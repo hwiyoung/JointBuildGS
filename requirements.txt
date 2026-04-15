@@ -1,0 +1,34 @@
+# Core: differentiable rendering
+gsplat>=1.3.0
+torch>=2.1.0
+torchvision>=0.16.0
+
+# Scientific / geometric
+numpy>=1.24
+scipy>=1.11
+open3d>=0.18
+trimesh>=4.0
+shapely>=2.0
+
+# CityGML / CityJSON
+lxml>=4.9
+cjio>=0.9
+
+# Image / IO
+Pillow>=10.0
+opencv-python>=4.8
+imageio>=2.31
+
+# Training utilities
+tensorboard>=2.15
+tqdm>=4.66
+pyyaml>=6.0
+einops>=0.7
+
+# Evaluation
+scikit-learn>=1.3
+scikit-image>=0.22
+
+# Segmentation (Stage 1 GT generation, optional at Phase 1)
+# transformers>=4.40          # Grounding DINO
+# sam2                        # Meta SAM 2.1
