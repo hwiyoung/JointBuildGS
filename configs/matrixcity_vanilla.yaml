@@ -25,11 +25,11 @@ lr_sh0: 2.5e-3
 lr_shN: 1.25e-4
 
 prune_opa: 0.005
-grow_grad2d: 2.0e-4
+grow_grad2d: 5.0e-4             # tighter threshold to limit N growth (was 2e-4, OOM at 9.4M)
 grow_scale3d: 0.01
 prune_scale3d: 0.1
 refine_start_iter: 500
-refine_stop_iter: 15000
+refine_stop_iter: 10000          # stop densification earlier (was 15000)
 refine_every: 100
 reset_every: 3000
 
