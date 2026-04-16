@@ -1,15 +1,14 @@
-# MatrixCity aerial block_1 — pipeline validation smoke (3k)
+# MatrixCity aerial — smoke test (3k iter)
 seed: 0
 device: cuda
 
-data_root: /workspace/JointBuildGS/data/matrix_city_aerial
+data_root: /workspace/JointBuildGS/data/matrixcity
 out_dir: /workspace/JointBuildGS/results/matrixcity_smoke/run
 
-downscale: 1.0                # already 1920x1080, no downscale needed
+downscale: 1.0
 sh_degree: 3
 sh_up_every: 1000
 
-# losses — photo only (no depth/normal GT for MatrixCity)
 w_photo: 1.0
 w_depth: 0.0
 w_normal: 0.0
@@ -36,4 +35,3 @@ reset_every: 3000
 max_iter: 3000
 eval_every: 500
 ckpt_every: 3000
-sequential: false

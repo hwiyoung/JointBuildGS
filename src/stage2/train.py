@@ -23,7 +23,7 @@ import yaml
 from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
 
-from .dataloader import SeongsuDataset
+from .dataloader import ColmapDataset
 from .densification import build_optimizers, build_param_dict, build_strategy
 from .loss import data_fitting as L
 from .model import GaussianModel2D
@@ -81,7 +81,7 @@ def main():
     (out_dir / "renders").mkdir(exist_ok=True)
 
     # ---------- data ----------
-    ds = SeongsuDataset(
+    ds = ColmapDataset(
         root=cfg["data_root"],
         downscale=cfg.get("downscale", 0.5),
         load_depth=True,

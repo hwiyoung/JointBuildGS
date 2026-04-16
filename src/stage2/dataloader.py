@@ -1,14 +1,18 @@
-"""Seongsu COLMAP-dense dataset loader.
+"""COLMAP dataset loader.
 
-Expects the COLMAP dense workspace produced by scripts/stage2/run_colmap_dense.sh:
-    data/seongsu/colmap/dense/
-        images/                         # undistorted JPGs
-        sparse/                         # undistorted sparse (cameras/images/points3D .bin)
-        stereo/depth_maps/*.geometric.bin
-        stereo/normal_maps/*.geometric.bin
+Standard COLMAP directory layout:
+    root/
+        images/                          # RGB images
+        sparse/0/                        # SfM output
+            cameras.bin
+            images.bin
+            points3D.bin
+        stereo/                          # (optional) MVS depth/normal
+            depth_maps/*.geometric.bin
+            normal_maps/*.geometric.bin
 
-Images/depths/normals are loaded lazily per __getitem__ and downscaled to `downscale`
-(default 0.5). World<-camera extrinsics follow COLMAP convention: x_cam = R * x_world + t.
+Images/depths/normals are loaded lazily per __getitem__ and downscaled to
+`downscale` (default 1.0). World<-camera extrinsics follow COLMAP convention.
 """
 from __future__ import annotations
 
@@ -39,34 +43,41 @@ class Frame:
     image_path: Path
     depth_path: Optional[Path]
     normal_path: Optional[Path]
-    K: np.ndarray        # 3x3 intrinsics at native resolution (undistorted)
+    K: np.ndarray        # 3x3 intrinsics at native resolution
     R: np.ndarray        # 3x3 world->cam
     t: np.ndarray        # 3 world->cam translation
     width: int
     height: int
 
 
-class SeongsuDataset(Dataset):
+class ColmapDataset(Dataset):
+    """Generic COLMAP dataset loader.
+
+    Args:
+        root: Path containing images/, sparse/0/, and optionally stereo/.
+        downscale: Image downscale factor (1.0 = native resolution).
+        load_depth: Whether to load MVS depth maps from stereo/.
+        load_normal: Whether to load MVS normal maps from stereo/.
+    """
+
     def __init__(
         self,
         root: str | Path,
-        downscale: float = 0.5,
+        downscale: float = 1.0,
         load_depth: bool = True,
         load_normal: bool = True,
-        device: str = "cpu",
     ):
         self.root = Path(root)
         self.downscale = float(downscale)
         self.load_depth = load_depth
         self.load_normal = load_normal
-        self.device = device
 
-        dense = self.root / "dense"
-        self.image_dir = dense / "images"
-        self.depth_dir = dense / "stereo" / "depth_maps"
-        self.normal_dir = dense / "stereo" / "normal_maps"
-        sparse_dir = dense / "sparse"
-        # Support both flat (sparse/*.bin) and nested (sparse/0/*.bin) layouts
+        self.image_dir = self.root / "images"
+        self.depth_dir = self.root / "stereo" / "depth_maps"
+        self.normal_dir = self.root / "stereo" / "normal_maps"
+
+        # Support both sparse/*.bin and sparse/0/*.bin
+        sparse_dir = self.root / "sparse"
         if (sparse_dir / "0" / "cameras.bin").exists():
             sparse_dir = sparse_dir / "0"
 
@@ -82,20 +93,18 @@ class SeongsuDataset(Dataset):
             img_path = self.image_dir / img.name
             if not img_path.exists():
                 continue
-            depth_path = self.depth_dir / f"{img.name}.geometric.bin"
-            if not depth_path.exists():
-                depth_path = self.depth_dir / f"{img.name}.photometric.bin"
-            normal_path = self.normal_dir / f"{img.name}.geometric.bin"
-            if not normal_path.exists():
-                normal_path = self.normal_dir / f"{img.name}.photometric.bin"
+
+            depth_path = self._find_stereo_file(self.depth_dir, img.name)
+            normal_path = self._find_stereo_file(self.normal_dir, img.name)
+
             self.frames.append(
                 Frame(
                     image_id=img_id,
                     name=img.name,
                     cam_id=img.camera_id,
                     image_path=img_path,
-                    depth_path=depth_path if depth_path.exists() else None,
-                    normal_path=normal_path if normal_path.exists() else None,
+                    depth_path=depth_path,
+                    normal_path=normal_path,
                     K=cam.K(),
                     R=img.R(),
                     t=img.tvec.copy(),
@@ -105,12 +114,18 @@ class SeongsuDataset(Dataset):
             )
         self.frames.sort(key=lambda f: f.name)
 
-    # ------------------------------------------------------------------
+    @staticmethod
+    def _find_stereo_file(stereo_dir: Path, img_name: str) -> Optional[Path]:
+        for suffix in [".geometric.bin", ".photometric.bin"]:
+            p = stereo_dir / f"{img_name}{suffix}"
+            if p.exists():
+                return p
+        return None
+
     def __len__(self) -> int:
         return len(self.frames)
 
     def image_size(self, idx: int = 0) -> Tuple[int, int]:
-        """Return (H, W) after downscale."""
         fr = self.frames[idx]
         H = int(round(fr.height * self.downscale))
         W = int(round(fr.width * self.downscale))
@@ -119,13 +134,10 @@ class SeongsuDataset(Dataset):
     def scaled_K(self, idx: int = 0) -> np.ndarray:
         fr = self.frames[idx]
         K = fr.K.copy()
-        K[0, 0] *= self.downscale
-        K[1, 1] *= self.downscale
-        K[0, 2] *= self.downscale
-        K[1, 2] *= self.downscale
+        K[0, :] *= self.downscale
+        K[1, :] *= self.downscale
         return K
 
-    # ------------------------------------------------------------------
     def __getitem__(self, idx: int) -> dict:
         fr = self.frames[idx]
         H = int(round(fr.height * self.downscale))
@@ -135,14 +147,14 @@ class SeongsuDataset(Dataset):
         pil = PILImage.open(fr.image_path).convert("RGB")
         if (pil.size[0], pil.size[1]) != (W, H):
             pil = pil.resize((W, H), PILImage.BILINEAR)
-        rgb = np.asarray(pil, dtype=np.float32) / 255.0  # (H,W,3)
+        rgb = np.asarray(pil, dtype=np.float32) / 255.0
 
         # Depth
         depth = None
         depth_mask = None
         if self.load_depth and fr.depth_path is not None:
-            d = read_array(fr.depth_path)  # (H0, W0)
-            d = _resize_float(d, (H, W), order="bilinear")
+            d = read_array(fr.depth_path)
+            d = _resize_float(d, (H, W))
             depth_mask = d > 0
             depth = np.where(depth_mask, d, 0.0)
 
@@ -150,14 +162,13 @@ class SeongsuDataset(Dataset):
         normal = None
         normal_mask = None
         if self.load_normal and fr.normal_path is not None:
-            n = read_array(fr.normal_path)  # (H0, W0, 3)
-            n = _resize_float(n, (H, W), order="bilinear")
+            n = read_array(fr.normal_path)
+            n = _resize_float(n, (H, W))
             norm = np.linalg.norm(n, axis=-1, keepdims=True)
-            normal_mask = (norm[..., 0] > 1e-3)
+            normal_mask = norm[..., 0] > 1e-3
             n = np.where(norm > 1e-6, n / np.maximum(norm, 1e-6), 0.0)
             normal = n.astype(np.float32)
 
-        # Build world->cam 4x4
         w2c = np.eye(4, dtype=np.float32)
         w2c[:3, :3] = fr.R
         w2c[:3, 3] = fr.t
@@ -166,28 +177,22 @@ class SeongsuDataset(Dataset):
         out = {
             "image_id": fr.image_id,
             "name": fr.name,
-            "rgb": torch.from_numpy(rgb),                         # (H,W,3) float32 [0,1]
-            "w2c": torch.from_numpy(w2c),                         # (4,4)
-            "K": torch.from_numpy(K),                             # (3,3)
+            "rgb": torch.from_numpy(rgb),
+            "w2c": torch.from_numpy(w2c),
+            "K": torch.from_numpy(K),
             "height": H,
             "width": W,
         }
         if depth is not None:
-            out["depth"] = torch.from_numpy(depth.astype(np.float32))             # (H,W)
-            out["depth_mask"] = torch.from_numpy(depth_mask.astype(np.bool_))     # (H,W)
+            out["depth"] = torch.from_numpy(depth.astype(np.float32))
+            out["depth_mask"] = torch.from_numpy(depth_mask.astype(np.bool_))
         if normal is not None:
-            out["normal"] = torch.from_numpy(normal)                               # (H,W,3)
-            out["normal_mask"] = torch.from_numpy(normal_mask.astype(np.bool_))   # (H,W)
+            out["normal"] = torch.from_numpy(normal)
+            out["normal_mask"] = torch.from_numpy(normal_mask.astype(np.bool_))
         return out
 
 
-def _resize_float(arr: np.ndarray, size_hw: Tuple[int, int], order: str = "bilinear") -> np.ndarray:
-    """Resize float array via PIL. Supports (H,W) or (H,W,C)."""
+def _resize_float(arr: np.ndarray, size_hw: Tuple[int, int]) -> np.ndarray:
     import cv2
-
     H, W = size_hw
-    interp = cv2.INTER_LINEAR if order == "bilinear" else cv2.INTER_NEAREST
-    if arr.ndim == 2:
-        return cv2.resize(arr, (W, H), interpolation=interp)
-    out = cv2.resize(arr, (W, H), interpolation=interp)
-    return out
+    return cv2.resize(arr, (W, H), interpolation=cv2.INTER_LINEAR)

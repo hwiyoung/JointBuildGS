@@ -15,7 +15,7 @@ import numpy as np
 import torch
 import yaml
 
-from src.stage2.dataloader import SeongsuDataset
+from src.stage2.dataloader import ColmapDataset
 from src.stage2.model import GaussianModel2D
 from src.stage2.renderer import render
 
@@ -46,7 +46,7 @@ def main():
         cfg = yaml.safe_load(f)
     device = "cuda"
 
-    ds = SeongsuDataset(root=cfg["data_root"], downscale=cfg.get("downscale", 0.5))
+    ds = ColmapDataset(root=cfg["data_root"], downscale=cfg.get("downscale", 1.0))
     model = GaussianModel2D(points_xyz=ds.points_xyz, points_rgb=ds.points_rgb,
                             sh_degree=cfg.get("sh_degree", 3), device=device).to(device)
     sd = torch.load(args.ckpt, map_location=device)["state_dict"]

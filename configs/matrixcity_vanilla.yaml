@@ -1,23 +1,22 @@
-# Phase 1 / Step 1-1 — gsplat 2DGS vanilla training (seongsu)
+# Phase 1 Step 1-1 — MatrixCity aerial vanilla 2DGS (30k iter)
+# Reference: CityGSV2 Table 1, vanilla 2DGS PSNR ~21.12 (photo only)
 seed: 0
 device: cuda
 
-data_root: /workspace/JointBuildGS/data/seongsu/colmap
+data_root: /workspace/JointBuildGS/data/matrixcity
 out_dir: /workspace/JointBuildGS/results/phase1_vanilla/run
 
-downscale: 0.5                # 8192x5460 -> 4096x2730
+downscale: 1.0
 sh_degree: 3
 sh_up_every: 1000
 
-# losses
 w_photo: 1.0
-w_depth: 0.1
-w_normal: 0.05
+w_depth: 0.0
+w_normal: 0.0
 w_nc: 0.05
-w_distort: 0.0                # disabled for now (was dominating total loss)
+w_distort: 0.0
 photo_lam: 0.2
 
-# optim (per-param Adam; gsplat DefaultStrategy assumes this)
 lr_means: 1.6e-4
 lr_scales: 5.0e-3
 lr_quats: 1.0e-3
@@ -25,7 +24,6 @@ lr_opacities: 5.0e-2
 lr_sh0: 2.5e-3
 lr_shN: 1.25e-4
 
-# densification (gsplat DefaultStrategy)
 prune_opa: 0.005
 grow_grad2d: 2.0e-4
 grow_scale3d: 0.01
@@ -35,8 +33,6 @@ refine_stop_iter: 15000
 refine_every: 100
 reset_every: 3000
 
-# schedule
 max_iter: 30000
 eval_every: 2000
 ckpt_every: 5000
-sequential: false
