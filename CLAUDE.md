@@ -25,10 +25,8 @@ gsplat 선정 이유: N-D feature 네이티브 렌더링(semantic head CUDA fork
 | 변수 | 차원 | 의미 |
 |------|------|------|
 | c_i | (N,3) | 중심 |
-| t_u, t_v | (N,3)×2 | tangent 벡터 (학습 파라미터) |
-| n_i | (N,3), derived | 법선 = normalize(t_u × t_v) |
+| n_i | tangent 외적 | 법선 (t_u × t_v) |
 | s_i | (N,2) | in-plane scale |
-| opacity_i | (N,1) | 불투명도 |
 | f_i | (N,4) | 의미론 (BG/Roof/Wall/Terrain) |
 | color_i | SH | 색상 |
 
@@ -51,7 +49,6 @@ L_structure → n_i, c_i      inter-primitive 구조 정렬
 - L_horiz: terrain 법선 → 수직
 - L_height: roof > terrain (높이)
 - 핵심: p_c × 기하 오차의 곱 → 양방향 gradient
-- 안전장치: L_sem이 f_i를 GT 방향으로 강제하여 p_c→0 trivial solution 방지
 
 ## 메커니즘 2: Inter-primitive (L_structure)
 - 매 T iter 그룹핑: 동일 class + 법선 유사 + 공간 근접
@@ -70,17 +67,34 @@ L_structure → n_i, c_i      inter-primitive 구조 정렬
 ## Gravity
 Grounded SAM terrain MVS 법선 평균. 학습 전 1회 계산.
 
+## 연구 계획 구조
+- **Phase 1** — MatrixCity(벤치마크)에서 Stage 2 각 단계가 레퍼런스(CityGSV2, ULSR-GS) 수준 달성 확인
+- **Phase 2** — 3D BAG 합성 렌더링에서 Stage 2+3 end-to-end + 4조건 ablation(CityGML 품질)
+- **Phase 3** — GauU-Scene(real UAV) + 순차 파이프라인 비교 + 성수동 실데이터 시연
+
+## 데이터셋 용도
+- Stage 2 검증: MatrixCity Small City Aerial (메인), GauU-Scene (서브)
+- Stage 3 검증: 3D BAG 합성 렌더링 (GT CityGML 있음)
+- 실데이터 시연: 성수동 (Metashape depth 사용)
+
+## Ablation 4조건
+Baseline / Mutual only / Structure only / Both — 메커니즘 1/2 개별 기여 분리
+
 ## 현재 진행 상태
-- [x] Stage 1 완료
+- [x] Stage 1 완료 (성수동)
 - [x] PlanarSplatting 예비 실험 완료 (legacy/)
 - [x] Synthetic A 완료 (results/synthetic_a/)
-- [x] Phase 1 Step 1-0: 리포지터리 셋업 + 마이그레이션 (results/phase1_setup/REPORT.md)
-- [ ] **Phase 1 Step 1-1**: gsplat/2DGS vanilla 학습 ← **현재**
-- [ ] Phase 1 Step 1-2: Semantic head + L_sem
-- [ ] Phase 1 Step 1-3: L_mutual 이식
-- [ ] Phase 1 Step 1-4: 통합 검증
-- [ ] Phase 2: Ablation (Baseline/Joint/Joint+Structure)
-- [ ] Phase 3: Stage 3 + 비교
+- [x] gsplat 환경 구축 + gradient_2dgs 버그 수정
+- [x] MatrixCity 데이터 준비 (5,621장 + COLMAP sparse)
+- [x] Step 1-1 smoke test 완료 (3k, PSNR 20.60, densification 정상)
+- [ ] **Phase 1 Step 1-1**: 30k 본 학습 (CityGSV2 baseline 21.35 비교) ← **현재**
+- [ ] Phase 1 Step 1-2: + Depth/Normal 감독 (CityGSV2 with-depth ~22.22)
+- [ ] Phase 1 Step 1-3: + Semantic head + L_sem
+- [ ] Phase 1 Step 1-4: + L_mutual (Mutual only)
+- [ ] Phase 1 Step 1-5: + L_structure (Structure only)
+- [ ] Phase 1 Step 1-6: Both + 4조건 ablation 정리
+- [ ] Phase 2: 3D BAG 합성 → CityGML 검증
+- [ ] Phase 3: GauU-Scene + City3D 비교 + 성수동
 
 ## 중요 규칙
 - **gsplat 라이브러리** 사용 (2DGS 공식 fork 아님)

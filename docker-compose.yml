@@ -1,0 +1,21 @@
+services:
+  dev:
+    build: .
+    image: jointbuildgs:dev
+    container_name: jointbuildgs-dev
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=1
+      - CUDA_VISIBLE_DEVICES=0
+      - TORCH_CUDA_ARCH_LIST=8.6
+    volumes:
+      - .:/workspace/JointBuildGS
+      - /media/innopam/InnoPAM-8TB:/data
+    shm_size: "16gb"
+    ulimits:
+      memlock: -1
+      stack: 67108864
+    working_dir: /workspace/JointBuildGS
+    stdin_open: true
+    tty: true
+    command: sleep infinity

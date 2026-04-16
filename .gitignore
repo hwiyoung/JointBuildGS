@@ -1,35 +1,45 @@
-# Large data (symlinked to external storage)
-data/seongsu/input_data.pth
-data/seongsu/colmap_sparse.ply
-data/seongsu/colmap_runs
-data/3dbag/raw
+# ===== Data (large, not in repo) =====
+data/matrixcity/images/
+data/matrixcity/sparse/
+data/seongsu/
+data/gauu_scene/
+data/3dbag/
+data/synthetic/
 
-# Synthetic A bulk results (regenerable via scripts/synthetic_a/)
+# ===== Results (regenerable) =====
+results/*/run/
+results/*/tb/
+results/archive_seongsu_v0/
+results/matrixcity_smoke/
 results/synthetic_a/3dbag_results/
 results/synthetic_a/3dbag_raw/
 results/synthetic_a/viz_samples/
 results/synthetic_a/images/
 results/synthetic_a/3dbag_buildings_3d_sample.png
 
-# Python
+# ===== Training artifacts =====
+*.pt
+*.pth
+*.ckpt
+*.ply
+
+# ===== Python =====
 __pycache__/
 *.py[cod]
 *.egg-info/
 .pytest_cache/
 .ipynb_checkpoints/
 
-# Env / IDE
+# ===== Env / IDE =====
 .venv/
 venv/
 .env
 .vscode/
 .idea/
+.claude/
 
-# Training outputs
-*.pth
-*.ckpt
-tensorboard_logs/
-wandb/
+# ===== Docker build context =====
+# Dockerfile and docker-compose.yml ARE tracked
 
-# OS
+# ===== OS =====
 .DS_Store

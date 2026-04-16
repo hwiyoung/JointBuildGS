@@ -1,9 +1,18 @@
-# 실험계획 (v6 — gsplat/2DGS 기반, Claude Code 실행용)
+# 실험계획 (v7 — 벤치마크 우선 검증, 레퍼런스 수치 기반)
 
-## 리포지터리 구조 (gsplat 라이브러리 의존)
+## 연구 계획의 논리
 
-gsplat은 pip install로 설치하는 라이브러리. fork가 아니라 의존성으로 사용.
-우리 코드가 주체이고, gsplat은 렌더링 함수를 호출하는 의존성.
+**벤치마크에서 방법론 검증 → 실데이터 시연** 순서.
+
+Phase 1: MatrixCity Small City Aerial에서 Stage 2 각 단계가 기존 항공 2DGS 연구들의 수준을 달성하는지 확인. 레퍼런스 수치(CityGaussianV2, ULSR-GS, AGS)와 직접 비교.
+
+Phase 2: 3D BAG 합성 렌더링에서 Stage 2+3 통합 검증. GT CityGML이 있으므로 val3dity, 면 IoU로 방법론의 최종 효과 검증. Ablation 4조건으로 메커니즘 1/2 개별 기여 분리.
+
+Phase 3: Real UAV(GauU-Scene) + 순차 파이프라인 비교 + 실데이터 시연.
+
+Phase 1은 "파이프라인이 레퍼런스 수준으로 작동하는가"의 검증, Phase 2가 방법론의 핵심 검증, Phase 3가 일반화/비교/실환경 시연.
+
+## 리포지터리 구조 (gsplat 의존)
 
 ```
 JointBuildGS/
@@ -11,21 +20,21 @@ JointBuildGS/
 ├── docs/
 │   ├── EXPERIMENT_PLAN.md
 │   └── RESEARCH_CONTEXT.md
-├── requirements.txt                # gsplat, torch, etc.
+├── requirements.txt
 ├── src/
-│   ├── stage1/                     # SfM/MVS + Grounded SAM (기존)
+│   ├── stage1/
 │   ├── stage2/
-│   │   ├── model.py                # 2DGS 파라미터 정의 (c, n, s, f, color)
-│   │   ├── renderer.py             # gsplat 호출 → RGB/depth/normal/semantic
+│   │   ├── model.py
+│   │   ├── renderer.py
 │   │   ├── loss/
-│   │   │   ├── data_fitting.py     # L_depth, L_normal, L_photo, L_nc
-│   │   │   ├── semantic.py         # L_sem
-│   │   │   ├── mutual.py           # L_mutual (메커니즘 1, intra)
-│   │   │   └── structure.py        # L_structure (메커니즘 2, inter)
-│   │   ├── grouping.py             # 메커니즘 2 그룹핑
-│   │   ├── densification.py        # split/clone/prune + 그룹 연동
-│   │   ├── dataloader.py           # COLMAP 데이터 로딩
-│   │   └── train.py                # 학습 루프, warmup, 스케줄
+│   │   │   ├── data_fitting.py
+│   │   │   ├── semantic.py
+│   │   │   ├── mutual.py
+│   │   │   └── structure.py
+│   │   ├── grouping.py
+│   │   ├── densification.py
+│   │   ├── dataloader.py
+│   │   └── train.py
 │   └── stage3/
 │       ├── clustering.py
 │       ├── plane_intersection.py
@@ -33,415 +42,549 @@ JointBuildGS/
 │       ├── ground_surface.py
 │       └── citygml_export.py
 ├── scripts/
-│   ├── synthetic_a/
+│   ├── synthetic_a/        # 기존 결과 마이그레이션
 │   ├── synthetic_b/
 │   └── comparison/
 ├── configs/
-│   ├── baseline.yaml
-│   ├── joint.yaml
-│   └── joint_structure.yaml
 ├── data/
-│   ├── seongsu/
+│   ├── matrixcity/         # Small City Aerial
+│   ├── gauu_scene/
 │   ├── 3dbag/
-│   └── synthetic/
+│   └── seongsu/
 ├── results/
-│   ├── phase1_setup/
-│   ├── phase1_vanilla/
-│   ├── phase1_semantic/
-│   ├── phase1_mutual/
-│   ├── phase1_integration/
-│   ├── phase2_baseline/
-│   ├── phase2_joint/
-│   ├── phase2_structure/
-│   ├── phase3_citygml/
-│   ├── synthetic_a/
-│   ├── synthetic_b/
-│   └── comparison/
-└── legacy/                         # PlanarSplatting 예비 실험 보존
+└── legacy/                 # PlanarSplatting 예비 실험
 ```
 
 ## 현재 상태
 
-| 항목 | 상태 | 비고 |
-|------|------|------|
-| Stage 1 (SfM/MVS + Grounded SAM) | 완료 | 성수동 100장, seg GT |
-| PlanarSplatting 예비 실험 | 완료 | L_mutual 효과 확인, 항공 밀착 실패 |
-| Synthetic A (Stage 3 단독) | 완료 | 법선 지배성 발견, base 무관 |
-| gsplat/2DGS 기반 파이프라인 | **미착수** | ← 현재 시작점 |
+| 항목 | 상태 |
+|------|------|
+| Stage 1 (성수동 COLMAP + Grounded SAM) | 완료 |
+| PlanarSplatting 예비 실험 | 완료, legacy/ |
+| Synthetic A (Stage 3 단독) | 완료 |
+| gsplat 기반 파이프라인 구축 시작 | 진행 중 (MatrixCity smoke test) |
 
-## 실행 순서
+## 데이터셋 용도 분리
 
-```
-Phase 1: gsplat 기반 파이프라인 구축
-  Step 1-0: 리포지터리 셋업 + 기존 자산 마이그레이션
-  Step 1-1: gsplat 기반 2DGS Vanilla 학습
-  Step 1-2: Semantic head + L_sem
-  Step 1-3: L_mutual 이식 + Gravity
-  Step 1-4: 통합 검증
+**Stage 2 재구성 품질 검증:**
+- MatrixCity Small City Aerial (메인) — CityGSV2 레퍼런스 비교
+- GauU-Scene (서브, real UAV) — ULSR-GS 레퍼런스 비교
 
-Phase 2: Stage 2 실험 — Ablation
-  Step 2-1: Baseline 학습
-  Step 2-2: Joint (메커니즘 1)
-  Step 2-3: L_structure 구현 (메커니즘 2)
-  Step 2-4: Joint+Structure (메커니즘 1+2)
+**Stage 3 CityGML 품질 검증:**
+- 3D BAG 합성 렌더링 (Synthetic B) — GT CityGML 있음, val3dity로 end-to-end 평가
 
-Phase 3: Stage 3 + 비교 실험
-  Step 3-1: Stage 3 → CityGML
-  Step 3-2: Synthetic B
-  Step 3-3: City3D 비교
-  Step 3-4: 종합
-```
+**실데이터 정성 시연:**
+- 성수동 (Metashape depth 사용)
+
+## Ablation 4조건
+
+| 조건 | 손실 함수 | 검증 대상 |
+|------|----------|---------|
+| Baseline | L_photo + L_depth + L_normal + L_nc + L_sem | 두 메커니즘 모두 없음 |
+| Mutual only | + L_mutual | 메커니즘 1 (intra) 단독 |
+| Structure only | + L_structure | 메커니즘 2 (inter) 단독 |
+| Both | + L_mutual + L_structure | 결합 효과, 상호작용 검증 |
+
+Both < Mutual + Structure이면 간섭. Both > Mutual + Structure이면 시너지.
 
 ---
 
-## Phase 1: gsplat 기반 파이프라인 구축
+## Phase 1: MatrixCity에서 Stage 2 검증
 
-### Step 1-0: 리포지터리 셋업 + 기존 자산 마이그레이션
+### Step 1-0: 리포지터리 셋업 + 마이그레이션 + MatrixCity 준비
 
 **프롬프트:**
 ```
 docs/EXPERIMENT_PLAN.md의 Step 1-0을 진행해줘.
 
-목표: 새 리포지터리 구조 생성 + 기존 자산 마이그레이션.
-
-=== Part A: 리포지터리 생성 ===
-EXPERIMENT_PLAN.md의 리포지터리 구조대로 디렉토리 생성.
-CLAUDE.md를 루트에 배치. EXPERIMENT_PLAN.md를 docs/에 배치.
+=== Part A: 리포지터리 구조 ===
+EXPERIMENT_PLAN.md 구조대로 디렉토리 생성.
 
 === Part B: 기존 자산 마이그레이션 ===
-기존 리포지터리 경로: /media/innopam/InnoPAM-8TB/hwiyoung/code/PlanarSplatting
+기존 리포지터리 경로: [사용자 제공]
+1. Synthetic A 코드 → scripts/synthetic_a/, 결과 → results/synthetic_a/
+2. Stage 3 코드를 src/stage3/로 분리
+3. PlanarSplatting 예비 실험을 legacy/
+4. Stage 1 출력물을 data/seongsu/에 배치
 
-1. Synthetic A:
-   - 기존 코드(generate_synthetic_primitives.py, add_noise_to_primitives.py, Stage 3 실행 코드)를 scripts/synthetic_a/로 복사
-   - 기존 결과(val3dity, 면 IoU, Hausdorff, REPORT.md)를 results/synthetic_a/로 복사
-2. Stage 3 코드를 src/stage3/로 분리 정리 (clustering, plane_intersection, building_instance, ground_surface, citygml_export)
-3. PlanarSplatting 예비 실험 전체를 legacy/로 보존 (L_mutual, L_sem 구현 참고용)
-4. Stage 1 출력물(COLMAP 결과, Grounded SAM GT)을 data/seongsu/에 배치
-5. 3D BAG 데이터를 data/3dbag/에 배치
-
-=== Part C: 의존성 설정 ===
-requirements.txt 생성:
-- gsplat (pip install gsplat)
-- torch, torchvision
-- numpy, scipy, open3d, trimesh
-- lxml (CityGML XML)
-- 기타 필요 라이브러리
+=== Part C: MatrixCity 준비 ===
+1. MatrixCity Small City Aerial 다운로드 (CityGSV2 Google Drive COLMAP sparse + HuggingFace GT)
+2. data/matrixcity/small_city_aerial/에 배치
+3. GT 구성 확인: 이미지, 카메라 포즈, COLMAP sparse, GT depth, GT normal, GT point cloud
+4. 가능하면 semantic GT도 확인 (없으면 Step 1-3에서 Grounded SAM으로 생성)
 
 === Part D: 검증 ===
-Synthetic A를 새 위치에서 실행하여 기존 결과 재현 확인.
+1. Synthetic A 재현 확인
+2. MatrixCity 데이터 로딩 테스트
 
 results/phase1_setup/REPORT.md 작성.
 ```
 
-### Step 1-1: gsplat 기반 2DGS Vanilla 학습
+### Step 1-1: Vanilla 2DGS (photo only) — 파이프라인 정상성 검증
+
+**목적:** gsplat 기반 2DGS 파이프라인이 레퍼런스 수준으로 작동하는지 확인. 구현 버그 식별.
+
+**레퍼런스:** CityGaussianV2 Table 1-2, MatrixCity Small City Aerial에서 vanilla 2DGS PSNR 약 21.12 (depth 없이, photo only).
+
+**Go 기준:**
+- PSNR ≥ 20 (레퍼런스 -1 이내)
+- SSIM, LPIPS도 CityGSV2 수치 대비 합리적 범위
+- F1 (GT point cloud 대비, 임계값 0.5m/1.0m), Chamfer Distance도 CityGSV2/ULSR-GS 수준
 
 **프롬프트:**
 ```
 docs/EXPERIMENT_PLAN.md의 Step 1-1을 진행해줘.
 
-목표: gsplat 라이브러리를 사용하여 성수동 데이터에서 2DGS vanilla 학습 파이프라인 구축 및 확인.
+목표: gsplat 기반 vanilla 2DGS 학습 파이프라인 구축 + MatrixCity에서 CityGSV2 수준 달성.
 
-=== Part A: gsplat 기반 학습 파이프라인 구축 ===
-gsplat의 examples/ 스크립트를 참고하되, 우리 코드 구조에 맞게 작성.
+=== 파이프라인 구축 ===
+src/stage2/:
+- model.py: 2DGS 파라미터 (c, q → t_u/t_v, s, opacity, SH)
+- renderer.py: gsplat rasterization_2dgs 호출 → RGB, depth, normal
+- loss/data_fitting.py: L_photo (L1+SSIM), L_nc (렌더링 normal ≈ depth 유도 normal)
+- densification.py: gsplat DefaultStrategy (key_for_gradient="gradient_2dgs" 주의)
+- dataloader.py: MatrixCity COLMAP 로더
+- train.py: 학습 루프 (30000 iter)
 
-1. src/stage2/model.py:
-   - 2DGS 프리미티브 파라미터 관리 (c_i, tangent_u/v, s_i, opacity, SH)
-   - 초기화: COLMAP 포인트 클라우드에서
-   - n_i = normalize(t_u × t_v) 함수
+**구현 주의사항 (RESEARCH_CONTEXT.md §12 참조):**
+- DefaultStrategy(key_for_gradient="gradient_2dgs") 필수 (기본값 "means2d"면 grow 미작동)
+- scales shape (N,3), dim2 ≈ 0
+- L_nc: depth_to_normal 자체 구현 권장 (gsplat render_normals_from_depth 불안정)
+- Densification 후 _sync_params_to_model() 호출
 
-2. src/stage2/renderer.py:
-   - gsplat의 rasterization 함수 호출
-   - RGB, depth, normal 렌더링
-   - from gsplat import rasterization (또는 해당 API)
+=== 학습 ===
+L = L_photo + λ_nc·L_nc (vanilla 2DGS)
+MatrixCity Small City Aerial, 30000 iter.
 
-3. src/stage2/loss/data_fitting.py:
-   - L_depth = L1(D_render, D_MVS)
-   - L_normal = 1 - cos(n_render, n_MVS)
-   - L_photo = (1-λ)·L1 + λ·(1-SSIM), λ=0.2
-   - L_nc = 1 - cos(n_render, n_depth_derived)
-     * n_depth_derived: 렌더링 depth map의 인접 픽셀 finite difference cross product
+=== 평가 ===
+렌더링: PSNR, SSIM, LPIPS → CityGSV2 Table 1 비교
+기하: F1 (0.5m, 1.0m 임계), Chamfer Distance → CityGSV2/ULSR-GS 비교
+추가: 프리미티브 수 변화, 학습 시간, Coverage
 
-4. src/stage2/densification.py:
-   - gsplat의 densification strategy 활용 (또는 직접 구현)
-   - split/clone/prune
-
-5. src/stage2/dataloader.py:
-   - COLMAP 출력 로딩 (카메라, 이미지, 포인트 클라우드)
-   - MVS depth/normal 로딩
-
-6. src/stage2/train.py:
-   - 학습 루프: forward → loss → backward → optimizer step → densification
-   - TensorBoard 로깅
-
-=== Part B: 성수동 Vanilla 학습 ===
-L_photo + L_depth + L_normal + L_nc, 30000 iter.
-평가: PSNR, Depth MAE, Normal cos.
-
-=== Part C: 항공 적응 확인 ===
-Coverage, px/prim 측정.
-PlanarSplatting(legacy/) 결과 대비 밀착 개선 확인.
+=== Go/No-Go ===
+Go: 5개 지표(PSNR/SSIM/LPIPS/F1/Chamfer) 모두 레퍼런스 대비 합리적 범위
+No-Go: gsplat API 사용, densification 설정, depth/normal 렌더링 구현 재검토
 
 === 시각적 산출물 ===
-1. RGB/Depth/Normal 렌더링 (4뷰 이상)
-2. 프리미티브 3D PLY
+1. RGB/Depth/Normal 렌더링 (4뷰)
+2. 프리미티브 PLY
 3. Coverage 히트맵
-4. PlanarSplatting vs gsplat/2DGS 비교 표
+4. CityGSV2 수치 vs 본 실험 비교 표
 
-results/phase1_vanilla/REPORT.md 작성. CLAUDE.md 업데이트.
+results/phase1_vanilla/REPORT.md 작성.
 ```
 
-### Step 1-2: Semantic Head + L_sem
+### Step 1-2: + Depth/Normal 감독
+
+**목적:** MVS depth/normal 감독이 기하 품질을 개선하는지 확인.
+
+**레퍼런스:** CityGaussianV2 Table 2 ablation, MatrixCity with depth supervision PSNR 약 22.22.
+
+**Go 기준:**
+- PSNR, SSIM, LPIPS가 레퍼런스 with-depth 수치 대비 -0.7 이내
+- F1, Chamfer가 Step 1-1 대비 개선
+- Depth MAE, Normal cos가 Step 1-1 대비 유의미 개선
 
 **프롬프트:**
 ```
 docs/EXPERIMENT_PLAN.md의 Step 1-2를 진행해줘.
 
-목표: 2DGS에 semantic head(f_i, K=4) 추가 + L_sem 구현.
+목표: L_depth + L_normal 추가, 기하 품질 개선 확인.
 
-=== Part A: Semantic Head ===
-src/stage2/model.py 수정:
-- 각 Gaussian에 f_i ∈ R^4 파라미터 추가. 초기화: uniform.
-- split/clone: 부모 f_i 복사. prune: 함께 제거.
+=== 학습 ===
+L = L_photo + λ_nc·L_nc + L_depth + L_normal
+- L_depth = L1(D_render, D_GT_MVS)
+- L_normal = 1 - cos(n_render, n_GT_MVS)
+- GT: MatrixCity 제공 GT depth/normal (HuggingFace)
 
-src/stage2/renderer.py 수정:
-- gsplat의 N-D feature 렌더링 활용.
-  gsplat은 colors shape=[N,D]를 네이티브 지원하므로, f_i를 colors로 전달하여 semantic map 렌더링.
-  RGB와 semantic을 별도 forward pass 또는 채널 결합으로 렌더링.
-- softmax 적용하여 픽셀별 class 확률 생성.
-
-=== Part B: L_sem ===
-src/stage2/loss/semantic.py:
-- CrossEntropyLoss(ignore_index=0)
-- GT: data/seongsu/ Grounded SAM segmentation
-- Gradient 격리 검증: L_sem → f_i에만 gradient, c_i/n_i/s_i/color에는 gradient 없음
-
-=== Part C: 학습 + 평가 ===
-L_photo + L_depth + L_normal + L_nc + L_sem, 30000 iter.
-기하 지표 유지 확인 + mIoU, per-class IoU 측정.
+=== 평가 ===
+렌더링: PSNR, SSIM, LPIPS → CityGSV2 Table 2 (with depth) 비교
+기하: F1, Chamfer → CityGSV2 with-depth 비교
+추가: Depth MAE, Normal cos → Step 1-1 대비 개선
 
 === 시각적 산출물 ===
-1. Semantic map 렌더링 (class별 색상, 4뷰)
-2. 프리미티브 PLY (class별 색상)
-3. Gradient 격리 검증 로그
+1. Step 1-1 vs 1-2 렌더링 비교 (4뷰)
+2. Depth 오차 히트맵
+3. CityGSV2 ablation 수치 vs 본 실험 표
 
-results/phase1_semantic/REPORT.md 작성. CLAUDE.md 업데이트.
+results/phase1_depth_normal/REPORT.md 작성.
 ```
 
-### Step 1-3: L_mutual 이식 + Gravity
+### Step 1-3: + Semantic Head + L_sem
+
+**목적:** Semantic head 추가가 기하 품질을 해치지 않으면서 의미론을 학습하는지 확인.
+
+**레퍼런스:** 직접 비교 가능 연구 적음. AlignGS, NeRBuilder 등 semantic 3DGS의 mIoU 수준 참고.
+
+**Go 기준:**
+- PSNR/SSIM/LPIPS가 Step 1-2 대비 -0.3 이내 유지 (레퍼런스 with-depth 수준 유지)
+- F1, Chamfer가 Step 1-2 대비 유지
+- mIoU ≥ 0.75
+- Gradient 격리: L_sem이 f_i에만 gradient
 
 **프롬프트:**
 ```
 docs/EXPERIMENT_PLAN.md의 Step 1-3을 진행해줘.
 
-목표: L_mutual을 gsplat/2DGS에 이식 + gravity 추정 연결.
+=== Semantic Head ===
+- 각 Gaussian에 f_i ∈ R^4 추가
+- gsplat N-D feature 렌더링 (colors shape=[N,D]) 활용 → semantic map
+- softmax 적용
 
-=== Part A: Gravity 추정 ===
-Grounded SAM GT terrain 영역의 MVS 법선 평균 = UP → gravity = -UP.
-학습 전 1회 계산. Fallback: terrain 부족 시 경고.
+=== GT Segmentation ===
+MatrixCity에 semantic GT가 있으면 사용.
+없으면 Grounded SAM 2로 생성 (roof/wall/terrain/BG, K=4).
 
-=== Part B: L_mutual 이식 ===
-legacy/ 참고. src/stage2/loss/mutual.py에 구현.
-핵심 변경: n_i = normalize(t_u × t_v) (gsplat 2DGS tangent에서).
-L_mutual = Σ_i [p_wall·(n_i·e_g)² + p_roof·relu(τ-(n_i·e_g)²)² + p_terrain·(1-|n_i·e_g|)² + L_height]
-Warmup: 0~N/3에서 λ_m=0 (비율 기반, N에 따라 자동 조정).
+=== 학습 ===
+L = Step 1-2 + λ_s·L_sem (CrossEntropy, ignore_index=0)
 
-=== Part C: Gradient 검증 ===
-∂L_mutual/∂n_i ≠ 0 (tangent까지 역전파), ∂L_mutual/∂f_i ≠ 0, ∂L_mutual/∂c_i (L_height 높이만), ∂L_mutual/∂s_i = 0.
-Detach mode 구현.
-
-=== Part D: Smoke Test ===
-10 iter: NaN 없음, loss 감소.
+=== 평가 ===
+렌더링/기하: Step 1-2 대비 유지 확인 (레퍼런스 with-depth 수준 유지)
+의미론: mIoU, per-class IoU
+Gradient 격리 검증: L_sem만 f_i에 gradient, 기하 파라미터에 0
 
 === 시각적 산출물 ===
-1. Gravity 시각화
-2. Gradient 검증 로그
+1. Semantic map 렌더링 (class별 색상, 4뷰)
+2. 프리미티브 PLY (class 색상)
+3. Gradient 격리 로그
 
-results/phase1_mutual/REPORT.md 작성. CLAUDE.md 업데이트.
+results/phase1_semantic/REPORT.md 작성.
 ```
 
-### Step 1-4: 통합 검증
+### Step 1-4: + L_mutual (메커니즘 1 단독)
+
+**목적:** Intra-primitive 도메인 규칙이 법선과 의미론을 양방향 교정하는지 확인.
+
+**레퍼런스:** PlanarSplatting 예비 실험 (legacy/) — wall normal 8.9° → 3.8°. 2DGS로 재검증.
+
+**Go 기준:**
+- PSNR/SSIM/LPIPS/F1/Chamfer가 Step 1-3 대비 유지
+- Wall 법선 수직도(|n·e_g| < sin(10°) 비율)가 Step 1-3 대비 유의미 증가
+- mIoU가 Step 1-3 대비 유지 또는 개선
+- Gradient 양방향성 검증
 
 **프롬프트:**
 ```
 docs/EXPERIMENT_PLAN.md의 Step 1-4를 진행해줘.
 
-목표: 전체 Stage 2 파이프라인 통합 검증 (L_structure 제외).
+=== Gravity 추정 ===
+Grounded SAM terrain 영역의 MVS 법선 평균 = UP → e_g = -UP (학습 전 1회 계산).
+MatrixCity는 합성이므로 GT gravity도 알고 있음 → 추정값 검증 가능.
+
+=== L_mutual 구현 ===
+legacy/ 참고. n_i = normalize(t_u × t_v) (2DGS tangent).
+L_mutual = Σ_i [p_wall·(n·e_g)² + p_roof·relu(τ-(n·e_g)²)² + p_terrain·(1-|n·e_g|)² + L_height]
 
 === 학습 ===
-L_depth + L_normal + L_nc + L_sem + L_photo + L_mutual (warmup), 5000 iter.
+L = Step 1-3 + λ_m·L_mutual (warmup 10000 iter부터)
 
-=== 비교 ===
-Step 1-1(vanilla) vs Step 1-2(+sem) vs Step 1-4(+mutual).
-PlanarSplatting 예비 결과 대비 coverage/밀착 개선 확인.
+=== 평가 ===
+렌더링/기하: Step 1-3 대비 유지
+Wall 법선 수직도 히스토그램, 증가 비율
+mIoU 유지/개선
+Gradient 양방향성: (1) p_wall 증가 → n_i 수평 방향 gradient, (2) n_i 수평 → p_wall 증가 방향 gradient
 
-=== Go/No-Go ===
-Go: coverage > 80%, wall normal 개선, mIoU > 0.75.
-No-Go: gsplat 파라미터 조정, 또는 AGS/ULSR-GS 항공 메커니즘 참고.
+=== 조건부 실험 ===
+Mutual < Baseline(Step 1-3)이면 Joint-GTOnly, Joint-Weak 추가.
 
 === 시각적 산출물 ===
-1. 3조건 비교 표 (vanilla / +sem / +mutual)
-2. Normal/Semantic 비교 렌더링 (동일 뷰)
-3. Coverage 히트맵 (PlanarSplatting vs gsplat/2DGS)
-4. Wall 법선 수직도 히스토그램
+1. Wall 법선 히스토그램 (Step 1-3 vs 1-4)
+2. p_wall 분포 변화
+3. Gradient 양방향성 로그
+4. PlanarSplatting 예비 결과 vs 2DGS 본 실험 비교 표
 
-results/phase1_integration/REPORT.md 작성. CLAUDE.md 업데이트.
+results/phase1_mutual/REPORT.md 작성.
+```
+
+### Step 1-5: + L_structure (메커니즘 2 단독) — ablation용
+
+**목적:** Inter-primitive 구조 정렬 단독 효과 확인 (Structure only 조건).
+
+**Go 기준:**
+- 렌더링/기하 지표가 Step 1-3 대비 유지
+- σ_normal_intra(그룹 내 법선 분산)가 의미있게 감소
+- σ_coplanar(그룹 내 coplanarity 오차) 감소
+
+**프롬프트:**
+```
+docs/EXPERIMENT_PLAN.md의 Step 1-5를 진행해줘.
+
+=== 그룹핑 구현 ===
+src/stage2/grouping.py:
+- 조건: 동일 class(argmax(f_i)) + 법선 cos>0.95 + 공간 근접
+- 대표 평면: 가중 평균 (s_i 기반)
+- 매 T=500 iter 재계산
+- Density control 연동
+
+=== L_structure 구현 ===
+- L_normal_align = Σ_k Σ_{i∈G_k} (1-n_i·n_k)² — n_i gradient, n_k detach
+- L_coplanar = Σ_k Σ_{i∈G_k} (n_k·c_i+d_k)² — c_i gradient, n_k/d_k detach
+- L_structure = λ_na·L_normal_align + λ_cp·L_coplanar
+- L_coverage: 후보
+
+=== 학습 (Structure only, 메커니즘 2 단독) ===
+L = Step 1-3 + λ_str·L_structure (warmup 15000부터)
+이것은 ablation의 "Structure only" 조건.
+
+=== 평가 ===
+렌더링/기하: Step 1-3 대비 유지
+σ_normal_intra, σ_coplanar: Step 1-3 대비 감소
+그룹핑 통계: 그룹 수, 평균 크기
+
+=== Gradient 검증 ===
+∂L_na/∂n_i ≠ 0, ∂L_cp/∂c_i ≠ 0, ∂L_str/∂f_i = 0
+
+=== 시각적 산출물 ===
+1. 그룹핑 PLY (그룹별 색상)
+2. σ_normal_intra 히스토그램
+3. 그룹 통계 표
+
+results/phase1_structure/REPORT.md 작성.
+```
+
+### Step 1-6: Both (메커니즘 1 + 2 결합)
+
+**목적:** 두 메커니즘 결합 시 각각의 개선이 유지되고 상호작용이 있는지 확인.
+
+**Go 기준:**
+- Wall 수직도: Mutual only 조건과 비슷하거나 개선
+- σ_normal_intra: Structure only 조건과 비슷하거나 개선
+- 렌더링/기하 지표 유지
+
+**프롬프트:**
+```
+docs/EXPERIMENT_PLAN.md의 Step 1-6을 진행해줘.
+
+=== 학습 (Both) ===
+L = Step 1-3 + λ_m·L_mutual + λ_str·L_structure
+- L_mutual warmup: 10000부터
+- L_structure warmup: 20000부터 (L_mutual보다 늦게, f_i/n_i 수렴 후 그룹 정의)
+
+=== 평가 ===
+렌더링/기하: Step 1-3 대비 유지
+Wall 수직도 (L_mutual 효과), σ_normal_intra (L_structure 효과) 모두 개선 확인
+
+=== Ablation 정리 (Phase 1 종합) ===
+4조건 비교표 작성:
+- Baseline (Step 1-3: L_photo + L_depth + L_normal + L_nc + L_sem)
+- Mutual only (Step 1-4)
+- Structure only (Step 1-5)
+- Both (Step 1-6)
+
+각 지표(PSNR, SSIM, LPIPS, F1, Chamfer, mIoU, Wall 수직도, σ_normal_intra)의 4조건 비교.
+
+상호작용 분석:
+- Both > Mutual + Structure: 시너지
+- Both ≈ Mutual + Structure: 독립 기여
+- Both < Mutual + Structure: 간섭 → warmup 순서 바꿔 재실험
+
+=== 시각적 산출물 ===
+1. 4조건 비교 표 (모든 지표)
+2. 4조건 렌더링 비교 (동일 뷰)
+3. 4조건 프리미티브 PLY
+4. 기여도 분해 그래프
+
+results/phase1_ablation/REPORT.md 작성.
 ```
 
 ---
 
-## Phase 2: Stage 2 실험 — Ablation
+## Phase 2: Stage 3 검증 (3D BAG 합성 렌더링)
 
-### Step 2-1: Baseline
+### Step 2-1: 3D BAG 합성 렌더링 파이프라인
 
 **프롬프트:**
 ```
 docs/EXPERIMENT_PLAN.md의 Step 2-1을 진행해줘.
 
-목표: Baseline 학습 (λ_m=0, λ_str=0), 30000 iter.
-평가: PSNR, Depth MAE, Normal cos, mIoU, per-class IoU, Wall 법선 수직도.
-CityGML 전제 조건 측정: wall σ_normal.
+목표: 3D BAG GT CityGML → 합성 이미지/depth/normal/seg 렌더링 파이프라인.
 
-=== 시각적 산출물 ===
-렌더링 8뷰, PLY, Wall 법선 히스토그램, Coverage.
+=== 작업 ===
+1. 3D BAG LOD2.2에서 건물 20개 선정 (flat/shed/gable/hip/complex 다양)
+2. CityGML → mesh 변환 (각 면 유지, 면별 semantic 레이블 보존)
+3. 카메라 배치 (이상적 full-coverage + oblique + nadir 옵션)
+4. Blender/PyTorch3D 렌더링: RGB, depth, normal, segmentation
+5. COLMAP 스타일 카메라 파일 생성 (파이프라인 호환)
 
-results/phase2_baseline/REPORT.md 작성. CLAUDE.md 업데이트.
+=== 검증 ===
+렌더링 결과가 Stage 2 학습 가능한지 smoke test.
+
+results/phase2_synthesis/REPORT.md 작성.
 ```
 
-### Step 2-2: Joint (메커니즘 1)
+### Step 2-2: Phase 1 4조건 Ablation → Stage 3 CityGML
 
 **프롬프트:**
 ```
 docs/EXPERIMENT_PLAN.md의 Step 2-2를 진행해줘.
 
-목표: Joint = Baseline + L_mutual, 30000 iter, warmup N/3부터.
-Joint vs Baseline 비교.
-조건부: Joint < Baseline이면 Joint-GTOnly, Joint-Weak 추가.
+목표: Phase 1의 4조건(Baseline/Mutual/Structure/Both)을 3D BAG 합성에서 학습 → Stage 3 → CityGML → val3dity.
+
+=== 4조건 학습 ===
+각 조건: 3D BAG 합성 렌더링 입력 + 해당 손실 함수 조합 + 30000 iter
+
+=== Stage 3 실행 ===
+6단계 (클러스터링 → 평면 교차 → 건물 분리 → GroundSurface → CityGML).
+각 조건의 출력을 val3dity 검증.
+
+=== 평가 ===
+- val3dity 통과율 (4조건 비교)
+- val3dity 오류 유형 분포
+- 면 단위 IoU (생성 vs GT CityGML)
+- Hausdorff distance
+- 의미론 accuracy (면 class vs GT)
+
+=== Synthetic A와의 연결 ===
+각 조건의 σ_normal을 Synthetic A 법선 노이즈 그래프에 매핑.
+예측 val3dity vs 실제 val3dity 비교.
+
+=== 기여도 분해 ===
+- 기여 1 (메커니즘 1+2 결합): Both vs Baseline의 val3dity 차이
+- 기여 1a (메커니즘 1 intra): Mutual only vs Baseline
+- 기여 1b (메커니즘 2 inter): Structure only vs Baseline
 
 === 시각적 산출물 ===
-Baseline vs Joint side-by-side, Wall 법선 히스토그램 비교, Δ 막대그래프.
+1. 4조건 CityGML 3D 비교
+2. 4조건 val3dity 막대그래프
+3. 오류 유형 분포 heatmap
+4. Synthetic A 그래프에 4조건 위치 표시
+5. 대표 건물의 4조건 비교
 
-results/phase2_joint/REPORT.md 작성. CLAUDE.md 업데이트.
+results/phase2_ablation_citygml/REPORT.md 작성.
 ```
 
-### Step 2-3: L_structure 구현 (메커니즘 2)
+### Step 2-3: Synthetic B 확장 (노이즈/카메라 변수)
 
 **프롬프트:**
 ```
 docs/EXPERIMENT_PLAN.md의 Step 2-3을 진행해줘.
 
-목표: 메커니즘 2(inter-primitive 구조 정렬) 구현.
+목표: 최선 조건(Phase 2-2의 결과)에서 입력 노이즈/카메라 배치 민감도 파악.
 
-=== Part A: 그룹핑 ===
-src/stage2/grouping.py:
-- 입력: 전체 프리미티브의 f_i(→argmax class), n_i, c_i, s_i
-- 조건: (1) 동일 class, (2) 법선 cos > threshold, (3) 공간 근접 < threshold
-- 출력: group_id, 그룹별 대표 평면 (n_k, d_k) = 가중 평균(s_i 기반)
-- 매 T=500 iter 재계산
-- Density control 연동: split/clone → 부모 group_id, prune → 탈퇴
+=== 변수 ===
+기본: 이상적 카메라 + clean 감독 신호
+노이즈 (이상적 카메라): depth σ=2.0m, segmentation 15% 오분류
+카메라 (clean 감독 신호): 이상적 / oblique only / nadir only / 뷰 50% / 뷰 25%
 
-=== Part B: L_structure ===
-src/stage2/loss/structure.py:
-- L_normal_align = Σ_k Σ_{i∈G_k} (1 - n_i·n_k)² → n_i gradient, n_k detach
-- L_coplanar = Σ_k Σ_{i∈G_k} (n_k·c_i + d_k)² → c_i gradient, n_k/d_k detach
-- L_structure = λ_na·L_normal_align + λ_cp·L_coplanar
-- Warmup: 2N/3부터 (비율 기반)
-
-=== Part C: 검증 ===
-Gradient: ∂L_na/∂n_i ≠ 0, ∂L_cp/∂c_i ≠ 0, ∂L_str/∂f_i = 0.
-Smoke test: 10 iter + 그룹 재계산 1회.
-
-=== 시각적 산출물 ===
-그룹핑 PLY (그룹별 색상), Gradient 로그, 그룹 통계.
-
-results/phase2_structure/REPORT.md 작성. CLAUDE.md 업데이트.
-```
-
-### Step 2-4: Joint+Structure (메커니즘 1+2)
-
-**프롬프트:**
-```
-docs/EXPERIMENT_PLAN.md의 Step 2-4를 진행해줘.
-
-목표: Joint+Structure = Baseline + L_mutual + L_structure, 30000 iter.
-L_mutual N/3부터, L_structure 2N/3부터 (비율 기반).
+각 조건: Stage 2 (Both) 학습 + Stage 3 → GT 비교.
 
 === 평가 ===
-Joint+Structure vs Joint vs Baseline.
-면 단위 일관성: σ_normal_intra, σ_coplanar.
-Synthetic A 매핑: σ_normal → 예상 val3dity.
+val3dity, 면 IoU, Hausdorff, 의미론 accuracy.
+Stage 2가 노이즈를 얼마나 흡수하는가 (Synthetic A의 Stage 3 단독 대비).
 
 === 시각적 산출물 ===
-3조건 비교 표, 그룹핑 시각화, σ_normal_intra 히스토그램,
-Coplanarity 분포, Synthetic A에 실측 세로선, 렌더링 3조건 비교.
+1. 조건별 CityGML 비교
+2. val3dity 그래프 (노이즈 축, 카메라 축)
+3. 실데이터 촬영 계획 가이드라인
 
-results/phase2_structure/REPORT.md에 추가. CLAUDE.md 업데이트.
+results/phase2_synthetic_b/REPORT.md 작성.
 ```
 
 ---
 
-## Phase 3: Stage 3 + 비교 실험
+## Phase 3: 비교 + Real UAV + 실데이터
 
-### Step 3-1: Stage 3 → CityGML
+### Step 3-1: GauU-Scene (Real UAV 검증)
 
 **프롬프트:**
 ```
 docs/EXPERIMENT_PLAN.md의 Step 3-1을 진행해줘.
 
-목표: Baseline/Joint/Joint+Structure → Stage 3 → CityGML + val3dity.
+목표: MatrixCity에서 검증된 파이프라인이 real UAV에서도 작동하는지 확인.
 
-=== 시각적 산출물 ===
-CityGML 3D, val3dity 오류 하이라이트, 건물별 품질 표,
-이미지→프리미티브→CityGML 3단계 비교, 3조건 val3dity 막대그래프.
+=== 데이터 ===
+GauU-Scene (접근 신청 필요, 병렬로 진행).
+ULSR-GS, CityGaussianV2가 사용.
 
-results/phase3_citygml/REPORT.md 작성.
+=== 학습 + 평가 ===
+Phase 1 4조건 모두 실행 (시간 허용 시, 또는 Both만).
+PSNR, SSIM, LPIPS, F1, Chamfer → ULSR-GS, CityGSV2 레퍼런스와 비교.
+
+=== Go 기준 ===
+레퍼런스(ULSR-GS GauU-Scene F1, CityGSV2 GauU-Scene PSNR) 대비 합리적 범위.
+
+results/phase3_gauu/REPORT.md 작성.
 ```
 
-### Step 3-2: Synthetic B
+### Step 3-2: 순차 파이프라인 비교 (City3D)
 
 **프롬프트:**
 ```
 docs/EXPERIMENT_PLAN.md의 Step 3-2를 진행해줘.
 
-목표: gsplat/2DGS 기반 Synthetic B.
+목표: 순차 vs 공동최적화 비교.
 
-=== 합성 렌더링 ===
-3D BAG GT → mesh → 카메라(이상적/oblique/nadir/뷰 감소) → 렌더링.
+=== 4조건 ===
+(a) City3D + 풋프린트 (best practice)
+(b) City3D - 풋프린트 (벽면 사후 가정)
+(c) 제안 방법 (Phase 2 Both)
+(d) 3D BAG LiDAR 기반 결과 (upper bound)
 
-=== 조건 ===
-기본: 이상적+clean. 노이즈: depth/seg. 카메라: 이상적/oblique/nadir/50%/25%.
-각 조건: Stage 2(Joint+Structure) → Stage 3 → GT 비교.
+모두 3D BAG 합성 또는 GauU-Scene에서 실행. val3dity 검증.
+
+=== 핵심 비교 ===
+(b) vs (c): 방법론 순수 비교 (둘 다 footprint 없음)
+(a) vs (c): best practice 대비
+(c) vs (d): upper bound 접근도
 
 === 시각적 산출물 ===
-조건별 CityGML, val3dity 막대그래프, 카메라별 비교 표.
+1. 4조건 CityGML 비교
+2. val3dity 막대그래프
+3. 면 IoU/Hausdorff 비교
+4. 처리 시간 비교
 
-results/synthetic_b/REPORT.md 작성.
+results/phase3_comparison/REPORT.md 작성.
 ```
 
-### Step 3-3: City3D 비교
+### Step 3-3: 성수동 실데이터 시연
 
 **프롬프트:**
 ```
 docs/EXPERIMENT_PLAN.md의 Step 3-3을 진행해줘.
 
-목표: 순차 vs 공동최적화 비교.
-(a) 영상+순차+footprint, (b) 영상+순차-footprint, (c) 제안 방법, (d) LiDAR upper bound.
-val3dity, 면 IoU, 의미론, 처리 시간.
+목표: 실환경 정성 시연 (논문 figure용).
+
+=== 데이터 준비 ===
+Metashape depth (coverage 61.6%) 사용.
+Grounded SAM GT + gravity 추정.
+
+=== 학습 + Stage 3 ===
+Phase 2의 Both 설정으로 학습 → CityGML → val3dity.
+
+=== 평가 ===
+val3dity 통과율, 건물별 품질.
+GT CityGML이 없으므로 정량 비교는 제한적. 정성 평가 중심.
 
 === 시각적 산출물 ===
-Side-by-side, val3dity 4조건, 의미론 비교, 시간 표.
+1. 입력 이미지 → 프리미티브 → CityGML 3단계 시각화
+2. 건물별 CityGML (대표 6-8개)
+3. 도시 전체 overview
+4. Phase 2 합성과의 비교 (같은 방법이 실데이터에서도 작동)
 
-results/comparison/REPORT.md 작성.
+results/phase3_seongsu/REPORT.md 작성.
 ```
 
-### Step 3-4: 종합
+### Step 3-4: 종합 + 논문 산출물
 
 **프롬프트:**
 ```
 docs/EXPERIMENT_PLAN.md의 Step 3-4를 진행해줘.
 
-목표: 전체 결과 종합 + 논문용 최종 산출물.
-기여 1 증거: ablation (2-2, 2-4). 기여 2 증거: Synthetic A + 비교. 기여 3 증거: (b) vs (c).
-최종 표, 그래프, CityGML 결과, 실패 분석.
+목표: 전체 결과 종합 + 논문용 최종 표/그래프.
+
+=== 기여별 증거 정리 ===
+- 기여 1 (공동 최적화): Phase 1 4조건 ablation + Phase 2 CityGML ablation
+- 기여 2 (지배 요인 + 순차 대비): Synthetic A + Phase 3-2 비교
+- 기여 3 (외부 데이터 불필요): Phase 3-2 (b) vs (c)
+
+=== 논문용 최종 산출물 ===
+1. 최종 정량 비교 표 (Phase 1 + Phase 2 + Phase 3)
+2. Phase 1 ablation 막대그래프 (MatrixCity 수준 검증)
+3. Phase 2 CityGML ablation 그래프
+4. Synthetic A 노이즈-품질 그래프 (Phase 2 실측 표시)
+5. 파이프라인 비교 다이어그램
+6. 대표 CityGML 결과 (합성 + 성수동)
+7. 실패 사례 분석
 
 results/final/REPORT.md 작성.
 ```
@@ -458,13 +601,16 @@ results/final/REPORT.md 작성.
 ## 수행 작업 요약
 
 ## 정량 지표
-| 지표 | 값 | 이전 | 변화 |
-|------|-----|------|------|
+### 레퍼런스 비교 (해당 시)
+| 지표 | 본 실험 | 레퍼런스 | 차이 | 레퍼런스 출처 |
+
+### Step 간 비교
+| 지표 | 이전 | 현재 | 변화 |
 
 ## 시각적 산출물 체크리스트
-- [ ] 산출물 1
 
-## Go/No-Go
+## Go/No-Go 판단
+- [ ] Go / [ ] Retry / [ ] Switch
 
 ## 이슈 및 해결
 

@@ -96,7 +96,7 @@ p_c = softmax(f_i). e_g = gravity (사전 추정).
 양방향 원리: p_c × 기하 오차의 곱.
 - 의미론→기하학: p_c 높으면 → 기하 오차 gradient 증폭 → n_i 교정.
 - 기하학→의미론: 기하 오차 작으면 → p_c 높이는 것이 유리 → f_i 교정.
-안전장치: L_sem이 독립적으로 f_i를 GT 방향으로 강제. L_mutual만 단독이면 p_c→0 trivial solution 위험.
+L_sem이 독립적으로 f_i를 GT 방향으로 강제하여 균형.
 
 Gradient: n_i, f_i 양방향. c_i(L_height 높이만). s_i 없음.
 Warmup: 0~N/3에서 λ_m=0.
@@ -110,23 +110,20 @@ L_structure = λ_na·L_normal_align + λ_cp·L_coplanar.
 
 L_coverage(s_i): 후보. densification 대비 검증.
 f_i: 직접 gradient 없음(그룹 할당 미분 불가). 메커니즘 1이 f_i 교정 담당.
-한계: 오분류 프리미티브가 잘못된 그룹에 편입될 수 있음. 메커니즘 1의 f_i 교정이 선행되어야 하므로 warmup 순서(L_mutual → L_structure)가 필수.
 
 대표 법선 정확도 위험 → 안전장치: warmup(2N/3 이후), 재계산, 가중 평균.
-Warmup: 2N/3 이후 활성화 (비율 기반, §5 참조).
+Warmup: 2N/3 이후 활성화.
 
 ---
 
 ## 5. 학습 전략
 
-### Warmup (비율 기반)
-모든 warmup은 총 iteration N에 대한 비율로 정의. N이 달라져도 학습 단계의 의미가 보존됨.
-
+### Warmup
 | 구간 | Iteration | 활성 손실 |
 |------|----------|----------|
-| 초기 | 0 ~ N/3 | L_depth+L_normal+L_nc+L_sem+L_photo |
-| 중기 | N/3 ~ 2N/3 | +L_mutual |
-| 후기 | 2N/3 ~ N | +L_structure |
+| 초기 | 0~N/3 | L_depth+L_normal+L_nc+L_sem+L_photo |
+| 중기 | N/3~2N/3 | +L_mutual |
+| 후기 | 2N/3~N | +L_structure |
 
 ### 하이퍼파라미터 (초기값)
 | 파라미터 | 값 | 비고 |
@@ -134,12 +131,12 @@ Warmup: 2N/3 이후 활성화 (비율 기반, §5 참조).
 | λ_nc | 0.01 | 2DGS 참고 |
 | λ_s | 0.1 | 예비 실험 |
 | λ_p | 1.0 | 표준 |
-| λ_m | 0.1 | warmup(N/3) 후 |
+| λ_m | 0.1 | warmup 후 |
 | λ_na | TBD | 실험적 |
 | λ_cp | TBD | 실험적 |
 | τ (L_slope) | 0.15 | 예비 실험 |
 | T (그룹 주기) | 500 | 실험적 |
-| N (총 iter) | 30000 | 3DGS/2DGS 관례 (공정 비교) |
+| N (총 iter) | 30000 | 정식 |
 
 ---
 
@@ -242,3 +239,55 @@ Clean wall normal 8.9°→3.8°, Noisy 9.0°→4.3°. 밀착 실패(coverage 6-2
 
 ### 성수동
 mIoU=0.81. L_mutual gravity 미보정 보류. Stage 3: 11 instance, non-watertight.
+
+---
+
+## 12. gsplat 2DGS 구현 주의사항
+
+실제 구현 중 발견한 gsplat 1.4.0 + 2DGS 관련 함정. Claude Code 참조용.
+
+### 12.1 Densification gradient key
+gsplat 2DGS는 gradient를 `gradient_2dgs` 키로 전달하지만, DefaultStrategy의 `key_for_gradient` 기본값은 `"means2d"`. 기본값 사용 시 grow가 0회 실행되어 프리미티브가 prune만 됨.
+**수정:** `DefaultStrategy(..., key_for_gradient="gradient_2dgs")` 명시.
+
+### 12.2 Scales shape
+`rasterization_2dgs`는 scales를 (N,3)으로 요구 (dim2 ≈ 0으로 설정). (N,2)로 전달 시 오류.
+
+### 12.3 Distortion loss weight
+Depth distortion loss의 weight가 과도하면 total loss를 지배함. 초기값으로 w_distort=100은 문제. 0 또는 낮은 값으로 시작 후 조정.
+
+### 12.4 L_nc 구현
+gsplat의 `render_normals_from_depth`는 shape 불일치 이슈 있음. 자체 구현 권장:
+- `depth_to_normal(D_render)`: 인접 픽셀 finite difference → cross product
+- n_render는 gsplat이 world-frame으로 변환해서 반환 (추가 변환 불필요)
+
+### 12.5 Densification sync
+gsplat strategy가 params dict를 교체해도 우리 model의 파라미터에 자동 반영 안 됨.
+**수정:** `_sync_params_to_model()` 호출로 명시적 동기화.
+
+### 12.6 Render normals 좌표계
+`render_normals`는 이미 world-frame. `render_normals_from_depth`와 비교 시 좌표계 일치 확인.
+
+---
+
+## 13. Step 1-1 Smoke Test 결과 (2026-04-16)
+
+### 환경
+- Docker: jointbuildgs:dev (CUDA 12.1.1 + torch 2.4.1 + gsplat 1.4.0)
+- GPU: RTX 3090
+- Data: MatrixCity Small City Aerial (5,621장, CityGSV2 COLMAP sparse)
+
+### Smoke test (3k iter, photo only)
+| 지표 | 값 | 참고 |
+|------|-----|------|
+| Train PSNR | 20.60 | CityGSV2 baseline 21.35 (30k) |
+| N (primitives) | 3.8M → 7.9M | grow 정상 작동 확인 |
+
+### 의의
+- gradient_2dgs 버그 수정이 핵심
+- 3k만에 CityGSV2 30k baseline(21.35)에 근접
+- 30k 본 학습에서 baseline 도달/초과 기대
+- 파이프라인 구현이 레퍼런스 수준으로 작동함을 확인
+
+### 이전 시도 (실패)
+성수동 30k, eval PSNR 16.3 dB, N 62k. gradient_2dgs 버그로 grow 미작동이 원인. 수정 후 MatrixCity에서 정상 확인.
