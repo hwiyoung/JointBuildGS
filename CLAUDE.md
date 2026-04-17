@@ -88,7 +88,8 @@ Baseline / Mutual only / Structure only / Both — 메커니즘 1/2 개별 기�
 - [x] MatrixCity 데이터 준비 (5,621장 + COLMAP sparse)
 - [x] Step 1-1 smoke test 완료 (3k, PSNR 20.60, densification 정상)
 - [x] Phase 1 Step 1-1: Vanilla 2DGS 30k (eval PSNR 21.31, CityGSV2 baseline 21.12 달성)
-- [ ] **Phase 1 Step 1-2**: + Depth/Normal 감독 (CityGSV2 with-depth ~22.22) ← **현재**
+- [x] Phase 1 Step 1-2: + Depth/Normal 감독 (eval PSNR 22.06, max 22.39, CityGSV2 w/depth 22.22 근접/일부 초과)
+- [ ] **Phase 1 Step 1-3**: + Semantic head + L_sem ← **현재**
 - [ ] Phase 1 Step 1-2: + Depth/Normal 감독 (CityGSV2 with-depth ~22.22)
 - [ ] Phase 1 Step 1-3: + Semantic head + L_sem
 - [ ] Phase 1 Step 1-4: + L_mutual (Mutual only)

@@ -51,19 +51,19 @@ def l_depth(depth_pred: torch.Tensor, depth_gt: torch.Tensor, mask: torch.Tensor
 
 
 def l_normal(
-    n_pred_world: torch.Tensor,   # (H,W,3) world-frame normal (rendered)
-    n_gt_cam: torch.Tensor,       # (H,W,3) camera-frame normal (COLMAP)
-    w2c: torch.Tensor,            # (4,4)
+    n_pred_world: torch.Tensor,   # (H,W,3) world-frame rendered normal
+    n_gt_world: torch.Tensor,     # (H,W,3) world-frame GT normal (dataloader canonicalizes)
+    w2c: torch.Tensor,            # (4,4) unused (kept for API compat)
     mask: torch.Tensor,           # (H,W) bool
 ) -> torch.Tensor:
-    """1 - cos(n_render, n_MVS).  Transforms rendered world normals into camera frame."""
-    R = w2c[:3, :3]                              # world -> cam rotation
-    n_pred_cam = n_pred_world @ R.T              # (H,W,3)
-    n_pred_cam = F.normalize(n_pred_cam, dim=-1, eps=1e-6)
-    n_gt = F.normalize(n_gt_cam, dim=-1, eps=1e-6)
-    cos = (n_pred_cam * n_gt).sum(-1)
-    # COLMAP convention: normals point toward camera (z<0); if signs differ systematically,
-    # take abs to avoid penalizing flipped convention.
+    """1 - |cos(n_render, n_GT)| in world frame.
+
+    Dataloader returns GT normals already in world frame (converts from camera for COLMAP).
+    abs(cos) makes the loss sign-invariant (handles orientation flips).
+    """
+    n_pred = F.normalize(n_pred_world, dim=-1, eps=1e-6)
+    n_gt = F.normalize(n_gt_world, dim=-1, eps=1e-6)
+    cos = (n_pred * n_gt).sum(-1)
     err = 1.0 - cos.abs()
     m = mask.to(err.dtype)
     return (err * m).sum() / m.sum().clamp_min(1.0)

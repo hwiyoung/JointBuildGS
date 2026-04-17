@@ -84,8 +84,9 @@ def main():
     ds = ColmapDataset(
         root=cfg["data_root"],
         downscale=cfg.get("downscale", 0.5),
-        load_depth=True,
-        load_normal=True,
+        load_depth=cfg.get("load_depth", True),
+        load_normal=cfg.get("load_normal", True),
+        depth_scale=cfg.get("depth_scale", 1.0),
     )
     print(f"[data] frames={len(ds)}  pts_init={ds.points_xyz.shape[0]}")
 
