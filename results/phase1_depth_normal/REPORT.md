@@ -13,9 +13,13 @@ Step 1-1 파이프라인에 **L_depth + L_normal** 감독을 추가하여 Matrix
 
 ![Training curves](figures/training_curves.png)
 
-- **Photo loss**: 꾸준히 감소 (0.19 → 0.10)
-- **Depth loss**: 초기 24 → 0.04 (스케일 매칭 후 급락, iter 6k에서 reset 여파로 일시 peak)
-- **Normal loss**: 진동하나 추세 하강
+그래프의 **빨간 선은 200-iter moving average**, 연한 파란 점은 per-iter 원시값. 매 iter 랜덤 뷰 샘플링으로 원시값은 진동하나 평균은 선명한 추세를 보임.
+
+- **Photo loss**: 0.178 → 0.094 (47% ↓)
+- **Depth loss**: 초기 peak 24 → 0.025 (y축 3으로 clip). 스케일 매칭 후 급락.
+- **Normal loss**: 0.293 → 0.141 (52% ↓)
+- **eval PSNR (빨간 점)**: 20k 이후 CityGSV2 w/depth baseline(22.22, 녹색 점선) 근접·일부 초과. final 22.06, max 22.39 (iter 28k).
+- **N**: 3.83M → 5.28M (refine_stop 10k 이후 안정)
 - **eval PSNR (빨강)**: 20k 이후 CityGSV2 w/depth baseline(22.22, 녹색) 근접·일부 초과. 24k=22.37, 28k=22.39, 30k=22.06
 - **N**: 3.83M → 5.28M (refine_stop 10k 이후 안정)
 
