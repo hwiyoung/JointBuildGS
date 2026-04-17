@@ -11,7 +11,7 @@ gsplat 1.4.0 기반 vanilla 2DGS 학습 파이프라인을 MatrixCity Small City
 
 ## 학습 곡선
 
-![Training curves](run/training_curves.png)
+![Training curves](figures/training_curves.png)
 
 - **Loss (좌)**: 0.2 → 0.11 단조 감소. 중간 피크(iter 3k, 6k)는 opacity reset(3000 iter 주기).
 - **PSNR (중)**: train per-view(연한 파랑)는 뷰 난이도에 따라 진동, eval 4-view 평균(빨강)은 안정적 상승. 20,000 iter 이후 CityGSV2 baseline(21.35) 도달.
@@ -102,7 +102,7 @@ px/prim < 1은 가우시안이 픽셀보다 많아 표현력 충분. PlanarSplat
 
 ## 정성 비교 — Pred | GT | ×3 Diff (4뷰)
 
-![Pred vs GT comparison](run/comparison_4views.png)
+![Pred vs GT comparison](figures/comparison_4views.png)
 
 행별 관찰:
 
@@ -141,8 +141,8 @@ px/prim < 1은 가우시안이 픽셀보다 많아 표현력 충분. PlanarSplat
 - [x] Normal 렌더링 (8뷰) → `run/renders_final/v*_normal.png`
 - [x] 프리미티브 3D PLY (3.5M pts, 91MB) → [`run/primitives.ply`](run/primitives.ply)
 - [x] Coverage 히트맵 + alpha maps → [`run/coverage/`](run/coverage/)
-- [x] 비교 figure (pred | GT | ×3 diff, 4뷰) → [`run/comparison_4views.png`](run/comparison_4views.png)
-- [x] 학습 곡선 → [`run/training_curves.png`](run/training_curves.png)
+- [x] 비교 figure (pred | GT | ×3 diff, 4뷰) → [`figures/comparison_4views.png`](figures/comparison_4views.png)
+- [x] 학습 곡선 → [`figures/training_curves.png`](figures/training_curves.png)
 - [x] CityGSV2 비교 표 (본 REPORT)
 - [x] TensorBoard 로그 → [`run/tb/`](run/tb/)
 - [x] 정성 분석 + inline 시각화 (본 REPORT)
