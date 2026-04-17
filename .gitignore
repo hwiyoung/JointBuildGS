@@ -1,14 +1,12 @@
-# ===== Data (large, not in repo) =====
-data/matrixcity/images/
-data/matrixcity/sparse/
-data/seongsu/
-data/gauu_scene/
-data/3dbag/
-data/synthetic/
+# ===== Data (all downloadable, not in repo) =====
+data/*
+!data/.gitkeep
 
 # ===== Results (regenerable) =====
 results/*/run/
 results/*/tb/
+results/*/smoke/
+results/*/train.log
 results/archive_seongsu_v0/
 results/matrixcity_smoke/
 results/synthetic_a/3dbag_results/
