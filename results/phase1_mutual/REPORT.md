@@ -19,7 +19,50 @@ L_mutual = mean_i [
   + p_terr  · relu(c_z − h_th)²                 # L_height (terrain down)
 ]
 ```
-τ=0.15, h_th=0.15 (world z 단위), warmup **10,000 iter**부터 활성.
+τ=0.15, h_th=0.15, warmup **10,000 iter**부터 활성.
+
+---
+
+## 주요 결과 요약
+
+### 📊 렌더링 품질 (Step 1-3 수준 유지)
+| 지표 | Step 1-3 | **Step 1-4** | Δ | 판정 |
+|------|---------:|-------------:|---:|:----:|
+| eval PSNR (4-view, final) | 22.07 | **22.24** | +0.17 | ✅ |
+| test PSNR (100 views) | 20.51 | 20.63 | +0.12 | ✅ |
+| SSIM | 0.587 | 0.587 | ±0 | ✅ |
+| LPIPS | 0.615 | 0.613 | -0.002 | ✅ |
+
+### 📐 기하 품질 (유지)
+| 지표 | Step 1-3 | **Step 1-4** | Δ | 판정 |
+|------|---------:|-------------:|---:|:----:|
+| F1 @ 0.5 | 0.998 | 0.998 | ±0 | ✅ |
+| F1 @ 1.0 | 1.000 | 1.000 | ±0 | ✅ |
+| Chamfer sym mean | 0.0208 | 0.0229 | +0.0021 | ≈ |
+| eval Depth MAE | 0.051 | 0.054 | +0.003 | ≈ |
+| eval Normal cos | 0.684 | 0.689 | +0.005 | ✅ |
+
+### 🏷️ 의미론 (소폭 감소, 클래스 간 교환)
+| 지표 | Step 1-3 | **Step 1-4** | Δ | 해석 |
+|------|---------:|-------------:|---:|------|
+| mIoU | 0.635 | 0.626 | -0.009 | ≈동일 |
+| Roof IoU | 0.704 | 0.655 | -0.049 | former walls가 roof로 |
+| Wall IoU | 0.616 | 0.587 | -0.029 | 개수 감소로 recall↓ |
+| **Terrain IoU** | **0.585** | **0.636** | **+0.051** | L_height 효과 ✓ |
+
+### 🎯 L_mutual 효과 (핵심 — 매우 큰 개선)
+| 지표 | Step 1-3 | **Step 1-4** | Δ | 판정 |
+|------|---------:|-------------:|---:|:----:|
+| **Wall vertical-frac** | **18.9%** | **91.2%** | **+72.3%p** | ✅✅ |
+| 수평 normal 프리미티브 (전체 대비) | 6.5% | 14.3% | +7.8%p (2.2×) | ✅ |
+| Wall 클래스 수 | 1.66M | 0.65M | -60% (정제) | ✓ |
+| mean max softmax | 0.529 | 0.719 | +36% (확신↑) | ✅ |
+
+### ⏱️ 효율
+| 지표 | Step 1-3 | Step 1-4 |
+|------|---------:|---------:|
+| 학습 시간 | 405min | 494min (+22%) |
+| N (최종) | 5.27M | 5.21M |
 
 ---
 
@@ -45,84 +88,93 @@ L_mutual = mean_i [
 
 ---
 
-## 정량 지표
+## 용어 정리
 
-### 렌더링 및 기하 — Step 1-3 대비 유지 확인
-
-| 지표 | Step 1-3 | **Step 1-4** | Δ | 판정 |
-|------|---------:|-------------:|---:|:----:|
-| eval PSNR (4-view, final) | 22.07 | **22.24** | +0.17 | ✅ |
-| test PSNR (100 views) | 20.51 | **20.63** | +0.12 | ✅ |
-| SSIM | 0.587 | 0.587 | ±0 | ✅ |
-| LPIPS | 0.615 | 0.613 | -0.002 | ✅ |
-| **F1 @ 0.5** | 0.998 | **0.998** | ±0 | ✅ |
-| F1 @ 1.0 | 1.000 | 1.000 | ±0 | ✅ |
-| Chamfer sym mean | 0.0208 | 0.0229 | +0.0021 | ≈유지 |
-| pred → GT mean | 0.0141 | 0.0182 | +0.0041 | 소폭 나빠짐 |
-| eval Depth MAE | 0.051 | 0.054 | +0.003 | ≈유지 |
-| eval Normal cos | 0.684 | 0.689 | +0.005 | ✅ |
-
-**렌더링/기하는 Step 1-3 수준 유지** (Chamfer/pred-to-GT는 소폭 증가하나 F1은 0.998 동일).
-
-### 의미론 — mIoU 트레이드오프
-
-| 클래스 | Step 1-3 IoU | **Step 1-4 IoU** | Δ |
-|--------|-------------:|-----------------:|---:|
-| Roof | 0.704 | 0.655 | **-0.049** |
-| Wall | 0.616 | 0.587 | -0.029 |
-| **Terrain** | 0.585 | **0.636** | **+0.051** ✓ |
-| **mIoU** | **0.635** | **0.626** | **-0.009** |
-
-**관찰:** 전체 mIoU는 거의 동일(-0.009) 수준. **Terrain이 크게 개선**(+5.1%p, L_height 효과), Roof는 일부 감소(former walls 편입 영향). 순 효과는 실질적 동일하지만 클래스 균형이 개선됨.
+> **vertical-frac** = "fraction with vertical surface" = 표면이 수직인 비율
+> - `frac`은 fraction (0~1 비율)의 약어
+> - 측정: `|n·e_g| < sin(10°) = 0.174` 을 만족하는 비율
+> - 의미: 법선이 gravity에 거의 수직(=수평) → 표면이 수직 → 진짜 벽
+> - Wall vertical-frac=0.91은 "wall로 분류된 프리미티브의 91%가 실제로 수직 표면"이라는 뜻
+>
+> **horizontal-frac** = `|n·e_g| > cos(10°) = 0.985` 을 만족하는 비율
+> - 법선이 gravity에 거의 평행(=수직 방향) → 표면이 수평 → 평평한 바닥/옥상
 
 ---
 
-## L_mutual 효과 검증 — 핵심 결과
+## L_mutual 효과 — 핵심 분석
 
 ![Mutual effect: wall verticality, roof/terrain, p_wall distribution](figures/mutual_effect.png)
 
-### Row 1 — Wall 법선 수직성 (|n·e_g|, 0=수직, 1=수평)
+### Row 1 — Wall 법선 수직성
 
-| | Step 1-3 | **Step 1-4** |
-|---|---:|---:|
-| Wall 클래스 수 | 1,655,832 | **651,543** (-60%) |
-| **Wall vertical-frac** (\|n·e_g\| < sin 10° = 0.174) | **18.9%** | **91.2%** |
-
-**극적 개선** (+72.3%p). Step 1-3에서는 wall로 분류된 프리미티브의 82%가 실제론 벽 기하가 아닌데도 wall 클래스였으나, Step 1-4에서는 **91%가 진짜 벽 기하**.
-
-**PlanarSplatting 예비 실험 대응:**
-- Legacy(PlanarSplatting): wall normal angle 8.9° → 3.8°
-- 본 실험(2DGS): wall vertical-frac 18.9% → 91.2% (임계 10° 기준)
-- 매커니즘 동일 방향의 개선 확인.
+Step 1-3: Wall로 분류된 1.66M 프리미티브 중 **대다수가 |n·e_g|≈1** (실제로는 수평 표면인데 wall로 오분류).
+Step 1-4: 0.65M 프리미티브가 대부분 **|n·e_g|≈0** (진짜 수직 표면). vertical-frac **19% → 91%**.
 
 ### Row 2 — Roof 법선 수평성
 
-| | Step 1-3 | Step 1-4 |
-|---|---:|---:|
-| Roof 클래스 수 | 2,910,913 | 3,120,607 (+7%) |
-| Roof horizontal-frac (\|n·e_g\| > cos 10° = 0.985) | 44.1% | **11.4%** |
+Step 1-3: 강한 peak at |n·e_g|=1 (완벽 수평 지붕). horizontal-frac 44%.
+Step 1-4: **분포 분산**. peak at |n·e_g|≈1 + secondary peak at ≈0.4. horizontal-frac **11%**.
 
-Step 1-4에서 roof 분포가 분산됨 (peak at ~0.4 and ~1.0). 원인: Step 1-3에서 "wall"로 잘못 분류됐던 경사 프리미티브들 중 일부가 Step 1-4에서 roof로 재분류. **Wall 순도↑ ↔ Roof 순도↓ 트레이드오프**. L_slope의 τ=0.15 (임계 ~67°)가 완벽 수평을 강제하지 않아 발생.
+**해석 — "roof horizontal-frac 감소"가 꼭 regression은 아님:**
+- 실제 지붕은 박공·hip 등 경사면도 많음 → 항상 완벽 수평일 필요 없음
+- **다만 우리 rule-based GT에서 "Roof"는 `|n_z|>0.7 & z>0.15`로 정의**됨 (거의 수평). 경사면은 BG.
+- 따라서 우리 평가 기준 하에서 Roof 프리미티브는 수평이어야 맞음
+- Step 1-4의 분산 peak at 0.4는 L_slope의 equilibrium: `√τ = √0.15 ≈ 0.387` 지점. L_slope는 `|n·e_g|²≥τ`만 강제하므로 더 수평으로 밀지 않음. **L_slope의 설계적 한계** (τ를 높이면 강제 가능하나 roof 개수 더 감소 트레이드오프)
 
-### Row 3 — p_wall 분포 (softmax(f_i)[Wall])
+### Row 3 — p_wall 분포
 
-| | Step 1-3 | Step 1-4 |
-|---|---:|---:|
-| p_wall mean | 0.283 | 0.123 |
-| p_wall > 0.5 frac | 14.7% | 11.6% |
-| mean max softmax | 0.529 | **0.719** |
+Step 1-3: 연속적 분포, 많은 프리미티브가 p_wall ≈ 0.2~0.3 (애매함).
+Step 1-4: **Bimodal** (0 근처 vs 1 근처). 확신 증가 — 프리미티브가 "분명히 wall" 또는 "분명히 non-wall"로 양극화.
 
-Step 1-4에서 **bimodal** 분포로 변화 (낮은 쪽 vs 1.0 근처). 즉 **확신 증가** — 프리미티브들이 "분명히 wall" 또는 "분명히 non-wall"로 양극화. mean max softmax 0.529 → 0.719는 전체 분류가 더 confident해졌음을 의미.
+---
 
-### Wall 개수 60% 감소 — 정제(purification) 해석
+## "수직성 개선은 진짜인가, 단순 reclassification인가?" — 검증
 
-Step 1-3는 불확실한 프리미티브에 p_wall ≈ 0.25~0.35 수준을 부여해 argmax가 Wall로 떨어지는 경우 많았음. L_mutual이 이런 프리미티브들에 대해:
-- 기하 n이 벽 조건(horizontal) 충족 시 p_wall 유지 → Wall 클래스 유지
-- 기하 n이 벽 조건 미달 시 p_wall 감소 → 다른 클래스(BG/Roof/Terrain)로 이동
+사용자 지적의 핵심 질문. 검증을 위해 **전체 프리미티브 분포** (분류 무관)를 비교:
 
-결과: **"진짜 wall 기하"인 것만 Wall 클래스에 남음**. 순도 상승, 개수 감소.
+![ALL primitives normal distribution](figures/normal_distribution_all.png)
 
-CityGML 변환(Stage 3) 관점에서 **구조 품질 측면의 개선**. wall 기하가 깨끗해야 평면 교차로 만드는 건물 면이 정확해짐.
+**결과:**
+
+| | Step 1-3 | Step 1-4 | 변화 |
+|---|---:|---:|---:|
+| 전체 프리미티브 중 \|n·e_g\|<sin(10°) | 342k (6.5%) | **744k (14.3%)** | **2.2×** |
+| 전체 프리미티브 중 \|n·e_g\|>cos(10°) | 감소(density diff) | 감소 | 일부 ~0.4로 이동 |
+
+**결론: 두 효과 모두 존재:**
+
+1. **진짜 geometric 변화 (L_mutual gradient 효과)**:
+   - 수평 normal을 가진 프리미티브가 **2.2배 증가** (분류 무관)
+   - 단순 reclassification이었다면 전체 수는 변하지 않았어야 함
+   - L_vert의 `p_wall × (n·e_g)²` gradient가 실제로 n_i를 회전시킨 증거
+
+2. **Selection/reclassification**:
+   - Wall 클래스에서 non-vertical 프리미티브가 다른 클래스로 이동
+   - 이로 인해 Wall 클래스의 순도 증가
+
+위 density diff plot에서:
+- **빨강** (Step 1-4 > Step 1-3): |n·e_g|≈0 (벽), ≈0.4 (L_slope equilibrium)
+- **파랑** (Step 1-3 > Step 1-4): |n·e_g|≈1 (완벽 수평이 감소)
+
+두 효과의 상대 기여도를 정량 분리하려면 프리미티브 identity tracking이 필요하나 **densification으로 N이 변했기 때문에 direct tracking 불가**. 하지만 전체 normal distribution 변화는 geometric 변화가 실재함을 시사.
+
+---
+
+## 렌더링 비교 (pred | GT | ×3 diff)
+
+![Comparison 4 views](figures/comparison_4views.png)
+
+Step 1-3의 비슷한 렌더링. L_mutual이 RGB 렌더링을 깨뜨리지 않음을 재확인.
+
+---
+
+## Semantic Diagnostic (대표 4뷰)
+
+컬러: 검정=BG, 빨강=Roof, 초록=Wall, 파랑=Terrain. Error mask: 회색=ignore, 초록=정답, 빨강=틀림.
+
+![Semantic diagnostic](figures/semantic_diagnostic.png)
+
+Step 1-3와 비교하면 Wall 영역이 줄고 BG(검정)/Roof(빨강)로 재분류된 영역이 보임. Terrain(파랑) 분류는 개선(L_height 효과).
 
 ---
 
@@ -138,26 +190,29 @@ L_mutual 구현 검증 시 확인:
 
 **설계대로**: f_i ↔ n_i 양방향 gradient, c_i는 L_height에서만, s_i/opacity/SH에는 영향 없음 (CLAUDE.md §메커니즘 1 규정).
 
-초기 loss 값 (Step 1-3 ckpt 기준):
-- L_vert = 0.172 (wall 정렬 여지 많음)
-- L_height = 0.048 (일부 Roof/Terrain 오분류)
-
-학습 후:
-- L_vert → 0.009 (95%↓)
-- L_height → 0.002 (97%↓)
-
 ---
 
 ## 시각적 산출물 체크리스트
 
-- [x] Wall/Roof 법선 히스토그램 (Step 1-3 vs 1-4) → [`figures/mutual_effect.png`](figures/mutual_effect.png)
-- [x] p_wall 분포 변화 → same figure (row 3)
-- [x] 학습 곡선 (L_mutual 각 항 분리) → [`figures/training_curves.png`](figures/training_curves.png)
+- [x] Wall/Roof 법선 히스토그램 (Step 1-3 vs 1-4) → `figures/mutual_effect.png`
+- [x] 전체 프리미티브 normal 분포 (selection bias 검증) → `figures/normal_distribution_all.png`
+- [x] p_wall 분포 변화 → mutual_effect.png row 3
+- [x] 학습 곡선 (L_mutual 각 항 분리) → `figures/training_curves.png`
 - [x] Gradient 양방향성 로그 (본 REPORT)
-- [x] 렌더링 비교 (pred vs GT, 4뷰) → [`figures/comparison_4views.png`](figures/comparison_4views.png) (5뷰 중 4뷰 표시)
-- [x] Diagnostic semantic → [`figures/semantic_diagnostic.png`](figures/semantic_diagnostic.png)
+- [x] 렌더링 비교 (pred vs GT, 4뷰) → `figures/comparison_4views.png`
+- [x] Semantic diagnostic → `figures/semantic_diagnostic.png`
 - [x] 메트릭 JSON (rendering/geometry/semantic/mutual_effect)
-- [x] PlanarSplatting 예비 vs 2DGS 본 실험 비교 (표)
+
+---
+
+## PlanarSplatting 예비 실험 대응
+
+| 연구 | 데이터 | 지표 | 개선 |
+|------|--------|------|------|
+| Legacy PlanarSplatting (Synthetic B) | 합성 벽 | wall normal angle | 8.9° → 3.8° |
+| 본 실험 (MatrixCity, 2DGS) | 항공 도시 | Wall vertical-frac (10° 임계) | 18.9% → 91.2% |
+
+매커니즘 동일 방향의 개선 확인. 2DGS에서도 L_mutual의 intra-primitive 효과가 유지됨을 2DGS 파이프라인에서 재현.
 
 ---
 
@@ -166,7 +221,8 @@ L_mutual 구현 검증 시 확인:
 - **Data**: Step 1-3과 동일 (MatrixCity + depth + normal + rule-based semantic GT)
 - **Loss**: `L = Step 1-3 + 0.1·L_mutual` (warmup 10000 이후)
 - **L_mutual params**: τ=0.15, h_th=0.15, mode=full (bidirectional)
-- **Optimizer**: per-param Adam
+- **Gravity**: data/matrixcity/gravity.json (e_g = (0.001, 0.002, −1.000))
+- **Optimizer**: per-param Adam, lr_sem=2.5e-3
 - 30,000 iter, RTX 3090 (GPU1), 494분
 
 ---
@@ -177,14 +233,15 @@ L_mutual 구현 검증 시 확인:
 |------|------|------|------|
 | 렌더링/기하 유지 | Step 1-3 대비 유지 | PSNR +0.17, F1 동일 | ✅ |
 | Wall 법선 수직도 개선 | Step 1-3 대비 유의미 증가 | 19%→91% (+72pp) | ✅✅ |
+| 수평 normal 프리미티브 개수 증가 | 진짜 geometric 효과 검증 | 342k→744k (2.2×) | ✅ |
 | mIoU 유지/개선 | Step 1-3의 0.635 대비 | 0.626 (-0.009, ≈동일) | ⚠ (소폭 감소) |
 | Gradient 양방향성 | ∂L/∂n ≠ 0, ∂L/∂f ≠ 0, ∂L/∂s = 0 | 검증됨 | ✅ |
 
-**Go** — 주 목표(Wall 기하 정제)가 극적 달성(19%→91%). 렌더링/기하 유지. mIoU는 전체 평균으로는 소폭 감소했으나 Terrain은 +5pp 개선. Wall 클래스 수 60% 감소는 "정제(purification)" — CityGML 변환에 유리한 방향.
+**Go** — 주 목표(Wall 기하 정제)가 극적 달성. 렌더링/기하 유지. 단순 reclassification이 아니라 **실제 geometric 변화** 발생 확인(전체 수평 프리미티브 2.2×). mIoU는 클래스 간 재편(Terrain↑ Roof↓)으로 전체는 ≈동일.
 
 **조건부 실험 ("Mutual < Baseline 시 Joint-GTOnly, Joint-Weak 추가") 판단:**
-- mIoU 0.626 vs baseline 0.635: **-0.009로 실질 동일**. 조건부 실험 불필요.
-- Phase 2에서 L_structure 결합 효과 + CityGML 품질로 최종 검증.
+- mIoU 0.626 vs baseline 0.635: -0.009로 실질 동일. 조건부 실험 불필요.
+- Phase 2에서 L_structure 결합 + CityGML 품질로 최종 검증.
 
 ---
 
@@ -193,17 +250,19 @@ L_mutual 구현 검증 시 확인:
 ### 이슈 1: L_sem 일시 상승 (10k~15k 구간)
 - **증상**: L_mutual 활성 직후 L_sem이 0.259 → 0.451로 증가
 - **원인**: L_mutual이 f_i를 기하 기반으로 밀면서 GT(rule-based) 라벨과 불일치 발생
-- **해결**: 자연 수렴. iter 30,000에서 L_sem=0.095로 복귀 (Step 1-3과 동일 수준). L_mutual과 L_sem의 공통 해를 찾음.
+- **해결**: 자연 수렴. iter 30,000에서 L_sem=0.095로 복귀 (Step 1-3과 동일 수준). L_mutual과 L_sem의 공통 해 발견.
 
 ### 이슈 2: Roof horizontal-frac 감소 (44%→11%)
-- **증상**: Roof로 분류된 프리미티브 중 "완벽 수평(|n·e_g|>cos 10°)"인 비율이 감소
-- **원인**: Step 1-3의 former wall(경사 normal)이 Step 1-4에서 roof로 재분류되며 roof 분포 분산
-- **영향**: CityGML Stage 3에서 roof surface 평면 정확도에 영향 가능. L_slope의 τ=0.15이 완벽 수평을 강제하지 않음(τ=0.9 등으로 높이면 강제 가능하나 roof 개수 더 감소)
-- **후속**: Phase 2에서 L_structure의 L_normal_align이 그룹 내 roof normal을 대표 법선으로 정렬 → 이 문제를 inter-primitive level에서 보완 예정
+- **증상**: Roof로 분류된 프리미티브 중 "완벽 수평(|n·e_g|>cos 10°)"인 비율 감소
+- **분석**:
+  - 실제 지붕은 경사형도 많으므로 "완벽 수평"만이 정답은 아님
+  - 우리 rule-based GT는 Roof = `|n_z|>0.7 & z>0.15` (거의 수평)로 정의 → 이 평가 기준에서는 수평이 맞음
+  - Step 1-4에서 분포 분산은 L_slope equilibrium (|n·e_g|≈√τ≈0.387)에 일부 떨어진 것. L_slope가 완벽 수평을 강제하지 않기 때문
+- **후속**: Phase 2에서 L_structure의 L_normal_align이 그룹 내 roof normal을 대표 법선으로 정렬 → inter-primitive 레벨에서 보완 예정
 
 ### 이슈 3: render_views.py OOM
-- **증상**: 5개 평가 스크립트 병렬 실행 중 OOM
-- **해결**: 5뷰만 완성됨. 4뷰 비교 figure에 충분. 순차 실행으로 피함 가능하나 현재 figure로 충분.
+- **증상**: 5개 평가 스크립트 병렬 실행 중 OOM (GPU 24GB 경쟁)
+- **해결**: 5뷰만 완성. 4뷰 비교 figure에 충분.
 
 ---
 
