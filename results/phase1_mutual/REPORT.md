@@ -82,9 +82,10 @@ L_mutual = mean_i [
 
 **주목할 현상 — L_sem 일시 상승 후 회복:**
 - iter 10,000(활성): L_sem = 0.259
-- iter 12,000: L_sem = 0.452 (기하-의미 긴장 구간)
+- iter 12,000: L_sem = 0.452 (기하-의미 긴장 구간, 초기값의 1.75배)
 - iter 30,000: L_sem = **0.095** (Step 1-3와 동일 수준까지 회복)
 - 해석: L_mutual이 초기에 f_i를 기하 일관 방향으로 밀면서 GT 라벨과 긴장. 이후 L_mutual의 기하 제약과 L_sem의 GT 제약이 **합의 가능한 해를 찾아 수렴**.
+- **그래프 참조**: Semantic loss 그래프(우상단)에서 warmup 선(주황 점선, iter 10000) 직후 작은 상승·plateau. 200-iter moving average로 smoothing되어 peak가 두드러지지 않으나, raw per-iter 값(연한 파랑 점들)에는 12k 부근 상승 존재. TB 로그에서 직접 확인한 수치: s10k=0.259 / s12k=0.452 / s16k=0.327 / s30k=0.095.
 
 ---
 
@@ -192,13 +193,13 @@ Step 1-4의 RGB(PSNR 22.24)는 CityGSV2 full method(27.23)보다 **5dB 낮음**.
 
 ## Step 1-3 vs Step 1-4 Semantic 직접 비교 (같은 4뷰)
 
-**뷰 선택**: Step 1-3에서 mIoU 특성 별로 선정한 대표 뷰 4개:
-- idx 5368 — Best: Step 1-3에서 mIoU 최고(0.78)
-- idx 5083 — RT-confusion: Roof↔Terrain 혼동 36%
-- idx 5528 — Wall-err: Wall IoU 0
-- idx 5328 — Worst: mIoU 0.14
+**뷰 선택**: Step 1-3에서 mIoU 특성 별로 선정한 대표 뷰 4개. **Figure 행 순서 (위→아래)**:
+1. idx 5083 — **RT-confusion**: Roof↔Terrain 혼동 36%
+2. idx 5528 — **Wall-err**: Wall IoU 0
+3. idx 5328 — **Worst**: mIoU 0.14
+4. idx 5368 — **Best**: Step 1-3에서 mIoU 최고(0.78)
 
-**Layout**: `RGB | GT_sem | Step 1-3 pred | Step 1-4 pred | Step 1-3 err | Step 1-4 err`
+**Layout (가로)**: `RGB | GT_sem | Step 1-3 pred | Step 1-4 pred | Step 1-3 err | Step 1-4 err`
 
 컬러: 검정=BG, 빨강=Roof, 초록=Wall, 파랑=Terrain. Err: 회색=ignore, 초록=정답, 빨강=틀림.
 
@@ -353,12 +354,17 @@ Mechanism 2(L_structure) 그룹핑은 "같은 class + 유사 normal + 공간 근
 - 공간 근접으로 진짜 수평 roof와 같은 그룹에 묶이면 일부 pull 가능하나 **보장 아님**
 
 **가능한 실제 해결 방안** (우선순위):
-1. **GT 정의 확장** — 경사 표면도 Roof로 인정 (규칙 설계 복잡도 증가)
+1. **GT 정의 확장** — 경사 표면도 Roof로 인정 (규칙 설계 복잡도 증가, 위험)
 2. **L_slope τ 조정** — τ를 0.7 등으로 올리면 완벽 수평 강제 (roof 개수 감소 trade-off)
-3. **Metric 수정** — horizontal-frac 대신 "|n_z|>0.7" 같은 완화 기준 사용
-4. **그대로 두기** — L_slope의 의도된 설계. Phase 2 CityGML 품질로 downstream 판단
+3. **Metric 수정** — horizontal-frac 대신 "|n_z|>0.7" 같은 완화 기준 (post-hoc)
+4. **그대로 두기 (현재 선택)** — 아래 사유로 지금 단계에서 가장 합리적
 
-**현 단계 결론**: regression은 GT/L_slope의 구조적 한계에서 기인하며 L_structure가 자동으로 고쳐주지 않음. **Phase 2에서 CityGML val3dity를 보고 metric 수준의 regression이 downstream에 영향 있는지 판단**.
+**"그대로 두기"를 현 시점 선택으로 하는 근거**:
+- 해결 방안 1~3은 모두 side effect/risk 동반
+- **최종 평가는 Phase 2 CityGML val3dity + 면 IoU** — 이 metric 수준의 regression이 downstream에 실제 영향 있는지 아직 불명
+- L_structure(Step 1-5)가 자동으로 고치지 않음(위에서 검토)
+- 따라서 **Phase 2에서 Baseline/Mutual only/Structure only/Both 4조건 비교 시 CityGML 품질로 최종 판단**하는 게 올바른 순서
+- 현 단계에서 설계 변경은 근거 부족
 
 ### 이슈 3: render_views.py OOM
 - **증상**: 5개 평가 스크립트 병렬 실행 중 OOM (GPU 24GB 경쟁)
