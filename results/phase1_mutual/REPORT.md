@@ -170,7 +170,7 @@ Step 1-4: **Bimodal** (0 근처 vs 1 근처). 확신 증가 — 프리미티브�
 
 ## Step 1-3 vs Step 1-4 렌더링 직접 비교 (같은 4뷰)
 
-**뷰 선택**: Step 1-3의 semantic diagnostic에서 선정한 4뷰 (best/RT-confusion/Wall-err/worst). Step 1-3 체크포인트와 Step 1-4 체크포인트로 같은 카메라 뷰를 각각 렌더링.
+**뷰 선택**: Step 1-3의 semantic diagnostic 4뷰, **행 순서 Best → RT-confusion → Wall-err → Worst (Step 1-3 REPORT와 통일)**. Step 1-3/1-4 체크포인트로 같은 카메라 뷰 각각 렌더.
 
 **Layout**: `GT | Step 1-3 render | Step 1-4 render | diff×5`
 
@@ -193,11 +193,11 @@ Step 1-4의 RGB(PSNR 22.24)는 CityGSV2 full method(27.23)보다 **5dB 낮음**.
 
 ## Step 1-3 vs Step 1-4 Semantic 직접 비교 (같은 4뷰)
 
-**뷰 선택**: Step 1-3에서 mIoU 특성 별로 선정한 대표 뷰 4개. **Figure 행 순서 (위→아래)**:
-1. idx 5083 — **RT-confusion**: Roof↔Terrain 혼동 36%
-2. idx 5528 — **Wall-err**: Wall IoU 0
-3. idx 5328 — **Worst**: mIoU 0.14
-4. idx 5368 — **Best**: Step 1-3에서 mIoU 최고(0.78)
+**뷰 선택**: Step 1-3 REPORT와 동일한 대표 뷰 4개. **Figure 행 순서 (위→아래, Step 1-3과 통일)**:
+1. idx 5368 — **Best**: Step 1-3에서 mIoU 최고(0.78)
+2. idx 5083 — **RT-confusion**: Roof↔Terrain 혼동 36%
+3. idx 5528 — **Wall-err**: Wall IoU 0
+4. idx 5328 — **Worst**: mIoU 0.14
 
 **Layout (가로)**: `RGB | GT_sem | Step 1-3 pred | Step 1-4 pred | Step 1-3 err | Step 1-4 err`
 
@@ -205,9 +205,19 @@ Step 1-4의 RGB(PSNR 22.24)는 CityGSV2 full method(27.23)보다 **5dB 낮음**.
 
 ![Step 1-3 vs 1-4 semantic on same views](figures/sem_compare_step13_step14.png)
 
-**뷰별 per-class IoU 상세 변화**:
+**뷰별 per-class IoU 상세 변화** (Figure 행 순서와 동일):
 
-**idx=5083 — RT-confusion (mIoU 0.496 → 0.606, Δ+0.110)**
+**[Row 1] idx=5368 — Best (mIoU 0.780 → 0.731, Δ-0.049)**
+
+| 클래스 | Step 1-3 IoU | Step 1-4 IoU |
+|--------|---:|---:|
+| Roof | 0.705 | 0.648 |
+| Wall | 0.644 | 0.565 |
+| Terrain | 0.991 | 0.979 |
+
+모든 클래스 소폭 감소. **이미 잘 된 케이스에서는 L_mutual이 미세하게 방해.** 큰 재분류 없이 세부 경계만 살짝 흔들림.
+
+**[Row 2] idx=5083 — RT-confusion (mIoU 0.496 → 0.606, Δ+0.110)**
 
 | 클래스 | Step 1-3 IoU | Step 1-4 IoU | 세부 변화 |
 |--------|---:|---:|---|
@@ -217,7 +227,7 @@ Step 1-4의 RGB(PSNR 22.24)는 CityGSV2 full method(27.23)보다 **5dB 낮음**.
 
 ✅ **L_height 효과가 명확.** Step 1-3은 많은 GT=Terrain 픽셀을 Roof로 오분류. L_mutual의 L_height(`p_roof·relu(h_th−c_z)²`)가 world_z로 Roof/Terrain 구분 → Terrain 픽셀 39%가 정답으로 전환.
 
-**idx=5528 — Wall-err (mIoU 0.624 → 0.522, Δ-0.102)**
+**[Row 3] idx=5528 — Wall-err (mIoU 0.624 → 0.522, Δ-0.102)**
 
 | 클래스 | Step 1-3 IoU | Step 1-4 IoU | 세부 변화 |
 |--------|---:|---:|---|
@@ -227,7 +237,7 @@ Step 1-4의 RGB(PSNR 22.24)는 CityGSV2 full method(27.23)보다 **5dB 낮음**.
 
 ⚠ **L_height의 trade-off 명확한 예시.** GT에서 Roof가 29%, Terrain이 69%인 뷰. L_mutual이 낮은 높이의 Roof 일부를 Terrain으로 오인하게 밀어버림. 70k 진짜 Roof 픽셀이 Terrain으로 전환 → regression.
 
-**idx=5328 — Worst (mIoU 0.136 → 0.242, Δ+0.106)**
+**[Row 4] idx=5328 — Worst (mIoU 0.136 → 0.242, Δ+0.106)**
 
 | 클래스 | Step 1-3 IoU | Step 1-4 IoU | 세부 변화 |
 |--------|---:|---:|---|
@@ -236,16 +246,6 @@ Step 1-4의 RGB(PSNR 22.24)는 CityGSV2 full method(27.23)보다 **5dB 낮음**.
 | Terrain | 0.000 | 0.013 | 미미 |
 
 ✅ **"Wall 정제"가 극명하게 드러난 케이스.** Step 1-3은 애매한 프리미티브를 Wall로 과예측 (FP 625k). L_mutual이 기하 조건(|n·e_g|) 불만족 프리미티브들의 p_wall을 떨어뜨려 **88% 제거**. Wall 순도 상승.
-
-**idx=5368 — Best (mIoU 0.780 → 0.731, Δ-0.049)**
-
-| 클래스 | Step 1-3 IoU | Step 1-4 IoU |
-|--------|---:|---:|
-| Roof | 0.705 | 0.648 |
-| Wall | 0.644 | 0.565 |
-| Terrain | 0.991 | 0.979 |
-
-모든 클래스 소폭 감소. **이미 잘 된 케이스에서는 L_mutual이 미세하게 방해.** 큰 재분류 없이 세부 경계만 살짝 흔들림.
 
 **종합 메시지** (숫자로 뒷받침):
 - **L_mutual이 약점 케이스에서 구조적 개선**:
