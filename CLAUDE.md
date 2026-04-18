@@ -99,7 +99,8 @@ Baseline / Mutual only / Structure only / Both — 메커니즘 1/2 개별 기�
 - [ ] **Phase 1 Step 1-3**: + Semantic head + L_sem ← **현재**
 - [ ] Phase 1 Step 1-2: + Depth/Normal 감독 (CityGSV2 with-depth ~22.22)
 - [x] Phase 1 Step 1-3: + Semantic head + L_sem (eval PSNR 22.07 유지, mIoU 0.635, gradient isolation 검증)
-- [ ] **Phase 1 Step 1-4**: + L_mutual (Mutual only) ← **현재**
+- [x] Phase 1 Step 1-4: + L_mutual (Mutual only) — PSNR 22.24 유지, Wall vertical-frac 19%→91%, mIoU 0.626(-0.009)
+- [ ] **Phase 1 Step 1-5**: + L_structure (Structure only) ← **현재**
 - [ ] Phase 1 Step 1-5: + L_structure (Structure only)
 - [ ] Phase 1 Step 1-6: Both + 4조건 ablation 정리
 - [ ] Phase 2: 3D BAG 합성 → CityGML 검증

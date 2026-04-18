@@ -26,6 +26,7 @@ from tqdm import tqdm
 from .dataloader import ColmapDataset
 from .densification import build_optimizers, build_param_dict, build_strategy
 from .loss import data_fitting as L
+from .loss.mutual import l_mutual
 from .model import GaussianModel2D
 from .renderer import render
 
@@ -143,6 +144,18 @@ def main():
     w_nc = cfg.get("w_nc", 0.05)
     w_distort = cfg.get("w_distort", 100.0)   # 2DGS distortion reg
     w_sem = cfg.get("w_sem", 0.1)
+    w_mutual = cfg.get("w_mutual", 0.0)
+    mutual_warmup = int(cfg.get("mutual_warmup", 10000))
+    mutual_tau = float(cfg.get("mutual_tau", 0.15))
+    mutual_height_th = float(cfg.get("mutual_height_th", 0.15))
+    mutual_mode = cfg.get("mutual_mode", "full")
+    e_gravity = None
+    grav_file = cfg.get("gravity_file")
+    if grav_file and Path(grav_file).exists():
+        import json as _json
+        e_gravity = torch.tensor(_json.loads(Path(grav_file).read_text())["e_gravity"],
+                                  dtype=torch.float32, device=device)
+        print(f"[gravity] loaded e_g = {e_gravity.tolist()}")
     photo_lam = cfg.get("photo_lam", 0.2)
 
     max_iter = int(cfg["max_iter"])
@@ -209,6 +222,28 @@ def main():
         else:
             loss_sem = torch.tensor(0.0, device=device)
 
+        # L_mutual (intra-primitive, operates directly on primitives, no rendering)
+        loss_mut_total = torch.tensor(0.0, device=device)
+        loss_mut_vert = torch.tensor(0.0, device=device)
+        loss_mut_slope = torch.tensor(0.0, device=device)
+        loss_mut_horiz = torch.tensor(0.0, device=device)
+        loss_mut_height = torch.tensor(0.0, device=device)
+        if (w_mutual > 0 and it >= mutual_warmup
+                and e_gravity is not None and hasattr(model, "sem_logits")):
+            mut = l_mutual(
+                normals=model.normals(),
+                centers=model.means,
+                sem_logits=model.sem_logits,
+                e_gravity=e_gravity,
+                tau=mutual_tau,
+                height_th=mutual_height_th,
+                mode=mutual_mode,
+            )
+            loss_mut_total = mut["total"]
+            loss_mut_vert = mut["vert"]; loss_mut_slope = mut["slope"]
+            loss_mut_horiz = mut["horiz"]; loss_mut_height = mut["height"]
+            loss_total = loss_total + w_mutual * loss_mut_total
+
         # backward
         for opt in optimizers.values():
             opt.zero_grad(set_to_none=True)
@@ -237,6 +272,11 @@ def main():
             writer.add_scalar("loss/nc", loss_nc.item(), it)
             writer.add_scalar("loss/distort", loss_dist.item(), it)
             writer.add_scalar("loss/sem", loss_sem.item(), it)
+            writer.add_scalar("loss/mutual", loss_mut_total.item(), it)
+            writer.add_scalar("loss/mutual_vert", loss_mut_vert.item(), it)
+            writer.add_scalar("loss/mutual_slope", loss_mut_slope.item(), it)
+            writer.add_scalar("loss/mutual_horiz", loss_mut_horiz.item(), it)
+            writer.add_scalar("loss/mutual_height", loss_mut_height.item(), it)
             writer.add_scalar("metric/psnr_train", p, it)
             writer.add_scalar("stats/n_primitives", model.num_points, it)
             pbar.set_postfix(loss=f"{loss_total.item():.4f}", psnr=f"{p:.2f}", N=model.num_points)
