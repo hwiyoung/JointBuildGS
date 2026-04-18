@@ -15,7 +15,11 @@ Step 1-2 파이프라인에 **per-Gaussian semantic head** `f_i ∈ R^4` (K=4: B
 
 ![Training curves](figures/training_curves.png)
 
-- **Semantic (빨간 선, 200-iter moving avg)**: 초기 log(4)=1.386 → 최종 **0.095** (93% ↓, 14× 감소). NaN 이벤트는 CE의 all-ignored batch에서 발생하나 PyTorch가 gradient를 0으로 처리해 파라미터에 전파되지 않음 (11.6%의 iters).
+- **Semantic (빨간 선, 200-iter moving avg)**: 초기 **log(K=4)=1.386** → 최종 **0.095** (93% ↓, 14× 감소).
+  - **log(4)의 의미**: CrossEntropy = −Σ y·log(p). K=4 클래스를 완전 무작위(각 확률 1/4)로 예측할 때 CE = −log(1/4) = log(4) ≈ 1.386. 즉 "아무 것도 학습하지 않은 모델"의 이론적 손실값 (**chance-level baseline**).
+  - 초기 `sem_logits`을 0.01×randn으로 초기화 → softmax → 거의 균일분포 → 초기 CE ≈ log(4)로 시작 (확인).
+  - 0.095로의 감소는 **학습이 발생했다는 신호**이지 정확도 지표는 아님. 실제 품질은 mIoU로 판단.
+  - NaN 이벤트는 CE의 all-ignored batch에서 발생하나 PyTorch가 gradient를 0으로 처리해 파라미터에 전파되지 않음 (11.6%의 iters).
 - **eval PSNR (빨간 점)**: Step 1-2(22.06, 주황 점선)와 CityGSV2(22.22, 녹색 점선) 사이에서 안정. 최종 **22.07**.
 - **N**: 3.83M → 5.27M (Step 1-2와 유사).
 
@@ -104,12 +108,24 @@ L_sem.backward() 후:
 ![Semantic comparison](figures/semantic_comparison.png)
 
 관찰:
-- **Row 1 (도로+건물)**: GT와 pred 모두 도로=Terrain(파랑) + 건물=Roof(빨강)/Wall(초록) 분류. 구조 일치.
-- **Row 2 (도시 블록)**: **GT에 BG(검정)가 많음** — rule-based가 slanted 표면(30°~60°)을 BG로 처리하기 때문. Pred는 이 영역을 Roof/Wall로 합리적으로 채움 — **GT의 gap을 model이 학습으로 메운 것**.
-- **Row 3 (고층 건물)**: Pred가 건물 블록 경계를 더 선명하게 구분.
-- **Row 4 (다리)**: GT 거의 비어있으나, pred가 다리 상판=Roof(다리는 높이상 Roof로 분류됨)로 학습.
+- **Row 1 (도로+건물)**: GT와 pred 모두 도로=Terrain(파랑) + 건물=Roof(빨강)/Wall(초록). 구조 일치.
+- **Row 2 (도시 블록)**: GT에 BG(검정) 영역이 많음 — rule-based가 slanted 표면(30°~60°)을 BG로 분류하기 때문. Pred는 이 영역까지 Roof/Wall로 확장 분류.
+- **Row 3 (고층 건물)**: Pred가 건물 경계를 선명히 분할.
+- **Row 4 (다리)**: GT 대부분 BG, pred는 다리 상판=Roof로 학습 (높이 기준).
 
-**핵심 관찰:** Pred > GT인 경우가 잦음. Rule-based GT의 "don't know" 영역이 mIoU를 낮추는 주 원인. Phase 2(3D BAG, 완벽 GT)에서 진짜 의미론 정확도 측정 가능.
+**⚠️ 중요 — BG 영역은 mIoU 계산에서 제외됨:**
+
+eval_semantic.py의 `valid = gt != 0` 필터로 BG 픽셀은 confusion matrix에 들어가지 않음. 즉:
+
+| 상황 | mIoU 영향 |
+|------|:---------:|
+| GT=BG, pred=아무 것 | **영향 없음** (ignored) |
+| GT=Roof, pred=BG | FN for Roof (카운트) |
+| GT=Roof, pred=Wall | FP for Wall, FN for Roof (카운트) |
+
+따라서 "GT에 BG가 많다"는 사실이 mIoU 값을 직접 낮추지는 **않음**. 그림에서 보이는 BG 영역은 평가 대상에서 제외된 영역일 뿐. 100 test views에 대해 유효 픽셀은 **~151.5M** (Roof 65.7M + Wall 52.6M + Terrain 33.2M) — 통계적으로 robust.
+
+**따라서 mIoU 0.635는 GT의 불완전성과 무관한 "잘 정의된 GT 픽셀에 대한 실제 학습 한계"이다.** 시각적으로 pred가 GT의 BG 영역에 자연스럽게 확장된 것은 보너스(검증 불가한 추정)일 뿐 mIoU 숫자를 결정하지 않는다.
 
 ---
 
@@ -146,17 +162,43 @@ L_sem.backward() 후:
 | **mIoU** | **≥ 0.75** | **0.635** | ⚠️ **미달** |
 | Gradient 격리 | L_sem만 f_i에 | 검증됨 | ✅ |
 
-**Conditional Go** — 4/5 기준 충족, mIoU 기준만 미달. 하지만 mIoU 미달의 원인은 **rule-based GT 자체의 불완전성** (slanted 표면을 BG로 처리 → 모호 영역 많음)으로, 모델 자체의 의미론 학습은 시각적으로 합리적(L_sem 1.39→0.095, pred가 GT gap을 합리적으로 보완). Phase 2(3D BAG 완벽 GT)에서 진짜 mIoU 측정 + Stage 3 CityGML 품질로 downstream 검증 예정.
+**Conditional Go** — 4/5 기준 충족, mIoU 기준만 미달.
+
+### mIoU 0.635 미달 원인 분석 (정정)
+
+**이전 해석("GT 문제")은 부정확했음.** BG 영역은 mIoU 계산에서 제외되므로 GT의 sparse 라벨링은 mIoU 수치에 영향이 없다.
+
+**실제 원인 — task 난이도 + 모델 학습 한계:**
+
+클래스별 혼동 패턴:
+
+| 클래스 | IoU | FP | FN | 패턴 | 의미 |
+|--------|----:|---:|---:|------|------|
+| **Roof** | 0.70 | **18.4M** | 6.5M | 과예측 | 다른 클래스를 Roof로 잘못 분류 |
+| **Wall** | 0.62 | 12.1M | 12.7M | 균형 | 경계 영역 혼동 |
+| **Terrain** | 0.59 | 1.5M | **12.9M** | 저예측 | Terrain을 Roof로 잘못 분류 (FN 많음) |
+
+- **핵심 난점**: Roof와 Terrain은 **기하적으로 동일** (둘 다 수평, n_z ≈ 1). 구분은 오직 **world_z(높이) context**. 모델이 per-pixel rendering에서 암묵적으로 높이를 학습해야 하는데, L_sem 만으로는 이 context가 충분히 주입되지 않음.
+- **Wall도 경계에서 혼동**: 건물 가장자리 픽셀은 Roof/Wall 혼합, rule-based가 특정 방향에 할당하는데 pred가 다른 방향으로 가면 FP/FN 발생.
+
+### 그럼 왜 다음 단계로 넘어가는가
+
+1. **Step 1-3의 주 목표는 달성됨**: (a) 렌더링/기하 품질 유지, (b) gradient 격리 검증, (c) semantic head 메커니즘 동작 확인. mIoU는 부수 지표.
+2. **0.635는 "실패"가 아니라 "개선 여지"**: 랜덤(K=4 → 0.25)보다 2.5배 나음. 메커니즘이 의미론을 학습하긴 했으나 구조적 context가 부족.
+3. **Step 1-4(L_mutual)가 정확히 이 문제를 해결하려는 설계**: p_c × 기하 오차 곱으로 Roof/Terrain 높이 관계(L_height), Wall 수직성(L_vert)을 명시적으로 부과. Step 1-4 이후 mIoU 재측정하면 개선 기대.
+4. **Phase 2에서 downstream 검증**: 3D BAG 완벽 GT + Stage 3 CityGML val3dity로 의미론의 실제 가치 측정.
+
+즉 "mIoU 미달 = 모델 실패"가 아니라, **"현재 수준에서 메커니즘은 검증됨, 품질은 메커니즘 1/2의 도메인 규칙이 올릴 차례"**.
 
 ---
 
 ## 이슈 및 해결
 
-### 이슈 1: Rule-based GT의 "don't know" 영역
+### 이슈 1: Rule-based GT의 "don't know" 영역 (mIoU에는 영향 없음)
 - **증상**: GT semantic에서 BG(ignore_index=0) 영역이 프레임당 10-30% 차지. 특히 slanted 표면(박공지붕, 경사면).
 - **원인**: 규칙이 |n_z|>0.7(horizontal) 또는 |n_z|<0.3(vertical)만 분류. 중간 기울기(0.3≤|n_z|≤0.7)는 BG 할당 (GT로 믿지 않음).
-- **영향**: mIoU 측정 시 pred가 이 영역에 합리적으로 분류해도 FN/FP로 카운트되지 않음 (ignored). 그러나 pred 자체가 GT의 좁은 범위에 갇혀 학습됨.
-- **완화 방안**: Phase 2에서 3D BAG 합성 데이터 사용 (완벽 GT, BG 영역 없음).
+- **영향**: mIoU 계산에서 BG 픽셀은 confusion matrix에 포함되지 않으므로 **mIoU 수치에 영향 없음**. 단, pred가 이 영역에서 어떻게 동작하는지 평가 불가 (시각적 확인만 가능).
+- **학습 측면의 영향**: L_sem도 ignore_index=0이라 BG 픽셀에서는 gradient=0 → 이 영역은 **photo/depth/normal/nc loss만으로 간접 학습**. Supervised signal이 덜 조밀함.
 
 ### 이슈 2: L_sem NaN (benign)
 - **증상**: loss/sem에서 NaN 159회 (11.6%). 한 iter 후 정상값 복구.
