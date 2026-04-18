@@ -88,8 +88,9 @@ L_mutual = mean_i [
 
 ---
 
-## 용어 정리
+## 용어 정리 및 임계값 선택 근거
 
+### 용어
 > **vertical-frac** = "fraction with vertical surface" = 표면이 수직인 비율
 > - `frac`은 fraction (0~1 비율)의 약어
 > - 측정: `|n·e_g| < sin(10°) = 0.174` 을 만족하는 비율
@@ -98,6 +99,21 @@ L_mutual = mean_i [
 >
 > **horizontal-frac** = `|n·e_g| > cos(10°) = 0.985` 을 만족하는 비율
 > - 법선이 gravity에 거의 평행(=수직 방향) → 표면이 수평 → 평평한 바닥/옥상
+
+### 임계값 10°의 선택 근거
+- **물리적 필연성 없음 — 임의 선택임을 명시.**
+- **PlanarSplatting 예비 실험 관례**: legacy 연구가 "wall normal angle 8.9° → 3.8°"로 10° 미만을 "수직 벽"의 실효 기준으로 사용. 일관성 유지.
+- **직관적 의미**: 건물 벽이 10° 기울면 시각적으로도 "벽 아님"에 근접.
+- 다른 선택 가능: 5°(매우 엄격), 15°(관대), 45°(구조만 구분). **민감도 분석은 Phase 2에서 추가 검토 예정**.
+
+### 임계값 민감도 (참고)
+| 임계 각도 | 해당 |n·e_g| | Step 1-3 Wall vert-frac | Step 1-4 Wall vert-frac |
+|----------|----------|---:|---:|
+| 5° (엄격) | < 0.087 | ~10% | ~82% |
+| **10° (채택)** | **< 0.174** | **18.9%** | **91.2%** |
+| 15° | < 0.259 | ~26% | ~95% |
+
+(정확한 민감도 수치는 mutual_effect 스크립트에 threshold 인자 추가 후 재측정 필요. 위 5°/15° 값은 히스토그램 추정.)
 
 ---
 
@@ -160,21 +176,50 @@ Step 1-4: **Bimodal** (0 근처 vs 1 근처). 확신 증가 — 프리미티브�
 
 ---
 
-## 렌더링 비교 (pred | GT | ×3 diff)
+## Step 1-3 vs Step 1-4 렌더링 직접 비교 (같은 4뷰)
 
-![Comparison 4 views](figures/comparison_4views.png)
+**뷰 선택**: Step 1-3의 semantic diagnostic에서 선정한 4뷰 (best/RT-confusion/Wall-err/worst). Step 1-3 체크포인트와 Step 1-4 체크포인트로 같은 카메라 뷰를 각각 렌더링.
 
-Step 1-3의 비슷한 렌더링. L_mutual이 RGB 렌더링을 깨뜨리지 않음을 재확인.
+**Layout**: `GT | Step 1-3 render | Step 1-4 render | diff×5`
+
+![Step 1-3 vs 1-4 rendering on same views](figures/render_compare_step13_step14.png)
+
+**관찰**:
+- 4뷰 모두 Step 1-3과 Step 1-4의 렌더링이 **시각적으로 거의 동일**.
+- Diff 컬럼(×5 증폭)에 엣지/그림자 주변 작은 변화만. 건물 텍스처/형태는 보존.
+- PSNR 수치(20.51 → 20.63)의 미세 개선과 부합.
+
+**메시지**: L_mutual은 semantic(f_i)과 normal/center(n_i, c_i)를 수정하지만, **RGB 렌더링에는 거의 영향을 주지 않음**. 예상된 결과 — 렌더링 품질은 photo/depth/nc loss가 담당하고, L_mutual은 구조적 제약만 추가.
 
 ---
 
-## Semantic Diagnostic (대표 4뷰)
+## Step 1-3 vs Step 1-4 Semantic 직접 비교 (같은 4뷰)
 
-컬러: 검정=BG, 빨강=Roof, 초록=Wall, 파랑=Terrain. Error mask: 회색=ignore, 초록=정답, 빨강=틀림.
+**뷰 선택**: Step 1-3에서 mIoU 특성 별로 선정한 대표 뷰 4개:
+- idx 5368 — Best: Step 1-3에서 mIoU 최고(0.78)
+- idx 5083 — RT-confusion: Roof↔Terrain 혼동 36%
+- idx 5528 — Wall-err: Wall IoU 0
+- idx 5328 — Worst: mIoU 0.14
 
-![Semantic diagnostic](figures/semantic_diagnostic.png)
+**Layout**: `RGB | GT_sem | Step 1-3 pred | Step 1-4 pred | Step 1-3 err | Step 1-4 err`
 
-Step 1-3와 비교하면 Wall 영역이 줄고 BG(검정)/Roof(빨강)로 재분류된 영역이 보임. Terrain(파랑) 분류는 개선(L_height 효과).
+컬러: 검정=BG, 빨강=Roof, 초록=Wall, 파랑=Terrain. Err: 회색=ignore, 초록=정답, 빨강=틀림.
+
+![Step 1-3 vs 1-4 semantic on same views](figures/sem_compare_step13_step14.png)
+
+**Per-frame mIoU 변화**:
+
+| 뷰 | idx | Step 1-3 mIoU | Step 1-4 mIoU | Δ | 해석 |
+|----|----:|--------------:|--------------:|---:|------|
+| RT-confusion | 5083 | 0.496 | **0.606** | **+0.110** | ✅ L_mutual의 핵심 기여 — Roof↔Terrain 구분 개선 (L_height 효과) |
+| Worst | 5328 | 0.136 | **0.242** | **+0.106** | ✅ 어려운 뷰에서도 큰 개선 |
+| Wall-err | 5528 | 0.624 | 0.522 | **-0.102** | ⚠ Wall이 strict해져 recall↓ (trade-off) |
+| Best | 5368 | 0.780 | 0.731 | -0.049 | ⚠ 소폭 감소 |
+
+**종합 메시지**:
+- L_mutual이 **약점(RT-confusion, worst)에서는 크게 개선**(+0.10 전후)
+- 강점(best)이나 Wall-err 케이스에서는 소폭 감소
+- 전체 평균 mIoU는 -0.009 (~동일)로 수렴하나, **정성적으로는 "어려운 케이스를 끌어올리고 쉬운 케이스를 약간 희생"하는 rebalancing 효과**가 있음
 
 ---
 
@@ -252,13 +297,19 @@ L_mutual 구현 검증 시 확인:
 - **원인**: L_mutual이 f_i를 기하 기반으로 밀면서 GT(rule-based) 라벨과 불일치 발생
 - **해결**: 자연 수렴. iter 30,000에서 L_sem=0.095로 복귀 (Step 1-3과 동일 수준). L_mutual과 L_sem의 공통 해 발견.
 
-### 이슈 2: Roof horizontal-frac 감소 (44%→11%)
+### 이슈 2: Roof horizontal-frac 감소 (44%→11%) — 정직한 평가
 - **증상**: Roof로 분류된 프리미티브 중 "완벽 수평(|n·e_g|>cos 10°)"인 비율 감소
-- **분석**:
-  - 실제 지붕은 경사형도 많으므로 "완벽 수평"만이 정답은 아님
-  - 우리 rule-based GT는 Roof = `|n_z|>0.7 & z>0.15` (거의 수평)로 정의 → 이 평가 기준에서는 수평이 맞음
-  - Step 1-4에서 분포 분산은 L_slope equilibrium (|n·e_g|≈√τ≈0.387)에 일부 떨어진 것. L_slope가 완벽 수평을 강제하지 않기 때문
-- **후속**: Phase 2에서 L_structure의 L_normal_align이 그룹 내 roof normal을 대표 법선으로 정렬 → inter-primitive 레벨에서 보완 예정
+- **이 metric 기준으로는 명확한 regression**:
+  - 44% → 11%는 이 metric 상의 감소이며 "regression 아님"으로 포장하지 않음.
+  - 다만 metric 자체의 해석은 nuance가 있음:
+- **metric의 한계**:
+  - 실제 지붕은 박공·hip 등 경사면도 존재 → "완벽 수평"이 유일 정답은 아님
+  - 그러나 우리 **rule-based GT는 Roof = `|n_z|>0.7 & z>0.15`** (거의 수평)로 정의. 경사면은 BG로 분류. 즉 이 평가 기준에서는 "Roof 프리미티브 = 수평"이 맞음.
+- **원인 — L_slope의 설계적 한계**:
+  - Step 1-4의 분포 분산 peak at |n·e_g|≈0.387은 L_slope equilibrium (`√τ = √0.15`)
+  - L_slope는 `(n·e_g)² ≥ τ`만 강제 → 완벽 수평은 강제하지 않음
+  - τ를 높이면 (예: τ=0.9) 강제 가능하나 roof 개수 대폭 감소 trade-off
+- **후속**: Phase 2에서 L_structure의 L_normal_align이 그룹 내 roof normal을 대표 법선으로 정렬 → **inter-primitive 레벨에서 보완 예정**. Mechanism 2는 Mechanism 1의 설계적 한계를 보완하는 역할.
 
 ### 이슈 3: render_views.py OOM
 - **증상**: 5개 평가 스크립트 병렬 실행 중 OOM (GPU 24GB 경쟁)
