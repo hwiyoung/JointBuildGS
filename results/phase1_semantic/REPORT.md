@@ -99,19 +99,39 @@ L_sem.backward() 후:
 
 ---
 
-## 정성 비교 — Semantic Rendering (4뷰)
+## 정성 비교 — Diagnostic Semantic Rendering (대표 4뷰)
 
-**컬러 코드:** 검정=BG, 빨강=Roof, 초록=Wall, 파랑=Terrain.
+**컬러 코드 (GT/Pred 열):** 검정=BG(ignore), 빨강=Roof, 초록=Wall, 파랑=Terrain.
+**Error mask (오른쪽 열):** 회색=ignore(GT=BG), 초록=정답, **빨강=틀림**.
 
-좌/중/우 = **입력 RGB / GT semantic / Pred semantic**
+100 test views를 스캔해서 대표 4뷰를 **진단 기준으로 선택:**
 
-![Semantic comparison](figures/semantic_comparison.png)
+| 행 | 선택 기준 | idx | mIoU | Roof | Wall | Terrain | RT-confusion | Wall-err |
+|---|----------|----:|-----:|-----:|-----:|--------:|-------------:|---------:|
+| 1 | **Best** (최고 mIoU) | 5368 | 0.78 | 0.70 | 0.64 | **0.99** | 0.2% | 35.6% |
+| 2 | **Roof↔Terrain 혼동** | 5083 | 0.50 | 0.49 | 0.73 | **0.27** | **36.3%** | 27.4% |
+| 3 | **Wall 오류** | 5528 | 0.62 | 0.91 | **0.00** | 0.96 | 1.9% | **99.8%** |
+| 4 | **Worst** (최악) | 5328 | 0.14 | 0.09 | 0.32 | 0.00 | 24.5% | 68.0% |
 
-관찰:
-- **Row 1 (도로+건물)**: GT와 pred 모두 도로=Terrain(파랑) + 건물=Roof(빨강)/Wall(초록). 구조 일치.
-- **Row 2 (도시 블록)**: GT에 BG(검정) 영역이 많음 — rule-based가 slanted 표면(30°~60°)을 BG로 분류하기 때문. Pred는 이 영역까지 Roof/Wall로 확장 분류.
-- **Row 3 (고층 건물)**: Pred가 건물 경계를 선명히 분할.
-- **Row 4 (다리)**: GT 대부분 BG, pred는 다리 상판=Roof로 학습 (높이 기준).
+![Semantic diagnostic (best / RT-confusion / Wall-err / worst)](figures/semantic_diagnostic.png)
+
+### 핵심 관찰 — Roof/Terrain 혼동 (Row 2, idx=5083)
+
+이 뷰에서 **Terrain IoU가 0.27로 급락**했고 RT-confusion이 36%. Error mask에 빨간 영역이 건물 블록 내부/도로 경계에 집중. 원인:
+- 이 프레임은 지상 건물+지면이 섞인 oblique view
+- rule-based GT는 **world_z 0.15**로 Roof/Terrain을 나눔
+- 모델은 n_z만으로 local 판단 → **높이 context를 알지 못해 낮은 옥상을 Terrain으로, 높은 지면을 Roof로 오인**
+
+### Wall 오류 (Row 3, idx=5528)
+
+이 뷰에서 **Wall IoU = 0**. 모델이 Wall을 거의 예측하지 못함. GT는 건물 측면을 Wall로 표시했으나 pred는 그 영역을 Roof로 채움. 원인:
+- 항공 top-down에 가까운 뷰 → 벽면이 얇게 보이고 수직 normal이 노이즈에 묻힘
+- 모델이 Wall 클래스를 받는 supervision이 제한적 (전체 training signal의 ~14% 추정)
+
+### Best vs Worst (Row 1 vs Row 4)
+
+- **Best**: 명확한 Terrain+Roof 분리, 일부 Wall 경계 오류만
+- **Worst**: GT가 대부분 BG이고 유효 픽셀이 적은 뷰. 유효 픽셀 중에서도 pred가 Roof/Wall/Terrain 혼합. 모델이 학습 distribution에서 먼 oblique view에 취약.
 
 **⚠️ 중요 — BG 영역은 mIoU 계산에서 제외됨:**
 
