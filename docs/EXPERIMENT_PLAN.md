@@ -83,9 +83,12 @@ JointBuildGS/
 | Baseline | L_photo + L_depth + L_normal + L_nc + L_sem | 두 메커니즘 모두 없음 |
 | Mutual only | + L_mutual | 메커니즘 1 (intra) 단독 |
 | Structure only | + L_structure | 메커니즘 2 (inter) 단독 |
-| Both | + L_mutual + L_structure | 결합 효과, 상호작용 검증 |
+| Both | + L_mutual + L_structure | 동시 작용 |
 
-Both < Mutual + Structure이면 간섭. Both > Mutual + Structure이면 시너지.
+핵심 비교와 해석 프레임:
+- **Structure only vs Both:** 메커니즘 1 없이 메커니즘 2만 작동하면, 기하 정렬이 양방향 gradient를 통해 의미론에 피드백되지 않음. Both에서 better면 "메커니즘 1의 양방향 gradient가 메커니즘 2의 그룹핑 품질을 개선한다"는 순환 효과 입증.
+- **Mutual only vs Both:** per-primitive 교정만 vs 면 단위 정렬 추가. Both에서 better면 구조 정렬의 추가 가치 입증.
+- **Both vs Mutual + Structure 합:** 시너지(Both > 합) / 독립(≈) / 간섭(Both < 합).
 
 ---
 
@@ -374,9 +377,13 @@ Wall 수직도 (L_mutual 효과), σ_normal_intra (L_structure 효과) 모두 �
 각 지표(PSNR, SSIM, LPIPS, F1, Chamfer, mIoU, Wall 수직도, σ_normal_intra)의 4조건 비교.
 
 상호작용 분석:
-- Both > Mutual + Structure: 시너지
+- Both > Mutual + Structure: 시너지 — 동시 작용에 의한 순환 효과 확인
 - Both ≈ Mutual + Structure: 독립 기여
 - Both < Mutual + Structure: 간섭 → warmup 순서 바꿔 재실험
+
+핵심 해석 프레임:
+- Structure only vs Both: Structure only에서는 메커니즘 1이 없으므로 기하 정렬이 의미론에 피드백되지 않음(순차에 가까운 조건). Both에서 better면 "메커니즘 1의 양방향 gradient가 메커니즘 2의 그룹핑 품질을 개선"하는 순환 입증.
+- Mutual only vs Both: per-primitive만으로는 면 단위 일관성 부재. Both에서 better면 구조 정렬의 추가 가치 입증.
 
 === 시각적 산출물 ===
 1. 4조건 비교 표 (모든 지표)
@@ -442,6 +449,8 @@ docs/EXPERIMENT_PLAN.md의 Step 2-2를 진행해줘.
 - 기여 1 (메커니즘 1+2 결합): Both vs Baseline의 val3dity 차이
 - 기여 1a (메커니즘 1 intra): Mutual only vs Baseline
 - 기여 1b (메커니즘 2 inter): Structure only vs Baseline
+- 순환 효과: Structure only vs Both — 메커니즘 1의 양방향 gradient가 CityGML 품질에 미치는 영향
+- 구조 정렬 추가 가치: Mutual only vs Both — 면 단위 정렬이 CityGML 품질에 미치는 영향
 
 === 시각적 산출물 ===
 1. 4조건 CityGML 3D 비교

@@ -109,7 +109,18 @@ L_coplanar = Σ_k Σ_{i∈G_k} (n_k·c_i+d_k)². c_i gradient, n_k/d_k detach.
 L_structure = λ_na·L_normal_align + λ_cp·L_coplanar.
 
 L_coverage(s_i): 후보. densification 대비 검증.
-f_i: 직접 gradient 없음(그룹 할당 미분 불가). 메커니즘 1이 f_i 교정 담당.
+
+**f_i에 직접 gradient 없음.** 그룹 할당 = argmax(f_i) 이산 연산 → ∂L_structure/∂f_i = 0.
+f_i 교정은 메커니즘 1(L_mutual) 담당. 간접 피드백: 매 T iter 그룹 재할당.
+
+**핵심: 메커니즘 1과의 동시 작용.**
+매 iteration에서 n_i에 대한 gradient:
+∂L/∂n_i = ... + ∂L_mutual/∂n_i + ∂L_normal_align/∂n_i
+하나의 파라미터에 도메인 규칙("벽이니까 수평") + 면 단위 정렬("같은 면이니까 같은 방향")이 동시 작용.
+메커니즘 2가 n_i 정렬 → 메커니즘 1이 정렬된 n_i로 f_i 교정 → 교정된 f_i가 다음 그룹 재할당에 반영.
+이 동시 작용 + 주기적 재할당의 순환이 순차 파이프라인과의 근본적 차이.
+
+**s_i에 별도 제약 없음.** Stage 3에서 CityGML 폴리곤 경계는 인접 대표 평면을 확장하여 교차선으로 결정되므로 s_i에 의존하지 않음. s_i는 데이터 정합 손실과 densification으로 조정. 항공 2DGS(AGS, ULSR-GS)도 s_i에 별도 제약 미부과.
 
 대표 법선 정확도 위험 → 안전장치: warmup(2N/3 이후), 재계산, 가중 평균.
 Warmup: 2N/3 이후 활성화.
@@ -144,11 +155,15 @@ Warmup: 2N/3 이후 활성화.
 
 | 지표 | 수식/도구 | 레퍼런스 |
 |------|----------|---------|
+| PSNR | -10·log10(MSE) | 3DGS, CityGSV2 |
+| SSIM | structural similarity | 3DGS, CityGSV2 |
+| LPIPS | learned perceptual | 3DGS, CityGSV2 |
 | Depth MAE | mean(\|D_render-D_GT\|) | 2DGS |
 | Normal cos | mean(n_render·n_GT) | 2DGS |
+| F1 (0.5m, 1.0m) | precision-recall @ threshold | CityGSV2, AGS, ULSR-GS |
+| Chamfer Distance | bidirectional nearest-neighbor | CityGSV2, AGS |
 | Wall 수직도 | wall 중 \|n·e_g\|<sin(10°) 비율 | 본 연구 |
 | mIoU | mean(TP/(TP+FP+FN)) | AlignGS |
-| PSNR | -10·log10(MSE) | 3DGS |
 | val3dity | Ledoux(2019) | PLANES4LOD2 |
 | 면 IoU | 생성 vs GT | Point2Building |
 | Hausdorff | 최대 거리 | City3D |
@@ -159,9 +174,18 @@ Warmup: 2N/3 이후 활성화.
 
 ## 7. 실험 조건
 
-### Ablation
-Baseline / Joint(+L_mutual) / Joint+Structure(+L_mutual+L_structure).
-조건부: Joint-GTOnly, Joint-Weak.
+### Ablation (4조건)
+| 조건 | 구성 | 검증 |
+|------|------|------|
+| Baseline | L_photo+L_depth+L_normal+L_nc+L_sem | 메커니즘 없음 |
+| Mutual only | +L_mutual | 메커니즘 1 단독(intra) |
+| Structure only | +L_structure | 메커니즘 2 단독(inter) |
+| Both | +L_mutual+L_structure | 동시 작용 |
+
+핵심 비교:
+- Structure only vs Both: 순환 효과 검증. Both에서 better면 "메커니즘 1의 양방향 gradient가 메커니즘 2의 그룹핑 품질 개선".
+- Mutual only vs Both: 면 단위 정렬의 추가 가치.
+- Both vs Mutual+Structure 합: 시너지/독립/간섭.
 
 ### 비교
 (a) 영상+순차+footprint, (b) 영상+순차-footprint, (c) 제안, (d) LiDAR upper bound.

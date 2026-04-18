@@ -69,6 +69,18 @@ def l_normal(
     return (err * m).sum() / m.sum().clamp_min(1.0)
 
 
+def l_sem(
+    sem_pred: torch.Tensor,       # (H, W, K) raw logits
+    sem_gt: torch.Tensor,         # (H, W) int64 labels
+    ignore_index: int = 0,
+) -> torch.Tensor:
+    """CrossEntropy with ignore_index. sem_gt values outside [0, K-1] are ignored."""
+    H, W, K = sem_pred.shape
+    logits = sem_pred.reshape(-1, K)      # (H*W, K)
+    labels = sem_gt.reshape(-1).long()    # (H*W,)
+    return F.cross_entropy(logits, labels, ignore_index=ignore_index)
+
+
 def l_nc(n_render: torch.Tensor, n_surf: torch.Tensor, alpha: torch.Tensor | None = None) -> torch.Tensor:
     """Normal-consistency: render-normal vs depth-derived-normal (both world frame).
 

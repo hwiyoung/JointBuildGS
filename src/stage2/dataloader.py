@@ -77,6 +77,7 @@ class ColmapDataset(Dataset):
         downscale: float = 1.0,
         load_depth: bool = True,
         load_normal: bool = True,
+        load_semantic: bool = False,
         depth_far_sentinel: Optional[float] = 28000.0,
         depth_scale: float = 1.0,
         normal_encoding: str = "half_range",
@@ -85,6 +86,8 @@ class ColmapDataset(Dataset):
         self.downscale = float(downscale)
         self.load_depth = load_depth
         self.load_normal = load_normal
+        self.load_semantic = load_semantic
+        self.semantic_dir = self.root / "semantic"
         self.depth_far_sentinel = depth_far_sentinel
         self.depth_scale = float(depth_scale)
         self.normal_encoding = normal_encoding
@@ -238,6 +241,16 @@ class ColmapDataset(Dataset):
         if self.load_normal:
             normal, normal_mask = self._load_normal(fr, H, W)
 
+        semantic = None
+        if self.load_semantic:
+            stem = Path(fr.name).stem
+            sem_path = self.semantic_dir / f"{stem}.png"
+            if sem_path.exists():
+                lbl = np.asarray(PILImage.open(sem_path))  # (H0, W0) uint8, 0..3
+                if lbl.shape[:2] != (H, W):
+                    lbl = cv2.resize(lbl, (W, H), interpolation=cv2.INTER_NEAREST)
+                semantic = lbl.astype(np.int64)
+
         w2c = np.eye(4, dtype=np.float32)
         w2c[:3, :3] = fr.R
         w2c[:3, 3] = fr.t
@@ -258,6 +271,8 @@ class ColmapDataset(Dataset):
         if normal is not None:
             out["normal"] = torch.from_numpy(normal)
             out["normal_mask"] = torch.from_numpy(normal_mask.astype(np.bool_))
+        if semantic is not None:
+            out["semantic"] = torch.from_numpy(semantic)
         return out
 
 

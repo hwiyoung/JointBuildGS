@@ -48,13 +48,20 @@ L_structure → n_i, c_i      inter-primitive 구조 정렬
 - L_slope: roof가 벽처럼 수평이면 penalty
 - L_horiz: terrain 법선 → 수직
 - L_height: roof > terrain (높이)
-- 핵심: p_c × 기하 오차의 곱 → 양방향 gradient
+- 핵심: p_c × 기하 오차의 곱 → 양방향 gradient (f_i ↔ n_i)
+- Gradient: n_i, f_i 양방향. c_i(L_height 높이만). s_i 없음.
 
 ## 메커니즘 2: Inter-primitive (L_structure)
 - 매 T iter 그룹핑: 동일 class + 법선 유사 + 공간 근접
-- L_normal_align: 같은 그룹 법선 → 대표 법선 (n_k detach)
-- L_coplanar: 같은 그룹 중심 → 대표 평면 위 (n_k/d_k detach)
+- L_normal_align: 같은 그룹 법선 → 대표 법선 (n_i gradient, n_k detach)
+- L_coplanar: 같은 그룹 중심 → 대표 평면 위 (c_i gradient, n_k/d_k detach)
 - L_coverage: 후보 (densification 대비 검증)
+- **f_i에 직접 gradient 없음** (그룹 할당 = argmax, 이산 연산)
+- f_i 교정은 메커니즘 1이 담당. 간접 피드백: 매 T iter 재할당.
+- **핵심: 메커니즘 1과 동시 작용.** 매 iter에서 n_i에 L_mutual + L_normal_align gradient 동시 합산.
+  메커니즘 2의 기하 정렬 → 메커니즘 1이 정렬된 n_i로 f_i 교정 → 다음 그룹 재할당에 반영.
+  이 동시 작용 + 주기적 재할당의 순환이 순차 파이프라인과의 차별점.
+- s_i 별도 제약 없음: Stage 3 폴리곤 경계가 대표 평면 교차로 결정되어 s_i에 미의존.
 
 ## Semantic Class (K=4)
 | Index | Class | CityGML | 역할 |
@@ -91,8 +98,8 @@ Baseline / Mutual only / Structure only / Both — 메커니즘 1/2 개별 기�
 - [x] Phase 1 Step 1-2: + Depth/Normal 감독 (eval PSNR 22.06, max 22.39, CityGSV2 w/depth 22.22 근접/일부 초과)
 - [ ] **Phase 1 Step 1-3**: + Semantic head + L_sem ← **현재**
 - [ ] Phase 1 Step 1-2: + Depth/Normal 감독 (CityGSV2 with-depth ~22.22)
-- [ ] Phase 1 Step 1-3: + Semantic head + L_sem
-- [ ] Phase 1 Step 1-4: + L_mutual (Mutual only)
+- [x] Phase 1 Step 1-3: + Semantic head + L_sem (eval PSNR 22.07 유지, mIoU 0.635, gradient isolation 검증)
+- [ ] **Phase 1 Step 1-4**: + L_mutual (Mutual only) ← **현재**
 - [ ] Phase 1 Step 1-5: + L_structure (Structure only)
 - [ ] Phase 1 Step 1-6: Both + 4조건 ablation 정리
 - [ ] Phase 2: 3D BAG 합성 → CityGML 검증

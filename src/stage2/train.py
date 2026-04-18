@@ -38,6 +38,7 @@ _STRATEGY_TO_MODEL = {
     "opacities": "opacities_raw",
     "sh0": "sh0",
     "shN": "shN",
+    "sem_logits": "sem_logits",
 }
 
 
@@ -86,6 +87,7 @@ def main():
         downscale=cfg.get("downscale", 0.5),
         load_depth=cfg.get("load_depth", True),
         load_normal=cfg.get("load_normal", True),
+        load_semantic=cfg.get("load_semantic", False),
         depth_scale=cfg.get("depth_scale", 1.0),
     )
     print(f"[data] frames={len(ds)}  pts_init={ds.points_xyz.shape[0]}")
@@ -140,6 +142,7 @@ def main():
     w_normal = cfg.get("w_normal", 0.05)
     w_nc = cfg.get("w_nc", 0.05)
     w_distort = cfg.get("w_distort", 100.0)   # 2DGS distortion reg
+    w_sem = cfg.get("w_sem", 0.1)
     photo_lam = cfg.get("photo_lam", 0.2)
 
     max_iter = int(cfg["max_iter"])
@@ -196,6 +199,16 @@ def main():
         loss_dist = distort.mean()
         loss_total = loss_total + w_distort * loss_dist
 
+        # Semantic (only if GT provided and w_sem > 0)
+        if "semantic" in batch and w_sem > 0 and hasattr(model, "sem_logits"):
+            from .renderer import render_semantic
+            sem_pred = render_semantic(model, w2c, K, W, H)
+            sem_gt = batch["semantic"].to(device)
+            loss_sem = L.l_sem(sem_pred, sem_gt, ignore_index=0)
+            loss_total = loss_total + w_sem * loss_sem
+        else:
+            loss_sem = torch.tensor(0.0, device=device)
+
         # backward
         for opt in optimizers.values():
             opt.zero_grad(set_to_none=True)
@@ -223,6 +236,7 @@ def main():
             writer.add_scalar("loss/normal", loss_n.item(), it)
             writer.add_scalar("loss/nc", loss_nc.item(), it)
             writer.add_scalar("loss/distort", loss_dist.item(), it)
+            writer.add_scalar("loss/sem", loss_sem.item(), it)
             writer.add_scalar("metric/psnr_train", p, it)
             writer.add_scalar("stats/n_primitives", model.num_points, it)
             pbar.set_postfix(loss=f"{loss_total.item():.4f}", psnr=f"{p:.2f}", N=model.num_points)

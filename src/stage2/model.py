@@ -93,6 +93,12 @@ class GaussianModel2D(nn.Module):
         self.sh0 = nn.Parameter(sh0.to(device))
         self.shN = nn.Parameter(shN.to(device))
 
+        # --- semantic logits f_i (N, K) ---
+        # K=4: BG(0), Roof(1), Wall(2), Terrain(3). Init near-uniform with small noise
+        self.num_classes = 4
+        sem = 0.01 * torch.randn(N, self.num_classes)
+        self.sem_logits = nn.Parameter(sem.to(device))
+
     # ---------- derived ----------
     @property
     def num_points(self) -> int:

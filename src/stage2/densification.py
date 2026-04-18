@@ -20,7 +20,7 @@ PARAM_NAMES = ("means", "quats", "log_scales", "opacities_raw", "sh0", "shN")
 
 
 def build_param_dict(model: GaussianModel2D) -> Dict[str, nn.Parameter]:
-    return {
+    params = {
         "means": model.means,
         "scales": model.log_scales,        # gsplat treats as raw; monotonic via exp at render
         "quats": model.quats,
@@ -28,6 +28,9 @@ def build_param_dict(model: GaussianModel2D) -> Dict[str, nn.Parameter]:
         "sh0": model.sh0,
         "shN": model.shN,
     }
+    if hasattr(model, "sem_logits"):
+        params["sem_logits"] = model.sem_logits
+    return params
 
 
 def build_optimizers(
@@ -38,6 +41,7 @@ def build_optimizers(
     lr_opacities: float = 5e-2,
     lr_sh0: float = 2.5e-3,
     lr_shN: float = 1.25e-4,
+    lr_sem: float = 2.5e-3,
 ) -> Dict[str, torch.optim.Optimizer]:
     """One Adam per param (gsplat strategy assumption)."""
     opts = {
@@ -48,6 +52,8 @@ def build_optimizers(
         "sh0": torch.optim.Adam([model.sh0], lr=lr_sh0),
         "shN": torch.optim.Adam([model.shN], lr=lr_shN),
     }
+    if hasattr(model, "sem_logits"):
+        opts["sem_logits"] = torch.optim.Adam([model.sem_logits], lr=lr_sem)
     return opts
 
 

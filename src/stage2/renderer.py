@@ -90,6 +90,51 @@ def render(
     }
 
 
+def render_semantic(
+    model: GaussianModel2D,
+    viewmat: torch.Tensor,
+    K: torch.Tensor,
+    width: int,
+    height: int,
+    near_plane: float = 0.01,
+    far_plane: float = 1e10,
+) -> torch.Tensor:
+    """Render per-pixel semantic logits by alpha-compositing model.sem_logits.
+
+    Gradient isolation: geometry params (means, quats, scales, opacities, SH) are
+    detached inside this function, so L_sem's gradient flows ONLY back through
+    model.sem_logits. This keeps L_sem from corrupting geometry optimization.
+
+    Returns:
+        (H, W, K) float — raw logits (not softmaxed).
+    """
+    device = model.means.device
+    viewmats = viewmat.unsqueeze(0).to(device)
+    Ks = K.unsqueeze(0).to(device)
+
+    # Detach geometry so only sem_logits receives gradient.
+    means = model.means.detach()
+    quats = model.quats.detach()
+    scales = model.scales.detach()
+    opacities = model.opacities.detach()
+    colors = model.sem_logits.unsqueeze(0) if model.sem_logits.ndim == 2 else model.sem_logits
+    # gsplat expects colors shape (C, N, D) OR (N, D) for non-SH case
+    # Use (N, D) and pass sh_degree=None to treat as plain features
+    colors_feat = model.sem_logits  # (N, K)
+
+    out = rasterization_2dgs(
+        means=means, quats=quats, scales=scales, opacities=opacities,
+        colors=colors_feat,
+        viewmats=viewmats, Ks=Ks,
+        width=width, height=height,
+        near_plane=near_plane, far_plane=far_plane,
+        render_mode="RGB",  # just feature alpha blending
+        sh_degree=None,
+    )
+    render_feat = out[0][0]  # (H, W, K)
+    return render_feat
+
+
 def _depth_to_normal(
     depth: torch.Tensor,  # (H, W)
     K: torch.Tensor,      # (3, 3)
