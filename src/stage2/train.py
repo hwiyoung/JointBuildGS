@@ -25,8 +25,10 @@ from tqdm import tqdm
 
 from .dataloader import ColmapDataset
 from .densification import build_optimizers, build_param_dict, build_strategy
+from .grouping import group_primitives
 from .loss import data_fitting as L
 from .loss.mutual import l_mutual
+from .loss.structure import l_structure
 from .model import GaussianModel2D
 from .renderer import render
 
@@ -144,6 +146,16 @@ def main():
     w_nc = cfg.get("w_nc", 0.05)
     w_distort = cfg.get("w_distort", 100.0)   # 2DGS distortion reg
     w_sem = cfg.get("w_sem", 0.1)
+    w_structure = cfg.get("w_structure", 0.0)
+    w_structure_na = cfg.get("w_structure_na", 1.0)
+    w_structure_cp = cfg.get("w_structure_cp", 1.0)
+    structure_warmup = int(cfg.get("structure_warmup", 15000))
+    structure_regroup_every = int(cfg.get("structure_regroup_every", 500))
+    structure_voxel_size = float(cfg.get("structure_voxel_size", 0.05))
+    structure_n_directions = int(cfg.get("structure_n_directions", 12))
+    structure_min_group = int(cfg.get("structure_min_group", 5))
+    # group state (updated every T iters after warmup)
+    _grp = {"group_ids": None, "rep_n": None, "rep_d": None}
     w_mutual = cfg.get("w_mutual", 0.0)
     mutual_warmup = int(cfg.get("mutual_warmup", 10000))
     mutual_tau = float(cfg.get("mutual_tau", 0.15))
@@ -244,6 +256,47 @@ def main():
             loss_mut_horiz = mut["horiz"]; loss_mut_height = mut["height"]
             loss_total = loss_total + w_mutual * loss_mut_total
 
+        # L_structure (inter-primitive, Mechanism 2)
+        loss_str_total = torch.tensor(0.0, device=device)
+        loss_str_na = torch.tensor(0.0, device=device)
+        loss_str_cp = torch.tensor(0.0, device=device)
+        n_groups = 0; n_in_group = 0
+        if w_structure > 0 and it >= structure_warmup and hasattr(model, "sem_logits"):
+            # Re-group every T iter (and on first activation)
+            if (_grp["group_ids"] is None
+                    or (it - structure_warmup) % structure_regroup_every == 0):
+                gids, rep_n, rep_d = group_primitives(
+                    centers=model.means.detach(),
+                    normals=model.normals().detach(),
+                    sem_logits=model.sem_logits.detach(),
+                    scales=model.scales.detach(),
+                    voxel_size=structure_voxel_size,
+                    n_directions=structure_n_directions,
+                    min_group_size=structure_min_group,
+                )
+                _grp["group_ids"] = gids
+                _grp["rep_n"] = rep_n
+                _grp["rep_d"] = rep_d
+            # If N changed due to densification (shouldn't after refine_stop), drop stale groups
+            if _grp["group_ids"].shape[0] != model.means.shape[0]:
+                _grp["group_ids"] = None  # will regroup next matching iter
+            else:
+                sd = l_structure(
+                    normals=model.normals(),
+                    centers=model.means,
+                    group_ids=_grp["group_ids"],
+                    rep_normals=_grp["rep_n"],
+                    rep_d=_grp["rep_d"],
+                    w_normal_align=w_structure_na,
+                    w_coplanar=w_structure_cp,
+                )
+                loss_str_total = sd["total"]
+                loss_str_na = sd["normal_align"]
+                loss_str_cp = sd["coplanar"]
+                n_in_group = sd["n_used"]
+                n_groups = _grp["rep_n"].shape[0]
+                loss_total = loss_total + w_structure * loss_str_total
+
         # backward
         for opt in optimizers.values():
             opt.zero_grad(set_to_none=True)
@@ -277,6 +330,11 @@ def main():
             writer.add_scalar("loss/mutual_slope", loss_mut_slope.item(), it)
             writer.add_scalar("loss/mutual_horiz", loss_mut_horiz.item(), it)
             writer.add_scalar("loss/mutual_height", loss_mut_height.item(), it)
+            writer.add_scalar("loss/structure", loss_str_total.item(), it)
+            writer.add_scalar("loss/structure_na", loss_str_na.item(), it)
+            writer.add_scalar("loss/structure_cp", loss_str_cp.item(), it)
+            writer.add_scalar("stats/n_groups", n_groups, it)
+            writer.add_scalar("stats/n_in_group", n_in_group, it)
             writer.add_scalar("metric/psnr_train", p, it)
             writer.add_scalar("stats/n_primitives", model.num_points, it)
             pbar.set_postfix(loss=f"{loss_total.item():.4f}", psnr=f"{p:.2f}", N=model.num_points)
