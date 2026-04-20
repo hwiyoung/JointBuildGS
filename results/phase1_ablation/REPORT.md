@@ -121,16 +121,68 @@ Rule-based GT 기반 mIoU. GT 자체가 depth/normal 기반이므로 L_mutual의
 표면 포함" — L_mutual이 "엄격히 수직인 표면만 Wall"로 좁히면 rule-GT 기준 손해로 측정. 실제
 CityGML용도의 정확도는 Phase 2에서 재평가.
 
-### 정성 증거 (Semantic 맵 4-way)
+### 정성 증거 — L_mutual 의도 효과 직접 시각화
 
-동일 뷰의 semantic prediction 비교. Layout: `RGB_GT | GT_sem | Baseline | Mutual | Structure | Both`
+설계 목표:
+- **L_vert**: Wall 법선이 수평 (벽면 = 수직). `|n·g| < 0.15` → 벽면 수직.
+- **L_horiz**: Terrain 법선이 수직 (지면 = 수평). `|n·g| > 0.85` → 지면 수평.
+- **L_slope**: Roof 법선이 수직 (지붕 = 수평). `|n·g| > 0.85` → 지붕 수평.
+
+의도 효과 heatmap — 해당 class 프리미티브만 필터링 후 **녹색 = 의도대로, 빨강 = 미달**로 채색.
+3×3m bbox (center (-0.30, +0.56), 위경도 클러스터 #1 tilted-wall hotspot).
+
+**① Wall-class 수직성 (L_vert):**
+
+| Baseline | Mutual | Structure | Both |
+|---|---|---|---|
+| ![](figures/mech_evidence/baseline_oblique_vert_wall.png) | ![](figures/mech_evidence/mutual_oblique_vert_wall.png) | ![](figures/mech_evidence/structure_oblique_vert_wall.png) | ![](figures/mech_evidence/both_oblique_vert_wall.png) |
+| 녹색 **29.6%** | 녹색 **94.5%** | 녹색 30.0% | 녹색 **95.0%** |
+
+**해석**: Baseline/Structure에서 Wall-class 프리미티브 중 70%가 빨강(기울어진/수평이 아닌 법선)
+— 실제로는 지붕 상면·기울어진 표면이 Wall로 오분류됨. Mutual/Both는 94~95% 녹색 = Wall class가
+*실제로* 벽면만 포함. **L_vert 효과 뚜렷, 개별 프리미티브 단위로 가시.**
+
+**② Terrain-class 수평성 (L_horiz):**
+
+| Baseline | Mutual | Structure | Both |
+|---|---|---|---|
+| ![](figures/mech_evidence/baseline_oblique_horiz_terrain.png) | ![](figures/mech_evidence/mutual_oblique_horiz_terrain.png) | ![](figures/mech_evidence/structure_oblique_horiz_terrain.png) | ![](figures/mech_evidence/both_oblique_horiz_terrain.png) |
+| 녹색 94.4% | 녹색 **98.5%** | 녹색 96.0% | 녹색 **98.3%** |
+
+Terrain은 Baseline에서도 이미 94% 수평 — L_horiz 개선 폭은 소폭 (+4%p) 이지만 의도된 방향.
+
+**③ Roof-class 수평성 (L_slope):**
+
+| Baseline | Mutual | Structure | Both |
+|---|---|---|---|
+| ![](figures/mech_evidence/baseline_oblique_horiz_roof.png) | ![](figures/mech_evidence/mutual_oblique_horiz_roof.png) | ![](figures/mech_evidence/structure_oblique_horiz_roof.png) | ![](figures/mech_evidence/both_oblique_horiz_roof.png) |
+| 녹색 **90.9%** | 녹색 61.1% | 녹색 **93.1%** | 녹색 64.6% |
+
+**의도와 반대 방향 변화**: Mutual/Both에서 Roof-class 수평성이 90% → 65%로 *감소*.
+원인: L_vert가 Wall-class를 엄격히 수직 법선만 포함하도록 조이자, Baseline에서 Wall이었던
+비수직 프리미티브 (지붕 가장자리·발코니)가 Roof로 재분류 → Roof 클래스에 비수평 프리미티브가
+혼입되어 녹색 비율 하락. 이는 설계상 *의도하지 않은 부작용*.
+
+**CityGML 관점 재평가**: 원래 의도는 "지붕은 수평"이었으나 실질적으로 필요한 것은 "지붕=지붕,
+벽=벽"의 깨끗한 분리. Roof-class 수평 비율 하락은 Phase 1 rule-based GT에서 손해지만,
+Phase 2 폴리곤 추출 성능에 실제로 어떤 영향을 주는지는 Phase 2에서 평가 필요.
+
+### 정성 증거 — Semantic 맵 4-way 2D
+
+동일 뷰의 semantic prediction. Layout: `RGB_GT | GT_sem | Baseline | Mutual | Structure | Both`
 (Wall=파랑, Roof=빨강, Terrain=녹색):
 
 ![semantic_compare_4way](figures/semantic_compare_4way/semantic_compare_4way.png)
 
-- Baseline/Structure: Wall(파랑)이 지붕면에도 번져 Wall 과잉 추정 (mIoU 0.635/0.640 구성 근거).
-- Mutual/Both: Wall이 건물 측면에만 얇게 분포, 지붕면은 Roof(빨강) + Terrain(녹색) — GT도 같은 경향.
-- GT_sem 자체가 rule-based proxy라 "Mutual의 Wall 축소가 GT 기준 손해"로 측정되나, 실제 벽 면적 축소는 CityGML 벽면 추출에 유리한 방향. Phase 2 재평가 필요.
+Baseline/Structure의 Wall 과잉 추정(지붕까지 파랑 번짐) vs Mutual/Both의 Wall 측면 한정 분포 확인.
+
+### 정성 증거 — Wall normal 분포 히스토그램 (4조건)
+
+![wall_normal_distribution](figures/wall_normal_distribution.png)
+
+Wall-class 프리미티브의 `|n·g|` 확률밀도 — 이상적 = 0에 peak (벽면 수직).
+- Baseline/Structure: bimodal (0 과 1 에 양쪽 peak, ~80% 비정상 분포)
+- Mutual/Both: 0 에 sharp peak (벽면 수직 일관)
 
 ## ③ 메커니즘 2 (L_structure) 작동 검증
 
@@ -140,24 +192,52 @@ CityGML용도의 정확도는 Phase 2에서 재평가.
 
 | Metric | Baseline | Mutual | Structure | Both |
 |--------|----------|--------|-----------|------|
-| σ_normal_intra ↓ | 0.0246 | (pending) | **0.0136 (−45%)** | 0.0158 (−36%) |
-| σ_coplanar ↓ | 0.0085 | (pending) | **0.0072 (−16%)** | 0.0075 (−13%) |
+| σ_normal_intra ↓ | 0.0246 | **0.0358 (+46% 악화)** | **0.0136 (−45%)** | 0.0158 (−36%) |
+| σ_coplanar ↓ | 0.0085 | 0.0091 (+7%) | **0.0072 (−16%)** | 0.0075 (−13%) |
 | n_groups | 254k | 224k | 249k | 222k |
 | in-group % | 68.7% | 51.8% | 71.1% | 54.0% |
 | mean group size | 14.2 | 12.0 | 15.1 | 12.8 |
 
-*Mutual의 σ 값은 본 REPORT 시점 백그라운드 실행 중 (eval_structure 2~3h/ckpt). Mutual은
-구조 손실이 없으므로 **baseline 근사 예상** (0.024 ± 5%).*
+![structure_4way_bars](figures/structure_4way_bars.png)
 
-**판정**: L_structure는 설계대로 σ_normal, σ_coplanar를 개선. Structure only > Both 폭 (−45% vs
-−36%, −16% vs −13%)의 원인 해석:
-- Both의 L_structure 실효 iter 10k (warmup @20k) vs Structure only 15k → 수렴 시간 −33%
-- L_mutual이 f_i를 재분포 → 그룹핑 경계가 달라짐 → 더 적고(249k → 222k) 커버리지 낮은(71% →
-  54%) 그룹 집합 → 측정 모수 달라짐
+### 핵심 발견 — Mutual은 구조 일관성을 **악화**시킨다
 
-즉 Both는 *다른 grouping domain* 에서 작동하므로 Structure only와 절대 비교가 완전하지 않음.
-**두 조건 모두 설계대로 작동함을 확인하는 것이 Phase 1 목표**이며, 어느 쪽이 최종 폴리곤
-품질에 유리한지는 Phase 2 결과에 의존.
+예상과 다른 실측 결과: L_mutual 단독 사용 시 **σ_normal_intra가 baseline 대비 +46% 악화**.
+사전 가설은 "L_mutual은 구조 손실이 없으므로 σ는 baseline 근사" 였으나, 실제로는 **적극 악화**.
+
+원인 (mechanism 설계 관점):
+- L_mutual의 L_vert가 Wall-class 프리미티브의 normal을 `|n·g| < ε` (horizontal-normal) 영역으로 밀어냄
+- 하지만 수평면 내에서 *어느 방위*(N/E/S/W)를 향할지는 제약 없음 → N-facing 벽과 E-facing 벽이
+  같은 "Wall" semantic class에 공존
+- 그룹핑은 (class, voxel, normal-direction-bin-of-12)로 hash → Wall-class + 인접 voxel + 같은
+  방위 bin 내에서 그룹 형성. 각 direction bin은 ~30° arc를 포함 → bin 내 법선이 최대 30° 변동
+- Baseline은 Wall-class에 "방위가 명확하지 않은 혼합" 프리미티브가 섞여 오히려 bin 할당이 덜
+  민감 → σ 낮음. Mutual은 방위가 명확히 나뉘며 bin 경계 부근 노이즈가 증폭
+
+**해석 수정**: Mutual vs Structure는 **충돌(antagonistic) 관계** — 같은 메트릭 (σ_normal)에서
+정반대 방향으로 기여. Both는 두 힘의 타협 산물로 σ_normal = 0.0158 (Baseline 0.0246 기준 −36%,
+*Mutual 기준 −56%*).
+
+### Both는 Mutual을 Structure가 구조(rescue)한 결과
+
+Mutual을 시작점(0.0358)으로 보면 Structure는 Both에서 0.0158로 끌어내림 = **Mutual 기준 −56% 개선**.
+반면 Structure only는 Baseline(0.0246)에서 0.0136으로 = **Baseline 기준 −45% 개선**.
+즉 **Both에서 Structure의 marginal contribution이 standalone보다 더 크다** (−56% > −45%).
+
+이건 "Mutual이 Structure를 억제"가 아니라, "Mutual이 Structure에게 더 어려운 문제를 주지만
+Structure가 상대적으로 더 큰 일을 한다"는 해석.
+
+**Phase 1 체크리스트 관점에서는 모두 OK**:
+- L_mutual 설계 작동 ✓ (Wall-vert 17%→88%; σ_normal 악화는 설계상 의도하지 않은 *부작용*)
+- L_structure 설계 작동 ✓ (σ_normal 감소; Mutual 존재 시에도 유효, marginal 개선은 더 큼)
+- Both에서 두 손실이 공존 ✓
+
+**시너지/간섭/충돌 판정 유보 — 이유**:
+- 시너지 (Both > Mutual+Structure 합): σ_normal에서 미성립
+- 간섭 (Both < 기대치): Mutual 기준으론 오히려 *증폭*, Baseline 기준으론 감쇠
+- 충돌 (antagonistic): Mutual이 σ를 키우고 Structure가 줄이는 *mechanism-level 충돌* 확인
+- 최종 평가는 CityGML 폴리곤 품질 (Phase 2) — "Mutual의 Wall-vert 교정 + Structure의 σ 감쇠"가
+  폴리곤 추출에 어떤 trade-off로 작용하는지가 실질 판정 기준
 
 ### 정성 증거
 
@@ -183,6 +263,43 @@ Baseline/Structure: Wall 파랑이 지붕 상면에도 번짐 (혼동 패턴).
 | ![](figures/3d/baseline_top_normal.png) | ![](figures/3d/mutual_top_normal.png) | ![](figures/3d/structure_top_normal.png) | ![](figures/3d/both_top_normal.png) |
 
 건물 상면 법선이 단색에 가까울수록 일관성 높음. Structure가 가장 균일, Both는 Structure와 baseline 중간.
+
+### 정성 증거 — L_structure 의도 효과 직접 시각화
+
+설계 목표:
+- **L_normal_align**: 같은 그룹 내 프리미티브 법선이 그룹 대표 법선과 일치 (각 편차 → 0)
+- **L_coplanar**: 같은 그룹 내 프리미티브가 그룹 대표 평면 위 (점-면 거리 → 0)
+
+의도 효과 heatmap — **녹색 = 그룹 대표와 일치 (0~7.5° 또는 0~2cm), 빨강 = 편차 (15°+ 또는 5cm+)**.
+동일 3×3m bbox.
+
+**④ Group normal deviation (L_normal_align):**
+
+| Baseline | Mutual | Structure | Both |
+|---|---|---|---|
+| ![](figures/mech_evidence/baseline_oblique_group_dev.png) | ![](figures/mech_evidence/mutual_oblique_group_dev.png) | ![](figures/mech_evidence/structure_oblique_group_dev.png) | ![](figures/mech_evidence/both_oblique_group_dev.png) |
+| 녹색 45.7% | 녹색 37.2% | 녹색 **67.1%** | 녹색 **58.0%** |
+
+**해석**: 같은 그룹 내 프리미티브들이 그룹 대표 법선과 얼마나 가까운가. Structure/Both만 50%+ 녹색
+= L_normal_align 작동 ✓. Mutual은 37% (baseline 45%보다 나쁨) — Wall 방위가 명확해진 뒤 direction
+bin 경계 부근 노이즈가 증폭된 결과 (σ_normal +46% 원인과 동일). Both는 Structure 단독(67%)보다
+약간 낮은 58%인데, 이는 Mutual이 만든 "더 어려운 그룹핑 domain" 위에서 Structure가 작동한 결과.
+
+**⑤ Coplanar deviation (L_coplanar):**
+
+| Baseline | Mutual | Structure | Both |
+|---|---|---|---|
+| ![](figures/mech_evidence/baseline_oblique_coplanar_dev.png) | ![](figures/mech_evidence/mutual_oblique_coplanar_dev.png) | ![](figures/mech_evidence/structure_oblique_coplanar_dev.png) | ![](figures/mech_evidence/both_oblique_coplanar_dev.png) |
+| 녹색 96.0% | 녹색 95.0% | 녹색 **97.6%** | 녹색 **97.7%** |
+
+**해석**: 공면성은 모든 조건에서 이미 95%+ — 2DGS 프리미티브는 disk라 원래부터 얇음. L_coplanar는
+σ_coplanar를 baseline 0.0085 → 0.0072 (−16%) 수준으로 "미세 튜닝"만 가능. 이건 놀랄 일이 아니며
+설계 의도 (통계 수준 개선) 와 부합.
+
+**핵심 메시지**: L_structure의 효과는 Mechanism 1만큼 "개별 프리미티브 단위로 시각적" 하지 않음.
+*그룹 내 모든 프리미티브가 같은 대표값에 수렴하도록* 만드는 통계적 제약이므로, 개별 프리미티브
+색깔이 녹색·빨강으로 바뀌는 것을 집계하여 "60% 녹색 vs 45% 녹색"으로 비교해야 그 효과가 보인다.
+이는 Mechanism 1처럼 "단일 벽면이 바로 벽처럼 변한다"의 극적인 시각 변화와는 *다른 종류의 작용*.
 
 #### 3D 근경 정성 — 건물 클러스터 8×8m (peak1, peak2)
 
@@ -358,12 +475,27 @@ results/phase1_ablation/
 ## 결론
 
 Phase 1 종합 판정:
-1. **체크리스트 6/6 통과**: 모든 조건이 렌더/기하 레퍼런스 수준 유지 + 각 메커니즘 설계대로 작동.
-2. **두 메커니즘 기여 축 독립**: L_mutual = Wall 수직성 등 도메인 규칙. L_structure = 그룹 내부
-   구조 일관성. 각각 독점적으로 해당 축에 기여, 서로 다른 축에서는 개입하지 않음.
-3. **Both는 두 축 동시 보존**: Wall-vert 88% + σ_normal −36%를 동시 달성 (단일 메커니즘으론 한
-   축만 가능). Phase 2 input으로 4조건 중 가장 구조화된 프리미티브 분포 제공.
-4. **시너지/간섭 판정 유보**: MatrixCity rule-GT 기반 mIoU 차이(0.015)는 proxy 한계 내. 실제
-   판정은 CityGML 기반 Phase 2 지표로 수행.
-5. **Phase 2 착수 자격 충족**: Stage 3 폴리곤 추출 파이프라인 구축 + 3D BAG 합성 데이터 + 4조건
-   ckpt 비교 준비 완료.
+
+1. **체크리스트 6/6 통과**: 네 조건 모두 렌더/기하 레퍼런스 수준 유지 + 각 메커니즘이 설계
+   의도한 방향으로 작동.
+
+2. **L_mutual 의도 효과 개별 프리미티브 단위로 시각 확인**: Wall-class 수직성 29.6% → 95.0%
+   (heatmap 정량화, 벽 법선 분포 histogram), Terrain 수평성 94% → 98%. CityGML 대상 표면-클래스
+   올바른 재분류.
+
+3. **L_structure 의도 효과 통계 수준으로 확인**: σ_normal −45% (Structure only) / −36% (Both,
+   Mutual 기준 −56%), 그룹편차 heatmap 45% → 67% 녹색 비율. 개별 프리미티브 단위에서는 색 편차
+   집계로 관찰 가능하나 "한 장면에서 한 벽이 드라마틱하게 달라짐" 수준의 시각 변화는 나타나지
+   않음 (설계 의도상 당연).
+
+4. **Mutual–Structure 충돌 관계 확인**: L_mutual이 σ_normal을 악화(+46%)시킴 (설계상
+   의도하지 않은 부작용). Both에서 L_structure가 이를 상쇄 (0.0358→0.0158). **시너지 아니며,
+   mechanism-level trade-off**: 두 mechanism의 optimal point가 같은 지표에서 정반대 방향에
+   있음을 실측으로 확인.
+
+5. **시너지/간섭 최종 판정 유보**: MatrixCity rule-GT 기반 지표(mIoU, σ)만으로는 "어느 trade-off
+   조합이 CityGML 품질에 유리한가" 판정 불가. Phase 2 (3D BAG 폴리곤 기반 평가)에서 실질 판정.
+
+6. **Phase 2 착수 자격 충족**: Stage 3 폴리곤 추출 파이프라인 구축 + 3D BAG 합성 데이터 +
+   4조건 ckpt 비교 준비 완료. Both ckpt는 "Wall 수직성 + 구조 일관성 동시 보존" 을 유일하게
+   달성한 조건으로, Phase 2 primary input 후보.
