@@ -121,6 +121,39 @@ Rule-based GT 기반 mIoU. GT 자체가 depth/normal 기반이므로 L_mutual의
 표면 포함" — L_mutual이 "엄격히 수직인 표면만 Wall"로 좁히면 rule-GT 기준 손해로 측정. 실제
 CityGML용도의 정확도는 Phase 2에서 재평가.
 
+### Mech 1 + Mech 2 공통 정성 증거 — Photo + Normal 4-way
+
+두 메커니즘 모두 **프리미티브 법선(n_i)에 gradient를 흘려** 개선을 만듬:
+- L_mutual: Wall n_i → 수평 법선 / Terrain n_i → 수직 법선 (개별 프리미티브 직접 제약)
+- L_structure: 같은 그룹 n_i → 그룹 대표 법선 정렬 (통계 제약)
+
+따라서 **rendered normal map**이 두 효과를 동시에 드러내는 가장 직접적 시각 증거입니다.
+
+렌더링 방식: gsplat `rasterization_2dgs`에 per-primitive 색상으로 normal → RGB 매핑
+(각 성분 `(n+1)/2`) 전달. 같은 평면 = 같은 색 = 법선 일관성.
+
+**Row 1 (Photo / RGB)**: photometric 품질이 조건에 관계없이 유지됨을 확인.
+**Row 2 (Normal)**: 표면 법선 일관성. 같은 벽·지붕은 단일 색이어야 이상적.
+**Row 3 (Δnormal vs Baseline ×3)**: 각 조건이 Baseline과 어디서 다른지 3배 증폭.
+
+![photo_normal_v5083](figures/photo_normal_4way/v5083_panel.png)
+
+![photo_normal_v5528](figures/photo_normal_4way/v5528_panel.png)
+
+**관찰**:
+1. **Photo 4조건 거의 동일** → 두 손실 추가가 photometric 해치지 않음 (parity 유지 직접 증거)
+2. **Normal map 미묘한 차이**: Baseline에서 건물 측면 normal color가 부분적으로 튐(fragmented) vs
+   Structure/Both에서 매끈한 단색 블록. 하지만 전체 뷰 레벨에서는 **미묘 수준**.
+3. **Diff map (Row 3)이 가장 정보 많음**:
+   - Mutual vs Baseline: 지붕에 큰 차이 (Wall→Roof 재분류된 프리미티브들의 법선이 실제로 바뀜)
+   - Structure vs Baseline: 건물 전체에 분산된 작은 차이 (그룹 단위 미세 재정렬)
+   - Both vs Baseline: Mutual의 큰 차이 + Structure의 잔잔한 차이 중첩
+
+**한계**: Photo가 4조건 동일하게 보이는 것과 마찬가지로, normal map의 조건간 차이도 "드라마틱
+수준"이 아닌 *미묘* 수준. 이는 개별 픽셀 수준 normal 은 이미 baseline에서도 "그럴듯한" 수준이며,
+개선의 주 영역이 *집계 통계 (σ_normal)* 이기 때문. Diff map이 변화의 공간 분포를 드러내지만,
+그 *크기(magnitude)*는 통계 수치(σ_normal Structure −45%, Both −36%)로만 완전히 표현됨.
+
 ### 정성 증거 — L_mutual 의도 효과
 
 설계 목표:
