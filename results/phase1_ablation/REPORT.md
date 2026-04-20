@@ -121,74 +121,51 @@ Rule-based GT 기반 mIoU. GT 자체가 depth/normal 기반이므로 L_mutual의
 표면 포함" — L_mutual이 "엄격히 수직인 표면만 Wall"로 좁히면 rule-GT 기준 손해로 측정. 실제
 CityGML용도의 정확도는 Phase 2에서 재평가.
 
-### 정성 증거 — L_mutual 의도 효과 직접 시각화
+### 정성 증거 — L_mutual 의도 효과
 
 설계 목표:
-- **L_vert**: Wall 법선이 수평 (벽면 = 수직). `|n·g| < 0.15` → 녹색.
-- **L_horiz**: Terrain 법선이 수직 (지면 = 수평). `|n·g| > 0.85` → 녹색.
-- **L_slope**: Roof 법선이 수직 (지붕 = 수평). `|n·g| > 0.85` → 녹색.
+- **L_vert**: Wall 법선이 수평 (벽면 = 수직)
+- **L_horiz**: Terrain 법선이 수직 (지면 = 수평)
+- **L_slope**: Roof 법선이 수직 (지붕 = 수평)
 
-**렌더링 방식**: gsplat `rasterization_2dgs` 로 per-primitive RGB feature를 커스텀 heatmap 색상
-(녹색=의도대로, 빨강=미달)로 설정 후 원근 투영 + alpha blending — 점구름이 아닌 **제대로 된
-2DGS planar disk 렌더링**. 각 class의 프리미티브만 필터링하여 표면으로 시각화. 뷰 5368 (전체
-scene 대각선 aerial view).
+#### 증거 ① — Semantic 맵 4-way (픽셀 수준, 가장 직관적)
 
-**해당 class의 전체(global) 프리미티브에 대한 녹색 비율**:
-
-| Mode | Baseline | Mutual | Structure | Both |
-|------|----------|--------|-----------|------|
-| Wall-vert (L_vert) | **21.0%** | **93.5%** | 21.0% | **93.6%** |
-| Terrain-horiz (L_horiz) | 95.5% | 99.5% | 96.7% | 99.5% |
-| Roof-horiz (L_slope) | **91.7%** | **56.0%** | 93.5% | 59.6% |
-
-**① Wall-class 수직성 (L_vert):**
-
-| Baseline | Mutual | Structure | Both |
-|---|---|---|---|
-| ![](figures/mech_evidence_2dgs/baseline_v5368_vert_wall.png) | ![](figures/mech_evidence_2dgs/mutual_v5368_vert_wall.png) | ![](figures/mech_evidence_2dgs/structure_v5368_vert_wall.png) | ![](figures/mech_evidence_2dgs/both_v5368_vert_wall.png) |
-
-**해석**: Baseline/Structure는 Wall-class 중 79%가 빨강(기울어진 법선) — 지붕 상면이 Wall로 오분류.
-Mutual/Both는 94% 녹색 = Wall class가 실제로 벽면만 포함. **L_vert 효과 개별 프리미티브 단위로
-드라마틱하게 시각화됨.**
-
-**② Terrain-class 수평성 (L_horiz):**
-
-| Baseline | Mutual | Structure | Both |
-|---|---|---|---|
-| ![](figures/mech_evidence_2dgs/baseline_v5368_horiz_terrain.png) | ![](figures/mech_evidence_2dgs/mutual_v5368_horiz_terrain.png) | ![](figures/mech_evidence_2dgs/structure_v5368_horiz_terrain.png) | ![](figures/mech_evidence_2dgs/both_v5368_horiz_terrain.png) |
-
-Terrain은 Baseline에서도 이미 95% 수평 — L_horiz 효과는 소폭 개선 (+4%p). Terrain은 원래 평평해서
-제약이 거의 필요하지 않았음.
-
-**③ Roof-class 수평성 (L_slope) — 설계 부작용 노출:**
-
-| Baseline | Mutual | Structure | Both |
-|---|---|---|---|
-| ![](figures/mech_evidence_2dgs/baseline_v5368_horiz_roof.png) | ![](figures/mech_evidence_2dgs/mutual_v5368_horiz_roof.png) | ![](figures/mech_evidence_2dgs/structure_v5368_horiz_roof.png) | ![](figures/mech_evidence_2dgs/both_v5368_horiz_roof.png) |
-
-**의도와 반대 변화**: Mutual/Both에서 Roof-class 수평성이 91.7% → 56~60%로 *하락*. 원인은 앞서
-설명한 "Roof class 오염" — L_vert에 의해 Wall에서 축출된 비수직 프리미티브가 Roof로 재분류되며
-비수평 요소가 흡수됨. 이것이 **Mutual σ_normal +46% 악화의 주범**.
-
-이 결과는 L_mutual 설계의 *의도하지 않은 부작용*이며, Phase 2에서 Roof 재정의 엄격화 또는
-L_slope 가중치 조정 등을 통해 개선 여지 있음.
-
-### 정성 증거 — Semantic 맵 4-way 2D
-
-동일 뷰의 semantic prediction. Layout: `RGB_GT | GT_sem | Baseline | Mutual | Structure | Both`
+동일 뷰의 semantic prediction 픽셀 비교. Layout: `RGB_GT | GT_sem | Baseline | Mutual | Structure | Both`
 (Wall=파랑, Roof=빨강, Terrain=녹색):
 
 ![semantic_compare_4way](figures/semantic_compare_4way/semantic_compare_4way.png)
 
-Baseline/Structure의 Wall 과잉 추정(지붕까지 파랑 번짐) vs Mutual/Both의 Wall 측면 한정 분포 확인.
+- **Baseline/Structure**: 지붕 상면까지 파랑(Wall)이 번짐 → "건물 상부도 Wall로 오분류"
+- **Mutual/Both**: 지붕 상면은 빨강(Roof), 측면만 파랑(Wall) → **L_vert 효과로 Wall class가 실제 벽면으로 국한**
 
-### 정성 증거 — Wall normal 분포 히스토그램 (4조건)
+이 픽셀 수준 비교가 가장 명확한 Mech 1 증거.
+
+#### 증거 ② — Wall-class 법선 분포 히스토그램 (분포 shift)
 
 ![wall_normal_distribution](figures/wall_normal_distribution.png)
 
-Wall-class 프리미티브의 `|n·g|` 확률밀도 — 이상적 = 0에 peak (벽면 수직).
-- Baseline/Structure: bimodal (0 과 1 에 양쪽 peak, ~80% 비정상 분포)
-- Mutual/Both: 0 에 sharp peak (벽면 수직 일관)
+Wall-class 프리미티브의 `|n·g|` 확률밀도 (0 = horizontal-normal = 벽면 수직 = 이상적):
+- **Baseline/Structure (gray/blue)**: bimodal — 0과 1 양쪽에 peak. 즉 Wall class에 "수직 벽" + "수평 지붕면" 혼재.
+- **Mutual/Both (red/green)**: 0에 sharp peak. Wall class가 실제 벽면(horizontal normal)으로만 분포.
+
+이 히스토그램이 L_vert의 "설계대로 분포 shift" 증거.
+
+#### 증거 ③ — 도메인 규칙 수치 요약
+
+| Metric | Baseline | Mutual | Structure | Both |
+|--------|----------|--------|-----------|------|
+| Wall-vert (global) | 21.0% | **93.5%** | 21.0% | **93.6%** |
+| Terrain-horiz | 95.5% | **99.5%** | 96.7% | **99.5%** |
+| Roof-horiz | **91.7%** | 56.0% | 93.5% | 59.6% |
+
+- **Wall-vert 21% → 93.6%**: Mech1이 Wall class를 "수직 벽면만 포함"하도록 교정. Structure 단독으론 개선 없음 (21% 동일).
+- **Terrain-horiz 95% → 99.5%**: 소폭 개선 — Terrain은 원래 거의 수평.
+- **Roof-horiz 91.7% → 59.6%**: 의도와 반대 방향 *부작용*. 원인: L_vert가 Wall에서 축출한 비수직 프리미티브가 Roof로 재분류되며 Roof class에 비수평 요소 혼재. *이 Roof 오염이 σ_normal +46% 악화의 주범*.
+
+> 참고: mech_evidence heatmap 이미지 (figures/mech_evidence_2dgs/) 는 개별 프리미티브를
+> gsplat으로 verticality 색상 매핑한 실험적 시각화이나, class-필터링된 semi-transparent
+> primitive들이 aerial view에서 명확히 해석되지 않아 **부록** 지위로 두고 본문 주요 증거는
+> 위 ①②③ (semantic map + histogram + 수치표)로 정리.
 
 ## ③ 메커니즘 2 (L_structure) 작동 검증
 
@@ -276,70 +253,72 @@ Baseline/Structure: Wall 파랑이 지붕 상면에도 번짐 (혼동 패턴).
 
 건물 상면 법선이 단색에 가까울수록 일관성 높음. Structure가 가장 균일, Both는 Structure와 baseline 중간.
 
-### 정성 증거 — L_structure 의도 효과 직접 시각화
+### 정성 증거 — L_structure 의도 효과
 
 설계 목표:
-- **L_normal_align**: 같은 그룹 내 프리미티브 법선이 그룹 대표 법선과 일치 (각 편차 → 0)
-- **L_coplanar**: 같은 그룹 내 프리미티브가 그룹 대표 평면 위 (점-면 거리 → 0)
+- **L_normal_align**: 같은 그룹 내 프리미티브 법선이 그룹 대표 법선과 일치
+- **L_coplanar**: 같은 그룹 내 프리미티브가 그룹 대표 평면 위에 분포
 
-의도 효과 heatmap (gsplat 2DGS 렌더, 같은 뷰 5368):
-**녹색 = 그룹 대표와 일치 (0~7.5° 또는 0~2cm), 빨강 = 편차 (15°+ 또는 5cm+)**.
+**Mech 2는 본질적으로 집계(aggregate) 수준 제약**이므로 "단일 벽이 드라마틱하게 변하는" 개별
+프리미티브 단위 시각 증거는 설계 의도상 존재하지 않음. 증거는 통계 분포 형태:
 
-**그룹 할당된(in-group) 프리미티브 전체 기준 녹색 비율**:
+#### 증거 ① — σ_normal_intra / σ_coplanar 4조건 bar chart
 
-| Mode | Baseline | Mutual | Structure | Both |
-|------|----------|--------|-----------|------|
-| Group-dev (L_normal_align) | 47.5% | **36.4%** | **69.8%** | 60.1% |
-| Coplanar-dev (L_coplanar) | 95.5% | 94.3% | 97.5% | 97.2% |
+![structure_4way_bars](figures/structure_4way_bars.png)
 
-**④ Group normal deviation (L_normal_align):**
+**읽는 법**:
+- σ_normal_intra = 그룹 내 법선 편차의 RMS (그룹 멤버 법선이 얼마나 서로 다른지). 낮을수록 그룹이 "같은 면처럼 깔끔".
+- σ_coplanar = 그룹 대표 평면으로부터의 거리 편차. 낮을수록 "모두 같은 평면 위".
 
-| Baseline | Mutual | Structure | Both |
-|---|---|---|---|
-| ![](figures/mech_evidence_2dgs/baseline_v5368_group_dev.png) | ![](figures/mech_evidence_2dgs/mutual_v5368_group_dev.png) | ![](figures/mech_evidence_2dgs/structure_v5368_group_dev.png) | ![](figures/mech_evidence_2dgs/both_v5368_group_dev.png) |
+**읽히는 패턴**:
+- **Structure only (청색)**: σ_normal 0.0246 → 0.0136 (**−45%**, 최대 개선). 설계 의도대로 작동 ✓
+- **Mutual only (빨강)**: σ_normal 0.0246 → 0.0358 (**+46% 악화**). Roof class 오염 부작용.
+- **Both (녹색)**: σ_normal 0.0158 (Baseline 대비 −36%, Mutual 대비 −56%). Mech1과 Mech2 타협점.
 
-**해석**: Structure only가 가장 녹색 (69.8%) = 그룹 내 법선 정렬 가장 엄격. Mutual은 36.4%로
-Baseline(47.5%)보다도 나쁨 — Roof class 오염으로 그룹 정렬이 망가짐. Both(60.1%)는 두 힘의 타협
-— Structure 효과가 Mutual의 악화를 대부분 상쇄하지만 *완전 복원은 아님* (Structure 단독 69.8% vs
-Both 60.1%).
+#### 증거 ② — 그룹 편차 녹색 비율 (heatmap 통계)
 
-**⑤ Coplanar deviation (L_coplanar):**
+그룹이 할당된 프리미티브 각각에 대해 "그룹 대표 법선과의 각도 편차"를 계산. 0~7.5°면 "정렬됨(녹색)", 30°+면 "편차(빨강)":
 
-| Baseline | Mutual | Structure | Both |
-|---|---|---|---|
-| ![](figures/mech_evidence_2dgs/baseline_v5368_coplanar_dev.png) | ![](figures/mech_evidence_2dgs/mutual_v5368_coplanar_dev.png) | ![](figures/mech_evidence_2dgs/structure_v5368_coplanar_dev.png) | ![](figures/mech_evidence_2dgs/both_v5368_coplanar_dev.png) |
+| Metric | Baseline | Mutual | Structure | Both |
+|--------|----------|--------|-----------|------|
+| group_dev 녹색 % | 47.5% | 36.4% | **69.8%** | 60.1% |
+| coplanar_dev 녹색 % | 95.5% | 94.3% | **97.5%** | 97.2% |
 
-**해석**: 공면성은 모든 조건에서 94%+ — 2DGS 프리미티브는 원래 disk라 개별 자체가 얇음. L_coplanar는
-σ_coplanar를 0.0085 → 0.0072 (−16%) 수준 미세 튜닝. 집합 수준에서만 수치로 드러남.
+- **group_dev (L_normal_align 직접 측정)**: Structure +22.3%p, Mutual −11.1%p, Both +12.6%p 개선.
+  Structure가 가장 엄격히 정렬, Mutual은 오히려 악화, Both는 중간.
+- **coplanar_dev (L_coplanar 직접 측정)**: 이미 95%+로 포화. 개선 폭 미미 (2DGS 프리미티브가 원래 disk라 개별 자체가 얇음 → 공면성은 이미 양호, L_coplanar는 "미세 튜닝").
 
-**Mechanism 2 효과의 본질적 차이**:
-- Mechanism 1 (L_mutual): *개별* 프리미티브의 normal을 직접 밀어냄 → 단일 벽면이 드라마틱하게
-  녹색→빨강→녹색 전환하는 것을 눈으로 볼 수 있음.
-- Mechanism 2 (L_structure): *그룹 평균*을 타깃으로 함. 개별 프리미티브는 그룹 대표에 "근접"하는
-  방향으로 조정되지만, 대표 자체가 매 500 iter 재계산. 시각적으로는 "전체 녹색 비율이 47% →
-  60%로 집계적으로 증가" 수준으로 나타남. 이는 *설계 의도 자체*가 통계 aggregate에서 작동하는
-  mechanism이기 때문.
+#### Mechanism 2 효과의 본질적 한계
 
-### Both에서 두 메커니즘 효과가 어떻게 드러나는가 — honest 정량
+Mech 2의 효과는 "단일 장면에서 한 벽이 변하는 것"이 아니라 **"200k 그룹 전체의 편차 분포가 shift"** 하는 것:
+- 개별 프리미티브는 그룹 대표에 "근접"하는 방향으로 조정
+- 하지만 대표 자체가 매 500 iter 재계산되는 이동 타겟
+- 시각적 결과: 장면의 녹색 비율이 집계적으로 47.5% → 60%로 증가하는 양적 변화
 
-| 지표 | Baseline | Structure only | Mutual only | **Both** | Both 회복도 |
-|------|----------|---------------|-------------|----------|-----------|
-| Mech1: Wall-vert % | 21.0% | 21.0% | 93.5% | **93.6%** | **Mutual 효과 100%** |
-| Mech1: Terrain-horiz % | 95.5% | 96.7% | 99.5% | **99.5%** | **Mutual 효과 100%** |
-| Mech2: σ_normal_intra | 0.0246 | 0.0136 | 0.0358 | **0.0158** | Structure 개선의 **80%** 보존 |
-| Mech2: group_dev 녹색 % | 47.5% | 69.8% | 36.4% | **60.1%** | Structure 개선의 **57%** 보존 |
-| Mech2: σ_coplanar | 0.0085 | 0.0072 | 0.0091 | **0.0075** | Structure 개선의 **77%** 보존 |
+즉 **Mech 2의 "개선"은 정량 수치로만 완전히 드러남**. 개별 프리미티브 단위 heatmap은 참고용 이상의 가치가 없음. 이는 설계상 당연한 결과이지 시각화의 실패가 아님.
 
-**정직한 판정**: Both에서
-- **Mech 1 효과는 완전 보존** (Wall-vert, Terrain-horiz 모두 Mutual 단독과 동등)
-- **Mech 2 효과는 부분 보존** (σ 지표 57~80% 회복, group_dev 57% 회복)
+### Both에서 두 메커니즘 효과 — honest 정량 비교
 
-Mech 2가 부분 보존되는 이유는 **Mutual이 Roof class를 오염시켜 그룹핑 domain이 달라졌기 때문**이며,
-Structure가 그 나빠진 domain에서 작업하므로 standalone만큼의 효과는 내지 못함.
+| 지표 | Baseline | Structure only | Mutual only | **Both** | Both vs 최적 조건 |
+|------|----------|---------------|-------------|----------|------------------|
+| Mech1: Wall-vert % | 21.0% | 21.0% | 93.5% | **93.6%** | Mutual의 **100%** 보존 |
+| Mech1: Terrain-horiz % | 95.5% | 96.7% | 99.5% | **99.5%** | Mutual의 **100%** 보존 |
+| Mech2: σ_normal_intra | 0.0246 | **0.0136** | 0.0358 | 0.0158 | Structure 개선폭의 **80%** 보존 |
+| Mech2: σ_coplanar | 0.0085 | **0.0072** | 0.0091 | 0.0075 | Structure 개선폭의 **77%** 보존 |
+| Mech2: group_dev 녹색 % | 47.5% | **69.8%** | 36.4% | 60.1% | Structure 개선폭의 **57%** 보존 |
 
-**Both의 실질적 성격**: "두 효과 모두 drama하게 드러나는 이상적 조합"이 아니라, **"Mech 1을 완전
-적용하면서 Mech 2의 효과를 절반 이상 지키는 타협점"**. 이 타협이 CityGML 폴리곤 품질에 어떤
-영향을 주는지는 Phase 2에서 판정.
+**Both의 실체**:
+- Mech 1 지표에서는 **Mutual only와 동등** (두 조건이 같은 Wall-vert / Terrain-horiz 달성).
+- Mech 2 지표에서는 **Structure only보다 약함** (σ는 80%만, group_dev는 57%만 회복).
+
+즉 Both는 Mech 1은 full 적용, Mech 2는 partial 적용의 조합. "두 효과가 완전히 같은 수준으로 드러나는 이상적 상태"가 아님.
+
+**왜 Mech 2만 약한가**: L_mutual이 Roof class를 오염시켜 (Wall에서 축출된 비수직 프리미티브가 Roof로 이동) 그룹핑 domain 자체가 달라짐 → Structure가 그 혼란스런 domain 위에서 작업하게 되어 standalone(깨끗한 baseline 그룹)만큼의 효과 안 나옴.
+
+**그럼에도 Both가 유의한 이유**:
+- 단독 조건은 항상 한 축에서 손해 (Mutual: σ +46%, Structure: Wall-vert 미개선)
+- Both는 두 축 모두 acceptable (Wall-vert 93.6%, σ −36%)
+- CityGML 폴리곤 품질에 "Wall 수직 + 구조 일관" 둘 다 필요하다면 Both가 유일한 선택지 (Phase 2 검증)
 
 #### 3D 근경 정성 — 건물 클러스터 8×8m (peak1, peak2)
 

@@ -80,25 +80,33 @@ def compute_groups(ckpt_path, voxel=0.05, n_dir=12, min_gr=5):
     return means, n, sem, scales, quats, gids, ang_dev, copl_d
 
 
-def render_feature(model, colors_custom, mask, w2c, K, W, H, device):
-    """Render only primitives where mask=True, with custom RGB colors."""
-    means = model.means.detach()[mask].contiguous()
-    quats = model.quats.detach()[mask].contiguous()
-    scales = model.scales.detach()[mask].contiguous()
-    opacities = model.opacities.detach()[mask].contiguous()
-    colors = torch.from_numpy(colors_custom[mask.cpu().numpy()]).to(device).contiguous()
+def render_feature(model, colors_custom, mask, w2c, K, W, H, device,
+                   gray_nontarget=True, nontarget_rgb=(0.72, 0.72, 0.72)):
+    """Render ALL primitives with custom RGB. Target (mask=True) gets
+    colors_custom; non-target gets muted gray (so scene context is preserved).
+    """
+    means = model.means.detach().contiguous()
+    quats = model.quats.detach().contiguous()
+    scales = model.scales.detach().contiguous()
+    opacities = model.opacities.detach().contiguous()
+    N = means.shape[0]
+    colors_full = torch.from_numpy(colors_custom).to(device).contiguous()
+    if gray_nontarget:
+        gray = torch.tensor(nontarget_rgb, device=device).expand(N, 3).contiguous()
+        mask_dev = mask.to(device).view(-1, 1).float()
+        colors_full = colors_full * mask_dev + gray * (1 - mask_dev)
     viewmats = w2c.unsqueeze(0).to(device)
     Ks = K.unsqueeze(0).to(device)
     out = rasterization_2dgs(
         means=means, quats=quats, scales=scales, opacities=opacities,
-        colors=colors,
+        colors=colors_full,
         viewmats=viewmats, Ks=Ks,
         width=W, height=H,
         render_mode="RGB",
         sh_degree=None,
-        backgrounds=torch.ones(1, 3, device=device),  # white background
+        backgrounds=torch.ones(1, 3, device=device),
     )
-    rgb = out[0][0]  # (H, W, 3)
+    rgb = out[0][0]
     return rgb.detach().clamp(0, 1).cpu().numpy()
 
 
