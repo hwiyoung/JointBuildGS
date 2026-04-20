@@ -101,7 +101,9 @@ Baseline / Mutual only / Structure only / Both — 메커니즘 1/2 개별 기�
 - [x] Phase 1 Step 1-3: + Semantic head + L_sem (eval PSNR 22.07 유지, mIoU 0.635, gradient isolation 검증)
 - [x] Phase 1 Step 1-4: + L_mutual (Mutual only) — PSNR 22.24 유지, Wall vertical-frac 19%→91%, mIoU 0.626(-0.009)
 - [x] Phase 1 Step 1-5: + L_structure (Structure only) — PSNR 22.16 유지, σ_normal_intra -45%, σ_coplanar -16%, mIoU 0.640(+0.005)
-- [ ] **Phase 1 Step 1-6**: Both + 4조건 ablation 정리 ← **현재**
+- [x] Phase 1 Step 1-6: Both — PSNR 22.26 peak 22.44, Wall-vert 88.3%, σ_normal −36%, 두 메커니즘 동시 보존 확인
+- [x] **Phase 1 종합**: 체크리스트 6/6 통과 — 렌더/기하 parity 유지, L_mutual/L_structure 각각 설계대로 작동, Both에서 동시 공존. 시너지·간섭 판정은 Phase 2 CityGML 평가로 이관.
+- [ ] **Phase 2 준비**: 3D BAG 합성 데이터 + Stage 3 (대표 평면 → 폴리곤 교차 → CityGML) 파이프라인 구축 ← **현재**
 - [ ] Phase 1 Step 1-5: + L_structure (Structure only)
 - [ ] Phase 1 Step 1-6: Both + 4조건 ablation 정리
 - [ ] Phase 2: 3D BAG 합성 → CityGML 검증

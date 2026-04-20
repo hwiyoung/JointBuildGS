@@ -1,0 +1,53 @@
+=== baseline ===
+[baseline] loading results/phase1_semantic/run/ckpt/final.pt
+  primitives: 5270672
+  bbox lo=[-8.36288371 -6.65655376 -0.01953039] hi=[7.37011394 6.05643221 3.00785073]
+  after crop: 4973782
+  grouping (voxel=0.05)...
+  groups: 254562, in-group: 3618860/5270672 (68.7%)
+  wrote baseline_top_group.png
+  wrote baseline_top_normal.png
+  wrote baseline_top_semantic.png
+  wrote baseline_oblique_group.png
+  wrote baseline_oblique_normal.png
+  wrote baseline_oblique_semantic.png
+=== mutual ===
+[mutual] loading results/phase1_mutual/run/ckpt/final.pt
+  primitives: 5212551
+  bbox lo=[-8.37315512 -6.66927123 -0.01099514] hi=[7.37489557 6.02705097 3.00060928]
+  after crop: 4916485
+  grouping (voxel=0.05)...
+  groups: 224028, in-group: 2698611/5212551 (51.8%)
+  wrote mutual_top_group.png
+  wrote mutual_top_normal.png
+  wrote mutual_top_semantic.png
+  wrote mutual_oblique_group.png
+  wrote mutual_oblique_normal.png
+  wrote mutual_oblique_semantic.png
+=== structure ===
+[structure] loading results/phase1_structure/run/ckpt/final.pt
+  primitives: 5274035
+  bbox lo=[-8.38333658 -6.66601815 -0.01822406] hi=[7.36867545 6.04760257 3.01217665]
+  after crop: 4976737
+  grouping (voxel=0.05)...
+  groups: 248885, in-group: 3752046/5274035 (71.1%)
+  wrote structure_top_group.png
+  wrote structure_top_normal.png
+  wrote structure_top_semantic.png
+  wrote structure_oblique_group.png
+  wrote structure_oblique_normal.png
+  wrote structure_oblique_semantic.png
+=== both ===
+[both] loading results/phase1_ablation/run/ckpt/final.pt
+  primitives: 5263854
+  bbox lo=[-8.36568461 -6.6686619  -0.01095196] hi=[7.38062682 6.06906466 2.99853211]
+  after crop: 4964991
+  grouping (voxel=0.05)...
+  groups: 222398, in-group: 2843152/5263854 (54.0%)
+  wrote both_top_group.png
+  wrote both_top_normal.png
+  wrote both_top_semantic.png
+  wrote both_oblique_group.png
+  wrote both_oblique_normal.png
+  wrote both_oblique_semantic.png
+=== ALL DONE ===

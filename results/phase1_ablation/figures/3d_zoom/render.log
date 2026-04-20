@@ -1,0 +1,129 @@
+=== peak1_baseline ===
+[peak1_baseline] loading results/phase1_semantic/run/ckpt/final.pt
+  primitives: 5270672
+  bbox lo=[-6.49 -8.48 -0.1 ] hi=[ 1.51 -0.48  3.2 ]
+  after crop: 1247722
+  grouping (voxel=0.05)...
+  groups: 254562, in-group: 3618860/5270672 (68.7%)
+  wrote peak1_baseline_top_group.png
+  wrote peak1_baseline_top_normal.png
+  wrote peak1_baseline_top_semantic.png
+  wrote peak1_baseline_front_group.png
+  wrote peak1_baseline_front_normal.png
+  wrote peak1_baseline_front_semantic.png
+  wrote peak1_baseline_oblique_group.png
+  wrote peak1_baseline_oblique_normal.png
+  wrote peak1_baseline_oblique_semantic.png
+=== peak1_mutual ===
+[peak1_mutual] loading results/phase1_mutual/run/ckpt/final.pt
+  primitives: 5212551
+  bbox lo=[-6.49 -8.48 -0.1 ] hi=[ 1.51 -0.48  3.2 ]
+  after crop: 1207089
+  grouping (voxel=0.05)...
+  groups: 224028, in-group: 2698611/5212551 (51.8%)
+  wrote peak1_mutual_top_group.png
+  wrote peak1_mutual_top_normal.png
+  wrote peak1_mutual_top_semantic.png
+  wrote peak1_mutual_front_group.png
+  wrote peak1_mutual_front_normal.png
+  wrote peak1_mutual_front_semantic.png
+  wrote peak1_mutual_oblique_group.png
+  wrote peak1_mutual_oblique_normal.png
+  wrote peak1_mutual_oblique_semantic.png
+=== peak1_structure ===
+[peak1_structure] loading results/phase1_structure/run/ckpt/final.pt
+  primitives: 5274035
+  bbox lo=[-6.49 -8.48 -0.1 ] hi=[ 1.51 -0.48  3.2 ]
+  after crop: 1250472
+  grouping (voxel=0.05)...
+  groups: 248885, in-group: 3752046/5274035 (71.1%)
+  wrote peak1_structure_top_group.png
+  wrote peak1_structure_top_normal.png
+  wrote peak1_structure_top_semantic.png
+  wrote peak1_structure_front_group.png
+  wrote peak1_structure_front_normal.png
+  wrote peak1_structure_front_semantic.png
+  wrote peak1_structure_oblique_group.png
+  wrote peak1_structure_oblique_normal.png
+  wrote peak1_structure_oblique_semantic.png
+=== peak1_both ===
+[peak1_both] loading results/phase1_ablation/run/ckpt/final.pt
+  primitives: 5263854
+  bbox lo=[-6.49 -8.48 -0.1 ] hi=[ 1.51 -0.48  3.2 ]
+  after crop: 1244557
+  grouping (voxel=0.05)...
+  groups: 222398, in-group: 2843152/5263854 (54.0%)
+  wrote peak1_both_top_group.png
+  wrote peak1_both_top_normal.png
+  wrote peak1_both_top_semantic.png
+  wrote peak1_both_front_group.png
+  wrote peak1_both_front_normal.png
+  wrote peak1_both_front_semantic.png
+  wrote peak1_both_oblique_group.png
+  wrote peak1_both_oblique_normal.png
+  wrote peak1_both_oblique_semantic.png
+=== peak2_baseline ===
+[peak2_baseline] loading results/phase1_semantic/run/ckpt/final.pt
+  primitives: 5270672
+  bbox lo=[-0.75 -2.63 -0.1 ] hi=[7.25 5.37 3.2 ]
+  after crop: 1845299
+  grouping (voxel=0.05)...
+  groups: 254562, in-group: 3618860/5270672 (68.7%)
+  wrote peak2_baseline_top_group.png
+  wrote peak2_baseline_top_normal.png
+  wrote peak2_baseline_top_semantic.png
+  wrote peak2_baseline_front_group.png
+  wrote peak2_baseline_front_normal.png
+  wrote peak2_baseline_front_semantic.png
+  wrote peak2_baseline_oblique_group.png
+  wrote peak2_baseline_oblique_normal.png
+  wrote peak2_baseline_oblique_semantic.png
+=== peak2_mutual ===
+[peak2_mutual] loading results/phase1_mutual/run/ckpt/final.pt
+  primitives: 5212551
+  bbox lo=[-0.75 -2.63 -0.1 ] hi=[7.25 5.37 3.2 ]
+  after crop: 1846858
+  grouping (voxel=0.05)...
+  groups: 224028, in-group: 2698611/5212551 (51.8%)
+  wrote peak2_mutual_top_group.png
+  wrote peak2_mutual_top_normal.png
+  wrote peak2_mutual_top_semantic.png
+  wrote peak2_mutual_front_group.png
+  wrote peak2_mutual_front_normal.png
+  wrote peak2_mutual_front_semantic.png
+  wrote peak2_mutual_oblique_group.png
+  wrote peak2_mutual_oblique_normal.png
+  wrote peak2_mutual_oblique_semantic.png
+=== peak2_structure ===
+[peak2_structure] loading results/phase1_structure/run/ckpt/final.pt
+  primitives: 5274035
+  bbox lo=[-0.75 -2.63 -0.1 ] hi=[7.25 5.37 3.2 ]
+  after crop: 1854614
+  grouping (voxel=0.05)...
+  groups: 248885, in-group: 3752046/5274035 (71.1%)
+  wrote peak2_structure_top_group.png
+  wrote peak2_structure_top_normal.png
+  wrote peak2_structure_top_semantic.png
+  wrote peak2_structure_front_group.png
+  wrote peak2_structure_front_normal.png
+  wrote peak2_structure_front_semantic.png
+  wrote peak2_structure_oblique_group.png
+  wrote peak2_structure_oblique_normal.png
+  wrote peak2_structure_oblique_semantic.png
+=== peak2_both ===
+[peak2_both] loading results/phase1_ablation/run/ckpt/final.pt
+  primitives: 5263854
+  bbox lo=[-0.75 -2.63 -0.1 ] hi=[7.25 5.37 3.2 ]
+  after crop: 1855952
+  grouping (voxel=0.05)...
+  groups: 222398, in-group: 2843152/5263854 (54.0%)
+  wrote peak2_both_top_group.png
+  wrote peak2_both_top_normal.png
+  wrote peak2_both_top_semantic.png
+  wrote peak2_both_front_group.png
+  wrote peak2_both_front_normal.png
+  wrote peak2_both_front_semantic.png
+  wrote peak2_both_oblique_group.png
+  wrote peak2_both_oblique_normal.png
+  wrote peak2_both_oblique_semantic.png
+=== ZOOM DONE ===

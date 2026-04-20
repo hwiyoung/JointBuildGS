@@ -1,0 +1,137 @@
+=== TIGHT ZOOM peak2_tight 4x4m ===
+[tight2_baseline] loading results/phase1_semantic/run/ckpt/final.pt
+  primitives: 5270672
+  bbox lo=[ 1.25 -0.63 -0.1 ] hi=[5.25 3.37 3.2 ]
+  after crop: 580856
+  grouping (voxel=0.05)...
+  groups: 254562, in-group: 3618860/5270672 (68.7%)
+  wrote tight2_baseline_top_group.png
+  wrote tight2_baseline_top_normal.png
+  wrote tight2_baseline_top_semantic.png
+  wrote tight2_baseline_front_group.png
+  wrote tight2_baseline_front_normal.png
+  wrote tight2_baseline_front_semantic.png
+  wrote tight2_baseline_oblique_group.png
+  wrote tight2_baseline_oblique_normal.png
+  wrote tight2_baseline_oblique_semantic.png
+[tight2_mutual] loading results/phase1_mutual/run/ckpt/final.pt
+  primitives: 5212551
+  bbox lo=[ 1.25 -0.63 -0.1 ] hi=[5.25 3.37 3.2 ]
+  after crop: 581322
+  grouping (voxel=0.05)...
+  groups: 224028, in-group: 2698611/5212551 (51.8%)
+  wrote tight2_mutual_top_group.png
+  wrote tight2_mutual_top_normal.png
+  wrote tight2_mutual_top_semantic.png
+  wrote tight2_mutual_front_group.png
+  wrote tight2_mutual_front_normal.png
+  wrote tight2_mutual_front_semantic.png
+  wrote tight2_mutual_oblique_group.png
+  wrote tight2_mutual_oblique_normal.png
+  wrote tight2_mutual_oblique_semantic.png
+[tight2_structure] loading results/phase1_structure/run/ckpt/final.pt
+  primitives: 5274035
+  bbox lo=[ 1.25 -0.63 -0.1 ] hi=[5.25 3.37 3.2 ]
+  after crop: 586603
+  grouping (voxel=0.05)...
+  groups: 248885, in-group: 3752046/5274035 (71.1%)
+  wrote tight2_structure_top_group.png
+  wrote tight2_structure_top_normal.png
+  wrote tight2_structure_top_semantic.png
+  wrote tight2_structure_front_group.png
+  wrote tight2_structure_front_normal.png
+  wrote tight2_structure_front_semantic.png
+  wrote tight2_structure_oblique_group.png
+  wrote tight2_structure_oblique_normal.png
+  wrote tight2_structure_oblique_semantic.png
+[tight2_both] loading results/phase1_ablation/run/ckpt/final.pt
+  primitives: 5263854
+  bbox lo=[ 1.25 -0.63 -0.1 ] hi=[5.25 3.37 3.2 ]
+  after crop: 586297
+  grouping (voxel=0.05)...
+  groups: 222398, in-group: 2843152/5263854 (54.0%)
+  wrote tight2_both_top_group.png
+  wrote tight2_both_top_normal.png
+  wrote tight2_both_top_semantic.png
+  wrote tight2_both_front_group.png
+  wrote tight2_both_front_normal.png
+  wrote tight2_both_front_semantic.png
+  wrote tight2_both_oblique_group.png
+  wrote tight2_both_oblique_normal.png
+  wrote tight2_both_oblique_semantic.png
+=== CROSS-SECTION wall (Y-slab 0.5m) ===
+[wallslab_baseline] loading results/phase1_semantic/run/ckpt/final.pt
+  primitives: 5270672
+  bbox lo=[-6.   -4.75 -0.1 ] hi=[ 2.   -4.25  3.2 ]
+  after crop: 110259
+  grouping (voxel=0.05)...
+  groups: 254562, in-group: 3618860/5270672 (68.7%)
+  wrote wallslab_baseline_slice_y_group.png
+  wrote wallslab_baseline_slice_y_normal.png
+[wallslab_mutual] loading results/phase1_mutual/run/ckpt/final.pt
+  primitives: 5212551
+  bbox lo=[-6.   -4.75 -0.1 ] hi=[ 2.   -4.25  3.2 ]
+  after crop: 103243
+  grouping (voxel=0.05)...
+  groups: 224028, in-group: 2698611/5212551 (51.8%)
+  wrote wallslab_mutual_slice_y_group.png
+  wrote wallslab_mutual_slice_y_normal.png
+[wallslab_structure] loading results/phase1_structure/run/ckpt/final.pt
+  primitives: 5274035
+  bbox lo=[-6.   -4.75 -0.1 ] hi=[ 2.   -4.25  3.2 ]
+  after crop: 109920
+  grouping (voxel=0.05)...
+  groups: 248885, in-group: 3752046/5274035 (71.1%)
+  wrote wallslab_structure_slice_y_group.png
+  wrote wallslab_structure_slice_y_normal.png
+[wallslab_both] loading results/phase1_ablation/run/ckpt/final.pt
+  primitives: 5263854
+  bbox lo=[-6.   -4.75 -0.1 ] hi=[ 2.   -4.25  3.2 ]
+  after crop: 105541
+  grouping (voxel=0.05)...
+  groups: 222398, in-group: 2843152/5263854 (54.0%)
+  wrote wallslab_both_slice_y_group.png
+  wrote wallslab_both_slice_y_normal.png
+=== CROSS-SECTION roof (Z-slab 0.5m @ z=2.0) ===
+[roofslab_baseline] loading results/phase1_semantic/run/ckpt/final.pt
+  primitives: 5270672
+  bbox lo=[-6.   -8.    1.75] hi=[2.   0.   2.25]
+  after crop: 22510
+  grouping (voxel=0.05)...
+  groups: 254562, in-group: 3618860/5270672 (68.7%)
+  wrote roofslab_baseline_top_group.png
+  wrote roofslab_baseline_top_normal.png
+[roofslab_mutual] loading results/phase1_mutual/run/ckpt/final.pt
+  primitives: 5212551
+  bbox lo=[-6.   -8.    1.75] hi=[2.   0.   2.25]
+  after crop: 16420
+  grouping (voxel=0.05)...
+  groups: 224028, in-group: 2698611/5212551 (51.8%)
+  wrote roofslab_mutual_top_group.png
+  wrote roofslab_mutual_top_normal.png
+[roofslab_structure] loading results/phase1_structure/run/ckpt/final.pt
+  primitives: 5274035
+  bbox lo=[-6.   -8.    1.75] hi=[2.   0.   2.25]
+  after crop: 21942
+  grouping (voxel=0.05)...
+  groups: 248885, in-group: 3752046/5274035 (71.1%)
+  wrote roofslab_structure_top_group.png
+  wrote roofslab_structure_top_normal.png
+[roofslab_both] loading results/phase1_ablation/run/ckpt/final.pt
+  primitives: 5263854
+  bbox lo=[-6.   -8.    1.75] hi=[2.   0.   2.25]
+  after crop: 22303
+  grouping (voxel=0.05)...
+  groups: 222398, in-group: 2843152/5263854 (54.0%)
+  wrote roofslab_both_top_group.png
+  wrote roofslab_both_top_normal.png
+=== PLY export (group colors, 4 conds) ===
+wrote 5270672 primitives -> results/phase1_ablation/figures/ply_exports/baseline_groups.ply
+  groups: 254562, in-group: 3618860 (68.7%)
+wrote 5212551 primitives -> results/phase1_ablation/figures/ply_exports/mutual_groups.ply
+  groups: 224028, in-group: 2698611 (51.8%)
+wrote 5274035 primitives -> results/phase1_ablation/figures/ply_exports/structure_groups.ply
+  groups: 248885, in-group: 3752046 (71.1%)
+wrote 5263854 primitives -> results/phase1_ablation/figures/ply_exports/both_groups.ply
+  groups: 222398, in-group: 2843152 (54.0%)
+=== ALL BATCH DONE ===
