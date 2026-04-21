@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>JointBuildGS Phase 1 - Rasterized 2DGS Trajectory</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #050505;
+    --panel: #080808;
+    --ui: rgba(0, 0, 0, 0.88);
+    --border: rgba(255, 255, 255, 0.16);
+    --text: #f1f1f1;
+    --muted: #aeb6bf;
+    --accent: #6bd7ff;
+  }
+  html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", monospace;
+  }
+  #grid {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 2px;
+    background: #000;
+  }
+  .panel {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    background: var(--panel);
+  }
+  .panel img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    background: #000;
+  }
+  .label, .meta {
+    position: absolute;
+    left: 8px;
+    z-index: 2;
+    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.76);
+    text-shadow: 0 1px 1px #000;
+    pointer-events: none;
+  }
+  .label {
+    top: 8px;
+    padding: 4px 10px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .meta {
+    top: 36px;
+    padding: 3px 7px;
+    color: var(--muted);
+    font-size: 10px;
+  }
+  #toolbar {
+    position: fixed;
+    left: 50%;
+    bottom: 10px;
+    z-index: 10;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: calc(100vw - 20px);
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--ui);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  #toolbar label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  button, select, a.nav-link {
+    height: 28px;
+    box-sizing: border-box;
+    border: 1px solid #555;
+    border-radius: 3px;
+    background: #252525;
+    color: var(--text);
+    font: inherit;
+  }
+  button, a.nav-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 10px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  button:hover, a.nav-link:hover {
+    background: #333;
+  }
+  input[type="range"] {
+    width: 220px;
+  }
+  .value {
+    min-width: 8ch;
+    color: var(--accent);
+  }
+  .source {
+    color: var(--muted);
+  }
+  .source code {
+    color: var(--accent);
+  }
+  #status {
+    position: fixed;
+    top: 8px;
+    left: 50%;
+    z-index: 12;
+    transform: translateX(-50%);
+    max-width: calc(100vw - 20px);
+    padding: 5px 10px;
+    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.82);
+    color: #fff2a8;
+    font-size: 12px;
+    pointer-events: none;
+  }
+  @media (max-width: 980px) {
+    #toolbar {
+      left: 10px;
+      right: 10px;
+      transform: none;
+      overflow-x: auto;
+      justify-content: flex-start;
+    }
+    input[type="range"] {
+      width: 160px;
+    }
+  }
+</style>
+</head>
+<body>
+<div id="status">Loading trajectory...</div>
+<div id="grid"></div>
+<div id="toolbar">
+  <button id="playBtn">Pause</button>
+  <button id="prevBtn">Prev</button>
+  <label>Frame <input id="frameSlider" type="range" min="0" max="0" step="1" value="0"><span class="value" id="frameValue">0 / 0</span></label>
+  <button id="nextBtn">Next</button>
+  <label>FPS
+    <select id="fpsSelect">
+      <option value="6">6</option>
+      <option value="10" selected>10</option>
+      <option value="15">15</option>
+      <option value="24">24</option>
+    </select>
+  </label>
+  <a class="nav-link" href="./?v=gs3d-final">2DGS splat</a>
+  <a class="nav-link" href="./surfel_inspector.html?v=surfel-debug">Surfel debug</a>
+  <a class="nav-link" href="./raster_viewer.html?v=raster-final">Static raster</a>
+  <span class="source">Source: <code id="sourceLabel">assets/turntable_2dgs</code></span>
+</div>
+
+<script>
+const manifestURL = 'assets/turntable_2dgs/manifest.json';
+const grid = document.getElementById('grid');
+const statusEl = document.getElementById('status');
+const frameSlider = document.getElementById('frameSlider');
+const frameValue = document.getElementById('frameValue');
+const fpsSelect = document.getElementById('fpsSelect');
+const playBtn = document.getElementById('playBtn');
+
+let manifest = null;
+let frameIndex = 0;
+let playing = new URLSearchParams(window.location.search).get('autoplay') !== '0';
+let lastTick = 0;
+let panels = [];
+playBtn.textContent = playing ? 'Pause' : 'Play';
+
+function framePath(relativePath) {
+  return `assets/turntable_2dgs/${relativePath}`;
+}
+
+function setStatus(text, muted = false) {
+  statusEl.textContent = text;
+  statusEl.style.opacity = muted ? 0.35 : 1;
+}
+
+function buildGrid() {
+  grid.innerHTML = '';
+  panels = manifest.conditions.map((condition) => {
+    const panel = document.createElement('div');
+    panel.className = 'panel';
+
+    const label = document.createElement('div');
+    label.className = 'label';
+    label.textContent = condition.label;
+
+    const meta = document.createElement('div');
+    meta.className = 'meta';
+
+    const img = document.createElement('img');
+    img.alt = condition.label;
+    img.decoding = 'async';
+
+    panel.append(label, meta, img);
+    grid.appendChild(panel);
+    return { condition, img, meta };
+  });
+}
+
+function updateFrame(index) {
+  if (!manifest) return;
+  frameIndex = (index + manifest.frame_count) % manifest.frame_count;
+  const view = manifest.views[frameIndex];
+  for (const panel of panels) {
+    panel.img.src = framePath(panel.condition.frames[frameIndex]);
+    panel.meta.textContent = `view ${view}`;
+  }
+  frameSlider.value = String(frameIndex);
+  frameValue.textContent = `${frameIndex + 1} / ${manifest.frame_count}`;
+}
+
+function step(delta) {
+  updateFrame(frameIndex + delta);
+}
+
+function preloadFrames() {
+  for (const condition of manifest.conditions) {
+    for (const frame of condition.frames) {
+      const img = new Image();
+      img.src = framePath(frame);
+    }
+  }
+}
+
+async function waitForVisibleImages() {
+  const decodes = panels.map((panel) => {
+    if (panel.img.complete && panel.img.naturalWidth > 0) return Promise.resolve();
+    if (panel.img.decode) return panel.img.decode().catch(() => undefined);
+    return new Promise((resolve) => {
+      panel.img.addEventListener('load', resolve, { once: true });
+      panel.img.addEventListener('error', resolve, { once: true });
+    });
+  });
+  await Promise.all(decodes);
+}
+
+function animate(now) {
+  const fps = Number(fpsSelect.value);
+  const interval = 1000 / Math.max(1, fps);
+  if (playing && now - lastTick >= interval) {
+    step(1);
+    lastTick = now;
+  }
+  requestAnimationFrame(animate);
+}
+
+async function init() {
+  try {
+    const response = await fetch(`${manifestURL}?t=${Date.now()}`, { cache: 'no-store' });
+    if (!response.ok) throw new Error(`missing manifest (${response.status})`);
+    manifest = await response.json();
+    frameSlider.max = String(Math.max(0, manifest.frame_count - 1));
+    buildGrid();
+    updateFrame(0);
+    await waitForVisibleImages();
+    preloadFrames();
+    setStatus(`Loaded ${manifest.frame_count} rasterized 2DGS frames`, true);
+    requestAnimationFrame(animate);
+  } catch (error) {
+    console.error(error);
+    setStatus(`Load error: ${error.message || error}`);
+  }
+}
+
+playBtn.addEventListener('click', () => {
+  playing = !playing;
+  playBtn.textContent = playing ? 'Pause' : 'Play';
+});
+document.getElementById('prevBtn').addEventListener('click', () => step(-1));
+document.getElementById('nextBtn').addEventListener('click', () => step(1));
+frameSlider.addEventListener('input', (event) => updateFrame(Number(event.target.value)));
+window.addEventListener('keydown', (event) => {
+  if (event.key === 'ArrowLeft') step(-1);
+  if (event.key === 'ArrowRight') step(1);
+  if (event.key === ' ') {
+    event.preventDefault();
+    playBtn.click();
+  }
+});
+
+init();
+</script>
+</body>
+</html>

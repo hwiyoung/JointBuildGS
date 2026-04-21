@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>JointBuildGS Phase 1 - 2DGS Rasterized View</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #070707;
+    --panel: #0c0c0c;
+    --ui: rgba(0, 0, 0, 0.88);
+    --border: rgba(255, 255, 255, 0.16);
+    --text: #f2f2f2;
+    --muted: #aab2bb;
+    --accent: #68d4ff;
+  }
+  html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", monospace;
+  }
+  #stage {
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 1fr auto;
+  }
+  #grid {
+    min-height: 0;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 2px;
+    background: #000;
+  }
+  .cell {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    background: var(--panel);
+  }
+  .cell img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    background: #000;
+  }
+  .label {
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    z-index: 2;
+    padding: 4px 9px;
+    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.76);
+    font-size: 13px;
+    font-weight: 600;
+    text-shadow: 0 1px 1px #000;
+    pointer-events: none;
+  }
+  #toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    min-height: 46px;
+    padding: 8px 12px;
+    border-top: 1px solid var(--border);
+    background: var(--ui);
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  #toolbar label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  select, button, a.nav-link {
+    height: 28px;
+    box-sizing: border-box;
+    border: 1px solid #555;
+    border-radius: 3px;
+    background: #252525;
+    color: var(--text);
+    font: inherit;
+  }
+  button, a.nav-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 10px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  button:hover, a.nav-link:hover {
+    background: #333;
+  }
+  .source {
+    color: var(--muted);
+  }
+  .source code {
+    color: var(--accent);
+  }
+  @media (max-width: 1100px) {
+    #grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      overflow: auto;
+    }
+    .cell {
+      min-height: 42vh;
+    }
+    #toolbar {
+      justify-content: flex-start;
+      overflow-x: auto;
+    }
+  }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="grid"></div>
+  <div id="toolbar">
+    <label>View
+      <select id="viewSelect"></select>
+    </label>
+    <label>Mode
+      <select id="modeSelect">
+        <option value="rgb" selected>RGB rasterization</option>
+        <option value="semantic">Semantic rasterization</option>
+        <option value="panel">Saved paper panel</option>
+      </select>
+    </label>
+    <button id="prevBtn">Prev</button>
+    <button id="nextBtn">Next</button>
+    <a class="nav-link" href="./?v=gs3d-final">2DGS splat</a>
+    <a class="nav-link" href="./turntable_viewer.html?v=turntable-final">2DGS render</a>
+    <a class="nav-link" href="./surfel_inspector.html?v=surfel-debug">Surfel debug</a>
+    <span class="source">Source: <code id="sourceLabel"></code></span>
+  </div>
+</div>
+
+<script>
+const views = [5368, 5083, 5528, 5328];
+const labels = ['GT', 'Baseline', 'Mutual', 'Structure', 'Both'];
+const rgbBase = '../../results/phase1_ablation/figures/render_compare_4way';
+const semBase = '../../results/phase1_ablation/figures/semantic_compare_4way';
+const panelBase = '../../results/phase1_ablation/figures/render_compare_4way';
+
+const viewSelect = document.getElementById('viewSelect');
+const modeSelect = document.getElementById('modeSelect');
+const grid = document.getElementById('grid');
+const sourceLabel = document.getElementById('sourceLabel');
+
+for (const view of views) {
+  const option = document.createElement('option');
+  option.value = String(view);
+  option.textContent = `v${String(view).padStart(4, '0')}`;
+  viewSelect.appendChild(option);
+}
+
+function padView(view) {
+  return String(view).padStart(4, '0');
+}
+
+function imageFor(mode, view, label) {
+  const v = padView(view);
+  if (mode === 'semantic') {
+    if (label === 'GT') return `${semBase}/v${v}_gt_sem.png`;
+    return `${semBase}/v${v}_${label}_sem.png`;
+  }
+  if (label === 'GT') return `${rgbBase}/v${v}_gt.png`;
+  return `${rgbBase}/v${v}_${label}.png`;
+}
+
+function sourceFor(mode) {
+  if (mode === 'semantic') return `${semBase}/v*_*.png`;
+  if (mode === 'panel') return `${panelBase}/render_compare_4way.png`;
+  return `${rgbBase}/v*_*.png`;
+}
+
+function render() {
+  const view = Number(viewSelect.value);
+  const mode = modeSelect.value;
+  grid.innerHTML = '';
+  sourceLabel.textContent = sourceFor(mode);
+
+  if (mode === 'panel') {
+    grid.style.gridTemplateColumns = '1fr';
+    const cell = document.createElement('div');
+    cell.className = 'cell';
+    const label = document.createElement('div');
+    label.className = 'label';
+    label.textContent = 'saved RGB panel';
+    const img = document.createElement('img');
+    img.src = `${panelBase}/render_compare_4way.png`;
+    img.alt = 'saved RGB comparison panel';
+    cell.append(label, img);
+    grid.appendChild(cell);
+    return;
+  }
+
+  grid.style.gridTemplateColumns = '';
+  for (const labelText of labels) {
+    const cell = document.createElement('div');
+    cell.className = 'cell';
+    const label = document.createElement('div');
+    label.className = 'label';
+    label.textContent = labelText;
+    const img = document.createElement('img');
+    img.src = imageFor(mode, view, labelText);
+    img.alt = `${mode} ${labelText} view ${view}`;
+    cell.append(label, img);
+    grid.appendChild(cell);
+  }
+}
+
+function step(delta) {
+  const i = views.indexOf(Number(viewSelect.value));
+  const next = (i + delta + views.length) % views.length;
+  viewSelect.value = String(views[next]);
+  render();
+}
+
+viewSelect.addEventListener('change', render);
+modeSelect.addEventListener('change', render);
+document.getElementById('prevBtn').addEventListener('click', () => step(-1));
+document.getElementById('nextBtn').addEventListener('click', () => step(1));
+window.addEventListener('keydown', (event) => {
+  if (event.key === 'ArrowLeft') step(-1);
+  if (event.key === 'ArrowRight') step(1);
+});
+
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>JointBuildGS Phase 1 - 2DGS Surfel 4-way viewer</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --panel-gap: 2px;
+    --panel-bg: #050505;
+    --ui-bg: rgba(0, 0, 0, 0.88);
+    --ui-border: rgba(255, 255, 255, 0.18);
+    --text: #f0f0f0;
+    --muted: #a9b1ba;
+    --accent: #69d6ff;
+  }
+  html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: #070707;
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", monospace;
+  }
+  #grid {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--panel-gap);
+  }
+  .panel {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    background: var(--panel-bg);
+  }
+  .viewport {
+    position: absolute;
+    inset: 0;
+  }
+  .viewport canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .label, .stats {
+    position: absolute;
+    left: 8px;
+    z-index: 10;
+    pointer-events: none;
+    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.72);
+    text-shadow: 0 1px 1px #000;
+  }
+  .label {
+    top: 8px;
+    padding: 4px 10px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .stats {
+    top: 36px;
+    padding: 3px 7px;
+    font-size: 10px;
+    color: var(--muted);
+  }
+  #toolbar {
+    position: fixed;
+    left: 50%;
+    bottom: 10px;
+    z-index: 20;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    max-width: calc(100vw - 20px);
+    padding: 10px 14px;
+    border: 1px solid var(--ui-border);
+    border-radius: 6px;
+    background: var(--ui-bg);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  #toolbar label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  #toolbar select, #toolbar button, #toolbar .nav-link {
+    height: 26px;
+    border: 1px solid #555;
+    border-radius: 3px;
+    background: #252525;
+    color: var(--text);
+    font: inherit;
+  }
+  #toolbar button, #toolbar .nav-link {
+    box-sizing: border-box;
+    padding: 0 10px;
+    cursor: pointer;
+  }
+  #toolbar .nav-link {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+  }
+  #toolbar button:hover, #toolbar .nav-link:hover {
+    background: #333;
+  }
+  #toolbar input[type="range"] {
+    width: 118px;
+  }
+  .value {
+    min-width: 4ch;
+    display: inline-block;
+    color: var(--accent);
+  }
+  .source {
+    color: var(--muted);
+  }
+  .source code {
+    color: var(--accent);
+  }
+  #status {
+    position: fixed;
+    top: 8px;
+    left: 50%;
+    z-index: 30;
+    transform: translateX(-50%);
+    max-width: calc(100vw - 20px);
+    padding: 5px 10px;
+    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.82);
+    color: #fff2a8;
+    font-size: 12px;
+    pointer-events: none;
+  }
+  @media (max-width: 980px) {
+    #toolbar {
+      left: 10px;
+      right: 10px;
+      transform: none;
+      overflow-x: auto;
+      justify-content: flex-start;
+    }
+  }
+</style>
+</head>
+<body>
+<div id="status">Initializing...</div>
+<div id="grid">
+  <div class="panel"><div class="viewport" id="v0"></div><div class="label">Baseline (Step 1-3)</div><div class="stats" id="s0">loading</div></div>
+  <div class="panel"><div class="viewport" id="v1"></div><div class="label">Mutual (Step 1-4)</div><div class="stats" id="s1">loading</div></div>
+  <div class="panel"><div class="viewport" id="v2"></div><div class="label">Structure (Step 1-5)</div><div class="stats" id="s2">loading</div></div>
+  <div class="panel"><div class="viewport" id="v3"></div><div class="label">Both (Step 1-6)</div><div class="stats" id="s3">loading</div></div>
+</div>
+<div id="toolbar">
+  <label><input type="checkbox" id="syncChk" checked> Sync camera</label>
+  <label>Render
+    <select id="renderMode">
+      <option value="surfels" selected>2D surfels</option>
+      <option value="points">points</option>
+    </select>
+  </label>
+  <label>LOD
+    <select id="lodMode">
+      <option value="dense" selected>dense</option>
+      <option value="fast">fast</option>
+    </select>
+  </label>
+  <label>Color
+    <select id="colorMode">
+      <option value="0" selected>RGB</option>
+      <option value="1">normal</option>
+      <option value="2">alpha</option>
+    </select>
+  </label>
+  <label><input type="checkbox" id="solidChk" checked> Solid discs</label>
+  <label>Size <input type="range" id="sizeSlider" min="1" max="60" step="1" value="4"><span class="value" id="sizeValue">4x</span></label>
+  <label>Opacity <input type="range" id="opacitySlider" min="0.15" max="3.00" step="0.05" value="1.60"><span class="value" id="opacityValue">1.60</span></label>
+  <button id="resetBtn">Reset</button>
+  <a class="nav-link" href="./?v=gs3d-final">2DGS splat</a>
+  <a class="nav-link" href="./turntable_viewer.html?v=turntable-final">2DGS render</a>
+  <a class="nav-link" href="./raster_viewer.html?v=raster-final">Raster view</a>
+  <span class="source">Source: <code id="sourceLabel">assets/surfels_2dgs_dense/*.surfels</code></span>
+</div>
+
+<script type="importmap">
+{ "imports": { "three": "./build/three.module.min.js" } }
+</script>
+<script type="module">
+import * as THREE from 'three';
+
+const lods = {
+  dense: { dir: 'assets/surfels_2dgs_dense', label: 'dense' },
+  fast: { dir: 'assets/surfels_2dgs', label: 'fast' },
+};
+
+const conds = [
+  { slot: 'v0', stats: 's0', file: 'baseline.surfels', label: 'Baseline' },
+  { slot: 'v1', stats: 's1', file: 'mutual.surfels', label: 'Mutual' },
+  { slot: 'v2', stats: 's2', file: 'structure.surfels', label: 'Structure' },
+  { slot: 'v3', stats: 's3', file: 'both.surfels', label: 'Both' },
+];
+
+const MAGIC = 'JBSF2D1\0';
+const FLOATS_PER_SURFEL = 16;
+const status = document.getElementById('status');
+const viewers = [];
+const state = {
+  lod: 'dense',
+  renderMode: 'surfels',
+  colorMode: 0,
+  solidDiscs: true,
+  sizeScale: 4,
+  opacityScale: 1.6,
+};
+
+const initialTarget = new THREE.Vector3(0, 0, -5);
+const initialPosition = new THREE.Vector3(26, 26, 16);
+const initialDistance = initialPosition.distanceTo(initialTarget);
+const initialOffset = initialPosition.clone().sub(initialTarget);
+const initialYaw = Math.atan2(initialOffset.y, initialOffset.x);
+const initialPitch = Math.asin(initialOffset.z / initialDistance);
+
+const surfelVertexShader = `
+precision highp float;
+attribute vec3 iCenter;
+attribute vec3 iAxis0;
+attribute vec3 iAxis1;
+attribute vec3 iNormal;
+attribute vec4 iColorAlpha;
+uniform float sizeScale;
+varying vec2 vLocal;
+varying vec3 vNormal;
+varying vec3 vRgb;
+varying float vAlpha;
+varying vec3 vWorldPos;
+void main() {
+  vLocal = position.xy;
+  vNormal = normalize(iNormal);
+  vRgb = iColorAlpha.rgb;
+  vAlpha = iColorAlpha.a;
+  vec3 worldPos = iCenter + (iAxis0 * position.x + iAxis1 * position.y) * sizeScale;
+  vWorldPos = worldPos;
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(worldPos, 1.0);
+}
+`;
+
+const surfelFragmentShader = `
+precision highp float;
+uniform float opacityScale;
+uniform int colorMode;
+uniform int solidDiscs;
+varying vec2 vLocal;
+varying vec3 vNormal;
+varying vec3 vRgb;
+varying float vAlpha;
+varying vec3 vWorldPos;
+void main() {
+  float r2 = dot(vLocal, vLocal);
+  if (r2 > 1.0) discard;
+
+  vec3 normalColor = normalize(vNormal) * 0.5 + 0.5;
+  vec3 color = vRgb;
+  if (colorMode == 1) {
+    color = normalColor;
+  } else if (colorMode == 2) {
+    color = mix(vec3(0.05, 0.12, 0.25), vec3(1.0, 0.82, 0.18), clamp(vAlpha, 0.0, 1.0));
+  } else {
+    vec3 viewDir = normalize(cameraPosition - vWorldPos);
+    float facing = 0.45 + 0.55 * abs(dot(normalize(vNormal), viewDir));
+    color *= facing;
+  }
+
+  float footprint = solidDiscs == 1 ? smoothstep(1.0, 0.86, r2) : exp(-2.2 * r2);
+  float primitiveAlpha = solidDiscs == 1 ? max(vAlpha, 0.12) : vAlpha;
+  float alpha = clamp(primitiveAlpha * opacityScale * footprint, 0.0, 0.98);
+  if (alpha < 0.01) discard;
+  gl_FragColor = vec4(color, alpha);
+}
+`;
+
+const pointsVertexShader = `
+precision highp float;
+attribute vec4 iColorAlpha;
+uniform float pointSize;
+uniform int colorMode;
+varying vec3 vColor;
+varying float vAlpha;
+void main() {
+  vAlpha = iColorAlpha.a;
+  vColor = iColorAlpha.rgb;
+  if (colorMode == 2) {
+    vColor = mix(vec3(0.05, 0.12, 0.25), vec3(1.0, 0.82, 0.18), clamp(vAlpha, 0.0, 1.0));
+  }
+  vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+  gl_Position = projectionMatrix * mvPosition;
+  gl_PointSize = clamp(pointSize * (220.0 / max(1.0, -mvPosition.z)), 1.0, 14.0);
+}
+`;
+
+const pointsFragmentShader = `
+precision highp float;
+uniform float opacityScale;
+varying vec3 vColor;
+varying float vAlpha;
+void main() {
+  vec2 d = gl_PointCoord * 2.0 - 1.0;
+  float r2 = dot(d, d);
+  if (r2 > 1.0) discard;
+  float alpha = clamp(vAlpha * opacityScale * smoothstep(1.0, 0.55, r2), 0.0, 0.95);
+  if (alpha < 0.01) discard;
+  gl_FragColor = vec4(vColor, alpha);
+}
+`;
+
+function decodeMagic(buffer) {
+  return String.fromCharCode(...new Uint8Array(buffer, 0, 8));
+}
+
+async function loadSurfels(url) {
+  const response = await fetch(`${url}?v=20260421-surfel`, { cache: 'no-store' });
+  if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
+  const buffer = await response.arrayBuffer();
+  if (decodeMagic(buffer) !== MAGIC) throw new Error('bad surfel magic');
+  const view = new DataView(buffer);
+  const count = view.getUint32(8, true);
+  const floatsPer = view.getUint32(12, true);
+  if (floatsPer !== FLOATS_PER_SURFEL) throw new Error(`unexpected stride ${floatsPer}`);
+  return { count, floatsPer, data: new Float32Array(buffer, 16) };
+}
+
+function makeQuadGeometry(surfelData) {
+  const geometry = new THREE.InstancedBufferGeometry();
+  geometry.setAttribute('position', new THREE.Float32BufferAttribute([
+    -1, -1, 0,
+     1, -1, 0,
+     1,  1, 0,
+    -1,  1, 0,
+  ], 3));
+  geometry.setIndex([0, 1, 2, 0, 2, 3]);
+
+  const interleaved = new THREE.InstancedInterleavedBuffer(surfelData.data, surfelData.floatsPer, 1);
+  geometry.setAttribute('iCenter', new THREE.InterleavedBufferAttribute(interleaved, 3, 0));
+  geometry.setAttribute('iAxis0', new THREE.InterleavedBufferAttribute(interleaved, 3, 3));
+  geometry.setAttribute('iAxis1', new THREE.InterleavedBufferAttribute(interleaved, 3, 6));
+  geometry.setAttribute('iNormal', new THREE.InterleavedBufferAttribute(interleaved, 3, 9));
+  geometry.setAttribute('iColorAlpha', new THREE.InterleavedBufferAttribute(interleaved, 4, 12));
+  geometry.instanceCount = surfelData.count;
+  geometry.boundingSphere = new THREE.Sphere(initialTarget.clone(), 90);
+  return { geometry, interleaved };
+}
+
+function makePointGeometry(interleaved, count) {
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.InterleavedBufferAttribute(interleaved, 3, 0));
+  geometry.setAttribute('iColorAlpha', new THREE.InterleavedBufferAttribute(interleaved, 4, 12));
+  geometry.setDrawRange(0, count);
+  geometry.boundingSphere = new THREE.Sphere(initialTarget.clone(), 90);
+  return geometry;
+}
+
+class OrbitState {
+  constructor() {
+    this.target = initialTarget.clone();
+    this.distance = initialDistance;
+    this.yaw = initialYaw;
+    this.pitch = initialPitch;
+  }
+  copyFrom(other) {
+    this.target.copy(other.target);
+    this.distance = other.distance;
+    this.yaw = other.yaw;
+    this.pitch = other.pitch;
+  }
+  reset() {
+    this.target.copy(initialTarget);
+    this.distance = initialDistance;
+    this.yaw = initialYaw;
+    this.pitch = initialPitch;
+  }
+  applyTo(camera) {
+    const cp = Math.cos(this.pitch);
+    camera.position.set(
+      this.target.x + this.distance * cp * Math.cos(this.yaw),
+      this.target.y + this.distance * cp * Math.sin(this.yaw),
+      this.target.z + this.distance * Math.sin(this.pitch),
+    );
+    camera.up.set(0, 0, 1);
+    camera.lookAt(this.target);
+  }
+}
+
+class SurfelPanel {
+  constructor(cond, index) {
+    this.cond = cond;
+    this.index = index;
+    this.root = document.getElementById(cond.slot);
+    this.stats = document.getElementById(cond.stats);
+    this.scene = new THREE.Scene();
+    this.scene.background = new THREE.Color(0x050505);
+    this.camera = new THREE.PerspectiveCamera(48, 1, 0.05, 2000);
+    this.orbit = new OrbitState();
+    this.orbit.applyTo(this.camera);
+    this.renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+    this.root.appendChild(this.renderer.domElement);
+    this.surfelMesh = null;
+    this.points = null;
+    this.drag = null;
+    this.installControls();
+  }
+
+  async load() {
+    const url = `${lods[state.lod].dir}/${this.cond.file}`;
+    this.disposeSceneData();
+    this.stats.textContent = 'loading asset';
+    const surfelData = await loadSurfels(url);
+    const { geometry, interleaved } = makeQuadGeometry(surfelData);
+    const pointGeometry = makePointGeometry(interleaved, surfelData.count);
+
+    this.surfelMaterial = new THREE.ShaderMaterial({
+      vertexShader: surfelVertexShader,
+      fragmentShader: surfelFragmentShader,
+      uniforms: {
+        sizeScale: { value: state.sizeScale },
+        opacityScale: { value: state.opacityScale },
+        colorMode: { value: state.colorMode },
+        solidDiscs: { value: state.solidDiscs ? 1 : 0 },
+      },
+      transparent: true,
+      depthTest: true,
+      depthWrite: false,
+      side: THREE.DoubleSide,
+    });
+    this.pointMaterial = new THREE.ShaderMaterial({
+      vertexShader: pointsVertexShader,
+      fragmentShader: pointsFragmentShader,
+      uniforms: {
+        pointSize: { value: state.sizeScale },
+        opacityScale: { value: state.opacityScale },
+        colorMode: { value: state.colorMode },
+      },
+      transparent: true,
+      depthTest: true,
+      depthWrite: false,
+    });
+
+    this.surfelMesh = new THREE.Mesh(geometry, this.surfelMaterial);
+    this.surfelMesh.frustumCulled = false;
+    this.points = new THREE.Points(pointGeometry, this.pointMaterial);
+    this.points.frustumCulled = false;
+    this.scene.add(this.surfelMesh);
+    this.scene.add(this.points);
+    this.applyDisplaySettings();
+    this.stats.textContent = `${surfelData.count.toLocaleString()} surfels (${lods[state.lod].label})`;
+  }
+
+  disposeSceneData() {
+    for (const object of [this.surfelMesh, this.points]) {
+      if (!object) continue;
+      this.scene.remove(object);
+      if (object.geometry) object.geometry.dispose();
+      if (object.material) object.material.dispose();
+    }
+    this.surfelMesh = null;
+    this.points = null;
+    this.surfelMaterial = null;
+    this.pointMaterial = null;
+  }
+
+  installControls() {
+    const canvas = this.renderer.domElement;
+    canvas.addEventListener('contextmenu', (event) => event.preventDefault());
+    canvas.addEventListener('pointerdown', (event) => {
+      activeViewerIndex = this.index;
+      canvas.setPointerCapture(event.pointerId);
+      this.drag = {
+        x: event.clientX,
+        y: event.clientY,
+        mode: event.button === 2 || event.shiftKey ? 'pan' : 'rotate',
+      };
+    });
+    canvas.addEventListener('pointermove', (event) => {
+      if (!this.drag) return;
+      const dx = event.clientX - this.drag.x;
+      const dy = event.clientY - this.drag.y;
+      this.drag.x = event.clientX;
+      this.drag.y = event.clientY;
+      if (this.drag.mode === 'pan') {
+        this.pan(dx, dy);
+      } else {
+        this.orbit.yaw -= dx * 0.005;
+        this.orbit.pitch = Math.max(-1.45, Math.min(1.45, this.orbit.pitch + dy * 0.005));
+      }
+      this.orbit.applyTo(this.camera);
+    });
+    canvas.addEventListener('pointerup', () => {
+      this.drag = null;
+    });
+    canvas.addEventListener('wheel', (event) => {
+      event.preventDefault();
+      activeViewerIndex = this.index;
+      this.orbit.distance = Math.max(0.2, Math.min(500, this.orbit.distance * Math.exp(event.deltaY * 0.0012)));
+      this.orbit.applyTo(this.camera);
+    }, { passive: false });
+  }
+
+  pan(dx, dy) {
+    this.camera.updateMatrixWorld();
+    const right = new THREE.Vector3().setFromMatrixColumn(this.camera.matrixWorld, 0);
+    const up = new THREE.Vector3().setFromMatrixColumn(this.camera.matrixWorld, 1);
+    const speed = this.orbit.distance * 0.0016;
+    this.orbit.target.addScaledVector(right, -dx * speed);
+    this.orbit.target.addScaledVector(up, dy * speed);
+  }
+
+  resize() {
+    const width = this.root.clientWidth;
+    const height = this.root.clientHeight;
+    const canvas = this.renderer.domElement;
+    if (canvas.width !== Math.floor(width * this.renderer.getPixelRatio()) ||
+        canvas.height !== Math.floor(height * this.renderer.getPixelRatio())) {
+      this.renderer.setSize(width, height, false);
+      this.camera.aspect = width / Math.max(1, height);
+      this.camera.updateProjectionMatrix();
+    }
+  }
+
+  applyDisplaySettings() {
+    if (this.surfelMaterial) {
+      this.surfelMaterial.uniforms.sizeScale.value = state.sizeScale;
+      this.surfelMaterial.uniforms.opacityScale.value = state.opacityScale;
+      this.surfelMaterial.uniforms.colorMode.value = state.colorMode;
+      this.surfelMaterial.uniforms.solidDiscs.value = state.solidDiscs ? 1 : 0;
+    }
+    if (this.pointMaterial) {
+      this.pointMaterial.uniforms.pointSize.value = state.sizeScale;
+      this.pointMaterial.uniforms.opacityScale.value = state.opacityScale;
+      this.pointMaterial.uniforms.colorMode.value = state.colorMode;
+    }
+    if (this.surfelMesh) this.surfelMesh.visible = state.renderMode === 'surfels';
+    if (this.points) this.points.visible = state.renderMode === 'points';
+  }
+
+  reset() {
+    this.orbit.reset();
+    this.orbit.applyTo(this.camera);
+  }
+
+  render() {
+    this.resize();
+    this.renderer.render(this.scene, this.camera);
+  }
+}
+
+let activeViewerIndex = 0;
+
+function syncCameras() {
+  if (!document.getElementById('syncChk').checked || viewers.length !== 4) return;
+  const source = viewers[activeViewerIndex] || viewers[0];
+  for (const viewer of viewers) {
+    if (viewer === source) continue;
+    viewer.orbit.copyFrom(source.orbit);
+    viewer.orbit.applyTo(viewer.camera);
+  }
+}
+
+function applyAllDisplaySettings() {
+  viewers.forEach((viewer) => viewer.applyDisplaySettings());
+}
+
+function animate() {
+  syncCameras();
+  viewers.forEach((viewer) => viewer.render());
+  requestAnimationFrame(animate);
+}
+
+async function initAll() {
+  try {
+    conds.forEach((cond, index) => viewers.push(new SurfelPanel(cond, index)));
+    await reloadAll();
+    animate();
+  } catch (error) {
+    console.error(error);
+    status.textContent = `Load error: ${error.message || error}`;
+  }
+}
+
+let loadGeneration = 0;
+async function reloadAll() {
+  const generation = ++loadGeneration;
+  status.style.opacity = 1;
+  document.getElementById('sourceLabel').textContent = `${lods[state.lod].dir}/*.surfels`;
+  await Promise.all(viewers.map(async (viewer, index) => {
+    status.textContent = `Loading ${viewer.cond.label} ${lods[state.lod].label} (${index + 1}/4)...`;
+    await viewer.load();
+  }));
+  if (generation !== loadGeneration) return;
+  status.textContent = `Loaded ${lods[state.lod].label} LOD - drag to rotate, right-drag or shift-drag to pan, scroll to zoom.`;
+  setTimeout(() => {
+    if (generation === loadGeneration) status.style.opacity = 0.35;
+  }, 3000);
+}
+
+document.getElementById('renderMode').addEventListener('change', (event) => {
+  state.renderMode = event.target.value;
+  applyAllDisplaySettings();
+});
+
+document.getElementById('lodMode').addEventListener('change', async (event) => {
+  state.lod = event.target.value;
+  await reloadAll();
+});
+
+document.getElementById('colorMode').addEventListener('change', (event) => {
+  state.colorMode = Number(event.target.value);
+  applyAllDisplaySettings();
+});
+
+document.getElementById('solidChk').addEventListener('change', (event) => {
+  state.solidDiscs = event.target.checked;
+  applyAllDisplaySettings();
+});
+
+document.getElementById('sizeSlider').addEventListener('input', (event) => {
+  state.sizeScale = Number(event.target.value);
+  document.getElementById('sizeValue').textContent = `${state.sizeScale}x`;
+  applyAllDisplaySettings();
+});
+
+document.getElementById('opacitySlider').addEventListener('input', (event) => {
+  state.opacityScale = Number(event.target.value);
+  document.getElementById('opacityValue').textContent = state.opacityScale.toFixed(2);
+  applyAllDisplaySettings();
+});
+
+document.getElementById('resetBtn').addEventListener('click', () => {
+  viewers.forEach((viewer) => viewer.reset());
+});
+
+initAll();
+</script>
+</body>
+</html>
