@@ -139,6 +139,49 @@ Baseline vs Both semantic 차이 가장 큰 3개 뷰 (`scripts/stage2/find_max_d
 rule-GT 뷰 편향 평균이 개별 뷰 개선을 가림. rule-GT 의 Wall 과잉 라벨링이 proxy 약점.
 **Phase 2 CityGML 지표로 재평가**.
 
+### 6.5 BG reassignment — 양방향 gradient 의 의도된 전역 효과
+
+L_mutual 은 설계상 **f_i ↔ n_i 양방향 gradient** (CLAUDE.md 메커니즘 1). 프리미티브가 Wall 로
+라벨됐는데 `|n·g|>0.15` 이면 탈출 경로가 둘: (1) n 을 회전해 수직화, (2) f 를 움직여 Wall
+이탈. 둘 중 저항 적은 쪽으로 descent. depth/normal 감독으로 n 이 묶여 있으면 f 가 움직이고,
+Roof/Terrain rule 도 만족 못 하면 → BG 로 수렴 (ignore_index = "commit 안 함").
+
+전역 통계:
+
+| 조건 | Wall+Roof+Terrain | BG (잔여) | Wall_frac |
+|------|-------------------|-----------|-----------|
+| Baseline | 0.982 | **1.8%** | 31.4% |
+| Mutual | 0.809 | **19.1%** | 12.5% |
+| Structure | 0.982 | 1.8% | 31.4% |
+| Both | 0.809 | **19.1%** | 12.5% |
+
+약 **89만 개 프리미티브** (5.27M 중 17%) 가 BG 로 이동. 이는 "domain rule 을 만족하지 못하는
+프리미티브는 건물 표면 class 를 배정하지 않는다" 는 설계 규칙의 **전역 적용** 결과이며, artifact
+가 아닙니다.
+
+**3D 뷰어 관찰 (`tools/gs3d_4way_viewer/` semantic 모드)**:
+- 건물 주변부 (지면 경계, 하늘-건물 접합층, 주차 차량, 그림자 영역) 에서 큰 색감 변화
+  → L_mutual 이 이런 애매한 프리미티브를 BG 로 정리
+- 건물 코어의 시각 변화 적음 → 건물 기하가 이미 명확해 Wall/Roof rule 을 깔끔히 통과하기 때문
+- 지면 경계 청소는 Terrain IoU +0.057 로 rule-GT 에도 반영됨
+
+**Wall-vert% 88.3% 의 정직한 해석**:
+- 지표 정의 ("Wall-labeled 중 `|n·g|<0.15` 비율") 가 L_mutual 강제 규칙 그 자체 → **설계대로면
+  tautological 하게 수렴**. 이게 설계의 의도이고 부작용이 아님.
+- 분모 (Wall class) 가 31.4% → 12.5% 로 줄어든 것도 동일한 설계 동작의 산물 (애매한 후보는
+  Wall 이 아니다).
+- **단 두 효과를 하나로 묶어 "법선만 고친 것" 으로 읽으면 over-claim**. 실제로는 "법선 정렬 +
+  class 정리" 의 결합 효과.
+- §6.3 max-diff 뷰는 건물 지붕에서 Wall → Roof 의 개별 재라벨링을 보여주는 드라마틱 증거로
+  유효.
+
+**Phase 2 이점**: BG 프리미티브는 CityGML 폴리곤 추출 파이프라인에서 자동 배제 →
+"conservative polygon extraction" (애매한 건 벽·지붕·지면 폴리곤에 안 넣음) 이 자연스럽게 성립.
+3D BAG curated GT 에서는 rule-GT 의 Wall 과잉 라벨이 없어져 BG 재분류량 자체도 줄어들 예정.
+
+**보고 원칙**: Phase 2 에서는 `Wall_frac`, `Wall-vert%`, `BG_frac` 세 지표를 **항상 동반** 표기.
+셋을 함께 봐야 "법선 정렬" 과 "class 정리" 효과를 분리 해석 가능.
+
 ## 7. Mechanism 2 (L_structure) 작동 검증
 
 **프레이밍**: Mech 2 는 **그룹 수준 aggregate 제약** — 개별 프리미티브 시각 변화 없음. 유효 증거는
@@ -212,32 +255,44 @@ gradient 없음. Both 에서 두 loss 가 n, c 에 동시 gradient 합산.
 
 ## 10. 3D 대화형 시각화
 
-### 2DGS → 3DGS emulation 포맷 변환
+4조건을 동일 카메라로 동기화해 비교하는 로컬 웹 뷰어를 제공합니다 —
+[tools/gs3d_4way_viewer/](../../tools/gs3d_4way_viewer/).
 
-2DGS 는 disk (2 scales), 3DGS 는 ellipsoid (3 scales). SuperSplat 등 3DGS 뷰어 호환 위해
-세 번째 scale 을 e^−7 ≈ 0.001m 로 강제 (매우 얇은 ellipsoid = disk 근사).
+### 포맷: 2DGS → ksplat
+
+2DGS 는 disk (2 scales), 3DGS 는 ellipsoid (3 scales). GS 웹 뷰어 호환 위해 세 번째 scale 을
+e^−7 ≈ 0.001m 로 강제 (매우 얇은 ellipsoid = disk 근사) 한 뒤 `.ksplat` 로 변환.
+
+### 에셋 구성 (6 모드)
+
+```
+tools/gs3d_4way_viewer/assets/
+├── ksplat_2dgs_dense_rgb/         (full SH, 기본 포토리얼)
+├── ksplat_2dgs_dense_normal/      (법선을 RGB 로 치환 — Mech2 증거)
+├── ksplat_2dgs_dense_semantic/    (의미론 class 를 RGB 로 치환 — Mech1 증거)
+├── ksplat_2dgs_light_rgb/         (경량 서브샘플)
+├── ksplat_2dgs_light_normal/
+└── ksplat_2dgs_light_semantic/
+```
+
+각 디렉토리에 `baseline.ksplat, mutual.ksplat, structure.ksplat, both.ksplat` 4개.
 
 ### 사용법
 
+```bash
+cd tools/gs3d_4way_viewer && python serve.py   # 로컬 HTTP 서버
+# 브라우저에서 http://localhost:8000/index.html
+# 상단 LOD (dense/light), View (RGB/Normal/Semantic) 토글
+# "Sync camera" 체크 시 한 패널 드래그 → 4 패널 동시 갱신
 ```
-figures/ply_3dgs/
-├── baseline_3dgs.ply   (800k prims, 190MB, full SH + opacity)
-├── mutual_3dgs.ply
-├── structure_3dgs.ply
-└── both_3dgs.ply
-```
 
-**SuperSplat** (https://superSplat.com 또는 https://playcanvas.com/supersplat/editor):
-- 각 `*_3dgs.ply` 드래그&드롭 → 정식 GS 쉐이더로 렌더
-- 4조건 비교: 브라우저 탭 4개에 나란히 배치
+### 관찰 포인트
 
-**관찰 포인트**:
-- Baseline: 지붕 위 프리미티브 색·방향 혼잡 (Wall 과 Roof 섞임)
-- Mutual/Both: 지붕은 수평 disk, 벽면은 수직 disk 로 분리
-- Structure/Both: 벽면 프리미티브 정렬 개선 (σ_normal)
-
-**참고**: 800k 서브샘플 (원본 5.3M). 세 번째 scale 강제로 인해 실제보다 살짝 두꺼워 보일 수
-있으나 육안 판별 어려움.
+- **Semantic 뷰**: Baseline 은 지붕을 Wall(파랑)로 오분류, Mutual/Both 는 Roof(빨강)로 교정.
+  동시에 Mutual/Both 에서 지면 경계·하늘층 프리미티브가 BG 로 재분류되어 주변부 색감이
+  크게 달라짐 (§6.5 BG reassignment 참조).
+- **Normal 뷰**: Structure/Both 에서 벽면 법선 색 균일도 개선 (σ_normal_intra −36~−45%).
+- **RGB 뷰**: 4조건 시각 구분 불가 — photometric 파리티의 직접 증거.
 
 ## 11. Phase 2 착수 준비사항
 
@@ -264,44 +319,49 @@ figures/ply_3dgs/
 
 ```
 results/phase1_ablation/
-├─ REPORT.md                                  (본 문서)
-├─ run/                                        (Step 1-6 학습)
-│  ├─ ckpt/{step_05000.pt … step_25000.pt, final.pt}
-│  ├─ tb/, eval_rendering/, eval_semantic/, eval_geometry/, eval_structure/
-│  └─ train.log
+├─ REPORT.md                                   (본 문서)
+├─ run/                                         (Step 1-6 Both 학습 — 4조건 중 하나)
+│  ├─ ckpt/{step_05000.pt … step_25000.pt, final.pt}   (intermediate ckpt 포함)
+│  ├─ renders/, tb/, train.log
+│  ├─ eval_rendering/, eval_semantic/, eval_geometry/, eval_structure/
+│  └─ eval_all.log
 └─ figures/
-   ├─ (정량 JSON 사본)
-   ├─ training_curves.png                      (4조건 통합)
-   ├─ contribution_decomposition.png           (6 지표 bar)
-   ├─ structure_4way_bars.png                  (σ 4조건)
-   ├─ wall_normal_distribution.png             (분포 shift)
-   ├─ render_compare_4way/                     (RGB 4-way 4 뷰)
-   ├─ semantic_compare_4way/                   (semantic 2D 4 뷰)
-   ├─ phase1_visual_check_maxdiff/             (max-diff 3 뷰 — 주요 Mech1 증거)
-   ├─ phase1_visual_check/                     (건물-heavy 3 뷰)
-   ├─ ply_3dgs/                                (3DGS emulation, SuperSplat 용)
-   ├─ ply_with_normals/                        (CloudCompare/MeshLab 용)
-   └─ (참고용: 3d*, mech_evidence*, photo_normal_4way, ply_exports, ply_web,
-      ply_viewer, structure_mutual_vs_base)
+   ├─ rendering_metrics.json, semantic_metrics.json,
+   │  geometry_metrics.json, domain_metrics.json       (§5–§7 정량 JSON)
+   ├─ training_curves.png                       (4조건 통합)
+   ├─ contribution_decomposition.png            (6 지표 bar)
+   ├─ structure_4way_bars.png                   (σ 4조건)
+   ├─ wall_normal_distribution.png              (분포 shift)
+   ├─ render_compare_4way/                      (RGB 4-way, 4 뷰)
+   ├─ semantic_compare_4way/                    (semantic 2D, 4 뷰)
+   ├─ phase1_visual_check_maxdiff/              (max-diff 3 뷰 — 주요 Mech1 증거)
+   └─ phase1_visual_check/                      (건물-heavy 3 뷰)
 ```
+
+나머지 3 조건 ckpt 는 각 step 디렉토리에서 참조:
+`results/phase1_semantic/run/ckpt/final.pt` (Baseline, Step 1-3),
+`results/phase1_mutual/run/ckpt/final.pt` (Step 1-4),
+`results/phase1_structure/run/ckpt/final.pt` (Step 1-5).
+
+3D 대화형 뷰어 (§10): [tools/gs3d_4way_viewer/](../../tools/gs3d_4way_viewer/) — ksplat 6 모드.
 
 ## 13. 결론
 
 1. **체크리스트 6/6 통과**: 네 조건 모두 렌더/기하 레퍼런스 유지 + 메커니즘이 설계대로 작동.
 
-2. **L_mutual 의도 효과 육안 확인** (§6.3): Baseline 이 지붕을 Wall 로 오분류하는 현상이
-   Mutual/Both 에서 완전 교정. View 2597: Wall 91.3% → 4.3%. "Wall-vert 16.9%→88.3%" 수치가
-   실제 의미론적 교정에 1:1 대응.
+2. **L_mutual 의도 효과 육안 확인** (§6.3, §6.5): Baseline 이 지붕을 Wall 로 오분류하는 현상이
+   Mutual/Both 에서 교정 — View 2597: Wall 91.3% → 4.3%. "Wall-vert 16.9% → 88.3%" 는
+   양방향 gradient 설계의 자연스러운 귀결 (법선 정렬 + 애매 후보의 BG 재분류 17%). 해석
+   오독 방지 위해 `Wall_frac`, `Wall-vert%`, `BG_frac` 를 쌍으로 보고.
 
 3. **L_structure 의도 효과 통계로 확인**: σ_normal −45% (Structure), Both −36%. Mech 2 는 설계상
    그룹 평균 제약 — bar chart/histogram/수치가 유효 증거 (개별 프리미티브 시각 변화 없음).
 
-4. **Mutual σ 악화는 rule-GT artifact**: Wall 과잉 라벨을 L_mutual 이 교정하며 Roof 오염. Phase 2
-   curated GT 에서 해소 예상.
+4. **Mutual σ 악화는 rule-GT artifact**: Wall 과잉 라벨을 L_mutual 이 교정하며 Roof 오염 + BG
+   재분류 (17%). Phase 2 curated GT 에서 해소 예상.
 
 5. **두 메커니즘이 직교 축에 기여**: Wall-vert 는 L_mutual 전담, σ_normal 은 L_structure 전담.
    Both 만 두 축 동시 양호. 시너지 판정은 Phase 2 로.
 
-6. **Phase 2 착수 자격 충족**: 4조건 ckpt + 정량/정성 분석 + 3DGS emulation PLY (SuperSplat
-   시각화 가능) 완비. Baseline 의 "지붕 Wall 폴리곤 생성" 실패 모드가 Phase 2 CityGML 에서
-   정량화될 것.
+6. **Phase 2 착수 자격 충족**: 4조건 ckpt + 정량/정성 분석 + 3D ksplat 뷰어 (§10) 완비.
+   Baseline 의 "지붕 Wall 폴리곤 생성" 실패 모드가 Phase 2 CityGML 에서 정량화될 것.
