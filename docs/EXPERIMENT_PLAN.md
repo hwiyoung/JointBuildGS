@@ -398,34 +398,64 @@ results/phase1_ablation/REPORT.md 작성.
 
 ## Phase 2: Stage 3 검증 (3D BAG 합성 렌더링)
 
-### Step 2-1: 3D BAG 합성 렌더링 파이프라인
+### Step 2-1: 3D BAG 합성 렌더링 파이프라인 (UAV/Pix4D-standard)
 
-**프롬프트:**
+**Reference mission: DJI Phantom 4 RTK + Pix4D 기본 설정 UAV mapping**
+
+**설계 근거**:
+- **플랫폼**: UAV (§RESEARCH_CONTEXT.md §8.1 성수동 = DJI 70m, §10 레퍼런스 = AGS/ULSR-GS/CityGSV2)
+- **Scene**: 3D BAG Amsterdam Jordaan 에서 실제 200×200m 블록 (자연 분포 ~100 건물). 인위적 grid 배치 아님.
+- **해상도**: 원본 5472×3648 (DJI P4 RTK) → 학습용 **2048×1536** downsample (2.67×)
+- **FOV**: 74° horizontal (DJI spec)
+- **Altitude**: **80m AGL** (Pix4D 기본 권장)
+- **Overlap**: 80% forward / 70% side (Pix4D default)
+- **Oblique**: 45° tilt × 4 cardinal directions (N/E/S/W) — Pix4D 표준
+- **Orbit 제외**: LOD2 mapping 표준 아님
+- **GSD**: 원본 1 cm / 학습용 2.7 cm (LOD2 상단 정밀)
+- **Train/test split**: interleave `i % 10 == 9` (biased split 방지)
+
+**Scene 선정 절차**:
+1. 3D BAG Amsterdam Jordaan 4 타일 (2888 건물) 전체 building centroid 의 world XZ 위치 스캔
+2. 200×200m sliding window 로 80-150 건물 포함 영역 후보 추출
+3. Roof type 다양성 기준으로 가장 균형 잡힌 블록 선정 (flat/gable/hip/tri-slope/complex 최소 각 5 개)
+4. 해당 building 들을 **world position 유지** 로 scene.obj 작성 (per-building centering 아님)
+5. ground plane 추가, Roof/Wall/Ground/Terrain material tag 보존
+
+**프롬프트**:
 ```
 docs/EXPERIMENT_PLAN.md의 Step 2-1을 진행해줘.
 
-목표: 3D BAG GT CityGML → 합성 이미지/depth/normal/seg 렌더링 파이프라인.
+목표: UAV Pix4D-standard mission 으로 3D BAG Jordaan 실제 블록 렌더링.
 
 === 작업 ===
-1. 3D BAG LOD2.2에서 건물 20개 선정 (flat/shed/gable/hip/complex 다양)
-2. CityGML → mesh 변환 (각 면 유지, 면별 semantic 레이블 보존)
-3. 카메라 배치 (이상적 full-coverage + oblique + nadir 옵션)
-4. Blender/PyTorch3D 렌더링: RGB, depth, normal, segmentation
-5. COLMAP 스타일 카메라 파일 생성 (파이프라인 호환)
+1. select_block.py: 3D BAG Jordaan 에서 200×200m 자연 블록 선정 (80-150 건물, roof type 균형)
+2. compose_scene.py: 선정 건물들을 world position 유지하여 scene.obj 생성
+3. render_scene.py: 80m altitude, 2048×1536, 74° FOV, 80/70% overlap, 4 cardinal oblique (no orbit)
+4. postprocess_exr.py: depth/normal frame 변환 (기존 유지)
+5. export_colmap.py: COLMAP sparse 생성 (기존 유지)
 
 === 검증 ===
-렌더링 결과가 Stage 2 학습 가능한지 smoke test.
+- FC-2 (500 iter benchmark): 실제 it/s 측정, 30k 총 시간 정확 추정
+- FC-3 (5k iter smoke): eval PSNR >= 20 시 full training 진행
 
 results/phase2_synthesis/REPORT.md 작성.
 ```
 
-### Step 2-2: Phase 1 4조건 Ablation → Stage 3 CityGML
+**v1/v2 실패 교훈 (본 Step 재시도에서 수정):**
+1. **Frame bug**: render_scene.py 의 `camera_pose_dict` 이 Blender world 에 저장 → OBJ world 로 일관 (수정 완료)
+2. **View 부족**: 73 views → Pix4D 표준 overlap 에 기반한 ~360 views
+3. **Biased split**: last 10% (orbit 몰림) → `i % 10 == 9` interleave (수정 예정)
+4. **인위적 grid scene**: spacing 18m 로 건물 띄워놓음 → 실제 Jordaan 블록 자연 배치
+
+### Step 2-2: Phase 1 4조건 Ablation → Stage 3 CityGML (UAV Pix4D 데이터에서)
+
+**전제**: Step 2-1 (UAV Pix4D-standard) 데이터셋 사용. Step 2-1 의 FC-2/FC-3 검증으로 수렴 확인 후 진행.
 
 **프롬프트:**
 ```
 docs/EXPERIMENT_PLAN.md의 Step 2-2를 진행해줘.
 
-목표: Phase 1의 4조건(Baseline/Mutual/Structure/Both)을 3D BAG 합성에서 학습 → Stage 3 → CityGML → val3dity.
+목표: Phase 1의 4조건(Baseline/Mutual/Structure/Both)을 Step 2-1 UAV Pix4D 데이터에서 학습 → Stage 3 → CityGML → val3dity.
 
 === 4조건 학습 ===
 각 조건: 3D BAG 합성 렌더링 입력 + 해당 손실 함수 조합 + 30000 iter
