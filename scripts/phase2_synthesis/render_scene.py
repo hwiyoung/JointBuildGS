@@ -58,6 +58,91 @@ def import_scene():
         name = mat.name.split('.')[0]
         if name in MTL_TO_CLASS:
             mat.pass_index = MTL_TO_CLASS[name]
+    add_procedural_texture_to_materials()
+
+
+def add_procedural_texture_to_materials():
+    """Add Perlin noise variation to each material's base color.
+
+    Flat material colors (RGB ≈ semantic label) make L_photo trivial and
+    weaken the L_mutual semantic↔geometry feedback measurement. This breaks
+    the trivial correspondence while keeping:
+      - Semantic pass unchanged (driven by material pass_index, not color)
+      - Depth/Normal passes unchanged (geometry-only)
+      - Per-class color identity preserved (dominant color)
+
+    Design:
+      - Noise uses WORLD (Generated) coords, scale ~0.05 (very wide features,
+        ~5-10 m patches across the scene). World coords are continuous across
+        object boundaries so adjacent walls blend smoothly.
+      - ColorRamp expands contrast: narrow input range (0.25-0.75) → full
+        grayscale (0.3 to 1.0), so multiplier range covers 0.3 × base to
+        1.0 × base = 70 % brightness variation.
+      - MULTIPLY against base color (clamped ≤1).
+    """
+    # Scale unit here: cycles across object's Generated-coord bbox (0-1).
+    # Scene buildings are ~10-20m wide, so scale=3.0 → 3 cycles → ~3-6m patches
+    # (well above GSD 5.9 cm, well below building size for visible variation).
+    params = {
+        'Roof':    {'scale': 3.5, 'ramp_lo': 0.35, 'ramp_hi': 1.00,
+                    'pos_lo': 0.25, 'pos_hi': 0.75, 'detail': 6.0},
+        'Wall':    {'scale': 2.5, 'ramp_lo': 0.40, 'ramp_hi': 1.00,
+                    'pos_lo': 0.25, 'pos_hi': 0.75, 'detail': 5.0},
+        'Ground':  {'scale': 5.0, 'ramp_lo': 0.50, 'ramp_hi': 1.00,
+                    'pos_lo': 0.25, 'pos_hi': 0.75, 'detail': 5.0},
+        'Terrain': {'scale': 4.0, 'ramp_lo': 0.55, 'ramp_hi': 1.00,
+                    'pos_lo': 0.25, 'pos_hi': 0.75, 'detail': 4.0},
+    }
+    for mat in bpy.data.materials:
+        name = mat.name.split('.')[0]
+        if name not in params:
+            continue
+        p = params[name]
+        if not mat.use_nodes:
+            mat.use_nodes = True
+        nt = mat.node_tree
+        nodes = nt.nodes
+        links = nt.links
+        bsdf = next((n for n in nodes if n.type == 'BSDF_PRINCIPLED'), None)
+        if bsdf is None:
+            continue
+        base = tuple(bsdf.inputs['Base Color'].default_value[:3])
+        # Clean any previously-added texture nodes (re-invocation safety)
+        for n in list(nodes):
+            if n.type in ('TEX_COORD', 'MAPPING', 'TEX_NOISE', 'VALTORGB', 'MIX_RGB'):
+                nodes.remove(n)
+        # Drop any link into BSDF Base Color
+        for link in list(links):
+            if link.to_socket == bsdf.inputs['Base Color']:
+                links.remove(link)
+
+        # Chain: TexCoord.Generated → Noise → ColorRamp → MixMultiply → BSDF
+        coord = nodes.new('ShaderNodeTexCoord'); coord.location = (-900, 0)
+        noise = nodes.new('ShaderNodeTexNoise'); noise.location = (-600, 0)
+        noise.noise_dimensions = '3D'
+        noise.inputs['Scale'].default_value = p['scale']
+        noise.inputs['Detail'].default_value = p['detail']
+        noise.inputs['Roughness'].default_value = 0.6
+
+        ramp = nodes.new('ShaderNodeValToRGB'); ramp.location = (-350, 0)
+        # Expand contrast: narrow input range so small noise fac changes → full output swing
+        ramp.color_ramp.elements[0].position = p['pos_lo']
+        ramp.color_ramp.elements[1].position = p['pos_hi']
+        ramp.color_ramp.elements[0].color = (p['ramp_lo'],) * 3 + (1.0,)
+        ramp.color_ramp.elements[1].color = (p['ramp_hi'],) * 3 + (1.0,)
+        ramp.color_ramp.interpolation = 'LINEAR'
+
+        mix = nodes.new('ShaderNodeMixRGB'); mix.location = (-100, 0)
+        mix.blend_type = 'MULTIPLY'
+        mix.inputs['Fac'].default_value = 1.0
+        mix.inputs['Color1'].default_value = (*base, 1.0)
+
+        # Use Generated (object-local 0-1 normalized) rather than Object so texture
+        # tiles the same across object bbox. Generated is continuous per-mesh-island.
+        links.new(coord.outputs['Generated'], noise.inputs['Vector'])
+        links.new(noise.outputs['Fac'], ramp.inputs['Fac'])
+        links.new(ramp.outputs['Color'], mix.inputs['Color2'])
+        links.new(mix.outputs['Color'], bsdf.inputs['Base Color'])
 
 
 def add_lighting():

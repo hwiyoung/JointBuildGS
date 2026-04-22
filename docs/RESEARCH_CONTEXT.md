@@ -196,6 +196,9 @@ Warmup: 2N/3 이후 활성화.
 ### Synthetic B
 이상적+clean 기본. 노이즈: depth/seg. 카메라: 이상적/oblique/nadir/뷰 감소.
 
+### 합성 씬의 RGB≈semantic 문제와 대응 (Phase 2 Step 2-1)
+3D BAG GT CityGML 을 flat-color material (Roof/Wall/Ground/Terrain) 로 렌더하면 RGB 가 사실상 semantic class 를 그대로 알려주는 trivial 상태가 된다. L_mutual 의 `p_c × 기하_오차` 에서 `p_c` 가 one-hot 에 근접 → **의미론↔기하 양방향 gradient 의 양방향성 손실**. Phase 2 Step 2-1 에서 material 별 Perlin noise (3D Generated 좌표 기반, view-consistent) 를 추가해 RGB 를 비자명화. Brightness range material 별 0.35-1.00 × base, scale 2.5-5 cycles/building. Semantic / depth / normal pass 는 불변 (material pass_index + geometry 기반).
+
 ---
 
 ## 8. 데이터

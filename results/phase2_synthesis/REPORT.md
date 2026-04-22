@@ -102,7 +102,42 @@ UAV oblique 촬영은 업계에서 다음 3 방식이 혼용된다:
 > **Panel (1)**: 2D 비행 계획. 131 건물 + 112 nadir waypoints (파란 점) + 각 nadir 이미지의 120×90m ground footprint (파란 사각형) + scene 경계 (빨간). Overlap 시각화.
 > **Panel (2)**: 중앙 waypoint 의 3D 카메라 frustum (80m 고도). 파랑 nadir (straight down) + 4 색 oblique (N/E/S/W 45° tilt). Frustum 은 scene 경계로 clip — "학습에 실제 기여하는 ground 영역" 만 표시.
 
-### 3.5 Train/test split
+### 3.5 Procedural texture (RGB ≠ semantic)
+
+합성 씬의 **flat-color 한계** 해소용. [render_scene.py](../../scripts/phase2_synthesis/render_scene.py) `add_procedural_texture_to_materials()` 에서 Blender Cycles shader 노드로 각 material 에 3D Perlin noise 기반 brightness variation 추가.
+
+**문제**: scene.mtl 이 Roof/Wall/Ground/Terrain 각각 단일 Kd 색만 정의 → 렌더 RGB ≈ semantic class. 이로 인해:
+- L_photo 와 L_sem 이 파라미터는 다르나 신호 중복
+- L_mutual 의 `p_c × 기하_오차` 에서 `p_c = softmax(sem_logits)` 가 **trivially one-hot** 에 가까워짐 → 의미론↔기하 양방향 gradient 의 "양방향성" 손실
+- 결과적으로 **L_mutual 기여가 과소측정**되고 실 데이터 (Phase 3 성수동) 에 대한 transferability 약화
+
+**해결**: 각 material 의 base color 에 material 별 다른 Perlin noise 를 multiply.
+
+| Material | Noise scale (cycles/object bbox) | Brightness range (× base color) |
+|---|---|---|
+| Roof | 3.5 | 0.35 – 1.00 |
+| Wall | 2.5 | 0.40 – 1.00 |
+| Ground | 5.0 | 0.50 – 1.00 |
+| Terrain | 4.0 | 0.55 – 1.00 |
+
+**View consistency 보장**: Noise 는 `TexCoord.Generated` 3D 좌표 기반 (건물별 bbox 에서 0-1 normalized). 3D world 의 동일 점 → 동일 noise 값 → 동일 RGB (모든 view 에서). 2D screen-space noise 아니므로 3DGS triangulation 과 호환.
+
+![texture_before_after](figures/texture_before_after.png)
+
+> 동일 waypoint 06_03 에서 BEFORE (flat color) vs AFTER (procedural texture).
+> 위: nadir, 아래: oblique. 각 material 의 dominant color (red / blue / gray) 는 유지되고 brightness 만 얼룩덜룩 (mottling) 변동. 픽셀 수준 variation 검증: wall brightness std 가 5.2 → 8.0 (+54% nadir) / 20.1 (+286% oblique) 로 증가.
+
+**설계 원칙**:
+- Scale 선택: 3D 좌표계 (Generated bbox-normalized) 상 ~2-5 cycles/building → **~3-5m 패치** 크기. GSD 5.9cm 와 차이 충분해 aliasing 없음.
+- Brightness range 상한 1.0: Blender Base Color 가 [0,1] 로 clamp 되므로 1.0 이상은 의미 없음. 대신 lo 값 (0.35-0.55) 낮춰 asymmetric darker-only variation 도입.
+- **Depth / Normal / Semantic pass 불변**: material pass_index 와 geometry 는 shader 와 무관.
+
+**파라미터 시행착오 기록 (reference)**:
+- v1: Object coord + scale 25 → pixel-level aliasing → variation 없음
+- v2: Generated coord + scale 0.08 → under-cycle → variation 없음
+- v3 (현재): Generated coord + scale 2.5-5 → **~3-5m 패치 선명히 관측**
+
+### 3.6 Train/test split
 
 [src/stage2/train.py:99-104](../../src/stage2/train.py#L99-L104):
 
@@ -226,18 +261,12 @@ Baseline 전용 이유: L_mutual warmup=10000, L_structure warmup=20000 → 5k i
 
 ## 6. 한계 및 후속 조치 (명시)
 
-### 6.1 RGB ≈ Semantic 문제
+### 6.1 RGB ≈ Semantic 문제 — **해결 적용됨 (§3.5 Procedural texture)**
 
-Scene.mtl 은 Roof / Wall / Ground / Terrain 에 각각 단일 RGB 색만 정의 → **렌더 RGB 가 semantic 라벨과 거의 동등**. 결과:
+Scene.mtl 단일-Kd 로 렌더 RGB ≈ semantic 이 되는 문제는 §3.5 에서 **Procedural texture 를 주 data 생성에 적용** 해 해결. 더 이상 후속 조치가 아닌 주 파이프라인 구성요소.
 
-- L_photo 와 L_sem 이 **파라미터는 다르지만 신호가 중복** (L_photo: sh0/shN; L_sem: sem_logits)
-- L_mutual 의 `p_c × 기하_오차` 에서 `p_c` 가 trivially one-hot 에 근접 → "**의미론→기하 피드백**" 효과가 과소측정됨
-
-**후속 조치 (선택)**:
-1. **Procedural texture** (material 별 Perlin noise): 재렌더 시간 ~45 min, Phase 2-3 또는 RGB validity 검증용 추가 실험으로 고려
-2. 또는 실 데이터 (Phase 3 성수동) 에서 해당 효과를 재검증
-
-Phase 2 Step 2-2 결과는 **"합성 + flat RGB 조건 하에서의 값"** 임을 REPORT 에 명시.
+다만 진짜 사진 texture (roof tile, brick wall 등) 대비 현실감은 낮으므로:
+- Phase 2-3 / Phase 3 에서 실 UAV 데이터 처리 시에도 동일 method 가 작동하는지 확인하여 **texture 복잡도에 대한 robustness** 검증 필요.
 
 ### 6.2 Oblique footprint 가시화 주의
 

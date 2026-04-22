@@ -413,6 +413,7 @@ results/phase1_ablation/REPORT.md 작성.
 - **Orbit 제외**: LOD2 mapping 표준 아님
 - **GSD**: 원본 1 cm / 학습용 2.7 cm (LOD2 상단 정밀)
 - **Train/test split**: interleave `i % 10 == 9` (biased split 방지)
+- **Procedural texture**: material 별 Perlin noise (3D, `TexCoord.Generated` 기반, view-consistent). flat-color scene 의 RGB ≈ semantic trivial 대응을 깨뜨려 L_mutual 의 의미론↔기하 양방향 gradient 가 정상 측정되게 함. Brightness range material 별 0.35-1.00 × base.
 
 **Scene 선정 절차**:
 1. 3D BAG Amsterdam Jordaan 4 타일 (2888 건물) 전체 building centroid 의 world XZ 위치 스캔
