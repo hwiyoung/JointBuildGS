@@ -95,9 +95,12 @@ def main():
     )
     print(f"[data] frames={len(ds)}  pts_init={ds.points_xyz.shape[0]}")
 
-    # train/test split (last 10% as test)
+    # train/test split: interleave (every 10th frame → test) to avoid systematic
+    # azimuth / viewpoint bias when frames are stored in sorted order (grouped by
+    # capture type). Previously used "last 10%" which grouped all orbit views into
+    # test → test was out-of-distribution → severe overfitting.
     n = len(ds)
-    test_idx = list(range(max(1, int(n * 0.9)), n))
+    test_idx = [i for i in range(n) if i % 10 == 9]
     train_idx = [i for i in range(n) if i not in test_idx]
 
     # ---------- model ----------
@@ -382,9 +385,11 @@ def _eval_and_save(model, ds, test_idx, device, writer, out_dir, it, tag: str = 
         if "normal" in b:
             n_gt = b["normal"].to(device)
             n_m = b["normal_mask"].to(device)
-            R = w2c[:3, :3]
-            np_pred = out["normal_render"] @ R.T
-            np_pred = torch.nn.functional.normalize(np_pred, dim=-1, eps=1e-6)
+            # Both n_render and n_gt are in WORLD frame (see RESEARCH_CONTEXT.md §12.6
+            # for render_normals; dataloader canonicalizes EXR GT to world). No
+            # additional rotation needed. The earlier `@ R.T` produced a spurious
+            # camera-to-world rotation of already-world vectors → near-random cos.
+            np_pred = torch.nn.functional.normalize(out["normal_render"], dim=-1, eps=1e-6)
             ng = torch.nn.functional.normalize(n_gt, dim=-1, eps=1e-6)
             c = (np_pred * ng).sum(-1).abs()
             normal_coses.append((c * n_m.float()).sum().item() / n_m.sum().clamp_min(1).item())

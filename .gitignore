@@ -20,6 +20,15 @@ results/phase2_synthesis/renders_raw/
 results/phase2_synthesis/dataset/
 results/phase2_synthesis/smoke_test/
 results/phase2_synthesis/smoke_stage2/
+results/phase2_synthesis/smoke/          # FC-3 baseline smoke
+
+# Phase 2 Step 2-2: 4-condition training + Stage 3 artifacts
+results/phase2_ablation_citygml/*/ckpt/
+results/phase2_ablation_citygml/*/tb/
+results/phase2_ablation_citygml/*/renders/
+results/phase2_ablation_citygml/*/stage3/primitives.npz
+results/phase2_ablation_citygml/*/stage3/building_*/
+results/phase2_ablation_citygml/_logs/
 
 # ===== Training artifacts =====
 *.pt

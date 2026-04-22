@@ -1,13 +1,18 @@
-"""Blender 4.3 full scene renderer: aerial + oblique + perimeter camera sampling.
+"""Blender 4.3 scene renderer — UAV Pix4D-standard mission (DJI P4 RTK proxy).
 
-Produces raw Blender EXR/PNG outputs per view; pair with postprocess_exr.py.
+Camera strategy: at each nadir waypoint on a regular grid, capture 5 images:
+  1 nadir (straight down) + 4 oblique (45° tilt facing N/E/S/W).
+Grid spacing derived from Pix4D 80% forward / 70% side overlap targets.
 
-Camera strategy (adaptive to scene bbox):
-  - Aerial nadir grid: GRID_NX × GRID_NY cameras straight above, looking down
-    with slight inward tilt for multi-view triangulation baseline
-  - Oblique rings: 3 tilt angles (30°, 45°, 60°) × 12 azimuths, pointed at scene center
-  - Perimeter orbit: 1 ring at roof level, 12 azimuths around the scene
-Total default: 25 + 36 + 12 = 73 views.
+Spec basis:
+  - Platform: DJI Phantom 4 RTK proxy (5472×3648 @ 74° h-FOV, downsampled 2.67× for GS training)
+  - Altitude: 80 m AGL (Pix4D default, both nadir and oblique)
+  - Resolution: 2048×1536 (4:3) for training (GSD ≈ 5.5 cm at 80m)
+  - Overlap: 80% forward / 70% side
+  - Oblique: 45° tilt × 4 cardinal (Pix4D double-grid + oblique standard)
+  - NO orbit (not a standard UAV mapping product; excluded for Pix4D conformance)
+
+Produces raw Blender EXR/PNG; pair with postprocess_exr.py.
 """
 import bpy
 import json
@@ -23,16 +28,20 @@ OUT_DIR = REPO_ROOT / 'results/phase2_synthesis/renders_raw'
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 MTL_TO_CLASS = {'Ground': 3, 'Terrain': 3, 'Wall': 2, 'Roof': 1}
-DEPTH_SKY_CLAMP = 29000.0
+DEPTH_SKY_CLAMP = 30000.0  # > any realistic UAV depth
 
-RES_W, RES_H = 800, 600
+# ------------ camera specs (Pix4D-standard UAV mission) ------------
+RES_W, RES_H = 2048, 1536
 SAMPLES = 32
-FOV_DEG = 50.0
+FOV_DEG = 74.0                   # DJI P4 RTK horizontal FOV
+ALTITUDE = 80.0                  # AGL meters (Pix4D standard)
 
-GRID_NX, GRID_NY = 5, 5
-RING_AZIMUTHS = 12
-RING_TILTS = [30, 45, 60]           # degrees from nadir (0=straight down)
-NADIR_TILT_IN = 8                   # degrees inward tilt for grid views
+FORWARD_OVERLAP = 0.80           # along-Z spacing
+SIDE_OVERLAP    = 0.70           # along-X spacing
+
+OBLIQUE_TILT_DEG = 45.0          # Pix4D oblique standard
+# Cardinal directions that the oblique camera looks toward (XZ plane)
+OBLIQUE_AZIMUTHS = [0, 90, 180, 270]  # N, E, S, W (degrees)
 
 
 def reset():
@@ -150,10 +159,24 @@ def setup_compositor(prefix):
 
 
 def camera_pose_dict(cam):
+    # M = camera-local -> Blender world.
+    # flip = (y,z) sign swap: OpenGL camera axes -> OpenCV camera axes.
+    # T_obj_to_bl = OBJ world -> Blender world. Blender imported the OBJ with the
+    # default axis swap "OBJ Y up -> Blender Z up", which maps points
+    # (x, y, z)_obj -> (x, -z, y)_bl. We write w2c in OBJ world so it matches
+    # scene.obj / points3D.bin (COLMAP -Y up). Prevents the Step 2-1 frame bug.
     M = np.array(cam.matrix_world)
     flip = np.diag([1.0, -1.0, -1.0, 1.0])
-    c2w_cv = M @ flip
-    w2c_cv = np.linalg.inv(c2w_cv)
+    T_obj_to_bl = np.array([
+        [1, 0,  0, 0],
+        [0, 0, -1, 0],
+        [0, 1,  0, 0],
+        [0, 0,  0, 1],
+    ], dtype=float)
+    c2w_cv_bl = M @ flip                            # OpenCV-cam -> Blender-world
+    w2c_cv_bl = np.linalg.inv(c2w_cv_bl)            # Blender-world -> OpenCV-cam
+    w2c_cv = w2c_cv_bl @ T_obj_to_bl                # OBJ-world -> OpenCV-cam
+    c2w_cv = np.linalg.inv(w2c_cv)
     scene = bpy.context.scene
     W, H = scene.render.resolution_x, scene.render.resolution_y
     fx = W * cam.data.lens / cam.data.sensor_width
@@ -166,56 +189,78 @@ def camera_pose_dict(cam):
 
 
 def generate_cameras(bbox_min, bbox_max):
-    """Return list of (view_name, loc_bl, target_bl, up_bl) tuples."""
-    center = (bbox_min + bbox_max) / 2
+    """Generate UAV Pix4D-standard camera positions over the scene.
+
+    Coord frame notes (Blender-world after default OBJ import):
+      - OBJ -Y up maps to Blender -Z up, so "physical up" in Blender is -Z.
+      - Scene roofs are at most-negative Z (bbox_min[2]), ground at ~Z=0.
+      - Camera altitude ALTITUDE meters above the highest roof.
+
+    Strategy:
+      - Determine ground footprint per image at ALTITUDE from FOV_DEG + aspect.
+      - Derive nadir grid spacing from (1 - overlap) × footprint.
+      - At each nadir waypoint: 1 nadir image + 4 oblique images
+        (45° tilt, facing cardinal directions toward scene). 5 captures/waypoint.
+    """
     extent = bbox_max - bbox_min
-    # In Blender: physical up is -Z (OBJ import flipped COLMAP -Y up to Blender -Z).
-    # Roofs at bbox_min[2] (most negative Z).
-    max_xy = max(extent[0], extent[1])
-    altitude = bbox_min[2] - max_xy * 0.7      # above roofs by ~70% of scene width
-    radius = max_xy * 0.75                      # horizontal distance from center
-    up_bl = (0, 0, -1)                          # physical up = Blender -Z
+    cx, cy = (bbox_min[0] + bbox_max[0]) / 2, (bbox_min[1] + bbox_max[1]) / 2
+    # Z is Blender "up" axis with flipped sign (scene ground at Z≈0, roofs at negative Z).
+    ground_z = bbox_max[2]                # scene ground (least-negative Z)
+    roof_top_z = bbox_min[2]              # highest roof (most-negative Z)
+    altitude_z = roof_top_z - ALTITUDE    # camera altitude in Blender frame (more negative = higher)
+
+    # Ground footprint per image at ALTITUDE (distance from camera to ground = ALTITUDE
+    # + however deep we look to the ground; approximate with ALTITUDE for Pix4D standard)
+    hfov = math.radians(FOV_DEG)
+    footprint_w = 2 * ALTITUDE * math.tan(hfov / 2)             # along camera X
+    # vertical FOV from aspect
+    vfov = 2 * math.atan(math.tan(hfov / 2) * RES_H / RES_W)
+    footprint_h = 2 * ALTITUDE * math.tan(vfov / 2)             # along camera Y
+
+    # Along-track (Z in Blender XY plane convention; really we pick X=along-track, Y=across)
+    # Pix4D: forward = primary flight direction, we call it +X.
+    # Actually we're using XY-plane with X east, Y north (Blender convention).
+    # For simplicity: X = side, Y = forward. side_overlap 70% on X, fwd_overlap 80% on Y.
+    side_spacing = (1 - SIDE_OVERLAP) * footprint_w         # X direction
+    fwd_spacing = (1 - FORWARD_OVERLAP) * footprint_h       # Y direction
+    n_cols = max(2, int(math.ceil(extent[0] / side_spacing)) + 1)
+    n_rows = max(2, int(math.ceil(extent[1] / fwd_spacing)) + 1)
+    # Evenly distribute n waypoints across the scene extent
+    if n_cols > 1:
+        xs = np.linspace(bbox_min[0], bbox_max[0], n_cols)
+    else:
+        xs = np.array([cx])
+    if n_rows > 1:
+        ys = np.linspace(bbox_min[1], bbox_max[1], n_rows)
+    else:
+        ys = np.array([cy])
+
+    up_bl = (0, 0, -1)  # physical up in Blender frame
     cams = []
 
-    # 1) Aerial nadir grid — target = ground point below (straight down) blended toward center for tilt_in°
-    ground_z = bbox_max[2]  # Blender +Z ground (scene ground at Z≈0)
-    tilt_frac = math.sin(math.radians(NADIR_TILT_IN))
-    for iy in range(GRID_NY):
-        for ix in range(GRID_NX):
-            fx = (ix + 0.5) / GRID_NX - 0.5
-            fy = (iy + 0.5) / GRID_NY - 0.5
-            x = center[0] + fx * extent[0] * 0.8
-            y = center[1] + fy * extent[1] * 0.8
-            loc = (x, y, altitude)
-            straight_down_tgt = np.array([x, y, ground_z])
-            toward_center_tgt = np.array([center[0], center[1], ground_z])
-            target = (1 - tilt_frac) * straight_down_tgt + tilt_frac * toward_center_tgt
-            cams.append((f'nadir_{iy:02d}_{ix:02d}', loc, target.tolist(), up_bl))
+    # Compute once: oblique look-at vector for each azimuth.
+    # azimuth 0 = +Y (north), 90 = +X (east), 180 = -Y (south), 270 = -X (west)
+    # Oblique camera tilts 45° toward the scene → it looks down-and-toward-target.
+    tilt = math.radians(OBLIQUE_TILT_DEG)
+    # Horizontal offset from waypoint to a target in the looking direction:
+    # Place target at (waypoint_xy + unit_azimuth * ALTITUDE*tan(tilt)) and ground z.
+    obl_target_offset = ALTITUDE * math.tan(tilt)
 
-    # 2) Oblique rings
-    for tilt_deg in RING_TILTS:
-        for ai in range(RING_AZIMUTHS):
-            az = 2 * math.pi * ai / RING_AZIMUTHS
-            tilt = math.radians(tilt_deg)
-            # Spherical coords: tilt from nadir (0° = straight down)
-            # Camera is offset from center by radius*sin(tilt) horizontally,
-            # and up by |altitude|*cos(tilt) above scene top
-            horiz_r = radius * math.sin(tilt)
-            vert_h = altitude + (0 - altitude) * (1 - math.cos(tilt)) * 0.3  # gentle lift
-            x = center[0] + horiz_r * math.cos(az)
-            y = center[1] + horiz_r * math.sin(az)
-            z = vert_h
-            cams.append((f'oblique_t{tilt_deg:02d}_a{ai:02d}',
-                         (x, y, z), center.tolist(), up_bl))
-
-    # 3) Perimeter orbit at roof level
-    orbit_z = bbox_min[2] - max_xy * 0.05  # just above roofs
-    orbit_r = max_xy * 0.9
-    for ai in range(RING_AZIMUTHS):
-        az = 2 * math.pi * ai / RING_AZIMUTHS
-        x = center[0] + orbit_r * math.cos(az)
-        y = center[1] + orbit_r * math.sin(az)
-        cams.append((f'orbit_a{ai:02d}', (x, y, orbit_z), center.tolist(), up_bl))
+    for iy, y in enumerate(ys):
+        for ix, x in enumerate(xs):
+            loc = (float(x), float(y), float(altitude_z))
+            # Nadir: look straight down
+            nadir_target = (float(x), float(y), float(ground_z))
+            cams.append((f'waypt_{iy:02d}_{ix:02d}_nadir',
+                         loc, nadir_target, up_bl))
+            # 4 oblique captures at same waypoint, rotated azimuth
+            for az_deg in OBLIQUE_AZIMUTHS:
+                az = math.radians(az_deg)
+                tx = x + obl_target_offset * math.sin(az)
+                ty = y + obl_target_offset * math.cos(az)
+                target = (float(tx), float(ty), float(ground_z))
+                cams.append((f'waypt_{iy:02d}_{ix:02d}_oblique_az{az_deg:03d}',
+                             loc, target, up_bl))
 
     return cams
 

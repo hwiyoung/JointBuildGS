@@ -1,0 +1,53 @@
+# Phase 2 Step 2-2 — Condition 2: Mutual only (Phase 1 Step 1-4 equivalent)
+seed: 0
+device: cuda
+
+data_root: /workspace/JointBuildGS/results/phase2_synthesis/dataset
+out_dir: /workspace/JointBuildGS/results/phase2_ablation_citygml/mutual
+
+downscale: 1.0
+sh_degree: 3
+sh_up_every: 1000
+
+load_depth: true
+load_normal: true
+load_semantic: true
+depth_scale: 1.0
+
+w_photo: 1.0
+w_depth: 0.5
+w_normal: 0.05
+w_nc: 0.05
+w_distort: 0.0
+w_sem: 0.1
+photo_lam: 0.2
+
+w_mutual: 0.1
+mutual_warmup: 10000
+mutual_tau: 0.15
+mutual_height_th: 0.15
+mutual_mode: full
+gravity_file: /workspace/JointBuildGS/results/phase2_synthesis/gravity.json
+
+w_structure: 0.0
+
+lr_means: 1.6e-4
+lr_scales: 5.0e-3
+lr_quats: 1.0e-3
+lr_opacities: 5.0e-2
+lr_sh0: 2.5e-3
+lr_shN: 1.25e-4
+lr_sem: 2.5e-3
+
+prune_opa: 0.005
+grow_grad2d: 5.0e-4
+grow_scale3d: 0.01
+prune_scale3d: 0.1
+refine_start_iter: 500
+refine_stop_iter: 10000
+refine_every: 100
+reset_every: 3000
+
+max_iter: 30000
+eval_every: 2000
+ckpt_every: 5000

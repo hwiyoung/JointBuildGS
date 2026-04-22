@@ -11,6 +11,8 @@ services:
     volumes:
       - .:/workspace/JointBuildGS
       - /media/innopam/InnoPAM-8TB:/data
+    ports:
+      - "6006:6006"      # TensorBoard
     shm_size: "16gb"
     ulimits:
       memlock: -1
