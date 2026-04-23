@@ -43,6 +43,8 @@
 
 ### 3.3 카메라 설계 ([render_scene.py](../../scripts/phase2_synthesis/render_scene.py))
 
+8×14 = **112 nadir waypoints** (80% forward spacing 18.1m × 70% side spacing 36.2m). 각 waypoint 에서 **1 nadir + 4 cardinal oblique (45° tilt)** = **5 captures** → **총 560 views**.
+
 #### 3.3.1 Reference mission
 
 **DJI Phantom 4 RTK + Pix4D Capture 기본 설정을 시뮬레이션**한다.
@@ -91,25 +93,19 @@ UAV oblique 촬영은 업계에서 다음 3 방식이 혼용된다:
 
 **즉 우리 112 waypoints × 5 captures = 560 images** 는 Pix4D 표준 LOD2 mission 과 실질적으로 동등하며, 세 획득 방식 모두에 호환된다.
 
-### 3.4 카메라 총괄
-
-- **Nadir waypoint 그리드**: 8×14 = **112**. 80% forward (spacing 18.1m) + 70% side (36.2m) overlap 기준
-- **각 waypoint 당 촬영**: 1 (nadir) + 4 (oblique 45° × N/E/S/W) = **5 images**
-- **총 views**: **560**
-
 ![flight_plan](figures/flight_plan.png)
 
 > **Panel (1)**: 2D 비행 계획. 131 건물 + 112 nadir waypoints (파란 점) + 각 nadir 이미지의 120×90m ground footprint (파란 사각형) + scene 경계 (빨간). Overlap 시각화.
 > **Panel (2)**: 중앙 waypoint 의 3D 카메라 frustum (80m 고도). 파랑 nadir (straight down) + 4 색 oblique (N/E/S/W 45° tilt). Frustum 은 scene 경계로 clip — "학습에 실제 기여하는 ground 영역" 만 표시.
 
-### 3.5 Procedural texture (RGB ≠ semantic)
+### 3.4 Procedural texture (RGB ≠ semantic)
 
 합성 씬의 **flat-color 한계** 해소용. [render_scene.py](../../scripts/phase2_synthesis/render_scene.py) `add_procedural_texture_to_materials()` 에서 Blender Cycles shader 노드로 각 material 에 3D Perlin noise 기반 brightness variation 추가.
 
 **문제**: scene.mtl 이 Roof/Wall/Ground/Terrain 각각 단일 Kd 색만 정의 → 렌더 RGB ≈ semantic class. 이로 인해:
-- L_photo 와 L_sem 이 파라미터는 다르나 신호 중복
-- L_mutual 의 `p_c × 기하_오차` 에서 `p_c = softmax(sem_logits)` 가 **trivially one-hot** 에 가까워짐 → 의미론↔기하 양방향 gradient 의 "양방향성" 손실
-- 결과적으로 **L_mutual 기여가 과소측정**되고 실 데이터 (Phase 3 성수동) 에 대한 transferability 약화
+- L_photo 와 L_sem 이 파라미터 경로는 다르지만 제공 신호가 중복 (둘 다 동일 class 로 수렴)
+- L_mutual 의 `p_c × 기하_오차` 에서 `p_c = softmax(sem_logits)` 가 쉽게 one-hot 이 되어 의미론↔기하 gradient 의 "양방향성" 이 약화 가능
+- 이는 Phase 2 ablation 에서 **L_mutual 의 기여를 과소측정할 잠재 리스크**. (실 데이터는 풍부한 텍스쳐를 가지므로 이 효과가 없음 → 합성 실험 결과의 실 데이터 transferability 해석에 주의 필요)
 
 **해결**: 각 material 의 base color 에 material 별 다른 Perlin noise 를 multiply.
 
@@ -132,12 +128,9 @@ UAV oblique 촬영은 업계에서 다음 3 방식이 혼용된다:
 - Brightness range 상한 1.0: Blender Base Color 가 [0,1] 로 clamp 되므로 1.0 이상은 의미 없음. 대신 lo 값 (0.35-0.55) 낮춰 asymmetric darker-only variation 도입.
 - **Depth / Normal / Semantic pass 불변**: material pass_index 와 geometry 는 shader 와 무관.
 
-**파라미터 시행착오 기록 (reference)**:
-- v1: Object coord + scale 25 → pixel-level aliasing → variation 없음
-- v2: Generated coord + scale 0.08 → under-cycle → variation 없음
-- v3 (현재): Generated coord + scale 2.5-5 → **~3-5m 패치 선명히 관측**
+**파라미터 튜닝 기록 (appendix)**: Scale 은 좌표계 의미에 따라 의미가 다름 — Object coord 는 `cycles/meter`, Generated coord 는 `cycles/object-bbox`. 최종 Generated + scale 2.5-5 (3-5m 패치). 초기 Object+25 와 Generated+0.08 은 각각 aliasing / under-cycle 로 실패.
 
-### 3.6 Train/test split
+### 3.5 Train/test split
 
 [src/stage2/train.py:99-104](../../src/stage2/train.py#L99-L104):
 
@@ -170,15 +163,15 @@ dataset/                                (Stage 2 dataloader 호환)
 dataset/sparse/0/{cameras,images,points3D}.bin   (560 cams, 100k init pts)
 ```
 
-- 렌더 시간: 560 views × ~1.8s ≈ **17 분** (RTX 3090)
+- 렌더 시간: flat-color **~17 분** / procedural texture 적용 시 **~47 분** (Cycles 에서 shader 노드 샘플링 추가로 3× 느려짐). RTX 3090.
 - Postprocess: ~17 분 (OpenEXR → PNG/EXR 변환 + normal 축변환, 560 frames)
 - COLMAP export: ~1 분
 
 ![render_samples](figures/render_samples.png)
 
-> 중앙 waypoint (`waypt_06_03`) 의 5 views × 4 passes.
+> 중앙 waypoint (`waypt_06_03`) 의 5 views × 4 passes (**텍스쳐 적용 후**).
 > **행**: RGB / Depth / Normal / Semantic. **열**: Nadir / 4 방위 Oblique.
-> RGB 가 semantic 과 거의 동등한 이유는 scene.mtl 이 material 별 flat color 만 부여했기 때문 (§6.1 한계 참조).
+> RGB 에 procedural mottling 이 적용되어 semantic 과 완전 일치하지 않음 (§3.4 참조). Depth/Normal/Semantic 은 texture 무관하게 geometry / pass_index 로 결정.
 
 ## 5. 검증 (Feasibility Checks)
 
@@ -190,7 +183,7 @@ dataset/sparse/0/{cameras,images,points3D}.bin   (560 cams, 100k init pts)
 |---|---|---|---|---|
 | **FC-1** | 데이터 파이프라인 건강성 | Scene 선정 + 렌더 + postprocess + COLMAP | ~35분 | 560 views × 4 pass 정상 생성, dataloader 로드 OK |
 | **FC-2** | 학습 throughput 실측 | baseline 500 iter | 5-6분 | 실제 it/s → 30k / 4 조건 총 시간 계산 |
-| **FC-3** | 학습 수렴 트렌드 | **baseline** 5000 iter (L_mutual/L_structure=0; warmup 아직 발동 전) | 55-60분 | §5.4 6 지표 기준 |
+| **FC-3** | 학습 수렴 트렌드 | **baseline** 5000 iter (L_mutual/L_structure=0; warmup 아직 발동 전) | 55-60분 | §5.4 7 지표 기준. **flat-color / textured 두 번 측정** (텍스쳐 적용은 §3.4) |
 
 Baseline 전용 이유: L_mutual warmup=10000, L_structure warmup=20000 → 5k iter 내엔 어차피 발동 안 함. "base 학습 자체가 건강한가" 확인이 목적이며, base 실패 시 mutual/structure 추가는 무의미.
 
@@ -219,7 +212,7 @@ Baseline 전용 이유: L_mutual warmup=10000, L_structure warmup=20000 → 5k i
 
 **Config**: [configs/phase2_smoke.yaml](../../configs/phase2_smoke.yaml). L_mutual = L_structure = 0. eval_every = 1000.
 
-**판정 기준 (6 지표, [fc3_diagnose.py](../../scripts/phase2_synthesis/fc3_diagnose.py) 자동 체크)**:
+**판정 기준 (7 지표, [fc3_diagnose.py](../../scripts/phase2_synthesis/fc3_diagnose.py) 자동 체크)**:
 
 | 지표 | 건강한 값 @ 5k | 통과 의미 |
 |---|---|---|
@@ -227,15 +220,18 @@ Baseline 전용 이유: L_mutual warmup=10000, L_structure warmup=20000 → 5k i
 | `eval/depth_mae` | **< 2 m** | 기하 수렴 (GT depth ~80m 대비 2% 오차) |
 | `eval/normal_cos` | **> 0.7** | 법선 학습 (0.5 = 랜덤) |
 | Train-Eval PSNR gap | **< 10 dB** | Overfit 억제 |
-| `stats/n_primitives` | **200k-2M** | densification 건강성 (폭주/정체 아님) |
-| `loss/photo`, `loss/depth` 유한 | **< 10**, **< 100** | NaN/발산 없음 |
+| `stats/n_primitives` | **200k–2M** | densification 건강성 (폭주/정체 아님) |
+| `loss/photo` | 유한, < 10 | NaN/발산 없음 |
+| `loss/depth` | 유한, < 100 | NaN/발산 없음 |
 
 **판정**:
-- 6/6 통과 → **GO**: 4-조건 full training 착수
-- 4-5/6 통과 → **Conditional GO / Marginal**: HP 조정 or 텍스쳐 추가 후 재smoke
-- ≤3/6 통과 → **STOP**: 근본 진단 (frame, loss scale, split 재검증)
+- 7/7 통과 → **GO**: 다음 단계 진행 (FC-3a 후엔 텍스쳐 적용 / FC-3b 후엔 full 4 조건 학습)
+- 5-6/7 통과 → **Conditional GO / Marginal**: HP 조정 또는 보강 후 재실행
+- ≤4/7 통과 → **STOP**: 근본 진단 (frame, loss scale, split 재검증)
 
-**결과 (FC-3 실제 측정, 2026-04-23)**:
+**실행 순서**: FC-3a (flat-color) 통과 → §3.4 텍스쳐 적용 → FC-3b (textured) 재실행 → 통과 시 full 착수.
+
+#### 5.4.1 FC-3a — flat-color (2026-04-23)
 
 | 지표 | 5k 측정값 | 기준 | 통과 |
 |---|---|---|---|
@@ -247,26 +243,40 @@ Baseline 전용 이유: L_mutual warmup=10000, L_structure warmup=20000 → 5k i
 | loss/photo | 0.0067 | finite, < 10 | ✅ |
 | loss/depth | 0.084 | finite, < 100 | ✅ |
 
-**판정: 7/7 통과 → GO**. 수렴 trajectory 는 iter 3000 의 `reset_every` opacity reset 에서 PSNR 일시 급락 후 2000 iter 내 완전 회복 (8.89 → 29.68 → 8.33 → 15.71 → 32.27) — 2DGS 표준 패턴.
+**판정: 7/7 GO**. 수렴 trajectory: iter 3000 의 `reset_every` opacity reset 에서 PSNR 일시 급락 후 2000 iter 내 완전 회복 (8.89 → 29.68 → 8.33 → 15.71 → 32.27) — 2DGS 표준 패턴.
 
-**eval normal_cos 버그 수정**: 기존 eval ([src/stage2/train.py:389](../../src/stage2/train.py#L389)) 이 world-frame 인 `n_render` 에 `@ R.T` (c2w) 회전을 추가 적용하여 near-random (0.515) 값을 출력했었음. L_normal 훈련 loss 는 world×world 로 정상 작동 중이었음이 확인되어 eval 만 수정. 수정 전 0.515 → 수정 후 0.968 (같은 ckpt 재평가).
+**eval normal_cos 버그 수정 (FC-3a 도중 발견)**: 기존 eval ([src/stage2/train.py:389](../../src/stage2/train.py#L389)) 이 world-frame 인 `n_render` 에 `@ R.T` (c2w) 회전을 추가 적용하여 near-random (0.515) 값을 출력했었음. L_normal 훈련 loss 는 world×world 로 정상 작동 중이었음을 확인해 eval 만 수정. 수정 전 0.515 → 수정 후 **0.968** (같은 ckpt 재평가).
 
-### 5.5 FC 판정별 다음 행동
+#### 5.4.2 FC-3b — textured (§3.4 적용 후, 2026-04-23)
+
+| 지표 | 5k 측정값 | 기준 | 통과 | vs flat-color |
+|---|---|---|---|---|
+| eval PSNR | **33.47 dB** | ≥ 20 | ✅ | +1.20 dB |
+| eval depth MAE | **0.89 m** | < 2 m | ✅ | +0.08 m (변동 미미) |
+| eval normal cos | **0.966** | > 0.7 | ✅ | −0.002 (동일) |
+| Train-Eval gap | 7.85 dB | < 10 | ✅ | −0.39 dB (overfit 완화) |
+| N primitives | 910,433 | 200k–2M | ✅ | −19k (변동 미미) |
+| loss/photo | 0.0069 | finite, < 10 | ✅ | ≈ |
+| loss/depth | 0.082 | finite, < 100 | ✅ | ≈ |
+
+**판정: 7/7 GO**. 텍스쳐 추가가 수렴에 **부정 영향 없음**. eval PSNR 오히려 미세 개선 (+1.2 dB) + train-eval gap 축소 → L_photo 의 풍부한 per-pixel gradient 가 오히려 generalization 보조. Densification / loss dynamics 는 flat 과 실질 동일.
+
+→ **Full 4-조건 training 착수 조건 모두 충족**.
+
+### 5.5 FC 판정별 다음 행동 (template)
 
 | 판정 | 행동 |
 |---|---|
-| GO | §6.1 제안대로 procedural texture 추가 (45분) → 4 조건 full training (22-28h) |
-| Marginal | HP 후보: SH degree 3→1, `grow_grad2d` 5e-4→2e-4, `refine_stop` 10k→7k. 또는 texture 바로 추가 (L_photo gradient 풍부화로 수렴 개선 기대) |
+| GO (FC-3a) | §3.4 텍스쳐 적용 + FC-3b 재실행 |
+| GO (FC-3b) | **4 조건 full training 착수** (~27h) |
+| Marginal | HP 후보: SH degree 3→1, `grow_grad2d` 5e-4→2e-4, `refine_stop` 10k→7k |
 | STOP | Train view 직접 렌더해서 primitive 위치 재검증. `loss/*` 개별 추이로 특정 loss 발산 탐지. Interleave split drop 해서 frame bug 재발 여부 확인 |
 
 ## 6. 한계 및 후속 조치 (명시)
 
-### 6.1 RGB ≈ Semantic 문제 — **해결 적용됨 (§3.5 Procedural texture)**
+### 6.1 RGB ≈ Semantic 문제 — **§3.4 에서 해결 적용됨**
 
-Scene.mtl 단일-Kd 로 렌더 RGB ≈ semantic 이 되는 문제는 §3.5 에서 **Procedural texture 를 주 data 생성에 적용** 해 해결. 더 이상 후속 조치가 아닌 주 파이프라인 구성요소.
-
-다만 진짜 사진 texture (roof tile, brick wall 등) 대비 현실감은 낮으므로:
-- Phase 2-3 / Phase 3 에서 실 UAV 데이터 처리 시에도 동일 method 가 작동하는지 확인하여 **texture 복잡도에 대한 robustness** 검증 필요.
+Scene.mtl 단일-Kd 로 렌더 RGB ≈ semantic 이 되는 초기 문제는 §3.4 에서 Procedural texture 를 주 data 생성에 적용해 해결 (FC-3b 에서 수렴 정상 검증). 단, procedural Perlin noise 는 진짜 사진 texture (roof tile, brick wall 등) 대비 low-frequency 변동 위주 → 실 UAV 데이터의 고주파 texture (창틀, 지붕 잔디, 벽 얼룩 등) 재현은 못 함. Phase 3 실 데이터에서 method 동작 재검증 필요.
 
 ### 6.2 Oblique footprint 가시화 주의
 
@@ -287,7 +297,8 @@ results/phase2_synthesis/
 ├── block_3d.png                              # 3-panel: Jordaan context + block zoom + 3D bird's-eye
 └── figures/
     ├── flight_plan.png                       # 2D flight plan + 3D 5-frustum
-    └── render_samples.png                    # 5 views × 4 passes 대표 샘플
+    ├── render_samples.png                    # 5 views × 4 passes 대표 샘플 (textured)
+    └── texture_before_after.png              # Procedural texture 전/후 비교 (waypt_06_03)
 ```
 
 (중간 산출물 `renders_raw/`, `dataset/` 은 `.gitignore` 처리; 재생성 가능)
