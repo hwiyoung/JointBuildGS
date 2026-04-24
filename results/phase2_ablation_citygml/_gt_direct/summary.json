@@ -1,0 +1,1253 @@
+{
+  "n_total": 131,
+  "n_processed": 131,
+  "n_valid": 123,
+  "pass_rate": 0.9389312977099237,
+  "by_type": {
+    "tri-slope": {
+      "valid": 25,
+      "total": 26
+    },
+    "flat": {
+      "valid": 25,
+      "total": 25
+    },
+    "complex": {
+      "valid": 23,
+      "total": 29
+    },
+    "hip": {
+      "valid": 23,
+      "total": 23
+    },
+    "gable": {
+      "valid": 27,
+      "total": 28
+    }
+  },
+  "errors": {
+    "303": 3,
+    "305": 5,
+    "306": 20,
+    "102": 2
+  },
+  "per_building": [
+    {
+      "bid": 0,
+      "type": "tri-slope",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 21,
+      "n_vertices": 34,
+      "signed_volume": 1214.7571257978332
+    },
+    {
+      "bid": 1,
+      "type": "flat",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 8,
+      "n_vertices": 12,
+      "signed_volume": 2023.4734617825
+    },
+    {
+      "bid": 2,
+      "type": "flat",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 8,
+      "n_vertices": 12,
+      "signed_volume": 955.1339526280002
+    },
+    {
+      "bid": 3,
+      "type": "complex",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 127,
+      "n_vertices": 200,
+      "signed_volume": 6156.769159475004
+    },
+    {
+      "bid": 4,
+      "type": "flat",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 6,
+      "n_vertices": 8,
+      "signed_volume": 955.36023579
+    },
+    {
+      "bid": 5,
+      "type": "hip",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 32,
+      "n_vertices": 53,
+      "signed_volume": 1603.8938614216668
+    },
+    {
+      "bid": 6,
+      "type": "hip",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 28,
+      "n_vertices": 45,
+      "signed_volume": 1042.5264005886668
+    },
+    {
+      "bid": 7,
+      "type": "complex",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 30,
+      "n_vertices": 47,
+      "signed_volume": 1108.416151397
+    },
+    {
+      "bid": 8,
+      "type": "gable",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 12,
+      "n_vertices": 18,
+      "signed_volume": 1067.9572705686667
+    },
+    {
+      "bid": 9,
+      "type": "hip",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 21,
+      "n_vertices": 32,
+      "signed_volume": 1351.8096371011666
+    },
+    {
+      "bid": 10,
+      "type": "tri-slope",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 28,
+      "n_vertices": 48,
+      "signed_volume": 1240.396935113167
+    },
+    {
+      "bid": 11,
+      "type": "hip",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 20,
+      "n_vertices": 30,
+      "signed_volume": 1164.4004547798334
+    },
+    {
+      "bid": 12,
+      "type": "hip",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 26,
+      "n_vertices": 42,
+      "signed_volume": 621.7599800031666
+    },
+    {
+      "bid": 13,
+      "type": "flat",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 6,
+      "n_vertices": 8,
+      "signed_volume": 1153.7250930475
+    },
+    {
+      "bid": 14,
+      "type": "gable",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 15,
+      "n_vertices": 24,
+      "signed_volume": 971.167868682167
+    },
+    {
+      "bid": 15,
+      "type": "flat",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 7,
+      "n_vertices": 10,
+      "signed_volume": 1193.4850335413337
+    },
+    {
+      "bid": 16,
+      "type": "tri-slope",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 18,
+      "n_vertices": 28,
+      "signed_volume": 1455.677560929834
+    },
+    {
+      "bid": 17,
+      "type": "gable",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 13,
+      "n_vertices": 20,
+      "signed_volume": 1073.2890718434999
+    },
+    {
+      "bid": 18,
+      "type": "hip",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 25,
+      "n_vertices": 40,
+      "signed_volume": 1249.5767428475
+    },
+    {
+      "bid": 19,
+      "type": "gable",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 10,
+      "n_vertices": 14,
+      "signed_volume": 1397.020045566667
+    },
+    {
+      "bid": 20,
+      "type": "hip",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 22,
+      "n_vertices": 34,
+      "signed_volume": 1116.702359419167
+    },
+    {
+      "bid": 21,
+      "type": "complex",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 34,
+      "n_vertices": 56,
+      "signed_volume": 1118.7525041533333
+    },
+    {
+      "bid": 22,
+      "type": "gable",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 14,
+      "n_vertices": 22,
+      "signed_volume": 1100.6092923523336
+    },
+    {
+      "bid": 23,
+      "type": "hip",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 21,
+      "n_vertices": 32,
+      "signed_volume": 1306.5112074813333
+    },
+    {
+      "bid": 24,
+      "type": "gable",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 13,
+      "n_vertices": 20,
+      "signed_volume": 1005.8606447883336
+    },
+    {
+      "bid": 25,
+      "type": "flat",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 6,
+      "n_vertices": 8,
+      "signed_volume": 1111.3453918623334
+    },
+    {
+      "bid": 26,
+      "type": "flat",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 8,
+      "n_vertices": 12,
+      "signed_volume": 965.299117368167
+    },
+    {
+      "bid": 27,
+      "type": "complex",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 39,
+      "n_vertices": 60,
+      "signed_volume": 1499.8826582103336
+    },
+    {
+      "bid": 28,
+      "type": "tri-slope",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 19,
+      "n_vertices": 30,
+      "signed_volume": 982.7826575680006
+    },
+    {
+      "bid": 29,
+      "type": "tri-slope",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 17,
+      "n_vertices": 26,
+      "signed_volume": 1118.501065456667
+    },
+    {
+      "bid": 30,
+      "type": "gable",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 11,
+      "n_vertices": 16,
+      "signed_volume": 1115.8495888386672
+    },
+    {
+      "bid": 31,
+      "type": "tri-slope",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 20,
+      "n_vertices": 32,
+      "signed_volume": 973.2319010208329
+    },
+    {
+      "bid": 32,
+      "type": "gable",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 10,
+      "n_vertices": 14,
+      "signed_volume": 1027.7892156778332
+    },
+    {
+      "bid": 33,
+      "type": "tri-slope",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 17,
+      "n_vertices": 26,
+      "signed_volume": 1313.2246822098334
+    },
+    {
+      "bid": 34,
+      "type": "flat",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 10,
+      "n_vertices": 16,
+      "signed_volume": 1495.115301527
+    },
+    {
+      "bid": 35,
+      "type": "complex",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 48,
+      "n_vertices": 74,
+      "signed_volume": 1094.0125066584997
+    },
+    {
+      "bid": 36,
+      "type": "gable",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 10,
+      "n_vertices": 14,
+      "signed_volume": 959.9648294168336
+    },
+    {
+      "bid": 37,
+      "type": "gable",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 12,
+      "n_vertices": 18,
+      "signed_volume": 1007.4266627354999
+    },
+    {
+      "bid": 38,
+      "type": "complex",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 24,
+      "n_vertices": 36,
+      "signed_volume": 1516.9539851166671
+    },
+    {
+      "bid": 39,
+      "type": "gable",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 11,
+      "n_vertices": 16,
+      "signed_volume": 1081.1484417258334
+    },
+    {
+      "bid": 40,
+      "type": "flat",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 6,
+      "n_vertices": 8,
+      "signed_volume": 1175.6520330663332
+    },
+    {
+      "bid": 41,
+      "type": "flat",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 6,
+      "n_vertices": 8,
+      "signed_volume": 1214.5381588060002
+    },
+    {
+      "bid": 42,
+      "type": "tri-slope",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 15,
+      "n_vertices": 22,
+      "signed_volume": 1149.8564268596667
+    },
+    {
+      "bid": 43,
+      "type": "gable",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 11,
+      "n_vertices": 16,
+      "signed_volume": 1123.7675828278334
+    },
+    {
+      "bid": 44,
+      "type": "gable",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 11,
+      "n_vertices": 16,
+      "signed_volume": 1069.4034007098332
+    },
+    {
+      "bid": 45,
+      "type": "complex",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 22,
+      "n_vertices": 32,
+      "signed_volume": 1209.1153648950003
+    },
+    {
+      "bid": 46,
+      "type": "flat",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 9,
+      "n_vertices": 14,
+      "signed_volume": 1056.130429678334
+    },
+    {
+      "bid": 47,
+      "type": "flat",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 6,
+      "n_vertices": 8,
+      "signed_volume": 1181.2916115
+    },
+    {
+      "bid": 48,
+      "type": "tri-slope",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 16,
+      "n_vertices": 24,
+      "signed_volume": 1156.619839642167
+    },
+    {
+      "bid": 49,
+      "type": "flat",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 6,
+      "n_vertices": 8,
+      "signed_volume": 886.8751269658333
+    },
+    {
+      "bid": 50,
+      "type": "complex",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 32,
+      "n_vertices": 48,
+      "signed_volume": 1339.180961903667
+    },
+    {
+      "bid": 51,
+      "type": "tri-slope",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 16,
+      "n_vertices": 24,
+      "signed_volume": 1067.3873573878338
+    },
+    {
+      "bid": 52,
+      "type": "tri-slope",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 18,
+      "n_vertices": 28,
+      "signed_volume": 1201.8786137359996
+    },
+    {
+      "bid": 53,
+      "type": "tri-slope",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 19,
+      "n_vertices": 30,
+      "signed_volume": 1073.9184978283336
+    },
+    {
+      "bid": 54,
+      "type": "gable",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 10,
+      "n_vertices": 14,
+      "signed_volume": 1114.6946458498335
+    },
+    {
+      "bid": 55,
+      "type": "gable",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 14,
+      "n_vertices": 22,
+      "signed_volume": 1559.281265059666
+    },
+    {
+      "bid": 56,
+      "type": "tri-slope",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 18,
+      "n_vertices": 28,
+      "signed_volume": 879.4804076511664
+    },
+    {
+      "bid": 57,
+      "type": "hip",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 27,
+      "n_vertices": 44,
+      "signed_volume": 624.6775489795001
+    },
+    {
+      "bid": 58,
+      "type": "hip",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 28,
+      "n_vertices": 46,
+      "signed_volume": 1426.7204746408324
+    },
+    {
+      "bid": 59,
+      "type": "tri-slope",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 19,
+      "n_vertices": 30,
+      "signed_volume": 926.9214916451666
+    },
+    {
+      "bid": 60,
+      "type": "hip",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 21,
+      "n_vertices": 32,
+      "signed_volume": 1257.0212824176667
+    },
+    {
+      "bid": 61,
+      "type": "tri-slope",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 17,
+      "n_vertices": 26,
+      "signed_volume": 1289.4148425328337
+    },
+    {
+      "bid": 62,
+      "type": "complex",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 24,
+      "n_vertices": 36,
+      "signed_volume": 1474.5276245593334
+    },
+    {
+      "bid": 63,
+      "type": "complex",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 39,
+      "n_vertices": 61,
+      "signed_volume": 1696.1600514885001
+    },
+    {
+      "bid": 64,
+      "type": "complex",
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        303,
+        303,
+        303
+      ],
+      "n_faces": 35,
+      "n_vertices": 54,
+      "signed_volume": 1389.2039913194997
+    },
+    {
+      "bid": 65,
+      "type": "gable",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 11,
+      "n_vertices": 16,
+      "signed_volume": 1138.0558727875
+    },
+    {
+      "bid": 66,
+      "type": "tri-slope",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 16,
+      "n_vertices": 24,
+      "signed_volume": 1272.9486859411663
+    },
+    {
+      "bid": 67,
+      "type": "flat",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 6,
+      "n_vertices": 8,
+      "signed_volume": 1128.9153468833335
+    },
+    {
+      "bid": 68,
+      "type": "tri-slope",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 17,
+      "n_vertices": 26,
+      "signed_volume": 1145.6715803333336
+    },
+    {
+      "bid": 69,
+      "type": "gable",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 10,
+      "n_vertices": 14,
+      "signed_volume": 1152.5337481938334
+    },
+    {
+      "bid": 70,
+      "type": "flat",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 8,
+      "n_vertices": 12,
+      "signed_volume": 912.8228690896667
+    },
+    {
+      "bid": 71,
+      "type": "flat",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 8,
+      "n_vertices": 12,
+      "signed_volume": 1022.9299599366668
+    },
+    {
+      "bid": 72,
+      "type": "complex",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 49,
+      "n_vertices": 82,
+      "signed_volume": 3029.431812088334
+    },
+    {
+      "bid": 73,
+      "type": "complex",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 37,
+      "n_vertices": 59,
+      "signed_volume": 1516.3835870688329
+    },
+    {
+      "bid": 74,
+      "type": "complex",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 57,
+      "n_vertices": 91,
+      "signed_volume": 1534.2491043546668
+    },
+    {
+      "bid": 75,
+      "type": "hip",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 31,
+      "n_vertices": 52,
+      "signed_volume": 1418.8639868000007
+    },
+    {
+      "bid": 76,
+      "type": "hip",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 31,
+      "n_vertices": 52,
+      "signed_volume": 1569.9796889006666
+    },
+    {
+      "bid": 77,
+      "type": "tri-slope",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 25,
+      "n_vertices": 42,
+      "signed_volume": 1564.5357355036665
+    },
+    {
+      "bid": 78,
+      "type": "hip",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 31,
+      "n_vertices": 52,
+      "signed_volume": 1676.3118017183324
+    },
+    {
+      "bid": 79,
+      "type": "gable",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 16,
+      "n_vertices": 26,
+      "signed_volume": 1388.7214250169998
+    },
+    {
+      "bid": 80,
+      "type": "hip",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 38,
+      "n_vertices": 67,
+      "signed_volume": 2070.6251200345005
+    },
+    {
+      "bid": 81,
+      "type": "hip",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 19,
+      "n_vertices": 28,
+      "signed_volume": 1458.424105203
+    },
+    {
+      "bid": 82,
+      "type": "hip",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 27,
+      "n_vertices": 41,
+      "signed_volume": 1328.9168874465001
+    },
+    {
+      "bid": 83,
+      "type": "hip",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 23,
+      "n_vertices": 35,
+      "signed_volume": 1838.5881000931668
+    },
+    {
+      "bid": 84,
+      "type": "gable",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 12,
+      "n_vertices": 18,
+      "signed_volume": 1036.8672439516665
+    },
+    {
+      "bid": 85,
+      "type": "gable",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 12,
+      "n_vertices": 18,
+      "signed_volume": 1989.8472877591666
+    },
+    {
+      "bid": 86,
+      "type": "complex",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 27,
+      "n_vertices": 40,
+      "signed_volume": 1348.7750596914996
+    },
+    {
+      "bid": 87,
+      "type": "complex",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 36,
+      "n_vertices": 58,
+      "signed_volume": 1363.1072441046672
+    },
+    {
+      "bid": 88,
+      "type": "complex",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 28,
+      "n_vertices": 44,
+      "signed_volume": 1796.3672199681666
+    },
+    {
+      "bid": 89,
+      "type": "gable",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 11,
+      "n_vertices": 16,
+      "signed_volume": 1269.8675488883334
+    },
+    {
+      "bid": 90,
+      "type": "complex",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 25,
+      "n_vertices": 37,
+      "signed_volume": 1313.068161153667
+    },
+    {
+      "bid": 91,
+      "type": "hip",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 21,
+      "n_vertices": 32,
+      "signed_volume": 1339.0544578378338
+    },
+    {
+      "bid": 92,
+      "type": "tri-slope",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 17,
+      "n_vertices": 25,
+      "signed_volume": 1671.5744955306664
+    },
+    {
+      "bid": 93,
+      "type": "tri-slope",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 23,
+      "n_vertices": 36,
+      "signed_volume": 1647.5211754511665
+    },
+    {
+      "bid": 94,
+      "type": "complex",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 31,
+      "n_vertices": 46,
+      "signed_volume": 1857.3552706760001
+    },
+    {
+      "bid": 95,
+      "type": "tri-slope",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 24,
+      "n_vertices": 39,
+      "signed_volume": 1601.672310119001
+    },
+    {
+      "bid": 96,
+      "type": "hip",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 19,
+      "n_vertices": 28,
+      "signed_volume": 1894.2898376638334
+    },
+    {
+      "bid": 97,
+      "type": "tri-slope",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 15,
+      "n_vertices": 22,
+      "signed_volume": 1378.3427506881662
+    },
+    {
+      "bid": 98,
+      "type": "hip",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 19,
+      "n_vertices": 28,
+      "signed_volume": 1389.0244536815007
+    },
+    {
+      "bid": 99,
+      "type": "hip",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 26,
+      "n_vertices": 41,
+      "signed_volume": 1425.6828670691666
+    },
+    {
+      "bid": 100,
+      "type": "gable",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 10,
+      "n_vertices": 14,
+      "signed_volume": 1526.1907483178331
+    },
+    {
+      "bid": 101,
+      "type": "complex",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 27,
+      "n_vertices": 42,
+      "signed_volume": 1512.7621988138328
+    },
+    {
+      "bid": 102,
+      "type": "complex",
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        305
+      ],
+      "n_faces": 44,
+      "n_vertices": 71,
+      "signed_volume": 1851.6165183161665
+    },
+    {
+      "bid": 103,
+      "type": "gable",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 9,
+      "n_vertices": 12,
+      "signed_volume": 1672.5537884083342
+    },
+    {
+      "bid": 104,
+      "type": "flat",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 6,
+      "n_vertices": 8,
+      "signed_volume": 61.92613339183334
+    },
+    {
+      "bid": 105,
+      "type": "tri-slope",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 15,
+      "n_vertices": 22,
+      "signed_volume": 1785.114590903
+    },
+    {
+      "bid": 106,
+      "type": "gable",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 9,
+      "n_vertices": 12,
+      "signed_volume": 1653.4196197880003
+    },
+    {
+      "bid": 107,
+      "type": "complex",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 28,
+      "n_vertices": 45,
+      "signed_volume": 1545.3122278438343
+    },
+    {
+      "bid": 108,
+      "type": "tri-slope",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 17,
+      "n_vertices": 26,
+      "signed_volume": 1641.5597769873332
+    },
+    {
+      "bid": 109,
+      "type": "complex",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 36,
+      "n_vertices": 56,
+      "signed_volume": 1623.7289353423323
+    },
+    {
+      "bid": 110,
+      "type": "gable",
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        305
+      ],
+      "n_faces": 12,
+      "n_vertices": 18,
+      "signed_volume": 1633.5958563941665
+    },
+    {
+      "bid": 111,
+      "type": "flat",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 8,
+      "n_vertices": 12,
+      "signed_volume": 36.06108133516666
+    },
+    {
+      "bid": 112,
+      "type": "flat",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 7,
+      "n_vertices": 10,
+      "signed_volume": 54.895672125
+    },
+    {
+      "bid": 113,
+      "type": "flat",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 6,
+      "n_vertices": 8,
+      "signed_volume": 74.217401025
+    },
+    {
+      "bid": 114,
+      "type": "flat",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 7,
+      "n_vertices": 10,
+      "signed_volume": 34.05516466033333
+    },
+    {
+      "bid": 115,
+      "type": "flat",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 6,
+      "n_vertices": 8,
+      "signed_volume": 99.20088937100002
+    },
+    {
+      "bid": 116,
+      "type": "flat",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 7,
+      "n_vertices": 10,
+      "signed_volume": 55.561490021166684
+    },
+    {
+      "bid": 117,
+      "type": "flat",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 8,
+      "n_vertices": 12,
+      "signed_volume": 28.883563504166663
+    },
+    {
+      "bid": 118,
+      "type": "flat",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 6,
+      "n_vertices": 8,
+      "signed_volume": 22.520719260500005
+    },
+    {
+      "bid": 119,
+      "type": "tri-slope",
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        305
+      ],
+      "n_faces": 19,
+      "n_vertices": 30,
+      "signed_volume": 1468.5898461105007
+    },
+    {
+      "bid": 120,
+      "type": "complex",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 69,
+      "n_vertices": 111,
+      "signed_volume": 4055.868683400664
+    },
+    {
+      "bid": 121,
+      "type": "tri-slope",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 16,
+      "n_vertices": 24,
+      "signed_volume": 645.089807381667
+    },
+    {
+      "bid": 122,
+      "type": "complex",
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        306,
+        306,
+        306,
+        306,
+        306,
+        306,
+        306,
+        306,
+        306,
+        306,
+        306,
+        306,
+        306,
+        306,
+        306,
+        306,
+        306,
+        306,
+        306,
+        306
+      ],
+      "n_faces": 41,
+      "n_vertices": 66,
+      "signed_volume": 1183.0536224276664
+    },
+    {
+      "bid": 123,
+      "type": "complex",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 63,
+      "n_vertices": 110,
+      "signed_volume": 6736.394488059007
+    },
+    {
+      "bid": 124,
+      "type": "gable",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 24,
+      "n_vertices": 42,
+      "signed_volume": 3609.8697072646632
+    },
+    {
+      "bid": 125,
+      "type": "complex",
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        305
+      ],
+      "n_faces": 68,
+      "n_vertices": 109,
+      "signed_volume": 3585.0141779393357
+    },
+    {
+      "bid": 126,
+      "type": "complex",
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        102,
+        102
+      ],
+      "n_faces": 129,
+      "n_vertices": 215,
+      "signed_volume": 3634.780592290339
+    },
+    {
+      "bid": 127,
+      "type": "hip",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 38,
+      "n_vertices": 66,
+      "signed_volume": 2604.5748890415016
+    },
+    {
+      "bid": 128,
+      "type": "complex",
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        305
+      ],
+      "n_faces": 81,
+      "n_vertices": 134,
+      "signed_volume": 3713.866065503833
+    },
+    {
+      "bid": 129,
+      "type": "gable",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 21,
+      "n_vertices": 36,
+      "signed_volume": 4245.2364223165
+    },
+    {
+      "bid": 130,
+      "type": "gable",
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_faces": 28,
+      "n_vertices": 50,
+      "signed_volume": 3637.8446047485027
+    }
+  ]
+}

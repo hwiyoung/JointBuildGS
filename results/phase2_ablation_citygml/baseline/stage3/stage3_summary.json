@@ -1,0 +1,2558 @@
+{
+  "ckpt": "results/phase2_ablation_citygml/baseline/ckpt/final.pt",
+  "scene": "results/phase2_synthesis/scene.obj",
+  "n_buildings_total": 131,
+  "n_buildings_stage3_success": 101,
+  "n_buildings_val3dity_valid": 53,
+  "val3dity_pass_rate": 0.40458015267175573,
+  "params": {
+    "opa_thresh": 0.05,
+    "cos_thresh": 0.85,
+    "hs_tol": 0.1
+  },
+  "buildings": [
+    {
+      "building_id": 0,
+      "building_name": "NL.IMBAG.Pand.0363100012066398",
+      "type": "tri-slope",
+      "n_primitives_assigned": 11071,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 9,
+      "n_vertices": 14,
+      "signed_volume": 780.2665008005773,
+      "n_edges_shared": 21,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 3,
+        "WallSurface": 5,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_00/building.city.json"
+    },
+    {
+      "building_id": 1,
+      "building_name": "NL.IMBAG.Pand.0363100012100805",
+      "type": "flat",
+      "n_primitives_assigned": 9533,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 9,
+      "n_vertices": 13,
+      "signed_volume": 1777.2861568415162,
+      "n_edges_shared": 20,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 3,
+        "WallSurface": 5,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_01/building.city.json"
+    },
+    {
+      "building_id": 2,
+      "building_name": "NL.IMBAG.Pand.0363100012102915",
+      "type": "flat",
+      "n_primitives_assigned": 5218,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 7,
+      "n_vertices": 9,
+      "signed_volume": 774.7287153356916,
+      "n_edges_shared": 14,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 4,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_02/building.city.json"
+    },
+    {
+      "building_id": 3,
+      "building_name": "NL.IMBAG.Pand.0363100012130645",
+      "type": "complex",
+      "n_primitives_assigned": 81972,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203"
+      ],
+      "n_surfaces": 7,
+      "n_vertices": 10,
+      "signed_volume": 12390.865416529816,
+      "n_edges_shared": 15,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 4,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_03/building.city.json"
+    },
+    {
+      "building_id": 4,
+      "building_name": "NL.IMBAG.Pand.0363100012152340",
+      "type": "flat",
+      "n_primitives_assigned": 0,
+      "stage3_success": false,
+      "val3dity_valid": false,
+      "val3dity_errors": [],
+      "reason": "too_few_primitives"
+    },
+    {
+      "building_id": 5,
+      "building_name": "NL.IMBAG.Pand.0363100012152522",
+      "type": "hip",
+      "n_primitives_assigned": 134,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203"
+      ],
+      "n_surfaces": 5,
+      "n_vertices": 6,
+      "signed_volume": 269.1666096627352,
+      "n_edges_shared": 7,
+      "n_edges_boundary": 3,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 0,
+        "WallSurface": 4,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_05/building.city.json"
+    },
+    {
+      "building_id": 6,
+      "building_name": "NL.IMBAG.Pand.0363100012152546",
+      "type": "hip",
+      "n_primitives_assigned": 2359,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203",
+        "203"
+      ],
+      "n_surfaces": 5,
+      "n_vertices": 7,
+      "signed_volume": 286.91589063795345,
+      "n_edges_shared": 10,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 1,
+        "WallSurface": 3,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_06/building.city.json"
+    },
+    {
+      "building_id": 7,
+      "building_name": "NL.IMBAG.Pand.0363100012152875",
+      "type": "complex",
+      "n_primitives_assigned": 6032,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203"
+      ],
+      "n_surfaces": 7,
+      "n_vertices": 10,
+      "signed_volume": 945.4732654767439,
+      "n_edges_shared": 15,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 3,
+        "WallSurface": 3,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_07/building.city.json"
+    },
+    {
+      "building_id": 8,
+      "building_name": "NL.IMBAG.Pand.0363100012152957",
+      "type": "gable",
+      "n_primitives_assigned": 4927,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203",
+        "203"
+      ],
+      "n_surfaces": 8,
+      "n_vertices": 10,
+      "signed_volume": 2063.0219980813786,
+      "n_edges_shared": 16,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 3,
+        "WallSurface": 4,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_08/building.city.json"
+    },
+    {
+      "building_id": 9,
+      "building_name": "NL.IMBAG.Pand.0363100012153762",
+      "type": "hip",
+      "n_primitives_assigned": 0,
+      "stage3_success": false,
+      "val3dity_valid": false,
+      "val3dity_errors": [],
+      "reason": "too_few_primitives"
+    },
+    {
+      "building_id": 10,
+      "building_name": "NL.IMBAG.Pand.0363100012154112",
+      "type": "tri-slope",
+      "n_primitives_assigned": 10032,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 7,
+      "n_vertices": 10,
+      "signed_volume": 939.9126012474308,
+      "n_edges_shared": 15,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 4,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_10/building.city.json"
+    },
+    {
+      "building_id": 11,
+      "building_name": "NL.IMBAG.Pand.0363100012154138",
+      "type": "hip",
+      "n_primitives_assigned": 2189,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203"
+      ],
+      "n_surfaces": 9,
+      "n_vertices": 13,
+      "signed_volume": 1139.8007493232135,
+      "n_edges_shared": 20,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 3,
+        "WallSurface": 5,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_11/building.city.json"
+    },
+    {
+      "building_id": 12,
+      "building_name": "NL.IMBAG.Pand.0363100012154275",
+      "type": "hip",
+      "n_primitives_assigned": 3136,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203",
+        "203"
+      ],
+      "n_surfaces": 7,
+      "n_vertices": 10,
+      "signed_volume": 259.2469578086006,
+      "n_edges_shared": 15,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 3,
+        "WallSurface": 3,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_12/building.city.json"
+    },
+    {
+      "building_id": 13,
+      "building_name": "NL.IMBAG.Pand.0363100012154279",
+      "type": "flat",
+      "n_primitives_assigned": 0,
+      "stage3_success": false,
+      "val3dity_valid": false,
+      "val3dity_errors": [],
+      "reason": "too_few_primitives"
+    },
+    {
+      "building_id": 14,
+      "building_name": "NL.IMBAG.Pand.0363100012155521",
+      "type": "gable",
+      "n_primitives_assigned": 2080,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203",
+        "203",
+        "203"
+      ],
+      "n_surfaces": 7,
+      "n_vertices": 11,
+      "signed_volume": 79.85087357848879,
+      "n_edges_shared": 16,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 3,
+        "WallSurface": 4,
+        "GroundSurface": 0
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_14/building.city.json"
+    },
+    {
+      "building_id": 15,
+      "building_name": "NL.IMBAG.Pand.0363100012155585",
+      "type": "flat",
+      "n_primitives_assigned": 2242,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203"
+      ],
+      "n_surfaces": 9,
+      "n_vertices": 13,
+      "signed_volume": 348.1036900571914,
+      "n_edges_shared": 20,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 4,
+        "WallSurface": 4,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_15/building.city.json"
+    },
+    {
+      "building_id": 16,
+      "building_name": "NL.IMBAG.Pand.0363100012155804",
+      "type": "tri-slope",
+      "n_primitives_assigned": 7501,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203",
+        "203"
+      ],
+      "n_surfaces": 6,
+      "n_vertices": 10,
+      "signed_volume": 615.5402244114235,
+      "n_edges_shared": 14,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 3,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_16/building.city.json"
+    },
+    {
+      "building_id": 17,
+      "building_name": "NL.IMBAG.Pand.0363100012156162",
+      "type": "gable",
+      "n_primitives_assigned": 2788,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203"
+      ],
+      "n_surfaces": 7,
+      "n_vertices": 7,
+      "signed_volume": 1436.6459269363513,
+      "n_edges_shared": 12,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 4,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_17/building.city.json"
+    },
+    {
+      "building_id": 18,
+      "building_name": "NL.IMBAG.Pand.0363100012156211",
+      "type": "hip",
+      "n_primitives_assigned": 5791,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203"
+      ],
+      "n_surfaces": 7,
+      "n_vertices": 9,
+      "signed_volume": 9.45753189939713,
+      "n_edges_shared": 14,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 3,
+        "WallSurface": 3,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_18/building.city.json"
+    },
+    {
+      "building_id": 19,
+      "building_name": "NL.IMBAG.Pand.0363100012156430",
+      "type": "gable",
+      "n_primitives_assigned": 7527,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 5,
+      "n_vertices": 6,
+      "signed_volume": 16.92867890962786,
+      "n_edges_shared": 9,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 2,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_19/building.city.json"
+    },
+    {
+      "building_id": 20,
+      "building_name": "NL.IMBAG.Pand.0363100012156449",
+      "type": "hip",
+      "n_primitives_assigned": 0,
+      "stage3_success": false,
+      "val3dity_valid": false,
+      "val3dity_errors": [],
+      "reason": "too_few_primitives"
+    },
+    {
+      "building_id": 21,
+      "building_name": "NL.IMBAG.Pand.0363100012156527",
+      "type": "complex",
+      "n_primitives_assigned": 3844,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203",
+        "203"
+      ],
+      "n_surfaces": 9,
+      "n_vertices": 14,
+      "signed_volume": 266.26975866601407,
+      "n_edges_shared": 21,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 5,
+        "WallSurface": 3,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_21/building.city.json"
+    },
+    {
+      "building_id": 22,
+      "building_name": "NL.IMBAG.Pand.0363100012156639",
+      "type": "gable",
+      "n_primitives_assigned": 3906,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 8,
+      "n_vertices": 12,
+      "signed_volume": 735.8530118884249,
+      "n_edges_shared": 18,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 5,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_22/building.city.json"
+    },
+    {
+      "building_id": 23,
+      "building_name": "NL.IMBAG.Pand.0363100012156665",
+      "type": "hip",
+      "n_primitives_assigned": 389,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 5,
+      "n_vertices": 6,
+      "signed_volume": 7.649993042460513,
+      "n_edges_shared": 9,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 3,
+        "GroundSurface": 0
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_23/building.city.json"
+    },
+    {
+      "building_id": 24,
+      "building_name": "NL.IMBAG.Pand.0363100012156684",
+      "type": "gable",
+      "n_primitives_assigned": 1538,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 7,
+      "n_vertices": 10,
+      "signed_volume": 93.80810176991338,
+      "n_edges_shared": 15,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 4,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_24/building.city.json"
+    },
+    {
+      "building_id": 25,
+      "building_name": "NL.IMBAG.Pand.0363100012156749",
+      "type": "flat",
+      "n_primitives_assigned": 389,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203",
+        "203"
+      ],
+      "n_surfaces": 7,
+      "n_vertices": 8,
+      "signed_volume": 1.5488265983184988,
+      "n_edges_shared": 13,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 3,
+        "WallSurface": 3,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_25/building.city.json"
+    },
+    {
+      "building_id": 26,
+      "building_name": "NL.IMBAG.Pand.0363100012156763",
+      "type": "flat",
+      "n_primitives_assigned": 973,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203"
+      ],
+      "n_surfaces": 8,
+      "n_vertices": 11,
+      "signed_volume": 1423.923904591504,
+      "n_edges_shared": 17,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 5,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_26/building.city.json"
+    },
+    {
+      "building_id": 27,
+      "building_name": "NL.IMBAG.Pand.0363100012156772",
+      "type": "complex",
+      "n_primitives_assigned": 1003,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 6,
+      "n_vertices": 7,
+      "signed_volume": 45.49104201072467,
+      "n_edges_shared": 11,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 3,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_27/building.city.json"
+    },
+    {
+      "building_id": 28,
+      "building_name": "NL.IMBAG.Pand.0363100012157151",
+      "type": "tri-slope",
+      "n_primitives_assigned": 1653,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203"
+      ],
+      "n_surfaces": 10,
+      "n_vertices": 14,
+      "signed_volume": 867.4241810756735,
+      "n_edges_shared": 22,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 5,
+        "WallSurface": 4,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_28/building.city.json"
+    },
+    {
+      "building_id": 29,
+      "building_name": "NL.IMBAG.Pand.0363100012157227",
+      "type": "tri-slope",
+      "n_primitives_assigned": 572,
+      "stage3_success": false,
+      "val3dity_valid": false,
+      "val3dity_errors": [],
+      "reason": "process_building_returned_none"
+    },
+    {
+      "building_id": 30,
+      "building_name": "NL.IMBAG.Pand.0363100012157419",
+      "type": "gable",
+      "n_primitives_assigned": 0,
+      "stage3_success": false,
+      "val3dity_valid": false,
+      "val3dity_errors": [],
+      "reason": "too_few_primitives"
+    },
+    {
+      "building_id": 31,
+      "building_name": "NL.IMBAG.Pand.0363100012157994",
+      "type": "tri-slope",
+      "n_primitives_assigned": 4321,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203"
+      ],
+      "n_surfaces": 6,
+      "n_vertices": 8,
+      "signed_volume": 114.15421844789337,
+      "n_edges_shared": 12,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 3,
+        "WallSurface": 3,
+        "GroundSurface": 0
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_31/building.city.json"
+    },
+    {
+      "building_id": 32,
+      "building_name": "NL.IMBAG.Pand.0363100012158277",
+      "type": "gable",
+      "n_primitives_assigned": 6663,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 6,
+      "n_vertices": 7,
+      "signed_volume": 339.96812727439703,
+      "n_edges_shared": 11,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 3,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_32/building.city.json"
+    },
+    {
+      "building_id": 33,
+      "building_name": "NL.IMBAG.Pand.0363100012158498",
+      "type": "tri-slope",
+      "n_primitives_assigned": 0,
+      "stage3_success": false,
+      "val3dity_valid": false,
+      "val3dity_errors": [],
+      "reason": "too_few_primitives"
+    },
+    {
+      "building_id": 34,
+      "building_name": "NL.IMBAG.Pand.0363100012158622",
+      "type": "flat",
+      "n_primitives_assigned": 673,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 6,
+      "n_vertices": 7,
+      "signed_volume": 11.430621989306532,
+      "n_edges_shared": 11,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 0,
+        "WallSurface": 5,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_34/building.city.json"
+    },
+    {
+      "building_id": 35,
+      "building_name": "NL.IMBAG.Pand.0363100012158725",
+      "type": "complex",
+      "n_primitives_assigned": 5745,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 7,
+      "n_vertices": 10,
+      "signed_volume": 828.2975167681593,
+      "n_edges_shared": 15,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 3,
+        "WallSurface": 3,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_35/building.city.json"
+    },
+    {
+      "building_id": 36,
+      "building_name": "NL.IMBAG.Pand.0363100012159452",
+      "type": "gable",
+      "n_primitives_assigned": 1831,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203"
+      ],
+      "n_surfaces": 7,
+      "n_vertices": 10,
+      "signed_volume": 277.2886590489292,
+      "n_edges_shared": 15,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 4,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_36/building.city.json"
+    },
+    {
+      "building_id": 37,
+      "building_name": "NL.IMBAG.Pand.0363100012159936",
+      "type": "gable",
+      "n_primitives_assigned": 494,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203"
+      ],
+      "n_surfaces": 7,
+      "n_vertices": 10,
+      "signed_volume": 52.707852405861864,
+      "n_edges_shared": 15,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 4,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_37/building.city.json"
+    },
+    {
+      "building_id": 38,
+      "building_name": "NL.IMBAG.Pand.0363100012159968",
+      "type": "complex",
+      "n_primitives_assigned": 281,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203",
+        "203"
+      ],
+      "n_surfaces": 8,
+      "n_vertices": 13,
+      "signed_volume": 34.453027127382875,
+      "n_edges_shared": 19,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 4,
+        "WallSurface": 3,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_38/building.city.json"
+    },
+    {
+      "building_id": 39,
+      "building_name": "NL.IMBAG.Pand.0363100012160295",
+      "type": "gable",
+      "n_primitives_assigned": 15,
+      "stage3_success": false,
+      "val3dity_valid": false,
+      "val3dity_errors": [],
+      "reason": "process_building_returned_none"
+    },
+    {
+      "building_id": 40,
+      "building_name": "NL.IMBAG.Pand.0363100012161315",
+      "type": "flat",
+      "n_primitives_assigned": 3227,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 9,
+      "n_vertices": 13,
+      "signed_volume": 726.5183955957514,
+      "n_edges_shared": 20,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 3,
+        "WallSurface": 5,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_40/building.city.json"
+    },
+    {
+      "building_id": 41,
+      "building_name": "NL.IMBAG.Pand.0363100012161548",
+      "type": "flat",
+      "n_primitives_assigned": 6323,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203"
+      ],
+      "n_surfaces": 7,
+      "n_vertices": 9,
+      "signed_volume": 570.7030608839453,
+      "n_edges_shared": 14,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 3,
+        "WallSurface": 3,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_41/building.city.json"
+    },
+    {
+      "building_id": 42,
+      "building_name": "NL.IMBAG.Pand.0363100012161668",
+      "type": "tri-slope",
+      "n_primitives_assigned": 1889,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203"
+      ],
+      "n_surfaces": 4,
+      "n_vertices": 5,
+      "signed_volume": 0.07695151291090951,
+      "n_edges_shared": 7,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 1,
+        "WallSurface": 3,
+        "GroundSurface": 0
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_42/building.city.json"
+    },
+    {
+      "building_id": 43,
+      "building_name": "NL.IMBAG.Pand.0363100012161739",
+      "type": "gable",
+      "n_primitives_assigned": 828,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 7,
+      "n_vertices": 10,
+      "signed_volume": 200.22544095948248,
+      "n_edges_shared": 15,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 4,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_43/building.city.json"
+    },
+    {
+      "building_id": 44,
+      "building_name": "NL.IMBAG.Pand.0363100012161817",
+      "type": "gable",
+      "n_primitives_assigned": 80,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203"
+      ],
+      "n_surfaces": 6,
+      "n_vertices": 9,
+      "signed_volume": 0.2907588787980255,
+      "n_edges_shared": 13,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 4,
+        "GroundSurface": 0
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_44/building.city.json"
+    },
+    {
+      "building_id": 45,
+      "building_name": "NL.IMBAG.Pand.0363100012161958",
+      "type": "complex",
+      "n_primitives_assigned": 2699,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203",
+        "203"
+      ],
+      "n_surfaces": 8,
+      "n_vertices": 13,
+      "signed_volume": 293.1861405374764,
+      "n_edges_shared": 19,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 3,
+        "WallSurface": 4,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_45/building.city.json"
+    },
+    {
+      "building_id": 46,
+      "building_name": "NL.IMBAG.Pand.0363100012161980",
+      "type": "flat",
+      "n_primitives_assigned": 0,
+      "stage3_success": false,
+      "val3dity_valid": false,
+      "val3dity_errors": [],
+      "reason": "too_few_primitives"
+    },
+    {
+      "building_id": 47,
+      "building_name": "NL.IMBAG.Pand.0363100012162375",
+      "type": "flat",
+      "n_primitives_assigned": 7158,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 10,
+      "n_vertices": 13,
+      "signed_volume": 829.9373848010663,
+      "n_edges_shared": 21,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 4,
+        "WallSurface": 5,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_47/building.city.json"
+    },
+    {
+      "building_id": 48,
+      "building_name": "NL.IMBAG.Pand.0363100012162495",
+      "type": "tri-slope",
+      "n_primitives_assigned": 1488,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 7,
+      "n_vertices": 10,
+      "signed_volume": 53.2461555354098,
+      "n_edges_shared": 15,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 3,
+        "WallSurface": 4,
+        "GroundSurface": 0
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_48/building.city.json"
+    },
+    {
+      "building_id": 49,
+      "building_name": "NL.IMBAG.Pand.0363100012162582",
+      "type": "flat",
+      "n_primitives_assigned": 0,
+      "stage3_success": false,
+      "val3dity_valid": false,
+      "val3dity_errors": [],
+      "reason": "too_few_primitives"
+    },
+    {
+      "building_id": 50,
+      "building_name": "NL.IMBAG.Pand.0363100012162799",
+      "type": "complex",
+      "n_primitives_assigned": 1452,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 7,
+      "n_vertices": 10,
+      "signed_volume": 33.36530768865831,
+      "n_edges_shared": 15,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 3,
+        "WallSurface": 3,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_50/building.city.json"
+    },
+    {
+      "building_id": 51,
+      "building_name": "NL.IMBAG.Pand.0363100012162970",
+      "type": "tri-slope",
+      "n_primitives_assigned": 0,
+      "stage3_success": false,
+      "val3dity_valid": false,
+      "val3dity_errors": [],
+      "reason": "too_few_primitives"
+    },
+    {
+      "building_id": 52,
+      "building_name": "NL.IMBAG.Pand.0363100012162978",
+      "type": "tri-slope",
+      "n_primitives_assigned": 0,
+      "stage3_success": false,
+      "val3dity_valid": false,
+      "val3dity_errors": [],
+      "reason": "too_few_primitives"
+    },
+    {
+      "building_id": 53,
+      "building_name": "NL.IMBAG.Pand.0363100012163100",
+      "type": "tri-slope",
+      "n_primitives_assigned": 812,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203",
+        "203"
+      ],
+      "n_surfaces": 9,
+      "n_vertices": 14,
+      "signed_volume": 18.194498583933733,
+      "n_edges_shared": 21,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 3,
+        "WallSurface": 5,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_53/building.city.json"
+    },
+    {
+      "building_id": 54,
+      "building_name": "NL.IMBAG.Pand.0363100012163254",
+      "type": "gable",
+      "n_primitives_assigned": 1438,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203"
+      ],
+      "n_surfaces": 6,
+      "n_vertices": 7,
+      "signed_volume": 1240.45427857675,
+      "n_edges_shared": 11,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 3,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_54/building.city.json"
+    },
+    {
+      "building_id": 55,
+      "building_name": "NL.IMBAG.Pand.0363100012163910",
+      "type": "gable",
+      "n_primitives_assigned": 6046,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 7,
+      "n_vertices": 10,
+      "signed_volume": 29.717030255292077,
+      "n_edges_shared": 15,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 4,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_55/building.city.json"
+    },
+    {
+      "building_id": 56,
+      "building_name": "NL.IMBAG.Pand.0363100012164202",
+      "type": "tri-slope",
+      "n_primitives_assigned": 1821,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 8,
+      "n_vertices": 12,
+      "signed_volume": 141.73419456852662,
+      "n_edges_shared": 18,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 3,
+        "WallSurface": 4,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_56/building.city.json"
+    },
+    {
+      "building_id": 57,
+      "building_name": "NL.IMBAG.Pand.0363100012164314",
+      "type": "hip",
+      "n_primitives_assigned": 10,
+      "stage3_success": false,
+      "val3dity_valid": false,
+      "val3dity_errors": [],
+      "reason": "process_building_returned_none"
+    },
+    {
+      "building_id": 58,
+      "building_name": "NL.IMBAG.Pand.0363100012164630",
+      "type": "hip",
+      "n_primitives_assigned": 72,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203",
+        "203",
+        "203",
+        "203",
+        "203",
+        "203"
+      ],
+      "n_surfaces": 11,
+      "n_vertices": 18,
+      "signed_volume": 20.4323841646026,
+      "n_edges_shared": 27,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 8,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_58/building.city.json"
+    },
+    {
+      "building_id": 59,
+      "building_name": "NL.IMBAG.Pand.0363100012164710",
+      "type": "tri-slope",
+      "n_primitives_assigned": 0,
+      "stage3_success": false,
+      "val3dity_valid": false,
+      "val3dity_errors": [],
+      "reason": "too_few_primitives"
+    },
+    {
+      "building_id": 60,
+      "building_name": "NL.IMBAG.Pand.0363100012164755",
+      "type": "hip",
+      "n_primitives_assigned": 2438,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 6,
+      "n_vertices": 8,
+      "signed_volume": 551.349725887835,
+      "n_edges_shared": 12,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 1,
+        "WallSurface": 4,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_60/building.city.json"
+    },
+    {
+      "building_id": 61,
+      "building_name": "NL.IMBAG.Pand.0363100012164923",
+      "type": "tri-slope",
+      "n_primitives_assigned": 1796,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203",
+        "203"
+      ],
+      "n_surfaces": 4,
+      "n_vertices": 6,
+      "signed_volume": 67.9284360090428,
+      "n_edges_shared": 8,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 1,
+        "WallSurface": 2,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_61/building.city.json"
+    },
+    {
+      "building_id": 62,
+      "building_name": "NL.IMBAG.Pand.0363100012165188",
+      "type": "complex",
+      "n_primitives_assigned": 13,
+      "stage3_success": false,
+      "val3dity_valid": false,
+      "val3dity_errors": [],
+      "reason": "process_building_returned_none"
+    },
+    {
+      "building_id": 63,
+      "building_name": "NL.IMBAG.Pand.0363100012165353",
+      "type": "complex",
+      "n_primitives_assigned": 3217,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203"
+      ],
+      "n_surfaces": 8,
+      "n_vertices": 11,
+      "signed_volume": 271.9540674314608,
+      "n_edges_shared": 17,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 4,
+        "WallSurface": 3,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_63/building.city.json"
+    },
+    {
+      "building_id": 64,
+      "building_name": "NL.IMBAG.Pand.0363100012165716",
+      "type": "complex",
+      "n_primitives_assigned": 634,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 7,
+      "n_vertices": 10,
+      "signed_volume": 132.53844574702455,
+      "n_edges_shared": 15,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 1,
+        "WallSurface": 5,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_64/building.city.json"
+    },
+    {
+      "building_id": 65,
+      "building_name": "NL.IMBAG.Pand.0363100012166176",
+      "type": "gable",
+      "n_primitives_assigned": 1,
+      "stage3_success": false,
+      "val3dity_valid": false,
+      "val3dity_errors": [],
+      "reason": "too_few_primitives"
+    },
+    {
+      "building_id": 66,
+      "building_name": "NL.IMBAG.Pand.0363100012166210",
+      "type": "tri-slope",
+      "n_primitives_assigned": 405,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203",
+        "203"
+      ],
+      "n_surfaces": 9,
+      "n_vertices": 14,
+      "signed_volume": 1.8870479977818018,
+      "n_edges_shared": 21,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 6,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_66/building.city.json"
+    },
+    {
+      "building_id": 67,
+      "building_name": "NL.IMBAG.Pand.0363100012166447",
+      "type": "flat",
+      "n_primitives_assigned": 11,
+      "stage3_success": false,
+      "val3dity_valid": false,
+      "val3dity_errors": [],
+      "reason": "process_building_returned_none"
+    },
+    {
+      "building_id": 68,
+      "building_name": "NL.IMBAG.Pand.0363100012166612",
+      "type": "tri-slope",
+      "n_primitives_assigned": 0,
+      "stage3_success": false,
+      "val3dity_valid": false,
+      "val3dity_errors": [],
+      "reason": "too_few_primitives"
+    },
+    {
+      "building_id": 69,
+      "building_name": "NL.IMBAG.Pand.0363100012166950",
+      "type": "gable",
+      "n_primitives_assigned": 1,
+      "stage3_success": false,
+      "val3dity_valid": false,
+      "val3dity_errors": [],
+      "reason": "too_few_primitives"
+    },
+    {
+      "building_id": 70,
+      "building_name": "NL.IMBAG.Pand.0363100012167107",
+      "type": "flat",
+      "n_primitives_assigned": 10,
+      "stage3_success": false,
+      "val3dity_valid": false,
+      "val3dity_errors": [],
+      "reason": "process_building_returned_none"
+    },
+    {
+      "building_id": 71,
+      "building_name": "NL.IMBAG.Pand.0363100012167376",
+      "type": "flat",
+      "n_primitives_assigned": 20,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 6,
+      "n_vertices": 8,
+      "signed_volume": 0.25327926517526494,
+      "n_edges_shared": 12,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 3,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_71/building.city.json"
+    },
+    {
+      "building_id": 72,
+      "building_name": "NL.IMBAG.Pand.0363100012167460",
+      "type": "complex",
+      "n_primitives_assigned": 8305,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203"
+      ],
+      "n_surfaces": 10,
+      "n_vertices": 15,
+      "signed_volume": 1563.1633903041766,
+      "n_edges_shared": 23,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 4,
+        "WallSurface": 5,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_72/building.city.json"
+    },
+    {
+      "building_id": 73,
+      "building_name": "NL.IMBAG.Pand.0363100012167461",
+      "type": "complex",
+      "n_primitives_assigned": 7628,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 8,
+      "n_vertices": 12,
+      "signed_volume": 889.9440148749554,
+      "n_edges_shared": 18,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 4,
+        "WallSurface": 3,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_73/building.city.json"
+    },
+    {
+      "building_id": 74,
+      "building_name": "NL.IMBAG.Pand.0363100012167462",
+      "type": "complex",
+      "n_primitives_assigned": 3110,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "204"
+      ],
+      "n_surfaces": 7,
+      "n_vertices": 11,
+      "signed_volume": 10.712808012974449,
+      "n_edges_shared": 16,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 4,
+        "WallSurface": 2,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_74/building.city.json"
+    },
+    {
+      "building_id": 75,
+      "building_name": "NL.IMBAG.Pand.0363100012168514",
+      "type": "hip",
+      "n_primitives_assigned": 12179,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 9,
+      "n_vertices": 14,
+      "signed_volume": 2600.186814664805,
+      "n_edges_shared": 21,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 3,
+        "WallSurface": 5,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_75/building.city.json"
+    },
+    {
+      "building_id": 76,
+      "building_name": "NL.IMBAG.Pand.0363100012168515",
+      "type": "hip",
+      "n_primitives_assigned": 9771,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 9,
+      "n_vertices": 14,
+      "signed_volume": 721.5137844917612,
+      "n_edges_shared": 21,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 5,
+        "WallSurface": 3,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_76/building.city.json"
+    },
+    {
+      "building_id": 77,
+      "building_name": "NL.IMBAG.Pand.0363100012168516",
+      "type": "tri-slope",
+      "n_primitives_assigned": 30,
+      "stage3_success": false,
+      "val3dity_valid": false,
+      "val3dity_errors": [],
+      "reason": "process_building_returned_none"
+    },
+    {
+      "building_id": 78,
+      "building_name": "NL.IMBAG.Pand.0363100012168519",
+      "type": "hip",
+      "n_primitives_assigned": 3018,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203",
+        "203"
+      ],
+      "n_surfaces": 9,
+      "n_vertices": 15,
+      "signed_volume": 672.252127717367,
+      "n_edges_shared": 22,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 3,
+        "WallSurface": 5,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_78/building.city.json"
+    },
+    {
+      "building_id": 79,
+      "building_name": "NL.IMBAG.Pand.0363100012174361",
+      "type": "gable",
+      "n_primitives_assigned": 5608,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 9,
+      "n_vertices": 14,
+      "signed_volume": 259.2997145610304,
+      "n_edges_shared": 21,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 6,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_79/building.city.json"
+    },
+    {
+      "building_id": 80,
+      "building_name": "NL.IMBAG.Pand.0363100012174362",
+      "type": "hip",
+      "n_primitives_assigned": 11716,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 9,
+      "n_vertices": 14,
+      "signed_volume": 387.41941907104996,
+      "n_edges_shared": 21,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 3,
+        "WallSurface": 5,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_80/building.city.json"
+    },
+    {
+      "building_id": 81,
+      "building_name": "NL.IMBAG.Pand.0363100012174363",
+      "type": "hip",
+      "n_primitives_assigned": 2791,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203"
+      ],
+      "n_surfaces": 5,
+      "n_vertices": 8,
+      "signed_volume": 88.69894410319587,
+      "n_edges_shared": 11,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 3,
+        "GroundSurface": 0
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_81/building.city.json"
+    },
+    {
+      "building_id": 82,
+      "building_name": "NL.IMBAG.Pand.0363100012174364",
+      "type": "hip",
+      "n_primitives_assigned": 2473,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 6,
+      "n_vertices": 8,
+      "signed_volume": 14.832285065418526,
+      "n_edges_shared": 12,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 1,
+        "WallSurface": 4,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_82/building.city.json"
+    },
+    {
+      "building_id": 83,
+      "building_name": "NL.IMBAG.Pand.0363100012174365",
+      "type": "hip",
+      "n_primitives_assigned": 4382,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203"
+      ],
+      "n_surfaces": 5,
+      "n_vertices": 7,
+      "signed_volume": 1.7649741540693593,
+      "n_edges_shared": 10,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 4,
+        "WallSurface": 0,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_83/building.city.json"
+    },
+    {
+      "building_id": 84,
+      "building_name": "NL.IMBAG.Pand.0363100012174366",
+      "type": "gable",
+      "n_primitives_assigned": 2118,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 9,
+      "n_vertices": 14,
+      "signed_volume": 442.65945596287673,
+      "n_edges_shared": 21,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 4,
+        "WallSurface": 4,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_84/building.city.json"
+    },
+    {
+      "building_id": 85,
+      "building_name": "NL.IMBAG.Pand.0363100012174367",
+      "type": "gable",
+      "n_primitives_assigned": 5629,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203"
+      ],
+      "n_surfaces": 8,
+      "n_vertices": 10,
+      "signed_volume": 601.1387088500187,
+      "n_edges_shared": 16,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 5,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_85/building.city.json"
+    },
+    {
+      "building_id": 86,
+      "building_name": "NL.IMBAG.Pand.0363100012174368",
+      "type": "complex",
+      "n_primitives_assigned": 2,
+      "stage3_success": false,
+      "val3dity_valid": false,
+      "val3dity_errors": [],
+      "reason": "too_few_primitives"
+    },
+    {
+      "building_id": 87,
+      "building_name": "NL.IMBAG.Pand.0363100012174369",
+      "type": "complex",
+      "n_primitives_assigned": 5793,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 8,
+      "n_vertices": 12,
+      "signed_volume": 1433.327140791326,
+      "n_edges_shared": 18,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 5,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_87/building.city.json"
+    },
+    {
+      "building_id": 88,
+      "building_name": "NL.IMBAG.Pand.0363100012174370",
+      "type": "complex",
+      "n_primitives_assigned": 627,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203"
+      ],
+      "n_surfaces": 5,
+      "n_vertices": 7,
+      "signed_volume": 174.95916272086205,
+      "n_edges_shared": 10,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 1,
+        "WallSurface": 3,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_88/building.city.json"
+    },
+    {
+      "building_id": 89,
+      "building_name": "NL.IMBAG.Pand.0363100012174371",
+      "type": "gable",
+      "n_primitives_assigned": 2268,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 8,
+      "n_vertices": 12,
+      "signed_volume": 848.7715813475521,
+      "n_edges_shared": 18,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 3,
+        "WallSurface": 4,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_89/building.city.json"
+    },
+    {
+      "building_id": 90,
+      "building_name": "NL.IMBAG.Pand.0363100012174372",
+      "type": "complex",
+      "n_primitives_assigned": 2670,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203"
+      ],
+      "n_surfaces": 4,
+      "n_vertices": 5,
+      "signed_volume": 9.957934994722905,
+      "n_edges_shared": 7,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 4,
+        "WallSurface": 0,
+        "GroundSurface": 0
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_90/building.city.json"
+    },
+    {
+      "building_id": 91,
+      "building_name": "NL.IMBAG.Pand.0363100012174373",
+      "type": "hip",
+      "n_primitives_assigned": 25,
+      "stage3_success": false,
+      "val3dity_valid": false,
+      "val3dity_errors": [],
+      "reason": "process_building_returned_none"
+    },
+    {
+      "building_id": 92,
+      "building_name": "NL.IMBAG.Pand.0363100012174375",
+      "type": "tri-slope",
+      "n_primitives_assigned": 8541,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 6,
+      "n_vertices": 8,
+      "signed_volume": 377.098412005088,
+      "n_edges_shared": 12,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 3,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_92/building.city.json"
+    },
+    {
+      "building_id": 93,
+      "building_name": "NL.IMBAG.Pand.0363100012174376",
+      "type": "tri-slope",
+      "n_primitives_assigned": 12186,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 7,
+      "n_vertices": 9,
+      "signed_volume": 15.803669228945978,
+      "n_edges_shared": 14,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 5,
+        "WallSurface": 1,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_93/building.city.json"
+    },
+    {
+      "building_id": 94,
+      "building_name": "NL.IMBAG.Pand.0363100012174443",
+      "type": "complex",
+      "n_primitives_assigned": 12539,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 6,
+      "n_vertices": 8,
+      "signed_volume": 62.48695726561709,
+      "n_edges_shared": 12,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 3,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_94/building.city.json"
+    },
+    {
+      "building_id": 95,
+      "building_name": "NL.IMBAG.Pand.0363100012174444",
+      "type": "tri-slope",
+      "n_primitives_assigned": 4268,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203",
+        "203",
+        "203"
+      ],
+      "n_surfaces": 9,
+      "n_vertices": 13,
+      "signed_volume": 258.5816055428498,
+      "n_edges_shared": 20,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 3,
+        "WallSurface": 5,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_95/building.city.json"
+    },
+    {
+      "building_id": 96,
+      "building_name": "NL.IMBAG.Pand.0363100012174446",
+      "type": "hip",
+      "n_primitives_assigned": 4044,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203"
+      ],
+      "n_surfaces": 6,
+      "n_vertices": 7,
+      "signed_volume": 157.53392711467555,
+      "n_edges_shared": 11,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 4,
+        "GroundSurface": 0
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_96/building.city.json"
+    },
+    {
+      "building_id": 97,
+      "building_name": "NL.IMBAG.Pand.0363100012174449",
+      "type": "tri-slope",
+      "n_primitives_assigned": 4967,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203"
+      ],
+      "n_surfaces": 9,
+      "n_vertices": 13,
+      "signed_volume": 981.4385811587177,
+      "n_edges_shared": 20,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 3,
+        "WallSurface": 5,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_97/building.city.json"
+    },
+    {
+      "building_id": 98,
+      "building_name": "NL.IMBAG.Pand.0363100012174450",
+      "type": "hip",
+      "n_primitives_assigned": 2421,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 9,
+      "n_vertices": 13,
+      "signed_volume": 580.6289467824839,
+      "n_edges_shared": 20,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 4,
+        "WallSurface": 4,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_98/building.city.json"
+    },
+    {
+      "building_id": 99,
+      "building_name": "NL.IMBAG.Pand.0363100012174451",
+      "type": "hip",
+      "n_primitives_assigned": 2587,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203",
+        "203"
+      ],
+      "n_surfaces": 9,
+      "n_vertices": 13,
+      "signed_volume": 156.30220653780302,
+      "n_edges_shared": 20,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 4,
+        "WallSurface": 4,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_99/building.city.json"
+    },
+    {
+      "building_id": 100,
+      "building_name": "NL.IMBAG.Pand.0363100012174452",
+      "type": "gable",
+      "n_primitives_assigned": 3037,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 8,
+      "n_vertices": 12,
+      "signed_volume": 100.45873675147466,
+      "n_edges_shared": 18,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 1,
+        "WallSurface": 6,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_100/building.city.json"
+    },
+    {
+      "building_id": 101,
+      "building_name": "NL.IMBAG.Pand.0363100012174453",
+      "type": "complex",
+      "n_primitives_assigned": 0,
+      "stage3_success": false,
+      "val3dity_valid": false,
+      "val3dity_errors": [],
+      "reason": "too_few_primitives"
+    },
+    {
+      "building_id": 102,
+      "building_name": "NL.IMBAG.Pand.0363100012174454",
+      "type": "complex",
+      "n_primitives_assigned": 2089,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 9,
+      "n_vertices": 14,
+      "signed_volume": 670.4979997962309,
+      "n_edges_shared": 21,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 4,
+        "WallSurface": 4,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_102/building.city.json"
+    },
+    {
+      "building_id": 103,
+      "building_name": "NL.IMBAG.Pand.0363100012174455",
+      "type": "gable",
+      "n_primitives_assigned": 3087,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 8,
+      "n_vertices": 12,
+      "signed_volume": 98.71175594297658,
+      "n_edges_shared": 18,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 3,
+        "WallSurface": 4,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_103/building.city.json"
+    },
+    {
+      "building_id": 104,
+      "building_name": "NL.IMBAG.Pand.0363100012174456",
+      "type": "flat",
+      "n_primitives_assigned": 8,
+      "stage3_success": false,
+      "val3dity_valid": false,
+      "val3dity_errors": [],
+      "reason": "process_building_returned_none"
+    },
+    {
+      "building_id": 105,
+      "building_name": "NL.IMBAG.Pand.0363100012174457",
+      "type": "tri-slope",
+      "n_primitives_assigned": 0,
+      "stage3_success": false,
+      "val3dity_valid": false,
+      "val3dity_errors": [],
+      "reason": "too_few_primitives"
+    },
+    {
+      "building_id": 106,
+      "building_name": "NL.IMBAG.Pand.0363100012174458",
+      "type": "gable",
+      "n_primitives_assigned": 229,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 8,
+      "n_vertices": 11,
+      "signed_volume": 112.06580467197982,
+      "n_edges_shared": 17,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 6,
+        "WallSurface": 1,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_106/building.city.json"
+    },
+    {
+      "building_id": 107,
+      "building_name": "NL.IMBAG.Pand.0363100012174459",
+      "type": "complex",
+      "n_primitives_assigned": 3290,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203"
+      ],
+      "n_surfaces": 5,
+      "n_vertices": 5,
+      "signed_volume": 366.9101739494633,
+      "n_edges_shared": 8,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 3,
+        "GroundSurface": 0
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_107/building.city.json"
+    },
+    {
+      "building_id": 108,
+      "building_name": "NL.IMBAG.Pand.0363100012174460",
+      "type": "tri-slope",
+      "n_primitives_assigned": 3378,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 11,
+      "n_vertices": 18,
+      "signed_volume": 762.0096570586829,
+      "n_edges_shared": 27,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 4,
+        "WallSurface": 6,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_108/building.city.json"
+    },
+    {
+      "building_id": 109,
+      "building_name": "NL.IMBAG.Pand.0363100012174461",
+      "type": "complex",
+      "n_primitives_assigned": 3136,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 8,
+      "n_vertices": 12,
+      "signed_volume": 179.0030472381313,
+      "n_edges_shared": 18,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 3,
+        "WallSurface": 4,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_109/building.city.json"
+    },
+    {
+      "building_id": 110,
+      "building_name": "NL.IMBAG.Pand.0363100012174462",
+      "type": "gable",
+      "n_primitives_assigned": 42,
+      "stage3_success": false,
+      "val3dity_valid": false,
+      "val3dity_errors": [],
+      "reason": "process_building_returned_none"
+    },
+    {
+      "building_id": 111,
+      "building_name": "NL.IMBAG.Pand.0363100012184355",
+      "type": "flat",
+      "n_primitives_assigned": 196,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 8,
+      "n_vertices": 11,
+      "signed_volume": 12.69081358600972,
+      "n_edges_shared": 17,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 3,
+        "WallSurface": 4,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_111/building.city.json"
+    },
+    {
+      "building_id": 112,
+      "building_name": "NL.IMBAG.Pand.0363100012186218",
+      "type": "flat",
+      "n_primitives_assigned": 1619,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 7,
+      "n_vertices": 8,
+      "signed_volume": 34.56992524714959,
+      "n_edges_shared": 13,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 4,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_112/building.city.json"
+    },
+    {
+      "building_id": 113,
+      "building_name": "NL.IMBAG.Pand.0363100012189238",
+      "type": "flat",
+      "n_primitives_assigned": 678,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 7,
+      "n_vertices": 10,
+      "signed_volume": 32.65738264923178,
+      "n_edges_shared": 15,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 4,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_113/building.city.json"
+    },
+    {
+      "building_id": 114,
+      "building_name": "NL.IMBAG.Pand.0363100012191579",
+      "type": "flat",
+      "n_primitives_assigned": 198,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 11,
+      "n_vertices": 16,
+      "signed_volume": 21.696911680993292,
+      "n_edges_shared": 25,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 5,
+        "WallSurface": 5,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_114/building.city.json"
+    },
+    {
+      "building_id": 115,
+      "building_name": "NL.IMBAG.Pand.0363100012216872",
+      "type": "flat",
+      "n_primitives_assigned": 1845,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203",
+        "203"
+      ],
+      "n_surfaces": 9,
+      "n_vertices": 11,
+      "signed_volume": 72.67895711115132,
+      "n_edges_shared": 18,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 6,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_115/building.city.json"
+    },
+    {
+      "building_id": 116,
+      "building_name": "NL.IMBAG.Pand.0363100012220104",
+      "type": "flat",
+      "n_primitives_assigned": 308,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203",
+        "203"
+      ],
+      "n_surfaces": 6,
+      "n_vertices": 8,
+      "signed_volume": 38.3517690533634,
+      "n_edges_shared": 12,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 1,
+        "WallSurface": 4,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_116/building.city.json"
+    },
+    {
+      "building_id": 117,
+      "building_name": "NL.IMBAG.Pand.0363100012224536",
+      "type": "flat",
+      "n_primitives_assigned": 0,
+      "stage3_success": false,
+      "val3dity_valid": false,
+      "val3dity_errors": [],
+      "reason": "too_few_primitives"
+    },
+    {
+      "building_id": 118,
+      "building_name": "NL.IMBAG.Pand.0363100012235050",
+      "type": "flat",
+      "n_primitives_assigned": 4,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 7,
+      "n_vertices": 10,
+      "signed_volume": 9.041745767881828,
+      "n_edges_shared": 15,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 4,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_118/building.city.json"
+    },
+    {
+      "building_id": 119,
+      "building_name": "NL.IMBAG.Pand.0363100012236011",
+      "type": "tri-slope",
+      "n_primitives_assigned": 0,
+      "stage3_success": false,
+      "val3dity_valid": false,
+      "val3dity_errors": [],
+      "reason": "too_few_primitives"
+    },
+    {
+      "building_id": 120,
+      "building_name": "NL.IMBAG.Pand.0363100012236066",
+      "type": "complex",
+      "n_primitives_assigned": 9564,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203",
+        "203",
+        "203"
+      ],
+      "n_surfaces": 11,
+      "n_vertices": 18,
+      "signed_volume": 3098.4693980359552,
+      "n_edges_shared": 27,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 3,
+        "WallSurface": 7,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_120/building.city.json"
+    },
+    {
+      "building_id": 121,
+      "building_name": "NL.IMBAG.Pand.0363100012236070",
+      "type": "tri-slope",
+      "n_primitives_assigned": 192,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203"
+      ],
+      "n_surfaces": 8,
+      "n_vertices": 10,
+      "signed_volume": 0.48605579389032033,
+      "n_edges_shared": 16,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 5,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_121/building.city.json"
+    },
+    {
+      "building_id": 122,
+      "building_name": "NL.IMBAG.Pand.0363100012236078",
+      "type": "complex",
+      "n_primitives_assigned": 0,
+      "stage3_success": false,
+      "val3dity_valid": false,
+      "val3dity_errors": [],
+      "reason": "too_few_primitives"
+    },
+    {
+      "building_id": 123,
+      "building_name": "NL.IMBAG.Pand.0363100012236312",
+      "type": "complex",
+      "n_primitives_assigned": 17906,
+      "stage3_success": true,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203"
+      ],
+      "n_surfaces": 9,
+      "n_vertices": 14,
+      "signed_volume": 4798.563132515653,
+      "n_edges_shared": 21,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 6,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_123/building.city.json"
+    },
+    {
+      "building_id": 124,
+      "building_name": "NL.IMBAG.Pand.0363100012236744",
+      "type": "gable",
+      "n_primitives_assigned": 11439,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 6,
+      "n_vertices": 8,
+      "signed_volume": 155.15235845114026,
+      "n_edges_shared": 12,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 3,
+        "WallSurface": 3,
+        "GroundSurface": 0
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_124/building.city.json"
+    },
+    {
+      "building_id": 125,
+      "building_name": "NL.IMBAG.Pand.0363100012236827",
+      "type": "complex",
+      "n_primitives_assigned": 16117,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 5,
+      "n_vertices": 6,
+      "signed_volume": 83.48207945230388,
+      "n_edges_shared": 9,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 3,
+        "WallSurface": 1,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_125/building.city.json"
+    },
+    {
+      "building_id": 126,
+      "building_name": "NL.IMBAG.Pand.0363100012237109",
+      "type": "complex",
+      "n_primitives_assigned": 3925,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 7,
+      "n_vertices": 10,
+      "signed_volume": 5461.842666392989,
+      "n_edges_shared": 15,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 4,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_126/building.city.json"
+    },
+    {
+      "building_id": 127,
+      "building_name": "NL.IMBAG.Pand.0363100012237184",
+      "type": "hip",
+      "n_primitives_assigned": 4722,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 8,
+      "n_vertices": 12,
+      "signed_volume": 279.31934984008797,
+      "n_edges_shared": 18,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 2,
+        "WallSurface": 5,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_127/building.city.json"
+    },
+    {
+      "building_id": 128,
+      "building_name": "NL.IMBAG.Pand.0363100012237295",
+      "type": "complex",
+      "n_primitives_assigned": 6029,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 7,
+      "n_vertices": 10,
+      "signed_volume": 2669.449233036736,
+      "n_edges_shared": 15,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 3,
+        "WallSurface": 3,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_128/building.city.json"
+    },
+    {
+      "building_id": 129,
+      "building_name": "NL.IMBAG.Pand.0363100012237310",
+      "type": "gable",
+      "n_primitives_assigned": 14057,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 6,
+      "n_vertices": 8,
+      "signed_volume": 2175.810917915689,
+      "n_edges_shared": 12,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 3,
+        "WallSurface": 2,
+        "GroundSurface": 1
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_129/building.city.json"
+    },
+    {
+      "building_id": 130,
+      "building_name": "NL.IMBAG.Pand.0363100012237312",
+      "type": "gable",
+      "n_primitives_assigned": 2116,
+      "stage3_success": true,
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "n_surfaces": 7,
+      "n_vertices": 10,
+      "signed_volume": 12.407445035334908,
+      "n_edges_shared": 15,
+      "n_edges_boundary": 0,
+      "n_edges_nonmanifold": 0,
+      "surface_types": {
+        "RoofSurface": 3,
+        "WallSurface": 4,
+        "GroundSurface": 0
+      },
+      "cityjson_path": "results/phase2_ablation_citygml/baseline/stage3/building_130/building.city.json"
+    }
+  ]
+}
