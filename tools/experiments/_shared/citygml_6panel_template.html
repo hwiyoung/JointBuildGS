@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title><!-- TITLE --></title>
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #050505; --panel: #070707; --ui: rgba(0, 0, 0, 0.88);
+    --border: rgba(255, 255, 255, 0.16); --text: #f2f2f2;
+    --muted: #aab2bb; --accent: #68d4ff;
+  }
+  html, body { width: 100%; height: 100%; margin: 0; overflow: hidden;
+               background: var(--bg); color: var(--text);
+               font-family: -apple-system, BlinkMacSystemFont, monospace; }
+  #grid { width: 100vw; height: 100vh; display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          grid-template-rows: 1fr 1fr; gap: 2px; background: #000; }
+  .panel { position: relative; overflow: hidden; background: var(--panel); }
+  .panel canvas { display: block; width: 100%; height: 100%; }
+  .label { position: absolute; top: 8px; left: 8px; z-index: 20;
+           padding: 4px 10px; font-size: 13px; font-weight: 600;
+           background: rgba(0, 0, 0, 0.72); border-radius: 3px; }
+  .label.gt { background: rgba(56, 161, 105, 0.85); }
+  .label.mini { background: rgba(132, 90, 223, 0.85); }
+  .stats { position: absolute; top: 36px; left: 8px; z-index: 20;
+           padding: 3px 7px; color: var(--muted); font-size: 10px;
+           background: rgba(0, 0, 0, 0.72); border-radius: 3px; }
+  #toolbar { position: fixed; left: 50%; bottom: 10px; z-index: 30;
+             transform: translateX(-50%); display: flex; gap: 12px;
+             padding: 10px 14px; background: var(--ui);
+             border: 1px solid var(--border); border-radius: 7px;
+             font-size: 13px; }
+  #toolbar label { display: flex; align-items: center; gap: 6px; color: var(--muted); }
+  #toolbar button { padding: 4px 10px; background: #1f2937; color: #fff;
+                    border: 1px solid #374151; border-radius: 4px; cursor: pointer; }
+  .back { position: fixed; left: 10px; top: 10px; z-index: 30;
+          padding: 6px 12px; font-size: 12px; color: var(--muted);
+          background: var(--ui); border: 1px solid var(--border);
+          border-radius: 5px; text-decoration: none; }
+  .back:hover { color: var(--accent); }
+  #status { position: fixed; right: 10px; top: 10px; z-index: 30;
+            padding: 4px 10px; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+<a class="back" href="../../">← Dashboard</a>
+<div id="status">loading</div>
+
+<div id="grid">
+  <div class="panel"><div class="label gt">GT (scene.obj)</div><div class="stats" id="sg"></div><div id="vg" style="width:100%;height:100%"></div></div>
+  <div class="panel"><div class="label">Baseline</div><div class="stats" id="s0"></div><div id="v0" style="width:100%;height:100%"></div></div>
+  <div class="panel"><div class="label">Mutual</div><div class="stats" id="s1"></div><div id="v1" style="width:100%;height:100%"></div></div>
+  <div class="panel"><div class="label mini">2D Minimap (top-down)</div><div class="stats" id="sm"></div><div id="vm" style="width:100%;height:100%"></div></div>
+  <div class="panel"><div class="label">Structure</div><div class="stats" id="s2"></div><div id="v2" style="width:100%;height:100%"></div></div>
+  <div class="panel"><div class="label">Both</div><div class="stats" id="s3"></div><div id="v3" style="width:100%;height:100%"></div></div>
+</div>
+
+<div id="toolbar">
+  <label><input type="checkbox" id="syncChk" checked> Sync cameras (GT + 4 conds)</label>
+  <button id="resetBtn">Reset view</button>
+  <span style="color:#6e7681">drag: orbit · right-drag: pan · scroll: zoom</span>
+</div>
+
+<script type="importmap">
+{ "imports": { "three": "../../_shared/build/three.module.min.js" } }
+</script>
+<script type="module">
+import * as THREE from 'three';
+
+async function loadPLY(url) {
+  const resp = await fetch(url);
+  if (!resp.ok) throw new Error(`${resp.status} ${url}`);
+  const buf = await resp.arrayBuffer();
+  const bytes = new Uint8Array(buf);
+  const decoder = new TextDecoder();
+  let hdrEnd = 0;
+  for (let i = 0; i < bytes.length - 10; i++) {
+    if (bytes[i] === 0x65 && decoder.decode(bytes.slice(i, i+11)) === 'end_header\n') {
+      hdrEnd = i + 11; break;
+    }
+  }
+  const header = decoder.decode(bytes.slice(0, hdrEnd));
+  let nVert = 0, nFace = 0;
+  const mV = header.match(/element vertex (\d+)/); if (mV) nVert = parseInt(mV[1]);
+  const mF = header.match(/element face (\d+)/); if (mF) nFace = parseInt(mF[1]);
+  const hasColorOnFace = /property uchar (red|green|blue)/.test(header.split('element face')[1] || '');
+
+  const geom = new THREE.BufferGeometry();
+  const rest = decoder.decode(bytes.slice(hdrEnd));
+  const lines = rest.split(/\r?\n/);
+  const positions = new Float32Array(nVert * 3);
+  for (let i = 0; i < nVert; i++) {
+    const parts = lines[i].split(/\s+/);
+    positions[3*i] = parseFloat(parts[0]);
+    positions[3*i+1] = parseFloat(parts[1]);
+    positions[3*i+2] = parseFloat(parts[2]);
+  }
+  geom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const indices = [];
+  const faceColors = hasColorOnFace ? new Float32Array(nVert * 3) : null;
+  const counts = hasColorOnFace ? new Uint32Array(nVert) : null;
+  for (let i = 0; i < nFace; i++) {
+    const parts = lines[nVert + i].split(/\s+/);
+    const cnt = parseInt(parts[0]);
+    const fi = [];
+    for (let j = 0; j < cnt; j++) fi.push(parseInt(parts[1 + j]));
+    for (let j = 1; j < cnt - 1; j++) {
+      indices.push(fi[0], fi[j], fi[j+1]);
+    }
+    if (hasColorOnFace) {
+      const r = parseInt(parts[1 + cnt]) / 255;
+      const g = parseInt(parts[1 + cnt + 1]) / 255;
+      const b = parseInt(parts[1 + cnt + 2]) / 255;
+      for (const v of fi) {
+        faceColors[3*v] += r; faceColors[3*v+1] += g; faceColors[3*v+2] += b;
+        counts[v]++;
+      }
+    }
+  }
+  geom.setIndex(indices);
+  if (hasColorOnFace) {
+    for (let i = 0; i < nVert; i++) {
+      if (counts[i] > 0) {
+        faceColors[3*i] /= counts[i];
+        faceColors[3*i+1] /= counts[i];
+        faceColors[3*i+2] /= counts[i];
+      } else {
+        faceColors[3*i] = faceColors[3*i+1] = faceColors[3*i+2] = 0.6;
+      }
+    }
+    geom.setAttribute('color', new THREE.BufferAttribute(faceColors, 3));
+  }
+  geom.computeVertexNormals();
+  return geom;
+}
+
+// Minimal PLY parser for scene.obj → obj format
+async function loadOBJ(url) {
+  const text = await (await fetch(url)).text();
+  const verts = [];
+  const faceTriangles = [];
+  const faceMaterials = [];
+  const matColors = {
+    Roof: [0xC5/255, 0x30/255, 0x30/255],
+    Wall: [0x2C/255, 0x55/255, 0x82/255],
+    Ground: [0x71/255, 0x80/255, 0x96/255],
+    Terrain: [0xA0/255, 0xAE/255, 0xC0/255],
+  };
+  let curMat = "Wall";
+  for (const ln of text.split(/\r?\n/)) {
+    const tok = ln.trim().split(/\s+/);
+    if (tok[0] === "v") {
+      verts.push([parseFloat(tok[1]), parseFloat(tok[2]), parseFloat(tok[3])]);
+    } else if (tok[0] === "usemtl") {
+      curMat = tok[1];
+    } else if (tok[0] === "f") {
+      const fi = tok.slice(1).map(t => parseInt(t.split("/")[0]) - 1);
+      for (let j = 1; j < fi.length - 1; j++) {
+        faceTriangles.push([fi[0], fi[j], fi[j+1]]);
+        faceMaterials.push(curMat);
+      }
+    }
+  }
+  const geom = new THREE.BufferGeometry();
+  const positions = new Float32Array(verts.length * 3);
+  for (let i = 0; i < verts.length; i++) {
+    positions[3*i] = verts[i][0];
+    positions[3*i+1] = verts[i][1];
+    positions[3*i+2] = verts[i][2];
+  }
+  geom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const indices = [];
+  const colors = new Float32Array(verts.length * 3);
+  const cnts = new Uint32Array(verts.length);
+  for (let i = 0; i < faceTriangles.length; i++) {
+    const [a, b, c] = faceTriangles[i];
+    indices.push(a, b, c);
+    const col = matColors[faceMaterials[i]] || [0.6, 0.6, 0.6];
+    for (const v of [a, b, c]) {
+      colors[3*v] += col[0]; colors[3*v+1] += col[1]; colors[3*v+2] += col[2];
+      cnts[v]++;
+    }
+  }
+  for (let i = 0; i < verts.length; i++) {
+    if (cnts[i] > 0) {
+      colors[3*i] /= cnts[i];
+      colors[3*i+1] /= cnts[i];
+      colors[3*i+2] /= cnts[i];
+    }
+  }
+  geom.setIndex(indices);
+  geom.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+  geom.computeVertexNormals();
+  return geom;
+}
+
+function makeOrbit(camera, domEl, target) {
+  const state = { phi: Math.PI / 3, theta: Math.PI / 4, r: 150, target };
+  function updateCam() {
+    camera.position.x = target.x + state.r * Math.sin(state.phi) * Math.cos(state.theta);
+    camera.position.y = target.y + state.r * Math.cos(state.phi);
+    camera.position.z = target.z + state.r * Math.sin(state.phi) * Math.sin(state.theta);
+    camera.lookAt(target);
+  }
+  updateCam();
+  let dragging = false, panning = false, lastX = 0, lastY = 0;
+  domEl.addEventListener('mousedown', e => {
+    if (e.button === 0) dragging = true;
+    else if (e.button === 2) panning = true;
+    lastX = e.clientX; lastY = e.clientY;
+  });
+  window.addEventListener('mouseup', () => { dragging = false; panning = false; });
+  window.addEventListener('mousemove', e => {
+    if (!dragging && !panning) return;
+    const dx = e.clientX - lastX, dy = e.clientY - lastY;
+    lastX = e.clientX; lastY = e.clientY;
+    if (dragging) {
+      state.theta -= dx * 0.005;
+      state.phi = Math.max(0.05, Math.min(Math.PI - 0.05, state.phi - dy * 0.005));
+    } else if (panning) {
+      const fwd = new THREE.Vector3().subVectors(target, camera.position).normalize();
+      const right = new THREE.Vector3().crossVectors(fwd, camera.up).normalize();
+      const up = camera.up.clone();
+      const scale = state.r * 0.002;
+      target.addScaledVector(right, -dx * scale);
+      target.addScaledVector(up, dy * scale);
+    }
+    updateCam();
+  });
+  domEl.addEventListener('wheel', e => {
+    e.preventDefault();
+    state.r *= Math.pow(1.0015, e.deltaY);
+    state.r = Math.max(5, Math.min(2000, state.r));
+    updateCam();
+  }, { passive: false });
+  domEl.addEventListener('contextmenu', e => e.preventDefault());
+  return { state, update: updateCam };
+}
+
+async function setupMeshPanel(rootId, statsId, plyUrl, isGT = false) {
+  const el = document.getElementById(rootId);
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x050505);
+  const light1 = new THREE.DirectionalLight(0xffffff, 1.5); light1.position.set(10, 15, 10); scene.add(light1);
+  const light2 = new THREE.DirectionalLight(0xffffff, 0.4); light2.position.set(-10, 5, -10); scene.add(light2);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.35));
+  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 5000);
+  camera.up.set(0, -1, 0);
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  el.appendChild(renderer.domElement);
+  const target = new THREE.Vector3(0, -8, 0);
+  const orbit = makeOrbit(camera, renderer.domElement, target);
+
+  try {
+    const geom = isGT ? await loadOBJ(plyUrl) : await loadPLY(plyUrl);
+    const hasCol = geom.getAttribute('color') != null;
+    const mat = new THREE.MeshStandardMaterial({
+      vertexColors: hasCol,
+      color: hasCol ? 0xffffff : 0x888888,
+      flatShading: true, side: THREE.DoubleSide,
+    });
+    const mesh = new THREE.Mesh(geom, mat);
+    scene.add(mesh);
+    geom.computeBoundingBox();
+    const bb = geom.boundingBox;
+    const cx = (bb.min.x + bb.max.x)/2, cy = (bb.min.y + bb.max.y)/2, cz = (bb.min.z + bb.max.z)/2;
+    target.set(cx, cy, cz);
+    const span = Math.max(bb.max.x - bb.min.x, bb.max.z - bb.min.z);
+    orbit.state.r = span * 1.3;
+    orbit.update();
+    document.getElementById(statsId).textContent = `${geom.attributes.position.count.toLocaleString()} verts`;
+  } catch (e) {
+    document.getElementById(statsId).textContent = 'load fail';
+    console.error(plyUrl, e);
+  }
+
+  function resize() {
+    const rect = el.getBoundingClientRect();
+    renderer.setSize(rect.width, rect.height, false);
+    camera.aspect = rect.width / rect.height;
+    camera.updateProjectionMatrix();
+  }
+  new ResizeObserver(resize).observe(el); resize();
+
+  function loop() {
+    renderer.render(scene, camera);
+    requestAnimationFrame(loop);
+  }
+  loop();
+  return { orbit, camera, resize };
+}
+
+// Minimap: orthographic top-down of GT + camera arrow
+async function setupMinimap(rootId, statsId, gtUrl, otherPanels) {
+  const el = document.getElementById(rootId);
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x0a0f1a);
+  scene.add(new THREE.AmbientLight(0xffffff, 1.0));
+  const camera = new THREE.OrthographicCamera(-150, 150, 150, -150, 0.1, 1000);
+  camera.position.set(0, 200, 0);
+  camera.up.set(0, 0, 1);
+  camera.lookAt(0, 0, 0);
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  el.appendChild(renderer.domElement);
+
+  // Load GT mesh flat-shaded
+  try {
+    const geom = await loadOBJ(gtUrl);
+    const mat = new THREE.MeshBasicMaterial({
+      vertexColors: true, side: THREE.DoubleSide,
+    });
+    const mesh = new THREE.Mesh(geom, mat);
+    scene.add(mesh);
+    geom.computeBoundingBox();
+    const bb = geom.boundingBox;
+    const span = Math.max(bb.max.x - bb.min.x, bb.max.z - bb.min.z) / 2 * 1.1;
+    camera.left = -span; camera.right = span; camera.top = span; camera.bottom = -span;
+    camera.position.set((bb.min.x + bb.max.x)/2, 200, (bb.min.z + bb.max.z)/2);
+    camera.lookAt((bb.min.x + bb.max.x)/2, 0, (bb.min.z + bb.max.z)/2);
+    camera.updateProjectionMatrix();
+    document.getElementById(statsId).textContent = 'minimap ready';
+  } catch (e) {
+    document.getElementById(statsId).textContent = 'load fail';
+    console.error(e);
+  }
+
+  // Camera position marker (small yellow sphere + direction line)
+  const markerGroup = new THREE.Group();
+  const markerSphere = new THREE.Mesh(
+    new THREE.SphereGeometry(3, 16, 16),
+    new THREE.MeshBasicMaterial({ color: 0xffcc00 })
+  );
+  markerGroup.add(markerSphere);
+  const lineMat = new THREE.LineBasicMaterial({ color: 0xffcc00 });
+  const lineGeom = new THREE.BufferGeometry().setFromPoints(
+    [new THREE.Vector3(0, 0, 0), new THREE.Vector3(15, 0, 0)]
+  );
+  const line = new THREE.Line(lineGeom, lineMat);
+  markerGroup.add(line);
+  scene.add(markerGroup);
+
+  function resize() {
+    const rect = el.getBoundingClientRect();
+    renderer.setSize(rect.width, rect.height, false);
+  }
+  new ResizeObserver(resize).observe(el); resize();
+
+  function loop() {
+    // Follow primary panel's camera
+    if (otherPanels[0] && otherPanels[0].orbit) {
+      const st = otherPanels[0].orbit.state;
+      markerSphere.position.set(
+        st.target.x + st.r * Math.sin(st.phi) * Math.cos(st.theta),
+        0.5,  // slight elevation for visibility
+        st.target.z + st.r * Math.sin(st.phi) * Math.sin(st.theta)
+      );
+      // Direction line
+      const dir = new THREE.Vector3(-Math.cos(st.theta), 0, -Math.sin(st.theta));
+      line.geometry.setFromPoints([
+        markerSphere.position.clone(),
+        markerSphere.position.clone().addScaledVector(dir, 15),
+      ]);
+    }
+    renderer.render(scene, camera);
+    requestAnimationFrame(loop);
+  }
+  loop();
+  return { camera, resize };
+}
+
+const statusEl = document.getElementById('status');
+const syncChk = document.getElementById('syncChk');
+const resetBtn = document.getElementById('resetBtn');
+
+(async () => {
+  statusEl.textContent = 'loading 1 GT + 4 conditions…';
+  const conds = await Promise.all([
+    setupMeshPanel('vg', 'sg', '../../../../results/phase2_synthesis/scene.obj', true),
+    setupMeshPanel('v0', 's0', 'assets/baseline.ply'),
+    setupMeshPanel('v1', 's1', 'assets/mutual.ply'),
+    setupMeshPanel('v2', 's2', 'assets/structure.ply'),
+    setupMeshPanel('v3', 's3', 'assets/both.ply'),
+  ]);
+  await setupMinimap('vm', 'sm', '../../../../results/phase2_synthesis/scene.obj', conds);
+  statusEl.textContent = 'ready';
+
+  // Sync cameras (GT is primary)
+  const base = conds[0];
+  window.addEventListener('mousemove', () => {
+    if (!syncChk.checked) return;
+    for (let i = 1; i < conds.length; i++) {
+      if (!conds[i]) continue;
+      conds[i].orbit.state.phi = base.orbit.state.phi;
+      conds[i].orbit.state.theta = base.orbit.state.theta;
+      conds[i].orbit.state.r = base.orbit.state.r;
+      conds[i].orbit.state.target.copy(base.orbit.state.target);
+      conds[i].orbit.update();
+    }
+  });
+  resetBtn.addEventListener('click', () => {
+    for (const p of conds) if (p) {
+      p.orbit.state.phi = Math.PI / 3;
+      p.orbit.state.theta = Math.PI / 4;
+      p.orbit.update();
+    }
+  });
+})();
+</script>
+</body>
+</html>

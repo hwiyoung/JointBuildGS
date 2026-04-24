@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>JointBuildGS Phase 1 - 2DGS Splat Viewer</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #050505;
+    --panel: #070707;
+    --ui: rgba(0, 0, 0, 0.88);
+    --border: rgba(255, 255, 255, 0.16);
+    --text: #f2f2f2;
+    --muted: #aab2bb;
+    --accent: #68d4ff;
+  }
+  html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", monospace;
+  }
+  #grid {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 2px;
+    background: #000;
+  }
+  .panel {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    background: var(--panel);
+  }
+  .label, .stats {
+    position: absolute;
+    left: 8px;
+    z-index: 20;
+    pointer-events: none;
+    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.72);
+    text-shadow: 0 1px 1px #000;
+  }
+  .label {
+    top: 8px;
+    padding: 4px 10px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .stats {
+    top: 36px;
+    padding: 3px 7px;
+    color: var(--muted);
+    font-size: 10px;
+  }
+  .viewer-root {
+    position: absolute;
+    inset: 0;
+  }
+  .viewer-root canvas {
+    display: block;
+  }
+  #toolbar {
+    position: fixed;
+    left: 50%;
+    bottom: 10px;
+    z-index: 30;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: calc(100vw - 20px);
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--ui);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  #toolbar label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  button, select, a.nav-link {
+    height: 28px;
+    box-sizing: border-box;
+    border: 1px solid #555;
+    border-radius: 3px;
+    background: #252525;
+    color: var(--text);
+    font: inherit;
+  }
+  button, a.nav-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 10px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  button:hover, a.nav-link:hover {
+    background: #333;
+  }
+  .source {
+    color: var(--muted);
+  }
+  .source code {
+    color: var(--accent);
+  }
+  #status {
+    position: fixed;
+    top: 8px;
+    left: 50%;
+    z-index: 40;
+    transform: translateX(-50%);
+    max-width: calc(100vw - 20px);
+    padding: 5px 10px;
+    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.82);
+    color: #fff2a8;
+    font-size: 12px;
+    pointer-events: none;
+  }
+  @media (max-width: 980px) {
+    #toolbar {
+      left: 10px;
+      right: 10px;
+      transform: none;
+      justify-content: flex-start;
+      overflow-x: auto;
+    }
+  }
+</style>
+</head>
+<body>
+<div id="status">Loading 2DGS splats...</div>
+<div id="grid">
+  <div class="panel"><div class="viewer-root" id="v0"></div><div class="label">Baseline (Step 1-3)</div><div class="stats" id="s0">loading</div></div>
+  <div class="panel"><div class="viewer-root" id="v1"></div><div class="label">Mutual (Step 1-4)</div><div class="stats" id="s1">loading</div></div>
+  <div class="panel"><div class="viewer-root" id="v2"></div><div class="label">Structure (Step 1-5)</div><div class="stats" id="s2">loading</div></div>
+  <div class="panel"><div class="viewer-root" id="v3"></div><div class="label">Both (Step 1-6)</div><div class="stats" id="s3">loading</div></div>
+</div>
+<div id="toolbar">
+  <label><input type="checkbox" id="syncChk" checked> Sync camera</label>
+  <button id="resetBtn">Reset views</button>
+  <label>LOD
+    <select id="lodSelect">
+      <option value="dense" selected>dense 1.2M</option>
+      <option value="light">light 0.23M</option>
+    </select>
+  </label>
+  <label>Quality
+    <select id="qualitySelect">
+      <option value="balanced">balanced</option>
+      <option value="detail">detail</option>
+      <option value="fast" selected>fast</option>
+    </select>
+  </label>
+  <label>View
+    <select id="viewSelect">
+      <option value="rgb" selected>RGB</option>
+      <option value="normal">Normal</option>
+      <option value="semantic">Semantic</option>
+    </select>
+  </label>
+  <a class="nav-link" href="../../_shared/surfel_inspector.html?v=surfel-debug">Surfel debug</a>
+  <a class="nav-link" href="../../_shared/raster_viewer.html?v=raster-final">Static raster</a>
+  <span class="source">Source: <code id="sourceLabel">assets/ksplat_2dgs_dense/*.ksplat</code></span>
+</div>
+
+<script type="importmap">
+{ "imports": { "three": "../../_shared/build/three.module.min.js" } }
+</script>
+<script type="module">
+import * as GaussianSplats3D from '../../_shared/build/gaussian-splats-3d.module.min.js';
+
+const statusEl = document.getElementById('status');
+const syncChk = document.getElementById('syncChk');
+const resetBtn = document.getElementById('resetBtn');
+const lodSelect = document.getElementById('lodSelect');
+const qualitySelect = document.getElementById('qualitySelect');
+const viewSelect = document.getElementById('viewSelect');
+const sourceLabel = document.getElementById('sourceLabel');
+
+const lods = {
+  dense: {
+    label: 'dense',
+    dirs: {
+      rgb: 'assets/ksplat_rgb',
+      normal: 'assets/ksplat_normal',
+      semantic: 'assets/ksplat_semantic',
+    },
+  },
+};
+
+const viewLabels = {
+  rgb: 'RGB',
+  normal: 'normal',
+  semantic: 'semantic',
+};
+
+const assets = [
+  { root: 'v0', stats: 's0', file: 'baseline.ksplat', label: 'Baseline' },
+  { root: 'v1', stats: 's1', file: 'mutual.ksplat', label: 'Mutual' },
+  { root: 'v2', stats: 's2', file: 'structure.ksplat', label: 'Structure' },
+  { root: 'v3', stats: 's3', file: 'both.ksplat', label: 'Both' },
+];
+
+const initialCamera = {
+  up: [0, 0, 1],
+  position: [26, 26, 16],
+  lookAt: [0, 0, -5],
+};
+
+const quality = {
+  fast: { sh: 0, kernel: 0.3, maxSize: 768 },
+  balanced: { sh: 1, kernel: 0.3, maxSize: 1024 },
+  detail: { sh: 2, kernel: 0.2, maxSize: 1400 },
+};
+
+const panels = [];
+let loadRun = 0;
+
+function setStatus(text, muted = false) {
+  statusEl.textContent = text;
+  statusEl.style.opacity = muted ? 0.35 : 1;
+}
+
+function viewerOptions(rootElement, q) {
+  return {
+    rootElement,
+    cameraUp: initialCamera.up,
+    initialCameraPosition: initialCamera.position,
+    initialCameraLookAt: initialCamera.lookAt,
+    splatRenderMode: GaussianSplats3D.SplatRenderMode.TwoD,
+    sphericalHarmonicsDegree: q.sh,
+    kernel2DSize: q.kernel,
+    maxScreenSpaceSplatSize: q.maxSize,
+    sharedMemoryForWorkers: false,
+    enableSIMDInSort: false,
+    gpuAcceleratedSort: false,
+    integerBasedSort: false,
+    ignoreDevicePixelRatio: true,
+    sceneRevealMode: GaussianSplats3D.SceneRevealMode.Instant,
+    renderMode: GaussianSplats3D.RenderMode.Always,
+    logLevel: GaussianSplats3D.LogLevel.None,
+  };
+}
+
+function sceneOptions() {
+  return {
+    showLoadingUI: false,
+    progressiveLoad: false,
+    splatAlphaRemovalThreshold: 1,
+    sceneRevealMode: GaussianSplats3D.SceneRevealMode.Instant,
+  };
+}
+
+async function disposePanels() {
+  const disposals = panels.splice(0).map(async (panel) => {
+    try {
+      if (panel.viewer) await panel.viewer.dispose();
+    } catch (error) {
+      console.warn('dispose failed', error);
+    }
+    panel.root.innerHTML = '';
+  });
+  await Promise.all(disposals);
+}
+
+function captureCameraStates() {
+  return panels.map((panel) => {
+    const viewer = panel.viewer;
+    if (!viewer || !viewer.camera) return null;
+    return {
+      position: viewer.camera.position.toArray(),
+      quaternion: viewer.camera.quaternion.toArray(),
+      up: viewer.camera.up.toArray(),
+      target: viewer.controls ? viewer.controls.target.toArray() : initialCamera.lookAt.slice(),
+    };
+  });
+}
+
+function applyCameraState(viewer, state) {
+  if (!viewer || !viewer.camera || !state) return;
+  viewer.camera.position.fromArray(state.position);
+  viewer.camera.quaternion.fromArray(state.quaternion);
+  viewer.camera.up.fromArray(state.up);
+  if (viewer.controls && state.target) {
+    viewer.controls.target.fromArray(state.target);
+    viewer.controls.update();
+  }
+  viewer.camera.updateMatrixWorld();
+  viewer.forceRenderNextFrame();
+}
+
+async function loadAll() {
+  const run = ++loadRun;
+  const cameraStates = captureCameraStates();
+  const syncedCameraState = syncChk.checked ? (cameraStates[0] || cameraStates.find(Boolean)) : null;
+  setStatus('Loading 2DGS splats...');
+  await disposePanels();
+  const q = quality[qualitySelect.value];
+  const lod = lods[lodSelect.value];
+  const viewMode = viewSelect.value;
+  const sourceDir = lod.dirs[viewMode];
+  sourceLabel.textContent = `${sourceDir}/*.ksplat`;
+
+  for (const [index, asset] of assets.entries()) {
+    if (run !== loadRun) return;
+    const root = document.getElementById(asset.root);
+    const stats = document.getElementById(asset.stats);
+    stats.textContent = 'loading ksplat';
+    setStatus(`Loading ${asset.label} (${index + 1}/4)...`);
+
+    const viewer = new GaussianSplats3D.Viewer(viewerOptions(root, q));
+    panels.push({ viewer, root, stats, asset });
+    await viewer.addSplatScene(`${sourceDir}/${asset.file}`, sceneOptions());
+    applyCameraState(viewer, syncedCameraState || cameraStates[index]);
+    stats.textContent = `${viewLabels[viewMode]} - ${lod.label}`;
+    viewer.start();
+  }
+
+  syncFromPrimary(true);
+  setStatus('Loaded 2DGS splat renderer - drag the first panel, synced camera updates all panels.', true);
+}
+
+function copyControls(source, target) {
+  if (!source || !target) return;
+  if (source.controls && target.controls) {
+    target.controls.target.copy(source.controls.target);
+    target.controls.update();
+  }
+}
+
+function syncFromPrimary(force = false) {
+  if (!syncChk.checked && !force) return;
+  if (panels.length < 2) return;
+  const primary = panels[0].viewer;
+  if (!primary || !primary.camera) return;
+  for (let i = 1; i < panels.length; i++) {
+    const viewer = panels[i].viewer;
+    if (!viewer || !viewer.camera) continue;
+    viewer.camera.position.copy(primary.camera.position);
+    viewer.camera.quaternion.copy(primary.camera.quaternion);
+    viewer.camera.up.copy(primary.camera.up);
+    copyControls(primary, viewer);
+    viewer.forceRenderNextFrame();
+  }
+}
+
+function resetViews() {
+  for (const panel of panels) {
+    const camera = panel.viewer.camera;
+    camera.position.fromArray(initialCamera.position);
+    camera.up.fromArray(initialCamera.up);
+    camera.lookAt(...initialCamera.lookAt);
+    if (panel.viewer.controls) {
+      panel.viewer.controls.target.set(...initialCamera.lookAt);
+      panel.viewer.controls.update();
+    }
+    panel.viewer.forceRenderNextFrame();
+  }
+}
+
+function animate() {
+  syncFromPrimary(false);
+  requestAnimationFrame(animate);
+}
+
+resetBtn.addEventListener('click', resetViews);
+lodSelect.addEventListener('change', loadAll);
+qualitySelect.addEventListener('change', loadAll);
+viewSelect.addEventListener('change', loadAll);
+window.addEventListener('keydown', (event) => {
+  if (event.key === 'r' || event.key === 'R') resetViews();
+});
+
+loadAll().catch((error) => {
+  console.error(error);
+  setStatus(`Load error: ${error.message || error}`);
+});
+requestAnimationFrame(animate);
+</script>
+</body>
+</html>

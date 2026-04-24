@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Phase 2 Step 2-2 / Stage 2 GS (GT + 4 conds + minimap)</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #050505; --panel: #070707; --ui: rgba(0, 0, 0, 0.88);
+    --border: rgba(255, 255, 255, 0.16); --text: #f2f2f2;
+    --muted: #aab2bb; --accent: #68d4ff;
+  }
+  html, body { width: 100%; height: 100%; margin: 0; overflow: hidden;
+               background: var(--bg); color: var(--text);
+               font-family: -apple-system, BlinkMacSystemFont, monospace; }
+  #grid { width: 100vw; height: 100vh; display: grid;
+          grid-template-columns: repeat(3, minmax(0,1fr));
+          grid-template-rows: minmax(0,1fr) minmax(0,1fr);
+          gap: 2px; background: #000; }
+  .panel { position: relative; min-width: 0; min-height: 0;
+           overflow: hidden; background: var(--panel); }
+  .panel canvas { display: block; width: 100%; height: 100%; }
+  .viewer-root { position: absolute; inset: 0; }
+  .photo-root { position: absolute; inset: 0; background: #000; }
+  .photo-root img { position: absolute; inset: 0; width: 100%; height: 100%;
+                    object-fit: contain; image-rendering: auto; }
+  .label { position: absolute; top: 8px; left: 8px; z-index: 20;
+           padding: 4px 10px; font-size: 13px; font-weight: 600;
+           background: rgba(0, 0, 0, 0.72); border-radius: 3px;
+           pointer-events: none; }
+  .label.gt { background: rgba(56, 161, 105, 0.85); }
+  .label.photo { background: rgba(132, 90, 223, 0.85); }
+  .stats { position: absolute; top: 36px; left: 8px; z-index: 20;
+           padding: 3px 7px; color: var(--muted); font-size: 10px;
+           background: rgba(0, 0, 0, 0.72); border-radius: 3px;
+           pointer-events: none; }
+  #toolbar { position: fixed; left: 50%; bottom: 10px; z-index: 30;
+             transform: translateX(-50%); display: flex; gap: 12px;
+             align-items: center; padding: 10px 14px; background: var(--ui);
+             border: 1px solid var(--border); border-radius: 6px; font-size: 12px; }
+  #toolbar label { display: flex; align-items: center; gap: 6px; }
+  #toolbar button, #toolbar select {
+    height: 26px; padding: 0 10px; background: #252525;
+    color: #fff; border: 1px solid #555; border-radius: 3px; font: inherit; }
+  .back { position: fixed; left: 10px; top: 10px; z-index: 30;
+          padding: 6px 12px; font-size: 12px; color: var(--muted);
+          background: var(--ui); border: 1px solid var(--border);
+          border-radius: 5px; text-decoration: none; }
+  .back:hover { color: var(--accent); }
+  #status { position: fixed; top: 10px; left: 50%; z-index: 40;
+            transform: translateX(-50%); padding: 4px 10px;
+            background: rgba(0, 0, 0, 0.82); color: #fff2a8;
+            border-radius: 3px; font-size: 12px; pointer-events: none; }
+  #debug { position: fixed !important; right: 10px; top: 40px;
+           z-index: 9999 !important; padding: 6px 10px;
+           background: #d13b3b !important; color: #fff !important;
+           font-family: monospace; font-size: 12px; border-radius: 3px;
+           min-width: 300px; pointer-events: none; white-space: pre; }
+</style>
+</head>
+<body>
+<a class="back" href="../../">← Dashboard</a>
+<div id="status">loading</div>
+<div id="debug">init</div>
+<script>
+// catch any uncaught JS error + dump to debug div (before any module loads)
+window.addEventListener('error', (ev) => {
+  const d = document.getElementById('debug');
+  if (d) d.textContent = 'UNCAUGHT: ' + (ev.message || ev.error) + '\n' + (ev.filename || '?') + ':' + (ev.lineno || '?');
+});
+window.addEventListener('unhandledrejection', (ev) => {
+  const d = document.getElementById('debug');
+  if (d) d.textContent = 'UNHANDLED REJECT: ' + (ev.reason && ev.reason.message ? ev.reason.message : ev.reason);
+});
+function dbg(msg) {
+  const d = document.getElementById('debug');
+  if (d) d.textContent = msg;
+}
+</script>
+
+<div id="grid">
+  <div class="panel"><div class="viewer-root" id="vg"></div><div class="label gt">GT (scene.obj)</div><div class="stats" id="sg"></div></div>
+  <div class="panel"><div class="viewer-root" id="v0"></div><div class="label">Baseline</div><div class="stats" id="s0">loading</div></div>
+  <div class="panel"><div class="viewer-root" id="v1"></div><div class="label">Mutual</div><div class="stats" id="s1">loading</div></div>
+  <div class="panel"><div class="photo-root" id="vp"><img id="photoImg" alt="nearest Pix4D photo"></div><div class="label photo">Nearest Pix4D photo</div><div class="stats" id="sp">loading</div></div>
+  <div class="panel"><div class="viewer-root" id="v2"></div><div class="label">Structure</div><div class="stats" id="s2">loading</div></div>
+  <div class="panel"><div class="viewer-root" id="v3"></div><div class="label">Both</div><div class="stats" id="s3">loading</div></div>
+</div>
+
+<div id="toolbar">
+  <label><input type="checkbox" id="syncChk" checked> Sync cameras (drag GT)</label>
+  <button id="resetBtn">Reset</button>
+  <label>View
+    <select id="viewSelect">
+      <option value="rgb" selected>RGB</option>
+      <option value="normal">Normal</option>
+      <option value="semantic">Semantic</option>
+    </select>
+  </label>
+  <label>Quality
+    <select id="qualitySelect">
+      <option value="fast" selected>fast</option>
+      <option value="balanced">balanced</option>
+      <option value="detail">detail</option>
+    </select>
+  </label>
+</div>
+
+<script type="importmap">
+{ "imports": { "three": "../../_shared/build/three.module.min.js" } }
+</script>
+<script type="module">
+import * as THREE from 'three';
+import * as GaussianSplats3D from '../../_shared/build/gaussian-splats-3d.module.min.js';
+
+// ---------- OBJ loader ----------
+async function loadOBJ(url) {
+  const text = await (await fetch(url)).text();
+  const verts = [];
+  const faceTriangles = [];
+  const faceMaterials = [];
+  const matColors = {
+    Roof: [0xC5/255, 0x30/255, 0x30/255],
+    Wall: [0x2C/255, 0x55/255, 0x82/255],
+    Ground: [0x71/255, 0x80/255, 0x96/255],
+    Terrain: [0xA0/255, 0xAE/255, 0xC0/255],
+  };
+  let curMat = "Wall";
+  for (const ln of text.split(/\r?\n/)) {
+    const tok = ln.trim().split(/\s+/);
+    if (tok[0] === "v") verts.push([parseFloat(tok[1]), parseFloat(tok[2]), parseFloat(tok[3])]);
+    else if (tok[0] === "usemtl") curMat = tok[1];
+    else if (tok[0] === "f") {
+      const fi = tok.slice(1).map(t => parseInt(t.split("/")[0]) - 1);
+      for (let j = 1; j < fi.length - 1; j++) {
+        faceTriangles.push([fi[0], fi[j], fi[j+1]]);
+        faceMaterials.push(curMat);
+      }
+    }
+  }
+  const geom = new THREE.BufferGeometry();
+  const positions = new Float32Array(verts.length * 3);
+  for (let i = 0; i < verts.length; i++) {
+    positions[3*i] = verts[i][0]; positions[3*i+1] = verts[i][1]; positions[3*i+2] = verts[i][2];
+  }
+  geom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const indices = [];
+  const colors = new Float32Array(verts.length * 3);
+  const cnts = new Uint32Array(verts.length);
+  for (let i = 0; i < faceTriangles.length; i++) {
+    const [a, b, c] = faceTriangles[i];
+    indices.push(a, b, c);
+    const col = matColors[faceMaterials[i]] || [0.6, 0.6, 0.6];
+    for (const v of [a, b, c]) {
+      colors[3*v] += col[0]; colors[3*v+1] += col[1]; colors[3*v+2] += col[2];
+      cnts[v]++;
+    }
+  }
+  for (let i = 0; i < verts.length; i++) {
+    if (cnts[i] > 0) { colors[3*i] /= cnts[i]; colors[3*i+1] /= cnts[i]; colors[3*i+2] /= cnts[i]; }
+  }
+  geom.setIndex(indices);
+  geom.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+  geom.computeVertexNormals();
+  return geom;
+}
+
+// ---------- GT panel (three.js mesh + GaussianSplats3D.OrbitControls) ----------
+async function setupGTPanel(rootId, statsId, objUrl) {
+  const el = document.getElementById(rootId);
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x050505);
+  const dl1 = new THREE.DirectionalLight(0xffffff, 1.5); dl1.position.set(10, 15, 10); scene.add(dl1);
+  const dl2 = new THREE.DirectionalLight(0xffffff, 0.4); dl2.position.set(-10, 5, -10); scene.add(dl2);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.35));
+  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 5000);
+  camera.up.set(0, -1, 0);  // Y-down (scene.obj ground at Y=0, buildings Y<0)
+  camera.position.set(120, -120, 120);
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  el.appendChild(renderer.domElement);
+
+  // Use same OrbitControls impl as splat viewers (bundled in gaussian-splats-3d module)
+  const controls = new GaussianSplats3D.OrbitControls(camera, renderer.domElement);
+  controls.target.set(0, -8, 0);
+  controls.enableDamping = false;
+  controls.update();
+
+  try {
+    const geom = await loadOBJ(objUrl);
+    const mat = new THREE.MeshStandardMaterial({ vertexColors: true, flatShading: true, side: THREE.DoubleSide });
+    scene.add(new THREE.Mesh(geom, mat));
+    geom.computeBoundingBox();
+    const bb = geom.boundingBox;
+    const cx = (bb.min.x+bb.max.x)/2, cy = (bb.min.y+bb.max.y)/2, cz = (bb.min.z+bb.max.z)/2;
+    controls.target.set(cx, cy, cz);
+    const span = Math.max(bb.max.x - bb.min.x, bb.max.z - bb.min.z);
+    camera.position.set(cx + span*0.6, cy - span*0.8, cz + span*0.6);
+    controls.update();
+    document.getElementById(statsId).textContent = `${geom.attributes.position.count.toLocaleString()} verts`;
+  } catch (e) {
+    document.getElementById(statsId).textContent = 'load fail';
+    console.error(objUrl, e);
+  }
+  function resize() {
+    const rect = el.getBoundingClientRect();
+    renderer.setSize(rect.width, rect.height, false);
+    camera.aspect = rect.width / rect.height;
+    camera.updateProjectionMatrix();
+  }
+  new ResizeObserver(resize).observe(el); resize();
+  (function loop() {
+    controls.update();
+    renderer.render(scene, camera);
+    requestAnimationFrame(loop);
+  })();
+  return { camera, controls, scene, renderer };
+}
+
+// ---------- Nearest-photo panel ----------
+let cams = [];
+let currentPhotoName = null;
+async function setupPhotoPanel(camsUrl) {
+  const sp = document.getElementById('sp');
+  const img = document.getElementById('photoImg');
+  try {
+    const resp = await fetch(camsUrl);
+    if (!resp.ok) throw new Error(`${resp.status} ${camsUrl}`);
+    cams = await resp.json();
+    sp.textContent = `${cams.length} cams indexed`;
+    if (cams.length) {
+      currentPhotoName = cams[0].name;
+      img.src = `../../_shared/phase2_cams/thumbs/${currentPhotoName}.jpg`;
+    }
+  } catch (e) {
+    sp.textContent = `cams.json fail: ${e.message}`;
+    console.error('cams.json fetch failed:', e);
+  }
+}
+const _tmpFwd = new THREE.Vector3();
+function updateNearestPhoto(camPos) {
+  if (!cams.length || !camPos || !gt) return;
+  // GT forward direction = normalize(target - camera.position)
+  _tmpFwd.subVectors(gt.controls.target, camPos).normalize();
+  const fx = _tmpFwd.x, fy = _tmpFwd.y, fz = _tmpFwd.z;
+  // Score = dist + α * (1 - cos(theta)).  α=80m penalty for opposite direction.
+  let best = -1, bestScore = Infinity, bestDist = 0, bestCos = 0;
+  const alpha = 80;
+  for (let i = 0; i < cams.length; i++) {
+    const p = cams[i].pos;
+    const dx = p[0] - camPos.x, dy = p[1] - camPos.y, dz = p[2] - camPos.z;
+    const d = Math.sqrt(dx*dx + dy*dy + dz*dz);
+    const f = cams[i].fwd;
+    const cos = f[0]*fx + f[1]*fy + f[2]*fz;  // [-1, 1]
+    const score = d + alpha * (1 - cos);
+    if (score < bestScore) { bestScore = score; best = i; bestDist = d; bestCos = cos; }
+  }
+  const name = cams[best].name;
+  document.getElementById('sp').textContent = `${name}  d=${bestDist.toFixed(0)}m  cos=${bestCos.toFixed(2)}`;
+  if (name === currentPhotoName) return;
+  currentPhotoName = name;
+  document.getElementById('photoImg').src = `../../_shared/phase2_cams/thumbs/${name}.jpg`;
+}
+
+// ---------- Splat viewers (disable internal controls, direct camera override) ----------
+const quality = {
+  fast: { sh: 0, kernel: 0.3, maxSize: 768 },
+  balanced: { sh: 1, kernel: 0.3, maxSize: 1024 },
+  detail: { sh: 2, kernel: 0.2, maxSize: 1400 },
+};
+const viewDirs = { rgb: 'assets/ksplat_rgb', normal: 'assets/ksplat_normal', semantic: 'assets/ksplat_semantic' };
+const assets = [
+  { root: 'v0', stats: 's0', file: 'baseline.ksplat' },
+  { root: 'v1', stats: 's1', file: 'mutual.ksplat' },
+  { root: 'v2', stats: 's2', file: 'structure.ksplat' },
+  { root: 'v3', stats: 's3', file: 'both.ksplat' },
+];
+const splatPanels = [];
+let loadRun = 0;
+
+function viewerOptions(rootElement, q) {
+  return {
+    rootElement,
+    cameraUp: [0, -1, 0],
+    initialCameraPosition: [100, -120, 100],
+    initialCameraLookAt: [0, -8, 0],
+    splatRenderMode: GaussianSplats3D.SplatRenderMode.TwoD,
+    sphericalHarmonicsDegree: q.sh,
+    kernel2DSize: q.kernel,
+    maxScreenSpaceSplatSize: q.maxSize,
+    sharedMemoryForWorkers: false,
+    enableSIMDInSort: false,
+    gpuAcceleratedSort: false,
+    integerBasedSort: false,
+    ignoreDevicePixelRatio: true,
+    sceneRevealMode: GaussianSplats3D.SceneRevealMode.Instant,
+    renderMode: GaussianSplats3D.RenderMode.Always,
+    logLevel: GaussianSplats3D.LogLevel.None,
+  };
+}
+
+async function disposePanels() {
+  const tasks = splatPanels.splice(0).map(async p => {
+    try { if (p.viewer) await p.viewer.dispose(); } catch (e) { console.warn(e); }
+    p.root.innerHTML = '';
+  });
+  await Promise.all(tasks);
+}
+
+async function fileExists(url) {
+  try {
+    const r = await fetch(url, { method: 'HEAD' });
+    return r.ok;
+  } catch { return false; }
+}
+
+async function loadSplats(viewMode, qKey) {
+  const run = ++loadRun;
+  await disposePanels();
+  const q = quality[qKey];
+  const dir = viewDirs[viewMode];
+  for (const [i, a] of assets.entries()) {
+    if (run !== loadRun) return;
+    const root = document.getElementById(a.root);
+    const stats = document.getElementById(a.stats);
+    const url = `${dir}/${a.file}`;
+    stats.textContent = 'checking…';
+    const exists = await fileExists(url);
+    if (!exists) {
+      stats.textContent = 'not yet available';
+      root.innerHTML = '<div style="display:flex;height:100%;align-items:center;justify-content:center;color:#666;font-size:11px;">training in progress</div>';
+      continue;
+    }
+    stats.textContent = 'loading ksplat';
+    try {
+      const viewer = new GaussianSplats3D.Viewer(viewerOptions(root, q));
+      splatPanels.push({ viewer, root, stats, asset: a });
+      await viewer.addSplatScene(url, {
+        showLoadingUI: false, progressiveLoad: false,
+        splatAlphaRemovalThreshold: 1,
+        sceneRevealMode: GaussianSplats3D.SceneRevealMode.Instant,
+      });
+      stats.textContent = `${viewMode} · ${qKey}`;
+      viewer.start();
+    } catch (e) {
+      stats.textContent = `load fail`;
+      console.error(a.file, e);
+    }
+  }
+}
+
+// ---------- Main ----------
+const statusEl = document.getElementById('status');
+const syncChk = document.getElementById('syncChk');
+const resetBtn = document.getElementById('resetBtn');
+const viewSelect = document.getElementById('viewSelect');
+const qualitySelect = document.getElementById('qualitySelect');
+
+let gt = null;
+
+let syncFrames = 0;
+let syncErr = null;
+const debugEl = document.getElementById('debug');
+function writeDebug() {
+  const gtPos = gt && gt.camera && gt.camera.position;
+  const line1 = `frame ${syncFrames} · splats ${splatPanels.length} · sync ${syncChk.checked ? 'ON' : 'OFF'}`;
+  const line2 = gtPos ? `gt pos ${gtPos.x.toFixed(0)},${gtPos.y.toFixed(0)},${gtPos.z.toFixed(0)}` : 'gt null';
+  const line3 = splatPanels[0] && splatPanels[0].viewer && splatPanels[0].viewer.camera
+    ? `baseline pos ${splatPanels[0].viewer.camera.position.x.toFixed(0)},${splatPanels[0].viewer.camera.position.y.toFixed(0)},${splatPanels[0].viewer.camera.position.z.toFixed(0)}`
+    : 'baseline null';
+  const line4 = syncErr ? `ERR ${syncErr}` : `ok`;
+  debugEl.textContent = `${line1}\n${line2}\n${line3}\n${line4}`;
+}
+function syncAll() {
+  syncFrames++;  // always increment, even if later lines throw
+  if (!gt || !gt.camera) { if (syncFrames % 30 === 0) writeDebug(); return; }
+  const gtPos = gt.camera.position;
+  const gtQ = gt.camera.quaternion;
+  const gtUp = gt.camera.up;
+  const tgt = gt.controls ? gt.controls.target : null;
+  if (syncChk.checked) {
+    for (const p of splatPanels) {
+      const v = p.viewer;
+      if (!v || !v.camera) continue;
+      v.camera.position.copy(gtPos);
+      v.camera.quaternion.copy(gtQ);
+      v.camera.up.copy(gtUp);
+      if (v.controls && tgt) {
+        v.controls.target.copy(tgt);
+        v.controls.update();
+      }
+      v.camera.updateMatrixWorld();
+      if (v.forceRenderNextFrame) v.forceRenderNextFrame();
+    }
+  }
+  updateNearestPhoto(gtPos);
+  if (syncFrames % 30 === 0) writeDebug();
+}
+function syncLoop() {
+  try { syncAll(); } catch (e) { syncErr = e.message; console.error('sync err', e); writeDebug(); }
+  requestAnimationFrame(syncLoop);
+}
+
+(async () => {
+  window.dbg('step1: THREE=' + !!THREE + ' GS3D=' + !!GaussianSplats3D + ' OC=' + !!GaussianSplats3D.OrbitControls);
+  try {
+    gt = await setupGTPanel('vg', 'sg', '../../../../results/phase2_synthesis/scene.obj');
+    window.dbg('step2: gt ok, camera=' + !!gt.camera + ' controls=' + !!gt.controls);
+    await setupPhotoPanel('../../_shared/phase2_cams/cams.json');
+    window.dbg('step3: photo panel ok, cams=' + cams.length);
+    await loadSplats('rgb', 'fast');
+    window.dbg('step4: splats loaded, n=' + splatPanels.length + ' v0.camera=' + !!(splatPanels[0] && splatPanels[0].viewer && splatPanels[0].viewer.camera));
+    updateNearestPhoto(gt.camera.position);
+    requestAnimationFrame(syncLoop);
+    window.dbg('step5: syncLoop scheduled');
+  } catch (e) {
+    window.dbg('SETUP FAIL: ' + e.message + '\n' + (e.stack || '').slice(0, 300));
+    throw e;
+  }
+})();
+
+resetBtn.addEventListener('click', () => {
+  if (!gt) return;
+  const tgt = gt.controls.target;
+  gt.camera.position.set(tgt.x + 120, tgt.y - 120, tgt.z + 120);
+  gt.camera.up.set(0, -1, 0);
+  gt.controls.update();
+});
+viewSelect.addEventListener('change', () => loadSplats(viewSelect.value, qualitySelect.value));
+qualitySelect.addEventListener('change', () => loadSplats(viewSelect.value, qualitySelect.value));
+</script>
+</body>
+</html>
