@@ -14,11 +14,24 @@ from .clustering import cluster_primitives
 from .ground_surface import orient_normals_outward, add_ground_surface, add_bbox_planes
 from .plane_intersection import build_convex_polytope
 from .citygml_export import build_cityjson
+from .building_2_5d import build_2_5d_solid, faces_to_cityjson
 
 
 def process_building(building_id, prim_ids, primitives, out_dir,
-                     cos_thresh=0.85, hs_tol=0.05):
-    """Process one building: cluster -> orient -> ground -> polytope -> CityJSON."""
+                     cos_thresh=0.85, hs_tol=0.05, method="convex"):
+    """Process one building → CityJSON.
+
+    method:
+      - "convex" (default): half-space intersection → ConvexHull. Manifold-
+                guaranteed, fails on non-convex footprints (Amsterdam L/U shapes).
+                On GT input: val3dity 76.3%. On Stage 2 baseline: 40.5%.
+      - "2_5d": footprint extraction + roof-type-specific construction (3D BAG
+                style, aims for non-convex support). Ported from
+                legacy/planarsplat_ref but shows LOWER val3dity than convex on
+                Amsterdam Jordaan data (GT 61% / Baseline 16%). Needs further
+                debugging/tuning for real-world building topology. Kept as
+                experimental.
+    """
     centers = primitives['centers'][prim_ids]
     normals = primitives['normals'][prim_ids]
     areas = primitives['areas'][prim_ids]
@@ -53,25 +66,48 @@ def process_building(building_id, prim_ids, primitives, out_dir,
     n_w = sum(1 for g in groups if g['class'] == 2)
     print(f"  {len(groups)} surfaces (roof={n_r}, wall={n_w}, ground=1, bbox={n_bbox})")
 
-    # Step 2: Build convex polytope
-    polygons = build_convex_polytope(groups, centers, hs_tol=hs_tol)
-    if polygons is None or len(polygons) < 4:
-        print(f"  Polytope failed or <4 faces")
-        return None
+    if method == "2_5d":
+        # Step 2 (2.5D hybrid): Extract non-convex footprint + roof-type construction.
+        # NOTE: groups' prim_ids were converted to GLOBAL indices above, so we must
+        # pass the FULL primitives['centers'] (not the building-local subset).
+        try:
+            faces = build_2_5d_solid(groups, primitives['centers'])
+        except Exception as e:
+            print(f"  2.5D build error: {type(e).__name__}: {e}; fallback to convex")
+            faces = None
+        if faces is None or len(faces) < 4:
+            # Fallback to convex polytope
+            print(f"  2.5D failed, fallback to convex polytope")
+            polygons = build_convex_polytope(groups, centers, hs_tol=hs_tol)
+            if polygons is None or len(polygons) < 4:
+                print(f"  Both methods failed")
+                return None
+            for gi in sorted(polygons.keys()):
+                cls = {1: 'roof', 2: 'wall', -1: 'ground'}.get(groups[gi]['class'], '?')
+                gnd = ' [G]' if groups[gi].get('is_ground') else ''
+                print(f"    S{gi}({cls}{gnd}): {len(polygons[gi])}v")
+            result = build_cityjson(building_id, groups, polygons, out_dir)
+        else:
+            # Write 2.5D faces via faces_to_cityjson
+            for f in faces:
+                print(f"    [{f['type']}] {len(f['vertices'])}v")
+            result = faces_to_cityjson(faces, building_id, out_dir)
+    elif method == "convex":
+        polygons = build_convex_polytope(groups, centers, hs_tol=hs_tol)
+        if polygons is None or len(polygons) < 4:
+            print(f"  Polytope failed or <4 faces")
+            return None
+        for gi in sorted(polygons.keys()):
+            cls = {1: 'roof', 2: 'wall', -1: 'ground'}.get(groups[gi]['class'], '?')
+            gnd = ' [G]' if groups[gi].get('is_ground') else ''
+            print(f"    S{gi}({cls}{gnd}): {len(polygons[gi])}v")
+        result = build_cityjson(building_id, groups, polygons, out_dir)
+    else:
+        raise ValueError(f"unknown method: {method!r}")
 
-    for gi in sorted(polygons.keys()):
-        cls = {1: 'roof', 2: 'wall', -1: 'ground'}.get(groups[gi]['class'], '?')
-        gnd = ' [G]' if groups[gi].get('is_ground') else ''
-        print(f"    S{gi}({cls}{gnd}): {len(polygons[gi])}v")
-
-    # Step 3: CityJSON output
-    result = build_cityjson(building_id, groups, polygons, out_dir)
     if result:
-        print(f"  -> {result['n_surfaces']}s {result['n_vertices']}v "
-              f"vol={result['signed_volume']:.4f} "
-              f"edges={result['n_edges_shared']}sh/"
-              f"{result['n_edges_boundary']}bd/"
-              f"{result['n_edges_nonmanifold']}nm")
+        print(f"  -> {result.get('n_surfaces', '?')}s {result.get('n_vertices', '?')}v"
+              + (f"  vol={result['signed_volume']:.4f}" if 'signed_volume' in result else ''))
     return result
 
 

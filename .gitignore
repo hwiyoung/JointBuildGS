@@ -23,18 +23,35 @@ results/phase2_synthesis/smoke_stage2/
 results/phase2_synthesis/smoke/          # FC-3 baseline smoke
 
 # Phase 2 Step 2-2: 4-condition training + Stage 3 artifacts
+# Keep: REPORT.md, figures/*.png, */eval/eval_summary.json, */stage3/stage3_summary.json,
+#       stage2_primitive_metrics.json, _gt_*/summary.json
+# Drop: per-building CityJSON/val3dity (regenerable from ckpts), logs, 2.5D dead branches,
+#       preview images, PolyFit CLI binary.
 results/phase2_ablation_citygml/*/ckpt/
 results/phase2_ablation_citygml/*/tb/
 results/phase2_ablation_citygml/*/renders/
+results/phase2_ablation_citygml/*/eval_preview.png
 results/phase2_ablation_citygml/*/stage3/primitives.npz
 results/phase2_ablation_citygml/*/stage3/building_*/
+results/phase2_ablation_citygml/*/stage3_2_5d/
+results/phase2_ablation_citygml/*/eval_2_5d/
+results/phase2_ablation_citygml/_gt_*/building_*/
+results/phase2_ablation_citygml/_gt_stage3_test_2_5d/
+results/phase2_ablation_citygml/_gt_stage3_test_2_5d_v3/
 results/phase2_ablation_citygml/_logs/
+
+# PolyFit CLI binary (regenerate via g++ + CGAL 5.6 headers + SCIP)
+src/stage3/polyfit_cli
+
+# Ad-hoc debug scripts
+tmp_*.py
 
 # ===== Training artifacts =====
 *.pt
 *.pth
 *.ckpt
 *.ply
+*.ksplat
 
 # ===== Python =====
 __pycache__/
@@ -58,4 +75,10 @@ venv/
 .DS_Store
 
 # ===== Viewer heavy assets (regenerable via scripts) =====
-tools/*/assets/
+tools/**/assets/
+# 560 JPEGs regenerable via tools/experiments/_shared/extract_phase2_cams.py
+tools/experiments/_shared/phase2_cams/thumbs/
+# gaussian-splats-3d demo folder + sourcemaps
+tools/experiments/_shared/build/demo/
+tools/experiments/_shared/build/*.js.map
+tools/experiments/_shared/build/*.cjs.map

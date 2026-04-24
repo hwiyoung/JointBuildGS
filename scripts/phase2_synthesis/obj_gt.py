@@ -1,7 +1,12 @@
 """Parse scene.obj into per-building GT face dicts.
 
-Each building (`building_NN_<type>` group in scene.obj) becomes:
-    {"building_id": int, "type": str, "faces": [
+Each building group in scene.obj is either:
+  (v1) `building_NN_<type>`                                   — legacy grid scene
+  (v2+) `<bag_name>_<type>`  e.g. `NL.IMBAG.Pand.0363...._gable` — natural block
+Both are parsed. Non-matching groups (ground_plane, etc.) are skipped.
+
+Output per building:
+    {"building_id": int, "name": str, "type": str, "faces": [
         {"vertices": (Nv,3) ndarray, "material": "Roof"|"Wall"|"Ground"|"Terrain",
          "semantic_class": 1|2|3, "normal": (3,), "centroid": (3,), "area": float},
         ...
@@ -24,6 +29,8 @@ MATERIAL_TO_CLASS = {
     "Ground": 3,
     "Terrain": 3,
 }
+
+KNOWN_ROOF_TYPES = {"flat", "shed", "gable", "hip", "tri-slope", "complex"}
 
 
 # Step 2-1 bug: cameras.bin were written in Blender world frame (axes swapped vs
@@ -63,11 +70,25 @@ def parse_scene_obj(obj_path: str | Path, frame: str = "obj") -> Dict:
             verts.append([float(x) for x in rest[:3]])
         elif head in ("g", "o"):
             name = rest[0] if rest else ""
+            bid, bname, btype = None, name, None
             if name.startswith("building_"):
+                # v1 legacy grid scene: building_NN_<type>
                 parts = name.split("_")
-                bid = int(parts[1])
-                btype = "_".join(parts[2:]) if len(parts) >= 3 else "unknown"
-                buildings.append({"building_id": bid, "name": name, "type": btype,
+                try:
+                    bid = int(parts[1])
+                    btype = "_".join(parts[2:]) if len(parts) >= 3 else "unknown"
+                    bname = name
+                except (ValueError, IndexError):
+                    bid = None
+            else:
+                # v2 natural block: <bag_name>_<type>. Accept if final suffix is a known type
+                parts = name.rsplit("_", 1)
+                if len(parts) == 2 and parts[1] in KNOWN_ROOF_TYPES:
+                    btype = parts[1]
+                    bname = parts[0]
+                    bid = len(buildings)  # sequential id
+            if btype is not None:
+                buildings.append({"building_id": bid, "name": bname, "type": btype,
                                   "faces": []})
                 cur_group = buildings[-1]
             else:
