@@ -2,7 +2,7 @@
 
 > 본 문서는 **claude web 에 작성된 초기 연구 스케치** 를 수정할 목적으로, Phase 1 ~ Phase 2-2 완료까지의 실험 결과 + 검증된 가설 / 틀린 가설 + 열린 질문을 한 번에 담는다. 방법론은 축약 인용하고, **실험으로 확인된 것 / 확인 후 틀린 것 / 수정이 필요한 것** 을 중심으로 기술한다.
 >
-> Last updated: 2026-04-25 KST (Phase 2-2 전체 완료 + 후속 진단 검증 반영)
+> Last updated: 2026-04-25 KST (Phase 2-2 전체 완료 + 진단 실험 D1-D4 반영)
 
 ---
 
@@ -125,14 +125,36 @@ Stage 2 primitive 가 이상적 (GT 수준) 이라도 Stage 3 알고리즘 자�
 | "기울어진 벽 (처마/장식) 때문에 L_mutual 회귀" | **GT wall 2334 개 전체가 완벽 수직 (< 0.1° 편차)**. 기울어진 벽 자체가 존재 안 함 |
 | "mutual_height 분리하면 tug-of-war 완화" | tug-of-war 자체가 없음. mutual_height peak 91 은 초반 dynamics 일 뿐 |
 
-#### ⚠ 미확정 원인 (추가 진단 필요)
+#### ⚠ 미확정 원인 → 진단 실험 D1-D4 결과
 
-1. **Mutual 이 단순 건물 (flat/gable) 에서 val3dity 회귀 (-22%p on flat, -29%p on gable)** 의 정확한 메커니즘
-2. **L_structure 가 Phase 2 에서 σ_normal_intra 를 개선 못 하는 이유** — Phase 1 −45% vs Phase 2 +1%
-3. **Baseline Stage 2 의 Wall 이 72% 비수직** 인 공간 패턴 (GT 는 100% 수직인데)
-4. **Stage 3 6-step 중 어느 step 에서 각 조건이 갈라지는가**
+**D1 (bid=2 case study)**: bid=2 (flat, 4 walls 박스) 에서 Baseline → Mutual 갈 때 Stage 3 Step 2 (clustering) 가 wall 그룹 4 → 2 로 줄어들고 polytope 의 face 가 부족해져 203 (non-planar) 발생. **하지만 다른 건물 (bid=22 gable, bid=21 complex)** 에선 다른 패턴 — D1 의 cluster 병합 메커니즘은 **사례 단위 설명**, 일반화 불가.
 
-위 4가지를 규명하는 **진단 실험 D1-D4** 계획되어 있음 (재학습 불필요, 기존 ckpt 분석만).
+**D2 (L_structure grouping output)**: 3 건물 비교 결과:
+- bid=2 (flat): σ_normal_intra Baseline 19.46° → Structure 17.00° (**−13%**) ✓
+- bid=6 (hip): 16.22° → 16.04° (**−1%**, 측정 노이즈 수준)
+- bid=21 (complex): 16.52° → 16.92° (**+2%**, 약간 악화)
+- 전체 131 건물 평균: **+1%** (효과 부재)
+- → L_structure 가 **단순 건물에서 약하게 작동, 복잡 건물에선 약간 악화**. 평균 0 은 "효과 없음" 이 아니라 "이질적 효과 상쇄"
+
+**D3 (Stage 3 6-step breakdown, 4 buildings)**:
+- bid=2 (flat): Mutual fail / 나머지 pass
+- bid=22 (gable): Baseline fail / 메커니즘 모두 pass
+- bid=6 (hip): Baseline + Both fail / Mutual + Structure pass
+- bid=21 (complex): Structure + Both fail / Baseline + Mutual pass
+- → **건물별 매우 이질적**. 단일 메커니즘이 보편적 우열 없음. 집계 수준에서만 통계적 우세 (Structure/Both > Baseline > Mutual).
+
+**D4 (Baseline Wall 비수직 공간 패턴)**:
+- Baseline Wall 의 **4-5% 만 < 1° 완전 수직**, 평균 tilt 12-15°
+- **코너 영역 (d<1m)**: tilt 16.5°, %<5° = 20% (가장 나쁨)
+- **벽면 가운데 (d<10m)**: tilt 12.2°, %<5° = 25%
+- **Mutual + Both 에선 코너 영역 tilt 2.76°, %<5° = 81%** (uniformly fixed)
+- → **L_mutual 의 per-primitive intra 메커니즘이 spatial dependency 추가 없이 corner 문제 자연스럽게 해결**
+
+**D1-D4 종합 결론**:
+- L_mutual 의 Stage 2 효과 (Wall 수직화) 는 의도대로 작동, 공간적으로 균질
+- L_structure 의 Stage 2 효과 (σ_normal_intra) 는 매우 약함, 건물별 이질적
+- Mutual 의 Stage 3 회귀는 단일 메커니즘으로 설명 안 됨 (cluster 병합은 일부 사례)
+- "순환 효과" 시너지 미입증. Both 는 Mutual 의 회귀를 Structure 가 부분 상쇄하는 정도
 
 ### II.5 연구 주장별 증거 현황 (업데이트)
 
@@ -246,16 +268,23 @@ Phase 2-2 결과로 **포지셔닝의 불명확성** 발견:
 
 ## Part V. 현재 남은 작업 (Phase 2-2 이후)
 
+### 완료 (D1-D4 모두 완료)
+
+| 작업 | 상태 | 산출물 |
+|---|---|---|
+| D1 (Mutual regression 원인) | ✓ | fig_d1_bid002.png, fig_d1_bid022.png |
+| D2 (L_structure grouping) | ✓ | fig_d2_structure_grouping.png |
+| D3 (Stage 3 6-step breakdown) | ✓ | fig_d3_bid{2,22,6,21}_steps.png |
+| D4 (Wall 법선 공간 패턴) | ✓ | fig_d4_baseline_wall_tilt.png |
+| Phase 2-2 REPORT v3 (진단 통합) | ✓ | results/phase2_ablation_citygml/REPORT.md |
+
 ### 단기 (~2 주)
 
-| 작업 | 예상 완료 | 산출물 |
-|---|---|---|
-| 진단 실험 D1 (Mutual regression 원인) | 3-5 일 | figure + 원인 분석 |
-| 진단 실험 D2 (L_structure grouping) | 2-3 일 | figure + 진단 결과 |
-| 진단 실험 D3 (Stage 3 6-step breakdown) | 5-7 일 | figure set + 단계별 분석 |
-| 진단 실험 D4 (Wall 법선 공간 패턴) | 1-2 일 | figure + 통계 |
-| Phase 2-2 REPORT 재작성 (진단 결과 통합) | 1-2 일 | REPORT.md |
-| **연구 포지셔닝 결정** (틀 A/B/C) | 이번 주 | claude-web 논의 결과 반영 |
+| 작업 | 산출물 |
+|---|---|
+| **연구 포지셔닝 결정** (틀 A/B/C) | claude-web 논의 결과 반영 |
+| 학습 중 gradient norm 측정 (D2 가설 D 검증) | 추가 분석 |
+| Sequential baseline 측정 (MVS+RANSAC+convex) | joint vs sequential 정량화 |
 
 ### 중기 (1-2 개월, 포지셔닝에 따라)
 

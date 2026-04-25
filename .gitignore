@@ -39,6 +39,9 @@ results/phase2_ablation_citygml/_gt_*/building_*/
 results/phase2_ablation_citygml/_gt_stage3_test_2_5d/
 results/phase2_ablation_citygml/_gt_stage3_test_2_5d_v3/
 results/phase2_ablation_citygml/_logs/
+# D1-D4 diagnostic intermediates (per-(cond, bid) raw); aggregate JSONs kept
+results/phase2_ablation_citygml/_diag/d1/*_bid*/
+results/phase2_ablation_citygml/_diag/d3/
 
 # PolyFit CLI binary (regenerate via g++ + CGAL 5.6 headers + SCIP)
 src/stage3/polyfit_cli

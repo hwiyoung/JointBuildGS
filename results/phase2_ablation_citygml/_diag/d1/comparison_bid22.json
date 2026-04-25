@@ -1,0 +1,248 @@
+{
+  "step1": {
+    "baseline": {
+      "n_primitives_total": 4470,
+      "n_by_class": {
+        "0": 0,
+        "1": 2439,
+        "2": 2029,
+        "3": 2
+      },
+      "n_roof": 2439,
+      "n_wall": 2029,
+      "n_terrain": 2
+    },
+    "mutual": {
+      "n_primitives_total": 4307,
+      "n_by_class": {
+        "0": 0,
+        "1": 2367,
+        "2": 1933,
+        "3": 7
+      },
+      "n_roof": 2367,
+      "n_wall": 1933,
+      "n_terrain": 7
+    },
+    "structure": {
+      "n_primitives_total": 4460,
+      "n_by_class": {
+        "0": 0,
+        "1": 2455,
+        "2": 2001,
+        "3": 4
+      },
+      "n_roof": 2455,
+      "n_wall": 2001,
+      "n_terrain": 4
+    },
+    "both": {
+      "n_primitives_total": 4537,
+      "n_by_class": {
+        "0": 0,
+        "1": 2658,
+        "2": 1872,
+        "3": 7
+      },
+      "n_roof": 2658,
+      "n_wall": 1872,
+      "n_terrain": 7
+    }
+  },
+  "step2": {
+    "baseline": {
+      "n_groups": 5,
+      "group_sizes": [
+        1049,
+        1390,
+        1155,
+        570,
+        304
+      ],
+      "group_classes": [
+        1,
+        1,
+        2,
+        2,
+        2
+      ],
+      "sigma_normal_mean": 17.11160945892334,
+      "sigma_coplanar_mean": 3.5922664165496827
+    },
+    "mutual": {
+      "n_groups": 7,
+      "group_sizes": [
+        867,
+        1201,
+        299,
+        568,
+        302,
+        542,
+        521
+      ],
+      "group_classes": [
+        1,
+        1,
+        1,
+        2,
+        2,
+        2,
+        2
+      ],
+      "sigma_normal_mean": 13.100886685507637,
+      "sigma_coplanar_mean": 2.8527520980153764
+    },
+    "structure": {
+      "n_groups": 7,
+      "group_sizes": [
+        1074,
+        169,
+        1212,
+        354,
+        595,
+        512,
+        540
+      ],
+      "group_classes": [
+        1,
+        1,
+        1,
+        2,
+        2,
+        2,
+        2
+      ],
+      "sigma_normal_mean": 16.730700492858887,
+      "sigma_coplanar_mean": 3.2370511974607195
+    },
+    "both": {
+      "n_groups": 8,
+      "group_sizes": [
+        1243,
+        379,
+        1036,
+        367,
+        274,
+        273,
+        521,
+        437
+      ],
+      "group_classes": [
+        1,
+        1,
+        1,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "sigma_normal_mean": 12.742162734270096,
+      "sigma_coplanar_mean": 2.6063501462340355
+    }
+  },
+  "step3_prep": {
+    "baseline": {
+      "n_roof_groups": 2,
+      "n_wall_groups": 4,
+      "n_ground": 1,
+      "n_bbox": 1
+    },
+    "mutual": {
+      "n_roof_groups": 3,
+      "n_wall_groups": 4,
+      "n_ground": 1,
+      "n_bbox": 0
+    },
+    "structure": {
+      "n_roof_groups": 3,
+      "n_wall_groups": 6,
+      "n_ground": 1,
+      "n_bbox": 2
+    },
+    "both": {
+      "n_roof_groups": 3,
+      "n_wall_groups": 6,
+      "n_ground": 1,
+      "n_bbox": 1
+    }
+  },
+  "step4_convex": {
+    "baseline": {
+      "n_faces": 7,
+      "n_faces_gte_3v": 7,
+      "face_vertex_counts": [
+        4,
+        3,
+        4,
+        4,
+        5,
+        4,
+        4
+      ]
+    },
+    "mutual": {
+      "n_faces": 4,
+      "n_faces_gte_3v": 4,
+      "face_vertex_counts": [
+        3,
+        3,
+        3,
+        3
+      ]
+    },
+    "structure": {
+      "n_faces": 8,
+      "n_faces_gte_3v": 8,
+      "face_vertex_counts": [
+        4,
+        4,
+        5,
+        5,
+        4,
+        5,
+        5,
+        4
+      ]
+    },
+    "both": {
+      "n_faces": 4,
+      "n_faces_gte_3v": 4,
+      "face_vertex_counts": [
+        3,
+        4,
+        4,
+        3
+      ]
+    }
+  },
+  "step6_val3dity": {
+    "baseline": {
+      "valid": false,
+      "error_codes": [
+        203
+      ],
+      "error_details": [
+        {
+          "code": 203,
+          "id": "coid=building_022|geom=0|shell=0|face=6"
+        }
+      ]
+    },
+    "mutual": {
+      "valid": true,
+      "error_codes": [],
+      "error_details": []
+    },
+    "structure": {
+      "valid": true,
+      "error_codes": [],
+      "error_details": []
+    },
+    "both": {
+      "valid": true,
+      "error_codes": [],
+      "error_details": []
+    }
+  }
+}

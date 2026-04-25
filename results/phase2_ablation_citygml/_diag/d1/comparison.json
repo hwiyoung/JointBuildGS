@@ -1,0 +1,130 @@
+{
+  "step1": {
+    "baseline": {
+      "n_primitives_total": 9533,
+      "n_by_class": {
+        "0": 0,
+        "1": 4842,
+        "2": 4565,
+        "3": 126
+      },
+      "n_roof": 4842,
+      "n_wall": 4565,
+      "n_terrain": 126
+    },
+    "mutual": {
+      "n_primitives_total": 9373,
+      "n_by_class": {
+        "0": 1,
+        "1": 4781,
+        "2": 4456,
+        "3": 135
+      },
+      "n_roof": 4781,
+      "n_wall": 4456,
+      "n_terrain": 135
+    }
+  },
+  "step2": {
+    "baseline": {
+      "n_groups": 7,
+      "group_sizes": [
+        1718,
+        849,
+        2275,
+        1354,
+        1680,
+        873,
+        658
+      ],
+      "group_classes": [
+        1,
+        1,
+        1,
+        2,
+        2,
+        2,
+        2
+      ],
+      "sigma_normal_mean": 18.53251048496791,
+      "sigma_coplanar_mean": 3.1489584275654385
+    },
+    "mutual": {
+      "n_groups": 6,
+      "group_sizes": [
+        2868,
+        1913,
+        1497,
+        577,
+        1215,
+        1167
+      ],
+      "group_classes": [
+        1,
+        1,
+        2,
+        2,
+        2,
+        2
+      ],
+      "sigma_normal_mean": 17.10864559809367,
+      "sigma_coplanar_mean": 3.7230109771092734
+    }
+  },
+  "step3_prep": {
+    "baseline": {
+      "n_roof_groups": 3,
+      "n_wall_groups": 5,
+      "n_ground": 1,
+      "n_bbox": 1
+    },
+    "mutual": {
+      "n_roof_groups": 2,
+      "n_wall_groups": 5,
+      "n_ground": 1,
+      "n_bbox": 1
+    }
+  },
+  "step4_convex": {
+    "baseline": {
+      "n_faces": 9,
+      "n_faces_gte_3v": 9,
+      "face_vertex_counts": [
+        3,
+        4,
+        4,
+        5,
+        5,
+        4,
+        6,
+        6,
+        5
+      ]
+    },
+    "mutual": {
+      "n_faces": 7,
+      "n_faces_gte_3v": 7,
+      "face_vertex_counts": [
+        3,
+        4,
+        4,
+        5,
+        5,
+        5,
+        4
+      ]
+    }
+  },
+  "step6_val3dity": {
+    "baseline": {
+      "valid": true,
+      "error_codes": [],
+      "error_details": []
+    },
+    "mutual": {
+      "valid": true,
+      "error_codes": [],
+      "error_details": []
+    }
+  }
+}
