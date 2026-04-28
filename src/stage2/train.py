@@ -353,12 +353,35 @@ def main():
                 "n_prim": model.num_points,
             }, out_dir / "ckpt" / f"step_{it:06d}.pt")
 
-    # final
-    torch.save({
+    # final ckpt — also export Stage 2 group structure for Stage 3 (Track 1,
+    # RESEARCH_CONTEXT §15). voxel_size etc. match training defaults, so the
+    # exported groups are exactly what L_structure was optimizing toward at
+    # the last grouping step.
+    final_ckpt = {
         "it": max_iter,
         "state_dict": model.state_dict(),
         "n_prim": model.num_points,
-    }, out_dir / "ckpt" / "final.pt")
+    }
+    try:
+        from .model import quat_to_rotmat
+        with torch.no_grad():
+            scales_final = torch.exp(model.log_scales).detach()
+            normals_final = quat_to_rotmat(model.quats.detach())[..., :, 2]
+            gid, rep_n, rep_d = group_primitives(
+                centers=model.means.detach(),
+                normals=normals_final,
+                sem_logits=model.sem_logits.detach(),
+                scales=scales_final,
+            )
+        final_ckpt["stage2_group_ids"] = gid.cpu()
+        final_ckpt["stage2_rep_normals"] = rep_n.cpu()
+        final_ckpt["stage2_rep_d"] = rep_d.cpu()
+        print(f"[final] exported Stage 2 grouping: {rep_n.shape[0]} groups, "
+              f"{int((gid >= 0).sum())} grouped primitives")
+    except Exception as e:
+        print(f"[final] WARNING: failed to export Stage 2 grouping: "
+              f"{type(e).__name__}: {e}. Stage 3 will recompute via run_stage3.py.")
+    torch.save(final_ckpt, out_dir / "ckpt" / "final.pt")
     _eval_and_save(model, ds, test_idx, device, writer, out_dir, max_iter, tag="final")
     dt = time.time() - t0
     print(f"[done] {max_iter} iter in {dt/60:.1f} min.  final N={model.num_points}")

@@ -53,6 +53,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--method", choices=["convex", "2_5d"], default="2_5d")
     ap.add_argument("--out", default="results/phase2_ablation_citygml/_gt_stage3_test")
+    ap.add_argument("--cos-thresh", type=float, default=0.85,
+                    help="grouping threshold. 1.0 = no merging (true ceiling test)")
     args = ap.parse_args()
     out_dir = ROOT / args.out
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -93,7 +95,7 @@ def main():
         try:
             result = process_building(
                 bid, prim_ids, prim_dict, str(bdir),
-                cos_thresh=0.85, hs_tol=0.10, method=args.method,
+                cos_thresh=args.cos_thresh, hs_tol=0.10, method=args.method,
             )
         except Exception as e:
             per_building.append({"bid": bid, "type": b["type"],

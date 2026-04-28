@@ -22,13 +22,19 @@ def intersect_three_planes(n1, d1, n2, d2, n3, d3):
 
 
 def build_convex_polytope(groups, prim_centers, hs_tol=0.05, plane_tol=0.1,
-                          bbox_margin=1.0):
+                          bbox_margin=None):
     """
     Build building polyhedron as a convex polytope.
 
     Each surface group defines a half-space: n_i · x <= d_i (outward normal).
     Valid vertices = 3-plane intersections satisfying ALL half-spaces.
     ConvexHull of valid vertices -> manifold solid.
+
+    bbox_margin: if None, auto = max(5.0, 0.5 * building extent). Centroids of
+    faces lie inside the building shell; corners can be up to ~half a face
+    width outside the centroid bbox, so a too-small margin rejects all valid
+    corners and the polytope construction fails (typical symptom on flat
+    buildings: "Initial simplex flat" from QHull).
 
     Returns: {group_idx: polygon_vertices_ndarray} or None
     """
@@ -38,6 +44,10 @@ def build_convex_polytope(groups, prim_centers, hs_tol=0.05, plane_tol=0.1,
 
     normals = np.array([g['plane_normal'] for g in groups])
     ds = np.array([g['plane_d'] for g in groups])
+
+    if bbox_margin is None:
+        extent = float((prim_centers.max(axis=0) - prim_centers.min(axis=0)).max())
+        bbox_margin = max(5.0, 0.5 * extent)
 
     bbox_min = prim_centers.min(axis=0) - bbox_margin
     bbox_max = prim_centers.max(axis=0) + bbox_margin

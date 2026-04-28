@@ -35,12 +35,31 @@ if str(_ROOT) not in sys.path:
     sys.path.insert(0, str(_ROOT))
 
 from src.stage2.model import GaussianModel2D, quat_to_rotmat  # noqa: E402
+from src.stage2.grouping import group_primitives  # noqa: E402
 from src.stage3.building_instance import process_building  # noqa: E402
 from scripts.phase2_synthesis.obj_gt import parse_scene_obj  # noqa: E402
 
 
-def _load_model(ckpt_path: Path) -> Dict[str, np.ndarray]:
-    """Load checkpoint state_dict -> derived primitive arrays (cpu numpy)."""
+# Stage 2 grouping voxel size (must match training; src/stage2/grouping.py default)
+_STAGE2_VOXEL_SIZE = 0.05
+_STAGE2_N_DIRECTIONS = 12
+_STAGE2_MIN_GROUP_SIZE = 5
+
+
+def _load_model(ckpt_path: Path,
+                emit_stage2_groups: bool = True) -> Dict[str, np.ndarray]:
+    """Load checkpoint state_dict -> derived primitive arrays (cpu numpy).
+
+    If emit_stage2_groups: also compute Stage 2 group assignment (the same
+    voxel-hash grouping used during L_structure training) on the final
+    primitives and add 'group_ids', 'rep_normals', 'rep_d' to the dict. This
+    closes the C2 interface gap (RESEARCH_CONTEXT §15): Stage 3 receives the
+    group structure Stage 2 was trained against, instead of re-clustering
+    from scratch with a different algorithm.
+
+    Stage 2's voxel_size/n_directions/min_group_size match training defaults.
+    Result is deterministic given the ckpt — no randomness, no learning.
+    """
     sd = torch.load(ckpt_path, map_location="cpu")["state_dict"]
     means = sd["means"].float()
     quats = sd["quats"].float()
@@ -51,13 +70,12 @@ def _load_model(ckpt_path: Path) -> Dict[str, np.ndarray]:
     R = quat_to_rotmat(quats)
     normals = R[..., :, 2]                       # (N,3) per CLAUDE.md
     scales = torch.exp(log_scales)               # (N,3)
-    # in-plane scales = first two dims
     sU, sV = scales[..., 0], scales[..., 1]
     areas = (np.pi * sU * sV).float()            # ellipse area
     sem_probs = torch.softmax(sem_logits, dim=-1).float()
     labels = sem_probs.argmax(dim=-1)
 
-    return {
+    out = {
         "centers": means.numpy(),
         "normals": normals.numpy(),
         "scales": scales.numpy(),
@@ -66,6 +84,24 @@ def _load_model(ckpt_path: Path) -> Dict[str, np.ndarray]:
         "sem_probs": sem_probs.numpy(),
         "labels": labels.numpy(),
     }
+
+    if emit_stage2_groups:
+        # group_primitives runs in torch.no_grad. We use cpu — the only cost is
+        # one global voxel hash on ~10^6 primitives, ~1-2 s.
+        gid_t, rep_n_t, rep_d_t = group_primitives(
+            centers=means, normals=normals, sem_logits=sem_logits, scales=scales,
+            voxel_size=_STAGE2_VOXEL_SIZE, n_directions=_STAGE2_N_DIRECTIONS,
+            min_group_size=_STAGE2_MIN_GROUP_SIZE, exclude_bg=True,
+        )
+        out["group_ids"] = gid_t.numpy()        # (N,) int64, -1 = ungrouped
+        out["rep_normals"] = rep_n_t.numpy()    # (G, 3)
+        out["rep_d"] = rep_d_t.numpy()          # (G,) — Stage 2 convention
+        n_grouped = int((gid_t >= 0).sum())
+        n_groups = int(rep_n_t.shape[0])
+        print(f"[stage3] Stage 2 grouping: {n_groups} groups, "
+              f"{n_grouped}/{means.shape[0]} primitives grouped")
+
+    return out
 
 
 def _assign_primitives_to_buildings(
@@ -117,12 +153,17 @@ def _assign_primitives_to_buildings(
 
 def _build_primitives_dict(prims: Dict[str, np.ndarray]) -> Dict[str, np.ndarray]:
     """Package for src.stage3.building_instance.process_building."""
-    return {
+    out = {
         "centers": prims["centers"],
         "normals": prims["normals"],
         "areas": prims["areas"],
         "semantic_probs": prims["sem_probs"],
     }
+    # Pass Stage 2 group info if present (Track 1, RESEARCH_CONTEXT §15).
+    for k in ("group_ids", "rep_normals", "rep_d"):
+        if k in prims:
+            out[k] = prims[k]
+    return out
 
 
 def _run_val3dity(cj_path: Path, report_path: Path) -> Dict:

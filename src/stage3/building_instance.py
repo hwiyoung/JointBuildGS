@@ -10,7 +10,7 @@ import os
 
 import numpy as np
 
-from .clustering import cluster_primitives
+from .clustering import cluster_primitives, groups_from_stage2_grouping
 from .ground_surface import orient_normals_outward, add_ground_surface, add_bbox_planes
 from .plane_intersection import build_convex_polytope
 from .citygml_export import build_cityjson
@@ -18,19 +18,21 @@ from .building_2_5d import build_2_5d_solid, faces_to_cityjson
 
 
 def process_building(building_id, prim_ids, primitives, out_dir,
-                     cos_thresh=0.85, hs_tol=0.05, method="convex"):
+                     cos_thresh=0.85, hs_tol=0.05, method="convex",
+                     use_stage2_groups=True):
     """Process one building → CityJSON.
 
     method:
       - "convex" (default): half-space intersection → ConvexHull. Manifold-
                 guaranteed, fails on non-convex footprints (Amsterdam L/U shapes).
-                On GT input: val3dity 76.3%. On Stage 2 baseline: 40.5%.
       - "2_5d": footprint extraction + roof-type-specific construction (3D BAG
-                style, aims for non-convex support). Ported from
-                legacy/planarsplat_ref but shows LOWER val3dity than convex on
-                Amsterdam Jordaan data (GT 61% / Baseline 16%). Needs further
-                debugging/tuning for real-world building topology. Kept as
-                experimental.
+                style, aims for non-convex support). Experimental.
+
+    use_stage2_groups (Track 1, RESEARCH_CONTEXT §15):
+      - True (default): use Stage 2's voxel-hash group_id from
+        primitives['group_ids']. Closes the C2 interface gap. Falls back to
+        legacy clustering automatically if group_ids absent.
+      - False: force legacy independent hierarchical clustering.
     """
     centers = primitives['centers'][prim_ids]
     normals = primitives['normals'][prim_ids]
@@ -46,8 +48,26 @@ def process_building(building_id, prim_ids, primitives, out_dir,
         return None
 
     # Step 1: Cluster primitives -> surface groups
-    groups = cluster_primitives(centers, normals, areas, labels,
-                                cos_thresh=cos_thresh)
+    have_stage2_groups = (use_stage2_groups
+                         and 'group_ids' in primitives
+                         and 'rep_normals' in primitives)
+    if have_stage2_groups:
+        building_gids = primitives['group_ids'][prim_ids]
+        groups = groups_from_stage2_grouping(
+            centers, normals, areas, labels,
+            building_gids, primitives['rep_normals'])
+        print(f"  Stage 2 groups: {len(groups)} (from "
+              f"{int((building_gids >= 0).sum())} / {len(prim_ids)} grouped prims)")
+        if len(groups) < 4:
+            # Stage 2 grouping yielded too few groups for this building (rare —
+            # usually because primitives split across many tiny voxel cells).
+            # Fall back to legacy clustering.
+            print(f"  → fallback to legacy clustering (need ≥4 surfaces)")
+            groups = cluster_primitives(centers, normals, areas, labels,
+                                        cos_thresh=cos_thresh)
+    else:
+        groups = cluster_primitives(centers, normals, areas, labels,
+                                    cos_thresh=cos_thresh)
     for g in groups:
         g['prim_ids'] = [prim_ids[lid] for lid in g['prim_ids']]
 

@@ -1,12 +1,82 @@
 """
-Step 1: Primitive Clustering → Surface Groups
+Stage 3 Step 2: Primitive → Surface Groups.
 
-Cluster primitives within same semantic class by normal similarity.
-Two-pass approach: strict clustering + merge tiny clusters.
+Two implementations:
+
+(A) groups_from_stage2_grouping() — preferred (Track 1, RESEARCH_CONTEXT §15)
+    Use Stage 2's voxel-hash group_id (computed by src/stage2/grouping.py).
+    Stage 2 trained primitives toward these groups; reusing them in Stage 3
+    closes the C2 interface gap (Stage 2's structural intent flows through).
+
+(B) cluster_primitives() — legacy fallback
+    Independent hierarchical clustering on normals (cos>0.92) + spatial split.
+    Used when ckpt has no group export (legacy) or caller opts in explicitly.
 """
 
 import numpy as np
 from scipy.cluster.hierarchy import fcluster, linkage
+
+
+# ============================================================================
+# (A) Stage 2 group passthrough  — Track 1 implementation
+# ============================================================================
+
+
+def groups_from_stage2_grouping(centers, normals, areas, labels,
+                                group_ids, rep_normals,
+                                min_group_size=3):
+    """Convert Stage 2's group_id assignment into Stage 3 surface-group dicts.
+
+    Stage 2 plane convention: rep_n · x + rep_d = 0  (group_primitives)
+    Stage 3 plane convention: plane_normal · x = plane_d  (downstream)
+    plane_d is recomputed here from this building's centroid (sub-voxel
+    correction; rep_d was averaged over Stage 2's global voxel population).
+
+    Args:
+        centers, normals, areas, labels: per-primitive arrays already
+            restricted to one building (caller filters via prim_ids).
+        group_ids: (N,) int64 building-local. -1 = ungrouped.
+        rep_normals: (G, 3) Stage 2 representative normals (global G).
+        min_group_size: drop groups with fewer building-local primitives than
+            this. Stage 2's own min_group_size acts globally; restricting to
+            one building can shrink a group below it.
+
+    Returns: list of group dicts compatible with downstream Stage 3 code:
+        {'plane_normal', 'plane_d', 'class', 'prim_ids', 'center', 'area'}.
+    """
+    groups_out = []
+    valid_gids = np.unique(group_ids[group_ids >= 0])
+    for gid in valid_gids:
+        mask = group_ids == gid
+        if int(mask.sum()) < min_group_size:
+            continue
+        cls_members = labels[mask]
+        cls = int(np.bincount(cls_members).argmax())
+        if cls == 0:
+            continue
+
+        n = rep_normals[gid].astype(np.float64)
+        n /= np.linalg.norm(n) + 1e-12
+        cs = centers[mask].astype(np.float64)
+        as_ = areas[mask].astype(np.float64)
+        w = as_ / (as_.sum() + 1e-12)
+        c_mean = (cs * w[:, None]).sum(0)
+        plane_d = float(np.dot(n, c_mean))
+
+        groups_out.append({
+            'plane_normal': n,
+            'plane_d': plane_d,
+            'class': cls,
+            'prim_ids': np.where(mask)[0].tolist(),
+            'center': c_mean.copy(),
+            'area': float(as_.sum()),
+        })
+    return groups_out
+
+
+# ============================================================================
+# (B) Legacy independent clustering  — fallback
+# ============================================================================
 
 
 def cluster_primitives(centers, normals, areas, labels, cos_thresh=0.85,

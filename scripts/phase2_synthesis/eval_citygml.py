@@ -60,6 +60,68 @@ def load_cityjson_building(cj_path: Path):
     return {"name": bname, "faces": faces, "vertices": V}
 
 
+SEMTYPE_TO_CLASS = {"RoofSurface": 1, "WallSurface": 2, "GroundSurface": 3}
+
+
+def _face_geom_from_vertices(verts: np.ndarray):
+    """Return (normal_unit, centroid, area). None if degenerate."""
+    n_unnorm = np.zeros(3)
+    N = len(verts)
+    for i in range(N):
+        a, b = verts[i], verts[(i + 1) % N]
+        n_unnorm[0] += (a[1] - b[1]) * (a[2] + b[2])
+        n_unnorm[1] += (a[2] - b[2]) * (a[0] + b[0])
+        n_unnorm[2] += (a[0] - b[0]) * (a[1] + b[1])
+    nrm = float(np.linalg.norm(n_unnorm))
+    if nrm < 1e-12:
+        return None
+    return n_unnorm / nrm, verts.mean(axis=0), nrm * 0.5
+
+
+def load_gt_from_convex_dir(convex_dir: Path, scene_obj_path: str) -> Dict:
+    """Load 'GT' from convex polytope reconstructions of GT mesh.
+
+    For apples-to-apples comparison: both pred and 'GT' have been through the
+    same convex simplification, so face-count discrepancy (~22 vs ~7 per
+    building) is removed. Building 'type' (flat/gable/...) is copied from the
+    original scene.obj since CityJSON does not preserve that metadata.
+    """
+    scene_gt = parse_scene_obj(scene_obj_path)
+    types_by_id = {b["building_id"]: b["type"] for b in scene_gt["buildings"]}
+
+    buildings = []
+    for cj_path in sorted(convex_dir.glob("building_*/building.city.json")):
+        bid_str = cj_path.parent.name.replace("building_", "")
+        try:
+            bid = int(bid_str)
+        except ValueError:
+            continue
+        cjb = load_cityjson_building(cj_path)
+        faces = []
+        for f in cjb["faces"]:
+            verts = np.asarray(f["vertices"], dtype=np.float64)
+            geom = _face_geom_from_vertices(verts)
+            if geom is None:
+                continue
+            normal, centroid, area = geom
+            faces.append({
+                "vertices": verts,
+                "normal": normal,
+                "area": area,
+                "centroid": centroid,
+                "semantic_class": SEMTYPE_TO_CLASS.get(f["type"], 0),
+            })
+        if not faces:
+            continue
+        buildings.append({
+            "building_id": bid,
+            "type": types_by_id.get(bid, "unknown"),
+            "name": cjb["name"],
+            "faces": faces,
+        })
+    return {"buildings": buildings}
+
+
 def faces_to_mesh(faces: List[Dict]) -> trimesh.Trimesh:
     """Triangulate per-face polygons and build a single trimesh."""
     verts = []
@@ -317,6 +379,10 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--stage3-dir", required=True)
     ap.add_argument("--scene", default="results/phase2_synthesis/scene.obj")
+    ap.add_argument("--gt-cityjson-dir", default=None,
+                    help="If set, use convex GT CityJSON from this dir instead "
+                         "of scene.obj GT. Apples-to-apples comparison "
+                         "(both pred and GT convex-simplified).")
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
 
@@ -324,7 +390,12 @@ def main():
     out_dir = Path(args.out)
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    gt = parse_scene_obj(args.scene)
+    if args.gt_cityjson_dir:
+        gt = load_gt_from_convex_dir(Path(args.gt_cityjson_dir), args.scene)
+        print(f"[eval] GT source: convex CityJSON dir ({len(gt['buildings'])} buildings)")
+    else:
+        gt = parse_scene_obj(args.scene)
+        print(f"[eval] GT source: scene.obj ({len(gt['buildings'])} buildings)")
     stage3_summary = json.loads((stage3_dir / "stage3_summary.json").read_text())
     prims_file = stage3_dir / "primitives.npz"
 

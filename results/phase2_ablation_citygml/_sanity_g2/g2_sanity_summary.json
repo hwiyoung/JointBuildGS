@@ -1,0 +1,4398 @@
+{
+  "ckpt": "results/phase2_ablation_citygml/baseline/ckpt/final.pt",
+  "n_primitives": 981148,
+  "g2": {
+    "voxel_size": 2.0,
+    "merge_n_cos": 0.92,
+    "merge_d_tol": 0.5,
+    "min_group_size": 30,
+    "n_groups_total": 631,
+    "n_grouped": 891308,
+    "timing_sec": 26.743
+  },
+  "per_bldg_stats": {
+    "n_buildings": 131,
+    "n_buildings_nonempty": 114,
+    "n_groups_per_bldg_mean": 9.131578947368421,
+    "n_groups_per_bldg_median": 7.0,
+    "n_groups_per_bldg_min": 0,
+    "n_groups_per_bldg_max": 105,
+    "in_5_15_range_count": 71
+  },
+  "per_bldg": [
+    {
+      "bid": 0,
+      "n_prims": 11071,
+      "n_groups": 10,
+      "n_ungrouped": 557,
+      "top_groups": [
+        {
+          "gid": 244,
+          "size": 4414,
+          "class": 2
+        },
+        {
+          "gid": 0,
+          "size": 3297,
+          "class": 1
+        },
+        {
+          "gid": 248,
+          "size": 1931,
+          "class": 2
+        },
+        {
+          "gid": 245,
+          "size": 428,
+          "class": 2
+        },
+        {
+          "gid": 589,
+          "size": 248,
+          "class": 3
+        },
+        {
+          "gid": 262,
+          "size": 90,
+          "class": 2
+        },
+        {
+          "gid": 3,
+          "size": 43,
+          "class": 1
+        },
+        {
+          "gid": 253,
+          "size": 31,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 1,
+      "n_prims": 9533,
+      "n_groups": 9,
+      "n_ungrouped": 632,
+      "top_groups": [
+        {
+          "gid": 18,
+          "size": 4214,
+          "class": 1
+        },
+        {
+          "gid": 263,
+          "size": 3068,
+          "class": 2
+        },
+        {
+          "gid": 269,
+          "size": 807,
+          "class": 2
+        },
+        {
+          "gid": 279,
+          "size": 476,
+          "class": 2
+        },
+        {
+          "gid": 30,
+          "size": 161,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 114,
+          "class": 3
+        },
+        {
+          "gid": 32,
+          "size": 32,
+          "class": 1
+        },
+        {
+          "gid": 283,
+          "size": 20,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 2,
+      "n_prims": 5218,
+      "n_groups": 9,
+      "n_ungrouped": 408,
+      "top_groups": [
+        {
+          "gid": 24,
+          "size": 2202,
+          "class": 1
+        },
+        {
+          "gid": 247,
+          "size": 1402,
+          "class": 2
+        },
+        {
+          "gid": 277,
+          "size": 1049,
+          "class": 2
+        },
+        {
+          "gid": 589,
+          "size": 56,
+          "class": 3
+        },
+        {
+          "gid": 254,
+          "size": 39,
+          "class": 2
+        },
+        {
+          "gid": 270,
+          "size": 35,
+          "class": 2
+        },
+        {
+          "gid": 35,
+          "size": 21,
+          "class": 1
+        },
+        {
+          "gid": 50,
+          "size": 4,
+          "class": 1
+        }
+      ]
+    },
+    {
+      "bid": 3,
+      "n_prims": 81972,
+      "n_groups": 105,
+      "n_ungrouped": 6524,
+      "top_groups": [
+        {
+          "gid": 18,
+          "size": 23951,
+          "class": 1
+        },
+        {
+          "gid": 287,
+          "size": 7597,
+          "class": 2
+        },
+        {
+          "gid": 269,
+          "size": 5712,
+          "class": 2
+        },
+        {
+          "gid": 305,
+          "size": 5347,
+          "class": 2
+        },
+        {
+          "gid": 263,
+          "size": 5157,
+          "class": 2
+        },
+        {
+          "gid": 43,
+          "size": 4172,
+          "class": 1
+        },
+        {
+          "gid": 279,
+          "size": 4092,
+          "class": 2
+        },
+        {
+          "gid": 372,
+          "size": 3376,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 4,
+      "n_prims": 0,
+      "n_groups": 0
+    },
+    {
+      "bid": 5,
+      "n_prims": 134,
+      "n_groups": 3,
+      "n_ungrouped": 3,
+      "top_groups": [
+        {
+          "gid": 305,
+          "size": 124,
+          "class": 2
+        },
+        {
+          "gid": 161,
+          "size": 5,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 2,
+          "class": 3
+        }
+      ]
+    },
+    {
+      "bid": 6,
+      "n_prims": 2359,
+      "n_groups": 6,
+      "n_ungrouped": 209,
+      "top_groups": [
+        {
+          "gid": 18,
+          "size": 1342,
+          "class": 1
+        },
+        {
+          "gid": 263,
+          "size": 349,
+          "class": 2
+        },
+        {
+          "gid": 310,
+          "size": 229,
+          "class": 2
+        },
+        {
+          "gid": 287,
+          "size": 147,
+          "class": 2
+        },
+        {
+          "gid": 306,
+          "size": 69,
+          "class": 2
+        },
+        {
+          "gid": 589,
+          "size": 14,
+          "class": 3
+        }
+      ]
+    },
+    {
+      "bid": 7,
+      "n_prims": 6032,
+      "n_groups": 16,
+      "n_ungrouped": 522,
+      "top_groups": [
+        {
+          "gid": 247,
+          "size": 2690,
+          "class": 2
+        },
+        {
+          "gid": 98,
+          "size": 1204,
+          "class": 1
+        },
+        {
+          "gid": 24,
+          "size": 1084,
+          "class": 1
+        },
+        {
+          "gid": 106,
+          "size": 95,
+          "class": 1
+        },
+        {
+          "gid": 99,
+          "size": 58,
+          "class": 1
+        },
+        {
+          "gid": 104,
+          "size": 52,
+          "class": 1
+        },
+        {
+          "gid": 362,
+          "size": 49,
+          "class": 2
+        },
+        {
+          "gid": 107,
+          "size": 44,
+          "class": 1
+        }
+      ]
+    },
+    {
+      "bid": 8,
+      "n_prims": 4927,
+      "n_groups": 11,
+      "n_ungrouped": 448,
+      "top_groups": [
+        {
+          "gid": 247,
+          "size": 2243,
+          "class": 2
+        },
+        {
+          "gid": 24,
+          "size": 1936,
+          "class": 1
+        },
+        {
+          "gid": 67,
+          "size": 57,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 57,
+          "class": 3
+        },
+        {
+          "gid": 79,
+          "size": 47,
+          "class": 1
+        },
+        {
+          "gid": 351,
+          "size": 36,
+          "class": 2
+        },
+        {
+          "gid": 91,
+          "size": 28,
+          "class": 1
+        },
+        {
+          "gid": 277,
+          "size": 27,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 9,
+      "n_prims": 0,
+      "n_groups": 0
+    },
+    {
+      "bid": 10,
+      "n_prims": 10032,
+      "n_groups": 19,
+      "n_ungrouped": 717,
+      "top_groups": [
+        {
+          "gid": 4,
+          "size": 3782,
+          "class": 1
+        },
+        {
+          "gid": 255,
+          "size": 2951,
+          "class": 2
+        },
+        {
+          "gid": 247,
+          "size": 1566,
+          "class": 2
+        },
+        {
+          "gid": 28,
+          "size": 307,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 225,
+          "class": 3
+        },
+        {
+          "gid": 271,
+          "size": 141,
+          "class": 2
+        },
+        {
+          "gid": 272,
+          "size": 57,
+          "class": 2
+        },
+        {
+          "gid": 278,
+          "size": 55,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 11,
+      "n_prims": 2189,
+      "n_groups": 11,
+      "n_ungrouped": 307,
+      "top_groups": [
+        {
+          "gid": 247,
+          "size": 795,
+          "class": 2
+        },
+        {
+          "gid": 98,
+          "size": 578,
+          "class": 1
+        },
+        {
+          "gid": 380,
+          "size": 231,
+          "class": 2
+        },
+        {
+          "gid": 111,
+          "size": 68,
+          "class": 1
+        },
+        {
+          "gid": 383,
+          "size": 58,
+          "class": 2
+        },
+        {
+          "gid": 390,
+          "size": 39,
+          "class": 2
+        },
+        {
+          "gid": 112,
+          "size": 34,
+          "class": 1
+        },
+        {
+          "gid": 382,
+          "size": 31,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 12,
+      "n_prims": 3136,
+      "n_groups": 9,
+      "n_ungrouped": 275,
+      "top_groups": [
+        {
+          "gid": 123,
+          "size": 1713,
+          "class": 1
+        },
+        {
+          "gid": 263,
+          "size": 670,
+          "class": 2
+        },
+        {
+          "gid": 372,
+          "size": 249,
+          "class": 2
+        },
+        {
+          "gid": 125,
+          "size": 63,
+          "class": 1
+        },
+        {
+          "gid": 407,
+          "size": 45,
+          "class": 2
+        },
+        {
+          "gid": 589,
+          "size": 36,
+          "class": 3
+        },
+        {
+          "gid": 408,
+          "size": 35,
+          "class": 2
+        },
+        {
+          "gid": 404,
+          "size": 34,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 13,
+      "n_prims": 0,
+      "n_groups": 0
+    },
+    {
+      "bid": 14,
+      "n_prims": 2080,
+      "n_groups": 8,
+      "n_ungrouped": 210,
+      "top_groups": [
+        {
+          "gid": 4,
+          "size": 567,
+          "class": 1
+        },
+        {
+          "gid": 247,
+          "size": 521,
+          "class": 2
+        },
+        {
+          "gid": 255,
+          "size": 308,
+          "class": 2
+        },
+        {
+          "gid": 98,
+          "size": 219,
+          "class": 1
+        },
+        {
+          "gid": 390,
+          "size": 125,
+          "class": 2
+        },
+        {
+          "gid": 392,
+          "size": 101,
+          "class": 2
+        },
+        {
+          "gid": 116,
+          "size": 17,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 12,
+          "class": 3
+        }
+      ]
+    },
+    {
+      "bid": 15,
+      "n_prims": 2242,
+      "n_groups": 9,
+      "n_ungrouped": 183,
+      "top_groups": [
+        {
+          "gid": 18,
+          "size": 1214,
+          "class": 1
+        },
+        {
+          "gid": 305,
+          "size": 692,
+          "class": 2
+        },
+        {
+          "gid": 73,
+          "size": 38,
+          "class": 1
+        },
+        {
+          "gid": 343,
+          "size": 38,
+          "class": 2
+        },
+        {
+          "gid": 337,
+          "size": 37,
+          "class": 2
+        },
+        {
+          "gid": 333,
+          "size": 21,
+          "class": 2
+        },
+        {
+          "gid": 348,
+          "size": 15,
+          "class": 2
+        },
+        {
+          "gid": 326,
+          "size": 3,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 16,
+      "n_prims": 7501,
+      "n_groups": 17,
+      "n_ungrouped": 643,
+      "top_groups": [
+        {
+          "gid": 255,
+          "size": 2525,
+          "class": 2
+        },
+        {
+          "gid": 4,
+          "size": 2477,
+          "class": 1
+        },
+        {
+          "gid": 247,
+          "size": 1034,
+          "class": 2
+        },
+        {
+          "gid": 345,
+          "size": 393,
+          "class": 2
+        },
+        {
+          "gid": 89,
+          "size": 223,
+          "class": 1
+        },
+        {
+          "gid": 336,
+          "size": 45,
+          "class": 2
+        },
+        {
+          "gid": 75,
+          "size": 39,
+          "class": 1
+        },
+        {
+          "gid": 66,
+          "size": 37,
+          "class": 1
+        }
+      ]
+    },
+    {
+      "bid": 17,
+      "n_prims": 2788,
+      "n_groups": 5,
+      "n_ungrouped": 233,
+      "top_groups": [
+        {
+          "gid": 24,
+          "size": 1077,
+          "class": 1
+        },
+        {
+          "gid": 277,
+          "size": 829,
+          "class": 2
+        },
+        {
+          "gid": 247,
+          "size": 619,
+          "class": 2
+        },
+        {
+          "gid": 589,
+          "size": 22,
+          "class": 3
+        },
+        {
+          "gid": 322,
+          "size": 8,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 18,
+      "n_prims": 5791,
+      "n_groups": 10,
+      "n_ungrouped": 883,
+      "top_groups": [
+        {
+          "gid": 4,
+          "size": 2208,
+          "class": 1
+        },
+        {
+          "gid": 255,
+          "size": 1501,
+          "class": 2
+        },
+        {
+          "gid": 247,
+          "size": 821,
+          "class": 2
+        },
+        {
+          "gid": 388,
+          "size": 158,
+          "class": 2
+        },
+        {
+          "gid": 115,
+          "size": 87,
+          "class": 1
+        },
+        {
+          "gid": 399,
+          "size": 33,
+          "class": 2
+        },
+        {
+          "gid": 387,
+          "size": 30,
+          "class": 2
+        },
+        {
+          "gid": 121,
+          "size": 28,
+          "class": 1
+        }
+      ]
+    },
+    {
+      "bid": 19,
+      "n_prims": 7527,
+      "n_groups": 14,
+      "n_ungrouped": 656,
+      "top_groups": [
+        {
+          "gid": 8,
+          "size": 3980,
+          "class": 1
+        },
+        {
+          "gid": 251,
+          "size": 876,
+          "class": 2
+        },
+        {
+          "gid": 308,
+          "size": 790,
+          "class": 2
+        },
+        {
+          "gid": 302,
+          "size": 345,
+          "class": 2
+        },
+        {
+          "gid": 300,
+          "size": 324,
+          "class": 2
+        },
+        {
+          "gid": 276,
+          "size": 301,
+          "class": 2
+        },
+        {
+          "gid": 290,
+          "size": 75,
+          "class": 2
+        },
+        {
+          "gid": 285,
+          "size": 35,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 20,
+      "n_prims": 0,
+      "n_groups": 0
+    },
+    {
+      "bid": 21,
+      "n_prims": 3844,
+      "n_groups": 11,
+      "n_ungrouped": 307,
+      "top_groups": [
+        {
+          "gid": 123,
+          "size": 1632,
+          "class": 1
+        },
+        {
+          "gid": 305,
+          "size": 855,
+          "class": 2
+        },
+        {
+          "gid": 263,
+          "size": 462,
+          "class": 2
+        },
+        {
+          "gid": 145,
+          "size": 218,
+          "class": 1
+        },
+        {
+          "gid": 407,
+          "size": 125,
+          "class": 2
+        },
+        {
+          "gid": 142,
+          "size": 65,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 49,
+          "class": 3
+        },
+        {
+          "gid": 143,
+          "size": 42,
+          "class": 1
+        }
+      ]
+    },
+    {
+      "bid": 22,
+      "n_prims": 3906,
+      "n_groups": 11,
+      "n_ungrouped": 433,
+      "top_groups": [
+        {
+          "gid": 4,
+          "size": 1626,
+          "class": 1
+        },
+        {
+          "gid": 247,
+          "size": 917,
+          "class": 2
+        },
+        {
+          "gid": 255,
+          "size": 691,
+          "class": 2
+        },
+        {
+          "gid": 103,
+          "size": 73,
+          "class": 1
+        },
+        {
+          "gid": 101,
+          "size": 35,
+          "class": 1
+        },
+        {
+          "gid": 357,
+          "size": 33,
+          "class": 2
+        },
+        {
+          "gid": 381,
+          "size": 30,
+          "class": 2
+        },
+        {
+          "gid": 389,
+          "size": 27,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 23,
+      "n_prims": 389,
+      "n_groups": 5,
+      "n_ungrouped": 16,
+      "top_groups": [
+        {
+          "gid": 255,
+          "size": 213,
+          "class": 2
+        },
+        {
+          "gid": 4,
+          "size": 128,
+          "class": 1
+        },
+        {
+          "gid": 247,
+          "size": 16,
+          "class": 2
+        },
+        {
+          "gid": 103,
+          "size": 10,
+          "class": 1
+        },
+        {
+          "gid": 597,
+          "size": 6,
+          "class": 3
+        }
+      ]
+    },
+    {
+      "bid": 24,
+      "n_prims": 1538,
+      "n_groups": 7,
+      "n_ungrouped": 139,
+      "top_groups": [
+        {
+          "gid": 4,
+          "size": 520,
+          "class": 1
+        },
+        {
+          "gid": 255,
+          "size": 493,
+          "class": 2
+        },
+        {
+          "gid": 247,
+          "size": 331,
+          "class": 2
+        },
+        {
+          "gid": 391,
+          "size": 22,
+          "class": 2
+        },
+        {
+          "gid": 388,
+          "size": 21,
+          "class": 2
+        },
+        {
+          "gid": 597,
+          "size": 9,
+          "class": 3
+        },
+        {
+          "gid": 399,
+          "size": 3,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 25,
+      "n_prims": 389,
+      "n_groups": 3,
+      "n_ungrouped": 16,
+      "top_groups": [
+        {
+          "gid": 305,
+          "size": 220,
+          "class": 2
+        },
+        {
+          "gid": 18,
+          "size": 149,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 4,
+          "class": 3
+        }
+      ]
+    },
+    {
+      "bid": 26,
+      "n_prims": 973,
+      "n_groups": 5,
+      "n_ungrouped": 24,
+      "top_groups": [
+        {
+          "gid": 247,
+          "size": 526,
+          "class": 2
+        },
+        {
+          "gid": 24,
+          "size": 255,
+          "class": 1
+        },
+        {
+          "gid": 277,
+          "size": 133,
+          "class": 2
+        },
+        {
+          "gid": 589,
+          "size": 30,
+          "class": 3
+        },
+        {
+          "gid": 327,
+          "size": 5,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 27,
+      "n_prims": 1003,
+      "n_groups": 12,
+      "n_ungrouped": 164,
+      "top_groups": [
+        {
+          "gid": 305,
+          "size": 385,
+          "class": 2
+        },
+        {
+          "gid": 123,
+          "size": 209,
+          "class": 1
+        },
+        {
+          "gid": 439,
+          "size": 71,
+          "class": 2
+        },
+        {
+          "gid": 152,
+          "size": 56,
+          "class": 1
+        },
+        {
+          "gid": 372,
+          "size": 35,
+          "class": 2
+        },
+        {
+          "gid": 440,
+          "size": 27,
+          "class": 2
+        },
+        {
+          "gid": 438,
+          "size": 24,
+          "class": 2
+        },
+        {
+          "gid": 433,
+          "size": 18,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 28,
+      "n_prims": 1653,
+      "n_groups": 4,
+      "n_ungrouped": 131,
+      "top_groups": [
+        {
+          "gid": 247,
+          "size": 757,
+          "class": 2
+        },
+        {
+          "gid": 24,
+          "size": 618,
+          "class": 1
+        },
+        {
+          "gid": 93,
+          "size": 118,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 29,
+          "class": 3
+        }
+      ]
+    },
+    {
+      "bid": 29,
+      "n_prims": 572,
+      "n_groups": 3,
+      "n_ungrouped": 14,
+      "top_groups": [
+        {
+          "gid": 263,
+          "size": 354,
+          "class": 2
+        },
+        {
+          "gid": 18,
+          "size": 187,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 17,
+          "class": 3
+        }
+      ]
+    },
+    {
+      "bid": 30,
+      "n_prims": 0,
+      "n_groups": 0
+    },
+    {
+      "bid": 31,
+      "n_prims": 4321,
+      "n_groups": 14,
+      "n_ungrouped": 341,
+      "top_groups": [
+        {
+          "gid": 18,
+          "size": 2075,
+          "class": 1
+        },
+        {
+          "gid": 305,
+          "size": 1166,
+          "class": 2
+        },
+        {
+          "gid": 263,
+          "size": 262,
+          "class": 2
+        },
+        {
+          "gid": 53,
+          "size": 114,
+          "class": 1
+        },
+        {
+          "gid": 326,
+          "size": 99,
+          "class": 2
+        },
+        {
+          "gid": 310,
+          "size": 52,
+          "class": 2
+        },
+        {
+          "gid": 312,
+          "size": 47,
+          "class": 2
+        },
+        {
+          "gid": 318,
+          "size": 45,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 32,
+      "n_prims": 6663,
+      "n_groups": 13,
+      "n_ungrouped": 440,
+      "top_groups": [
+        {
+          "gid": 11,
+          "size": 1881,
+          "class": 1
+        },
+        {
+          "gid": 24,
+          "size": 1806,
+          "class": 1
+        },
+        {
+          "gid": 247,
+          "size": 1165,
+          "class": 2
+        },
+        {
+          "gid": 254,
+          "size": 1144,
+          "class": 2
+        },
+        {
+          "gid": 264,
+          "size": 88,
+          "class": 2
+        },
+        {
+          "gid": 12,
+          "size": 56,
+          "class": 1
+        },
+        {
+          "gid": 19,
+          "size": 43,
+          "class": 1
+        },
+        {
+          "gid": 17,
+          "size": 18,
+          "class": 1
+        }
+      ]
+    },
+    {
+      "bid": 33,
+      "n_prims": 0,
+      "n_groups": 0
+    },
+    {
+      "bid": 34,
+      "n_prims": 673,
+      "n_groups": 5,
+      "n_ungrouped": 32,
+      "top_groups": [
+        {
+          "gid": 305,
+          "size": 514,
+          "class": 2
+        },
+        {
+          "gid": 18,
+          "size": 114,
+          "class": 1
+        },
+        {
+          "gid": 161,
+          "size": 8,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 4,
+          "class": 3
+        },
+        {
+          "gid": 156,
+          "size": 1,
+          "class": 1
+        }
+      ]
+    },
+    {
+      "bid": 35,
+      "n_prims": 5745,
+      "n_groups": 12,
+      "n_ungrouped": 375,
+      "top_groups": [
+        {
+          "gid": 4,
+          "size": 2760,
+          "class": 1
+        },
+        {
+          "gid": 247,
+          "size": 2215,
+          "class": 2
+        },
+        {
+          "gid": 126,
+          "size": 121,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 81,
+          "class": 3
+        },
+        {
+          "gid": 417,
+          "size": 48,
+          "class": 2
+        },
+        {
+          "gid": 401,
+          "size": 41,
+          "class": 2
+        },
+        {
+          "gid": 133,
+          "size": 28,
+          "class": 1
+        },
+        {
+          "gid": 392,
+          "size": 26,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 36,
+      "n_prims": 1831,
+      "n_groups": 7,
+      "n_ungrouped": 97,
+      "top_groups": [
+        {
+          "gid": 245,
+          "size": 739,
+          "class": 2
+        },
+        {
+          "gid": 0,
+          "size": 502,
+          "class": 1
+        },
+        {
+          "gid": 244,
+          "size": 219,
+          "class": 2
+        },
+        {
+          "gid": 589,
+          "size": 175,
+          "class": 3
+        },
+        {
+          "gid": 246,
+          "size": 78,
+          "class": 2
+        },
+        {
+          "gid": 1,
+          "size": 13,
+          "class": 1
+        },
+        {
+          "gid": 2,
+          "size": 8,
+          "class": 1
+        }
+      ]
+    },
+    {
+      "bid": 37,
+      "n_prims": 494,
+      "n_groups": 4,
+      "n_ungrouped": 25,
+      "top_groups": [
+        {
+          "gid": 18,
+          "size": 214,
+          "class": 1
+        },
+        {
+          "gid": 305,
+          "size": 213,
+          "class": 2
+        },
+        {
+          "gid": 343,
+          "size": 26,
+          "class": 2
+        },
+        {
+          "gid": 348,
+          "size": 16,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 38,
+      "n_prims": 281,
+      "n_groups": 6,
+      "n_ungrouped": 12,
+      "top_groups": [
+        {
+          "gid": 372,
+          "size": 139,
+          "class": 2
+        },
+        {
+          "gid": 407,
+          "size": 47,
+          "class": 2
+        },
+        {
+          "gid": 145,
+          "size": 31,
+          "class": 1
+        },
+        {
+          "gid": 408,
+          "size": 28,
+          "class": 2
+        },
+        {
+          "gid": 123,
+          "size": 23,
+          "class": 1
+        },
+        {
+          "gid": 404,
+          "size": 1,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 39,
+      "n_prims": 15,
+      "n_groups": 1,
+      "n_ungrouped": 0,
+      "top_groups": [
+        {
+          "gid": 589,
+          "size": 15,
+          "class": 3
+        }
+      ]
+    },
+    {
+      "bid": 40,
+      "n_prims": 3227,
+      "n_groups": 5,
+      "n_ungrouped": 236,
+      "top_groups": [
+        {
+          "gid": 4,
+          "size": 1667,
+          "class": 1
+        },
+        {
+          "gid": 255,
+          "size": 670,
+          "class": 2
+        },
+        {
+          "gid": 247,
+          "size": 638,
+          "class": 2
+        },
+        {
+          "gid": 7,
+          "size": 14,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 2,
+          "class": 3
+        }
+      ]
+    },
+    {
+      "bid": 41,
+      "n_prims": 6323,
+      "n_groups": 9,
+      "n_ungrouped": 461,
+      "top_groups": [
+        {
+          "gid": 251,
+          "size": 3050,
+          "class": 2
+        },
+        {
+          "gid": 8,
+          "size": 2713,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 37,
+          "class": 3
+        },
+        {
+          "gid": 267,
+          "size": 30,
+          "class": 2
+        },
+        {
+          "gid": 41,
+          "size": 18,
+          "class": 1
+        },
+        {
+          "gid": 22,
+          "size": 6,
+          "class": 1
+        },
+        {
+          "gid": 302,
+          "size": 6,
+          "class": 2
+        },
+        {
+          "gid": 13,
+          "size": 1,
+          "class": 1
+        }
+      ]
+    },
+    {
+      "bid": 42,
+      "n_prims": 1889,
+      "n_groups": 5,
+      "n_ungrouped": 69,
+      "top_groups": [
+        {
+          "gid": 247,
+          "size": 1007,
+          "class": 2
+        },
+        {
+          "gid": 4,
+          "size": 576,
+          "class": 1
+        },
+        {
+          "gid": 5,
+          "size": 129,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 107,
+          "class": 3
+        },
+        {
+          "gid": 7,
+          "size": 1,
+          "class": 1
+        }
+      ]
+    },
+    {
+      "bid": 43,
+      "n_prims": 828,
+      "n_groups": 6,
+      "n_ungrouped": 42,
+      "top_groups": [
+        {
+          "gid": 263,
+          "size": 450,
+          "class": 2
+        },
+        {
+          "gid": 18,
+          "size": 233,
+          "class": 1
+        },
+        {
+          "gid": 400,
+          "size": 69,
+          "class": 2
+        },
+        {
+          "gid": 589,
+          "size": 21,
+          "class": 3
+        },
+        {
+          "gid": 118,
+          "size": 8,
+          "class": 1
+        },
+        {
+          "gid": 123,
+          "size": 5,
+          "class": 1
+        }
+      ]
+    },
+    {
+      "bid": 44,
+      "n_prims": 80,
+      "n_groups": 2,
+      "n_ungrouped": 0,
+      "top_groups": [
+        {
+          "gid": 305,
+          "size": 44,
+          "class": 2
+        },
+        {
+          "gid": 73,
+          "size": 36,
+          "class": 1
+        }
+      ]
+    },
+    {
+      "bid": 45,
+      "n_prims": 2699,
+      "n_groups": 9,
+      "n_ungrouped": 245,
+      "top_groups": [
+        {
+          "gid": 4,
+          "size": 1421,
+          "class": 1
+        },
+        {
+          "gid": 255,
+          "size": 455,
+          "class": 2
+        },
+        {
+          "gid": 247,
+          "size": 343,
+          "class": 2
+        },
+        {
+          "gid": 314,
+          "size": 165,
+          "class": 2
+        },
+        {
+          "gid": 281,
+          "size": 23,
+          "class": 2
+        },
+        {
+          "gid": 7,
+          "size": 22,
+          "class": 1
+        },
+        {
+          "gid": 37,
+          "size": 15,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 7,
+          "class": 3
+        }
+      ]
+    },
+    {
+      "bid": 46,
+      "n_prims": 0,
+      "n_groups": 0
+    },
+    {
+      "bid": 47,
+      "n_prims": 7158,
+      "n_groups": 9,
+      "n_ungrouped": 380,
+      "top_groups": [
+        {
+          "gid": 251,
+          "size": 4025,
+          "class": 2
+        },
+        {
+          "gid": 8,
+          "size": 2511,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 161,
+          "class": 3
+        },
+        {
+          "gid": 16,
+          "size": 20,
+          "class": 1
+        },
+        {
+          "gid": 13,
+          "size": 18,
+          "class": 1
+        },
+        {
+          "gid": 9,
+          "size": 13,
+          "class": 1
+        },
+        {
+          "gid": 22,
+          "size": 12,
+          "class": 1
+        },
+        {
+          "gid": 31,
+          "size": 12,
+          "class": 1
+        }
+      ]
+    },
+    {
+      "bid": 48,
+      "n_prims": 1488,
+      "n_groups": 12,
+      "n_ungrouped": 92,
+      "top_groups": [
+        {
+          "gid": 4,
+          "size": 704,
+          "class": 1
+        },
+        {
+          "gid": 247,
+          "size": 375,
+          "class": 2
+        },
+        {
+          "gid": 255,
+          "size": 160,
+          "class": 2
+        },
+        {
+          "gid": 275,
+          "size": 58,
+          "class": 2
+        },
+        {
+          "gid": 281,
+          "size": 41,
+          "class": 2
+        },
+        {
+          "gid": 282,
+          "size": 16,
+          "class": 2
+        },
+        {
+          "gid": 34,
+          "size": 14,
+          "class": 1
+        },
+        {
+          "gid": 37,
+          "size": 12,
+          "class": 1
+        }
+      ]
+    },
+    {
+      "bid": 49,
+      "n_prims": 0,
+      "n_groups": 0
+    },
+    {
+      "bid": 50,
+      "n_prims": 1452,
+      "n_groups": 6,
+      "n_ungrouped": 149,
+      "top_groups": [
+        {
+          "gid": 4,
+          "size": 475,
+          "class": 1
+        },
+        {
+          "gid": 255,
+          "size": 444,
+          "class": 2
+        },
+        {
+          "gid": 247,
+          "size": 361,
+          "class": 2
+        },
+        {
+          "gid": 391,
+          "size": 17,
+          "class": 2
+        },
+        {
+          "gid": 399,
+          "size": 4,
+          "class": 2
+        },
+        {
+          "gid": 589,
+          "size": 2,
+          "class": 3
+        }
+      ]
+    },
+    {
+      "bid": 51,
+      "n_prims": 0,
+      "n_groups": 0
+    },
+    {
+      "bid": 52,
+      "n_prims": 0,
+      "n_groups": 0
+    },
+    {
+      "bid": 53,
+      "n_prims": 812,
+      "n_groups": 6,
+      "n_ungrouped": 61,
+      "top_groups": [
+        {
+          "gid": 263,
+          "size": 359,
+          "class": 2
+        },
+        {
+          "gid": 123,
+          "size": 224,
+          "class": 1
+        },
+        {
+          "gid": 400,
+          "size": 89,
+          "class": 2
+        },
+        {
+          "gid": 118,
+          "size": 38,
+          "class": 1
+        },
+        {
+          "gid": 18,
+          "size": 23,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 18,
+          "class": 3
+        }
+      ]
+    },
+    {
+      "bid": 54,
+      "n_prims": 1438,
+      "n_groups": 7,
+      "n_ungrouped": 48,
+      "top_groups": [
+        {
+          "gid": 251,
+          "size": 890,
+          "class": 2
+        },
+        {
+          "gid": 8,
+          "size": 417,
+          "class": 1
+        },
+        {
+          "gid": 31,
+          "size": 30,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 29,
+          "class": 3
+        },
+        {
+          "gid": 267,
+          "size": 17,
+          "class": 2
+        },
+        {
+          "gid": 22,
+          "size": 6,
+          "class": 1
+        },
+        {
+          "gid": 13,
+          "size": 1,
+          "class": 1
+        }
+      ]
+    },
+    {
+      "bid": 55,
+      "n_prims": 6046,
+      "n_groups": 14,
+      "n_ungrouped": 414,
+      "top_groups": [
+        {
+          "gid": 8,
+          "size": 3015,
+          "class": 1
+        },
+        {
+          "gid": 276,
+          "size": 1841,
+          "class": 2
+        },
+        {
+          "gid": 251,
+          "size": 335,
+          "class": 2
+        },
+        {
+          "gid": 285,
+          "size": 238,
+          "class": 2
+        },
+        {
+          "gid": 290,
+          "size": 84,
+          "class": 2
+        },
+        {
+          "gid": 59,
+          "size": 43,
+          "class": 1
+        },
+        {
+          "gid": 54,
+          "size": 21,
+          "class": 1
+        },
+        {
+          "gid": 289,
+          "size": 20,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 56,
+      "n_prims": 1821,
+      "n_groups": 6,
+      "n_ungrouped": 85,
+      "top_groups": [
+        {
+          "gid": 247,
+          "size": 671,
+          "class": 2
+        },
+        {
+          "gid": 11,
+          "size": 456,
+          "class": 1
+        },
+        {
+          "gid": 254,
+          "size": 433,
+          "class": 2
+        },
+        {
+          "gid": 589,
+          "size": 95,
+          "class": 3
+        },
+        {
+          "gid": 12,
+          "size": 54,
+          "class": 1
+        },
+        {
+          "gid": 19,
+          "size": 27,
+          "class": 1
+        }
+      ]
+    },
+    {
+      "bid": 57,
+      "n_prims": 10,
+      "n_groups": 1,
+      "n_ungrouped": 0,
+      "top_groups": [
+        {
+          "gid": 589,
+          "size": 10,
+          "class": 3
+        }
+      ]
+    },
+    {
+      "bid": 58,
+      "n_prims": 72,
+      "n_groups": 2,
+      "n_ungrouped": 33,
+      "top_groups": [
+        {
+          "gid": 255,
+          "size": 34,
+          "class": 2
+        },
+        {
+          "gid": 4,
+          "size": 5,
+          "class": 1
+        }
+      ]
+    },
+    {
+      "bid": 59,
+      "n_prims": 0,
+      "n_groups": 0
+    },
+    {
+      "bid": 60,
+      "n_prims": 2438,
+      "n_groups": 10,
+      "n_ungrouped": 125,
+      "top_groups": [
+        {
+          "gid": 255,
+          "size": 1045,
+          "class": 2
+        },
+        {
+          "gid": 4,
+          "size": 702,
+          "class": 1
+        },
+        {
+          "gid": 247,
+          "size": 382,
+          "class": 2
+        },
+        {
+          "gid": 281,
+          "size": 70,
+          "class": 2
+        },
+        {
+          "gid": 284,
+          "size": 58,
+          "class": 2
+        },
+        {
+          "gid": 589,
+          "size": 26,
+          "class": 3
+        },
+        {
+          "gid": 37,
+          "size": 13,
+          "class": 1
+        },
+        {
+          "gid": 286,
+          "size": 9,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 61,
+      "n_prims": 1796,
+      "n_groups": 5,
+      "n_ungrouped": 44,
+      "top_groups": [
+        {
+          "gid": 18,
+          "size": 1064,
+          "class": 1
+        },
+        {
+          "gid": 263,
+          "size": 584,
+          "class": 2
+        },
+        {
+          "gid": 589,
+          "size": 100,
+          "class": 3
+        },
+        {
+          "gid": 42,
+          "size": 2,
+          "class": 1
+        },
+        {
+          "gid": 305,
+          "size": 2,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 62,
+      "n_prims": 13,
+      "n_groups": 1,
+      "n_ungrouped": 0,
+      "top_groups": [
+        {
+          "gid": 589,
+          "size": 13,
+          "class": 3
+        }
+      ]
+    },
+    {
+      "bid": 63,
+      "n_prims": 3217,
+      "n_groups": 9,
+      "n_ungrouped": 103,
+      "top_groups": [
+        {
+          "gid": 8,
+          "size": 1260,
+          "class": 1
+        },
+        {
+          "gid": 276,
+          "size": 1076,
+          "class": 2
+        },
+        {
+          "gid": 251,
+          "size": 497,
+          "class": 2
+        },
+        {
+          "gid": 289,
+          "size": 90,
+          "class": 2
+        },
+        {
+          "gid": 589,
+          "size": 61,
+          "class": 3
+        },
+        {
+          "gid": 62,
+          "size": 56,
+          "class": 1
+        },
+        {
+          "gid": 303,
+          "size": 44,
+          "class": 2
+        },
+        {
+          "gid": 280,
+          "size": 20,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 64,
+      "n_prims": 634,
+      "n_groups": 6,
+      "n_ungrouped": 84,
+      "top_groups": [
+        {
+          "gid": 247,
+          "size": 232,
+          "class": 2
+        },
+        {
+          "gid": 75,
+          "size": 216,
+          "class": 1
+        },
+        {
+          "gid": 24,
+          "size": 64,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 20,
+          "class": 3
+        },
+        {
+          "gid": 347,
+          "size": 12,
+          "class": 2
+        },
+        {
+          "gid": 255,
+          "size": 6,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 65,
+      "n_prims": 1,
+      "n_groups": 1,
+      "n_ungrouped": 0,
+      "top_groups": [
+        {
+          "gid": 589,
+          "size": 1,
+          "class": 3
+        }
+      ]
+    },
+    {
+      "bid": 66,
+      "n_prims": 405,
+      "n_groups": 7,
+      "n_ungrouped": 51,
+      "top_groups": [
+        {
+          "gid": 38,
+          "size": 188,
+          "class": 1
+        },
+        {
+          "gid": 281,
+          "size": 95,
+          "class": 2
+        },
+        {
+          "gid": 286,
+          "size": 44,
+          "class": 2
+        },
+        {
+          "gid": 282,
+          "size": 15,
+          "class": 2
+        },
+        {
+          "gid": 589,
+          "size": 9,
+          "class": 3
+        },
+        {
+          "gid": 37,
+          "size": 2,
+          "class": 1
+        },
+        {
+          "gid": 7,
+          "size": 1,
+          "class": 1
+        }
+      ]
+    },
+    {
+      "bid": 67,
+      "n_prims": 11,
+      "n_groups": 1,
+      "n_ungrouped": 0,
+      "top_groups": [
+        {
+          "gid": 589,
+          "size": 11,
+          "class": 3
+        }
+      ]
+    },
+    {
+      "bid": 68,
+      "n_prims": 0,
+      "n_groups": 0
+    },
+    {
+      "bid": 69,
+      "n_prims": 1,
+      "n_groups": 0,
+      "n_ungrouped": 1,
+      "top_groups": []
+    },
+    {
+      "bid": 70,
+      "n_prims": 10,
+      "n_groups": 1,
+      "n_ungrouped": 2,
+      "top_groups": [
+        {
+          "gid": 589,
+          "size": 8,
+          "class": 3
+        }
+      ]
+    },
+    {
+      "bid": 71,
+      "n_prims": 20,
+      "n_groups": 3,
+      "n_ungrouped": 8,
+      "top_groups": [
+        {
+          "gid": 266,
+          "size": 7,
+          "class": 2
+        },
+        {
+          "gid": 17,
+          "size": 4,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 1,
+          "class": 3
+        }
+      ]
+    },
+    {
+      "bid": 72,
+      "n_prims": 8305,
+      "n_groups": 19,
+      "n_ungrouped": 1141,
+      "top_groups": [
+        {
+          "gid": 176,
+          "size": 3815,
+          "class": 1
+        },
+        {
+          "gid": 464,
+          "size": 1956,
+          "class": 2
+        },
+        {
+          "gid": 443,
+          "size": 613,
+          "class": 2
+        },
+        {
+          "gid": 492,
+          "size": 172,
+          "class": 2
+        },
+        {
+          "gid": 200,
+          "size": 167,
+          "class": 1
+        },
+        {
+          "gid": 498,
+          "size": 98,
+          "class": 2
+        },
+        {
+          "gid": 532,
+          "size": 64,
+          "class": 2
+        },
+        {
+          "gid": 502,
+          "size": 59,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 73,
+      "n_prims": 7628,
+      "n_groups": 10,
+      "n_ungrouped": 796,
+      "top_groups": [
+        {
+          "gid": 176,
+          "size": 3277,
+          "class": 1
+        },
+        {
+          "gid": 443,
+          "size": 3048,
+          "class": 2
+        },
+        {
+          "gid": 200,
+          "size": 201,
+          "class": 1
+        },
+        {
+          "gid": 461,
+          "size": 99,
+          "class": 2
+        },
+        {
+          "gid": 589,
+          "size": 71,
+          "class": 3
+        },
+        {
+          "gid": 185,
+          "size": 51,
+          "class": 1
+        },
+        {
+          "gid": 190,
+          "size": 35,
+          "class": 1
+        },
+        {
+          "gid": 469,
+          "size": 33,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 74,
+      "n_prims": 3110,
+      "n_groups": 11,
+      "n_ungrouped": 273,
+      "top_groups": [
+        {
+          "gid": 443,
+          "size": 1168,
+          "class": 2
+        },
+        {
+          "gid": 176,
+          "size": 977,
+          "class": 1
+        },
+        {
+          "gid": 184,
+          "size": 417,
+          "class": 1
+        },
+        {
+          "gid": 460,
+          "size": 114,
+          "class": 2
+        },
+        {
+          "gid": 589,
+          "size": 47,
+          "class": 3
+        },
+        {
+          "gid": 197,
+          "size": 31,
+          "class": 1
+        },
+        {
+          "gid": 459,
+          "size": 31,
+          "class": 2
+        },
+        {
+          "gid": 193,
+          "size": 22,
+          "class": 1
+        }
+      ]
+    },
+    {
+      "bid": 75,
+      "n_prims": 12179,
+      "n_groups": 19,
+      "n_ungrouped": 1216,
+      "top_groups": [
+        {
+          "gid": 214,
+          "size": 4544,
+          "class": 1
+        },
+        {
+          "gid": 504,
+          "size": 3896,
+          "class": 2
+        },
+        {
+          "gid": 515,
+          "size": 1427,
+          "class": 2
+        },
+        {
+          "gid": 525,
+          "size": 270,
+          "class": 2
+        },
+        {
+          "gid": 589,
+          "size": 220,
+          "class": 3
+        },
+        {
+          "gid": 526,
+          "size": 219,
+          "class": 2
+        },
+        {
+          "gid": 535,
+          "size": 120,
+          "class": 2
+        },
+        {
+          "gid": 236,
+          "size": 47,
+          "class": 1
+        }
+      ]
+    },
+    {
+      "bid": 76,
+      "n_prims": 9771,
+      "n_groups": 20,
+      "n_ungrouped": 858,
+      "top_groups": [
+        {
+          "gid": 214,
+          "size": 4181,
+          "class": 1
+        },
+        {
+          "gid": 504,
+          "size": 4095,
+          "class": 2
+        },
+        {
+          "gid": 537,
+          "size": 126,
+          "class": 2
+        },
+        {
+          "gid": 506,
+          "size": 99,
+          "class": 2
+        },
+        {
+          "gid": 589,
+          "size": 98,
+          "class": 3
+        },
+        {
+          "gid": 524,
+          "size": 56,
+          "class": 2
+        },
+        {
+          "gid": 533,
+          "size": 55,
+          "class": 2
+        },
+        {
+          "gid": 544,
+          "size": 31,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 77,
+      "n_prims": 30,
+      "n_groups": 1,
+      "n_ungrouped": 4,
+      "top_groups": [
+        {
+          "gid": 589,
+          "size": 26,
+          "class": 3
+        }
+      ]
+    },
+    {
+      "bid": 78,
+      "n_prims": 3018,
+      "n_groups": 5,
+      "n_ungrouped": 108,
+      "top_groups": [
+        {
+          "gid": 504,
+          "size": 1585,
+          "class": 2
+        },
+        {
+          "gid": 214,
+          "size": 1175,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 117,
+          "class": 3
+        },
+        {
+          "gid": 505,
+          "size": 30,
+          "class": 2
+        },
+        {
+          "gid": 218,
+          "size": 3,
+          "class": 1
+        }
+      ]
+    },
+    {
+      "bid": 79,
+      "n_prims": 5608,
+      "n_groups": 7,
+      "n_ungrouped": 281,
+      "top_groups": [
+        {
+          "gid": 504,
+          "size": 3909,
+          "class": 2
+        },
+        {
+          "gid": 214,
+          "size": 1069,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 285,
+          "class": 3
+        },
+        {
+          "gid": 530,
+          "size": 31,
+          "class": 2
+        },
+        {
+          "gid": 223,
+          "size": 16,
+          "class": 1
+        },
+        {
+          "gid": 232,
+          "size": 13,
+          "class": 1
+        },
+        {
+          "gid": 229,
+          "size": 4,
+          "class": 1
+        }
+      ]
+    },
+    {
+      "bid": 80,
+      "n_prims": 11716,
+      "n_groups": 14,
+      "n_ungrouped": 1104,
+      "top_groups": [
+        {
+          "gid": 443,
+          "size": 4705,
+          "class": 2
+        },
+        {
+          "gid": 176,
+          "size": 3881,
+          "class": 1
+        },
+        {
+          "gid": 500,
+          "size": 708,
+          "class": 2
+        },
+        {
+          "gid": 474,
+          "size": 589,
+          "class": 2
+        },
+        {
+          "gid": 464,
+          "size": 167,
+          "class": 2
+        },
+        {
+          "gid": 589,
+          "size": 167,
+          "class": 3
+        },
+        {
+          "gid": 208,
+          "size": 136,
+          "class": 1
+        },
+        {
+          "gid": 209,
+          "size": 102,
+          "class": 1
+        }
+      ]
+    },
+    {
+      "bid": 81,
+      "n_prims": 2791,
+      "n_groups": 7,
+      "n_ungrouped": 322,
+      "top_groups": [
+        {
+          "gid": 176,
+          "size": 1464,
+          "class": 1
+        },
+        {
+          "gid": 508,
+          "size": 434,
+          "class": 2
+        },
+        {
+          "gid": 464,
+          "size": 381,
+          "class": 2
+        },
+        {
+          "gid": 509,
+          "size": 120,
+          "class": 2
+        },
+        {
+          "gid": 231,
+          "size": 33,
+          "class": 1
+        },
+        {
+          "gid": 531,
+          "size": 30,
+          "class": 2
+        },
+        {
+          "gid": 217,
+          "size": 7,
+          "class": 1
+        }
+      ]
+    },
+    {
+      "bid": 82,
+      "n_prims": 2473,
+      "n_groups": 7,
+      "n_ungrouped": 272,
+      "top_groups": [
+        {
+          "gid": 176,
+          "size": 1387,
+          "class": 1
+        },
+        {
+          "gid": 464,
+          "size": 272,
+          "class": 2
+        },
+        {
+          "gid": 512,
+          "size": 205,
+          "class": 2
+        },
+        {
+          "gid": 513,
+          "size": 168,
+          "class": 2
+        },
+        {
+          "gid": 514,
+          "size": 142,
+          "class": 2
+        },
+        {
+          "gid": 539,
+          "size": 26,
+          "class": 2
+        },
+        {
+          "gid": 589,
+          "size": 1,
+          "class": 3
+        }
+      ]
+    },
+    {
+      "bid": 83,
+      "n_prims": 4382,
+      "n_groups": 12,
+      "n_ungrouped": 398,
+      "top_groups": [
+        {
+          "gid": 176,
+          "size": 2364,
+          "class": 1
+        },
+        {
+          "gid": 443,
+          "size": 850,
+          "class": 2
+        },
+        {
+          "gid": 464,
+          "size": 382,
+          "class": 2
+        },
+        {
+          "gid": 497,
+          "size": 198,
+          "class": 2
+        },
+        {
+          "gid": 224,
+          "size": 56,
+          "class": 1
+        },
+        {
+          "gid": 521,
+          "size": 46,
+          "class": 2
+        },
+        {
+          "gid": 518,
+          "size": 38,
+          "class": 2
+        },
+        {
+          "gid": 520,
+          "size": 34,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 84,
+      "n_prims": 2118,
+      "n_groups": 6,
+      "n_ungrouped": 122,
+      "top_groups": [
+        {
+          "gid": 176,
+          "size": 981,
+          "class": 1
+        },
+        {
+          "gid": 443,
+          "size": 672,
+          "class": 2
+        },
+        {
+          "gid": 464,
+          "size": 271,
+          "class": 2
+        },
+        {
+          "gid": 529,
+          "size": 26,
+          "class": 2
+        },
+        {
+          "gid": 230,
+          "size": 25,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 21,
+          "class": 3
+        }
+      ]
+    },
+    {
+      "bid": 85,
+      "n_prims": 5629,
+      "n_groups": 12,
+      "n_ungrouped": 557,
+      "top_groups": [
+        {
+          "gid": 176,
+          "size": 2515,
+          "class": 1
+        },
+        {
+          "gid": 464,
+          "size": 1131,
+          "class": 2
+        },
+        {
+          "gid": 497,
+          "size": 956,
+          "class": 2
+        },
+        {
+          "gid": 443,
+          "size": 218,
+          "class": 2
+        },
+        {
+          "gid": 516,
+          "size": 109,
+          "class": 2
+        },
+        {
+          "gid": 221,
+          "size": 85,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 19,
+          "class": 3
+        },
+        {
+          "gid": 495,
+          "size": 18,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 86,
+      "n_prims": 2,
+      "n_groups": 1,
+      "n_ungrouped": 0,
+      "top_groups": [
+        {
+          "gid": 589,
+          "size": 2,
+          "class": 3
+        }
+      ]
+    },
+    {
+      "bid": 87,
+      "n_prims": 5793,
+      "n_groups": 11,
+      "n_ungrouped": 669,
+      "top_groups": [
+        {
+          "gid": 443,
+          "size": 2640,
+          "class": 2
+        },
+        {
+          "gid": 176,
+          "size": 2059,
+          "class": 1
+        },
+        {
+          "gid": 488,
+          "size": 122,
+          "class": 2
+        },
+        {
+          "gid": 468,
+          "size": 85,
+          "class": 2
+        },
+        {
+          "gid": 482,
+          "size": 73,
+          "class": 2
+        },
+        {
+          "gid": 589,
+          "size": 54,
+          "class": 3
+        },
+        {
+          "gid": 489,
+          "size": 31,
+          "class": 2
+        },
+        {
+          "gid": 473,
+          "size": 30,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 88,
+      "n_prims": 627,
+      "n_groups": 5,
+      "n_ungrouped": 119,
+      "top_groups": [
+        {
+          "gid": 443,
+          "size": 259,
+          "class": 2
+        },
+        {
+          "gid": 176,
+          "size": 198,
+          "class": 1
+        },
+        {
+          "gid": 472,
+          "size": 26,
+          "class": 2
+        },
+        {
+          "gid": 589,
+          "size": 16,
+          "class": 3
+        },
+        {
+          "gid": 474,
+          "size": 9,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 89,
+      "n_prims": 2268,
+      "n_groups": 4,
+      "n_ungrouped": 295,
+      "top_groups": [
+        {
+          "gid": 176,
+          "size": 1003,
+          "class": 1
+        },
+        {
+          "gid": 443,
+          "size": 876,
+          "class": 2
+        },
+        {
+          "gid": 465,
+          "size": 53,
+          "class": 2
+        },
+        {
+          "gid": 589,
+          "size": 41,
+          "class": 3
+        }
+      ]
+    },
+    {
+      "bid": 90,
+      "n_prims": 2670,
+      "n_groups": 4,
+      "n_ungrouped": 230,
+      "top_groups": [
+        {
+          "gid": 176,
+          "size": 1389,
+          "class": 1
+        },
+        {
+          "gid": 443,
+          "size": 984,
+          "class": 2
+        },
+        {
+          "gid": 589,
+          "size": 43,
+          "class": 3
+        },
+        {
+          "gid": 463,
+          "size": 24,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 91,
+      "n_prims": 25,
+      "n_groups": 1,
+      "n_ungrouped": 0,
+      "top_groups": [
+        {
+          "gid": 589,
+          "size": 25,
+          "class": 3
+        }
+      ]
+    },
+    {
+      "bid": 92,
+      "n_prims": 8541,
+      "n_groups": 8,
+      "n_ungrouped": 655,
+      "top_groups": [
+        {
+          "gid": 443,
+          "size": 3639,
+          "class": 2
+        },
+        {
+          "gid": 176,
+          "size": 2226,
+          "class": 1
+        },
+        {
+          "gid": 168,
+          "size": 1768,
+          "class": 1
+        },
+        {
+          "gid": 456,
+          "size": 110,
+          "class": 2
+        },
+        {
+          "gid": 589,
+          "size": 81,
+          "class": 3
+        },
+        {
+          "gid": 167,
+          "size": 27,
+          "class": 1
+        },
+        {
+          "gid": 181,
+          "size": 25,
+          "class": 1
+        },
+        {
+          "gid": 186,
+          "size": 10,
+          "class": 1
+        }
+      ]
+    },
+    {
+      "bid": 93,
+      "n_prims": 12186,
+      "n_groups": 21,
+      "n_ungrouped": 710,
+      "top_groups": [
+        {
+          "gid": 443,
+          "size": 4325,
+          "class": 2
+        },
+        {
+          "gid": 163,
+          "size": 2593,
+          "class": 1
+        },
+        {
+          "gid": 167,
+          "size": 1635,
+          "class": 1
+        },
+        {
+          "gid": 166,
+          "size": 1098,
+          "class": 1
+        },
+        {
+          "gid": 165,
+          "size": 1092,
+          "class": 1
+        },
+        {
+          "gid": 450,
+          "size": 172,
+          "class": 2
+        },
+        {
+          "gid": 589,
+          "size": 139,
+          "class": 3
+        },
+        {
+          "gid": 170,
+          "size": 71,
+          "class": 1
+        }
+      ]
+    },
+    {
+      "bid": 94,
+      "n_prims": 12539,
+      "n_groups": 22,
+      "n_ungrouped": 1044,
+      "top_groups": [
+        {
+          "gid": 176,
+          "size": 5556,
+          "class": 1
+        },
+        {
+          "gid": 464,
+          "size": 4180,
+          "class": 2
+        },
+        {
+          "gid": 192,
+          "size": 1038,
+          "class": 1
+        },
+        {
+          "gid": 477,
+          "size": 88,
+          "class": 2
+        },
+        {
+          "gid": 194,
+          "size": 86,
+          "class": 1
+        },
+        {
+          "gid": 496,
+          "size": 76,
+          "class": 2
+        },
+        {
+          "gid": 503,
+          "size": 75,
+          "class": 2
+        },
+        {
+          "gid": 470,
+          "size": 63,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 95,
+      "n_prims": 4268,
+      "n_groups": 9,
+      "n_ungrouped": 179,
+      "top_groups": [
+        {
+          "gid": 443,
+          "size": 2552,
+          "class": 2
+        },
+        {
+          "gid": 163,
+          "size": 677,
+          "class": 1
+        },
+        {
+          "gid": 171,
+          "size": 399,
+          "class": 1
+        },
+        {
+          "gid": 452,
+          "size": 218,
+          "class": 2
+        },
+        {
+          "gid": 589,
+          "size": 167,
+          "class": 3
+        },
+        {
+          "gid": 177,
+          "size": 25,
+          "class": 1
+        },
+        {
+          "gid": 174,
+          "size": 24,
+          "class": 1
+        },
+        {
+          "gid": 450,
+          "size": 21,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 96,
+      "n_prims": 4044,
+      "n_groups": 6,
+      "n_ungrouped": 125,
+      "top_groups": [
+        {
+          "gid": 464,
+          "size": 1990,
+          "class": 2
+        },
+        {
+          "gid": 192,
+          "size": 1460,
+          "class": 1
+        },
+        {
+          "gid": 176,
+          "size": 359,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 102,
+          "class": 3
+        },
+        {
+          "gid": 499,
+          "size": 7,
+          "class": 2
+        },
+        {
+          "gid": 194,
+          "size": 1,
+          "class": 1
+        }
+      ]
+    },
+    {
+      "bid": 97,
+      "n_prims": 4967,
+      "n_groups": 9,
+      "n_ungrouped": 594,
+      "top_groups": [
+        {
+          "gid": 176,
+          "size": 2889,
+          "class": 1
+        },
+        {
+          "gid": 464,
+          "size": 1109,
+          "class": 2
+        },
+        {
+          "gid": 493,
+          "size": 187,
+          "class": 2
+        },
+        {
+          "gid": 517,
+          "size": 63,
+          "class": 2
+        },
+        {
+          "gid": 490,
+          "size": 62,
+          "class": 2
+        },
+        {
+          "gid": 206,
+          "size": 20,
+          "class": 1
+        },
+        {
+          "gid": 483,
+          "size": 16,
+          "class": 2
+        },
+        {
+          "gid": 519,
+          "size": 16,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 98,
+      "n_prims": 2421,
+      "n_groups": 4,
+      "n_ungrouped": 349,
+      "top_groups": [
+        {
+          "gid": 176,
+          "size": 1268,
+          "class": 1
+        },
+        {
+          "gid": 464,
+          "size": 766,
+          "class": 2
+        },
+        {
+          "gid": 483,
+          "size": 30,
+          "class": 2
+        },
+        {
+          "gid": 203,
+          "size": 8,
+          "class": 1
+        }
+      ]
+    },
+    {
+      "bid": 99,
+      "n_prims": 2587,
+      "n_groups": 4,
+      "n_ungrouped": 368,
+      "top_groups": [
+        {
+          "gid": 176,
+          "size": 1206,
+          "class": 1
+        },
+        {
+          "gid": 464,
+          "size": 840,
+          "class": 2
+        },
+        {
+          "gid": 479,
+          "size": 150,
+          "class": 2
+        },
+        {
+          "gid": 203,
+          "size": 23,
+          "class": 1
+        }
+      ]
+    },
+    {
+      "bid": 100,
+      "n_prims": 3037,
+      "n_groups": 13,
+      "n_ungrouped": 380,
+      "top_groups": [
+        {
+          "gid": 176,
+          "size": 1281,
+          "class": 1
+        },
+        {
+          "gid": 464,
+          "size": 819,
+          "class": 2
+        },
+        {
+          "gid": 204,
+          "size": 238,
+          "class": 1
+        },
+        {
+          "gid": 481,
+          "size": 95,
+          "class": 2
+        },
+        {
+          "gid": 484,
+          "size": 67,
+          "class": 2
+        },
+        {
+          "gid": 475,
+          "size": 49,
+          "class": 2
+        },
+        {
+          "gid": 486,
+          "size": 43,
+          "class": 2
+        },
+        {
+          "gid": 201,
+          "size": 30,
+          "class": 1
+        }
+      ]
+    },
+    {
+      "bid": 101,
+      "n_prims": 0,
+      "n_groups": 0
+    },
+    {
+      "bid": 102,
+      "n_prims": 2089,
+      "n_groups": 10,
+      "n_ungrouped": 287,
+      "top_groups": [
+        {
+          "gid": 176,
+          "size": 796,
+          "class": 1
+        },
+        {
+          "gid": 464,
+          "size": 722,
+          "class": 2
+        },
+        {
+          "gid": 187,
+          "size": 153,
+          "class": 1
+        },
+        {
+          "gid": 485,
+          "size": 46,
+          "class": 2
+        },
+        {
+          "gid": 204,
+          "size": 37,
+          "class": 1
+        },
+        {
+          "gid": 205,
+          "size": 23,
+          "class": 1
+        },
+        {
+          "gid": 486,
+          "size": 8,
+          "class": 2
+        },
+        {
+          "gid": 484,
+          "size": 7,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 103,
+      "n_prims": 3087,
+      "n_groups": 8,
+      "n_ungrouped": 160,
+      "top_groups": [
+        {
+          "gid": 443,
+          "size": 1657,
+          "class": 2
+        },
+        {
+          "gid": 168,
+          "size": 660,
+          "class": 1
+        },
+        {
+          "gid": 167,
+          "size": 511,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 38,
+          "class": 3
+        },
+        {
+          "gid": 457,
+          "size": 33,
+          "class": 2
+        },
+        {
+          "gid": 458,
+          "size": 19,
+          "class": 2
+        },
+        {
+          "gid": 169,
+          "size": 7,
+          "class": 1
+        },
+        {
+          "gid": 456,
+          "size": 2,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 104,
+      "n_prims": 8,
+      "n_groups": 0,
+      "n_ungrouped": 8,
+      "top_groups": []
+    },
+    {
+      "bid": 105,
+      "n_prims": 0,
+      "n_groups": 0
+    },
+    {
+      "bid": 106,
+      "n_prims": 229,
+      "n_groups": 3,
+      "n_ungrouped": 10,
+      "top_groups": [
+        {
+          "gid": 443,
+          "size": 125,
+          "class": 2
+        },
+        {
+          "gid": 167,
+          "size": 54,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 40,
+          "class": 3
+        }
+      ]
+    },
+    {
+      "bid": 107,
+      "n_prims": 3290,
+      "n_groups": 13,
+      "n_ungrouped": 352,
+      "top_groups": [
+        {
+          "gid": 443,
+          "size": 1288,
+          "class": 2
+        },
+        {
+          "gid": 176,
+          "size": 994,
+          "class": 1
+        },
+        {
+          "gid": 189,
+          "size": 160,
+          "class": 1
+        },
+        {
+          "gid": 460,
+          "size": 152,
+          "class": 2
+        },
+        {
+          "gid": 462,
+          "size": 129,
+          "class": 2
+        },
+        {
+          "gid": 191,
+          "size": 52,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 49,
+          "class": 3
+        },
+        {
+          "gid": 467,
+          "size": 44,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 108,
+      "n_prims": 3378,
+      "n_groups": 6,
+      "n_ungrouped": 425,
+      "top_groups": [
+        {
+          "gid": 443,
+          "size": 1472,
+          "class": 2
+        },
+        {
+          "gid": 176,
+          "size": 1286,
+          "class": 1
+        },
+        {
+          "gid": 455,
+          "size": 71,
+          "class": 2
+        },
+        {
+          "gid": 589,
+          "size": 52,
+          "class": 3
+        },
+        {
+          "gid": 454,
+          "size": 42,
+          "class": 2
+        },
+        {
+          "gid": 188,
+          "size": 30,
+          "class": 1
+        }
+      ]
+    },
+    {
+      "bid": 109,
+      "n_prims": 3136,
+      "n_groups": 4,
+      "n_ungrouped": 210,
+      "top_groups": [
+        {
+          "gid": 443,
+          "size": 1875,
+          "class": 2
+        },
+        {
+          "gid": 176,
+          "size": 899,
+          "class": 1
+        },
+        {
+          "gid": 186,
+          "size": 93,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 59,
+          "class": 3
+        }
+      ]
+    },
+    {
+      "bid": 110,
+      "n_prims": 42,
+      "n_groups": 2,
+      "n_ungrouped": 0,
+      "top_groups": [
+        {
+          "gid": 589,
+          "size": 31,
+          "class": 3
+        },
+        {
+          "gid": 443,
+          "size": 11,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 111,
+      "n_prims": 196,
+      "n_groups": 5,
+      "n_ungrouped": 53,
+      "top_groups": [
+        {
+          "gid": 75,
+          "size": 89,
+          "class": 1
+        },
+        {
+          "gid": 597,
+          "size": 30,
+          "class": 3
+        },
+        {
+          "gid": 255,
+          "size": 14,
+          "class": 2
+        },
+        {
+          "gid": 100,
+          "size": 6,
+          "class": 1
+        },
+        {
+          "gid": 338,
+          "size": 4,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 112,
+      "n_prims": 1619,
+      "n_groups": 6,
+      "n_ungrouped": 148,
+      "top_groups": [
+        {
+          "gid": 589,
+          "size": 879,
+          "class": 3
+        },
+        {
+          "gid": 144,
+          "size": 256,
+          "class": 1
+        },
+        {
+          "gid": 434,
+          "size": 100,
+          "class": 2
+        },
+        {
+          "gid": 430,
+          "size": 84,
+          "class": 2
+        },
+        {
+          "gid": 436,
+          "size": 78,
+          "class": 2
+        },
+        {
+          "gid": 431,
+          "size": 74,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 113,
+      "n_prims": 678,
+      "n_groups": 5,
+      "n_ungrouped": 42,
+      "top_groups": [
+        {
+          "gid": 589,
+          "size": 338,
+          "class": 3
+        },
+        {
+          "gid": 17,
+          "size": 188,
+          "class": 1
+        },
+        {
+          "gid": 260,
+          "size": 54,
+          "class": 2
+        },
+        {
+          "gid": 266,
+          "size": 30,
+          "class": 2
+        },
+        {
+          "gid": 259,
+          "size": 26,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 114,
+      "n_prims": 198,
+      "n_groups": 2,
+      "n_ungrouped": 81,
+      "top_groups": [
+        {
+          "gid": 100,
+          "size": 81,
+          "class": 1
+        },
+        {
+          "gid": 597,
+          "size": 36,
+          "class": 3
+        }
+      ]
+    },
+    {
+      "bid": 115,
+      "n_prims": 1845,
+      "n_groups": 6,
+      "n_ungrouped": 167,
+      "top_groups": [
+        {
+          "gid": 589,
+          "size": 776,
+          "class": 3
+        },
+        {
+          "gid": 164,
+          "size": 441,
+          "class": 1
+        },
+        {
+          "gid": 445,
+          "size": 198,
+          "class": 2
+        },
+        {
+          "gid": 448,
+          "size": 99,
+          "class": 2
+        },
+        {
+          "gid": 446,
+          "size": 89,
+          "class": 2
+        },
+        {
+          "gid": 447,
+          "size": 75,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 116,
+      "n_prims": 308,
+      "n_groups": 4,
+      "n_ungrouped": 26,
+      "top_groups": [
+        {
+          "gid": 589,
+          "size": 110,
+          "class": 3
+        },
+        {
+          "gid": 75,
+          "size": 109,
+          "class": 1
+        },
+        {
+          "gid": 338,
+          "size": 37,
+          "class": 2
+        },
+        {
+          "gid": 347,
+          "size": 26,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 117,
+      "n_prims": 0,
+      "n_groups": 0
+    },
+    {
+      "bid": 118,
+      "n_prims": 4,
+      "n_groups": 1,
+      "n_ungrouped": 3,
+      "top_groups": [
+        {
+          "gid": 597,
+          "size": 1,
+          "class": 3
+        }
+      ]
+    },
+    {
+      "bid": 119,
+      "n_prims": 0,
+      "n_groups": 0
+    },
+    {
+      "bid": 120,
+      "n_prims": 9564,
+      "n_groups": 10,
+      "n_ungrouped": 363,
+      "top_groups": [
+        {
+          "gid": 8,
+          "size": 4574,
+          "class": 1
+        },
+        {
+          "gid": 251,
+          "size": 4246,
+          "class": 2
+        },
+        {
+          "gid": 78,
+          "size": 119,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 111,
+          "class": 3
+        },
+        {
+          "gid": 68,
+          "size": 43,
+          "class": 1
+        },
+        {
+          "gid": 77,
+          "size": 34,
+          "class": 1
+        },
+        {
+          "gid": 346,
+          "size": 34,
+          "class": 2
+        },
+        {
+          "gid": 315,
+          "size": 21,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 121,
+      "n_prims": 192,
+      "n_groups": 4,
+      "n_ungrouped": 44,
+      "top_groups": [
+        {
+          "gid": 75,
+          "size": 104,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 39,
+          "class": 3
+        },
+        {
+          "gid": 255,
+          "size": 4,
+          "class": 2
+        },
+        {
+          "gid": 338,
+          "size": 1,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 122,
+      "n_prims": 0,
+      "n_groups": 0
+    },
+    {
+      "bid": 123,
+      "n_prims": 17906,
+      "n_groups": 24,
+      "n_ungrouped": 1136,
+      "top_groups": [
+        {
+          "gid": 6,
+          "size": 6775,
+          "class": 1
+        },
+        {
+          "gid": 249,
+          "size": 5221,
+          "class": 2
+        },
+        {
+          "gid": 307,
+          "size": 2527,
+          "class": 2
+        },
+        {
+          "gid": 57,
+          "size": 594,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 581,
+          "class": 3
+        },
+        {
+          "gid": 411,
+          "size": 280,
+          "class": 2
+        },
+        {
+          "gid": 96,
+          "size": 260,
+          "class": 1
+        },
+        {
+          "gid": 384,
+          "size": 81,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 124,
+      "n_prims": 11439,
+      "n_groups": 18,
+      "n_ungrouped": 1152,
+      "top_groups": [
+        {
+          "gid": 6,
+          "size": 4138,
+          "class": 1
+        },
+        {
+          "gid": 410,
+          "size": 3247,
+          "class": 2
+        },
+        {
+          "gid": 411,
+          "size": 1927,
+          "class": 2
+        },
+        {
+          "gid": 414,
+          "size": 581,
+          "class": 2
+        },
+        {
+          "gid": 589,
+          "size": 83,
+          "class": 3
+        },
+        {
+          "gid": 418,
+          "size": 78,
+          "class": 2
+        },
+        {
+          "gid": 419,
+          "size": 59,
+          "class": 2
+        },
+        {
+          "gid": 127,
+          "size": 54,
+          "class": 1
+        }
+      ]
+    },
+    {
+      "bid": 125,
+      "n_prims": 16117,
+      "n_groups": 39,
+      "n_ungrouped": 1393,
+      "top_groups": [
+        {
+          "gid": 6,
+          "size": 6079,
+          "class": 1
+        },
+        {
+          "gid": 249,
+          "size": 4294,
+          "class": 2
+        },
+        {
+          "gid": 307,
+          "size": 1077,
+          "class": 2
+        },
+        {
+          "gid": 291,
+          "size": 795,
+          "class": 2
+        },
+        {
+          "gid": 57,
+          "size": 527,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 258,
+          "class": 3
+        },
+        {
+          "gid": 261,
+          "size": 236,
+          "class": 2
+        },
+        {
+          "gid": 44,
+          "size": 140,
+          "class": 1
+        }
+      ]
+    },
+    {
+      "bid": 126,
+      "n_prims": 3925,
+      "n_groups": 13,
+      "n_ungrouped": 210,
+      "top_groups": [
+        {
+          "gid": 249,
+          "size": 1629,
+          "class": 2
+        },
+        {
+          "gid": 6,
+          "size": 947,
+          "class": 1
+        },
+        {
+          "gid": 57,
+          "size": 542,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 303,
+          "class": 3
+        },
+        {
+          "gid": 307,
+          "size": 117,
+          "class": 2
+        },
+        {
+          "gid": 82,
+          "size": 63,
+          "class": 1
+        },
+        {
+          "gid": 350,
+          "size": 58,
+          "class": 2
+        },
+        {
+          "gid": 363,
+          "size": 24,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 127,
+      "n_prims": 4722,
+      "n_groups": 13,
+      "n_ungrouped": 537,
+      "top_groups": [
+        {
+          "gid": 6,
+          "size": 1940,
+          "class": 1
+        },
+        {
+          "gid": 249,
+          "size": 914,
+          "class": 2
+        },
+        {
+          "gid": 307,
+          "size": 758,
+          "class": 2
+        },
+        {
+          "gid": 414,
+          "size": 138,
+          "class": 2
+        },
+        {
+          "gid": 411,
+          "size": 119,
+          "class": 2
+        },
+        {
+          "gid": 420,
+          "size": 115,
+          "class": 2
+        },
+        {
+          "gid": 424,
+          "size": 80,
+          "class": 2
+        },
+        {
+          "gid": 425,
+          "size": 39,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 128,
+      "n_prims": 6029,
+      "n_groups": 17,
+      "n_ungrouped": 479,
+      "top_groups": [
+        {
+          "gid": 247,
+          "size": 2206,
+          "class": 2
+        },
+        {
+          "gid": 4,
+          "size": 1626,
+          "class": 1
+        },
+        {
+          "gid": 255,
+          "size": 1094,
+          "class": 2
+        },
+        {
+          "gid": 81,
+          "size": 219,
+          "class": 1
+        },
+        {
+          "gid": 92,
+          "size": 110,
+          "class": 1
+        },
+        {
+          "gid": 355,
+          "size": 54,
+          "class": 2
+        },
+        {
+          "gid": 357,
+          "size": 43,
+          "class": 2
+        },
+        {
+          "gid": 345,
+          "size": 42,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 129,
+      "n_prims": 14057,
+      "n_groups": 13,
+      "n_ungrouped": 541,
+      "top_groups": [
+        {
+          "gid": 249,
+          "size": 5659,
+          "class": 2
+        },
+        {
+          "gid": 6,
+          "size": 5658,
+          "class": 1
+        },
+        {
+          "gid": 261,
+          "size": 984,
+          "class": 2
+        },
+        {
+          "gid": 589,
+          "size": 492,
+          "class": 3
+        },
+        {
+          "gid": 250,
+          "size": 392,
+          "class": 2
+        },
+        {
+          "gid": 257,
+          "size": 121,
+          "class": 2
+        },
+        {
+          "gid": 258,
+          "size": 63,
+          "class": 2
+        },
+        {
+          "gid": 265,
+          "size": 39,
+          "class": 2
+        }
+      ]
+    },
+    {
+      "bid": 130,
+      "n_prims": 2116,
+      "n_groups": 6,
+      "n_ungrouped": 230,
+      "top_groups": [
+        {
+          "gid": 6,
+          "size": 1066,
+          "class": 1
+        },
+        {
+          "gid": 410,
+          "size": 763,
+          "class": 2
+        },
+        {
+          "gid": 154,
+          "size": 17,
+          "class": 1
+        },
+        {
+          "gid": 441,
+          "size": 15,
+          "class": 2
+        },
+        {
+          "gid": 135,
+          "size": 13,
+          "class": 1
+        },
+        {
+          "gid": 589,
+          "size": 12,
+          "class": 3
+        }
+      ]
+    }
+  ],
+  "verdict": {
+    "groups": "OK",
+    "timing": "OK"
+  }
+}
