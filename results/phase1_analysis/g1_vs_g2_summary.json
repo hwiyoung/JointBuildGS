@@ -1,0 +1,98 @@
+{
+  "Baseline (Step 1-3)": {
+    "ckpt": "results/phase1_semantic/run/ckpt/final.pt",
+    "n_primitives": 5270672,
+    "G1": {
+      "n_groups": 254562,
+      "n_groups_with_2plus": 254562,
+      "n_grouped": 3618860,
+      "sigma_normal_intra_deg_mean": 4.440344605802607,
+      "sigma_normal_intra_deg_median": 4.2963394301536075,
+      "sigma_coplanar_m_mean": 0.008537220178593192,
+      "sigma_coplanar_m_median": 0.008166834199987549,
+      "timing_sec": 0.38
+    },
+    "G2": {
+      "n_groups": 224,
+      "n_groups_with_2plus": 224,
+      "n_grouped": 5177172,
+      "sigma_normal_intra_deg_mean": 9.49282192410201,
+      "sigma_normal_intra_deg_median": 8.332110622578625,
+      "sigma_coplanar_m_mean": 0.43878864807947265,
+      "sigma_coplanar_m_median": 0.4460398315864467,
+      "timing_sec": 1.51
+    }
+  },
+  "Mutual (Step 1-4)": {
+    "ckpt": "results/phase1_mutual/run/ckpt/final.pt",
+    "n_primitives": 5212551,
+    "G1": {
+      "n_groups": 224028,
+      "n_groups_with_2plus": 224028,
+      "n_grouped": 2698611,
+      "sigma_normal_intra_deg_mean": 5.268579663368182,
+      "sigma_normal_intra_deg_median": 5.077975411846799,
+      "sigma_coplanar_m_mean": 0.009141728207251999,
+      "sigma_coplanar_m_median": 0.008861448832116427,
+      "timing_sec": 0.1
+    },
+    "G2": {
+      "n_groups": 195,
+      "n_groups_with_2plus": 195,
+      "n_grouped": 4211988,
+      "sigma_normal_intra_deg_mean": 8.40041091434386,
+      "sigma_normal_intra_deg_median": 7.038195555193518,
+      "sigma_coplanar_m_mean": 0.4535714158194621,
+      "sigma_coplanar_m_median": 0.456694889004359,
+      "timing_sec": 0.92
+    }
+  },
+  "Structure (Step 1-5)": {
+    "ckpt": "results/phase1_structure/run/ckpt/final.pt",
+    "n_primitives": 5274035,
+    "G1": {
+      "n_groups": 248885,
+      "n_groups_with_2plus": 248885,
+      "n_grouped": 3752046,
+      "sigma_normal_intra_deg_mean": 3.3103931146787113,
+      "sigma_normal_intra_deg_median": 3.1441093961340703,
+      "sigma_coplanar_m_mean": 0.007171934242463498,
+      "sigma_coplanar_m_median": 0.006776995723306173,
+      "timing_sec": 0.12
+    },
+    "G2": {
+      "n_groups": 203,
+      "n_groups_with_2plus": 203,
+      "n_grouped": 5179379,
+      "sigma_normal_intra_deg_mean": 9.19747957374657,
+      "sigma_normal_intra_deg_median": 8.085341748960822,
+      "sigma_coplanar_m_mean": 0.40978990850563224,
+      "sigma_coplanar_m_median": 0.41243010107644446,
+      "timing_sec": 1.43
+    }
+  },
+  "Both (Step 1-6)": {
+    "ckpt": "results/phase1_ablation/run/ckpt/final.pt",
+    "n_primitives": 5263854,
+    "G1": {
+      "n_groups": 222398,
+      "n_groups_with_2plus": 222398,
+      "n_grouped": 2843152,
+      "sigma_normal_intra_deg_mean": 3.4132961226028478,
+      "sigma_normal_intra_deg_median": 3.2479519066818145,
+      "sigma_coplanar_m_mean": 0.007455122740322066,
+      "sigma_coplanar_m_median": 0.007183982224036361,
+      "timing_sec": 0.1
+    },
+    "G2": {
+      "n_groups": 165,
+      "n_groups_with_2plus": 165,
+      "n_grouped": 4255955,
+      "sigma_normal_intra_deg_mean": 8.659143513397373,
+      "sigma_normal_intra_deg_median": 7.197997087207312,
+      "sigma_coplanar_m_mean": 0.45932359195990013,
+      "sigma_coplanar_m_median": 0.4603293080788491,
+      "timing_sec": 0.92
+    }
+  }
+}

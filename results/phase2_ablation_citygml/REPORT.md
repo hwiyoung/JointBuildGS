@@ -1,22 +1,30 @@
 # Phase 2 Step 2-2 — Stage 2 메커니즘이 CityGML LOD2 품질에 미치는 영향
 
-**작성**: 2026-04-25 KST  
+**최초 작성**: 2026-04-25 KST  
+**v4 갱신**: 2026-04-26 KST (bbox_margin 버그 수정 후 재측정 반영)  
 **실험 대상**: 3D BAG Amsterdam Jordaan 합성 데이터 (131 건물) × 4 조건 Stage 2 × convex Stage 3  
 **Stage 2 ckpts**: 각 30,000 iter, ~988K primitives/condition  
 **Stage 3 (고정)**: Convex polytope (half-space intersection + ConvexHull)  
+
+> **REVISION NOTE (v4)**: 2026-04-25 23:08 `src/stage3/plane_intersection.py` 의 `bbox_margin` 자동화 수정 (None → max(5.0, 0.5×extent)) 후 GT 와 4 조건 모두 재측정. **GT convex 천장 76.3% → 96.2%, 모든 조건 +10~17%p 상승.** Pre-fix 측정값은 tracked 파일 (`_gt_stage3_test/`, `*/eval/`, `*/stage3/`) 에 보존, post-fix 는 `_gt_stage3_convex_fixed/`, `*/eval_fixed/`, `*/stage3_fixed/`. 본 v4 는 post-fix 기준. Pre-fix 해석 중 *bbox 버그 발동률* 에 의해 왜곡됐던 부분 (특히 C1 magnitude) 재해석.
 
 ---
 
 ## 0. TL;DR (3 가지 결과 + 2 가지 미확정)
 
-**확인된 것**:
+**확인된 것** (v4, post-fix 기준):
 1. **L_mutual 의 Stage 2 효과 명확** — Wall vertical-frac 28% → 79% (Phase 1 의 19% → 91% 와 같은 방향, magnitude 약간 작음). 공간적으로도 균질 (corner 영역 포함).
-2. **Stage 3 val3dity 에서 Structure/Both +3.0%p, Mutual −8.4%p 회귀** — type별 패턴 강함: complex/hip/tri-slope (+11~17%p) 개선, flat/gable (−8~29%p) 회귀.
-3. **메커니즘별 다른 축 개선**: Mutual = face IoU (0.213→0.238) + σ_normal_3D 최저, Structure = val3dity + semantic accuracy 최고.
+2. **Stage 3 val3dity 에서 Structure/Both +1.5~2.3%p, Mutual −3.8%p 회귀** — type별 패턴: complex/hip/tri-slope (+10~17%p) 개선, flat/gable (모든 메커니즘 −5~−16%p) 회귀. **Pre-fix 의 −8.4%p 회귀는 절반이 bbox 버그 발동률 차이였음.**
+3. **메커니즘별 다른 축 개선**: Mutual = face IoU (0.214→0.240) 최고, Structure = val3dity + semantic accuracy 최고.
 
 **미확정**:
-1. **L_structure 의 Phase 2 약함** — σ_normal_intra 변화 +1% (Phase 1 −45% 대비). 일부 건물 (flat) 에서만 효과 (−13%), 평균 효과 미미. 원인 가설 미확정.
-2. **Mutual + Structure 시너지 부재** — Both 의 지표가 Mutual 과 유사. Structure 가 Mutual 의 회귀 일부 상쇄하는 정도. "순환 효과" claim 미입증.
+1. **L_structure 의 Phase 2 약함** — σ_normal_intra 변화 +1% (Phase 1 −45% 대비). 일부 건물 (flat) 에서만 효과 (−13%), 평균 효과 미미. 원인 가설 미확정. (bbox fix 와 무관, 여전히 유효)
+2. **Mutual + Structure 시너지 부재** — Both 의 val3dity 가 Structure 보다 약간 낮음 (54.2% vs 55.0%). "순환 효과" claim 미입증.
+
+**v4 신규 발견**:
+- **GT convex 천장이 96.2%** (pre-fix 76.3% 는 bbox 버그). 따라서 "Stage 3 algorithm 이 천장 76.3% 라서 한계" 라는 진단은 무효. 우리 best 55.0% / 천장 96.2% = **57% 달성** (수치는 우연히 동일).
+- **203 에러 순위 변화**: Structure (46) < Mutual (52) ≈ Both (52) < Baseline (54). Mutual 의 203 감소폭이 가장 큼 (81→52, −29). Pre-fix 의 "Mutual → 203 증가" 서사 중 *bbox 버그가 dominant 원인* 이었음.
+- 그러나 Mutual 의 val3dity 는 여전히 최저 (48.9%) — 203 외 에러 (204=4) 와 stage3 처리 실패가 합쳐진 결과.
 
 ---
 
@@ -41,22 +49,26 @@
 
 ---
 
-## 2. 평가 기준선 — GT 상한
+## 2. 평가 기준선 — GT 상한 (v4 갱신)
 
 Stage 2 quality 와 별개로 **Stage 3 알고리즘 자체** 의 천장 측정. GT scene.obj 를 입력으로:
 
 | 방식 | val3dity 통과율 | 의미 |
 |---|---|---|
-| **GT direct (topology 보존)** | **93.9%** (123/131) | 절대 상한. 실패 6.1% 는 3D BAG 원본의 미세 결함 |
-| GT + convex polytope | **76.3%** (100/131) | **현재 우리 Stage 3 의 천장**. -17.6%p = 알고리즘 한계 (L/U 22% 불가) |
-| GT + 2.5D hybrid | 67.2% | 구현 버그 |
+| **GT direct (topology 보존)** | **93.9%** (123/131) | 3D BAG 원본 미세 결함만 실패 |
+| **GT + convex polytope (post-fix)** | **96.2%** (126/131) | **현재 Stage 3 의 천장**. GT direct 보다 *높음* — convex 가 GT 의 자잘한 결함을 normalize |
+| GT + convex polytope (pre-fix) | 76.3% (100/131) | bbox_margin 버그로 14 건물 처리 자체 실패 (REPORT v3 까지) |
+| GT + 2.5D hybrid | 67.2% | 구현 버그 (별도 작업) |
 | GT + PolyFit (CGAL+SCIP) | 0% | watertight 후처리 미완 |
 
-→ 우리 Stage 2 결과 (43.5% best) 는 **convex 천장 76.3% 의 57%** 달성.
+→ 우리 Stage 2 best (Structure 55.0%) 는 **convex 천장 96.2% 의 57%** 달성. (수치 57% 는 pre-fix 와 우연 동일)
 
-**Type 별 GT convex 상한**:
-- complex 79.3%, hip 87.0%, tri-slope 80.8%, flat 64.0%, gable 71.4%
-- **Flat 의 64% ceiling 이 의외**: 단순 박스인데 convex 자체가 처마/장식 같은 부속 표현 못 함
+**Type 별 GT convex 상한 (post-fix)**:
+- tri-slope 100%, flat 100%, gable 100%, hip 95.7%, complex 86.2%
+- **Flat 100%**: 박스형 단순 건물은 convex 가 완벽 처리. Pre-fix 의 64% ceiling 은 bbox 버그 (flat 건물에서 가장 심하게 발동).
+- **Complex 86.2%**: L-shape, 안뜰 등 진짜 non-convex 가 한계. 4 건물 (29 중) 만 실패 — 이게 convex polytope 의 *진짜* 알고리즘 한계.
+
+**의의**: "convex polytope 의 천장이 76.3% 라서 알고리즘 자체에 큰 한계가 있다" 는 v3 서사 무효. 실제로는 96.2% 천장에서 우리 best 55%까지 격차 = **약 41%p 개선 여지** (대부분 Stage 2 quality / 인터페이스 정합 문제).
 
 ---
 
@@ -123,6 +135,8 @@ Stage 2 quality 와 별개로 **Stage 3 알고리즘 자체** 의 천장 측정.
 
 bid=2 (flat), bid=22 (gable), bid=6 (hip), bid=21 (complex) 4 건물에서 6 step 진행 추적.
 
+> **v4 caveat**: 4.1, 4.2 의 단일 건물 case study 는 pre-fix 데이터 기준. Post-fix 에서 개별 건물 상태 (✓/✗) 가 일부 바뀌었을 수 있음 (특히 bid=2 flat 같이 bbox 영향이 큰 건물). 집계 통계 (4.3-4.5) 는 모두 post-fix 로 갱신 완료.
+
 ### 4.1 Step 별 정량 — bid=2 flat (대표 case study, D1+D3)
 
 | Step | 측정값 | Baseline | Mutual | Structure | Both |
@@ -158,59 +172,78 @@ bid=2 (flat), bid=22 (gable), bid=6 (hip), bid=21 (complex) 4 건물에서 6 ste
 
 → **단일 건물 단위로는 어느 조건이 우세한지 불일관**. 집계 수준에서만 통계적 우세 (Structure/Both > Baseline > Mutual).
 
-### 4.3 전체 통계 — 4 조건 × 131 건물
+### 4.3 전체 통계 — 4 조건 × 131 건물 (v4, post-fix)
 
-| Condition | val3dity pass | face IoU | Hausdorff (m) | SemAcc | σ_normal (3D) |
-|---|---|---|---|---|---|
-| **Baseline** | **40.5%** (53/131) | 0.213 | 11.42 | 21.1% | 9.09° |
-| **Mutual** | 32.1% (42/131) ↓ | **0.238** ↑ | 11.33 | 20.0% | **8.73°** ↑ |
-| **Structure** | **43.5%** (57/131) ↑ | 0.220 | 11.39 | **21.8%** ↑ | 9.18° |
-| **Both** | **43.5%** (57/131) ↑ | 0.230 | 11.46 | 19.5% | 9.00° |
+| Condition | val3dity pass | face IoU (mean) | Hausdorff (m) | SemAcc |
+|---|---|---|---|---|
+| **Baseline** | **52.7%** (69/131) | 0.214 | 11.37 | 21.6% |
+| **Mutual** | 48.9% (64/131) ↓ | **0.240** ↑ | 11.54 | 20.6% |
+| **Structure** | **55.0%** (72/131) ↑ | 0.221 | 11.45 | **22.0%** ↑ |
+| **Both** | **54.2%** (71/131) ↑ | 0.227 | 11.56 | 20.4% |
+
+**v3 (pre-fix) 와 비교**:
+
+| Condition | v3 val3dity | v4 val3dity | Δ |
+|---|---|---|---|
+| Baseline | 40.5% | 52.7% | +12.2%p |
+| Mutual | 32.1% | 48.9% | **+16.8%p** (가장 큰 회복) |
+| Structure | 43.5% | 55.0% | +11.5%p |
+| Both | 43.5% | 54.2% | +10.7%p |
+
+→ Mutual 의 회복폭이 가장 큼. Pre-fix 의 −8.4%p 회귀 (Mutual vs Baseline) 가 post-fix 에서 −3.8%p 로 축소. C1 의 magnitude 절반이 bbox 버그였음.
 
 ![fig2](figures/fig2_val3dity_bars.png)  
-*Figure 2. 조건별 val3dity 통과율 (전체 131 건물).*
+*Figure 2. 조건별 val3dity 통과율 (pre-fix 기반, post-fix 갱신 필요).*
 
-### 4.4 Roof type 별 통계
+### 4.4 Roof type 별 통계 (v4, post-fix)
 
 | Type | GT direct | GT convex | Baseline | Mutual | Structure | Both | Pattern |
 |---|---|---|---|---|---|---|---|
-| complex (29) | 79.3% | 79.3% | 41.4% | 37.9% | **55.2%** | **55.2%** | Mech 모두 ↑ |
-| hip (23) | 100% | 87.0% | 34.8% | 34.8% | 47.8% | **52.2%** | Mech 모두 ↑ |
-| tri-slope (26) | 96.2% | 80.8% | 26.9% | 30.8% | 34.6% | **38.5%** | Mech 모두 ↑ |
-| gable (28) | 96.4% | 71.4% | 53.6% | **25.0%** ↓ | 42.9% | 42.9% | Mutual ↓↓ |
-| flat (25) | 100% | 64.0% | 44.0% | **32.0%** ↓ | 36.0% | 28.0% | Mutual/Both ↓ |
+| complex (29) | 79.3% | **86.2%** | 58.6% | 51.7% | **69.0%** ↑ | 65.5% | Structure/Both ↑ |
+| hip (23) | 100% | **95.7%** | 43.5% | 52.2% | **56.5%** ↑ | 52.2% | Mech 모두 ↑ |
+| tri-slope (26) | 96.2% | **100%** | 38.5% | 42.3% | 50.0% | **53.8%** ↑ | Mech 모두 ↑ |
+| gable (28) | 96.4% | **100%** | **64.3%** | 53.6% | 57.1% | 53.6% | Baseline 최고, 모든 Mech ↓ |
+| flat (25) | 100% | **100%** | **56.0%** | 44.0% | 40.0% | 44.0% | Baseline 최고, 모든 Mech ↓ |
 
 ![fig7](figures/fig7_type_vs_condition.png)  
-*Figure 7. Roof type × Condition. 점선 = GT direct 천장, 파선 = convex 천장.*
+*Figure 7. Roof type × Condition (pre-fix). 점선 = GT direct, 파선 = convex 천장. Post-fix 로 갱신 필요.*
 
-**일관 패턴**:
-- **Complex/hip/tri-slope** (복잡 건물): Structure/Both 가 모두 +11~17%p
-- **Flat/gable** (단순 건물): Mutual 단독 −22~29%p, Structure 도 약간 ↓
+**v4 일관 패턴 (post-fix)**:
+- **Complex/hip/tri-slope** (복잡 건물): Structure/Both 가 +10~17%p — v3 와 동일 결론, magnitude 유사
+- **Flat/gable** (단순 건물): **모든 메커니즘이 Baseline 보다 낮음** — Mutual 만이 아니라 Structure 도. (v3 에서도 동일 방향이었으나 Mutual 의 −29%p 회귀가 dominant 했고 Structure 의 −8~−11%p 는 묻혔음. v4 에서 Mutual 회귀 −10~−12%p 로 축소되어 Structure 의 회귀가 비교 가능한 수준으로 보임)
+  - Pre-fix: gable Mutual 25.0% (Baseline 대비 −28.6%p), flat Mutual 32.0% (−12.0%p)
+  - Post-fix: gable Mutual 53.6% (Baseline 대비 −10.7%p), flat Mutual 44.0% (−12.0%p)
+  - Structure: gable 57.1% (−7.2%p), flat 40.0% (−16.0%p) — flat 에서 오히려 Mutual 보다 더 회귀
+- **GT convex 천장**: 단순 건물 (flat/gable/tri-slope) 100%. 즉 알고리즘은 완벽 처리 가능. 회귀 원인은 *Stage 2 primitive quality* + *Stage 3 clustering 변형* 의 부정적 상호작용 (D' 가설).
 
-### 4.5 val3dity 에러 분포
+### 4.5 val3dity 에러 분포 (v4, post-fix)
 
-| Condition | 203 (non-planar) | 204 (orient) | 104 (multi-comp) |
-|---|---|---|---|
-| Baseline | 73 | 1 | 0 |
-| Mutual | **81** ↑ | 4 | 0 |
-| Structure | **64** ↓ | 0 | 1 |
-| Both | **66** ↓ | 0 | 0 |
+| Condition | 203 (non-planar) | 204 (orient) | 104 (multi-comp) | v3 → v4 (203) |
+|---|---|---|---|---|
+| Baseline | 54 | 1 | 0 | 73 → 54 (−19) |
+| Mutual | 52 | **4** ↑ | 0 | 81 → 52 (**−29**) |
+| Structure | **46** ↓ | 0 | 1 | 64 → 46 (−18) |
+| Both | 52 | 0 | 0 | 66 → 52 (−14) |
 
-코드 203 (non-planar face) 가 전체 95%+ — current pipeline 의 dominant failure mode. Structure 가 의미있게 감소시킴 (73→64).
+**v4 관찰**:
+- 203 (non-planar) 여전히 dominant 이지만, Mutual 의 203 절대값이 **Baseline 과 비슷**해짐 (52 vs 54). Pre-fix 의 81 → 52 가 가장 큰 감소 — Mutual 에서 bbox 버그가 가장 심하게 발동했었음.
+- **Structure 의 203 가 가장 적음** (46) — 메커니즘 2 가 Stage 3 출력 폐합에 도움이 되는 정량 증거. Pre-fix 와 동일 결론, magnitude 유사.
+- Mutual 의 204 (orientation) 4 건 — Baseline 1 건 대비 ↑. Mutual 후 normal 정렬이 Stage 3 face orientation 일관성에 부정적 영향 가능성. 절대값 작지만 v4 신규 관찰.
 
 ![fig3](figures/fig3_error_heatmap.png)
+*Figure 3. Pre-fix 기반. Post-fix 갱신 필요.*
 
 ---
 
 ## 5. 결과 해석
 
-### 5.1 명확한 관찰 (5)
+### 5.1 명확한 관찰 (5, v4)
 
-1. **L_mutual 은 Stage 2 primitive 수준에서 의도대로 작동** (Wall vert 28→79%, σ_normal_intra −14%, corner 영역 균질화 D4)
-2. **L_structure 는 Stage 2 primitive 수준에서 효과 미미** (σ_normal_intra +1%, σ_coplanar 미세 개선 −2~−9%)
-3. **Stage 3 (val3dity) 에서는 Structure/Both 가 Baseline 대비 +3%p 개선** — 메커니즘 2 의 효과는 Stage 2 보다 Stage 3 에서 더 잘 보임
-4. **Mutual 단독은 Stage 3 val3dity 회귀** (-8.4%p) — 단순 건물 (flat/gable) 에서 두드러짐
-5. **Type 별 패턴**: 복잡 건물에선 메커니즘 효과 ↑, 단순 건물에선 ↓
+1. **L_mutual 은 Stage 2 primitive 수준에서 의도대로 작동** (Wall vert 28→79%, σ_normal_intra −14%, corner 영역 균질화 D4) — 변화 없음
+2. **L_structure 는 Stage 2 primitive 수준에서 효과 미미** (σ_normal_intra +1%, σ_coplanar 미세 개선 −2~−9%) — 변화 없음 (primitive level, bbox 무관)
+3. **Stage 3 (val3dity) 에서는 Structure/Both 가 Baseline 대비 +1.5~2.3%p 개선** (v3: +3%p, magnitude 약간 축소). 203 에러 기준 Structure 가 여전히 최저 (46 vs Baseline 54).
+4. **Mutual 단독은 Stage 3 val3dity 회귀** (−3.8%p, v3 의 −8.4%p 에서 절반으로 축소) — bbox 버그 효과 제거 후에도 회귀는 잔존. 단순 건물 (flat/gable) 에서 여전히 두드러짐.
+5. **Type 별 패턴**: 복잡 건물 (complex/hip/tri-slope) 에선 메커니즘 효과 ↑, 단순 건물 (flat/gable) 에선 모든 메커니즘 ↓ — v4 신규: Mutual 뿐 아니라 *Structure 도 단순 건물에서 약간 회귀*.
 
 ### 5.2 미확정 — 가설 × 증거 매트릭스
 
@@ -219,7 +252,9 @@ bid=2 (flat), bid=22 (gable), bid=6 (hip), bid=21 (complex) 4 건물에서 6 ste
 | **Mutual 의 단순 건물 회귀 메커니즘** | A: Mutual 이 wall direction 손실 (D1) | bid=2: clusters 7→5, walls 4→2 | bid=22 baseline 도 fail, bid=21 Mutual pass | **건물별 다름 — D1 사례는 일반화 못함** |
 | | B: 처마 등 수직 wall detail 손실 | — | GT walls 100% 수직 (D4 verified) | **틀림** |
 | | C: photo loss 와 tug-of-war | — | r(mutual, photo) = -0.03 | **틀림** |
-| | **D: Stage 3 의 convex hull 과 L_mutual 후 primitive 의 부정적 상호작용 (case-by-case)** | val3dity 203 증가 | 단일 메커니즘 설명 없음 | **현재 가장 그럴듯, 검증 추가 필요** |
+| | D (v3): Stage 3 convex hull + L_mutual primitive 부정적 상호작용 | pre-fix 203 증가 | **v4 post-fix: Mutual 203=52 (Baseline 54 와 유사), 회귀 magnitude −8.4 → −3.8%p** | **부분 부정** — 절반은 bbox 버그 |
+| | **D' (v4 신규): 단순 건물에서 Stage 2 메커니즘이 *과조정***  | flat/gable GT convex 100%, 모든 메커니즘 ↓ (Mutual −12%p, Structure −16%p) | — | **그럴듯** — baseline primitive 도 단순 건물엔 충분, 추가 정렬이 polytope 안정성 손상 |
+| | E (v4 신규): Mutual 후 face orientation (204) 증가 | post-fix Mutual 204=4 (Baseline 1) | 절대값 작음, 회귀 magnitude 와 부정합 | 부분적, 약함 |
 | **L_structure 의 Phase 2 효과 부재** | A: 데이터 복잡도 | — | Phase 1 / 2 의 loss magnitude 비슷 | 약함 |
 | | B: w_structure 작아서 | — | Phase 2 의 L_struct/L_photo ratio 가 Phase 1 의 20x | **틀림** |
 | | **C: Grouping 알고리즘이 noisy 데이터에서 부정확** | D2: bid=21 (complex) 에서 σn 악화 (+3%) | bid=2 에선 σn 개선 (-13%) | **부분 맞음, 건물별 차이** |
@@ -230,7 +265,7 @@ bid=2 (flat), bid=22 (gable), bid=6 (hip), bid=21 (complex) 4 건물에서 6 ste
 
 → **방법론적 시사점**: 메커니즘 1+2 의 "순환 효과" 가설은 **두 메커니즘이 같은 grouping 을 공유** 가정. 실제로는 Mutual 이 grouping 자체를 변형 → 가설 부분 부정.
 
-### 5.3 정리된 인과 사슬
+### 5.3 정리된 인과 사슬 (v4)
 
 ```
 L_mutual (Stage 2):
@@ -239,11 +274,10 @@ L_mutual (Stage 2):
   Stage 3 Step 2 clustering (cos > 0.85):
     수직화된 Wall normals 가 cos similarity 높아짐
         ↓
-  일부 건물에서 wall directions 잘못 merge (D1: bid=2 의 4→2 walls)
+  단순 건물에서 polytope 안정성 약간 손상 (회귀 −3.8%p, post-fix)
+  ※ pre-fix 의 −8.4%p 중 절반은 bbox 버그가 Mutual 에서 더 자주 발동했기 때문
         ↓
-  Step 3-4 polytope 구성: 평면 부족
-        ↓
-  Step 6 val3dity: 203 non-planar (Mutual 단순 건물 회귀)
+  Step 6 val3dity: 203 (Baseline 와 유사), 204 약간 증가 (1→4)
 
 L_structure (Stage 2):
   Group 평면 정렬 효과 약함 (σ_normal_intra +1%)
@@ -255,23 +289,26 @@ L_structure (Stage 2):
         ↓
   Step 4 polytope: plane intersection 더 깨끗
         ↓
-  Step 6: 203 에러 감소 (-9 errors), val3dity +3%p
+  Step 6: 203 에러 감소 (54→46), val3dity +2.3%p
 
 Both:
-  Mutual 의 wall verticalization + Structure 의 plane 정합 동시
-  단, Mutual 의 grouping 변형이 Structure 의 input 약화
-  → Synergy 라기보다 Structure 가 Mutual 의 회귀 일부 상쇄
+  Mutual + Structure 동시 — val3dity 54.2% (Structure 55.0% 보다 약간 낮음)
+  Synergy 부재 확인 — Structure 단독 ≥ Both
+  단순 건물에선 Both 도 회귀 (gable 53.6, flat 44.0; Baseline 64.3, 56.0)
 ```
+
+**v4 핵심 update**: pre-fix 의 "Mutual → wall over-merge → 203 fail" 인과 사슬이 dominant 라고 봤는데 (D1: bid=2 의 4→2 walls), post-fix 데이터로 보면 **bbox 버그가 dominant 였음**. 잔존 회귀의 메커니즘은 D' (단순 건물 과조정) 가 더 그럴듯.
 
 ---
 
 ## 6. 한계 및 다음 단계
 
-### 6.1 측정의 한계
+### 6.1 측정의 한계 (v4)
 
 - **Sequential baseline 미측정**: MVS+RANSAC+convex 와 직접 비교 안 됨. Joint > Sequential 정량 증거 없음
 - **val3dity 의 binary 특성**: 메커니즘의 partial improvement 가 잘 안 보임
-- **Stage 3 (convex) 의 천장이 76.3%**: 우리 best (43.5%) 가 천장의 57%. 천장 자체를 올리는 건 별도 연구
+- ~~Stage 3 (convex) 의 천장이 76.3%~~ → **v4: 실제 천장 96.2%**. 우리 best (Structure 55.0%) 와 천장 사이에 **+41%p 개선 여지**. 알고리즘 자체보다 *Stage 2→3 인터페이스* 가 진짜 병목 가능성 (별도 분석 필요)
+- **bbox_margin 자동화 이전 측정값 (REPORT v3) 의 해석 신뢰도 저하**: 특히 4.5 의 203 에러 분포, 4.4 type 별 패턴, 5.3 인과 사슬 일부가 bbox 버그에 의해 왜곡됐었음. 본 v4 가 정정.
 
 ### 6.2 다음 단계 (재학습 없는 분석)
 
@@ -285,10 +322,15 @@ Both:
 - **L_structure 의 group split 능력**: 현재는 grouping 후 그룹 내 정렬만. Split 도 가능하게 (contrastive loss 도입) → 재학습
 - **L_mutual 의 quadratic 페널티** (linear → 제곱) → 재학습
 
-### 6.4 Stage 3 알고리즘 교체 (천장 상승)
+### 6.4 Stage 3 알고리즘 교체 (천장 상승) — v4 우선순위 하향
 
-- **PolyFit 완성** (CGAL output watertight 후처리 미완) → 천장 76.3% → 85%+ 기대
-- **City3D / Roofer**: footprint 입력 필요. 천장 90%+. Image-only 가정 위배 우려
+v3 에선 "convex 천장 76.3% 가 한계" 라서 PolyFit/City3D 등 알고리즘 교체가 우선이었음. **v4: 천장 96.2% 라 알고리즘 자체 한계는 거의 없음**. 우선순위 재조정:
+
+- ~~PolyFit 완성~~ → 우선순위 ↓ (천장 추가 상승 여지 작음)
+- **Stage 2→3 인터페이스 정렬 (Stage 2 group_id 를 Stage 3 입력으로 직접 전달)** → 우선순위 ↑ (현재 41%p 격차의 주된 원인 가능성)
+- **L_normal_align 의 Phase 2 약효 진단** (C3, photo loss redundancy 가설) → 우선순위 ↑
+
+**Stage 3 알고리즘 교체는 41%p 격차를 인터페이스 정렬로 줄인 후 잔존 격차에 대해 재평가.**
 
 ---
 
@@ -310,22 +352,25 @@ Both:
 
 ---
 
-## 8. 결론
+## 8. 결론 (v4)
 
 **확정된 기여**:
 1. L_mutual 이 Phase 1 의 Wall 수직화 효과를 Phase 2 에 부분 전이 (28→79%)
-2. L_structure 가 복잡 건물 (complex/hip/tri-slope) 에서 Stage 3 val3dity 의미있게 개선 (+11~17%p)
-3. 메커니즘별 다른 metric 축 (Mutual: face IoU; Structure: val3dity, SemAcc)
-4. **Stage 3 algorithm + Stage 2 mechanism 의 부정적 상호작용** 발견 (Mutual 의 단순 건물 회귀)
+2. L_structure 가 복잡 건물 (complex/hip/tri-slope) 에서 Stage 3 val3dity 의미있게 개선 (+10~17%p, post-fix 에서도 유효)
+3. 메커니즘별 다른 metric 축 (Mutual: face IoU 0.214→0.240; Structure: val3dity, SemAcc)
+4. ~~Stage 3 algorithm + Stage 2 mechanism 부정적 상호작용~~ → **v4: 부정적 상호작용은 일부만 잔존** (회귀 magnitude 절반은 bbox 버그)
+5. **v4 신규: 단순 건물 (flat/gable) 에서는 모든 메커니즘이 Baseline 보다 낮음** — "단순 입력엔 추가 정렬이 과조정" 가설 성립
 
 **한계**:
-- L_structure 의 Phase 2 매커니즘 약함 — Phase 1 수준 개선 못 미침
-- "순환 효과" 시너지 미입증
+- L_structure 의 Phase 2 매커니즘 약함 (σ_normal_intra +1%) — Phase 1 −45% 대비 큰 차이, 원인 미확정 (C3)
+- "순환 효과" 시너지 미입증 — Both ≤ Structure (val3dity)
 - Sequential baseline 미측정 — joint 우세 정량화 불가
+- **v3→v4 revision 자체가 시사**: Stage 3 측정 인프라의 신뢰성 점검 필요. bbox 같은 1줄 수정이 conclusion 을 뒤집을 수 있다는 fragility.
 
-**개선이 필요한 곳** (확정):
-- Clustering 알고리즘 robustness (Mutual 후 wall direction 보존)
-- L_structure gradient 효과 검증 (re-tuning 가능성)
+**개선이 필요한 곳** (v4 우선순위):
+1. **Stage 2→3 인터페이스 정렬** (group_id 전달) — 41%p 격차의 주 원인 가능성
+2. **C3 진단** — L_normal_align 의 Phase 2 약효, photo loss redundancy 가설 검증 (1 시간)
+3. ~~Clustering 알고리즘 robustness~~ — bbox fix + 인터페이스 정렬로 상당 부분 해결 예상
 
 ---
 
@@ -333,19 +378,22 @@ Both:
 
 ```
 results/phase2_ablation_citygml/
-├── REPORT.md                       # 본 문서
+├── REPORT.md                       # 본 문서 (v4)
 ├── stage2_primitive_metrics.json   # §3.2 데이터
 ├── _gt_direct/summary.json         # GT direct 93.9%
-├── _gt_stage3_test/summary.json    # GT convex 76.3%
-├── _gt_stage3_test_2_5d_v2/summary.json  # GT 2.5D 67.2%
+├── _gt_stage3_test/summary.json    # [v3, pre-fix] GT convex 76.3% — obsolete, bbox 버그
+├── _gt_stage3_convex_fixed/summary.json  # [v4, post-fix] GT convex 96.2% ★
+├── _gt_stage3_test_2_5d_v2/summary.json  # GT 2.5D 67.2% (별도 알고리즘)
 ├── _gt_polyfit_test/summary.json   # PolyFit 미완
 ├── _diag/d1/comparison_bid{2,22}.json    # D1 raw data
 ├── _diag/d2/d2_results.json        # D2 grouping 비교
 ├── _diag/d3/                       # D3 raw
 ├── _diag/d4_stats.json             # D4 wall tilt 통계
 ├── {baseline,mutual,structure,both}/
-│   ├── eval/eval_summary.json      # §4.3 데이터
-│   └── stage3/stage3_summary.json  # 처리 metadata
+│   ├── eval/eval_summary.json      # [v3, pre-fix] §4.3 v3 데이터 — obsolete
+│   ├── eval_fixed/eval_summary.json # [v4, post-fix] §4.3 v4 데이터 ★
+│   ├── stage3/stage3_summary.json  # [v3, pre-fix] obsolete
+│   └── stage3_fixed/stage3_summary.json # [v4, post-fix] §4.4 type 별 데이터 ★
 └── figures/
     ├── fig1_citygml_4cond.png
     ├── fig2_val3dity_bars.png      # §4.3

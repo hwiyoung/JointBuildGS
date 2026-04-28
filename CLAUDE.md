@@ -92,22 +92,35 @@ Baseline / Mutual only / Structure only / Both — 메커니즘 1/2 개별 기�
 - [x] PlanarSplatting 예비 실험 완료 (legacy/)
 - [x] Synthetic A 완료 (results/synthetic_a/)
 - [x] gsplat 환경 구축 + gradient_2dgs 버그 수정
-- [x] MatrixCity 데이터 준비 (5,621장 + COLMAP sparse)
-- [x] Step 1-1 smoke test 완료 (3k, PSNR 20.60, densification 정상)
-- [x] Phase 1 Step 1-1: Vanilla 2DGS 30k (eval PSNR 21.31, CityGSV2 baseline 21.12 달성)
-- [x] Phase 1 Step 1-2: + Depth/Normal 감독 (eval PSNR 22.06, max 22.39, CityGSV2 w/depth 22.22 근접/일부 초과)
-- [ ] **Phase 1 Step 1-3**: + Semantic head + L_sem ← **현재**
-- [ ] Phase 1 Step 1-2: + Depth/Normal 감독 (CityGSV2 with-depth ~22.22)
-- [x] Phase 1 Step 1-3: + Semantic head + L_sem (eval PSNR 22.07 유지, mIoU 0.635, gradient isolation 검증)
-- [x] Phase 1 Step 1-4: + L_mutual (Mutual only) — PSNR 22.24 유지, Wall vertical-frac 19%→91%, mIoU 0.626(-0.009)
-- [x] Phase 1 Step 1-5: + L_structure (Structure only) — PSNR 22.16 유지, σ_normal_intra -45%, σ_coplanar -16%, mIoU 0.640(+0.005)
-- [x] Phase 1 Step 1-6: Both — PSNR 22.26 peak 22.44, Wall-vert 88.3%, σ_normal −36%, 두 메커니즘 동시 보존 확인
-- [x] **Phase 1 종합**: 체크리스트 6/6 통과 — 렌더/기하 parity 유지, L_mutual/L_structure 각각 설계대로 작동, Both에서 동시 공존. 시너지·간섭 판정은 Phase 2 CityGML 평가로 이관.
-- [ ] **Phase 2 준비**: 3D BAG 합성 데이터 + Stage 3 (대표 평면 → 폴리곤 교차 → CityGML) 파이프라인 구축 ← **현재**
-- [ ] Phase 1 Step 1-5: + L_structure (Structure only)
-- [ ] Phase 1 Step 1-6: Both + 4조건 ablation 정리
-- [ ] Phase 2: 3D BAG 합성 → CityGML 검증
-- [ ] Phase 3: GauU-Scene + City3D 비교 + 성수동
+- [x] Phase 1 완료 (MatrixCity, 6/6 통과, PSNR 22.26)
+- [x] Phase 2-1 완료 (3D BAG 합성 파이프라인, Amsterdam Jordaan 131건물)
+- [x] Phase 2-2 Stage 2 완료 (4조건 30k 학습, G1 grouping)
+- [x] Phase 2-2 Stage 3 완료 (convex polytope, post-bbox-fix)
+- [x] C3 진단 완료 — photo loss redundancy 확정 (gradient L_mutual의 1/135)
+- [x] Cycle 검증 완료 — G1 위에서 4고리 모두 약함 입증
+- [x] Track 1 (인터페이스 정렬) 시도 — **patch vs surface unit mismatch로 실패**
+- **발견 사항:**
+  - C1: Mutual val3dity 회귀 -3.8%p (bbox fix 전 -8.4%p)
+  - C2: Stage 2 group(G1, patch 단위 154개)과 Stage 3 surface(6-9개)가 다른 단위
+  - C3: 3 component — C3a photo redundancy 확정, C3b patch unit, C3c cycle 부재
+  - G1(voxel hash 5cm + 12 dir bin)이 thesis 의도(surface 단위)와 불일치
+  - GT_convex reference 오류 (절반 높이 축소) — 진짜 천장 미정
+  - Building 1 직접 검증: 우리 출력 16.41m ≈ GT 16.61m (알고리즘 작동)
+- [ ] **G2 (surface-level grouping) 설계 + 구현** ← **현재 블로커**
+- [ ] Phase 2 재학습 (Structure/Both with G2)
+- [ ] 4조건 Stage 3 재측정 (G2 기반)
+- [ ] Cycle 재검증 (G2 위에서)
+- [ ] GT 천장 재측정
+- [ ] Phase 3: GauU-Scene + 순차 비교 + 성수동
+
+## 현재 병목
+**G2 (surface-level grouping).** G1(voxel hash 5cm)은 patch 단위로, thesis가 의도한 "평면 인스턴스 그룹"(surface 단위)과 불일치. L_normal_align이 intra-patch smoothing에 그쳐 차별화 안 됨. Cycle 4고리 모두 약함 입증.
+
+G2로 전환 시: thesis-구현 일치, Stage 2-3 인터페이스 자연 통합, cycle 의미 있음.
+Structure/Both만 재학습 필요. Baseline/Mutual은 post-hoc G2.
+C3a(photo redundancy)는 G2로도 해소 안 됨 — Phase 3에서 검증.
+
+**Measurement fragility 주의:** bbox 1줄 + GT_convex 두 차례 측정 오류. 모든 재측정에 GT sanity check 필수.
 
 ## 중요 규칙
 - **gsplat 라이브러리** 사용 (2DGS 공식 fork 아님)

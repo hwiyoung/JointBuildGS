@@ -1,0 +1,47 @@
+{
+  "default     ": {
+    "kw": {
+      "cos_thresh": 0.85,
+      "min_cluster_fraction": 0.05
+    },
+    "n_groups_per_bldg_mean": 8.0,
+    "\u03c3_normal_mean_deg": 14.622494365422412,
+    "\u03c3_coplanar_mean_m": 2.0502788548939153
+  },
+  "cos>0.95    ": {
+    "kw": {
+      "cos_thresh": 0.95,
+      "min_cluster_fraction": 0.05
+    },
+    "n_groups_per_bldg_mean": 8.4,
+    "\u03c3_normal_mean_deg": 13.14534998053596,
+    "\u03c3_coplanar_mean_m": 2.2444537282652326
+  },
+  "cos>0.99    ": {
+    "kw": {
+      "cos_thresh": 0.99,
+      "min_cluster_fraction": 0.05
+    },
+    "n_groups_per_bldg_mean": 84.2,
+    "\u03c3_normal_mean_deg": 8.813175693294387,
+    "\u03c3_coplanar_mean_m": 2.144611974982381
+  },
+  "cos>0.999   ": {
+    "kw": {
+      "cos_thresh": 0.999,
+      "min_cluster_fraction": 0.05
+    },
+    "n_groups_per_bldg_mean": 857.2,
+    "\u03c3_normal_mean_deg": 0.4204923582158018,
+    "\u03c3_coplanar_mean_m": 0.9803175040112999
+  },
+  "cos>0.85 +tight_min": {
+    "kw": {
+      "cos_thresh": 0.85,
+      "min_cluster_fraction": 0.01
+    },
+    "n_groups_per_bldg_mean": 30.2,
+    "\u03c3_normal_mean_deg": 6.527476590950269,
+    "\u03c3_coplanar_mean_m": 1.7938499913371473
+  }
+}

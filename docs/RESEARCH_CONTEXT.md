@@ -196,9 +196,6 @@ Warmup: 2N/3 이후 활성화.
 ### Synthetic B
 이상적+clean 기본. 노이즈: depth/seg. 카메라: 이상적/oblique/nadir/뷰 감소.
 
-### 합성 씬의 RGB≈semantic 문제와 대응 (Phase 2 Step 2-1)
-3D BAG GT CityGML 을 flat-color material (Roof/Wall/Ground/Terrain) 로 렌더하면 RGB 가 사실상 semantic class 를 그대로 알려주는 trivial 상태가 된다. L_mutual 의 `p_c × 기하_오차` 에서 `p_c` 가 one-hot 에 근접 → **의미론↔기하 양방향 gradient 의 양방향성 손실**. Phase 2 Step 2-1 에서 material 별 Perlin noise (3D Generated 좌표 기반, view-consistent) 를 추가해 RGB 를 비자명화. Brightness range material 별 0.35-1.00 × base, scale 2.5-5 cycles/building. Semantic / depth / normal pass 는 불변 (material pass_index + geometry 기반).
-
 ---
 
 ## 8. 데이터
@@ -318,3 +315,211 @@ gsplat strategy가 params dict를 교체해도 우리 model의 파라미터에 �
 
 ### 이전 시도 (실패)
 성수동 30k, eval PSNR 16.3 dB, N 62k. gradient_2dgs 버그로 grow 미작동이 원인. 수정 후 MatrixCity에서 정상 확인.
+
+---
+
+## 14. Phase 2-2 핵심 발견 (2026-04-25)
+
+### 14.1 Stage 2 4조건 결과
+| 조건 | PSNR | Wall vert | σ_normal_intra | σ_coplanar |
+|------|------|----------|---------------|-----------|
+| Baseline | 40.35 | 28.0% | 14.74° | 1.91m |
+| Mutual | 40.93 | **79.3%** | 12.63° | 1.84m |
+| Structure | 40.96 | 28.4% | 14.88° | 1.86m |
+| Both | 39.81 | **79.4%** | 12.99° | 2.01m |
+
+### 14.2 Stage 3 4조건 결과 (convex polytope)
+| 조건 | val3dity | face IoU | sem acc |
+|------|---------|---------|---------|
+| Baseline | 40.5% | 0.213 | 21.1% |
+| Mutual | **32.1%** ↓ | **0.238** ↑ | 20.0% |
+| Structure | **43.5%** ↑ | 0.220 | **21.8%** |
+| Both | **43.5%** ↑ | 0.230 | 19.5% |
+
+### 14.3 확인된 문제 (C1, C2, C3)
+
+**C1: Mutual val3dity 회귀.**
+Post-bbox-fix: -3.8%p (pre-fix -8.4%p, 절반은 bbox 버그). 잔존 회귀의 가설: D'(단순 건물 과조정), E(204 orientation 에러 증가).
+v3의 dominant 가설(Stage 3 clustering over-merge)은 post-fix에서 Mutual 203=52, Baseline 54로 유사 → 부분 부정.
+
+**C2: Stage 2 group(G1)과 Stage 3 surface의 unit mismatch.**
+Stage 2 grouping.py: voxel hash(0.05m) + 12 dir bin = **patch 단위** (건물당 ~154개).
+Stage 3 clustering.py: hierarchical clustering(cos>0.92) = **surface 단위** (건물당 ~7개).
+Track 1(Stage 2 group 직접 전달) 시도 → patch 154개를 surface로 오인하여 실패.
+**단순 인터페이스 정렬이 아니라 grouping 정의 자체가 문제 (G1 vs G2).**
+
+**C3: L_normal_align 효과 소실 — 3 component 분해.**
+- **C3a (photo redundancy, 측정 입증):** L_normal_align 활성화(step 20k)에서 이미 loss 0.0002. gradient L_mutual의 1/135. photo+L_normal이 normal을 이미 정렬(cos 0.984).
+- **C3b (patch unit):** G1의 5cm patch가 원래 동질적 → L_normal_align이 intra-patch smoothing에 그침. Across-patch/surface 단위 정합(corner tilt 등) 못 잡음.
+- **C3c (cycle 부재):** Cycle 4고리 모두 약함 (§14.4 참조).
+
+### 14.4 Cycle 검증 결과 + 시너지 미입증 근본 원인
+
+**Cycle 4고리 측정 (G1 위에서):**
+
+| 고리 | 검증 방법 | 결과 |
+|------|---------|------|
+| 1. L_structure → n_i 정렬 | Loss magnitude | L_structure : L_mutual = **1 : 135** → 약함 |
+| 2. 정렬된 n_i → f_i 교정 | L_mutual 수식 분석 | (n·e_g)² 작아질수록 ∂L_mut/∂f_i 작아짐 → **정렬되면 교정 비활성화** |
+| 3. f_i 변경 → 그룹 재할당 | f_i argmax change | step 25k→30k Structure 0.45%, Both 0.29% → **trigger 없음** |
+| 4. 그룹 변동 | n_groups 통계 | CV 2.01%, consecutive change 0.007% → **거의 정적** |
+
+**결론:** G1 위에서 thesis의 "동시작용 cycle"이 4고리 모두 약함. cycle claim 미입증.
+
+**근본 원인 3가지:**
+1. **C3a (photo redundancy):** L_normal이 이미 n_i 정렬 → 고리 1 끊김.
+2. **C3b (patch unit):** G1의 5cm patch가 동질적 → L_normal_align이 intra-patch smoothing에 그침.
+3. **G1 grouping이 위치 기반:** f_i 변경이 voxel hash에 영향 안 줌 → 고리 3,4 끊김.
+
+**G2(surface 단위)로 전환 시 고리 3,4 해소 가능:** f_i(class)가 grouping 조건이므로 f_i 변경이 직접 그룹 재할당을 trigger. G2에서 cycle 재검증 필요.
+C3a는 G2로도 해소 안 됨. Real UAV(Phase 3)에서 L_normal 약해지면 고리 1도 복원 가능.
+
+### 14.5 Stage 3 천장
+| 방식 | val3dity | 비고 |
+|------|---------|------|
+| GT direct (topology 보존) | 93.9% | 절대 상한의 lower bound |
+| GT + convex polytope (post-bbox-fix) | ~~96.2%~~ | **GT_convex reference 오류 — 절반 높이로 축소. 무효.** |
+| GT + convex polytope (pre-bbox-fix) | ~~76.3%~~ | bbox 버그. 무효. |
+| 우리 best (Structure/Both) | 55.0% | GT direct 93.9% 대비 -38.9%p 격차 |
+| val3dity 203 (non-planar) | 95%+ | dominant failure mode |
+
+**GT_convex reference 오류 발견 (v3):**
+gt_stage3_test.py에서 GT를 convex polytope 통과시켰을 때, 131건물 중 88%(115건물)가 절반 이하 높이로 축소됨. 평균 비율 0.55-0.57. 원인 미확정(process_building의 face merge 로직 가능).
+
+**Building 1 직접 검증:**
+- GT mesh 원본: 16.61m
+- 우리 Stage 3 출력: 16.41m ← GT와 거의 일치
+- GT_convex (잘못된 reference): 8.56m
+→ Stage 3 알고리즘(convex polytope) 자체는 GT 비슷한 출력을 만듦. 알고리즘 교체 불필요.
+
+---
+
+## 15. Stage 3 개선 방향: G2 (Surface-level Grouping) + 통합 재설계
+
+### 15.1 G1 → G2 전환의 4가지 근거
+
+1. **thesis novelty:** "순차 파이프라인과의 차이"가 surface 단위에서만 성립. Patch 단위는 일반 normal smoothing과 차별화 안 됨.
+2. **용어 일관성:** "평면 인스턴스 그룹", "대표 평면", "inter-primitive" 모두 surface 명시.
+3. **Cycle 의미:** G2에서만 f_i 변경 → 다른 surface로 진짜 재할당. G1에선 voxel 위치로 결정되어 cycle 무의미.
+4. **Stage 2-3 인터페이스:** G2 = Stage 3 surface와 같은 단위 → 자연스러운 통합.
+
+현 G1은 implementation choice (학습 안정성 + 계산 효율). thesis 표현은 G2 의도 그대로.
+
+### 15.2 G2 알고리즘 후보
+
+| 후보 | 알고리즘 | 장점 | 단점 |
+|------|---------|------|------|
+| A. Voxel + spatial | (class, large voxel ~1m, dir bin) + post-merge by (n, plane_d) | voxel hash 효율 | 같은 wall의 cell split |
+| B. Region growing | (class, n similarity, plane_d similarity, spatial connectivity) | surface 직접 표현 | 효율 (매 T iter) |
+| C. Hybrid | (class, dir bin) + plane_d clustering + connected component | 단순 + 정확 | 구현 복잡도 |
+
+Trade-off: 988K primitive에 매 T=500 iter 호출 → 1분 미만 필요. 학습 초기 noisy primitive → warmup 강화 필요 가능.
+
+### 15.3 Stage 2→3 인터페이스 (G2 위에서)
+
+Stage 2: 매 T iter G2 호출 → surface 단위 group_id. L_structure가 group별 rep_n/rep_d 향해 정렬. 학습 끝에 ckpt에 G2 group_id 저장.
+Stage 3: ckpt의 G2 group_id 그대로 받음. Stage 3 자체 clustering 제거 또는 thin wrapper.
+
+Baseline/Mutual: G2 grouping 학습 안 함. Stage 3 입구에서 post-hoc G2 호출.
+Structure/Both: trained ckpt의 G2.
+→ 4조건 모두 같은 grouping 알고리즘으로 평가 — fair comparison.
+
+### 15.4 4조건 ablation 통합 의미
+
+| Cond | Stage 2 학습 grouping | Stage 3 입력 | 측정하는 것 |
+|------|---------------------|------------|---------|
+| Baseline | 없음 | post-hoc G2 | grouping만의 효과 (control) |
+| Mutual | 없음 | post-hoc G2 | + L_mutual 효과 |
+| Structure | G2 (학습 중) | trained G2 | + L_structure 학습 시 효과 |
+| Both | G2 (학습 중) | trained G2 | + 두 메커니즘 + 시너지 |
+
+### 15.5 Cycle 재검증 (G2 위에서)
+
+G2 위에서 §14.4의 4고리 재측정:
+- 고리 1: L_normal_align gradient magnitude (C3a가 여전한지)
+- 고리 3: f_i 변경 → surface 재할당 비율 (G1의 0.45% 대비 증가 기대)
+- 고리 4: 그룹 변동률 (G1의 2% 대비 증가 기대)
+- Both > Structure 시너지 발생 여부
+
+### 15.6 알고리즘 교체 검토 결과 (유지: convex polytope)
+
+Building 1 직접 검증에서 convex polytope 자체가 GT 비슷한 출력을 만듦 확인.
+PolyFit, Plane arrangement 등 검토했으나 알고리즘 교체보다 grouping 정의(G2) + 인터페이스가 우선.
+
+### 15.7 측정 인프라 정정 (병행)
+
+| # | 문제 | 상태 |
+|---|------|------|
+| 1 | bbox_margin 자동화 | 정정 완료 |
+| 2 | GT_convex 절반 축소 | 미완. GT direct 93.9% lower bound 채택 또는 cos_thresh 정정 |
+| 3 | eval metric 가혹성 | 진단됨. multi-to-one matching 또는 area-weighted metric 도입 검토 |
+
+---
+
+## 16. C3 진단 결과 (확정, 3 component 분해)
+
+### 16.1 C3a: Photo loss redundancy — 직접 입증
+
+| 측정 | 값 | 해석 |
+|------|-----|------|
+| L_normal_align 활성화 시점 (step 20k) | 0.000222 | 활성화되자마자 이미 매우 작음 |
+| 활성화 후 첫 50 step | 0.000222 → 0.000104 | 빠르게 감소 (할 일 거의 없음) |
+| 학습 끝 (step 30k) | 0.0000115 | 20배 감소했으나 절대값 무의미 |
+| L_normal_align peak vs L_mutual_vert peak | 0.000222 vs 0.0326 | **L_structure가 L_mutual보다 135배 작음** |
+| eval/normal_cos | step 2k: 0.929 → step 30k: 0.984 | photo loss만으로 normal 거의 완벽 정렬 |
+
+### 16.2 인과 메커니즘
+Photo loss(L_photo) + L_normal이 step 0~20k 동안 n_i를 이미 정렬 (normal_cos 0.984).
+L_normal_align이 step 20k에 활성화될 때 그룹 내 normal 분산이 이미 매우 작음.
+L_normal_align이 추가로 줄일 거리가 거의 없음 → σ_normal_intra +1% (Phase 2 효과 부재)의 근본 원인.
+
+Phase 1(MatrixCity, PSNR 22, normal_cos 더 낮음)에서는 L_normal이 약해서 L_normal_align이 추가 정렬 여지가 있었음 → σ_normal_intra -45%.
+
+### 16.3 L_coplanar도 유사
+L_coplanar max magnitude: 7.5e-5. L_normal_align과 비슷한 수준으로 redundant 가능성.
+다만 σ_coplanar은 -2~-9% 개선이 관측됨 — 작지만 0은 아님.
+
+### 16.4 시너지 미입증의 근본 원인 확정
+시너지 기대 경로: 메커니즘 2가 n_i 정렬 → 메커니즘 1이 정렬된 n_i로 f_i 교정 → 순환.
+순환의 첫 고리: L_normal_align이 n_i를 이동시켜야 함.
+첫 고리가 끊김: L_normal_align의 gradient가 L_mutual의 1/135 → n_i를 effective하게 이동 못함.
+→ 메커니즘 1이 "메커니즘 2에 의해 정렬된 n_i"를 볼 수 없음 → 순환 불발 → 시너지 없음.
+
+### 16.5 Thesis 함의 (G2 전환 반영)
+
+**Negative result도 contribution:**
+"어떤 환경에서 어떤 메커니즘이 작동하는지"의 boundary를 정량적으로 그어줌.
+
+- 메커니즘 1 (L_mutual): strong/weak supervision 모두에서 작동 (Wall vert 개선 일관)
+- 메커니즘 2 (L_structure with G1): strong supervision에서 redundant (C3a + C3b + C3c)
+- 메커니즘 2 (L_structure with G2): C3b(patch unit) 해소, C3c(cycle) 해소 가능. C3a는 남음.
+- 시너지: G1에서 미발현. G2에서 고리 3,4 복원 → 시너지 가능. Phase 3에서 고리 1도 복원 가능.
+
+**G2 위에서의 시나리오:**
+- G2 + Phase 2 합성: C3a가 남아 L_normal_align absolute magnitude 여전히 작을 수 있으나, across-patch 정렬(C3b 해소)로 Stage 3 품질 개선 가능.
+- G2 + Phase 3 실데이터: C3a도 해소 → L_normal_align이 진짜 효과 + 시너지 가능.
+
+**스케치 서술 방향:**
+"G1(patch 단위)에서는 L_normal_align이 intra-patch smoothing에 그쳤으나, G2(surface 단위)에서는 across-patch 정렬이 가능. 합성 clean 환경에서는 photo redundancy(C3a)로 marginal contribution이 축소되며, 실데이터에서 효과 복원이 기대된다."
+
+---
+
+## 17. Measurement Infrastructure Fragility
+
+### 17.1 발견된 측정 오류
+**Bug 1 (bbox_margin, 정정 완료):** plane_intersection.py의 bbox_margin 고정 1.0m → flat 건물에서 QHull 실패 → 14건물 처리 실패. max(5.0, 0.5×extent)로 자동화 후 전체 수치 +10~17%p.
+
+**Bug 2 (GT_convex 축소, 정정 미완):** gt_stage3_test.py에서 GT를 convex 통과시켰을 때 88% 건물이 절반 높이로 축소. 96.2% "천장"은 축소된 GT의 통과율이지 알고리즘 천장이 아님.
+
+### 17.2 교훈
+1. 모든 Stage 3 측정에 GT sanity check 포함: GT direct val3dity(93.9%), 건물 높이 비교
+2. 코드 수정 시 regression test: 알려진 건물(bid=1,2,6,21,22)의 수치 변화 확인
+3. Metric의 face count mismatch 한계 명시: pred ~7면 vs GT ~22면에서 sem accuracy, face IoU 과소 측정
+
+### 17.3 Eval metric 가혹성
+| Metric | vs scene.obj GT (~22 face/bldg) | vs GT_convex (~7 face/bldg) |
+|---|---|---|
+| sem accuracy | 21.6% | 46.1% |
+| face IoU | 0.214 | 0.154 ↓ |
+sem acc 21→46%: greedy 1-to-1 matching에서 face count mismatch 시 GT face 64%가 unmatched → 과소 측정.
+논문 보고: matched subset metric 병행, face count mismatch 한계 명시.
