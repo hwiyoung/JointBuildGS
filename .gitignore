@@ -49,6 +49,24 @@ src/stage3/polyfit_cli
 # Ad-hoc debug scripts
 tmp_*.py
 
+# v5 Stage 3 input variant tests (regenerable via test_*.py scripts; summary JSON kept)
+results/phase2_ablation_citygml/_g2_stage3_test/G2/
+results/phase2_ablation_citygml/_g2_stage3_test/default/
+results/phase2_ablation_citygml/_ransac_stage3_test/bldg_*/
+results/phase2_ablation_citygml/_strict_cluster_test/
+results/phase2_ablation_citygml/_marching_cubes/
+# v5 diagnostic intermediates (keep summary JSON + key figures only)
+results/phase2_ablation_citygml/_sanity_g2/figs_baseline/
+results/phase2_ablation_citygml/_sanity_g2_mutual/figs_mutual/
+results/phase2_ablation_citygml/_sanity_g2_mutual/figs_gt/
+results/phase2_ablation_citygml/_sanity_g2_mutual/figs_per_group/
+results/phase2_ablation_citygml/_sanity_g2_mutual/bldg_*.ply
+# v5 stage3_fixed per-building CityJSON (regenerable; aggregate in eval_fixed/eval_summary.json)
+results/phase2_ablation_citygml/*/stage3_fixed/
+# Phase 1 analysis intermediates
+results/phase1_analysis/perturb_test/
+results/phase1_analysis/stage3_test/process_out/
+
 # ===== Training artifacts =====
 *.pt
 *.pth
