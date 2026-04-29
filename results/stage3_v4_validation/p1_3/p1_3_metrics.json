@@ -1,0 +1,197 @@
+{
+  "ckpt": "/workspace/JointBuildGS/results/phase2_ablation_citygml/mutual/ckpt/final.pt",
+  "target_bids": [
+    0,
+    1,
+    2,
+    6,
+    21
+  ],
+  "legacy": {
+    "0": {
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "signed_volume": 120.85298951696313,
+      "n_surfaces": 9
+    },
+    "1": {
+      "val3dity_valid": true,
+      "val3dity_errors": [],
+      "signed_volume": 1278.2657246089836,
+      "n_surfaces": 7
+    },
+    "2": {
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203"
+      ],
+      "signed_volume": 1339.2441658298249,
+      "n_surfaces": 7
+    },
+    "6": {
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203",
+        "203"
+      ],
+      "signed_volume": 165.45397879832873,
+      "n_surfaces": 8
+    },
+    "21": {
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "203"
+      ],
+      "signed_volume": 49.8589824251414,
+      "n_surfaces": 9
+    }
+  },
+  "v3": {
+    "0": {
+      "type": "tri-slope",
+      "n_primitives": 10091,
+      "n_surfaces": 6,
+      "n_vertices": 8,
+      "signed_volume": 8.25552064591731,
+      "height_pred": 5.751900000000001,
+      "height_gt": 15.968,
+      "height_err": -10.216099999999999,
+      "gt_bbox_volume": 2397.925050976,
+      "coverage": 0.003442776763417672,
+      "val3dity_valid": true,
+      "val3dity_errors": []
+    },
+    "1": {
+      "type": "flat",
+      "n_primitives": 9373,
+      "n_surfaces": 5,
+      "n_vertices": 6,
+      "signed_volume": 42.239040675530454,
+      "height_pred": 2.5769,
+      "height_gt": 16.61,
+      "height_err": -14.0331,
+      "gt_bbox_volume": 4232.69354508,
+      "coverage": 0.009979234316320463,
+      "val3dity_valid": true,
+      "val3dity_errors": []
+    },
+    "2": {
+      "type": "flat",
+      "n_primitives": 4672,
+      "n_surfaces": 10,
+      "n_vertices": 16,
+      "signed_volume": 1991.070407536669,
+      "height_pred": 13.9524,
+      "height_gt": 13.635,
+      "height_err": 0.317400000000001,
+      "gt_bbox_volume": 1938.2651540999987,
+      "coverage": 1.0272435653733814,
+      "val3dity_valid": true,
+      "val3dity_errors": []
+    },
+    "6": {
+      "type": "hip",
+      "n_primitives": 2168,
+      "n_surfaces": 8,
+      "n_vertices": 10,
+      "signed_volume": 90.63531467163024,
+      "height_pred": 15.5602,
+      "height_gt": 19.912,
+      "height_err": -4.351799999999999,
+      "gt_bbox_volume": 2472.4970538719995,
+      "coverage": 0.036657400472810596,
+      "val3dity_valid": true,
+      "val3dity_errors": []
+    },
+    "21": {
+      "type": "complex",
+      "n_primitives": 3725,
+      "n_surfaces": 6,
+      "n_vertices": 8,
+      "signed_volume": 1.4270888728508213,
+      "height_pred": 2.0021000000000004,
+      "height_gt": 17.416,
+      "height_err": -15.4139,
+      "gt_bbox_volume": 2302.5091703040002,
+      "coverage": 0.000619797259119017,
+      "val3dity_valid": true,
+      "val3dity_errors": []
+    }
+  },
+  "v4": {
+    "0": {
+      "type": "tri-slope",
+      "n_primitives": 10091,
+      "n_surfaces": 9,
+      "n_vertices": 14,
+      "signed_volume": 53.55843988632879,
+      "height_pred": 9.0667,
+      "height_gt": 15.968,
+      "height_err": -6.901299999999999,
+      "gt_bbox_volume": 2397.925050976,
+      "coverage": 0.022335326896280396,
+      "val3dity_valid": true,
+      "val3dity_errors": []
+    },
+    "1": {
+      "type": "flat",
+      "n_primitives": 9373,
+      "n_surfaces": 9,
+      "n_vertices": 14,
+      "signed_volume": 103.96398189879574,
+      "height_pred": 4.218299999999999,
+      "height_gt": 16.61,
+      "height_err": -12.3917,
+      "gt_bbox_volume": 4232.69354508,
+      "coverage": 0.0245621330227513,
+      "val3dity_valid": true,
+      "val3dity_errors": []
+    },
+    "2": {
+      "type": "flat",
+      "n_primitives": 4672,
+      "n_surfaces": 8,
+      "n_vertices": 13,
+      "signed_volume": 1651.737858039457,
+      "height_pred": 13.945300000000001,
+      "height_gt": 13.635,
+      "height_err": 0.3103000000000016,
+      "gt_bbox_volume": 1938.2651540999987,
+      "coverage": 0.8521733234204554,
+      "val3dity_valid": false,
+      "val3dity_errors": [
+        "204"
+      ]
+    },
+    "6": {
+      "type": "hip",
+      "n_primitives": 2168,
+      "n_surfaces": 9,
+      "n_vertices": 13,
+      "signed_volume": 270.26272811807127,
+      "height_pred": 15.5616,
+      "height_gt": 19.912,
+      "height_err": -4.350399999999999,
+      "gt_bbox_volume": 2472.4970538719995,
+      "coverage": 0.10930760370162314,
+      "val3dity_valid": true,
+      "val3dity_errors": []
+    },
+    "21": {
+      "type": "complex",
+      "n_primitives": 3725,
+      "n_surfaces": 10,
+      "n_vertices": 15,
+      "signed_volume": 5.148869530340165,
+      "height_pred": 3.1476000000000006,
+      "height_gt": 17.416,
+      "height_err": -14.2684,
+      "gt_bbox_volume": 2302.5091703040002,
+      "coverage": 0.0022361993588326775,
+      "val3dity_valid": true,
+      "val3dity_errors": []
+    }
+  },
+  "gt_direct_pass_rate": 0.9389312977099237,
+  "gt_direct_summary_path": "/workspace/JointBuildGS/results/phase2_ablation_citygml/_gt_direct/summary.json"
+}
