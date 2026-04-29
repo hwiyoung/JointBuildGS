@@ -17,6 +17,12 @@
 #include <CGAL/IO/OFF.h>
 #include <CGAL/Polygon_mesh_processing/orientation.h>
 #include <CGAL/Polygon_mesh_processing/stitch_borders.h>
+#include <CGAL/Polygon_mesh_processing/polygon_soup_to_polygon_mesh.h>
+#include <CGAL/Polygon_mesh_processing/polygon_mesh_to_polygon_soup.h>
+#include <CGAL/Polygon_mesh_processing/repair_polygon_soup.h>
+#include <CGAL/Polygon_mesh_processing/orient_polygon_soup.h>
+#include <CGAL/Polygon_mesh_processing/merge_border_vertices.h>
+#include <CGAL/Polygon_mesh_processing/triangulate_faces.h>
 
 #include <fstream>
 #include <iostream>
@@ -71,23 +77,60 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    // Stitch coincident border edges: PolyFit emits duplicate vertices per-face,
-    // so adjacent faces share coords but not vertex indices. After stitching,
-    // the mesh uses shared halfedges where faces meet.
-    CGAL::Polygon_mesh_processing::stitch_borders(model);
+    namespace PMP = CGAL::Polygon_mesh_processing;
 
-    bool closed = CGAL::is_closed(model);
+    std::cerr << "[polyfit] mip output: n_faces=" << model.number_of_faces()
+              << " n_verts=" << model.number_of_vertices() << "\n";
+
+    // === Phase 1 dominant cause A: PolyFit emits per-face independent vertices,
+    // so stitch_borders alone fails on float-precision boundaries. The standard
+    // CGAL repair is to convert to a polygon soup, dedup + repair + orient,
+    // then rebuild the polygon mesh.
+
+    std::vector<Point> soup_points;
+    std::vector<std::vector<std::size_t>> soup_polygons;
+    PMP::polygon_mesh_to_polygon_soup(model, soup_points, soup_polygons);
+    std::cerr << "[polyfit] soup: " << soup_points.size() << " pts, "
+              << soup_polygons.size() << " polys\n";
+
+    PMP::merge_duplicate_points_in_polygon_soup(soup_points, soup_polygons);
+    std::cerr << "[polyfit] after merge_dup: " << soup_points.size() << " pts, "
+              << soup_polygons.size() << " polys\n";
+
+    PMP::repair_polygon_soup(soup_points, soup_polygons);
+    std::cerr << "[polyfit] after repair: " << soup_points.size() << " pts, "
+              << soup_polygons.size() << " polys\n";
+
+    bool oriented = PMP::orient_polygon_soup(soup_points, soup_polygons);
+    std::cerr << "[polyfit] orient_polygon_soup: oriented="
+              << (oriented ? "true" : "false") << "\n";
+
+    Surface_mesh repaired;
+    PMP::polygon_soup_to_polygon_mesh(soup_points, soup_polygons, repaired);
+    std::cerr << "[polyfit] rebuilt mesh: n_faces=" << repaired.number_of_faces()
+              << " n_verts=" << repaired.number_of_vertices() << "\n";
+
+    // Existing close+orient on the repaired mesh
+    PMP::stitch_borders(repaired);
+    bool closed = CGAL::is_closed(repaired);
     std::cerr << "[polyfit] after stitch: is_closed=" << closed
-              << " n_faces=" << model.number_of_faces() << "\n";
+              << " n_faces=" << repaired.number_of_faces() << "\n";
 
     if (closed) {
-        // orient_to_bound_a_volume requires closed mesh. Makes all face normals
-        // consistent (outward). Fixes val3dity 303 NON_MANIFOLD / 307 ORIENT.
-        CGAL::Polygon_mesh_processing::orient_to_bound_a_volume(model);
+        // orient_to_bound_a_volume requires triangle mesh. Triangulate first.
+        // We then keep the triangulated form for export — val3dity accepts
+        // triangulated faces, and downstream reads OFF face-by-face anyway.
+        bool tri_ok = PMP::triangulate_faces(repaired);
+        std::cerr << "[polyfit] triangulate_faces: ok=" << tri_ok
+                  << " n_faces=" << repaired.number_of_faces() << "\n";
+        if (tri_ok) {
+            PMP::orient_to_bound_a_volume(repaired);
+            std::cerr << "[polyfit] orient_to_bound_a_volume done\n";
+        }
     }
 
     std::ofstream out(argv[2]);
-    CGAL::IO::write_OFF(out, model);
-    std::cerr << "[polyfit] OK: " << model.number_of_faces() << " faces -> " << argv[2] << "\n";
+    CGAL::IO::write_OFF(out, repaired);
+    std::cerr << "[polyfit] OK: " << repaired.number_of_faces() << " faces -> " << argv[2] << "\n";
     return 0;
 }

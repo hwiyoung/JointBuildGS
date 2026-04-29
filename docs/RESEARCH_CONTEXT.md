@@ -394,9 +394,13 @@ gt_stage3_test.py에서 GT를 convex polytope 통과시켰을 때, 131건물 중
 
 ---
 
-## 15. Stage 3 개선 방향: G2 (Surface-level Grouping) + 통합 재설계
+## 15. Stage 3 개선 방향: 2단계 (clustering fix → G2 재학습)
 
-### 15.1 G1 → G2 전환의 4가지 근거
+### 15.1 2단계 접근
+
+**1단계: Stage 3 clustering 개선 (§19).** cluster_primitives의 spatial_split을 DBSCAN on plane_d로 교체. Baseline/Mutual checkpoint에서 검증. 재학습 불필요.
+
+**2단계: G2 재학습.** 1단계가 검증되면, cluster_primitives_v3를 기반으로 G2(학습용 surface grouping)를 구현. Structure/Both를 G2로 재학습하여 L_structure의 surface 단위 효과 검증.
 
 1. **thesis novelty:** "순차 파이프라인과의 차이"가 surface 단위에서만 성립. Patch 단위는 일반 normal smoothing과 차별화 안 됨.
 2. **용어 일관성:** "평면 인스턴스 그룹", "대표 평면", "inter-primitive" 모두 surface 명시.
@@ -523,3 +527,160 @@ L_coplanar max magnitude: 7.5e-5. L_normal_align과 비슷한 수준으로 redun
 | face IoU | 0.214 | 0.154 ↓ |
 sem acc 21→46%: greedy 1-to-1 matching에서 face count mismatch 시 GT face 64%가 unmatched → 과소 측정.
 논문 보고: matched subset metric 병행, face count mismatch 한계 명시.
+
+---
+
+## 18. v5 핵심 발견: Phase 2 학습 양호 + Stage 3 본질적 결함
+
+### 18.1 Phase 2 Stage 2 학습 양호 (정량 확인)
+
+| 지표 | Phase 1 | Phase 2 | 비고 |
+|------|---------|---------|------|
+| PSNR | 20.5 | 40.4 | Phase 2 더 좋음 |
+| mIoU | 0.63 | **0.97** | Phase 1은 rule-GT artifact |
+| F1@0.5m | 0.999 | 0.97 | 둘 다 양호 |
+| G1 σ_coplanar | 7-9mm | **2.6mm** | Phase 2가 더 좋음. cm 단위 응집 |
+| G1 σ_normal | 1.4° | 1.3° | 둘 다 양호 |
+
+**"학습 부족" 가설 반증.** primitive 단위 학습은 매우 잘 됨.
+
+### 18.2 Stage 3 cluster_primitives 본질적 결함
+
+cos_thresh sweep (v5 §2.10):
+| cos_thresh | n_groups | σ_normal | σ_coplanar |
+|---|---|---|---|
+| 0.85 (default) | 8 | 14.6° | 2050mm |
+| 0.99 | 84 | 8.8° | 2144mm |
+| 0.999 | 857 | 0.42° | **980mm** |
+
+cos_thresh 강화로도 σ_coplanar 안 줄어듦. G1 단위에서는 2.6mm인데 cluster_primitives에서는 980-2050mm.
+원인: cluster_primitives가 방향만 보고 같은 방향의 다른 평면(평행한 벽)을 합침.
+spatial_split이 plane_d gap을 찾아야 하는데 dense primitive에서 gap이 없어 실패.
+
+bid=21 polytope: GT bbox 2210m³ 대비 188m³ → GT의 **25%만 coverage**.
+
+### 18.3 Cluster cross-tab (over-merge 직접 입증)
+
+bid=21의 2011 primitive에 cluster_primitives 적용:
+- cluster 0 (77 prims): 100% off-surface noise
+- cluster 4 (256 prims): face 32에 75% 대응 — clean
+- cluster 12 (415 prims): **5개 GT face 혼재** — 결정적 over-merge
+
+### 18.4 Perturbation test (C3a 정밀화)
+
+| Shift | Phase 1 ΔdB | Phase 2 ΔdB | 비율 |
+|---|---|---|---|
+| 0.10m | -6.45 | -0.85 | 7.6× |
+| 0.50m | -7.83 | -5.00 | 1.6× |
+| 1.00m | -7.81 | -7.50 | 1.04× |
+
+C3a(photo redundancy)는 **sub-meter(cm-dm) 영역에 한정.** 1m 이상은 Phase 1/2 대칭.
+
+### 18.5 Cycle 재해석 — "cycle" → "단발성 alignment"
+
+Phase 1 σ_normal_intra -45%의 진짜 메커니즘: 그룹은 거의 고정(Loop 4 churn 0.19%), 그 안에서 L_structure가 n_i를 정렬한 단발성 효과. "동적 cycle"이 아님.
+
+Phase 1 Loop 1 ratio: L_mutual_vert : L_structure_na = 84:1 (Phase 2 135:1과 비슷한 자릿수).
+Phase 1에서 L_structure 효과가 있었던 이유: ratio가 아니라 **normal_cos 수렴 정도의 차이** (Phase 1 0.68 → Phase 2 0.98).
+
+thesis "cycle of feedback" → **데이터로 반증.** "두 독립 메커니즘 결합"으로 재정의 필요.
+
+---
+
+## 19. Stage 3 개선: 2단계 DBSCAN (cluster_primitives_v3) — **§20으로 대체됨**
+
+> v3는 프리미티브 n_i 기반. P1-1b 검증에서 n_i가 실제 표면 법선과 불일치(wall vert 5-8%) 발견.
+> v3 자체는 정상 작동하나, 입력(n_i)이 부정확하므로 한계. §20의 렌더링 기반으로 전환.
+
+### 19.1 v2의 실패와 v3의 설계
+
+**v2 (quantized normal 24 bins + DBSCAN on plane_d):**
+Baseline checkpoint에서 71 groups (기대 5-15). 원인: hard bin 경계에서 같은 평면의 primitive 법선이 두 bin으로 갈라짐. 각 bin에서 독립 DBSCAN → 같은 평면이 2개 surface로 중복 생성.
+
+**v3 (2단계 DBSCAN, hard binning 제거):**
+1. class 분리 (roof/wall)
+2. 법선에 DBSCAN (euclidean on unit vectors, eps ≈ 2sin(5°/2) ≈ 0.087)
+3. 각 법선 cluster에서 plane_d에 DBSCAN (eps=0.2m)
+
+Building 0에서 7 groups (기대 5-15) — GO. 하지만 Wall=3이 GT Wall=17과 불일치.
+원인: n_i가 표면 법선과 불일치. v3는 정확히 클러스터링하지만, 입력 자체가 부정확.
+
+### 19.2-19.5 (이전 내용 보존, §20으로 대체)
+
+---
+
+## 20. Stage 3 개선: v4 Wall Azimuth DBSCAN — **§19 렌더링 접근 대체**
+
+### 20.1 Gravity 축 오류 발견 + n_i 정확성 복원
+
+이전 측정에서 up=[0,0,1]을 사용했으나, 실제 gravity=[0,1,0] (Y-down). 90° 어긋남.
+올바른 측정: Mutual wall vert frac = 87.8% (이전 "5-8%"는 축 오류).
+
+| 측정 | 잘못된 축 [0,0,1] | 올바른 축 [0,1,0] |
+|------|-----------------|-----------------|
+| Baseline wall vert | 5.5% | 34.7% |
+| Mutual wall vert | 7.7% | **87.8%** |
+| 전체 131 Baseline | 4.8% | 28.0% (Phase 2-2 매칭) |
+| 전체 131 Mutual | 5.2% | 79.3% (Phase 2-2 매칭) |
+
+L_mutual은 의도대로 강하게 작동. "primitive n_i 부정확" 진단(§19 근거)은 **무효.**
+렌더링 기반 Stage 3(이전 §20)은 불필요.
+
+### 20.2 v3의 적도 chaining 문제
+
+Wall primitive 88%가 수직 → 법선이 단위 구의 적도(equator)에 빽빽이 분포.
+3D DBSCAN(eps=5°)이 적도를 따라 density chain → 5086개 wall이 1 cluster(v3_07, 98%).
+4D DBSCAN(n + plane_d)도 법선 차원에서 chaining 동일.
+
+역설: L_mutual이 잘 작동할수록(수직 primitive가 많을수록) 적도가 빽빽해져 chaining 심화.
+
+v3 결과 (Mutual, Building 0):
+- Wall groups: 2 (v3_07에 4989개, v3_08에 11개)
+- v3_07의 rep_n=[+0.51, -0.04, +0.86] — 5086벡터 평균의 우연한 방향, 실제 wall 방향 아님
+
+### 20.3 해결: Mode-based 4단계 Surface Clustering (v4)
+
+Density-based(DBSCAN, gap 찾기) → mode-based(histogram peak, peak 찾기)로 전환.
+Gap이 없어도 peak은 있음. 건물 벽은 4-5개 discrete 방향 → azimuth histogram에 peak 존재.
+
+```
+v4 알고리즘 (4단계):
+1. Wall primitive 선택: class=wall AND |n·g|<0.15, weight=opacity×area
+2. Azimuth mode detection:
+   θ = atan2(n_z, n_x) → area-weighted circular histogram(3° bin)
+   → Gaussian smoothing → local maxima(prominence>10%) → 4-5 peaks
+   → 각 primitive를 nearest peak에 배정 (25°+ → noise)
+3. Plane_d mode detection (각 azimuth group 내):
+   d = n_peak · c_i → 1D histogram → local maxima → nearest peak 배정
+   (DBSCAN 아님 — 같은 chaining 방지)
+4. Spatial connected component split:
+   같은 (azimuth, plane_d)을 plane 위 2D로 투영 → CC(0.5m)
+Roof: v3 그대로 (3D DBSCAN, 적도 문제 없음)
+```
+
+### 20.4 v3→v4 실험 경과
+
+| 버전 | wall 방법 | Baseline B0 walls | Mutual B0 walls | 실패 원인 |
+|------|---------|------------------|----------------|---------|
+| v3 | 3D DBSCAN | 3 (87% 합침) | 2 (98% 합침) | 적도 chaining |
+| v4-dbscan | 1D azimuth DBSCAN | 7 (48%) GO | 2 (90%) NG | periodic chaining |
+| v4-mode | histogram peak | 검증 중 | 검증 중 | — |
+
+v4-dbscan의 eps sweep(3°~10°): Mutual에서 최대 cluster 항상 ~98%. 하이퍼파라미터 문제 아님, topology 문제.
+→ density-based의 한계 입증 → mode-based 전환.
+
+### 20.5 비교
+
+| 방법 | 원리 | Gap 필요? | Peak 필요? | 적도 대응 |
+|------|------|---------|---------|---------|
+| DBSCAN | density-connected component | **필요** | 불필요 | 실패 (gap 없음) |
+| Histogram peak | mode detection | 불필요 | **필요** | 가능 (peak 있음) |
+
+### 20.5 연구 의도 정합성
+GT를 입력으로 사용하지 않음. Stage 2 출력(c_i, n_i, f_i)만 사용.
+Primitive n_i가 정확하므로(88% 수직), n_i를 직접 사용하는 것이 thesis와 정합.
+렌더링 우회 불필요.
+
+### 20.6 Measurement fragility 업데이트
+3번째 측정 오류: gravity 축. bbox(1번), GT_convex(2번), gravity(3번).
+교훈: 좌표계/축 확인을 모든 측정의 첫 단계로. gravity=[0,1,0] 하드코딩 금지, GT Ground normal에서 검증.

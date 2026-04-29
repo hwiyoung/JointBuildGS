@@ -99,28 +99,32 @@ Baseline / Mutual only / Structure only / Both — 메커니즘 1/2 개별 기�
 - [x] C3 진단 완료 — photo loss redundancy 확정 (gradient L_mutual의 1/135)
 - [x] Cycle 검증 완료 — G1 위에서 4고리 모두 약함 입증
 - [x] Track 1 (인터페이스 정렬) 시도 — **patch vs surface unit mismatch로 실패**
-- **발견 사항:**
-  - C1: Mutual val3dity 회귀 -3.8%p (bbox fix 전 -8.4%p)
-  - C2: Stage 2 group(G1, patch 단위 154개)과 Stage 3 surface(6-9개)가 다른 단위
-  - C3: 3 component — C3a photo redundancy 확정, C3b patch unit, C3c cycle 부재
-  - G1(voxel hash 5cm + 12 dir bin)이 thesis 의도(surface 단위)와 불일치
-  - GT_convex reference 오류 (절반 높이 축소) — 진짜 천장 미정
-  - Building 1 직접 검증: 우리 출력 16.41m ≈ GT 16.61m (알고리즘 작동)
-- [ ] **G2 (surface-level grouping) 설계 + 구현** ← **현재 블로커**
-- [ ] Phase 2 재학습 (Structure/Both with G2)
-- [ ] 4조건 Stage 3 재측정 (G2 기반)
+- [x] G2 시도 — chaining 문제 (σ_coplanar 787mm)
+- **v5 핵심 발견:**
+  - Phase 2 학습은 양호: mIoU 0.97, F1@0.5m 0.97, G1 σ_coplanar 2.6mm
+  - Stage 3 cluster_primitives가 본질적 결함: 방향 기반 + spatial_split 실패 → 건물 25% coverage
+  - Cycle 4고리: Phase 1/2 모두 그룹 거의 정적. "cycle" → "단발성 alignment"
+  - C3 3 component: C3a photo redundancy, C3b patch unit, C3c cycle 부재
+  - Perturbation test: sub-meter에서만 photo 둔감 (Phase2 0.1m→-0.85dB vs Phase1 -6.45dB)
+- [ ] **Stage 3 clustering v4 (wall azimuth DBSCAN)** ← **현재 블로커**
+- [ ] 131건물 검증 (재학습 전 gate)
+- [ ] G2 재학습 (Structure/Both)
+- [ ] 4조건 통합 측정
 - [ ] Cycle 재검증 (G2 위에서)
 - [ ] GT 천장 재측정
 - [ ] Phase 3: GauU-Scene + 순차 비교 + 성수동
 
 ## 현재 병목
-**G2 (surface-level grouping).** G1(voxel hash 5cm)은 patch 단위로, thesis가 의도한 "평면 인스턴스 그룹"(surface 단위)과 불일치. L_normal_align이 intra-patch smoothing에 그쳐 차별화 안 됨. Cycle 4고리 모두 약함 입증.
+**Stage 3 wall surface 분리.** Density-based(DBSCAN)가 gap 없는 적도에서 실패 → mode-based(histogram peak)로 전환.
 
-G2로 전환 시: thesis-구현 일치, Stage 2-3 인터페이스 자연 통합, cycle 의미 있음.
-Structure/Both만 재학습 필요. Baseline/Mutual은 post-hoc G2.
-C3a(photo redundancy)는 G2로도 해소 안 됨 — Phase 3에서 검증.
+v4-dbscan 결과: Baseline GO(Wall 7), Mutual NG(Wall 2, eps sweep으로도 해결 안 됨).
+원인: DBSCAN은 gap을 찾는데, Mutual은 적도에 gap이 없음(valley 1개, 반대쪽으로 chain).
+eps 3°~10° sweep: 최대 cluster 항상 98%. 하이퍼파라미터가 아니라 topology 문제.
 
-**Measurement fragility 주의:** bbox 1줄 + GT_convex 두 차례 측정 오류. 모든 재측정에 GT sanity check 필수.
+**v4-mode:** azimuth histogram peak detection. Gap이 없어도 peak은 있음.
+건물 벽은 4-5개 discrete 방향 → peak 존재. peak 찾기 → nearest 배정 → plane_d peak → spatial CC.
+
+**Measurement fragility:** gravity 축 오류(3번째). 모든 측정에 gravity=[0,1,0] 확인 필수.
 
 ## 중요 규칙
 - **gsplat 라이브러리** 사용 (2DGS 공식 fork 아님)
