@@ -67,6 +67,17 @@ results/phase2_ablation_citygml/*/stage3_fixed/
 results/phase1_analysis/perturb_test/
 results/phase1_analysis/stage3_test/process_out/
 
+# Stage 3 typed readout: keep root reports/summaries, ignore regenerable per-building raw artifacts
+results/stage3_typed_readout/*/B*/
+results/stage3_typed_readout/*/val3dity_enable/
+results/stage3_typed_readout/*/val3dity_search.json
+
+# Stage 3 validation audits: keep aggregate reports/summaries, ignore per-building raw artifacts
+results/stage3_v4_validation/polyfit_input_audit/B*/
+
+# Local external checkouts/build attempts
+external/val3dity/
+
 # ===== Training artifacts =====
 *.pt
 *.pth

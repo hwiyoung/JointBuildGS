@@ -25,6 +25,31 @@
 층위 2 (입력): 항공 LiDAR는 벽면 미관측 → 외부 풋프린트 + 수직 가정 필요.
 층위 3 (확장): LiDAR → LoD3 시 별도 데이터 필요. 본 방법은 연속 확장 가능.
 
+### 1.4 연구 목표와 기여
+
+본 연구의 목표는 영상 기반 2DGS primitive를 기하-의미론적으로 공동 최적화하고, 그 결과를 CityGML LOD2 수준의 구조적 건물 모델로 읽어내는 것이다.
+
+**기여 1 — 기하-의미론 공동 최적화 프레임워크.**
+2DGS primitive에 depth, normal, semantic, photo supervision을 결합하고, 건물 도메인 규칙과 구조 정렬 손실을 추가하여 wall / roof / terrain evidence를 학습한다.
+
+**기여 2 — Intra-primitive domain-rule loss (L_mutual).**
+L_mutual은 wall normal의 gravity 정합성, roof/wall/terrain semantic-geometric consistency, height relation을 primitive level에서 부과한다. 실험적으로 Mutual은 wall verticality를 크게 개선하며 (Phase 2-2 wall vert frac 28.0%→79.3%), 이는 Stage 3 footprint/read-out evidence의 품질을 높이는 핵심 신호이다.
+
+**기여 3 — Surface evidence-to-CityGML read-out.**
+Stage 2의 joint-optimized evidence를 Roofer-style 2.5D roof-partition read-out으로 변환하여 RoofSurface, WallSurface, GroundSurface를 갖는 CityJSON / CityGML semantic shell을 생성한다. 기존 Roofer/3DBAG와 달리, 외부 roofprint를 입력으로 사용하지 않고 wall-derived footprint와 roof evidence relation으로 building shell을 구성한다. 최종 end-to-end 설정에서는 외부 roofprint / footprint를 입력으로 사용하지 않는다. 다만 read-out module과 Stage 2 evidence 품질을 분리 검증하기 위해 GT-derived per-building sanity와 GT oracle split diagnostic을 별도로 수행한다.
+
+**기여 4 — Failure mode analysis of generic plane assembly.**
+Convex polytope와 PolyFit-style generic plane assembly가 local surface evidence에서 valid-small solid, coverage collapse, non-manifold error를 만들 수 있음을 정량적으로 분석한다 (P1-3b convex polytope 4 condition ablation, PolyFit Phase 2 GT input 40% val3dity, Phase 0c backend two-bug analysis). CityGML LOD2 read-out에는 semantic relation-based roof-partition 구조가 더 적합함을 P1-4a Part B에서 보인다 (simple/medium 4건 coverage 90-100%).
+
+### 1.5 메커니즘 1과 2의 관계 (G1 cycle 약화 정정)
+
+이전 thesis sketch는 "메커니즘 1과 2의 순환 효과(cycle of feedback)"를 핵심 contribution으로 주장했으나, P1-3b cycle 검증 결과 G1 위에서 cycle 4고리(L_structure 강도, n_i→f_i 교정, f_i 재할당, 그룹 변동)가 모두 약하게 나타났다 (§14.4). 이는 두 가지 원인에서 비롯한다:
+
+1. **C3a (photo redundancy):** Photo loss + L_normal이 이미 n_i를 정렬 (normal_cos 0.984) → L_normal_align의 marginal contribution 매우 작음 (L_mutual의 1/135).
+2. **C3b (G1 patch unit):** G1의 5cm voxel hash가 patch 단위 → L_normal_align이 intra-patch smoothing에 그침.
+
+따라서 본 논문은 "cycle of feedback"이 아니라 **두 메커니즘의 독립 효과 + 결합 효과 + 조건적 시너지**를 평가한다. Phase 3 실데이터(L_normal 약화) 또는 G2(surface-unit grouping) 환경에서 cycle 일부 복원 가능성은 별도로 검증한다.
+
 ---
 
 ## 2. 파이프라인
@@ -37,8 +62,73 @@
 ### Stage 2: 구조 인식 공동 최적화
 - gsplat/2DGS + L_mutual(intra) + L_structure(inter)
 
-### Stage 3: CityGML 변환
-6단계: 분류 → 클러스터링 → 평면 교차 → 건물 분리 → GroundSurface → val3dity.
+### Stage 3: Evidence-to-CityGML read-out
+
+#### Stage 3의 역할
+
+Stage 3는 Stage 2에서 학습된 2DGS primitive evidence를 CityGML LOD2 semantic shell로 변환하는 read-out module이다. Stage 3의 목적은 새로운 generic polygon reconstruction backend를 제안하는 것이 아니라, Stage 2의 joint geometric-semantic optimization이 생성한 wall / roof / terrain evidence를 구조적 건물 모델로 읽어내는 것이다.
+
+#### Stage 3 입력 evidence
+
+Stage 2 checkpoint에서 다음 evidence를 export한다.
+
+- primitive centers `c_i`
+- primitive normals `n_i`
+- in-plane scales `s_i`
+- opacity
+- semantic logits / probabilities `f_i`
+- class probabilities: Roof, Wall, Terrain
+- support area proxy
+- optional rendered depth / normal / semantic evidence
+
+이 evidence는 CityJSON이 아니며, PLY / NPZ / custom JSON 형태로 저장한다. CityJSON은 최종 building shell에만 사용한다.
+
+#### Stage 3 처리 흐름
+
+```
+Stage 2 checkpoint
+  ↓
+Primitive evidence export (c_i, n_i, s_i, opacity_i, f_i)
+  ↓
+Building evidence partition
+  - GT bid for sanity (E1, E3)
+  - automatic split for full scene (E2, E4)
+  ↓
+Wall-derived footprint / roofprint estimation
+  ↓
+Roof evidence projection and roof partition
+  ↓
+Semantic shell assembly (RoofSurface / WallSurface / GroundSurface)
+  ↓
+CityJSON / CityGML export
+  ↓
+Validation
+  val3dity + height + recall/precision/F + vol_ratio + Hausdorff
+```
+
+세부 단계:
+
+1. **Evidence export:** evidence_primitives.npz, evidence_primitives.ply
+2. **Building evidence partition:** GT bid (sanity) 또는 automatic split (full scene)
+3. **Wall-derived footprint estimation:** wall evidence ground-plane projection, wall direction modes / support lines / boundary graph
+4. **Roof partition:** roof evidence를 footprint domain에 projection, roof plane candidates / normal modes / height relation. Archetype label은 optional diagnostic.
+5. **Semantic shell assembly:** RoofSurface / WallSurface / GroundSurface, closed shell
+6. **CityJSON / CityGML export**
+7. **Validation:** val3dity (formal), h_err, recall coverage, pred-to-GT precision, F-score, vol_ratio, footprint IoU, Hausdorff / Chamfer, stepwise failure reason
+
+#### Roofer / 3DBAG와의 관계
+
+Roofer/3DBAG는 classified point cloud와 2D roofprint polygon을 입력으로 LoD2 building model을 생성하는 대표적인 building-prior 기반 reconstruction pipeline이다. Roofer는 roofprint domain에서 roof partition을 만들고, vertical wall과 roof planes를 조합해 2.5D model을 생성한다. 본 연구의 Stage 3는 이러한 Roofer-style roof-partition read-out과 구조적으로 유사하지만, 중요한 차이가 있다. Roofer는 외부 roofprint polygon을 입력으로 사용하지만, 본 연구는 Stage 2에서 학습된 wall / roof / terrain evidence에서 building partition과 footprint / roofprint를 추정한다. 따라서 본 연구의 핵심 비교는 "roofprint가 주어진 point-cloud reconstruction"이 아니라, "joint-optimized image-derived evidence가 CityGML read-out에 충분한가"이다.
+
+#### 기존 backend 결과의 지위 (diagnostic baseline)
+
+Convex polytope와 PolyFit-style generic plane assembly는 diagnostic baseline으로 유지한다. 두 방법은 local surface candidate를 global support surface로 조립하는 과정에서 valid-small solid, coverage collapse, non-manifold error를 보였다.
+
+- **Convex polytope (P1-3b 4 condition ablation):** GT input val3dity 96.2%, v4 input 32.1%. Height/coverage collapse 일관 (B1 4.22m vs GT 16.61m, B21 3.15m vs 17.42m). Support-plane d-assignment + orientation fix 시도해도 coverage 회복 실패.
+- **PolyFit (CGAL+SCIP+repair recipe, Phase 2):** GT input 40% val3dity. flat 3/3 정확 재구성 (vol_ratio=1.00, h_err=0.00m). hip/complex/tri-slope 두 모드 실패: 303 non-manifold 잔존 또는 val3dity ✓ but coverage <10% (MIP minimal valid 선호). 66+ planes에서 CGAL assertion failure.
+- **2.5D extrusion (legacy, port from PlanarSplatting ref):** val3dity 67.2% pass, quality (h_err/coverage/Hausdorff) 미측정. flat 100% pass, complex 34.5% pass.
+
+→ 최종 Stage 3 본류는 Roofer-style relation-based read-out으로 전환.
 
 ---
 
@@ -113,14 +203,12 @@ L_coverage(s_i): 후보. densification 대비 검증.
 **f_i에 직접 gradient 없음.** 그룹 할당 = argmax(f_i) 이산 연산 → ∂L_structure/∂f_i = 0.
 f_i 교정은 메커니즘 1(L_mutual) 담당. 간접 피드백: 매 T iter 그룹 재할당.
 
-**핵심: 메커니즘 1과의 동시 작용.**
+**메커니즘 1과의 동시 작용 (G1 cycle 약화는 §1.5 / §14 참조):**
 매 iteration에서 n_i에 대한 gradient:
 ∂L/∂n_i = ... + ∂L_mutual/∂n_i + ∂L_normal_align/∂n_i
-하나의 파라미터에 도메인 규칙("벽이니까 수평") + 면 단위 정렬("같은 면이니까 같은 방향")이 동시 작용.
-메커니즘 2가 n_i 정렬 → 메커니즘 1이 정렬된 n_i로 f_i 교정 → 교정된 f_i가 다음 그룹 재할당에 반영.
-이 동시 작용 + 주기적 재할당의 순환이 순차 파이프라인과의 근본적 차이.
+하나의 파라미터에 도메인 규칙("벽이니까 수평") + 면 단위 정렬("같은 면이니까 같은 방향")이 동시 작용. 단, G1(patch 단위) 위에서는 두 효과의 독립 결합으로 평가 (cycle 약함).
 
-**s_i에 별도 제약 없음.** Stage 3에서 CityGML 폴리곤 경계는 인접 대표 평면을 확장하여 교차선으로 결정되므로 s_i에 의존하지 않음. s_i는 데이터 정합 손실과 densification으로 조정. 항공 2DGS(AGS, ULSR-GS)도 s_i에 별도 제약 미부과.
+**s_i에 별도 제약 없음.** Stage 3 Roofer-style read-out에서 footprint는 wall evidence 위치/normal에서 추정되므로 s_i에 의존하지 않음.
 
 대표 법선 정확도 위험 → 안전장치: warmup(2N/3 이후), 재계산, 가중 평균.
 Warmup: 2N/3 이후 활성화.
@@ -153,6 +241,7 @@ Warmup: 2N/3 이후 활성화.
 
 ## 6. 평가 지표
 
+### Stage 2 평가
 | 지표 | 수식/도구 | 레퍼런스 |
 |------|----------|---------|
 | PSNR | -10·log10(MSE) | 3DGS, CityGSV2 |
@@ -164,51 +253,56 @@ Warmup: 2N/3 이후 활성화.
 | Chamfer Distance | bidirectional nearest-neighbor | CityGSV2, AGS |
 | Wall 수직도 | wall 중 \|n·e_g\|<sin(10°) 비율 | 본 연구 |
 | mIoU | mean(TP/(TP+FP+FN)) | AlignGS |
-| val3dity | Ledoux(2019) | PLANES4LOD2 |
-| 면 IoU | 생성 vs GT | Point2Building |
-| Hausdorff | 최대 거리 | City3D |
-| σ_normal_intra | 그룹 내 법선 분산 | 본 연구 |
-| σ_coplanar | 그룹 내 coplanarity 오차 | 본 연구 |
 
----
+### Stage 3 평가 (Roofer-style read-out)
+| 지표 | 정의 | 레퍼런스 |
+|------|------|---------|
+| val3dity | formal CityJSON validity | Ledoux(2019) |
+| h_err | \|output_h - GT_h\| | 본 연구 |
+| recall coverage | GT surface samples within 0.5m of pred mesh | 본 연구 |
+| pred-to-GT precision | predicted samples within 0.5m of GT mesh | 본 연구 |
+| F-score | precision/recall harmonic mean | Point2Building |
+| vol_ratio | output_vol / GT_vol | 본 연구 |
+| footprint IoU | predicted footprint vs GT footprint | City3D |
+| Hausdorff / Chamfer | mesh-to-mesh distance | City3D, AGS |
+| edge incidence | manifoldness, open edges, non-manifold edges | val3dity |
+| failure_reason | EVIDENCE_INSUFFICIENT, FOOTPRINT_FAIL, ROOF_PARTITION_FAIL, SHELL_ASSEMBLY_FAIL, VAL3DITY_FAIL, LOW_PRECISION_OVERFILL, LOW_RECALL_UNDERFILL, COMPLEX_MULTIPART, SHARED_WALL_LIKELY | 본 연구 |
 
-## 7. 실험 조건
+### Instance-level (E2, E4 자동 split)
+| 지표 | 정의 |
+|------|------|
+| instance precision | predicted components matched to GT / total predicted |
+| instance recall | matched GT / total GT |
+| over-merge / over-split count | one-to-many / many-to-one matching |
+| component-to-GT IoU | bbox 또는 footprint IoU |
 
-### Ablation (4조건)
+### 4조건 ablation (E3, E4)
 | 조건 | 구성 | 검증 |
 |------|------|------|
 | Baseline | L_photo+L_depth+L_normal+L_nc+L_sem | 메커니즘 없음 |
 | Mutual only | +L_mutual | 메커니즘 1 단독(intra) |
 | Structure only | +L_structure | 메커니즘 2 단독(inter) |
-| Both | +L_mutual+L_structure | 동시 작용 |
-
-핵심 비교:
-- Structure only vs Both: 순환 효과 검증. Both에서 better면 "메커니즘 1의 양방향 gradient가 메커니즘 2의 그룹핑 품질 개선".
-- Mutual only vs Both: 면 단위 정렬의 추가 가치.
-- Both vs Mutual+Structure 합: 시너지/독립/간섭.
-
-### 비교
-(a) 영상+순차+footprint, (b) 영상+순차-footprint, (c) 제안, (d) LiDAR upper bound.
-
-### Synthetic A (완료)
-법선 지배성: 20°→val3dity -53%p, 분류 30%→-10%p. 2위의 5배.
-
-### Synthetic B
-이상적+clean 기본. 노이즈: depth/seg. 카메라: 이상적/oblique/nadir/뷰 감소.
+| Both | +L_mutual+L_structure | 동시 작용 + 결합 |
 
 ---
 
-## 8. 데이터
+## 7. 데이터
 
-### 성수동
+### 성수동 (Phase 3 실데이터)
 180장 oblique (DJI, 70m, GSD~1cm). COLMAP 100장. data/seongsu/.
 
-### 3D BAG
-LOD2.2. 20개(개별) + 구역 단위(도시 규모). data/3dbag/.
+### 3D BAG (Phase 2 합성)
+LOD2.2. Amsterdam Jordaan 131건물. data/3dbag/.
+
+### MatrixCity (Phase 1 학습 검증)
+Small City Aerial, 5,621장 (CityGSV2 COLMAP sparse).
+
+### GauU-Scene (Phase 3 서브)
+Real UAV.
 
 ---
 
-## 9. 용어 규칙
+## 8. 용어 규칙
 
 | 사용 | 미사용 |
 |------|--------|
@@ -221,19 +315,27 @@ LOD2.2. 20개(개별) + 구역 단위(도시 규모). data/3dbag/.
 | 벽 법선 수평(gravity에 수직) | 벽 법선 수직 |
 | L_nc | L_geo |
 | Stage (파이프라인) | Phase (실험 순서만) |
+| evidence-to-CityGML read-out | convex polytope / plane intersection 기반 변환 |
+| Roofer-style 2.5D roof-partition | generic plane assembly |
+| 두 메커니즘의 결합 효과 | 메커니즘 1과 2의 순환 효과 |
 
 ---
 
-## 10. 레퍼런스
+## 9. 레퍼런스
 
 ### 건물 구조 추출
 - PolyFit (Nan & Wonka, 2017), City3D (Huang et al., 2022), KSR (2020), Point2Building (2024), 3DBAG, PLANES4LOD2 (2024), SAT2BUILDING (2025)
+- Roofer (3DBAG / TU Delft) — 본 연구 Stage 3 reference
 
 ### 미분 가능 렌더링
 - 3DGS (Kerbl et al., 2023), 2DGS (Huang et al., 2024), PGSR (2024), PlanarSplatting (2025), gsplat
 
 ### 항공/도시
 - AGS (Wu et al., 2024), ULSR-GS (Li et al., 2025), CityGaussianV2
+
+### Building-prior + GS
+- GS4Buildings (Zhang et al., 2025): LoD2 → GS prior. 본 연구와 반대 방향.
+- Gaussian Building Mesh (Gao et al., 2025): GS → building mesh, structured 변환 미포함.
 
 ### 기하-의미론 연계
 - AlignGS (2025), NeRBuilder (2025), IGGT (2025), PCGrad (2020), CAGrad (2021)
@@ -253,7 +355,7 @@ LOD2.2. 20개(개별) + 구역 단위(도시 규모). data/3dbag/.
 
 ---
 
-## 11. 예비 실험 (PlanarSplatting, legacy/)
+## 10. 예비 실험 (PlanarSplatting, legacy/)
 
 ### L_mutual 효과 (Synthetic B)
 Clean wall normal 8.9°→3.8°, Noisy 9.0°→4.3°. 밀착 실패(coverage 6-26%) → gsplat 변경 근거.
@@ -266,35 +368,35 @@ mIoU=0.81. L_mutual gravity 미보정 보류. Stage 3: 11 instance, non-watertig
 
 ---
 
-## 12. gsplat 2DGS 구현 주의사항
+## 11. gsplat 2DGS 구현 주의사항
 
 실제 구현 중 발견한 gsplat 1.4.0 + 2DGS 관련 함정. Claude Code 참조용.
 
-### 12.1 Densification gradient key
+### 11.1 Densification gradient key
 gsplat 2DGS는 gradient를 `gradient_2dgs` 키로 전달하지만, DefaultStrategy의 `key_for_gradient` 기본값은 `"means2d"`. 기본값 사용 시 grow가 0회 실행되어 프리미티브가 prune만 됨.
 **수정:** `DefaultStrategy(..., key_for_gradient="gradient_2dgs")` 명시.
 
-### 12.2 Scales shape
+### 11.2 Scales shape
 `rasterization_2dgs`는 scales를 (N,3)으로 요구 (dim2 ≈ 0으로 설정). (N,2)로 전달 시 오류.
 
-### 12.3 Distortion loss weight
+### 11.3 Distortion loss weight
 Depth distortion loss의 weight가 과도하면 total loss를 지배함. 초기값으로 w_distort=100은 문제. 0 또는 낮은 값으로 시작 후 조정.
 
-### 12.4 L_nc 구현
+### 11.4 L_nc 구현
 gsplat의 `render_normals_from_depth`는 shape 불일치 이슈 있음. 자체 구현 권장:
 - `depth_to_normal(D_render)`: 인접 픽셀 finite difference → cross product
 - n_render는 gsplat이 world-frame으로 변환해서 반환 (추가 변환 불필요)
 
-### 12.5 Densification sync
+### 11.5 Densification sync
 gsplat strategy가 params dict를 교체해도 우리 model의 파라미터에 자동 반영 안 됨.
 **수정:** `_sync_params_to_model()` 호출로 명시적 동기화.
 
-### 12.6 Render normals 좌표계
+### 11.6 Render normals 좌표계
 `render_normals`는 이미 world-frame. `render_normals_from_depth`와 비교 시 좌표계 일치 확인.
 
 ---
 
-## 13. Step 1-1 Smoke Test 결과 (2026-04-16)
+## 12. Phase 1 Smoke Test 결과 (2026-04-16)
 
 ### 환경
 - Docker: jointbuildgs:dev (CUDA 12.1.1 + torch 2.4.1 + gsplat 1.4.0)
@@ -311,16 +413,15 @@ gsplat strategy가 params dict를 교체해도 우리 model의 파라미터에 �
 - gradient_2dgs 버그 수정이 핵심
 - 3k만에 CityGSV2 30k baseline(21.35)에 근접
 - 30k 본 학습에서 baseline 도달/초과 기대
-- 파이프라인 구현이 레퍼런스 수준으로 작동함을 확인
 
 ### 이전 시도 (실패)
-성수동 30k, eval PSNR 16.3 dB, N 62k. gradient_2dgs 버그로 grow 미작동이 원인. 수정 후 MatrixCity에서 정상 확인.
+성수동 30k, eval PSNR 16.3 dB, N 62k. gradient_2dgs 버그로 grow 미작동이 원인.
 
 ---
 
-## 14. Phase 2-2 핵심 발견 (2026-04-25)
+## 13. Phase 2-2 Stage 2 학습 결과 (2026-04-25)
 
-### 14.1 Stage 2 4조건 결과
+### 13.1 Stage 2 4조건 결과
 | 조건 | PSNR | Wall vert | σ_normal_intra | σ_coplanar |
 |------|------|----------|---------------|-----------|
 | Baseline | 40.35 | 28.0% | 14.74° | 1.91m |
@@ -328,34 +429,17 @@ gsplat strategy가 params dict를 교체해도 우리 model의 파라미터에 �
 | Structure | 40.96 | 28.4% | 14.88° | 1.86m |
 | Both | 39.81 | **79.4%** | 12.99° | 2.01m |
 
-### 14.2 Stage 3 4조건 결과 (convex polytope)
-| 조건 | val3dity | face IoU | sem acc |
-|------|---------|---------|---------|
-| Baseline | 40.5% | 0.213 | 21.1% |
-| Mutual | **32.1%** ↓ | **0.238** ↑ | 20.0% |
-| Structure | **43.5%** ↑ | 0.220 | **21.8%** |
-| Both | **43.5%** ↑ | 0.230 | 19.5% |
+→ L_mutual은 wall verticality에서 강한 효과 (28% → 79%). L_structure는 σ_normal/σ_coplanar에서 marginal 효과만. 상세 분석은 §14 (cycle 검증).
 
-### 14.3 확인된 문제 (C1, C2, C3)
+### 13.2 v4-mode wall clustering (Stage 3 backend audit의 일환)
+Mutual 조건에서 wall over-merge 해결 (P1-2 4/5 GO). Mode-based azimuth detection으로 적도 chaining(v3 DBSCAN의 한계) 우회.
+단, 이는 Stage 3 backend audit의 한 단계이며, 최종 Stage 3 본류는 §2 Roofer-style read-out으로 전환.
 
-**C1: Mutual val3dity 회귀.**
-Post-bbox-fix: -3.8%p (pre-fix -8.4%p, 절반은 bbox 버그). 잔존 회귀의 가설: D'(단순 건물 과조정), E(204 orientation 에러 증가).
-v3의 dominant 가설(Stage 3 clustering over-merge)은 post-fix에서 Mutual 203=52, Baseline 54로 유사 → 부분 부정.
+---
 
-**C2: Stage 2 group(G1)과 Stage 3 surface의 unit mismatch.**
-Stage 2 grouping.py: voxel hash(0.05m) + 12 dir bin = **patch 단위** (건물당 ~154개).
-Stage 3 clustering.py: hierarchical clustering(cos>0.92) = **surface 단위** (건물당 ~7개).
-Track 1(Stage 2 group 직접 전달) 시도 → patch 154개를 surface로 오인하여 실패.
-**단순 인터페이스 정렬이 아니라 grouping 정의 자체가 문제 (G1 vs G2).**
+## 14. Cycle 검증 결과 (G1 위에서) — thesis "cycle of feedback" 정정
 
-**C3: L_normal_align 효과 소실 — 3 component 분해.**
-- **C3a (photo redundancy, 측정 입증):** L_normal_align 활성화(step 20k)에서 이미 loss 0.0002. gradient L_mutual의 1/135. photo+L_normal이 normal을 이미 정렬(cos 0.984).
-- **C3b (patch unit):** G1의 5cm patch가 원래 동질적 → L_normal_align이 intra-patch smoothing에 그침. Across-patch/surface 단위 정합(corner tilt 등) 못 잡음.
-- **C3c (cycle 부재):** Cycle 4고리 모두 약함 (§14.4 참조).
-
-### 14.4 Cycle 검증 결과 + 시너지 미입증 근본 원인
-
-**Cycle 4고리 측정 (G1 위에서):**
+### 14.1 Cycle 4고리 측정
 
 | 고리 | 검증 방법 | 결과 |
 |------|---------|------|
@@ -364,209 +448,17 @@ Track 1(Stage 2 group 직접 전달) 시도 → patch 154개를 surface로 오�
 | 3. f_i 변경 → 그룹 재할당 | f_i argmax change | step 25k→30k Structure 0.45%, Both 0.29% → **trigger 없음** |
 | 4. 그룹 변동 | n_groups 통계 | CV 2.01%, consecutive change 0.007% → **거의 정적** |
 
-**결론:** G1 위에서 thesis의 "동시작용 cycle"이 4고리 모두 약함. cycle claim 미입증.
+→ G1 위에서 thesis "동시작용 cycle"이 4고리 모두 약함.
 
-**근본 원인 3가지:**
-1. **C3a (photo redundancy):** L_normal이 이미 n_i 정렬 → 고리 1 끊김.
-2. **C3b (patch unit):** G1의 5cm patch가 동질적 → L_normal_align이 intra-patch smoothing에 그침.
-3. **G1 grouping이 위치 기반:** f_i 변경이 voxel hash에 영향 안 줌 → 고리 3,4 끊김.
+### 14.2 근본 원인 3가지
 
-**G2(surface 단위)로 전환 시 고리 3,4 해소 가능:** f_i(class)가 grouping 조건이므로 f_i 변경이 직접 그룹 재할당을 trigger. G2에서 cycle 재검증 필요.
-C3a는 G2로도 해소 안 됨. Real UAV(Phase 3)에서 L_normal 약해지면 고리 1도 복원 가능.
+**C3a (photo redundancy):** Photo loss + L_normal이 step 0~20k 동안 n_i를 이미 정렬 (normal_cos 0.984). L_normal_align(step 20k 활성화)이 추가로 줄일 거리 거의 없음. L_normal_align peak vs L_mutual peak: 0.000222 vs 0.0326 (1/135).
 
-### 14.5 Stage 3 천장
-| 방식 | val3dity | 비고 |
-|------|---------|------|
-| GT direct (topology 보존) | 93.9% | 절대 상한의 lower bound |
-| GT + convex polytope (post-bbox-fix) | ~~96.2%~~ | **GT_convex reference 오류 — 절반 높이로 축소. 무효.** |
-| GT + convex polytope (pre-bbox-fix) | ~~76.3%~~ | bbox 버그. 무효. |
-| 우리 best (Structure/Both) | 55.0% | GT direct 93.9% 대비 -38.9%p 격차 |
-| val3dity 203 (non-planar) | 95%+ | dominant failure mode |
+**C3b (G1 patch unit):** G1의 5cm voxel hash + 12 dir bin이 patch 단위 → L_normal_align이 intra-patch smoothing에 그침. Across-patch/surface 단위 corner tilt 등 못 잡음.
 
-**GT_convex reference 오류 발견 (v3):**
-gt_stage3_test.py에서 GT를 convex polytope 통과시켰을 때, 131건물 중 88%(115건물)가 절반 이하 높이로 축소됨. 평균 비율 0.55-0.57. 원인 미확정(process_building의 face merge 로직 가능).
+**C3c (G1 grouping이 위치 기반):** f_i 변경이 voxel hash에 영향 안 줌 → 고리 3,4 끊김.
 
-**Building 1 직접 검증:**
-- GT mesh 원본: 16.61m
-- 우리 Stage 3 출력: 16.41m ← GT와 거의 일치
-- GT_convex (잘못된 reference): 8.56m
-→ Stage 3 알고리즘(convex polytope) 자체는 GT 비슷한 출력을 만듦. 알고리즘 교체 불필요.
-
----
-
-## 15. Stage 3 개선 방향: 2단계 (clustering fix → G2 재학습)
-
-### 15.1 2단계 접근
-
-**1단계: Stage 3 clustering 개선 (§19).** cluster_primitives의 spatial_split을 DBSCAN on plane_d로 교체. Baseline/Mutual checkpoint에서 검증. 재학습 불필요.
-
-**2단계: G2 재학습.** 1단계가 검증되면, cluster_primitives_v3를 기반으로 G2(학습용 surface grouping)를 구현. Structure/Both를 G2로 재학습하여 L_structure의 surface 단위 효과 검증.
-
-1. **thesis novelty:** "순차 파이프라인과의 차이"가 surface 단위에서만 성립. Patch 단위는 일반 normal smoothing과 차별화 안 됨.
-2. **용어 일관성:** "평면 인스턴스 그룹", "대표 평면", "inter-primitive" 모두 surface 명시.
-3. **Cycle 의미:** G2에서만 f_i 변경 → 다른 surface로 진짜 재할당. G1에선 voxel 위치로 결정되어 cycle 무의미.
-4. **Stage 2-3 인터페이스:** G2 = Stage 3 surface와 같은 단위 → 자연스러운 통합.
-
-현 G1은 implementation choice (학습 안정성 + 계산 효율). thesis 표현은 G2 의도 그대로.
-
-### 15.2 G2 알고리즘 후보
-
-| 후보 | 알고리즘 | 장점 | 단점 |
-|------|---------|------|------|
-| A. Voxel + spatial | (class, large voxel ~1m, dir bin) + post-merge by (n, plane_d) | voxel hash 효율 | 같은 wall의 cell split |
-| B. Region growing | (class, n similarity, plane_d similarity, spatial connectivity) | surface 직접 표현 | 효율 (매 T iter) |
-| C. Hybrid | (class, dir bin) + plane_d clustering + connected component | 단순 + 정확 | 구현 복잡도 |
-
-Trade-off: 988K primitive에 매 T=500 iter 호출 → 1분 미만 필요. 학습 초기 noisy primitive → warmup 강화 필요 가능.
-
-### 15.3 Stage 2→3 인터페이스 (G2 위에서)
-
-Stage 2: 매 T iter G2 호출 → surface 단위 group_id. L_structure가 group별 rep_n/rep_d 향해 정렬. 학습 끝에 ckpt에 G2 group_id 저장.
-Stage 3: ckpt의 G2 group_id 그대로 받음. Stage 3 자체 clustering 제거 또는 thin wrapper.
-
-Baseline/Mutual: G2 grouping 학습 안 함. Stage 3 입구에서 post-hoc G2 호출.
-Structure/Both: trained ckpt의 G2.
-→ 4조건 모두 같은 grouping 알고리즘으로 평가 — fair comparison.
-
-### 15.4 4조건 ablation 통합 의미
-
-| Cond | Stage 2 학습 grouping | Stage 3 입력 | 측정하는 것 |
-|------|---------------------|------------|---------|
-| Baseline | 없음 | post-hoc G2 | grouping만의 효과 (control) |
-| Mutual | 없음 | post-hoc G2 | + L_mutual 효과 |
-| Structure | G2 (학습 중) | trained G2 | + L_structure 학습 시 효과 |
-| Both | G2 (학습 중) | trained G2 | + 두 메커니즘 + 시너지 |
-
-### 15.5 Cycle 재검증 (G2 위에서)
-
-G2 위에서 §14.4의 4고리 재측정:
-- 고리 1: L_normal_align gradient magnitude (C3a가 여전한지)
-- 고리 3: f_i 변경 → surface 재할당 비율 (G1의 0.45% 대비 증가 기대)
-- 고리 4: 그룹 변동률 (G1의 2% 대비 증가 기대)
-- Both > Structure 시너지 발생 여부
-
-### 15.6 알고리즘 교체 검토 결과 (유지: convex polytope)
-
-Building 1 직접 검증에서 convex polytope 자체가 GT 비슷한 출력을 만듦 확인.
-PolyFit, Plane arrangement 등 검토했으나 알고리즘 교체보다 grouping 정의(G2) + 인터페이스가 우선.
-
-### 15.7 측정 인프라 정정 (병행)
-
-| # | 문제 | 상태 |
-|---|------|------|
-| 1 | bbox_margin 자동화 | 정정 완료 |
-| 2 | GT_convex 절반 축소 | 미완. GT direct 93.9% lower bound 채택 또는 cos_thresh 정정 |
-| 3 | eval metric 가혹성 | 진단됨. multi-to-one matching 또는 area-weighted metric 도입 검토 |
-
----
-
-## 16. C3 진단 결과 (확정, 3 component 분해)
-
-### 16.1 C3a: Photo loss redundancy — 직접 입증
-
-| 측정 | 값 | 해석 |
-|------|-----|------|
-| L_normal_align 활성화 시점 (step 20k) | 0.000222 | 활성화되자마자 이미 매우 작음 |
-| 활성화 후 첫 50 step | 0.000222 → 0.000104 | 빠르게 감소 (할 일 거의 없음) |
-| 학습 끝 (step 30k) | 0.0000115 | 20배 감소했으나 절대값 무의미 |
-| L_normal_align peak vs L_mutual_vert peak | 0.000222 vs 0.0326 | **L_structure가 L_mutual보다 135배 작음** |
-| eval/normal_cos | step 2k: 0.929 → step 30k: 0.984 | photo loss만으로 normal 거의 완벽 정렬 |
-
-### 16.2 인과 메커니즘
-Photo loss(L_photo) + L_normal이 step 0~20k 동안 n_i를 이미 정렬 (normal_cos 0.984).
-L_normal_align이 step 20k에 활성화될 때 그룹 내 normal 분산이 이미 매우 작음.
-L_normal_align이 추가로 줄일 거리가 거의 없음 → σ_normal_intra +1% (Phase 2 효과 부재)의 근본 원인.
-
-Phase 1(MatrixCity, PSNR 22, normal_cos 더 낮음)에서는 L_normal이 약해서 L_normal_align이 추가 정렬 여지가 있었음 → σ_normal_intra -45%.
-
-### 16.3 L_coplanar도 유사
-L_coplanar max magnitude: 7.5e-5. L_normal_align과 비슷한 수준으로 redundant 가능성.
-다만 σ_coplanar은 -2~-9% 개선이 관측됨 — 작지만 0은 아님.
-
-### 16.4 시너지 미입증의 근본 원인 확정
-시너지 기대 경로: 메커니즘 2가 n_i 정렬 → 메커니즘 1이 정렬된 n_i로 f_i 교정 → 순환.
-순환의 첫 고리: L_normal_align이 n_i를 이동시켜야 함.
-첫 고리가 끊김: L_normal_align의 gradient가 L_mutual의 1/135 → n_i를 effective하게 이동 못함.
-→ 메커니즘 1이 "메커니즘 2에 의해 정렬된 n_i"를 볼 수 없음 → 순환 불발 → 시너지 없음.
-
-### 16.5 Thesis 함의 (G2 전환 반영)
-
-**Negative result도 contribution:**
-"어떤 환경에서 어떤 메커니즘이 작동하는지"의 boundary를 정량적으로 그어줌.
-
-- 메커니즘 1 (L_mutual): strong/weak supervision 모두에서 작동 (Wall vert 개선 일관)
-- 메커니즘 2 (L_structure with G1): strong supervision에서 redundant (C3a + C3b + C3c)
-- 메커니즘 2 (L_structure with G2): C3b(patch unit) 해소, C3c(cycle) 해소 가능. C3a는 남음.
-- 시너지: G1에서 미발현. G2에서 고리 3,4 복원 → 시너지 가능. Phase 3에서 고리 1도 복원 가능.
-
-**G2 위에서의 시나리오:**
-- G2 + Phase 2 합성: C3a가 남아 L_normal_align absolute magnitude 여전히 작을 수 있으나, across-patch 정렬(C3b 해소)로 Stage 3 품질 개선 가능.
-- G2 + Phase 3 실데이터: C3a도 해소 → L_normal_align이 진짜 효과 + 시너지 가능.
-
-**스케치 서술 방향:**
-"G1(patch 단위)에서는 L_normal_align이 intra-patch smoothing에 그쳤으나, G2(surface 단위)에서는 across-patch 정렬이 가능. 합성 clean 환경에서는 photo redundancy(C3a)로 marginal contribution이 축소되며, 실데이터에서 효과 복원이 기대된다."
-
----
-
-## 17. Measurement Infrastructure Fragility
-
-### 17.1 발견된 측정 오류
-**Bug 1 (bbox_margin, 정정 완료):** plane_intersection.py의 bbox_margin 고정 1.0m → flat 건물에서 QHull 실패 → 14건물 처리 실패. max(5.0, 0.5×extent)로 자동화 후 전체 수치 +10~17%p.
-
-**Bug 2 (GT_convex 축소, 정정 미완):** gt_stage3_test.py에서 GT를 convex 통과시켰을 때 88% 건물이 절반 높이로 축소. 96.2% "천장"은 축소된 GT의 통과율이지 알고리즘 천장이 아님.
-
-### 17.2 교훈
-1. 모든 Stage 3 측정에 GT sanity check 포함: GT direct val3dity(93.9%), 건물 높이 비교
-2. 코드 수정 시 regression test: 알려진 건물(bid=1,2,6,21,22)의 수치 변화 확인
-3. Metric의 face count mismatch 한계 명시: pred ~7면 vs GT ~22면에서 sem accuracy, face IoU 과소 측정
-
-### 17.3 Eval metric 가혹성
-| Metric | vs scene.obj GT (~22 face/bldg) | vs GT_convex (~7 face/bldg) |
-|---|---|---|
-| sem accuracy | 21.6% | 46.1% |
-| face IoU | 0.214 | 0.154 ↓ |
-sem acc 21→46%: greedy 1-to-1 matching에서 face count mismatch 시 GT face 64%가 unmatched → 과소 측정.
-논문 보고: matched subset metric 병행, face count mismatch 한계 명시.
-
----
-
-## 18. v5 핵심 발견: Phase 2 학습 양호 + Stage 3 본질적 결함
-
-### 18.1 Phase 2 Stage 2 학습 양호 (정량 확인)
-
-| 지표 | Phase 1 | Phase 2 | 비고 |
-|------|---------|---------|------|
-| PSNR | 20.5 | 40.4 | Phase 2 더 좋음 |
-| mIoU | 0.63 | **0.97** | Phase 1은 rule-GT artifact |
-| F1@0.5m | 0.999 | 0.97 | 둘 다 양호 |
-| G1 σ_coplanar | 7-9mm | **2.6mm** | Phase 2가 더 좋음. cm 단위 응집 |
-| G1 σ_normal | 1.4° | 1.3° | 둘 다 양호 |
-
-**"학습 부족" 가설 반증.** primitive 단위 학습은 매우 잘 됨.
-
-### 18.2 Stage 3 cluster_primitives 본질적 결함
-
-cos_thresh sweep (v5 §2.10):
-| cos_thresh | n_groups | σ_normal | σ_coplanar |
-|---|---|---|---|
-| 0.85 (default) | 8 | 14.6° | 2050mm |
-| 0.99 | 84 | 8.8° | 2144mm |
-| 0.999 | 857 | 0.42° | **980mm** |
-
-cos_thresh 강화로도 σ_coplanar 안 줄어듦. G1 단위에서는 2.6mm인데 cluster_primitives에서는 980-2050mm.
-원인: cluster_primitives가 방향만 보고 같은 방향의 다른 평면(평행한 벽)을 합침.
-spatial_split이 plane_d gap을 찾아야 하는데 dense primitive에서 gap이 없어 실패.
-
-bid=21 polytope: GT bbox 2210m³ 대비 188m³ → GT의 **25%만 coverage**.
-
-### 18.3 Cluster cross-tab (over-merge 직접 입증)
-
-bid=21의 2011 primitive에 cluster_primitives 적용:
-- cluster 0 (77 prims): 100% off-surface noise
-- cluster 4 (256 prims): face 32에 75% 대응 — clean
-- cluster 12 (415 prims): **5개 GT face 혼재** — 결정적 over-merge
-
-### 18.4 Perturbation test (C3a 정밀화)
+### 14.3 Perturbation test로 본 C3a 정밀화
 
 | Shift | Phase 1 ΔdB | Phase 2 ΔdB | 비율 |
 |---|---|---|---|
@@ -574,113 +466,140 @@ bid=21의 2011 primitive에 cluster_primitives 적용:
 | 0.50m | -7.83 | -5.00 | 1.6× |
 | 1.00m | -7.81 | -7.50 | 1.04× |
 
-C3a(photo redundancy)는 **sub-meter(cm-dm) 영역에 한정.** 1m 이상은 Phase 1/2 대칭.
+C3a(photo redundancy)는 sub-meter(cm-dm) 영역에 한정. 1m 이상은 대칭. → Phase 3 실데이터(L_normal 약화)에서 C3a 일부 해소 가능성.
 
-### 18.5 Cycle 재해석 — "cycle" → "단발성 alignment"
+### 14.4 thesis 함의
 
-Phase 1 σ_normal_intra -45%의 진짜 메커니즘: 그룹은 거의 고정(Loop 4 churn 0.19%), 그 안에서 L_structure가 n_i를 정렬한 단발성 효과. "동적 cycle"이 아님.
+**G1 위에서 "cycle of feedback" 미입증.** 두 가지 contribution claim:
 
-Phase 1 Loop 1 ratio: L_mutual_vert : L_structure_na = 84:1 (Phase 2 135:1과 비슷한 자릿수).
-Phase 1에서 L_structure 효과가 있었던 이유: ratio가 아니라 **normal_cos 수렴 정도의 차이** (Phase 1 0.68 → Phase 2 0.98).
+- **Negative result도 contribution:** "어떤 환경에서 어떤 메커니즘이 작동하는지"의 boundary를 정량적으로 그어줌.
+  - 메커니즘 1 (L_mutual): strong/weak supervision 모두에서 작동 (Wall vert 28% → 79%).
+  - 메커니즘 2 (L_structure with G1): strong supervision에서 redundant.
+  - 시너지: G1에서 미발현. Phase 3에서 고리 1 복원 가능.
 
-thesis "cycle of feedback" → **데이터로 반증.** "두 독립 메커니즘 결합"으로 재정의 필요.
+- **G2 (surface-unit grouping) 가능성:** C3b/C3c는 G2로 해소 가능 (f_i가 grouping 조건 → 고리 3,4 복원). C3a는 G2로도 해소 안 됨. **단, G2 재학습은 본 thesis scope 밖**. Phase 3 future work로 명시.
 
----
-
-## 19. Stage 3 개선: 2단계 DBSCAN (cluster_primitives_v3) — **§20으로 대체됨**
-
-> v3는 프리미티브 n_i 기반. P1-1b 검증에서 n_i가 실제 표면 법선과 불일치(wall vert 5-8%) 발견.
-> v3 자체는 정상 작동하나, 입력(n_i)이 부정확하므로 한계. §20의 렌더링 기반으로 전환.
-
-### 19.1 v2의 실패와 v3의 설계
-
-**v2 (quantized normal 24 bins + DBSCAN on plane_d):**
-Baseline checkpoint에서 71 groups (기대 5-15). 원인: hard bin 경계에서 같은 평면의 primitive 법선이 두 bin으로 갈라짐. 각 bin에서 독립 DBSCAN → 같은 평면이 2개 surface로 중복 생성.
-
-**v3 (2단계 DBSCAN, hard binning 제거):**
-1. class 분리 (roof/wall)
-2. 법선에 DBSCAN (euclidean on unit vectors, eps ≈ 2sin(5°/2) ≈ 0.087)
-3. 각 법선 cluster에서 plane_d에 DBSCAN (eps=0.2m)
-
-Building 0에서 7 groups (기대 5-15) — GO. 하지만 Wall=3이 GT Wall=17과 불일치.
-원인: n_i가 표면 법선과 불일치. v3는 정확히 클러스터링하지만, 입력 자체가 부정확.
-
-### 19.2-19.5 (이전 내용 보존, §20으로 대체)
+**스케치 표현:**
+"G1(patch 단위)에서는 L_normal_align이 intra-patch smoothing에 그치며, photo redundancy(C3a)로 marginal contribution이 축소된다. 두 메커니즘은 결합 시너지가 아닌 독립 효과로 평가하며, Phase 3 실데이터에서 photo supervision 약화 시 효과 복원이 기대된다."
 
 ---
 
-## 20. Stage 3 개선: v4 Wall Azimuth DBSCAN — **§19 렌더링 접근 대체**
+## 15. Stage 3 backend audit 결과 (P1-3 ~ P1-3b)
 
-### 20.1 Gravity 축 오류 발견 + n_i 정확성 복원
+### 15.1 Audit 동기
 
-이전 측정에서 up=[0,0,1]을 사용했으나, 실제 gravity=[0,1,0] (Y-down). 90° 어긋남.
-올바른 측정: Mutual wall vert frac = 87.8% (이전 "5-8%"는 축 오류).
+Phase 2-2 Stage 2 학습은 양호 (mIoU 0.97, F1@0.5m 0.97, G1 σ_coplanar 2.6mm). 그러나 초기 Stage 3 (convex polytope 기반)에서 height/coverage collapse 발견. 4가지 backend candidate audit 수행.
 
-| 측정 | 잘못된 축 [0,0,1] | 올바른 축 [0,1,0] |
-|------|-----------------|-----------------|
-| Baseline wall vert | 5.5% | 34.7% |
-| Mutual wall vert | 7.7% | **87.8%** |
-| 전체 131 Baseline | 4.8% | 28.0% (Phase 2-2 매칭) |
-| 전체 131 Mutual | 5.2% | 79.3% (Phase 2-2 매칭) |
+### 15.2 Backend별 결과
 
-L_mutual은 의도대로 강하게 작동. "primitive n_i 부정확" 진단(§19 근거)은 **무효.**
-렌더링 기반 Stage 3(이전 §20)은 불필요.
+| Backend | GT input | v4 input | quality 측정 | 결론 |
+|---------|----------|----------|------------|------|
+| Convex polytope | val3dity 96.2% | 32.1% | h_err/coverage/vol_ratio 측정 | Height/coverage collapse, support fix 시도 후에도 회복 안 됨. P1-3b NG |
+| PolyFit (CGAL+SCIP+repair recipe) | 40% val3dity | partial | 측정 | Flat 정확 재구성, hip/complex valid-small 또는 over-segment |
+| 2.5D extrusion (legacy port) | 67.2% val3dity | 미측정 | 미측정 | Flat 100%, complex 34.5%. quality 검증 미완 |
+| RANSAC | spot-check | 미측정 | 미측정 | 2/5 |
 
-### 20.2 v3의 적도 chaining 문제
+### 15.3 Phase 0c backend two-bug analysis
 
-Wall primitive 88%가 수직 → 법선이 단위 구의 적도(equator)에 빽빽이 분포.
-3D DBSCAN(eps=5°)이 적도를 따라 density chain → 5086개 wall이 1 cluster(v3_07, 98%).
-4D DBSCAN(n + plane_d)도 법선 차원에서 chaining 동일.
+Convex polytope 자체에 두 backend 버그 분리:
+1. **S4 polygon planarity bug:** `_merge_coplanar_triangles` 이후 face polygon이 assigned plane으로부터 max 44.4mm 벗어남 → val3dity 203 발생.
+2. **d=centroid bug:** `_gt_envelope_planes`가 `d = n · centroid` 사용 → wall jog/alcove에서 inner sub-face가 polytope를 안쪽으로 자름 → vol_ratio collapse (B0: GT input vol_ratio 0.058).
 
-역설: L_mutual이 잘 작동할수록(수직 primitive가 많을수록) 적도가 빽빽해져 chaining 심화.
+### 15.4 PolyFit Phase 2 detailed
 
-v3 결과 (Mutual, Building 0):
-- Wall groups: 2 (v3_07에 4989개, v3_08에 11개)
-- v3_07의 rep_n=[+0.51, -0.04, +0.86] — 5086벡터 평균의 우연한 방향, 실제 wall 방향 아님
+GT input 9건 결과:
+- Flat 3/3 ✓ (B1: vol_ratio 1.00, B4: 1.00, B2: 0.05 small but valid)
+- Hip 0/3, tri-slope 0/1, complex 0/1
+- val3dity ✓ but coverage <10% pattern: B2 (cov 2.4%), B8 gable (cov 5.7%), B6 hip Stage B (cov 0.5%)
+- bid 3 (66 planes) CGAL assertion failure
 
-### 20.3 해결: Mode-based 4단계 Surface Clustering (v4)
+→ "val3dity 통과해도 quality 부족" 패턴 정량 검증. PolyFit-style hypothesis-and-selection이 본 building distribution에 부적합.
 
-Density-based(DBSCAN, gap 찾기) → mode-based(histogram peak, peak 찾기)로 전환.
-Gap이 없어도 peak은 있음. 건물 벽은 4-5개 discrete 방향 → azimuth histogram에 peak 존재.
+### 15.5 Audit의 thesis 자산화
 
-```
-v4 알고리즘 (4단계):
-1. Wall primitive 선택: class=wall AND |n·g|<0.15, weight=opacity×area
-2. Azimuth mode detection:
-   θ = atan2(n_z, n_x) → area-weighted circular histogram(3° bin)
-   → Gaussian smoothing → local maxima(prominence>10%) → 4-5 peaks
-   → 각 primitive를 nearest peak에 배정 (25°+ → noise)
-3. Plane_d mode detection (각 azimuth group 내):
-   d = n_peak · c_i → 1D histogram → local maxima → nearest peak 배정
-   (DBSCAN 아님 — 같은 chaining 방지)
-4. Spatial connected component split:
-   같은 (azimuth, plane_d)을 plane 위 2D로 투영 → CC(0.5m)
-Roof: v3 그대로 (3D DBSCAN, 적도 문제 없음)
-```
+이 audit 결과는 **기여 4 (Failure mode analysis of generic plane assembly)**의 정량 근거가 된다. "Convex polytope, PolyFit-style이 local surface evidence를 global support로 조립하는 과정에서 valid-small solid, coverage collapse, non-manifold error를 만드는 실패 모드를 정량적으로 분석한다."
 
-### 20.4 v3→v4 실험 경과
+---
 
-| 버전 | wall 방법 | Baseline B0 walls | Mutual B0 walls | 실패 원인 |
-|------|---------|------------------|----------------|---------|
-| v3 | 3D DBSCAN | 3 (87% 합침) | 2 (98% 합침) | 적도 chaining |
-| v4-dbscan | 1D azimuth DBSCAN | 7 (48%) GO | 2 (90%) NG | periodic chaining |
-| v4-mode | histogram peak | 검증 중 | 검증 중 | — |
+## 16. P1-4a Part B — Roofer-style read-out feasibility
 
-v4-dbscan의 eps sweep(3°~10°): Mutual에서 최대 cluster 항상 ~98%. 하이퍼파라미터 문제 아님, topology 문제.
-→ density-based의 한계 입증 → mode-based 전환.
+### 16.1 결과 (6건 GT-derived per-building relation read-out)
 
-### 20.5 비교
+| bid | type | h_err | coverage | edge_ok | val3dity |
+|-----|------|-------|----------|---------|----------|
+| B1 | flat | 0.00m | **99.0%** | ✓ | NOT_RUN |
+| B2 | flat | 0.00m | **100.0%** | ✓ | NOT_RUN |
+| B8 | gable | 0.00m | **98.8%** | ✓ | NOT_RUN |
+| B0 | tri-slope | 0.00m | **90.2%** | ✓ | NOT_RUN |
+| B6 | hip | 3.61m | 88.3% | ✓ | NOT_RUN |
+| B3 | complex | 7.31m | 36.5% | ✓ | NOT_RUN |
 
-| 방법 | 원리 | Gap 필요? | Peak 필요? | 적도 대응 |
-|------|------|---------|---------|---------|
-| DBSCAN | density-connected component | **필요** | 불필요 | 실패 (gap 없음) |
-| Histogram peak | mode detection | 불필요 | **필요** | 가능 (peak 있음) |
+Simple/medium 4건 (B1, B2, B8, B0): coverage 90-100%, h_err 0.00m. 이전 backend (convex polytope, PolyFit) 대비 압도적 quality.
+hip 1건 (B6): partial GO. complex 1건 (B3): NG.
 
-### 20.5 연구 의도 정합성
-GT를 입력으로 사용하지 않음. Stage 2 출력(c_i, n_i, f_i)만 사용.
-Primitive n_i가 정확하므로(88% 수직), n_i를 직접 사용하는 것이 thesis와 정합.
-렌더링 우회 불필요.
+### 16.2 의미
 
-### 20.6 Measurement fragility 업데이트
-3번째 측정 오류: gravity 축. bbox(1번), GT_convex(2번), gravity(3번).
-교훈: 좌표계/축 확인을 모든 측정의 첫 단계로. gravity=[0,1,0] 하드코딩 금지, GT Ground normal에서 검증.
+P1-4a Part B는 4 backend audit에서 처음으로 GT input에서 정량 quality (h_err < 1m AND coverage > 50%)를 달성한 backend다. Roofer-style relation-based read-out이 본 thesis Stage 3 본류로 적합한 첫 정량 근거.
+
+단, val3dity NOT_RUN (validator missing) → E0에서 formal pass/fail 확인 필요.
+
+---
+
+## 17. Measurement Infrastructure Fragility
+
+### 17.1 발견된 측정 오류
+
+**Bug 1 (bbox_margin, 정정 완료):** plane_intersection.py의 bbox_margin 고정 1.0m → flat 건물에서 QHull 실패 → 14건물 처리 실패. max(5.0, 0.5×extent)로 자동화.
+
+**Bug 2 (GT_convex 절반 축소, P1-3a Phase 0a에서 정정):** ratio_3D 계산이 vertex mean을 face centroid로 사용 → B2 ratio_3D=1.949 (정의상 불가능). Fan triangulation + signed tetrahedra로 정정. B6 NON_CONVEX 판정 무효 (재계산 후 ratio_3D=0.859 → CONVEX_OK).
+
+**Bug 3 (gravity 축, Phase 0d에서 발견):** 이전 측정에서 up=[0,0,1], 실제 gravity=[0,1,0] (Y-down). 90° 어긋남. 올바른 측정 후 wall vert frac 5-8% → 87.8% (Mutual). "primitive n_i 부정확" 진단은 무효.
+
+### 17.2 교훈
+
+1. 모든 Stage 3 측정에 GT sanity check 포함: GT direct val3dity, 건물 높이 비교, ratio_3D ≤ 1 검증.
+2. 코드 수정 시 regression test: 알려진 건물(bid=1,2,6,21,22)의 수치 변화 확인.
+3. 좌표계/축 확인을 모든 측정의 첫 단계로. gravity 하드코딩 금지, GT terrain normal에서 검증.
+4. val3dity ≠ quality. coverage/h_err/Hausdorff 함께 측정해야 정량 평가 가능.
+
+### 17.3 Eval metric 가혹성
+
+| Metric | vs scene.obj GT (~22 face/bldg) | vs GT_convex (~7 face/bldg) |
+|---|---|---|
+| sem accuracy | 21.6% | 46.1% |
+| face IoU | 0.214 | 0.154 ↓ |
+
+Greedy 1-to-1 matching에서 face count mismatch 시 GT face 64%가 unmatched → 과소 측정.
+논문 보고: matched subset metric 병행, face count mismatch 한계 명시.
+
+---
+
+## 18. 실험 단계 요약
+
+상세 프롬프트는 EXPERIMENT_PLAN.md.
+
+| 실험 | 입력 evidence | building split | 목적 | 제안 방법 성능 주장 |
+|------|-------------|--------------|------|--------------------|
+| E0 | (P1-4a Part B 결과) | (재실행 아님) | val3dity preflight + precision metric | 아니오 |
+| E1 | GT-derived | GT bid | read-out sanity / 131건물 일반화 | 아니오 |
+| E2 | GT-derived | automatic | clean evidence에서 building split 검증 | 아니오 |
+| E3 | Stage2-derived | GT oracle | Stage2 evidence 품질 upper-bound, 4조건 | 부분적 진단 |
+| E4 | Stage2-derived | automatic | end-to-end Stage 3, 4조건 | 예 |
+
+---
+
+## 19. 비교 실험 계획
+
+(a) 영상+순차+footprint, (b) 영상+순차-footprint, (c) 제안, (d) LiDAR upper bound.
+
+상세 비교 protocol은 Phase 3 단계에서 EXPERIMENT_PLAN.md에 추가.
+
+---
+
+## 20. Synthetic 실험
+
+### Synthetic A (완료)
+법선 지배성: 20°→val3dity -53%p, 분류 30%→-10%p. 2위의 5배.
+
+### Synthetic B (Phase 2)
+이상적+clean 기본. 노이즈: depth/seg. 카메라: 이상적/oblique/nadir/뷰 감소.

@@ -1,7 +1,7 @@
 # 도시 규모 건물의 구조적 3D 복원을 위한 기하-의미론 공동 최적화
 
 ## 프로젝트 개요
-미분 가능 렌더링 기반 평면 프리미티브(2DGS) 위에 건물 도메인 지식과 면 단위 구조 인식을 통합하여, 건물의 재구성과 구조화를 공동 최적화하는 박사 연구.
+미분 가능 렌더링 기반 평면 프리미티브(2DGS) 위에 건물 도메인 지식과 면 단위 구조 인식을 통합하여, 건물의 재구성과 구조화를 공동 최적화하는 박사 연구. Stage 2의 joint-optimized evidence를 Roofer-style evidence-to-CityGML read-out으로 변환하여 CityGML LOD2 semantic shell을 생성한다.
 
 공동 최적화 두 수준:
 - **Intra-primitive (메커니즘 1, L_mutual):** 개별 프리미티브의 도메인 규칙 기반 상호 교정
@@ -19,7 +19,7 @@ gsplat 선정 이유: N-D feature 네이티브 렌더링(semantic head CUDA fork
 ## 파이프라인
 - **Stage 1**: SfM/MVS + 2D Segmentation + Gravity 추정
 - **Stage 2**: 구조 인식 공동 최적화 (gsplat/2DGS + L_mutual + L_structure)
-- **Stage 3**: CityGML 변환
+- **Stage 3**: Evidence-to-CityGML read-out (Roofer-style 2.5D roof-partition, 외부 roofprint 미사용)
 
 ## 프리미티브 (G_i)
 | 변수 | 차원 | 의미 |
@@ -58,10 +58,9 @@ L_structure → n_i, c_i      inter-primitive 구조 정렬
 - L_coverage: 후보 (densification 대비 검증)
 - **f_i에 직접 gradient 없음** (그룹 할당 = argmax, 이산 연산)
 - f_i 교정은 메커니즘 1이 담당. 간접 피드백: 매 T iter 재할당.
-- **핵심: 메커니즘 1과 동시 작용.** 매 iter에서 n_i에 L_mutual + L_normal_align gradient 동시 합산.
-  메커니즘 2의 기하 정렬 → 메커니즘 1이 정렬된 n_i로 f_i 교정 → 다음 그룹 재할당에 반영.
-  이 동시 작용 + 주기적 재할당의 순환이 순차 파이프라인과의 차별점.
-- s_i 별도 제약 없음: Stage 3 폴리곤 경계가 대표 평면 교차로 결정되어 s_i에 미의존.
+- **메커니즘 1과 동시 작용.** 매 iter에서 n_i에 L_mutual + L_normal_align gradient 동시 합산.
+
+**G1 cycle effect 정정:** P1-3b cycle 검증에서 G1 cycle 4고리는 거의 정적이었음. "메커니즘 1과 2의 순환 효과"보다는 **두 메커니즘의 독립 효과 + 결합 효과**로 평가. cycle of feedback이 아니라 surface evidence quality 개선이 핵심.
 
 ## Semantic Class (K=4)
 | Index | Class | CityGML | 역할 |
@@ -74,14 +73,28 @@ L_structure → n_i, c_i      inter-primitive 구조 정렬
 ## Gravity
 Grounded SAM terrain MVS 법선 평균. 학습 전 1회 계산.
 
-## 연구 계획 구조
-- **Phase 1** — MatrixCity(벤치마크)에서 Stage 2 각 단계가 레퍼런스(CityGSV2, ULSR-GS) 수준 달성 확인
-- **Phase 2** — 3D BAG 합성 렌더링에서 Stage 2+3 end-to-end + 4조건 ablation(CityGML 품질)
-- **Phase 3** — GauU-Scene(real UAV) + 순차 파이프라인 비교 + 성수동 실데이터 시연
+## 현재 병목 — Stage 3 Evidence-to-CityGML read-out
+
+최신 실험 결과, Stage 3의 병목은 더 이상 단순한 primitive normal clustering 또는 렌더링 기반 surface 추출 문제가 아니다. v4-mode는 Mutual 조건에서 wall over-merge를 상당히 완화했으며 (P1-2 Mutual 4/5 GO), PolyFit/convex polytope 실험은 local surface candidate를 generic plane assembly로 바로 조립하면 valid-small solid, non-manifold error, coverage collapse가 발생함을 정량적으로 보였다.
+
+**Stage 3 재정의:**
+Stage 3 = Stage 2에서 생성된 wall / roof / terrain evidence를 CityGML LOD2 semantic shell로 변환하는 evidence-to-CityGML read-out.
+
+구체적으로 Stage 3는 Roofer-style 2.5D roof-partition read-out을 따른다. 기존 Roofer/3DBAG는 point cloud와 외부 roofprint polygon을 입력으로 사용하지만, 본 연구는 외부 roofprint를 사용하지 않고 Stage 2의 joint-optimized evidence에서 building instance, footprint/roofprint, roof partition을 추정한다.
+
+처리 순서:
+1. building evidence partition
+2. wall-derived footprint / roofprint estimation
+3. roof evidence projection and roof partition
+4. roof-wall-ground semantic surface assembly
+5. CityJSON / CityGML export
+6. val3dity + height + coverage + precision 평가
+
+P1-4a Part B에서 6건 GT-derived per-building relation read-out이 read-out feasibility를 보였다 (simple/medium 4건 coverage 90-100%, h_err 0.00m). 전체 scene에서 building instance를 자동으로 나누는 문제는 별도 Stage 3-0(automatic split)으로 검증한다.
 
 ## 데이터셋 용도
 - Stage 2 검증: MatrixCity Small City Aerial (메인), GauU-Scene (서브)
-- Stage 3 검증: 3D BAG 합성 렌더링 (GT CityGML 있음)
+- Stage 3 검증: 3D BAG 합성 렌더링 Amsterdam Jordaan 131건물 (GT CityGML 있음)
 - 실데이터 시연: 성수동 (Metashape depth 사용)
 
 ## Ablation 4조건
@@ -95,36 +108,29 @@ Baseline / Mutual only / Structure only / Both — 메커니즘 1/2 개별 기�
 - [x] Phase 1 완료 (MatrixCity, 6/6 통과, PSNR 22.26)
 - [x] Phase 2-1 완료 (3D BAG 합성 파이프라인, Amsterdam Jordaan 131건물)
 - [x] Phase 2-2 Stage 2 완료 (4조건 30k 학습, G1 grouping)
-- [x] Phase 2-2 Stage 3 완료 (convex polytope, post-bbox-fix)
-- [x] C3 진단 완료 — photo loss redundancy 확정 (gradient L_mutual의 1/135)
-- [x] Cycle 검증 완료 — G1 위에서 4고리 모두 약함 입증
-- [x] Track 1 (인터페이스 정렬) 시도 — **patch vs surface unit mismatch로 실패**
-- [x] G2 시도 — chaining 문제 (σ_coplanar 787mm)
-- **v5 핵심 발견:**
-  - Phase 2 학습은 양호: mIoU 0.97, F1@0.5m 0.97, G1 σ_coplanar 2.6mm
-  - Stage 3 cluster_primitives가 본질적 결함: 방향 기반 + spatial_split 실패 → 건물 25% coverage
-  - Cycle 4고리: Phase 1/2 모두 그룹 거의 정적. "cycle" → "단발성 alignment"
-  - C3 3 component: C3a photo redundancy, C3b patch unit, C3c cycle 부재
-  - Perturbation test: sub-meter에서만 photo 둔감 (Phase2 0.1m→-0.85dB vs Phase1 -6.45dB)
-- [ ] **Stage 3 clustering v4 (wall azimuth DBSCAN)** ← **현재 블로커**
-- [ ] 131건물 검증 (재학습 전 gate)
-- [ ] G2 재학습 (Structure/Both)
-- [ ] 4조건 통합 측정
-- [ ] Cycle 재검증 (G2 위에서)
-- [ ] GT 천장 재측정
-- [ ] Phase 3: GauU-Scene + 순차 비교 + 성수동
+- [x] Stage 3 backend 비교 audit (v4 mode-based clustering, convex polytope, PolyFit, 2.5D, RANSAC)
+  - v4 mode-based clustering: Mutual 4/5 GO (P1-2)
+  - convex polytope: P1-3b 4 condition ablation, height/coverage collapse → NG
+  - PolyFit (CGAL+SCIP+repair recipe): GT input 40% val3dity, simple flat만 정확 재구성, hip/complex valid-small 또는 over-segment → 본 thesis Stage 3로 부적합
+  - 2.5D extrusion: val3dity 67.2%, quality 미측정 (별도 알고리즘으로 분리)
+  - RANSAC: 2/5 spot-check
+- [x] **P1-4a Part B 완료 — Roofer-style relation read-out feasibility 확인**
+  - simple/medium 4건 (B1 flat, B2 flat, B8 gable, B0 tri-slope): coverage 90-100%, h_err 0.00m
+  - hip 1건 (B6): coverage 88.3%, h_err 3.61m
+  - complex 1건 (B3): coverage 36.5%, h_err 7.31m
+  - val3dity NOT_RUN (validator missing) → E0 preflight에서 formal pass/fail 확인 필요
+- [ ] **E0: val3dity preflight + precision metric 재실행** ← **즉시 시작**
+- [ ] E1: GT-derived 131 per-building relation read-out
+- [ ] E2: GT-derived full-scene automatic building split
+- [ ] E3: Stage2-derived primitives + GT oracle split (4조건)
+- [ ] E4: Stage2-derived full-scene automatic split + read-out (4조건, end-to-end)
+- [ ] Phase 3: GauU-Scene + 성수동
 
-## 현재 병목
-**Stage 3 wall surface 분리.** Density-based(DBSCAN)가 gap 없는 적도에서 실패 → mode-based(histogram peak)로 전환.
-
-v4-dbscan 결과: Baseline GO(Wall 7), Mutual NG(Wall 2, eps sweep으로도 해결 안 됨).
-원인: DBSCAN은 gap을 찾는데, Mutual은 적도에 gap이 없음(valley 1개, 반대쪽으로 chain).
-eps 3°~10° sweep: 최대 cluster 항상 98%. 하이퍼파라미터가 아니라 topology 문제.
-
-**v4-mode:** azimuth histogram peak detection. Gap이 없어도 peak은 있음.
-건물 벽은 4-5개 discrete 방향 → peak 존재. peak 찾기 → nearest 배정 → plane_d peak → spatial CC.
-
-**Measurement fragility:** gravity 축 오류(3번째). 모든 측정에 gravity=[0,1,0] 확인 필수.
+## 현재 우선순위
+**E0 → E1 → E2/E3 병렬 → E4** 순서.
+- E0/E1: 1주 내
+- E2/E3: 2주
+- E4: E1-E3 결과에 따라 진행
 
 ## 중요 규칙
 - **gsplat 라이브러리** 사용 (2DGS 공식 fork 아님)
@@ -134,5 +140,10 @@ eps 3°~10° sweep: 최대 cluster 항상 98%. 하이퍼파라미터가 아니�
 - **법선**: "벽의 법선은 수평(gravity에 수직)"
 - **L_nc**: 독립 손실 (L_geo로 묶지 않음)
 - **L_coverage**: 후보
-- 각 Step 완료 시 results/에 REPORT.md 생성
+- **Stage 3**: Roofer-style evidence-to-CityGML read-out. 외부 roofprint 미사용.
+- **GT 사용 분리**:
+  - GT building id: per-building sanity (E1, E3 oracle split) — read-out 입력 가능
+  - GT footprint / roof type / final roof model: read-out 입력 절대 금지, evaluation only
+  - 최종 end-to-end (E4): GT 일체 미사용, evaluation only
+- 각 실험 완료 시 results/에 REPORT.md 생성
 - 시각적 산출물 필수
