@@ -1,0 +1,25 @@
+{
+  "final_decision": "S1D_EXPORT_BUG",
+  "failure_flags": [
+    "same-view reprojection is usable but world alignment to GT is poor"
+  ],
+  "image_depth_MAE_mean": 1.3725794439791346,
+  "image_normal_abs_mean": 0.977845744930526,
+  "image_semantic_accuracy_mean": 0.9698701078877158,
+  "existing_reprojection_error_px_mean": 4.128040015746964e-14,
+  "existing_GT_distance_mean": 26.91448640542038,
+  "best_normal_variant": "N0_exported",
+  "best_normal_abs_dot": 0.5696949713111527,
+  "best_normal_signed_dot": 0.08408788794417925,
+  "semantic_expected_3d_accuracy": 0.444398,
+  "semantic_best_3d_accuracy": 0.444398,
+  "F2_mean_view_count": 1.0205266379968407,
+  "F8_view_count_ge2_points": 52830,
+  "best_sampling_instance_recall": 0.09923664122137404,
+  "C0_instance_recall": 0.022900763358778626,
+  "C3_oracle_instance_recall": 0.04580152671755725,
+  "C4_GT_xyz_rendered_semantic_recall": 0.8244274809160306,
+  "bidlocal_success_count": 7,
+  "stage2_retraining_performed": false,
+  "gt_used_in_non_oracle_generation": false
+}

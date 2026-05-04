@@ -117,10 +117,9 @@ def render_semantic(
     quats = model.quats.detach()
     scales = model.scales.detach()
     opacities = model.opacities.detach()
-    colors = model.sem_logits.unsqueeze(0) if model.sem_logits.ndim == 2 else model.sem_logits
-    # gsplat expects colors shape (C, N, D) OR (N, D) for non-SH case
-    # Use (N, D) and pass sh_degree=None to treat as plain features
-    colors_feat = model.sem_logits  # (N, K)
+    # gsplat 1.5 expects non-SH feature colors to carry the camera batch
+    # dimension, i.e. (C, N, D), even for a single view.
+    colors_feat = model.sem_logits.unsqueeze(0) if model.sem_logits.ndim == 2 else model.sem_logits
 
     out = rasterization_2dgs(
         means=means, quats=quats, scales=scales, opacities=opacities,

@@ -1,0 +1,26 @@
+{
+  "gravity": [
+    0,
+    1,
+    0
+  ],
+  "checkpoint": "Mutual",
+  "stage2_retraining_performed": false,
+  "roofer_called": false,
+  "polyfit_backend_called": false,
+  "gt_used_for_generation": false,
+  "gt_used_for_quality_audit_and_post_generation_matching_only": true,
+  "cityjson_export_optional": true,
+  "primary_outputs": [
+    "semantic_faces.json",
+    "face_graph.json",
+    "evidence metrics"
+  ],
+  "thresholds_global_fixed": true,
+  "runtime_caps": {
+    "max_primitive_points_for_B_split": 120000,
+    "max_rendered_points_for_C_split": 300000,
+    "max_component_readout_points": 2500
+  },
+  "val3dity_status": "VAL3DITY_BLOCKED_DEPENDENCY"
+}
