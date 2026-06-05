@@ -1,0 +1,14 @@
+config_id,source,class_name,point_count_mean,semantic_entropy_mean,normal_consistency_mean,distance_to_same_surface_mean,status
+M0,E1_Baseline_rendered,roof,6969.0,0.04206781543003013,0.9455100534078905,0.8175440736050714,
+M0,E1_Baseline_rendered,wall,2408.6,0.08360346763370596,0.7286483542523166,0.7269278021102579,
+M0,E1_Baseline_rendered,ground,292.0,0.17702264144040644,0.9503656087867028,1.002687257827944,
+M1,E2_Mutual_rendered,roof,6995.5,0.02865336351705362,0.9411416825567345,0.842218987834066,
+M1,E2_Mutual_rendered,wall,2433.0,0.07507376531648728,0.737735688321485,0.7680710703576328,
+M1,E2_Mutual_rendered,ground,260.1,0.16289259400004757,0.9612174538491427,0.8030729131787574,
+M2,Mutual weight 0.5x,,,,,,planned_not_run
+M3,Mutual weight 0.25x,,,,,,planned_not_run
+M4,Mutual roof-wall only,,,,,,planned_not_run
+M5,Mutual without ground/terrain term,,,,,,planned_not_run
+M6,Mutual without height relation term,,,,,,planned_not_run
+M7,Mutual class-balanced weighting,,,,,,planned_not_run
+M8,Mutual with late-start schedule,,,,,,planned_not_run

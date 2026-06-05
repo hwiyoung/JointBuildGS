@@ -1,0 +1,97 @@
+run,scalar_tag,component_mapping,available,n_events,first_step,last_step,first_value,last_value,note
+baseline,eval/depth_mae,,True,15,2000,30000,3.628682851791382,0.12305629998445511,
+baseline,eval/normal_cos,,True,15,2000,30000,0.9288750886917114,0.9835355877876282,
+baseline,eval/psnr,,True,15,2000,30000,28.589645385742188,40.353904724121094,
+baseline,loss/depth,L_depth,True,3000,0,29990,12.475281715393066,0.044676460325717926,
+baseline,loss/distort,L_distort,True,3000,0,29990,0.1668468415737152,1.279883861541748,
+baseline,loss/mutual,L_mutual,True,3000,0,29990,0.0,0.0,mutual tags are logged as zero when disabled
+baseline,loss/mutual_height,L_mutual_height_relation,True,3000,0,29990,0.0,0.0,mutual tags are logged as zero when disabled
+baseline,loss/mutual_horiz,L_mutual_ground,True,3000,0,29990,0.0,0.0,mutual tags are logged as zero when disabled
+baseline,loss/mutual_slope,L_mutual_roof,True,3000,0,29990,0.0,0.0,mutual tags are logged as zero when disabled
+baseline,loss/mutual_vert,L_mutual_wall,True,3000,0,29990,0.0,0.0,mutual tags are logged as zero when disabled
+baseline,loss/nc,L_normal_consistency,True,3000,0,29990,0.8531642556190491,0.023646973073482513,
+baseline,loss/normal,L_normal,True,3000,0,29990,0.8917381763458252,0.01221192441880703,
+baseline,loss/photo,L_render/photo,True,3000,0,29990,0.46100425720214844,0.006792208179831505,
+baseline,loss/sem,L_semantic,True,3000,0,29990,1.3864601850509644,0.026022281497716904,
+baseline,loss/structure,L_structure,True,3000,0,29990,0.0,0.0,
+baseline,loss/structure_cp,L_structure_coplanar,True,3000,0,29990,0.0,0.0,
+baseline,loss/structure_na,L_structure_normal_align,True,3000,0,29990,0.0,0.0,
+baseline,loss/total,L_total,True,3000,0,29990,6.92453670501709,0.03352561220526695,
+baseline,metric/psnr_train,,True,3000,0,29990,8.15549087524414,40.45383834838867,
+baseline,stats/n_groups,,True,3000,0,29990,0.0,0.0,
+baseline,stats/n_in_group,,True,3000,0,29990,0.0,0.0,
+baseline,stats/n_primitives,,True,3000,0,29990,99998.0,981148.0,
+mutual,eval/depth_mae,,True,15,2000,30000,3.7197797298431396,0.12961378693580627,
+mutual,eval/normal_cos,,True,15,2000,30000,0.9279114007949829,0.9842721223831177,
+mutual,eval/psnr,,True,15,2000,30000,28.017295837402344,40.92522048950195,
+mutual,loss/depth,L_depth,True,3000,0,29990,12.475281715393066,0.04313839599490166,
+mutual,loss/distort,L_distort,True,3000,0,29990,0.1668468415737152,0.9597498774528503,
+mutual,loss/mutual,L_mutual,True,3000,0,29990,0.0,0.0034197899512946606,
+mutual,loss/mutual_height,L_mutual_height_relation,True,3000,0,29990,0.0,0.0013603729894384742,
+mutual,loss/mutual_horiz,L_mutual_ground,True,3000,0,29990,0.0,0.00013636752555612475,
+mutual,loss/mutual_slope,L_mutual_roof,True,3000,0,29990,0.0,0.00019921523926313967,
+mutual,loss/mutual_vert,L_mutual_wall,True,3000,0,29990,0.0,0.0017238343134522438,
+mutual,loss/nc,L_normal_consistency,True,3000,0,29990,0.8531642556190491,0.02306957356631756,
+mutual,loss/normal,L_normal,True,3000,0,29990,0.8917381763458252,0.011418645270168781,
+mutual,loss/photo,L_render/photo,True,3000,0,29990,0.46100425720214844,0.006545230746269226,
+mutual,loss/sem,L_semantic,True,3000,0,29990,1.3864601850509644,0.021855847910046577,
+mutual,loss/structure,L_structure,True,3000,0,29990,0.0,0.0,
+mutual,loss/structure_cp,L_structure_coplanar,True,3000,0,29990,0.0,0.0,
+mutual,loss/structure_na,L_structure_normal_align,True,3000,0,29990,0.0,0.0,
+mutual,loss/total,L_total,True,3000,0,29990,6.92453670501709,0.03236640244722366,
+mutual,metric/psnr_train,,True,3000,0,29990,8.15549087524414,41.066749572753906,
+mutual,stats/n_groups,,True,3000,0,29990,0.0,0.0,
+mutual,stats/n_in_group,,True,3000,0,29990,0.0,0.0,
+mutual,stats/n_primitives,,True,3000,0,29990,99998.0,986908.0,
+structure,eval/depth_mae,,True,15,2000,30000,3.177846908569336,0.10835999250411987,
+structure,eval/normal_cos,,True,15,2000,30000,0.9336842894554138,0.9841777086257935,
+structure,eval/psnr,,True,15,2000,30000,29.85602378845215,40.95696258544922,
+structure,loss/depth,L_depth,True,3000,0,29990,12.475281715393066,0.04115830361843109,
+structure,loss/distort,L_distort,True,3000,0,29990,0.1668468415737152,1.1159143447875977,
+structure,loss/mutual,L_mutual,True,3000,0,29990,0.0,0.0,mutual tags are logged as zero when disabled
+structure,loss/mutual_height,L_mutual_height_relation,True,3000,0,29990,0.0,0.0,mutual tags are logged as zero when disabled
+structure,loss/mutual_horiz,L_mutual_ground,True,3000,0,29990,0.0,0.0,mutual tags are logged as zero when disabled
+structure,loss/mutual_slope,L_mutual_roof,True,3000,0,29990,0.0,0.0,mutual tags are logged as zero when disabled
+structure,loss/mutual_vert,L_mutual_wall,True,3000,0,29990,0.0,0.0,mutual tags are logged as zero when disabled
+structure,loss/nc,L_normal_consistency,True,3000,0,29990,0.8531642556190491,0.023911891505122185,
+structure,loss/normal,L_normal,True,3000,0,29990,0.8917381763458252,0.012016740627586842,
+structure,loss/photo,L_render/photo,True,3000,0,29990,0.46100425720214844,0.006546358112245798,
+structure,loss/sem,L_semantic,True,3000,0,29990,1.3864601850509644,0.022091642022132874,
+structure,loss/structure,L_structure,True,3000,0,29990,0.0,2.253041384392418e-05,
+structure,loss/structure_cp,L_structure_coplanar,True,3000,0,29990,0.0,1.102832902688533e-05,
+structure,loss/structure_na,L_structure_normal_align,True,3000,0,29990,0.0,1.1502083907544147e-05,
+structure,loss/total,L_total,True,3000,0,29990,6.92453670501709,0.031133359298110008,
+structure,metric/psnr_train,,True,3000,0,29990,8.15549087524414,41.14236068725586,
+structure,stats/n_groups,,True,3000,0,29990,0.0,16195.0,
+structure,stats/n_in_group,,True,3000,0,29990,0.0,210293.0,
+structure,stats/n_primitives,,True,3000,0,29990,99998.0,986957.0,
+both,eval/depth_mae,,True,15,2000,30000,3.448131799697876,0.12742425501346588,
+both,eval/normal_cos,,True,15,2000,30000,0.9306243658065796,0.985090970993042,
+both,eval/psnr,,True,15,2000,30000,29.555213928222656,39.81403732299805,
+both,loss/depth,L_depth,True,3000,0,29990,12.475281715393066,0.044730044901371,
+both,loss/distort,L_distort,True,3000,0,29990,0.1668468415737152,0.9447218179702759,
+both,loss/mutual,L_mutual,True,3000,0,29990,0.0,0.003443647176027298,
+both,loss/mutual_height,L_mutual_height_relation,True,3000,0,29990,0.0,0.0013396184658631682,
+both,loss/mutual_horiz,L_mutual_ground,True,3000,0,29990,0.0,0.0001495474425610155,
+both,loss/mutual_slope,L_mutual_roof,True,3000,0,29990,0.0,0.00021787367586512119,
+both,loss/mutual_vert,L_mutual_wall,True,3000,0,29990,0.0,0.0017366076353937387,
+both,loss/nc,L_normal_consistency,True,3000,0,29990,0.8531642556190491,0.023976396769285202,
+both,loss/normal,L_normal,True,3000,0,29990,0.8917381763458252,0.012036916799843311,
+both,loss/photo,L_render/photo,True,3000,0,29990,0.46100425720214844,0.006637486629188061,
+both,loss/sem,L_semantic,True,3000,0,29990,1.3864601850509644,0.02315543405711651,
+both,loss/structure,L_structure,True,3000,0,29990,0.0,2.5682062187115662e-05,
+both,loss/structure_cp,L_structure_coplanar,True,3000,0,29990,0.0,1.1120644558104686e-05,
+both,loss/structure_na,L_structure_normal_align,True,3000,0,29990,0.0,1.4561417629010975e-05,
+both,loss/total,L_total,True,3000,0,29990,6.92453670501709,0.03346565365791321,
+both,metric/psnr_train,,True,3000,0,29990,8.15549087524414,40.93769073486328,
+both,stats/n_groups,,True,3000,0,29990,0.0,17841.0,
+both,stats/n_in_group,,True,3000,0,29990,0.0,211415.0,
+both,stats/n_primitives,,True,3000,0,29990,99998.0,988573.0,
+all,grad/classwise,missing_requirement,False,,,,,,classwise gradient norms unavailable
+all,grad/loss_family,missing_requirement,False,,,,,,gradient norm per base loss family unavailable
+all,grad/cosine_mutual_render,missing_requirement,False,,,,,,gradient cosine L_mutual vs render/depth/normal unavailable
+all,loss/mutual_roof_wall_relation,missing_requirement,False,,,,,,roof-wall relation loss unavailable because term is not implemented/logged
+all,loss/mutual_ground_wall_relation,missing_requirement,False,,,,,,ground-wall relation loss unavailable because term is not implemented/logged
+all,stats/evidence_ground_y_by_class,missing_requirement,False,,,,,,per-class evidence distributions during training unavailable
+all,stats/semantic_entropy_by_class,missing_requirement,False,,,,,,semantic entropy by class during training unavailable
+all,stats/support_acceptance_by_class,missing_requirement,False,,,,,,support acceptance by class during training unavailable

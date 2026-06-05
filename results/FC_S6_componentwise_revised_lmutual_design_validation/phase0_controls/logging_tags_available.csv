@@ -1,0 +1,30 @@
+tag,flag_or_interval,default_logged,note
+loss/mutual_wall_vertical,mutual_audit_logging,no,existing wall verticality component
+loss/mutual_roof_nonwall,mutual_audit_logging,no,existing roof non-wall component
+loss/mutual_terrain_normal,mutual_audit_logging,no,existing terrain normal component
+loss/mutual_height_roof,mutual_audit_logging,no,split roof-side height
+loss/mutual_height_terrain,mutual_audit_logging,no,split terrain-side height
+loss/mutual_sem_geom_calib,mutual_audit_logging,no,disabled placeholder logged as NaN
+loss/mutual_roof_wall_relation,mutual_audit_logging,no,disabled placeholder logged as NaN
+loss/mutual_terrain_wall_relation,mutual_audit_logging,no,disabled placeholder logged as NaN
+mutual/mass_roof,mutual_log_class_stats_every,no,class mass
+mutual/mass_wall,mutual_log_class_stats_every,no,class mass
+mutual/mass_terrain,mutual_log_class_stats_every,no,class mass
+entropy/roof,mutual_log_class_stats_every,no,class-weighted entropy
+entropy/wall,mutual_log_class_stats_every,no,class-weighted entropy
+entropy/terrain,mutual_log_class_stats_every,no,class-weighted entropy
+mutual/height_roof_p10,mutual_log_class_stats_every,no,height quantile alias
+mutual/height_roof_p50,mutual_log_class_stats_every,no,height quantile alias
+mutual/height_roof_p90,mutual_log_class_stats_every,no,height quantile alias
+mutual/height_wall_p10,mutual_log_class_stats_every,no,height quantile alias
+mutual/height_wall_p50,mutual_log_class_stats_every,no,height quantile alias
+mutual/height_wall_p90,mutual_log_class_stats_every,no,height quantile alias
+mutual/height_terrain_p10,mutual_log_class_stats_every,no,height quantile alias
+mutual/height_terrain_p50,mutual_log_class_stats_every,no,height quantile alias
+mutual/height_terrain_p90,mutual_log_class_stats_every,no,height quantile alias
+grad_norm/base,mutual_grad_audit_every,no,additional autograd diagnostic only when enabled
+grad_norm/mutual,mutual_grad_audit_every,no,additional autograd diagnostic only when enabled
+"grad_cosine(mutual, depth)",mutual_grad_audit_every,no,additional autograd diagnostic only when enabled
+"grad_cosine(mutual, normal)",mutual_grad_audit_every,no,additional autograd diagnostic only when enabled
+"grad_cosine(mutual, semantic)",mutual_grad_audit_every,no,additional autograd diagnostic only when enabled
+"grad_cosine(mutual, photo)",mutual_grad_audit_every,no,additional autograd diagnostic only when enabled

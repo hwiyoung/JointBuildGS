@@ -1,0 +1,32 @@
+{
+  "experiment": "Stage3-v1 Auditable Semantic Surface Read-out and FC-S1 v0-v1 Comparison",
+  "fc_s1_v0_root": "results/footprint_conditioned_readout/FC_S1_semantic_surface_readout",
+  "stage3_v1_root": "results/footprint_conditioned_readout/Stage3_v1_auditable_readout_FC_S1_v0_v1_comparison",
+  "target_bids": [
+    "B0",
+    "B1",
+    "B2",
+    "B8",
+    "B6",
+    "B3",
+    "B123",
+    "B126",
+    "B50",
+    "B104"
+  ],
+  "sources": [
+    "E0_GT_clean_upper_bound",
+    "E1_Baseline_rendered",
+    "E2_Mutual_rendered",
+    "E3_Baseline_primitive",
+    "E4_Mutual_primitive"
+  ],
+  "footprint_buffer_m": 0.75,
+  "gravity": [
+    0,
+    1,
+    0
+  ],
+  "same_evidence_files_where_available": true,
+  "stage2_evidence_generation_logic_changed": false
+}

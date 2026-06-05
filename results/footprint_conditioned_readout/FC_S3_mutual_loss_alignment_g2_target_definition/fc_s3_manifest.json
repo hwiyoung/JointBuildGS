@@ -1,0 +1,33 @@
+{
+  "experiment": "FC-S3: Mutual Loss Alignment Audit and G2 Target Definition",
+  "controlled_stage3_algorithm": "Stage3Algo-v1",
+  "controlled_metric": "Metric-v1",
+  "uses_rejected_stage3_v1c_patches": false,
+  "starts_full_g2_training": false,
+  "modifies_stage3_algorithms": false,
+  "modifies_metric_v1": false,
+  "modifies_footprint_estimation": false,
+  "gravity": [
+    0.0,
+    1.0,
+    0.0
+  ],
+  "sources": [
+    "E0_GT_clean_upper_bound",
+    "E1_Baseline_rendered",
+    "E2_Mutual_rendered"
+  ],
+  "target_bids": [
+    "B0",
+    "B1",
+    "B2",
+    "B8",
+    "B6",
+    "B3",
+    "B123",
+    "B126",
+    "B50",
+    "B104"
+  ],
+  "final_decision": "C. REVISE_L_MUTUAL_BEFORE_G2"
+}

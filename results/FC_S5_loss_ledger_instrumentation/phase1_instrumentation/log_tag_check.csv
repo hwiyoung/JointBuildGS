@@ -1,0 +1,42 @@
+tag,kind,present,last_value,note
+loss/mutual_wall_vertical,scalar,yes,0,
+loss/mutual_roof_nonwall,scalar,yes,0.00562527915,
+loss/mutual_terrain_normal,scalar,yes,0.249988198,
+loss/mutual_terrain_height,scalar,yes,18.4432793,
+loss/mutual_height_roof,scalar,yes,0.00178018841,
+loss/mutual_height_terrain,scalar,yes,18.4432793,
+loss/mutual_total,scalar,yes,18.7006741,
+loss/mutual_vert,scalar,yes,0,
+loss/mutual_slope,scalar,yes,0.00562527915,
+loss/mutual_horiz,scalar,yes,0.249988198,
+loss/mutual_height,scalar,yes,18.4450607,
+loss/mutual_sem_geom_calib,scalar,yes,nan,disabled placeholder uses NaN scalar plus text status
+loss/mutual_roof_wall_relation,scalar,yes,nan,disabled placeholder uses NaN scalar plus text status
+loss/mutual_terrain_wall_relation,scalar,yes,nan,disabled placeholder uses NaN scalar plus text status
+mutual/mass_roof,scalar,yes,0.250566721,
+mutual/mass_wall,scalar,yes,0.250551671,
+mutual/mass_terrain,scalar,yes,0.248359144,
+entropy/roof,scalar,yes,0.999967098,
+entropy/wall,scalar,yes,0.999966919,
+entropy/terrain,scalar,yes,0.999967098,
+height/roof_p10,scalar,yes,0.000267667492,
+height/roof_median,scalar,yes,3.61974454,
+height/roof_p90,scalar,yes,16.0003872,
+height/wall_p10,scalar,yes,0.000267667492,
+height/wall_median,scalar,yes,3.61949086,
+height/wall_p90,scalar,yes,16.0002575,
+height/terrain_p10,scalar,yes,0.000267640658,
+height/terrain_median,scalar,yes,3.60219002,
+height/terrain_p90,scalar,yes,15.9969044,
+grad_norm/photo,scalar,yes,0.00454710703,
+grad_norm/depth,scalar,yes,0.172985479,
+grad_norm/normal,scalar,yes,0.0239494573,
+grad_norm/semantic,scalar,yes,0.00195410103,
+grad_norm/mutual,scalar,yes,0.0886087418,
+"grad_cosine(mutual, photo)",scalar,yes,-8.75810147e-05,
+"grad_cosine(mutual, depth)",scalar,yes,-0.000202272655,
+"grad_cosine(mutual, normal)",scalar,yes,-5.35633224e-13,
+"grad_cosine(mutual, semantic)",scalar,yes,0.0589552484,
+loss/mutual_sem_geom_calib/status/text_summary,text_tensor,yes,disabled,explicit disabled record for placeholder term
+loss/mutual_roof_wall_relation/status/text_summary,text_tensor,yes,disabled,explicit disabled record for placeholder term
+loss/mutual_terrain_wall_relation/status/text_summary,text_tensor,yes,disabled,explicit disabled record for placeholder term

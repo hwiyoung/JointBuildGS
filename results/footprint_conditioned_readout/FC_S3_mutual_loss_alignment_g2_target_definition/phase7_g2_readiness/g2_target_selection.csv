@@ -1,0 +1,7 @@
+target,priority,evidence,candidate_signal
+ground support stabilization,1,B104 E1 succeeds while E2 ground_cov collapses; rendered ground support remains low.,"classwise ground evidence y distribution, support acceptance, wall-ground closure confidence"
+surface support coverage,2,"E1/E2 both have low classwise support, especially ground.",accepted/rejected support distribution and confidence calibration
+roof grouping consistency,3,B3/B123/B126 remain unresolved with E0/E1/E2 triangulation.,roof cluster continuity and roof-wall adjacency consistency
+roof-wall adjacency consistency,4,Complex roof cases need structure-aware grouping without topology destruction.,roof-wall adjacency graph consistency
+wall-ground closure confidence,5,GroundSurface metrics are vulnerable to noisy rendered ground evidence.,wall base support and ground plane confidence
+low-support face confidence calibration,6,Low support can coexist with closed topology; final evaluator penalizes semantic coverage.,per-face support confidence and metric-aware calibration

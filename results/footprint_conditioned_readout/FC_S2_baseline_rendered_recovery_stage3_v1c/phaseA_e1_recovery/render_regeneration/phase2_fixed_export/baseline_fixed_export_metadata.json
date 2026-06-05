@@ -1,0 +1,29 @@
+{
+  "checkpoint": "results/phase2_ablation_citygml/baseline/ckpt/final.pt",
+  "config": "configs/phase2_baseline.yaml",
+  "matched_e2_metadata": "results/stage3_rendered_evidence/S1D_fix_export_and_rerun/phase2_fixed_export/fixed_export_metadata.json",
+  "depth_convention": "expected_z",
+  "camera_convention": "camera_to_world_inverse_extrinsic",
+  "normal_frame": "gsplat_render_normals_world_frame_N0_exported",
+  "scene_normalization_inverse_applied": false,
+  "axis_convention": "existing_axes",
+  "gravity": [
+    0,
+    1,
+    0
+  ],
+  "selected_candidate_id_reused_from_e2": "C000",
+  "gt_used_for_generation": false,
+  "gt_used_for_candidate_selection": false,
+  "note": "Baseline reused E2 selected deterministic render/depth/camera/axis convention; no Baseline-specific tuning.",
+  "world_bbox_min": [
+    -234.4283447265625,
+    -103.04745483398438,
+    -174.51580810546875
+  ],
+  "world_bbox_max": [
+    187.0399627685547,
+    1.6426280736923218,
+    154.9496612548828
+  ]
+}

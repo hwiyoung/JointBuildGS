@@ -1,0 +1,28 @@
+{
+  "experiment": "FC-S2 Phase A+ Stage3 matrix insertion",
+  "e1_source_npz": "results/footprint_conditioned_readout/FC_S2_baseline_rendered_recovery_stage3_v1c/phaseA_e1_recovery/E1_Baseline_rendered.npz",
+  "phase_a_root": "results/footprint_conditioned_readout/FC_S2_baseline_rendered_recovery_stage3_v1c/phaseA_e1_recovery",
+  "stage3_algorithms_modified": false,
+  "metric_v1_modified": false,
+  "track_b_started": false,
+  "stage2_evidence_generation_modified": false,
+  "footprint_buffer_m": 0.75,
+  "gravity": [
+    0,
+    1,
+    0
+  ],
+  "target_bids": [
+    "B0",
+    "B1",
+    "B2",
+    "B8",
+    "B6",
+    "B3",
+    "B123",
+    "B126",
+    "B50",
+    "B104"
+  ],
+  "comparison": "E1_Baseline_rendered vs E2_Mutual_rendered under Stage3Algo-v1 + Metric-v1"
+}

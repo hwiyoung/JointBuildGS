@@ -1,0 +1,19 @@
+{
+  "gravity": [
+    0,
+    1,
+    0
+  ],
+  "evidence_type": "stage2_rendered_surface_evidence_fixed",
+  "points_file": "E1_Baseline_rendered.npz",
+  "ply_file": "E1_Baseline_rendered.ply",
+  "classes": [
+    "bg",
+    "roof",
+    "wall",
+    "terrain"
+  ],
+  "fusion": "F2_class_normal_aware_voxel_0p05",
+  "gt_used_for_generation": false,
+  "checkpoint": "results/phase2_ablation_citygml/baseline/ckpt/final.pt"
+}

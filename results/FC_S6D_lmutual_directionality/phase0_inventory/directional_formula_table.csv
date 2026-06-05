@@ -1,0 +1,4 @@
+candidate,formula,wall_term,roof_term,roof_height_term,semantic_detach,geometry_detach,terrain_terms,train_support
+A8_legacy_terrain_off,lambda_mu * (L_wall + L_roof + L_roof_height),mean p_wall * (n dot g)^2,mean p_roof * relu(tau - (n dot g)^2)^2,mean p_roof * relu(height_th - height)^2,no,no,off except terrain evidence is not used by active roof-side height,implemented by existing mutual.py with A8 config
+A8_v2_geo,lambda_mu * kappa_geo * (L_wall_sg + L_roof_sg + L_roof_height_sg),mean stopgrad(p_wall) * (n dot g)^2,mean stopgrad(p_roof) * relu(tau - (n dot g)^2)^2,mean stopgrad(p_roof) * relu(height_th - height)^2,yes,no,off,config-only via mutual_mode=sem2geo and scaled w_mutual
+A8_v2_joint,A8_v2_geo + lambda_mu * beta * KL(stopgrad(s_geom_roofwall) || p_roofwall),same as A8_v2_geo,same as A8_v2_geo,same as A8_v2_geo,geo term yes; semcal teacher stopgrad yes,semcal geometry teacher detached,off,not implemented in train.py/mutual.py yet; audit-only formula here

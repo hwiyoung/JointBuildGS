@@ -1,0 +1,8 @@
+term,enable_key,weight_key,default,stage2_class,final_readout_contribution
+wall_verticality,mutual_enable_wall_vertical,mutual_w_wall_vertical,"enabled,1.0",Wall primitive,stabilize wall normals for WallSurface face graph and footprint support
+roof_nonwall_prior,mutual_enable_roof_nonwall,mutual_w_roof_nonwall,"enabled,1.0",Roof primitive,discourage wall-like roof normals before roof candidate extraction
+terrain_normal_horiz,mutual_enable_terrain_normal,mutual_w_terrain_normal,"enabled,1.0",Terrain primitive,test whether Stage2 terrain evidence helps or drifts final GroundSurface read-out
+roof_side_height_relation,mutual_enable_height_roof_side,mutual_w_height_roof,"enabled,1.0",Roof primitive,encourage roof evidence above the height threshold for roof/shell separation
+terrain_side_height_relation,mutual_enable_height_terrain_side plus mutual_enable_terrain_height,mutual_w_height_terrain,"enabled,1.0",Terrain primitive,test whether terrain-side height helps final GroundSurface or causes terrain drift
+roof_wall_relation,mutual_enable_roof_wall_relation,,disabled placeholder,not implemented,not called in FC-S6 Phase 0
+terrain_wall_relation,mutual_enable_terrain_wall_relation,,disabled placeholder,not implemented,not called in FC-S6 Phase 0

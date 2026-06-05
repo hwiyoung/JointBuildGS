@@ -1,0 +1,5 @@
+component,formula,gradient_path,classes
+geometry_teacher,"s_geom = normalize([exp(-e_roof/tau_geom), exp(-e_wall/tau_geom)])",stopgrad,"roof,wall"
+semantic_student,"p_rw = normalize([p_roof,p_wall])",semantic logits receive gradient,"roof,wall"
+reliability,confidence_gate * sigmoid((entropy_tau - entropy_rw) / entropy_alpha),stopgrad,"roof,wall"
+loss,mean stopgrad(reliability) * KL(stopgrad(s_geom) || p_rw),semantic only,"roof,wall"

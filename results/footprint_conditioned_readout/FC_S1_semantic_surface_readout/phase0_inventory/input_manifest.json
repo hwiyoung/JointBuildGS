@@ -1,0 +1,61 @@
+{
+  "output_root": "results/footprint_conditioned_readout/FC_S1_semantic_surface_readout",
+  "scene_obj": "results/phase2_synthesis/scene.obj",
+  "gravity": [
+    0.0,
+    1.0,
+    0.0
+  ],
+  "gravity_check": "PASS",
+  "footprint_buffer_m": 0.75,
+  "sources": {
+    "E0_GT_clean_upper_bound": {
+      "kind": "gt",
+      "path": "results/phase2_synthesis/scene.obj",
+      "exists": true,
+      "checkpoint": ""
+    },
+    "E1_Baseline_rendered": {
+      "kind": "rendered",
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS/results/stage3_rendered_evidence/baseline_rendered_evidence_NOT_AVAILABLE.npz",
+      "exists": false,
+      "checkpoint": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS/results/phase2_ablation_citygml/baseline/ckpt/final.pt"
+    },
+    "E2_Mutual_rendered": {
+      "kind": "rendered",
+      "path": "results/stage3_rendered_evidence/S1D_fix_export_and_rerun/phase3_fixed_quality/rendered_evidence_fixed_F2_class_normal_aware_voxel_0p05.npz",
+      "exists": true,
+      "checkpoint": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS/results/phase2_ablation_citygml/mutual/ckpt/final.pt"
+    },
+    "E3_Baseline_primitive": {
+      "kind": "primitive",
+      "path": "results/phase2_ablation_citygml/baseline/stage3/primitives.npz",
+      "exists": true,
+      "checkpoint": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS/results/phase2_ablation_citygml/baseline/ckpt/final.pt"
+    },
+    "E4_Mutual_primitive": {
+      "kind": "primitive",
+      "path": "results/phase2_ablation_citygml/mutual/stage3/primitives.npz",
+      "exists": true,
+      "checkpoint": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS/results/phase2_ablation_citygml/mutual/ckpt/final.pt"
+    }
+  },
+  "target_bids": [
+    "B0",
+    "B1",
+    "B2",
+    "B8",
+    "B6",
+    "B3",
+    "B123",
+    "B126",
+    "B50",
+    "B104"
+  ],
+  "restrictions": {
+    "full_scene_automatic_building_split_used": false,
+    "gt_footprint_or_roofprint_used_as_domain_input": true,
+    "gt_roof_type_partition_mesh_semantics_used_for_stage2_generation": false,
+    "gt_used_for_evaluation": true
+  }
+}

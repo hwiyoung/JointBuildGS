@@ -1,0 +1,10 @@
+config_id,name,mutual_weight_relative,status,ground_term_enabled,height_relation_enabled,roof_wall_terms_enabled,class_balanced,late_start,diagnostic_question
+M0,Baseline,0.0,existing_run,False,False,False,False,False,No mutual loss.
+M1,Mutual original,1.0,existing_run,True,True,True,False,False,Original L_mutual checkpoint.
+M2,Mutual weight 0.5x,0.5,planned_not_run,True,True,True,False,False,Cheapest first reweighting candidate.
+M3,Mutual weight 0.25x,0.25,planned_not_run,True,True,True,False,False,Tests whether E1-like stability returns.
+M4,Mutual roof-wall only,1.0,planned_not_run,False,False,True,False,False,Remove ground and height terms.
+M5,Mutual without ground/terrain term,1.0,planned_not_run,False,True,True,False,False,Direct B104 negative-transfer test.
+M6,Mutual without height relation term,1.0,planned_not_run,True,False,True,False,False,Tests B6 height relation sensitivity.
+M7,Mutual class-balanced weighting,1.0,planned_not_run,True,True,True,True,False,Reduce classwise support imbalance.
+M8,Mutual with late-start schedule,1.0,planned_not_run,True,True,True,False,True,Avoid early semantic/geometric lock-in.

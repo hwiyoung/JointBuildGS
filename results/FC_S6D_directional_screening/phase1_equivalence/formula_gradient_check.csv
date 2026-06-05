@@ -1,0 +1,4 @@
+candidate,batch_id,raw_loss,weighted_loss,grad_norm_centers_means,grad_norm_rotations_quats,grad_norm_semantic_logits,weighted_grad_ratio_to_base,cosine_with_base,semantic_probability_detached,terrain_terms_disabled,formula_check
+L_base,0,0.05850060284137726,0.05850060284137726,0.011820623535872083,0.30509404422972836,2.0114832517403574e-05,1.0,,no_or_not_applicable,,REFERENCE
+A8_legacy_terrain_off,0,0.007945070043206215,0.0007945070043206215,3.893508055894205e-06,0.0001814754616020494,1.0117454327031035e-05,5.954317144191834e-05,0.00017686233721432533,no_or_not_applicable,yes,REFERENCE
+A8_v2_geo,0,0.007945070043206215,0.0007945070043206215,3.893508055894205e-06,0.0001814754616020494,0.0,5.9450893408002155e-05,0.00017722987750105066,yes,yes,PASS_semantic_grad_zero_geometry_nonzero
