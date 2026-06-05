@@ -10,12 +10,13 @@ data-fitting losses: L_photo, L_depth, L_normal, L_nc.
 from __future__ import annotations
 
 import argparse
+import json
 import math
 import os
 import random
 import time
 from pathlib import Path
-from typing import Dict
+from typing import Dict, Iterable, Optional
 
 import numpy as np
 import torch
@@ -68,6 +69,165 @@ def set_seed(seed: int):
 def psnr(a: torch.Tensor, b: torch.Tensor) -> float:
     mse = ((a - b) ** 2).mean().item()
     return 20 * math.log10(1.0) - 10 * math.log10(max(mse, 1e-10))
+
+
+def _mutual_weight_scale(it: int, warmup: int, schedule: str, ramp_steps: int) -> float:
+    if it < warmup:
+        return 0.0
+    if schedule == "constant":
+        return 1.0
+    if schedule == "ramp":
+        if ramp_steps <= 0:
+            return 1.0
+        return min(1.0, float(it - warmup + 1) / float(ramp_steps))
+    raise ValueError(f"Unsupported mutual_schedule={schedule!r}; expected 'constant' or 'ramp'")
+
+
+def _height_values(centers: torch.Tensor, e_gravity: torch.Tensor) -> torch.Tensor:
+    ax = int(e_gravity.abs().argmax().item())
+    sign = -torch.sign(e_gravity[ax])
+    return sign * centers[:, ax]
+
+
+def _weighted_quantile(values: torch.Tensor, weights: torch.Tensor, q: float) -> float:
+    weights = weights.clamp_min(0)
+    total = weights.sum()
+    if total <= 1e-8 or values.numel() == 0:
+        return float("nan")
+    order = torch.argsort(values)
+    v = values[order]
+    w = weights[order]
+    cdf = torch.cumsum(w, dim=0) / total
+    idx = int(torch.searchsorted(cdf, torch.tensor(float(q), device=values.device)).clamp(max=len(v) - 1).item())
+    return float(v[idx].detach().cpu().item())
+
+
+def _mutual_class_stats(model: GaussianModel2D, e_gravity: torch.Tensor) -> Dict[str, float]:
+    with torch.no_grad():
+        p = torch.softmax(model.sem_logits, dim=-1)
+        height = _height_values(model.means, e_gravity.to(model.means.device))
+        entropy = -(p * p.clamp_min(1e-8).log()).sum(dim=-1)
+        entropy = entropy / math.log(float(p.shape[-1]))
+        stats: Dict[str, float] = {}
+        for idx, name in [(1, "roof"), (2, "wall"), (3, "terrain")]:
+            w = p[:, idx]
+            mass = w.mean()
+            stats[f"mutual/mass_{name}"] = float(mass.detach().cpu().item())
+            stats[f"entropy/{name}"] = float(((w * entropy).sum() / w.sum().clamp_min(1e-8)).detach().cpu().item())
+            p10 = _weighted_quantile(height, w, 0.10)
+            p50 = _weighted_quantile(height, w, 0.50)
+            p90 = _weighted_quantile(height, w, 0.90)
+            stats[f"height/{name}_p10"] = p10
+            stats[f"height/{name}_median"] = p50
+            stats[f"height/{name}_p90"] = p90
+            stats[f"mutual/height_{name}_p10"] = p10
+            stats[f"mutual/height_{name}_p50"] = p50
+            stats[f"mutual/height_{name}_p90"] = p90
+        return stats
+
+
+def _grad_params(model: GaussianModel2D) -> Iterable[torch.nn.Parameter]:
+    params = [model.means, model.quats]
+    if hasattr(model, "sem_logits"):
+        params.append(model.sem_logits)
+    return [p for p in params if p.requires_grad]
+
+
+def _grad_vector(
+    loss: torch.Tensor,
+    params: Iterable[torch.nn.Parameter],
+) -> tuple[Optional[torch.Tensor], Optional[str]]:
+    params = list(params)
+    if not params:
+        return None, "no_audit_parameters"
+    if not torch.is_tensor(loss) or not loss.requires_grad:
+        return None, "loss_has_no_grad_graph"
+    grads = torch.autograd.grad(
+        loss,
+        params,
+        retain_graph=True,
+        allow_unused=True,
+    )
+    if all(g is None for g in grads):
+        return None, "loss_unused_by_audit_parameters"
+    pieces = [
+        (torch.zeros_like(p) if g is None else g).detach().reshape(-1)
+        for p, g in zip(params, grads)
+    ]
+    return torch.cat(pieces), None
+
+
+def _record_grad_skip(
+    writer: SummaryWriter,
+    out_dir: Path,
+    it: int,
+    name: str,
+    reason: str,
+) -> None:
+    tag_name = (
+        name.replace("grad_cosine(", "grad_cosine_")
+        .replace(")", "")
+        .replace(", ", "_")
+        .replace("/", "_")
+    )
+    writer.add_text(f"grad_diag/skipped/{tag_name}", reason, it)
+    audit_dir = out_dir / "audit"
+    audit_dir.mkdir(exist_ok=True)
+    with (audit_dir / "gradient_skipped.jsonl").open("a") as f:
+        f.write(json.dumps({"step": it, "diagnostic": name, "reason": reason}) + "\n")
+
+
+def _write_mutual_grad_diagnostics(
+    writer: SummaryWriter,
+    out_dir: Path,
+    it: int,
+    model: GaussianModel2D,
+    losses: Dict[str, torch.Tensor],
+) -> None:
+    params = list(_grad_params(model))
+    vectors: Dict[str, torch.Tensor] = {}
+    for name, loss in losses.items():
+        tag = f"grad_norm/{name}"
+        vec, reason = _grad_vector(loss, params)
+        if vec is None:
+            _record_grad_skip(writer, out_dir, it, tag, reason or "unavailable")
+            continue
+        vectors[name] = vec
+        writer.add_scalar(tag, float(vec.norm().detach().cpu().item()), it)
+
+    for other in ["photo", "depth", "normal", "semantic"]:
+        tag = f"grad_cosine(mutual, {other})"
+        if "mutual" not in vectors:
+            _record_grad_skip(writer, out_dir, it, tag, "mutual_gradient_unavailable")
+            continue
+        if other not in vectors:
+            _record_grad_skip(writer, out_dir, it, tag, f"{other}_gradient_unavailable")
+            continue
+        a = vectors["mutual"]
+        b = vectors[other]
+        denom = a.norm() * b.norm()
+        if denom <= 1e-12:
+            _record_grad_skip(writer, out_dir, it, tag, "zero_norm_gradient")
+            continue
+        writer.add_scalar(tag, float((a @ b / denom).detach().cpu().item()), it)
+
+
+def _log_disabled_mutual_terms(
+    writer: SummaryWriter,
+    it: int,
+    *,
+    semcal_enabled: bool = False,
+) -> None:
+    tags = []
+    if not semcal_enabled:
+        tags.append("loss/mutual_sem_geom_calib")
+    tags.extend([
+        "loss/mutual_roof_wall_relation",
+        "loss/mutual_terrain_wall_relation",
+    ])
+    for tag in tags:
+        writer.add_scalar(tag, float("nan"), it)
+        writer.add_text(f"{tag}/status", "disabled", it)
 
 
 def main():
@@ -161,9 +321,47 @@ def main():
     _grp = {"group_ids": None, "rep_n": None, "rep_d": None}
     w_mutual = cfg.get("w_mutual", 0.0)
     mutual_warmup = int(cfg.get("mutual_warmup", 10000))
+    mutual_schedule = cfg.get("mutual_schedule", "constant")
+    mutual_ramp_steps = int(cfg.get("mutual_ramp_steps", 0))
     mutual_tau = float(cfg.get("mutual_tau", 0.15))
     mutual_height_th = float(cfg.get("mutual_height_th", 0.15))
     mutual_mode = cfg.get("mutual_mode", "full")
+    mutual_audit_logging = bool(cfg.get("mutual_audit_logging", False))
+    mutual_grad_audit_every = int(cfg.get("mutual_grad_audit_every", 0))
+    mutual_log_class_stats_every = int(cfg.get("mutual_log_class_stats_every", 0))
+    mutual_log_evidence_snapshot_every = int(cfg.get("mutual_log_evidence_snapshot_every", 0))
+    mutual_enable_wall_vertical = bool(cfg.get("mutual_enable_wall_vertical", True))
+    mutual_enable_roof_nonwall = bool(cfg.get("mutual_enable_roof_nonwall", True))
+    mutual_enable_terrain_normal = bool(cfg.get("mutual_enable_terrain_normal", True))
+    mutual_enable_terrain_height = bool(cfg.get("mutual_enable_terrain_height", True))
+    mutual_enable_height_roof_side = bool(cfg.get("mutual_enable_height_roof_side", True))
+    mutual_enable_height_terrain_side = bool(cfg.get("mutual_enable_height_terrain_side", True))
+    mutual_w_wall_vertical = float(cfg.get("mutual_w_wall_vertical", 1.0))
+    mutual_w_roof_nonwall = float(cfg.get("mutual_w_roof_nonwall", 1.0))
+    mutual_w_terrain_normal = float(cfg.get("mutual_w_terrain_normal", 1.0))
+    mutual_w_height = float(cfg.get("mutual_w_height", 1.0))
+    mutual_w_height_roof = float(cfg.get("mutual_w_height_roof", 1.0))
+    mutual_w_height_terrain = float(cfg.get("mutual_w_height_terrain", 1.0))
+    mutual_terrain_gate_mode = cfg.get("mutual_terrain_gate_mode", "none")
+    mutual_terrain_gate_conf_min = float(cfg.get("mutual_terrain_gate_conf_min", 0.0))
+    mutual_terrain_gate_mass_min = float(cfg.get("mutual_terrain_gate_mass_min", 0.0))
+    mutual_terrain_gate_entropy_max = float(cfg.get("mutual_terrain_gate_entropy_max", 1.0))
+    mutual_terrain_height_reference = cfg.get("mutual_terrain_height_reference", "fixed")
+    mutual_terrain_height_quantile = float(cfg.get("mutual_terrain_height_quantile", 0.5))
+    mutual_terrain_height_margin = float(cfg.get("mutual_terrain_height_margin", 0.0))
+    mutual_semcal_enabled = bool(cfg.get("mutual_semcal_enabled", False))
+    mutual_semcal_classes = cfg.get("mutual_semcal_classes", "roof_wall")
+    mutual_semcal_tau = float(cfg.get("mutual_semcal_tau", 0.05))
+    mutual_semcal_weight_beta = float(cfg.get("mutual_semcal_weight_beta", 0.0))
+    mutual_semcal_reliability_gate = cfg.get("mutual_semcal_reliability_gate", "conf_entropy")
+    mutual_semcal_entropy_tau = float(cfg.get("mutual_semcal_entropy_tau", 0.75))
+    mutual_semcal_entropy_alpha = float(cfg.get("mutual_semcal_entropy_alpha", 0.10))
+    mutual_enable_roof_wall_relation = bool(cfg.get("mutual_enable_roof_wall_relation", False))
+    mutual_enable_terrain_wall_relation = bool(cfg.get("mutual_enable_terrain_wall_relation", False))
+    if mutual_enable_roof_wall_relation or mutual_enable_terrain_wall_relation:
+        raise ValueError("FC-S5 relation hints are placeholders only; do not enable them in this run")
+    if mutual_log_evidence_snapshot_every > 0:
+        print("[mutual] evidence snapshot logging is reserved for offline export diagnostics in FC-S5")
     e_gravity = None
     grav_file = cfg.get("gravity_file")
     if grav_file and Path(grav_file).exists():
@@ -236,6 +434,7 @@ def main():
             loss_total = loss_total + w_sem * loss_sem
         else:
             loss_sem = torch.tensor(0.0, device=device)
+        loss_base_for_grad = loss_total
 
         # L_mutual (intra-primitive, operates directly on primitives, no rendering)
         loss_mut_total = torch.tensor(0.0, device=device)
@@ -243,7 +442,18 @@ def main():
         loss_mut_slope = torch.tensor(0.0, device=device)
         loss_mut_horiz = torch.tensor(0.0, device=device)
         loss_mut_height = torch.tensor(0.0, device=device)
-        if (w_mutual > 0 and it >= mutual_warmup
+        loss_mut_wall_vertical = torch.tensor(0.0, device=device)
+        loss_mut_roof_nonwall = torch.tensor(0.0, device=device)
+        loss_mut_terrain_normal = torch.tensor(0.0, device=device)
+        loss_mut_terrain_height = torch.tensor(0.0, device=device)
+        loss_mut_height_roof = torch.tensor(0.0, device=device)
+        loss_mut_height_terrain = torch.tensor(0.0, device=device)
+        loss_mut_semcal = torch.tensor(0.0, device=device)
+        loss_mut_semcal_reliability = torch.tensor(0.0, device=device)
+        loss_mut_semcal_active_frac = torch.tensor(0.0, device=device)
+        loss_mut_semcal_entropy = torch.tensor(0.0, device=device)
+        mutual_weight_scale = _mutual_weight_scale(it, mutual_warmup, mutual_schedule, mutual_ramp_steps)
+        if (w_mutual > 0 and mutual_weight_scale > 0
                 and e_gravity is not None and hasattr(model, "sem_logits")):
             mut = l_mutual(
                 normals=model.normals(),
@@ -252,12 +462,48 @@ def main():
                 e_gravity=e_gravity,
                 tau=mutual_tau,
                 height_th=mutual_height_th,
+                w_vert=mutual_w_wall_vertical,
+                w_slope=mutual_w_roof_nonwall,
+                w_horiz=mutual_w_terrain_normal,
+                w_height=mutual_w_height,
+                w_height_roof=mutual_w_height_roof,
+                w_height_terrain=mutual_w_height_terrain,
                 mode=mutual_mode,
+                enable_wall_vertical=mutual_enable_wall_vertical,
+                enable_roof_nonwall=mutual_enable_roof_nonwall,
+                enable_terrain_normal=mutual_enable_terrain_normal,
+                enable_terrain_height=mutual_enable_terrain_height,
+                enable_height_roof_side=mutual_enable_height_roof_side,
+                enable_height_terrain_side=mutual_enable_height_terrain_side,
+                terrain_gate_mode=mutual_terrain_gate_mode,
+                terrain_gate_conf_min=mutual_terrain_gate_conf_min,
+                terrain_gate_mass_min=mutual_terrain_gate_mass_min,
+                terrain_gate_entropy_max=mutual_terrain_gate_entropy_max,
+                terrain_height_reference=mutual_terrain_height_reference,
+                terrain_height_quantile=mutual_terrain_height_quantile,
+                terrain_height_margin=mutual_terrain_height_margin,
+                enable_sem_geom_calib=mutual_semcal_enabled,
+                semcal_classes=mutual_semcal_classes,
+                semcal_tau=mutual_semcal_tau,
+                semcal_weight_beta=mutual_semcal_weight_beta,
+                semcal_reliability_gate=mutual_semcal_reliability_gate,
+                semcal_entropy_tau=mutual_semcal_entropy_tau,
+                semcal_entropy_alpha=mutual_semcal_entropy_alpha,
             )
             loss_mut_total = mut["total"]
             loss_mut_vert = mut["vert"]; loss_mut_slope = mut["slope"]
             loss_mut_horiz = mut["horiz"]; loss_mut_height = mut["height"]
-            loss_total = loss_total + w_mutual * loss_mut_total
+            loss_mut_wall_vertical = mut["wall_vertical"]
+            loss_mut_roof_nonwall = mut["roof_nonwall"]
+            loss_mut_terrain_normal = mut["terrain_normal"]
+            loss_mut_terrain_height = mut["terrain_height"]
+            loss_mut_height_roof = mut["height_roof"]
+            loss_mut_height_terrain = mut["height_terrain"]
+            loss_mut_semcal = mut["sem_geom_calib"]
+            loss_mut_semcal_reliability = mut["sem_geom_reliability"]
+            loss_mut_semcal_active_frac = mut["sem_geom_active_frac"]
+            loss_mut_semcal_entropy = mut["sem_geom_entropy"]
+            loss_total = loss_total + (w_mutual * mutual_weight_scale) * loss_mut_total
 
         # L_structure (inter-primitive, Mechanism 2)
         loss_str_total = torch.tensor(0.0, device=device)
@@ -300,6 +546,22 @@ def main():
                 n_groups = _grp["rep_n"].shape[0]
                 loss_total = loss_total + w_structure * loss_str_total
 
+        if mutual_grad_audit_every > 0 and it % mutual_grad_audit_every == 0:
+            _write_mutual_grad_diagnostics(
+                writer=writer,
+                out_dir=out_dir,
+                it=it,
+                model=model,
+                losses={
+                    "base": loss_base_for_grad,
+                    "photo": loss_photo,
+                    "depth": loss_depth,
+                    "normal": loss_n,
+                    "semantic": loss_sem,
+                    "mutual": loss_mut_total,
+                },
+            )
+
         # backward
         for opt in optimizers.values():
             opt.zero_grad(set_to_none=True)
@@ -333,6 +595,19 @@ def main():
             writer.add_scalar("loss/mutual_slope", loss_mut_slope.item(), it)
             writer.add_scalar("loss/mutual_horiz", loss_mut_horiz.item(), it)
             writer.add_scalar("loss/mutual_height", loss_mut_height.item(), it)
+            if mutual_audit_logging:
+                writer.add_scalar("loss/mutual_wall_vertical", loss_mut_wall_vertical.item(), it)
+                writer.add_scalar("loss/mutual_roof_nonwall", loss_mut_roof_nonwall.item(), it)
+                writer.add_scalar("loss/mutual_terrain_normal", loss_mut_terrain_normal.item(), it)
+                writer.add_scalar("loss/mutual_terrain_height", loss_mut_terrain_height.item(), it)
+                writer.add_scalar("loss/mutual_height_roof", loss_mut_height_roof.item(), it)
+                writer.add_scalar("loss/mutual_height_terrain", loss_mut_height_terrain.item(), it)
+                writer.add_scalar("loss/mutual_sem_geom_calib", loss_mut_semcal.item(), it)
+                writer.add_scalar("mutual/semcal_reliability_mean", loss_mut_semcal_reliability.item(), it)
+                writer.add_scalar("mutual/semcal_active_frac", loss_mut_semcal_active_frac.item(), it)
+                writer.add_scalar("mutual/semcal_entropy_mean", loss_mut_semcal_entropy.item(), it)
+                writer.add_scalar("loss/mutual_total", loss_mut_total.item(), it)
+                _log_disabled_mutual_terms(writer, it, semcal_enabled=mutual_semcal_enabled)
             writer.add_scalar("loss/structure", loss_str_total.item(), it)
             writer.add_scalar("loss/structure_na", loss_str_na.item(), it)
             writer.add_scalar("loss/structure_cp", loss_str_cp.item(), it)
@@ -341,6 +616,15 @@ def main():
             writer.add_scalar("metric/psnr_train", p, it)
             writer.add_scalar("stats/n_primitives", model.num_points, it)
             pbar.set_postfix(loss=f"{loss_total.item():.4f}", psnr=f"{p:.2f}", N=model.num_points)
+
+        if (
+            mutual_log_class_stats_every > 0
+            and it % mutual_log_class_stats_every == 0
+            and e_gravity is not None
+            and hasattr(model, "sem_logits")
+        ):
+            for tag, value in _mutual_class_stats(model, e_gravity).items():
+                writer.add_scalar(tag, value, it)
 
         # periodic eval + render sample
         if it % cfg.get("eval_every", 2000) == 0 and it > 0:

@@ -31,6 +31,7 @@ def render(
     near_plane: float = 0.01,
     far_plane: float = 1e10,
     bg_color: torch.Tensor | None = None,
+    depth_mode: str = "expected",
 ) -> Dict[str, torch.Tensor]:
     device = model.means.device
     viewmats = viewmat.unsqueeze(0).to(device)  # (1,4,4)
@@ -53,6 +54,7 @@ def render(
         near_plane=near_plane,
         far_plane=far_plane,
         render_mode=render_mode,
+        depth_mode=depth_mode,
         sh_degree=sh_degree,
         backgrounds=bg_color.unsqueeze(0) if bg_color is not None else None,
     )
@@ -62,6 +64,7 @@ def render(
     render_normals = out[2]      # (1, H, W, 3) — already world-frame
     surf_normals = out[3]        # (H, W, 3) or None — depth-derived, world-frame
     render_distort = out[4]      # (1, H, W, 1)
+    render_median = out[5]       # (1, H, W, 1)
     meta = out[-1]
 
     if render_mode.endswith("+ED") or render_mode.endswith("+D"):
@@ -86,6 +89,7 @@ def render(
         "normal_render": n_render,
         "normal_surf": n_surf,
         "distort": render_distort[0, ..., 0] if render_distort is not None else torch.zeros(height, width, device=device),
+        "depth_median": render_median[0, ..., 0] if render_median is not None else depth,
         "meta": meta,
     }
 
