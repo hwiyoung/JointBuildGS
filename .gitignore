@@ -86,6 +86,47 @@ results/stage3_typed_readout/E3d_true_context_roofprint/
 # Stage 3 validation audits: keep aggregate reports/summaries, ignore per-building raw artifacts
 results/stage3_v4_validation/polyfit_input_audit/B*/
 
+# FC experiment ledgers: keep curated reports/tables/configs, ignore rerunnable raw artifacts.
+results/FC_*/**/checkpoints/
+results/FC_*/**/runs/
+results/FC_*/**/run/
+results/FC_*/**/tb/
+results/FC_*/**/logs/
+results/FC_*/**/smoke_run/
+results/FC_*/**/evidence_exports/
+results/FC_*/**/rendered_evidence/
+results/FC_*/**/viewer_screenshots/
+results/FC_*/**/stage3_readout/**/B*/
+results/FC_*/**/metric_v1/**/B*/
+results/FC_*/*.npz
+results/FC_*/**/*.npz
+results/FC_*/**/*.ply
+results/FC_*/**/*.city.json
+results/FC_*/**/*.jsonl
+results/FC_*/**/*.log
+results/FC_*/**/*.pid
+results/FC_*/**/*.out
+results/FC_*/**/*.sh
+results/FC_*/**/*_record.txt
+results/FC_*/**/smoke_log.txt
+results/FC_*/**/events.out.tfevents*
+
+# Footprint-conditioned readout is historical evidence for FC design work.
+# Keep root reports and aggregate tables; ignore raw evidence/readout payloads.
+results/footprint_conditioned_readout/**/B*/
+results/footprint_conditioned_readout/**/evidence/
+results/footprint_conditioned_readout/**/readout/
+results/footprint_conditioned_readout/**/metric_v1/**/B*/
+results/footprint_conditioned_readout/**/overlays/
+results/footprint_conditioned_readout/**/plots/
+results/footprint_conditioned_readout/**/*.npz
+results/footprint_conditioned_readout/**/*.ply
+results/footprint_conditioned_readout/**/*.city.json
+results/footprint_conditioned_readout/**/*.log
+results/footprint_conditioned_readout/**/*.pid
+results/footprint_conditioned_readout/**/*.out
+results/footprint_conditioned_readout/**/*.txt
+
 # Local external checkouts/build attempts
 external/val3dity/
 
