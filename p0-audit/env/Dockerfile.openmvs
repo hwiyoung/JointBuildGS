@@ -1,0 +1,7 @@
+FROM openmvs/openmvs-ubuntu@sha256:fcb172bd84903d679684e618b45dc6f7a7621de0da87e6dc40f8fb084016e35a
+
+LABEL org.opencontainers.image.base.name="openmvs/openmvs-ubuntu:latest"
+LABEL org.opencontainers.image.base.digest="sha256:fcb172bd84903d679684e618b45dc6f7a7621de0da87e6dc40f8fb084016e35a"
+LABEL org.opencontainers.image.description="P0 OpenMVS runtime pinned to the verified upstream image"
+
+ENV PATH="/usr/local/bin/OpenMVS:${PATH}"
