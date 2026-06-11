@@ -86,3 +86,14 @@ Copyright (C) 2018-2026 Claus Nagel <claus.nagel@gmail.com>
 
 laspy 2.6.1
 ```
+
+## T2 OPF Conversion Additions
+
+```console
+[jointbuildgs-p0-tools:t0] image_id=sha256:8cf744bbe052590560b307ba8f2075f7f1dad493f83ae5fcd88046298aeb30a9 base_name=pdal/pdal:latest base_digest=sha256:dabc2c1b5de34fb2eff749ddba066cc66a7aa9448eac6e93743c32c7e4aa5051
+
+$ docker compose -f env/docker-compose.p0.yml run --rm tools bash -lc 'python -c "import importlib.metadata as m, matplotlib, numpy; print(\"pyopf \" + m.version(\"pyopf\")); print(\"matplotlib \" + matplotlib.__version__); print(\"numpy \" + numpy.__version__)"'
+pyopf 1.4.1
+matplotlib 3.10.9
+numpy 2.4.6
+```
