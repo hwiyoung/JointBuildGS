@@ -97,3 +97,12 @@ pyopf 1.4.1
 matplotlib 3.10.9
 numpy 2.4.6
 ```
+
+## T3 DIM Point Cloud Additions
+
+```console
+[jointbuildgs-p0-tools:t0] image_id=sha256:196bf613ddf6a94f921b780fb6385681eeb4de94a1f95be3e015399673286d02 base_name=pdal/pdal:latest base_digest=sha256:dabc2c1b5de34fb2eff749ddba066cc66a7aa9448eac6e93743c32c7e4aa5051
+
+$ docker compose -f env/docker-compose.p0.yml run --rm tools bash -lc 'lasinfo --version'
+lasinfo laspy-backed 0.1 (laspy 2.6.1, pyproj 3.7.2)
+```

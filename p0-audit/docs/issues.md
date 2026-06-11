@@ -3,3 +3,16 @@
 ## T1 Data Download
 
 - UAV OPF poses (Zenodo) primary -> uav/opf.zip: `https://zenodo.org/records/14548134/files/opf.zip` -- primary URL unavailable; using existing fallback file
+
+## T3 DIM Point Cloud
+
+- t3_mvs_20260611_225241: failed at line 76 with exit code 134. See runs/t3_mvs_20260611_225241/logs/.
+- t3_mvs_20260611_230138: failed at line 76 with exit code 1. See runs/t3_mvs_20260611_230138/logs/.
+- t3_mvs_20260611_230936: failed at line 76 with exit code 1. See runs/t3_mvs_20260611_230936/logs/.
+- t3_mvs_20260611_231056: failed at line 76 with exit code 1. See runs/t3_mvs_20260611_231056/logs/.
+- t3_mvs_20260611_233132: failed at line 464 with exit code 126. See runs/t3_mvs_20260611_233132/logs/.
+- t3_mvs_20260611_233132: failed at line 464 with exit code 127. See runs/t3_mvs_20260611_233132/logs/.
+- t3_mvs_20260611_233132: failed at line 466 with exit code 127. See runs/t3_mvs_20260611_233132/logs/.
+- t3_mvs_20260611_233132: failed at line 76 with exit code 1. See runs/t3_mvs_20260611_233132/logs/.
+- t3_mvs_20260611_233524: failed at line 76 with exit code 1. See runs/t3_mvs_20260611_233524/logs/.
+- Resolved in t3_mvs_20260611_233721 by remapping COLMAP image/frame IDs to database IDs, using OpenMVS `colmap_txt/sparse`, writing relative OpenMVS image paths, reading OPF `base_to_canonical.shift`, and asserting CRS via PDAL metadata.

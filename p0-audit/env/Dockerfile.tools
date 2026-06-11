@@ -29,7 +29,8 @@ RUN apt-get update \
 RUN /opt/conda/bin/pip install --no-cache-dir \
       'laspy[lazrs]==2.6.1' \
       'matplotlib==3.10.9' \
-      'pyopf==1.4.1'
+      'pyopf==1.4.1' \
+      'pyproj==3.7.2'
 
 RUN git clone --depth 1 --branch "${VAL3DITY_VERSION}" https://github.com/tudelft3d/val3dity.git /tmp/val3dity \
     && cmake -S /tmp/val3dity -B /tmp/val3dity/build -DCMAKE_BUILD_TYPE=Release \
@@ -43,3 +44,6 @@ RUN curl -fsSL "https://github.com/citygml4j/citygml-tools/releases/download/v${
     && mv "/opt/citygml-tools-${CITYGML_TOOLS_VERSION}" /opt/citygml-tools \
     && ln -s /opt/citygml-tools/citygml-tools /usr/local/bin/citygml-tools \
     && rm -f /tmp/citygml-tools.zip
+
+COPY env/lasinfo.py /usr/local/bin/lasinfo
+RUN chmod +x /usr/local/bin/lasinfo
