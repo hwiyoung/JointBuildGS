@@ -1,0 +1,8 @@
+metric,ALS,DIM,gap,section6_threshold_position,source
+LoD2.2 generation rate (assembly),92/93 (98.9%),85/93 (91.4%),-7.5 pp,no direct Section 6 threshold; paired assembly table reports exact McNemar p,docs/W3_2c_canonical_paired_status.csv; coverage_control_population=yes; *_has_lod22
+Final success rate,87/93 (93.5%),75/93 (80.6%),-12.9 pp,no direct Section 6 threshold,docs/W3_2c_canonical_success_rates.csv; population=coverage_controlled_93
+Plane F1 median,0.666667,0.571429,-0.095238 (old harness gap: -0.128571),observed=0.095238; threshold=0.100000; observed-threshold=-0.004762,docs/W3_2c_canonical_roofer_quality_summary.csv; metric=plane_f1; old harness from docs/W3_1_threshold_position.csv
+Exterior boundary Chamfer (m),0.126200,0.151802,0.025602,observed=1.202868; threshold=1.500000; observed-threshold=-0.297132,docs/W3_2c_canonical_roofer_quality_summary.csv; metric=boundary_chamfer_m
+Internal boundary Hausdorff (m),1.470091,1.744066,0.273975,auxiliary metric; no direct Section 6 threshold,docs/W3_2c_canonical_internal_boundary_summary.csv; metric=internal_boundary_hausdorff_m
+Height NMAD (m),0.059665,0.080237,0.020572,no direct Section 6 threshold,docs/W3_2c_canonical_roofer_quality_summary.csv; metric=height_nmad_m
+val3dity valid rate,88/93 (94.6%),83/93 (89.2%),-5.4 pp,observed=5.376344; threshold=10.000000; observed-threshold=-4.623656,docs/W3_2c_canonical_success_rates.csv; population=coverage_controlled_93
