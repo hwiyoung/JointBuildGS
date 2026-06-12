@@ -2,7 +2,9 @@
 
 - Coverage rule: DIM `nodata_frac <= 0.3` and `pt_density >= 20.0 pts/m2`.
 - Sensitivity: strict `0.20/30 pts/m2`, loose `0.40/10 pts/m2`.
-- Failure bucket v1: `coverage`, `roof_matching_assembly_failure`, `validity`, `reference_mismatch`.
+- Failure bucket v1: `coverage`, `roof_matching_assembly_failure`, `validity`, `reference_mismatch`, `aoi_edge_excluded`.
+- W2-1d correction: AOI-edge `missing_roofer_output` cases are separated as `aoi_edge_excluded`, not `reference_mismatch`.
+- Temporal note from `docs/data_inventory.md` inputs and local metadata: ALS tiles are 2022-era data (LAZ creation date 2022-06-16; adjusted GPS time range 2022-02-27), while UAV image filenames indicate 2024-12-17, so the modalities differ by about 2.8 years.
 - Coverage-controlled population: both attempted, DIM coverage pass, and no reference-mismatch exclusion.
 
 ## Success Rates
@@ -17,7 +19,7 @@
 
 - DIM `no_points` classified as coverage: 46 total; 44 are paired with ALS success.
 - DIM `missing_lod22_geometry` classified as coverage due to coverage miss: 8.
-- DIM bucket counts, full 199: {'success': 102, 'coverage': 56, 'reference_mismatch': 21, 'roof_matching_assembly_failure': 7, 'validity': 13}
+- DIM bucket counts, full 199: {'success': 102, 'coverage': 56, 'reference_mismatch': 1, 'aoi_edge_excluded': 20, 'roof_matching_assembly_failure': 7, 'validity': 13}
 
 ## Bucket Counts
 
@@ -27,12 +29,14 @@
 | ALS | coverage | 1 | 1 | 1 |
 | ALS | roof_matching_assembly_failure | 0 | 0 | 0 |
 | ALS | validity | 15 | 15 | 8 |
-| ALS | reference_mismatch | 20 | 0 | 0 |
+| ALS | reference_mismatch | 0 | 0 | 0 |
+| ALS | aoi_edge_excluded | 20 | 0 | 0 |
 | DIM | success | 102 | 102 | 75 |
 | DIM | coverage | 56 | 56 | 0 |
 | DIM | roof_matching_assembly_failure | 7 | 7 | 7 |
 | DIM | validity | 13 | 13 | 11 |
-| DIM | reference_mismatch | 21 | 1 | 0 |
+| DIM | reference_mismatch | 1 | 1 | 0 |
+| DIM | aoi_edge_excluded | 20 | 0 | 0 |
 
 ## Coverage Sensitivity
 
@@ -47,6 +51,8 @@
 | building_id | reference_mismatch_suspected | reason | action | figure | als_inside_count | als_inside_ground_ratio | als_inside_non_ground_z_p50 | dim_inside_count | dim_inside_ground_ratio | dim_inside_non_ground_z_p50 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | DEBY_LOD2_104586480 | yes | DIM footprint interior is dominated by ground-class points while ALS has almost no ground-class interior; coverage is high, so the failure is treated as reference or temporal mismatch candidate. | exclude_from_coverage_control_population | docs/figs/w2_1c_DEBY_LOD2_104586480_als_dim_section.png | 199 | 0.000 | 515.115 | 15489 | 0.766 | 523.940 |
+
+- 104586480 observation: ALS generated a flat model over an effectively empty footprint interior and passed validity; `validity` therefore does not imply semantic correctness.
 
 - ALS/DIM section figure: `docs/figs/w2_1c_DEBY_LOD2_104586480_als_dim_section.png`
 

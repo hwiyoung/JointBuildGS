@@ -20,3 +20,7 @@
 ## Failed Or Fallback URLs
 
 - UAV OPF poses (Zenodo) primary -> uav/opf.zip: `https://zenodo.org/records/14548134/files/opf.zip` -- primary URL unavailable; using existing fallback file
+
+## Acquisition-Year Notes
+
+- W2 temporal comparison note: ALS tiles are 2022-era data (LAZ header creation date `2022-06-16`; adjusted GPS time range resolves to `2022-02-27`), while UAV image filenames indicate `2024-12-17`; input modalities differ by about 2.8 years.

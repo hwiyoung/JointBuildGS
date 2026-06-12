@@ -272,7 +272,7 @@ def failure_bucket(label: str, row: dict[str, str], dim_coverage_pass: bool, ref
     if label == "DIM" and reference_exclude:
         return "reference_mismatch"
     if reason == "missing_roofer_output":
-        return "reference_mismatch"
+        return "aoi_edge_excluded"
     if reason in {"pointcloud_unusable_no_points", "pointcloud_unusable_no_planes", "pointcloud_unusable"}:
         return "coverage"
     if label == "DIM" and reason == "missing_lod22_geometry":
@@ -283,7 +283,14 @@ def failure_bucket(label: str, row: dict[str, str], dim_coverage_pass: bool, ref
 
 
 def build_bucket_summary(rows: list[dict[str, str]]) -> list[dict[str, str]]:
-    buckets = ["success", "coverage", "roof_matching_assembly_failure", "validity", "reference_mismatch"]
+    buckets = [
+        "success",
+        "coverage",
+        "roof_matching_assembly_failure",
+        "validity",
+        "reference_mismatch",
+        "aoi_edge_excluded",
+    ]
     output: list[dict[str, str]] = []
     for label in ("als", "dim"):
         for bucket in buckets:
@@ -655,7 +662,9 @@ def write_report(
         "",
         f"- Coverage rule: DIM `nodata_frac <= {BASE_NODATA_MAX}` and `pt_density >= {BASE_DENSITY_MIN} pts/m2`.",
         "- Sensitivity: strict `0.20/30 pts/m2`, loose `0.40/10 pts/m2`.",
-        "- Failure bucket v1: `coverage`, `roof_matching_assembly_failure`, `validity`, `reference_mismatch`.",
+        "- Failure bucket v1: `coverage`, `roof_matching_assembly_failure`, `validity`, `reference_mismatch`, `aoi_edge_excluded`.",
+        "- W2-1d correction: AOI-edge `missing_roofer_output` cases are separated as `aoi_edge_excluded`, not `reference_mismatch`.",
+        "- Temporal note from `docs/data_inventory.md` inputs and local metadata: ALS tiles are 2022-era data (LAZ creation date 2022-06-16; adjusted GPS time range 2022-02-27), while UAV image filenames indicate 2024-12-17, so the modalities differ by about 2.8 years.",
         "- Coverage-controlled population: both attempted, DIM coverage pass, and no reference-mismatch exclusion.",
         "",
         "## Success Rates",
@@ -682,6 +691,8 @@ def write_report(
     lines.extend(markdown_table(reference_rows))
     lines.extend(
         [
+            "",
+            "- 104586480 observation: ALS generated a flat model over an effectively empty footprint interior and passed validity; `validity` therefore does not imply semantic correctness.",
             "",
             f"- ALS/DIM section figure: `{rel(ref_fig)}`",
             "",
