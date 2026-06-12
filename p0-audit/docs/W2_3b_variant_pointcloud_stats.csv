@@ -1,0 +1,4 @@
+variant,path,method,point_count,base_aoi_point_count,kept_fraction,removed_fraction,aoi_planimetric_density_pts_m2
+base_aoi_crop,data/work/w2_3b/dim_aoi_crop.laz,AOI crop before variant filtering,43480044,43480044,1.000000,0.000000,244.609
+wall_removed,data/work/w2_3b/dim_wall_removed_nzge0p3.laz,"PDAL crop -> filters.normal(knn=16, always_up=true) -> filters.expression(abs(NormalZ) >= 0.3)",32391061,43480044,0.744964,0.255036,182.225
+thinned,data/work/w2_3b/dim_thinned_sample_r0p30.laz,PDAL crop -> filters.sample(radius=0.3),2555951,43480044,0.058784,0.941216,14.379
