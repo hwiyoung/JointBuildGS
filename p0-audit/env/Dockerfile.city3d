@@ -1,0 +1,44 @@
+FROM pdal/pdal@sha256:dabc2c1b5de34fb2eff749ddba066cc66a7aa9448eac6e93743c32c7e4aa5051
+
+ARG CITY3D_COMMIT=c9299efe61625f03a78245683eaa155a9670df0e
+ARG DEBIAN_FRONTEND=noninteractive
+
+LABEL org.opencontainers.image.base.name="pdal/pdal:latest"
+LABEL org.opencontainers.image.base.digest="sha256:dabc2c1b5de34fb2eff749ddba066cc66a7aa9448eac6e93743c32c7e4aa5051"
+LABEL org.opencontainers.image.description="P0 City3D CLI runtime"
+LABEL org.opencontainers.image.source="https://github.com/tudelft3d/City3D"
+
+SHELL ["/bin/bash", "-lc"]
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+      build-essential \
+      ca-certificates \
+      cmake \
+      git \
+      libboost-filesystem-dev \
+      libboost-system-dev \
+      libcgal-dev \
+      libgl-dev \
+      libglu1-mesa-dev \
+      libgmp-dev \
+      libmpfr-dev \
+      libopencv-dev \
+      pkg-config \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN git clone https://github.com/tudelft3d/City3D.git /opt/City3D \
+    && git -C /opt/City3D checkout "${CITY3D_COMMIT}"
+
+COPY env/city3d_cli_main.cpp /tmp/city3d_cli_main.cpp
+
+RUN cp /tmp/city3d_cli_main.cpp /opt/City3D/code/CLI_Example_1/main.cpp \
+    && grep -v 'add_subdirectory(3rd_party/3rd_QGLViewer)' /opt/City3D/code/CMakeLists.txt \
+      | grep -v 'add_subdirectory(CLI_Example_2)' \
+      | grep -v 'add_subdirectory(City3D)' \
+      > /tmp/City3D.CMakeLists.txt \
+    && mv /tmp/City3D.CMakeLists.txt /opt/City3D/code/CMakeLists.txt \
+    && cmake -S /opt/City3D/code -B /opt/City3D/build -DCMAKE_BUILD_TYPE=Release \
+    && cmake --build /opt/City3D/build --target CLI_Example_1 --parallel "$(nproc)" \
+    && install -m 0755 /opt/City3D/build/bin/CLI_Example_1 /usr/local/bin/city3d_cli \
+    && city3d_cli --version
