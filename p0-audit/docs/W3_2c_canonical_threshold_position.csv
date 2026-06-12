@@ -1,0 +1,5 @@
+item,observed_value,threshold_value,observed_minus_threshold,definition
+plane_f1_drop,0.095238,0.100000,-0.004762,ALS median plane F1 minus DIM median plane F1
+exterior_boundary_chamfer_ratio,1.202868,1.500000,-0.297132,DIM median exterior Chamfer divided by ALS median exterior Chamfer
+exterior_boundary_hausdorff_ratio,1.000000,1.500000,-0.500000,DIM median exterior Hausdorff divided by ALS median exterior Hausdorff
+validity_rate_drop_pp,5.376344,10.000000,-4.623656,coverage-control val3dity-valid rate: ALS 88/93 (94.6%) minus DIM 83/93 (89.2%)

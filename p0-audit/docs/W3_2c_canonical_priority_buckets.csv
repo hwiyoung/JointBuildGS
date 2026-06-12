@@ -1,0 +1,7 @@
+bucket,count,scope_note
+coverage,85,"both attempted, outside W2-1c DIM coverage rule after reference-mismatch exclusions"
+aoi_edge,20,footprint centroid outside Roofer AOI box
+reference_mismatch,2,104586480 from W2-1c and 4906973 from W3-1b height-bias review
+roof_matching,8,canonical DIM missing_lod22_geometry with coverage present
+validity,13,coverage-control buildings with ALS or DIM validity bucket after roof-matching priority
+remainder_after_priority,71,not assigned to non-success/exclusion buckets above; canonical quality table uses 71 paired both_success buildings

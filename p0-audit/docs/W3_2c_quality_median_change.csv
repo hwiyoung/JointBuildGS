@@ -1,0 +1,15 @@
+metric,input,old_n,canonical_n,old_median,canonical_median,canonical_minus_old,within_pm_0p02
+plane_f1,ALS,67,71,0.700000,0.666667,-0.033333,no
+plane_f1,DIM,67,71,0.571429,0.571429,0.000000,yes
+boundary_chamfer_m,ALS,67,71,0.132148,0.126200,-0.005948,yes
+boundary_chamfer_m,DIM,67,71,0.143199,0.151802,0.008603,yes
+boundary_hausdorff_m,ALS,67,71,0.190758,0.191575,0.000817,yes
+boundary_hausdorff_m,DIM,67,71,0.189572,0.191575,0.002003,yes
+height_bias_m,ALS,63,69,0.013801,0.012943,-0.000858,yes
+height_bias_m,DIM,63,69,-0.038490,-0.039375,-0.000885,yes
+height_nmad_m,ALS,63,69,0.056373,0.059665,0.003292,yes
+height_nmad_m,DIM,63,69,0.080454,0.080237,-0.000217,yes
+internal_boundary_chamfer_m,ALS,36,35,0.396221,0.345675,-0.050546,no
+internal_boundary_chamfer_m,DIM,36,35,0.414909,0.377285,-0.037624,no
+internal_boundary_hausdorff_m,ALS,36,35,1.439189,1.470091,0.030902,no
+internal_boundary_hausdorff_m,DIM,36,35,1.800416,1.744066,-0.056350,no

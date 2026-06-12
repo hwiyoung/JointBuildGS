@@ -1,0 +1,6 @@
+metric,n,als_median,dim_median,dim_minus_als,dim_over_als,interpretation
+plane_f1,71,0.666667,0.571429,-0.095238,0.857143,higher_is_better
+boundary_chamfer_m,71,0.126200,0.151802,0.025602,1.202868,lower_is_better
+boundary_hausdorff_m,71,0.191575,0.191575,0.000000,1.000000,lower_is_better
+height_bias_m,69,0.012943,-0.039375,-0.052318,,signed_median_pred_minus_ref
+height_nmad_m,69,0.059665,0.080237,0.020572,1.344792,lower_is_better
