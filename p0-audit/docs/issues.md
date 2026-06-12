@@ -16,3 +16,8 @@
 - t3_mvs_20260611_233132: failed at line 76 with exit code 1. See runs/t3_mvs_20260611_233132/logs/.
 - t3_mvs_20260611_233524: failed at line 76 with exit code 1. See runs/t3_mvs_20260611_233524/logs/.
 - Resolved in t3_mvs_20260611_233721 by remapping COLMAP image/frame IDs to database IDs, using OpenMVS `colmap_txt/sparse`, writing relative OpenMVS image paths, reading OPF `base_to_canonical.shift`, and asserting CRS via PDAL metadata.
+
+## T4 Point Classification
+
+- t4_classify_20260612_114812: failed with exit code 1. See runs/t4_classify_20260612_114812/logs/.
+- Resolved in t4_classify_20260612_114903 by preserving `GroundSurface` children during streaming XML parsing before extracting `gml:posList` footprint rings.
