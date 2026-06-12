@@ -39,3 +39,7 @@
 - Building metrics: `docs/W3_1_roofer_quality_metrics.csv`
 - Median summary: `docs/W3_1_roofer_quality_summary.csv`
 - Threshold position table: `docs/W3_1_threshold_position.csv`
+
+## W3-1b Addendum
+
+- Matching spot-check overlays, internal boundary metrics, and the common height-bias outlier note are recorded in `docs/W3_1b_matching_validation.md`.
