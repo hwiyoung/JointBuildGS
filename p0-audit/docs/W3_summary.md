@@ -53,6 +53,8 @@ Medians are paired by building where the metric is finite.
 | W2-3b thinned | coverage-control 93 | PDAL sample radius 0.3; mean Roofer footprint density 19.147 pts/m2 | DIM success 75/93 -> 72/93 (-3.2 pp); paired both success 67/93 -> 67/93 (+0.0 pp); roof-matching recovery 1/7 |
 | City3D scope note | coverage-control 93 | W2-2 default comparison recorded City3D success 1/93 for ALS and 1/93 for DIM | W2-2b retained City3D as a scoped comparison artifact rather than extending the P0 Roofer quality analysis |
 
+Noise-band note: W3-2b repeated Roofer default with identical 93-building settings; Same-settings Roofer default run noise over three 93-building runs is +/-0.5 pp by half-range, with the maximum on DIM. See `docs/W3_2b_roofer_repeatability.md`.
+
 ### Roof-Matching Recovery Trace
 
 | building_id | subset | wall_removed | thinned |
