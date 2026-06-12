@@ -322,30 +322,72 @@ def write_plan_png(
     import matplotlib.pyplot as plt
 
     out_png.parent.mkdir(parents=True, exist_ok=True)
-    fig, ax = plt.subplots(figsize=(10, 10))
+
+    focus_parts = [samples[class_id] for class_id in (GROUND, BUILDING) if class_id in samples]
+    if not focus_parts:
+        focus_parts = [arr for arr in samples.values() if arr.size]
+    focus = np.vstack(focus_parts)
+    min_x, max_x = np.percentile(focus[:, 0], [1.0, 99.0])
+    min_y, max_y = np.percentile(focus[:, 1], [1.0, 99.0])
+    margin = 35.0
+    min_x -= margin
+    max_x += margin
+    min_y -= margin
+    max_y += margin
+
+    width = max_x - min_x
+    height = max_y - min_y
+    if width > height:
+        pad = (width - height) / 2.0
+        min_y -= pad
+        max_y += pad
+    else:
+        pad = (height - width) / 2.0
+        min_x -= pad
+        max_x += pad
+
+    fig, ax = plt.subplots(figsize=(14, 14))
 
     draw_order = [
-        (UNCLASSIFIED, "#8a8a8a", 0.12, "unclassified(1)"),
-        (GROUND, "#2ca02c", 0.18, "ground(2)"),
-        (BUILDING, "#d62728", 0.45, "building(6)"),
+        (UNCLASSIFIED, "#8a8a8a", 0.16, "unclassified(1)"),
+        (GROUND, "#2ca02c", 0.24, "ground(2)"),
+        (BUILDING, "#d62728", 0.60, "building(6)"),
     ]
     for class_id, color, alpha, label in draw_order:
         arr = samples.get(class_id)
         if arr is None or arr.size == 0:
             continue
-        ax.scatter(arr[:, 0], arr[:, 1], s=0.4, c=color, alpha=alpha, linewidths=0, label=label)
+        in_view = (
+            (arr[:, 0] >= min_x)
+            & (arr[:, 0] <= max_x)
+            & (arr[:, 1] >= min_y)
+            & (arr[:, 1] <= max_y)
+        )
+        arr = arr[in_view]
+        if arr.size == 0:
+            continue
+        ax.scatter(arr[:, 0], arr[:, 1], s=0.7, c=color, alpha=alpha, linewidths=0, label=label)
 
     for xy in footprints:
+        if (
+            float(np.max(xy[:, 0])) < min_x
+            or float(np.min(xy[:, 0])) > max_x
+            or float(np.max(xy[:, 1])) < min_y
+            or float(np.min(xy[:, 1])) > max_y
+        ):
+            continue
         ax.plot(xy[:, 0], xy[:, 1], color="#111111", linewidth=0.25, alpha=0.2)
 
     ax.set_aspect("equal", adjustable="box")
+    ax.set_xlim(min_x, max_x)
+    ax.set_ylim(min_y, max_y)
     ax.set_xlabel("Easting (EPSG:25832 m)")
     ax.set_ylabel("Northing (EPSG:25832 m)")
-    ax.set_title("T4 DIM classification plan view")
+    ax.set_title("T4 DIM classification plan view (zoomed to classified core)")
     ax.legend(markerscale=8, loc="upper right")
     ax.grid(True, linewidth=0.25, alpha=0.25)
     fig.tight_layout()
-    fig.savefig(out_png, dpi=220)
+    fig.savefig(out_png, dpi=240)
     plt.close(fig)
 
 

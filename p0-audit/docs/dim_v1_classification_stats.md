@@ -1,6 +1,6 @@
 # DIM v1 Classification Stats
 
-- Run ID: t4_classify_20260612_120320
+- Run ID: t4_classify_20260612_130152
 - Input DIM LAZ: data/work/mvs/dim/dim_v1.laz
 - Output classified LAZ: data/work/classify/dim_v1_classified.laz
 - CRS assertion: EPSG:25832
@@ -10,8 +10,8 @@
 - Classification method: PDAL filters.smrf ground=2 other=1, then filters.overlay sets non-ground points inside LoD2 footprints to building=6.
 - ALS handling: source ALS files were not modified; existing classifications were counted for verification only.
 - Plan view PNG: docs/figs/dim_v1_classification_plan.png
-- Run config: runs/t4_classify_20260612_120320/config.yaml
-- Run versions: runs/t4_classify_20260612_120320/versions.txt
+- Run config: runs/t4_classify_20260612_130152/config.yaml
+- Run versions: runs/t4_classify_20260612_130152/versions.txt
 
 ## DIM Classified Counts
 
