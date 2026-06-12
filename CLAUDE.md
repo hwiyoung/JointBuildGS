@@ -147,3 +147,5 @@ Baseline / Mutual only / Structure only / Both — 메커니즘 1/2 개별 기�
   - 최종 end-to-end (E4): GT 일체 미사용, evaluation only
 - 각 실험 완료 시 results/에 REPORT.md 생성
 - 시각적 산출물 필수
+## P0 입력 치환 Audit
+P0 작업은 p0-audit/에서 수행하며 p0-audit/CLAUDE.md를 따른다. GS-JSO 구현 규칙과 독립.
