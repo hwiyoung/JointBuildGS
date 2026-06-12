@@ -28,7 +28,9 @@ RUN apt-get update \
 
 RUN /opt/conda/bin/pip install --no-cache-dir \
       'laspy[lazrs]==2.6.1' \
+      'lxml==6.0.2' \
       'matplotlib==3.10.9' \
+      'shapely==2.1.2' \
       'pyopf==1.4.1' \
       'pyproj==3.7.2'
 

@@ -106,3 +106,16 @@ numpy 2.4.6
 $ docker compose -f env/docker-compose.p0.yml run --rm tools bash -lc 'lasinfo --version'
 lasinfo laspy-backed 0.1 (laspy 2.6.1, pyproj 3.7.2)
 ```
+
+## W3-1 Roof Quality Additions
+
+```console
+[jointbuildgs-p0-tools:t0] image_id=sha256:87bea02e5598a3d53a119b754191673497d52641bd8ea4106ffee653407579b0 base_name=pdal/pdal:latest base_digest=sha256:dabc2c1b5de34fb2eff749ddba066cc66a7aa9448eac6e93743c32c7e4aa5051
+
+$ docker compose -f env/docker-compose.p0.yml run --rm tools python -c "import laspy,numpy,matplotlib,shapely,lxml; print('laspy ' + laspy.__version__); print('numpy ' + numpy.__version__); print('matplotlib ' + matplotlib.__version__); print('shapely ' + shapely.__version__); print('lxml ' + lxml.__version__)"
+laspy 2.6.1
+numpy 2.4.6
+matplotlib 3.10.9
+shapely 2.1.2
+lxml 6.0.2
+```
