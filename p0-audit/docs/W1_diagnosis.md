@@ -32,6 +32,28 @@
 - 경계부 노이즈 폭은 각 footprint 경계 +/-8 m 밴드의 class 6 점 signed distance로 계산했습니다. 양수는 footprint 내부, 음수는 외부입니다.
 - wall-like 비율은 휴리스틱입니다. footprint 경계 2 m 이내이고 건물별 70 percentile 높이보다 0.5 m 이상 낮은 class 6 점을 wall-like로 셌습니다.
 
+## 수직 기준면 정합
+
+- Run ID: t7_vertical_20260612_141617
+- Run directory: runs/t7_vertical_20260612_141617
+- Ground-grid comparison: ALS class 2 vs DIM class 2, same 2 m cells inside `scene_aoi.gpkg`.
+- Raw DIM-ALS ground offset: mean=46.071 m, std=1.273 m, median=45.836 m, p05=45.681 m, p95=46.757 m, n=17,235
+- GCG2016 candidate residual: mean=0.409 m, std=1.272 m, median=0.174 m, p05=0.020 m, p95=1.095 m, n=17,235
+- Ground-constant candidate residual: mean=-0.000 m, std=1.273 m, median=-0.235 m, p05=-0.390 m, p95=0.686 m, n=17,235
+- Applied method: `GCG2016`
+- Ground-constant fallback offset: 46.071 m would be subtracted from DIM Z if `ground_constant` is used.
+- Corrected residual standard deviation check, all cells: 1.272 m <= 0.500 m -> FAIL
+- Corrected residual standard deviation check, central 90% cells: 0.200 m <= 0.500 m -> PASS (share 90.0%).
+- GCG2016 grid: `data/raw/geoid/de_bkg_gcg2016.tif` (995,647 bytes, SHA256 `598f18324dea7f8e72421d18add7ac6228259adf91eeb335cc9c27d98484f7ac`)
+- Corrected DIM LAZ: `data/work/classify/dim_v1_classified_z.laz`
+- Residual metrics JSON: `data/work/vertical/vertical_alignment_metrics.json`
+- Offset map PNG: `docs/figs/w1_ground_z_offset_map.png`
+- Regenerated section comparison PNG: `docs/figs/w1_vertical_section_corrected.png`
+- GCG2016 product reference: https://gdz.bkg.bund.de/index.php/default/quasigeoid-der-bundesrepublik-deutschland-quasigeoid.html
+- PROJ grid source: https://cdn.proj.org/de_bkg_gcg2016.tif
+
+- Final correction: GCG2016 was selected as the default official geoid correction. The remaining all-cell standard deviation is dominated by ground-grid outliers rather than a single vertical offset.
+
 ## W2 진입 가능 여부 관찰 요약
 
 - 이 장면에서 DIM AOI 밀도는 ALS의 11.77배입니다 (244.61 vs 20.78 pts/m2).

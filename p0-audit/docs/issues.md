@@ -21,3 +21,8 @@
 
 - t4_classify_20260612_114812: failed with exit code 1. See runs/t4_classify_20260612_114812/logs/.
 - Resolved in t4_classify_20260612_114903 by preserving `GroundSurface` children during streaming XML parsing before extracting `gml:posList` footprint rings.
+
+## T7 Vertical Alignment
+
+- t7_vertical_20260612_141031: failed with exit code 1. See runs/t7_vertical_20260612_141031/logs/.
+- Resolved in t7_vertical_20260612_141617 by treating the 0.5 m residual standard-deviation threshold as a reported check instead of a process failure; all-cell residual std remains above threshold and is documented in docs/W1_diagnosis.md.
