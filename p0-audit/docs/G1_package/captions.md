@@ -3,7 +3,7 @@
 | figure | file | caption |
 | --- | --- | --- |
 | Figure 1 | figs/fig_01_t2_camera_lod2_overlay.png | T2 OPF camera positions over the LoD2 footprint context; coordinates are EPSG:25832. |
-| Figure 2 | figs/fig_02_figure_1_1a_dim_unrecovered_4907182.png | Figure 1.1 refined: near-nadir roof-only crops contrasting a high-texture survivor roof with threshold-confirmed textureless failure DEBY_LOD2_4907182. |
+| Figure 2 | figs/fig_02_figure_1_1a_dim_unrecovered_4907182.png | Figure 1.1 story: threshold-confirmed textureless failure DEBY_LOD2_4907182 and textured survivor DEBY_LOD2_4908023, showing near-nadir image footprint, roof texture, DIM clip, and ALS clip. |
 | Figure 3 | figs/fig_03_figure_1_1b_ridge_4907518.png | Figure 1.1b: DEBY_LOD2_4907518 roof-plane matching overlay and ridge/shared-boundary comparison. |
 | Figure 4 | figs/fig_04_plane_f1_boxplot.png | Plane-instance F1 boxplot from the W3 quality run; canonical medians are tabulated in this package. |
 | Figure 5 | figs/fig_05_boundary_error_boxplots.png | Exterior boundary Chamfer and Hausdorff boxplots from the W3 quality run; canonical medians are tabulated in this package. |

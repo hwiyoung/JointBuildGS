@@ -31,3 +31,8 @@
 
 - t7_failure_diagnosis_20260615_133845: failed with exit code 1. See runs/t7_failure_diagnosis_20260615_133845/logs/.
 - Resolved in t7_failure_diagnosis_20260615_134149 by accepting the raw ALS LAZ empty CRS tag only after numeric UTM32 range alignment with T5 footprints.
+
+## T12 Figure Failure Story
+
+- t12_figure_failure_story_20260615_223248: failed with exit code 1. See runs/t12_figure_failure_story_20260615_223248/logs/.
+- Resolved in t12_figure_failure_story_20260615_223458 by fixing the G1 package figure destination path and regenerating Figure 1.1.

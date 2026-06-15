@@ -1,0 +1,40 @@
+{
+  "run_id": "t12_figure_failure_story_20260615_223458",
+  "task_id": "T12",
+  "canonical_run": "w3_2b_roofer_repeatability_20260612_220747/run_2",
+  "figure": "docs/figs/w3_t12_figure_1_1_failure_story.png",
+  "crs": "EPSG:25832 numeric UTM32 for footprints, DIM/ALS LAZ, and camera centers after T2 OPF scene-reference transform",
+  "local_gradient_low_threshold": 0.02137,
+  "cases": [
+    {
+      "label": "Textureless DIM failure",
+      "building_id": "DEBY_LOD2_4907182",
+      "cohort": "failure_8",
+      "image_name": "DJI_20241217084841_0184_D.JPG",
+      "incidence_deg": 6.925,
+      "texture_gradient_p10": 0.00196,
+      "low_texture_pixel_ratio": 0.9887,
+      "dim_point_count": 243,
+      "dim_density_pts_m2": 2.558,
+      "dim_hole_ratio": 0.845,
+      "als_point_count": 1985,
+      "als_density_pts_m2": 20.894,
+      "als_hole_ratio": 0.0
+    },
+    {
+      "label": "Textured survivor",
+      "building_id": "DEBY_LOD2_4908023",
+      "cohort": "control_success_71",
+      "image_name": "DJI_20241217103013_0032_D.JPG",
+      "incidence_deg": 10.084,
+      "texture_gradient_p10": 0.03054,
+      "low_texture_pixel_ratio": 0.0523,
+      "dim_point_count": 16849,
+      "dim_density_pts_m2": 768.869,
+      "dim_hole_ratio": 0.0,
+      "als_point_count": 448,
+      "als_density_pts_m2": 20.444,
+      "als_hole_ratio": 0.0
+    }
+  ]
+}
