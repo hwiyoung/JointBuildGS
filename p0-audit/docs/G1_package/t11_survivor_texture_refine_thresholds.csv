@@ -1,0 +1,5 @@
+threshold,value,source,interpretation
+near_nadir_incidence_max_deg,20.000,fixed T9 definition,view is near-nadir when incidence angle is <= threshold
+local_gradient_low_threshold,0.02137,docs/W3_failure_surface_cause_thresholds.csv texture_gradient_low_max,roof pixel is low-texture when local grayscale gradient is below this value
+max_survivor_near_nadir_views,8,T10/T11 fixed sampling cap,nearest-nadir survivor views used for per-building image texture
+figure_textureless_failure_id,DEBY_LOD2_4907182,T9 threshold-confirmed texture failure,failure crop used for regenerated Figure 1.1

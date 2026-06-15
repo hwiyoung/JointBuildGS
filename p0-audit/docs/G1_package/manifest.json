@@ -5,6 +5,7 @@
     "W3_failure_diagnosis.md",
     "W3_failure_surface_cause.md",
     "W3_survivor_texture_gap.md",
+    "W3_survivor_texture_refine.md",
     "W4b_population_profile.md",
     "appendix_tables.md",
     "captions.md",
@@ -23,6 +24,7 @@
     "figs/fig_12_w4b_population_size_complexity.png",
     "figs/fig_13_t9_failure_texture_crops.png",
     "figs/fig_14_t10_survivor_texture_gap_scatter.png",
+    "figs/fig_15_t11_survivor_texture_refine_scatter.png",
     "g1_core_table.csv",
     "manifest.json",
     "mcnemar_assembly.csv",
@@ -31,6 +33,10 @@
     "t10_survivor_texture_gap_building_metrics.csv",
     "t10_survivor_texture_gap_correlations.csv",
     "t10_survivor_texture_gap_strata.csv",
+    "t11_survivor_texture_refine_building_metrics.csv",
+    "t11_survivor_texture_refine_correlations.csv",
+    "t11_survivor_texture_refine_strata.csv",
+    "t11_survivor_texture_refine_thresholds.csv",
     "t7_failure_diagnosis_building_metrics.csv",
     "t7_failure_diagnosis_control_summary.csv",
     "t7_failure_diagnosis_thresholds.csv",
@@ -40,7 +46,7 @@
     "w4b_population_profile_building_metrics.csv",
     "w4b_population_profile_summary.csv"
   ],
-  "figure_count": 14,
+  "figure_count": 15,
   "t7_failure_diagnosis": {
     "report": "W3_failure_diagnosis.md",
     "figures": [
@@ -77,6 +83,17 @@
       "t10_survivor_texture_gap_building_metrics.csv",
       "t10_survivor_texture_gap_correlations.csv",
       "t10_survivor_texture_gap_strata.csv"
+    ]
+  },
+  "t11_survivor_texture_refine": {
+    "report": "W3_survivor_texture_refine.md",
+    "figure_1_1": "figs/fig_02_figure_1_1a_dim_unrecovered_4907182.png",
+    "scatter": "figs/fig_15_t11_survivor_texture_refine_scatter.png",
+    "tables": [
+      "t11_survivor_texture_refine_building_metrics.csv",
+      "t11_survivor_texture_refine_correlations.csv",
+      "t11_survivor_texture_refine_strata.csv",
+      "t11_survivor_texture_refine_thresholds.csv"
     ]
   }
 }
