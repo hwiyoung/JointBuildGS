@@ -3,6 +3,7 @@
   "canonical_run": "w3_2b_roofer_repeatability_20260612_220747/run_2",
   "files": [
     "W3_failure_diagnosis.md",
+    "W4b_population_profile.md",
     "appendix_tables.md",
     "captions.md",
     "core_table.md",
@@ -17,6 +18,7 @@
     "figs/fig_09_lod2_aoi_population_map.png",
     "figs/fig_10_t7_failure_point_clips.png",
     "figs/fig_11_t7_failure_classification_counts.png",
+    "figs/fig_12_w4b_population_size_complexity.png",
     "g1_core_table.csv",
     "manifest.json",
     "mcnemar_assembly.csv",
@@ -24,9 +26,11 @@
     "source_mapping.md",
     "t7_failure_diagnosis_building_metrics.csv",
     "t7_failure_diagnosis_control_summary.csv",
-    "t7_failure_diagnosis_thresholds.csv"
+    "t7_failure_diagnosis_thresholds.csv",
+    "w4b_population_profile_building_metrics.csv",
+    "w4b_population_profile_summary.csv"
   ],
-  "figure_count": 11,
+  "figure_count": 12,
   "t7_failure_diagnosis": {
     "report": "W3_failure_diagnosis.md",
     "figures": [
@@ -37,6 +41,14 @@
       "t7_failure_diagnosis_building_metrics.csv",
       "t7_failure_diagnosis_control_summary.csv",
       "t7_failure_diagnosis_thresholds.csv"
+    ]
+  },
+  "w4b_population_profile": {
+    "report": "W4b_population_profile.md",
+    "figure": "figs/fig_12_w4b_population_size_complexity.png",
+    "tables": [
+      "w4b_population_profile_building_metrics.csv",
+      "w4b_population_profile_summary.csv"
     ]
   }
 }
