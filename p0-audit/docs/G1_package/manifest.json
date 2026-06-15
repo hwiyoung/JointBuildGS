@@ -4,6 +4,7 @@
   "files": [
     "W3_failure_diagnosis.md",
     "W3_failure_surface_cause.md",
+    "W3_survivor_texture_gap.md",
     "W4b_population_profile.md",
     "appendix_tables.md",
     "captions.md",
@@ -21,11 +22,15 @@
     "figs/fig_11_t7_failure_classification_counts.png",
     "figs/fig_12_w4b_population_size_complexity.png",
     "figs/fig_13_t9_failure_texture_crops.png",
+    "figs/fig_14_t10_survivor_texture_gap_scatter.png",
     "g1_core_table.csv",
     "manifest.json",
     "mcnemar_assembly.csv",
     "mcnemar_assembly.md",
     "source_mapping.md",
+    "t10_survivor_texture_gap_building_metrics.csv",
+    "t10_survivor_texture_gap_correlations.csv",
+    "t10_survivor_texture_gap_strata.csv",
     "t7_failure_diagnosis_building_metrics.csv",
     "t7_failure_diagnosis_control_summary.csv",
     "t7_failure_diagnosis_thresholds.csv",
@@ -35,7 +40,7 @@
     "w4b_population_profile_building_metrics.csv",
     "w4b_population_profile_summary.csv"
   ],
-  "figure_count": 13,
+  "figure_count": 14,
   "t7_failure_diagnosis": {
     "report": "W3_failure_diagnosis.md",
     "figures": [
@@ -63,6 +68,15 @@
       "t9_failure_surface_cause_building_metrics.csv",
       "t9_failure_surface_cause_thresholds.csv",
       "t9_failure_surface_cause_control_summary.csv"
+    ]
+  },
+  "t10_survivor_texture_gap": {
+    "report": "W3_survivor_texture_gap.md",
+    "figure": "figs/fig_14_t10_survivor_texture_gap_scatter.png",
+    "tables": [
+      "t10_survivor_texture_gap_building_metrics.csv",
+      "t10_survivor_texture_gap_correlations.csv",
+      "t10_survivor_texture_gap_strata.csv"
     ]
   }
 }

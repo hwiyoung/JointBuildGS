@@ -1,0 +1,19 @@
+predictor,target,n,spearman_r,p_value,predictor_note,target_note
+texture_deficit_score,dim_plane_f1,71,-0.3733,0.0017,higher means lower/patchier DIM or image texture,DIM plane F1
+texture_deficit_score,delta_plane_f1_als_minus_dim,71,0.3142,0.0080,higher means lower/patchier DIM or image texture,ALS-DIM plane F1 gap
+texture_deficit_score,dim_internal_boundary_hausdorff_m,35,0.3039,0.0781,higher means lower/patchier DIM or image texture,DIM internal Hausdorff
+dim_hole_ratio,dim_plane_f1,71,-0.2854,0.0178,higher means more empty footprint grid cells,DIM plane F1
+dim_hole_ratio,delta_plane_f1_als_minus_dim,71,0.2789,0.0190,higher means more empty footprint grid cells,ALS-DIM plane F1 gap
+dim_hole_ratio,dim_internal_boundary_hausdorff_m,35,0.1257,0.4613,higher means more empty footprint grid cells,DIM internal Hausdorff
+dim_density_cv,dim_plane_f1,71,-0.3134,0.0076,higher means more uneven local DIM point density,DIM plane F1
+dim_density_cv,delta_plane_f1_als_minus_dim,71,0.1416,0.2366,higher means more uneven local DIM point density,ALS-DIM plane F1 gap
+dim_density_cv,dim_internal_boundary_hausdorff_m,35,0.0955,0.5862,higher means more uneven local DIM point density,DIM internal Hausdorff
+dim_plane_rmse_m,dim_plane_f1,71,-0.3070,0.0088,higher means rougher DIM roof plane fit,DIM plane F1
+dim_plane_rmse_m,delta_plane_f1_als_minus_dim,71,0.2515,0.0317,higher means rougher DIM roof plane fit,ALS-DIM plane F1 gap
+dim_plane_rmse_m,dim_internal_boundary_hausdorff_m,35,0.1591,0.3586,higher means rougher DIM roof plane fit,DIM internal Hausdorff
+dim_density_pts_m2,dim_plane_f1,71,0.2788,0.0186,higher means denser DIM building points,DIM plane F1
+dim_density_pts_m2,delta_plane_f1_als_minus_dim,71,-0.2362,0.0453,higher means denser DIM building points,ALS-DIM plane F1 gap
+dim_density_pts_m2,dim_internal_boundary_hausdorff_m,35,-0.2527,0.1434,higher means denser DIM building points,DIM internal Hausdorff
+image_texture_gradient_median,dim_plane_f1,70,-0.1622,0.1858,higher means more image roof texture,DIM plane F1
+image_texture_gradient_median,delta_plane_f1_als_minus_dim,70,0.0362,0.7661,higher means more image roof texture,ALS-DIM plane F1 gap
+image_texture_gradient_median,dim_internal_boundary_hausdorff_m,35,-0.0555,0.7452,higher means more image roof texture,DIM internal Hausdorff
