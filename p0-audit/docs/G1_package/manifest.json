@@ -3,6 +3,7 @@
   "canonical_run": "w3_2b_roofer_repeatability_20260612_220747/run_2",
   "files": [
     "W3_failure_diagnosis.md",
+    "W3_failure_surface_cause.md",
     "W4b_population_profile.md",
     "appendix_tables.md",
     "captions.md",
@@ -19,6 +20,7 @@
     "figs/fig_10_t7_failure_point_clips.png",
     "figs/fig_11_t7_failure_classification_counts.png",
     "figs/fig_12_w4b_population_size_complexity.png",
+    "figs/fig_13_t9_failure_texture_crops.png",
     "g1_core_table.csv",
     "manifest.json",
     "mcnemar_assembly.csv",
@@ -27,10 +29,13 @@
     "t7_failure_diagnosis_building_metrics.csv",
     "t7_failure_diagnosis_control_summary.csv",
     "t7_failure_diagnosis_thresholds.csv",
+    "t9_failure_surface_cause_building_metrics.csv",
+    "t9_failure_surface_cause_control_summary.csv",
+    "t9_failure_surface_cause_thresholds.csv",
     "w4b_population_profile_building_metrics.csv",
     "w4b_population_profile_summary.csv"
   ],
-  "figure_count": 12,
+  "figure_count": 13,
   "t7_failure_diagnosis": {
     "report": "W3_failure_diagnosis.md",
     "figures": [
@@ -49,6 +54,15 @@
     "tables": [
       "w4b_population_profile_building_metrics.csv",
       "w4b_population_profile_summary.csv"
+    ]
+  },
+  "t9_failure_surface_cause": {
+    "report": "W3_failure_surface_cause.md",
+    "figure": "figs/fig_13_t9_failure_texture_crops.png",
+    "tables": [
+      "t9_failure_surface_cause_building_metrics.csv",
+      "t9_failure_surface_cause_thresholds.csv",
+      "t9_failure_surface_cause_control_summary.csv"
     ]
   }
 }

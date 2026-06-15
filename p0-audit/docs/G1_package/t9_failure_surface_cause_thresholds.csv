@@ -1,0 +1,7 @@
+threshold,value,source,interpretation
+near_nadir_incidence_max_deg,20.000,fixed T9 definition,view is near-nadir when incidence angle is <= threshold
+near_nadir_view_count_min,4.000,"max(3, control_success_71 near-nadir count p10)",nadir coverage is sufficient when count is >= threshold
+texture_gradient_low_max,0.02137,control_success_71 near-nadir roof crop gradient p10,texture is low when gradient is <= threshold
+texture_gray_std_low_max,0.14441,control_success_71 near-nadir roof crop gray std p25,texture confirmation uses std <= threshold with low gradient
+brightness_shadow_low_max,0.284,control_success_71 near-nadir roof crop brightness p10,shadow candidate when brightness is <= threshold
+shadow_ratio_high_min,0.286,"max(0.25, control_success_71 near-nadir shadow ratio p90)",shadow candidate when dark-pixel ratio is >= threshold
