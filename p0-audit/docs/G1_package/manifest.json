@@ -2,6 +2,7 @@
   "package": "G1_package",
   "canonical_run": "w3_2b_roofer_repeatability_20260612_220747/run_2",
   "files": [
+    "W3_failure_diagnosis.md",
     "appendix_tables.md",
     "captions.md",
     "core_table.md",
@@ -14,11 +15,28 @@
     "figs/fig_07_matching_overlay_high_4959793.png",
     "figs/fig_08_matching_overlay_low_4906987.png",
     "figs/fig_09_lod2_aoi_population_map.png",
+    "figs/fig_10_t7_failure_point_clips.png",
+    "figs/fig_11_t7_failure_classification_counts.png",
     "g1_core_table.csv",
     "manifest.json",
     "mcnemar_assembly.csv",
     "mcnemar_assembly.md",
-    "source_mapping.md"
+    "source_mapping.md",
+    "t7_failure_diagnosis_building_metrics.csv",
+    "t7_failure_diagnosis_control_summary.csv",
+    "t7_failure_diagnosis_thresholds.csv"
   ],
-  "figure_count": 9
+  "figure_count": 11,
+  "t7_failure_diagnosis": {
+    "report": "W3_failure_diagnosis.md",
+    "figures": [
+      "figs/fig_10_t7_failure_point_clips.png",
+      "figs/fig_11_t7_failure_classification_counts.png"
+    ],
+    "tables": [
+      "t7_failure_diagnosis_building_metrics.csv",
+      "t7_failure_diagnosis_control_summary.csv",
+      "t7_failure_diagnosis_thresholds.csv"
+    ]
+  }
 }

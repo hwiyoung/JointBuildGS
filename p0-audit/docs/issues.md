@@ -26,3 +26,8 @@
 
 - t7_vertical_20260612_141031: failed with exit code 1. See runs/t7_vertical_20260612_141031/logs/.
 - Resolved in t7_vertical_20260612_141617 by treating the 0.5 m residual standard-deviation threshold as a reported check instead of a process failure; all-cell residual std remains above threshold and is documented in docs/W1_diagnosis.md.
+
+## T7 Failure Diagnosis
+
+- t7_failure_diagnosis_20260615_133845: failed with exit code 1. See runs/t7_failure_diagnosis_20260615_133845/logs/.
+- Resolved in t7_failure_diagnosis_20260615_134149 by accepting the raw ALS LAZ empty CRS tag only after numeric UTM32 range alignment with T5 footprints.

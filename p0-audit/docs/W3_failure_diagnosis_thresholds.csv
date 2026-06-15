@@ -1,0 +1,7 @@
+threshold,value,source,interpretation
+density_min_pts_m2,70.518,control_success_71 DIM density p10,DIM building points are sufficient when value is >= threshold
+hole_ratio_max,0.092,control_success_71 DIM hole ratio p90,DIM footprint holes are small when value is <= threshold
+plane_rmse_max_m,2.083,control_success_71 DIM plane RMSE p90,DIM roof plane residual is control-like when value is <= threshold
+view_count_min,183.000,control_success_71 view count p10,T2 pose visibility is sufficient when value is >= threshold
+incidence_max_deg,68.075,"min(control_success_71 incidence p90, 75 deg grazing cap)",View angle is not grazing when value is <= threshold
+occlusion_risk_max_fraction,0.500,fixed approximate occlusion-risk cap,Approximate occlusion risk is acceptable when value is <= threshold
