@@ -13,3 +13,5 @@
 | Figure 9 | figs/fig_09_lod2_aoi_population_map.png | LoD2 footprint AOI map with the 199-building population and the 93-building coverage-control subset distinguished by fill color. |
 | Figure 15 | figs/fig_15_t11_survivor_texture_refine_scatter.png | T11 survivor low-texture roof-pixel ratio versus ALS-DIM plane F1 gap; colors split the median low-texture ratio strata. |
 | Figure 16 | figs/fig_16_t13_validity_error_breakdown.png | T13 val3dity validity-error category counts by input over the canonical run_2 control 93; ALS 5/93 vs DIM 10/93 invalid, no GO/NO-GO judgement. |
+| Figure 17 | figs/fig_17_t14_texture_to_points.png | T14 Figure A: textureless roof -> empty DIM points for 4907182 (DIM-empty vs DIM-points patch, boxed and tied to the DIM top-view) with 4908023 textured contrast. No judgement. |
+| Figure 18 | figs/fig_18_t14_input_to_output.png | T14 Figure B: input point cloud -> output LoD2 model for 4907182/4906969/4906972 (ALS|DIM input above ALS|DIM|reference models; cross-sections for 4906969/4906972). No judgement. |
