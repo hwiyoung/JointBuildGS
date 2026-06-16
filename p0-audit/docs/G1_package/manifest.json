@@ -6,6 +6,7 @@
     "W3_failure_surface_cause.md",
     "W3_survivor_texture_gap.md",
     "W3_survivor_texture_refine.md",
+    "W3_validity_error_breakdown.md",
     "W4b_population_profile.md",
     "appendix_tables.md",
     "captions.md",
@@ -25,6 +26,7 @@
     "figs/fig_13_t9_failure_texture_crops.png",
     "figs/fig_14_t10_survivor_texture_gap_scatter.png",
     "figs/fig_15_t11_survivor_texture_refine_scatter.png",
+    "figs/fig_16_t13_validity_error_breakdown.png",
     "g1_core_table.csv",
     "manifest.json",
     "mcnemar_assembly.csv",
@@ -38,6 +40,9 @@
     "t11_survivor_texture_refine_strata.csv",
     "t11_survivor_texture_refine_thresholds.csv",
     "t12_figure_failure_story_metadata.json",
+    "t13_validity_error_breakdown_building_errors.csv",
+    "t13_validity_error_breakdown_quality_attribution.csv",
+    "t13_validity_error_breakdown_type_by_input.csv",
     "t7_failure_diagnosis_building_metrics.csv",
     "t7_failure_diagnosis_control_summary.csv",
     "t7_failure_diagnosis_thresholds.csv",
@@ -47,7 +52,7 @@
     "w4b_population_profile_building_metrics.csv",
     "w4b_population_profile_summary.csv"
   ],
-  "figure_count": 15,
+  "figure_count": 16,
   "t7_failure_diagnosis": {
     "report": "W3_failure_diagnosis.md",
     "figures": [
@@ -102,5 +107,14 @@
     "metadata": "t12_figure_failure_story_metadata.json",
     "failure_id": "DEBY_LOD2_4907182",
     "survivor_id": "DEBY_LOD2_4908023"
+  },
+  "t13_validity_error_breakdown": {
+    "report": "W3_validity_error_breakdown.md",
+    "figure": "figs/fig_16_t13_validity_error_breakdown.png",
+    "tables": [
+      "t13_validity_error_breakdown_building_errors.csv",
+      "t13_validity_error_breakdown_type_by_input.csv",
+      "t13_validity_error_breakdown_quality_attribution.csv"
+    ]
   }
 }

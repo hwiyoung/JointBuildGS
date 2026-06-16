@@ -12,3 +12,4 @@
 | Figure 8 | figs/fig_08_matching_overlay_low_4906987.png | Low-F1 spot-check overlay for DEBY_LOD2_4906987. |
 | Figure 9 | figs/fig_09_lod2_aoi_population_map.png | LoD2 footprint AOI map with the 199-building population and the 93-building coverage-control subset distinguished by fill color. |
 | Figure 15 | figs/fig_15_t11_survivor_texture_refine_scatter.png | T11 survivor low-texture roof-pixel ratio versus ALS-DIM plane F1 gap; colors split the median low-texture ratio strata. |
+| Figure 16 | figs/fig_16_t13_validity_error_breakdown.png | T13 val3dity validity-error category counts by input over the canonical run_2 control 93; ALS 5/93 vs DIM 10/93 invalid, no GO/NO-GO judgement. |
