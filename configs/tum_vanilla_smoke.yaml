@@ -1,0 +1,43 @@
+# P2 — TUM transfer smoke: vanilla 2DGS on real TUM aerial (engine check only).
+# Mirrors configs/matrixcity_vanilla.yaml (photo + nc only; sem/mutual/structure OFF).
+# Goal: does the GS engine converge and form recognizable building surfaces on TUM?
+#   (textured buildings -> success expected; this is NOT the textureless-recovery test.)
+# Data staged by scripts/stage2/prep_tum_smoke.sh (937 undistorted PINHOLE views).
+seed: 0
+device: cuda
+
+data_root: /workspace/JointBuildGS/results/tum_transfer/data
+out_dir: /workspace/JointBuildGS/results/tum_transfer/run
+
+downscale: 2.0          # 1400x1013 -> 700x506 (cheap smoke)
+sh_degree: 3
+sh_up_every: 1000
+
+# --- vanilla: priors OFF ---
+w_photo: 1.0
+w_depth: 0.0
+w_normal: 0.0
+w_nc: 0.05
+w_distort: 0.0
+photo_lam: 0.2
+# (no w_sem / w_mutual / w_structure; load_semantic defaults False)
+
+lr_means: 1.6e-4
+lr_scales: 5.0e-3
+lr_quats: 1.0e-3
+lr_opacities: 5.0e-2
+lr_sh0: 2.5e-3
+lr_shN: 1.25e-4
+
+prune_opa: 0.005
+grow_grad2d: 5.0e-4
+grow_scale3d: 0.01
+prune_scale3d: 0.1
+refine_start_iter: 500
+refine_stop_iter: 7000
+refine_every: 100
+reset_every: 3000
+
+max_iter: 7000          # 3DGS-standard early convergence checkpoint
+eval_every: 1000
+ckpt_every: 7000
