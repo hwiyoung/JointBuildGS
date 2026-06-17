@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Run W2-3a Roofer parameter tuning on the coverage-controlled population.
 
-Run from p0-audit/. Host mode selects a deterministic dev subset, runs a small
+Run from phases/p0-audit/. Host mode selects a deterministic dev subset, runs a small
 Roofer parameter grid separately for ALS and DIM, selects one configuration per
 input using dev success/validity, and reruns the selected configurations on all
 93 coverage-controlled buildings.
@@ -831,7 +831,7 @@ def count_rate(count: int, total: int) -> str:
 
 
 def rel(path: Path) -> str:
-    return path.as_posix().replace("/workspace/", "").replace("p0-audit/", "")
+    return path.as_posix().replace("/workspace/", "").replace("phases/p0-audit/", "")
 
 
 def to_yaml(value: Any, indent: int = 0) -> str:

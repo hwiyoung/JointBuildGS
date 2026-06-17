@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Estimate Roofer default repeatability on the W2-1c coverage-control set.
 
-Run from p0-audit/. The existing W2-3a full93/default run is treated as run 1
+Run from phases/p0-audit/. The existing W2-3a full93/default run is treated as run 1
 because it already used the 93-building filter, explicit Roofer default
 parameters, and the same plumbing used here.
 """
@@ -543,7 +543,7 @@ def count_rate(count: int, total: int) -> str:
 
 
 def rel(path: Path) -> str:
-    return path.as_posix().replace("/workspace/", "").replace("p0-audit/", "")
+    return path.as_posix().replace("/workspace/", "").replace("phases/p0-audit/", "")
 
 
 def to_yaml(value: Any, indent: int = 0) -> str:

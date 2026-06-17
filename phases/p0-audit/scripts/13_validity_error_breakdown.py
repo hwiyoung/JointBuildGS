@@ -6,7 +6,7 @@ val3dity reports for the 93-building coverage-control set and aggregate the
 validity errors by input (ALS / DIM) and by geometric error category. This is
 an aggregation/observation task only -- no GO/NO-GO judgement is made.
 
-Run from p0-audit/. Host mode re-runs this script inside the P0 tools
+Run from phases/p0-audit/. Host mode re-runs this script inside the P0 tools
 container so the parsing/plotting stays in the recorded audit toolchain
 (rule 8). The val3dity reports are pre-existing run_2 outputs; this script does
 not re-run any geometry tool.

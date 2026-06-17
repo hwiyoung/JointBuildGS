@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """W3-1b addendum: roof matching overlays and internal boundary metrics.
 
-Run from p0-audit/. Host mode records a run and executes the computation inside
+Run from phases/p0-audit/. Host mode records a run and executes the computation inside
 the P0 tools container. The compute mode imports W3-1 parsing/matching helpers
 from scripts/15_roofer_quality_w3.py.
 """

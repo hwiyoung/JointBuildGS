@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Convert the TUM2TWIN OPF bundle to COLMAP text format and validate poses.
 
-Run this script from p0-audit/. The host-side entrypoint immediately re-runs
+Run this script from phases/p0-audit/. The host-side entrypoint immediately re-runs
 itself inside the P0 tools container so the actual processing is Docker-based.
 """
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Compute W3-1 paired Roofer roof quality metrics.
 
-Run from p0-audit/. Host mode rebuilds/uses the P0 tools image and executes the
+Run from phases/p0-audit/. Host mode rebuilds/uses the P0 tools image and executes the
 metric computation inside the container. Metrics are computed for the 67 W2-1c
 Roofer-default ALS/DIM both-success buildings.
 """
@@ -993,7 +993,7 @@ def gml_id(elem: etree._Element) -> str:
 
 
 def rel(path: Path) -> str:
-    return path.as_posix().replace("/workspace/", "").replace("p0-audit/", "")
+    return path.as_posix().replace("/workspace/", "").replace("phases/p0-audit/", "")
 
 
 def to_yaml(value: Any, indent: int = 0) -> str:

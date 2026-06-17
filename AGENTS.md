@@ -1,6 +1,6 @@
-# JointBuildGS — 레포 인덱스 (Claude Code용)
+# JointBuildGS — 레포 인덱스 (Codex·범용 에이전트용)
 
-> 다른 에이전트(Codex 등)는 AGENTS.md(동일 내용)를 읽는다. 사람 검토자: 김휘영.
+> Claude Code는 CLAUDE.md(동일 내용)를 읽는다. 사람 검토자: 김휘영.
 > 이 파일은 **슬림 인덱스**다. 단계별 상세 가이드·태스크·규칙은 해당 phase 디렉토리의
 > `CLAUDE.md`/`AGENTS.md`를 읽는다.
 
@@ -21,7 +21,7 @@ evidence-to-CityGML read-out으로 변환해 CityGML LOD2 semantic shell을 생�
 
 | 단계 | 상태 | 위치 | 가이드 |
 |------|------|------|--------|
-| **P0** 입력치환 Audit | ✅ 완료 | `phases/p0-audit/` | `phases/p0-audit/CLAUDE.md` · `AGENTS.md` |
+| **P0** 입력치환 Audit | ✅ 완료 | `phases/p0-audit/` | `phases/p0-audit/AGENTS.md` · `CLAUDE.md` |
 | **P2** GS-JSO 코어 | 🚧 진행 | `phases/p2-gsjso/` | `phases/p2-gsjso/CLAUDE.md` |
 
 - **P0 완료 → `phases/p0-audit/`** — ALS(Ref-L) vs 영상 유래 DIM(Seq-G) 입력 치환 audit
@@ -35,7 +35,7 @@ evidence-to-CityGML read-out으로 변환해 CityGML LOD2 semantic shell을 생�
 ## §4 불변 규칙 (repo-wide)
 
 > P0 §4(9개 불변 규칙)와 GS-JSO 중요 규칙을 통합한 레포 전역 규칙. 단계별 전체 규칙은
-> 각 phase 문서를 따른다 — P0 전체 9개 규칙: `phases/p0-audit/CLAUDE.md` §4.
+> 각 phase 문서를 따른다 — P0 전체 9개 규칙: `phases/p0-audit/AGENTS.md` §4.
 
 1. **Docker 기반 개발** — 모든 도구 실행은 컨테이너로. 호스트(conda 등) 직접 설치 금지.
 2. **재현성** — 손 실행 금지. 모든 처리는 `scripts/` + config로 재현 가능해야 하며,

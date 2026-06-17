@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Compare ALS and DIM input point clouds for W1 diagnosis.
 
-Run from p0-audit/. The host entrypoint re-runs this script inside the P0 tools
+Run from phases/p0-audit/. The host entrypoint re-runs this script inside the P0 tools
 container so laspy/matplotlib execution stays in the audit toolchain.
 """
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Extract LoD2 ground plans and intersect them with the target scene AOI.
 
-Run from p0-audit/. The host entrypoint re-runs this script inside the P0 tools
+Run from phases/p0-audit/. The host entrypoint re-runs this script inside the P0 tools
 container so GDAL/laspy execution stays in the audit toolchain.
 """
 

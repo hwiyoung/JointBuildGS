@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """T11 refined survivor image-texture correlation test.
 
-Run from p0-audit/. Host mode re-runs this script inside the P0 tools
+Run from phases/p0-audit/. Host mode re-runs this script inside the P0 tools
 container so LAZ/GIS/image processing stays in the recorded audit toolchain.
 """
 

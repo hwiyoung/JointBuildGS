@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """T7 post-audit diagnosis for DIM-only roof-matching failures.
 
-Run from p0-audit/. Host mode re-runs this script inside the P0 tools
+Run from phases/p0-audit/. Host mode re-runs this script inside the P0 tools
 container so LAZ/GIS dependencies stay in the recorded audit toolchain.
 """
 

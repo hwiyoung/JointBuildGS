@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """T9 image-surface cause diagnosis for DIM-only reconstruction failures.
 
-Run from p0-audit/. Host mode re-runs this script inside the P0 tools
+Run from phases/p0-audit/. Host mode re-runs this script inside the P0 tools
 container so image, point-cloud, and GIS processing stay in the recorded audit
 toolchain.
 """

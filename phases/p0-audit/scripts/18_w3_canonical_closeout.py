@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """W3-2c P0 closeout with canonical explicit-default Roofer harness.
 
-Run from p0-audit/. Host mode executes compute mode inside the tools container.
+Run from phases/p0-audit/. Host mode executes compute mode inside the tools container.
 Canonical Roofer output is W3-2b run_2, which uses explicit default parameters
 and the W2-1c 93-building coverage-control filter.
 """
@@ -880,7 +880,7 @@ def capture(cmd: list[str], cwd: Path | None = None, env: dict[str, str] | None 
 
 
 def rel(path: Path) -> str:
-    return path.as_posix().replace("/workspace/", "").replace("p0-audit/", "")
+    return path.as_posix().replace("/workspace/", "").replace("phases/p0-audit/", "")
 
 
 def to_yaml(value: Any, indent: int = 0) -> str:

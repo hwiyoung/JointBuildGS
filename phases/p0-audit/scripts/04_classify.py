@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Classify DIM LAZ for Roofer input.
 
-Run from p0-audit/. The host entrypoint re-runs this script inside the P0 tools
+Run from phases/p0-audit/. The host entrypoint re-runs this script inside the P0 tools
 container so PDAL/laspy work stays Docker-based.
 """
 

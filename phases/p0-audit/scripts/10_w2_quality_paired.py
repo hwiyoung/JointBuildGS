@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Finalize W2-1c quality-controlled paired population and failure buckets.
 
-Run from p0-audit/. The host entrypoint re-runs this script inside the P0 tools
+Run from phases/p0-audit/. The host entrypoint re-runs this script inside the P0 tools
 container so laspy/matplotlib execution stays in the audit toolchain.
 """
 
@@ -754,7 +754,7 @@ def yesno(value: bool) -> str:
 
 
 def rel(path: Path) -> str:
-    return path.as_posix().replace("/workspace/", "").replace("p0-audit/", "")
+    return path.as_posix().replace("/workspace/", "").replace("phases/p0-audit/", "")
 
 
 def parse_args() -> argparse.Namespace:

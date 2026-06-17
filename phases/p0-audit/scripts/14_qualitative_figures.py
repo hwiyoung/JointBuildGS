@@ -18,7 +18,7 @@ explicit cell). Input view reveals the building characteristic: 4907182 top-view
 (emptiness), 4906969 / 4906972 a roof cross-section (thin slab from the side: DIM
 thick scatter vs ALS thin plane) plus a top-view inset.
 
-Run from p0-audit/. Rendered inside the P0 tools container (rule 8); reuses the T7
+Run from phases/p0-audit/. Rendered inside the P0 tools container (rule 8); reuses the T7
 cloud/footprint/camera helpers. EPSG:25832 throughout.
 """
 

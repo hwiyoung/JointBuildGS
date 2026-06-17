@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Run W2-3b DIM point-cloud variants through Roofer defaults.
 
-Run from p0-audit/. Host mode creates two DIM variants from the corrected DIM
+Run from phases/p0-audit/. Host mode creates two DIM variants from the corrected DIM
 cloud, runs Roofer defaults on the W2 coverage-control population, validates the
 CityJSON outputs, and writes paired comparison tables against the W2-1c default
 DIM baseline.
@@ -806,7 +806,7 @@ def delta_pp(new_count: int, old_count: int, total: int) -> str:
 
 
 def rel(path: Path) -> str:
-    return path.as_posix().replace("/workspace/", "").replace("p0-audit/", "")
+    return path.as_posix().replace("/workspace/", "").replace("phases/p0-audit/", "")
 
 
 def to_yaml(value: Any, indent: int = 0) -> str:

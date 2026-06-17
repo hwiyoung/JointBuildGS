@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Run W2-2 City3D default paired comparison.
 
-Run from p0-audit/. The host entrypoint orchestrates Docker Compose services.
+Run from phases/p0-audit/. The host entrypoint orchestrates Docker Compose services.
 Container modes prepare per-building City3D inputs, execute City3D, and
 post-process OBJ validation/status outputs.
 """
@@ -1095,7 +1095,7 @@ def yesno(value: bool) -> str:
 
 
 def rel(path: Path) -> str:
-    return path.as_posix().replace("/workspace/", "").replace("p0-audit/", "")
+    return path.as_posix().replace("/workspace/", "").replace("phases/p0-audit/", "")
 
 
 def parse_args() -> argparse.Namespace:

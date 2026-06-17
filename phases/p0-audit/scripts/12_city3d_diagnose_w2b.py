@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Diagnose W2-2 City3D results and run the W2-2b timeout sample.
 
-Run from p0-audit/. Host mode orchestrates Docker Compose services. Container
+Run from phases/p0-audit/. Host mode orchestrates Docker Compose services. Container
 modes parse the W2-2 outputs, render OBJ diagnostics, rerun selected ALS
 buildings with a longer City3D timeout, and write the W2-2b report.
 """
@@ -952,7 +952,7 @@ def count_rate(count: int, total: int) -> str:
 
 
 def rel(path: Path) -> str:
-    return path.as_posix().replace("/workspace/", "").replace("p0-audit/", "")
+    return path.as_posix().replace("/workspace/", "").replace("phases/p0-audit/", "")
 
 
 def to_yaml(value: Any, indent: int = 0) -> str:

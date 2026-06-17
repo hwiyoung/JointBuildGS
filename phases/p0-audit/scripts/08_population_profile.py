@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """T8 evaluation-population profile for P0 audit buildings.
 
-Run from p0-audit/. Host mode re-runs this script inside the P0 tools
+Run from phases/p0-audit/. Host mode re-runs this script inside the P0 tools
 container so GDAL/XML/numeric processing stays in the recorded audit toolchain.
 """
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Run W2-1 Roofer default reconstructions for ALS and DIM inputs.
 
-Run from p0-audit/. The host entrypoint orchestrates Docker Compose services.
+Run from phases/p0-audit/. The host entrypoint orchestrates Docker Compose services.
 Container modes perform data preparation and post-processing inside the P0
 toolchain.
 """
@@ -699,7 +699,7 @@ def write_report(
 
 
 def rel(path: Path) -> str:
-    return path.as_posix().replace("/workspace/", "").replace("p0-audit/", "")
+    return path.as_posix().replace("/workspace/", "").replace("phases/p0-audit/", "")
 
 
 def parse_args() -> argparse.Namespace:
