@@ -1,0 +1,45 @@
+# P2 prep-4 — TUM "proper settings" retrain (noise-cleanup check, control 4906972).
+# Same data/scope as the 7k smoke (results/tum_transfer/data, 937 views); SETTINGS only changed
+# to isolate whether tuning alone reduces TSDF noise -> Roofer roof over-fragmentation.
+# Geometry-only, label-free regularization. Semantic / mutual / structure stay OFF.
+seed: 0
+device: cuda
+
+data_root: /workspace/JointBuildGS/results/tum_transfer/data
+out_dir: /workspace/JointBuildGS/results/tum_transfer/run_proper
+
+downscale: 1.0          # 1400x1013 native (vs smoke 2.0) -> sharper depth
+sh_degree: 3
+sh_up_every: 1000
+
+# vanilla geometry-only; priors OFF
+w_photo: 1.0
+w_depth: 0.0            # no MVS depth GT staged (colmap_dense/stereo/depth_maps empty)
+w_normal: 0.0
+w_nc: 0.05             # render-vs-depth normal consistency (self-supervised, label-free)
+w_distort: 0.0         # 2DGS distortion reg DISABLED: at w=100 it collapsed on TUM (PSNR 4.5) —
+                       # TUM's large metric depths make the distortion term (~depth^2) explode
+                       # (MatrixCity's near-unit scale tolerated 100). Needs scene-scale tuning; deferred.
+photo_lam: 0.2
+# (no w_sem / w_mutual / w_structure; load_semantic defaults False)
+
+lr_means: 1.6e-4
+lr_scales: 5.0e-3
+lr_quats: 1.0e-3
+lr_opacities: 5.0e-2
+lr_sh0: 2.5e-3
+lr_shN: 1.25e-4
+
+# densification + opacity pruning/reset (floater suppression), longer than smoke
+prune_opa: 0.005
+grow_grad2d: 5.0e-4     # tight (OOM guard, per Phase-1 note)
+grow_scale3d: 0.01
+prune_scale3d: 0.1
+refine_start_iter: 500
+refine_stop_iter: 25000  # densify most of training for completeness (smoke stopped at 7000)
+refine_every: 100
+reset_every: 3000
+
+max_iter: 30000
+eval_every: 2000
+ckpt_every: 10000        # intermediate ckpts (inspect 10k/20k trend)

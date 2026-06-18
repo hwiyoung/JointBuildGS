@@ -20,6 +20,8 @@ ap.add_argument("--downscale", type=float, default=1.0)   # 1.0 = native 1400x10
 ap.add_argument("--voxel", type=float, default=0.05)
 ap.add_argument("--alpha", type=float, default=0.5)       # accumulated-opacity surface threshold
 ap.add_argument("--max-views", type=int, default=0)       # 0 = all
+ap.add_argument("--min-obs", type=int, default=1)         # multi-view consensus: keep voxels seen by >= N views
+ap.add_argument("--ckpt", default="")                     # checkpoint path (default = 7k smoke run)
 ap.add_argument("--sh-degree", type=int, default=3)
 ap.add_argument("--out", default="/workspace/JointBuildGS/results/tum_transfer/analysis/tsdf_points.npz")
 A = ap.parse_args()
@@ -27,7 +29,8 @@ A = ap.parse_args()
 REPO="/workspace/JointBuildGS"; DENSE=f"{REPO}/phases/p0-audit/data/work/mvs/colmap_dense"
 SHIFT=np.array([690953.0,5336071.0,604.0])
 dev="cuda"
-ck=torch.load(f"{REPO}/results/tum_transfer/run/ckpt/final.pt", map_location=dev, weights_only=False)
+CKPT=A.ckpt if getattr(A,"ckpt",None) else f"{REPO}/results/tum_transfer/run/ckpt/final.pt"
+ck=torch.load(CKPT, map_location=dev, weights_only=False)
 sd=ck["state_dict"]
 means=sd["means"].to(dev); quats=sd["quats"].to(dev)
 scales=torch.exp(sd["log_scales"]).to(dev); opac=torch.sigmoid(sd["opacities_raw"]).to(dev).ravel()
@@ -55,13 +58,11 @@ uu,vv=np.meshgrid(np.arange(W),np.arange(H)); uu=uu.ravel(); vv=vv.ravel()
 ud=torch.tensor((uu-K[0,2])/K[0,0],dtype=torch.float32,device=dev)
 vd=torch.tensor((vv-K[1,2])/K[1,1],dtype=torch.float32,device=dev)
 
-keyset=None; OFF=1<<20; MUL=1<<21
-def add_keys(P):  # P (M,3) local float -> packed int64 unique keys
-    global keyset
+keylist=[]; OFF=1<<20; MUL=1<<21
+def add_keys(P):  # P (M,3) local float -> per-view-unique packed int64 voxel keys (kept on CPU)
     q=torch.floor(P/A.voxel).to(torch.int64)+OFF
     k=(q[:,0]*MUL+q[:,1])*MUL+q[:,2]
-    k=torch.unique(k)
-    keyset = k if keyset is None else torch.unique(torch.cat([keyset,k]))
+    keylist.append(torch.unique(k).cpu())   # per-view unique -> count over views = multi-view consensus
 
 n_surf=0
 for i,im in enumerate(imgs):
@@ -82,12 +83,17 @@ for i,im in enumerate(imgs):
         inbox |= (Xw[:,0]>=bx[0])&(Xw[:,0]<=bx[2])&(Xw[:,1]>=bx[1])&(Xw[:,1]<=bx[3])
     Xw=Xw[sel&inbox]
     if len(Xw): add_keys(Xw); n_surf+=len(Xw)
-    if (i+1)%100==0: print(f"  view {i+1}/{len(imgs)}  voxels={0 if keyset is None else len(keyset)}",flush=True)
+    if (i+1)%100==0: print(f"  view {i+1}/{len(imgs)}  view_key_chunks={len(keylist)}",flush=True)
 
-k=keyset.cpu().numpy(); iz=(k%MUL)-OFF; k//=MUL; iy=(k%MUL)-OFF; ix=(k//MUL)-OFF
+allk=torch.cat(keylist)                                    # all per-view-unique voxel keys
+uk,cnt=torch.unique(allk,return_counts=True)               # cnt = number of views observing each voxel
+n_total=len(uk)
+uk=uk[cnt>=A.min_obs]
+print(f"[consensus] min_obs={A.min_obs}: kept {len(uk)}/{n_total} voxels (dropped sparsely-observed = floaters)")
+k=uk.numpy(); iz=(k%MUL)-OFF; k//=MUL; iy=(k%MUL)-OFF; ix=(k//MUL)-OFF
 P_local=(np.stack([ix,iy,iz],1).astype(np.float64)+0.5)*A.voxel
 P_utm=P_local+SHIFT
-print(f"[fuse] surf_backproj={n_surf}  fused_voxels={len(P_local)}  (~{len(P_local)} pts @ {A.voxel}m)")
+print(f"[fuse] surf_backproj={n_surf}  fused_voxels(min_obs>={A.min_obs})={len(P_local)}  @ {A.voxel}m")
 
 # floater removal (statistical outlier) via open3d if available
 try:

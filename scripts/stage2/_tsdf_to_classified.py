@@ -8,13 +8,14 @@ from matplotlib.path import Path as MplPath
 GROUND,BUILDING,UNCLASS=2,6,1
 ap=argparse.ArgumentParser()
 ap.add_argument("--bid",required=True)            # e.g. DEBY_LOD2_4906972
+ap.add_argument("--tsdf",default="")              # tsdf npz (default = tsdf_points.npz)
 ap.add_argument("--buffer",type=float,default=15.0)
 ap.add_argument("--outdir",default="/workspace/JointBuildGS/phases/p0-audit/runs/tum_e2e")
 A=ap.parse_args()
 ANA="/workspace/JointBuildGS/results/tum_transfer/analysis"
 os.makedirs(A.outdir,exist_ok=True)
 
-TS=np.load(f"{ANA}/tsdf_points.npz")["P_utm_clean"]
+TS=np.load(A.tsdf if A.tsdf else f"{ANA}/tsdf_points.npz")["P_utm_clean"]
 feats=json.load(open(f"{ANA}/footprints_aoi.geojson"))["features"]
 fb=[f for f in feats if f["properties"]["building_id"]==A.bid]
 geom=fb[0]["geometry"]

@@ -1,5 +1,7 @@
 # 단계 1c — TSDF 점추출 + Roofer 바닥 + 1동 end-to-end (build A 진입 결정)
 
+> 📑 **P2 준비 단계** 작업입니다. 통합 명칭과 순서는 [docs/P2_index.md](P2_index.md) 참조. (이전 별칭: 단계 1c / P2-4)
+
 > **일자:** 2026-06-18 · **branch:** `feature/p2-gsjso` · **판정은 사람 — 측정·관찰까지(판정 금지).**
 > **목적:** 1b에서 GS *센터* 점군이 ALS 대비 13~200× 희박·floater 많음이 확인됨. 표준 방법(2DGS depth→융합)으로
 > 바꿔 ① Roofer가 요구하는 *바닥* 측정, ② TSDF 점군이 그 바닥을 넘는지, ③ 넘으면 텍스처 1동 end-to-end(→CityJSON).
