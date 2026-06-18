@@ -31,10 +31,21 @@
 밀도·모델생성을 해소해 end-to-end 유효 모델이 나오나, 7k-vanilla depth 노이즈가 Roofer를 과분할시킴(준비-3:
 지붕면 32 vs reference 3). 준비-4는 그 노이즈가 *학습 설정*만으로 reference 수준에 가까워지는지 확인한다.
 
-## 다음 순서
+## 현재 상태 · 다음 순서 (세션 핸드오프)
 
-1. **노이즈 정리 확인** (P2 준비-4, 진행) — 설정으로 노이즈가 잡히는지.
-2. **라벨 단계** — 의미 라벨(roof/wall/terrain) 소스 마련 (실데이터엔 부재; `GSJSO_loss_audit.md` §3).
-3. **효과 검증** — 의미·기하-의미 prior(`L_sem`·`L_mutual`·`L_structure`) 켜고 ablation으로 효과 격리.
+- **P2 준비 1~4 완료.** 준비-4 결론: 설정만으로 Roofer 과분할이 **32 → 13**(plane RMS 3.46→1.88 m,
+  floater 24.6→7.8%, val3dity valid)로 크게 줄었으나 **reference(3)·ALS→Roofer(3)엔 미달(13 vs 3)** →
+  "**설정만으로는 부족**"(관찰; 판정은 사람). 상세: [TUM_noise_check.md](TUM_noise_check.md).
+- **갈림길 (사람 판단 후 다음 시험):**
+  - **ⓐ 라벨 라인** — 의미 라벨(roof/wall/terrain) 소스 마련(실데이터 부재; [GSJSO_loss_audit.md](GSJSO_loss_audit.md) §3)
+    → 의미·기하-의미 prior(`L_sem`·`L_mutual`·`L_structure`) ablation으로 면 정규화가 과분할을 더 줄이는지 효과 격리.
+  - **ⓑ 설정 probe 라인** — w_distort scene-scale 재튜닝·depth 일관성·Roofer 평면병합 파라미터 등 더 깊은 원인 진단.
+
+> **재사용 자산(디스크, gitignore되나 보존):** 7k ckpt `results/tum_transfer/run/ckpt/final.pt`,
+> 30k ckpt `results/tum_transfer/run_proper/ckpt/final.pt`, TSDF `results/tum_transfer/analysis/tsdf_{points,proper}.npz`,
+> 좌표 변환 **EPSG:25832 = GS_local + [690953,5336071,604]**. 컨테이너: `jointbuildgs:dev`(torch/gsplat/open3d) ·
+> `jointbuildgs-p0-tools:t0`(laspy/GDAL·ogr2ogr/pdal/matplotlib; torch·geopandas·scipy·lxml 없음). 재사용 스크립트는
+> `scripts/stage2/tum_*`·`_tsdf_to_classified.py`·`_als_decimate.py`. P0 Roofer/classify 호출은
+> `phases/p0-audit/scripts/{08_roofer_w2,04_classify}.py`.
 
 > 판정은 사람. 각 준비 문서는 측정·관찰까지(판정 금지).
