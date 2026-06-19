@@ -1,0 +1,49 @@
+# P2 make-or-break ablation #4 STRUCTURE = base + L_sem + L_structure (inter-primitive, mech 2).
+# structure_voxel_size=2.0 (METRIC): G1 grouping default 0.05 is unit-scale and nullifies grouping on a 500 m scene.
+seed: 0
+device: cuda
+
+data_root: /workspace/JointBuildGS/results/tum_transfer/data
+
+downscale: 1.0
+sh_degree: 3
+sh_up_every: 1000
+
+w_photo: 1.0
+w_depth: 0.0
+w_normal: 0.0
+w_nc: 0.05
+w_distort: 0.0            # FALLBACK to OFF (validated prep-4 base). Sweep: w=100/1.0/0.1 collapse PSNR; w=0.01 destabilizes densification (N 371k to 113k). Engine frozen so no scene-scale distortion norm available.
+photo_lam: 0.2
+
+lr_means: 1.6e-4
+lr_scales: 5.0e-3
+lr_quats: 1.0e-3
+lr_opacities: 5.0e-2
+lr_sh0: 2.5e-3
+lr_shN: 1.25e-4
+lr_sem: 2.5e-3
+
+prune_opa: 0.005
+grow_grad2d: 5.0e-4
+grow_scale3d: 0.01
+prune_scale3d: 0.1
+refine_start_iter: 500
+refine_stop_iter: 25000
+refine_every: 100
+reset_every: 3000
+
+max_iter: 30000
+eval_every: 2000
+ckpt_every: 10000
+out_dir: /workspace/JointBuildGS/results/tum_transfer/mob/structure
+load_semantic: true
+w_sem: 0.1
+w_structure: 0.1
+w_structure_na: 1.0
+w_structure_cp: 1.0
+structure_warmup: 20000
+structure_regroup_every: 500
+structure_voxel_size: 2.0
+structure_n_directions: 12
+structure_min_group: 5

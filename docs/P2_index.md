@@ -31,15 +31,20 @@
 밀도·모델생성을 해소해 end-to-end 유효 모델이 나오나, 7k-vanilla depth 노이즈가 Roofer를 과분할시킴(준비-3:
 지붕면 32 vs reference 3). 준비-4는 그 노이즈가 *학습 설정*만으로 reference 수준에 가까워지는지 확인한다.
 
+## P2 효과 검증 (make-or-break)
+
+| 순서 | 활동 | 문서 |
+|---|---|---|
+| 효과검증 (깨끗한 라벨 arm) | sem·mutual·structure ablation (복구·품질·컴포넌트 기여) | [docs/P2_makeorbreak_clean.md](P2_makeorbreak_clean.md) · 예전결과 [experiments/p2_mob_past_results.md](experiments/p2_mob_past_results.md) |
+
 ## 현재 상태 · 다음 순서 (세션 핸드오프)
 
-- **P2 준비 1~4 완료.** 준비-4 결론: 설정만으로 Roofer 과분할이 **32 → 13**(plane RMS 3.46→1.88 m,
-  floater 24.6→7.8%, val3dity valid)로 크게 줄었으나 **reference(3)·ALS→Roofer(3)엔 미달(13 vs 3)** →
-  "**설정만으로는 부족**"(관찰; 판정은 사람). 상세: [TUM_noise_check.md](TUM_noise_check.md).
-- **갈림길 (사람 판단 후 다음 시험):**
-  - **ⓐ 라벨 라인** — 의미 라벨(roof/wall/terrain) 소스 마련(실데이터 부재; [GSJSO_loss_audit.md](GSJSO_loss_audit.md) §3)
-    → 의미·기하-의미 prior(`L_sem`·`L_mutual`·`L_structure`) ablation으로 면 정규화가 과분할을 더 줄이는지 효과 격리.
-  - **ⓑ 설정 probe 라인** — w_distort scene-scale 재튜닝·depth 일관성·Roofer 평면병합 파라미터 등 더 깊은 원인 진단.
+- **P2 준비 1~4 완료** → **갈림길 ⓐ(라벨 라인) 실행 완료** = make-or-break 깨끗한 라벨 ablation([P2_makeorbreak_clean.md](P2_makeorbreak_clean.md)).
+  관찰(판정 금지): **복구 8동은 어느 구성도 전부 복구 못함 — 5/8 무씨딩**(무텍스처에 프리미티브 미생성, `L_sem` geometry-isolation·mutual/structure는 기존 프리미티브만 정규화),
+  **3/8은 재구성되어 sem/structure가 vanilla 0면을 유효 모델로 살림**(일부 ref 일치). **품질축: L_sem·L_structure가 정확도(RMS→ref 4.6→1.1 m)·과분할(17→7/12)·validity를 개선,
+  L_mutual·both는 악화, 그러나 reference·ALS엔 미달.** 무회귀(PSNR ~20). 예전 합성결과와 방향 일치.
+- **다음 시험 (사람 판단 후):** 원인규명 실험([P2_makeorbreak_clean.md](P2_makeorbreak_clean.md) §7) — 특히 **E-R3 semantic-driven densification**(라벨이 무텍스처 기하를 씨딩; 엔진변경·승인 요청), E-R4 L_sem geometry coupling. 또는 FM(예측) 라벨 arm.
+- (대안) **ⓑ 설정 probe 라인** — w_distort scene-scale 재튜닝·depth 일관성·Roofer 평면병합 파라미터.
 
 > **재사용 자산(디스크, gitignore되나 보존):** 7k ckpt `results/tum_transfer/run/ckpt/final.pt`,
 > 30k ckpt `results/tum_transfer/run_proper/ckpt/final.pt`, TSDF `results/tum_transfer/analysis/tsdf_{points,proper}.npz`,
