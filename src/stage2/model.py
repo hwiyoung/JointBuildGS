@@ -18,11 +18,15 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass
-from typing import Tuple
+from typing import Optional, Tuple
 
 import numpy as np
 import torch
 import torch.nn as nn
+
+# Semantic-seed init constants (P2 implementation ①, see semantic_seed.py).
+SEED_SEM_LOGIT = 5.0     # near-one-hot: softmax([5,0,0,0]) ~= 0.97 for the seed class
+SEED_INIT_OPACITY = 0.25  # mid opacity so seeds are not pruned immediately at init
 
 
 # ---------- quaternion helpers ----------
@@ -53,6 +57,7 @@ class GaussianModel2D(nn.Module):
         sh_degree: int = 3,
         init_scale_factor: float = 1.0,
         device: str = "cuda",
+        points_sem: Optional[np.ndarray] = None,
     ):
         super().__init__()
         self.sh_degree = sh_degree
@@ -80,8 +85,19 @@ class GaussianModel2D(nn.Module):
         log_scales[:, 2] = math.log(1e-6)  # near-zero thickness → planar (2DGS)
         self.log_scales = nn.Parameter(log_scales.to(device))
 
-        # --- opacity: sigmoid^-1(0.1) ~ -2.197 ---
+        # --- semantic seed mask (P2 ①): points with a specified class id (>=0) ---
+        # are carved seeds for textureless buildings; -1/None means "SfM point".
+        if points_sem is not None:
+            sem_ids = torch.from_numpy(np.asarray(points_sem)).long()
+            seed_mask = sem_ids >= 0
+        else:
+            sem_ids = torch.full((N,), -1, dtype=torch.long)
+            seed_mask = torch.zeros(N, dtype=torch.bool)
+
+        # --- opacity: SfM = sigmoid^-1(0.1); seeds = sigmoid^-1(0.25) (no insta-prune) ---
         opa = torch.full((N,), _inv_sigmoid(0.1))
+        if seed_mask.any():
+            opa[seed_mask] = _inv_sigmoid(SEED_INIT_OPACITY)
         self.opacities_raw = nn.Parameter(opa.to(device))
 
         # --- SH ---
@@ -94,9 +110,13 @@ class GaussianModel2D(nn.Module):
         self.shN = nn.Parameter(shN.to(device))
 
         # --- semantic logits f_i (N, K) ---
-        # K=4: BG(0), Roof(1), Wall(2), Terrain(3). Init near-uniform with small noise
+        # K=4: BG(0), Roof(1), Wall(2), Terrain(3). Init near-uniform with small noise;
+        # carved seeds are initialised near-one-hot toward their carved class (P2 ①).
         self.num_classes = 4
         sem = 0.01 * torch.randn(N, self.num_classes)
+        if seed_mask.any():
+            seed_rows = torch.where(seed_mask)[0]
+            sem[seed_rows, sem_ids[seed_rows]] += SEED_SEM_LOGIT
         self.sem_logits = nn.Parameter(sem.to(device))
 
     # ---------- derived ----------

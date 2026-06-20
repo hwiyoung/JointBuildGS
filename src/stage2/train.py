@@ -263,12 +263,39 @@ def main():
     test_idx = [i for i in range(n) if i % 10 == 9]
     train_idx = [i for i in range(n) if i not in test_idx]
 
+    # ---------- semantic seeding (P2 ①): optional carve seeds for textureless bldgs ----------
+    points_xyz, points_rgb = ds.points_xyz, ds.points_rgb
+    points_sem = None
+    if cfg.get("seed_semantic", False):
+        from .semantic_seed import build_semantic_seeds, cameras_from_frames, concat_seeds
+
+        sc = dict(cfg["seed_cfg"])   # seeding config (the int `seed:` is the RNG seed)
+        seeds = build_semantic_seeds(
+            cameras=cameras_from_frames(ds.frames),
+            semantic_dir=sc["semantic_dir"],
+            footprints_path=sc["footprints"],
+            buildings=sc["buildings"],
+            scene_rgb=ds.points_rgb.mean(axis=0),
+            id_field=sc.get("id_field", "building_id"),
+            world_offset=sc.get("world_offset", [690953.0, 5336071.0, 604.0]),
+            z_min=sc.get("z_min", -55.0), z_max=sc.get("z_max", 5.0),
+            voxel=sc.get("voxel", 1.0), tau=sc.get("tau", 0.6),
+            min_obs=sc.get("min_obs", 5),
+            roof_code=sc.get("roof_code", 1), wall_code=sc.get("wall_code", 2),
+            max_seeds_per_building=sc.get("max_seeds_per_building", 0),
+            geoid=sc.get("geoid"),
+        )
+        points_xyz, points_rgb, points_sem = concat_seeds(ds.points_xyz, ds.points_rgb, seeds)
+        print(f"[seed] +{len(seeds.xyz)} semantic seeds over {len(sc['buildings'])} buildings "
+              f"-> N {ds.points_xyz.shape[0]} -> {points_xyz.shape[0]}")
+
     # ---------- model ----------
     model = GaussianModel2D(
-        points_xyz=ds.points_xyz,
-        points_rgb=ds.points_rgb,
+        points_xyz=points_xyz,
+        points_rgb=points_rgb,
         sh_degree=cfg.get("sh_degree", 3),
         device=device,
+        points_sem=points_sem,
     )
     model = model.to(device)
 
