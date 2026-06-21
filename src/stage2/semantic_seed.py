@@ -274,6 +274,7 @@ def build_semantic_seeds(
     world_offset: Sequence[float] = WORLD_OFFSET_DEFAULT,
     z_min: float = -55.0,
     z_max: float = 5.0,
+    bands: Optional[Dict[str, Sequence[float]]] = None,
     voxel: float = 1.0,
     tau: float = 0.6,
     min_obs: int = 5,
@@ -308,9 +309,15 @@ def build_semantic_seeds(
             continue
         bbox_local = [bbox[0] - offset[0], bbox[1] - offset[1],
                       bbox[2] - offset[0], bbox[3] - offset[1]]
+        # P2 impl ②: per-building band overrides the global [z_min, z_max] when provided.
+        if bands is not None and bid in bands:
+            zmn, zmx = float(bands[bid][0]), float(bands[bid][1])
+        else:
+            zmn, zmx = z_min, z_max
         xyz, cls, stats = _carve_one(
-            cameras, semantic_dir, bbox_local, z_min, z_max, voxel, tau, min_obs,
+            cameras, semantic_dir, bbox_local, zmn, zmx, voxel, tau, min_obs,
             roof_code, wall_code, label_cache)
+        stats["band"] = [round(zmn, 2), round(zmx, 2)]
         if max_seeds_per_building and len(xyz) > max_seeds_per_building:
             step = int(np.ceil(len(xyz) / max_seeds_per_building))
             xyz, cls = xyz[::step], cls[::step]

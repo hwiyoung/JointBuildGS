@@ -270,6 +270,14 @@ def main():
         from .semantic_seed import build_semantic_seeds, cameras_from_frames, concat_seeds
 
         sc = dict(cfg["seed_cfg"])   # seeding config (the int `seed:` is the RNG seed)
+        # P2 impl ②: optional per-building seeding band {bid: [z_min, z_max]} (GS-local). If
+        # bands_file is given it overrides the global z_min/z_max per building (impl ① path,
+        # no bands_file, is unchanged).
+        bands = None
+        if sc.get("bands_file"):
+            import json as _json
+            bands = _json.loads(Path(sc["bands_file"]).read_text())
+            print(f"[seed] per-building bands from {sc['bands_file']} ({len(bands)} buildings)")
         seeds = build_semantic_seeds(
             cameras=cameras_from_frames(ds.frames),
             semantic_dir=sc["semantic_dir"],
@@ -279,6 +287,7 @@ def main():
             id_field=sc.get("id_field", "building_id"),
             world_offset=sc.get("world_offset", [690953.0, 5336071.0, 604.0]),
             z_min=sc.get("z_min", -55.0), z_max=sc.get("z_max", 5.0),
+            bands=bands,
             voxel=sc.get("voxel", 1.0), tau=sc.get("tau", 0.6),
             min_obs=sc.get("min_obs", 5),
             roof_code=sc.get("roof_code", 1), wall_code=sc.get("wall_code", 2),
@@ -336,6 +345,9 @@ def main():
     w_nc = cfg.get("w_nc", 0.05)
     w_distort = cfg.get("w_distort", 100.0)   # 2DGS distortion reg
     w_sem = cfg.get("w_sem", 0.1)
+    # P2 impl ②: release L_sem geometry detach so semantics can move geometry (default True
+    # keeps the existing gradient-isolated behaviour, so the other configs are unaffected).
+    sem_detach_geometry = cfg.get("sem_detach_geometry", True)
     w_structure = cfg.get("w_structure", 0.0)
     w_structure_na = cfg.get("w_structure_na", 1.0)
     w_structure_cp = cfg.get("w_structure_cp", 1.0)
@@ -455,7 +467,7 @@ def main():
         # Semantic (only if GT provided and w_sem > 0)
         if "semantic" in batch and w_sem > 0 and hasattr(model, "sem_logits"):
             from .renderer import render_semantic
-            sem_pred = render_semantic(model, w2c, K, W, H)
+            sem_pred = render_semantic(model, w2c, K, W, H, sem_detach_geometry=sem_detach_geometry)
             sem_gt = batch["semantic"].to(device)
             loss_sem = L.l_sem(sem_pred, sem_gt, ignore_index=0)
             loss_total = loss_total + w_sem * loss_sem

@@ -102,12 +102,19 @@ def render_semantic(
     height: int,
     near_plane: float = 0.01,
     far_plane: float = 1e10,
+    sem_detach_geometry: bool = True,
 ) -> torch.Tensor:
     """Render per-pixel semantic logits by alpha-compositing model.sem_logits.
 
-    Gradient isolation: geometry params (means, quats, scales, opacities, SH) are
-    detached inside this function, so L_sem's gradient flows ONLY back through
-    model.sem_logits. This keeps L_sem from corrupting geometry optimization.
+    Gradient isolation (default, sem_detach_geometry=True): geometry params
+    (means, quats, scales, opacities, SH) are detached inside this function, so
+    L_sem's gradient flows ONLY back through model.sem_logits. This keeps L_sem
+    from corrupting geometry optimization.
+
+    P2 impl ② "depth coupling" sets sem_detach_geometry=False: geometry is NOT
+    detached, so L_sem's gradient also flows into means/quats/scales/opacities —
+    semantics can then move geometry (the carved seed columns toward the labelled
+    roof). Default stays True so the existing configs are unaffected.
 
     Returns:
         (H, W, K) float — raw logits (not softmaxed).
@@ -116,11 +123,17 @@ def render_semantic(
     viewmats = viewmat.unsqueeze(0).to(device)
     Ks = K.unsqueeze(0).to(device)
 
-    # Detach geometry so only sem_logits receives gradient.
-    means = model.means.detach()
-    quats = model.quats.detach()
-    scales = model.scales.detach()
-    opacities = model.opacities.detach()
+    # Geometry: detached (gradient isolation) unless impl ② releases it.
+    if sem_detach_geometry:
+        means = model.means.detach()
+        quats = model.quats.detach()
+        scales = model.scales.detach()
+        opacities = model.opacities.detach()
+    else:
+        means = model.means
+        quats = model.quats
+        scales = model.scales
+        opacities = model.opacities
     # gsplat 1.5 expects non-SH feature colors to carry the camera batch
     # dimension, i.e. (C, N, D), even for a single view.
     colors_feat = model.sem_logits.unsqueeze(0) if model.sem_logits.ndim == 2 else model.sem_logits
