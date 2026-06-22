@@ -170,3 +170,8 @@ tools/experiments/_shared/phase2_cams/thumbs/
 tools/experiments/_shared/build/demo/
 tools/experiments/_shared/build/*.js.map
 tools/experiments/_shared/build/*.cjs.map
+
+# Repo tidy 2026-06-22: untrack regenerable phase1/2/3 result figures (~390 MB; history kept)
+results/phase1_*/**/*.png
+results/phase2_*/**/*.png
+results/phase3_*/**/*.png
