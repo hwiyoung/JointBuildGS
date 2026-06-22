@@ -1,0 +1,14 @@
+{
+  "pipeline": [
+    "/workspace/JointBuildGS/phases/p0-audit/data/raw/als/690_5335.laz",
+    "/workspace/JointBuildGS/phases/p0-audit/data/raw/als/690_5336.laz",
+    "/workspace/JointBuildGS/phases/p0-audit/data/raw/als/691_5335.laz",
+    "/workspace/JointBuildGS/phases/p0-audit/data/raw/als/691_5336.laz",
+    { "type":"filters.merge" },
+    { "type":"filters.expression", "expression":"Classification == 2 || Classification == 6" },
+    { "type":"filters.crop", "bounds":"([690766.0, 691180.0],[5335839.0, 5336379.0])" },
+    { "type":"writers.las",
+      "filename":"/workspace/JointBuildGS/results/tum_transfer/mob_analysis/p0c_step2/als_aoi.laz",
+      "a_srs":"EPSG:25832", "minor_version":4, "dataformat_id":3, "compression":"lazperf" }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "pipeline": [
+    { "type":"readers.las", "filename":"/workspace/JointBuildGS/results/tum_transfer/mob_analysis/p0c_step2/acmp_classified.laz" },
+    { "type":"filters.overlay", "dimension":"Classification",
+      "datasource":"/workspace/JointBuildGS/results/tum_transfer/mob_analysis/p0c_step2/footprints_class6.gpkg",
+      "column":"class", "threads":8 },
+    { "type":"writers.las",
+      "filename":"/workspace/JointBuildGS/results/tum_transfer/mob_analysis/p0c_step2/acmp_forcebuild.laz",
+      "a_srs":"EPSG:25832", "minor_version":4, "dataformat_id":3, "compression":"lazperf" }
+  ]
+}
