@@ -1,0 +1,58 @@
+# P2 make-or-break v6 — GS arm: DENSE seed (= DIM MVS cloud, AOI-cropped + voxel<=~3M, concat onto SfM).
+# Joint optimisation: L_sem detach RELEASED + L_structure. w_mutual dropped. MVS depth/normal ablated.
+# Only difference vs gs_seed_{sparse,acmp}: init point cloud (here = DIM dense) + densification relaxed.
+seed: 0
+device: cuda
+
+data_root: /workspace/JointBuildGS/results/tum_transfer/data_geoidfix   # clean geoid-corrected labels
+
+# MVS-seed init: prepared GS-LOCAL DIM cloud (tum_mob_seed_prep.sh; dim_v1 -604 geoid shift).
+init_pointcloud: /workspace/JointBuildGS/results/tum_transfer/mob_analysis/seed/seed_dense.ply
+init_pointcloud_mode: concat   # add MVS pts onto SfM base (keeps full scene trainable; AOI gets dense init)
+
+downscale: 1.0
+sh_degree: 3
+sh_up_every: 1000
+
+w_photo: 1.0
+w_depth: 0.0
+w_normal: 0.0
+w_nc: 0.05
+w_distort: 0.0
+photo_lam: 0.2
+
+load_semantic: true
+w_sem: 0.1
+sem_detach_geometry: false   # joint-opt: L_sem gradient flows into geometry (means/quats/scales/opacity)
+
+w_mutual: 0.0                 # dropped for v6
+
+w_structure: 0.1             # inter-primitive structure alignment
+w_structure_na: 1.0
+w_structure_cp: 1.0
+structure_voxel_size: 2.0
+structure_warmup: 15000
+structure_regroup_every: 500
+
+lr_means: 1.6e-4
+lr_scales: 5.0e-3
+lr_quats: 1.0e-3
+lr_opacities: 5.0e-2
+lr_sh0: 2.5e-3
+lr_shN: 1.25e-4
+lr_sem: 2.5e-3
+
+# densification: RELAXED for dense init (already ~3M; grow conservatively, refine less often)
+prune_opa: 0.005
+grow_grad2d: 1.0e-3
+grow_scale3d: 0.01
+prune_scale3d: 0.1
+refine_start_iter: 500
+refine_stop_iter: 20000
+refine_every: 200
+reset_every: 3000
+
+max_iter: 30000
+eval_every: 2000
+ckpt_every: 10000
+out_dir: /workspace/JointBuildGS/results/tum_transfer/mob/gs_seed_dense

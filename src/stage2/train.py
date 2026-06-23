@@ -298,6 +298,38 @@ def main():
         print(f"[seed] +{len(seeds.xyz)} semantic seeds over {len(sc['buildings'])} buildings "
               f"-> N {ds.points_xyz.shape[0]} -> {points_xyz.shape[0]}")
 
+    # ---------- MVS-seed init (P2 make-or-break v6) ----------
+    # INIT/DATA PATH ONLY (no engine logic): seed the model with a prepared GS-LOCAL MVS cloud
+    # (dense=DIM / acmp=ACMP), produced offline by tum_mob_seed_prep.sh (AOI crop + per-cloud
+    # geoid shift + voxel<=~3M + outlier clip). Default mode "concat": add the MVS points onto
+    # the SfM base so the full scene stays trainable (ACMP exists only over the AOI), while the
+    # 11 eval buildings get dense init. RGB = scene mean (same as the semantic seeds; L_photo
+    # recolours during training). scene_scale is intentionally left on ds.points_xyz (the SfM
+    # extent) so densification thresholds are unchanged by the AOI-concentrated seeds.
+    init_pc = cfg.get("init_pointcloud")
+    if init_pc:
+        from .pointcloud_io import read_init_pointcloud
+
+        mode = cfg.get("init_pointcloud_mode", "concat")
+        seed_xyz = read_init_pointcloud(init_pc)                      # (M,3) GS-LOCAL
+        scene_rgb = ds.points_rgb.mean(axis=0)
+        seed_rgb = np.broadcast_to(scene_rgb, (len(seed_xyz), 3)).astype(np.float32).copy()
+        n0 = points_xyz.shape[0]
+        if mode == "replace":
+            points_xyz = seed_xyz.astype(np.float32)
+            points_rgb = seed_rgb
+            points_sem = None
+        elif mode == "concat":
+            points_xyz = np.concatenate([points_xyz, seed_xyz], axis=0).astype(np.float32)
+            points_rgb = np.concatenate([points_rgb, seed_rgb], axis=0).astype(np.float32)
+            if points_sem is not None:
+                points_sem = np.concatenate(
+                    [points_sem, np.full(len(seed_xyz), -1, np.int64)]).astype(np.int64)
+        else:
+            raise ValueError(f"init_pointcloud_mode must be concat|replace, got {mode!r}")
+        print(f"[mvs-seed] {mode} {len(seed_xyz)} MVS init pts from {init_pc}: "
+              f"N {n0} -> {points_xyz.shape[0]}")
+
     # ---------- model ----------
     model = GaussianModel2D(
         points_xyz=points_xyz,
