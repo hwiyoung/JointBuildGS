@@ -34,6 +34,43 @@ from .model import GaussianModel2D
 from .renderer import render
 
 
+def _load_footprint_boxes_local(geojson_path, world_offset, building_ids=None):
+    """(P2 C seed-survival) {bid: (x0,y0,x1,y1)} GS-LOCAL bboxes from a UTM footprint geojson."""
+    if not geojson_path:
+        return None
+    feats = json.loads(Path(geojson_path).read_text())["features"]
+    wx, wy = float(world_offset[0]), float(world_offset[1])
+    want = set(building_ids) if building_ids else None
+    boxes = {}
+    for f in feats:
+        bid = f["properties"].get("building_id")
+        if want is not None and bid not in want:
+            continue
+        g = f["geometry"]
+        r = np.asarray(g["coordinates"][0] if g["type"] == "Polygon" else g["coordinates"][0][0])
+        x, y = r[:, 0] - wx, r[:, 1] - wy
+        boxes[bid] = (float(x.min()), float(y.min()), float(x.max()), float(y.max()))
+    return boxes
+
+
+def _log_seed_survival(it, model, is_seed, boxes, writer):
+    """(P2 C) log surviving seed count (+ per-building footprint seed count / median opacity)."""
+    with torch.no_grad():
+        n_seed = int(is_seed.sum().item())
+        msg = f"[seed-survival] it={it} N={model.num_points} seeds={n_seed}"
+        writer.add_scalar("seed/surviving", n_seed, it)
+        if boxes:
+            m = model.means.detach(); op = model.opacities.detach().flatten()
+            for bid, (x0, y0, x1, y1) in boxes.items():
+                inb = (m[:, 0] >= x0) & (m[:, 0] <= x1) & (m[:, 1] >= y0) & (m[:, 1] <= y1) & is_seed
+                c = int(inb.sum().item())
+                medop = float(op[inb].median().item()) if c > 0 else 0.0
+                short = bid.replace("DEBY_LOD2_", "")
+                msg += f" | {short}={c}(op{medop:.2f})"
+                writer.add_scalar(f"seed/fp_{short}", c, it)
+        print(msg, flush=True)
+
+
 # Map from gsplat strategy dict keys -> model attribute names
 _STRATEGY_TO_MODEL = {
     "means": "means",
@@ -306,6 +343,7 @@ def main():
     # 11 eval buildings get dense init. RGB = scene mean (same as the semantic seeds; L_photo
     # recolours during training). scene_scale is intentionally left on ds.points_xyz (the SfM
     # extent) so densification thresholds are unchanged by the AOI-concentrated seeds.
+    mvs_seed_mask = None   # (P2 make-or-break C) bool over final init rows: True = MVS seed
     init_pc = cfg.get("init_pointcloud")
     if init_pc:
         from .pointcloud_io import read_init_pointcloud
@@ -329,6 +367,8 @@ def main():
             raise ValueError(f"init_pointcloud_mode must be concat|replace, got {mode!r}")
         print(f"[mvs-seed] {mode} {len(seed_xyz)} MVS init pts from {init_pc}: "
               f"N {n0} -> {points_xyz.shape[0]}")
+        mvs_seed_mask = np.zeros(points_xyz.shape[0], dtype=bool)
+        mvs_seed_mask[(0 if mode == "replace" else n0):] = True   # replace=all, concat=appended rows
 
     # ---------- model ----------
     model = GaussianModel2D(
@@ -354,7 +394,7 @@ def main():
     # scene scale (for DefaultStrategy)
     scene_scale = float(np.linalg.norm(ds.points_xyz - ds.points_xyz.mean(0), axis=1).mean())
 
-    strategy = build_strategy(
+    _strat_kwargs = dict(
         prune_opa=cfg.get("prune_opa", 0.005),
         grow_grad2d=cfg.get("grow_grad2d", 2e-4),
         grow_scale3d=cfg.get("grow_scale3d", 0.01),
@@ -364,8 +404,23 @@ def main():
         refine_every=cfg.get("refine_every", 100),
         reset_every=cfg.get("reset_every", 3000),
     )
+    # (P2 make-or-break C) seed_protect: MVS-seed Gaussians are exempt from opacity-prune.
+    seed_protect = bool(cfg.get("seed_protect", False)) and (mvs_seed_mask is not None)
+    if seed_protect:
+        from .densification import build_seed_protect_strategy
+        strategy = build_seed_protect_strategy(**_strat_kwargs)
+    else:
+        strategy = build_strategy(**_strat_kwargs)
     strategy.check_sanity(params, optimizers)
     strategy_state = strategy.initialize_state(scene_scale=scene_scale)
+    seed_log_boxes = None
+    if seed_protect:
+        strategy_state["is_seed"] = torch.from_numpy(mvs_seed_mask).to(device)
+        print(f"[seed-protect] protecting {int(mvs_seed_mask.sum())} MVS-seed Gaussians from prune "
+              f"(of {len(mvs_seed_mask)})")
+        seed_log_boxes = _load_footprint_boxes_local(
+            cfg.get("seed_log_footprints"), cfg.get("world_offset", [690953.0, 5336071.0, 604.0]),
+            cfg.get("seed_log_buildings"))
 
     # ---------- logging ----------
     writer = SummaryWriter(out_dir / "tb")
@@ -642,6 +697,10 @@ def main():
 
         # sync params dict -> model (gsplat strategy may replace nn.Parameters on grow/prune)
         _sync_params_to_model(params, model)
+
+        # (P2 make-or-break C) seed-survival diagnostic (every 5k + at 500 for pre-check)
+        if seed_protect and (it == 500 or (it > 0 and it % 5000 == 0)):
+            _log_seed_survival(it, model, strategy_state["is_seed"], seed_log_boxes, writer)
 
         for opt in optimizers.values():
             opt.step()

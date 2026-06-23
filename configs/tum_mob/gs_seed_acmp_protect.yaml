@@ -1,0 +1,72 @@
+# P2 make-or-break C — ACMP seed + SEED PROTECTION (de-confound v6 prune).
+# Identical to gs_seed_acmp.yaml (v6) EXCEPT seed_protect=true: MVS-seed Gaussians are exempt
+# from opacity-prune so the generation band can recover (v6 pruned 2.9M->226k, losing seeds on
+# low-density R buildings). New-Gaussian growth keeps the v6 dense settings (no aggressive return).
+seed: 0
+device: cuda
+
+data_root: /workspace/JointBuildGS/results/tum_transfer/data_geoidfix
+
+init_pointcloud: /workspace/JointBuildGS/results/tum_transfer/mob_analysis/seed/seed_acmp.ply
+init_pointcloud_mode: concat
+seed_protect: true                       # <-- C: MVS seeds never pruned (+ lineage)
+seed_log_footprints: /workspace/JointBuildGS/results/tum_transfer/analysis/footprints_aoi.geojson
+seed_log_buildings:                      # per-building seed-survival log (5k steps + step 500)
+  - DEBY_LOD2_42364609
+  - DEBY_LOD2_42364659
+  - DEBY_LOD2_42364663
+  - DEBY_LOD2_4907182
+  - DEBY_LOD2_4907510
+  - DEBY_LOD2_4908050
+  - DEBY_LOD2_4908166
+  - DEBY_LOD2_4908176
+  - DEBY_LOD2_4906969
+  - DEBY_LOD2_4908023
+  - DEBY_LOD2_4906972
+
+downscale: 1.0
+sh_degree: 3
+sh_up_every: 1000
+
+w_photo: 1.0
+w_depth: 0.0
+w_normal: 0.0
+w_nc: 0.05
+w_distort: 0.0
+photo_lam: 0.2
+
+load_semantic: true
+w_sem: 0.1
+sem_detach_geometry: false
+
+w_mutual: 0.0
+
+w_structure: 0.1
+w_structure_na: 1.0
+w_structure_cp: 1.0
+structure_voxel_size: 2.0
+structure_warmup: 15000
+structure_regroup_every: 500
+
+lr_means: 1.6e-4
+lr_scales: 5.0e-3
+lr_quats: 1.0e-3
+lr_opacities: 5.0e-2
+lr_sh0: 2.5e-3
+lr_shN: 1.25e-4
+lr_sem: 2.5e-3
+
+# densification: v6 dense settings (relaxed) — unchanged; only seed-prune is disabled
+prune_opa: 0.005
+grow_grad2d: 1.0e-3
+grow_scale3d: 0.01
+prune_scale3d: 0.1
+refine_start_iter: 500
+refine_stop_iter: 20000
+refine_every: 200
+reset_every: 3000
+
+max_iter: 30000
+eval_every: 2000
+ckpt_every: 10000
+out_dir: /workspace/JointBuildGS/results/tum_transfer/mob/gs_seed_acmp_protect

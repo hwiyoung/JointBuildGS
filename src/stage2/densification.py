@@ -12,6 +12,7 @@ from typing import Dict, Tuple
 import torch
 import torch.nn as nn
 from gsplat.strategy import DefaultStrategy
+from gsplat.strategy.ops import remove
 
 from .model import GaussianModel2D
 
@@ -81,3 +82,43 @@ def build_strategy(
         absgrad=absgrad,
         verbose=False,
     )
+
+
+class SeedProtectStrategy(DefaultStrategy):
+    """DefaultStrategy that NEVER prunes MVS-seed Gaussians (P2 make-or-break C: seed protection).
+
+    Seeds are flagged by a bool tensor in ``state["is_seed"]`` registered at init. gsplat's
+    remove/duplicate/split (ops.py) carry every per-Gaussian ``state`` tensor in lockstep with the
+    params, so the flag stays aligned automatically (seed lineage — split/dup children — inherits it).
+    Only ``_prune_gs`` is overridden: identical to gsplat 1.4.0 DefaultStrategy._prune_gs but with
+    ``is_prune &= ~is_seed`` so seeds survive opacity-prune (and reset_opa, which only lowers opacity).
+    PINNED to gsplat 1.4.0 prune logic — re-sync if gsplat is upgraded.
+    """
+
+    def _prune_gs(self, params, optimizers, state, step):  # type: ignore[override]
+        import torch as _torch
+
+        is_prune = _torch.sigmoid(params["opacities"].flatten()) < self.prune_opa
+        if step > self.reset_every:
+            is_too_big = (
+                _torch.exp(params["scales"]).max(dim=-1).values
+                > self.prune_scale3d * state["scene_scale"]
+            )
+            if step < self.refine_scale2d_stop_iter:
+                is_too_big |= state["radii"] > self.prune_scale2d
+            is_prune = is_prune | is_too_big
+
+        is_seed = state.get("is_seed")
+        if is_seed is not None:
+            is_prune = is_prune & (~is_seed)   # protect MVS seeds (+ their lineage)
+
+        n_prune = int(is_prune.sum().item())
+        if n_prune > 0:
+            remove(params=params, optimizers=optimizers, state=state, mask=is_prune)
+        return n_prune
+
+
+def build_seed_protect_strategy(**kwargs) -> SeedProtectStrategy:
+    """Same args/defaults as build_strategy, but seeds (state['is_seed']) are prune-protected."""
+    base = build_strategy(**kwargs)
+    return SeedProtectStrategy(**{f.name: getattr(base, f.name) for f in __import__("dataclasses").fields(base)})
