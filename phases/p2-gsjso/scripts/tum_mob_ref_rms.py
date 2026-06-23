@@ -69,6 +69,14 @@ def aligned_rms(P, planes):
 
 
 def main():
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--arms", nargs="+", default=ARMS,
+                    help="config arm names to score (default = the 5 original ablations)")
+    ap.add_argument("--out", default=f"{REPO}/results/tum_transfer/mob_analysis/ref_rms.csv")
+    A = ap.parse_args()
+    arms = A.arms
+
     gml = [f"{REPO}/phases/p0-audit/data/raw/lod2/690_5334.gml",
            f"{REPO}/phases/p0-audit/data/raw/lod2/690_5336.gml"]
     geo = json.load(open(f"{REPO}/results/tum_transfer/analysis/footprints_aoi.geojson"))["features"]
@@ -80,7 +88,7 @@ def main():
         return np.asarray(g["coordinates"][0] if g["type"] == "Polygon" else g["coordinates"][0][0])[:, :2]
 
     rows = []
-    for cfg in ARMS:
+    for cfg in arms:
         for t in TARGETS:
             bid = f"DEBY_LOD2_{t}"
             if not planes[bid]:
@@ -104,7 +112,7 @@ def main():
                              "ref_planes": len(planes[bid]), "rms_to_ref_m": round(rms, 3), "dz_m": dz})
                 print(f"{cfg:9} {bid:20} {tag:8} n={len(Pb):>7} ref_planes={len(planes[bid])} "
                       f"rms_to_ref={rms:.3f}m dz={dz:.1f}")
-    out = f"{REPO}/results/tum_transfer/mob_analysis/ref_rms.csv"
+    out = A.out
     with open(out, "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=["config", "bid", "tag", "n_roof_pts", "ref_planes", "rms_to_ref_m", "dz_m"])
         w.writeheader(); w.writerows(rows)
