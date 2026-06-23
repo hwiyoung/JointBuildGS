@@ -1,6 +1,16 @@
 # 세션 핸드오프 (rolling) — 새 세션 시작 시 이 문서부터 읽기
 
-> 갱신 2026-06-22. 직전 작업 브랜치 `feature/p2-semantic-seed`(origin 동기화됨). 사람 검토자=김휘영.
+> 갱신 2026-06-23. 직전 작업 브랜치 `feature/p2-semantic-seed`. 사람 검토자=김휘영.
+
+## 0) ⚡ 진행 중 백그라운드 (2026-06-23, P2 make-or-break v6 "MVS-seed가 raw MVS→Roofer를 이기나")
+> 커밋 `caa3377`(빌드)·`e7c721d`(raw arm)·`19a9edc`(Phase4 tooling), 모두 `feature/p2-semantic-seed`.
+- **GS arm** (`run_mob_v6.sh`, GPU, ~5–6h): gs_seed_{sparse,dense,acmp} 학습→TSDF→eval. 완료=`results/tum_transfer/mob/V6_PIPELINE_DONE`. log=`mob/v6.log`·`mob/train_gs_seed_*.log`.
+- **raw arm** (`run_mob_v6_raw.sh`, CPU, ~1h): raw {sparse,dense,acmp,lidar}→동일 tum_mob_eval. 완료=`mob/V6_RAW_DONE`. log=`mob/v6_raw.log`.
+- **Phase 4 (둘 다 끝난 뒤 1줄)**: `bash phases/p2-gsjso/scripts/run_mob_v6_table.sh matched` → `mob/REPORT_v6.md`(8-way: RoofSurface·RMS→ref·val3dity·solid)+`table_v6.csv`.
+- 설계 핵심: 씨드=concat(SfM 372k + AOI MVS ~3M, voxel0.40); **geoid: dim −604(타원체)·acmp −556(정사고)**; raw arm은 ellipsoidal로 통일(acmp/als +48). Phase2 pre-check PASS(detach 해제 grad≠0). 관찰만, 판정=사람.
+
+---
+> (이전) 직전 작업 브랜치 `feature/p2-semantic-seed`(origin 동기화됨). 사람 검토자=김휘영.
 > 영속 메모리(`MEMORY.md` + `project_*.md`)는 세션 시작 시 자동 로드됨 — 이 문서는 그 위의 **진행상태·다음할일** 인계.
 > 규칙: 관찰·수치까지만, 합/불·결론은 사람. EPSG:25832 · Docker(`jointbuildgs:dev` 학습 / `jointbuildgs-p0-tools:t0`·`3dgi/roofer` 진단).
 
