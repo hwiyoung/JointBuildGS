@@ -1,13 +1,26 @@
 # 세션 핸드오프 (rolling) — 새 세션 시작 시 이 문서부터 읽기
 
-> 갱신 2026-06-23. 직전 작업 브랜치 `feature/p2-semantic-seed`. 사람 검토자=김휘영.
+> 갱신 2026-06-24. **현재 작업 브랜치 `feature/p2-seed-protect`**(C 엔진변경+C2+B2). v6/raw는 `feature/p2-semantic-seed`. 사람 검토자=김휘영. 관찰만, 판정=사람.
 
-## 0) ⚡ 진행 중 백그라운드 (2026-06-23, P2 make-or-break v6 "MVS-seed가 raw MVS→Roofer를 이기나")
-> 커밋 `caa3377`(빌드)·`e7c721d`(raw arm)·`19a9edc`(Phase4 tooling), 모두 `feature/p2-semantic-seed`.
-- **GS arm** (`run_mob_v6.sh`, GPU, ~5–6h): gs_seed_{sparse,dense,acmp} 학습→TSDF→eval. 완료=`results/tum_transfer/mob/V6_PIPELINE_DONE`. log=`mob/v6.log`·`mob/train_gs_seed_*.log`.
-- **raw arm** (`run_mob_v6_raw.sh`, CPU, ~1h): raw {sparse,dense,acmp,lidar}→동일 tum_mob_eval. 완료=`mob/V6_RAW_DONE`. log=`mob/v6_raw.log`.
-- **Phase 4 (둘 다 끝난 뒤 1줄)**: `bash phases/p2-gsjso/scripts/run_mob_v6_table.sh matched` → `mob/REPORT_v6.md`(8-way: RoofSurface·RMS→ref·val3dity·solid)+`table_v6.csv`.
-- 설계 핵심: 씨드=concat(SfM 372k + AOI MVS ~3M, voxel0.40); **geoid: dim −604(타원체)·acmp −556(정사고)**; raw arm은 ellipsoidal로 통일(acmp/als +48). Phase2 pre-check PASS(detach 해제 grad≠0). 관찰만, 판정=사람.
+## 0) ⚡ P2 make-or-break v6 진단 체인 — 전부 완료 (2026-06-24). 미푸시, 로컬 커밋만.
+> 질문: "MVS-seed GS 공동최적화가 raw MVS→Roofer를 이기나" + 왜/어디서 막히나. 데이터(`results/`·`phases/p0-audit/data/`)는 gitignore.
+> **브랜치**: `feature/p2-semantic-seed`에 v6 빌드·raw·overseg·density·no_points(caa3377→46bd821). `feature/p2-seed-protect`에 C 엔진(c39c15c)·C2(1fc7e1f)·B2(4089036).
+
+| # | 작업 | 결과(관찰, 판정=사람) | 보고서/커밋 |
+|---|---|---|---|
+| v6 | 8-way(GS-seed vs raw vs LiDAR) | GS-seed **R-solid 2–3/8** vs raw MVS 1–2/8 vs LiDAR 7/8. dense/acmp 씨드가 prune로 226k/281k 붕괴(생성축 오염) | `REPORT_v6.md` / caa3377·e7c721d·19a9edc |
+| 과분할 | GS가 raw보다 facet 많음 원인 | (나)Roofer 임계 우세(GS 표면 매끈한데 과분할); 밀도정합해도 facet 유지=**저주파 waviness**(밀도 아님) | `docs/W3_overseg_diagnosis.md` / 81230a3·a520204 |
+| no_points | 영상 0점 46동 분해 | **c near-nadir 결손 36** + b5/d3/e2. a(미촬영)0. ALS 46/46 관측 | `phases/p0-audit/docs/W4c_no_points_breakdown.md` / 46bd821 |
+| **C** | 씨드보존 재실행(엔진, 승인됨) | 씨드 보존(2.95M, v6 붕괴와 대비)**해도 생성밴드 0/5 미회복**. 보존 씨드 op≈0 | `REPORT_v6_protect.md` / c39c15c·60b52a9 |
+| (리뷰) | C 결론 적대검증 | 원 "thin-evidence"=**과장**. 입력엔 점 있음(raw_dense). 진짜 기전=**opacity 붕괴→alpha 게이트 탈락** | (워크플로) |
+| **C2** | opacity 진단(alpha 우회) | op median **3.8e-3**(96% 투명). **우회 시 지붕점 회복**(dense 4/5, RMS→ref 0.2~0.5m=위치 정확)나 **조립은 cloud-limited**(raw_dense도 미조립, LiDAR밀도만). densification은 C서 v6 dense **유지(변경X)** | `docs/W_opacity_diag.md` / 1fc7e1f |
+| **B2** | 동시취득 데이터 귀속 | no_points 41/46(34/36 near-nadir)= **취득/커버리지 한계**(동시취득 ULS-nadir도 미커버, Bavaria-ALS만 46/46). 내 파이프라인特有 4, MVS일반 1 | `docs/W4d_coacquired_crosscheck.md` / 4089036 |
+
+**종합(판정 재료)**: 영상-유래 실패 = ① **취득**(L2 나디르 커버리지 결손, 동시취득 LiDAR로도 미회복=재촬영/완전측량 필요) + ② **파이프라인**(GS opacity 붕괴→점 안보임[고칠 수 있음] + raw도 미조립하는 cloud/구조화 한계). GS-seed가 raw 약간 상회하나 LiDAR 미달.
+
+**다음 후보(미착수, 판정=사람)**: (a) **opacity floor/detach** 실험(C2가 가리킨 fix; 점은 회복되나 조립엔 L_structure/더 조밀 증거 필요) — 엔진변경, feature/p2-seed-protect. (b) 내 파이프라인特有 4동(Pix4D 복원) 회복. (c) 브랜치 정리/머지·v6 판정(사람). (d) 보류: 무텍스처 신호진단(`wip/textureless-signal`).
+
+**재사용 자산**: 엔진 `SeedProtectStrategy`(densification.py, gsplat fork 없음·state["is_seed"]). bypass `c2_dump_means.py`. B2 번들 `phases/p0-audit/data/raw/tum2twin/`(ULS/Pix4D, EPSG:32632). eval 하네스 `tum_mob_eval.py`(matched)·`tum_mob_ref_rms.py --arms`·`run_mob_v6{,_raw,_protect,_table}.sh`. 8-way 정합용 raw/LiDAR/ref는 `eval_v6_raw.json`·`baselines.json` 재사용.
 
 ---
 > (이전) 직전 작업 브랜치 `feature/p2-semantic-seed`(origin 동기화됨). 사람 검토자=김휘영.
