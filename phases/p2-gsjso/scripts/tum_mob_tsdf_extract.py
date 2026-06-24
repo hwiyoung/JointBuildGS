@@ -34,8 +34,11 @@ def main():
     ap.add_argument("--geojson", default=f"{REPO}/results/tum_transfer/analysis/footprints_aoi.geojson")
     ap.add_argument("--max-views", type=int, default=0)
     ap.add_argument("--sh-degree", type=int, default=3)
+    ap.add_argument("--no-sem", action="store_true",
+                    help="disable the GS-semantic feature pass (default: carry per-voxel class if ckpt has sem_logits)")
     A = ap.parse_args()
     dev = "cuda"
+    KC = 4  # engine semantic classes: 0 BG / 1 Roof / 2 Wall / 3 Terrain (model.py num_classes)
 
     # boxes from footprints (UTM -> local), union of the 11 targets
     feats = json.load(open(A.geojson))["features"]
@@ -56,6 +59,15 @@ def main():
     means = sd["means"].to(dev); quats = sd["quats"].to(dev)
     scales = torch.exp(sd["log_scales"]).to(dev); opac = torch.sigmoid(sd["opacities_raw"]).to(dev).ravel()
     colors = torch.cat([sd["sh0"], sd["shN"]], dim=1).to(dev)
+    # P2-D Lever 3: per-Gaussian semantic logits for the GS-semantic classification read-out.
+    sem = sd.get("sem_logits")
+    do_sem = (sem is not None) and (not A.no_sem)
+    if do_sem:
+        sem = sem.to(dev)
+        sem = sem.unsqueeze(0) if sem.ndim == 2 else sem   # (1,N,K) gsplat feature-color layout
+        print(f"[sem] GS-semantic feature pass ON (K={sem.shape[-1]})")
+    else:
+        print("[sem] GS-semantic OFF (no sem_logits in ckpt or --no-sem); XYZ-only fusion")
     print(f"[model] N={means.shape[0]} ckpt={A.ckpt}")
 
     cam = list(read_cameras_bin(f"{DENSE}/sparse/cameras.bin").values())[0]
@@ -71,11 +83,17 @@ def main():
     ud = torch.tensor((uu - K[0, 2]) / K[0, 0], dtype=torch.float32, device=dev)
     vd = torch.tensor((vv - K[1, 2]) / K[1, 1], dtype=torch.float32, device=dev)
 
-    keylist = []; OFF = 1 << 20; MUL = 1 << 21
-    def add_keys(P):
+    keylist = []; clslist = []; OFF = 1 << 20; MUL = 1 << 21
+    def add_keys(P, cls=None):
         q = torch.floor(P / A.voxel).to(torch.int64) + OFF
         k = (q[:, 0] * MUL + q[:, 1]) * MUL + q[:, 2]
-        keylist.append(torch.unique(k).cpu())
+        if cls is None:
+            keylist.append(torch.unique(k).cpu()); return
+        # one vote per (view, voxel): majority class among this view's pixels in the voxel.
+        uk_v, inv_v = torch.unique(k, return_inverse=True)
+        hist = torch.zeros((uk_v.shape[0], KC), device=P.device)
+        hist.index_add_(0, inv_v, torch.nn.functional.one_hot(cls, KC).float())
+        keylist.append(uk_v.cpu()); clslist.append(hist.argmax(1).to(torch.int64).cpu())
 
     n_surf = 0
     for i, im in enumerate(imgs):
@@ -85,6 +103,14 @@ def main():
             out = rasterization_2dgs(means=means, quats=quats, scales=scales, opacities=opac, colors=colors,
                 viewmats=vm.unsqueeze(0), Ks=Kt.unsqueeze(0), width=W, height=H,
                 near_plane=0.01, far_plane=1e10, render_mode="RGB+ED", depth_mode="expected", sh_degree=A.sh_degree)
+            cls_pix = None
+            if do_sem:
+                # Same view/intrinsics → semantic logits land on the same pixels as the median-depth
+                # surface; argmax of the alpha-composited logits = surface class for that pixel.
+                fout = rasterization_2dgs(means=means, quats=quats, scales=scales, opacities=opac, colors=sem,
+                    viewmats=vm.unsqueeze(0), Ks=Kt.unsqueeze(0), width=W, height=H,
+                    near_plane=0.01, far_plane=1e10, render_mode="RGB", sh_degree=None)
+                cls_pix = fout[0][0].reshape(-1, sem.shape[-1]).argmax(-1)  # (H*W,)
         alpha = out[1][0, ..., 0].reshape(-1); med = out[5][0, ..., 0].reshape(-1)
         m = (alpha > A.alpha) & (med > 0) & (med < 500)
         if m.sum() == 0:
@@ -95,29 +121,54 @@ def main():
         inbox = torch.zeros_like(sel)
         for bx in boxes:
             inbox |= (Xw[:, 0] >= bx[0]) & (Xw[:, 0] <= bx[2]) & (Xw[:, 1] >= bx[1]) & (Xw[:, 1] <= bx[3])
-        Xw = Xw[sel & inbox]
+        keepm = sel & inbox
+        Xw = Xw[keepm]
         if len(Xw):
-            add_keys(Xw); n_surf += len(Xw)
+            if do_sem:
+                add_keys(Xw, cls_pix[m][keepm]); n_surf += len(Xw)
+            else:
+                add_keys(Xw); n_surf += len(Xw)
         if (i + 1) % 200 == 0:
             print(f"  view {i+1}/{len(imgs)}", flush=True)
 
     allk = torch.cat(keylist)
-    uk, cnt = torch.unique(allk, return_counts=True)
-    n_total = len(uk)
-    uk = uk[cnt >= A.min_obs]
+    if do_sem:
+        allc = torch.cat(clslist)                                  # one class vote per (view, voxel)
+        uk_all, inv_all = torch.unique(allk, return_inverse=True)
+        cnt = torch.bincount(inv_all, minlength=uk_all.shape[0])
+        hist = torch.zeros((uk_all.shape[0], KC))
+        hist.index_add_(0, inv_all, torch.nn.functional.one_hot(allc, KC).float())
+        vox_cls = hist.argmax(1)                                   # majority class across views
+        n_total = len(uk_all); keep = cnt >= A.min_obs
+        uk = uk_all[keep]; vox_cls = vox_cls[keep]
+    else:
+        uk, cnt = torch.unique(allk, return_counts=True)
+        n_total = len(uk); uk = uk[cnt >= A.min_obs]; vox_cls = None
     print(f"[consensus] min_obs={A.min_obs}: kept {len(uk)}/{n_total} voxels")
     k = uk.numpy(); iz = (k % MUL) - OFF; k //= MUL; iy = (k % MUL) - OFF; ix = (k // MUL) - OFF
     P_local = (np.stack([ix, iy, iz], 1).astype(np.float64) + 0.5) * A.voxel
     P_utm = P_local + SHIFT
+    P_class = vox_cls.numpy().astype(np.int32) if vox_cls is not None else None
+    P_class_clean = P_class
     try:
         import open3d as o3d
         pc = o3d.geometry.PointCloud(); pc.points = o3d.utility.Vector3dVector(P_utm)
-        pc2, _ = pc.remove_statistical_outlier(nb_neighbors=20, std_ratio=2.0)
-        P_utm_clean = np.asarray(pc2.points); print(f"[sor] kept {len(P_utm_clean)}/{len(P_utm)}")
+        pc2, ind = pc.remove_statistical_outlier(nb_neighbors=20, std_ratio=2.0)
+        P_utm_clean = np.asarray(pc2.points)
+        if P_class is not None:
+            P_class_clean = P_class[np.asarray(ind, dtype=np.int64)]   # carry class through SOR reindex
+        print(f"[sor] kept {len(P_utm_clean)}/{len(P_utm)}")
     except Exception as e:
         P_utm_clean = P_utm; print("[sor] skipped:", repr(e))
     Path(A.out).parent.mkdir(parents=True, exist_ok=True)
-    np.savez(A.out, P_utm=P_utm, P_utm_clean=P_utm_clean, voxel=A.voxel, downscale=A.downscale)
+    save = dict(P_utm=P_utm, P_utm_clean=P_utm_clean, voxel=A.voxel, downscale=A.downscale)
+    if P_class is not None:
+        save.update(P_class=P_class, P_class_clean=P_class_clean,
+                    class_names=np.array(["BG", "Roof", "Wall", "Terrain"]))
+        u, c = np.unique(P_class_clean, return_counts=True)
+        names = ["BG", "Roof", "Wall", "Terrain"]
+        print("[sem] fused class dist:", {names[int(a)]: int(b) for a, b in zip(u, c)})
+    np.savez(A.out, **save)
     print(f"[done] surf_backproj={n_surf} fused={len(P_local)} -> {A.out}")
 
 

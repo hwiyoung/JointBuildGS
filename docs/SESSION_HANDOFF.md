@@ -1,6 +1,15 @@
 # 세션 핸드오프 (rolling) — 새 세션 시작 시 이 문서부터 읽기
 
-> 갱신 2026-06-24. **현재 작업 브랜치 `feature/p2-seed-protect`**(C 엔진변경+C2+B2). v6/raw는 `feature/p2-semantic-seed`. 사람 검토자=김휘영. 관찰만, 판정=사람.
+> 갱신 2026-06-25. **현재 작업 브랜치 `feature/p2-prior-full`**(D 전체 prior 수트, 미푸시·미머지). 이전: `feature/p2-seed-protect`(C/C2/B2), v6/raw는 `feature/p2-semantic-seed`. 사람 검토자=김휘영. 관찰만, 판정=사람.
+
+## 0′) ⭐ D 전체 prior 수트 — 완료 (2026-06-25, `feature/p2-prior-full`, 미푸시). 보고 `docs/W_D_prior_full.md`.
+> 3 레버 ON(L1 depth/normal 감독 + L2 structure-G2 + L3 GS-의미 분류) vs v6(prior off). 엔진 변경 격리. 한 커밋 "전체 prior 수트".
+- **결정적 결과(귀속)**: 조립안됨 8동 → prior-on GS **7/8 조립(=LiDAR)** vs v6 2/8. **단 회복=레버3(GS-의미 read-out, SMRF 제거) 효과**, depth/normal/structure 학습-prior 무효(D-smrf 2–3/8≈v6 2/8). valid-solid 4/8<LiDAR 7/8.
+- 품질: 과분할 net 미감소(3.5 vs v6 3.0; G2는 smrf서 4906972 9→3만)·RMS→ref 2.8m로 LiDAR 1.4m **미수렴**(v6 1.9m 동등~소폭악화)·PSNR 19.9 무회귀.
+- 엔진: train.py(depth/normal warm-up→ramp 스케줄러 `_ramp_weight_scale` + `structure_grouping g1|g2` 디스패처 + silent-zero 가드); 추출 의미 voxel-히스토그램; `_mob_prep_las_gssem.py`(SMRF 대체 + ground 합성); eval `--classifier {gssem,smrf}`. configs `gs_prior_full_{dense,acmp}`. 맵 `prior_full_stereo.sh`(COLMAP 1024px). 손실감사 `docs/W_D_loss_audit.md`(불균형=단위 m²/m, 합산 아님).
+- 다음 후보(미착수): valid-solid↑(위상 구조화); 정밀 분리(v6 ckpt에 gssem만; depth-prior 고해상도/스케줄 재튜닝); D 판정(사람)·브랜치 머지.
+
+---
 
 ## 0) ⚡ P2 make-or-break v6 진단 체인 — 전부 완료 (2026-06-24). 미푸시, 로컬 커밋만.
 > 질문: "MVS-seed GS 공동최적화가 raw MVS→Roofer를 이기나" + 왜/어디서 막히나. 데이터(`results/`·`phases/p0-audit/data/`)는 gitignore.

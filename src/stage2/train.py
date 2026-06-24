@@ -26,7 +26,7 @@ from tqdm import tqdm
 
 from .dataloader import ColmapDataset
 from .densification import build_optimizers, build_param_dict, build_strategy
-from .grouping import group_primitives
+from .grouping import group_primitives, group_primitives_g2
 from .loss import data_fitting as L
 from .loss.mutual import l_mutual
 from .loss.structure import l_structure
@@ -108,7 +108,14 @@ def psnr(a: torch.Tensor, b: torch.Tensor) -> float:
     return 20 * math.log10(1.0) - 10 * math.log10(max(mse, 1e-10))
 
 
-def _mutual_weight_scale(it: int, warmup: int, schedule: str, ramp_steps: int) -> float:
+def _ramp_weight_scale(it: int, warmup: int, schedule: str, ramp_steps: int) -> float:
+    """Generic warm-up→ramp scale in [0, 1].
+
+    0.0 before `warmup`, then either constant 1.0 or a linear ramp to 1.0 over
+    `ramp_steps`. Used by L_mutual and (P2-D) by L_depth / L_normal priors.
+    Defaults (warmup=0, schedule='constant') reproduce a plain constant weight, so
+    configs that set w_depth/w_normal without schedule keys are unaffected.
+    """
     if it < warmup:
         return 0.0
     if schedule == "constant":
@@ -117,7 +124,7 @@ def _mutual_weight_scale(it: int, warmup: int, schedule: str, ramp_steps: int) -
         if ramp_steps <= 0:
             return 1.0
         return min(1.0, float(it - warmup + 1) / float(ramp_steps))
-    raise ValueError(f"Unsupported mutual_schedule={schedule!r}; expected 'constant' or 'ramp'")
+    raise ValueError(f"Unsupported schedule={schedule!r}; expected 'constant' or 'ramp'")
 
 
 def _height_values(centers: torch.Tensor, e_gravity: torch.Tensor) -> torch.Tensor:
@@ -429,6 +436,15 @@ def main():
     w_photo = cfg.get("w_photo", 1.0)
     w_depth = cfg.get("w_depth", 1.0)
     w_normal = cfg.get("w_normal", 0.05)
+    # P2-D: optional warm-up→ramp schedule for the depth/normal priors (lets the photometric
+    # base settle before the MVS depth/normal supervision ramps in). Defaults reproduce a
+    # plain constant weight, so prior configs without these keys are byte-identical.
+    depth_warmup = int(cfg.get("depth_warmup", 0))
+    depth_schedule = cfg.get("depth_schedule", "constant")
+    depth_ramp_steps = int(cfg.get("depth_ramp_steps", 0))
+    normal_warmup = int(cfg.get("normal_warmup", 0))
+    normal_schedule = cfg.get("normal_schedule", "constant")
+    normal_ramp_steps = int(cfg.get("normal_ramp_steps", 0))
     w_nc = cfg.get("w_nc", 0.05)
     w_distort = cfg.get("w_distort", 100.0)   # 2DGS distortion reg
     w_sem = cfg.get("w_sem", 0.1)
@@ -443,6 +459,28 @@ def main():
     structure_voxel_size = float(cfg.get("structure_voxel_size", 0.05))
     structure_n_directions = int(cfg.get("structure_n_directions", 12))
     structure_min_group = int(cfg.get("structure_min_group", 5))
+    # P2-D: select grouping definition. g1 = patch-level (legacy; L_normal_align degenerates to
+    # intra-patch smoothing). g2 = surface-level union-find (thesis target — coarse cell + merge).
+    structure_grouping = cfg.get("structure_grouping", "g1")
+    structure_merge_n_cos = float(cfg.get("structure_merge_n_cos", 0.92))   # g2 only
+    structure_merge_d_tol = float(cfg.get("structure_merge_d_tol", 0.5))    # g2 only
+    if structure_grouping not in ("g1", "g2"):
+        raise ValueError(f"Unsupported structure_grouping={structure_grouping!r}; expected 'g1' or 'g2'")
+
+    def _group_primitives(centers, normals, sem_logits, scales):
+        """Dispatch L_structure grouping per config (g1 patch-level | g2 surface-level).
+        Both return the same (group_ids, rep_n, rep_d) signature."""
+        if structure_grouping == "g2":
+            return group_primitives_g2(
+                centers=centers, normals=normals, sem_logits=sem_logits, scales=scales,
+                voxel_size=structure_voxel_size, n_directions=structure_n_directions,
+                merge_n_cos=structure_merge_n_cos, merge_d_tol=structure_merge_d_tol,
+                min_group_size=structure_min_group)
+        return group_primitives(
+            centers=centers, normals=normals, sem_logits=sem_logits, scales=scales,
+            voxel_size=structure_voxel_size, n_directions=structure_n_directions,
+            min_group_size=structure_min_group)
+
     # group state (updated every T iters after warmup)
     _grp = {"group_ids": None, "rep_n": None, "rep_d": None}
     w_mutual = cfg.get("w_mutual", 0.0)
@@ -500,6 +538,24 @@ def main():
     max_iter = int(cfg["max_iter"])
     sh_up_every = int(cfg.get("sh_up_every", 1000))
 
+    # P2-D silent-zero guard: w_depth/w_normal>0 contributes nothing unless per-view maps were
+    # actually resolved on disk (the loss term is gated on the batch key). Turn that silent
+    # no-op into a hard failure so a mis-located map is caught at startup, not believed-on.
+    if w_depth > 0 and not any(f.depth_path is not None for f in ds.frames):
+        raise RuntimeError(
+            "w_depth>0 but NO depth maps resolved under data_root/stereo|depth — L_depth would be "
+            "a silent no-op. Generate+stage maps (phases/p2-gsjso/scripts/prior_full_stereo.sh) or set w_depth=0.")
+    if w_normal > 0 and not any(f.normal_path is not None for f in ds.frames):
+        raise RuntimeError(
+            "w_normal>0 but NO normal maps resolved under data_root/stereo|normal — L_normal would be "
+            "a silent no-op. Generate+stage maps or set w_normal=0.")
+    if w_depth > 0 or w_normal > 0:
+        n_d = sum(f.depth_path is not None for f in ds.frames)
+        n_n = sum(f.normal_path is not None for f in ds.frames)
+        print(f"[prior] depth maps on {n_d}/{len(ds.frames)} frames, normal maps on {n_n}/{len(ds.frames)} "
+              f"(w_depth={w_depth} sched={depth_schedule}@{depth_warmup}+{depth_ramp_steps}; "
+              f"w_normal={w_normal} sched={normal_schedule}@{normal_warmup}+{normal_ramp_steps})")
+
     print(f"[train] max_iter={max_iter}  out={out_dir}")
     pbar = tqdm(range(max_iter), desc="train")
     t0 = time.time()
@@ -533,7 +589,8 @@ def main():
             d_gt = batch["depth"].to(device)
             d_m = batch["depth_mask"].to(device)
             loss_depth = L.l_depth(depth_pred, d_gt, d_m)
-            loss_total = loss_total + w_depth * loss_depth
+            w_depth_eff = w_depth * _ramp_weight_scale(it, depth_warmup, depth_schedule, depth_ramp_steps)
+            loss_total = loss_total + w_depth_eff * loss_depth
         else:
             loss_depth = torch.tensor(0.0, device=device)
 
@@ -541,7 +598,8 @@ def main():
             n_gt = batch["normal"].to(device)
             n_m = batch["normal_mask"].to(device)
             loss_n = L.l_normal(n_render, n_gt, w2c, n_m)
-            loss_total = loss_total + w_normal * loss_n
+            w_normal_eff = w_normal * _ramp_weight_scale(it, normal_warmup, normal_schedule, normal_ramp_steps)
+            loss_total = loss_total + w_normal_eff * loss_n
         else:
             loss_n = torch.tensor(0.0, device=device)
 
@@ -578,7 +636,7 @@ def main():
         loss_mut_semcal_reliability = torch.tensor(0.0, device=device)
         loss_mut_semcal_active_frac = torch.tensor(0.0, device=device)
         loss_mut_semcal_entropy = torch.tensor(0.0, device=device)
-        mutual_weight_scale = _mutual_weight_scale(it, mutual_warmup, mutual_schedule, mutual_ramp_steps)
+        mutual_weight_scale = _ramp_weight_scale(it, mutual_warmup, mutual_schedule, mutual_ramp_steps)
         if (w_mutual > 0 and mutual_weight_scale > 0
                 and e_gravity is not None and hasattr(model, "sem_logits")):
             mut = l_mutual(
@@ -640,14 +698,11 @@ def main():
             # Re-group every T iter (and on first activation)
             if (_grp["group_ids"] is None
                     or (it - structure_warmup) % structure_regroup_every == 0):
-                gids, rep_n, rep_d = group_primitives(
+                gids, rep_n, rep_d = _group_primitives(
                     centers=model.means.detach(),
                     normals=model.normals().detach(),
                     sem_logits=model.sem_logits.detach(),
                     scales=model.scales.detach(),
-                    voxel_size=structure_voxel_size,
-                    n_directions=structure_n_directions,
-                    min_group_size=structure_min_group,
                 )
                 _grp["group_ids"] = gids
                 _grp["rep_n"] = rep_n
@@ -781,7 +836,7 @@ def main():
         with torch.no_grad():
             scales_final = torch.exp(model.log_scales).detach()
             normals_final = quat_to_rotmat(model.quats.detach())[..., :, 2]
-            gid, rep_n, rep_d = group_primitives(
+            gid, rep_n, rep_d = _group_primitives(
                 centers=model.means.detach(),
                 normals=normals_final,
                 sem_logits=model.sem_logits.detach(),

@@ -81,7 +81,14 @@ def main():
     ap.add_argument("--out", default="results/tum_transfer/mob/eval_results.json")
     ap.add_argument("--targets", nargs="*", default=TARGETS)
     ap.add_argument("--densities", nargs="*", default=["orig", "matched"])
+    ap.add_argument("--classifier", choices=["smrf", "gssem"], default="smrf",
+                    help="ground/building labeling for the Roofer read-out: smrf (PDAL filters.smrf + "
+                         "GT-footprint overlay, the v6 default) | gssem (GS per-point semantic argmax, "
+                         "no SMRF — building=6 from Roof/Wall, ground=2 from Terrain + synth base)")
     A = ap.parse_args()
+    prep_script = ("phases/p2-gsjso/scripts/_mob_prep_las_gssem.py" if A.classifier == "gssem"
+                   else "phases/p2-gsjso/scripts/_mob_prep_las.py")
+    print(f"[eval] classifier={A.classifier} -> {prep_script}")
 
     base = json.loads((REPO / A.baselines).read_text())
     configs = dict(c.split("=", 1) for c in A.configs)
@@ -94,12 +101,15 @@ def main():
             x0, y0, x1, y1 = bb["bbox_utm"]
             outdir_host = REPO / A.evalroot / cname
             outdir_ct = f"/workspace/JointBuildGS/{A.evalroot}/{cname}"
-            outdir_roofer = f"/workspace/runs/mob_eval/{cname}"
+            # roofer service mounts phases/p0-audit/runs -> /workspace/runs; derive its output dir
+            # from evalroot (not a hardcoded 'mob_eval') so custom --evalroot values resolve.
+            eval_rel = A.evalroot.split("phases/p0-audit/runs/", 1)[-1]
+            outdir_roofer = f"/workspace/runs/{eval_rel}/{cname}"
             outdir_host.mkdir(parents=True, exist_ok=True)
             for tag in A.densities:
                 tgt = (bb["als_roof_density_pps_m2"] or 0.0) if tag == "matched" else 0.0
-                # 1) prep + classify
-                pr = sh(TOOLS_RUN + ["python3", "phases/p2-gsjso/scripts/_mob_prep_las.py",
+                # 1) prep + classify (smrf or gssem per --classifier)
+                pr = sh(TOOLS_RUN + ["python3", prep_script,
                         "--tsdf", npz_ct, "--bid", bid, "--geojson", f"/workspace/JointBuildGS/{A.geojson}",
                         "--target-density", str(tgt), "--outdir", outdir_ct, "--tag", tag],
                         log=str(outdir_host / f"{bid}_{tag}_prep.log"))
