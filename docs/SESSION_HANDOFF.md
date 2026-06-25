@@ -1,6 +1,19 @@
 # 세션 핸드오프 (rolling) — 새 세션 시작 시 이 문서부터 읽기
 
-> 갱신 2026-06-25. **현재 작업 브랜치 `feature/p2-prior-full`**(D 전체 prior 수트, 미푸시·미머지). 이전: `feature/p2-seed-protect`(C/C2/B2), v6/raw는 `feature/p2-semantic-seed`. 사람 검토자=김휘영. 관찰만, 판정=사람.
+> 갱신 2026-06-26. **현재 작업 브랜치 `feature/p2-prior-full`**(D 전체 prior 수트 + **D4 corrected** 재학습; D4 **커밋됨**, 미푸시). 이전: `feature/p2-seed-protect`(C/C2/B2), v6/raw는 `feature/p2-semantic-seed`. 사람 검토자=김휘영. 관찰만, 판정=사람.
+
+## 0″) ⭐ D4 — 정규화 재학습 (corrected, "cp만 정규화") — 완료 (2026-06-26, `feature/p2-prior-full`, **커밋 "D4"**, 미푸시).
+> 질문: "손실 균형을 바로잡으면(노이즈 depth/normal 제거 + cp 탈-지배) GS 지붕이 펴지고 과분할↓되, 생성 7/8·무열화는 유지되나 — 품질을 GS 방법으로."
+> **본보고**: `docs/W_D4.md`(2축 8-way + §6 판정 패키지). **사양·사전등록(LOCKED)**: `P2_D4_사양서_사전등록_20260625.md`(§6 판정기준·§7 cp 사다리). 그림 `docs/figs/W_D4_qual/`.
+
+- **config = corrected cp-only normalization** (엔진 무변경, 가중만): cp eff **0.08→0.01**(탈-지배, cp share 68%→31%≈photo)·depth **0.1→0.03**(de-noise CV 1.74)·normal **0.15→0**(노이즈 제거); **photo 1.0·nc 0.05·sem 0.1·na 0.08 = D 유지**(건강항). `configs/tum_mob/gs_d4_{dense,acmp}.yaml`. ⚠ 초기 D4는 전-항 정규화(photo 5.6·nc 2.1) 과적용→photo 열세→김휘영 정정(config 오류 정정, 골대이동 아님).
+- **학습**: `run_d4.sh`(2-GPU 병렬, idempotent skip-train→extract→eval), 30k 완료, **PSNR 20.08/20.15**(D 19.87/19.99 무회귀). commit 5dd26cc 시점.
+- **결과(관찰, 판정=사람)**: ① 품질↑ — 평지붕 4906972 **면 3=ref**(target-only)·**RMS→LiDAR 수렴**(2.41=2.41 vs D 2.79); **RMS→ref 개선**(dense 2.83→**2.25**·acmp 2.53→**1.65**, acmp가 v6 1.89 상회·LiDAR 1.40 접근 = **D-수트 최초 LiDAR 방향 이동**); 곡면 4906969 19→13면 **비-과평탄**(RMS 0.76, 곡선 보존). ② 생성 **7/8 유지**(=D=LiDAR, 깊이 0.03에도). ③ 무열화 OK(제어 RMS↓·PSNR≥D). **④ 대가 = valid-solid(dense) 4→2 회귀**(위상; acmp 3=3). cp는 발화했으나 펴짐 동력은 **depth-denoise**(cp 압력 아님).
+- **메트릭 주의(내가 발견)**: eval over-seg 메트릭 = **클립-이웃 건물 오염**(4906972 eval 8/12 vs target-only 3). W_D4는 target-only 사용. D 보고(W_D_prior_full) 합산 수치와 직접 비교 시 유의.
+- **⚡ NEXT = 판정(김휘영)**: 사전등록 §6 성공조건 1–5 **충족방향** but valid-solid-dense 회귀 = **부분지지** 신호 → 성공 vs 부분지지 판정. 부분지지면 §7 cp 사다리(cp 이미 발화→불발동) 또는 **valid-solid/위상 후속**(roofer 1.0.0 위상수리 플래그 無). **커밋 "D4" 완료**(`feature/p2-prior-full`, 미푸시; P2_D4_사양서·configs gs_d4_*·run_d4.sh·d4_table.py·d4_qual_figs.py·docs/W_D4.md·figs/W_D4_qual/. results/ data는 gitignore=재생성).
+- **재사용**: 표 `d4_table.py`→`REPORT_D4.md`; 그림 `d4_qual_figs.py`; RMS `tum_mob_ref_rms.py --arms gs_d4_{dense,acmp}`→`ref_rms_d4.csv`; eval `eval_d4_{gssem,smrf}.json`. baseline 재사용: `eval_prior_full_gssem.json`(D)·`eval_v6_{protect,raw}.json`·`baselines.json`·`ref_rms_{D,v6,raw}.csv`.
+
+---
 
 ## 0′) ⭐ D 전체 prior 수트 + 후속 진단(D2/D3/D4) — 완료 (2026-06-25, `feature/p2-prior-full`, 미푸시).
 > 3 레버 ON(L1 depth/normal 감독 + L2 structure-G2 + L3 GS-의미 분류) vs v6(prior off). 엔진 변경 격리.
