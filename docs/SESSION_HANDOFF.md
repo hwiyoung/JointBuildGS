@@ -2,12 +2,22 @@
 
 > 갱신 2026-06-25. **현재 작업 브랜치 `feature/p2-prior-full`**(D 전체 prior 수트, 미푸시·미머지). 이전: `feature/p2-seed-protect`(C/C2/B2), v6/raw는 `feature/p2-semantic-seed`. 사람 검토자=김휘영. 관찰만, 판정=사람.
 
-## 0′) ⭐ D 전체 prior 수트 — 완료 (2026-06-25, `feature/p2-prior-full`, 미푸시). 보고 `docs/W_D_prior_full.md`.
-> 3 레버 ON(L1 depth/normal 감독 + L2 structure-G2 + L3 GS-의미 분류) vs v6(prior off). 엔진 변경 격리. 한 커밋 "전체 prior 수트".
-- **결정적 결과(귀속)**: 조립안됨 8동 → prior-on GS **7/8 조립(=LiDAR)** vs v6 2/8. **단 회복=레버3(GS-의미 read-out, SMRF 제거) 효과**, depth/normal/structure 학습-prior 무효(D-smrf 2–3/8≈v6 2/8). valid-solid 4/8<LiDAR 7/8.
-- 품질: 과분할 net 미감소(3.5 vs v6 3.0; G2는 smrf서 4906972 9→3만)·RMS→ref 2.8m로 LiDAR 1.4m **미수렴**(v6 1.9m 동등~소폭악화)·PSNR 19.9 무회귀.
-- 엔진: train.py(depth/normal warm-up→ramp 스케줄러 `_ramp_weight_scale` + `structure_grouping g1|g2` 디스패처 + silent-zero 가드); 추출 의미 voxel-히스토그램; `_mob_prep_las_gssem.py`(SMRF 대체 + ground 합성); eval `--classifier {gssem,smrf}`. configs `gs_prior_full_{dense,acmp}`. 맵 `prior_full_stereo.sh`(COLMAP 1024px). 손실감사 `docs/W_D_loss_audit.md`(불균형=단위 m²/m, 합산 아님).
-- 다음 후보(미착수): valid-solid↑(위상 구조화); 정밀 분리(v6 ckpt에 gssem만; depth-prior 고해상도/스케줄 재튜닝); D 판정(사람)·브랜치 머지.
+## 0′) ⭐ D 전체 prior 수트 + 후속 진단(D2/D3/D4) — 완료 (2026-06-25, `feature/p2-prior-full`, 미푸시).
+> 3 레버 ON(L1 depth/normal 감독 + L2 structure-G2 + L3 GS-의미 분류) vs v6(prior off). 엔진 변경 격리.
+> **보고서**: `docs/W_D_prior_full.md`(본보고·2축·G1) · `W_D_loss_audit.md` · `W_D_followup_audit.md` · `W_D2_D3.md` · `W_D4_precheck.md`. 그림 `docs/figs/W_D_qual/`.
+> **커밋**: `0e43d37`(전체 prior 수트=엔진+config+W_D_prior_full/loss_audit) + 후속 진단 커밋(D2/D3/D4 doc·figs·스크립트).
+
+- **⚡ NEXT STEP (사용자 지시): weight 조정 D 재실험** — D4 사전점검 근거로 가중 재조정 후 `gs_prior_full_{dense,acmp}` 재학습. **D4 권고(판정=사람)**:
+  · **법선 타깃 노이즈**(MVS PatchMatch 1024px, 유효 33–90%, 렌더는 매끈) → **w_normal 빼거나 대폭↓**.
+  · **depth 신뢰 최하**(CV 1.74=std>mean, 노이즈 MVS에 핀) → **w_depth ↓**(현 0.1 → O(1)정합 ~0.03 / photo정합 ~0.006).
+  · **structure magnitude 지배**(cp=18 m², CV 0.11 안정) → CV가중은 magnitude 못고침; **mean/길이스케일 고정정규**(cp÷s²·depth÷s, s=voxel 2.0m) 또는 w_structure 추가↓. 단 곡면(4906969 15k점그룹 4.13m잔차) 과병합 주의.
+  · CV 자동가중: 인프라 無, ~20–35줄 신규 가능(4함정 처리, `cv_autoweight` 기본 off) — 단 scale엔 고정정규가 정답(W_D4 §2·3).
+  · 재학습=엔진 무변경(가중은 config만). `run_prior_full.sh`(맵 이미 staged) 또는 새 config 복제. ~4h/2arm.
+
+- **결과 귀속(정정됨)**: 조립안됨 8동 → D-gssem **7/8(=LiDAR)** vs v6 2/8. **D2(재추출)로 정정**: 회복은 read-out 단독 아니라 **분류+학습 초가산적 시너지**(분류만=v6+gssem 3–5/8, 학습만=D-smrf 2–3/8, 둘다=7/8). valid-solid 4/8<LiDAR 7/8(위상 잔여).
+- **품질/위상(D3)**: 과분할 net 미감소(3.5 vs v6 3.0)·RMS→ref 2.8m로 LiDAR 1.4m 미수렴·PSNR 19.9 무회귀. 무효 4동=**Roofer shell 위상**(302비폐합·306/405방향·303비-다양체; roofer 1.0.0 **위상수리 플래그 無**, 전부 default). 4906969 19면=**곡면 지붕×default epsilon 0.3** 분할(라벨 잡음 아님).
+- **엔진(0e43d37)**: train.py(`_ramp_weight_scale` depth/normal warm-up→ramp + `structure_grouping g1|g2` 디스패처 + silent-zero 가드); `tum_mob_tsdf_extract.py`(의미 voxel-히스토그램→P_class); `_mob_prep_las_gssem.py`(SMRF 대체+ground 합성); `tum_mob_eval.py --classifier {gssem,smrf}`. configs `gs_prior_full_{dense,acmp}.yaml`. 맵 `prior_full_stereo.sh`(COLMAP 1024px, `data_geoidfix/stereo` 상대심링크 staged).
+- **재사용 자산/재현**: 학습 `run_prior_full.sh`; 표 `d_prior_full_table.py`→`REPORT_D.md`; RMS `tum_mob_ref_rms.py --arms gs_prior_full_{dense,acmp}`; 그림 `d_qual_figs.py`·`d4_normal_check.py`. 비교 baseline 재사용: `eval_v6_protect.json`(v6)·`eval_v6_raw.json`(raw/LiDAR)·`baselines.json`(ref). D2 재추출 npz `tsdf_v6sem_*`(gitignore).
 
 ---
 
