@@ -1,0 +1,87 @@
+# P2-D5b (ACMP seed arm) — cp HARD. Identical to gs_d5b_dense.yaml EXCEPT init seed = seed_acmp.ply and
+# out_dir = ..._acmp. D5 cp ablation: de-noise (depth 0.03 / normal 0) FIXED = D4; only w_structure_cp varies.
+# D5b: w_structure_cp 0.01 -> 0.03 (cp HARD, cp share ~57%). na 0.08 KEPT. OVER-FLATTEN WATCH (4906969 RMS->ref).
+# Engine UNCHANGED. Spec: P2_D5_cp_ablation_사양_사전등록_20260626.md.
+seed: 0
+device: cuda
+
+data_root: /workspace/JointBuildGS/results/tum_transfer/data_geoidfix   # MUST-EQ
+
+init_pointcloud: /workspace/JointBuildGS/results/tum_transfer/mob_analysis/seed/seed_acmp.ply   # MUST-EQ
+init_pointcloud_mode: concat
+seed_protect: true                                                       # MUST-EQ
+seed_log_footprints: /workspace/JointBuildGS/results/tum_transfer/analysis/footprints_aoi.geojson
+seed_log_buildings:
+  - DEBY_LOD2_42364609
+  - DEBY_LOD2_42364659
+  - DEBY_LOD2_42364663
+  - DEBY_LOD2_4907182
+  - DEBY_LOD2_4907510
+  - DEBY_LOD2_4908050
+  - DEBY_LOD2_4908166
+  - DEBY_LOD2_4908176
+  - DEBY_LOD2_4906969
+  - DEBY_LOD2_4908023
+  - DEBY_LOD2_4906972
+
+downscale: 1.0
+sh_degree: 3
+sh_up_every: 1000
+
+# === D5b loss-balance = D4 EXACTLY except w_structure_cp: 0.01 -> 0.03 (cp HARD) ===
+w_photo: 1.0          # = D4
+
+w_depth: 0.03         # = D4 (de-noise FIXED)
+w_normal: 0.0         # = D4 (external MVS normal removed, FIXED)
+load_depth: true
+load_normal: true
+depth_scale: 1.0
+depth_warmup: 5000
+depth_schedule: ramp
+depth_ramp_steps: 5000
+normal_warmup: 5000
+normal_schedule: ramp
+normal_ramp_steps: 5000
+
+w_nc: 0.05            # = D4
+w_distort: 0.0
+photo_lam: 0.2        # MUST-EQ
+
+load_semantic: true
+w_sem: 0.1            # = D4
+sem_detach_geometry: false   # MUST-EQ
+
+w_mutual: 0.0
+
+w_structure: 1.0      # = D4 (carrier; sub-weights ARE the effective scalars)
+w_structure_na: 0.08  # = D4 (effective na = 0.08, KEPT)
+w_structure_cp: 0.03  # D5b: 0.01 -> 0.03  (cp HARD: 3x planarization pressure, cp share ~57%)
+structure_grouping: g2          # MUST-EQ
+structure_voxel_size: 2.0       # MUST-EQ
+structure_merge_n_cos: 0.92     # MUST-EQ
+structure_merge_d_tol: 0.5      # MUST-EQ
+structure_min_group: 30         # MUST-EQ
+structure_warmup: 15000         # = D4 (cp gate @15000)
+structure_regroup_every: 1000   # MUST-EQ
+
+lr_means: 1.6e-4
+lr_scales: 5.0e-3
+lr_quats: 1.0e-3
+lr_opacities: 5.0e-2
+lr_sh0: 2.5e-3
+lr_shN: 1.25e-4
+lr_sem: 2.5e-3
+
+prune_opa: 0.005
+grow_grad2d: 1.0e-3
+grow_scale3d: 0.01
+prune_scale3d: 0.1
+refine_start_iter: 500
+refine_stop_iter: 20000
+refine_every: 200
+reset_every: 3000
+
+max_iter: 30000                 # MUST-EQ
+eval_every: 2000
+ckpt_every: 10000
+out_dir: /workspace/JointBuildGS/results/tum_transfer/mob/gs_d5b_acmp

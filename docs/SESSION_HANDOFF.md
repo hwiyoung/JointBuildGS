@@ -1,5 +1,12 @@
 # 세션 핸드오프 (rolling) — 새 세션 시작 시 이 문서부터 읽기
 
+> ⚡⚡ **D5 (cp ablation) 완료 (2026-06-27, feature/p2-prior-full)** — 본런 6 arm + gssem 재평가 + §5 cp 판정표 끝. 커밋 "D5".
+> 사양·사전등록(LOCKED §5) = `P2_D5_cp_ablation_사양_사전등록_20260626.md`. 본보고 = `docs/W_D5.md`(§0 사전점검 + §2~ cp 판정표 gssem|smrf + §5 기준 대입).
+> **판정 (김휘영): (다) 부분 레버** — cp 끄면(D5a) D4 대비 생성·valid-solid 하락(cp 기여 확인=de-noise 단독 기각); 단 세게/일찍의 복합 과분할 감소는 혼재, 곡면 4906969은 cp 강도 무관 9~16면(LiDAR 5 미달)=cp 밖 문제. 함의: cp 유지 + 다음 레버=곡률기반 G2/Roofer 분할 임계.
+> **read-out 정합(중요)**: eval이 arm당 gssem→smrf 순차라 per-building las/cityjson/val3dity가 smrf로 덮임 → D·D4·D5 모두 **gssem 재평가**로 정정함(`run_gssem_requal.sh`·`run_d5_gssem_requal.sh`; 디스크 최종=gssem, smrf=`gssem_requal_backup/` 백업, 생성수치 불변 검증). 보고 `W_gssem_requal.md`. matched-n 분석 `W_matched_rms.md`, 결과통합 `W_results_consolidation.md`.
+> ⚠ **교훈(다음 적용)**: ① 장시간 학습은 harness `run_in_background` 금지(세션 teardown 시 죽고 docker stdout 파이프 끊겨 train.py 멈춤=로그 동결되나 ckpt는 진행) → **`setsid nohup` detached + ckpt mtime/util로 진척 확인**(로그만 믿지 말 것; 1차 D5b ~20k서 함정). ② **train.py resume 없음** → kill/정전 시 0부터(GPU 양도로 D5b acmp ~24k 손실) → D5 후 full-state ckpt+auto-resume 도입 예정([[project-train-resume-todo]]). ③ requal 백업 tar엔 `.las` 미포함(용량) — smrf 점은 deterministic SMRF로 temp 재생성.
+
+
 > 갱신 2026-06-26. **현재 작업 브랜치 `feature/p2-prior-full`**(D 전체 prior 수트 + **D4 corrected** 재학습; D4 **커밋됨**, 미푸시). 이전: `feature/p2-seed-protect`(C/C2/B2), v6/raw는 `feature/p2-semantic-seed`. 사람 검토자=김휘영. 관찰만, 판정=사람.
 
 ## 0″) ⭐ D4 — 정규화 재학습 (corrected, "cp만 정규화") — 완료 (2026-06-26, `feature/p2-prior-full`, **커밋 "D4"**, 미푸시).
