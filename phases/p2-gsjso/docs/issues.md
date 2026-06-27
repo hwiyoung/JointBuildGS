@@ -3,6 +3,21 @@
 > 실패·예외는 숨기지 말고 기록 후 보고. P0 이슈는 `phases/p0-audit/docs/issues.md`.
 > 신설 2026-06-22 — 이번까지의 P2 및 P0→P2 전이(P0c) 실패를 백필. 시간순(최근 위).
 
+## D6 survey — 참조 roofType가 관찰 라벨과 불일치 / 곡면 0동 (2026-06-27)
+
+- **참조 `<bldg:roofType>`가 관찰 라벨과 어긋남 (전제 위반, 비-STOP)** — D6 survey 착수 지시는 "곡면 4906969·평지붕
+  4906972·복합 42364659" 검증을 요구하나, 권위 속성(AdV Dachform)·LoD2 기하는 정반대로 분류: 4906969=**1000
+  Flachdach(평·3 수평면)**, 4906972=**3100 Satteldach(박공·경사 24°/35°)**, 42364659=**1000 평**. 즉 참조 LoD2가
+  4906969의 실제 곡률을 담지 않음(coarse 단순화). 코드 증거: GML iterparse로 bid→roofType·RoofSurface 면수
+  (11 mob에서 `baselines.json`과 면수 일치 검증). **곡면(3700 Bogendach)은 통제 93동에 0동**(전체 690_53xx 타일쌍
+  6동, 통제셋엔 없음). → "곡면군 동별 표" 작성 불가.
+- **결정(추정 회피)**: 데이터·산출 전부 존재하므로 **STOP 안 함**. 권위 roofType로 4분류 + 매핑 공개, 과분할은
+  동별 분포(93)로 답함. "곡면군" → **경험적 과분할 상위군 + 4906969 명시 강조**로 대체. 결과: 과분할은 유형무관
+  광범위(DIM>ref 57/85, 4906969는 20/85위), LiDAR도 과분할(ALS>ref 54/92, med DIM−ALS=0). 본보고 `docs/W_D6_survey.md`.
+  (관찰만, 레버·판정=김휘영.)
+- **이슈 로그 위치** — 착수 지시는 `docs/issues.md`였으나 해당 파일 없음·§4 규칙은 "해당 phase의 issues 로그" →
+  본 P2 phase 로그(`phases/p2-gsjso/docs/issues.md`)에 기록.
+
 ## P0c 완전성/조립 재검증 (2026-06-22)
 
 - **SMRF가 ACMP 지붕을 ground로 오분류 (조립실패 주원인)** — generic SMRF(04_classify, DIM용 파라미터)가

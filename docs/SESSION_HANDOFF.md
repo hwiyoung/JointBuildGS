@@ -1,5 +1,10 @@
 # 세션 핸드오프 (rolling) — 새 세션 시작 시 이 문서부터 읽기
 
+> ⚡⚡⚡⚡ **D6 survey (곡면 건물 전수 조사) 완료 (2026-06-27, `feat/p2-d6-curved`, 커밋 `1fcd9cd`, 미푸시)** — 관찰만, 판정=김휘영. 본보고 `docs/W_D6_survey.md`(+G1_package 사본). P0 통제 93동 재사용(재구성 무재실행).
+> **전제 뒤집힘(중요)**: 참조 `<bldg:roofType>`·LoD2 기하가 관찰 라벨과 불일치 — **4906969(관찰 "곡면")=1000 Flachdach·3 수평면**, 4906972(관찰 "평")=3100 박공, 42364659=1000. **통제 93동에 참조-곡면(3700 Bogendach) 0동** → "곡면 유형 전반" 검증 불가(표본 0). P0 T14도 4906969를 "ALS 4 vs DIM 11, 노이즈"로 규정(곡면 아님) — "곡면"은 P2(D4/D5) 관찰 라벨. issues 기록 `phases/p2-gsjso/docs/issues.md`.
+> **과분할 census(93, target-only, w3_2b ALS/DIM)**: 유형분포 평40·경사48·곡면0·복합1·기타4. **광범위·유형무관**: DIM>ref 57/85(4906969=20/85위, 중상위), ALS(LiDAR)>ref 54/92. 참조 대비 초과=영상·LiDAR 공통(coarse 참조)+**DIM 고유 초과**(불일치 52동 DIM>ALS **37 vs 15**·평균 +2.79·4906969 제외 36 vs 15) → 영상이 LiDAR보다 전반적으로 더 쪼갬; **4906969(DIM11·GS13≫ALS/LiDAR4~5)는 그 영상-고유 추세의 꼬리**(=D6 step0 입력측 성분), 고립 아님.
+> **한 줄(판정=김휘영)**: 곡면 과분할은 4906969 고립도 "곡면 유형"도 아님 — 참조 대비 과분할은 유형무관 광범위(LiDAR 포함)+DIM 고유 초과. 재현 `d6_survey.py`. 검증=적대 워크플로 3검 ok·must-fix 0.
+
 > ⚡⚡⚡ **D6 step0 (곡면 과분할 청정 재진단) 완료 (2026-06-27, `feat/p2-d6-curved`, 커밋 `105da76`, 미푸시)** — 관찰만, 판정=김휘영. 본보고 `docs/W_D6_overseg_diag.md`(§0 무결성+§2~4 a/b/c+§6 레버 지시). 그림 `docs/figs/W_D6/`.
 > **§0 무결성**: v6 과분할 진단(`W3_overseg_diagnosis.md`)은 **SMRF** 분류 지붕점을 읽음(코드증거 8건: `--classifier`는 0e43d37 신설·v6는 `_mob_prep_las.py`=filters.smrf·v6 `gs_seed_*` 미-requal·mtime 06-23<gssem코드 06-25). → 옛 v6 결론 **‘보류’**(단 gssem 청정 재진단이 "GS 안 거침" 정성 방향 재현). matched_rms와 동형 오염.
 > **곡면 4906969 격차(GS 10~14 vs LiDAR 5) 분해(gssem 정본·smrf 병기, 대조 42364659·4906972)**: (a) 입력거칠기 GS localRMS 0.30≈LiDAR 0.28(밀도정합 0.26)=**고주파 거칠기 아님**; (b) 밀도 GS **~33×**(638 vs 19/m²), 밀도 솎으면 면수 **14→1 붕괴**(밀도 결합, 단 voxel 과평탄→LiDAR 5 재현 아님=한정증거); (c) Roofer eps 0.2~1.2·min-pts 15~60 전구간 **GS 9에서 바닥(>LiDAR 5)**·격차비율 보존=**분할 임계로 미해소**. 정합 sanity: eps0.3 → GS_dense 14·LiDAR 5(=D5 §5 재현).
