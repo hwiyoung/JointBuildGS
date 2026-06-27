@@ -1,5 +1,11 @@
 # 세션 핸드오프 (rolling) — 새 세션 시작 시 이 문서부터 읽기
 
+> ⚡⚡⚡ **D6 step0 (곡면 과분할 청정 재진단) 완료 (2026-06-27, `feat/p2-d6-curved`, 커밋 `105da76`, 미푸시)** — 관찰만, 판정=김휘영. 본보고 `docs/W_D6_overseg_diag.md`(§0 무결성+§2~4 a/b/c+§6 레버 지시). 그림 `docs/figs/W_D6/`.
+> **§0 무결성**: v6 과분할 진단(`W3_overseg_diagnosis.md`)은 **SMRF** 분류 지붕점을 읽음(코드증거 8건: `--classifier`는 0e43d37 신설·v6는 `_mob_prep_las.py`=filters.smrf·v6 `gs_seed_*` 미-requal·mtime 06-23<gssem코드 06-25). → 옛 v6 결론 **‘보류’**(단 gssem 청정 재진단이 "GS 안 거침" 정성 방향 재현). matched_rms와 동형 오염.
+> **곡면 4906969 격차(GS 10~14 vs LiDAR 5) 분해(gssem 정본·smrf 병기, 대조 42364659·4906972)**: (a) 입력거칠기 GS localRMS 0.30≈LiDAR 0.28(밀도정합 0.26)=**고주파 거칠기 아님**; (b) 밀도 GS **~33×**(638 vs 19/m²), 밀도 솎으면 면수 **14→1 붕괴**(밀도 결합, 단 voxel 과평탄→LiDAR 5 재현 아님=한정증거); (c) Roofer eps 0.2~1.2·min-pts 15~60 전구간 **GS 9에서 바닥(>LiDAR 5)**·격차비율 보존=**분할 임계로 미해소**. 정합 sanity: eps0.3 → GS_dense 14·LiDAR 5(=D5 §5 재현).
+> **레버 지시(판정=김휘영)**: 격차 주성분=**입력측(GS 곡률/밀도)**; **Roofer 분할 임계 노브 단독은 비지시**(전역 둔화·정확도 손실·초과분 미제거; 단 GS밀도×Roofer 평면검출 민감성 상호작용 가능성은 미배제). D5 §5 두 후보 중 곡률-G2 쪽 지시. **다음(step1+)**: 곡률 기반 G2/밀도·곡률 인지 read-out 설계, 또는 면-기하 공간중첩(step0 caveat=카운트기반).
+> 재현: `bash phases/p2-gsjso/scripts/run_d6_step0.sh`. 검증=적대 워크플로 3검(무결성·수치·방법론) ok·must-fix 0. CSV `analysis_pack_d6/`(gitignore).
+
 > ⚡⚡ **D5 (cp ablation) 완료 (2026-06-27, feature/p2-prior-full)** — 본런 6 arm + gssem 재평가 + §5 cp 판정표 끝. 커밋 "D5".
 > 사양·사전등록(LOCKED §5) = `P2_D5_cp_ablation_사양_사전등록_20260626.md`. 본보고 = `docs/W_D5.md`(§0 사전점검 + §2~ cp 판정표 gssem|smrf + §5 기준 대입).
 > **판정 (김휘영): (다) 부분 레버** — cp 끄면(D5a) D4 대비 생성·valid-solid 하락(cp 기여 확인=de-noise 단독 기각); 단 세게/일찍의 복합 과분할 감소는 혼재, 곡면 4906969은 cp 강도 무관 9~16면(LiDAR 5 미달)=cp 밖 문제. 함의: cp 유지 + 다음 레버=곡률기반 G2/Roofer 분할 임계.
