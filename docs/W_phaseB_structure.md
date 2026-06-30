@@ -109,6 +109,8 @@
 
 ## §3 정량 (정정본; dense arm, gssem read-out, raw ALS, EPSG:25832)
 
+> ⚠ **메트릭 갱신(2026-06-30, [[W_complexity_survey]] Part 1)**: 아래 표의 per-arm dz(+공유=D4 dz)는 **dz-강건 clamp-free best-fit / joint-shared-dz로 대체**됨(`complexity_metric.py`). 갱신본: 42364659 "4.8×"는 **clamp 거품**(공정 best-fit 2.65→0.95 ≈ 2.8×, B1 실개선 잔존)·4907510 개선 유지·**정본 4906969는 1차 "판정불가"였으나 dz-강건서 B1 소폭 우위**(1.60→1.52). **B1 핵심 = 평균회귀**(고-결함 동 개선·저-결함 동 소폭 악화, corr(d4_resid, B1−D4)=−0.82). 즉 1차 "거의 인공산물" 결론은 **부분 정정**(고-결함서 실재). 비용(depth_mae·plane_rms)은 불변.
+
 **면별 수직거리 resid̄(median|ALS−면평면|) — own-dz vs 공유-dz(=D4 dz, 재중심화 제거):**
 
 | 동 | 역할 | D4 resid̄ | B1 resid̄(own) | **B1 resid̄(공유)** | B1 <1.0(공유) | 견고성 |
