@@ -29,9 +29,51 @@ from .densification import build_optimizers, build_param_dict, build_strategy
 from .grouping import group_primitives, group_primitives_g2
 from .loss import data_fitting as L
 from .loss.mutual import l_mutual
+from .loss.multiview import l_multiview_consistency
 from .loss.structure import l_structure
 from .model import GaussianModel2D
 from .renderer import render
+
+
+def _build_mvc_neighbors(frames, train_idx, k, max_angle_deg, min_baseline):
+    """(Phase B / B1) Per-view covisible-neighbor index for L_mvc, from poses only.
+
+    A neighbor j of view i is a training frame whose viewing direction is within
+    `max_angle_deg` of i's (so they see roughly the same surface) and whose camera
+    centre is at least `min_baseline` away (so the depth-consistency signal has a
+    non-trivial parallax). Returns {i: [j,...]} (up to k nearest-by-baseline). If no
+    candidate satisfies the gates, falls back to the k nearest cameras by centre
+    distance (still a valid consistency pair). All indices are restricted to
+    train_idx so the every-10th test frames never leak into the consistency term.
+    """
+    idxs = list(train_idx)
+    C, D = {}, {}
+    for i in idxs:
+        fr = frames[i]
+        R = np.asarray(fr.R, dtype=np.float64)
+        t = np.asarray(fr.t, dtype=np.float64).reshape(3)
+        C[i] = -R.T @ t                                  # camera centre (world)
+        d = R.T @ np.array([0.0, 0.0, 1.0])              # viewing direction (world)
+        D[i] = d / (np.linalg.norm(d) + 1e-9)
+    cos_thr = float(np.cos(np.deg2rad(max_angle_deg)))
+    nbr = {}
+    for i in idxs:
+        cand = []
+        for j in idxs:
+            if j == i:
+                continue
+            if float(D[i] @ D[j]) < cos_thr:
+                continue
+            base = float(np.linalg.norm(C[i] - C[j]))
+            if base < min_baseline:
+                continue
+            cand.append((base, j))
+        cand.sort()
+        nbr[i] = [j for _, j in cand[:k]]
+        if not nbr[i]:
+            allj = sorted((float(np.linalg.norm(C[i] - C[j])), j) for j in idxs if j != i)
+            nbr[i] = [j for _, j in allj[:k]]
+    return nbr
 
 
 def _load_footprint_boxes_local(geojson_path, world_offset, building_ids=None):
@@ -535,6 +577,37 @@ def main():
         print(f"[gravity] loaded e_g = {e_gravity.tolist()}")
     photo_lam = cfg.get("photo_lam", 0.2)
 
+    # ---------- Phase B / B1: self-supervised multi-view consistency (L_mvc) ----------
+    # PGSR/ULSR-style geometric consistency: reproject the source view's rendered depth
+    # into a covisible neighbour and penalize depth+normal disagreement (occlusion-filtered).
+    # NO GT labels. Default off (w_mvc=0) so all prior configs are byte-identical.
+    w_mvc = cfg.get("w_mvc", 0.0)
+    mvc_warmup = int(cfg.get("mvc_warmup", 7000))
+    mvc_schedule = cfg.get("mvc_schedule", "constant")
+    mvc_ramp_steps = int(cfg.get("mvc_ramp_steps", 0))
+    mvc_every = int(cfg.get("mvc_every", 1))                  # fire every N iters (cost knob)
+    mvc_neighbor_k = int(cfg.get("mvc_neighbor_k", 2))
+    mvc_max_angle_deg = float(cfg.get("mvc_max_angle_deg", 40.0))
+    mvc_min_baseline = float(cfg.get("mvc_min_baseline", 2.0))  # GS-local metres
+    mvc_w_normal = float(cfg.get("mvc_w_normal", 0.5))
+    mvc_rel_thresh = float(cfg.get("mvc_rel_thresh", 0.1))
+    mvc_ref_detach = bool(cfg.get("mvc_ref_detach", True))     # render ref under no_grad (1-sided)
+    _mvc_neighbors = None
+    if w_mvc > 0:
+        _mvc_neighbors = _build_mvc_neighbors(
+            ds.frames, train_idx, mvc_neighbor_k, mvc_max_angle_deg, mvc_min_baseline)
+        _ncov = sum(len(v) for v in _mvc_neighbors.values()) / max(1, len(_mvc_neighbors))
+        print(f"[mvc] w_mvc={w_mvc} warmup={mvc_warmup} sched={mvc_schedule}+{mvc_ramp_steps} "
+              f"every={mvc_every} k={mvc_neighbor_k} angle<{mvc_max_angle_deg} base>{mvc_min_baseline} "
+              f"w_normal={mvc_w_normal} rel<{mvc_rel_thresh} ref_detach={mvc_ref_detach} "
+              f"-> avg {_ncov:.1f} neighbors/view")
+        # silent-zero guard (mirrors the depth/normal guard): a covisibility-empty index
+        # would make L_mvc a no-op believed-on.
+        if _ncov < 0.5:
+            raise RuntimeError(
+                "w_mvc>0 but the neighbor index is essentially empty — loosen "
+                "mvc_max_angle_deg / mvc_min_baseline or check the poses.")
+
     max_iter = int(cfg["max_iter"])
     sh_up_every = int(cfg.get("sh_up_every", 1000))
 
@@ -608,6 +681,44 @@ def main():
 
         loss_dist = distort.mean()
         loss_total = loss_total + w_distort * loss_dist
+
+        # L_mvc (Phase B / B1): self-supervised multi-view geometric consistency.
+        # Reproject this (source) view's rendered depth into a covisible neighbour and
+        # penalize depth+normal disagreement. The neighbour is rendered under no_grad
+        # (mvc_ref_detach), so the gradient flows one-sidedly into the source-view
+        # geometry — pulling floating facets toward the multi-view-consistent surface.
+        loss_mvc = torch.tensor(0.0, device=device)
+        loss_mvc_depth = torch.tensor(0.0, device=device)
+        loss_mvc_normal = torch.tensor(0.0, device=device)
+        mvc_n_inlier = 0
+        if (w_mvc > 0 and it >= mvc_warmup and (it % mvc_every == 0)
+                and _mvc_neighbors is not None):
+            nbrs = _mvc_neighbors.get(idx) or []
+            if nbrs:
+                j = random.choice(nbrs)
+                bj = ds[j]
+                w2c_j = bj["w2c"].to(device)
+                K_j = bj["K"].to(device)
+                Hj, Wj = bj["height"], bj["width"]
+                if mvc_ref_detach:
+                    with torch.no_grad():
+                        out_j = render(model, w2c_j, K_j, Wj, Hj,
+                                       sh_degree=model.active_sh_degree, render_mode="RGB+ED")
+                else:
+                    out_j = render(model, w2c_j, K_j, Wj, Hj,
+                                   sh_degree=model.active_sh_degree, render_mode="RGB+ED")
+                mvc = l_multiview_consistency(
+                    depth_src=depth_pred, normal_src=n_render, K_src=K, w2c_src=w2c,
+                    depth_ref=out_j["depth"], normal_ref=out_j["normal_render"],
+                    K_ref=K_j, w2c_ref=w2c_j,
+                    w_normal=mvc_w_normal, rel_thresh=mvc_rel_thresh,
+                )
+                loss_mvc = mvc["total"]
+                loss_mvc_depth = mvc["depth"]
+                loss_mvc_normal = mvc["normal"]
+                mvc_n_inlier = mvc["n_inlier"]
+                w_mvc_eff = w_mvc * _ramp_weight_scale(it, mvc_warmup, mvc_schedule, mvc_ramp_steps)
+                loss_total = loss_total + w_mvc_eff * loss_mvc
 
         # Semantic (only if GT provided and w_sem > 0)
         if "semantic" in batch and w_sem > 0 and hasattr(model, "sem_logits"):
@@ -774,6 +885,10 @@ def main():
             writer.add_scalar("loss/normal", loss_n.item(), it)
             writer.add_scalar("loss/nc", loss_nc.item(), it)
             writer.add_scalar("loss/distort", loss_dist.item(), it)
+            writer.add_scalar("loss/mvc", loss_mvc.item(), it)
+            writer.add_scalar("loss/mvc_depth", float(loss_mvc_depth), it)
+            writer.add_scalar("loss/mvc_normal", float(loss_mvc_normal), it)
+            writer.add_scalar("stats/mvc_n_inlier", mvc_n_inlier, it)
             writer.add_scalar("loss/sem", loss_sem.item(), it)
             writer.add_scalar("loss/mutual", loss_mut_total.item(), it)
             writer.add_scalar("loss/mutual_vert", loss_mut_vert.item(), it)
