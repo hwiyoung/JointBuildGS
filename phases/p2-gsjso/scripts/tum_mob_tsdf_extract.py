@@ -34,15 +34,18 @@ def main():
     ap.add_argument("--geojson", default=f"{REPO}/results/tum_transfer/analysis/footprints_aoi.geojson")
     ap.add_argument("--max-views", type=int, default=0)
     ap.add_argument("--sh-degree", type=int, default=3)
+    ap.add_argument("--targets", nargs="*", default=None,
+                    help="building IDs to extract (default: the 11 make-or-break TARGETS)")
     ap.add_argument("--no-sem", action="store_true",
                     help="disable the GS-semantic feature pass (default: carry per-voxel class if ckpt has sem_logits)")
     A = ap.parse_args()
     dev = "cuda"
     KC = 4  # engine semantic classes: 0 BG / 1 Roof / 2 Wall / 3 Terrain (model.py num_classes)
 
-    # boxes from footprints (UTM -> local), union of the 11 targets
+    # boxes from footprints (UTM -> local), union of the target buildings (default 11; --targets to extend)
+    target_list = A.targets if getattr(A, "targets", None) else TARGETS
     feats = json.load(open(A.geojson))["features"]
-    tg = {f"DEBY_LOD2_{t}" for t in TARGETS}
+    tg = {f"DEBY_LOD2_{t}" for t in target_list}
     boxes = []
     for f in feats:
         if f["properties"].get("building_id") in tg:
