@@ -25,7 +25,9 @@ def main():
                 continue
             cfg = r.get("config"); bid = str(r["bid"]).replace("DEBY_LOD2_", "")
             model = bool(r.get("roofer_ok") and (r.get("roof_surfaces") or 0) > 0)
-            val = bool(r.get("val3dity_valid")) if r.get("val3dity_valid") is not None else False
+            # val3dity-valid ONLY counts among MODELS (roof>0): a topologically-valid but ROOFLESS solid
+            # (roof_surfaces=0, val3dity=True) is NOT a generated building model — exclude it.
+            val = bool(model and r.get("val3dity_valid"))
             gen[cfg][bid] = (model, val)
 
     # count table per bucket x arm

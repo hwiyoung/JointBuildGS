@@ -7,10 +7,10 @@
 
 | bucket (n) | GS-sparse | GS-dense | GS-acmp | raw-sparse | raw-dense | raw-acmp | raw-lidar |
 |---|---|---|---|---|---|---|---|
-| ① textureless (5) | 0/5 | 1/5 | 1/4 | 0/5 | 0/5 | 2/5 | 5/5 |
-| ② assembly(missing_lod22) (16) | 5/14 | 6/11 | 4/12 | 1/16 | 1/16 | 7/15 | 14/15 |
-| ③ coverage(near-nadir gap) (36) | 0/0 | 0/0 | 0/0 | 0/23 | 0/19 | 7/35 | 36/35 |
-| ④ impossible/other (7) | 0/0 | 0/0 | 0/0 | 0/6 | 1/6 | 4/7 | 6/7 |
+| ① textureless (5) | 0/0 | 1/1 | 1/1 | 0/0 | 0/0 | 2/2 | 5/5 |
+| ② assembly(missing_lod22) (16) | 5/3 | 6/1 | 4/2 | 1/1 | 1/1 | 7/6 | 14/13 |
+| ③ coverage(near-nadir gap) (36) | 0/0 | 0/0 | 0/0 | 0/0 | 0/0 | 7/6 | 36/35 |
+| ④ impossible/other (7) | 0/0 | 0/0 | 0/0 | 0/0 | 1/1 | 4/4 | 6/6 |
 | **TOTAL model-y (64)** | 5 | 7 | 5 | 1 | 2 | 20 | 61 |
 
 ## §2 버킷별 서사 (판정 금지)
