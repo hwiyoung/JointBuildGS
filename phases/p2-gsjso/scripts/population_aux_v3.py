@@ -23,6 +23,11 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 import numpy as np
 import cv2
+from projection_datum import (
+    as_ellipsoidal_points,
+    base_to_canonical_points,
+    canonical_to_base_points,
+)
 
 ROOT = Path("/workspace/JointBuildGS/phases/p0-audit")
 REPO = Path("/workspace/JointBuildGS")
@@ -83,14 +88,10 @@ def qvec_to_rotmat(q):
                      [2*q3*q1-2*q0*q2, 2*q2*q3+2*q0*q1, 1-2*q1*q1-2*q2*q2]], float)
 
 def _t(sr): return sr.get("base_to_canonical", {})
-def base_to_canonical(p, sr):
-    a = p.copy(); t = _t(sr)
-    if t.get("swap_xy", False): a[:, [0, 1]] = a[:, [1, 0]]
-    return (a + np.array(t.get("shift", [0, 0, 0]), float)) * np.array(t.get("scale", [1, 1, 1]), float)
+def base_to_canonical(p, sr, input_datum="orthometric", geoid_m=None):
+    return base_to_canonical_points(p, sr, input_datum=input_datum, geoid_m=geoid_m)
 def canonical_to_base(p, sr):
-    t = _t(sr); a = p / np.array(t.get("scale", [1, 1, 1]), float) - np.array(t.get("shift", [0, 0, 0]), float)
-    if t.get("swap_xy", False): a[:, [0, 1]] = a[:, [1, 0]]
-    return a
+    return canonical_to_base_points(p, sr)
 
 class Cam:
     __slots__ = ("name", "tvec", "rot", "center")
@@ -116,8 +117,8 @@ def parse_cameras(path, sr):
                         np.array([float(x) for x in p[5:8]], float), sr)); expect = False
     return cams
 
-def project(points_base, cam, W, H, params, sr):
-    pc = base_to_canonical(points_base, sr)
+def project(points_base, cam, W, H, params, sr, input_datum="orthometric", geoid_m=None):
+    pc = base_to_canonical(points_base, sr, input_datum=input_datum, geoid_m=geoid_m)
     c = (cam.rot @ pc.T).T + cam.tvec
     front = c[:, 2] > 0.1
     uv = np.full((len(points_base), 2), np.nan)
@@ -202,6 +203,7 @@ def main():
         P, Nn = sample_roof(roof)
         if len(P) == 0:
             rows.append({**row, **{k: "" for k in COLS}}); continue
+        P_ellip = as_ellipsoidal_points(P)
         roof_z = float(np.median(P[:, 2])); zmax = float(P[:, 2].max())
         nbr.append((float(np.mean([r0[0] for r0 in ring])), float(np.mean([r0[1] for r0 in ring])), zmax, b))
         # candidate cameras: those whose footprint bbox roughly projects in-frame (cheap prefilter)
@@ -220,7 +222,7 @@ def main():
             uv, fr = project(P, cam, W, H, params, sr)
             inframe = fr & (uv[:, 0] >= 0) & (uv[:, 0] < W) & (uv[:, 1] >= 0) & (uv[:, 1] < H)
             if not inframe.any(): continue
-            vd = cam.center - P                     # (ns,3) point->camera vectors
+            vd = cam.center - P_ellip               # (ns,3) point->camera vectors; both ellipsoidal
             dist = np.linalg.norm(vd, axis=1)
             unit = vd/np.maximum(dist[:, None], 1e-9)
             cosinc = np.clip(np.abs(np.sum(unit*Nn, axis=1)), -1, 1)

@@ -15,7 +15,7 @@ FIG = REPO/"docs/figs/projection_gate2"; N = 48.5
 
 def proj(ring3, cam, params, sr, dz):
     p = np.asarray(ring3, float).copy(); p[:, 2] += dz
-    cc = clip_near(to_cam(p, cam, sr))
+    cc = clip_near(to_cam(p, cam, sr, geoid_m=0.0))
     return distort(cc, params) if len(cc) >= 2 else np.zeros((0, 2))
 
 

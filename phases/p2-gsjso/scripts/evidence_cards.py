@@ -13,6 +13,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.path import Path as MPath
+from projection_datum import base_to_canonical_points
 
 ROOT = Path("/workspace/JointBuildGS/phases/p0-audit")
 REPO = Path("/workspace/JointBuildGS")
@@ -34,10 +35,8 @@ def qrot(q):
                      [2*x*y+2*w*z, 1-2*x*x-2*z*z, 2*y*z-2*w*x],
                      [2*z*x-2*w*y, 2*y*z+2*w*x, 1-2*x*x-2*y*y]], float)
 
-def b2c(p, sr):
-    a = p.copy(); t = sr
-    if t.get("swap_xy", False): a[:, [0, 1]] = a[:, [1, 0]]
-    return (a + np.array(t["shift"], float)) * np.array(t["scale"], float)
+def b2c(p, sr, input_datum="orthometric", geoid_m=None):
+    return base_to_canonical_points(p, sr, input_datum=input_datum, geoid_m=geoid_m)
 
 class Cam:
     __slots__ = ("name", "tvec", "rot")
@@ -60,8 +59,8 @@ def parse_cameras(path):
                         np.array([float(x) for x in p[5:8]], float))); expect = False
     return cams
 
-def project(points_base, cam, W, H, params, sr):
-    pc = b2c(points_base, sr)
+def project(points_base, cam, W, H, params, sr, input_datum="orthometric", geoid_m=None):
+    pc = b2c(points_base, sr, input_datum=input_datum, geoid_m=geoid_m)
     c = (cam.rot @ pc.T).T + cam.tvec
     front = c[:, 2] > 0.1
     uv = np.full((len(points_base), 2), np.nan)

@@ -61,7 +61,7 @@ def pick_view(roof, ring, cams, params, sr, W, H, want_nadir):
 
 def proj_dz(pts3, cam, params, sr, dz):
     p = pts3.copy(); p[:, 2] = p[:, 2] + dz
-    cc = clip_near(to_cam(p, cam, sr))
+    cc = clip_near(to_cam(p, cam, sr, geoid_m=0.0))
     if len(cc): cc = clip_frustum(cc, params)
     return distort(cc, params) if len(cc) else np.zeros((0, 2))
 

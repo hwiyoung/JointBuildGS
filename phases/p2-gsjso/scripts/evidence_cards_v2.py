@@ -18,6 +18,11 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.path import Path as MPath
+from projection_datum import (
+    as_ellipsoidal_points,
+    base_to_canonical_points,
+    canonical_to_base_points,
+)
 
 ROOT = Path("/workspace/JointBuildGS/phases/p0-audit")
 REPO = Path("/workspace/JointBuildGS")
@@ -40,20 +45,15 @@ def qrot(q):
                      [2*x*y+2*w*z, 1-2*x*x-2*z*z, 2*y*z-2*w*x],
                      [2*z*x-2*w*y, 2*y*z+2*w*x, 1-2*x*x-2*y*y]], float)
 
-def b2c(p, sr):
-    a = np.asarray(p, float).copy()
-    if a.ndim == 1: a = a[None]
-    if sr.get("swap_xy", False): a[:, [0, 1]] = a[:, [1, 0]]
-    return (a + np.array(sr["shift"], float)) * np.array(sr["scale"], float)
+def b2c(p, sr, input_datum="orthometric", geoid_m=None):
+    return base_to_canonical_points(p, sr, input_datum=input_datum, geoid_m=geoid_m)
 
 class Cam:
     __slots__ = ("name", "tvec", "rot", "center")
     def __init__(s, name, q, tv, sr):
         s.name = name; s.tvec = tv; s.rot = qrot(q)
         cc = (-s.rot.T @ tv)
-        inv = cc/np.array(sr["scale"], float) - np.array(sr["shift"], float)
-        if sr.get("swap_xy", False): inv[[0, 1]] = inv[[1, 0]]
-        s.center = inv
+        s.center = canonical_to_base_points(cc.reshape(1, 3), sr)[0]
 
 def parse_cam_model(path):
     for ln in open(path):
@@ -74,8 +74,8 @@ def parse_cameras(path, sr):
 
 
 # ---- clean projection: base UTM -> camera coords -> near-plane clip -> distort -> pixels ----
-def to_cam(ring_base, cam, sr):
-    pc = b2c(ring_base, sr)
+def to_cam(ring_base, cam, sr, input_datum="orthometric", geoid_m=None):
+    pc = b2c(ring_base, sr, input_datum=input_datum, geoid_m=geoid_m)
     return (cam.rot @ pc.T).T + cam.tvec           # (N,3) camera coords, +z forward
 
 def clip_near(cam_poly, eps=1.0):
@@ -123,8 +123,8 @@ def distort(cam_pts, params):
     xd = x*rad + 2*p1*x*y + p2*(r2+2*x*x); yd = y*rad + p1*(r2+2*y*y) + 2*p2*x*y
     return np.column_stack([fx*xd+cx, fy*yd+cy])
 
-def proj_ring(ring_base, cam, params, sr):
-    cc = clip_near(to_cam(ring_base, cam, sr))
+def proj_ring(ring_base, cam, params, sr, input_datum="orthometric", geoid_m=None):
+    cc = clip_near(to_cam(ring_base, cam, sr, input_datum=input_datum, geoid_m=geoid_m))
     if len(cc) < 3: return None
     cc = clip_frustum(cc, params)
     if len(cc) < 3: return None
@@ -190,8 +190,9 @@ def roof_mask(roof_rings, cam, params, sr, W, H):
     return np.asarray(im, bool)
 
 
-def nadir_of(cam, ctr3):
-    v = cam.center - ctr3; u = v/np.linalg.norm(v)
+def nadir_of(cam, ctr3, input_datum="orthometric", geoid_m=None):
+    target = as_ellipsoidal_points(np.asarray(ctr3, float), input_datum=input_datum, geoid_m=geoid_m)[0]
+    v = cam.center - target; u = v/np.linalg.norm(v)
     return math.degrees(math.acos(min(1, abs(u[2]))))
 
 
