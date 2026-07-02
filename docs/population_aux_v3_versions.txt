@@ -1,0 +1,39 @@
+# population_aux v3 — Tool Versions & Adopted Parameters
+
+- Task: population-aux-v3 (observation-geometry unified recompute over 199 buildings; observe-only)
+- Branch: feat/p2-structure-learn
+- Parent commit: d20a0af (population-verify-aux)
+- Compute container: jointbuildgs:dev (image id sha256:926b2fd5e31d) — cv2 4.10.0, numpy
+- QA container:      jointbuildgs-p0-tools:t0 (image id sha256:87bea02e5598) — pure stdlib
+- Inputs (reuse, no modification):
+  - COLMAP poses:  phases/p0-audit/data/work/colmap/sparse/0/{cameras.txt(FULL_OPENCV 5280x3956),images.txt(937 cams)}
+  - Scene ref:     phases/p0-audit/data/work/opf/opf/scene_reference_frame.json (base_to_canonical shift=[-690953,-5336071,-604], scale=1, swap_xy=false; frame CRS EPSG:32632)
+  - Roof faces:    phases/p0-audit/data/raw/lod2/*.gml (LoD2 RoofSurface 3D rings; geo CRS EPSG:25832)
+  - Footprints:    results/tum_transfer/analysis/footprints_aoi.geojson (199; area_m2, min/max_x/y)
+  - Images:        phases/p0-audit/data/work/images/Images/*.JPG
+  - Status (for [5]): phases/p0-audit/runs/w2_1_roofer_default_20260612_152729/building_reconstruction_status.csv (roofer 1.0.0)
+- Outputs:
+  - results/tum_transfer/mob/overseg_lever/population_aux_v3.csv (199 rows, 19 cols; results/ is gitignored)
+  - docs/population_aux_v3.csv (tracked copy)
+  - docs/population_aux_v3_qa.md (operational defs, params, QA cross-check, [5] density basis)
+
+## Adopted parameters (also in QA §2)
+SAMPLE_DENSITY   = 1.0 pt/m^2
+SAMPLE_CAP       = 400 samples/building
+NADIR_MAX_DEG    = 20 deg   (near-nadir: view vs vertical; project convention)
+INC_OK_DEG       = 60 deg   (Soudarissanane incidence bound)
+PAIR_LO,PAIR_HI  = 10,60 deg (Schoenberger view-selection parallax band)
+MAXV_PAIR        = 24       (per-sample view cap for pairwise, lowest-incidence kept; Smith neighborhood)
+w_parallax(a)    = exp(-(a-20)^2 / (2*20^2))            [PAR_PEAK=20, PAR_SIG=20]
+w_incidence(th)  = max(0, cos(th))                      [pair-mean incidence]
+w_distance(d)    = 1 on [20,120] m; linear decay outside [D_LO=20, D_HI=120]
+LOWTEX_GRAD      = 0.02   (normalized [0,1] gray Sobel-gradient low-texture threshold; T11 sharp def)
+SAT_THRESH       = 0.97   (brightness-saturation = specular proxy)
+periodicity      = max autocorrelation peak outside central lobe (radius ~min(h,w)/8); crop downsampled if >512 px
+RNG seed         = 0 (numpy; roof-sampling reproducible)
+
+## Notes
+- OPF/COLMAP frame is EPSG:32632 (WGS84) vs footprints/GML EPSG:25832 (ETRS89): sub-meter offset,
+  negligible for view geometry (incidence/parallax), identical handling to P0 T9 (09_failure_surface_cause).
+- Visibility = in-frame reprojection (approx); self/neighbour occlusion NOT strictly modelled in [1]
+  (occlusion_frac_approx [4] is the separate coarse neighbour-height LOS proxy).
