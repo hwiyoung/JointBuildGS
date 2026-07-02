@@ -1,7 +1,16 @@
 # projection_gate — 카드 v2 투영 픽셀 정합 검증 (ALS 독립 참조·읽기·판정 금지)
 
+> ## ⚠⚠ 철회(RETRACTED, 2026-07-02) — 아래 "합격 0.058 m" 결론 신뢰 불가. 게이트 미통과 취급.
+> **측정 결함**: STEP 검출이 법선 ±28 px만 탐색 → **28 px(~0.3 m) 넘는 실오차는 창 밖이라 측정 못 하고 텍스처 스텝에
+> 락되어 허위로 작게 보고**(하향 편향). per-point 잔차 rms ~14 px → "6 cm"는 잡음 내 값. 오버레이의 빨강은 **깨끗한 LoD2
+> 폴리곤이 아니라 톱니 실루엣 컨투어**였고 cyan ALS는 반투명 담요라 정합이 실제보다 좋아 보였다. **깨끗 재검(`diag_*.png`)에서
+> 4907520(near-nadir)의 지붕 hip 선이 LoD2 hip과 수십 px 어긋남 = 실제 오정합 존재**. **미해결**: 이 오차가 투영/포즈 오차인지
+> LoD2 모델-실지붕 불일치인지 미분리(ALS-대-사진 깨끗검이 필요; 시도했으나 버그). → **lowtex-v5 진행 금지**. 재측정 필요:
+> (a) 큰 오차도 보이는 방법(코너/특징 기반 또는 에지-방향 매칭·넓은 창·불확실도 보고), (b) ALS-대-사진(투영) vs LoD2-대-ALS(모델) 분리.
+> 아래 §1~5는 결함 측정의 기록으로만 남긴다(수치 신뢰 금지).
+
 > **박사연구 GS-JSO · projection-gate.** 브랜치 `feat/p2-structure-learn`. EPSG:25832(지오)/32632(OPF). Docker(`--user`).
-> **읽기 + 소규모 계산**, 재구성/재학습 없음. 관찰만, **합격 판정=김휘영**. 커밋 `projection-gate`.
+> **읽기 + 소규모 계산**, 재구성/재학습 없음. 관찰만, **합격 판정=김휘영**. 커밋 `projection-gate`(+철회 노트).
 > 재현 `phases/p2-gsjso/scripts/projection_gate.py`(tools:t0, pyproj+laspy+PIL+numpy). 산출 `docs/projection_gate.csv` +
 > 오버레이 `docs/figs/projection_gate/*.png`(8) + 본 문서.
 
