@@ -298,6 +298,9 @@ def main():
     with open(OUT, "w", newline="") as fo:
         w = csv.DictWriter(fo, fieldnames=cols, extrasaction="ignore"); w.writeheader()
         for r in rows: w.writerow({k: r.get(k, "") for k in cols})
+    # sidecar: exact texture view v3 selected per building (used by texture_anchor_check v4; CSV unchanged)
+    json.dump({r["building_id"]: r.get("_best_view", "") for r in rows},
+              open(OUT.parent / "population_aux_v3_bestview.json", "w"))
     print(f"[done] {len(rows)} buildings -> {OUT}")
     nonblank = lambda k: sum(1 for r in rows if r.get(k) not in ("", None))
     for k in cols[3:]: print(f"  {k:26} {nonblank(k)}/{len(rows)}")
