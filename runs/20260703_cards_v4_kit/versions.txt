@@ -1,0 +1,13 @@
+run_id: 20260703_cards_v4_kit
+git_head: 735aee8513de72747cdbc659e972994469d4b246
+command: docker run --rm --user $(id -u):$(id -g) -v $PWD:/workspace/JointBuildGS -w /workspace/JointBuildGS jointbuildgs-p0-tools:t0 python3 phases/p2-gsjso/scripts/judgment_kit_v4.py
+projection_config: geo=EPSG:25832 opf=EPSG:32632 input_default=orthometric orthometric_geoid_m=45.700000
+orthometric_geoid_m: 45.700000
+crs: geo EPSG:25832; OPF EPSG:32632
+container: jointbuildgs-p0-tools:t0; Docker --user
+python: 3.13.13
+numpy: 2.4.6
+reconstruction_or_retraining: none
+manual_review_judgments_csv_missing: 1
+manual_cards: 44
+time_diff_locators: 2
