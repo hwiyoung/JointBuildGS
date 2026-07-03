@@ -1,0 +1,19 @@
+recipe-audit versions / provenance
+stamped: 2026-07-03T21:16:53+09:00
+branch: feat/p2-structure-learn
+git_commit_before_audit_commit: d3ea4e87231a2110acc27f7ccec0f8bbddda9c2a
+scope: read/compare only; no reconstruction; no retraining; no verdict; no canonical adoption
+GPU: 0 used
+primary_output: docs/recipe_registry.md
+commands:
+  - rg/find/sed over CLAUDE.md, docs, configs, versions, scripts
+  - rg geoid patterns: -604, -556, 48.0, 48.125, 45.7, geoid, orthometric_geoid_m, input_datum
+  - find results/tum_transfer/mob -maxdepth 3 -path '*/ckpt/final.pt'
+  - sha256sum D, D4, D5, B1 final.pt checkpoints
+requested_but_absent:
+  - 세션핸드오프_모집단잠금·기준문서_20260702.md
+  - P2_실험기록_20260629.md
+  - 원격발주_투영fix·LS정합·재게이트·재계산체인_레시피감사_20260702.md
+notes:
+  - Output separates image-projection datum config from 3D seed/label/band datum conventions.
+  - D4 basis is reported as observation only; no 정본 alias assigned.
