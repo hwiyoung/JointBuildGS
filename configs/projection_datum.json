@@ -2,11 +2,12 @@
   "geo_crs": "EPSG:25832",
   "opf_crs": "EPSG:32632",
   "input_vertical_datum_default": "orthometric",
-  "orthometric_geoid_m": 48.125535,
+  "orthometric_geoid_m": 45.7,
   "ellipsoid_shift_z_m": 604.0,
   "notes": [
     "Image-projection inputs from GML, ALS and footprints are orthometric unless a caller explicitly passes input_datum=ellipsoidal.",
     "orthometric_geoid_m is a config value, not a code constant. A1 zeta-ls is expected to update this default; 45.7 and 48.0 remain reproducible override values.",
+    "A3a changes the image-projection default to the official GCG2016 value 45.700 for orthometric inputs; 3D seed/training paths remain outside this config.",
     "3D seed and training paths already use their own geoid-fixed data and are not controlled by this file."
   ],
   "a1_zeta_ls": {
