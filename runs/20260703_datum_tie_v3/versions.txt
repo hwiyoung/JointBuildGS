@@ -1,0 +1,88 @@
+{
+  "run_id": "20260703_datum_tie_v3",
+  "created_at": "2026-07-03T06:10:20",
+  "branch": "feat/p2-structure-learn",
+  "git_commit": "6d017bf8f4cd1b3e2386476587198b766f52eb3b",
+  "docker_image": "jointbuildgs-p0-tools:t0",
+  "command": "python phases/p2-gsjso/scripts/datum_tie.py jointbuildgs-p0-tools:t0 --run-id 20260703_datum_tie_v3",
+  "no_reconstruction_or_retraining": true,
+  "no_photo_matching_or_edge_matching": true,
+  "geo_crs": "EPSG:25832",
+  "opf_crs": "EPSG:32632",
+  "inputs": {
+    "raw_dense_npz": "results/tum_transfer/mob/raw/raw_dense.npz",
+    "raw_dense_versions": "results/tum_transfer/mob/raw/versions.txt",
+    "raw_dense_converter": "phases/p2-gsjso/scripts/tum_mob_raw_to_npz.py",
+    "als_aoi": "results/tum_transfer/mob_analysis/p0c_step2/als_aoi.laz",
+    "footprints": "results/tum_transfer/analysis/footprints_aoi.geojson",
+    "dense_success_114_status": "phases/p0-audit/runs/w2_1d_bucket_relabel_20260612_final/docs/W2_1c_paired_status.csv",
+    "gcg2016_grid": "phases/p0-audit/data/raw/geoid/de_bkg_gcg2016.tif"
+  },
+  "parameters": {
+    "gcg_reference_m": 45.7,
+    "egm96_aoi_m": 45.544227408539186,
+    "ls_zeta_reference_m": 48.126,
+    "ground_target": 36,
+    "roof_target": 24
+  },
+  "summary": {
+    "n_total": 60,
+    "n_ground": 36,
+    "n_roof": 24,
+    "delta_median_m": 0.05999999999994543,
+    "delta_mad_m": 0.049999999999954525,
+    "ground_delta_median_m": 0.05999999999994543,
+    "ground_delta_mad_m": 0.03999999999996362,
+    "roof_delta_median_m": 0.049999999999954525,
+    "roof_delta_mad_m": 0.07499999999998863,
+    "group_delta_absdiff_m": 0.009999999999990905,
+    "effective_zeta_m": 45.75999999999995,
+    "gcg_reference_m": 45.7,
+    "egm96_aoi_m": 45.544227408539186,
+    "ls_zeta_m": 48.126,
+    "paper_expected_delta_if_camera_egm96_m": -0.155772591460817,
+    "trend": {
+      "n": 60,
+      "slope_east_m_per_100m": -0.21319653980955905,
+      "slope_north_m_per_100m": 0.08321611724564042,
+      "intercept_m": 0.05766666666617823,
+      "predicted_span_m": 0.8006571363857315,
+      "r2": 0.15570968017156506
+    },
+    "trend_central_abs_delta_le_0p3": {
+      "n": 53,
+      "slope_east_m_per_100m": -0.015839571166483647,
+      "slope_north_m_per_100m": -0.01009860240491311,
+      "intercept_m": 0.05999999999997223,
+      "predicted_span_m": 0.09635435289856037,
+      "r2": 0.10551250788585909
+    },
+    "delta_min_m": -3.2100000000000364,
+    "delta_p10_m": -0.059999999999956796,
+    "delta_p90_m": 0.1999999999999318,
+    "delta_max_m": 2.339999999999918,
+    "outlier_abs_delta_gt_0p3": 7,
+    "criterion_patch_mad_le_0p3": true,
+    "criterion_group_diff_le_0p3": true,
+    "criterion_spatial_span_le_0p3": false,
+    "criterion_all_numeric": false
+  },
+  "raw_dense_versions_snippet": [
+    "run=raw_arm  stamped=2026-06-23 09:54:24  git_commit=e7c721d5f674360d0e508bae284ca2403a564a00",
+    "datum: ellipsoidal UTM (GS-LOCAL+[690953,5336071,604]); acmp/lidar +48 geoid (ortho->ellip)",
+    "  raw_sparse: ",
+    "  raw_dense: [raw:dense] N=26081674 voxel=0.1 Z[438.4..617.4] -> /workspace/JointBuildGS/results/tum_transfer/mob/raw/raw_dense.npz",
+    "  raw_acmp: [raw:acmp] N=35436177 voxel=0.1 Z[512.5..735.6] -> /workspace/JointBuildGS/results/tum_transfer/mob/raw/raw_acmp.npz",
+    "  raw_lidar: ",
+    "harness=tum_mob_eval.py (same as GS arm)  roofer=3dgi/roofer@sha256:dd2c415a... tools=jointbuildgs-p0-tools:t0"
+  ],
+  "raw_converter_snippet": [
+    "Datum: all outputs in ELLIPSOIDAL UTM (= GS-LOCAL + [690953,5336071,604]) to match the GS TSDF",
+    "  dense  = dim_v1.laz   (already ellipsoidal UTM, local+604)            -> as-is",
+    "  acmp   = acmp_aoi_utm.laz (orthometric, local+556) + Z 48             -> ellipsoidal",
+    "SHIFT = np.array([690953.0, 5336071.0, 604.0])      # GS-LOCAL -> ellipsoidal UTM",
+    "GEOID = 48.0                                          # orthometric -> ellipsoidal",
+    "        P = np.asarray(xyz, dtype=np.float64) + SHIFT       # GS-LOCAL -> ellipsoidal UTM",
+    "            P[:, 2] += GEOID                                # orthometric -> ellipsoidal"
+  ]
+}
