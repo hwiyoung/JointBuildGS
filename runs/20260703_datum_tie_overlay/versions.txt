@@ -1,0 +1,13 @@
+run_id: 20260703_datum_tie_overlay
+git_head: 53e64467b71d34ba15c5a14405b625ee1a77dd48
+command: python phases/p2-gsjso/scripts/datum_tie_overlay.py
+projection_config_context: geo=EPSG:25832 opf=EPSG:32632 input_default=orthometric orthometric_geoid_m=48.125535
+left_zeta_m: 45.700000
+right_zeta_m: 48.126000
+delta_zeta_m: 2.426000
+render_only: true
+reconstruction_or_retraining: none
+crs: geo EPSG:25832; OPF/COLMAP EPSG:32632 local with ellipsoidal Z
+container: jointbuildgs-p0-tools:t0; Docker --user
+python: 3.13.13
+numpy: 2.4.6
