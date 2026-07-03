@@ -57,3 +57,12 @@ dense 성공 그룹은 `W2_1c_paired_status.csv`에서 `als_has_lod22=True AND d
 1. `45.7` 공식값을 이후 A3a/A3b 입력 zeta로 사용할지 여부.
 2. `48.126` LS 참고값을 이번 오버레이 이후 계속 대비값으로만 둘지 여부.
 3. 이 확인 오버레이만으로 A3a/A3b 투입 조건이 충분한지 여부.
+
+## A3b corner zoom refresh
+
+> aux-v4b에서 4906966, 4906969 강기울기 corner zoom 2장을 LiDAR-point-centered occlusion treatment, edge arrow, LoD2 ring tolerance +/-1 m caption 규약으로 교체했다. 관찰 보조 그림이며 채택 판정 문장이 아니다.
+
+| building_id | status | view | zenith_deg | figure |
+|---|---|---|---:|---|
+| DEBY_LOD2_4906966 | refreshed | `DJI_20241217095507_0036_D.JPG` | 60.806 | `docs/figs/datum_tie_overlay/4906966_strong_corner_zoom.png` |
+| DEBY_LOD2_4906969 | refreshed | `DJI_20241217103103_0008_D.JPG` | 59.985 | `docs/figs/datum_tie_overlay/4906969_strong_corner_zoom.png` |

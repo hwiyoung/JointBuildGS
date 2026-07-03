@@ -1,0 +1,12 @@
+run_id: 20260703_aux_v4b
+git_head: da26fa1ce14fd41e835b6b8bfadee010004ab74a
+command: python phases/p2-gsjso/scripts/aux_v4b.py
+projection_config: geo=EPSG:25832 opf=EPSG:32632 input_default=orthometric orthometric_geoid_m=45.700000
+geoid_m: 45.700000
+python: 3.13.13
+numpy: 2.4.6
+container: jointbuildgs-p0-tools:t0; Docker --user
+crs: geo EPSG:25832; OPF/COLMAP EPSG:32632 local with ellipsoidal Z
+reconstruction_or_retraining: none
+lowtex_v5_valid: 199
+evidence_cards_v3: 47
