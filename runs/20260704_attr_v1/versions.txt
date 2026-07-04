@@ -1,0 +1,51 @@
+run_id: 20260704_attr_v1
+created_utc: 2026-07-04T13:11:20.046335+00:00
+task: attr-v1
+mode: observation only; no reconstruction; no retraining; no image projection
+git_head: 5692ee9bcc39920204928bd1e1e81342149764bc
+git_branch: feat/p2-structure-learn
+docker_image: jointbuildgs-p0-tools:t0
+run_command: docker run --rm --user "$(id -u):$(id -g)" -v "$PWD":/workspace/JointBuildGS -w /workspace/JointBuildGS jointbuildgs-p0-tools:t0 python3 phases/p2-gsjso/scripts/pointcloud_attributes_v1.py
+docker_image_id: recorded by host command in execution log; docker CLI not required inside container
+python: Python 3.13.13
+pdal: --------------------------------------------------------------------------------
+pdal 2.10.1 (git-version: 3ef768)
+--------------------------------------------------------------------------------
+
+inputs:
+  population: docs/population_aux_v4.csv
+  status_requested: docs/building_reconstruction_status.csv
+  status_used: phases/p0-audit/runs/w2_1_roofer_default_20260612_152729/building_reconstruction_status.csv
+  status_note: fallback_canonical_w2_1_docs_copy_missing
+  footprints: phases/p0-audit/data/work/w2/footprints_scene_aoi.gpkg
+  lod2_gml_dir: phases/p0-audit/data/raw/lod2
+  raw_clip_dirs: phases/p0-audit/runs/mob_eval/raw_{dense,acmp,lidar}
+  acmp_fallback_laz: results/tum_transfer/mob_analysis/p0c_step2/acmp_classified.laz
+
+parameters:
+  grid_cell_m: 0.5
+  local_plane_radius_m: 0.75
+  local_plane_min_neighbors: 10
+  local_plane_max_cores: 3000
+  m3c2_normal_radius_m: 1.0
+  m3c2_proj_radius_m: 0.75
+  m3c2_min_neighbors: 8
+  m3c2_max_cores: 2500
+  floater_margin_m: 3.0
+  label_proxy_roof_minus_m: 1.0
+  ref_ortho_to_ellip_m: 48.165
+  acmp_fallback_ortho_to_ellip_m: 48.0
+
+clip_source_counts:
+  raw_dense.existing_mob_eval_clip: 50
+  raw_dense.missing_clip: 149
+  raw_acmp.existing_mob_eval_clip: 68
+  raw_acmp.fallback_fused_acmp_footprint_clip: 131
+  raw_lidar.existing_mob_eval_clip: 136
+  raw_lidar.missing_clip: 63
+
+outputs:
+  docs/pointcloud_attributes_v1.csv
+  docs/W_pointcloud_attributes.md
+  docs/figs/pointcloud_attributes_v1/arm_distribution.png
+  docs/figs/pointcloud_attributes_v1/als_scatter.png
