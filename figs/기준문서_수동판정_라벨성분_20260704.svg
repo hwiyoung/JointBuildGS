@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 460" font-family="Malgun Gothic, 'Noto Sans KR', sans-serif">
+  <style>
+    .h{font-size:16px;font-weight:bold;fill:#1a2733}
+    .l{font-size:14px;fill:#2a3a48}
+    .n{font-size:15px;font-weight:bold}
+    .s{font-size:12px;fill:#5a6a78}
+    .cap{font-size:12px;fill:#8a98a5}
+  </style>
+  <text class="h" x="40" y="36">수동판정 44동 — 라벨 분포</text>
+  <text class="s" x="40" y="56">주 라벨(코드북 9라벨 중 4종 사용) · 불명 0</text>
+
+  <!-- 좌: 라벨 분포, 16px/동 -->
+  <text class="l" x="40" y="104">관측각·커버리지</text>
+  <rect x="175" y="88" width="272" height="26" fill="#5b84b1" rx="4"/><text class="n" x="455" y="107" fill="#1a2733">17</text>
+  <text class="l" x="40" y="148">가림</text>
+  <rect x="175" y="132" width="176" height="26" fill="#c98a5e" rx="4"/><text class="n" x="359" y="151" fill="#1a2733">11</text>
+  <text class="l" x="40" y="192">복합(2성분)</text>
+  <rect x="175" y="176" width="192" height="26" fill="#9aa8b5" rx="4"/><text class="n" x="375" y="195" fill="#1a2733">12</text>
+  <text class="s" x="175" y="220">성분: 소형 8 · 가림 7 · 재질 5 · 관측 2 · 저조도 1 · 세장 1</text>
+  <text class="l" x="40" y="254">무텍스처</text>
+  <rect x="175" y="238" width="64" height="26" fill="#8a7fb1" rx="4"/><text class="n" x="247" y="257" fill="#1a2733">4</text>
+
+  <!-- 우: 성분 집계, 16px/회 -->
+  <text class="h" x="530" y="36">원인 성분으로 풀면 — 56회 출현</text>
+  <text class="s" x="530" y="56">진한 = 단독 라벨 · 연한 = 복합 속 성분</text>
+
+  <text class="l" x="530" y="104">관측기하</text>
+  <rect x="640" y="88" width="272" height="26" fill="#5b84b1" rx="4"/><rect x="912" y="88" width="32" height="26" fill="#a8c0d8"/>
+  <text class="n" x="900" y="107" text-anchor="end" fill="#ffffff">17</text><text class="n" x="928" y="107" text-anchor="middle" fill="#2a3a48">2</text>
+
+  <text class="l" x="530" y="148">가림</text>
+  <rect x="640" y="132" width="176" height="26" fill="#c98a5e" rx="4"/><rect x="816" y="132" width="112" height="26" fill="#e5c3a8"/>
+  <text class="n" x="804" y="151" text-anchor="end" fill="#ffffff">11</text><text class="n" x="872" y="151" text-anchor="middle" fill="#2a3a48">7</text>
+
+  <text class="l" x="530" y="192">재질(무텍·저조도)</text>
+  <rect x="640" y="176" width="64" height="26" fill="#8a7fb1" rx="4"/><rect x="704" y="176" width="96" height="26" fill="#c3bcdd"/>
+  <text class="n" x="694" y="195" text-anchor="end" fill="#ffffff">4</text><text class="n" x="752" y="195" text-anchor="middle" fill="#2a3a48">6</text>
+
+  <text class="l" x="530" y="236">소형(&lt;35㎡ 조각)</text>
+  <rect x="640" y="220" width="128" height="26" fill="#a8c9a8" rx="4"/>
+  <text class="n" x="704" y="239" text-anchor="middle" fill="#2a3a48">8</text>
+
+  <rect x="40" y="300" width="900" height="106" fill="#fffbe6" stroke="#e6d780" rx="8"/>
+  <text class="l" x="60" y="328"><tspan font-weight="bold">읽는 법:</tspan> 관측기하 19 = 취득 설계의 공백(재촬영 회복 부류) · 가림 18 = 도시 형태의 구조적 한계(ALS도 구멍)</text>
+  <text class="l" x="60" y="354">재질 10 = 관측 최상에서도 실패(순수 표면 형성 실패 — 회귀·② 개입의 표적) · 소형 8 = LoD2 분할 산물(부속 가지)</text>
+  <text class="s" x="60" y="384">주의: ALS 상한은 별도 완전측량 캠페인 — 동시취득 드론 LiDAR도 같은 동을 놓침(W4d 41/46 캠페인 귀속) → 격차는 모달리티 아닌 취득 설계.</text>
+  <text class="cap" x="40" y="440">판정=김휘영 · 2026-07-04 · 근거 CSV=docs/manual_review_judgments.csv · 확증은 §3.2 회귀·E5에서</text>
+</svg>

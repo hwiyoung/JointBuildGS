@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" font-family="Malgun Gothic, 'Noto Sans KR', sans-serif">
+  <style>
+    .box{rx:8;stroke-width:1.5}
+    .t1{font-size:17px;font-weight:bold;fill:#1a2733}
+    .t2{font-size:13px;fill:#3a4a58}
+    .t3{font-size:12px;fill:#5a6a78}
+    .edge{stroke:#9aa8b5;stroke-width:1.6;fill:none}
+    .cap{font-size:12px;fill:#8a98a5}
+  </style>
+  <text x="24" y="30" font-size="15" fill="#5a6a78">모집단 트리 v3 — 확정판 (2026-07-04 · 기준문서 §2.1 · 성공 정의 = has_lod22)</text>
+
+  <!-- 199 -->
+  <rect class="box" x="370" y="48" width="220" height="46" fill="#eef2f7" stroke="#5b84b1"/>
+  <text class="t1" x="480" y="77" text-anchor="middle">199 참조 전체</text>
+
+  <path class="edge" d="M480 94 V116 H200 V138"/>
+  <path class="edge" d="M480 94 V116 H620 V138"/>
+
+  <!-- 21 / 178 -->
+  <rect class="box" x="90" y="138" width="220" height="56" fill="#f2f2f2" stroke="#aaaaaa"/>
+  <text class="t1" x="200" y="161" text-anchor="middle">21 항공 LiDAR 실패</text>
+  <text class="t3" x="200" y="181" text-anchor="middle">→ 비교 밖 (각주: 1동은 dense 성공)</text>
+
+  <rect class="box" x="500" y="138" width="240" height="46" fill="#eef2f7" stroke="#5b84b1"/>
+  <text class="t1" x="620" y="167" text-anchor="middle">178 평가 대상</text>
+
+  <path class="edge" d="M620 184 V206 H420 V228"/>
+  <path class="edge" d="M620 184 V206 H760 V228"/>
+
+  <!-- 114 / 64 -->
+  <rect class="box" x="290" y="228" width="260" height="56" fill="#e9f3e9" stroke="#6a9a6a"/>
+  <text class="t1" x="420" y="251" text-anchor="middle">114 dense 성공 그룹</text>
+  <text class="t2" x="420" y="271" text-anchor="middle">→ dense↔LiDAR 짝비교 (주 결과)</text>
+
+  <rect class="box" x="640" y="228" width="240" height="56" fill="#fdf3ea" stroke="#c98a5e"/>
+  <text class="t1" x="760" y="251" text-anchor="middle">64 dense 실패 그룹</text>
+  <text class="t2" x="760" y="271" text-anchor="middle">→ 생성 기여의 무대</text>
+
+  <path class="edge" d="M760 284 V306 H560 V328"/>
+  <path class="edge" d="M760 284 V306 H790 V328"/>
+
+  <!-- 16 / 48 -->
+  <rect class="box" x="470" y="328" width="180" height="46" fill="#f7f0e8" stroke="#c9a97e"/>
+  <text class="t1" x="560" y="350" text-anchor="middle">16 조립 실패</text>
+  <text class="t3" x="560" y="367" text-anchor="middle">(점군은 있음)</text>
+
+  <rect class="box" x="690" y="328" width="200" height="46" fill="#fdf3ea" stroke="#c98a5e"/>
+  <text class="t1" x="790" y="350" text-anchor="middle">48 표면 형성 실패</text>
+  <text class="t3" x="790" y="367" text-anchor="middle">(dense 점군 자체가 빔)</text>
+
+  <path class="edge" d="M790 374 V396 H320 V418"/>
+  <path class="edge" d="M790 374 V396 H540 V418"/>
+  <path class="edge" d="M790 374 V418"/>
+
+  <!-- 2 / 2 / 44 -->
+  <rect class="box" x="230" y="418" width="180" height="52" fill="#f2f2f2" stroke="#aaaaaa"/>
+  <text class="t1" x="320" y="440" text-anchor="middle">취득 한계 2</text>
+  <text class="t3" x="320" y="458" text-anchor="middle">자동 규칙 (§2.3, 보수적)</text>
+
+  <rect class="box" x="450" y="418" width="180" height="52" fill="#f2f2f2" stroke="#aaaaaa"/>
+  <text class="t1" x="540" y="440" text-anchor="middle">경계·방법회복 2</text>
+  <text class="t3" x="540" y="458" text-anchor="middle">영상 arm이 실제로 지음</text>
+
+  <rect class="box" x="670" y="418" width="240" height="52" fill="#fff8df" stroke="#c9a12e" stroke-width="2.5"/>
+  <text class="t1" x="790" y="440" text-anchor="middle">수동판정 44</text>
+  <text class="t2" x="790" y="458" text-anchor="middle">44/44 판정 완료 (07-04) · 불명 0</text>
+
+  <path class="edge" d="M790 470 V492 H600 V514"/>
+  <path class="edge" d="M790 470 V492 H830 V514"/>
+
+  <!-- 31 / 13 -->
+  <rect class="box" x="480" y="514" width="240" height="72" fill="#eef2f7" stroke="#5b84b1"/>
+  <text class="t1" x="600" y="537" text-anchor="middle">본건물 31</text>
+  <text class="t2" x="600" y="556" text-anchor="middle">관측각·커버리지 15 · 가림 9</text>
+  <text class="t2" x="600" y="574" text-anchor="middle">무텍스처 3 · 복합 4</text>
+
+  <rect class="box" x="750" y="514" width="190" height="72" fill="#f0eef7" stroke="#8a7fb1"/>
+  <text class="t1" x="845" y="537" text-anchor="middle">부속 구조물 13</text>
+  <text class="t2" x="845" y="556" text-anchor="middle">&lt;50㎡ 소형 플래그(사전 잠금)</text>
+  <text class="t2" x="845" y="574" text-anchor="middle">복합(소형+…) 8 · 일반 라벨 5</text>
+
+  <text class="cap" x="24" y="620">가지=모집단 구조 · 라벨=실패 원인(층 구분) · 분모 유지(제외 아님) · ID 잠금 = bucket_crosswalk_v2.csv + manual_review_judgments.csv</text>
+</svg>
