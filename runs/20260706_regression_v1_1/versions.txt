@@ -1,0 +1,34 @@
+run_id: 20260706_regression_v1_1
+task: regression-v1.1
+created_utc: 2026-07-06T12:55:00+00:00
+mode: documentation and figures only; no regression recomputation; no refit; no reconstruction; no retraining; no image projection
+crs_xy: EPSG:25832
+git_head_before_commit: 090f7a36e3b66fefd7c9378ced6461f13777790d
+git_branch: feat/p2-structure-learn
+docker_image: jointbuildgs-p0-tools:t0
+gpu: not used
+run_command: docker run -i --rm --user "$(id -u):$(id -g)" -v "$PWD":/workspace/JointBuildGS -w /workspace/JointBuildGS jointbuildgs-p0-tools:t0 python3 - <temporary_figure_script>
+figure_generation_note: coefficient CSV and regression snapshot were read only; top-view panels read W2 DIM classified LAZ inside EPSG:25832 footprints and wrote no point-cloud artifact
+
+changes:
+  md: add ACMP perfect-separation interpretation-excluded labels; add LiDAR label quasi-separation note; add qualitative evidence stub; update figure captions
+  coefficient_forest: regenerated with degenerate/separation rows excluded and old image preserved
+  representative_buildings: regenerated as two contrast pairs with attribute percentile bars and DIM top-view panels; old image preserved
+
+representative_buildings:
+  label_pair: DEBY_LOD2_108247351 label_proxy_frac_all=1.000 assembled=0 vs DEBY_LOD2_4908023 label_proxy_frac_all=0.000 assembled=1
+  noise_pair: DEBY_LOD2_4959320 local_plane_rms_m=0.214 rf_rmse_lod22=8.583 vs DEBY_LOD2_104583447 local_plane_rms_m=0.045 rf_rmse_lod22=0.049
+  excluded_ids_not_used: DEBY_LOD2_42364663;DEBY_LOD2_42364667;DEBY_LOD2_104586480
+
+inputs_with_sha256:
+  regression_snapshot: docs/regression_input_snapshot.csv sha256=3cabed76b37625fdf8f9a72ed5c5b1f7c90ba23a839d6f1a61fc3727870cee82
+  coefficient_csv: docs/attr_outcome_regression_coefficients_v1.csv sha256=cb2d209970a068032ce999ac5a99c8ed1ffe297a8131dadb39d31edc3297f2cb
+  dim_w2_classified_laz: phases/p0-audit/data/work/w2/dim_v1_classified_z_minus0p174.laz sha256=f91929924af251d802ec71d9d246caa3194faa72cf82d739d474cd7dc2b1931d
+  footprints_gpkg: phases/p0-audit/data/work/w2/footprints_scene_aoi.gpkg sha256=7042d4139afd808fa11dc3c624e0cb3f3ede8d5066ec9d2bed37d7f1bc90cc91
+
+outputs_with_sha256:
+  report: docs/W_attr_outcome_regression.md sha256=f39cb579e6d5341326a127556fff5b2ba8e80c80adf90cd1350b08075ec98686
+  coef_forest_new: docs/figs/attr_outcome_regression_v1/coef_forest.png sha256=1de08a8d4794904a73c1a7a0da9de4a052df2e67895830e2d06733ee133853e6
+  coef_forest_old: docs/figs/attr_outcome_regression_v1/coef_forest_old.png sha256=c24d2d95af4d62b36b6ca07e7dbbe6d8f11e8c49380bfe93462e529c0578e62f
+  representative_new: docs/figs/attr_outcome_regression_v1/representative_buildings.png sha256=3dfc0bf8d728f6820642627fb7117b7825980c814258a3d94d20445d2999945a
+  representative_old: docs/figs/attr_outcome_regression_v1/representative_buildings_old.png sha256=061072d2a6ec8bda3bd73bf6e25eada069528712ba7b2c1ce0676a2d76ece97d

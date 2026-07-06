@@ -114,6 +114,8 @@ VIF:
 
 아래 표는 3사양×4결과의 계수다. 모든 predictor는 모델 안에서 표준화했다. 연속 결과는 y도 표준화했다.
 
+표 주석: ACMP의 `assembled`·`val3dity_valid` 로지스틱 행은 n=26 완전 분리(perfect separation)로 해석 제외한다. 표에는 보고용 기록으로만 남긴다. LiDAR `assembled`의 `label_proxy_frac_all` 계수(549~973 범위)는 라벨 축 비영 비율 11%의 준분리 성격이 있어 같은 방식으로 각주 처리한다.
+
 | arm | outcome | spec | n | predictor | coef | CI95 |
 |---|---|---|---:|---|---:|---|
 | raw_dense | assembled | attributes_only | 144 | pt_density_m2_reg | 2.421 | -0.801..5.643 |
@@ -378,6 +380,8 @@ VIF:
 
 로버스트 제외 재추정(속성+관측기하 사양):
 
+표 주석: ACMP의 `assembled`·`val3dity_valid` 로지스틱 행은 제외 3동을 뺀 뒤 n=25에서도 완전 분리로 해석 제외한다. 계수 수백~수천만 또는 폭주 CI는 보고용 기록이며, 연속 결과(`rf_rmse_lod22`, `rf_roof_planes`) 행은 그대로 읽는다. LiDAR `assembled`의 `label_proxy_frac_all` 행도 준분리 각주 대상이다.
+
 | arm | outcome | spec | n | predictor | coef | CI95 |
 |---|---|---|---:|---|---:|---|
 | raw_dense | assembled | attributes_plus_observation | 141 | pt_density_m2_reg | 9.088 | -3.006..21.182 |
@@ -640,16 +644,24 @@ Cook's distance > 4/n 목록(속성+관측기하 사양):
 | raw_acmp | manual_failure_label | 복합(재질+가림) | 1 | 0.000 | 0.000 | none | 0.110 | 0.027 |
 | raw_acmp | manual_failure_label | 복합(저조도+가림) | 1 | 1.000 | 1.000 | 9.962 | 4.259 | 0.331 |
 
+## 판정의 정성 근거
+
+아래 그림은 기준문서 §3.2의 정량-정성 쌍 재료다. §2.4 제외 건물 42364663·42364667·104586480은 쓰지 않았다. 판정 없이 수치와 관찰만 적는다.
+
+- 라벨 × 조립: `docs/figs/attr_outcome_regression_v1/representative_buildings.png` 위쪽 행. 108247351은 `label_proxy_frac_all=1.000`, `assembled=0`; 4908023은 `label_proxy_frac_all=0.000`, `assembled=1`. 대응 계수는 DIM `label_proxy_frac_all -> assembled` = -1.01, CI -1.58..-0.45.
+- 노이즈 × 적합: 같은 그림 아래쪽 행. 4959320은 `local_plane_rms_m=0.214`, `rf_rmse_lod22=8.583`; 104583447은 `local_plane_rms_m=0.045`, `rf_rmse_lod22=0.049`. 대응 계수는 DIM `local_plane_rms_m -> rf_rmse_lod22` = 0.17, CI 0.07..0.26.
+
 ## 그림
 
-- 계수 그림: `docs/figs/attr_outcome_regression_v1/coef_forest.png`
-- 대표 건물 속성-결과 패널: `docs/figs/attr_outcome_regression_v1/representative_buildings.png`
+- 계수 그림: `docs/figs/attr_outcome_regression_v1/coef_forest.png`. 퇴화·분리 계수는 그림에서 제외했다. 제외 목록: LiDAR `assembled:label_proxy_frac_all`(|coef|>10, CI 폭>20, 준분리), ACMP `assembled` 5개 속성 축(perfect separation), ACMP `val3dity_valid` 5개 속성 축(perfect separation; `pt_density_m2_reg`는 CI 폭>20). 채움 마커는 CI가 0을 배제하는 계수다.
+- 대표 건물 속성-결과 패널: `docs/figs/attr_outcome_regression_v1/representative_buildings.png`. 각 건물 패널은 DIM 속성 백분위 막대와 EPSG:25832 footprint 내부 W2 DIM top-view를 나란히 둔 것이다.
+- 교체 전 원본: `docs/figs/attr_outcome_regression_v1/coef_forest_old.png`, `docs/figs/attr_outcome_regression_v1/representative_buildings_old.png`.
 
 ## 관찰
 
 - raw_dense: 속성+관측기하 사양에서 절대값 상위 속성 계수는 assembled:pt_density_m2_reg=2.00, assembled:label_proxy_frac_all=-1.01, val3dity_valid:local_plane_rms_m=-0.63.
-- raw_lidar: 속성+관측기하 사양에서 절대값 상위 속성 계수는 assembled:label_proxy_frac_all=549.19, assembled:pt_density_m2_reg=-0.76, val3dity_valid:coverage_frac_reg=0.53.
-- raw_acmp: 속성+관측기하 사양에서 절대값 상위 속성 계수는 val3dity_valid:pt_density_m2_reg=-8.92, val3dity_valid:label_proxy_frac_all=-6.56, val3dity_valid:coverage_frac_reg=6.33.
+- raw_lidar: 속성+관측기하 사양에서 `assembled:label_proxy_frac_all=549.19`는 비영 비율 11%의 준분리 각주 대상이다. 그 밖의 절대값 상위 속성 계수는 assembled:pt_density_m2_reg=-0.76, val3dity_valid:coverage_frac_reg=0.53이다.
+- raw_acmp: `assembled`·`val3dity_valid` 로지스틱 행은 완전 분리(perfect separation)로 해석 제외하며 보고용 기록이다. 연속 결과 쪽 속성+관측기하 사양에서는 rf_rmse_lod22:pt_density_m2_reg=0.61, rf_roof_planes:local_plane_rms_m=0.34가 절대값 상위다.
 - 위 문장은 계수 크기 순서만 적은 관찰이다. 원인·채택·강등 판정은 포함하지 않는다.
 
 ## 산출 파일
