@@ -1,0 +1,47 @@
+run_id: 20260706_attr_v1_3
+created_utc: 2026-07-06T15:25:55.618748+00:00
+task: E5-A4 pointcloud attributes v1.3
+mode: observation only; no reconstruction; no retraining; no image projection
+crs_xy: EPSG:25832
+git_head: 0484921e38c4b09fc2ccf295fb9a101443895644
+git_branch: feat/p2-structure-learn
+docker_image: jointbuildgs-p0-tools:t0
+run_command: docker run --rm --user "$(id -u):$(id -g)" -v "$PWD":/workspace/JointBuildGS -w /workspace/JointBuildGS jointbuildgs-p0-tools:t0 python3 phases/p2-gsjso/scripts/e5_pointcloud_attributes_v1_3.py
+python: Python 3.13.13
+
+height_datum:
+  e5_geoid_m: 45.7
+  no_points_recode: density=0, coverage=0, hole=1 for new rows only
+
+inputs_with_sha256:
+  v1_2_csv: docs/pointcloud_attributes_v1_2.csv sha256=4d0ca1bf377e7094291e865910c74206aec2b46eaa9ea8f1e9e1b9885bd19a11
+  script: /workspace/JointBuildGS/phases/p2-gsjso/scripts/e5_pointcloud_attributes_v1_3.py sha256=0418dd334d3d70b3e5f9c1fe99623742767d9890dc6ca05b3e0b2ad128bf6b87
+  acmp_status: /workspace/JointBuildGS/phases/p0-audit/runs/e5p_baseline_acmp_20260706_001813/building_reconstruction_status.csv sha256=9ae4c2a1b09b64b38694a5ccdd849921cf1c4a3fd4444f8adb2d729bfed6a6fb
+  sparse_status: /workspace/JointBuildGS/phases/p0-audit/runs/e5p_baseline_sparse_20260706_002300/building_reconstruction_status.csv sha256=58a0a0bcc8ec184ddd830594a339e32ff1cc6bb5e9817ed35b3de9f5662f3cda
+  acmp_classified: /workspace/JointBuildGS/phases/p0-audit/runs/e5p_baseline_acmp_20260706_001813/classified/raw_acmp_classified.laz sha256=e3dfc98af60d2598421249f15df5c8e5a56ae331495bfc16cf8719199d946d12
+  sparse_classified: /workspace/JointBuildGS/phases/p0-audit/runs/e5p_baseline_sparse_20260706_002300/classified/raw_sparse_classified.laz sha256=b7be233c845cacd49725ef4d32cbc11464172bfdce5f19a35daf417047d3bcc0
+
+parameters:
+  grid_cell_m: 0.5
+  local_plane_radius_m: 0.75
+  m3c2_normal_radius_m: 1.0
+  m3c2_proj_radius_m: 0.75
+  floater_margin_m: 3.0
+  label_proxy_roof_minus_m: 1.0
+
+checks:
+  existing_rows_checked: 597
+  original_columns_checked: 67
+  existing_row_diffs: 0
+
+new_row_summary:
+  rows: 398
+  arm_counts: {'raw_acmp_e5p': 199, 'raw_sparse_e5p': 199}
+  raw_acmp_e5p_no_points_rows: 1
+  raw_acmp_e5p_density_nonzero_rows: 198
+  raw_sparse_e5p_no_points_rows: 40
+  raw_sparse_e5p_density_nonzero_rows: 159
+
+outputs:
+  docs/pointcloud_attributes_v1_3.csv
+  docs/e5_pointcloud_attributes_v1_3_check.json
