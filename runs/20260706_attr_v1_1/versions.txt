@@ -1,0 +1,50 @@
+run_id: 20260706_attr_v1_1
+task: attr-v1.1
+created_utc: 2026-07-06T08:38:25.070268+00:00
+mode: observation only; no reconstruction; no retraining; no image projection
+git_head: 074660da963a8244ea38d93a5ca4d75ea87429f0
+git_branch: feat/p2-structure-learn
+run_command: docker run --rm --user "$(id -u):$(id -g)" -v "$PWD":/workspace/JointBuildGS -w /workspace/JointBuildGS jointbuildgs-p0-tools:t0 python3 phases/p2-gsjso/scripts/pointcloud_attributes_v1_1.py
+
+height_datum:
+  selected_constant_m: 45.760
+  selected_constant_source: v1.14_section_1.6_zeta_45.7_QA_45.760
+  rejected_history_constants_m: ACMP_fallback_v1=48.000; ref_compare_v1=48.165
+  raw_dense: DIM ellipsoid/local+604 history as-is
+  raw_acmp/raw_lidar_existing: historical orthometric+48.000 clips shifted -2.240 m for v1.1 metrics
+  raw_acmp/raw_lidar_fallback: source orthometric LAZ +45.760 m
+
+inputs_with_sha256:
+  status_csv: phases/p0-audit/runs/w2_1_roofer_default_20260612_152729/building_reconstruction_status.csv sha256=4412ee47f8665e1a12663629dd66f9c9612f2e9adca54be38c188f2bc521a9b6
+  w2_config: phases/p0-audit/runs/w2_1_roofer_default_20260612_152729/config.yaml sha256=65a8435b8e95b5cbeb86d3a2b82a8fed0b07e62737dc7714062a4151eb24bdd3
+  w2_versions: phases/p0-audit/runs/w2_1_roofer_default_20260612_152729/versions.txt sha256=4a786bdc66cc29732b208b665c5133aa57af848ff38da8e347d77dc001b9c113
+  w3_repeatability_versions: phases/p0-audit/runs/w3_2b_roofer_repeatability_20260612_220747/versions.txt sha256=0071622cde70adc2a4a62e106468fc7d98d59fc6d5587276db7bbe662caf9c82
+  w3_run2_als_status: phases/p0-audit/runs/w3_2b_roofer_repeatability_20260612_220747/status/run_2/als_default.csv sha256=43ad02e993ac250516d7ce75ffb7539276a1f2e7e4e3449cd461e0646f06d613
+  w3_run2_dim_status: phases/p0-audit/runs/w3_2b_roofer_repeatability_20260612_220747/status/run_2/dim_default.csv sha256=625d49898c140c6d1ecf2dc66196b46a962770a240124049ea9b9493fe826ce1
+  w3_repeatability_building_status: phases/p0-audit/docs/W3_2b_roofer_repeatability_building_status.csv sha256=6a3ca7d8a13407ba0b7ac34cb1d682ccc66aada10adef988a5b4e7d58521c520
+  dim_fallback_source: phases/p0-audit/data/work/w2/dim_v1_classified_z_minus0p174.laz sha256=f91929924af251d802ec71d9d246caa3194faa72cf82d739d474cd7dc2b1931d
+  als_fallback_source: results/tum_transfer/mob_analysis/p0c_step2/als_aoi.laz sha256=ac5cd0dc9c368a15e1f8fd5a18ad8d96ddbbd8cbaf8e1b608fd675430d6e9225
+  acmp_fallback_source: results/tum_transfer/mob_analysis/p0c_step2/acmp_classified.laz sha256=a034e2d80ae2efe6303037c3173e82098c84f88a865989d7893ca98d285fbfd0
+
+clip_source_counts:
+  raw_dense.existing_mob_eval_clip: 50
+  raw_dense.fallback_dim_footprint_clip: 149
+  raw_acmp.existing_mob_eval_clip: 68
+  raw_acmp.fallback_fused_acmp_footprint_clip: 131
+  raw_lidar.existing_mob_eval_clip: 136
+  raw_lidar.fallback_als_footprint_clip: 63
+
+parameters:
+  grid_cell_m: 0.5
+  local_plane_radius_m: 0.75
+  m3c2_normal_radius_m: 1.0
+  m3c2_proj_radius_m: 0.75
+  floater_margin_m: 3.0
+  label_proxy_roof_minus_m: 1.0
+
+outputs:
+  docs/pointcloud_attributes_v1_1.csv
+  docs/W_pointcloud_attributes.md
+  docs/figs/pointcloud_attributes_v1_1/arm_distribution.png
+  docs/figs/pointcloud_attributes_v1_1/als_scatter.png
+  docs/figs/pointcloud_attributes_v1_1/ref_invalid_104586480_topview.png
