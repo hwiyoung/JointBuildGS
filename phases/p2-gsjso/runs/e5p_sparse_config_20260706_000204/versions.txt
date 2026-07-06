@@ -1,0 +1,13 @@
+run_id=e5p_sparse_config_20260706_000204
+task=e5p-sparse-config A3 GS-sparse config diff proof
+created_at=2026-07-06T15:02:04
+branch=feat/p2-structure-learn
+head_before_commit=2ebd8afbdce075317fc7ae2cfe23be8661589931
+crs=EPSG:25832
+docker_image=jointbuildgs-p0-tools:t0
+doc=docs/e5_gs_sparse_config_diff.md
+dense_config=configs/tum_mob/gs_d4_dense.yaml sha256=5b1a9644d92392471e960aa204da0e25691924c33c3556e8d15a6e555494d397
+sparse_config=configs/tum_mob/gs_d4_sparse.yaml sha256=45c78cae47cabc9a1279b9494df093ed5c603bbaba7dcd1d3646a49b8af4b839
+sparse_seed=results/tum_transfer/mob_analysis/seed/seed_sparse.ply sha256=ad44838727c57a44c27a7d3976c6dbeedac7286e99c834ac279efc392b9cd76c
+sparse_source=phases/p0-audit/data/work/mvs/openmvs/colmap_txt/sparse/points3D.txt sha256=4ab059130e33ebcda1ef46f126bea9da703c28ff075320ab6a9e9d923d740883
+script=phases/p2-gsjso/scripts/e5_sparse_config_diff.py sha256=c6d79dc569f00f46806e341b41b05c725d1e940e8684963c57ca56e6807cdb53
