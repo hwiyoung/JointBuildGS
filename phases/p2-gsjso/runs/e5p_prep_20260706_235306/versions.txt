@@ -1,0 +1,19 @@
+run_id=e5p_prep_20260706_235306
+task=e5p-prep A1 pilot block candidate enumeration
+created_at=2026-07-06T14:53:08
+branch=feat/p2-structure-learn
+head=bcd8ac94f8e6a6681500e71da99941ee32de7dca
+crs=EPSG:25832
+docker_image=jointbuildgs-p0-tools:t0
+script=phases/p2-gsjso/scripts/e5_pilot_prep.py sha256=3b34ec917d4450f96d560ace360475a104bc419565824c50c061d1ceb958f33e
+candidate_count=412
+
+inputs:
+- results/tum_transfer/analysis/footprints_aoi.geojson sha256=ca7f5b13a52368e1d2ac47b77cc78f12887bad4d598d122ad57b882eb4920a82
+- docs/population_aux_v4.csv sha256=7a0e905e0d203515dbe941101bd0752aedf2dcdbef4ff1bddea66b99c9b54389
+- docs/manual_review_judgments.csv sha256=801f99423cd2de75e694a04c9c680a31edfa0c2c6300da1a3a0257ca221f39e8
+- results/tum_transfer/mob/overseg_lever/d12_buckets.csv sha256=1bec0a9f23254e0d1f39ce09d292515d6a2e95e8628255c2f8220ffcd32fcb5e
+- results/tum_transfer/mob/eval_d4_gssem.csv sha256=fafb2844c272d5e4de57813319cc84b284cbec083002e09cef2e6159a6ea1a4d
+- results/tum_transfer/mob/eval_d12_gssem.csv sha256=afd3c51713e890bf118223a1c8f6ec9b248ed423766284cceec481a859c9d8d7
+- phases/p0-audit/runs/w2_1_roofer_default_20260612_152729/building_reconstruction_status.csv sha256=4412ee47f8665e1a12663629dd66f9c9612f2e9adca54be38c188f2bc521a9b6
+- phases/p2-gsjso/scripts/e5_pilot_prep.py sha256=3b34ec917d4450f96d560ace360475a104bc419565824c50c061d1ceb958f33e
