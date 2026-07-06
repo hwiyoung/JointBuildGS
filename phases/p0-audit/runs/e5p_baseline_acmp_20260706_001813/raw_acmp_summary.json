@@ -1,0 +1,25 @@
+{
+  "run_id": "e5p_baseline_acmp_20260706_001813",
+  "arm": "raw_acmp",
+  "input_label": "raw-ACMP",
+  "status_csv": "phases/p0-audit/runs/e5p_baseline_acmp_20260706_001813/building_reconstruction_status.csv",
+  "cityjson": "phases/p0-audit/runs/e5p_baseline_acmp_20260706_001813/cityjson/raw_acmp_roofer.city.json",
+  "val3dity_report": "phases/p0-audit/runs/e5p_baseline_acmp_20260706_001813/val3dity/raw_acmp_val3dity_report.json",
+  "reason_counts": {
+    "success": 124,
+    "pointcloud_unusable_no_points": 22,
+    "pointcloud_unusable_no_planes": 13,
+    "val3dity_invalid": 17,
+    "missing_lod22_geometry": 22,
+    "missing_roofer_output": 1
+  },
+  "status_counts": {
+    "success": 124,
+    "failure": 75
+  },
+  "val3dity": {
+    "validity": false,
+    "feature_total": 198,
+    "feature_valid": 181
+  }
+}

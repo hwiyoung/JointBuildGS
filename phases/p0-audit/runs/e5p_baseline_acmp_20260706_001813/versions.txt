@@ -1,0 +1,21 @@
+run_id: e5p_baseline_acmp_20260706_001813
+task: E5-A4-baseline-raw_acmp
+phase: postprocess
+created_utc: 2026-07-06T15:22:27.191235+00:00
+crs: EPSG:25832
+git_head: 7b25e71f830d58b2c67741ec5a8a27ad1c63459c
+git_branch: feat/p2-structure-learn
+docker_image: jointbuildgs-p0-tools:t0
+python: Python 3.13.13
+pdal: --------------------------------------------------------------------------------
+pdal 2.10.1 (git-version: 3ef768)
+--------------------------------------------------------------------------------
+val3dity: val3dity  version: 2.6.0
+
+fingerprint:
+  config: phases/p0-audit/runs/e5p_baseline_acmp_20260706_001813/config.yaml
+  ckpt_sha256: not_applicable_baseline_no_training
+  pointcloudification: raw point cloud -> LAS -> SMRF + footprint overlay
+  label_method: original point cloud + SMRF/boundary rule
+  geoid_flag: ACMP source acmp_aoi_utm.laz orthometric; tum_mob_raw_to_npz.py E5 adds +45.7 m; classified LAS uses ellipsoidal UTM
+  timestamp_utc: 2026-07-06T15:22:27.231932+00:00

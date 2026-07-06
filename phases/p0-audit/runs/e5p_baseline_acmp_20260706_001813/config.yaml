@@ -1,0 +1,48 @@
+task: E5-A4-baseline-reinforcement
+arm: raw_acmp
+input_label: raw-ACMP
+crs: "EPSG:25832"
+run_dir: phases/p0-audit/runs/e5p_baseline_acmp_20260706_001813
+population: docs/population_aux_v4.csv
+building_count: 199
+npz_input: phases/p0-audit/runs/e5p_baseline_acmp_20260706_001813/input/raw_acmp_e5p_z45p7.npz
+npz_sha256: 182fdca725566f3d9281a133e5ad68957149efb20b2ec90d8bbbf5955fbb2a81
+raw_laz: phases/p0-audit/runs/e5p_baseline_acmp_20260706_001813/input/raw_acmp_raw.laz
+classified_laz: phases/p0-audit/runs/e5p_baseline_acmp_20260706_001813/classified/raw_acmp_classified.laz
+footprint_overlay: phases/p0-audit/runs/e5p_baseline_acmp_20260706_001813/input/footprints_overlay_class6.geojson
+roofer_footprints: phases/p0-audit/data/work/w2/footprints_scene_aoi.gpkg
+roofer_bbox_epsg25832:
+  - 690766.0
+  - 5335839.0
+  - 691180.0
+  - 5336379.0
+pointcloudification: "raw point cloud -> LAS -> SMRF ground -> footprint overlay building class 6"
+label_method: SMRF + boundary rule (P0 T4); non-ground inside footprint becomes building class 6
+roofer:
+  mode: default parameter family
+  only_plumbing_options:
+    - --id-attribute building_id
+    - --box full E5 AOI
+  expected_default_readout: eps0.3/minpts15/complexity0.888 계열
+geoid_flag: E5 canonical +45.7 for raw orthometric sources; sparse local+604 uses no geoid
+z_datum_history: ACMP source acmp_aoi_utm.laz orthometric; tum_mob_raw_to_npz.py E5 adds +45.7 m; classified LAS uses ellipsoidal UTM
+smrf:
+  cell: 1.0
+  slope: 0.15
+  scalar: 1.25
+  threshold: 0.5
+  window: 18.0
+  ground_class: 2
+  other_class: 1
+raw_stats:
+  n_points: 35453062
+  z_min: 510.18
+  z_max: 733.2800000000001
+  x_min: 690766.0
+  x_max: 691180.0
+  y_min: 5335839.0
+  y_max: 5336379.0
+class_counts_after_overlay:
+  1: 8447088
+  2: 10669817
+  6: 16336157
