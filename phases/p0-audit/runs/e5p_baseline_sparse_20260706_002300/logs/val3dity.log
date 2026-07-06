@@ -1,0 +1,68 @@
++ val3dity phases/p0-audit/runs/e5p_baseline_sparse_20260706_002300/cityjson/raw_sparse_roofer.city.json --report phases/p0-audit/runs/e5p_baseline_sparse_20260706_002300/val3dity/raw_sparse_val3dity_report.json
+---
+val3dity Copyright (c) 2011-2026, 3D geoinformation research group, TU Delft  
+This program comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to redistribute it
+under certain conditions; for details run val3dity with the '--license' option.
+---
+CityJSON input file
+# City Objects found: 292
+Parameters used for validation:
+   snap_tol                 0.001
+   planarity_d2p_tol         0.01
+   planarity_n_tol             20
+   overlap_tol               none
+
+Validation of 198 feature(s):
+
+[==>                                               ]   5%     
+[=====>                                            ]  10%     
+[=======>                                          ]  15%     
+[==========>                                       ]  20%     
+[============>                                     ]  25%     
+[===============>                                  ]  30%     
+[=================>                                ]  35%     
+[====================>                             ]  40%     
+[======================>                           ]  45%     
+[=========================>                        ]  50%     
+[===========================>                      ]  55%     
+[==============================>                   ]  60%     
+[================================>                 ]  65%     
+[===================================>              ]  70%     
+[=====================================>            ]  75%     
+[========================================>         ]  80%     
+[==========================================>       ]  85%     
+[=============================================>    ]  90%     
+[===============================================>  ]  95%     
+[==================================================] 100%     
+
++++++++++++++++++++ SUMMARY +++++++++++++++++++
+INVALID :(
++++++
+Input file type:
+  CityJSON
++++++
+Total # of Features:        198
+  # valid:                  196 (99.0%)
+  # invalid:                  2 (1.0%)
+Types:
+  Building
++++++
+Total # of primitives:      292
+  # valid:                  290 (99.3%)
+  # invalid:                  2 (0.7%)
+Types:
+  Solid
+  MultiSurface
++++++
+Errors present:
+  104 -- RING_SELF_INTERSECTION
+          2 primitive(s)
+  203 -- NON_PLANAR_POLYGON_DISTANCE_PLANE
+          1 primitive(s)
++++++++++++++++++++++++++++++++++++++++++++++++
+
+Validation report saved to "/workspace/JointBuildGS/phases/p0-audit/runs/e5p_baseline_sparse_20260706_002300/val3dity/raw_sparse_val3dity_report.json"
+Browse its content:
+==>http://geovalidation.bk.tudelft.nl/val3dity/browser/
+

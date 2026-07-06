@@ -1,0 +1,32 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "phases/p0-audit/runs/e5p_baseline_sparse_20260706_002300/input/raw_sparse_raw.laz"
+    },
+    {
+      "type": "filters.smrf",
+      "cell": 1.0,
+      "slope": 0.15,
+      "scalar": 1.25,
+      "threshold": 0.5,
+      "window": 18.0,
+      "ground_class": 2,
+      "other_class": 1
+    },
+    {
+      "type": "filters.overlay",
+      "dimension": "Classification",
+      "datasource": "phases/p0-audit/runs/e5p_baseline_sparse_20260706_002300/input/footprints_overlay_class6.geojson",
+      "column": "class",
+      "where": "Classification != 2"
+    },
+    {
+      "type": "writers.las",
+      "filename": "phases/p0-audit/runs/e5p_baseline_sparse_20260706_002300/classified/raw_sparse_classified.laz",
+      "a_srs": "EPSG:25832",
+      "minor_version": 4,
+      "dataformat_id": 3
+    }
+  ]
+}

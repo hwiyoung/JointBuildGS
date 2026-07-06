@@ -1,0 +1,21 @@
+run_id: e5p_baseline_sparse_20260706_002300
+task: E5-A4-baseline-raw_sparse
+phase: postprocess
+created_utc: 2026-07-06T15:23:23.541336+00:00
+crs: EPSG:25832
+git_head: 6150ab39d87432d0c74a361ea36b44f1af55613e
+git_branch: feat/p2-structure-learn
+docker_image: jointbuildgs-p0-tools:t0
+python: Python 3.13.13
+pdal: --------------------------------------------------------------------------------
+pdal 2.10.1 (git-version: 3ef768)
+--------------------------------------------------------------------------------
+val3dity: val3dity  version: 2.6.0
+
+fingerprint:
+  config: phases/p0-audit/runs/e5p_baseline_sparse_20260706_002300/config.yaml
+  ckpt_sha256: not_applicable_baseline_no_training
+  pointcloudification: raw point cloud -> LAS -> SMRF + footprint overlay
+  label_method: original point cloud + SMRF/boundary rule
+  geoid_flag: COLMAP sparse points3D local frame + [690953,5336071,604]; no geoid term; classified LAS uses ellipsoidal UTM
+  timestamp_utc: 2026-07-06T15:23:23.580090+00:00
