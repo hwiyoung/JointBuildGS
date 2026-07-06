@@ -232,3 +232,174 @@
 - 라벨 프록시를 전체 점 대비로 둘지 ground 라벨 내부 비율로 둘지.
 - `none` 처리 행을 회귀에서 결측으로 둘지, 결측 자체를 설명변수로 둘지.
 - 회귀 사양에서 ref_invalid와 fallback clip_source를 어떻게 층화·제외·고정효과 처리할지.
+
+---
+
+# W pointcloud attributes v1.2
+
+> 재구성/재학습 없음. 이미지-투영 불사용. 수치와 관찰만 기록한다. CRS는 EPSG:25832.
+
+## v1.2 입력·수리 범위
+
+- 기준문서 확인: 루트 기준문서 v1.14 (2026-07-05).
+- 본 수리는 `raw_dense`의 `fallback_dim_footprint_clip` 149행만 대상으로 했다. 밀도·완전성·국소 평면 RMS는 v1.1 값을 보존했다.
+- W1 기록: `dim_v1_classified_z.laz`는 GCG2016 보정본이고, W2 기록: `dim_v1_classified_z_minus0p174.laz`는 `Z := Z - 0.174 m`로 만든 입력이다.
+- v1.2 dense fallback 높이 이동: +45.934 m (= 45.760 + 0.174). 근거 파일은 `W1_diagnosis.md`, `07_vertical_align.py`, `08_roofer_w2.py`, W2 config이며, W2 config의 기록 커밋은 `d61ff0f7386ba4df3e61a75443d9b84346c44387`이다.
+- `z_datum_history`에는 W1 GCG2016 보정, W2 `-0.174 m`, v1.2 `+45.934 m` 이동을 남겼다.
+
+## v1.2 클립 출처
+
+| arm | source | n_rows |
+|---|---|---:|
+| raw_dense | existing_mob_eval_clip | 50 |
+| raw_dense | fallback_dim_footprint_clip | 149 |
+| raw_acmp | existing_mob_eval_clip | 68 |
+| raw_acmp | fallback_fused_acmp_footprint_clip | 131 |
+| raw_lidar | existing_mob_eval_clip | 136 |
+| raw_lidar | fallback_als_footprint_clip | 63 |
+
+## v1.2 축별·입력 종류별 분포
+
+| 축 | 입력 종류 | n | median | IQR |
+|---|---|---:|---:|---:|
+| 밀도 pt/m2 | raw_dense | 151 | 89.8032 | 13.71-392 |
+| 밀도 pt/m2 | raw_acmp | 198 | 77.2229 | 5.991-242.8 |
+| 밀도 pt/m2 | raw_lidar | 199 | 18.5787 | 16.05-19.85 |
+| 완전성 coverage | raw_dense | 151 | 0.9640 | 0.3979-1 |
+| 완전성 coverage | raw_acmp | 198 | 0.8620 | 0.3569-1 |
+| 완전성 coverage | raw_lidar | 199 | 0.9979 | 0.9932-1 |
+| 노이즈 local RMS m | raw_dense | 144 | 0.1517 | 0.1163-0.183 |
+| 노이즈 local RMS m | raw_acmp | 155 | 0.1771 | 0.151-0.2053 |
+| 노이즈 local RMS m | raw_lidar | 198 | 0.1498 | 0.1221-0.1686 |
+| M3C2 RMS m | raw_dense | 143 | 0.3410 | 0.1723-0.5796 |
+| M3C2 RMS m | raw_acmp | 159 | 1.7212 | 1.373-2.209 |
+| M3C2 RMS m | raw_lidar | 0 | none | none |
+| 부유점 fraction | raw_dense | 151 | 0.0030 | 0-0.02985 |
+| 부유점 fraction | raw_acmp | 198 | 0.0052 | 0.0008655-0.126 |
+| 부유점 fraction | raw_lidar | 199 | 0.0010 | 0-0.01831 |
+| 라벨 프록시 fraction | raw_dense | 151 | 0.0000 | 0-0.1483 |
+| 라벨 프록시 fraction | raw_acmp | 198 | 0.0000 | 0-0.01764 |
+| 라벨 프록시 fraction | raw_lidar | 199 | 0.0000 | 0-0 |
+
+그림:
+
+- 입력 종류 대조 분포: `docs/figs/pointcloud_attributes_v1_2/arm_distribution.png`
+- ALS 대비 산점: `docs/figs/pointcloud_attributes_v1_2/als_scatter.png`
+
+## v1.2 자가 게이트
+
+| 항목 | 수리 전 | 수리 후 | 기존 dense clip | 통과 |
+|---|---:|---:|---:|---|
+| dense fallback M3C2 RMS median m | 33.1788 | 0.3271 | existing n/a | True |
+| dense fallback M3C2 mean median_abs m | 28.5147 | 0.1099 | existing n/a | False |
+| dense fallback M3C2 mean median m | -28.5147 | 0.0971 | existing n/a | 기록 |
+| 부유점 0 아닌 행 수 | 0 | 77 | 16/50 | True |
+| 라벨 프록시 0 아닌 행 수 | 0 | 36 | 20/50 | True |
+| 기존 유효 행 metric 변경 수 | n/a | 0 | n/a | True |
+| dense fallback 보존 축 변경 수 | n/a | 0 | n/a | True |
+
+- 게이트 요약: A=True, B=True, C=True.
+- A는 v1/v1.1 분포표와 같은 `M3C2 RMS median` 기준이다. `M3C2 mean median_abs`는 보조 기록으로 함께 남겼다.
+
+## v1.2 변경 로그
+
+- dense fallback 149행 중 `n_points_footprint>0` 행의 부유점·라벨·M3C2 축을 재계산했다. no_points 행의 metric 값은 그대로 두고 높이 이력 열만 갱신했다.
+- 기존 유효 행의 metric 변경 수는 위 게이트 표에 기록했다.
+
+## 104586480 ref_invalid 후보 재료
+
+| 입력 종류 | n | coverage | ground_label_frac_all | roof_points | z_p05 | z_p50 | z_p95 | pt_density | local_RMS |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| ALS | 175 | 1.0000 | 0.7657 | 41 | 560.820 | 560.870 | 569.813 | 11.848 | 0.137 |
+| DIM | 5508 | 1.0000 | 0.5739 | 2347 | 560.800 | 561.030 | 577.650 | 372.898 | 0.152 |
+
+- 그림: `docs/figs/pointcloud_attributes_v1_2/ref_invalid_104586480_topview.png`
+- §2.4 본문 명시 ID 42364663·42364667과 대조하면 104586480은 그 두 본문 명시 ID가 아니다. v1.1과 같은 P0 기록에는 후보 재료로 남아 있다.
+- 관찰 재료: ALS 내부는 지면 라벨 우세·지면 높이 분포이고, DIM은 더 높은 구조물 성분을 포함한다. 시간차·참조 형상·점군 라벨 오류 중 어느 쪽인지는 여기서 판정하지 않는다.
+
+## dense fallback status-density QA
+
+- 새 raw_dense fallback의 status density delta: n=111, median=3.6695, IQR=-7.1991-23.1928.
+- 큰 density delta 기준: abs(delta)>max(5 pt/m2, 25% status_density). v1.1 보고서는 28동 중 앞 20동만 출력했으므로, v1.2에서는 전체 28동을 같은 기준으로 적는다.
+
+| building_id | delta | attr_density | status_density | note |
+|---|---:|---:|---:|---|
+| DEBY_LOD2_104583447 | -16.608 | 20.059 | 36.667 | fallback footprint all-point density below status rf_pt_density; metric definition/source selection differs |
+| DEBY_LOD2_108250120 | -17.169 | 8.693 | 25.862 | fallback footprint all-point density below status rf_pt_density; metric definition/source selection differs |
+| DEBY_LOD2_4906989 | -34.466 | 89.729 | 124.195 | fallback footprint all-point density below status rf_pt_density; metric definition/source selection differs |
+| DEBY_LOD2_4906998 | -36.214 | 43.265 | 79.479 | fallback footprint all-point density below status rf_pt_density; metric definition/source selection differs |
+| DEBY_LOD2_4907017 | -15.149 | 0.184 | 15.333 | fallback footprint all-point density below status rf_pt_density; metric definition/source selection differs |
+| DEBY_LOD2_4907026 | -27.458 | 23.890 | 51.348 | fallback footprint all-point density below status rf_pt_density; metric definition/source selection differs |
+| DEBY_LOD2_4907028 | -5.020 | 0.230 | 5.250 | fallback footprint all-point density below status rf_pt_density; metric definition/source selection differs |
+| DEBY_LOD2_4907165 | -71.050 | 6.703 | 77.753 | fallback footprint all-point density below status rf_pt_density; metric definition/source selection differs |
+| DEBY_LOD2_4907170 | -5.408 | 3.668 | 9.077 | fallback footprint all-point density below status rf_pt_density; metric definition/source selection differs |
+| DEBY_LOD2_4907171 | -5.231 | 3.143 | 8.374 | fallback footprint all-point density below status rf_pt_density; metric definition/source selection differs |
+| DEBY_LOD2_4907176 | -31.371 | 17.094 | 48.465 | fallback footprint all-point density below status rf_pt_density; metric definition/source selection differs |
+| DEBY_LOD2_4907177 | -36.820 | 12.148 | 48.967 | fallback footprint all-point density below status rf_pt_density; metric definition/source selection differs |
+| DEBY_LOD2_4907185 | -27.898 | 22.350 | 50.248 | fallback footprint all-point density below status rf_pt_density; metric definition/source selection differs |
+| DEBY_LOD2_4907186 | -7.371 | 3.223 | 10.594 | fallback footprint all-point density below status rf_pt_density; metric definition/source selection differs |
+| DEBY_LOD2_4907188 | -6.156 | 6.908 | 13.064 | fallback footprint all-point density below status rf_pt_density; metric definition/source selection differs |
+| DEBY_LOD2_4907195 | -8.530 | 6.433 | 14.963 | fallback footprint all-point density below status rf_pt_density; metric definition/source selection differs |
+| DEBY_LOD2_4907198 | -9.877 | 11.718 | 21.595 | fallback footprint all-point density below status rf_pt_density; metric definition/source selection differs |
+| DEBY_LOD2_4907202 | -56.568 | 49.683 | 106.251 | fallback footprint all-point density below status rf_pt_density; metric definition/source selection differs |
+| DEBY_LOD2_4907505 | -68.413 | 33.993 | 102.406 | fallback footprint all-point density below status rf_pt_density; metric definition/source selection differs |
+| DEBY_LOD2_4908163 | -6.178 | 2.364 | 8.542 | fallback footprint all-point density below status rf_pt_density; metric definition/source selection differs |
+| DEBY_LOD2_4908168 | -42.245 | 28.545 | 70.791 | fallback footprint all-point density below status rf_pt_density; metric definition/source selection differs |
+| DEBY_LOD2_4908178 | -21.592 | 17.282 | 38.874 | fallback footprint all-point density below status rf_pt_density; metric definition/source selection differs |
+| DEBY_LOD2_4908351 | -13.203 | 0.797 | 14.000 | fallback footprint all-point density below status rf_pt_density; metric definition/source selection differs |
+| DEBY_LOD2_4959320 | -94.374 | 6.141 | 100.515 | fallback footprint all-point density below status rf_pt_density; metric definition/source selection differs |
+| DEBY_LOD2_60097 | -33.283 | 8.521 | 41.803 | fallback footprint all-point density below status rf_pt_density; metric definition/source selection differs |
+| DEBY_LOD2_60098 | -6.628 | 3.440 | 10.068 | fallback footprint all-point density below status rf_pt_density; metric definition/source selection differs |
+| DEBY_LOD2_8568403 | -15.305 | 15.273 | 30.578 | fallback footprint all-point density below status rf_pt_density; metric definition/source selection differs |
+| DEBY_LOD2_8573848 | -27.631 | 62.416 | 90.047 | fallback footprint all-point density below status rf_pt_density; metric definition/source selection differs |
+
+## 결과 정본 런 델타 재료
+
+| 입력 종류 | w2_1 rows | run_2 rows | overlap rows | has_lod22 flips | val3dity flips | rmse nonzero/median/IQR/min/max | roof_planes nonzero/median/IQR/min/max |
+|---|---:|---:|---:|---:|---:|---|---|
+| ALS | 199 | 93 | 93 | 0 | 5 | 54/0.0000/-0.0000-0.0000/-0.2116/0.1354 | 16/0.0000/0.0000-0.0000/-2.0000/2.0000 |
+| DIM | 199 | 93 | 93 | 1 | 5 | 64/0.0000/-0.0009-0.0002/-12.0512/0.3405 | 36/0.0000/0.0000-0.0000/-23.0000/10.0000 |
+
+- 겹치는 동별 델타 CSV: `docs/W_canonical_run_delta.csv`.
+- 조립 성공 flip IDs:
+  - DIM DEBY_LOD2_42364663: w2=True, run_2=False
+- 유효성 flip IDs:
+  - ALS DEBY_LOD2_108580336: w2=False, run_2=True
+  - ALS DEBY_LOD2_4906975: w2=True, run_2=False
+  - ALS DEBY_LOD2_4907178: w2=False, run_2=True
+  - ALS DEBY_LOD2_4907506: w2=False, run_2=True
+  - ALS DEBY_LOD2_4907514: w2=False, run_2=True
+  - DIM DEBY_LOD2_108580335: w2=True, run_2=False
+  - DIM DEBY_LOD2_4906968: w2=False, run_2=True
+  - DIM DEBY_LOD2_4906969: w2=False, run_2=True
+  - DIM DEBY_LOD2_4907519: w2=False, run_2=True
+  - DIM DEBY_LOD2_4907521: w2=True, run_2=False
+- 관찰: w2_1은 입력 종류별 199동 전수이고, run_2는 입력 종류별 93동 coverage-control 부분집합이다. 위 표는 겹치는 93동 기준의 수치 차이다.
+
+## 104586480 날짜 재료
+
+| building_id | LoD2 creationDate | LoD2 source | ALS date material | ALS source | UAV capture date | UAV source |
+|---|---|---|---|---|---|---|
+| DEBY_LOD2_104586480 | 2025-04-04 | `phases/p0-audit/data/raw/lod2/690_5334.gml` | LAZ header creation date 2022-06-16; adjusted GPS time 2022-02-27 | `phases/p0-audit/docs/data_inventory.md` | 2024-12-17 | `docs/flight_meta_summary.md` |
+
+## 입력 지문
+
+| 항목 | 경로 | sha256 |
+|---|---|---|
+| v1_1_csv | `docs/pointcloud_attributes_v1_1.csv` | `22b158810d5b667c2ef71a5e70b682a7de23faa7a5e29b3422780c421bd71b04` |
+| dim_fallback_source_w2_minus0p174 | `phases/p0-audit/data/work/w2/dim_v1_classified_z_minus0p174.laz` | `f91929924af251d802ec71d9d246caa3194faa72cf82d739d474cd7dc2b1931d` |
+| als_fallback_source | `results/tum_transfer/mob_analysis/p0c_step2/als_aoi.laz` | `ac5cd0dc9c368a15e1f8fd5a18ad8d96ddbbd8cbaf8e1b608fd675430d6e9225` |
+| w1_diagnosis | `phases/p0-audit/docs/W1_diagnosis.md` | `d2775c436a74362f74ee2819b833ab0bb055e4533e08f15aa1c814ed53866814` |
+| w1_vertical_align_script | `phases/p0-audit/scripts/07_vertical_align.py` | `bc705c1fee3df8aacc8bd9e2a1be1336d13faa541e2d2fb12e6a4d397560ef94` |
+| w2_roofer_script | `phases/p0-audit/scripts/08_roofer_w2.py` | `ae655090915c56bfeee2be830a28e27520c2430e97d19e515a0aa046e4c79e97` |
+| w2_config | `phases/p0-audit/runs/w2_1_roofer_default_20260612_152729/config.yaml` | `65a8435b8e95b5cbeb86d3a2b82a8fed0b07e62737dc7714062a4151eb24bdd3` |
+| w2_status | `phases/p0-audit/runs/w2_1_roofer_default_20260612_152729/building_reconstruction_status.csv` | `4412ee47f8665e1a12663629dd66f9c9612f2e9adca54be38c188f2bc521a9b6` |
+| w3_run2_als_status | `phases/p0-audit/runs/w3_2b_roofer_repeatability_20260612_220747/status/run_2/als_default.csv` | `43ad02e993ac250516d7ce75ffb7539276a1f2e7e4e3449cd461e0646f06d613` |
+| w3_run2_dim_status | `phases/p0-audit/runs/w3_2b_roofer_repeatability_20260612_220747/status/run_2/dim_default.csv` | `625d49898c140c6d1ecf2dc66196b46a962770a240124049ea9b9493fe826ce1` |
+
+## 판정 필요 지점
+
+- 부유점 여유 3 m 유지 여부.
+- 라벨 프록시 정의: 전체 점 대비 `label_proxy_frac_all`과 ground 내부 `label_proxy_frac_ground` 중 회귀 주지표 선택.
+- `none` 행 처리: no_points 재코딩은 회귀 사양에서 처리.
+- 결과 정본 런 선택과 회귀 사양은 B단계 판정 뒤 실행.

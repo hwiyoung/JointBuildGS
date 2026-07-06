@@ -1,0 +1,71 @@
+run_id: 20260706_attr_v1_2
+task: attr-v1.2
+created_utc: 2026-07-06T10:51:19.990518+00:00
+mode: observation only; no reconstruction; no retraining; no image projection
+crs_xy: EPSG:25832
+git_head: bfb133c8b94cb2d3211c9e32d9874fc9512a638f
+git_branch: feat/p2-structure-learn
+docker_image: jointbuildgs-p0-tools:t0
+run_command: docker run --rm --user "$(id -u):$(id -g)" -v "$PWD":/workspace/JointBuildGS -w /workspace/JointBuildGS jointbuildgs-p0-tools:t0 python3 phases/p2-gsjso/scripts/pointcloud_attributes_v1_2.py
+python: Python 3.13.13
+
+height_datum:
+  v1_14_selected_constant_m: 45.760
+  selected_constant_source: v1.14_section_1.6_zeta_45.7_QA_45.760
+  dense_fallback_w2_extra_removed_m: 0.174
+  dense_fallback_shift_m: 45.934
+  dense_fallback_shift_formula: 45.760 + 0.174
+  dense_fallback_history: W1 GCG2016 corrected dim_v1_classified_z.laz; W2 used Z := Z - 0.174 m; v1.2 adds +45.934 m for the ref-dependent axes
+
+gate:
+  gate_a_m3c2_rms_median_range_0p2_3m: True
+  gate_b_nonzero_floater_label_tail: True
+  gate_c_existing_metric_change_zero: True
+  after_fallback_m3c2_rms_median_m: 0.327147
+  after_fallback_m3c2_mean_median_abs_m: 0.109907
+  gate_a_mean_abs_range_0p2_3m_recorded: False
+  existing_metric_diff_rows: 0
+  dense_preserved_metric_diff_rows: 0
+
+inputs_with_sha256:
+  v1_1_csv: docs/pointcloud_attributes_v1_1.csv sha256=22b158810d5b667c2ef71a5e70b682a7de23faa7a5e29b3422780c421bd71b04
+  v1_2_script: phases/p2-gsjso/scripts/pointcloud_attributes_v1_2.py sha256=5bdf2f2f92e81a4381387d9a3c1c7a190dbcc97a47d757681d4fb7e4743eba01
+  dim_fallback_source_w2_minus0p174: phases/p0-audit/data/work/w2/dim_v1_classified_z_minus0p174.laz sha256=f91929924af251d802ec71d9d246caa3194faa72cf82d739d474cd7dc2b1931d
+  als_fallback_source: results/tum_transfer/mob_analysis/p0c_step2/als_aoi.laz sha256=ac5cd0dc9c368a15e1f8fd5a18ad8d96ddbbd8cbaf8e1b608fd675430d6e9225
+  w1_diagnosis: phases/p0-audit/docs/W1_diagnosis.md sha256=d2775c436a74362f74ee2819b833ab0bb055e4533e08f15aa1c814ed53866814
+  w1_vertical_align_script: phases/p0-audit/scripts/07_vertical_align.py sha256=bc705c1fee3df8aacc8bd9e2a1be1336d13faa541e2d2fb12e6a4d397560ef94
+  w2_roofer_script: phases/p0-audit/scripts/08_roofer_w2.py sha256=ae655090915c56bfeee2be830a28e27520c2430e97d19e515a0aa046e4c79e97
+  w2_config: phases/p0-audit/runs/w2_1_roofer_default_20260612_152729/config.yaml sha256=65a8435b8e95b5cbeb86d3a2b82a8fed0b07e62737dc7714062a4151eb24bdd3
+  w2_versions: phases/p0-audit/runs/w2_1_roofer_default_20260612_152729/versions.txt sha256=4a786bdc66cc29732b208b665c5133aa57af848ff38da8e347d77dc001b9c113
+  w2_status: phases/p0-audit/runs/w2_1_roofer_default_20260612_152729/building_reconstruction_status.csv sha256=4412ee47f8665e1a12663629dd66f9c9612f2e9adca54be38c188f2bc521a9b6
+  w3_run2_als_status: phases/p0-audit/runs/w3_2b_roofer_repeatability_20260612_220747/status/run_2/als_default.csv sha256=43ad02e993ac250516d7ce75ffb7539276a1f2e7e4e3449cd461e0646f06d613
+  w3_run2_dim_status: phases/p0-audit/runs/w3_2b_roofer_repeatability_20260612_220747/status/run_2/dim_default.csv sha256=625d49898c140c6d1ecf2dc66196b46a962770a240124049ea9b9493fe826ce1
+  population_aux_v4: docs/population_aux_v4.csv sha256=7a0e905e0d203515dbe941101bd0752aedf2dcdbef4ff1bddea66b99c9b54389
+  manual_review_judgments: docs/manual_review_judgments.csv sha256=801f99423cd2de75e694a04c9c680a31edfa0c2c6300da1a3a0257ca221f39e8
+  gen_8way_results_path: results/tum_transfer/mob/overseg_lever/gen_8way.csv sha256=fd691af4d70d03ae326fdc648627f978b6e2e9b8d4a199672564facf2c75af76
+  flight_meta_summary: docs/flight_meta_summary.md sha256=c247440093603f2a4069db26514ea2a1c75d555b16e9a3406da68ffd4fbfa876
+  data_inventory: phases/p0-audit/docs/data_inventory.md sha256=f4ee5f6863de1a5dc7d49668876098c367c6d9761513f5a9dec23d3eb0527247
+
+clip_source_counts:
+  raw_dense.existing_mob_eval_clip: 50
+  raw_dense.fallback_dim_footprint_clip: 149
+  raw_acmp.existing_mob_eval_clip: 68
+  raw_acmp.fallback_fused_acmp_footprint_clip: 131
+  raw_lidar.existing_mob_eval_clip: 136
+  raw_lidar.fallback_als_footprint_clip: 63
+
+parameters:
+  grid_cell_m: 0.5
+  local_plane_radius_m: 0.75
+  m3c2_normal_radius_m: 1.0
+  m3c2_proj_radius_m: 0.75
+  floater_margin_m: 3.0
+  label_proxy_roof_minus_m: 1.0
+
+outputs:
+  docs/pointcloud_attributes_v1_2.csv
+  docs/W_pointcloud_attributes.md
+  docs/W_canonical_run_delta.csv
+  docs/figs/pointcloud_attributes_v1_2/arm_distribution.png
+  docs/figs/pointcloud_attributes_v1_2/als_scatter.png
+  docs/figs/pointcloud_attributes_v1_2/ref_invalid_104586480_topview.png
