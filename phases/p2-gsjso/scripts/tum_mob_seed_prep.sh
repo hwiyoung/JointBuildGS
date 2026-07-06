@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # P2 make-or-break v6 — prepare MVS-seed init clouds (dense=DIM, acmp=ACMP) for GS init.
 # Each PDAL pipeline: AOI crop (UTM) -> per-cloud geoid Z shift to GS-LOCAL ellipsoidal
-# (dim -604, acmp -556) -> outlier z-clip [-65,30] local -> voxel downsample (<=~3M) ->
+# (dim -604, acmp -558.3) -> outlier z-clip [-65,30] local -> voxel downsample (<=~3M) ->
 # write GS-LOCAL .ply. The training image then reads the .ply via src/stage2/pointcloud_io.
 # sparse arm needs NO prep (default COLMAP init). Observation only. EPSG:25832. Docker-based.
 # Usage: bash tum_mob_seed_prep.sh         (runs both)

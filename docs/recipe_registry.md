@@ -160,15 +160,15 @@
 |---|---|---|---|
 | `results/tum_transfer/mob/*/versions.txt` | `GS-LOCAL=EPSG:25832-[690953,5336071,604]`; dim `-604`; acmp `-556` | 3D train/seed | GS-local convention. projection config와 별도. |
 | `results/tum_transfer/mob/raw/versions.txt` | `ellipsoidal UTM (GS-LOCAL+[690953,5336071,604]); acmp/lidar +48 geoid` | raw 대조 | raw arm 통일 이력. |
-| `tum_mob_seed_prep.sh` | comment: dim `-604`, acmp `-556` | 3D seed prep | PDAL seed 변환 경로. |
+| `tum_mob_seed_prep.sh` | comment: dim `-604`, acmp `-558.3` | 3D seed prep | E5 신규 canonical부터 전환. |
 | `seed_prep_dense.json` | matrix z `-604` | 3D seed prep | DIM seed. |
-| `seed_prep_acmp.json` | matrix z `-556` | 3D seed prep | ACMP seed. |
-| `src/stage2/semantic_seed.py` | `z_local=Hoehe_orthometric+geoid-604`; labels rendered with `shift_z=604-48=556` | semantic seed/label | geoid raster는 provenance only. |
-| `configs/tum_mob/seed_semantic.yaml` | `shift_z=604-48=556`, geoid path | semantic seed/label | clean_labels_geoidfix 이력. |
+| `seed_prep_acmp.json` | matrix z `-558.3` | 3D seed prep | E5 신규 canonical ACMP seed. |
+| `src/stage2/semantic_seed.py` | `z_local=Hoehe_orthometric+geoid-604`; labels rendered with `shift_z=604-45.7=558.3` | semantic seed/label | geoid raster는 provenance only. |
+| `configs/tum_mob/seed_semantic.yaml` | `shift_z=604-45.7=558.3`, geoid path | semantic seed/label | E5 신규 canonical label 이력. |
 | `configs/tum_mob/depth_release_{range,oracle}.yaml` | `world_offset=[690953,5336071,604]`, geoid raster path | seed band | bands file가 per-building z band 제공. |
 | `results/tum_transfer/mob/depth_release_{range,oracle}/versions.txt` | labels `shift_z=556`, `ground_local=H_ortho+geoid(48)-604=H_ortho-556` | seed band | P2 impl 2 versions. |
-| `seed_depth_bands.py` | `--geoid default=48.0`, `--shift-z` 사용 | seed band generation | 3D seed/band 경로. |
-| `seed_material_audit.py` | `--geoid-val default=48.0`; ref height local 변환 | seed audit | 3D seed material 감사 경로. |
+| `seed_depth_bands.py` | `--geoid default=45.7`, `--shift-z` 사용 | seed band generation | E5 신규 canonical band 경로. |
+| `seed_material_audit.py` | `--geoid-val default=45.7`; ref height local 변환 | seed audit | E5 신규 canonical seed material 감사 경로. |
 | `scripts/stage2/tum_tsdf_extract.py`, `tum_qc_*` | `SHIFT=[690953,5336071,604]` | 3D extract/QC | image-projection config 미사용. |
 | `overseg_faithfulness.py` | `GEOID=48.165` comment | analysis readability | ellip-ortho readability용으로 보이며 projection config와 별도. |
 
@@ -195,6 +195,6 @@
 4. v6 수치 인용 시 `smrf`와 `gssem` read-out 구분을 필수 필드로 둘지.
 5. D/D4/D5/B1 per-building 산출물의 `gssem -> smrf` 덮어쓰기 이력을 canonical 표에서 어떤 수준까지 노출할지.
 6. projection/datum/aux 숫자는 GS 레시피 대장과 별도 registry로 분리할지, 본 registry의 geoid flag 필드에 계속 포함할지.
-7. 3D seed·라벨·밴드 경로의 `-556`/`48.0` 관례를 현 45.7 projection 규약과 분리 유지할지, 별도 판정 후 전환할지.
+7. 3D seed·라벨·밴드 경로의 `-556`/`48.0` 관례는 E5 신규 canonical부터 `-558.3`/`45.7` 세트로 전환했다. 과거 run versions는 이력으로 보존한다.
 8. `gssem`을 read-out 이름으로만 고정할지, 문서에 남은 `gssem 정본` 표현을 일괄 치환할지.
 9. `v5`처럼 현 checkout에서 근거가 없는 옛 라벨을 사전등록서에서 폐기 라벨로 명시할지.

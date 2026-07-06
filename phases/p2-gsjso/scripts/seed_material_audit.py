@@ -31,8 +31,8 @@ Run in the dev container exactly like seed_semantic_verify.py:
         [--ref <ref_heights.csv | reference.city.json>] [--er3-diag er3_diag.json]
 
 Frame: GS-LOCAL z = Hoehe_orthometric + geoid - 604. Reference (orthometric) heights
-are mapped to GS-local with --geoid-val (default 48.0, the value baked into
-clean_labels_geoidfix via shift_z = 604-48 = 556). Confirm the geoid value per scene.
+are mapped to GS-local with --geoid-val (default 45.7 for E5 canonical, baked into
+semantic labels via shift_z = 604-45.7 = 558.3). Confirm the geoid value per scene.
 """
 from __future__ import annotations
 
@@ -186,7 +186,7 @@ def main():
     ap.add_argument("--ref", default=None,
                     help="reference roof heights: CSV(building_id,h_ground,h_roof) or CityJSON")
     ap.add_argument("--er3-diag", default=None, help="er3_diag.json (use its C1/C2 if present)")
-    ap.add_argument("--geoid-val", type=float, default=48.0)
+    ap.add_argument("--geoid-val", type=float, default=45.7)
     ap.add_argument("--voxel", type=float, default=1.0)
     ap.add_argument("--theta-min", type=float, default=15.0,
                     help="parallax(deg) below this = data-limited 'D'")

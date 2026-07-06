@@ -1,0 +1,20 @@
+run_id=e5p_const_20260706_235710
+task=e5p-const A2 seed constant transition gate
+created_at=2026-07-06T14:57:11
+branch=feat/p2-structure-learn
+head_before_commit=8237380b479279a79098dd1d7b1c41b2f76d6f4c
+crs=EPSG:25832
+docker_image=jointbuildgs-p0-tools:t0
+gate_doc=docs/e5_seed_constant_gate.md
+old_constant_hit_count=0
+script=phases/p2-gsjso/scripts/e5_seed_constant_gate.py sha256=240f17ba24d7d0cbb615c0473bb2d23062e4651cf267296778d405745768e619
+
+new_execution_paths:
+- phases/p2-gsjso/scripts/seed_prep_acmp.json sha256=b3014473461640e96b8c75d6408da05d6f78fb08ee53170f62b25985c38ba7af
+- phases/p2-gsjso/scripts/tum_mob_seed_prep.sh sha256=d83375265447f578ee899180aa76f7d220ae1a73dcfc888ac57a735380b24325
+- phases/p2-gsjso/scripts/tum_mob_raw_to_npz.py sha256=5827338e01e558d4a633b3777ac18565b0820626a9278176344e91dd1daa4365
+- phases/p2-gsjso/scripts/seed_depth_bands.py sha256=f87764b7b5f280b3d5c39dcf2290b7f369c9c07b5c74c467b085b701218bd61a
+- phases/p2-gsjso/scripts/seed_material_audit.py sha256=a8ed5d71b57f4dbd822fd6feb99c4f36473b270b6642817f4ab0c61b2818560f
+- configs/tum_mob/seed_semantic.yaml sha256=39f2301b6918b9154b07660629436a5be6fade9c3fe192663f9017d042fc0824
+- configs/tum_mob/gs_seed_acmp.yaml sha256=8a069d27bd77f1b0df7466a836934170e65900b292e1710180f85b51d9bac70a
+- src/stage2/semantic_seed.py sha256=5885006d6a1929f68d31bd6d99513e0f308c71e1be46104e8d5bf2ffd2906c5b

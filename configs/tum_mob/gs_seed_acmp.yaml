@@ -6,7 +6,7 @@ device: cuda
 
 data_root: /workspace/JointBuildGS/results/tum_transfer/data_geoidfix   # clean geoid-corrected labels
 
-# MVS-seed init: prepared GS-LOCAL ACMP cloud (tum_mob_seed_prep.sh; acmp_aoi_utm -556 geoid shift).
+# MVS-seed init: prepared GS-LOCAL ACMP cloud (tum_mob_seed_prep.sh; acmp_aoi_utm -558.3 geoid shift).
 init_pointcloud: /workspace/JointBuildGS/results/tum_transfer/mob_analysis/seed/seed_acmp.ply
 init_pointcloud_mode: concat   # add MVS pts onto SfM base (keeps full scene trainable; AOI gets dense init)
 

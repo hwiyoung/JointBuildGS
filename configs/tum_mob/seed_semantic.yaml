@@ -44,10 +44,10 @@ out_dir: /workspace/JointBuildGS/results/tum_transfer/mob/seed_semantic
 
 # ---- semantic seeding (P2 ①) ----
 # Frame: GS-LOCAL = EPSG:25832 - world_offset (ellipsoidal). footprint xy -> local by
-# subtracting world_offset[:2]; z taken directly in the GS-local band. The geoid (~48 m)
-# is already baked into the geoid-fixed labels (rendered with shift_z = 604-48 = 556) and
-# into the band: z_local = Hoehe_orthometric + geoid - 604. Band [-55, 5] reproduces
-# er3_diag.json exactly. The geoid raster path is provenance only (labels encode it).
+# subtracting world_offset[:2]; z taken directly in the GS-local band. The geoid (45.7 m)
+# is already baked into the E5 canonical labels (shift_z = 604-45.7 = 558.3) and
+# into the band: z_local = Hoehe_orthometric + geoid - 604. Band [-55, 5] is the
+# retained default search band. The geoid raster path is provenance only.
 seed_semantic: true
 seed_cfg:                          # NB: NOT `seed:` — that is the RNG seed (top of file)
   footprints:   /workspace/JointBuildGS/results/tum_transfer/analysis/footprints_aoi.geojson

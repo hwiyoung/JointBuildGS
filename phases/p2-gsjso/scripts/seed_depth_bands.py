@@ -8,7 +8,7 @@ Condition B (oracle-ceiling, comparison only): band = [roof_local - 1, roof_loca
   ref_roof_heights.csv (reference; B is the ceiling, never fed to A).
 
 LiDAR datum: determined by comparing in-footprint ground z to reference HoeheGrund (~514 m ortho).
-  orthometric  -> ground_local = H_ortho + GEOID - 604   (GEOID~48 -> H_ortho - 556)
+  orthometric  -> ground_local = H_ortho + GEOID - 604   (E5 GEOID=45.7 -> H_ortho - 558.3)
   ellipsoidal  -> ground_local = z_ellip - 604
 Records the determination. Runs in P0 tools container (laspy + numpy + matplotlib). EPSG:25832.
 """
@@ -34,7 +34,7 @@ def main():
     ap.add_argument("--geojson", required=True)
     ap.add_argument("--ref-roof", required=True, help="ref_roof_heights.csv (building_id,h_ground,h_roof) ortho")
     ap.add_argument("--shift-z", type=float, default=604.0)
-    ap.add_argument("--geoid", type=float, default=48.0, help="geoid undulation (ortho->ellipsoidal), Munich ~48")
+    ap.add_argument("--geoid", type=float, default=45.7, help="geoid undulation (ortho->ellipsoidal), E5 canonical")
     ap.add_argument("--ground-buffer", type=float, default=8.0)
     ap.add_argument("--hmax", type=float, default=30.0)
     ap.add_argument("--outdir", required=True)
@@ -77,7 +77,7 @@ def main():
             infp = fp.contains_points(Pb[:, :2]); z = Pb[infp, 2] if infp.any() else Pb[:, 2]
             lo = np.percentile(z, 5); ground_ortho = float(np.median(z[z <= lo])); src = "lowest5pct"
         ref_hg = float(refh[bid]["h_ground"])
-        # datum: ground close to ref HoeheGrund(ortho ~514) => ortho; ~+48 => ellipsoidal
+        # datum: ground close to ref HoeheGrund(ortho ~514) => ortho; ~+45.7 => ellipsoidal
         d_ortho = abs(ground_ortho - ref_hg); d_ellip = abs(ground_ortho - (ref_hg + A.geoid))
         datum = "ortho" if d_ortho <= d_ellip else "ellipsoidal"
         datum_votes.append(datum)

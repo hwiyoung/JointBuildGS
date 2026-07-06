@@ -4,11 +4,12 @@ consume, so the raw baselines (sparse/dense/ACMP/LiDAR) go through the IDENTICAL
 val3dity->facet/RMS harness as the GS arm (8-way apples-to-apples).
 
 Datum: all outputs in ELLIPSOIDAL UTM (= GS-LOCAL + [690953,5336071,604]) to match the GS TSDF
-clouds, so the Phase-4 ref-RMS dz search (dz in [40,56] ~= +48 geoid vs orthometric LoD2) locks.
+clouds. E5 canonical uses the linked geoid set fixed in prereg §8: +45.7 m for
+orthometric raw ACMP/LiDAR, hence ACMP seed local z uses -558.3 (= -604 + 45.7).
   sparse = COLMAP points3D (GS-LOCAL) + [690953,5336071,604]            -> ellipsoidal
   dense  = dim_v1.laz   (already ellipsoidal UTM, local+604)            -> as-is
-  acmp   = acmp_aoi_utm.laz (orthometric, local+556) + Z 48             -> ellipsoidal
-  lidar  = als_aoi.laz  (orthometric)               + Z 48             -> ellipsoidal
+  acmp   = acmp_aoi_utm.laz (orthometric, local+558.3) + Z 45.7         -> ellipsoidal
+  lidar  = als_aoi.laz  (orthometric)                 + Z 45.7         -> ellipsoidal
 Runs in jointbuildgs-p0-tools:t0 (laspy + numpy). Observation only. EPSG:25832.
 """
 import argparse
@@ -19,7 +20,7 @@ import numpy as np
 R = "/workspace/JointBuildGS"
 AOI = (690766.0, 691180.0, 5335839.0, 5336379.0)   # x0,x1,y0,y1 (UTM)
 SHIFT = np.array([690953.0, 5336071.0, 604.0])      # GS-LOCAL -> ellipsoidal UTM
-GEOID = 48.0                                          # orthometric -> ellipsoidal
+GEOID = 45.7                                          # orthometric -> ellipsoidal (E5 canonical)
 
 
 def voxel_ds(P, v):

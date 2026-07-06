@@ -29,10 +29,10 @@ GS-LOCAL = EPSG:25832 - SHIFT, SHIFT = world_offset = [690953, 5336071, 604]
 
   * footprint xy (EPSG) -> local: ``xy - world_offset[:2]``
   * z is taken directly in the GS-local band ``[z_min, z_max]``. The geoid
-    correction (~48 m) is ALREADY baked into the geoid-fixed labels
-    (``clean_labels_geoidfix``, rendered with shift_z = 604 - 48 = 556) and into
+    correction (45.7 m for E5 canonical) is ALREADY baked into the semantic labels
+    (rendered with shift_z = 604 - 45.7 = 558.3) and into
     the band, which is why ``z_local = Hoehe_orthometric + geoid - 604`` holds.
-    The recovered band [-55, 5] reproduces ``er3_diag.json`` exactly.
+    The default band [-55, 5] is retained as the semantic seed search band.
 
 Because the carve projects voxels (GS-local) into the *training* COLMAP poses and
 reads the geoid-fixed label there, each occupied voxel centre is already in the

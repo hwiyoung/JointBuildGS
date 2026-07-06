@@ -2,7 +2,7 @@
   "pipeline": [
     "/workspace/JointBuildGS/results/tum_transfer/mob_analysis/p0c_step2/acmp_aoi_utm.laz",
     { "type": "filters.crop", "bounds": "([690766.0, 691180.0],[5335839.0, 5336379.0])" },
-    { "type": "filters.transformation", "matrix": "1 0 0 -690953  0 1 0 -5336071  0 0 1 -556  0 0 0 1" },
+    { "type": "filters.transformation", "matrix": "1 0 0 -690953  0 1 0 -5336071  0 0 1 -558.3  0 0 0 1" },
     { "type": "filters.expression", "expression": "Z >= -65.0 && Z <= 30.0" },
     { "type": "filters.voxelcenternearestneighbor", "cell": 0.40 },
     { "type": "writers.ply",
