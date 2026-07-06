@@ -1,0 +1,39 @@
+run_id: 20260706_regression_v1
+task: regression-v1
+created_utc: 2026-07-06T11:42:50.327417+00:00
+mode: observation only; no reconstruction; no retraining; no image projection
+crs_xy: EPSG:25832
+git_head: 78c58c5082cb2552ca34e36e8827c13eb6a85890
+git_branch: feat/p2-structure-learn
+docker_image: jointbuildgs-p0-tools:t0
+run_command: docker run --rm --user "$(id -u):$(id -g)" -v "$PWD":/workspace/JointBuildGS -w /workspace/JointBuildGS jointbuildgs-p0-tools:t0 python3 phases/p2-gsjso/scripts/attr_outcome_regression_v1.py
+python: Python 3.13.13
+packages: numpy + matplotlib; regression routines implemented in script
+
+design:
+  canonical_result_run: w2_1_roofer_default_20260612_152729
+  run2_role: sensitivity only, 93 overlap rows per DIM/LiDAR
+  robust_exclude_ids: DEBY_LOD2_42364663;DEBY_LOD2_42364667;DEBY_LOD2_104586480
+  label_main: label_proxy_frac_all
+  label_sensitivity: label_proxy_frac_ground
+  no_points_recode: density=0 coverage=0
+
+counts:
+  snapshot_rows: 462
+  dim_rows: 199
+  lidar_rows: 199
+  acmp_rows: 64
+  coef_rows: 1317
+  diagnostic_rows: 72
+  sensitivity_rows: 812
+
+inputs_with_sha256:
+  script: phases/p2-gsjso/scripts/attr_outcome_regression_v1.py sha256=de60a57d25a7a17422197056f091193984c3f3d7385e99238bb0fca10b4d7e69
+  attr_v1_2: docs/pointcloud_attributes_v1_2.csv sha256=4d0ca1bf377e7094291e865910c74206aec2b46eaa9ea8f1e9e1b9885bd19a11
+  population_aux_v4: docs/population_aux_v4.csv sha256=7a0e905e0d203515dbe941101bd0752aedf2dcdbef4ff1bddea66b99c9b54389
+  manual_review_judgments: docs/manual_review_judgments.csv sha256=801f99423cd2de75e694a04c9c680a31edfa0c2c6300da1a3a0257ca221f39e8
+  w2_status: phases/p0-audit/runs/w2_1_roofer_default_20260612_152729/building_reconstruction_status.csv sha256=4412ee47f8665e1a12663629dd66f9c9612f2e9adca54be38c188f2bc521a9b6
+  w3_run2_als: phases/p0-audit/runs/w3_2b_roofer_repeatability_20260612_220747/status/run_2/als_default.csv sha256=43ad02e993ac250516d7ce75ffb7539276a1f2e7e4e3449cd461e0646f06d613
+  w3_run2_dim: phases/p0-audit/runs/w3_2b_roofer_repeatability_20260612_220747/status/run_2/dim_default.csv sha256=625d49898c140c6d1ecf2dc66196b46a962770a240124049ea9b9493fe826ce1
+  gen_8way: results/tum_transfer/mob/overseg_lever/gen_8way.csv sha256=fd691af4d70d03ae326fdc648627f978b6e2e9b8d4a199672564facf2c75af76
+  basis_document: 기준문서_방법론·모집단·비교설계_v1.md sha256=4b5ce0a203dbe37fe85b11893c593d776ad973fc253bd26d3554541a411cd4ea
