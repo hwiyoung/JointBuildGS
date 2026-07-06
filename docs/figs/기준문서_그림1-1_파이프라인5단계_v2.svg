@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="900" viewBox="0 0 1920 900">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 z" fill="#7a8699"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 z" fill="#3b6fd4"/>
+    </marker>
+    <marker id="arrowOrange" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 z" fill="#c9821a"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: 'Noto Sans CJK KR','Malgun Gothic','Noto Sans KR',sans-serif; fill:#2b3648; }
+    .title { font-size:34px; font-weight:700; }
+    .sub { font-size:22px; fill:#5a6577; }
+    .boxTitle { font-size:23px; font-weight:700; }
+    .boxLine { font-size:19px; fill:#3d4a5e; }
+    .noteLine { font-size:19px; fill:#5a6577; }
+    .lane { font-size:21px; font-weight:700; fill:#1f4fa8; }
+    .laneLine { font-size:19px; fill:#2b5bb8; }
+    .flowLabel { font-size:18px; fill:#3b6fd4; }
+    .abl { font-size:17px; fill:#8a6510; }
+    .ablTitle { font-size:18px; font-weight:700; fill:#8a6510; }
+    .legend { font-size:19px; fill:#3d4a5e; }
+  </style>
+
+  <text x="52" y="62" class="title">그림 1.1 — 5단계 파이프라인과 개입 지점(②③)</text>
+  <text x="52" y="100" class="sub">고정된 조립·평가(④⑤) 위에서 입력(점군 중간표현)만 바뀐다 — 입력 치환 비교의 공정성 구조</text>
+
+  <!-- ① 입력 준비 -->
+  <rect x="50" y="160" width="320" height="140" rx="10" fill="#f3f5f8" stroke="#aab4c2" stroke-width="2"/>
+  <text x="72" y="200" class="boxTitle">① 입력 준비</text>
+  <text x="72" y="236" class="boxLine">영상 937장 · 카메라 포즈 고정</text>
+  <text x="72" y="266" class="boxLine">포즈 변환(OPF→COLMAP)</text>
+
+  <!-- ② 표면 형성 -->
+  <rect x="420" y="160" width="320" height="140" rx="10" fill="#fdf3dc" stroke="#c9821a" stroke-width="2.5"/>
+  <text x="442" y="200" class="boxTitle" fill="#8a5a08">② 표면 형성 — 개입</text>
+  <text x="442" y="236" class="boxLine">MVS(dense) · ACMP · sparse</text>
+  <text x="442" y="266" class="boxLine">GS 공동최적화(기준 레시피=빈7)</text>
+
+  <!-- ③ 점군화·라벨 -->
+  <rect x="790" y="160" width="340" height="140" rx="10" fill="#fdf3dc" stroke="#c9821a" stroke-width="2.5"/>
+  <text x="812" y="196" class="boxTitle" fill="#8a5a08">③ 점군화·라벨 — 개입</text>
+  <text x="812" y="228" class="boxLine"><tspan font-weight="700">원래 점군 그대로</tspan>(자기 산출물이 주)</text>
+  <text x="812" y="255" class="boxLine">GS만: 렌더 깊이맵→점군화</text>
+  <text x="812" y="282" class="boxLine">경계 오려냄 · 지면필터+경계 라벨</text>
+
+  <!-- ④ 조립 -->
+  <rect x="1200" y="160" width="320" height="140" rx="10" fill="#f3f5f8" stroke="#aab4c2" stroke-width="2"/>
+  <text x="1222" y="200" class="boxTitle">④ 조립 — 고정</text>
+  <text x="1222" y="236" class="boxLine">Roofer, 전 입력 종류 동일 설정</text>
+  <text x="1222" y="266" class="boxLine">LoD2 건물 모델 생성</text>
+
+  <!-- ⑤ 평가 -->
+  <rect x="1570" y="160" width="300" height="140" rx="10" fill="#f3f5f8" stroke="#aab4c2" stroke-width="2"/>
+  <text x="1592" y="200" class="boxTitle">⑤ 평가 — 고정</text>
+  <text x="1592" y="236" class="boxLine">참조 모델 대비 3D 지표</text>
+  <text x="1592" y="266" class="boxLine">유효성 검사 · 품질 등급 3단</text>
+
+  <!-- 본선 화살표 -->
+  <line x1="370" y1="230" x2="412" y2="230" stroke="#7a8699" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="740" y1="230" x2="782" y2="230" stroke="#7a8699" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="1130" y1="230" x2="1192" y2="230" stroke="#7a8699" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="1520" y1="230" x2="1562" y2="230" stroke="#7a8699" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- ③ 보조 ablation 상자 (점선) -->
+  <rect x="790" y="340" width="368" height="94" rx="10" fill="none" stroke="#c9821a" stroke-width="2" stroke-dasharray="7 6"/>
+  <text x="812" y="368" class="ablTitle">보조 ablation — 공용 점군화</text>
+  <text x="812" y="394" class="abl">semantic-TSDF · 깊이맵을 같은 변환기로</text>
+  <text x="812" y="418" class="abl">대표 부분집합만 · sparse 제외 → 감도 병기(§3.2)</text>
+  <line x1="1158" y1="387" x2="1255" y2="308" stroke="#c9821a" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#arrowOrange)"/>
+  
+
+  <!-- LiDAR 상한 레인 -->
+  <rect x="50" y="490" width="500" height="100" rx="10" fill="#e9f0fc" stroke="#3b6fd4" stroke-width="2.5"/>
+  <text x="72" y="528" class="lane">항공 LiDAR 점군 — 완전측량 기준선(상한)</text>
+  <text x="72" y="562" class="laneLine">밀도 ~21 pt/m² · 라벨 확인만(지적도 기반)</text>
+  <path d="M 550 540 L 1330 540 L 1330 308" fill="none" stroke="#3b6fd4" stroke-width="2.5" stroke-dasharray="8 7" marker-end="url(#arrowBlue)"/>
+  <text x="600" y="528" class="flowLabel">표면 형성·점군화 생략 — 같은 ④⑤로 합류(입력 치환)</text>
+
+  <!-- 범례 -->
+  <rect x="52" y="660" width="26" height="26" rx="6" fill="#fdf3dc" stroke="#c9821a" stroke-width="2.5"/>
+  <text x="90" y="680" class="legend">개입 지점 = 연구 변수(점군 중간표현을 바꾸는 곳)</text>
+  <rect x="700" y="660" width="26" height="26" rx="6" fill="#f3f5f8" stroke="#aab4c2" stroke-width="2"/>
+  <text x="738" y="680" class="legend">고정 = 모든 입력 종류 공통(비교 공정성)</text>
+  <rect x="1270" y="660" width="26" height="26" rx="6" fill="#e9f0fc" stroke="#3b6fd4" stroke-width="2.5"/>
+  <text x="1308" y="680" class="legend">상한 레인(항공 LiDAR — 선수 아닌 기준선)</text>
+
+  <!-- 주석 -->
+  <text x="52" y="742" class="noteLine">주: 모든 영상 입력은 ④⑤를 공유(같은 조립기·같은 평가). ③의 주 트랙 = 원래 점군 그대로(§1.5, 07-05 개정) —</text>
+  <text x="52" y="772" class="noteLine">공용 점군화(semantic-TSDF)는 "차이가 점군화 탓이 아님"을 확인하는 귀속용 보조 ablation(sparse는 깊이맵이 없어 제외).</text>
+  <text x="52" y="802" class="noteLine">GS만 점군화가 필수(가우시안은 표면 샘플이 아님) — 그 점군화는 GS 시스템의 일부로 사전등록(빈7).</text>
+  <text x="52" y="832" class="noteLine">코드명·구 표기는 부록 A 용어 대장, 좌표·높이 기준은 §1.6. (v2 — v1.14 규칙 반영 · 구판 v1은 figs/에 보존)</text>
+</svg>
