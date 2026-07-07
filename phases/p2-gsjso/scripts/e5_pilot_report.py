@@ -434,7 +434,7 @@ def build_argparser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--train-run-dir", default="phases/p2-gsjso/runs/e5p_train_20260707_C001")
     parser.add_argument("--gate-run-dir", default="phases/p0-audit/runs/e5p_gate_20260707_C001")
-    parser.add_argument("--fig-dir", default="figs/e5_pilot")
+    parser.add_argument("--fig-dir", default="docs/figs/e5_pilot")
     parser.add_argument("--report", default="docs/W_E5_pilot_gate.md")
     return parser
 

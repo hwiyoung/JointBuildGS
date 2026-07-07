@@ -40,7 +40,7 @@ DETAIL_CSV = Path("docs/e5_pilot_substantiveness_detail.csv")
 SUMMARY_CSV = Path("docs/e5_pilot_substantiveness_summary.csv")
 PAIR_CSV = Path("docs/e5_pilot_substantiveness_pair_clean.csv")
 SELECTION_CSV = Path("docs/e5_pilot_substantiveness_panel_selection.csv")
-FIG_DIR = Path("figs/e5_pilot/subst")
+FIG_DIR = Path("docs/figs/e5_pilot/subst")
 RUN_DIR = Path("phases/p2-gsjso/runs/20260707_e5_pilot_subst")
 
 RAW_POINTCLOUDS = {

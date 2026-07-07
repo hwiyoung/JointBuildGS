@@ -2,7 +2,7 @@
 
 > **성격**: 원격 회신(`docs/W_E5_pilot_substantiveness.md`)과 게이트 재료(`docs/W_E5_pilot_gate.md`)를 검수하고, 재현·일반화 게이트를 정량+정성으로 **판정에 회부**한다.
 > **판정 금지 딱지**: 이 문서는 검수 사실(수치 재계산 일치 여부·정의 이탈·그림 충실도)만 적는다. 게이트 통과/실패, 실질 충분/불충분 같은 **판정 문구는 쓰지 않는다 — 판정은 김휘영.**
-> 검수 방법: 세부표 `e5_pilot_substantiveness_detail.csv`(108행 = 18동 × 3 씨앗 × 2 씨드)에서 모든 집계를 **독립 재계산**하고, `figs/e5_pilot/subst/`의 그림 14장을 직접 열어 확인했다. CRS EPSG:25832.
+> 검수 방법: 세부표 `e5_pilot_substantiveness_detail.csv`(108행 = 18동 × 3 씨앗 × 2 씨드)에서 모든 집계를 **독립 재계산**하고, `docs/figs/e5_pilot/subst/`의 그림 14장을 직접 열어 확인했다. CRS EPSG:25832.
 
 ---
 

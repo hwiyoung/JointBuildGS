@@ -1,0 +1,16 @@
+run_id: 20260707_e5_c001_gsdiag
+created_utc: 2026-07-07T14:14:43.160814+00:00
+task: E5 C001 GS diagnostic
+mode: read-only; no training; no recipe change; no Roofer rerun; no verdict
+crs: EPSG:25832
+git_branch: feat/p2-structure-learn
+git_head: f73c1a331588d88afe55233e8fd0f9c585efa98e
+docker_image: jointbuildgs-p0-tools:t0
+script: phases/p2-gsjso/scripts/e5_c001_gsdiag.py
+readout: readout(gssem; semantic-TSDF[minobs3, voxel0.05]; Roofer eps0.3/minpts15/complexity0.888)
+height_frame_gs_raw_sparse_raw_acmp_shift_m: -45.7
+height_frame_raw_dense_lidar_shift_m: 0
+render_depth_saved: false
+gaussian_ckpt_available: true
+flattening_attribution: proxy_only_classified_pointcloud_plus_acmp
+figures: 6

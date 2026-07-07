@@ -1,0 +1,6 @@
+question,observation,density_delta_mean,coverage_delta_mean,noise_gain_m_median,routing
+GS가 자기 입력을 개선하나,GS-dense vs raw-dense median/mean pair deltas,34.8165,-0.0769,-0.6934,negative_noise_gain_or_mixed_density_coverage_observed
+영상 탓인가 방법 탓인가,both_fail_or_invalid=2; both_have_success=9; common_texture_limit_proxy=1; gs_only_success=4; method_or_acmp_proxy_texture_unknown=2,,,,proxy_video_layer_only
+평판화는 깊이인가 readout인가,gs_depth_or_gs_readout_proxy=5; not_built_no_flattening_localization=6; readout_roofer_proxy=6; structure_survived_proxy=1,,,,render_depth_absent_proxy
+생성 실패 뿌리,collapse_invalid_or_rms_tail=19; no_planes=17; no_points=30,,,,root_pointcloud_status_linked
+유효성 오류,duplicate_degenerate=3; face_orientation=5; non_closed_shell=9; self_intersection=2,,,,val3dity_report_reparsed

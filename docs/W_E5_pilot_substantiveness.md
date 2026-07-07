@@ -41,25 +41,25 @@
 
 ## 그림
 
-- 지붕면 수 산점도: `figs/e5_pilot/subst/scatter_roofplanes_by_seed.png`.
-- RMSE 분포: `figs/e5_pilot/subst/rmse_hist_by_seed.png`.
-- 결손 전수 그림: `figs/e5_pilot/subst/pathology_all_shell.png`.
-- 과분할 전수 그림: `figs/e5_pilot/subst/pathology_all_overseg.png`.
+- 지붕면 수 산점도: `docs/figs/e5_pilot/subst/scatter_roofplanes_by_seed.png`.
+- RMSE 분포: `docs/figs/e5_pilot/subst/rmse_hist_by_seed.png`.
+- 결손 전수 그림: `docs/figs/e5_pilot/subst/pathology_all_shell.png`.
+- 과분할 전수 그림: `docs/figs/e5_pilot/subst/pathology_all_overseg.png`.
 
 ## 정성 패널 선정
 
 | 유형 | 선정 규칙 | 씨앗 | 씨드 | building_id | ref_roof_planes | gs_roof_planes | rf_rmse_lod22 | primary_label | clean | figure |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 구조 일치 대표 | 클린 중 RMSE 중앙값에 가장 가까움 | sparse | r2 | DEBY_LOD2_108247351 | 1 | 1 | 2.551575 | 구조 일치 | True | figs/e5_pilot/subst/panel_typical_clean_sparse_r2_DEBY_LOD2_108247351.png |
-| 무텍스처 복구 | 8568391·8568392 중 has_lod22 후 RMSE 낮은 행 | sparse | r1 | DEBY_LOD2_8568391 | 1 | 2 | 12.204517 | 과분할 | False | figs/e5_pilot/subst/panel_textureless_sparse_r1_DEBY_LOD2_8568391.png |
-| 씨드 변동 | r1/r2 has_lod22 flip 중 building_id 사전순 첫 행 | sparse | r1 | DEBY_LOD2_108247350 | 1 | 0 |  | 결손 | False | figs/e5_pilot/subst/panel_seed_flip_sparse_DEBY_LOD2_108247350.png |
-| 구조 일치 대표 | 클린 중 RMSE 중앙값에 가장 가까움 | dense | r2 | DEBY_LOD2_60098 | 2 | 2 | 0.933127 | 구조 일치 | True | figs/e5_pilot/subst/panel_typical_clean_dense_r2_DEBY_LOD2_60098.png |
-| 무텍스처 복구 | 8568391·8568392 중 has_lod22 후 RMSE 낮은 행 | dense | r2 | DEBY_LOD2_8568391 | 1 | 1 | 0.007875 | 구조 일치 | True | figs/e5_pilot/subst/panel_textureless_dense_r2_DEBY_LOD2_8568391.png |
-| 씨드 변동 | r1/r2 has_lod22 flip 중 building_id 사전순 첫 행 | dense | r1 | DEBY_LOD2_108247350 | 1 | 0 |  | 결손 | False | figs/e5_pilot/subst/panel_seed_flip_dense_DEBY_LOD2_108247350.png |
-| 구조 일치 대표 | 클린 중 RMSE 중앙값에 가장 가까움 | acmp | r2 | DEBY_LOD2_4907186 | 2 | 2 | 2.357641 | 구조 일치 | True | figs/e5_pilot/subst/panel_typical_clean_acmp_r2_DEBY_LOD2_4907186.png |
-| 씨드 변동 | r1/r2 has_lod22 flip 중 building_id 사전순 첫 행 | acmp | r1 | DEBY_LOD2_4907194 | 2 | 0 |  | 결손 | False | figs/e5_pilot/subst/panel_seed_flip_acmp_DEBY_LOD2_4907194.png |
-| ACMP 회귀 | 지정 ID 108247350·108247351 중 GS 미조립 행 | acmp | r1 | DEBY_LOD2_108247350 | 1 | 0 |  | 결손 | False | figs/e5_pilot/subst/panel_acmp_regression_r1_DEBY_LOD2_108247350.png |
-| ACMP 회귀 | 지정 ID 108247350·108247351 중 GS 미조립 행 | acmp | r1 | DEBY_LOD2_108247351 | 1 | 0 |  | 결손 | False | figs/e5_pilot/subst/panel_acmp_regression_r1_DEBY_LOD2_108247351.png |
+| 구조 일치 대표 | 클린 중 RMSE 중앙값에 가장 가까움 | sparse | r2 | DEBY_LOD2_108247351 | 1 | 1 | 2.551575 | 구조 일치 | True | docs/figs/e5_pilot/subst/panel_typical_clean_sparse_r2_DEBY_LOD2_108247351.png |
+| 무텍스처 복구 | 8568391·8568392 중 has_lod22 후 RMSE 낮은 행 | sparse | r1 | DEBY_LOD2_8568391 | 1 | 2 | 12.204517 | 과분할 | False | docs/figs/e5_pilot/subst/panel_textureless_sparse_r1_DEBY_LOD2_8568391.png |
+| 씨드 변동 | r1/r2 has_lod22 flip 중 building_id 사전순 첫 행 | sparse | r1 | DEBY_LOD2_108247350 | 1 | 0 |  | 결손 | False | docs/figs/e5_pilot/subst/panel_seed_flip_sparse_DEBY_LOD2_108247350.png |
+| 구조 일치 대표 | 클린 중 RMSE 중앙값에 가장 가까움 | dense | r2 | DEBY_LOD2_60098 | 2 | 2 | 0.933127 | 구조 일치 | True | docs/figs/e5_pilot/subst/panel_typical_clean_dense_r2_DEBY_LOD2_60098.png |
+| 무텍스처 복구 | 8568391·8568392 중 has_lod22 후 RMSE 낮은 행 | dense | r2 | DEBY_LOD2_8568391 | 1 | 1 | 0.007875 | 구조 일치 | True | docs/figs/e5_pilot/subst/panel_textureless_dense_r2_DEBY_LOD2_8568391.png |
+| 씨드 변동 | r1/r2 has_lod22 flip 중 building_id 사전순 첫 행 | dense | r1 | DEBY_LOD2_108247350 | 1 | 0 |  | 결손 | False | docs/figs/e5_pilot/subst/panel_seed_flip_dense_DEBY_LOD2_108247350.png |
+| 구조 일치 대표 | 클린 중 RMSE 중앙값에 가장 가까움 | acmp | r2 | DEBY_LOD2_4907186 | 2 | 2 | 2.357641 | 구조 일치 | True | docs/figs/e5_pilot/subst/panel_typical_clean_acmp_r2_DEBY_LOD2_4907186.png |
+| 씨드 변동 | r1/r2 has_lod22 flip 중 building_id 사전순 첫 행 | acmp | r1 | DEBY_LOD2_4907194 | 2 | 0 |  | 결손 | False | docs/figs/e5_pilot/subst/panel_seed_flip_acmp_DEBY_LOD2_4907194.png |
+| ACMP 회귀 | 지정 ID 108247350·108247351 중 GS 미조립 행 | acmp | r1 | DEBY_LOD2_108247350 | 1 | 0 |  | 결손 | False | docs/figs/e5_pilot/subst/panel_acmp_regression_r1_DEBY_LOD2_108247350.png |
+| ACMP 회귀 | 지정 ID 108247350·108247351 중 GS 미조립 행 | acmp | r1 | DEBY_LOD2_108247351 | 1 | 0 |  | 결손 | False | docs/figs/e5_pilot/subst/panel_acmp_regression_r1_DEBY_LOD2_108247351.png |
 
 ## 산출 표
 

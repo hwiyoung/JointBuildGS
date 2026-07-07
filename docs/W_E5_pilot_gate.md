@@ -39,8 +39,8 @@
 
 ## 그림 쌍
 
-- 생성 축: `figs/e5_pilot/e5_generation_DEBY_LOD2_8568391.png`.
-- 품질 축: `figs/e5_pilot/e5_quality_gs_e5_C001_dense_r1_DEBY_LOD2_4908178.png`. 대표 선정: 조립 3회 flip 우선, 없으면 `rf_rmse_lod22` 짝 델타 최대.
+- 생성 축: `docs/figs/e5_pilot/e5_generation_DEBY_LOD2_8568391.png`.
+- 품질 축: `docs/figs/e5_pilot/e5_quality_gs_e5_C001_dense_r1_DEBY_LOD2_4908178.png`. 대표 선정: 조립 3회 flip 우선, 없으면 `rf_rmse_lod22` 짝 델타 최대.
 
 ## 런 지문
 
