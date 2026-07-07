@@ -1,0 +1,15 @@
+run_id: 20260707_e5_pilot_subst
+created_utc: 2026-07-07T11:11:43.571561+00:00
+task: E5 pilot substantiveness classification and qualitative panels
+mode: read-only over existing six GS pilot runs; no retraining; no recipe change; no Roofer change; no gate verdict
+crs: EPSG:25832
+git_head: 361712bf89205f689cc3a5cb7bfb35326d2e230d
+git_branch: feat/p2-structure-learn
+docker_image: jointbuildgs-p0-tools:t0
+readout: readout(gssem; semantic-TSDF[minobs3, voxel0.05]; Roofer eps0.3/minpts15/complexity0.888)
+input_gate_run: phases/p0-audit/runs/e5p_gate_20260707_C001
+input_train_run: phases/p2-gsjso/runs/e5p_train_20260707_C001
+reference_lod2: phases/p0-audit/data/raw/lod2/*.gml
+w_d6_shape_correction: docs/W_D6_shape_audit.md; 4906969=stepped flat roof; curved roofs=0 in D6 set
+rmse_tail_upper_fence_m: 9.826100
+script: phases/p2-gsjso/scripts/e5_pilot_substantiveness.py
