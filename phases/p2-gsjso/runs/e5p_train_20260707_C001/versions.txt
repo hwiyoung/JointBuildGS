@@ -1,0 +1,31 @@
+run_id: e5p_train_20260707_C001
+created_utc: 2026-07-07T01:37:31.392958+00:00
+task: E5-B1 train prep C001 block crop
+mode: data/config preparation only; no training in this script
+crs: EPSG:25832
+git_head: 526d09b301e238ec43c155b01267c323f91f4c83
+git_branch: feat/p2-structure-learn
+docker_image: jointbuildgs:dev
+python: Python 3.11.15
+buffer_m: 20.0
+manifest: results/tum_transfer/e5_pilot/C001/C001_train_prep_manifest.json
+report: docs/e5_pilot_train_prep.md
+selected_views: 428
+sfm_points_clipped: 44016
+
+configs:
+  gs_e5_C001_sparse_r1: configs/tum_mob/e5_pilot/gs_e5_C001_sparse_r1.yaml
+  gs_e5_C001_sparse_r2: configs/tum_mob/e5_pilot/gs_e5_C001_sparse_r2.yaml
+  gs_e5_C001_dense_r1: configs/tum_mob/e5_pilot/gs_e5_C001_dense_r1.yaml
+  gs_e5_C001_dense_r2: configs/tum_mob/e5_pilot/gs_e5_C001_dense_r2.yaml
+  gs_e5_C001_acmp_r1: configs/tum_mob/e5_pilot/gs_e5_C001_acmp_r1.yaml
+  gs_e5_C001_acmp_r2: configs/tum_mob/e5_pilot/gs_e5_C001_acmp_r2.yaml
+
+training_runtime_observation:
+  first_run: gs_e5_C001_sparse_r1 elapsed_min=66.8 final_N=409546
+  after_first_run_remaining_estimate_min: 334.0
+  actual_remaining_5_runs_min: 345.4
+  total_training_elapsed_min_sum: 412.2
+  wall_clock_utc: 2026-07-07T01:42:41Z..2026-07-07T08:35:49Z
+  wall_clock_elapsed_min: 413.1
+  source: phases/p2-gsjso/runs/e5p_train_20260707_C001/train_fingerprints.csv

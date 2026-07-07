@@ -1,0 +1,153 @@
+--- configs/tum_mob/gs_d4_dense.yaml
++++ configs/tum_mob/e5_pilot/gs_e5_C001_dense_r1.yaml
+@@ -1,100 +1,77 @@
+-# P2-D4 (CORRECTED) — minimal "normalize cp only" re-train (flatten GS roof curvature).
+-# Base = gs_prior_full_dense.yaml (reported D). CORRECTION (2026-06-25, 김휘영): the earlier D4 OVER-APPLIED
+-# per-term normalization (photo 5.6 / nc 2.1 / sem 0.92) -> early photo/psnr lag. Corrected D4 keeps D's
+-# HEALTHY terms (photo 1.0, nc 0.05, sem 0.1, na 0.08) and surgically fixes only the 3 problem terms:
+-#   cp     : effective 0.08 -> 0.01  (de-dominate; cp share 68% -> ~31%, to photo parity)
+-#   depth  : 0.1 -> 0.03             (de-noise: CV 1.74 noisy MVS target -> lower pin)
+-#   normal : 0.15 -> 0               (remove noisy external MVS normal)
+-# Engine UNCHANGED (config-only). NOT a goalpost-moving variant — a config-error correction; re-locked as D4.
+-# Effective scalar = weight that multiplies the RAW loss in train.py loss_total
+-#   (cp = w_structure*w_structure_cp ; na = w_structure*w_structure_na ; others = their w_).
+-# Predicted weighted shares (D-run means): cp 31% / photo 31% / sem 19% / depth 17% / nc 2% / normal 0
+-#   -> no term > 40% (vs reported D cp 68%). See docs/W_D4_precheck.md / P2_D4_사양서_사전등록_20260625.md §2.
+-seed: 0
++seed: 1001
+ device: cuda
+-
+-data_root: /workspace/JointBuildGS/results/tum_transfer/data_geoidfix   # MUST-EQ
+-
+-init_pointcloud: /workspace/JointBuildGS/results/tum_transfer/mob_analysis/seed/seed_dense.ply   # MUST-EQ
++data_root: /workspace/JointBuildGS/results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20
++init_pointcloud: /workspace/JointBuildGS/results/tum_transfer/e5_pilot/C001/seeds/seed_dense_C001_buf20.ply
+ init_pointcloud_mode: concat
+-seed_protect: true                                                       # MUST-EQ
++seed_protect: true
+ seed_log_footprints: /workspace/JointBuildGS/results/tum_transfer/analysis/footprints_aoi.geojson
+ seed_log_buildings:
+-  - DEBY_LOD2_42364609
+-  - DEBY_LOD2_42364659
+-  - DEBY_LOD2_42364663
+-  - DEBY_LOD2_4907182
+-  - DEBY_LOD2_4907510
+-  - DEBY_LOD2_4908050
+-  - DEBY_LOD2_4908166
+-  - DEBY_LOD2_4908176
+-  - DEBY_LOD2_4906969
+-  - DEBY_LOD2_4908023
+-  - DEBY_LOD2_4906972
+-
++- DEBY_LOD2_108247349
++- DEBY_LOD2_108247350
++- DEBY_LOD2_108247351
++- DEBY_LOD2_4907184
++- DEBY_LOD2_4907185
++- DEBY_LOD2_4907186
++- DEBY_LOD2_4907188
++- DEBY_LOD2_4907194
++- DEBY_LOD2_4907195
++- DEBY_LOD2_4907198
++- DEBY_LOD2_4907199
++- DEBY_LOD2_4907202
++- DEBY_LOD2_4908168
++- DEBY_LOD2_4908178
++- DEBY_LOD2_4908179
++- DEBY_LOD2_60098
++- DEBY_LOD2_8568391
++- DEBY_LOD2_8568392
+ downscale: 1.0
+ sh_degree: 3
+ sh_up_every: 1000
+-
+-# === D4 (corrected) loss-balance: D-healthy terms kept, only cp/depth/normal fixed ===
+-w_photo: 1.0          # = D (kept; NOT 5.6)
+-
+-# --- Lever 1: depth/normal supervision (MVS maps under data_root/stereo) ---
+-w_depth: 0.03         # D4: 0.1 -> 0.03  (de-noise: CV 1.74 noisy target -> lower pin; valid-mask kept)
+-w_normal: 0.0         # D4: 0.15 -> 0    external MVS normal removed (noise + depth's noise partner)
++w_photo: 1.0
++w_depth: 0.03
++w_normal: 0.0
+ load_depth: true
+-load_normal: true     # maps still loaded (pipeline identical to D); weight 0 -> zero gradient, TB still logs loss_n
++load_normal: true
+ depth_scale: 1.0
+-# MUST-EQ schedule: base (photo+sem) settles 5k, depth ramps 5k->10k (normal ramp moot at w=0)
+ depth_warmup: 5000
+ depth_schedule: ramp
+ depth_ramp_steps: 5000
+ normal_warmup: 5000
+ normal_schedule: ramp
+ normal_ramp_steps: 5000
+-
+-w_nc: 0.05            # = D (kept; NOT 2.1 — over-constraint was the photo-lag culprit)
++w_nc: 0.05
+ w_distort: 0.0
+-photo_lam: 0.2        # MUST-EQ
+-
++photo_lam: 0.2
+ load_semantic: true
+-w_sem: 0.1            # = D (kept; NOT 0.92)
+-sem_detach_geometry: false   # MUST-EQ
+-
++w_sem: 0.1
++sem_detach_geometry: false
+ w_mutual: 0.0
+-
+-# --- Lever 2: structure reinforcement (surface-level G2) ---
+-# w_structure=1.0 so sub-weights ARE the effective scalars.
+-w_structure: 1.0      # D4: 0.08 -> 1.0  (carrier; effective set by sub-weights below)
+-w_structure_na: 0.08  # effective na = 1.0*0.08 = 0.08  (= D's effective na, kept)
+-w_structure_cp: 0.01  # effective cp = 1.0*0.01 = 0.01  (de-dominate: cp 68% -> ~31%, to photo parity)
+-structure_grouping: g2          # MUST-EQ (G2 current)
+-structure_voxel_size: 2.0       # MUST-EQ
+-structure_merge_n_cos: 0.92     # MUST-EQ
+-structure_merge_d_tol: 0.5      # MUST-EQ
+-structure_min_group: 30         # MUST-EQ
+-structure_warmup: 15000         # MUST-EQ (structure gate @15000)
+-structure_regroup_every: 1000   # MUST-EQ
+-
+-lr_means: 1.6e-4
+-lr_scales: 5.0e-3
+-lr_quats: 1.0e-3
+-lr_opacities: 5.0e-2
+-lr_sh0: 2.5e-3
+-lr_shN: 1.25e-4
+-lr_sem: 2.5e-3
+-
+-# densification: D dense settings — MUST-EQ (only seed-prune disabled via seed_protect)
++w_structure: 1.0
++w_structure_na: 0.08
++w_structure_cp: 0.01
++structure_grouping: g2
++structure_voxel_size: 2.0
++structure_merge_n_cos: 0.92
++structure_merge_d_tol: 0.5
++structure_min_group: 30
++structure_warmup: 15000
++structure_regroup_every: 1000
++lr_means: 0.00016
++lr_scales: 0.005
++lr_quats: 0.001
++lr_opacities: 0.05
++lr_sh0: 0.0025
++lr_shN: 0.000125
++lr_sem: 0.0025
+ prune_opa: 0.005
+-grow_grad2d: 1.0e-3
++grow_grad2d: 0.001
+ grow_scale3d: 0.01
+ prune_scale3d: 0.1
+ refine_start_iter: 500
+ refine_stop_iter: 20000
+ refine_every: 200
+ reset_every: 3000
+-
+-max_iter: 30000                 # MUST-EQ
++max_iter: 30000
+ eval_every: 2000
+ ckpt_every: 10000
+-out_dir: /workspace/JointBuildGS/results/tum_transfer/mob/gs_d4_dense
++out_dir: /workspace/JointBuildGS/results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_dense_r1
