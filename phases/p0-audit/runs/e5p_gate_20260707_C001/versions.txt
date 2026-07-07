@@ -1,0 +1,18 @@
+run_id: e5p_gate_20260707_C001
+created_utc: 2026-07-07T08:58:39.721864+00:00
+task: E5-B3 GS pilot Roofer assembly repeats
+mode: observation only; no recipe change; no gate verdict
+crs: EPSG:25832
+git_head: 3647987e70fb4818315f38fac86877e8eb32a05c
+git_branch: feat/p2-structure-learn
+docker_images:
+  gs_readout: jointbuildgs:dev
+  roofer_tools: jointbuildgs-p0-tools:t0 and P0 roofer compose service
+readout: readout(gssem; semantic-TSDF[minobs3, voxel0.05]; Roofer eps0.3/minpts15/complexity0.888)
+z_datum_history: E5 pilot GS: C001 cropped scene uses zeta -558.3 linked constants; output P_utm in EPSG:25832 ellipsoidal frame
+roofer_defaults: eps0.3/minpts15/complexity0.888 default family; no input-kind tuning
+repeats_per_training_run: 3
+buffer_m: 20.0
+outputs:
+  status: phases/p0-audit/runs/e5p_gate_20260707_C001/building_reconstruction_status.csv
+  prep_metrics: phases/p0-audit/runs/e5p_gate_20260707_C001/prep_metrics.csv

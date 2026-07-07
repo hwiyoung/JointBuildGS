@@ -3,6 +3,19 @@
 > 실패·예외는 숨기지 말고 기록 후 보고. P0 이슈는 `phases/p0-audit/docs/issues.md`.
 > 신설 2026-06-22 — 이번까지의 P2 및 P0→P2 전이(P0c) 실패를 백필. 시간순(최근 위).
 
+## E5 파일럿 B3 조립 — C001 근접 동 중복 산출 병합 실패 (2026-07-07)
+
+- **증상**: `e5p_gate_20260707_C001` 첫 조립 시 `sparse_r1/run_1` 병합 단계에서
+  `Duplicate CityObject id ... DEBY_LOD2_108247350`로 중단.
+- **원인**: C001의 근접 동에서는 동별 bbox Roofer 실행이 타깃 동뿐 아니라 이웃 동 CityJSONFeature도 함께 내보냄.
+  동별 실행 산출을 전부 병합하면 이웃 동이 여러 번 들어가 중복 id가 생긴다.
+- **처리**: Roofer 설정·입력 종류별 튜닝은 바꾸지 않고, `roofer_DEBY_LOD2_xxx_run_n` 산출에서 `xxx` 타깃 동 feature만
+  병합하도록 후처리 필터를 추가. 실패 중간 산출은
+  `phases/p0-audit/runs/e5p_gate_20260707_C001_failed_duplicate_20260707_0842`로 보존.
+- **추가 중단**: 재실행 중 val3dity report 디렉토리 미생성으로 report 저장이 실패해 유효성 열이 비게 되는 문제가 확인됨.
+  `val3dity/` 디렉토리를 실행 전 생성하도록 보강하고, 해당 중간 산출은
+  `phases/p0-audit/runs/e5p_gate_20260707_C001_failed_val3dity_path_20260707_0847`로 보존.
+
 ## D6 survey — 참조 roofType가 관찰 라벨과 불일치 / 곡면 0동 (2026-06-27)
 
 - **참조 `<bldg:roofType>`가 관찰 라벨과 어긋남 (전제 위반, 비-STOP)** — D6 survey 착수 지시는 "곡면 4906969·평지붕

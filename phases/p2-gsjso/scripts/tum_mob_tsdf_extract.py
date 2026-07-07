@@ -32,6 +32,8 @@ def main():
     ap.add_argument("--min-obs", type=int, default=3)
     ap.add_argument("--buffer", type=float, default=15.0)
     ap.add_argument("--geojson", default=f"{REPO}/results/tum_transfer/analysis/footprints_aoi.geojson")
+    ap.add_argument("--data-root", default=DENSE,
+                    help="COLMAP data root with images/sparse[/0] (default: original dense scene)")
     ap.add_argument("--max-views", type=int, default=0)
     ap.add_argument("--sh-degree", type=int, default=3)
     ap.add_argument("--targets", nargs="*", default=None,
@@ -73,18 +75,14 @@ def main():
         print("[sem] GS-semantic OFF (no sem_logits in ckpt or --no-sem); XYZ-only fusion")
     print(f"[model] N={means.shape[0]} ckpt={A.ckpt}")
 
-    cam = list(read_cameras_bin(f"{DENSE}/sparse/cameras.bin").values())[0]
-    K0 = cam.K(); W0, H0 = cam.width, cam.height
-    imgs = list(read_images_bin(f"{DENSE}/sparse/images.bin").values())
+    data_root = Path(A.data_root)
+    sparse_dir = data_root / "sparse"
+    if (sparse_dir / "0" / "cameras.bin").exists():
+        sparse_dir = sparse_dir / "0"
+    cams = read_cameras_bin(sparse_dir / "cameras.bin")
+    imgs = list(read_images_bin(sparse_dir / "images.bin").values())
     if A.max_views:
         imgs = imgs[:A.max_views]
-
-    s = 1.0 / A.downscale; W, H = int(round(W0 * s)), int(round(H0 * s))
-    K = K0.copy(); K[:2, :] *= s
-    Kt = torch.tensor(K, dtype=torch.float32, device=dev)
-    uu, vv = np.meshgrid(np.arange(W), np.arange(H)); uu = uu.ravel(); vv = vv.ravel()
-    ud = torch.tensor((uu - K[0, 2]) / K[0, 0], dtype=torch.float32, device=dev)
-    vd = torch.tensor((vv - K[1, 2]) / K[1, 1], dtype=torch.float32, device=dev)
 
     keylist = []; clslist = []; OFF = 1 << 20; MUL = 1 << 21
     def add_keys(P, cls=None):
@@ -100,6 +98,14 @@ def main():
 
     n_surf = 0
     for i, im in enumerate(imgs):
+        cam = cams[im.camera_id]
+        K0 = cam.K(); W0, H0 = cam.width, cam.height
+        s = 1.0 / A.downscale; W, H = int(round(W0 * s)), int(round(H0 * s))
+        K = K0.copy(); K[:2, :] *= s
+        Kt = torch.tensor(K, dtype=torch.float32, device=dev)
+        uu, vv = np.meshgrid(np.arange(W), np.arange(H)); uu = uu.ravel(); vv = vv.ravel()
+        ud = torch.tensor((uu - K[0, 2]) / K[0, 0], dtype=torch.float32, device=dev)
+        vd = torch.tensor((vv - K[1, 2]) / K[1, 1], dtype=torch.float32, device=dev)
         R = torch.tensor(im.R(), dtype=torch.float32, device=dev); t = torch.tensor(im.tvec, dtype=torch.float32, device=dev)
         vm = torch.eye(4, device=dev); vm[:3, :3] = R; vm[:3, 3] = t
         with torch.no_grad():
