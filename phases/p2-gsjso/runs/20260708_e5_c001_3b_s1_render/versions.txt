@@ -1,0 +1,38 @@
+# W_E5_C001 render/floater audit versions
+created_local=2026-07-08T20:47:24.972580+09:00
+branch=exp/3b-surface-restore
+head=9286a83306b25dedcd81ea3c9fb582178bb49b4b
+docker_image=jointbuildgs:dev
+script=phases/p2-gsjso/scripts/e5_c001_render_audit.py
+data_root=results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20
+runs_root=results/tum_transfer/e5_3b_s1/C001/runs
+readout_root=results/tum_transfer/e5_3b_s1/C001/readout_ablation/base
+max_render_views=4
+render_views_total=9
+target_extra_views=5
+training=0
+formal_pointcloudification=0
+formal_reassembly=0
+verdict=0
+config_constants={"prune_opa": 0.005, "readout": "semantic-TSDF minobs3 / voxel0.05 / alpha0.5 / SOR", "seed_protect": true, "sh_degree": 3, "w_depth": 0.03, "w_distort": 0.0}
+
+inputs:
+- phases/p2-gsjso/runs/20260708_e5_c001_3b_s1/train_fingerprints.csv sha256=4604e86bce66dff90e87a2723b817a2eadd858695eecad0770b089325dbdf1f5
+- phases/p2-gsjso/runs/20260708_e5_c001_3b_s1/readout_fingerprints.csv sha256=a33b5311a2bb163af3da003f3611f4bdd17e961b2d20dd71fcfbe0bddb1ea44e
+- phases/p2-gsjso/runs/20260707_e5_c001_gsdiag/snapshots/e5_c001_gsdiag_video_layer.csv sha256=c51afe25e5032d1ce8d9ed68d4e5efc0042d5261e0953caa593255ae259c9f50
+- docs/lowtex_v5.csv sha256=848c419c8b576d5ceceecb25666b71804539c1ecf427b8df659284eb88f10d31
+- docs/projection_zeta_ls.csv sha256=454d4d22e00cec99cfac1516ad5ebe97c0cf18d94293901210df63e1d092d8c1
+
+outputs:
+- /workspace/JointBuildGS/docs/e5_c001_3b_s1_render_eval_metrics.csv
+- /workspace/JointBuildGS/docs/e5_c001_3b_s1_render_floater_metrics.csv
+- /workspace/JointBuildGS/docs/e5_c001_3b_s1_render_depth_supervision.csv
+- /workspace/JointBuildGS/docs/e5_c001_3b_s1_render_readout_coverage.csv
+- /workspace/JointBuildGS/docs/e5_c001_3b_s1_render_condition_strata.csv
+- /workspace/JointBuildGS/docs/e5_c001_3b_s1_render_cause_attribution.csv
+- /workspace/JointBuildGS/docs/W_E5_C001_3b_S1_render_audit_tmp.md
+- /workspace/JointBuildGS/figs/e5_c001_3b_s1/render/flattening_location_cases.png
+- /workspace/JointBuildGS/figs/e5_c001_3b_s1/render/floater_distribution.png
+- /workspace/JointBuildGS/figs/e5_c001_3b_s1/render/readout_prepost_coverage.png
+- /workspace/JointBuildGS/figs/e5_c001_3b_s1/render/render_depth_vs_mvs.png
+- /workspace/JointBuildGS/figs/e5_c001_3b_s1/render/sh_comparison.png

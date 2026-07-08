@@ -1,0 +1,8 @@
+failure_axis,candidate_cause,evidence_metric,value,observation
+coverage_collapse,readout_minobs_sor_discard,mean(drop_render_to_minobs + drop_minobs_to_sor),0.37884930112481496,positive means sampled render support exceeds retained TSDF/SOR footprint coverage
+coverage_collapse,render_depth_support_absent,mean(render_depth_backproj_sample_pre_readout coverage),0.6232045140048407,low sampled pre-readout footprint coverage means the checkpoint render already supplies little roof support
+coverage_collapse,mvs_depth_no_signal_texture_proxy,median MVS valid fraction on semantic roof pixels,0.9268428594172903,low roof valid-mask coverage means depth supervision was sparse on roof pixels
+coverage_collapse_or_flattening,floater_or_degenerate_gaussians,mean off-seed>1m proxy + elongated>10 fraction,1.1724738474563983,seed-distance proxy is not surface truth; it flags drift away from initialization support
+flattening_or_depth_error,sh_view_dependent_absorption,mean PSNR gain SH3-SH0; depth MAE delta SH3-SH0,2.7401771699940927,depth_mae_delta_sh3_minus_sh0=0.0000; large PSNR gain with non-improved depth suggests appearance absorbs error
+flattening_or_depth_error,render_depth_itself,mean SH3 depth MAE vs MVS valid pixels,6.930997629960378,"MVS depth is a baseline signal, not final geometric truth"
+condition_strata,texture_observation_interaction,target case rows available,3.0,4907184/60098/8568391 retained as named strata cases

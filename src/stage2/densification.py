@@ -12,7 +12,7 @@ from typing import Dict, Tuple
 import torch
 import torch.nn as nn
 from gsplat.strategy import DefaultStrategy
-from gsplat.strategy.ops import remove
+from gsplat.strategy.ops import duplicate, remove, split
 
 from .model import GaussianModel2D
 
@@ -122,3 +122,90 @@ def build_seed_protect_strategy(**kwargs) -> SeedProtectStrategy:
     """Same args/defaults as build_strategy, but seeds (state['is_seed']) are prune-protected."""
     base = build_strategy(**kwargs)
     return SeedProtectStrategy(**{f.name: getattr(base, f.name) for f in __import__("dataclasses").fields(base)})
+
+
+class ElongationFilterStrategy(DefaultStrategy):
+    """DefaultStrategy with CityGSV2-style axis-ratio gating before densification.
+
+    The upstream CityGSV2 gate is min(scale)/max(scale) > 0.01 for 3D Gaussians.
+    This repo's primitives are 2DGS surfels with scale[2] fixed near zero, so the
+    gate is applied to the two in-plane scales only.
+    """
+
+    axis_ratio_threshold: float = 0.01
+
+    def _densify_candidate_mask(self, params, state):
+        import torch as _torch
+
+        scales = _torch.exp(params["scales"])
+        in_plane = scales[:, :2]
+        axis_ratio = in_plane.min(dim=-1).values / in_plane.max(dim=-1).values.clamp_min(1e-12)
+        return axis_ratio > float(self.axis_ratio_threshold)
+
+    @torch.no_grad()
+    def _grow_gs(self, params, optimizers, state, step):  # type: ignore[override]
+        count = state["count"]
+        grads = state["grad2d"] / count.clamp_min(1)
+        device = grads.device
+
+        ratio_ok = self._densify_candidate_mask(params, state)
+        state["elongation_filter_blocked"] = int((~ratio_ok).sum().item())
+        state["elongation_axis_ratio_threshold"] = float(self.axis_ratio_threshold)
+
+        is_grad_high = grads > self.grow_grad2d
+        is_small = (
+            torch.exp(params["scales"]).max(dim=-1).values
+            <= self.grow_scale3d * state["scene_scale"]
+        )
+        is_dupli = is_grad_high & is_small & ratio_ok
+        n_dupli = int(is_dupli.sum().item())
+
+        is_large = ~is_small
+        is_split = is_grad_high & is_large & ratio_ok
+        if step < self.refine_scale2d_stop_iter:
+            is_split |= (state["radii"] > self.grow_scale2d) & ratio_ok
+        n_split = int(is_split.sum().item())
+
+        if n_dupli > 0:
+            duplicate(params=params, optimizers=optimizers, state=state, mask=is_dupli)
+
+        is_split = torch.cat(
+            [
+                is_split,
+                torch.zeros(n_dupli, dtype=torch.bool, device=device),
+            ]
+        )
+
+        if n_split > 0:
+            split(
+                params=params,
+                optimizers=optimizers,
+                state=state,
+                mask=is_split,
+                revised_opacity=self.revised_opacity,
+            )
+        return n_dupli, n_split
+
+
+class SeedProtectElongationFilterStrategy(ElongationFilterStrategy, SeedProtectStrategy):
+    """Combine seed opacity-prune protection with elongation-gated densification."""
+
+
+def _clone_strategy(base, cls, *, axis_ratio_threshold: float | None = None):
+    strategy = cls(**{f.name: getattr(base, f.name) for f in __import__("dataclasses").fields(base)})
+    if axis_ratio_threshold is not None:
+        strategy.axis_ratio_threshold = float(axis_ratio_threshold)
+    return strategy
+
+
+def build_elongation_filter_strategy(axis_ratio_threshold: float = 0.01, **kwargs) -> ElongationFilterStrategy:
+    base = build_strategy(**kwargs)
+    return _clone_strategy(base, ElongationFilterStrategy, axis_ratio_threshold=axis_ratio_threshold)
+
+
+def build_seed_protect_elongation_filter_strategy(
+    axis_ratio_threshold: float = 0.01,
+    **kwargs,
+) -> SeedProtectElongationFilterStrategy:
+    base = build_strategy(**kwargs)
+    return _clone_strategy(base, SeedProtectElongationFilterStrategy, axis_ratio_threshold=axis_ratio_threshold)

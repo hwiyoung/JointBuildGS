@@ -88,6 +88,7 @@ def parse_args() -> argparse.Namespace:
     ap.add_argument("--data-root", default="results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20")
     ap.add_argument("--readout-root", default="results/tum_transfer/e5_pilot/C001/readout")
     ap.add_argument("--seed-root", default="results/tum_transfer/e5_pilot/C001/seeds")
+    ap.add_argument("--readout-setting", default=None, help="Optional setting filter for readout_fingerprints.csv rows.")
     ap.add_argument("--footprints", default="phases/p0-audit/data/work/footprints/lod2_ground_plan.geojson")
     ap.add_argument("--train-fingerprints", default="phases/p2-gsjso/runs/e5p_train_20260707_C001/train_fingerprints.csv")
     ap.add_argument("--readout-fingerprints", default="phases/p2-gsjso/runs/e5p_train_20260707_C001/readout_fingerprints.csv")
@@ -97,6 +98,7 @@ def parse_args() -> argparse.Namespace:
     ap.add_argument("--out-run", default="phases/p2-gsjso/runs/20260708_e5_c001_render_audit")
     ap.add_argument("--fig-dir", default="docs/figs/e5_c001_render")
     ap.add_argument("--doc-path", default="docs/W_E5_C001_렌더플로터점검.md")
+    ap.add_argument("--docs-prefix", default="docs/e5_c001_render", help="Prefix for CSV outputs before _eval_metrics.csv, etc.")
     ap.add_argument("--max-render-views", type=int, default=4)
     ap.add_argument("--max-depth-coverage-views", type=int, default=0, help="0 means all frames.")
     ap.add_argument("--max-offsurface-sample", type=int, default=200000)
@@ -955,6 +957,8 @@ def main() -> None:
             torch.cuda.empty_cache()
 
     for _, row in readout_fp.iterrows():
+        if args.readout_setting and str(row.get("setting", "")) != args.readout_setting:
+            continue
         source_run = row["run_name"]
         npz_path = repo / row["tsdf_npz"]
         if npz_path.exists():
@@ -980,13 +984,14 @@ def main() -> None:
 
     cause_df = infer_cause_table(render_df, readout_cov_df, floater_df, depth_cov_df, condition_df)
 
+    csv_prefix = repo / args.docs_prefix
     docs_csvs = [
-        repo / "docs/e5_c001_render_eval_metrics.csv",
-        repo / "docs/e5_c001_render_floater_metrics.csv",
-        repo / "docs/e5_c001_render_depth_supervision.csv",
-        repo / "docs/e5_c001_render_readout_coverage.csv",
-        repo / "docs/e5_c001_render_condition_strata.csv",
-        repo / "docs/e5_c001_render_cause_attribution.csv",
+        csv_prefix.with_name(csv_prefix.name + "_eval_metrics.csv"),
+        csv_prefix.with_name(csv_prefix.name + "_floater_metrics.csv"),
+        csv_prefix.with_name(csv_prefix.name + "_depth_supervision.csv"),
+        csv_prefix.with_name(csv_prefix.name + "_readout_coverage.csv"),
+        csv_prefix.with_name(csv_prefix.name + "_condition_strata.csv"),
+        csv_prefix.with_name(csv_prefix.name + "_cause_attribution.csv"),
     ]
     render_df.to_csv(docs_csvs[0], index=False)
     floater_df.to_csv(docs_csvs[1], index=False)

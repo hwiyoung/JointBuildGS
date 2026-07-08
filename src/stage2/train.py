@@ -169,6 +169,41 @@ def _ramp_weight_scale(it: int, warmup: int, schedule: str, ramp_steps: int) -> 
     raise ValueError(f"Unsupported schedule={schedule!r}; expected 'constant' or 'ramp'")
 
 
+def _scheduled_weight(
+    base_weight: float,
+    it: int,
+    warmup: int,
+    schedule: str,
+    ramp_steps: int,
+    *,
+    final_weight: Optional[float] = None,
+    final_factor: Optional[float] = None,
+) -> float:
+    """Return the effective scalar for depth/normal priors.
+
+    Existing configs use ``constant`` or ``ramp`` and are unchanged. ``exp_decay``
+    mirrors CityGSV2's multiplicative decay, with an optional absolute final
+    weight for experiments that state the endpoint directly.
+    """
+    if schedule in ("constant", "ramp"):
+        return base_weight * _ramp_weight_scale(it, warmup, schedule, ramp_steps)
+    if it < warmup:
+        return 0.0
+    if schedule in ("exp_decay", "exponential_decay"):
+        if ramp_steps <= 0:
+            ramp_steps = max(1, it - warmup + 1)
+        if final_weight is None:
+            factor = 0.01 if final_factor is None else float(final_factor)
+            final_weight = float(base_weight) * factor
+        start = max(float(base_weight), 1e-12)
+        end = max(float(final_weight), 1e-12)
+        t = min(1.0, float(it - warmup + 1) / float(ramp_steps))
+        return float(math.exp(math.log(start) * (1.0 - t) + math.log(end) * t))
+    raise ValueError(
+        f"Unsupported schedule={schedule!r}; expected 'constant', 'ramp', or 'exp_decay'"
+    )
+
+
 def _height_values(centers: torch.Tensor, e_gravity: torch.Tensor) -> torch.Tensor:
     ax = int(e_gravity.abs().argmax().item())
     sign = -torch.sign(e_gravity[ax])
@@ -442,6 +477,7 @@ def main():
 
     # scene scale (for DefaultStrategy)
     scene_scale = float(np.linalg.norm(ds.points_xyz - ds.points_xyz.mean(0), axis=1).mean())
+    scene_extent_bbox = float(np.linalg.norm(ds.points_xyz.max(axis=0) - ds.points_xyz.min(axis=0)))
 
     _strat_kwargs = dict(
         prune_opa=cfg.get("prune_opa", 0.005),
@@ -455,9 +491,23 @@ def main():
     )
     # (P2 make-or-break C) seed_protect: MVS-seed Gaussians are exempt from opacity-prune.
     seed_protect = bool(cfg.get("seed_protect", False)) and (mvs_seed_mask is not None)
-    if seed_protect:
+    elongation_filter = bool(cfg.get("elongation_filter", False))
+    elongation_axis_ratio_threshold = float(cfg.get("elongation_axis_ratio_threshold", 0.01))
+    if seed_protect and elongation_filter:
+        from .densification import build_seed_protect_elongation_filter_strategy
+        strategy = build_seed_protect_elongation_filter_strategy(
+            axis_ratio_threshold=elongation_axis_ratio_threshold,
+            **_strat_kwargs,
+        )
+    elif seed_protect:
         from .densification import build_seed_protect_strategy
         strategy = build_seed_protect_strategy(**_strat_kwargs)
+    elif elongation_filter:
+        from .densification import build_elongation_filter_strategy
+        strategy = build_elongation_filter_strategy(
+            axis_ratio_threshold=elongation_axis_ratio_threshold,
+            **_strat_kwargs,
+        )
     else:
         strategy = build_strategy(**_strat_kwargs)
     strategy.check_sanity(params, optimizers)
@@ -470,6 +520,11 @@ def main():
         seed_log_boxes = _load_footprint_boxes_local(
             cfg.get("seed_log_footprints"), cfg.get("world_offset", [690953.0, 5336071.0, 604.0]),
             cfg.get("seed_log_buildings"))
+    if elongation_filter:
+        print(
+            f"[elongation-filter] in-plane min(scale0,scale1)/max(scale0,scale1) "
+            f"> {elongation_axis_ratio_threshold:g} required for densify"
+        )
 
     # ---------- logging ----------
     writer = SummaryWriter(out_dir / "tb")
@@ -484,11 +539,28 @@ def main():
     depth_warmup = int(cfg.get("depth_warmup", 0))
     depth_schedule = cfg.get("depth_schedule", "constant")
     depth_ramp_steps = int(cfg.get("depth_ramp_steps", 0))
+    depth_final_weight = cfg.get("depth_final_weight")
+    depth_final_factor = cfg.get("depth_final_factor")
     normal_warmup = int(cfg.get("normal_warmup", 0))
     normal_schedule = cfg.get("normal_schedule", "constant")
     normal_ramp_steps = int(cfg.get("normal_ramp_steps", 0))
+    normal_final_weight = cfg.get("normal_final_weight")
+    normal_final_factor = cfg.get("normal_final_factor")
     w_nc = cfg.get("w_nc", 0.05)
     w_distort = cfg.get("w_distort", 100.0)   # 2DGS distortion reg
+    distort_normalization = cfg.get("distort_normalization", "none")
+    distort_norm_denominator = 1.0
+    if distort_normalization in ("none", None):
+        distort_normalization = "none"
+    elif distort_normalization in ("scene_extent_sq", "scene_bbox_sq"):
+        distort_norm_denominator = max(scene_extent_bbox * scene_extent_bbox, 1e-12)
+    elif distort_normalization in ("scene_scale_sq", "strategy_scene_scale_sq"):
+        distort_norm_denominator = max(scene_scale * scene_scale, 1e-12)
+    else:
+        raise ValueError(
+            f"Unsupported distort_normalization={distort_normalization!r}; "
+            "expected none|scene_extent_sq|scene_scale_sq"
+        )
     w_sem = cfg.get("w_sem", 0.1)
     # P2 impl ②: release L_sem geometry detach so semantics can move geometry (default True
     # keeps the existing gradient-isolated behaviour, so the other configs are unaffected).
@@ -628,6 +700,30 @@ def main():
         print(f"[prior] depth maps on {n_d}/{len(ds.frames)} frames, normal maps on {n_n}/{len(ds.frames)} "
               f"(w_depth={w_depth} sched={depth_schedule}@{depth_warmup}+{depth_ramp_steps}; "
               f"w_normal={w_normal} sched={normal_schedule}@{normal_warmup}+{normal_ramp_steps})")
+    if w_distort > 0:
+        print(
+            f"[distort] w_distort={w_distort:g} normalization={distort_normalization} "
+            f"denom={distort_norm_denominator:.6g} "
+            f"(scene_extent_bbox={scene_extent_bbox:.6g}m; scene_scale={scene_scale:.6g}m)"
+        )
+
+    effective_config = {
+        "scene_scale_strategy_m": scene_scale,
+        "scene_extent_bbox_m": scene_extent_bbox,
+        "distort_normalization": distort_normalization,
+        "distort_norm_denominator": distort_norm_denominator,
+        "distort_formula": "loss_distort = mean(rend_dist) / denominator; total += w_distort * loss_distort",
+        "depth_schedule": depth_schedule,
+        "depth_warmup": depth_warmup,
+        "depth_ramp_steps": depth_ramp_steps,
+        "depth_base_weight": w_depth,
+        "depth_final_weight": depth_final_weight,
+        "depth_final_factor": depth_final_factor,
+        "elongation_filter": elongation_filter,
+        "elongation_axis_ratio_threshold": elongation_axis_ratio_threshold,
+        "elongation_axis_ratio_formula": "min(exp(scale0), exp(scale1)) / max(exp(scale0), exp(scale1))",
+    }
+    (out_dir / "effective_config.json").write_text(json.dumps(effective_config, indent=2) + "\n")
 
     print(f"[train] max_iter={max_iter}  out={out_dir}")
     pbar = tqdm(range(max_iter), desc="train")
@@ -662,24 +758,43 @@ def main():
             d_gt = batch["depth"].to(device)
             d_m = batch["depth_mask"].to(device)
             loss_depth = L.l_depth(depth_pred, d_gt, d_m)
-            w_depth_eff = w_depth * _ramp_weight_scale(it, depth_warmup, depth_schedule, depth_ramp_steps)
+            w_depth_eff = _scheduled_weight(
+                w_depth,
+                it,
+                depth_warmup,
+                depth_schedule,
+                depth_ramp_steps,
+                final_weight=depth_final_weight,
+                final_factor=depth_final_factor,
+            )
             loss_total = loss_total + w_depth_eff * loss_depth
         else:
             loss_depth = torch.tensor(0.0, device=device)
+            w_depth_eff = 0.0
 
         if "normal" in batch:
             n_gt = batch["normal"].to(device)
             n_m = batch["normal_mask"].to(device)
             loss_n = L.l_normal(n_render, n_gt, w2c, n_m)
-            w_normal_eff = w_normal * _ramp_weight_scale(it, normal_warmup, normal_schedule, normal_ramp_steps)
+            w_normal_eff = _scheduled_weight(
+                w_normal,
+                it,
+                normal_warmup,
+                normal_schedule,
+                normal_ramp_steps,
+                final_weight=normal_final_weight,
+                final_factor=normal_final_factor,
+            )
             loss_total = loss_total + w_normal_eff * loss_n
         else:
             loss_n = torch.tensor(0.0, device=device)
+            w_normal_eff = 0.0
 
         loss_nc = L.l_nc(n_render, n_surf, alpha=alpha.detach())
         loss_total = loss_total + w_nc * loss_nc
 
-        loss_dist = distort.mean()
+        loss_dist_raw = distort.mean()
+        loss_dist = loss_dist_raw / distort_norm_denominator
         loss_total = loss_total + w_distort * loss_dist
 
         # L_mvc (Phase B / B1): self-supervised multi-view geometric consistency.
@@ -885,6 +1000,21 @@ def main():
             writer.add_scalar("loss/normal", loss_n.item(), it)
             writer.add_scalar("loss/nc", loss_nc.item(), it)
             writer.add_scalar("loss/distort", loss_dist.item(), it)
+            writer.add_scalar("loss/distort_raw", loss_dist_raw.item(), it)
+            writer.add_scalar("loss_weight/depth", float(w_depth_eff), it)
+            writer.add_scalar("loss_weight/normal", float(w_normal_eff), it)
+            writer.add_scalar("loss_weight/distort", float(w_distort), it)
+            if elongation_filter:
+                writer.add_scalar(
+                    "stats/elongation_filter_blocked",
+                    int(strategy_state.get("elongation_filter_blocked", 0)),
+                    it,
+                )
+                writer.add_scalar(
+                    "stats/elongation_axis_ratio_threshold",
+                    float(strategy_state.get("elongation_axis_ratio_threshold", elongation_axis_ratio_threshold)),
+                    it,
+                )
             writer.add_scalar("loss/mvc", loss_mvc.item(), it)
             writer.add_scalar("loss/mvc_depth", float(loss_mvc_depth), it)
             writer.add_scalar("loss/mvc_normal", float(loss_mvc_normal), it)

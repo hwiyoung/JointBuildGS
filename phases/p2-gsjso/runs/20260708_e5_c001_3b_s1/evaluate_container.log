@@ -1,0 +1,2 @@
++ docker run --rm -i --user 1000:1000 -e E5_3B_S1_EVAL_CONTAINER=1 -e MPLCONFIGDIR=/tmp/matplotlib -v /media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS:/workspace/JointBuildGS -w /workspace/JointBuildGS jointbuildgs-p0-tools:t0 python3 phases/p2-gsjso/scripts/e5_c001_3b_s1.py evaluate --settings base voxel02
+{"report": "docs/W_E5_C001_3b_S1_readout_tmp.md", "metrics_rows": 108, "coverage_rows": 324, "figures": 3}
