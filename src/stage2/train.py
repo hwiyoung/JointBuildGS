@@ -491,17 +491,24 @@ def main():
     )
     # (P2 make-or-break C) seed_protect: MVS-seed Gaussians are exempt from opacity-prune.
     seed_protect = bool(cfg.get("seed_protect", False)) and (mvs_seed_mask is not None)
+    seed_protect_until_iter = cfg.get("seed_protect_until_iter")
+    if seed_protect_until_iter is not None:
+        seed_protect_until_iter = int(seed_protect_until_iter)
     elongation_filter = bool(cfg.get("elongation_filter", False))
     elongation_axis_ratio_threshold = float(cfg.get("elongation_axis_ratio_threshold", 0.01))
     if seed_protect and elongation_filter:
         from .densification import build_seed_protect_elongation_filter_strategy
         strategy = build_seed_protect_elongation_filter_strategy(
             axis_ratio_threshold=elongation_axis_ratio_threshold,
+            seed_protect_until_iter=seed_protect_until_iter,
             **_strat_kwargs,
         )
     elif seed_protect:
         from .densification import build_seed_protect_strategy
-        strategy = build_seed_protect_strategy(**_strat_kwargs)
+        strategy = build_seed_protect_strategy(
+            seed_protect_until_iter=seed_protect_until_iter,
+            **_strat_kwargs,
+        )
     elif elongation_filter:
         from .densification import build_elongation_filter_strategy
         strategy = build_elongation_filter_strategy(
@@ -515,8 +522,9 @@ def main():
     seed_log_boxes = None
     if seed_protect:
         strategy_state["is_seed"] = torch.from_numpy(mvs_seed_mask).to(device)
+        release_msg = "for all refine steps" if seed_protect_until_iter is None else f"until iter {seed_protect_until_iter}"
         print(f"[seed-protect] protecting {int(mvs_seed_mask.sum())} MVS-seed Gaussians from prune "
-              f"(of {len(mvs_seed_mask)})")
+              f"(of {len(mvs_seed_mask)}) {release_msg}")
         seed_log_boxes = _load_footprint_boxes_local(
             cfg.get("seed_log_footprints"), cfg.get("world_offset", [690953.0, 5336071.0, 604.0]),
             cfg.get("seed_log_buildings"))
@@ -713,12 +721,24 @@ def main():
         "distort_normalization": distort_normalization,
         "distort_norm_denominator": distort_norm_denominator,
         "distort_formula": "loss_distort = mean(rend_dist) / denominator; total += w_distort * loss_distort",
+        "w_distort": w_distort,
         "depth_schedule": depth_schedule,
         "depth_warmup": depth_warmup,
         "depth_ramp_steps": depth_ramp_steps,
         "depth_base_weight": w_depth,
         "depth_final_weight": depth_final_weight,
         "depth_final_factor": depth_final_factor,
+        "seed_protect": seed_protect,
+        "seed_protect_until_iter": seed_protect_until_iter,
+        "prune_opa": _strat_kwargs["prune_opa"],
+        "grow_grad2d": _strat_kwargs["grow_grad2d"],
+        "grow_scale3d": _strat_kwargs["grow_scale3d"],
+        "prune_scale3d": _strat_kwargs["prune_scale3d"],
+        "refine_start_iter": _strat_kwargs["refine_start_iter"],
+        "refine_stop_iter": _strat_kwargs["refine_stop_iter"],
+        "refine_every": _strat_kwargs["refine_every"],
+        "reset_every": _strat_kwargs["reset_every"],
+        "final_prune_opa": float(cfg.get("final_prune_opa", 0.0) or 0.0),
         "elongation_filter": elongation_filter,
         "elongation_axis_ratio_threshold": elongation_axis_ratio_threshold,
         "elongation_axis_ratio_formula": "min(exp(scale0), exp(scale1)) / max(exp(scale0), exp(scale1))",
@@ -1015,6 +1035,26 @@ def main():
                     float(strategy_state.get("elongation_axis_ratio_threshold", elongation_axis_ratio_threshold)),
                     it,
                 )
+            grow_step = int(strategy_state.get("last_grow_step", -1))
+            prune_step = int(strategy_state.get("last_prune_step", -1))
+            grow_duplicated = int(strategy_state.get("last_grow_duplicated", 0)) if grow_step == it else 0
+            grow_split = int(strategy_state.get("last_grow_split", 0)) if grow_step == it else 0
+            prune_candidates = int(strategy_state.get("last_prune_candidates", 0)) if prune_step == it else 0
+            prune_seed_protected = int(strategy_state.get("last_prune_seed_protected", 0)) if prune_step == it else 0
+            pruned = int(strategy_state.get("last_pruned", 0)) if prune_step == it else 0
+            writer.add_scalar("stats/grow_duplicated", grow_duplicated, it)
+            writer.add_scalar("stats/grow_split", grow_split, it)
+            writer.add_scalar("stats/grow_total", grow_duplicated + grow_split, it)
+            writer.add_scalar("stats/cum_grow_duplicated", int(strategy_state.get("cum_grow_duplicated", 0)), it)
+            writer.add_scalar("stats/cum_grow_split", int(strategy_state.get("cum_grow_split", 0)), it)
+            writer.add_scalar("stats/prune_candidates", prune_candidates, it)
+            writer.add_scalar("stats/prune_seed_protected", prune_seed_protected, it)
+            writer.add_scalar("stats/pruned", pruned, it)
+            writer.add_scalar("stats/cum_prune_candidates", int(strategy_state.get("cum_prune_candidates", 0)), it)
+            writer.add_scalar("stats/cum_prune_seed_protected", int(strategy_state.get("cum_prune_seed_protected", 0)), it)
+            writer.add_scalar("stats/cum_pruned", int(strategy_state.get("cum_pruned", 0)), it)
+            writer.add_scalar("stats/seed_protect_active", int(bool(strategy_state.get("last_seed_protect_active", False))), it)
+            writer.add_scalar("stats/seed_protected_count", int(strategy_state.get("seed_protected_count", 0)), it)
             writer.add_scalar("loss/mvc", loss_mvc.item(), it)
             writer.add_scalar("loss/mvc_depth", float(loss_mvc_depth), it)
             writer.add_scalar("loss/mvc_normal", float(loss_mvc_normal), it)
@@ -1067,6 +1107,23 @@ def main():
                 "n_prim": model.num_points,
             }, out_dir / "ckpt" / f"step_{it:06d}.pt")
 
+    final_prune_opa = float(cfg.get("final_prune_opa", 0.0) or 0.0)
+    final_prune_candidates = 0
+    final_pruned = 0
+    if final_prune_opa > 0:
+        from gsplat.strategy.ops import remove
+
+        with torch.no_grad():
+            final_prune_mask = torch.sigmoid(params["opacities"].flatten()) < final_prune_opa
+            final_prune_candidates = int(final_prune_mask.sum().item())
+            if final_prune_candidates > 0:
+                remove(params=params, optimizers=optimizers, state=strategy_state, mask=final_prune_mask)
+                _sync_params_to_model(params, model)
+                final_pruned = final_prune_candidates
+        writer.add_scalar("stats/final_prune_candidates", final_prune_candidates, max_iter)
+        writer.add_scalar("stats/final_pruned", final_pruned, max_iter)
+        print(f"[final-prune] opa<{final_prune_opa:g}: candidates={final_prune_candidates} pruned={final_pruned}")
+
     # final ckpt — also export Stage 2 group structure for Stage 3 (Track 1,
     # RESEARCH_CONTEXT §15). voxel_size etc. match training defaults, so the
     # exported groups are exactly what L_structure was optimizing toward at
@@ -1075,6 +1132,9 @@ def main():
         "it": max_iter,
         "state_dict": model.state_dict(),
         "n_prim": model.num_points,
+        "final_prune_opa": final_prune_opa,
+        "final_prune_candidates": final_prune_candidates,
+        "final_pruned": final_pruned,
     }
     try:
         from .model import quat_to_rotmat

@@ -1,0 +1,25 @@
+run_id: 20260709_e5_c001_corrected_s1
+created_utc: 2026-07-08T18:29:05.836703+00:00
+task: E5 C001 ③a readout rerun ablation
+mode: readout-only ablation; no GS training; no GS recipe/loss/densification change; canonical readout unchanged; no verdict
+crs: EPSG:25832
+git_branch: exp/3b-surface-restore-corrected
+git_head: 498fe76c1f425866a29b2ee388eb9075cb3c76fd
+docker_images:
+  gs_readout: jointbuildgs:dev
+  roofer_tools: jointbuildgs-p0-tools:t0 and P0 roofer compose service
+script: phases/p2-gsjso/scripts/e5_c001_readout_ablation.py
+extractor_script: phases/p2-gsjso/scripts/e5_c001_readout_extract_ablation.py
+settings: [{"setting": "base", "min_obs": 3, "voxel": 0.05, "alpha": 0.5, "sor": "on", "sor_std": 2.0, "purpose": "S1 정본 readout 재현"}, {"setting": "voxel02", "min_obs": 3, "voxel": 0.02, "alpha": 0.5, "sor": "on", "sor_std": 2.0, "purpose": "S1 voxel0.02 천장 시험"}]
+input_checkpoints: results/tum_transfer/e5_corrected_s1/C001/runs/gs_e5_C001_*_*/ckpt/final.pt
+input_train_fingerprints: phases/p2-gsjso/runs/20260709_e5_c001_corrected_s1/train_fingerprints.csv
+canonical_gate_reference_unchanged: phases/p0-audit/runs/e5p_gate_20260707_C001
+p0_assembly_run: phases/p0-audit/runs/e5p_corrected_s1_20260709_C001
+outputs:
+  report: docs/W_E5_C001_corrected_S1_readout_tmp.md
+  coverage: docs/e5_c001_corrected_s1_coverage.csv
+  metrics: docs/e5_c001_corrected_s1_building_8way.csv
+  summary: docs/e5_c001_corrected_s1_summary.csv
+  figures: docs/figs/e5_c001_corrected_s1/readout
+inventory_rows: 6
+figures: 3

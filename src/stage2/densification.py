@@ -85,15 +85,17 @@ def build_strategy(
 
 
 class SeedProtectStrategy(DefaultStrategy):
-    """DefaultStrategy that NEVER prunes MVS-seed Gaussians (P2 make-or-break C: seed protection).
+    """DefaultStrategy with optional MVS-seed opacity-prune protection.
 
     Seeds are flagged by a bool tensor in ``state["is_seed"]`` registered at init. gsplat's
     remove/duplicate/split (ops.py) carry every per-Gaussian ``state`` tensor in lockstep with the
-    params, so the flag stays aligned automatically (seed lineage — split/dup children — inherits it).
+    params, so the flag stays aligned automatically (seed lineage children inherit it).
     Only ``_prune_gs`` is overridden: identical to gsplat 1.4.0 DefaultStrategy._prune_gs but with
-    ``is_prune &= ~is_seed`` so seeds survive opacity-prune (and reset_opa, which only lowers opacity).
+    an optional ``is_prune &= ~is_seed`` while protection is active.
     PINNED to gsplat 1.4.0 prune logic — re-sync if gsplat is upgraded.
     """
+
+    seed_protect_until_iter: int | None = None
 
     def _prune_gs(self, params, optimizers, state, step):  # type: ignore[override]
         import torch as _torch
@@ -108,20 +110,36 @@ class SeedProtectStrategy(DefaultStrategy):
                 is_too_big |= state["radii"] > self.prune_scale2d
             is_prune = is_prune | is_too_big
 
+        n_candidate = int(is_prune.sum().item())
         is_seed = state.get("is_seed")
-        if is_seed is not None:
+        protect_active = is_seed is not None and (
+            self.seed_protect_until_iter is None or step < int(self.seed_protect_until_iter)
+        )
+        n_seed_protected = 0
+        if protect_active:
+            n_seed_protected = int((is_prune & is_seed).sum().item())
             is_prune = is_prune & (~is_seed)   # protect MVS seeds (+ their lineage)
 
         n_prune = int(is_prune.sum().item())
         if n_prune > 0:
             remove(params=params, optimizers=optimizers, state=state, mask=is_prune)
+        state["last_prune_step"] = int(step)
+        state["last_prune_candidates"] = n_candidate
+        state["last_prune_seed_protected"] = n_seed_protected
+        state["last_pruned"] = n_prune
+        state["last_seed_protect_active"] = bool(protect_active)
+        state["seed_protect_until_iter"] = -1 if self.seed_protect_until_iter is None else int(self.seed_protect_until_iter)
+        state["seed_protected_count"] = int(is_seed.sum().item()) if is_seed is not None else 0
+        state["cum_prune_candidates"] = int(state.get("cum_prune_candidates", 0)) + n_candidate
+        state["cum_prune_seed_protected"] = int(state.get("cum_prune_seed_protected", 0)) + n_seed_protected
+        state["cum_pruned"] = int(state.get("cum_pruned", 0)) + n_prune
         return n_prune
 
 
-def build_seed_protect_strategy(**kwargs) -> SeedProtectStrategy:
+def build_seed_protect_strategy(seed_protect_until_iter: int | None = None, **kwargs) -> SeedProtectStrategy:
     """Same args/defaults as build_strategy, but seeds (state['is_seed']) are prune-protected."""
     base = build_strategy(**kwargs)
-    return SeedProtectStrategy(**{f.name: getattr(base, f.name) for f in __import__("dataclasses").fields(base)})
+    return _clone_strategy(base, SeedProtectStrategy, seed_protect_until_iter=seed_protect_until_iter)
 
 
 class ElongationFilterStrategy(DefaultStrategy):
@@ -184,6 +202,11 @@ class ElongationFilterStrategy(DefaultStrategy):
                 mask=is_split,
                 revised_opacity=self.revised_opacity,
             )
+        state["last_grow_step"] = int(step)
+        state["last_grow_duplicated"] = n_dupli
+        state["last_grow_split"] = n_split
+        state["cum_grow_duplicated"] = int(state.get("cum_grow_duplicated", 0)) + n_dupli
+        state["cum_grow_split"] = int(state.get("cum_grow_split", 0)) + n_split
         return n_dupli, n_split
 
 
@@ -191,10 +214,18 @@ class SeedProtectElongationFilterStrategy(ElongationFilterStrategy, SeedProtectS
     """Combine seed opacity-prune protection with elongation-gated densification."""
 
 
-def _clone_strategy(base, cls, *, axis_ratio_threshold: float | None = None):
+def _clone_strategy(
+    base,
+    cls,
+    *,
+    axis_ratio_threshold: float | None = None,
+    seed_protect_until_iter: int | None = None,
+):
     strategy = cls(**{f.name: getattr(base, f.name) for f in __import__("dataclasses").fields(base)})
     if axis_ratio_threshold is not None:
         strategy.axis_ratio_threshold = float(axis_ratio_threshold)
+    if hasattr(strategy, "seed_protect_until_iter"):
+        strategy.seed_protect_until_iter = None if seed_protect_until_iter is None else int(seed_protect_until_iter)
     return strategy
 
 
@@ -205,7 +236,13 @@ def build_elongation_filter_strategy(axis_ratio_threshold: float = 0.01, **kwarg
 
 def build_seed_protect_elongation_filter_strategy(
     axis_ratio_threshold: float = 0.01,
+    seed_protect_until_iter: int | None = None,
     **kwargs,
 ) -> SeedProtectElongationFilterStrategy:
     base = build_strategy(**kwargs)
-    return _clone_strategy(base, SeedProtectElongationFilterStrategy, axis_ratio_threshold=axis_ratio_threshold)
+    return _clone_strategy(
+        base,
+        SeedProtectElongationFilterStrategy,
+        axis_ratio_threshold=axis_ratio_threshold,
+        seed_protect_until_iter=seed_protect_until_iter,
+    )
