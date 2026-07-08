@@ -17,4 +17,4 @@ S1 wrapper executed base and voxel02 only. Final interpretation material is writ
 - tradeoff rows: 2
 - filter rows: 6
 - case rows: 24
-- figures: `figs/e5_c001_3b_s1/readout/coverage_recovery_summary.png`, `figs/e5_c001_3b_s1/readout/coverage_accuracy_scatter.png`, `figs/e5_c001_3b_s1/readout/filter_stage_contribution.png`
+- figures: `docs/figs/e5_c001_3b_s1/readout/coverage_recovery_summary.png`, `docs/figs/e5_c001_3b_s1/readout/coverage_accuracy_scatter.png`, `docs/figs/e5_c001_3b_s1/readout/filter_stage_contribution.png`

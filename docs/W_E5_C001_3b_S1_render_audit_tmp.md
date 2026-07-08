@@ -19,7 +19,7 @@
 ## 산출 파일
 
 - 표: `docs/e5_c001_render_eval_metrics.csv`, `docs/e5_c001_render_floater_metrics.csv`, `docs/e5_c001_render_depth_supervision.csv`, `docs/e5_c001_render_readout_coverage.csv`, `docs/e5_c001_render_condition_strata.csv`, `docs/e5_c001_render_cause_attribution.csv`.
-- 그림: `figs/e5_c001_3b_s1/render`/.
+- 그림: `docs/figs/e5_c001_3b_s1/render`/.
 - run 기록: `phases/p2-gsjso/runs/20260708_e5_c001_3b_s1_render/versions.txt`.
 
 ## A. 렌더 품질
