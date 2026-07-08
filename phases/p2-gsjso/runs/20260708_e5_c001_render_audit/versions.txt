@@ -1,0 +1,38 @@
+# W_E5_C001 render/floater audit versions
+created_local=2026-07-08T13:10:07.645459+09:00
+branch=feat/p2-structure-learn
+head=cee2b9d4f14f95b56692a47a373d10e94c1de4d5
+docker_image=jointbuildgs:dev
+script=phases/p2-gsjso/scripts/e5_c001_render_audit.py
+data_root=results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20
+runs_root=results/tum_transfer/e5_pilot/C001/runs
+readout_root=results/tum_transfer/e5_pilot/C001/readout
+max_render_views=4
+render_views_total=9
+target_extra_views=5
+training=0
+formal_pointcloudification=0
+formal_reassembly=0
+verdict=0
+config_constants={"prune_opa": 0.005, "readout": "semantic-TSDF minobs3 / voxel0.05 / alpha0.5 / SOR", "seed_protect": true, "sh_degree": 3, "w_depth": 0.03, "w_distort": 0.0}
+
+inputs:
+- phases/p2-gsjso/runs/e5p_train_20260707_C001/train_fingerprints.csv sha256=25b9524f6691003a67c28c590fd478abc4e797f5ce935ffb520e8b299cccf841
+- phases/p2-gsjso/runs/e5p_train_20260707_C001/readout_fingerprints.csv sha256=64bed8c302dc0a05b021f837481a3f383d1a4ecabb9031775620c86452f76627
+- phases/p2-gsjso/runs/20260707_e5_c001_gsdiag/snapshots/e5_c001_gsdiag_video_layer.csv sha256=c51afe25e5032d1ce8d9ed68d4e5efc0042d5261e0953caa593255ae259c9f50
+- docs/lowtex_v5.csv sha256=848c419c8b576d5ceceecb25666b71804539c1ecf427b8df659284eb88f10d31
+- docs/projection_zeta_ls.csv sha256=454d4d22e00cec99cfac1516ad5ebe97c0cf18d94293901210df63e1d092d8c1
+
+outputs:
+- /workspace/docs/e5_c001_render_eval_metrics.csv
+- /workspace/docs/e5_c001_render_floater_metrics.csv
+- /workspace/docs/e5_c001_render_depth_supervision.csv
+- /workspace/docs/e5_c001_render_readout_coverage.csv
+- /workspace/docs/e5_c001_render_condition_strata.csv
+- /workspace/docs/e5_c001_render_cause_attribution.csv
+- /workspace/docs/W_E5_C001_렌더플로터점검.md
+- /workspace/docs/figs/e5_c001_render/flattening_location_cases.png
+- /workspace/docs/figs/e5_c001_render/floater_distribution.png
+- /workspace/docs/figs/e5_c001_render/readout_prepost_coverage.png
+- /workspace/docs/figs/e5_c001_render/render_depth_vs_mvs.png
+- /workspace/docs/figs/e5_c001_render/sh_comparison.png
