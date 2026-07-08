@@ -1,0 +1,25 @@
+run_id: 20260708_e5_c001_readout_ablation
+created_utc: 2026-07-08T06:02:52.635144+00:00
+task: E5 C001 ③a readout rerun ablation
+mode: readout-only ablation; no GS training; no GS recipe/loss/densification change; canonical readout unchanged; no verdict
+crs: EPSG:25832
+git_branch: feat/p2-structure-learn
+git_head: 3786ac5db4912d0949742933928fab8f5ec33985
+docker_images:
+  gs_readout: jointbuildgs:dev
+  roofer_tools: jointbuildgs-p0-tools:t0 and P0 roofer compose service
+script: phases/p2-gsjso/scripts/e5_c001_readout_ablation.py
+extractor_script: phases/p2-gsjso/scripts/e5_c001_readout_extract_ablation.py
+settings: [{"setting": "base", "min_obs": 3, "voxel": 0.05, "alpha": 0.5, "sor": "on", "sor_std": 2.0, "purpose": "정본 기준선 재현"}, {"setting": "minobs2", "min_obs": 2, "voxel": 0.05, "alpha": 0.5, "sor": "on", "sor_std": 2.0, "purpose": "minobs 3->2 관측 게이트 완화"}, {"setting": "minobs1", "min_obs": 1, "voxel": 0.05, "alpha": 0.5, "sor": "on", "sor_std": 2.0, "purpose": "minobs 3->1 게이트 최대 완화"}, {"setting": "sor_weak", "min_obs": 3, "voxel": 0.05, "alpha": 0.5, "sor": "on", "sor_std": 4.0, "purpose": "SOR std 비율 완화"}, {"setting": "sor_off", "min_obs": 3, "voxel": 0.05, "alpha": 0.5, "sor": "off", "sor_std": 2.0, "purpose": "SOR 생략"}, {"setting": "voxel03", "min_obs": 3, "voxel": 0.03, "alpha": 0.5, "sor": "on", "sor_std": 2.0, "purpose": "voxel 0.05->0.03 해상도 기여"}, {"setting": "voxel02", "min_obs": 3, "voxel": 0.02, "alpha": 0.5, "sor": "on", "sor_std": 2.0, "purpose": "voxel 0.05->0.02 해상도 기여(강)"}, {"setting": "relaxed", "min_obs": 1, "voxel": 0.03, "alpha": 0.5, "sor": "off", "sor_std": 2.0, "purpose": "minobs1 + SOR off + voxel0.03 완화 조합"}]
+input_checkpoints: results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_*_*/ckpt/final.pt
+input_train_fingerprints: phases/p2-gsjso/runs/e5p_train_20260707_C001/train_fingerprints.csv
+canonical_gate_reference_unchanged: phases/p0-audit/runs/e5p_gate_20260707_C001
+p0_assembly_run: phases/p0-audit/runs/e5p_readout_ablation_20260708_C001
+outputs:
+  report: docs/W_E5_C001_③a_readout재실행.md
+  coverage: docs/e5_c001_readout_ablation_coverage.csv
+  metrics: docs/e5_c001_readout_ablation_metrics.csv
+  summary: docs/e5_c001_readout_ablation_summary.csv
+  figures: docs/figs/e5_c001_readout_ablation
+inventory_rows: 48
+figures: 5

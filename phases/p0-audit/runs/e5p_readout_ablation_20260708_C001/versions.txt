@@ -1,0 +1,11 @@
+run_id: e5p_readout_ablation_20260708_C001
+created_utc: 2026-07-08T06:02:17.940792+00:00
+task: E5 C001 ③a Roofer assembly for readout ablation
+mode: Roofer rerun from ablated readout point clouds; no GS training; canonical readout unchanged; no verdict
+crs: EPSG:25832
+git_branch: feat/p2-structure-learn
+git_head: 3786ac5db4912d0949742933928fab8f5ec33985
+roofer_defaults: unchanged P0 compose Roofer defaults
+settings: base,minobs2,minobs1,sor_weak,sor_off,voxel03,voxel02,relaxed
+status: phases/p0-audit/runs/e5p_readout_ablation_20260708_C001/building_reconstruction_status.csv
+prep_metrics: phases/p0-audit/runs/e5p_readout_ablation_20260708_C001/prep_metrics.csv

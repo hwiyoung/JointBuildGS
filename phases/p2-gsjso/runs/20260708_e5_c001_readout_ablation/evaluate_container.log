@@ -1,0 +1,2 @@
++ docker run --rm -i --user 1000:1000 -e E5_READOUT_ABLATION_EVAL_CONTAINER=1 -e MPLCONFIGDIR=/tmp/matplotlib -v /media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS:/workspace/JointBuildGS -w /workspace/JointBuildGS jointbuildgs-p0-tools:t0 python3 phases/p2-gsjso/scripts/e5_c001_readout_ablation.py evaluate
+{"report": "docs/W_E5_C001_③a_readout재실행.md", "metrics_rows": 864, "coverage_rows": 2592, "figures": 5}
