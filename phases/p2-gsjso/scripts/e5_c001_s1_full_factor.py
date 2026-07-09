@@ -381,6 +381,11 @@ def train_one(args: argparse.Namespace) -> None:
 def parse_train_log(path: Path) -> dict[str, str]:
     out = {"start_utc": "", "end_utc": "", "host_gpu": "", "return_code": "", "elapsed_min": ""}
     if not path.exists():
+        run_name = path.stem
+        final_ckpt = CKPT_ROOT / run_name / "ckpt/final.pt"
+        if final_ckpt.exists():
+            out["return_code"] = "final_ckpt_present_log_missing"
+            out["end_utc"] = datetime.fromtimestamp(final_ckpt.stat().st_mtime, timezone.utc).isoformat()
         return out
     for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
         if line.startswith("START_UTC="):
@@ -928,7 +933,7 @@ def build_factor_cells(args: argparse.Namespace) -> None:
                 "normal6_raw_anchor_count": sum(bool(x["raw_anchor_ok"]) for x in normal_eval),
                 "normal6_median_delta_vs_s1_m": fmt(float(np.median(deltas)) if deltas else None),
                 "normal6_max_delta_vs_s1_m": fmt(max(deltas) if deltas else None),
-                "preview_or_train_return_code": train_info.get("return_code", "reuse"),
+                "preview_or_train_return_code": "reuse" if cell.reuse else train_info.get("return_code", ""),
                 "elapsed_min": train_info.get("elapsed_min", ""),
                 "distort_grad_norm_share_max": fmt(audit.get("distort_grad_norm_share_max")),
                 "distort_weighted_loss_share_max": fmt(audit.get("distort_weighted_loss_share_max")),
@@ -990,8 +995,8 @@ def fingerprint_training(args: argparse.Namespace) -> None:
                 "ckpt": rel(ckpt),
                 "ckpt_sha256": sha256_file(ckpt) if ckpt.exists() else "",
                 "audit_csv": rel(audit_csv_for(cell.run_name)) if audit_csv_for(cell.run_name).exists() else "",
-                "log": rel(log) if log.exists() else "reuse_alias",
-                "return_code": info.get("return_code", "reuse"),
+                "log": rel(log) if log.exists() else ("reuse_alias" if cell.reuse else "missing"),
+                "return_code": "reuse" if cell.reuse else info.get("return_code", ""),
                 "elapsed_min": info.get("elapsed_min", ""),
                 "host_gpu": info.get("host_gpu", ""),
                 "max_iter": state.get("it", "") if state else "",
