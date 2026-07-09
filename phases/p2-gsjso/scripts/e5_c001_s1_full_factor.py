@@ -39,11 +39,14 @@ if str(REPO) not in sys.path:
 import e5_c001_readout_ablation as ab  # noqa: E402
 from e5_pilot_gate_tools import C001_IDS, DEV_IMAGE, P0_RUNS, sha256_file  # noqa: E402
 
+ORIGINAL_AB_SOURCE_FOR = ab.source_for
 
 RUN_ID = "20260709_e5_c001_s1_full_factor"
 P2_RUN_DIR = REPO / "phases/p2-gsjso/runs" / RUN_ID
 P0_RUN_ID = "e5p_s1_full_factor_20260709_C001"
 P0_RUN_DIR = P0_RUNS / P0_RUN_ID
+REPAIR_RUN_ID = "e5p_405_repair_20260709_C001"
+REPAIRED_P0_RUN_DIR = P0_RUNS / REPAIR_RUN_ID / P0_RUN_ID
 CONFIG_DIR = REPO / "configs/tum_mob/e5_s1_full_factor"
 RESULTS_ROOT = REPO / "results/tum_transfer/e5_s1_full_factor/C001/readout_ablation"
 CKPT_ROOT = REPO / "results/tum_transfer/e5_s1_full_factor/C001/runs"
@@ -69,6 +72,7 @@ CSV_FACTOR = REPO / "docs/e5_c001_s1_full_factor_cells.csv"
 CSV_DEPTH_SOURCE = REPO / "docs/e5_c001_s1_full_depth_source.csv"
 CSV_INVENTORY = REPO / "docs/e5_c001_s1_full_inventory.csv"
 CSV_ISSUES = REPO / "docs/e5_c001_s1_full_issues.csv"
+CSV_405_REPAIR = REPO / "docs/e5_c001_s1_full_405_rescore.csv"
 
 TIMELINE_IDS_DENSE = ["4907202", "4908178", "4908168", "4907184"]
 TIMELINE_IDS_OTHER = ["4907202"]
@@ -503,6 +507,18 @@ def configure_ablation_module(weight: int | None = None) -> list[Cell]:
     ab.RENDER_COVERAGE = REPO / "docs/e5_c001_s1_full_render_readout_coverage.csv"
     ab.SETTINGS = [ab.Setting("base", "S1 factor-cell canonical readout", min_obs=3, voxel=0.05, sor="on", sor_std=2.0)]
 
+    def source_for(setting: ab.Setting, run_name: str) -> Any:
+        src = ORIGINAL_AB_SOURCE_FOR(setting, run_name)
+        repaired_root = REPAIRED_P0_RUN_DIR / setting.key
+        repaired_status = repaired_root / "status" / f"{run_name}_run_1.csv"
+        repaired_cityjson = repaired_root / "cityjson" / f"{run_name}_run_1.city.json"
+        if repaired_status.exists() and repaired_cityjson.exists():
+            src.status_path = repaired_status
+            src.cityjson_path = repaired_cityjson
+            src.source_badge = f"{setting.key}_405repair"
+            src.readout = src.readout + "; 405 winding repair overlay"
+        return src
+
     def selected_run_names(args: argparse.Namespace) -> list[str]:
         names = [cell.run_name for cell in cells]
         selected = getattr(args, "runs", None)
@@ -523,6 +539,7 @@ def configure_ablation_module(weight: int | None = None) -> list[Cell]:
         )
 
     ab.selected_run_names = selected_run_names
+    ab.source_for = source_for
     ab.write_report = write_readout_report
     link_reuse_alias()
     return cells
@@ -1004,9 +1021,11 @@ def versions(_args: argparse.Namespace) -> None:
         f"timeline_csv: {rel(CSV_TIMELINE)}",
         f"sheet_identity_csv: {rel(CSV_SHEET)}",
         f"depth_source_csv: {rel(CSV_DEPTH_SOURCE)}",
+        f"405_repair_csv: {rel(CSV_405_REPAIR)}",
         f"train_fingerprints: {rel(P2_RUN_DIR / 'train_fingerprints.csv')}",
         f"readout_fingerprints: {rel(P2_RUN_DIR / 'readout_fingerprints.csv')}",
         f"p0_versions: {rel(P0_RUN_DIR / 'versions.txt')}",
+        f"repaired_p0_run_dir: {rel(REPAIRED_P0_RUN_DIR)}",
     ]
     (P2_RUN_DIR / "versions.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(json.dumps({"versions": rel(P2_RUN_DIR / "versions.txt")}, ensure_ascii=False))
@@ -1028,6 +1047,7 @@ def report(_args: argparse.Namespace) -> None:
     timeline = read_csv(CSV_TIMELINE)
     sheet = read_csv(CSV_SHEET)
     depth = read_csv(CSV_DEPTH_SOURCE)
+    repair405 = read_csv(CSV_405_REPAIR)
     issues = read_csv(CSV_ISSUES)
     lines = [
         "# E5 C001 S1 완성판 요인",
@@ -1060,13 +1080,23 @@ def report(_args: argparse.Namespace) -> None:
         "",
         md_table(depth, ["arm", "data_root", "load_depth", "init_pointcloud", "depth_source_interpretation", "effective_config_absence_reason"], 6),
         "",
+        "## A-4 405 Repair",
+        "",
+        md_table(
+            [r for r in repair405 if r.get("source_run_id") == P0_RUN_ID],
+            ["setting", "run_name", "valid_features_original", "valid_features_repaired", "error_405_original", "error_405_repaired", "error_302_repaired", "vertices_same"],
+            12,
+        )
+        if repair405
+        else "_405 repair overlay not present at report time_",
+        "",
         "## Issues",
         "",
         md_table(issues, ["part", "severity", "message", "path"], 20) if issues else "_recorded issues 없음_",
         "",
         "## Outputs",
         "",
-        f"- CSV: `{rel(CSV_FACTOR)}`, `{rel(CSV_TIMELINE)}`, `{rel(CSV_SHEET)}`, `{rel(CSV_GRAD_SHARE)}`, `{rel(CSV_DEPTH_SOURCE)}`.",
+        f"- CSV: `{rel(CSV_FACTOR)}`, `{rel(CSV_TIMELINE)}`, `{rel(CSV_SHEET)}`, `{rel(CSV_GRAD_SHARE)}`, `{rel(CSV_DEPTH_SOURCE)}`, `{rel(CSV_405_REPAIR)}`.",
         f"- figures: `{rel(FIG_DIR)}/`.",
         f"- versions: `{rel(P2_RUN_DIR / 'versions.txt')}`.",
     ]
