@@ -10,6 +10,7 @@ data-fitting losses: L_photo, L_depth, L_normal, L_nc.
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 import math
 import os
@@ -254,6 +255,22 @@ def _grad_params(model: GaussianModel2D) -> Iterable[torch.nn.Parameter]:
     return [p for p in params if p.requires_grad]
 
 
+def _audit_params(model: GaussianModel2D, mode: str) -> list[torch.nn.Parameter]:
+    """Parameters used for component-force diagnostics.
+
+    The default geometry set excludes SH/color parameters so the reported norms
+    describe surface-shaping force rather than appearance-only updates.
+    """
+
+    if mode == "all":
+        return [p for p in model.parameters() if p.requires_grad]
+    names = ["means", "quats", "log_scales", "opacities_raw"]
+    if mode == "geometry_semantic":
+        names.append("sem_logits")
+    params = [getattr(model, name) for name in names if hasattr(model, name)]
+    return [p for p in params if p.requires_grad]
+
+
 def _grad_vector(
     loss: torch.Tensor,
     params: Iterable[torch.nn.Parameter],
@@ -331,6 +348,96 @@ def _write_mutual_grad_diagnostics(
             _record_grad_skip(writer, out_dir, it, tag, "zero_norm_gradient")
             continue
         writer.add_scalar(tag, float((a @ b / denom).detach().cpu().item()), it)
+
+
+def _grad_norm_value(
+    loss: torch.Tensor,
+    params: list[torch.nn.Parameter],
+) -> tuple[float, str]:
+    if not params:
+        return float("nan"), "no_audit_parameters"
+    if not torch.is_tensor(loss) or not loss.requires_grad:
+        return 0.0, "loss_has_no_grad_graph"
+    grads = torch.autograd.grad(loss, params, retain_graph=True, allow_unused=True)
+    sq = torch.zeros((), device=params[0].device)
+    used = False
+    for grad in grads:
+        if grad is None:
+            continue
+        used = True
+        sq = sq + grad.detach().pow(2).sum()
+    if not used:
+        return 0.0, "loss_unused_by_audit_parameters"
+    return float(torch.sqrt(sq).detach().cpu().item()), ""
+
+
+def _write_loss_grad_audit(
+    out_dir: Path,
+    writer: SummaryWriter,
+    it: int,
+    model: GaussianModel2D,
+    params: list[torch.nn.Parameter],
+    rowspec: Dict[str, tuple[torch.Tensor, float, torch.Tensor]],
+    total_loss: torch.Tensor,
+    psnr_value: float,
+    n_primitives: int,
+) -> None:
+    audit_dir = out_dir / "audit"
+    audit_dir.mkdir(exist_ok=True)
+    path = audit_dir / "loss_grad_norms.csv"
+    fields = [
+        "step",
+        "component",
+        "raw_loss",
+        "weight",
+        "weighted_loss",
+        "weighted_loss_share",
+        "grad_norm",
+        "grad_norm_share",
+        "grad_status",
+        "total_loss",
+        "psnr_train",
+        "n_primitives",
+    ]
+    weighted_vals = {
+        name: float(weighted.detach().cpu().item())
+        for name, (_raw, _weight, weighted) in rowspec.items()
+    }
+    denom_loss = sum(abs(v) for v in weighted_vals.values())
+    grad_vals: dict[str, float] = {}
+    grad_status: dict[str, str] = {}
+    for name, (_raw, _weight, weighted) in rowspec.items():
+        grad_vals[name], grad_status[name] = _grad_norm_value(weighted, params)
+    denom_grad = sum(v for v in grad_vals.values() if math.isfinite(v))
+    new_file = not path.exists()
+    with path.open("a", newline="", encoding="utf-8") as fh:
+        writer_csv = csv.DictWriter(fh, fieldnames=fields, lineterminator="\n")
+        if new_file:
+            writer_csv.writeheader()
+        for name, (raw, weight, weighted) in rowspec.items():
+            raw_v = float(raw.detach().cpu().item()) if torch.is_tensor(raw) else float(raw)
+            weighted_v = float(weighted.detach().cpu().item())
+            grad_v = grad_vals[name]
+            loss_share = abs(weighted_v) / denom_loss if denom_loss > 0 else 0.0
+            grad_share = grad_v / denom_grad if denom_grad > 0 and math.isfinite(grad_v) else 0.0
+            writer.add_scalar(f"grad_component/{name}", grad_v, it)
+            writer.add_scalar(f"grad_component_share/{name}", grad_share, it)
+            writer_csv.writerow(
+                {
+                    "step": it,
+                    "component": name,
+                    "raw_loss": raw_v,
+                    "weight": float(weight),
+                    "weighted_loss": weighted_v,
+                    "weighted_loss_share": loss_share,
+                    "grad_norm": grad_v,
+                    "grad_norm_share": grad_share,
+                    "grad_status": grad_status[name],
+                    "total_loss": float(total_loss.detach().cpu().item()),
+                    "psnr_train": psnr_value,
+                    "n_primitives": int(n_primitives),
+                }
+            )
 
 
 def _log_disabled_mutual_terms(
@@ -690,6 +797,8 @@ def main():
 
     max_iter = int(cfg["max_iter"])
     sh_up_every = int(cfg.get("sh_up_every", 1000))
+    loss_grad_audit_every = int(cfg.get("loss_grad_audit_every", 0) or 0)
+    loss_grad_audit_params = cfg.get("loss_grad_audit_params", "geometry")
 
     # P2-D silent-zero guard: w_depth/w_normal>0 contributes nothing unless per-view maps were
     # actually resolved on disk (the loss term is gated on the batch key). Turn that silent
@@ -742,6 +851,8 @@ def main():
         "elongation_filter": elongation_filter,
         "elongation_axis_ratio_threshold": elongation_axis_ratio_threshold,
         "elongation_axis_ratio_formula": "min(exp(scale0), exp(scale1)) / max(exp(scale0), exp(scale1))",
+        "loss_grad_audit_every": loss_grad_audit_every,
+        "loss_grad_audit_params": loss_grad_audit_params,
     }
     (out_dir / "effective_config.json").write_text(json.dumps(effective_config, indent=2) + "\n")
 
@@ -825,6 +936,7 @@ def main():
         loss_mvc = torch.tensor(0.0, device=device)
         loss_mvc_depth = torch.tensor(0.0, device=device)
         loss_mvc_normal = torch.tensor(0.0, device=device)
+        w_mvc_eff = 0.0
         mvc_n_inlier = 0
         if (w_mvc > 0 and it >= mvc_warmup and (it % mvc_every == 0)
                 and _mvc_neighbors is not None):
@@ -987,6 +1099,32 @@ def main():
                     "semantic": loss_sem,
                     "mutual": loss_mut_total,
                 },
+            )
+
+        if loss_grad_audit_every > 0 and it % loss_grad_audit_every == 0:
+            with torch.no_grad():
+                p_for_audit = psnr(rgb_pred.clamp(0, 1), rgb_gt)
+            audit_rowspec = {
+                "photo": (loss_photo, float(w_photo), w_photo * loss_photo),
+                "depth": (loss_depth, float(w_depth_eff), w_depth_eff * loss_depth),
+                "normal": (loss_n, float(w_normal_eff), w_normal_eff * loss_n),
+                "nc": (loss_nc, float(w_nc), w_nc * loss_nc),
+                "distort": (loss_dist, float(w_distort), w_distort * loss_dist),
+                "semantic": (loss_sem, float(w_sem), w_sem * loss_sem),
+                "mvc": (loss_mvc, float(w_mvc_eff), w_mvc_eff * loss_mvc),
+                "mutual": (loss_mut_total, float(w_mutual * mutual_weight_scale), (w_mutual * mutual_weight_scale) * loss_mut_total),
+                "structure": (loss_str_total, float(w_structure), w_structure * loss_str_total),
+            }
+            _write_loss_grad_audit(
+                out_dir=out_dir,
+                writer=writer,
+                it=it,
+                model=model,
+                params=_audit_params(model, loss_grad_audit_params),
+                rowspec=audit_rowspec,
+                total_loss=loss_total,
+                psnr_value=p_for_audit,
+                n_primitives=model.num_points,
             )
 
         # backward
