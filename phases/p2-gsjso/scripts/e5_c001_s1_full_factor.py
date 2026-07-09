@@ -1105,6 +1105,12 @@ def report(_args: argparse.Namespace) -> None:
     for mode, condition in sorted({(r.get("mode", ""), r.get("condition", "")) for r in strips if r.get("mode")}):
         part = [r for r in strips if r.get("mode") == mode and r.get("condition") == condition]
         strip_summary.append({"mode": mode, "condition": condition, "figures": len(part)})
+    track_c_rows = [
+        {
+            "item": "extension gate",
+            "observation": "not run; factor table has normal6_all_built=false for every cell, so no winning cell was selected under the locked Track C rule",
+        }
+    ]
     lines = [
         "# E5 C001 S1 완성판 요인",
         "",
@@ -1161,6 +1167,10 @@ def report(_args: argparse.Namespace) -> None:
         md_table(strip_summary, ["mode", "condition", "figures"], 16) if strip_summary else "_pipeline strips not present at report time_",
         "",
         f"- strip figures: `{rel(FIG_DIR / 'pipeline_strips')}/`.",
+        "",
+        "## Track C Gate",
+        "",
+        md_table(track_c_rows, ["item", "observation"], 4),
         "",
         "## Issues",
         "",
