@@ -73,6 +73,8 @@ CSV_DEPTH_SOURCE = REPO / "docs/e5_c001_s1_full_depth_source.csv"
 CSV_INVENTORY = REPO / "docs/e5_c001_s1_full_inventory.csv"
 CSV_ISSUES = REPO / "docs/e5_c001_s1_full_issues.csv"
 CSV_405_REPAIR = REPO / "docs/e5_c001_s1_full_405_rescore.csv"
+CSV_NORMAL_PRECHECK = REPO / "docs/e5_c001_s1_full_normal_precheck.csv"
+CSV_PIPELINE_STRIPS = REPO / "docs/e5_c001_s1_full_pipeline_strips.csv"
 
 TIMELINE_IDS_DENSE = ["4907202", "4908178", "4908168", "4907184"]
 TIMELINE_IDS_OTHER = ["4907202"]
@@ -1027,6 +1029,8 @@ def versions(_args: argparse.Namespace) -> None:
         f"sheet_identity_csv: {rel(CSV_SHEET)}",
         f"depth_source_csv: {rel(CSV_DEPTH_SOURCE)}",
         f"405_repair_csv: {rel(CSV_405_REPAIR)}",
+        f"normal_precheck_csv: {rel(CSV_NORMAL_PRECHECK)}",
+        f"pipeline_strips_csv: {rel(CSV_PIPELINE_STRIPS)}",
         f"train_fingerprints: {rel(P2_RUN_DIR / 'train_fingerprints.csv')}",
         f"readout_fingerprints: {rel(P2_RUN_DIR / 'readout_fingerprints.csv')}",
         f"p0_versions: {rel(P0_RUN_DIR / 'versions.txt')}",
@@ -1053,7 +1057,54 @@ def report(_args: argparse.Namespace) -> None:
     sheet = read_csv(CSV_SHEET)
     depth = read_csv(CSV_DEPTH_SOURCE)
     repair405 = read_csv(CSV_405_REPAIR)
+    normal = read_csv(CSV_NORMAL_PRECHECK)
+    strips = read_csv(CSV_PIPELINE_STRIPS)
     issues = read_csv(CSV_ISSUES)
+    factor_by = {r.get("cell_key", ""): r for r in factor}
+
+    def final_timeline(run_name: str, sid: str) -> dict[str, str]:
+        bid = full_id(sid)
+        for row in timeline:
+            if row.get("run_name") == run_name and row.get("building_id") == bid and str(row.get("step")) == "30000":
+                return row
+        return {}
+
+    def obs_cell(key: str, fields: list[str]) -> str:
+        row = factor_by.get(key, {})
+        return "; ".join(f"{field}={row.get(field, '')}" for field in fields)
+
+    def obs_timeline(key: str, sid: str, run_name: str) -> str:
+        row = final_timeline(run_name, sid)
+        return f"{key} {sid}: n={row.get('n_gaussians_in_footprint', '')}, z50={row.get('z_p50', '')}, op50={row.get('opacity_p50', '')}"
+
+    prediction_rows = [
+        {
+            "locked_item": "strength main effect / 4907202 branch",
+            "observed_material": "; ".join(
+                [
+                    obs_timeline("w240_p050", "4907202", trained_run_name(selected_w(), 0.05)),
+                    obs_timeline("w240_p005", "4907202", trained_run_name(selected_w(), 0.005)),
+                ]
+            ),
+        },
+        {
+            "locked_item": "prune relaxation main effect",
+            "observed_material": "; ".join(
+                [
+                    obs_cell("w100_p050_reuse", ["has_lod22", "valid_assembled", "mean_coverage_post_sor"]),
+                    obs_cell("w100_p005", ["has_lod22", "valid_assembled", "mean_coverage_post_sor"]),
+                ]
+            ),
+        },
+        {
+            "locked_item": "combined full S1 cell",
+            "observed_material": obs_cell("w240_p005", ["has_lod22", "valid_assembled", "median_ref_rms_m", "mean_coverage_post_sor", "distort_grad_norm_share_max"]),
+        },
+    ]
+    strip_summary: list[dict[str, Any]] = []
+    for mode, condition in sorted({(r.get("mode", ""), r.get("condition", "")) for r in strips if r.get("mode")}):
+        part = [r for r in strips if r.get("mode") == mode and r.get("condition") == condition]
+        strip_summary.append({"mode": mode, "condition": condition, "figures": len(part)})
     lines = [
         "# E5 C001 S1 완성판 요인",
         "",
@@ -1068,6 +1119,10 @@ def report(_args: argparse.Namespace) -> None:
         md_table(factor, ["cell_key", "role", "w_distort", "prune_opa", "has_lod22", "valid_assembled", "median_ref_rms_m", "mean_coverage_post_sor", "normal6_raw_anchor_count"], 8),
         "",
         f"- summary figure: `{rel(FIG_DIR / 'factor_cell_summary.png')}`.",
+        "",
+        "## Locked Prediction Contrast",
+        "",
+        md_table(prediction_rows, ["locked_item", "observed_material"], 8),
         "",
         "## A-1 Timeline",
         "",
@@ -1095,13 +1150,25 @@ def report(_args: argparse.Namespace) -> None:
         if repair405
         else "_405 repair overlay not present at report time_",
         "",
+        "## A-5 Normal Precheck",
+        "",
+        md_table(normal, ["building_id", "group", "angle_error_median_deg_absdot", "quality_bin_locked", "normal_mode_count", "gable_two_mode_proxy"], 12)
+        if normal
+        else "_normal precheck not present at report time_",
+        "",
+        "## A-6 Pipeline Strips",
+        "",
+        md_table(strip_summary, ["mode", "condition", "figures"], 16) if strip_summary else "_pipeline strips not present at report time_",
+        "",
+        f"- strip figures: `{rel(FIG_DIR / 'pipeline_strips')}/`.",
+        "",
         "## Issues",
         "",
         md_table(issues, ["part", "severity", "message", "path"], 20) if issues else "_recorded issues 없음_",
         "",
         "## Outputs",
         "",
-        f"- CSV: `{rel(CSV_FACTOR)}`, `{rel(CSV_TIMELINE)}`, `{rel(CSV_SHEET)}`, `{rel(CSV_GRAD_SHARE)}`, `{rel(CSV_DEPTH_SOURCE)}`, `{rel(CSV_405_REPAIR)}`.",
+        f"- CSV: `{rel(CSV_FACTOR)}`, `{rel(CSV_TIMELINE)}`, `{rel(CSV_SHEET)}`, `{rel(CSV_GRAD_SHARE)}`, `{rel(CSV_DEPTH_SOURCE)}`, `{rel(CSV_405_REPAIR)}`, `{rel(CSV_NORMAL_PRECHECK)}`, `{rel(CSV_PIPELINE_STRIPS)}`.",
         f"- figures: `{rel(FIG_DIR)}/`.",
         f"- versions: `{rel(P2_RUN_DIR / 'versions.txt')}`.",
     ]

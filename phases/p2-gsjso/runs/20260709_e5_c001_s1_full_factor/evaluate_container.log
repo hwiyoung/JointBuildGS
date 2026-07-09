@@ -1,0 +1,2 @@
++ docker run --rm -i --user 1000:1000 -e E5_S1_FACTOR_EVAL_CONTAINER=1 -e MPLCONFIGDIR=/tmp/matplotlib -v /media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS:/workspace/JointBuildGS -w /workspace/JointBuildGS jointbuildgs-p0-tools:t0 python3 phases/p2-gsjso/scripts/e5_c001_s1_full_factor.py evaluate --weight 240 --force
+{"report": "docs/W_E5_C001_S1_full_factor_readout_tmp.md", "metrics_rows": 72, "coverage_rows": 216, "figures": 3}
