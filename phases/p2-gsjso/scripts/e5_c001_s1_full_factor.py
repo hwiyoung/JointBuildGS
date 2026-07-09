@@ -720,7 +720,7 @@ def plot_timeline(rows: list[dict[str, Any]]) -> None:
     FIG_DIR.mkdir(parents=True, exist_ok=True)
     for sid in ["4907202", "4908178", "4908168", "4907184"]:
         bid = full_id(sid)
-        part = [r for r in rows if r.get("building_id") == bid and r.get("arm") == "dense" and r.get("family") in {"corrected_recheck", "corrected_original", "s1_original"}]
+        part = [r for r in rows if r.get("building_id") == bid and r.get("arm") == "dense"]
         if not part:
             continue
         fig, axes = plt.subplots(1, 3, figsize=(11.0, 3.5))
