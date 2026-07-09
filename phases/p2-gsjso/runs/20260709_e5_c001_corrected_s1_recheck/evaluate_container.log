@@ -1,0 +1,2 @@
++ docker run --rm -i --user 1000:1000 -e E5_RECHECK_EVAL_CONTAINER=1 -e MPLCONFIGDIR=/tmp/matplotlib -v /media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS:/workspace/JointBuildGS -w /workspace/JointBuildGS jointbuildgs-p0-tools:t0 python3 phases/p2-gsjso/scripts/e5_c001_corrected_s1_recheck.py evaluate --settings voxel02 --runs gs_e5_C001_corrected_s1_preprune_keepall_dense_r1
+{"report": "docs/W_E5_C001_corrected_S1_recheck_readout_tmp.md", "metrics_rows": 18, "coverage_rows": 54, "figures": 3}

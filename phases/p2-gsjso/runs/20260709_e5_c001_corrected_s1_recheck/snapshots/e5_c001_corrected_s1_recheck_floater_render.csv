@@ -1,0 +1,16 @@
+condition,view_idx,image_name,valid_pixel_frac_alpha02,depth_p50,depth_p95,rend_dist_mean_alpha02,rend_dist_p95_alpha02,note,scale_variant,scale_factor,scale_scales,device,rend_dist_p50_alpha02
+s1_dense,0,DJI_20241217084553_0100_D.JPG,1.0000,55.1767,65.5928,1.5037,6.7746,render proxy; not the historical collapse-view metric,,,,,
+s1_dense,10,DJI_20241217084613_0110_D.JPG,1.0000,58.9742,64.5164,1.0941,2.2562,render proxy; not the historical collapse-view metric,,,,,
+s1_dense,30,DJI_20241217084709_0138_D.JPG,1.0000,59.7783,76.5093,0.4625,1.3587,render proxy; not the historical collapse-view metric,,,,,
+s1_dense,60,DJI_20241217084857_0192_D.JPG,1.0000,60.4746,76.4397,0.5393,2.0564,render proxy; not the historical collapse-view metric,,,,,
+corrected_dense,0,DJI_20241217084553_0100_D.JPG,1.0000,53.8192,59.7489,0.2773,0.7723,render proxy; not the historical collapse-view metric,,,,,
+corrected_dense,10,DJI_20241217084613_0110_D.JPG,1.0000,58.9970,64.0583,0.4128,1.3828,render proxy; not the historical collapse-view metric,,,,,
+corrected_dense,30,DJI_20241217084709_0138_D.JPG,0.8198,57.4007,75.8037,0.2031,0.5795,render proxy; not the historical collapse-view metric,,,,,
+corrected_dense,60,DJI_20241217084857_0192_D.JPG,0.8354,57.8930,76.2889,0.1891,0.6140,render proxy; not the historical collapse-view metric,,,,,
+preprune_keepall_dense,0,DJI_20241217084553_0100_D.JPG,1.0000,53.8112,59.8606,0.2439,0.6342,render proxy; not the historical collapse-view metric,,,,,
+preprune_keepall_dense,10,DJI_20241217084613_0110_D.JPG,1.0000,59.0021,64.4962,0.2470,0.5879,render proxy; not the historical collapse-view metric,,,,,
+preprune_keepall_dense,30,DJI_20241217084709_0138_D.JPG,0.8494,57.5840,76.1505,0.1731,0.5114,render proxy; not the historical collapse-view metric,,,,,
+preprune_keepall_dense,60,DJI_20241217084857_0192_D.JPG,0.8662,58.1965,76.3835,0.1821,0.6164,render proxy; not the historical collapse-view metric,,,,,
+rend_dist_unit_test,10,DJI_20241217084613_0110_D.JPG,1.0000,59.0021,,0.2470,0.5879,x2 camera+Gaussian scale test for rend_dist units,original,1.0,false,cuda,0.2040
+rend_dist_unit_test,10,DJI_20241217084613_0110_D.JPG,0.9294,118.3162,,0.3983,1.6017,x2 camera+Gaussian scale test for rend_dist units,x2_centers_camera,2.0,false,cuda,0.1855
+rend_dist_unit_test,10,DJI_20241217084613_0110_D.JPG,1.0000,118.0042,,0.4941,1.1759,x2 camera+Gaussian scale test for rend_dist units,x2_centers_camera_scales,2.0,true,cuda,0.4080
