@@ -81,6 +81,9 @@ CSV_GABLE_MODE = REPO / "docs/e5_c001_s2p_gable_mode.csv"
 CSV_PANEL_INVENTORY = REPO / "docs/e5_c001_s2p_8way_panel_inventory.csv"
 CSV_PIPELINE_STRIPS = REPO / "docs/e5_c001_s2p_pipeline_strips.csv"
 CSV_PIPELINE_STRIP_ISSUES = REPO / "docs/e5_c001_s2p_pipeline_strips_issues.csv"
+CSV_ARM_CELLS = REPO / "docs/e5_c001_s2p_arm_cells.csv"
+CSV_REND_DIST = REPO / "docs/e5_c001_s2p_rend_dist.csv"
+CSV_GLOBAL_Z = REPO / "docs/e5_c001_s2p_global_z_hist.csv"
 
 TIMELINE_IDS = ["4907202", "4908168", "4908178", "4907184"]
 TIMELINE_FULL_IDS = [f"DEBY_LOD2_{sid}" for sid in TIMELINE_IDS]
@@ -1655,6 +1658,322 @@ def _plot_monodepth_v2(
     plt.close(fig)
 
 
+def fingerprint_training(_args: argparse.Namespace) -> None:
+    import torch
+
+    rows: list[dict[str, Any]] = []
+    for rep in [1, 2]:
+        run_name = arm1p_run_name(rep)
+        config = CONFIG_DIR / f"{run_name}.yaml"
+        effective_config = CKPT_ROOT / run_name / "effective_config.json"
+        checkpoint = checkpoint_path(run_name, "final")
+        log = TRAIN_LOG_ROOT / f"{run_name}.log"
+        log_info = s2.parse_train_log(log)
+        payload = (
+            torch.load(checkpoint, map_location="cpu", weights_only=False)
+            if checkpoint.exists()
+            else {}
+        )
+        effective = (
+            json.loads(effective_config.read_text(encoding="utf-8"))
+            if effective_config.exists()
+            else {}
+        )
+        rows.append(
+            {
+                "arm": "arm1p",
+                "replicate": f"r{rep}",
+                "run_name": run_name,
+                "seed": effective.get("seed", 2001),
+                "config": rel(config),
+                "config_sha256": sha256_file(config) if config.exists() else "",
+                "effective_config": rel(effective_config),
+                "effective_config_sha256": (
+                    sha256_file(effective_config) if effective_config.exists() else ""
+                ),
+                "ckpt": rel(checkpoint),
+                "ckpt_sha256": sha256_file(checkpoint) if checkpoint.exists() else "",
+                "start_utc": log_info.get("start_utc", ""),
+                "end_utc": log_info.get("end_utc", ""),
+                "return_code": log_info.get("return_code", ""),
+                "elapsed_min": log_info.get("elapsed_min", ""),
+                "host_gpu": log_info.get("host_gpu", ""),
+                "max_iter": payload.get("it", ""),
+                "final_n_gaussians": payload.get("n_prim", ""),
+                "w_normal": effective.get("w_normal", ""),
+                "prune_opa": effective.get("prune_opa", ""),
+                "final_prune_opa": effective.get("final_prune_opa", ""),
+                "depth_weight_floor": effective.get("depth_weight_floor", ""),
+                "audit_csv": rel(CKPT_ROOT / run_name / "audit/loss_grad_norms.csv"),
+                "densify_audit": rel(CKPT_ROOT / run_name / "audit/densify_events.csv"),
+            }
+        )
+    write_csv(RUN_DIR / "train_fingerprints.csv", rows)
+    print(
+        json.dumps(
+            {"train_fingerprints": rel(RUN_DIR / "train_fingerprints.csv"), "rows": len(rows)},
+            ensure_ascii=False,
+        )
+    )
+
+
+def rend_dist_summary(_args: argparse.Namespace) -> None:
+    rows: list[dict[str, Any]] = []
+    for rep in [1, 2]:
+        run_name = arm1p_run_name(rep)
+        rows.append(
+            {
+                "arm": "arm1p",
+                "replicate": f"r{rep}",
+                "run_name": run_name,
+                **_rend_dist_from_audit(run_name, CKPT_ROOT),
+                "reconstruction": "tail raw_loss * distort_norm_denominator; same S2 method",
+            }
+        )
+    write_csv(CSV_REND_DIST, rows)
+    print(json.dumps({"rend_dist": rel(CSV_REND_DIST), "rows": len(rows)}, ensure_ascii=False))
+
+
+def global_z_hist(_args: argparse.Namespace) -> None:
+    import torch
+
+    rows: list[dict[str, Any]] = []
+    edges = np.arange(520.0, 702.0, 2.0)
+    for rep in [1, 2]:
+        run_name = arm1p_run_name(rep)
+        checkpoint = checkpoint_path(run_name, "final")
+        if not checkpoint.exists():
+            continue
+        state = torch.load(checkpoint, map_location="cpu", weights_only=False)["state_dict"]
+        z = state["means"].detach().cpu().numpy()[:, 2].astype(np.float64) + s2.SHIFT_UTM[2]
+        opacity = torch.sigmoid(state["opacities_raw"].detach().cpu().float()).numpy()
+        hist, _ = np.histogram(z, bins=edges)
+        for index, count in enumerate(hist):
+            in_bin = (z >= edges[index]) & (z < edges[index + 1])
+            rows.append(
+                {
+                    "arm": "arm1p",
+                    "replicate": f"r{rep}",
+                    "run_name": run_name,
+                    "z_min": s2.fmt(edges[index]),
+                    "z_max": s2.fmt(edges[index + 1]),
+                    "n_gaussians": int(count),
+                    "fraction_of_all": s2.fmt(int(count) / len(z) if len(z) else None, 8),
+                    "opacity_p50": s2.fmt(
+                        float(np.quantile(opacity[in_bin], 0.5)) if np.any(in_bin) else None
+                    ),
+                    "ckpt": rel(checkpoint),
+                }
+            )
+    write_csv(CSV_GLOBAL_Z, rows)
+    print(json.dumps({"global_z_hist": rel(CSV_GLOBAL_Z), "rows": len(rows)}, ensure_ascii=False))
+
+
+def _source_summary(metrics: list[dict[str, str]], run_name: str) -> dict[str, Any]:
+    part = [
+        row
+        for row in metrics
+        if row.get("setting") == "base" and row.get("run_name") == run_name
+    ]
+    rms_values = [
+        value
+        for value in (_finite_float(row.get("ref_rms_m")) for row in part)
+        if value is not None
+    ]
+    return {
+        "has_lod22": sum(s2.tf(row.get("has_lod22")) for row in part),
+        "valid_assembled": sum(
+            s2.tf(row.get("has_lod22")) and s2.tf(row.get("val3dity_valid"))
+            for row in part
+        ),
+        "invalid_assembled": sum(
+            s2.tf(row.get("has_lod22")) and not s2.tf(row.get("val3dity_valid"))
+            for row in part
+        ),
+        "median_ref_rms_m": float(np.median(rms_values)) if rms_values else None,
+    }
+
+
+def _s0_dense_count() -> int:
+    source = REPO / "phases/p2-gsjso/runs/e5p_train_20260707_C001/train_fingerprints.csv"
+    for row in read_csv(source):
+        if row.get("run_name") == "gs_e5_C001_dense_r1":
+            value = _finite_float(row.get("final_n") or row.get("final_n_gaussians"))
+            if value is not None:
+                return int(value)
+    return 575318
+
+
+def build_arm_cells(_args: argparse.Namespace) -> None:
+    metrics = read_csv(CSV_405_BUILDING)
+    raw_metrics = read_csv(REPO / "docs/e5_c001_8way_metrics.csv")
+    s1_metrics = read_csv(REPO / "docs/e5_c001_3b_s1_metrics.csv")
+    fingerprints = read_csv(RUN_DIR / "train_fingerprints.csv")
+    rend_dist = read_csv(CSV_REND_DIST)
+    raw_by = {
+        (row.get("source_run", ""), row.get("building_id", "")): row
+        for row in raw_metrics
+    }
+    s1_by = {
+        (row.get("source_run", ""), row.get("building_id", "")): row
+        for row in s1_metrics
+    }
+    metric_by = {
+        (row.get("run_name", ""), row.get("building_id", "")): row
+        for row in metrics
+        if row.get("setting") == "base"
+    }
+    fingerprint_by = {row.get("run_name", ""): row for row in fingerprints}
+    rend_by = {row.get("run_name", ""): row for row in rend_dist}
+    s0_x2 = 2 * _s0_dense_count()
+    rows: list[dict[str, Any]] = []
+    for rep in [1, 2]:
+        run_name = arm1p_run_name(rep)
+        source = _source_summary(metrics, run_name)
+        good6: list[dict[str, Any]] = []
+        for short_id in s2.GOOD6:
+            building_id = s2.full_id(short_id)
+            row = metric_by.get((run_name, building_id), {})
+            raw_row = raw_by.get(("raw_dense", building_id), {})
+            s1_row = s1_by.get(("base__gs_e5_C001_s1_dense_r1", building_id), {})
+            rms = _finite_float(row.get("ref_rms_m"))
+            raw_rms = _finite_float(raw_row.get("ref_rms_m"))
+            s1_rms = _finite_float(s1_row.get("ref_rms_m"))
+            good6.append(
+                {
+                    "built": s2.tf(row.get("has_lod22")),
+                    "raw_anchor_ok": (
+                        rms is not None and raw_rms is not None and rms <= raw_rms + 0.5
+                    ),
+                    "delta_vs_s1": (
+                        None if rms is None or s1_rms is None else rms - s1_rms
+                    ),
+                }
+            )
+        deltas = [
+            item["delta_vs_s1"]
+            for item in good6
+            if item["delta_vs_s1"] is not None
+        ]
+        final_n = _finite_float(fingerprint_by.get(run_name, {}).get("final_n_gaussians"))
+        rend_value = _finite_float(rend_by.get(run_name, {}).get("rend_dist_mean_tail_m"))
+        guardrail = all(item["built"] for item in good6) and sum(
+            bool(item["raw_anchor_ok"]) for item in good6
+        ) >= 5
+        accuracy = (
+            bool(deltas)
+            and float(np.median(deltas)) <= 0.3
+            and not any(value > 1.5 for value in deltas)
+        )
+        count_ok = final_n is not None and final_n <= s0_x2
+        if rend_value is None:
+            rend_status = "missing"
+        elif rend_value < 0.4:
+            rend_status = "pass"
+        elif rend_value <= 0.6:
+            rend_status = "boundary"
+        else:
+            rend_status = "fail"
+        cleaning_status = rend_status if count_ok else "fail"
+        validity = source["valid_assembled"] >= 10
+        if cleaning_status == "boundary" and guardrail and accuracy and validity:
+            all4_status = "boundary"
+        elif cleaning_status == "pass" and guardrail and accuracy and validity:
+            all4_status = "pass"
+        else:
+            all4_status = "fail"
+        rows.append(
+            {
+                "arm": "arm1p",
+                "replicate": f"r{rep}",
+                "run_name": run_name,
+                "configuration": "arm1 + prune_opa 0.05 (normal fixed)",
+                "has_lod22": source["has_lod22"],
+                "valid_assembled": source["valid_assembled"],
+                "invalid_assembled": source["invalid_assembled"],
+                "median_ref_rms_m": s2.fmt(source["median_ref_rms_m"]),
+                "good6_all_built": str(all(item["built"] for item in good6)).lower(),
+                "good6_raw_anchor_count": sum(
+                    bool(item["raw_anchor_ok"]) for item in good6
+                ),
+                "good6_median_delta_vs_s1_m": s2.fmt(
+                    float(np.median(deltas)) if deltas else None
+                ),
+                "good6_max_delta_vs_s1_m": s2.fmt(max(deltas) if deltas else None),
+                "good6_catastrophe_count": sum(value > 1.5 for value in deltas),
+                "final_n_gaussians": s2.fmt(final_n),
+                "s0_dense_x2_threshold": s0_x2,
+                "count_le_s0_x2": str(count_ok).lower(),
+                "rend_dist_mean_tail_m": s2.fmt(rend_value),
+                "rend_dist_status": rend_status,
+                "pareto_guardrail": "pass" if guardrail else "fail",
+                "pareto_accuracy_nonregression": "pass" if accuracy else "fail",
+                "pareto_cleaning": cleaning_status,
+                "pareto_validity_nonregression": "pass" if validity else "fail",
+                "pareto_all4": all4_status,
+                "ckpt": fingerprint_by.get(run_name, {}).get(
+                    "ckpt", rel(checkpoint_path(run_name, "final"))
+                ),
+                "readout": "gssem; minobs3; voxel0.05; SORstd2; 405 repair overlay",
+                "arm3_scoring": "excluded by A-1p >8 m branch",
+            }
+        )
+    write_csv(CSV_ARM_CELLS, rows)
+    _plot_arm_cells(rows)
+    print(json.dumps({"arm_cells": rel(CSV_ARM_CELLS), "rows": len(rows)}, ensure_ascii=False))
+
+
+def _plot_arm_cells(rows: list[dict[str, Any]]) -> None:
+    if not rows:
+        return
+    output_dir = FIG_DIR / "summary"
+    output_dir.mkdir(parents=True, exist_ok=True)
+    labels = [row["replicate"] for row in rows]
+    x = np.arange(len(rows))
+    fig, axes = plt.subplots(1, 3, figsize=(10.5, 3.6), constrained_layout=True)
+    axes[0].bar(x, [int(row["good6_raw_anchor_count"]) for row in rows], color="#1F4E79")
+    axes[1].bar(x, [_finite_float(row["valid_assembled"]) or 0 for row in rows], color="#4F7C5B")
+    axes[2].bar(x, [_finite_float(row["rend_dist_mean_tail_m"]) or 0 for row in rows], color="#B7831B")
+    axes[0].axhline(5, color="#555555", linestyle="--", linewidth=1)
+    axes[1].axhline(10, color="#555555", linestyle="--", linewidth=1)
+    axes[2].axhspan(0.4, 0.6, color="#D9D9D9", alpha=0.55)
+    axes[0].set_title("Good6 raw anchors")
+    axes[1].set_title("Valid assembled")
+    axes[2].set_title("rend_dist tail (m)")
+    for axis in axes:
+        axis.set_xticks(x)
+        axis.set_xticklabels(labels)
+        axis.grid(axis="y", color="#DDDDDD", linewidth=0.6)
+    fig.suptitle("Arm 1p replicate metrics", fontsize=11)
+    fig.savefig(output_dir / "arm1p_cell_summary.png", dpi=190)
+    plt.close(fig)
+
+
+def versions(_args: argparse.Namespace) -> None:
+    large_checkpoint = MONO_V2_ROOT / "checkpoints/depth_anything_v2_vitl.pth"
+    decision = RUN_DIR / "monodepth_decision_v2.json"
+    lines = [
+        f"run_id: {RUN_ID}",
+        f"timestamp_utc: {datetime.now(timezone.utc).isoformat()}",
+        f"git_head: {s2.capture(['git', 'rev-parse', 'HEAD'])}",
+        f"git_branch: {s2.capture(['git', 'branch', '--show-current'])}",
+        "crs: EPSG:25832",
+        "canonical_changed: no",
+        "mode: S2p observation material; no human verdict",
+        "arm3: excluded by locked A-1p branch; no Pearson implementation or training",
+        f"monodepth_decision: {rel(decision)}",
+        f"monodepth_large_checkpoint: {rel(large_checkpoint)}",
+        f"monodepth_large_checkpoint_sha256: {sha256_file(large_checkpoint) if large_checkpoint.exists() else ''}",
+        f"train_fingerprints: {rel(RUN_DIR / 'train_fingerprints.csv')}",
+        f"readout_fingerprints: {rel(RUN_DIR / 'readout_fingerprints.csv')}",
+        f"arm_cells_csv: {rel(CSV_ARM_CELLS)}",
+        f"issues_csv: {rel(CSV_ISSUES)}",
+        "issues_md: docs/issues.md",
+    ]
+    (RUN_DIR / "versions.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print(json.dumps({"versions": rel(RUN_DIR / "versions.txt")}, ensure_ascii=False))
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="cmd", required=True)
@@ -1668,6 +1987,11 @@ def build_parser() -> argparse.ArgumentParser:
     sub.add_parser("twin-rend-dist")
     sub.add_parser("gable-mode")
     sub.add_parser("panels-8way")
+    sub.add_parser("fingerprint-training")
+    sub.add_parser("rend-dist")
+    sub.add_parser("global-z-hist")
+    sub.add_parser("arm-cells")
+    sub.add_parser("versions")
     strips = sub.add_parser("pipeline-strips")
     strips.add_argument("--rep", choices=["1", "2", "all"], default="all")
     strips.add_argument("--device", default="cuda:0")
@@ -1710,6 +2034,16 @@ def main() -> None:
         gable_mode(args)
     elif args.cmd == "panels-8way":
         panels_8way(args)
+    elif args.cmd == "fingerprint-training":
+        fingerprint_training(args)
+    elif args.cmd == "rend-dist":
+        rend_dist_summary(args)
+    elif args.cmd == "global-z-hist":
+        global_z_hist(args)
+    elif args.cmd == "arm-cells":
+        build_arm_cells(args)
+    elif args.cmd == "versions":
+        versions(args)
     elif args.cmd == "pipeline-strips":
         pipeline_strips(args)
     elif args.cmd == "infer-monodepth-v2":
