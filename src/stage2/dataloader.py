@@ -49,8 +49,10 @@ class Frame:
     image_path: Path
     depth_path: Optional[Path]
     normal_path: Optional[Path]
+    mono_depth_path: Optional[Path]
     depth_format: str                   # "colmap_bin" | "exr" | None
     normal_format: str                  # "colmap_bin" | "exr" | None
+    mono_depth_format: str              # "npy" | "exr" | None
     K: np.ndarray
     R: np.ndarray
     t: np.ndarray
@@ -78,8 +80,12 @@ class ColmapDataset(Dataset):
         load_depth: bool = True,
         load_normal: bool = True,
         load_semantic: bool = False,
+        normal_dir: Optional[str | Path] = None,
+        mono_depth_dir: Optional[str | Path] = None,
         depth_far_sentinel: Optional[float] = 28000.0,
+        mono_depth_far_sentinel: Optional[float] = 28000.0,
         depth_scale: float = 1.0,
+        mono_depth_scale: float = 1.0,
         normal_encoding: str = "half_range",
     ):
         self.root = Path(root)
@@ -88,8 +94,12 @@ class ColmapDataset(Dataset):
         self.load_normal = load_normal
         self.load_semantic = load_semantic
         self.semantic_dir = self.root / "semantic"
+        self.override_normal_dir = self._resolve_aux_dir(normal_dir)
+        self.mono_depth_dir = self._resolve_aux_dir(mono_depth_dir)
         self.depth_far_sentinel = depth_far_sentinel
+        self.mono_depth_far_sentinel = mono_depth_far_sentinel
         self.depth_scale = float(depth_scale)
+        self.mono_depth_scale = float(mono_depth_scale)
         self.normal_encoding = normal_encoding
 
         self.image_dir = self.root / "images"
@@ -119,6 +129,7 @@ class ColmapDataset(Dataset):
 
             dpath, dfmt = self._find_depth(img.name)
             npath, nfmt = self._find_normal(img.name)
+            mdpath, mdfmt = self._find_mono_depth(img.name)
 
             self.frames.append(
                 Frame(
@@ -126,11 +137,20 @@ class ColmapDataset(Dataset):
                     image_path=img_path,
                     depth_path=dpath, depth_format=dfmt,
                     normal_path=npath, normal_format=nfmt,
+                    mono_depth_path=mdpath, mono_depth_format=mdfmt,
                     K=cam.K(), R=img.R(), t=img.tvec.copy(),
                     width=cam.width, height=cam.height,
                 )
             )
         self.frames.sort(key=lambda f: f.name)
+
+    def _resolve_aux_dir(self, value: Optional[str | Path]) -> Optional[Path]:
+        if value is None or str(value).strip() == "":
+            return None
+        p = Path(value)
+        if not p.is_absolute():
+            p = self.root / p
+        return p
 
     def _find_depth(self, img_name: str) -> Tuple[Optional[Path], Optional[str]]:
         # COLMAP PatchMatch .bin
@@ -146,14 +166,29 @@ class ColmapDataset(Dataset):
         return None, None
 
     def _find_normal(self, img_name: str) -> Tuple[Optional[Path], Optional[str]]:
+        stem = Path(img_name).stem
+        if self.override_normal_dir is not None:
+            for suffix, fmt in [(".npy", "npy_world"), (".exr", "exr")]:
+                p = self.override_normal_dir / f"{stem}{suffix}"
+                if p.exists():
+                    return p, fmt
         for suffix in [".geometric.bin", ".photometric.bin"]:
             p = self.colmap_normal_dir / f"{img_name}{suffix}"
             if p.exists():
                 return p, "colmap_bin"
-        stem = Path(img_name).stem
         p = self.exr_normal_dir / f"{stem}.exr"
         if p.exists():
             return p, "exr"
+        return None, None
+
+    def _find_mono_depth(self, img_name: str) -> Tuple[Optional[Path], Optional[str]]:
+        if self.mono_depth_dir is None:
+            return None, None
+        stem = Path(img_name).stem
+        for suffix, fmt in [(".npy", "npy"), (".exr", "exr")]:
+            p = self.mono_depth_dir / f"{stem}{suffix}"
+            if p.exists():
+                return p, fmt
         return None, None
 
     def __len__(self) -> int:
@@ -192,6 +227,23 @@ class ColmapDataset(Dataset):
         d = d * self.depth_scale
         return np.where(mask, d, 0.0).astype(np.float32), mask
 
+    def _load_mono_depth(self, fr: Frame, H: int, W: int):
+        if fr.mono_depth_path is None:
+            return None, None
+        if fr.mono_depth_format == "npy":
+            d = np.load(fr.mono_depth_path).astype(np.float32)
+        else:
+            raw = cv2.imread(str(fr.mono_depth_path), cv2.IMREAD_UNCHANGED)
+            if raw is None:
+                return None, None
+            d = raw[..., 0] if raw.ndim == 3 else raw
+        d = _resize_float(d, (H, W))
+        d = d * self.mono_depth_scale
+        mask = np.isfinite(d) & (d > 0)
+        if self.mono_depth_far_sentinel is not None:
+            mask &= d < self.mono_depth_far_sentinel
+        return np.where(mask, d, 0.0).astype(np.float32), mask
+
     def _load_normal(self, fr: Frame, H: int, W: int):
         """Load normal map and return in WORLD frame.
 
@@ -200,6 +252,15 @@ class ColmapDataset(Dataset):
         """
         if fr.normal_path is None:
             return None, None
+        if fr.normal_format == "npy_world":
+            n = np.load(fr.normal_path).astype(np.float32)
+            if n.ndim == 3 and n.shape[0] == 3 and n.shape[-1] != 3:
+                n = np.moveaxis(n, 0, -1)
+            n = _resize_float(n, (H, W))
+            norm = np.linalg.norm(n, axis=-1, keepdims=True)
+            mask = norm[..., 0] > 0.5
+            n = np.where(norm > 1e-6, n / np.maximum(norm, 1e-6), 0.0)
+            return n.astype(np.float32), mask
         if fr.normal_format == "colmap_bin":
             n_cam = read_array(fr.normal_path)
             n_cam = _resize_float(n_cam, (H, W))
@@ -237,6 +298,8 @@ class ColmapDataset(Dataset):
         if self.load_depth:
             depth, depth_mask = self._load_depth(fr, H, W)
 
+        mono_depth, mono_depth_mask = self._load_mono_depth(fr, H, W)
+
         normal, normal_mask = (None, None)
         if self.load_normal:
             normal, normal_mask = self._load_normal(fr, H, W)
@@ -268,6 +331,9 @@ class ColmapDataset(Dataset):
         if depth is not None:
             out["depth"] = torch.from_numpy(depth)
             out["depth_mask"] = torch.from_numpy(depth_mask.astype(np.bool_))
+        if mono_depth is not None:
+            out["mono_depth"] = torch.from_numpy(mono_depth)
+            out["mono_depth_mask"] = torch.from_numpy(mono_depth_mask.astype(np.bool_))
         if normal is not None:
             out["normal"] = torch.from_numpy(normal)
             out["normal_mask"] = torch.from_numpy(normal_mask.astype(np.bool_))

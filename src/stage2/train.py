@@ -479,7 +479,12 @@ def main():
         load_depth=cfg.get("load_depth", True),
         load_normal=cfg.get("load_normal", True),
         load_semantic=cfg.get("load_semantic", False),
+        normal_dir=cfg.get("normal_dir") or cfg.get("mono_normal_dir"),
+        mono_depth_dir=cfg.get("mono_depth_dir"),
         depth_scale=cfg.get("depth_scale", 1.0),
+        mono_depth_scale=cfg.get("mono_depth_scale", 1.0),
+        mono_depth_far_sentinel=cfg.get("mono_depth_far_sentinel", 28000.0),
+        normal_encoding=cfg.get("normal_encoding", "half_range"),
     )
     print(f"[data] frames={len(ds)}  pts_init={ds.points_xyz.shape[0]}")
 
@@ -656,11 +661,18 @@ def main():
     depth_ramp_steps = int(cfg.get("depth_ramp_steps", 0))
     depth_final_weight = cfg.get("depth_final_weight")
     depth_final_factor = cfg.get("depth_final_factor")
+    depth_weight_floor = cfg.get("depth_weight_floor")
     normal_warmup = int(cfg.get("normal_warmup", 0))
     normal_schedule = cfg.get("normal_schedule", "constant")
     normal_ramp_steps = int(cfg.get("normal_ramp_steps", 0))
     normal_final_weight = cfg.get("normal_final_weight")
     normal_final_factor = cfg.get("normal_final_factor")
+    w_mono_depth = float(cfg.get("w_mono_depth", 0.0) or 0.0)
+    mono_depth_warmup = int(cfg.get("mono_depth_warmup", 0))
+    mono_depth_schedule = cfg.get("mono_depth_schedule", "constant")
+    mono_depth_ramp_steps = int(cfg.get("mono_depth_ramp_steps", 0))
+    mono_depth_final_weight = cfg.get("mono_depth_final_weight")
+    mono_depth_final_factor = cfg.get("mono_depth_final_factor")
     w_nc = cfg.get("w_nc", 0.05)
     w_distort = cfg.get("w_distort", 100.0)   # 2DGS distortion reg
     distort_normalization = cfg.get("distort_normalization", "none")
@@ -811,12 +823,19 @@ def main():
         raise RuntimeError(
             "w_normal>0 but NO normal maps resolved under data_root/stereo|normal — L_normal would be "
             "a silent no-op. Generate+stage maps or set w_normal=0.")
-    if w_depth > 0 or w_normal > 0:
+    if w_mono_depth > 0 and not any(f.mono_depth_path is not None for f in ds.frames):
+        raise RuntimeError(
+            "w_mono_depth>0 but NO mono depth maps resolved via mono_depth_dir — "
+            "L_mono_depth would be a silent no-op. Generate aligned mono-depth maps or set w_mono_depth=0.")
+    if w_depth > 0 or w_normal > 0 or w_mono_depth > 0:
         n_d = sum(f.depth_path is not None for f in ds.frames)
         n_n = sum(f.normal_path is not None for f in ds.frames)
+        n_md = sum(f.mono_depth_path is not None for f in ds.frames)
         print(f"[prior] depth maps on {n_d}/{len(ds.frames)} frames, normal maps on {n_n}/{len(ds.frames)} "
               f"(w_depth={w_depth} sched={depth_schedule}@{depth_warmup}+{depth_ramp_steps}; "
-              f"w_normal={w_normal} sched={normal_schedule}@{normal_warmup}+{normal_ramp_steps})")
+              f"w_normal={w_normal} sched={normal_schedule}@{normal_warmup}+{normal_ramp_steps}; "
+              f"mono_depth maps on {n_md}/{len(ds.frames)} frames, w_mono_depth={w_mono_depth} "
+              f"sched={mono_depth_schedule}@{mono_depth_warmup}+{mono_depth_ramp_steps})")
     if w_distort > 0:
         print(
             f"[distort] w_distort={w_distort:g} normalization={distort_normalization} "
@@ -837,6 +856,16 @@ def main():
         "depth_base_weight": w_depth,
         "depth_final_weight": depth_final_weight,
         "depth_final_factor": depth_final_factor,
+        "depth_weight_floor": depth_weight_floor,
+        "normal_dir": cfg.get("normal_dir") or cfg.get("mono_normal_dir"),
+        "mono_depth_dir": cfg.get("mono_depth_dir"),
+        "mono_depth_base_weight": w_mono_depth,
+        "mono_depth_schedule": mono_depth_schedule,
+        "mono_depth_warmup": mono_depth_warmup,
+        "mono_depth_ramp_steps": mono_depth_ramp_steps,
+        "mono_depth_final_weight": mono_depth_final_weight,
+        "mono_depth_final_factor": mono_depth_final_factor,
+        "mono_depth_mask_rule": "mono_depth_mask AND NOT depth_mask when depth_mask is present",
         "seed_protect": seed_protect,
         "seed_protect_until_iter": seed_protect_until_iter,
         "prune_opa": _strat_kwargs["prune_opa"],
@@ -898,10 +927,35 @@ def main():
                 final_weight=depth_final_weight,
                 final_factor=depth_final_factor,
             )
+            if depth_weight_floor is not None:
+                w_depth_eff = max(float(w_depth_eff), float(depth_weight_floor))
             loss_total = loss_total + w_depth_eff * loss_depth
         else:
             loss_depth = torch.tensor(0.0, device=device)
             w_depth_eff = 0.0
+
+        if "mono_depth" in batch:
+            md_gt = batch["mono_depth"].to(device)
+            md_m = batch["mono_depth_mask"].to(device)
+            if "depth_mask" in batch:
+                md_m = md_m & (~batch["depth_mask"].to(device))
+            if bool(md_m.any().item()):
+                loss_mono_depth = L.l_depth(depth_pred, md_gt, md_m)
+            else:
+                loss_mono_depth = torch.tensor(0.0, device=device)
+            w_mono_depth_eff = _scheduled_weight(
+                w_mono_depth,
+                it,
+                mono_depth_warmup,
+                mono_depth_schedule,
+                mono_depth_ramp_steps,
+                final_weight=mono_depth_final_weight,
+                final_factor=mono_depth_final_factor,
+            )
+            loss_total = loss_total + w_mono_depth_eff * loss_mono_depth
+        else:
+            loss_mono_depth = torch.tensor(0.0, device=device)
+            w_mono_depth_eff = 0.0
 
         if "normal" in batch:
             n_gt = batch["normal"].to(device)
@@ -1095,6 +1149,7 @@ def main():
                     "base": loss_base_for_grad,
                     "photo": loss_photo,
                     "depth": loss_depth,
+                    "mono_depth": loss_mono_depth,
                     "normal": loss_n,
                     "semantic": loss_sem,
                     "mutual": loss_mut_total,
@@ -1107,6 +1162,7 @@ def main():
             audit_rowspec = {
                 "photo": (loss_photo, float(w_photo), w_photo * loss_photo),
                 "depth": (loss_depth, float(w_depth_eff), w_depth_eff * loss_depth),
+                "mono_depth": (loss_mono_depth, float(w_mono_depth_eff), w_mono_depth_eff * loss_mono_depth),
                 "normal": (loss_n, float(w_normal_eff), w_normal_eff * loss_n),
                 "nc": (loss_nc, float(w_nc), w_nc * loss_nc),
                 "distort": (loss_dist, float(w_distort), w_distort * loss_dist),
@@ -1155,11 +1211,13 @@ def main():
             writer.add_scalar("loss/total", loss_total.item(), it)
             writer.add_scalar("loss/photo", loss_photo.item(), it)
             writer.add_scalar("loss/depth", loss_depth.item(), it)
+            writer.add_scalar("loss/mono_depth", loss_mono_depth.item(), it)
             writer.add_scalar("loss/normal", loss_n.item(), it)
             writer.add_scalar("loss/nc", loss_nc.item(), it)
             writer.add_scalar("loss/distort", loss_dist.item(), it)
             writer.add_scalar("loss/distort_raw", loss_dist_raw.item(), it)
             writer.add_scalar("loss_weight/depth", float(w_depth_eff), it)
+            writer.add_scalar("loss_weight/mono_depth", float(w_mono_depth_eff), it)
             writer.add_scalar("loss_weight/normal", float(w_normal_eff), it)
             writer.add_scalar("loss_weight/distort", float(w_distort), it)
             if elongation_filter:
