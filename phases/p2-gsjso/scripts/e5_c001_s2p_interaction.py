@@ -78,6 +78,7 @@ CSV_READOUT_CASES = REPO / "docs/e5_c001_s2p_representative_buildings.csv"
 CSV_READOUT_INVENTORY = REPO / "docs/e5_c001_s2p_readout_inventory.csv"
 CSV_READOUT_ISSUES = REPO / "docs/e5_c001_s2p_readout_issues.csv"
 CSV_GABLE_MODE = REPO / "docs/e5_c001_s2p_gable_mode.csv"
+CSV_PANEL_INVENTORY = REPO / "docs/e5_c001_s2p_8way_panel_inventory.csv"
 
 TIMELINE_IDS = ["4907202", "4908168", "4908178", "4907184"]
 TIMELINE_FULL_IDS = [f"DEBY_LOD2_{sid}" for sid in TIMELINE_IDS]
@@ -766,6 +767,235 @@ def gable_mode(_args: argparse.Namespace) -> None:
     print(json.dumps({"gable_mode": rel(CSV_GABLE_MODE), "rows": len(rows)}, ensure_ascii=False))
 
 
+def _panel_sources() -> list[Any]:
+    eight = s2.eight
+    base_sources = {source.source_run: source for source in eight.sources()}
+    sources = [
+        base_sources["reference"],
+        base_sources["lidar"],
+        base_sources["raw_dense"],
+        base_sources["raw_sparse"],
+        base_sources["raw_acmp"],
+    ]
+    s2_repaired = (
+        REPO
+        / "phases/p0-audit/runs/e5p_s2_405_repair_20260710_C001/e5p_s2_direction_position_20260710_C001/base"
+    )
+    s2_original = REPO / "phases/p0-audit/runs/e5p_s2_direction_position_20260710_C001/base"
+    arm1_name = "gs_e5_C001_s2_arm1_dense_r1"
+    sources.append(
+        eight.Source(
+            "gs_arm1",
+            "s2_arm1_r1",
+            "S2 Arm 1 r1",
+            "gs",
+            s2_repaired / "status" / f"{arm1_name}_run_1.csv",
+            None,
+            s2_repaired / "cityjson" / f"{arm1_name}_run_1.city.json",
+            None,
+            pointcloud_template=str(
+                s2_original / "roofer" / arm1_name / "run_1" / "{bid}_run_1_classified.las"
+            ),
+            run_name=arm1_name,
+            z_shift_to_reference_m=s2.ELLIP_TO_REF_SHIFT_M,
+        )
+    )
+    for rep in [1, 2]:
+        run_name = arm1p_run_name(rep)
+        sources.append(
+            eight.Source(
+                "gs_arm1p",
+                f"s2p_arm1p_r{rep}",
+                f"S2p Arm 1' r{rep}",
+                "gs",
+                REPAIRED_P0_RUN_DIR / "base/status" / f"{run_name}_run_1.csv",
+                None,
+                REPAIRED_P0_RUN_DIR / "base/cityjson" / f"{run_name}_run_1.city.json",
+                None,
+                pointcloud_template=str(
+                    P0_RUN_DIR / "base/roofer" / run_name / "run_1" / "{bid}_run_1_classified.las"
+                ),
+                run_name=run_name,
+                z_shift_to_reference_m=s2.ELLIP_TO_REF_SHIFT_M,
+            )
+        )
+    return sources
+
+
+def _footprint_polygons(ids: list[str]) -> tuple[dict[str, Any], dict[str, dict[str, Any]]]:
+    from shapely.geometry import Polygon
+    from shapely.ops import unary_union
+
+    footprint_rows = s2.strips.load_footprints(ids)
+    polygons = {
+        building_id: unary_union([Polygon(ring) for ring in footprint["rings"]])
+        for building_id, footprint in footprint_rows.items()
+    }
+    return polygons, footprint_rows
+
+
+def _reference_cloud(surfaces: list[Any]) -> np.ndarray:
+    samples: list[np.ndarray] = []
+    for surface in surfaces:
+        xy = s2.eight.sample_polygon_points(surface.polygon, spacing=0.35, limit=1200)
+        if len(xy):
+            samples.append(np.column_stack([xy[:, 0], xy[:, 1], surface.z_at(xy[:, 0], xy[:, 1])]))
+    return np.vstack(samples) if samples else np.zeros((0, 3), dtype=np.float64)
+
+
+def _panel_axis(footprint: dict[str, Any]) -> np.ndarray:
+    points = np.concatenate(footprint["rings"], axis=0).astype(np.float64)
+    centered = points - points.mean(axis=0, keepdims=True)
+    covariance = centered.T @ centered
+    values, vectors = np.linalg.eigh(covariance)
+    axis = vectors[:, int(np.argmax(values))]
+    if axis[0] < 0:
+        axis = -axis
+    return axis / max(float(np.linalg.norm(axis)), 1e-9)
+
+
+def _draw_panel_top(ax: Any, points: np.ndarray, footprint: dict[str, Any], title: str) -> None:
+    ax.set_title(title, fontsize=7)
+    if len(points):
+        selected = points
+        if len(selected) > 18000:
+            rng = np.random.default_rng(20260710)
+            selected = selected[rng.choice(len(selected), 18000, replace=False)]
+        color = selected[:, 2] - np.median(selected[:, 2])
+        ax.scatter(selected[:, 0], selected[:, 1], c=color, cmap="viridis", s=0.7, linewidths=0)
+    else:
+        ax.text(0.5, 0.5, "no points", ha="center", va="center", transform=ax.transAxes, fontsize=7)
+    for ring in footprint["rings"]:
+        ax.plot(ring[:, 0], ring[:, 1], color="#202020", linewidth=0.8)
+    x0, y0, x1, y1 = footprint["bbox"]
+    pad = max(x1 - x0, y1 - y0) * 0.12 + 0.5
+    ax.set_xlim(x0 - pad, x1 + pad)
+    ax.set_ylim(y0 - pad, y1 + pad)
+    ax.set_aspect("equal", adjustable="box")
+    ax.set_xticks([])
+    ax.set_yticks([])
+
+
+def _draw_panel_side(
+    ax: Any,
+    points: np.ndarray,
+    footprint: dict[str, Any],
+    axis: np.ndarray,
+    z_limits: tuple[float, float],
+) -> None:
+    if len(points):
+        selected = points
+        if len(selected) > 18000:
+            rng = np.random.default_rng(20260710)
+            selected = selected[rng.choice(len(selected), 18000, replace=False)]
+        origin = np.mean(np.concatenate(footprint["rings"], axis=0), axis=0)
+        horizontal = (selected[:, :2] - origin) @ axis
+        ax.scatter(horizontal, selected[:, 2], c=selected[:, 2], cmap="viridis", s=0.7, linewidths=0)
+    else:
+        ax.text(0.5, 0.5, "no points", ha="center", va="center", transform=ax.transAxes, fontsize=7)
+    x0, y0, x1, y1 = footprint["bbox"]
+    span = math.hypot(x1 - x0, y1 - y0) * 0.58 + 0.5
+    ax.set_xlim(-span, span)
+    ax.set_ylim(*z_limits)
+    ax.set_xlabel("principal axis (m)", fontsize=6)
+    ax.set_ylabel("z (m)", fontsize=6)
+    ax.tick_params(labelsize=5)
+    ax.grid(color="#DDDDDD", linewidth=0.5)
+
+
+def panels_8way(_args: argparse.Namespace) -> None:
+    core_ids = ["4907202", "4908168", "4907185", "4907184", "60098", "8568392"]
+    full_ids = [s2.full_id(short_id) for short_id in core_ids]
+    sources = _panel_sources()
+    polygons, footprint_rows = _footprint_polygons(core_ids)
+    references = s2.eight.parse_lod2_roofs(s2.eight.LOD2_DIR, set(full_ids))
+    predictions: dict[str, dict[str, list[Any]]] = {}
+    for source in sources:
+        if source.source_run == "reference":
+            predictions[source.source_run] = references
+        elif source.cityjson_path and source.cityjson_path.exists():
+            parsed = s2.eight.parse_cityjson_roofs(source.cityjson_path, set(full_ids))
+            predictions[source.source_run] = {
+                building_id: s2.eight.shift_surface_z(surfaces, source.z_shift_to_reference_m)
+                for building_id, surfaces in parsed.items()
+            }
+        else:
+            predictions[source.source_run] = {}
+    cache = s2.eight.PointCloudCache(polygons)
+    out_dir = FIG_DIR / "8way_panels"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    inventory: list[dict[str, Any]] = []
+    for short_id in core_ids:
+        building_id = s2.full_id(short_id)
+        footprint = footprint_rows[building_id]
+        axis = _panel_axis(footprint)
+        reference_surfaces = references.get(building_id, [])
+        reference_points = _reference_cloud(reference_surfaces)
+        if len(reference_points):
+            z_limits = (
+                float(np.percentile(reference_points[:, 2], 1)) - 3.0,
+                float(np.percentile(reference_points[:, 2], 99)) + 3.0,
+            )
+        else:
+            z_limits = (560.0, 590.0)
+        clouds: dict[str, np.ndarray] = {}
+        for source in sources:
+            if source.source_run == "reference":
+                points = reference_points
+            else:
+                points = cache.read_roof_points(source, building_id)
+                if len(points) and source.z_shift_to_reference_m:
+                    points = points.copy()
+                    points[:, 2] += float(source.z_shift_to_reference_m)
+            clouds[source.source_run] = points
+        n_columns = len(sources)
+        figure = plt.figure(figsize=(2.25 * n_columns, 8.0), constrained_layout=True)
+        for column, source in enumerate(sources, start=1):
+            points = clouds[source.source_run]
+            surfaces = predictions[source.source_run].get(building_id, [])
+            _draw_panel_top(
+                figure.add_subplot(3, n_columns, column),
+                points,
+                footprint,
+                source.display_label,
+            )
+            _draw_panel_side(
+                figure.add_subplot(3, n_columns, n_columns + column),
+                points,
+                footprint,
+                axis,
+                z_limits,
+            )
+            s2.eight.draw_model(
+                figure.add_subplot(3, n_columns, 2 * n_columns + column, projection="3d"),
+                surfaces,
+                polygons[building_id],
+                "assembled model" if source.source_run != "reference" else "reference LoD2",
+                f"roof faces {len(surfaces)}",
+            )
+            inventory.append(
+                {
+                    "building_id": building_id,
+                    "source_run": source.source_run,
+                    "display_label": source.display_label,
+                    "point_count_in_footprint": len(points),
+                    "roof_face_count": len(surfaces),
+                    "pointcloud_source": source.pointcloud_template or rel(source.pointcloud_path) if source.pointcloud_path else source.pointcloud_template or "reference samples",
+                    "cityjson": rel(source.cityjson_path) if source.cityjson_path else "reference LoD2",
+                    "z_shift_to_reference_m": source.z_shift_to_reference_m,
+                }
+            )
+        figure.suptitle(f"C001 S2p source panel: {building_id}", fontsize=12)
+        output = out_dir / f"8way_{short_id}.png"
+        figure.savefig(output, dpi=170)
+        plt.close(figure)
+        for row in inventory[-len(sources) :]:
+            row["figure"] = rel(output)
+        print(json.dumps({"panel": rel(output), "building_id": building_id}, ensure_ascii=False), flush=True)
+    write_csv(CSV_PANEL_INVENTORY, inventory)
+    print(json.dumps({"panel_inventory": rel(CSV_PANEL_INVENTORY), "rows": len(inventory)}, ensure_ascii=False))
+
+
 def _load_depth_anything_v2(device: Any) -> tuple[Any, str]:
     import torch
 
@@ -1306,6 +1536,7 @@ def build_parser() -> argparse.ArgumentParser:
     sub.add_parser("sheet-opacity-dist")
     sub.add_parser("twin-rend-dist")
     sub.add_parser("gable-mode")
+    sub.add_parser("panels-8way")
     mono = sub.add_parser("infer-monodepth-v2")
     mono.add_argument("--gpu", default="1")
     mono.add_argument("--device", default="cuda:0")
@@ -1342,6 +1573,8 @@ def main() -> None:
         twin_rend_dist(args)
     elif args.cmd == "gable-mode":
         gable_mode(args)
+    elif args.cmd == "panels-8way":
+        panels_8way(args)
     elif args.cmd == "infer-monodepth-v2":
         infer_monodepth_v2(args)
     elif args.cmd == "score-monodepth-v2":
