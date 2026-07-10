@@ -58,6 +58,7 @@ MONO_V2_DEPTH_DIR = MONO_V2_ROOT / "depth_aligned_npy"
 DA_REPO = REPO / "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/Depth-Anything-V2"
 
 FIG_DIR = REPO / "docs/figs/e5_c001_s2p"
+REPORT_PATH = REPO / "docs/W_E5_C001_S2p_상호작용.md"
 CSV_INVENTORY = REPO / "docs/e5_c001_s2p_inventory.csv"
 CSV_TIMELINE = REPO / "docs/e5_c001_s2p_timeline_roofcrop.csv"
 CSV_DENSIFY = REPO / "docs/e5_c001_s2p_densify_log.csv"
@@ -1974,6 +1975,303 @@ def versions(_args: argparse.Namespace) -> None:
     print(json.dumps({"versions": rel(RUN_DIR / "versions.txt")}, ensure_ascii=False))
 
 
+def _report_group(building_id: str) -> str:
+    short = s2.short_id(building_id)
+    if short in s2.GOOD6:
+        return "양쪽 성공 6동"
+    if short in s2.GS_FAIL5:
+        return "GS만 실패 5동"
+    if short in s2.TEXTURELESS_OBS3:
+        return "입력 한계 5동/무늬없음·관측됨 3"
+    return ""
+
+
+def _join_metric(values: list[Any], digits: int = 4) -> str:
+    return "/".join(s2.fmt(_finite_float(value), digits) for value in values)
+
+
+def report(_args: argparse.Namespace) -> None:
+    arm_cells = read_csv(CSV_ARM_CELLS)
+    metrics = [
+        row
+        for row in read_csv(CSV_405_BUILDING)
+        if row.get("run_name") in {arm1p_run_name(1), arm1p_run_name(2)}
+        and row.get("setting") == "base"
+    ]
+    timeline = read_csv(CSV_TIMELINE)
+    densify = read_csv(CSV_DENSIFY)
+    mono = read_csv(CSV_MONO_V2)
+    opacity = read_csv(CSV_SHEET_OPACITY)
+    twin = read_csv(CSV_TWIN_REND)
+    gable = read_csv(CSV_GABLE_MODE)
+    old_cells = [
+        row for row in read_csv(REPO / "docs/e5_c001_s2_arm_cells.csv")
+        if row.get("arm") == "arm1"
+    ]
+    issues = read_csv(CSV_ISSUES)
+
+    building_rows: list[dict[str, Any]] = []
+    named_ids = set(s2.GOOD6 + s2.GS_FAIL5 + s2.TEXTURELESS_OBS3)
+    for row in sorted(
+        metrics,
+        key=lambda item: (item.get("replicate", ""), s2.short_id(item.get("building_id", ""))),
+    ):
+        if s2.short_id(row.get("building_id", "")) not in named_ids:
+            continue
+        building_rows.append(
+            {
+                "run": row.get("replicate", ""),
+                "분류": _report_group(row.get("building_id", "")),
+                "building": s2.short_id(row.get("building_id", "")),
+                "조립": row.get("has_lod22", ""),
+                "유효": row.get("val3dity_valid", ""),
+                "상태": row.get("status_reason", ""),
+                "RMS_m": row.get("ref_rms_m", ""),
+                "면수": row.get("roof_planes", ""),
+                "참조면수": row.get("ref_roof_planes", ""),
+            }
+        )
+
+    adjacent_rows: list[dict[str, Any]] = []
+    for rep in ["r1", "r2"]:
+        old = next((row for row in old_cells if row.get("replicate") == rep), {})
+        new = next((row for row in arm_cells if row.get("replicate") == rep), {})
+        adjacent_rows.append(
+            {
+                "run": rep,
+                "cell": "Arm 1 (p=0.005)",
+                "good6조립": old.get("good6_all_built", ""),
+                "anchor": old.get("good6_raw_anchor_count", ""),
+                "valid": old.get("valid_assembled", ""),
+                "N": old.get("final_n_gaussians", ""),
+                "rend_dist": old.get("rend_dist_mean_tail_m", ""),
+                "4항": old.get("pareto_all4", ""),
+            }
+        )
+        adjacent_rows.append(
+            {
+                "run": rep,
+                "cell": "Arm 1p (p=0.05)",
+                "good6조립": new.get("good6_all_built", ""),
+                "anchor": new.get("good6_raw_anchor_count", ""),
+                "valid": new.get("valid_assembled", ""),
+                "N": new.get("final_n_gaussians", ""),
+                "rend_dist": new.get("rend_dist_mean_tail_m", ""),
+                "4항": new.get("pareto_all4", ""),
+            }
+        )
+
+    five_k = {
+        (row.get("replicate", ""), s2.short_id(row.get("building_id", ""))): row
+        for row in timeline
+        if row.get("step") == "5000"
+    }
+    final_timeline = {
+        (row.get("replicate", ""), s2.short_id(row.get("building_id", ""))): row
+        for row in timeline
+        if row.get("step") == "30000"
+    }
+    collapse_ids = ["4907202", "4908168", "4908178"]
+    collapse_built: list[str] = []
+    for rep in ["r1", "r2"]:
+        run_name = arm1p_run_name(int(rep[-1]))
+        built = sum(
+            s2.tf(row.get("has_lod22"))
+            for row in metrics
+            if row.get("run_name") == run_name
+            and s2.short_id(row.get("building_id", "")) in collapse_ids
+        )
+        collapse_built.append(f"{rep}:{built}/3")
+    five_k_text = "; ".join(
+        f"{rep} "
+        + "/".join(
+            f"{short}={five_k.get((rep, short), {}).get('n_gaussians_in_footprint', '')}"
+            for short in TIMELINE_IDS
+        )
+        for rep in ["r1", "r2"]
+    )
+    final_z_text = "; ".join(
+        f"{rep} "
+        + "/".join(
+            f"{short}={final_timeline.get((rep, short), {}).get('z_p50', '')}"
+            for short in collapse_ids
+        )
+        for rep in ["r1", "r2"]
+    )
+    rend_text = "/".join(row.get("rend_dist_mean_tail_m", "") for row in arm_cells)
+
+    arm1p_opacity = [
+        row
+        for row in opacity
+        if row.get("family") == "s2p"
+        and row.get("cell") == "arm1p_p050_normal"
+        and row.get("band") == "floater_595_615"
+        and row.get("opacity_bin") == "gt_0p5"
+    ]
+    opacity_text = "/".join(
+        f"{row.get('replicate')}:{row.get('fraction_of_band')} ({row.get('n_gaussians')}/{row.get('band_total')})"
+        for row in arm1p_opacity
+    ) or "산출 없음"
+    prediction_rows = [
+        {
+            "예측": "P-F 5k 재료",
+            "잠금": "수백 개 회복",
+            "관찰": five_k_text,
+        },
+        {
+            "예측": "P-F 붕괴 3동",
+            "잠금": "런마다 >=2동 조립 회복",
+            "관찰": "; ".join(collapse_built),
+        },
+        {
+            "예측": "P-F 청소",
+            "잠금": "rend_dist <=0.5",
+            "관찰": rend_text,
+        },
+        {
+            "예측": "P-Fp 갈래 A/B",
+            "잠금": "A=실물 층에도 이동 억제; B=이동 재발",
+            "관찰": f">0.5 층 비율 {opacity_text}; 최종 z {final_z_text}",
+        },
+        {
+            "예측": "P-G Arm 3",
+            "잠금": "무늬없음 3채 형성 신호+양쪽 성공 비퇴행",
+            "관찰": "A-1p >8 m 자동 분기로 Arm 3 미실행",
+        },
+        {
+            "예측": "P-H 쌍둥이 청소",
+            "잠금": "w100_p005가 0.5 부근이면 법선 청소 몫 없음; >=1이면 몫 실재",
+            "관찰": "; ".join(
+                f"{row.get('normal_state')}:{row.get('cell')}:{row.get('replicate')}={row.get('rend_dist_mean_tail_m')}"
+                for row in twin
+            ),
+        },
+    ]
+
+    opacity_summary = [
+        row
+        for row in opacity
+        if row.get("band") == "floater_595_615"
+        and row.get("opacity_bin") == "gt_0p5"
+    ]
+    gable_summary = [
+        row for row in gable
+        if row.get("family") == "s2p" and row.get("target_four") == "true"
+    ]
+    densify_summary = [
+        row for row in densify
+        if row.get("interval_start_exclusive") == "0"
+        and row.get("interval_end_inclusive") == "5000"
+    ]
+
+    lines = [
+        "# W_E5_C001 S2p 법선×걸러내기 상호작용",
+        "",
+        "> 관찰 자료. 판정 0. C001 dense 18동, seed 2001, 30k, Arm 1p 2런. 정본 S0/S1/S2 산출물은 덮어쓰지 않았다.",
+        "",
+        "## 실행 범위",
+        "",
+        "- Arm 1p: Arm 1의 단안 법선 0.05를 유지하고 `prune_opa`만 0.005에서 0.05로 변경.",
+        "- A-1p: Depth Anything V2 Large, 14동, 건물당 5뷰. 전체 건물 중앙 `8.10335 m`, 건물 분해 Pearson `0.77734`.",
+        "- 잠금 자동 분기: `>8 m`이므로 Arm 3 제외. Pearson 구현·1k 게이트·Arm 3 학습은 수행하지 않음.",
+        "- 파레토 ③: `rend_dist <0.4` pass, `0.4~0.6` boundary, `>0.6` fail로 기록. boundary는 통과/탈락으로 강제하지 않음.",
+        "",
+        "## 파레토 4항 v2.2",
+        "",
+        s2.md_table(
+            arm_cells,
+            [
+                "replicate", "good6_all_built", "good6_raw_anchor_count",
+                "good6_median_delta_vs_s1_m", "final_n_gaussians",
+                "rend_dist_mean_tail_m", "rend_dist_status", "valid_assembled",
+                "pareto_guardrail", "pareto_accuracy_nonregression",
+                "pareto_cleaning", "pareto_validity_nonregression", "pareto_all4",
+            ],
+            4,
+        ) if arm_cells else "_산출 없음_",
+        "",
+        "## 건물별 정답 채점",
+        "",
+        "> 표 머리는 확정 신표기다. 입력 한계 5동 중 여기에는 무늬없음·관측됨 3동만 포함하고, 파레토 전체 유효성 집계는 C001 18동 전부를 사용한다.",
+        "",
+        s2.md_table(
+            building_rows,
+            ["run", "분류", "building", "조립", "유효", "상태", "RMS_m", "면수", "참조면수"],
+            40,
+        ) if building_rows else "_산출 없음_",
+        "",
+        "## 사전 예측 대조",
+        "",
+        s2.md_table(prediction_rows, ["예측", "잠금", "관찰"], 10),
+        "",
+        "## 인접 셀 대조",
+        "",
+        "> Arm 1과 Arm 1p는 법선·모으기·깊이 설정을 고정하고 걸러내기 문턱만 0.005/0.05로 달리한다. Arm 3과 Arm 1의 대조는 A-1p 자동 기각으로 미실행이다.",
+        "",
+        s2.md_table(adjacent_rows, ["run", "cell", "good6조립", "anchor", "valid", "N", "rend_dist", "4항"], 8),
+        "",
+        "## 학습 0 확인",
+        "",
+        "### A-1p 단안 깊이",
+        "",
+        s2.md_table(
+            mono,
+            ["building_id", "group_new", "views_scored", "roof_height_error_abs_median_m", "roof_height_error_abs_p90_viewmedian_m", "mono_crop_depth_step_viewmedian_m"],
+            20,
+        ) if mono else "_산출 없음_",
+        "",
+        "### A-2p 플로터 층 불투명도",
+        "",
+        s2.md_table(
+            opacity_summary,
+            ["family", "cell", "replicate", "n_gaussians", "fraction_of_band", "band_total", "opacity_p50", "high_opacity_core_present"],
+            24,
+        ) if opacity_summary else "_산출 없음_",
+        "",
+        "### A-3p 쌍둥이 rend_dist",
+        "",
+        s2.md_table(twin, ["normal_state", "cell", "replicate", "rend_dist_mean_tail_m", "rend_dist_p50_tail_m"], 8),
+        "",
+        "### A-5p 지붕 방향 모드",
+        "",
+        "> 정의: 3D 지붕면 법선, tilt>10도, 원형 거리 25도 이내 병합, 전체 경사면적 5% 이상 모드 유지. 따라서 저경사 4907202 참조는 이 정의에서 0모드다.",
+        "",
+        s2.md_table(
+            gable_summary,
+            ["replicate", "building_id", "has_lod22", "pred_direction_mode_count", "ref_direction_mode_count", "pred_mode_azimuths_deg", "ref_mode_azimuths_deg"],
+            12,
+        ) if gable_summary else "_산출 없음_",
+        "",
+        "## Densify 기록",
+        "",
+        s2.md_table(
+            densify_summary,
+            ["replicate", "building_id", "interval_start_exclusive", "interval_end_inclusive", "duplicate_events", "split_events", "total_events"],
+            12,
+        ) if densify_summary else "_산출 없음_",
+        "",
+        "## 정성 패널",
+        "",
+        "- 핵심 6동 다중소스 8way: `docs/figs/e5_c001_s2p/8way_panels/`.",
+        "- 핵심 4동 Arm 1p 단계별 띠: `docs/figs/e5_c001_s2p/pipeline_strips/`.",
+        "- 시계열: `docs/figs/e5_c001_s2p/timeline/`.",
+        "- 플로터 층 분포: `docs/figs/e5_c001_s2p/sheet_opacity_dist/sheet_opacity_distribution.png`.",
+        "",
+        "## 기록된 이슈",
+        "",
+        s2.md_table(issues, ["part", "severity", "message", "path"], 20) if issues else "_기록된 실험 이슈 없음_",
+        "",
+        "## 산출",
+        "",
+        "- CSV: `docs/e5_c001_s2p_arm_cells.csv`, `docs/e5_c001_s2p_timeline_roofcrop.csv`, `docs/e5_c001_s2p_densify_log.csv`, `docs/e5_c001_s2p_monodepth_precheck_v2.csv`, `docs/e5_c001_s2p_sheet_opacity_dist.csv`, `docs/e5_c001_s2p_twin_rend_dist.csv`, `docs/e5_c001_s2p_gable_mode.csv`, `docs/e5_c001_s2p_rend_dist.csv`, `docs/e5_c001_s2p_global_z_hist.csv`, `docs/e5_c001_s2p_405_rescore_building.csv`, `docs/e5_c001_s2p_inventory.csv`, `docs/e5_c001_s2p_issues.csv`.",
+        "- 런 지문: `phases/p2-gsjso/runs/20260710_e5_c001_s2p_interaction/train_fingerprints.csv`, `versions.txt`.",
+        "- 실패·예외 장부: `docs/issues.md`와 태스크 CSV를 함께 사용.",
+        "",
+    ]
+    REPORT_PATH.write_text("\n".join(lines), encoding="utf-8")
+    print(json.dumps({"report": rel(REPORT_PATH), "lines": len(lines)}, ensure_ascii=False))
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="cmd", required=True)
@@ -1992,6 +2290,7 @@ def build_parser() -> argparse.ArgumentParser:
     sub.add_parser("global-z-hist")
     sub.add_parser("arm-cells")
     sub.add_parser("versions")
+    sub.add_parser("report")
     strips = sub.add_parser("pipeline-strips")
     strips.add_argument("--rep", choices=["1", "2", "all"], default="all")
     strips.add_argument("--device", default="cuda:0")
@@ -2044,6 +2343,8 @@ def main() -> None:
         build_arm_cells(args)
     elif args.cmd == "versions":
         versions(args)
+    elif args.cmd == "report":
+        report(args)
     elif args.cmd == "pipeline-strips":
         pipeline_strips(args)
     elif args.cmd == "infer-monodepth-v2":
