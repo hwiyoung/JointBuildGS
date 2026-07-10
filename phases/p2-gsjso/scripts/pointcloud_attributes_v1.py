@@ -16,6 +16,7 @@ import hashlib
 import json
 import math
 import os
+import shutil
 import subprocess
 import tempfile
 from collections import defaultdict
@@ -126,6 +127,15 @@ def load_ref_invalid(repo: Path) -> dict[str, str]:
 
 
 def convert_gpkg_to_geojson(gpkg: Path) -> dict:
+    cached_candidates = [gpkg.with_suffix(".geojson")]
+    if gpkg.name == "footprints_scene_aoi.gpkg":
+        cached_candidates.append(gpkg.parent.parent / "w2_city3d" / "footprints_scene_aoi.geojson")
+    for cached in cached_candidates:
+        if cached.exists():
+            return json.loads(cached.read_text(encoding="utf-8"))
+    if shutil.which("ogr2ogr") is None:
+        tried = ", ".join(str(p) for p in cached_candidates)
+        raise FileNotFoundError(f"ogr2ogr not found and cached GeoJSON missing: {tried}")
     with tempfile.TemporaryDirectory() as td:
         out = Path(td) / "footprints.geojson"
         subprocess.run(["ogr2ogr", "-f", "GeoJSON", str(out), str(gpkg)], check=True)

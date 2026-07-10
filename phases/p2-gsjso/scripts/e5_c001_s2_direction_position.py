@@ -23,6 +23,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+os.environ.setdefault("MPLCONFIGDIR", "/tmp/matplotlib")
+os.environ.setdefault("XDG_CACHE_HOME", "/tmp")
+
 import matplotlib
 import numpy as np
 
@@ -1509,6 +1512,7 @@ def repair_405(args: argparse.Namespace) -> None:
 def pipeline_strips(args: argparse.Namespace) -> None:
     from src.stage2.dataloader import ColmapDataset
 
+    os.environ.setdefault("TORCH_HOME", "/tmp/torch")
     arms = configure_ablation_module(args.include_arm3)
     reps = [1, 2] if args.rep == "all" else [int(args.rep)]
     conditions = [
@@ -1584,8 +1588,11 @@ def pipeline_strips(args: argparse.Namespace) -> None:
             )
             print(json.dumps({"strip": rel(out), "condition": condition.key, "building_id": bid}, ensure_ascii=False), flush=True)
     write_csv(CSV_PIPELINE_STRIPS, rows)
-    if issues:
-        write_csv(REPO / "docs/e5_c001_s2_pipeline_strips_issues.csv", issues)
+    write_csv(
+        REPO / "docs/e5_c001_s2_pipeline_strips_issues.csv",
+        issues,
+        ["condition", "building_id", "message", "path"],
+    )
     print(json.dumps({"pipeline_strips": rel(CSV_PIPELINE_STRIPS), "rows": len(rows), "issues": len(issues)}, ensure_ascii=False))
 
 
