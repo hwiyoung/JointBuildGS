@@ -38,9 +38,9 @@ depth_warmup: 0
 depth_schedule: exp_decay
 depth_ramp_steps: 30000
 depth_final_weight: 0.05
-normal_warmup: 5000
-normal_schedule: ramp
-normal_ramp_steps: 5000
+normal_warmup: 0
+normal_schedule: constant
+normal_ramp_steps: 0
 w_nc: 0.05
 w_distort: 0.0
 distort_normalization: scene_scale_sq

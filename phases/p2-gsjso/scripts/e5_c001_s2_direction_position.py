@@ -1017,6 +1017,9 @@ def write_config(run_name_value: str, arm: Arm, *, max_iter: int, gate: bool, no
     cfg = yaml_load(BASE_CONFIG)
     cfg["w_distort"] = float(arm.w_distort)
     cfg["w_normal"] = float(normal_weight)
+    cfg["normal_warmup"] = 0
+    cfg["normal_schedule"] = "constant"
+    cfg["normal_ramp_steps"] = 0
     cfg["normal_dir"] = ws(MONO_NORMAL_DIR)
     cfg["load_normal"] = True
     cfg["prune_opa"] = 0.005
