@@ -1,0 +1,16 @@
+run_id: 20260710_e5_c001_s2p_interaction
+timestamp_utc: 2026-07-10T13:54:40.724836+00:00
+git_head: 0c7dab44904dfa92c8427b667ad43f9f7c3dcead
+git_branch: exp/3b-surface-restore-corrected
+crs: EPSG:25832
+canonical_changed: no
+mode: S2p observation material; no human verdict
+arm3: excluded by locked A-1p branch; no Pearson implementation or training
+monodepth_decision: phases/p2-gsjso/runs/20260710_e5_c001_s2p_interaction/monodepth_decision_v2.json
+monodepth_large_checkpoint: results/tum_transfer/e5_s2p_interaction/C001/mono_priors_v2/checkpoints/depth_anything_v2_vitl.pth
+monodepth_large_checkpoint_sha256: a7ea19fa0ed99244e67b624c72b8580b7e9553043245905be58796a608eb9345
+train_fingerprints: phases/p2-gsjso/runs/20260710_e5_c001_s2p_interaction/train_fingerprints.csv
+readout_fingerprints: phases/p2-gsjso/runs/20260710_e5_c001_s2p_interaction/readout_fingerprints.csv
+arm_cells_csv: docs/e5_c001_s2p_arm_cells.csv
+issues_csv: docs/e5_c001_s2p_issues.csv
+issues_md: docs/issues.md

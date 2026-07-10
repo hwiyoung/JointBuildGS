@@ -1,8 +1,9 @@
 {
   "run_id": "20260710_e5_c001_s2p_interaction",
-  "created_utc": "2026-07-10T12:12:21.348852+00:00",
-  "git_head": "d58774809d665b196fa62683df6ecbe947a04118",
+  "created_utc": "2026-07-10T13:54:40.720627+00:00",
+  "git_head": "0c7dab44904dfa92c8427b667ad43f9f7c3dcead",
   "branch": "exp/3b-surface-restore-corrected",
+  "training_implementation_commit": "d58774809d665b196fa62683df6ecbe947a04118",
   "canonical_artifacts_mutated": false,
   "crs": "EPSG:25832",
   "arm1p_semantic_delta": {
@@ -43,5 +44,22 @@
     "P-F-prime",
     "P-G",
     "P-H"
+  ],
+  "outputs": [
+    "docs/W_E5_C001_S2p_상호작용.md",
+    "docs/e5_c001_s2p_arm_cells.csv",
+    "docs/e5_c001_s2p_timeline_roofcrop.csv",
+    "docs/e5_c001_s2p_densify_log.csv",
+    "docs/e5_c001_s2p_monodepth_precheck_v2.csv",
+    "docs/e5_c001_s2p_sheet_opacity_dist.csv",
+    "docs/e5_c001_s2p_twin_rend_dist.csv",
+    "docs/e5_c001_s2p_gable_mode.csv",
+    "docs/e5_c001_s2p_rend_dist.csv",
+    "docs/e5_c001_s2p_global_z_hist.csv",
+    "docs/e5_c001_s2p_405_rescore_building.csv",
+    "docs/figs/e5_c001_s2p",
+    "phases/p2-gsjso/runs/20260710_e5_c001_s2p_interaction/train_fingerprints.csv",
+    "phases/p2-gsjso/runs/20260710_e5_c001_s2p_interaction/readout_fingerprints.csv",
+    "phases/p2-gsjso/runs/20260710_e5_c001_s2p_interaction/versions.txt"
   ]
 }

@@ -1,0 +1,2 @@
++ docker run --rm -i --user 1000:1000 -e HOME=/tmp -e MPLCONFIGDIR=/tmp/matplotlib -e XDG_CACHE_HOME=/tmp -e E5_S2P_EVAL_CONTAINER=1 -v /media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS:/workspace/JointBuildGS -w /workspace/JointBuildGS jointbuildgs-p0-tools:t0 python3 phases/p2-gsjso/scripts/e5_c001_s2p_interaction.py evaluate --force
+{"report": "phases/p2-gsjso/runs/20260710_e5_c001_s2p_interaction/readout_tmp.md", "metrics_rows": 36, "coverage_rows": 108, "figures": 3}
