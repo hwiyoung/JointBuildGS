@@ -77,6 +77,7 @@ CSV_READOUT_TRADEOFF = REPO / "docs/e5_c001_s2p_tradeoff.csv"
 CSV_READOUT_CASES = REPO / "docs/e5_c001_s2p_representative_buildings.csv"
 CSV_READOUT_INVENTORY = REPO / "docs/e5_c001_s2p_readout_inventory.csv"
 CSV_READOUT_ISSUES = REPO / "docs/e5_c001_s2p_readout_issues.csv"
+CSV_GABLE_MODE = REPO / "docs/e5_c001_s2p_gable_mode.csv"
 
 TIMELINE_IDS = ["4907202", "4908168", "4908178", "4907184"]
 TIMELINE_FULL_IDS = [f"DEBY_LOD2_{sid}" for sid in TIMELINE_IDS]
@@ -653,6 +654,118 @@ def twin_rend_dist(_args: argparse.Namespace) -> None:
     print(json.dumps({"twin_rend_dist": rel(CSV_TWIN_REND), "rows": len(rows)}, ensure_ascii=False))
 
 
+def _circular_distance_deg(a: float, b: float) -> float:
+    return abs((a - b + 180.0) % 360.0 - 180.0)
+
+
+def _roof_mode_summary(surfaces: list[Any]) -> dict[str, Any]:
+    candidates: list[tuple[float, float]] = []
+    total_roof_area = 0.0
+    for surface in surfaces:
+        normal = s2.roof_normal_world(surface)
+        area = max(float(surface.polygon.area), 0.0)
+        total_roof_area += area
+        tilt = math.degrees(math.acos(float(np.clip(abs(normal[2]), 0.0, 1.0))))
+        if tilt <= 10.0 or area <= 0.0:
+            continue
+        azimuth = math.degrees(math.atan2(float(normal[1]), float(normal[0]))) % 360.0
+        candidates.append((azimuth, area))
+    clusters: list[dict[str, float]] = []
+    for azimuth, area in sorted(candidates, key=lambda item: item[1], reverse=True):
+        nearest = None
+        nearest_distance = float("inf")
+        for cluster in clusters:
+            distance = _circular_distance_deg(azimuth, cluster["azimuth"])
+            if distance < nearest_distance:
+                nearest, nearest_distance = cluster, distance
+        if nearest is None or nearest_distance > 25.0:
+            clusters.append({"azimuth": azimuth, "weight": area})
+            continue
+        old_weight = nearest["weight"]
+        x = old_weight * math.cos(math.radians(nearest["azimuth"])) + area * math.cos(math.radians(azimuth))
+        y = old_weight * math.sin(math.radians(nearest["azimuth"])) + area * math.sin(math.radians(azimuth))
+        nearest["azimuth"] = math.degrees(math.atan2(y, x)) % 360.0
+        nearest["weight"] = old_weight + area
+    sloped_area = sum(cluster["weight"] for cluster in clusters)
+    retained = [
+        cluster for cluster in clusters if sloped_area > 0 and cluster["weight"] / sloped_area >= 0.05
+    ]
+    retained.sort(key=lambda cluster: cluster["azimuth"])
+    return {
+        "roof_face_count": len(surfaces),
+        "sloped_face_count": len(candidates),
+        "direction_mode_count": len(retained),
+        "direction_mode_azimuths_deg": ";".join(f"{cluster['azimuth']:.1f}" for cluster in retained),
+        "sloped_area_m2": s2.fmt(sloped_area),
+        "roof_area_m2": s2.fmt(total_roof_area),
+    }
+
+
+def _assembled_cityjson_sources() -> list[tuple[str, str, str, Path]]:
+    sources: list[tuple[str, str, str, Path]] = []
+    s2_repaired = (
+        REPO
+        / "phases/p0-audit/runs/e5p_s2_405_repair_20260710_C001/e5p_s2_direction_position_20260710_C001/base/cityjson"
+    )
+    for arm in ["arm0", "arm1", "arm2"]:
+        for rep in [1, 2]:
+            run_name = f"gs_e5_C001_s2_{arm}_dense_r{rep}"
+            sources.append(("s2", arm, f"r{rep}", s2_repaired / f"{run_name}_run_1.city.json"))
+    for rep in [1, 2]:
+        run_name = arm1p_run_name(rep)
+        sources.append(
+            (
+                "s2p",
+                "arm1p",
+                f"r{rep}",
+                REPAIRED_P0_RUN_DIR / "base/cityjson" / f"{run_name}_run_1.city.json",
+            )
+        )
+    return sources
+
+
+def gable_mode(_args: argparse.Namespace) -> None:
+    target_ids = ["4907184", "4907202", "60098", "4907186"]
+    all_ids = list(s2.C001_IDS)
+    references = s2.eight.parse_lod2_roofs(s2.eight.LOD2_DIR, set(all_ids))
+    reference_summary = {
+        building_id: _roof_mode_summary(surfaces) for building_id, surfaces in references.items()
+    }
+    rows: list[dict[str, Any]] = []
+    for family, arm, replicate, cityjson in _assembled_cityjson_sources():
+        if not cityjson.exists():
+            continue
+        predictions = s2.eight.parse_cityjson_roofs(cityjson, set(all_ids))
+        run_name = cityjson.name.removesuffix("_run_1.city.json")
+        for building_id in all_ids:
+            predicted = _roof_mode_summary(predictions.get(building_id, []))
+            reference = reference_summary.get(building_id, _roof_mode_summary([]))
+            rows.append(
+                {
+                    "family": family,
+                    "arm": arm,
+                    "replicate": replicate,
+                    "run_name": run_name,
+                    "building_id": building_id,
+                    "target_four": str(s2.short_id(building_id) in target_ids).lower(),
+                    "has_lod22": str(bool(predictions.get(building_id))).lower(),
+                    "pred_direction_mode_count": predicted["direction_mode_count"],
+                    "ref_direction_mode_count": reference["direction_mode_count"],
+                    "mode_count_delta": predicted["direction_mode_count"] - reference["direction_mode_count"],
+                    "pred_mode_azimuths_deg": predicted["direction_mode_azimuths_deg"],
+                    "ref_mode_azimuths_deg": reference["direction_mode_azimuths_deg"],
+                    "pred_roof_face_count": predicted["roof_face_count"],
+                    "ref_roof_face_count": reference["roof_face_count"],
+                    "pred_sloped_face_count": predicted["sloped_face_count"],
+                    "ref_sloped_face_count": reference["sloped_face_count"],
+                    "mode_definition": "3D roof normals; tilt>10deg; circular merge<=25deg; retain>=5% sloped area",
+                    "cityjson": rel(cityjson),
+                }
+            )
+    write_csv(CSV_GABLE_MODE, rows)
+    print(json.dumps({"gable_mode": rel(CSV_GABLE_MODE), "rows": len(rows)}, ensure_ascii=False))
+
+
 def _load_depth_anything_v2(device: Any) -> tuple[Any, str]:
     import torch
 
@@ -1192,6 +1305,7 @@ def build_parser() -> argparse.ArgumentParser:
     sub.add_parser("densify-log")
     sub.add_parser("sheet-opacity-dist")
     sub.add_parser("twin-rend-dist")
+    sub.add_parser("gable-mode")
     mono = sub.add_parser("infer-monodepth-v2")
     mono.add_argument("--gpu", default="1")
     mono.add_argument("--device", default="cuda:0")
@@ -1226,6 +1340,8 @@ def main() -> None:
         sheet_opacity_dist(args)
     elif args.cmd == "twin-rend-dist":
         twin_rend_dist(args)
+    elif args.cmd == "gable-mode":
+        gable_mode(args)
     elif args.cmd == "infer-monodepth-v2":
         infer_monodepth_v2(args)
     elif args.cmd == "score-monodepth-v2":
