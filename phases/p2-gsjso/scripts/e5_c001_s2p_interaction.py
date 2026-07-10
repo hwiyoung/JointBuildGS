@@ -61,6 +61,8 @@ CSV_MONO_V2 = REPO / "docs/e5_c001_s2p_monodepth_precheck_v2.csv"
 CSV_MONO_V2_IMAGE = REPO / "docs/e5_c001_s2p_monodepth_precheck_v2_image.csv"
 CSV_MONO_V2_VIEW = REPO / "docs/e5_c001_s2p_monodepth_precheck_v2_view.csv"
 CSV_MONO_V2_RUNTIME = REPO / "docs/e5_c001_s2p_monodepth_runtime_v2.csv"
+CSV_SHEET_OPACITY = REPO / "docs/e5_c001_s2p_sheet_opacity_dist.csv"
+CSV_TWIN_REND = REPO / "docs/e5_c001_s2p_twin_rend_dist.csv"
 
 TIMELINE_IDS = ["4907202", "4908168", "4908178", "4907184"]
 TIMELINE_FULL_IDS = [f"DEBY_LOD2_{sid}" for sid in TIMELINE_IDS]
@@ -337,6 +339,177 @@ def densify_log(_args: argparse.Namespace) -> None:
         ],
     )
     print(json.dumps({"densify_log": rel(CSV_DENSIFY), "rows": len(rows)}, ensure_ascii=False))
+
+
+def _opacity_sources() -> list[tuple[str, str, str, Path]]:
+    sources = [
+        (
+            "corrected_recheck",
+            "w100_p050_no_normal",
+            "r1",
+            REPO
+            / "results/tum_transfer/e5_corrected_s1_recheck/C001/runs/gs_e5_C001_corrected_s1_preprune_keepall_dense_r1/ckpt/final.pt",
+        ),
+        (
+            "s1_full",
+            "w100_p005_no_normal",
+            "r1",
+            REPO
+            / "results/tum_transfer/e5_s1_full_factor/C001/runs/gs_e5_C001_s1fac_w100_p005_dense_r1/ckpt/final.pt",
+        ),
+        (
+            "s1_full",
+            "w240_p050_no_normal",
+            "r1",
+            REPO
+            / "results/tum_transfer/e5_s1_full_factor/C001/runs/gs_e5_C001_s1fac_w240_p050_dense_r1/ckpt/final.pt",
+        ),
+        (
+            "s1_full",
+            "w240_p005_no_normal",
+            "r1",
+            REPO
+            / "results/tum_transfer/e5_s1_full_factor/C001/runs/gs_e5_C001_s1fac_w240_p005_dense_r1/ckpt/final.pt",
+        ),
+    ]
+    s2_root = REPO / "results/tum_transfer/e5_s2_direction_position/C001/runs"
+    for arm in ["arm0", "arm1", "arm2"]:
+        for rep in [1, 2]:
+            run_name = f"gs_e5_C001_s2_{arm}_dense_r{rep}"
+            sources.append(("s2", f"{arm}_p005_normal", f"r{rep}", s2_root / run_name / "ckpt/final.pt"))
+    for rep in [1, 2]:
+        run_name = arm1p_run_name(rep)
+        sources.append(("s2p", "arm1p_p050_normal", f"r{rep}", checkpoint_path(run_name, "final")))
+        arm3_name = f"gs_e5_C001_s2p_arm3_dense_r{rep}"
+        sources.append(("s2p", "arm3_p005_normal_mono", f"r{rep}", CKPT_ROOT / arm3_name / "ckpt/final.pt"))
+    return sources
+
+
+def sheet_opacity_dist(_args: argparse.Namespace) -> None:
+    import torch
+
+    rows: list[dict[str, Any]] = []
+    for family, cell, replicate, checkpoint in _opacity_sources():
+        if not checkpoint.exists():
+            continue
+        state = torch.load(checkpoint, map_location="cpu", weights_only=False)["state_dict"]
+        z = state["means"].detach().cpu().numpy()[:, 2].astype(np.float64) + s2.SHIFT_UTM[2]
+        opacity = torch.sigmoid(state["opacities_raw"].detach().cpu().float()).numpy()
+        for band, z_min, z_max in [("floater_595_615", 595.0, 615.0), ("high_655_670", 655.0, 670.0)]:
+            in_band = (z >= z_min) & (z <= z_max)
+            values = opacity[in_band]
+            bins = [
+                ("gt_0p5", values > 0.5),
+                ("0p1_to_0p5", (values >= 0.1) & (values <= 0.5)),
+                ("lt_0p1", values < 0.1),
+            ]
+            total = int(len(values))
+            for opacity_bin, mask in bins:
+                count = int(np.count_nonzero(mask))
+                rows.append(
+                    {
+                        "family": family,
+                        "cell": cell,
+                        "replicate": replicate,
+                        "band": band,
+                        "z_min": z_min,
+                        "z_max": z_max,
+                        "opacity_bin": opacity_bin,
+                        "n_gaussians": count,
+                        "fraction_of_band": s2.fmt(count / total if total else None, 8),
+                        "band_total": total,
+                        "opacity_p50": s2.fmt(float(np.median(values)) if total else None),
+                        "high_opacity_core_present": str(bool(np.any(values > 0.5))).lower(),
+                        "ckpt": rel(checkpoint),
+                    }
+                )
+    write_csv(CSV_SHEET_OPACITY, rows)
+    _plot_sheet_opacity(rows)
+    print(json.dumps({"sheet_opacity_dist": rel(CSV_SHEET_OPACITY), "rows": len(rows)}, ensure_ascii=False))
+
+
+def _plot_sheet_opacity(rows: list[dict[str, Any]]) -> None:
+    part = [row for row in rows if row["band"] == "floater_595_615"]
+    keys = sorted({(row["family"], row["cell"], row["replicate"]) for row in part})
+    if not keys:
+        return
+    figure_dir = FIG_DIR / "sheet_opacity_dist"
+    figure_dir.mkdir(parents=True, exist_ok=True)
+    bins = ["gt_0p5", "0p1_to_0p5", "lt_0p1"]
+    colors = {"gt_0p5": "#1F4E79", "0p1_to_0p5": "#D6A33A", "lt_0p1": "#C9CDD2"}
+    labels = {"gt_0p5": ">0.5", "0p1_to_0p5": "0.1-0.5", "lt_0p1": "<0.1"}
+    fig, ax = plt.subplots(figsize=(10.5, max(5.0, 0.42 * len(keys))), constrained_layout=True)
+    left = np.zeros(len(keys), dtype=np.float64)
+    for opacity_bin in bins:
+        values = []
+        for key in keys:
+            match = [
+                row
+                for row in part
+                if (row["family"], row["cell"], row["replicate"]) == key
+                and row["opacity_bin"] == opacity_bin
+            ]
+            values.append(_finite_float(match[0]["fraction_of_band"]) if match else 0.0)
+        ax.barh(range(len(keys)), values, left=left, color=colors[opacity_bin], label=labels[opacity_bin])
+        left += np.asarray(values, dtype=np.float64)
+    ax.set_yticks(range(len(keys)))
+    ax.set_yticklabels([f"{family}:{cell}:{rep}" for family, cell, rep in keys], fontsize=7)
+    ax.set_xlim(0, 1)
+    ax.set_xlabel("fraction of Gaussians in z=595-615 m band")
+    ax.set_title("Floater-layer opacity distribution")
+    ax.grid(axis="x", color="#DDDDDD", linewidth=0.6)
+    ax.legend(loc="lower right", fontsize=8)
+    fig.savefig(figure_dir / "sheet_opacity_distribution.png", dpi=190)
+    plt.close(fig)
+
+
+def _rend_dist_from_audit(run_name: str, run_root: Path) -> dict[str, Any]:
+    audit_path = run_root / run_name / "audit/loss_grad_norms.csv"
+    effective_path = run_root / run_name / "effective_config.json"
+    audit = read_csv(audit_path)
+    denominator = 1.0
+    if effective_path.exists():
+        denominator = float(
+            json.loads(effective_path.read_text(encoding="utf-8")).get("distort_norm_denominator", 1.0)
+            or 1.0
+        )
+    values = [
+        value * denominator
+        for value in (_finite_float(row.get("raw_loss")) for row in audit if row.get("component") == "distort")
+        if value is not None
+    ][-10:]
+    return {
+        "rend_dist_mean_tail_m": s2.fmt(float(np.mean(values)) if values else None),
+        "rend_dist_p50_tail_m": s2.fmt(float(np.median(values)) if values else None),
+        "audit_rows_tail": len(values),
+        "denominator": s2.fmt(denominator),
+        "audit_csv": rel(audit_path),
+    }
+
+
+def twin_rend_dist(_args: argparse.Namespace) -> None:
+    s1_root = REPO / "results/tum_transfer/e5_s1_full_factor/C001/runs"
+    s2_root = REPO / "results/tum_transfer/e5_s2_direction_position/C001/runs"
+    specs = [
+        ("no_normal", "w100_p005", "r1", "gs_e5_C001_s1fac_w100_p005_dense_r1", s1_root),
+        ("no_normal", "w240_p005", "r1", "gs_e5_C001_s1fac_w240_p005_dense_r1", s1_root),
+        ("normal", "arm1", "r1", "gs_e5_C001_s2_arm1_dense_r1", s2_root),
+        ("normal", "arm1", "r2", "gs_e5_C001_s2_arm1_dense_r2", s2_root),
+    ]
+    rows = []
+    for normal_state, cell, replicate, run_name, root in specs:
+        rows.append(
+            {
+                "normal_state": normal_state,
+                "cell": cell,
+                "replicate": replicate,
+                "run_name": run_name,
+                **_rend_dist_from_audit(run_name, root),
+                "reconstruction": "tail raw_loss * distort_norm_denominator; same S2 method",
+            }
+        )
+    write_csv(CSV_TWIN_REND, rows)
+    print(json.dumps({"twin_rend_dist": rel(CSV_TWIN_REND), "rows": len(rows)}, ensure_ascii=False))
 
 
 def _load_depth_anything_v2(device: Any) -> tuple[Any, str]:
@@ -876,6 +1049,8 @@ def build_parser() -> argparse.ArgumentParser:
     train.add_argument("--gpu", default="0")
     sub.add_parser("timeline-roofcrop")
     sub.add_parser("densify-log")
+    sub.add_parser("sheet-opacity-dist")
+    sub.add_parser("twin-rend-dist")
     mono = sub.add_parser("infer-monodepth-v2")
     mono.add_argument("--gpu", default="1")
     mono.add_argument("--device", default="cuda:0")
@@ -895,6 +1070,10 @@ def main() -> None:
         timeline_roofcrop(args)
     elif args.cmd == "densify-log":
         densify_log(args)
+    elif args.cmd == "sheet-opacity-dist":
+        sheet_opacity_dist(args)
+    elif args.cmd == "twin-rend-dist":
+        twin_rend_dist(args)
     elif args.cmd == "infer-monodepth-v2":
         infer_monodepth_v2(args)
     elif args.cmd == "score-monodepth-v2":
