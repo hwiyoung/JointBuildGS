@@ -184,6 +184,30 @@ class ElongationFilterStrategy(DefaultStrategy):
             is_split |= (state["radii"] > self.grow_scale2d) & ratio_ok
         n_split = int(is_split.sum().item())
 
+        audit_boxes = getattr(self, "densify_audit_boxes", None)
+        if audit_boxes:
+            means = params["means"].detach()
+            events = []
+            for building_id, (x0, y0, x1, y1) in audit_boxes.items():
+                in_box = (
+                    (means[:, 0] >= x0)
+                    & (means[:, 0] <= x1)
+                    & (means[:, 1] >= y0)
+                    & (means[:, 1] <= y1)
+                )
+                duplicate_count = int((is_dupli & in_box).sum().item())
+                split_count = int((is_split & in_box).sum().item())
+                events.append(
+                    {
+                        "iteration": int(step),
+                        "building_id": str(building_id),
+                        "duplicate_events": duplicate_count,
+                        "split_events": split_count,
+                        "total_events": duplicate_count + split_count,
+                    }
+                )
+            self.densify_audit_events = events
+
         if n_dupli > 0:
             duplicate(params=params, optimizers=optimizers, state=state, mask=is_dupli)
 

@@ -114,6 +114,22 @@ def _log_seed_survival(it, model, is_seed, boxes, writer):
         print(msg, flush=True)
 
 
+def _append_densify_audit(out_dir: Path, events: list[dict]) -> None:
+    """Append recording-only per-footprint split/duplicate counts."""
+    if not events:
+        return
+    audit_dir = out_dir / "audit"
+    audit_dir.mkdir(exist_ok=True)
+    path = audit_dir / "densify_events.csv"
+    fields = ["iteration", "building_id", "duplicate_events", "split_events", "total_events"]
+    write_header = not path.exists()
+    with path.open("a", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=fields)
+        if write_header:
+            writer.writeheader()
+        writer.writerows(events)
+
+
 # Map from gsplat strategy dict keys -> model attribute names
 _STRATEGY_TO_MODEL = {
     "means": "means",
@@ -645,6 +661,21 @@ def main():
             f"[elongation-filter] in-plane min(scale0,scale1)/max(scale0,scale1) "
             f"> {elongation_axis_ratio_threshold:g} required for densify"
         )
+    densify_audit_buildings = list(cfg.get("densify_audit_buildings") or [])
+    if densify_audit_buildings:
+        if not hasattr(strategy, "_densify_candidate_mask"):
+            raise RuntimeError("densify_audit_buildings requires elongation_filter=true")
+        densify_boxes = _load_footprint_boxes_local(
+            cfg.get("densify_audit_footprints") or cfg.get("seed_log_footprints"),
+            cfg.get("world_offset", [690953.0, 5336071.0, 604.0]),
+            densify_audit_buildings,
+        )
+        if not densify_boxes or len(densify_boxes) != len(densify_audit_buildings):
+            missing = sorted(set(densify_audit_buildings) - set((densify_boxes or {}).keys()))
+            raise RuntimeError(f"densify audit footprint boxes missing for: {missing}")
+        strategy.densify_audit_boxes = densify_boxes
+        strategy.densify_audit_events = []
+        print(f"[densify-audit] recording split/duplicate events for {len(densify_boxes)} buildings")
 
     # ---------- logging ----------
     writer = SummaryWriter(out_dir / "tb")
@@ -1189,6 +1220,11 @@ def main():
         loss_total.backward()
 
         strategy.step_post_backward(params, optimizers, strategy_state, it, meta)
+
+        densify_events = getattr(strategy, "densify_audit_events", [])
+        if densify_events:
+            _append_densify_audit(out_dir, densify_events)
+            strategy.densify_audit_events = []
 
         # sync params dict -> model (gsplat strategy may replace nn.Parameters on grow/prune)
         _sync_params_to_model(params, model)
