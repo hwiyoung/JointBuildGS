@@ -185,6 +185,7 @@ def write_manifest() -> None:
         "branch": subprocess.run(
             ["git", "branch", "--show-current"], cwd=REPO, text=True, stdout=subprocess.PIPE, check=True
         ).stdout.strip(),
+        "training_implementation_commit": "d58774809d665b196fa62683df6ecbe947a04118",
         "canonical_artifacts_mutated": False,
         "crs": "EPSG:25832",
         "arm1p_semantic_delta": {"base": rel(BASE_CONFIG), "prune_opa": [0.005, 0.05]},
@@ -196,6 +197,23 @@ def write_manifest() -> None:
             {"path": rel(path), "sha256": sha256_file(path)} for path in SOURCE_DOCS
         ],
         "predictions_locked": ["P-F", "P-F-prime", "P-G", "P-H"],
+        "outputs": [
+            rel(REPORT_PATH),
+            rel(CSV_ARM_CELLS),
+            rel(CSV_TIMELINE),
+            rel(CSV_DENSIFY),
+            rel(CSV_MONO_V2),
+            rel(CSV_SHEET_OPACITY),
+            rel(CSV_TWIN_REND),
+            rel(CSV_GABLE_MODE),
+            rel(CSV_REND_DIST),
+            rel(CSV_GLOBAL_Z),
+            rel(CSV_405_BUILDING),
+            rel(FIG_DIR),
+            rel(RUN_DIR / "train_fingerprints.csv"),
+            rel(RUN_DIR / "readout_fingerprints.csv"),
+            rel(RUN_DIR / "versions.txt"),
+        ],
     }
     (RUN_DIR / "manifest.json").write_text(
         json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
@@ -2015,6 +2033,7 @@ def _plot_arm_cells(rows: list[dict[str, Any]]) -> None:
 
 
 def versions(_args: argparse.Namespace) -> None:
+    write_manifest()
     large_checkpoint = MONO_V2_ROOT / "checkpoints/depth_anything_v2_vitl.pth"
     decision = RUN_DIR / "monodepth_decision_v2.json"
     lines = [
