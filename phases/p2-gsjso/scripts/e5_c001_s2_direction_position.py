@@ -70,6 +70,7 @@ DATA_ROOT = REPO / "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20"
 DATA_ROOT_WS = "/workspace/JointBuildGS/results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20"
 BASE_CONFIG = REPO / "configs/tum_mob/e5_s1_full_factor/gs_e5_C001_s1fac_w100_p005_dense_r1.yaml"
 SHIFT_UTM = np.array([690953.0, 5336071.0, 604.0], dtype=np.float64)
+ELLIP_TO_REF_SHIFT_M = float(eight.ELLIP_TO_REF_SHIFT_M)
 FOOTPRINTS_GEOJSON = REPO / "phases/p0-audit/data/work/footprints/lod2_ground_plan.geojson"
 
 FIG_DIR = REPO / "docs/figs/e5_c001_s2"
@@ -537,6 +538,18 @@ def _project_local(points_local: np.ndarray, w2c: np.ndarray, K: np.ndarray) -> 
     return uv, z
 
 
+def camera_depth_to_world(uv: np.ndarray, depth: np.ndarray, w2c: np.ndarray, K: np.ndarray) -> np.ndarray:
+    if len(uv) == 0:
+        return np.zeros((0, 3), dtype=np.float64)
+    Kinv = np.linalg.inv(K)
+    uv1 = np.column_stack([uv[:, 0], uv[:, 1], np.ones(len(uv), dtype=np.float64)])
+    rays = (Kinv @ uv1.T).T
+    pts_cam = rays * depth.reshape(-1, 1)
+    R = w2c[:3, :3]
+    t = w2c[:3, 3]
+    return (R.T @ (pts_cam - t).T).T + SHIFT_UTM
+
+
 def roof_normal_world(surface: eight.RoofSurface) -> np.ndarray:
     n = np.asarray([-surface.ax, -surface.by, 1.0], dtype=np.float64)
     n = n / max(np.linalg.norm(n), 1e-9)
@@ -635,7 +648,11 @@ def monodepth_building_score(_args: argparse.Namespace) -> None:
         u = np.rint(uv[:, 0]).astype(int)
         v = np.rint(uv[:, 1]).astype(int)
         inside = (roof_depth > 0) & (u >= 0) & (u < w) & (v >= 0) & (v < h)
-        err = mono[v[inside], u[inside]] - roof_depth[inside] if np.any(inside) else np.asarray([])
+        mono_at_roof = mono[v[inside], u[inside]] if np.any(inside) else np.asarray([])
+        depth_err = mono_at_roof - roof_depth[inside] if np.any(inside) else np.asarray([])
+        mono_world = camera_depth_to_world(uv[inside], mono_at_roof, batch["w2c"].numpy(), batch["K"].numpy()) if np.any(inside) else np.zeros((0, 3), dtype=np.float64)
+        mono_ref_z = mono_world[:, 2] + ELLIP_TO_REF_SHIFT_M if len(mono_world) else np.asarray([])
+        height_err = mono_ref_z - pts_utm[inside, 2] if len(mono_ref_z) else np.asarray([])
         z_vals = np.concatenate([surf.z_at(np.asarray([(fp["bbox"][0] + fp["bbox"][2]) / 2.0]), np.asarray([(fp["bbox"][1] + fp["bbox"][3]) / 2.0])) for surf in refs])
         crop_depth = mono[crop[1] : crop[3], crop[0] : crop[2]]
         crop_valid = crop_depth[np.isfinite(crop_depth) & (crop_depth > 0)]
@@ -646,10 +663,15 @@ def monodepth_building_score(_args: argparse.Namespace) -> None:
                 "view_idx": view_idx,
                 "image_name": str(batch["name"]),
                 "projected_roof_samples": int(np.count_nonzero(inside)),
-                "roof_depth_error_abs_median_m": fmt(float(np.median(np.abs(err))) if err.size else None),
-                "roof_depth_error_abs_p90_m": fmt(float(np.percentile(np.abs(err), 90)) if err.size else None),
-                "signed_depth_error_median_m": fmt(float(np.median(err)) if err.size else None),
+                "roof_height_error_abs_median_m": fmt(float(np.median(np.abs(height_err))) if height_err.size else None),
+                "roof_height_error_abs_p90_m": fmt(float(np.percentile(np.abs(height_err), 90)) if height_err.size else None),
+                "signed_height_error_median_m": fmt(float(np.median(height_err)) if height_err.size else None),
+                "roof_depth_error_abs_median_m": fmt(float(np.median(np.abs(depth_err))) if depth_err.size else None),
+                "roof_depth_error_abs_p90_m": fmt(float(np.percentile(np.abs(depth_err), 90)) if depth_err.size else None),
+                "signed_depth_error_median_m": fmt(float(np.median(depth_err)) if depth_err.size else None),
+                "ellip_to_reference_shift_m": fmt(ELLIP_TO_REF_SHIFT_M),
                 "reference_roof_z_median_m": fmt(float(np.median(z_vals)) if len(z_vals) else None),
+                "mono_ref_z_p50_m": fmt(float(np.median(mono_ref_z)) if len(mono_ref_z) else None),
                 "crop_mono_depth_p10": fmt(float(np.percentile(crop_valid, 10)) if len(crop_valid) else None),
                 "crop_mono_depth_p90": fmt(float(np.percentile(crop_valid, 90)) if len(crop_valid) else None),
             }
@@ -678,7 +700,9 @@ def group_label(sid: str) -> str:
 
 
 def decide_monodepth_branch(rows: list[dict[str, Any]]) -> None:
-    vals = [num(r.get("roof_depth_error_abs_median_m")) for r in rows]
+    vals = [num(r.get("roof_height_error_abs_median_m")) for r in rows]
+    if not any(v is not None for v in vals):
+        vals = [num(r.get("roof_depth_error_abs_median_m")) for r in rows]
     vals = [v for v in vals if v is not None]
     if not vals:
         decision = "exclude_arm3"
@@ -687,13 +711,13 @@ def decide_monodepth_branch(rows: list[dict[str, Any]]) -> None:
         med = float(np.median(vals))
         if med <= 3.0:
             decision = "arm3_default_under_provisional_threshold"
-            reason = f"roof direct-score median {med:.3f} m <= 3 m"
+            reason = f"roof height direct-score median {med:.3f} m <= 3 m"
         elif med <= 8.0:
             decision = "needs_human_mitigation_choice_before_arm3"
-            reason = f"roof direct-score median {med:.3f} m in 3-8 m band"
+            reason = f"roof height direct-score median {med:.3f} m in 3-8 m band"
         else:
             decision = "exclude_arm3"
-            reason = f"roof direct-score median {med:.3f} m > 8 m"
+            reason = f"roof height direct-score median {med:.3f} m > 8 m"
     payload = {"decision": decision, "reason": reason, "created_utc": datetime.now(timezone.utc).isoformat()}
     (P2_RUN_DIR / "monodepth_decision.json").parent.mkdir(parents=True, exist_ok=True)
     (P2_RUN_DIR / "monodepth_decision.json").write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -1772,7 +1796,7 @@ def checkpoint_report(_args: argparse.Namespace) -> None:
         "",
         "## A-1 Roof Direct Score",
         "",
-        md_table(mono, ["building_id", "group_new", "roof_depth_error_abs_median_m", "roof_depth_error_abs_p90_m", "view_idx"], 18) if mono else "_pending_",
+        md_table(mono, ["building_id", "group_new", "roof_height_error_abs_median_m", "roof_height_error_abs_p90_m", "view_idx"], 18) if mono else "_pending_",
         "",
         "## B-0 Gates",
         "",
@@ -1840,7 +1864,7 @@ def report(_args: argparse.Namespace) -> None:
         "",
         "## A-1 Mono Depth",
         "",
-        md_table(mono, ["building_id", "group_new", "roof_depth_error_abs_median_m", "roof_depth_error_abs_p90_m", "view_idx"], 18) if mono else "_not generated_",
+        md_table(mono, ["building_id", "group_new", "roof_height_error_abs_median_m", "roof_height_error_abs_p90_m", "view_idx"], 18) if mono else "_not generated_",
         "",
         "## A-2 Sheet Identity",
         "",
@@ -1885,6 +1909,7 @@ def build_parser() -> argparse.ArgumentParser:
     p_prior = sub.add_parser("infer-priors")
     p_prior.add_argument("--gpu", default="0")
     p_prior.add_argument("--device", default="cuda:0")
+    sub.add_parser("score-monodepth")
     sub.add_parser("sheet-identity-alt")
     sub.add_parser("implementation-check")
     p_norm = sub.add_parser("normal-recheck")
@@ -1935,6 +1960,8 @@ def main() -> None:
     args = build_parser().parse_args()
     if args.cmd == "infer-priors":
         infer_priors(args)
+    elif args.cmd == "score-monodepth":
+        monodepth_building_score(args)
     elif args.cmd == "sheet-identity-alt":
         sheet_identity_alt(args)
     elif args.cmd == "implementation-check":

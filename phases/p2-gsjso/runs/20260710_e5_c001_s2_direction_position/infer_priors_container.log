@@ -1,0 +1,69 @@
++ docker run --rm --user 1000:1000 --gpus all -e HOME=/tmp -e CUDA_VISIBLE_DEVICES=0 -e TORCH_EXTENSIONS_DIR=/workspace/JointBuildGS/results/tum_transfer/e5_s2_direction_position/C001/torch_extensions -e TORCH_HOME=/workspace/JointBuildGS/results/tum_transfer/e5_s1_full_factor/C001/torch_hub -v /media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS:/workspace/JointBuildGS -w /workspace/JointBuildGS -e E5_S2_PRIOR_CONTAINER=1 -e MPLCONFIGDIR=/tmp/matplotlib jointbuildgs:dev python phases/p2-gsjso/scripts/e5_c001_s2_direction_position.py infer-priors --device cuda:0
+
+==========
+== CUDA ==
+==========
+
+CUDA Version 12.1.1
+
+Container image Copyright (c) 2016-2023, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+
+This container image and its contents are governed by the NVIDIA Deep Learning Container License.
+By pulling and using the container, you accept the terms and conditions of this license:
+https://developer.nvidia.com/ngc/nvidia-deep-learning-container-license
+
+A copy of this license is made available in this container at /NGC-DL-CONTAINER-LICENSE for your convenience.
+
+xFormers not available
+xFormers not available
+Downloading: "https://huggingface.co/depth-anything/Depth-Anything-V2-Small/resolve/main/depth_anything_v2_vits.pth" to /workspace/JointBuildGS/results/tum_transfer/e5_s2_direction_position/C001/mono_priors/depth_anything_v2_vits.pth
+
+  0%|          | 0.00/94.6M [00:00<?, ?B/s]
+  0%|          | 128k/94.6M [00:00<09:29, 174kB/s]
+  0%|          | 384k/94.6M [00:00<02:56, 561kB/s]
+  1%|          | 1.12M/94.6M [00:00<00:52, 1.88MB/s]
+  3%|▎         | 3.12M/94.6M [00:01<00:16, 5.81MB/s]
+  8%|▊         | 7.50M/94.6M [00:01<00:06, 14.9MB/s]
+ 13%|█▎        | 12.1M/94.6M [00:01<00:03, 23.0MB/s]
+ 16%|█▌        | 15.2M/94.6M [00:01<00:03, 22.6MB/s]
+ 19%|█▉        | 18.0M/94.6M [00:01<00:03, 20.7MB/s]
+ 22%|██▏       | 20.4M/94.6M [00:01<00:04, 18.7MB/s]
+ 25%|██▍       | 23.2M/94.6M [00:01<00:04, 18.7MB/s]
+ 28%|██▊       | 26.8M/94.6M [00:02<00:03, 20.1MB/s]
+ 32%|███▏      | 30.1M/94.6M [00:02<00:02, 23.4MB/s]
+ 34%|███▍      | 32.6M/94.6M [00:02<00:03, 20.8MB/s]
+ 38%|███▊      | 35.8M/94.6M [00:02<00:03, 17.6MB/s]
+ 42%|████▏     | 39.9M/94.6M [00:02<00:02, 22.5MB/s]
+ 45%|████▍     | 42.5M/94.6M [00:02<00:02, 20.6MB/s]
+ 47%|████▋     | 44.9M/94.6M [00:03<00:03, 16.2MB/s]
+ 50%|█████     | 47.4M/94.6M [00:03<00:03, 14.4MB/s]
+ 53%|█████▎    | 50.0M/94.6M [00:03<00:03, 14.7MB/s]
+ 55%|█████▍    | 52.0M/94.6M [00:03<00:02, 15.0MB/s]
+ 57%|█████▋    | 54.1M/94.6M [00:03<00:02, 16.0MB/s]
+ 59%|█████▉    | 56.1M/94.6M [00:03<00:02, 16.3MB/s]
+ 62%|██████▏   | 58.5M/94.6M [00:04<00:02, 17.2MB/s]
+ 65%|██████▍   | 61.1M/94.6M [00:04<00:01, 17.8MB/s]
+ 66%|██████▋   | 62.9M/94.6M [00:04<00:02, 15.7MB/s]
+ 69%|██████▉   | 65.6M/94.6M [00:04<00:01, 16.3MB/s]
+ 73%|███████▎  | 68.8M/94.6M [00:04<00:01, 19.7MB/s]
+ 75%|███████▌  | 71.0M/94.6M [00:04<00:01, 20.5MB/s]
+ 77%|███████▋  | 73.1M/94.6M [00:04<00:01, 18.8MB/s]
+ 79%|███████▉  | 75.1M/94.6M [00:04<00:01, 18.7MB/s]
+ 82%|████████▏ | 78.0M/94.6M [00:05<00:00, 21.6MB/s]
+ 85%|████████▍ | 80.2M/94.6M [00:05<00:00, 21.1MB/s]
+ 87%|████████▋ | 82.6M/94.6M [00:05<00:00, 21.9MB/s]
+ 90%|████████▉ | 85.0M/94.6M [00:05<00:00, 22.4MB/s]
+ 92%|█████████▏| 87.5M/94.6M [00:05<00:00, 23.4MB/s]
+ 95%|█████████▌| 90.1M/94.6M [00:05<00:00, 24.2MB/s]
+ 98%|█████████▊| 93.0M/94.6M [00:05<00:00, 25.7MB/s]
+100%|██████████| 94.6M/94.6M [00:05<00:00, 17.2MB/s]
+Using cache found in /workspace/JointBuildGS/results/tum_transfer/e5_s1_full_factor/C001/torch_hub/hub/alexsax_omnidata_models_main
+{"stage": "A-1-priors", "done": 50, "total": 428}
+{"stage": "A-1-priors", "done": 100, "total": 428}
+{"stage": "A-1-priors", "done": 150, "total": 428}
+{"stage": "A-1-priors", "done": 200, "total": 428}
+{"stage": "A-1-priors", "done": 250, "total": 428}
+{"stage": "A-1-priors", "done": 300, "total": 428}
+{"stage": "A-1-priors", "done": 350, "total": 428}
+{"stage": "A-1-priors", "done": 400, "total": 428}
+{"monodepth_precheck": "docs/e5_c001_s2_monodepth_precheck.csv", "rows": 428}

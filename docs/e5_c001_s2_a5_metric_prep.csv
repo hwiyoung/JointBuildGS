@@ -1,0 +1,4 @@
+metric,status,producer,definition,csv
+rend_dist_mean,implemented,render_dist_summary,mean render_dist over alpha>0.5 pixels for selected representative views; linear metre scale inherited from 20260709 recheck,docs/e5_c001_s2_rend_dist.csv
+final_gaussian_count,implemented,fingerprint_training/build_arm_cells,state['n_prim'] from ckpt/final.pt and S0 ratio in arm cell table,docs/e5_c001_s2_arm_cells.csv
+global_z_hist,implemented,global_z_hist,all Gaussian centers shifted to EPSG:25832 z; 2 m bins with opacity summaries,docs/e5_c001_s2_global_z_hist.csv
