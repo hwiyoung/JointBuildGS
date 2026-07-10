@@ -838,6 +838,8 @@ def gable_mode(_args: argparse.Namespace) -> None:
 def _panel_sources() -> list[Any]:
     eight = s2.eight
     base_sources = {source.source_run: source for source in eight.sources()}
+    base_sources["reference"].display_label = "Reference LoD2"
+    base_sources["lidar"].display_label = "LiDAR"
     sources = [
         base_sources["reference"],
         base_sources["lidar"],
