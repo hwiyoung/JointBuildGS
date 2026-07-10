@@ -1,0 +1,5 @@
+normal_state,cell,replicate,run_name,rend_dist_mean_tail_m,rend_dist_p50_tail_m,audit_rows_tail,denominator,audit_csv,reconstruction
+no_normal,w100_p005,r1,gs_e5_C001_s1fac_w100_p005_dense_r1,0.4070,0.3347,10,1453.9805,results/tum_transfer/e5_s1_full_factor/C001/runs/gs_e5_C001_s1fac_w100_p005_dense_r1/audit/loss_grad_norms.csv,tail raw_loss * distort_norm_denominator; same S2 method
+no_normal,w240_p005,r1,gs_e5_C001_s1fac_w240_p005_dense_r1,0.2218,0.1375,10,1453.9805,results/tum_transfer/e5_s1_full_factor/C001/runs/gs_e5_C001_s1fac_w240_p005_dense_r1/audit/loss_grad_norms.csv,tail raw_loss * distort_norm_denominator; same S2 method
+normal,arm1,r1,gs_e5_C001_s2_arm1_dense_r1,0.4156,0.2795,10,1453.9805,results/tum_transfer/e5_s2_direction_position/C001/runs/gs_e5_C001_s2_arm1_dense_r1/audit/loss_grad_norms.csv,tail raw_loss * distort_norm_denominator; same S2 method
+normal,arm1,r2,gs_e5_C001_s2_arm1_dense_r2,0.3577,0.2435,10,1453.9805,results/tum_transfer/e5_s2_direction_position/C001/runs/gs_e5_C001_s2_arm1_dense_r2/audit/loss_grad_norms.csv,tail raw_loss * distort_norm_denominator; same S2 method
