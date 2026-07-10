@@ -79,6 +79,8 @@ CSV_READOUT_INVENTORY = REPO / "docs/e5_c001_s2p_readout_inventory.csv"
 CSV_READOUT_ISSUES = REPO / "docs/e5_c001_s2p_readout_issues.csv"
 CSV_GABLE_MODE = REPO / "docs/e5_c001_s2p_gable_mode.csv"
 CSV_PANEL_INVENTORY = REPO / "docs/e5_c001_s2p_8way_panel_inventory.csv"
+CSV_PIPELINE_STRIPS = REPO / "docs/e5_c001_s2p_pipeline_strips.csv"
+CSV_PIPELINE_STRIP_ISSUES = REPO / "docs/e5_c001_s2p_pipeline_strips_issues.csv"
 
 TIMELINE_IDS = ["4907202", "4908168", "4908178", "4907184"]
 TIMELINE_FULL_IDS = [f"DEBY_LOD2_{sid}" for sid in TIMELINE_IDS]
@@ -996,6 +998,135 @@ def panels_8way(_args: argparse.Namespace) -> None:
     print(json.dumps({"panel_inventory": rel(CSV_PANEL_INVENTORY), "rows": len(inventory)}, ensure_ascii=False))
 
 
+def pipeline_strips(args: argparse.Namespace) -> None:
+    from src.stage2.dataloader import ColmapDataset
+
+    os.environ.setdefault("TORCH_HOME", "/tmp/torch")
+    configure_readout()
+    reps = [1, 2] if args.rep == "all" else [int(args.rep)]
+    conditions = [
+        s2.strips.StripCondition(
+            key=f"arm1p_r{rep}",
+            label=f"Arm 1' r{rep}",
+            run_name=arm1p_run_name(rep),
+            ckpt=checkpoint_path(arm1p_run_name(rep), "final"),
+            coverage_csv=CSV_COVERAGE,
+            metrics_csv=CSV_405_BUILDING,
+            p0_run_id=P0_RUN_ID,
+        )
+        for rep in reps
+    ]
+    s2.strips.REPAIR_ROOT = s2.P0_RUNS / REPAIR_RUN_ID
+    footprints = s2.strips.load_footprints(TIMELINE_IDS)
+    references = s2.eight.parse_lod2_roofs(
+        s2.eight.LOD2_DIR, {s2.full_id(short_id) for short_id in TIMELINE_IDS}
+    )
+    dataset = ColmapDataset(
+        root=str(DATA_ROOT),
+        downscale=args.downscale,
+        load_depth=True,
+        load_normal=False,
+        load_semantic=False,
+    )
+    s2.strips.render_crop.dataset = dataset
+    render_cache: dict[tuple[str, int], dict[str, np.ndarray]] = {}
+    rows: list[dict[str, Any]] = []
+    issues: list[dict[str, Any]] = []
+    out_dir = FIG_DIR / "pipeline_strips"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    for condition in conditions:
+        if not condition.ckpt.exists():
+            issues.append(
+                {
+                    "condition": condition.key,
+                    "building_id": "",
+                    "message": "checkpoint missing",
+                    "path": rel(condition.ckpt),
+                }
+            )
+            continue
+        gaussians = s2.strips.load_gaussians(condition.ckpt)
+        parsed = s2.eight.parse_cityjson_roofs(
+            s2.strips.cityjson_path(condition), {s2.full_id(short_id) for short_id in TIMELINE_IDS}
+        )
+        predictions = {
+            building_id: s2.eight.shift_surface_z(surfaces, condition.z_shift_to_reference_m)
+            for building_id, surfaces in parsed.items()
+        }
+        for short_id in TIMELINE_IDS:
+            building_id = s2.full_id(short_id)
+            footprint = footprints.get(building_id)
+            reference = references.get(building_id, [])
+            if footprint is None or not reference:
+                issues.append(
+                    {
+                        "condition": condition.key,
+                        "building_id": building_id,
+                        "message": "footprint or reference missing",
+                        "path": "",
+                    }
+                )
+                continue
+            view_idx, crop = s2.strips.select_view(dataset, footprint, reference)
+            rendered = None
+            try:
+                rendered = s2.strips.render_crop(
+                    condition, view_idx, crop, args.device, render_cache
+                )
+            except Exception as exc:  # noqa: BLE001
+                issues.append(
+                    {
+                        "condition": condition.key,
+                        "building_id": building_id,
+                        "message": f"render failed: {type(exc).__name__}: {exc}",
+                        "path": rel(condition.ckpt),
+                    }
+                )
+            counts = s2.strips.coverage_counts(condition, building_id)
+            status = s2.strips.status_for(condition, building_id)
+            output = out_dir / f"{short_id}_{condition.key}.png"
+            s2.strips.plot_strip(
+                condition,
+                building_id,
+                footprint,
+                reference,
+                predictions.get(building_id, []),
+                gaussians,
+                rendered,
+                counts,
+                status,
+                output,
+            )
+            stats = s2.strips.gaussian_stats(gaussians["means"], gaussians["opacity"], footprint)
+            rows.append(
+                {
+                    "condition": condition.key,
+                    "arm": "arm1p",
+                    "replicate": f"r{condition.key[-1]}",
+                    "run_name": condition.run_name,
+                    "building_id": building_id,
+                    "figure": rel(output),
+                    "view_idx": view_idx,
+                    "crop_xyxy": ",".join(str(value) for value in crop),
+                    "ckpt": rel(condition.ckpt),
+                    "cityjson": rel(s2.strips.cityjson_path(condition)),
+                    "status_reason": status.get("reason", ""),
+                    "has_lod22": status.get("has_lod22", ""),
+                    "val3dity_valid": status.get("val3dity_valid", ""),
+                    **{key: "" if value is None else value for key, value in stats.items()},
+                    **{f"readout_{key}": value for key, value in counts.items()},
+                }
+            )
+            print(json.dumps({"strip": rel(output), "building_id": building_id}, ensure_ascii=False), flush=True)
+    write_csv(CSV_PIPELINE_STRIPS, rows)
+    write_csv(
+        CSV_PIPELINE_STRIP_ISSUES,
+        issues,
+        ["condition", "building_id", "message", "path"],
+    )
+    print(json.dumps({"pipeline_strips": rel(CSV_PIPELINE_STRIPS), "rows": len(rows), "issues": len(issues)}, ensure_ascii=False))
+
+
 def _load_depth_anything_v2(device: Any) -> tuple[Any, str]:
     import torch
 
@@ -1537,6 +1668,10 @@ def build_parser() -> argparse.ArgumentParser:
     sub.add_parser("twin-rend-dist")
     sub.add_parser("gable-mode")
     sub.add_parser("panels-8way")
+    strips = sub.add_parser("pipeline-strips")
+    strips.add_argument("--rep", choices=["1", "2", "all"], default="all")
+    strips.add_argument("--device", default="cuda:0")
+    strips.add_argument("--downscale", type=float, default=0.35)
     mono = sub.add_parser("infer-monodepth-v2")
     mono.add_argument("--gpu", default="1")
     mono.add_argument("--device", default="cuda:0")
@@ -1575,6 +1710,8 @@ def main() -> None:
         gable_mode(args)
     elif args.cmd == "panels-8way":
         panels_8way(args)
+    elif args.cmd == "pipeline-strips":
+        pipeline_strips(args)
     elif args.cmd == "infer-monodepth-v2":
         infer_monodepth_v2(args)
     elif args.cmd == "score-monodepth-v2":
