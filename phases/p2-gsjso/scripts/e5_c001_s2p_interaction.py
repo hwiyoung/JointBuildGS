@@ -439,7 +439,69 @@ def timeline_roofcrop(_args: argparse.Namespace) -> None:
             "opacity_p50",
         ],
     )
+    _plot_timeline(rows)
     print(json.dumps({"timeline": rel(CSV_TIMELINE), "rows": len(rows)}, ensure_ascii=False))
+
+
+def _plot_timeline(rows: list[dict[str, Any]]) -> None:
+    output_dir = FIG_DIR / "timeline"
+    output_dir.mkdir(parents=True, exist_ok=True)
+    colors = {"r1": "#1F4E79", "r2": "#B7831B"}
+    for short_id in TIMELINE_IDS:
+        building_id = s2.full_id(short_id)
+        part = [row for row in rows if row.get("building_id") == building_id]
+        if not part:
+            continue
+        fig, axes = plt.subplots(1, 3, figsize=(10.8, 3.5), constrained_layout=True)
+        for replicate in ["r1", "r2"]:
+            group = sorted(
+                [row for row in part if row.get("replicate") == replicate],
+                key=lambda row: int(row["step"]),
+            )
+            if not group:
+                continue
+            x = [int(row["step"]) / 1000.0 for row in group]
+            axes[0].plot(
+                x,
+                [_finite_float(row.get("n_gaussians_in_footprint")) or 0 for row in group],
+                marker="o",
+                color=colors[replicate],
+                label=replicate,
+            )
+            axes[1].plot(
+                x,
+                [
+                    _finite_float(row.get("z_p50"))
+                    if _finite_float(row.get("z_p50")) is not None
+                    else np.nan
+                    for row in group
+                ],
+                marker="o",
+                color=colors[replicate],
+                label=replicate,
+            )
+            axes[2].plot(
+                x,
+                [
+                    _finite_float(row.get("opacity_p50"))
+                    if _finite_float(row.get("opacity_p50")) is not None
+                    else np.nan
+                    for row in group
+                ],
+                marker="o",
+                color=colors[replicate],
+                label=replicate,
+            )
+        axes[0].set_ylabel("Gaussians in footprint")
+        axes[1].set_ylabel("z p50 (m)")
+        axes[2].set_ylabel("opacity p50")
+        for axis in axes:
+            axis.set_xlabel("iteration (k)")
+            axis.grid(color="#DDDDDD", linewidth=0.6)
+        axes[0].legend(fontsize=8)
+        fig.suptitle(f"Arm 1p roof-crop timeline: {short_id}", fontsize=11)
+        fig.savefig(output_dir / f"timeline_{short_id}.png", dpi=190)
+        plt.close(fig)
 
 
 def densify_log(_args: argparse.Namespace) -> None:
