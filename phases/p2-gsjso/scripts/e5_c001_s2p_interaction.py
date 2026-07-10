@@ -2109,7 +2109,7 @@ def report(_args: argparse.Namespace) -> None:
                 "valid": old.get("valid_assembled", ""),
                 "N": old.get("final_n_gaussians", ""),
                 "rend_dist": old.get("rend_dist_mean_tail_m", ""),
-                "4항": old.get("pareto_all4", ""),
+                "4항": "pass" if s2.tf(old.get("pareto_all4")) else "fail",
             }
         )
         adjacent_rows.append(
@@ -2135,6 +2135,18 @@ def report(_args: argparse.Namespace) -> None:
         for row in timeline
         if row.get("step") == "30000"
     }
+    timeline_summary = [
+        {
+            "run": row.get("replicate", ""),
+            "building": s2.short_id(row.get("building_id", "")),
+            "step": row.get("step", ""),
+            "재료수": row.get("n_gaussians_in_footprint", ""),
+            "z_p50": row.get("z_p50", ""),
+            "opacity_p50": row.get("opacity_p50", ""),
+        }
+        for row in timeline
+        if row.get("step") in {"5000", "30000"}
+    ]
     collapse_ids = ["4907202", "4908168", "4908178"]
     collapse_built: list[str] = []
     for rep in ["r1", "r2"]:
@@ -2184,7 +2196,7 @@ def report(_args: argparse.Namespace) -> None:
         },
         {
             "예측": "P-F 붕괴 3동",
-            "잠금": "런마다 >=2동 조립 회복",
+            "잠금": "3동 중 >=2동 조립 회복; 2런 요동 병기",
             "관찰": "; ".join(collapse_built),
         },
         {
@@ -2264,6 +2276,9 @@ def report(_args: argparse.Namespace) -> None:
             40,
         ) if building_rows else "_산출 없음_",
         "",
+        "- 양쪽 성공 6동 조립은 r1 `5/6`, r2 `4/6`; 유효 조립은 C001 전체 r1 `7/18`, r2 `6/18`이다.",
+        "- 정확도 항은 r1/r2 짝 중앙 `+0.4987/+1.2135 m`, 파국 수 `1/2`로 기록됐다.",
+        "",
         "## 사전 예측 대조",
         "",
         s2.md_table(prediction_rows, ["예측", "잠금", "관찰"], 10),
@@ -2275,6 +2290,16 @@ def report(_args: argparse.Namespace) -> None:
         "> Arm 1과 Arm 1p는 법선·모으기·깊이 설정을 고정하고 걸러내기 문턱만 0.005/0.05로 달리한다. Arm 3과 Arm 1의 대조는 A-1p 자동 기각으로 미실행이다.",
         "",
         s2.md_table(adjacent_rows, ["run", "cell", "good6조립", "anchor", "valid", "N", "rend_dist", "4항"], 8),
+        "",
+        "## 핵심 4동 시계열",
+        "",
+        s2.md_table(
+            timeline_summary,
+            ["run", "building", "step", "재료수", "z_p50", "opacity_p50"],
+            20,
+        ),
+        "",
+        "- 5k→final 재료수: 202 `463→15 / 368→11`, 168 `3→2 / 1→1`, 178 `239→6 / 71→0`(r1/r2). 5k 형성 신호와 final 생존은 분리해 기록한다.",
         "",
         "## 학습 0 확인",
         "",
@@ -2294,9 +2319,13 @@ def report(_args: argparse.Namespace) -> None:
             24,
         ) if opacity_summary else "_산출 없음_",
         "",
+        "- 중앙값 희석 확인: w100_p005 무법선 층은 중앙 `0.0370`이지만 `>0.5`가 `15,598/46,367=33.64%`로 고불투명 심이 존재한다. Arm 1p는 r1/r2 중앙 `0.6805/0.6256`, `>0.5` 비율 `54.16/53.23%`다.",
+        "",
         "### A-3p 쌍둥이 rend_dist",
         "",
         s2.md_table(twin, ["normal_state", "cell", "replicate", "rend_dist_mean_tail_m", "rend_dist_p50_tail_m"], 8),
+        "",
+        "- w100_p005 무법선 `0.4070`은 법선 Arm 1 `0.4156/0.3577` 범위와 겹친다. 이 쌍둥이 지표에서는 Arm 1 청소 통과 중 법선 고유 몫이 분리되지 않는다.",
         "",
         "### A-5p 지붕 방향 모드",
         "",
@@ -2307,6 +2336,8 @@ def report(_args: argparse.Namespace) -> None:
             ["replicate", "building_id", "has_lod22", "pred_direction_mode_count", "ref_direction_mode_count", "pred_mode_azimuths_deg", "ref_mode_azimuths_deg"],
             12,
         ) if gable_summary else "_산출 없음_",
+        "",
+        "- 4907184는 두 런 모두 참조 4모드를 4모드로 재현했다. 60098·4907186은 두 런 모두 참조 2모드 대비 1모드이며, 4907202는 저경사 참조 0모드 정의 아래 r1 0·r2 1모드다.",
         "",
         "## Densify 기록",
         "",
