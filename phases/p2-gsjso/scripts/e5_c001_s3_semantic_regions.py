@@ -207,7 +207,12 @@ def write_csv(path: Path, rows: list[dict[str, Any]], fields: Sequence[str] | No
                     seen.add(key)
                     fields.append(key)
     with path.open("w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=list(fields), extrasaction="ignore")
+        writer = csv.DictWriter(
+            f,
+            fieldnames=list(fields),
+            extrasaction="ignore",
+            lineterminator="\n",
+        )
         writer.writeheader()
         writer.writerows(rows)
 
