@@ -1,0 +1,19 @@
+run_id: 20260713_e5_c001_s3_semantic_guided
+updated_utc: 2026-07-13T15:31:44.116111+00:00
+git_head: e324b460f1071543a623389daaa0d3ec728d85f2
+git_branch: exp/3b-surface-restore-corrected
+docker_image: jointbuildgs:dev
+docker_image_id: sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396
+crs: EPSG:25832
+training_started: no (config/orchestrator generation only)
+claim_scope: S3-A oracle class+instance-address mechanism upper bound; not a battlefield win; S3-B forbids the oracle ID map and owns the FM/paper claim
+base_config: configs/tum_mob/e5_s2p_interaction/gs_e5_C001_s2p_arm1p_dense_r1.yaml
+base_config_sha256: bdd3d229e6ae8052e60d5d8bbff26d670c62008326ee6ed4d8ee81970a4146df
+orchestrator_sha256: c26c1ddf6168242c68620aeb8f0eee4a0bec77b3998d1b3e37091526c5c59565
+train_py_sha256: ccb218f3d7176ad41e4d81042f661312420851e3faabc6d80eb0a51c8ab948a3
+densification_py_sha256: 659de10aa1c134b17575ccac89664f9f3678102b1e006284802c2a8e28a71605
+semantic_loss_py_sha256: bce153583d843eb81e7a2f855d5605292729787aca627acc3b79e90d8bf3eb48
+inventory: docs/e5_c001_s3_inventory.csv
+manifest: phases/p2-gsjso/runs/20260713_e5_c001_s3_semantic_guided/config_gate_manifest.json
+cache_ready: true
+cache_present_expected: 428/428
