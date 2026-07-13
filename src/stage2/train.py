@@ -31,6 +31,7 @@ from .grouping import group_primitives, group_primitives_g2
 from .loss import data_fitting as L
 from .loss.mutual import l_mutual
 from .loss.multiview import l_multiview_consistency
+from .loss.semantic_guided import SemanticGuidedGeometry, SemanticRegionCache
 from .loss.structure import l_structure
 from .model import GaussianModel2D
 from .renderer import render
@@ -397,6 +398,7 @@ def _write_loss_grad_audit(
     total_loss: torch.Tensor,
     psnr_value: float,
     n_primitives: int,
+    audit_only_rowspec: Optional[Dict[str, tuple[torch.Tensor, float, torch.Tensor]]] = None,
 ) -> None:
     audit_dir = out_dir / "audit"
     audit_dir.mkdir(exist_ok=True)
@@ -415,6 +417,13 @@ def _write_loss_grad_audit(
         "psnr_train",
         "n_primitives",
     ]
+    detail_rows = audit_only_rowspec or {}
+    if detail_rows:
+        fields.append("denominator_role")
+    overlap = set(rowspec) & set(detail_rows)
+    if overlap:
+        raise ValueError(f"duplicate primary/audit-only loss components: {sorted(overlap)}")
+    all_rowspec = {**rowspec, **detail_rows}
     weighted_vals = {
         name: float(weighted.detach().cpu().item())
         for name, (_raw, _weight, weighted) in rowspec.items()
@@ -422,15 +431,22 @@ def _write_loss_grad_audit(
     denom_loss = sum(abs(v) for v in weighted_vals.values())
     grad_vals: dict[str, float] = {}
     grad_status: dict[str, str] = {}
-    for name, (_raw, _weight, weighted) in rowspec.items():
+    for name, (_raw, _weight, weighted) in all_rowspec.items():
         grad_vals[name], grad_status[name] = _grad_norm_value(weighted, params)
-    denom_grad = sum(v for v in grad_vals.values() if math.isfinite(v))
+    # Gate denominator: primary effective components only.  The smooth/plane
+    # detail rows are measured against it but never added to it, because their
+    # combined weighted gradient already appears as the primary semdepth row.
+    denom_grad = sum(
+        grad_vals[name]
+        for name in rowspec
+        if math.isfinite(grad_vals[name])
+    )
     new_file = not path.exists()
     with path.open("a", newline="", encoding="utf-8") as fh:
         writer_csv = csv.DictWriter(fh, fieldnames=fields, lineterminator="\n")
         if new_file:
             writer_csv.writeheader()
-        for name, (raw, weight, weighted) in rowspec.items():
+        for name, (raw, weight, weighted) in all_rowspec.items():
             raw_v = float(raw.detach().cpu().item()) if torch.is_tensor(raw) else float(raw)
             weighted_v = float(weighted.detach().cpu().item())
             grad_v = grad_vals[name]
@@ -438,8 +454,7 @@ def _write_loss_grad_audit(
             grad_share = grad_v / denom_grad if denom_grad > 0 and math.isfinite(grad_v) else 0.0
             writer.add_scalar(f"grad_component/{name}", grad_v, it)
             writer.add_scalar(f"grad_component_share/{name}", grad_share, it)
-            writer_csv.writerow(
-                {
+            output_row = {
                     "step": it,
                     "component": name,
                     "raw_loss": raw_v,
@@ -452,6 +467,170 @@ def _write_loss_grad_audit(
                     "total_loss": float(total_loss.detach().cpu().item()),
                     "psnr_train": psnr_value,
                     "n_primitives": int(n_primitives),
+                }
+            if detail_rows:
+                output_row["denominator_role"] = (
+                    "audit_only" if name in detail_rows else "primary"
+                )
+            writer_csv.writerow(output_row)
+
+
+def _short_building_id(value: object) -> str:
+    return str(value or "").replace("DEBY_LOD2_", "")
+
+
+def _write_semantic_geometry_audit(
+    *,
+    out_dir: Path,
+    it: int,
+    view_name: str,
+    result: Dict[str, object],
+    weighted_semdepth: torch.Tensor,
+    weighted_boundary_normal: torch.Tensor,
+    depth_pred: torch.Tensor,
+    target_buildings: set[str],
+    target_observations: Dict[str, int],
+) -> None:
+    """Write audit-only S3 rows without double-counting the gate denominator.
+
+    The generic ``loss_grad_norms.csv`` owns gate shares and contains only the
+    combined weighted ``semdepth`` component plus ``boundary_normal``.  This
+    companion file records smooth/plane detail, per-region validity/mapping, and
+    P-I rendered-depth gradient delivery.  Its rows are explicitly
+    ``denominator_role=audit_only``.
+    """
+
+    audit_dir = out_dir / "audit"
+    audit_dir.mkdir(exist_ok=True)
+    path = audit_dir / "semantic_geometry.csv"
+    fields = [
+        "step", "view", "region_id", "building_id", "is_pi_target",
+        "denominator_role", "loss_smooth", "weight_smooth", "weighted_smooth",
+        "loss_plane", "weight_plane", "weighted_plane", "loss_semdepth_weighted",
+        "loss_boundary_normal", "weight_boundary_normal", "weighted_boundary_normal",
+        "view_smooth_valid_stencil_count", "smooth_valid_stencil_count",
+        "boundary_valid_pixel_count", "boundary_kernel_size", "boundary_radius_px",
+        "source_component_id", "source_component_pixel_count",
+        "pre_split_overlap_count", "region_pixel_count",
+        "render_valid_pixel_count", "render_valid_fraction", "depth_anchor_pixel_count",
+        "depth_anchor_fraction", "plane_valid_pixel_count", "plane_skipped_lt64",
+        "plane_fitted_iteration", "plane_loss", "semdepth_depth_grad_norm",
+        "semdepth_depth_grad_norm_share", "semdepth_depth_grad_nonzero_pixel_count",
+        "semdepth_depth_grad_nonzero_fraction", "target_observation_count",
+        "raycast_misassignment_rate", "raycast_misassignment_numerator",
+        "raycast_misassignment_denominator",
+    ]
+
+    grad = None
+    if torch.is_tensor(weighted_semdepth) and weighted_semdepth.requires_grad:
+        grad = torch.autograd.grad(
+            weighted_semdepth,
+            depth_pred,
+            retain_graph=True,
+            allow_unused=True,
+        )[0]
+    grad_norm_total = float(grad.detach().norm().cpu().item()) if grad is not None else 0.0
+
+    smooth = result["smooth"]
+    plane = result["plane"]
+    boundary = result["boundary_normal"]
+    region_ids = result.get("region_ids")
+    cutline_mask = result.get("cutline_mask")
+    metadata = result.get("metadata") or {}
+    if not isinstance(metadata, dict):
+        metadata = {}
+    check = metadata.get("raycast_assignment_check", metadata)
+    if not isinstance(check, dict):
+        check = {}
+
+    region_rows = list(result.get("region_rows") or [])
+    if not region_rows:
+        # Keep a view-level row so zero-signal/zero-region events are observable.
+        region_rows = [{"region_id": "", "building_id": ""}]
+    new_file = not path.exists()
+    with path.open("a", newline="", encoding="utf-8") as fh:
+        csv_writer = csv.DictWriter(fh, fieldnames=fields, lineterminator="\n")
+        if new_file:
+            csv_writer.writeheader()
+        for region_row in region_rows:
+            row = dict(region_row)
+            bid = _short_building_id(row.get("building_id"))
+            rid = row.get("region_id", "")
+            target = bid in target_buildings
+            region_grad_norm = 0.0
+            nonzero_count = 0
+            region_count = 0
+            if (
+                grad is not None
+                and torch.is_tensor(region_ids)
+                and torch.is_tensor(cutline_mask)
+                and rid != ""
+            ):
+                mask = (region_ids == int(rid)) & (~cutline_mask)
+                values = grad[mask]
+                region_count = int(values.numel())
+                if region_count:
+                    region_grad_norm = float(values.detach().norm().cpu().item())
+                    nonzero_count = int((values.detach() != 0).sum().cpu().item())
+            csv_writer.writerow(
+                {
+                    "step": int(it),
+                    "view": view_name,
+                    "region_id": rid,
+                    "building_id": bid,
+                    "is_pi_target": int(target),
+                    "denominator_role": "audit_only",
+                    "loss_smooth": float(smooth.detach().cpu().item()),
+                    "weight_smooth": result.get("weight_smooth", 0.0),
+                    "weighted_smooth": float(result.get("weighted_smooth", 0.0)),
+                    "loss_plane": float(plane.detach().cpu().item()),
+                    "weight_plane": result.get("weight_plane", 0.0),
+                    "weighted_plane": float(result.get("weighted_plane", 0.0)),
+                    "loss_semdepth_weighted": float(weighted_semdepth.detach().cpu().item()),
+                    "loss_boundary_normal": float(boundary.detach().cpu().item()),
+                    "weight_boundary_normal": result.get("weight_boundary_normal", 0.0),
+                    "weighted_boundary_normal": float(weighted_boundary_normal.detach().cpu().item()),
+                    "view_smooth_valid_stencil_count": result.get("smooth_valid_stencil_count", 0),
+                    "smooth_valid_stencil_count": row.get("smooth_valid_stencil_count", ""),
+                    "boundary_valid_pixel_count": result.get("boundary_valid_pixel_count", 0),
+                    "boundary_kernel_size": result.get("boundary_kernel_size", ""),
+                    "boundary_radius_px": result.get("boundary_radius_px", ""),
+                    "semdepth_depth_grad_norm": region_grad_norm,
+                    "semdepth_depth_grad_norm_share": (
+                        region_grad_norm / grad_norm_total if grad_norm_total > 0 else 0.0
+                    ),
+                    "semdepth_depth_grad_nonzero_pixel_count": nonzero_count,
+                    "semdepth_depth_grad_nonzero_fraction": (
+                        nonzero_count / region_count if region_count else 0.0
+                    ),
+                    "target_observation_count": target_observations.get(bid, 0),
+                    "raycast_misassignment_rate": check.get("misassignment_rate", ""),
+                    "raycast_misassignment_numerator": check.get("misassigned_pixels", ""),
+                    "raycast_misassignment_denominator": check.get("validated_pixels", ""),
+                    **{
+                        key: row.get(key, "")
+                        for key in fields
+                        if key in row and key not in {"region_id", "building_id"}
+                    },
+                }
+            )
+
+    summary_path = audit_dir / "semantic_target_observations.csv"
+    new_summary = not summary_path.exists()
+    with summary_path.open("a", newline="", encoding="utf-8") as fh:
+        summary_writer = csv.DictWriter(
+            fh,
+            fieldnames=["step", "building_id", "active_view_observation_count"],
+            lineterminator="\n",
+        )
+        if new_summary:
+            summary_writer.writeheader()
+        for bid in sorted(target_buildings):
+            summary_writer.writerow(
+                {
+                    "step": int(it),
+                    "building_id": bid,
+                    "active_view_observation_count": target_observations.get(bid, 0),
                 }
             )
 
@@ -723,6 +902,95 @@ def main():
     # P2 impl ②: release L_sem geometry detach so semantics can move geometry (default True
     # keeps the existing gradient-isolated behaviour, so the other configs are unaffected).
     sem_detach_geometry = cfg.get("sem_detach_geometry", True)
+    # S3-A oracle-label mechanism test.  All three weights default to zero so
+    # every pre-S3 configuration follows the previous execution path exactly.
+    w_semdepth_smooth = float(cfg.get("w_semdepth_smooth", 0.0) or 0.0)
+    w_semdepth_plane = float(cfg.get("w_semdepth_plane", 0.0) or 0.0)
+    w_boundary_normal = float(cfg.get("w_boundary_normal", 0.0) or 0.0)
+    semantic_geometry_warmup = int(cfg.get("semantic_geometry_warmup", 1500))
+    semantic_geometry_audit_every = int(
+        cfg.get("semantic_geometry_audit_every", cfg.get("loss_grad_audit_every", 0)) or 0
+    )
+    semantic_pi_target_buildings = {
+        _short_building_id(value)
+        for value in cfg.get(
+            "semantic_pi_target_buildings",
+            ["4907199", "8568391", "8568392"],
+        )
+    }
+    semantic_depth_enabled = w_semdepth_smooth > 0 or w_semdepth_plane > 0
+    boundary_normal_enabled = w_boundary_normal > 0
+    semantic_geometry_enabled = semantic_depth_enabled or boundary_normal_enabled
+    if min(w_semdepth_smooth, w_semdepth_plane, w_boundary_normal) < 0:
+        raise ValueError("S3 semantic geometry weights must be non-negative")
+    if semantic_geometry_warmup < 0:
+        raise ValueError("semantic_geometry_warmup must be non-negative")
+    semantic_region_cache = None
+    semantic_geometry = None
+    semantic_target_observations = {bid: 0 for bid in semantic_pi_target_buildings}
+    if semantic_geometry_enabled:
+        if not cfg.get("load_semantic", False):
+            raise RuntimeError("S3 semantic geometry requires load_semantic=true")
+        if w_mono_depth > 0:
+            raise RuntimeError(
+                "S3-A forbids monocular depth: set w_mono_depth=0 when semantic geometry is enabled"
+            )
+        cache_root = cfg.get("semantic_region_cache")
+        if semantic_depth_enabled and not cache_root:
+            raise RuntimeError(
+                "w_semdepth_smooth/plane>0 requires semantic_region_cache with footprint-split NPZ files"
+            )
+        if cache_root:
+            cache_path = Path(cache_root)
+            if not cache_path.is_dir():
+                raise FileNotFoundError(f"semantic_region_cache is not a directory: {cache_path}")
+            missing_cache = [
+                f"{Path(ds.frames[i].name).stem}.npz"
+                for i in train_idx
+                if not (cache_path / f"{Path(ds.frames[i].name).stem}.npz").exists()
+            ]
+            if semantic_depth_enabled and missing_cache:
+                preview = ", ".join(missing_cache[:5])
+                raise FileNotFoundError(
+                    f"semantic_region_cache misses {len(missing_cache)} training views "
+                    f"(first: {preview})"
+                )
+            semantic_region_cache = SemanticRegionCache(
+                cache_path,
+                expected_cutline_half_width_px=int(
+                    cfg.get("semantic_cutline_half_width_px", 7)
+                ),
+                expected_source_component_min_pixels=int(
+                    cfg.get("semantic_source_component_min_pixels", 256)
+                ),
+                expected_connectivity=int(cfg.get("semantic_component_connectivity", 8)),
+                expected_footprint_buffer_m=float(
+                    cfg.get("semantic_footprint_buffer_m", 20.0)
+                ),
+            )
+            if semantic_depth_enabled:
+                semantic_region_cache.validate_files(
+                    [ds.frames[i].name for i in train_idx]
+                )
+        semantic_geometry = SemanticGuidedGeometry(
+            semantic_region_cache,
+            roof_class=int(cfg.get("semantic_roof_class", 1)),
+            alpha_threshold=float(cfg.get("semantic_alpha_threshold", 0.5)),
+            plane_min_pixels=int(cfg.get("semantic_plane_min_pixels", 64)),
+            plane_refit_every=int(cfg.get("semantic_plane_refit_every", 500)),
+            huber_delta=float(cfg.get("semantic_huber_delta", 1.0)),
+            plane_irls_iterations=int(cfg.get("semantic_plane_irls_iterations", 5)),
+            boundary_kernel_size=int(cfg.get("semantic_boundary_band_px", 5)),
+        )
+        print(
+            "[S3-A] AlignGS/DN monocular-depth Pearson replaced by rendered-depth "
+            "masked smooth+free-plane (no monocular depth); boundary normal reuses Omnidata"
+        )
+        print(
+            f"[S3-A] warmup={semantic_geometry_warmup} "
+            f"w_smooth={w_semdepth_smooth:g} w_plane={w_semdepth_plane:g} "
+            f"w_nb={w_boundary_normal:g} cache={cache_root or 'not-required'}"
+        )
     w_structure = cfg.get("w_structure", 0.0)
     w_structure_na = cfg.get("w_structure_na", 1.0)
     w_structure_cp = cfg.get("w_structure_cp", 1.0)
@@ -914,6 +1182,51 @@ def main():
         "loss_grad_audit_every": loss_grad_audit_every,
         "loss_grad_audit_params": loss_grad_audit_params,
     }
+    if semantic_geometry_enabled:
+        effective_config.update(
+            {
+                "s3_claim_scope": "oracle-label mechanism upper bound; not the FM/paper claim",
+                "s3_no_monocular_depth": True,
+                "semantic_region_cache": cfg.get("semantic_region_cache"),
+                "semantic_geometry_warmup": semantic_geometry_warmup,
+                "semantic_geometry_active_updates": max(0, max_iter - semantic_geometry_warmup),
+                "w_semdepth_smooth": w_semdepth_smooth,
+                "w_semdepth_plane": w_semdepth_plane,
+                "w_boundary_normal": w_boundary_normal,
+                "semantic_roof_class": int(cfg.get("semantic_roof_class", 1)),
+                "semantic_alpha_threshold": float(cfg.get("semantic_alpha_threshold", 0.5)),
+                "semantic_source_component_min_pixels": int(cfg.get("semantic_source_component_min_pixels", 256)),
+                "semantic_component_connectivity": int(cfg.get("semantic_component_connectivity", 8)),
+                "semantic_cutline_half_width_px": int(cfg.get("semantic_cutline_half_width_px", 7)),
+                "semantic_footprint_buffer_m": float(cfg.get("semantic_footprint_buffer_m", 20.0)),
+                "semantic_plane_min_pixels": int(cfg.get("semantic_plane_min_pixels", 64)),
+                "semantic_plane_refit_every": int(cfg.get("semantic_plane_refit_every", 500)),
+                "semantic_plane_fit": "free-orientation weighted-PCA IRLS/Huber; n,d detached between refits",
+                "semantic_boundary_band_kernel_px": int(cfg.get("semantic_boundary_band_px", 5)),
+                "semantic_boundary_band_effective_radius_px": int(cfg.get("semantic_boundary_band_px", 5)) // 2,
+                "semantic_boundary_band_definition": "class roof mask dilation-minus-erosion; instance cutline excluded from L_nb address",
+                "semantic_smooth_aggregate": "sum of per-region Huber means",
+                "semantic_plane_aggregate": "global pixel mean of residuals to per-region robust planes",
+                "semantic_gate_share_denominator": "baseline effective components + combined weighted semdepth + weighted boundary_normal; smooth/plane detail audit-only",
+                "semantic_pi_target_buildings": sorted(semantic_pi_target_buildings),
+                "semantic_geometry_audit_every": semantic_geometry_audit_every,
+                "semantic_delta_keys": [
+                    "w_semdepth_smooth",
+                    "w_semdepth_plane",
+                    "w_boundary_normal",
+                    "semantic_geometry_warmup",
+                    "semantic_region_cache",
+                    "semantic_alpha_threshold",
+                    "semantic_source_component_min_pixels",
+                    "semantic_component_connectivity",
+                    "semantic_cutline_half_width_px",
+                    "semantic_footprint_buffer_m",
+                    "semantic_plane_min_pixels",
+                    "semantic_plane_refit_every",
+                    "semantic_boundary_band_px",
+                ],
+            }
+        )
     (out_dir / "effective_config.json").write_text(json.dumps(effective_config, indent=2) + "\n")
 
     print(f"[train] max_iter={max_iter}  out={out_dir}")
@@ -988,6 +1301,8 @@ def main():
             loss_mono_depth = torch.tensor(0.0, device=device)
             w_mono_depth_eff = 0.0
 
+        n_gt = None
+        n_m = None
         if "normal" in batch:
             n_gt = batch["normal"].to(device)
             n_m = batch["normal_mask"].to(device)
@@ -1052,16 +1367,89 @@ def main():
                 w_mvc_eff = w_mvc * _ramp_weight_scale(it, mvc_warmup, mvc_schedule, mvc_ramp_steps)
                 loss_total = loss_total + w_mvc_eff * loss_mvc
 
-        # Semantic (only if GT provided and w_sem > 0)
-        if "semantic" in batch and w_sem > 0 and hasattr(model, "sem_logits"):
+        # Semantic CE (only if GT provided and w_sem > 0).
+        sem_gt = (
+            batch["semantic"].to(device)
+            if "semantic" in batch
+            and (w_sem > 0 or (semantic_geometry_enabled and it >= semantic_geometry_warmup))
+            else None
+        )
+        if sem_gt is not None and w_sem > 0 and hasattr(model, "sem_logits"):
             from .renderer import render_semantic
             sem_pred = render_semantic(model, w2c, K, W, H, sem_detach_geometry=sem_detach_geometry)
-            sem_gt = batch["semantic"].to(device)
             loss_sem = L.l_sem(sem_pred, sem_gt, ignore_index=0)
             loss_total = loss_total + w_sem * loss_sem
         else:
             loss_sem = torch.tensor(0.0, device=device)
         loss_base_for_grad = loss_total
+
+        # S3-A: semantics addresses geometry, but supplies no depth values.  The
+        # first active update is exactly ``semantic_geometry_warmup`` (1500 in
+        # the locked configs), hence a max_iter=2500 probe has 1000 active updates.
+        loss_semdepth_smooth = depth_pred.sum() * 0.0
+        loss_semdepth_plane = depth_pred.sum() * 0.0
+        loss_boundary_normal = n_render.sum() * 0.0
+        weighted_semdepth = depth_pred.sum() * 0.0
+        weighted_boundary_normal = n_render.sum() * 0.0
+        s3_result: Dict[str, object] = {
+            "smooth": loss_semdepth_smooth,
+            "plane": loss_semdepth_plane,
+            "boundary_normal": loss_boundary_normal,
+            "region_rows": [],
+            "metadata": {},
+            "region_ids": None,
+            "cutline_mask": None,
+            "smooth_valid_stencil_count": 0,
+            "boundary_valid_pixel_count": 0,
+        }
+        semantic_geometry_active = semantic_geometry_enabled and it >= semantic_geometry_warmup
+        if semantic_geometry_active:
+            if sem_gt is None:
+                raise RuntimeError(f"S3 semantic label missing for active view {batch['name']!r}")
+            assert semantic_geometry is not None
+            s3_result = semantic_geometry(
+                iteration=it,
+                view_key=batch["name"],
+                depth=depth_pred,
+                alpha=alpha,
+                K=K,
+                semantic=sem_gt,
+                normal_render=n_render,
+                normal_target=n_gt,
+                normal_mask=n_m,
+                depth_anchor_mask=(batch["depth_mask"].to(device) if "depth_mask" in batch else None),
+                enable_semdepth=semantic_depth_enabled,
+                enable_boundary_normal=boundary_normal_enabled,
+            )
+            loss_semdepth_smooth = s3_result["smooth"]
+            loss_semdepth_plane = s3_result["plane"]
+            loss_boundary_normal = s3_result["boundary_normal"]
+            weighted_semdepth = (
+                w_semdepth_smooth * loss_semdepth_smooth
+                + w_semdepth_plane * loss_semdepth_plane
+            )
+            weighted_boundary_normal = w_boundary_normal * loss_boundary_normal
+            loss_total = loss_total + weighted_semdepth + weighted_boundary_normal
+            s3_result.update(
+                {
+                    "weight_smooth": w_semdepth_smooth,
+                    "weight_plane": w_semdepth_plane,
+                    "weight_boundary_normal": w_boundary_normal,
+                    "weighted_smooth": float(
+                        (w_semdepth_smooth * loss_semdepth_smooth).detach().cpu().item()
+                    ),
+                    "weighted_plane": float(
+                        (w_semdepth_plane * loss_semdepth_plane).detach().cpu().item()
+                    ),
+                }
+            )
+            seen_targets = {
+                _short_building_id(row.get("building_id"))
+                for row in s3_result.get("region_rows", [])
+                if _short_building_id(row.get("building_id")) in semantic_pi_target_buildings
+            }
+            for bid in seen_targets:
+                semantic_target_observations[bid] += 1
 
         # L_mutual (intra-primitive, operates directly on primitives, no rendering)
         loss_mut_total = torch.tensor(0.0, device=device)
@@ -1170,6 +1558,24 @@ def main():
                 n_groups = _grp["rep_n"].shape[0]
                 loss_total = loss_total + w_structure * loss_str_total
 
+        if semantic_geometry_enabled and not bool(torch.isfinite(loss_total).item()):
+            audit_dir = out_dir / "audit"
+            audit_dir.mkdir(exist_ok=True)
+            failure = {
+                "step": int(it),
+                "view": str(batch["name"]),
+                "total_loss": float(loss_total.detach().cpu().item()),
+                "semdepth_smooth": float(loss_semdepth_smooth.detach().cpu().item()),
+                "semdepth_plane": float(loss_semdepth_plane.detach().cpu().item()),
+                "boundary_normal": float(loss_boundary_normal.detach().cpu().item()),
+            }
+            with (audit_dir / "nonfinite_loss.jsonl").open("a", encoding="utf-8") as fh:
+                fh.write(json.dumps(failure, allow_nan=True) + "\n")
+            raise FloatingPointError(
+                f"Non-finite S3 total loss at step={it} view={batch['name']!r}; "
+                f"recorded in {audit_dir / 'nonfinite_loss.jsonl'}"
+            )
+
         if mutual_grad_audit_every > 0 and it % mutual_grad_audit_every == 0:
             _write_mutual_grad_diagnostics(
                 writer=writer,
@@ -1187,7 +1593,11 @@ def main():
                 },
             )
 
-        if loss_grad_audit_every > 0 and it % loss_grad_audit_every == 0:
+        loss_grad_audit_step = loss_grad_audit_every > 0 and (
+            it % loss_grad_audit_every == 0
+            or (semantic_geometry_enabled and it == max_iter - 1)
+        )
+        if loss_grad_audit_step:
             with torch.no_grad():
                 p_for_audit = psnr(rgb_pred.clamp(0, 1), rgb_gt)
             audit_rowspec = {
@@ -1202,6 +1612,19 @@ def main():
                 "mutual": (loss_mut_total, float(w_mutual * mutual_weight_scale), (w_mutual * mutual_weight_scale) * loss_mut_total),
                 "structure": (loss_str_total, float(w_structure), w_structure * loss_str_total),
             }
+            if semantic_geometry_enabled:
+                # Only the combined weighted semdepth component enters the gate
+                # denominator.  Smooth/plane detail is written separately below.
+                audit_rowspec["semdepth"] = (
+                    weighted_semdepth,
+                    1.0,
+                    weighted_semdepth,
+                )
+                audit_rowspec["boundary_normal"] = (
+                    loss_boundary_normal,
+                    float(w_boundary_normal if semantic_geometry_active else 0.0),
+                    weighted_boundary_normal,
+                )
             _write_loss_grad_audit(
                 out_dir=out_dir,
                 writer=writer,
@@ -1212,6 +1635,45 @@ def main():
                 total_loss=loss_total,
                 psnr_value=p_for_audit,
                 n_primitives=model.num_points,
+                audit_only_rowspec=(
+                    {
+                        "semdepth_smooth": (
+                            loss_semdepth_smooth,
+                            float(w_semdepth_smooth if semantic_geometry_active else 0.0),
+                            (w_semdepth_smooth if semantic_geometry_active else 0.0)
+                            * loss_semdepth_smooth,
+                        ),
+                        "semdepth_plane": (
+                            loss_semdepth_plane,
+                            float(w_semdepth_plane if semantic_geometry_active else 0.0),
+                            (w_semdepth_plane if semantic_geometry_active else 0.0)
+                            * loss_semdepth_plane,
+                        ),
+                    }
+                    if semantic_geometry_enabled
+                    else None
+                ),
+            )
+
+        semantic_geometry_audit_step = (
+            semantic_geometry_active
+            and semantic_geometry_audit_every > 0
+            and (
+                it % semantic_geometry_audit_every == 0
+                or it == max_iter - 1
+            )
+        )
+        if semantic_geometry_audit_step:
+            _write_semantic_geometry_audit(
+                out_dir=out_dir,
+                it=it,
+                view_name=str(batch["name"]),
+                result=s3_result,
+                weighted_semdepth=weighted_semdepth,
+                weighted_boundary_normal=weighted_boundary_normal,
+                depth_pred=depth_pred,
+                target_buildings=semantic_pi_target_buildings,
+                target_observations=semantic_target_observations,
             )
 
         # backward
@@ -1292,6 +1754,22 @@ def main():
             writer.add_scalar("loss/mvc_normal", float(loss_mvc_normal), it)
             writer.add_scalar("stats/mvc_n_inlier", mvc_n_inlier, it)
             writer.add_scalar("loss/sem", loss_sem.item(), it)
+            if semantic_geometry_enabled:
+                writer.add_scalar("loss/semdepth_smooth", loss_semdepth_smooth.item(), it)
+                writer.add_scalar("loss/semdepth_plane", loss_semdepth_plane.item(), it)
+                writer.add_scalar("loss/semdepth_weighted", weighted_semdepth.item(), it)
+                writer.add_scalar("loss/boundary_normal", loss_boundary_normal.item(), it)
+                writer.add_scalar("loss/boundary_normal_weighted", weighted_boundary_normal.item(), it)
+                writer.add_scalar(
+                    "stats/semdepth_valid_stencils",
+                    int(s3_result.get("smooth_valid_stencil_count", 0)),
+                    it,
+                )
+                writer.add_scalar(
+                    "stats/boundary_normal_valid_pixels",
+                    int(s3_result.get("boundary_valid_pixel_count", 0)),
+                    it,
+                )
             writer.add_scalar("loss/mutual", loss_mut_total.item(), it)
             writer.add_scalar("loss/mutual_vert", loss_mut_vert.item(), it)
             writer.add_scalar("loss/mutual_slope", loss_mut_slope.item(), it)
