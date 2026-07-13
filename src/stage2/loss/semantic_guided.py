@@ -186,7 +186,10 @@ class SemanticRegionCache:
                     f"{path}: region {rid} metadata misses {missing_fields}"
                 )
         frame = RegionFrame(
-            region_ids=torch.from_numpy(region_ids.astype(np.int64, copy=False)),
+            # Producer ids are int32.  Preserving that dtype cuts the eventual
+            # all-view lazy CPU cache roughly in half versus an unnecessary
+            # int64 expansion; comparisons/unique do not require int64 here.
+            region_ids=torch.from_numpy(region_ids.astype(np.int32, copy=False)),
             cutline_mask=torch.from_numpy(cutline_mask.astype(np.bool_, copy=False)),
             metadata=metadata,
         )
@@ -224,7 +227,12 @@ def class_boundary_band(
 ) -> torch.Tensor:
     """Morphological roof/non-roof boundary, independent of instance cuts.
 
-    ``kernel_size=5`` implements the locked 5 px dilation-minus-erosion band.
+    ``kernel_size=5`` implements a *true five-pixel output band*: take the
+    one-pixel roof-side class transition ``M - erode_3(M)`` and dilate it by a
+    5x5 structuring element.  On a straight in-frame boundary this is exactly
+    two non-roof pixels + the roof transition pixel + two roof pixels.  Pooling
+    does not fabricate non-roof pixels outside the image, so an all-roof image
+    (or a roof merely touching the image border) has no artificial border band.
     """
 
     if semantic.ndim != 2:
@@ -232,10 +240,16 @@ def class_boundary_band(
     if kernel_size <= 0 or kernel_size % 2 == 0:
         raise ValueError("kernel_size must be a positive odd integer")
     roof = (semantic == int(roof_class)).to(torch.float32)[None, None]
+    # Max-pool pads with -inf.  Therefore an image exterior does not count as
+    # a non-roof neighbour, which avoids a spurious frame-edge normal loss.
+    nonroof = 1.0 - roof
+    near_nonroof = F.max_pool2d(nonroof, 3, stride=1, padding=1) > 0.5
+    inner_transition = (roof > 0.5) & near_nonroof
     pad = kernel_size // 2
-    dilated = F.max_pool2d(roof, kernel_size, stride=1, padding=pad)
-    eroded = -F.max_pool2d(-roof, kernel_size, stride=1, padding=pad)
-    return (dilated[0, 0] - eroded[0, 0]) > 0.5
+    band = F.max_pool2d(
+        inner_transition.to(torch.float32), kernel_size, stride=1, padding=pad
+    )
+    return band[0, 0] > 0.5
 
 
 def masked_laplacian_smoothness(

@@ -490,7 +490,7 @@ def _write_semantic_geometry_audit(
     depth_pred: torch.Tensor,
     target_buildings: set[str],
     target_observations: Dict[str, int],
-) -> None:
+) -> set[str]:
     """Write audit-only S3 rows without double-counting the gate denominator.
 
     The generic ``loss_grad_norms.csv`` owns gate shares and contains only the
@@ -517,8 +517,11 @@ def _write_semantic_geometry_audit(
         "plane_fitted_iteration", "plane_loss", "semdepth_depth_grad_norm",
         "semdepth_depth_grad_norm_share", "semdepth_depth_grad_nonzero_pixel_count",
         "semdepth_depth_grad_nonzero_fraction", "target_observation_count",
-        "raycast_misassignment_rate", "raycast_misassignment_numerator",
-        "raycast_misassignment_denominator",
+        "view_region_count", "plane_active_region_count", "plane_skipped_region_count",
+        "raycast_assignment_primary_provenance", "raycast_misassignment_rate",
+        "raycast_misassignment_numerator", "raycast_misassignment_denominator",
+        "raycast_official_provenance", "raycast_official_misassignment_rate",
+        "raycast_official_misassignment_numerator", "raycast_official_misassignment_denominator",
     ]
 
     grad = None
@@ -539,15 +542,30 @@ def _write_semantic_geometry_audit(
     metadata = result.get("metadata") or {}
     if not isinstance(metadata, dict):
         metadata = {}
-    check = metadata.get("raycast_assignment_check", metadata)
-    if not isinstance(check, dict):
-        check = {}
+    checks = metadata.get("raycast_assignment_check", {})
+    if not isinstance(checks, dict):
+        checks = {}
+    check_primary = checks.get("primary_actual_label_source", {})
+    check_official = checks.get("secondary_official_v2", {})
+    if not isinstance(check_primary, dict):
+        check_primary = {}
+    if not isinstance(check_official, dict):
+        check_official = {}
 
     region_rows = list(result.get("region_rows") or [])
+    view_region_count = len(region_rows)
+    plane_active_region_count = sum(
+        row.get("plane_fitted_iteration", "") not in {"", None}
+        for row in region_rows
+    )
+    plane_skipped_region_count = sum(
+        int(row.get("plane_skipped_lt64", 0) or 0) for row in region_rows
+    )
     if not region_rows:
         # Keep a view-level row so zero-signal/zero-region events are observable.
         region_rows = [{"region_id": "", "building_id": ""}]
     new_file = not path.exists()
+    positive_targets: set[str] = set()
     with path.open("a", newline="", encoding="utf-8") as fh:
         csv_writer = csv.DictWriter(fh, fieldnames=fields, lineterminator="\n")
         if new_file:
@@ -572,6 +590,8 @@ def _write_semantic_geometry_audit(
                 if region_count:
                     region_grad_norm = float(values.detach().norm().cpu().item())
                     nonzero_count = int((values.detach() != 0).sum().cpu().item())
+            if target and region_grad_norm > 0.0 and nonzero_count > 0:
+                positive_targets.add(bid)
             csv_writer.writerow(
                 {
                     "step": int(it),
@@ -604,9 +624,17 @@ def _write_semantic_geometry_audit(
                         nonzero_count / region_count if region_count else 0.0
                     ),
                     "target_observation_count": target_observations.get(bid, 0),
-                    "raycast_misassignment_rate": check.get("misassignment_rate", ""),
-                    "raycast_misassignment_numerator": check.get("misassigned_pixels", ""),
-                    "raycast_misassignment_denominator": check.get("validated_pixels", ""),
+                    "view_region_count": view_region_count,
+                    "plane_active_region_count": plane_active_region_count,
+                    "plane_skipped_region_count": plane_skipped_region_count,
+                    "raycast_assignment_primary_provenance": check_primary.get("provenance", ""),
+                    "raycast_misassignment_rate": check_primary.get("misassignment_rate", ""),
+                    "raycast_misassignment_numerator": check_primary.get("misassigned_building_pixels", ""),
+                    "raycast_misassignment_denominator": check_primary.get("comparable_true_roof_pixels", ""),
+                    "raycast_official_provenance": check_official.get("provenance", ""),
+                    "raycast_official_misassignment_rate": check_official.get("misassignment_rate", ""),
+                    "raycast_official_misassignment_numerator": check_official.get("misassigned_building_pixels", ""),
+                    "raycast_official_misassignment_denominator": check_official.get("comparable_true_roof_pixels", ""),
                     **{
                         key: row.get(key, "")
                         for key in fields
@@ -633,6 +661,8 @@ def _write_semantic_geometry_audit(
                     "active_view_observation_count": target_observations.get(bid, 0),
                 }
             )
+
+    return positive_targets
 
 
 def _log_disabled_mutual_terms(
@@ -918,6 +948,9 @@ def main():
             ["4907199", "8568391", "8568392"],
         )
     }
+    semantic_pi_event_until_positive = bool(
+        cfg.get("semantic_pi_event_until_positive", False)
+    )
     semantic_depth_enabled = w_semdepth_smooth > 0 or w_semdepth_plane > 0
     boundary_normal_enabled = w_boundary_normal > 0
     semantic_geometry_enabled = semantic_depth_enabled or boundary_normal_enabled
@@ -928,6 +961,7 @@ def main():
     semantic_region_cache = None
     semantic_geometry = None
     semantic_target_observations = {bid: 0 for bid in semantic_pi_target_buildings}
+    semantic_pi_audited_targets: set[str] = set()
     if semantic_geometry_enabled:
         if not cfg.get("load_semantic", False):
             raise RuntimeError("S3 semantic geometry requires load_semantic=true")
@@ -1204,11 +1238,12 @@ def main():
                 "semantic_plane_fit": "free-orientation weighted-PCA IRLS/Huber; n,d detached between refits",
                 "semantic_boundary_band_kernel_px": int(cfg.get("semantic_boundary_band_px", 5)),
                 "semantic_boundary_band_effective_radius_px": int(cfg.get("semantic_boundary_band_px", 5)) // 2,
-                "semantic_boundary_band_definition": "class roof mask dilation-minus-erosion; instance cutline excluded from L_nb address",
+                "semantic_boundary_band_definition": "true-width class band = dilate_5(M - erode_3(M)); instance cutline excluded",
                 "semantic_smooth_aggregate": "sum of per-region Huber means",
                 "semantic_plane_aggregate": "global pixel mean of residuals to per-region robust planes",
                 "semantic_gate_share_denominator": "baseline effective components + combined weighted semdepth + weighted boundary_normal; smooth/plane detail audit-only",
                 "semantic_pi_target_buildings": sorted(semantic_pi_target_buildings),
+                "semantic_pi_event_until_positive": semantic_pi_event_until_positive,
                 "semantic_geometry_audit_every": semantic_geometry_audit_every,
                 "semantic_delta_keys": [
                     "w_semdepth_smooth",
@@ -1403,6 +1438,7 @@ def main():
             "boundary_valid_pixel_count": 0,
         }
         semantic_geometry_active = semantic_geometry_enabled and it >= semantic_geometry_warmup
+        semantic_pi_event_targets: set[str] = set()
         if semantic_geometry_active:
             if sem_gt is None:
                 raise RuntimeError(f"S3 semantic label missing for active view {batch['name']!r}")
@@ -1450,6 +1486,12 @@ def main():
             }
             for bid in seen_targets:
                 semantic_target_observations[bid] += 1
+            # A periodic audit alone can miss a rare target merely because its
+            # view was sampled between audit ticks.  Force the first observed
+            # event for every P-I target into the audit without changing the
+            # training-view sampler or optimizer path.
+            if semantic_pi_event_until_positive:
+                semantic_pi_event_targets = seen_targets - semantic_pi_audited_targets
 
         # L_mutual (intra-primitive, operates directly on primitives, no rendering)
         loss_mut_total = torch.tensor(0.0, device=device)
@@ -1655,16 +1697,15 @@ def main():
                 ),
             )
 
-        semantic_geometry_audit_step = (
-            semantic_geometry_active
-            and semantic_geometry_audit_every > 0
-            and (
-                it % semantic_geometry_audit_every == 0
-                or it == max_iter - 1
-            )
+        semantic_geometry_periodic_audit = (
+            semantic_geometry_audit_every > 0
+            and (it % semantic_geometry_audit_every == 0 or it == max_iter - 1)
+        )
+        semantic_geometry_audit_step = semantic_geometry_active and (
+            semantic_geometry_periodic_audit or bool(semantic_pi_event_targets)
         )
         if semantic_geometry_audit_step:
-            _write_semantic_geometry_audit(
+            positive_targets = _write_semantic_geometry_audit(
                 out_dir=out_dir,
                 it=it,
                 view_name=str(batch["name"]),
@@ -1675,6 +1716,8 @@ def main():
                 target_buildings=semantic_pi_target_buildings,
                 target_observations=semantic_target_observations,
             )
+            if semantic_pi_event_until_positive:
+                semantic_pi_audited_targets.update(positive_targets)
 
         # backward
         for opt in optimizers.values():
