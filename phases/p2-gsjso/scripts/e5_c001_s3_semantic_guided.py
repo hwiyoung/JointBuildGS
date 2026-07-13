@@ -28,15 +28,18 @@ verdict.
 from __future__ import annotations
 
 import argparse
+import contextlib
 import csv
 import hashlib
 import json
+import io
 import math
 import os
 import re
 import shlex
 import subprocess
 import sys
+import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable
@@ -66,6 +69,12 @@ DATA_ROOT = REPO / "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20"
 CSV_INVENTORY = REPO / "docs/e5_c001_s3_inventory.csv"
 CSV_GATE_AUDIT = REPO / "docs/e5_c001_s3_loss_gate_audit.csv"
 CSV_SEED_INVENTORY = REPO / "docs/e5_c001_s3_seed_inventory.csv"
+CACHE_INVENTORY = REPO / "docs/e5_c001_s3_semantic_region_inventory.csv"
+CACHE_MANIFEST = (
+    REPO
+    / "phases/p2-gsjso/runs/20260713_e5_c001_s3_track0/semantic_region_manifest.json"
+)
+CACHE_PRODUCER = REPO / "phases/p2-gsjso/scripts/e5_c001_s3_semantic_regions.py"
 MANIFEST = RUN_DIR / "config_gate_manifest.json"
 VERSIONS = RUN_DIR / "versions.txt"
 
@@ -130,6 +139,13 @@ SEMANTIC_DELTA = {
     "semantic_pi_event_until_positive": False,
 }
 SEMANTIC_DELTA_KEYS = tuple(SEMANTIC_DELTA)
+S3_METADATA_KEYS = {
+    "s3_gate_attempt",
+    "s3_semdepth_scale",
+    "s3_nb_scale",
+    "s3_claim_scope",
+    "s3_no_monocular_depth",
+}
 GATE_CONTROL_KEYS = ("max_iter",)
 AUDIT_CONTROL_KEYS = ("loss_grad_audit_every", "semantic_geometry_audit_every")
 # Per dispatch: these are the only path/routing changes and are not scientific
@@ -154,6 +170,27 @@ REQUIRED_BASE_VALUES = {
     "sem_detach_geometry": False,
     "ckpt_every": 5000,
 }
+INACTIVE_ZERO_SOURCE_BUILDINGS = ["DEBY_LOD2_4908179"]
+SEED_INVENTORY_COUNTS = {
+    "DEBY_LOD2_4907199": (2, 30),
+    "DEBY_LOD2_8568391": (0, 9),
+    "DEBY_LOD2_8568392": (0, 29),
+    "DEBY_LOD2_4907202": (70, 955),
+    "DEBY_LOD2_4908168": (2, 91),
+    "DEBY_LOD2_4908178": (24, 395),
+}
+CACHE_SCHEMA = "jointbuildgs.s3a.semantic_regions.v2"
+CACHE_GLOBAL_INPUTS = [
+    REPO / "results/tum_transfer/analysis/footprints_aoi.geojson",
+    REPO / "configs/projection_datum.json",
+    DATA_ROOT / "sparse/0/cameras.bin",
+    DATA_ROOT / "sparse/0/images.bin",
+    DATA_ROOT / "sparse/0/points3D.bin",
+    REPO / "results/tum_transfer/e5_pilot/C001/seeds/seed_dense_C001_buf20.ply",
+    BASE_CONFIG,
+    REPO / "phases/p0-audit/data/raw/lod2/690_5334.gml",
+    REPO / "phases/p0-audit/data/raw/lod2/690_5336.gml",
+]
 
 
 def rel(path: Path | str) -> str:
@@ -225,7 +262,12 @@ def committed_unchanged(path: Path) -> dict[str, Any]:
 
 def docker_image_id() -> str:
     supplied = os.environ.get("S3_DOCKER_IMAGE_ID", "").strip()
-    return supplied or capture(["docker", "image", "inspect", "--format", "{{.Id}}", DEV_IMAGE])
+    observed = capture(["docker", "image", "inspect", "--format", "{{.Id}}", DEV_IMAGE])
+    if supplied and supplied != observed:
+        raise RuntimeError(
+            f"S3_DOCKER_IMAGE_ID override {supplied!r} does not match docker inspect {observed!r}"
+        )
+    return observed
 
 
 def read_csv(path: Path) -> list[dict[str, str]]:
@@ -291,6 +333,21 @@ def invariant_payload(config: dict[str, Any], base: dict[str, Any]) -> dict[str,
 
 
 def verify_exact_base(config: dict[str, Any], base: dict[str, Any]) -> tuple[str, str, int]:
+    allowed_keys = (
+        set(base)
+        | set(SEMANTIC_DELTA_KEYS)
+        | S3_METADATA_KEYS
+        | set(GATE_CONTROL_KEYS)
+        | set(AUDIT_CONTROL_KEYS)
+        | set(RECORDING_ONLY_KEYS)
+    )
+    missing_base = sorted(set(base) - set(config))
+    unexpected = sorted(set(config) - allowed_keys)
+    if missing_base or unexpected:
+        raise RuntimeError(
+            "derived config key-set violates the exact Arm 1-prime + S3 delta contract: "
+            f"missing_base={missing_base}, unexpected={unexpected}"
+        )
     base_payload = invariant_payload(base, base)
     derived_payload = invariant_payload(config, base)
     base_fingerprint = sha256_json(base_payload)
@@ -310,7 +367,7 @@ def validate_s3_config(config: dict[str, Any], run_name: str) -> None:
         expected_max_iter = GATE_MAX_ITER
         expected_generic_every = GATE_GENERIC_AUDIT_EVERY
         expected_semantic_every = GATE_SEMANTIC_AUDIT_EVERY
-    elif run_name.startswith(f"{GATE_RUN}_"):
+    elif run_name == f"{GATE_RUN}_half_once":
         expected_attempt = 2
         expected_max_iter = GATE_MAX_ITER
         expected_generic_every = GATE_GENERIC_AUDIT_EVERY
@@ -331,8 +388,8 @@ def validate_s3_config(config: dict[str, Any], run_name: str) -> None:
     nb_scale = float(config.get("s3_nb_scale", float("nan")))
     if semdepth_scale not in {0.5, 1.0} or nb_scale not in {0.5, 1.0}:
         raise RuntimeError(f"{run_name}: S3 scales must be exactly 0.5 or 1.0")
-    if attempt in {0, 1} and (semdepth_scale != 1.0 or nb_scale != 1.0):
-        raise RuntimeError(f"{run_name}: initial/full cells must keep both S3 scales at 1.0")
+    if attempt == 1 and (semdepth_scale != 1.0 or nb_scale != 1.0):
+        raise RuntimeError(f"{run_name}: initial gate must keep both S3 scales at 1.0")
     if attempt == 2 and semdepth_scale == 1.0 and nb_scale == 1.0:
         raise RuntimeError(f"{run_name}: second gate attempt must halve an offending loss")
 
@@ -364,12 +421,93 @@ def validate_s3_config(config: dict[str, Any], run_name: str) -> None:
         )
 
 
-def expected_cache_stems() -> list[str]:
+def expected_image_paths() -> list[Path]:
     image_dir = DATA_ROOT / "images"
     images = sorted(path for path in image_dir.iterdir() if path.suffix.lower() in {".jpg", ".jpeg", ".png"})
     if len(images) != 428:
         raise RuntimeError(f"locked C001 view count is 428, found {len(images)} in {rel(image_dir)}")
-    return [path.stem for path in images]
+    return images
+
+
+def expected_cache_stems() -> list[str]:
+    return [path.stem for path in expected_image_paths()]
+
+
+def expected_cache_provenance() -> dict[str, Any]:
+    """Derive the immutable cache-input contract from the current locked inputs."""
+
+    base = locked_base()
+    building_ids = list(base.get("seed_log_buildings") or [])
+    if len(building_ids) != 18 or len(set(building_ids)) != 18:
+        raise RuntimeError(
+            "Arm 1-prime cache candidate list must contain exactly 18 unique buildings"
+        )
+    missing_inputs = [rel(path) for path in CACHE_GLOBAL_INPUTS if not path.is_file()]
+    if missing_inputs:
+        raise FileNotFoundError(f"cache provenance inputs missing: {missing_inputs}")
+    list_hash = hashlib.sha256(
+        json.dumps(building_ids, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
+    return {
+        "config_order": building_ids,
+        "assignment_order": sorted(building_ids),
+        "list_sha256": list_hash,
+        "global_hashes": {rel(path): sha256_file(path) for path in CACHE_GLOBAL_INPUTS},
+    }
+
+
+def cache_inventory_contract(*, require_complete: bool) -> dict[str, Any]:
+    """Validate the producer inventory and return its sorted cache fingerprint."""
+
+    rows = read_csv(CACHE_INVENTORY)
+    if not rows:
+        if require_complete:
+            raise RuntimeError(f"missing canonical cache inventory: {rel(CACHE_INVENTORY)}")
+        return {"rows": {}, "aggregate_sha256": "", "inventory_sha256": ""}
+    expected = expected_cache_stems()
+    by_stem: dict[str, dict[str, str]] = {}
+    for row in rows:
+        stem = row.get("view_stem", "")
+        if not stem or stem in by_stem:
+            raise RuntimeError(f"cache inventory has empty/duplicate view_stem: {stem!r}")
+        by_stem[stem] = row
+    missing = sorted(set(expected) - set(by_stem))
+    extra = sorted(set(by_stem) - set(expected))
+    if require_complete and (missing or extra or len(rows) != 428):
+        raise RuntimeError(
+            f"cache inventory must be exact 428 views: rows={len(rows)}, "
+            f"missing={missing[:10]}, extra={extra[:10]}"
+        )
+    usable = [stem for stem in expected if stem in by_stem]
+    pairs: list[list[str]] = []
+    for stem in usable:
+        row = by_stem[stem]
+        cache_path = SEMANTIC_REGION_CACHE / f"{stem}.npz"
+        semantic_path = DATA_ROOT / "semantic" / f"{stem}.png"
+        expected_fields = {
+            "cache_path": rel(cache_path),
+            "semantic_mask_path": rel(semantic_path),
+            "status": "ok",
+        }
+        mismatches = {
+            key: {"actual": row.get(key), "expected": value}
+            for key, value in expected_fields.items()
+            if row.get(key) != value
+        }
+        digest = row.get("cache_sha256", "")
+        semantic_digest = row.get("semantic_mask_sha256", "")
+        if mismatches or not re.fullmatch(r"[0-9a-f]{64}", digest) or not re.fullmatch(
+            r"[0-9a-f]{64}", semantic_digest
+        ):
+            raise RuntimeError(
+                f"cache inventory row {stem} violates path/status/hash contract: {mismatches}"
+            )
+        pairs.append([stem, digest])
+    return {
+        "rows": by_stem,
+        "aggregate_sha256": sha256_json(pairs),
+        "inventory_sha256": sha256_file(CACHE_INVENTORY),
+    }
 
 
 def cache_status() -> dict[str, Any]:
@@ -395,6 +533,9 @@ def cache_status() -> dict[str, Any]:
 def loader_cache_preflight(limit: int | None = None) -> dict[str, Any]:
     """Load cache files through the training loader and enforce its metadata contract."""
 
+    import numpy as np
+    from PIL import Image
+
     from src.stage2.loss.semantic_guided import SemanticRegionCache
 
     status = cache_status()
@@ -413,13 +554,28 @@ def loader_cache_preflight(limit: int | None = None) -> dict[str, Any]:
             raise RuntimeError(f"loader preflight requested {limit} files, only {len(present)} exist")
         selected = present[:limit]
 
+    inventory_contract = cache_inventory_contract(require_complete=limit is None)
+    inventory_rows = inventory_contract["rows"]
+    image_by_stem = {path.stem: path for path in expected_image_paths()}
     cache = SemanticRegionCache(SEMANTIC_REGION_CACHE)
+    provenance = expected_cache_provenance()
     required_top = {
+        "schema",
         "regions",
         "source_component_min_pixels",
         "connectivity",
         "cutline_half_width_px",
         "raycast_assignment_check",
+        "projection_height_policy",
+        "projection_height_candidate_inventory_c00118",
+        "candidate_building_source",
+        "candidate_building_ids_config_order",
+        "candidate_building_ids_assignment_order",
+        "candidate_building_list_sha256",
+        "candidate_buildings_inactive_for_loss_address",
+        "raycast_building_id_is_loss_input",
+        "input_hashes",
+        "l_nb_boundary_source",
     }
     required_region = {
         "building_id",
@@ -431,24 +587,158 @@ def loader_cache_preflight(limit: int | None = None) -> dict[str, Any]:
         "primary_actual_label_source",
         "secondary_official_v2",
     }
-    required_raycast_fields = {
-        "comparable_true_roof_pixels",
-        "misassigned_building_pixels",
-        "misassignment_rate",
+    required_assignment_count_fields = {
+        "eligible_ge256_true_roof",
+        "correct",
+        "wrong",
+        "unassigned_no_owner",
+        "cutline_excluded",
+        "inactive_veto_excluded",
+        "assigned",
     }
+
+    def validate_assignment_partition(
+        stem: str, scope_name: str, label: str, counts: dict[str, Any]
+    ) -> None:
+        missing_counts = sorted(required_assignment_count_fields - set(counts))
+        if missing_counts:
+            raise RuntimeError(
+                f"{stem}.npz {scope_name}.{label} missing assignment counts: {missing_counts}"
+            )
+        parsed: dict[str, int] = {}
+        for key in required_assignment_count_fields:
+            value = finite_number(counts[key])
+            if value is None or value < 0 or not float(value).is_integer():
+                raise RuntimeError(
+                    f"{stem}.npz {scope_name}.{label}.{key} is not a nonnegative integer"
+                )
+            parsed[key] = int(value)
+        if parsed["eligible_ge256_true_roof"] != (
+            parsed["correct"]
+            + parsed["wrong"]
+            + parsed["unassigned_no_owner"]
+            + parsed["cutline_excluded"]
+            + parsed["inactive_veto_excluded"]
+        ):
+            raise RuntimeError(
+                f"{stem}.npz {scope_name}.{label} raycast partition is inconsistent"
+            )
+        if parsed["assigned"] != parsed["correct"] + parsed["wrong"]:
+            raise RuntimeError(
+                f"{stem}.npz {scope_name}.{label} assigned count is inconsistent"
+            )
+
     region_total = 0
+    validated_cache_pairs: list[list[str]] = []
     for stem in selected:
+        cache_path = SEMANTIC_REGION_CACHE / f"{stem}.npz"
+        with np.load(cache_path, allow_pickle=False) as raw:
+            required_arrays = {"region_ids", "cutline_mask", "metadata_json"}
+            missing_arrays = sorted(required_arrays - set(raw.files))
+            if missing_arrays:
+                raise RuntimeError(f"{stem}.npz missing raw arrays: {missing_arrays}")
+            raw_region_ids = raw["region_ids"]
+            raw_cutline = raw["cutline_mask"]
+            if raw_region_ids.dtype != np.dtype(np.int32):
+                raise RuntimeError(f"{stem}.npz raw region_ids dtype must be int32")
+            if raw_cutline.dtype != np.dtype(np.bool_):
+                raise RuntimeError(f"{stem}.npz raw cutline_mask dtype must be bool")
+            if raw_region_ids.ndim != 2 or raw_cutline.shape != raw_region_ids.shape:
+                raise RuntimeError(f"{stem}.npz raw arrays must share an HxW shape")
+            raw_shape = [int(raw_region_ids.shape[0]), int(raw_region_ids.shape[1])]
+        image_path = image_by_stem[stem]
+        with Image.open(image_path) as image:
+            image_width, image_height = image.size
+        expected_shape = [int(image_height), int(image_width)]
+        if raw_shape != expected_shape:
+            raise RuntimeError(
+                f"{stem}.npz raw shape {raw_shape} does not match current image {expected_shape}"
+            )
+        cache_digest = sha256_file(cache_path)
+        semantic_path = DATA_ROOT / "semantic" / f"{stem}.png"
+        semantic_digest = sha256_file(semantic_path)
+        inventory_row = inventory_rows.get(stem)
+        if inventory_row is not None:
+            expected_inventory = {
+                "image_name": image_path.name,
+                "height_px": str(image_height),
+                "width_px": str(image_width),
+                "cache_sha256": cache_digest,
+                "semantic_mask_sha256": semantic_digest,
+            }
+            mismatches = {
+                key: {"actual": inventory_row.get(key), "expected": value}
+                for key, value in expected_inventory.items()
+                if inventory_row.get(key) != value
+            }
+            if mismatches:
+                raise RuntimeError(f"{stem}.npz differs from canonical cache inventory: {mismatches}")
+        validated_cache_pairs.append([stem, cache_digest])
         frame = cache._load_cpu(stem)  # task-scoped preflight of the production loader.
         metadata = frame.metadata
         missing_top = sorted(required_top - set(metadata))
         if missing_top:
             raise RuntimeError(f"{stem}.npz metadata missing top-level keys: {missing_top}")
+        if metadata["schema"] != CACHE_SCHEMA:
+            raise RuntimeError(f"{stem}.npz cache schema is not {CACHE_SCHEMA}")
+        if metadata.get("image_stem") != stem or metadata.get("image_name") != image_path.name:
+            raise RuntimeError(f"{stem}.npz image identity metadata mismatch")
+        if metadata.get("shape_hw") != expected_shape:
+            raise RuntimeError(f"{stem}.npz shape_hw metadata mismatch")
         if int(metadata["source_component_min_pixels"]) != 256:
             raise RuntimeError(f"{stem}.npz source_component_min_pixels is not 256")
         if int(metadata["connectivity"]) != 8:
             raise RuntimeError(f"{stem}.npz connectivity is not 8")
         if int(metadata["cutline_half_width_px"]) != 7:
             raise RuntimeError(f"{stem}.npz cutline_half_width_px is not 7")
+        if metadata["candidate_building_source"] != rel(BASE_CONFIG):
+            raise RuntimeError(f"{stem}.npz candidate building source is not the locked Arm 1-prime config")
+        if metadata["candidate_building_ids_config_order"] != provenance["config_order"]:
+            raise RuntimeError(f"{stem}.npz candidate config-order list is not exact C00118")
+        if metadata["candidate_building_ids_assignment_order"] != provenance["assignment_order"]:
+            raise RuntimeError(f"{stem}.npz candidate assignment-order list is not exact C00118")
+        if metadata["candidate_building_list_sha256"] != provenance["list_sha256"]:
+            raise RuntimeError(f"{stem}.npz candidate building list hash mismatch")
+        if metadata["candidate_buildings_inactive_for_loss_address"] != INACTIVE_ZERO_SOURCE_BUILDINGS:
+            raise RuntimeError(f"{stem}.npz zero-source inactive building lock mismatch")
+        if metadata["raycast_building_id_is_loss_input"] is not False:
+            raise RuntimeError(f"{stem}.npz raycast building id must be audit-only")
+        if metadata["l_nb_boundary_source"] != "class boundary only; cutline_mask is forbidden for L_nb":
+            raise RuntimeError(f"{stem}.npz L_nb source improperly includes instance cutlines")
+        height_policy = metadata["projection_height_policy"]
+        if not isinstance(height_policy, dict) or height_policy.get("uses_lod2_height") is not False:
+            raise RuntimeError(f"{stem}.npz projection height must explicitly forbid LoD2 height")
+        inventory = metadata["projection_height_candidate_inventory_c00118"]
+        if not isinstance(inventory, dict) or sorted(inventory) != provenance["assignment_order"]:
+            raise RuntimeError(f"{stem}.npz projection-height inventory is not exact C00118")
+        derived_inactive: list[str] = []
+        for building_id, row in inventory.items():
+            if not isinstance(row, dict):
+                raise RuntimeError(f"{stem}.npz projection-height row for {building_id} is not a mapping")
+            count_values: dict[str, int] = {}
+            for key in ("source_count", "sparse_points3d_count", "dense_init_point_count"):
+                value = finite_number(row.get(key))
+                if value is None or value < 0 or not float(value).is_integer():
+                    raise RuntimeError(f"{stem}.npz invalid {key} for {building_id}")
+                count_values[key] = int(value)
+            count = count_values["source_count"]
+            if count != count_values["sparse_points3d_count"] + count_values["dense_init_point_count"]:
+                raise RuntimeError(f"{stem}.npz source-count decomposition mismatch for {building_id}")
+            active = row.get("active_for_loss_address")
+            if row.get("fallback_used") is not False or active is not (count > 0):
+                raise RuntimeError(f"{stem}.npz invalid no-fallback source policy for {building_id}")
+            if count == 0 and row.get("estimated_z_local_m") is not None:
+                raise RuntimeError(f"{stem}.npz inactive {building_id} has an active projection height")
+            if count == 0:
+                derived_inactive.append(building_id)
+        if derived_inactive != metadata["candidate_buildings_inactive_for_loss_address"]:
+            raise RuntimeError(f"{stem}.npz inactive building inventory/top-level mismatch")
+        hashes = metadata["input_hashes"]
+        if not isinstance(hashes, dict) or hashes.get("global") != provenance["global_hashes"]:
+            raise RuntimeError(f"{stem}.npz global input hashes do not match current locked inputs")
+        expected_semantic_hash = {rel(semantic_path): semantic_digest}
+        if hashes.get("semantic_mask") != expected_semantic_hash:
+            raise RuntimeError(f"{stem}.npz semantic-mask hash does not match current input")
         regions = metadata["regions"]
         if not isinstance(regions, dict):
             raise RuntimeError(f"{stem}.npz metadata regions must be a mapping")
@@ -484,56 +774,61 @@ def loader_cache_preflight(limit: int | None = None) -> dict[str, Any]:
                 raise RuntimeError(
                     f"{stem}.npz raycast_assignment_check.{scope_name} must be a mapping"
                 )
-            missing_fields = sorted(required_raycast_fields - set(scope))
-            if missing_fields:
-                raise RuntimeError(
-                    f"{stem}.npz raycast_assignment_check.{scope_name} missing canonical "
-                    f"fields: {missing_fields}"
-                )
-            numerator = finite_number(scope["misassigned_building_pixels"])
-            denominator = finite_number(scope["comparable_true_roof_pixels"])
-            if (
-                numerator is None
-                or denominator is None
-                or numerator < 0
-                or denominator < 0
-                or numerator > denominator
-            ):
-                raise RuntimeError(
-                    f"{stem}.npz invalid raycast assignment audit values for {scope_name}"
-                )
-            rate = finite_number(scope["misassignment_rate"])
-            if denominator == 0:
-                if numerator != 0 or scope["misassignment_rate"] is not None:
+            if scope.get("raycast_building_id_is_loss_input") is not False:
+                raise RuntimeError(f"{stem}.npz {scope_name} raycast IDs are not audit-only")
+            totals = scope.get("totals")
+            by_building = scope.get("by_building")
+            if not isinstance(totals, dict) or not isinstance(by_building, dict):
+                raise RuntimeError(f"{stem}.npz {scope_name} totals/by_building must be mappings")
+            if sorted(by_building) != provenance["assignment_order"]:
+                raise RuntimeError(f"{stem}.npz {scope_name} by-building audit is not exact C00118")
+            validate_assignment_partition(stem, scope_name, "totals", totals)
+            for building_id, counts in by_building.items():
+                if not isinstance(counts, dict):
+                    raise RuntimeError(f"{stem}.npz {scope_name}.{building_id} is not a mapping")
+                validate_assignment_partition(stem, scope_name, building_id, counts)
+            for key in required_assignment_count_fields:
+                if int(totals[key]) != sum(int(counts[key]) for counts in by_building.values()):
                     raise RuntimeError(
-                        f"{stem}.npz zero-denominator raycast assignment values are "
-                        f"inconsistent for {scope_name}"
+                        f"{stem}.npz {scope_name} totals/by-building sum mismatch for {key}"
                     )
-            elif rate is None or not 0.0 <= rate <= 1.0 or not math.isclose(
-                rate,
-                numerator / denominator,
-                rel_tol=1e-9,
-                abs_tol=1e-12,
+            expected_rate = (
+                float(totals["wrong"]) / float(totals["assigned"])
+                if int(totals["assigned"])
+                else None
+            )
+            actual_rate = totals.get("conditional_misassignment_rate")
+            if expected_rate is None:
+                if actual_rate is not None:
+                    raise RuntimeError(f"{stem}.npz {scope_name} zero-assigned rate must be null")
+            elif finite_number(actual_rate) is None or not math.isclose(
+                float(actual_rate), expected_rate, rel_tol=1e-9, abs_tol=1e-12
             ):
-                raise RuntimeError(
-                    f"{stem}.npz inconsistent raycast assignment rate for {scope_name}: "
-                    f"rate={rate}, numerator={numerator}, denominator={denominator}"
-                )
+                raise RuntimeError(f"{stem}.npz {scope_name} misassignment rate mismatch")
         region_total += len(regions)
         # The production loader is deliberately lazy and memoizes frames for
         # training.  A 428-view validation should not retain the entire cache
         # (~multi-GiB CPU tensors) merely to prove the contract once.
         cache._cpu_cache.pop(stem, None)
+    cache_aggregate_sha256 = sha256_json(validated_cache_pairs)
+    if limit is None and cache_aggregate_sha256 != inventory_contract["aggregate_sha256"]:
+        raise RuntimeError("validated cache aggregate does not match canonical inventory aggregate")
     return {
         "cache": status,
         "loader": "src.stage2.loss.semantic_guided.SemanticRegionCache",
         "validated_files": len(selected),
         "validated_regions": region_total,
+        "cache_aggregate_sha256": cache_aggregate_sha256,
+        "cache_inventory": rel(CACHE_INVENTORY),
+        "cache_inventory_sha256": inventory_contract["inventory_sha256"],
         "metadata_contract": {
             "top_level": sorted(required_top),
             "per_region": sorted(required_region),
             "raycast_assignment_check_scopes": sorted(required_raycast_scopes),
-            "raycast_assignment_check_fields_per_scope": sorted(required_raycast_fields),
+            "raycast_assignment_count_fields": sorted(required_assignment_count_fields),
+            "cache_schema": CACHE_SCHEMA,
+            "candidate_building_list_sha256": provenance["list_sha256"],
+            "global_input_hashes": provenance["global_hashes"],
         },
         "status": "pass",
     }
@@ -731,6 +1026,7 @@ def write_manifest_and_versions() -> None:
         f"base_config_sha256: {sha256_file(BASE_CONFIG)}",
         f"orchestrator_sha256: {sha256_file(SCRIPT_PATH)}",
         f"train_py_sha256: {sha256_file(REPO / 'src/stage2/train.py')}",
+        f"densification_py_sha256: {sha256_file(REPO / 'src/stage2/densification.py')}",
         f"semantic_loss_py_sha256: {sha256_file(REPO / 'src/stage2/loss/semantic_guided.py') if (REPO / 'src/stage2/loss/semantic_guided.py').exists() else 'missing'}",
         f"inventory: {rel(CSV_INVENTORY)}",
         f"manifest: {rel(MANIFEST)}",
@@ -792,9 +1088,52 @@ def generate_regate_config(args: argparse.Namespace) -> None:
         raise RuntimeError("re-gate scales must each be exactly 0.5 or 1.0")
     if args.semdepth_scale == 1.0 and args.nb_scale == 1.0:
         raise RuntimeError("re-gate must halve at least one offending loss")
-    if not re.fullmatch(r"[a-z0-9][a-z0-9_-]*", args.tag):
-        raise RuntimeError("--tag must match [a-z0-9][a-z0-9_-]*")
+    if args.tag != "half_once":
+        raise RuntimeError("the only permitted second-attempt tag is exactly 'half_once'")
     run_name = f"{GATE_RUN}_{args.tag}"
+    gate_commit = committed_unchanged(CSV_GATE_AUDIT)
+    if not gate_commit["committed_unchanged"]:
+        raise RuntimeError(f"half-once config requires committed attempt-1 audit: {gate_commit}")
+    selection = canonical_gate_selection()
+    initial = selection["by_run"].get(GATE_RUN)
+    if selection["errors"] or initial is None:
+        raise RuntimeError(f"attempt-1 gate provenance is invalid: {selection['errors']}")
+    if initial.get("gate_status") != "fail":
+        raise RuntimeError("half-once is forbidden unless canonical attempt 1 failed")
+    expected_semdepth_scale = 0.5 if initial.get("semdepth_over_threshold") == "true" else 1.0
+    expected_nb_scale = 0.5 if initial.get("boundary_normal_over_threshold") == "true" else 1.0
+    if expected_semdepth_scale == 1.0 and expected_nb_scale == 1.0:
+        raise RuntimeError("attempt 1 has no complete over-threshold loss eligible for halving")
+    if not same_value(args.semdepth_scale, expected_semdepth_scale) or not same_value(
+        args.nb_scale, expected_nb_scale
+    ):
+        raise RuntimeError(
+            "half-once scales must exactly follow attempt-1 sampled maxima: "
+            f"expected semdepth={expected_semdepth_scale}, nb={expected_nb_scale}"
+        )
+    existing_attempt2_rows = [
+        row
+        for row in read_csv(CSV_INVENTORY)
+        if row.get("record_type") == "training_config"
+        and row.get("gate_attempt") == "2"
+    ]
+    attempt2_artifacts = launch_artifact_state(
+        run_name,
+        {
+            "out_dir": ws(CKPT_ROOT / run_name),
+        },
+    )
+    if (
+        run_name_config_path(run_name).exists()
+        or existing_attempt2_rows
+        or selection["by_run"].get(run_name) is not None
+        or attempt2_artifacts["collision"]
+    ):
+        raise RuntimeError(
+            "half-once is globally create-only and attempt-2 material already exists: "
+            f"config={run_name_config_path(run_name).exists()}, inventory_rows={len(existing_attempt2_rows)}, "
+            f"summary={selection['by_run'].get(run_name) is not None}, artifacts={attempt2_artifacts}"
+        )
     base = locked_base()
     path, config, metadata = make_config(
         base=base,
@@ -818,6 +1157,78 @@ def generate_regate_config(args: argparse.Namespace) -> None:
     update_inventory([row], {run_name})
     write_manifest_and_versions()
     print(json.dumps({"config": rel(path), "run_name": run_name, "training_started": False}, ensure_ascii=False))
+
+
+def sync_full_configs_from_gate(_args: argparse.Namespace) -> None:
+    """Carry the mechanically selected gate weights into both full cells."""
+
+    gate_commit = committed_unchanged(CSV_GATE_AUDIT)
+    if not gate_commit["committed_unchanged"]:
+        raise RuntimeError(f"full-config sync requires committed gate evidence: {gate_commit}")
+    selection = canonical_gate_selection()
+    selected = selection["selected"]
+    if selection["errors"] or selected.get("gate_status") != "pass":
+        raise RuntimeError(
+            f"full-config sync requires one valid passing selected gate: errors={selection['errors']}, "
+            f"status={selected.get('gate_status', 'missing')}"
+        )
+    semdepth_scale = finite_number(selected.get("effective_semdepth_scale"))
+    nb_scale = finite_number(selected.get("effective_nb_scale"))
+    if semdepth_scale not in {0.5, 1.0} or nb_scale not in {0.5, 1.0}:
+        raise RuntimeError(f"selected gate scales are invalid: {semdepth_scale}/{nb_scale}")
+    for run_name in FULL_RUNS:
+        config_path = run_name_config_path(run_name)
+        existing = load_yaml(config_path) if config_path.is_file() else {}
+        if existing and same_value(existing.get("s3_semdepth_scale"), semdepth_scale) and same_value(
+            existing.get("s3_nb_scale"), nb_scale
+        ):
+            continue
+        state = launch_artifact_state(
+            run_name,
+            {"out_dir": ws(CKPT_ROOT / run_name)},
+        )
+        if state["collision"]:
+            raise RuntimeError(f"cannot rescale a full config after launch material exists: {state}")
+
+    base = locked_base()
+    cache = cache_status()
+    rows: list[dict[str, Any]] = []
+    for replicate, run_name in zip(("r1", "r2"), FULL_RUNS):
+        path, config, metadata = make_config(
+            base=base,
+            run_name=run_name,
+            max_iter=FULL_MAX_ITER,
+            generic_audit_every=FULL_GENERIC_AUDIT_EVERY,
+            semantic_audit_every=FULL_SEMANTIC_AUDIT_EVERY,
+            semdepth_scale=float(semdepth_scale),
+            nb_scale=float(nb_scale),
+            gate_attempt=0,
+        )
+        rows.append(
+            config_inventory_row(
+                phase="full_selected_gate",
+                replicate=replicate,
+                run_name=run_name,
+                path=path,
+                config=config,
+                metadata=metadata,
+                cache=cache,
+            )
+        )
+    update_inventory(rows, set(FULL_RUNS))
+    write_manifest_and_versions()
+    print(
+        json.dumps(
+            {
+                "selected_gate_run": selected["run_name"],
+                "semdepth_scale": semdepth_scale,
+                "nb_scale": nb_scale,
+                "configs": [rel(run_name_config_path(run_name)) for run_name in FULL_RUNS],
+                "training_started": False,
+            },
+            ensure_ascii=False,
+        )
+    )
 
 
 def docker_base(gpu: str) -> list[str]:
@@ -865,40 +1276,342 @@ def train_command(run_name: str, gpu: str) -> tuple[Path, list[str]]:
     return config, command
 
 
+def recompute_gate_mechanical_summary(run_name: str) -> dict[str, str]:
+    """Re-run the pure CSV gate calculation into an isolated test-only file."""
+
+    config = load_yaml(run_name_config_path(run_name))
+    out_dir = workspace_path_to_host(config["out_dir"])
+    with tempfile.TemporaryDirectory(prefix="jointbuildgs_s3_gate_recheck_") as tmp:
+        output = Path(tmp) / "gate_recheck.csv"
+        args = argparse.Namespace(
+            run_name=run_name,
+            loss_csv=str(out_dir / "audit/loss_grad_norms.csv"),
+            semantic_csv=str(out_dir / "audit/semantic_geometry.csv"),
+            train_log=str(TRAIN_LOG_ROOT / f"{run_name}.log"),
+            output=str(output),
+            test_mode=True,
+        )
+        with contextlib.redirect_stdout(io.StringIO()):
+            gate_audit(args)
+        summaries = [
+            row for row in read_csv(output) if row.get("record_type") == "gate_summary"
+        ]
+    if len(summaries) != 1:
+        raise RuntimeError(f"mechanical gate recheck emitted {len(summaries)} summaries")
+    return summaries[0]
+
+
+def validate_gate_summary_provenance(summary: dict[str, str]) -> list[str]:
+    """Rebind one canonical summary to current gate inputs and raw evidence."""
+
+    errors: list[str] = []
+    run_name = summary.get("run_name", "")
+    attempt_by_run = {GATE_RUN: 1, f"{GATE_RUN}_half_once": 2}
+    if run_name not in attempt_by_run:
+        return [f"unrecognised canonical gate run: {run_name!r}"]
+    try:
+        attempt = int(summary.get("gate_attempt", ""))
+    except ValueError:
+        return [f"{run_name}: non-integer gate_attempt"]
+    if attempt != attempt_by_run[run_name]:
+        errors.append(f"{run_name}: gate_attempt/run-name mismatch")
+    if summary.get("evidence_scope") != "canonical":
+        errors.append(f"{run_name}: evidence_scope is not canonical")
+
+    config_path = run_name_config_path(run_name)
+    if not config_path.is_file():
+        return errors + [f"{run_name}: config is missing"]
+    try:
+        config = load_yaml(config_path)
+        verify_exact_base(config, locked_base())
+        validate_s3_config(config, run_name)
+    except Exception as exc:
+        return errors + [f"{run_name}: config validation failed: {exc}"]
+    out_dir = workspace_path_to_host(config["out_dir"])
+    expected_paths = {
+        "config": config_path,
+        "loss_source_csv": out_dir / "audit/loss_grad_norms.csv",
+        "semantic_source_csv": out_dir / "audit/semantic_geometry.csv",
+        "train_log": TRAIN_LOG_ROOT / f"{run_name}.log",
+        "launch_versions": RUN_DIR / "versions" / f"{run_name}.txt",
+    }
+    for field, path in expected_paths.items():
+        if summary.get(field) != rel(path):
+            errors.append(f"{run_name}: {field} canonical path mismatch")
+        digest_field = f"{field}_sha256"
+        if not path.is_file() or summary.get(digest_field) != sha256_file(path):
+            errors.append(f"{run_name}: {digest_field} missing or stale")
+
+    try:
+        cache_inventory = cache_inventory_contract(require_complete=True)
+    except Exception as exc:
+        return errors + [f"{run_name}: cache inventory validation failed: {exc}"]
+    current_hashes = {
+        "orchestrator_sha256": sha256_file(SCRIPT_PATH),
+        "train_py_sha256": sha256_file(REPO / "src/stage2/train.py"),
+        "densification_py_sha256": sha256_file(REPO / "src/stage2/densification.py"),
+        "semantic_loss_py_sha256": sha256_file(REPO / "src/stage2/loss/semantic_guided.py"),
+        "cache_producer_sha256": sha256_file(CACHE_PRODUCER),
+        "cache_manifest_sha256": sha256_file(CACHE_MANIFEST),
+        "cache_inventory_sha256": cache_inventory["inventory_sha256"],
+        "cache_aggregate_sha256": cache_inventory["aggregate_sha256"],
+    }
+    for field, expected in current_hashes.items():
+        if summary.get(field) != expected:
+            errors.append(f"{run_name}: {field} differs from current locked input")
+    expected_scalars = {
+        "effective_semdepth_scale": float(config["s3_semdepth_scale"]),
+        "effective_nb_scale": float(config["s3_nb_scale"]),
+        "effective_w_semdepth_smooth": float(config["w_semdepth_smooth"]),
+        "effective_w_semdepth_plane": float(config["w_semdepth_plane"]),
+        "effective_w_boundary_normal": float(config["w_boundary_normal"]),
+    }
+    for field, expected in expected_scalars.items():
+        if not same_value(summary.get(field), expected):
+            errors.append(f"{run_name}: {field} does not match its config")
+    preflight_path = REPO / summary.get("cache_preflight_log", "")
+    if (
+        not preflight_path.is_file()
+        or summary.get("cache_preflight_log_sha256") != sha256_file(preflight_path)
+    ):
+        errors.append(f"{run_name}: cache preflight evidence is missing or stale")
+    try:
+        recomputed = recompute_gate_mechanical_summary(run_name)
+        mechanical_fields = {
+            "active_start",
+            "active_end",
+            "active_update_count",
+            "generic_audit_every",
+            "generic_expected_step_count",
+            "generic_observed_step_count",
+            "semantic_audit_every",
+            "semantic_expected_step_count",
+            "semantic_observed_step_count",
+            "total_loss_finite_status",
+            "train_return_code",
+            "nonfinite_loss_records",
+            "semdepth_grad_share_p50",
+            "semdepth_grad_share_p95",
+            "semdepth_grad_share_max",
+            "semdepth_grad_share_threshold",
+            "semdepth_audit_rows_complete",
+            "semdepth_status",
+            "boundary_normal_grad_share_p50",
+            "boundary_normal_grad_share_p95",
+            "boundary_normal_grad_share_max",
+            "boundary_normal_grad_share_threshold",
+            "boundary_normal_audit_rows_complete",
+            "boundary_normal_status",
+            "smooth_grad_share_p50_audit_only",
+            "smooth_grad_share_max_audit_only",
+            "smooth_audit_rows_complete",
+            "plane_grad_share_p50_audit_only",
+            "plane_grad_share_max_audit_only",
+            "plane_audit_rows_complete",
+            "smooth_plane_detail_status",
+            "pi_all_targets_status",
+            "gate_status",
+            "gate_reasons",
+            "gate_attempt",
+            "effective_semdepth_scale",
+            "effective_nb_scale",
+            "effective_w_semdepth_smooth",
+            "effective_w_semdepth_plane",
+            "effective_w_boundary_normal",
+            "semdepth_over_threshold",
+            "boundary_normal_over_threshold",
+            "suggested_semdepth_scale",
+            "suggested_nb_scale",
+            "regate_config_command_not_executed",
+            "config",
+            "config_sha256",
+            "loss_source_csv",
+            "loss_source_csv_sha256",
+            "semantic_source_csv",
+            "semantic_source_csv_sha256",
+            "train_log",
+            "train_log_sha256",
+            "grad_share_sampling",
+            "denominator_contract",
+        }
+        mismatched = sorted(
+            field for field in mechanical_fields if summary.get(field, "") != recomputed.get(field, "")
+        )
+        if mismatched:
+            errors.append(f"{run_name}: committed summary differs from mechanical recheck: {mismatched}")
+    except Exception as exc:
+        errors.append(f"{run_name}: mechanical gate recheck failed: {exc}")
+    return errors
+
+
+def canonical_gate_selection() -> dict[str, Any]:
+    """Select only the preregistered attempt1/half-once evidence."""
+
+    summaries = [
+        row for row in read_csv(CSV_GATE_AUDIT) if row.get("record_type") == "gate_summary"
+    ]
+    by_run: dict[str, dict[str, str]] = {}
+    errors: list[str] = []
+    allowed = {GATE_RUN, f"{GATE_RUN}_half_once"}
+    for row in summaries:
+        run_name = row.get("run_name", "")
+        if run_name not in allowed:
+            errors.append(f"unexpected gate summary run_name: {run_name!r}")
+        elif run_name in by_run:
+            errors.append(f"duplicate gate summary for {run_name}")
+        else:
+            by_run[run_name] = row
+    initial = by_run.get(GATE_RUN)
+    half = by_run.get(f"{GATE_RUN}_half_once")
+    if initial is None:
+        errors.append("canonical attempt-1 gate summary is missing")
+    else:
+        errors.extend(validate_gate_summary_provenance(initial))
+    if half is not None:
+        errors.extend(validate_gate_summary_provenance(half))
+
+    selected = half or initial or {}
+    if initial is not None:
+        if initial.get("gate_status") == "pass" and half is not None:
+            errors.append("half-once evidence exists even though attempt 1 passed")
+        if half is not None:
+            expected_sem = 0.5 if initial.get("semdepth_over_threshold") == "true" else 1.0
+            expected_nb = 0.5 if initial.get("boundary_normal_over_threshold") == "true" else 1.0
+            if expected_sem == 1.0 and expected_nb == 1.0:
+                errors.append("half-once evidence exists without an over-threshold loss")
+            if not same_value(half.get("effective_semdepth_scale"), expected_sem):
+                errors.append("half-once semdepth scale does not match attempt-1 over-threshold result")
+            if not same_value(half.get("effective_nb_scale"), expected_nb):
+                errors.append("half-once boundary-normal scale does not match attempt-1 over-threshold result")
+    return {"by_run": by_run, "selected": selected, "errors": errors}
+
+
+def validate_seed_inventory(rows: list[dict[str, str]]) -> list[str]:
+    errors: list[str] = []
+    by_id: dict[str, dict[str, str]] = {}
+    for row in rows:
+        building_id = row.get("building_id", "")
+        if not building_id or building_id in by_id:
+            errors.append(f"empty/duplicate T0-2 building id: {building_id!r}")
+        else:
+            by_id[building_id] = row
+    if set(by_id) != set(SEED_INVENTORY_COUNTS):
+        errors.append(
+            f"T0-2 building set mismatch: observed={sorted(by_id)}, "
+            f"expected={sorted(SEED_INVENTORY_COUNTS)}"
+        )
+    source_contract = {
+        "sfm_source": rel(DATA_ROOT / "sparse/0/points3D.bin"),
+        "sfm_source_sha256": sha256_file(DATA_ROOT / "sparse/0/points3D.bin"),
+        "dense_init_source": rel(
+            REPO / "results/tum_transfer/e5_pilot/C001/seeds/seed_dense_C001_buf20.ply"
+        ),
+        "dense_init_source_sha256": sha256_file(
+            REPO / "results/tum_transfer/e5_pilot/C001/seeds/seed_dense_C001_buf20.ply"
+        ),
+        "footprint_source": rel(REPO / "results/tum_transfer/analysis/footprints_aoi.geojson"),
+        "footprint_source_sha256": sha256_file(
+            REPO / "results/tum_transfer/analysis/footprints_aoi.geojson"
+        ),
+        "arm1p_config": rel(BASE_CONFIG),
+        "arm1p_config_sha256": sha256_file(BASE_CONFIG),
+        "footprint_crs": "EPSG:25832",
+        "init_pointcloud_mode": "concat_sfm_plus_dense",
+        "qa_match_expected": "true",
+    }
+    for building_id, expected_counts in SEED_INVENTORY_COUNTS.items():
+        row = by_id.get(building_id)
+        if row is None:
+            continue
+        for field, expected in source_contract.items():
+            if row.get(field) != expected:
+                errors.append(f"{building_id}: T0-2 {field} mismatch")
+        try:
+            sfm = int(row["sfm_seed_points_in_footprint"])
+            dense = int(row["dense_init_points_in_footprint"])
+            initial = int(row["initial_gaussians_in_footprint"])
+        except (KeyError, TypeError, ValueError):
+            errors.append(f"{building_id}: invalid T0-2 point counts")
+            continue
+        if (sfm, dense) != expected_counts or initial != sfm + dense:
+            errors.append(
+                f"{building_id}: T0-2 count mismatch observed={(sfm, dense, initial)}, "
+                f"expected={(*expected_counts, sum(expected_counts))}"
+            )
+    return errors
+
+
 def track_a_preconditions() -> dict[str, Any]:
     seed_rows = read_csv(CSV_SEED_INVENTORY)
-    seed_data_complete = (
-        len(seed_rows) == 6
-        and all(row.get("qa_match_expected") == "true" for row in seed_rows)
-    )
+    seed_errors = validate_seed_inventory(seed_rows)
+    seed_data_complete = not seed_errors
     seed_commit = committed_unchanged(CSV_SEED_INVENTORY)
-    gate_rows = read_csv(CSV_GATE_AUDIT)
-    gate_summaries = [row for row in gate_rows if row.get("record_type") == "gate_summary"]
-    # A half-weight re-gate is attempt 2 and supersedes attempt 1 regardless of
-    # CSV append order.  Within the same attempt the latest row wins.
-    latest_gate = max(
-        enumerate(gate_summaries),
-        key=lambda item: (int(item[1].get("gate_attempt") or 0), item[0]),
-        default=(-1, {}),
-    )[1]
     gate_commit = committed_unchanged(CSV_GATE_AUDIT)
-    gate_data_pass = latest_gate.get("gate_status") == "pass"
+    gate_selection = canonical_gate_selection()
+    selected = gate_selection["selected"]
+    selected_pass = selected.get("gate_status") == "pass"
+    selected_scales = {
+        "semdepth": finite_number(selected.get("effective_semdepth_scale")),
+        "boundary_normal": finite_number(selected.get("effective_nb_scale")),
+    }
+    full_config_states: dict[str, Any] = {}
+    full_scales_match = bool(selected) and selected_scales["semdepth"] is not None and selected_scales[
+        "boundary_normal"
+    ] is not None
+    for run_name in FULL_RUNS:
+        path = run_name_config_path(run_name)
+        state: dict[str, Any] = {"path": rel(path), "commit": committed_unchanged(path)}
+        try:
+            config = load_yaml(path)
+            verify_exact_base(config, locked_base())
+            validate_s3_config(config, run_name)
+            scale_match = same_value(config.get("s3_semdepth_scale"), selected_scales["semdepth"]) and same_value(
+                config.get("s3_nb_scale"), selected_scales["boundary_normal"]
+            )
+            state.update(
+                {
+                    "valid": True,
+                    "semdepth_scale": config.get("s3_semdepth_scale"),
+                    "nb_scale": config.get("s3_nb_scale"),
+                    "selected_scale_match": scale_match,
+                }
+            )
+            full_scales_match = full_scales_match and scale_match and state["commit"][
+                "committed_unchanged"
+            ]
+        except Exception as exc:
+            state.update({"valid": False, "error": str(exc), "selected_scale_match": False})
+            full_scales_match = False
+        full_config_states[run_name] = state
     seed_complete = seed_data_complete and seed_commit["committed_unchanged"]
-    gate_pass = gate_data_pass and gate_commit["committed_unchanged"]
-    gate_effective_status = latest_gate.get("gate_status", "missing")
-    if gate_data_pass and not gate_commit["committed_unchanged"]:
+    gate_pass = (
+        selected_pass
+        and not gate_selection["errors"]
+        and gate_commit["committed_unchanged"]
+        and full_scales_match
+    )
+    gate_effective_status = selected.get("gate_status", "missing")
+    if gate_selection["errors"]:
+        gate_effective_status = "invalid_provenance"
+    elif selected_pass and not gate_commit["committed_unchanged"]:
         gate_effective_status = "pass_uncommitted"
+    elif selected_pass and not full_scales_match:
+        gate_effective_status = "pass_full_scale_unsynced"
     return {
         "t0_2_seed_inventory": rel(CSV_SEED_INVENTORY),
         "t0_2_rows": len(seed_rows),
         "t0_2_data_complete": seed_data_complete,
+        "t0_2_validation_errors": seed_errors,
         "t0_2_commit_state": seed_commit,
         "t0_2_complete": seed_complete,
         "t0_4_gate_audit": rel(CSV_GATE_AUDIT),
-        "t0_4_gate_run": latest_gate.get("run_name", ""),
-        "t0_4_gate_data_status": latest_gate.get("gate_status", "missing"),
+        "t0_4_gate_run": selected.get("run_name", ""),
+        "t0_4_gate_data_status": selected.get("gate_status", "missing"),
         "t0_4_gate_commit_state": gate_commit,
         "t0_4_gate_status": gate_effective_status,
+        "t0_4_gate_validation_errors": gate_selection["errors"],
+        "selected_scales": selected_scales,
+        "full_config_states": full_config_states,
         "track_a_ready": seed_complete and gate_pass,
     }
 
@@ -911,6 +1624,7 @@ def write_launch_versions(
     preflight_log: Path,
 ) -> Path:
     status = cache_status()
+    cache_inventory = cache_inventory_contract(require_complete=True)
     path = RUN_DIR / "versions" / f"{run_name}.txt"
     path.parent.mkdir(parents=True, exist_ok=True)
     lines = [
@@ -927,7 +1641,15 @@ def write_launch_versions(
         f"base_config_sha256: {sha256_file(BASE_CONFIG)}",
         f"orchestrator_sha256: {sha256_file(SCRIPT_PATH)}",
         f"train_py_sha256: {sha256_file(REPO / 'src/stage2/train.py')}",
+        f"densification_py_sha256: {sha256_file(REPO / 'src/stage2/densification.py')}",
         f"semantic_loss_py_sha256: {sha256_file(REPO / 'src/stage2/loss/semantic_guided.py')}",
+        f"cache_producer: {rel(CACHE_PRODUCER)}",
+        f"cache_producer_sha256: {sha256_file(CACHE_PRODUCER)}",
+        f"cache_manifest: {rel(CACHE_MANIFEST)}",
+        f"cache_manifest_sha256: {sha256_file(CACHE_MANIFEST)}",
+        f"cache_inventory: {rel(CACHE_INVENTORY)}",
+        f"cache_inventory_sha256: {cache_inventory['inventory_sha256']}",
+        f"cache_aggregate_sha256: {cache_inventory['aggregate_sha256']}",
         f"cache_ready: {str(status['ready']).lower()}",
         f"cache_present_expected: {status['present_expected_files']}/{status['expected_files']}",
         f"cache_loader_preflight_log: {rel(preflight_log)}",
@@ -990,7 +1712,12 @@ def train_one(args: argparse.Namespace) -> None:
             "orchestrator": SCRIPT_PATH,
             "base_config": BASE_CONFIG,
             "train": REPO / "src/stage2/train.py",
+            "densification": REPO / "src/stage2/densification.py",
             "semantic_loss": REPO / "src/stage2/loss/semantic_guided.py",
+            "experiment_inventory": CSV_INVENTORY,
+            "cache_producer": CACHE_PRODUCER,
+            "cache_manifest": CACHE_MANIFEST,
+            "cache_inventory": CACHE_INVENTORY,
         }.items()
     }
     preflight_command = docker_base(args.gpu) + [
@@ -1018,6 +1745,10 @@ def train_one(args: argparse.Namespace) -> None:
             )
         )
         return
+    if HOST_REPO != REPO:
+        raise RuntimeError(
+            f"non-dry launch forbids alternate S3_HOST_REPO mounts: HOST_REPO={HOST_REPO}, REPO={REPO}"
+        )
     dirty_inputs = [
         key for key, state in committed_inputs.items() if not state["committed_unchanged"]
     ]
@@ -1042,6 +1773,35 @@ def train_one(args: argparse.Namespace) -> None:
             "Track A precondition gate failed: T0-2 completion and a passing T0-4 "
             f"gate summary are both required; observed={track_a}"
         )
+    if args.run_name == f"{GATE_RUN}_half_once":
+        gate_commit = committed_unchanged(CSV_GATE_AUDIT)
+        selection = canonical_gate_selection()
+        initial = selection["by_run"].get(GATE_RUN)
+        attempt2_rows = [
+            row
+            for row in read_csv(CSV_INVENTORY)
+            if row.get("record_type") == "training_config"
+            and row.get("run_name") == args.run_name
+            and row.get("gate_attempt") == "2"
+        ]
+        expected_sem = 0.5 if initial and initial.get("semdepth_over_threshold") == "true" else 1.0
+        expected_nb = 0.5 if initial and initial.get("boundary_normal_over_threshold") == "true" else 1.0
+        if (
+            not gate_commit["committed_unchanged"]
+            or selection["errors"]
+            or initial is None
+            or initial.get("gate_status") != "fail"
+            or len(attempt2_rows) != 1
+            or not same_value(config_payload.get("s3_semdepth_scale"), expected_sem)
+            or not same_value(config_payload.get("s3_nb_scale"), expected_nb)
+        ):
+            raise RuntimeError(
+                "half-once launch precondition failed: "
+                f"gate_commit={gate_commit}, errors={selection['errors']}, "
+                f"initial_status={None if initial is None else initial.get('gate_status')}, "
+                f"attempt2_inventory_rows={len(attempt2_rows)}, "
+                f"expected_scales={expected_sem}/{expected_nb}"
+            )
     preflight_stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
     preflight_log = (
         RUN_DIR / "cache_preflight" / f"{args.run_name}_{preflight_stamp}.log"
@@ -1106,6 +1866,16 @@ def train_one(args: argparse.Namespace) -> None:
         log.write(
             f"\nEND_UTC={datetime.now(timezone.utc).isoformat()}\nRETURN_CODE={return_code}\n"
         )
+        out_dir = workspace_path_to_host(config_payload["out_dir"])
+        for label, audit_path in (
+            ("AUDIT_LOSS_CSV", out_dir / "audit/loss_grad_norms.csv"),
+            ("AUDIT_SEMANTIC_CSV", out_dir / "audit/semantic_geometry.csv"),
+        ):
+            log.write(f"{label}={rel(audit_path)}\n")
+            log.write(
+                f"{label}_SHA256={sha256_file(audit_path) if audit_path.is_file() else 'missing'}\n"
+            )
+        log.flush()
     print(
         json.dumps(
             {
@@ -1157,6 +1927,134 @@ def parse_return_code(path: Path) -> int | None:
     return int(match.group(1)) if match else None
 
 
+def unique_equals_value(path: Path, key: str) -> str:
+    if not path.is_file():
+        raise FileNotFoundError(path)
+    values = re.findall(
+        rf"^{re.escape(key)}=(.*)$",
+        path.read_text(encoding="utf-8", errors="replace"),
+        flags=re.MULTILINE,
+    )
+    if len(values) != 1:
+        raise RuntimeError(f"{rel(path)} must contain exactly one {key}= line, found {len(values)}")
+    return values[0].strip()
+
+
+def unique_colon_value(path: Path, key: str) -> str:
+    if not path.is_file():
+        raise FileNotFoundError(path)
+    values = re.findall(
+        rf"^{re.escape(key)}:\s*(.*)$",
+        path.read_text(encoding="utf-8", errors="replace"),
+        flags=re.MULTILINE,
+    )
+    if len(values) != 1:
+        raise RuntimeError(f"{rel(path)} must contain exactly one {key}: line, found {len(values)}")
+    return values[0].strip()
+
+
+def validate_canonical_gate_launch(
+    run_name: str,
+    config_path: Path,
+    config: dict[str, Any],
+) -> dict[str, Any]:
+    """Bind canonical gate CSVs to one immutable orchestrated training launch."""
+
+    out_dir = workspace_path_to_host(config["out_dir"])
+    loss_path = out_dir / "audit/loss_grad_norms.csv"
+    semantic_path = out_dir / "audit/semantic_geometry.csv"
+    train_log = TRAIN_LOG_ROOT / f"{run_name}.log"
+    version_path = RUN_DIR / "versions" / f"{run_name}.txt"
+    for path in (loss_path, semantic_path, train_log, version_path):
+        if not path.is_file():
+            raise FileNotFoundError(path)
+
+    current_config_sha = sha256_file(config_path)
+    expected_log = {
+        "CONFIG": rel(config_path),
+        "CONFIG_SHA256": current_config_sha,
+        "VERSIONS": rel(version_path),
+        "RETURN_CODE": "0",
+        "AUDIT_LOSS_CSV": rel(loss_path),
+        "AUDIT_LOSS_CSV_SHA256": sha256_file(loss_path),
+        "AUDIT_SEMANTIC_CSV": rel(semantic_path),
+        "AUDIT_SEMANTIC_CSV_SHA256": sha256_file(semantic_path),
+    }
+    log_values = {key: unique_equals_value(train_log, key) for key in expected_log}
+    log_mismatches = {
+        key: {"actual": log_values[key], "expected": expected}
+        for key, expected in expected_log.items()
+        if log_values[key] != expected
+    }
+    if log_mismatches:
+        raise RuntimeError(f"canonical gate train-log binding mismatch: {log_mismatches}")
+
+    cache_inventory = cache_inventory_contract(require_complete=True)
+    expected_versions = {
+        "run_name": run_name,
+        "config": rel(config_path),
+        "config_sha256": current_config_sha,
+        "base_config_sha256": sha256_file(BASE_CONFIG),
+        "orchestrator_sha256": sha256_file(SCRIPT_PATH),
+        "train_py_sha256": sha256_file(REPO / "src/stage2/train.py"),
+        "densification_py_sha256": sha256_file(REPO / "src/stage2/densification.py"),
+        "semantic_loss_py_sha256": sha256_file(REPO / "src/stage2/loss/semantic_guided.py"),
+        "cache_producer_sha256": sha256_file(CACHE_PRODUCER),
+        "cache_manifest_sha256": sha256_file(CACHE_MANIFEST),
+        "cache_inventory_sha256": cache_inventory["inventory_sha256"],
+        "cache_aggregate_sha256": cache_inventory["aggregate_sha256"],
+    }
+    version_values = {key: unique_colon_value(version_path, key) for key in expected_versions}
+    version_mismatches = {
+        key: {"actual": version_values[key], "expected": expected}
+        for key, expected in expected_versions.items()
+        if version_values[key] != expected
+    }
+    if version_mismatches:
+        raise RuntimeError(f"canonical gate launch-version binding mismatch: {version_mismatches}")
+
+    command = unique_equals_value(train_log, "COMMAND")
+    if command != unique_colon_value(version_path, "command"):
+        raise RuntimeError("canonical gate command differs between train log and launch versions")
+    gpu = unique_colon_value(version_path, "host_gpu_selector")
+    if command != shlex.join(train_command(run_name, gpu)[1]):
+        raise RuntimeError("canonical gate command no longer matches the locked orchestrator command")
+
+    preflight_path = REPO / unique_colon_value(version_path, "cache_loader_preflight_log")
+    preflight_sha = unique_colon_value(version_path, "cache_loader_preflight_sha256")
+    if not preflight_path.is_file() or sha256_file(preflight_path) != preflight_sha:
+        raise RuntimeError("canonical gate cache preflight log/hash mismatch")
+    if unique_equals_value(preflight_path, "RETURN_CODE") != "0":
+        raise RuntimeError("canonical gate cache preflight did not return zero")
+    preflight_text = preflight_path.read_text(encoding="utf-8", errors="replace")
+    json_start = preflight_text.find("{")
+    if json_start < 0:
+        raise RuntimeError("canonical gate cache preflight JSON is missing")
+    preflight_payload = json.loads(preflight_text[json_start:])
+    if (
+        preflight_payload.get("status") != "pass"
+        or int(preflight_payload.get("validated_files", -1)) != 428
+        or preflight_payload.get("cache_aggregate_sha256") != cache_inventory["aggregate_sha256"]
+    ):
+        raise RuntimeError("canonical gate cache preflight payload is incomplete or stale")
+
+    launch_git_head = unique_colon_value(version_path, "git_head")
+    if launch_git_head != capture(["git", "rev-parse", "HEAD"]):
+        raise RuntimeError("git HEAD changed between canonical gate launch and gate audit")
+    return {
+        "loss_path": loss_path,
+        "semantic_path": semantic_path,
+        "train_log": train_log,
+        "version_path": version_path,
+        "launch_git_head": launch_git_head,
+        "train_log_sha256": sha256_file(train_log),
+        "launch_versions_sha256": sha256_file(version_path),
+        "cache_preflight_log": preflight_path,
+        "cache_preflight_log_sha256": preflight_sha,
+        **expected_versions,
+    }
+
+
 def component_rows(rows: list[dict[str, str]], component: str, start: int, end: int) -> list[dict[str, str]]:
     return [
         row
@@ -1180,6 +2078,8 @@ def component_audit_complete(
     rows: list[dict[str, str]],
     expected_count: int,
     expected_weight: float,
+    *,
+    require_unit_share: bool = True,
 ) -> bool:
     if len(rows) != expected_count:
         return False
@@ -1193,7 +2093,8 @@ def component_audit_complete(
             or grad_norm is None
             or grad_norm < 0.0
             or grad_share is None
-            or not 0.0 <= grad_share <= 1.0
+            or grad_share < 0.0
+            or (require_unit_share and grad_share > 1.0)
             or str(row.get("grad_status", "")).strip()
         ):
             return False
@@ -1219,6 +2120,41 @@ def validate_denominator_contract(rows: list[dict[str, str]], active_steps: set[
         unexpected = sorted(set(names) - PRIMARY_AUDIT_COMPONENTS)
         if unexpected:
             reasons.append(f"step {step} unexpected primary components: {unexpected}")
+        primary_norms = [finite_number(row.get("grad_norm")) for row in primary]
+        if not primary_norms or any(value is None or value < 0.0 for value in primary_norms):
+            reasons.append(f"step {step} primary grad_norm values are invalid")
+            continue
+        denominator = sum(float(value) for value in primary_norms if value is not None)
+        if denominator <= 0.0:
+            reasons.append(f"step {step} primary gradient denominator is not positive")
+            continue
+        primary_shares: list[float] = []
+        for row, norm in zip(primary, primary_norms):
+            reported = finite_number(row.get("grad_norm_share"))
+            expected_share = float(norm) / denominator  # type: ignore[arg-type]
+            if reported is None or not math.isclose(
+                reported, expected_share, rel_tol=1e-6, abs_tol=1e-9
+            ):
+                reasons.append(
+                    f"step {step} {row.get('component')} grad share does not match primary norms"
+                )
+            else:
+                primary_shares.append(reported)
+        if len(primary_shares) == len(primary) and not math.isclose(
+            sum(primary_shares), 1.0, rel_tol=1e-6, abs_tol=1e-9
+        ):
+            reasons.append(f"step {step} primary grad shares do not sum to one")
+        for row in part:
+            if row.get("denominator_role") != "audit_only":
+                continue
+            norm = finite_number(row.get("grad_norm"))
+            reported = finite_number(row.get("grad_norm_share"))
+            if norm is None or norm < 0.0 or reported is None or reported < 0.0 or not math.isclose(
+                reported, norm / denominator, rel_tol=1e-6, abs_tol=1e-9
+            ):
+                reasons.append(
+                    f"step {step} {row.get('component')} audit-only share does not match primary denominator"
+                )
     return reasons
 
 
@@ -1242,12 +2178,12 @@ def normalize_source_rows(
                 continue
             output.append(
                 {
+                    **row,
                     "run_name": run_name,
                     "record_type": record_type,
                     "source_csv": rel(source_path),
                     "source_row": source_row_index,
                     "active": 1,
-                    **row,
                 }
             )
     return output
@@ -1270,10 +2206,39 @@ def gate_audit(args: argparse.Namespace) -> None:
             f"got {max_iter}/{active_start}"
         )
     out_dir = Path(str(config["out_dir"]).replace("/workspace/JointBuildGS", str(REPO), 1))
-    loss_path = Path(args.loss_csv) if args.loss_csv else out_dir / "audit/loss_grad_norms.csv"
-    semantic_path = Path(args.semantic_csv) if args.semantic_csv else out_dir / "audit/semantic_geometry.csv"
-    train_log = Path(args.train_log) if args.train_log else TRAIN_LOG_ROOT / f"{args.run_name}.log"
-    output_path = Path(args.output) if args.output else CSV_GATE_AUDIT
+    override_values = [args.loss_csv, args.semantic_csv, args.train_log, args.output]
+    if args.test_mode:
+        if not all(override_values):
+            raise RuntimeError(
+                "--test-mode requires explicit --loss-csv, --semantic-csv, --train-log, and --output"
+            )
+        loss_path = Path(args.loss_csv).resolve()
+        semantic_path = Path(args.semantic_csv).resolve()
+        train_log = Path(args.train_log).resolve()
+        output_path = Path(args.output).resolve()
+        if output_path == CSV_GATE_AUDIT.resolve():
+            raise RuntimeError("--test-mode may not write the canonical gate audit CSV")
+        launch_evidence: dict[str, Any] = {}
+        evidence_scope = "test_only"
+    else:
+        if any(override_values):
+            raise RuntimeError(
+                "canonical gate-audit forbids path overrides; use --test-mode with all four paths"
+            )
+        launch_evidence = validate_canonical_gate_launch(args.run_name, config_path, config)
+        loss_path = launch_evidence["loss_path"]
+        semantic_path = launch_evidence["semantic_path"]
+        train_log = launch_evidence["train_log"]
+        output_path = CSV_GATE_AUDIT
+        evidence_scope = "canonical"
+        existing_same_run = [
+            row for row in read_csv(output_path) if row.get("run_name") == args.run_name
+        ]
+        if existing_same_run:
+            raise RuntimeError(
+                f"canonical gate evidence is create-only; {args.run_name} already has "
+                f"{len(existing_same_run)} rows in {rel(output_path)}"
+            )
     for path in (loss_path, semantic_path):
         if not path.exists():
             raise FileNotFoundError(path)
@@ -1301,7 +2266,10 @@ def gate_audit(args: argparse.Namespace) -> None:
         reasons.append(f"missing generic audit steps: {missing_generic[:10]}")
     if missing_semantic:
         reasons.append(f"missing semantic audit steps: {missing_semantic[:10]}")
-    reasons.extend(validate_denominator_contract(loss_rows, expected_generic & observed_generic))
+    denominator_reasons = validate_denominator_contract(
+        loss_rows, expected_generic & observed_generic
+    )
+    reasons.extend(denominator_reasons)
 
     active_loss_rows = [row for row in loss_rows if active_start <= int(row["step"]) <= active_end]
     total_values = [finite_number(row.get("total_loss")) for row in active_loss_rows]
@@ -1339,11 +2307,13 @@ def gate_audit(args: argparse.Namespace) -> None:
         smooth_rows,
         expected_component_rows,
         float(config["w_semdepth_smooth"]),
+        require_unit_share=False,
     )
     plane_rows_complete = component_audit_complete(
         plane_rows,
         expected_component_rows,
         float(config["w_semdepth_plane"]),
+        require_unit_share=False,
     )
     semdepth_pass = (
         semdepth_rows_complete
@@ -1430,7 +2400,7 @@ def gate_audit(args: argparse.Namespace) -> None:
     gate_pass = (
         not missing_generic
         and not missing_semantic
-        and not validate_denominator_contract(loss_rows, expected_generic & observed_generic)
+        and not denominator_reasons
         and total_finite_pass
         and semdepth_pass
         and boundary_pass
@@ -1438,13 +2408,21 @@ def gate_audit(args: argparse.Namespace) -> None:
         and pi_all_pass
     )
     attempt = int(config.get("s3_gate_attempt", 1))
-    suggested_semdepth_scale = (
-        0.5 if attempt == 1 and not semdepth_pass and stats["semdepth"]["max"] is not None else 1.0
+    semdepth_over_threshold = bool(
+        not denominator_reasons
+        and semdepth_rows_complete
+        and stats["semdepth"]["max"] is not None
+        and stats["semdepth"]["max"] > GRAD_SHARE_MAX
     )
+    boundary_over_threshold = bool(
+        not denominator_reasons
+        and boundary_rows_complete
+        and stats["boundary_normal"]["max"] is not None
+        and stats["boundary_normal"]["max"] > GRAD_SHARE_MAX
+    )
+    suggested_semdepth_scale = 0.5 if attempt == 1 and semdepth_over_threshold else 1.0
     suggested_nb_scale = (
-        0.5
-        if attempt == 1 and not boundary_pass and stats["boundary_normal"]["max"] is not None
-        else 1.0
+        0.5 if attempt == 1 and boundary_over_threshold else 1.0
     )
     regate_command = ""
     if attempt == 1 and (suggested_semdepth_scale == 0.5 or suggested_nb_scale == 0.5):
@@ -1468,6 +2446,7 @@ def gate_audit(args: argparse.Namespace) -> None:
         {
             "run_name": args.run_name,
             "record_type": "gate_summary",
+            "evidence_scope": evidence_scope,
             "active": 1,
             "active_start": active_start,
             "active_end": active_end,
@@ -1504,17 +2483,53 @@ def gate_audit(args: argparse.Namespace) -> None:
             "gate_status": "pass" if gate_pass else "fail",
             "gate_reasons": "; ".join(dict.fromkeys(reasons)),
             "gate_attempt": attempt,
+            "effective_semdepth_scale": config["s3_semdepth_scale"],
+            "effective_nb_scale": config["s3_nb_scale"],
+            "effective_w_semdepth_smooth": config["w_semdepth_smooth"],
+            "effective_w_semdepth_plane": config["w_semdepth_plane"],
+            "effective_w_boundary_normal": config["w_boundary_normal"],
+            "semdepth_over_threshold": str(semdepth_over_threshold).lower(),
+            "boundary_normal_over_threshold": str(boundary_over_threshold).lower(),
             "suggested_semdepth_scale": suggested_semdepth_scale,
             "suggested_nb_scale": suggested_nb_scale,
             "regate_config_command_not_executed": regate_command,
             "config": rel(config_path),
             "config_sha256": sha256_file(config_path),
+            "loss_source_csv": rel(loss_path),
+            "loss_source_csv_sha256": sha256_file(loss_path),
+            "semantic_source_csv": rel(semantic_path),
+            "semantic_source_csv_sha256": sha256_file(semantic_path),
+            "train_log": rel(train_log),
+            "train_log_sha256": sha256_file(train_log),
+            "launch_versions": (
+                rel(launch_evidence["version_path"]) if launch_evidence else ""
+            ),
+            "launch_versions_sha256": launch_evidence.get("launch_versions_sha256", ""),
+            "launch_git_head": launch_evidence.get("launch_git_head", ""),
+            "orchestrator_sha256": launch_evidence.get("orchestrator_sha256", ""),
+            "train_py_sha256": launch_evidence.get("train_py_sha256", ""),
+            "densification_py_sha256": launch_evidence.get("densification_py_sha256", ""),
+            "semantic_loss_py_sha256": launch_evidence.get("semantic_loss_py_sha256", ""),
+            "cache_producer_sha256": launch_evidence.get("cache_producer_sha256", ""),
+            "cache_manifest_sha256": launch_evidence.get("cache_manifest_sha256", ""),
+            "cache_inventory_sha256": launch_evidence.get("cache_inventory_sha256", ""),
+            "cache_aggregate_sha256": launch_evidence.get("cache_aggregate_sha256", ""),
+            "cache_preflight_log": (
+                rel(launch_evidence["cache_preflight_log"]) if launch_evidence else ""
+            ),
+            "cache_preflight_log_sha256": launch_evidence.get(
+                "cache_preflight_log_sha256", ""
+            ),
+            "grad_share_sampling": (
+                f"sampled max at {generic_every}-update cadence plus final; "
+                "nonfinite_loss.jsonl covers all updates"
+            ),
             "denominator_contract": "combined semdepth and boundary_normal are primary once; smooth/plane are audit_only",
             "judgment_scope": "mechanical preregistered gate fields only; human verdict excluded",
         }
     )
-    # Preserve the first-attempt material when a differently named half-weight
-    # re-gate is normalised; rerunning the same run replaces only that run.
+    # Canonical evidence is create-only. Test-only output may be regenerated in
+    # an explicitly separate path, while other run rows remain intact.
     existing_output = read_csv(output_path)
     preserved_output = [row for row in existing_output if row.get("run_name") != args.run_name]
     write_csv(output_path, preserved_output + normalized)
@@ -1550,6 +2565,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     subparsers = parser.add_subparsers(dest="command", required=True)
     subparsers.add_parser("generate-configs")
+    subparsers.add_parser("sync-full-configs-from-gate")
 
     regate = subparsers.add_parser("generate-regate-config")
     regate.add_argument("--tag", required=True)
@@ -1567,6 +2583,7 @@ def build_parser() -> argparse.ArgumentParser:
     audit.add_argument("--semantic-csv")
     audit.add_argument("--train-log")
     audit.add_argument("--output")
+    audit.add_argument("--test-mode", action="store_true")
 
     cache = subparsers.add_parser("check-cache")
     cache.add_argument("--loader-preflight", action="store_true")
@@ -1578,6 +2595,8 @@ def main() -> None:
     args = build_parser().parse_args()
     if args.command == "generate-configs":
         generate_configs(args)
+    elif args.command == "sync-full-configs-from-gate":
+        sync_full_configs_from_gate(args)
     elif args.command == "generate-regate-config":
         generate_regate_config(args)
     elif args.command == "train-one":
