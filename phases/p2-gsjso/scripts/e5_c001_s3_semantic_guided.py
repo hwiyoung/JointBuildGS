@@ -282,11 +282,34 @@ def committed_unchanged(path: Path) -> dict[str, Any]:
 def docker_image_id() -> str:
     supplied = os.environ.get("S3_DOCKER_IMAGE_ID", "").strip()
     observed = capture(["docker", "image", "inspect", "--format", "{{.Id}}", DEV_IMAGE])
-    if supplied and supplied != observed:
+    digest_pattern = re.compile(r"^sha256:[0-9a-fA-F]{64}$")
+    supplied_is_digest = bool(digest_pattern.fullmatch(supplied))
+    observed_is_digest = bool(digest_pattern.fullmatch(observed))
+
+    if observed_is_digest:
+        if supplied and (not supplied_is_digest or supplied.lower() != observed.lower()):
+            raise RuntimeError(
+                f"S3_DOCKER_IMAGE_ID override {supplied!r} does not match "
+                f"docker inspect {observed!r}"
+            )
+        return observed
+
+    inspect_unavailable = observed == "not_available:docker"
+    if inspect_unavailable and supplied_is_digest:
+        return supplied
+
+    if inspect_unavailable:
         raise RuntimeError(
-            f"S3_DOCKER_IMAGE_ID override {supplied!r} does not match docker inspect {observed!r}"
+            "docker inspect is unavailable in-container and S3_DOCKER_IMAGE_ID "
+            "is not a valid host-inspected sha256 digest"
         )
-    return observed
+
+    if supplied:
+        raise RuntimeError(
+            f"docker inspect did not return a sha256 image ID ({observed!r}); "
+            "refusing S3_DOCKER_IMAGE_ID fallback because inspect was executable"
+        )
+    raise RuntimeError(f"docker inspect did not return a sha256 image ID: {observed!r}")
 
 
 def read_csv(path: Path) -> list[dict[str, str]]:

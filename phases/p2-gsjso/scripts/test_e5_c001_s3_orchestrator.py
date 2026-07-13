@@ -4,9 +4,11 @@
 from __future__ import annotations
 
 import importlib.util
+import os
 from pathlib import Path
 import tempfile
 import unittest
+from unittest import mock
 
 
 SCRIPT = Path(__file__).with_name("e5_c001_s3_semantic_guided.py")
@@ -17,6 +19,44 @@ SPEC.loader.exec_module(S3)
 
 
 class S3OrchestratorContractTest(unittest.TestCase):
+    _DIGEST_A = "sha256:" + "a" * 64
+    _DIGEST_B = "sha256:" + "b" * 64
+
+    def test_docker_image_id_accepts_host_digest_only_when_cli_unavailable(self) -> None:
+        with (
+            mock.patch.dict(os.environ, {"S3_DOCKER_IMAGE_ID": self._DIGEST_A}),
+            mock.patch.object(S3, "capture", return_value="not_available:docker"),
+        ):
+            self.assertEqual(S3.docker_image_id(), self._DIGEST_A)
+
+    def test_docker_image_id_rejects_real_inspect_mismatch(self) -> None:
+        with (
+            mock.patch.dict(os.environ, {"S3_DOCKER_IMAGE_ID": self._DIGEST_A}),
+            mock.patch.object(S3, "capture", return_value=self._DIGEST_B),
+        ):
+            with self.assertRaisesRegex(RuntimeError, "does not match docker inspect"):
+                S3.docker_image_id()
+
+    def test_docker_image_id_rejects_fallback_when_inspect_executes_but_fails(self) -> None:
+        with (
+            mock.patch.dict(os.environ, {"S3_DOCKER_IMAGE_ID": self._DIGEST_A}),
+            mock.patch.object(
+                S3,
+                "capture",
+                return_value="Error response from daemon: No such image: jointbuildgs:dev",
+            ),
+        ):
+            with self.assertRaisesRegex(RuntimeError, "inspect was executable"):
+                S3.docker_image_id()
+
+    def test_docker_image_id_requires_valid_digest_when_cli_unavailable(self) -> None:
+        with (
+            mock.patch.dict(os.environ, {"S3_DOCKER_IMAGE_ID": "not-a-digest"}),
+            mock.patch.object(S3, "capture", return_value="not_available:docker"),
+        ):
+            with self.assertRaisesRegex(RuntimeError, "not a valid host-inspected sha256"):
+                S3.docker_image_id()
+
     def test_exact_base_rejects_unknown_derived_key(self) -> None:
         base = S3.locked_base()
         derived = dict(base)
