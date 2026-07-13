@@ -479,6 +479,281 @@ def _short_building_id(value: object) -> str:
     return str(value or "").replace("DEBY_LOD2_", "")
 
 
+PJPL_VIEW_AUDIT_SCHEMA = "jointbuildgs.s3a.pjpl_depth_anchor_views.v2"
+PJPL_VIEW_AUDIT_FILENAME = "pjpl_depth_anchor_views.csv"
+
+
+def _semantic_geometry_execution_flags(
+    *,
+    w_semdepth_smooth: float,
+    w_semdepth_plane: float,
+    w_boundary_normal: float,
+    gate_attempt: int,
+) -> tuple[bool, bool, bool, bool]:
+    """Separate semantic-loss activation from the gate-only P-J/P-L sweep."""
+
+    semantic_depth_enabled = w_semdepth_smooth > 0 or w_semdepth_plane > 0
+    boundary_normal_enabled = w_boundary_normal > 0
+    semantic_geometry_enabled = semantic_depth_enabled or boundary_normal_enabled
+    pjpl_gate_sweep_enabled = semantic_geometry_enabled and int(gate_attempt) in {1, 2}
+    return (
+        semantic_depth_enabled,
+        boundary_normal_enabled,
+        semantic_geometry_enabled,
+        pjpl_gate_sweep_enabled,
+    )
+
+
+def _update_pjpl_view_audit(
+    latest: Dict[tuple[str, str], Dict[str, object]],
+    *,
+    it: int,
+    view_name: str,
+    result: Dict[str, object],
+    alpha: torch.Tensor,
+    depth_valid_mask: Optional[torch.Tensor],
+    target_buildings: set[str],
+    oracle_visible_roof_pixels: Dict[str, int],
+    alpha_threshold: float,
+    snapshot_kind: str = "latest_active_sample_per_unique_view",
+) -> None:
+    """Keep the latest alpha/L_depth-valid pixel count for each target view.
+
+    ``region_ids`` is the oracle class+instance *address* only.  It selects
+    which pixels belong to a building, while the counted signal is strictly
+    ``alpha >= threshold AND batch.depth_mask``.  No raycast distance,
+    intersection coordinate, depth value, or height value is read here.
+    """
+
+    region_ids = result.get("region_ids")
+    cutline_mask = result.get("cutline_mask")
+    region_rows = list(result.get("region_rows") or [])
+    if not torch.is_tensor(region_ids) or not torch.is_tensor(cutline_mask):
+        return
+    if region_ids.shape != alpha.shape or cutline_mask.shape != alpha.shape:
+        raise ValueError("P-J/P-L audit expects alpha, region_ids, and cutline_mask at HxW")
+    if depth_valid_mask is None:
+        depth_valid = torch.zeros_like(alpha, dtype=torch.bool)
+        depth_mask_present = False
+    else:
+        depth_valid = depth_valid_mask.to(device=alpha.device, dtype=torch.bool)
+        if depth_valid.shape != alpha.shape:
+            raise ValueError("P-J/P-L L_depth-valid mask must match rendered alpha HxW")
+        depth_mask_present = True
+
+    with torch.no_grad():
+        outside_cut = ~cutline_mask.bool()
+        alpha_valid = torch.isfinite(alpha) & (alpha >= float(alpha_threshold))
+        rows_by_building: Dict[str, list[int]] = {
+            bid: []
+            for bid, visible_pixels in oracle_visible_roof_pixels.items()
+            if bid in target_buildings and int(visible_pixels) > 0
+        }
+        for row in region_rows:
+            bid = _short_building_id(row.get("building_id"))
+            if bid not in target_buildings:
+                continue
+            if bid not in rows_by_building:
+                raise ValueError(
+                    f"P-J/P-L retained region {bid} lacks positive oracle visibility metadata"
+                )
+            try:
+                rid = int(row["region_id"])
+            except (KeyError, TypeError, ValueError):
+                continue
+            rows_by_building.setdefault(bid, []).append(rid)
+
+        view = str(view_name)
+        view_stem = Path(view).stem
+        for bid, region_id_values in rows_by_building.items():
+            unique_region_ids = sorted(set(region_id_values))
+            address = torch.zeros_like(alpha_valid)
+            for rid in unique_region_ids:
+                address |= region_ids == rid
+            address &= outside_cut
+            address_count = int(address.sum().detach().cpu().item())
+            alpha_count = int((address & alpha_valid).sum().detach().cpu().item())
+            depth_count = int((address & depth_valid).sum().detach().cpu().item())
+            joint_count = int(
+                (address & alpha_valid & depth_valid).sum().detach().cpu().item()
+            )
+            latest[(bid, view_stem)] = {
+                "schema": PJPL_VIEW_AUDIT_SCHEMA,
+                "building_id": bid,
+                "view": view,
+                "view_stem": view_stem,
+                "measurement_step": int(it),
+                "source_region_count": len(unique_region_ids),
+                "retained_region_present": str(bool(unique_region_ids)).lower(),
+                "oracle_visible_roof_pixel_count": int(oracle_visible_roof_pixels[bid]),
+                "visibility_source": "oracle_address_check.by_building.true_roof_total",
+                "address_pixel_count": address_count,
+                "alpha_valid_pixel_count": alpha_count,
+                "ldepth_valid_pixel_count": depth_count,
+                "alpha_and_ldepth_valid_pixel_count": joint_count,
+                "alpha_threshold": float(alpha_threshold),
+                "depth_mask_present": str(depth_mask_present).lower(),
+                "depth_valid_source": "batch.depth_mask_existing_L_depth",
+                "valid_pixel_rule": "alpha>=0.5 AND existing_L_depth_valid",
+                "view_aggregation_snapshot": str(snapshot_kind),
+                "region_address_mode": "oracle_class_plus_raycast_building_id",
+                "raycast_building_id_role": "region_membership_only",
+                "raycast_id_depth_or_height_supervision": "false",
+                "cutline_policy": "exclude_instance_cutline_plus_minus_7px",
+            }
+
+
+def _write_pjpl_view_audit(
+    out_dir: Path,
+    latest: Dict[tuple[str, str], Dict[str, object]],
+) -> Path:
+    """Write one deterministic, latest active observation per building/view."""
+
+    audit_dir = out_dir / "audit"
+    audit_dir.mkdir(exist_ok=True)
+    path = audit_dir / PJPL_VIEW_AUDIT_FILENAME
+    fields = [
+        "schema",
+        "building_id",
+        "view",
+        "view_stem",
+        "measurement_step",
+        "source_region_count",
+        "retained_region_present",
+        "oracle_visible_roof_pixel_count",
+        "visibility_source",
+        "address_pixel_count",
+        "alpha_valid_pixel_count",
+        "ldepth_valid_pixel_count",
+        "alpha_and_ldepth_valid_pixel_count",
+        "alpha_threshold",
+        "depth_mask_present",
+        "depth_valid_source",
+        "valid_pixel_rule",
+        "view_aggregation_snapshot",
+        "region_address_mode",
+        "raycast_building_id_role",
+        "raycast_id_depth_or_height_supervision",
+        "cutline_policy",
+    ]
+    with path.open("x", newline="", encoding="utf-8") as fh:
+        writer_csv = csv.DictWriter(fh, fieldnames=fields, lineterminator="\n")
+        writer_csv.writeheader()
+        for key in sorted(latest):
+            writer_csv.writerow(latest[key])
+    return path
+
+
+@torch.no_grad()
+def _collect_pjpl_view_audit(
+    *,
+    model: GaussianModel2D,
+    ds: ColmapDataset,
+    view_indices: Iterable[int],
+    device: str,
+    region_cache: SemanticRegionCache,
+    target_buildings: set[str],
+    alpha_threshold: float,
+    measurement_step: int,
+) -> Dict[tuple[str, str], Dict[str, object]]:
+    """Render one fixed post-probe snapshot for every visible training view.
+
+    This audit sweep has no optimizer/backward call.  It prevents the P-J/P-L
+    classification from depending on which views happened to be sampled at a
+    periodic logging tick and makes every per-view count describe the same
+    post-1k model state.
+    """
+
+    latest: Dict[tuple[str, str], Dict[str, object]] = {}
+    total_view_count = 0
+    visible_view_count = 0
+    rendered_view_count = 0
+    skipped_zero_visibility_view_count = 0
+    for idx in view_indices:
+        total_view_count += 1
+        batch = ds[idx]
+        height, width = batch["height"], batch["width"]
+        frame = region_cache.get(batch["name"], height, width, device)
+        oracle_by_building = (
+            (frame.metadata.get("oracle_address_check") or {}).get("by_building") or {}
+        )
+        if not isinstance(oracle_by_building, dict):
+            raise ValueError("P-J/P-L oracle visibility inventory must be a building mapping")
+        oracle_visible_roof_pixels: Dict[str, int] = {}
+        for raw_bid, counts in oracle_by_building.items():
+            bid = _short_building_id(raw_bid)
+            if bid not in target_buildings:
+                continue
+            if not isinstance(counts, dict):
+                raise ValueError(f"P-J/P-L visibility metadata for {bid} must be a mapping")
+            try:
+                visible_pixels = int(counts["true_roof_total"])
+            except (KeyError, TypeError, ValueError) as exc:
+                raise ValueError(
+                    f"P-J/P-L visibility metadata for {bid} lacks integer true_roof_total"
+                ) from exc
+            if visible_pixels < 0:
+                raise ValueError(f"P-J/P-L visibility count for {bid} must be nonnegative")
+            oracle_visible_roof_pixels[bid] = visible_pixels
+        if set(oracle_visible_roof_pixels) != target_buildings:
+            raise ValueError(
+                "P-J/P-L visibility metadata target set mismatch: "
+                f"observed={sorted(oracle_visible_roof_pixels)}, "
+                f"expected={sorted(target_buildings)}"
+            )
+        if not any(count > 0 for count in oracle_visible_roof_pixels.values()):
+            skipped_zero_visibility_view_count += 1
+            continue
+        visible_view_count += 1
+        w2c = batch["w2c"].to(device)
+        K = batch["K"].to(device)
+        rendered = render(
+            model,
+            w2c,
+            K,
+            width,
+            height,
+            sh_degree=model.active_sh_degree,
+            render_mode="RGB+ED",
+        )
+        rendered_view_count += 1
+        metadata_regions = frame.metadata.get("regions", {})
+        region_rows: list[Dict[str, object]] = []
+        for rid_t in torch.unique(frame.region_ids[frame.region_ids > 0]):
+            rid = int(rid_t.detach().cpu().item())
+            metadata = metadata_regions.get(str(rid), metadata_regions.get(rid, {}))
+            region_rows.append(
+                {
+                    "region_id": rid,
+                    "building_id": metadata.get("building_id", ""),
+                }
+            )
+        _update_pjpl_view_audit(
+            latest,
+            it=measurement_step,
+            view_name=str(batch["name"]),
+            result={
+                "region_ids": frame.region_ids,
+                "cutline_mask": frame.cutline_mask,
+                "region_rows": region_rows,
+            },
+            alpha=rendered["alpha"],
+            depth_valid_mask=(batch["depth_mask"] if "depth_mask" in batch else None),
+            target_buildings=target_buildings,
+            oracle_visible_roof_pixels=oracle_visible_roof_pixels,
+            alpha_threshold=alpha_threshold,
+            snapshot_kind="post_probe_full_training_view_sweep",
+        )
+    print(
+        "[S3-A P-J/P-L sweep views] "
+        f"total={total_view_count} visible={visible_view_count} "
+        f"rendered={rendered_view_count} "
+        f"skipped_zero_visibility={skipped_zero_visibility_view_count}",
+        flush=True,
+    )
+    return latest
+
+
 def _write_semantic_geometry_audit(
     *,
     out_dir: Path,
@@ -932,7 +1207,7 @@ def main():
     # P2 impl ②: release L_sem geometry detach so semantics can move geometry (default True
     # keeps the existing gradient-isolated behaviour, so the other configs are unaffected).
     sem_detach_geometry = cfg.get("sem_detach_geometry", True)
-    # S3-A oracle-label mechanism test.  All three weights default to zero so
+    # S3-A oracle class+instance-address mechanism test.  All three weights default to zero so
     # every pre-S3 configuration follows the previous execution path exactly.
     w_semdepth_smooth = float(cfg.get("w_semdepth_smooth", 0.0) or 0.0)
     w_semdepth_plane = float(cfg.get("w_semdepth_plane", 0.0) or 0.0)
@@ -951,9 +1226,17 @@ def main():
     semantic_pi_event_until_positive = bool(
         cfg.get("semantic_pi_event_until_positive", False)
     )
-    semantic_depth_enabled = w_semdepth_smooth > 0 or w_semdepth_plane > 0
-    boundary_normal_enabled = w_boundary_normal > 0
-    semantic_geometry_enabled = semantic_depth_enabled or boundary_normal_enabled
+    (
+        semantic_depth_enabled,
+        boundary_normal_enabled,
+        semantic_geometry_enabled,
+        pjpl_gate_sweep_enabled,
+    ) = _semantic_geometry_execution_flags(
+        w_semdepth_smooth=w_semdepth_smooth,
+        w_semdepth_plane=w_semdepth_plane,
+        w_boundary_normal=w_boundary_normal,
+        gate_attempt=int(cfg.get("s3_gate_attempt", 0)),
+    )
     if min(w_semdepth_smooth, w_semdepth_plane, w_boundary_normal) < 0:
         raise ValueError("S3 semantic geometry weights must be non-negative")
     if semantic_geometry_warmup < 0:
@@ -972,7 +1255,7 @@ def main():
         cache_root = cfg.get("semantic_region_cache")
         if semantic_depth_enabled and not cache_root:
             raise RuntimeError(
-                "w_semdepth_smooth/plane>0 requires semantic_region_cache with footprint-split NPZ files"
+                "w_semdepth_smooth/plane>0 requires semantic_region_cache with oracle-ID-split NPZ files"
             )
         if cache_root:
             cache_path = Path(cache_root)
@@ -1219,7 +1502,7 @@ def main():
     if semantic_geometry_enabled:
         effective_config.update(
             {
-                "s3_claim_scope": "oracle-label mechanism upper bound; not the FM/paper claim",
+                "s3_claim_scope": cfg.get("s3_claim_scope"),
                 "s3_no_monocular_depth": True,
                 "semantic_region_cache": cfg.get("semantic_region_cache"),
                 "semantic_geometry_warmup": semantic_geometry_warmup,
@@ -1864,6 +2147,26 @@ def main():
                 "state_dict": model.state_dict(),
                 "n_prim": model.num_points,
             }, out_dir / "ckpt" / f"step_{it:06d}.pt")
+
+    if pjpl_gate_sweep_enabled:
+        if semantic_region_cache is None:
+            raise RuntimeError("P-J/P-L final-view audit requires semantic region cache")
+        semantic_pjpl_view_latest = _collect_pjpl_view_audit(
+            model=model,
+            ds=ds,
+            view_indices=train_idx,
+            device=device,
+            region_cache=semantic_region_cache,
+            target_buildings=semantic_pi_target_buildings,
+            alpha_threshold=float(cfg.get("semantic_alpha_threshold", 0.5)),
+            measurement_step=max_iter - 1,
+        )
+        pjpl_path = _write_pjpl_view_audit(out_dir, semantic_pjpl_view_latest)
+        print(
+            f"[S3-A P-J/P-L audit] {len(semantic_pjpl_view_latest)} "
+            f"latest building-view measurements -> {pjpl_path}",
+            flush=True,
+        )
 
     final_prune_opa = float(cfg.get("final_prune_opa", 0.0) or 0.0)
     final_prune_candidates = 0

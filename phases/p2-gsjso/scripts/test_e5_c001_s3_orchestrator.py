@@ -29,7 +29,10 @@ class S3OrchestratorContractTest(unittest.TestCase):
                 "s3_gate_attempt": 1,
                 "s3_semdepth_scale": 1.0,
                 "s3_nb_scale": 1.0,
-                "s3_claim_scope": "oracle-label mechanism upper bound; not the FM/paper claim",
+                "s3_claim_scope": (
+                    "oracle class+instance-address mechanism upper bound; not a battlefield "
+                    "win; S3-B forbids the oracle ID map and owns the FM/paper claim"
+                ),
                 "s3_no_monocular_depth": True,
             }
         )

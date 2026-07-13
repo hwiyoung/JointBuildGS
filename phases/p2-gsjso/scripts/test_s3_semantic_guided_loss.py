@@ -122,12 +122,15 @@ class SemanticGuidedLossTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             metadata = {
+                "schema": "jointbuildgs.s3a.semantic_regions.v3",
                 "regions": {
                     "1": {
                         "building_id": "DEBY_LOD2_4907199",
                         "source_component_id": 7,
                         "source_component_pixel_count": 400,
                         "pre_split_overlap_count": 2,
+                        "address_source": "actual_label_source_raycast_building_id_only",
+                        "lod2_depth_or_height_loss_input": False,
                     }
                 },
                 "raycast_assignment_check": {
@@ -148,11 +151,66 @@ class SemanticGuidedLossTest(unittest.TestCase):
                 "source_component_min_pixels": 256,
                 "connectivity": 8,
                 "footprint_buffer_m": 20.0,
+                "loss_address_mode": "oracle_class_plus_raycast_building_id",
+                "raycast_building_id_is_loss_input": True,
+                "raycast_building_id_loss_role": "region address only",
+                "loss_address_datum": {
+                    "provenance": "actual_clean_label_source_legacy48p0",
+                    "orthometric_geoid_m": 48.0,
+                    "shift_z_m": 556.0,
+                    "class_mask_alignment": (
+                        "fixed clean PNG is authoritative; actual-source datum ID map only; "
+                        "per-view raster-edge mismatch audited"
+                    ),
+                },
+                "official_datum_audit": {
+                    "role": "audit_only",
+                    "is_loss_input": False,
+                    "orthometric_geoid_m": 45.7,
+                    "shift_z_m": 558.3,
+                },
+                "loss_value_contract": {
+                    "raycast_building_id_role": "region membership only",
+                    "raycast_hit_distance_stored": False,
+                    "raycast_intersection_xyz_stored": False,
+                    "lod2_depth_or_height_loss_input": False,
+                    "official_datum_is_loss_input": False,
+                    "absolute_height_source": "existing L_depth supervision only",
+                    "npz_loss_address_arrays": ["region_ids", "cutline_mask"],
+                },
+                "cache_contract": {
+                    "cutline_half_width_px": 7,
+                    "source_component_min_pixels": 256,
+                    "connectivity": 8,
+                    "footprint_buffer_m": 20.0,
+                    "loss_address_mode": "oracle_class_plus_raycast_building_id",
+                    "loss_address_geoid_m": 48.0,
+                    "loss_address_shift_z_m": 556.0,
+                },
+                "l_nb_boundary_source": "class boundary only; cutline_mask is forbidden for L_nb",
+                "oracle_address_check": {
+                    "provenance": "actual_label_source_legacy48p0_oracle_address",
+                    "raycast_building_id_is_loss_input": True,
+                    "totals": {"wrong": 0},
+                    "by_building": {
+                        "DEBY_LOD2_4907199": {
+                            "true_roof_total": 400,
+                            "eligible_ge256_true_roof": 400,
+                        }
+                    },
+                },
+                "footprint_rule_defect_baseline": {
+                    "role": "audit_only; test fixture",
+                    "projection_height_policy": {
+                        "uses_lod2_height": False,
+                        "is_loss_address_input": False,
+                    },
+                },
             }
             np.savez_compressed(
                 root / "view_a.npz",
                 region_ids=np.ones((20, 20), dtype=np.int32),
-                cutline_mask=np.zeros((20, 20), dtype=np.uint8),
+                cutline_mask=np.zeros((20, 20), dtype=np.bool_),
                 metadata_json=np.asarray(json.dumps(metadata)),
             )
             cache = SemanticRegionCache(root)
@@ -214,6 +272,87 @@ class SemanticGuidedLossTest(unittest.TestCase):
                 normal_mask=normal_mask,
             )
             self.assertEqual(r2000["region_rows"][0]["plane_fitted_iteration"], 2000)
+
+    def test_cache_rejects_lod2_value_side_channel(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            metadata = {
+                "schema": "jointbuildgs.s3a.semantic_regions.v3",
+                "regions": {
+                    "1": {
+                        "building_id": "DEBY_LOD2_4907199",
+                        "source_component_id": 1,
+                        "source_component_pixel_count": 256,
+                        "pre_split_overlap_count": 1,
+                        "address_source": "actual_label_source_raycast_building_id_only",
+                        "lod2_depth_or_height_loss_input": False,
+                    }
+                },
+                "loss_address_mode": "oracle_class_plus_raycast_building_id",
+                "raycast_building_id_is_loss_input": True,
+                "raycast_building_id_loss_role": "region address only",
+                "loss_address_datum": {
+                    "provenance": "actual_clean_label_source_legacy48p0",
+                    "orthometric_geoid_m": 48.0,
+                    "shift_z_m": 556.0,
+                    "class_mask_alignment": (
+                        "fixed clean PNG is authoritative; actual-source datum ID map only; "
+                        "per-view raster-edge mismatch audited"
+                    ),
+                },
+                "official_datum_audit": {
+                    "role": "audit_only",
+                    "is_loss_input": False,
+                    "orthometric_geoid_m": 45.7,
+                    "shift_z_m": 558.3,
+                },
+                "loss_value_contract": {
+                    "raycast_building_id_role": "region membership only",
+                    "raycast_hit_distance_stored": False,
+                    "raycast_intersection_xyz_stored": False,
+                    "lod2_depth_or_height_loss_input": False,
+                    "official_datum_is_loss_input": False,
+                    "absolute_height_source": "existing L_depth supervision only",
+                    "npz_loss_address_arrays": ["region_ids", "cutline_mask"],
+                },
+                "cache_contract": {
+                    "cutline_half_width_px": 7,
+                    "source_component_min_pixels": 256,
+                    "connectivity": 8,
+                    "footprint_buffer_m": 20.0,
+                    "loss_address_mode": "oracle_class_plus_raycast_building_id",
+                    "loss_address_geoid_m": 48.0,
+                    "loss_address_shift_z_m": 556.0,
+                },
+                "l_nb_boundary_source": "class boundary only; cutline_mask is forbidden for L_nb",
+                "oracle_address_check": {
+                    "provenance": "actual_label_source_legacy48p0_oracle_address",
+                    "raycast_building_id_is_loss_input": True,
+                    "totals": {"wrong": 0},
+                    "by_building": {
+                        "DEBY_LOD2_4907199": {
+                            "true_roof_total": 400,
+                            "eligible_ge256_true_roof": 400,
+                        }
+                    },
+                },
+                "footprint_rule_defect_baseline": {
+                    "role": "audit_only; test fixture",
+                    "projection_height_policy": {
+                        "uses_lod2_height": False,
+                        "is_loss_address_input": False,
+                    },
+                },
+            }
+            np.savez_compressed(
+                root / "view_a.npz",
+                region_ids=np.ones((20, 20), dtype=np.int32),
+                cutline_mask=np.zeros((20, 20), dtype=np.bool_),
+                metadata_json=np.asarray(json.dumps(metadata)),
+                lod2_height_target=np.full((20, 20), 100.0, dtype=np.float32),
+            )
+            with self.assertRaisesRegex(ValueError, "side channels are forbidden"):
+                SemanticRegionCache(root).validate_files(["view_a.jpg"])
 
     def test_pi_audit_logs_combined_depth_gradient_by_building(self):
         from src.stage2.train import _write_semantic_geometry_audit

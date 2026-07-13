@@ -16,13 +16,14 @@ Locked experiment shape
   5000;
 * weights: smooth=0.25, plane=0.25, boundary-normal=0.01;
 * no monocular depth;
-* all training remains blocked until every C001 view has a footprint-split
+* all training remains blocked until every C001 view has an oracle-ID-split
   semantic-region cache file.
 
-``gate-audit`` merges ``audit/loss_grad_norms.csv`` and
-``audit/semantic_geometry.csv`` into the locked docs CSV.  Its pass/fail fields
-are mechanical evaluations of the preregistered thresholds, not a research
-verdict.
+``gate-audit`` merges ``audit/loss_grad_norms.csv``,
+``audit/semantic_geometry.csv``, and the post-probe per-view
+``audit/pjpl_depth_anchor_views.csv`` into the locked docs CSV.  Its pass/fail
+fields are mechanical evaluations of the preregistered thresholds, not a
+research verdict.
 """
 
 from __future__ import annotations
@@ -84,6 +85,17 @@ FULL_RUNS = [
     "gs_e5_C001_s3a_semantic_guided_r2",
 ]
 PI_TARGETS = ["4907199", "8568391", "8568392"]
+PJPL_FIXED_PJ_TARGETS = {
+    "4907202": 1025,
+    "4908168": 93,
+    "4908178": 419,
+}
+PJPL_VIEW_AUDIT_FILENAME = "pjpl_depth_anchor_views.csv"
+PJPL_VIEW_AUDIT_SCHEMA = "jointbuildgs.s3a.pjpl_depth_anchor_views.v2"
+PJPL_VALID_PIXEL_THRESHOLD = 64
+PJPL_BOUNDARY_MIN_PIXELS = 32
+PJPL_BOUNDARY_MAX_PIXELS = 128
+PJPL_MIN_VISIBLE_VIEWS = 3
 DENSIFY_AUDIT_BUILDINGS = [
     "DEBY_LOD2_4907202",
     "DEBY_LOD2_4908168",
@@ -179,7 +191,14 @@ SEED_INVENTORY_COUNTS = {
     "DEBY_LOD2_4908168": (2, 91),
     "DEBY_LOD2_4908178": (24, 395),
 }
-CACHE_SCHEMA = "jointbuildgs.s3a.semantic_regions.v2"
+CACHE_SCHEMA = "jointbuildgs.s3a.semantic_regions.v3"
+CACHE_ADDRESS_MODE = "oracle_class_plus_raycast_building_id"
+CACHE_ADDRESS_GEOID_M = 48.0
+CACHE_ADDRESS_SHIFT_Z_M = 556.0
+CACHE_CLASS_ALIGNMENT_POLICY = (
+    "fixed clean PNG is authoritative; actual-source datum ID map only; "
+    "per-view raster-edge mismatch audited"
+)
 CACHE_GLOBAL_INPUTS = [
     REPO / "results/tum_transfer/analysis/footprints_aoi.geojson",
     REPO / "configs/projection_datum.json",
@@ -406,7 +425,10 @@ def validate_s3_config(config: dict[str, Any], run_name: str) -> None:
         "semantic_region_cache": ws(SEMANTIC_REGION_CACHE),
         "out_dir": ws(CKPT_ROOT / run_name),
         "densify_audit_buildings": DENSIFY_AUDIT_BUILDINGS,
-        "s3_claim_scope": "oracle-label mechanism upper bound; not the FM/paper claim",
+        "s3_claim_scope": (
+            "oracle class+instance-address mechanism upper bound; not a battlefield win; "
+            "S3-B forbids the oracle ID map and owns the FM/paper claim"
+        ),
         "s3_no_monocular_depth": True,
     }
     mismatches = {
@@ -566,13 +588,19 @@ def loader_cache_preflight(limit: int | None = None) -> dict[str, Any]:
         "connectivity",
         "cutline_half_width_px",
         "raycast_assignment_check",
-        "projection_height_policy",
-        "projection_height_candidate_inventory_c00118",
+        "oracle_address_check",
+        "footprint_rule_defect_baseline",
         "candidate_building_source",
         "candidate_building_ids_config_order",
         "candidate_building_ids_assignment_order",
         "candidate_building_list_sha256",
         "candidate_buildings_inactive_for_loss_address",
+        "zero_initial_point_buildings_audit_only",
+        "loss_address_mode",
+        "raycast_building_id_loss_role",
+        "loss_address_datum",
+        "official_datum_audit",
+        "loss_value_contract",
         "raycast_building_id_is_loss_input",
         "input_hashes",
         "l_nb_boundary_source",
@@ -582,12 +610,16 @@ def loader_cache_preflight(limit: int | None = None) -> dict[str, Any]:
         "source_component_id",
         "source_component_pixel_count",
         "pre_split_overlap_count",
+        "pre_split_oracle_instance_count",
+        "address_source",
+        "lod2_depth_or_height_loss_input",
     }
     required_raycast_scopes = {
         "primary_actual_label_source",
         "secondary_official_v2",
     }
     required_assignment_count_fields = {
+        "true_roof_total",
         "eligible_ge256_true_roof",
         "correct",
         "wrong",
@@ -623,6 +655,10 @@ def loader_cache_preflight(limit: int | None = None) -> dict[str, Any]:
             raise RuntimeError(
                 f"{stem}.npz {scope_name}.{label} raycast partition is inconsistent"
             )
+        if parsed["true_roof_total"] < parsed["eligible_ge256_true_roof"]:
+            raise RuntimeError(
+                f"{stem}.npz {scope_name}.{label} true-roof visibility is smaller than eligible support"
+            )
         if parsed["assigned"] != parsed["correct"] + parsed["wrong"]:
             raise RuntimeError(
                 f"{stem}.npz {scope_name}.{label} assigned count is inconsistent"
@@ -637,6 +673,11 @@ def loader_cache_preflight(limit: int | None = None) -> dict[str, Any]:
             missing_arrays = sorted(required_arrays - set(raw.files))
             if missing_arrays:
                 raise RuntimeError(f"{stem}.npz missing raw arrays: {missing_arrays}")
+            extra_arrays = sorted(set(raw.files) - required_arrays)
+            if extra_arrays:
+                raise RuntimeError(
+                    f"{stem}.npz has forbidden loss-value side-channel arrays: {extra_arrays}"
+                )
             raw_region_ids = raw["region_ids"]
             raw_cutline = raw["cutline_mask"]
             if raw_region_ids.dtype != np.dtype(np.int32):
@@ -699,18 +740,64 @@ def loader_cache_preflight(limit: int | None = None) -> dict[str, Any]:
             raise RuntimeError(f"{stem}.npz candidate assignment-order list is not exact C00118")
         if metadata["candidate_building_list_sha256"] != provenance["list_sha256"]:
             raise RuntimeError(f"{stem}.npz candidate building list hash mismatch")
-        if metadata["candidate_buildings_inactive_for_loss_address"] != INACTIVE_ZERO_SOURCE_BUILDINGS:
-            raise RuntimeError(f"{stem}.npz zero-source inactive building lock mismatch")
-        if metadata["raycast_building_id_is_loss_input"] is not False:
-            raise RuntimeError(f"{stem}.npz raycast building id must be audit-only")
+        if metadata["candidate_buildings_inactive_for_loss_address"] != []:
+            raise RuntimeError(f"{stem}.npz oracle ID address must not deactivate zero-source buildings")
+        if metadata["zero_initial_point_buildings_audit_only"] != INACTIVE_ZERO_SOURCE_BUILDINGS:
+            raise RuntimeError(f"{stem}.npz zero-source audit inventory mismatch")
+        if metadata["loss_address_mode"] != CACHE_ADDRESS_MODE:
+            raise RuntimeError(f"{stem}.npz loss address mode is not {CACHE_ADDRESS_MODE}")
+        if metadata["raycast_building_id_is_loss_input"] is not True:
+            raise RuntimeError(f"{stem}.npz actual-source raycast building ID must address R")
+        if metadata["raycast_building_id_loss_role"] != "region address only":
+            raise RuntimeError(f"{stem}.npz raycast building ID role exceeds address-only")
         if metadata["l_nb_boundary_source"] != "class boundary only; cutline_mask is forbidden for L_nb":
             raise RuntimeError(f"{stem}.npz L_nb source improperly includes instance cutlines")
-        height_policy = metadata["projection_height_policy"]
-        if not isinstance(height_policy, dict) or height_policy.get("uses_lod2_height") is not False:
-            raise RuntimeError(f"{stem}.npz projection height must explicitly forbid LoD2 height")
-        inventory = metadata["projection_height_candidate_inventory_c00118"]
+        address_datum = metadata["loss_address_datum"]
+        if (
+            not isinstance(address_datum, dict)
+            or address_datum.get("provenance") != "actual_clean_label_source_legacy48p0"
+            or not math.isclose(float(address_datum.get("orthometric_geoid_m", float("nan"))), CACHE_ADDRESS_GEOID_M)
+            or not math.isclose(float(address_datum.get("shift_z_m", float("nan"))), CACHE_ADDRESS_SHIFT_Z_M)
+            or address_datum.get("class_mask_alignment") != CACHE_CLASS_ALIGNMENT_POLICY
+        ):
+            raise RuntimeError(f"{stem}.npz loss address datum is not exact actual label source")
+        official_audit = metadata["official_datum_audit"]
+        if (
+            not isinstance(official_audit, dict)
+            or official_audit.get("role") != "audit_only"
+            or official_audit.get("is_loss_input") is not False
+            or not math.isclose(float(official_audit.get("orthometric_geoid_m", float("nan"))), 45.7)
+            or not math.isclose(float(official_audit.get("shift_z_m", float("nan"))), 558.3)
+        ):
+            raise RuntimeError(f"{stem}.npz official datum must remain a 45.7/558.3 audit")
+        value_contract = metadata["loss_value_contract"]
+        expected_value_contract = {
+            "raycast_building_id_role": "region membership only",
+            "raycast_hit_distance_stored": False,
+            "raycast_intersection_xyz_stored": False,
+            "lod2_depth_or_height_loss_input": False,
+            "official_datum_is_loss_input": False,
+            "absolute_height_source": "existing L_depth supervision only",
+            "npz_loss_address_arrays": ["region_ids", "cutline_mask"],
+        }
+        if not isinstance(value_contract, dict) or any(
+            value_contract.get(key) != expected
+            for key, expected in expected_value_contract.items()
+        ):
+            raise RuntimeError(f"{stem}.npz loss-value isolation contract mismatch")
+        baseline = metadata["footprint_rule_defect_baseline"]
+        if not isinstance(baseline, dict) or not str(baseline.get("role", "")).startswith("audit_only"):
+            raise RuntimeError(f"{stem}.npz footprint-rule baseline is not audit-only")
+        height_policy = baseline.get("projection_height_policy")
+        if (
+            not isinstance(height_policy, dict)
+            or height_policy.get("uses_lod2_height") is not False
+            or height_policy.get("is_loss_address_input") is not False
+        ):
+            raise RuntimeError(f"{stem}.npz footprint projection-height baseline leaked into R")
+        inventory = baseline.get("projection_height_candidate_inventory_c00118")
         if not isinstance(inventory, dict) or sorted(inventory) != provenance["assignment_order"]:
-            raise RuntimeError(f"{stem}.npz projection-height inventory is not exact C00118")
+            raise RuntimeError(f"{stem}.npz footprint-audit projection inventory is not exact C00118")
         derived_inactive: list[str] = []
         for building_id, row in inventory.items():
             if not isinstance(row, dict):
@@ -731,8 +818,8 @@ def loader_cache_preflight(limit: int | None = None) -> dict[str, Any]:
                 raise RuntimeError(f"{stem}.npz inactive {building_id} has an active projection height")
             if count == 0:
                 derived_inactive.append(building_id)
-        if derived_inactive != metadata["candidate_buildings_inactive_for_loss_address"]:
-            raise RuntimeError(f"{stem}.npz inactive building inventory/top-level mismatch")
+        if derived_inactive != metadata["zero_initial_point_buildings_audit_only"]:
+            raise RuntimeError(f"{stem}.npz zero-source audit inventory/top-level mismatch")
         hashes = metadata["input_hashes"]
         if not isinstance(hashes, dict) or hashes.get("global") != provenance["global_hashes"]:
             raise RuntimeError(f"{stem}.npz global input hashes do not match current locked inputs")
@@ -760,9 +847,51 @@ def loader_cache_preflight(limit: int | None = None) -> dict[str, Any]:
                 raise RuntimeError(
                     f"{stem}.npz region {region_id} metadata missing keys: {missing_region}"
                 )
+            if region.get("address_source") != "actual_label_source_raycast_building_id_only":
+                raise RuntimeError(f"{stem}.npz region {region_id} is not oracle-ID addressed")
+            if region.get("lod2_depth_or_height_loss_input") is not False:
+                raise RuntimeError(f"{stem}.npz region {region_id} permits LoD2 value supervision")
+            forbidden_region_fields = {
+                "projection_z_local_m",
+                "reference_roof_z_local_m",
+                "depth_target",
+                "height_target",
+                "raycast_hit_distance",
+                "raycast_intersection_xyz",
+            }
+            leaked = sorted(forbidden_region_fields & set(region))
+            if leaked:
+                raise RuntimeError(
+                    f"{stem}.npz region {region_id} exposes forbidden value fields: {leaked}"
+                )
+        oracle_check = metadata["oracle_address_check"]
+        if (
+            not isinstance(oracle_check, dict)
+            or oracle_check.get("provenance") != "actual_label_source_legacy48p0_oracle_address"
+            or oracle_check.get("raycast_building_id_is_loss_input") is not True
+            or not math.isclose(float(oracle_check.get("shift_z_m", float("nan"))), CACHE_ADDRESS_SHIFT_Z_M)
+        ):
+            raise RuntimeError(f"{stem}.npz oracle-address integrity provenance mismatch")
+        oracle_totals = oracle_check.get("totals")
+        oracle_by_building = oracle_check.get("by_building")
+        if not isinstance(oracle_totals, dict) or not isinstance(oracle_by_building, dict):
+            raise RuntimeError(f"{stem}.npz oracle-address integrity counts are missing")
+        validate_assignment_partition(stem, "oracle_address_check", "totals", oracle_totals)
+        if int(oracle_totals["wrong"]) != 0:
+            raise RuntimeError(f"{stem}.npz oracle-address integrity has nonzero misassignment")
+        if sorted(oracle_by_building) != provenance["assignment_order"]:
+            raise RuntimeError(f"{stem}.npz oracle-address integrity is not exact C00118")
+        for building_id, counts in oracle_by_building.items():
+            validate_assignment_partition(stem, "oracle_address_check", building_id, counts)
+            if int(counts["wrong"]) != 0:
+                raise RuntimeError(
+                    f"{stem}.npz oracle-address integrity wrong pixels for {building_id}"
+                )
         raycast = metadata["raycast_assignment_check"]
         if not isinstance(raycast, dict):
             raise RuntimeError(f"{stem}.npz raycast_assignment_check must be a mapping")
+        if raycast != baseline.get("raycast_assignment_check"):
+            raise RuntimeError(f"{stem}.npz footprint-rule baseline/compatibility audit mismatch")
         missing_scopes = sorted(required_raycast_scopes - set(raycast))
         if missing_scopes:
             raise RuntimeError(
@@ -869,7 +998,10 @@ def make_config(
     config["s3_gate_attempt"] = int(gate_attempt)
     config["s3_semdepth_scale"] = float(semdepth_scale)
     config["s3_nb_scale"] = float(nb_scale)
-    config["s3_claim_scope"] = "oracle-label mechanism upper bound; not the FM/paper claim"
+    config["s3_claim_scope"] = (
+        "oracle class+instance-address mechanism upper bound; not a battlefield win; "
+        "S3-B forbids the oracle ID map and owns the FM/paper claim"
+    )
     config["s3_no_monocular_depth"] = True
     if float(config.get("w_mono_depth", 0.0) or 0.0) != 0.0:
         raise RuntimeError("S3-A config would enable monocular depth")
@@ -972,7 +1104,10 @@ def manifest_payload() -> dict[str, Any]:
         "orchestrator_sha256": sha256_file(SCRIPT_PATH),
         "base_config": rel(BASE_CONFIG),
         "base_config_sha256": sha256_file(BASE_CONFIG),
-        "claim_scope": "S3-A oracle/clean-label mechanism upper bound; S3-B FM claim excluded",
+        "claim_scope": (
+            "S3-A oracle class+instance-address mechanism upper bound; not a battlefield "
+            "win; S3-B forbids the oracle ID map and owns the FM/paper claim"
+        ),
         "no_monocular_depth": True,
         "semantic_delta_keys": list(SEMANTIC_DELTA_KEYS),
         "gate_control_keys": list(GATE_CONTROL_KEYS),
@@ -988,6 +1123,22 @@ def manifest_payload() -> dict[str, Any]:
             "semantic_pi_event_until_positive": True,
             "grad_share_max": GRAD_SHARE_MAX,
             "half_weight_once": True,
+            "pjpl_classification": {
+                "targets": PI_TARGETS,
+                "measurement": "post_probe_full_training_view_sweep",
+                "valid_pixel_rule": "alpha>=0.5 AND existing_L_depth_valid",
+                "building_aggregation": "visible_view_median",
+                "pj_threshold_pixels": PJPL_VALID_PIXEL_THRESHOLD,
+                "pl_rule": f"median<{PJPL_VALID_PIXEL_THRESHOLD}",
+                "boundary_case_inclusive_pixels": [
+                    PJPL_BOUNDARY_MIN_PIXELS,
+                    PJPL_BOUNDARY_MAX_PIXELS,
+                ],
+                "min_visible_views": PJPL_MIN_VISIBLE_VIEWS,
+                "fixed_collapse_pj_targets": PJPL_FIXED_PJ_TARGETS,
+                "raycast_id_role": "region_membership_only",
+                "raycast_id_depth_or_height_supervision": False,
+            },
         },
         "full": {
             "max_iter": FULL_MAX_ITER,
@@ -1002,6 +1153,9 @@ def manifest_payload() -> dict[str, Any]:
         "outputs": {
             "inventory": rel(CSV_INVENTORY),
             "gate_audit": rel(CSV_GATE_AUDIT),
+            "pjpl_view_audit_per_gate_attempt": (
+                f"<gate_run_out>/audit/{PJPL_VIEW_AUDIT_FILENAME}"
+            ),
             "versions": rel(VERSIONS),
         },
     }
@@ -1021,7 +1175,10 @@ def write_manifest_and_versions() -> None:
         f"docker_image_id: {docker_id}",
         "crs: EPSG:25832",
         "training_started: no (config/orchestrator generation only)",
-        "claim_scope: S3-A oracle-label mechanism upper bound; not S3-B FM/paper claim",
+        (
+            "claim_scope: S3-A oracle class+instance-address mechanism upper bound; "
+            "not a battlefield win; S3-B forbids the oracle ID map and owns the FM/paper claim"
+        ),
         f"base_config: {rel(BASE_CONFIG)}",
         f"base_config_sha256: {sha256_file(BASE_CONFIG)}",
         f"orchestrator_sha256: {sha256_file(SCRIPT_PATH)}",
@@ -1287,6 +1444,7 @@ def recompute_gate_mechanical_summary(run_name: str) -> dict[str, str]:
             run_name=run_name,
             loss_csv=str(out_dir / "audit/loss_grad_norms.csv"),
             semantic_csv=str(out_dir / "audit/semantic_geometry.csv"),
+            pjpl_csv=str(out_dir / f"audit/{PJPL_VIEW_AUDIT_FILENAME}"),
             train_log=str(TRAIN_LOG_ROOT / f"{run_name}.log"),
             output=str(output),
             test_mode=True,
@@ -1328,10 +1486,24 @@ def validate_gate_summary_provenance(summary: dict[str, str]) -> list[str]:
     except Exception as exc:
         return errors + [f"{run_name}: config validation failed: {exc}"]
     out_dir = workspace_path_to_host(config["out_dir"])
+    current_pjpl_path = out_dir / f"audit/{PJPL_VIEW_AUDIT_FILENAME}"
+    if attempt == 2:
+        attempt1_config_path = run_name_config_path(GATE_RUN)
+        if not attempt1_config_path.is_file():
+            return errors + [f"{run_name}: attempt-1 config is missing"]
+        attempt1_config = load_yaml(attempt1_config_path)
+        authoritative_pjpl_path = (
+            workspace_path_to_host(attempt1_config["out_dir"])
+            / f"audit/{PJPL_VIEW_AUDIT_FILENAME}"
+        )
+    else:
+        authoritative_pjpl_path = current_pjpl_path
     expected_paths = {
         "config": config_path,
         "loss_source_csv": out_dir / "audit/loss_grad_norms.csv",
         "semantic_source_csv": out_dir / "audit/semantic_geometry.csv",
+        "pjpl_source_csv": authoritative_pjpl_path,
+        "pjpl_diagnostic_source_csv": current_pjpl_path,
         "train_log": TRAIN_LOG_ROOT / f"{run_name}.log",
         "launch_versions": RUN_DIR / "versions" / f"{run_name}.txt",
     }
@@ -1410,6 +1582,21 @@ def validate_gate_summary_provenance(summary: dict[str, str]) -> list[str]:
             "plane_audit_rows_complete",
             "smooth_plane_detail_status",
             "pi_all_targets_status",
+            "pjpl_classification_status",
+            "pjpl_diagnostic_status",
+            "pjpl_target_rule",
+            "pjpl_boundary_case_rule",
+            "pjpl_min_visible_views",
+            "pjpl_target_classifications",
+            "pjpl_diagnostic_target_classifications",
+            "pjpl_boundary_case_buildings",
+            "pjpl_diagnostic_boundary_case_buildings",
+            "pjpl_fixed_collapse_pj_targets",
+            "pjpl_source_view_rows",
+            "pjpl_diagnostic_source_view_rows",
+            "pjpl_authority",
+            "pjpl_frozen_from_run",
+            "pjpl_attempt1_lock_sha256",
             "gate_status",
             "gate_reasons",
             "gate_attempt",
@@ -1429,6 +1616,10 @@ def validate_gate_summary_provenance(summary: dict[str, str]) -> list[str]:
             "loss_source_csv_sha256",
             "semantic_source_csv",
             "semantic_source_csv_sha256",
+            "pjpl_source_csv",
+            "pjpl_source_csv_sha256",
+            "pjpl_diagnostic_source_csv",
+            "pjpl_diagnostic_source_csv_sha256",
             "train_log",
             "train_log_sha256",
             "grad_share_sampling",
@@ -1870,6 +2061,7 @@ def train_one(args: argparse.Namespace) -> None:
         for label, audit_path in (
             ("AUDIT_LOSS_CSV", out_dir / "audit/loss_grad_norms.csv"),
             ("AUDIT_SEMANTIC_CSV", out_dir / "audit/semantic_geometry.csv"),
+            ("AUDIT_PJPL_CSV", out_dir / f"audit/{PJPL_VIEW_AUDIT_FILENAME}"),
         ):
             log.write(f"{label}={rel(audit_path)}\n")
             log.write(
@@ -1912,6 +2104,367 @@ def percentile(values: Iterable[float], q: float) -> float | None:
         return ordered[lower]
     weight = position - lower
     return ordered[lower] * (1.0 - weight) + ordered[upper] * weight
+
+
+PJPL_VIEW_AUDIT_FIELDS = {
+    "schema",
+    "building_id",
+    "view",
+    "view_stem",
+    "measurement_step",
+    "source_region_count",
+    "retained_region_present",
+    "oracle_visible_roof_pixel_count",
+    "visibility_source",
+    "address_pixel_count",
+    "alpha_valid_pixel_count",
+    "ldepth_valid_pixel_count",
+    "alpha_and_ldepth_valid_pixel_count",
+    "alpha_threshold",
+    "depth_mask_present",
+    "depth_valid_source",
+    "valid_pixel_rule",
+    "view_aggregation_snapshot",
+    "region_address_mode",
+    "raycast_building_id_role",
+    "raycast_id_depth_or_height_supervision",
+    "cutline_policy",
+}
+
+
+def summarize_pjpl_view_rows(
+    rows: list[dict[str, str]],
+    *,
+    active_end: int,
+) -> dict[str, Any]:
+    """Validate and lock the P-J/P-L median classification table.
+
+    Classification itself is observational and never a pass/fail target: a
+    valid median may yield either P-J or P-L.  Completeness/provenance of the
+    three preregistered no-texture buildings is required before the 1k gate can
+    be considered mechanically complete.
+    """
+
+    errors: list[str] = []
+    by_building: dict[str, dict[str, int]] = {bid: {} for bid in PI_TARGETS}
+    for source_row, row in enumerate(rows, start=2):
+        if set(row) != PJPL_VIEW_AUDIT_FIELDS:
+            errors.append(
+                f"P-J/P-L source row {source_row} schema fields mismatch: "
+                f"missing={sorted(PJPL_VIEW_AUDIT_FIELDS - set(row))}, "
+                f"extra={sorted(set(row) - PJPL_VIEW_AUDIT_FIELDS)}"
+            )
+            continue
+        bid = row.get("building_id", "")
+        if bid not in by_building:
+            errors.append(f"P-J/P-L source row {source_row} unexpected building_id={bid!r}")
+            continue
+        view = row.get("view", "")
+        view_stem = row.get("view_stem", "")
+        if not view or view_stem != Path(view).stem:
+            errors.append(f"P-J/P-L source row {source_row} invalid view/view_stem")
+            continue
+        if view_stem in by_building[bid]:
+            errors.append(f"P-J/P-L duplicate building/view row: {bid}/{view_stem}")
+            continue
+        constant_contract = {
+            "schema": PJPL_VIEW_AUDIT_SCHEMA,
+            "depth_valid_source": "batch.depth_mask_existing_L_depth",
+            "valid_pixel_rule": "alpha>=0.5 AND existing_L_depth_valid",
+            "view_aggregation_snapshot": "post_probe_full_training_view_sweep",
+            "visibility_source": "oracle_address_check.by_building.true_roof_total",
+            "region_address_mode": CACHE_ADDRESS_MODE,
+            "raycast_building_id_role": "region_membership_only",
+            "raycast_id_depth_or_height_supervision": "false",
+            "cutline_policy": "exclude_instance_cutline_plus_minus_7px",
+        }
+        mismatches = [
+            field for field, expected in constant_contract.items() if row.get(field) != expected
+        ]
+        if mismatches:
+            errors.append(
+                f"P-J/P-L source row {source_row} contract mismatch: {mismatches}"
+            )
+            continue
+        try:
+            step = int(row["measurement_step"])
+            source_regions = int(row["source_region_count"])
+            visible_roof = int(row["oracle_visible_roof_pixel_count"])
+            address = int(row["address_pixel_count"])
+            alpha_valid = int(row["alpha_valid_pixel_count"])
+            depth_valid = int(row["ldepth_valid_pixel_count"])
+            joint = int(row["alpha_and_ldepth_valid_pixel_count"])
+            alpha_threshold = float(row["alpha_threshold"])
+        except (TypeError, ValueError) as exc:
+            errors.append(f"P-J/P-L source row {source_row} invalid numeric field: {exc}")
+            continue
+        if step != active_end:
+            errors.append(
+                f"P-J/P-L source row {source_row} is not the post-probe step {active_end}"
+            )
+        retained_present = row.get("retained_region_present")
+        if retained_present not in {"true", "false"}:
+            errors.append(f"P-J/P-L source row {source_row} retained_region_present is invalid")
+        if source_regions < 0 or visible_roof <= 0 or min(address, alpha_valid, depth_valid, joint) < 0:
+            errors.append(f"P-J/P-L source row {source_row} has invalid nonnegative counts")
+        if (retained_present == "true") != (source_regions > 0):
+            errors.append(f"P-J/P-L source row {source_row} retained-region/count mismatch")
+        if retained_present == "false" and any(
+            value != 0 for value in (address, alpha_valid, depth_valid, joint)
+        ):
+            errors.append(f"P-J/P-L source row {source_row} zero-region row has nonzero address counts")
+        if alpha_valid > address or depth_valid > address or joint > min(alpha_valid, depth_valid):
+            errors.append(f"P-J/P-L source row {source_row} count partition is impossible")
+        if joint < alpha_valid + depth_valid - address:
+            errors.append(f"P-J/P-L source row {source_row} intersection is below set lower bound")
+        if not math.isclose(alpha_threshold, 0.5, rel_tol=0.0, abs_tol=1e-12):
+            errors.append(f"P-J/P-L source row {source_row} alpha threshold is not 0.5")
+        if row.get("depth_mask_present") not in {"true", "false"}:
+            errors.append(f"P-J/P-L source row {source_row} depth_mask_present is invalid")
+        elif row.get("depth_mask_present") == "false" and (depth_valid != 0 or joint != 0):
+            errors.append(
+                f"P-J/P-L source row {source_row} missing depth mask has nonzero depth/joint count"
+            )
+        if errors and any(f"row {source_row} " in error for error in errors):
+            continue
+        by_building[bid][view_stem] = joint
+
+    summary_rows: list[dict[str, Any]] = []
+    classifications: dict[str, str] = {}
+    boundary_cases: list[str] = []
+    for bid in PI_TARGETS:
+        counts = list(by_building[bid].values())
+        median = percentile(counts, 0.5)
+        view_count = len(counts)
+        complete = median is not None and view_count >= PJPL_MIN_VISIBLE_VIEWS
+        if not complete:
+            errors.append(
+                f"P-J/P-L {bid} needs >={PJPL_MIN_VISIBLE_VIEWS} visible post-probe views; "
+                f"observed={view_count}"
+            )
+        classification = (
+            "P-J"
+            if median is not None and median >= PJPL_VALID_PIXEL_THRESHOLD
+            else "P-L" if median is not None else "unclassified"
+        )
+        boundary_case = bool(
+            median is not None
+            and PJPL_BOUNDARY_MIN_PIXELS <= median <= PJPL_BOUNDARY_MAX_PIXELS
+        )
+        classifications[bid] = classification
+        if boundary_case:
+            boundary_cases.append(bid)
+        summary_rows.append(
+            {
+                "record_type": "pjpl_classification",
+                "building_id": bid,
+                "pjpl_basis": "post_probe_view_median_alpha_and_existing_ldepth_valid",
+                "pjpl_visible_view_count": view_count,
+                "pjpl_view_median_valid_pixel_count": "" if median is None else median,
+                "pjpl_threshold_pixels": PJPL_VALID_PIXEL_THRESHOLD,
+                "pjpl_classification": classification,
+                "pjpl_boundary_case": str(boundary_case).lower(),
+                "pjpl_boundary_case_range_pixels": (
+                    f"{PJPL_BOUNDARY_MIN_PIXELS}..{PJPL_BOUNDARY_MAX_PIXELS}"
+                ),
+                "pjpl_min_visible_views": PJPL_MIN_VISIBLE_VIEWS,
+                "pjpl_lock_status": "locked_after_gate_audit" if complete else "incomplete",
+            }
+        )
+    for bid, initial_count in PJPL_FIXED_PJ_TARGETS.items():
+        summary_rows.append(
+            {
+                "record_type": "pjpl_classification",
+                "building_id": bid,
+                "pjpl_basis": "preregistered_collapse_target_seed_inventory_and_z_error_lt1m",
+                "pjpl_initial_gaussian_count": initial_count,
+                "pjpl_visible_view_count": "",
+                "pjpl_view_median_valid_pixel_count": "",
+                "pjpl_threshold_pixels": "not_applicable_fixed_target",
+                "pjpl_classification": "P-J",
+                "pjpl_boundary_case": "false",
+                "pjpl_boundary_case_range_pixels": (
+                    f"{PJPL_BOUNDARY_MIN_PIXELS}..{PJPL_BOUNDARY_MAX_PIXELS}"
+                ),
+                "pjpl_min_visible_views": "",
+                "pjpl_lock_status": "preregistered_fixed",
+            }
+        )
+    return {
+        "status": "pass" if not errors else "fail",
+        "errors": errors,
+        "summary_rows": summary_rows,
+        "classifications": classifications,
+        "boundary_cases": boundary_cases,
+        "source_view_rows": sum(len(values) for values in by_building.values()),
+    }
+
+
+def pjpl_summary_values(pjpl: dict[str, Any]) -> dict[str, Any]:
+    """Return the preregistered P-J/P-L aggregate fields in one canonical form."""
+
+    return {
+        "pjpl_classification_status": pjpl["status"],
+        "pjpl_target_classifications": ";".join(
+            f"{bid}:{pjpl['classifications'].get(bid, 'unclassified')}"
+            for bid in PI_TARGETS
+        ),
+        "pjpl_boundary_case_buildings": ";".join(pjpl["boundary_cases"]),
+        "pjpl_fixed_collapse_pj_targets": ";".join(PJPL_FIXED_PJ_TARGETS),
+        "pjpl_source_view_rows": pjpl["source_view_rows"],
+    }
+
+
+def pjpl_attempt1_lock_sha256(
+    pjpl: dict[str, Any],
+    *,
+    source_csv: Path,
+    source_csv_sha256: str,
+) -> str:
+    """Fingerprint only attempt-1 authority fields, independent of later CSV appends."""
+
+    return sha256_json(
+        {
+            "source_csv": rel(source_csv),
+            "source_csv_sha256": source_csv_sha256,
+            "summary": pjpl_summary_values(pjpl),
+            "classification_rows": sorted(
+                pjpl["summary_rows"], key=lambda row: str(row["building_id"])
+            ),
+        }
+    )
+
+
+def _csv_text(value: Any) -> str:
+    return "" if value is None else str(value)
+
+
+def load_frozen_attempt1_pjpl() -> dict[str, Any]:
+    """Rebind half-once classification to committed, hashed attempt-1 evidence.
+
+    Attempt 2 may produce a fresh diagnostic sweep, but that sweep must never
+    change the preregistered median, boundary tag, or P-J/P-L classification.
+    """
+
+    commit_state = committed_unchanged(CSV_GATE_AUDIT)
+    if not commit_state.get("committed_unchanged"):
+        raise RuntimeError(
+            "half-once P-J/P-L freeze requires the attempt-1 gate CSV committed "
+            f"and unchanged: {commit_state}"
+        )
+
+    attempt1_config_path = run_name_config_path(GATE_RUN)
+    if not attempt1_config_path.is_file():
+        raise FileNotFoundError(attempt1_config_path)
+    attempt1_config = load_yaml(attempt1_config_path)
+    if int(attempt1_config.get("s3_gate_attempt", -1)) != 1:
+        raise RuntimeError("attempt-1 freeze source config is not s3_gate_attempt=1")
+    attempt1_out_dir = workspace_path_to_host(attempt1_config["out_dir"])
+    source_path = attempt1_out_dir / f"audit/{PJPL_VIEW_AUDIT_FILENAME}"
+    if not source_path.is_file():
+        raise FileNotFoundError(source_path)
+    source_sha = sha256_file(source_path)
+    pjpl = summarize_pjpl_view_rows(
+        read_csv(source_path), active_end=GATE_MAX_ITER - 1
+    )
+    if pjpl["status"] != "pass":
+        raise RuntimeError(
+            f"attempt-1 frozen P-J/P-L source is invalid: {pjpl['errors']}"
+        )
+
+    committed_rows = read_csv(CSV_GATE_AUDIT)
+    gate_summaries = [
+        row
+        for row in committed_rows
+        if row.get("run_name") == GATE_RUN and row.get("record_type") == "gate_summary"
+    ]
+    classification_rows = [
+        row
+        for row in committed_rows
+        if row.get("run_name") == GATE_RUN
+        and row.get("record_type") == "pjpl_classification"
+    ]
+    if len(gate_summaries) != 1:
+        raise RuntimeError(
+            f"attempt-1 freeze requires exactly one committed gate summary, found {len(gate_summaries)}"
+        )
+    expected_rows = {
+        str(row["building_id"]): row for row in pjpl["summary_rows"]
+    }
+    actual_rows: dict[str, dict[str, str]] = {}
+    for row in classification_rows:
+        bid = row.get("building_id", "")
+        if bid in actual_rows:
+            raise RuntimeError(f"attempt-1 committed P-J/P-L row is duplicated: {bid}")
+        actual_rows[bid] = row
+    if set(actual_rows) != set(expected_rows):
+        raise RuntimeError(
+            "attempt-1 committed P-J/P-L building set mismatch: "
+            f"observed={sorted(actual_rows)}, expected={sorted(expected_rows)}"
+        )
+
+    aggregate = pjpl_summary_values(pjpl)
+    lock_sha = pjpl_attempt1_lock_sha256(
+        pjpl, source_csv=source_path, source_csv_sha256=source_sha
+    )
+    expected_summary = {
+        **aggregate,
+        "pjpl_diagnostic_status": pjpl["status"],
+        "pjpl_diagnostic_target_classifications": aggregate[
+            "pjpl_target_classifications"
+        ],
+        "pjpl_diagnostic_boundary_case_buildings": aggregate[
+            "pjpl_boundary_case_buildings"
+        ],
+        "pjpl_diagnostic_source_view_rows": pjpl["source_view_rows"],
+        "pjpl_source_csv": rel(source_path),
+        "pjpl_source_csv_sha256": source_sha,
+        "pjpl_diagnostic_source_csv": rel(source_path),
+        "pjpl_diagnostic_source_csv_sha256": source_sha,
+        "pjpl_authority": "attempt1_self",
+        "pjpl_frozen_from_run": "",
+        "pjpl_attempt1_lock_sha256": lock_sha,
+    }
+    committed_summary = gate_summaries[0]
+    summary_mismatches = sorted(
+        key
+        for key, expected in expected_summary.items()
+        if committed_summary.get(key, "") != _csv_text(expected)
+    )
+    if summary_mismatches:
+        raise RuntimeError(
+            "attempt-1 committed P-J/P-L summary differs from raw source: "
+            f"{summary_mismatches}"
+        )
+    for bid, expected in expected_rows.items():
+        actual = actual_rows[bid]
+        mismatches = sorted(
+            key
+            for key, expected_value in expected.items()
+            if actual.get(key, "") != _csv_text(expected_value)
+        )
+        expected_row_provenance = {
+            "source_csv": rel(source_path),
+            "pjpl_authority": "attempt1_self",
+            "pjpl_frozen_from_run": "",
+            "pjpl_attempt1_lock_sha256": lock_sha,
+        }
+        mismatches.extend(
+            key
+            for key, expected_value in expected_row_provenance.items()
+            if actual.get(key, "") != expected_value
+        )
+        if mismatches:
+            raise RuntimeError(
+                f"attempt-1 committed P-J/P-L row {bid} differs from raw source: "
+                f"{sorted(set(mismatches))}"
+            )
+    return {
+        "pjpl": pjpl,
+        "source_path": source_path,
+        "source_sha256": source_sha,
+        "lock_sha256": lock_sha,
+    }
 
 
 def expected_audit_steps(start: int, max_iter: int, every: int) -> set[int]:
@@ -1963,9 +2516,10 @@ def validate_canonical_gate_launch(
     out_dir = workspace_path_to_host(config["out_dir"])
     loss_path = out_dir / "audit/loss_grad_norms.csv"
     semantic_path = out_dir / "audit/semantic_geometry.csv"
+    pjpl_path = out_dir / f"audit/{PJPL_VIEW_AUDIT_FILENAME}"
     train_log = TRAIN_LOG_ROOT / f"{run_name}.log"
     version_path = RUN_DIR / "versions" / f"{run_name}.txt"
-    for path in (loss_path, semantic_path, train_log, version_path):
+    for path in (loss_path, semantic_path, pjpl_path, train_log, version_path):
         if not path.is_file():
             raise FileNotFoundError(path)
 
@@ -1979,6 +2533,8 @@ def validate_canonical_gate_launch(
         "AUDIT_LOSS_CSV_SHA256": sha256_file(loss_path),
         "AUDIT_SEMANTIC_CSV": rel(semantic_path),
         "AUDIT_SEMANTIC_CSV_SHA256": sha256_file(semantic_path),
+        "AUDIT_PJPL_CSV": rel(pjpl_path),
+        "AUDIT_PJPL_CSV_SHA256": sha256_file(pjpl_path),
     }
     log_values = {key: unique_equals_value(train_log, key) for key in expected_log}
     log_mismatches = {
@@ -2044,6 +2600,7 @@ def validate_canonical_gate_launch(
     return {
         "loss_path": loss_path,
         "semantic_path": semantic_path,
+        "pjpl_path": pjpl_path,
         "train_log": train_log,
         "version_path": version_path,
         "launch_git_head": launch_git_head,
@@ -2200,20 +2757,31 @@ def gate_audit(args: argparse.Namespace) -> None:
     max_iter = int(config["max_iter"])
     active_start = int(config["semantic_geometry_warmup"])
     active_end = max_iter - 1
+    attempt = int(config.get("s3_gate_attempt", -1))
+    if attempt not in {1, 2}:
+        raise RuntimeError(f"gate audit accepts only s3_gate_attempt 1 or 2, got {attempt}")
     if max_iter != GATE_MAX_ITER or active_start != ACTIVE_START:
         raise RuntimeError(
             f"gate config must have max_iter={GATE_MAX_ITER}, warmup={ACTIVE_START}; "
             f"got {max_iter}/{active_start}"
         )
     out_dir = Path(str(config["out_dir"]).replace("/workspace/JointBuildGS", str(REPO), 1))
-    override_values = [args.loss_csv, args.semantic_csv, args.train_log, args.output]
+    override_values = [
+        args.loss_csv,
+        args.semantic_csv,
+        args.pjpl_csv,
+        args.train_log,
+        args.output,
+    ]
     if args.test_mode:
         if not all(override_values):
             raise RuntimeError(
-                "--test-mode requires explicit --loss-csv, --semantic-csv, --train-log, and --output"
+                "--test-mode requires explicit --loss-csv, --semantic-csv, --pjpl-csv, "
+                "--train-log, and --output"
             )
         loss_path = Path(args.loss_csv).resolve()
         semantic_path = Path(args.semantic_csv).resolve()
+        pjpl_path = Path(args.pjpl_csv).resolve()
         train_log = Path(args.train_log).resolve()
         output_path = Path(args.output).resolve()
         if output_path == CSV_GATE_AUDIT.resolve():
@@ -2223,11 +2791,12 @@ def gate_audit(args: argparse.Namespace) -> None:
     else:
         if any(override_values):
             raise RuntimeError(
-                "canonical gate-audit forbids path overrides; use --test-mode with all four paths"
+                "canonical gate-audit forbids path overrides; use --test-mode with all five paths"
             )
         launch_evidence = validate_canonical_gate_launch(args.run_name, config_path, config)
         loss_path = launch_evidence["loss_path"]
         semantic_path = launch_evidence["semantic_path"]
+        pjpl_path = launch_evidence["pjpl_path"]
         train_log = launch_evidence["train_log"]
         output_path = CSV_GATE_AUDIT
         evidence_scope = "canonical"
@@ -2239,13 +2808,14 @@ def gate_audit(args: argparse.Namespace) -> None:
                 f"canonical gate evidence is create-only; {args.run_name} already has "
                 f"{len(existing_same_run)} rows in {rel(output_path)}"
             )
-    for path in (loss_path, semantic_path):
+    for path in (loss_path, semantic_path, pjpl_path):
         if not path.exists():
             raise FileNotFoundError(path)
     loss_rows = read_csv(loss_path)
     semantic_rows = read_csv(semantic_path)
+    pjpl_rows = read_csv(pjpl_path)
     if not loss_rows or not semantic_rows:
-        raise RuntimeError("gate audit inputs must both contain data rows")
+        raise RuntimeError("loss and semantic gate audit CSV inputs must contain data rows")
     for row in loss_rows + semantic_rows:
         try:
             int(row["step"])
@@ -2397,6 +2967,35 @@ def gate_audit(args: argparse.Namespace) -> None:
             }
         )
 
+    pjpl_diagnostic = summarize_pjpl_view_rows(pjpl_rows, active_end=active_end)
+    if pjpl_diagnostic["status"] != "pass":
+        reasons.extend(
+            f"attempt-{attempt} diagnostic P-J/P-L sweep: {error}"
+            for error in pjpl_diagnostic["errors"]
+        )
+    if attempt == 1:
+        pjpl = pjpl_diagnostic
+        pjpl_source_path = pjpl_path
+        pjpl_source_sha = sha256_file(pjpl_path)
+        pjpl_authority = "attempt1_self"
+        pjpl_frozen_from_run = ""
+        pjpl_lock_sha = pjpl_attempt1_lock_sha256(
+            pjpl,
+            source_csv=pjpl_source_path,
+            source_csv_sha256=pjpl_source_sha,
+        )
+    else:
+        frozen = load_frozen_attempt1_pjpl()
+        pjpl = frozen["pjpl"]
+        pjpl_source_path = frozen["source_path"]
+        pjpl_source_sha = frozen["source_sha256"]
+        pjpl_authority = "attempt1_frozen"
+        pjpl_frozen_from_run = GATE_RUN
+        pjpl_lock_sha = frozen["lock_sha256"]
+    pjpl_complete = (
+        pjpl["status"] == "pass" and pjpl_diagnostic["status"] == "pass"
+    )
+
     gate_pass = (
         not missing_generic
         and not missing_semantic
@@ -2406,8 +3005,8 @@ def gate_audit(args: argparse.Namespace) -> None:
         and boundary_pass
         and detail_pass
         and pi_all_pass
+        and pjpl_complete
     )
-    attempt = int(config.get("s3_gate_attempt", 1))
     semdepth_over_threshold = bool(
         not denominator_reasons
         and semdepth_rows_complete
@@ -2440,6 +3039,39 @@ def gate_audit(args: argparse.Namespace) -> None:
         semantic_rows,
         active_start,
         active_end,
+    )
+    for source_row, row in enumerate(pjpl_rows, start=2):
+        normalized.append(
+            {
+                **row,
+                "run_name": args.run_name,
+                "record_type": (
+                    "pjpl_view_measurement"
+                    if attempt == 1
+                    else "pjpl_view_measurement_diagnostic"
+                ),
+                "step": row.get("measurement_step", ""),
+                "source_csv": rel(pjpl_path),
+                "source_row": source_row,
+                "active": 1,
+                "pjpl_authority": (
+                    "attempt1_self" if attempt == 1 else "attempt2_diagnostic_only"
+                ),
+                "pjpl_frozen_from_run": pjpl_frozen_from_run,
+                "pjpl_attempt1_lock_sha256": pjpl_lock_sha,
+            }
+        )
+    normalized.extend(
+        {
+            **row,
+            "run_name": args.run_name,
+            "active": 1,
+            "source_csv": rel(pjpl_source_path),
+            "pjpl_authority": pjpl_authority,
+            "pjpl_frozen_from_run": pjpl_frozen_from_run,
+            "pjpl_attempt1_lock_sha256": pjpl_lock_sha,
+        }
+        for row in pjpl["summary_rows"]
     )
     normalized.extend(pi_rows)
     normalized.append(
@@ -2480,6 +3112,35 @@ def gate_audit(args: argparse.Namespace) -> None:
             "plane_audit_rows_complete": str(plane_rows_complete).lower(),
             "smooth_plane_detail_status": "pass" if detail_pass else "fail",
             "pi_all_targets_status": "pass" if pi_all_pass else "fail",
+            "pjpl_classification_status": pjpl["status"],
+            "pjpl_diagnostic_status": pjpl_diagnostic["status"],
+            "pjpl_target_rule": (
+                "median_over_visible_training_views(alpha>=0.5 AND existing_L_depth_valid) "
+                f">={PJPL_VALID_PIXEL_THRESHOLD} => P-J; "
+                f"<{PJPL_VALID_PIXEL_THRESHOLD} => P-L"
+            ),
+            "pjpl_boundary_case_rule": (
+                f"{PJPL_BOUNDARY_MIN_PIXELS}<=median<={PJPL_BOUNDARY_MAX_PIXELS}"
+            ),
+            "pjpl_min_visible_views": PJPL_MIN_VISIBLE_VIEWS,
+            "pjpl_target_classifications": ";".join(
+                f"{bid}:{pjpl['classifications'].get(bid, 'unclassified')}"
+                for bid in PI_TARGETS
+            ),
+            "pjpl_diagnostic_target_classifications": ";".join(
+                f"{bid}:{pjpl_diagnostic['classifications'].get(bid, 'unclassified')}"
+                for bid in PI_TARGETS
+            ),
+            "pjpl_boundary_case_buildings": ";".join(pjpl["boundary_cases"]),
+            "pjpl_diagnostic_boundary_case_buildings": ";".join(
+                pjpl_diagnostic["boundary_cases"]
+            ),
+            "pjpl_fixed_collapse_pj_targets": ";".join(PJPL_FIXED_PJ_TARGETS),
+            "pjpl_source_view_rows": pjpl["source_view_rows"],
+            "pjpl_diagnostic_source_view_rows": pjpl_diagnostic["source_view_rows"],
+            "pjpl_authority": pjpl_authority,
+            "pjpl_frozen_from_run": pjpl_frozen_from_run,
+            "pjpl_attempt1_lock_sha256": pjpl_lock_sha,
             "gate_status": "pass" if gate_pass else "fail",
             "gate_reasons": "; ".join(dict.fromkeys(reasons)),
             "gate_attempt": attempt,
@@ -2499,6 +3160,10 @@ def gate_audit(args: argparse.Namespace) -> None:
             "loss_source_csv_sha256": sha256_file(loss_path),
             "semantic_source_csv": rel(semantic_path),
             "semantic_source_csv_sha256": sha256_file(semantic_path),
+            "pjpl_source_csv": rel(pjpl_source_path),
+            "pjpl_source_csv_sha256": pjpl_source_sha,
+            "pjpl_diagnostic_source_csv": rel(pjpl_path),
+            "pjpl_diagnostic_source_csv_sha256": sha256_file(pjpl_path),
             "train_log": rel(train_log),
             "train_log_sha256": sha256_file(train_log),
             "launch_versions": (
@@ -2543,6 +3208,7 @@ def gate_audit(args: argparse.Namespace) -> None:
                 "semdepth_max": summary["semdepth_grad_share_max"],
                 "boundary_normal_max": summary["boundary_normal_grad_share_max"],
                 "pi_all_targets_status": summary["pi_all_targets_status"],
+                "pjpl_classification_status": summary["pjpl_classification_status"],
                 "regate_config_command_not_executed": regate_command,
             },
             ensure_ascii=False,
@@ -2581,6 +3247,7 @@ def build_parser() -> argparse.ArgumentParser:
     audit.add_argument("--run-name", default=GATE_RUN)
     audit.add_argument("--loss-csv")
     audit.add_argument("--semantic-csv")
+    audit.add_argument("--pjpl-csv")
     audit.add_argument("--train-log")
     audit.add_argument("--output")
     audit.add_argument("--test-mode", action="store_true")

@@ -15,7 +15,7 @@ script.  For image ``foo.jpg``, ``SemanticRegionCache`` expects ``foo.npz`` with
 
 ``region_ids``
     ``(H,W) int32``; zero means excluded, positive values identify a
-    footprint-split roof region.  The producer applies the >=256 px test to the
+    oracle-instance-split roof region.  The producer applies the >=256 px test to the
     *source class connected component before splitting*; a small split child is
     therefore still retained.
 ``cutline_mask``
@@ -24,8 +24,9 @@ script.  For image ``foo.jpg``, ``SemanticRegionCache`` expects ``foo.npz`` with
     Required JSON scalar.  Its cache contract locks 8-connectivity, 256 px
     pre-split minimum, +/-7 px cut band, and the 20 m Roofer footprint buffer.
     ``regions`` maps each id to building id, source component id/size, and the
-    pre-split footprint-overlap count.  A one-time raycast-building-id check may
-    also be recorded here.  Mapping fields are audit-only, never loss values.
+    pre-split footprint-overlap count.  The discrete actual-source raycast ID is
+    permitted only to form this region address.  No ray hit distance, XYZ,
+    LoD2 depth, or LoD2 height is accepted as a loss-value input.
 """
 from __future__ import annotations
 
@@ -37,6 +38,18 @@ from typing import Any, Dict, Optional
 import numpy as np
 import torch
 import torch.nn.functional as F
+
+
+CACHE_SCHEMA = "jointbuildgs.s3a.semantic_regions.v3"
+LOSS_ADDRESS_MODE = "oracle_class_plus_raycast_building_id"
+ACTUAL_SOURCE_GEOID_M = 48.0
+ACTUAL_SOURCE_SHIFT_Z_M = 556.0
+OFFICIAL_AUDIT_GEOID_M = 45.7
+OFFICIAL_AUDIT_SHIFT_Z_M = 558.3
+CLASS_ALIGNMENT_POLICY = (
+    "fixed clean PNG is authoritative; actual-source datum ID map only; "
+    "per-view raster-edge mismatch audited"
+)
 
 
 def _zero_like_graph(x: torch.Tensor) -> torch.Tensor:
@@ -58,7 +71,7 @@ def _huber_mean(values: torch.Tensor, delta: float) -> torch.Tensor:
 
 @dataclass
 class RegionFrame:
-    """One cached, footprint-split semantic frame."""
+    """One cached, oracle-ID-split semantic frame."""
 
     region_ids: torch.Tensor
     cutline_mask: torch.Tensor
@@ -99,6 +112,25 @@ class SemanticRegionCache:
         return parsed
 
     def _validate_contract(self, metadata: Dict[str, Any], path: Path) -> None:
+        required_top = {
+            "schema",
+            "cache_contract",
+            "regions",
+            "loss_address_mode",
+            "raycast_building_id_is_loss_input",
+            "raycast_building_id_loss_role",
+            "loss_address_datum",
+            "official_datum_audit",
+            "loss_value_contract",
+            "oracle_address_check",
+            "footprint_rule_defect_baseline",
+            "l_nb_boundary_source",
+        }
+        missing_top = sorted(required_top - set(metadata))
+        if missing_top:
+            raise ValueError(f"{path}: metadata_json misses required fields {missing_top}")
+        if metadata.get("schema") != CACHE_SCHEMA:
+            raise ValueError(f"{path}: cache schema must be {CACHE_SCHEMA}")
         contract = metadata.get("cache_contract", metadata)
         required = {
             "cutline_half_width_px": self.expected_cutline_half_width_px,
@@ -118,6 +150,89 @@ class SemanticRegionCache:
                 raise ValueError(
                     f"{path}: cache contract {key}={actual!r}, expected {expected!r}"
                 )
+        if contract.get("loss_address_mode") != LOSS_ADDRESS_MODE:
+            raise ValueError(f"{path}: loss address mode must be {LOSS_ADDRESS_MODE}")
+        if abs(float(contract.get("loss_address_geoid_m", float("nan"))) - ACTUAL_SOURCE_GEOID_M) > 1e-9:
+            raise ValueError(f"{path}: loss address geoid must be the actual label source 48.0 m")
+        if abs(float(contract.get("loss_address_shift_z_m", float("nan"))) - ACTUAL_SOURCE_SHIFT_Z_M) > 1e-9:
+            raise ValueError(f"{path}: loss address shift_z must be the actual label source 556.0 m")
+        if metadata.get("loss_address_mode") != LOSS_ADDRESS_MODE:
+            raise ValueError(f"{path}: top-level loss address mode mismatch")
+        if metadata.get("raycast_building_id_is_loss_input") is not True:
+            raise ValueError(f"{path}: raycast building ID must be enabled for address only")
+        if metadata.get("raycast_building_id_loss_role") != "region address only":
+            raise ValueError(f"{path}: raycast building ID role must be region address only")
+        datum = metadata.get("loss_address_datum")
+        if not isinstance(datum, dict):
+            raise ValueError(f"{path}: loss_address_datum must be an object")
+        if (
+            datum.get("provenance") != "actual_clean_label_source_legacy48p0"
+            or abs(float(datum.get("orthometric_geoid_m", float("nan"))) - ACTUAL_SOURCE_GEOID_M) > 1e-9
+            or abs(float(datum.get("shift_z_m", float("nan"))) - ACTUAL_SOURCE_SHIFT_Z_M) > 1e-9
+            or datum.get("class_mask_alignment") != CLASS_ALIGNMENT_POLICY
+        ):
+            raise ValueError(f"{path}: loss address datum/provenance is not the exact actual label source")
+        official = metadata.get("official_datum_audit")
+        if (
+            not isinstance(official, dict)
+            or official.get("role") != "audit_only"
+            or official.get("is_loss_input") is not False
+            or abs(float(official.get("orthometric_geoid_m", float("nan"))) - OFFICIAL_AUDIT_GEOID_M) > 1e-9
+            or abs(float(official.get("shift_z_m", float("nan"))) - OFFICIAL_AUDIT_SHIFT_Z_M) > 1e-9
+        ):
+            raise ValueError(f"{path}: official 45.7 datum must remain audit-only")
+        value_contract = metadata.get("loss_value_contract")
+        required_value_contract = {
+            "raycast_building_id_role": "region membership only",
+            "raycast_hit_distance_stored": False,
+            "raycast_intersection_xyz_stored": False,
+            "lod2_depth_or_height_loss_input": False,
+            "official_datum_is_loss_input": False,
+            "absolute_height_source": "existing L_depth supervision only",
+            "npz_loss_address_arrays": ["region_ids", "cutline_mask"],
+        }
+        if not isinstance(value_contract, dict) or any(
+            value_contract.get(key) != expected
+            for key, expected in required_value_contract.items()
+        ):
+            raise ValueError(f"{path}: loss-value isolation contract mismatch")
+        if metadata.get("l_nb_boundary_source") != "class boundary only; cutline_mask is forbidden for L_nb":
+            raise ValueError(f"{path}: instance cutline is forbidden from L_nb")
+        oracle_check = metadata.get("oracle_address_check")
+        if (
+            not isinstance(oracle_check, dict)
+            or oracle_check.get("provenance") != "actual_label_source_legacy48p0_oracle_address"
+            or oracle_check.get("raycast_building_id_is_loss_input") is not True
+            or int((oracle_check.get("totals") or {}).get("wrong", -1)) != 0
+        ):
+            raise ValueError(f"{path}: oracle-ID address integrity check is invalid")
+        oracle_by_building = oracle_check.get("by_building")
+        if not isinstance(oracle_by_building, dict) or not oracle_by_building:
+            raise ValueError(f"{path}: oracle-ID per-building visibility inventory is missing")
+        for building_id, counts in oracle_by_building.items():
+            if not isinstance(counts, dict):
+                raise ValueError(f"{path}: oracle visibility row {building_id!r} is not an object")
+            try:
+                true_roof_total = int(counts["true_roof_total"])
+                eligible_roof = int(counts["eligible_ge256_true_roof"])
+            except (KeyError, TypeError, ValueError) as exc:
+                raise ValueError(
+                    f"{path}: oracle visibility row {building_id!r} lacks integer counts"
+                ) from exc
+            if true_roof_total < 0 or eligible_roof < 0 or eligible_roof > true_roof_total:
+                raise ValueError(
+                    f"{path}: oracle visibility row {building_id!r} has impossible counts"
+                )
+        baseline = metadata.get("footprint_rule_defect_baseline")
+        baseline_height = baseline.get("projection_height_policy") if isinstance(baseline, dict) else None
+        if (
+            not isinstance(baseline, dict)
+            or not str(baseline.get("role", "")).startswith("audit_only")
+            or not isinstance(baseline_height, dict)
+            or baseline_height.get("is_loss_address_input") is not False
+            or baseline_height.get("uses_lod2_height") is not False
+        ):
+            raise ValueError(f"{path}: footprint-rule baseline must remain audit-only")
 
     def validate_files(self, image_names: list[str]) -> None:
         """Fail before training if any view has a missing/mismatched cache."""
@@ -132,8 +247,17 @@ class SemanticRegionCache:
                 missing = sorted(required - set(npz.files))
                 if missing:
                     raise ValueError(f"{path}: missing arrays {missing}")
+                extra = sorted(set(npz.files) - required)
+                if extra:
+                    raise ValueError(
+                        f"{path}: unexpected arrays {extra}; geometry/height side channels are forbidden"
+                    )
                 region_ids = npz["region_ids"]
                 cutline_mask = npz["cutline_mask"]
+                if region_ids.dtype != np.dtype(np.int32):
+                    raise ValueError(f"{path}: region_ids must be int32")
+                if cutline_mask.dtype != np.dtype(np.bool_):
+                    raise ValueError(f"{path}: cutline_mask must be bool")
                 if region_ids.ndim != 2 or cutline_mask.shape != region_ids.shape:
                     raise ValueError(
                         f"{path}: region_ids and cutline_mask must be same-shape HxW arrays"
@@ -150,10 +274,15 @@ class SemanticRegionCache:
                 f"Missing semantic-region cache for {image_name!r}: {path}"
             )
         with np.load(path, allow_pickle=False) as npz:
-            required = {"region_ids", "cutline_mask"}
+            required = {"region_ids", "cutline_mask", "metadata_json"}
             missing = sorted(required - set(npz.files))
             if missing:
                 raise ValueError(f"{path}: missing arrays {missing}")
+            extra = sorted(set(npz.files) - required)
+            if extra:
+                raise ValueError(
+                    f"{path}: unexpected arrays {extra}; geometry/height side channels are forbidden"
+                )
             region_ids = np.asarray(npz["region_ids"])
             cutline_mask = np.asarray(npz["cutline_mask"])
             metadata = self._parse_metadata(npz)
@@ -163,6 +292,12 @@ class SemanticRegionCache:
             )
         if np.any(region_ids < 0):
             raise ValueError(f"{path}: region_ids must be non-negative")
+        if region_ids.dtype != np.dtype(np.int32):
+            raise ValueError(f"{path}: region_ids must be int32")
+        if cutline_mask.dtype != np.dtype(np.bool_):
+            raise ValueError(f"{path}: cutline_mask must be bool")
+        if np.any((region_ids > 0) & cutline_mask):
+            raise ValueError(f"{path}: cutline pixels must have region id 0")
         self._validate_contract(metadata, path)
         metadata_regions = metadata.get("regions", {})
         if not isinstance(metadata_regions, dict):
@@ -184,6 +319,23 @@ class SemanticRegionCache:
             if missing_fields:
                 raise ValueError(
                     f"{path}: region {rid} metadata misses {missing_fields}"
+                )
+            if row.get("address_source") != "actual_label_source_raycast_building_id_only":
+                raise ValueError(f"{path}: region {rid} has a non-oracle-ID address source")
+            if row.get("lod2_depth_or_height_loss_input") is not False:
+                raise ValueError(f"{path}: region {rid} permits LoD2 depth/height as a loss value")
+            forbidden_region_fields = {
+                "projection_z_local_m",
+                "reference_roof_z_local_m",
+                "depth_target",
+                "height_target",
+                "raycast_hit_distance",
+                "raycast_intersection_xyz",
+            }
+            present_forbidden = sorted(forbidden_region_fields & set(row))
+            if present_forbidden:
+                raise ValueError(
+                    f"{path}: region {rid} exposes forbidden loss-value fields {present_forbidden}"
                 )
         frame = RegionFrame(
             # Producer ids are int32.  Preserving that dtype cuts the eventual

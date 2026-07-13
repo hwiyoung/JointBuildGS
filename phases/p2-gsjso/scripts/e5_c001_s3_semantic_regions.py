@@ -1,20 +1,19 @@
 #!/usr/bin/env python3
 """S3-A Track 0 semantic-region cache and reference-only label QA.
 
-This script has two deliberately separate provenance tracks:
+This script has three deliberately separate provenance tracks:
 
 * The S3-A loss address is the fixed C001 clean roof mask (class 1), split by
-  the exact 18 ``seed_log_buildings`` footprints from the Arm 1' base config.
-  Footprint XY is reused from the read-out crop but is newly used here as a
-  loss address.  Its projection height is estimated only from the Arm 1'
-  zero-iteration inputs (C001 SfM points3D plus dense-init points).  A building
-  with no initial point is inactive/unassigned; the global median can only
-  place its conservative +20 m exclusion/veto mask and never creates a positive
-  loss region.  No LoD2 height is used by the loss-address cache.
+  the raycast building-ID map generated with the *same observed datum as that
+  mask* (48.0 m geoid, ``shift_z = 556.0``).  Only the discrete building ID is
+  retained in ``region_ids``.  Ray distance, intersection XYZ, LoD2 z, and
+  LoD2 height are never stored as a loss-value input.
 * The current clean-label raster is first reproduced with its observed legacy
-  generation datum (48.0 m geoid, ``shift_z = 556.0``).  That raycast is used
-  only as the primary building-ID assignment audit.  An official-datum ID
-  audit is recorded separately.  Neither raycast ID map is a training input.
+  generation datum.  Exact per-view class reproduction is a precondition for
+  using its building ID as the class+instance oracle address.
+* The former +20 m projected-footprint rule is still evaluated and written as
+  a one-time defect baseline.  The official 45.7 m datum is likewise retained
+  only as an audit.  Neither audit changes the oracle address.
 
 For every C001 image stem, the cache contains:
 
@@ -24,9 +23,9 @@ For every C001 image stem, the cache contains:
   region-to-building mapping, and both raycast assignment checks.
 
 T0-1 is emitted as ``reference_only/self_consistency``.  It never emits a GO
-or rejection verdict.  This is explicitly an oracle-label +
-reference-footprint-assisted mechanism upper bound, not a model-free S3-B
-claim.
+or rejection verdict.  This is explicitly an oracle class+instance-address
+mechanism upper bound, not a model-free S3-B claim.  S3-B must not reuse the
+raycast building-ID address.
 """
 from __future__ import annotations
 
@@ -108,7 +107,9 @@ CORE9 = [
     "DEBY_LOD2_4908168",
     "DEBY_LOD2_4908178",
 ]
+TEXTURELESS3 = CORE9[:3]
 
+CANONICAL_VIEW_COUNT = 428
 SOURCE_COMPONENT_MIN_PIXELS = 256
 FRAGMENT_MEASURE_MIN_PIXELS = 64
 PLANE_MIN_PIXELS = 64
@@ -116,6 +117,10 @@ REGION_FOOTPRINT_BUFFER_M = 20.0
 CUTLINE_HALF_WIDTH_PX = 7
 QA_FOOTPRINT_BUFFER_M = 1.0
 LEGACY_LABEL_GEOID_M = 48.0
+DOCKER_IMAGE_ID_ENV = "S3_DOCKER_IMAGE_ID"
+PRIORITY_CROP_MARGIN_PX = 32
+PRIORITY_CROP_MIN_SIDE_PX = 256
+PRIORITY_CONTACT_TILE_WH = (480, 360)
 
 ASSIGNMENT_RULE = (
     "eligible class-1 8-connected source component pixels are assigned to "
@@ -126,17 +131,27 @@ ASSIGNMENT_RULE = (
     "lexical building_id tie-break; active winners become positive regions and inactive "
     "winners map to region 0"
 )
+ORACLE_ADDRESS_RULE = (
+    "fixed clean class-1 mask; discard source 8-connected components below 256 px; "
+    "within each retained component assign only the discrete building ID from the "
+    "actual clean-label-source raycast (geoid 48.0 m, shift_z 556.0); restrict IDs "
+    "to exact Arm1-prime C00118; exclude exactly 7 px on both sides of ID cuts"
+)
 EXPERIMENT_SCOPE = (
-    "S3-A oracle-label plus reference-footprint-assisted mechanism upper bound; "
-    "not model-free and not an S3-B/FM result"
+    "S3-A oracle class label plus oracle instance-address mechanism upper bound; "
+    "not model-free and not an S3-B/FM result; S3-B forbids the oracle ID address"
 )
 FOOTPRINT_ROLE = (
-    "footprint XY source is reused from the Arm1-prime/Roofer crop inventory, "
-    "but its use as a semantic geometry loss address is new in S3-A"
+    "footprint XY is retained only to reproduce the pre-adjudication +20 m rule's "
+    "assignment-defect baseline and T0-1 crop; it is not the v3 loss address"
 )
 QA_BUFFER_RATIONALE = (
     "1.0 m absorbs footprint/roof-eave and sub-pixel projection rounding while remaining "
     "far below the locked 20.0 m loss-region split buffer and avoiding adjacent-roof capture"
+)
+QA_BUFFER_ROLE = (
+    "T0-1 audit-only implementation choice; not a loss address, training prior, "
+    "or pass/fail threshold"
 )
 
 
@@ -178,6 +193,13 @@ def sha256_file(path: Path, chunk: int = 1 << 20) -> str:
                 break
             h.update(block)
     return h.hexdigest()
+
+
+def sha256_json(value: Any) -> str:
+    payload = json.dumps(
+        value, sort_keys=True, ensure_ascii=False, separators=(",", ":")
+    ).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
 
 
 def rel(path: Path) -> str:
@@ -593,7 +615,7 @@ def validate_cutline_exactness() -> dict[str, Any]:
     return metrics
 
 
-def build_regions(
+def build_footprint_regions(
     clean_roof: np.ndarray,
     frame: Frame,
     footprints: dict[str, Polygon | MultiPolygon],
@@ -784,6 +806,10 @@ def build_regions(
         ),
         "candidate_footprints_using_global_height_fallback": 0,
         "candidate_overlap_pixels": int(multiple.sum()),
+        "source_component_footprint_overlap_counts": {
+            str(component_id): int(count)
+            for component_id, count in sorted(overlap_counts.items())
+        },
         "raw_two_sided_cutline_pixels_before_inactive_veto_precedence": int(
             raw_cutline_mask.sum()
         ),
@@ -805,6 +831,150 @@ def build_regions(
     )
 
 
+def raycast_owner_map(
+    address_mask: np.ndarray,
+    ray_bidmap: np.ndarray,
+    bid_owner_lookup: np.ndarray,
+) -> np.ndarray:
+    """Map a raycast building index to the locked C00118 owner id.
+
+    The result is a discrete address only.  No hit distance, intersection XYZ,
+    roof z, or height is accepted by this function or returned from it.
+    """
+
+    if address_mask.shape != ray_bidmap.shape:
+        raise ValueError("address_mask and ray_bidmap must have the same HxW shape")
+    owner = np.zeros(ray_bidmap.shape, dtype=np.int32)
+    valid_hit = (
+        address_mask.astype(bool, copy=False)
+        & (ray_bidmap >= 0)
+        & (ray_bidmap < int(len(bid_owner_lookup)))
+    )
+    owner[valid_hit] = bid_owner_lookup[ray_bidmap[valid_hit]]
+    return owner
+
+
+def build_oracle_id_regions(
+    clean_roof: np.ndarray,
+    actual_label: np.ndarray,
+    actual_bidmap: np.ndarray,
+    bid_owner_lookup: np.ndarray,
+    building_ids: list[str],
+    footprint_overlap_counts: dict[int, int],
+) -> tuple[
+    np.ndarray,
+    np.ndarray,
+    list[dict[str, Any]],
+    dict[str, Any],
+    np.ndarray,
+    np.ndarray,
+    np.ndarray,
+]:
+    """Split retained clean-label components by the actual-source building ID.
+
+    This is the adjudicated S3-A B rule.  ``actual_bidmap`` supplies only a
+    categorical owner address.  The output contains no geometric value from
+    the LoD2 raycast.  The former footprint candidate overlap count is carried
+    into each region strictly as audit metadata.
+    """
+
+    if clean_roof.shape != actual_label.shape or clean_roof.shape != actual_bidmap.shape:
+        raise ValueError("clean mask and actual-source raycast arrays must share HxW")
+    alignment = class_alignment(clean_roof.astype(np.uint8), (actual_label == 1).astype(np.uint8))
+
+    component_ids, component_counts, eligible = source_components(clean_roof)
+    # The saved clean PNG remains authoritative for class membership.  The
+    # same-datum raycast contributes only its discrete building ID; it never
+    # replaces the class mask, even at a raster-edge rounding mismatch.
+    owner = raycast_owner_map(clean_roof, actual_bidmap, bid_owner_lookup)
+    owner[~eligible] = 0
+    cutline_mask = two_sided_cutline_band(owner, CUTLINE_HALF_WIDTH_PX)
+    owner_after_cut = owner.copy()
+    owner_after_cut[cutline_mask] = 0
+
+    positive_components = np.unique(component_ids[eligible])
+    owner_to_bid = {i + 1: b for i, b in enumerate(building_ids)}
+    region_ids = np.zeros(clean_roof.shape, dtype=np.int32)
+    regions: list[dict[str, Any]] = []
+    next_region_id = 1
+    for source_component_id in sorted(int(v) for v in positive_components):
+        source_mask = component_ids == source_component_id
+        source_pixel_count = int(component_counts[source_component_id])
+        source_owner_ids = sorted(
+            int(v) for v in np.unique(owner[source_mask]) if int(v) > 0
+        )
+        oracle_instance_count = len(source_owner_ids)
+        for owner_id in source_owner_ids:
+            pair_before_cut = source_mask & (owner == owner_id)
+            pair_after_cut = source_mask & (owner_after_cut == owner_id)
+            fragments, n_fragments = ndimage.label(
+                pair_after_cut, structure=np.ones((3, 3), dtype=np.uint8)
+            )
+            for fragment_index in range(1, int(n_fragments) + 1):
+                fragment = fragments == fragment_index
+                pixel_count = int(fragment.sum())
+                if pixel_count == 0:
+                    continue
+                region_ids[fragment] = next_region_id
+                regions.append(
+                    {
+                        "region_id": next_region_id,
+                        "building_id": owner_to_bid[owner_id],
+                        "source_component_id": source_component_id,
+                        "source_component_pixel_count": source_pixel_count,
+                        "pre_split_overlap_count": int(
+                            footprint_overlap_counts.get(source_component_id, 0)
+                        ),
+                        "pre_split_oracle_instance_count": oracle_instance_count,
+                        "pre_cut_pair_pixel_count": int(pair_before_cut.sum()),
+                        "post_cut_fragment_pixel_count": pixel_count,
+                        "fragment_index": fragment_index,
+                        "post_split_fragment_min_pixels": None,
+                        "plane_loss_min_valid_pixels": PLANE_MIN_PIXELS,
+                        "address_source": "actual_label_source_raycast_building_id_only",
+                        "address_geoid_m": LEGACY_LABEL_GEOID_M,
+                        "address_shift_z_m": 556.0,
+                        "lod2_depth_or_height_loss_input": False,
+                    }
+                )
+                next_region_id += 1
+
+    unassigned = eligible & (owner == 0)
+    stats = {
+        "source_components_total": int(len(component_counts) - 1),
+        "source_components_eligible_ge256": int(len(positive_components)),
+        "source_components_excluded_lt256": int(
+            sum(1 for count in component_counts[1:] if int(count) < SOURCE_COMPONENT_MIN_PIXELS)
+        ),
+        "source_roof_pixels": int(clean_roof.sum()),
+        "eligible_source_pixels": int(eligible.sum()),
+        "unassigned_eligible_pixels_outside_c00118_or_missing_id": int(unassigned.sum()),
+        "oracle_owner_pixels_before_cut": int((owner > 0).sum()),
+        "cutline_pixels": int(cutline_mask.sum()),
+        "regions_after_cut": int(len(regions)),
+        "region_pixels_after_cut": int((region_ids > 0).sum()),
+        "address_mode": "oracle_class_plus_raycast_building_id",
+        "address_datum_geoid_m": LEGACY_LABEL_GEOID_M,
+        "address_datum_shift_z_m": 556.0,
+        "actual_source_class_agreement": alignment["class_agreement"],
+        "actual_source_roof_iou": alignment["roof_iou"],
+        "actual_source_class_mismatch_pixels": alignment["mismatch_pixels"],
+        "fixed_clean_class_mask_is_authoritative": True,
+        "lod2_depth_or_height_loss_input": False,
+    }
+    # Kept in the common return position for assignment_check compatibility.
+    no_inactive_veto = np.zeros(clean_roof.shape, dtype=bool)
+    return (
+        region_ids,
+        cutline_mask.astype(bool),
+        regions,
+        stats,
+        owner,
+        eligible,
+        no_inactive_veto,
+    )
+
+
 def mesh_bid_to_owner(bids: Sequence[str], building_ids: Sequence[str]) -> np.ndarray:
     owner_of = {building_id: i + 1 for i, building_id in enumerate(building_ids)}
     return np.asarray([owner_of.get(building_id, 0) for building_id in bids], dtype=np.int32)
@@ -821,8 +991,10 @@ def assignment_check(
     building_ids: Sequence[str],
     provenance: str,
     shift_z_m: float,
+    *,
+    raycast_building_id_is_loss_input: bool = False,
 ) -> dict[str, Any]:
-    """Audit footprint owner assignment against one raycast building-ID map.
+    """Audit an owner assignment against one raycast building-ID map.
 
     Counts are emitted per C00118 building as well as pooled.  The partition is
     exact on eligible true-roof pixels:
@@ -904,7 +1076,7 @@ def assignment_check(
         "shift_z_m": float(shift_z_m),
         "totals": counts_for(None),
         "by_building": by_building,
-        "raycast_building_id_is_loss_input": False,
+        "raycast_building_id_is_loss_input": bool(raycast_building_id_is_loss_input),
     }
 
 
@@ -999,6 +1171,68 @@ def gate_measurement(
     )
 
 
+def select_gate_candidates(
+    measurements: Sequence[GateMeasurement],
+    core_buildings: Sequence[str],
+    selected_count: int,
+    *,
+    official_geoid_m: float,
+    official_shift_z_m: float,
+    label_actual_source_shift_z_m: float,
+) -> tuple[dict[str, list[GateMeasurement]], list[dict[str, Any]]]:
+    """Select deterministic primary views and retain the full candidate audit."""
+
+    if selected_count < 0:
+        raise ValueError("selected_count must be nonnegative")
+    selected_by_building: dict[str, list[GateMeasurement]] = {}
+    candidate_rows: list[dict[str, Any]] = []
+    for building_id in core_buildings:
+        candidates = [m for m in measurements if m.building_id == building_id]
+        candidates.sort(key=lambda m: (-m.ref_pixels, m.view_stem))
+        selected = candidates[:selected_count]
+        if len(selected) < selected_count:
+            raise AssertionError(
+                f"{building_id}: only {len(selected)} visible views with >=64 P_ref pixels; "
+                f"need {selected_count}"
+            )
+        selected_by_building[building_id] = selected
+        for rank, measurement in enumerate(candidates, start=1):
+            payload = asdict(measurement)
+            candidate_rows.append(
+                {
+                    "measurement_role": "reference_only",
+                    "gate_role": "self_consistency_not_a_gate",
+                    "decision": "not_applicable",
+                    "row_type": "view_candidate",
+                    "building_id": building_id,
+                    "view_stem": measurement.view_stem,
+                    "view_name": measurement.view_name,
+                    "rank_by_ref_area": rank,
+                    "selected_for_primary": rank <= selected_count,
+                    "selected_top3_by_reference_area": (
+                        selected_count == 3 and rank <= 3
+                    ),
+                    "visible_view_count_available": len(candidates),
+                    **{
+                        key: json_number(value)
+                        for key, value in payload.items()
+                        if key not in {"building_id", "view_stem", "view_name"}
+                    },
+                    "qa_footprint_buffer_m": QA_FOOTPRINT_BUFFER_M,
+                    "qa_buffer_rationale": QA_BUFFER_RATIONALE,
+                    "qa_buffer_role": QA_BUFFER_ROLE,
+                    "view_selection_rule": (
+                        "top 3 deterministic views by official P_ref roof pixel area; "
+                        "tie by view stem"
+                    ),
+                    "official_geoid_m": official_geoid_m,
+                    "official_shift_z_m": official_shift_z_m,
+                    "label_actual_source_shift_z_m": label_actual_source_shift_z_m,
+                }
+            )
+    return selected_by_building, candidate_rows
+
+
 def mask_centroid_xy(mask: np.ndarray) -> tuple[float, float] | None:
     ys, xs = np.nonzero(mask)
     if not len(xs):
@@ -1070,13 +1304,20 @@ def projection_height_view_audit(
     }
 
 
+def _ui_font(size: int) -> ImageFont.ImageFont:
+    try:
+        return ImageFont.truetype("DejaVuSans.ttf", size=size)
+    except OSError:
+        return ImageFont.load_default()
+
+
 def render_overlay(
     out_path: Path,
     image_path: Path,
     measured: np.ndarray,
     ref_mask: np.ndarray,
     measurement: GateMeasurement,
-) -> None:
+) -> PILImage.Image:
     image = np.asarray(PILImage.open(image_path).convert("RGB"), dtype=np.uint8)
     blend = image.astype(np.float32)
     blend[measured] = 0.60 * blend[measured] + 0.40 * np.array([230, 55, 55], dtype=np.float32)
@@ -1086,13 +1327,14 @@ def render_overlay(
     blend[ref_boundary] = np.array([0, 235, 255], dtype=np.float32)
     canvas = PILImage.fromarray(np.clip(blend, 0, 255).astype(np.uint8))
     draw = ImageDraw.Draw(canvas)
-    font = ImageFont.load_default()
+    font = _ui_font(13)
     lines = [
         "S3-A T0-1 | reference only / self-consistency",
         f"Building: {measurement.building_id} | View: {measurement.view_stem}",
         f"IoU: {measurement.iou:.4f} | Fragments >=64 px: {measurement.fragment_count_ge64}",
         f"Boundary offset: {measurement.boundary_offset_px:.3f} px / {measurement.boundary_offset_m:.3f} m",
-        "Red: clean roof clipped by +1.0 m footprint | Cyan: official-datum LoD2 roof",
+        "Red: fixed clean roof (legacy 48.0 source) | Cyan: official 45.7 LoD2 reference",
+        "+1.0 m footprint clip: T0-1 audit-only implementation choice",
     ]
     y = 5
     for line in lines:
@@ -1102,6 +1344,400 @@ def render_overlay(
         y = bbox[3] + 4
     out_path.parent.mkdir(parents=True, exist_ok=True)
     canvas.save(out_path)
+    return canvas
+
+
+def priority_crop_box(
+    measured: np.ndarray,
+    ref_mask: np.ndarray,
+    *,
+    margin_px: int = PRIORITY_CROP_MARGIN_PX,
+    min_side_px: int = PRIORITY_CROP_MIN_SIDE_PX,
+) -> tuple[tuple[int, int, int, int], bool]:
+    """Return a deterministic padded union crop and whether the target hits a frame edge."""
+
+    if measured.shape != ref_mask.shape or measured.ndim != 2:
+        raise ValueError("measured and ref_mask must share one HxW shape")
+    if margin_px < 0 or min_side_px <= 0:
+        raise ValueError("margin_px must be nonnegative and min_side_px positive")
+    union = measured.astype(bool, copy=False) | ref_mask.astype(bool, copy=False)
+    ys, xs = np.nonzero(union)
+    if not len(xs):
+        raise ValueError("priority crop requires a nonempty measured/reference union")
+    height, width = union.shape
+    target_touches_frame = bool(
+        np.any(xs == 0)
+        or np.any(xs == width - 1)
+        or np.any(ys == 0)
+        or np.any(ys == height - 1)
+    )
+
+    def bounds(lo: int, hi_exclusive: int, limit: int) -> tuple[int, int]:
+        desired = min(limit, max(hi_exclusive - lo + 2 * margin_px, min_side_px))
+        center = 0.5 * (lo + hi_exclusive)
+        start = int(math.floor(center - 0.5 * desired))
+        start = max(0, min(start, limit - desired))
+        return start, start + desired
+
+    x0, x1 = bounds(int(xs.min()), int(xs.max()) + 1, width)
+    y0, y1 = bounds(int(ys.min()), int(ys.max()) + 1, height)
+    return (x0, y0, x1, y1), target_touches_frame
+
+
+def render_priority_crop(
+    out_path: Path,
+    overlay: PILImage.Image,
+    crop_box: tuple[int, int, int, int],
+    measurement: GateMeasurement,
+    rank: int,
+    *,
+    target_touches_frame: bool,
+) -> PILImage.Image:
+    crop = overlay.crop(crop_box)
+    header_height = 62
+    canvas_width = max(crop.width, 520)
+    canvas = PILImage.new(
+        "RGB", (canvas_width, crop.height + header_height), color=(12, 12, 12)
+    )
+    canvas.paste(crop, ((canvas_width - crop.width) // 2, header_height))
+    draw = ImageDraw.Draw(canvas)
+    font = _ui_font(14)
+    short_id = measurement.building_id.removeprefix("DEBY_LOD2_")
+    lines = [
+        f"Building {short_id} | Rank {rank} | {measurement.view_stem}",
+        (
+            f"IoU {measurement.iou:.4f} | Fragments {measurement.fragment_count_ge64} | "
+            f"Offset {measurement.boundary_offset_px:.3f} px / {measurement.boundary_offset_m:.3f} m"
+            + (" | FRAME EDGE" if target_touches_frame else "")
+        ),
+    ]
+    y = 5
+    for line in lines:
+        draw.text((7, y), line, fill=(255, 255, 255), font=font)
+        bbox = draw.textbbox((7, y), line, font=font)
+        y = bbox[3] + 4
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    canvas.save(out_path)
+    return canvas
+
+
+def make_textureless_contact_sheet(
+    priority_paths: dict[tuple[str, int], Path],
+    out_path: Path,
+) -> PILImage.Image:
+    """Create the locked 3-buildings by 3-ranked-views visual QA sheet."""
+
+    expected = {(building_id, rank) for building_id in TEXTURELESS3 for rank in (1, 2, 3)}
+    if set(priority_paths) != expected:
+        missing = sorted(expected - set(priority_paths))
+        extra = sorted(set(priority_paths) - expected)
+        raise AssertionError(f"priority contact sheet key mismatch: missing={missing}, extra={extra}")
+    tile_width, tile_height = PRIORITY_CONTACT_TILE_WH
+    title_height = 64
+    sheet = PILImage.new(
+        "RGB", (tile_width * 3, title_height + tile_height * 3), color=(245, 245, 245)
+    )
+    draw = ImageDraw.Draw(sheet)
+    title_font = _ui_font(18)
+    draw.text(
+        (10, 7),
+        "S3-A T0-1 textureless priority gallery (reference-only; no gate verdict)",
+        fill=(0, 0, 0),
+        font=title_font,
+    )
+    draw.text(
+        (10, 33),
+        "Red = fixed clean roof (legacy 48.0 source); Cyan = official 45.7 LoD2 reference",
+        fill=(0, 0, 0),
+        font=_ui_font(13),
+    )
+    resampling = getattr(PILImage, "Resampling", PILImage).LANCZOS
+    for row_index, building_id in enumerate(TEXTURELESS3):
+        for column_index, rank in enumerate((1, 2, 3)):
+            path = priority_paths[(building_id, rank)]
+            with PILImage.open(path) as source:
+                tile = source.convert("RGB")
+            tile.thumbnail((tile_width - 12, tile_height - 12), resampling)
+            x = column_index * tile_width + (tile_width - tile.width) // 2
+            y = title_height + row_index * tile_height + (tile_height - tile.height) // 2
+            sheet.paste(tile, (x, y))
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    sheet.save(out_path)
+    return sheet
+
+
+def image_artifact(
+    path: Path,
+    *,
+    kind: str,
+    building_id: str | None = None,
+    view_stem: str | None = None,
+    rank: int | None = None,
+    crop_box_xyxy: tuple[int, int, int, int] | None = None,
+    target_touches_frame: bool | None = None,
+) -> dict[str, Any]:
+    with PILImage.open(path) as image:
+        image.load()
+        width, height = image.size
+        image_format = image.format
+    if image_format != "PNG" or width <= 0 or height <= 0:
+        raise AssertionError(f"invalid PNG artifact: {path}")
+    return {
+        "kind": kind,
+        "building_id": building_id,
+        "view_stem": view_stem,
+        "rank": rank,
+        "path": rel(path),
+        "sha256": sha256_file(path),
+        "width_px": int(width),
+        "height_px": int(height),
+        "crop_box_xyxy": list(crop_box_xyxy) if crop_box_xyxy is not None else None,
+        "target_touches_frame": target_touches_frame,
+    }
+
+
+def validate_run_mode_contract(
+    *,
+    debug_subset: bool,
+    frame_count: int,
+    core_buildings: Sequence[str],
+    views_per_building: int,
+    skip_overlays: bool,
+    legacy_label_geoid_m: float,
+) -> dict[str, Any]:
+    """Keep canonical production strict while preserving explicit debug/smoke modes."""
+
+    if not math.isclose(legacy_label_geoid_m, LEGACY_LABEL_GEOID_M, abs_tol=1e-9):
+        raise AssertionError("actual label-source geoid must remain 48.0 m")
+    if debug_subset:
+        return {
+            "mode": "debug_subset",
+            "canonical_guards_applied": False,
+            "frame_count": int(frame_count),
+            "core_buildings": list(core_buildings),
+            "views_per_building": int(views_per_building),
+            "overlays_enabled": not skip_overlays,
+        }
+    errors: list[str] = []
+    if frame_count != CANONICAL_VIEW_COUNT:
+        errors.append(f"frame_count={frame_count}, expected={CANONICAL_VIEW_COUNT}")
+    if list(core_buildings) != CORE9:
+        errors.append("core_buildings must equal the locked ordered CORE9")
+    if views_per_building != 3:
+        errors.append(f"views_per_building={views_per_building}, expected=3")
+    if skip_overlays:
+        errors.append("canonical T0-1 forbids --skip-overlays")
+    if errors:
+        raise AssertionError("canonical S3-A T0-1 contract failed: " + "; ".join(errors))
+    return {
+        "mode": "canonical_full",
+        "canonical_guards_applied": True,
+        "frame_count": int(frame_count),
+        "core_buildings": list(core_buildings),
+        "views_per_building": int(views_per_building),
+        "overlays_enabled": True,
+        "label_source_geoid_m": float(legacy_label_geoid_m),
+    }
+
+
+def validate_t0_1_outputs(
+    *,
+    gate_rows: Sequence[dict[str, Any]],
+    candidate_rows: Sequence[dict[str, Any]],
+    core_buildings: Sequence[str],
+    views_per_building: int,
+    overlay_artifacts: Sequence[dict[str, Any]],
+    fig_dir: Path,
+    debug_subset: bool,
+    skip_overlays: bool,
+) -> dict[str, Any]:
+    """Self-validate quantitative/qualitative T0-1 outputs before gate use."""
+
+    metric_names = [
+        "ref_pixels",
+        "clean_clipped_pixels",
+        "intersection_pixels",
+        "union_pixels",
+        "iou",
+        "fragment_count_ge64",
+        "boundary_offset_px",
+        "jacobian_m_per_px_x",
+        "jacobian_m_per_px_y",
+        "jacobian_m_per_px",
+        "boundary_offset_m",
+        "roof_height_local_m",
+    ]
+
+    candidate_by_building: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for row in candidate_rows:
+        candidate_by_building[str(row["building_id"])].append(dict(row))
+    expected_selected: set[tuple[str, str]] = set()
+    for building_id in core_buildings:
+        rows = sorted(
+            candidate_by_building.get(building_id, []),
+            key=lambda row: int(row["rank_by_ref_area"]),
+        )
+        expected_order = sorted(
+            rows, key=lambda row: (-int(row["ref_pixels"]), str(row["view_stem"]))
+        )
+        if [row["view_stem"] for row in rows] != [
+            row["view_stem"] for row in expected_order
+        ]:
+            raise AssertionError(f"{building_id}: candidate area/stem ordering mismatch")
+        for expected_rank, row in enumerate(rows, start=1):
+            if int(row["rank_by_ref_area"]) != expected_rank:
+                raise AssertionError(f"{building_id}: candidate ranks are not contiguous")
+            expected_flag = expected_rank <= views_per_building
+            if bool(row["selected_for_primary"]) is not expected_flag:
+                raise AssertionError(f"{building_id}: selected_for_primary disagrees with rank")
+            if expected_flag:
+                expected_selected.add((building_id, str(row["view_stem"])))
+        if len(rows) < views_per_building:
+            raise AssertionError(f"{building_id}: candidate audit has fewer than selected views")
+
+    view_rows = [dict(row) for row in gate_rows if row.get("row_type") == "view"]
+    median_rows = [
+        dict(row) for row in gate_rows if row.get("row_type") == "building_median"
+    ]
+    observed_selected = {(str(row["building_id"]), str(row["view_stem"])) for row in view_rows}
+    if observed_selected != expected_selected:
+        raise AssertionError("primary gate rows do not match candidate selected flags")
+    for row in view_rows:
+        if (
+            row.get("measurement_role") != "reference_only"
+            or row.get("gate_role") != "self_consistency_not_a_gate"
+            or row.get("decision") != "not_applicable"
+        ):
+            raise AssertionError("T0-1 rows must remain reference-only and non-gating")
+        ref_pixels = int(row["ref_pixels"])
+        measured_pixels = int(row["clean_clipped_pixels"])
+        intersection = int(row["intersection_pixels"])
+        union = int(row["union_pixels"])
+        if ref_pixels < FRAGMENT_MEASURE_MIN_PIXELS or measured_pixels < 0:
+            raise AssertionError("selected T0-1 view has invalid pixel support")
+        if intersection < 0 or intersection > min(ref_pixels, measured_pixels):
+            raise AssertionError("selected T0-1 intersection is inconsistent")
+        if union != ref_pixels + measured_pixels - intersection:
+            raise AssertionError("selected T0-1 union is inconsistent")
+        iou = float(row["iou"])
+        if not math.isfinite(iou) or not 0.0 <= iou <= 1.0:
+            raise AssertionError("selected T0-1 IoU is not finite in [0,1]")
+        fragments = float(row["fragment_count_ge64"])
+        if fragments < 0 or not fragments.is_integer():
+            raise AssertionError("selected T0-1 fragment count is not a nonnegative integer")
+        for key in (
+            "boundary_offset_px",
+            "jacobian_m_per_px_x",
+            "jacobian_m_per_px_y",
+            "jacobian_m_per_px",
+            "boundary_offset_m",
+        ):
+            value = float(row[key])
+            if not math.isfinite(value) or value < 0:
+                raise AssertionError(f"selected T0-1 {key} is not finite/nonnegative")
+
+    if views_per_building > 0:
+        medians_by_building = {str(row["building_id"]): row for row in median_rows}
+        if set(medians_by_building) != set(core_buildings):
+            raise AssertionError("T0-1 building median coverage mismatch")
+        for building_id in core_buildings:
+            selected = [row for row in view_rows if row["building_id"] == building_id]
+            if len(selected) != views_per_building:
+                raise AssertionError(f"{building_id}: primary selected-view count mismatch")
+            median = medians_by_building[building_id]
+            for key in metric_names:
+                expected = float(np.median([float(row[key]) for row in selected]))
+                actual = float(median[key])
+                if not math.isclose(actual, expected, rel_tol=1e-9, abs_tol=1e-12):
+                    raise AssertionError(f"{building_id}: median mismatch for {key}")
+    elif gate_rows:
+        raise AssertionError("views_per_building=0 must not emit primary gate rows")
+
+    artifacts = [dict(row) for row in overlay_artifacts]
+    for artifact in artifacts:
+        path = REPO / str(artifact["path"])
+        if not path.is_file():
+            path = Path(str(artifact["path"]))
+        current = image_artifact(
+            path,
+            kind=str(artifact["kind"]),
+            building_id=artifact.get("building_id"),
+            view_stem=artifact.get("view_stem"),
+            rank=artifact.get("rank"),
+            crop_box_xyxy=(
+                tuple(int(value) for value in artifact["crop_box_xyxy"])
+                if artifact.get("crop_box_xyxy") is not None
+                else None
+            ),
+            target_touches_frame=artifact.get("target_touches_frame"),
+        )
+        if current["sha256"] != artifact.get("sha256"):
+            raise AssertionError(f"overlay hash changed during output QA: {path}")
+
+    by_kind: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for artifact in artifacts:
+        by_kind[str(artifact["kind"])].append(artifact)
+    if skip_overlays:
+        if artifacts:
+            raise AssertionError("--skip-overlays produced unexpected image artifacts")
+    else:
+        if len(by_kind["full_overlay"]) != len(expected_selected):
+            raise AssertionError("full overlay count does not match selected primary views")
+
+    if not debug_subset:
+        if list(core_buildings) != CORE9 or views_per_building != 3:
+            raise AssertionError("canonical T0-1 QA requires exact CORE9 x 3")
+        if len(candidate_rows) < 27 or len(view_rows) != 27 or len(median_rows) != 9:
+            raise AssertionError("canonical T0-1 row contract is not 27 views + 9 medians")
+        expected_full_paths = {
+            (fig_dir / f"{building_id}__{stem}.png").resolve()
+            for building_id, stem in expected_selected
+        }
+        observed_full_paths = {
+            (REPO / str(row["path"])).resolve() for row in by_kind["full_overlay"]
+        }
+        if observed_full_paths != expected_full_paths:
+            raise AssertionError("canonical full overlay path set mismatch")
+        immediate_pngs = {path.resolve() for path in fig_dir.glob("*.png")}
+        if immediate_pngs != expected_full_paths:
+            raise AssertionError("canonical overlay directory has missing/stale immediate PNGs")
+        if len(by_kind["priority_crop"]) != 9 or len(by_kind["priority_contact_sheet"]) != 1:
+            raise AssertionError("canonical priority gallery must contain 9 crops + 1 contact sheet")
+        expected_priority = {
+            (building_id, rank) for building_id in TEXTURELESS3 for rank in (1, 2, 3)
+        }
+        observed_priority = {
+            (str(row["building_id"]), int(row["rank"]))
+            for row in by_kind["priority_crop"]
+        }
+        if observed_priority != expected_priority:
+            raise AssertionError("canonical priority crop building/rank grid mismatch")
+        expected_priority_paths = {
+            (REPO / str(row["path"])).resolve()
+            for row in [*by_kind["priority_crop"], *by_kind["priority_contact_sheet"]]
+        }
+        observed_priority_paths = {
+            path.resolve() for path in (fig_dir / "priority").glob("*.png")
+        }
+        if observed_priority_paths != expected_priority_paths:
+            raise AssertionError("canonical priority directory has missing/stale PNGs")
+
+    artifact_fingerprint = [
+        [str(row["kind"]), str(row["path"]), str(row["sha256"])]
+        for row in sorted(artifacts, key=lambda row: (str(row["kind"]), str(row["path"])))
+    ]
+    return {
+        "status": "pass",
+        "mode": "debug_subset" if debug_subset else "canonical_full",
+        "candidate_rows": len(candidate_rows),
+        "primary_view_rows": len(view_rows),
+        "building_median_rows": len(median_rows),
+        "full_overlay_count": len(by_kind["full_overlay"]),
+        "priority_crop_count": len(by_kind["priority_crop"]),
+        "priority_contact_sheet_count": len(by_kind["priority_contact_sheet"]),
+        "overlay_artifact_aggregate_sha256": sha256_json(artifact_fingerprint),
+        "qa_buffer_role": QA_BUFFER_ROLE,
+    }
 
 
 ASSIGNMENT_COUNT_FIELDS = [
@@ -1231,15 +1867,33 @@ def parse_args() -> argparse.Namespace:
 def main() -> int:
     args = parse_args()
     started = time.time()
+    debug_subset = bool(args.limit or args.view_stems)
+    docker_image_id = os.environ.get(DOCKER_IMAGE_ID_ENV, "").strip()
+    docker_digest = docker_image_id.removeprefix("sha256:")
+    valid_docker_digest = (
+        docker_image_id.startswith("sha256:")
+        and len(docker_digest) == 64
+        and all(character in "0123456789abcdef" for character in docker_digest.lower())
+    )
+    if not debug_subset and not valid_docker_digest:
+        raise RuntimeError(
+            f"canonical producer requires {DOCKER_IMAGE_ID_ENV}=sha256:<64 hex>; "
+            "pass the host `docker image inspect --format {{.Id}} jointbuildgs:dev` result"
+        )
     # These are implementation locks, not tunable CLI knobs for this order.
     if args.source_component_min_pixels != SOURCE_COMPONENT_MIN_PIXELS:
-        raise ValueError("S3-A v2 locks source_component_min_pixels=256")
+        raise ValueError("S3-A v3 locks source_component_min_pixels=256")
     if not math.isclose(args.region_buffer_m, REGION_FOOTPRINT_BUFFER_M):
-        raise ValueError("S3-A v2 locks region footprint buffer=20.0 m")
+        raise ValueError("S3-A v3 locks footprint-audit buffer=20.0 m")
     if args.cutline_half_width_px != CUTLINE_HALF_WIDTH_PX:
-        raise ValueError("S3-A v2 locks cutline half-width=7 px")
+        raise ValueError("S3-A v3 locks cutline half-width=7 px")
+    if not math.isclose(args.legacy_label_geoid_m, LEGACY_LABEL_GEOID_M, abs_tol=1e-9):
+        raise ValueError("S3-A v3 locks the loss-address label-source geoid to 48.0 m")
     if not math.isclose(args.qa_buffer_m, QA_FOOTPRINT_BUFFER_M):
-        raise ValueError("this reproducible T0-1 run locks the documented QA buffer=1.0 m")
+        raise ValueError(
+            "this reproducible T0-1 audit fixes the implementation-choice QA buffer=1.0 m; "
+            "it is not a loss address or pass/fail threshold"
+        )
     if args.limit and args.view_stems:
         raise ValueError("--limit and --view-stems are mutually exclusive")
 
@@ -1266,18 +1920,23 @@ def main() -> int:
     legacy_shift_z = ellipsoid_shift - float(args.legacy_label_geoid_m)
     if not math.isclose(official_geoid, 45.7, abs_tol=1e-9) or not math.isclose(official_shift_z, 558.3):
         raise AssertionError(f"official datum lock changed: geoid={official_geoid}, shift_z={official_shift_z}")
+    if not math.isclose(legacy_shift_z, 556.0, abs_tol=1e-9):
+        raise AssertionError(
+            f"actual clean-label source loss-address shift_z must be 556.0, got {legacy_shift_z}"
+        )
     xy_shift = np.array([690953.0, 5336071.0], dtype=np.float64)
     shift_official = np.array([xy_shift[0], xy_shift[1], official_shift_z], dtype=np.float64)
 
     all_frames = load_frames(data_root)
+    run_mode_contract = validate_run_mode_contract(
+        debug_subset=debug_subset,
+        frame_count=len(all_frames),
+        core_buildings=args.core_buildings,
+        views_per_building=args.views_per_building,
+        skip_overlays=args.skip_overlays,
+        legacy_label_geoid_m=args.legacy_label_geoid_m,
+    )
     frames = all_frames
-    if not args.limit and not args.view_stems:
-        raise RuntimeError(
-            "BLOCKED: 428-view cache generation is disabled until the footprint-split "
-            "address rule is adjudicated. The preregistered +20 m projection cannot "
-            "simultaneously preserve 4907199 and keep zero-source 4908179 unassigned; "
-            "use --view-stems/--limit for diagnostic smoke only."
-        )
     if args.view_stems:
         by_stem = {frame.stem: frame for frame in all_frames}
         missing_views = sorted(set(args.view_stems) - set(by_stem))
@@ -1479,6 +2138,7 @@ def main() -> int:
     inventory_rows: list[dict[str, Any]] = []
     mapping_rows: list[dict[str, Any]] = []
     validation_rows: list[dict[str, Any]] = []
+    oracle_integrity_rows: list[dict[str, Any]] = []
     projection_height_view_rows: list[dict[str, Any]] = []
     all_gate_measurements: list[GateMeasurement] = []
 
@@ -1505,15 +2165,17 @@ def main() -> int:
             frame.camera.width,
         )
 
+        # Preserve the pre-adjudication footprint rule as a one-time defect
+        # baseline.  Its owner raster is never written as the v3 loss address.
         (
-            region_ids,
-            cutline_mask,
-            regions,
-            region_stats,
-            owner,
-            eligible,
-            inactive_veto_mask,
-        ) = build_regions(
+            _footprint_region_ids,
+            footprint_cutline_mask,
+            _footprint_regions,
+            footprint_region_stats,
+            footprint_owner,
+            footprint_eligible,
+            footprint_inactive_veto_mask,
+        ) = build_footprint_regions(
             clean_roof,
             frame,
             footprints,
@@ -1522,7 +2184,29 @@ def main() -> int:
             xy_shift,
             building_ids,
         )
-        check_actual = assignment_check(
+        footprint_overlap_counts = {
+            int(component_id): int(count)
+            for component_id, count in footprint_region_stats[
+                "source_component_footprint_overlap_counts"
+            ].items()
+        }
+        (
+            region_ids,
+            cutline_mask,
+            regions,
+            region_stats,
+            owner,
+            eligible,
+            inactive_veto_mask,
+        ) = build_oracle_id_regions(
+            clean_roof,
+            actual_label,
+            actual_bidmap,
+            bid_owner_lookup,
+            building_ids,
+            footprint_overlap_counts,
+        )
+        oracle_check_actual = assignment_check(
             owner,
             cutline_mask,
             eligible,
@@ -1531,14 +2215,28 @@ def main() -> int:
             actual_bidmap,
             bid_owner_lookup,
             building_ids,
+            "actual_label_source_legacy48p0_oracle_address",
+            legacy_shift_z,
+            raycast_building_id_is_loss_input=True,
+        )
+        oracle_integrity_rows.append(oracle_check_actual["totals"])
+        check_actual = assignment_check(
+            footprint_owner,
+            footprint_cutline_mask,
+            footprint_eligible,
+            footprint_inactive_veto_mask,
+            actual_label,
+            actual_bidmap,
+            bid_owner_lookup,
+            building_ids,
             "actual_label_source_legacy48p0",
             legacy_shift_z,
         )
         check_official = assignment_check(
-            owner,
-            cutline_mask,
-            eligible,
-            inactive_veto_mask,
+            footprint_owner,
+            footprint_cutline_mask,
+            footprint_eligible,
+            footprint_inactive_veto_mask,
             official_label,
             official_bidmap,
             bid_owner_lookup,
@@ -1549,34 +2247,66 @@ def main() -> int:
 
         semantic_hash = sha256_file(semantic_path)
         metadata = {
-            "schema": "jointbuildgs.s3a.semantic_regions.v2",
+            "schema": "jointbuildgs.s3a.semantic_regions.v3",
             "image_stem": frame.stem,
             "image_name": frame.name,
             "shape_hw": [int(frame.camera.height), int(frame.camera.width)],
             "loss_address_source": (
-                "fixed C001 clean semantic class-1 mask plus exact Arm1-prime C00118 footprint "
-                "split projected at zero-iteration sparse+dense-init point median z; "
-                "source_count=0 candidate inactive; no LoD2 height"
+                "fixed C001 clean semantic class-1 mask plus discrete building ID from the "
+                "exactly aligned actual clean-label-source raycast; exact Arm1-prime C00118 only"
             ),
             "experiment_scope": EXPERIMENT_SCOPE,
-            "claim_boundary": "mechanism upper bound only; not model-free and not S3-B/FM",
+            "claim_boundary": (
+                "oracle class+instance-address mechanism upper bound only; not a battlefield "
+                "win, not model-free, and not S3-B/FM; S3-B forbids this ID map"
+            ),
             "footprint_xy_role": FOOTPRINT_ROLE,
             "candidate_building_source": rel(arm1p_config_path),
             "candidate_building_ids_config_order": configured_building_ids,
             "candidate_building_ids_assignment_order": building_ids,
             "candidate_building_list_sha256": candidate_list_sha256,
-            "candidate_buildings_inactive_for_loss_address": [
+            "candidate_buildings_inactive_for_loss_address": [],
+            "zero_initial_point_buildings_audit_only": [
                 building_id
                 for building_id in building_ids
                 if not projection_heights[building_id]["active_for_loss_address"]
             ],
-            "raycast_building_id_is_loss_input": False,
-            "raycast_validation_scope": "audit only; neither actual nor official building-ID map enters training",
+            "loss_address_mode": "oracle_class_plus_raycast_building_id",
+            "raycast_building_id_is_loss_input": True,
+            "raycast_building_id_loss_role": "region address only",
+            "loss_address_datum": {
+                "provenance": "actual_clean_label_source_legacy48p0",
+                "orthometric_geoid_m": float(args.legacy_label_geoid_m),
+                "shift_z_m": legacy_shift_z,
+                "class_mask_alignment": (
+                    "fixed clean PNG is authoritative; actual-source datum ID map only; "
+                    "per-view raster-edge mismatch audited"
+                ),
+            },
+            "official_datum_audit": {
+                "provenance": rel(datum_path),
+                "orthometric_geoid_m": official_geoid,
+                "shift_z_m": official_shift_z,
+                "role": "audit_only",
+                "is_loss_input": False,
+            },
+            "loss_value_contract": {
+                "raycast_building_id_role": "region membership only",
+                "raycast_hit_distance_stored": False,
+                "raycast_intersection_xyz_stored": False,
+                "lod2_depth_or_height_loss_input": False,
+                "official_datum_is_loss_input": False,
+                "absolute_height_source": "existing L_depth supervision only",
+                "npz_loss_address_arrays": ["region_ids", "cutline_mask"],
+            },
             "cache_contract": {
                 "cutline_half_width_px": CUTLINE_HALF_WIDTH_PX,
                 "source_component_min_pixels": SOURCE_COMPONENT_MIN_PIXELS,
                 "connectivity": 8,
                 "footprint_buffer_m": REGION_FOOTPRINT_BUFFER_M,
+                "loss_address_mode": "oracle_class_plus_raycast_building_id",
+                "loss_address_geoid_m": float(args.legacy_label_geoid_m),
+                "loss_address_shift_z_m": legacy_shift_z,
             },
             "connectivity": 8,
             "source_component_connectivity": 8,
@@ -1590,46 +2320,29 @@ def main() -> int:
                 "subpixel cut; exactly 7 owner pixels each side via per-owner Chebyshev distance 0..6"
             ),
             "cutline_exactness_qa": cutline_exactness_qa,
-            "assignment_rule": ASSIGNMENT_RULE,
-            "projection_height_policy": {
-                "estimator": (
-                    "per-building median z of combined Arm1-prime zero-iteration sparse points3D "
-                    "and dense-init points strictly inside the unbuffered footprint"
-                ),
-                "fallback": "none; source_count=0 remains inactive/unassigned",
-                "zero_source_policy": (
-                    "global-median +20m exclusion-only candidate enters the same nearest-"
-                    "unbuffered-distance competition as active candidates; only an inactive "
-                    "winner becomes veto/region0 and never a positive region; reason=zero "
-                    "Arm1p initial points; P-L-style no-material branch"
-                ),
-                "global_initial_point_z_median": global_initial_z_median,
-                "sparse_points3d_path": rel(sparse_points_path),
-                "dense_init_path": rel(dense_init_path),
-                "uses_lod2_height": False,
-                "lod2_height_scope": "T0-1 P_ref and raycast audit only",
-            },
-            "projection_height_buildings_used": {
-                building_id: projection_heights[building_id]
-                for building_id in sorted({region["building_id"] for region in regions})
-            },
-            "projection_height_candidate_inventory_c00118": projection_heights,
-            "inactive_zero_source_veto": {
-                "building_ids": region_stats["inactive_veto_buildings_projected"],
-                "eligible_pixels_excluded": region_stats["inactive_veto_pixels"],
-                "buffer_m": REGION_FOOTPRINT_BUFFER_M,
-                "projection_height": "global initial-point median; exclusion/veto only",
-                "competition_rule": (
-                    "same +20m candidate set and nearest-unbuffered-distance winner as active; "
-                    "no blanket pre-exclusion"
-                ),
-                "positive_region_created": False,
-                "reason": "zero Arm1p initial points; P-L-style no-material branch",
+            "assignment_rule": ORACLE_ADDRESS_RULE,
+            "footprint_rule_defect_baseline": {
+                "role": "audit_only; retained pre-adjudication S3-B address-delta baseline",
+                "assignment_rule": ASSIGNMENT_RULE,
+                "footprint_buffer_m": REGION_FOOTPRINT_BUFFER_M,
+                "projection_height_policy": {
+                    "estimator": (
+                        "per-building median z of Arm1-prime zero-iteration sparse points3D "
+                        "plus dense-init points strictly inside the unbuffered footprint"
+                    ),
+                    "global_initial_point_z_median": global_initial_z_median,
+                    "uses_lod2_height": False,
+                    "is_loss_address_input": False,
+                },
+                "projection_height_candidate_inventory_c00118": projection_heights,
+                "region_stats": footprint_region_stats,
+                "raycast_assignment_check": {
+                    "primary_actual_label_source": check_actual,
+                    "secondary_official_v2": check_official,
+                },
             },
             "crs": crs,
-            "orthometric_geoid_m": official_geoid,
             "ellipsoid_shift_z_m": ellipsoid_shift,
-            "official_local_shift_xyz_m": shift_official.tolist(),
             "l_nb_boundary_source": "class boundary only; cutline_mask is forbidden for L_nb",
             "alignment_preflight": alignment_preflight,
             "input_hashes": {
@@ -1638,6 +2351,7 @@ def main() -> int:
             },
             "regions": {str(region["region_id"]): region for region in regions},
             "region_stats": region_stats,
+            "oracle_address_check": oracle_check_actual,
             "raycast_assignment_check": {
                 "primary_actual_label_source": check_actual,
                 "secondary_official_v2": check_official,
@@ -1658,6 +2372,7 @@ def main() -> int:
                     "view_stem": frame.stem,
                     **region,
                     "footprint_buffer_m": REGION_FOOTPRINT_BUFFER_M,
+                    "footprint_buffer_role": "pre-adjudication overlap audit only",
                     "cutline_half_width_px": CUTLINE_HALF_WIDTH_PX,
                     "source_component_min_pixels": SOURCE_COMPONENT_MIN_PIXELS,
                     "cache_path": rel(cache_path),
@@ -1790,13 +2505,18 @@ def main() -> int:
 
     aggregate_primary = aggregate_checks["actual_label_source_legacy48p0"]
     aggregate_secondary = aggregate_checks["official_v2_datum45p7"]
+    aggregate_oracle_integrity = sum_assignment_counts(oracle_integrity_rows)
+    if int(aggregate_oracle_integrity["wrong"]) != 0:
+        raise AssertionError(
+            "actual-source oracle ID address must have zero misassigned pixels; "
+            f"got {aggregate_oracle_integrity['wrong']}"
+        )
 
     # Input-height versus audit-only LoD2-height projection coverage.  Full runs
     # require >=3 visible views for every C00118 building.  Explicit smoke/debug
     # subsets retain however many are visible and mark the aggregate accordingly.
     projection_height_rows: list[dict[str, Any]] = []
     projection_audit_by_building: dict[str, Any] = {}
-    debug_subset = bool(args.limit or args.view_stems)
     for building_id in building_ids:
         candidates = [
             row for row in projection_height_view_rows if row["building_id"] == building_id
@@ -1873,20 +2593,14 @@ def main() -> int:
         projection_height_rows.append(aggregate)
         projection_audit_by_building[building_id] = aggregate
 
-    selected_by_building: dict[str, list[GateMeasurement]] = {}
-    for building_id in args.core_buildings:
-        if args.views_per_building == 0:
-            selected_by_building[building_id] = []
-            continue
-        candidates = [m for m in all_gate_measurements if m.building_id == building_id]
-        candidates.sort(key=lambda m: (-m.ref_pixels, m.view_stem))
-        selected = candidates[: args.views_per_building]
-        if len(selected) < args.views_per_building:
-            raise AssertionError(
-                f"{building_id}: only {len(selected)} visible views with >=64 P_ref pixels; "
-                f"need {args.views_per_building}"
-            )
-        selected_by_building[building_id] = selected
+    selected_by_building, gate_candidate_rows = select_gate_candidates(
+        all_gate_measurements,
+        args.core_buildings,
+        args.views_per_building,
+        official_geoid_m=official_geoid,
+        official_shift_z_m=official_shift_z,
+        label_actual_source_shift_z_m=legacy_shift_z,
+    )
 
     frame_by_stem = {frame.stem: frame for frame in frames}
     gate_rows: list[dict[str, Any]] = []
@@ -1911,6 +2625,7 @@ def main() -> int:
                     **{k: json_number(v) for k, v in asdict(measurement).items() if k not in {"building_id", "view_stem", "view_name"}},
                     "qa_footprint_buffer_m": QA_FOOTPRINT_BUFFER_M,
                     "qa_buffer_rationale": QA_BUFFER_RATIONALE,
+                    "qa_buffer_role": QA_BUFFER_ROLE,
                     "view_selection_rule": "top 3 deterministic views by official P_ref roof pixel area; tie by view stem",
                     "official_geoid_m": official_geoid,
                     "official_shift_z_m": official_shift_z,
@@ -1952,6 +2667,7 @@ def main() -> int:
                 **medians,
                 "qa_footprint_buffer_m": QA_FOOTPRINT_BUFFER_M,
                 "qa_buffer_rationale": QA_BUFFER_RATIONALE,
+                "qa_buffer_role": QA_BUFFER_ROLE,
                 "view_selection_rule": "top 3 deterministic views by official P_ref roof pixel area; tie by view stem",
                 "official_geoid_m": official_geoid,
                 "official_shift_z_m": official_shift_z,
@@ -1959,9 +2675,11 @@ def main() -> int:
             }
         )
 
+    overlay_artifacts: list[dict[str, Any]] = []
+    priority_paths: dict[tuple[str, int], Path] = {}
     if not args.skip_overlays:
         for building_id, selected in selected_by_building.items():
-            for measurement in selected:
+            for rank, measurement in enumerate(selected, start=1):
                 frame = frame_by_stem[measurement.view_stem]
                 semantic_path = data_root / "semantic" / f"{frame.stem}.png"
                 clean_roof = np.asarray(PILImage.open(semantic_path), dtype=np.uint8) == 1
@@ -1976,15 +2694,64 @@ def main() -> int:
                     qa_footprints[building_id], reference_heights[building_id], frame, xy_shift
                 )
                 measured = clean_roof & qa_mask
-                render_overlay(
-                    args.fig_dir / f"{building_id}__{frame.stem}.png",
+                full_path = args.fig_dir / f"{building_id}__{frame.stem}.png"
+                overlay = render_overlay(
+                    full_path,
                     data_root / "images" / frame.name,
                     measured,
                     ref_mask,
                     measurement,
                 )
+                overlay_artifacts.append(
+                    image_artifact(
+                        full_path,
+                        kind="full_overlay",
+                        building_id=building_id,
+                        view_stem=frame.stem,
+                        rank=rank,
+                    )
+                )
+                if building_id in TEXTURELESS3:
+                    crop_box, target_touches_frame = priority_crop_box(measured, ref_mask)
+                    priority_path = (
+                        args.fig_dir
+                        / "priority"
+                        / f"{building_id}__rank{rank}__{frame.stem}.png"
+                    )
+                    render_priority_crop(
+                        priority_path,
+                        overlay,
+                        crop_box,
+                        measurement,
+                        rank,
+                        target_touches_frame=target_touches_frame,
+                    )
+                    priority_paths[(building_id, rank)] = priority_path
+                    overlay_artifacts.append(
+                        image_artifact(
+                            priority_path,
+                            kind="priority_crop",
+                            building_id=building_id,
+                            view_stem=frame.stem,
+                            rank=rank,
+                            crop_box_xyxy=crop_box,
+                            target_touches_frame=target_touches_frame,
+                        )
+                    )
+        expected_priority_keys = {
+            (building_id, rank) for building_id in TEXTURELESS3 for rank in (1, 2, 3)
+        }
+        if set(priority_paths) == expected_priority_keys:
+            contact_sheet_path = args.fig_dir / "priority" / "textureless3_contact_sheet.png"
+            make_textureless_contact_sheet(priority_paths, contact_sheet_path)
+            overlay_artifacts.append(
+                image_artifact(contact_sheet_path, kind="priority_contact_sheet")
+            )
 
     semantic_gate_path = args.docs_dir / "e5_c001_s3_semantic_gate.csv"
+    semantic_gate_candidates_path = (
+        args.docs_dir / "e5_c001_s3_semantic_gate_candidates.csv"
+    )
     mapping_path = args.docs_dir / "e5_c001_s3_semantic_region_mapping.csv"
     inventory_path = args.docs_dir / "e5_c001_s3_semantic_region_inventory.csv"
     validation_path = args.docs_dir / "e5_c001_s3_raycast_assignment_check.csv"
@@ -1994,6 +2761,7 @@ def main() -> int:
     )
     issue_path = args.docs_dir / "e5_c001_s3_issues.csv"
     write_csv(semantic_gate_path, gate_rows)
+    write_csv(semantic_gate_candidates_path, gate_candidate_rows)
     write_csv(mapping_path, mapping_rows)
     write_csv(inventory_path, inventory_rows)
     write_csv(validation_path, validation_rows)
@@ -2016,8 +2784,38 @@ def main() -> int:
                 f"roof_iou={official_alignment['roof_iou']:.6f}, mismatch_px={official_alignment['mismatch_pixels']}"
             ),
             "impact": "T0-1 remains reference-only; official-datum self-consistency includes a 2.3 m vertical provenance mismatch.",
-            "handling": "Loss address keeps the fixed clean class mask but projects footprint instances at Arm1-prime zero-iteration input-point median z; LoD2 z is restricted to T0-1/raycast audit. Building-ID audits report actual-source primary and official secondary; raycast IDs are not training inputs.",
+            "handling": (
+                "S3-A B adjudication uses only the actual-source 48.0/556.0 discrete building "
+                "ID as the region address; ray distance/XYZ/LoD2 depth or height are forbidden "
+                "loss values. Official 45.7/558.3 remains audit-only; the old footprint rule "
+                "is retained only as the S3-B address-defect baseline."
+            ),
         },
+    )
+
+    t0_1_output_qa = validate_t0_1_outputs(
+        gate_rows=gate_rows,
+        candidate_rows=gate_candidate_rows,
+        core_buildings=args.core_buildings,
+        views_per_building=args.views_per_building,
+        overlay_artifacts=overlay_artifacts,
+        fig_dir=args.fig_dir,
+        debug_subset=debug_subset,
+        skip_overlays=args.skip_overlays,
+    )
+    hashed_output_paths = [
+        semantic_gate_path,
+        semantic_gate_candidates_path,
+        mapping_path,
+        inventory_path,
+        validation_path,
+        height_audit_path,
+        projection_height_audit_path,
+        issue_path,
+    ]
+    output_hashes = {rel(path): sha256_file(path) for path in hashed_output_paths}
+    output_hashes.update(
+        {str(row["path"]): str(row["sha256"]) for row in overlay_artifacts}
     )
 
     elapsed = time.time() - started
@@ -2040,10 +2838,17 @@ def main() -> int:
         "run_id": "20260713_e5_c001_s3a_semantic_regions",
         "created_local_date": "2026-07-13",
         "script": rel(Path(__file__)),
+        "script_sha256": sha256_file(Path(__file__)),
         "command": [sys.executable, *sys.argv],
         "git_head": git_value("rev-parse", "HEAD"),
         "git_branch": git_value("branch", "--show-current"),
         "container_image": "jointbuildgs:dev",
+        "container_image_id": docker_image_id or "unrecorded_debug_subset",
+        "container_image_id_source": (
+            "required S3_DOCKER_IMAGE_ID passed from host docker image inspect"
+            if docker_image_id
+            else "debug subset exemption"
+        ),
         "host_uid_gid": f"{os.getuid()}:{os.getgid()}",
         "python": platform.python_version(),
         "versions": {
@@ -2054,7 +2859,10 @@ def main() -> int:
         },
         "runtime_seconds": elapsed,
         "experiment_scope": EXPERIMENT_SCOPE,
-        "claim_boundary": "mechanism upper bound only; not model-free and not S3-B/FM",
+        "claim_boundary": (
+            "oracle class+instance-address mechanism upper bound only; not a battlefield win, "
+            "not model-free, and not S3-B/FM; S3-B forbids the oracle ID address"
+        ),
         "footprint_xy_role": FOOTPRINT_ROLE,
         "inputs": {
             "data_root": rel(data_root),
@@ -2084,7 +2892,22 @@ def main() -> int:
             "cutline_exactness_qa": cutline_exactness_qa,
             "qa_footprint_buffer_m": QA_FOOTPRINT_BUFFER_M,
             "qa_buffer_rationale": QA_BUFFER_RATIONALE,
-            "assignment_rule": ASSIGNMENT_RULE,
+            "qa_buffer_role": QA_BUFFER_ROLE,
+            "run_mode_contract": run_mode_contract,
+            "loss_address_mode": "oracle_class_plus_raycast_building_id",
+            "assignment_rule": ORACLE_ADDRESS_RULE,
+            "raycast_building_id_loss_role": "region address only",
+            "loss_value_contract": {
+                "raycast_hit_distance_stored": False,
+                "raycast_intersection_xyz_stored": False,
+                "lod2_depth_or_height_loss_input": False,
+                "absolute_height_source": "existing L_depth supervision only",
+            },
+            "footprint_rule_defect_baseline": {
+                "role": "audit_only",
+                "buffer_m": REGION_FOOTPRINT_BUFFER_M,
+                "assignment_rule": ASSIGNMENT_RULE,
+            },
             "projection_height_estimator": (
                 "per-building median z of Arm1-prime zero-iteration sparse points3D+dense-init "
                 "points strictly inside unbuffered footprint"
@@ -2097,18 +2920,25 @@ def main() -> int:
                 "zero Arm1p initial points; P-L-style no-material branch"
             ),
             "projection_height_uses_lod2_z": False,
+            "projection_height_role": "footprint-rule defect baseline audit only",
             "l_nb_boundary_source": "class boundary only; no instance cutline",
         },
         "datum_provenance": {
-            "official": {"geoid_m": official_geoid, "shift_z_m": official_shift_z},
+            "official": {
+                "geoid_m": official_geoid,
+                "shift_z_m": official_shift_z,
+                "role": "audit_only",
+                "is_loss_input": False,
+            },
             "actual_label_source": {
                 "geoid_m": float(args.legacy_label_geoid_m),
                 "shift_z_m": legacy_shift_z,
+                "building_id_role": "region address only",
             },
             "alignment_preflight": alignment_preflight,
         },
         "projection_height": {
-            "source_role": "existing Arm1-prime zero-iteration training input",
+            "source_role": "footprint-rule defect baseline audit only",
             "uses_lod2_height": False,
             "global_initial_point_z_median": global_initial_z_median,
             "total_sparse_points3d": int(len(sparse_xyz)),
@@ -2132,7 +2962,7 @@ def main() -> int:
             "triangles": int(len(tri_class)),
             "mesh_buildings": int(len(mesh_bids)),
             "degenerate_rings": int(n_degenerate),
-            "loss_address_footprints_exact_c00118": int(len(footprints)),
+            "footprint_audit_candidates_exact_c00118": int(len(footprints)),
             "footprint_source_inventory_total": int(len(all_footprints)),
             "footprint_parts": int(sum(footprint_part_counts.values())),
             "missing_footprint_roof_height_count": int(len(missing_fp_height)),
@@ -2142,6 +2972,7 @@ def main() -> int:
             "cache_dir": rel(args.cache_dir),
             "cache_files": len(inventory_rows),
             "semantic_gate_csv": rel(semantic_gate_path),
+            "semantic_gate_candidates_csv": rel(semantic_gate_candidates_path),
             "mapping_csv": rel(mapping_path),
             "inventory_csv": rel(inventory_path),
             "raycast_assignment_csv": rel(validation_path),
@@ -2149,10 +2980,29 @@ def main() -> int:
             "input_z_vs_reference_z_projection_audit_csv": rel(projection_height_audit_path),
             "issues_csv": rel(issue_path),
             "overlay_dir": rel(args.fig_dir),
-            "overlay_count": 0 if args.skip_overlays else sum(len(v) for v in selected_by_building.values()),
+            "overlay_count": sum(
+                row["kind"] == "full_overlay" for row in overlay_artifacts
+            ),
+            "priority_crop_count": sum(
+                row["kind"] == "priority_crop" for row in overlay_artifacts
+            ),
+            "priority_contact_sheet_count": sum(
+                row["kind"] == "priority_contact_sheet" for row in overlay_artifacts
+            ),
+            "overlay_artifacts": overlay_artifacts,
+            "output_sha256": output_hashes,
             "quarantined_partial_caches": partial_cache_inventory,
         },
-        "raycast_assignment_aggregate": {
+        "oracle_id_address_aggregate": {
+            "provenance": "actual_label_source_legacy48p0_oracle_address",
+            "geoid_m": float(args.legacy_label_geoid_m),
+            "shift_z_m": legacy_shift_z,
+            "building_id_is_loss_input": True,
+            "loss_role": "region address only",
+            "lod2_depth_or_height_loss_input": False,
+            "totals": aggregate_oracle_integrity,
+        },
+        "footprint_rule_defect_baseline_aggregate": {
             "primary_actual_label_source": aggregate_primary,
             "secondary_official_v2": aggregate_secondary,
             "raycast_building_id_is_loss_input": False,
@@ -2176,6 +3026,11 @@ def main() -> int:
             "views_per_building": args.views_per_building,
             "view_selection": "top official-P_ref area, deterministic tie by view stem",
             "rows": len(gate_rows),
+            "candidate_rows": len(gate_candidate_rows),
+            "candidate_csv": rel(semantic_gate_candidates_path),
+            "qa_footprint_buffer_m": QA_FOOTPRINT_BUFFER_M,
+            "qa_buffer_role": QA_BUFFER_ROLE,
+            "output_qa": t0_1_output_qa,
         },
     }
     manifest_path = args.run_dir / "semantic_region_manifest.json"
