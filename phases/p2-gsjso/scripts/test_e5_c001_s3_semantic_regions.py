@@ -91,22 +91,36 @@ class OracleIdAddressTest(unittest.TestCase):
 
 class T01OutputContractTest(unittest.TestCase):
     @staticmethod
-    def measurement(building_id: str, stem: str, ref_pixels: int) -> object:
+    def measurement(
+        building_id: str,
+        stem: str,
+        ref_pixels: int,
+        *,
+        measured_boundary_present: bool = True,
+    ) -> object:
+        measured_pixels = ref_pixels if measured_boundary_present else 0
         return REGIONS.GateMeasurement(
             building_id=building_id,
             view_stem=stem,
             view_name=f"{stem}.JPG",
             ref_pixels=ref_pixels,
-            clean_clipped_pixels=ref_pixels,
-            intersection_pixels=ref_pixels,
+            clean_clipped_pixels=measured_pixels,
+            intersection_pixels=measured_pixels,
             union_pixels=ref_pixels,
-            iou=1.0,
-            fragment_count_ge64=1,
-            boundary_offset_px=0.0,
+            iou=float(measured_pixels / ref_pixels),
+            fragment_count_ge64=int(
+                measured_boundary_present
+                and ref_pixels >= REGIONS.FRAGMENT_MEASURE_MIN_PIXELS
+            ),
+            boundary_offset_px=(0.0 if measured_boundary_present else float("nan")),
+            boundary_offset_defined=measured_boundary_present,
+            boundary_offset_status=(
+                "defined" if measured_boundary_present else "undefined_no_measured_boundary"
+            ),
             jacobian_m_per_px_x=1.0,
             jacobian_m_per_px_y=1.0,
             jacobian_m_per_px=1.0,
-            boundary_offset_m=0.0,
+            boundary_offset_m=(0.0 if measured_boundary_present else float("nan")),
             roof_height_local_m=100.0,
         )
 
@@ -169,6 +183,48 @@ class T01OutputContractTest(unittest.TestCase):
             [row["selected_for_primary"] for row in rows], [True, True, True, False]
         )
 
+    def test_candidate_selection_accepts_two_high_plus_one_low_support(self) -> None:
+        building = REGIONS.CORE9[1]
+        measurements = [
+            self.measurement(building, "high_a", 200),
+            self.measurement(building, "high_b", 100),
+            self.measurement(
+                building,
+                "low",
+                12,
+                measured_boundary_present=False,
+            ),
+        ]
+        selected, rows = REGIONS.select_gate_candidates(
+            measurements,
+            [building],
+            3,
+            official_geoid_m=45.7,
+            official_shift_z_m=558.3,
+            label_actual_source_shift_z_m=556.0,
+        )
+        self.assertEqual(
+            [measurement.view_stem for measurement in selected[building]],
+            ["high_a", "high_b", "low"],
+        )
+        self.assertEqual(
+            [row["ref_support_ge64"] for row in rows], [True, True, False]
+        )
+        self.assertEqual({row["selected_low_support_count"] for row in rows}, {1})
+        self.assertIsNone(rows[2]["boundary_offset_px"])
+        self.assertEqual(
+            rows[2]["boundary_offset_status"], "undefined_no_measured_boundary"
+        )
+        with self.assertRaises(AssertionError):
+            REGIONS.select_gate_candidates(
+                measurements[:2],
+                [building],
+                3,
+                official_geoid_m=45.7,
+                official_shift_z_m=558.3,
+                label_actual_source_shift_z_m=556.0,
+            )
+
     def test_priority_crop_and_contact_sheet(self) -> None:
         measured = np.zeros((300, 400), dtype=bool)
         reference = np.zeros_like(measured)
@@ -193,18 +249,20 @@ class T01OutputContractTest(unittest.TestCase):
                     paths[(building_id, rank)] = path
             sheet_path = root / "sheet.png"
             sheet = REGIONS.make_textureless_contact_sheet(paths, sheet_path)
-            self.assertEqual(sheet.size, (1440, 1144))
+            self.assertEqual(sheet.size, (1440, 1164))
             self.assertTrue(sheet_path.is_file())
 
     def test_canonical_output_self_validation_and_hashes(self) -> None:
         measurements = []
         for building_index, building_id in enumerate(REGIONS.CORE9):
             for rank in range(1, 4):
+                low_undefined = building_id == REGIONS.CORE9[1] and rank == 3
                 measurements.append(
                     self.measurement(
                         building_id,
                         f"view_{building_index:02d}_{rank}",
-                        1000 - rank,
+                        12 if low_undefined else 1000 - rank,
+                        measured_boundary_present=not low_undefined,
                     )
                 )
         selected, candidate_rows = REGIONS.select_gate_candidates(
@@ -232,6 +290,10 @@ class T01OutputContractTest(unittest.TestCase):
         gate_rows = []
         for building_id in REGIONS.CORE9:
             rows = selected[building_id]
+            selected_low_support_count = sum(
+                measurement.ref_pixels < REGIONS.FRAGMENT_MEASURE_MIN_PIXELS
+                for measurement in rows
+            )
             for rank, measurement in enumerate(rows, start=1):
                 payload = vars(measurement)
                 gate_rows.append(
@@ -243,13 +305,19 @@ class T01OutputContractTest(unittest.TestCase):
                         "building_id": building_id,
                         "view_stem": measurement.view_stem,
                         "view_rank_by_ref_area": rank,
+                        "ref_support_ge64": (
+                            measurement.ref_pixels >= REGIONS.FRAGMENT_MEASURE_MIN_PIXELS
+                        ),
+                        "ref_support_scope": "this_view",
+                        "selected_low_support_count": selected_low_support_count,
                         **{
-                            key: value
+                            key: REGIONS.json_number(value)
                             for key, value in payload.items()
                             if key not in {"building_id", "view_stem", "view_name"}
                         },
                     }
                 )
+            boundary_defined_count = sum(row.boundary_offset_defined for row in rows)
             gate_rows.append(
                 {
                     "measurement_role": "reference_only",
@@ -258,8 +326,21 @@ class T01OutputContractTest(unittest.TestCase):
                     "row_type": "building_median",
                     "building_id": building_id,
                     "view_stem": "MEDIAN",
+                    "ref_support_ge64": selected_low_support_count == 0,
+                    "ref_support_scope": "all_selected_views",
+                    "selected_low_support_count": selected_low_support_count,
+                    "boundary_offset_defined": boundary_defined_count > 0,
+                    "boundary_offset_status": (
+                        f"median_defined_from_{boundary_defined_count}_of_{len(rows)}_selected_views"
+                        if boundary_defined_count
+                        else "undefined_all_selected_views"
+                    ),
+                    "boundary_offset_defined_view_count": boundary_defined_count,
+                    "boundary_offset_undefined_view_count": len(rows) - boundary_defined_count,
                     **{
-                        key: float(np.median([getattr(row, key) for row in rows]))
+                        key: REGIONS.json_number(
+                            float(np.nanmedian([getattr(row, key) for row in rows]))
+                        )
                         for key in metric_names
                     },
                 }
@@ -271,6 +352,10 @@ class T01OutputContractTest(unittest.TestCase):
             priority_dir.mkdir(parents=True)
             artifacts = []
             for building_id, rows in selected.items():
+                selected_low_support_count = sum(
+                    measurement.ref_pixels < REGIONS.FRAGMENT_MEASURE_MIN_PIXELS
+                    for measurement in rows
+                )
                 for rank, measurement in enumerate(rows, start=1):
                     full_path = fig_dir / f"{building_id}__{measurement.view_stem}.png"
                     PILImage.new("RGB", (32, 24), "white").save(full_path)
@@ -281,6 +366,14 @@ class T01OutputContractTest(unittest.TestCase):
                             building_id=building_id,
                             view_stem=measurement.view_stem,
                             rank=rank,
+                            ref_support_ge64=(
+                                measurement.ref_pixels
+                                >= REGIONS.FRAGMENT_MEASURE_MIN_PIXELS
+                            ),
+                            selected_low_support_count=selected_low_support_count,
+                            support_label=REGIONS.ref_support_label(
+                                measurement.ref_pixels
+                            ),
                         )
                     )
                     if building_id in REGIONS.TEXTURELESS3:
@@ -295,12 +388,34 @@ class T01OutputContractTest(unittest.TestCase):
                                 rank=rank,
                                 crop_box_xyxy=(0, 0, 20, 20),
                                 target_touches_frame=False,
+                                ref_support_ge64=(
+                                    measurement.ref_pixels
+                                    >= REGIONS.FRAGMENT_MEASURE_MIN_PIXELS
+                                ),
+                                selected_low_support_count=selected_low_support_count,
+                                support_label=REGIONS.ref_support_label(
+                                    measurement.ref_pixels
+                                ),
                             )
                         )
             contact_path = priority_dir / "textureless3_contact_sheet.png"
             PILImage.new("RGB", (30, 30), "black").save(contact_path)
+            textureless_low_support_count = sum(
+                measurement.ref_pixels < REGIONS.FRAGMENT_MEASURE_MIN_PIXELS
+                for building_id in REGIONS.TEXTURELESS3
+                for measurement in selected[building_id]
+            )
             artifacts.append(
-                REGIONS.image_artifact(contact_path, kind="priority_contact_sheet")
+                REGIONS.image_artifact(
+                    contact_path,
+                    kind="priority_contact_sheet",
+                    ref_support_ge64=textureless_low_support_count == 0,
+                    selected_low_support_count=textureless_low_support_count,
+                    support_label=(
+                        f"LOW SUPPORT = P_ref <{REGIONS.FRAGMENT_MEASURE_MIN_PIXELS} px; "
+                        "audit-only"
+                    ),
+                )
             )
             result = REGIONS.validate_t0_1_outputs(
                 gate_rows=gate_rows,
@@ -315,6 +430,10 @@ class T01OutputContractTest(unittest.TestCase):
             self.assertEqual(result["status"], "pass")
             self.assertEqual(result["primary_view_rows"], 27)
             self.assertEqual(result["priority_crop_count"], 9)
+            self.assertEqual(result["selected_low_support_count"], 1)
+            self.assertEqual(
+                result["selected_low_support_by_building"][REGIONS.CORE9[1]], 1
+            )
             self.assertRegex(result["overlay_artifact_aggregate_sha256"], r"^[0-9a-f]{64}$")
 
 

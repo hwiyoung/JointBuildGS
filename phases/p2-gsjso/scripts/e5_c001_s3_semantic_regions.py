@@ -177,6 +177,8 @@ class GateMeasurement:
     iou: float
     fragment_count_ge64: int
     boundary_offset_px: float
+    boundary_offset_defined: bool
+    boundary_offset_status: str
     jacobian_m_per_px_x: float
     jacobian_m_per_px_y: float
     jacobian_m_per_px: float
@@ -1141,8 +1143,17 @@ def gate_measurement(
     if np.any(ref_boundary) and np.any(measured_boundary):
         distance = ndimage.distance_transform_edt(~measured_boundary)
         boundary_offset_px = float(np.median(distance[ref_boundary]))
+        boundary_offset_defined = True
+        boundary_offset_status = "defined"
     else:
         boundary_offset_px = float("nan")
+        boundary_offset_defined = False
+        if not np.any(ref_boundary) and not np.any(measured_boundary):
+            boundary_offset_status = "undefined_no_reference_or_measured_boundary"
+        elif not np.any(ref_boundary):
+            boundary_offset_status = "undefined_no_reference_boundary"
+        else:
+            boundary_offset_status = "undefined_no_measured_boundary"
 
     ys, xs = np.nonzero(ref_mask)
     if len(xs):
@@ -1163,6 +1174,8 @@ def gate_measurement(
         iou=iou,
         fragment_count_ge64=fragment_count,
         boundary_offset_px=boundary_offset_px,
+        boundary_offset_defined=boundary_offset_defined,
+        boundary_offset_status=boundary_offset_status,
         jacobian_m_per_px_x=mx,
         jacobian_m_per_px_y=my,
         jacobian_m_per_px=mpp,
@@ -1187,15 +1200,23 @@ def select_gate_candidates(
     selected_by_building: dict[str, list[GateMeasurement]] = {}
     candidate_rows: list[dict[str, Any]] = []
     for building_id in core_buildings:
-        candidates = [m for m in measurements if m.building_id == building_id]
+        candidates = [
+            m
+            for m in measurements
+            if m.building_id == building_id and int(m.ref_pixels) > 0
+        ]
         candidates.sort(key=lambda m: (-m.ref_pixels, m.view_stem))
         selected = candidates[:selected_count]
         if len(selected) < selected_count:
             raise AssertionError(
-                f"{building_id}: only {len(selected)} visible views with >=64 P_ref pixels; "
+                f"{building_id}: only {len(selected)} visible views with P_ref > 0; "
                 f"need {selected_count}"
             )
         selected_by_building[building_id] = selected
+        selected_low_support_count = sum(
+            int(measurement.ref_pixels) < FRAGMENT_MEASURE_MIN_PIXELS
+            for measurement in selected
+        )
         for rank, measurement in enumerate(candidates, start=1):
             payload = asdict(measurement)
             candidate_rows.append(
@@ -1212,6 +1233,11 @@ def select_gate_candidates(
                     "selected_top3_by_reference_area": (
                         selected_count == 3 and rank <= 3
                     ),
+                    "ref_support_ge64": (
+                        int(measurement.ref_pixels) >= FRAGMENT_MEASURE_MIN_PIXELS
+                    ),
+                    "ref_support_scope": "this_view",
+                    "selected_low_support_count": selected_low_support_count,
                     "visible_view_count_available": len(candidates),
                     **{
                         key: json_number(value)
@@ -1222,8 +1248,8 @@ def select_gate_candidates(
                     "qa_buffer_rationale": QA_BUFFER_RATIONALE,
                     "qa_buffer_role": QA_BUFFER_ROLE,
                     "view_selection_rule": (
-                        "top 3 deterministic views by official P_ref roof pixel area; "
-                        "tie by view stem"
+                        "visible iff official P_ref > 0; top 3 deterministic views by "
+                        "official P_ref roof pixel area; tie by view stem"
                     ),
                     "official_geoid_m": official_geoid_m,
                     "official_shift_z_m": official_shift_z_m,
@@ -1311,12 +1337,32 @@ def _ui_font(size: int) -> ImageFont.ImageFont:
         return ImageFont.load_default()
 
 
+def ref_support_label(ref_pixels: int) -> str:
+    if int(ref_pixels) < FRAGMENT_MEASURE_MIN_PIXELS:
+        return (
+            f"LOW SUPPORT | P_ref {int(ref_pixels)} px "
+            f"(<{FRAGMENT_MEASURE_MIN_PIXELS}; audit-only)"
+        )
+    return f"P_ref support: {int(ref_pixels)} px (>={FRAGMENT_MEASURE_MIN_PIXELS})"
+
+
+def boundary_offset_label(measurement: GateMeasurement) -> str:
+    if measurement.boundary_offset_defined:
+        return (
+            f"Boundary offset: {measurement.boundary_offset_px:.3f} px / "
+            f"{measurement.boundary_offset_m:.3f} m"
+        )
+    return f"Boundary offset: UNDEFINED ({measurement.boundary_offset_status})"
+
+
 def render_overlay(
     out_path: Path,
     image_path: Path,
     measured: np.ndarray,
     ref_mask: np.ndarray,
     measurement: GateMeasurement,
+    *,
+    selected_low_support_count: int,
 ) -> PILImage.Image:
     image = np.asarray(PILImage.open(image_path).convert("RGB"), dtype=np.uint8)
     blend = image.astype(np.float32)
@@ -1331,8 +1377,12 @@ def render_overlay(
     lines = [
         "S3-A T0-1 | reference only / self-consistency",
         f"Building: {measurement.building_id} | View: {measurement.view_stem}",
+        (
+            f"{ref_support_label(measurement.ref_pixels)} | "
+            f"Selected low-support views: {selected_low_support_count}"
+        ),
         f"IoU: {measurement.iou:.4f} | Fragments >=64 px: {measurement.fragment_count_ge64}",
-        f"Boundary offset: {measurement.boundary_offset_px:.3f} px / {measurement.boundary_offset_m:.3f} m",
+        boundary_offset_label(measurement),
         "Red: fixed clean roof (legacy 48.0 source) | Cyan: official 45.7 LoD2 reference",
         "+1.0 m footprint clip: T0-1 audit-only implementation choice",
     ]
@@ -1392,9 +1442,10 @@ def render_priority_crop(
     rank: int,
     *,
     target_touches_frame: bool,
+    selected_low_support_count: int,
 ) -> PILImage.Image:
     crop = overlay.crop(crop_box)
-    header_height = 62
+    header_height = 82
     canvas_width = max(crop.width, 520)
     canvas = PILImage.new(
         "RGB", (canvas_width, crop.height + header_height), color=(12, 12, 12)
@@ -1406,8 +1457,17 @@ def render_priority_crop(
     lines = [
         f"Building {short_id} | Rank {rank} | {measurement.view_stem}",
         (
+            f"{ref_support_label(measurement.ref_pixels)} | "
+            f"Selected low-support views: {selected_low_support_count}"
+        ),
+        (
             f"IoU {measurement.iou:.4f} | Fragments {measurement.fragment_count_ge64} | "
-            f"Offset {measurement.boundary_offset_px:.3f} px / {measurement.boundary_offset_m:.3f} m"
+            + (
+                f"Offset {measurement.boundary_offset_px:.3f} px / "
+                f"{measurement.boundary_offset_m:.3f} m"
+                if measurement.boundary_offset_defined
+                else f"Offset UNDEFINED ({measurement.boundary_offset_status})"
+            )
             + (" | FRAME EDGE" if target_touches_frame else "")
         ),
     ]
@@ -1424,6 +1484,8 @@ def render_priority_crop(
 def make_textureless_contact_sheet(
     priority_paths: dict[tuple[str, int], Path],
     out_path: Path,
+    *,
+    selected_low_support_count: int = 0,
 ) -> PILImage.Image:
     """Create the locked 3-buildings by 3-ranked-views visual QA sheet."""
 
@@ -1433,7 +1495,7 @@ def make_textureless_contact_sheet(
         extra = sorted(set(priority_paths) - expected)
         raise AssertionError(f"priority contact sheet key mismatch: missing={missing}, extra={extra}")
     tile_width, tile_height = PRIORITY_CONTACT_TILE_WH
-    title_height = 64
+    title_height = 84
     sheet = PILImage.new(
         "RGB", (tile_width * 3, title_height + tile_height * 3), color=(245, 245, 245)
     )
@@ -1448,6 +1510,15 @@ def make_textureless_contact_sheet(
     draw.text(
         (10, 33),
         "Red = fixed clean roof (legacy 48.0 source); Cyan = official 45.7 LoD2 reference",
+        fill=(0, 0, 0),
+        font=_ui_font(13),
+    )
+    draw.text(
+        (10, 55),
+        (
+            f"LOW SUPPORT = P_ref <{FRAGMENT_MEASURE_MIN_PIXELS} px; audit-only | "
+            f"Selected low-support views: {selected_low_support_count}"
+        ),
         fill=(0, 0, 0),
         font=_ui_font(13),
     )
@@ -1475,6 +1546,9 @@ def image_artifact(
     rank: int | None = None,
     crop_box_xyxy: tuple[int, int, int, int] | None = None,
     target_touches_frame: bool | None = None,
+    ref_support_ge64: bool | None = None,
+    selected_low_support_count: int | None = None,
+    support_label: str | None = None,
 ) -> dict[str, Any]:
     with PILImage.open(path) as image:
         image.load()
@@ -1493,6 +1567,9 @@ def image_artifact(
         "height_px": int(height),
         "crop_box_xyxy": list(crop_box_xyxy) if crop_box_xyxy is not None else None,
         "target_touches_frame": target_touches_frame,
+        "ref_support_ge64": ref_support_ge64,
+        "selected_low_support_count": selected_low_support_count,
+        "support_label": support_label,
     }
 
 
@@ -1572,6 +1649,7 @@ def validate_t0_1_outputs(
     for row in candidate_rows:
         candidate_by_building[str(row["building_id"])].append(dict(row))
     expected_selected: set[tuple[str, str]] = set()
+    selected_low_support_by_building: dict[str, int] = {}
     for building_id in core_buildings:
         rows = sorted(
             candidate_by_building.get(building_id, []),
@@ -1584,7 +1662,41 @@ def validate_t0_1_outputs(
             row["view_stem"] for row in expected_order
         ]:
             raise AssertionError(f"{building_id}: candidate area/stem ordering mismatch")
+        selected_rows = rows[:views_per_building]
+        selected_low_support_count = sum(
+            int(row["ref_pixels"]) < FRAGMENT_MEASURE_MIN_PIXELS
+            for row in selected_rows
+        )
+        selected_low_support_by_building[building_id] = selected_low_support_count
         for expected_rank, row in enumerate(rows, start=1):
+            ref_pixels = int(row["ref_pixels"])
+            if ref_pixels <= 0:
+                raise AssertionError(
+                    f"{building_id}: candidate visibility requires official P_ref > 0"
+                )
+            expected_support = ref_pixels >= FRAGMENT_MEASURE_MIN_PIXELS
+            if bool(row.get("ref_support_ge64")) is not expected_support:
+                raise AssertionError(f"{building_id}: candidate ref-support flag mismatch")
+            if row.get("ref_support_scope") != "this_view":
+                raise AssertionError(f"{building_id}: candidate ref-support scope mismatch")
+            if int(row.get("selected_low_support_count", -1)) != selected_low_support_count:
+                raise AssertionError(
+                    f"{building_id}: candidate selected-low-support count mismatch"
+                )
+            boundary_defined = bool(row.get("boundary_offset_defined"))
+            boundary_status = str(row.get("boundary_offset_status"))
+            boundary_px = row.get("boundary_offset_px")
+            boundary_m = row.get("boundary_offset_m")
+            if boundary_defined:
+                if boundary_status != "defined":
+                    raise AssertionError(f"{building_id}: defined candidate boundary status mismatch")
+                for value in (boundary_px, boundary_m):
+                    if value is None or not math.isfinite(float(value)) or float(value) < 0:
+                        raise AssertionError(f"{building_id}: defined candidate boundary is invalid")
+            elif not boundary_status.startswith("undefined_"):
+                raise AssertionError(f"{building_id}: undefined candidate boundary status mismatch")
+            elif boundary_px is not None or boundary_m is not None:
+                raise AssertionError(f"{building_id}: undefined candidate boundary must stay null")
             if int(row["rank_by_ref_area"]) != expected_rank:
                 raise AssertionError(f"{building_id}: candidate ranks are not contiguous")
             expected_flag = expected_rank <= views_per_building
@@ -1613,8 +1725,18 @@ def validate_t0_1_outputs(
         measured_pixels = int(row["clean_clipped_pixels"])
         intersection = int(row["intersection_pixels"])
         union = int(row["union_pixels"])
-        if ref_pixels < FRAGMENT_MEASURE_MIN_PIXELS or measured_pixels < 0:
+        if ref_pixels <= 0 or measured_pixels < 0:
             raise AssertionError("selected T0-1 view has invalid pixel support")
+        expected_support = ref_pixels >= FRAGMENT_MEASURE_MIN_PIXELS
+        if bool(row.get("ref_support_ge64")) is not expected_support:
+            raise AssertionError("selected T0-1 ref-support flag mismatch")
+        if row.get("ref_support_scope") != "this_view":
+            raise AssertionError("selected T0-1 ref-support scope mismatch")
+        building_id = str(row["building_id"])
+        if int(row.get("selected_low_support_count", -1)) != (
+            selected_low_support_by_building[building_id]
+        ):
+            raise AssertionError("selected T0-1 low-support count mismatch")
         if intersection < 0 or intersection > min(ref_pixels, measured_pixels):
             raise AssertionError("selected T0-1 intersection is inconsistent")
         if union != ref_pixels + measured_pixels - intersection:
@@ -1626,15 +1748,31 @@ def validate_t0_1_outputs(
         if fragments < 0 or not fragments.is_integer():
             raise AssertionError("selected T0-1 fragment count is not a nonnegative integer")
         for key in (
-            "boundary_offset_px",
             "jacobian_m_per_px_x",
             "jacobian_m_per_px_y",
             "jacobian_m_per_px",
-            "boundary_offset_m",
         ):
             value = float(row[key])
             if not math.isfinite(value) or value < 0:
                 raise AssertionError(f"selected T0-1 {key} is not finite/nonnegative")
+        boundary_defined = bool(row.get("boundary_offset_defined"))
+        boundary_status = str(row.get("boundary_offset_status"))
+        boundary_px = row.get("boundary_offset_px")
+        boundary_m = row.get("boundary_offset_m")
+        if boundary_defined:
+            if boundary_status != "defined":
+                raise AssertionError("defined T0-1 boundary status mismatch")
+            for key, value in (
+                ("boundary_offset_px", boundary_px),
+                ("boundary_offset_m", boundary_m),
+            ):
+                if value is None or not math.isfinite(float(value)) or float(value) < 0:
+                    raise AssertionError(f"defined T0-1 {key} is invalid")
+        else:
+            if not boundary_status.startswith("undefined_"):
+                raise AssertionError("undefined T0-1 boundary status mismatch")
+            if boundary_px is not None or boundary_m is not None:
+                raise AssertionError("undefined T0-1 boundary values must stay null")
 
     if views_per_building > 0:
         medians_by_building = {str(row["building_id"]): row for row in median_rows}
@@ -1646,10 +1784,52 @@ def validate_t0_1_outputs(
                 raise AssertionError(f"{building_id}: primary selected-view count mismatch")
             median = medians_by_building[building_id]
             for key in metric_names:
-                expected = float(np.median([float(row[key]) for row in selected]))
-                actual = float(median[key])
-                if not math.isclose(actual, expected, rel_tol=1e-9, abs_tol=1e-12):
+                finite_values = [
+                    float(row[key])
+                    for row in selected
+                    if row.get(key) is not None and math.isfinite(float(row[key]))
+                ]
+                expected = float(np.median(finite_values)) if finite_values else None
+                actual = median.get(key)
+                if expected is None:
+                    matches = actual is None
+                else:
+                    matches = actual is not None and math.isclose(
+                        float(actual), expected, rel_tol=1e-9, abs_tol=1e-12
+                    )
+                if not matches:
                     raise AssertionError(f"{building_id}: median mismatch for {key}")
+            selected_low_support_count = selected_low_support_by_building[building_id]
+            if int(median.get("selected_low_support_count", -1)) != selected_low_support_count:
+                raise AssertionError(f"{building_id}: median low-support count mismatch")
+            if bool(median.get("ref_support_ge64")) is not (
+                selected_low_support_count == 0
+            ):
+                raise AssertionError(f"{building_id}: median ref-support flag mismatch")
+            if median.get("ref_support_scope") != "all_selected_views":
+                raise AssertionError(f"{building_id}: median ref-support scope mismatch")
+            boundary_defined_count = sum(
+                bool(row["boundary_offset_defined"]) for row in selected
+            )
+            boundary_undefined_count = len(selected) - boundary_defined_count
+            if int(median.get("boundary_offset_defined_view_count", -1)) != (
+                boundary_defined_count
+            ):
+                raise AssertionError(f"{building_id}: median boundary-defined count mismatch")
+            if int(median.get("boundary_offset_undefined_view_count", -1)) != (
+                boundary_undefined_count
+            ):
+                raise AssertionError(f"{building_id}: median boundary-undefined count mismatch")
+            expected_boundary_defined = boundary_defined_count > 0
+            if bool(median.get("boundary_offset_defined")) is not expected_boundary_defined:
+                raise AssertionError(f"{building_id}: median boundary-defined flag mismatch")
+            expected_boundary_status = (
+                f"median_defined_from_{boundary_defined_count}_of_{len(selected)}_selected_views"
+                if expected_boundary_defined
+                else "undefined_all_selected_views"
+            )
+            if median.get("boundary_offset_status") != expected_boundary_status:
+                raise AssertionError(f"{building_id}: median boundary status mismatch")
     elif gate_rows:
         raise AssertionError("views_per_building=0 must not emit primary gate rows")
 
@@ -1670,6 +1850,9 @@ def validate_t0_1_outputs(
                 else None
             ),
             target_touches_frame=artifact.get("target_touches_frame"),
+            ref_support_ge64=artifact.get("ref_support_ge64"),
+            selected_low_support_count=artifact.get("selected_low_support_count"),
+            support_label=artifact.get("support_label"),
         )
         if current["sha256"] != artifact.get("sha256"):
             raise AssertionError(f"overlay hash changed during output QA: {path}")
@@ -1677,6 +1860,41 @@ def validate_t0_1_outputs(
     by_kind: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for artifact in artifacts:
         by_kind[str(artifact["kind"])].append(artifact)
+    selected_row_by_key = {
+        (str(row["building_id"]), str(row["view_stem"])): row for row in view_rows
+    }
+    for artifact in [*by_kind["full_overlay"], *by_kind["priority_crop"]]:
+        key = (str(artifact["building_id"]), str(artifact["view_stem"]))
+        if key not in selected_row_by_key:
+            raise AssertionError("overlay artifact does not map to a selected T0-1 view")
+        selected_row = selected_row_by_key[key]
+        expected_support = bool(selected_row["ref_support_ge64"])
+        expected_count = int(selected_row["selected_low_support_count"])
+        if artifact.get("ref_support_ge64") is not expected_support:
+            raise AssertionError("overlay ref-support flag mismatch")
+        if int(artifact.get("selected_low_support_count", -1)) != expected_count:
+            raise AssertionError("overlay selected-low-support count mismatch")
+        expected_label = ref_support_label(int(selected_row["ref_pixels"]))
+        if artifact.get("support_label") != expected_label:
+            raise AssertionError("overlay support label mismatch")
+    total_selected_low_support = sum(selected_low_support_by_building.values())
+    textureless_selected_low_support = sum(
+        selected_low_support_by_building.get(building_id, 0)
+        for building_id in TEXTURELESS3
+    )
+    for artifact in by_kind["priority_contact_sheet"]:
+        if artifact.get("ref_support_ge64") is not (
+            textureless_selected_low_support == 0
+        ):
+            raise AssertionError("contact-sheet aggregate ref-support flag mismatch")
+        if int(artifact.get("selected_low_support_count", -1)) != (
+            textureless_selected_low_support
+        ):
+            raise AssertionError("contact-sheet aggregate low-support count mismatch")
+        if artifact.get("support_label") != (
+            f"LOW SUPPORT = P_ref <{FRAGMENT_MEASURE_MIN_PIXELS} px; audit-only"
+        ):
+            raise AssertionError("contact-sheet support label mismatch")
     if skip_overlays:
         if artifacts:
             raise AssertionError("--skip-overlays produced unexpected image artifacts")
@@ -1735,6 +1953,10 @@ def validate_t0_1_outputs(
         "full_overlay_count": len(by_kind["full_overlay"]),
         "priority_crop_count": len(by_kind["priority_crop"]),
         "priority_contact_sheet_count": len(by_kind["priority_contact_sheet"]),
+        "visibility_rule": "official P_ref > 0",
+        "ref_support_ge64_threshold_px": FRAGMENT_MEASURE_MIN_PIXELS,
+        "selected_low_support_count": total_selected_low_support,
+        "selected_low_support_by_building": selected_low_support_by_building,
         "overlay_artifact_aggregate_sha256": sha256_json(artifact_fingerprint),
         "qa_buffer_role": QA_BUFFER_ROLE,
     }
@@ -2439,7 +2661,7 @@ def main() -> int:
         for building_id in args.core_buildings:
             mesh_index = mesh_bid_index[building_id]
             ref_mask = (official_label == 1) & (official_bidmap == mesh_index)
-            if int(ref_mask.sum()) < FRAGMENT_MEASURE_MIN_PIXELS:
+            if int(ref_mask.sum()) <= 0:
                 continue
             qa_mask = rasterize_geometry(
                 qa_footprints[building_id], reference_heights[building_id], frame, xy_shift
@@ -2608,6 +2830,10 @@ def main() -> int:
         selected = selected_by_building[building_id]
         if not selected:
             continue
+        selected_low_support_count = sum(
+            int(measurement.ref_pixels) < FRAGMENT_MEASURE_MIN_PIXELS
+            for measurement in selected
+        )
         for rank, measurement in enumerate(selected, start=1):
             gate_rows.append(
                 {
@@ -2619,6 +2845,11 @@ def main() -> int:
                     "building_id": building_id,
                     "view_stem": measurement.view_stem,
                     "view_rank_by_ref_area": rank,
+                    "ref_support_ge64": (
+                        int(measurement.ref_pixels) >= FRAGMENT_MEASURE_MIN_PIXELS
+                    ),
+                    "ref_support_scope": "this_view",
+                    "selected_low_support_count": selected_low_support_count,
                     "visible_view_count_available": sum(
                         1 for m in all_gate_measurements if m.building_id == building_id
                     ),
@@ -2626,7 +2857,10 @@ def main() -> int:
                     "qa_footprint_buffer_m": QA_FOOTPRINT_BUFFER_M,
                     "qa_buffer_rationale": QA_BUFFER_RATIONALE,
                     "qa_buffer_role": QA_BUFFER_ROLE,
-                    "view_selection_rule": "top 3 deterministic views by official P_ref roof pixel area; tie by view stem",
+                    "view_selection_rule": (
+                        "visible iff official P_ref > 0; top 3 deterministic views by "
+                        "official P_ref roof pixel area; tie by view stem"
+                    ),
                     "official_geoid_m": official_geoid,
                     "official_shift_z_m": official_shift_z,
                     "label_actual_source_shift_z_m": legacy_shift_z,
@@ -2651,6 +2885,12 @@ def main() -> int:
         for name in metric_names:
             values = np.asarray([getattr(m, name) for m in selected], dtype=np.float64)
             medians[name] = json_number(float(np.nanmedian(values))) if np.any(np.isfinite(values)) else None
+        boundary_offset_defined_view_count = sum(
+            bool(measurement.boundary_offset_defined) for measurement in selected
+        )
+        boundary_offset_undefined_view_count = (
+            len(selected) - boundary_offset_defined_view_count
+        )
         gate_rows.append(
             {
                 "measurement_role": "reference_only",
@@ -2661,6 +2901,17 @@ def main() -> int:
                 "building_id": building_id,
                 "view_stem": "MEDIAN",
                 "view_rank_by_ref_area": "",
+                "ref_support_ge64": selected_low_support_count == 0,
+                "ref_support_scope": "all_selected_views",
+                "selected_low_support_count": selected_low_support_count,
+                "boundary_offset_defined": boundary_offset_defined_view_count > 0,
+                "boundary_offset_status": (
+                    f"median_defined_from_{boundary_offset_defined_view_count}_of_{len(selected)}_selected_views"
+                    if boundary_offset_defined_view_count > 0
+                    else "undefined_all_selected_views"
+                ),
+                "boundary_offset_defined_view_count": boundary_offset_defined_view_count,
+                "boundary_offset_undefined_view_count": boundary_offset_undefined_view_count,
                 "visible_view_count_available": sum(
                     1 for m in all_gate_measurements if m.building_id == building_id
                 ),
@@ -2668,7 +2919,10 @@ def main() -> int:
                 "qa_footprint_buffer_m": QA_FOOTPRINT_BUFFER_M,
                 "qa_buffer_rationale": QA_BUFFER_RATIONALE,
                 "qa_buffer_role": QA_BUFFER_ROLE,
-                "view_selection_rule": "top 3 deterministic views by official P_ref roof pixel area; tie by view stem",
+                "view_selection_rule": (
+                    "visible iff official P_ref > 0; top 3 deterministic views by "
+                    "official P_ref roof pixel area; tie by view stem"
+                ),
                 "official_geoid_m": official_geoid,
                 "official_shift_z_m": official_shift_z,
                 "label_actual_source_shift_z_m": legacy_shift_z,
@@ -2679,6 +2933,10 @@ def main() -> int:
     priority_paths: dict[tuple[str, int], Path] = {}
     if not args.skip_overlays:
         for building_id, selected in selected_by_building.items():
+            selected_low_support_count = sum(
+                int(measurement.ref_pixels) < FRAGMENT_MEASURE_MIN_PIXELS
+                for measurement in selected
+            )
             for rank, measurement in enumerate(selected, start=1):
                 frame = frame_by_stem[measurement.view_stem]
                 semantic_path = data_root / "semantic" / f"{frame.stem}.png"
@@ -2701,6 +2959,7 @@ def main() -> int:
                     measured,
                     ref_mask,
                     measurement,
+                    selected_low_support_count=selected_low_support_count,
                 )
                 overlay_artifacts.append(
                     image_artifact(
@@ -2709,6 +2968,11 @@ def main() -> int:
                         building_id=building_id,
                         view_stem=frame.stem,
                         rank=rank,
+                        ref_support_ge64=(
+                            int(measurement.ref_pixels) >= FRAGMENT_MEASURE_MIN_PIXELS
+                        ),
+                        selected_low_support_count=selected_low_support_count,
+                        support_label=ref_support_label(measurement.ref_pixels),
                     )
                 )
                 if building_id in TEXTURELESS3:
@@ -2725,6 +2989,7 @@ def main() -> int:
                         measurement,
                         rank,
                         target_touches_frame=target_touches_frame,
+                        selected_low_support_count=selected_low_support_count,
                     )
                     priority_paths[(building_id, rank)] = priority_path
                     overlay_artifacts.append(
@@ -2736,6 +3001,11 @@ def main() -> int:
                             rank=rank,
                             crop_box_xyxy=crop_box,
                             target_touches_frame=target_touches_frame,
+                            ref_support_ge64=(
+                                int(measurement.ref_pixels) >= FRAGMENT_MEASURE_MIN_PIXELS
+                            ),
+                            selected_low_support_count=selected_low_support_count,
+                            support_label=ref_support_label(measurement.ref_pixels),
                         )
                     )
         expected_priority_keys = {
@@ -2743,9 +3013,26 @@ def main() -> int:
         }
         if set(priority_paths) == expected_priority_keys:
             contact_sheet_path = args.fig_dir / "priority" / "textureless3_contact_sheet.png"
-            make_textureless_contact_sheet(priority_paths, contact_sheet_path)
+            textureless_low_support_count = sum(
+                int(measurement.ref_pixels) < FRAGMENT_MEASURE_MIN_PIXELS
+                for building_id in TEXTURELESS3
+                for measurement in selected_by_building.get(building_id, [])
+            )
+            make_textureless_contact_sheet(
+                priority_paths,
+                contact_sheet_path,
+                selected_low_support_count=textureless_low_support_count,
+            )
             overlay_artifacts.append(
-                image_artifact(contact_sheet_path, kind="priority_contact_sheet")
+                image_artifact(
+                    contact_sheet_path,
+                    kind="priority_contact_sheet",
+                    ref_support_ge64=textureless_low_support_count == 0,
+                    selected_low_support_count=textureless_low_support_count,
+                    support_label=(
+                        f"LOW SUPPORT = P_ref <{FRAGMENT_MEASURE_MIN_PIXELS} px; audit-only"
+                    ),
+                )
             )
 
     semantic_gate_path = args.docs_dir / "e5_c001_s3_semantic_gate.csv"
@@ -3024,7 +3311,18 @@ def main() -> int:
             "decision": "not_applicable",
             "core_buildings": list(args.core_buildings),
             "views_per_building": args.views_per_building,
-            "view_selection": "top official-P_ref area, deterministic tie by view stem",
+            "visibility_rule": "official P_ref > 0",
+            "view_selection": (
+                "visible iff official P_ref > 0; top official-P_ref area, "
+                "deterministic tie by view stem"
+            ),
+            "ref_support_ge64_threshold_px": FRAGMENT_MEASURE_MIN_PIXELS,
+            "selected_low_support_count": t0_1_output_qa[
+                "selected_low_support_count"
+            ],
+            "selected_low_support_by_building": t0_1_output_qa[
+                "selected_low_support_by_building"
+            ],
             "rows": len(gate_rows),
             "candidate_rows": len(gate_candidate_rows),
             "candidate_csv": rel(semantic_gate_candidates_path),
