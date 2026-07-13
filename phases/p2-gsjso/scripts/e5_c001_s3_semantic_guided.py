@@ -651,7 +651,17 @@ def config_inventory_row(
 
 def update_inventory(rows: list[dict[str, Any]], replace_run_names: set[str]) -> None:
     existing = read_csv(CSV_INVENTORY)
-    preserved = [row for row in existing if row.get("run_name", "") not in replace_run_names]
+    # Config regeneration may happen for the one allowed half-weight re-gate.
+    # Replace only config rows; downstream checkpoint/readout/score inventory
+    # rows sharing the run name are immutable evidence and must survive.
+    preserved = [
+        row
+        for row in existing
+        if not (
+            row.get("record_type") == "training_config"
+            and row.get("run_name", "") in replace_run_names
+        )
+    ]
     write_csv(CSV_INVENTORY, preserved + rows)
 
 
