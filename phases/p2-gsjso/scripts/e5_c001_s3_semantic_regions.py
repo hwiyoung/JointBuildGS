@@ -309,9 +309,13 @@ def points_strictly_in_footprint(
     """Strict 2D footprint clip; boundary points are intentionally excluded."""
 
     minx, miny, maxx, maxy = geom.bounds
-    x_utm = xyz_local[:, 0] + xy_shift[0]
-    y_utm = xyz_local[:, 1] + xy_shift[1]
-    bbox = (x_utm > minx) & (x_utm < maxx) & (y_utm > miny) & (y_utm < maxy)
+    # The training centres are float32, but restoring the large EPSG:25832
+    # offset in float32 quantises Y by roughly 0.5 m.  Promote first so this
+    # clip is identical to the locked T0-2 inventory definition and does not
+    # move edge-near seeds across a footprint merely through UTM arithmetic.
+    x_utm = xyz_local[:, 0].astype(np.float64) + float(xy_shift[0])
+    y_utm = xyz_local[:, 1].astype(np.float64) + float(xy_shift[1])
+    bbox = (x_utm >= minx) & (x_utm <= maxx) & (y_utm >= miny) & (y_utm <= maxy)
     selected = np.flatnonzero(bbox)
     if len(selected) == 0:
         return np.zeros(len(xyz_local), dtype=bool)
@@ -380,7 +384,10 @@ def input_derived_projection_heights(
             "zero_source_exclusion_only_global_median_z_local_m": exclusion_only_global,
             "estimator": estimator,
             "xy_clip": "strict unbuffered footprint contains_xy; boundary excluded",
-            "input_dtype": "float32 (training-identical quantization before clip/statistic)",
+            "input_dtype": (
+                "float32 training centres; promoted to float64 before EPSG:25832 "
+                "offset restoration and footprint clip"
+            ),
             "height_source_role": (
                 "existing Arm1-prime zero-iteration training input; no LoD2 z; "
                 "global median may place only the source_count=0 exclusion/veto and "
