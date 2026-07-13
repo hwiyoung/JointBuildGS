@@ -1,0 +1,204 @@
+{
+  "run_id": "20260713_e5_c001_s3_track0",
+  "task": "S3-A Track 0 T0-2 seed inventory + T0-3 normal multiview audit",
+  "created_utc": "2026-07-13T09:22:01.438837+00:00",
+  "training_started": false,
+  "git_head": "191ea47c85cd0c92704dda3ca3651fc9c5fc0397",
+  "git_branch": "exp/3b-surface-restore-corrected",
+  "docker_image": "jointbuildgs:dev",
+  "docker_image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
+  "canonical_command": "docker run --rm --user \"$(id -u):$(id -g)\" -e HOME=/tmp -e MPLCONFIGDIR=/tmp/matplotlib -e XDG_CACHE_HOME=/tmp -e S3_DOCKER_IMAGE_ID=\"$(docker image inspect --format '{{.Id}}' jointbuildgs:dev)\" -v \"$PWD:/workspace/JointBuildGS\" -w /workspace/JointBuildGS jointbuildgs:dev python phases/p2-gsjso/scripts/e5_c001_s3_track0_measurements.py",
+  "runtime": {
+    "python": "3.11.15",
+    "numpy": "1.26.4",
+    "shapely": "2.0.6",
+    "torch": "2.4.1+cu121",
+    "platform": "Linux-6.8.0-107-generic-x86_64-with-glibc2.35",
+    "uid": 1000,
+    "gid": 1000
+  },
+  "spatial": {
+    "crs": "EPSG:25832",
+    "world_offset": [
+      690953.0,
+      5336071.0,
+      604.0
+    ],
+    "orthometric_geoid_m": 45.7,
+    "projection_formula": "x_local=E-world_offset_x; y_local=N-world_offset_y; z_local=H_ortho+geoid-world_offset_z"
+  },
+  "parameters": {
+    "only": "all",
+    "views_per_building": 5,
+    "min_views": 3,
+    "central_fraction": 0.64,
+    "strict_seed_expected": true
+  },
+  "input_hashes_common": {
+    "configs/projection_datum.json": "096a49b46fc5661d74f9d3b54c4f3777676cfc6b27e577b52bb2dabeee8b480c",
+    "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/sparse/0/cameras.bin": "7c9b01e524628658a92305202a2618a287570c6a90c414509b78dba1b5fc7794",
+    "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/sparse/0/images.bin": "dcb84b0d46f2666a9a8f6e1657a48dc4a8d1d60c35a7e47117b2df04c5f0cefb",
+    "phases/p0-audit/data/raw/lod2/690_5334.gml": "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314",
+    "phases/p0-audit/data/raw/lod2/690_5336.gml": "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674"
+  },
+  "t0_2": {
+    "rows": 6,
+    "sfm_scene_points_total": 44016,
+    "dense_init_scene_points_total": 201625,
+    "initial_scene_gaussians_total": 245641,
+    "footprint_crs_source": "urn:ogc:def:crs:EPSG::25832",
+    "strict_expected": true,
+    "mismatches": [],
+    "source_hashes": {
+      "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/sparse/0/points3D.bin": "d1fb05b4d7913d61a248a95a6faf1357ed9d669abbd6e575939e306b4ffece09",
+      "results/tum_transfer/e5_pilot/C001/seeds/seed_dense_C001_buf20.ply": "6083e9e93df712734499a0d1ff3621fb23cf96046d39d6adda3712ac98aa0c53",
+      "results/tum_transfer/analysis/footprints_aoi.geojson": "ca7f5b13a52368e1d2ac47b77cc78f12887bad4d598d122ad57b882eb4920a82",
+      "results/tum_transfer/e5_pilot/C001/C001_train_prep_manifest.json": "eca68a7890116c52557ab467361b58c4c784047807f9bee857a2517ac0b40b58",
+      "configs/tum_mob/e5_s2p_interaction/gs_e5_C001_s2p_arm1p_dense_r1.yaml": "bdd3d229e6ae8052e60d5d8bbff26d670c62008326ee6ed4d8ee81970a4146df"
+    }
+  },
+  "t0_3": {
+    "target_buildings": 14,
+    "view_rows": 70,
+    "views_per_building_requested": 5,
+    "min_views_locked": 3,
+    "central_fraction": 0.64,
+    "world_normal_files_selected": 43,
+    "selected_normal_tree_sha256": "a34a3c6cdb0e7a38728b3edb6117dfddc321763d2c459b3e4f26e2b5b2d9d0ab",
+    "selected_normal_hashes": {
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217095527_0046_D.npy": "599549eabd71bbcf33a53219565791d634bc0ddddf380e174134f56c238898e6",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217095625_0075_D.npy": "b7f3b42f9a0cd29d7517a799c8c091a12bdb70395e33f1ec975e63f8d164a007",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217095525_0045_D.npy": "e1eb40780178ac4d2bf52d7061f6c6b2f5c7bd0e971bca757e1e90f98528a49b",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217095529_0047_D.npy": "281852cd670ce8e10fbe04bb8720e140b05bb3a0836a967b97dac3f321d0e2d5",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217095639_0082_D.npy": "81c68263a92385216252e53d2b2bcdc5b3f45dd58328c4c63c95b1d19cd9712d",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217084845_0186_D.npy": "95a58f3a8e2a4f6f04b5ce42ed833ea4387509dbf245b5405c93f3d1a2c9d43d",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217084847_0187_D.npy": "4463c40153b3eb441527e39b4cbbc76af0672ede8b8023eb4f80df277a833a60",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217102719_0015_D.npy": "539fcd31511d73fbb58c0efef064f7bce8cb1fde8590a47b411aee7938147672",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217095623_0074_D.npy": "0bfe7276432f50ac66ec6218afec43490421fdc0a4ab2fa07a91dfa795284fae",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217084849_0188_D.npy": "7bfb6a379b4d5f1e821f82fbcecfac146f1f64c1e35bbdec2aa33d35ea107f60",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217095531_0048_D.npy": "d52a6ea766ee1374e1e2d5419e9ded802816a00f055fd9d7ace62975ff550302",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217102937_0014_D.npy": "e573bb548af28bd00582cd9413589b0619bfaafd965e74d7a866d48f63a906e0",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217095127_0070_D.npy": "ceff49c64d8c073a3e3dbe60c2c4f1c97316d45f3873d9734218d28e5bb45613",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217095125_0069_D.npy": "e660b001d397923603dd34f7a06795c819fab1d7ebf18ea997cda09973a9835d",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217084901_0194_D.npy": "ea66413e98f3013b588e468a356d5047deba4f4bce9ec46188c2e36bb004be8d",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217095439_0022_D.npy": "4df03e7c75760b375239a679a53d286e1d830c9ce265e86ab7d3ea719c5c49db",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217084903_0195_D.npy": "5a809973a29f5f43e8f5167c1499a2cb722107238ccda9ade456742ae2729ac6",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217084859_0193_D.npy": "25b2bd53837d737c5f72e7bbdd6fdad82530b9abbc3f6f3d5bf55d32ebc436a6",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217102731_0021_D.npy": "fcf3df6ca15d93aaaa61ec1e4bc047c8f2d62deb517cc0423b3d888dfb157445",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217084843_0185_D.npy": "289a7f18cd704260853b30aed9c0c660b824acffc0663c7442ea71152cca7ba9",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217084841_0184_D.npy": "e0981fd8dbde1342d8825ed735c71d9adecf21f6c28656473a90a3a3cf694df7",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217084857_0192_D.npy": "12d9b89287b23b8a101866a556fc8029368eaa3e786c6e5aaba45f2b1b9d6f31",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217095441_0023_D.npy": "688cb46b9339bff3dd095b3047e18ac399a528a8951736c27728ea0dd08b788f",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217095139_0076_D.npy": "6669353e3ffd92a0aebf7ca6234214bd71e42093b1ab2921306c964aa091dfaf",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217102523_0014_D.npy": "4638d1843845bed3ac140a7599267e99eea76ae706c51d30279d194d66e2b8b9",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217095141_0077_D.npy": "dcda4da676f560e4087c09764e551f2ece6223fcb7244d74e2f7ee6963bbb315",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217095149_0081_D.npy": "e91d8cc86ca1f95edee07dc64a290da604318de12161208a13c91c817c1ed7ca",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217095145_0079_D.npy": "80b09cdcdff7a7631dc237ed246c1f31d489768c4a1fcd266879315cf5cf1113",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217102521_0013_D.npy": "d948dfe722bd46aae5dfcef03dde88a84f734793b0f78eed400673436dfccf7b",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217084905_0196_D.npy": "92d371ef5c4f7aa5e311b3467f3b1dfba18567465771ef0b91a71860a1df5ae4",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217102713_0012_D.npy": "e05a3055084d34f299c65b5193f1ea7a9296d71a32764692243f5e6b69066170",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217102921_0006_D.npy": "6ee83eb7e93746c54808d3eae10347d9fcd890aadbfd9f122c044bfb970a71ee",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217102525_0015_D.npy": "6f1b7bef55b4abf9ca1bbb9ca215c0790bb19242c056b6eddafa56c533c77120",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217102915_0003_D.npy": "f0f6fd679daa68d1056e83921da74e027c5cd0faf63eeb7033f5a8c87c08e6c1",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217102705_0008_D.npy": "edf4a11f4e78d098815ce431eb5bd56e482e8cf27f09c1ff2eefc31bbcd43678",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217102703_0007_D.npy": "9a68ad0cf8667d0641f2aa7e8cbba66a5f5cef66a83fe475f04533dbe9d9edc2",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217102741_0026_D.npy": "bc0df24c72ed1d8af82bc285b855aa5d69ba95a51b338af03c717a77cc27ef98",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217102659_0005_D.npy": "5fff8da5a8484edfff6d7677ab9aad3ff3f4d3b41697eb3c9fbeae46b0e736eb",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217102701_0006_D.npy": "aade9838de4db4416fd7e999073ae9c440729f7a10a6ed14e0df219600aae313",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217102939_0015_D.npy": "f00bc198a7f7736600566b8019c9ddfa6327406e8effe6c8a43f6f7a4cac3ae6",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217102531_0018_D.npy": "74cf94f3c6a8b921b18d82ce0a4bc133fef087d0764529d19aa26a548ed66b6e",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217095147_0080_D.npy": "f6f1d8f6fea91c75ad69874b99f0dbd9487de2d94e3d0b3896bfe887b84a7ad6",
+      "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217095143_0078_D.npy": "4413fdce464fb7324a4e9d374b17f982f64edfdde10b6830d2c26aaea862be4f"
+    },
+    "buildings": {
+      "DEBY_LOD2_4907184": {
+        "views": 5,
+        "candidate_views": 137,
+        "building_angle_median_deg_absdot": 19.6345,
+        "quality_bin": "borderline_15_30"
+      },
+      "DEBY_LOD2_4907185": {
+        "views": 5,
+        "candidate_views": 102,
+        "building_angle_median_deg_absdot": 35.5068,
+        "quality_bin": "bad_gt30"
+      },
+      "DEBY_LOD2_4907198": {
+        "views": 5,
+        "candidate_views": 95,
+        "building_angle_median_deg_absdot": 17.0084,
+        "quality_bin": "borderline_15_30"
+      },
+      "DEBY_LOD2_4907202": {
+        "views": 5,
+        "candidate_views": 109,
+        "building_angle_median_deg_absdot": 5.6172,
+        "quality_bin": "good_lt15"
+      },
+      "DEBY_LOD2_4908168": {
+        "views": 5,
+        "candidate_views": 103,
+        "building_angle_median_deg_absdot": 28.5712,
+        "quality_bin": "borderline_15_30"
+      },
+      "DEBY_LOD2_4908178": {
+        "views": 5,
+        "candidate_views": 102,
+        "building_angle_median_deg_absdot": 9.3716,
+        "quality_bin": "good_lt15"
+      },
+      "DEBY_LOD2_4907199": {
+        "views": 5,
+        "candidate_views": 79,
+        "building_angle_median_deg_absdot": 29.8616,
+        "quality_bin": "borderline_15_30"
+      },
+      "DEBY_LOD2_8568391": {
+        "views": 5,
+        "candidate_views": 98,
+        "building_angle_median_deg_absdot": 5.5832,
+        "quality_bin": "good_lt15"
+      },
+      "DEBY_LOD2_8568392": {
+        "views": 5,
+        "candidate_views": 56,
+        "building_angle_median_deg_absdot": 1.6595,
+        "quality_bin": "good_lt15"
+      },
+      "DEBY_LOD2_60098": {
+        "views": 5,
+        "candidate_views": 85,
+        "building_angle_median_deg_absdot": 43.1204,
+        "quality_bin": "bad_gt30"
+      },
+      "DEBY_LOD2_4907186": {
+        "views": 5,
+        "candidate_views": 78,
+        "building_angle_median_deg_absdot": 46.7058,
+        "quality_bin": "bad_gt30"
+      },
+      "DEBY_LOD2_4907188": {
+        "views": 5,
+        "candidate_views": 72,
+        "building_angle_median_deg_absdot": 37.7617,
+        "quality_bin": "bad_gt30"
+      },
+      "DEBY_LOD2_4907194": {
+        "views": 5,
+        "candidate_views": 71,
+        "building_angle_median_deg_absdot": 29.282,
+        "quality_bin": "borderline_15_30"
+      },
+      "DEBY_LOD2_4907195": {
+        "views": 5,
+        "candidate_views": 73,
+        "building_angle_median_deg_absdot": 30.9342,
+        "quality_bin": "bad_gt30"
+      }
+    }
+  },
+  "output_hashes": {
+    "docs/e5_c001_s3_seed_inventory.csv": "a01d6e494cb84f5c71c0ef42df8d36d54d48ff697416f23525bb45560a431742",
+    "docs/e5_c001_s3_normal_multiview.csv": "2f10312152c12b55496e5d80971f78eccb6ad9ca39d9a31c31c48bb19fe3f8ab"
+  }
+}
