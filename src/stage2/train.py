@@ -1251,6 +1251,7 @@ def main():
                     "w_boundary_normal",
                     "semantic_geometry_warmup",
                     "semantic_region_cache",
+                    "semantic_roof_class",
                     "semantic_alpha_threshold",
                     "semantic_source_component_min_pixels",
                     "semantic_component_connectivity",
@@ -1258,7 +1259,11 @@ def main():
                     "semantic_footprint_buffer_m",
                     "semantic_plane_min_pixels",
                     "semantic_plane_refit_every",
+                    "semantic_huber_delta",
+                    "semantic_plane_irls_iterations",
                     "semantic_boundary_band_px",
+                    "semantic_pi_target_buildings",
+                    "semantic_pi_event_until_positive",
                 ],
             }
         )
