@@ -1,0 +1,88 @@
+{
+  "schema": "jointbuildgs.s3ap.fm_env_manifest.v1",
+  "created_utc": "2026-07-14T12:08:29.872586+00:00",
+  "status": "environment_locked_smoke_pass",
+  "learning_runs_started": 0,
+  "repo_git_head": "3d6d2d0015e4eb423dae3b62fa9fd757ae8df4d7",
+  "repo_branch": "exp/3b-surface-restore-corrected",
+  "model": {
+    "id": "naver/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric",
+    "revision": "06e7259f34c3060f322df5cb0c7b9094f57e41fc",
+    "weights_sha256": "0a615eb05fa9db654050aa655945ee5696e7c6c1b7f93f1ee8c37249010f6feb",
+    "weights_bytes": 2754661648,
+    "config_sha256": "718eb93dc4f9e4332b60cc0041af962d712cbd346d7770ce35c5b22cff68eae4",
+    "source": "complete pre-existing local Hugging Face cache; mounted read-only; offline mode"
+  },
+  "code": {
+    "mast3r_repository": "https://github.com/naver/mast3r.git",
+    "mast3r_commit": "f5209afc300cec36239a7ac992263f36847bbba0",
+    "dust3r_repository": "https://github.com/naver/dust3r.git",
+    "dust3r_commit": "3cc8c88c413bb9e34c41db0e0eef99c2ee010b12",
+    "croco_repository": "https://github.com/naver/croco.git",
+    "croco_commit": "d7de0705845239092414480bd829228723bf20de"
+  },
+  "runtime_lock": {
+    "docker_image_tag": "jointbuildgs-s3ap-mast3r:20260714-f5209af",
+    "docker_image_id": "sha256:89d64b4c7112cc55db0d42d562e2a0208858658c0c67ab1bd48424175c50f501",
+    "base_image_tag": "jointbuildgs:dev",
+    "base_image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
+    "dockerfile": "phases/p2-gsjso/docker/s3ap-mast3r/Dockerfile",
+    "dockerfile_sha256": "2ada6809de7e5d8e66a9c62875edaf47fe9ee584c4a1aec228732b7e3e0fc3fc",
+    "python": "3.11.15",
+    "torch": "2.4.1+cu121",
+    "torch_cuda": "12.1",
+    "cuda_available": true,
+    "gpu_name": "NVIDIA GeForce RTX 3090",
+    "pip_freeze": "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_env/pip_freeze.txt",
+    "pip_freeze_sha256": "1c556c3be3304703a2971d82b4fd320fc96d2dd682787388123130db0a586b77",
+    "pip_freeze_line_count": 179,
+    "dependency_lock_method": "immutable local Docker image ID plus complete pip freeze",
+    "offline_inference": true
+  },
+  "smoke": {
+    "status_line": "pass; matches=593; pts1=[1, 384, 512, 3]; pts2=[1, 384, 512, 3]; finite=true",
+    "artifact": "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_env/smoke_4907199_pair.json",
+    "artifact_sha256": "1b4f829df3cccaa68e3aa2324276c20e03d01011dc8ae050a88740bf9a095e04",
+    "building": "DEBY_LOD2_4907199",
+    "pair": [
+      "DJI_20241217095441_0023_D",
+      "DJI_20241217095531_0048_D"
+    ],
+    "crop_rule": "raw source image cropped by the already-recorded T0-1 crop_box_xyxy",
+    "output_shapes": {
+      "pred1_pts3d": [
+        1,
+        384,
+        512,
+        3
+      ],
+      "pred2_pts3d_in_other_view": [
+        1,
+        384,
+        512,
+        3
+      ],
+      "pred1_desc": [
+        1,
+        384,
+        512,
+        24
+      ],
+      "pred2_desc": [
+        1,
+        384,
+        512,
+        24
+      ]
+    },
+    "all_finite": true,
+    "reciprocal_match_count": 593
+  },
+  "runtime_notes": [
+    "CUDA RoPE2D extension was not compiled; official PyTorch fallback was used.",
+    "The first inference completed but its provenance write stopped on git dubious-ownership; no artifact was written. The rerun used explicit per-repository safe.directory and passed.",
+    "No weight download, model training, seed generation, or experiment input mutation occurred."
+  ],
+  "gt_use": "none in environment lock and smoke",
+  "interpretation_or_verdict": null
+}

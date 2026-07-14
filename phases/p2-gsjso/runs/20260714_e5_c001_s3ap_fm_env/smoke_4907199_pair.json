@@ -1,0 +1,134 @@
+{
+  "schema": "jointbuildgs.s3ap.mast3r_smoke.v1",
+  "created_utc": "2026-07-14T12:07:02.736529+00:00",
+  "status": "pass",
+  "learning_runs_started": 0,
+  "device": "cuda",
+  "gpu_name": "NVIDIA GeForce RTX 3090",
+  "model_id": "naver/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric",
+  "model_revision": "06e7259f34c3060f322df5cb0c7b9094f57e41fc",
+  "model_sha256": "0a615eb05fa9db654050aa655945ee5696e7c6c1b7f93f1ee8c37249010f6feb",
+  "model_bytes": 2754661648,
+  "config_sha256": "718eb93dc4f9e4332b60cc0041af962d712cbd346d7770ce35c5b22cff68eae4",
+  "mast3r_commit": "f5209afc300cec36239a7ac992263f36847bbba0",
+  "dust3r_commit": "3cc8c88c413bb9e34c41db0e0eef99c2ee010b12",
+  "croco_commit": "d7de0705845239092414480bd829228723bf20de",
+  "images": [
+    {
+      "path": "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/images/DJI_20241217095441_0023_D.JPG",
+      "sha256": "3ea299fda1acd3c75881553eaed2bb8113b7689cc24d251a6d2de24f7ff6e457",
+      "crop_box_xyxy": [
+        0,
+        757,
+        337,
+        1013
+      ]
+    },
+    {
+      "path": "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/images/DJI_20241217095531_0048_D.JPG",
+      "sha256": "d780e87d9bf8a15e2e09d262f381cab4a049c81c77b6fe72f74cecdb7c0bbcd1",
+      "crop_box_xyxy": [
+        1107,
+        757,
+        1363,
+        1013
+      ]
+    }
+  ],
+  "load_size": 512,
+  "output": {
+    "pred1_pts3d": {
+      "shape": [
+        1,
+        384,
+        512,
+        3
+      ],
+      "dtype": "float32",
+      "finite_count": 589824,
+      "value_count": 589824,
+      "all_finite": true,
+      "min": -0.36418020725250244,
+      "max": 2.4596426486968994
+    },
+    "pred2_pts3d_in_other_view": {
+      "shape": [
+        1,
+        384,
+        512,
+        3
+      ],
+      "dtype": "float32",
+      "finite_count": 589824,
+      "value_count": 589824,
+      "all_finite": true,
+      "min": -0.7402806878089905,
+      "max": 2.599142551422119
+    },
+    "pred1_desc": {
+      "shape": [
+        1,
+        384,
+        512,
+        24
+      ],
+      "dtype": "float32",
+      "finite_count": 4718592,
+      "value_count": 4718592,
+      "all_finite": true,
+      "min": -0.7420205473899841,
+      "max": 0.7516558766365051
+    },
+    "pred2_desc": {
+      "shape": [
+        1,
+        384,
+        512,
+        24
+      ],
+      "dtype": "float32",
+      "finite_count": 4718592,
+      "value_count": 4718592,
+      "all_finite": true,
+      "min": -0.7876548171043396,
+      "max": 0.7835334539413452
+    },
+    "pred1_conf": {
+      "shape": [
+        1,
+        384,
+        512
+      ],
+      "dtype": "float32",
+      "finite_count": 196608,
+      "value_count": 196608,
+      "all_finite": true,
+      "min": 1.0,
+      "max": 11.258776664733887
+    },
+    "pred2_conf": {
+      "shape": [
+        1,
+        384,
+        512
+      ],
+      "dtype": "float32",
+      "finite_count": 196608,
+      "value_count": 196608,
+      "all_finite": true,
+      "min": 1.263848900794983,
+      "max": 9.486252784729004
+    }
+  },
+  "reciprocal_match_count": 593,
+  "matches1_shape": [
+    593,
+    2
+  ],
+  "matches2_shape": [
+    593,
+    2
+  ],
+  "finite_and_shape_check": "pass",
+  "interpretation_or_verdict": null
+}
