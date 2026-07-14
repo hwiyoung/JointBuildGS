@@ -1,0 +1,38 @@
+{
+  "schema": "jointbuildgs.s3a.human_admission.v1",
+  "recorded_utc": "2026-07-14T06:50:55.919347+00:00",
+  "git_head_before_admission_commit": "6056a23e3c6db5ec02d03436cb5a67f4930cf59a",
+  "git_branch": "exp/3b-surface-restore-corrected",
+  "mechanical_gate_status_preserved": "fail",
+  "mechanical_gate_reason_preserved": "P-I nonzero rendered-depth gradient not observed for 8568391",
+  "human_verdict": "pass_by_kim_20260714",
+  "human_verdict_reason": "P-I reclassified as measurement",
+  "post_result_ruling_disclosure": [
+    "이 재판정은 게이트 결과를 본 뒤에 내려졌다.",
+    "근거 = ① 신호 도달을 당락으로 잠근 문면이 없음.",
+    "② \"3채 전부 신호 통과\" 요구는 씨앗 부재 갈래의 사전 등록과 논리 충돌(무반응이 예측인 건물의 무반응이 게이트를 죽이는 구조) ③ 비중 기준은 통과."
+  ],
+  "selected_weights": {
+    "w_semdepth_smooth": 0.125,
+    "w_semdepth_plane": 0.125,
+    "w_boundary_normal": 0.01,
+    "semantic_geometry_warmup": 1500
+  },
+  "claim_boundary": "S3-A oracle class+instance-address mechanism upper-bound information-recovery runs; not a battlefield win; S3-B forbids the oracle ID map",
+  "mechanical_orchestrator": "phases/p2-gsjso/scripts/e5_c001_s3_semantic_guided.py",
+  "mechanical_orchestrator_sha256": "c26c1ddf6168242c68620aeb8f0eee4a0bec77b3998d1b3e37091526c5c59565",
+  "human_admission_adapter": "phases/p2-gsjso/scripts/e5_c001_s3_human_admission.py",
+  "human_admission_adapter_sha256": "6681cf81fc56bb3e286a888f5c65434ca94063563c9ebe5aabfbcc90ca1a4c87",
+  "gate_audit": "docs/e5_c001_s3_loss_gate_audit.csv",
+  "gate_audit_sha256": "06963f55cc863ea3948da3d00e753af577e4cbff498fa08778bc29a26215dd39",
+  "full_configs": {
+    "gs_e5_C001_s3a_semantic_guided_r1": {
+      "path": "configs/tum_mob/e5_s3_semantic_guided/gs_e5_C001_s3a_semantic_guided_r1.yaml",
+      "sha256": "28145a0926381fe8e11350928f7f109f9893179a3ddbd86c9816b750c9086a82"
+    },
+    "gs_e5_C001_s3a_semantic_guided_r2": {
+      "path": "configs/tum_mob/e5_s3_semantic_guided/gs_e5_C001_s3a_semantic_guided_r2.yaml",
+      "sha256": "ad0baee1f19ced010355391e5f3a8030999cbfa78a9cfdf2365ed1955a49786f"
+    }
+  }
+}

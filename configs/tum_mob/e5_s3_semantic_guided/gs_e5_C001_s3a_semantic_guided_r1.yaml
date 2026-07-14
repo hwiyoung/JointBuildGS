@@ -94,8 +94,8 @@ densify_audit_buildings:
 - DEBY_LOD2_4907199
 - DEBY_LOD2_8568391
 - DEBY_LOD2_8568392
-w_semdepth_smooth: 0.25
-w_semdepth_plane: 0.25
+w_semdepth_smooth: 0.125
+w_semdepth_plane: 0.125
 w_boundary_normal: 0.01
 semantic_geometry_warmup: 1500
 semantic_roof_class: 1
@@ -117,7 +117,7 @@ semantic_pi_event_until_positive: false
 semantic_geometry_audit_every: 5000
 semantic_region_cache: /workspace/JointBuildGS/results/tum_transfer/e5_s3/C001/semantic_regions
 s3_gate_attempt: 0
-s3_semdepth_scale: 1.0
+s3_semdepth_scale: 0.5
 s3_nb_scale: 1.0
 s3_claim_scope: oracle class+instance-address mechanism upper bound; not a battlefield win; S3-B forbids the oracle ID map
   and owns the FM/paper claim
