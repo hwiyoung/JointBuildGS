@@ -1,0 +1,144 @@
+{
+  "schema": "jointbuildgs.s3ap.fm_rescore.v1",
+  "created_utc": "2026-07-14T12:24:17.638493+00:00",
+  "git_head_at_measurement": "344ebccd90c764e07070b1998188daee0a48cb7d",
+  "branch": "exp/3b-surface-restore-corrected",
+  "learning_runs_started": 0,
+  "model": {
+    "revision": "06e7259f34c3060f322df5cb0c7b9094f57e41fc",
+    "weights_sha256": "0a615eb05fa9db654050aa655945ee5696e7c6c1b7f93f1ee8c37249010f6feb",
+    "weights_bytes": 2754661648
+  },
+  "environment_manifest": "docs/e5_c001_s3ap_fm_env_manifest.json",
+  "environment_manifest_sha256": "7246a77569a7af1b931ad60eda7012e6e3e8f4ff81b5e10f2e3c1a2efea80d68",
+  "targets": [
+    "4907199",
+    "8568391",
+    "8568392"
+  ],
+  "locked_visible_views": {
+    "4907199": [
+      {
+        "stem": "DJI_20241217095141_0077_D",
+        "view": "DJI_20241217095141_0077_D.JPG",
+        "support": 60,
+        "oracle_visible_support": 60
+      },
+      {
+        "stem": "DJI_20241217095145_0079_D",
+        "view": "DJI_20241217095145_0079_D.JPG",
+        "support": 612,
+        "oracle_visible_support": 612
+      },
+      {
+        "stem": "DJI_20241217095147_0080_D",
+        "view": "DJI_20241217095147_0080_D.JPG",
+        "support": 603,
+        "oracle_visible_support": 603
+      },
+      {
+        "stem": "DJI_20241217095149_0081_D",
+        "view": "DJI_20241217095149_0081_D.JPG",
+        "support": 607,
+        "oracle_visible_support": 607
+      },
+      {
+        "stem": "DJI_20241217095441_0023_D",
+        "view": "DJI_20241217095441_0023_D.JPG",
+        "support": 35597,
+        "oracle_visible_support": 35597
+      },
+      {
+        "stem": "DJI_20241217095531_0048_D",
+        "view": "DJI_20241217095531_0048_D.JPG",
+        "support": 2402,
+        "oracle_visible_support": 2402
+      }
+    ],
+    "8568391": [
+      {
+        "stem": "DJI_20241217084901_0194_D",
+        "view": "DJI_20241217084901_0194_D.JPG",
+        "support": 2140,
+        "oracle_visible_support": 2335
+      },
+      {
+        "stem": "DJI_20241217084903_0195_D",
+        "view": "DJI_20241217084903_0195_D.JPG",
+        "support": 622,
+        "oracle_visible_support": 622
+      },
+      {
+        "stem": "DJI_20241217095441_0023_D",
+        "view": "DJI_20241217095441_0023_D.JPG",
+        "support": 20782,
+        "oracle_visible_support": 22412
+      }
+    ],
+    "8568392": [
+      {
+        "stem": "DJI_20241217084901_0194_D",
+        "view": "DJI_20241217084901_0194_D.JPG",
+        "support": 3,
+        "oracle_visible_support": 3
+      },
+      {
+        "stem": "DJI_20241217084903_0195_D",
+        "view": "DJI_20241217084903_0195_D.JPG",
+        "support": 3,
+        "oracle_visible_support": 3
+      },
+      {
+        "stem": "DJI_20241217095441_0023_D",
+        "view": "DJI_20241217095441_0023_D.JPG",
+        "support": 1505,
+        "oracle_visible_support": 1743
+      }
+    ]
+  },
+  "pair_selection_rule": "all locked visible-view combinations; sort by minimum frozen address pixels descending, then sum descending, view stems ascending; cap 10 per building",
+  "crop_rule": "frozen T0-1 target region bbox only; 32px margin; exact 4:3; min 256x192; resize exactly 512x384; no result-dependent crop",
+  "match_rule": "reciprocal descriptor NN stride8; 3px border; finite positive pointmaps",
+  "pose_and_scale_rule": "PnP recovers both physical cameras in the centered MASt3R crop gauge; COLMAP poses remain fixed; scale=known/predicted camera-center baseline; rotation=SO(3) mean of the two pose-implied world rotations; translation=least-squares mean camera-center alignment",
+  "candidate_rule": "joint crop-gauge PnP-inlier paired pointmap mean transformed by the camera-aligned similarity; no footprint/LoD2 filter",
+  "scoring_rule": "footprint containment and exterior leakage after reconstruction; roof candidates additionally z>=observed exterior-ring ground q10+1.5m; LoD2 used only for absolute z error",
+  "source_sha256": {
+    "docs/e5_c001_s3ap_anchor_inventory.csv": "877508520f1bdca60d74bb4afdc416dcc6743707cfb0c67de2cb5027fe70216d",
+    "docs/e5_c001_s3ap_fm_env_manifest.json": "7246a77569a7af1b931ad60eda7012e6e3e8f4ff81b5e10f2e3c1a2efea80d68",
+    "results/tum_transfer/analysis/footprints_aoi.geojson": "ca7f5b13a52368e1d2ac47b77cc78f12887bad4d598d122ad57b882eb4920a82",
+    "results/tum_transfer/e5_pilot/C001/C001_train_prep_manifest.json": "eca68a7890116c52557ab467361b58c4c784047807f9bee857a2517ac0b40b58",
+    "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/images/DJI_20241217084901_0194_D.JPG": "d871933cff4686cdc5b436e583790ac5f9a50445aa2642286ea7e9afa8fd1a52",
+    "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/images/DJI_20241217084903_0195_D.JPG": "64b25a2806374e1305ce05c592134d6f475a916ac03007dbbda6743e20b75b13",
+    "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/images/DJI_20241217095141_0077_D.JPG": "2717348b6e6ad814f2e1b923fd81e1496a8d2cf636aadbfebc3253ba581ffd7b",
+    "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/images/DJI_20241217095145_0079_D.JPG": "b82a014c983fd79037f6390c279bb57bc75a915654f622a42c48cde8ece6d5a5",
+    "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/images/DJI_20241217095147_0080_D.JPG": "16b77884b4305caacebe780a12fc3100bc9fe0db89ca5e1dfd07eda96134965d",
+    "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/images/DJI_20241217095149_0081_D.JPG": "a774565dda0e337c95ec6a0003b8dddfede582b1ed93b739950fa864a5099b38",
+    "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/images/DJI_20241217095441_0023_D.JPG": "3ea299fda1acd3c75881553eaed2bb8113b7689cc24d251a6d2de24f7ff6e457",
+    "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/images/DJI_20241217095531_0048_D.JPG": "d780e87d9bf8a15e2e09d262f381cab4a049c81c77b6fe72f74cecdb7c0bbcd1",
+    "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/sparse/0/cameras.bin": "7c9b01e524628658a92305202a2618a287570c6a90c414509b78dba1b5fc7794",
+    "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/sparse/0/images.bin": "dcb84b0d46f2666a9a8f6e1657a48dc4a8d1d60c35a7e47117b2df04c5f0cefb",
+    "results/tum_transfer/e5_s3/C001/semantic_regions/DJI_20241217084901_0194_D.npz": "8ce702f91349aeb5145b0408dc08ce3b035ef934e657011be4dd6d067994a414",
+    "results/tum_transfer/e5_s3/C001/semantic_regions/DJI_20241217084903_0195_D.npz": "d007a2d80c41e4a3d6db520548845081a50ec62f8678f30c5d48e29b5748eb5a",
+    "results/tum_transfer/e5_s3/C001/semantic_regions/DJI_20241217095141_0077_D.npz": "da2fccd27e46fe9b74dc8c756c7a49f213f0a2d31f9cfb3d09554da6eaf374fa",
+    "results/tum_transfer/e5_s3/C001/semantic_regions/DJI_20241217095145_0079_D.npz": "5a5f20979aeffbfed4440cebee31b4d631402b8edc23730a749cdf1ffec5d74e",
+    "results/tum_transfer/e5_s3/C001/semantic_regions/DJI_20241217095147_0080_D.npz": "f955ddfd3603e0a06822e89d758c8c932c901fd7b90630be58e9e9c21c76be50",
+    "results/tum_transfer/e5_s3/C001/semantic_regions/DJI_20241217095149_0081_D.npz": "7db6bef7a773242749ac327a70676b6fbc56352a8fb1b56e767bf06f4789d6aa",
+    "results/tum_transfer/e5_s3/C001/semantic_regions/DJI_20241217095441_0023_D.npz": "685762a1cc2752962224ce89bc44d1a7f216dcf926941421ecdf04de90c34707",
+    "results/tum_transfer/e5_s3/C001/semantic_regions/DJI_20241217095531_0048_D.npz": "02b1203dfba4a44f687468479d6d9583aaeed2dd7a5538bad7cffb3fd9a61e35",
+    "results/tum_transfer/e5_s3_semantic_guided/C001/runs/gs_e5_C001_s3a_semantic_guided_gate/audit/pjpl_depth_anchor_views.csv": "65391c2b8c1c73aeffaca7e6a60198e34cf2247cb978dee9edfe11d42284ca39"
+  },
+  "script_sha256": "82af89400b88f5057cffd10b8cbfd921c0925341ea093b28011607364ba17ab7",
+  "output_sha256": {
+    "docs/e5_c001_s3ap_fm_rescore.csv": "7b62164e8fb19617e702c81a12e100721ea269d17c15367fde1e336d382f5276",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_rescore/pair_details.json": "28dfcbae2eef881d1020a0e2c6697739296618a1cde5cd9c22ea99c0f6f111c5",
+    "docs/figs/e5_c001_s3ap_fm_rescore/fm_rescore_4907199.png": "a699ee553722605f7fac88cb5f69af1e7939a60eddbc1cb2feb57dd15da68151",
+    "docs/figs/e5_c001_s3ap_fm_rescore/fm_rescore_8568391.png": "6dc6b1d552db8da857dd377df58f131d0c1a4b3b631906ba4245140c640d2594",
+    "docs/figs/e5_c001_s3ap_fm_rescore/fm_rescore_8568392.png": "9c57c2037c7d529f0210c854f303650fea27d8e8e39a1f8378989640649c1398"
+  },
+  "row_count": 19,
+  "pair_row_count": 16,
+  "building_summary_count": 3,
+  "gt_separation": "The frozen gate region selects the requested input crop. Footprint and LoD2 reference z are first applied after camera-aligned reconstruction and only produce score columns/figure overlays.",
+  "no_seed_or_training_use": true,
+  "interpretation_or_verdict": null
+}
