@@ -1,0 +1,41 @@
+{
+  "task_id": "FAIR-B-VAIHINGEN-AREA3",
+  "run_id": "20260714_vaihingen_area3",
+  "stage": "stats_candidates",
+  "status": "complete",
+  "overall_status": "partial",
+  "training_runs": 0,
+  "source_crs": "EPSG:32632",
+  "output_crs": "EPSG:25832",
+  "buildings": 57,
+  "area_eligible": 40,
+  "positive_control_candidates": 7,
+  "thresholds": {
+    "texture_gradient_p40": 2.315406656265259,
+    "open_distance_p50_m": 1.2201337620754642,
+    "minimum_footprint_area_m2": 40.0,
+    "textureless_gradient_percentile": 40.0,
+    "open_nearest_building_percentile": 50.0,
+    "open_building_fraction_10m_max": 0.15,
+    "good_view_count_min": 4,
+    "good_max_baseline_height_ratio_min": 0.2,
+    "coverage_grid_m": 0.25,
+    "coverage_radius_m": 0.35
+  },
+  "official_dim": {
+    "footprint_valid_cells": 1005472,
+    "footprint_total_cells": 1005472
+  },
+  "fixed_pose_colmap": {
+    "status": "partial",
+    "area3_points": 0
+  },
+  "als_points": 262470,
+  "artifacts": {
+    "inventory": "fair-pilot/docs/data_inventory.md",
+    "baseline": "fair-pilot/docs/baseline_mvs_stats.md",
+    "candidates": "fair-pilot/docs/positive_control_candidates.csv",
+    "all_metrics": "fair-pilot/runs/20260714_vaihingen_area3/all_building_metrics.csv",
+    "incremental_metrics": "fair-pilot/runs/20260714_vaihingen_area3/building_metrics_incremental.csv"
+  }
+}

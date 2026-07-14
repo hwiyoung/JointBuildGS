@@ -1,0 +1,56 @@
+{
+  "task_id": "FAIR-B-VAIHINGEN-AREA3",
+  "run_id": "20260714_vaihingen_area3",
+  "stage": "colmap_mvs",
+  "status": "partial",
+  "gpu_mapping": "host GPU 1 -> container GPU 0",
+  "training_runs": 0,
+  "poses": "fixed DGPF daporp.dat; no SfM pose optimization",
+  "source_crs": "EPSG:32632",
+  "output_crs": "EPSG:25832",
+  "depth_range_m": [
+    700.0,
+    1100.0
+  ],
+  "reprojection_threshold_px": 2.0,
+  "steps": [
+    {
+      "name": "model_converter",
+      "returncode": 0,
+      "elapsed_seconds": 0,
+      "reason": "ok"
+    },
+    {
+      "name": "patch_match_stereo",
+      "returncode": 0,
+      "elapsed_seconds": 0,
+      "reason": "reused_complete_geometric_cache"
+    },
+    {
+      "name": "stereo_fusion",
+      "returncode": 0,
+      "elapsed_seconds": 23,
+      "reason": "ok"
+    },
+    {
+      "name": "stereo_fusion_photometric",
+      "returncode": 0,
+      "elapsed_seconds": 25,
+      "reason": "geometric_zero_recovery"
+    }
+  ],
+  "official_dim_fallback_available": true,
+  "colmap_version_line": "COLMAP 4.0.4 -- Structure-from-Motion and Multi-View Stereo",
+  "colmap_image_id": "sha256:f3fecec368989ea8d3ba7178416453c07419ff1b310c6df727e1b7efb8a3d4f2",
+  "fusion_attempts": {
+    "geometric_vertices": 0,
+    "photometric_vertices": 0,
+    "selected": "photometric_after_geometric_zero"
+  },
+  "fused": {
+    "path": "fair-pilot/runs/20260714_vaihingen_area3/mvs/fused_photometric_source_epsg32632.ply",
+    "size_bytes": 229,
+    "sha256": "84585f60956b534f1486de9bce213d48ae8530b8d7374616317dc953348ed01c",
+    "vertices": 0
+  }
+}

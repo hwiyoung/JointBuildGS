@@ -1,0 +1,49 @@
+{
+  "task_id": "FAIR-B-VAIHINGEN-AREA3",
+  "run_id": "20260714_vaihingen_area3",
+  "archive": {
+    "path": "phases/p0-audit/data/raw/isprs/Vaihingen.zip",
+    "expected_size_bytes": 16016774527,
+    "expected_sha256": "ddde00345439f0a778a8fb4cf325c7791d9c66da4378fbcea44ca3ff7678fa0f",
+    "source_url": "https://seafile.projekt.uni-hannover.de/f/6a06a837b1f349cfa749/",
+    "source_page": "https://www.isprs.org/resources/datasets/benchmarks/UrbanSemLab/default.aspx",
+    "terms_url": "https://www2.isprs.org/media/komfssn5/complexscenes_revision_v4.pdf"
+  },
+  "runtime_lock": {
+    "dev_image": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
+    "tools_image": "sha256:87bea02e5598a3d53a119b754191673497d52641bd8ea4106ffee653407579b0",
+    "colmap_image": "sha256:f3fecec368989ea8d3ba7178416453c07419ff1b310c6df727e1b7efb8a3d4f2"
+  },
+  "pilot": {
+    "area": 3,
+    "label": "Residential Area",
+    "source_crs": "EPSG:32632",
+    "output_crs": "EPSG:25832",
+    "images": [
+      "10040082", "10040083", "10040084",
+      "10050104", "10050105", "10050106",
+      "10250132", "10250133", "10250134", "10250135"
+    ],
+    "image_scale": 0.25,
+    "reprojection_error_px": 2.0,
+    "mvs_depth_min_m": 700.0,
+    "mvs_depth_max_m": 1100.0
+  },
+  "time_limits": {
+    "inventory_minutes": 30,
+    "selective_staging_minutes": 90,
+    "prepare_minutes": 60,
+    "colmap_mvs_minutes": 240,
+    "stats_candidates_minutes": 60
+  },
+  "candidate_rules": {
+    "minimum_footprint_area_m2": 40.0,
+    "textureless_gradient_percentile": 40.0,
+    "open_nearest_building_percentile": 50.0,
+    "open_building_fraction_10m_max": 0.15,
+    "good_view_count_min": 4,
+    "good_max_baseline_height_ratio_min": 0.20,
+    "coverage_grid_m": 0.25,
+    "coverage_radius_m": 0.35
+  }
+}

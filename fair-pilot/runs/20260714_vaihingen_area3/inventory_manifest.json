@@ -1,0 +1,28 @@
+{
+  "task_id": "FAIR-B-VAIHINGEN-AREA3",
+  "run_id": "20260714_vaihingen_area3",
+  "stage": "inventory",
+  "status": "complete",
+  "archive": {
+    "path": "phases/p0-audit/data/raw/isprs/Vaihingen.zip",
+    "size_bytes": 16016774527,
+    "sha256": "ddde00345439f0a778a8fb4cf325c7791d9c66da4378fbcea44ca3ff7678fa0f",
+    "size_match": true,
+    "sha256_match": true,
+    "zip_bad_member": null,
+    "members": 180,
+    "compressed_member_bytes": 16016728705,
+    "uncompressed_member_bytes": 22715159436
+  },
+  "license": {
+    "terms_url": "https://www2.isprs.org/media/komfssn5/complexscenes_revision_v4.pdf",
+    "research_only": true,
+    "third_party_redistribution_prohibited": true
+  },
+  "source_crs": "EPSG:32632",
+  "output_crs": "EPSG:25832",
+  "versions": {
+    "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+    "platform": "Linux-6.8.0-107-generic-x86_64-with-glibc2.35"
+  }
+}

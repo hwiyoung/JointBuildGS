@@ -1,0 +1,8 @@
+# Immutable source and regenerable staged data stay local.
+/staging/**
+!/staging/README.md
+
+# Keep run provenance, but not heavy reconstruction products.
+/runs/**/workspace/
+/runs/**/mvs/
+/runs/**/tmp/

@@ -1,0 +1,51 @@
+{
+  "task_id": "FAIR-B-VAIHINGEN-AREA3",
+  "run_id": "20260714_vaihingen_area3",
+  "stage": "prepare",
+  "status": "complete",
+  "pilot_area": 3,
+  "source_crs": "EPSG:32632",
+  "output_crs": "EPSG:25832",
+  "source_bbox": [
+    497070.6476140013,
+    5419210.510898002,
+    497200.5117860006,
+    5419415.295528004
+  ],
+  "output_bbox_with_buffer": [
+    497060.6476139739,
+    5419200.510775407,
+    497210.5117859745,
+    5419425.295405408
+  ],
+  "reference_roof_z_median_source": 273.793,
+  "footprint_features": 57,
+  "images": [
+    "10040082",
+    "10040083",
+    "10040084",
+    "10050104",
+    "10050105",
+    "10050106",
+    "10250132",
+    "10250133",
+    "10250134",
+    "10250135"
+  ],
+  "image_scale": 0.25,
+  "image_size": [
+    1920,
+    3456
+  ],
+  "colmap_camera": {
+    "model": "PINHOLE",
+    "fx": 2500.0,
+    "fy": 2500.0,
+    "cx": 960.0,
+    "cy": 1728.0
+  },
+  "pose_axis_conversion": "R_world_to_colmap_camera = diag(1,-1,-1) @ R_dgpf_camera_to_world.T",
+  "centroid_visible_views": 9,
+  "official_dim": "fair-pilot/staging/area3_work_epsg25832/dim_official_09cm_area3_epsg25832.tif",
+  "als": "fair-pilot/staging/area3_work_epsg25832/als_area3_buf10_epsg25832.laz"
+}
