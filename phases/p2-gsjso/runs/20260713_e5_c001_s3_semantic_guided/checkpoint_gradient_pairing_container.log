@@ -1,0 +1,17 @@
++ docker run --rm -i --user 1000:1000 --gpus all -e HOME=/tmp -e MPLCONFIGDIR=/tmp/matplotlib -e XDG_CACHE_HOME=/tmp -e E5_S3A_GRADIENT_PAIRING_CONTAINER=1 -e TORCH_EXTENSIONS_DIR=/workspace/JointBuildGS/results/tum_transfer/e5_s3_semantic_guided/C001/torch_extensions -v /media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS:/workspace/JointBuildGS -w /workspace/JointBuildGS -e CUDA_VISIBLE_DEVICES=1 jointbuildgs:dev python3 phases/p2-gsjso/scripts/e5_c001_s3_checkpoint_gradient_pairing.py --views-per-building 3
+
+==========
+== CUDA ==
+==========
+
+CUDA Version 12.1.1
+
+Container image Copyright (c) 2016-2023, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+
+This container image and its contents are governed by the NVIDIA Deep Learning Container License.
+By pulling and using the container, you accept the terms and conditions of this license:
+https://developer.nvidia.com/ngc/nvidia-deep-learning-container-license
+
+A copy of this license is made available in this container at /NGC-DL-CONTAINER-LICENSE for your convenience.
+
+{"checkpoint_gradient_pairing": "docs/e5_c001_s3_checkpoint_gradient_pairing.csv", "view_rows": 144, "median_rows": 48, "collapse_pair_rows": 36, "claim_scope": "posthoc checkpoint gradient potential; fixed-view read-only measurement; not exact online optimizer-time gradient; no FM/paper claim", "checkpoint_or_input_mutated": false}
