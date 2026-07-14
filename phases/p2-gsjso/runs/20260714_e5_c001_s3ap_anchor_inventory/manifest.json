@@ -1,0 +1,78 @@
+{
+  "schema": "jointbuildgs.s3ap.anchor_inventory.v1",
+  "created_utc": "2026-07-14T12:00:45.510191+00:00",
+  "git_head_at_measurement": "67e78875869435d1a061227ea1cf8bb5775e6991",
+  "branch": "exp/3b-surface-restore-corrected",
+  "learning_runs_started": 0,
+  "crs": "EPSG:25832",
+  "world_offset": [
+    690953.0,
+    5336071.0,
+    604.0
+  ],
+  "geoid_m_evaluation_only_reference_conversion": 45.7,
+  "targets": [
+    "4907199",
+    "8568391",
+    "8568392"
+  ],
+  "bands_m": [
+    0.5,
+    1.0,
+    1.5
+  ],
+  "ground_rule": "q10(combined sparse+dense points in exterior footprint ring buffer(5m)-footprint)",
+  "upper_rule": "z_local >= ground_q10 + 1.5m",
+  "observed_multiview_rule": "sparse track_len>=2; dense reprojected to all 428 poses and existing PatchMatch depth, abs error <= max(0.50m,2% camera z), at least two views",
+  "render_rule": "Arm1-prime final expected depth pixels with alpha>=0.5; building median over locked P-J/P-L views",
+  "pjpl_views": {
+    "4907199": [
+      "DJI_20241217095141_0077_D",
+      "DJI_20241217095145_0079_D",
+      "DJI_20241217095147_0080_D",
+      "DJI_20241217095149_0081_D",
+      "DJI_20241217095441_0023_D",
+      "DJI_20241217095531_0048_D"
+    ],
+    "8568391": [
+      "DJI_20241217084901_0194_D",
+      "DJI_20241217084903_0195_D",
+      "DJI_20241217095441_0023_D"
+    ],
+    "8568392": [
+      "DJI_20241217084901_0194_D",
+      "DJI_20241217084903_0195_D",
+      "DJI_20241217095441_0023_D"
+    ]
+  },
+  "ground_z_q10_local_m": {
+    "4907199": -27.521000480651857,
+    "8568391": -38.43000030517578,
+    "8568392": -40.42800102233887
+  },
+  "reference_roof_z_local_m_evaluation_only": {
+    "4907199": -34.33299999999997,
+    "8568391": -40.781999999999925,
+    "8568392": -40.92699999999991
+  },
+  "source_sha256": {
+    "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/sparse/0/points3D.bin": "d1fb05b4d7913d61a248a95a6faf1357ed9d669abbd6e575939e306b4ffece09",
+    "results/tum_transfer/e5_pilot/C001/seeds/seed_dense_C001_buf20.ply": "6083e9e93df712734499a0d1ff3621fb23cf96046d39d6adda3712ac98aa0c53",
+    "results/tum_transfer/analysis/footprints_aoi.geojson": "ca7f5b13a52368e1d2ac47b77cc78f12887bad4d598d122ad57b882eb4920a82",
+    "results/tum_transfer/e5_pilot/C001/C001_train_prep_manifest.json": "eca68a7890116c52557ab467361b58c4c784047807f9bee857a2517ac0b40b58",
+    "configs/projection_datum.json": "096a49b46fc5661d74f9d3b54c4f3777676cfc6b27e577b52bb2dabeee8b480c",
+    "results/tum_transfer/e5_s3_semantic_guided/C001/runs/gs_e5_C001_s3a_semantic_guided_gate/audit/pjpl_depth_anchor_views.csv": "65391c2b8c1c73aeffaca7e6a60198e34cf2247cb978dee9edfe11d42284ca39",
+    "results/tum_transfer/e5_s2p_interaction/C001/runs/gs_e5_C001_s2p_arm1p_dense_r1/ckpt/final.pt": "dbdf674a8425836a1526348e2aff0a35b0d01de102914672da0e9d626be81663",
+    "results/tum_transfer/e5_s2p_interaction/C001/runs/gs_e5_C001_s2p_arm1p_dense_r2/ckpt/final.pt": "b7036ff7d589cd30dc554cac12d96b921cb478db1f3d21540c7e8d584e6605b3"
+  },
+  "script_sha256": "b0083cc5598778ad9a520901334ba4bb638afc80c522cf684011b91b3168d393",
+  "output_sha256": {
+    "docs/e5_c001_s3ap_anchor_inventory.csv": "877508520f1bdca60d74bb4afdc416dcc6743707cfb0c67de2cb5027fe70216d",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_anchor_inventory/render_view_inventory.csv": "89e27d619603bd443bad830da023b8dbdbb5800a10164785e0250c4087da78f3",
+    "docs/figs/e5_c001_s3ap_anchor_inventory/anchor_inventory_4907199.png": "df3b0783de468f94bed75a46dacd5a108f5cf1038cc1ceecb7b22d2bfde41a7b",
+    "docs/figs/e5_c001_s3ap_anchor_inventory/anchor_inventory_8568391.png": "87ce1c0346f649fc5f49e3596ad2bc934d21cb681e0bffc4b0681c76bef11115",
+    "docs/figs/e5_c001_s3ap_anchor_inventory/anchor_inventory_8568392.png": "be4ce4af8d7b9b3b5f9fa68f69932287f1cb9e23795c23be4946170f4dcedba3"
+  },
+  "gt_separation": "LoD2 is not used to generate or filter candidates; only abs_delta_z_ref_m and projection display height",
+  "no_interpretation_or_verdict": true
+}
