@@ -1,0 +1,291 @@
+{
+  "schema": "jointbuildgs.s3a.idmap_class_agreement_manifest.v1",
+  "measurement_csv_schema": "jointbuildgs.s3a.idmap_class_agreement.v2",
+  "claim_scope": "S3-A oracle class+instance-address upper-bound supplement; ID is an address only and never depth or height supervision",
+  "source_semantic_region_manifest": {
+    "path": "phases/p2-gsjso/runs/20260713_e5_c001_s3_track0/semantic_region_manifest.json",
+    "sha256": "0a1e4a38a83c1f0f77e3cb4134d424b6311706f4b7a604c0d37308e70428600e"
+  },
+  "supplement_script": {
+    "path": "phases/p2-gsjso/scripts/e5_c001_s3_idmap_class_supplement.py",
+    "sha256": "602f6caa0f1c731f44f7cbaba7ebe13070632cb4862b05fe60722bd646036182"
+  },
+  "strict_input_hash_set": {
+    "manifest_sha256": "0a1e4a38a83c1f0f77e3cb4134d424b6311706f4b7a604c0d37308e70428600e",
+    "producer_script_sha256": "6fde6adb2df01a5411b0a4512d53fb5f0d1e1e8b1636fe5f35a827de6ca3c384",
+    "manifest_input_hashes": {
+      "results/tum_transfer/analysis/footprints_aoi.geojson": "ca7f5b13a52368e1d2ac47b77cc78f12887bad4d598d122ad57b882eb4920a82",
+      "configs/projection_datum.json": "096a49b46fc5661d74f9d3b54c4f3777676cfc6b27e577b52bb2dabeee8b480c",
+      "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/sparse/0/cameras.bin": "7c9b01e524628658a92305202a2618a287570c6a90c414509b78dba1b5fc7794",
+      "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/sparse/0/images.bin": "dcb84b0d46f2666a9a8f6e1657a48dc4a8d1d60c35a7e47117b2df04c5f0cefb",
+      "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/sparse/0/points3D.bin": "d1fb05b4d7913d61a248a95a6faf1357ed9d669abbd6e575939e306b4ffece09",
+      "results/tum_transfer/e5_pilot/C001/seeds/seed_dense_C001_buf20.ply": "6083e9e93df712734499a0d1ff3621fb23cf96046d39d6adda3712ac98aa0c53",
+      "configs/tum_mob/e5_s2p_interaction/gs_e5_C001_s2p_arm1p_dense_r1.yaml": "bdd3d229e6ae8052e60d5d8bbff26d670c62008326ee6ed4d8ee81970a4146df",
+      "phases/p0-audit/data/raw/lod2/690_5334.gml": "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314",
+      "phases/p0-audit/data/raw/lod2/690_5336.gml": "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674"
+    },
+    "semantic_png_set_sha256": "eaca8fcd29b8a1462f88fa9996d2a5e7d21477e0735a3c6b136f713342492a24",
+    "cache_npz_set_sha256": "30b8d87941f5c0884a26bf8ec2b061e592ca0059cb56f87f77432b9e7f4cf6ef",
+    "inventory_csv_sha256": "3729a9be64b9856ab9e6d4c24945daff307129b3cdcc8c1a3170f5f449b3cf1b",
+    "semantic_gate_csv_sha256": "f72bb205e79f598be82271577389b0c434e64a91dd5a00612df2df889194edca"
+  },
+  "strict_input_hash_set_sha256": "ea59818269e2fe20b1e7d545f0044f8cdbb7f5db291e66f67554f613dfe644d8",
+  "replay_validation_rule": "nonblocking pixel replay measurement after strict committed-manifest, producer, input, datum, mesh, fixed-class-PNG, cache, and container locks; raw class mismatch/agreement and replay-minus-inventory deltas are recorded; roof-membership disagreements inside the locked evaluable domain remain scored and are never hidden",
+  "boundary_exclusion_definition": "exclude the union of pixels whose 3x3 Chebyshev neighborhood crosses either the fixed-class roof/nonroof transition or the raycast ID-roof/nonroof transition; this removes one pixel centre on each side of either transition; for per-building rows also exclude the same one-pixel band around that raycast building-ID support",
+  "priority_target_id_summary": {
+    "aggregation": "sum_over_frozen_9_crops; repeated full views are intentionally repeated",
+    "record_count": 9,
+    "status_counts": {
+      "target_id_boundary_visible_in_frozen_crop": 8,
+      "target_id_not_raycast_visible": 1
+    },
+    "boundary_visible_crop_count": 8,
+    "not_raycast_visible_crop_count": 1,
+    "target_id_pixels_full_sum": 122273,
+    "target_id_pixels_crop_sum": 122273,
+    "target_id_boundary_pixels_full_sum": 3364,
+    "target_id_boundary_pixels_crop_sum": 3364,
+    "target_id_painted_line_pixels_full_sum": 9233,
+    "target_id_painted_line_pixels_crop_sum": 9233,
+    "boundary_fabricated_count": 0
+  },
+  "boundary_fabricated_count": 0,
+  "gallery_output_set_sha256": "0859963e365ea062b8c13848907a7dd6c7a109a02c6d5fed922f0d1b93013672",
+  "outputs": {
+    "manifest_path": "docs/e5_c001_s3_idmap_class_agreement_manifest.json",
+    "artifact_set_excludes_manifest": true,
+    "output_set_hash_definition": "sha256 of canonical JSON for outputs.artifact_set; the durable manifest path and manifest bytes are deliberately excluded to avoid a hash cycle",
+    "artifact_set": {
+      "csv": {
+        "path": "docs/e5_c001_s3_idmap_class_agreement.csv",
+        "sha256": "58f798a9dc57c6670052d1db3acd2969e510f9db11b3639a48d70b71c922adb3",
+        "schema": "jointbuildgs.s3a.idmap_class_agreement.v2",
+        "rows": 447
+      },
+      "priority_crops": [
+        {
+          "building_id": "DEBY_LOD2_8568391",
+          "rank": 1,
+          "view_stem": "DJI_20241217095441_0023_D",
+          "path": "docs/figs/e5_c001_s3/semantic_gate/priority/DEBY_LOD2_8568391__rank1__DJI_20241217095441_0023_D.png",
+          "crop_box_xyxy": [
+            667,
+            534,
+            923,
+            844
+          ],
+          "target_id_status": "target_id_boundary_visible_in_frozen_crop",
+          "target_id_annotation": "Lime = actual-source 48.0/556.0 target building-ID boundary (address only)",
+          "target_id_pixels_full": 22412,
+          "target_id_pixels_crop": 22412,
+          "target_id_boundary_pixels_full": 631,
+          "target_id_boundary_pixels_crop": 631,
+          "target_id_painted_line_pixels_full": 1893,
+          "target_id_painted_line_pixels_crop": 1893,
+          "boundary_fabricated": false,
+          "sha256": "d910368fd9ea4866a41699fe0da8d5e693122897f88b7a9d03b0a00a776a0140"
+        },
+        {
+          "building_id": "DEBY_LOD2_8568391",
+          "rank": 2,
+          "view_stem": "DJI_20241217084901_0194_D",
+          "path": "docs/figs/e5_c001_s3/semantic_gate/priority/DEBY_LOD2_8568391__rank2__DJI_20241217084901_0194_D.png",
+          "crop_box_xyxy": [
+            1144,
+            0,
+            1400,
+            256
+          ],
+          "target_id_status": "target_id_boundary_visible_in_frozen_crop",
+          "target_id_annotation": "Lime = actual-source 48.0/556.0 target building-ID boundary (address only)",
+          "target_id_pixels_full": 2335,
+          "target_id_pixels_crop": 2335,
+          "target_id_boundary_pixels_full": 229,
+          "target_id_boundary_pixels_crop": 229,
+          "target_id_painted_line_pixels_full": 625,
+          "target_id_painted_line_pixels_crop": 625,
+          "boundary_fabricated": false,
+          "sha256": "40def0a68cbd5786ed9605150d056b72f25bf795dc0c7def47d592d28a84643c"
+        },
+        {
+          "building_id": "DEBY_LOD2_8568391",
+          "rank": 3,
+          "view_stem": "DJI_20241217084903_0195_D",
+          "path": "docs/figs/e5_c001_s3/semantic_gate/priority/DEBY_LOD2_8568391__rank3__DJI_20241217084903_0195_D.png",
+          "crop_box_xyxy": [
+            1144,
+            93,
+            1400,
+            349
+          ],
+          "target_id_status": "target_id_boundary_visible_in_frozen_crop",
+          "target_id_annotation": "Lime = actual-source 48.0/556.0 target building-ID boundary (address only)",
+          "target_id_pixels_full": 622,
+          "target_id_pixels_crop": 622,
+          "target_id_boundary_pixels_full": 166,
+          "target_id_boundary_pixels_crop": 166,
+          "target_id_painted_line_pixels_full": 412,
+          "target_id_painted_line_pixels_crop": 412,
+          "boundary_fabricated": false,
+          "sha256": "ebedb55255c3bd44eeacb08e2d3b81cedd980871c85db17ab9b42960c154d842"
+        },
+        {
+          "building_id": "DEBY_LOD2_8568392",
+          "rank": 1,
+          "view_stem": "DJI_20241217095441_0023_D",
+          "path": "docs/figs/e5_c001_s3/semantic_gate/priority/DEBY_LOD2_8568392__rank1__DJI_20241217095441_0023_D.png",
+          "crop_box_xyxy": [
+            749,
+            482,
+            1005,
+            738
+          ],
+          "target_id_status": "target_id_boundary_visible_in_frozen_crop",
+          "target_id_annotation": "Lime = actual-source 48.0/556.0 target building-ID boundary (address only)",
+          "target_id_pixels_full": 1743,
+          "target_id_pixels_crop": 1743,
+          "target_id_boundary_pixels_full": 170,
+          "target_id_boundary_pixels_crop": 170,
+          "target_id_painted_line_pixels_full": 510,
+          "target_id_painted_line_pixels_crop": 510,
+          "boundary_fabricated": false,
+          "sha256": "0c573e0fbd9658f87a7974ea9a37a53a57bf022080f0ca417cf8a8a6c5c1b427"
+        },
+        {
+          "building_id": "DEBY_LOD2_8568392",
+          "rank": 2,
+          "view_stem": "DJI_20241217095439_0022_D",
+          "path": "docs/figs/e5_c001_s3/semantic_gate/priority/DEBY_LOD2_8568392__rank2__DJI_20241217095439_0022_D.png",
+          "crop_box_xyxy": [
+            722,
+            757,
+            978,
+            1013
+          ],
+          "target_id_status": "target_id_not_raycast_visible",
+          "target_id_annotation": "TARGET ID NOT RAYCAST-VISIBLE | no boundary drawn",
+          "target_id_pixels_full": 0,
+          "target_id_pixels_crop": 0,
+          "target_id_boundary_pixels_full": 0,
+          "target_id_boundary_pixels_crop": 0,
+          "target_id_painted_line_pixels_full": 0,
+          "target_id_painted_line_pixels_crop": 0,
+          "boundary_fabricated": false,
+          "sha256": "10abe1c143dc307d6368eb366ae5a9d8f76b0324f0111c4eb10bf15f864dedca"
+        },
+        {
+          "building_id": "DEBY_LOD2_8568392",
+          "rank": 3,
+          "view_stem": "DJI_20241217084903_0195_D",
+          "path": "docs/figs/e5_c001_s3/semantic_gate/priority/DEBY_LOD2_8568392__rank3__DJI_20241217084903_0195_D.png",
+          "crop_box_xyxy": [
+            1144,
+            48,
+            1400,
+            304
+          ],
+          "target_id_status": "target_id_boundary_visible_in_frozen_crop",
+          "target_id_annotation": "Lime = actual-source 48.0/556.0 target building-ID boundary (address only)",
+          "target_id_pixels_full": 3,
+          "target_id_pixels_crop": 3,
+          "target_id_boundary_pixels_full": 3,
+          "target_id_boundary_pixels_crop": 3,
+          "target_id_painted_line_pixels_full": 27,
+          "target_id_painted_line_pixels_crop": 27,
+          "boundary_fabricated": false,
+          "sha256": "c20650f5b78d73d2a6be0933ea44fefb319aa7ba386a06f3759076d2810c799b"
+        },
+        {
+          "building_id": "DEBY_LOD2_4907199",
+          "rank": 1,
+          "view_stem": "DJI_20241217095441_0023_D",
+          "path": "docs/figs/e5_c001_s3/semantic_gate/priority/DEBY_LOD2_4907199__rank1__DJI_20241217095441_0023_D.png",
+          "crop_box_xyxy": [
+            0,
+            757,
+            337,
+            1013
+          ],
+          "target_id_status": "target_id_boundary_visible_in_frozen_crop",
+          "target_id_annotation": "Lime = actual-source 48.0/556.0 target building-ID boundary (address only)",
+          "target_id_pixels_full": 73549,
+          "target_id_pixels_crop": 73549,
+          "target_id_boundary_pixels_full": 1168,
+          "target_id_boundary_pixels_crop": 1168,
+          "target_id_painted_line_pixels_full": 3032,
+          "target_id_painted_line_pixels_crop": 3032,
+          "boundary_fabricated": false,
+          "sha256": "0a756f57a15108542ef42880e24e25eb0eee821681eaebae3b0dd6d57c8e0fe6"
+        },
+        {
+          "building_id": "DEBY_LOD2_4907199",
+          "rank": 2,
+          "view_stem": "DJI_20241217095531_0048_D",
+          "path": "docs/figs/e5_c001_s3/semantic_gate/priority/DEBY_LOD2_4907199__rank2__DJI_20241217095531_0048_D.png",
+          "crop_box_xyxy": [
+            1107,
+            757,
+            1363,
+            1013
+          ],
+          "target_id_status": "target_id_boundary_visible_in_frozen_crop",
+          "target_id_annotation": "Lime = actual-source 48.0/556.0 target building-ID boundary (address only)",
+          "target_id_pixels_full": 20899,
+          "target_id_pixels_crop": 20899,
+          "target_id_boundary_pixels_full": 735,
+          "target_id_boundary_pixels_crop": 735,
+          "target_id_painted_line_pixels_full": 1987,
+          "target_id_painted_line_pixels_crop": 1987,
+          "boundary_fabricated": false,
+          "sha256": "5930ca50d41cdad4a704f487851c990b469600d7718bb65c75bc816800a21368"
+        },
+        {
+          "building_id": "DEBY_LOD2_4907199",
+          "rank": 3,
+          "view_stem": "DJI_20241217095143_0078_D",
+          "path": "docs/figs/e5_c001_s3/semantic_gate/priority/DEBY_LOD2_4907199__rank3__DJI_20241217095143_0078_D.png",
+          "crop_box_xyxy": [
+            0,
+            425,
+            256,
+            681
+          ],
+          "target_id_status": "target_id_boundary_visible_in_frozen_crop",
+          "target_id_annotation": "Lime = actual-source 48.0/556.0 target building-ID boundary (address only)",
+          "target_id_pixels_full": 710,
+          "target_id_pixels_crop": 710,
+          "target_id_boundary_pixels_full": 262,
+          "target_id_boundary_pixels_crop": 262,
+          "target_id_painted_line_pixels_full": 747,
+          "target_id_painted_line_pixels_crop": 747,
+          "boundary_fabricated": false,
+          "sha256": "06d8940581a4499810485a580a28f622f7abc043ca2f7df5ab5775fdf07e55f1"
+        }
+      ],
+      "contact_sheet": {
+        "kind": "priority_contact_sheet",
+        "path": "docs/figs/e5_c001_s3/semantic_gate/priority/textureless3_contact_sheet.png",
+        "target_id_summary": {
+          "aggregation": "sum_over_frozen_9_crops; repeated full views are intentionally repeated",
+          "record_count": 9,
+          "status_counts": {
+            "target_id_boundary_visible_in_frozen_crop": 8,
+            "target_id_not_raycast_visible": 1
+          },
+          "boundary_visible_crop_count": 8,
+          "not_raycast_visible_crop_count": 1,
+          "target_id_pixels_full_sum": 122273,
+          "target_id_pixels_crop_sum": 122273,
+          "target_id_boundary_pixels_full_sum": 3364,
+          "target_id_boundary_pixels_crop_sum": 3364,
+          "target_id_painted_line_pixels_full_sum": 9233,
+          "target_id_painted_line_pixels_crop_sum": 9233,
+          "boundary_fabricated_count": 0
+        },
+        "boundary_fabricated": false,
+        "sha256": "157825e9069e28fff0777784683fe81ca8c324e5a8c0c551242c632553af7aa5"
+      }
+    },
+    "output_set_sha256": "a40f1e96019899b8adfedcd2a60fa8d10326f435948ec93005b244b36252f0c4"
+  }
+}
