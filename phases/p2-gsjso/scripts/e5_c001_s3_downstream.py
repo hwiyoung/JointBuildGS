@@ -54,6 +54,9 @@ from e5_pilot_gate_tools import DEV_IMAGE, P0_RUNS, sha256_file  # noqa: E402
 RUN_ID = "20260713_e5_c001_s3_semantic_guided"
 RUN_DIR = REPO / "phases/p2-gsjso/runs" / RUN_ID
 SCRIPT_PATH = Path(__file__).resolve()
+CHECKPOINT_GRADIENT_PAIRING_SCRIPT = (
+    SCRIPT_DIR / "e5_c001_s3_checkpoint_gradient_pairing.py"
+)
 
 CONFIG_DIR = REPO / "configs/tum_mob/e5_s3_semantic_guided"
 RESULTS_ROOT = REPO / "results/tum_transfer/e5_s3_semantic_guided/C001"
@@ -112,6 +115,30 @@ CSV_PANEL_INVENTORY = REPO / "docs/e5_c001_s3_8way_panel_inventory.csv"
 CSV_INVENTORY = REPO / "docs/e5_c001_s3_inventory.csv"
 CSV_ISSUES = REPO / "docs/e5_c001_s3_issues.csv"
 CSV_GATE_AUDIT = REPO / "docs/e5_c001_s3_loss_gate_audit.csv"
+CSV_CHECKPOINT_GRADIENT_PAIRING = (
+    REPO / "docs/e5_c001_s3_checkpoint_gradient_pairing.csv"
+)
+FIG_SURVIVAL_GRADIENT_PAIRING = (
+    FIG_DIR / "timeline/survival_gradient_pairing.png"
+)
+FIG_ORGANIZATION_PLANE_RESIDUAL = (
+    FIG_DIR / "timeline/organization_plane_residual.png"
+)
+
+CHECKPOINT_GRADIENT_STEPS = (5000, 10000, 15000, 20000, 25000, 30000)
+CHECKPOINT_GRADIENT_COLLAPSE_TARGETS = ("4907202", "4908168", "4908178")
+CHECKPOINT_GRADIENT_ORGANIZATION_TARGETS = ("4907199",)
+CHECKPOINT_GRADIENT_ALL_TARGETS = (
+    CHECKPOINT_GRADIENT_COLLAPSE_TARGETS
+    + CHECKPOINT_GRADIENT_ORGANIZATION_TARGETS
+)
+CHECKPOINT_GRADIENT_CLAIM_SCOPE = (
+    "posthoc checkpoint gradient potential; fixed-view read-only measurement; "
+    "not exact online optimizer-time gradient; no FM/paper claim"
+)
+CHECKPOINT_GRADIENT_VIEW_SELECTION_SCOPE = (
+    "preexecution_committed_oracle_cache_top3_by_address_pixels"
+)
 
 # Extra task-scoped tables used by the canonical readout harness.  They are
 # intentionally S3-prefixed even though only the required final tables are
@@ -222,6 +249,7 @@ def _allowed_write(path: Path) -> bool:
         CSV_405_REPAIR, CSV_405_REPAIR_STATUS, CSV_GABLE_MODE,
         CSV_REND_DIST, CSV_GLOBAL_Z, CSV_SHEET_OPACITY,
         CSV_PANEL_INVENTORY, CSV_INVENTORY, CSV_ISSUES, CSV_GATE_AUDIT,
+        CSV_CHECKPOINT_GRADIENT_PAIRING,
         CSV_COVERAGE, CSV_FILTER, CSV_READOUT_SUMMARY, CSV_READOUT_TRADEOFF,
         CSV_READOUT_CASES, CSV_READOUT_INVENTORY, CSV_READOUT_ISSUES,
         CSV_REPAIR_ISSUES,
@@ -1814,6 +1842,24 @@ def _downstream_artifact_specs() -> list[tuple[str, Path, list[str]]]:
         ),
         ("loss_gate_and_full_audit", CSV_GATE_AUDIT, ["record_type", "run_name"]),
         ("timeline_roofcrop", CSV_TIMELINE, TIMELINE_FIELDS),
+        (
+            "checkpoint_gradient_pairing",
+            CSV_CHECKPOINT_GRADIENT_PAIRING,
+            [
+                "record_type",
+                "claim_scope",
+                "run_name",
+                "step",
+                "building_id",
+                "semdepth_depth_grad_norm",
+                "semdepth_depth_grad_rms",
+                "semdepth_depth_grad_norm_share",
+                "semdepth_depth_grad_nonzero_pixel_count",
+                "alpha_valid_pixel_count",
+                "depth_anchor_pixel_count",
+                "plane_residual_huber_mean",
+            ],
+        ),
         ("densify_log", CSV_DENSIFY, DENSIFY_FIELDS),
         (
             "405_rescore_building",
@@ -1910,6 +1956,99 @@ def _validate_final_artifact_contract(
         }
         if observed != expected_keys:
             raise RuntimeError("timeline final key coverage mismatch")
+    elif artifact == "checkpoint_gradient_pairing":
+        allowed_types = {
+            "fixed_view",
+            "collapse_building_median",
+            "organization_building_median",
+            "collapse_timeline_pair",
+        }
+        observed_types = {row.get("record_type", "") for row in rows}
+        if observed_types != allowed_types:
+            raise RuntimeError(
+                f"checkpoint-gradient record types mismatch: {sorted(observed_types)}"
+            )
+        if any(row.get("claim_scope") != CHECKPOINT_GRADIENT_CLAIM_SCOPE for row in rows):
+            raise RuntimeError("checkpoint-gradient claim scope is missing or broadened")
+
+        fixed_rows = [row for row in rows if row.get("record_type") == "fixed_view"]
+        fixed_groups: dict[tuple[str, int, str], list[dict[str, str]]] = defaultdict(list)
+        for row in fixed_rows:
+            fixed_groups[
+                (row.get("run_name", ""), int(row.get("step", -1)), row.get("building_id", ""))
+            ].append(row)
+        expected_fixed_groups = {
+            (run_name, step, building_id)
+            for run_name in FULL_RUNS
+            for step in CHECKPOINT_GRADIENT_STEPS
+            for building_id in CHECKPOINT_GRADIENT_ALL_TARGETS
+        }
+        if set(fixed_groups) != expected_fixed_groups:
+            raise RuntimeError("checkpoint-gradient fixed-view target coverage is not exact 2x6x4")
+        for key, group in fixed_groups.items():
+            stems = {row.get("view_stem", "") for row in group}
+            ranks = {row.get("view_rank", "") for row in group}
+            if len(group) != 3 or len(stems) != 3 or "" in stems or ranks != {"1", "2", "3"}:
+                raise RuntimeError(f"checkpoint-gradient fixed-view triplet mismatch: {key}")
+            if any(
+                row.get("view_selection_scope")
+                != CHECKPOINT_GRADIENT_VIEW_SELECTION_SCOPE
+                for row in group
+            ):
+                raise RuntimeError(f"checkpoint-gradient fixed-view selector drift: {key}")
+
+        collapse_expected = {
+            (run_name, step, building_id)
+            for run_name in FULL_RUNS
+            for step in CHECKPOINT_GRADIENT_STEPS
+            for building_id in CHECKPOINT_GRADIENT_COLLAPSE_TARGETS
+        }
+        organization_expected = {
+            (run_name, step, building_id)
+            for run_name in FULL_RUNS
+            for step in CHECKPOINT_GRADIENT_STEPS
+            for building_id in CHECKPOINT_GRADIENT_ORGANIZATION_TARGETS
+        }
+
+        def keys_for(record_type: str) -> set[tuple[str, int, str]]:
+            selected_rows = [row for row in rows if row.get("record_type") == record_type]
+            keys = {
+                (row.get("run_name", ""), int(row.get("step", -1)), row.get("building_id", ""))
+                for row in selected_rows
+            }
+            if len(keys) != len(selected_rows):
+                raise RuntimeError(f"checkpoint-gradient duplicate keys for {record_type}")
+            return keys
+
+        if keys_for("collapse_building_median") != collapse_expected:
+            raise RuntimeError("checkpoint-gradient collapse medians are not exact 36")
+        if keys_for("organization_building_median") != organization_expected:
+            raise RuntimeError("checkpoint-gradient organization medians are not exact 12")
+        if keys_for("collapse_timeline_pair") != collapse_expected:
+            raise RuntimeError("checkpoint-gradient timeline pairs are not exact 36")
+        if len(rows) != 144 + 36 + 12 + 36:
+            raise RuntimeError(f"checkpoint-gradient row count mismatch: {len(rows)}")
+
+        required_numeric = (
+            "alpha_valid_pixel_count",
+            "depth_anchor_pixel_count",
+            "semdepth_depth_grad_norm",
+            "semdepth_depth_grad_rms",
+            "semdepth_depth_grad_norm_share",
+            "semdepth_depth_grad_nonzero_pixel_count",
+            "semdepth_depth_grad_nonzero_fraction",
+        )
+        for row_index, row in enumerate(rows, start=2):
+            for field in required_numeric:
+                if number(row.get(field)) is None:
+                    raise RuntimeError(
+                        f"checkpoint-gradient numeric field missing/nonfinite: row={row_index}, field={field}"
+                    )
+        for row in rows:
+            if row.get("record_type") == "collapse_timeline_pair" and number(
+                row.get("n_gaussians_in_footprint")
+            ) is None:
+                raise RuntimeError("checkpoint-gradient timeline pair lacks material count")
     elif artifact == "densify_log":
         expected = {(run_name, full_id(building)) for run_name in FULL_RUNS for building in TIMELINE_IDS}
         observed = {(row.get("run_name", ""), row.get("building_id", "")) for row in rows}
@@ -2010,6 +2149,8 @@ def _validated_final_figures() -> list[tuple[str, Path]]:
             ("global_z_hist", FIG_DIR / "summary/global_z_hist.png"),
             ("sheet_opacity_bands", FIG_DIR / "summary/sheet_opacity_bands.png"),
             ("five_axis_material", FIG_DIR / "summary/five_axis_material.png"),
+            ("survival_gradient_pairing", FIG_SURVIVAL_GRADIENT_PAIRING),
+            ("organization_plane_residual", FIG_ORGANIZATION_PLANE_RESIDUAL),
         ]
     )
     missing = [rel(path) for _kind, path in figures if not path.is_file() or path.stat().st_size == 0]
@@ -2171,6 +2312,64 @@ def repair_405_or_container(args: argparse.Namespace) -> None:
     s2p.s2.ab.run(command, log_path=RUN_DIR / "repair_405_container.log", check=True, quiet=False)
 
 
+def checkpoint_gradient_pairing_or_container(args: argparse.Namespace) -> None:
+    """Launch the read-only checkpoint sweep in the locked CUDA image.
+
+    The worker never calls this adapter recursively and owns no training
+    command.  It loads frozen checkpoints and differentiates only a detached
+    rendered-depth leaf.
+    """
+
+    command = [
+        "docker",
+        "run",
+        "--rm",
+        "-i",
+        "--user",
+        f"{os.getuid()}:{os.getgid()}",
+    ]
+    if not args.preflight_only:
+        command.extend(["--gpus", "all"])
+    command.extend([
+        "-e",
+        "HOME=/tmp",
+        "-e",
+        "MPLCONFIGDIR=/tmp/matplotlib",
+        "-e",
+        "XDG_CACHE_HOME=/tmp",
+        "-e",
+        "E5_S3A_GRADIENT_PAIRING_CONTAINER=1",
+        "-e",
+        f"TORCH_EXTENSIONS_DIR=/workspace/JointBuildGS/{rel(TORCH_EXTENSIONS)}",
+        "-v",
+        f"{REPO}:/workspace/JointBuildGS",
+        "-w",
+        "/workspace/JointBuildGS",
+        DEV_IMAGE,
+        "python3",
+        rel(CHECKPOINT_GRADIENT_PAIRING_SCRIPT),
+        "--views-per-building",
+        str(args.views_per_building),
+    ])
+    if not args.preflight_only:
+        image_index = command.index(DEV_IMAGE)
+        command[image_index:image_index] = ["-e", f"CUDA_VISIBLE_DEVICES={args.gpu}"]
+    else:
+        command.append("--preflight-only")
+    if args.force:
+        command.append("--force")
+    s2p.s2.ab.run(
+        command,
+        log_path=RUN_DIR / (
+            "checkpoint_gradient_pairing_preflight_container.log"
+            if args.preflight_only
+            else "checkpoint_gradient_pairing_container.log"
+        ),
+        check=True,
+        quiet=False,
+    )
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="cmd", required=True)
@@ -2187,6 +2386,14 @@ def build_parser() -> argparse.ArgumentParser:
 
     timeline = sub.add_parser("timeline-roofcrop")
     timeline.add_argument("--force", action="store_true")
+    gradient_pairing = sub.add_parser(
+        "checkpoint-gradient-pairing",
+        help="read-only fixed-view checkpoint gradient-potential pairing audit",
+    )
+    gradient_pairing.add_argument("--gpu", default="1")
+    gradient_pairing.add_argument("--views-per-building", type=int, default=3, choices=[3])
+    gradient_pairing.add_argument("--preflight-only", action="store_true")
+    gradient_pairing.add_argument("--force", action="store_true")
     for command in [
         "densify-log", "fingerprint-training", "rend-dist", "global-z-hist",
         "sheet-opacity-dist", "full-loss-audit", "gable-mode", "panels-8way",
@@ -2213,6 +2420,7 @@ def main() -> None:
     actions = {
         "wave2-roofcrop": wave2_roofcrop,
         "timeline-roofcrop": timeline_roofcrop,
+        "checkpoint-gradient-pairing": checkpoint_gradient_pairing_or_container,
         "densify-log": densify_log,
         "fingerprint-training": fingerprint_training,
         "rend-dist": rend_dist,

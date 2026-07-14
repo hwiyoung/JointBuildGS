@@ -107,7 +107,8 @@ class S3DownstreamContractTests(unittest.TestCase):
         self.assertEqual(args.run_name, downstream.FULL_RUNS[0])
         self.assertEqual(args.step, 5000)
         for command in [
-            "timeline-roofcrop", "densify-log", "readout", "assemble", "evaluate",
+            "timeline-roofcrop", "checkpoint-gradient-pairing", "densify-log",
+            "readout", "assemble", "evaluate",
             "repair-405", "gable-mode", "panels-8way", "arm-cells", "inventory",
         ]:
             parsed = parser.parse_args([command])
