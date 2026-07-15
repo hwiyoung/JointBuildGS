@@ -1,0 +1,16 @@
++ docker run --rm -i --user 1000:1000 -e HOME=/tmp -e MPLCONFIGDIR=/tmp/matplotlib -e XDG_CACHE_HOME=/tmp -e TORCH_EXTENSIONS_DIR=/workspace/JointBuildGS/results/tum_transfer/e5_s3ap_phase2/runtime/torch_extensions -v /media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS:/workspace/JointBuildGS -w /workspace/JointBuildGS jointbuildgs-p0-tools:t0 python3 phases/p2-gsjso/scripts/e5_c001_s3ap_phase3.py aggregate --config /workspace/JointBuildGS/phases/p2-gsjso/configs/e5_c001_s3ap_phase3_lock.json
+{"status": "partial_fail_closed", "scores": 3, "complete_scores": 2, "perturbations": 3, "return_signal": false, "evaluation_complete": false, "errors": ["score_rows_3_expected_42", "invalid_current_rows_39", "height_rows_3_expected_24"]}
+Traceback (most recent call last):
+  File "/workspace/JointBuildGS/phases/p2-gsjso/scripts/e5_c001_s3ap_phase3.py", line 3305, in <module>
+    main()
+    ~~~~^^
+  File "/workspace/JointBuildGS/phases/p2-gsjso/scripts/e5_c001_s3ap_phase3.py", line 3296, in main
+    aggregate(args)
+    ~~~~~~~~~^^^^^^
+  File "/workspace/JointBuildGS/phases/p2-gsjso/scripts/e5_c001_s3ap_phase3.py", line 2896, in aggregate
+    raise RuntimeError("aggregate fail-closed: " + ";".join(errors))
+RuntimeError: aggregate fail-closed: score_rows_3_expected_42;invalid_current_rows_39;height_rows_3_expected_24
+[exit] 1
++ docker run --rm -i --user 1000:1000 -e HOME=/tmp -e MPLCONFIGDIR=/tmp/matplotlib -e XDG_CACHE_HOME=/tmp -e TORCH_EXTENSIONS_DIR=/workspace/JointBuildGS/results/tum_transfer/e5_s3ap_phase2/runtime/torch_extensions -v /media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS:/workspace/JointBuildGS -w /workspace/JointBuildGS jointbuildgs-p0-tools:t0 python3 phases/p2-gsjso/scripts/e5_c001_s3ap_phase3.py aggregate --config /workspace/JointBuildGS/phases/p2-gsjso/configs/e5_c001_s3ap_phase3_lock.json
+{"status": "complete", "scores": 42, "complete_scores": 40, "perturbations": 27, "return_signal": false, "evaluation_complete": false, "errors": []}
+[exit] 0
