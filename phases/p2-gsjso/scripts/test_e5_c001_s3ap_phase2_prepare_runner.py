@@ -387,6 +387,11 @@ class Phase2PrepareRunnerTest(unittest.TestCase):
         self.assertIn('--user "${HOST_UID}:${HOST_GID}"', launcher)
         for name in ("HOME", "XDG_CACHE_HOME", "TORCH_EXTENSIONS_DIR"):
             self.assertIn(f'-e "{name}=', launcher)
+        prewarm = self.lock["runtime"]["gsplat_prewarm"]
+        self.assertTrue((REPO / prewarm["script"]).is_file())
+        self.assertIn(prewarm["script"], launcher)
+        self.assertLess(launcher.index(prewarm["script"]), launcher.index("e5_c001_s3ap_phase2_runner.py"))
+        self.assertIn('"--dry-run"', launcher)
 
 
 if __name__ == "__main__":

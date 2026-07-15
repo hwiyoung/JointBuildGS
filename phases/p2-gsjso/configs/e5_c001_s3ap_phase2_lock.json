@@ -21,6 +21,11 @@
       "XDG_CACHE_HOME": "/workspace/JointBuildGS/results/tum_transfer/e5_s3ap_phase2/runtime/xdg_cache",
       "TORCH_EXTENSIONS_DIR": "/workspace/JointBuildGS/results/tum_transfer/e5_s3ap_phase2/runtime/torch_extensions"
     },
+    "gsplat_prewarm": {
+      "script": "phases/p2-gsjso/scripts/e5_c001_s3ap_gsplat_prewarm.py",
+      "manifest": "results/tum_transfer/e5_s3ap_phase2/runtime/gsplat_prewarm.json",
+      "policy": "one serialized CUDA extension import must complete before the two GPU worker threads start"
+    },
     "training_command": ["python", "-m", "src.stage2.train", "--config", "{config}"],
     "resume_policy": "a loadable final.pt with it=30000 is complete and skipped; any non-final checkpoint is blocked_resume_unsupported; continue other jobs"
   },

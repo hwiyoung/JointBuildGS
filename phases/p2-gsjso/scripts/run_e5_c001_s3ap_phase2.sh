@@ -36,16 +36,30 @@ COMMON=(
 )
 
 case "${MODE}" in
+  prewarm)
+    exec docker run "${COMMON[@]}" --gpus all "${IMAGE}" \
+      python phases/p2-gsjso/scripts/e5_c001_s3ap_gsplat_prewarm.py "$@"
+    ;;
   prepare)
     exec docker run "${COMMON[@]}" "${IMAGE}" \
       python phases/p2-gsjso/scripts/e5_c001_s3ap_phase2_prepare.py "$@"
     ;;
   run)
+    PREWARM=true
+    for ARG in "$@"; do
+      if [[ "${ARG}" == "--dry-run" ]]; then
+        PREWARM=false
+      fi
+    done
+    if [[ "${PREWARM}" == "true" ]]; then
+      docker run "${COMMON[@]}" --gpus all "${IMAGE}" \
+        python phases/p2-gsjso/scripts/e5_c001_s3ap_gsplat_prewarm.py
+    fi
     exec docker run "${COMMON[@]}" --gpus all "${IMAGE}" \
       python phases/p2-gsjso/scripts/e5_c001_s3ap_phase2_runner.py "$@"
     ;;
   *)
-    echo "usage: $0 {prepare|run} [arguments...]" >&2
+    echo "usage: $0 {prewarm|prepare|run} [arguments...]" >&2
     exit 2
     ;;
 esac
