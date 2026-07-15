@@ -1,5 +1,5 @@
 {
-  "schema": "jointbuildgs.s3ap.phase3.archive.lock.v1",
+  "schema": "jointbuildgs.s3ap.phase3.archive.lock.v2",
   "task_date": "2026-07-15",
   "crs": "EPSG:25832",
   "phase3_lock": "phases/p2-gsjso/configs/e5_c001_s3ap_phase3_lock.json",
@@ -23,19 +23,49 @@
       "base_jobs": 18,
       "height_nonzero_jobs": 24,
       "tilt_jobs": 0,
-      "complete_scores": 42,
+      "terminal_scores": 42,
+      "complete_scores": 40,
+      "certified_partial_scores": 2,
+      "certified_partial_kind_counts": {
+        "no_roof_evidence": 1,
+        "prepared_zero_inside_points": 1
+      },
+      "certified_partial_runs": {
+        "gs_e5_C001_s3ap_b8568391_a1_dz_m4_r1": "no_roof_evidence",
+        "gs_e5_C001_s3ap_b8568392_a1_dz_m4_r1": "prepared_zero_inside_points"
+      },
+      "allowed_partial_statuses": [
+        "partial_no_scored_roof_points"
+      ],
+      "require_all_scores_complete": false,
       "perturbation_rows": 27,
+      "complete_perturbation_rows": 25,
+      "partial_perturbation_rows": 2,
       "nonzero_height_rows": 24,
-      "require_return_signal": null
+      "complete_nonzero_height_rows": 22,
+      "require_evaluation_complete": false,
+      "require_raw_return_signal": true,
+      "require_return_signal": false
     },
     "final60": {
       "total_jobs": 60,
       "base_jobs": 18,
       "height_nonzero_jobs": 24,
       "tilt_jobs": 18,
+      "terminal_scores": 60,
       "complete_scores": 60,
+      "certified_partial_scores": 0,
+      "certified_partial_kind_counts": {},
+      "certified_partial_runs": {},
+      "allowed_partial_statuses": [],
+      "require_all_scores_complete": true,
       "perturbation_rows": 27,
+      "complete_perturbation_rows": 27,
+      "partial_perturbation_rows": 0,
       "nonzero_height_rows": 24,
+      "complete_nonzero_height_rows": 24,
+      "require_evaluation_complete": true,
+      "require_raw_return_signal": true,
       "require_return_signal": true
     }
   },
@@ -48,9 +78,9 @@
     "roofer_input_manifest": "jointbuildgs.s3ap.phase3.roofer_input.v1",
     "pre_readout_fingerprint": "jointbuildgs.s3ap.phase3.pre_readout_fingerprint.v1",
     "score_only_fingerprint": "jointbuildgs.s3ap.phase3.score_only_fingerprint.v1",
-    "wave_reconciliation": "jointbuildgs.s3ap.phase3.wave_reconciliation.v1",
-    "archive_manifest": "jointbuildgs.s3ap.phase3.wave_archive.v1",
-    "archive_completion": "jointbuildgs.s3ap.phase3.wave_archive_completion.v1"
+    "wave_reconciliation": "jointbuildgs.s3ap.phase3.wave_reconciliation.v2",
+    "archive_manifest": "jointbuildgs.s3ap.phase3.wave_archive.v2",
+    "archive_completion": "jointbuildgs.s3ap.phase3.wave_archive_completion.v2"
   },
   "containers": {
     "tools_image": "jointbuildgs-p0-tools:t0",

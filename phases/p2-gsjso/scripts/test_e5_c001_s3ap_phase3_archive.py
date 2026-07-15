@@ -40,13 +40,13 @@ def trigger_from_rows(rows: Sequence[Mapping[str, Any]], rule: str) -> dict[str,
     candidates: list[dict[str, Any]] = []
     for row in rows:
         delta = float(row["delta_m"])
-        post = float(row["post_gs_signed_median_error_m"])
-        seed = float(row["perturbed_p0_signed_median_error_m"])
         eligible = bool(
             str(row["arm"]).lower() == "a1" and str(row["replicate"]).lower() == "r1"
             and delta != 0.0 and str(row["score_status"]) == "complete"
         )
         if eligible:
+            post = float(row["post_gs_signed_median_error_m"])
+            seed = float(row["perturbed_p0_signed_median_error_m"])
             candidates.append({
                 "run_id": str(row["run_id"]), "building_id": str(row["building_id"]),
                 "delta_m": delta, "post_gs_abs_signed_median_error_m": abs(post),
@@ -93,17 +93,18 @@ class Phase3ArchiveTests(unittest.TestCase):
             "roof_evidence": {"ground_source_csv": "inputs/ground.csv"},
         }
         self.archive = {
+            "schema": "jointbuildgs.s3ap.phase3.archive.lock.v2",
             "task_date": "2026-07-15", "crs": "EPSG:25832",
             "schemas": {
-                "archive_manifest": "jointbuildgs.s3ap.phase3.wave_archive.v1",
-                "archive_completion": "jointbuildgs.s3ap.phase3.wave_archive_completion.v1",
+                "archive_manifest": "jointbuildgs.s3ap.phase3.wave_archive.v2",
+                "archive_completion": "jointbuildgs.s3ap.phase3.wave_archive_completion.v2",
                 "return_signal": "jointbuildgs.s3ap.return_signal.v1",
                 "score_manifest": "jointbuildgs.s3ap.phase3.score.v1",
                 "roofer_input_manifest": "jointbuildgs.s3ap.phase3.roofer_input.v1",
                 "pre_readout_fingerprint": "jointbuildgs.s3ap.phase3.pre_readout_fingerprint.v1",
                 "score_only_fingerprint": "jointbuildgs.s3ap.phase3.score_only_fingerprint.v1",
                 "prewarm_binding": "jointbuildgs.s3ap.phase3.gsplat_prewarm_binding.v1",
-                "wave_reconciliation": "jointbuildgs.s3ap.phase3.wave_reconciliation.v1",
+                "wave_reconciliation": "jointbuildgs.s3ap.phase3.wave_reconciliation.v2",
             },
             "phase3_aggregate_schema": "jointbuildgs.s3ap.phase3.aggregate.v2",
             "phase3_script": "phase3.py", "phase3_lock": "phase3.json",
@@ -112,15 +113,34 @@ class Phase3ArchiveTests(unittest.TestCase):
             "waves": {
                 "base42": {
                     "total_jobs": 42, "base_jobs": 18, "height_nonzero_jobs": 24,
-                    "tilt_jobs": 0, "complete_scores": 42,
+                    "tilt_jobs": 0, "terminal_scores": 42, "complete_scores": 40,
+                    "certified_partial_scores": 2,
+                    "certified_partial_kind_counts": {
+                        "no_roof_evidence": 1, "prepared_zero_inside_points": 1,
+                    },
+                    "certified_partial_runs": {
+                        "gs_e5_C001_s3ap_b8568391_a1_dz_m4_r1": "no_roof_evidence",
+                        "gs_e5_C001_s3ap_b8568392_a1_dz_m4_r1": "prepared_zero_inside_points",
+                    },
+                    "allowed_partial_statuses": ["partial_no_scored_roof_points"],
+                    "require_all_scores_complete": False,
                     "perturbation_rows": 27, "nonzero_height_rows": 24,
-                    "require_return_signal": None,
+                    "complete_perturbation_rows": 25, "partial_perturbation_rows": 2,
+                    "complete_nonzero_height_rows": 22,
+                    "require_evaluation_complete": False,
+                    "require_raw_return_signal": True, "require_return_signal": False,
                 },
                 "final60": {
                     "total_jobs": 60, "base_jobs": 18, "height_nonzero_jobs": 24,
-                    "tilt_jobs": 18, "complete_scores": 60,
+                    "tilt_jobs": 18, "terminal_scores": 60, "complete_scores": 60,
+                    "certified_partial_scores": 0, "certified_partial_kind_counts": {},
+                    "certified_partial_runs": {},
+                    "allowed_partial_statuses": [], "require_all_scores_complete": True,
                     "perturbation_rows": 27, "nonzero_height_rows": 24,
-                    "require_return_signal": True,
+                    "complete_perturbation_rows": 27, "partial_perturbation_rows": 0,
+                    "complete_nonzero_height_rows": 24,
+                    "require_evaluation_complete": True,
+                    "require_raw_return_signal": True, "require_return_signal": True,
                 },
             },
         }
@@ -237,14 +257,24 @@ class Phase3ArchiveTests(unittest.TestCase):
         status: list[dict[str, Any]] = []
         perturb: list[dict[str, Any]] = []
         cells: list[dict[str, Any]] = []
+        certified_partials: dict[str, str] = {}
         for job in jobs:
             kind = "none" if job.kind == "base" else job.kind
+            partial_kind = None
+            if wave == "base42" and job.kind == "height" and job.value == -4.0:
+                if job.building_id == "8568391":
+                    partial_kind = "no_roof_evidence"
+                elif job.building_id == "8568392":
+                    partial_kind = "prepared_zero_inside_points"
+            score_status = "partial_no_scored_roof_points" if partial_kind else "complete"
+            if partial_kind:
+                certified_partials[job.run_id] = partial_kind
             scores.append({
                 "run_id": job.run_id, "building_id": f"DEBY_LOD2_{job.building_id}",
                 "arm": job.arm, "replicate": job.replicate,
                 "perturbation_type": kind, "perturbation_value": f"{job.value:.9f}",
                 "checkpoint": job.final_checkpoint, "checkpoint_sha256": "",
-                "prepared_root": job.data_root, "score_status": "complete", "crs": "EPSG:25832",
+                "prepared_root": job.data_root, "score_status": score_status, "crs": "EPSG:25832",
                 "supplied_footprint_passed_to_roofer": "false", "gt_role": "score-only boundary",
                 "footprint_role": "score-region and coverage mask opened after Roofer input finalization",
             })
@@ -252,27 +282,29 @@ class Phase3ArchiveTests(unittest.TestCase):
                 "run_id": job.run_id, "building_id": f"DEBY_LOD2_{job.building_id}",
                 "arm": job.arm, "replicate": job.replicate,
                 "perturbation_type": kind, "perturbation_value": f"{job.value:.9f}",
-                "stage": "score", "status": "complete", "checkpoint": job.final_checkpoint,
+                "stage": "score", "status": score_status, "checkpoint": job.final_checkpoint,
                 "prepared_root": job.data_root, "job_dir": f"jobs/{job.run_id}",
             })
             if job.arm == "a1" and job.replicate == "r1" and job.kind in {"base", "height"}:
                 delta = 0.0 if job.kind == "base" else job.value
                 p0 = 0.1
                 seed = p0 + delta
-                post = 0.0 if return_signal else abs(seed) + 1.0
-                condition = bool(delta != 0.0 and abs(post) < abs(seed))
+                post = None if partial_kind else (
+                    0.0 if (return_signal or wave == "base42") else abs(seed) + 1.0
+                )
+                condition = bool(post is not None and delta != 0.0 and abs(post) < abs(seed))
                 row = {
                     "run_id": job.run_id, "building_id": f"DEBY_LOD2_{job.building_id}",
                     "arm": job.arm, "replicate": job.replicate, "delta_m": f"{delta:.9f}",
-                    "score_status": "complete", "p0_signed_median_error_m": f"{p0:.9f}",
+                    "score_status": score_status, "p0_signed_median_error_m": f"{p0:.9f}",
                     "perturbed_p0_signed_median_error_m": f"{seed:.9f}",
                     "perturbed_p0_abs_signed_median_error_m": f"{abs(seed):.9f}",
-                    "post_gs_signed_median_error_m": f"{post:.9f}",
-                    "post_gs_abs_signed_median_error_m": f"{abs(post):.9f}",
-                    "signed_error_reduction_m": f"{abs(seed) - abs(post):.9f}",
-                    "post_minus_perturbed_seed_signed_m": f"{post - seed:.9f}",
+                    "post_gs_signed_median_error_m": "" if post is None else f"{post:.9f}",
+                    "post_gs_abs_signed_median_error_m": "" if post is None else f"{abs(post):.9f}",
+                    "signed_error_reduction_m": "" if post is None else f"{abs(seed) - abs(post):.9f}",
+                    "post_minus_perturbed_seed_signed_m": "" if post is None else f"{post - seed:.9f}",
                     "return_condition_met": str(condition).lower(),
-                    "trigger_candidate": str(delta != 0.0).lower(), "trigger_rule": self.rule,
+                    "trigger_candidate": str(delta != 0.0 and post is not None).lower(), "trigger_rule": self.rule,
                 }
                 perturb.append(row)
                 cells.append({
@@ -283,17 +315,22 @@ class Phase3ArchiveTests(unittest.TestCase):
                     "p0_base_signed_error_m": f"{p0:.9f}",
                     "perturbed_p0_signed_error_m": f"{seed:.9f}",
                     "perturbed_p0_abs_error_m": f"{abs(seed):.9f}",
-                    "post_gs_point_count": "1", "post_gs_signed_error_m": f"{post:.9f}",
-                    "post_gs_abs_error_m": f"{abs(post):.9f}",
-                    "return_amount_m": f"{abs(seed) - abs(post):.9f}",
+                    "post_gs_point_count": "0" if post is None else "1",
+                    "post_gs_signed_error_m": "" if post is None else f"{post:.9f}",
+                    "post_gs_abs_error_m": "" if post is None else f"{abs(post):.9f}",
+                    "return_amount_m": "" if post is None else f"{abs(seed) - abs(post):.9f}",
                     "return_condition_met": str(condition).lower(),
-                    "coverage_grid_m": "0.500000000", "score_status": "complete",
+                    "coverage_grid_m": "0.500000000", "score_status": score_status,
                 })
         trigger = trigger_from_rows(perturb, self.rule)
+        raw_return = trigger["return_signal"]
+        evaluation_complete = wave == "final60"
         trigger.update({
-            "raw_return_signal": trigger["return_signal"], "evaluation_complete": True,
+            "raw_return_signal": raw_return,
+            "return_signal": bool(raw_return and evaluation_complete),
+            "evaluation_complete": evaluation_complete,
             "expected_nonzero_height_rows": 24, "observed_nonzero_height_rows": 24,
-            "complete_nonzero_height_rows": 24,
+            "complete_nonzero_height_rows": 24 if wave == "final60" else 22,
         })
         aggregate = {
             "schema": "jointbuildgs.s3ap.phase3.aggregate.v2", "status": "complete",
@@ -305,8 +342,10 @@ class Phase3ArchiveTests(unittest.TestCase):
                 "status": "complete", "errors": [], "invalid_current_rows": [],
                 "stale_job_directories": [],
                 "inventory": {"counts": inventory["counts"], "current_run_ids": inventory["run_ids"]},
-                "score_row_count": len(scores), "complete_score_count": len(scores),
-                "nonzero_height_row_count": 24, "complete_nonzero_height_row_count": 24,
+                "score_row_count": len(scores),
+                "complete_score_count": 60 if wave == "final60" else 40,
+                "nonzero_height_row_count": 24,
+                "complete_nonzero_height_row_count": 24 if wave == "final60" else 22,
             },
         }
         module = SimpleNamespace(
@@ -314,7 +353,7 @@ class Phase3ArchiveTests(unittest.TestCase):
             PERTURB_CELL_FIELDS=list(cells[0]), STATUS_FIELDS=list(status[0]),
             perturbation_trigger=trigger_from_rows,
         )
-        return {"jobs": jobs, "inventory": inventory, "scores": scores, "perturb": perturb, "cells": cells, "status": status, "trigger": trigger, "aggregate": aggregate, "module": module}
+        return {"jobs": jobs, "inventory": inventory, "scores": scores, "perturb": perturb, "cells": cells, "status": status, "trigger": trigger, "aggregate": aggregate, "module": module, "certified_partials": certified_partials}
 
     def validate_contract_fixture(self, wave: str, fixture: dict[str, Any]) -> dict[str, Any]:
         return MODULE.validate_wave_contract(
@@ -325,6 +364,7 @@ class Phase3ArchiveTests(unittest.TestCase):
             cell_header=list(fixture["cells"][0]), cell_rows=fixture["cells"],
             status_header=list(fixture["status"][0]), status_rows=fixture["status"],
             phase3_module=fixture["module"],
+            certified_partial_runs=fixture["certified_partials"],
         )
 
     def authoritative_perturb_fixture(self, fixture: Mapping[str, Any]) -> list[dict[str, Any]]:
@@ -356,11 +396,79 @@ class Phase3ArchiveTests(unittest.TestCase):
             rows.append(row)
         return rows
 
-    def test_wave_contract_requires_all_scores_and_exact_height_evaluation(self) -> None:
+    def test_base42_accepts_only_exact_certified_partial_counts(self) -> None:
         fixture = self.contract_fixture("base42", False)
-        self.assertEqual(self.validate_contract_fixture("base42", fixture)["complete_scores"], 42)
-        fixture["scores"][0]["score_status"] = "partial"
-        with self.assertRaisesRegex(MODULE.ArchiveError, "not_all_complete"):
+        counts = self.validate_contract_fixture("base42", fixture)
+        self.assertEqual(counts["terminal_score_count"], 42)
+        self.assertEqual(counts["complete_score_count"], 40)
+        self.assertEqual(counts["partial_score_count"], 2)
+        self.assertEqual(counts["complete_nonzero_height_rows"], 22)
+        self.assertTrue(counts["raw_return_signal"])
+        self.assertFalse(counts["evaluation_complete"])
+        self.assertFalse(counts["return_signal"])
+
+        fixture = self.contract_fixture("base42", False)
+        fixture["scores"][0]["score_status"] = "partial_no_scored_roof_points"
+        fixture["status"][0]["status"] = "partial_no_scored_roof_points"
+        with self.assertRaisesRegex(MODULE.ArchiveError, "partial_certification"):
+            self.validate_contract_fixture("base42", fixture)
+
+        fixture = self.contract_fixture("base42", False)
+        partial_id = next(iter(fixture["certified_partials"]))
+        fixture["certified_partials"][partial_id] = "forged_kind"
+        with self.assertRaisesRegex(MODULE.ArchiveError, "partial_kind_counts"):
+            self.validate_contract_fixture("base42", fixture)
+
+        fixture = self.contract_fixture("base42", False)
+        partial_ids = sorted(fixture["certified_partials"])
+        fixture["certified_partials"][partial_ids[0]], fixture["certified_partials"][partial_ids[1]] = (
+            fixture["certified_partials"][partial_ids[1]], fixture["certified_partials"][partial_ids[0]]
+        )
+        with self.assertRaisesRegex(MODULE.ArchiveError, "partial_runs_mismatch"):
+            self.validate_contract_fixture("base42", fixture)
+
+        fixture = self.contract_fixture("base42", False)
+        fixture["trigger"]["raw_return_signal"] = False
+        fixture["aggregate"]["trigger"] = fixture["trigger"]
+        with self.assertRaisesRegex(MODULE.ArchiveError, "raw_signal"):
+            self.validate_contract_fixture("base42", fixture)
+
+        fixture = self.contract_fixture("base42", False)
+        fixture["trigger"]["return_signal"] = True
+        fixture["aggregate"]["trigger"] = fixture["trigger"]
+        with self.assertRaisesRegex(MODULE.ArchiveError, "signal_semantic|return_signal_policy"):
+            self.validate_contract_fixture("base42", fixture)
+
+    def test_final60_remains_all_complete(self) -> None:
+        fixture = self.contract_fixture("final60", True)
+        self.assertEqual(self.validate_contract_fixture("final60", fixture)["complete_score_count"], 60)
+        run_id = str(fixture["scores"][0]["run_id"])
+        fixture["scores"][0]["score_status"] = "partial_no_scored_roof_points"
+        fixture["status"][0]["status"] = "partial_no_scored_roof_points"
+        fixture["certified_partials"][run_id] = "no_roof_evidence"
+        with self.assertRaisesRegex(MODULE.ArchiveError, "score_status_not_terminal|not_all_complete"):
+            self.validate_contract_fixture("final60", fixture)
+
+    def test_certified_partial_perturbation_and_cells_remain_censored(self) -> None:
+        fixture = self.contract_fixture("base42", False)
+        partial = next(row for row in fixture["perturb"] if row["score_status"] != "complete")
+        partial["post_gs_signed_median_error_m"] = "0.000000000"
+        with self.assertRaisesRegex(MODULE.ArchiveError, "partial_post_present"):
+            self.validate_contract_fixture("base42", fixture)
+
+        fixture = self.contract_fixture("base42", False)
+        partial = next(row for row in fixture["perturb"] if row["score_status"] != "complete")
+        partial["trigger_candidate"] = "true"
+        with self.assertRaisesRegex(MODULE.ArchiveError, "candidate_mismatch"):
+            self.validate_contract_fixture("base42", fixture)
+
+        fixture = self.contract_fixture("base42", False)
+        partial_cell = next(row for row in fixture["cells"] if row["score_status"] != "complete")
+        partial_cell["post_gs_point_count"] = "1"
+        partial_cell["post_gs_signed_error_m"] = "0.000000000"
+        partial_cell["post_gs_abs_error_m"] = "0.000000000"
+        partial_cell["return_amount_m"] = partial_cell["perturbed_p0_abs_error_m"]
+        with self.assertRaisesRegex(MODULE.ArchiveError, "partial_post_count_nonzero"):
             self.validate_contract_fixture("base42", fixture)
 
     def test_score_identity_and_locked_height_grid_attacks_fail(self) -> None:
@@ -426,7 +534,7 @@ class Phase3ArchiveTests(unittest.TestCase):
             phase3_module=fixture["module"],
             authoritative_perturb_rows=authoritative,
         )
-        self.assertEqual(counts["complete_scores"], 60)
+        self.assertEqual(counts["complete_score_count"], 60)
 
     def test_reviewer_every_perturbation_cell_field_attack_fails_closed(self) -> None:
         attacks = (
@@ -435,9 +543,9 @@ class Phase3ArchiveTests(unittest.TestCase):
             ("perturbed_p0_signed_error_m", "0.100000001", "cell_perturbed_equation"),
             ("region", "roof", "cell_region_invalid"),
             ("post_gs_point_count", "0", "cell_empty_post_fields"),
-            ("return_condition_met", "true", "cell_condition_mismatch"),
+            ("return_condition_met", "false", "cell_condition_mismatch"),
             ("coverage_grid_m", "0.500000001", "cell_grid_mismatch"),
-            ("score_status", "forged", "perturbation_cells_not_complete"),
+            ("score_status", "forged", "cell_score_status_mismatch"),
         )
         for field, value, reason in attacks:
             with self.subTest(field=field):
@@ -590,19 +698,135 @@ class Phase3ArchiveTests(unittest.TestCase):
         aggregate = {"aggregate_contract": {"invalid_current_rows": []}, "phase2_serialized_gsplat_prewarm": prewarm}
         return job, [csv_row], aggregate, score_manifest
 
+    def make_partial_job_bundle(
+        self, repo: Path, kind: str,
+    ) -> tuple[Any, list[dict[str, str]], dict[str, Any], dict[str, Any]]:
+        job, _, aggregate, _ = self.make_job_bundle(repo)
+        job_dir = repo / "jobs/run1"
+        score_path = job_dir / "score_row.json"
+        input_path = job_dir / "roofer_input_manifest.json"
+        manifest_path = job_dir / "score_manifest.json"
+        score = json.loads(score_path.read_text())
+        roofer_input = json.loads(input_path.read_text())
+        manifest = json.loads(manifest_path.read_text())
+        score.update({
+            "score_status": "partial_no_scored_roof_points",
+            "fused_inside_point_count": 0,
+            "coverage_occupied_cells": 0, "coverage_ratio": 0.0,
+            "edge_point_count": 0, "edge_coverage_occupied_cells": 0,
+            "edge_coverage_ratio": 0.0, "interior_point_count": 0,
+            "interior_coverage_occupied_cells": 0, "interior_coverage_ratio": 0.0,
+            "supplied_footprint_passed_to_roofer": False,
+        })
+        for field in (
+            "height_error_signed_median_m", "height_error_abs_median_m",
+            "height_error_mad_m", "height_error_rms_m",
+            "edge_height_error_signed_median_m", "edge_height_error_abs_median_m",
+            "edge_height_error_mad_m", "edge_height_error_rms_m",
+            "interior_height_error_signed_median_m", "interior_height_error_abs_median_m",
+            "interior_height_error_mad_m", "interior_height_error_rms_m",
+        ):
+            score[field] = None
+        if kind == "no_roof_evidence":
+            roofer_input.update({
+                "status": "no_roof_evidence", "roof_evidence_point_count": 0,
+                "derived_roofprint_area_m2": 0.0,
+                "point_evidence_derived_roofprint_passed_to_roofer": False,
+            })
+            score.update({
+                "score_reason": "no_roof_evidence", "roof_evidence_point_count": 0,
+                "derived_roofprint_area_m2": 0.0,
+                "point_evidence_derived_roofprint_passed_to_roofer": False,
+                "roofer_status": "failed", "roofer_reason": "roofer_exit_125",
+                "cityjson_path": "", "citygml_roof_point_count": 0,
+            })
+            manifest["roofer_exit_code"] = 125
+        elif kind == "prepared_zero_inside_points":
+            las = job_dir / "roof.las"; las.write_bytes(b"roof evidence")
+            roofprint = job_dir / "roofprint.geojson"; roofprint.write_text("{}\n")
+            cityjson = job_dir / "city.json"; cityjson.write_text("{}\n")
+            report = job_dir / "report.json"; report.write_text("{}\n")
+            log = job_dir / "val3dity.log"; log.write_text("ok\n")
+            roofer_input.update({
+                "status": "prepared", "roof_evidence_point_count": 12,
+                "derived_roofprint_area_m2": 4.0,
+                "point_evidence_derived_roofprint_passed_to_roofer": True,
+                "roofer_las": "jobs/run1/roof.las",
+                "roofer_las_sha256": MODULE.sha256_file(las),
+                "derived_roofprint": "jobs/run1/roofprint.geojson",
+                "derived_roofprint_sha256": MODULE.sha256_file(roofprint),
+            })
+            score.update({
+                "score_reason": "prepared", "roof_evidence_point_count": 12,
+                "derived_roofprint_area_m2": 4.0,
+                "point_evidence_derived_roofprint_passed_to_roofer": True,
+                "roofer_status": "failure", "roofer_reason": "lod11_fallback",
+                "cityjson_path": "jobs/run1/city.json", "citygml_roof_point_count": 2,
+            })
+            manifest.update({
+                "roofer_exit_code": 0,
+                "cityjson": "jobs/run1/city.json", "cityjson_sha256": MODULE.sha256_file(cityjson),
+                "val3dity_report": "jobs/run1/report.json", "val3dity_report_sha256": MODULE.sha256_file(report),
+                "val3dity_log": "jobs/run1/val3dity.log", "val3dity_log_sha256": MODULE.sha256_file(log),
+            })
+        else:
+            raise AssertionError(kind)
+        write_json(input_path, roofer_input)
+        write_json(score_path, score)
+        manifest["roofer_input_manifest_sha256"] = MODULE.sha256_file(input_path)
+        manifest["score_row_sha256"] = MODULE.sha256_file(score_path)
+        write_json(manifest_path, manifest)
+        return job, [{key: MODULE.csv_scalar(value) for key, value in score.items()}], aggregate, manifest
+
     def test_job_bundle_cross_binds_identity_prewarm_and_canonical_bundles(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             repo = Path(directory)
             job, rows, aggregate, manifest = self.make_job_bundle(repo)
-            _, fingerprints, _, _, bound_inputs = MODULE.validate_job_bundles(
+            _, fingerprints, _, _, bound_inputs, partials = MODULE.validate_job_bundles(
                 [job], rows, self.archive, self.phase3, aggregate, repo, score_fields=list(rows[0]),
             )
             self.assertEqual(fingerprints[0]["run_id"], "run1")
             self.assertIn(repo / "configs/run1.yaml", bound_inputs)
+            self.assertEqual(partials, {})
             manifest["job"]["building_id"] = "8568392"
             write_json(repo / "jobs/run1/score_manifest.json", manifest)
             with self.assertRaisesRegex(MODULE.ArchiveError, "manifest_identity"):
                 MODULE.validate_job_bundles([job], rows, self.archive, self.phase3, aggregate, repo, score_fields=list(rows[0]))
+
+    def test_job_bundle_cryptographically_certifies_both_partial_paths(self) -> None:
+        for kind in ("no_roof_evidence", "prepared_zero_inside_points"):
+            with self.subTest(kind=kind), tempfile.TemporaryDirectory() as directory:
+                repo = Path(directory)
+                job, rows, aggregate, _ = self.make_partial_job_bundle(repo, kind)
+                _, fingerprints, _, _, _, partials = MODULE.validate_job_bundles(
+                    [job], rows, self.archive, self.phase3, aggregate, repo,
+                    score_fields=list(rows[0]),
+                )
+                self.assertEqual(partials, {"run1": kind})
+                self.assertEqual(fingerprints[0]["score_status"], "partial_no_scored_roof_points")
+                self.assertEqual(fingerprints[0]["certified_partial_kind"], kind)
+
+    def test_partial_certificate_rejects_structural_and_type_attacks(self) -> None:
+        attacks = (
+            ("no_roof_evidence", "score", "score_reason", "prepared", "partial_reason"),
+            ("no_roof_evidence", "score", "fused_inside_point_count", False, "inside_count.*type"),
+            ("no_roof_evidence", "score", "height_error_rms_m", 0.0, "metric_present"),
+            ("no_roof_evidence", "manifest", "roofer_exit_code", True, "no_evidence_exit.*type"),
+            ("prepared_zero_inside_points", "input", "roof_evidence_point_count", True, "partial_roof_count"),
+            ("prepared_zero_inside_points", "manifest", "roofer_exit_code", False, "prepared_exit.*type"),
+            ("prepared_zero_inside_points", "manifest", "cityjson_sha256", "", "artifact_hash"),
+        )
+        for kind, target, field, value, reason in attacks:
+            with self.subTest(kind=kind, field=field), tempfile.TemporaryDirectory() as directory:
+                repo = Path(directory)
+                job, _, _, _ = self.make_partial_job_bundle(repo, kind)
+                job_dir = repo / "jobs/run1"
+                score = json.loads((job_dir / "score_row.json").read_text())
+                roofer_input = json.loads((job_dir / "roofer_input_manifest.json").read_text())
+                manifest = json.loads((job_dir / "score_manifest.json").read_text())
+                {"score": score, "input": roofer_input, "manifest": manifest}[target][field] = value
+                with self.assertRaisesRegex(MODULE.ArchiveError, reason):
+                    MODULE.certify_partial_score_bundle(score, roofer_input, manifest, job)
 
     def test_reviewer_post_inventory_seed_config_and_checkpoint_drift_fail(self) -> None:
         for filename, reason in (
@@ -661,18 +885,33 @@ class Phase3ArchiveTests(unittest.TestCase):
         self, mapping: Sequence[Mapping[str, Any]], wave: str,
     ) -> dict[str, Any]:
         mapped = {Path(str(row["source_path"])).stem: row for row in mapping}
+        spec = self.archive["waves"][wave]
+        partial_runs = dict(spec["certified_partial_runs"])
         counts = {
-            "score_rows": 42 if wave == "base42" else 60,
-            "complete_scores": 42 if wave == "base42" else 60,
-            "perturbation_rows": 27, "nonzero_height_rows": 24,
+            "score_rows": spec["total_jobs"], "terminal_score_count": spec["terminal_scores"],
+            "complete_score_count": spec["complete_scores"],
+            "partial_score_count": spec["certified_partial_scores"],
+            "score_status_counts": {
+                **{"complete": spec["complete_scores"]},
+                **({"partial_no_scored_roof_points": spec["certified_partial_scores"]} if spec["certified_partial_scores"] else {}),
+            },
+            "certified_partial_run_ids": sorted(partial_runs),
+            "certified_partial_runs": partial_runs,
+            "certified_partial_kind_counts": spec["certified_partial_kind_counts"],
+            "perturbation_rows": 27,
+            "complete_perturbation_row_count": spec["complete_perturbation_rows"],
+            "partial_perturbation_row_count": spec["partial_perturbation_rows"],
+            "nonzero_height_rows": 24,
+            "complete_nonzero_height_rows": spec["complete_nonzero_height_rows"],
             "perturbation_cell_rows": 27,
-            "status_rows": 42 if wave == "base42" else 60,
-            "evaluation_complete": True,
-            "return_signal": wave == "final60",
+            "status_rows": spec["total_jobs"],
+            "evaluation_complete": spec["require_evaluation_complete"],
+            "raw_return_signal": spec["require_raw_return_signal"],
+            "return_signal": spec["require_return_signal"],
             "declared_figure_files": 1, "skipped_figure_records": 0,
         }
         total = counts["score_rows"]
-        run_ids = [f"run{i:02d}" for i in range(total)]
+        run_ids = sorted([*partial_runs, *[f"run{i:02d}" for i in range(total - len(partial_runs))]])
         inventory = {
             "wave": wave,
             "counts": {"total": total, "base": 18, "height_nonzero": 24, "tilt": 0 if wave == "base42" else 18},
@@ -683,6 +922,10 @@ class Phase3ArchiveTests(unittest.TestCase):
         source_fingerprints = [{
             "run_id": run_id, "pre_readout_digest": "1" * 64,
             "score_only_digest": "2" * 64, "full_reuse_fingerprint": "3" * 64,
+            "score_status": (
+                "partial_no_scored_roof_points" if run_id in partial_runs else "complete"
+            ),
+            "certified_partial_kind": partial_runs.get(run_id),
             "score_only_bundle_file_count": 1, "gt_content_reopened_by_archive": False,
             "phase2_input_binding": {
                 "schema": MODULE.PHASE2_INPUT_BINDING_SCHEMA, "random_seed": 2001,
@@ -708,9 +951,16 @@ class Phase3ArchiveTests(unittest.TestCase):
                 "phase3_aggregate_manifest": "manifest.json",
                 "phase3_aggregate_manifest_sha256": mapped["manifest"]["sha256"],
                 "source_mapping_digest": MODULE.canonical_digest(list(mapping)),
-                "complete_score_count": counts["complete_scores"],
-                "nonzero_height_rows": 24, "evaluation_complete": True,
-                "return_signal": counts["return_signal"],
+                **{
+                    key: counts[key] for key in (
+                        "terminal_score_count", "complete_score_count", "partial_score_count",
+                        "score_status_counts", "certified_partial_run_ids",
+                        "certified_partial_runs", "certified_partial_kind_counts",
+                        "complete_perturbation_row_count", "partial_perturbation_row_count",
+                        "nonzero_height_rows", "complete_nonzero_height_rows",
+                        "evaluation_complete", "raw_return_signal", "return_signal",
+                    )
+                },
                 "outputs": {
                     key: {
                         "source_path": mapped[key]["source_path"],
@@ -833,11 +1083,26 @@ class Phase3ArchiveTests(unittest.TestCase):
             with self.assertRaisesRegex(MODULE.ArchiveError, "score_rows_type"):
                 MODULE.validate_archive_payload_contract(string_count, mapping, archive=self.archive)
             incomplete = deepcopy(payload); incomplete["measurement_counts"]["evaluation_complete"] = False
-            with self.assertRaisesRegex(MODULE.ArchiveError, "evaluation_incomplete"):
+            with self.assertRaisesRegex(MODULE.ArchiveError, "evaluation_policy"):
                 MODULE.validate_archive_payload_contract(incomplete, mapping, archive=self.archive)
             no_return = deepcopy(payload); no_return["measurement_counts"]["return_signal"] = False
-            with self.assertRaisesRegex(MODULE.ArchiveError, "final60_return_signal"):
+            with self.assertRaisesRegex(MODULE.ArchiveError, "return_signal_policy"):
                 MODULE.validate_archive_payload_contract(no_return, mapping, archive=self.archive)
+
+            base = self.archive_payload_fixture(mapping, "base42")
+            MODULE.validate_archive_payload_contract(base, mapping, archive=self.archive)
+            forged = deepcopy(base); forged["measurement_counts"]["complete_score_count"] = True
+            with self.assertRaisesRegex(MODULE.ArchiveError, "complete_scores.*type"):
+                MODULE.validate_archive_payload_contract(forged, mapping, archive=self.archive)
+            forged = deepcopy(base); forged["measurement_counts"]["raw_return_signal"] = False
+            with self.assertRaisesRegex(MODULE.ArchiveError, "raw_return_signal_policy"):
+                MODULE.validate_archive_payload_contract(forged, mapping, archive=self.archive)
+            forged = deepcopy(base)
+            partial_ids = forged["measurement_counts"]["certified_partial_run_ids"]
+            runs = forged["measurement_counts"]["certified_partial_runs"]
+            runs[partial_ids[0]], runs[partial_ids[1]] = runs[partial_ids[1]], runs[partial_ids[0]]
+            with self.assertRaisesRegex(MODULE.ArchiveError, "partial_runs"):
+                MODULE.validate_archive_payload_contract(forged, mapping, archive=self.archive)
 
     def test_reviewer_seed_binding_and_executed_source_mapping_mismatch_fail(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

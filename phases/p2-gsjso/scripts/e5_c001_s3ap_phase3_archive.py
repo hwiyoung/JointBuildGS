@@ -40,6 +40,64 @@ INVENTORY_FIELDS = [
     "final_checkpoint", "iterations", "gt_used", "lod2_used", "als_used", "status",
 ]
 PHASE2_INPUT_BINDING_SCHEMA = "jointbuildgs.s3ap.phase3.archive_phase2_input_binding.v1"
+ARCHIVE_LOCK_SCHEMA = "jointbuildgs.s3ap.phase3.archive.lock.v2"
+PARTIAL_NO_SCORED_ROOF_POINTS = "partial_no_scored_roof_points"
+
+
+def locked_wave_policy(wave: str) -> dict[str, Any]:
+    """Exact archive-v2 policy, independent of mutable config bytes."""
+
+    common = {
+        "base_jobs": 18,
+        "height_nonzero_jobs": 24,
+        "perturbation_rows": 27,
+        "nonzero_height_rows": 24,
+    }
+    if wave == "base42":
+        return {
+            **common,
+            "total_jobs": 42,
+            "tilt_jobs": 0,
+            "terminal_scores": 42,
+            "complete_scores": 40,
+            "certified_partial_scores": 2,
+            "certified_partial_kind_counts": {
+                "no_roof_evidence": 1,
+                "prepared_zero_inside_points": 1,
+            },
+            "certified_partial_runs": {
+                "gs_e5_C001_s3ap_b8568391_a1_dz_m4_r1": "no_roof_evidence",
+                "gs_e5_C001_s3ap_b8568392_a1_dz_m4_r1": "prepared_zero_inside_points",
+            },
+            "allowed_partial_statuses": [PARTIAL_NO_SCORED_ROOF_POINTS],
+            "require_all_scores_complete": False,
+            "complete_perturbation_rows": 25,
+            "partial_perturbation_rows": 2,
+            "complete_nonzero_height_rows": 22,
+            "require_evaluation_complete": False,
+            "require_raw_return_signal": True,
+            "require_return_signal": False,
+        }
+    if wave == "final60":
+        return {
+            **common,
+            "total_jobs": 60,
+            "tilt_jobs": 18,
+            "terminal_scores": 60,
+            "complete_scores": 60,
+            "certified_partial_scores": 0,
+            "certified_partial_kind_counts": {},
+            "certified_partial_runs": {},
+            "allowed_partial_statuses": [],
+            "require_all_scores_complete": True,
+            "complete_perturbation_rows": 27,
+            "partial_perturbation_rows": 0,
+            "complete_nonzero_height_rows": 24,
+            "require_evaluation_complete": True,
+            "require_raw_return_signal": True,
+            "require_return_signal": True,
+        }
+    raise ArchiveError(f"wave_invalid:{wave}")
 
 
 class ArchiveError(RuntimeError):
@@ -218,16 +276,11 @@ def exact_perturbation_trigger(
     for row in rows:
         try:
             delta = float(row.get("delta_m"))
-            post = float(row.get("post_gs_signed_median_error_m"))
-            seed = float(row.get("perturbed_p0_signed_median_error_m"))
         except (TypeError, ValueError) as exc:
             raise ArchiveError(
                 f"trigger_source_numeric_invalid:{row.get('run_id', '')}"
             ) from exc
-        require(
-            all(math.isfinite(value) for value in (delta, post, seed)),
-            f"trigger_source_numeric_nonfinite:{row.get('run_id', '')}",
-        )
+        require(math.isfinite(delta), f"trigger_source_numeric_nonfinite:{row.get('run_id', '')}")
         eligible = bool(
             str(row.get("arm", "")).lower() == "a1"
             and str(row.get("replicate", "")).lower() == "r1"
@@ -235,6 +288,17 @@ def exact_perturbation_trigger(
             and str(row.get("score_status", "")) == "complete"
         )
         if eligible:
+            try:
+                post = float(row.get("post_gs_signed_median_error_m"))
+                seed = float(row.get("perturbed_p0_signed_median_error_m"))
+            except (TypeError, ValueError) as exc:
+                raise ArchiveError(
+                    f"trigger_source_numeric_invalid:{row.get('run_id', '')}"
+                ) from exc
+            require(
+                all(math.isfinite(value) for value in (post, seed)),
+                f"trigger_source_numeric_nonfinite:{row.get('run_id', '')}",
+            )
             condition = bool(abs(post) < abs(seed))
             candidates.append({
                 "run_id": str(row.get("run_id", "")),
@@ -631,8 +695,11 @@ def validate_wave_contract(
     status_rows: Sequence[Mapping[str, str]], phase3_module: Any,
     authoritative_perturb_rows: Sequence[Mapping[str, Any]] | None = None,
     authoritative_cell_rows: Sequence[Mapping[str, str]] | None = None,
+    certified_partial_runs: Mapping[str, str] | None = None,
 ) -> dict[str, Any]:
     spec = archive["waves"][wave]
+    require(spec == locked_wave_policy(wave), f"wave_policy_mismatch:{wave}")
+    certified_partials = dict(certified_partial_runs or {})
     run_ids = set(inventory["run_ids"])
     jobs_by_id = {job.run_id: job for job in jobs}
     require(set(jobs_by_id) == run_ids, "inventory_job_object_ids_mismatch")
@@ -644,10 +711,30 @@ def validate_wave_contract(
     require(len(score_ids) == int(spec["total_jobs"]), "score_row_count_mismatch")
     require(len(score_ids) == len(set(score_ids)), "score_run_ids_duplicate")
     require(set(score_ids) == run_ids, "score_run_ids_inventory_mismatch")
-    require(
-        all(str(row.get("score_status")) == "complete" for row in score_rows),
-        "score_rows_not_all_complete",
-    )
+    score_by_id = {str(row["run_id"]): row for row in score_rows}
+    allowed_partial = set(spec["allowed_partial_statuses"])
+    score_status_counts: dict[str, int] = {}
+    for row in score_rows:
+        status = str(row.get("score_status", ""))
+        require(status == "complete" or status in allowed_partial, f"score_status_not_terminal:{row.get('run_id')}")
+        score_status_counts[status] = score_status_counts.get(status, 0) + 1
+    partial_ids = {
+        run_id for run_id, row in score_by_id.items()
+        if str(row.get("score_status", "")) != "complete"
+    }
+    require(partial_ids == set(certified_partials), "score_partial_certification_mismatch")
+    complete_score_count = score_status_counts.get("complete", 0)
+    partial_score_count = len(partial_ids)
+    partial_kind_counts: dict[str, int] = {}
+    for kind in certified_partials.values():
+        partial_kind_counts[kind] = partial_kind_counts.get(kind, 0) + 1
+    require(len(score_rows) == int(spec["terminal_scores"]), "terminal_score_count_mismatch")
+    require(complete_score_count == int(spec["complete_scores"]), "complete_score_count_mismatch")
+    require(partial_score_count == int(spec["certified_partial_scores"]), "certified_partial_count_mismatch")
+    require(partial_kind_counts == spec["certified_partial_kind_counts"], "certified_partial_kind_counts_mismatch")
+    require(certified_partials == spec["certified_partial_runs"], "certified_partial_runs_mismatch")
+    if bool(spec["require_all_scores_complete"]):
+        require(partial_score_count == 0 and complete_score_count == len(score_rows), "score_rows_not_all_complete")
     for row in score_rows:
         run_id = str(row.get("run_id", ""))
         job = jobs_by_id[run_id]
@@ -701,24 +788,34 @@ def validate_wave_contract(
         semantic_perturb_rows = [authoritative_by_id[run_id] for run_id in perturb_ids]
     nonzero = [row for row in semantic_perturb_rows if float(row.get("delta_m", "0")) != 0.0]
     require(len(nonzero) == int(spec["nonzero_height_rows"]), "nonzero_height_row_count_mismatch")
-    require(all(str(row.get("score_status")) == "complete" for row in perturb_rows), "perturbation_rows_not_complete")
+    complete_perturbation_count = 0
+    partial_perturbation_count = 0
     for row in semantic_perturb_rows:
         run_id = str(row.get("run_id", ""))
         job = expected_perturb_jobs[run_id]
         delta = 0.0 if job.kind == "base" else job.value
+        score_status = str(row.get("score_status", ""))
+        require(score_status == str(score_by_id[run_id].get("score_status", "")), f"perturbation_score_status_mismatch:{run_id}")
+        require(score_status == "complete" or run_id in certified_partials, f"perturbation_partial_not_certified:{run_id}")
+        if score_status == "complete":
+            complete_perturbation_count += 1
+        else:
+            partial_perturbation_count += 1
         require(str(row.get("building_id")) == f"DEBY_LOD2_{job.building_id}", f"perturbation_building_mismatch:{run_id}")
         require(str(row.get("arm")).lower() == job.arm, f"perturbation_arm_mismatch:{run_id}")
         require(str(row.get("replicate")).lower() == job.replicate, f"perturbation_replicate_mismatch:{run_id}")
         same_number(row.get("delta_m"), delta, f"perturbation_delta:{run_id}")
-        numeric_keys = (
+        seed_keys = (
             "p0_signed_median_error_m", "perturbed_p0_signed_median_error_m",
             "perturbed_p0_abs_signed_median_error_m",
+        )
+        post_keys = (
             "post_gs_signed_median_error_m", "post_gs_abs_signed_median_error_m",
             "signed_error_reduction_m", "post_minus_perturbed_seed_signed_m",
         )
         if authoritative_perturb_rows is not None:
-            numeric_values: list[float] = []
-            for field in numeric_keys:
+            seed_values: list[float] = []
+            for field in seed_keys:
                 value = row.get(field)
                 require(
                     isinstance(value, (int, float)) and not isinstance(value, bool),
@@ -726,26 +823,22 @@ def validate_wave_contract(
                 )
                 number = float(value)
                 require(math.isfinite(number), f"perturbation_numeric_nonfinite:{run_id}:{field}")
-                numeric_values.append(number)
-            p0, perturbed, perturbed_abs, post, post_abs, reduction, post_minus_seed = numeric_values
+                seed_values.append(number)
+            p0, perturbed, perturbed_abs = seed_values
             delta_number: float | Decimal = float(delta)
         else:
-            decimal_values = [
+            seed_values = [
                 finite_decimal(row.get(field), f"perturbation_numeric:{run_id}:{field}")
-                for field in numeric_keys
+                for field in seed_keys
             ]
             require(
-                all(value is not None for value in decimal_values),
+                all(value is not None for value in seed_values),
                 f"perturbation_numeric_missing:{run_id}",
             )
-            p0, perturbed, perturbed_abs, post, post_abs, reduction, post_minus_seed = decimal_values
+            p0, perturbed, perturbed_abs = seed_values
             delta_number = Decimal(str(delta))
         require(perturbed == p0 + delta_number, f"perturbation_seed_equation:{run_id}")
         require(perturbed_abs == abs(perturbed), f"perturbation_seed_abs_equation:{run_id}")
-        require(post_abs == abs(post), f"perturbation_post_abs_equation:{run_id}")
-        require(reduction == abs(perturbed) - abs(post), f"perturbation_reduction_equation:{run_id}")
-        require(post_minus_seed == post - perturbed, f"perturbation_post_seed_equation:{run_id}")
-        condition = bool(delta_number != 0 and abs(post) < abs(perturbed))
         if authoritative_perturb_rows is not None:
             require(type(row.get("return_condition_met")) is bool, f"perturbation_condition_type:{run_id}")
             require(type(row.get("trigger_candidate")) is bool, f"perturbation_candidate_type:{run_id}")
@@ -756,8 +849,38 @@ def validate_wave_contract(
             require(str(row.get("trigger_candidate")) in {"true", "false"}, f"perturbation_candidate_type:{run_id}")
             observed_condition = str(row.get("return_condition_met")) == "true"
             observed_candidate = str(row.get("trigger_candidate")) == "true"
+        if score_status == "complete":
+            if authoritative_perturb_rows is not None:
+                post_values: list[float] = []
+                for field in post_keys:
+                    value = row.get(field)
+                    require(
+                        isinstance(value, (int, float)) and not isinstance(value, bool),
+                        f"perturbation_numeric_type:{run_id}:{field}",
+                    )
+                    number = float(value)
+                    require(math.isfinite(number), f"perturbation_numeric_nonfinite:{run_id}:{field}")
+                    post_values.append(number)
+            else:
+                post_values = [
+                    finite_decimal(row.get(field), f"perturbation_numeric:{run_id}:{field}")
+                    for field in post_keys
+                ]
+                require(all(value is not None for value in post_values), f"perturbation_numeric_missing:{run_id}")
+            post, post_abs, reduction, post_minus_seed = post_values
+            require(post_abs == abs(post), f"perturbation_post_abs_equation:{run_id}")
+            require(reduction == abs(perturbed) - abs(post), f"perturbation_reduction_equation:{run_id}")
+            require(post_minus_seed == post - perturbed, f"perturbation_post_seed_equation:{run_id}")
+            condition = bool(delta_number != 0 and abs(post) < abs(perturbed))
+            candidate = bool(delta != 0.0)
+        else:
+            for field in post_keys:
+                value = row.get(field)
+                require(value is None if authoritative_perturb_rows is not None else str(value or "") == "", f"perturbation_partial_post_present:{run_id}:{field}")
+            condition = False
+            candidate = False
         require(observed_condition is condition, f"perturbation_condition_mismatch:{run_id}")
-        require(observed_candidate is bool(delta != 0.0), f"perturbation_candidate_mismatch:{run_id}")
+        require(observed_candidate is candidate, f"perturbation_candidate_mismatch:{run_id}")
         require(str(row.get("trigger_rule")) == phase3["perturbation"]["trigger_rule"], f"perturbation_rule_mismatch:{run_id}")
     semantic_cell_rows = list(authoritative_cell_rows or cell_rows)
     if authoritative_cell_rows is not None:
@@ -774,15 +897,16 @@ def validate_wave_contract(
         )
     cell_ids = {str(row.get("run_id", "")) for row in semantic_cell_rows}
     require(cell_ids == set(perturb_ids), "perturbation_cell_run_coverage_mismatch")
-    require(all(str(row.get("score_status")) == "complete" for row in semantic_cell_rows), "perturbation_cells_not_complete")
     cell_keys: set[tuple[str, int, int]] = set()
     cell_reference_by_building: dict[tuple[str, int, int], tuple[Decimal, Decimal, str, Decimal, Decimal]] = {}
     cell_grid_by_run: dict[str, set[tuple[int, int]]] = {}
-    score_by_id = {str(row["run_id"]): row for row in score_rows}
     for row in semantic_cell_rows:
         run_id = str(row.get("run_id", ""))
         require(set(row) == set(phase3_module.PERTURB_CELL_FIELDS), f"cell_schema:{run_id}")
         job = expected_perturb_jobs[run_id]
+        cell_status = str(row.get("score_status", ""))
+        require(cell_status == str(score_by_id[run_id].get("score_status", "")), f"cell_score_status_mismatch:{run_id}")
+        require(cell_status == "complete" or run_id in certified_partials, f"cell_partial_not_certified:{run_id}")
         delta = 0.0 if job.kind == "base" else job.value
         require(str(row.get("building_id")) == f"DEBY_LOD2_{job.building_id}", f"cell_building_mismatch:{run_id}")
         require(str(row.get("arm")).lower() == job.arm, f"cell_arm_mismatch:{run_id}")
@@ -821,6 +945,8 @@ def validate_wave_contract(
         except ValueError as exc:
             raise ArchiveError(f"cell_post_count_invalid:{run_id}") from exc
         require(post_count >= 0, f"cell_post_count_negative:{run_id}")
+        if cell_status != "complete":
+            require(post_count == 0, f"cell_partial_post_count_nonzero:{run_id}")
         post_cell = finite_decimal(
             row.get("post_gs_signed_error_m"), f"cell_post:{run_id}", allow_empty=True,
         )
@@ -843,7 +969,6 @@ def validate_wave_contract(
         )
         require(str(row.get("return_condition_met")) in {"true", "false"}, f"cell_condition_type:{run_id}")
         require((str(row.get("return_condition_met")) == "true") is expected_condition, f"cell_condition_mismatch:{run_id}")
-        require(str(row.get("score_status")) == str(score_by_id[run_id].get("score_status")), f"cell_score_status_mismatch:{run_id}")
         reference_key = (job.building_id, key[1], key[2])
         reference_value = (
             center_x, center_y, str(row.get("region")), p0_cell,
@@ -867,16 +992,24 @@ def validate_wave_contract(
                 cell_grid_by_run[run_id] == reference_grid,
                 f"cell_cross_run_grid_mismatch:{building_id}:{run_id}",
             )
+    complete_nonzero_count = sum(
+        str(row.get("score_status", "")) == "complete" for row in nonzero
+    )
+    require(complete_perturbation_count == int(spec["complete_perturbation_rows"]), "complete_perturbation_count_mismatch")
+    require(partial_perturbation_count == int(spec["partial_perturbation_rows"]), "partial_perturbation_count_mismatch")
+    require(complete_nonzero_count == int(spec["complete_nonzero_height_rows"]), "complete_nonzero_height_count_mismatch")
     require(trigger.get("schema") == archive["schemas"]["return_signal"], "trigger_schema_mismatch")
-    require(trigger.get("evaluation_complete") is True, "trigger_evaluation_not_complete")
-    for key in ("expected_nonzero_height_rows", "observed_nonzero_height_rows", "complete_nonzero_height_rows"):
+    require(trigger.get("evaluation_complete") is bool(spec["require_evaluation_complete"]), "trigger_evaluation_policy_mismatch")
+    for key in ("expected_nonzero_height_rows", "observed_nonzero_height_rows"):
         require(type(trigger.get(key)) is int, f"trigger_{key}_type")
         require(trigger.get(key) == int(spec["nonzero_height_rows"]), f"trigger_{key}_mismatch")
+    require(type(trigger.get("complete_nonzero_height_rows")) is int, "trigger_complete_nonzero_height_rows_type")
+    require(trigger.get("complete_nonzero_height_rows") == complete_nonzero_count, "trigger_complete_nonzero_height_rows_mismatch")
     require(type(trigger.get("candidate_count")) is int, "trigger_candidate_count_type")
-    require(trigger.get("candidate_count") == int(spec["nonzero_height_rows"]), "trigger_candidate_count_mismatch")
+    require(trigger.get("candidate_count") == complete_nonzero_count, "trigger_candidate_count_mismatch")
     require(type(trigger.get("qualifying_count")) is int, "trigger_qualifying_count_type")
     require(trigger.get("qualifying_count") == len(trigger.get("qualifying", [])), "trigger_qualifying_count_mismatch")
-    require(len(trigger.get("candidates", [])) == int(spec["nonzero_height_rows"]), "trigger_candidates_length_mismatch")
+    require(len(trigger.get("candidates", [])) == complete_nonzero_count, "trigger_candidates_length_mismatch")
     recomputed = exact_perturbation_trigger(
         semantic_perturb_rows, phase3["perturbation"]["trigger_rule"],
     )
@@ -884,7 +1017,12 @@ def validate_wave_contract(
     require(trigger.get("equality_counts_as_return") is False, "trigger_equality_policy_mismatch")
     require(trigger.get("numeric_tolerance") is None, "trigger_numeric_tolerance_present")
     require(trigger.get("raw_return_signal") is recomputed["return_signal"], "trigger_raw_signal_semantic_mismatch")
-    require(trigger.get("return_signal") is recomputed["return_signal"], "trigger_signal_semantic_mismatch")
+    require(trigger.get("raw_return_signal") is spec["require_raw_return_signal"], "trigger_raw_signal_policy_mismatch")
+    require(
+        trigger.get("return_signal")
+        is bool(recomputed["return_signal"] and trigger.get("evaluation_complete")),
+        "trigger_signal_semantic_mismatch",
+    )
 
     trigger_nested_fields = {
         "run_id", "building_id", "delta_m",
@@ -909,8 +1047,8 @@ def validate_wave_contract(
                 require(math.isfinite(value), f"trigger_{label}_{key}_nonfinite:{index}")
         require(nested == recomputed[label], f"trigger_{label}_semantic_mismatch")
     required_signal = spec["require_return_signal"]
-    if required_signal is not None:
-        require(trigger.get("return_signal") is required_signal, "final60_return_signal_not_true")
+    require(trigger.get("return_signal") is required_signal, "trigger_return_signal_policy_mismatch")
+    if required_signal:
         require(trigger.get("raw_return_signal") is required_signal, "final60_raw_return_signal_not_true")
     require(aggregate.get("schema") == archive["phase3_aggregate_schema"], "aggregate_schema_mismatch")
     require(aggregate.get("status") == "complete", "aggregate_status_not_complete")
@@ -926,9 +1064,9 @@ def validate_wave_contract(
     require(contract.get("inventory", {}).get("counts") == inventory["counts"], "aggregate_inventory_counts_mismatch")
     require(contract.get("inventory", {}).get("current_run_ids") == inventory["run_ids"], "aggregate_inventory_ids_mismatch")
     require(int(contract.get("score_row_count", -1)) == int(spec["total_jobs"]), "aggregate_score_count_mismatch")
-    require(int(contract.get("complete_score_count", -1)) == int(spec["complete_scores"]), "aggregate_complete_score_count_mismatch")
+    require(int(contract.get("complete_score_count", -1)) == complete_score_count, "aggregate_complete_score_count_mismatch")
     require(int(contract.get("nonzero_height_row_count", -1)) == int(spec["nonzero_height_rows"]), "aggregate_height_count_mismatch")
-    require(int(contract.get("complete_nonzero_height_row_count", -1)) == int(spec["nonzero_height_rows"]), "aggregate_complete_height_count_mismatch")
+    require(int(contract.get("complete_nonzero_height_row_count", -1)) == complete_nonzero_count, "aggregate_complete_height_count_mismatch")
     require(aggregate.get("trigger") == trigger, "aggregate_trigger_mismatch")
     require(int(aggregate.get("status_row_count", -1)) == len(status_rows), "aggregate_status_row_count_mismatch")
     status_ids = {str(row.get("run_id", "")) for row in status_rows}
@@ -947,16 +1085,28 @@ def validate_wave_contract(
         require(str(row.get("job_dir")) == f"{phase3['outputs']['job_root']}/{run_id}", f"status_job_dir_mismatch:{run_id}")
     for run_id in sorted(run_ids):
         rows = [row for row in status_rows if str(row.get("run_id")) == run_id]
+        expected_terminal_status = str(score_by_id[run_id].get("score_status", ""))
         terminal = any(
-            (str(row.get("stage")) == "score" and str(row.get("status")) == "complete")
+            (str(row.get("stage")) == "score" and str(row.get("status")) == expected_terminal_status)
             or (str(row.get("stage")) == "pipeline" and str(row.get("status")) == "reused")
             for row in rows
         )
-        require(terminal, f"status_terminal_complete_missing:{run_id}")
+        require(terminal, f"status_terminal_score_missing:{run_id}")
     return {
-        "score_rows": len(score_rows), "complete_scores": int(spec["complete_scores"]),
-        "perturbation_rows": len(perturb_rows), "nonzero_height_rows": len(nonzero),
+        "score_rows": len(score_rows), "terminal_score_count": len(score_rows),
+        "complete_score_count": complete_score_count,
+        "partial_score_count": partial_score_count,
+        "score_status_counts": dict(sorted(score_status_counts.items())),
+        "certified_partial_run_ids": sorted(certified_partials),
+        "certified_partial_runs": dict(sorted(certified_partials.items())),
+        "certified_partial_kind_counts": dict(sorted(partial_kind_counts.items())),
+        "perturbation_rows": len(perturb_rows),
+        "complete_perturbation_row_count": complete_perturbation_count,
+        "partial_perturbation_row_count": partial_perturbation_count,
+        "nonzero_height_rows": len(nonzero),
+        "complete_nonzero_height_rows": complete_nonzero_count,
         "perturbation_cell_rows": len(cell_rows), "status_rows": len(status_rows),
+        "raw_return_signal": trigger.get("raw_return_signal"),
         "return_signal": trigger.get("return_signal"),
         "evaluation_complete": trigger.get("evaluation_complete"),
     }
@@ -1005,6 +1155,102 @@ def verify_manifest_hashes(
         require(sha256_file(path) == expected, f"aggregate_source_hash_mismatch:{source}")
 
 
+def _zero_number(value: Any, label: str) -> None:
+    require(not isinstance(value, bool), f"{label}_type")
+    try:
+        number = float(value)
+    except (TypeError, ValueError) as exc:
+        raise ArchiveError(f"{label}_not_numeric") from exc
+    require(math.isfinite(number) and number == 0.0, f"{label}_not_zero")
+
+
+def _exact_json_int(value: Any, expected: int, label: str) -> None:
+    require(type(value) is int, f"{label}_type")
+    require(value == expected, f"{label}_mismatch")
+
+
+def certify_partial_score_bundle(
+    score: Mapping[str, Any], roofer_input: Mapping[str, Any],
+    score_manifest: Mapping[str, Any], job: InventoryJob,
+) -> str | None:
+    """Authenticate the two terminal zero-inside-point paths without opening GT."""
+
+    status = str(score.get("score_status", ""))
+    if status == "complete":
+        return None
+    require(status == PARTIAL_NO_SCORED_ROOF_POINTS, f"job_score_status_invalid:{job.run_id}")
+    input_status = str(roofer_input.get("status", ""))
+    require(input_status in {"no_roof_evidence", "prepared"}, f"job_partial_input_status:{job.run_id}")
+    require(str(score.get("score_reason", "")) == input_status, f"job_partial_reason:{job.run_id}")
+    _exact_json_int(score.get("fused_inside_point_count"), 0, f"job_partial_inside_count:{job.run_id}")
+    for field in (
+        "height_error_signed_median_m", "height_error_abs_median_m",
+        "height_error_mad_m", "height_error_rms_m",
+        "edge_height_error_signed_median_m", "edge_height_error_abs_median_m",
+        "edge_height_error_mad_m", "edge_height_error_rms_m",
+        "interior_height_error_signed_median_m", "interior_height_error_abs_median_m",
+        "interior_height_error_mad_m", "interior_height_error_rms_m",
+    ):
+        require(score.get(field) is None, f"job_partial_metric_present:{job.run_id}:{field}")
+    for field in (
+        "coverage_occupied_cells", "edge_point_count", "edge_coverage_occupied_cells",
+        "interior_point_count", "interior_coverage_occupied_cells",
+    ):
+        _exact_json_int(score.get(field), 0, f"job_partial_occupied:{job.run_id}:{field}")
+    for field in ("coverage_ratio", "edge_coverage_ratio", "interior_coverage_ratio"):
+        _zero_number(score.get(field), f"job_partial_ratio:{job.run_id}:{field}")
+    require(
+        type(score.get("roof_evidence_point_count")) is int
+        and score.get("roof_evidence_point_count") == roofer_input.get("roof_evidence_point_count"),
+        f"job_partial_roof_count:{job.run_id}",
+    )
+    require(score.get("derived_roofprint_area_m2") == roofer_input.get("derived_roofprint_area_m2"), f"job_partial_roofprint_area:{job.run_id}")
+    require(score.get("supplied_footprint_passed_to_roofer") is False, f"job_partial_supplied_footprint:{job.run_id}")
+    require(
+        score.get("point_evidence_derived_roofprint_passed_to_roofer")
+        is roofer_input.get("point_evidence_derived_roofprint_passed_to_roofer"),
+        f"job_partial_roofprint_flag:{job.run_id}",
+    )
+
+    if input_status == "no_roof_evidence":
+        _exact_json_int(roofer_input.get("roof_evidence_point_count"), 0, f"job_partial_no_evidence_count:{job.run_id}")
+        _zero_number(roofer_input.get("derived_roofprint_area_m2"), f"job_partial_no_evidence_area:{job.run_id}")
+        require(roofer_input.get("roofer_las") == "" and roofer_input.get("derived_roofprint") == "", f"job_partial_no_evidence_paths:{job.run_id}")
+        require(roofer_input.get("point_evidence_derived_roofprint_passed_to_roofer") is False, f"job_partial_no_evidence_flag:{job.run_id}")
+        _exact_json_int(score_manifest.get("roofer_exit_code"), 125, f"job_partial_no_evidence_exit:{job.run_id}")
+        require(score.get("roofer_status") == "failed" and score.get("roofer_reason") == "roofer_exit_125", f"job_partial_no_evidence_roofer_status:{job.run_id}")
+        require(score.get("cityjson_path") == "", f"job_partial_no_evidence_cityjson_row:{job.run_id}")
+        _exact_json_int(score.get("citygml_roof_point_count"), 0, f"job_partial_no_evidence_city_points:{job.run_id}")
+        for path_key, hash_key in (
+            ("cityjson", "cityjson_sha256"),
+            ("val3dity_report", "val3dity_report_sha256"),
+            ("val3dity_log", "val3dity_log_sha256"),
+        ):
+            require(score_manifest.get(path_key) is None and score_manifest.get(hash_key) is None, f"job_partial_no_evidence_artifact:{job.run_id}:{path_key}")
+        return "no_roof_evidence"
+
+    roof_count = roofer_input.get("roof_evidence_point_count")
+    require(type(roof_count) is int and roof_count > 0, f"job_partial_prepared_roof_count:{job.run_id}")
+    try:
+        area = float(roofer_input.get("derived_roofprint_area_m2"))
+    except (TypeError, ValueError) as exc:
+        raise ArchiveError(f"job_partial_prepared_roofprint_area:{job.run_id}") from exc
+    require(math.isfinite(area) and area > 0.0, f"job_partial_prepared_roofprint_area:{job.run_id}")
+    require(bool(roofer_input.get("roofer_las")) and bool(roofer_input.get("derived_roofprint")), f"job_partial_prepared_paths:{job.run_id}")
+    require(roofer_input.get("point_evidence_derived_roofprint_passed_to_roofer") is True, f"job_partial_prepared_roofprint_flag:{job.run_id}")
+    _exact_json_int(score_manifest.get("roofer_exit_code"), 0, f"job_partial_prepared_exit:{job.run_id}")
+    require(str(score.get("roofer_status", "")) != "", f"job_partial_prepared_roofer_status:{job.run_id}")
+    for path_key, hash_key in (
+        ("cityjson", "cityjson_sha256"),
+        ("val3dity_report", "val3dity_report_sha256"),
+        ("val3dity_log", "val3dity_log_sha256"),
+    ):
+        require(bool(score_manifest.get(path_key)), f"job_partial_prepared_artifact_path:{job.run_id}:{path_key}")
+        valid_sha256(score_manifest.get(hash_key), f"job_partial_prepared_artifact_hash:{job.run_id}:{path_key}")
+    require(score.get("cityjson_path") == score_manifest.get("cityjson"), f"job_partial_prepared_cityjson_row:{job.run_id}")
+    return "prepared_zero_inside_points"
+
+
 def validate_job_bundles(
     jobs: Sequence[InventoryJob], score_rows: Sequence[Mapping[str, str]],
     archive: Mapping[str, Any], phase3: Mapping[str, Any], aggregate: Mapping[str, Any],
@@ -1014,7 +1260,7 @@ def validate_job_bundles(
     cell_fields: Sequence[str] | None = None,
 ) -> tuple[
     list[Path], list[dict[str, Any]], list[dict[str, Any]],
-    list[dict[str, str]], list[Path],
+    list[dict[str, str]], list[Path], dict[str, str],
 ]:
     rows_by_id = {str(row["run_id"]): row for row in score_rows}
     root = repo_path(phase3["outputs"]["job_root"], repo)
@@ -1027,6 +1273,7 @@ def validate_job_bundles(
     authoritative_perturb_rows: list[dict[str, Any]] = []
     authoritative_cell_rows: list[dict[str, str]] = []
     bound_input_files: set[Path] = set()
+    certified_partial_runs: dict[str, str] = {}
     common_score_only: Mapping[str, Any] | None = None
     global_prewarm = aggregate.get("phase2_serialized_gsplat_prewarm", {})
     raw_gt_roots = [
@@ -1068,7 +1315,6 @@ def validate_job_bundles(
         if score_fields is not None:
             require(set(score) == set(score_fields), f"job_score_schema:{job.run_id}")
         require(score.get("run_id") == job.run_id, f"job_score_run_id_mismatch:{job.run_id}")
-        require(score.get("score_status") == "complete", f"job_score_not_complete:{job.run_id}")
         require(score.get("building_id") == f"DEBY_LOD2_{job.building_id}", f"job_score_building:{job.run_id}")
         require(str(score.get("arm", "")).lower() == job.arm, f"job_score_arm:{job.run_id}")
         require(str(score.get("replicate", "")).lower() == job.replicate, f"job_score_replicate:{job.run_id}")
@@ -1082,6 +1328,9 @@ def validate_job_bundles(
         for key in ("supplied_footprint_opened", "supplied_footprint_passed_to_roofer", "lod2_opened", "als_opened", "gt_used", "lod2_used", "als_used"):
             require(roofer_input.get(key) is False, f"job_pre_score_boundary_violation:{job.run_id}:{key}")
         require(score_manifest.get("gt_opened_after_roofer_input_finalized") is True, f"job_gt_boundary_attestation_missing:{job.run_id}")
+        partial_kind = certify_partial_score_bundle(score, roofer_input, score_manifest, job)
+        if partial_kind is not None:
+            certified_partial_runs[job.run_id] = partial_kind
         pre = score_manifest.get("pre_readout_fingerprint", {})
         score_only = score_manifest.get("score_only_fingerprint", {})
         validate_fingerprint(pre, archive["schemas"]["pre_readout_fingerprint"], f"pre:{job.run_id}")
@@ -1274,6 +1523,8 @@ def validate_job_bundles(
             "run_id": job.run_id, "pre_readout_digest": pre["digest"],
             "score_only_digest": score_only["digest"],
             "full_reuse_fingerprint": expected_full,
+            "score_status": str(score.get("score_status", "")),
+            "certified_partial_kind": partial_kind,
             "score_only_bundle_file_count": int(score_only["payload"].get("bundle", {}).get("file_count", -1)),
             "gt_content_reopened_by_archive": False,
             "phase2_input_binding": phase2_input_binding,
@@ -1294,7 +1545,7 @@ def validate_job_bundles(
     return (
         sorted(set(all_files)), fingerprint_rows,
         sorted(authoritative_perturb_rows, key=lambda row: str(row.get("run_id", ""))),
-        authoritative_cell_rows, sorted(bound_input_files),
+        authoritative_cell_rows, sorted(bound_input_files), certified_partial_runs,
     )
 
 
@@ -1446,10 +1697,7 @@ def validate_archive_payload_contract(
     )
     wave = str(payload.get("wave", ""))
     require(wave in {"base42", "final60"}, "existing_archive_payload_wave")
-    locked = {
-        "base42": {"total": 42, "base": 18, "height_nonzero": 24, "tilt": 0, "complete": 42},
-        "final60": {"total": 60, "base": 18, "height_nonzero": 24, "tilt": 18, "complete": 60},
-    }[wave]
+    spec = locked_wave_policy(wave)
 
     def exact_int(value: Any, label: str, *, minimum: int | None = None) -> int:
         require(type(value) is int, f"{label}_type")
@@ -1459,16 +1707,10 @@ def validate_archive_payload_contract(
         return result
 
     if archive is not None:
+        require(archive.get("schema") == ARCHIVE_LOCK_SCHEMA, "existing_archive_lock_schema")
         require(payload.get("task_date") == archive.get("task_date"), "existing_archive_task_date")
         require(payload.get("crs") == archive.get("crs"), "existing_archive_crs")
-        spec = archive.get("waves", {}).get(wave, {})
-        require(spec == {
-            "total_jobs": locked["total"], "base_jobs": locked["base"],
-            "height_nonzero_jobs": locked["height_nonzero"],
-            "tilt_jobs": locked["tilt"], "complete_scores": locked["complete"],
-            "perturbation_rows": 27, "nonzero_height_rows": 24,
-            "require_return_signal": True if wave == "final60" else None,
-        }, "existing_archive_wave_lock_contract")
+        require(archive.get("waves", {}).get(wave, {}) == spec, "existing_archive_wave_lock_contract")
     require(payload.get("task_date") == "2026-07-15", "existing_archive_locked_task_date")
     require(payload.get("crs") == "EPSG:25832", "existing_archive_locked_crs")
     require(exact_int(payload.get("training_runs_started"), "existing_archive_training_runs") == 0, "existing_archive_training_runs")
@@ -1482,36 +1724,60 @@ def validate_archive_payload_contract(
     require(inventory.get("wave") == wave, "existing_archive_inventory_wave")
     counts = inventory.get("counts")
     require(counts == {
-        "total": locked["total"], "base": locked["base"],
-        "height_nonzero": locked["height_nonzero"], "tilt": locked["tilt"],
+        "total": spec["total_jobs"], "base": spec["base_jobs"],
+        "height_nonzero": spec["height_nonzero_jobs"], "tilt": spec["tilt_jobs"],
     }, "existing_archive_inventory_locked_counts")
     run_ids = inventory.get("run_ids")
     require(
-        isinstance(run_ids, list) and len(run_ids) == locked["total"]
-        and len(set(run_ids)) == locked["total"] and run_ids == sorted(run_ids),
+        isinstance(run_ids, list) and len(run_ids) == spec["total_jobs"]
+        and len(set(run_ids)) == spec["total_jobs"] and run_ids == sorted(run_ids),
         "existing_archive_inventory_run_ids",
     )
     require(exact_int(inventory.get("base_tuple_count"), "existing_archive_base_tuple_count") == 18, "existing_archive_base_tuple_count")
     require(exact_int(inventory.get("height_tuple_count"), "existing_archive_height_tuple_count") == 24, "existing_archive_height_tuple_count")
-    require(exact_int(inventory.get("tilt_tuple_count"), "existing_archive_tilt_tuple_count") == locked["tilt"], "existing_archive_tilt_tuple_count")
+    require(exact_int(inventory.get("tilt_tuple_count"), "existing_archive_tilt_tuple_count") == spec["tilt_jobs"], "existing_archive_tilt_tuple_count")
     valid_sha256(inventory.get("job_contract_digest"), "existing_archive_inventory_digest")
     measurements = payload.get("measurement_counts")
     require(isinstance(measurements, dict) and set(measurements) == {
-        "score_rows", "complete_scores", "perturbation_rows",
-        "nonzero_height_rows", "perturbation_cell_rows", "status_rows",
-        "return_signal", "evaluation_complete", "declared_figure_files",
+        "score_rows", "terminal_score_count", "complete_score_count",
+        "partial_score_count", "score_status_counts", "certified_partial_run_ids",
+        "certified_partial_runs", "certified_partial_kind_counts", "perturbation_rows",
+        "complete_perturbation_row_count", "partial_perturbation_row_count",
+        "nonzero_height_rows", "complete_nonzero_height_rows",
+        "perturbation_cell_rows", "status_rows",
+        "raw_return_signal", "return_signal", "evaluation_complete", "declared_figure_files",
         "skipped_figure_records",
     }, "existing_archive_measurement_fields")
-    require(exact_int(measurements.get("score_rows"), "existing_archive_score_rows") == locked["total"], "existing_archive_score_rows")
-    require(exact_int(measurements.get("complete_scores"), "existing_archive_complete_scores") == locked["complete"], "existing_archive_complete_scores")
-    require(exact_int(measurements.get("perturbation_rows"), "existing_archive_perturbation_rows") == 27, "existing_archive_perturbation_rows")
-    require(exact_int(measurements.get("nonzero_height_rows"), "existing_archive_height_rows") == 24, "existing_archive_height_rows")
+    require(exact_int(measurements.get("score_rows"), "existing_archive_score_rows") == spec["total_jobs"], "existing_archive_score_rows")
+    require(exact_int(measurements.get("terminal_score_count"), "existing_archive_terminal_scores") == spec["terminal_scores"], "existing_archive_terminal_scores")
+    require(exact_int(measurements.get("complete_score_count"), "existing_archive_complete_scores") == spec["complete_scores"], "existing_archive_complete_scores")
+    require(exact_int(measurements.get("partial_score_count"), "existing_archive_partial_scores") == spec["certified_partial_scores"], "existing_archive_partial_scores")
+    require(measurements.get("certified_partial_kind_counts") == spec["certified_partial_kind_counts"], "existing_archive_partial_kind_counts")
+    require(measurements.get("certified_partial_runs") == spec["certified_partial_runs"], "existing_archive_partial_runs")
+    expected_status_counts = {"complete": spec["complete_scores"]}
+    if spec["certified_partial_scores"]:
+        expected_status_counts[PARTIAL_NO_SCORED_ROOF_POINTS] = spec["certified_partial_scores"]
+    require(measurements.get("score_status_counts") == expected_status_counts, "existing_archive_score_status_counts")
+    partial_ids = measurements.get("certified_partial_run_ids")
+    require(
+        isinstance(partial_ids, list)
+        and len(partial_ids) == spec["certified_partial_scores"]
+        and len(set(partial_ids)) == len(partial_ids)
+        and partial_ids == sorted(partial_ids)
+        and set(partial_ids).issubset(set(run_ids)),
+        "existing_archive_certified_partial_ids",
+    )
+    require(exact_int(measurements.get("perturbation_rows"), "existing_archive_perturbation_rows") == spec["perturbation_rows"], "existing_archive_perturbation_rows")
+    require(exact_int(measurements.get("complete_perturbation_row_count"), "existing_archive_complete_perturbation_rows") == spec["complete_perturbation_rows"], "existing_archive_complete_perturbation_rows")
+    require(exact_int(measurements.get("partial_perturbation_row_count"), "existing_archive_partial_perturbation_rows") == spec["partial_perturbation_rows"], "existing_archive_partial_perturbation_rows")
+    require(exact_int(measurements.get("nonzero_height_rows"), "existing_archive_height_rows") == spec["nonzero_height_rows"], "existing_archive_height_rows")
+    require(exact_int(measurements.get("complete_nonzero_height_rows"), "existing_archive_complete_height_rows") == spec["complete_nonzero_height_rows"], "existing_archive_complete_height_rows")
     require(exact_int(measurements.get("perturbation_cell_rows"), "existing_archive_cell_rows") >= 27, "existing_archive_cell_rows")
-    require(exact_int(measurements.get("status_rows"), "existing_archive_status_rows") >= locked["total"], "existing_archive_status_rows")
-    require(measurements.get("evaluation_complete") is True, "existing_archive_evaluation_incomplete")
+    require(exact_int(measurements.get("status_rows"), "existing_archive_status_rows") >= spec["total_jobs"], "existing_archive_status_rows")
+    require(measurements.get("evaluation_complete") is spec["require_evaluation_complete"], "existing_archive_evaluation_policy")
+    require(measurements.get("raw_return_signal") is spec["require_raw_return_signal"], "existing_archive_raw_return_signal_policy")
     require(isinstance(measurements.get("return_signal"), bool), "existing_archive_return_signal_type")
-    if wave == "final60":
-        require(measurements.get("return_signal") is True, "existing_archive_final60_return_signal")
+    require(measurements.get("return_signal") is spec["require_return_signal"], "existing_archive_return_signal_policy")
     require(exact_int(measurements.get("declared_figure_files"), "existing_archive_figure_count") > 0, "existing_archive_figure_count")
     require(exact_int(measurements.get("skipped_figure_records"), "existing_archive_skipped_figures") >= 0, "existing_archive_skipped_figures")
     mapping_lookup = {str(row.get("source_path", "")): row for row in mapping}
@@ -1519,12 +1785,16 @@ def validate_archive_payload_contract(
     require(isinstance(reconciliation, dict) and set(reconciliation) == {
         "schema", "wave", "inventory_job_contract_digest",
         "phase3_aggregate_manifest", "phase3_aggregate_manifest_sha256",
-        "source_mapping_digest", "complete_score_count", "nonzero_height_rows",
-        "evaluation_complete", "return_signal", "outputs",
+        "source_mapping_digest", "terminal_score_count", "complete_score_count",
+        "partial_score_count", "score_status_counts", "certified_partial_run_ids",
+        "certified_partial_runs", "certified_partial_kind_counts", "complete_perturbation_row_count",
+        "partial_perturbation_row_count", "nonzero_height_rows",
+        "complete_nonzero_height_rows",
+        "evaluation_complete", "raw_return_signal", "return_signal", "outputs",
     }, "existing_archive_reconciliation_fields")
     expected_reconciliation_schema = (
         archive["schemas"]["wave_reconciliation"] if archive is not None
-        else "jointbuildgs.s3ap.phase3.wave_reconciliation.v1"
+        else "jointbuildgs.s3ap.phase3.wave_reconciliation.v2"
     )
     require(reconciliation.get("schema") == expected_reconciliation_schema, "existing_archive_reconciliation_schema")
     require(reconciliation.get("wave") == wave, "existing_archive_reconciliation_wave")
@@ -1544,10 +1814,15 @@ def validate_archive_payload_contract(
         reconciliation.get("source_mapping_digest") == canonical_digest(list(mapping)),
         "existing_archive_reconciliation_mapping",
     )
-    require(reconciliation.get("complete_score_count") == measurements.get("complete_scores"), "existing_archive_reconciliation_complete")
-    require(reconciliation.get("nonzero_height_rows") == measurements.get("nonzero_height_rows"), "existing_archive_reconciliation_height")
-    require(reconciliation.get("evaluation_complete") is measurements.get("evaluation_complete"), "existing_archive_reconciliation_evaluation")
-    require(reconciliation.get("return_signal") is measurements.get("return_signal"), "existing_archive_reconciliation_return")
+    for key in (
+        "terminal_score_count", "complete_score_count", "partial_score_count",
+        "score_status_counts", "certified_partial_run_ids",
+        "certified_partial_runs", "certified_partial_kind_counts", "complete_perturbation_row_count",
+        "partial_perturbation_row_count", "nonzero_height_rows",
+        "complete_nonzero_height_rows", "evaluation_complete", "raw_return_signal",
+        "return_signal",
+    ):
+        require(reconciliation.get(key) == measurements.get(key), f"existing_archive_reconciliation_measurement:{key}")
     reconciliation_outputs = reconciliation.get("outputs")
     require(
         isinstance(reconciliation_outputs, dict)
@@ -1581,12 +1856,13 @@ def validate_archive_payload_contract(
             }, f"existing_archive_reconciliation_output_mismatch:{label}",
         )
     fingerprints = payload.get("source_fingerprints")
-    require(isinstance(fingerprints, list) and len(fingerprints) == locked["total"], "existing_archive_fingerprint_count")
+    require(isinstance(fingerprints, list) and len(fingerprints) == spec["total_jobs"], "existing_archive_fingerprint_count")
     fingerprint_ids: list[str] = []
     for row in fingerprints:
         require(isinstance(row, dict) and set(row) == {
             "run_id", "pre_readout_digest", "score_only_digest",
             "full_reuse_fingerprint", "score_only_bundle_file_count",
+            "score_status", "certified_partial_kind",
             "gt_content_reopened_by_archive", "phase2_input_binding",
             "phase2_input_binding_digest",
         }, "existing_archive_fingerprint_fields")
@@ -1595,6 +1871,16 @@ def validate_archive_payload_contract(
             valid_sha256(row.get(key), f"existing_archive_fingerprint:{key}")
         require(exact_int(row.get("score_only_bundle_file_count"), "existing_archive_fingerprint_bundle_count") > 0, "existing_archive_fingerprint_bundle_count")
         require(row.get("gt_content_reopened_by_archive") is False, "existing_archive_fingerprint_gt_reopened")
+        run_id = str(row.get("run_id", ""))
+        if run_id in set(partial_ids):
+            require(row.get("score_status") == PARTIAL_NO_SCORED_ROOF_POINTS, f"existing_archive_fingerprint_partial_status:{run_id}")
+            require(
+                row.get("certified_partial_kind") == spec["certified_partial_runs"].get(run_id),
+                f"existing_archive_fingerprint_partial_kind:{run_id}",
+            )
+        else:
+            require(row.get("score_status") == "complete", f"existing_archive_fingerprint_complete_status:{run_id}")
+            require(row.get("certified_partial_kind") is None, f"existing_archive_fingerprint_complete_kind:{run_id}")
         input_binding = row.get("phase2_input_binding")
         require(isinstance(input_binding, dict) and set(input_binding) == {
             "schema", "random_seed", "config", "surface_seed", "checkpoint",
@@ -1619,6 +1905,12 @@ def validate_archive_payload_contract(
                 f"existing_archive_phase2_binding_mapping:{label}",
             )
     require(fingerprint_ids == run_ids, "existing_archive_fingerprint_ids")
+    fingerprint_kind_counts: dict[str, int] = {}
+    for row in fingerprints:
+        kind = row.get("certified_partial_kind")
+        if kind is not None:
+            fingerprint_kind_counts[str(kind)] = fingerprint_kind_counts.get(str(kind), 0) + 1
+    require(fingerprint_kind_counts == spec["certified_partial_kind_counts"], "existing_archive_fingerprint_partial_kind_counts")
     for payload_path_key, payload_hash_key in (
         ("archive_lock", "archive_lock_sha256"),
         ("phase3_lock", "phase3_lock_sha256"),
@@ -1788,13 +2080,17 @@ def verify_archive_directory(
     require(isinstance(reconciliation, dict), "existing_archive_reconciliation_missing")
     expected_reconciliation_schema = (
         archive["schemas"]["wave_reconciliation"] if archive is not None
-        else "jointbuildgs.s3ap.phase3.wave_reconciliation.v1"
+        else "jointbuildgs.s3ap.phase3.wave_reconciliation.v2"
     )
     require(set(reconciliation) == {
         "schema", "wave", "inventory_job_contract_digest",
         "phase3_aggregate_manifest", "phase3_aggregate_manifest_sha256",
-        "source_mapping_digest", "complete_score_count", "nonzero_height_rows",
-        "evaluation_complete", "return_signal", "outputs",
+        "source_mapping_digest", "terminal_score_count", "complete_score_count",
+        "partial_score_count", "score_status_counts", "certified_partial_run_ids",
+        "certified_partial_runs", "certified_partial_kind_counts", "complete_perturbation_row_count",
+        "partial_perturbation_row_count", "nonzero_height_rows",
+        "complete_nonzero_height_rows",
+        "evaluation_complete", "raw_return_signal", "return_signal", "outputs",
     }, "existing_archive_reconciliation_fields")
     require(reconciliation.get("schema") == expected_reconciliation_schema, "existing_archive_reconciliation_schema")
     require(reconciliation.get("wave") == wave, "existing_archive_reconciliation_wave")
@@ -1811,14 +2107,16 @@ def verify_archive_directory(
         "existing_archive_reconciliation_aggregate",
     )
     measurement = payload.get("measurement_counts", {})
-    for reconciliation_key, measurement_key in (
-        ("complete_score_count", "complete_scores"),
-        ("nonzero_height_rows", "nonzero_height_rows"),
-        ("evaluation_complete", "evaluation_complete"),
-        ("return_signal", "return_signal"),
+    for reconciliation_key in (
+        "terminal_score_count", "complete_score_count", "partial_score_count",
+        "score_status_counts", "certified_partial_run_ids",
+        "certified_partial_runs", "certified_partial_kind_counts", "complete_perturbation_row_count",
+        "partial_perturbation_row_count", "nonzero_height_rows",
+        "complete_nonzero_height_rows", "evaluation_complete", "raw_return_signal",
+        "return_signal",
     ):
         require(
-            reconciliation.get(reconciliation_key) == measurement.get(measurement_key),
+            reconciliation.get(reconciliation_key) == measurement.get(reconciliation_key),
             f"existing_archive_reconciliation_measurement:{reconciliation_key}",
         )
     outputs = reconciliation.get("outputs")
@@ -1944,7 +2242,25 @@ def materialize_archive(
 
 
 def validate_paths_only(archive: Mapping[str, Any], repo: Path = REPO) -> dict[str, Any]:
-    require(archive.get("schema") == "jointbuildgs.s3ap.phase3.archive.lock.v1", "archive_lock_schema_mismatch")
+    require(archive.get("schema") == ARCHIVE_LOCK_SCHEMA, "archive_lock_schema_mismatch")
+    require(archive.get("waves") == {
+        wave: locked_wave_policy(wave) for wave in ("base42", "final60")
+    }, "archive_wave_policies_mismatch")
+    require(
+        archive.get("schemas", {}).get("wave_reconciliation")
+        == "jointbuildgs.s3ap.phase3.wave_reconciliation.v2",
+        "archive_reconciliation_schema_mismatch",
+    )
+    require(
+        archive.get("schemas", {}).get("archive_manifest")
+        == "jointbuildgs.s3ap.phase3.wave_archive.v2",
+        "archive_manifest_schema_mismatch",
+    )
+    require(
+        archive.get("schemas", {}).get("archive_completion")
+        == "jointbuildgs.s3ap.phase3.wave_archive_completion.v2",
+        "archive_completion_schema_mismatch",
+    )
     phase3_lock = repo_path(archive["phase3_lock"], repo)
     phase3_script = repo_path(archive["phase3_script"], repo)
     archive_root = repo_path(archive["archive_root"], repo)
@@ -2053,7 +2369,7 @@ def archive_wave(wave: str, archive_path: Path = DEFAULT_CONFIG, repo: Path = RE
     verify_manifest_hashes(aggregate, archive, phase3, repo)
     (
         job_files, fingerprint_rows, authoritative_perturb_rows,
-        authoritative_cell_rows, job_bound_input_files,
+        authoritative_cell_rows, job_bound_input_files, certified_partial_runs,
     ) = validate_job_bundles(
         jobs, score_rows, archive, phase3, aggregate, repo, hash_cache,
         phase3_module.SCORE_FIELDS, phase3_module.PERTURB_FIELDS,
@@ -2067,6 +2383,7 @@ def archive_wave(wave: str, archive_path: Path = DEFAULT_CONFIG, repo: Path = RE
         status_header=status_header, status_rows=status_rows, phase3_module=phase3_module,
         authoritative_perturb_rows=authoritative_perturb_rows,
         authoritative_cell_rows=authoritative_cell_rows,
+        certified_partial_runs=certified_partial_runs,
     )
     expected_trigger_fields = {
         "schema", "created_utc", "return_signal", "rule",
@@ -2171,10 +2488,17 @@ def archive_wave(wave: str, archive_path: Path = DEFAULT_CONFIG, repo: Path = RE
         "phase3_aggregate_manifest": relative(paths["aggregate"], repo),
         "phase3_aggregate_manifest_sha256": aggregate_sha,
         "source_mapping_digest": canonical_digest(mapping),
-        "complete_score_count": counts["complete_scores"],
-        "nonzero_height_rows": counts["nonzero_height_rows"],
-        "evaluation_complete": counts["evaluation_complete"],
-        "return_signal": counts["return_signal"],
+        **{
+            key: counts[key] for key in (
+                "terminal_score_count", "complete_score_count", "partial_score_count",
+                "score_status_counts", "certified_partial_run_ids",
+                "certified_partial_runs", "certified_partial_kind_counts",
+                "complete_perturbation_row_count",
+                "partial_perturbation_row_count", "nonzero_height_rows",
+                "complete_nonzero_height_rows", "evaluation_complete",
+                "raw_return_signal", "return_signal",
+            )
+        },
         "outputs": reconciliation_outputs,
     }
     payload = {
@@ -2231,7 +2555,7 @@ def archive_wave(wave: str, archive_path: Path = DEFAULT_CONFIG, repo: Path = RE
     require(final_jobs == jobs and final_inventory == inventory, "final_inventory_drift")
     (
         final_job_files, final_fingerprints, final_perturb_rows,
-        final_cell_rows, final_bound_inputs,
+        final_cell_rows, final_bound_inputs, final_certified_partial_runs,
     ) = validate_job_bundles(
         final_jobs, score_rows, archive, phase3, aggregate, repo, {},
         phase3_module.SCORE_FIELDS, phase3_module.PERTURB_FIELDS,
@@ -2242,6 +2566,7 @@ def archive_wave(wave: str, archive_path: Path = DEFAULT_CONFIG, repo: Path = RE
     require(final_perturb_rows == authoritative_perturb_rows, "final_perturbation_drift")
     require(final_cell_rows == authoritative_cell_rows, "final_cells_drift")
     require(final_bound_inputs == job_bound_input_files, "final_job_bound_inputs_drift")
+    require(final_certified_partial_runs == certified_partial_runs, "final_certified_partial_runs_drift")
     final_mapping = source_mapping(
         copied=copied, bound=bound, copy_prefix=archive["policy"]["copy_prefix"], repo=repo,
     )
