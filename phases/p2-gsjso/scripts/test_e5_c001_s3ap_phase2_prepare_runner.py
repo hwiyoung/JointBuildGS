@@ -361,18 +361,32 @@ class Phase2PrepareRunnerTest(unittest.TestCase):
 
     def test_runtime_attestation_and_launcher_lock(self):
         names = self.lock["runtime"]["attestation_env"]
+        os_module = __import__("os")
         environment = {
             names["image_id"]: self.lock["runtime"]["docker_image_id"],
-            names["host_uid"]: str(__import__("os").getuid()),
-            names["host_gid"]: str(__import__("os").getgid()),
+            names["host_uid"]: str(os_module.getuid()),
+            names["host_gid"]: str(os_module.getgid()),
         }
-        with mock.patch.dict("os.environ", environment, clear=False):
-            audit = prepare.validate_runtime_attestation(self.lock)
-            self.assertTrue(audit["user_mapping_exact"])
-            self.assertEqual(runner.validate_runtime_attestation(self.lock)["docker_image_id"], environment[names["image_id"]])
+        with tempfile.TemporaryDirectory() as tmp:
+            cache_env = {
+                name: str(Path(tmp) / name.lower())
+                for name in ("HOME", "XDG_CACHE_HOME", "TORCH_EXTENSIONS_DIR")
+            }
+            for path in cache_env.values():
+                Path(path).mkdir()
+            runtime_lock = json.loads(json.dumps(self.lock))
+            runtime_lock["runtime"]["writable_cache_env"] = cache_env
+            with mock.patch.dict("os.environ", {**environment, **cache_env}, clear=False):
+                audit = prepare.validate_runtime_attestation(runtime_lock)
+                self.assertTrue(audit["user_mapping_exact"])
+                runner_audit = runner.validate_runtime_attestation(runtime_lock)
+                self.assertEqual(runner_audit["docker_image_id"], environment[names["image_id"]])
+                self.assertEqual(set(runner_audit["writable_cache_env"]), set(cache_env))
         launcher = (REPO / self.lock["runtime"]["host_launcher"]).read_text(encoding="utf-8")
         self.assertIn(self.lock["runtime"]["docker_image_id"], launcher)
         self.assertIn('--user "${HOST_UID}:${HOST_GID}"', launcher)
+        for name in ("HOME", "XDG_CACHE_HOME", "TORCH_EXTENSIONS_DIR"):
+            self.assertIn(f'-e "{name}=', launcher)
 
 
 if __name__ == "__main__":

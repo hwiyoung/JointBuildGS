@@ -16,6 +16,11 @@
       "host_uid": "S3AP_HOST_UID",
       "host_gid": "S3AP_HOST_GID"
     },
+    "writable_cache_env": {
+      "HOME": "/workspace/JointBuildGS/results/tum_transfer/e5_s3ap_phase2/runtime/home",
+      "XDG_CACHE_HOME": "/workspace/JointBuildGS/results/tum_transfer/e5_s3ap_phase2/runtime/xdg_cache",
+      "TORCH_EXTENSIONS_DIR": "/workspace/JointBuildGS/results/tum_transfer/e5_s3ap_phase2/runtime/torch_extensions"
+    },
     "training_command": ["python", "-m", "src.stage2.train", "--config", "{config}"],
     "resume_policy": "a loadable final.pt with it=30000 is complete and skipped; any non-final checkpoint is blocked_resume_unsupported; continue other jobs"
   },

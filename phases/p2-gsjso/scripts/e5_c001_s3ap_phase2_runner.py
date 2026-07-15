@@ -125,10 +125,23 @@ def validate_runtime_attestation(lock: dict[str, Any]) -> dict[str, Any]:
             f"--user mapping mismatch: container={os.getuid()}:{os.getgid()} "
             f"host={uid_text}:{gid_text}"
         )
+    cache_env = lock["runtime"].get("writable_cache_env") or {}
+    if set(cache_env) != {"HOME", "XDG_CACHE_HOME", "TORCH_EXTENSIONS_DIR"}:
+        raise RuntimeError("writable cache environment lock is incomplete")
+    cache_audit: dict[str, dict[str, Any]] = {}
+    for name, expected in cache_env.items():
+        actual = os.environ.get(name)
+        if actual != expected:
+            raise RuntimeError(f"{name} cache attestation mismatch: {actual!r} != {expected!r}")
+        path = Path(actual)
+        if not path.is_dir() or not os.access(path, os.W_OK | os.X_OK):
+            raise RuntimeError(f"{name} cache path is not a writable directory: {path}")
+        cache_audit[name] = {"path": str(path), "writable": True}
     return {
         "docker_image_id": image_id,
         "container_uid": os.getuid(), "container_gid": os.getgid(),
         "host_uid": int(uid_text), "host_gid": int(gid_text),
+        "writable_cache_env": cache_audit,
     }
 
 

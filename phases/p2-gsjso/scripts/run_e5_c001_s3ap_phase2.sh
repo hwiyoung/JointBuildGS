@@ -15,6 +15,8 @@ fi
 
 HOST_UID="$(id -u)"
 HOST_GID="$(id -g)"
+RUNTIME_ROOT="${REPO_ROOT}/results/tum_transfer/e5_s3ap_phase2/runtime"
+mkdir -p "${RUNTIME_ROOT}/home" "${RUNTIME_ROOT}/xdg_cache" "${RUNTIME_ROOT}/torch_extensions"
 MODE="${1:-run}"
 if [[ $# -gt 0 ]]; then
   shift
@@ -26,6 +28,9 @@ COMMON=(
   -e "S3AP_DOCKER_IMAGE_ID=${ACTUAL_IMAGE_ID}"
   -e "S3AP_HOST_UID=${HOST_UID}"
   -e "S3AP_HOST_GID=${HOST_GID}"
+  -e "HOME=${CONTAINER_ROOT}/results/tum_transfer/e5_s3ap_phase2/runtime/home"
+  -e "XDG_CACHE_HOME=${CONTAINER_ROOT}/results/tum_transfer/e5_s3ap_phase2/runtime/xdg_cache"
+  -e "TORCH_EXTENSIONS_DIR=${CONTAINER_ROOT}/results/tum_transfer/e5_s3ap_phase2/runtime/torch_extensions"
   -v "${REPO_ROOT}:${CONTAINER_ROOT}"
   -w "${CONTAINER_ROOT}"
 )
