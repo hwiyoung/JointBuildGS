@@ -1,9 +1,9 @@
 {
   "als_used": false,
-  "completed_utc": "2026-07-15T12:44:53.050797+00:00",
-  "created_utc": "2026-07-15T12:44:46.502670+00:00",
+  "completed_utc": "2026-07-15T13:05:16.010028+00:00",
+  "created_utc": "2026-07-15T13:05:09.495624+00:00",
   "git_branch": "exp/3b-surface-restore-corrected",
-  "git_head": "a1c48cfcfc85507a7a98ccd3b527491e729e9e2d",
+  "git_head": "95afb455c44dc0792ddfea91fbbf51aa1774afb7",
   "gt_used": false,
   "inventory": "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase2_prepare/jobs.csv",
   "inventory_sha256": "57cd72e27aba96e412a3e57de1003551f67b40b6d321d0c048261b58effe34df",
@@ -263,7 +263,7 @@
     }
   ],
   "lock_path": "phases/p2-gsjso/configs/e5_c001_s3ap_phase2_lock.json",
-  "lock_sha256": "b131c85c66442a9f91d4001684a897cbb9fb707a57879869279f16d39cd137ee",
+  "lock_sha256": "0e800b49e180bb1e986ec7d25d11faec983d98ebceea5d5b6c45ec1627fb4965",
   "lod2_used": false,
   "mode": "base",
   "mono_prior_provenance": {
@@ -482,9 +482,9 @@
       "building_id": "DEBY_LOD2_4907199",
       "camera_manifest": "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_4907199/camera_crop_manifest.json",
       "camera_manifest_sha256": "c60fc246daa9cb2abcbe74f1d802ad4157f0daf4624cc8f438c2f03d56299196",
-      "created_utc": "2026-07-15T12:44:48.457492+00:00",
+      "created_utc": "2026-07-15T13:05:11.448610+00:00",
       "data_manifest": "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_4907199/data_manifest.json",
-      "data_manifest_sha256": "9a700a29063b4151c7fa89a4d28110a031bbf767ca2fea2683ef3b89495e8829",
+      "data_manifest_sha256": "d5d5c4bb2b4b248889a0401278a2201b1f8a958b9284f0e3b74d6b96a76f2ada",
       "data_root": "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_4907199",
       "gt_used": false,
       "lod2_used": false,
@@ -1202,9 +1202,9 @@
       "building_id": "DEBY_LOD2_8568391",
       "camera_manifest": "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_8568391/camera_crop_manifest.json",
       "camera_manifest_sha256": "c885647ccf07de71c25406317ad8ee797cd48d0d34646224961b923c90b56966",
-      "created_utc": "2026-07-15T12:44:49.428684+00:00",
+      "created_utc": "2026-07-15T13:05:12.462564+00:00",
       "data_manifest": "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_8568391/data_manifest.json",
-      "data_manifest_sha256": "3b9ebc5cd91cdcf1aa51ca7ba1b29a41452048096fd9f7572166fcf2adeef6f0",
+      "data_manifest_sha256": "7b9f7e43d455481dce39a4f4790adefce70d690b6d6f3778d68de13147bfe691",
       "data_root": "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_8568391",
       "gt_used": false,
       "lod2_used": false,
@@ -1622,9 +1622,9 @@
       "building_id": "DEBY_LOD2_8568392",
       "camera_manifest": "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_8568392/camera_crop_manifest.json",
       "camera_manifest_sha256": "be0e977e50f126ab5e38609cc7ecc9df4529c9cf5c9d3ec41e0c8d5375f94a06",
-      "created_utc": "2026-07-15T12:44:50.464871+00:00",
+      "created_utc": "2026-07-15T13:05:13.486836+00:00",
       "data_manifest": "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_8568392/data_manifest.json",
-      "data_manifest_sha256": "dfbc55ecea1a2a12d65ad1f471c4ab30193469280f12c99d26d40deaf8541a72",
+      "data_manifest_sha256": "d27db692b0a8c6d471a6954e01aabd2685de6ca43d2280da6656e2b80775250e",
       "data_root": "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_8568392",
       "gt_used": false,
       "lod2_used": false,
@@ -1986,7 +1986,21 @@
     "docker_image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
     "host_gid": 1000,
     "host_uid": 1000,
-    "user_mapping_exact": true
+    "user_mapping_exact": true,
+    "writable_cache_env": {
+      "HOME": {
+        "path": "/workspace/JointBuildGS/results/tum_transfer/e5_s3ap_phase2/runtime/home",
+        "writable": true
+      },
+      "TORCH_EXTENSIONS_DIR": {
+        "path": "/workspace/JointBuildGS/results/tum_transfer/e5_s3ap_phase2/runtime/torch_extensions",
+        "writable": true
+      },
+      "XDG_CACHE_HOME": {
+        "path": "/workspace/JointBuildGS/results/tum_transfer/e5_s3ap_phase2/runtime/xdg_cache",
+        "writable": true
+      }
+    }
   },
   "schema": "jointbuildgs.s3ap.phase2.prepare_manifest.v1",
   "source_sparse_sha256": {
