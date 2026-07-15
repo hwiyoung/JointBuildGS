@@ -1,0 +1,225 @@
+{
+  "schema": "jointbuildgs.s3ap.phase0.baselines.v1",
+  "created_utc": "2026-07-15T11:22:15.790237+00:00",
+  "targets": [
+    "4907199",
+    "8568391",
+    "8568392"
+  ],
+  "git_head_at_measurement": "bd9abe6dc46fcf68eaeec261612891e4b5c6c9e3",
+  "branch": "exp/3b-surface-restore-corrected",
+  "crs": "EPSG:25832",
+  "learning_runs_started": 0,
+  "new_mast3r_inference_runs": 0,
+  "docker": {
+    "tools_tag": "jointbuildgs-p0-tools:t0",
+    "tools_image_id": "sha256:87bea02e5598a3d53a119b754191673497d52641bd8ea4106ffee653407579b0",
+    "roofer_tag": "3dgi/roofer:v1.0.0",
+    "roofer_image_id": "sha256:9c980b97fba4c3fd30f5bb4afb8f2621be211d4e72e4333ea2053e8cd69b2dba",
+    "roofer_version": "1.0.0",
+    "val3dity_version": "2.6.0"
+  },
+  "fm_threshold_label": "2px_cached_dlt",
+  "fm_input_mode": "cached_dlt_pairs",
+  "selected_points_manifest": null,
+  "plane_fit": {
+    "method": "deterministic numpy RANSAC z=ax+by+c for ax/by, then absolute-height recenter c=median(z_all_inside)-median(ax*x_all+by*y_all)",
+    "random_seed": 20260715,
+    "residual_threshold_m": 0.3,
+    "max_trials": 1000,
+    "min_samples": 3
+  },
+  "fill": {
+    "grid_m": 0.5,
+    "cell_rule": "every globally aligned 0.5m cell intersecting the supplied footprint receives one representative interior point on the fitted plane",
+    "footprint_role": "explicit P0 plane extension and score/coverage spatial mask only"
+  },
+  "gt_separation": {
+    "candidate_generation": "FM points and fitted P0 surface only",
+    "footprint": "explicit P0 extension plus inside/coverage mask",
+    "lod2": "loaded after P0 construction for score/overlay only",
+    "als_used": false
+  },
+  "roofer_readout": {
+    "status": "measured_point_evidence_derived_roofprint",
+    "original_adapter_status": "blocked_input_contract",
+    "original_adapter_reason": "validated repository adapters pass the supplied external footprint/roofprint directly to Roofer; final Stage-3 forbids that reconstruction input",
+    "forbidden_adapter": "phases/p2-gsjso/scripts/p0c_run_roofer.sh",
+    "design_reference": "docs/RESEARCH_CONTEXT.md",
+    "adapter": {
+      "name": "point_evidence_derived_roofprint",
+      "grid_m": 0.5,
+      "polygon_rule": "union of globally aligned 0.5m occupied cells reconstructed from P0 fill points; no clip/intersection with supplied footprint after point generation",
+      "indirect_dependency": "P0 fill points were generated inside the supplied footprint; the supplied footprint itself is never passed to Roofer",
+      "ground_source_csv": "docs/e5_c001_s3ap_fm_retri_rescore.csv",
+      "ground_source_rule": "building_summary ground_z_local_m from clean exterior SfM+dense-init observations; no LoD2 or ALS elevation",
+      "roof_class": 6,
+      "ground_class": 2
+    },
+    "substantive_filter": {
+      "definition": "roofer_status=success AND raw LoD2.2 geometry exists AND val3dity_valid AND rf_extrusion_mode not forbidden AND rf_roof_planes>0 AND citygml_roof_rms_m<=3.0 AND citygml_completeness>=0.5",
+      "roofer_status_success": true,
+      "forbid_extrusion_modes": [
+        "lod11_fallback"
+      ],
+      "require_roof_planes": true,
+      "has_lod22": true,
+      "val3dity_valid": true,
+      "citygml_roof_rms_max_m": 3.0,
+      "citygml_completeness_min": 0.5
+    },
+    "locked_pre_execution_status": "point_evidence_derived_roofprint_pending"
+  },
+  "roofer_input_contract": {
+    "supplied_footprint_passed_to_roofer": false,
+    "point_evidence_derived_roofprint": "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase0_baselines/point_evidence_derived_roofprints.geojson",
+    "point_evidence_derived_roofprint_passed_to_roofer": true,
+    "indirect_supplied_footprint_dependency": "P0 fill points were generated inside the supplied footprint; the supplied footprint itself is never passed to Roofer",
+    "ground_source": "docs/e5_c001_s3ap_fm_retri_rescore.csv"
+  },
+  "roofer_adapter_executed": true,
+  "val3dity_executed": true,
+  "p0_rows": 3,
+  "mvs_rows": 3,
+  "source_sha256": {
+    "configs/projection_datum.json": "096a49b46fc5661d74f9d3b54c4f3777676cfc6b27e577b52bb2dabeee8b480c",
+    "docs/RESEARCH_CONTEXT.md": "0dbdde6a96577e661fe7670a80cecc3ce6cae276c78bd4573bb24cbe95081c4a",
+    "docs/e5_c001_s3ap_fm_retri_rescore.csv": "f720a5687da54dac276c27222e49f8012f2b24be3e2bbcaa5cf7e15a21faf299",
+    "phases/p0-audit/data/raw/lod2/690_5336.gml": "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674",
+    "phases/p0-audit/runs/mob_eval/raw_dense/DEBY_LOD2_4907199_orig_classified.las": "3038b718d6e8c2d90450fd99c048b09fbc74c65427d91c3270fa36d8d1949bc1",
+    "phases/p0-audit/runs/mob_eval/raw_dense/DEBY_LOD2_8568391_orig_classified.las": "88a93c76d4af2c76bf5314121706068462d27961168bc5a339951a1491ab4ded",
+    "phases/p0-audit/runs/mob_eval/raw_dense/DEBY_LOD2_8568392_orig_classified.las": "04cad267bca867692222649a25e440f81f8e8474b21292762886ecd6f8826217",
+    "phases/p0-audit/runs/w2_1_roofer_default_20260612_152729/building_reconstruction_status.csv": "4412ee47f8665e1a12663629dd66f9c9612f2e9adca54be38c188f2bc521a9b6",
+    "phases/p2-gsjso/configs/e5_c001_s3ap_phase0_baselines.json": "c81f6ad14951b13cb342bcaac7b525abf0addd5dbea5c713bb57bea3857ddc4d",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/pairs/4907199_rank01.npz": "ab64178617976dbbab053614b5387fedc6f9a0978e37f9bd4674b93b6c68b21f",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/pairs/4907199_rank02.npz": "6da6e6aca1ed0c8648576b77640c59b70b204fe811e967a705123542ba0a0397",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/pairs/4907199_rank03.npz": "91a92546e05b84fab8d4fae067d0a66e482daf60f7d2f55c809143715ff1d63d",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/pairs/4907199_rank04.npz": "2d7f6a8cc6e411d58fd7efbcfcf7dd0622130ee6be6860e32ead379721428dbe",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/pairs/4907199_rank05.npz": "1c83f2f94bfe64a2a5bb1a5532ee87ab373618e5779a731aedb38fc12b180e9a",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/pairs/4907199_rank06.npz": "e4fffbbbee6bf35dfcf3ca9818e8608b58108994baa88920fe61c7b9d151bd03",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/pairs/4907199_rank07.npz": "f3dac12de8380ee4ee4d872d69f453eea867f614b563ff5d1af75437a93da7f3",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/pairs/4907199_rank08.npz": "51fb4b6a477daa5cd308be3aa7ec9756f46aafbaab2053f27cf8181325c6e873",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/pairs/4907199_rank09.npz": "8cf0929fd7d2578c9e9cdb1a78e720c730cc65a5a047c0c3ea261add2406360c",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/pairs/4907199_rank10.npz": "3c86624ef6464df01046058d56e2d98e6a086b159155b4998837589721a133cc",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/pairs/8568391_rank01.npz": "7dba27c1b6e7e6f131038a375abb8d1b5893ccb22ea06f0ec434fdaecf993c17",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/pairs/8568391_rank02.npz": "02a5cf2e8b24f4825e4227c9b42706b8406f22740c774781e7366e19746a1e61",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/pairs/8568391_rank03.npz": "8950564010d8eabeabd3cdcb58051313613dda8ede11429888914f5434ed42cd",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/pairs/8568392_rank01.npz": "3600d66a1d46efa6333498ce36d6c8b9be85c1ab1ecf69d912a2b9a59755ac42",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/pairs/8568392_rank02.npz": "414ddfa82bafb14e9a47f826e4cf6bd74972cdd8063625875d865379b18f48ff",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/pairs/8568392_rank03.npz": "a55b55de1a277201dc21e4c16c5ce406a50f2ef8614d5b7cb1824bac438a7ba5",
+    "phases/p2-gsjso/scripts/e5_c001_s3ap_phase0_baselines.py": "141ba61a6832f55fd474d269d4aae0fd7c0f9d20b6fa50a095a9d7c88163e7fd",
+    "phases/p2-gsjso/scripts/e5_c001_s3ap_phase0_roofer_finalize.py": "e163fe85923ca857a03e1eb593b283380abce658c2cc750505137846b27a74b2",
+    "phases/p2-gsjso/scripts/p0c_run_roofer.sh": "a52b4ed84d297ed789a948d86b7ace1fbf29cea223783b84de5b1536a7d78621",
+    "phases/p2-gsjso/scripts/run_e5_c001_s3ap_phase0_baselines.sh": "61f7d9a6201bc0584b10b565e7be00d952373ed6fc948e391f817bd0d8114ed3",
+    "results/tum_transfer/analysis/footprints_aoi.geojson": "ca7f5b13a52368e1d2ac47b77cc78f12887bad4d598d122ad57b882eb4920a82",
+    "results/tum_transfer/e5_pilot/C001/C001_train_prep_manifest.json": "eca68a7890116c52557ab467361b58c4c784047807f9bee857a2517ac0b40b58"
+  },
+  "output_sha256": {
+    "docs/planefit_baseline.csv": "4942ffcfa14ca5f348eb924652d20ba4528c3f18fab5bf1fd9d667425e78f536",
+    "docs/mvs_hole_check.csv": "88cb9003b35906e167006b5f9ca9f5403814971343f3ca6da3c54cf0f017aea0",
+    "docs/figs/e5_c001_s3ap_phase0/p0_planefit_baseline.png": "ad655aa88f1600a42fe35a56b5bdac8a689a65658364ebe7925e556e607048c1",
+    "docs/figs/e5_c001_s3ap_phase0/mvs_hole_check.png": "c45a7adddddd2f63ace76d72bdfb613eb8d8b42f6d62759cb450bfb68b42b455",
+    "docs/figs/e5_c001_s3ap_phase0/p0_roofer_readout.png": "42a88f919d37a487de060d7182114d2fd36c56707d70f83b9c70623ab32dad00",
+    "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase0_baselines/p0_fill_points.npz": "35371e026d78be91a54a34eb2032198ba7ddeafd62c359e3a58a005398e7b28d",
+    "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase0_baselines/p0_fill_classified.las": "e7b83c27154cab123eef4b6684443a252418db5dcc814f124417605945e7b6e9",
+    "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase0_baselines/point_evidence_derived_roofprints.geojson": "6b928b2962385d0c790efb231706f2f6aa23a17e7ea80ab3a40d2e79770fbd2f",
+    "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase0_baselines/cityjson/p0_planefit_roofer.city.json": "4bce933f452b78f74d593d6e31efb247025a9dc190acdfb4ed07c945efeb1ef4",
+    "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase0_baselines/val3dity/p0_planefit_val3dity_report.json": "2c560ec2d6b551afd35e77640ae111d4505918e6cc244916d64b025a3d515eaf",
+    "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase0_baselines/val3dity/p0_planefit_val3dity.log": "e940358cd5ca2d541ef2a897da88b3cd4fcb9f3185e515c75021364a33307ae9",
+    "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase0_baselines/roofer_building_status.csv": "1d892657c5bbc3eabad9392a711236f93004e92e304df37515af77ec4a7e4e40",
+    "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase0_baselines/report_fragment.md": "2dc2e83d64d20e344533cd01e05ed13517f0c813d14c6ee5afd7de5611e3b32e",
+    "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase0_baselines/progress.json": "9ff0435b1ec83756b66e187752e5c3e23d1cb5596ff157484f9d8397c7142c4a",
+    "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase0_baselines/run.log": "0c7996e8eed944e0830451a167e7de5b5ae97fc2983f7ed1f702cf4dda2b3040",
+    "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase0_baselines/roofer.log": "e37f81844018ef96cb898ac1df6c75f91b9dab5ca03276a68a63f06341b21572",
+    "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase0_baselines/roofer.log.json": "4a24181c0376907f13c58e673e711ac7ca8c8623d307165936e83aa662041a94",
+    "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase0_baselines/roofer/690786_5336019.city.jsonl": "b0d7ecb304f71a690959d1fd5aee652a60803755e1fa6a23f5f539a677ca58f7"
+  },
+  "interpretation_or_verdict": null,
+  "finalized_utc": "2026-07-15T11:26:10.115723+00:00",
+  "roofer_exit_code": 0,
+  "roofer_jsonl_count": 1,
+  "val3dity_exit_code": 0,
+  "roofer_adapter_status": "measured_point_evidence_derived_roofprint",
+  "roofer_status_rows": 3,
+  "cityjson": "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase0_baselines/cityjson/p0_planefit_roofer.city.json",
+  "val3dity_report": "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase0_baselines/val3dity/p0_planefit_val3dity_report.json",
+  "substantive_filter": {
+    "definition": "roofer_status=success AND raw LoD2.2 geometry exists AND val3dity_valid AND rf_extrusion_mode not forbidden AND rf_roof_planes>0 AND citygml_roof_rms_m<=3.0 AND citygml_completeness>=0.5",
+    "roofer_status_success": true,
+    "forbid_extrusion_modes": [
+      "lod11_fallback"
+    ],
+    "require_roof_planes": true,
+    "has_lod22": true,
+    "val3dity_valid": true,
+    "citygml_roof_rms_max_m": 3.0,
+    "citygml_completeness_min": 0.5
+  },
+  "cityjson_object_mapping": {
+    "DEBY_LOD2_4907199": {
+      "cityjson_path": "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase0_baselines/cityjson/p0_planefit_roofer.city.json",
+      "building_object_id": "DEBY_LOD2_4907199",
+      "child_object_ids": [
+        "DEBY_LOD2_4907199-0"
+      ],
+      "jsonl_file": "690786_5336019.city.jsonl"
+    },
+    "DEBY_LOD2_8568391": {
+      "cityjson_path": "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase0_baselines/cityjson/p0_planefit_roofer.city.json",
+      "building_object_id": "DEBY_LOD2_8568391",
+      "child_object_ids": [
+        "DEBY_LOD2_8568391-0"
+      ],
+      "jsonl_file": "690786_5336019.city.jsonl"
+    },
+    "DEBY_LOD2_8568392": {
+      "cityjson_path": "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase0_baselines/cityjson/p0_planefit_roofer.city.json",
+      "building_object_id": "DEBY_LOD2_8568392",
+      "child_object_ids": [
+        "DEBY_LOD2_8568392-0"
+      ],
+      "jsonl_file": "690786_5336019.city.jsonl"
+    }
+  },
+  "readout_rows": [
+    {
+      "building_id": "DEBY_LOD2_4907199",
+      "roofer_status": "failure",
+      "roofer_reason": "lod11_fallback",
+      "rf_extrusion_mode": "lod11_fallback",
+      "rf_roof_planes": "None",
+      "geometry_has_lod22": true,
+      "has_lod22": false,
+      "val3dity_valid": true,
+      "citygml_completeness": 1.0,
+      "citygml_roof_rms_m": 0.07600000000002184,
+      "substantive_filter": false
+    },
+    {
+      "building_id": "DEBY_LOD2_8568391",
+      "roofer_status": "failure",
+      "roofer_reason": "lod11_fallback",
+      "rf_extrusion_mode": "lod11_fallback",
+      "rf_roof_planes": "None",
+      "geometry_has_lod22": true,
+      "has_lod22": false,
+      "val3dity_valid": true,
+      "citygml_completeness": 1.0,
+      "citygml_roof_rms_m": 0.11999999999977717,
+      "substantive_filter": false
+    },
+    {
+      "building_id": "DEBY_LOD2_8568392",
+      "roofer_status": "failure",
+      "roofer_reason": "lod11_fallback",
+      "rf_extrusion_mode": "lod11_fallback",
+      "rf_roof_planes": "None",
+      "geometry_has_lod22": true,
+      "has_lod22": false,
+      "val3dity_valid": true,
+      "citygml_completeness": 1.0,
+      "citygml_roof_rms_m": 1.3799999999996544,
+      "substantive_filter": false
+    }
+  ]
+}

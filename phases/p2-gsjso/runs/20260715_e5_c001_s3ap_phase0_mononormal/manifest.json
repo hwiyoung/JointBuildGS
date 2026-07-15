@@ -1,0 +1,301 @@
+{
+  "branch": "exp/3b-surface-restore-corrected",
+  "buildings": {
+    "4907199": {
+      "angle_median_deg_absdot": 9.80543137684993,
+      "building_view_unique_pixel_denominator": 714,
+      "cache_reprojection_crosscheck_max_px": 0.8747085501045181,
+      "eligible_pair_count": 7,
+      "fm_inside_point_count": 373,
+      "gt_free_fm_plane": {
+        "plane_ax": 0.01604268911140168,
+        "plane_by": 0.001028471338727314,
+        "plane_c": -31.8603012787962,
+        "plane_internal_rms_m": 0.04725879162461007,
+        "plane_status": "fit",
+        "ransac_inlier_count": 273,
+        "ransac_inlier_ratio": 0.7319034852546917
+      },
+      "visible_view_count": 6,
+      "within_22p5_count": 460,
+      "within_22p5_rate": 0.6442577030812325
+    },
+    "8568391": {
+      "angle_median_deg_absdot": 18.11081116146567,
+      "building_view_unique_pixel_denominator": 897,
+      "cache_reprojection_crosscheck_max_px": 1.9778060171433776,
+      "eligible_pair_count": 2,
+      "fm_inside_point_count": 456,
+      "gt_free_fm_plane": {
+        "plane_ax": 0.002614115463611883,
+        "plane_by": -0.017163734101267276,
+        "plane_c": -41.03406003522209,
+        "plane_internal_rms_m": 0.05642162057326505,
+        "plane_status": "fit",
+        "ransac_inlier_count": 453,
+        "ransac_inlier_ratio": 0.993421052631579
+      },
+      "visible_view_count": 3,
+      "within_22p5_count": 496,
+      "within_22p5_rate": 0.5529542920847269
+    },
+    "8568392": {
+      "angle_median_deg_absdot": 45.46327028560238,
+      "building_view_unique_pixel_denominator": 12,
+      "cache_reprojection_crosscheck_max_px": 1.3853949853507412,
+      "eligible_pair_count": 2,
+      "fm_inside_point_count": 6,
+      "gt_free_fm_plane": {
+        "plane_ax": 0.48761485741254607,
+        "plane_by": -0.3954583613214832,
+        "plane_c": 17.64272420956548,
+        "plane_internal_rms_m": 0.04526823061574511,
+        "plane_status": "fit",
+        "ransac_inlier_count": 6,
+        "ransac_inlier_ratio": 1.0
+      },
+      "visible_view_count": 3,
+      "within_22p5_count": 0,
+      "within_22p5_rate": 0.0
+    }
+  },
+  "cache_integrity": {
+    "fixed_camera_reprojection_crosscheck_max_px": 1.9778060171433776,
+    "footprint_inside_mask_mismatch_count": 0,
+    "full_frame_cache_file_count": 428,
+    "selected_finite_unit_count": 8,
+    "selected_hash_match_count": 8,
+    "selected_unique_file_count": 8
+  },
+  "created_utc": "2026-07-15T11:17:11.650632+00:00",
+  "crs": "EPSG:25832",
+  "docker": {
+    "docker_image_id": "sha256:89d64b4c7112cc55db0d42d562e2a0208858658c0c67ab1bd48424175c50f501",
+    "docker_tag": "jointbuildgs-s3ap-mast3r:20260714-f5209af",
+    "host_gpu_requested": 1
+  },
+  "footprint_crs_source": "urn:ogc:def:crs:EPSG::25832",
+  "gate_applied": false,
+  "git_head_at_measurement": "bd9abe6dc46fcf68eaeec261612891e4b5c6c9e3",
+  "gpu_preflight": {
+    "command": "nvidia-smi --query-gpu=index,uuid,name,memory.used,memory.total,utilization.gpu --format=csv,noheader,nounits",
+    "gpu_compute_used": false,
+    "output": "0, GPU-fab8b9b4-e6eb-9f2b-71e3-7997f092d21e, NVIDIA GeForce RTX 3090, 91, 24576, 33",
+    "returncode": 0,
+    "stderr": ""
+  },
+  "gt_lod2_or_als_used": false,
+  "interpretation_or_verdict": null,
+  "learning_runs_started": 0,
+  "measurement_rule": {
+    "angle_rule": "degrees(arccos(abs(dot(unit mono-normal world, unit FM fitted-plane normal world))))",
+    "building_summary": "pool unique pixels within each originating building-view endpoint, then concatenate building-view samples; the same pair point may contribute once at each of its two endpoint views; locked visible views with no originating eligible-pair points have denominator zero",
+    "expected_fm_inside_point_count": {
+      "4907199": 373,
+      "8568391": 456,
+      "8568392": 6
+    },
+    "fm_plane_ransac": {
+      "max_trials": 1000,
+      "min_samples_floor": 3,
+      "min_samples_fraction": 0.3,
+      "random_seed": 20260715,
+      "residual_threshold_m": 0.3
+    },
+    "fm_plane_source": "GT-free robust plane refit on every pooled footprint-inside cached DLT survivor",
+    "footprint_role": "spatial mask and projected outline only",
+    "gate_applied": false,
+    "gt_lod2_or_als_used": false,
+    "originating_pair_endpoint_views_only": true,
+    "pair_scope": "rows marked eligible_summary_pair=true in the locked FM rescore; empty eligible pairs remain auditable",
+    "pixel_sampling": "for each eligible pair, use cached source pixels_a/b only at its two originating endpoint views after independently cross-checking the DLT world XYZ projection against those pixels; round with numpy.rint, retain positive-depth in-frame finite world-normal, and deduplicate identical integer pixels within building-view",
+    "point_scope": "pool every footprint-XY-inside cached DLT survivor across eligible pairs for the pure-FM plane fit; attribute each pair point only to that pair's two endpoint views for pixel diagnostics; no roof-height or GT filter",
+    "pure_fm_fit": true,
+    "within_angle_deg": 22.5
+  },
+  "model_pin": {
+    "backbone_weights_bytes": 395854632,
+    "backbone_weights_sha256": "9fd3c705fb48f191a5c67cf0a41e2504091779a36f1ff0b78997f23abb8446f1",
+    "cache_generation_rows": 428,
+    "cache_generation_runtime": {
+      "backend": "Omnidata DPT-Hybrid surface normal",
+      "component": "mono_normal",
+      "depth_anything_repo": "",
+      "device": "cuda:0",
+      "torch": "2.4.1+cu121",
+      "torch_home": "results/tum_transfer/e5_s1_full_factor/C001/torch_hub"
+    },
+    "code_tree_file_count": 13,
+    "code_tree_sha256": "06f8f1b55b1dde682c94c25f6ef384d4a66fe18a343fb492ffc5480dae32d334",
+    "revision": "152cf1465313b68cdf5d47bb09568a9357c57086",
+    "revision_evidence": "cached hubconf.py plus omnidata_models subtree exact-file diff against official upstream commit",
+    "timm_tree_file_count": 176,
+    "timm_tree_sha256": "df7b842574335ffe02e0d6ecdfbba49f09f2d03d0b0580a3ecfb4313d08e2fdc",
+    "weights_bytes": 492716590,
+    "weights_sha256": "1af4506385ef4c828af559309ec89428833c005d7ecbcf921c4b12f84c2f62df"
+  },
+  "new_mast3r_inference_runs": 0,
+  "new_mononormal_inference_runs": 0,
+  "normal_cache_inventory": [
+    {
+      "actual_sha256": "ea66413e98f3013b588e468a356d5047deba4f4bce9ec46188c2e36bb004be8d",
+      "buildings": "8568391;8568392",
+      "dtype": "float32",
+      "expected_sha256": "ea66413e98f3013b588e468a356d5047deba4f4bce9ec46188c2e36bb004be8d",
+      "finite_fraction": 1.0,
+      "hash_match": true,
+      "normal_path": "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217084901_0194_D.npy",
+      "shape": "1013x1400x3",
+      "status": "verified",
+      "unit_norm_max_abs_error": 1.1920928955078125e-07,
+      "unit_norm_median": 1.0,
+      "view_stem": "DJI_20241217084901_0194_D"
+    },
+    {
+      "actual_sha256": "5a809973a29f5f43e8f5167c1499a2cb722107238ccda9ade456742ae2729ac6",
+      "buildings": "8568391;8568392",
+      "dtype": "float32",
+      "expected_sha256": "5a809973a29f5f43e8f5167c1499a2cb722107238ccda9ade456742ae2729ac6",
+      "finite_fraction": 1.0,
+      "hash_match": true,
+      "normal_path": "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217084903_0195_D.npy",
+      "shape": "1013x1400x3",
+      "status": "verified",
+      "unit_norm_max_abs_error": 1.1920928955078125e-07,
+      "unit_norm_median": 1.0,
+      "view_stem": "DJI_20241217084903_0195_D"
+    },
+    {
+      "actual_sha256": "dcda4da676f560e4087c09764e551f2ece6223fcb7244d74e2f7ee6963bbb315",
+      "buildings": "4907199",
+      "dtype": "float32",
+      "expected_sha256": "dcda4da676f560e4087c09764e551f2ece6223fcb7244d74e2f7ee6963bbb315",
+      "finite_fraction": 1.0,
+      "hash_match": true,
+      "normal_path": "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217095141_0077_D.npy",
+      "shape": "1013x1136x3",
+      "status": "verified",
+      "unit_norm_max_abs_error": 1.1920928955078125e-07,
+      "unit_norm_median": 1.0,
+      "view_stem": "DJI_20241217095141_0077_D"
+    },
+    {
+      "actual_sha256": "80b09cdcdff7a7631dc237ed246c1f31d489768c4a1fcd266879315cf5cf1113",
+      "buildings": "4907199",
+      "dtype": "float32",
+      "expected_sha256": "80b09cdcdff7a7631dc237ed246c1f31d489768c4a1fcd266879315cf5cf1113",
+      "finite_fraction": 1.0,
+      "hash_match": true,
+      "normal_path": "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217095145_0079_D.npy",
+      "shape": "1013x1160x3",
+      "status": "verified",
+      "unit_norm_max_abs_error": 1.1920928955078125e-07,
+      "unit_norm_median": 1.0,
+      "view_stem": "DJI_20241217095145_0079_D"
+    },
+    {
+      "actual_sha256": "f6f1d8f6fea91c75ad69874b99f0dbd9487de2d94e3d0b3896bfe887b84a7ad6",
+      "buildings": "4907199",
+      "dtype": "float32",
+      "expected_sha256": "f6f1d8f6fea91c75ad69874b99f0dbd9487de2d94e3d0b3896bfe887b84a7ad6",
+      "finite_fraction": 1.0,
+      "hash_match": true,
+      "normal_path": "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217095147_0080_D.npy",
+      "shape": "1013x1159x3",
+      "status": "verified",
+      "unit_norm_max_abs_error": 1.1920928955078125e-07,
+      "unit_norm_median": 1.0,
+      "view_stem": "DJI_20241217095147_0080_D"
+    },
+    {
+      "actual_sha256": "e91d8cc86ca1f95edee07dc64a290da604318de12161208a13c91c817c1ed7ca",
+      "buildings": "4907199",
+      "dtype": "float32",
+      "expected_sha256": "e91d8cc86ca1f95edee07dc64a290da604318de12161208a13c91c817c1ed7ca",
+      "finite_fraction": 1.0,
+      "hash_match": true,
+      "normal_path": "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217095149_0081_D.npy",
+      "shape": "1013x1159x3",
+      "status": "verified",
+      "unit_norm_max_abs_error": 1.1920928955078125e-07,
+      "unit_norm_median": 1.0,
+      "view_stem": "DJI_20241217095149_0081_D"
+    },
+    {
+      "actual_sha256": "688cb46b9339bff3dd095b3047e18ac399a528a8951736c27728ea0dd08b788f",
+      "buildings": "4907199;8568391;8568392",
+      "dtype": "float32",
+      "expected_sha256": "688cb46b9339bff3dd095b3047e18ac399a528a8951736c27728ea0dd08b788f",
+      "finite_fraction": 1.0,
+      "hash_match": true,
+      "normal_path": "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217095441_0023_D.npy",
+      "shape": "1013x1400x3",
+      "status": "verified",
+      "unit_norm_max_abs_error": 1.1920928955078125e-07,
+      "unit_norm_median": 1.0,
+      "view_stem": "DJI_20241217095441_0023_D"
+    },
+    {
+      "actual_sha256": "d52a6ea766ee1374e1e2d5419e9ded802816a00f055fd9d7ace62975ff550302",
+      "buildings": "4907199",
+      "dtype": "float32",
+      "expected_sha256": "d52a6ea766ee1374e1e2d5419e9ded802816a00f055fd9d7ace62975ff550302",
+      "finite_fraction": 1.0,
+      "hash_match": true,
+      "normal_path": "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy/DJI_20241217095531_0048_D.npy",
+      "shape": "1013x1363x3",
+      "status": "verified",
+      "unit_norm_max_abs_error": 1.1920928955078125e-07,
+      "unit_norm_median": 1.0,
+      "view_stem": "DJI_20241217095531_0048_D"
+    }
+  ],
+  "originating_pair_endpoint_views_only": true,
+  "output_sha256": {
+    "docs/figs/e5_c001_s3ap_phase0/mononormal_4907199_overlay.png": "af7c7cec78b6a008ed5b31c14fff8501550a8ece5e2e80f4856ab60e178d3133",
+    "docs/figs/e5_c001_s3ap_phase0/mononormal_8568391_overlay.png": "469d3b1be42f644d0e4d86cf4e8166c2b3e6e9d26a8d91dbb89020d77874ff2f",
+    "docs/figs/e5_c001_s3ap_phase0/mononormal_8568392_overlay.png": "004e7cd14e0e9a3791a72d640a4083ca041fc04197349be84975dbcf7f5fd524",
+    "docs/figs/e5_c001_s3ap_phase0/mononormal_angle_distribution.png": "e3a4986a860224a8240522bdba546d7318109773851c26bc56a0f0ef04fdd488",
+    "docs/mononormal_diag.csv": "51725eec0953b59ffabf30bf8e4a468909b4352d3749fe8be9976e07db0e054e",
+    "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase0_mononormal/angle_samples.npz": "62283b0219643c2e449e7d1ad3328ec54d61a7323b0eadbe1a4dfcd3a8136982",
+    "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase0_mononormal/normal_cache_inventory.csv": "6f08a98bedbb60b0ae5bccabebd88170ba4c840aa916a9cbe88d7d90e2b7e1c8",
+    "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase0_mononormal/progress.json": "be5fc813c5a13d64b696b6b3dff7847b5c1fee09faf985dea09d4ec56fdc6e28",
+    "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase0_mononormal/run.log": "8adec10eba98401bd6e220d9a6befbde8b4486243d5f90a0fcdda1c27ff5d909"
+  },
+  "pure_fm_fit": true,
+  "revision_recovery": {
+    "repository": "https://github.com/alexsax/omnidata_models.git",
+    "revision": "152cf1465313b68cdf5d47bb09568a9357c57086",
+    "rule": "cached hubconf.py plus omnidata_models subtree exact-file diff against official upstream commit",
+    "used_subtree_exact_match": true
+  },
+  "rows": {
+    "building_summary": 3,
+    "model": 1,
+    "total": 16,
+    "view": 12
+  },
+  "schema": "jointbuildgs.s3ap.phase0.mononormal_diag.manifest.v1",
+  "source_sha256": {
+    "docs/e5_c001_s2_mono_runtime.csv": "66084e75a000e3b950f4a601207dc4ba7aad51c8c157e9106b20c9b6a63e92d6",
+    "docs/e5_c001_s3ap_fm_retri_rescore.csv": "f720a5687da54dac276c27222e49f8012f2b24be3e2bbcaa5cf7e15a21faf299",
+    "phases/p2-gsjso/configs/e5_c001_s3ap_phase0_mononormal.json": "b4c3fdec45057d2e7be5951521742e08197756007351bf0e9f08dcf97e8c4771",
+    "phases/p2-gsjso/runs/20260710_e5_c001_s2_direction_position/infer_priors_container.log": "9ead9f046ab10481d4013ddd67ae13b719e000545c49b983a9c503ea34ec1142",
+    "phases/p2-gsjso/runs/20260713_e5_c001_s3_track0/t0_2_t0_3_manifest.json": "bc1cbeba28e71032252b48fbf94156b7a6a299d78726831bd4583ee487f6f6ba",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/manifest.json": "6748aa43d1c8de7f965bba2b11e6cc5b5b1fedc77e5f1c7e07916952a5179541",
+    "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_fm_retri_rescore/manifest.json": "14487ac30c0e8524d6e00be3890ef6802366640c864dd8d1e7fba43cc567216e",
+    "phases/p2-gsjso/scripts/e5_c001_s3ap_phase0_mononormal.py": "054e181cbf364dee4487d880a1902281d1bbf9eb102dfbd5cc75ca313ad6cff7",
+    "results/tum_transfer/analysis/footprints_aoi.geojson": "ca7f5b13a52368e1d2ac47b77cc78f12887bad4d598d122ad57b882eb4920a82",
+    "results/tum_transfer/e5_pilot/C001/C001_train_prep_manifest.json": "eca68a7890116c52557ab467361b58c4c784047807f9bee857a2517ac0b40b58",
+    "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/sparse/0/cameras.bin": "7c9b01e524628658a92305202a2618a287570c6a90c414509b78dba1b5fc7794",
+    "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/sparse/0/images.bin": "dcb84b0d46f2666a9a8f6e1657a48dc4a8d1d60c35a7e47117b2df04c5f0cefb",
+    "results/tum_transfer/e5_s1_full_factor/C001/torch_hub/hub/checkpoints/jx_vit_base_resnet50_384-9fd3c705.pth": "9fd3c705fb48f191a5c67cf0a41e2504091779a36f1ff0b78997f23abb8446f1",
+    "results/tum_transfer/e5_s1_full_factor/C001/torch_hub/hub/checkpoints/omnidata_normal_dpt_hybrid.pth": "1af4506385ef4c828af559309ec89428833c005d7ecbcf921c4b12f84c2f62df"
+  },
+  "status": "complete",
+  "world_offset": [
+    690953.0,
+    5336071.0,
+    604.0
+  ]
+}

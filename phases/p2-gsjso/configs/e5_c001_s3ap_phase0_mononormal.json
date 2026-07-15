@@ -1,0 +1,92 @@
+{
+  "schema": "jointbuildgs.s3ap.phase0.mononormal_diag.lock.v1",
+  "task_date": "2026-07-15",
+  "crs": "EPSG:25832",
+  "learning_runs_allowed": 0,
+  "new_mononormal_inference_allowed": false,
+  "new_mast3r_inference_allowed": false,
+  "targets": ["4907199", "8568391", "8568392"],
+  "model": {
+    "repository": "https://github.com/alexsax/omnidata_models.git",
+    "name": "surface_normal_dpt_hybrid_384",
+    "revision": "152cf1465313b68cdf5d47bb09568a9357c57086",
+    "revision_recovery_rule": "cached hubconf.py plus omnidata_models subtree exact-file diff against official upstream commit",
+    "cached_code_tree_sha256": "06f8f1b55b1dde682c94c25f6ef384d4a66fe18a343fb492ffc5480dae32d334",
+    "weights_path": "results/tum_transfer/e5_s1_full_factor/C001/torch_hub/hub/checkpoints/omnidata_normal_dpt_hybrid.pth",
+    "weights_sha256": "1af4506385ef4c828af559309ec89428833c005d7ecbcf921c4b12f84c2f62df",
+    "weights_bytes": 492716590,
+    "backbone_weights_path": "results/tum_transfer/e5_s1_full_factor/C001/torch_hub/hub/checkpoints/jx_vit_base_resnet50_384-9fd3c705.pth",
+    "backbone_weights_sha256": "9fd3c705fb48f191a5c67cf0a41e2504091779a36f1ff0b78997f23abb8446f1",
+    "backbone_weights_bytes": 395854632,
+    "timm_path": "results/tum_transfer/e5_s1_full_factor/C001/python_deps/timm_0_4_12",
+    "timm_version": "0.4.12",
+    "timm_tree_sha256": "df7b842574335ffe02e0d6ecdfbba49f09f2d03d0b0580a3ecfb4313d08e2fdc",
+    "torch_version_at_cache_generation": "2.4.1+cu121",
+    "generator_script": "phases/p2-gsjso/scripts/e5_c001_s2_direction_position.py",
+    "generator_artifact_commit": "3c1808c47d37024588f8c3e6353894e634374e88",
+    "generator_run_log": "phases/p2-gsjso/runs/20260710_e5_c001_s2_direction_position/infer_priors_container.log",
+    "generator_runtime_csv": "docs/e5_c001_s2_mono_runtime.csv",
+    "normal_frame": "world"
+  },
+  "inputs": {
+    "normal_cache_dir": "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy",
+    "normal_hash_manifest": "phases/p2-gsjso/runs/20260713_e5_c001_s3_track0/t0_2_t0_3_manifest.json",
+    "visible_view_manifest": "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/manifest.json",
+    "cached_dlt_manifest": "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/manifest.json",
+    "fm_rescore_csv": "docs/e5_c001_s3ap_fm_retri_rescore.csv",
+    "fm_rescore_manifest": "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_fm_retri_rescore/manifest.json",
+    "footprints": "results/tum_transfer/analysis/footprints_aoi.geojson",
+    "train_manifest": "results/tum_transfer/e5_pilot/C001/C001_train_prep_manifest.json",
+    "sparse_dir": "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/sparse/0",
+    "image_dir": "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/images"
+  },
+  "measurement": {
+    "pair_scope": "rows marked eligible_summary_pair=true in the locked FM rescore; empty eligible pairs remain auditable",
+    "point_scope": "pool every footprint-XY-inside cached DLT survivor across eligible pairs for the pure-FM plane fit; attribute each pair point only to that pair's two endpoint views for pixel diagnostics; no roof-height or GT filter",
+    "pixel_sampling": "for each eligible pair, use cached source pixels_a/b only at its two originating endpoint views after independently cross-checking the DLT world XYZ projection against those pixels; round with numpy.rint, retain positive-depth in-frame finite world-normal, and deduplicate identical integer pixels within building-view",
+    "angle_rule": "degrees(arccos(abs(dot(unit mono-normal world, unit FM fitted-plane normal world))))",
+    "building_summary": "pool unique pixels within each originating building-view endpoint, then concatenate building-view samples; the same pair point may contribute once at each of its two endpoint views; locked visible views with no originating eligible-pair points have denominator zero",
+    "within_angle_deg": 22.5,
+    "expected_fm_inside_point_count": {
+      "4907199": 373,
+      "8568391": 456,
+      "8568392": 6
+    },
+    "fm_plane_source": "GT-free robust plane refit on every pooled footprint-inside cached DLT survivor",
+    "pure_fm_fit": true,
+    "originating_pair_endpoint_views_only": true,
+    "fm_plane_ransac": {
+      "residual_threshold_m": 0.30,
+      "min_samples_fraction": 0.30,
+      "min_samples_floor": 3,
+      "max_trials": 1000,
+      "random_seed": 20260715
+    },
+    "footprint_role": "spatial mask and projected outline only",
+    "gt_lod2_or_als_used": false,
+    "gate_applied": false
+  },
+  "visual": {
+    "overlay_alpha": 0.58,
+    "histogram_bin_deg": 5.0,
+    "histogram_range_deg": [0.0, 90.0],
+    "palette": {
+      "histogram": "#4477AA",
+      "median": "#CCAA44",
+      "threshold": "#4D4D4D",
+      "footprint": "#CCAA44",
+      "fm_point_face": "#FFFFFF",
+      "fm_point_edge": "#222222"
+    }
+  },
+  "gpu_preflight": {
+    "preferred_host_gpu": 1,
+    "gpu_compute_used": false,
+    "reason": "verified full-frame mono-normal cache reused; no model inference required"
+  },
+  "measurement_runtime": {
+    "docker_tag": "jointbuildgs-s3ap-mast3r:20260714-f5209af",
+    "docker_image_id": "sha256:89d64b4c7112cc55db0d42d562e2a0208858658c0c67ab1bd48424175c50f501",
+    "host_gpu_requested": 1
+  }
+}
