@@ -33,10 +33,10 @@
     }
   },
   "rescore_lock": {
-    "summary_pair_scope": "nondegenerate baseline >0.06m; pair rows retain all pairs",
+    "summary_pair_scope": "cross-acquisition-minute block AND nondegenerate baseline >0.06m; pair rows retain all pairs",
     "summary_point_aggregation": "pool every footprint-XY-inside cached DLT survivor across eligible pairs; do not take median pair count",
     "ground": {
-      "source": "observed SfM plus dense-init points only",
+      "source": "elevation samples: observed SfM plus dense-init points only; spatial target/exclusion masks: supplied footprints_aoi footprint geometry",
       "target_outer_distance_min_m": 2.0,
       "target_outer_distance_max_m": 15.0,
       "all_footprint_exclusion_buffer_m": 1.0,

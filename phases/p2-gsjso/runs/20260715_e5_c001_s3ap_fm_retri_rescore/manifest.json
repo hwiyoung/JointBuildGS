@@ -1,0 +1,124 @@
+{
+  "schema": "jointbuildgs.s3ap.fm_retri_rescore.v1",
+  "created_utc": "2026-07-15T04:29:20.400073+00:00",
+  "git_head_at_measurement": "cc7d55b1e7a4ffae118b8fdad20211e3f8e911cd",
+  "branch": "exp/3b-surface-restore-corrected",
+  "docker": {
+    "tag": "jointbuildgs-s3ap-mast3r:20260714-f5209af",
+    "image_id": "sha256:89d64b4c7112cc55db0d42d562e2a0208858658c0c67ab1bd48424175c50f501"
+  },
+  "learning_runs_started": 0,
+  "new_mast3r_inference_runs": 0,
+  "cache_source_run": "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation",
+  "cached_pair_count": 16,
+  "cached_dlt_survivor_count": 16283,
+  "cache_input_lineage": "cached DLT NPZ inherits the source run's frozen T0-1 oracle-address input crops; this wave performs no crop selection, matching, inference, or triangulation",
+  "registration_classes": {
+    "4907199": "seated",
+    "8568391": "seated",
+    "8568392": "seated"
+  },
+  "rescore_lock": {
+    "summary_pair_scope": "cross-acquisition-minute block AND nondegenerate baseline >0.06m; pair rows retain all pairs",
+    "summary_point_aggregation": "pool every footprint-XY-inside cached DLT survivor across eligible pairs; do not take median pair count",
+    "ground": {
+      "source": "elevation samples: observed SfM plus dense-init points only; spatial target/exclusion masks: supplied footprints_aoi footprint geometry",
+      "target_outer_distance_min_m": 2.0,
+      "target_outer_distance_max_m": 15.0,
+      "all_footprint_exclusion_buffer_m": 1.0,
+      "grid_m": 1.0,
+      "min_points_per_cell": 2,
+      "cell_z_quantile": 0.1,
+      "mode_bin_m": 0.5,
+      "mode_half_window_m": 0.75,
+      "fallback": "median of finite cell q10 values after Tukey 1.5-IQR clipping"
+    },
+    "plane": {
+      "random_seed": 20260715,
+      "ransac_residual_threshold_m": 0.3,
+      "ransac_min_samples_fraction": 0.3,
+      "ransac_min_samples_floor": 3,
+      "ransac_max_trials": 1000
+    },
+    "coverage": {
+      "grid_m": 0.5,
+      "occupied_definition": "footprint-intersecting XY cell containing at least one cached DLT point"
+    },
+    "numeric_boundary_classes": {
+      "i_seed_usable": "n>=20 AND median_abs_dz<=1.0m AND fitted_plane_to_lod2_rms<=1.0m AND ransac_inlier_ratio>=0.50 AND grid_coverage>=0.25",
+      "ii_near_height_scattered_or_low_coverage": "median_abs_dz<=1.5m but class i is false",
+      "iii_wrong_height_neighbor_or_wall": "no inside points OR median_abs_dz>1.5m",
+      "iv_bad_registration": "registration_class=misregistered; score withheld",
+      "ambiguous_registration": "registration_class=ambiguous; score reported as untrusted and boundary class withheld"
+    }
+  },
+  "ground_source_quality": {
+    "sparse_point_count": 44016,
+    "dense_point_count": 201625,
+    "sparse_track_metadata_available": false,
+    "note": "ground elevations use observed SfM+dense-init geometry; supplied footprints_aoi geometry defines target exterior and building exclusions; no LoD2 roof height/plane or ALS elevation; sparse track lengths and dense native visibility are not claimed"
+  },
+  "source_sha256": {
+    "phases/p2-gsjso/scripts/e5_c001_s3ap_fm_retri_rescore.py": "6d317741a09aa65f2add5c013a138638f8361d721ddece129bbfb47eafabae31",
+    "phases/p2-gsjso/configs/e5_c001_s3ap_fm_retri_rescore.json": "cf09d846ecf3a1cec81ca2f515dbc76b8724d02b3dc1625fb5c5a89dc79785c5",
+    "docs/e5_c001_s3ap_fm_retri_registration.csv": "50fa465a18f991905cd94c01d9ddb01e7d75c2c83bbd51ecabc66ba109b3e72f",
+    "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_fm_retri_rescore/registration_manifest.json": "5616911bf8cbf612383f3e8e51b4736c6f96ceb00cd1a3c85850fada37d8cfce",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/manifest.json": "6748aa43d1c8de7f965bba2b11e6cc5b5b1fedc77e5f1c7e07916952a5179541",
+    "results/tum_transfer/e5_pilot/C001/C001_train_prep_manifest.json": "eca68a7890116c52557ab467361b58c4c784047807f9bee857a2517ac0b40b58",
+    "configs/projection_datum.json": "096a49b46fc5661d74f9d3b54c4f3777676cfc6b27e577b52bb2dabeee8b480c",
+    "results/tum_transfer/analysis/footprints_aoi.geojson": "ca7f5b13a52368e1d2ac47b77cc78f12887bad4d598d122ad57b882eb4920a82",
+    "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/sparse/0/points3D.bin": "d1fb05b4d7913d61a248a95a6faf1357ed9d669abbd6e575939e306b4ffece09",
+    "results/tum_transfer/e5_pilot/C001/seeds/seed_dense_C001_buf20.ply": "6083e9e93df712734499a0d1ff3621fb23cf96046d39d6adda3712ac98aa0c53",
+    "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/sparse/0/cameras.bin": "7c9b01e524628658a92305202a2618a287570c6a90c414509b78dba1b5fc7794",
+    "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/sparse/0/images.bin": "dcb84b0d46f2666a9a8f6e1657a48dc4a8d1d60c35a7e47117b2df04c5f0cefb",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/pairs/4907199_rank01.npz": "ab64178617976dbbab053614b5387fedc6f9a0978e37f9bd4674b93b6c68b21f",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/pairs/4907199_rank02.npz": "6da6e6aca1ed0c8648576b77640c59b70b204fe811e967a705123542ba0a0397",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/pairs/4907199_rank03.npz": "91a92546e05b84fab8d4fae067d0a66e482daf60f7d2f55c809143715ff1d63d",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/pairs/4907199_rank04.npz": "2d7f6a8cc6e411d58fd7efbcfcf7dd0622130ee6be6860e32ead379721428dbe",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/pairs/4907199_rank05.npz": "1c83f2f94bfe64a2a5bb1a5532ee87ab373618e5779a731aedb38fc12b180e9a",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/pairs/4907199_rank06.npz": "e4fffbbbee6bf35dfcf3ca9818e8608b58108994baa88920fe61c7b9d151bd03",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/pairs/4907199_rank07.npz": "f3dac12de8380ee4ee4d872d69f453eea867f614b563ff5d1af75437a93da7f3",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/pairs/4907199_rank08.npz": "51fb4b6a477daa5cd308be3aa7ec9756f46aafbaab2053f27cf8181325c6e873",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/pairs/4907199_rank09.npz": "8cf0929fd7d2578c9e9cdb1a78e720c730cc65a5a047c0c3ea261add2406360c",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/pairs/4907199_rank10.npz": "3c86624ef6464df01046058d56e2d98e6a086b159155b4998837589721a133cc",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/pairs/8568391_rank01.npz": "7dba27c1b6e7e6f131038a375abb8d1b5893ccb22ea06f0ec434fdaecf993c17",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/pairs/8568391_rank02.npz": "02a5cf2e8b24f4825e4227c9b42706b8406f22740c774781e7366e19746a1e61",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/pairs/8568391_rank03.npz": "8950564010d8eabeabd3cdcb58051313613dda8ede11429888914f5434ed42cd",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/pairs/8568392_rank01.npz": "3600d66a1d46efa6333498ce36d6c8b9be85c1ab1ecf69d912a2b9a59755ac42",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/pairs/8568392_rank02.npz": "414ddfa82bafb14e9a47f826e4cf6bd74972cdd8063625875d865379b18f48ff",
+    "phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_retriangulation/pairs/8568392_rank03.npz": "a55b55de1a277201dc21e4c16c5ce406a50f2ef8614d5b7cb1824bac438a7ba5",
+    "phases/p0-audit/data/raw/lod2/690_5334.gml": "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314",
+    "phases/p0-audit/data/raw/lod2/690_5336.gml": "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674"
+  },
+  "output_sha256": {
+    "docs/e5_c001_s3ap_fm_retri_rescore.csv": "f720a5687da54dac276c27222e49f8012f2b24be3e2bbcaa5cf7e15a21faf299",
+    "docs/W_E5_C001_S3Ap_FM재채점_20260715.md": "bc5d6bc1f11fa86eb34088b378b458997d3b591cc5586ca1e9c2af63a9b8fd64",
+    "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_fm_retri_rescore/progress.json": "e0ffd985cfae62b73a993d5d1182dab555d0c64562091109b6dd0385835b85ba",
+    "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_fm_retri_rescore/run.log": "ab4cd26b97896eb0234f101102b2c43c522847d903a3236d275b3a2881b5b6ba",
+    "docs/figs/e5_c001_s3ap_fm_retri_rescore/recog_4907199_DJI_20241217095141_0077_D.png": "6ff584c03fd0db9fba784306ba5d5cdbe1da09d22ec0620af959246a4fc9c280",
+    "docs/figs/e5_c001_s3ap_fm_retri_rescore/recog_4907199_DJI_20241217095145_0079_D.png": "c140509bd48aa2645e17aca8490ed5b9bf97e766f2cf3f6f99d938692e1f430b",
+    "docs/figs/e5_c001_s3ap_fm_retri_rescore/recog_4907199_DJI_20241217095147_0080_D.png": "57441ac3ab65fcec63f78006f2d9d1d1de52b284bee0ecfb77f3035549aba43f",
+    "docs/figs/e5_c001_s3ap_fm_retri_rescore/recog_4907199_DJI_20241217095149_0081_D.png": "23dafa850e140d366b438f8c5ea9f5a1a1411081ffd04fb70756510813b478f5",
+    "docs/figs/e5_c001_s3ap_fm_retri_rescore/recog_4907199_DJI_20241217095441_0023_D.png": "da8c388c03058d7e9ac998ccc2468b12f1296bbafd5ceb6a9efe13527374fc6c",
+    "docs/figs/e5_c001_s3ap_fm_retri_rescore/recog_4907199_DJI_20241217095531_0048_D.png": "96e80493263e7432a98d349cf256475476918dbf7b627a0bda844ceb2623de4f",
+    "docs/figs/e5_c001_s3ap_fm_retri_rescore/recog_8568391_DJI_20241217084901_0194_D.png": "40af81838980abfbe596f289c2c413bca4fb7ba78c7d2fe87e764fc73abf74cc",
+    "docs/figs/e5_c001_s3ap_fm_retri_rescore/recog_8568391_DJI_20241217084903_0195_D.png": "085eee9feb0db8512e1109cc20bba977235ac01c0a4bbb405dfd42db0b30fae6",
+    "docs/figs/e5_c001_s3ap_fm_retri_rescore/recog_8568391_DJI_20241217095441_0023_D.png": "2fe708b329bff7d43a869e55174b63aabd8c34a59ca2ff4399a4a74a02fc0e9a",
+    "docs/figs/e5_c001_s3ap_fm_retri_rescore/recog_8568392_DJI_20241217084901_0194_D.png": "0ef87ce78cec0aa02fb8c64ab3c68d10564cf360a38fba44346f3d67e95201cb",
+    "docs/figs/e5_c001_s3ap_fm_retri_rescore/recog_8568392_DJI_20241217084903_0195_D.png": "a72ac9a8bb135f9ce135cafd6f7b2d86e75f97f8bbb440666189ae37e84773df",
+    "docs/figs/e5_c001_s3ap_fm_retri_rescore/recog_8568392_DJI_20241217095441_0023_D.png": "a844bd12d49f9c9e83a9f049d57efcc29f2ba84274b09ba956b903f801712209",
+    "docs/figs/e5_c001_s3ap_fm_retri_rescore/score_4907199.png": "b32b97d12936bc99777a248bb4c144b0d0927e9e3ccdcbce25d3be55e9e59a70",
+    "docs/figs/e5_c001_s3ap_fm_retri_rescore/score_8568391.png": "bc1b104d8109bb906751bbffb5f91512d560540668b56857cb36ec5f8c656850",
+    "docs/figs/e5_c001_s3ap_fm_retri_rescore/score_8568392.png": "180290048031f57466a48b2dbaef85ee145d3ddbec4cd01d6e0b665fc89ca5ca"
+  },
+  "row_count": 19,
+  "pair_row_count": 16,
+  "summary_row_count": 3,
+  "numeric_boundary_classes": {
+    "DEBY_LOD2_4907199": "ii_near_height_scattered_or_low_coverage",
+    "DEBY_LOD2_8568391": "i_seed_usable",
+    "DEBY_LOD2_8568392": "ii_near_height_scattered_or_low_coverage"
+  },
+  "interpretation_or_verdict": null,
+  "no_seed_or_training_use": true
+}
