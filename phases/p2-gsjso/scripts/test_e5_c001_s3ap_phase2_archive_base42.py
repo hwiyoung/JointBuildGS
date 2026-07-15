@@ -1063,9 +1063,18 @@ class Base42ArchiveTest(unittest.TestCase):
         )
         launcher = WRAPPER.read_text(encoding="utf-8")
         self.assertIn(
-            'RUNNER_DRY_RUN_JSON="$("${TRAINING_LAUNCHER}" run --dry-run)"',
+            'RUNNER_DRY_RUN_OUTPUT="$("${TRAINING_LAUNCHER}" run --dry-run)"',
             launcher,
         )
+        self.assertIn(
+            'RUNNER_DRY_RUN_JSON="${RUNNER_DRY_RUN_OUTPUT##*$\'\\n\'}"',
+            launcher,
+        )
+        self.assertIn(
+            'RUNNER_DRY_RUN_PREFIX="${RUNNER_DRY_RUN_OUTPUT%$\'\\n\'*}"',
+            launcher,
+        )
+        self.assertIn("ambiguous JSON-like stdout", launcher)
         self.assertIn(
             '--runner-dry-run-attestation-json "${RUNNER_DRY_RUN_JSON}"',
             launcher,

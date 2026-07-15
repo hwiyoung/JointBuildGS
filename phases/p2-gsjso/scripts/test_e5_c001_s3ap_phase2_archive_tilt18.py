@@ -1548,6 +1548,15 @@ class Tilt18ArchiveTest(unittest.TestCase):
             'run --inventory "${TILT_INVENTORY}" --dry-run', launcher
         )
         self.assertIn(
+            'RUNNER_DRY_RUN_JSON="${RUNNER_DRY_RUN_OUTPUT##*$\'\\n\'}"',
+            launcher,
+        )
+        self.assertIn(
+            'RUNNER_DRY_RUN_PREFIX="${RUNNER_DRY_RUN_OUTPUT%$\'\\n\'*}"',
+            launcher,
+        )
+        self.assertIn("ambiguous JSON-like stdout", launcher)
+        self.assertIn(
             '--runner-dry-run-attestation-json "${RUNNER_DRY_RUN_JSON}"',
             launcher,
         )
