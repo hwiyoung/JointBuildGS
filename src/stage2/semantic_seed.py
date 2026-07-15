@@ -45,9 +45,10 @@ optional provenance / for a future per-building band derived from LoD2 heights.
 from __future__ import annotations
 
 import os
+import json
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Optional, Sequence
+from typing import Dict, Iterator, List, Optional, Sequence
 
 import numpy as np
 
@@ -55,6 +56,10 @@ import numpy as np
 ROOF_CODE_DEFAULT = 1
 WALL_CODE_DEFAULT = 2
 WORLD_OFFSET_DEFAULT = (690953.0, 5336071.0, 604.0)
+SURFACE_SEED_SCHEMA = "jointbuildgs.s3ap.surface_seeds.v1"
+SFM_INIT_OPACITY = 0.10
+SEMANTIC_SEED_INIT_OPACITY = 0.25
+SURFACE_SEED_INIT_OPACITY = 0.10
 
 
 # ---------------------------------------------------------------------------
@@ -185,6 +190,207 @@ class SeedResult:
     rgb: np.ndarray            # (M,3) seed colours in [0,1]
     sem: np.ndarray            # (M,)  class id (roof_code / wall_code)
     per_building: Dict[str, dict]   # diagnostics per building
+    init_opacity: Optional[np.ndarray] = None
+    is_surface_seed: Optional[np.ndarray] = None
+    metadata: Optional[dict] = None
+
+
+@dataclass
+class ConcatenatedSeeds:
+    """Init arrays plus lineage attributes, with legacy three-value unpacking.
+
+    ``xyz, rgb, sem = concat_seeds(...)`` remains valid.  New callers inspect
+    ``init_opacity`` and ``is_surface_seed`` explicitly, avoiding a breaking
+    change to the Phase-2 semantic-carve utilities.
+    """
+
+    xyz: np.ndarray
+    rgb: np.ndarray
+    sem: np.ndarray
+    init_opacity: np.ndarray
+    is_surface_seed: np.ndarray
+
+    def __iter__(self) -> Iterator[np.ndarray]:
+        yield self.xyz
+        yield self.rgb
+        yield self.sem
+
+
+def _metadata_json_scalar(raw: np.ndarray, path: Path) -> dict:
+    if not isinstance(raw, np.ndarray) or raw.shape != ():
+        raise ValueError(f"{path}: metadata_json must be a scalar JSON string")
+    value = raw.item()
+    if isinstance(value, bytes):
+        value = value.decode("utf-8")
+    try:
+        metadata = json.loads(str(value))
+    except json.JSONDecodeError as exc:
+        raise ValueError(f"{path}: metadata_json is not valid JSON") from exc
+    if not isinstance(metadata, dict):
+        raise ValueError(f"{path}: metadata_json must decode to an object")
+    return metadata
+
+
+def _validate_surface_seed_metadata(metadata: dict, path: Path) -> None:
+    required = {
+        "schema": SURFACE_SEED_SCHEMA,
+        "seed_type": "surface",
+        "coordinate_frame": "GS-local",
+        "crs": "EPSG:25832",
+        "gt_used_for_seed_generation": False,
+        "lod2_used_for_seed_generation": False,
+        "als_used_for_seed_generation": False,
+    }
+    for key, expected in required.items():
+        if metadata.get(key) != expected:
+            raise ValueError(f"{path}: metadata {key!r} must equal {expected!r}")
+
+    # Truth geometry is allowed in downstream score artifacts, never in this
+    # init artifact.  Reject disguised side channels as well as the obvious
+    # top-level names.  The three explicit false declarations above are the
+    # only permitted truth-related metadata keys.
+    declared_false = {
+        "gt_used_for_seed_generation",
+        "lod2_used_for_seed_generation",
+        "als_used_for_seed_generation",
+    }
+    forbidden_tokens = ("ground_truth", "reference_roof", "lod2", "als")
+
+    def walk(value, prefix: str = "") -> None:
+        if isinstance(value, dict):
+            for key, child in value.items():
+                name = str(key).lower()
+                full = f"{prefix}.{key}" if prefix else str(key)
+                truth_named = (
+                    name == "gt"
+                    or name.startswith("gt_")
+                    or name.endswith("_gt")
+                    or any(token in name for token in forbidden_tokens)
+                )
+                if truth_named and key not in declared_false:
+                    raise ValueError(
+                        f"{path}: forbidden truth-geometry metadata field {full!r}"
+                    )
+                walk(child, full)
+        elif isinstance(value, (list, tuple)):
+            for index, child in enumerate(value):
+                walk(child, f"{prefix}[{index}]")
+
+    walk(metadata)
+
+
+def load_surface_seed_npz(path: str | Path) -> SeedResult:
+    """Load a strict S3-A-prime seed-surface artifact.
+
+    Only the four contract arrays are accepted.  In particular, a score/LoD2/ALS array
+    cannot hitchhike into model initialization.  Coordinates are already in
+    the COLMAP/GS-local metric frame; no transform or GT-derived correction is
+    applied here.
+    """
+
+    path = Path(path)
+    with np.load(path, allow_pickle=False) as npz:
+        required = {"xyz", "rgb", "sem", "metadata_json"}
+        missing = sorted(required - set(npz.files))
+        extra = sorted(set(npz.files) - required)
+        if missing:
+            raise ValueError(f"{path}: missing required arrays {missing}")
+        if extra:
+            raise ValueError(f"{path}: unexpected arrays {extra}")
+        xyz = np.asarray(npz["xyz"])
+        rgb = np.asarray(npz["rgb"])
+        sem = np.asarray(npz["sem"])
+        metadata = _metadata_json_scalar(npz["metadata_json"], path)
+
+    if xyz.dtype != np.float32 or xyz.ndim != 2 or xyz.shape[1:] != (3,):
+        raise ValueError(f"{path}: xyz must be float32 with shape (N,3)")
+    if rgb.dtype != np.float32 or rgb.shape != xyz.shape:
+        raise ValueError(f"{path}: rgb must be float32 with shape {xyz.shape}")
+    if sem.dtype != np.int64 or sem.shape != (len(xyz),):
+        raise ValueError(f"{path}: sem must be int64 with shape ({len(xyz)},)")
+    if len(xyz) == 0:
+        raise ValueError(f"{path}: a surface-seed artifact must contain at least one point")
+    if not np.isfinite(xyz).all() or not np.isfinite(rgb).all():
+        raise ValueError(f"{path}: xyz/rgb must be finite")
+    if np.any((rgb < 0.0) | (rgb > 1.0)):
+        raise ValueError(f"{path}: rgb must lie in [0,1]")
+    if np.any((sem < 0) | (sem > 3)):
+        raise ValueError(f"{path}: sem values must lie in [0,3]")
+    _validate_surface_seed_metadata(metadata, path)
+    return SeedResult(
+        xyz=xyz.copy(),
+        rgb=rgb.copy(),
+        sem=sem.copy(),
+        per_building=dict(metadata.get("per_building") or {}),
+        init_opacity=np.full(len(xyz), SURFACE_SEED_INIT_OPACITY, np.float32),
+        is_surface_seed=np.ones(len(xyz), dtype=np.bool_),
+        metadata=metadata,
+    )
+
+
+def perturb_surface_seed(
+    seeds: SeedResult,
+    *,
+    height_delta_m: float = 0.0,
+    tilt_deg: float = 0.0,
+    tilt_axis_xy: Optional[Sequence[float]] = None,
+    tilt_pivot_xy: Optional[Sequence[float]] = None,
+) -> SeedResult:
+    """Apply the locked synthetic seed perturbation in GS-local metres.
+
+    Height is applied first.  Tilt rotates about a horizontal axis through the
+    supplied XY pivot and the perturbed seed median Z.  Only the external seed
+    coordinates change; SfM points and every supervision map remain untouched.
+    """
+
+    xyz = np.asarray(seeds.xyz, dtype=np.float32).copy()
+    delta = float(height_delta_m)
+    angle = float(tilt_deg)
+    if not np.isfinite(delta) or not np.isfinite(angle):
+        raise ValueError("surface seed perturbation values must be finite")
+    xyz[:, 2] += delta
+    if abs(angle) > 0.0:
+        if tilt_axis_xy is None or tilt_pivot_xy is None:
+            raise ValueError("nonzero surface seed tilt requires axis_xy and pivot_xy")
+        axis_xy = np.asarray(tilt_axis_xy, dtype=np.float64)
+        pivot_xy = np.asarray(tilt_pivot_xy, dtype=np.float64)
+        if axis_xy.shape != (2,) or pivot_xy.shape != (2,) or not (
+            np.isfinite(axis_xy).all() and np.isfinite(pivot_xy).all()
+        ):
+            raise ValueError("surface seed tilt axis/pivot must be finite XY vectors")
+        norm = float(np.linalg.norm(axis_xy))
+        if norm <= 1e-12:
+            raise ValueError("surface seed tilt axis must be nonzero")
+        axis = np.array([axis_xy[0] / norm, axis_xy[1] / norm, 0.0], np.float64)
+        radians = np.deg2rad(angle)
+        skew = np.array(
+            [[0.0, -axis[2], axis[1]], [axis[2], 0.0, -axis[0]], [-axis[1], axis[0], 0.0]],
+            dtype=np.float64,
+        )
+        rotation = (
+            np.eye(3, dtype=np.float64)
+            + np.sin(radians) * skew
+            + (1.0 - np.cos(radians)) * (skew @ skew)
+        )
+        pivot = np.array([pivot_xy[0], pivot_xy[1], float(np.median(xyz[:, 2]))])
+        xyz = ((xyz.astype(np.float64) - pivot) @ rotation.T + pivot).astype(np.float32)
+    metadata = dict(seeds.metadata or {})
+    metadata["applied_perturbation"] = {
+        "height_delta_m": delta,
+        "tilt_deg": angle,
+        "tilt_axis_xy": None if tilt_axis_xy is None else list(map(float, tilt_axis_xy)),
+        "tilt_pivot_xy": None if tilt_pivot_xy is None else list(map(float, tilt_pivot_xy)),
+        "tilt_pivot_z_rule": "median seed z after height delta",
+    }
+    return SeedResult(
+        xyz=xyz,
+        rgb=seeds.rgb.copy(),
+        sem=seeds.sem.copy(),
+        per_building=dict(seeds.per_building),
+        init_opacity=None if seeds.init_opacity is None else seeds.init_opacity.copy(),
+        is_surface_seed=None if seeds.is_surface_seed is None else seeds.is_surface_seed.copy(),
+        metadata=metadata,
+    )
 
 
 def _carve_one(cams: Sequence[SeedCamera], semantic_dir: Path, bbox_local: Sequence[float],
@@ -340,16 +546,58 @@ def build_semantic_seeds(
         xyz = np.zeros((0, 3), np.float32)
         sem = np.zeros((0,), np.int64)
     rgb = np.broadcast_to(scene_rgb, (len(xyz), 3)).astype(np.float32).copy()
-    return SeedResult(xyz=xyz, rgb=rgb, sem=sem, per_building=per_building)
+    return SeedResult(
+        xyz=xyz,
+        rgb=rgb,
+        sem=sem,
+        per_building=per_building,
+        init_opacity=np.full(len(xyz), SEMANTIC_SEED_INIT_OPACITY, np.float32),
+        is_surface_seed=np.zeros(len(xyz), dtype=np.bool_),
+        metadata={"seed_type": "semantic_carve"},
+    )
 
 
-def concat_seeds(points_xyz: np.ndarray, points_rgb: np.ndarray, seeds: SeedResult):
-    """Concatenate SfM points + seeds. SfM points get sem id -1 ("unspecified").
-
-    Returns (points_xyz, points_rgb, points_sem) ready for ``GaussianModel2D``.
-    """
+def concat_seeds(
+    points_xyz: np.ndarray,
+    points_rgb: np.ndarray,
+    seeds: SeedResult,
+    *,
+    points_sem: Optional[np.ndarray] = None,
+    points_init_opacity: Optional[np.ndarray] = None,
+    points_surface_seed: Optional[np.ndarray] = None,
+) -> ConcatenatedSeeds:
+    """Concatenate existing init points and a seed batch without losing lineage."""
     n_sfm = len(points_xyz)
+    if points_sem is None:
+        points_sem = np.full(n_sfm, -1, np.int64)
+    else:
+        points_sem = np.asarray(points_sem)
+        if points_sem.dtype != np.int64 or points_sem.shape != (n_sfm,):
+            raise ValueError("points_sem must be int64 with shape (N,)")
+    if points_init_opacity is None:
+        points_init_opacity = np.full(n_sfm, SFM_INIT_OPACITY, np.float32)
+    else:
+        points_init_opacity = np.asarray(points_init_opacity, dtype=np.float32)
+        if points_init_opacity.shape != (n_sfm,):
+            raise ValueError("points_init_opacity must have shape (N,)")
+    if points_surface_seed is None:
+        points_surface_seed = np.zeros(n_sfm, dtype=np.bool_)
+    else:
+        points_surface_seed = np.asarray(points_surface_seed)
+        if points_surface_seed.dtype != np.bool_ or points_surface_seed.shape != (n_sfm,):
+            raise ValueError("points_surface_seed must be bool with shape (N,)")
+
+    seed_opacity = seeds.init_opacity
+    if seed_opacity is None:
+        seed_opacity = np.full(len(seeds.xyz), SEMANTIC_SEED_INIT_OPACITY, np.float32)
+    seed_surface = seeds.is_surface_seed
+    if seed_surface is None:
+        seed_surface = np.zeros(len(seeds.xyz), dtype=np.bool_)
     xyz = np.concatenate([points_xyz, seeds.xyz], axis=0).astype(np.float32)
     rgb = np.concatenate([points_rgb, seeds.rgb], axis=0).astype(np.float32)
-    sem = np.concatenate([np.full(n_sfm, -1, np.int64), seeds.sem]).astype(np.int64)
-    return xyz, rgb, sem
+    sem = np.concatenate([points_sem, seeds.sem]).astype(np.int64)
+    opacity = np.concatenate([points_init_opacity, seed_opacity]).astype(np.float32)
+    is_surface = np.concatenate([points_surface_seed, seed_surface]).astype(np.bool_)
+    if not np.isfinite(opacity).all() or np.any((opacity <= 0.0) | (opacity >= 1.0)):
+        raise ValueError("all initialization opacities must be finite and lie in (0,1)")
+    return ConcatenatedSeeds(xyz, rgb, sem, opacity, is_surface)

@@ -1,0 +1,70 @@
+{
+  "schema": "jointbuildgs.s3ap.phase1.seedprep.lock.v1",
+  "task_date": "2026-07-15",
+  "crs": "EPSG:25832",
+  "learning_runs_allowed": 0,
+  "new_mast3r_inference_allowed": false,
+  "targets": ["4907199", "8568391", "8568392"],
+  "sources": {
+    "p0_fill_npz": "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase0_baselines/p0_fill_points.npz",
+    "footprints": "results/tum_transfer/analysis/footprints_aoi.geojson",
+    "train_manifest": "results/tum_transfer/e5_pilot/C001/C001_train_prep_manifest.json",
+    "sparse_points": "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/sparse/0/points3D.bin",
+    "sparse_cameras": "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/sparse/0/cameras.bin",
+    "sparse_images": "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/sparse/0/images.bin",
+    "dense_init": "results/tum_transfer/e5_pilot/C001/seeds/seed_dense_C001_buf20.ply",
+    "depth_maps": "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/stereo/depth_maps",
+    "engine_seed_loader": "src/stage2/semantic_seed.py"
+  },
+  "canonical_surface": {
+    "surface_key": "DEBY_LOD2_{short}_local_xyz",
+    "fm_key": "DEBY_LOD2_{short}_fm_local_xyz",
+    "grid_m": 0.5,
+    "height_anchor": "median z of every footprint-inside FM point stored in the Phase-0 canonical NPZ",
+    "plane_check": "least-squares z=ax+by+c on canonical P0 fill; max absolute surface residual <=1e-9m",
+    "reuse_rule": "seed xyz is the exact little-endian float32 cast of the canonical Phase-0 P0 fill array; no refit or resampling"
+  },
+  "seed_contract": {
+    "schema": "jointbuildgs.s3ap.surface_seeds.v1",
+    "xyz_dtype": "float32",
+    "coordinate_frame": "GS-local",
+    "coordinate_frame_definition": "EPSG:25832 XY minus world_offset; ellipsoidal Z local",
+    "rgb": "mean RGB of the C001 COLMAP sparse initialization, repeated per seed",
+    "sem": 1,
+    "loader_derived_init_opacity": 0.10,
+    "required_npz_keys": ["xyz", "rgb", "sem", "metadata_json"],
+    "required_false_metadata_declarations": [
+      "gt_used_for_seed_generation",
+      "lod2_used_for_seed_generation",
+      "als_used_for_seed_generation"
+    ],
+    "truth_sidechannel_rule": "the three required false declarations are allowed; every other truth-geometry array or metadata key is rejected by the engine loader"
+  },
+  "boundary_propagation": {
+    "applicable_targets": ["4907199", "8568392"],
+    "not_applicable_target": "8568391",
+    "band_m": 1.0,
+    "candidate_rule": "observed SfM+dense-init point with horizontal distance to target footprint boundary <=1.0m",
+    "target_spatial_address_rule": "XY is covered by the supplied target footprint; outside-band points are retained only in rejected-count provenance",
+    "height_match_rule": "abs(z_observed - z_FM_P0_plane(x,y)) <=0.30m",
+    "height_tolerance_m": 0.30,
+    "sparse_multiview_rule": "COLMAP track length >=2",
+    "dense_multiview_rule": "reproject to all locked COLMAP poses; existing PatchMatch depth agrees within max(0.50m, 0.02*camera_z) in >=2 views",
+    "dense_visibility_abs_tolerance_m": 0.50,
+    "dense_visibility_relative_tolerance": 0.02,
+    "dense_min_views": 2,
+    "aux_seed_rule": "only eligible observed boundary points are emitted as a separate lineage, with XY and observed z unchanged; no point outside the target footprint and no footprint-wide extension is emitted",
+    "empty_rule": "eligible count 0 emits no auxiliary seed NPZ and records zero"
+  },
+  "outputs": {
+    "run_dir": "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase1_seedprep",
+    "seed_manifest_csv": "docs/e5_c001_s3ap_seed_manifest.csv",
+    "boundary_csv": "docs/e5_c001_s3ap_boundary_propagation.csv",
+    "figure_dir": "docs/figs/e5_c001_s3ap_phase1"
+  },
+  "docker": {
+    "tag": "jointbuildgs:dev",
+    "image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
+    "user_mapping_required": true
+  }
+}
