@@ -27,6 +27,7 @@ failed job does not stop later jobs.
 from __future__ import annotations
 
 import argparse
+import copy
 import csv
 import hashlib
 import importlib.util
@@ -1732,7 +1733,9 @@ def _combine_and_validate_roofer(
         return None, empty_status, None, None
     w2 = load_module(f"s3ap_phase3_w2_{os.getpid()}_{threading.get_ident()}", W2_SCRIPT)
     cityjson.parent.mkdir(parents=True, exist_ok=True)
-    w2.combine_cityjsonseq(jsonl, cityjson)
+    roofer_feature = _combine_roofer_component_cityjsonseq(
+        jsonl, cityjson, building_id, w2,
+    )
     val_report.parent.mkdir(parents=True, exist_ok=True)
     proc = subprocess.run(
         ["val3dity", str(cityjson), "--report", str(val_report)],
@@ -1751,13 +1754,391 @@ def _combine_and_validate_roofer(
             for feature in payload.get("features", [])
             if feature.get("id") is not None
         }
-    roofer_features = w2.parse_roofer_features(jsonl)
+    roofer_features = {building_id: roofer_feature}
     rows = w2.classify_buildings("GS", [building_id], roofer_features, val_by_id)
     if len(rows) != 1:
         raise RuntimeError(f"Roofer status row mismatch for {building_id}: {len(rows)}")
     status = dict(rows[0])
     status["val3dity_exit_code"] = int(proc.returncode)
     return cityjson, status, val_report if val_report.exists() else None, val_log
+
+
+def _roofer_component_extent(
+    current: list[float] | None,
+    value: Any,
+    role: str,
+) -> list[float]:
+    if not isinstance(value, list) or len(value) != 6:
+        raise RuntimeError(f"{role} geographicalExtent must contain six values")
+    extent = [finite_float(item) for item in value]
+    if any(item is None for item in extent):
+        raise RuntimeError(f"{role} geographicalExtent is non-finite")
+    numeric = [float(item) for item in extent]
+    if current is None:
+        return numeric
+    return [
+        min(current[0], numeric[0]), min(current[1], numeric[1]),
+        min(current[2], numeric[2]), max(current[3], numeric[3]),
+        max(current[4], numeric[4]), max(current[5], numeric[5]),
+    ]
+
+
+def _aggregate_roofer_component_attributes(
+    components: list[Mapping[str, Any]],
+) -> dict[str, Any]:
+    if not components:
+        raise RuntimeError("Roofer component attribute list is empty")
+    identity_keys = ("building_id", "source", "grid_m", "point_count")
+    for key in identity_keys:
+        values = [component.get(key) for component in components]
+        if any(value != values[0] for value in values[1:]):
+            raise RuntimeError(f"Roofer component attribute drift: {key}")
+    common_keys = set(components[0]).intersection(*(set(item) for item in components[1:]))
+    result = {
+        key: copy.deepcopy(components[0][key])
+        for key in sorted(common_keys)
+        if all(item[key] == components[0][key] for item in components[1:])
+    }
+    result["s3ap_component_count"] = len(components)
+    result["rf_success"] = all(parse_bool(item.get("rf_success")) for item in components)
+    result["rf_pointcloud_unusable"] = any(
+        parse_bool(item.get("rf_pointcloud_unusable")) for item in components
+    )
+    result["rf_force_lod11"] = any(
+        parse_bool(item.get("rf_force_lod11")) for item in components
+    )
+    modes = [str(item.get("rf_extrusion_mode", "")) for item in components]
+    allowed_modes = {"standard", "lod11_fallback", "skip"}
+    if any(mode not in allowed_modes for mode in modes):
+        result["rf_extrusion_mode"] = "mixed_components"
+        result["rf_success"] = False
+    elif all(mode == modes[0] for mode in modes):
+        result["rf_extrusion_mode"] = modes[0]
+    elif "skip" in modes:
+        result["rf_extrusion_mode"] = "skip"
+    elif "lod11_fallback" in modes:
+        result["rf_extrusion_mode"] = "lod11_fallback"
+    else:
+        result["rf_extrusion_mode"] = "mixed_components"
+        result["rf_success"] = False
+    result["s3ap_component_extrusion_modes"] = sorted(set(modes))
+    roof_types = [str(item.get("rf_roof_type", "")) for item in components]
+    result["rf_roof_type"] = (
+        roof_types[0] if all(value == roof_types[0] for value in roof_types)
+        else "mixed_components"
+    )
+
+    def numeric_values(key: str) -> list[float] | None:
+        values = [finite_float(item.get(key)) for item in components]
+        return None if any(value is None for value in values) else [float(value) for value in values]
+
+    roof_planes = numeric_values("rf_roof_planes")
+    result["rf_roof_planes"] = (
+        int(sum(roof_planes)) if roof_planes is not None else None
+    )
+    for key, reducer in (
+        ("rf_volume_lod22", sum),
+        ("rf_rmse_lod22", max),
+        ("rf_pt_density", min),
+        ("rf_nodata_frac", max),
+    ):
+        values = numeric_values(key)
+        result[key] = reducer(values) if values is not None else None
+    return result
+
+
+def _validate_cityjson_ring(
+    ring: Any,
+    upper_bound: int,
+    role: str,
+) -> None:
+    if not isinstance(ring, list) or len(ring) < 3:
+        raise RuntimeError(f"{role} must contain at least three vertex indices")
+    for value in ring:
+        if isinstance(value, bool) or not isinstance(value, int):
+            raise RuntimeError(f"{role} contains a non-integer index")
+        if value < 0 or value >= upper_bound:
+            raise RuntimeError(f"{role} index out of range: {value} not in [0,{upper_bound})")
+
+
+def _validate_cityjson_multisurface_boundaries(
+    boundaries: Any,
+    upper_bound: int,
+    role: str,
+) -> None:
+    if not isinstance(boundaries, list) or not boundaries:
+        raise RuntimeError(f"{role} must contain at least one surface")
+    for surface_index, surface in enumerate(boundaries):
+        if not isinstance(surface, list) or not surface:
+            raise RuntimeError(f"{role} surface {surface_index} has no rings")
+        for ring_index, ring in enumerate(surface):
+            _validate_cityjson_ring(
+                ring, upper_bound,
+                f"{role} surface {surface_index} ring {ring_index}",
+            )
+
+
+def _validate_cityjson_solid_boundaries(
+    boundaries: Any,
+    upper_bound: int,
+    role: str,
+) -> None:
+    if not isinstance(boundaries, list) or not boundaries:
+        raise RuntimeError(f"{role} must contain at least one shell")
+    for shell_index, shell in enumerate(boundaries):
+        _validate_cityjson_multisurface_boundaries(
+            shell, upper_bound, f"{role} shell {shell_index}",
+        )
+
+
+def _validate_cityjson_solid_semantics(
+    semantics: Any,
+    boundaries: list[Any],
+    role: str,
+) -> None:
+    if not isinstance(semantics, dict):
+        raise RuntimeError(f"{role} semantics missing")
+    surfaces = semantics.get("surfaces")
+    values = semantics.get("values")
+    if not isinstance(surfaces, list) or not surfaces:
+        raise RuntimeError(f"{role} semantic surfaces missing")
+    if not isinstance(values, list) or len(values) != len(boundaries):
+        raise RuntimeError(f"{role} semantic shell shape mismatch")
+    for shell_index, shell_values in enumerate(values):
+        shell_boundaries = boundaries[shell_index]
+        if not isinstance(shell_values, list) or len(shell_values) != len(shell_boundaries):
+            raise RuntimeError(
+                f"{role} semantic surface shape mismatch at shell {shell_index}"
+            )
+        for value in shell_values:
+            if value is None:
+                continue
+            if isinstance(value, bool) or not isinstance(value, int):
+                raise RuntimeError(f"{role} semantics contains a non-integer index")
+            if value < 0 or value >= len(surfaces):
+                raise RuntimeError(
+                    f"{role} semantic index out of range: {value} not in [0,{len(surfaces)})"
+                )
+
+
+def _validate_roofer_cityjsonseq_header(header: Any, path: Path) -> None:
+    if not isinstance(header, dict):
+        raise RuntimeError(f"Roofer CityJSONSeq header is not an object: {path}")
+    if (
+        header.get("type") != "CityJSON"
+        or header.get("version") != "2.0"
+        or header.get("CityObjects") != {}
+        or header.get("vertices") != []
+    ):
+        raise RuntimeError(f"unexpected Roofer CityJSONSeq header: {path}")
+    transform = header.get("transform")
+    if not isinstance(transform, dict):
+        raise RuntimeError(f"Roofer CityJSONSeq transform missing: {path}")
+    for key in ("scale", "translate"):
+        values = transform.get(key)
+        if (
+            not isinstance(values, list) or len(values) != 3
+            or any(isinstance(item, bool) or finite_float(item) is None for item in values)
+        ):
+            raise RuntimeError(f"Roofer CityJSONSeq {key} is invalid: {path}")
+    metadata = header.get("metadata")
+    reference = metadata.get("referenceSystem") if isinstance(metadata, dict) else None
+    if str(reference) != "https://www.opengis.net/def/crs/EPSG/0/25832":
+        raise RuntimeError(f"Roofer CityJSONSeq CRS is not EPSG:25832: {path}")
+
+
+def _combine_roofer_component_cityjsonseq(
+    jsonl_files: list[Path],
+    output: Path,
+    building_id: str,
+    w2: Any,
+) -> dict[str, Any]:
+    """Merge repeated Roofer MultiPolygon features into one Building.
+
+    Roofer emits one CityJSONFeature per disconnected polygon but repeats the
+    source ``building_id`` and ``building_id-0`` identifiers for each feature.
+    Every LoD0 footprint component and LoD2.2 BuildingPart is retained; only
+    the BuildingPart identifiers are normalized deterministically.
+    """
+
+    top: dict[str, Any] | None = None
+    vertices: list[list[int]] = []
+    merged_parent: dict[str, Any] | None = None
+    merged_lod0: dict[str, Any] | None = None
+    children: dict[str, dict[str, Any]] = {}
+    component_attributes: list[Mapping[str, Any]] = []
+    extent: list[float] | None = None
+    component_index = 0
+
+    if len(jsonl_files) != 1:
+        raise RuntimeError(
+            f"Phase 3 expects exactly one Roofer CityJSONSeq file, got {len(jsonl_files)}"
+        )
+    for path in jsonl_files:
+        with path.open("r", encoding="utf-8") as handle:
+            try:
+                header = json.loads(handle.readline())
+            except json.JSONDecodeError as error:
+                raise RuntimeError(f"invalid Roofer CityJSONSeq header: {path}") from error
+            _validate_roofer_cityjsonseq_header(header, path)
+            if top is None:
+                top = copy.deepcopy(header)
+                top["CityObjects"] = {}
+                top["vertices"] = []
+            source_transform = header.get("transform")
+            target_transform = top.get("transform")
+            for line_number, line in enumerate(handle, start=2):
+                if not line.strip():
+                    continue
+                try:
+                    feature = json.loads(line)
+                except json.JSONDecodeError as error:
+                    raise RuntimeError(
+                        f"invalid Roofer CityJSONFeature: {path}:{line_number}"
+                    ) from error
+                if feature.get("type") != "CityJSONFeature" or str(feature.get("id")) != building_id:
+                    raise RuntimeError(
+                        f"unexpected Roofer feature identity: {path}:{line_number}"
+                    )
+                objects = feature.get("CityObjects")
+                if not isinstance(objects, dict):
+                    raise RuntimeError(f"Roofer feature lacks CityObjects: {path}:{line_number}")
+                parent_source = objects.get(building_id)
+                if not isinstance(parent_source, dict) or parent_source.get("type") != "Building":
+                    raise RuntimeError(f"Roofer feature lacks expected Building: {path}:{line_number}")
+                source_children = parent_source.get("children")
+                if not isinstance(source_children, list) or len(source_children) != 1:
+                    raise RuntimeError(
+                        f"Roofer component must contain exactly one BuildingPart: {path}:{line_number}"
+                    )
+                source_child_id = str(source_children[0])
+                child_source = objects.get(source_child_id)
+                if (
+                    not isinstance(child_source, dict)
+                    or child_source.get("type") != "BuildingPart"
+                    or child_source.get("parents") != [building_id]
+                    or set(objects) != {building_id, source_child_id}
+                ):
+                    raise RuntimeError(
+                        f"unexpected Roofer BuildingPart graph: {path}:{line_number}"
+                    )
+                feature_vertices = feature.get("vertices")
+                if not isinstance(feature_vertices, list) or not feature_vertices:
+                    raise RuntimeError(f"Roofer component has no vertices: {path}:{line_number}")
+                child_geometries = child_source.get("geometry")
+                if not isinstance(child_geometries, list) or len(child_geometries) != 1:
+                    raise RuntimeError(
+                        f"Roofer component must contain one child LoD2.2 Solid: {path}:{line_number}"
+                    )
+                child_geometry = child_geometries[0]
+                if (
+                    child_geometry.get("type") != "Solid"
+                    or str(child_geometry.get("lod")) != "2.2"
+                    or not isinstance(child_geometry.get("boundaries"), list)
+                    or not child_geometry["boundaries"]
+                ):
+                    raise RuntimeError(
+                        f"unexpected Roofer child geometry: {path}:{line_number}"
+                    )
+                _validate_cityjson_solid_boundaries(
+                    child_geometry["boundaries"], len(feature_vertices),
+                    f"Roofer child boundaries {path}:{line_number}",
+                )
+                semantics = child_geometry.get("semantics")
+                _validate_cityjson_solid_semantics(
+                    semantics, child_geometry["boundaries"],
+                    f"Roofer child {path}:{line_number}",
+                )
+                source_parent_geometries = parent_source.get("geometry")
+                if (
+                    not isinstance(source_parent_geometries, list)
+                    or len(source_parent_geometries) != 1
+                    or not isinstance(source_parent_geometries[0].get("boundaries"), list)
+                ):
+                    raise RuntimeError(
+                        f"Roofer component must contain one parent LoD0 geometry: {path}:{line_number}"
+                    )
+                _validate_cityjson_multisurface_boundaries(
+                    source_parent_geometries[0]["boundaries"], len(feature_vertices),
+                    f"Roofer parent boundaries {path}:{line_number}",
+                )
+                converted = w2.convert_vertices(
+                    feature_vertices, source_transform, target_transform,
+                )
+                offset = len(vertices)
+                vertices.extend(converted)
+                parent = copy.deepcopy(parent_source)
+                child = copy.deepcopy(child_source)
+                w2.shift_cityobject_boundaries(parent, offset)
+                w2.shift_cityobject_boundaries(child, offset)
+                parent_geometries = parent.pop("geometry", None)
+                if not isinstance(parent_geometries, list) or len(parent_geometries) != 1:
+                    raise RuntimeError(
+                        f"Roofer component must contain one parent LoD0 geometry: {path}:{line_number}"
+                    )
+                parent_geometry = parent_geometries[0]
+                if (
+                    parent_geometry.get("type") != "MultiSurface"
+                    or str(parent_geometry.get("lod")) != "0"
+                    or not isinstance(parent_geometry.get("boundaries"), list)
+                    or not parent_geometry["boundaries"]
+                ):
+                    raise RuntimeError(
+                        f"unexpected Roofer parent geometry: {path}:{line_number}"
+                    )
+                if merged_lod0 is None:
+                    merged_lod0 = copy.deepcopy(parent_geometry)
+                    merged_lod0["boundaries"] = []
+                elif {
+                    key: value for key, value in parent_geometry.items() if key != "boundaries"
+                } != {
+                    key: value for key, value in merged_lod0.items() if key != "boundaries"
+                }:
+                    raise RuntimeError(
+                        f"Roofer parent geometry contract drift: {path}:{line_number}"
+                    )
+                merged_lod0["boundaries"].extend(parent_geometry["boundaries"])
+                attributes = parent.get("attributes")
+                if not isinstance(attributes, dict):
+                    raise RuntimeError(f"Roofer parent attributes missing: {path}:{line_number}")
+                component_attributes.append(attributes)
+                child["attributes"] = copy.deepcopy(attributes)
+                extent = _roofer_component_extent(
+                    extent, parent.get("geographicalExtent"),
+                    f"Roofer component {component_index}",
+                )
+                if merged_parent is None:
+                    merged_parent = parent
+                    merged_parent["children"] = []
+                    merged_parent["geometry"] = []
+                new_child_id = f"{building_id}-{component_index}"
+                if new_child_id in children:
+                    raise RuntimeError(f"Roofer normalized BuildingPart collision: {new_child_id}")
+                child["parents"] = [building_id]
+                children[new_child_id] = child
+                merged_parent["children"].append(new_child_id)
+                component_index += 1
+
+    if top is None or merged_parent is None or merged_lod0 is None or extent is None:
+        raise RuntimeError("Roofer CityJSONSeq contains no components")
+    merged_parent["attributes"] = _aggregate_roofer_component_attributes(
+        component_attributes,
+    )
+    merged_parent["geographicalExtent"] = extent
+    merged_parent["geometry"] = [merged_lod0]
+    top["CityObjects"] = {building_id: merged_parent, **children}
+    top["vertices"] = vertices
+    top.setdefault("metadata", {})["geographicalExtent"] = extent
+    atomic_text(
+        output,
+        json.dumps(top, ensure_ascii=False, separators=(",", ":")) + "\n",
+    )
+    return {
+        "attributes": merged_parent["attributes"],
+        "has_lod22": w2.has_lod22_geometry(top["CityObjects"]),
+        "jsonl_file": ";".join(path.name for path in jsonl_files),
+        "component_count": component_index,
+    }
 
 
 def _row_lookup(path: Path, building: str) -> dict[str, str]:

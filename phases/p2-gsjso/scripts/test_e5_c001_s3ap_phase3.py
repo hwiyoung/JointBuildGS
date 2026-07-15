@@ -48,6 +48,213 @@ class Phase3ContractTests(unittest.TestCase):
             self.assertEqual(cloud.header.parse_crs().to_epsg(), 25832)
             np.testing.assert_array_equal(np.asarray(cloud.classification), [6, 2])
 
+    def test_roofer_multipolygon_components_merge_without_geometry_loss(self) -> None:
+        def feature(z: int, roof_planes: int, mode: str) -> dict[str, object]:
+            building = "DEBY_LOD2_8568391"
+            return {
+                "type": "CityJSONFeature", "id": building,
+                "CityObjects": {
+                    building: {
+                        "type": "Building", "children": [building + "-0"],
+                        "geographicalExtent": [0, 0, 0, 1, 1, z + 1],
+                        "attributes": {
+                            "building_id": building, "source": "fixture",
+                            "grid_m": 0.5, "point_count": 20,
+                            "rf_success": True, "rf_pointcloud_unusable": False,
+                            "rf_force_lod11": mode == "lod11_fallback",
+                            "rf_extrusion_mode": mode, "rf_roof_type": "flat",
+                            "rf_roof_planes": roof_planes, "rf_volume_lod22": 2.0,
+                            "rf_rmse_lod22": 0.2, "rf_pt_density": 5.0,
+                            "rf_nodata_frac": 0.1,
+                        },
+                        "geometry": [{
+                            "type": "MultiSurface", "lod": "0",
+                            "boundaries": [[[0, 1, 2, 3]]],
+                        }],
+                    },
+                    building + "-0": {
+                        "type": "BuildingPart", "parents": [building],
+                        "geometry": [{
+                            "type": "Solid", "lod": "2.2",
+                            "boundaries": [[[[0, 1, 2, 3]]]],
+                            "semantics": {
+                                "surfaces": [{"type": "RoofSurface"}],
+                                "values": [[0]],
+                            },
+                        }],
+                    },
+                },
+                "vertices": [[0, 0, z], [1, 0, z], [1, 1, z], [0, 1, z]],
+            }
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            jsonl = root / "components.city.jsonl"
+            header = {
+                "type": "CityJSON", "version": "2.0", "CityObjects": {},
+                "vertices": [], "transform": {
+                    "scale": [1.0, 1.0, 1.0], "translate": [0.0, 0.0, 0.0],
+                }, "metadata": {
+                    "referenceSystem": "https://www.opengis.net/def/crs/EPSG/0/25832",
+                },
+            }
+            jsonl.write_text(
+                "\n".join(json.dumps(value) for value in (
+                    header, feature(10, 1, "standard"), feature(20, 2, "lod11_fallback"),
+                )) + "\n",
+                encoding="utf-8",
+            )
+            output = root / "merged.city.json"
+            w2 = MODULE.load_module("phase3_component_fixture_w2", MODULE.W2_SCRIPT)
+            result = MODULE._combine_roofer_component_cityjsonseq(
+                [jsonl], output, "DEBY_LOD2_8568391", w2,
+            )
+            payload = json.loads(output.read_text(encoding="utf-8"))
+            objects = payload["CityObjects"]
+            self.assertEqual(
+                set(objects),
+                {"DEBY_LOD2_8568391", "DEBY_LOD2_8568391-0", "DEBY_LOD2_8568391-1"},
+            )
+            parent = objects["DEBY_LOD2_8568391"]
+            self.assertEqual(parent["children"], ["DEBY_LOD2_8568391-0", "DEBY_LOD2_8568391-1"])
+            self.assertEqual(len(parent["geometry"][0]["boundaries"]), 2)
+            self.assertEqual(len(payload["vertices"]), 8)
+            self.assertEqual(
+                objects["DEBY_LOD2_8568391-1"]["geometry"][0]["boundaries"][0][0][0],
+                [4, 5, 6, 7],
+            )
+            self.assertEqual(parent["attributes"]["s3ap_component_count"], 2)
+            self.assertEqual(parent["attributes"]["rf_roof_planes"], 3)
+            self.assertEqual(parent["attributes"]["rf_extrusion_mode"], "lod11_fallback")
+            self.assertEqual(
+                objects["DEBY_LOD2_8568391-1"]["attributes"]["rf_roof_planes"],
+                2,
+            )
+            self.assertEqual(result["component_count"], 2)
+            self.assertTrue(result["has_lod22"])
+
+    def test_roofer_component_merge_rejects_unexpected_object_graph(self) -> None:
+        building = "DEBY_LOD2_8568391"
+        header = {
+            "type": "CityJSON", "version": "2.0", "CityObjects": {},
+            "vertices": [], "transform": {
+                "scale": [1.0, 1.0, 1.0], "translate": [0.0, 0.0, 0.0],
+            }, "metadata": {
+                "referenceSystem": "https://www.opengis.net/def/crs/EPSG/0/25832",
+            },
+        }
+        malformed = {
+            "type": "CityJSONFeature", "id": building,
+            "CityObjects": {
+                building: {
+                    "type": "Building", "children": [building + "-0", building + "-1"],
+                    "attributes": {}, "geographicalExtent": [0, 0, 0, 1, 1, 1],
+                    "geometry": [{"type": "MultiSurface", "lod": "0", "boundaries": []}],
+                },
+            },
+            "vertices": [[0, 0, 0]],
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            jsonl = Path(directory) / "malformed.city.jsonl"
+            jsonl.write_text(
+                json.dumps(header) + "\n" + json.dumps(malformed) + "\n",
+                encoding="utf-8",
+            )
+            w2 = MODULE.load_module("phase3_component_reject_w2", MODULE.W2_SCRIPT)
+            with self.assertRaisesRegex(RuntimeError, "exactly one BuildingPart"):
+                MODULE._combine_roofer_component_cityjsonseq(
+                    [jsonl], Path(directory) / "out.city.json", building, w2,
+                )
+
+    def test_roofer_component_mode_aggregation_is_fail_closed(self) -> None:
+        base = {
+            "building_id": "DEBY_LOD2_8568391", "source": "fixture",
+            "grid_m": 0.5, "point_count": 20, "rf_success": True,
+            "rf_pointcloud_unusable": False, "rf_force_lod11": False,
+            "rf_roof_type": "flat", "rf_roof_planes": 1,
+            "rf_volume_lod22": 1.0, "rf_rmse_lod22": 0.1,
+            "rf_pt_density": 5.0, "rf_nodata_frac": 0.0,
+        }
+        standard = {**base, "rf_extrusion_mode": "standard"}
+        skipped = {**base, "rf_extrusion_mode": "skip"}
+        result = MODULE._aggregate_roofer_component_attributes([standard, skipped])
+        self.assertEqual(result["rf_extrusion_mode"], "skip")
+        unknown = {**base, "rf_extrusion_mode": "unknown"}
+        mixed = MODULE._aggregate_roofer_component_attributes([standard, unknown])
+        self.assertEqual(mixed["rf_extrusion_mode"], "mixed_components")
+        self.assertFalse(mixed["rf_success"])
+        unknown_only = MODULE._aggregate_roofer_component_attributes([unknown])
+        self.assertEqual(unknown_only["rf_extrusion_mode"], "mixed_components")
+        self.assertFalse(unknown_only["rf_success"])
+
+    def test_roofer_solid_semantics_shape_is_fail_closed(self) -> None:
+        boundaries = [[[[0, 1, 2, 3]], [[0, 3, 2, 1]]]]
+        with self.assertRaisesRegex(RuntimeError, "semantic surfaces missing"):
+            MODULE._validate_cityjson_solid_semantics(
+                {}, boundaries, "fixture",
+            )
+        with self.assertRaisesRegex(RuntimeError, "surface shape mismatch"):
+            MODULE._validate_cityjson_solid_semantics(
+                {"surfaces": [{"type": "RoofSurface"}], "values": [[0]]},
+                boundaries, "fixture",
+            )
+        with self.assertRaisesRegex(RuntimeError, "semantic index out of range"):
+            MODULE._validate_cityjson_solid_semantics(
+                {"surfaces": [{"type": "RoofSurface"}], "values": [[0, 1]]},
+                boundaries, "fixture",
+            )
+
+    def test_roofer_component_merge_rejects_out_of_range_child_vertex(self) -> None:
+        building = "DEBY_LOD2_8568391"
+        header = {
+            "type": "CityJSON", "version": "2.0", "CityObjects": {},
+            "vertices": [], "transform": {
+                "scale": [1.0, 1.0, 1.0], "translate": [0.0, 0.0, 0.0],
+            }, "metadata": {
+                "referenceSystem": "https://www.opengis.net/def/crs/EPSG/0/25832",
+            },
+        }
+        feature = {
+            "type": "CityJSONFeature", "id": building,
+            "CityObjects": {
+                building: {
+                    "type": "Building", "children": [building + "-0"],
+                    "attributes": {
+                        "building_id": building, "source": "fixture",
+                        "grid_m": 0.5, "point_count": 4,
+                    },
+                    "geographicalExtent": [0, 0, 0, 1, 1, 1],
+                    "geometry": [{
+                        "type": "MultiSurface", "lod": "0",
+                        "boundaries": [[[0, 1, 2, 3]]],
+                    }],
+                },
+                building + "-0": {
+                    "type": "BuildingPart", "parents": [building],
+                    "geometry": [{
+                        "type": "Solid", "lod": "2.2",
+                        "boundaries": [[[[0, 1, 2, 9]]]],
+                        "semantics": {
+                            "surfaces": [{"type": "RoofSurface"}],
+                            "values": [[0]],
+                        },
+                    }],
+                },
+            },
+            "vertices": [[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0]],
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            jsonl = Path(directory) / "bad-index.city.jsonl"
+            jsonl.write_text(
+                json.dumps(header) + "\n" + json.dumps(feature) + "\n",
+                encoding="utf-8",
+            )
+            w2 = MODULE.load_module("phase3_component_bad_index_w2", MODULE.W2_SCRIPT)
+            with self.assertRaisesRegex(RuntimeError, "index out of range"):
+                MODULE._combine_roofer_component_cityjsonseq(
+                    [jsonl], Path(directory) / "out.city.json", building, w2,
+                )
+
     def test_phase2_inventory_aliases_and_tilt_precedence(self) -> None:
         config = MODULE.load_json(MODULE.DEFAULT_CONFIG)
         job = MODULE.job_from_row({
