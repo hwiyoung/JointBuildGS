@@ -273,6 +273,35 @@ def validate_source_contract(lock: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def validate_gsplat_prewarm(lock: dict[str, Any]) -> dict[str, Any]:
+    phase2_lock_path = resolve(lock["source_contract"]["phase2_lock"])
+    phase2_lock = json.loads(phase2_lock_path.read_text(encoding="utf-8"))
+    contract = phase2_lock["runtime"].get("gsplat_prewarm") or {}
+    if contract.get("script") != lock["runtime"]["gsplat_prewarm"]["script"]:
+        raise RuntimeError("smoke/main gsplat prewarm script contract drift")
+    manifest_path = resolve(contract.get("manifest", ""))
+    payload = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if payload.get("schema") != "jointbuildgs.s3ap.phase2.gsplat_prewarm.v1":
+        raise RuntimeError("unexpected gsplat prewarm manifest schema")
+    if payload.get("status") != "complete":
+        raise RuntimeError("gsplat prewarm did not complete")
+    if payload.get("lock_sha256") != sha256_file(phase2_lock_path):
+        raise RuntimeError("gsplat prewarm main-lock hash drift")
+    script_path = resolve(contract["script"])
+    if payload.get("script_sha256") != sha256_file(script_path):
+        raise RuntimeError("gsplat prewarm script hash drift")
+    extension_path = Path(payload.get("extension_path", ""))
+    if not extension_path.is_file() or payload.get("extension_sha256") != sha256_file(extension_path):
+        raise RuntimeError("gsplat prewarm extension file/hash drift")
+    return {
+        "manifest": relative(manifest_path),
+        "manifest_sha256": sha256_file(manifest_path),
+        "extension_path": str(extension_path),
+        "extension_sha256": payload["extension_sha256"],
+        "elapsed_s": payload.get("elapsed_s"),
+    }
+
+
 def derive_smoke_config(
     source_config: dict[str, Any], smoke: dict[str, Any], lock: dict[str, Any]
 ) -> tuple[dict[str, Any], Path]:
@@ -739,6 +768,8 @@ def main() -> None:
             "runtime_attestation": runtime,
         }, sort_keys=True))
         return
+    manifest["gsplat_prewarm"] = validate_gsplat_prewarm(lock)
+    atomic_json(lock["outputs"]["manifest"], manifest)
     manifest["git_head_at_run"] = git_output("rev-parse", "HEAD")
     manifest = run_schedule(
         manifest,

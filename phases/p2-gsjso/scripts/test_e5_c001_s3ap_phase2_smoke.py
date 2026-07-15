@@ -90,6 +90,10 @@ class Phase2SmokeHarnessTest(unittest.TestCase):
         self.assertIn("--gpus all", launcher)
         for name in ("HOME", "XDG_CACHE_HOME", "TORCH_EXTENSIONS_DIR"):
             self.assertIn(f'-e "{name}=', launcher)
+        prewarm = self.lock["runtime"]["gsplat_prewarm"]
+        self.assertTrue((REPO / prewarm["script"]).is_file())
+        self.assertIn(prewarm["script"], launcher)
+        self.assertLess(launcher.index(prewarm["script"]), launcher.rindex("e5_c001_s3ap_phase2_smoke.py"))
 
     def test_live_source_contract_reuses_strict_phase2_payload_validation(self):
         audit = smoke_module.validate_source_contract(self.lock)

@@ -24,18 +24,22 @@
       "HOME": "/workspace/JointBuildGS/results/tum_transfer/e5_s3ap_phase2/runtime/home",
       "XDG_CACHE_HOME": "/workspace/JointBuildGS/results/tum_transfer/e5_s3ap_phase2/runtime/xdg_cache",
       "TORCH_EXTENSIONS_DIR": "/workspace/JointBuildGS/results/tum_transfer/e5_s3ap_phase2/runtime/torch_extensions"
+    },
+    "gsplat_prewarm": {
+      "script": "phases/p2-gsjso/scripts/e5_c001_s3ap_gsplat_prewarm.py",
+      "policy": "one serialized prewarm container must complete before parallel A0/A1 smoke workers"
     }
   },
   "source_contract": {
-    "phase2_implementation_commit": "95afb455c44dc0792ddfea91fbbf51aa1774afb7",
+    "phase2_implementation_commit": "4e6dabbddb5c5694f5d899558e6fb35dbc174de3",
     "phase2_lock": "phases/p2-gsjso/configs/e5_c001_s3ap_phase2_lock.json",
-    "phase2_lock_sha256": "0e800b49e180bb1e986ec7d25d11faec983d98ebceea5d5b6c45ec1627fb4965",
+    "phase2_lock_sha256": "9f62fe3d5756b02bbd3f4b495b183e68980097afaf3dae55369e97a902075dce",
     "prepare_manifest": "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase2_prepare/manifest.json",
-    "prepare_manifest_sha256": "5081e3080beecd902633be6c8b36d7caab2a43ea042b2de53366c08cfe4553d7",
+    "prepare_manifest_sha256": "3f99dd5983872d9ef882ecdb9382837887aec2ae6b8a0165889a9c72999ddf75",
     "base_inventory": "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase2_prepare/jobs.csv",
     "base_inventory_sha256": "57cd72e27aba96e412a3e57de1003551f67b40b6d321d0c048261b58effe34df",
     "prepared_data_manifest": "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_8568391/data_manifest.json",
-    "prepared_data_manifest_sha256": "7b9f7e43d455481dce39a4f4790adefce70d690b6d6f3778d68de13147bfe691",
+    "prepared_data_manifest_sha256": "a0e1b937592fa12acbb4f701dbb5df43b4169d851b7fa1b42ac948181825c6bf",
     "required_source_iterations": 30000,
     "required_replicate": "r1",
     "required_job_class": "base",
@@ -44,11 +48,11 @@
     "als_used": false
   },
   "outputs": {
-    "root": "results/tum_transfer/e5_s3ap_phase2/smoke/20260715_cuda_wiring_v2",
-    "config_dir": "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase2_smoke_v2/configs",
-    "run_dir": "results/tum_transfer/e5_s3ap_phase2/smoke/20260715_cuda_wiring_v2/runs",
-    "log_dir": "results/tum_transfer/e5_s3ap_phase2/smoke/20260715_cuda_wiring_v2/logs",
-    "manifest": "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase2_smoke_v2/manifest.json"
+    "root": "results/tum_transfer/e5_s3ap_phase2/smoke/20260715_cuda_wiring_v3",
+    "config_dir": "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase2_smoke_v3/configs",
+    "run_dir": "results/tum_transfer/e5_s3ap_phase2/smoke/20260715_cuda_wiring_v3/runs",
+    "log_dir": "results/tum_transfer/e5_s3ap_phase2/smoke/20260715_cuda_wiring_v3/logs",
+    "manifest": "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase2_smoke_v3/manifest.json"
   },
   "safety": {
     "source_configs_are_read_only": true,

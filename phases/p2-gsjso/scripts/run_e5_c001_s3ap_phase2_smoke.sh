@@ -28,6 +28,9 @@ COMMON=(
   -e "S3AP_SMOKE_DOCKER_IMAGE_ID=${ACTUAL_IMAGE_ID}"
   -e "S3AP_SMOKE_HOST_UID=${HOST_UID}"
   -e "S3AP_SMOKE_HOST_GID=${HOST_GID}"
+  -e "S3AP_DOCKER_IMAGE_ID=${ACTUAL_IMAGE_ID}"
+  -e "S3AP_HOST_UID=${HOST_UID}"
+  -e "S3AP_HOST_GID=${HOST_GID}"
   -e "HOME=${CONTAINER_ROOT}/results/tum_transfer/e5_s3ap_phase2/runtime/home"
   -e "XDG_CACHE_HOME=${CONTAINER_ROOT}/results/tum_transfer/e5_s3ap_phase2/runtime/xdg_cache"
   -e "TORCH_EXTENSIONS_DIR=${CONTAINER_ROOT}/results/tum_transfer/e5_s3ap_phase2/runtime/torch_extensions"
@@ -42,6 +45,8 @@ case "${MODE}" in
       --prepare-only "$@"
     ;;
   run)
+    docker run "${COMMON[@]}" --gpus all "${IMAGE}" \
+      python phases/p2-gsjso/scripts/e5_c001_s3ap_gsplat_prewarm.py
     exec docker run "${COMMON[@]}" --gpus all "${IMAGE}" \
       python phases/p2-gsjso/scripts/e5_c001_s3ap_phase2_smoke.py "$@"
     ;;
