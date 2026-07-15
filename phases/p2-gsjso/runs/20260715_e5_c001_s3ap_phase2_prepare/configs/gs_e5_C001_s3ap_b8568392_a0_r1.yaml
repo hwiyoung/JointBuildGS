@@ -1,0 +1,79 @@
+device: cuda
+sh_degree: 3
+sh_up_every: 1000
+w_photo: 1.0
+photo_lam: 0.2
+w_distort: 0.0
+w_mutual: 0.0
+w_mvc: 0.0
+lr_means: 0.00016
+lr_scales: 0.005
+lr_quats: 0.001
+lr_opacities: 0.05
+lr_sh0: 0.0025
+lr_shN: 0.000125
+lr_sem: 0.0025
+prune_opa: 0.01
+grow_grad2d: 0.001
+grow_scale3d: 0.01
+prune_scale3d: 0.1
+refine_start_iter: 500
+refine_stop_iter: 20000
+refine_every: 200
+reset_every: 3000
+eval_every: 2000
+ckpt_every: 10000
+load_normal: false
+load_semantic: false
+load_depth: false
+w_depth: 0.0
+w_normal: 0.0
+w_mono_depth: 0.0
+w_nc: 0.0
+w_sem: 0.0
+sem_detach_geometry: true
+w_semdepth_smooth: 0.0
+w_semdepth_plane: 0.0
+w_boundary_normal: 0.0
+w_structure: 0.0
+loss_grad_audit_every: 0
+semantic_geometry_audit_every: 0
+surface_seed_protect: false
+seed: 2001
+data_root: /workspace/JointBuildGS/results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_8568392
+out_dir: /workspace/JointBuildGS/results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b8568392_a0_r1
+max_iter: 30000
+downscale: 1.0
+surface_seed_npz: /workspace/JointBuildGS/phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase1_seedprep/seeds/DEBY_LOD2_8568392_p0_surface_seed.npz
+surface_seed_initial_opacity: 0.1
+surface_seed_height_delta_m: 0.0
+surface_seed_tilt_deg: 0.0
+surface_seed_tilt_axis_xy:
+- 1.0
+- 0.0
+surface_seed_tilt_pivot_xy:
+- 0.0
+- 0.0
+visible_views: &id001
+- DJI_20241217084901_0194_D.png
+- DJI_20241217084903_0195_D.png
+- DJI_20241217095441_0023_D.png
+train_views: *id001
+eval_views: []
+mono_target_buildings:
+- '8568392'
+semantic_pi_target_buildings:
+- '8568392'
+world_offset:
+- 690953.0
+- 5336071.0
+- 604.0
+phase2_input_contract:
+  observed_sfm: true
+  external_surface_seed: true
+  mvs_init: false
+  gt_used: false
+  lod2_used: false
+  als_used: false
+  job_class: base
+  building_id: '8568392'
