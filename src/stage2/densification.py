@@ -96,6 +96,34 @@ class SeedProtectStrategy(DefaultStrategy):
     """
 
     seed_protect_until_iter: int | None = None
+    seed_prune_opa_initial: float | None = None
+    seed_prune_opa_final: float | None = None
+    seed_prune_switch_iter: int | None = None
+
+    def effective_prune_opa(self, step: int) -> float:
+        """Opacity threshold used by both prune and upstream opacity reset."""
+
+        if (
+            self.seed_prune_opa_initial is None
+            or self.seed_prune_opa_final is None
+            or self.seed_prune_switch_iter is None
+        ):
+            return float(self.prune_opa)
+        if int(step) < int(self.seed_prune_switch_iter):
+            return float(self.seed_prune_opa_initial)
+        return float(self.seed_prune_opa_final)
+
+    def step_post_backward(self, params, optimizers, state, step, info, packed=False):  # type: ignore[override]
+        # DefaultStrategy reads ``self.prune_opa`` for both _prune_gs and
+        # reset_opa(value=2*prune_opa), so one assignment keeps the two locked
+        # schedules identical without forking upstream gsplat logic.
+        self.prune_opa = self.effective_prune_opa(step)
+        state["effective_prune_opa"] = float(self.prune_opa)
+        state["effective_reset_opa"] = float(self.prune_opa) * 2.0
+        state["prune_opa_schedule_step"] = int(step)
+        return super().step_post_backward(
+            params, optimizers, state, step, info, packed=packed
+        )
 
     def _prune_gs(self, params, optimizers, state, step):  # type: ignore[override]
         import torch as _torch
@@ -129,17 +157,33 @@ class SeedProtectStrategy(DefaultStrategy):
         state["last_pruned"] = n_prune
         state["last_seed_protect_active"] = bool(protect_active)
         state["seed_protect_until_iter"] = -1 if self.seed_protect_until_iter is None else int(self.seed_protect_until_iter)
-        state["seed_protected_count"] = int(is_seed.sum().item()) if is_seed is not None else 0
+        remaining_is_seed = state.get("is_seed")
+        state["seed_protected_count"] = (
+            int(remaining_is_seed.sum().item()) if remaining_is_seed is not None else 0
+        )
         state["cum_prune_candidates"] = int(state.get("cum_prune_candidates", 0)) + n_candidate
         state["cum_prune_seed_protected"] = int(state.get("cum_prune_seed_protected", 0)) + n_seed_protected
         state["cum_pruned"] = int(state.get("cum_pruned", 0)) + n_prune
         return n_prune
 
 
-def build_seed_protect_strategy(seed_protect_until_iter: int | None = None, **kwargs) -> SeedProtectStrategy:
+def build_seed_protect_strategy(
+    seed_protect_until_iter: int | None = None,
+    seed_prune_opa_initial: float | None = None,
+    seed_prune_opa_final: float | None = None,
+    seed_prune_switch_iter: int | None = None,
+    **kwargs,
+) -> SeedProtectStrategy:
     """Same args/defaults as build_strategy, but seeds (state['is_seed']) are prune-protected."""
     base = build_strategy(**kwargs)
-    return _clone_strategy(base, SeedProtectStrategy, seed_protect_until_iter=seed_protect_until_iter)
+    return _clone_strategy(
+        base,
+        SeedProtectStrategy,
+        seed_protect_until_iter=seed_protect_until_iter,
+        seed_prune_opa_initial=seed_prune_opa_initial,
+        seed_prune_opa_final=seed_prune_opa_final,
+        seed_prune_switch_iter=seed_prune_switch_iter,
+    )
 
 
 class ElongationFilterStrategy(DefaultStrategy):
@@ -244,12 +288,35 @@ def _clone_strategy(
     *,
     axis_ratio_threshold: float | None = None,
     seed_protect_until_iter: int | None = None,
+    seed_prune_opa_initial: float | None = None,
+    seed_prune_opa_final: float | None = None,
+    seed_prune_switch_iter: int | None = None,
 ):
     strategy = cls(**{f.name: getattr(base, f.name) for f in __import__("dataclasses").fields(base)})
     if axis_ratio_threshold is not None:
         strategy.axis_ratio_threshold = float(axis_ratio_threshold)
     if hasattr(strategy, "seed_protect_until_iter"):
         strategy.seed_protect_until_iter = None if seed_protect_until_iter is None else int(seed_protect_until_iter)
+        schedule = (
+            seed_prune_opa_initial,
+            seed_prune_opa_final,
+            seed_prune_switch_iter,
+        )
+        if any(value is not None for value in schedule) and not all(
+            value is not None for value in schedule
+        ):
+            raise ValueError(
+                "seed prune schedule requires initial, final, and switch_iter together"
+            )
+        if all(value is not None for value in schedule):
+            initial = float(seed_prune_opa_initial)
+            final = float(seed_prune_opa_final)
+            switch = int(seed_prune_switch_iter)
+            if not (0.0 < initial < 1.0 and 0.0 < final < 1.0 and switch >= 0):
+                raise ValueError("seed prune thresholds must be in (0,1) and switch_iter >=0")
+            strategy.seed_prune_opa_initial = initial
+            strategy.seed_prune_opa_final = final
+            strategy.seed_prune_switch_iter = switch
     return strategy
 
 
@@ -261,6 +328,9 @@ def build_elongation_filter_strategy(axis_ratio_threshold: float = 0.01, **kwarg
 def build_seed_protect_elongation_filter_strategy(
     axis_ratio_threshold: float = 0.01,
     seed_protect_until_iter: int | None = None,
+    seed_prune_opa_initial: float | None = None,
+    seed_prune_opa_final: float | None = None,
+    seed_prune_switch_iter: int | None = None,
     **kwargs,
 ) -> SeedProtectElongationFilterStrategy:
     base = build_strategy(**kwargs)
@@ -269,4 +339,7 @@ def build_seed_protect_elongation_filter_strategy(
         SeedProtectElongationFilterStrategy,
         axis_ratio_threshold=axis_ratio_threshold,
         seed_protect_until_iter=seed_protect_until_iter,
+        seed_prune_opa_initial=seed_prune_opa_initial,
+        seed_prune_opa_final=seed_prune_opa_final,
+        seed_prune_switch_iter=seed_prune_switch_iter,
     )

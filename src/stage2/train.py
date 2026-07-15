@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import math
 import os
@@ -25,7 +26,7 @@ import yaml
 from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
 
-from .dataloader import ColmapDataset
+from .dataloader import ColmapDataset, resolve_view_roles
 from .densification import build_optimizers, build_param_dict, build_strategy
 from .grouping import group_primitives, group_primitives_g2
 from .loss import data_fitting as L
@@ -129,6 +130,13 @@ def _append_densify_audit(out_dir: Path, events: list[dict]) -> None:
         if write_header:
             writer.writeheader()
         writer.writerows(events)
+
+
+def _append_mono_target_audit(out_dir: Path, row: dict) -> None:
+    audit_dir = out_dir / "audit"
+    audit_dir.mkdir(exist_ok=True)
+    with (audit_dir / "mono_target_regions.jsonl").open("a", encoding="utf-8") as fh:
+        fh.write(json.dumps(row, sort_keys=True) + "\n")
 
 
 # Map from gsplat strategy dict keys -> model attribute names
@@ -479,6 +487,45 @@ def _short_building_id(value: object) -> str:
     return str(value or "").replace("DEBY_LOD2_", "")
 
 
+def _target_region_mask(
+    region_frame,
+    target_buildings: set[str],
+) -> tuple[torch.Tensor, torch.Tensor, dict]:
+    """Select oracle-address regions by building ID, without reading GT values."""
+
+    metadata_regions = region_frame.metadata.get("regions", {})
+    if not isinstance(metadata_regions, dict):
+        raise ValueError("semantic region metadata.regions must be an object")
+    selected_ids: list[int] = []
+    mapping: dict[int, str] = {}
+    for raw_rid, row in metadata_regions.items():
+        if not isinstance(row, dict):
+            continue
+        rid = int(raw_rid)
+        bid = _short_building_id(row.get("building_id"))
+        if bid in target_buildings:
+            selected_ids.append(rid)
+            mapping[rid] = bid
+    if selected_ids:
+        ids = torch.tensor(
+            sorted(set(selected_ids)),
+            device=region_frame.region_ids.device,
+            dtype=region_frame.region_ids.dtype,
+        )
+        mask = (region_frame.region_ids[..., None] == ids).any(dim=-1)
+        target_region_ids = torch.where(mask, region_frame.region_ids, 0)
+    else:
+        mask = torch.zeros_like(region_frame.region_ids, dtype=torch.bool)
+        target_region_ids = torch.zeros_like(region_frame.region_ids)
+    mask = mask & (~region_frame.cutline_mask)
+    target_region_ids = torch.where(mask, target_region_ids, 0)
+    return mask, target_region_ids, {
+        "selected_region_ids": sorted(set(selected_ids)),
+        "region_to_building": mapping,
+        "address_role": "region membership only",
+    }
+
+
 PJPL_VIEW_AUDIT_SCHEMA = "jointbuildgs.s3a.pjpl_depth_anchor_views.v2"
 PJPL_VIEW_AUDIT_FILENAME = "pjpl_depth_anchor_views.csv"
 
@@ -502,6 +549,29 @@ def _semantic_geometry_execution_flags(
         semantic_geometry_enabled,
         pjpl_gate_sweep_enabled,
     )
+
+
+def _mono_depth_geometry_contract(
+    *,
+    semantic_geometry_enabled: bool,
+    w_mono_depth: float,
+    mono_depth_loss: str,
+) -> dict:
+    """Validate and describe the no-absolute-depth S3-A-prime contract."""
+
+    absolute_active = float(w_mono_depth) > 0 and mono_depth_loss == "absolute_l1"
+    ssi_active = float(w_mono_depth) > 0 and mono_depth_loss == "ssi"
+    if semantic_geometry_enabled and absolute_active:
+        raise RuntimeError(
+            "semantic geometry permits mono depth only with explicit mono_depth_loss=ssi; "
+            "absolute monocular-depth L1 remains forbidden"
+        )
+    return {
+        "absolute_mono_depth_forbidden_with_semantic_geometry": True,
+        "absolute_mono_depth_active": absolute_active,
+        "mono_depth_ssi_enabled": ssi_active,
+        "semantic_geometry_enabled": bool(semantic_geometry_enabled),
+    }
 
 
 def _update_pjpl_view_audit(
@@ -985,6 +1055,7 @@ def main():
         mono_depth_scale=cfg.get("mono_depth_scale", 1.0),
         mono_depth_far_sentinel=cfg.get("mono_depth_far_sentinel", 28000.0),
         normal_encoding=cfg.get("normal_encoding", "half_range"),
+        visible_views=cfg.get("visible_views"),
     )
     print(f"[data] frames={len(ds)}  pts_init={ds.points_xyz.shape[0]}")
 
@@ -992,13 +1063,23 @@ def main():
     # azimuth / viewpoint bias when frames are stored in sorted order (grouped by
     # capture type). Previously used "last 10%" which grouped all orbit views into
     # test → test was out-of-distribution → severe overfitting.
-    n = len(ds)
-    test_idx = [i for i in range(n) if i % 10 == 9]
-    train_idx = [i for i in range(n) if i not in test_idx]
+    train_idx, test_idx, view_role_audit = resolve_view_roles(
+        ds.frames,
+        train_views=cfg.get("train_views"),
+        eval_views=cfg.get("eval_views"),
+    )
+    view_role_audit["visible_filter"] = ds.visible_view_audit
+    print(
+        f"[views] mode={view_role_audit['mode']} train={len(train_idx)} "
+        f"eval={len(test_idx)} visible={len(ds.frames)}"
+    )
 
     # ---------- semantic seeding (P2 ①): optional carve seeds for textureless bldgs ----------
     points_xyz, points_rgb = ds.points_xyz, ds.points_rgb
     points_sem = None
+    points_init_opacity = None
+    surface_seed_mask = None
+    surface_seed_audit = None
     if cfg.get("seed_semantic", False):
         from .semantic_seed import build_semantic_seeds, cameras_from_frames, concat_seeds
 
@@ -1027,9 +1108,55 @@ def main():
             max_seeds_per_building=sc.get("max_seeds_per_building", 0),
             geoid=sc.get("geoid"),
         )
-        points_xyz, points_rgb, points_sem = concat_seeds(ds.points_xyz, ds.points_rgb, seeds)
+        combined = concat_seeds(ds.points_xyz, ds.points_rgb, seeds)
+        points_xyz, points_rgb, points_sem = combined
+        points_init_opacity = combined.init_opacity
+        surface_seed_mask = combined.is_surface_seed
         print(f"[seed] +{len(seeds.xyz)} semantic seeds over {len(sc['buildings'])} buildings "
               f"-> N {ds.points_xyz.shape[0]} -> {points_xyz.shape[0]}")
+
+    # ---------- S3-A-prime external seed surface ----------
+    surface_seed_path = cfg.get("surface_seed_npz")
+    if surface_seed_path:
+        from .semantic_seed import (
+            concat_seeds,
+            load_surface_seed_npz,
+            perturb_surface_seed,
+        )
+
+        surface_seed_path = str(surface_seed_path)
+        surface_seeds = load_surface_seed_npz(surface_seed_path)
+        surface_seeds = perturb_surface_seed(
+            surface_seeds,
+            height_delta_m=float(cfg.get("surface_seed_height_delta_m", 0.0)),
+            tilt_deg=float(cfg.get("surface_seed_tilt_deg", 0.0)),
+            tilt_axis_xy=cfg.get("surface_seed_tilt_axis_xy"),
+            tilt_pivot_xy=cfg.get("surface_seed_tilt_pivot_xy"),
+        )
+        combined = concat_seeds(
+            points_xyz,
+            points_rgb,
+            surface_seeds,
+            points_sem=points_sem,
+            points_init_opacity=points_init_opacity,
+            points_surface_seed=surface_seed_mask,
+        )
+        points_xyz, points_rgb, points_sem = combined
+        points_init_opacity = combined.init_opacity
+        surface_seed_mask = combined.is_surface_seed
+        seed_bytes = Path(surface_seed_path).read_bytes()
+        surface_seed_audit = {
+            "path": surface_seed_path,
+            "sha256": hashlib.sha256(seed_bytes).hexdigest(),
+            "schema": surface_seeds.metadata.get("schema"),
+            "metadata": surface_seeds.metadata,
+            "n_surface_seed": int(surface_seed_mask.sum()),
+            "init_opacity": 0.10,
+        }
+        print(
+            f"[surface-seed] +{len(surface_seeds.xyz)} strict NPZ seeds "
+            f"opacity=0.10 -> N={len(points_xyz)}"
+        )
 
     # ---------- MVS-seed init (P2 make-or-break v6) ----------
     # INIT/DATA PATH ONLY (no engine logic): seed the model with a prepared GS-LOCAL MVS cloud
@@ -1053,12 +1180,22 @@ def main():
             points_xyz = seed_xyz.astype(np.float32)
             points_rgb = seed_rgb
             points_sem = None
+            points_init_opacity = None
+            surface_seed_mask = np.zeros(len(seed_xyz), dtype=np.bool_)
         elif mode == "concat":
             points_xyz = np.concatenate([points_xyz, seed_xyz], axis=0).astype(np.float32)
             points_rgb = np.concatenate([points_rgb, seed_rgb], axis=0).astype(np.float32)
             if points_sem is not None:
                 points_sem = np.concatenate(
                     [points_sem, np.full(len(seed_xyz), -1, np.int64)]).astype(np.int64)
+            if points_init_opacity is not None:
+                points_init_opacity = np.concatenate(
+                    [points_init_opacity, np.full(len(seed_xyz), 0.10, np.float32)]
+                ).astype(np.float32)
+            if surface_seed_mask is not None:
+                surface_seed_mask = np.concatenate(
+                    [surface_seed_mask, np.zeros(len(seed_xyz), dtype=np.bool_)]
+                )
         else:
             raise ValueError(f"init_pointcloud_mode must be concat|replace, got {mode!r}")
         print(f"[mvs-seed] {mode} {len(seed_xyz)} MVS init pts from {init_pc}: "
@@ -1073,6 +1210,8 @@ def main():
         sh_degree=cfg.get("sh_degree", 3),
         device=device,
         points_sem=points_sem,
+        points_init_opacity=points_init_opacity,
+        surface_seed_mask=surface_seed_mask,
     )
     model = model.to(device)
 
@@ -1101,11 +1240,52 @@ def main():
         refine_every=cfg.get("refine_every", 100),
         reset_every=cfg.get("reset_every", 3000),
     )
-    # (P2 make-or-break C) seed_protect: MVS-seed Gaussians are exempt from opacity-prune.
-    seed_protect = bool(cfg.get("seed_protect", False)) and (mvs_seed_mask is not None)
+    # Legacy ``seed_protect`` remains MVS-lineage protection.  S3-A-prime uses
+    # a separate, surface-only switch so A0/A1 cannot accidentally inherit A2.
+    legacy_mvs_seed_protect = bool(cfg.get("seed_protect", False)) and (
+        mvs_seed_mask is not None
+    )
+    surface_seed_protect = bool(cfg.get("surface_seed_protect", False))
+    if surface_seed_protect and (
+        surface_seed_mask is None or not bool(surface_seed_mask.any())
+    ):
+        raise RuntimeError("surface_seed_protect=true requires a nonempty surface_seed_npz")
+    if surface_seed_protect and legacy_mvs_seed_protect:
+        raise ValueError(
+            "S3-A-prime A2 protection is surface-lineage only; disable legacy seed_protect"
+        )
     seed_protect_until_iter = cfg.get("seed_protect_until_iter")
-    if seed_protect_until_iter is not None:
+    seed_prune_schedule = {}
+    if surface_seed_protect:
+        surface_until = int(cfg.get("surface_seed_protect_until_iter", 10000))
+        schedule_initial = float(cfg.get("surface_seed_prune_opa_initial", 0.05))
+        schedule_final = float(cfg.get("surface_seed_prune_opa_final", 0.01))
+        schedule_switch = int(cfg.get("surface_seed_prune_switch_iter", 10000))
+        if (surface_until, schedule_initial, schedule_final, schedule_switch) != (
+            10000,
+            0.05,
+            0.01,
+            10000,
+        ):
+            raise ValueError(
+                "S3-A-prime A2 lock requires protect_until=10000 and "
+                "prune opacity 0.05->0.01 at iteration 10000"
+            )
+        seed_protect_until_iter = surface_until
+        seed_prune_schedule = {
+            "seed_prune_opa_initial": schedule_initial,
+            "seed_prune_opa_final": schedule_final,
+            "seed_prune_switch_iter": schedule_switch,
+        }
+    elif seed_protect_until_iter is not None:
         seed_protect_until_iter = int(seed_protect_until_iter)
+
+    seed_protect = legacy_mvs_seed_protect or surface_seed_protect
+    seed_protect_mask = np.zeros(len(points_xyz), dtype=np.bool_)
+    if legacy_mvs_seed_protect:
+        seed_protect_mask |= mvs_seed_mask
+    if surface_seed_protect:
+        seed_protect_mask |= surface_seed_mask
     elongation_filter = bool(cfg.get("elongation_filter", False))
     elongation_axis_ratio_threshold = float(cfg.get("elongation_axis_ratio_threshold", 0.01))
     if seed_protect and elongation_filter:
@@ -1113,12 +1293,14 @@ def main():
         strategy = build_seed_protect_elongation_filter_strategy(
             axis_ratio_threshold=elongation_axis_ratio_threshold,
             seed_protect_until_iter=seed_protect_until_iter,
+            **seed_prune_schedule,
             **_strat_kwargs,
         )
     elif seed_protect:
         from .densification import build_seed_protect_strategy
         strategy = build_seed_protect_strategy(
             seed_protect_until_iter=seed_protect_until_iter,
+            **seed_prune_schedule,
             **_strat_kwargs,
         )
     elif elongation_filter:
@@ -1131,12 +1313,24 @@ def main():
         strategy = build_strategy(**_strat_kwargs)
     strategy.check_sanity(params, optimizers)
     strategy_state = strategy.initialize_state(scene_scale=scene_scale)
+    if surface_seed_path:
+        # Kept for every arm, not just A2.  gsplat duplicate/split/remove carries
+        # arbitrary per-Gaussian state tensors in lockstep, so this remains a
+        # true lineage mask after densification and pruning.
+        strategy_state["surface_seed_lineage"] = torch.from_numpy(
+            surface_seed_mask
+        ).to(device)
     seed_log_boxes = None
     if seed_protect:
-        strategy_state["is_seed"] = torch.from_numpy(mvs_seed_mask).to(device)
+        strategy_state["is_seed"] = torch.from_numpy(seed_protect_mask).to(device)
         release_msg = "for all refine steps" if seed_protect_until_iter is None else f"until iter {seed_protect_until_iter}"
-        print(f"[seed-protect] protecting {int(mvs_seed_mask.sum())} MVS-seed Gaussians from prune "
-              f"(of {len(mvs_seed_mask)}) {release_msg}")
+        protected_kind = (
+            "surface+MVS" if surface_seed_protect and legacy_mvs_seed_protect
+            else "surface" if surface_seed_protect
+            else "MVS"
+        )
+        print(f"[seed-protect] protecting {int(seed_protect_mask.sum())} {protected_kind}-lineage "
+              f"Gaussians from prune (of {len(seed_protect_mask)}) {release_msg}")
         seed_log_boxes = _load_footprint_boxes_local(
             cfg.get("seed_log_footprints"), cfg.get("world_offset", [690953.0, 5336071.0, 604.0]),
             cfg.get("seed_log_buildings"))
@@ -1188,6 +1382,24 @@ def main():
     mono_depth_ramp_steps = int(cfg.get("mono_depth_ramp_steps", 0))
     mono_depth_final_weight = cfg.get("mono_depth_final_weight")
     mono_depth_final_factor = cfg.get("mono_depth_final_factor")
+    mono_depth_loss = str(cfg.get("mono_depth_loss", "absolute_l1"))
+    mono_normal_loss = str(cfg.get("mono_normal_loss", "global"))
+    if mono_depth_loss not in {"absolute_l1", "ssi"}:
+        raise ValueError("mono_depth_loss must be absolute_l1|ssi")
+    if mono_normal_loss not in {"global", "target_region"}:
+        raise ValueError("mono_normal_loss must be global|target_region")
+    mono_target_buildings = {
+        _short_building_id(value) for value in cfg.get("mono_target_buildings", [])
+    }
+    mono_target_min_pixels = int(cfg.get("mono_target_min_pixels", 64))
+    target_region_priors = (
+        (w_mono_depth > 0 and mono_depth_loss == "ssi")
+        or (w_normal > 0 and mono_normal_loss == "target_region")
+    )
+    if target_region_priors and not mono_target_buildings:
+        raise ValueError("target-region mono priors require mono_target_buildings")
+    if target_region_priors and mono_target_min_pixels < 64:
+        raise ValueError("mono_target_min_pixels must be >=64")
     w_nc = cfg.get("w_nc", 0.05)
     w_distort = cfg.get("w_distort", 100.0)   # 2DGS distortion reg
     distort_normalization = cfg.get("distort_normalization", "none")
@@ -1237,6 +1449,11 @@ def main():
         w_boundary_normal=w_boundary_normal,
         gate_attempt=int(cfg.get("s3_gate_attempt", 0)),
     )
+    mono_depth_geometry_contract = _mono_depth_geometry_contract(
+        semantic_geometry_enabled=semantic_geometry_enabled,
+        w_mono_depth=w_mono_depth,
+        mono_depth_loss=mono_depth_loss,
+    )
     if min(w_semdepth_smooth, w_semdepth_plane, w_boundary_normal) < 0:
         raise ValueError("S3 semantic geometry weights must be non-negative")
     if semantic_geometry_warmup < 0:
@@ -1248,10 +1465,6 @@ def main():
     if semantic_geometry_enabled:
         if not cfg.get("load_semantic", False):
             raise RuntimeError("S3 semantic geometry requires load_semantic=true")
-        if w_mono_depth > 0:
-            raise RuntimeError(
-                "S3-A forbids monocular depth: set w_mono_depth=0 when semantic geometry is enabled"
-            )
         cache_root = cfg.get("semantic_region_cache")
         if semantic_depth_enabled and not cache_root:
             raise RuntimeError(
@@ -1300,13 +1513,48 @@ def main():
             boundary_kernel_size=int(cfg.get("semantic_boundary_band_px", 5)),
         )
         print(
-            "[S3-A] AlignGS/DN monocular-depth Pearson replaced by rendered-depth "
-            "masked smooth+free-plane (no monocular depth); boundary normal reuses Omnidata"
+            "[S3-A] rendered-depth masked smooth+free-plane active; boundary normal "
+            "reuses Omnidata; mono depth is allowed only as explicit target-region SSI"
         )
         print(
             f"[S3-A] warmup={semantic_geometry_warmup} "
             f"w_smooth={w_semdepth_smooth:g} w_plane={w_semdepth_plane:g} "
             f"w_nb={w_boundary_normal:g} cache={cache_root or 'not-required'}"
+        )
+    if target_region_priors:
+        if not cfg.get("load_semantic", False):
+            raise RuntimeError("target-region mono priors require load_semantic=true")
+        cache_root = cfg.get("semantic_region_cache")
+        if not cache_root:
+            raise RuntimeError(
+                "target-region mono priors require semantic_region_cache for address only"
+            )
+        if semantic_region_cache is None:
+            cache_path = Path(cache_root)
+            if not cache_path.is_dir():
+                raise FileNotFoundError(
+                    f"semantic_region_cache is not a directory: {cache_path}"
+                )
+            semantic_region_cache = SemanticRegionCache(
+                cache_path,
+                expected_cutline_half_width_px=int(
+                    cfg.get("semantic_cutline_half_width_px", 7)
+                ),
+                expected_source_component_min_pixels=int(
+                    cfg.get("semantic_source_component_min_pixels", 256)
+                ),
+                expected_connectivity=int(cfg.get("semantic_component_connectivity", 8)),
+                expected_footprint_buffer_m=float(
+                    cfg.get("semantic_footprint_buffer_m", 20.0)
+                ),
+            )
+        semantic_region_cache.validate_files(
+            [ds.frames[i].name for i in train_idx]
+        )
+        print(
+            f"[mono-target] buildings={sorted(mono_target_buildings)} "
+            f"normal={mono_normal_loss} depth={mono_depth_loss} "
+            f"min_pixels={mono_target_min_pixels} address=semantic-region-cache"
         )
     w_structure = cfg.get("w_structure", 0.0)
     w_structure_na = cfg.get("w_structure_na", 1.0)
@@ -1481,9 +1729,32 @@ def main():
         "mono_depth_ramp_steps": mono_depth_ramp_steps,
         "mono_depth_final_weight": mono_depth_final_weight,
         "mono_depth_final_factor": mono_depth_final_factor,
-        "mono_depth_mask_rule": "mono_depth_mask AND NOT depth_mask when depth_mask is present",
+        "mono_depth_loss": mono_depth_loss,
+        "mono_normal_loss": mono_normal_loss,
+        "mono_target_buildings": sorted(mono_target_buildings),
+        "mono_target_min_pixels": mono_target_min_pixels,
+        "mono_depth_mask_rule": (
+            "mono_depth_mask AND oracle-address target region"
+            if mono_depth_loss == "ssi"
+            else "mono_depth_mask AND NOT depth_mask when depth_mask is present"
+        ),
+        "mono_target_region_aggregate": "mean_of_per_region_means",
+        "mono_depth_geometry_contract": mono_depth_geometry_contract,
+        "view_roles": view_role_audit,
+        "surface_seed": surface_seed_audit,
+        "surface_seed_protect": surface_seed_protect,
+        "legacy_mvs_seed_protect": legacy_mvs_seed_protect,
         "seed_protect": seed_protect,
         "seed_protect_until_iter": seed_protect_until_iter,
+        "seed_protected_lineage": (
+            "surface+MVS" if surface_seed_protect and legacy_mvs_seed_protect
+            else "surface" if surface_seed_protect
+            else "MVS" if legacy_mvs_seed_protect
+            else "none"
+        ),
+        "surface_seed_prune_opa_initial": seed_prune_schedule.get("seed_prune_opa_initial"),
+        "surface_seed_prune_opa_final": seed_prune_schedule.get("seed_prune_opa_final"),
+        "surface_seed_prune_switch_iter": seed_prune_schedule.get("seed_prune_switch_iter"),
         "prune_opa": _strat_kwargs["prune_opa"],
         "grow_grad2d": _strat_kwargs["grow_grad2d"],
         "grow_scale3d": _strat_kwargs["grow_scale3d"],
@@ -1503,7 +1774,10 @@ def main():
         effective_config.update(
             {
                 "s3_claim_scope": cfg.get("s3_claim_scope"),
-                "s3_no_monocular_depth": True,
+                "absolute_mono_depth_forbidden": True,
+                "mono_depth_ssi_enabled": bool(
+                    mono_depth_geometry_contract["mono_depth_ssi_enabled"]
+                ),
                 "semantic_region_cache": cfg.get("semantic_region_cache"),
                 "semantic_geometry_warmup": semantic_geometry_warmup,
                 "semantic_geometry_active_updates": max(0, max_iter - semantic_geometry_warmup),
@@ -1551,6 +1825,13 @@ def main():
             }
         )
     (out_dir / "effective_config.json").write_text(json.dumps(effective_config, indent=2) + "\n")
+    (out_dir / "view_roles.json").write_text(
+        json.dumps(view_role_audit, indent=2) + "\n"
+    )
+    if surface_seed_audit is not None:
+        (out_dir / "surface_seed_audit.json").write_text(
+            json.dumps(surface_seed_audit, indent=2) + "\n"
+        )
 
     print(f"[train] max_iter={max_iter}  out={out_dir}")
     pbar = tqdm(range(max_iter), desc="train")
@@ -1564,6 +1845,18 @@ def main():
         w2c = batch["w2c"].to(device)
         K = batch["K"].to(device)
         H, W = batch["height"], batch["width"]
+
+        target_region_mask = None
+        target_region_ids = None
+        target_region_address_audit = None
+        if target_region_priors:
+            assert semantic_region_cache is not None
+            target_frame = semantic_region_cache.get(batch["name"], H, W, device)
+            (
+                target_region_mask,
+                target_region_ids,
+                target_region_address_audit,
+            ) = _target_region_mask(target_frame, mono_target_buildings)
 
         out = render(model, w2c, K, W, H, sh_degree=model.active_sh_degree, render_mode="RGB+ED")
         rgb_pred = out["rgb"]
@@ -1604,12 +1897,34 @@ def main():
         if "mono_depth" in batch:
             md_gt = batch["mono_depth"].to(device)
             md_m = batch["mono_depth_mask"].to(device)
-            if "depth_mask" in batch:
-                md_m = md_m & (~batch["depth_mask"].to(device))
-            if bool(md_m.any().item()):
-                loss_mono_depth = L.l_depth(depth_pred, md_gt, md_m)
+            if mono_depth_loss == "ssi":
+                if w_mono_depth > 0:
+                    assert target_region_mask is not None and target_region_ids is not None
+                    md_m = md_m & target_region_mask
+                    loss_mono_depth, mono_depth_stats = L.l_mono_depth_ssi(
+                        depth_pred,
+                        md_gt,
+                        target_region_ids,
+                        md_m,
+                        min_pixels=mono_target_min_pixels,
+                    )
+                else:
+                    loss_mono_depth = depth_pred.sum() * 0.0
+                    mono_depth_stats = {
+                        "eligible_region_count": 0,
+                        "mode": "ssi_weight_zero",
+                    }
             else:
-                loss_mono_depth = torch.tensor(0.0, device=device)
+                if "depth_mask" in batch:
+                    md_m = md_m & (~batch["depth_mask"].to(device))
+                if bool(md_m.any().item()):
+                    loss_mono_depth = L.l_depth(depth_pred, md_gt, md_m)
+                else:
+                    loss_mono_depth = torch.tensor(0.0, device=device)
+                mono_depth_stats = {
+                    "eligible_region_count": 0,
+                    "mode": "legacy_absolute_l1",
+                }
             w_mono_depth_eff = _scheduled_weight(
                 w_mono_depth,
                 it,
@@ -1623,13 +1938,36 @@ def main():
         else:
             loss_mono_depth = torch.tensor(0.0, device=device)
             w_mono_depth_eff = 0.0
+            mono_depth_stats = {"eligible_region_count": 0, "mode": "map_absent"}
 
         n_gt = None
         n_m = None
         if "normal" in batch:
             n_gt = batch["normal"].to(device)
             n_m = batch["normal_mask"].to(device)
-            loss_n = L.l_normal(n_render, n_gt, w2c, n_m)
+            if mono_normal_loss == "target_region":
+                if w_normal > 0:
+                    assert target_region_mask is not None and target_region_ids is not None
+                    n_m = n_m & target_region_mask
+                    loss_n, mono_normal_stats = L.l_normal_target_regions(
+                        n_render,
+                        n_gt,
+                        target_region_ids,
+                        n_m,
+                        min_pixels=mono_target_min_pixels,
+                    )
+                else:
+                    loss_n = n_render.sum() * 0.0
+                    mono_normal_stats = {
+                        "eligible_region_count": 0,
+                        "mode": "target_region_weight_zero",
+                    }
+            else:
+                loss_n = L.l_normal(n_render, n_gt, w2c, n_m)
+                mono_normal_stats = {
+                    "eligible_region_count": 0,
+                    "mode": "legacy_global",
+                }
             w_normal_eff = _scheduled_weight(
                 w_normal,
                 it,
@@ -1643,6 +1981,7 @@ def main():
         else:
             loss_n = torch.tensor(0.0, device=device)
             w_normal_eff = 0.0
+            mono_normal_stats = {"eligible_region_count": 0, "mode": "map_absent"}
 
         loss_nc = L.l_nc(n_render, n_surf, alpha=alpha.detach())
         loss_total = loss_total + w_nc * loss_nc
@@ -2049,6 +2388,28 @@ def main():
             writer.add_scalar("loss_weight/mono_depth", float(w_mono_depth_eff), it)
             writer.add_scalar("loss_weight/normal", float(w_normal_eff), it)
             writer.add_scalar("loss_weight/distort", float(w_distort), it)
+            if target_region_priors:
+                writer.add_scalar(
+                    "stats/mono_depth_eligible_regions",
+                    int(mono_depth_stats.get("eligible_region_count", 0)),
+                    it,
+                )
+                writer.add_scalar(
+                    "stats/mono_normal_eligible_regions",
+                    int(mono_normal_stats.get("eligible_region_count", 0)),
+                    it,
+                )
+                _append_mono_target_audit(
+                    out_dir,
+                    {
+                        "step": int(it),
+                        "view": str(batch["name"]),
+                        "target_buildings": sorted(mono_target_buildings),
+                        "address": target_region_address_audit,
+                        "mono_depth": mono_depth_stats,
+                        "mono_normal": mono_normal_stats,
+                    },
+                )
             if elongation_filter:
                 writer.add_scalar(
                     "stats/elongation_filter_blocked",
@@ -2080,6 +2441,17 @@ def main():
             writer.add_scalar("stats/cum_pruned", int(strategy_state.get("cum_pruned", 0)), it)
             writer.add_scalar("stats/seed_protect_active", int(bool(strategy_state.get("last_seed_protect_active", False))), it)
             writer.add_scalar("stats/seed_protected_count", int(strategy_state.get("seed_protected_count", 0)), it)
+            if surface_seed_protect:
+                writer.add_scalar(
+                    "stats/effective_prune_opa",
+                    float(strategy_state.get("effective_prune_opa", _strat_kwargs["prune_opa"])),
+                    it,
+                )
+                writer.add_scalar(
+                    "stats/effective_reset_opa",
+                    float(strategy_state.get("effective_reset_opa", 2.0 * _strat_kwargs["prune_opa"])),
+                    it,
+                )
             writer.add_scalar("loss/mvc", loss_mvc.item(), it)
             writer.add_scalar("loss/mvc_depth", float(loss_mvc_depth), it)
             writer.add_scalar("loss/mvc_normal", float(loss_mvc_normal), it)
@@ -2139,14 +2511,22 @@ def main():
 
         # periodic eval + render sample
         if it % cfg.get("eval_every", 2000) == 0 and it > 0:
-            _eval_and_save(model, ds, test_idx, device, writer, out_dir, it)
+            _eval_and_save(
+                model, ds, test_idx, device, writer, out_dir, it,
+                allow_explicit_empty=(view_role_audit["mode"] == "explicit_locked_roles"),
+            )
 
         if it % cfg.get("ckpt_every", 5000) == 0 and it > 0:
-            torch.save({
+            checkpoint = {
                 "it": it,
                 "state_dict": model.state_dict(),
                 "n_prim": model.num_points,
-            }, out_dir / "ckpt" / f"step_{it:06d}.pt")
+            }
+            if "surface_seed_lineage" in strategy_state:
+                checkpoint["surface_seed_lineage_mask"] = strategy_state[
+                    "surface_seed_lineage"
+                ].detach().cpu()
+            torch.save(checkpoint, out_dir / "ckpt" / f"step_{it:06d}.pt")
 
     if pjpl_gate_sweep_enabled:
         if semantic_region_cache is None:
@@ -2197,6 +2577,13 @@ def main():
         "final_prune_candidates": final_prune_candidates,
         "final_pruned": final_pruned,
     }
+    if "surface_seed_lineage" in strategy_state:
+        final_ckpt["surface_seed_lineage_mask"] = strategy_state[
+            "surface_seed_lineage"
+        ].detach().cpu()
+        final_ckpt["surface_seed_lineage_count"] = int(
+            strategy_state["surface_seed_lineage"].sum().item()
+        )
     try:
         from .model import quat_to_rotmat
         with torch.no_grad():
@@ -2217,13 +2604,29 @@ def main():
         print(f"[final] WARNING: failed to export Stage 2 grouping: "
               f"{type(e).__name__}: {e}. Stage 3 will recompute via run_stage3.py.")
     torch.save(final_ckpt, out_dir / "ckpt" / "final.pt")
-    _eval_and_save(model, ds, test_idx, device, writer, out_dir, max_iter, tag="final")
+    _eval_and_save(
+        model, ds, test_idx, device, writer, out_dir, max_iter, tag="final",
+        allow_explicit_empty=(view_role_audit["mode"] == "explicit_locked_roles"),
+    )
     dt = time.time() - t0
     print(f"[done] {max_iter} iter in {dt/60:.1f} min.  final N={model.num_points}")
 
 
 @torch.no_grad()
-def _eval_and_save(model, ds, test_idx, device, writer, out_dir, it, tag: str = ""):
+def _eval_and_save(
+    model,
+    ds,
+    test_idx,
+    device,
+    writer,
+    out_dir,
+    it,
+    tag: str = "",
+    allow_explicit_empty: bool = False,
+):
+    if not test_idx and allow_explicit_empty:
+        writer.add_text("eval/status", "skipped_explicit_empty_eval_role", it)
+        return
     psnrs, depth_maes, normal_coses = [], [], []
     for k, idx in enumerate(test_idx[:4]):
         b = ds[idx]

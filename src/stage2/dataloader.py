@@ -20,7 +20,7 @@ from __future__ import annotations
 import os
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Sequence, Tuple
 
 import numpy as np
 from PIL import Image as PILImage
@@ -60,6 +60,83 @@ class Frame:
     height: int
 
 
+def _view_lookup(frames: Sequence[Frame]) -> Dict[str, int]:
+    """Map exact name, basename and stem to one unambiguous frame index."""
+
+    lookup: Dict[str, int] = {}
+    ambiguous: set[str] = set()
+    for index, frame in enumerate(frames):
+        keys = {str(frame.name), Path(frame.name).name, Path(frame.name).stem}
+        for key in keys:
+            if key in lookup and lookup[key] != index:
+                ambiguous.add(key)
+            else:
+                lookup[key] = index
+    for key in ambiguous:
+        lookup.pop(key, None)
+    return lookup
+
+
+def resolve_view_roles(
+    frames: Sequence[Frame],
+    train_views: Optional[Sequence[str]] = None,
+    eval_views: Optional[Sequence[str]] = None,
+) -> tuple[List[int], List[int], dict]:
+    """Resolve locked filename roles, or reproduce the legacy 10th-view split.
+
+    Explicit roles must be disjoint and cover every already-filtered frame.  An
+    empty eval list is valid for three-view crops; evaluation then records no
+    aggregate instead of a NaN.  Supplying neither key preserves old behavior.
+    """
+
+    if train_views is None and eval_views is None:
+        test_idx = [i for i in range(len(frames)) if i % 10 == 9]
+        train_idx = [i for i in range(len(frames)) if i not in test_idx]
+        return train_idx, test_idx, {
+            "mode": "legacy_every_10th_eval",
+            "train_views": [frames[i].name for i in train_idx],
+            "eval_views": [frames[i].name for i in test_idx],
+        }
+    if train_views is None or eval_views is None:
+        raise ValueError("train_views and eval_views must be supplied together")
+
+    lookup = _view_lookup(frames)
+
+    def resolve(names: Sequence[str], role: str) -> List[int]:
+        indices: List[int] = []
+        missing: List[str] = []
+        for value in names:
+            key = str(value)
+            if key not in lookup:
+                missing.append(key)
+            else:
+                indices.append(lookup[key])
+        if missing:
+            raise ValueError(f"unknown or ambiguous {role} views: {missing}")
+        if len(indices) != len(set(indices)):
+            raise ValueError(f"duplicate frame in {role}_views")
+        return indices
+
+    train_idx = resolve(train_views, "train")
+    eval_idx = resolve(eval_views, "eval")
+    if not train_idx:
+        raise ValueError("train_views must contain at least one frame")
+    overlap = sorted(set(train_idx) & set(eval_idx))
+    if overlap:
+        raise ValueError(
+            f"train/eval roles overlap: {[frames[i].name for i in overlap]}"
+        )
+    covered = set(train_idx) | set(eval_idx)
+    if covered != set(range(len(frames))):
+        unused = [frames[i].name for i in range(len(frames)) if i not in covered]
+        raise ValueError(f"explicit view roles leave frames unassigned: {unused}")
+    return train_idx, eval_idx, {
+        "mode": "explicit_locked_roles",
+        "train_views": [frames[i].name for i in train_idx],
+        "eval_views": [frames[i].name for i in eval_idx],
+    }
+
+
 class ColmapDataset(Dataset):
     """COLMAP dataset loader supporting COLMAP MVS and MatrixCity GT formats.
 
@@ -87,6 +164,7 @@ class ColmapDataset(Dataset):
         depth_scale: float = 1.0,
         mono_depth_scale: float = 1.0,
         normal_encoding: str = "half_range",
+        visible_views: Optional[Sequence[str]] = None,
     ):
         self.root = Path(root)
         self.downscale = float(downscale)
@@ -143,6 +221,26 @@ class ColmapDataset(Dataset):
                 )
             )
         self.frames.sort(key=lambda f: f.name)
+        self.visible_view_audit = {
+            "mode": "all_colmap_views",
+            "requested": None,
+            "resolved": [frame.name for frame in self.frames],
+        }
+        if visible_views is not None:
+            lookup = _view_lookup(self.frames)
+            requested = [str(value) for value in visible_views]
+            missing = [value for value in requested if value not in lookup]
+            if missing:
+                raise ValueError(f"unknown or ambiguous visible_views: {missing}")
+            selected = [lookup[value] for value in requested]
+            if len(selected) != len(set(selected)):
+                raise ValueError("visible_views resolves the same frame more than once")
+            self.frames = [self.frames[index] for index in selected]
+            self.visible_view_audit = {
+                "mode": "explicit_locked_visible_views",
+                "requested": requested,
+                "resolved": [frame.name for frame in self.frames],
+            }
 
     def _resolve_aux_dir(self, value: Optional[str | Path]) -> Optional[Path]:
         if value is None or str(value).strip() == "":

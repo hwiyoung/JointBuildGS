@@ -58,6 +58,8 @@ class GaussianModel2D(nn.Module):
         init_scale_factor: float = 1.0,
         device: str = "cuda",
         points_sem: Optional[np.ndarray] = None,
+        points_init_opacity: Optional[np.ndarray] = None,
+        surface_seed_mask: Optional[np.ndarray] = None,
     ):
         super().__init__()
         self.sh_degree = sh_degree
@@ -94,11 +96,32 @@ class GaussianModel2D(nn.Module):
             sem_ids = torch.full((N,), -1, dtype=torch.long)
             seed_mask = torch.zeros(N, dtype=torch.bool)
 
-        # --- opacity: SfM = sigmoid^-1(0.1); seeds = sigmoid^-1(0.25) (no insta-prune) ---
-        opa = torch.full((N,), _inv_sigmoid(0.1))
-        if seed_mask.any():
-            opa[seed_mask] = _inv_sigmoid(SEED_INIT_OPACITY)
+        # --- opacity: legacy path remains SfM=.10 / semantic carve=.25. ---
+        if points_init_opacity is None:
+            opacity_values = torch.full((N,), 0.1, dtype=torch.float32)
+            if seed_mask.any():
+                opacity_values[seed_mask] = SEED_INIT_OPACITY
+        else:
+            init = np.asarray(points_init_opacity)
+            if init.shape != (N,) or not np.isfinite(init).all():
+                raise ValueError("points_init_opacity must be finite with shape (N,)")
+            if np.any((init <= 0.0) | (init >= 1.0)):
+                raise ValueError("points_init_opacity values must lie in (0,1)")
+            opacity_values = torch.from_numpy(init.astype(np.float32, copy=False))
+        opa = torch.logit(opacity_values)
         self.opacities_raw = nn.Parameter(opa.to(device))
+
+        # Plain tensor (not a persistent buffer) keeps legacy checkpoint state
+        # dictionaries byte-compatible.  Densification copies this once into
+        # strategy state, whose row-wise tensors preserve split/clone lineage.
+        if surface_seed_mask is None:
+            surface = torch.zeros(N, dtype=torch.bool)
+        else:
+            surface_np = np.asarray(surface_seed_mask)
+            if surface_np.dtype != np.bool_ or surface_np.shape != (N,):
+                raise ValueError("surface_seed_mask must be bool with shape (N,)")
+            surface = torch.from_numpy(surface_np)
+        self.surface_seed_mask = surface.to(device)
 
         # --- SH ---
         # DC from RGB in SH0 basis: C0 = 0.2820947917 ; sh_dc = (rgb - 0.5) / C0

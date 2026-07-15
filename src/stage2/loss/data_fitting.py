@@ -69,6 +69,134 @@ def l_normal(
     return (err * m).sum() / m.sum().clamp_min(1.0)
 
 
+def l_normal_target_regions(
+    n_pred_world: torch.Tensor,
+    n_target_world: torch.Tensor,
+    region_ids: torch.Tensor,
+    valid_mask: torch.Tensor,
+    *,
+    min_pixels: int = 64,
+) -> tuple[torch.Tensor, dict]:
+    """Equal-per-region monocular-normal loss on oracle-addressed target roofs."""
+
+    if n_pred_world.shape != n_target_world.shape or n_pred_world.ndim != 3:
+        raise ValueError("normal tensors must be same-shape HxWx3")
+    if region_ids.shape != n_pred_world.shape[:2] or valid_mask.shape != region_ids.shape:
+        raise ValueError("region_ids/valid_mask must match normal HxW")
+    if min_pixels < 1:
+        raise ValueError("min_pixels must be positive")
+    nr = F.normalize(n_pred_world, dim=-1, eps=1e-6)
+    nt = F.normalize(n_target_world, dim=-1, eps=1e-6)
+    err = 1.0 - (nr * nt).sum(-1).abs()
+    valid = valid_mask.bool() & torch.isfinite(err)
+    losses = []
+    rows = {}
+    for rid_tensor in torch.unique(region_ids[(region_ids > 0) & valid]):
+        rid = int(rid_tensor.detach().cpu().item())
+        mask = valid & (region_ids == rid_tensor)
+        count = int(mask.sum().detach().cpu().item())
+        row = {"valid_pixel_count": count, "status": "active"}
+        rows[rid] = row
+        if count >= int(min_pixels):
+            region_loss = err[mask].mean()
+            row["mean_one_minus_abs_cos"] = float(
+                region_loss.detach().cpu().item()
+            )
+            losses.append(region_loss)
+        else:
+            row["status"] = "skipped_lt_min_pixels"
+    zero = torch.where(
+        torch.isfinite(n_pred_world), n_pred_world, torch.zeros_like(n_pred_world)
+    ).sum() * 0.0
+    loss = torch.stack(losses).mean() if losses else zero
+    return loss, {
+        "eligible_region_count": len(losses),
+        "per_region": rows,
+        "aggregate": "mean_of_per_region_means",
+        "min_pixels": int(min_pixels),
+    }
+
+
+def l_mono_depth_ssi(
+    depth_pred: torch.Tensor,
+    mono_depth: torch.Tensor,
+    region_ids: torch.Tensor,
+    valid_mask: torch.Tensor,
+    *,
+    min_pixels: int = 64,
+    variance_epsilon: float = 1e-12,
+) -> tuple[torch.Tensor, dict]:
+    """Affine scale-and-shift invariant depth loss on target address regions.
+
+    For each region, solve ``s,t = argmin ||s*mono+t-rendered||^2`` and take
+    the mean absolute residual.  Regions are then equally averaged so a large
+    roof cannot dominate a small one.  Empty, <64-pixel, or constant-mono
+    regions return a graph-connected zero and never leak gradient outside the
+    selected address mask.
+    """
+
+    if not (
+        depth_pred.ndim == mono_depth.ndim == region_ids.ndim == valid_mask.ndim == 2
+        and depth_pred.shape == mono_depth.shape == region_ids.shape == valid_mask.shape
+    ):
+        raise ValueError("depth, mono_depth, region_ids, and valid_mask must be same-shape HxW")
+    if min_pixels < 1:
+        raise ValueError("min_pixels must be positive")
+    valid = (
+        valid_mask.bool()
+        & (region_ids > 0)
+        & torch.isfinite(depth_pred)
+        & torch.isfinite(mono_depth)
+        & (mono_depth > 0)
+    )
+    losses = []
+    rows = {}
+    for rid_tensor in torch.unique(region_ids[valid]):
+        rid = int(rid_tensor.detach().cpu().item())
+        mask = valid & (region_ids == rid_tensor)
+        count = int(mask.sum().detach().cpu().item())
+        row = {"valid_pixel_count": count, "status": "active"}
+        rows[rid] = row
+        if count < int(min_pixels):
+            row["status"] = "skipped_lt_min_pixels"
+            continue
+        x = mono_depth[mask]
+        y = depth_pred[mask]
+        x_mean = x.mean()
+        y_mean = y.mean()
+        x_centered = x - x_mean
+        denominator = x_centered.square().sum()
+        row["mono_variance_sum"] = float(denominator.detach().cpu().item())
+        if not bool(torch.isfinite(denominator).item()) or float(
+            denominator.detach().cpu().item()
+        ) <= variance_epsilon:
+            row["status"] = "skipped_degenerate_constant_mono"
+            continue
+        scale = (x_centered * (y - y_mean)).sum() / denominator
+        shift = y_mean - scale * x_mean
+        residual = scale * x + shift - y
+        region_loss = residual.abs().mean()
+        if not bool(torch.isfinite(region_loss).item()):
+            row["status"] = "skipped_nonfinite_fit"
+            continue
+        row["scale"] = float(scale.detach().cpu().item())
+        row["shift"] = float(shift.detach().cpu().item())
+        row["mean_abs_residual"] = float(region_loss.detach().cpu().item())
+        losses.append(region_loss)
+    zero = torch.where(
+        torch.isfinite(depth_pred), depth_pred, torch.zeros_like(depth_pred)
+    ).sum() * 0.0
+    loss = torch.stack(losses).mean() if losses else zero
+    return loss, {
+        "eligible_region_count": len(losses),
+        "per_region": rows,
+        "fit": "least_squares s*mono+t to rendered depth",
+        "residual": "mean_absolute",
+        "aggregate": "mean_of_per_region_means",
+        "min_pixels": int(min_pixels),
+    }
+
+
 def l_sem(
     sem_pred: torch.Tensor,       # (H, W, K) raw logits
     sem_gt: torch.Tensor,         # (H, W) int64 labels
