@@ -1,0 +1,69 @@
+{
+  "schema": "jointbuildgs.s3ap.fm_retri_rescore.lock.v1",
+  "task_date": "2026-07-15",
+  "learning_runs_allowed": 0,
+  "new_mast3r_inference_allowed": false,
+  "crs": "EPSG:25832",
+  "vertical_conversion": "z_local=z_DHHN2016+orthometric_geoid_m-world_offset_z",
+  "registration_gate": {
+    "safe_frame_margin_px": 8.0,
+    "reviewable_min_clipped_area_px": 256.0,
+    "reviewable_min_safe_perimeter_fraction": 0.70,
+    "anchor_min_clipped_area_px": 1024.0,
+    "anchor_min_safe_perimeter_fraction": 0.90,
+    "consensus_min_reviewable_views": 2,
+    "consensus_min_acquisition_blocks": 2,
+    "building_rule": "use visually reviewed anchor views; if no anchor exists, require consistent reviewable views from at least two acquisition-minute blocks; frame-clipped or too-small views do not vote; conflicting evidence => ambiguous"
+  },
+  "registration_reviews": {
+    "4907199": {
+      "registration_class": "seated",
+      "anchor_view": "MULTIVIEW_CONSENSUS",
+      "observation": "09:51 사선 4뷰와 09:54 정사 0023에서 RoofSurface 외곽이 같은 낮은 지붕 패치에 겹침; 0048은 frame-clipped로 투표 제외"
+    },
+    "8568391": {
+      "registration_class": "seated",
+      "anchor_view": "DJI_20241217095441_0023_D",
+      "observation": "0023 완전 앵커가 골함석 지붕 외곽에 앉음; 0195 투영 대상은 주황 기와가 아니라 우측 끝 어두운 골함석이며 외곽 44.0%만 보여 투표 제외"
+    },
+    "8568392": {
+      "registration_class": "seated",
+      "anchor_view": "DJI_20241217095441_0023_D",
+      "observation": "0023 완전 앵커가 작은 부속 지붕 외곽에 앉고 0194·0195의 판독 가능 크롭도 같은 부속 지붕을 가리킴"
+    }
+  },
+  "rescore_lock": {
+    "summary_pair_scope": "nondegenerate baseline >0.06m; pair rows retain all pairs",
+    "summary_point_aggregation": "pool every footprint-XY-inside cached DLT survivor across eligible pairs; do not take median pair count",
+    "ground": {
+      "source": "observed SfM plus dense-init points only",
+      "target_outer_distance_min_m": 2.0,
+      "target_outer_distance_max_m": 15.0,
+      "all_footprint_exclusion_buffer_m": 1.0,
+      "grid_m": 1.0,
+      "min_points_per_cell": 2,
+      "cell_z_quantile": 0.10,
+      "mode_bin_m": 0.50,
+      "mode_half_window_m": 0.75,
+      "fallback": "median of finite cell q10 values after Tukey 1.5-IQR clipping"
+    },
+    "plane": {
+      "random_seed": 20260715,
+      "ransac_residual_threshold_m": 0.30,
+      "ransac_min_samples_fraction": 0.30,
+      "ransac_min_samples_floor": 3,
+      "ransac_max_trials": 1000
+    },
+    "coverage": {
+      "grid_m": 0.50,
+      "occupied_definition": "footprint-intersecting XY cell containing at least one cached DLT point"
+    },
+    "numeric_boundary_classes": {
+      "i_seed_usable": "n>=20 AND median_abs_dz<=1.0m AND fitted_plane_to_lod2_rms<=1.0m AND ransac_inlier_ratio>=0.50 AND grid_coverage>=0.25",
+      "ii_near_height_scattered_or_low_coverage": "median_abs_dz<=1.5m but class i is false",
+      "iii_wrong_height_neighbor_or_wall": "no inside points OR median_abs_dz>1.5m",
+      "iv_bad_registration": "registration_class=misregistered; score withheld",
+      "ambiguous_registration": "registration_class=ambiguous; score reported as untrusted and boundary class withheld"
+    }
+  }
+}
