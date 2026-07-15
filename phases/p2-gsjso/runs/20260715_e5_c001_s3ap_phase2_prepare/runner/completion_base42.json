@@ -1,0 +1,81 @@
+{
+  "archive_git_branch": "exp/3b-surface-restore-corrected",
+  "archive_git_head": "f5c25d471e546018a85fb82e114122e16a746dae",
+  "archive_tools_image": "jointbuildgs-p0-tools:t0",
+  "archive_tools_image_id": "sha256:87bea02e5598a3d53a119b754191673497d52641bd8ea4106ffee653407579b0",
+  "artifact_policy": "hashes only for runtime logs/checkpoints/bindings/config audits; no raw runtime payload copied",
+  "artifacts_manifest": "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase2_prepare/runner/artifacts_base42.sha256",
+  "artifacts_manifest_entry_count": 316,
+  "artifacts_manifest_sha256": "f69513ae49d4ffc95655df3b8efe633ab03cbf56607a50396e3fd34abf578f1d",
+  "created_utc": "2026-07-15T18:44:18.299426+00:00",
+  "docker_image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
+  "final_checkpoint_count": 42,
+  "final_n_prim_max": 60822,
+  "final_n_prim_min": 21960,
+  "iterations": 30000,
+  "job_count": 42,
+  "job_status_counts": {
+    "complete": 42
+  },
+  "jobs_csv": "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase2_prepare/jobs.csv",
+  "jobs_csv_sha256": "57cd72e27aba96e412a3e57de1003551f67b40b6d321d0c048261b58effe34df",
+  "phase2_lock_sha256": "9f62fe3d5756b02bbd3f4b495b183e68980097afaf3dae55369e97a902075dce",
+  "prepare_git_head": "4e6dabbddb5c5694f5d899558e6fb35dbc174de3",
+  "prepare_manifest_sha256": "3f99dd5983872d9ef882ecdb9382837887aec2ae6b8a0165889a9c72999ddf75",
+  "prewarm_manifest": "results/tum_transfer/e5_s3ap_phase2/runtime/gsplat_prewarm.json",
+  "prewarm_manifest_sha256": "3f21531687e6ed69b232792822d7ed407b5272a57ec3d750217b6d4b6548e4c8",
+  "prewarm_status": "complete",
+  "raw_checkpoints_copied": false,
+  "raw_logs_copied": false,
+  "returncode_counts": {
+    "0": 42
+  },
+  "runner_dry_run_attestation": {
+    "gpu_ids": [
+      0,
+      1
+    ],
+    "inventory": "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase2_prepare/jobs.csv",
+    "jobs": 42,
+    "prepare_manifest_sha256": "3f99dd5983872d9ef882ecdb9382837887aec2ae6b8a0165889a9c72999ddf75",
+    "runtime_attestation": {
+      "container_gid": 1000,
+      "container_uid": 1000,
+      "docker_image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
+      "host_gid": 1000,
+      "host_uid": 1000,
+      "writable_cache_env": {
+        "HOME": {
+          "path": "/workspace/JointBuildGS/results/tum_transfer/e5_s3ap_phase2/runtime/home",
+          "writable": true
+        },
+        "TORCH_EXTENSIONS_DIR": {
+          "path": "/workspace/JointBuildGS/results/tum_transfer/e5_s3ap_phase2/runtime/torch_extensions",
+          "writable": true
+        },
+        "XDG_CACHE_HOME": {
+          "path": "/workspace/JointBuildGS/results/tum_transfer/e5_s3ap_phase2/runtime/xdg_cache",
+          "writable": true
+        }
+      }
+    },
+    "status_counts": {
+      "skipped_final_exists": 42
+    },
+    "timeout_s": 7200,
+    "training_started": false
+  },
+  "runner_dry_run_attestation_sha256": "3d25d3b71e3542a8111f414e864ab8ed15a6d075dc3673074ba8ecff0bbb630c",
+  "runner_dry_run_status_counts": {
+    "skipped_final_exists": 42
+  },
+  "runner_dry_run_training_started": false,
+  "schema": "jointbuildgs.s3ap.phase2.base42_completion.v1",
+  "source_status_csv": "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase2_prepare/runner/status.csv",
+  "source_status_csv_sha256": "bd6c43912b047f6279df266b0ef78d284aa56293641d4e448e948739d64bf3be",
+  "status": "complete",
+  "status_snapshot": "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase2_prepare/runner/status_base42.csv",
+  "status_snapshot_sha256": "bd6c43912b047f6279df266b0ef78d284aa56293641d4e448e948739d64bf3be",
+  "total_final_checkpoint_bytes": 367106822,
+  "wave": "base42"
+}
