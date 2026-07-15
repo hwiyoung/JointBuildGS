@@ -19,18 +19,23 @@
       "image_id": "S3AP_SMOKE_DOCKER_IMAGE_ID",
       "host_uid": "S3AP_SMOKE_HOST_UID",
       "host_gid": "S3AP_SMOKE_HOST_GID"
+    },
+    "writable_cache_env": {
+      "HOME": "/workspace/JointBuildGS/results/tum_transfer/e5_s3ap_phase2/runtime/home",
+      "XDG_CACHE_HOME": "/workspace/JointBuildGS/results/tum_transfer/e5_s3ap_phase2/runtime/xdg_cache",
+      "TORCH_EXTENSIONS_DIR": "/workspace/JointBuildGS/results/tum_transfer/e5_s3ap_phase2/runtime/torch_extensions"
     }
   },
   "source_contract": {
-    "phase2_implementation_commit": "a1c48cfcfc85507a7a98ccd3b527491e729e9e2d",
+    "phase2_implementation_commit": "95afb455c44dc0792ddfea91fbbf51aa1774afb7",
     "phase2_lock": "phases/p2-gsjso/configs/e5_c001_s3ap_phase2_lock.json",
-    "phase2_lock_sha256": "b131c85c66442a9f91d4001684a897cbb9fb707a57879869279f16d39cd137ee",
+    "phase2_lock_sha256": "0e800b49e180bb1e986ec7d25d11faec983d98ebceea5d5b6c45ec1627fb4965",
     "prepare_manifest": "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase2_prepare/manifest.json",
-    "prepare_manifest_sha256": "3974a3a39955a42125115d31ffbeb6584804b41b0ae18a8972acac1c38ee768c",
+    "prepare_manifest_sha256": "5081e3080beecd902633be6c8b36d7caab2a43ea042b2de53366c08cfe4553d7",
     "base_inventory": "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase2_prepare/jobs.csv",
     "base_inventory_sha256": "57cd72e27aba96e412a3e57de1003551f67b40b6d321d0c048261b58effe34df",
     "prepared_data_manifest": "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_8568391/data_manifest.json",
-    "prepared_data_manifest_sha256": "3b9ebc5cd91cdcf1aa51ca7ba1b29a41452048096fd9f7572166fcf2adeef6f0",
+    "prepared_data_manifest_sha256": "7b9f7e43d455481dce39a4f4790adefce70d690b6d6f3778d68de13147bfe691",
     "required_source_iterations": 30000,
     "required_replicate": "r1",
     "required_job_class": "base",
@@ -39,11 +44,11 @@
     "als_used": false
   },
   "outputs": {
-    "root": "results/tum_transfer/e5_s3ap_phase2/smoke/20260715_cuda_wiring_v1",
-    "config_dir": "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase2_smoke/configs",
-    "run_dir": "results/tum_transfer/e5_s3ap_phase2/smoke/20260715_cuda_wiring_v1/runs",
-    "log_dir": "results/tum_transfer/e5_s3ap_phase2/smoke/20260715_cuda_wiring_v1/logs",
-    "manifest": "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase2_smoke/manifest.json"
+    "root": "results/tum_transfer/e5_s3ap_phase2/smoke/20260715_cuda_wiring_v2",
+    "config_dir": "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase2_smoke_v2/configs",
+    "run_dir": "results/tum_transfer/e5_s3ap_phase2/smoke/20260715_cuda_wiring_v2/runs",
+    "log_dir": "results/tum_transfer/e5_s3ap_phase2/smoke/20260715_cuda_wiring_v2/logs",
+    "manifest": "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase2_smoke_v2/manifest.json"
   },
   "safety": {
     "source_configs_are_read_only": true,

@@ -71,13 +71,25 @@ class Phase2SmokeHarnessTest(unittest.TestCase):
             names["host_uid"]: str(os.getuid()),
             names["host_gid"]: str(os.getgid()),
         }
-        with mock.patch.dict(os.environ, environment, clear=False):
-            audit = smoke_module.validate_runtime_attestation(self.lock)
+        with tempfile.TemporaryDirectory() as tmp:
+            cache_env = {
+                name: str(Path(tmp) / name.lower())
+                for name in ("HOME", "XDG_CACHE_HOME", "TORCH_EXTENSIONS_DIR")
+            }
+            for path in cache_env.values():
+                Path(path).mkdir()
+            runtime_lock = copy.deepcopy(self.lock)
+            runtime_lock["runtime"]["writable_cache_env"] = cache_env
+            with mock.patch.dict(os.environ, {**environment, **cache_env}, clear=False):
+                audit = smoke_module.validate_runtime_attestation(runtime_lock)
         self.assertTrue(audit["user_mapping_exact"])
+        self.assertEqual(set(audit["writable_cache_env"]), set(cache_env))
         launcher = smoke_module.resolve(self.lock["runtime"]["host_launcher"]).read_text(encoding="utf-8")
         self.assertIn(self.lock["runtime"]["docker_image_id"], launcher)
         self.assertIn('--user "${HOST_UID}:${HOST_GID}"', launcher)
         self.assertIn("--gpus all", launcher)
+        for name in ("HOME", "XDG_CACHE_HOME", "TORCH_EXTENSIONS_DIR"):
+            self.assertIn(f'-e "{name}=', launcher)
 
     def test_live_source_contract_reuses_strict_phase2_payload_validation(self):
         audit = smoke_module.validate_source_contract(self.lock)
