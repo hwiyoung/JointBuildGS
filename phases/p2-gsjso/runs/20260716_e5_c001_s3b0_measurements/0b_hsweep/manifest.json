@@ -75,12 +75,13 @@
   },
   "counts": {
     "figures": 6,
+    "gtfree_anchor_rows": 12,
     "hsweep_rows": 3165,
     "outline_rows": 12,
     "segment_peak_rows": 12,
     "view_count": 12
   },
-  "created_utc": "2026-07-16T09:00:23.031499+00:00",
+  "created_utc": "2026-07-16T09:04:19.535102+00:00",
   "crs": "EPSG:25832",
   "estimation_contract": {
     "als_used": false,
@@ -98,7 +99,7 @@
   },
   "estimation_source_sha256": {
     "docs/e5_c001_s3ap_fm_retri_rescore.csv": "f720a5687da54dac276c27222e49f8012f2b24be3e2bbcaa5cf7e15a21faf299",
-    "phases/p2-gsjso/configs/e5_c001_s3b0_lock.json": "1097980934dad6b7061df3ca8b59c5d603a988009b189513a96c81896967c2ba",
+    "phases/p2-gsjso/configs/e5_c001_s3b0_lock.json": "ef6e1cebbb0ca740bfeb6ed661bd66b299868ee8f5426be66ea16a6902e44054",
     "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase0_baselines/p0_fill_points.npz": "35371e026d78be91a54a34eb2032198ba7ddeafd62c359e3a58a005398e7b28d",
     "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0e_semantic/masks/DEBY_LOD2_4907199_DJI_20241217095141_0077_D.npz": "e570c75687116cce1da980acc2ca9bb5569bd4b35f4dde154951f0ec7f18b9c3",
     "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0e_semantic/masks/DEBY_LOD2_4907199_DJI_20241217095145_0079_D.npz": "656871b70a66ec5b9e690d9ad1494adccd493fa43e74f9be9c3dd35eac25789b",
@@ -113,7 +114,7 @@
     "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0e_semantic/masks/DEBY_LOD2_8568392_DJI_20241217084903_0195_D.npz": "2d25103ce728566491e166fcb7d9a70760568e5a582cc53f394a4ed7c0e140b8",
     "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0e_semantic/masks/DEBY_LOD2_8568392_DJI_20241217095441_0023_D.npz": "7e083cc29b939c21d262f86c7c8d4f6d383e0b6c086fbf3d2a9da4adb63299db",
     "phases/p2-gsjso/scripts/e5_c001_s3b0_common.py": "f778cfbae8cf90fe69e5dbd984f5370edeb83ec51cad2b1a3c2c1c513870e103",
-    "phases/p2-gsjso/scripts/e5_c001_s3b0_hsweep.py": "3009d8dfdbf736eda8cc6c2077ddc01e9e1be6c069abd2e73ee84fb3ec0785bc",
+    "phases/p2-gsjso/scripts/e5_c001_s3b0_hsweep.py": "0cab33aed2e8c36090c056ff4a659b39260648b3780511b16612e2fda31ea184",
     "phases/p2-gsjso/scripts/run_e5_c001_s3b0_hsweep.sh": "f79b8656597e58b11206ef97199927df5422c6c1f9be47c536ae4707f663658d",
     "phases/p2-gsjso/scripts/test_e5_c001_s3b0_hsweep.py": "5ab805d9547267bb3aae5d001763c8b3542b0c8f235a24fdcd96d794ae41fc97",
     "results/tum_transfer/analysis/footprints_aoi.geojson": "ca7f5b13a52368e1d2ac47b77cc78f12887bad4d598d122ad57b882eb4920a82",
@@ -133,7 +134,7 @@
   "git": {
     "branch": "exp/3b-surface-restore-corrected",
     "dirty": true,
-    "head": "c1da27314b9fc5db562fb597b22a3e8a6366f70d"
+    "head": "10a74a1e704f34ec5b290b39018b6fd237cabb19"
   },
   "learning_runs_started": 0,
   "new_inference_runs": 0,
@@ -145,7 +146,8 @@
     "docs/figs/e5_c001_s3b0/hsweep/DEBY_LOD2_8568392_hsweep_curves.png": "b538f95e8649e86291dc9e0f31972dd25d648992d6f708709741087c1a3483b5",
     "docs/figs/e5_c001_s3b0/hsweep/DEBY_LOD2_8568392_native_overlay.png": "e2434a6805a5557503ec7f9a475af79cf8397ab5f9220cde3696ed640955a57a",
     "docs/s3b0_hsweep.csv": "69643741dd6ed1938d834495c60bbaca504108258f475718a776eb775c920329",
-    "docs/s3b0_outline_observability.csv": "db04283b4f76e068565844d06964a6470c151873aa7fbb07a76a723eaab17f45"
+    "docs/s3b0_outline_observability.csv": "db04283b4f76e068565844d06964a6470c151873aa7fbb07a76a723eaab17f45",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0b_hsweep/segment_anchors_gtfree.csv": "df16dc61bef89e13f48f425b16174593b0b0bfb733771dcd6785307e403c94d2"
   },
   "posthoc_score_contract": {
     "als_used": false,

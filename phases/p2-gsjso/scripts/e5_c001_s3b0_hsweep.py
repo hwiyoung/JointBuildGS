@@ -143,6 +143,30 @@ HSWEEP_FIELDS = [
     "note",
 ]
 
+ANCHOR_FIELDS = [
+    "building_id",
+    "segment_index",
+    "segment_length_m",
+    "segment_midpoint_e_utm",
+    "segment_midpoint_n_utm",
+    "h_est_local_m",
+    "h_est_above_ground_m",
+    "peak_score",
+    "background_median_score",
+    "peak_to_background_ratio",
+    "peak_status",
+    "ground_z_local_m",
+    "edge_definition",
+    "score_definition",
+    "semantic_mask_scope",
+    "gt_used",
+    "lod2_used",
+    "als_used",
+    "learning_runs_started",
+    "new_inference_runs",
+    "status",
+]
+
 
 def gradient_magnitude(image_rgb: np.ndarray) -> np.ndarray:
     gray = cv2.cvtColor(np.asarray(image_rgb, dtype=np.uint8), cv2.COLOR_RGB2GRAY)
@@ -1102,7 +1126,38 @@ def run(args: argparse.Namespace) -> None:
             "building_row": building_row,
         }
 
-    # Post-hoc reference load begins only after all GT-free peaks and planes are fixed.
+    # Dedicated V2 handoff is written before any reference source is opened.
+    anchor_rows = [
+        {
+            "building_id": row["building_id"],
+            "segment_index": row["segment_index"],
+            "segment_length_m": row["segment_length_m"],
+            "segment_midpoint_e_utm": row["segment_midpoint_e_utm"],
+            "segment_midpoint_n_utm": row["segment_midpoint_n_utm"],
+            "h_est_local_m": row["h_est_local_m"],
+            "h_est_above_ground_m": row["h_est_above_ground_m"],
+            "peak_score": row["peak_score"],
+            "background_median_score": row["background_median_score"],
+            "peak_to_background_ratio": row["peak_to_background_ratio"],
+            "peak_status": row["peak_status"],
+            "ground_z_local_m": row["ground_z_local_m"],
+            "edge_definition": row["edge_definition"],
+            "score_definition": row["score_definition"],
+            "semantic_mask_scope": row["semantic_mask_scope"],
+            "gt_used": False,
+            "lod2_used": False,
+            "als_used": False,
+            "learning_runs_started": 0,
+            "new_inference_runs": 0,
+            "status": "measured",
+        }
+        for row in hsweep_rows
+        if row["row_type"] == "segment_peak"
+    ]
+    common.atomic_csv(outputs["hsweep_anchor_csv"], anchor_rows, ANCHOR_FIELDS)
+
+    # Post-hoc reference load begins only after all GT-free peaks, planes, and
+    # the dedicated anchor handoff are fixed.
     roofs = common.load_lod2_roofs(sources["lod2_dir"], lock["targets"])
     projection = json.loads(sources["projection_datum"].read_text(encoding="utf-8"))
     geoid_m = float(projection["orthometric_geoid_m"])
@@ -1247,7 +1302,12 @@ def run(args: argparse.Namespace) -> None:
         )
         figure_paths.extend([curve_path, overlay_path])
 
-    output_paths = [outputs["outline_csv"], outputs["hsweep_csv"], *figure_paths]
+    output_paths = [
+        outputs["outline_csv"],
+        outputs["hsweep_csv"],
+        outputs["hsweep_anchor_csv"],
+        *figure_paths,
+    ]
     manifest = {
         "schema": "jointbuildgs.s3b0.hsweep.v1",
         "created_utc": common.now(),
@@ -1310,6 +1370,7 @@ def run(args: argparse.Namespace) -> None:
             "segment_peak_rows": sum(
                 row["row_type"] == "segment_peak" for row in hsweep_rows
             ),
+            "gtfree_anchor_rows": len(anchor_rows),
         },
         "learning_runs_started": 0,
         "new_inference_runs": 0,
