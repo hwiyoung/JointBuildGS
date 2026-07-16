@@ -81,6 +81,11 @@
     "background_exclusion_half_width_m": 1.0
   },
   "gate_0c": {
+    "texture_definition": "T11 np.gradient magnitude on grayscale [0,1]",
+    "low_gradient_threshold": 0.02137,
+    "point_support_rule": "supplied footprint inside and z >= observed exterior ground + 1.5m",
+    "projection_sampling": "nearest integer crop pixel",
+    "fm_pair_rule": "eligible_summary_pair=true cached fixed-COLMAP DLT rows",
     "existing_mono_fm_view_angle_deg": 22.5,
     "new_composite_threshold_defined": false
   },
@@ -103,6 +108,7 @@
     "semantic_masks": "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0e_semantic/masks",
     "alpha_run": "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0a_alpha",
     "alpha_runtime_root": "results/tum_transfer/e5_s3b0/alpha",
+    "gate_run": "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0c_gate",
     "semantic_lineage_md": "docs/s3b0_semantic_lineage.md",
     "mask_iou_csv": "docs/s3b0_mask_iou.csv",
     "semantic_figure_dir": "docs/figs/e5_c001_s3b0/semantic",
