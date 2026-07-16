@@ -1,0 +1,37 @@
+{
+  "schema": "jointbuildgs.genclose.prepare.v1",
+  "created_utc": "2026-07-16T15:19:44.914116+00:00",
+  "targets": [
+    "4907199",
+    "8568391",
+    "8568392"
+  ],
+  "grids_m": [
+    0.5,
+    0.25,
+    0.125
+  ],
+  "offset": [
+    690953.0,
+    5336071.0,
+    604.0
+  ],
+  "geoid_m": 45.7,
+  "learning_runs_started": 0,
+  "new_inference_runs": 0,
+  "roofer_parameters": "--id-attribute building_id --jobs 3 --srs EPSG:25832 --bld-class 6 --grnd-class 2 --lod22",
+  "inputs": {
+    "g0500": {
+      "laz": "phases/p2-gsjso/runs/20260716_genclose_flat_density/roofer_inputs/flat_density_g0500.laz",
+      "roofprint": "phases/p2-gsjso/runs/20260716_genclose_flat_density/roofer_inputs/flat_density_g0500.geojson"
+    },
+    "g0250": {
+      "laz": "phases/p2-gsjso/runs/20260716_genclose_flat_density/roofer_inputs/flat_density_g0250.laz",
+      "roofprint": "phases/p2-gsjso/runs/20260716_genclose_flat_density/roofer_inputs/flat_density_g0250.geojson"
+    },
+    "g0125": {
+      "laz": "phases/p2-gsjso/runs/20260716_genclose_flat_density/roofer_inputs/flat_density_g0125.laz",
+      "roofprint": "phases/p2-gsjso/runs/20260716_genclose_flat_density/roofer_inputs/flat_density_g0125.geojson"
+    }
+  }
+}
