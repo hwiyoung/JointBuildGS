@@ -1,0 +1,28 @@
+{
+  "schema": "jointbuildgs.boundary_map.mast3r.v1",
+  "created_utc": "2026-07-16T15:23:38.731513+00:00",
+  "status": "complete",
+  "device": "cuda",
+  "cuda_device_name": "NVIDIA GeForce RTX 3090",
+  "max_seconds": 43100.0,
+  "elapsed_seconds": 137.89837277587503,
+  "job_count": 185,
+  "result_count": 185,
+  "pending_buildings": [],
+  "model": {
+    "revision": "06e7259f34c3060f322df5cb0c7b9094f57e41fc",
+    "weights_sha256": "0a615eb05fa9db654050aa655945ee5696e7c6c1b7f93f1ee8c37249010f6feb",
+    "weights_bytes": 2754661648
+  },
+  "jobs_sha256": "3b0de36ceb4810f54218c52eee3f1bd9799ddc3534016a85b54a942bdfada022",
+  "output_sha256": {
+    "phases/p2-gsjso/runs/20260716_boundary_map/mast3r_correspondence.csv": "15af736506c9973baf257ac131029bd32a3eb18aa46b6b5684319cdbaf5c41ca",
+    "phases/p2-gsjso/runs/20260716_boundary_map/mast3r_progress.json": "104263e8a275744b28e86ddf5a0bc876de3f2137419d9911d0f54884a05129a2",
+    "phases/p2-gsjso/runs/20260716_boundary_map/mast3r.log": "272273f607439040e3e8a0c2eb34bae40d06f748d2bdff58d2ef3ccb15c181ad",
+    "phases/p2-gsjso/runs/20260716_boundary_map/boundary_map_support_metrics.csv": "65a04520555996dc4b87e9b7aaf4e48c5f3da55c7d6afd535dd96bd5e67e0ccc",
+    "docs/boundary_map_metrics.csv": "939a66842ada88423faf7f500896a1b87346ae5b457dbc2677cf2d139c31c999"
+  },
+  "learning_runs_started": 0,
+  "new_inference_type": "MASt3R correspondence only",
+  "interpretation_or_verdict": null
+}

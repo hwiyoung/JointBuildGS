@@ -1,0 +1,43 @@
+{
+  "schema": "jointbuildgs.boundary_map.prepare.v1",
+  "created_utc": "2026-07-16T15:21:17.616008+00:00",
+  "git_head_at_measurement": "46d67fe0e01e6ddb13941f17ca7c05722eee1c24",
+  "evaluation_rule": "footprint_area_m2 >= 30.0",
+  "evaluation_population": 178,
+  "support_population": 185,
+  "support_only_buildings": [
+    "DEBY_LOD2_104583794",
+    "DEBY_LOD2_108247350",
+    "DEBY_LOD2_4908160",
+    "DEBY_LOD2_4908165",
+    "DEBY_LOD2_4908168",
+    "DEBY_LOD2_4908169",
+    "DEBY_LOD2_8568392"
+  ],
+  "manual_label_population": 44,
+  "priority_population": 48,
+  "mast3r_job_count": 185,
+  "projection_reference_height_used": true,
+  "projection_reference_source": "LoD2 CityGML; measurement/classification projection only",
+  "source_sha256": {
+    "results/tum_transfer/analysis/footprints_aoi.geojson": "ca7f5b13a52368e1d2ac47b77cc78f12887bad4d598d122ad57b882eb4920a82",
+    "docs/lowtex_v5.csv": "848c419c8b576d5ceceecb25666b71804539c1ecf427b8df659284eb88f10d31",
+    "docs/pointcloud_attributes_v1_3.csv": "195476f80329b6fbf598cf861393e647c99ea81481e25895fd4791d416b9b6c5",
+    "docs/regression_input_snapshot.csv": "3cabed76b37625fdf8f9a72ed5c5b1f7c90ba23a839d6f1a61fc3727870cee82",
+    "docs/manual_review_judgments.csv": "801f99423cd2de75e694a04c9c680a31edfa0c2c6300da1a3a0257ca221f39e8",
+    "docs/bucket_crosswalk.csv": "c2fb12f0ea0bf90c649c463a4d07f9a260c00b18ba3516061f1b89c08b6dccf2",
+    "phases/p0-audit/data/work/opf/opf/scene_reference_frame.json": "fb408e9c97bdad6af7ad4a6e94be823be294030907ce92e395bd63490f77daf6",
+    "phases/p0-audit/data/work/colmap/sparse/0/cameras.txt": "d67c0fff80d2563fea5f3ec108c7e93d9a846851a0fdee1053c8b668a5f770ce",
+    "phases/p0-audit/data/work/colmap/sparse/0/images.txt": "b53e86754018db9eeb53d13b187cb065e55db83ffa9add6e7c8e9c8d7c29e88b",
+    "phases/p2-gsjso/scripts/overnight_boundary_map.py": "bce1369cf293fc6337339444cc28b83dce89b9a1192e6e8fc5eb21083e995a42"
+  },
+  "output_sha256": {
+    "phases/p2-gsjso/runs/20260716_boundary_map/boundary_map_support_metrics.csv": "1cb1258245f5b68751483a5de577b6eb06d5a44726e695e2266209fde7c60ed4",
+    "docs/boundary_map_metrics.csv": "68448b1b59b2e0969f816170053c81ed96dd9adcbd71b450ff846acda6195a35",
+    "phases/p2-gsjso/runs/20260716_boundary_map/mast3r_jobs.json": "3b0de36ceb4810f54218c52eee3f1bd9799ddc3534016a85b54a942bdfada022",
+    "phases/p2-gsjso/runs/20260716_boundary_map/run.log": "0c5e1de7b242b2ea96178e2630013b78b25f5c96c7331c27c20c4675b54657f3"
+  },
+  "learning_runs_started": 0,
+  "new_inference_runs": 0,
+  "interpretation_or_verdict": null
+}
