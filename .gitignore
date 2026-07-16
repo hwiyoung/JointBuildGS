@@ -175,3 +175,8 @@ tools/experiments/_shared/build/*.cjs.map
 results/phase1_*/**/*.png
 results/phase2_*/**/*.png
 results/phase3_*/**/*.png
+
+# S3-A-prime Phase 2 mutable runner outputs.
+# Keep the committed immutable status/hash/completion snapshots under runner/.
+phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase2_prepare/runner/status.csv
+phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase2_prepare/runner/logs/
