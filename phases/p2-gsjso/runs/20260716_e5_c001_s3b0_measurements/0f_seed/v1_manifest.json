@@ -4,7 +4,7 @@
     "score_rows": 28,
     "seed_artifacts": 3
   },
-  "created_utc": "2026-07-16T08:49:19.030862+00:00",
+  "created_utc": "2026-07-16T09:10:53.171501+00:00",
   "crs": "EPSG:25832",
   "generation_contract": {
     "current_loader_surface_opacity_observed": 0.1,
@@ -24,7 +24,7 @@
   "generation_source_sha256": {
     "docs/e5_c001_s3ap_fm_retri_rescore.csv": "f720a5687da54dac276c27222e49f8012f2b24be3e2bbcaa5cf7e15a21faf299",
     "docs/s3b0_gate_scores.csv": "fefa4a80078bfc1b8885bdd9cbcaca107a82817ca2a52e6103f5a6634cceafb2",
-    "phases/p2-gsjso/configs/e5_c001_s3b0_lock.json": "eeddc216413a47f71722f43af29a1622e3c99749b70350be191592746df260a6",
+    "phases/p2-gsjso/configs/e5_c001_s3b0_lock.json": "3b33003cc24a6deaf06afc0c78fa927e6e03be6f70fac6515c032181e6a9bd18",
     "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase0_baselines/p0_fill_points.npz": "35371e026d78be91a54a34eb2032198ba7ddeafd62c359e3a58a005398e7b28d",
     "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase1_seedprep/seeds/DEBY_LOD2_4907199_p0_surface_seed.npz": "146a5134cb8958a98296ce5252852326f58a796bb1f6d58707d4655b0bec39ce",
     "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase1_seedprep/seeds/DEBY_LOD2_8568391_p0_surface_seed.npz": "237fbb2f4a4737cef95874f73bc46b365bc55c574a65c52dfebabd92b1fbf33e",
@@ -33,9 +33,9 @@
     "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0e_semantic/masks/DEBY_LOD2_4907199_DJI_20241217095531_0048_D.npz": "e40c6910782d6ac6b0d7a4e8badeffd0155d1e3436d449c3abeb00e6f155f358",
     "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0e_semantic/masks/DEBY_LOD2_8568391_DJI_20241217095441_0023_D.npz": "db2dc978d5b9c6dfa0f3f81a9248f270bbd89cfa6b60bb61cf34a5a3bb0dff97",
     "phases/p2-gsjso/scripts/e5_c001_s3b0_common.py": "f778cfbae8cf90fe69e5dbd984f5370edeb83ec51cad2b1a3c2c1c513870e103",
-    "phases/p2-gsjso/scripts/e5_c001_s3b0_seed.py": "9514761935d2adb0026ef62c174eaf705c5ee39e8a28a28866f5e260840af2b5",
+    "phases/p2-gsjso/scripts/e5_c001_s3b0_seed.py": "907c39fe90c88695a6d6c09fa2202c455ac110c6ef906a2b3fd23deedfd93c6c",
     "phases/p2-gsjso/scripts/run_e5_c001_s3b0_seed_v1.sh": "45ebc25636451db0e74fe1e70e276d4a89d4e4b2676746c7339a185fa095a796",
-    "phases/p2-gsjso/scripts/test_e5_c001_s3b0_seed.py": "b4c1a76294971874be7972a9b8e9ef522376a13bc41db88c4bb3e10ea3bcb7e4",
+    "phases/p2-gsjso/scripts/test_e5_c001_s3b0_seed.py": "d0c5e24b6686c49554987804115c216fc7e0c3a8cee9f048bbda0538c1997bd4",
     "results/tum_transfer/analysis/footprints_aoi.geojson": "ca7f5b13a52368e1d2ac47b77cc78f12887bad4d598d122ad57b882eb4920a82",
     "results/tum_transfer/e5_pilot/C001/C001_train_prep_manifest.json": "eca68a7890116c52557ab467361b58c4c784047807f9bee857a2517ac0b40b58",
     "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_4907199/mono_normal/DJI_20241217095441_0023_D.npy": "62a8f7db3100f3c2f3452e16771f33f41da7f185db34a132574952fa363c7e4c",
@@ -46,7 +46,7 @@
   "git": {
     "branch": "exp/3b-surface-restore-corrected",
     "dirty": true,
-    "head": "1ff729e6ebe219298b796856a5d3920ead4fd514"
+    "head": "aeb23792cf2f5ef3c8a490577c9aac98b4e1416c"
   },
   "gt_boundary": {
     "generation_als_used": false,
@@ -63,10 +63,10 @@
     "docs/figs/e5_c001_s3b0/seeds/DEBY_LOD2_4907199_v1_score.png": "c877e87e134f9dee3fd179157adaef633f551340550619020ae478d80e4e8326",
     "docs/figs/e5_c001_s3b0/seeds/DEBY_LOD2_8568391_v1_score.png": "2cc677ac057ab937dab67a6ad091649aafaa95f52acf78cbdbebc6f6635c2c1f",
     "docs/figs/e5_c001_s3b0/seeds/DEBY_LOD2_8568392_v1_score.png": "587c47aa24c44489a85a077a24701ae14e42e051b9d7b8705595d9e122bafb15",
-    "docs/s3b0_p0prime_scores.csv": "9f03c416a7739681ac37b9af9efa152d9bcf556894b6bd96f6a18813dff00829",
     "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0f_seed/seeds/DEBY_LOD2_4907199_v1_surface_seed.npz": "6603fc28c6639b92133165b5155de69284f7696c59a2ef64a05c6dde520eddaf",
     "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0f_seed/seeds/DEBY_LOD2_8568391_v1_surface_seed.npz": "9f6e40be1b7440fbec13fc3220f244a277febc233e346be00041753d341da252",
-    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0f_seed/seeds/DEBY_LOD2_8568392_v1_surface_seed.npz": "058f0cfa7ae965493fcd03829269f9a0139d35d2c55a94130068768566fb773a"
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0f_seed/seeds/DEBY_LOD2_8568392_v1_surface_seed.npz": "058f0cfa7ae965493fcd03829269f9a0139d35d2c55a94130068768566fb773a",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0f_seed/v1_scores.csv": "9f03c416a7739681ac37b9af9efa152d9bcf556894b6bd96f6a18813dff00829"
   },
   "runtime": {
     "docker_image": "jointbuildgs:dev",

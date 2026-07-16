@@ -101,6 +101,7 @@
     "far_field_distance_bins_m": [0.0, 1.0, 2.0, 4.0, 6.0],
     "height_anchor_location": "supplied footprint centroid",
     "mono_pool_rule": "component median per eligible view, orient z positive, then component median across views and normalize",
+    "v2_fit_rule": "equal-weight least squares z=ax+by+c on V1 centroid FM anchor plus four GT-free h-sweep segment-midpoint anchors",
     "semantic_class": 1,
     "planned_init_opacity": 0.25,
     "coordinate_frame": "GS-local",

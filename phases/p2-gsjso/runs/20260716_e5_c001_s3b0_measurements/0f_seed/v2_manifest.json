@@ -1,0 +1,343 @@
+{
+  "counts": {
+    "figures": 3,
+    "score_rows": 42,
+    "seed_artifacts": 3
+  },
+  "created_utc": "2026-07-16T09:11:05.289850+00:00",
+  "crs": "EPSG:25832",
+  "generation_contract": {
+    "current_loader_surface_opacity_observed": 0.1,
+    "fit_rule": "equal-weight least squares z=ax+by+c on V1 centroid FM anchor plus four GT-free h-sweep segment-midpoint anchors",
+    "peak_condition": "all four GT-free segment rows carry a positive-peak class",
+    "planned_init_opacity": 0.25,
+    "required_npz_keys": [
+      "xyz",
+      "rgb",
+      "sem",
+      "metadata_json"
+    ],
+    "xy_lattice": "V1 XY copied exactly"
+  },
+  "generation_source_sha256": {
+    "docs/e5_c001_s3ap_fm_retri_rescore.csv": "f720a5687da54dac276c27222e49f8012f2b24be3e2bbcaa5cf7e15a21faf299",
+    "phases/p2-gsjso/configs/e5_c001_s3b0_lock.json": "3b33003cc24a6deaf06afc0c78fa927e6e03be6f70fac6515c032181e6a9bd18",
+    "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase0_baselines/p0_fill_points.npz": "35371e026d78be91a54a34eb2032198ba7ddeafd62c359e3a58a005398e7b28d",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0b_hsweep/manifest.json": "f65b784e61764bcdce4e80f618d93a6d1457ae42d582369b1e543b9a552d7c03",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0b_hsweep/segment_anchors_gtfree.csv": "df16dc61bef89e13f48f425b16174593b0b0bfb733771dcd6785307e403c94d2",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0f_seed/seeds/DEBY_LOD2_4907199_v1_surface_seed.npz": "6603fc28c6639b92133165b5155de69284f7696c59a2ef64a05c6dde520eddaf",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0f_seed/seeds/DEBY_LOD2_8568391_v1_surface_seed.npz": "9f6e40be1b7440fbec13fc3220f244a277febc233e346be00041753d341da252",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0f_seed/seeds/DEBY_LOD2_8568392_v1_surface_seed.npz": "058f0cfa7ae965493fcd03829269f9a0139d35d2c55a94130068768566fb773a",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0f_seed/v1_manifest.json": "307b5719e88e078d53478673a174b5b7c7ff6715b1fa3708fee958b4108e07fa",
+    "phases/p2-gsjso/scripts/e5_c001_s3b0_common.py": "f778cfbae8cf90fe69e5dbd984f5370edeb83ec51cad2b1a3c2c1c513870e103",
+    "phases/p2-gsjso/scripts/e5_c001_s3b0_seed.py": "907c39fe90c88695a6d6c09fa2202c455ac110c6ef906a2b3fd23deedfd93c6c",
+    "phases/p2-gsjso/scripts/run_e5_c001_s3b0_seed_v2.sh": "3879b898bc1e32e70e5f8a6fed1d9b509befca92f09bc5caa43e830715a1eb0a",
+    "phases/p2-gsjso/scripts/test_e5_c001_s3b0_seed.py": "d0c5e24b6686c49554987804115c216fc7e0c3a8cee9f048bbda0538c1997bd4",
+    "results/tum_transfer/analysis/footprints_aoi.geojson": "ca7f5b13a52368e1d2ac47b77cc78f12887bad4d598d122ad57b882eb4920a82",
+    "results/tum_transfer/e5_pilot/C001/C001_train_prep_manifest.json": "eca68a7890116c52557ab467361b58c4c784047807f9bee857a2517ac0b40b58",
+    "src/stage2/semantic_seed.py": "84b2f9b1503952664f8f42bfee6c60794347ad7b83fa022cbff1822b814ba923"
+  },
+  "git": {
+    "branch": "exp/3b-surface-restore-corrected",
+    "dirty": true,
+    "head": "aeb23792cf2f5ef3c8a490577c9aac98b4e1416c"
+  },
+  "gt_boundary": {
+    "generation_input": "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0b_hsweep/segment_anchors_gtfree.csv",
+    "generation_input_gt_flags": {
+      "als_used": false,
+      "gt_used": false,
+      "lod2_used": false
+    },
+    "ordering": "all V2 NPZ files written and engine-validated before reference load",
+    "score_als_used": false,
+    "score_gt_used": true,
+    "score_lod2_used": true
+  },
+  "learning_runs_started": 0,
+  "new_inference_runs": 0,
+  "output_sha256": {
+    "docs/figs/e5_c001_s3b0/seeds/DEBY_LOD2_4907199_v1_v2_score.png": "9761720e345afeab5471b55b443efd0d2291f9359fd433d2f7dda6f1859dbcb8",
+    "docs/figs/e5_c001_s3b0/seeds/DEBY_LOD2_8568391_v1_v2_score.png": "d95a47ae31f449b7753de319735610d545c4448dbbae7690f892ee4ebb60c999",
+    "docs/figs/e5_c001_s3b0/seeds/DEBY_LOD2_8568392_v1_v2_score.png": "e531967ff18135c92dda0c7b65659ef88f29c2bc8c171f64a56640ecf74f9d60",
+    "docs/s3b0_p0prime_scores.csv": "36014bc293cded6a6636720aff6521173e75d8bdfa2e623c4c779ab32685596f",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0f_seed/seeds/DEBY_LOD2_4907199_v2_surface_seed.npz": "a05337c99d7c285b54cb192ceb0e91a1378b4bdce39f7be4be632facaf178cfe",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0f_seed/seeds/DEBY_LOD2_8568391_v2_surface_seed.npz": "11e1ec111ed591c48733a714695f77971e21fdcf7c00eac6fef0581498322b1f",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0f_seed/seeds/DEBY_LOD2_8568392_v2_surface_seed.npz": "b2497d7f7e8eb81cf73006ca7f88a0515a0ba19cf98b42f5ba31b1770bd78fb0"
+  },
+  "runtime": {
+    "docker_image": "jointbuildgs:dev",
+    "docker_image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
+    "numpy": "1.26.4",
+    "python": "3.11.15"
+  },
+  "schema": "jointbuildgs.s3b0.virtual_seed.v2",
+  "score_contract": {
+    "delta_definition": "variant metric minus P0 metric for the identical scope",
+    "far_field_bins_m": [
+      0.0,
+      1.0,
+      2.0,
+      4.0,
+      6.0
+    ],
+    "far_field_distance": "nearest footprint-inside FM anchor XY",
+    "far_field_target": "4907199",
+    "reference": "CityGML LoD2 RoofSurface plus configured orthometric geoid",
+    "scopes": [
+      "overall",
+      "edge<=1m",
+      "interior>1m"
+    ],
+    "variants": [
+      "P0",
+      "V1",
+      "V2"
+    ]
+  },
+  "score_only_source_sha256": {
+    "configs/projection_datum.json": "096a49b46fc5661d74f9d3b54c4f3777676cfc6b27e577b52bb2dabeee8b480c",
+    "phases/p0-audit/data/raw/lod2/690_5334.gml": "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314",
+    "phases/p0-audit/data/raw/lod2/690_5336.gml": "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674"
+  },
+  "seed_records": {
+    "4907199": {
+      "anchor_count": 5,
+      "anchor_rms_m": 1.3738703026776853,
+      "anchor_z_median_local_m": -34.242,
+      "building_id": "DEBY_LOD2_4907199",
+      "current_loader_surface_opacity_observed": 0.10000000149011612,
+      "fit_rule": "equal-weight least squares z=ax+by+c on V1 centroid FM anchor plus four GT-free h-sweep segment-midpoint anchors",
+      "learning_runs_started": 0,
+      "new_inference_runs": 0,
+      "plane_ax_by_c": [
+        0.4953530815484727,
+        -0.25861512243834106,
+        40.281190010439666
+      ],
+      "planned_init_opacity": 0.25,
+      "seed_count": 448,
+      "seed_npz": "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0f_seed/seeds/DEBY_LOD2_4907199_v2_surface_seed.npz",
+      "seed_npz_sha256": "a05337c99d7c285b54cb192ceb0e91a1378b4bdce39f7be4be632facaf178cfe",
+      "seed_xyz_payload_sha256": "ad3c12d2b7710b359a288d4da73d0c68c214323f312b3e9010cb29be34b8346f",
+      "segment_anchor_csv": "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0b_hsweep/segment_anchors_gtfree.csv",
+      "segment_anchor_records": [
+        {
+          "background_median_score": 0.170840963994,
+          "building_id": "DEBY_LOD2_4907199",
+          "h_est_above_ground_m": 9.1,
+          "h_est_local_m": -34.242,
+          "peak_score": 13.934950826239,
+          "peak_status": "interior_positive_peak",
+          "peak_to_background_ratio": 81.566800493794,
+          "segment_index": 1,
+          "segment_length_m": 7.648856123293,
+          "segment_midpoint_e_utm": 690793.9750000001,
+          "segment_midpoint_n_utm": 5336049.835
+        },
+        {
+          "background_median_score": 0.0,
+          "building_id": "DEBY_LOD2_4907199",
+          "h_est_above_ground_m": 9.45,
+          "h_est_local_m": -33.892,
+          "peak_score": 25.879651693957,
+          "peak_status": "interior_positive_peak",
+          "peak_to_background_ratio": null,
+          "segment_index": 2,
+          "segment_length_m": 12.814948303059,
+          "segment_midpoint_e_utm": 690792.7050000001,
+          "segment_midpoint_n_utm": 5336057.26
+        },
+        {
+          "background_median_score": 0.0,
+          "building_id": "DEBY_LOD2_4907199",
+          "h_est_above_ground_m": 8.25,
+          "h_est_local_m": -35.092,
+          "peak_score": 12.287320693306,
+          "peak_status": "interior_positive_peak",
+          "peak_to_background_ratio": null,
+          "segment_index": 3,
+          "segment_length_m": 7.639849474791,
+          "segment_midpoint_e_utm": 690798.54,
+          "segment_midpoint_n_utm": 5336061.865
+        },
+        {
+          "background_median_score": 2.306086679695,
+          "building_id": "DEBY_LOD2_4907199",
+          "h_est_above_ground_m": 13.7,
+          "h_est_local_m": -29.642,
+          "peak_score": 20.517236479076,
+          "peak_status": "interior_positive_peak",
+          "peak_to_background_ratio": 8.896992753885,
+          "segment_index": 4,
+          "segment_length_m": 12.919086655078,
+          "segment_midpoint_e_utm": 690799.81,
+          "segment_midpoint_n_utm": 5336054.44
+        }
+      ],
+      "segment_anchor_sha256": "df16dc61bef89e13f48f425b16174593b0b0bfb733771dcd6785307e403c94d2",
+      "v1_seed_npz": "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0f_seed/seeds/DEBY_LOD2_4907199_v1_surface_seed.npz",
+      "v1_seed_sha256": "6603fc28c6639b92133165b5155de69284f7696c59a2ef64a05c6dde520eddaf",
+      "variant": "V2"
+    },
+    "8568391": {
+      "anchor_count": 5,
+      "anchor_rms_m": 1.3809392904756408,
+      "anchor_z_median_local_m": -37.728,
+      "building_id": "DEBY_LOD2_8568391",
+      "current_loader_surface_opacity_observed": 0.10000000149011612,
+      "fit_rule": "equal-weight least squares z=ax+by+c on V1 centroid FM anchor plus four GT-free h-sweep segment-midpoint anchors",
+      "learning_runs_started": 0,
+      "new_inference_runs": 0,
+      "plane_ax_by_c": [
+        0.3941122300349951,
+        0.08495164777879893,
+        28.533790434754444
+      ],
+      "planned_init_opacity": 0.25,
+      "seed_count": 265,
+      "seed_npz": "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0f_seed/seeds/DEBY_LOD2_8568391_v2_surface_seed.npz",
+      "seed_npz_sha256": "11e1ec111ed591c48733a714695f77971e21fdcf7c00eac6fef0581498322b1f",
+      "seed_xyz_payload_sha256": "e43d49e40ddf7b2ff9cb3dcbbc34440d582e8c7a0d3374cb096e9497cb40e1e1",
+      "segment_anchor_csv": "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0b_hsweep/segment_anchors_gtfree.csv",
+      "segment_anchor_records": [
+        {
+          "background_median_score": 0.629846423178,
+          "building_id": "DEBY_LOD2_8568391",
+          "h_est_above_ground_m": 5.45,
+          "h_est_local_m": -37.728,
+          "peak_score": 9.875692301848,
+          "peak_status": "interior_positive_peak",
+          "peak_to_background_ratio": 15.67952430693,
+          "segment_index": 1,
+          "segment_length_m": 10.190902805968,
+          "segment_midpoint_e_utm": 690791.1699999999,
+          "segment_midpoint_n_utm": 5336023.1850000005
+        },
+        {
+          "background_median_score": 0.0,
+          "building_id": "DEBY_LOD2_8568391",
+          "h_est_above_ground_m": 2.15,
+          "h_est_local_m": -41.028,
+          "peak_score": 2.322550377895,
+          "peak_status": "interior_positive_peak",
+          "peak_to_background_ratio": null,
+          "segment_index": 2,
+          "segment_length_m": 5.478138369574,
+          "segment_midpoint_e_utm": 690787.39,
+          "segment_midpoint_n_utm": 5336027.5
+        },
+        {
+          "background_median_score": 0.013039767725,
+          "building_id": "DEBY_LOD2_8568391",
+          "h_est_above_ground_m": 6.65,
+          "h_est_local_m": -36.528,
+          "peak_score": 4.429309519704,
+          "peak_status": "interior_positive_peak",
+          "peak_to_background_ratio": 339.677025928205,
+          "segment_index": 3,
+          "segment_length_m": 10.08323856709,
+          "segment_midpoint_e_utm": 690793.12,
+          "segment_midpoint_n_utm": 5336028.305
+        },
+        {
+          "background_median_score": 0.859503420193,
+          "building_id": "DEBY_LOD2_8568391",
+          "h_est_above_ground_m": 5.6,
+          "h_est_local_m": -37.578,
+          "peak_score": 7.481868839117,
+          "peak_status": "interior_positive_peak",
+          "peak_to_background_ratio": 8.7048738415,
+          "segment_index": 4,
+          "segment_length_m": 5.479927006507,
+          "segment_midpoint_e_utm": 690796.8999999999,
+          "segment_midpoint_n_utm": 5336023.99
+        }
+      ],
+      "segment_anchor_sha256": "df16dc61bef89e13f48f425b16174593b0b0bfb733771dcd6785307e403c94d2",
+      "v1_seed_npz": "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0f_seed/seeds/DEBY_LOD2_8568391_v1_surface_seed.npz",
+      "v1_seed_sha256": "9f6e40be1b7440fbec13fc3220f244a277febc233e346be00041753d341da252",
+      "variant": "V2"
+    },
+    "8568392": {
+      "anchor_count": 5,
+      "anchor_rms_m": 0.5468435791415625,
+      "anchor_z_median_local_m": -39.907,
+      "building_id": "DEBY_LOD2_8568392",
+      "current_loader_surface_opacity_observed": 0.10000000149011612,
+      "fit_rule": "equal-weight least squares z=ax+by+c on V1 centroid FM anchor plus four GT-free h-sweep segment-midpoint anchors",
+      "learning_runs_started": 0,
+      "new_inference_runs": 0,
+      "plane_ax_by_c": [
+        0.8941306557249541,
+        1.3647987005441458,
+        170.8899353192461
+      ],
+      "planned_init_opacity": 0.25,
+      "seed_count": 37,
+      "seed_npz": "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0f_seed/seeds/DEBY_LOD2_8568392_v2_surface_seed.npz",
+      "seed_npz_sha256": "b2497d7f7e8eb81cf73006ca7f88a0515a0ba19cf98b42f5ba31b1770bd78fb0",
+      "seed_xyz_payload_sha256": "9cee621a94a27acc16dcc3d6549d93e9ef908a830f6aa06452e4c09dda5f2e29",
+      "segment_anchor_csv": "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0b_hsweep/segment_anchors_gtfree.csv",
+      "segment_anchor_records": [
+        {
+          "background_median_score": 0.0,
+          "building_id": "DEBY_LOD2_8568392",
+          "h_est_above_ground_m": 4.15,
+          "h_est_local_m": -39.007,
+          "peak_score": 2.243508444117,
+          "peak_status": "interior_positive_peak",
+          "peak_to_background_ratio": null,
+          "segment_index": 1,
+          "segment_length_m": 2.359241615996,
+          "segment_midpoint_e_utm": 690795.5435,
+          "segment_midpoint_n_utm": 5336020.309
+        },
+        {
+          "background_median_score": 0.0,
+          "building_id": "DEBY_LOD2_8568392",
+          "h_est_above_ground_m": 2.2,
+          "h_est_local_m": -40.957,
+          "peak_score": 2.490320353617,
+          "peak_status": "interior_positive_peak",
+          "peak_to_background_ratio": null,
+          "segment_index": 2,
+          "segment_length_m": 2.457076718677,
+          "segment_midpoint_e_utm": 690793.9835000001,
+          "segment_midpoint_n_utm": 5336019.6274999995
+        },
+        {
+          "background_median_score": 0.0,
+          "building_id": "DEBY_LOD2_8568392",
+          "h_est_above_ground_m": 3.25,
+          "h_est_local_m": -39.907,
+          "peak_score": 1.34408337559,
+          "peak_status": "interior_positive_peak",
+          "peak_to_background_ratio": null,
+          "segment_index": 3,
+          "segment_length_m": 2.358896351821,
+          "segment_midpoint_e_utm": 690793.238,
+          "segment_midpoint_n_utm": 5336021.16
+        },
+        {
+          "background_median_score": 0.0,
+          "building_id": "DEBY_LOD2_8568392",
+          "h_est_above_ground_m": 5.95,
+          "h_est_local_m": -37.207,
+          "peak_score": 3.226235485218,
+          "peak_status": "interior_positive_peak",
+          "peak_to_background_ratio": null,
+          "segment_index": 4,
+          "segment_length_m": 2.458014849337,
+          "segment_midpoint_e_utm": 690794.798,
+          "segment_midpoint_n_utm": 5336021.8415
+        }
+      ],
+      "segment_anchor_sha256": "df16dc61bef89e13f48f425b16174593b0b0bfb733771dcd6785307e403c94d2",
+      "v1_seed_npz": "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0f_seed/seeds/DEBY_LOD2_8568392_v1_surface_seed.npz",
+      "v1_seed_sha256": "058f0cfa7ae965493fcd03829269f9a0139d35d2c55a94130068768566fb773a",
+      "variant": "V2"
+    }
+  },
+  "variant": "V2"
+}

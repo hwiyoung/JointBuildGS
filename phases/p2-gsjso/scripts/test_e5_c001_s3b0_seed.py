@@ -37,6 +37,19 @@ class VirtualSeedTests(unittest.TestCase):
         )
         np.testing.assert_allclose(value, [0.0, 5.0])
 
+    def test_plane_from_five_equal_weight_anchors(self) -> None:
+        anchors = np.asarray(
+            [
+                [0.5, 0.5, 3.5],
+                [0.0, 0.0, 1.0],
+                [1.0, 0.0, 3.0],
+                [0.0, 1.0, 4.0],
+                [1.0, 1.0, 6.0],
+            ]
+        )
+        plane = seed.plane_from_xyz(anchors)
+        np.testing.assert_allclose(plane, [2.0, 3.0, 1.0], atol=1e-12)
+
 
 if __name__ == "__main__":
     unittest.main()
