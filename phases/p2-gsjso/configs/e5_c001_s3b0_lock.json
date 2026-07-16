@@ -107,6 +107,13 @@
     "coordinate_frame": "GS-local",
     "required_npz_keys": ["xyz", "rgb", "sem", "metadata_json"]
   },
+  "mono_0d": {
+    "mode": "conditional_skip",
+    "requested_scope": "C001 18-building crops with reference roof normals",
+    "reason": "mandatory 0-a, 0-b, 0-c, 0-e, and 0-f measurements occupied this wave; conditional 0-d was not started",
+    "reference_opened": false,
+    "mono_normal_inference_started": 0
+  },
   "containers": {
     "main_image": "jointbuildgs:dev",
     "main_image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
@@ -122,6 +129,7 @@
     "gate_run": "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0c_gate",
     "seed_run": "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0f_seed",
     "hsweep_run": "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0b_hsweep",
+    "mono_run": "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0d_mono",
     "semantic_lineage_md": "docs/s3b0_semantic_lineage.md",
     "mask_iou_csv": "docs/s3b0_mask_iou.csv",
     "semantic_figure_dir": "docs/figs/e5_c001_s3b0/semantic",

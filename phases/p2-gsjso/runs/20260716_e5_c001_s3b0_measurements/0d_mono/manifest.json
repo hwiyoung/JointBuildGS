@@ -1,0 +1,36 @@
+{
+  "counts": {
+    "buildings_measured": 0,
+    "csv_rows": 1,
+    "figures": 0
+  },
+  "created_utc": "2026-07-16T09:14:38.441378+00:00",
+  "git": {
+    "branch": "exp/3b-surface-restore-corrected",
+    "dirty": true,
+    "head": "619b902c49b364cf085fc583b515e4fd8982e0d7"
+  },
+  "learning_runs_started": 0,
+  "mode": "conditional_skip",
+  "mono_normal_inference_started": 0,
+  "new_inference_runs": 0,
+  "output_sha256": {
+    "docs/s3b0_mono_reliability.csv": "2d607268f81cdfeb3fa6b0be02a8cc81900d57a7d636851b1082f9bdca8199b7"
+  },
+  "reason": "mandatory 0-a, 0-b, 0-c, 0-e, and 0-f measurements occupied this wave; conditional 0-d was not started",
+  "reference_opened": false,
+  "runtime": {
+    "docker_image": "jointbuildgs:dev",
+    "docker_image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
+    "python": "3.11.15"
+  },
+  "schema": "jointbuildgs.s3b0.mono_reliability.conditional_skip.v1",
+  "scope": "C001 18-building crops with reference roof normals",
+  "source_sha256": {
+    "phases/p2-gsjso/configs/e5_c001_s3b0_lock.json": "f03f195971da248206241e9ea93156608deaa6ced875a3200a6b5e26aec7a035",
+    "phases/p2-gsjso/scripts/e5_c001_s3b0_common.py": "f778cfbae8cf90fe69e5dbd984f5370edeb83ec51cad2b1a3c2c1c513870e103",
+    "phases/p2-gsjso/scripts/e5_c001_s3b0_mono_reliability.py": "9338868d8922bba2c79ffd911dc45d74c7de45f988973b513291781fe86fc85b",
+    "phases/p2-gsjso/scripts/run_e5_c001_s3b0_mono_reliability.sh": "61ae59bad5be79c6bf26eec3df0445bd5cb80d6a0395e6bb1f7ea53225871e6e"
+  },
+  "status": "not_started_conditional"
+}
