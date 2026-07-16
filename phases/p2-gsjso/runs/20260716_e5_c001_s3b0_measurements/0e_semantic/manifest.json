@@ -1,0 +1,199 @@
+{
+  "counts": {
+    "building_view_count": 12,
+    "figure_count": 3,
+    "iou_row_count": 36,
+    "mask_npz_count": 12
+  },
+  "created_utc": "2026-07-16T08:05:08.649924+00:00",
+  "crs": "EPSG:25832",
+  "git": {
+    "branch": "exp/3b-surface-restore-corrected",
+    "dirty": true,
+    "head": "95b6b3ca2116ae32be861603ab2b2604b0b8d1db"
+  },
+  "gt_boundary": {
+    "als_used_for_non_gt_inference": false,
+    "current_semantic_region_cache": "score_only",
+    "gt_used_for_non_gt_inference": false,
+    "lod2_used_for_non_gt_inference": false
+  },
+  "input_height_inventory": {
+    "DEBY_LOD2_108247349": {
+      "source": "zero-iteration COLMAP sparse plus DIM dense-init inside supplied footprint",
+      "source_count": 1,
+      "z_median_local_m": -59.395474171246995
+    },
+    "DEBY_LOD2_108247350": {
+      "source": "zero-iteration COLMAP sparse plus DIM dense-init inside supplied footprint",
+      "source_count": 9,
+      "z_median_local_m": -25.61
+    },
+    "DEBY_LOD2_108247351": {
+      "source": "zero-iteration COLMAP sparse plus DIM dense-init inside supplied footprint",
+      "source_count": 10,
+      "z_median_local_m": -25.755000000000003
+    },
+    "DEBY_LOD2_4907184": {
+      "source": "zero-iteration COLMAP sparse plus DIM dense-init inside supplied footprint",
+      "source_count": 9371,
+      "z_median_local_m": -23.06
+    },
+    "DEBY_LOD2_4907185": {
+      "source": "zero-iteration COLMAP sparse plus DIM dense-init inside supplied footprint",
+      "source_count": 681,
+      "z_median_local_m": -26.04
+    },
+    "DEBY_LOD2_4907186": {
+      "source": "zero-iteration COLMAP sparse plus DIM dense-init inside supplied footprint",
+      "source_count": 427,
+      "z_median_local_m": -25.55
+    },
+    "DEBY_LOD2_4907188": {
+      "source": "zero-iteration COLMAP sparse plus DIM dense-init inside supplied footprint",
+      "source_count": 777,
+      "z_median_local_m": -26.45
+    },
+    "DEBY_LOD2_4907194": {
+      "source": "zero-iteration COLMAP sparse plus DIM dense-init inside supplied footprint",
+      "source_count": 505,
+      "z_median_local_m": -24.89
+    },
+    "DEBY_LOD2_4907195": {
+      "source": "zero-iteration COLMAP sparse plus DIM dense-init inside supplied footprint",
+      "source_count": 681,
+      "z_median_local_m": -24.25
+    },
+    "DEBY_LOD2_4907198": {
+      "source": "zero-iteration COLMAP sparse plus DIM dense-init inside supplied footprint",
+      "source_count": 1993,
+      "z_median_local_m": -26.16
+    },
+    "DEBY_LOD2_4907199": {
+      "source": "zero-iteration COLMAP sparse plus DIM dense-init inside supplied footprint",
+      "source_count": 32,
+      "z_median_local_m": -26.305
+    },
+    "DEBY_LOD2_4907202": {
+      "source": "zero-iteration COLMAP sparse plus DIM dense-init inside supplied footprint",
+      "source_count": 1026,
+      "z_median_local_m": -36.765
+    },
+    "DEBY_LOD2_4908168": {
+      "source": "zero-iteration COLMAP sparse plus DIM dense-init inside supplied footprint",
+      "source_count": 93,
+      "z_median_local_m": -38.01
+    },
+    "DEBY_LOD2_4908178": {
+      "source": "zero-iteration COLMAP sparse plus DIM dense-init inside supplied footprint",
+      "source_count": 419,
+      "z_median_local_m": -39.45
+    },
+    "DEBY_LOD2_4908179": {
+      "source": "zero-iteration COLMAP sparse plus DIM dense-init inside supplied footprint",
+      "source_count": 0,
+      "z_median_local_m": null
+    },
+    "DEBY_LOD2_60098": {
+      "source": "zero-iteration COLMAP sparse plus DIM dense-init inside supplied footprint",
+      "source_count": 521,
+      "z_median_local_m": -24.22
+    },
+    "DEBY_LOD2_8568391": {
+      "source": "zero-iteration COLMAP sparse plus DIM dense-init inside supplied footprint",
+      "source_count": 9,
+      "z_median_local_m": -38.92
+    },
+    "DEBY_LOD2_8568392": {
+      "source": "zero-iteration COLMAP sparse plus DIM dense-init inside supplied footprint",
+      "source_count": 29,
+      "z_median_local_m": -39.63
+    }
+  },
+  "learning_runs_started": 0,
+  "model": {
+    "model_type": "vit_b",
+    "name": "Segment Anything ViT-B",
+    "repository": "https://github.com/facebookresearch/segment-anything.git",
+    "resolved_revision": "dca509fe793f601edb92606367a655c15ac00fdf",
+    "revision": "dca509fe793f601edb92606367a655c15ac00fdf",
+    "runtime_repo": "results/tum_transfer/e5_s3b0/runtime/sam_vit_b/segment-anything",
+    "weights": "results/tum_transfer/e5_s3b0/runtime/sam_vit_b/sam_vit_b_01ec64.pth",
+    "weights_bytes": 375042383,
+    "weights_sha256": "ec2df62732614e57411cdcf32a23ffdf28910380d03139ee0f4fcbe91eb8c912",
+    "weights_url": "https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth"
+  },
+  "new_2d_segmentation_inference_models": 1,
+  "output_sha256": {
+    "docs/figs/e5_c001_s3b0/semantic/DEBY_LOD2_4907199_DJI_20241217095441_0023_D.png": "f1bcab9d765c3e0af5385f084358707a1b88b24528a7d904ee7d534afba538c9",
+    "docs/figs/e5_c001_s3b0/semantic/DEBY_LOD2_8568391_DJI_20241217095441_0023_D.png": "f49471dcfd59eefaf7559914d9e8f5a701fd3cc0583ff9e6f5bdf3c26a433908",
+    "docs/figs/e5_c001_s3b0/semantic/DEBY_LOD2_8568392_DJI_20241217095441_0023_D.png": "8e006b242cfb7835dfb194fee43ae06c56aa3f39c6a78d1146d352533506877f",
+    "docs/s3b0_mask_iou.csv": "40b29958074a84e33521b3813230c716359d8bebed193dcfe1d68ffeeb701810",
+    "docs/s3b0_semantic_lineage.md": "c8a3ef9212101ac0d68b8bc780223f6bff1a912eaa038e3f0da109a6d6ceee09",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0e_semantic/masks/DEBY_LOD2_4907199_DJI_20241217095141_0077_D.npz": "e570c75687116cce1da980acc2ca9bb5569bd4b35f4dde154951f0ec7f18b9c3",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0e_semantic/masks/DEBY_LOD2_4907199_DJI_20241217095145_0079_D.npz": "656871b70a66ec5b9e690d9ad1494adccd493fa43e74f9be9c3dd35eac25789b",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0e_semantic/masks/DEBY_LOD2_4907199_DJI_20241217095147_0080_D.npz": "8ecd0152ec34647c3d632bf438adf25cc1cc47a73502d5216b3d0f23ac8b6740",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0e_semantic/masks/DEBY_LOD2_4907199_DJI_20241217095149_0081_D.npz": "b180fe5fdac2fccb46918ee1122d49bdc1da48ad891aeee7ed308de0ae0ff104",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0e_semantic/masks/DEBY_LOD2_4907199_DJI_20241217095441_0023_D.npz": "e1782a674cbcd2364524e5328d4e4abc70dec3a04ca4d48ee0943a7cb44e7998",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0e_semantic/masks/DEBY_LOD2_4907199_DJI_20241217095531_0048_D.npz": "e40c6910782d6ac6b0d7a4e8badeffd0155d1e3436d449c3abeb00e6f155f358",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0e_semantic/masks/DEBY_LOD2_8568391_DJI_20241217084901_0194_D.npz": "d9c19f0e6ee1d4effbb2ac22f8f9869d7ea3278cb1875143987293ee3d019266",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0e_semantic/masks/DEBY_LOD2_8568391_DJI_20241217084903_0195_D.npz": "82c60d2211c4a5febb896e8be941c534cf8f32adb1355115e28c52067e8639f6",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0e_semantic/masks/DEBY_LOD2_8568391_DJI_20241217095441_0023_D.npz": "db2dc978d5b9c6dfa0f3f81a9248f270bbd89cfa6b60bb61cf34a5a3bb0dff97",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0e_semantic/masks/DEBY_LOD2_8568392_DJI_20241217084901_0194_D.npz": "5f33f0e3351eaf471297f35434c7b8dae6b7fc7a0019af8c63586132fb4bcab4",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0e_semantic/masks/DEBY_LOD2_8568392_DJI_20241217084903_0195_D.npz": "2d25103ce728566491e166fcb7d9a70760568e5a582cc53f394a4ed7c0e140b8",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0e_semantic/masks/DEBY_LOD2_8568392_DJI_20241217095441_0023_D.npz": "7e083cc29b939c21d262f86c7c8d4f6d383e0b6c086fbf3d2a9da4adb63299db"
+  },
+  "runtime": {
+    "cuda_available": true,
+    "cuda_device": "NVIDIA GeForce RTX 3090",
+    "docker_image": "jointbuildgs:dev",
+    "docker_image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
+    "python": "3.11.15",
+    "torch": "2.4.1+cu121"
+  },
+  "schema": "jointbuildgs.s3b0.semantic_measurement.v1",
+  "source_sha256": {
+    "configs/tum_mob/e5_s2p_interaction/gs_e5_C001_s2p_arm1p_dense_r1.yaml": "bdd3d229e6ae8052e60d5d8bbff26d670c62008326ee6ed4d8ee81970a4146df",
+    "docs/e5_c001_s3ap_fm_retri_rescore.csv": "f720a5687da54dac276c27222e49f8012f2b24be3e2bbcaa5cf7e15a21faf299",
+    "phases/p2-gsjso/configs/e5_c001_s3b0_lock.json": "e3157417489365899404a4fa3634858149777c216ba98fd18a09702c2d22c22f",
+    "phases/p2-gsjso/scripts/e5_c001_s3_semantic_regions.py": "6fde6adb2df01a5411b0a4512d53fb5f0d1e1e8b1636fe5f35a827de6ca3c384",
+    "phases/p2-gsjso/scripts/e5_c001_s3ap_phase2_prepare.py": "11e1c2e5b77c8f9e601925aa768637bf03bc968684b5c76900cdf81b013ab558",
+    "phases/p2-gsjso/scripts/make_clean_labels.py": "64bf932c2edcbdb188cf2ea13f3fcbad821b64d31317f2bcb81da8554eb8c9d9",
+    "results/tum_transfer/analysis/footprints_aoi.geojson": "ca7f5b13a52368e1d2ac47b77cc78f12887bad4d598d122ad57b882eb4920a82",
+    "results/tum_transfer/e5_pilot/C001/C001_train_prep_manifest.json": "eca68a7890116c52557ab467361b58c4c784047807f9bee857a2517ac0b40b58",
+    "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/sparse/0/points3D.bin": "d1fb05b4d7913d61a248a95a6faf1357ed9d669abbd6e575939e306b4ffece09",
+    "results/tum_transfer/e5_pilot/C001/seeds/seed_dense_C001_buf20.ply": "6083e9e93df712734499a0d1ff3621fb23cf96046d39d6adda3712ac98aa0c53",
+    "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_4907199/camera_crop_manifest.json": "c60fc246daa9cb2abcbe74f1d802ad4157f0daf4624cc8f438c2f03d56299196",
+    "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_4907199/images/DJI_20241217095141_0077_D.png": "cb92d11c64f80f8fb63eb16d46d863bb58d93f992ebcf26f43f4c91758757391",
+    "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_4907199/images/DJI_20241217095145_0079_D.png": "4316da9c8fe43d939c3fb832775538a2b1c97d141c7064b6ae313564be5768dc",
+    "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_4907199/images/DJI_20241217095147_0080_D.png": "82d28d482f80feeadae4e08a4a3a8f08b2f42afc6f4f5e9702da4f66b2c5c576",
+    "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_4907199/images/DJI_20241217095149_0081_D.png": "77803e8887c62ccd6de48ba757b986e638d81deb1c83617fe3dd554494ec2eb1",
+    "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_4907199/images/DJI_20241217095441_0023_D.png": "8bb35c6a6c7e21276d46cdd3439c3770808ebae0710cfc0e81ecf71a15e29c1c",
+    "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_4907199/images/DJI_20241217095531_0048_D.png": "b89bbf10e1e6944fb50a990c53745ccaaecbd769630f79a4e3faf0aec0b1602e",
+    "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_4907199/semantic_regions/DJI_20241217095141_0077_D.npz": "3870afe9e0f6f5893ec2e29935883107da4ec3313f232dd99edc4cbaf4106055",
+    "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_4907199/semantic_regions/DJI_20241217095145_0079_D.npz": "8e8bd89205030f589708eb4d06ab68db2b25b508400af86773b285727774fa90",
+    "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_4907199/semantic_regions/DJI_20241217095147_0080_D.npz": "fdfc596fa14009e961bde415a99c097477437ce459ddd52716fe1473e5403881",
+    "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_4907199/semantic_regions/DJI_20241217095149_0081_D.npz": "7e53432dc56667f6a3a74dce77a262a09974b21ca6782116d70d993f442e551f",
+    "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_4907199/semantic_regions/DJI_20241217095441_0023_D.npz": "c36cb0c44a79c20f92eddd453e08bdbd812d0029b3c2c870dc10abead6e03297",
+    "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_4907199/semantic_regions/DJI_20241217095531_0048_D.npz": "98d6227bbfdfe870ee389fd4e0eeac8553402142a78440cdc2f348a257d6c6e9",
+    "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_8568391/camera_crop_manifest.json": "c885647ccf07de71c25406317ad8ee797cd48d0d34646224961b923c90b56966",
+    "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_8568391/images/DJI_20241217084901_0194_D.png": "9532d225082cfb0934762b9d06caba634758182cc765d67d317ab9ee072918c3",
+    "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_8568391/images/DJI_20241217084903_0195_D.png": "75d5b03dbb2c569a6a19b4b1c7d2077f9c905a937a40e41d2e26b34a4dbf9cc1",
+    "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_8568391/images/DJI_20241217095441_0023_D.png": "cea471ffe83f897bfa2a9cb1f1f4966e1a8a8aa40aa0a7a0becc78572a74b977",
+    "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_8568391/semantic_regions/DJI_20241217084901_0194_D.npz": "095419ed29a0a03802a1768ef6ade4ecb463fcd47b70fb17c6d4dfe39e3ffed1",
+    "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_8568391/semantic_regions/DJI_20241217084903_0195_D.npz": "e5a4d8f6dbcac7506bc04dfbe870b89bdb9065db01bef1a0cc893b6df1c5377c",
+    "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_8568391/semantic_regions/DJI_20241217095441_0023_D.npz": "65ab2b9074da9ef49a5b275cf8ab81e39ca6ac96bc7248fe15cacb8b5461736e",
+    "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_8568392/camera_crop_manifest.json": "be0e977e50f126ab5e38609cc7ecc9df4529c9cf5c9d3ec41e0c8d5375f94a06",
+    "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_8568392/images/DJI_20241217084901_0194_D.png": "9532d225082cfb0934762b9d06caba634758182cc765d67d317ab9ee072918c3",
+    "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_8568392/images/DJI_20241217084903_0195_D.png": "71a57e508f5890df4d1ba72ab966d72b4f1f30cddda74ebe25e3c6e623cec1cc",
+    "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_8568392/images/DJI_20241217095441_0023_D.png": "800a3bbf0a206b47194f9fd7923c46bb571937caf4f02c37cb6b3f0f090ff187",
+    "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_8568392/semantic_regions/DJI_20241217084901_0194_D.npz": "095419ed29a0a03802a1768ef6ade4ecb463fcd47b70fb17c6d4dfe39e3ffed1",
+    "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_8568392/semantic_regions/DJI_20241217084903_0195_D.npz": "b894c91562e7b3031397443eb217e61724cf5c2f703d808d4a0f76aa5acb0580",
+    "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_8568392/semantic_regions/DJI_20241217095441_0023_D.npz": "ef5acbb7bfef75bd9e1b85aa6f25967817fabd2eefd5773dbc195bb0ca37922f",
+    "results/tum_transfer/e5_s3b0/runtime/sam_vit_b/sam_vit_b_01ec64.pth": "ec2df62732614e57411cdcf32a23ffdf28910380d03139ee0f4fcbe91eb8c912",
+    "src/stage2/loss/semantic_guided.py": "bce153583d843eb81e7a2f855d5605292729787aca627acc3b79e90d8bf3eb48",
+    "src/stage2/train.py": "e58f12fae4a30f1977ee74535facccf98fb3cb5ccb22e542f3485a642ca96dfc"
+  },
+  "status": "measured",
+  "task": "0-e semantic lineage audit and one-model non-GT mask IoU"
+}
