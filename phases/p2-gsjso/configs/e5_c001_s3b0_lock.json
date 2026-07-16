@@ -62,8 +62,14 @@
     "reference_half_band_199_m": 0.5,
     "histogram_bin_m": 0.5,
     "histogram_top_above_ground_m": 15.0,
+    "roof_candidate_min_above_ground_m": 1.5,
     "coverage_grid_m": 0.5,
-    "xy_map_grid_m": 0.5
+    "xy_map_grid_m": 0.5,
+    "upper_edge_band_m": 1.0,
+    "upper_edge_concentration_fraction": 0.5,
+    "upper_neighbor_direction_fraction": 0.65,
+    "canonical_depth": "median",
+    "representative_heightmap_job": "base A1 r1"
   },
   "hsweep_0b": {
     "ground_plus_min_m": 2.0,
@@ -95,6 +101,8 @@
     "run_root": "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements",
     "semantic_run": "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0e_semantic",
     "semantic_masks": "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0e_semantic/masks",
+    "alpha_run": "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0a_alpha",
+    "alpha_runtime_root": "results/tum_transfer/e5_s3b0/alpha",
     "semantic_lineage_md": "docs/s3b0_semantic_lineage.md",
     "mask_iou_csv": "docs/s3b0_mask_iou.csv",
     "semantic_figure_dir": "docs/figs/e5_c001_s3b0/semantic",

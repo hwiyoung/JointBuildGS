@@ -1,0 +1,86 @@
+{
+  "als_used": false,
+  "arm": "a1",
+  "building_id": "DEBY_LOD2_8568392",
+  "checkpoint": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b8568392_a1_r2/ckpt/final.pt",
+  "checkpoint_it": 30000,
+  "checkpoint_n_prim": 27923,
+  "checkpoint_sha256": "e5053c24be6aae48fb82ed0122e5bd4d113e11421cba3e715eeaf05ac3dc4669",
+  "created_utc": "2026-07-16T08:18:26.970386+00:00",
+  "equivalent_alpha_readout_count": 3,
+  "fixed_view_count": 3,
+  "fixed_views": [
+    "DJI_20241217084901_0194_D.png",
+    "DJI_20241217084903_0195_D.png",
+    "DJI_20241217095441_0023_D.png"
+  ],
+  "fusion": {
+    "0p1": {
+      "alpha": 0.1,
+      "fused_all": 122829,
+      "minobs_kept": 959,
+      "sor_kept": 912,
+      "sor_status": "applied"
+    },
+    "0p3": {
+      "alpha": 0.3,
+      "fused_all": 122004,
+      "minobs_kept": 959,
+      "sor_kept": 912,
+      "sor_status": "applied"
+    },
+    "0p5": {
+      "alpha": 0.5,
+      "fused_all": 119012,
+      "minobs_kept": 959,
+      "sor_kept": 912,
+      "sor_status": "applied"
+    }
+  },
+  "gt_used": false,
+  "height_delta_m": 0.0,
+  "job_class": "base",
+  "learning_runs_started": 0,
+  "lod2_used": false,
+  "output_npz": "results/tum_transfer/e5_s3b0/alpha/jobs/gs_e5_C001_s3ap_b8568392_a1_r2.npz",
+  "output_npz_sha256": "9ac17dc3200f59cc6bbe6c5c46b11acce4e1c1fb241cfca223bea43935dbbacc",
+  "phase3_alpha0p5_crosscheck": {
+    "all_payload_match": true,
+    "available": true,
+    "clean_payload_match": true,
+    "existing_path": "results/tum_transfer/e5_s3ap_phase3/jobs/gs_e5_C001_s3ap_b8568392_a1_r2/fused_depth.npz",
+    "existing_sha256": "71303752b04a4204739030bf3a54d99e70b1b0da2b7fd9ee310fd87f57717881",
+    "fused_all_count_match": true,
+    "minobs_count_match": true,
+    "sor_count_match": true
+  },
+  "prepared_root": "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_8568392",
+  "render_pass_count": 1,
+  "replicate": "r2",
+  "run_id": "gs_e5_C001_s3ap_b8568392_a1_r2",
+  "schema": "jointbuildgs.s3b0.alpha_extraction.v1",
+  "status": "measured",
+  "view_rows": [
+    {
+      "alpha_0p1_valid_pixels": 49152,
+      "alpha_0p3_valid_pixels": 48358,
+      "alpha_0p5_valid_pixels": 45877,
+      "view_index": 0,
+      "view_name": "DJI_20241217084901_0194_D.png"
+    },
+    {
+      "alpha_0p1_valid_pixels": 49152,
+      "alpha_0p3_valid_pixels": 49121,
+      "alpha_0p5_valid_pixels": 48352,
+      "view_index": 1,
+      "view_name": "DJI_20241217084903_0195_D.png"
+    },
+    {
+      "alpha_0p1_valid_pixels": 49152,
+      "alpha_0p3_valid_pixels": 49152,
+      "alpha_0p5_valid_pixels": 49114,
+      "view_index": 2,
+      "view_name": "DJI_20241217095441_0023_D.png"
+    }
+  ]
+}

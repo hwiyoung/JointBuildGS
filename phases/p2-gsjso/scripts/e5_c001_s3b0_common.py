@@ -17,8 +17,9 @@ from typing import Any, Iterable, Iterator, Sequence
 
 import cv2
 import numpy as np
-from shapely import make_valid
-from shapely.geometry import GeometryCollection, MultiPolygon, Polygon, shape
+from lxml import etree
+from shapely import contains_xy, make_valid
+from shapely.geometry import GeometryCollection, MultiPolygon, Point, Polygon, shape
 from shapely.ops import unary_union
 
 
@@ -185,6 +186,117 @@ def load_footprints(path: Path, wanted: Iterable[str] | None = None) -> dict[str
         if missing:
             raise RuntimeError(f"missing footprints: {missing}")
     return result
+
+
+def local_name(tag: str) -> str:
+    return tag.rsplit("}", 1)[-1]
+
+
+def gml_id(element: etree._Element) -> str:
+    return next(
+        (str(value) for key, value in element.attrib.items() if local_name(key) == "id"),
+        "",
+    )
+
+
+def first_poslist(element: etree._Element) -> np.ndarray | None:
+    for child in element.iter():
+        if local_name(child.tag) == "posList" and child.text:
+            values = np.asarray([float(value) for value in child.text.split()], dtype=np.float64)
+            return values.reshape(-1, 3)
+    return None
+
+
+def load_lod2_roofs(lod2_dir: Path, targets: Sequence[str]) -> dict[str, list[dict[str, Any]]]:
+    wanted = {full_id(short): short_id(short) for short in targets}
+    output: dict[str, list[dict[str, Any]]] = {short_id(short): [] for short in targets}
+    for path in sorted(lod2_dir.glob("*.gml")):
+        for _event, element in etree.iterparse(str(path), events=("end",), recover=True):
+            if local_name(element.tag) != "Building":
+                continue
+            bid = gml_id(element)
+            if bid in wanted:
+                short = wanted[bid]
+                index = 0
+                for surface in element.iter():
+                    if local_name(surface.tag) != "RoofSurface":
+                        continue
+                    for polygon_element in surface.iter():
+                        if local_name(polygon_element.tag) != "Polygon":
+                            continue
+                        ring = first_poslist(polygon_element)
+                        if ring is None or len(ring) < 3:
+                            continue
+                        if not np.allclose(ring[0], ring[-1]):
+                            ring = np.vstack([ring, ring[0]])
+                        polygon = make_valid(Polygon(ring[:, :2]))
+                        if polygon.is_empty or polygon.area <= 0.01:
+                            continue
+                        points = ring[:-1]
+                        x0, y0, _zmean = points.mean(axis=0)
+                        design = np.column_stack(
+                            [
+                                points[:, 0] - x0,
+                                points[:, 1] - y0,
+                                np.ones(len(points)),
+                            ]
+                        )
+                        ax, by, z0 = np.linalg.lstsq(design, points[:, 2], rcond=None)[0]
+                        index += 1
+                        output[short].append(
+                            {
+                                "id": f"{bid}_roof_{index}",
+                                "ring": ring,
+                                "polygon": polygon,
+                                "x0": float(x0),
+                                "y0": float(y0),
+                                "z0": float(z0),
+                                "ax": float(ax),
+                                "by": float(by),
+                                "source": path,
+                            }
+                        )
+            element.clear()
+            parent = element.getparent()
+            if parent is not None:
+                while element.getprevious() is not None:
+                    del parent[0]
+    missing = sorted(short for short, roofs in output.items() if not roofs)
+    if missing:
+        raise RuntimeError(f"missing LoD2 roofs: {missing}")
+    return output
+
+
+def reference_roof_z(
+    xy_utm: np.ndarray,
+    roofs: Sequence[dict[str, Any]],
+    geoid_m: float,
+) -> np.ndarray:
+    xy = np.asarray(xy_utm, dtype=np.float64).reshape(-1, 2)
+    values = np.full(len(xy), np.nan, dtype=np.float64)
+    for roof in roofs:
+        mask = contains_xy(roof["polygon"], xy[:, 0], xy[:, 1])
+        if np.any(mask):
+            values[mask] = (
+                roof["z0"]
+                + roof["ax"] * (xy[mask, 0] - roof["x0"])
+                + roof["by"] * (xy[mask, 1] - roof["y0"])
+                + geoid_m
+            )
+    for index in np.flatnonzero(~np.isfinite(values)):
+        nearest = min(
+            roofs,
+            key=lambda roof: roof["polygon"].distance(
+                Point(float(xy[index, 0]), float(xy[index, 1]))
+            ),
+        )
+        values[index] = (
+            nearest["z0"]
+            + nearest["ax"] * (xy[index, 0] - nearest["x0"])
+            + nearest["by"] * (xy[index, 1] - nearest["y0"])
+            + geoid_m
+        )
+    return values
 
 
 def load_world_offset(path: Path) -> np.ndarray:
