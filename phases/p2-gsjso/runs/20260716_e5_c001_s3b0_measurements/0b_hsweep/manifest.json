@@ -1,0 +1,173 @@
+{
+  "building_measurements": {
+    "4907199": {
+      "h_est_local_m": -33.892,
+      "peak_status": "interior_positive_peak",
+      "peak_to_background_ratio": 11.713402848531679,
+      "reference_roof_z_local_m_score_only": -34.332999999999856,
+      "segment_h_est_values_local_m": [
+        -34.242,
+        -33.892,
+        -35.092,
+        -29.642
+      ],
+      "segment_plane_anchor_rms_m": 1.4499999999999984,
+      "segment_plane_ax_by_c": [
+        0.49549831236765596,
+        -0.2586824435463879,
+        40.529605206551324
+      ],
+      "view_h_est_values_local_m": [
+        -35.292,
+        -29.642,
+        -29.642,
+        -29.742,
+        -38.892,
+        -41.342
+      ]
+    },
+    "8568391": {
+      "h_est_local_m": -37.628,
+      "peak_status": "interior_positive_peak",
+      "peak_to_background_ratio": 11.65237400188885,
+      "reference_roof_z_local_m_score_only": -40.781999999999925,
+      "segment_h_est_values_local_m": [
+        -37.728,
+        -41.028,
+        -36.528,
+        -37.578
+      ],
+      "segment_plane_anchor_rms_m": 1.0874999999999968,
+      "segment_plane_ax_by_c": [
+        0.3939087830038208,
+        0.0843511471063097,
+        28.964008452381755
+      ],
+      "view_h_est_values_local_m": [
+        -39.028,
+        -37.578,
+        -37.728
+      ]
+    },
+    "8568392": {
+      "h_est_local_m": -38.707,
+      "peak_status": "interior_positive_peak",
+      "peak_to_background_ratio": null,
+      "reference_roof_z_local_m_score_only": -40.92699999999991,
+      "segment_h_est_values_local_m": [
+        -39.007,
+        -40.957,
+        -39.907,
+        -37.207
+      ],
+      "segment_plane_anchor_rms_m": 0.18750000031777425,
+      "segment_plane_ax_by_c": [
+        0.8941501069835263,
+        1.3648214710940763,
+        171.15441151130904
+      ],
+      "view_h_est_values_local_m": [
+        -38.707,
+        -37.207,
+        -37.207
+      ]
+    }
+  },
+  "counts": {
+    "figures": 6,
+    "hsweep_rows": 3165,
+    "outline_rows": 12,
+    "segment_peak_rows": 12,
+    "view_count": 12
+  },
+  "created_utc": "2026-07-16T09:00:23.031499+00:00",
+  "crs": "EPSG:25832",
+  "estimation_contract": {
+    "als_used": false,
+    "boundary_sample_step_m": 0.2,
+    "coarse_step_m": 0.5,
+    "edge_definition": "T11 np.gradient magnitude on full source-image grayscale [0,1]",
+    "fine_half_width_m": 1.0,
+    "fine_step_m": 0.05,
+    "gt_used": false,
+    "lod2_used": false,
+    "peak_tie_rule": "maximum score, then closest to parent coarse peak, then lower height",
+    "range": "observed exterior ground +2m through +40m",
+    "score_definition": "sum edge magnitude at unique projected outline pixels after available non-GT neighbor-mask exclusion",
+    "semantic_mask_scope": "0-e crop mask placed back at native crop_box; outside crop is recorded unknown and excluded from edge score"
+  },
+  "estimation_source_sha256": {
+    "docs/e5_c001_s3ap_fm_retri_rescore.csv": "f720a5687da54dac276c27222e49f8012f2b24be3e2bbcaa5cf7e15a21faf299",
+    "phases/p2-gsjso/configs/e5_c001_s3b0_lock.json": "1097980934dad6b7061df3ca8b59c5d603a988009b189513a96c81896967c2ba",
+    "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase0_baselines/p0_fill_points.npz": "35371e026d78be91a54a34eb2032198ba7ddeafd62c359e3a58a005398e7b28d",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0e_semantic/masks/DEBY_LOD2_4907199_DJI_20241217095141_0077_D.npz": "e570c75687116cce1da980acc2ca9bb5569bd4b35f4dde154951f0ec7f18b9c3",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0e_semantic/masks/DEBY_LOD2_4907199_DJI_20241217095145_0079_D.npz": "656871b70a66ec5b9e690d9ad1494adccd493fa43e74f9be9c3dd35eac25789b",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0e_semantic/masks/DEBY_LOD2_4907199_DJI_20241217095147_0080_D.npz": "8ecd0152ec34647c3d632bf438adf25cc1cc47a73502d5216b3d0f23ac8b6740",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0e_semantic/masks/DEBY_LOD2_4907199_DJI_20241217095149_0081_D.npz": "b180fe5fdac2fccb46918ee1122d49bdc1da48ad891aeee7ed308de0ae0ff104",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0e_semantic/masks/DEBY_LOD2_4907199_DJI_20241217095441_0023_D.npz": "e1782a674cbcd2364524e5328d4e4abc70dec3a04ca4d48ee0943a7cb44e7998",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0e_semantic/masks/DEBY_LOD2_4907199_DJI_20241217095531_0048_D.npz": "e40c6910782d6ac6b0d7a4e8badeffd0155d1e3436d449c3abeb00e6f155f358",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0e_semantic/masks/DEBY_LOD2_8568391_DJI_20241217084901_0194_D.npz": "d9c19f0e6ee1d4effbb2ac22f8f9869d7ea3278cb1875143987293ee3d019266",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0e_semantic/masks/DEBY_LOD2_8568391_DJI_20241217084903_0195_D.npz": "82c60d2211c4a5febb896e8be941c534cf8f32adb1355115e28c52067e8639f6",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0e_semantic/masks/DEBY_LOD2_8568391_DJI_20241217095441_0023_D.npz": "db2dc978d5b9c6dfa0f3f81a9248f270bbd89cfa6b60bb61cf34a5a3bb0dff97",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0e_semantic/masks/DEBY_LOD2_8568392_DJI_20241217084901_0194_D.npz": "5f33f0e3351eaf471297f35434c7b8dae6b7fc7a0019af8c63586132fb4bcab4",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0e_semantic/masks/DEBY_LOD2_8568392_DJI_20241217084903_0195_D.npz": "2d25103ce728566491e166fcb7d9a70760568e5a582cc53f394a4ed7c0e140b8",
+    "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0e_semantic/masks/DEBY_LOD2_8568392_DJI_20241217095441_0023_D.npz": "7e083cc29b939c21d262f86c7c8d4f6d383e0b6c086fbf3d2a9da4adb63299db",
+    "phases/p2-gsjso/scripts/e5_c001_s3b0_common.py": "f778cfbae8cf90fe69e5dbd984f5370edeb83ec51cad2b1a3c2c1c513870e103",
+    "phases/p2-gsjso/scripts/e5_c001_s3b0_hsweep.py": "3009d8dfdbf736eda8cc6c2077ddc01e9e1be6c069abd2e73ee84fb3ec0785bc",
+    "phases/p2-gsjso/scripts/run_e5_c001_s3b0_hsweep.sh": "f79b8656597e58b11206ef97199927df5422c6c1f9be47c536ae4707f663658d",
+    "phases/p2-gsjso/scripts/test_e5_c001_s3b0_hsweep.py": "5ab805d9547267bb3aae5d001763c8b3542b0c8f235a24fdcd96d794ae41fc97",
+    "results/tum_transfer/analysis/footprints_aoi.geojson": "ca7f5b13a52368e1d2ac47b77cc78f12887bad4d598d122ad57b882eb4920a82",
+    "results/tum_transfer/e5_pilot/C001/C001_train_prep_manifest.json": "eca68a7890116c52557ab467361b58c4c784047807f9bee857a2517ac0b40b58",
+    "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/images/DJI_20241217084901_0194_D.JPG": "d871933cff4686cdc5b436e583790ac5f9a50445aa2642286ea7e9afa8fd1a52",
+    "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/images/DJI_20241217084903_0195_D.JPG": "64b25a2806374e1305ce05c592134d6f475a916ac03007dbbda6743e20b75b13",
+    "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/images/DJI_20241217095141_0077_D.JPG": "2717348b6e6ad814f2e1b923fd81e1496a8d2cf636aadbfebc3253ba581ffd7b",
+    "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/images/DJI_20241217095145_0079_D.JPG": "b82a014c983fd79037f6390c279bb57bc75a915654f622a42c48cde8ece6d5a5",
+    "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/images/DJI_20241217095147_0080_D.JPG": "16b77884b4305caacebe780a12fc3100bc9fe0db89ca5e1dfd07eda96134965d",
+    "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/images/DJI_20241217095149_0081_D.JPG": "a774565dda0e337c95ec6a0003b8dddfede582b1ed93b739950fa864a5099b38",
+    "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/images/DJI_20241217095441_0023_D.JPG": "3ea299fda1acd3c75881553eaed2bb8113b7689cc24d251a6d2de24f7ff6e457",
+    "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/images/DJI_20241217095531_0048_D.JPG": "d780e87d9bf8a15e2e09d262f381cab4a049c81c77b6fe72f74cecdb7c0bbcd1",
+    "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_4907199/camera_crop_manifest.json": "c60fc246daa9cb2abcbe74f1d802ad4157f0daf4624cc8f438c2f03d56299196",
+    "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_8568391/camera_crop_manifest.json": "c885647ccf07de71c25406317ad8ee797cd48d0d34646224961b923c90b56966",
+    "results/tum_transfer/e5_s3ap_phase2/prepared/DEBY_LOD2_8568392/camera_crop_manifest.json": "be0e977e50f126ab5e38609cc7ecc9df4529c9cf5c9d3ec41e0c8d5375f94a06"
+  },
+  "git": {
+    "branch": "exp/3b-surface-restore-corrected",
+    "dirty": true,
+    "head": "c1da27314b9fc5db562fb597b22a3e8a6366f70d"
+  },
+  "learning_runs_started": 0,
+  "new_inference_runs": 0,
+  "output_sha256": {
+    "docs/figs/e5_c001_s3b0/hsweep/DEBY_LOD2_4907199_hsweep_curves.png": "a32b05d9c2624dfe8f4e2014f34aac24c4532e0e98bfdfd53324df406f284d78",
+    "docs/figs/e5_c001_s3b0/hsweep/DEBY_LOD2_4907199_native_overlay.png": "8ebcec27d12b47956af882fb9057c8c663bc9e10aa1b973cda7338e5ecfbb267",
+    "docs/figs/e5_c001_s3b0/hsweep/DEBY_LOD2_8568391_hsweep_curves.png": "67566ec2ee360a7a31ce5b7d3481459db6f103d98554008d2b107ba8bf4972e2",
+    "docs/figs/e5_c001_s3b0/hsweep/DEBY_LOD2_8568391_native_overlay.png": "5245f64ad85e32db989e78e8c3fe19d6fc0cfbb21b0154f3e1cd9225f9a4ee63",
+    "docs/figs/e5_c001_s3b0/hsweep/DEBY_LOD2_8568392_hsweep_curves.png": "b538f95e8649e86291dc9e0f31972dd25d648992d6f708709741087c1a3483b5",
+    "docs/figs/e5_c001_s3b0/hsweep/DEBY_LOD2_8568392_native_overlay.png": "e2434a6805a5557503ec7f9a475af79cf8397ab5f9220cde3696ed640955a57a",
+    "docs/s3b0_hsweep.csv": "69643741dd6ed1938d834495c60bbaca504108258f475718a776eb775c920329",
+    "docs/s3b0_outline_observability.csv": "db04283b4f76e068565844d06964a6470c151873aa7fbb07a76a723eaab17f45"
+  },
+  "posthoc_score_contract": {
+    "als_used": false,
+    "building_reference_address": "supplied footprint centroid",
+    "far_field_distance": "nearest footprint-inside FM anchor XY",
+    "far_field_target": "4907199",
+    "gt_used": true,
+    "lod2_used": true,
+    "ordering": "all building/view/segment peaks and segment planes fixed before reference load",
+    "reference": "CityGML LoD2 RoofSurface plus configured orthometric geoid"
+  },
+  "runtime": {
+    "docker_image": "jointbuildgs:dev",
+    "docker_image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
+    "numpy": "1.26.4",
+    "opencv": "4.10.0",
+    "python": "3.11.15"
+  },
+  "schema": "jointbuildgs.s3b0.hsweep.v1",
+  "score_only_source_sha256": {
+    "configs/projection_datum.json": "096a49b46fc5661d74f9d3b54c4f3777676cfc6b27e577b52bb2dabeee8b480c",
+    "phases/p0-audit/data/raw/lod2/690_5334.gml": "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314",
+    "phases/p0-audit/data/raw/lod2/690_5336.gml": "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674"
+  }
+}

@@ -13,6 +13,7 @@
   "reference_only_seed_target": "8568392",
   "sources": {
     "prepared_root": "results/tum_transfer/e5_s3ap_phase2/prepared",
+    "source_images": "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/images",
     "footprints": "results/tum_transfer/analysis/footprints_aoi.geojson",
     "train_manifest": "results/tum_transfer/e5_pilot/C001/C001_train_prep_manifest.json",
     "sparse_points": "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/sparse/0/points3D.bin",
@@ -79,7 +80,11 @@
     "fine_half_width_m": 1.0,
     "fine_step_m": 0.05,
     "boundary_sample_step_m": 0.2,
-    "background_exclusion_half_width_m": 1.0
+    "background_exclusion_half_width_m": 1.0,
+    "edge_definition": "T11 np.gradient magnitude on full source-image grayscale [0,1]",
+    "score_definition": "sum edge magnitude at unique projected outline pixels after available non-GT neighbor-mask exclusion",
+    "semantic_mask_scope": "0-e crop mask placed back at native crop_box; outside crop is recorded unknown and excluded from edge score",
+    "peak_tie_rule": "maximum score, then closest to parent coarse peak, then lower height"
   },
   "gate_0c": {
     "texture_definition": "T11 np.gradient magnitude on grayscale [0,1]",
@@ -115,6 +120,7 @@
     "alpha_runtime_root": "results/tum_transfer/e5_s3b0/alpha",
     "gate_run": "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0c_gate",
     "seed_run": "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0f_seed",
+    "hsweep_run": "phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0b_hsweep",
     "semantic_lineage_md": "docs/s3b0_semantic_lineage.md",
     "mask_iou_csv": "docs/s3b0_mask_iou.csv",
     "semantic_figure_dir": "docs/figs/e5_c001_s3b0/semantic",
