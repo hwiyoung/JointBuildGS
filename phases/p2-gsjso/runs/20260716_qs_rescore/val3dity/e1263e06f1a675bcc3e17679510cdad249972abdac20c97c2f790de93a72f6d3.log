@@ -1,0 +1,49 @@
++ val3dity /workspace/JointBuildGS/phases/p0-audit/runs/e5p_405_repair_20260709_C001/e5p_corrected_s1_recheck_20260709_C001/voxel02/cityjson/gs_e5_C001_corrected_s1_preprune_keepall_dense_r1_run_1.city.json --report /workspace/JointBuildGS/phases/p2-gsjso/runs/20260716_qs_rescore/val3dity/e1263e06f1a675bcc3e17679510cdad249972abdac20c97c2f790de93a72f6d3.json
+---
+val3dity Copyright (c) 2011-2026, 3D geoinformation research group, TU Delft  
+This program comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to redistribute it
+under certain conditions; for details run val3dity with the '--license' option.
+---
+CityJSON input file
+# City Objects found: 12
+Parameters used for validation:
+   snap_tol                 0.001
+   planarity_d2p_tol         0.01
+   planarity_n_tol             20
+   overlap_tol               none
+
+Validation of 9 feature(s):
+
+[==================================================] 100%     
+
++++++++++++++++++++ SUMMARY +++++++++++++++++++
+INVALID :(
++++++
+Input file type:
+  CityJSON
++++++
+Total # of Features:          9
+  # valid:                    7 (77.8%)
+  # invalid:                  2 (22.2%)
+Types:
+  Building
++++++
+Total # of primitives:       12
+  # valid:                   10 (83.3%)
+  # invalid:                  2 (16.7%)
+Types:
+  Solid
+  MultiSurface
++++++
+Errors present:
+  302 -- SHELL_NOT_CLOSED
+          1 primitive(s)
+  306 -- SHELL_SELF_INTERSECTION
+          1 primitive(s)
++++++++++++++++++++++++++++++++++++++++++++++++
+
+Validation report saved to "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260716_qs_rescore/val3dity/e1263e06f1a675bcc3e17679510cdad249972abdac20c97c2f790de93a72f6d3.json"
+Browse its content:
+==>http://geovalidation.bk.tudelft.nl/val3dity/browser/
+

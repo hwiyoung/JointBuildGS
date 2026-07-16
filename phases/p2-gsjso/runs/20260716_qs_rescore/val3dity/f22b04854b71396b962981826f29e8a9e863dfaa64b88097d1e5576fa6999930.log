@@ -1,0 +1,62 @@
++ val3dity /workspace/JointBuildGS/phases/p0-audit/runs/e5p_readout_ablation_20260708_C001/relaxed/cityjson/gs_e5_C001_dense_r1_run_1.city.json --report /workspace/JointBuildGS/phases/p2-gsjso/runs/20260716_qs_rescore/val3dity/f22b04854b71396b962981826f29e8a9e863dfaa64b88097d1e5576fa6999930.json
+---
+val3dity Copyright (c) 2011-2026, 3D geoinformation research group, TU Delft  
+This program comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to redistribute it
+under certain conditions; for details run val3dity with the '--license' option.
+---
+CityJSON input file
+# City Objects found: 36
+Parameters used for validation:
+   snap_tol                 0.001
+   planarity_d2p_tol         0.01
+   planarity_n_tol             20
+   overlap_tol               none
+
+Validation of 18 feature(s):
+
+[===========================>                      ]  55%     
+[==================================================] 100%     
+
++++++++++++++++++++ SUMMARY +++++++++++++++++++
+INVALID :(
++++++
+Input file type:
+  CityJSON
++++++
+Total # of Features:         18
+  # valid:                    7 (38.9%)
+  # invalid:                 11 (61.1%)
+Types:
+  Building
++++++
+Total # of primitives:       36
+  # valid:                   25 (69.4%)
+  # invalid:                 11 (30.6%)
+Types:
+  Solid
+  MultiSurface
++++++
+Errors present:
+  102 -- CONSECUTIVE_POINTS_SAME
+          1 primitive(s)
+  104 -- RING_SELF_INTERSECTION
+          4 primitive(s)
+  203 -- NON_PLANAR_POLYGON_DISTANCE_PLANE
+          2 primitive(s)
+  204 -- NON_PLANAR_POLYGON_NORMALS_DEVIATION
+          1 primitive(s)
+  302 -- SHELL_NOT_CLOSED
+          1 primitive(s)
+  303 -- NON_MANIFOLD_CASE
+          4 primitive(s)
+  306 -- SHELL_SELF_INTERSECTION
+          1 primitive(s)
+  307 -- POLYGON_WRONG_ORIENTATION
+          1 primitive(s)
++++++++++++++++++++++++++++++++++++++++++++++++
+
+Validation report saved to "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260716_qs_rescore/val3dity/f22b04854b71396b962981826f29e8a9e863dfaa64b88097d1e5576fa6999930.json"
+Browse its content:
+==>http://geovalidation.bk.tudelft.nl/val3dity/browser/
+

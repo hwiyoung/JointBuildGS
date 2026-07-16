@@ -1,0 +1,54 @@
++ val3dity /workspace/JointBuildGS/phases/p0-audit/runs/e5p_readout_ablation_20260708_C001/minobs2/cityjson/gs_e5_C001_sparse_r1_run_1.city.json --report /workspace/JointBuildGS/phases/p2-gsjso/runs/20260716_qs_rescore/val3dity/ca6f9d7352a31539450099f7e16edcada79ed869d15adf2f1472fd737bffce44.json
+---
+val3dity Copyright (c) 2011-2026, 3D geoinformation research group, TU Delft  
+This program comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to redistribute it
+under certain conditions; for details run val3dity with the '--license' option.
+---
+CityJSON input file
+# City Objects found: 33
+Parameters used for validation:
+   snap_tol                 0.001
+   planarity_d2p_tol         0.01
+   planarity_n_tol             20
+   overlap_tol               none
+
+Validation of 18 feature(s):
+
+[===========================>                      ]  55%     
+[==================================================] 100%     
+
++++++++++++++++++++ SUMMARY +++++++++++++++++++
+INVALID :(
++++++
+Input file type:
+  CityJSON
++++++
+Total # of Features:         18
+  # valid:                   13 (72.2%)
+  # invalid:                  5 (27.8%)
+Types:
+  Building
++++++
+Total # of primitives:       33
+  # valid:                   28 (84.8%)
+  # invalid:                  5 (15.2%)
+Types:
+  Solid
+  MultiSurface
++++++
+Errors present:
+  102 -- CONSECUTIVE_POINTS_SAME
+          1 primitive(s)
+  203 -- NON_PLANAR_POLYGON_DISTANCE_PLANE
+          1 primitive(s)
+  303 -- NON_MANIFOLD_CASE
+          2 primitive(s)
+  306 -- SHELL_SELF_INTERSECTION
+          2 primitive(s)
++++++++++++++++++++++++++++++++++++++++++++++++
+
+Validation report saved to "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260716_qs_rescore/val3dity/ca6f9d7352a31539450099f7e16edcada79ed869d15adf2f1472fd737bffce44.json"
+Browse its content:
+==>http://geovalidation.bk.tudelft.nl/val3dity/browser/
+
