@@ -1,0 +1,104 @@
+{
+  "schema": "jointbuildgs.qs_cheap_refine_pilot.v1",
+  "created_utc": "2026-07-17T13:08:09.153605+00:00",
+  "git_head_at_measurement": "715bf665035010361e5bbcd177e2038628ebe27e",
+  "branch": "exp/3b-surface-restore-corrected",
+  "population": "C001 18 buildings",
+  "population_count": 18,
+  "input": "canonical dense(w2_1) classified point cloud",
+  "refinement_method": "MLS-style local plane fit and z projection on roof-top class-6 points",
+  "refinement_parameters": {
+    "cell_m": 0.5,
+    "window_radius_cells": 2,
+    "passes": 1,
+    "building_class": 6,
+    "roof_top_cell_m": 1.0,
+    "roof_top_band_m": 1.5
+  },
+  "clip": {
+    "bbox_epsg25832": [
+      690769.55,
+      5336014.202,
+      690864.713,
+      5336125.41
+    ],
+    "ground_context_margin_m": 5.0,
+    "building_clip_buffer_m": 0.5
+  },
+  "roofer_image": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+  "roofer_parameters": "--id-attribute building_id --box C001_BBOX; all reconstruction parameters default",
+  "val3dity_exit_code": 0,
+  "summary": {
+    "baseline_lod2_count": 10,
+    "refined_lod2_count": 8,
+    "lod2_transition_counts": {
+      "retained": 8,
+      "lost": 2,
+      "gained": 0,
+      "neither": 8
+    },
+    "baseline_val3dity_valid_count": 15,
+    "refined_val3dity_valid_count": 18,
+    "baseline_median_face_count_ratio": 0.375,
+    "refined_median_face_count_ratio": 0.0,
+    "baseline_median_roof_rms_m": 0.9895546639999999,
+    "baseline_roof_rms_measurable_count": 10,
+    "refined_median_roof_rms_m": 0.6090916179025982,
+    "refined_roof_rms_measurable_count": 8,
+    "paired_roof_rms_count": 8,
+    "paired_baseline_median_roof_rms_m": 0.9589393945,
+    "paired_refined_median_roof_rms_m": 0.6090916179025982,
+    "paired_median_delta_roof_rms_m": 0.05068581237584707,
+    "refined_rf_extrusion_mode_counts": {
+      "skip": 7,
+      "standard": 11
+    },
+    "refined_roofer_status_counts": {
+      "failure": 10,
+      "success": 8
+    },
+    "point_movement_building_count": 13,
+    "point_movement_sum_exact_footprint_class6_points": 216097,
+    "median_building_median_abs_point_dz_m": 0.05999999999994543
+  },
+  "comparison_population_note": "Unpaired baseline/refined medians use their separately measurable populations; paired_* fields use only buildings measurable in both.",
+  "point_displacement_support": "All class-6 points inside each exact footprint; unchanged points included. The 0.5 m buffer is used only to retain assembly input near footprint edges.",
+  "representative_figure_buildings": [
+    "DEBY_LOD2_4907199",
+    "DEBY_LOD2_4907186",
+    "DEBY_LOD2_4907185",
+    "DEBY_LOD2_4907184"
+  ],
+  "representative_selection_rule": "4907199 plus min/max delta RMS and max absolute face-count delta; unique first 4",
+  "learning_runs_started": 0,
+  "new_inference_runs": 0,
+  "gt_role": "LoD2 reference used only after reconstruction for scoring and figure",
+  "interpretation_or_verdict": null,
+  "source_sha256": {
+    "phases/p0-audit/data/work/w2/dim_v1_classified_z_minus0p174.laz": "f91929924af251d802ec71d9d246caa3194faa72cf82d739d474cd7dc2b1931d",
+    "phases/p0-audit/data/work/w2_city3d/footprints_scene_aoi.geojson": "9dd6d87775e02d91f979a0f0284e6ccac5c3d67f104f1c0649dbe682bee64d5e",
+    "phases/p0-audit/runs/w2_1_roofer_default_20260612_152729/cityjson/dim_roofer.city.json": "01f4df46bd9b51786f3314c16f9fb87fc3c254f3156dc53c174abde81f3bbdae",
+    "docs/qs_rescore_scores.csv": "71090f6de80cd1076f695db4679e0913be83287056360752953fe280730e4111",
+    "phases/p0-audit/scripts/08_roofer_w2.py": "ae655090915c56bfeee2be830a28e27520c2430e97d19e515a0aa046e4c79e97",
+    "phases/p2-gsjso/scripts/overseg_smooth.py": "8a9a8808317cb4287c388276f9785fd91af8eb70f6435e191c370de13cd4b365",
+    "phases/p2-gsjso/scripts/qs_cheap_refine_pilot.py": "4b85c5a8de8aa8578cb3ade196e0700c055c5899d50f64244c9c7fcd232ae066",
+    "phases/p2-gsjso/scripts/run_qs_cheap_refine_pilot_20260717.sh": "a0e7d59519512acc728cd74a512f717bf34751abf291c07c03ab2a0d70c525f0"
+  },
+  "output_sha256": {
+    "phases/p2-gsjso/runs/20260717_qs_cheap_refine_pilot/input/dense_w2_1_c001_classified.laz": "e9acd5eb90dc42d88f13485a73fbaf8d10cff76cb5a3063f5f5bc72f51454c4a",
+    "phases/p2-gsjso/runs/20260717_qs_cheap_refine_pilot/input/dense_w2_1_c001_mls_default.laz": "4184cf45bd6cb30fce5d23fe51cc5b1a85ba19d891aed592a3fb1ec087f1f85a",
+    "phases/p2-gsjso/runs/20260717_qs_cheap_refine_pilot/input/footprints_c001.geojson": "3224e101a1821488cdcdb955cd45de5351eaee9045ccf2d954864b909e995879",
+    "phases/p2-gsjso/runs/20260717_qs_cheap_refine_pilot/input/footprints_c001.gpkg": "f54ed301cc3738b01026ecde8634c36f6bcf2a893ae1b03a64335a1c0c410c98",
+    "phases/p2-gsjso/runs/20260717_qs_cheap_refine_pilot/cityjson/dense_w2_1_c001_mls_default.city.json": "90b1311cf1f5038d22394a9e53aae36f692306ffa0fc554f5f3e329ae4981657",
+    "phases/p2-gsjso/runs/20260717_qs_cheap_refine_pilot/val3dity/dense_w2_1_c001_mls_default.json": "f101b4b8abe9494ed812d9549228772bd2ff61bbc147d8f912e5dc4c94b9cfd6",
+    "phases/p2-gsjso/runs/20260717_qs_cheap_refine_pilot/val3dity/dense_w2_1_c001_mls_default.log": "36c79802ee29534f25a0d59ab2eff2ece23ca832fb80c0799f57bad41dc36375",
+    "docs/qs_cheap_refine_pilot.csv": "419fe571a6a78dca29f9aa88a2ae9dab52e53235d2bcdeecc3968cd6ff1b746b",
+    "docs/figs/qs_cheap_refine_pilot.png": "77348c972757b271925125f2fdb02187da58de25cbc97be40a827a2ad16edeec",
+    "phases/p2-gsjso/runs/20260717_qs_cheap_refine_pilot/prepared.json": "6b10cd6211bb79bfe252436ad1002c1ad53977d2d255149b3c1e613296512799",
+    "phases/p2-gsjso/runs/20260717_qs_cheap_refine_pilot/roofer/690769_5336014.city.jsonl": "b3a04c87ebe5b8052f1ef1bda756bc6fa71c995960acf159047e55c79d050777",
+    "phases/p2-gsjso/runs/20260717_qs_cheap_refine_pilot/logs/prepare.log": "0653616ee5c5bdbcfc3fd326d4ca6d1ff7aba334a628b5282795f08c3be8c18c",
+    "phases/p2-gsjso/runs/20260717_qs_cheap_refine_pilot/logs/refine.log": "2a9a1082305f0477fcdf45aeb718f612d0b9057fe4e300296cac4c74de5e14e8",
+    "phases/p2-gsjso/runs/20260717_qs_cheap_refine_pilot/logs/roofer.log": "73e8392c25c113336eeea91e4f1b407f243cee372fef2060986af399f0359aff",
+    "phases/p2-gsjso/runs/20260717_qs_cheap_refine_pilot/versions.txt": "a3642b1300890f55a8396ef7bcbf69023edffb052f6d05879ea7475e10fd1ba4"
+  }
+}

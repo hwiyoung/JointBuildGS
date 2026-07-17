@@ -1,0 +1,35 @@
+{
+  "schema": "jointbuildgs.qs_cheap_refine.prepare.v1",
+  "created_utc": "2026-07-17T13:02:16.712105+00:00",
+  "source_laz": "phases/p0-audit/data/work/w2/dim_v1_classified_z_minus0p174.laz",
+  "source_laz_sha256": "f91929924af251d802ec71d9d246caa3194faa72cf82d739d474cd7dc2b1931d",
+  "c001_footprints": "phases/p2-gsjso/runs/20260717_qs_cheap_refine_pilot/input/footprints_c001.geojson",
+  "c001_footprints_sha256": "3224e101a1821488cdcdb955cd45de5351eaee9045ccf2d954864b909e995879",
+  "c001_footprints_gpkg": "phases/p2-gsjso/runs/20260717_qs_cheap_refine_pilot/input/footprints_c001.gpkg",
+  "c001_footprints_gpkg_sha256": "f54ed301cc3738b01026ecde8634c36f6bcf2a893ae1b03a64335a1c0c410c98",
+  "building_count": 18,
+  "clip_bbox_epsg25832": [
+    690769.55,
+    5336014.202,
+    690864.713,
+    5336125.41
+  ],
+  "ground_context_margin_m": 5.0,
+  "building_clip_buffer_m": 0.5,
+  "class_counts": {
+    "6": 219804,
+    "2": 335882
+  },
+  "refinement_method": "MLS-style local plane fit and z projection on roof-top class-6 points",
+  "refinement_parameters": {
+    "cell_m": 0.5,
+    "window_radius_cells": 2,
+    "passes": 1,
+    "building_class": 6,
+    "roof_top_cell_m": 1.0,
+    "roof_top_band_m": 1.5
+  },
+  "reference_opened": false,
+  "learning_runs_started": 0,
+  "new_inference_runs": 0
+}
