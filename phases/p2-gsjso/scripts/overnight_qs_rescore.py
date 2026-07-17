@@ -532,7 +532,8 @@ SCORE_FIELDS = [
 ]
 
 PAIR_FIELDS = [
-    "row_type", "building_id", "population_role", "dense_model_id", "dense_has_lod22",
+    "row_type", "building_id", "population_role", "gs_selection_scope",
+    "dense_model_id", "dense_has_lod22",
     "dense_val3dity_valid", "dense_lod1_fallback", "dense_roof_face_count",
     "dense_face_count_ratio", "dense_roof_rms_m", "gs_valid_count", "gs_total_count",
     "gs_lod2_count", "gs_best_model_id", "gs_best_wave", "gs_best_arm", "gs_best_run",
@@ -724,6 +725,7 @@ def build_pairs(scores: Sequence[dict[str, Any]]) -> tuple[list[dict[str, Any]],
                 "row_type": "building",
                 "building_id": bid,
                 "population_role": population,
+                "gs_selection_scope": "per_building_oracle_upper_bound_not_fixed_condition",
                 "dense_model_id": dense["model_id"] if dense else "",
                 "dense_has_lod22": dense["has_lod22"] if dense else None,
                 "dense_val3dity_valid": dense["val3dity_valid"] if dense else None,
@@ -766,7 +768,11 @@ def build_pairs(scores: Sequence[dict[str, Any]]) -> tuple[list[dict[str, Any]],
         ("all_c001", pairs),
         ("dense_success", [row for row in pairs if row["population_role"] == "dense_success"]),
     ]:
-        for label, prefix in (("dense", "dense"), ("gs_best", "gs_best"), ("als", "als")):
+        for label, prefix in (
+            ("dense", "dense"),
+            ("gs_per_building_oracle", "gs_best"),
+            ("als", "als"),
+        ):
             ratio = [number(row.get(f"{prefix}_face_count_ratio")) for row in subset]
             rms = [number(row.get(f"{prefix}_roof_rms_m")) for row in subset]
             ratio_values = [value for value in ratio if value is not None]
@@ -793,7 +799,10 @@ def build_pairs(scores: Sequence[dict[str, Any]]) -> tuple[list[dict[str, Any]],
         values = sorted({row.get(lens_field, "") for row in pairs if row.get(lens_field, "")})
         for value in values:
             subset = [row for row in pairs if row.get(lens_field) == value]
-            for label, prefix in (("dense", "dense"), ("gs_best", "gs_best")):
+            for label, prefix in (
+                ("dense", "dense"),
+                ("gs_per_building_oracle", "gs_best"),
+            ):
                 ratio_values = [
                     float(row[f"{prefix}_face_count_ratio"])
                     for row in subset
@@ -855,7 +864,13 @@ def make_figures(
     figure, axis = plt.subplots(figsize=(7.2, 6.2), dpi=180)
     for label, xfield, yfield, color, marker in (
         ("dense w2_1", "reference_roof_face_count", "dense_roof_face_count", "#1f77b4", "o"),
-        ("GS best", "reference_roof_face_count", "gs_best_roof_face_count", "#d62728", "^"),
+        (
+            "GS per-building oracle",
+            "reference_roof_face_count",
+            "gs_best_roof_face_count",
+            "#d62728",
+            "^",
+        ),
     ):
         x = [number(row[xfield]) for row in dense_rows]
         y = [number(row[yfield]) for row in dense_rows]
@@ -912,7 +927,7 @@ def make_figures(
         positions + width / 2,
         [float(row["gs_best_roof_rms_m"]) for row in ordered],
         width,
-        label="GS best (locked rule)",
+        label="GS per-building oracle (not one fixed condition)",
         color="#d62728",
     )
     axis.set_xticks(positions)
@@ -962,11 +977,14 @@ def make_figures(
         plot_surface_top(
             axes_array[row_index, 2],
             surfaces.get(best_id, {}).get(bid, []),
-            f"GS best | {row['gs_best_arm']} {row['gs_best_run']}\n"
+            f"GS per-building oracle | {row['gs_best_arm']} {row['gs_best_run']}\n"
             f"faces={row['gs_best_roof_face_count']} | RMS={float(row['gs_best_roof_rms_m']):.2f}",
             bool_value(row.get("gs_best_lod1_fallback")),
         )
-    figure.suptitle("C001 roof-surface instances: reference | dense | GS best", fontsize=12)
+    figure.suptitle(
+        "C001 roof-surface instances: reference | dense | GS per-building oracle",
+        fontsize=12,
+    )
     figure.tight_layout(rect=[0, 0, 1, 0.98])
     figure.savefig(FIG_TOP)
     plt.close(figure)
@@ -1019,6 +1037,7 @@ def write_manifest(
         "score_rows": len(scores),
         "pair_rows": len(pairs),
         "summary_rows": len(summary),
+        "gs_best_selection_scope": "per_building_oracle_upper_bound_not_fixed_condition",
         "learning_runs_started": 0,
         "new_inference_runs": 0,
         "gt_role": "LoD2 reference used only for scoring, self-check, datum alignment, and figures",

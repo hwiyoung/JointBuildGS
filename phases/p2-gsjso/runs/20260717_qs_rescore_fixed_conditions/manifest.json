@@ -1,0 +1,39 @@
+{
+  "schema": "jointbuildgs.qs_rescore.fixed_conditions.v1",
+  "created_utc": "2026-07-17T12:47:05.032614+00:00",
+  "git_head_at_measurement": "a1eb1ae7b6877f3043c94e8c904917c7e4cb3cd2",
+  "branch": "exp/3b-surface-restore-corrected",
+  "source_score_rows": 2813,
+  "fixed_condition_rows": 388,
+  "unique_conditions": 194,
+  "unique_gs_conditions": 191,
+  "unique_gs_payloads": 159,
+  "complete_canonical_gs_conditions": {
+    "all_c001": 118,
+    "dense_success": 118
+  },
+  "oracle_selection_scope": "per_building_oracle_upper_bound_not_fixed_condition",
+  "oracle_diversity": {
+    "model_ids": 16,
+    "waves": 4,
+    "wave_arm": 8,
+    "wave_arm_run": 10
+  },
+  "fixed_condition_selection_scope": "one_fixed_model_condition_no_per_building_switching",
+  "learning_runs_started": 0,
+  "new_inference_runs": 0,
+  "gt_role": "no reference geometry opened; existing A score rows only",
+  "interpretation_or_verdict": null,
+  "source_sha256": {
+    "docs/qs_rescore_scores.csv": "71090f6de80cd1076f695db4679e0913be83287056360752953fe280730e4111",
+    "docs/qs_rescore_pairs.csv": "57f54fcd196e696200365622ab9fe067ba15f7bd90e40b8be02786b20abe92e3",
+    "phases/p2-gsjso/runs/20260716_qs_rescore/manifest.json": "707b60851ff5caba8b2ce1056ed453440e3701a61f6ee34e736f2748a9cbdaf9",
+    "phases/p2-gsjso/scripts/qs_rescore_fixed_conditions.py": "9e89b6dc565626f9f3924ac86d0d03cd2f5639412c8203f54d68860d59b72533"
+  },
+  "output_sha256": {
+    "docs/qs_rescore_fixed_conditions.csv": "d69f207233a8bd5064a306b62b4bdb1996f973dfbaacb3408c649812db67b48d",
+    "docs/qs_rescore_oracle_audit.csv": "a386f930d4537cfe96d2c04451f7648bf3ad8ebddb0649bc3444d30827e5fec2",
+    "docs/figs/qs_rescore/qs_rescore_fixed_condition_scatter.png": "b20bfd5a924cfa54d42c56faefaa2f85e059b600dc8182221954467f7a763ee6",
+    "phases/p2-gsjso/runs/20260717_qs_rescore_fixed_conditions/run.log": "31503ba3011eabbbe459dad6e3f86c82b2eee4d4175818a4b409354441f703b5"
+  }
+}
