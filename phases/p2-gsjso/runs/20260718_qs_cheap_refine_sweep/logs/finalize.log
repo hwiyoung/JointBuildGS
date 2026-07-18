@@ -1,0 +1,2 @@
++ docker run --rm --user 1000:1000 -e HOME=/tmp -e MPLCONFIGDIR=/tmp/matplotlib -e XDG_CACHE_HOME=/tmp -v /media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS:/workspace/JointBuildGS -w /workspace/JointBuildGS jointbuildgs-p0-tools:t0 python3 /workspace/JointBuildGS/phases/p2-gsjso/scripts/qs_cheap_refine_sweep.py finalize
+{"conditions": 18, "rows": 324, "learning_runs_started": 0, "new_inference_runs": 0}

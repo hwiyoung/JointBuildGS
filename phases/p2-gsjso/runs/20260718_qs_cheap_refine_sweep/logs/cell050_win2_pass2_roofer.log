@@ -1,0 +1,16 @@
++ docker run --rm --user 1000:1000 -e HOME=/tmp -e MPLCONFIGDIR=/tmp/matplotlib -e XDG_CACHE_HOME=/tmp -v /media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS:/workspace/JointBuildGS -w /workspace/JointBuildGS 3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2 --id-attribute building_id --box 690769.55 5336014.202 690864.713 5336125.41 /workspace/JointBuildGS/phases/p2-gsjso/runs/20260718_qs_cheap_refine_sweep/jobs/cell050_win2_pass2/dense_w2_1_c001_cell050_win2_pass2.laz /workspace/JointBuildGS/phases/p2-gsjso/runs/20260717_qs_cheap_refine_pilot/input/footprints_c001.gpkg /workspace/JointBuildGS/phases/p2-gsjso/runs/20260718_qs_cheap_refine_sweep/jobs/cell050_win2_pass2/roofer
+[2026-07-18 15:37:22.550] [stdout] [info] Region of interest: 690769.550 5336014.202, 690864.713 5336125.410
+[2026-07-18 15:37:22.550] [stdout] [info] Number of source footprints: 18
+[2026-07-18 15:37:22.550] [stdout] [info] Using 127 threads for the reconstructor pool (-j/--jobs 128, system offers 128)
+[2026-07-18 15:37:22.554] [stdout] [info] Simplifying and buffering footprints...
+[2026-07-18 15:37:22.555] [stdout] [info] Cropping pointcloud ...
+[2026-07-18 15:37:22.557] [stdout] [info] [reconstructor] Starting reconstruction with 127 worker threads
+[2026-07-18 15:37:22.557] [stdout] [info] [serializer] Output directory: /workspace/JointBuildGS/phases/p2-gsjso/runs/20260718_qs_cheap_refine_sweep/jobs/cell050_win2_pass2/roofer
+[2026-07-18 15:37:22.893] [stdout] [info] Analysing pointcloud ...
+[2026-07-18 15:37:22.984] [stdout] [info] [cropper] Tile 0: cropped 18 buildings
+[2026-07-18 15:37:22.985] [stdout] [info] [reconstructor] Tile 0: submitted 18 buildings for reconstruction
+[2026-07-18 15:37:23.189] [stdout] [info] [reconstructor] Finished reconstruction: processed 18 of 18 submitted buildings
+[2026-07-18 15:37:23.189] [stdout] [info] [sorter] Tile 0: sorted 18 buildings
+[2026-07-18 15:37:23.189] [stdout] [info] [serializer] Tile 0: writing 18 buildings
+[2026-07-18 15:37:23.192] [stdout] [info] [serializer] Tile 0: wrote 18 buildings
+[2026-07-18 15:37:23.192] [stdout] [info] [serializer] Finished serialization: wrote 18 buildings in 1 tiles
