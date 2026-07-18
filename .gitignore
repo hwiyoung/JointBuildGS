@@ -180,3 +180,11 @@ results/phase3_*/**/*.png
 # Keep the committed immutable status/hash/completion snapshots under runner/.
 phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase2_prepare/runner/status.csv
 phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase2_prepare/runner/logs/
+
+# 2026-07-16 detached overnight A/B/C mutable driver outputs.
+# Canonical task logs, manifests, status, and issue ledgers are tracked separately.
+/phases/p2-gsjso/runs/20260716_overnight_abc/detached.log
+/phases/p2-gsjso/runs/20260716_overnight_abc/driver.log
+/phases/p2-gsjso/runs/20260716_overnight_abc/launcher.pid
+/phases/p2-gsjso/runs/20260716_overnight_abc/logs/
+/roofer.log.json
