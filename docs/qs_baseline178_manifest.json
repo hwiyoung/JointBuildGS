@@ -1,0 +1,72 @@
+{
+  "schema": "jointbuildgs.qs_baseline178.v1",
+  "created_utc": "2026-07-18T15:36:53.948228+00:00",
+  "git_head_at_measurement": "ba4ea22b9f6f1ec9dbbec51abd972abd939f34fe",
+  "branch": "exp/3b-surface-restore-corrected",
+  "population_definition": "docs/regression_input_snapshot.csv raw_lidar assembled=true",
+  "population_count": 178,
+  "population_sha256": "9558f7de787703470469bd37bcb7b8a8114f8eccbd6b44639e7941b085e04650",
+  "model_rows": {
+    "dense": 178,
+    "als": 178,
+    "reference": 178
+  },
+  "score_rows": 534,
+  "summary_rows": 5,
+  "canonical_counts": {
+    "dense_has_lod22": 114,
+    "dense_no_lod22": 64,
+    "als_has_lod22": 178
+  },
+  "old_status_agreement": {
+    "dense": {
+      "agreement_count": 178,
+      "population_count": 178,
+      "agreement_rate": 1.0
+    },
+    "als": {
+      "agreement_count": 178,
+      "population_count": 178,
+      "agreement_rate": 1.0
+    }
+  },
+  "metrics": [
+    "has_lod22",
+    "val3dity_valid",
+    "face_count_ratio",
+    "roof_rms_m",
+    "roof_completeness"
+  ],
+  "roof_completeness_definition": "area(union(model roof XY) intersect union(reference roof XY)) / area(union(reference roof XY))",
+  "distance_definition_source": "phases/p2-gsjso/scripts/e5_c001_8way.py",
+  "score_time_z_shift_m": 0.0,
+  "dense_source_preassembly_z_shift_m": -0.174,
+  "z_shift_rule": "canonical dense/ALS/reference already share EPSG:25832; score-time shift fixed at 0.0 m",
+  "crs": "EPSG:25832",
+  "val3dity_version": "val3dity  version: 2.6.0",
+  "learning_runs_started": 0,
+  "new_inference_runs": 0,
+  "gt_role": "LoD2 reference used only for scoring, figure, and reference self-check",
+  "interpretation_or_verdict": null,
+  "source_sha256": {
+    "docs/regression_input_snapshot.csv": "3cabed76b37625fdf8f9a72ed5c5b1f7c90ba23a839d6f1a61fc3727870cee82",
+    "phases/p0-audit/runs/w2_1_roofer_default_20260612_152729/building_reconstruction_status.csv": "4412ee47f8665e1a12663629dd66f9c9612f2e9adca54be38c188f2bc521a9b6",
+    "phases/p0-audit/runs/w2_1_roofer_default_20260612_152729/cityjson/dim_roofer.city.json": "01f4df46bd9b51786f3314c16f9fb87fc3c254f3156dc53c174abde81f3bbdae",
+    "phases/p0-audit/runs/w2_1_roofer_default_20260612_152729/cityjson/als_roofer.city.json": "4bd411c8ac705049b7ada6f059ea9c9f9275400458929434450333a34d6c81c5",
+    "phases/p2-gsjso/scripts/overnight_qs_rescore.py": "65dadf6de520278bd25ac3e631a17f00ee711d03d2e96a3b67b2fd5bb6cfdde5",
+    "phases/p2-gsjso/scripts/e5_c001_8way.py": "12322a7fd49c0904eaf7160946c7ef3b521ed091038452f9a863bef37f0bcbdc",
+    "phases/p0-audit/scripts/08_roofer_w2.py": "ae655090915c56bfeee2be830a28e27520c2430e97d19e515a0aa046e4c79e97",
+    "phases/p2-gsjso/scripts/qs_baseline178_rescore.py": "0d752dade0b8677460b55d381a69db77f7bf611061fb7479710434358db33e9d",
+    "phases/p0-audit/data/raw/lod2/690_5334.gml": "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314",
+    "phases/p0-audit/data/raw/lod2/690_5336.gml": "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674"
+  },
+  "output_sha256": {
+    "docs/qs_baseline178_scores.csv": "a3b89f1907e6e61aead702efe6b742b5c012615df77d90bdb2a859b5418d85ab",
+    "docs/qs_baseline178_summary.csv": "9c0eb511bcb1d1673c401655395ad0f39c594df565a03d8c5c2c0d42d846fd41",
+    "docs/figs/qs_baseline178/dense_vs_als_rms_distribution.png": "ccfd46186e411d0244e86671689a42c5ce902bde7707f479c9028f365f3d35d2",
+    "phases/p2-gsjso/runs/20260718_qs_baseline178_rescore/val3dity/01f4df46bd9b51786f3314c16f9fb87fc3c254f3156dc53c174abde81f3bbdae.json": "f0da25eb33f31f13bc59428de532a1f8093bca5839e6c60198d4c30b64583e83",
+    "phases/p2-gsjso/runs/20260718_qs_baseline178_rescore/val3dity/01f4df46bd9b51786f3314c16f9fb87fc3c254f3156dc53c174abde81f3bbdae.log": "ee3c51e0ecc6239205a385295daa1d8386b2b9589d44a1b02afbaede0008abcb",
+    "phases/p2-gsjso/runs/20260718_qs_baseline178_rescore/val3dity/4bd411c8ac705049b7ada6f059ea9c9f9275400458929434450333a34d6c81c5.json": "5a7940c791465b4612fbe381c8e224acd3e18bac36e51bbad213fb81ff34ca68",
+    "phases/p2-gsjso/runs/20260718_qs_baseline178_rescore/val3dity/4bd411c8ac705049b7ada6f059ea9c9f9275400458929434450333a34d6c81c5.log": "dafc545afb0d291200b355a38db16ba863ed15f7f6206a715391e25cd322c3d1"
+  }
+}
