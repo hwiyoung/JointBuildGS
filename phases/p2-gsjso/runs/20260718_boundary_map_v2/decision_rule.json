@@ -1,0 +1,121 @@
+{
+  "schema": "jointbuildgs.boundary_map_v2.depth2_rule.v1",
+  "created_utc": "2026-07-18T15:20:28.493459+00:00",
+  "maximum_depth": 2,
+  "objective": "calibration exact expected-tier agreement",
+  "tie_break": "higher exact count; shallower depth; fewer predicates; lexicographic serialized rule; leaf-count ties use well_textured, textureless_correspondence_anchored, outline_only order",
+  "features": [
+    "texture_low_gradient_fraction",
+    "texture_grad_p10",
+    "dense_point_count",
+    "dense_point_density_m2",
+    "coverage_frac",
+    "n_views_nadir",
+    "frac_views_incidence_le60",
+    "recon_score_median",
+    "footprint_area_m2"
+  ],
+  "feature_thresholds": "midpoints of calibration-only unique values",
+  "zero_point_recode": "raw_dense n_points_footprint=0 -> pt_density_m2=0 and coverage_frac=0; recode flags retained",
+  "calibration_seed": 20260718,
+  "split_inventory": {
+    "well_textured": {
+      "calibration": 17,
+      "validation": 17
+    },
+    "textureless_correspondence_anchored": {
+      "calibration": 2,
+      "validation": 2
+    },
+    "outline_only": {
+      "calibration": 3,
+      "validation": 3
+    }
+  },
+  "calibration_buildings": [
+    "DEBY_LOD2_104583794",
+    "DEBY_LOD2_108247351",
+    "DEBY_LOD2_4907014",
+    "DEBY_LOD2_4907015",
+    "DEBY_LOD2_4907019",
+    "DEBY_LOD2_4907021",
+    "DEBY_LOD2_4907027",
+    "DEBY_LOD2_4907030",
+    "DEBY_LOD2_4907032",
+    "DEBY_LOD2_4907034",
+    "DEBY_LOD2_4907167",
+    "DEBY_LOD2_4907199",
+    "DEBY_LOD2_4908044",
+    "DEBY_LOD2_4908049",
+    "DEBY_LOD2_4908053",
+    "DEBY_LOD2_4908054",
+    "DEBY_LOD2_4908157",
+    "DEBY_LOD2_4908159",
+    "DEBY_LOD2_4908161",
+    "DEBY_LOD2_4908165",
+    "DEBY_LOD2_4908169",
+    "DEBY_LOD2_8568392"
+  ],
+  "validation_buildings_locked_not_used_for_fit": [
+    "DEBY_LOD2_108247350",
+    "DEBY_LOD2_42364607",
+    "DEBY_LOD2_4906999",
+    "DEBY_LOD2_4907012",
+    "DEBY_LOD2_4907013",
+    "DEBY_LOD2_4907016",
+    "DEBY_LOD2_4907022",
+    "DEBY_LOD2_4907031",
+    "DEBY_LOD2_4907033",
+    "DEBY_LOD2_4907036",
+    "DEBY_LOD2_4907174",
+    "DEBY_LOD2_4907187",
+    "DEBY_LOD2_4908045",
+    "DEBY_LOD2_4908051",
+    "DEBY_LOD2_4908052",
+    "DEBY_LOD2_4908158",
+    "DEBY_LOD2_4908160",
+    "DEBY_LOD2_4908162",
+    "DEBY_LOD2_4908164",
+    "DEBY_LOD2_4908167",
+    "DEBY_LOD2_4908170",
+    "DEBY_LOD2_8568391"
+  ],
+  "calibration_correct": 21,
+  "calibration_n": 22,
+  "tree": {
+    "predicate": {
+      "feature": "texture_low_gradient_fraction",
+      "op": "<=",
+      "threshold": 0.518
+    },
+    "le": {
+      "predicate": {
+        "feature": "dense_point_count",
+        "op": "<=",
+        "threshold": 105.5
+      },
+      "le": {
+        "label": "well_textured"
+      },
+      "gt": {
+        "label": "textureless_correspondence_anchored"
+      }
+    },
+    "gt": {
+      "predicate": {
+        "feature": "recon_score_median",
+        "op": "<=",
+        "threshold": 64.834
+      },
+      "le": {
+        "label": "well_textured"
+      },
+      "gt": {
+        "label": "outline_only"
+      }
+    }
+  },
+  "tree_sha256": "0702eac350290680bae4275f73cb4180425215862c79ffbbaf6a62e6ff2468dd",
+  "learning_runs_started": 0,
+  "interpretation_or_verdict": null
+}

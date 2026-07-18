@@ -1,0 +1,1035 @@
+{
+  "schema": "jointbuildgs.boundary_map_v2.crop_pair_jobs.v1",
+  "created_utc": "2026-07-18T15:20:27.187256+00:00",
+  "model": {
+    "revision": "06e7259f34c3060f322df5cb0c7b9094f57e41fc",
+    "weights_sha256": "0a615eb05fa9db654050aa655945ee5696e7c6c1b7f93f1ee8c37249010f6feb",
+    "weights_bytes": 2754661648,
+    "config_sha256": "718eb93dc4f9e4332b60cc0041af962d712cbd346d7770ce35c5b22cff68eae4"
+  },
+  "crop_rule": "projected footprint at LoD2 median roof height; 32px margin; exact 4:3; min 256x192; resize 512x384",
+  "learning_runs_started": 0,
+  "requested_building_count": 14,
+  "projectable_job_count": 14,
+  "unprojectable_buildings": [],
+  "jobs": [
+    {
+      "building_id": "DEBY_LOD2_104583447",
+      "evaluation_scope": "canonical_178",
+      "priority_group": "repair_14",
+      "priority_rank": 1,
+      "view_a": "DJI_20241217084827_0177_D.JPG",
+      "view_b": "DJI_20241217095755_0002_D.JPG",
+      "image_a": "phases/p0-audit/data/work/images/Images/DJI_20241217084827_0177_D.JPG",
+      "image_b": "phases/p0-audit/data/work/images/Images/DJI_20241217095755_0002_D.JPG",
+      "crop_a_xyxy": [
+        4211,
+        108,
+        4611,
+        408
+      ],
+      "crop_b_xyxy": [
+        154,
+        2634,
+        1466,
+        3618
+      ],
+      "projected_rings_a": [
+        [
+          [
+            4420.67666778269,
+            141.54626565148806
+          ],
+          [
+            4482.821630685657,
+            358.1160274501606
+          ],
+          [
+            4400.15885276325,
+            375.01180499099837
+          ],
+          [
+            4339.850965987933,
+            153.6542984594546
+          ]
+        ]
+      ],
+      "projected_rings_b": [
+        [
+          [
+            572.8836675744337,
+            3357.9676902032925
+          ],
+          [
+            1430.6384982252362,
+            2705.923860460237
+          ],
+          [
+            797.8574109942558,
+            3046.678651558414
+          ],
+          [
+            189.55869983290404,
+            3545.177553930915
+          ]
+        ]
+      ],
+      "source_width": 5280,
+      "source_height": 3956,
+      "projection_reference_height_m": 532.08,
+      "projection_reference_source": "LoD2 CityGML; measurement/classification projection only",
+      "learning_runs_started": 0
+    },
+    {
+      "building_id": "DEBY_LOD2_104586480",
+      "evaluation_scope": "canonical_178",
+      "priority_group": "repair_14",
+      "priority_rank": 2,
+      "view_a": "DJI_20241217084707_0137_D.JPG",
+      "view_b": "DJI_20241217084657_0132_D.JPG",
+      "image_a": "phases/p0-audit/data/work/images/Images/DJI_20241217084707_0137_D.JPG",
+      "image_b": "phases/p0-audit/data/work/images/Images/DJI_20241217084657_0132_D.JPG",
+      "crop_a_xyxy": [
+        3031,
+        2815,
+        3607,
+        3247
+      ],
+      "crop_b_xyxy": [
+        2481,
+        425,
+        3041,
+        845
+      ],
+      "projected_rings_a": [
+        [
+          [
+            3330.977017298573,
+            3209.9163553827193
+          ],
+          [
+            3203.151718182428,
+            2875.7031190861912
+          ],
+          [
+            3300.301305786752,
+            2852.9302987079163
+          ],
+          [
+            3435.2557521292515,
+            3185.207254217007
+          ]
+        ]
+      ],
+      "projected_rings_b": [
+        [
+          [
+            2774.2489095330147,
+            810.0782431259049
+          ],
+          [
+            2642.6774992986866,
+            480.54924548728377
+          ],
+          [
+            2738.965420834004,
+            459.4635408091933
+          ],
+          [
+            2879.09071829578,
+            787.1315893909809
+          ]
+        ]
+      ],
+      "source_width": 5280,
+      "source_height": 3956,
+      "projection_reference_height_m": 518.08,
+      "projection_reference_source": "LoD2 CityGML; measurement/classification projection only",
+      "learning_runs_started": 0
+    },
+    {
+      "building_id": "DEBY_LOD2_108246888",
+      "evaluation_scope": "canonical_178",
+      "priority_group": "repair_14",
+      "priority_rank": 3,
+      "view_a": "DJI_20241217084903_0195_D.JPG",
+      "view_b": "DJI_20241217084340_0034_D.JPG",
+      "image_a": "phases/p0-audit/data/work/images/Images/DJI_20241217084903_0195_D.JPG",
+      "image_b": "phases/p0-audit/data/work/images/Images/DJI_20241217084340_0034_D.JPG",
+      "crop_a_xyxy": [
+        1657,
+        712,
+        2649,
+        1456
+      ],
+      "crop_b_xyxy": [
+        1775,
+        1017,
+        3023,
+        1953
+      ],
+      "projected_rings_a": [
+        [
+          [
+            2033.7947168225078,
+            930.6451464817393
+          ],
+          [
+            2336.7602519444613,
+            1423.687411785966
+          ],
+          [
+            2245.5577086902326,
+            1222.5437614190296
+          ],
+          [
+            1969.635201915664,
+            744.8494804631796
+          ]
+        ]
+      ],
+      "projected_rings_b": [
+        [
+          [
+            2167.359505528119,
+            1051.2186697628895
+          ],
+          [
+            2259.906773153514,
+            1264.1632400271947
+          ],
+          [
+            2630.2710662441445,
+            1917.9940049325926
+          ],
+          [
+            2510.611013656802,
+            1686.3320193852035
+          ]
+        ]
+      ],
+      "source_width": 5280,
+      "source_height": 3956,
+      "projection_reference_height_m": 518.164,
+      "projection_reference_source": "LoD2 CityGML; measurement/classification projection only",
+      "learning_runs_started": 0
+    },
+    {
+      "building_id": "DEBY_LOD2_42364609",
+      "evaluation_scope": "canonical_178",
+      "priority_group": "repair_14",
+      "priority_rank": 4,
+      "view_a": "DJI_20241217084853_0190_D.JPG",
+      "view_b": "DJI_20241217090923_0044_D.JPG",
+      "image_a": "phases/p0-audit/data/work/images/Images/DJI_20241217084853_0190_D.JPG",
+      "image_b": "phases/p0-audit/data/work/images/Images/DJI_20241217090923_0044_D.JPG",
+      "crop_a_xyxy": [
+        3375,
+        3220,
+        4223,
+        3856
+      ],
+      "crop_b_xyxy": [
+        812,
+        2837,
+        1564,
+        3401
+      ],
+      "projected_rings_a": [
+        [
+          [
+            3976.225835289938,
+            3822.7375363260835
+          ],
+          [
+            3897.8674591684,
+            3584.0509605711877
+          ],
+          [
+            3621.1429040369126,
+            3253.8701983180026
+          ],
+          [
+            3727.6513120767886,
+            3509.098468252906
+          ]
+        ]
+      ],
+      "projected_rings_b": [
+        [
+          [
+            1117.2201619501436,
+            3232.9951493672534
+          ],
+          [
+            1494.697687081175,
+            2869.9328270517667
+          ],
+          [
+            1225.705195950003,
+            3036.385791431442
+          ],
+          [
+            880.452101138545,
+            3367.145358881966
+          ]
+        ]
+      ],
+      "source_width": 5280,
+      "source_height": 3956,
+      "projection_reference_height_m": 517.282,
+      "projection_reference_source": "LoD2 CityGML; measurement/classification projection only",
+      "learning_runs_started": 0
+    },
+    {
+      "building_id": "DEBY_LOD2_4908023",
+      "evaluation_scope": "canonical_178",
+      "priority_group": "repair_14",
+      "priority_rank": 5,
+      "view_a": "DJI_20241217084837_0182_D.JPG",
+      "view_b": "DJI_20241217084725_0146_D.JPG",
+      "image_a": "phases/p0-audit/data/work/images/Images/DJI_20241217084837_0182_D.JPG",
+      "image_b": "phases/p0-audit/data/work/images/Images/DJI_20241217084725_0146_D.JPG",
+      "crop_a_xyxy": [
+        1163,
+        1080,
+        1707,
+        1488
+      ],
+      "crop_b_xyxy": [
+        1095,
+        988,
+        1639,
+        1396
+      ],
+      "projected_rings_a": [
+        [
+          [
+            1321.0003293619009,
+            1153.159432774759
+          ],
+          [
+            1490.2032892052985,
+            1113.1236968280657
+          ],
+          [
+            1542.235600244281,
+            1377.5830217532412
+          ],
+          [
+            1549.5151509653044,
+            1413.8887318842594
+          ],
+          [
+            1548.9472486169861,
+            1414.0323858221336
+          ],
+          [
+            1374.327213917003,
+            1454.247259640966
+          ]
+        ]
+      ],
+      "projected_rings_b": [
+        [
+          [
+            1480.6156999333084,
+            1321.7499759916059
+          ],
+          [
+            1310.7749705719934,
+            1361.4364115436574
+          ],
+          [
+            1260.470378074762,
+            1098.720372131324
+          ],
+          [
+            1253.7576007938037,
+            1063.2210759000209
+          ],
+          [
+            1254.3137782753265,
+            1063.073634327698
+          ],
+          [
+            1427.0764712942166,
+            1021.7539038468269
+          ]
+        ]
+      ],
+      "source_width": 5280,
+      "source_height": 3956,
+      "projection_reference_height_m": 518.951,
+      "projection_reference_source": "LoD2 CityGML; measurement/classification projection only",
+      "learning_runs_started": 0
+    },
+    {
+      "building_id": "DEBY_LOD2_4908024",
+      "evaluation_scope": "canonical_178",
+      "priority_group": "repair_14",
+      "priority_rank": 6,
+      "view_a": "DJI_20241217084723_0145_D.JPG",
+      "view_b": "DJI_20241217084839_0183_D.JPG",
+      "image_a": "phases/p0-audit/data/work/images/Images/DJI_20241217084723_0145_D.JPG",
+      "image_b": "phases/p0-audit/data/work/images/Images/DJI_20241217084839_0183_D.JPG",
+      "crop_a_xyxy": [
+        1483,
+        940,
+        1899,
+        1252
+      ],
+      "crop_b_xyxy": [
+        908,
+        1237,
+        1324,
+        1549
+      ],
+      "projected_rings_a": [
+        [
+          [
+            1557.704203087137,
+            1216.1655689017712
+          ],
+          [
+            1524.505618520008,
+            1044.6428647879848
+          ],
+          [
+            1824.4038226610858,
+            975.3956946868086
+          ],
+          [
+            1858.4670682735073,
+            1147.558993456163
+          ]
+        ]
+      ],
+      "projected_rings_b": [
+        [
+          [
+            1244.6103590567634,
+            1272.7816356686576
+          ],
+          [
+            1277.283684907029,
+            1444.9703749060357
+          ],
+          [
+            986.2980060846451,
+            1513.726453613323
+          ],
+          [
+            955.2313440936498,
+            1342.3468370545147
+          ]
+        ]
+      ],
+      "source_width": 5280,
+      "source_height": 3956,
+      "projection_reference_height_m": 518.95,
+      "projection_reference_source": "LoD2 CityGML; measurement/classification projection only",
+      "learning_runs_started": 0
+    },
+    {
+      "building_id": "DEBY_LOD2_4908025",
+      "evaluation_scope": "canonical_178",
+      "priority_group": "repair_14",
+      "priority_rank": 7,
+      "view_a": "DJI_20241217084723_0145_D.JPG",
+      "view_b": "DJI_20241217084839_0183_D.JPG",
+      "image_a": "phases/p0-audit/data/work/images/Images/DJI_20241217084723_0145_D.JPG",
+      "image_b": "phases/p0-audit/data/work/images/Images/DJI_20241217084839_0183_D.JPG",
+      "crop_a_xyxy": [
+        1445,
+        745,
+        1861,
+        1057
+      ],
+      "crop_b_xyxy": [
+        946,
+        1434,
+        1362,
+        1746
+      ],
+      "projected_rings_a": [
+        [
+          [
+            1519.4041286636577,
+            1020.0179158707269
+          ],
+          [
+            1487.3861690157773,
+            851.7061886419958
+          ],
+          [
+            1785.9867217290473,
+            782.4178171961794
+          ],
+          [
+            1818.927756317283,
+            952.0757265171384
+          ]
+        ]
+      ],
+      "projected_rings_b": [
+        [
+          [
+            1282.3202065336388,
+            1469.8672667662079
+          ],
+          [
+            1315.856516438709,
+            1642.3447414977286
+          ],
+          [
+            1023.3440777172323,
+            1709.4781002138288
+          ],
+          [
+            991.3338195613999,
+            1537.0996123283337
+          ]
+        ]
+      ],
+      "source_width": 5280,
+      "source_height": 3956,
+      "projection_reference_height_m": 518.954,
+      "projection_reference_source": "LoD2 CityGML; measurement/classification projection only",
+      "learning_runs_started": 0
+    },
+    {
+      "building_id": "DEBY_LOD2_4908026",
+      "evaluation_scope": "canonical_178",
+      "priority_group": "repair_14",
+      "priority_rank": 8,
+      "view_a": "DJI_20241217084723_0145_D.JPG",
+      "view_b": "DJI_20241217084837_0182_D.JPG",
+      "image_a": "phases/p0-audit/data/work/images/Images/DJI_20241217084723_0145_D.JPG",
+      "image_b": "phases/p0-audit/data/work/images/Images/DJI_20241217084837_0182_D.JPG",
+      "crop_a_xyxy": [
+        1408,
+        553,
+        1824,
+        865
+      ],
+      "crop_b_xyxy": [
+        883,
+        1128,
+        1299,
+        1440
+      ],
+      "projected_rings_a": [
+        [
+          [
+            1482.9670002120326,
+            827.0855266731203
+          ],
+          [
+            1451.0623500641511,
+            660.8767121041526
+          ],
+          [
+            1747.6855547190437,
+            591.1689608708587
+          ],
+          [
+            1780.8347494102923,
+            758.0448421871095
+          ]
+        ]
+      ],
+      "projected_rings_b": [
+        [
+          [
+            1219.2886566110578,
+            1164.69622911972
+          ],
+          [
+            1252.081220636979,
+            1335.249599210859
+          ],
+          [
+            961.7038700507028,
+            1404.2697874053508
+          ],
+          [
+            930.6705629054538,
+            1234.451796748081
+          ]
+        ]
+      ],
+      "source_width": 5280,
+      "source_height": 3956,
+      "projection_reference_height_m": 518.932,
+      "projection_reference_source": "LoD2 CityGML; measurement/classification projection only",
+      "learning_runs_started": 0
+    },
+    {
+      "building_id": "DEBY_LOD2_4908027",
+      "evaluation_scope": "canonical_178",
+      "priority_group": "repair_14",
+      "priority_rank": 9,
+      "view_a": "DJI_20241217084837_0182_D.JPG",
+      "view_b": "DJI_20241217084723_0145_D.JPG",
+      "image_a": "phases/p0-audit/data/work/images/Images/DJI_20241217084837_0182_D.JPG",
+      "image_b": "phases/p0-audit/data/work/images/Images/DJI_20241217084723_0145_D.JPG",
+      "crop_a_xyxy": [
+        920,
+        1324,
+        1336,
+        1636
+      ],
+      "crop_b_xyxy": [
+        1379,
+        370,
+        1779,
+        670
+      ],
+      "projected_rings_a": [
+        [
+          [
+            1256.9672597981905,
+            1360.0683885270666
+          ],
+          [
+            1290.5590959769686,
+            1531.8599296411476
+          ],
+          [
+            998.7999367732721,
+            1599.6560697668624
+          ],
+          [
+            965.951896987986,
+            1429.1796340057008
+          ]
+        ]
+      ],
+      "projected_rings_b": [
+        [
+          [
+            1446.2662878971116,
+            636.8577050213612
+          ],
+          [
+            1415.8669761033314,
+            473.88030801730906
+          ],
+          [
+            1710.4225609846135,
+            403.7792641222002
+          ],
+          [
+            1743.1019936398084,
+            566.8573043655722
+          ]
+        ]
+      ],
+      "source_width": 5280,
+      "source_height": 3956,
+      "projection_reference_height_m": 518.938,
+      "projection_reference_source": "LoD2 CityGML; measurement/classification projection only",
+      "learning_runs_started": 0
+    },
+    {
+      "building_id": "DEBY_LOD2_4908028",
+      "evaluation_scope": "canonical_178",
+      "priority_group": "repair_14",
+      "priority_rank": 10,
+      "view_a": "DJI_20241217084843_0185_D.JPG",
+      "view_b": "DJI_20241217084737_0152_D.JPG",
+      "image_a": "phases/p0-audit/data/work/images/Images/DJI_20241217084843_0185_D.JPG",
+      "image_b": "phases/p0-audit/data/work/images/Images/DJI_20241217084737_0152_D.JPG",
+      "crop_a_xyxy": [
+        1309,
+        3016,
+        1725,
+        3328
+      ],
+      "crop_b_xyxy": [
+        2137,
+        3590,
+        2553,
+        3902
+      ],
+      "projected_rings_a": [
+        [
+          [
+            1643.917215787456,
+            3057.6679504078083
+          ],
+          [
+            1684.7537683027529,
+            3228.549379446352
+          ],
+          [
+            1389.7604493566657,
+            3287.214238627928
+          ],
+          [
+            1349.3869865000822,
+            3116.612133170615
+          ]
+        ]
+      ],
+      "projected_rings_b": [
+        [
+          [
+            2214.473810049886,
+            3858.5247049310374
+          ],
+          [
+            2174.495632513556,
+            3694.604368486247
+          ],
+          [
+            2477.189359607528,
+            3633.0972212934857
+          ],
+          [
+            2514.921315756381,
+            3799.2179018030088
+          ]
+        ]
+      ],
+      "source_width": 5280,
+      "source_height": 3956,
+      "projection_reference_height_m": 518.93,
+      "projection_reference_source": "LoD2 CityGML; measurement/classification projection only",
+      "learning_runs_started": 0
+    },
+    {
+      "building_id": "DEBY_LOD2_4908166",
+      "evaluation_scope": "canonical_178",
+      "priority_group": "repair_14",
+      "priority_rank": 11,
+      "view_a": "DJI_20241217084853_0190_D.JPG",
+      "view_b": "DJI_20241217090925_0045_D.JPG",
+      "image_a": "phases/p0-audit/data/work/images/Images/DJI_20241217084853_0190_D.JPG",
+      "image_b": "phases/p0-audit/data/work/images/Images/DJI_20241217090925_0045_D.JPG",
+      "crop_a_xyxy": [
+        2809,
+        2639,
+        4153,
+        3647
+      ],
+      "crop_b_xyxy": [
+        922,
+        2545,
+        2026,
+        3373
+      ],
+      "projected_rings_a": [
+        [
+          [
+            3334.735078865985,
+            2982.6672662644355
+          ],
+          [
+            3791.0433196223757,
+            3611.151474686122
+          ],
+          [
+            3785.5475582852814,
+            3592.7536017400444
+          ],
+          [
+            3689.6419575633463,
+            3345.6987690031324
+          ],
+          [
+            3685.813997214371,
+            3337.355769085194
+          ],
+          [
+            3170.9539434340077,
+            2675.650739375432
+          ],
+          [
+            3335.767498359794,
+            2981.7028003960354
+          ],
+          [
+            3331.1314965999363,
+            2975.0621142797318
+          ],
+          [
+            3289.166040960011,
+            2914.769708987752
+          ],
+          [
+            3292.553724282857,
+            2921.866675766202
+          ]
+        ]
+      ],
+      "projected_rings_b": [
+        [
+          [
+            1053.4893065924564,
+            3320.85931787149
+          ],
+          [
+            1460.5461669763988,
+            3042.0565767614908
+          ],
+          [
+            1490.4387782502029,
+            3010.258835547583
+          ],
+          [
+            1910.015629365367,
+            2593.2994863800004
+          ],
+          [
+            1925.1838782067584,
+            2579.097276673321
+          ],
+          [
+            1443.6543717768232,
+            2932.0071292462976
+          ],
+          [
+            1065.4666174145648,
+            3309.4887431903962
+          ],
+          [
+            1062.0092125530118,
+            3311.600548865804
+          ],
+          [
+            1031.0322255055928,
+            3330.376349470024
+          ],
+          [
+            1022.8014925849343,
+            3339.2573646800065
+          ]
+        ]
+      ],
+      "source_width": 5280,
+      "source_height": 3956,
+      "projection_reference_height_m": 516.822,
+      "projection_reference_source": "LoD2 CityGML; measurement/classification projection only",
+      "learning_runs_started": 0
+    },
+    {
+      "building_id": "DEBY_LOD2_4908352",
+      "evaluation_scope": "canonical_178",
+      "priority_group": "repair_14",
+      "priority_rank": 12,
+      "view_a": "DJI_20241217084641_0124_D.JPG",
+      "view_b": "DJI_20241217102056_0027_D.JPG",
+      "image_a": "phases/p0-audit/data/work/images/Images/DJI_20241217084641_0124_D.JPG",
+      "image_b": "phases/p0-audit/data/work/images/Images/DJI_20241217102056_0027_D.JPG",
+      "crop_a_xyxy": [
+        1518,
+        61,
+        2126,
+        517
+      ],
+      "crop_b_xyxy": [
+        1647,
+        1058,
+        2207,
+        1478
+      ],
+      "projected_rings_a": [
+        [
+          [
+            1753.5423080799662,
+            480.64360588482236
+          ],
+          [
+            1707.2496401320227,
+            125.0680931973684
+          ],
+          [
+            1898.9022350309515,
+            98.05746939876508
+          ],
+          [
+            1901.4923753473256,
+            97.76090432434626
+          ],
+          [
+            1908.1446807120751,
+            166.54212138469757
+          ],
+          [
+            1936.9259756859724,
+            454.9451788764586
+          ]
+        ]
+      ],
+      "projected_rings_b": [
+        [
+          [
+            1745.9714886380398,
+            1186.4526341272283
+          ],
+          [
+            2172.720692092875,
+            1208.4921951720298
+          ],
+          [
+            2120.7768402550223,
+            1347.2068255152521
+          ],
+          [
+            2119.9744934972705,
+            1349.149661483804
+          ],
+          [
+            2032.917344405093,
+            1342.1907243214814
+          ],
+          [
+            1681.3560063192263,
+            1314.9229879709198
+          ]
+        ]
+      ],
+      "source_width": 5280,
+      "source_height": 3956,
+      "projection_reference_height_m": 518.257,
+      "projection_reference_source": "LoD2 CityGML; measurement/classification projection only",
+      "learning_runs_started": 0
+    },
+    {
+      "building_id": "DEBY_LOD2_4908354",
+      "evaluation_scope": "canonical_178",
+      "priority_group": "repair_14",
+      "priority_rank": 13,
+      "view_a": "DJI_20241217084915_0201_D.JPG",
+      "view_b": "DJI_20241217084629_0118_D.JPG",
+      "image_a": "phases/p0-audit/data/work/images/Images/DJI_20241217084915_0201_D.JPG",
+      "image_b": "phases/p0-audit/data/work/images/Images/DJI_20241217084629_0118_D.JPG",
+      "crop_a_xyxy": [
+        516,
+        328,
+        1076,
+        748
+      ],
+      "crop_b_xyxy": [
+        4694,
+        616,
+        5238,
+        1024
+      ],
+      "projected_rings_a": [
+        [
+          [
+            870.247477575022,
+            362.38542573556197
+          ],
+          [
+            916.7693185468972,
+            659.6222747345196
+          ],
+          [
+            716.7780261151347,
+            712.9603465490825
+          ],
+          [
+            675.476992751723,
+            418.73120763021666
+          ]
+        ]
+      ],
+      "projected_rings_b": [
+        [
+          [
+            5015.17787763054,
+            652.785446462643
+          ],
+          [
+            5094.578093503967,
+            954.4899385544885
+          ],
+          [
+            4913.225054860148,
+            988.1137748398395
+          ],
+          [
+            4836.452302643399,
+            684.0130938781042
+          ]
+        ]
+      ],
+      "source_width": 5280,
+      "source_height": 3956,
+      "projection_reference_height_m": 518.58,
+      "projection_reference_source": "LoD2 CityGML; measurement/classification projection only",
+      "learning_runs_started": 0
+    },
+    {
+      "building_id": "DEBY_LOD2_8568403",
+      "evaluation_scope": "canonical_178",
+      "priority_group": "repair_14",
+      "priority_rank": 14,
+      "view_a": "DJI_20241217084639_0123_D.JPG",
+      "view_b": "DJI_20241217084913_0200_D.JPG",
+      "image_a": "phases/p0-audit/data/work/images/Images/DJI_20241217084639_0123_D.JPG",
+      "image_b": "phases/p0-audit/data/work/images/Images/DJI_20241217084913_0200_D.JPG",
+      "crop_a_xyxy": [
+        2009,
+        147,
+        2537,
+        543
+      ],
+      "crop_b_xyxy": [
+        1023,
+        85,
+        1711,
+        601
+      ],
+      "projected_rings_a": [
+        [
+          [
+            2043.0470281382813,
+            298.3535061663674
+          ],
+          [
+            2486.181312343234,
+            243.14335713534
+          ],
+          [
+            2503.419148627978,
+            391.22696550104024
+          ],
+          [
+            2058.5626976020894,
+            446.70664683065934
+          ]
+        ]
+      ],
+      "projected_rings_b": [
+        [
+          [
+            1404.0933269023258,
+            123.52129969000771
+          ],
+          [
+            1474.944120448895,
+            528.033985957022
+          ],
+          [
+            1327.1824613821339,
+            563.1585997073448
+          ],
+          [
+            1258.7074752827916,
+            159.73798764424214
+          ]
+        ]
+      ],
+      "source_width": 5280,
+      "source_height": 3956,
+      "projection_reference_height_m": 518.188,
+      "projection_reference_source": "LoD2 CityGML; measurement/classification projection only",
+      "learning_runs_started": 0
+    }
+  ]
+}
