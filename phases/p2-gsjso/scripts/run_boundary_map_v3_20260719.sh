@@ -1602,6 +1602,18 @@ for label in ("source_sha256", "output_sha256"):
             ): (
                 "718eb93dc4f9e4332b60cc0041af962d712cbd346d7770ce35c5b22cff68eae4"
             ),
+            (
+                "/models/mast3r_metric/blobs/"
+                "0a615eb05fa9db654050aa655945ee5696e7c6c1b7f93f1ee8c37249010f6feb"
+            ): (
+                "0a615eb05fa9db654050aa655945ee5696e7c6c1b7f93f1ee8c37249010f6feb"
+            ),
+            (
+                "/models/mast3r_metric/blobs/"
+                "e485617403af6e7900f6157a399a379176b61656"
+            ): (
+                "718eb93dc4f9e4332b60cc0041af962d712cbd346d7770ce35c5b22cff68eae4"
+            ),
         }
         if path.is_absolute():
             if relative not in locked_external or expected != locked_external[relative]:
@@ -2043,9 +2055,20 @@ main() {
     R1P3_COMMIT="$(state_get stages.R1P3.commit)"
     log "resume skip R1P3 status=$stage_status commit=$R1P3_COMMIT"
   elif [[ "$stage_status" == "hard_error" ]]; then
-    write_status "R1prime-3" "failed" \
-      "persistent state records hard_error"
-    exit 1
+    local preserved_mode
+    preserved_mode="$(fm_result_mode)"
+    if [[ "$preserved_mode" =~ ^(complete|budget_exhausted|prerequisite_partial|measurement_partial)$ ]]; then
+      log "resume retry R1P3 from preserved measurements mode=$preserved_mode"
+      if ! run_r1p3; then
+        write_status "R1prime-3" "partial" \
+          "preserved FM rows recommitted where present; finalize not run"
+        exit 1
+      fi
+    else
+      write_status "R1prime-3" "failed" \
+        "persistent state records hard_error without recoverable FM manifest"
+      exit 1
+    fi
   elif ! run_r1p3; then
     write_status "R1prime-3" "partial" \
       "completed FM rows committed; finalize not run"
