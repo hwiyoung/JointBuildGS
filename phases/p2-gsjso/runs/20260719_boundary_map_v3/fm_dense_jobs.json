@@ -1,0 +1,1236 @@
+{
+  "model": {
+    "model_id": "naver/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric",
+    "model_revision": "06e7259f34c3060f322df5cb0c7b9094f57e41fc",
+    "weights_sha256": "0a615eb05fa9db654050aa655945ee5696e7c6c1b7f93f1ee8c37249010f6feb",
+    "weights_bytes": 2754661648,
+    "model_config_sha256": "718eb93dc4f9e4332b60cc0041af962d712cbd346d7770ce35c5b22cff68eae4",
+    "docker_image_tag": "jointbuildgs-s3ap-mast3r:20260714-f5209af",
+    "docker_image_id": "sha256:89d64b4c7112cc55db0d42d562e2a0208858658c0c67ab1bd48424175c50f501",
+    "mast3r_commit": "f5209afc300cec36239a7ac992263f36847bbba0",
+    "dust3r_commit": "3cc8c88c413bb9e34c41db0e0eef99c2ee010b12",
+    "croco_commit": "d7de0705845239092414480bd829228723bf20de",
+    "environment_manifest": "docs/e5_c001_s3ap_fm_env_manifest.json",
+    "environment_manifest_sha256": "7246a77569a7af1b931ad60eda7012e6e3e8f4ff81b5e10f2e3c1a2efea80d68",
+    "dense_dial_config": "phases/p2-gsjso/configs/e5_c001_s3ap_fm_dense_dial.json",
+    "dense_dial_config_sha256": "72d0bef6578b9e5cbe96fb32cbf81802d3a87a92a8da5a6b5b497baba18491c9",
+    "raw_definition": "MASt3R reciprocal descriptor-NN matches after the locked 3-pixel crop border, linearly triangulated with fixed COLMAP K[R|t], finite homogeneous DLT, and positive depth in both cameras; no reprojection-error ceiling",
+    "reprojection_threshold_px": 2.0,
+    "summary_pair_rule": "pool footprint-inside points from cross-acquisition-minute-block pairs with fixed-COLMAP camera-centre baseline greater than 0.06 m; preserve every selected pair in run detail",
+    "coverage_rule": {
+      "grid_m": 0.5,
+      "denominator": "EPSG:25832 grid cells whose closed square intersects the supplied footprint",
+      "numerator": "eligible denominator cells containing at least one selected footprint-inside DLT point"
+    },
+    "lock_checks": {
+      "model_revision": true,
+      "weights_sha256": true,
+      "weights_bytes": true,
+      "docker_image_id": true,
+      "mast3r_commit": true,
+      "dust3r_commit": true,
+      "croco_commit": true
+    },
+    "learning_runs_started": 0,
+    "new_inference_type": "R1prime-3_FM_dense_dial_2px"
+  },
+  "jobs": [
+    {
+      "building_id": "DEBY_LOD2_4907199",
+      "priority_rank": 1,
+      "priority_group": "manual_textureless",
+      "primary_assignment": "well_textured",
+      "queue_inclusion_reason": "manual_textureless_mandatory",
+      "pairs": [
+        {
+          "pair_rank": 1,
+          "view_a": "DJI_20241217095441_0023_D.JPG",
+          "view_b": "DJI_20241217095531_0048_D.JPG",
+          "crop_source": "s3ap_locked_pjpl_semantic_region",
+          "crop_a_xyxy": [
+            0,
+            773,
+            320,
+            1013
+          ],
+          "crop_b_xyxy": [
+            1107,
+            821,
+            1363,
+            1013
+          ]
+        },
+        {
+          "pair_rank": 2,
+          "view_a": "DJI_20241217095145_0079_D.JPG",
+          "view_b": "DJI_20241217095441_0023_D.JPG",
+          "crop_source": "s3ap_locked_pjpl_semantic_region",
+          "crop_a_xyxy": [
+            0,
+            435,
+            256,
+            627
+          ],
+          "crop_b_xyxy": [
+            0,
+            773,
+            320,
+            1013
+          ]
+        },
+        {
+          "pair_rank": 3,
+          "view_a": "DJI_20241217095145_0079_D.JPG",
+          "view_b": "DJI_20241217095531_0048_D.JPG",
+          "crop_source": "s3ap_locked_pjpl_semantic_region",
+          "crop_a_xyxy": [
+            0,
+            435,
+            256,
+            627
+          ],
+          "crop_b_xyxy": [
+            1107,
+            821,
+            1363,
+            1013
+          ]
+        },
+        {
+          "pair_rank": 4,
+          "view_a": "DJI_20241217095149_0081_D.JPG",
+          "view_b": "DJI_20241217095441_0023_D.JPG",
+          "crop_source": "s3ap_locked_pjpl_semantic_region",
+          "crop_a_xyxy": [
+            0,
+            434,
+            256,
+            626
+          ],
+          "crop_b_xyxy": [
+            0,
+            773,
+            320,
+            1013
+          ]
+        },
+        {
+          "pair_rank": 5,
+          "view_a": "DJI_20241217095149_0081_D.JPG",
+          "view_b": "DJI_20241217095531_0048_D.JPG",
+          "crop_source": "s3ap_locked_pjpl_semantic_region",
+          "crop_a_xyxy": [
+            0,
+            434,
+            256,
+            626
+          ],
+          "crop_b_xyxy": [
+            1107,
+            821,
+            1363,
+            1013
+          ]
+        },
+        {
+          "pair_rank": 6,
+          "view_a": "DJI_20241217095145_0079_D.JPG",
+          "view_b": "DJI_20241217095149_0081_D.JPG",
+          "crop_source": "s3ap_locked_pjpl_semantic_region",
+          "crop_a_xyxy": [
+            0,
+            435,
+            256,
+            627
+          ],
+          "crop_b_xyxy": [
+            0,
+            434,
+            256,
+            626
+          ]
+        },
+        {
+          "pair_rank": 7,
+          "view_a": "DJI_20241217095147_0080_D.JPG",
+          "view_b": "DJI_20241217095441_0023_D.JPG",
+          "crop_source": "s3ap_locked_pjpl_semantic_region",
+          "crop_a_xyxy": [
+            0,
+            434,
+            256,
+            626
+          ],
+          "crop_b_xyxy": [
+            0,
+            773,
+            320,
+            1013
+          ]
+        },
+        {
+          "pair_rank": 8,
+          "view_a": "DJI_20241217095147_0080_D.JPG",
+          "view_b": "DJI_20241217095531_0048_D.JPG",
+          "crop_source": "s3ap_locked_pjpl_semantic_region",
+          "crop_a_xyxy": [
+            0,
+            434,
+            256,
+            626
+          ],
+          "crop_b_xyxy": [
+            1107,
+            821,
+            1363,
+            1013
+          ]
+        },
+        {
+          "pair_rank": 9,
+          "view_a": "DJI_20241217095145_0079_D.JPG",
+          "view_b": "DJI_20241217095147_0080_D.JPG",
+          "crop_source": "s3ap_locked_pjpl_semantic_region",
+          "crop_a_xyxy": [
+            0,
+            435,
+            256,
+            627
+          ],
+          "crop_b_xyxy": [
+            0,
+            434,
+            256,
+            626
+          ]
+        },
+        {
+          "pair_rank": 10,
+          "view_a": "DJI_20241217095147_0080_D.JPG",
+          "view_b": "DJI_20241217095149_0081_D.JPG",
+          "crop_source": "s3ap_locked_pjpl_semantic_region",
+          "crop_a_xyxy": [
+            0,
+            434,
+            256,
+            626
+          ],
+          "crop_b_xyxy": [
+            0,
+            434,
+            256,
+            626
+          ]
+        }
+      ]
+    },
+    {
+      "building_id": "DEBY_LOD2_8568391",
+      "priority_rank": 2,
+      "priority_group": "manual_textureless",
+      "primary_assignment": "well_textured",
+      "queue_inclusion_reason": "manual_textureless_mandatory",
+      "pairs": [
+        {
+          "pair_rank": 1,
+          "view_a": "DJI_20241217084901_0194_D.JPG",
+          "view_b": "DJI_20241217095441_0023_D.JPG",
+          "crop_source": "s3ap_locked_pjpl_semantic_region",
+          "crop_a_xyxy": [
+            1144,
+            0,
+            1400,
+            192
+          ],
+          "crop_b_xyxy": [
+            626,
+            584,
+            978,
+            848
+          ]
+        },
+        {
+          "pair_rank": 2,
+          "view_a": "DJI_20241217084903_0195_D.JPG",
+          "view_b": "DJI_20241217095441_0023_D.JPG",
+          "crop_source": "s3ap_locked_pjpl_semantic_region",
+          "crop_a_xyxy": [
+            1144,
+            110,
+            1400,
+            302
+          ],
+          "crop_b_xyxy": [
+            626,
+            584,
+            978,
+            848
+          ]
+        },
+        {
+          "pair_rank": 3,
+          "view_a": "DJI_20241217084901_0194_D.JPG",
+          "view_b": "DJI_20241217084903_0195_D.JPG",
+          "crop_source": "s3ap_locked_pjpl_semantic_region",
+          "crop_a_xyxy": [
+            1144,
+            0,
+            1400,
+            192
+          ],
+          "crop_b_xyxy": [
+            1144,
+            110,
+            1400,
+            302
+          ]
+        }
+      ]
+    },
+    {
+      "building_id": "DEBY_LOD2_4908049",
+      "priority_rank": 3,
+      "priority_group": "manual_textureless",
+      "primary_assignment": "well_textured",
+      "queue_inclusion_reason": "manual_textureless_mandatory",
+      "pairs": [
+        {
+          "pair_rank": 1,
+          "view_a": "DJI_20241217090949_0057_D.JPG",
+          "view_b": "DJI_20241217090915_0040_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            162,
+            3416,
+            882,
+            3956
+          ],
+          "crop_b_xyxy": [
+            131,
+            213,
+            979,
+            849
+          ]
+        },
+        {
+          "pair_rank": 2,
+          "view_a": "DJI_20241217084813_0170_D.JPG",
+          "view_b": "DJI_20241217090949_0057_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            4592,
+            3244,
+            5280,
+            3760
+          ],
+          "crop_b_xyxy": [
+            162,
+            3416,
+            882,
+            3956
+          ]
+        },
+        {
+          "pair_rank": 3,
+          "view_a": "DJI_20241217090815_0010_D.JPG",
+          "view_b": "DJI_20241217090915_0040_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            4640,
+            229,
+            5280,
+            709
+          ],
+          "crop_b_xyxy": [
+            131,
+            213,
+            979,
+            849
+          ]
+        },
+        {
+          "pair_rank": 4,
+          "view_a": "DJI_20241217090817_0011_D.JPG",
+          "view_b": "DJI_20241217090915_0040_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            4624,
+            639,
+            5280,
+            1131
+          ],
+          "crop_b_xyxy": [
+            131,
+            213,
+            979,
+            849
+          ]
+        },
+        {
+          "pair_rank": 5,
+          "view_a": "DJI_20241217090815_0010_D.JPG",
+          "view_b": "DJI_20241217084813_0170_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            4640,
+            229,
+            5280,
+            709
+          ],
+          "crop_b_xyxy": [
+            4592,
+            3244,
+            5280,
+            3760
+          ]
+        },
+        {
+          "pair_rank": 6,
+          "view_a": "DJI_20241217090817_0011_D.JPG",
+          "view_b": "DJI_20241217084813_0170_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            4624,
+            639,
+            5280,
+            1131
+          ],
+          "crop_b_xyxy": [
+            4592,
+            3244,
+            5280,
+            3760
+          ]
+        },
+        {
+          "pair_rank": 7,
+          "view_a": "DJI_20241217090817_0011_D.JPG",
+          "view_b": "DJI_20241217090949_0057_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            4624,
+            639,
+            5280,
+            1131
+          ],
+          "crop_b_xyxy": [
+            162,
+            3416,
+            882,
+            3956
+          ]
+        },
+        {
+          "pair_rank": 8,
+          "view_a": "DJI_20241217084813_0170_D.JPG",
+          "view_b": "DJI_20241217090915_0040_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            4592,
+            3244,
+            5280,
+            3760
+          ],
+          "crop_b_xyxy": [
+            131,
+            213,
+            979,
+            849
+          ]
+        },
+        {
+          "pair_rank": 9,
+          "view_a": "DJI_20241217090815_0010_D.JPG",
+          "view_b": "DJI_20241217090949_0057_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            4640,
+            229,
+            5280,
+            709
+          ],
+          "crop_b_xyxy": [
+            162,
+            3416,
+            882,
+            3956
+          ]
+        },
+        {
+          "pair_rank": 10,
+          "view_a": "DJI_20241217090817_0011_D.JPG",
+          "view_b": "DJI_20241217090815_0010_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            4624,
+            639,
+            5280,
+            1131
+          ],
+          "crop_b_xyxy": [
+            4640,
+            229,
+            5280,
+            709
+          ]
+        }
+      ]
+    },
+    {
+      "building_id": "DEBY_LOD2_4908162",
+      "priority_rank": 4,
+      "priority_group": "manual_textureless",
+      "primary_assignment": "well_textured",
+      "queue_inclusion_reason": "manual_textureless_mandatory",
+      "pairs": [
+        {
+          "pair_rank": 1,
+          "view_a": "DJI_20241217084849_0188_D.JPG",
+          "view_b": "DJI_20241217084805_0166_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            2597,
+            1944,
+            4885,
+            3660
+          ],
+          "crop_b_xyxy": [
+            206,
+            291,
+            1838,
+            1515
+          ]
+        },
+        {
+          "pair_rank": 2,
+          "view_a": "DJI_20241217084849_0188_D.JPG",
+          "view_b": "DJI_20241217084743_0155_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            2597,
+            1944,
+            4885,
+            3660
+          ],
+          "crop_b_xyxy": [
+            248,
+            1745,
+            2424,
+            3377
+          ]
+        },
+        {
+          "pair_rank": 3,
+          "view_a": "DJI_20241217084849_0188_D.JPG",
+          "view_b": "DJI_20241217084741_0154_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            2597,
+            1944,
+            4885,
+            3660
+          ],
+          "crop_b_xyxy": [
+            16,
+            1816,
+            2016,
+            3316
+          ]
+        },
+        {
+          "pair_rank": 4,
+          "view_a": "DJI_20241217084805_0166_D.JPG",
+          "view_b": "DJI_20241217084733_0150_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            206,
+            291,
+            1838,
+            1515
+          ],
+          "crop_b_xyxy": [
+            0,
+            1015,
+            2464,
+            2863
+          ]
+        },
+        {
+          "pair_rank": 5,
+          "view_a": "DJI_20241217084849_0188_D.JPG",
+          "view_b": "DJI_20241217084733_0150_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            2597,
+            1944,
+            4885,
+            3660
+          ],
+          "crop_b_xyxy": [
+            0,
+            1015,
+            2464,
+            2863
+          ]
+        },
+        {
+          "pair_rank": 6,
+          "view_a": "DJI_20241217084805_0166_D.JPG",
+          "view_b": "DJI_20241217084741_0154_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            206,
+            291,
+            1838,
+            1515
+          ],
+          "crop_b_xyxy": [
+            16,
+            1816,
+            2016,
+            3316
+          ]
+        },
+        {
+          "pair_rank": 7,
+          "view_a": "DJI_20241217084805_0166_D.JPG",
+          "view_b": "DJI_20241217084743_0155_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            206,
+            291,
+            1838,
+            1515
+          ],
+          "crop_b_xyxy": [
+            248,
+            1745,
+            2424,
+            3377
+          ]
+        },
+        {
+          "pair_rank": 8,
+          "view_a": "DJI_20241217084743_0155_D.JPG",
+          "view_b": "DJI_20241217084733_0150_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            248,
+            1745,
+            2424,
+            3377
+          ],
+          "crop_b_xyxy": [
+            0,
+            1015,
+            2464,
+            2863
+          ]
+        },
+        {
+          "pair_rank": 9,
+          "view_a": "DJI_20241217084741_0154_D.JPG",
+          "view_b": "DJI_20241217084733_0150_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            16,
+            1816,
+            2016,
+            3316
+          ],
+          "crop_b_xyxy": [
+            0,
+            1015,
+            2464,
+            2863
+          ]
+        },
+        {
+          "pair_rank": 10,
+          "view_a": "DJI_20241217084741_0154_D.JPG",
+          "view_b": "DJI_20241217084743_0155_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            16,
+            1816,
+            2016,
+            3316
+          ],
+          "crop_b_xyxy": [
+            248,
+            1745,
+            2424,
+            3377
+          ]
+        }
+      ]
+    },
+    {
+      "building_id": "DEBY_LOD2_4907024",
+      "priority_rank": 5,
+      "priority_group": "remaining_area_desc",
+      "primary_assignment": "outline_only",
+      "queue_inclusion_reason": "primary_nonwell",
+      "pairs": [
+        {
+          "pair_rank": 1,
+          "view_a": "DJI_20241217090821_0013_D.JPG",
+          "view_b": "DJI_20241217090911_0038_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            3264,
+            562,
+            5280,
+            2074
+          ],
+          "crop_b_xyxy": [
+            199,
+            305,
+            4727,
+            3701
+          ]
+        },
+        {
+          "pair_rank": 2,
+          "view_a": "DJI_20241217090821_0013_D.JPG",
+          "view_b": "DJI_20241217090915_0040_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            3264,
+            562,
+            5280,
+            2074
+          ],
+          "crop_b_xyxy": [
+            52,
+            194,
+            4084,
+            3218
+          ]
+        },
+        {
+          "pair_rank": 3,
+          "view_a": "DJI_20241217090823_0014_D.JPG",
+          "view_b": "DJI_20241217090911_0038_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            3232,
+            1164,
+            5280,
+            2700
+          ],
+          "crop_b_xyxy": [
+            199,
+            305,
+            4727,
+            3701
+          ]
+        },
+        {
+          "pair_rank": 4,
+          "view_a": "DJI_20241217090823_0014_D.JPG",
+          "view_b": "DJI_20241217090915_0040_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            3232,
+            1164,
+            5280,
+            2700
+          ],
+          "crop_b_xyxy": [
+            52,
+            194,
+            4084,
+            3218
+          ]
+        },
+        {
+          "pair_rank": 5,
+          "view_a": "DJI_20241217090825_0015_D.JPG",
+          "view_b": "DJI_20241217090911_0038_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            3248,
+            1786,
+            5280,
+            3310
+          ],
+          "crop_b_xyxy": [
+            199,
+            305,
+            4727,
+            3701
+          ]
+        },
+        {
+          "pair_rank": 6,
+          "view_a": "DJI_20241217090825_0015_D.JPG",
+          "view_b": "DJI_20241217090915_0040_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            3248,
+            1786,
+            5280,
+            3310
+          ],
+          "crop_b_xyxy": [
+            52,
+            194,
+            4084,
+            3218
+          ]
+        },
+        {
+          "pair_rank": 7,
+          "view_a": "DJI_20241217090821_0013_D.JPG",
+          "view_b": "DJI_20241217090825_0015_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            3264,
+            562,
+            5280,
+            2074
+          ],
+          "crop_b_xyxy": [
+            3248,
+            1786,
+            5280,
+            3310
+          ]
+        },
+        {
+          "pair_rank": 8,
+          "view_a": "DJI_20241217090823_0014_D.JPG",
+          "view_b": "DJI_20241217090821_0013_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            3232,
+            1164,
+            5280,
+            2700
+          ],
+          "crop_b_xyxy": [
+            3264,
+            562,
+            5280,
+            2074
+          ]
+        },
+        {
+          "pair_rank": 9,
+          "view_a": "DJI_20241217090823_0014_D.JPG",
+          "view_b": "DJI_20241217090825_0015_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            3232,
+            1164,
+            5280,
+            2700
+          ],
+          "crop_b_xyxy": [
+            3248,
+            1786,
+            5280,
+            3310
+          ]
+        },
+        {
+          "pair_rank": 10,
+          "view_a": "DJI_20241217090915_0040_D.JPG",
+          "view_b": "DJI_20241217090911_0038_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            52,
+            194,
+            4084,
+            3218
+          ],
+          "crop_b_xyxy": [
+            199,
+            305,
+            4727,
+            3701
+          ]
+        }
+      ]
+    },
+    {
+      "building_id": "DEBY_LOD2_4907018",
+      "priority_rank": 6,
+      "priority_group": "remaining_area_desc",
+      "primary_assignment": "outline_only",
+      "queue_inclusion_reason": "primary_nonwell",
+      "pairs": [
+        {
+          "pair_rank": 1,
+          "view_a": "DJI_20241217090927_0046_D.JPG",
+          "view_b": "DJI_20241217101554_0014_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            0,
+            114,
+            4064,
+            3162
+          ],
+          "crop_b_xyxy": [
+            2827,
+            744,
+            4267,
+            1824
+          ]
+        },
+        {
+          "pair_rank": 2,
+          "view_a": "DJI_20241217090927_0046_D.JPG",
+          "view_b": "DJI_20241217101552_0013_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            0,
+            114,
+            4064,
+            3162
+          ],
+          "crop_b_xyxy": [
+            3084,
+            610,
+            4444,
+            1630
+          ]
+        },
+        {
+          "pair_rank": 3,
+          "view_a": "DJI_20241217090927_0046_D.JPG",
+          "view_b": "DJI_20241217101357_0031_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            0,
+            114,
+            4064,
+            3162
+          ],
+          "crop_b_xyxy": [
+            3394,
+            630,
+            3730,
+            882
+          ]
+        },
+        {
+          "pair_rank": 4,
+          "view_a": "DJI_20241217090927_0046_D.JPG",
+          "view_b": "DJI_20241217103613_0076_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            0,
+            114,
+            4064,
+            3162
+          ],
+          "crop_b_xyxy": [
+            676,
+            616,
+            2276,
+            1816
+          ]
+        },
+        {
+          "pair_rank": 5,
+          "view_a": "DJI_20241217103613_0076_D.JPG",
+          "view_b": "DJI_20241217101554_0014_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            676,
+            616,
+            2276,
+            1816
+          ],
+          "crop_b_xyxy": [
+            2827,
+            744,
+            4267,
+            1824
+          ]
+        },
+        {
+          "pair_rank": 6,
+          "view_a": "DJI_20241217103613_0076_D.JPG",
+          "view_b": "DJI_20241217101552_0013_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            676,
+            616,
+            2276,
+            1816
+          ],
+          "crop_b_xyxy": [
+            3084,
+            610,
+            4444,
+            1630
+          ]
+        },
+        {
+          "pair_rank": 7,
+          "view_a": "DJI_20241217103613_0076_D.JPG",
+          "view_b": "DJI_20241217101357_0031_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            676,
+            616,
+            2276,
+            1816
+          ],
+          "crop_b_xyxy": [
+            3394,
+            630,
+            3730,
+            882
+          ]
+        },
+        {
+          "pair_rank": 8,
+          "view_a": "DJI_20241217101554_0014_D.JPG",
+          "view_b": "DJI_20241217101357_0031_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            2827,
+            744,
+            4267,
+            1824
+          ],
+          "crop_b_xyxy": [
+            3394,
+            630,
+            3730,
+            882
+          ]
+        },
+        {
+          "pair_rank": 9,
+          "view_a": "DJI_20241217101552_0013_D.JPG",
+          "view_b": "DJI_20241217101357_0031_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            3084,
+            610,
+            4444,
+            1630
+          ],
+          "crop_b_xyxy": [
+            3394,
+            630,
+            3730,
+            882
+          ]
+        },
+        {
+          "pair_rank": 10,
+          "view_a": "DJI_20241217101552_0013_D.JPG",
+          "view_b": "DJI_20241217101554_0014_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            3084,
+            610,
+            4444,
+            1630
+          ],
+          "crop_b_xyxy": [
+            2827,
+            744,
+            4267,
+            1824
+          ]
+        }
+      ]
+    },
+    {
+      "building_id": "DEBY_LOD2_4908169",
+      "priority_rank": 7,
+      "priority_group": "remaining_area_desc",
+      "primary_assignment": "outline_only",
+      "queue_inclusion_reason": "primary_nonwell",
+      "pairs": [
+        {
+          "pair_rank": 1,
+          "view_a": "DJI_20241217084843_0185_D.JPG",
+          "view_b": "DJI_20241217084851_0189_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            4379,
+            515,
+            4795,
+            827
+          ],
+          "crop_b_xyxy": [
+            4801,
+            2354,
+            5249,
+            2690
+          ]
+        },
+        {
+          "pair_rank": 2,
+          "view_a": "DJI_20241217084845_0186_D.JPG",
+          "view_b": "DJI_20241217084851_0189_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            4495,
+            957,
+            4927,
+            1281
+          ],
+          "crop_b_xyxy": [
+            4801,
+            2354,
+            5249,
+            2690
+          ]
+        },
+        {
+          "pair_rank": 3,
+          "view_a": "DJI_20241217084849_0188_D.JPG",
+          "view_b": "DJI_20241217084843_0185_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            4711,
+            1899,
+            5159,
+            2235
+          ],
+          "crop_b_xyxy": [
+            4379,
+            515,
+            4795,
+            827
+          ]
+        },
+        {
+          "pair_rank": 4,
+          "view_a": "DJI_20241217084845_0186_D.JPG",
+          "view_b": "DJI_20241217084849_0188_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            4495,
+            957,
+            4927,
+            1281
+          ],
+          "crop_b_xyxy": [
+            4711,
+            1899,
+            5159,
+            2235
+          ]
+        },
+        {
+          "pair_rank": 5,
+          "view_a": "DJI_20241217084847_0187_D.JPG",
+          "view_b": "DJI_20241217084843_0185_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            4616,
+            1432,
+            5048,
+            1756
+          ],
+          "crop_b_xyxy": [
+            4379,
+            515,
+            4795,
+            827
+          ]
+        },
+        {
+          "pair_rank": 6,
+          "view_a": "DJI_20241217084847_0187_D.JPG",
+          "view_b": "DJI_20241217084851_0189_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            4616,
+            1432,
+            5048,
+            1756
+          ],
+          "crop_b_xyxy": [
+            4801,
+            2354,
+            5249,
+            2690
+          ]
+        },
+        {
+          "pair_rank": 7,
+          "view_a": "DJI_20241217084847_0187_D.JPG",
+          "view_b": "DJI_20241217084845_0186_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            4616,
+            1432,
+            5048,
+            1756
+          ],
+          "crop_b_xyxy": [
+            4495,
+            957,
+            4927,
+            1281
+          ]
+        },
+        {
+          "pair_rank": 8,
+          "view_a": "DJI_20241217084847_0187_D.JPG",
+          "view_b": "DJI_20241217084849_0188_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            4616,
+            1432,
+            5048,
+            1756
+          ],
+          "crop_b_xyxy": [
+            4711,
+            1899,
+            5159,
+            2235
+          ]
+        },
+        {
+          "pair_rank": 9,
+          "view_a": "DJI_20241217084849_0188_D.JPG",
+          "view_b": "DJI_20241217084851_0189_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            4711,
+            1899,
+            5159,
+            2235
+          ],
+          "crop_b_xyxy": [
+            4801,
+            2354,
+            5249,
+            2690
+          ]
+        },
+        {
+          "pair_rank": 10,
+          "view_a": "DJI_20241217084845_0186_D.JPG",
+          "view_b": "DJI_20241217084843_0185_D.JPG",
+          "crop_source": "v2_projected_footprint_at_LoD2_height_projection_classification_only",
+          "crop_a_xyxy": [
+            4495,
+            957,
+            4927,
+            1281
+          ],
+          "crop_b_xyxy": [
+            4379,
+            515,
+            4795,
+            827
+          ]
+        }
+      ]
+    }
+  ]
+}
