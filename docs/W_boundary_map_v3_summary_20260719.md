@@ -47,6 +47,10 @@ The manual 22/22 membership is the v2 set at seed 20260718. Dense-success labels
 
 - measurement status: partial
 - incomplete buildings: 1
+- first-measurement new pair inferences: 63
+- final-source invocation new pair inferences: 0
+- final-source invocation cache reuses: 63
+- origin inference caches: 63
 - threshold status: selected_on_partial_calibration_support
 - selected footprint-inside count threshold: 1
 - calibration candidate total: 3
@@ -63,6 +67,10 @@ Incomplete FM candidates retain their primary assignment; the fixed override is 
 Incomplete building identifiers:
 
 - `DEBY_LOD2_4908169`
+
+| incomplete building_id | status | reason | elapsed seconds |
+|---|---|---|---:|
+| `DEBY_LOD2_4908169` | `ineligible_no_summary_pair` | `eligible_nondegenerate_completed_pairs=0` | 6.672020 |
 
 ## Dense outcome cross-tabulations
 

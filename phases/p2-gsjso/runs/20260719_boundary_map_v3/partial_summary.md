@@ -10,6 +10,11 @@
 
 ## Recorded reasons
 
+- none
 
-Public boundary_map_v3 outputs were not written by this invocation.
+## Incomplete building records
+
+- `DEBY_LOD2_4908169`: status=`ineligible_no_summary_pair`; reason=`eligible_nondegenerate_completed_pairs=0`; elapsed_seconds=6.672020
+
+Public boundary_map_v3 outputs use completed FM rows; each incomplete row retains its primary assignment before the fixed small-area and override steps.
 All recorded rows retain `learning_runs_started=0`.

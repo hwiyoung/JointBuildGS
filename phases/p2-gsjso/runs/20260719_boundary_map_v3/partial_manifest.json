@@ -1,6 +1,6 @@
 {
   "schema": "jointbuildgs.boundary_map_v3.partial.v1",
-  "created_utc": "2026-07-19T16:15:37.271278+00:00",
+  "created_utc": "2026-07-19T16:29:29.234676+00:00",
   "status": "partial_dense_measurements",
   "expected_building_count": 7,
   "recorded_building_count": 7,
@@ -8,6 +8,14 @@
   "missing_buildings": [],
   "incomplete_buildings": [
     "DEBY_LOD2_4908169"
+  ],
+  "incomplete_building_records": [
+    {
+      "building_id": "DEBY_LOD2_4908169",
+      "status": "ineligible_no_summary_pair",
+      "failure_reason": "eligible_nondegenerate_completed_pairs=0",
+      "elapsed_seconds": 6.67202
+    }
   ],
   "unexpected_buildings": [],
   "reasons": [],
