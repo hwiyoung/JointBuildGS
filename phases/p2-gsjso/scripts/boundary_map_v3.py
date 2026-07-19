@@ -229,6 +229,9 @@ CONDITIONAL_FIELDS = [
     "map_assignment",
     "fm_dense_footprint_inside_point_count",
     "fm_dense_inside_z_median_m",
+    "fm_dense_new_mast3r_inference_runs",
+    "fm_dense_cache_reuse_runs",
+    "fm_dense_origin_new_mast3r_inference_runs",
     "conditional_generation_target",
     "learning_runs_started",
     "new_inference_type",
@@ -350,6 +353,30 @@ def git_value(*args: str) -> str:
         ).strip()
     except (subprocess.CalledProcessError, FileNotFoundError):
         return ""
+
+
+def git_file_history(path: Path) -> list[str]:
+    history = git_value(
+        "log", "--reverse", "--format=%H", "--", rel(path)
+    )
+    return [line for line in history.splitlines() if line]
+
+
+def git_bytes_at_commit(commit: str, path: Path) -> bytes:
+    try:
+        return subprocess.check_output(
+            ["git", "show", f"{commit}:{rel(path)}"],
+            cwd=REPO,
+            stderr=subprocess.STDOUT,
+        )
+    except (subprocess.CalledProcessError, FileNotFoundError) as exc:
+        raise RuntimeError(
+            f"cannot read committed file: commit={commit} path={rel(path)}"
+        ) from exc
+
+
+def git_json_at_commit(commit: str, path: Path) -> dict[str, Any]:
+    return json.loads(git_bytes_at_commit(commit, path))
 
 
 def expected_tier(label: str) -> str:
@@ -1526,6 +1553,19 @@ def write_partial(
     )
     missing = sorted(expected_ids - set(measured_by_id))
     unexpected = sorted(set(measured_by_id) - expected_ids)
+    incomplete_records = []
+    for building_id in incomplete:
+        row = measured_by_id.get(building_id, {})
+        incomplete_records.append(
+            {
+                "building_id": building_id,
+                "status": row.get("status", "missing"),
+                "failure_reason": row.get(
+                    "failure_reason", "measurement row missing"
+                ),
+                "elapsed_seconds": as_float(row.get("elapsed_seconds")),
+            }
+        )
     payload = {
         "schema": "jointbuildgs.boundary_map_v3.partial.v1",
         "created_utc": now(),
@@ -1538,6 +1578,7 @@ def write_partial(
         ),
         "missing_buildings": missing,
         "incomplete_buildings": incomplete,
+        "incomplete_building_records": incomplete_records,
         "unexpected_buildings": unexpected,
         "reasons": list(reasons),
         "source_sha256": {
@@ -1571,9 +1612,33 @@ def write_partial(
         "",
         "## Recorded reasons",
         "",
-        *[f"- {reason}" for reason in reasons],
+        *(
+            [f"- {reason}" for reason in reasons]
+            if reasons
+            else ["- none"]
+        ),
         "",
-        "Public boundary_map_v3 outputs were not written by this invocation.",
+        "## Incomplete building records",
+        "",
+        *(
+            [
+                (
+                    f"- `{row['building_id']}`: "
+                    f"status=`{row['status']}`; "
+                    f"reason=`{row['failure_reason']}`; "
+                    f"elapsed_seconds={row['elapsed_seconds']:.6f}"
+                )
+                for row in incomplete_records
+            ]
+            if incomplete_records
+            else ["- none"]
+        ),
+        "",
+        (
+            "Public boundary_map_v3 outputs use completed FM rows; each "
+            "incomplete row retains its primary assignment before the fixed "
+            "small-area and override steps."
+        ),
         "All recorded rows retain `learning_runs_started=0`.",
     ]
     atomic_text(PARTIAL_SUMMARY, "\n".join(lines) + "\n")
@@ -1717,8 +1782,17 @@ def load_dense_results(
         building_id for building_id in incomplete
         if prerequisite_missing_row(measured_by_id.get(building_id))
     )
+    ineligible_no_summary_pair = sorted(
+        building_id for building_id in incomplete
+        if (
+            measured_by_id.get(building_id, {}).get("status")
+            == "ineligible_no_summary_pair"
+        )
+    )
     budget_incomplete = sorted(
-        set(incomplete) - set(prerequisite_missing)
+        set(incomplete)
+        - set(prerequisite_missing)
+        - set(ineligible_no_summary_pair)
     )
     complete_count = len(expected_ids) - len(incomplete)
     overall_status = (
@@ -1752,8 +1826,88 @@ def load_dense_results(
     notes.append(
         f"prerequisite_missing_buildings={len(prerequisite_missing)}"
     )
+    notes.append(
+        "ineligible_no_summary_pair_buildings="
+        f"{len(ineligible_no_summary_pair)}"
+    )
     notes.append(f"budget_incomplete_buildings={len(budget_incomplete)}")
     return measured_by_id, incomplete, overall_status, notes
+
+
+def measurement_inference_provenance(
+    current_manifest: Mapping[str, Any],
+    measured_by_id: Mapping[str, Mapping[str, Any]],
+) -> dict[str, Any]:
+    history = git_file_history(FM_RUN_MANIFEST)
+    if not history:
+        raise RuntimeError("FM dense manifest has no committed history")
+    first_measurement_commit = history[0]
+    final_source_commit = history[-1]
+    first_manifest = git_json_at_commit(
+        first_measurement_commit, FM_RUN_MANIFEST
+    )
+    first_parent = git_value(
+        "rev-parse", f"{first_measurement_commit}^"
+    )
+    final_parent = git_value("rev-parse", f"{final_source_commit}^")
+    if (
+        not first_parent
+        or not final_parent
+        or first_manifest.get("input_fingerprint")
+        != current_manifest.get("input_fingerprint")
+    ):
+        raise RuntimeError("FM dense committed inference lineage drift")
+    origin_count_by_building = {
+        building_id: origin_new_inference_count(row)
+        for building_id, row in measured_by_id.items()
+    }
+    origin_count = sum(
+        int(value) for value in origin_count_by_building.values()
+        if value != ""
+    )
+    raw_cache_count = len(
+        current_manifest.get("raw_cache_sha256", {})
+    )
+    if origin_count != raw_cache_count:
+        raise RuntimeError(
+            "FM dense origin-inference/cache cardinality drift: "
+            f"{origin_count} != {raw_cache_count}"
+        )
+    return {
+        "counter_semantics": (
+            "first_measurement counters are read from the earliest committed "
+            "FM manifest; final-source counters describe the cache-recovery "
+            "invocation; origin per-building counts equal current new plus "
+            "cache-reuse rows and are checked against raw-cache cardinality"
+        ),
+        "first_new_inference_git_head": first_parent,
+        "first_measurement_commit": first_measurement_commit,
+        "first_measurement_manifest_sha256": hashlib.sha256(
+            git_bytes_at_commit(first_measurement_commit, FM_RUN_MANIFEST)
+        ).hexdigest(),
+        "first_measurement_new_mast3r_inference_runs": int(
+            first_manifest.get("new_mast3r_inference_runs", -1)
+        ),
+        "first_measurement_cache_reuse_runs": int(
+            first_manifest.get("cache_reuse_runs", -1)
+        ),
+        "final_source_git_head": final_parent,
+        "final_source_measurement_commit": final_source_commit,
+        "final_source_new_mast3r_inference_runs": int(
+            current_manifest.get("new_mast3r_inference_runs", -1)
+        ),
+        "final_source_cache_reuse_runs": int(
+            current_manifest.get("cache_reuse_runs", -1)
+        ),
+        "origin_new_mast3r_inference_runs": origin_count,
+        "origin_new_mast3r_inference_runs_by_building": (
+            origin_count_by_building
+        ),
+        "raw_cache_count": raw_cache_count,
+        "input_fingerprint": current_manifest.get(
+            "input_fingerprint"
+        ),
+    }
 
 
 def fm_candidate_set(
@@ -2235,6 +2389,8 @@ def metric_output_fields() -> list[str]:
         "fm_dense_completed_pair_count",
         "fm_dense_elapsed_seconds",
         "fm_dense_new_mast3r_inference_runs",
+        "fm_dense_cache_reuse_runs",
+        "fm_dense_origin_new_mast3r_inference_runs",
         "fm_dense_count_role",
     ]
     return [field for field in base if field != "new_inference_type"] + [
@@ -2264,6 +2420,9 @@ def ladder_fields() -> list[str]:
         "fm_dense_selected_pair_count",
         "fm_dense_completed_pair_count",
         "fm_dense_elapsed_seconds",
+        "fm_dense_new_mast3r_inference_runs",
+        "fm_dense_cache_reuse_runs",
+        "fm_dense_origin_new_mast3r_inference_runs",
         "fm_dense_count_threshold",
         "fm_sparse_status_reference",
         "fm_sparse_selected_dlt_point_count_reference",
@@ -2290,6 +2449,17 @@ def dense_value(
     dense_row: Mapping[str, Any] | None, field: str
 ) -> Any:
     return "" if dense_row is None else dense_row.get(field, "")
+
+
+def origin_new_inference_count(
+    dense_row: Mapping[str, Any] | None,
+) -> int | str:
+    if dense_row is None:
+        return ""
+    return (
+        (as_int(dense_row.get("new_mast3r_inference_runs")) or 0)
+        + (as_int(dense_row.get("cache_reuse_runs")) or 0)
+    )
 
 
 def build_public_rows(
@@ -2370,6 +2540,12 @@ def build_public_rows(
                 "fm_dense_new_mast3r_inference_runs": dense_value(
                     dense, "new_mast3r_inference_runs"
                 ),
+                "fm_dense_cache_reuse_runs": dense_value(
+                    dense, "cache_reuse_runs"
+                ),
+                "fm_dense_origin_new_mast3r_inference_runs": (
+                    origin_new_inference_count(dense)
+                ),
                 "fm_dense_count_role": (
                     "assignment_channel"
                     if building_id in candidates
@@ -2426,6 +2602,15 @@ def build_public_rows(
                 "fm_dense_elapsed_seconds": dense_value(
                     dense, "elapsed_seconds"
                 ),
+                "fm_dense_new_mast3r_inference_runs": dense_value(
+                    dense, "new_mast3r_inference_runs"
+                ),
+                "fm_dense_cache_reuse_runs": dense_value(
+                    dense, "cache_reuse_runs"
+                ),
+                "fm_dense_origin_new_mast3r_inference_runs": (
+                    origin_new_inference_count(dense)
+                ),
                 "fm_dense_count_threshold": threshold,
                 "fm_sparse_status_reference": source.get("fm_status", ""),
                 "fm_sparse_selected_dlt_point_count_reference": source.get(
@@ -2479,6 +2664,15 @@ def build_conditional(
             "fm_dense_inside_z_median_m": row[
                 "fm_dense_inside_z_median_m"
             ],
+            "fm_dense_new_mast3r_inference_runs": row[
+                "fm_dense_new_mast3r_inference_runs"
+            ],
+            "fm_dense_cache_reuse_runs": row[
+                "fm_dense_cache_reuse_runs"
+            ],
+            "fm_dense_origin_new_mast3r_inference_runs": row[
+                "fm_dense_origin_new_mast3r_inference_runs"
+            ],
             "conditional_generation_target": True,
             "learning_runs_started": 0,
             "new_inference_type": row["new_inference_type"],
@@ -2503,6 +2697,8 @@ def summary_markdown(
     dense_measurement_status: str,
     incomplete_dense: Sequence[str],
     threshold_status: str,
+    measured_by_id: Mapping[str, Mapping[str, Any]],
+    inference_provenance: Mapping[str, Any],
 ) -> str:
     tier_counts = Counter(row["map_assignment"] for row in ladder)
     selected_threshold = next(
@@ -2575,6 +2771,14 @@ def summary_markdown(
         "",
             f"- measurement status: {dense_measurement_status}",
             f"- incomplete buildings: {len(incomplete_dense)}",
+            f"- first-measurement new pair inferences: "
+            f"{inference_provenance['first_measurement_new_mast3r_inference_runs']}",
+            f"- final-source invocation new pair inferences: "
+            f"{inference_provenance['final_source_new_mast3r_inference_runs']}",
+            f"- final-source invocation cache reuses: "
+            f"{inference_provenance['final_source_cache_reuse_runs']}",
+            f"- origin inference caches: "
+            f"{inference_provenance['origin_new_mast3r_inference_runs']}",
             f"- threshold status: {threshold_status}",
             f"- selected footprint-inside count threshold: {threshold}",
             f"- calibration candidate total: "
@@ -2603,6 +2807,22 @@ def summary_markdown(
             *(
                 [f"- `{building_id}`" for building_id in incomplete_dense]
                 if incomplete_dense else ["- none"]
+            ),
+            "",
+            "| incomplete building_id | status | reason | elapsed seconds |",
+            "|---|---|---|---:|",
+            *(
+                [
+                    (
+                        f"| `{building_id}` | "
+                        f"`{measured_by_id[building_id]['status']}` | "
+                        f"`{measured_by_id[building_id]['failure_reason']}` | "
+                        f"{float(measured_by_id[building_id]['elapsed_seconds']):.6f} |"
+                    )
+                    for building_id in incomplete_dense
+                ]
+                if incomplete_dense
+                else ["| none | none | none | 0.000000 |"]
             ),
             "",
             "## Dense outcome cross-tabulations",
@@ -2765,6 +2985,12 @@ def finalize() -> None:
         dense_measurement_status,
         dense_measurement_notes,
     ) = load_dense_results(candidates)
+    dense_run_manifest = json.loads(
+        FM_RUN_MANIFEST.read_text(encoding="utf-8")
+    )
+    inference_provenance = measurement_inference_provenance(
+        dense_run_manifest, measured_by_id
+    )
     expected = {
         building_id: label
         for building_id, label in zip(
@@ -2814,8 +3040,17 @@ def finalize() -> None:
         building_id for building_id in incomplete_dense
         if prerequisite_missing_row(measured_by_id.get(building_id))
     )
+    ineligible_no_summary_pair_dense = sorted(
+        building_id for building_id in incomplete_dense
+        if (
+            measured_by_id.get(building_id, {}).get("status")
+            == "ineligible_no_summary_pair"
+        )
+    )
     budget_or_pending_dense = sorted(
-        set(incomplete_dense) - set(prerequisite_missing_dense)
+        set(incomplete_dense)
+        - set(prerequisite_missing_dense)
+        - set(ineligible_no_summary_pair_dense)
     )
     metrics, ladder = build_public_rows(
         metric_rows,
@@ -2853,14 +3088,12 @@ def finalize() -> None:
             dense_measurement_status,
             incomplete_dense,
             threshold_status,
+            measured_by_id,
+            inference_provenance,
         ),
     )
 
     tier_counts = Counter(row["map_assignment"] for row in ladder)
-    dense_run_manifest = (
-        json.loads(FM_RUN_MANIFEST.read_text(encoding="utf-8"))
-        if FM_RUN_MANIFEST.is_file() else {}
-    )
     if dense_measurement_status == "complete":
         if PARTIAL_MANIFEST.exists():
             PARTIAL_MANIFEST.unlink()
@@ -2911,7 +3144,10 @@ def finalize() -> None:
     manifest_payload = {
         "schema": "jointbuildgs.boundary_map_v3.v1",
         "created_utc": now(),
-        "git_head_at_measurement": git_value("rev-parse", "HEAD"),
+        "git_head_at_measurement": inference_provenance[
+            "first_new_inference_git_head"
+        ],
+        "git_head_at_finalize": git_value("rev-parse", "HEAD"),
         "branch": git_value("branch", "--show-current"),
         "population": {
             "canonical_count": 178,
@@ -2947,10 +3183,14 @@ def finalize() -> None:
             "measurement_prerequisite_missing_buildings": (
                 prerequisite_missing_dense
             ),
+            "measurement_ineligible_no_summary_pair_buildings": (
+                ineligible_no_summary_pair_dense
+            ),
             "measurement_budget_or_pending_buildings": (
                 budget_or_pending_dense
             ),
             "measurement_notes": dense_measurement_notes,
+            "measurement_inference_provenance": inference_provenance,
             "sparse_channel_role": "reference columns only",
             "assignment_count_role": (
                 "only fm_dense_footprint_inside_point_count is used for "
