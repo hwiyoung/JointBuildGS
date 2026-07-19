@@ -1,17 +1,17 @@
 {
   "schema": "jointbuildgs.boundary_map_v3.fm_dense.manifest.v1",
   "run_id": "20260719_boundary_map_v3",
-  "created_utc": "2026-07-19T16:09:53.317165+00:00",
+  "created_utc": "2026-07-19T16:15:31.817722+00:00",
   "status": "partial",
-  "git_head_at_measurement": "0cd607da0f9ae65805f812a09230e582b385ad15",
+  "git_head_at_measurement": "3a891754a13ba4ebdbe4db3d03423feddab79c43",
   "branch": "exp/3b-surface-restore-corrected",
   "jobs": "phases/p2-gsjso/runs/20260719_boundary_map_v3/fm_dense_jobs.json",
   "input_fingerprint": "3af60747ffde1a12a1edd7f17bcca152bbb7b557b06b04233f2f70b8014c0fe0",
   "budget": {
-    "maximum_seconds": 21480.0,
+    "maximum_seconds": 21096.0,
     "locked_upper_bound_seconds": 21600,
     "finalization_reserve_seconds": 60.0,
-    "elapsed_seconds_this_invocation": 53.929616753943264
+    "elapsed_seconds_this_invocation": 9.002694613300264
   },
   "runtime_lock": {
     "docker_image_tag": "jointbuildgs-s3ap-mast3r:20260714-f5209af",
@@ -207,7 +207,7 @@
       "failed_pair_count": 0,
       "pending_pair_count": 0,
       "elapsed_seconds": 6.672020035795867,
-      "elapsed_seconds_this_invocation": 7.322380214929581,
+      "elapsed_seconds_this_invocation": 0.6442329846322536,
       "failure_reason": "eligible_nondegenerate_completed_pairs=0"
     }
   ],
@@ -224,8 +224,8 @@
     }
   ],
   "sparse_v2_reference_source": "docs/boundary_map_v2_metrics.csv",
-  "new_mast3r_inference_runs": 63,
-  "cache_reuse_runs": 0,
+  "new_mast3r_inference_runs": 0,
+  "cache_reuse_runs": 63,
   "learning_runs_started": 0,
   "new_inference_type": "R1prime-3_FM_dense_dial_2px",
   "resume_policy": "valid pair caches with exact pair/input fingerprints are reused; building rows are deterministically reconstructed without new inference",
@@ -357,10 +357,10 @@
     "phases/p2-gsjso/runs/20260719_boundary_map_v3/fm_dense_raw/8568391_rank03_raw_cheirality.npz": "bab7c25e43d1e34549db212cb4f167f1f1437a7f5ebbef04f4a106bddb467f31"
   },
   "output_sha256": {
-    "phases/p2-gsjso/runs/20260719_boundary_map_v3/fm_dense_measurements.csv": "f81892c04c86fd0f930740392f85c511ed057b5543c9efb036bd04534f996fe9",
-    "phases/p2-gsjso/runs/20260719_boundary_map_v3/fm_dense_pairs.csv": "3ec011afa1762b752315209f0d7a321b21085608df632df36145ac9f47b12cfb",
-    "phases/p2-gsjso/runs/20260719_boundary_map_v3/fm_dense_progress.json": "e3c54ebf0cb6842cbc2e0a1083f3045176b2956da74e046366009da2df3e1c77",
-    "phases/p2-gsjso/runs/20260719_boundary_map_v3/fm_dense.log": "a49dc2c8b3da49edc140c7d3c7bd8f4107c61b01c0c2815f64c60640479eea15",
+    "phases/p2-gsjso/runs/20260719_boundary_map_v3/fm_dense_measurements.csv": "9de795c8a0495026c1ca2265f3b1e367fe59903acead200d32f0f5bdefcf4ccb",
+    "phases/p2-gsjso/runs/20260719_boundary_map_v3/fm_dense_pairs.csv": "f99de9a9141a134a9ce582387f3f1648659eaa4598f8117dd874cc5964f889d1",
+    "phases/p2-gsjso/runs/20260719_boundary_map_v3/fm_dense_progress.json": "f994ce2004baedd773ea568eb813a0189431b7f7294b137ba5a128169d032b8a",
+    "phases/p2-gsjso/runs/20260719_boundary_map_v3/fm_dense.log": "e1ac3fdc4e2cab38520c0ee72193f81bc2713b8bac28d8117360e47b120dedee",
     "phases/p2-gsjso/runs/20260719_boundary_map_v3/fm_dense_raw/4907018_rank01_raw_cheirality.npz": "6cf5f459554a3d52de50e563c85e2bc0499abbab753337667dceb6e6716a2a6d",
     "phases/p2-gsjso/runs/20260719_boundary_map_v3/fm_dense_raw/4907018_rank02_raw_cheirality.npz": "bf5d8df548734aa26fbf937f564f67243a0a4c6c5b3a5a4e9bc1a9e8fb7f1415",
     "phases/p2-gsjso/runs/20260719_boundary_map_v3/fm_dense_raw/4907018_rank03_raw_cheirality.npz": "57ea14d015e3fde1bd233a8717dc50bf9fb0e798f2fb680140c908a3cf48774a",
