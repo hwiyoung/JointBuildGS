@@ -1,0 +1,26 @@
+{
+  "schema": "jointbuildgs.boundary_map_v3.partial.v1",
+  "created_utc": "2026-07-19T16:15:37.271278+00:00",
+  "status": "partial_dense_measurements",
+  "expected_building_count": 7,
+  "recorded_building_count": 7,
+  "complete_building_count": 6,
+  "missing_buildings": [],
+  "incomplete_buildings": [
+    "DEBY_LOD2_4908169"
+  ],
+  "unexpected_buildings": [],
+  "reasons": [],
+  "source_sha256": {
+    "phases/p2-gsjso/runs/20260719_boundary_map_v3/primary_predictions.csv": "a104d4f148ae4c34b1bf4e0ae8236b72880dc1b1cde635e2341683c9201566c5",
+    "phases/p2-gsjso/runs/20260719_boundary_map_v3/decision_rule.json": "04a2e5139307f70adccd75cefdbdc9365e2cc105ec2bd9f05229bcd7c688aabf",
+    "phases/p2-gsjso/runs/20260719_boundary_map_v3/label_inventory.json": "828d61f9c66f11f5c0dc1032c415fb5b3dc054e43101eb1537d59490a4b82bd0",
+    "phases/p2-gsjso/runs/20260719_boundary_map_v3/fm_dense_jobs.json": "707e19ad6df153f6fad48beaec6dd8672931461f8aeda5b034e410f512a5a27f",
+    "phases/p2-gsjso/runs/20260719_boundary_map_v3/fm_dense_measurements.csv": "9de795c8a0495026c1ca2265f3b1e367fe59903acead200d32f0f5bdefcf4ccb",
+    "phases/p2-gsjso/runs/20260719_boundary_map_v3/fm_dense_progress.json": "f994ce2004baedd773ea568eb813a0189431b7f7294b137ba5a128169d032b8a",
+    "phases/p2-gsjso/runs/20260719_boundary_map_v3/fm_dense_manifest.json": "624f4ed1fea6c43e5f90b730ff91ab01fa5968730a6b3a96b9189cf19be33278"
+  },
+  "learning_runs_started": 0,
+  "new_inference_type": "R1prime-3_FM_dense_dial_2px",
+  "interpretation_or_verdict": null
+}
