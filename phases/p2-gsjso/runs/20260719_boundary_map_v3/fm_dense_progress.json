@@ -1,0 +1,45 @@
+{
+  "schema": "jointbuildgs.boundary_map_v3.fm_dense.progress.v1",
+  "run_id": "20260719_boundary_map_v3",
+  "updated_utc": "2026-07-19T16:09:53.292695+00:00",
+  "status": "partial",
+  "input_fingerprint": "3af60747ffde1a12a1edd7f17bcca152bbb7b557b06b04233f2f70b8014c0fe0",
+  "max_seconds": 21480.0,
+  "finalization_reserve_seconds": 60.0,
+  "elapsed_seconds_this_invocation": 53.89811001345515,
+  "target_building_count": 7,
+  "complete_building_count": 6,
+  "completed_building_ids": [
+    "DEBY_LOD2_4907018",
+    "DEBY_LOD2_4907024",
+    "DEBY_LOD2_4907199",
+    "DEBY_LOD2_4908049",
+    "DEBY_LOD2_4908162",
+    "DEBY_LOD2_8568391"
+  ],
+  "incomplete_building_count": 1,
+  "incomplete_building_ids": [
+    "DEBY_LOD2_4908169"
+  ],
+  "target_pair_count": 63,
+  "complete_or_excluded_pair_count": 63,
+  "failed_pair_count": 0,
+  "prerequisite_missing_pair_count": 0,
+  "pending_pair_count": 0,
+  "new_mast3r_inference_runs": 63,
+  "cache_reuse_runs": 0,
+  "active": null,
+  "incomplete_buildings": [
+    {
+      "building_id": "DEBY_LOD2_4908169",
+      "status": "ineligible_no_summary_pair",
+      "failed_pair_count": 0,
+      "pending_pair_count": 0,
+      "elapsed_seconds": 6.672020035795867,
+      "elapsed_seconds_this_invocation": 7.322380214929581,
+      "failure_reason": "eligible_nondegenerate_completed_pairs=0"
+    }
+  ],
+  "learning_runs_started": 0,
+  "new_inference_type": "R1prime-3_FM_dense_dial_2px"
+}
