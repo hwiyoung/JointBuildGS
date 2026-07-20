@@ -1,0 +1,341 @@
+{
+  "schema": "jointbuildgs.boundary_map_v4.v1",
+  "created_utc": "2026-07-20T07:34:08.274426+00:00",
+  "status": "complete_with_unmeasurable",
+  "git_head_at_finalize": "c636c1804ae2b91882f56bf077fc2f9228dcd149",
+  "branch": "exp/3b-surface-restore-corrected",
+  "population": {
+    "canonical_count": 178,
+    "dense_assembled_count": 114,
+    "dense_failure_count": 64,
+    "small_lt50_count": 37,
+    "nonsmall_count": 141
+  },
+  "cell_labels": [
+    "cell_1_assembled",
+    "cell_2_anchored",
+    "cell_3_outline_only",
+    "cell_4_beyond_image"
+  ],
+  "assignment_rule": {
+    "cell_1_assembled": "dense_assembled=true",
+    "cell_2_anchored": "dense failure and measured footprint-inside count>=1",
+    "cell_3_outline_only": "dense failure and no measured anchor assignment and outline_observable=true",
+    "cell_4_beyond_image": "dense failure and no measured anchor assignment and outline_observable=false",
+    "unmeasurable": "anchor_status=unmeasurable; assign cell_3 or cell_4 only from outline_observable; add 앵커 미판정 sticker",
+    "incomplete_budget": "assign cell_3 or cell_4 only from outline_observable; add 앵커 미완 sticker",
+    "anchor_count_threshold": 1,
+    "anchor_mad_threshold": "not preregistered; recorded only",
+    "outline_observable": "representative_view_count>=2 and outline_inframe_frac_max>0 and outline_valid_pixel_count_max>=3",
+    "texture_signal": "descriptive only; not an assignment input"
+  },
+  "legacy_v1_2_label_reference": {
+    "cell_1_assembled": "well-textured",
+    "cell_2_anchored": "textureless, correspondence-anchored",
+    "cell_3_outline_only": "outline-only",
+    "cell_4_beyond_image": "unobservable"
+  },
+  "cell_counts": {
+    "cell_1_assembled": {
+      "all": 114,
+      "small_lt50": 19,
+      "nonsmall": 95
+    },
+    "cell_2_anchored": {
+      "all": 18,
+      "small_lt50": 4,
+      "nonsmall": 14
+    },
+    "cell_3_outline_only": {
+      "all": 46,
+      "small_lt50": 14,
+      "nonsmall": 32
+    },
+    "cell_4_beyond_image": {
+      "all": 0,
+      "small_lt50": 0,
+      "nonsmall": 0
+    }
+  },
+  "cell_2_buildings": [
+    {
+      "building_id": "DEBY_LOD2_104586480",
+      "inside_count": 3364,
+      "inside_z_mad_m": 0.071273,
+      "ref_roof_type": "horizontal",
+      "ref_roof_slope_group": "horizontal",
+      "small_lt50": true
+    },
+    {
+      "building_id": "DEBY_LOD2_107802038",
+      "inside_count": 4,
+      "inside_z_mad_m": 0.127067,
+      "ref_roof_type": "slanted",
+      "ref_roof_slope_group": "sloped",
+      "small_lt50": false
+    },
+    {
+      "building_id": "DEBY_LOD2_107807336",
+      "inside_count": 22,
+      "inside_z_mad_m": 0.740816,
+      "ref_roof_type": "slanted",
+      "ref_roof_slope_group": "sloped",
+      "small_lt50": false
+    },
+    {
+      "building_id": "DEBY_LOD2_42364659",
+      "inside_count": 5062,
+      "inside_z_mad_m": 0.510582,
+      "ref_roof_type": "slanted",
+      "ref_roof_slope_group": "sloped",
+      "small_lt50": false
+    },
+    {
+      "building_id": "DEBY_LOD2_4907013",
+      "inside_count": 202,
+      "inside_z_mad_m": 0.690746,
+      "ref_roof_type": "slanted",
+      "ref_roof_slope_group": "sloped",
+      "small_lt50": false
+    },
+    {
+      "building_id": "DEBY_LOD2_4907032",
+      "inside_count": 319,
+      "inside_z_mad_m": 0.785923,
+      "ref_roof_type": "slanted",
+      "ref_roof_slope_group": "sloped",
+      "small_lt50": false
+    },
+    {
+      "building_id": "DEBY_LOD2_4907033",
+      "inside_count": 355,
+      "inside_z_mad_m": 1.377241,
+      "ref_roof_type": "slanted",
+      "ref_roof_slope_group": "sloped",
+      "small_lt50": false
+    },
+    {
+      "building_id": "DEBY_LOD2_4907034",
+      "inside_count": 41,
+      "inside_z_mad_m": 0.529169,
+      "ref_roof_type": "slanted",
+      "ref_roof_slope_group": "sloped",
+      "small_lt50": false
+    },
+    {
+      "building_id": "DEBY_LOD2_4907036",
+      "inside_count": 403,
+      "inside_z_mad_m": 1.729978,
+      "ref_roof_type": "slanted",
+      "ref_roof_slope_group": "sloped",
+      "small_lt50": false
+    },
+    {
+      "building_id": "DEBY_LOD2_4907167",
+      "inside_count": 2688,
+      "inside_z_mad_m": 1.270808,
+      "ref_roof_type": "slanted",
+      "ref_roof_slope_group": "sloped",
+      "small_lt50": false
+    },
+    {
+      "building_id": "DEBY_LOD2_4907169",
+      "inside_count": 156,
+      "inside_z_mad_m": 1.95408,
+      "ref_roof_type": "slanted",
+      "ref_roof_slope_group": "sloped",
+      "small_lt50": false
+    },
+    {
+      "building_id": "DEBY_LOD2_4907199",
+      "inside_count": 373,
+      "inside_z_mad_m": 0.022915,
+      "ref_roof_type": "horizontal",
+      "ref_roof_slope_group": "horizontal",
+      "small_lt50": false
+    },
+    {
+      "building_id": "DEBY_LOD2_4907508",
+      "inside_count": 156,
+      "inside_z_mad_m": 1.228451,
+      "ref_roof_type": "multiple horizontal",
+      "ref_roof_slope_group": "horizontal",
+      "small_lt50": false
+    },
+    {
+      "building_id": "DEBY_LOD2_4908048",
+      "inside_count": 1379,
+      "inside_z_mad_m": 0.03924,
+      "ref_roof_type": "multiple horizontal",
+      "ref_roof_slope_group": "horizontal",
+      "small_lt50": false
+    },
+    {
+      "building_id": "DEBY_LOD2_4908049",
+      "inside_count": 966,
+      "inside_z_mad_m": 0.035898,
+      "ref_roof_type": "horizontal",
+      "ref_roof_slope_group": "horizontal",
+      "small_lt50": true
+    },
+    {
+      "building_id": "DEBY_LOD2_4908176",
+      "inside_count": 6012,
+      "inside_z_mad_m": 0.149244,
+      "ref_roof_type": "slanted",
+      "ref_roof_slope_group": "sloped",
+      "small_lt50": true
+    },
+    {
+      "building_id": "DEBY_LOD2_8568391",
+      "inside_count": 456,
+      "inside_z_mad_m": 0.032179,
+      "ref_roof_type": "slanted",
+      "ref_roof_slope_group": "sloped",
+      "small_lt50": false
+    },
+    {
+      "building_id": "DEBY_LOD2_8568392",
+      "inside_count": 6,
+      "inside_z_mad_m": 0.069191,
+      "ref_roof_type": "slanted",
+      "ref_roof_slope_group": "sloped",
+      "small_lt50": true
+    }
+  ],
+  "cell_2_ref_roof_slope_counts": {
+    "horizontal": 5,
+    "sloped": 13
+  },
+  "ambiguous_lowcount_1_99": [
+    {
+      "building_id": "DEBY_LOD2_107802038",
+      "inside_count": 4,
+      "inside_z_mad_m": 0.127067
+    },
+    {
+      "building_id": "DEBY_LOD2_107807336",
+      "inside_count": 22,
+      "inside_z_mad_m": 0.740816
+    },
+    {
+      "building_id": "DEBY_LOD2_4907034",
+      "inside_count": 41,
+      "inside_z_mad_m": 0.529169
+    },
+    {
+      "building_id": "DEBY_LOD2_8568392",
+      "inside_count": 6,
+      "inside_z_mad_m": 0.069191
+    }
+  ],
+  "ambiguous_precedent": "8568392=6 points; 2026-07-15 review recorded n<20 material insufficient",
+  "high_count_high_mad": [
+    {
+      "building_id": "DEBY_LOD2_42364659",
+      "inside_count": 5062,
+      "inside_z_mad_m": 0.510582
+    },
+    {
+      "building_id": "DEBY_LOD2_4907013",
+      "inside_count": 202,
+      "inside_z_mad_m": 0.690746
+    },
+    {
+      "building_id": "DEBY_LOD2_4907032",
+      "inside_count": 319,
+      "inside_z_mad_m": 0.785923
+    },
+    {
+      "building_id": "DEBY_LOD2_4907033",
+      "inside_count": 355,
+      "inside_z_mad_m": 1.377241
+    },
+    {
+      "building_id": "DEBY_LOD2_4907036",
+      "inside_count": 403,
+      "inside_z_mad_m": 1.729978
+    },
+    {
+      "building_id": "DEBY_LOD2_4907167",
+      "inside_count": 2688,
+      "inside_z_mad_m": 1.270808
+    },
+    {
+      "building_id": "DEBY_LOD2_4907169",
+      "inside_count": 156,
+      "inside_z_mad_m": 1.95408
+    },
+    {
+      "building_id": "DEBY_LOD2_4907508",
+      "inside_count": 156,
+      "inside_z_mad_m": 1.228451
+    }
+  ],
+  "inside_count_distribution": {
+    "zero": 37,
+    "one_to_99": 4,
+    "hundred_or_more": 14,
+    "unmeasurable": 9,
+    "incomplete_budget": 0
+  },
+  "override_records": {
+    "DEBY_LOD2_4907199": {
+      "inside_count": 373,
+      "inside_z_mad_m": 0.022915,
+      "cell_label": "cell_2_anchored",
+      "source": "B-1 measured flat-seed evidence",
+      "effect_on_cell": "none; measured formula also yields cell_2_anchored"
+    },
+    "DEBY_LOD2_8568391": {
+      "inside_count": 456,
+      "inside_z_mad_m": 0.032179,
+      "cell_label": "cell_2_anchored",
+      "source": "B-1 measured flat-seed evidence",
+      "effect_on_cell": "none; measured formula also yields cell_2_anchored"
+    }
+  },
+  "census_measurement_manifest": "phases/p2-gsjso/runs/20260720_anchor_census/anchor_census_manifest.json",
+  "census_measurement_manifest_sha256": "38664bdf33a2b2b0a9710375a74b745ca9e90362ab7606e2359e097eaf72c7df",
+  "source_sha256": {
+    "docs/regression_input_snapshot.csv": "3cabed76b37625fdf8f9a72ed5c5b1f7c90ba23a839d6f1a61fc3727870cee82",
+    "docs/boundary_map_v3_metrics.csv": "07c7698e71258124d491f211d615d49793073a2ed5a32282aa694bb321075a8d",
+    "docs/boundary_map_v3_ladder.csv": "a0e0bee8e3590ebd7ae827386917d0773501c155ad3cdaf2a8dea17526548a6c",
+    "docs/boundary_map_v3_manifest.json": "a7845dd265f871b89d99b005affa6fc14687f635957490c1ec056c8190912ede",
+    "phases/p2-gsjso/scripts/boundary_map_v3.py": "926b0fc989e84b19fb8c0499bddcb519c14840a2f0fc04d2f45f0d6f3eb79d2c",
+    "phases/p2-gsjso/scripts/boundary_map_v3_dense.py": "d1e6f31489c85b196490079c37f536d1daf6c2dcc30149aad402dfdac5553645",
+    "phases/p2-gsjso/scripts/anchor_census_dense.py": "190d1446c63c1dbdbda62705fa5f41e17130cbada230cb62902046eb7c1ad104",
+    "phases/p2-gsjso/scripts/run_anchor_census_20260720.sh": "3f86af1a4f20b3059ecdc0d71395d3cc298639d83f5af2f1b9ecf151f904ca9a",
+    "docs/사전등록서_품질축본선_잠금후보v1.5_20260720.md": "00f60374e3f88c67739b52aa493db59e109bbb14964197150ce8eb022efc1cce",
+    "docs/e5_c001_s3ap_fm_env_manifest.json": "7246a77569a7af1b931ad60eda7012e6e3e8f4ff81b5e10f2e3c1a2efea80d68",
+    "phases/p2-gsjso/configs/e5_c001_s3ap_fm_dense_dial.json": "72d0bef6578b9e5cbe96fb32cbf81802d3a87a92a8da5a6b5b497baba18491c9",
+    "phases/p0-audit/runs/w2_1_roofer_default_20260612_152729/building_reconstruction_status.csv": "4412ee47f8665e1a12663629dd66f9c9612f2e9adca54be38c188f2bc521a9b6",
+    "phases/p2-gsjso/runs/20260719_boundary_map_v3/fm_dense_measurements.csv": "9de795c8a0495026c1ca2265f3b1e367fe59903acead200d32f0f5bdefcf4ccb",
+    "phases/p2-gsjso/runs/20260719_boundary_map_v3/fm_dense_manifest.json": "624f4ed1fea6c43e5f90b730ff91ab01fa5968730a6b3a96b9189cf19be33278",
+    "docs/e5_c001_s3ap_fm_dense_dial.csv": "5a743961cd58dc099dce3200a2465d0838dc9b4dce4f59fb787769064d4a9a26",
+    "phases/p2-gsjso/runs/20260720_anchor_census/anchor_census_jobs.json": "8275751d32fb37ed9a4c68f938a62935647a551c8943fda5cd0443d93e70afd0",
+    "phases/p2-gsjso/runs/20260720_anchor_census/anchor_census_prepare_manifest.json": "5e57063c9fc93c1a0d73a0f6ae20940b165ffdc78a6467105c026379b6cf3015",
+    "phases/p2-gsjso/runs/20260720_anchor_census/anchor_census_inference_measurements.csv": "e83d0b56366b1a6c6cee25151687b48e44b1664d3a6ba33afa9dd1aa6bc038b5",
+    "phases/p2-gsjso/runs/20260720_anchor_census/anchor_census_pairs.csv": "96f172b5e72e80586a4f24520407282724993ffca2d9de623e49927b500eef42",
+    "phases/p2-gsjso/runs/20260720_anchor_census/anchor_census_progress.json": "5474c39209a0ecbe1c7ce3902241dfbfc9eba75ee768bc68b1f87af99bd0beed",
+    "phases/p2-gsjso/runs/20260720_anchor_census/anchor_census_inference_manifest.json": "eae6320dd69f84ad015c07d51aa774948f96adf271741acce1e7f2fe28d11710",
+    "phases/p2-gsjso/scripts/anchor_census.py": "2b4b0d41b8cdc94acc59d06404db873dfda6f0df2b7ea6558227136c4785c5dc",
+    "phases/p2-gsjso/runs/20260720_anchor_census/anchor_census_measurements.csv": "7f718bf4eac60e997edd02788b6945003470f6185af197197d837660c392f64a",
+    "phases/p2-gsjso/runs/20260720_anchor_census/anchor_census_manifest.json": "38664bdf33a2b2b0a9710375a74b745ca9e90362ab7606e2359e097eaf72c7df"
+  },
+  "output_sha256": {
+    "docs/anchor_census_measurements.csv": "7f718bf4eac60e997edd02788b6945003470f6185af197197d837660c392f64a",
+    "docs/boundary_map_v4_ladder.csv": "e2ac47e5fdb6dca715e53b8081e43cb73c6251070761da7d1bf14ea512988d57",
+    "docs/boundary_map_v4_targets.csv": "4e784bf3490206e51e8e0b54ec37c1e974aab4f20a6ec19737f216f024f38248",
+    "docs/anchor_census_ambiguous_1_99.csv": "a1209853eedb71bf8385f2c99a3b0a30b519d6aac04658353a53d5c21748b2c4",
+    "docs/anchor_census_high_count_high_mad.csv": "abd01bbacd671d0543827287ca286ebf90fc38a3d5c92e80b3012255bc8ff576",
+    "docs/figs/boundary_map_v4/boundary_map_v4_map.png": "f4b3cb0fbc4c4ce0fadb22a07d6eca84b9979d5e40f1c803ff41e9dc3284b431",
+    "docs/W_anchor_census_boundary_map_v4_summary_20260720.md": "383749a4cd9fa53830b402a622928622cd9609a195a63d616e676cec6e6af8cd"
+  },
+  "learning_runs_started": 0,
+  "new_inference_allowlist": [
+    "census_FM_dense_dial_2px_only"
+  ],
+  "reference_lod2_role": "projection and classification only",
+  "interpretation_or_verdict": null
+}
