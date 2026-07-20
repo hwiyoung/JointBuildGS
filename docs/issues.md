@@ -92,25 +92,7 @@
 - 2026-07-20 01:33:38 R1P-QA commit ledger: correction_commit=37e2e9a5ca846ff03ca29cc1484dfa059c321afd; refreshed_artifact_commit=1995494236ebfefb9f64af522c36eb4f21990111; first_measurement_commit=0f5d158b6e359f29d104abd14ff34b3840c7f560; recovery_measurement_commit=e3241fca496efd74f444a7f3239fb32e1a3fd5e4; learning_runs_started=0; allowed_new_inference=R1prime-3_FM_dense_dial_2px_only
 - 2026-07-20 16:21:00 AC-PREP census inventory complete: canonical=178; dense_failure=64; previously_measured=6; fixed_census=58 (nonsmall=43, small_lt50=15); jobs=58; pairs=580; jobs_sha256=8275751d32fb37ed9a4c68f938a62935647a551c8943fda5cd0443d93e70afd0; prepare_manifest_sha256=d10f5f2c5057faf14569235f39a3b8a11864a74de1b7837f7125e3f2f067bf6a; C001 108247350/108247351 have no frozen semantic-region address and use the unchanged R1prime projected-footprint FULL_OPENCV branch (LoD2 projection/classification only); learning_runs_started=0; new_inference_runs=0; allowed_new_inference=census_FM_dense_dial_2px_only.
 - 2026-07-20 16:24:32 AC-PREP preflight recovery: first detached invocation stopped before GPU inference because quoted Korean untracked paths did not match the preserved-draft allowlist; Git status now uses core.quotePath=false, ordered jobs remain byte-identical (sha256=8275751d32fb37ed9a4c68f938a62935647a551c8943fda5cd0443d93e70afd0), refreshed prepare_manifest_sha256=5e57063c9fc93c1a0d73a0f6ae20940b165ffdc78a6467105c026379b6cf3015; learning_runs_started=0; new_inference_runs=0.
-- 2026-07-20 16:34:02 AC-C2 measurement recorded: census_rows=58; pairs=580; pending_buildings=
-==========
-== CUDA ==
-==========
-
-CUDA Version 12.1.1
-
-Container image Copyright (c) 2016-2023, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
-
-This container image and its contents are governed by the NVIDIA Deep Learning Container License.
-By pulling and using the container, you accept the terms and conditions of this license:
-https://developer.nvidia.com/ngc/nvidia-deep-learning-container-license
-
-A copy of this license is made available in this container at /NGC-DL-CONTAINER-LICENSE for your convenience.
-
-WARNING: The NVIDIA Driver was not detected.  GPU functionality will not be available.
-   Use the NVIDIA Container Toolkit to start this container with GPU support; see
-   https://docs.nvidia.com/datacenter/cloud-native/ .
-
-0; measurements_sha256=e83d0b56366b1a6c6cee25151687b48e44b1664d3a6ba33afa9dd1aa6bc038b5; pairs_sha256=96f172b5e72e80586a4f24520407282724993ffca2d9de623e49927b500eef42; progress_sha256=5474c39209a0ecbe1c7ce3902241dfbfc9eba75ee768bc68b1f87af99bd0beed; inference_manifest_sha256=eae6320dd69f84ad015c07d51aa774948f96adf271741acce1e7f2fe28d11710; learning_runs_started=0; new_inference_allowlist=census_FM_dense_dial_2px_only.
+- 2026-07-20 16:34:02 AC-C2 measurement recorded: census_rows=58; pairs=580; pending_buildings=0; measurements_sha256=e83d0b56366b1a6c6cee25151687b48e44b1664d3a6ba33afa9dd1aa6bc038b5; pairs_sha256=96f172b5e72e80586a4f24520407282724993ffca2d9de623e49927b500eef42; progress_sha256=5474c39209a0ecbe1c7ce3902241dfbfc9eba75ee768bc68b1f87af99bd0beed; inference_manifest_sha256=eae6320dd69f84ad015c07d51aa774948f96adf271741acce1e7f2fe28d11710; learning_runs_started=0; new_inference_allowlist=census_FM_dense_dial_2px_only.
 - 2026-07-20 16:34:09 AC-C3 boundary_map_v4 recorded: measurements_sha256=7f718bf4eac60e997edd02788b6945003470f6185af197197d837660c392f64a; run_manifest_sha256=38664bdf33a2b2b0a9710375a74b745ca9e90362ab7606e2359e097eaf72c7df; ladder_sha256=e2ac47e5fdb6dca715e53b8081e43cb73c6251070761da7d1bf14ea512988d57; targets_sha256=4e784bf3490206e51e8e0b54ec37c1e974aab4f20a6ec19737f216f024f38248; lowcount_sha256=a1209853eedb71bf8385f2c99a3b0a30b519d6aac04658353a53d5c21748b2c4; highmad_sha256=abd01bbacd671d0543827287ca286ebf90fc38a3d5c92e80b3012255bc8ff576; public_manifest_sha256=eff0d85e02a9ed47b84891359b18659276ec3dcfc4c9a17a74770473edfdf2d7; figure_sha256=f4b3cb0fbc4c4ce0fadb22a07d6eca84b9979d5e40f1c803ff41e9dc3284b431; summary_sha256=383749a4cd9fa53830b402a622928622cd9609a195a63d616e676cec6e6af8cd; learning_runs_started=0.
 - 2026-07-20 16:34:13 AC-20260720 commit ledger: prep_commit=6a30748dbdf1d561df9441c38aadc21f696546d7; measurement_commit=c636c1804ae2b91882f56bf077fc2f9228dcd149; public_commit=2cd9e9dd14b58c8b6ca70d8a1d9a074eab4004eb; learning_runs_started=0; allowed_new_inference=census_FM_dense_dial_2px_only.
+- 2026-07-20 16:37:08 AC-QA ledger: driver_ledger_commit=fb1551cdad7c00b92f2ccb000a254380f068c0b0; Docker bundle QA passed for measurements=59, ladder=178, targets=64, cells=114/18/46/0, census measured/unmeasurable/incomplete=50/8/0, lowcount=4, highcount_highMAD=8, 4907199 reproduction=538/373/-34.347425 cache reuse, new_inference_pairs=580, learning_runs_started=0; map inspected with four neutral cell colors and small_lt50 hatching; AC-C2 issue entry normalized to one line without changing any artifact payload.
