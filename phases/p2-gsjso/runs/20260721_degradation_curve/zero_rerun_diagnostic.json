@@ -1,0 +1,162 @@
+{
+  "schema": "jointbuildgs.degradation_curve.zero_rerun_diagnostic.v3",
+  "created_utc": "2026-07-20T16:09:33.976964+00:00",
+  "official_zero_stage": false,
+  "command_equivalence": "same pinned Roofer image, default parameters, AOI box, raw ALS directory, and 199-feature footprint GPKG",
+  "jsonl_dir": "/tmp/jbgs_degradation_baseline_roofer",
+  "jsonl_sha256": {
+    "690791_5335864.city.jsonl": "800af03d7909a65dc2cc1a912de10f489aea4f049d5f07c37e6f5844232a81d4"
+  },
+  "population_count": 178,
+  "metric_cell_mismatch_count_tolerance_5e_9": 97,
+  "buildings_with_metric_mismatch": 60,
+  "first_mismatches": [
+    {
+      "building_id": "DEBY_LOD2_107802038",
+      "metric": "roof_rms_m",
+      "observed": 0.10754085152343645,
+      "expected": 0.107495131,
+      "delta": 4.572052343645994e-05
+    },
+    {
+      "building_id": "DEBY_LOD2_108247351",
+      "metric": "roof_rms_m",
+      "observed": 1.0523998574736466,
+      "expected": 1.05239929,
+      "delta": 5.674736465177688e-07
+    },
+    {
+      "building_id": "DEBY_LOD2_108580335",
+      "metric": "roof_rms_m",
+      "observed": 0.7081126367840977,
+      "expected": 0.714275423,
+      "delta": -0.006162786215902272
+    },
+    {
+      "building_id": "DEBY_LOD2_108580335",
+      "metric": "roof_hausdorff_m",
+      "observed": 5.295656578870535,
+      "expected": 5.295667936,
+      "delta": -1.1357129465316973e-05
+    },
+    {
+      "building_id": "DEBY_LOD2_108580336",
+      "metric": "roof_rms_m",
+      "observed": 1.226200830808285,
+      "expected": 1.238246606,
+      "delta": -0.012045775191714903
+    },
+    {
+      "building_id": "DEBY_LOD2_4906965",
+      "metric": "roof_rms_m",
+      "observed": 2.2250946904867863,
+      "expected": 2.223594647,
+      "delta": 0.001500043486786229
+    },
+    {
+      "building_id": "DEBY_LOD2_4906965",
+      "metric": "roof_completeness",
+      "observed": 0.9998799549867394,
+      "expected": 0.999879731,
+      "delta": 2.2398673937829017e-07
+    },
+    {
+      "building_id": "DEBY_LOD2_4906966",
+      "metric": "roof_rms_m",
+      "observed": 0.7334099377990584,
+      "expected": 0.740872946,
+      "delta": -0.00746300820094159
+    },
+    {
+      "building_id": "DEBY_LOD2_4906967",
+      "metric": "roof_rms_m",
+      "observed": 2.30035767272623,
+      "expected": 2.333594217,
+      "delta": -0.0332365442737701
+    },
+    {
+      "building_id": "DEBY_LOD2_4906968",
+      "metric": "roof_rms_m",
+      "observed": 3.7434660599700513,
+      "expected": 3.669403021,
+      "delta": 0.0740630389700514
+    },
+    {
+      "building_id": "DEBY_LOD2_4906968",
+      "metric": "roof_completeness",
+      "observed": 0.9999175100620322,
+      "expected": 0.999917112,
+      "delta": 3.980620322252548e-07
+    },
+    {
+      "building_id": "DEBY_LOD2_4906969",
+      "metric": "roof_rms_m",
+      "observed": 1.0595197695317717,
+      "expected": 1.059519736,
+      "delta": 3.353177180365208e-08
+    },
+    {
+      "building_id": "DEBY_LOD2_4906974",
+      "metric": "roof_rms_m",
+      "observed": 0.07289153200874224,
+      "expected": 0.065297888,
+      "delta": 0.00759364400874224
+    },
+    {
+      "building_id": "DEBY_LOD2_4906975",
+      "metric": "roof_rms_m",
+      "observed": 1.7595507916599775,
+      "expected": 1.760478988,
+      "delta": -0.0009281963400225024
+    },
+    {
+      "building_id": "DEBY_LOD2_4906977",
+      "metric": "roof_rms_m",
+      "observed": 0.7745257209290612,
+      "expected": 0.774445897,
+      "delta": 7.982392906125124e-05
+    },
+    {
+      "building_id": "DEBY_LOD2_4906977",
+      "metric": "roof_hausdorff_m",
+      "observed": 5.92494222648088,
+      "expected": 5.92492317,
+      "delta": 1.9056480880408344e-05
+    },
+    {
+      "building_id": "DEBY_LOD2_4906981",
+      "metric": "roof_rms_m",
+      "observed": 1.0141374956014064,
+      "expected": 1.026703059,
+      "delta": -0.012565563398593493
+    },
+    {
+      "building_id": "DEBY_LOD2_4906981",
+      "metric": "roof_hausdorff_m",
+      "observed": 3.03014119110685,
+      "expected": 3.036071443,
+      "delta": -0.005930251893150107
+    },
+    {
+      "building_id": "DEBY_LOD2_4906982",
+      "metric": "roof_rms_m",
+      "observed": 1.5242586873998007,
+      "expected": 1.52480131,
+      "delta": -0.0005426226001992163
+    },
+    {
+      "building_id": "DEBY_LOD2_4906982",
+      "metric": "roof_hausdorff_m",
+      "observed": 24.588514755865617,
+      "expected": 24.588942698,
+      "delta": -0.0004279421343831302
+    }
+  ],
+  "accepted_roof_rms_median_m": 0.42130392250000004,
+  "rerun_roof_rms_median_m": 0.42008413404153566,
+  "rerun_minus_accepted_roof_rms_median_m": -0.001219788458464377,
+  "rerun_pilot10_roof_rms_median_m": 0.33737314532974877,
+  "record_role": "preflight reproducibility observation; accepted frozen artifact remains the official hard-stop zero stage",
+  "learning_runs_started": 0,
+  "new_inference_runs": 0
+}
