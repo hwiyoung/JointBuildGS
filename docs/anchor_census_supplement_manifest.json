@@ -1,0 +1,589 @@
+{
+  "schema": "jointbuildgs.anchor_census_supplement.boundary_map_v4_1.v1",
+  "created_utc": "2026-07-20T11:57:18.196923+00:00",
+  "status": "complete",
+  "branch": "exp/3b-surface-restore-corrected",
+  "git_head_at_finalize": "99a7029670d04ca7f33eb3a36e1e05b714e0cef7",
+  "scope": "fixed nine unmeasurable anchor rows; cache-only same-minute-block re-pooling plus one original-rule reproduction row",
+  "set_validation": {
+    "boundary_map_v4_unmeasurable_count": 9,
+    "fixed_target_count": 9,
+    "derived_equals_fixed": true,
+    "fixed_target_ids": [
+      "DEBY_LOD2_42364609",
+      "DEBY_LOD2_4907031",
+      "DEBY_LOD2_4907510",
+      "DEBY_LOD2_4908051",
+      "DEBY_LOD2_4908052",
+      "DEBY_LOD2_4908054",
+      "DEBY_LOD2_4908166",
+      "DEBY_LOD2_4908167",
+      "DEBY_LOD2_4908169"
+    ],
+    "fixed_target_set_sha256": "42d701a44fae609e002859e0476bfda38ed5a251cc754d19aa497e4e7c274543",
+    "dense_failure_count": 64,
+    "untouched_dense_failure_count": 55,
+    "arithmetic_check": "64-9=55",
+    "scope_rule": "only the fixed nine unmeasurable rows may be re-pooled and mechanically reassigned; the other 55 dense-failure rows remain unchanged, except the read-only 104586480 reproduction check"
+  },
+  "source_address_validation": {
+    "census_target_count": 8,
+    "census_pair_count": 80,
+    "census_source": "phases/p2-gsjso/runs/20260720_anchor_census/anchor_census_pairs.csv",
+    "R1prime_target_count": 1,
+    "R1prime_pair_count": 10,
+    "R1prime_source": "phases/p2-gsjso/runs/20260719_boundary_map_v3/fm_dense_pairs.csv",
+    "address_replacement_count": 0,
+    "all_target_pair_relations": "same_acquisition_minute_block"
+  },
+  "only_changed_measurement_rule": "remove cross-acquisition-minute-block requirement; retain fixed-camera-centre baseline >0.06m, finite positive-depth DLT, and <=2.0 source-pixel reprojection error",
+  "assignment_rule": {
+    "cell_1_assembled": "dense_assembled=true",
+    "cell_2_anchored": "dense failure and measured footprint-inside count>=1; same-block supplement rows retain low_independence",
+    "cell_3_outline_only": "dense failure and measured footprint-inside count=0 with outline_observable=true, or unmeasurable with outline",
+    "cell_4_beyond_image": "dense failure and no measured anchor assignment and outline_observable=false"
+  },
+  "ladder_invariance": {
+    "old_field_names": [
+      "building_id",
+      "population_scope",
+      "dense_assembled",
+      "dense_status_source",
+      "footprint_area_m2",
+      "small_lt50",
+      "anchor_status",
+      "anchor_measurement_source",
+      "anchor_measurement_lineage",
+      "anchor_selected_dlt_point_count",
+      "anchor_footprint_inside_point_count",
+      "anchor_inside_z_median_m",
+      "anchor_inside_z_mad_m",
+      "anchor_coverage_ratio",
+      "anchor_selected_pair_count",
+      "anchor_completed_pair_count",
+      "anchor_eligible_pair_count",
+      "anchor_zero_observed",
+      "anchor_undecided_sticker",
+      "anchor_count_threshold",
+      "anchor_mad_threshold_status",
+      "outline_observable",
+      "outline_representative_view_count",
+      "outline_inframe_frac_max",
+      "outline_valid_pixel_count_max",
+      "outline_definition_source",
+      "cell_label",
+      "cell_assignment_basis",
+      "legacy_v1_2_label_reference",
+      "ref_roof_type",
+      "ref_roof_slope_group",
+      "ref_roof_type_source",
+      "ref_roof_type_role",
+      "override_recorded",
+      "override_source",
+      "override_inside_count",
+      "override_effect_on_cell",
+      "texture_low_gradient_fraction",
+      "texture_grad_p10",
+      "texture_signal_role",
+      "crs",
+      "learning_runs_started",
+      "new_inference_type"
+    ],
+    "new_field_names": [
+      "same_block_only",
+      "pair_independence",
+      "low_independence",
+      "supplement_measurement_source",
+      "supplement_measurement_lineage",
+      "supplement_cache_reuse_runs",
+      "supplement_new_mast3r_inference_runs",
+      "supplement_new_inference_allowlist",
+      "preregister_primary_list_eligible"
+    ],
+    "row_count": 178,
+    "target_rows_allowed_to_change": [
+      "DEBY_LOD2_42364609",
+      "DEBY_LOD2_4907031",
+      "DEBY_LOD2_4907510",
+      "DEBY_LOD2_4908051",
+      "DEBY_LOD2_4908052",
+      "DEBY_LOD2_4908054",
+      "DEBY_LOD2_4908166",
+      "DEBY_LOD2_4908167",
+      "DEBY_LOD2_4908169"
+    ],
+    "target_rows_with_old_field_changes": [
+      "DEBY_LOD2_42364609",
+      "DEBY_LOD2_4907031",
+      "DEBY_LOD2_4907510",
+      "DEBY_LOD2_4908051",
+      "DEBY_LOD2_4908052",
+      "DEBY_LOD2_4908054",
+      "DEBY_LOD2_4908166",
+      "DEBY_LOD2_4908167",
+      "DEBY_LOD2_4908169"
+    ],
+    "non_target_rows_old_fields_value_identical": 169,
+    "untouched_dense_failure_rows": 55,
+    "reproduction_building_ladder_value_unchanged": true,
+    "changed_old_fields_by_target": {
+      "DEBY_LOD2_42364609": [
+        "anchor_status",
+        "anchor_measurement_source",
+        "anchor_measurement_lineage",
+        "anchor_selected_dlt_point_count",
+        "anchor_footprint_inside_point_count",
+        "anchor_inside_z_median_m",
+        "anchor_inside_z_mad_m",
+        "anchor_coverage_ratio",
+        "anchor_eligible_pair_count",
+        "anchor_zero_observed",
+        "anchor_undecided_sticker",
+        "cell_label",
+        "cell_assignment_basis",
+        "new_inference_type"
+      ],
+      "DEBY_LOD2_4907031": [
+        "anchor_status",
+        "anchor_measurement_source",
+        "anchor_measurement_lineage",
+        "anchor_selected_dlt_point_count",
+        "anchor_eligible_pair_count",
+        "anchor_zero_observed",
+        "anchor_undecided_sticker",
+        "cell_assignment_basis",
+        "new_inference_type"
+      ],
+      "DEBY_LOD2_4907510": [
+        "anchor_status",
+        "anchor_measurement_source",
+        "anchor_measurement_lineage",
+        "anchor_selected_dlt_point_count",
+        "anchor_footprint_inside_point_count",
+        "anchor_inside_z_median_m",
+        "anchor_inside_z_mad_m",
+        "anchor_coverage_ratio",
+        "anchor_eligible_pair_count",
+        "anchor_zero_observed",
+        "anchor_undecided_sticker",
+        "cell_label",
+        "cell_assignment_basis",
+        "new_inference_type"
+      ],
+      "DEBY_LOD2_4908051": [
+        "anchor_status",
+        "anchor_measurement_source",
+        "anchor_measurement_lineage",
+        "anchor_selected_dlt_point_count",
+        "anchor_eligible_pair_count",
+        "anchor_zero_observed",
+        "anchor_undecided_sticker",
+        "cell_assignment_basis",
+        "new_inference_type"
+      ],
+      "DEBY_LOD2_4908052": [
+        "anchor_status",
+        "anchor_measurement_source",
+        "anchor_measurement_lineage",
+        "anchor_selected_dlt_point_count",
+        "anchor_eligible_pair_count",
+        "anchor_zero_observed",
+        "anchor_undecided_sticker",
+        "cell_assignment_basis",
+        "new_inference_type"
+      ],
+      "DEBY_LOD2_4908054": [
+        "anchor_status",
+        "anchor_measurement_source",
+        "anchor_measurement_lineage",
+        "anchor_selected_dlt_point_count",
+        "anchor_eligible_pair_count",
+        "anchor_zero_observed",
+        "anchor_undecided_sticker",
+        "cell_assignment_basis",
+        "new_inference_type"
+      ],
+      "DEBY_LOD2_4908166": [
+        "anchor_status",
+        "anchor_measurement_source",
+        "anchor_measurement_lineage",
+        "anchor_selected_dlt_point_count",
+        "anchor_footprint_inside_point_count",
+        "anchor_inside_z_median_m",
+        "anchor_inside_z_mad_m",
+        "anchor_coverage_ratio",
+        "anchor_eligible_pair_count",
+        "anchor_zero_observed",
+        "anchor_undecided_sticker",
+        "cell_label",
+        "cell_assignment_basis",
+        "new_inference_type"
+      ],
+      "DEBY_LOD2_4908167": [
+        "anchor_status",
+        "anchor_measurement_source",
+        "anchor_measurement_lineage",
+        "anchor_selected_dlt_point_count",
+        "anchor_footprint_inside_point_count",
+        "anchor_inside_z_median_m",
+        "anchor_inside_z_mad_m",
+        "anchor_coverage_ratio",
+        "anchor_eligible_pair_count",
+        "anchor_zero_observed",
+        "anchor_undecided_sticker",
+        "cell_label",
+        "cell_assignment_basis",
+        "new_inference_type"
+      ],
+      "DEBY_LOD2_4908169": [
+        "anchor_status",
+        "anchor_measurement_source",
+        "anchor_measurement_lineage",
+        "anchor_selected_dlt_point_count",
+        "anchor_footprint_inside_point_count",
+        "anchor_inside_z_median_m",
+        "anchor_inside_z_mad_m",
+        "anchor_coverage_ratio",
+        "anchor_eligible_pair_count",
+        "anchor_zero_observed",
+        "anchor_undecided_sticker",
+        "cell_label",
+        "cell_assignment_basis",
+        "new_inference_type"
+      ]
+    },
+    "old_cell_counts": {
+      "cell_1_assembled": 114,
+      "cell_2_anchored": 18,
+      "cell_3_outline_only": 46,
+      "cell_4_beyond_image": 0
+    },
+    "new_cell_counts": {
+      "cell_1_assembled": 114,
+      "cell_2_anchored": 23,
+      "cell_3_outline_only": 41,
+      "cell_4_beyond_image": 0
+    },
+    "old_cell_counts_small_split": {
+      "cell_1_assembled": {
+        "total": 114,
+        "nonsmall": 95,
+        "small_lt50": 19
+      },
+      "cell_2_anchored": {
+        "total": 18,
+        "nonsmall": 14,
+        "small_lt50": 4
+      },
+      "cell_3_outline_only": {
+        "total": 46,
+        "nonsmall": 32,
+        "small_lt50": 14
+      },
+      "cell_4_beyond_image": {
+        "total": 0,
+        "nonsmall": 0,
+        "small_lt50": 0
+      }
+    },
+    "new_cell_counts_small_split": {
+      "cell_1_assembled": {
+        "total": 114,
+        "nonsmall": 95,
+        "small_lt50": 19
+      },
+      "cell_2_anchored": {
+        "total": 23,
+        "nonsmall": 15,
+        "small_lt50": 8
+      },
+      "cell_3_outline_only": {
+        "total": 41,
+        "nonsmall": 31,
+        "small_lt50": 10
+      },
+      "cell_4_beyond_image": {
+        "total": 0,
+        "nonsmall": 0,
+        "small_lt50": 0
+      }
+    }
+  },
+  "cell_counts": {
+    "cell_1_assembled": 114,
+    "cell_2_anchored": 23,
+    "cell_3_outline_only": 41,
+    "cell_4_beyond_image": 0
+  },
+  "cell_counts_small_split": {
+    "cell_1_assembled": {
+      "total": 114,
+      "nonsmall": 95,
+      "small_lt50": 19
+    },
+    "cell_2_anchored": {
+      "total": 23,
+      "nonsmall": 15,
+      "small_lt50": 8
+    },
+    "cell_3_outline_only": {
+      "total": 41,
+      "nonsmall": 31,
+      "small_lt50": 10
+    },
+    "cell_4_beyond_image": {
+      "total": 0,
+      "nonsmall": 0,
+      "small_lt50": 0
+    }
+  },
+  "target_results": [
+    {
+      "building_id": "DEBY_LOD2_42364609",
+      "status": "complete",
+      "selected_dlt_point_count": 22736,
+      "footprint_inside_point_count": 10811,
+      "inside_z_median_m": -40.8380647964622,
+      "inside_z_mad_m": 0.11084735713547644,
+      "coverage_ratio": 0.9555555555555556,
+      "eligible_pair_count": 10,
+      "cell_before": "cell_3_outline_only",
+      "cell_after": "cell_2_anchored",
+      "same_block_only": true,
+      "pair_independence": "low_same_block"
+    },
+    {
+      "building_id": "DEBY_LOD2_4907031",
+      "status": "complete",
+      "selected_dlt_point_count": 15908,
+      "footprint_inside_point_count": 0,
+      "inside_z_median_m": null,
+      "inside_z_mad_m": null,
+      "coverage_ratio": 0.0,
+      "eligible_pair_count": 10,
+      "cell_before": "cell_3_outline_only",
+      "cell_after": "cell_3_outline_only",
+      "same_block_only": true,
+      "pair_independence": "low_same_block"
+    },
+    {
+      "building_id": "DEBY_LOD2_4907510",
+      "status": "complete",
+      "selected_dlt_point_count": 25062,
+      "footprint_inside_point_count": 12312,
+      "inside_z_median_m": -43.424648760625004,
+      "inside_z_mad_m": 0.32926010890892954,
+      "coverage_ratio": 0.9742173112338858,
+      "eligible_pair_count": 10,
+      "cell_before": "cell_3_outline_only",
+      "cell_after": "cell_2_anchored",
+      "same_block_only": true,
+      "pair_independence": "low_same_block"
+    },
+    {
+      "building_id": "DEBY_LOD2_4908051",
+      "status": "complete",
+      "selected_dlt_point_count": 6153,
+      "footprint_inside_point_count": 0,
+      "inside_z_median_m": null,
+      "inside_z_mad_m": null,
+      "coverage_ratio": 0.0,
+      "eligible_pair_count": 10,
+      "cell_before": "cell_3_outline_only",
+      "cell_after": "cell_3_outline_only",
+      "same_block_only": true,
+      "pair_independence": "low_same_block"
+    },
+    {
+      "building_id": "DEBY_LOD2_4908052",
+      "status": "complete",
+      "selected_dlt_point_count": 9978,
+      "footprint_inside_point_count": 0,
+      "inside_z_median_m": null,
+      "inside_z_mad_m": null,
+      "coverage_ratio": 0.0,
+      "eligible_pair_count": 10,
+      "cell_before": "cell_3_outline_only",
+      "cell_after": "cell_3_outline_only",
+      "same_block_only": true,
+      "pair_independence": "low_same_block"
+    },
+    {
+      "building_id": "DEBY_LOD2_4908054",
+      "status": "complete",
+      "selected_dlt_point_count": 3744,
+      "footprint_inside_point_count": 0,
+      "inside_z_median_m": null,
+      "inside_z_mad_m": null,
+      "coverage_ratio": 0.0,
+      "eligible_pair_count": 10,
+      "cell_before": "cell_3_outline_only",
+      "cell_after": "cell_3_outline_only",
+      "same_block_only": true,
+      "pair_independence": "low_same_block"
+    },
+    {
+      "building_id": "DEBY_LOD2_4908166",
+      "status": "complete",
+      "selected_dlt_point_count": 19240,
+      "footprint_inside_point_count": 7273,
+      "inside_z_median_m": -41.22457260953622,
+      "inside_z_mad_m": 0.074135338141609,
+      "coverage_ratio": 0.9027777777777778,
+      "eligible_pair_count": 10,
+      "cell_before": "cell_3_outline_only",
+      "cell_after": "cell_2_anchored",
+      "same_block_only": true,
+      "pair_independence": "low_same_block"
+    },
+    {
+      "building_id": "DEBY_LOD2_4908167",
+      "status": "complete",
+      "selected_dlt_point_count": 12815,
+      "footprint_inside_point_count": 19,
+      "inside_z_median_m": -35.98164667277934,
+      "inside_z_mad_m": 1.8208593003445444,
+      "coverage_ratio": 0.07228915662650602,
+      "eligible_pair_count": 10,
+      "cell_before": "cell_3_outline_only",
+      "cell_after": "cell_2_anchored",
+      "same_block_only": true,
+      "pair_independence": "low_same_block"
+    },
+    {
+      "building_id": "DEBY_LOD2_4908169",
+      "status": "complete",
+      "selected_dlt_point_count": 11098,
+      "footprint_inside_point_count": 1145,
+      "inside_z_median_m": -36.7301459560603,
+      "inside_z_mad_m": 0.22971431338690707,
+      "coverage_ratio": 0.782608695652174,
+      "eligible_pair_count": 10,
+      "cell_before": "cell_3_outline_only",
+      "cell_after": "cell_2_anchored",
+      "same_block_only": true,
+      "pair_independence": "low_same_block"
+    }
+  ],
+  "unmeasurable_after_supplement": [],
+  "reproduction_check": {
+    "building_id": "DEBY_LOD2_104586480",
+    "expected": {
+      "footprint_inside_point_count": 3364,
+      "inside_z_median_m": -43.161802,
+      "inside_z_mad_m": 0.071273
+    },
+    "observed": {
+      "selected_dlt_point_count": 12023,
+      "footprint_inside_point_count": 3364,
+      "inside_z_median_m": -43.16180166954628,
+      "inside_z_mad_m": 0.0712729741613245,
+      "eligible_pair_count": 6
+    },
+    "passed": true,
+    "hard_stop_on_mismatch": true,
+    "source_pair_table": "phases/p2-gsjso/runs/20260720_anchor_census/anchor_census_pairs.csv",
+    "cache_reuse_runs": 10
+  },
+  "same_block_reliability_comparison": {
+    "pair_count": 24,
+    "building_count": 11,
+    "median_abs_delta_z_m": 0.27146073684481564,
+    "p90_abs_delta_z_m": 5.092228786555044,
+    "p90_method": "numpy.quantile(method=lower)",
+    "maximum_abs_delta_z_m": 7.275129823100009,
+    "within_0_5m_count": 13,
+    "within_0_5m_ratio": 0.5416666666666666,
+    "source_rule": "anchor_census_pairs same-acquisition-minute-block rows with footprint_inside_count>0 and a non-null adopted cross-block building z in anchor_census_measurements",
+    "read_only_derivation": true
+  },
+  "environment_lock": {
+    "environment_manifest": "docs/e5_c001_s3ap_fm_env_manifest.json",
+    "environment_manifest_sha256": "7246a77569a7af1b931ad60eda7012e6e3e8f4ff81b5e10f2e3c1a2efea80d68",
+    "model_id": "naver/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric",
+    "model_revision": "06e7259f34c3060f322df5cb0c7b9094f57e41fc",
+    "weights_sha256": "0a615eb05fa9db654050aa655945ee5696e7c6c1b7f93f1ee8c37249010f6feb",
+    "docker_image_id": "sha256:89d64b4c7112cc55db0d42d562e2a0208858658c0c67ab1bd48424175c50f501",
+    "same_as_anchor_census": true,
+    "learning_runs_started": 0
+  },
+  "inference_accounting": {
+    "target_cache_reuse_runs": 90,
+    "reproduction_cache_reuse_runs": 10,
+    "reliability_read_only_cache_validations": 24,
+    "new_mast3r_inference_runs": 0,
+    "authorized_if_4908169_cache_missing": "supplement_FM_dense_dial_2px_same_block",
+    "authorized_fallback_invoked": false,
+    "gpu_used": false,
+    "gpu_budget_seconds": 600,
+    "learning_runs_started": 0
+  },
+  "low_independence_contract": {
+    "pair_value": "low_same_block",
+    "building_same_block_only": true,
+    "preregister_section_2_primary_list_eligible": false,
+    "applies_to_buildings": [
+      "DEBY_LOD2_42364609",
+      "DEBY_LOD2_4907031",
+      "DEBY_LOD2_4907510",
+      "DEBY_LOD2_4908051",
+      "DEBY_LOD2_4908052",
+      "DEBY_LOD2_4908054",
+      "DEBY_LOD2_4908166",
+      "DEBY_LOD2_4908167",
+      "DEBY_LOD2_4908169"
+    ]
+  },
+  "reference_lod2_role": "projection and classification only",
+  "map_figure": {
+    "regenerated": false,
+    "reason": "figure subtask deferred by 2026-07-20 order",
+    "existing_v4_figure": "docs/figs/boundary_map_v4/boundary_map_v4_map.png",
+    "existing_v4_figure_sha256": "f4b3cb0fbc4c4ce0fadb22a07d6eca84b9979d5e40f1c803ff41e9dc3284b431"
+  },
+  "issues_sync_contract": {
+    "path": "docs/issues.md",
+    "same_output_commit_required": true,
+    "note": "the detached driver stages the new issues.md version with each synchronized artifact batch"
+  },
+  "source_sha256": {
+    "phases/p2-gsjso/runs/20260720_anchor_census/anchor_census_pairs.csv": "96f172b5e72e80586a4f24520407282724993ffca2d9de623e49927b500eef42",
+    "phases/p2-gsjso/runs/20260720_anchor_census/anchor_census_measurements.csv": "7f718bf4eac60e997edd02788b6945003470f6185af197197d837660c392f64a",
+    "phases/p2-gsjso/runs/20260720_anchor_census/anchor_census_manifest.json": "38664bdf33a2b2b0a9710375a74b745ca9e90362ab7606e2359e097eaf72c7df",
+    "phases/p2-gsjso/runs/20260720_anchor_census/anchor_census_inference_manifest.json": "eae6320dd69f84ad015c07d51aa774948f96adf271741acce1e7f2fe28d11710",
+    "phases/p2-gsjso/runs/20260719_boundary_map_v3/fm_dense_pairs.csv": "f99de9a9141a134a9ce582387f3f1648659eaa4598f8117dd874cc5964f889d1",
+    "phases/p2-gsjso/runs/20260719_boundary_map_v3/fm_dense_measurements.csv": "9de795c8a0495026c1ca2265f3b1e367fe59903acead200d32f0f5bdefcf4ccb",
+    "phases/p2-gsjso/runs/20260719_boundary_map_v3/fm_dense_manifest.json": "624f4ed1fea6c43e5f90b730ff91ab01fa5968730a6b3a96b9189cf19be33278",
+    "docs/boundary_map_v4_ladder.csv": "e2ac47e5fdb6dca715e53b8081e43cb73c6251070761da7d1bf14ea512988d57",
+    "docs/boundary_map_v4_manifest.json": "eff0d85e02a9ed47b84891359b18659276ec3dcfc4c9a17a74770473edfdf2d7",
+    "docs/figs/boundary_map_v4/boundary_map_v4_map.png": "f4b3cb0fbc4c4ce0fadb22a07d6eca84b9979d5e40f1c803ff41e9dc3284b431",
+    "docs/e5_c001_s3ap_fm_env_manifest.json": "7246a77569a7af1b931ad60eda7012e6e3e8f4ff81b5e10f2e3c1a2efea80d68",
+    "results/tum_transfer/analysis/footprints_aoi.geojson": "ca7f5b13a52368e1d2ac47b77cc78f12887bad4d598d122ad57b882eb4920a82",
+    "results/tum_transfer/e5_pilot/C001/C001_train_prep_manifest.json": "eca68a7890116c52557ab467361b58c4c784047807f9bee857a2517ac0b40b58",
+    "phases/p2-gsjso/scripts/anchor_census_supplement.py": "7467b9071d352bc7eae90e91d795739b8e6f908386545cacbadfe55793088480",
+    "phases/p2-gsjso/runs/20260720_anchor_census_supplement/anchor_census_supplement_pairs.csv": "73dc26d2ea92c038ca532e1ea8a05da31fafcae429d0d75bc9b1785074b025b1",
+    "phases/p2-gsjso/runs/20260720_anchor_census_supplement/anchor_census_supplement_measurements.csv": "991e1dc2948431433505c7a68a51110f35ee42271939d0d57a0eabbd8fcbdeb4",
+    "phases/p2-gsjso/runs/20260720_anchor_census_supplement/anchor_census_supplement_same_block_reliability_pairs.csv": "3a1df91654142e7ee6e4b37651473ce35d8698ae8647fbaef945a31bcf23c12e",
+    "phases/p2-gsjso/runs/20260720_anchor_census_supplement/anchor_census_supplement_measure_manifest.json": "2d8a0e103f471d26763ef3ed3abbd4d09e25fcc2ff9d54c2e036da4aa939b2c6",
+    "docs/anchor_census_supplement_pairs.csv": "73dc26d2ea92c038ca532e1ea8a05da31fafcae429d0d75bc9b1785074b025b1",
+    "docs/anchor_census_supplement_measurements.csv": "991e1dc2948431433505c7a68a51110f35ee42271939d0d57a0eabbd8fcbdeb4",
+    "docs/anchor_census_supplement_same_block_reliability_pairs.csv": "3a1df91654142e7ee6e4b37651473ce35d8698ae8647fbaef945a31bcf23c12e"
+  },
+  "output_sha256": {
+    "phases/p2-gsjso/runs/20260720_anchor_census_supplement/anchor_census_supplement_pairs.csv": "73dc26d2ea92c038ca532e1ea8a05da31fafcae429d0d75bc9b1785074b025b1",
+    "phases/p2-gsjso/runs/20260720_anchor_census_supplement/anchor_census_supplement_measurements.csv": "991e1dc2948431433505c7a68a51110f35ee42271939d0d57a0eabbd8fcbdeb4",
+    "phases/p2-gsjso/runs/20260720_anchor_census_supplement/anchor_census_supplement_same_block_reliability_pairs.csv": "3a1df91654142e7ee6e4b37651473ce35d8698ae8647fbaef945a31bcf23c12e",
+    "phases/p2-gsjso/runs/20260720_anchor_census_supplement/anchor_census_supplement_measure_manifest.json": "2d8a0e103f471d26763ef3ed3abbd4d09e25fcc2ff9d54c2e036da4aa939b2c6",
+    "docs/anchor_census_supplement_pairs.csv": "73dc26d2ea92c038ca532e1ea8a05da31fafcae429d0d75bc9b1785074b025b1",
+    "docs/anchor_census_supplement_measurements.csv": "991e1dc2948431433505c7a68a51110f35ee42271939d0d57a0eabbd8fcbdeb4",
+    "docs/anchor_census_supplement_same_block_reliability_pairs.csv": "3a1df91654142e7ee6e4b37651473ce35d8698ae8647fbaef945a31bcf23c12e",
+    "docs/boundary_map_v4_1_ladder.csv": "ae16170177ac0815eb6dd853b0469325c9a1018eeeac9b790b063927cbd7e7e2",
+    "docs/W_anchor_census_supplement_boundary_map_v4_1_summary_20260720.md": "d058ec709899ed52dab2eb3ccbbbd94f0b2edf3ebeb91f78a5fb123dfec65b94"
+  },
+  "learning_runs_started": 0,
+  "new_mast3r_inference_runs": 0,
+  "new_inference_allowlist": [
+    "supplement_FM_dense_dial_2px_same_block"
+  ],
+  "interpretation_or_verdict": null
+}
