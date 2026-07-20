@@ -92,3 +92,23 @@
 - 2026-07-20 01:33:38 R1P-QA commit ledger: correction_commit=37e2e9a5ca846ff03ca29cc1484dfa059c321afd; refreshed_artifact_commit=1995494236ebfefb9f64af522c36eb4f21990111; first_measurement_commit=0f5d158b6e359f29d104abd14ff34b3840c7f560; recovery_measurement_commit=e3241fca496efd74f444a7f3239fb32e1a3fd5e4; learning_runs_started=0; allowed_new_inference=R1prime-3_FM_dense_dial_2px_only
 - 2026-07-20 16:21:00 AC-PREP census inventory complete: canonical=178; dense_failure=64; previously_measured=6; fixed_census=58 (nonsmall=43, small_lt50=15); jobs=58; pairs=580; jobs_sha256=8275751d32fb37ed9a4c68f938a62935647a551c8943fda5cd0443d93e70afd0; prepare_manifest_sha256=d10f5f2c5057faf14569235f39a3b8a11864a74de1b7837f7125e3f2f067bf6a; C001 108247350/108247351 have no frozen semantic-region address and use the unchanged R1prime projected-footprint FULL_OPENCV branch (LoD2 projection/classification only); learning_runs_started=0; new_inference_runs=0; allowed_new_inference=census_FM_dense_dial_2px_only.
 - 2026-07-20 16:24:32 AC-PREP preflight recovery: first detached invocation stopped before GPU inference because quoted Korean untracked paths did not match the preserved-draft allowlist; Git status now uses core.quotePath=false, ordered jobs remain byte-identical (sha256=8275751d32fb37ed9a4c68f938a62935647a551c8943fda5cd0443d93e70afd0), refreshed prepare_manifest_sha256=5e57063c9fc93c1a0d73a0f6ae20940b165ffdc78a6467105c026379b6cf3015; learning_runs_started=0; new_inference_runs=0.
+- 2026-07-20 16:34:02 AC-C2 measurement recorded: census_rows=58; pairs=580; pending_buildings=
+==========
+== CUDA ==
+==========
+
+CUDA Version 12.1.1
+
+Container image Copyright (c) 2016-2023, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+
+This container image and its contents are governed by the NVIDIA Deep Learning Container License.
+By pulling and using the container, you accept the terms and conditions of this license:
+https://developer.nvidia.com/ngc/nvidia-deep-learning-container-license
+
+A copy of this license is made available in this container at /NGC-DL-CONTAINER-LICENSE for your convenience.
+
+WARNING: The NVIDIA Driver was not detected.  GPU functionality will not be available.
+   Use the NVIDIA Container Toolkit to start this container with GPU support; see
+   https://docs.nvidia.com/datacenter/cloud-native/ .
+
+0; measurements_sha256=e83d0b56366b1a6c6cee25151687b48e44b1664d3a6ba33afa9dd1aa6bc038b5; pairs_sha256=96f172b5e72e80586a4f24520407282724993ffca2d9de623e49927b500eef42; progress_sha256=5474c39209a0ecbe1c7ce3902241dfbfc9eba75ee768bc68b1f87af99bd0beed; inference_manifest_sha256=eae6320dd69f84ad015c07d51aa774948f96adf271741acce1e7f2fe28d11710; learning_runs_started=0; new_inference_allowlist=census_FM_dense_dial_2px_only.
