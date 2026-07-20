@@ -1,7 +1,7 @@
 {
   "schema": "jointbuildgs.anchor_census.prepare.v1",
-  "created_utc": "2026-07-20T07:20:01.145790+00:00",
-  "git_head": "1c91a448044ffd2c3f6ff3ca5cf2c20f2d57e501",
+  "created_utc": "2026-07-20T07:24:16.479321+00:00",
+  "git_head": "6a30748dbdf1d561df9441c38aadc21f696546d7",
   "branch": "exp/3b-surface-restore-corrected",
   "derivation": {
     "formula": "canonical raw_lidar assembled=true 178; raw_dense assembled=false intersection 64; minus previously measured six = census 58",
@@ -217,7 +217,7 @@
     "phases/p2-gsjso/scripts/boundary_map_v3.py": "926b0fc989e84b19fb8c0499bddcb519c14840a2f0fc04d2f45f0d6f3eb79d2c",
     "phases/p2-gsjso/scripts/boundary_map_v3_dense.py": "d1e6f31489c85b196490079c37f536d1daf6c2dcc30149aad402dfdac5553645",
     "phases/p2-gsjso/scripts/anchor_census_dense.py": "190d1446c63c1dbdbda62705fa5f41e17130cbada230cb62902046eb7c1ad104",
-    "phases/p2-gsjso/scripts/run_anchor_census_20260720.sh": "bde6721fc1987e8a1c9c0608b8ebd63646edb756326b885d9721bc714a21527c",
+    "phases/p2-gsjso/scripts/run_anchor_census_20260720.sh": "3f86af1a4f20b3059ecdc0d71395d3cc298639d83f5af2f1b9ecf151f904ca9a",
     "docs/사전등록서_품질축본선_잠금후보v1.5_20260720.md": "00f60374e3f88c67739b52aa493db59e109bbb14964197150ce8eb022efc1cce",
     "docs/e5_c001_s3ap_fm_env_manifest.json": "7246a77569a7af1b931ad60eda7012e6e3e8f4ff81b5e10f2e3c1a2efea80d68",
     "phases/p2-gsjso/configs/e5_c001_s3ap_fm_dense_dial.json": "72d0bef6578b9e5cbe96fb32cbf81802d3a87a92a8da5a6b5b497baba18491c9",

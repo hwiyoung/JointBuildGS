@@ -242,7 +242,7 @@ preflight() {
   fi
   local unexpected_untracked
   unexpected_untracked="$(
-    git status --porcelain --untracked-files=all |
+    git -c core.quotePath=false status --porcelain --untracked-files=all |
       awk '$1=="??"{print substr($0,4)}' |
       grep -Fvx 'docs/W_밤샘3과제_검수_20260717.md' |
       grep -Fvx 'docs/사전등록서_품질축본선_초안v1.2_20260718.md' || true
