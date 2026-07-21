@@ -1,0 +1,159 @@
+{
+  "schema": "jointbuildgs.primary4.prepared.v2",
+  "created_utc": "2026-07-21T11:29:34.564474+00:00",
+  "task_id": "E-PRIMARY4-20260721",
+  "targets": [
+    "4907199",
+    "4908049",
+    "104586480",
+    "4908048"
+  ],
+  "grid_m": 0.5,
+  "nominal_density_pt_m2": 4.0,
+  "offset": [
+    690953.0,
+    5336071.0,
+    604.0
+  ],
+  "input_anchor_lock": {
+    "4907199": {
+      "anchor_inside_z_median_m": "-34.347425",
+      "anchor_footprint_inside_point_count": "373",
+      "anchor_inside_z_mad_m": "0.022915",
+      "source_match": true
+    },
+    "4908049": {
+      "anchor_inside_z_median_m": "-41.264825",
+      "anchor_footprint_inside_point_count": "966",
+      "anchor_inside_z_mad_m": "0.035898",
+      "source_match": true
+    },
+    "104586480": {
+      "anchor_inside_z_median_m": "-43.161802",
+      "anchor_footprint_inside_point_count": "3364",
+      "anchor_inside_z_mad_m": "0.071273",
+      "source_match": true
+    },
+    "4908048": {
+      "anchor_inside_z_median_m": "-41.248347",
+      "anchor_footprint_inside_point_count": "1379",
+      "anchor_inside_z_mad_m": "0.039240",
+      "source_match": true
+    }
+  },
+  "flat_points": {
+    "4907199": {
+      "path": "phases/p2-gsjso/runs/20260721_primary4_assembly_validation/flat_points/DEBY_LOD2_4907199_flat_g0500_points.npz",
+      "sha256": "166a7c1e20d8f9d1f2ab96c1b7a3340c467720721b8da40e265fc7c9f0c6ab1c",
+      "xyz_payload_sha256": "5ea0a2638529bfcf7149167e31182dbf61d7116c304df6543e7002a96dc86f2c",
+      "point_count": 448,
+      "z_local_m": "-34.347425"
+    },
+    "4908049": {
+      "path": "phases/p2-gsjso/runs/20260721_primary4_assembly_validation/flat_points/DEBY_LOD2_4908049_flat_g0500_points.npz",
+      "sha256": "0d61e16c311d468d671aded6ccb02541015dbaed3ba05cf442f5baad841c35fa",
+      "xyz_payload_sha256": "5a34224dfc089b345590e09550e0b25b5be4e7cd8ec711886ef5ff4d87b4e266",
+      "point_count": 234,
+      "z_local_m": "-41.264825"
+    },
+    "104586480": {
+      "path": "phases/p2-gsjso/runs/20260721_primary4_assembly_validation/flat_points/DEBY_LOD2_104586480_flat_g0500_points.npz",
+      "sha256": "f1a5af68a0ec0bb6ff6d3f32f8f95b9e6f0d4f9d5a28779950462d0afa7b4c3d",
+      "xyz_payload_sha256": "1a744a824acc24ef3bb2801d11c265a69dc9d6813067317043b52c9e390dc9b1",
+      "point_count": 82,
+      "z_local_m": "-43.161802"
+    },
+    "4908048": {
+      "path": "phases/p2-gsjso/runs/20260721_primary4_assembly_validation/flat_points/DEBY_LOD2_4908048_flat_g0500_points.npz",
+      "sha256": "90ce74822ffd08ecf552280e7368bf2f6cb715bfb9143b97db4b9f28315e65e2",
+      "xyz_payload_sha256": "30d8b406d9b1eaf0acfe6432abfad712522024c52b146f611da2a936c8eb0f7e",
+      "point_count": 318,
+      "z_local_m": "-41.248347"
+    }
+  },
+  "ground": {
+    "4907199": {
+      "ground_z_local_m": -43.34200000000001,
+      "ground_z_mad_m": 0.15200000000005076,
+      "ground_method": "clean exterior 1m-cell q10 lower-mode median",
+      "ground_region_rule": "target 2.0-15.0m exterior; all footprint buffers 1.0m excluded",
+      "ground_observed_point_count": 1571,
+      "ground_cell_count": 170,
+      "ground_mode_cell_count": 76,
+      "ground_mode_centre_local_m": -43.25,
+      "ground_source": "full-scene parent SfM sparse seed PLY + dense-init seed PLY; supplied footprints used for exterior/exclusion masks; no LoD2 or ALS elevation"
+    },
+    "4908049": {
+      "ground_z_local_m": -43.90299999999998,
+      "ground_z_mad_m": 0.1489999999999725,
+      "ground_method": "clean exterior 1m-cell q10 lower-mode median",
+      "ground_region_rule": "target 2.0-15.0m exterior; all footprint buffers 1.0m excluded",
+      "ground_observed_point_count": 87,
+      "ground_cell_count": 17,
+      "ground_mode_cell_count": 11,
+      "ground_mode_centre_local_m": -43.75,
+      "ground_source": "full-scene parent SfM sparse seed PLY + dense-init seed PLY; supplied footprints used for exterior/exclusion masks; no LoD2 or ALS elevation"
+    },
+    "104586480": {
+      "ground_z_local_m": -43.16599999999996,
+      "ground_z_mad_m": 0.015999999999984027,
+      "ground_method": "clean exterior 1m-cell q10 lower-mode median",
+      "ground_region_rule": "target 2.0-15.0m exterior; all footprint buffers 1.0m excluded",
+      "ground_observed_point_count": 1493,
+      "ground_cell_count": 165,
+      "ground_mode_cell_count": 143,
+      "ground_mode_centre_local_m": -43.25,
+      "ground_source": "full-scene parent SfM sparse seed PLY + dense-init seed PLY; supplied footprints used for exterior/exclusion masks; no LoD2 or ALS elevation"
+    },
+    "4908048": {
+      "ground_z_local_m": -43.912108899999986,
+      "ground_z_mad_m": 0.1495000000000175,
+      "ground_method": "clean exterior 1m-cell q10 lower-mode median",
+      "ground_region_rule": "target 2.0-15.0m exterior; all footprint buffers 1.0m excluded",
+      "ground_observed_point_count": 237,
+      "ground_cell_count": 40,
+      "ground_mode_cell_count": 28,
+      "ground_mode_centre_local_m": -43.75,
+      "ground_source": "full-scene parent SfM sparse seed PLY + dense-init seed PLY; supplied footprints used for exterior/exclusion masks; no LoD2 or ALS elevation"
+    }
+  },
+  "ground_parent_sources": {
+    "sparse": {
+      "path": "results/tum_transfer/mob_analysis/seed/seed_sparse.ply",
+      "sha256": "ad44838727c57a44c27a7d3976c6dbeedac7286e99c834ac279efc392b9cd76c"
+    },
+    "dense": {
+      "path": "results/tum_transfer/mob_analysis/seed/seed_dense.ply",
+      "sha256": "2c1eac05851909510bc324deb67e81854e52045b7ebf6eaf44f31a4a6072b738"
+    }
+  },
+  "groups": {
+    "reproduction": {
+      "targets": [
+        "4907199"
+      ],
+      "classified_laz": "phases/p2-gsjso/runs/20260721_primary4_assembly_validation/inputs/reproduction_flat_g0500.laz",
+      "classified_laz_sha256": "d697e35a3b8e4d9183065153094b000b8cb8e6d275750d9f344e21e01f3da10a",
+      "roofprint_geojson": "phases/p2-gsjso/runs/20260721_primary4_assembly_validation/inputs/reproduction_flat_g0500.geojson",
+      "roofprint_geojson_sha256": "ad7475e70ebfbcb822a4ee1251174dd661d205bfa3c246df1f59155120888c1a"
+    },
+    "targets": {
+      "targets": [
+        "4908049",
+        "104586480",
+        "4908048"
+      ],
+      "classified_laz": "phases/p2-gsjso/runs/20260721_primary4_assembly_validation/inputs/targets_flat_g0500.laz",
+      "classified_laz_sha256": "90ab72be9630489ddbf68c81dfb97499466feb6864690207d0d424e747484488",
+      "roofprint_geojson": "phases/p2-gsjso/runs/20260721_primary4_assembly_validation/inputs/targets_flat_g0500.geojson",
+      "roofprint_geojson_sha256": "c9f40e8cce61602feb6a21bb9013c8353c717979f524c1b28047affe6001567e"
+    }
+  },
+  "reference_geometry_opened_during_prepare": false,
+  "roofer_parameters": "--id-attribute building_id --jobs 3 --srs EPSG:25832 --bld-class 6 --grnd-class 2 --lod22",
+  "crs": "EPSG:25832",
+  "learning_runs_started": 0,
+  "new_inference_runs": 0,
+  "image_inputs_used": 0,
+  "gpu_used": false
+}

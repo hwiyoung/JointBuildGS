@@ -1,0 +1,39 @@
+{
+  "schema": "jointbuildgs.primary4.reproduction_check.v2",
+  "created_utc": "2026-07-21T11:29:42.444761+00:00",
+  "building_id": "DEBY_LOD2_4907199",
+  "expected": {
+    "building_id": "4907199",
+    "expected_flat_point_count": 448,
+    "expected_b1_seed_signed_delta_z_median_m": "-0.014425402307",
+    "expected_b1_assembly_signed_delta_z_median_m": "-0.014000000000",
+    "expected_b1_roof_rms_m": "0.014000000000",
+    "expected_b1_roof_hausdorff_m": "0.014000000000",
+    "expected_b1_rf_extrusion_mode": "lod11_fallback",
+    "expected_b1_has_lod22": false,
+    "expected_b1_lod1_fallback": true,
+    "expected_b1_val3dity_valid": true,
+    "numeric_tolerance_m": 5e-07
+  },
+  "observed": {
+    "flat_point_count": 448,
+    "signed_delta_z_median_m": -0.014000000000010004,
+    "roof_rms_m": 0.014000000000010004,
+    "roof_hausdorff_m": 0.014000000000010004,
+    "rf_extrusion_mode": "lod11_fallback",
+    "has_lod22": false,
+    "lod1_fallback": true,
+    "val3dity_valid": true
+  },
+  "checks": {
+    "flat_point_count": true,
+    "signed_delta_z_median_m": true,
+    "roof_rms_m": true,
+    "roof_hausdorff_m": true,
+    "rf_extrusion_mode": true,
+    "has_lod22": true,
+    "lod1_fallback": true,
+    "val3dity_valid": true
+  },
+  "passed": true
+}

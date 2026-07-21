@@ -1,0 +1,197 @@
+{
+  "schema": "jointbuildgs.primary4_assembly_validation.v2",
+  "created_utc": "2026-07-21T11:29:51.520776+00:00",
+  "task_id": "E-PRIMARY4-20260721",
+  "git_head_at_measurement": "62ab88949936ef56dfb516f8d419e9248e2578d3",
+  "branch": "exp/3b-surface-restore-corrected",
+  "targets": [
+    "4907199",
+    "4908049",
+    "104586480",
+    "4908048"
+  ],
+  "new_targets": [
+    "4908049",
+    "104586480",
+    "4908048"
+  ],
+  "reproduction_target": "4907199",
+  "input_z_lock": {
+    "4907199": {
+      "anchor_inside_z_median_m": "-34.347425",
+      "anchor_footprint_inside_point_count": "373",
+      "anchor_inside_z_mad_m": "0.022915",
+      "source_match": true
+    },
+    "4908049": {
+      "anchor_inside_z_median_m": "-41.264825",
+      "anchor_footprint_inside_point_count": "966",
+      "anchor_inside_z_mad_m": "0.035898",
+      "source_match": true
+    },
+    "104586480": {
+      "anchor_inside_z_median_m": "-43.161802",
+      "anchor_footprint_inside_point_count": "3364",
+      "anchor_inside_z_mad_m": "0.071273",
+      "source_match": true
+    },
+    "4908048": {
+      "anchor_inside_z_median_m": "-41.248347",
+      "anchor_footprint_inside_point_count": "1379",
+      "anchor_inside_z_mad_m": "0.039240",
+      "source_match": true
+    }
+  },
+  "input_z_lock_all_match": true,
+  "flat_input": {
+    "xy_rule": "B-1 p0.fill_footprint: one representative point per EPSG:25832 0.5 m cell intersecting the supplied footprint",
+    "z_rule": "constant locked anchor_inside_z_median_m; plane_ax=0; plane_by=0",
+    "roofprint_rule": "B-1 p0.occupied_cell_union over generated flat points",
+    "ground_rule": "B-1 clean exterior 1 m-cell q10 lower-mode median; full-scene parent sparse+dense seed PLYs named by the C001 crop manifest",
+    "ground_source_scope_note": "B-1 used C001 clips of these exact parent PLYs; E uses the full-scene parents because three targets are outside the C001 clip while retaining the same estimator and parameters",
+    "ground_parameters": {
+      "target_outer_distance_min_m": 2.0,
+      "target_outer_distance_max_m": 15.0,
+      "all_footprint_exclusion_buffer_m": 1.0,
+      "grid_m": 1.0,
+      "min_points_per_cell": 2,
+      "cell_z_quantile": 0.1,
+      "mode_bin_m": 0.5,
+      "mode_half_window_m": 0.75,
+      "fallback": "median of finite cell q10 values after Tukey 1.5-IQR clipping"
+    }
+  },
+  "grid_m": 0.5,
+  "nominal_density_pt_m2": 4.0,
+  "roofer": {
+    "image": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+    "parameters": "--id-attribute building_id --jobs 3 --srs EPSG:25832 --bld-class 6 --grnd-class 2 --lod22"
+  },
+  "standard_scoring": {
+    "status": "phases/p0-audit/scripts/08_roofer_w2.py",
+    "roof_distance": "phases/p2-gsjso/scripts/e5_c001_8way.py",
+    "roof_completeness": "phases/p2-gsjso/scripts/qs_baseline178_rescore.py",
+    "reference_role": "LoD2 scoring and ref_roof_type classification only"
+  },
+  "success_gauge": {
+    "selected": "b",
+    "formula": "has_lod22 == true AND abs(signed_delta_z_median_m) <= 1.0",
+    "max_abs_signed_delta_z_median_m": 1.0,
+    "alternative_a": "has_lod22 == true",
+    "alternative_c": "has_lod22 == true AND abs(signed_delta_z_median_m) <= 0.3",
+    "remote_output_role": "record boolean only; no K2 sentence verdict"
+  },
+  "reproduction_check": {
+    "schema": "jointbuildgs.primary4.reproduction_check.v2",
+    "created_utc": "2026-07-21T11:29:42.444761+00:00",
+    "building_id": "DEBY_LOD2_4907199",
+    "expected": {
+      "building_id": "4907199",
+      "expected_flat_point_count": 448,
+      "expected_b1_seed_signed_delta_z_median_m": "-0.014425402307",
+      "expected_b1_assembly_signed_delta_z_median_m": "-0.014000000000",
+      "expected_b1_roof_rms_m": "0.014000000000",
+      "expected_b1_roof_hausdorff_m": "0.014000000000",
+      "expected_b1_rf_extrusion_mode": "lod11_fallback",
+      "expected_b1_has_lod22": false,
+      "expected_b1_lod1_fallback": true,
+      "expected_b1_val3dity_valid": true,
+      "numeric_tolerance_m": 5e-07
+    },
+    "observed": {
+      "flat_point_count": 448,
+      "signed_delta_z_median_m": -0.014000000000010004,
+      "roof_rms_m": 0.014000000000010004,
+      "roof_hausdorff_m": 0.014000000000010004,
+      "rf_extrusion_mode": "lod11_fallback",
+      "has_lod22": false,
+      "lod1_fallback": true,
+      "val3dity_valid": true
+    },
+    "checks": {
+      "flat_point_count": true,
+      "signed_delta_z_median_m": true,
+      "roof_rms_m": true,
+      "roof_hausdorff_m": true,
+      "rf_extrusion_mode": true,
+      "has_lod22": true,
+      "lod1_fallback": true,
+      "val3dity_valid": true
+    },
+    "passed": true
+  },
+  "result_counts": {
+    "rows": 4,
+    "has_lod22_true": 0,
+    "lod1_fallback_true": 4,
+    "val3dity_valid_true": 4,
+    "success_gauge_true": 0
+  },
+  "multiple_horizontal_record": {
+    "building_id": "DEBY_LOD2_4908048",
+    "ref_roof_type": "multiple horizontal",
+    "anchor_inside_z_mad_m": "0.039240",
+    "input_geometry": "single constant-height horizontal plane per locked order"
+  },
+  "learning_runs_started": 0,
+  "new_inference_runs": 0,
+  "image_inputs_used": 0,
+  "gpu_used": false,
+  "interpretation_or_verdict": null,
+  "orchestration_logs_excluded_from_payload_hash_scope": [
+    "phases/p2-gsjso/runs/20260721_primary4_assembly_validation_driver"
+  ],
+  "source_sha256": {
+    "configs/projection_datum.json": "096a49b46fc5661d74f9d3b54c4f3777676cfc6b27e577b52bb2dabeee8b480c",
+    "docs/boundary_map_v4_1_ladder.csv": "ae16170177ac0815eb6dd853b0469325c9a1018eeeac9b790b063927cbd7e7e2",
+    "docs/genclose_density_assembly.csv": "facbef51a2ab9f75788f224242fc752a1b4b137035ef1cf7d363b516ea93ee79",
+    "docs/genclose_flat_seed_scores.csv": "caafeb0328e61a240e4260c5ff1012c03865dad170aef3a08424c389e8c92bb9",
+    "phases/p0-audit/data/raw/lod2/690_5334.gml": "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314",
+    "phases/p0-audit/data/raw/lod2/690_5336.gml": "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674",
+    "phases/p0-audit/scripts/08_roofer_w2.py": "ae655090915c56bfeee2be830a28e27520c2430e97d19e515a0aa046e4c79e97",
+    "phases/p2-gsjso/configs/e5_c001_s3ap_fm_retri_rescore.json": "cf09d846ecf3a1cec81ca2f515dbc76b8724d02b3dc1625fb5c5a89dc79785c5",
+    "phases/p2-gsjso/configs/primary4_assembly_validation_v2.json": "5130f6db16e7ebb97ed994a597c2cec3ff0a40974fd24da91a78a9b3ea2f13a2",
+    "phases/p2-gsjso/runs/20260716_genclose_flat_density/cityjson/flat_density_g0500.city.json": "44465e43b4df50f643ec405d726a00b9fb15e43d8d3d2db14e80c552fc088d51",
+    "phases/p2-gsjso/runs/20260716_genclose_flat_density/manifest.json": "d94dcfc7a3900db1ad3b5a4279e077e0807223459737c1f28ced36115affb062",
+    "phases/p2-gsjso/scripts/e5_c001_8way.py": "12322a7fd49c0904eaf7160946c7ef3b521ed091038452f9a863bef37f0bcbdc",
+    "phases/p2-gsjso/scripts/e5_c001_s3ap_fm_retri_rescore.py": "6d317741a09aa65f2add5c013a138638f8361d721ddece129bbfb47eafabae31",
+    "phases/p2-gsjso/scripts/e5_c001_s3ap_phase0_baselines.py": "141ba61a6832f55fd474d269d4aae0fd7c0f9d20b6fa50a095a9d7c88163e7fd",
+    "phases/p2-gsjso/scripts/overnight_genclose.py": "79307506cb90905ea25579e70608b1fa53d6da33a3803826baa163aa057141e8",
+    "phases/p2-gsjso/scripts/primary4_assembly_validation.py": "ab7ceed59e7d45a4fa1cf9043f80d3b5c908d55727edd60f47c5062dbb5ab9b5",
+    "phases/p2-gsjso/scripts/primary4_assembly_validation_qa.py": "fd617f3224886c7be40d8932a0213dc5ee2b6a0ce0c969aeaa12ffb6c0664acd",
+    "phases/p2-gsjso/scripts/qs_baseline178_rescore.py": "0d752dade0b8677460b55d381a69db77f7bf611061fb7479710434358db33e9d",
+    "results/tum_transfer/analysis/footprints_aoi.geojson": "ca7f5b13a52368e1d2ac47b77cc78f12887bad4d598d122ad57b882eb4920a82",
+    "results/tum_transfer/e5_pilot/C001/C001_train_prep_manifest.json": "eca68a7890116c52557ab467361b58c4c784047807f9bee857a2517ac0b40b58",
+    "results/tum_transfer/mob_analysis/seed/seed_dense.ply": "2c1eac05851909510bc324deb67e81854e52045b7ebf6eaf44f31a4a6072b738",
+    "results/tum_transfer/mob_analysis/seed/seed_sparse.ply": "ad44838727c57a44c27a7d3976c6dbeedac7286e99c834ac279efc392b9cd76c"
+  },
+  "output_sha256": {
+    "docs/W_primary4_assembly_validation_summary_20260721.md": "a1d65fc0fb6499e78a402346168b679f5f8b1fdd38f8faedcf068483e8c9a1bb",
+    "docs/primary4_assembly_validation_measurements.csv": "249098843d6fe1d0888e800d3fe21c79137f3de0098e4bfc88933b3677f5d8ce",
+    "phases/p2-gsjso/runs/20260721_primary4_assembly_validation/cityjson/reproduction_flat_g0500.city.json": "fd1614965c22880f5de746f212a7b15b154308b3ebebeac20d1c597268a4672c",
+    "phases/p2-gsjso/runs/20260721_primary4_assembly_validation/cityjson/targets_flat_g0500.city.json": "1b0eae3b242ce6218ecb62c8e5759b88d65569cf74957cda605287dbb0cf7289",
+    "phases/p2-gsjso/runs/20260721_primary4_assembly_validation/flat_points/DEBY_LOD2_104586480_flat_g0500_points.npz": "f1a5af68a0ec0bb6ff6d3f32f8f95b9e6f0d4f9d5a28779950462d0afa7b4c3d",
+    "phases/p2-gsjso/runs/20260721_primary4_assembly_validation/flat_points/DEBY_LOD2_4907199_flat_g0500_points.npz": "166a7c1e20d8f9d1f2ab96c1b7a3340c467720721b8da40e265fc7c9f0c6ab1c",
+    "phases/p2-gsjso/runs/20260721_primary4_assembly_validation/flat_points/DEBY_LOD2_4908048_flat_g0500_points.npz": "90ce74822ffd08ecf552280e7368bf2f6cb715bfb9143b97db4b9f28315e65e2",
+    "phases/p2-gsjso/runs/20260721_primary4_assembly_validation/flat_points/DEBY_LOD2_4908049_flat_g0500_points.npz": "0d61e16c311d468d671aded6ccb02541015dbaed3ba05cf442f5baad841c35fa",
+    "phases/p2-gsjso/runs/20260721_primary4_assembly_validation/inputs/reproduction_flat_g0500.geojson": "ad7475e70ebfbcb822a4ee1251174dd661d205bfa3c246df1f59155120888c1a",
+    "phases/p2-gsjso/runs/20260721_primary4_assembly_validation/inputs/reproduction_flat_g0500.laz": "d697e35a3b8e4d9183065153094b000b8cb8e6d275750d9f344e21e01f3da10a",
+    "phases/p2-gsjso/runs/20260721_primary4_assembly_validation/inputs/targets_flat_g0500.geojson": "c9f40e8cce61602feb6a21bb9013c8353c717979f524c1b28047affe6001567e",
+    "phases/p2-gsjso/runs/20260721_primary4_assembly_validation/inputs/targets_flat_g0500.laz": "90ab72be9630489ddbf68c81dfb97499466feb6864690207d0d424e747484488",
+    "phases/p2-gsjso/runs/20260721_primary4_assembly_validation/preflight.json": "d9f7ebf046da0ceb84429239e80843c19bad6180c5a2fc91dc59495fa40620e8",
+    "phases/p2-gsjso/runs/20260721_primary4_assembly_validation/prepared.json": "baa5e45c8a220c4b44116475937f3d18e6c64588739551610d3271974de94ec2",
+    "phases/p2-gsjso/runs/20260721_primary4_assembly_validation/reproduction_check.json": "f2527d6961c9793826ea1cf5fcf5f3ed8435b8b122dc80cc6a11cfb00262b4a8",
+    "phases/p2-gsjso/runs/20260721_primary4_assembly_validation/reproduction_measurements.json": "0128d23d896f3007b984852a159f8e85a7c43751d8890c3e592790f2ac3d0ca7",
+    "phases/p2-gsjso/runs/20260721_primary4_assembly_validation/roofer/reproduction/690790_5336048.city.jsonl": "2b4285c490303cbd32da90429ccefa71a07d9cfa6876cc87fb4d1f7d64f65cdb",
+    "phases/p2-gsjso/runs/20260721_primary4_assembly_validation/roofer/targets/690888_5335971.city.jsonl": "8ec85fc672e9f272ecfbe18de8ef6f6b962c1328c624791a28223a707e3dd973",
+    "phases/p2-gsjso/runs/20260721_primary4_assembly_validation/roofer_logs/reproduction.log": "320a4e9fa130d2ce9840f7753c3f04cbe3a534450cdf14c4ed927eda478ef528",
+    "phases/p2-gsjso/runs/20260721_primary4_assembly_validation/roofer_logs/targets.log": "90ce5fbf0987f831bce2d3141902191111ca5055410e1846c31b0d54c667634e",
+    "phases/p2-gsjso/runs/20260721_primary4_assembly_validation/run.log": "9f5c53b38b96d3c2190d1a428c9be81d995b69de1c4981436df84576638d8f1c",
+    "phases/p2-gsjso/runs/20260721_primary4_assembly_validation/targets_measurements.json": "7bb7b6175b575c20d43afed660bddad439a5b57e5127887eb7f584ba13e06010",
+    "phases/p2-gsjso/runs/20260721_primary4_assembly_validation/val3dity/reproduction_flat_g0500.json": "da3d9f693e71c17ff543250c7c6e9d511981877d4ee5d0106fd9a8e698a590be",
+    "phases/p2-gsjso/runs/20260721_primary4_assembly_validation/val3dity/reproduction_flat_g0500.log": "a84ee109d66fba524eeb1bf483dcaf19011d07ff43df843369c264f3118d15c0",
+    "phases/p2-gsjso/runs/20260721_primary4_assembly_validation/val3dity/targets_flat_g0500.json": "fa93e53fba17ee8d18075b86788c28635600a0a0705774cb11b70facf96f8035",
+    "phases/p2-gsjso/runs/20260721_primary4_assembly_validation/val3dity/targets_flat_g0500.log": "22f07f0b9a46bf2086a596b4d5d6970e5c7cb513c80e1548c9a04bb4b00c8d25",
+    "phases/p2-gsjso/runs/20260721_primary4_assembly_validation/versions.txt": "dea3fce149bfb268f97149e8fae83387d694e9c77c1d66bb05edf8466509d29a"
+  }
+}

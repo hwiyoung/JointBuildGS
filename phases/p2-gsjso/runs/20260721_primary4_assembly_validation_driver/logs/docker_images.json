@@ -1,0 +1,162 @@
+[
+    {
+        "Id": "sha256:87bea02e5598a3d53a119b754191673497d52641bd8ea4106ffee653407579b0",
+        "RepoTags": [
+            "jointbuildgs-p0-tools:t0"
+        ],
+        "RepoDigests": [],
+        "Parent": "",
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-06-12T21:08:27.467582469+09:00",
+        "DockerVersion": "",
+        "Author": "",
+        "Config": {
+            "Hostname": "",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/opt/conda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/conda/envs/pdal/bin",
+                "CONDA_DIR=/opt/conda",
+                "LANG=C.UTF-8",
+                "LC_ALL=C.UTF-8",
+                "CONDAENV=/opt/conda/envs/pdal",
+                "PROJ_NETWORK=TRUE",
+                "PROJ_DATA=/opt/conda/envs/pdal/share/proj",
+                "GDAL_DATA=/opt/conda/envs/pdal/share/gdal",
+                "GEOTIFF_CSV=/opt/conda/envs/pdal/share/epsg_csv",
+                "PDAL_DRIVER_PATH=/opt/conda/envs/pdal/lib:/opt/conda/envs/pdal/lib/python3.13/site-packages/pdal/",
+                "GDAL_DRIVER_PATH=/opt/conda/envs/pdal/lib/gdalplugins",
+                "GTIFF_REPORT_COMPD_CS=TRUE",
+                "REPORT_COMPD_CS=TRUE"
+            ],
+            "Cmd": [
+                "/bin/bash"
+            ],
+            "ArgsEscaped": true,
+            "Image": "",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": [
+                "tini",
+                "--"
+            ],
+            "OnBuild": null,
+            "Labels": {
+                "com.docker.compose.project": "jointbuildgs-p0",
+                "com.docker.compose.service": "tools",
+                "com.docker.compose.version": "2.35.1",
+                "org.opencontainers.image.base.digest": "sha256:dabc2c1b5de34fb2eff749ddba066cc66a7aa9448eac6e93743c32c7e4aa5051",
+                "org.opencontainers.image.base.name": "pdal/pdal:latest",
+                "org.opencontainers.image.created": "2026-06-09T21:46:37Z",
+                "org.opencontainers.image.description": "P0 tools runtime: PDAL, GDAL, laspy, val3dity, citygml-tools",
+                "org.opencontainers.image.revision": "d4cfeec6e1dd4633d477017efc117e38db9b4ca0",
+                "org.opencontainers.image.source": "https://github.com/PDAL/PDAL",
+                "org.opencontainers.image.title": "PDAL",
+                "org.opencontainers.image.url": "https://github.com/PDAL/PDAL",
+                "org.opencontainers.image.version": "sha-d4cfeec6"
+            },
+            "Shell": [
+                "/bin/bash",
+                "-lc"
+            ]
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 3866473923,
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/6bmhp4qr6l0uurot1n3u4t7fx/diff:/var/lib/docker/overlay2/vo4cme1fc5nrjjbdyufn6rbrq/diff:/var/lib/docker/overlay2/j5vb2dim8ppugmz9g65126r03/diff:/var/lib/docker/overlay2/t0di3ngj3xz7u3kyyga56q2zm/diff:/var/lib/docker/overlay2/xfz3gcsj75ziaulwugyg0ewi2/diff:/var/lib/docker/overlay2/6902c61424a8053c65d4fe8684e2e70ee1ee6384edccd80048198d6fe15fe243/diff:/var/lib/docker/overlay2/0267222477bce52f9972caf9404cfb0ec5c0d3b620eedc2a413c8621376a608d/diff:/var/lib/docker/overlay2/58a278e11e4e4fb310f3875b886f7194879997a974510a8c8a9dd8a7d2fd038e/diff",
+                "MergedDir": "/var/lib/docker/overlay2/oa7rowidrpjujqipulu6ds8x0/merged",
+                "UpperDir": "/var/lib/docker/overlay2/oa7rowidrpjujqipulu6ds8x0/diff",
+                "WorkDir": "/var/lib/docker/overlay2/oa7rowidrpjujqipulu6ds8x0/work"
+            },
+            "Name": "overlay2"
+        },
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:538812a4b9bd45adaac2b5e5b967daa6999aa44eb110aa32ae7c69702b906475",
+                "sha256:85bed0f05cd1f424e7ee217174cfb4689f846acf7bd9f34879a13e0afe7e64c6",
+                "sha256:f7a7f28276bc6075e0c1f4dc6223ffe6bf6f734a383ef3d35fb83915764cb41b",
+                "sha256:1c0754acabf6b3421f8df1eb8f2c07c01d6c6b357a06f242741b7e3420238e5e",
+                "sha256:b8a8b72ec5a8cb9e456351823cb375ea088f624d93a26ff5dfb979947abc5270",
+                "sha256:9fb2ce1a50ca4ccb7ed0a3bb7920a6a80e1b1a92b98b822ac4b8bb9616ed103e",
+                "sha256:0725933ec4e39300129ea26b5792b4b97f1bec60b6fe23d7754f678fdf365d33",
+                "sha256:c472e0bf7dd3017d0a16b5cf2e1a1c64d5e49ba544c985ae58a7bdacac62ba6b",
+                "sha256:c472e0bf7dd3017d0a16b5cf2e1a1c64d5e49ba544c985ae58a7bdacac62ba6b"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-06-15T13:39:21.393323517+09:00"
+        }
+    },
+    {
+        "Id": "sha256:9c980b97fba4c3fd30f5bb4afb8f2621be211d4e72e4333ea2053e8cd69b2dba",
+        "RepoTags": [
+            "3dgi/roofer:v1.0.0"
+        ],
+        "RepoDigests": [
+            "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2"
+        ],
+        "Parent": "",
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-04-20T18:12:05.826630046Z",
+        "DockerVersion": "",
+        "Author": "",
+        "Config": {
+            "Hostname": "",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/opt/roofer/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "GDAL_DATA=/opt/roofer/share/gdal",
+                "PROJ_DATA=/opt/roofer/share/proj"
+            ],
+            "Cmd": null,
+            "Image": "",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": [
+                "roofer"
+            ],
+            "OnBuild": null,
+            "Labels": {
+                "org.opencontainers.image.version": "24.04"
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 133824834,
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/58a278e11e4e4fb310f3875b886f7194879997a974510a8c8a9dd8a7d2fd038e/diff",
+                "MergedDir": "/var/lib/docker/overlay2/0d9c6657b9bdfbf3439631ec7c79ed4acc35129a2e396f635ab5781c300f0ff9/merged",
+                "UpperDir": "/var/lib/docker/overlay2/0d9c6657b9bdfbf3439631ec7c79ed4acc35129a2e396f635ab5781c300f0ff9/diff",
+                "WorkDir": "/var/lib/docker/overlay2/0d9c6657b9bdfbf3439631ec7c79ed4acc35129a2e396f635ab5781c300f0ff9/work"
+            },
+            "Name": "overlay2"
+        },
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:538812a4b9bd45adaac2b5e5b967daa6999aa44eb110aa32ae7c69702b906475",
+                "sha256:0b706182aa5bd1675763239aff785fb677192635fefd1d65da5d2dfa78cf509d"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "0001-01-01T00:00:00Z"
+        }
+    }
+]
