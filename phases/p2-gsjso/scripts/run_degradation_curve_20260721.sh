@@ -80,7 +80,7 @@ PY
 }
 
 run_tools() {
-  docker run --rm -i \
+  docker run --rm \
     --user "$UID_GID" \
     -e HOME=/tmp \
     -e MPLCONFIGDIR=/tmp/matplotlib \

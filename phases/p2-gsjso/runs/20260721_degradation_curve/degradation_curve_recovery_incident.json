@@ -47,6 +47,19 @@
     "preserve_completed_stages": true,
     "resume_order": "noise_sigma_0p80 then noise finalize then density stages then combination stages"
   },
+  "first_recovery_attempt": {
+    "driver_started_utc": "2026-07-21T07:27:08Z",
+    "driver_exit_utc": "2026-07-21T07:30:48Z",
+    "driver_exit_code": 1,
+    "reported_line": 83,
+    "accepted_parts_before_exit": 1,
+    "accepted_building_id": "DEBY_LOD2_104583447",
+    "accepted_output_sha256": "3eb66167cf0b5695f342ffc5b103c2c9f591bf0d1ec2f6895f17d1519b1d7f1e",
+    "accepted_part_wall_seconds": 2.0,
+    "cause_scope": "the tools-container wrapper retained interactive stdin, so its first invocation inside the plan-reading loop consumed the remaining plan rows",
+    "recovery_action": "remove interactive stdin from the tools-container wrapper and resume the accepted part by hash",
+    "scientific_interpretation": null
+  },
   "learning_runs_started": 0,
   "new_inference_runs": 0,
   "image_inputs_used": 0
