@@ -94,6 +94,10 @@ QA_SCRIPT = REPO / "phases/p2-gsjso/scripts/degradation_curve_v3_qa.py"
 DRIVER_SCRIPT = (
     REPO / "phases/p2-gsjso/scripts/run_degradation_curve_20260721.sh"
 )
+RECOVERY_SCRIPT = (
+    REPO / "phases/p2-gsjso/scripts/degradation_curve_v3_recovery.py"
+)
+RECOVERY_INCIDENT = RUN_DIR / "degradation_curve_recovery_incident.json"
 
 EXPECTED_POPULATION = 178
 EXPECTED_STAGE_COUNT = 12
@@ -631,6 +635,7 @@ def prepare() -> None:
         Path(__file__),
         QA_SCRIPT,
         DRIVER_SCRIPT,
+        RECOVERY_SCRIPT,
     ]
     missing = [rel(path) for path in required if not path.is_file()]
     if missing:
@@ -681,6 +686,8 @@ def prepare() -> None:
         Path(__file__),
         QA_SCRIPT,
         DRIVER_SCRIPT,
+        RECOVERY_SCRIPT,
+        *([RECOVERY_INCIDENT] if RECOVERY_INCIDENT.is_file() else []),
         *([ZERO_RERUN_DIAGNOSTIC] if ZERO_RERUN_DIAGNOSTIC.is_file() else []),
         *sorted(CANONICAL_ALS_JSONL_DIR.glob("*.city.jsonl")),
         *sorted(LOD2_DIR.glob("*.gml")),
@@ -1336,6 +1343,12 @@ def record_roofer(stage_id: str, wall_seconds: float) -> None:
     files = sorted(output_dir.glob("*.city.jsonl"))
     if not files:
         raise RuntimeError(f"Roofer output missing stage={stage_id}")
+    recovery_manifest_path = RUNTIME / "recovery" / stage_id / "manifest.json"
+    recovery_manifest = (
+        json.loads(recovery_manifest_path.read_text(encoding="utf-8"))
+        if recovery_manifest_path.is_file()
+        else None
+    )
     payload = {
         "schema": "jointbuildgs.degradation_curve.roofer_stage.v3",
         "created_utc": now(),
@@ -1347,6 +1360,22 @@ def record_roofer(stage_id: str, wall_seconds: float) -> None:
         },
         "roofer_image": ROOFER_IMAGE,
         "roofer_parameters": ROOFER_PARAMETERS,
+        "execution_mode": (
+            recovery_manifest["execution_mode"]
+            if recovery_manifest is not None
+            else "single_stage_batch"
+        ),
+        "recovery_manifest": (
+            rel(recovery_manifest_path)
+            if recovery_manifest is not None
+            else None
+        ),
+        "recovery_manifest_sha256": (
+            sha256_file(recovery_manifest_path)
+            if recovery_manifest is not None
+            else None
+        ),
+        "reconstruction_parameter_change_count": 0,
         "learning_runs_started": 0,
         "new_inference_runs": 0,
     }
@@ -1757,6 +1786,64 @@ def diagnose_zero_rerun(jsonl_dir: Path) -> None:
         json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
     )
     print(json.dumps(payload, ensure_ascii=False))
+
+
+def verify_stage_measurement(stage_id: str) -> None:
+    """Verify a resumable stage measurement before the driver reuses it."""
+    if stage_id not in STAGE_BY_ID:
+        raise KeyError(stage_id)
+    population, _ = load_population()
+    measurement_path = STAGE_SCORE_DIR / f"{stage_id}.csv"
+    score_meta_path = STAGE_META_DIR / f"{stage_id}.score.json"
+    for required in (measurement_path, score_meta_path):
+        if not required.is_file():
+            raise FileNotFoundError(required)
+    rows = read_csv(measurement_path)
+    identifiers = [row["building_id"] for row in rows]
+    if len(rows) != EXPECTED_POPULATION or identifiers != population:
+        raise RuntimeError(f"stage measurement population drift stage={stage_id}")
+    if any(row["stage_id"] != stage_id for row in rows):
+        raise RuntimeError(f"stage measurement id drift stage={stage_id}")
+    if any(
+        row["learning_runs_started"] != "0"
+        or row["new_inference_runs"] != "0"
+        for row in rows
+    ):
+        raise RuntimeError(f"stage measurement run flag drift stage={stage_id}")
+    observed_sha = sha256_file(measurement_path)
+    score_meta = json.loads(score_meta_path.read_text(encoding="utf-8"))
+    if (
+        score_meta.get("measurement_rows") != EXPECTED_POPULATION
+        or score_meta.get("measurement_csv") != rel(measurement_path)
+        or score_meta.get("measurement_csv_sha256") != observed_sha
+        or score_meta.get("learning_runs_started") != 0
+        or score_meta.get("new_inference_runs") != 0
+    ):
+        raise RuntimeError(f"stage score metadata drift stage={stage_id}")
+    incident_expected = None
+    if RECOVERY_INCIDENT.is_file():
+        incident = json.loads(RECOVERY_INCIDENT.read_text(encoding="utf-8"))
+        incident_expected = incident.get("preserved_completed_stage_sha256", {}).get(
+            stage_id
+        )
+        if incident_expected is not None and incident_expected != observed_sha:
+            raise RuntimeError(f"preserved stage hash drift stage={stage_id}")
+    print(
+        json.dumps(
+            {
+                "stage_id": stage_id,
+                "measurement_rows": len(rows),
+                "measurement_csv_sha256": observed_sha,
+                "incident_hash_match": (
+                    None if incident_expected is None else True
+                ),
+                "learning_runs_started": 0,
+                "new_inference_runs": 0,
+                "verified": True,
+            },
+            ensure_ascii=False,
+        )
+    )
 
 
 def validate_baseline() -> None:
@@ -2992,6 +3079,7 @@ def finalize(scope: str) -> None:
                 Path(__file__),
                 QA_SCRIPT,
                 DRIVER_SCRIPT,
+                RECOVERY_SCRIPT,
                 SCORER_SCRIPT,
                 BASELINE_SCORER_SCRIPT,
                 W2_SCRIPT,
@@ -3037,6 +3125,10 @@ def parse_args() -> argparse.Namespace:
     record_parser.add_argument("--wall-seconds", type=float, required=True)
     score_parser = subparsers.add_parser("score-stage")
     score_parser.add_argument("--stage", required=True, choices=sorted(STAGE_BY_ID))
+    verify_stage_parser = subparsers.add_parser("verify-stage-measurement")
+    verify_stage_parser.add_argument(
+        "--stage", required=True, choices=sorted(STAGE_BY_ID)
+    )
     diagnostic = subparsers.add_parser("diagnose-zero-rerun")
     diagnostic.add_argument("--jsonl-dir", type=Path, required=True)
     subparsers.add_parser("validate-baseline")
@@ -3061,6 +3153,8 @@ def main() -> None:
         record_roofer(args.stage, args.wall_seconds)
     elif args.command == "score-stage":
         score_stage(args.stage)
+    elif args.command == "verify-stage-measurement":
+        verify_stage_measurement(args.stage)
     elif args.command == "diagnose-zero-rerun":
         diagnose_zero_rerun(args.jsonl_dir)
     elif args.command == "validate-baseline":

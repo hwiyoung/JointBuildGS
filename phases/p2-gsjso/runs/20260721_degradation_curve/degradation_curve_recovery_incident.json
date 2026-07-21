@@ -1,0 +1,53 @@
+{
+  "schema": "jointbuildgs.degradation_curve.recovery_incident.v3",
+  "recorded_utc": "2026-07-21T07:06:55+00:00",
+  "stage_id": "noise_sigma_0p80",
+  "incident_status": "terminated_after_stall",
+  "original_driver_head": "baa3d562572bc8d39a168cb4cc89e9dc315d1e62",
+  "failure_ledger_commit": "83ff992132485e2f0a7754b531b00fcee56beed6",
+  "roofer_container_started_utc": "2026-07-20T16:25:32.920729+00:00",
+  "termination_requested_utc": "2026-07-21T07:06:55+00:00",
+  "elapsed_seconds": 52882.079271,
+  "last_log_utc": "2026-07-20T16:25:38.004000+00:00",
+  "last_log_event": "three region-growing-limit LoD1.1 fallback warnings after 179 submitted footprints",
+  "final_observed_process_state": {
+    "running_before_termination": true,
+    "cpu_percent": 100.19,
+    "memory_gib": 1.606,
+    "process_count": 131,
+    "oom_killed": false,
+    "batch_output_file_count": 0,
+    "driver_exit_code_after_termination": 137
+  },
+  "blocked_driver_transition": "run_stage(noise_sigma_0p80) did not return, so finalize_noise and all later stages were not reached",
+  "stall_cause_scope": "orchestration observation: one 178-building Roofer batch had no timeout or per-building isolation",
+  "scientific_interpretation": null,
+  "stage_input": {
+    "path": "phases/p2-gsjso/runs/20260721_degradation_curve/runtime/input/noise_sigma_0p80/aoi.laz",
+    "sha256": "1b6c9747cde6e141b37acd4f7a1adc2a5fc8418700a2f54c1ef172f0cb843b08"
+  },
+  "roofer_log": {
+    "path": "phases/p2-gsjso/runs/20260721_degradation_curve_driver/logs/noise_sigma_0p80_roofer.log",
+    "sha256": "2bb35071d725a43dc1f988f19955ccb4e5fdfbff1ab9edf3d83649a7f3fed055"
+  },
+  "preserved_completed_stage_sha256": {
+    "baseline": "26423130965fd09949f4d0c8472c17aaba41f891706106f1430c343da309b0eb",
+    "noise_sigma_0p05": "37d8c59a20f8bca02a6027f844666b087ea83e29f7e120558b5a4cca09debdbf",
+    "noise_sigma_0p10": "1d1b828da47f3a342f11098605b86f59c7da067cff3d5679951fba7c5559f5f0",
+    "noise_sigma_0p20": "59344a8b037161702b0ad547cb5229ef72c4914dca6dec32009e4f4c3fd6c5c6",
+    "noise_sigma_0p40": "be1335d6ef0b2f5dbede1a6f41d621968984a57057167a642cee3bbe57a950e2"
+  },
+  "recovery_contract": {
+    "execution_mode": "isolated_per_building_same_parameters",
+    "first_timeout_seconds": 120,
+    "retry_timeout_seconds": 600,
+    "later_batch_watchdog_seconds": 1800,
+    "scope_change_only": true,
+    "reconstruction_parameter_change_count": 0,
+    "preserve_completed_stages": true,
+    "resume_order": "noise_sigma_0p80 then noise finalize then density stages then combination stages"
+  },
+  "learning_runs_started": 0,
+  "new_inference_runs": 0,
+  "image_inputs_used": 0
+}

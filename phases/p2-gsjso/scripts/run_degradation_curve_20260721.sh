@@ -23,6 +23,10 @@ CURRENT_WAVE="preflight"
 PREP_COMMIT="$(git rev-parse HEAD)"
 NOISE_COMMIT=""
 FINAL_COMMIT=""
+BATCH_TIMEOUT_SECONDS=1800
+ISOLATED_TIMEOUT_SECONDS=120
+ISOLATED_RETRY_TIMEOUT_SECONDS=600
+RECOVERY_SCRIPT="phases/p2-gsjso/scripts/degradation_curve_v3_recovery.py"
 
 mkdir -p "$RUN" "$RUNTIME" "$DRIVER" "$LOG_DIR"
 exec 9>"$LOCK"
@@ -176,8 +180,138 @@ build_base_and_zero() {
 
 stage_done() {
   local stage="$1"
-  local path="$RUNTIME/stage_measurements/$stage.csv"
-  [[ -f "$path" ]] && [[ "$(wc -l < "$path")" -eq 179 ]]
+  run_tools python3 phases/p2-gsjso/scripts/degradation_curve_v3.py \
+    verify-stage-measurement --stage "$stage" > /dev/null 2>&1
+}
+
+run_batch_roofer() {
+  local stage="$1"
+  local container_name="dc-v3-${stage//_/-}-batch"
+  docker rm -f "$container_name" > /dev/null 2>&1 || true
+  timeout --signal=TERM --kill-after=20s "${BATCH_TIMEOUT_SECONDS}s" \
+    docker run --rm --name "$container_name" \
+    --user "$UID_GID" \
+    -v "$REPO:/workspace/JointBuildGS" \
+    -w /workspace/JointBuildGS \
+    "$ROOFER_IMAGE" \
+    --id-attribute building_id \
+    --box 690791.740 5335864.050 691154.650 5336353.850 \
+    "/workspace/JointBuildGS/$RUN_REL/runtime/input/$stage/aoi.laz" \
+    /workspace/JointBuildGS/phases/p0-audit/data/work/w2/footprints_scene_aoi.gpkg \
+    "/workspace/JointBuildGS/$RUN_REL/runtime/roofer/$stage" \
+    > "$LOG_DIR/${stage}_roofer.log" 2>&1
+  local code=$?
+  docker rm -f "$container_name" > /dev/null 2>&1 || true
+  return "$code"
+}
+
+run_isolated_attempt() {
+  local stage="$1"
+  local building_id="$2"
+  local attempt="$3"
+  local timeout_seconds="$4"
+  local attempt_rel="$RUN_REL/runtime/recovery/$stage/work/$building_id/attempt_$attempt"
+  local attempt_dir="$REPO/$attempt_rel/output"
+  local log_rel="$DRIVER_REL/logs/recovery/$stage/${building_id}.attempt${attempt}.log"
+  local log_path="$REPO/$log_rel"
+  local container_name="dc-v3-${stage//_/-}-${building_id//_/-}-a$attempt"
+  rm -rf "$REPO/$RUN_REL/runtime/recovery/$stage/work/$building_id/attempt_$attempt"
+  mkdir -p "$attempt_dir" "$(dirname "$log_path")"
+  docker rm -f "$container_name" > /dev/null 2>&1 || true
+  local start end elapsed code
+  start="$(date +%s)"
+  if timeout --signal=TERM --kill-after=20s "${timeout_seconds}s" \
+    docker run --rm --name "$container_name" \
+      --user "$UID_GID" \
+      -v "$REPO:/workspace/JointBuildGS" \
+      -w /workspace/JointBuildGS \
+      "$ROOFER_IMAGE" \
+      --id-attribute building_id \
+      --box 690791.740 5335864.050 691154.650 5336353.850 \
+      --filter "building_id = '$building_id'" \
+      "/workspace/JointBuildGS/$RUN_REL/runtime/input/$stage/aoi.laz" \
+      /workspace/JointBuildGS/phases/p0-audit/data/work/w2/footprints_scene_aoi.gpkg \
+      "/workspace/JointBuildGS/$attempt_rel/output" \
+      > "$log_path" 2>&1; then
+    code=0
+  else
+    code=$?
+  fi
+  end="$(date +%s)"
+  elapsed="$((end - start))"
+  docker rm -f "$container_name" > /dev/null 2>&1 || true
+  if [[ "$code" -eq 0 ]]; then
+    if run_tools python3 "$RECOVERY_SCRIPT" accept \
+        --stage "$stage" \
+        --building-id "$building_id" \
+        --source-dir "$attempt_rel/output" \
+        --wall-seconds "$elapsed" \
+        --log-path "$log_rel" \
+        --attempt "$attempt" \
+        --timeout-seconds "$timeout_seconds" \
+        > "$LOG_DIR/recovery/${stage}/${building_id}.accept.json"; then
+      return 0
+    else
+      code=$?
+    fi
+  fi
+  run_tools python3 "$RECOVERY_SCRIPT" record-failure \
+    --stage "$stage" \
+    --building-id "$building_id" \
+    --exit-code "$code" \
+    --wall-seconds "$elapsed" \
+    --log-path "$log_rel" \
+    --attempt "$attempt" \
+    --timeout-seconds "$timeout_seconds" \
+    > "$LOG_DIR/recovery/${stage}/${building_id}.failure${attempt}.json"
+  return "$code"
+}
+
+run_stage_isolated() {
+  local stage="$1"
+  local stage_start="$2"
+  run_tools python3 "$RECOVERY_SCRIPT" plan --stage "$stage" \
+    > "$LOG_DIR/${stage}_recovery_plan.log" 2>&1
+  local plan="$RUNTIME/recovery/$stage/plan.csv"
+  local total completed building_id
+  total="$(( $(wc -l < "$plan") - 1 ))"
+  completed=0
+  while IFS= read -r building_id; do
+    if [[ -f "$RUNTIME/recovery/$stage/parts/$building_id.json" ]] \
+      && [[ -f "$RUNTIME/roofer/$stage/$building_id.city.jsonl" ]] \
+      && run_tools python3 "$RECOVERY_SCRIPT" part-ready \
+        --stage "$stage" --building-id "$building_id" > /dev/null 2>&1; then
+      completed="$((completed + 1))"
+      write_status "$CURRENT_WAVE" "running" \
+        "isolated recovery reused=$completed/$total building=$building_id"
+      continue
+    fi
+    if ! run_isolated_attempt \
+      "$stage" "$building_id" 1 "$ISOLATED_TIMEOUT_SECONDS"; then
+      issue "DC-RECOVERY isolated retry: stage=$stage; building=$building_id; first_timeout_seconds=$ISOLATED_TIMEOUT_SECONDS; reconstruction_parameters_unchanged=true"
+      if ! run_isolated_attempt \
+        "$stage" "$building_id" 2 "$ISOLATED_RETRY_TIMEOUT_SECONDS"; then
+        issue "DC-RECOVERY isolated failure: stage=$stage; building=$building_id; attempts=2; learning_runs_started=0; new_inference_runs=0"
+        return 1
+      fi
+    fi
+    completed="$((completed + 1))"
+    write_status "$CURRENT_WAVE" "running" \
+      "isolated recovery completed=$completed/$total building=$building_id"
+  done < <(tail -n +2 "$plan" | cut -d, -f3)
+  run_tools python3 "$RECOVERY_SCRIPT" finalize --stage "$stage" \
+    > "$LOG_DIR/${stage}_recovery_finalize.log" 2>&1
+  local end elapsed
+  end="$(date +%s)"
+  elapsed="$((end - stage_start))"
+  run_tools python3 phases/p2-gsjso/scripts/degradation_curve_v3.py \
+    record-roofer --stage "$stage" --wall-seconds "$elapsed" \
+    > "$LOG_DIR/${stage}_record.log" 2>&1
+  run_tools python3 phases/p2-gsjso/scripts/degradation_curve_v3.py \
+    score-stage --stage "$stage" > "$LOG_DIR/${stage}_score.log" 2>&1
+  issue "DC-STAGE isolated recovery complete: stage=$stage; rows=178; measurement_sha256=$(sha "$RUNTIME/stage_measurements/$stage.csv"); recovery_manifest_sha256=$(sha "$RUNTIME/recovery/$stage/manifest.json"); wall_seconds=$elapsed; reconstruction_parameter_change_count=0; learning_runs_started=0; new_inference_runs=0"
+  write_status "$CURRENT_WAVE" "complete" \
+    "rows=178 execution=isolated_per_building wall_seconds=$elapsed"
 }
 
 run_stage() {
@@ -191,21 +325,33 @@ run_stage() {
   write_status "$CURRENT_WAVE" "running" "generate input, Roofer default, val3dity, canonical scoring"
   run_tools python3 phases/p2-gsjso/scripts/degradation_curve_v3.py \
     make-stage --stage "$stage" > "$LOG_DIR/${stage}_input.log" 2>&1
+  local start end elapsed batch_code
+  start="$(date +%s)"
+  if [[ -f "$RUNTIME/recovery/$stage/plan.csv" ]]; then
+    issue "DC-RECOVERY resume isolated stage: stage=$stage; accepted_parts=$(find "$RUNTIME/roofer/$stage" -maxdepth 1 -name '*.city.jsonl' 2>/dev/null | wc -l); reconstruction_parameters_unchanged=true"
+    mkdir -p "$RUNTIME/roofer/$stage"
+    run_stage_isolated "$stage" "$start"
+    return 0
+  fi
   run_tools python3 phases/p2-gsjso/scripts/degradation_curve_v3.py \
     clean-stage-output --stage "$stage"
-  local start end elapsed
-  start="$(date +%s)"
-  docker run --rm \
-    --user "$UID_GID" \
-    -v "$REPO:/workspace/JointBuildGS" \
-    -w /workspace/JointBuildGS \
-    "$ROOFER_IMAGE" \
-    --id-attribute building_id \
-    --box 690791.740 5335864.050 691154.650 5336353.850 \
-    "/workspace/JointBuildGS/$RUN_REL/runtime/input/$stage/aoi.laz" \
-    /workspace/JointBuildGS/phases/p0-audit/data/work/w2/footprints_scene_aoi.gpkg \
-    "/workspace/JointBuildGS/$RUN_REL/runtime/roofer/$stage" \
-    > "$LOG_DIR/${stage}_roofer.log" 2>&1
+  if [[ "$stage" == "noise_sigma_0p80" ]]; then
+    issue "DC-RECOVERY start isolated stage: stage=$stage; reason=prior_batch_stalled_14h41m; per_building_timeout_seconds=$ISOLATED_TIMEOUT_SECONDS; retry_timeout_seconds=$ISOLATED_RETRY_TIMEOUT_SECONDS; reconstruction_parameters_unchanged=true"
+    run_stage_isolated "$stage" "$start"
+    return 0
+  fi
+  if run_batch_roofer "$stage"; then
+    batch_code=0
+  else
+    batch_code=$?
+  fi
+  if [[ "$batch_code" -ne 0 ]]; then
+    issue "DC-RECOVERY batch fallback: stage=$stage; exit_code=$batch_code; batch_timeout_seconds=$BATCH_TIMEOUT_SECONDS; execution=isolated_per_building_same_parameters"
+    run_tools python3 phases/p2-gsjso/scripts/degradation_curve_v3.py \
+      clean-stage-output --stage "$stage"
+    run_stage_isolated "$stage" "$start"
+    return 0
+  fi
   end="$(date +%s)"
   elapsed="$((end - start))"
   run_tools python3 phases/p2-gsjso/scripts/degradation_curve_v3.py \
@@ -213,7 +359,7 @@ run_stage() {
     > "$LOG_DIR/${stage}_record.log" 2>&1
   run_tools python3 phases/p2-gsjso/scripts/degradation_curve_v3.py \
     score-stage --stage "$stage" > "$LOG_DIR/${stage}_score.log" 2>&1
-  issue "DC-STAGE complete: stage=$stage; rows=178; measurement_sha256=$(sha "$RUNTIME/stage_measurements/$stage.csv"); roofer_wall_seconds=$elapsed; learning_runs_started=0; new_inference_runs=0"
+  issue "DC-STAGE complete: stage=$stage; rows=178; measurement_sha256=$(sha "$RUNTIME/stage_measurements/$stage.csv"); roofer_wall_seconds=$elapsed; batch_timeout_seconds=$BATCH_TIMEOUT_SECONDS; learning_runs_started=0; new_inference_runs=0"
   write_status "$CURRENT_WAVE" "complete" "rows=178 roofer_wall_seconds=$elapsed"
 }
 

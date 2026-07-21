@@ -25,6 +25,16 @@ MANIFEST = DOCS / "degradation_curve_manifest.json"
 SUMMARY_MD = DOCS / "W_degradation_curve_summary_20260721.md"
 NOISE_FIGURE = DOCS / "figs/degradation_curve/degradation_curve_noise.png"
 DENSITY_FIGURE = DOCS / "figs/degradation_curve/degradation_curve_density.png"
+RECOVERY_SCRIPT = REPO / "phases/p2-gsjso/scripts/degradation_curve_v3_recovery.py"
+RECOVERY_INCIDENT = (
+    REPO
+    / "phases/p2-gsjso/runs/20260721_degradation_curve"
+    / "degradation_curve_recovery_incident.json"
+)
+RECOVERY_ROOT = (
+    REPO
+    / "phases/p2-gsjso/runs/20260721_degradation_curve/runtime/recovery"
+)
 EXPECTED_POPULATION = 178
 SEED_NAMESPACE = "jointbuildgs.degradation_curve.v3"
 
@@ -379,6 +389,79 @@ def validate(scope: str) -> dict[str, Any]:
         raise AssertionError("manifest verdict field must be null")
     if manifest["zero_stage_validation"]["all_metric_mismatch_count"] != 0:
         raise AssertionError("manifest zero-stage metric mismatch")
+    pipeline_hashes = manifest["pipeline_sha256"]
+    recovery_script_key = str(RECOVERY_SCRIPT.relative_to(REPO))
+    if pipeline_hashes.get(recovery_script_key) != sha256_file(RECOVERY_SCRIPT):
+        raise AssertionError("recovery script pipeline hash drift")
+
+    recovery_qa: dict[str, Any] | None = None
+    if "noise_sigma_0p80" in expected_stage_ids:
+        roofer_meta = manifest["stage_artifacts"]["noise_sigma_0p80"][
+            "roofer"
+        ]
+        if roofer_meta.get("execution_mode") != (
+            "isolated_per_building_same_parameters"
+        ):
+            raise AssertionError("sigma0.80 recovery execution mode drift")
+        recovery_manifest_path = REPO / str(
+            roofer_meta.get("recovery_manifest", "")
+        )
+        if not recovery_manifest_path.is_file():
+            raise AssertionError("sigma0.80 recovery manifest missing")
+        if sha256_file(recovery_manifest_path) != roofer_meta.get(
+            "recovery_manifest_sha256"
+        ):
+            raise AssertionError("sigma0.80 recovery manifest hash drift")
+        recovery = json.loads(
+            recovery_manifest_path.read_text(encoding="utf-8")
+        )
+        if (
+            recovery.get("status") != "complete"
+            or recovery.get("population_count") != 178
+            or recovery.get("successful_parts") != 178
+            or recovery.get("reconstruction_parameter_change_count") != 0
+            or recovery.get("learning_runs_started") != 0
+            or recovery.get("new_inference_runs") != 0
+        ):
+            raise AssertionError("sigma0.80 recovery manifest contract drift")
+        isolated_csv = REPO / recovery["isolated_measurements_csv"]
+        isolated_rows = read_csv(isolated_csv)
+        if (
+            len(isolated_rows) != 178
+            or {row["building_id"] for row in isolated_rows} != canonical_set
+            or len({row["building_id"] for row in isolated_rows}) != 178
+            or any(row["status"] != "success" for row in isolated_rows)
+            or any(
+                row["execution_mode"]
+                != "isolated_per_building_same_parameters"
+                for row in isolated_rows
+            )
+            or any(
+                row["learning_runs_started"] != "0"
+                or row["new_inference_runs"] != "0"
+                for row in isolated_rows
+            )
+        ):
+            raise AssertionError("sigma0.80 isolated measurement grain drift")
+        for row in isolated_rows:
+            output = REPO / row["accepted_output_path"]
+            if (
+                not output.is_file()
+                or sha256_file(output) != row["accepted_output_sha256"]
+            ):
+                raise AssertionError(
+                    f"sigma0.80 isolated output hash drift {row['building_id']}"
+                )
+        if not RECOVERY_INCIDENT.is_file():
+            raise AssertionError("recovery incident record missing")
+        recovery_qa = {
+            "execution_mode": recovery["execution_mode"],
+            "isolated_rows": len(isolated_rows),
+            "successful_parts": recovery["successful_parts"],
+            "failed_attempt_records": recovery["failed_attempt_records"],
+            "manifest_sha256": sha256_file(recovery_manifest_path),
+            "incident_sha256": sha256_file(RECOVERY_INCIDENT),
+        }
 
     output_hash_mismatches = []
     for path_text, expected in manifest["output_sha256"].items():
@@ -442,6 +525,7 @@ def validate(scope: str) -> dict[str, Any]:
         "manifest_output_hash_mismatches": len(output_hash_mismatches),
         "manifest_source_hash_mismatches": len(source_hash_mismatches),
         "figures": figure_info,
+        "sigma0p80_recovery": recovery_qa,
         "learning_runs_started": 0,
         "new_inference_runs": 0,
         "qa_passed": True,
