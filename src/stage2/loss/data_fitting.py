@@ -13,17 +13,39 @@ def l1(a: torch.Tensor, b: torch.Tensor, mask: torch.Tensor | None = None) -> to
     return d.mean()
 
 
+def _ssim_window(
+    channels: int,
+    *,
+    window_size: int,
+    dtype: torch.dtype,
+    device: torch.device,
+) -> torch.Tensor:
+    """Return the historical normalized Gaussian SSIM window."""
+
+    sigma = 1.5
+    coords = (
+        torch.arange(window_size, dtype=dtype, device=device)
+        - window_size // 2
+    )
+    g = torch.exp(-(coords**2) / (2 * sigma**2))
+    g = (g / g.sum()).reshape(1, 1, -1)
+    return (g.mT * g).reshape(1, 1, window_size, window_size).expand(
+        channels, 1, -1, -1
+    )
+
+
 def ssim(img1: torch.Tensor, img2: torch.Tensor, window_size: int = 11) -> torch.Tensor:
     """Differentiable SSIM. img: (H,W,3) in [0,1]."""
     if img1.ndim == 3:
         img1 = img1.permute(2, 0, 1).unsqueeze(0)
         img2 = img2.permute(2, 0, 1).unsqueeze(0)
     C = img1.shape[1]
-    sigma = 1.5
-    coords = torch.arange(window_size, dtype=torch.float32, device=img1.device) - window_size // 2
-    g = torch.exp(-(coords ** 2) / (2 * sigma ** 2))
-    g = (g / g.sum()).reshape(1, 1, -1)
-    window = (g.mT * g).reshape(1, 1, window_size, window_size).expand(C, 1, -1, -1)
+    window = _ssim_window(
+        C,
+        window_size=window_size,
+        dtype=img1.dtype,
+        device=img1.device,
+    )
 
     mu1 = F.conv2d(img1, window, padding=window_size // 2, groups=C)
     mu2 = F.conv2d(img2, window, padding=window_size // 2, groups=C)
@@ -38,10 +60,99 @@ def ssim(img1: torch.Tensor, img2: torch.Tensor, window_size: int = 11) -> torch
     return ssim_map.mean()
 
 
-def l_photo(rgb_pred: torch.Tensor, rgb_gt: torch.Tensor, lam: float = 0.2) -> torch.Tensor:
-    """L_photo = (1-λ)·L1 + λ·(1 - SSIM).  rgb shape: (H,W,3), [0,1]."""
-    l1_term = (rgb_pred - rgb_gt).abs().mean()
-    s = ssim(rgb_pred.clamp(0, 1), rgb_gt.clamp(0, 1))
+def masked_ssim(
+    img1: torch.Tensor,
+    img2: torch.Tensor,
+    mask: torch.Tensor,
+    window_size: int = 11,
+) -> torch.Tensor:
+    """SSIM whose value and gradient are independent of pixels outside ``mask``.
+
+    Local moments are normalized by the Gaussian-weighted valid support and
+    only mask-centred windows enter the final mean.  Multiplying every moment
+    input by the binary support before convolution is essential: merely
+    masking a conventional SSIM map would still let neighbouring outside
+    pixels influence the selected windows and their gradients.
+    """
+
+    if img1.shape != img2.shape or img1.ndim != 3 or img1.shape[-1] != 3:
+        raise ValueError("masked_ssim expects same-shape HxWx3 RGB tensors")
+    if mask.dtype != torch.bool or mask.shape != img1.shape[:2]:
+        raise ValueError("masked_ssim mask must be bool HxW aligned with RGB")
+    if not bool(mask.any().item()):
+        raise ValueError("masked_ssim forbids an empty mask")
+    if window_size < 1 or window_size % 2 == 0:
+        raise ValueError("SSIM window_size must be a positive odd integer")
+
+    value1 = img1.permute(2, 0, 1).unsqueeze(0)
+    value2 = img2.permute(2, 0, 1).unsqueeze(0)
+    channels = int(value1.shape[1])
+    support = mask.to(device=img1.device, dtype=img1.dtype)[None, None]
+    support_channels = support.expand(1, channels, -1, -1)
+    window = _ssim_window(
+        channels,
+        window_size=window_size,
+        dtype=img1.dtype,
+        device=img1.device,
+    )
+    padding = window_size // 2
+    weighted_support = F.conv2d(
+        support_channels,
+        window,
+        padding=padding,
+        groups=channels,
+    )
+    denominator = weighted_support.clamp_min(torch.finfo(img1.dtype).eps)
+
+    def moment(value: torch.Tensor) -> torch.Tensor:
+        return F.conv2d(
+            value * support_channels,
+            window,
+            padding=padding,
+            groups=channels,
+        ) / denominator
+
+    mu1 = moment(value1)
+    mu2 = moment(value2)
+    mu1_sq = mu1.square()
+    mu2_sq = mu2.square()
+    mu12 = mu1 * mu2
+    sigma1_sq = moment(value1.square()) - mu1_sq
+    sigma2_sq = moment(value2.square()) - mu2_sq
+    sigma12 = moment(value1 * value2) - mu12
+    C1, C2 = 0.01**2, 0.03**2
+    ssim_map = ((2 * mu12 + C1) * (2 * sigma12 + C2)) / (
+        (mu1_sq + mu2_sq + C1) * (sigma1_sq + sigma2_sq + C2)
+    )
+    selected = support_channels.to(torch.bool)
+    return ssim_map[selected].mean()
+
+
+def l_photo(
+    rgb_pred: torch.Tensor,
+    rgb_gt: torch.Tensor,
+    lam: float = 0.2,
+    mask: torch.Tensor | None = None,
+) -> torch.Tensor:
+    """L_photo = (1-λ)·L1 + λ·(1 - SSIM), optionally footprint-masked."""
+
+    if mask is None:
+        l1_term = (rgb_pred - rgb_gt).abs().mean()
+        s = ssim(rgb_pred.clamp(0, 1), rgb_gt.clamp(0, 1))
+    else:
+        if rgb_pred.shape != rgb_gt.shape or rgb_pred.ndim != 3:
+            raise ValueError("masked photo loss expects same-shape HxWxC tensors")
+        if mask.dtype != torch.bool or mask.shape != rgb_pred.shape[:2]:
+            raise ValueError("photo mask must be bool HxW aligned with RGB")
+        selected = mask[..., None].expand_as(rgb_pred)
+        if not bool(selected.any().item()):
+            raise ValueError("masked photo loss forbids an empty mask")
+        l1_term = (rgb_pred - rgb_gt).abs()[selected].mean()
+        s = masked_ssim(
+            rgb_pred.clamp(0, 1),
+            rgb_gt.clamp(0, 1),
+            mask,
+        )
     return (1 - lam) * l1_term + lam * (1 - s)
 
 
