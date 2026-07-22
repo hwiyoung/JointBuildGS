@@ -28,7 +28,12 @@ from tqdm import tqdm
 
 from .dataloader import ColmapDataset, resolve_view_roles
 from .densification import build_optimizers, build_param_dict, build_strategy
-from .grouping import group_primitives, group_primitives_g2
+from .geometry_partition import assign_partition_ids, load_xy_partitions
+from .grouping import (
+    group_primitives,
+    group_primitives_g2,
+    group_primitives_g2_partitioned,
+)
 from .loss import data_fitting as L
 from .loss.mutual import l_mutual
 from .loss.multiview import l_multiview_consistency
@@ -1566,15 +1571,69 @@ def main():
     structure_min_group = int(cfg.get("structure_min_group", 5))
     # P2-D: select grouping definition. g1 = patch-level (legacy; L_normal_align degenerates to
     # intra-patch smoothing). g2 = surface-level union-find (thesis target — coarse cell + merge).
+    # g2_geometry = the first-wave geometry-only variant: selected footprint XY supplies only
+    # a building partition and random/untrained semantic logits are never read.
     structure_grouping = cfg.get("structure_grouping", "g1")
     structure_merge_n_cos = float(cfg.get("structure_merge_n_cos", 0.92))   # g2 only
     structure_merge_d_tol = float(cfg.get("structure_merge_d_tol", 0.5))    # g2 only
-    if structure_grouping not in ("g1", "g2"):
-        raise ValueError(f"Unsupported structure_grouping={structure_grouping!r}; expected 'g1' or 'g2'")
+    if structure_grouping not in ("g1", "g2", "g2_geometry"):
+        raise ValueError(
+            f"Unsupported structure_grouping={structure_grouping!r}; "
+            "expected 'g1', 'g2', or 'g2_geometry'"
+        )
+    structure_partitions = ()
+    structure_partition_path = None
+    structure_partition_sha256 = None
+    structure_partition_buildings: list[str] = []
+    structure_partition_world_offset = cfg.get(
+        "structure_partition_world_offset",
+        cfg.get("world_offset", [690953.0, 5336071.0, 604.0]),
+    )
+    if structure_grouping == "g2_geometry":
+        structure_partition_path = cfg.get("structure_partition_footprints")
+        structure_partition_buildings = list(
+            cfg.get("structure_partition_buildings") or []
+        )
+        if not structure_partition_path or not structure_partition_buildings:
+            raise ValueError(
+                "g2_geometry requires structure_partition_footprints and "
+                "structure_partition_buildings"
+            )
+        structure_partition_file = Path(structure_partition_path)
+        if not structure_partition_file.is_file():
+            raise FileNotFoundError(structure_partition_file)
+        structure_partitions = load_xy_partitions(
+            structure_partition_file,
+            structure_partition_buildings,
+        )
+        structure_partition_sha256 = hashlib.sha256(
+            structure_partition_file.read_bytes()
+        ).hexdigest()
+        print(
+            f"[structure] g2_geometry partitions={len(structure_partitions)} "
+            f"source={structure_partition_file} sha256={structure_partition_sha256}"
+        )
 
     def _group_primitives(centers, normals, sem_logits, scales):
         """Dispatch L_structure grouping per config (g1 patch-level | g2 surface-level).
         Both return the same (group_ids, rep_n, rep_d) signature."""
+        if structure_grouping == "g2_geometry":
+            partition_ids = assign_partition_ids(
+                centers,
+                structure_partitions,
+                world_offset_xy=structure_partition_world_offset,
+            )
+            return group_primitives_g2_partitioned(
+                centers=centers,
+                normals=normals,
+                partition_ids=partition_ids,
+                scales=scales,
+                voxel_size=structure_voxel_size,
+                n_directions=structure_n_directions,
+                merge_n_cos=structure_merge_n_cos,
+                merge_d_tol=structure_merge_d_tol,
+                min_group_size=structure_min_group,
+            )
         if structure_grouping == "g2":
             return group_primitives_g2(
                 centers=centers, normals=normals, sem_logits=sem_logits, scales=scales,
@@ -1769,6 +1828,14 @@ def main():
         "elongation_axis_ratio_formula": "min(exp(scale0), exp(scale1)) / max(exp(scale0), exp(scale1))",
         "loss_grad_audit_every": loss_grad_audit_every,
         "loss_grad_audit_params": loss_grad_audit_params,
+        "structure_grouping": structure_grouping,
+        "structure_partition_footprints": (
+            str(structure_partition_path) if structure_partition_path else None
+        ),
+        "structure_partition_footprints_sha256": structure_partition_sha256,
+        "structure_partition_buildings": structure_partition_buildings,
+        "structure_partition_world_offset": structure_partition_world_offset,
+        "structure_semantic_logits_used": structure_grouping != "g2_geometry",
     }
     if semantic_geometry_enabled:
         effective_config.update(

@@ -317,3 +317,62 @@ def group_primitives_g2(
         rep_d = -(rep_n * rep_c).sum(dim=-1)
 
     return group_ids, rep_n, rep_d
+
+
+def group_primitives_g2_partitioned(
+    centers: torch.Tensor,
+    normals: torch.Tensor,
+    partition_ids: torch.Tensor,
+    scales: torch.Tensor,
+    voxel_size: float = 2.0,
+    n_directions: int = 12,
+    merge_n_cos: float = 0.92,
+    merge_d_tol: float = 0.5,
+    min_group_size: int = 30,
+) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+    """Run G2 with fixed XY building partitions instead of semantic logits.
+
+    ``partition_ids`` is a discrete, detached address: zero means outside the
+    selected pilot footprints and positive values identify ordered buildings.
+    The one-hot facade exists only because the mature G2 implementation hashes
+    ``argmax(sem_logits)``; it carries no learned semantic value or gradient.
+    """
+
+    if partition_ids.ndim != 1 or partition_ids.shape[0] != centers.shape[0]:
+        raise ValueError("partition_ids must be an N-vector aligned with centers")
+    if partition_ids.dtype != torch.int64:
+        raise ValueError("partition_ids must use torch.int64")
+    if partition_ids.device != centers.device:
+        raise ValueError("partition_ids and centers must use the same device")
+    if partition_ids.numel() and int(partition_ids.min().item()) < 0:
+        raise ValueError("partition_ids must be non-negative")
+    n_partitions = int(partition_ids.max().item()) if partition_ids.numel() else 0
+    if n_partitions == 0:
+        return (
+            torch.full(
+                (centers.shape[0],),
+                -1,
+                dtype=torch.int64,
+                device=centers.device,
+            ),
+            torch.zeros((0, 3), dtype=centers.dtype, device=centers.device),
+            torch.zeros((0,), dtype=centers.dtype, device=centers.device),
+        )
+    fixed_logits = torch.zeros(
+        (centers.shape[0], n_partitions + 1),
+        dtype=centers.dtype,
+        device=centers.device,
+    )
+    fixed_logits.scatter_(1, partition_ids[:, None], 1.0)
+    return group_primitives_g2(
+        centers=centers,
+        normals=normals,
+        sem_logits=fixed_logits,
+        scales=scales,
+        voxel_size=voxel_size,
+        n_directions=n_directions,
+        merge_n_cos=merge_n_cos,
+        merge_d_tol=merge_d_tol,
+        min_group_size=min_group_size,
+        exclude_bg=True,
+    )
