@@ -45,7 +45,6 @@ from .loss.multiview import l_multiview_consistency
 from .loss.planarity import (
     audit_2dgs_flattening_invariant,
     local_rendered_depth_coplanarity,
-    region_rendered_depth_coplanarity,
 )
 from .loss.semantic_guided import SemanticGuidedGeometry, SemanticRegionCache
 from .loss.structure import l_structure
@@ -59,6 +58,11 @@ from .pilot_loss_audit import (
     masked_normal_consistency as pilot_masked_normal_consistency,
     public_normal_term as pilot_public_normal_term,
     structure_terms_in_scope as pilot_structure_terms_in_scope,
+)
+from .plane_guided_init import (
+    PlaneGuidedInitConfig,
+    build_plane_guided_initialization,
+    verify_resume_initialization_audit,
 )
 from .renderer import render
 from .seed_control import apply_mvs_seed_init_opacity
@@ -225,6 +229,14 @@ _PILOT_PHOTO_MASK_ARMS = _PILOT_ARMS - {"01_surface"}
 _PILOT_MEDIUM_ARMS = frozenset(
     {"04a_plane_medium_vision", "04b_plane_medium_gt_upperbound"}
 )
+_PILOT_PLANE_INIT_CONFIG_KEYS = (
+    "pilot_plane_init_stride_px",
+    "pilot_plane_init_grid_offset_px",
+    "pilot_plane_init_knn",
+    "pilot_plane_init_tolerance_m",
+    "pilot_plane_init_min_coverage",
+    "pilot_plane_init_query_chunk_size",
+)
 
 
 def _require_finite_config_number(
@@ -239,6 +251,170 @@ def _require_finite_config_number(
     if positive and result <= 0.0:
         raise ValueError(f"pilot config {key} must be >0")
     return result
+
+
+def _require_explicit_config_int(
+    cfg: Dict[str, Any],
+    key: str,
+    *,
+    minimum: int,
+    maximum: Optional[int] = None,
+) -> int:
+    value = cfg.get(key)
+    if isinstance(value, bool) or not isinstance(value, int):
+        raise ValueError(f"pilot config {key} must be an explicit integer")
+    result = int(value)
+    if result < minimum or (maximum is not None and result > maximum):
+        upper = "" if maximum is None else f" and <={maximum}"
+        raise ValueError(f"pilot config {key} must be >={minimum}{upper}")
+    return result
+
+
+def _pilot_plane_init_config(cfg: Dict[str, Any]) -> PlaneGuidedInitConfig:
+    """Resolve only explicit, prelocked plane-guided initialization controls."""
+
+    stride = _require_explicit_config_int(
+        cfg, "pilot_plane_init_stride_px", minimum=1
+    )
+    offset = _require_explicit_config_int(
+        cfg, "pilot_plane_init_grid_offset_px", minimum=0
+    )
+    if offset >= stride:
+        raise ValueError(
+            "pilot config pilot_plane_init_grid_offset_px must be < stride"
+        )
+    knn = _require_explicit_config_int(
+        cfg, "pilot_plane_init_knn", minimum=1, maximum=64
+    )
+    tolerance = _require_finite_config_number(
+        cfg, "pilot_plane_init_tolerance_m", positive=True
+    )
+    min_coverage = _require_finite_config_number(
+        cfg, "pilot_plane_init_min_coverage", positive=True
+    )
+    if min_coverage > 1.0:
+        raise ValueError("pilot_plane_init_min_coverage must be <=1")
+    chunk_size = _require_explicit_config_int(
+        cfg, "pilot_plane_init_query_chunk_size", minimum=1
+    )
+    return PlaneGuidedInitConfig(
+        stride_px=stride,
+        grid_offset_px=offset,
+        knn=knn,
+        tolerance_m=tolerance,
+        min_coverage=min_coverage,
+        query_chunk_size=chunk_size,
+    )
+
+
+def _pilot_plane_window_coplanarity(
+    *,
+    pilot_arm: str,
+    depth: torch.Tensor,
+    intrinsics: torch.Tensor,
+    alpha: torch.Tensor,
+    plane_region_mask: Optional[torch.Tensor],
+    audit_mask: Optional[torch.Tensor],
+    window_size: int,
+    stride: int,
+    min_points: int,
+    alpha_threshold: float,
+    max_depth_range: Optional[float],
+    min_second_eigenvalue: float,
+):
+    """One local-window primitive for soft and both controlled medium arms."""
+
+    if pilot_arm not in {"03_plane_soft", *_PILOT_MEDIUM_ARMS}:
+        raise ValueError(f"pilot arm has no plane loss: {pilot_arm}")
+    if pilot_arm in _PILOT_MEDIUM_ARMS:
+        if plane_region_mask is None:
+            raise RuntimeError(f"{pilot_arm} requires plane_region_mask")
+        valid_mask = plane_region_mask.to(device=depth.device, dtype=torch.bool)
+    else:
+        if plane_region_mask is not None:
+            raise RuntimeError("03_plane_soft must not receive a plane-region mask")
+        valid_mask = None
+    if audit_mask is not None:
+        audit = audit_mask.to(device=depth.device, dtype=torch.bool)
+        valid_mask = audit if valid_mask is None else valid_mask & audit
+    return local_rendered_depth_coplanarity(
+        depth,
+        intrinsics,
+        alpha=alpha,
+        valid_mask=valid_mask,
+        window_size=window_size,
+        stride=stride,
+        min_points=min_points,
+        alpha_threshold=alpha_threshold,
+        max_depth_range=max_depth_range,
+        min_second_eigenvalue=min_second_eigenvalue,
+    )
+
+
+def _pilot_plane_init_start_mode(
+    resume_request: Optional[str],
+    *,
+    fresh_audit_exists: bool,
+    checkpoint_candidate_exists: bool,
+) -> str:
+    """Resolve the only safe action available before checkpoint discovery.
+
+    ``auto`` with neither a checkpoint candidate nor a fresh audit is the
+    supported first-run convenience path.  It initializes fresh before
+    optimizers and is checked again after strict discovery.  Every other resume
+    request is verify-only here, so a checkpoint cannot manufacture its missing
+    historical initialization audit.
+    """
+
+    if resume_request is None:
+        return "fresh"
+    if (
+        resume_request.lower() == "auto"
+        and not fresh_audit_exists
+        and not checkpoint_candidate_exists
+    ):
+        return "fresh_auto_candidate"
+    return "resume_verify_only"
+
+
+def _execute_pilot_plane_init_start_gate(
+    *,
+    model: GaussianModel2D,
+    result: Any,
+    mvs_seed_mask: np.ndarray,
+    start_mode: str,
+    fresh_audit_path: Path,
+    resume_audit_path: Path,
+) -> Optional[Path]:
+    """Apply on a fresh scaffold or verify-only on a resume scaffold."""
+
+    if start_mode == "resume_verify_only":
+        verification = verify_resume_initialization_audit(
+            fresh_audit_path,
+            result,
+        )
+        atomic_write_json(resume_audit_path, verification)
+        return resume_audit_path
+    if start_mode not in {"fresh", "fresh_auto_candidate"}:
+        raise ValueError(f"unsupported plane initialization start mode: {start_mode}")
+
+    applied_count = model.initialize_normals_from_world(
+        torch.from_numpy(result.normals_world_up),
+        torch.from_numpy(mvs_seed_mask),
+    )
+    fresh_audit = {
+        **result.audit,
+        "application": {
+            "mode": "fresh_start",
+            "applied": True,
+            "applied_model_row_count": int(applied_count),
+            "selection": "dense_mvs_seed_rows_only",
+            "performed_before_optimizer_creation": True,
+            "unmatched_rows_initialized_to_positive_z": True,
+        },
+    }
+    atomic_write_json(fresh_audit_path, fresh_audit)
+    return None
 
 
 def _validate_pilot_config_contract(
@@ -295,8 +471,15 @@ def _validate_pilot_config_contract(
     if arm in _PILOT_MEDIUM_ARMS:
         if not plane_manifest:
             raise ValueError(f"{arm} requires plane_region_mask_manifest")
+        if not cfg.get("init_pointcloud"):
+            raise ValueError(f"{arm} requires dense MVS init_pointcloud")
+        _pilot_plane_init_config(cfg)
     elif plane_manifest is not None:
         raise ValueError(f"{arm} forbids plane_region_mask_manifest")
+    elif any(key in cfg for key in _PILOT_PLANE_INIT_CONFIG_KEYS):
+        raise ValueError(
+            f"{arm} forbids plane-guided initialization config keys"
+        )
 
     forbidden_nonzero_defaults = {
         "w_distort": 100.0,
@@ -338,9 +521,7 @@ def _validate_pilot_config_contract(
             raise ValueError("pilot_plane_window_size must be odd and >=3")
         if stride < 1:
             raise ValueError("pilot_plane_stride must be >=1")
-        if min_points < 3 or (
-            arm == "03_plane_soft" and min_points > window_size * window_size
-        ):
+        if min_points < 3 or min_points > window_size * window_size:
             raise ValueError("pilot_plane_min_points is invalid for the selected arm")
         if not 0.0 <= alpha_threshold <= 1.0:
             raise ValueError("pilot_plane_alpha_threshold must be in [0,1]")
@@ -1431,6 +1612,78 @@ def main():
     )
     model = model.to(device)
 
+    # 04a/04b share one deterministic plane-guided initialization path.  This
+    # start gate is deliberately before optimizer construction: fresh runs set
+    # only the dense-MVS seed quaternion rows, while resume requests validate
+    # the immutable binding and leave checkpoint quaternions authoritative.
+    pilot_plane_init_result = None
+    pilot_plane_init_audit_path: Optional[Path] = None
+    pilot_plane_init_resume_audit_path: Optional[Path] = None
+    pilot_plane_init_effective: dict[str, Any] = {
+        "status": "not_applicable_for_this_pilot_arm"
+    }
+    if pilot_arm in _PILOT_MEDIUM_ARMS:
+        if mvs_seed_mask is None or not bool(mvs_seed_mask.any()):
+            raise RuntimeError(
+                f"{pilot_arm} plane-guided initialization requires nonempty MVS seeds"
+            )
+        if ds.plane_region_mask_binding is None:
+            raise RuntimeError(
+                f"{pilot_arm} plane-guided initialization requires a bound plane mask"
+            )
+        plane_init_config = _pilot_plane_init_config(cfg)
+        pilot_plane_init_result = build_plane_guided_initialization(
+            dataset=ds,
+            training_view_indices=train_idx,
+            mvs_seed_xyz=points_xyz[mvs_seed_mask],
+            plane_mask_binding=ds.plane_region_mask_binding,
+            pilot_arm=pilot_arm,
+            config=plane_init_config,
+        )
+        pilot_plane_init_audit_path = (
+            out_dir / "audit/pilot_plane_guided_init.json"
+        )
+        pilot_plane_init_preoptimizer_mode = _pilot_plane_init_start_mode(
+            full_state["resume_request"],
+            fresh_audit_exists=pilot_plane_init_audit_path.is_file(),
+            checkpoint_candidate_exists=any(
+                (out_dir / "ckpt").glob("step_*.pt")
+            ),
+        )
+        pilot_plane_init_resume_audit_path = _execute_pilot_plane_init_start_gate(
+            model=model,
+            result=pilot_plane_init_result,
+            mvs_seed_mask=mvs_seed_mask,
+            start_mode=pilot_plane_init_preoptimizer_mode,
+            fresh_audit_path=pilot_plane_init_audit_path,
+            resume_audit_path=(
+                out_dir / "audit/pilot_plane_guided_init_resume_verification.json"
+            ),
+        )
+
+        init_audit = pilot_plane_init_result.audit
+        pilot_plane_init_effective = {
+            "status": "implemented_pre_optimizer_start_gate",
+            "algorithm": init_audit["algorithm"]["algorithm"],
+            "algorithm_sha256": init_audit["algorithm_sha256"],
+            "binding_sha256": init_audit["binding_sha256"],
+            "parameters": init_audit["parameters"],
+            "source": init_audit["source"],
+            "fresh_audit_path": str(pilot_plane_init_audit_path),
+            "fresh_only_application": True,
+            "checkpoint_quaternions_take_precedence_on_resume": True,
+            "selection": "dense_mvs_seed_rows_only",
+        }
+        print(
+            "[pilot-plane-init] "
+            f"arm={pilot_arm} evidence={init_audit['counts']['evidence_sample_count']} "
+            f"matched={init_audit['counts']['matched_seed_count']}/"
+            f"{init_audit['counts']['mvs_seed_count']} "
+            f"coverage={init_audit['counts']['matched_seed_fraction']:.6f} "
+            f"mode={pilot_plane_init_preoptimizer_mode}",
+            flush=True,
+        )
+
     def _configured_optimizers(candidate_model: GaussianModel2D):
         return build_optimizers(
             candidate_model,
@@ -2111,7 +2364,7 @@ def main():
                 "pilot_plane_mode": (
                     "soft_local_global_coverage"
                     if pilot_arm == "03_plane_soft"
-                    else "medium_common_region_code"
+                    else "medium_local_window_mask_restricted"
                     if pilot_arm in _PILOT_MEDIUM_ARMS
                     else "off"
                 ),
@@ -2127,10 +2380,7 @@ def main():
                 ],
                 "pilot_loss_audit_csv_paths": list(PILOT_FULL_STATE_CSV_PATHS),
                 "pilot_flattening_role": "audit_only_never_weighted",
-                "pilot_plane_guided_init": {
-                    "status": "not_implemented_in_stage2_trainer",
-                    "mvs_seed_or_mvs_normal_does_not_count_as_plane_guided_init": True,
-                },
+                "pilot_plane_guided_init": pilot_plane_init_effective,
             }
         )
     if semantic_geometry_enabled:
@@ -2299,6 +2549,25 @@ def main():
             prior_runs = read_learning_runs_started(full_state_manifest_path)
             learning_runs_started = prior_runs
 
+        if pilot_arm in _PILOT_MEDIUM_ARMS:
+            if (
+                pilot_plane_init_preoptimizer_mode == "resume_verify_only"
+                and selected_checkpoint is None
+            ):
+                raise RuntimeError(
+                    "medium-arm resume request resolved no checkpoint after its "
+                    "pre-optimizer audit was verified; disable full_state_resume "
+                    "to make a new fresh run"
+                )
+            if (
+                pilot_plane_init_preoptimizer_mode == "fresh_auto_candidate"
+                and selected_checkpoint is not None
+            ):
+                raise RuntimeError(
+                    "full_state_resume=auto discovered a checkpoint without the "
+                    "required prior plane-guided initialization audit"
+                )
+
         planned_learning_runs_started, learning_run_increment_pending = (
             learning_runs_for_process(
                 learning_runs_started,
@@ -2365,6 +2634,30 @@ def main():
             "learning_runs_started": learning_runs_started,
             "learning_runs_incremented_this_process": learning_run_incremented,
         }
+    if pilot_arm in _PILOT_MEDIUM_ARMS:
+        assert pilot_plane_init_result is not None
+        init_runtime = {
+            "mode": (
+                "checkpoint_resume_verified"
+                if resume_selected_path is not None
+                else "fresh_applied"
+            ),
+            "initializer_reapplied_after_checkpoint_restore": False,
+            "checkpoint_quaternions_restored": resume_selected_path is not None,
+            "resume_completed_steps": int(start_completed_steps),
+            "matched_seed_count": pilot_plane_init_result.audit["counts"][
+                "matched_seed_count"
+            ],
+            "matched_seed_fraction": pilot_plane_init_result.audit["counts"][
+                "matched_seed_fraction"
+            ],
+            "resume_verification_audit_path": (
+                str(pilot_plane_init_resume_audit_path)
+                if pilot_plane_init_resume_audit_path is not None
+                else None
+            ),
+        }
+        effective_config["pilot_plane_guided_init"]["runtime"] = init_runtime
     # Soft/strong plane arms may not begin (or resume) an optimizer update until
     # the gsplat 2DGS fixed-thickness invariant is proven.  This is a gate and an
     # audit only: its value is never added to ``loss_total`` or the plane share.
@@ -2664,18 +2957,23 @@ def main():
         loss_dist = loss_dist_raw / distort_norm_denominator
         loss_total = loss_total + w_distort * loss_dist
 
-        # First-wave plane ladder.  The medium pair shares this exact code path;
-        # the dataloader has already enforced that only the mask provenance can
-        # differ between 04a and 04b.  2DGS thickness is audited later and is
-        # intentionally absent from this loss.
+        # First-wave plane ladder.  Every plane arm uses the same local rendered-
+        # depth windows and edge guard.  The medium pair merely restricts those
+        # windows by its bound plane mask and uses its stronger prelocked
+        # ``w_plane``; fitting one plane to a binary union is intentionally
+        # forbidden because it can collapse distinct roof facets.  04a/04b share
+        # this exact branch, with mask provenance as their only difference.
         loss_plane = torch.tensor(0.0, device=device)
         pilot_plane_count = 0
         pilot_plane_point_count = 0
         if pilot_arm == "03_plane_soft":
-            plane_result = local_rendered_depth_coplanarity(
-                depth_pred,
-                K,
+            plane_result = _pilot_plane_window_coplanarity(
+                pilot_arm=pilot_arm,
+                depth=depth_pred,
+                intrinsics=K,
                 alpha=alpha,
+                plane_region_mask=None,
+                audit_mask=None,
                 window_size=pilot_plane_window_size,
                 stride=pilot_plane_stride,
                 min_points=pilot_plane_min_points,
@@ -2692,13 +2990,18 @@ def main():
                 raise RuntimeError(
                     f"{pilot_arm} batch is missing the locked plane_region_mask"
                 )
-            plane_result = region_rendered_depth_coplanarity(
-                depth_pred,
-                K,
-                batch["plane_region_mask"].to(device),
+            plane_result = _pilot_plane_window_coplanarity(
+                pilot_arm=pilot_arm,
+                depth=depth_pred,
+                intrinsics=K,
                 alpha=alpha,
+                plane_region_mask=batch["plane_region_mask"],
+                audit_mask=None,
+                window_size=pilot_plane_window_size,
+                stride=pilot_plane_stride,
                 min_points=pilot_plane_min_points,
                 alpha_threshold=pilot_plane_alpha_threshold,
+                max_depth_range=pilot_plane_max_depth_range,
                 min_second_eigenvalue=pilot_plane_min_second_eigenvalue,
             )
             loss_plane = plane_result.loss
@@ -3018,11 +3321,13 @@ def main():
             # unchanged by this recomputation.
             loss_plane_roof = depth_pred.sum() * 0.0
             if pilot_arm == "03_plane_soft":
-                roof_plane_result = local_rendered_depth_coplanarity(
-                    depth_pred,
-                    K,
+                roof_plane_result = _pilot_plane_window_coplanarity(
+                    pilot_arm=pilot_arm,
+                    depth=depth_pred,
+                    intrinsics=K,
                     alpha=alpha,
-                    valid_mask=roof_audit_mask,
+                    plane_region_mask=None,
+                    audit_mask=roof_audit_mask,
                     window_size=pilot_plane_window_size,
                     stride=pilot_plane_stride,
                     min_points=pilot_plane_min_points,
@@ -3032,14 +3337,18 @@ def main():
                 )
                 loss_plane_roof = roof_plane_result.loss
             elif pilot_arm in _PILOT_MEDIUM_ARMS:
-                roof_plane_result = region_rendered_depth_coplanarity(
-                    depth_pred,
-                    K,
-                    batch["plane_region_mask"].to(device),
+                roof_plane_result = _pilot_plane_window_coplanarity(
+                    pilot_arm=pilot_arm,
+                    depth=depth_pred,
+                    intrinsics=K,
                     alpha=alpha,
-                    valid_mask=roof_audit_mask,
+                    plane_region_mask=batch["plane_region_mask"],
+                    audit_mask=roof_audit_mask,
+                    window_size=pilot_plane_window_size,
+                    stride=pilot_plane_stride,
                     min_points=pilot_plane_min_points,
                     alpha_threshold=pilot_plane_alpha_threshold,
+                    max_depth_range=pilot_plane_max_depth_range,
                     min_second_eigenvalue=pilot_plane_min_second_eigenvalue,
                 )
                 loss_plane_roof = roof_plane_result.loss

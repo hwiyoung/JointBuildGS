@@ -47,6 +47,40 @@ def quat_to_rotmat(q: torch.Tensor) -> torch.Tensor:
     return R
 
 
+def quaternion_from_positive_z_normals(normals: torch.Tensor) -> torch.Tensor:
+    """Return deterministic ``wxyz`` rotations that map local +Z to ``normals``.
+
+    Plane-guided initialization first puts every source normal in the world +Z
+    hemisphere.  That removes both the normal-sign ambiguity and the antipodal
+    singularity of the shortest-arc quaternion used here.  The local x/y spin
+    remains fixed by the shortest-arc construction; there is no random tangent
+    rotation.
+    """
+
+    if normals.ndim != 2 or normals.shape[-1] != 3:
+        raise ValueError("normals must have shape (N,3)")
+    if not normals.is_floating_point():
+        raise TypeError("normals must be floating point")
+    if not bool(torch.isfinite(normals).all()):
+        raise ValueError("normals must be finite")
+
+    lengths = normals.norm(dim=-1, keepdim=True)
+    if bool((lengths <= 1.0e-12).any()):
+        raise ValueError("normals must be nonzero")
+    unit = normals / lengths
+    if bool((unit[:, 2] < -1.0e-7).any()):
+        raise ValueError("normals must lie in the +Z hemisphere")
+
+    # For a=(0,0,1), b=unit, shortest-arc q is
+    #   q = normalize([1 + dot(a,b), cross(a,b)]).
+    # +Z-hemisphere input guarantees the scalar component is >=1, so the
+    # construction is well-conditioned and has a unique, positive-w sign.
+    scalar = 1.0 + unit[:, 2]
+    vector = torch.stack((-unit[:, 1], unit[:, 0], torch.zeros_like(unit[:, 0])), dim=-1)
+    quat = torch.cat((scalar[:, None], vector), dim=-1)
+    return quat / quat.norm(dim=-1, keepdim=True).clamp_min(1.0e-12)
+
+
 # ---------- model ----------
 
 class GaussianModel2D(nn.Module):
@@ -164,6 +198,36 @@ class GaussianModel2D(nn.Module):
     def tangents(self) -> Tuple[torch.Tensor, torch.Tensor]:
         R = quat_to_rotmat(self.quats)
         return R[..., :, 0], R[..., :, 1]
+
+    def initialize_normals_from_world(
+        self,
+        target_normals: torch.Tensor,
+        selection_mask: torch.Tensor,
+    ) -> int:
+        """Set selected Gaussian frames before optimizer construction.
+
+        Only the quaternion rows selected by ``selection_mask`` are replaced.
+        Callers use this for fresh MVS-seed initialization; checkpoint resume
+        restores serialized quaternions instead and must not call this method.
+        """
+
+        if selection_mask.dtype != torch.bool or selection_mask.ndim != 1:
+            raise ValueError("selection_mask must be a bool vector")
+        if selection_mask.shape[0] != self.num_points:
+            raise ValueError("selection_mask length must match model point count")
+        selected_count = int(selection_mask.sum().item())
+        if target_normals.shape != (selected_count, 3):
+            raise ValueError(
+                "target_normals must have shape (selection_mask.sum(),3)"
+            )
+        target = target_normals.to(device=self.quats.device, dtype=self.quats.dtype)
+        quats = quaternion_from_positive_z_normals(target)
+        selected_indices = torch.nonzero(
+            selection_mask.to(device=self.quats.device), as_tuple=False
+        ).flatten()
+        with torch.no_grad():
+            self.quats.index_copy_(0, selected_indices, quats)
+        return selected_count
 
     def colors_sh(self) -> torch.Tensor:
         """Return (N, (deg+1)^2, 3) for gsplat."""
