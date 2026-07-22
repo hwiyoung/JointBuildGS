@@ -41,6 +41,7 @@ from .loss.semantic_guided import SemanticGuidedGeometry, SemanticRegionCache
 from .loss.structure import l_structure
 from .model import GaussianModel2D
 from .renderer import render
+from .seed_control import apply_mvs_seed_init_opacity
 
 
 def _build_mvc_neighbors(frames, train_idx, k, max_angle_deg, min_baseline):
@@ -1208,6 +1209,19 @@ def main():
         mvs_seed_mask = np.zeros(points_xyz.shape[0], dtype=bool)
         mvs_seed_mask[(0 if mode == "replace" else n0):] = True   # replace=all, concat=appended rows
 
+    mvs_seed_init_opacity = cfg.get("mvs_seed_init_opacity")
+    points_init_opacity = apply_mvs_seed_init_opacity(
+        len(points_xyz),
+        mvs_seed_mask,
+        points_init_opacity,
+        mvs_seed_init_opacity,
+    )
+    if mvs_seed_init_opacity is not None:
+        print(
+            f"[mvs-seed] init opacity={float(mvs_seed_init_opacity):.3f} "
+            f"for {int(mvs_seed_mask.sum())} lineage roots"
+        )
+
     # ---------- model ----------
     model = GaussianModel2D(
         points_xyz=points_xyz,
@@ -1805,6 +1819,11 @@ def main():
         "legacy_mvs_seed_protect": legacy_mvs_seed_protect,
         "seed_protect": seed_protect,
         "seed_protect_until_iter": seed_protect_until_iter,
+        "mvs_seed_init_opacity": (
+            float(mvs_seed_init_opacity)
+            if mvs_seed_init_opacity is not None
+            else 0.10
+        ),
         "seed_protected_lineage": (
             "surface+MVS" if surface_seed_protect and legacy_mvs_seed_protect
             else "surface" if surface_seed_protect
