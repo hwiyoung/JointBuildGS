@@ -76,6 +76,7 @@ from .train_resume import (
     atomic_write_json,
     capture_loss_csv_cursor,
     capture_trainer_runtime_state,
+    empty_loss_csv_cursor,
     full_state_binding_sha256,
     full_state_checkpoint_due,
     full_state_options,
@@ -363,21 +364,21 @@ def _pilot_plane_init_start_mode(
 ) -> str:
     """Resolve the only safe action available before checkpoint discovery.
 
-    ``auto`` with neither a checkpoint candidate nor a fresh audit is the
-    supported first-run convenience path.  It initializes fresh before
-    optimizers and is checked again after strict discovery.  Every other resume
-    request is verify-only here, so a checkpoint cannot manufacture its missing
-    historical initialization audit.
+    ``auto`` without a checkpoint candidate starts from deterministic initial
+    state.  A prior fresh audit is verified and the initializer is reapplied as
+    a pre-checkpoint retry; it is never treated as checkpoint state.  Every
+    request with a checkpoint candidate is verify-only here, so a checkpoint
+    cannot manufacture its missing historical initialization audit.
     """
 
     if resume_request is None:
         return "fresh"
-    if (
-        resume_request.lower() == "auto"
-        and not fresh_audit_exists
-        and not checkpoint_candidate_exists
-    ):
-        return "fresh_auto_candidate"
+    if resume_request.lower() == "auto" and not checkpoint_candidate_exists:
+        return (
+            "fresh_retry_precheckpoint"
+            if fresh_audit_exists
+            else "fresh_auto_candidate"
+        )
     return "resume_verify_only"
 
 
@@ -392,11 +393,25 @@ def _execute_pilot_plane_init_start_gate(
 ) -> Optional[Path]:
     """Apply on a fresh scaffold or verify-only on a resume scaffold."""
 
-    if start_mode == "resume_verify_only":
+    if start_mode in {"resume_verify_only", "fresh_retry_precheckpoint"}:
         verification = verify_resume_initialization_audit(
             fresh_audit_path,
             result,
         )
+        if start_mode == "fresh_retry_precheckpoint":
+            applied_count = model.initialize_normals_from_world(
+                torch.from_numpy(result.normals_world_up),
+                torch.from_numpy(mvs_seed_mask),
+            )
+            verification.update(
+                {
+                    "mode": "fresh_retry_before_first_full_state_checkpoint",
+                    "checkpoint_quaternions_take_precedence": False,
+                    "initializer_reapplied": True,
+                    "applied_model_row_count": int(applied_count),
+                    "performed_before_optimizer_creation": True,
+                }
+            )
         atomic_write_json(resume_audit_path, verification)
         return resume_audit_path
     if start_mode not in {"fresh", "fresh_auto_candidate"}:
@@ -2482,6 +2497,7 @@ def main():
     resume_selected_sha256: Optional[str] = None
     resume_skipped: list[dict[str, str]] = []
     loss_cursor_actions: list[str] = []
+    precheckpoint_fresh_retry = False
 
     if full_state["enabled"]:
         # Hash only the stable, training-effective section. Runtime selection
@@ -2571,8 +2587,36 @@ def main():
                 flush=True,
             )
         else:
+            prior_manifest_exists = full_state_manifest_path.is_file()
             prior_runs = read_learning_runs_started(full_state_manifest_path)
             learning_runs_started = prior_runs
+            precheckpoint_fresh_retry = bool(
+                pilot_arm is not None
+                and resume_request is not None
+                and resume_request.lower() == "auto"
+                and (
+                    prior_manifest_exists
+                    or (
+                        pilot_arm in _PILOT_MEDIUM_ARMS
+                        and pilot_plane_init_preoptimizer_mode
+                        == "fresh_retry_precheckpoint"
+                    )
+                )
+            )
+            if precheckpoint_fresh_retry:
+                loss_cursor_actions = restore_loss_csv_cursor(
+                    out_dir,
+                    full_state["loss_csv_paths"],
+                    empty_loss_csv_cursor(full_state["loss_csv_paths"]),
+                    expected_completed_steps=0,
+                )
+                print(
+                    "[resume] no full-state checkpoint; reset uncheckpointed "
+                    "pilot loss CSVs and restart from deterministic initial state",
+                    flush=True,
+                )
+                for action in loss_cursor_actions:
+                    print(f"[resume] pre-checkpoint rollback: {action}", flush=True)
 
         if pilot_arm in _PILOT_MEDIUM_ARMS:
             if (
@@ -2585,7 +2629,8 @@ def main():
                     "to make a new fresh run"
                 )
             if (
-                pilot_plane_init_preoptimizer_mode == "fresh_auto_candidate"
+                pilot_plane_init_preoptimizer_mode
+                in {"fresh_auto_candidate", "fresh_retry_precheckpoint"}
                 and selected_checkpoint is not None
             ):
                 raise RuntimeError(
@@ -2622,6 +2667,7 @@ def main():
             "resume_selected_sha256": resume_selected_sha256,
             "resume_skipped": resume_skipped,
             "loss_csv_rollback_actions": loss_cursor_actions,
+            "precheckpoint_fresh_retry": precheckpoint_fresh_retry,
             "start_completed_steps": start_completed_steps,
             "next_update": (
                 start_completed_steps + 1

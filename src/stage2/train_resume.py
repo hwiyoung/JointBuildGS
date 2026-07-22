@@ -202,6 +202,26 @@ def capture_loss_csv_cursor(
     }
 
 
+def empty_loss_csv_cursor(relative_paths: Sequence[str]) -> dict[str, Any]:
+    """Return the only valid zero-step cursor for a fresh pre-checkpoint retry."""
+
+    normalized = sorted(
+        {normalize_relative_output_path(path) for path in relative_paths}
+    )
+    return {
+        "schema": FULL_STATE_LOSS_CURSOR_SCHEMA,
+        "completed_steps": 0,
+        "files": {
+            path: {
+                "exists": False,
+                "size_bytes": 0,
+                "prefix_sha256": None,
+            }
+            for path in normalized
+        },
+    }
+
+
 def restore_loss_csv_cursor(
     out_dir: Path,
     relative_paths: Sequence[str],

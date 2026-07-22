@@ -28,6 +28,7 @@ from src.stage2.train import (
     _pilot_plane_window_coplanarity,
     _validate_pilot_config_contract,
 )
+from src.stage2.train_resume import empty_loss_csv_cursor, restore_loss_csv_cursor
 
 
 def _file_sha256(path: Path) -> str:
@@ -227,6 +228,36 @@ class PilotPlaneGuidedInitTests(unittest.TestCase):
                 resume_verification_path.read_text(encoding="utf-8")
             )
             self.assertFalse(persisted_verification["initializer_reapplied"])
+
+            class ApplyRetryModel:
+                def __init__(self) -> None:
+                    self.calls = 0
+
+                def initialize_normals_from_world(self, target, selection):
+                    self.calls += 1
+                    self.target_shape = tuple(target.shape)
+                    self.selection = selection.clone()
+                    return int(selection.sum())
+
+            retry_model = ApplyRetryModel()
+            retry_verification_path = root / "retry_verification.json"
+            _execute_pilot_plane_init_start_gate(
+                model=retry_model,
+                result=result,
+                mvs_seed_mask=np.array([True, True]),
+                start_mode="fresh_retry_precheckpoint",
+                fresh_audit_path=previous_path,
+                resume_audit_path=retry_verification_path,
+            )
+            retry_verification = json.loads(
+                retry_verification_path.read_text(encoding="utf-8")
+            )
+            self.assertEqual(retry_model.calls, 1)
+            self.assertTrue(retry_verification["initializer_reapplied"])
+            self.assertFalse(
+                retry_verification["checkpoint_quaternions_take_precedence"]
+            )
+            self.assertEqual(retry_verification["applied_model_row_count"], 2)
 
             changed_audit = dict(result.audit)
             changed_audit["binding_sha256"] = "0" * 64
@@ -448,7 +479,7 @@ class PilotPlaneGuidedInitTests(unittest.TestCase):
                 fresh_audit_exists=True,
                 checkpoint_candidate_exists=False,
             ),
-            "resume_verify_only",
+            "fresh_retry_precheckpoint",
         )
         self.assertEqual(
             _pilot_plane_init_start_mode(
@@ -474,6 +505,26 @@ class PilotPlaneGuidedInitTests(unittest.TestCase):
             ),
             "resume_verify_only",
         )
+
+    def test_precheckpoint_retry_cursor_removes_only_configured_loss_files(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            out_dir = Path(tmp)
+            configured = ("audit/pilot_loss_shares.csv", "audit/pilot_loss_details.csv")
+            for relative in configured:
+                path = out_dir / relative
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text("uncheckpointed\n", encoding="utf-8")
+            preserved = out_dir / "audit/pilot_plane_guided_init.json"
+            preserved.write_text("{}\n", encoding="utf-8")
+            actions = restore_loss_csv_cursor(
+                out_dir,
+                configured,
+                empty_loss_csv_cursor(configured),
+                expected_completed_steps=0,
+            )
+            self.assertEqual(len(actions), 2)
+            self.assertTrue(all(not (out_dir / path).exists() for path in configured))
+            self.assertTrue(preserved.is_file())
 
 
 if __name__ == "__main__":
