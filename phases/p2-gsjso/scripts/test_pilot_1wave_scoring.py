@@ -183,6 +183,124 @@ class PilotOneWaveScoringTests(unittest.TestCase):
         manifest.write_text(json.dumps(payload) + "\n", encoding="utf-8")
         return manifest
 
+    def write_execution_receipt(
+        self,
+        prepared: dict[str, object],
+        condition: str,
+        seed: int,
+    ) -> Path:
+        runtime = Path(str(prepared["path"])).parent
+        job_id = f"{condition}_seed{seed}"
+        container_name = (
+            f"{score.ROOFER_CONTAINER_NAME_PREFIX}-{condition}-seed{seed}-roofer"
+        )
+        container_id = "a" * 64
+        argv = prepared["roofer_argv"]
+        if not isinstance(argv, dict):
+            raise AssertionError("synthetic prepare fixture lacks argv")
+        contract_sha = score.canonical_json_sha256(
+            {
+                "job_id": job_id,
+                "prepare_sha256": prepared["sha256"],
+                "argv_sha256": argv["sha256"],
+                "image": score.ROOFER_IMAGE,
+                "arguments": argv["arguments"],
+            }
+        )
+        start_attempts = [
+            {"ordinal": 1, "requested_utc": "2026-07-22T00:00:00+00:00"}
+        ]
+        launch_path = runtime / "container_launch.json"
+        process_path = runtime / "process_complete.json"
+        log_path = runtime / "container.log"
+        score.atomic_json(
+            launch_path,
+            {
+                "schema": "jointbuildgs.pilot_1wave.postprocess_stage.v1",
+                "state": "start_requested",
+                "job_id": job_id,
+                "container_name": container_name,
+                "container_id": container_id,
+                "contract_sha256": contract_sha,
+                "start_attempt_count": 1,
+                "start_attempts": start_attempts,
+            },
+        )
+        score.atomic_json(
+            process_path,
+            {
+                "schema": "jointbuildgs.pilot_1wave.postprocess_stage.v1",
+                "state": "process_complete",
+                "job_id": job_id,
+                "container_name": container_name,
+                "contract_sha256": contract_sha,
+                "exit_code": 0,
+                "wait_exit_code": 0,
+            },
+        )
+        log_path.write_text("immutable synthetic Roofer log\n", encoding="utf-8")
+        receipt_path = runtime / "roofer_execution_receipt.json"
+        score.atomic_json(
+            receipt_path,
+            {
+                "schema": score.ROOFER_EXECUTION_SCHEMA,
+                "state": "complete",
+                "condition_id": condition,
+                "seed": seed,
+                "job_id": job_id,
+                "prepare_receipt": {
+                    "path": score.rel(Path(str(prepared["path"]))),
+                    "sha256": prepared["sha256"],
+                },
+                "roofer_argv": {
+                    "path": argv["path"],
+                    "sha256": argv["sha256"],
+                },
+                "container": {
+                    "id": container_id,
+                    "name": container_name,
+                    "image_reference": score.ROOFER_IMAGE,
+                    "image_id": score.ROOFER_IMAGE_ID,
+                    "config_image": score.ROOFER_IMAGE,
+                    "entrypoint": list(score.ROOFER_ENTRYPOINT),
+                    "cmd": argv["arguments"],
+                    "labels": {
+                        "jointbuildgs.p1w.job": job_id,
+                        "jointbuildgs.p1w.contract": contract_sha,
+                    },
+                    "binds": [
+                        f"{score.REPO.resolve()}:{score.ROOFER_CONTAINER_REPO}"
+                    ],
+                    "network_mode": "none",
+                    "restart_count": 0,
+                },
+                "execution": {
+                    "start_attempt_count": 1,
+                    "start_attempts": start_attempts,
+                    "started_at": "2026-07-22T00:00:00+00:00",
+                    "finished_at": "2026-07-22T00:01:00+00:00",
+                    "wait_exit_code": 0,
+                    "docker_state": "exited",
+                },
+                "logs": {
+                    "path": score.rel(log_path),
+                    "sha256": score.sha256_file(log_path),
+                    "size": log_path.stat().st_size,
+                },
+                "launch_receipt": {
+                    "path": score.rel(launch_path),
+                    "sha256": score.sha256_file(launch_path),
+                },
+                "process_receipt": {
+                    "path": score.rel(process_path),
+                    "sha256": score.sha256_file(process_path),
+                },
+                "created_utc": "2026-07-22T00:01:01+00:00",
+                "roofer_invocation_count": 1,
+            },
+        )
+        return receipt_path
+
     def roofer_marker_fixture(
         self,
         root: Path,
@@ -327,8 +445,12 @@ class PilotOneWaveScoringTests(unittest.TestCase):
         )
         raw_dir = score.REPO / prepared["outputs"]["raw_jsonseq_dir"]
         self.write_roofer_jsonseq(cityjson, raw_dir)
+        execution_receipt = self.write_execution_receipt(
+            prepared, condition, seed
+        )
         merged, _state = score.finalize_roofer(
             Path(prepared["path"]),
+            execution_receipt,
             self.lock,
             expected_condition=condition,
             expected_seed=seed,
@@ -1067,7 +1189,7 @@ class PilotOneWaveScoringTests(unittest.TestCase):
                 with self.assertRaisesRegex(RuntimeError, "image ID attestation"):
                     score.require_p0_tools_runtime()
 
-    def test_finalize_v2_marker_is_exact_and_second_finalize_is_refused(self) -> None:
+    def test_finalize_v2_marker_is_exact_and_second_finalize_is_idempotent(self) -> None:
         with self.temporary_directory() as raw:
             root = Path(raw)
             cityjson, _report, _references = self.synthetic_fixture(root)
@@ -1086,22 +1208,281 @@ class PilotOneWaveScoringTests(unittest.TestCase):
             self.assertEqual(marker_payload["raw_jsonseq"]["root_building_count"], 30)
             self.assertEqual(marker_payload["merged_cityjson"]["root_building_count"], 30)
             self.assertEqual(
+                marker_payload["roofer_execution"]["roofer_local_image_id"],
+                score.ROOFER_IMAGE_ID,
+            )
+            self.assertEqual(
+                marker_payload["roofer_execution"]["start_attempt_count"], 1
+            )
+            self.assertEqual(
+                marker_payload["execution_receipt"]["sha256"],
+                validated["execution_receipt_sha256"],
+            )
+            self.assertEqual(
                 marker_payload["footprints"]["ordered_feature_geometry_sha256"],
                 validated["roofprints"]["ordered_feature_geometry_sha256"],
             )
             prepare_path = self.repo_path(marker_payload["prepare_receipt"]["path"])
-            with self.assertRaisesRegex(RuntimeError, "second/stale Roofer finalize"):
-                score.finalize_roofer(
+            execution_path = self.repo_path(
+                marker_payload["execution_receipt"]["path"]
+            )
+            marker_sha = score.sha256_file(marker)
+            with mock.patch.object(
+                score,
+                "load_module",
+                side_effect=AssertionError("idempotent finalize must not rerun W2"),
+            ):
+                repeated_cityjson, repeated_state = score.finalize_roofer(
                     prepare_path,
+                    execution_path,
                     self.lock,
                     expected_condition="04b",
                     expected_seed=1002,
                 )
+            self.assertEqual(repeated_cityjson, merged)
+            self.assertEqual(repeated_state, marker_payload)
+            self.assertEqual(score.sha256_file(marker), marker_sha)
 
             marker_payload["schema"] = "jointbuildgs.pilot_1wave.roofer_invocation.v1"
             marker.write_text(json.dumps(marker_payload) + "\n", encoding="utf-8")
             with self.assertRaisesRegex(RuntimeError, "Roofer marker schema"):
                 score.validate_roofer_marker("04b", 1002, marker, merged, self.lock)
+
+    def test_finalize_requires_present_untampered_execution_receipt(self) -> None:
+        for drift in ("missing", "tampered"):
+            with self.subTest(drift=drift), self.temporary_directory() as raw:
+                root = Path(raw)
+                cityjson, _report, _references = self.synthetic_fixture(root)
+                full_state = self.full_state_fixture(
+                    root / "train", "01", 1002, completed_steps=score.MAX_ITER
+                )
+                marker, merged = self.roofer_marker_fixture(
+                    root / "roofer", "01", 1002, cityjson, full_state
+                )
+                marker_payload = json.loads(marker.read_text(encoding="utf-8"))
+                prepare_path = self.repo_path(
+                    marker_payload["prepare_receipt"]["path"]
+                )
+                execution_path = self.repo_path(
+                    marker_payload["execution_receipt"]["path"]
+                )
+                marker.unlink()
+                merged.unlink()
+                if drift == "missing":
+                    execution_path.unlink()
+                    expected = "roofer_execution_receipt.json"
+                else:
+                    receipt = json.loads(execution_path.read_text(encoding="utf-8"))
+                    receipt["execution"]["docker_state"] = "running"
+                    execution_path.write_text(
+                        json.dumps(receipt) + "\n", encoding="utf-8"
+                    )
+                    expected = "Roofer Docker state"
+                with mock.patch.object(
+                    score,
+                    "load_module",
+                    side_effect=AssertionError("invalid receipt must fail before W2"),
+                ):
+                    with self.assertRaisesRegex((RuntimeError, FileNotFoundError), expected):
+                        score.finalize_roofer(
+                            prepare_path,
+                            execution_path,
+                            self.lock,
+                            expected_condition="01",
+                            expected_seed=1002,
+                        )
+
+    def test_v2_marker_reopens_execution_log_and_rejects_tamper(self) -> None:
+        with self.temporary_directory() as raw:
+            root = Path(raw)
+            cityjson, _report, _references = self.synthetic_fixture(root)
+            full_state = self.full_state_fixture(
+                root / "train", "02", 1002, completed_steps=score.MAX_ITER
+            )
+            marker, merged = self.roofer_marker_fixture(
+                root / "roofer", "02", 1002, cityjson, full_state
+            )
+            marker_payload = json.loads(marker.read_text(encoding="utf-8"))
+            log_path = self.repo_path(
+                marker_payload["roofer_execution"]["logs"]["path"]
+            )
+            log_path.write_bytes(log_path.read_bytes() + b"tampered\n")
+            with self.assertRaisesRegex(RuntimeError, "immutable log SHA256"):
+                score.validate_roofer_marker(
+                    "02", 1002, marker, merged, self.lock
+                )
+
+    def test_execution_receipt_rejects_actual_docker_contract_drift(self) -> None:
+        with self.temporary_directory() as raw:
+            root = Path(raw)
+            cityjson, _report, _references = self.synthetic_fixture(root)
+            full_state = self.full_state_fixture(
+                root / "train", "03", 1002, completed_steps=score.MAX_ITER
+            )
+            marker, _merged = self.roofer_marker_fixture(
+                root / "roofer", "03", 1002, cityjson, full_state
+            )
+            marker_payload = json.loads(marker.read_text(encoding="utf-8"))
+            prepare_path = self.repo_path(marker_payload["prepare_receipt"]["path"])
+            execution_path = self.repo_path(
+                marker_payload["execution_receipt"]["path"]
+            )
+            prepared = score.validate_roofer_prepare_receipt(
+                prepare_path,
+                self.lock,
+                expected_condition="03",
+                expected_seed=1002,
+            )
+            original = execution_path.read_bytes()
+            drifts = {
+                "job_id": (lambda value: value.__setitem__("job_id", "wrong"), "job_id"),
+                "name": (
+                    lambda value: value["container"].__setitem__("name", "wrong"),
+                    "container name",
+                ),
+                "entrypoint": (
+                    lambda value: value["container"].__setitem__("entrypoint", ["wrong"]),
+                    "container entrypoint",
+                ),
+                "cmd": (
+                    lambda value: value["container"].__setitem__("cmd", ["--wrong"]),
+                    "container command",
+                ),
+                "contract_label": (
+                    lambda value: value["container"]["labels"].__setitem__(
+                        "jointbuildgs.p1w.contract", "0" * 64
+                    ),
+                    "contract label",
+                ),
+                "network": (
+                    lambda value: value["container"].__setitem__(
+                        "network_mode", "default"
+                    ),
+                    "network mode",
+                ),
+                "bind": (
+                    lambda value: value["container"].__setitem__("binds", []),
+                    "repository bind",
+                ),
+            }
+            for drift, (mutate, expected) in drifts.items():
+                with self.subTest(drift=drift):
+                    payload = json.loads(original.decode("utf-8"))
+                    mutate(payload)
+                    execution_path.write_text(
+                        json.dumps(payload) + "\n", encoding="utf-8"
+                    )
+                    with self.assertRaisesRegex(RuntimeError, expected):
+                        score.validate_roofer_execution_receipt(
+                            execution_path,
+                            prepared,
+                            expected_condition="03",
+                            expected_seed=1002,
+                        )
+                    execution_path.write_bytes(original)
+
+    def test_finalize_recovers_merged_without_marker_without_rerunning_w2(self) -> None:
+        with self.temporary_directory() as raw:
+            root = Path(raw)
+            cityjson, _report, _references = self.synthetic_fixture(root)
+            full_state = self.full_state_fixture(
+                root / "train", "03", 1001, completed_steps=score.MAX_ITER
+            )
+            marker, merged = self.roofer_marker_fixture(
+                root / "roofer", "03", 1001, cityjson, full_state
+            )
+            marker_payload = json.loads(marker.read_text(encoding="utf-8"))
+            prepare_path = self.repo_path(marker_payload["prepare_receipt"]["path"])
+            execution_path = self.repo_path(
+                marker_payload["execution_receipt"]["path"]
+            )
+            merged_sha = score.sha256_file(merged)
+            marker.unlink()
+            with mock.patch.object(
+                score,
+                "load_module",
+                side_effect=AssertionError("merged recovery must not rerun W2"),
+            ):
+                recovered, state = score.finalize_roofer(
+                    prepare_path,
+                    execution_path,
+                    self.lock,
+                    expected_condition="03",
+                    expected_seed=1001,
+                )
+            self.assertEqual(recovered, merged)
+            self.assertEqual(score.sha256_file(recovered), merged_sha)
+            self.assertEqual(state["cityjson_sha256"], merged_sha)
+            self.assertTrue(marker.is_file())
+
+    def test_finalize_validates_and_promotes_temp_only_recovery(self) -> None:
+        with self.temporary_directory() as raw:
+            root = Path(raw)
+            cityjson, _report, _references = self.synthetic_fixture(root)
+            full_state = self.full_state_fixture(
+                root / "train", "04a", 1002, completed_steps=score.MAX_ITER
+            )
+            marker, merged = self.roofer_marker_fixture(
+                root / "roofer", "04a", 1002, cityjson, full_state
+            )
+            marker_payload = json.loads(marker.read_text(encoding="utf-8"))
+            prepare_path = self.repo_path(marker_payload["prepare_receipt"]["path"])
+            execution_path = self.repo_path(
+                marker_payload["execution_receipt"]["path"]
+            )
+            merged_sha = score.sha256_file(merged)
+            temporary = merged.with_name(f".{merged.name}.tmp")
+            marker.unlink()
+            os.replace(merged, temporary)
+            with mock.patch.object(
+                score,
+                "load_module",
+                side_effect=AssertionError("temp recovery must not rerun W2"),
+            ):
+                recovered, state = score.finalize_roofer(
+                    prepare_path,
+                    execution_path,
+                    self.lock,
+                    expected_condition="04a",
+                    expected_seed=1002,
+                )
+            self.assertEqual(recovered, merged)
+            self.assertFalse(temporary.exists())
+            self.assertEqual(score.sha256_file(recovered), merged_sha)
+            self.assertEqual(state["cityjson_sha256"], merged_sha)
+
+    def test_finalize_rejects_invalid_temp_only_recovery_precisely(self) -> None:
+        with self.temporary_directory() as raw:
+            root = Path(raw)
+            cityjson, _report, _references = self.synthetic_fixture(root)
+            full_state = self.full_state_fixture(
+                root / "train", "04b", 1001, completed_steps=score.MAX_ITER
+            )
+            marker, merged = self.roofer_marker_fixture(
+                root / "roofer", "04b", 1001, cityjson, full_state
+            )
+            marker_payload = json.loads(marker.read_text(encoding="utf-8"))
+            prepare_path = self.repo_path(marker_payload["prepare_receipt"]["path"])
+            execution_path = self.repo_path(
+                marker_payload["execution_receipt"]["path"]
+            )
+            temporary = merged.with_name(f".{merged.name}.tmp")
+            marker.unlink()
+            merged.unlink()
+            temporary.write_text("{}\n", encoding="utf-8")
+            with self.assertRaisesRegex(
+                RuntimeError, "Roofer finalize recovery temporary validation failed"
+            ):
+                score.finalize_roofer(
+                    prepare_path,
+                    execution_path,
+                    self.lock,
+                    expected_condition="04b",
+                    expected_seed=1001,
+                )
+            self.assertTrue(temporary.is_file())
+            self.assertFalse(marker.exists())
+            self.assertFalse(merged.exists())
 
     def test_v2_marker_rejects_raw_jsonseq_tamper_add_and_delete(self) -> None:
         for drift in ("tamper", "add", "delete"):
@@ -1148,6 +1529,9 @@ class PilotOneWaveScoringTests(unittest.TestCase):
                 prepare_path = self.repo_path(
                     marker_payload["prepare_receipt"]["path"]
                 )
+                execution_path = self.repo_path(
+                    marker_payload["execution_receipt"]["path"]
+                )
                 raw_dir = self.repo_path(
                     marker_payload["raw_jsonseq"]["directory_path"]
                 )
@@ -1177,6 +1561,7 @@ class PilotOneWaveScoringTests(unittest.TestCase):
                 with self.assertRaisesRegex(RuntimeError, expected):
                     score.finalize_roofer(
                         prepare_path,
+                        execution_path,
                         self.lock,
                         expected_condition="02",
                         expected_seed=1001,
@@ -1194,6 +1579,9 @@ class PilotOneWaveScoringTests(unittest.TestCase):
             )
             marker_payload = json.loads(marker.read_text(encoding="utf-8"))
             prepare_path = self.repo_path(marker_payload["prepare_receipt"]["path"])
+            execution_path = self.repo_path(
+                marker_payload["execution_receipt"]["path"]
+            )
             raw_dir = self.repo_path(marker_payload["raw_jsonseq"]["directory_path"])
             raw_file = next(raw_dir.glob("*.city.jsonl"))
             marker.unlink()
@@ -1212,6 +1600,7 @@ class PilotOneWaveScoringTests(unittest.TestCase):
             raw_file.write_text("\n".join(lines) + "\n", encoding="utf-8")
             merged, state = score.finalize_roofer(
                 prepare_path,
+                execution_path,
                 self.lock,
                 expected_condition="03",
                 expected_seed=1002,
