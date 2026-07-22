@@ -107,9 +107,27 @@
       "DJI_20241217084627_0117_D.JPG"
     ]
   },
+  "forward_runtime": {
+    "container_required": true,
+    "image_tag": "jointbuildgs:dev",
+    "image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
+    "host_attestation_environment": {
+      "image_tag": "P1W_HOST_IMAGE_TAG",
+      "image_id": "P1W_HOST_IMAGE_ID"
+    },
+    "python": "3.11.15",
+    "torch": "2.4.1+cu121",
+    "cuda": "12.1",
+    "gsplat": "1.4.0",
+    "numpy": "1.26.4",
+    "scipy": "1.13.1",
+    "pillow": "10.4.0"
+  },
   "forward_only_resolution": {
     "optimizer_updates": 0,
     "random_view_sampling": false,
+    "calibration_seed": 1001,
+    "calibration_seed_reason": "lowest registered training seed; locked result-blind before forward-only calibration",
     "minimum_eligible_views": 8,
     "aggregation": "equal-view sum(weighted roof photo) divided by equal-view sum(raw roof plane)",
     "soft_03": {

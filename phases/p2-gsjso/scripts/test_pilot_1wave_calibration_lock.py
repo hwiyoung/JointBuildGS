@@ -11,6 +11,10 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[3]
 LOCK = REPO / "phases/p2-gsjso/configs/pilot_1wave_calibration_lock.json"
+LOCK_SHA256 = "7eb4db2df284388c076b4e6876b169be389edb8d3da601931d3ca7997cdf54b4"
+CALIBRATION_SEED_REASON = (
+    "lowest registered training seed; locked result-blind before forward-only calibration"
+)
 
 
 def sha256_file(path: Path) -> str:
@@ -23,6 +27,7 @@ class CalibrationLockTest(unittest.TestCase):
         cls.lock = json.loads(LOCK.read_text(encoding="utf-8"))
 
     def test_all_declared_inputs_match_bytes(self) -> None:
+        self.assertEqual(sha256_file(LOCK), LOCK_SHA256)
         for binding in self.lock["input_bindings"].values():
             path = REPO / binding["path"]
             self.assertTrue(path.is_file(), path)
@@ -52,6 +57,10 @@ class CalibrationLockTest(unittest.TestCase):
 
     def test_soft_is_below_medium_and_pair_shares_one_weight(self) -> None:
         resolution = self.lock["forward_only_resolution"]
+        self.assertEqual(resolution["calibration_seed"], 1001)
+        self.assertEqual(
+            resolution["calibration_seed_reason"], CALIBRATION_SEED_REASON
+        )
         soft = resolution["soft_03"]["target_plane_to_photo_ratio"]
         medium = resolution["medium_04a"]["target_plane_to_photo_ratio"]
         lower, upper = resolution["medium_verification"]["inclusive_ratio_range"]
@@ -76,6 +85,34 @@ class CalibrationLockTest(unittest.TestCase):
         )
         self.assertEqual(budget["wall_guard_hours"], 9.0)
         self.assertFalse(budget["partial_is_winner_eligible"])
+
+    def test_forward_runtime_is_exactly_pinned_and_host_attested(self) -> None:
+        runtime = self.lock["forward_runtime"]
+        self.assertTrue(runtime["container_required"])
+        self.assertEqual(runtime["image_tag"], "jointbuildgs:dev")
+        self.assertEqual(
+            runtime["image_id"],
+            "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
+        )
+        self.assertEqual(
+            runtime["host_attestation_environment"],
+            {
+                "image_tag": "P1W_HOST_IMAGE_TAG",
+                "image_id": "P1W_HOST_IMAGE_ID",
+            },
+        )
+        self.assertEqual(
+            {key: runtime[key] for key in ("python", "torch", "cuda", "gsplat", "numpy", "scipy", "pillow")},
+            {
+                "python": "3.11.15",
+                "torch": "2.4.1+cu121",
+                "cuda": "12.1",
+                "gsplat": "1.4.0",
+                "numpy": "1.26.4",
+                "scipy": "1.13.1",
+                "pillow": "10.4.0",
+            },
+        )
 
     def test_plane_guided_init_is_explicit_and_shared_by_medium_pair(self) -> None:
         init = self.lock["plane_guided_initialization"]
