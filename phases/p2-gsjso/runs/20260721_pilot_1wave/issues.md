@@ -42,3 +42,16 @@
   `4728402e0ff781d8322c8fbf2f663e473575f872cfac0d7180c1f34627916f16`
   separately, with the disclosure
   `fusion-only revision; asset bytes unchanged`.
+
+## 2026-07-22 — mask QA attempt 1 published a root-only directory
+
+- Issue ID: `P1W-MASK-QA-ATTEMPT1-DIR-MODE`
+- The first completed read-only pair QA validated all 481 views and wrote `0444`
+  files, but Python `mkdtemp` left the containing directory root-owned mode `0700`.
+  Host-side review therefore could not read the otherwise complete outputs.
+- The inaccessible attempt is preserved without deletion as
+  `plane_masks_04a_vs_04b_qa_attempt1_root700`.
+- Repair: publish the staging directory as mode `0555` before its atomic rename;
+  CSV and manifest remain mode `0444`. The repaired run repeats only evaluation
+  arithmetic: `inference_runs_started_by_qa=0`, `learning_runs_started=0`,
+  `optimizer_steps=0`, source masks unchanged.
