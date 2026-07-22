@@ -144,9 +144,15 @@
     "footprint_dilation_radius_px": 5,
     "footprint_core_erosion_radius_px": 5,
     "small_core_retry_erosion_radius_px": 1,
+    "small_core_final_fallback_erosion_radius_px": 0,
+    "small_core_fallback_order_px": [5, 1, 0],
     "structuring_element": "closed Euclidean disk",
     "formula": "(cross_view_consistent_sam AND dilate(projected_footprint,5px)) OR per-building eroded footprint core",
     "no_candidate_policy": "retain core and record core_only_fallback",
+    "zero_radius_policy": "only after 5px and 1px cores are empty, retain the original nonempty per-building projected footprint; a view with no nonempty projected selected-building footprint still hard-fails",
+    "fallback_audit_policy": "record per-view 1px/0px fallback counts and building IDs plus per-building erosion radius",
+    "inference_attempt_cli": "--prior-inference-runs-started",
+    "inference_attempt_policy": "required explicit nonnegative prior failed-attempt count; successful manifest records cumulative started, successful, and failed counts",
     "gt_used": false
   },
   "gt_upperbound": {
@@ -177,6 +183,9 @@
   },
   "asset_receipt": {
     "schema": "jointbuildgs.pilot_1wave.mask_producer_asset_receipt.v1",
+    "receipt_sha256": "ff144c6571713563895a41a67585e4d8b6f3d6f4bdef4a46716a19bd6efab76c",
+    "producer_lock_sha256_at_fetch": "4728402e0ff781d8322c8fbf2f663e473575f872cfac0d7180c1f34627916f16",
+    "revision_note": "fusion-only revision; asset bytes unchanged",
     "required_artifact_ids": [
       "groundingdino_source",
       "segment_anything_source",

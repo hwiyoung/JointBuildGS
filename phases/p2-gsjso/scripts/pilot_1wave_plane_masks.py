@@ -50,6 +50,7 @@ from src.stage2.pilot_plane_mask_producer import (  # noqa: E402
     cross_view_consistent_masks,
     fetch_asset_bundle,
     fuse_vision_roof_mask,
+    inference_attempt_audit,
     load_lod2_citygml_scene,
     load_producer_lock,
     raycast_lod2_roof_bool_mask,
@@ -104,6 +105,7 @@ def atomic_json(path: Path, payload: Mapping[str, Any]) -> None:
         stream.flush()
         os.fsync(stream.fileno())
     os.replace(temporary, path)
+    os.chmod(path, 0o444)
 
 
 def load_heights(path: Path) -> tuple[list[str], dict[str, HeightEstimate]]:
@@ -311,6 +313,7 @@ def _output_root_guard(path: Path) -> None:
 
 
 def produce_04a(args: argparse.Namespace, runtime: Mapping[str, Any]) -> dict[str, Any]:
+    attempt_audit = inference_attempt_audit(args.prior_inference_runs_started)
     if runtime["assets"] is None:
         raise MaskProducerError("04a requires a verified complete asset receipt")
     if not runtime["04a_runtime_ready"]:
@@ -364,6 +367,7 @@ def produce_04a(args: argparse.Namespace, runtime: Mapping[str, Any]) -> dict[st
             candidates[view_id],
             consistent[view_id],
             per_view_footprints[view_id],
+            footprint_ids=common["score_ids"],
         )
     source_hashes = {
         "producer_lock": sha256_file(args.lock),
@@ -402,6 +406,16 @@ def produce_04a(args: argparse.Namespace, runtime: Mapping[str, Any]) -> dict[st
                 **fusion_audit[view_id],
             }
         )
+    one_px_fallback_view_ids = [
+        view_id
+        for view_id in common["view_ids"]
+        if fusion_audit[view_id]["small_core_1px_fallback_count"] > 0
+    ]
+    zero_px_fallback_view_ids = [
+        view_id
+        for view_id in common["view_ids"]
+        if fusion_audit[view_id]["small_core_0px_fallback_count"] > 0
+    ]
     manifest = {
         "schema": "jointbuildgs.pilot_1wave.04a_mask_producer_manifest.v1",
         "created_utc": datetime.now(timezone.utc).isoformat(),
@@ -417,7 +431,20 @@ def produce_04a(args: argparse.Namespace, runtime: Mapping[str, Any]) -> dict[st
         "cross_view_parameters": asdict(parameters),
         "gt_read_for_selection": False,
         "gt_iou_computed": False,
-        "inference_runs_started": 1,
+        "small_core_fallback_order_px": [5, 1, 0],
+        "small_core_1px_fallback_view_count": len(one_px_fallback_view_ids),
+        "small_core_1px_fallback_view_ids": one_px_fallback_view_ids,
+        "small_core_1px_fallback_building_event_count": sum(
+            fusion_audit[view_id]["small_core_1px_fallback_count"]
+            for view_id in common["view_ids"]
+        ),
+        "small_core_0px_fallback_view_count": len(zero_px_fallback_view_ids),
+        "small_core_0px_fallback_view_ids": zero_px_fallback_view_ids,
+        "small_core_0px_fallback_building_event_count": sum(
+            fusion_audit[view_id]["small_core_0px_fallback_count"]
+            for view_id in common["view_ids"]
+        ),
+        **attempt_audit,
         "learning_runs_started": 0,
         "audit": audit_rows,
     }
@@ -581,6 +608,15 @@ def main(argv: list[str] | None = None) -> int:
     add_common(vision)
     vision.add_argument("--output", type=Path, required=True)
     vision.add_argument("--device", default="cuda")
+    vision.add_argument(
+        "--prior-inference-runs-started",
+        type=int,
+        required=True,
+        help=(
+            "explicit count of prior failed 04a inference attempts in this run chain; "
+            "use 0 for a first attempt"
+        ),
+    )
     vision.add_argument("--execute-inference", action="store_true")
 
     upper = sub.add_parser("produce-04b")

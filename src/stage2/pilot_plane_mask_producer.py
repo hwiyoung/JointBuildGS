@@ -445,7 +445,23 @@ def load_producer_lock(path: str | Path) -> dict[str, Any]:
         "footprint_dilation_radius_px": 5,
         "footprint_core_erosion_radius_px": 5,
         "small_core_retry_erosion_radius_px": 1,
+        "small_core_final_fallback_erosion_radius_px": 0,
+        "small_core_fallback_order_px": [5, 1, 0],
         "structuring_element": "closed Euclidean disk",
+        "zero_radius_policy": (
+            "only after 5px and 1px cores are empty, retain the original nonempty "
+            "per-building projected footprint; a view with no nonempty projected "
+            "selected-building footprint still hard-fails"
+        ),
+        "fallback_audit_policy": (
+            "record per-view 1px/0px fallback counts and building IDs plus "
+            "per-building erosion radius"
+        ),
+        "inference_attempt_cli": "--prior-inference-runs-started",
+        "inference_attempt_policy": (
+            "required explicit nonnegative prior failed-attempt count; successful "
+            "manifest records cumulative started, successful, and failed counts"
+        ),
         "gt_used": False,
     }
     for key, value in expected_fusion.items():
@@ -466,6 +482,12 @@ def load_producer_lock(path: str | Path) -> dict[str, Any]:
     receipt = lock.get("asset_receipt", {})
     if (
         receipt.get("schema") != RECEIPT_SCHEMA
+        or receipt.get("receipt_sha256")
+        != "ff144c6571713563895a41a67585e4d8b6f3d6f4bdef4a46716a19bd6efab76c"
+        or receipt.get("producer_lock_sha256_at_fetch")
+        != "4728402e0ff781d8322c8fbf2f663e473575f872cfac0d7180c1f34627916f16"
+        or receipt.get("revision_note")
+        != "fusion-only revision; asset bytes unchanged"
         or tuple(receipt.get("required_artifact_ids", ())) != EXPECTED_ASSETS
         or receipt.get("download_during_preflight") is not False
         or receipt.get("symlinks_allowed") is not False
@@ -488,9 +510,14 @@ def verify_asset_receipt(
     receipt = json.loads(Path(receipt_path).read_text(encoding="utf-8"))
     if receipt.get("schema") != RECEIPT_SCHEMA:
         raise MaskProducerError(f"asset receipt schema must be {RECEIPT_SCHEMA}")
-    expected_lock_sha = sha256_file(lock_path)
-    if receipt.get("producer_lock_sha256") != expected_lock_sha:
-        raise MaskProducerError("asset receipt belongs to a different producer lock")
+    receipt_contract = lock["asset_receipt"]
+    if sha256_file(receipt_path) != receipt_contract["receipt_sha256"]:
+        raise MaskProducerError("asset receipt bytes differ from the frozen receipt SHA")
+    if (
+        receipt.get("producer_lock_sha256")
+        != receipt_contract["producer_lock_sha256_at_fetch"]
+    ):
+        raise MaskProducerError("asset receipt fetch-time producer-lock SHA differs")
     if receipt.get("runtime_environment") != lock.get("runtime_environment"):
         raise MaskProducerError("asset receipt Docker image tag/ID differs from lock")
     current_runtime_attestation = collect_runtime_attestation(lock)
@@ -1088,8 +1115,10 @@ def fuse_vision_roof_mask(
     raw_candidate: np.ndarray,
     consistent_candidate: np.ndarray,
     per_building_footprints: Sequence[np.ndarray],
+    *,
+    footprint_ids: Sequence[str] | None = None,
 ) -> tuple[np.ndarray, dict[str, Any]]:
-    """Apply the locked 5px support and per-building 5px/1px core rule."""
+    """Apply locked support and the per-building 5px/1px/0px core rule."""
 
     raw = np.asarray(raw_candidate)
     consistent = np.asarray(consistent_candidate)
@@ -1097,15 +1126,28 @@ def fuse_vision_roof_mask(
         raise MaskProducerError("raw/consistent candidates must be same-shape bool masks")
     if not per_building_footprints:
         raise MaskProducerError("fusion requires at least one projected footprint")
+    if footprint_ids is None:
+        ids = [f"index:{index}" for index in range(len(per_building_footprints))]
+    else:
+        ids = [str(value) for value in footprint_ids]
+        if len(ids) != len(per_building_footprints):
+            raise MaskProducerError("footprint IDs and masks must have the same length")
+        if any(not value for value in ids) or len(set(ids)) != len(ids):
+            raise MaskProducerError("footprint IDs must be non-empty and unique")
     footprint_union = np.zeros(raw.shape, dtype=bool)
     core_union = np.zeros(raw.shape, dtype=bool)
     erosion_used: list[int] = []
+    core_audit: list[dict[str, Any]] = []
+    empty_footprint_ids: list[str] = []
+    one_px_fallback_ids: list[str] = []
+    zero_px_fallback_ids: list[str] = []
     visible_buildings = 0
-    for item in per_building_footprints:
+    for footprint_id, item in zip(ids, per_building_footprints, strict=True):
         footprint = np.asarray(item)
         if footprint.dtype != np.bool_ or footprint.shape != raw.shape:
             raise MaskProducerError("each projected footprint must be camera-sized bool HxW")
         if not footprint.any():
+            empty_footprint_ids.append(footprint_id)
             continue
         visible_buildings += 1
         footprint_union |= footprint
@@ -1114,10 +1156,22 @@ def fuse_vision_roof_mask(
         if not core.any():
             core = _erode(footprint, 1)
             radius = 1
+            if core.any():
+                one_px_fallback_ids.append(footprint_id)
         if not core.any():
-            raise MaskProducerError("projected footprint remains empty after locked 1px core retry")
+            core = np.ascontiguousarray(footprint)
+            radius = 0
+            zero_px_fallback_ids.append(footprint_id)
         core_union |= core
         erosion_used.append(radius)
+        core_audit.append(
+            {
+                "building_id": footprint_id,
+                "footprint_pixels": int(footprint.sum()),
+                "core_erosion_px": radius,
+                "core_pixels": int(core.sum()),
+            }
+        )
     if visible_buildings == 0:
         raise MaskProducerError("view has no non-empty projected selected-building footprint")
     supported = consistent & _dilate(footprint_union, 5)
@@ -1129,6 +1183,13 @@ def fuse_vision_roof_mask(
         "cross_view_consistent_candidate_present": bool(consistent.any()),
         "candidate_inside_dilated_footprint_present": bool(supported.any()),
         "core_erosion_px_used": sorted(set(erosion_used)),
+        "core_erosion_by_visible_building": core_audit,
+        "small_core_1px_fallback_count": len(one_px_fallback_ids),
+        "small_core_1px_fallback_building_ids": one_px_fallback_ids,
+        "small_core_0px_fallback_count": len(zero_px_fallback_ids),
+        "small_core_0px_fallback_building_ids": zero_px_fallback_ids,
+        "empty_projected_footprint_count": len(empty_footprint_ids),
+        "empty_projected_footprint_building_ids": empty_footprint_ids,
         "core_only_fallback": not bool(supported.any()),
         "visible_selected_building_count": visible_buildings,
         "raw_candidate_pixels": int(raw.sum()),
@@ -1142,6 +1203,21 @@ def fuse_vision_roof_mask(
         ),
     }
     return np.ascontiguousarray(fused), audit
+
+
+def inference_attempt_audit(prior_inference_runs_started: int) -> dict[str, int]:
+    """Return explicit cumulative accounting for one successful 04a attempt."""
+
+    if type(prior_inference_runs_started) is not int or prior_inference_runs_started < 0:
+        raise MaskProducerError(
+            "prior_inference_runs_started must be an explicit nonnegative integer"
+        )
+    return {
+        "prior_inference_runs_started": prior_inference_runs_started,
+        "inference_runs_started": prior_inference_runs_started + 1,
+        "inference_runs_successful": 1,
+        "inference_runs_failed": prior_inference_runs_started,
+    }
 
 
 @dataclass(frozen=True)

@@ -6,10 +6,14 @@ Run in the repository container:
 from __future__ import annotations
 
 import copy
+import importlib.util
 import json
+import os
 from pathlib import Path
 import shutil
+import stat
 import subprocess
+import sys
 import tempfile
 import unittest
 
@@ -34,6 +38,7 @@ from src.stage2.pilot_plane_mask_producer import (
     collect_runtime_attestation,
     cross_view_consistent_masks,
     fuse_vision_roof_mask,
+    inference_attempt_audit,
     fetch_asset_bundle,
     load_lod2_citygml_scene,
     load_producer_lock,
@@ -48,6 +53,12 @@ from src.stage2.pilot_plane_mask_producer import (
 REPO = Path(__file__).resolve().parents[3]
 LOCK = REPO / "phases/p2-gsjso/configs/pilot_1wave_mask_producer_lock.json"
 ZERO_SHA = "0" * 64
+CLI_SCRIPT = Path(__file__).with_name("pilot_1wave_plane_masks.py")
+CLI_SPEC = importlib.util.spec_from_file_location("pilot_1wave_plane_masks_tested", CLI_SCRIPT)
+assert CLI_SPEC is not None and CLI_SPEC.loader is not None
+CLI_MODULE = importlib.util.module_from_spec(CLI_SPEC)
+sys.modules[CLI_SPEC.name] = CLI_MODULE
+CLI_SPEC.loader.exec_module(CLI_MODULE)
 
 
 def pinhole_camera(width: int = 9, height: int = 9, focal: float = 20.0) -> Camera:
@@ -86,6 +97,11 @@ class ProducerLockReceiptTest(unittest.TestCase):
         self.assertEqual(cross["maximum_optical_axis_angle_deg"], 20.0)
         self.assertEqual(cross["minimum_camera_baseline_m"], 0.5)
         self.assertEqual(cross["reprojection_mask_tolerance_px"], 3)
+        self.assertEqual(lock["vision_fusion"]["small_core_fallback_order_px"], [5, 1, 0])
+        self.assertEqual(
+            lock["asset_receipt"]["revision_note"],
+            "fusion-only revision; asset bytes unchanged",
+        )
         self.assertIn("bool HxW mask only", lock["gt_upperbound"]["archive_contract"])
 
     def test_receipt_verifies_all_assets_and_detects_tamper(self):
@@ -185,6 +201,10 @@ class ProducerLockReceiptTest(unittest.TestCase):
             }
             receipt_path = root / "receipt.json"
             receipt_path.write_text(json.dumps(receipt), encoding="utf-8")
+            lock["asset_receipt"]["receipt_sha256"] = sha256_file(receipt_path)
+            lock["asset_receipt"]["producer_lock_sha256_at_fetch"] = receipt[
+                "producer_lock_sha256"
+            ]
             verified = verify_asset_receipt(lock, LOCK, root, receipt_path)
             self.assertEqual(set(verified), set(paths))
             # The explicit fetch path must reuse a byte-identical, receipt-verified
@@ -250,6 +270,81 @@ class CrossViewAndFusionTest(unittest.TestCase):
         self.assertTrue(audit["core_only_fallback"])
         self.assertEqual(audit["core_erosion_px_used"], [1, 5])
         self.assertFalse(audit["sam_candidate_present"])
+
+    def test_fusion_tiny_nonempty_footprint_uses_locked_zero_px_fallback(self):
+        shape = (25, 25)
+        raw = np.zeros(shape, dtype=bool)
+        consistent = np.zeros(shape, dtype=bool)
+        large = np.zeros(shape, dtype=bool)
+        large[5:20, 5:20] = True
+        small = np.zeros(shape, dtype=bool)
+        small[21:24, 21:24] = True
+        tiny = np.zeros(shape, dtype=bool)
+        tiny[2, 2] = True
+        fused, audit = fuse_vision_roof_mask(
+            raw,
+            consistent,
+            [large, small, tiny],
+            footprint_ids=["large", "small", "tiny"],
+        )
+        self.assertTrue(fused[2, 2])
+        self.assertEqual(audit["core_erosion_px_used"], [0, 1, 5])
+        self.assertEqual(audit["small_core_1px_fallback_count"], 1)
+        self.assertEqual(audit["small_core_1px_fallback_building_ids"], ["small"])
+        self.assertEqual(audit["small_core_0px_fallback_count"], 1)
+        self.assertEqual(audit["small_core_0px_fallback_building_ids"], ["tiny"])
+        self.assertEqual(
+            [row["core_erosion_px"] for row in audit["core_erosion_by_visible_building"]],
+            [5, 1, 0],
+        )
+
+    def test_fusion_truly_empty_projected_input_still_hard_fails(self):
+        empty = np.zeros((9, 9), dtype=bool)
+        with self.assertRaisesRegex(
+            MaskProducerError, "no non-empty projected selected-building footprint"
+        ):
+            fuse_vision_roof_mask(
+                empty,
+                empty,
+                [empty],
+                footprint_ids=["off_view"],
+            )
+
+    def test_inference_attempt_accounting_is_explicit_and_cumulative(self):
+        self.assertEqual(
+            inference_attempt_audit(1),
+            {
+                "prior_inference_runs_started": 1,
+                "inference_runs_started": 2,
+                "inference_runs_successful": 1,
+                "inference_runs_failed": 1,
+            },
+        )
+        with self.assertRaisesRegex(MaskProducerError, "nonnegative integer"):
+            inference_attempt_audit(-1)
+
+        process = subprocess.run(
+            [
+                sys.executable,
+                str(CLI_SCRIPT),
+                "produce-04a",
+                "--output",
+                "/tmp/must-not-be-created",
+                "--execute-inference",
+            ],
+            check=False,
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(process.returncode, 2)
+        self.assertIn("--prior-inference-runs-started", process.stderr)
+
+    def test_atomic_producer_manifest_is_host_readable_immutable(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "producer_manifest.json"
+            CLI_MODULE.atomic_json(path, {"learning_runs_started": 0})
+            self.assertEqual(stat.S_IMODE(path.stat().st_mode), 0o444)
+            self.assertTrue(os.access(path, os.R_OK))
 
 
 class GtRaycastAndControlledPairTest(unittest.TestCase):
