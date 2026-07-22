@@ -25,7 +25,7 @@ import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 import laspy
 import numpy as np
@@ -36,8 +36,8 @@ if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
 from pilot_1wave_readout_lineage import (
-    LINEAGE_SCHEMA,
-    validate_readout_lineage,
+    validate_roofprint_file,
+    validate_scene_npz_binding,
 )
 
 
@@ -78,54 +78,14 @@ def atomic_json(path: Path, value: Any) -> None:
     temporary.replace(path)
 
 
-def coordinate_lengths(value: Any) -> Iterable[int]:
-    if isinstance(value, list):
-        if value and all(isinstance(item, (int, float)) for item in value):
-            yield len(value)
-        else:
-            for item in value:
-                yield from coordinate_lengths(item)
-
-
-def validate_roofprints(path: Path) -> dict[str, Any]:
-    if not path.is_file():
-        raise FileNotFoundError(path)
-    payload = json.loads(path.read_text(encoding="utf-8"))
-    features = payload.get("features") or []
-    if len(features) != EXPECTED_FOOTPRINTS:
-        raise RuntimeError(
-            f"roofprint population drift: {len(features)} != {EXPECTED_FOOTPRINTS}"
-        )
-    crs = str((payload.get("crs") or {}).get("properties", {}).get("name", ""))
-    if "25832" not in crs:
-        raise RuntimeError(f"roofprint CRS drift: {crs!r}")
-    ids: list[str] = []
-    for feature in features:
-        properties = feature.get("properties") or {}
-        building_id = str(properties.get("building_id", ""))
-        if not building_id:
-            raise RuntimeError("roofprint without building_id")
-        if properties.get("class") != BUILDING:
-            raise RuntimeError(
-                f"roofprint overlay class drift for {building_id}: "
-                f"{properties.get('class')!r} != {BUILDING}"
-            )
-        ids.append(building_id)
-        lengths = list(
-            coordinate_lengths((feature.get("geometry") or {}).get("coordinates"))
-        )
-        if not lengths or any(length != 2 for length in lengths):
-            raise RuntimeError(f"roofprint is not XY-only: {building_id}")
-    if len(ids) != len(set(ids)):
-        raise RuntimeError("duplicate roofprint building_id")
-    return {
-        "path": str(path.resolve()),
-        "sha256": sha256_file(path),
-        "feature_count": len(features),
-        "building_ids": ids,
-        "crs": CRS,
-        "coordinate_dimension": 2,
-    }
+def validate_roofprints(
+    path: Path, *, expected_building_ids: list[str] | tuple[str, ...] | None = None
+) -> dict[str, Any]:
+    return validate_roofprint_file(
+        path,
+        expected_building_ids=expected_building_ids,
+        expected_count=EXPECTED_FOOTPRINTS,
+    )
 
 
 def load_scene_points(path: Path) -> tuple[np.ndarray, str]:
@@ -148,36 +108,16 @@ def load_scene_points(path: Path) -> tuple[np.ndarray, str]:
     return points, key
 
 
-def load_scene_lineage(path: Path) -> dict[str, Any]:
-    """Load a non-pickled scalar lineage and verify all named source bytes."""
+def load_scene_binding(path: Path) -> dict[str, Any]:
+    """Re-open lineage and duplicated crop scalars from one scene NPZ."""
 
-    if not path.is_file():
-        raise FileNotFoundError(path)
-    try:
-        with np.load(path, allow_pickle=False) as payload:
-            if "readout_lineage_json" not in payload:
-                raise RuntimeError("scene NPZ lacks readout_lineage_json")
-            encoded = np.asarray(payload["readout_lineage_json"])
-    except ValueError as exc:
-        raise RuntimeError(
-            "scene NPZ readout_lineage_json must not require pickle"
-        ) from exc
-    if encoded.shape != () or encoded.dtype.kind not in {"U", "S"}:
-        raise RuntimeError(
-            "scene NPZ readout_lineage_json must be a non-object scalar string"
-        )
-    raw = encoded.item()
-    if isinstance(raw, bytes):
-        raw = raw.decode("utf-8")
-    try:
-        lineage = json.loads(str(raw))
-    except json.JSONDecodeError as exc:
-        raise RuntimeError("scene NPZ readout_lineage_json is invalid JSON") from exc
-    if not isinstance(lineage, dict):
-        raise RuntimeError("scene NPZ readout lineage must be an object")
-    if lineage.get("schema") != LINEAGE_SCHEMA:
-        raise RuntimeError(f"scene NPZ readout lineage schema drift: {lineage.get('schema')!r}")
-    return validate_readout_lineage(lineage)
+    return validate_scene_npz_binding(path, allow_unverified_legacy=True)
+
+
+def load_scene_lineage(path: Path) -> dict[str, Any]:
+    """Backward-compatible lineage-only view of :func:`load_scene_binding`."""
+
+    return load_scene_binding(path)["readout_lineage"]
 
 
 def write_raw_las(path: Path, points: np.ndarray) -> None:
@@ -255,10 +195,17 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         if path.exists():
             raise RuntimeError(f"refusing to overwrite readout artifact: {path}")
 
-    roofprint_record = validate_roofprints(args.roofprints.resolve())
     scene_npz = args.scene_npz.resolve()
     points, source_key = load_scene_points(scene_npz)
-    readout_lineage = load_scene_lineage(scene_npz)
+    scene_binding = load_scene_binding(scene_npz)
+    readout_lineage = scene_binding["readout_lineage"]
+    crop_contract = scene_binding["crop_contract"]
+    expected_ids = (
+        crop_contract["ordered_building_ids"] if crop_contract is not None else None
+    )
+    roofprint_record = validate_roofprints(
+        args.roofprints.resolve(), expected_building_ids=expected_ids
+    )
     write_raw_las(raw_las, points)
     pipeline = pdal_pipeline(raw_las, args.roofprints.resolve(), output_las)
     atomic_json(pipeline_path, pipeline)
@@ -310,6 +257,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             "bounds": bounds,
         },
         "readout_lineage": readout_lineage,
+        "crop_contract": crop_contract,
         "roofprints": {
             **roofprint_record,
             "role": "approved historical LoD2 GroundSurface XY support only",

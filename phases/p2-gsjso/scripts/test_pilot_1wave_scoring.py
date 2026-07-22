@@ -3,12 +3,14 @@
 from __future__ import annotations
 
 import csv
+import hashlib
 import json
 import shutil
 import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 import numpy as np
 from pyproj import CRS
@@ -18,6 +20,7 @@ if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
 import pilot_1wave_scoring as score
+import pilot_1wave_readout_lineage as lineage_contract
 
 
 class PilotOneWaveScoringTests(unittest.TestCase):
@@ -106,6 +109,9 @@ class PilotOneWaveScoringTests(unittest.TestCase):
                 else "9h guard"
             ),
         )
+        crop_json = lineage_contract.canonical_json(
+            lineage_contract.PILOT_CROP_CONTRACT
+        )
         lineage = {
             "schema": score.READOUT_LINEAGE_SCHEMA,
             "condition_id": condition,
@@ -134,7 +140,17 @@ class PilotOneWaveScoringTests(unittest.TestCase):
                 "eligible_20k_full_state"
             ],
             "geometry_only": True,
+            "crop_contract_json": crop_json,
+            "crop_contract_sha256": lineage_contract.PILOT_CROP_CONTRACT_SHA256,
         }
+        lineage = lineage_contract.validate_readout_lineage(
+            lineage,
+            expected_condition=condition,
+            expected_seed=seed,
+        )
+        crop_contract = lineage_contract.validate_pilot_crop_contract(
+            crop_json, lineage_contract.PILOT_CROP_CONTRACT_SHA256
+        )
         scene_npz = root / "scene_geometry.npz"
         np.savez(
             scene_npz,
@@ -142,6 +158,34 @@ class PilotOneWaveScoringTests(unittest.TestCase):
             readout_lineage_json=np.array(
                 json.dumps(lineage, sort_keys=True, separators=(",", ":"))
             ),
+            crop_contract_json=np.array(crop_json),
+            crop_contract_sha256=np.array(
+                lineage_contract.PILOT_CROP_CONTRACT_SHA256
+            ),
+        )
+        footprints = root / "locked_30.geojson"
+        score.materialize_locked_roofprints(self.lock, footprints)
+        roofprint_record = lineage_contract.validate_roofprint_file(
+            footprints, expected_building_ids=self.lock.ids
+        )
+        pipeline = root / "pdal_pipeline.json"
+        pipeline.write_text(
+            json.dumps(
+                {
+                    "pipeline": [
+                        {
+                            "type": "filters.overlay",
+                            "datasource": str(footprints),
+                            "dimension": "Classification",
+                            "column": "class",
+                            "where": "Classification != 2",
+                        },
+                        {"type": "writers.las", "filename": str(pointcloud)},
+                    ]
+                }
+            )
+            + "\n",
+            encoding="utf-8",
         )
         classification_receipt = root / "scene_classification.receipt.json"
         classification_receipt.write_text(
@@ -158,13 +202,17 @@ class PilotOneWaveScoringTests(unittest.TestCase):
                         "sha256": score.sha256_file(pointcloud),
                     },
                     "readout_lineage": lineage,
+                    "crop_contract": crop_contract,
+                    "roofprints": roofprint_record,
+                    "classification": {
+                        "pipeline_path": str(pipeline),
+                        "pipeline_sha256": score.sha256_file(pipeline),
+                    },
                 }
             )
             + "\n",
             encoding="utf-8",
         )
-        footprints = root / "locked_30.geojson"
-        footprints.write_text("{}\n", encoding="utf-8")
         marker = root / "roofer_invocation.json"
         marker.write_text(
             json.dumps(
@@ -181,11 +229,8 @@ class PilotOneWaveScoringTests(unittest.TestCase):
                         "sha256": score.sha256_file(classification_receipt),
                     },
                     "readout_lineage": lineage,
-                    "footprints": {
-                        "path": str(footprints),
-                        "sha256": score.sha256_file(footprints),
-                        "feature_count": 30,
-                    },
+                    "crop_contract": crop_contract,
+                    "footprints": roofprint_record,
                     "roofer_image": score.ROOFER_IMAGE,
                     "roofer_parameters": score.ROOFER_PARAMETERS,
                     "selection_sha256": self.lock.selection_sha256,
@@ -727,6 +772,179 @@ class PilotOneWaveScoringTests(unittest.TestCase):
             )
             with self.assertRaisesRegex(RuntimeError, "replace completed 20k run"):
                 score.write_numeric_outputs(aggregate, replacement, self.lock)
+
+    def test_receipt_bound_roofprints_reject_swapped_order_and_mutated_bytes(self) -> None:
+        with self.temporary_directory() as raw:
+            root = Path(raw)
+            roofprints = root / "swapped.geojson"
+            score.materialize_locked_roofprints(self.lock, roofprints)
+            payload = json.loads(roofprints.read_text(encoding="utf-8"))
+            payload["features"][0], payload["features"][1] = (
+                payload["features"][1],
+                payload["features"][0],
+            )
+            roofprints.write_text(json.dumps(payload) + "\n", encoding="utf-8")
+            with self.assertRaisesRegex(RuntimeError, "ordered building IDs"):
+                lineage_contract.validate_roofprint_file(
+                    roofprints, expected_building_ids=self.lock.ids
+                )
+
+            bound_root = root / "bound"
+            bound_root.mkdir()
+            cityjson, _report, _references = self.synthetic_fixture(bound_root)
+            full_state = self.full_state_fixture(
+                root / "bound/train", "01", 1001, completed_steps=score.MAX_ITER
+            )
+            marker = self.roofer_marker_fixture(
+                root / "bound/roofer", "01", 1001, cityjson, full_state
+            )
+            marker_payload = json.loads(marker.read_text(encoding="utf-8"))
+            receipt = Path(marker_payload["classification_receipt"]["path"])
+            pointcloud = Path(marker_payload["pointcloud_path"])
+            bound_roofprints = Path(marker_payload["footprints"]["path"])
+            bound_roofprints.write_bytes(bound_roofprints.read_bytes() + b" \n")
+            with self.assertRaisesRegex(
+                RuntimeError, "classification receipt roofprints sha256"
+            ):
+                lineage_contract.validate_classification_receipt(
+                    receipt,
+                    pointcloud_path=pointcloud,
+                    expected_condition="01",
+                    expected_seed=1001,
+                    expected_building_ids=self.lock.ids,
+                )
+
+    def test_classification_receipt_rejects_roofprint_path_and_sha_mismatch(self) -> None:
+        for drift in ("path", "sha256"):
+            with self.subTest(drift=drift), self.temporary_directory() as raw:
+                root = Path(raw)
+                cityjson, _report, _references = self.synthetic_fixture(root)
+                full_state = self.full_state_fixture(
+                    root / "train", "02", 1002, completed_steps=score.MAX_ITER
+                )
+                marker = self.roofer_marker_fixture(
+                    root / "roofer", "02", 1002, cityjson, full_state
+                )
+                marker_payload = json.loads(marker.read_text(encoding="utf-8"))
+                receipt = Path(marker_payload["classification_receipt"]["path"])
+                pointcloud = Path(marker_payload["pointcloud_path"])
+                receipt_payload = json.loads(receipt.read_text(encoding="utf-8"))
+                if drift == "path":
+                    replacement = receipt.with_name("same_bytes_other_path.geojson")
+                    shutil.copyfile(receipt_payload["roofprints"]["path"], replacement)
+                    receipt_payload["roofprints"]["path"] = str(replacement)
+                    expected_error = "classification pipeline roofprint path"
+                else:
+                    receipt_payload["roofprints"]["sha256"] = "0" * 64
+                    expected_error = "classification receipt roofprints sha256"
+                receipt.write_text(json.dumps(receipt_payload) + "\n", encoding="utf-8")
+                with self.assertRaisesRegex(RuntimeError, expected_error):
+                    lineage_contract.validate_classification_receipt(
+                        receipt,
+                        pointcloud_path=pointcloud,
+                        expected_condition="02",
+                        expected_seed=1002,
+                        expected_building_ids=self.lock.ids,
+                    )
+
+    def test_scene_binding_rejects_crop_population_mismatch_even_with_new_sha(self) -> None:
+        with self.temporary_directory() as raw:
+            root = Path(raw)
+            cityjson, _report, _references = self.synthetic_fixture(root)
+            full_state = self.full_state_fixture(
+                root / "train", "03", 1001, completed_steps=score.MAX_ITER
+            )
+            marker = self.roofer_marker_fixture(
+                root / "roofer", "03", 1001, cityjson, full_state
+            )
+            marker_payload = json.loads(marker.read_text(encoding="utf-8"))
+            receipt = Path(marker_payload["classification_receipt"]["path"])
+            receipt_payload = json.loads(receipt.read_text(encoding="utf-8"))
+            source_npz = Path(receipt_payload["source_scene_npz"]["path"])
+            with np.load(source_npz, allow_pickle=False) as source:
+                points = np.asarray(source["P_utm_clean"])
+                embedded_lineage = json.loads(
+                    str(source["readout_lineage_json"].item())
+                )
+            bad_contract = json.loads(
+                json.dumps(lineage_contract.PILOT_CROP_CONTRACT)
+            )
+            bad_contract["population"]["count"] = 29
+            bad_json = lineage_contract.canonical_json(bad_contract)
+            bad_sha = hashlib.sha256(bad_json.encode("utf-8")).hexdigest()
+            embedded_lineage["crop_contract_json"] = bad_json
+            embedded_lineage["crop_contract_sha256"] = bad_sha
+            bad_npz = root / "bad_population.npz"
+            np.savez(
+                bad_npz,
+                P_utm_clean=points,
+                readout_lineage_json=np.array(
+                    lineage_contract.canonical_json(embedded_lineage)
+                ),
+                crop_contract_json=np.array(bad_json),
+                crop_contract_sha256=np.array(bad_sha),
+            )
+            with self.assertRaisesRegex(RuntimeError, "locked crop contract SHA256"):
+                lineage_contract.validate_scene_npz_binding(
+                    bad_npz,
+                    expected_condition="03",
+                    expected_seed=1001,
+                )
+
+    def test_roofer_boundary_uses_exact_receipt_bound_roofprint_file(self) -> None:
+        with self.temporary_directory() as raw:
+            root = Path(raw)
+            cityjson, _report, _references = self.synthetic_fixture(root)
+            full_state = self.full_state_fixture(
+                root / "train", "04a", 1001, completed_steps=score.MAX_ITER
+            )
+            fixture_marker = self.roofer_marker_fixture(
+                root / "fixture", "04a", 1001, cityjson, full_state
+            )
+            fixture_payload = json.loads(
+                fixture_marker.read_text(encoding="utf-8")
+            )
+            receipt = Path(fixture_payload["classification_receipt"]["path"])
+            pointcloud = Path(fixture_payload["pointcloud_path"])
+            roofprints = Path(fixture_payload["footprints"]["path"]).resolve()
+            calls: list[list[str]] = []
+
+            def stop_before_roofer(command: list[str], **_kwargs: object) -> mock.Mock:
+                calls.append(command)
+                return mock.Mock(returncode=23, stdout="synthetic no-Roofer stop")
+
+            pointcloud_record = {
+                "path": score.rel(pointcloud),
+                "sha256": score.sha256_file(pointcloud),
+                "point_count": 2,
+                "epsg": 25832,
+                "classes_required": [2, 6],
+                "validation_runtime": "synthetic",
+            }
+            output_dir = root / "assemble"
+            with mock.patch.object(
+                score,
+                "validate_roofer_pointcloud",
+                return_value=pointcloud_record,
+            ), mock.patch.object(score.subprocess, "run", side_effect=stop_before_roofer):
+                with self.assertRaisesRegex(RuntimeError, "Roofer exited 23"):
+                    score.assemble_pointcloud_once(
+                        "04a", 1001, pointcloud, receipt, output_dir, self.lock
+                    )
+            self.assertEqual(len(calls), 1)
+            expected_container_path = str(
+                Path("/workspace/JointBuildGS")
+                / roofprints.relative_to(score.REPO.resolve())
+            )
+            self.assertEqual(calls[0][-2], expected_container_path)
+            state = json.loads(
+                (output_dir / "roofer_invocation.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(Path(state["footprints"]["path"]).resolve(), roofprints)
+            self.assertEqual(
+                state["footprints"]["sha256"], score.sha256_file(roofprints)
+            )
+            self.assertFalse((output_dir / "locked_30_footprints.geojson").exists())
 
     def test_roofer_recipe_and_locked_footprints(self) -> None:
         with self.temporary_directory() as raw:

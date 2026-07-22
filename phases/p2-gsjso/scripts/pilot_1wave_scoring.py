@@ -830,8 +830,9 @@ def validate_roofer_marker(
     require_equal(marker_cityjson, cityjson, "Roofer marker CityJSON path")
     cityjson_sha = sha256_file(cityjson)
     require_equal(marker.get("cityjson_sha256"), cityjson_sha, "Roofer marker CityJSON SHA256")
-    footprints = marker.get("footprints") or {}
-    require_equal(int(footprints.get("feature_count", -1)), EXPECTED_POPULATION, "Roofer footprint count")
+    footprints = marker.get("footprints")
+    if not isinstance(footprints, Mapping):
+        raise RuntimeError("Roofer marker lacks a roofprint record")
     pointcloud = _resolve_declared_path(marker.get("pointcloud_path"), declaring_file=marker_path)
     require_equal(sha256_file(pointcloud), marker.get("pointcloud_sha256"), "Roofer pointcloud SHA256")
     receipt_record = marker.get("classification_receipt")
@@ -850,14 +851,45 @@ def validate_roofer_marker(
         pointcloud_path=pointcloud,
         expected_condition=condition_id,
         expected_seed=seed,
+        expected_building_ids=lock.ids,
+        require_verified_crop=True,
     )
     require_equal(
         marker.get("readout_lineage"),
         classification["readout_lineage"],
         "Roofer/read-out lineage",
     )
-    footprint_path = _resolve_declared_path(footprints.get("path"), declaring_file=marker_path)
-    require_equal(sha256_file(footprint_path), footprints.get("sha256"), "Roofer footprint SHA256")
+    require_equal(
+        marker.get("crop_contract"),
+        classification["crop_contract"],
+        "Roofer/classification crop contract",
+    )
+    footprint_path = _resolve_declared_path(
+        footprints.get("path"), declaring_file=marker_path
+    )
+    receipt_roofprint_path = Path(classification["roofprints"]["path"]).resolve()
+    require_equal(
+        footprint_path,
+        receipt_roofprint_path,
+        "Roofer/classification roofprint path",
+    )
+    for field in (
+        "sha256",
+        "feature_count",
+        "building_ids",
+        "crs",
+        "coordinate_dimension",
+    ):
+        require_equal(
+            footprints.get(field),
+            classification["roofprints"][field],
+            f"Roofer/classification roofprints {field}",
+        )
+    require_equal(
+        sha256_file(footprint_path),
+        classification["roofprints"]["sha256"],
+        "Roofer footprint SHA256",
+    )
     return {
         "roofer_invocation_count": 1,
         "roofer_marker_path": rel(marker_path),
@@ -873,6 +905,8 @@ def validate_roofer_marker(
         "scene_npz_path": rel(classification["scene_npz_path"]),
         "scene_npz_sha256": classification["scene_npz_sha256"],
         "readout_lineage": classification["readout_lineage"],
+        "crop_contract": classification["crop_contract"],
+        "roofprints": classification["roofprints"],
     }
 
 
@@ -1180,6 +1214,8 @@ def assemble_pointcloud_once(
         pointcloud_path=pointcloud,
         expected_condition=condition_id,
         expected_seed=seed,
+        expected_building_ids=lock.ids,
+        require_verified_crop=True,
     )
     output_dir.mkdir(parents=True, exist_ok=True)
     marker = output_dir / "roofer_invocation.json"
@@ -1197,11 +1233,28 @@ def assemble_pointcloud_once(
             and cityjson.is_file()
             and state.get("cityjson_sha256") == sha256_file(cityjson)
         ):
+            validate_roofer_marker(
+                condition_id,
+                seed,
+                marker,
+                cityjson,
+                lock,
+            )
             return cityjson, state
         raise RuntimeError(f"Roofer invocation marker already exists: {marker}")
 
-    roofprints = output_dir / "locked_30_footprints.geojson"
-    footprint_record = materialize_locked_roofprints(lock, roofprints)
+    footprint_record = dict(classification_record["roofprints"])
+    roofprints = Path(footprint_record["path"]).resolve()
+    require_equal(
+        tuple(footprint_record["building_ids"]),
+        lock.ids,
+        "receipt-bound Roofer roofprint order",
+    )
+    require_equal(
+        sha256_file(roofprints),
+        footprint_record["sha256"],
+        "receipt-bound Roofer roofprint SHA256",
+    )
     jsonseq_dir = output_dir / "jsonseq"
     jsonseq_dir.mkdir(parents=True, exist_ok=True)
     state = {
@@ -1221,6 +1274,7 @@ def assemble_pointcloud_once(
             "scene_npz_sha256": classification_record["scene_npz_sha256"],
         },
         "readout_lineage": classification_record["readout_lineage"],
+        "crop_contract": classification_record["crop_contract"],
         "footprints": footprint_record,
         "roofer_image": ROOFER_IMAGE,
         "roofer_parameters": ROOFER_PARAMETERS,
@@ -1228,6 +1282,11 @@ def assemble_pointcloud_once(
         "scoring_bbox": list(lock.scoring_bbox),
     }
     atomic_json(marker, state)
+    require_equal(
+        sha256_file(roofprints),
+        footprint_record["sha256"],
+        "Roofer-bound roofprint SHA256 before invocation",
+    )
     command = roofer_docker_command(pointcloud, roofprints, jsonseq_dir)
     process = subprocess.run(
         command,
