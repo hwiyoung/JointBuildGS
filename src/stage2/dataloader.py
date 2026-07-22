@@ -39,6 +39,14 @@ from .colmap_io import (
     read_images_bin,
     read_points3d_bin,
 )
+from .pilot_mask_schema import (
+    MONO_GATE_CONSUMER_ARMS,
+    BinaryMaskSet,
+    MaskPurpose,
+    MaskSchemaError,
+    MaskSource,
+    sha256_file,
+)
 
 
 @dataclass
@@ -139,6 +147,183 @@ def resolve_view_roles(
     }
 
 
+_PILOT_ARMS = frozenset(MONO_GATE_CONSUMER_ARMS)
+_PLANE_SOURCE_BY_ARM = {
+    "04a_plane_medium_vision": MaskSource.VISION_GROUNDEDSAM_ROOF,
+    "04b_plane_medium_gt_upperbound": MaskSource.LOD2_ROOFSURFACE_GT_UPPERBOUND,
+}
+
+
+def _validate_pilot_arm(pilot_arm: Optional[str]) -> Optional[str]:
+    if pilot_arm is None:
+        return None
+    if not isinstance(pilot_arm, str) or pilot_arm not in _PILOT_ARMS:
+        raise ValueError(
+            "pilot_arm must be one of the locked first-wave arms: "
+            f"{sorted(_PILOT_ARMS)}"
+        )
+    return pilot_arm
+
+
+def _resize_binary_mask(mask: np.ndarray, size_hw: Tuple[int, int]) -> np.ndarray:
+    """Nearest-resize one validated bool HxW mask for a training frame."""
+
+    value = np.asarray(mask)
+    if value.ndim != 2 or value.dtype != np.bool_:
+        raise MaskSchemaError(
+            f"runtime mask must be a bool HxW array, got {value.dtype} {value.shape}"
+        )
+    height, width = (int(size_hw[0]), int(size_hw[1]))
+    if height <= 0 or width <= 0:
+        raise MaskSchemaError(f"invalid training mask shape: {(height, width)}")
+    if value.shape == (height, width):
+        resized = np.ascontiguousarray(value)
+    else:
+        resized = cv2.resize(
+            value.astype(np.uint8),
+            (width, height),
+            interpolation=cv2.INTER_NEAREST,
+        ).astype(np.bool_)
+    if not bool(resized.any()):
+        raise MaskSchemaError(
+            "nearest resize produced an empty runtime mask; refusing silent loss disable"
+        )
+    return np.ascontiguousarray(resized)
+
+
+@dataclass(frozen=True)
+class PilotMaskBinding:
+    """Strict mapping from one immutable mask inventory to dataset frames."""
+
+    role: str
+    mask_set: BinaryMaskSet
+    record_id_by_frame_name: Dict[str, str]
+    audit: dict
+
+    def load(self, frame: Frame, size_hw: Tuple[int, int]) -> np.ndarray:
+        try:
+            record_id = self.record_id_by_frame_name[frame.name]
+        except KeyError as exc:  # Defensive: construction requires full coverage.
+            raise MaskSchemaError(
+                f"{self.role} mask is missing at runtime for frame {frame.name!r}"
+            ) from exc
+        return _resize_binary_mask(self.mask_set.load(record_id), size_hw)
+
+
+def _bind_pilot_mask_manifest(
+    manifest_path: str | Path,
+    *,
+    frames: Sequence[Frame],
+    downscale: float,
+    pilot_arm: Optional[str],
+    role: str,
+) -> PilotMaskBinding:
+    """Validate purpose, source, consumer arm and exact frame inventory.
+
+    ``role`` is deliberately closed to the two loss-side masks accepted by the
+    first-wave runtime.  Every archive is opened during binding, so a missing,
+    hash-mismatched, side-channel, or shape-mismatched file fails before the
+    first optimizer step rather than on a later sampled view.
+    """
+
+    arm = _validate_pilot_arm(pilot_arm)
+    if arm is None:
+        raise MaskSchemaError(f"pilot_arm is required with {role}_mask_manifest")
+    if role not in {"photo", "plane_region"}:
+        raise ValueError(f"unsupported pilot mask role: {role!r}")
+
+    mask_set = BinaryMaskSet(manifest_path)
+    if role == "photo":
+        expected_purpose = MaskPurpose.PHOTO_SUPPORT
+        expected_source = MaskSource.LOD2_GROUNDSURFACE_XY_SFM_HEIGHT
+    else:
+        expected_purpose = MaskPurpose.PLANE_REGION
+        expected_source = _PLANE_SOURCE_BY_ARM.get(arm)
+        if expected_source is None:
+            raise MaskSchemaError(
+                "plane_region_mask_manifest is permitted only for "
+                "04a_plane_medium_vision or 04b_plane_medium_gt_upperbound"
+            )
+
+    if mask_set.purpose is not expected_purpose:
+        raise MaskSchemaError(
+            f"{role} manifest purpose mismatch: "
+            f"{mask_set.purpose.value} != {expected_purpose.value}"
+        )
+    if mask_set.source is not expected_source:
+        raise MaskSchemaError(
+            f"{role} manifest source mismatch for {arm}: "
+            f"{mask_set.source.value} != {expected_source.value}"
+        )
+    if arm not in mask_set.consumer_arms:
+        raise MaskSchemaError(
+            f"pilot arm {arm} is not a declared consumer of the {role} manifest"
+        )
+
+    lookup = _view_lookup(frames)
+    unknown = sorted(view_id for view_id in mask_set.records if view_id not in lookup)
+    if unknown:
+        raise MaskSchemaError(
+            f"{role} mask inventory contains outside/unknown views: {unknown}"
+        )
+    record_by_index: Dict[int, str] = {}
+    duplicate_frames: list[str] = []
+    for view_id in mask_set.records:
+        frame_index = lookup[view_id]
+        if frame_index in record_by_index:
+            duplicate_frames.append(frames[frame_index].name)
+        else:
+            record_by_index[frame_index] = view_id
+    if duplicate_frames:
+        raise MaskSchemaError(
+            f"{role} mask inventory maps multiple records to frames: "
+            f"{sorted(duplicate_frames)}"
+        )
+    missing = [
+        frame.name for index, frame in enumerate(frames) if index not in record_by_index
+    ]
+    if missing:
+        raise MaskSchemaError(f"{role} mask inventory is missing views: {missing}")
+
+    source_shapes: set[tuple[int, int]] = set()
+    target_shapes: set[tuple[int, int]] = set()
+    record_id_by_frame_name: Dict[str, str] = {}
+    for frame_index, frame in enumerate(frames):
+        record_id = record_by_index[frame_index]
+        source_mask = mask_set.load(record_id)
+        target_shape = (
+            int(round(frame.height * float(downscale))),
+            int(round(frame.width * float(downscale))),
+        )
+        _resize_binary_mask(source_mask, target_shape)
+        source_shapes.add(tuple(int(value) for value in source_mask.shape))
+        target_shapes.add(target_shape)
+        record_id_by_frame_name[frame.name] = record_id
+
+    audit = {
+        "role": role,
+        "pilot_arm": arm,
+        "manifest_path": str(Path(manifest_path).resolve()),
+        "manifest_sha256": sha256_file(Path(manifest_path)),
+        "purpose": mask_set.purpose.value,
+        "source": mask_set.source.value,
+        "consumer_arms": list(mask_set.consumer_arms),
+        "inventory_sha256": mask_set.inventory_sha256,
+        "view_count": len(record_id_by_frame_name),
+        "source_shapes": [list(shape) for shape in sorted(source_shapes)],
+        "training_shapes": [list(shape) for shape in sorted(target_shapes)],
+        "resize_interpolation": "nearest",
+        "inventory_match": "exact",
+        "preflight_loaded_all_records": True,
+    }
+    return PilotMaskBinding(
+        role=role,
+        mask_set=mask_set,
+        record_id_by_frame_name=record_id_by_frame_name,
+        audit=audit,
+    )
+
+
 class ColmapDataset(Dataset):
     """COLMAP dataset loader supporting COLMAP MVS and MatrixCity GT formats.
 
@@ -168,6 +353,9 @@ class ColmapDataset(Dataset):
         mono_depth_scale: float = 1.0,
         normal_encoding: str = "half_range",
         visible_views: Optional[Sequence[str]] = None,
+        photo_mask_manifest: Optional[str | Path] = None,
+        plane_region_mask_manifest: Optional[str | Path] = None,
+        pilot_arm: Optional[str] = None,
     ):
         self.root = Path(root)
         self.downscale = float(downscale)
@@ -183,6 +371,7 @@ class ColmapDataset(Dataset):
         self.depth_scale = float(depth_scale)
         self.mono_depth_scale = float(mono_depth_scale)
         self.normal_encoding = normal_encoding
+        self.pilot_arm = _validate_pilot_arm(pilot_arm)
 
         self.image_dir = self.root / "images"
         # COLMAP PatchMatch layout
@@ -247,6 +436,38 @@ class ColmapDataset(Dataset):
                 "requested": requested,
                 "resolved": [frame.name for frame in self.frames],
             }
+
+        self.photo_mask_binding = None
+        if photo_mask_manifest is not None:
+            self.photo_mask_binding = _bind_pilot_mask_manifest(
+                photo_mask_manifest,
+                frames=self.frames,
+                downscale=self.downscale,
+                pilot_arm=self.pilot_arm,
+                role="photo",
+            )
+        self.plane_region_mask_binding = None
+        if plane_region_mask_manifest is not None:
+            self.plane_region_mask_binding = _bind_pilot_mask_manifest(
+                plane_region_mask_manifest,
+                frames=self.frames,
+                downscale=self.downscale,
+                pilot_arm=self.pilot_arm,
+                role="plane_region",
+            )
+        self.pilot_mask_audit = {
+            "pilot_arm": self.pilot_arm,
+            "photo_mask": (
+                None
+                if self.photo_mask_binding is None
+                else self.photo_mask_binding.audit
+            ),
+            "plane_region_mask": (
+                None
+                if self.plane_region_mask_binding is None
+                else self.plane_region_mask_binding.audit
+            ),
+        }
 
     def _resolve_aux_dir(self, value: Optional[str | Path]) -> Optional[Path]:
         if value is None or str(value).strip() == "":
@@ -478,6 +699,14 @@ class ColmapDataset(Dataset):
             out["mono_normal"] = torch.from_numpy(mono_normal)
             out["mono_normal_mask"] = torch.from_numpy(
                 mono_normal_mask.astype(np.bool_)
+            )
+        if self.photo_mask_binding is not None:
+            out["photo_mask"] = torch.from_numpy(
+                self.photo_mask_binding.load(fr, (H, W))
+            )
+        if self.plane_region_mask_binding is not None:
+            out["plane_region_mask"] = torch.from_numpy(
+                self.plane_region_mask_binding.load(fr, (H, W))
             )
         if semantic is not None:
             out["semantic"] = torch.from_numpy(semantic)
