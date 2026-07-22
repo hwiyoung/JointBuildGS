@@ -1,0 +1,216 @@
+{
+  "schema": "jointbuildgs.pilot_1wave.resolved_configs.v1",
+  "run_id": "20260721_pilot_1wave",
+  "state": "resolved",
+  "learning_runs_started": 0,
+  "inputs": {
+    "calibration_lock": {
+      "path": "phases/p2-gsjso/configs/pilot_1wave_calibration_lock.json",
+      "sha256": "7eb4db2df284388c076b4e6876b169be389edb8d3da601931d3ca7997cdf54b4"
+    },
+    "calibration_receipt": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/calibration/plane_calibration_receipt.json",
+      "sha256": "e15ad7114fe9e231bba91cc00b5e80b764533720ba142639880040093b517fdc"
+    },
+    "calibration_scaffolds_manifest": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/calibration/scaffolds/calibration_scaffolds_manifest.json",
+      "sha256": "0de95060b64903e73dcba87d037734c4997a3caf8a213edfeae615480a1d43a0"
+    },
+    "materialized_input_inventory": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/calibration/scaffolds/materialized_input_inventory.json",
+      "sha256": "30a3387275ee9ed29ad75bbdf7cb1979f2b8b2cd52640225e9dbe00895666450",
+      "records_sha256": "b99c38d31b37b59f1827537e520c20c76ca5a0ee0bfbc5baaaa879d4fff57271",
+      "view_count": 481,
+      "file_count": 1927,
+      "total_bytes": 12335728234
+    },
+    "04a_plane_mask": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/prep_artifacts/plane_masks_04a/mask_manifest.json",
+      "sha256": "db93653318d2adad7b6bf14177f55ab778df04f7966c2f5189e6dc8ec1ed86b7"
+    },
+    "04b_plane_mask": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/prep_artifacts/plane_masks_04b/mask_manifest.json",
+      "sha256": "14af4b14288d6ecf772c5f4426a507cc80ab5c354f2ebfaa81383220a5849b16"
+    }
+  },
+  "resolved_weights": {
+    "03": 4.029704429530609,
+    "04a": 13.005751642181838,
+    "04b": 13.005751642181838
+  },
+  "budget": {
+    "seeds": [
+      1001,
+      1002
+    ],
+    "max_optimizer_updates": 20000,
+    "full_state_checkpoint_updates": [
+      5000,
+      10000,
+      15000,
+      20000
+    ],
+    "gpu_count": 2,
+    "wall_guard_hours": 9.0,
+    "stop_starting_new_runs_hours": 8.5,
+    "partial_is_winner_eligible": false
+  },
+  "training_output_root": {
+    "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs",
+    "container_path": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs",
+    "writable_and_separate_from_config_bundle": true
+  },
+  "pair_control": {
+    "allowed_difference_keys": [
+      "out_dir",
+      "pilot_arm",
+      "pilot_condition",
+      "pilot_job_id",
+      "pilot_plane_region_manifest_sha256",
+      "pilot_plane_region_source",
+      "plane_region_mask_manifest"
+    ],
+    "required_difference_keys": [
+      "out_dir",
+      "pilot_arm",
+      "pilot_condition",
+      "pilot_job_id",
+      "pilot_plane_region_manifest_sha256",
+      "pilot_plane_region_source",
+      "plane_region_mask_manifest"
+    ],
+    "audits": [
+      {
+        "seed": 1001,
+        "difference_keys": [
+          "out_dir",
+          "pilot_arm",
+          "pilot_condition",
+          "pilot_job_id",
+          "pilot_plane_region_manifest_sha256",
+          "pilot_plane_region_source",
+          "plane_region_mask_manifest"
+        ],
+        "passed": true
+      },
+      {
+        "seed": 1002,
+        "difference_keys": [
+          "out_dir",
+          "pilot_arm",
+          "pilot_condition",
+          "pilot_job_id",
+          "pilot_plane_region_manifest_sha256",
+          "pilot_plane_region_source",
+          "plane_region_mask_manifest"
+        ],
+        "passed": true
+      }
+    ],
+    "shared_medium_weight_exact": true
+  },
+  "config_count": 10,
+  "jobs": [
+    {
+      "sequence": 1,
+      "job_id": "01_seed1001",
+      "condition": "01",
+      "pilot_arm": "01_surface",
+      "seed": 1001,
+      "config_path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/resolved_configs/01_seed1001.yaml",
+      "config_sha256": "22442754901ee5ebede0079a1fe35149821706d34174b951c94fb0a2f40eb73a",
+      "out_dir": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/01/seed_1001"
+    },
+    {
+      "sequence": 2,
+      "job_id": "01_seed1002",
+      "condition": "01",
+      "pilot_arm": "01_surface",
+      "seed": 1002,
+      "config_path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/resolved_configs/01_seed1002.yaml",
+      "config_sha256": "e7c54c59db4196ebf1d24f3ba5cb538b8af97bcf120473677f01e9e0e065c516",
+      "out_dir": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/01/seed_1002"
+    },
+    {
+      "sequence": 3,
+      "job_id": "02_seed1001",
+      "condition": "02",
+      "pilot_arm": "02_photo_control",
+      "seed": 1001,
+      "config_path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/resolved_configs/02_seed1001.yaml",
+      "config_sha256": "47e3f10335bc7ced21bfe842c8ea33387bded5e3f198234d7ac8037840d69a40",
+      "out_dir": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/02/seed_1001"
+    },
+    {
+      "sequence": 4,
+      "job_id": "02_seed1002",
+      "condition": "02",
+      "pilot_arm": "02_photo_control",
+      "seed": 1002,
+      "config_path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/resolved_configs/02_seed1002.yaml",
+      "config_sha256": "9b3642d94cb5769b91398d8ccbbd723247380c1480709516676386e66a13e290",
+      "out_dir": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/02/seed_1002"
+    },
+    {
+      "sequence": 5,
+      "job_id": "03_seed1001",
+      "condition": "03",
+      "pilot_arm": "03_plane_soft",
+      "seed": 1001,
+      "config_path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/resolved_configs/03_seed1001.yaml",
+      "config_sha256": "8ea828b9fee226e6d4f67bf6f821c85412c9b5f9e14ea39dfaacd730fad0c49d",
+      "out_dir": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/03/seed_1001"
+    },
+    {
+      "sequence": 6,
+      "job_id": "03_seed1002",
+      "condition": "03",
+      "pilot_arm": "03_plane_soft",
+      "seed": 1002,
+      "config_path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/resolved_configs/03_seed1002.yaml",
+      "config_sha256": "661b59fc1c296dda13699b08a9ab90c76b96eb7d6f7c1a74958cf3028403c2ab",
+      "out_dir": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/03/seed_1002"
+    },
+    {
+      "sequence": 7,
+      "job_id": "04a_seed1001",
+      "condition": "04a",
+      "pilot_arm": "04a_plane_medium_vision",
+      "seed": 1001,
+      "config_path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/resolved_configs/04a_seed1001.yaml",
+      "config_sha256": "9f1be4764f257383fe626dff22344d12103c09a0e386f57407f7f9a0ba0c9360",
+      "out_dir": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/04a/seed_1001"
+    },
+    {
+      "sequence": 8,
+      "job_id": "04a_seed1002",
+      "condition": "04a",
+      "pilot_arm": "04a_plane_medium_vision",
+      "seed": 1002,
+      "config_path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/resolved_configs/04a_seed1002.yaml",
+      "config_sha256": "ae0bd8f33649cb0f9fe3e544365a9e69453ade8c20942a2808727cebe3a1a24a",
+      "out_dir": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/04a/seed_1002"
+    },
+    {
+      "sequence": 9,
+      "job_id": "04b_seed1001",
+      "condition": "04b",
+      "pilot_arm": "04b_plane_medium_gt_upperbound",
+      "seed": 1001,
+      "config_path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/resolved_configs/04b_seed1001.yaml",
+      "config_sha256": "5fc49b0e6accf73c2eb1c964bcbfd17010235f5464d4b278cac959c1449882ec",
+      "out_dir": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/04b/seed_1001"
+    },
+    {
+      "sequence": 10,
+      "job_id": "04b_seed1002",
+      "condition": "04b",
+      "pilot_arm": "04b_plane_medium_gt_upperbound",
+      "seed": 1002,
+      "config_path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/resolved_configs/04b_seed1002.yaml",
+      "config_sha256": "39269d4734e3801e0f55354e936958152b28c5bd3a7974a3c793b9399d120d0f",
+      "out_dir": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/04b/seed_1002"
+    }
+  ],
+  "receipt_state": "complete"
+}
