@@ -201,10 +201,22 @@ _STRATEGY_TO_MODEL = {
 }
 
 
-def _sync_params_to_model(params: Dict[str, torch.nn.Parameter], model: GaussianModel2D):
+def _sync_params_to_model(
+    params: Dict[str, torch.nn.Parameter],
+    model: GaussianModel2D,
+    strategy_state: Optional[Dict[str, Any]] = None,
+):
     """After gsplat DefaultStrategy grow/prune, params dict entries may have been
     replaced with new nn.Parameters. Sync them back into the model so model.means etc.
-    reflect the updated tensors."""
+    reflect the updated tensors.
+
+    ``surface_seed_mask`` is deliberately not a model parameter or persistent
+    buffer.  Its live, row-wise copy therefore resides in strategy state, where
+    gsplat's duplicate/split/remove operations transform it in lockstep with the
+    Gaussian population.  Sync that lineage copy back as well so full-state
+    checkpoints serialize the post-refinement population, not the initializer
+    shape.
+    """
     for strategy_key, model_attr in _STRATEGY_TO_MODEL.items():
         p = params.get(strategy_key)
         if p is None:
@@ -212,6 +224,19 @@ def _sync_params_to_model(params: Dict[str, torch.nn.Parameter], model: Gaussian
         current = getattr(model, model_attr, None)
         if current is not p:
             setattr(model, model_attr, p)
+    if strategy_state is not None:
+        surface_seed_lineage = strategy_state.get("surface_seed_lineage")
+        if surface_seed_lineage is not None:
+            if (
+                not isinstance(surface_seed_lineage, torch.Tensor)
+                or surface_seed_lineage.dtype != torch.bool
+                or surface_seed_lineage.shape != (model.num_points,)
+            ):
+                raise RuntimeError(
+                    "strategy surface_seed_lineage must be bool with one row "
+                    "per live Gaussian"
+                )
+            model.surface_seed_mask = surface_seed_lineage
 
 
 def set_seed(seed: int):
@@ -1821,13 +1846,14 @@ def main():
         strategy = build_strategy(**_strat_kwargs)
     strategy.check_sanity(params, optimizers)
     strategy_state = strategy.initialize_state(scene_scale=scene_scale)
-    if surface_seed_path:
-        # Kept for every arm, not just A2.  gsplat duplicate/split/remove carries
-        # arbitrary per-Gaussian state tensors in lockstep, so this remains a
-        # true lineage mask after densification and pruning.
-        strategy_state["surface_seed_lineage"] = torch.from_numpy(
-            surface_seed_mask
-        ).to(device)
+    if full_state["enabled"] or surface_seed_path:
+        # Full-state checkpoints always serialize this model-side mask, even
+        # when an arm has no surface seeds (all False).  Keep its live copy in
+        # strategy state so gsplat duplicate/split/remove transforms it in
+        # exact lockstep with the Gaussian rows.
+        strategy_state["surface_seed_lineage"] = (
+            model.surface_seed_mask.detach().clone()
+        )
     seed_log_boxes = None
     if seed_protect:
         strategy_state["is_seed"] = torch.from_numpy(seed_protect_mask).to(device)
@@ -2551,6 +2577,13 @@ def main():
             optimizers = restored.optimizers
             strategy = restored.strategy
             strategy_state = restored.strategy_state
+            if "surface_seed_lineage" not in strategy_state:
+                # Compatibility for a valid pre-fix full-state payload: the
+                # checkpoint's model mask is authoritative at its saved shape,
+                # and becomes the row-wise strategy copy before any new refine.
+                strategy_state["surface_seed_lineage"] = (
+                    model.surface_seed_mask.detach().clone()
+                )
             params = build_param_dict(model)
             strategy.check_sanity(params, optimizers)
             (
@@ -3719,7 +3752,7 @@ def main():
             strategy.densify_audit_events = []
 
         # sync params dict -> model (gsplat strategy may replace nn.Parameters on grow/prune)
-        _sync_params_to_model(params, model)
+        _sync_params_to_model(params, model, strategy_state)
 
         # (P2 make-or-break C) seed-survival diagnostic (every 5k + at 500 for pre-check)
         if seed_protect and (it == 500 or (it > 0 and it % 5000 == 0)):
@@ -4006,7 +4039,7 @@ def main():
             final_prune_candidates = int(final_prune_mask.sum().item())
             if final_prune_candidates > 0:
                 remove(params=params, optimizers=optimizers, state=strategy_state, mask=final_prune_mask)
-                _sync_params_to_model(params, model)
+                _sync_params_to_model(params, model, strategy_state)
                 final_pruned = final_prune_candidates
         writer.add_scalar("stats/final_prune_candidates", final_prune_candidates, max_iter)
         writer.add_scalar("stats/final_pruned", final_pruned, max_iter)

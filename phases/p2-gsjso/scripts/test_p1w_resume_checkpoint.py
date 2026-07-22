@@ -10,6 +10,7 @@ from typing import Any
 import numpy as np
 import pytest
 import torch
+from gsplat.strategy.ops import duplicate, remove, split
 
 from src.stage2.checkpoint import (
     CheckpointBindingError,
@@ -24,6 +25,7 @@ from src.stage2.densification import (
     build_seed_protect_elongation_filter_strategy,
 )
 from src.stage2.model import GaussianModel2D
+from src.stage2.train import _sync_params_to_model
 
 
 GOOD_BINDING = {
@@ -182,6 +184,82 @@ def _assert_nested_equal(left: Any, right: Any) -> None:
             _assert_nested_equal(left_item, right_item)
     else:
         assert left == right
+
+
+@pytest.mark.parametrize(
+    "surface_seed_mask",
+    [
+        None,
+        np.array([True, False, True, False], dtype=np.bool_),
+    ],
+    ids=["no-surface-seeds", "mixed-surface-lineage"],
+)
+def test_surface_seed_mask_tracks_duplicate_split_remove_and_saves(
+    tmp_path: Path, surface_seed_mask: np.ndarray | None
+) -> None:
+    """The model-side checkpoint mask follows the live gsplat population."""
+
+    points = np.array(
+        [[0, 0, 0], [1, 0, 0], [0, 1, 0], [1, 1, 0]], dtype=np.float32
+    )
+    colors = np.full((4, 3), 0.5, dtype=np.float32)
+    model = GaussianModel2D(
+        points,
+        colors,
+        sh_degree=0,
+        device="cpu",
+        surface_seed_mask=surface_seed_mask,
+    )
+    params = {
+        "means": model.means,
+        "scales": model.log_scales,
+        "quats": model.quats,
+        "opacities": model.opacities_raw,
+        "sh0": model.sh0,
+        "shN": model.shN,
+        "sem_logits": model.sem_logits,
+    }
+    optimizers = build_optimizers(model)
+    strategy_state = {
+        "surface_seed_lineage": model.surface_seed_mask.detach().clone()
+    }
+    expected = strategy_state["surface_seed_lineage"].clone()
+
+    duplicate_mask = torch.tensor([False, True, False, False])
+    duplicate(params, optimizers, strategy_state, duplicate_mask)
+    expected = torch.cat([expected, expected[duplicate_mask]])
+    _sync_params_to_model(params, model, strategy_state)
+    assert torch.equal(model.surface_seed_mask, expected)
+
+    split_mask = torch.tensor([True, False, False, False, False])
+    split(params, optimizers, strategy_state, split_mask)
+    expected = torch.cat([expected[~split_mask], expected[split_mask].repeat(2)])
+    _sync_params_to_model(params, model, strategy_state)
+    assert torch.equal(model.surface_seed_mask, expected)
+
+    remove_mask = torch.tensor([False, True, False, False, False, False])
+    remove(params, optimizers, strategy_state, remove_mask)
+    expected = expected[~remove_mask]
+    _sync_params_to_model(params, model, strategy_state)
+    assert model.num_points == len(expected)
+    assert torch.equal(model.surface_seed_mask, expected)
+
+    saved = save_training_checkpoint(
+        tmp_path,
+        completed_steps=5_000,
+        model=model,
+        optimizers=optimizers,
+        strategy=None,
+        strategy_state=strategy_state,
+        grouping_state={},
+        binding_sha256=GOOD_BINDING,
+        loss_log_cursor={},
+        learning_runs_started=1,
+    )
+    loaded = load_training_checkpoint(
+        saved.path, expected_binding_sha256=GOOD_BINDING
+    )
+    assert torch.equal(loaded.payload["model"]["surface_seed_mask"], expected)
 
 
 def test_atomic_save_has_completed_update_semantics_and_sha_sidecar(tmp_path: Path) -> None:

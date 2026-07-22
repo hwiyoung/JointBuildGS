@@ -55,3 +55,26 @@
   CSV and manifest remain mode `0444`. The repaired run repeats only evaluation
   arithmetic: `inference_runs_started_by_qa=0`, `learning_runs_started=0`,
   `optimizer_steps=0`, source masks unchanged.
+
+## 2026-07-22 — attempt 4 failed at the first full-state checkpoint
+
+- Issue ID: `P1W-TRAIN-ATTEMPT4-SEED-MASK-CHECKPOINT`.
+- Both condition 01 seeds executed 5,000 optimizer updates, then failed before
+  publishing a durable checkpoint with
+  `CheckpointIntegrityError: surface_seed_mask must be bool with one row per saved Gaussian`.
+- Cause: gsplat duplicate/split/remove kept parameter tensors and registered strategy
+  state row-aligned, but the model-side `surface_seed_mask` remained at the initial
+  1,252,033 rows. At 5k the live populations were about 600k rows.
+- The queue was stopped after condition 02 had begun. Its two seeds report cumulative
+  `learning_runs_started=1`; their last observed progress displays were 238 and 215,
+  with no durable checkpoint.
+- No checkpoint payload or SHA sidecar was published by this attempt. The complete
+  read-only snapshot, cumulative logs, driver manifest, and SHA receipt are preserved
+  under `training/failed_attempts/attempt4_checkpoint_seed_mask/`.
+- Repair: register the all-False mask as row-wise strategy state even for condition 01,
+  let gsplat transform it during duplicate/split/remove, and synchronize it back to the
+  model after every refine/final-prune operation. The checkpoint validator remains
+  unchanged.
+- Regression coverage executes an actual gsplat duplicate -> split -> remove sequence
+  for both all-False and mixed lineage masks, then requires full-state save/load to
+  preserve the final live-row mask.
