@@ -1,0 +1,152 @@
+{
+  "schema": "jointbuildgs.pilot_1wave.mask_pair_qa.v1",
+  "created_utc": "2026-07-22T03:35:27.725233+00:00",
+  "run_id": "20260721_pilot_1wave",
+  "mode": "evaluation_only_mask_pair_qa",
+  "git_head": "e535576984ff6b64587aab5990f4cb5678e0d307",
+  "qa_script": "/workspace/JointBuildGS/phases/p2-gsjso/scripts/pilot_1wave_mask_qa.py",
+  "qa_script_sha256": "51aa24ff7f91b1071ed8e590711c21d377efc3a58208d040116f1c3bbfa228d8",
+  "csv": "pilot_1wave_04a_vs_04b_mask_qa.csv",
+  "csv_sha256": "fd2ac74b74cdc20753a126f0a3a3b2675cdae6720ae5d4c3d6a0e03c75bd0f41",
+  "row_count": 481,
+  "audit": {
+    "schema": "jointbuildgs.pilot_1wave.mask_pair_audit.v1",
+    "run_id": "20260721_pilot_1wave",
+    "mode": "read_only_evaluation_preflight",
+    "view_count": 481,
+    "expected_view_count": 481,
+    "view_inventory_exact": true,
+    "geometry_sha_matches_04a_04b_reference": true,
+    "shape_matches_04a_04b": true,
+    "source_04a": "vision_groundedsam_roof",
+    "source_04b": "lod2_roofsurface_gt_upperbound",
+    "purpose_04a": "plane_region",
+    "purpose_04b": "plane_region",
+    "binary_archives_fully_loaded": true,
+    "observed_archive_arrays": [
+      "mask:bool"
+    ],
+    "forbidden_gt_numeric_arrays": [
+      "lod2_z",
+      "roof_z",
+      "roof_height",
+      "roof_type",
+      "semantic",
+      "semantic_class",
+      "region_ids",
+      "building_ids",
+      "roof_surface",
+      "face_ids",
+      "plane_ids"
+    ],
+    "forbidden_gt_arrays_found": [],
+    "forbidden_gt_array_gate_passed": true,
+    "aggregate_positive_gate_04a": true,
+    "aggregate_positive_gate_04b": true,
+    "empty_view_policy_04a": "forbidden_per_view",
+    "empty_view_policy_04b": "allowed_per_view_but_aggregate_must_be_positive",
+    "empty_view_count_04a": 0,
+    "empty_view_count_04b": 19,
+    "empty_view_ids_04b": [
+      "DJI_20241217084543_0095_D.JPG",
+      "DJI_20241217084547_0097_D.JPG",
+      "DJI_20241217084549_0098_D.JPG",
+      "DJI_20241217084553_0100_D.JPG",
+      "DJI_20241217084555_0101_D.JPG",
+      "DJI_20241217090853_0029_D.JPG",
+      "DJI_20241217095827_0018_D.JPG",
+      "DJI_20241217095829_0019_D.JPG",
+      "DJI_20241217095859_0034_D.JPG",
+      "DJI_20241217101112_0005_D.JPG",
+      "DJI_20241217101118_0008_D.JPG",
+      "DJI_20241217101329_0017_D.JPG",
+      "DJI_20241217101341_0023_D.JPG",
+      "DJI_20241217101538_0006_D.JPG",
+      "DJI_20241217101542_0008_D.JPG",
+      "DJI_20241217101548_0011_D.JPG",
+      "DJI_20241217101550_0012_D.JPG",
+      "DJI_20241217101602_0018_D.JPG",
+      "DJI_20241217103609_0074_D.JPG"
+    ],
+    "input_manifests": {
+      "04a": {
+        "path": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/prep_artifacts/plane_masks_04a/mask_manifest.json",
+        "sha256": "db93653318d2adad7b6bf14177f55ab778df04f7966c2f5189e6dc8ec1ed86b7",
+        "inventory_sha256": "9d94eb95f6ba3dadbc521a7f099032662842a25fb3dcde63ed761bd2d025a320",
+        "producer_manifest": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/prep_artifacts/plane_masks_04a/producer_manifest.json",
+        "producer_manifest_sha256": "62fd46cb388415648140e2499108adac7b8c6d3a0dac5ec9f510f7f812262cc0"
+      },
+      "04b": {
+        "path": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/prep_artifacts/plane_masks_04b/mask_manifest.json",
+        "sha256": "14af4b14288d6ecf772c5f4426a507cc80ab5c354f2ebfaa81383220a5849b16",
+        "inventory_sha256": "df7e64b24d5e889061bef96ed659374f14364f1f1137418f82f5344e992f75c2",
+        "producer_manifest": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/prep_artifacts/plane_masks_04b/producer_manifest.json",
+        "producer_manifest_sha256": "b6590df4817367b822419f92fa387750e98566ab3425b0668f31381e36bb0500"
+      },
+      "geometry_reference": {
+        "path": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/prep_artifacts/photo_support_masks/mask_manifest.json",
+        "sha256": "de531c820482c38755833d1e5c38f5fdd725105ee6b87a9578f42996553406f8",
+        "inventory_sha256": "82ed73ef4f4b4f2db2fb4a493c61350f8598f340f5c5205ce3b9e8e0489ea4db"
+      }
+    },
+    "metric_direction": "04a vision prediction versus 04b LoD2-GT upper-bound reference",
+    "metric_denominator_policy": {
+      "iou": "intersection/union; union is positive because 04a is nonempty",
+      "precision": "intersection/04a_positive_pixels",
+      "recall": "intersection/04b_positive_pixels; null for an empty 04b view"
+    },
+    "aggregate": {
+      "positive_pixels_04a_vision": 120604170,
+      "positive_pixels_04b_gt": 138884049,
+      "intersection_pixels": 90539901,
+      "union_pixels": 168948318,
+      "false_positive_pixels": 30064269,
+      "false_negative_pixels": 48344148,
+      "micro_iou": 0.5359029439997147,
+      "micro_precision": 0.7507194900474834,
+      "micro_recall": 0.6519100044383067,
+      "macro_iou": 0.4323752477793208,
+      "macro_precision": 0.6430406725906896,
+      "macro_recall_defined_views": 0.5680171883928049,
+      "macro_recall_defined_view_count": 462
+    },
+    "per_view_positive_pixel_summary": {
+      "04a_vision": {
+        "count": 481,
+        "sum": 120604170.0,
+        "min": 46.0,
+        "p25": 25052.0,
+        "median": 179299.0,
+        "p75": 427451.0,
+        "p95": 740007.0,
+        "max": 995795.0,
+        "mean": 250736.32016632016
+      },
+      "04b_gt": {
+        "count": 481,
+        "sum": 138884049.0,
+        "min": 0.0,
+        "p25": 43181.0,
+        "median": 263453.0,
+        "p75": 466203.0,
+        "p95": 752949.0,
+        "max": 984112.0,
+        "mean": 288740.2266112266
+      }
+    },
+    "inference_runs_started_by_qa": 0,
+    "learning_runs_started": 0,
+    "optimizer_steps": 0,
+    "training_config_read": false,
+    "training_config_modified": false,
+    "source_masks_modified": false,
+    "evaluation_only": true
+  },
+  "inference_runs_started_by_qa": 0,
+  "learning_runs_started": 0,
+  "optimizer_steps": 0,
+  "training_config_read": false,
+  "training_config_modified": false,
+  "source_masks_modified": false,
+  "evaluation_only": true
+}
