@@ -1,0 +1,865 @@
+{
+  "schema": "jointbuildgs.pilot_1wave.plane_calibration_receipt.v1",
+  "run_id": "20260721_pilot_1wave",
+  "state": "complete",
+  "official": true,
+  "official_backend_id": "jointbuildgs.stage2_forward_backend.v1",
+  "synthetic": false,
+  "created_utc": "2026-07-22T04:13:09.000046+00:00",
+  "mode": "forward_only_preoptimizer_fixed_views",
+  "backend": {
+    "id": "jointbuildgs.stage2_forward_backend.v1",
+    "synthetic": false
+  },
+  "runtime_attestation": {
+    "state": "official_attested",
+    "synthetic": false,
+    "container": true,
+    "image_tag": "jointbuildgs:dev",
+    "image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
+    "host_attestation_environment": {
+      "image_tag": "P1W_HOST_IMAGE_TAG",
+      "image_id": "P1W_HOST_IMAGE_ID"
+    },
+    "python": "3.11.15",
+    "torch": "2.4.1+cu121",
+    "cuda": "12.1",
+    "gsplat": "1.4.0",
+    "numpy": "1.26.4",
+    "scipy": "1.13.1",
+    "pillow": "10.4.0",
+    "cuda_available": true,
+    "cuda_device_count": 1
+  },
+  "seed_lock": {
+    "calibration_seed": 1001,
+    "calibration_seed_reason": "lowest registered training seed; locked result-blind before forward-only calibration",
+    "weight_reused_for_seeds": [
+      1001,
+      1002
+    ]
+  },
+  "optimizer_audit": {
+    "optimizer_objects_created": 0,
+    "backward_calls": 0,
+    "optimizer_updates": 0
+  },
+  "view_lock": {
+    "view_ids": [
+      "DJI_20241217103523_0051_D.JPG",
+      "DJI_20241217084831_0179_D.JPG",
+      "DJI_20241217095441_0023_D.JPG",
+      "DJI_20241217102613_0039_D.JPG",
+      "DJI_20241217084731_0149_D.JPG",
+      "DJI_20241217090853_0029_D.JPG",
+      "DJI_20241217102925_0008_D.JPG",
+      "DJI_20241217102721_0016_D.JPG",
+      "DJI_20241217095053_0053_D.JPG",
+      "DJI_20241217095613_0069_D.JPG",
+      "DJI_20241217084657_0132_D.JPG",
+      "DJI_20241217101548_0011_D.JPG",
+      "DJI_20241217095635_0080_D.JPG",
+      "DJI_20241217084355_0041_D.JPG",
+      "DJI_20241217090901_0033_D.JPG",
+      "DJI_20241217084627_0117_D.JPG"
+    ],
+    "view_ids_sha256": "a1b88b85b63bab7572f5e9ea492e3e73cb0ebd5c2d6e01860f1af1b2f125acfe",
+    "view_count": 16,
+    "minimum_eligible_views": 8,
+    "random_view_sampling": false
+  },
+  "inputs": {
+    "calibration_lock": {
+      "path": "phases/p2-gsjso/configs/pilot_1wave_calibration_lock.json",
+      "sha256": "7eb4db2df284388c076b4e6876b169be389edb8d3da601931d3ca7997cdf54b4"
+    },
+    "calibration_scaffolds_manifest": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/calibration/scaffolds/calibration_scaffolds_manifest.json",
+      "sha256": "0de95060b64903e73dcba87d037734c4997a3caf8a213edfeae615480a1d43a0"
+    },
+    "materialized_input_inventory": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/calibration/scaffolds/materialized_input_inventory.json",
+      "sha256": "30a3387275ee9ed29ad75bbdf7cb1979f2b8b2cd52640225e9dbe00895666450"
+    },
+    "dense_seed": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/prep_artifacts/seeds/seed_dense_expanded_pilot.ply",
+      "sha256": "ab3cae4f3fd767296ca212a837a2704bb7eee572923e470ffdb1ec514d72380f"
+    },
+    "configs": {
+      "03": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/calibration/scaffolds/calibration_03_seed1001.yaml",
+        "sha256": "2171fd2c977d79729c9977fb4e0fc049dd88468ed4b95dda2c93902239c19b69"
+      },
+      "04a": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/calibration/scaffolds/calibration_04a_seed1001.yaml",
+        "sha256": "0475020ee05ffaad142fae83366c69f0f9b35ad0a1711a90cf4552d0ffc35cb5"
+      },
+      "04b": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/calibration/scaffolds/calibration_04b_seed1001.yaml",
+        "sha256": "a8bba45353408ecd0464c7b4d1cb3f80bfb4f10be7384e329ae8a77d284b71f7"
+      }
+    },
+    "masks": {
+      "common_roof_audit": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/prep_artifacts/photo_support_masks/mask_manifest.json",
+        "sha256": "de531c820482c38755833d1e5c38f5fdd725105ee6b87a9578f42996553406f8"
+      },
+      "04a_plane": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/prep_artifacts/plane_masks_04a/mask_manifest.json",
+        "sha256": "db93653318d2adad7b6bf14177f55ab778df04f7966c2f5189e6dc8ec1ed86b7"
+      },
+      "04b_plane": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/prep_artifacts/plane_masks_04b/mask_manifest.json",
+        "sha256": "14af4b14288d6ecf772c5f4426a507cc80ab5c354f2ebfaa81383220a5849b16"
+      }
+    },
+    "code": {
+      "runner": {
+        "path": "phases/p2-gsjso/scripts/pilot_1wave_plane_calibration.py",
+        "sha256": "5153446e3ffd63659e9a24b2dd1b4dfb60489cd0cb82f89cba43156583e21e25"
+      },
+      "train_contract": {
+        "path": "src/stage2/train.py",
+        "sha256": "2d78d708d3873481178b38c5b5a311ec6346b4a8b691ff23f7de69b9bc3f8f2c"
+      },
+      "model": {
+        "path": "src/stage2/model.py",
+        "sha256": "a392d093b38706097f1d3345b8b6b4567916145b31e37885d35ba810099d07c9"
+      },
+      "renderer": {
+        "path": "src/stage2/renderer.py",
+        "sha256": "bceda69ba03a89ea935c23f3316fbede4daceee53bbd0994b381e92987ec1687"
+      },
+      "dataloader": {
+        "path": "src/stage2/dataloader.py",
+        "sha256": "55e5e43215672c6fe53eddfb9fbc1466f2fc81e7772e3139489c0e9702659ee1"
+      },
+      "colmap_io": {
+        "path": "src/stage2/colmap_io.py",
+        "sha256": "7185fc2c8d292a81213b25608d6ce4639e5c44b6a8669ea8126a7de89ee9343d"
+      },
+      "data_fitting": {
+        "path": "src/stage2/loss/data_fitting.py",
+        "sha256": "c5a963cc7427244558198e75d8972723a6a876e0e8bfad33b3f46dbe4c77402a"
+      },
+      "planarity": {
+        "path": "src/stage2/loss/planarity.py",
+        "sha256": "925dc843463c7ce4efcbb3ce8210fa48e2d2da0fa45f6721b02be7d169bb8d7a"
+      },
+      "plane_guided_init": {
+        "path": "src/stage2/plane_guided_init.py",
+        "sha256": "d6d3e10e3875dd2a13899a18df6ad928c011c4ff166c2edae75a0cbd487dc3fa"
+      },
+      "pointcloud_io": {
+        "path": "src/stage2/pointcloud_io.py",
+        "sha256": "efe62ccb7a01abd56de258cd9b3b15093774325f56c716a28739ed6e6bc5fa64"
+      },
+      "seed_control": {
+        "path": "src/stage2/seed_control.py",
+        "sha256": "60e0a88096c12d14bd621426ac9e54eca9642af2f0d2d1326a14c1c9b853190a"
+      },
+      "pilot_mask_schema": {
+        "path": "src/stage2/pilot_mask_schema.py",
+        "sha256": "bc3ca6db40d5cdb33b2a62393d51ced816e7b84345b3b95514400c2251aef680"
+      },
+      "config_resolver": {
+        "path": "phases/p2-gsjso/scripts/pilot_1wave_resolved_configs.py",
+        "sha256": "b1bd34014fb5170ec5eb4dc27bdf1e2b6e3887975269770ea93ff0d52f325b66"
+      }
+    }
+  },
+  "mask_sources": {
+    "common_roof_audit": "lod2_groundsurface_xy_sfm_height",
+    "03_plane_scope": "segmentation_free_local_plane_intersect_common_roof_audit",
+    "04a_plane": "vision_groundedsam_roof",
+    "04b_plane": "lod2_roofsurface_gt_upperbound"
+  },
+  "input_validation": {
+    "verified_before_and_after_forward": true,
+    "scaffold_bundle": {
+      "manifest_sha256": "0de95060b64903e73dcba87d037734c4997a3caf8a213edfeae615480a1d43a0",
+      "directory_mode": "0555",
+      "file_mode": "0444"
+    },
+    "materialized_input_inventory": {
+      "schema": "jointbuildgs.pilot_1wave.materialized_input_inventory.v1",
+      "sha256": "30a3387275ee9ed29ad75bbdf7cb1979f2b8b2cd52640225e9dbe00895666450",
+      "records_sha256": "b99c38d31b37b59f1827537e520c20c76ca5a0ee0bfbc5baaaa879d4fff57271",
+      "view_count": 481,
+      "file_count": 1927,
+      "total_bytes": 12335728234
+    },
+    "binary_mask_payloads": {
+      "common": {
+        "manifest_sha256": "de531c820482c38755833d1e5c38f5fdd725105ee6b87a9578f42996553406f8",
+        "inventory_sha256": "82ed73ef4f4b4f2db2fb4a493c61350f8598f340f5c5205ce3b9e8e0489ea4db",
+        "source": "lod2_groundsurface_xy_sfm_height",
+        "purpose": "photo_support",
+        "consumer_arms": [
+          "02_photo_control",
+          "03_plane_soft",
+          "04a_plane_medium_vision",
+          "04b_plane_medium_gt_upperbound"
+        ],
+        "record_count": 481,
+        "aggregate_positive_pixels": 121367159
+      },
+      "04a": {
+        "manifest_sha256": "db93653318d2adad7b6bf14177f55ab778df04f7966c2f5189e6dc8ec1ed86b7",
+        "inventory_sha256": "9d94eb95f6ba3dadbc521a7f099032662842a25fb3dcde63ed761bd2d025a320",
+        "source": "vision_groundedsam_roof",
+        "purpose": "plane_region",
+        "consumer_arms": [
+          "04a_plane_medium_vision"
+        ],
+        "record_count": 481,
+        "aggregate_positive_pixels": 120604170
+      },
+      "04b": {
+        "manifest_sha256": "14af4b14288d6ecf772c5f4426a507cc80ab5c354f2ebfaa81383220a5849b16",
+        "inventory_sha256": "df7e64b24d5e889061bef96ed659374f14364f1f1137418f82f5344e992f75c2",
+        "source": "lod2_roofsurface_gt_upperbound",
+        "purpose": "plane_region",
+        "consumer_arms": [
+          "04b_plane_medium_gt_upperbound"
+        ],
+        "record_count": 481,
+        "aggregate_positive_pixels": 138884049
+      }
+    },
+    "common_04a_04b_view_shape_geometry_exact": true
+  },
+  "config_contract": {
+    "calibration_scaffold_schema": "jointbuildgs.pilot_1wave.calibration_scaffold.v1",
+    "calibration_only": true,
+    "conditions": {
+      "03": {
+        "pilot_arm": "03_plane_soft",
+        "seed": 1001
+      },
+      "04a": {
+        "pilot_arm": "04a_plane_medium_vision",
+        "seed": 1001
+      },
+      "04b": {
+        "pilot_arm": "04b_plane_medium_gt_upperbound",
+        "seed": 1001
+      }
+    },
+    "04_pair_control": {
+      "allowed_difference_keys": [
+        "out_dir",
+        "pilot_arm",
+        "pilot_condition",
+        "pilot_job_id",
+        "pilot_plane_region_manifest_sha256",
+        "pilot_plane_region_source",
+        "plane_region_mask_manifest"
+      ],
+      "observed_difference_keys": [
+        "pilot_arm",
+        "pilot_condition",
+        "pilot_job_id",
+        "pilot_plane_region_manifest_sha256",
+        "pilot_plane_region_source",
+        "plane_region_mask_manifest"
+      ],
+      "passed": true
+    }
+  },
+  "resolved_weights": {
+    "03": {
+      "w_plane": 4.029704429530609,
+      "target_ratio": 0.25,
+      "aggregate_weighted_roof_photo": 4.426259368658066,
+      "aggregate_raw_roof_plane": 0.2746019819751382,
+      "achieved_ratio": 0.24999999569807912,
+      "eligible_view_count": 15
+    },
+    "04a": {
+      "w_plane": 13.005751642181838,
+      "target_ratio": 1.0,
+      "aggregate_weighted_roof_photo": 4.426831379532814,
+      "aggregate_raw_roof_plane": 0.34037488885223866,
+      "achieved_ratio": 0.9999999751774258,
+      "eligible_view_count": 15
+    },
+    "04b": {
+      "w_plane": 13.005751642181838,
+      "source_weight_condition": "04a",
+      "target_ratio": null,
+      "aggregate_weighted_roof_photo": 4.0592823177576065,
+      "aggregate_raw_roof_plane": 0.31059431098401546,
+      "achieved_ratio": 0.9951297184878158,
+      "eligible_view_count": 14
+    }
+  },
+  "medium_verification": {
+    "inclusive_ratio_range": [
+      0.5,
+      2.0
+    ],
+    "conditions": {
+      "04a": {
+        "achieved_ratio": 0.9999999751774258,
+        "passed": true
+      },
+      "04b": {
+        "achieved_ratio": 0.9951297184878158,
+        "passed": true
+      }
+    },
+    "shared_weight_exact": true,
+    "passed": true,
+    "retuned_04b": false
+  },
+  "forward_measurements": {
+    "03": [
+      {
+        "condition_id": "03",
+        "view_id": "DJI_20241217103523_0051_D.JPG",
+        "weighted_roof_photo": 0.3421737551689148,
+        "raw_roof_plane": 0.008689362555742264,
+        "plane_count": 18423,
+        "plane_point_count": 897292,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "03",
+        "view_id": "DJI_20241217084831_0179_D.JPG",
+        "weighted_roof_photo": 0.32428425550460815,
+        "raw_roof_plane": 0.027754558250308037,
+        "plane_count": 1838,
+        "plane_point_count": 87378,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "03",
+        "view_id": "DJI_20241217095441_0023_D.JPG",
+        "weighted_roof_photo": 0.24962052702903748,
+        "raw_roof_plane": 0.016261417418718338,
+        "plane_count": 5381,
+        "plane_point_count": 258054,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "03",
+        "view_id": "DJI_20241217102613_0039_D.JPG",
+        "weighted_roof_photo": 0.2769404947757721,
+        "raw_roof_plane": 0.009515192359685898,
+        "plane_count": 19068,
+        "plane_point_count": 930747,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "03",
+        "view_id": "DJI_20241217084731_0149_D.JPG",
+        "weighted_roof_photo": 0.3302454352378845,
+        "raw_roof_plane": 0.018907703459262848,
+        "plane_count": 646,
+        "plane_point_count": 27392,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "03",
+        "view_id": "DJI_20241217090853_0029_D.JPG",
+        "weighted_roof_photo": 0.3736492991447449,
+        "raw_roof_plane": 0.015564579516649246,
+        "plane_count": 167,
+        "plane_point_count": 7596,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "03",
+        "view_id": "DJI_20241217102925_0008_D.JPG",
+        "weighted_roof_photo": 0.3311566114425659,
+        "raw_roof_plane": 0.017262665554881096,
+        "plane_count": 4693,
+        "plane_point_count": 215402,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "03",
+        "view_id": "DJI_20241217102721_0016_D.JPG",
+        "weighted_roof_photo": 0.29107150435447693,
+        "raw_roof_plane": 0.025843041017651558,
+        "plane_count": 3503,
+        "plane_point_count": 162950,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "03",
+        "view_id": "DJI_20241217095053_0053_D.JPG",
+        "weighted_roof_photo": 0.3129732012748718,
+        "raw_roof_plane": 0.036572810262441635,
+        "plane_count": 1308,
+        "plane_point_count": 63379,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "03",
+        "view_id": "DJI_20241217095613_0069_D.JPG",
+        "weighted_roof_photo": 0.3218702971935272,
+        "raw_roof_plane": 0.009145155549049377,
+        "plane_count": 18327,
+        "plane_point_count": 884919,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "03",
+        "view_id": "DJI_20241217084657_0132_D.JPG",
+        "weighted_roof_photo": 0.2512510418891907,
+        "raw_roof_plane": 0.02046380005776882,
+        "plane_count": 11381,
+        "plane_point_count": 549588,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "03",
+        "view_id": "DJI_20241217101548_0011_D.JPG",
+        "weighted_roof_photo": 0.35228231549263,
+        "raw_roof_plane": 0.0,
+        "plane_count": 0,
+        "plane_point_count": 0,
+        "eligible": false,
+        "reason": "nonpositive_or_empty_plane_measurement"
+      },
+      {
+        "condition_id": "03",
+        "view_id": "DJI_20241217095635_0080_D.JPG",
+        "weighted_roof_photo": 0.30504298210144043,
+        "raw_roof_plane": 0.010544960387051105,
+        "plane_count": 9654,
+        "plane_point_count": 458762,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "03",
+        "view_id": "DJI_20241217084355_0041_D.JPG",
+        "weighted_roof_photo": 0.18691691756248474,
+        "raw_roof_plane": 0.026702595874667168,
+        "plane_count": 18,
+        "plane_point_count": 652,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "03",
+        "view_id": "DJI_20241217090901_0033_D.JPG",
+        "weighted_roof_photo": 0.2730771601200104,
+        "raw_roof_plane": 0.013970332220196724,
+        "plane_count": 9,
+        "plane_point_count": 377,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "03",
+        "view_id": "DJI_20241217084627_0117_D.JPG",
+        "weighted_roof_photo": 0.25598588585853577,
+        "raw_roof_plane": 0.01740380749106407,
+        "plane_count": 164,
+        "plane_point_count": 7428,
+        "eligible": true,
+        "reason": "eligible"
+      }
+    ],
+    "04a": [
+      {
+        "condition_id": "04a",
+        "view_id": "DJI_20241217103523_0051_D.JPG",
+        "weighted_roof_photo": 0.34407782554626465,
+        "raw_roof_plane": 0.013986860401928425,
+        "plane_count": 8367,
+        "plane_point_count": 406701,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "04a",
+        "view_id": "DJI_20241217084831_0179_D.JPG",
+        "weighted_roof_photo": 0.3232244849205017,
+        "raw_roof_plane": 0.027224548161029816,
+        "plane_count": 1295,
+        "plane_point_count": 61432,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "04a",
+        "view_id": "DJI_20241217095441_0023_D.JPG",
+        "weighted_roof_photo": 0.25292670726776123,
+        "raw_roof_plane": 0.020413385704159737,
+        "plane_count": 2644,
+        "plane_point_count": 125207,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "04a",
+        "view_id": "DJI_20241217102613_0039_D.JPG",
+        "weighted_roof_photo": 0.28269821405410767,
+        "raw_roof_plane": 0.0159696564078331,
+        "plane_count": 6245,
+        "plane_point_count": 303164,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "04a",
+        "view_id": "DJI_20241217084731_0149_D.JPG",
+        "weighted_roof_photo": 0.32971853017807007,
+        "raw_roof_plane": 0.019340304657816887,
+        "plane_count": 492,
+        "plane_point_count": 19831,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "04a",
+        "view_id": "DJI_20241217090853_0029_D.JPG",
+        "weighted_roof_photo": 0.372823566198349,
+        "raw_roof_plane": 0.01913456991314888,
+        "plane_count": 140,
+        "plane_point_count": 6033,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "04a",
+        "view_id": "DJI_20241217102925_0008_D.JPG",
+        "weighted_roof_photo": 0.32848700881004333,
+        "raw_roof_plane": 0.020947137847542763,
+        "plane_count": 3793,
+        "plane_point_count": 172351,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "04a",
+        "view_id": "DJI_20241217102721_0016_D.JPG",
+        "weighted_roof_photo": 0.28512343764305115,
+        "raw_roof_plane": 0.02950158528983593,
+        "plane_count": 3218,
+        "plane_point_count": 146820,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "04a",
+        "view_id": "DJI_20241217095053_0053_D.JPG",
+        "weighted_roof_photo": 0.31345975399017334,
+        "raw_roof_plane": 0.03185576945543289,
+        "plane_count": 2343,
+        "plane_point_count": 112837,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "04a",
+        "view_id": "DJI_20241217095613_0069_D.JPG",
+        "weighted_roof_photo": 0.32134944200515747,
+        "raw_roof_plane": 0.010356432758271694,
+        "plane_count": 16941,
+        "plane_point_count": 818084,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "04a",
+        "view_id": "DJI_20241217084657_0132_D.JPG",
+        "weighted_roof_photo": 0.25143930315971375,
+        "raw_roof_plane": 0.023315366357564926,
+        "plane_count": 8016,
+        "plane_point_count": 385876,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "04a",
+        "view_id": "DJI_20241217101548_0011_D.JPG",
+        "weighted_roof_photo": 0.3527812957763672,
+        "raw_roof_plane": 0.0,
+        "plane_count": 0,
+        "plane_point_count": 0,
+        "eligible": false,
+        "reason": "nonpositive_or_empty_plane_measurement"
+      },
+      {
+        "condition_id": "04a",
+        "view_id": "DJI_20241217095635_0080_D.JPG",
+        "weighted_roof_photo": 0.30432891845703125,
+        "raw_roof_plane": 0.010959144681692123,
+        "plane_count": 8888,
+        "plane_point_count": 421616,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "04a",
+        "view_id": "DJI_20241217084355_0041_D.JPG",
+        "weighted_roof_photo": 0.18945194780826569,
+        "raw_roof_plane": 0.04831545054912567,
+        "plane_count": 3,
+        "plane_point_count": 117,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "04a",
+        "view_id": "DJI_20241217090901_0033_D.JPG",
+        "weighted_roof_photo": 0.2730748653411865,
+        "raw_roof_plane": 0.0116195660084486,
+        "plane_count": 9,
+        "plane_point_count": 275,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "04a",
+        "view_id": "DJI_20241217084627_0117_D.JPG",
+        "weighted_roof_photo": 0.2546473741531372,
+        "raw_roof_plane": 0.03743511065840721,
+        "plane_count": 29,
+        "plane_point_count": 1364,
+        "eligible": true,
+        "reason": "eligible"
+      }
+    ],
+    "04b": [
+      {
+        "condition_id": "04b",
+        "view_id": "DJI_20241217103523_0051_D.JPG",
+        "weighted_roof_photo": 0.3437788486480713,
+        "raw_roof_plane": 0.014666102826595306,
+        "plane_count": 6743,
+        "plane_point_count": 322817,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "04b",
+        "view_id": "DJI_20241217084831_0179_D.JPG",
+        "weighted_roof_photo": 0.32320675253868103,
+        "raw_roof_plane": 0.028161028400063515,
+        "plane_count": 1201,
+        "plane_point_count": 56240,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "04b",
+        "view_id": "DJI_20241217095441_0023_D.JPG",
+        "weighted_roof_photo": 0.2531052529811859,
+        "raw_roof_plane": 0.021390264853835106,
+        "plane_count": 2374,
+        "plane_point_count": 110455,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "04b",
+        "view_id": "DJI_20241217102613_0039_D.JPG",
+        "weighted_roof_photo": 0.2786100506782532,
+        "raw_roof_plane": 0.014354029670357704,
+        "plane_count": 10036,
+        "plane_point_count": 483886,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "04b",
+        "view_id": "DJI_20241217084731_0149_D.JPG",
+        "weighted_roof_photo": 0.3298940658569336,
+        "raw_roof_plane": 0.020769070833921432,
+        "plane_count": 558,
+        "plane_point_count": 23249,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "04b",
+        "view_id": "DJI_20241217090853_0029_D.JPG",
+        "weighted_roof_photo": 0.373654305934906,
+        "raw_roof_plane": 0.0,
+        "plane_count": 0,
+        "plane_point_count": 0,
+        "eligible": false,
+        "reason": "nonpositive_or_empty_plane_measurement"
+      },
+      {
+        "condition_id": "04b",
+        "view_id": "DJI_20241217102925_0008_D.JPG",
+        "weighted_roof_photo": 0.3310920000076294,
+        "raw_roof_plane": 0.022131580859422684,
+        "plane_count": 2295,
+        "plane_point_count": 103112,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "04b",
+        "view_id": "DJI_20241217102721_0016_D.JPG",
+        "weighted_roof_photo": 0.28762000799179077,
+        "raw_roof_plane": 0.029696956276893616,
+        "plane_count": 2222,
+        "plane_point_count": 100070,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "04b",
+        "view_id": "DJI_20241217095053_0053_D.JPG",
+        "weighted_roof_photo": 0.3134981691837311,
+        "raw_roof_plane": 0.029761897400021553,
+        "plane_count": 1815,
+        "plane_point_count": 84384,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "04b",
+        "view_id": "DJI_20241217095613_0069_D.JPG",
+        "weighted_roof_photo": 0.32156825065612793,
+        "raw_roof_plane": 0.00979478470981121,
+        "plane_count": 11358,
+        "plane_point_count": 544023,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "04b",
+        "view_id": "DJI_20241217084657_0132_D.JPG",
+        "weighted_roof_photo": 0.2519298791885376,
+        "raw_roof_plane": 0.024706216529011726,
+        "plane_count": 6840,
+        "plane_point_count": 321368,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "04b",
+        "view_id": "DJI_20241217101548_0011_D.JPG",
+        "weighted_roof_photo": 0.35259801149368286,
+        "raw_roof_plane": 0.0,
+        "plane_count": 0,
+        "plane_point_count": 0,
+        "eligible": false,
+        "reason": "nonpositive_or_empty_plane_measurement"
+      },
+      {
+        "condition_id": "04b",
+        "view_id": "DJI_20241217095635_0080_D.JPG",
+        "weighted_roof_photo": 0.30467578768730164,
+        "raw_roof_plane": 0.0192747600376606,
+        "plane_count": 3170,
+        "plane_point_count": 149016,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "04b",
+        "view_id": "DJI_20241217084355_0041_D.JPG",
+        "weighted_roof_photo": 0.18968631327152252,
+        "raw_roof_plane": 0.018737491220235825,
+        "plane_count": 1,
+        "plane_point_count": 19,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "04b",
+        "view_id": "DJI_20241217090901_0033_D.JPG",
+        "weighted_roof_photo": 0.27489393949508667,
+        "raw_roof_plane": 0.024516398087143898,
+        "plane_count": 11,
+        "plane_point_count": 417,
+        "eligible": true,
+        "reason": "eligible"
+      },
+      {
+        "condition_id": "04b",
+        "view_id": "DJI_20241217084627_0117_D.JPG",
+        "weighted_roof_photo": 0.2557229995727539,
+        "raw_roof_plane": 0.03263372927904129,
+        "plane_count": 41,
+        "plane_point_count": 1661,
+        "eligible": true,
+        "reason": "eligible"
+      }
+    ]
+  },
+  "backend_audits": {
+    "03": {
+      "backend_id": "jointbuildgs.stage2_forward_backend.v1",
+      "synthetic": false,
+      "forward_only": true,
+      "optimizer_objects_created": 0,
+      "backward_calls": 0,
+      "optimizer_updates": 0,
+      "model_initial_point_count": 1252033,
+      "mvs_seed_point_count": 1070560,
+      "view_role_mode": "legacy_every_10th_eval",
+      "plane_guided_initialization": null
+    },
+    "04a": {
+      "backend_id": "jointbuildgs.stage2_forward_backend.v1",
+      "synthetic": false,
+      "forward_only": true,
+      "optimizer_objects_created": 0,
+      "backward_calls": 0,
+      "optimizer_updates": 0,
+      "model_initial_point_count": 1252033,
+      "mvs_seed_point_count": 1070560,
+      "view_role_mode": "legacy_every_10th_eval",
+      "plane_guided_initialization": {
+        "binding_sha256": "da721217b6bd968bc67d943befdd6420c7a9c6dfe086eaaf759b25cefe264d91",
+        "algorithm_sha256": "bc9cc4539a5d87b0b17a64291621ae62edf44b5fb935f8c73e321ac6514b428c",
+        "counts": {
+          "mvs_seed_count": 1070560,
+          "evidence_sample_count": 1390169,
+          "matched_seed_count": 344725,
+          "unmatched_seed_count": 725835,
+          "matched_seed_fraction": 0.3220043715438649,
+          "zero_sum_fallback_count": 0
+        }
+      }
+    },
+    "04b": {
+      "backend_id": "jointbuildgs.stage2_forward_backend.v1",
+      "synthetic": false,
+      "forward_only": true,
+      "optimizer_objects_created": 0,
+      "backward_calls": 0,
+      "optimizer_updates": 0,
+      "model_initial_point_count": 1252033,
+      "mvs_seed_point_count": 1070560,
+      "view_role_mode": "legacy_every_10th_eval",
+      "plane_guided_initialization": {
+        "binding_sha256": "88913b596ec472e9c242fa5d1ba7f07af1eb1c6578a362b9875406cc0f146d9b",
+        "algorithm_sha256": "bc9cc4539a5d87b0b17a64291621ae62edf44b5fb935f8c73e321ac6514b428c",
+        "counts": {
+          "mvs_seed_count": 1070560,
+          "evidence_sample_count": 1611622,
+          "matched_seed_count": 190745,
+          "unmatched_seed_count": 879815,
+          "matched_seed_fraction": 0.1781731056643252,
+          "zero_sum_fallback_count": 0
+        }
+      }
+    }
+  },
+  "post_update_recalibration": false
+}
