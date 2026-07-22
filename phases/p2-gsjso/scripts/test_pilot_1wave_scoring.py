@@ -210,6 +210,7 @@ class PilotOneWaveScoringTests(unittest.TestCase):
         start_attempts = [
             {"ordinal": 1, "requested_utc": "2026-07-22T00:00:00+00:00"}
         ]
+        repo_bind = f"/host-mount/JointBuildGS:{score.ROOFER_CONTAINER_REPO}"
         launch_path = runtime / "container_launch.json"
         process_path = runtime / "process_complete.json"
         log_path = runtime / "container.log"
@@ -222,6 +223,9 @@ class PilotOneWaveScoringTests(unittest.TestCase):
                 "container_name": container_name,
                 "container_id": container_id,
                 "contract_sha256": contract_sha,
+                "create_command": [
+                    "docker", "create", "-v", repo_bind, score.ROOFER_IMAGE,
+                ],
                 "start_attempt_count": 1,
                 "start_attempts": start_attempts,
             },
@@ -268,9 +272,7 @@ class PilotOneWaveScoringTests(unittest.TestCase):
                         "jointbuildgs.p1w.job": job_id,
                         "jointbuildgs.p1w.contract": contract_sha,
                     },
-                    "binds": [
-                        f"{score.REPO.resolve()}:{score.ROOFER_CONTAINER_REPO}"
-                    ],
+                    "binds": [repo_bind],
                     "network_mode": "none",
                     "restart_count": 0,
                 },
@@ -1380,6 +1382,45 @@ class PilotOneWaveScoringTests(unittest.TestCase):
                             expected_seed=1002,
                         )
                     execution_path.write_bytes(original)
+
+    def test_repository_bind_uses_host_alias_and_sealed_create_command(self) -> None:
+        raw = f"/host-mount/JointBuildGS:{score.ROOFER_CONTAINER_REPO}"
+        launch = {
+            "create_command": [
+                "docker", "create", "-v", raw, score.ROOFER_IMAGE,
+            ]
+        }
+        normalized = score.validate_repository_bind([raw], launch)
+        self.assertEqual(normalized, {
+            "source": "/host-mount/JointBuildGS",
+            "target": str(score.ROOFER_CONTAINER_REPO),
+            "mode": "rw",
+            "docker_value": raw,
+            "launch_value": raw,
+        })
+        self.assertNotEqual(normalized["source"], str(score.REPO.resolve()))
+        inspect_with_rw = f"{raw}:rw"
+        normalized_rw = score.validate_repository_bind([inspect_with_rw], launch)
+        self.assertEqual(normalized_rw["source"], normalized["source"])
+        self.assertEqual(normalized_rw["mode"], "rw")
+        self.assertEqual(normalized_rw["docker_value"], inspect_with_rw)
+        self.assertEqual(normalized_rw["launch_value"], raw)
+        with self.assertRaisesRegex(RuntimeError, "mode must be absent or rw"):
+            score.validate_repository_bind(
+                [f"/host-mount/JointBuildGS:{score.ROOFER_CONTAINER_REPO}:ro"],
+                {"create_command": [
+                    "docker", "create", "-v",
+                    f"/host-mount/JointBuildGS:{score.ROOFER_CONTAINER_REPO}:ro",
+                ]},
+            )
+        with self.assertRaisesRegex(RuntimeError, "launch/inspect bind source"):
+            score.validate_repository_bind(
+                [raw],
+                {"create_command": [
+                    "docker", "create", "-v",
+                    f"/different-host/JointBuildGS:{score.ROOFER_CONTAINER_REPO}",
+                ]},
+            )
 
     def test_finalize_recovers_merged_without_marker_without_rerunning_w2(self) -> None:
         with self.temporary_directory() as raw:

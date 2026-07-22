@@ -842,6 +842,71 @@ def validate_execution_artifact_record(
     return normalized
 
 
+def validate_repository_bind(
+    binds: Any,
+    launch: Mapping[str, Any],
+) -> dict[str, str]:
+    """Validate the host-side bind without conflating host/container paths."""
+
+    if not isinstance(binds, list) or len(binds) != 1 or not isinstance(binds[0], str):
+        raise RuntimeError("Roofer repository bind must contain exactly one string")
+    raw = binds[0]
+
+    def parse(value: str, label: str) -> tuple[str, str, str]:
+        parts = value.split(":")
+        if len(parts) == 2:
+            source_value, target_value = parts
+            mode_value = ""
+        elif len(parts) == 3:
+            source_value, target_value, mode_value = parts
+        else:
+            raise RuntimeError(f"{label} has invalid syntax: {value!r}")
+        if not source_value or not Path(source_value).is_absolute():
+            raise RuntimeError(f"{label} source must be an absolute host path")
+        require_equal(target_value, str(ROOFER_CONTAINER_REPO), f"{label} target")
+        if mode_value not in {"", "rw"}:
+            raise RuntimeError(
+                f"{label} mode must be absent or rw: {mode_value!r}"
+            )
+        return source_value, target_value, "rw"
+
+    source, target, mode = parse(raw, "Roofer repository bind")
+
+    create_command = launch.get("create_command")
+    if not isinstance(create_command, list) or any(
+        not isinstance(value, str) for value in create_command
+    ):
+        raise RuntimeError("Roofer launch create_command must be a string array")
+    volume_values: list[str] = []
+    index = 0
+    while index < len(create_command):
+        value = create_command[index]
+        if value in {"-v", "--volume"}:
+            if index + 1 >= len(create_command):
+                raise RuntimeError("Roofer launch create_command has a dangling volume flag")
+            volume_values.append(create_command[index + 1])
+            index += 2
+            continue
+        if value.startswith("--volume="):
+            volume_values.append(value.partition("=")[2])
+        index += 1
+    require_equal(len(volume_values), 1, "Roofer launch repository bind count")
+    launch_raw = volume_values[0]
+    launch_source, launch_target, launch_mode = parse(
+        launch_raw, "Roofer launch repository bind"
+    )
+    require_equal(launch_source, source, "Roofer launch/inspect bind source")
+    require_equal(launch_target, target, "Roofer launch/inspect bind target")
+    require_equal(launch_mode, mode, "Roofer launch/inspect bind mode")
+    return {
+        "source": source,
+        "target": target,
+        "mode": mode,
+        "docker_value": raw,
+        "launch_value": launch_raw,
+    }
+
+
 def validate_execution_binding(
     marker: Mapping[str, Any],
     *,
@@ -905,8 +970,6 @@ def validate_execution_binding(
     expected_container_name = (
         f"{ROOFER_CONTAINER_NAME_PREFIX}-{inputs.condition_id}-seed{inputs.seed}-roofer"
     )
-    expected_repo_bind = f"{REPO.resolve()}:{ROOFER_CONTAINER_REPO}"
-
     container = payload.get("container")
     execution = payload.get("execution")
     if not isinstance(container, Mapping) or not isinstance(execution, Mapping):
@@ -929,7 +992,6 @@ def validate_execution_binding(
         "execution contract label",
     )
     require_equal(container.get("network_mode"), "none", "execution network mode")
-    require_equal(container.get("binds"), [expected_repo_bind], "execution repository bind")
     require_equal(int(container.get("restart_count", -1)), 0, "execution restart count")
     container_id = str(container.get("id", ""))
     require(
@@ -981,6 +1043,7 @@ def validate_execution_binding(
     require_equal(int(process.get("wait_exit_code", -1)), 0, "process wait exit code")
     require_equal(launch.get("job_id"), job_id, "launch job_id")
     require_equal(process.get("job_id"), job_id, "process job_id")
+    repo_bind = validate_repository_bind(container.get("binds"), launch)
     normalized = {
         "schema": ROOFER_EXECUTION_SCHEMA,
         "state": "complete",
@@ -1002,7 +1065,7 @@ def validate_execution_binding(
             "jointbuildgs.p1w.contract": expected_contract_sha,
         },
         "network_mode": "none",
-        "repo_bind": expected_repo_bind,
+        "repo_bind": repo_bind,
         "docker_state": "exited",
         "wait_exit_code": 0,
         "start_attempt_count": 1,

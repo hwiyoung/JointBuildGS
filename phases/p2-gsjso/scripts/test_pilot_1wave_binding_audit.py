@@ -399,6 +399,7 @@ class Fixture:
             }
         )
         self.start_attempts = [{"attempt": 1, "state": "started"}]
+        self.repo_bind = f"/host-mount/JointBuildGS:{audit.ROOFER_CONTAINER_REPO}"
         self.launch = root / "container_launch.json"
         self.process = root / "process_complete.json"
         self.container_log = root / "container.log"
@@ -411,6 +412,9 @@ class Fixture:
                 "start_attempts": self.start_attempts,
                 "start_attempt_count": 1,
                 "contract_sha256": self.contract_sha256,
+                "create_command": [
+                    "docker", "create", "-v", self.repo_bind, audit.ROOFER_IMAGE,
+                ],
             },
         )
         write_json(
@@ -446,7 +450,13 @@ class Fixture:
                 "jointbuildgs.p1w.contract": self.contract_sha256,
             },
             "network_mode": "none",
-            "repo_bind": f"{audit.REPO.resolve()}:{audit.ROOFER_CONTAINER_REPO}",
+            "repo_bind": {
+                "source": "/host-mount/JointBuildGS",
+                "target": str(audit.ROOFER_CONTAINER_REPO),
+                "mode": "rw",
+                "docker_value": self.repo_bind,
+                "launch_value": self.repo_bind,
+            },
             "docker_state": "exited",
             "wait_exit_code": 0,
             "start_attempt_count": 1,
@@ -476,9 +486,7 @@ class Fixture:
                         "jointbuildgs.p1w.job": self.job_id,
                         "jointbuildgs.p1w.contract": self.contract_sha256,
                     },
-                    "binds": [
-                        f"{audit.REPO.resolve()}:{audit.ROOFER_CONTAINER_REPO}"
-                    ],
+                    "binds": [self.repo_bind],
                     "network_mode": "none",
                     "restart_count": 0,
                     "id": self.container_id,
@@ -799,6 +807,31 @@ class PilotOneWaveBindingAuditTests(unittest.TestCase):
                 stream.write("tamper\n")
             with self.assertRaisesRegex(RuntimeError, "SHA256|size"):
                 fixture.run()
+
+    def test_repository_bind_accepts_host_alias_but_requires_sealed_volume(self) -> None:
+        raw = f"/host-mount/JointBuildGS:{audit.ROOFER_CONTAINER_REPO}"
+        launch = {"create_command": ["docker", "create", "-v", raw]}
+        normalized = audit.validate_repository_bind([raw], launch)
+        self.assertEqual(normalized["source"], "/host-mount/JointBuildGS")
+        self.assertEqual(normalized["target"], str(audit.ROOFER_CONTAINER_REPO))
+        self.assertEqual(normalized["mode"], "rw")
+        self.assertNotEqual(normalized["source"], str(audit.REPO.resolve()))
+        with self.assertRaisesRegex(RuntimeError, "absolute host path"):
+            audit.validate_repository_bind(
+                [f"relative/path:{audit.ROOFER_CONTAINER_REPO}"],
+                {"create_command": [
+                    "docker", "create", "-v",
+                    f"relative/path:{audit.ROOFER_CONTAINER_REPO}",
+                ]},
+            )
+        with self.assertRaisesRegex(RuntimeError, "launch/inspect bind source"):
+            audit.validate_repository_bind(
+                [raw],
+                {"create_command": [
+                    "docker", "create", "-v",
+                    f"/other-host/JointBuildGS:{audit.ROOFER_CONTAINER_REPO}",
+                ]},
+            )
 
     def test_zero_roof_is_flagged_without_owner_or_invented_geometry(self) -> None:
         with self.temporary_directory() as raw:
