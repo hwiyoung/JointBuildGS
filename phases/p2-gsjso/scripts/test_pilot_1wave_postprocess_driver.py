@@ -224,7 +224,12 @@ class CommandContractTest(unittest.TestCase):
         attempt = driver.REPO / "test-fixture/attempt_001"
         command = driver.dev_extract_command(job, attempt)
         self.assertIn(driver.DEV_IMAGE_ID, command)
-        self.assertIn("NVIDIA_VISIBLE_DEVICES=0", command)
+        self.assertEqual(command[command.index("--gpus") + 1], "device=0")
+        self.assertNotIn("all", command)
+        self.assertFalse(any(
+            argument.startswith("NVIDIA_VISIBLE_DEVICES=") for argument in command
+        ))
+        self.assertEqual(command.count("CUDA_VISIBLE_DEVICES=0"), 1)
         self.assertEqual(command.count("--sor"), 1)
         self.assertEqual(command[command.index("--sor") + 1], "on")
         self.assertIn("--no-sem", command)
@@ -255,9 +260,106 @@ class CommandContractTest(unittest.TestCase):
         payload = driver.dry_run_plan(jobs, {"state": "preflight_passed"})
         extracts = [row for row in payload["commands"] if row["stage"] == "extract"]
         self.assertEqual(len(extracts), 10)
+        self.assertEqual(
+            [
+                (row["job_id"], row["gpu"],
+                 row["command"][row["command"].index("--gpus") + 1])
+                for row in extracts
+            ],
+            [
+                (job.job_id, job.gpu, f"device={job.gpu}")
+                for job in jobs
+            ],
+        )
+        for row in extracts:
+            command = row["command"]
+            self.assertEqual(command.count("--gpus"), 1)
+            self.assertNotIn("all", command)
+            self.assertFalse(any(
+                argument.startswith("NVIDIA_VISIBLE_DEVICES=")
+                for argument in command
+            ))
+            self.assertEqual(command.count("CUDA_VISIBLE_DEVICES=0"), 1)
         self.assertEqual(payload["gpu_work_started"], 0)
         self.assertEqual(payload["roofer_invocations_started"], 0)
         self.assertEqual(payload["score_invocations_started"], 0)
+
+    def test_gpu_device_request_rejects_every_noncanonical_device(self) -> None:
+        self.assertEqual(driver.docker_gpu_device_request(0),
+                         ["--gpus", "device=0"])
+        self.assertEqual(driver.docker_gpu_device_request(1),
+                         ["--gpus", "device=1"])
+        for invalid in (-1, 2, True, "0", None):
+            with self.subTest(invalid=invalid):
+                with self.assertRaisesRegex(driver.DriverError,
+                                            "must be exactly 0 or 1"):
+                    driver.docker_gpu_device_request(invalid)  # type: ignore[arg-type]
+
+    def test_gpu_probe_binds_each_device_to_one_distinct_uuid(self) -> None:
+        uuids = (
+            "GPU-4bdfb675-5d06-8d93-b07e-cbee885cf52c",
+            "GPU-fab8c2ab-d02e-92a2-a873-9f096c67c32c",
+        )
+        responses = [
+            subprocess.CompletedProcess(["docker"], 0, f"{uuid}\n", "")
+            for uuid in uuids
+        ]
+        commands: list[list[str]] = []
+
+        def run(command: list[str], **_kwargs: object) -> subprocess.CompletedProcess[str]:
+            commands.append(list(command))
+            return responses[len(commands) - 1]
+
+        with mock.patch.object(driver, "run_host", side_effect=run):
+            result = driver.probe_gpu_device_bindings()
+
+        self.assertEqual(result["state"], "pass")
+        self.assertEqual(result["unique_visible_uuid_count"], 2)
+        self.assertEqual(result["learning_runs_started"], 0)
+        self.assertEqual(result["gpu_work_started"], 0)
+        self.assertEqual(
+            [record["visible_gpu_uuid"] for record in result["devices"]],
+            list(uuids),
+        )
+        for physical_gpu, command in enumerate(commands):
+            self.assertEqual(command[command.index("--gpus") + 1],
+                             f"device={physical_gpu}")
+            self.assertNotIn("all", command)
+            self.assertFalse(any(
+                argument.startswith("NVIDIA_VISIBLE_DEVICES=")
+                for argument in command
+            ))
+            self.assertEqual(command.count("CUDA_VISIBLE_DEVICES=0"), 1)
+            self.assertIn(driver.DEV_IMAGE_ID, command)
+            self.assertIn("nvidia-smi", command)
+
+    def test_gpu_probe_rejects_duplicate_visible_uuid(self) -> None:
+        uuid = "GPU-4bdfb675-5d06-8d93-b07e-cbee885cf52c"
+        response = subprocess.CompletedProcess(["docker"], 0, f"{uuid}\n", "")
+        with mock.patch.object(driver, "run_host", return_value=response):
+            with self.assertRaisesRegex(driver.DriverError, "two distinct UUIDs"):
+                driver.probe_gpu_device_bindings()
+
+    def test_failed_postprocess_archive_is_recorded_but_not_resumed(self) -> None:
+        temporary = Path(tempfile.mkdtemp(
+            prefix=".p1w-failed-postprocess-", dir=SCRIPT.parent
+        ))
+        self.addCleanup(shutil.rmtree, temporary)
+        archive = temporary / "attempt1_ce2fdab_gpu_device_overlap"
+        state = write_json(archive / "driver_state.json", {
+            "schema": driver.DRIVER_SCHEMA,
+            "state": "aborted",
+            "correction_head": "ce2fdab53d072adbb63dc05be6cda8da52ebd68d",
+            "abort_events": [{"type": "DriverError", "message": "exit=137"}],
+        })
+        records = driver.historical_postprocess_attempt_records(temporary)
+        self.assertEqual(len(records), 1)
+        self.assertEqual(records[0]["name"], archive.name)
+        self.assertEqual(records[0]["correction_head"],
+                         "ce2fdab53d072adbb63dc05be6cda8da52ebd68d")
+        self.assertEqual(records[0]["abort_event_count"], 1)
+        self.assertEqual(records[0]["driver_state_sha256"],
+                         driver.sha256_file(state))
 
     def test_loss_aggregate_discovers_condition_seed_under_runs(self) -> None:
         captured: list[str] = []
@@ -555,6 +657,11 @@ class MachineGateTest(unittest.TestCase):
                 "historical_learning_runs_started": 16,
                 "historical_failed_attempt_archive_count": 4,
                 "historical_failed_attempt_archives": ["a", "b", "c", "d"],
+                "historical_failed_postprocess_attempt_archive_count": 1,
+                "historical_failed_postprocess_attempt_archives": [{
+                    "name": "attempt1_ce2fdab_gpu_device_overlap",
+                    "correction_head": "ce2fdab53d072adbb63dc05be6cda8da52ebd68d",
+                }],
             }
         }
         result = driver.evaluate_g4(preflight, [])
@@ -562,6 +669,9 @@ class MachineGateTest(unittest.TestCase):
         self.assertEqual(result["canonical_training_completed_20k_count"], 10)
         self.assertEqual(result["historical_learning_runs_started"], 16)
         self.assertEqual(result["historical_failed_attempt_archive_count"], 4)
+        self.assertEqual(
+            result["historical_failed_postprocess_attempt_archive_count"], 1
+        )
         self.assertTrue(result["history_excluded_from_canonical_gate_counts"])
         self.assertEqual(driver.evaluate_g4(preflight, [{"type": "error"}])["status"], "fail")
 
@@ -583,11 +693,15 @@ class Wave2AndPublicationTest(unittest.TestCase):
                 "path": "runtime/gsplat_cuda.so",
                 "sha256": driver.GSPLAT_EXTENSION_SHA256,
             },
+            "gpu_device_probe": {
+                "schema": "jointbuildgs.pilot_1wave.gpu_device_probe.v1",
+                "state": "pass",
+            },
         }
         result = driver.final_preflight_provenance(preflight)
         self.assertEqual(set(result), {
             "correction_head", "committed_runtime_sources", "crop_lock",
-            "gsplat_extension",
+            "gsplat_extension", "gpu_device_probe",
         })
         self.assertEqual(result["crop_lock"]["inventory_sha256"],
                          driver.INVENTORY_SHA256)

@@ -44,6 +44,7 @@ READOUT_RUN_ID = "20260722_pilot_1wave_readout"
 SOURCE_RUN = REPO / "phases/p2-gsjso/runs" / SOURCE_RUN_ID
 TRAINING_ROOT = SOURCE_RUN / "training"
 POSTPROCESS_ROOT = TRAINING_ROOT / "postprocess"
+POSTPROCESS_FAILED_ATTEMPTS_ROOT = TRAINING_ROOT / "postprocess_failed_attempts"
 ATTEMPTS_ROOT = POSTPROCESS_ROOT / "attempts"
 PUBLICATION_ROOT = REPO / "phases/p2-gsjso/runs" / READOUT_RUN_ID
 CONTAINER_REPO = Path("/workspace/JointBuildGS")
@@ -55,6 +56,10 @@ PUBLICATION_SNAPSHOT_SCHEMA = (
     "jointbuildgs.pilot_1wave.publication_snapshot.v1"
 )
 BINDING_SPEC_SCHEMA = "jointbuildgs.pilot_1wave.binding_batch_spec.v1"
+FINAL_PREFLIGHT_PROVENANCE_KEYS = (
+    "committed_runtime_sources", "crop_lock", "gsplat_extension",
+    "gpu_device_probe",
+)
 
 DEV_IMAGE_TAG = "jointbuildgs:dev"
 DEV_IMAGE_ID = (
@@ -557,6 +562,48 @@ def _job_order() -> tuple[tuple[str, int], ...]:
     return tuple((condition, seed) for condition in CONDITIONS for seed in EXPECTED_SEEDS)
 
 
+def historical_postprocess_attempt_records(
+    root: Path = POSTPROCESS_FAILED_ATTEMPTS_ROOT,
+) -> list[dict[str, Any]]:
+    records: list[dict[str, Any]] = []
+    if not root.is_dir():
+        return records
+    for archive in sorted(root.iterdir()):
+        if archive.is_symlink() or not archive.is_dir():
+            raise DriverError(
+                "historical postprocess archive is not a regular directory: "
+                f"{archive}"
+            )
+        state_path = archive / "driver_state.json"
+        if state_path.is_symlink() or not state_path.is_file():
+            raise DriverError(
+                f"historical postprocess archive lacks driver_state.json: {archive}"
+            )
+        archived_state = load_json(state_path)
+        require_equal(archived_state.get("schema"), DRIVER_SCHEMA,
+                      f"historical postprocess archive {archive.name} schema")
+        require_equal(archived_state.get("state"), "aborted",
+                      f"historical postprocess archive {archive.name} state")
+        correction_head = str(archived_state.get("correction_head", ""))
+        if re.fullmatch(r"[0-9a-f]{40}", correction_head) is None:
+            raise DriverError(
+                f"historical postprocess archive has invalid correction HEAD: {archive}"
+            )
+        abort_events = archived_state.get("abort_events")
+        if not isinstance(abort_events, list) or not abort_events:
+            raise DriverError(
+                f"historical postprocess archive has no abort event: {archive}"
+            )
+        records.append({
+            "name": archive.name,
+            "path": repo_relative(archive),
+            "correction_head": correction_head,
+            "driver_state_sha256": sha256_file(state_path),
+            "abort_event_count": len(abort_events),
+        })
+    return records
+
+
 def validate_training_artifacts() -> tuple[list[Job], dict[str, Any]]:
     resolved = load_json(RESOLVED_MANIFEST)
     training = load_json(TRAINING_DRIVER_MANIFEST)
@@ -684,6 +731,7 @@ def validate_training_artifacts() -> tuple[list[Job], dict[str, Any]]:
         path.name for path in failed_root.iterdir()
         if path.name not in {".", ".."}
     ) if failed_root.is_dir() else []
+    failed_postprocess_attempts = historical_postprocess_attempt_records()
     return jobs, {
         "resolved_manifest_sha256": sha256_file(RESOLVED_MANIFEST),
         "resolved_manifest_path": repo_relative(RESOLVED_MANIFEST),
@@ -701,6 +749,10 @@ def validate_training_artifacts() -> tuple[list[Job], dict[str, Any]]:
         "historical_learning_runs_started": 16,
         "historical_failed_attempt_archive_count": len(failed_attempts),
         "historical_failed_attempt_archives": failed_attempts,
+        "historical_failed_postprocess_attempt_archive_count": len(
+            failed_postprocess_attempts
+        ),
+        "historical_failed_postprocess_attempt_archives": failed_postprocess_attempts,
     }
 
 
@@ -732,6 +784,7 @@ def preflight(expected_head: str, wave2_lock: Path | None = None,
               wave2_lock_sha256: str | None = None) -> tuple[list[Job], dict[str, Any]]:
     sources = require_committed_runtime(expected_head)
     images = require_images()
+    gpu_device_probe = probe_gpu_device_bindings()
     crop = validate_crop_locks()
     jobs, training = validate_training_artifacts()
     for required in (
@@ -751,6 +804,7 @@ def preflight(expected_head: str, wave2_lock: Path | None = None,
         "tracked_tree_clean": True,
         "committed_runtime_sources": sources,
         "images": images,
+        "gpu_device_probe": gpu_device_probe,
         "crop_lock": crop,
         "gsplat_extension": {
             "path": repo_relative(GSPLAT_EXTENSION),
@@ -782,11 +836,70 @@ def p0_command(arguments: Sequence[str], *, read_only: bool = False) -> list[str
     ]
 
 
+def docker_gpu_device_request(physical_gpu: int) -> list[str]:
+    """Expose exactly one physical GPU through Docker's DeviceRequest API."""
+
+    if type(physical_gpu) is not int or physical_gpu not in (0, 1):
+        raise DriverError(
+            f"extract physical GPU must be exactly 0 or 1, got {physical_gpu!r}"
+        )
+    return ["--gpus", f"device={physical_gpu}"]
+
+
+def probe_gpu_device_bindings() -> dict[str, Any]:
+    """Verify each DeviceRequest exposes one distinct GPU in the pinned image."""
+
+    devices: list[dict[str, Any]] = []
+    for physical_gpu in (0, 1):
+        command = [
+            "docker", "run", "--rm", "--network", "none",
+            *docker_gpu_device_request(physical_gpu),
+            "-e", "CUDA_VISIBLE_DEVICES=0",
+            "--entrypoint", "nvidia-smi",
+            DEV_IMAGE_ID,
+            "--query-gpu=uuid", "--format=csv,noheader",
+        ]
+        process = run_host(command)
+        lines = [line.strip() for line in process.stdout.splitlines() if line.strip()]
+        candidate = lines[0] if len(lines) == 1 else ""
+        if re.fullmatch(
+            r"GPU-[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}",
+            candidate,
+        ) is None:
+            raise DriverError(
+                f"physical GPU {physical_gpu} probe did not expose one UUID: {lines!r}"
+            )
+        devices.append({
+            "physical_gpu": physical_gpu,
+            "docker_device_request": f"device={physical_gpu}",
+            "container_cuda_visible_devices": "0",
+            "visible_gpu_count": 1,
+            "visible_gpu_uuid": candidate,
+            "command": command,
+        })
+    uuids = {record["visible_gpu_uuid"] for record in devices}
+    if len(uuids) != 2:
+        raise DriverError(
+            f"physical GPU DeviceRequests did not expose two distinct UUIDs: {sorted(uuids)}"
+        )
+    return {
+        "schema": "jointbuildgs.pilot_1wave.gpu_device_probe.v1",
+        "state": "pass",
+        "image_id": DEV_IMAGE_ID,
+        "device_count": 2,
+        "unique_visible_uuid_count": len(uuids),
+        "devices": devices,
+        "nvidia_smi_only": True,
+        "learning_runs_started": 0,
+        "gpu_work_started": 0,
+    }
+
+
 def dev_extract_command(job: Job, attempt: Path) -> list[str]:
     command = [
-        "docker", "run", "--rm", "--network", "none", "--gpus", "all",
+        "docker", "run", "--rm", "--network", "none",
+        *docker_gpu_device_request(job.gpu),
         "--user", f"{os.getuid()}:{os.getgid()}",
-        "-e", f"NVIDIA_VISIBLE_DEVICES={job.gpu}",
         "-e", "CUDA_VISIBLE_DEVICES=0",
         "-e", f"HOME={container_path(GSPLAT_RUNTIME / 'home')}",
         "-e", f"XDG_CACHE_HOME={container_path(GSPLAT_RUNTIME / 'xdg_cache')}",
@@ -2233,6 +2346,12 @@ def evaluate_g4(training: Mapping[str, Any], abort_events: Sequence[Mapping[str,
         "historical_failed_attempt_archives": raw.get(
             "historical_failed_attempt_archives", []
         ),
+        "historical_failed_postprocess_attempt_archive_count": raw.get(
+            "historical_failed_postprocess_attempt_archive_count"
+        ),
+        "historical_failed_postprocess_attempt_archives": raw.get(
+            "historical_failed_postprocess_attempt_archives", []
+        ),
         "history_excluded_from_canonical_gate_counts": True,
     }
 
@@ -2448,7 +2567,7 @@ def final_preflight_provenance(preflight_payload: Mapping[str, Any]) -> dict[str
     if re.fullmatch(r"[0-9a-f]{40}", correction_head) is None:
         raise DriverError("published preflight correction HEAD is invalid")
     result: dict[str, Any] = {"correction_head": correction_head}
-    for key in ("committed_runtime_sources", "crop_lock", "gsplat_extension"):
+    for key in FINAL_PREFLIGHT_PROVENANCE_KEYS:
         value = preflight_payload.get(key)
         if not isinstance(value, Mapping) or not value:
             raise DriverError(f"published preflight {key} is missing")
@@ -2482,7 +2601,7 @@ def publish_results(
         require_equal(existing.get("correction_head"),
                       preflight_payload["correction_head"],
                       "existing publication correction HEAD")
-        for key in ("committed_runtime_sources", "crop_lock", "gsplat_extension"):
+        for key in FINAL_PREFLIGHT_PROVENANCE_KEYS:
             require_equal(existing.get(key), provenance[key],
                           f"existing publication {key}")
         outputs = existing.get("outputs")
