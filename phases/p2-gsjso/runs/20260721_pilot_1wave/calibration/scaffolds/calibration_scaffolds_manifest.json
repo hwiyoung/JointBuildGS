@@ -1,0 +1,86 @@
+{
+  "schema": "jointbuildgs.pilot_1wave.calibration_scaffolds_manifest.v1",
+  "run_id": "20260721_pilot_1wave",
+  "state": "prepared_forward_only",
+  "pilot_calibration_only": true,
+  "learning_runs_started": 0,
+  "optimizer_audit": {
+    "optimizer_objects_created": 0,
+    "backward_calls": 0,
+    "optimizer_updates": 0
+  },
+  "calibration_seed": 1001,
+  "inputs": {
+    "calibration_lock": {
+      "path": "phases/p2-gsjso/configs/pilot_1wave_calibration_lock.json",
+      "sha256": "7eb4db2df284388c076b4e6876b169be389edb8d3da601931d3ca7997cdf54b4"
+    },
+    "04a_plane_mask": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/prep_artifacts/plane_masks_04a/mask_manifest.json",
+      "sha256": "db93653318d2adad7b6bf14177f55ab778df04f7966c2f5189e6dc8ec1ed86b7"
+    },
+    "04b_plane_mask": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/prep_artifacts/plane_masks_04b/mask_manifest.json",
+      "sha256": "14af4b14288d6ecf772c5f4426a507cc80ab5c354f2ebfaa81383220a5849b16"
+    },
+    "materialized_input_inventory": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/calibration/scaffolds/materialized_input_inventory.json",
+      "sha256": "30a3387275ee9ed29ad75bbdf7cb1979f2b8b2cd52640225e9dbe00895666450",
+      "records_sha256": "b99c38d31b37b59f1827537e520c20c76ca5a0ee0bfbc5baaaa879d4fff57271",
+      "file_count": 1927,
+      "total_bytes": 12335728234
+    }
+  },
+  "pair_control": {
+    "allowed_difference_keys": [
+      "out_dir",
+      "pilot_arm",
+      "pilot_condition",
+      "pilot_job_id",
+      "pilot_plane_region_manifest_sha256",
+      "pilot_plane_region_source",
+      "plane_region_mask_manifest"
+    ],
+    "required_difference_keys": [
+      "pilot_arm",
+      "pilot_condition",
+      "pilot_job_id",
+      "pilot_plane_region_manifest_sha256",
+      "pilot_plane_region_source",
+      "plane_region_mask_manifest"
+    ],
+    "difference_keys": [
+      "pilot_arm",
+      "pilot_condition",
+      "pilot_job_id",
+      "pilot_plane_region_manifest_sha256",
+      "pilot_plane_region_source",
+      "plane_region_mask_manifest"
+    ],
+    "passed": true
+  },
+  "config_count": 3,
+  "configs": [
+    {
+      "condition": "03",
+      "pilot_arm": "03_plane_soft",
+      "seed": 1001,
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/calibration/scaffolds/calibration_03_seed1001.yaml",
+      "sha256": "2171fd2c977d79729c9977fb4e0fc049dd88468ed4b95dda2c93902239c19b69"
+    },
+    {
+      "condition": "04a",
+      "pilot_arm": "04a_plane_medium_vision",
+      "seed": 1001,
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/calibration/scaffolds/calibration_04a_seed1001.yaml",
+      "sha256": "0475020ee05ffaad142fae83366c69f0f9b35ad0a1711a90cf4552d0ffc35cb5"
+    },
+    {
+      "condition": "04b",
+      "pilot_arm": "04b_plane_medium_gt_upperbound",
+      "seed": 1001,
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/calibration/scaffolds/calibration_04b_seed1001.yaml",
+      "sha256": "a8bba45353408ecd0464c7b4d1cb3f80bfb4f10be7384e329ae8a77d284b71f7"
+    }
+  ]
+}
