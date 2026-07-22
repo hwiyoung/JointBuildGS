@@ -1,0 +1,2459 @@
+{
+  "schema": "jointbuildgs.pilot_1wave.04b_mask_producer_manifest.v1",
+  "created_utc": "2026-07-22T03:20:51.557461+00:00",
+  "run_id": "20260721_pilot_1wave",
+  "condition": "04b_plane_medium_gt_upperbound",
+  "source": "lod2_roofsurface_gt_upperbound",
+  "mask_manifest": "mask_manifest.json",
+  "mask_manifest_sha256": "14af4b14288d6ecf772c5f4426a507cc80ab5c354f2ebfaa81383220a5849b16",
+  "producer_lock_sha256": "0c960709946dfd75d766531a5b36aa8f37dffbd5912d3d3b0a9671ba9cfdf847",
+  "input_sha256": "253d06e75e544ba0181ba3180d6524039215996999e1b00d2efe631dcbab51d6",
+  "view_count": 481,
+  "empty_view_count": 19,
+  "empty_view_ids": [
+    "DJI_20241217084543_0095_D.JPG",
+    "DJI_20241217084547_0097_D.JPG",
+    "DJI_20241217084549_0098_D.JPG",
+    "DJI_20241217084553_0100_D.JPG",
+    "DJI_20241217084555_0101_D.JPG",
+    "DJI_20241217090853_0029_D.JPG",
+    "DJI_20241217095827_0018_D.JPG",
+    "DJI_20241217095829_0019_D.JPG",
+    "DJI_20241217095859_0034_D.JPG",
+    "DJI_20241217101112_0005_D.JPG",
+    "DJI_20241217101118_0008_D.JPG",
+    "DJI_20241217101329_0017_D.JPG",
+    "DJI_20241217101341_0023_D.JPG",
+    "DJI_20241217101538_0006_D.JPG",
+    "DJI_20241217101542_0008_D.JPG",
+    "DJI_20241217101548_0011_D.JPG",
+    "DJI_20241217101550_0012_D.JPG",
+    "DJI_20241217101602_0018_D.JPG",
+    "DJI_20241217103609_0074_D.JPG"
+  ],
+  "total_roof_mask_pixels": 138884049,
+  "selected_building_count": 30,
+  "selected_building_roof_geometry_coverage_count": 30,
+  "selected_building_roof_geometry_coverage_complete": true,
+  "triangle_count_internal_not_archived": 55479,
+  "archive_arrays": [
+    "mask:bool"
+  ],
+  "forbidden_archive_arrays": [
+    "roof_z",
+    "hit_depth",
+    "face_ids",
+    "building_ids",
+    "semantic_class",
+    "primitive_ids"
+  ],
+  "inference_runs_started": 1,
+  "learning_runs_started": 0,
+  "audit": [
+    {
+      "view_id": "DJI_20241217084355_0041_D.JPG",
+      "roof_mask_pixels": 12237,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084357_0042_D.JPG",
+      "roof_mask_pixels": 25934,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084359_0043_D.JPG",
+      "roof_mask_pixels": 54512,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084401_0044_D.JPG",
+      "roof_mask_pixels": 80351,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084403_0045_D.JPG",
+      "roof_mask_pixels": 76262,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084405_0046_D.JPG",
+      "roof_mask_pixels": 86987,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084407_0047_D.JPG",
+      "roof_mask_pixels": 109234,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084409_0048_D.JPG",
+      "roof_mask_pixels": 142731,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084411_0049_D.JPG",
+      "roof_mask_pixels": 148678,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084413_0050_D.JPG",
+      "roof_mask_pixels": 126888,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084415_0051_D.JPG",
+      "roof_mask_pixels": 132628,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084417_0052_D.JPG",
+      "roof_mask_pixels": 120610,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084419_0053_D.JPG",
+      "roof_mask_pixels": 92568,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084421_0054_D.JPG",
+      "roof_mask_pixels": 56701,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084423_0055_D.JPG",
+      "roof_mask_pixels": 16138,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084541_0094_D.JPG",
+      "roof_mask_pixels": 328,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084543_0095_D.JPG",
+      "roof_mask_pixels": 0,
+      "empty_view": true
+    },
+    {
+      "view_id": "DJI_20241217084545_0096_D.JPG",
+      "roof_mask_pixels": 56,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084547_0097_D.JPG",
+      "roof_mask_pixels": 0,
+      "empty_view": true
+    },
+    {
+      "view_id": "DJI_20241217084549_0098_D.JPG",
+      "roof_mask_pixels": 0,
+      "empty_view": true
+    },
+    {
+      "view_id": "DJI_20241217084551_0099_D.JPG",
+      "roof_mask_pixels": 59,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084553_0100_D.JPG",
+      "roof_mask_pixels": 0,
+      "empty_view": true
+    },
+    {
+      "view_id": "DJI_20241217084555_0101_D.JPG",
+      "roof_mask_pixels": 0,
+      "empty_view": true
+    },
+    {
+      "view_id": "DJI_20241217084557_0102_D.JPG",
+      "roof_mask_pixels": 21268,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084559_0103_D.JPG",
+      "roof_mask_pixels": 94802,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084601_0104_D.JPG",
+      "roof_mask_pixels": 228162,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084603_0105_D.JPG",
+      "roof_mask_pixels": 361915,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084605_0106_D.JPG",
+      "roof_mask_pixels": 456262,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084607_0107_D.JPG",
+      "roof_mask_pixels": 485446,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084609_0108_D.JPG",
+      "roof_mask_pixels": 568016,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084611_0109_D.JPG",
+      "roof_mask_pixels": 635584,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084613_0110_D.JPG",
+      "roof_mask_pixels": 593252,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084615_0111_D.JPG",
+      "roof_mask_pixels": 495212,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084617_0112_D.JPG",
+      "roof_mask_pixels": 368150,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084619_0113_D.JPG",
+      "roof_mask_pixels": 291663,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084621_0114_D.JPG",
+      "roof_mask_pixels": 301062,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084623_0115_D.JPG",
+      "roof_mask_pixels": 237766,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084625_0116_D.JPG",
+      "roof_mask_pixels": 143370,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084627_0117_D.JPG",
+      "roof_mask_pixels": 43219,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084631_0119_D.JPG",
+      "roof_mask_pixels": 44403,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084633_0120_D.JPG",
+      "roof_mask_pixels": 46700,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084635_0121_D.JPG",
+      "roof_mask_pixels": 54158,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084637_0122_D.JPG",
+      "roof_mask_pixels": 55317,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084639_0123_D.JPG",
+      "roof_mask_pixels": 56821,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084641_0124_D.JPG",
+      "roof_mask_pixels": 53243,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084643_0125_D.JPG",
+      "roof_mask_pixels": 55398,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084647_0127_D.JPG",
+      "roof_mask_pixels": 54091,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084649_0128_D.JPG",
+      "roof_mask_pixels": 191695,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084651_0129_D.JPG",
+      "roof_mask_pixels": 367725,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084653_0130_D.JPG",
+      "roof_mask_pixels": 416383,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084655_0131_D.JPG",
+      "roof_mask_pixels": 408910,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084657_0132_D.JPG",
+      "roof_mask_pixels": 496880,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084659_0133_D.JPG",
+      "roof_mask_pixels": 627918,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084701_0134_D.JPG",
+      "roof_mask_pixels": 769421,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084703_0135_D.JPG",
+      "roof_mask_pixels": 871000,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084705_0136_D.JPG",
+      "roof_mask_pixels": 907369,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084707_0137_D.JPG",
+      "roof_mask_pixels": 794559,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084709_0138_D.JPG",
+      "roof_mask_pixels": 705325,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084711_0139_D.JPG",
+      "roof_mask_pixels": 655104,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084713_0140_D.JPG",
+      "roof_mask_pixels": 527746,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084715_0141_D.JPG",
+      "roof_mask_pixels": 387187,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084717_0142_D.JPG",
+      "roof_mask_pixels": 266666,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084719_0143_D.JPG",
+      "roof_mask_pixels": 201659,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084721_0144_D.JPG",
+      "roof_mask_pixels": 171867,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084723_0145_D.JPG",
+      "roof_mask_pixels": 148795,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084725_0146_D.JPG",
+      "roof_mask_pixels": 112700,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084727_0147_D.JPG",
+      "roof_mask_pixels": 74942,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084729_0148_D.JPG",
+      "roof_mask_pixels": 30914,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084731_0149_D.JPG",
+      "roof_mask_pixels": 15124,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084733_0150_D.JPG",
+      "roof_mask_pixels": 7691,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084735_0151_D.JPG",
+      "roof_mask_pixels": 3787,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084827_0177_D.JPG",
+      "roof_mask_pixels": 28219,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084829_0178_D.JPG",
+      "roof_mask_pixels": 88126,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084831_0179_D.JPG",
+      "roof_mask_pixels": 141856,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084833_0180_D.JPG",
+      "roof_mask_pixels": 183363,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084835_0181_D.JPG",
+      "roof_mask_pixels": 220683,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084837_0182_D.JPG",
+      "roof_mask_pixels": 249875,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084839_0183_D.JPG",
+      "roof_mask_pixels": 268262,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084841_0184_D.JPG",
+      "roof_mask_pixels": 299330,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084843_0185_D.JPG",
+      "roof_mask_pixels": 341921,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084845_0186_D.JPG",
+      "roof_mask_pixels": 412595,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084847_0187_D.JPG",
+      "roof_mask_pixels": 422111,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084849_0188_D.JPG",
+      "roof_mask_pixels": 469567,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084851_0189_D.JPG",
+      "roof_mask_pixels": 509195,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084853_0190_D.JPG",
+      "roof_mask_pixels": 493114,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084855_0191_D.JPG",
+      "roof_mask_pixels": 523765,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084857_0192_D.JPG",
+      "roof_mask_pixels": 567441,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084859_0193_D.JPG",
+      "roof_mask_pixels": 616663,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084901_0194_D.JPG",
+      "roof_mask_pixels": 680342,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084903_0195_D.JPG",
+      "roof_mask_pixels": 748364,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084905_0196_D.JPG",
+      "roof_mask_pixels": 784607,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084907_0197_D.JPG",
+      "roof_mask_pixels": 750972,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084909_0198_D.JPG",
+      "roof_mask_pixels": 664909,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084911_0199_D.JPG",
+      "roof_mask_pixels": 537029,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084913_0200_D.JPG",
+      "roof_mask_pixels": 412360,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084915_0201_D.JPG",
+      "roof_mask_pixels": 258598,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084917_0202_D.JPG",
+      "roof_mask_pixels": 221521,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217084919_0203_D.JPG",
+      "roof_mask_pixels": 244773,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217090841_0023_D.JPG",
+      "roof_mask_pixels": 5557,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217090843_0024_D.JPG",
+      "roof_mask_pixels": 21216,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217090845_0025_D.JPG",
+      "roof_mask_pixels": 39514,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217090847_0026_D.JPG",
+      "roof_mask_pixels": 58703,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217090849_0027_D.JPG",
+      "roof_mask_pixels": 69649,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217090851_0028_D.JPG",
+      "roof_mask_pixels": 201,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217090853_0029_D.JPG",
+      "roof_mask_pixels": 0,
+      "empty_view": true
+    },
+    {
+      "view_id": "DJI_20241217090855_0030_D.JPG",
+      "roof_mask_pixels": 949,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217090857_0031_D.JPG",
+      "roof_mask_pixels": 1547,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217090859_0032_D.JPG",
+      "roof_mask_pixels": 1030,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217090901_0033_D.JPG",
+      "roof_mask_pixels": 675,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217094534_0023_D.JPG",
+      "roof_mask_pixels": 31462,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217094536_0024_D.JPG",
+      "roof_mask_pixels": 33172,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217094546_0029_D.JPG",
+      "roof_mask_pixels": 29556,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217094548_0030_D.JPG",
+      "roof_mask_pixels": 41927,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217094550_0031_D.JPG",
+      "roof_mask_pixels": 42003,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217094552_0032_D.JPG",
+      "roof_mask_pixels": 43181,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217094652_0041_D.JPG",
+      "roof_mask_pixels": 28838,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217094653_0042_D.JPG",
+      "roof_mask_pixels": 29513,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217094925_0009_D.JPG",
+      "roof_mask_pixels": 7526,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217094927_0010_D.JPG",
+      "roof_mask_pixels": 9847,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217094933_0013_D.JPG",
+      "roof_mask_pixels": 17916,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217094935_0014_D.JPG",
+      "roof_mask_pixels": 21814,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217094937_0015_D.JPG",
+      "roof_mask_pixels": 28081,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217094939_0016_D.JPG",
+      "roof_mask_pixels": 27877,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217094941_0017_D.JPG",
+      "roof_mask_pixels": 32131,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217094943_0018_D.JPG",
+      "roof_mask_pixels": 32131,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217094945_0019_D.JPG",
+      "roof_mask_pixels": 38021,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217094947_0020_D.JPG",
+      "roof_mask_pixels": 44265,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217094953_0023_D.JPG",
+      "roof_mask_pixels": 81552,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217094955_0024_D.JPG",
+      "roof_mask_pixels": 91102,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217094957_0025_D.JPG",
+      "roof_mask_pixels": 94421,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217094959_0026_D.JPG",
+      "roof_mask_pixels": 71296,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095005_0029_D.JPG",
+      "roof_mask_pixels": 105637,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095007_0030_D.JPG",
+      "roof_mask_pixels": 77171,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095009_0031_D.JPG",
+      "roof_mask_pixels": 78026,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095011_0032_D.JPG",
+      "roof_mask_pixels": 81971,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095013_0033_D.JPG",
+      "roof_mask_pixels": 80196,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095015_0034_D.JPG",
+      "roof_mask_pixels": 75817,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095017_0035_D.JPG",
+      "roof_mask_pixels": 84607,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095023_0038_D.JPG",
+      "roof_mask_pixels": 194773,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095027_0040_D.JPG",
+      "roof_mask_pixels": 187228,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095029_0041_D.JPG",
+      "roof_mask_pixels": 215892,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095039_0046_D.JPG",
+      "roof_mask_pixels": 326213,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095051_0052_D.JPG",
+      "roof_mask_pixels": 408847,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095053_0053_D.JPG",
+      "roof_mask_pixels": 363882,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095055_0054_D.JPG",
+      "roof_mask_pixels": 416283,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095057_0055_D.JPG",
+      "roof_mask_pixels": 371600,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095103_0058_D.JPG",
+      "roof_mask_pixels": 329729,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095121_0067_D.JPG",
+      "roof_mask_pixels": 279255,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095123_0068_D.JPG",
+      "roof_mask_pixels": 458967,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095125_0069_D.JPG",
+      "roof_mask_pixels": 466203,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095127_0070_D.JPG",
+      "roof_mask_pixels": 478110,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095129_0071_D.JPG",
+      "roof_mask_pixels": 443268,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095131_0072_D.JPG",
+      "roof_mask_pixels": 438950,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095139_0076_D.JPG",
+      "roof_mask_pixels": 397522,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095141_0077_D.JPG",
+      "roof_mask_pixels": 366854,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095143_0078_D.JPG",
+      "roof_mask_pixels": 355387,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095145_0079_D.JPG",
+      "roof_mask_pixels": 355740,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095147_0080_D.JPG",
+      "roof_mask_pixels": 355454,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095149_0081_D.JPG",
+      "roof_mask_pixels": 355747,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095359_0002_D.JPG",
+      "roof_mask_pixels": 278401,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095403_0004_D.JPG",
+      "roof_mask_pixels": 327461,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095417_0011_D.JPG",
+      "roof_mask_pixels": 562779,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095419_0012_D.JPG",
+      "roof_mask_pixels": 463919,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095421_0013_D.JPG",
+      "roof_mask_pixels": 447011,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095427_0016_D.JPG",
+      "roof_mask_pixels": 407807,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095429_0017_D.JPG",
+      "roof_mask_pixels": 395809,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095431_0018_D.JPG",
+      "roof_mask_pixels": 745813,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095433_0019_D.JPG",
+      "roof_mask_pixels": 697971,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095435_0020_D.JPG",
+      "roof_mask_pixels": 790077,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095437_0021_D.JPG",
+      "roof_mask_pixels": 555116,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095439_0022_D.JPG",
+      "roof_mask_pixels": 670012,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095441_0023_D.JPG",
+      "roof_mask_pixels": 457583,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095443_0024_D.JPG",
+      "roof_mask_pixels": 543732,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095445_0025_D.JPG",
+      "roof_mask_pixels": 797513,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095447_0026_D.JPG",
+      "roof_mask_pixels": 405287,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095449_0027_D.JPG",
+      "roof_mask_pixels": 842316,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095451_0028_D.JPG",
+      "roof_mask_pixels": 372814,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095453_0029_D.JPG",
+      "roof_mask_pixels": 366131,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095455_0030_D.JPG",
+      "roof_mask_pixels": 357839,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095457_0031_D.JPG",
+      "roof_mask_pixels": 348626,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095459_0032_D.JPG",
+      "roof_mask_pixels": 728409,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095501_0033_D.JPG",
+      "roof_mask_pixels": 689846,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095503_0034_D.JPG",
+      "roof_mask_pixels": 641782,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095505_0035_D.JPG",
+      "roof_mask_pixels": 779095,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095507_0036_D.JPG",
+      "roof_mask_pixels": 461330,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095509_0037_D.JPG",
+      "roof_mask_pixels": 301327,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095511_0038_D.JPG",
+      "roof_mask_pixels": 338296,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095513_0039_D.JPG",
+      "roof_mask_pixels": 312274,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095515_0040_D.JPG",
+      "roof_mask_pixels": 643475,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095517_0041_D.JPG",
+      "roof_mask_pixels": 610774,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095519_0042_D.JPG",
+      "roof_mask_pixels": 611800,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095521_0043_D.JPG",
+      "roof_mask_pixels": 614715,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095523_0044_D.JPG",
+      "roof_mask_pixels": 383766,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095525_0045_D.JPG",
+      "roof_mask_pixels": 618871,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095527_0046_D.JPG",
+      "roof_mask_pixels": 610018,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095529_0047_D.JPG",
+      "roof_mask_pixels": 599805,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095531_0048_D.JPG",
+      "roof_mask_pixels": 707597,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095533_0049_D.JPG",
+      "roof_mask_pixels": 627339,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095535_0050_D.JPG",
+      "roof_mask_pixels": 664386,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095537_0051_D.JPG",
+      "roof_mask_pixels": 471445,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095539_0052_D.JPG",
+      "roof_mask_pixels": 308217,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095541_0053_D.JPG",
+      "roof_mask_pixels": 277351,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095543_0054_D.JPG",
+      "roof_mask_pixels": 276568,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095545_0055_D.JPG",
+      "roof_mask_pixels": 272966,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095547_0056_D.JPG",
+      "roof_mask_pixels": 85106,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095549_0057_D.JPG",
+      "roof_mask_pixels": 312235,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095551_0058_D.JPG",
+      "roof_mask_pixels": 298569,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095553_0059_D.JPG",
+      "roof_mask_pixels": 285928,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095555_0060_D.JPG",
+      "roof_mask_pixels": 326489,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095557_0061_D.JPG",
+      "roof_mask_pixels": 621621,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095559_0062_D.JPG",
+      "roof_mask_pixels": 366881,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095603_0064_D.JPG",
+      "roof_mask_pixels": 367421,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095605_0065_D.JPG",
+      "roof_mask_pixels": 365956,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095607_0066_D.JPG",
+      "roof_mask_pixels": 348412,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095609_0067_D.JPG",
+      "roof_mask_pixels": 337290,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095611_0068_D.JPG",
+      "roof_mask_pixels": 338046,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095613_0069_D.JPG",
+      "roof_mask_pixels": 327015,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095615_0070_D.JPG",
+      "roof_mask_pixels": 603353,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095617_0071_D.JPG",
+      "roof_mask_pixels": 666252,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095619_0072_D.JPG",
+      "roof_mask_pixels": 628544,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095621_0073_D.JPG",
+      "roof_mask_pixels": 598806,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095623_0074_D.JPG",
+      "roof_mask_pixels": 685056,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095625_0075_D.JPG",
+      "roof_mask_pixels": 650775,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095627_0076_D.JPG",
+      "roof_mask_pixels": 533691,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095629_0077_D.JPG",
+      "roof_mask_pixels": 104781,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095631_0078_D.JPG",
+      "roof_mask_pixels": 197545,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095633_0079_D.JPG",
+      "roof_mask_pixels": 112883,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095635_0080_D.JPG",
+      "roof_mask_pixels": 109922,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095637_0081_D.JPG",
+      "roof_mask_pixels": 107731,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095639_0082_D.JPG",
+      "roof_mask_pixels": 405415,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095641_0083_D.JPG",
+      "roof_mask_pixels": 580709,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095643_0084_D.JPG",
+      "roof_mask_pixels": 665030,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095645_0085_D.JPG",
+      "roof_mask_pixels": 573846,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095647_0086_D.JPG",
+      "roof_mask_pixels": 448263,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095649_0087_D.JPG",
+      "roof_mask_pixels": 411577,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095755_0002_D.JPG",
+      "roof_mask_pixels": 258300,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095757_0003_D.JPG",
+      "roof_mask_pixels": 271932,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095759_0004_D.JPG",
+      "roof_mask_pixels": 306560,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095801_0005_D.JPG",
+      "roof_mask_pixels": 381150,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095803_0006_D.JPG",
+      "roof_mask_pixels": 422208,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095805_0007_D.JPG",
+      "roof_mask_pixels": 427678,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095807_0008_D.JPG",
+      "roof_mask_pixels": 253896,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095809_0009_D.JPG",
+      "roof_mask_pixels": 620039,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095811_0010_D.JPG",
+      "roof_mask_pixels": 240307,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095813_0011_D.JPG",
+      "roof_mask_pixels": 42977,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095815_0012_D.JPG",
+      "roof_mask_pixels": 284096,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095817_0013_D.JPG",
+      "roof_mask_pixels": 198079,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095819_0014_D.JPG",
+      "roof_mask_pixels": 611962,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095821_0015_D.JPG",
+      "roof_mask_pixels": 108753,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095823_0016_D.JPG",
+      "roof_mask_pixels": 16329,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095825_0017_D.JPG",
+      "roof_mask_pixels": 66274,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095827_0018_D.JPG",
+      "roof_mask_pixels": 0,
+      "empty_view": true
+    },
+    {
+      "view_id": "DJI_20241217095829_0019_D.JPG",
+      "roof_mask_pixels": 0,
+      "empty_view": true
+    },
+    {
+      "view_id": "DJI_20241217095839_0024_D.JPG",
+      "roof_mask_pixels": 358385,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095841_0025_D.JPG",
+      "roof_mask_pixels": 235107,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095843_0026_D.JPG",
+      "roof_mask_pixels": 342227,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095845_0027_D.JPG",
+      "roof_mask_pixels": 134563,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095847_0028_D.JPG",
+      "roof_mask_pixels": 317816,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095851_0030_D.JPG",
+      "roof_mask_pixels": 331187,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095853_0031_D.JPG",
+      "roof_mask_pixels": 252063,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095855_0032_D.JPG",
+      "roof_mask_pixels": 280308,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095857_0033_D.JPG",
+      "roof_mask_pixels": 211692,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217095859_0034_D.JPG",
+      "roof_mask_pixels": 0,
+      "empty_view": true
+    },
+    {
+      "view_id": "DJI_20241217100036_0024_D.JPG",
+      "roof_mask_pixels": 8589,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217100038_0025_D.JPG",
+      "roof_mask_pixels": 219,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217100040_0026_D.JPG",
+      "roof_mask_pixels": 207,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217100106_0039_D.JPG",
+      "roof_mask_pixels": 864,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217100110_0041_D.JPG",
+      "roof_mask_pixels": 929,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217100112_0042_D.JPG",
+      "roof_mask_pixels": 1686,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217100255_0002_D.JPG",
+      "roof_mask_pixels": 46977,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217100257_0003_D.JPG",
+      "roof_mask_pixels": 34572,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217100259_0004_D.JPG",
+      "roof_mask_pixels": 32046,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217100301_0005_D.JPG",
+      "roof_mask_pixels": 31766,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217100319_0014_D.JPG",
+      "roof_mask_pixels": 30164,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101108_0003_D.JPG",
+      "roof_mask_pixels": 19260,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101110_0004_D.JPG",
+      "roof_mask_pixels": 21462,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101112_0005_D.JPG",
+      "roof_mask_pixels": 0,
+      "empty_view": true
+    },
+    {
+      "view_id": "DJI_20241217101118_0008_D.JPG",
+      "roof_mask_pixels": 0,
+      "empty_view": true
+    },
+    {
+      "view_id": "DJI_20241217101120_0009_D.JPG",
+      "roof_mask_pixels": 13559,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101122_0010_D.JPG",
+      "roof_mask_pixels": 18853,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101128_0013_D.JPG",
+      "roof_mask_pixels": 9918,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101130_0014_D.JPG",
+      "roof_mask_pixels": 14158,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101132_0015_D.JPG",
+      "roof_mask_pixels": 13589,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101134_0016_D.JPG",
+      "roof_mask_pixels": 13421,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101148_0023_D.JPG",
+      "roof_mask_pixels": 6088,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101307_0006_D.JPG",
+      "roof_mask_pixels": 5235,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101309_0007_D.JPG",
+      "roof_mask_pixels": 5157,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101311_0008_D.JPG",
+      "roof_mask_pixels": 4333,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101313_0009_D.JPG",
+      "roof_mask_pixels": 4628,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101315_0010_D.JPG",
+      "roof_mask_pixels": 4781,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101317_0011_D.JPG",
+      "roof_mask_pixels": 4261,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101323_0014_D.JPG",
+      "roof_mask_pixels": 3617,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101325_0015_D.JPG",
+      "roof_mask_pixels": 2776,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101327_0016_D.JPG",
+      "roof_mask_pixels": 2430,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101329_0017_D.JPG",
+      "roof_mask_pixels": 0,
+      "empty_view": true
+    },
+    {
+      "view_id": "DJI_20241217101341_0023_D.JPG",
+      "roof_mask_pixels": 0,
+      "empty_view": true
+    },
+    {
+      "view_id": "DJI_20241217101343_0024_D.JPG",
+      "roof_mask_pixels": 966,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101345_0025_D.JPG",
+      "roof_mask_pixels": 554,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101347_0026_D.JPG",
+      "roof_mask_pixels": 497,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101349_0027_D.JPG",
+      "roof_mask_pixels": 717,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101351_0028_D.JPG",
+      "roof_mask_pixels": 710,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101353_0029_D.JPG",
+      "roof_mask_pixels": 577,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101355_0030_D.JPG",
+      "roof_mask_pixels": 515,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101357_0031_D.JPG",
+      "roof_mask_pixels": 173,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101359_0032_D.JPG",
+      "roof_mask_pixels": 157,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101401_0033_D.JPG",
+      "roof_mask_pixels": 353,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101403_0034_D.JPG",
+      "roof_mask_pixels": 303,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101405_0035_D.JPG",
+      "roof_mask_pixels": 273,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101453_0037_D.JPG",
+      "roof_mask_pixels": 65969,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101530_0002_D.JPG",
+      "roof_mask_pixels": 36073,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101536_0005_D.JPG",
+      "roof_mask_pixels": 1345,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101538_0006_D.JPG",
+      "roof_mask_pixels": 0,
+      "empty_view": true
+    },
+    {
+      "view_id": "DJI_20241217101542_0008_D.JPG",
+      "roof_mask_pixels": 0,
+      "empty_view": true
+    },
+    {
+      "view_id": "DJI_20241217101544_0009_D.JPG",
+      "roof_mask_pixels": 24272,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101546_0010_D.JPG",
+      "roof_mask_pixels": 23082,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101548_0011_D.JPG",
+      "roof_mask_pixels": 0,
+      "empty_view": true
+    },
+    {
+      "view_id": "DJI_20241217101550_0012_D.JPG",
+      "roof_mask_pixels": 0,
+      "empty_view": true
+    },
+    {
+      "view_id": "DJI_20241217101556_0015_D.JPG",
+      "roof_mask_pixels": 33302,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101558_0016_D.JPG",
+      "roof_mask_pixels": 27835,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101600_0017_D.JPG",
+      "roof_mask_pixels": 28704,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217101602_0018_D.JPG",
+      "roof_mask_pixels": 0,
+      "empty_view": true
+    },
+    {
+      "view_id": "DJI_20241217101827_0031_D.JPG",
+      "roof_mask_pixels": 350166,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102012_0005_D.JPG",
+      "roof_mask_pixels": 271504,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102034_0016_D.JPG",
+      "roof_mask_pixels": 188314,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102036_0017_D.JPG",
+      "roof_mask_pixels": 510429,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102038_0018_D.JPG",
+      "roof_mask_pixels": 413064,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102040_0019_D.JPG",
+      "roof_mask_pixels": 471262,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102042_0020_D.JPG",
+      "roof_mask_pixels": 467250,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102052_0025_D.JPG",
+      "roof_mask_pixels": 241749,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102245_0004_D.JPG",
+      "roof_mask_pixels": 141229,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102247_0005_D.JPG",
+      "roof_mask_pixels": 179738,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102249_0006_D.JPG",
+      "roof_mask_pixels": 328366,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102251_0007_D.JPG",
+      "roof_mask_pixels": 591158,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102253_0008_D.JPG",
+      "roof_mask_pixels": 548865,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102255_0009_D.JPG",
+      "roof_mask_pixels": 660514,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102257_0010_D.JPG",
+      "roof_mask_pixels": 754140,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102259_0011_D.JPG",
+      "roof_mask_pixels": 792246,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102301_0012_D.JPG",
+      "roof_mask_pixels": 770059,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102303_0013_D.JPG",
+      "roof_mask_pixels": 723627,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102305_0014_D.JPG",
+      "roof_mask_pixels": 696864,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102307_0015_D.JPG",
+      "roof_mask_pixels": 698614,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102309_0016_D.JPG",
+      "roof_mask_pixels": 752949,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102311_0017_D.JPG",
+      "roof_mask_pixels": 741511,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102517_0011_D.JPG",
+      "roof_mask_pixels": 635334,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102519_0012_D.JPG",
+      "roof_mask_pixels": 632396,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102521_0013_D.JPG",
+      "roof_mask_pixels": 632555,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102523_0014_D.JPG",
+      "roof_mask_pixels": 465164,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102525_0015_D.JPG",
+      "roof_mask_pixels": 434935,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102527_0016_D.JPG",
+      "roof_mask_pixels": 424076,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102529_0017_D.JPG",
+      "roof_mask_pixels": 398936,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102531_0018_D.JPG",
+      "roof_mask_pixels": 355134,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102537_0021_D.JPG",
+      "roof_mask_pixels": 502414,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102539_0022_D.JPG",
+      "roof_mask_pixels": 901456,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102541_0023_D.JPG",
+      "roof_mask_pixels": 856081,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102543_0024_D.JPG",
+      "roof_mask_pixels": 764827,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102545_0025_D.JPG",
+      "roof_mask_pixels": 780707,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102547_0026_D.JPG",
+      "roof_mask_pixels": 695680,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102549_0027_D.JPG",
+      "roof_mask_pixels": 882539,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102551_0028_D.JPG",
+      "roof_mask_pixels": 844245,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102553_0029_D.JPG",
+      "roof_mask_pixels": 669457,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102555_0030_D.JPG",
+      "roof_mask_pixels": 697422,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102557_0031_D.JPG",
+      "roof_mask_pixels": 573013,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102603_0034_D.JPG",
+      "roof_mask_pixels": 656423,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102605_0035_D.JPG",
+      "roof_mask_pixels": 918162,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102609_0037_D.JPG",
+      "roof_mask_pixels": 984112,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102611_0038_D.JPG",
+      "roof_mask_pixels": 944343,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102613_0039_D.JPG",
+      "roof_mask_pixels": 901310,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102627_0046_D.JPG",
+      "roof_mask_pixels": 760473,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102629_0047_D.JPG",
+      "roof_mask_pixels": 826164,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102653_0002_D.JPG",
+      "roof_mask_pixels": 547580,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102655_0003_D.JPG",
+      "roof_mask_pixels": 529435,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102659_0005_D.JPG",
+      "roof_mask_pixels": 543462,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102701_0006_D.JPG",
+      "roof_mask_pixels": 500658,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102703_0007_D.JPG",
+      "roof_mask_pixels": 547272,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102705_0008_D.JPG",
+      "roof_mask_pixels": 554398,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102707_0009_D.JPG",
+      "roof_mask_pixels": 446347,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102711_0011_D.JPG",
+      "roof_mask_pixels": 485392,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102713_0012_D.JPG",
+      "roof_mask_pixels": 572483,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102715_0013_D.JPG",
+      "roof_mask_pixels": 405691,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102717_0014_D.JPG",
+      "roof_mask_pixels": 411020,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102719_0015_D.JPG",
+      "roof_mask_pixels": 517510,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102721_0016_D.JPG",
+      "roof_mask_pixels": 460198,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102723_0017_D.JPG",
+      "roof_mask_pixels": 258229,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102725_0018_D.JPG",
+      "roof_mask_pixels": 46603,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102727_0019_D.JPG",
+      "roof_mask_pixels": 353158,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102729_0020_D.JPG",
+      "roof_mask_pixels": 385849,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102731_0021_D.JPG",
+      "roof_mask_pixels": 371169,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102733_0022_D.JPG",
+      "roof_mask_pixels": 411069,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102735_0023_D.JPG",
+      "roof_mask_pixels": 58745,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102737_0024_D.JPG",
+      "roof_mask_pixels": 36578,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102739_0025_D.JPG",
+      "roof_mask_pixels": 72948,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102741_0026_D.JPG",
+      "roof_mask_pixels": 330692,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102913_0002_D.JPG",
+      "roof_mask_pixels": 303845,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102915_0003_D.JPG",
+      "roof_mask_pixels": 303260,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102917_0004_D.JPG",
+      "roof_mask_pixels": 12411,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102919_0005_D.JPG",
+      "roof_mask_pixels": 383879,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102921_0006_D.JPG",
+      "roof_mask_pixels": 411819,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102923_0007_D.JPG",
+      "roof_mask_pixels": 195977,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102925_0008_D.JPG",
+      "roof_mask_pixels": 320336,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102927_0009_D.JPG",
+      "roof_mask_pixels": 294997,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102929_0010_D.JPG",
+      "roof_mask_pixels": 284254,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102931_0011_D.JPG",
+      "roof_mask_pixels": 93233,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102933_0012_D.JPG",
+      "roof_mask_pixels": 117876,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102935_0013_D.JPG",
+      "roof_mask_pixels": 153411,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102937_0014_D.JPG",
+      "roof_mask_pixels": 147334,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102939_0015_D.JPG",
+      "roof_mask_pixels": 165534,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102941_0016_D.JPG",
+      "roof_mask_pixels": 233844,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102943_0017_D.JPG",
+      "roof_mask_pixels": 234264,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102945_0018_D.JPG",
+      "roof_mask_pixels": 156679,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102947_0019_D.JPG",
+      "roof_mask_pixels": 148904,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102949_0020_D.JPG",
+      "roof_mask_pixels": 169991,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102951_0021_D.JPG",
+      "roof_mask_pixels": 138621,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102953_0022_D.JPG",
+      "roof_mask_pixels": 40015,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102955_0023_D.JPG",
+      "roof_mask_pixels": 21530,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102957_0024_D.JPG",
+      "roof_mask_pixels": 17769,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217102959_0025_D.JPG",
+      "roof_mask_pixels": 30433,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103001_0026_D.JPG",
+      "roof_mask_pixels": 13923,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103003_0027_D.JPG",
+      "roof_mask_pixels": 10500,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103005_0028_D.JPG",
+      "roof_mask_pixels": 18348,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103007_0029_D.JPG",
+      "roof_mask_pixels": 36346,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103009_0030_D.JPG",
+      "roof_mask_pixels": 39038,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103011_0031_D.JPG",
+      "roof_mask_pixels": 49533,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103013_0032_D.JPG",
+      "roof_mask_pixels": 47784,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103015_0033_D.JPG",
+      "roof_mask_pixels": 47170,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103017_0034_D.JPG",
+      "roof_mask_pixels": 41193,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103019_0035_D.JPG",
+      "roof_mask_pixels": 95849,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103021_0036_D.JPG",
+      "roof_mask_pixels": 14194,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103023_0037_D.JPG",
+      "roof_mask_pixels": 732,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103025_0038_D.JPG",
+      "roof_mask_pixels": 6366,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103027_0039_D.JPG",
+      "roof_mask_pixels": 9761,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103029_0040_D.JPG",
+      "roof_mask_pixels": 120605,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103031_0041_D.JPG",
+      "roof_mask_pixels": 227679,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103033_0042_D.JPG",
+      "roof_mask_pixels": 106616,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103035_0043_D.JPG",
+      "roof_mask_pixels": 50599,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103037_0044_D.JPG",
+      "roof_mask_pixels": 413853,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103039_0045_D.JPG",
+      "roof_mask_pixels": 414050,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103041_0046_D.JPG",
+      "roof_mask_pixels": 471797,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103051_0002_D.JPG",
+      "roof_mask_pixels": 98361,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103053_0003_D.JPG",
+      "roof_mask_pixels": 614545,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103055_0004_D.JPG",
+      "roof_mask_pixels": 598733,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103057_0005_D.JPG",
+      "roof_mask_pixels": 356836,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103059_0006_D.JPG",
+      "roof_mask_pixels": 57204,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103101_0007_D.JPG",
+      "roof_mask_pixels": 61054,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103103_0008_D.JPG",
+      "roof_mask_pixels": 221661,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103105_0009_D.JPG",
+      "roof_mask_pixels": 329079,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103107_0010_D.JPG",
+      "roof_mask_pixels": 93270,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103109_0011_D.JPG",
+      "roof_mask_pixels": 567327,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103111_0012_D.JPG",
+      "roof_mask_pixels": 637551,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103113_0013_D.JPG",
+      "roof_mask_pixels": 424097,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103115_0014_D.JPG",
+      "roof_mask_pixels": 377154,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103117_0015_D.JPG",
+      "roof_mask_pixels": 491411,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103119_0016_D.JPG",
+      "roof_mask_pixels": 396062,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103121_0017_D.JPG",
+      "roof_mask_pixels": 323431,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103123_0018_D.JPG",
+      "roof_mask_pixels": 537048,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103125_0019_D.JPG",
+      "roof_mask_pixels": 447690,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103127_0020_D.JPG",
+      "roof_mask_pixels": 445515,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103413_0016_D.JPG",
+      "roof_mask_pixels": 552771,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103457_0038_D.JPG",
+      "roof_mask_pixels": 511830,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103459_0039_D.JPG",
+      "roof_mask_pixels": 376056,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103501_0040_D.JPG",
+      "roof_mask_pixels": 481052,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103503_0041_D.JPG",
+      "roof_mask_pixels": 258461,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103505_0042_D.JPG",
+      "roof_mask_pixels": 87810,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103507_0043_D.JPG",
+      "roof_mask_pixels": 142353,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103509_0044_D.JPG",
+      "roof_mask_pixels": 155804,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103511_0045_D.JPG",
+      "roof_mask_pixels": 162042,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103517_0048_D.JPG",
+      "roof_mask_pixels": 292444,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103519_0049_D.JPG",
+      "roof_mask_pixels": 496987,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103521_0050_D.JPG",
+      "roof_mask_pixels": 516921,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103523_0051_D.JPG",
+      "roof_mask_pixels": 442801,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103525_0052_D.JPG",
+      "roof_mask_pixels": 263453,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103527_0053_D.JPG",
+      "roof_mask_pixels": 183136,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103529_0054_D.JPG",
+      "roof_mask_pixels": 145778,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103539_0059_D.JPG",
+      "roof_mask_pixels": 127101,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103541_0060_D.JPG",
+      "roof_mask_pixels": 199751,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103543_0061_D.JPG",
+      "roof_mask_pixels": 331637,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103545_0062_D.JPG",
+      "roof_mask_pixels": 318235,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103547_0063_D.JPG",
+      "roof_mask_pixels": 279077,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103549_0064_D.JPG",
+      "roof_mask_pixels": 245423,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103551_0065_D.JPG",
+      "roof_mask_pixels": 165941,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103553_0066_D.JPG",
+      "roof_mask_pixels": 194003,
+      "empty_view": false
+    },
+    {
+      "view_id": "DJI_20241217103609_0074_D.JPG",
+      "roof_mask_pixels": 0,
+      "empty_view": true
+    }
+  ]
+}
