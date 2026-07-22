@@ -165,7 +165,12 @@ def _validate_pilot_arm(pilot_arm: Optional[str]) -> Optional[str]:
     return pilot_arm
 
 
-def _resize_binary_mask(mask: np.ndarray, size_hw: Tuple[int, int]) -> np.ndarray:
+def _resize_binary_mask(
+    mask: np.ndarray,
+    size_hw: Tuple[int, int],
+    *,
+    require_nonempty: bool = True,
+) -> np.ndarray:
     """Nearest-resize one validated bool HxW mask for a training frame."""
 
     value = np.asarray(mask)
@@ -184,7 +189,7 @@ def _resize_binary_mask(mask: np.ndarray, size_hw: Tuple[int, int]) -> np.ndarra
             (width, height),
             interpolation=cv2.INTER_NEAREST,
         ).astype(np.bool_)
-    if not bool(resized.any()):
+    if require_nonempty and not bool(resized.any()):
         raise MaskSchemaError(
             "nearest resize produced an empty runtime mask; refusing silent loss disable"
         )
@@ -198,6 +203,7 @@ class PilotMaskBinding:
     role: str
     mask_set: BinaryMaskSet
     record_id_by_frame_name: Dict[str, str]
+    allow_empty_per_view: bool
     audit: dict
 
     def load(self, frame: Frame, size_hw: Tuple[int, int]) -> np.ndarray:
@@ -207,7 +213,11 @@ class PilotMaskBinding:
             raise MaskSchemaError(
                 f"{self.role} mask is missing at runtime for frame {frame.name!r}"
             ) from exc
-        return _resize_binary_mask(self.mask_set.load(record_id), size_hw)
+        return _resize_binary_mask(
+            self.mask_set.load(record_id),
+            size_hw,
+            require_nonempty=not self.allow_empty_per_view,
+        )
 
 
 def _bind_pilot_mask_manifest(
@@ -293,6 +303,12 @@ def _bind_pilot_mask_manifest(
     source_shapes: set[tuple[int, int]] = set()
     target_shapes: set[tuple[int, int]] = set()
     record_id_by_frame_name: Dict[str, str] = {}
+    allow_empty_per_view = (
+        role == "plane_region"
+        and mask_set.source is MaskSource.LOD2_ROOFSURFACE_GT_UPPERBOUND
+    )
+    empty_training_view_ids: list[str] = []
+    aggregate_positive_training_pixels = 0
     for frame_index, frame in enumerate(frames):
         record_id = record_by_index[frame_index]
         source_mask = mask_set.load(record_id)
@@ -300,10 +316,24 @@ def _bind_pilot_mask_manifest(
             int(round(frame.height * float(downscale))),
             int(round(frame.width * float(downscale))),
         )
-        _resize_binary_mask(source_mask, target_shape)
+        training_mask = _resize_binary_mask(
+            source_mask,
+            target_shape,
+            require_nonempty=not allow_empty_per_view,
+        )
+        positive_pixels = int(training_mask.sum())
+        aggregate_positive_training_pixels += positive_pixels
+        if positive_pixels == 0:
+            empty_training_view_ids.append(frame.name)
         source_shapes.add(tuple(int(value) for value in source_mask.shape))
         target_shapes.add(target_shape)
         record_id_by_frame_name[frame.name] = record_id
+
+    if role == "plane_region" and aggregate_positive_training_pixels <= 0:
+        raise MaskSchemaError(
+            "plane_region mask manifest has zero aggregate positive pixels at "
+            "the locked training resolution"
+        )
 
     audit = {
         "role": role,
@@ -320,6 +350,13 @@ def _bind_pilot_mask_manifest(
         "resize_interpolation": "nearest",
         "inventory_match": "exact",
         "preflight_loaded_all_records": True,
+        "allow_empty_per_view": allow_empty_per_view,
+        "empty_training_view_count": len(empty_training_view_ids),
+        "empty_training_view_ids": empty_training_view_ids,
+        "aggregate_positive_training_pixels": aggregate_positive_training_pixels,
+        "aggregate_positive_gate_passed": (
+            role != "plane_region" or aggregate_positive_training_pixels > 0
+        ),
         "loss_consuming": role != "roof_audit",
         "consumer_contract_enforced": role != "roof_audit",
     }
@@ -327,6 +364,7 @@ def _bind_pilot_mask_manifest(
         role=role,
         mask_set=mask_set,
         record_id_by_frame_name=record_id_by_frame_name,
+        allow_empty_per_view=allow_empty_per_view,
         audit=audit,
     )
 

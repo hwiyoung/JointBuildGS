@@ -24,6 +24,7 @@ import importlib.util
 import json
 import math
 import os
+import platform
 from pathlib import Path, PurePosixPath
 import re
 import shutil
@@ -57,10 +58,48 @@ EXPECTED_BERT_REPOSITORY = "google-bert/bert-base-uncased"
 EXPECTED_BERT_REVISION = "86b5e0934494bd15c9632b12f734a8a67f723594"
 EXPECTED_DINO_REVISION = "856dde20aee659246248e20734ef9ba5214f5e44"
 EXPECTED_SAM_REVISION = "dca509fe793f601edb92606367a655c15ac00fdf"
-EXPECTED_DOCKER_IMAGE_TAG = "jointbuildgs:dev"
-EXPECTED_DOCKER_IMAGE_ID = (
+EXPECTED_BASE_DOCKER_IMAGE_TAG = "jointbuildgs:dev"
+EXPECTED_BASE_DOCKER_IMAGE_ID = (
     "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396"
 )
+EXPECTED_DOCKER_IMAGE_TAG = "jointbuildgs:p1w-groundedsam-v1"
+EXPECTED_DOCKER_IMAGE_ID = (
+    "sha256:3622911fb15eb2f460637f5c3f7f34f2790f5957b0475d1827d6c0a3e5dc88b1"
+)
+EXPECTED_RUNTIME_REQUIREMENTS_SHA256 = (
+    "399b3860c291e6685bc63c3704bf34b1a6b1ef9a5c59e1ede6e583433d36a063"
+)
+EXPECTED_DISTRIBUTION_VERSIONS = {
+    "torch": "2.4.1+cu121",
+    "torchvision": "0.19.1+cu121",
+    "transformers": "4.40.2",
+    "tokenizers": "0.19.1",
+    "huggingface-hub": "0.23.5",
+    "safetensors": "0.4.3",
+    "timm": "0.9.16",
+    "addict": "2.4.0",
+    "yapf": "0.40.2",
+    "regex": "2024.5.15",
+    "termcolor": "2.4.0",
+    "tomli": "2.0.1",
+    "pycocotools": "2.0.8",
+}
+EXPECTED_PYTHON_MODULES = (
+    "torch",
+    "torchvision",
+    "transformers",
+    "tokenizers",
+    "huggingface_hub",
+    "safetensors",
+    "timm",
+    "addict",
+    "yapf",
+    "regex",
+    "termcolor",
+    "tomli",
+    "pycocotools",
+)
+MODULE_DISTRIBUTION = {"huggingface_hub": "huggingface-hub"}
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 SURFACE_CLASS = {"RoofSurface": 1, "WallSurface": 2, "GroundSurface": 3}
 CONTROLLED_PAIR_PATHS = (
@@ -129,6 +168,174 @@ def _tree_receipt(path: Path) -> tuple[int, str, list[dict[str, Any]]]:
     return total, hashlib.sha256(canonical_json_bytes(rows)).hexdigest(), rows
 
 
+def _git_output(root: Path, arguments: Sequence[str]) -> str:
+    process = subprocess.run(
+        ["git", "-C", str(root), *arguments],
+        check=False,
+        text=True,
+        capture_output=True,
+        env={**os.environ, "GIT_TERMINAL_PROMPT": "0"},
+    )
+    if process.returncode != 0:
+        detail = (process.stderr or process.stdout).strip()[-2000:]
+        raise MaskProducerError(f"git source attestation failed: {detail}")
+    return process.stdout
+
+
+def _git_tracked_source_attestation(
+    root: Path, expected_revision: str, *, include_root: bool
+) -> dict[str, Any]:
+    if not root.is_dir() or root.is_symlink():
+        raise MaskProducerError(f"runtime source root must be a real directory: {root}")
+    head = _git_output(root, ["rev-parse", "HEAD"]).strip()
+    if head != expected_revision:
+        raise MaskProducerError(
+            f"source HEAD differs: {root}: {head} != {expected_revision}"
+        )
+    tree = _git_output(root, ["rev-parse", "HEAD^{tree}"]).strip()
+    if not re.fullmatch(r"[0-9a-f]{40}", tree):
+        raise MaskProducerError(f"source git tree is malformed: {root}")
+    tracked_status = _git_output(
+        root, ["status", "--porcelain", "--untracked-files=no"]
+    )
+    if tracked_status:
+        raise MaskProducerError(f"source tracked worktree is dirty: {root}")
+    tracked_names = _git_output(root, ["ls-files", "-z"]).split("\0")
+    tracked_rows: list[dict[str, Any]] = []
+    total = 0
+    for name in tracked_names:
+        if not name:
+            continue
+        relative = _safe_relative(name, "git tracked source path")
+        path = root.joinpath(*relative.parts)
+        if not path.is_file() or path.is_symlink():
+            raise MaskProducerError(f"tracked source must be a regular file: {path}")
+        size = path.stat().st_size
+        total += size
+        tracked_rows.append(
+            {
+                "path": relative.as_posix(),
+                "size_bytes": size,
+                "sha256": sha256_file(path),
+            }
+        )
+    if not tracked_rows:
+        raise MaskProducerError(f"source checkout contains no tracked files: {root}")
+    result: dict[str, Any] = {
+        "git_head": head,
+        "git_tree": tree,
+        "tracked_worktree_clean": True,
+        "tracked_file_count": len(tracked_rows),
+        "tracked_size_bytes": total,
+        "tracked_files_sha256": hashlib.sha256(
+            canonical_json_bytes(tracked_rows)
+        ).hexdigest(),
+    }
+    if include_root:
+        result["source_root"] = str(root.resolve())
+    return result
+
+
+def collect_runtime_attestation(lock: Mapping[str, Any]) -> dict[str, Any]:
+    """Attest the exact image-side runtime independently from fetched assets."""
+
+    runtime = lock["runtime_environment"]
+    gate = lock["runtime_dependency_gate"]
+    if platform.python_version() != gate["required_python_version"]:
+        raise MaskProducerError(
+            f"Python runtime differs: {platform.python_version()} != "
+            f"{gate['required_python_version']}"
+        )
+    versions: dict[str, str] = {}
+    for distribution, expected in gate["required_distribution_versions"].items():
+        try:
+            actual = importlib.metadata.version(distribution)
+        except importlib.metadata.PackageNotFoundError as exc:
+            raise MaskProducerError(
+                f"required runtime distribution is missing: {distribution}"
+            ) from exc
+        if actual != expected:
+            raise MaskProducerError(
+                f"runtime distribution differs: {distribution} {actual} != {expected}"
+            )
+        versions[distribution] = actual
+    requirements_path = Path(runtime["runtime_requirements_path"])
+    if (
+        not requirements_path.is_file()
+        or requirements_path.is_symlink()
+        or sha256_file(requirements_path) != runtime["runtime_requirements_sha256"]
+    ):
+        raise MaskProducerError("runtime requirements file SHA differs from lock")
+    dino_root = Path(runtime["groundingdino_source_root"])
+    sam_root = Path(runtime["segment_anything_source_root"])
+    source_trees = {
+        "groundingdino": _git_tracked_source_attestation(
+            dino_root, EXPECTED_DINO_REVISION, include_root=True
+        ),
+        "segment_anything": _git_tracked_source_attestation(
+            sam_root, EXPECTED_SAM_REVISION, include_root=True
+        ),
+    }
+    evidence = lock["groundingdino_primary_source_evidence"]
+    runtime_pins = {
+        "groundingdino/models/GroundingDINO/groundingdino.py": evidence[
+            "model_source_sha256"
+        ],
+        "groundingdino/util/get_tokenlizer.py": evidence[
+            "tokenizer_loader_sha256"
+        ],
+    }
+    for relative, expected_sha in runtime_pins.items():
+        path = dino_root / relative
+        if not path.is_file() or path.is_symlink() or sha256_file(path) != expected_sha:
+            raise MaskProducerError(f"runtime GroundingDINO source differs: {relative}")
+    extensions = sorted(
+        path
+        for path in dino_root.glob(gate["required_groundingdino_extension_glob"])
+        if path.is_file() and not path.is_symlink()
+    )
+    if len(extensions) != 1:
+        raise MaskProducerError(
+            f"runtime must contain exactly one GroundingDINO _C extension, got {len(extensions)}"
+        )
+    extension = extensions[0]
+    ignored = subprocess.run(
+        ["git", "-C", str(dino_root), "check-ignore", "-q", str(extension)],
+        check=False,
+        env={**os.environ, "GIT_TERMINAL_PROMPT": "0"},
+    ).returncode == 0
+    if not ignored:
+        raise MaskProducerError("runtime extension must be ignored by the clean source tree")
+    try:
+        import torch
+    except ImportError as exc:  # pragma: no cover - distribution gate catches this first
+        raise MaskProducerError("runtime torch import failed") from exc
+    if str(torch.version.cuda) != gate["compiled_torch_cuda"]:
+        raise MaskProducerError(
+            f"torch CUDA differs: {torch.version.cuda} != {gate['compiled_torch_cuda']}"
+        )
+    if os.environ.get("TORCH_CUDA_ARCH_LIST") != gate["compiled_cuda_arch"]:
+        raise MaskProducerError("TORCH_CUDA_ARCH_LIST differs from runtime lock")
+    return {
+        "python_version": platform.python_version(),
+        "distribution_versions": versions,
+        "runtime_requirements": {
+            "path": str(requirements_path),
+            "size_bytes": requirements_path.stat().st_size,
+            "sha256": sha256_file(requirements_path),
+        },
+        "source_trees": source_trees,
+        "groundingdino_cuda_extension": {
+            "path": str(extension.resolve()),
+            "size_bytes": extension.stat().st_size,
+            "sha256": sha256_file(extension),
+            "git_ignored": True,
+            "torch_cuda": str(torch.version.cuda),
+            "cuda_arch": os.environ["TORCH_CUDA_ARCH_LIST"],
+        },
+    }
+
+
 def load_producer_lock(path: str | Path) -> dict[str, Any]:
     lock = json.loads(Path(path).read_text(encoding="utf-8"))
     if not isinstance(lock, dict) or lock.get("schema") != LOCK_SCHEMA:
@@ -139,16 +346,24 @@ def load_producer_lock(path: str | Path) -> dict[str, Any]:
         raise MaskProducerError("producer lock itself must not claim inference")
     runtime = lock.get("runtime_environment", {})
     if (
-        runtime.get("docker_image_tag") != EXPECTED_DOCKER_IMAGE_TAG
+        runtime.get("base_docker_image_tag") != EXPECTED_BASE_DOCKER_IMAGE_TAG
+        or runtime.get("base_docker_image_id") != EXPECTED_BASE_DOCKER_IMAGE_ID
+        or runtime.get("runtime_requirements_sha256")
+        != EXPECTED_RUNTIME_REQUIREMENTS_SHA256
+        or runtime.get("docker_image_tag") != EXPECTED_DOCKER_IMAGE_TAG
         or runtime.get("docker_image_id") != EXPECTED_DOCKER_IMAGE_ID
     ):
         raise MaskProducerError("mask producer Docker image tag/ID changed")
     dependency_gate = lock.get("runtime_dependency_gate", {})
+    required_versions = dependency_gate.get("required_distribution_versions")
     if (
-        dependency_gate.get("required_python_modules")
-        != ["torch", "torchvision", "transformers", "timm", "addict", "yapf"]
+        dependency_gate.get("required_python_modules") != list(EXPECTED_PYTHON_MODULES)
+        or required_versions != EXPECTED_DISTRIBUTION_VERSIONS
+        or dependency_gate.get("required_python_version") != "3.11.15"
         or dependency_gate.get("required_groundingdino_extension_glob")
         != "groundingdino/_C*.so"
+        or dependency_gate.get("compiled_cuda_arch") != "8.6"
+        or dependency_gate.get("compiled_torch_cuda") != "12.1"
     ):
         raise MaskProducerError("GroundedSAM runtime dependency gate changed")
     assets = lock.get("runtime_assets")
@@ -254,6 +469,9 @@ def load_producer_lock(path: str | Path) -> dict[str, Any]:
         or tuple(receipt.get("required_artifact_ids", ())) != EXPECTED_ASSETS
         or receipt.get("download_during_preflight") is not False
         or receipt.get("symlinks_allowed") is not False
+        or receipt.get("verify_source_git_head_tree_and_clean_tracked_worktree")
+        is not True
+        or receipt.get("verify_runtime_extension_sha256_and_size") is not True
     ):
         raise MaskProducerError("asset receipt contract changed")
     return lock
@@ -275,6 +493,14 @@ def verify_asset_receipt(
         raise MaskProducerError("asset receipt belongs to a different producer lock")
     if receipt.get("runtime_environment") != lock.get("runtime_environment"):
         raise MaskProducerError("asset receipt Docker image tag/ID differs from lock")
+    current_runtime_attestation = collect_runtime_attestation(lock)
+    if (
+        canonical_json_bytes(receipt.get("runtime_attestation"))
+        != canonical_json_bytes(current_runtime_attestation)
+    ):
+        raise MaskProducerError(
+            "asset receipt runtime source/dependency/extension attestation differs"
+        )
     rows = receipt.get("artifacts")
     if not isinstance(rows, dict) or tuple(rows) != EXPECTED_ASSETS:
         raise MaskProducerError("asset receipt must contain the exact locked inventory")
@@ -322,6 +548,15 @@ def verify_asset_receipt(
                 )
                 if git.returncode != 0 or git.stdout.strip() != locked.get("revision"):
                     raise MaskProducerError(f"source checkout HEAD differs: {artifact_id}")
+                expected_git = _git_tracked_source_attestation(
+                    path, str(locked["revision"]), include_root=False
+                )
+                if canonical_json_bytes(row.get("git")) != canonical_json_bytes(
+                    expected_git
+                ):
+                    raise MaskProducerError(
+                        f"source checkout tracked-tree receipt differs: {artifact_id}"
+                    )
             elif locked["kind"] == "huggingface_snapshot":
                 if (
                     row.get("source") != locked.get("repository")
@@ -376,81 +611,41 @@ def audit_grounded_sam_runtime(
     for module_name in lock["runtime_dependency_gate"]["required_python_modules"]:
         present = importlib.util.find_spec(module_name) is not None
         version: str | None = None
+        expected_version: str | None = None
         if present:
-            distribution = {
-                "PIL": "Pillow",
-                "cv2": "opencv-python",
-            }.get(module_name, module_name)
+            distribution = MODULE_DISTRIBUTION.get(module_name, module_name)
+            expected_version = lock["runtime_dependency_gate"][
+                "required_distribution_versions"
+            ].get(distribution)
             try:
                 version = importlib.metadata.version(distribution)
             except importlib.metadata.PackageNotFoundError:
                 version = "present_version_unavailable"
-        modules[module_name] = {"present": present, "version": version}
-    extension_files: list[str] = []
-    source_extension_root: Path | None = None
-    if assets is not None:
-        source_extension_root = Path(assets["groundingdino_source"])
-    seen_extensions: set[Path] = set()
-    required_glob = lock["runtime_dependency_gate"][
-        "required_groundingdino_extension_glob"
-    ]
-    if source_extension_root is not None:
-        for path in source_extension_root.glob(required_glob):
-            if not path.is_file() or path.is_symlink():
-                continue
-            resolved = path.resolve()
-            seen_extensions.add(resolved)
-            extension_files.append(str(resolved))
-    # A rebuilt pinned image normally installs the exact-revision extension in
-    # site-packages.  Count that binary only when the installed model and
-    # tokenizer source files still match the receipt-verified upstream commit.
-    evidence = lock["groundingdino_primary_source_evidence"]
-    installed_source_checks: list[dict[str, Any]] = []
-    for value in sys.path:
-        if not value or not Path(value).is_dir():
-            continue
-        package_root = Path(value) / "groundingdino"
-        model_path = package_root / "models/GroundingDINO/groundingdino.py"
-        tokenizer_path = package_root / "util/get_tokenlizer.py"
-        extensions = sorted(package_root.glob("_C*.so"))
-        if not extensions:
-            continue
-        model_matches = (
-            model_path.is_file()
-            and not model_path.is_symlink()
-            and sha256_file(model_path) == evidence["model_source_sha256"]
-        )
-        tokenizer_matches = (
-            tokenizer_path.is_file()
-            and not tokenizer_path.is_symlink()
-            and sha256_file(tokenizer_path) == evidence["tokenizer_loader_sha256"]
-        )
-        installed_source_checks.append(
-            {
-                "package_root": str(package_root.resolve()),
-                "model_source_sha256_matches": model_matches,
-                "tokenizer_source_sha256_matches": tokenizer_matches,
-            }
-        )
-        if not (model_matches and tokenizer_matches):
-            continue
-        for path in extensions:
-            if not path.is_file() or path.is_symlink():
-                continue
-            resolved = path.resolve()
-            if resolved in seen_extensions:
-                continue
-            seen_extensions.add(resolved)
-            extension_files.append(str(resolved))
-    extension_files.sort()
-    all_modules = all(row["present"] for row in modules.values())
+        modules[module_name] = {
+            "present": present,
+            "version": version,
+            "expected_version": expected_version,
+            "version_matches": present and version == expected_version,
+        }
+    runtime_attestation: dict[str, Any] | None = None
+    runtime_error: str | None = None
+    try:
+        runtime_attestation = collect_runtime_attestation(lock)
+    except MaskProducerError as exc:
+        runtime_error = str(exc)
+    all_modules = all(row["version_matches"] for row in modules.values())
+    extension = (
+        None
+        if runtime_attestation is None
+        else runtime_attestation["groundingdino_cuda_extension"]
+    )
     return {
         "modules": modules,
-        "groundingdino_compiled_extension_files": extension_files,
-        "installed_groundingdino_source_checks": installed_source_checks,
+        "runtime_attestation": runtime_attestation,
+        "runtime_error": runtime_error,
         "all_required_modules_present": all_modules,
-        "groundingdino_compiled_extension_present": bool(extension_files),
-        "ready": all_modules and bool(extension_files),
+        "groundingdino_compiled_extension_present": extension is not None,
+        "ready": all_modules and runtime_attestation is not None,
     }
 
 
@@ -573,6 +768,10 @@ def _artifact_receipt_row(
     }
     if "revision" in locked:
         row["revision"] = locked["revision"]
+    if locked["kind"] == "source_tree":
+        row["git"] = _git_tracked_source_attestation(
+            path, str(locked["revision"]), include_root=False
+        )
     return row
 
 
@@ -592,6 +791,7 @@ def fetch_asset_bundle(
     target = Path(cache_root)
     repo = Path(repository_root)
     _assert_cache_target_safe(target, repo)
+    runtime_attestation = collect_runtime_attestation(lock)
     receipt_name = "asset_receipt.json"
     if target.exists():
         receipt_path = target / receipt_name
@@ -641,6 +841,7 @@ def fetch_asset_bundle(
             "producer_lock_sha256": sha256_file(lock_path),
             "created_utc": datetime.now(timezone.utc).isoformat(),
             "runtime_environment": dict(lock["runtime_environment"]),
+            "runtime_attestation": runtime_attestation,
             "network_accessed": True,
             "learning_runs_started": 0,
             "inference_runs_started": 0,
@@ -651,6 +852,7 @@ def fetch_asset_bundle(
         verify_asset_receipt(lock, lock_path, staging, receipt_path)
         if target.exists():
             raise MaskProducerError("asset cache target appeared during fetch; refusing overwrite")
+        staging.chmod(0o755)
         os.replace(staging, target)
         directory_fd = os.open(parent, os.O_RDONLY)
         try:

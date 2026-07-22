@@ -6,20 +6,51 @@
   "inference_started_by_this_lock": false,
   "reference_lock": "phases/p2-gsjso/configs/pilot_1wave_reference_lock.json",
   "runtime_environment": {
-    "docker_image_tag": "jointbuildgs:dev",
-    "docker_image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396"
+    "base_docker_image_tag": "jointbuildgs:dev",
+    "base_docker_image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
+    "docker_image_tag": "jointbuildgs:p1w-groundedsam-v1",
+    "docker_image_id": "sha256:3622911fb15eb2f460637f5c3f7f34f2790f5957b0475d1827d6c0a3e5dc88b1",
+    "runtime_requirements_path": "/opt/jointbuildgs/p1w_groundedsam/requirements-runtime.txt",
+    "runtime_requirements_sha256": "399b3860c291e6685bc63c3704bf34b1a6b1ef9a5c59e1ede6e583433d36a063",
+    "groundingdino_source_root": "/opt/jointbuildgs/p1w_groundedsam/GroundingDINO",
+    "segment_anything_source_root": "/opt/jointbuildgs/p1w_groundedsam/segment-anything"
   },
   "runtime_dependency_gate": {
     "required_python_modules": [
       "torch",
       "torchvision",
       "transformers",
+      "tokenizers",
+      "huggingface_hub",
+      "safetensors",
       "timm",
       "addict",
-      "yapf"
+      "yapf",
+      "regex",
+      "termcolor",
+      "tomli",
+      "pycocotools"
     ],
+    "required_python_version": "3.11.15",
+    "required_distribution_versions": {
+      "torch": "2.4.1+cu121",
+      "torchvision": "0.19.1+cu121",
+      "transformers": "4.40.2",
+      "tokenizers": "0.19.1",
+      "huggingface-hub": "0.23.5",
+      "safetensors": "0.4.3",
+      "timm": "0.9.16",
+      "addict": "2.4.0",
+      "yapf": "0.40.2",
+      "regex": "2024.5.15",
+      "termcolor": "2.4.0",
+      "tomli": "2.0.1",
+      "pycocotools": "2.0.8"
+    },
     "required_groundingdino_extension_glob": "groundingdino/_C*.so",
-    "policy": "all modules and the extension must be present in the receipt-pinned Docker/source runtime before 04a inference"
+    "compiled_cuda_arch": "8.6",
+    "compiled_torch_cuda": "12.1",
+    "policy": "all exact-version modules, clean exact-revision runtime source trees, and the separately SHA-receipted CUDA extension must match before 04a inference"
   },
   "runtime_assets": {
     "groundingdino_source": {
@@ -156,6 +187,8 @@
     "download_during_preflight": false,
     "symlinks_allowed": false,
     "verify_each_file_sha256_and_size": true,
-    "verify_directory_tree_sha256_and_size": true
+    "verify_directory_tree_sha256_and_size": true,
+    "verify_source_git_head_tree_and_clean_tracked_worktree": true,
+    "verify_runtime_extension_sha256_and_size": true
   }
 }

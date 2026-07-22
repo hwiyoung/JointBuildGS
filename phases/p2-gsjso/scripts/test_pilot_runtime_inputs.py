@@ -165,6 +165,58 @@ class PilotRuntimeMaskTests(unittest.TestCase):
                         role="plane_region",
                     )
 
+    def test_gt_plane_empty_view_requires_positive_manifest_aggregate(self) -> None:
+        empty = np.zeros_like(self.mask)
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            partly_visible = write_set(
+                root / "gt-partly-visible",
+                {"a.jpg": empty, "b.jpg": self.mask},
+                purpose=schema.MaskPurpose.PLANE_REGION,
+                source=schema.MaskSource.LOD2_ROOFSURFACE_GT_UPPERBOUND,
+            )
+            binding = _bind_pilot_mask_manifest(
+                partly_visible,
+                frames=self.frames,
+                downscale=1.0,
+                pilot_arm="04b_plane_medium_gt_upperbound",
+                role="plane_region",
+            )
+            self.assertTrue(binding.allow_empty_per_view)
+            self.assertFalse(bool(binding.load(self.frames[0], (4, 4)).any()))
+            self.assertEqual(binding.audit["empty_training_view_count"], 1)
+            self.assertEqual(binding.audit["empty_training_view_ids"], ["a.jpg"])
+            self.assertEqual(
+                binding.audit["aggregate_positive_training_pixels"],
+                int(self.mask.sum()),
+            )
+            self.assertTrue(binding.audit["aggregate_positive_gate_passed"])
+
+            all_empty = write_set(
+                root / "gt-all-empty",
+                {frame.name: empty for frame in self.frames},
+                purpose=schema.MaskPurpose.PLANE_REGION,
+                source=schema.MaskSource.LOD2_ROOFSURFACE_GT_UPPERBOUND,
+            )
+            with self.assertRaisesRegex(
+                schema.MaskSchemaError, "zero aggregate positive pixels"
+            ):
+                _bind_pilot_mask_manifest(
+                    all_empty,
+                    frames=self.frames,
+                    downscale=1.0,
+                    pilot_arm="04b_plane_medium_gt_upperbound",
+                    role="plane_region",
+                )
+
+            with self.assertRaisesRegex(schema.MaskSchemaError, "empty projected mask"):
+                write_set(
+                    root / "photo-empty",
+                    {frame.name: empty for frame in self.frames},
+                    purpose=schema.MaskPurpose.PHOTO_SUPPORT,
+                    source=schema.MaskSource.LOD2_GROUNDSURFACE_XY_SFM_HEIGHT,
+                )
+
     def test_role_purpose_mismatch_hard_fails(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             manifest = write_set(

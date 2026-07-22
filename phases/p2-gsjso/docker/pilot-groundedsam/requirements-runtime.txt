@@ -1,0 +1,13 @@
+# P1W GroundedSAM-only additions to the pinned jointbuildgs:dev base image.
+# Install with --no-deps: every required transitive package is either listed
+# here or already pinned by the base image and audited by producer preflight.
+transformers==4.40.2
+tokenizers==0.19.1
+huggingface-hub==0.23.5
+safetensors==0.4.3
+timm==0.9.16
+yapf==0.40.2
+regex==2024.5.15
+termcolor==2.4.0
+tomli==2.0.1
+pycocotools==2.0.8

@@ -188,10 +188,12 @@ def _validate_mask(mask: np.ndarray, *, require_nonempty: bool = True) -> np.nda
     return np.ascontiguousarray(value)
 
 
-def _deterministic_mask_npz(mask: np.ndarray) -> bytes:
+def _deterministic_mask_npz(
+    mask: np.ndarray, *, require_nonempty: bool = True
+) -> bytes:
     """Return a deterministic ZIP containing only ``mask.npy``."""
 
-    mask = _validate_mask(mask)
+    mask = _validate_mask(mask, require_nonempty=require_nonempty)
     npy = io.BytesIO()
     np.save(npy, mask, allow_pickle=False)
     payload = io.BytesIO()
@@ -296,12 +298,18 @@ def write_binary_mask_set(
         raise MaskSchemaError(f"mask output directory is not empty: {root}")
     (root / "masks").mkdir(parents=True, exist_ok=True)
 
+    allow_empty_per_view = (
+        purpose is MaskPurpose.PLANE_REGION
+        and source is MaskSource.LOD2_ROOFSURFACE_GT_UPPERBOUND
+    )
     records: list[MaskRecord] = []
     used_files: set[str] = set()
     for index, view_id in enumerate(sorted(masks), start=1):
         if not view_id or "\x00" in view_id:
             raise MaskSchemaError("view_id must be a non-empty text value")
-        mask = _validate_mask(masks[view_id])
+        mask = _validate_mask(
+            masks[view_id], require_nonempty=not allow_empty_per_view
+        )
         geometry_sha256 = _require_sha256(
             geometry_sha256_by_view[view_id], f"geometry_sha256[{view_id}]"
         )
@@ -311,7 +319,9 @@ def write_binary_mask_set(
         if rel_file in used_files:
             raise MaskSchemaError(f"mask filename collision for {view_id!r}")
         used_files.add(rel_file)
-        data = _deterministic_mask_npz(mask)
+        data = _deterministic_mask_npz(
+            mask, require_nonempty=not allow_empty_per_view
+        )
         path = root / rel_file
         _atomic_write(path, data)
         records.append(
@@ -491,7 +501,11 @@ class BinaryMaskSet:
             raise
         except (OSError, ValueError, zipfile.BadZipFile) as exc:
             raise MaskSchemaError(f"cannot read mask archive {record.file}: {exc}") from exc
-        mask = _validate_mask(mask)
+        allow_empty_per_view = (
+            self.purpose is MaskPurpose.PLANE_REGION
+            and self.source is MaskSource.LOD2_ROOFSURFACE_GT_UPPERBOUND
+        )
+        mask = _validate_mask(mask, require_nonempty=not allow_empty_per_view)
         if tuple(mask.shape) != record.shape:
             raise MaskSchemaError(
                 f"mask shape mismatch for {view_id}: {mask.shape} != {record.shape}"

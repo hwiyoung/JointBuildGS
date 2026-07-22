@@ -453,14 +453,28 @@ def produce_04b(args: argparse.Namespace, runtime: Mapping[str, Any]) -> dict[st
     )
     masks: dict[str, np.ndarray] = {}
     audit: list[dict[str, Any]] = []
+    empty_view_ids: list[str] = []
+    total_roof_mask_pixels = 0
     for view_id in common["view_ids"]:
         image = common["images_by_name"][view_id]
         camera = common["cameras"][image.camera_id]
         mask = raycast_lod2_roof_bool_mask(scene, camera, image)
         if not mask.any():
-            raise MaskProducerError(f"{view_id}: selected LoD2 roof raycast is empty")
+            empty_view_ids.append(view_id)
         masks[view_id] = mask
-        audit.append({"view_id": view_id, "roof_mask_pixels": int(mask.sum())})
+        roof_mask_pixels = int(mask.sum())
+        total_roof_mask_pixels += roof_mask_pixels
+        audit.append(
+            {
+                "view_id": view_id,
+                "roof_mask_pixels": roof_mask_pixels,
+                "empty_view": roof_mask_pixels == 0,
+            }
+        )
+    if total_roof_mask_pixels <= 0:
+        raise MaskProducerError(
+            "04b selected-building LoD2 roof raycast is empty over the complete view inventory"
+        )
     gml_hashes = {rel(Path(path)): sha256_file(path) for path in sorted(args.gml)}
     input_sha = producer_input_sha(
         args.data_root,
@@ -498,7 +512,16 @@ def produce_04b(args: argparse.Namespace, runtime: Mapping[str, Any]) -> dict[st
         "producer_lock_sha256": config_sha,
         "input_sha256": input_sha,
         "view_count": len(masks),
+        "empty_view_count": len(empty_view_ids),
+        "empty_view_ids": empty_view_ids,
+        "total_roof_mask_pixels": total_roof_mask_pixels,
         "selected_building_count": len(common["score_ids"]),
+        "selected_building_roof_geometry_coverage_count": len(
+            scene.selected_building_ids
+        ),
+        "selected_building_roof_geometry_coverage_complete": (
+            len(scene.selected_building_ids) == len(common["score_ids"])
+        ),
         "triangle_count_internal_not_archived": int(len(scene.triangles_local)),
         "archive_arrays": ["mask:bool"],
         "forbidden_archive_arrays": [

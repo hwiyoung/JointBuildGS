@@ -8,6 +8,7 @@ from __future__ import annotations
 import copy
 import json
 from pathlib import Path
+import shutil
 import subprocess
 import tempfile
 import unittest
@@ -16,6 +17,8 @@ import numpy as np
 
 from src.stage2.colmap_io import Camera, Image
 from src.stage2.pilot_mask_schema import (
+    BinaryMaskSet,
+    MaskSchemaError,
     MaskPurpose,
     MaskSource,
     sha256_file as schema_sha256_file,
@@ -26,7 +29,9 @@ from src.stage2.pilot_plane_mask_producer import (
     LoD2TriangleScene,
     MaskProducerError,
     ViewFrame,
+    _git_tracked_source_attestation,
     _tree_receipt,
+    collect_runtime_attestation,
     cross_view_consistent_masks,
     fuse_vision_roof_mask,
     fetch_asset_bundle,
@@ -92,20 +97,26 @@ class ProducerLockReceiptTest(unittest.TestCase):
                 for artifact_id, row in lock["runtime_assets"].items()
             }
             (paths["groundingdino_source"] / "groundingdino/config").mkdir(parents=True)
+            runtime_dino = Path(lock["runtime_environment"]["groundingdino_source_root"])
             dino_config = paths["groundingdino_source"] / "groundingdino/config/GroundingDINO_SwinT_OGC.py"
-            dino_config.write_text(
-                "text_encoder_type='bert-base-uncased'\n", encoding="utf-8"
+            shutil.copyfile(
+                runtime_dino / "groundingdino/config/GroundingDINO_SwinT_OGC.py",
+                dino_config,
             )
             dino_model = paths["groundingdino_source"] / "groundingdino/models/GroundingDINO/groundingdino.py"
             dino_model.parent.mkdir(parents=True)
-            dino_model.write_text("# model fixture\n", encoding="utf-8")
+            shutil.copyfile(
+                runtime_dino
+                / "groundingdino/models/GroundingDINO/groundingdino.py",
+                dino_model,
+            )
             dino_tokenizer = paths["groundingdino_source"] / "groundingdino/util/get_tokenlizer.py"
             dino_tokenizer.parent.mkdir(parents=True)
-            dino_tokenizer.write_text("# tokenizer fixture\n", encoding="utf-8")
+            shutil.copyfile(
+                runtime_dino / "groundingdino/util/get_tokenlizer.py",
+                dino_tokenizer,
+            )
             lock = copy.deepcopy(lock)
-            lock["groundingdino_primary_source_evidence"]["config_sha256"] = sha256_file(dino_config)
-            lock["groundingdino_primary_source_evidence"]["model_source_sha256"] = sha256_file(dino_model)
-            lock["groundingdino_primary_source_evidence"]["tokenizer_loader_sha256"] = sha256_file(dino_tokenizer)
             (paths["segment_anything_source"] / "segment_anything").mkdir(parents=True)
             (paths["segment_anything_source"] / "segment_anything/__init__.py").write_text(
                 "", encoding="utf-8"
@@ -160,11 +171,16 @@ class ProducerLockReceiptTest(unittest.TestCase):
                 }
                 if "revision" in locked:
                     row["revision"] = locked["revision"]
+                if locked["kind"] == "source_tree":
+                    row["git"] = _git_tracked_source_attestation(
+                        path, locked["revision"], include_root=False
+                    )
                 artifacts[artifact_id] = row
             receipt = {
                 "schema": "jointbuildgs.pilot_1wave.mask_producer_asset_receipt.v1",
                 "producer_lock_sha256": sha256_file(LOCK),
                 "runtime_environment": lock["runtime_environment"],
+                "runtime_attestation": collect_runtime_attestation(lock),
                 "artifacts": artifacts,
             }
             receipt_path = root / "receipt.json"
@@ -365,6 +381,35 @@ class GtRaycastAndControlledPairTest(unittest.TestCase):
                 base, upper, repository_root=root
             )
             self.assertEqual(result["view_inventory"]["count"], 1)
+
+    def test_gt_upperbound_archive_allows_empty_view_but_vision_does_not(self):
+        empty = np.zeros((5, 6), dtype=bool)
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            manifest = write_binary_mask_set(
+                root / "gt_empty_view",
+                {"occluded.png": empty},
+                purpose=MaskPurpose.PLANE_REGION,
+                source=MaskSource.LOD2_ROOFSURFACE_GT_UPPERBOUND,
+                source_disclosure="GT upper-bound occluded-view fixture",
+                input_sha256=ZERO_SHA,
+                config_sha256=ZERO_SHA,
+                geometry_sha256_by_view={"occluded.png": ZERO_SHA},
+            )
+            loaded = BinaryMaskSet(manifest).load("occluded.png")
+            self.assertEqual(loaded.dtype, np.bool_)
+            self.assertFalse(loaded.any())
+            with self.assertRaisesRegex(MaskSchemaError, "empty projected mask"):
+                write_binary_mask_set(
+                    root / "vision_empty_view",
+                    {"occluded.png": empty},
+                    purpose=MaskPurpose.PLANE_REGION,
+                    source=MaskSource.VISION_GROUNDEDSAM_ROOF,
+                    source_disclosure="vision empty fixture",
+                    input_sha256=ZERO_SHA,
+                    config_sha256=ZERO_SHA,
+                    geometry_sha256_by_view={"occluded.png": ZERO_SHA},
+                )
 
 
 if __name__ == "__main__":
