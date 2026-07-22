@@ -294,19 +294,22 @@ class DriverContractTest(unittest.TestCase):
         self.assertEqual(preview["state"], "dry_run_validated")
         self.assertEqual(preview["learning_runs_started"], 0)
         self.assertEqual(
-            preview["runtime"]["training_container_user"], "1000:1000"
+            preview["runtime"]["training_container_user"], "0:0"
         )
         self.assertEqual(
             preview["runtime"]["host_driver_identity"],
             self._expected_identity(),
         )
         self.assertEqual(
-            preview["runtime"]["torch_extensions_root"],
-            "/tmp/jointbuildgs-p1w-torch-extensions",
+            preview["runtime"]["training_artifact_publication"],
+            {
+                "runtime_json": "0644",
+                "full_state_checkpoint": "0644",
+                "checkpoint_sha256_sidecar": "0644",
+            },
         )
-        self.assertEqual(
-            preview["runtime"]["torch_extensions_policy"],
-            "per_deterministic_container_tmp",
+        self.assertFalse(
+            any(key.startswith("torch_extensions") for key in preview["runtime"])
         )
         self.assertEqual(len(preview["jobs"]), 10)
         self.assertEqual({row["queue_gpu_preview"] for row in preview["jobs"]}, {0, 1})
@@ -316,19 +319,12 @@ class DriverContractTest(unittest.TestCase):
             self.assertIn("NVIDIA_VISIBLE_DEVICES=", row["command_string"])
             self.assertIn("--name", row["command"])
             self.assertIn(row["container_name"], row["command"])
-            self.assertEqual(row["container_user"], "1000:1000")
+            self.assertEqual(row["container_user"], "0:0")
             user_index = row["command"].index("--user")
-            self.assertEqual(row["command"][user_index + 1], "1000:1000")
-            expected_extensions_dir = (
-                "/tmp/jointbuildgs-p1w-torch-extensions/"
-                + row["container_name"]
-            )
-            self.assertEqual(
-                row["torch_extensions_dir"], expected_extensions_dir
-            )
-            self.assertIn(
-                f"TORCH_EXTENSIONS_DIR={expected_extensions_dir}",
-                row["command"],
+            self.assertEqual(row["command"][user_index + 1], "0:0")
+            self.assertNotIn("torch_extensions_dir", row)
+            self.assertFalse(
+                any(token.startswith("TORCH_EXTENSIONS_DIR=") for token in row["command"])
             )
             self.assertFalse(
                 any(
@@ -362,23 +358,53 @@ class DriverContractTest(unittest.TestCase):
             ):
                 driver.require_host_driver_identity()
 
-    def test_training_command_contract_rejects_cache_or_user_drift(self) -> None:
+    def test_training_command_contract_rejects_user_or_environment_drift(self) -> None:
         name = driver.container_name_for("01_seed1001")
         command = driver.command_for("/workspace/config.yaml", 0, container_name=name)
         self.assertTrue(driver.command_is_docker_only(command))
-
-        without_extensions = list(command)
-        extension = next(
-            item
-            for item in without_extensions
-            if item.startswith("TORCH_EXTENSIONS_DIR=")
+        self.assertEqual(
+            command,
+            [
+                "docker",
+                "compose",
+                "run",
+                "--rm",
+                "--no-deps",
+                "-T",
+                "--user",
+                "0:0",
+                "--name",
+                name,
+                "-e",
+                "NVIDIA_VISIBLE_DEVICES=0",
+                "-e",
+                "CUDA_VISIBLE_DEVICES=0",
+                "dev",
+                "python",
+                "-m",
+                "src.stage2.train",
+                "--config",
+                "/workspace/config.yaml",
+            ],
         )
-        without_extensions.remove(extension)
-        self.assertFalse(driver.command_is_docker_only(without_extensions))
+        with self.assertRaisesRegex(driver.DriverError, "unsafe Docker container name"):
+            driver.command_for(
+                "/workspace/config.yaml",
+                0,
+                container_name="unsafe name",
+            )
 
         wrong_user = list(command)
-        wrong_user[wrong_user.index("--user") + 1] = "0:0"
+        wrong_user[wrong_user.index("--user") + 1] = "1000:1000"
         self.assertFalse(driver.command_is_docker_only(wrong_user))
+
+        with_extensions = list(command)
+        service_index = with_extensions.index("dev")
+        with_extensions[service_index:service_index] = [
+            "-e",
+            "TORCH_EXTENSIONS_DIR=/tmp/legacy-jit-cache",
+        ]
+        self.assertFalse(driver.command_is_docker_only(with_extensions))
 
         with_home = list(command)
         service_index = with_home.index("dev")
@@ -888,13 +914,20 @@ class DriverContractTest(unittest.TestCase):
         self.assertEqual(result["state"], "guarded_partial")
         self.assertTrue(result["guard"]["triggered"])
         self.assertEqual(result["runtime"]["compose_config_sha256"], "c" * 64)
-        self.assertEqual(result["runtime"]["training_container_user"], "1000:1000")
+        self.assertEqual(result["runtime"]["training_container_user"], "0:0")
         self.assertEqual(
             result["runtime"]["host_driver_identity"], self._expected_identity()
         )
         self.assertEqual(
-            result["runtime"]["torch_extensions_root"],
-            "/tmp/jointbuildgs-p1w-torch-extensions",
+            result["runtime"]["training_artifact_publication"],
+            {
+                "runtime_json": "0644",
+                "full_state_checkpoint": "0644",
+                "checkpoint_sha256_sidecar": "0644",
+            },
+        )
+        self.assertFalse(
+            any(key.startswith("torch_extensions") for key in result["runtime"])
         )
         self.assertTrue(result["runtime"]["execution_tree"]["clean"])
         self.assertTrue(
@@ -907,19 +940,20 @@ class DriverContractTest(unittest.TestCase):
         commands = [row["command"] for row in result["jobs"][:2]]
         self.assertEqual(
             [row["container_user"] for row in result["jobs"][:2]],
-            ["1000:1000", "1000:1000"],
+            ["0:0", "0:0"],
         )
-        self.assertEqual(
-            [row["torch_extensions_dir"] for row in result["jobs"][:2]],
-            [
-                "/tmp/jointbuildgs-p1w-torch-extensions/"
-                + row["container_name"]
-                for row in result["jobs"][:2]
-            ],
+        self.assertTrue(
+            all("torch_extensions_dir" not in row for row in result["jobs"][:2])
         )
         self.assertEqual(
             [command[command.index("--user") + 1] for command in commands],
-            ["1000:1000", "1000:1000"],
+            ["0:0", "0:0"],
+        )
+        self.assertTrue(
+            all(
+                not any(token.startswith("TORCH_EXTENSIONS_DIR=") for token in command)
+                for command in commands
+            )
         )
         self.assertIn("NVIDIA_VISIBLE_DEVICES=0", commands[0])
         self.assertIn("NVIDIA_VISIBLE_DEVICES=1", commands[1])

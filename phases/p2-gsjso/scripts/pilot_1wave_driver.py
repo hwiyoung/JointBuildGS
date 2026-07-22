@@ -39,8 +39,12 @@ IMAGE_TAG = "jointbuildgs:dev"
 CONTAINER_REPO = Path("/workspace/JointBuildGS")
 REQUIRED_HOST_UID = 1000
 REQUIRED_HOST_GID = 1000
-TRAINING_CONTAINER_USER = f"{REQUIRED_HOST_UID}:{REQUIRED_HOST_GID}"
-TORCH_EXTENSIONS_ROOT = "/tmp/jointbuildgs-p1w-torch-extensions"
+TRAINING_CONTAINER_USER = "0:0"
+TRAINING_ARTIFACT_PUBLICATION = {
+    "runtime_json": "0644",
+    "full_state_checkpoint": "0644",
+    "checkpoint_sha256_sidecar": "0644",
+}
 CHECKPOINT_STEPS = (5000, 10000, 15000, 20000)
 STOP_START_SECONDS = 8.5 * 3600.0
 WALL_GUARD_SECONDS = 9.0 * 3600.0
@@ -204,7 +208,7 @@ def require_host_driver_identity() -> dict[str, Any]:
     if observed != required:
         raise DriverError(
             "P1W driver must run as exact host UID:GID "
-            f"{TRAINING_CONTAINER_USER} (real/effective); observed "
+            f"{REQUIRED_HOST_UID}:{REQUIRED_HOST_GID} (real/effective); observed "
             f"real={identity['real_uid']}:{identity['real_gid']} "
             f"effective={identity['effective_uid']}:{identity['effective_gid']}"
         )
@@ -217,16 +221,11 @@ def container_name_for(job_id: str) -> str:
     return f"jointbuildgs-p1w-{RUN_ID.replace('_pilot_1wave', '')}-{job_id.replace('_', '-')}"
 
 
-def torch_extensions_dir_for(container_name: str) -> str:
-    if re.fullmatch(r"[a-zA-Z0-9][a-zA-Z0-9_.-]+", container_name) is None:
-        raise DriverError(f"unsafe Docker container name: {container_name!r}")
-    return f"{TORCH_EXTENSIONS_ROOT}/{container_name}"
-
-
 def command_for(config_path: str, gpu: int, *, container_name: str) -> list[str]:
     if gpu not in (0, 1):
         raise DriverError(f"P1W GPU must be 0 or 1, got {gpu}")
-    torch_extensions_dir = torch_extensions_dir_for(container_name)
+    if re.fullmatch(r"[a-zA-Z0-9][a-zA-Z0-9_.-]+", container_name) is None:
+        raise DriverError(f"unsafe Docker container name: {container_name!r}")
     command = [
         "docker",
         "compose",
@@ -244,8 +243,6 @@ def command_for(config_path: str, gpu: int, *, container_name: str) -> list[str]
         f"NVIDIA_VISIBLE_DEVICES={gpu}",
         "-e",
         "CUDA_VISIBLE_DEVICES=0",
-        "-e",
-        f"TORCH_EXTENSIONS_DIR={torch_extensions_dir}",
         "dev",
         "python",
         "-m",
@@ -1397,7 +1394,6 @@ def _initial_job_record(
         "out_dir": job.out_container,
         "container_name": job.container_name,
         "container_user": TRAINING_CONTAINER_USER,
-        "torch_extensions_dir": torch_extensions_dir_for(job.container_name),
         "materialized_input_inventory": {
             "path": repo_relative(repo, job.materialized_inventory_host),
             "sha256": job.materialized_inventory_sha256,
@@ -1479,9 +1475,6 @@ def _dry_run_payload(
                 "queue_gpu_preview": gpu,
                 "container_name": job.container_name,
                 "container_user": TRAINING_CONTAINER_USER,
-                "torch_extensions_dir": torch_extensions_dir_for(
-                    job.container_name
-                ),
                 "command": command,
                 "command_string": shlex.join(command),
                 "config_sha256": job.config_sha256,
@@ -1499,8 +1492,7 @@ def _dry_run_payload(
             "git_head": git_head,
             "host_driver_identity": host_identity,
             "training_container_user": TRAINING_CONTAINER_USER,
-            "torch_extensions_root": TORCH_EXTENSIONS_ROOT,
-            "torch_extensions_policy": "per_deterministic_container_tmp",
+            "training_artifact_publication": TRAINING_ARTIFACT_PUBLICATION,
         },
         "guard": {
             "stop_starting_new_runs_seconds": STOP_START_SECONDS,
@@ -1640,8 +1632,7 @@ def _execute_queue_locked(
             "compose_config_sha256": compose_config_sha256,
             "host_driver_identity": host_identity,
             "training_container_user": TRAINING_CONTAINER_USER,
-            "torch_extensions_root": TORCH_EXTENSIONS_ROOT,
-            "torch_extensions_policy": "per_deterministic_container_tmp",
+            "training_artifact_publication": TRAINING_ARTIFACT_PUBLICATION,
             "materialized_input_validation": materialized_validation,
             "checkpoint_verifier": {
                 "path": repo_relative(repo, verifier_source),
