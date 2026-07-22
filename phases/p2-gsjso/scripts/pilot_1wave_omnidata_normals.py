@@ -308,6 +308,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     dataset, prep_manifest_path = load_dataset(lock)
     output_dir = resolve(lock["output"]["normal_dir"])
     manifest_path = resolve(lock["output"]["manifest"])
+    verification_path = resolve(lock["output"]["verification_receipt"])
     progress_path = output_dir / ".progress.json"
     progress: dict[str, Any] = {"rows": {}}
     if progress_path.is_file():
@@ -432,6 +433,55 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "forbidden_sources_read": [],
         "rows": complete_rows,
     }
+    if args.mode == "verify":
+        if not manifest_path.is_file():
+            raise RuntimeError(
+                f"generation manifest is required before verification: {manifest_path}"
+            )
+        generation_bytes = manifest_path.read_bytes()
+        generation = json.loads(generation_bytes)
+        require_equal(
+            generation.get("schema"),
+            "jointbuildgs.pilot_1wave.omnidata_normal.manifest.v1",
+            "generation manifest schema",
+        )
+        require_equal(generation.get("mode"), "infer", "generation manifest mode")
+        require_equal(generation.get("status"), "complete", "generation status")
+        require_equal(generation.get("lock_sha256"), lock_sha, "generation lock SHA256")
+        require_equal(generation.get("view_count"), len(complete_rows), "generation view count")
+        require_equal(
+            generation.get("normal_receipt_sha256"),
+            manifest["normal_receipt_sha256"],
+            "generation normal receipt SHA256",
+        )
+        require_equal(generation.get("rows"), complete_rows, "generation per-view receipts")
+        verification = {
+            "schema": "jointbuildgs.pilot_1wave.omnidata_normal.verification.v1",
+            "run_id": lock["run_id"],
+            "task_id": lock["task_id"],
+            "status": "pass",
+            "created_utc": utc_now(),
+            "lock": relative(lock_path),
+            "lock_sha256": lock_sha,
+            "generation_manifest": relative(manifest_path),
+            "generation_manifest_sha256": hashlib.sha256(generation_bytes).hexdigest(),
+            "view_count": len(complete_rows),
+            "normal_receipt_sha256": manifest["normal_receipt_sha256"],
+            "checks": [
+                "input image SHA256",
+                "camera SHA256",
+                "output file SHA256",
+                "shape HxWx3",
+                "dtype float32",
+                "finite values",
+                "unit normal max error <= 2e-4",
+                "world-frame contract",
+            ],
+            "learning_runs_started": 0,
+            "new_mononormal_inference_runs": 0,
+        }
+        atomic_json(verification_path, verification)
+        return verification
     atomic_json(manifest_path, manifest)
     return manifest
 
@@ -458,6 +508,7 @@ def main() -> int:
             "normal_receipt_sha256",
             "learning_runs_started",
             "new_mononormal_inference_runs",
+            "generation_manifest_sha256",
         )
         if key in result
     }
