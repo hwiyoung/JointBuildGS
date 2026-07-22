@@ -51,6 +51,9 @@ CONTAINER_REPO = Path("/workspace/JointBuildGS")
 DRIVER_SCHEMA = "jointbuildgs.pilot_1wave.postprocess_driver.v1"
 STAGE_MARKER_SCHEMA = "jointbuildgs.pilot_1wave.postprocess_stage.v1"
 PUBLICATION_SCHEMA = "jointbuildgs.pilot_1wave.readout_manifest.v1"
+PUBLICATION_SNAPSHOT_SCHEMA = (
+    "jointbuildgs.pilot_1wave.publication_snapshot.v1"
+)
 BINDING_SPEC_SCHEMA = "jointbuildgs.pilot_1wave.binding_batch_spec.v1"
 
 DEV_IMAGE_TAG = "jointbuildgs:dev"
@@ -1943,6 +1946,34 @@ def binding_spec(jobs: Sequence[Job], path: Path) -> dict[str, Any]:
     return payload
 
 
+def validate_binding_batch_outputs(output: Path) -> dict[str, Any]:
+    """Validate a complete binding batch without requiring its G1 to pass."""
+
+    files = (
+        output / "binding_audit.csv",
+        output / "binding_audit_spatial_matrix.csv",
+        output / "binding_audit_receipt.json",
+    )
+    with files[0].open(newline="", encoding="utf-8") as stream:
+        require_equal(len(list(csv.DictReader(stream))), 300, "binding audit rows")
+    with files[1].open(newline="", encoding="utf-8") as stream:
+        require_equal(len(list(csv.DictReader(stream))), 9000, "binding matrix rows")
+    receipt = load_json(files[2])
+    require_equal(receipt.get("schema"),
+                  "jointbuildgs.pilot_1wave.binding_batch_receipt.v1",
+                  "binding batch receipt schema")
+    require_equal(receipt.get("state"), "complete", "binding batch state")
+    hard_gate = receipt.get("hard_gate_passed")
+    global_g1 = receipt.get("global_g1")
+    if not isinstance(hard_gate, bool):
+        raise DriverError("binding batch hard_gate_passed must be boolean")
+    if not isinstance(global_g1, Mapping) or not isinstance(global_g1.get("pass"), bool):
+        raise DriverError("binding batch global_g1.pass must be boolean")
+    require_equal(hard_gate, global_g1["pass"],
+                  "binding batch hard gate/global G1 consistency")
+    return receipt
+
+
 def run_binding_batch(jobs: Sequence[Job]) -> Path:
     root = global_stage_root("binding")
     complete = completed_attempt(root, "binding", "global")
@@ -1962,21 +1993,10 @@ def run_binding_batch(jobs: Sequence[Job]) -> Path:
         output / "binding_audit_spatial_matrix.csv",
         output / "binding_audit_receipt.json",
     )
-    with files[0].open(newline="", encoding="utf-8") as stream:
-        require_equal(len(list(csv.DictReader(stream))), 300, "binding audit rows")
-    with files[1].open(newline="", encoding="utf-8") as stream:
-        require_equal(len(list(csv.DictReader(stream))), 9000, "binding matrix rows")
-    receipt = load_json(files[2])
-    require_equal(receipt.get("schema"),
-                  "jointbuildgs.pilot_1wave.binding_batch_receipt.v1",
-                  "binding batch receipt schema")
-    require_equal(receipt.get("state"), "complete", "binding batch state")
-    require_equal(receipt.get("hard_gate_passed"), True,
-                  "binding batch hard gate")
-    require_equal((receipt.get("global_g1") or {}).get("pass"), True,
-                  "binding batch global G1")
+    receipt = validate_binding_batch_outputs(output)
     write_stage_marker(attempt, "binding", "global", (spec, *files), {
         "building_rows": 300, "matrix_rows": 9000,
+        "hard_gate_passed": receipt["hard_gate_passed"],
     })
     return output
 
@@ -2129,6 +2149,121 @@ def machine_gates(binding_dir: Path, aggregate_dir: Path,
     }
 
 
+def publication_gate_inputs(binding_dir: Path, aggregate_dir: Path,
+                            preflight_payload: Mapping[str, Any]) -> dict[str, Any]:
+    """Hash every byte/value from which the frozen machine gates are derived."""
+
+    paths = {
+        "binding_audit": binding_dir / "binding_audit.csv",
+        "binding_spatial_matrix": binding_dir / "binding_audit_spatial_matrix.csv",
+        "winner": aggregate_dir / "pilot_1wave_winner.csv",
+    }
+    records: dict[str, Any] = {}
+    for name, path in paths.items():
+        if not path.is_file() or path.is_symlink():
+            raise DriverError(f"publication gate input is missing/non-regular: {path}")
+        records[name] = {
+            "path": repo_relative(path),
+            "sha256": sha256_file(path),
+            "size": path.stat().st_size,
+        }
+    training = preflight_payload.get("training")
+    if not isinstance(training, Mapping):
+        raise DriverError("preflight training record is missing")
+    records["training_record_sha256"] = sha256_bytes(canonical_json(dict(training)))
+    return records
+
+
+def freeze_publication_snapshot(
+    state: dict[str, Any],
+    *,
+    binding_dir: Path,
+    aggregate_dir: Path,
+    preflight_payload: Mapping[str, Any],
+) -> dict[str, Any]:
+    """Create once, then re-open the immutable inputs to publication bytes.
+
+    Abort events accumulated before this boundary participate in G4.  Events
+    caused by an interrupted partial publication remain visible in driver
+    state, but cannot mutate already-published gate/receipt bytes on resume.
+    """
+
+    gate_inputs = publication_gate_inputs(
+        binding_dir, aggregate_dir, preflight_payload
+    )
+    current_wave2 = preflight_payload.get("wave2_launch")
+    if not isinstance(current_wave2, Mapping):
+        raise DriverError("preflight Wave 2 launch record is missing")
+    existing = state.get("publication_snapshot")
+    if existing is not None:
+        if not isinstance(existing, Mapping):
+            raise DriverError("publication snapshot is not an object")
+        require_equal(existing.get("schema"), PUBLICATION_SNAPSHOT_SCHEMA,
+                      "publication snapshot schema")
+        require_equal(existing.get("correction_head"),
+                      preflight_payload.get("correction_head"),
+                      "publication snapshot correction HEAD")
+        require_equal(existing.get("gate_inputs"), gate_inputs,
+                      "publication snapshot gate inputs")
+        require_equal(existing.get("wave2_launch"), dict(current_wave2),
+                      "publication snapshot Wave 2 lock")
+        timestamps = existing.get("timestamps")
+        if not isinstance(timestamps, Mapping):
+            raise DriverError("publication snapshot timestamps are missing")
+        require_equal(set(timestamps), {
+            "machine_gates_created_utc", "postprocess_completed_utc", "published_utc"
+        }, "publication snapshot timestamp keys")
+        if any(not isinstance(value, str) or not value for value in timestamps.values()):
+            raise DriverError("publication snapshot timestamps must be non-empty strings")
+        abort_events = existing.get("abort_events")
+        if not isinstance(abort_events, list) or any(
+            not isinstance(value, Mapping) for value in abort_events
+        ):
+            raise DriverError("publication snapshot abort event ledger is invalid")
+        expected_gates = machine_gates(
+            binding_dir,
+            aggregate_dir,
+            preflight_payload,
+            abort_events,
+            created_utc=str(timestamps["machine_gates_created_utc"]),
+        )
+        require_equal(existing.get("machine_gates"), expected_gates,
+                      "publication snapshot machine gates")
+        return dict(existing)
+
+    abort_events = state.get("abort_events", [])
+    if not isinstance(abort_events, list) or any(
+        not isinstance(value, Mapping) for value in abort_events
+    ):
+        raise DriverError("driver abort event ledger is invalid")
+    # Round-trip through canonical JSON to ensure later mutation of driver
+    # state cannot mutate the snapshot's nested event records by reference.
+    frozen_aborts = json.loads(canonical_json(abort_events))
+    timestamps = {
+        "machine_gates_created_utc": now(),
+        "postprocess_completed_utc": now(),
+        "published_utc": now(),
+    }
+    gates = machine_gates(
+        binding_dir,
+        aggregate_dir,
+        preflight_payload,
+        frozen_aborts,
+        created_utc=timestamps["machine_gates_created_utc"],
+    )
+    snapshot = {
+        "schema": PUBLICATION_SNAPSHOT_SCHEMA,
+        "correction_head": preflight_payload.get("correction_head"),
+        "gate_inputs": gate_inputs,
+        "timestamps": timestamps,
+        "abort_events": frozen_aborts,
+        "machine_gates": gates,
+        "wave2_launch": json.loads(canonical_json(dict(current_wave2))),
+    }
+    state["publication_snapshot"] = snapshot
+    return snapshot
+
+
 def publish_immutable(source: Path, target: Path) -> str:
     if not source.is_file() or source.is_symlink():
         raise DriverError(f"publication source is missing/non-regular: {source}")
@@ -2166,12 +2301,55 @@ def publish_allowlisted_files(
     return records
 
 
+def postprocess_receipt_payload(
+    *,
+    jobs: Sequence[Job],
+    preflight_payload: Mapping[str, Any],
+    publication_snapshot: Mapping[str, Any],
+    roofer_execution_receipts: Mapping[str, Mapping[str, Any]],
+) -> dict[str, Any]:
+    """Build bytes only from the pre-publication immutable snapshot."""
+
+    timestamps = publication_snapshot.get("timestamps")
+    abort_events = publication_snapshot.get("abort_events")
+    wave2 = publication_snapshot.get("wave2_launch")
+    if not isinstance(timestamps, Mapping):
+        raise DriverError("publication snapshot timestamps are missing")
+    if not isinstance(abort_events, list):
+        raise DriverError("publication snapshot abort events are missing")
+    if not isinstance(wave2, Mapping):
+        raise DriverError("publication snapshot Wave 2 record is missing")
+    return {
+        "schema": DRIVER_SCHEMA,
+        "state": "complete",
+        "completed_utc": timestamps["postprocess_completed_utc"],
+        "source_run_id": SOURCE_RUN_ID,
+        "readout_run_id": READOUT_RUN_ID,
+        "correction_head": preflight_payload["correction_head"],
+        "learning_runs_started_by_postprocess": 0,
+        "roofer_invocation_count": 10,
+        "score_invocation_count": 10,
+        "roofer_execution_receipts": dict(roofer_execution_receipts),
+        "job_order": [job.job_id for job in jobs],
+        "wave2_launch": dict(wave2),
+        "abort_events": list(abort_events),
+    }
+
+
 def publish_results(
     *, jobs: Sequence[Job], preflight_payload: Mapping[str, Any],
     aggregate_dir: Path, loss_dir: Path, binding_dir: Path,
-    gates: Mapping[str, Any], wave2: Mapping[str, Any], state: Mapping[str, Any],
-    publication_timestamps: Mapping[str, str],
+    publication_snapshot: Mapping[str, Any],
 ) -> dict[str, Any]:
+    gates = publication_snapshot.get("machine_gates")
+    wave2 = publication_snapshot.get("wave2_launch")
+    publication_timestamps = publication_snapshot.get("timestamps")
+    if not isinstance(gates, Mapping):
+        raise DriverError("publication snapshot machine gates are missing")
+    if not isinstance(wave2, Mapping):
+        raise DriverError("publication snapshot Wave 2 record is missing")
+    if not isinstance(publication_timestamps, Mapping):
+        raise DriverError("publication snapshot timestamps are missing")
     existing_manifest = PUBLICATION_ROOT / FINAL_MANIFEST_NAME
     if existing_manifest.is_file():
         existing = load_json(existing_manifest)
@@ -2268,18 +2446,12 @@ def publish_results(
             "sha256": sha256_file(execution_path),
         }
     receipt_path = staging / "pilot_1wave_postprocess_receipt.json"
-    receipt = {
-        "schema": DRIVER_SCHEMA, "state": "complete",
-        "completed_utc": publication_timestamps["postprocess_completed_utc"],
-        "source_run_id": SOURCE_RUN_ID, "readout_run_id": READOUT_RUN_ID,
-        "correction_head": preflight_payload["correction_head"],
-        "learning_runs_started_by_postprocess": 0,
-        "roofer_invocation_count": 10, "score_invocation_count": 10,
-        "roofer_execution_receipts": roofer_execution_receipts,
-        "job_order": [job.job_id for job in jobs],
-        "wave2_launch": dict(wave2),
-        "abort_events": list(state.get("abort_events", [])),
-    }
+    receipt = postprocess_receipt_payload(
+        jobs=jobs,
+        preflight_payload=preflight_payload,
+        publication_snapshot=publication_snapshot,
+        roofer_execution_receipts=roofer_execution_receipts,
+    )
     atomic_json(receipt_path, receipt)
     sources[receipt_path.name] = receipt_path
     publication_records = publish_allowlisted_files(sources, PUBLICATION_ROOT)
@@ -2433,25 +2605,23 @@ def execute_resume(jobs: Sequence[Job], preflight_payload: Mapping[str, Any]) ->
         aggregate = run_numeric_aggregate(jobs)
         loss = run_loss_aggregate()
         binding = run_binding_batch(jobs)
-        publication_timestamps = state.setdefault("publication_timestamps", {
-            "machine_gates_created_utc": now(),
-            "postprocess_completed_utc": now(),
-            "published_utc": now(),
-        })
-        if not isinstance(publication_timestamps, Mapping):
-            raise DriverError("publication timestamp ledger is invalid")
-        require_equal(set(publication_timestamps), {
-            "machine_gates_created_utc", "postprocess_completed_utc", "published_utc"
-        }, "publication timestamp keys")
+        publication_snapshot = freeze_publication_snapshot(
+            state,
+            binding_dir=binding,
+            aggregate_dir=aggregate,
+            preflight_payload=preflight_payload,
+        )
+        # This durable write is the publication boundary.  Any later abort is
+        # appended to live driver state but cannot alter the frozen gate or
+        # receipt bytes when a partial publication resumes.
         save_state(state)
-        gates = machine_gates(binding, aggregate, preflight_payload,
-                              state.get("abort_events", []),
-                              created_utc=publication_timestamps["machine_gates_created_utc"])
-        wave2 = preflight_payload["wave2_launch"]
+        gates = publication_snapshot["machine_gates"]
+        wave2 = publication_snapshot["wave2_launch"]
+        publication_timestamps = publication_snapshot["timestamps"]
         final = publish_results(
             jobs=jobs, preflight_payload=preflight_payload, aggregate_dir=aggregate,
-            loss_dir=loss, binding_dir=binding, gates=gates, wave2=wave2, state=state,
-            publication_timestamps=publication_timestamps,
+            loss_dir=loss, binding_dir=binding,
+            publication_snapshot=publication_snapshot,
         )
         state.update({
             "state": "complete",

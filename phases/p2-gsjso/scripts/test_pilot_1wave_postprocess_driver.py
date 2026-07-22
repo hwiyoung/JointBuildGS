@@ -313,6 +313,9 @@ class RetainedContainerStateMachineTest(unittest.TestCase):
         self.assertEqual(receipt["schema"], "jointbuildgs.pilot_1wave.roofer_execution.v1")
         self.assertEqual(receipt["roofer_invocation_count"], 1)
         self.assertEqual(receipt["container"]["image_id"], driver.ROOFER_IMAGE_ID)
+        self.assertEqual(receipt["container"]["binds"], [
+            f"{driver.REPO}:{driver.CONTAINER_REPO}"
+        ])
         self.assertEqual(receipt["execution"]["start_attempt_count"], 1)
         self.assertEqual(receipt["execution"]["wait_exit_code"], 0)
         self.assertEqual(receipt["logs"]["sha256"], driver.sha256_file(temporary / "container.log"))
@@ -411,6 +414,18 @@ class MachineGateTest(unittest.TestCase):
         result = driver.evaluate_g1(self._binding_fixture(one_offdiag=True))
         self.assertEqual(result["status"], "fail")
         self.assertFalse(result["runs"][0]["pass"])
+
+    def test_complete_binding_batch_with_failed_g1_remains_reportable(self) -> None:
+        output = self._binding_fixture(one_offdiag=True)
+        write_json(output / "binding_audit_receipt.json", {
+            "schema": "jointbuildgs.pilot_1wave.binding_batch_receipt.v1",
+            "state": "complete",
+            "hard_gate_passed": False,
+            "global_g1": {"pass": False},
+        })
+        receipt = driver.validate_binding_batch_outputs(output)
+        self.assertFalse(receipt["hard_gate_passed"])
+        self.assertEqual(driver.evaluate_g1(output)["status"], "fail")
 
     def _winner_fixture(self, *, co_minimum: bool = False) -> Path:
         rows = []
@@ -532,6 +547,118 @@ class Wave2AndPublicationTest(unittest.TestCase):
         for name in driver.PUBLISH_ALLOWLIST:
             self.assertEqual((partial_root / name).read_bytes(),
                              (clean_root / name).read_bytes())
+
+    def test_publication_snapshot_freezes_gates_receipt_and_preboundary_aborts(self) -> None:
+        temporary = Path(tempfile.mkdtemp(prefix="p1w-publication-snapshot-"))
+        self.addCleanup(shutil.rmtree, temporary)
+        binding = temporary / "binding"
+        aggregate = temporary / "aggregate"
+        buildings: list[dict[str, object]] = []
+        matrix: list[dict[str, object]] = []
+        for condition, seed in driver._job_order():
+            for building_id in driver.EXPECTED_IDS:
+                buildings.append({
+                    "condition_id": condition,
+                    "seed": seed,
+                    "crop_contract_sha_match": "True",
+                    "classification_receipt_sha_match": "True",
+                    "spatial_owner_matches_parent": "True",
+                    "cityjson_owner_match": "True",
+                    "owner_contained": "True",
+                })
+            for row_index, locked in enumerate(driver.EXPECTED_IDS):
+                for col_index, parent in enumerate(driver.EXPECTED_IDS):
+                    matrix.append({
+                        "condition_id": condition,
+                        "seed": seed,
+                        "locked_building_id": locked,
+                        "output_parent_id": parent,
+                        "owner_assignment": str(row_index == col_index),
+                        "is_diagonal": str(row_index == col_index),
+                    })
+        write_csv(binding / "binding_audit.csv", buildings)
+        write_csv(binding / "binding_audit_spatial_matrix.csv", matrix)
+        winner_rows = []
+        for index, condition in enumerate(driver.HONEST_CONDITIONS):
+            winner_rows.append({
+                "condition_id": condition,
+                "eligible_two_seed_rule": "True",
+                "is_minimum_worst_rms": str(index == 0),
+                "co_minimum_count": "1",
+                "seed_1001_rule_abcd": "True",
+                "seed_1002_rule_abcd": "True",
+                "rule_abcd_seed_count": "2",
+                "worst_seed_roof_rms_median_m": str(1.25 + index),
+            })
+        write_csv(aggregate / "pilot_1wave_winner.csv", winner_rows)
+        preflight = {
+            "correction_head": "a" * 40,
+            "wave2_launch": {
+                "status": "blocked_missing_wave2_lock",
+                "launch_performed": False,
+            },
+            "training": {
+                "jobs": [{"job_id": str(index)} for index in range(10)],
+                "guard": {"triggered": False, "partial": False, "completion": True},
+                "canonical_completed_20k_count": 10,
+                "canonical_collapse_count": 0,
+                "canonical_divergence_count": 0,
+                "canonical_guard_abort_count": 0,
+                "historical_learning_runs_started": 16,
+                "historical_failed_attempt_archive_count": 4,
+                "historical_failed_attempt_archives": ["a", "b", "c", "d"],
+            },
+        }
+        before = {"at": "before", "type": "BeforeSnapshot", "message": "included"}
+        after = {"at": "after", "type": "AfterSnapshot", "message": "live only"}
+        state = {"abort_events": [before]}
+        jobs = [
+            fake_job(condition, seed, index)
+            for index, (condition, seed) in enumerate(driver._job_order(), 1)
+        ]
+        executions = {
+            job.job_id: {"path": f"runtime/{job.job_id}.json", "sha256": "f" * 64}
+            for job in jobs
+        }
+        with mock.patch.object(
+            driver, "repo_relative", side_effect=lambda path: str(Path(path).resolve())
+        ), mock.patch.object(
+            driver, "now", side_effect=("gate-time", "complete-time", "publish-time")
+        ):
+            frozen = driver.freeze_publication_snapshot(
+                state,
+                binding_dir=binding,
+                aggregate_dir=aggregate,
+                preflight_payload=preflight,
+            )
+        receipt_before = driver.postprocess_receipt_payload(
+            jobs=jobs,
+            preflight_payload=preflight,
+            publication_snapshot=frozen,
+            roofer_execution_receipts=executions,
+        )
+        self.assertEqual(frozen["machine_gates"]["G4"]["postprocess_abort_count"], 1)
+        self.assertEqual(frozen["machine_gates"]["G4"]["status"], "fail")
+        state["abort_events"].append(after)
+        with mock.patch.object(
+            driver, "repo_relative", side_effect=lambda path: str(Path(path).resolve())
+        ):
+            reopened = driver.freeze_publication_snapshot(
+                state,
+                binding_dir=binding,
+                aggregate_dir=aggregate,
+                preflight_payload=preflight,
+            )
+        receipt_after = driver.postprocess_receipt_payload(
+            jobs=jobs,
+            preflight_payload=preflight,
+            publication_snapshot=reopened,
+            roofer_execution_receipts=executions,
+        )
+        self.assertEqual(frozen, reopened)
+        self.assertEqual(driver.canonical_json(receipt_before),
+                         driver.canonical_json(receipt_after))
+        self.assertEqual(receipt_after["abort_events"], [before])
 
 
 if __name__ == "__main__":
