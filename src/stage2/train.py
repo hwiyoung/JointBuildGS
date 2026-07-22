@@ -42,9 +42,24 @@ from .grouping import (
 from .loss import data_fitting as L
 from .loss.mutual import l_mutual
 from .loss.multiview import l_multiview_consistency
+from .loss.planarity import (
+    audit_2dgs_flattening_invariant,
+    local_rendered_depth_coplanarity,
+    region_rendered_depth_coplanarity,
+)
 from .loss.semantic_guided import SemanticGuidedGeometry, SemanticRegionCache
 from .loss.structure import l_structure
 from .model import GaussianModel2D
+from .mono_normal_gate import build_mono_normal_gate, l_auxiliary_mono_normal
+from .pilot_loss_audit import (
+    FULL_STATE_CSV_PATHS as PILOT_FULL_STATE_CSV_PATHS,
+    append_detail_rows as append_pilot_loss_detail_rows,
+    append_loss_share_rows as append_pilot_loss_share_rows,
+    append_plane_photo_ratio as append_pilot_plane_photo_ratio,
+    masked_normal_consistency as pilot_masked_normal_consistency,
+    public_normal_term as pilot_public_normal_term,
+    structure_terms_in_scope as pilot_structure_terms_in_scope,
+)
 from .renderer import render
 from .seed_control import apply_mvs_seed_init_opacity
 from .train_resume import (
@@ -195,6 +210,151 @@ def set_seed(seed: int):
     np.random.seed(seed)
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
+
+
+_PILOT_ARMS = frozenset(
+    {
+        "01_surface",
+        "02_photo_control",
+        "03_plane_soft",
+        "04a_plane_medium_vision",
+        "04b_plane_medium_gt_upperbound",
+    }
+)
+_PILOT_PHOTO_MASK_ARMS = _PILOT_ARMS - {"01_surface"}
+_PILOT_MEDIUM_ARMS = frozenset(
+    {"04a_plane_medium_vision", "04b_plane_medium_gt_upperbound"}
+)
+
+
+def _require_finite_config_number(
+    cfg: Dict[str, Any], key: str, *, positive: bool = False
+) -> float:
+    value = cfg.get(key)
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        raise ValueError(f"pilot config {key} must be an explicit numeric scalar")
+    result = float(value)
+    if not math.isfinite(result):
+        raise ValueError(f"pilot config {key} must be finite")
+    if positive and result <= 0.0:
+        raise ValueError(f"pilot config {key} must be >0")
+    return result
+
+
+def _validate_pilot_config_contract(
+    cfg: Dict[str, Any], full_state: Dict[str, Any]
+) -> Optional[str]:
+    """Hard-fail first-wave forbidden combinations before dataset/model creation."""
+
+    arm_value = cfg.get("pilot_arm")
+    if arm_value is None:
+        return None
+    if not isinstance(arm_value, str) or arm_value not in _PILOT_ARMS:
+        raise ValueError(f"pilot_arm must be one of {sorted(_PILOT_ARMS)}")
+    arm = arm_value
+
+    if int(cfg.get("max_iter", -1)) != 20000:
+        raise ValueError("pilot wave 1 requires max_iter=20000")
+    if not full_state["enabled"]:
+        raise ValueError("pilot wave 1 requires full_state_checkpoint=true")
+    missing_steps = {5000, 10000, 15000, 20000} - set(full_state["checkpoint_steps"])
+    if missing_steps:
+        raise ValueError(f"pilot full-state checkpoints missing: {sorted(missing_steps)}")
+    missing_cursor_paths = set(PILOT_FULL_STATE_CSV_PATHS) - set(
+        full_state["loss_csv_paths"]
+    )
+    if missing_cursor_paths:
+        raise ValueError(
+            "pilot audit CSVs must be listed in full_state_loss_csv_paths: "
+            f"{sorted(missing_cursor_paths)}"
+        )
+
+    if not bool(cfg.get("load_depth", True)) or not bool(cfg.get("load_normal", True)):
+        raise ValueError("pilot wave 1 requires separate MVS depth and normal supervision")
+    if bool(cfg.get("load_semantic", False)):
+        raise ValueError("pilot wave 1 geometry arms require load_semantic=false")
+    if not cfg.get("mono_normal_dir"):
+        raise ValueError("pilot wave 1 requires pinned Omnidata via mono_normal_dir")
+    if not cfg.get("roof_audit_mask_manifest"):
+        raise ValueError("every pilot arm requires roof_audit_mask_manifest")
+
+    photo_manifest = cfg.get("photo_mask_manifest")
+    if arm == "01_surface":
+        if photo_manifest is not None:
+            raise ValueError("arm 01 forbids photo_mask_manifest; audit mask is a separate key")
+    else:
+        if not photo_manifest:
+            raise ValueError(f"{arm} requires photo_mask_manifest")
+        if Path(photo_manifest).resolve() != Path(cfg["roof_audit_mask_manifest"]).resolve():
+            raise ValueError(
+                "photo_mask_manifest and roof_audit_mask_manifest must reference the "
+                "same immutable projected-footprint inventory"
+            )
+
+    plane_manifest = cfg.get("plane_region_mask_manifest")
+    if arm in _PILOT_MEDIUM_ARMS:
+        if not plane_manifest:
+            raise ValueError(f"{arm} requires plane_region_mask_manifest")
+    elif plane_manifest is not None:
+        raise ValueError(f"{arm} forbids plane_region_mask_manifest")
+
+    forbidden_nonzero_defaults = {
+        "w_distort": 100.0,
+        "w_sem": 0.1,
+        "w_mvc": 0.0,
+        "w_mutual": 0.0,
+        "w_mono_depth": 0.0,
+        "w_semdepth_smooth": 0.0,
+        "w_semdepth_plane": 0.0,
+        "w_boundary_normal": 0.0,
+    }
+    for key, default in forbidden_nonzero_defaults.items():
+        value = float(cfg.get(key, default) or 0.0)
+        if value != 0.0:
+            raise ValueError(f"pilot wave 1 forbids hidden/non-registered term {key}={value}")
+    if bool(cfg.get("seed_semantic", False)):
+        raise ValueError("pilot wave 1 forbids semantic seeding")
+    if cfg.get("mono_normal_loss", "global") != "global":
+        raise ValueError("pilot wave 1 uses only the fixed patch-gated mono auxiliary")
+    if cfg.get("structure_grouping") != "g2_geometry":
+        raise ValueError("pilot wave 1 requires structure_grouping=g2_geometry")
+
+    for key in ("w_photo", "w_depth", "w_normal", "w_nc", "w_structure"):
+        _require_finite_config_number(cfg, key, positive=True)
+    _require_finite_config_number(cfg, "w_mono_normal_aux", positive=True)
+    _require_finite_config_number(cfg, "w_structure_na", positive=True)
+    _require_finite_config_number(cfg, "w_structure_cp", positive=True)
+    if arm in {"03_plane_soft", *_PILOT_MEDIUM_ARMS}:
+        _require_finite_config_number(cfg, "w_plane", positive=True)
+        window_size = int(cfg.get("pilot_plane_window_size", 7))
+        stride = int(cfg.get("pilot_plane_stride", 4))
+        min_points = int(cfg.get("pilot_plane_min_points", 16))
+        alpha_threshold = float(cfg.get("pilot_plane_alpha_threshold", 0.5))
+        max_depth_range = cfg.get("pilot_plane_max_depth_range", 1.0)
+        min_second_eigenvalue = float(
+            cfg.get("pilot_plane_min_second_eigenvalue", 1.0e-10)
+        )
+        if window_size < 3 or window_size % 2 == 0:
+            raise ValueError("pilot_plane_window_size must be odd and >=3")
+        if stride < 1:
+            raise ValueError("pilot_plane_stride must be >=1")
+        if min_points < 3 or (
+            arm == "03_plane_soft" and min_points > window_size * window_size
+        ):
+            raise ValueError("pilot_plane_min_points is invalid for the selected arm")
+        if not 0.0 <= alpha_threshold <= 1.0:
+            raise ValueError("pilot_plane_alpha_threshold must be in [0,1]")
+        if max_depth_range is not None and float(max_depth_range) <= 0.0:
+            raise ValueError("pilot_plane_max_depth_range must be positive or null")
+        if min_second_eigenvalue < 0.0:
+            raise ValueError("pilot_plane_min_second_eigenvalue must be non-negative")
+    elif float(cfg.get("w_plane", 0.0) or 0.0) != 0.0:
+        raise ValueError(f"{arm} requires w_plane=0")
+
+    audit_every = cfg.get("pilot_loss_audit_every")
+    if isinstance(audit_every, bool) or not isinstance(audit_every, int) or audit_every <= 0:
+        raise ValueError("pilot_loss_audit_every must be an explicit positive integer")
+    return arm
 
 
 def psnr(a: torch.Tensor, b: torch.Tensor) -> float:
@@ -1062,6 +1222,7 @@ def main():
     with config_path.open() as f:
         cfg = yaml.safe_load(f)
     full_state = full_state_options(cfg)
+    pilot_arm = _validate_pilot_config_contract(cfg, full_state)
 
     set_seed(cfg.get("seed", 0))
     device = cfg.get("device", "cuda")
@@ -1071,19 +1232,33 @@ def main():
     (out_dir / "renders").mkdir(exist_ok=True)
 
     # ---------- data ----------
+    # Non-pilot configs retain the historical ``mono_normal_dir`` alias for the
+    # primary override.  Pilot configs make the two channels unambiguously
+    # separate: normal=MVS primary, mono_normal=Omnidata auxiliary.
+    primary_normal_dir = (
+        cfg.get("normal_dir")
+        if pilot_arm is not None
+        else cfg.get("normal_dir") or cfg.get("mono_normal_dir")
+    )
+    auxiliary_normal_dir = cfg.get("mono_normal_dir") if pilot_arm is not None else None
     ds = ColmapDataset(
         root=cfg["data_root"],
         downscale=cfg.get("downscale", 0.5),
         load_depth=cfg.get("load_depth", True),
         load_normal=cfg.get("load_normal", True),
         load_semantic=cfg.get("load_semantic", False),
-        normal_dir=cfg.get("normal_dir") or cfg.get("mono_normal_dir"),
+        normal_dir=primary_normal_dir,
+        mono_normal_dir=auxiliary_normal_dir,
         mono_depth_dir=cfg.get("mono_depth_dir"),
         depth_scale=cfg.get("depth_scale", 1.0),
         mono_depth_scale=cfg.get("mono_depth_scale", 1.0),
         mono_depth_far_sentinel=cfg.get("mono_depth_far_sentinel", 28000.0),
         normal_encoding=cfg.get("normal_encoding", "half_range"),
         visible_views=cfg.get("visible_views"),
+        photo_mask_manifest=cfg.get("photo_mask_manifest"),
+        roof_audit_mask_manifest=cfg.get("roof_audit_mask_manifest"),
+        plane_region_mask_manifest=cfg.get("plane_region_mask_manifest"),
+        pilot_arm=pilot_arm,
     )
     print(f"[data] frames={len(ds)}  pts_init={ds.points_xyz.shape[0]}")
 
@@ -1406,6 +1581,21 @@ def main():
     w_photo = cfg.get("w_photo", 1.0)
     w_depth = cfg.get("w_depth", 1.0)
     w_normal = cfg.get("w_normal", 0.05)
+    w_mono_normal_aux = float(cfg.get("w_mono_normal_aux", 0.0) or 0.0)
+    w_plane = float(cfg.get("w_plane", 0.0) or 0.0)
+    pilot_loss_audit_every = int(cfg.get("pilot_loss_audit_every", 0) or 0)
+    pilot_plane_window_size = int(cfg.get("pilot_plane_window_size", 7))
+    pilot_plane_stride = int(cfg.get("pilot_plane_stride", 4))
+    pilot_plane_min_points = int(cfg.get("pilot_plane_min_points", 16))
+    pilot_plane_alpha_threshold = float(
+        cfg.get("pilot_plane_alpha_threshold", 0.5)
+    )
+    pilot_plane_max_depth_range = cfg.get("pilot_plane_max_depth_range", 1.0)
+    if pilot_plane_max_depth_range is not None:
+        pilot_plane_max_depth_range = float(pilot_plane_max_depth_range)
+    pilot_plane_min_second_eigenvalue = float(
+        cfg.get("pilot_plane_min_second_eigenvalue", 1.0e-10)
+    )
     # P2-D: optional warm-up→ramp schedule for the depth/normal priors (lets the photometric
     # base settle before the MVS depth/normal supervision ramps in). Defaults reproduce a
     # plain constant weight, so prior configs without these keys are byte-identical.
@@ -1789,6 +1979,33 @@ def main():
         raise RuntimeError(
             "w_mono_depth>0 but NO mono depth maps resolved via mono_depth_dir — "
             "L_mono_depth would be a silent no-op. Generate aligned mono-depth maps or set w_mono_depth=0.")
+    if pilot_arm is not None:
+        missing_depth = [frame.name for frame in ds.frames if frame.depth_path is None]
+        missing_mvs_normal = [frame.name for frame in ds.frames if frame.normal_path is None]
+        missing_mono_normal = [
+            frame.name for frame in ds.frames if frame.mono_normal_path is None
+        ]
+        if missing_depth or missing_mvs_normal or missing_mono_normal:
+            raise RuntimeError(
+                "pilot prior inventory must cover every visible frame; "
+                f"depth_missing={len(missing_depth)} "
+                f"mvs_normal_missing={len(missing_mvs_normal)} "
+                f"mono_normal_missing={len(missing_mono_normal)}"
+            )
+        if ds.roof_audit_mask_binding is None:
+            raise RuntimeError("pilot roof_audit_mask binding is required")
+        if pilot_arm == "01_surface" and ds.photo_mask_binding is not None:
+            raise RuntimeError("arm 01 must not bind a photo loss mask")
+        if pilot_arm in _PILOT_PHOTO_MASK_ARMS and ds.photo_mask_binding is None:
+            raise RuntimeError(f"{pilot_arm} requires a bound photo loss mask")
+        if pilot_arm in _PILOT_MEDIUM_ARMS and ds.plane_region_mask_binding is None:
+            raise RuntimeError(f"{pilot_arm} requires a bound plane-region mask")
+        print(
+            f"[pilot] arm={pilot_arm} MVS+Omnidata maps={len(ds.frames)}/{len(ds.frames)} "
+            f"photo_mask={'on' if ds.photo_mask_binding is not None else 'off'} "
+            "roof_audit_mask=on "
+            f"plane_region_mask={'on' if ds.plane_region_mask_binding is not None else 'off'}"
+        )
     if w_depth > 0 or w_normal > 0 or w_mono_depth > 0:
         n_d = sum(f.depth_path is not None for f in ds.frames)
         n_n = sum(f.normal_path is not None for f in ds.frames)
@@ -1819,7 +2036,7 @@ def main():
         "depth_final_weight": depth_final_weight,
         "depth_final_factor": depth_final_factor,
         "depth_weight_floor": depth_weight_floor,
-        "normal_dir": cfg.get("normal_dir") or cfg.get("mono_normal_dir"),
+        "normal_dir": primary_normal_dir,
         "mono_depth_dir": cfg.get("mono_depth_dir"),
         "mono_depth_base_weight": w_mono_depth,
         "mono_depth_schedule": mono_depth_schedule,
@@ -1881,6 +2098,41 @@ def main():
         "structure_partition_world_offset": structure_partition_world_offset,
         "structure_semantic_logits_used": structure_grouping != "g2_geometry",
     }
+    if pilot_arm is not None:
+        effective_config.update(
+            {
+                "mono_normal_dir": auxiliary_normal_dir,
+                "pilot_arm": pilot_arm,
+                "pilot_mask_binding": ds.pilot_mask_audit,
+                "w_mono_normal_aux": w_mono_normal_aux,
+                "mono_normal_aux_schedule": "same_fraction_as_primary_normal_schedule",
+                "mono_normal_gate_cache": "view_static_cpu_bool_no_rng_no_loss_change",
+                "w_plane": w_plane,
+                "pilot_plane_mode": (
+                    "soft_local_global_coverage"
+                    if pilot_arm == "03_plane_soft"
+                    else "medium_common_region_code"
+                    if pilot_arm in _PILOT_MEDIUM_ARMS
+                    else "off"
+                ),
+                "pilot_plane_window_size": pilot_plane_window_size,
+                "pilot_plane_stride": pilot_plane_stride,
+                "pilot_plane_min_points": pilot_plane_min_points,
+                "pilot_plane_alpha_threshold": pilot_plane_alpha_threshold,
+                "pilot_plane_max_depth_range": pilot_plane_max_depth_range,
+                "pilot_plane_min_second_eigenvalue": pilot_plane_min_second_eigenvalue,
+                "pilot_loss_audit_every": pilot_loss_audit_every,
+                "pilot_loss_audit_terms": [
+                    "pho", "dep", "nrm", "nc", "str.na", "str.cp", "plane"
+                ],
+                "pilot_loss_audit_csv_paths": list(PILOT_FULL_STATE_CSV_PATHS),
+                "pilot_flattening_role": "audit_only_never_weighted",
+                "pilot_plane_guided_init": {
+                    "status": "not_implemented_in_stage2_trainer",
+                    "mvs_seed_or_mvs_normal_does_not_count_as_plane_guided_init": True,
+                },
+            }
+        )
     if semantic_geometry_enabled:
         effective_config.update(
             {
@@ -2113,6 +2365,37 @@ def main():
             "learning_runs_started": learning_runs_started,
             "learning_runs_incremented_this_process": learning_run_incremented,
         }
+    # Soft/strong plane arms may not begin (or resume) an optimizer update until
+    # the gsplat 2DGS fixed-thickness invariant is proven.  This is a gate and an
+    # audit only: its value is never added to ``loss_total`` or the plane share.
+    if pilot_arm in {"03_plane_soft", *_PILOT_MEDIUM_ARMS}:
+        flattening_start = audit_2dgs_flattening_invariant(model.scales)
+        flattening_start_payload = {
+            "schema": "jointbuildgs.pilot_1wave.flattening_start_gate.v1",
+            "pilot_arm": pilot_arm,
+            "evaluated_before_optimizer_update": True,
+            "resume_completed_steps": int(start_completed_steps),
+            "passed": flattening_start.passed,
+            "expected_thickness": flattening_start.expected_thickness,
+            "max_abs_error": (
+                flattening_start.max_abs_error
+                if math.isfinite(flattening_start.max_abs_error)
+                else None
+            ),
+            "finite_count": flattening_start.finite_count,
+            "total_count": flattening_start.total_count,
+            "contributes_to_loss": flattening_start.contributes_to_loss,
+        }
+        flattening_start_path = out_dir / "audit/pilot_flattening_start_gate.json"
+        atomic_write_json(flattening_start_path, flattening_start_payload)
+        effective_config["pilot_flattening_start_gate"] = {
+            **flattening_start_payload,
+            "path": str(flattening_start_path),
+        }
+        if not flattening_start.passed:
+            raise RuntimeError(
+                "pilot 2DGS flattening start gate failed; no optimizer update executed"
+            )
     (out_dir / "effective_config.json").write_text(json.dumps(effective_config, indent=2) + "\n")
     (out_dir / "view_roles.json").write_text(
         json.dumps(view_role_audit, indent=2) + "\n"
@@ -2131,6 +2414,11 @@ def main():
         print(f"[train] max_iter={max_iter}  out={out_dir}")
     pbar = tqdm(range(start_completed_steps, max_iter), desc="train")
     t0 = time.time()
+    # MVS/Omnidata targets are immutable, hence the fixed 16x16 agreement gate
+    # is view-static.  Cache bool gates on CPU after their first exact build;
+    # rebuilding the Python-audited patch grid at every sampled update would be
+    # pure overhead and would not change any loss value.
+    pilot_mono_gate_cache: Dict[str, tuple[torch.Tensor, Dict[str, Any]]] = {}
 
     # Restore after every setup action so the first view/neighbor draw is the
     # exact draw that followed the saved completed optimizer update.
@@ -2177,8 +2465,23 @@ def main():
         # track grad for densification (gsplat DefaultStrategy hook)
         strategy.step_pre_backward(params, optimizers, strategy_state, it, meta)
 
-        # losses
-        loss_photo = L.l_photo(rgb_pred, rgb_gt, lam=photo_lam)
+        # losses.  Arm 01 receives no photo-mask tensor; the common roof audit
+        # scope is loaded through a different key and is never consulted here.
+        photo_loss_mask = None
+        if pilot_arm is not None:
+            if pilot_arm == "01_surface":
+                if "photo_mask" in batch:
+                    raise RuntimeError("arm 01 batch unexpectedly contains photo_mask")
+            else:
+                if "photo_mask" not in batch:
+                    raise RuntimeError(f"{pilot_arm} batch is missing required photo_mask")
+                photo_loss_mask = batch["photo_mask"].to(device)
+        loss_photo = L.l_photo(
+            rgb_pred,
+            rgb_gt,
+            lam=photo_lam,
+            mask=photo_loss_mask,
+        )
         loss_total = w_photo * loss_photo
 
         if "depth" in batch:
@@ -2249,10 +2552,63 @@ def main():
 
         n_gt = None
         n_m = None
+        loss_n_mvs = torch.tensor(0.0, device=device)
+        loss_n_aux = torch.tensor(0.0, device=device)
+        w_mono_normal_aux_eff = 0.0
+        mono_gt = None
+        mono_gate = None
+        mono_gate_audit: Dict[str, Any] = {
+            "mode": "disabled",
+            "eligible_patch_count": 0,
+            "gated_pixel_count": 0,
+        }
         if "normal" in batch:
             n_gt = batch["normal"].to(device)
             n_m = batch["normal_mask"].to(device)
-            if mono_normal_loss == "target_region":
+            if pilot_arm is not None:
+                # Locked first-wave primary: MVS remains active on every valid
+                # MVS pixel and is never narrowed to the mono gate.
+                loss_n_mvs = L.l_normal(n_render, n_gt, w2c, n_m)
+                if "mono_normal" not in batch or "mono_normal_mask" not in batch:
+                    raise RuntimeError(
+                        f"pilot Omnidata normal missing for active view {batch['name']!r}"
+                )
+                mono_gt = batch["mono_normal"].to(device)
+                mono_gate_key = str(batch["name"])
+                cached_gate = pilot_mono_gate_cache.get(mono_gate_key)
+                if cached_gate is None:
+                    # Build once on CPU to avoid one GPU synchronization per
+                    # audited patch in the exact gate implementation.
+                    mono_gate_cpu, full_gate_audit = build_mono_normal_gate(
+                        batch["normal"],
+                        batch["mono_normal"],
+                        primary_valid=batch["normal_mask"],
+                        auxiliary_valid=batch["mono_normal_mask"],
+                    )
+                    mono_gate_audit = {
+                        key: value
+                        for key, value in full_gate_audit.items()
+                        if key != "patches"
+                    }
+                    pilot_mono_gate_cache[mono_gate_key] = (
+                        mono_gate_cpu,
+                        mono_gate_audit,
+                    )
+                    mono_gate = mono_gate_cpu.to(device=device)
+                else:
+                    mono_gate = cached_gate[0].to(device=device)
+                    mono_gate_audit = cached_gate[1]
+                loss_n_aux = l_auxiliary_mono_normal(
+                    n_render,
+                    mono_gt,
+                    mono_gate,
+                )
+                loss_n = loss_n_mvs
+                mono_normal_stats = {
+                    "eligible_region_count": 0,
+                    "mode": "pilot_fixed_patch_gate_auxiliary",
+                }
+            elif mono_normal_loss == "target_region":
                 if w_normal > 0:
                     assert target_region_mask is not None and target_region_ids is not None
                     n_m = n_m & target_region_mask
@@ -2284,7 +2640,18 @@ def main():
                 final_weight=normal_final_weight,
                 final_factor=normal_final_factor,
             )
-            loss_total = loss_total + w_normal_eff * loss_n
+            if pilot_arm is not None:
+                # Auxiliary follows the exact activation fraction of the MVS
+                # schedule while retaining its own resolved numeric base weight.
+                schedule_fraction = float(w_normal_eff) / float(w_normal)
+                w_mono_normal_aux_eff = w_mono_normal_aux * schedule_fraction
+                loss_total = (
+                    loss_total
+                    + w_normal_eff * loss_n_mvs
+                    + w_mono_normal_aux_eff * loss_n_aux
+                )
+            else:
+                loss_total = loss_total + w_normal_eff * loss_n
         else:
             loss_n = torch.tensor(0.0, device=device)
             w_normal_eff = 0.0
@@ -2296,6 +2663,48 @@ def main():
         loss_dist_raw = distort.mean()
         loss_dist = loss_dist_raw / distort_norm_denominator
         loss_total = loss_total + w_distort * loss_dist
+
+        # First-wave plane ladder.  The medium pair shares this exact code path;
+        # the dataloader has already enforced that only the mask provenance can
+        # differ between 04a and 04b.  2DGS thickness is audited later and is
+        # intentionally absent from this loss.
+        loss_plane = torch.tensor(0.0, device=device)
+        pilot_plane_count = 0
+        pilot_plane_point_count = 0
+        if pilot_arm == "03_plane_soft":
+            plane_result = local_rendered_depth_coplanarity(
+                depth_pred,
+                K,
+                alpha=alpha,
+                window_size=pilot_plane_window_size,
+                stride=pilot_plane_stride,
+                min_points=pilot_plane_min_points,
+                alpha_threshold=pilot_plane_alpha_threshold,
+                max_depth_range=pilot_plane_max_depth_range,
+                min_second_eigenvalue=pilot_plane_min_second_eigenvalue,
+            )
+            loss_plane = plane_result.loss
+            pilot_plane_count = plane_result.plane_count
+            pilot_plane_point_count = plane_result.point_count
+            loss_total = loss_total + w_plane * loss_plane
+        elif pilot_arm in _PILOT_MEDIUM_ARMS:
+            if "plane_region_mask" not in batch:
+                raise RuntimeError(
+                    f"{pilot_arm} batch is missing the locked plane_region_mask"
+                )
+            plane_result = region_rendered_depth_coplanarity(
+                depth_pred,
+                K,
+                batch["plane_region_mask"].to(device),
+                alpha=alpha,
+                min_points=pilot_plane_min_points,
+                alpha_threshold=pilot_plane_alpha_threshold,
+                min_second_eigenvalue=pilot_plane_min_second_eigenvalue,
+            )
+            loss_plane = plane_result.loss
+            pilot_plane_count = plane_result.plane_count
+            pilot_plane_point_count = plane_result.point_count
+            loss_total = loss_total + w_plane * loss_plane
 
         # L_mvc (Phase B / B1): self-supervised multi-view geometric consistency.
         # Reproject this (source) view's rendered depth into a covisible neighbour and
@@ -2534,6 +2943,257 @@ def main():
                 n_groups = _grp["rep_n"].shape[0]
                 loss_total = loss_total + w_structure * loss_str_total
 
+        if pilot_arm is not None and not bool(torch.isfinite(loss_total).item()):
+            audit_dir = out_dir / "audit"
+            audit_dir.mkdir(exist_ok=True)
+            failure = {
+                "step": int(it),
+                "view": str(batch["name"]),
+                "total_loss": float(loss_total.detach().cpu().item()),
+                "pilot_arm": pilot_arm,
+                "pilot_plane": float(loss_plane.detach().cpu().item()),
+                "pilot_mvs_normal": float(loss_n_mvs.detach().cpu().item()),
+                "pilot_mono_normal_aux": float(loss_n_aux.detach().cpu().item()),
+            }
+            with (audit_dir / "nonfinite_loss.jsonl").open("a", encoding="utf-8") as fh:
+                fh.write(json.dumps(failure, allow_nan=True) + "\n")
+            raise FloatingPointError(
+                f"Non-finite pilot loss at step={it} view={batch['name']!r}; "
+                f"recorded in {audit_dir / 'nonfinite_loss.jsonl'}"
+            )
+
+        # Locked seven-term first-wave audit.  ``iter`` means completed optimizer
+        # update number, matching the 5k checkpoint naming; the values are those
+        # used to form that update immediately below.
+        completed_update = it + 1
+        pilot_audit_step = pilot_arm is not None and (
+            completed_update % pilot_loss_audit_every == 0
+            or completed_update in set(full_state["checkpoint_steps"])
+        )
+        if pilot_audit_step:
+            if "roof_audit_mask" not in batch:
+                raise RuntimeError(
+                    f"pilot roof audit mask missing for active view {batch['name']!r}"
+                )
+            roof_audit_mask = batch["roof_audit_mask"].to(device)
+            if roof_audit_mask.dtype != torch.bool or roof_audit_mask.shape != (H, W):
+                raise RuntimeError("roof_audit_mask must be bool HxW at training resolution")
+
+            # Pixel terms are recomputed in the common projected-footprint mask.
+            loss_photo_roof = L.l_photo(
+                rgb_pred,
+                rgb_gt,
+                lam=photo_lam,
+                mask=roof_audit_mask,
+            )
+            if "depth" in batch:
+                loss_depth_roof = L.l_depth(
+                    depth_pred,
+                    d_gt,
+                    d_m & roof_audit_mask,
+                )
+            else:
+                loss_depth_roof = depth_pred.sum() * 0.0
+            loss_n_mvs_roof = L.l_normal(
+                n_render,
+                n_gt,
+                w2c,
+                n_m & roof_audit_mask,
+            )
+            assert mono_gt is not None and mono_gate is not None
+            loss_n_aux_roof = l_auxiliary_mono_normal(
+                n_render,
+                mono_gt,
+                mono_gate & roof_audit_mask,
+            )
+            loss_nc_roof = pilot_masked_normal_consistency(
+                n_render,
+                n_surf,
+                roof_audit_mask,
+                alpha=alpha,
+            )
+
+            # Plane audit uses the same primitive as its training arm, intersected
+            # only for audit with the common mask.  The training loss above remains
+            # unchanged by this recomputation.
+            loss_plane_roof = depth_pred.sum() * 0.0
+            if pilot_arm == "03_plane_soft":
+                roof_plane_result = local_rendered_depth_coplanarity(
+                    depth_pred,
+                    K,
+                    alpha=alpha,
+                    valid_mask=roof_audit_mask,
+                    window_size=pilot_plane_window_size,
+                    stride=pilot_plane_stride,
+                    min_points=pilot_plane_min_points,
+                    alpha_threshold=pilot_plane_alpha_threshold,
+                    max_depth_range=pilot_plane_max_depth_range,
+                    min_second_eigenvalue=pilot_plane_min_second_eigenvalue,
+                )
+                loss_plane_roof = roof_plane_result.loss
+            elif pilot_arm in _PILOT_MEDIUM_ARMS:
+                roof_plane_result = region_rendered_depth_coplanarity(
+                    depth_pred,
+                    K,
+                    batch["plane_region_mask"].to(device),
+                    alpha=alpha,
+                    valid_mask=roof_audit_mask,
+                    min_points=pilot_plane_min_points,
+                    alpha_threshold=pilot_plane_alpha_threshold,
+                    min_second_eigenvalue=pilot_plane_min_second_eigenvalue,
+                )
+                loss_plane_roof = roof_plane_result.loss
+
+            # In g2_geometry, a nonnegative group ID can only be produced inside
+            # one of the selected footprint partitions; outside and ungrouped
+            # primitives are both -1 and do not enter L_structure.  Reusing this
+            # exact loss-side membership avoids a second million-point CPU XY
+            # assignment at every audit interval.
+            primitive_scope = (
+                _grp["group_ids"] >= 0
+                if _grp["group_ids"] is not None
+                else torch.zeros(model.num_points, dtype=torch.bool, device=device)
+            )
+            (
+                loss_str_na_roof,
+                loss_str_cp_roof,
+                pilot_structure_roof_count,
+            ) = pilot_structure_terms_in_scope(
+                normals=model.normals(),
+                centers=model.means,
+                group_ids=_grp["group_ids"],
+                rep_normals=_grp["rep_n"],
+                rep_d=_grp["rep_d"],
+                primitive_scope=primitive_scope,
+            )
+
+            nrm_raw_public, nrm_weighted_public = pilot_public_normal_term(
+                loss_n_mvs,
+                loss_n_aux,
+                primary_weight=w_normal_eff,
+                auxiliary_weight=w_mono_normal_aux_eff,
+            )
+            _nrm_roof_raw, nrm_roof_weighted_public = pilot_public_normal_term(
+                loss_n_mvs_roof,
+                loss_n_aux_roof,
+                primary_weight=w_normal_eff,
+                auxiliary_weight=w_mono_normal_aux_eff,
+            )
+
+            raw_public = {
+                "pho": loss_photo,
+                "dep": loss_depth,
+                "nrm": nrm_raw_public,
+                "nc": loss_nc,
+                "str.na": loss_str_na,
+                "str.cp": loss_str_cp,
+                "plane": loss_plane,
+            }
+            weighted_public = {
+                "pho": w_photo * loss_photo,
+                "dep": w_depth_eff * loss_depth,
+                "nrm": nrm_weighted_public,
+                "nc": w_nc * loss_nc,
+                "str.na": w_structure * w_structure_na * loss_str_na,
+                "str.cp": w_structure * w_structure_cp * loss_str_cp,
+                "plane": w_plane * loss_plane,
+            }
+            roof_weighted_public = {
+                "pho": w_photo * loss_photo_roof,
+                "dep": w_depth_eff * loss_depth_roof,
+                "nrm": nrm_roof_weighted_public,
+                "nc": w_nc * loss_nc_roof,
+                "str.na": w_structure * w_structure_na * loss_str_na_roof,
+                "str.cp": w_structure * w_structure_cp * loss_str_cp_roof,
+                "plane": w_plane * loss_plane_roof,
+            }
+            append_pilot_loss_share_rows(
+                out_dir,
+                iteration=completed_update,
+                raw=raw_public,
+                weighted=weighted_public,
+                roof_weighted=roof_weighted_public,
+            )
+
+            flattening_audit = audit_2dgs_flattening_invariant(model.scales)
+            append_pilot_loss_detail_rows(
+                out_dir,
+                [
+                    {
+                        "iter": completed_update,
+                        "detail": "nrm.mvs_primary",
+                        "raw": float(loss_n_mvs.detach().cpu()),
+                        "weight": float(w_normal_eff),
+                        "weighted": float((w_normal_eff * loss_n_mvs).detach().cpu()),
+                        "roof_raw": float(loss_n_mvs_roof.detach().cpu()),
+                        "roof_weighted": float(
+                            (w_normal_eff * loss_n_mvs_roof).detach().cpu()
+                        ),
+                        "count": int(n_m.sum().detach().cpu()),
+                        "status": "primary",
+                    },
+                    {
+                        "iter": completed_update,
+                        "detail": "nrm.omnidata_aux_16x16_64_15deg",
+                        "raw": float(loss_n_aux.detach().cpu()),
+                        "weight": float(w_mono_normal_aux_eff),
+                        "weighted": float(
+                            (w_mono_normal_aux_eff * loss_n_aux).detach().cpu()
+                        ),
+                        "roof_raw": float(loss_n_aux_roof.detach().cpu()),
+                        "roof_weighted": float(
+                            (w_mono_normal_aux_eff * loss_n_aux_roof).detach().cpu()
+                        ),
+                        "count": int(mono_gate_audit["gated_pixel_count"]),
+                        "status": (
+                            f"eligible_patches={mono_gate_audit['eligible_patch_count']}"
+                        ),
+                    },
+                    {
+                        "iter": completed_update,
+                        "detail": "plane.rendered_depth_l1",
+                        "raw": float(loss_plane.detach().cpu()),
+                        "weight": float(w_plane),
+                        "weighted": float((w_plane * loss_plane).detach().cpu()),
+                        "roof_raw": float(loss_plane_roof.detach().cpu()),
+                        "roof_weighted": float(
+                            (w_plane * loss_plane_roof).detach().cpu()
+                        ),
+                        "count": int(pilot_plane_point_count),
+                        "status": f"planes={pilot_plane_count}",
+                    },
+                    {
+                        "iter": completed_update,
+                        "detail": "str.footprint_xy_scope",
+                        "raw": "",
+                        "weight": "",
+                        "weighted": "",
+                        "roof_raw": "",
+                        "roof_weighted": "",
+                        "count": pilot_structure_roof_count,
+                        "status": "audit_only_scope_count",
+                    },
+                    {
+                        "iter": completed_update,
+                        "detail": "flattening.2dgs_fixed_thickness",
+                        "raw": flattening_audit.max_abs_error,
+                        "weight": 0.0,
+                        "weighted": 0.0,
+                        "roof_raw": "",
+                        "roof_weighted": "",
+                        "count": flattening_audit.finite_count,
+                        "status": "pass" if flattening_audit.passed else "fail",
+                    },
+                ],
+            )
+            if pilot_arm in _PILOT_MEDIUM_ARMS:
+                append_pilot_plane_photo_ratio(
+                    out_dir,
+                    iteration=completed_update,
+                    weighted_roof_plane=roof_weighted_public["plane"],
+                    weighted_roof_photo=roof_weighted_public["pho"],
+                )
+
         if semantic_geometry_enabled and not bool(torch.isfinite(loss_total).item()):
             audit_dir = out_dir / "audit"
             audit_dir.mkdir(exist_ok=True)
@@ -2580,7 +3240,16 @@ def main():
                 "photo": (loss_photo, float(w_photo), w_photo * loss_photo),
                 "depth": (loss_depth, float(w_depth_eff), w_depth_eff * loss_depth),
                 "mono_depth": (loss_mono_depth, float(w_mono_depth_eff), w_mono_depth_eff * loss_mono_depth),
-                "normal": (loss_n, float(w_normal_eff), w_normal_eff * loss_n),
+                "normal": (
+                    loss_n_mvs + loss_n_aux if pilot_arm is not None else loss_n,
+                    1.0 if pilot_arm is not None else float(w_normal_eff),
+                    (
+                        w_normal_eff * loss_n_mvs
+                        + w_mono_normal_aux_eff * loss_n_aux
+                        if pilot_arm is not None
+                        else w_normal_eff * loss_n
+                    ),
+                ),
                 "nc": (loss_nc, float(w_nc), w_nc * loss_nc),
                 "distort": (loss_dist, float(w_distort), w_distort * loss_dist),
                 "semantic": (loss_sem, float(w_sem), w_sem * loss_sem),
@@ -2704,6 +3373,30 @@ def main():
             writer.add_scalar("loss/depth", loss_depth.item(), it)
             writer.add_scalar("loss/mono_depth", loss_mono_depth.item(), it)
             writer.add_scalar("loss/normal", loss_n.item(), it)
+            if pilot_arm is not None:
+                writer.add_scalar("loss/normal_mvs_primary", loss_n_mvs.item(), it)
+                writer.add_scalar("loss/normal_omnidata_aux", loss_n_aux.item(), it)
+                writer.add_scalar(
+                    "loss/normal_public_weighted",
+                    float(
+                        (
+                            w_normal_eff * loss_n_mvs
+                            + w_mono_normal_aux_eff * loss_n_aux
+                        ).detach().cpu()
+                    ),
+                    it,
+                )
+                writer.add_scalar("loss/plane", loss_plane.item(), it)
+                writer.add_scalar(
+                    "loss_weight/normal_omnidata_aux",
+                    float(w_mono_normal_aux_eff),
+                    it,
+                )
+                writer.add_scalar("loss_weight/plane", float(w_plane), it)
+                writer.add_scalar("stats/pilot_plane_count", pilot_plane_count, it)
+                writer.add_scalar(
+                    "stats/pilot_plane_point_count", pilot_plane_point_count, it
+                )
             writer.add_scalar("loss/nc", loss_nc.item(), it)
             writer.add_scalar("loss/distort", loss_dist.item(), it)
             writer.add_scalar("loss/distort_raw", loss_dist_raw.item(), it)

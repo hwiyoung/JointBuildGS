@@ -220,8 +220,9 @@ def _bind_pilot_mask_manifest(
 ) -> PilotMaskBinding:
     """Validate purpose, source, consumer arm and exact frame inventory.
 
-    ``role`` is deliberately closed to the two loss-side masks accepted by the
-    first-wave runtime.  Every archive is opened during binding, so a missing,
+    ``role`` is deliberately closed to two loss-side masks plus the separate
+    projected-footprint audit scope accepted by the first-wave runtime.  Every
+    archive is opened during binding, so a missing,
     hash-mismatched, side-channel, or shape-mismatched file fails before the
     first optimizer step rather than on a later sampled view.
     """
@@ -229,11 +230,11 @@ def _bind_pilot_mask_manifest(
     arm = _validate_pilot_arm(pilot_arm)
     if arm is None:
         raise MaskSchemaError(f"pilot_arm is required with {role}_mask_manifest")
-    if role not in {"photo", "plane_region"}:
+    if role not in {"photo", "plane_region", "roof_audit"}:
         raise ValueError(f"unsupported pilot mask role: {role!r}")
 
     mask_set = BinaryMaskSet(manifest_path)
-    if role == "photo":
+    if role in {"photo", "roof_audit"}:
         expected_purpose = MaskPurpose.PHOTO_SUPPORT
         expected_source = MaskSource.LOD2_GROUNDSURFACE_XY_SFM_HEIGHT
     else:
@@ -255,7 +256,11 @@ def _bind_pilot_mask_manifest(
             f"{role} manifest source mismatch for {arm}: "
             f"{mask_set.source.value} != {expected_source.value}"
         )
-    if arm not in mask_set.consumer_arms:
+    # ``consumer_arms`` describes loss-side photo masking.  The same immutable
+    # projected-footprint inventory is also the preregistered, audit-only roof
+    # scope for all five arms, including arm 01.  Keep that role in a distinct
+    # batch key so accepting it can never enable arm-01 photo masking.
+    if role != "roof_audit" and arm not in mask_set.consumer_arms:
         raise MaskSchemaError(
             f"pilot arm {arm} is not a declared consumer of the {role} manifest"
         )
@@ -315,6 +320,8 @@ def _bind_pilot_mask_manifest(
         "resize_interpolation": "nearest",
         "inventory_match": "exact",
         "preflight_loaded_all_records": True,
+        "loss_consuming": role != "roof_audit",
+        "consumer_contract_enforced": role != "roof_audit",
     }
     return PilotMaskBinding(
         role=role,
@@ -354,6 +361,7 @@ class ColmapDataset(Dataset):
         normal_encoding: str = "half_range",
         visible_views: Optional[Sequence[str]] = None,
         photo_mask_manifest: Optional[str | Path] = None,
+        roof_audit_mask_manifest: Optional[str | Path] = None,
         plane_region_mask_manifest: Optional[str | Path] = None,
         pilot_arm: Optional[str] = None,
     ):
@@ -446,6 +454,15 @@ class ColmapDataset(Dataset):
                 pilot_arm=self.pilot_arm,
                 role="photo",
             )
+        self.roof_audit_mask_binding = None
+        if roof_audit_mask_manifest is not None:
+            self.roof_audit_mask_binding = _bind_pilot_mask_manifest(
+                roof_audit_mask_manifest,
+                frames=self.frames,
+                downscale=self.downscale,
+                pilot_arm=self.pilot_arm,
+                role="roof_audit",
+            )
         self.plane_region_mask_binding = None
         if plane_region_mask_manifest is not None:
             self.plane_region_mask_binding = _bind_pilot_mask_manifest(
@@ -461,6 +478,11 @@ class ColmapDataset(Dataset):
                 None
                 if self.photo_mask_binding is None
                 else self.photo_mask_binding.audit
+            ),
+            "roof_audit_mask": (
+                None
+                if self.roof_audit_mask_binding is None
+                else self.roof_audit_mask_binding.audit
             ),
             "plane_region_mask": (
                 None
@@ -703,6 +725,11 @@ class ColmapDataset(Dataset):
         if self.photo_mask_binding is not None:
             out["photo_mask"] = torch.from_numpy(
                 self.photo_mask_binding.load(fr, (H, W))
+            )
+        roof_audit_binding = getattr(self, "roof_audit_mask_binding", None)
+        if roof_audit_binding is not None:
+            out["roof_audit_mask"] = torch.from_numpy(
+                roof_audit_binding.load(fr, (H, W))
             )
         if self.plane_region_mask_binding is not None:
             out["plane_region_mask"] = torch.from_numpy(
