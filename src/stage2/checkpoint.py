@@ -38,6 +38,7 @@ from .model import GaussianModel2D
 CHECKPOINT_FORMAT = "jointbuildgs.stage2.full_state"
 CHECKPOINT_VERSION = 1
 STEP_SEMANTICS = "completed_optimizer_updates"
+PUBLISHED_FILE_MODE = 0o644
 _STEP_RE = re.compile(r"^step_(\d{6,})\.pt$")
 _SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 
@@ -271,6 +272,7 @@ def save_training_checkpoint(
         checkpoint_tmp = _new_temp_path(destination.parent, destination.name)
         with checkpoint_tmp.open("wb") as stream:
             torch.save(payload, stream)
+            os.fchmod(stream.fileno(), PUBLISHED_FILE_MODE)
             stream.flush()
             os.fsync(stream.fileno())
         digest = _sha256_file(checkpoint_tmp)
@@ -278,6 +280,7 @@ def save_training_checkpoint(
         sidecar_tmp = _new_temp_path(destination.parent, sidecar.name)
         with sidecar_tmp.open("w", encoding="ascii", newline="\n") as stream:
             stream.write(f"{digest}  {destination.name}\n")
+            os.fchmod(stream.fileno(), PUBLISHED_FILE_MODE)
             stream.flush()
             os.fsync(stream.fileno())
 

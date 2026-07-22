@@ -20,6 +20,7 @@ FULL_STATE_REQUIRED_STEPS = (5000, 10000, 15000, 20000)
 FULL_STATE_RUNTIME_SCHEMA = "jointbuildgs.stage2.trainer_runtime.v1"
 FULL_STATE_LOSS_CURSOR_SCHEMA = "jointbuildgs.stage2.loss_csv_cursor.v1"
 FULL_STATE_MANIFEST_SCHEMA = "jointbuildgs.stage2.resume_manifest.v1"
+PUBLISHED_FILE_MODE = 0o644
 FULL_STATE_DEFAULT_LOSS_CSV_PATHS = (
     "audit/loss_grad_norms.csv",
     "audit/semantic_geometry.csv",
@@ -430,6 +431,7 @@ def atomic_write_json(path: Path, payload: Mapping[str, Any]) -> None:
             descriptor = -1
             json.dump(payload, stream, indent=2, sort_keys=True)
             stream.write("\n")
+            os.fchmod(stream.fileno(), PUBLISHED_FILE_MODE)
             stream.flush()
             os.fsync(stream.fileno())
         os.replace(tmp_path, path)

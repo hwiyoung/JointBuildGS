@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import random
+import stat
 from pathlib import Path
 
 import pytest
@@ -219,4 +220,5 @@ def test_learning_run_counter_increments_fresh_only_and_manifest_is_atomic(
         },
     )
     assert read_learning_runs_started(manifest) == 3
+    assert stat.S_IMODE(manifest.stat().st_mode) == 0o644
     assert not list(tmp_path.glob(".*.tmp"))

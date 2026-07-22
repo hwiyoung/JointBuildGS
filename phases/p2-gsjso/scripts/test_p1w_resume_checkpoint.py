@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import hashlib
 import random
+import stat
 from pathlib import Path
 from typing import Any
 
@@ -208,6 +209,8 @@ def test_atomic_save_has_completed_update_semantics_and_sha_sidecar(tmp_path: Pa
     assert saved.sidecar_path.read_text(encoding="ascii") == (
         f"{saved.sha256}  step_005000.pt\n"
     )
+    assert stat.S_IMODE(saved.path.stat().st_mode) == 0o644
+    assert stat.S_IMODE(saved.sidecar_path.stat().st_mode) == 0o644
     assert not list(tmp_path.glob("*.tmp"))
     assert not list(tmp_path.glob(".*.tmp"))
 
