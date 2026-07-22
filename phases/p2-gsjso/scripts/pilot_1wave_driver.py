@@ -40,6 +40,7 @@ CONTAINER_REPO = Path("/workspace/JointBuildGS")
 REQUIRED_HOST_UID = 1000
 REQUIRED_HOST_GID = 1000
 TRAINING_CONTAINER_USER = f"{REQUIRED_HOST_UID}:{REQUIRED_HOST_GID}"
+TORCH_EXTENSIONS_ROOT = "/tmp/jointbuildgs-p1w-torch-extensions"
 CHECKPOINT_STEPS = (5000, 10000, 15000, 20000)
 STOP_START_SECONDS = 8.5 * 3600.0
 WALL_GUARD_SECONDS = 9.0 * 3600.0
@@ -216,9 +217,16 @@ def container_name_for(job_id: str) -> str:
     return f"jointbuildgs-p1w-{RUN_ID.replace('_pilot_1wave', '')}-{job_id.replace('_', '-')}"
 
 
-def command_for(config_path: str, gpu: int, *, container_name: str | None = None) -> list[str]:
+def torch_extensions_dir_for(container_name: str) -> str:
+    if re.fullmatch(r"[a-zA-Z0-9][a-zA-Z0-9_.-]+", container_name) is None:
+        raise DriverError(f"unsafe Docker container name: {container_name!r}")
+    return f"{TORCH_EXTENSIONS_ROOT}/{container_name}"
+
+
+def command_for(config_path: str, gpu: int, *, container_name: str) -> list[str]:
     if gpu not in (0, 1):
         raise DriverError(f"P1W GPU must be 0 or 1, got {gpu}")
+    torch_extensions_dir = torch_extensions_dir_for(container_name)
     command = [
         "docker",
         "compose",
@@ -229,16 +237,15 @@ def command_for(config_path: str, gpu: int, *, container_name: str | None = None
         "--user",
         TRAINING_CONTAINER_USER,
     ]
-    if container_name is not None:
-        if re.fullmatch(r"[a-zA-Z0-9][a-zA-Z0-9_.-]+", container_name) is None:
-            raise DriverError(f"unsafe Docker container name: {container_name!r}")
-        command.extend(["--name", container_name])
+    command.extend(["--name", container_name])
     command.extend(
         [
         "-e",
         f"NVIDIA_VISIBLE_DEVICES={gpu}",
         "-e",
         "CUDA_VISIBLE_DEVICES=0",
+        "-e",
+        f"TORCH_EXTENSIONS_DIR={torch_extensions_dir}",
         "dev",
         "python",
         "-m",
@@ -251,11 +258,20 @@ def command_for(config_path: str, gpu: int, *, container_name: str | None = None
 
 
 def command_is_docker_only(command: Sequence[str]) -> bool:
-    return tuple(command[:3]) == ("docker", "compose", "run") and tuple(command[-4:-1]) == (
-        "-m",
-        "src.stage2.train",
-        "--config",
-    )
+    if tuple(command[:3]) != ("docker", "compose", "run") or tuple(
+        command[-4:-1]
+    ) != ("-m", "src.stage2.train", "--config"):
+        return False
+    try:
+        name_index = command.index("--name")
+        container_name = command[name_index + 1]
+        expected = [
+            command_for(command[-1], gpu, container_name=container_name)
+            for gpu in (0, 1)
+        ]
+    except (DriverError, ValueError, IndexError):
+        return False
+    return list(command) in expected
 
 
 def query_image_id(repo: Path) -> str:
@@ -1381,6 +1397,7 @@ def _initial_job_record(
         "out_dir": job.out_container,
         "container_name": job.container_name,
         "container_user": TRAINING_CONTAINER_USER,
+        "torch_extensions_dir": torch_extensions_dir_for(job.container_name),
         "materialized_input_inventory": {
             "path": repo_relative(repo, job.materialized_inventory_host),
             "sha256": job.materialized_inventory_sha256,
@@ -1462,6 +1479,9 @@ def _dry_run_payload(
                 "queue_gpu_preview": gpu,
                 "container_name": job.container_name,
                 "container_user": TRAINING_CONTAINER_USER,
+                "torch_extensions_dir": torch_extensions_dir_for(
+                    job.container_name
+                ),
                 "command": command,
                 "command_string": shlex.join(command),
                 "config_sha256": job.config_sha256,
@@ -1479,6 +1499,8 @@ def _dry_run_payload(
             "git_head": git_head,
             "host_driver_identity": host_identity,
             "training_container_user": TRAINING_CONTAINER_USER,
+            "torch_extensions_root": TORCH_EXTENSIONS_ROOT,
+            "torch_extensions_policy": "per_deterministic_container_tmp",
         },
         "guard": {
             "stop_starting_new_runs_seconds": STOP_START_SECONDS,
@@ -1618,6 +1640,8 @@ def _execute_queue_locked(
             "compose_config_sha256": compose_config_sha256,
             "host_driver_identity": host_identity,
             "training_container_user": TRAINING_CONTAINER_USER,
+            "torch_extensions_root": TORCH_EXTENSIONS_ROOT,
+            "torch_extensions_policy": "per_deterministic_container_tmp",
             "materialized_input_validation": materialized_validation,
             "checkpoint_verifier": {
                 "path": repo_relative(repo, verifier_source),

@@ -300,6 +300,14 @@ class DriverContractTest(unittest.TestCase):
             preview["runtime"]["host_driver_identity"],
             self._expected_identity(),
         )
+        self.assertEqual(
+            preview["runtime"]["torch_extensions_root"],
+            "/tmp/jointbuildgs-p1w-torch-extensions",
+        )
+        self.assertEqual(
+            preview["runtime"]["torch_extensions_policy"],
+            "per_deterministic_container_tmp",
+        )
         self.assertEqual(len(preview["jobs"]), 10)
         self.assertEqual({row["queue_gpu_preview"] for row in preview["jobs"]}, {0, 1})
         for row in preview["jobs"]:
@@ -311,6 +319,23 @@ class DriverContractTest(unittest.TestCase):
             self.assertEqual(row["container_user"], "1000:1000")
             user_index = row["command"].index("--user")
             self.assertEqual(row["command"][user_index + 1], "1000:1000")
+            expected_extensions_dir = (
+                "/tmp/jointbuildgs-p1w-torch-extensions/"
+                + row["container_name"]
+            )
+            self.assertEqual(
+                row["torch_extensions_dir"], expected_extensions_dir
+            )
+            self.assertIn(
+                f"TORCH_EXTENSIONS_DIR={expected_extensions_dir}",
+                row["command"],
+            )
+            self.assertFalse(
+                any(
+                    token == "HOME" or token.startswith("HOME=")
+                    for token in row["command"]
+                )
+            )
             self.assertRegex(
                 row["container_name"],
                 r"^jointbuildgs-p1w-20260721-(?:01|02|03|04a|04b)-seed(?:1001|1002)$",
@@ -336,6 +361,29 @@ class DriverContractTest(unittest.TestCase):
                 driver.DriverError, "exact host UID:GID 1000:1000"
             ):
                 driver.require_host_driver_identity()
+
+    def test_training_command_contract_rejects_cache_or_user_drift(self) -> None:
+        name = driver.container_name_for("01_seed1001")
+        command = driver.command_for("/workspace/config.yaml", 0, container_name=name)
+        self.assertTrue(driver.command_is_docker_only(command))
+
+        without_extensions = list(command)
+        extension = next(
+            item
+            for item in without_extensions
+            if item.startswith("TORCH_EXTENSIONS_DIR=")
+        )
+        without_extensions.remove(extension)
+        self.assertFalse(driver.command_is_docker_only(without_extensions))
+
+        wrong_user = list(command)
+        wrong_user[wrong_user.index("--user") + 1] = "0:0"
+        self.assertFalse(driver.command_is_docker_only(wrong_user))
+
+        with_home = list(command)
+        service_index = with_home.index("dev")
+        with_home[service_index:service_index] = ["-e", "HOME=/tmp/injected"]
+        self.assertFalse(driver.command_is_docker_only(with_home))
 
     def test_start_and_9h_guard_boundaries(self) -> None:
         self.assertTrue(driver.may_start_new_run(driver.STOP_START_SECONDS - 1e-6))
@@ -844,6 +892,10 @@ class DriverContractTest(unittest.TestCase):
         self.assertEqual(
             result["runtime"]["host_driver_identity"], self._expected_identity()
         )
+        self.assertEqual(
+            result["runtime"]["torch_extensions_root"],
+            "/tmp/jointbuildgs-p1w-torch-extensions",
+        )
         self.assertTrue(result["runtime"]["execution_tree"]["clean"])
         self.assertTrue(
             result["runtime"]["materialized_input_validation"]["validated"]
@@ -856,6 +908,14 @@ class DriverContractTest(unittest.TestCase):
         self.assertEqual(
             [row["container_user"] for row in result["jobs"][:2]],
             ["1000:1000", "1000:1000"],
+        )
+        self.assertEqual(
+            [row["torch_extensions_dir"] for row in result["jobs"][:2]],
+            [
+                "/tmp/jointbuildgs-p1w-torch-extensions/"
+                + row["container_name"]
+                for row in result["jobs"][:2]
+            ],
         )
         self.assertEqual(
             [command[command.index("--user") + 1] for command in commands],
