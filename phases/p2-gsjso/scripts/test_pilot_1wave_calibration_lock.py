@@ -1,0 +1,82 @@
+#!/usr/bin/env python3
+"""Regression checks for the result-blind first-wave calibration lock."""
+
+from __future__ import annotations
+
+import hashlib
+import json
+import unittest
+from pathlib import Path
+
+
+REPO = Path(__file__).resolve().parents[3]
+LOCK = REPO / "phases/p2-gsjso/configs/pilot_1wave_calibration_lock.json"
+
+
+def sha256_file(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+class CalibrationLockTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.lock = json.loads(LOCK.read_text(encoding="utf-8"))
+
+    def test_all_declared_inputs_match_bytes(self) -> None:
+        for binding in self.lock["input_bindings"].values():
+            path = REPO / binding["path"]
+            self.assertTrue(path.is_file(), path)
+            self.assertEqual(sha256_file(path), binding["sha256"], path)
+
+    def test_calibration_views_are_hash_ranked_training_views(self) -> None:
+        binding = self.lock["input_bindings"]["projected_footprint_mask_manifest"]
+        manifest = json.loads((REPO / binding["path"]).read_text(encoding="utf-8"))
+        names = sorted(record["view_id"] for record in manifest["records"])
+        self.assertEqual(len(names), 481)
+        training = [name for index, name in enumerate(names) if index % 10 != 9]
+        selection = self.lock["selection_sha256"]
+        expected = sorted(
+            training,
+            key=lambda name: hashlib.sha256(
+                f"{selection}|{name}".encode("utf-8")
+            ).hexdigest(),
+        )[:16]
+        actual = self.lock["view_selection"]["calibration_view_ids"]
+        self.assertEqual(actual, expected)
+        self.assertEqual(
+            hashlib.sha256("\n".join(actual).encode("utf-8")).hexdigest(),
+            self.lock["view_selection"][
+                "calibration_view_ids_sha256_newline_joined"
+            ],
+        )
+
+    def test_soft_is_below_medium_and_pair_shares_one_weight(self) -> None:
+        resolution = self.lock["forward_only_resolution"]
+        soft = resolution["soft_03"]["target_plane_to_photo_ratio"]
+        medium = resolution["medium_04a"]["target_plane_to_photo_ratio"]
+        lower, upper = resolution["medium_verification"]["inclusive_ratio_range"]
+        self.assertLess(soft, lower)
+        self.assertEqual(medium, 1.0)
+        self.assertLessEqual(lower, medium)
+        self.assertLessEqual(medium, upper)
+        self.assertEqual(
+            resolution["medium_04a"]["weight_reused_for_conditions"],
+            ["04a", "04b"],
+        )
+        self.assertTrue(resolution["no_post_update_recalibration"])
+
+    def test_recommended_mono_and_approved_budget_are_numeric(self) -> None:
+        recipe = self.lock["base_recipe"]
+        self.assertEqual(recipe["w_mono_normal_aux"], 0.05)
+        self.assertEqual(recipe["structure_grouping"], "g2_geometry")
+        budget = self.lock["training_budget"]
+        self.assertEqual(budget["max_optimizer_updates"], 20000)
+        self.assertEqual(
+            budget["full_state_checkpoint_updates"], [5000, 10000, 15000, 20000]
+        )
+        self.assertEqual(budget["wall_guard_hours"], 9.0)
+        self.assertFalse(budget["partial_is_winner_eligible"])
+
+
+if __name__ == "__main__":
+    unittest.main()
