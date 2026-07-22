@@ -1,0 +1,203 @@
+{
+  "schema": "jointbuildgs.pilot_1wave.reference_lock.v1",
+  "lock_date": "2026-07-22",
+  "role": "pre-results implementation reference and model-input lock",
+  "training_started_by_this_lock": false,
+  "code_references": {
+    "pgsr": {
+      "name": "PGSR",
+      "role": "soft segmentation-free planar regularization reference; equations are adapted natively to gsplat 2DGS",
+      "repository_url": "https://github.com/zju3dv/PGSR.git",
+      "revision": "de24f1a38b350387e8d8fe381b2cd70c1ae946e7",
+      "source_archive": {
+        "url": "https://github.com/zju3dv/PGSR/archive/de24f1a38b350387e8d8fe381b2cd70c1ae946e7.tar.gz",
+        "expected_filename": "pgsr-de24f1a38b350387e8d8fe381b2cd70c1ae946e7.tar.gz",
+        "state": "unfetched"
+      },
+      "source": {
+        "project_url": "https://zju3dv.github.io/pgsr/",
+        "paper_url": "https://arxiv.org/abs/2406.06521"
+      },
+      "license": {
+        "spdx": "LicenseRef-PGSR-Research-Only",
+        "name": "PGSR educational, research and non-profit only license",
+        "source_url": "https://raw.githubusercontent.com/zju3dv/PGSR/de24f1a38b350387e8d8fe381b2cd70c1ae946e7/LICENSE.md",
+        "commercial_use": "requires permission from the copyright holder",
+        "derivative_note": "modified distributed work must remain open-source and non-commercial"
+      }
+    },
+    "planargs": {
+      "name": "PlanarGS",
+      "role": "medium region-planarity, plane-guided initialization, and LP3 GroundedSAM reference",
+      "repository_url": "https://github.com/SJTU-ViSYS-team/PlanarGS.git",
+      "revision": "a68f22043e95146c4f1c52cc0e471a6a90e86f73",
+      "source_archive": {
+        "url": "https://github.com/SJTU-ViSYS-team/PlanarGS/archive/a68f22043e95146c4f1c52cc0e471a6a90e86f73.tar.gz",
+        "expected_filename": "planargs-a68f22043e95146c4f1c52cc0e471a6a90e86f73.tar.gz",
+        "state": "unfetched"
+      },
+      "source": {
+        "project_url": "https://planargs.github.io/",
+        "paper_url": "https://arxiv.org/abs/2510.23930"
+      },
+      "license": {
+        "spdx": "MIT",
+        "name": "MIT License",
+        "source_url": "https://raw.githubusercontent.com/SJTU-ViSYS-team/PlanarGS/a68f22043e95146c4f1c52cc0e471a6a90e86f73/LICENSE"
+      }
+    },
+    "grounded_segment_anything": {
+      "name": "Grounded-Segment-Anything",
+      "role": "official composition reference for GroundingDINO box prompts and SAM masks",
+      "repository_url": "https://github.com/IDEA-Research/Grounded-Segment-Anything.git",
+      "revision": "126abe633ffe333e16e4a0a4e946bc1003caf757",
+      "source_archive": {
+        "url": "https://github.com/IDEA-Research/Grounded-Segment-Anything/archive/126abe633ffe333e16e4a0a4e946bc1003caf757.tar.gz",
+        "expected_filename": "grounded-segment-anything-126abe633ffe333e16e4a0a4e946bc1003caf757.tar.gz",
+        "state": "unfetched"
+      },
+      "source": {
+        "project_url": "https://github.com/IDEA-Research/Grounded-Segment-Anything",
+        "paper_url": null
+      },
+      "license": {
+        "spdx": "Apache-2.0",
+        "name": "Apache License 2.0",
+        "source_url": "https://raw.githubusercontent.com/IDEA-Research/Grounded-Segment-Anything/126abe633ffe333e16e4a0a4e946bc1003caf757/LICENSE"
+      }
+    },
+    "groundingdino": {
+      "name": "GroundingDINO",
+      "role": "open-set roof text-to-box detector for condition 4a",
+      "repository_url": "https://github.com/IDEA-Research/GroundingDINO.git",
+      "revision": "856dde20aee659246248e20734ef9ba5214f5e44",
+      "source_archive": {
+        "url": "https://github.com/IDEA-Research/GroundingDINO/archive/856dde20aee659246248e20734ef9ba5214f5e44.tar.gz",
+        "expected_filename": "groundingdino-856dde20aee659246248e20734ef9ba5214f5e44.tar.gz",
+        "state": "unfetched"
+      },
+      "source": {
+        "project_url": "https://github.com/IDEA-Research/GroundingDINO",
+        "paper_url": "https://arxiv.org/abs/2303.05499"
+      },
+      "license": {
+        "spdx": "Apache-2.0",
+        "name": "Apache License 2.0",
+        "source_url": "https://raw.githubusercontent.com/IDEA-Research/GroundingDINO/856dde20aee659246248e20734ef9ba5214f5e44/LICENSE"
+      }
+    },
+    "segment_anything": {
+      "name": "Segment Anything",
+      "role": "ViT-H box-to-mask segmenter for condition 4a",
+      "repository_url": "https://github.com/facebookresearch/segment-anything.git",
+      "revision": "dca509fe793f601edb92606367a655c15ac00fdf",
+      "source_archive": {
+        "url": "https://github.com/facebookresearch/segment-anything/archive/dca509fe793f601edb92606367a655c15ac00fdf.tar.gz",
+        "expected_filename": "segment-anything-dca509fe793f601edb92606367a655c15ac00fdf.tar.gz",
+        "state": "unfetched"
+      },
+      "source": {
+        "project_url": "https://segment-anything.com/",
+        "paper_url": "https://arxiv.org/abs/2304.02643"
+      },
+      "license": {
+        "spdx": "Apache-2.0",
+        "name": "Apache License 2.0",
+        "source_url": "https://raw.githubusercontent.com/facebookresearch/segment-anything/dca509fe793f601edb92606367a655c15ac00fdf/LICENSE"
+      }
+    }
+  },
+  "model_weights": {
+    "groundingdino_swint_ogc": {
+      "model": "GroundingDINO Swin-T OGC",
+      "source_code_reference": "groundingdino",
+      "url": "https://github.com/IDEA-Research/GroundingDINO/releases/download/v0.1.0-alpha/groundingdino_swint_ogc.pth",
+      "expected_filename": "groundingdino_swint_ogc.pth",
+      "expected_sha256": null,
+      "expected_size_bytes": null,
+      "state": "unfetched",
+      "tracked_in_git": false,
+      "license_basis": "GroundingDINO repository Apache-2.0 license; preserve upstream notices"
+    },
+    "sam_vit_h": {
+      "model": "Segment Anything ViT-H",
+      "source_code_reference": "segment_anything",
+      "url": "https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth",
+      "expected_filename": "sam_vit_h_4b8939.pth",
+      "expected_sha256": null,
+      "expected_size_bytes": null,
+      "state": "unfetched",
+      "tracked_in_git": false,
+      "license_basis": "Segment Anything repository Apache-2.0 license; SA-1B dataset terms are separate"
+    }
+  },
+  "artifact_policy": {
+    "download_on_validation": false,
+    "weight_files_in_git": "forbidden",
+    "source_archives_in_git": "forbidden",
+    "fetch_requires_explicit_artifact_ids": true,
+    "first_fetch_output": "an external-cache receipt with URL, byte count, SHA256, lock SHA256, and UTC time",
+    "promotion_gate": "copy receipt SHA256 and size into a run manifest before inference; do not claim a verified model from URL or filename alone"
+  },
+  "grounded_sam_pipeline": {
+    "prompt_literal": "roof",
+    "caption_normalization": {
+      "lowercase": true,
+      "strip_whitespace": true,
+      "append_period_for_groundingdino": true,
+      "effective_caption": "roof."
+    },
+    "thresholds": {
+      "box": 0.25,
+      "text": 0.25,
+      "nms_iou": 0.8
+    },
+    "groundingdino_preprocessing": {
+      "input": "PIL RGB",
+      "resize": "RandomResize with singleton candidates [800] and max_size 1333; therefore deterministic 800 short-side subject to max_size",
+      "tensor_scale": "uint8 RGB to float tensor in [0,1]",
+      "normalize_mean": [0.485, 0.456, 0.406],
+      "normalize_std": [0.229, 0.224, 0.225],
+      "box_format": "normalized cxcywh converted to original-image xyxy before NMS and SAM",
+      "threshold_comparator": "strictly greater than box/text threshold"
+    },
+    "sam_preprocessing": {
+      "model_type": "vit_h",
+      "input": "original RGB uint8 image",
+      "resize": "ResizeLongestSide to image_encoder.img_size 1024",
+      "pixel_mean": [123.675, 116.28, 103.53],
+      "pixel_std": [58.395, 57.12, 57.375],
+      "padding": "zero-pad normalized tensor to 1024x1024",
+      "box_prompt": "GroundingDINO original-image xyxy box transformed with SAM ResizeLongestSide",
+      "multimask_output": false,
+      "mask_threshold": 0.0
+    },
+    "vision_fusion": {
+      "candidate_source": "per-view GroundedSAM roof candidates only; no GT",
+      "cross_view_consistency": "consume a boolean cross-view-consistent SAM mask from a separately parameter-locked image-derived reprojection stage",
+      "footprint_projection": "image-derived projection only; no LoD2 z, roof face, type, or semantic input",
+      "footprint_dilation_px": 5,
+      "footprint_core_erosion_px_default": 5,
+      "footprint_core_erosion_px_small_building_if_default_empty": 1,
+      "formula": "(cross_view_consistent_sam AND dilate(projected_footprint,5px)) OR erode(projected_footprint,core_px)",
+      "no_sam_candidate_policy": "retain the footprint erosion core and set fallback flag",
+      "small_building_policy": "if 5px erosion core is empty, retry exactly 1px erosion; record which core was used",
+      "gt_used_for_selection": false,
+      "required_flags": [
+        "sam_candidate_present",
+        "cross_view_consistent_candidate_present",
+        "core_erosion_px_used",
+        "core_only_fallback"
+      ]
+    },
+    "quality_reporting": {
+      "stage_1_pretraining": "report footprint-overlap statistics for the vision mask",
+      "stage_2_posthoc_score_only": "score-only report of IoU against GT after inference; GT is forbidden from mask selection, fusion, training, calibration, or rerun decisions"
+    },
+    "unresolved_execution_dependency": {
+      "item": "GroundingDINO BERT tokenizer/model bootstrap snapshot",
+      "state": "must be revision-pinned in the inference-runtime lock before model execution",
+      "reason": "the five user-approved Git revisions do not pin a Hugging Face snapshot"
+    }
+  }
+}
