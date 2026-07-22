@@ -28,6 +28,7 @@ import hashlib
 import json
 import math
 import os
+import re
 import tempfile
 from dataclasses import dataclass
 from pathlib import Path
@@ -50,6 +51,17 @@ CRS = "EPSG:25832"
 EXPECTED_POPULATION = 30
 EXPECTED_CONDITIONS = ("01", "02", "03", "04a", "04b")
 EXPECTED_SEEDS = (1001, 1002)
+ROOFER_EXECUTION_SCHEMA = "jointbuildgs.pilot_1wave.roofer_execution.v1"
+ROOFER_IMAGE = (
+    "3dgi/roofer@sha256:"
+    "dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2"
+)
+ROOFER_IMAGE_ID = (
+    "sha256:9c980b97fba4c3fd30f5bb4afb8f2621be211d4e72e4333ea2053e8cd69b2dba"
+)
+ROOFER_ENTRYPOINT = ("roofer",)
+ROOFER_CONTAINER_REPO = Path("/workspace/JointBuildGS")
+ROOFER_CONTAINER_NAME_PREFIX = "jointbuildgs-p1w-20260722"
 
 PILOT_SET_SHA256 = (
     "db5ecb6c838499dd3a5f96a4b1abae85414c3d38318d976b7ee598982b566ffc"
@@ -125,6 +137,8 @@ BUILDING_FIELDS = (
     "classified_pointcloud_sha256",
     "roofer_marker_path",
     "roofer_marker_sha256",
+    "roofer_execution_receipt_path",
+    "roofer_execution_receipt_sha256",
     "jsonseq_path",
     "jsonseq_sha256",
     "jsonseq_line_number",
@@ -156,12 +170,17 @@ BUILDING_FIELDS = (
     "jsonseq_id_match",
     "merged_parent_id_match",
     "score_id_match",
+    "spatial_owner_candidate_count",
     "spatial_owner_building_id",
     "spatial_owner_selection_rank",
     "spatial_owner_ratio",
     "spatial_owner_unique",
     "spatial_owner_matches_parent",
     "cityjson_owner_match",
+    "containment_tolerance_m2",
+    "outside_owner_area_m2",
+    "owner_containment_ratio",
+    "owner_contained",
     "strongest_offdiag_building_id",
     "strongest_offdiag_ratio",
     "all_four_match",
@@ -182,8 +201,15 @@ MATRIX_FIELDS = (
     "intersection_over_output_roof",
     "is_diagonal",
     "output_zero_roof",
+    "argmax_candidate_count",
     "is_column_argmax",
     "owner_assignment",
+    "assigned_owner_building_id",
+    "assigned_owner_selection_rank",
+    "containment_tolerance_m2",
+    "outside_assigned_owner_area_m2",
+    "assigned_owner_containment_ratio",
+    "assigned_owner_contained",
 )
 
 
@@ -226,21 +252,24 @@ class RawFeature:
 
 
 _SHA256_CACHE: dict[tuple[str, int, int, int], str] = {}
+SHA256_CACHE_MIN_BYTES = 64 * 1024 * 1024
 
 
 def sha256_file(path: Path, block_size: int = 1 << 20) -> str:
     path = path.resolve()
     stat = path.stat()
     cache_key = (str(path), int(stat.st_ino), int(stat.st_size), int(stat.st_mtime_ns))
-    cached = _SHA256_CACHE.get(cache_key)
-    if cached is not None:
-        return cached
+    if stat.st_size >= SHA256_CACHE_MIN_BYTES:
+        cached = _SHA256_CACHE.get(cache_key)
+        if cached is not None:
+            return cached
     digest = hashlib.sha256()
     with path.open("rb") as stream:
         for block in iter(lambda: stream.read(block_size), b""):
             digest.update(block)
     value = digest.hexdigest()
-    _SHA256_CACHE[cache_key] = value
+    if stat.st_size >= SHA256_CACHE_MIN_BYTES:
+        _SHA256_CACHE[cache_key] = value
     return value
 
 
@@ -266,6 +295,14 @@ def require_equal(actual: Any, expected: Any, label: str) -> None:
 def require(condition: bool, message: str) -> None:
     if not condition:
         raise RuntimeError(message)
+
+
+def require_exact_unique_ids(
+    actual: Sequence[str], expected: Sequence[str], label: str
+) -> None:
+    require_equal(len(actual), len(expected), f"{label} count")
+    require_equal(len(set(actual)), len(actual), f"{label} uniqueness")
+    require_equal(set(actual), set(expected), f"{label} set")
 
 
 def load_json(path: Path, label: str) -> dict[str, Any]:
@@ -766,10 +803,220 @@ def validate_argv_record(
     )
     require_equal(payload.get("condition_id"), expected_condition, f"{label} condition")
     require_equal(int(payload.get("seed", -1)), int(expected_seed), f"{label} seed")
+    require_equal(payload.get("image"), ROOFER_IMAGE, f"{label} image")
     for field in ("schema", "image", "arguments"):
         require_equal(record_value.get(field), payload.get(field), f"{label} {field}")
     require(isinstance(payload.get("arguments"), list), f"{label} arguments must be an array")
     return {"path": path, "sha256": sha256_file(path), "payload": payload}
+
+
+def repo_relative(path: Path) -> str:
+    path = path.resolve()
+    try:
+        return path.relative_to(REPO.resolve()).as_posix()
+    except ValueError as exc:
+        raise RuntimeError(f"binding artifact is outside repository: {path}") from exc
+
+
+def validate_execution_artifact_record(
+    value: Any,
+    *,
+    declaring_file: Path,
+    expected_path: Path,
+    label: str,
+    include_size: bool = False,
+) -> dict[str, Any]:
+    if not isinstance(value, Mapping):
+        raise RuntimeError(f"{label} must be an artifact record")
+    expected_path = expected_path.resolve()
+    require(not expected_path.is_symlink(), f"{label} must not be a symlink")
+    path = resolve_and_hash(value, declaring_file=declaring_file, label=label)
+    require_equal(path, expected_path, f"{label} path")
+    normalized: dict[str, Any] = {
+        "path": repo_relative(path),
+        "sha256": sha256_file(path),
+    }
+    if include_size:
+        normalized["size"] = path.stat().st_size
+    require_equal(dict(value), normalized, f"{label} record")
+    return normalized
+
+
+def validate_execution_binding(
+    marker: Mapping[str, Any],
+    *,
+    marker_path: Path,
+    inputs: RunInputs,
+    prepare_path: Path,
+    prepare_sha256: str,
+    argv: Mapping[str, Any],
+) -> dict[str, Any]:
+    """Re-open the retained-container receipt and normalized execution facts."""
+
+    execution_record = marker.get("execution_receipt")
+    if not isinstance(execution_record, Mapping):
+        raise RuntimeError("Roofer v2 marker lacks execution_receipt")
+    output_dir = marker_path.resolve().parent
+    execution_path = resolve_and_hash(
+        execution_record,
+        declaring_file=marker_path,
+        label="Roofer execution receipt",
+    )
+    require_equal(
+        execution_path,
+        output_dir / "roofer_execution_receipt.json",
+        "Roofer execution receipt path",
+    )
+    require_equal(
+        dict(execution_record),
+        {"path": repo_relative(execution_path), "sha256": sha256_file(execution_path)},
+        "Roofer execution receipt record",
+    )
+    payload = load_json(execution_path, "Roofer execution receipt")
+    require_equal(payload.get("schema"), ROOFER_EXECUTION_SCHEMA, "execution schema")
+    require_equal(payload.get("state"), "complete", "execution state")
+    require_equal(str(payload.get("condition_id", "")), inputs.condition_id, "execution condition")
+    require_equal(int(payload.get("seed", -1)), inputs.seed, "execution seed")
+    require_equal(int(payload.get("roofer_invocation_count", -1)), 1, "execution invocation count")
+    expected_job_id = f"{inputs.condition_id}_seed{inputs.seed}"
+    job_id = str(payload.get("job_id", "")).strip()
+    require_equal(job_id, expected_job_id, "Roofer execution job_id")
+
+    normalized_prepare = {
+        "path": repo_relative(prepare_path),
+        "sha256": prepare_sha256,
+    }
+    require_equal(payload.get("prepare_receipt"), normalized_prepare, "execution prepare receipt")
+    normalized_argv = {
+        "path": repo_relative(Path(str(argv["path"]))),
+        "sha256": str(argv["sha256"]),
+    }
+    require_equal(payload.get("roofer_argv"), normalized_argv, "execution Roofer argv")
+    expected_arguments = list(argv["payload"]["arguments"])
+    expected_contract_sha = sha256_json(
+        {
+            "job_id": expected_job_id,
+            "prepare_sha256": prepare_sha256,
+            "argv_sha256": str(argv["sha256"]),
+            "image": ROOFER_IMAGE,
+            "arguments": expected_arguments,
+        }
+    )
+    expected_container_name = (
+        f"{ROOFER_CONTAINER_NAME_PREFIX}-{inputs.condition_id}-seed{inputs.seed}-roofer"
+    )
+    expected_repo_bind = f"{REPO.resolve()}:{ROOFER_CONTAINER_REPO}"
+
+    container = payload.get("container")
+    execution = payload.get("execution")
+    if not isinstance(container, Mapping) or not isinstance(execution, Mapping):
+        raise RuntimeError("Roofer execution receipt lacks container/execution facts")
+    require_equal(container.get("image_reference"), ROOFER_IMAGE, "execution image reference")
+    require_equal(container.get("image_id"), ROOFER_IMAGE_ID, "execution local image ID")
+    require_equal(container.get("config_image"), ROOFER_IMAGE, "execution config image")
+    require_equal(
+        container.get("entrypoint"),
+        list(ROOFER_ENTRYPOINT),
+        "execution container entrypoint",
+    )
+    require_equal(container.get("cmd"), expected_arguments, "execution container command")
+    labels = container.get("labels")
+    require(isinstance(labels, Mapping), "execution container labels must be an object")
+    require_equal(labels.get("jointbuildgs.p1w.job"), expected_job_id, "execution job label")
+    require_equal(
+        labels.get("jointbuildgs.p1w.contract"),
+        expected_contract_sha,
+        "execution contract label",
+    )
+    require_equal(container.get("network_mode"), "none", "execution network mode")
+    require_equal(container.get("binds"), [expected_repo_bind], "execution repository bind")
+    require_equal(int(container.get("restart_count", -1)), 0, "execution restart count")
+    container_id = str(container.get("id", ""))
+    require(
+        re.fullmatch(r"[0-9a-f]{64}", container_id) is not None,
+        "Roofer execution container ID is invalid",
+    )
+    container_name = str(container.get("name", "")).strip()
+    require_equal(container_name, expected_container_name, "Roofer execution container name")
+    require_equal(execution.get("docker_state"), "exited", "execution Docker state")
+    require_equal(int(execution.get("wait_exit_code", -1)), 0, "execution wait exit code")
+    require_equal(int(execution.get("start_attempt_count", -1)), 1, "execution start count")
+    start_attempts = execution.get("start_attempts")
+    require(isinstance(start_attempts, list), "execution start_attempts must be an array")
+    require_equal(len(start_attempts), 1, "execution start-attempt ledger length")
+
+    launch_record = validate_execution_artifact_record(
+        payload.get("launch_receipt"),
+        declaring_file=execution_path,
+        expected_path=output_dir / "container_launch.json",
+        label="Roofer launch receipt",
+    )
+    process_record = validate_execution_artifact_record(
+        payload.get("process_receipt"),
+        declaring_file=execution_path,
+        expected_path=output_dir / "process_complete.json",
+        label="Roofer process receipt",
+    )
+    log_record = validate_execution_artifact_record(
+        payload.get("logs"),
+        declaring_file=execution_path,
+        expected_path=output_dir / "container.log",
+        label="Roofer immutable log",
+        include_size=True,
+    )
+    launch = load_json(output_dir / "container_launch.json", "Roofer launch receipt")
+    process = load_json(output_dir / "process_complete.json", "Roofer process receipt")
+    require_equal(launch.get("container_id"), container_id, "launch/container ID")
+    require_equal(launch.get("container_name"), container_name, "launch/container name")
+    require_equal(
+        launch.get("contract_sha256"), expected_contract_sha, "launch contract SHA256"
+    )
+    require_equal(launch.get("start_attempts"), start_attempts, "launch start attempts")
+    require_equal(int(launch.get("start_attempt_count", -1)), 1, "launch start count")
+    require_equal(process.get("container_name"), container_name, "process/container name")
+    require_equal(
+        process.get("contract_sha256"), launch.get("contract_sha256"), "process/launch contract"
+    )
+    require_equal(int(process.get("exit_code", -1)), 0, "process exit code")
+    require_equal(int(process.get("wait_exit_code", -1)), 0, "process wait exit code")
+    require_equal(launch.get("job_id"), job_id, "launch job_id")
+    require_equal(process.get("job_id"), job_id, "process job_id")
+    normalized = {
+        "schema": ROOFER_EXECUTION_SCHEMA,
+        "state": "complete",
+        "condition_id": inputs.condition_id,
+        "seed": inputs.seed,
+        "job_id": job_id,
+        "roofer_invocation_count": 1,
+        "prepare_receipt": normalized_prepare,
+        "roofer_argv": normalized_argv,
+        "roofer_image_reference": ROOFER_IMAGE,
+        "roofer_local_image_id": ROOFER_IMAGE_ID,
+        "container_id": container_id,
+        "container_name": container_name,
+        "roofer_entrypoint": list(ROOFER_ENTRYPOINT),
+        "roofer_command": expected_arguments,
+        "contract_sha256": expected_contract_sha,
+        "container_labels": {
+            "jointbuildgs.p1w.job": expected_job_id,
+            "jointbuildgs.p1w.contract": expected_contract_sha,
+        },
+        "network_mode": "none",
+        "repo_bind": expected_repo_bind,
+        "docker_state": "exited",
+        "wait_exit_code": 0,
+        "start_attempt_count": 1,
+        "restart_count": 0,
+        "launch_receipt": launch_record,
+        "process_receipt": process_record,
+        "logs": log_record,
+    }
+    require_equal(marker.get("roofer_execution"), normalized, "normalized Roofer execution")
+    return {
+        "path": execution_path,
+        "sha256": sha256_file(execution_path),
+        "normalized": normalized,
+    }
 
 
 def validate_classification(
@@ -955,15 +1202,23 @@ def validate_ownership_graph(
     *,
     label: str,
 ) -> dict[str, tuple[str, ...]]:
-    parent_ids = tuple(
+    parent_ids_in_serialization_order = tuple(
         str(object_id)
         for object_id, obj in cityobjects.items()
         if isinstance(obj, Mapping) and obj.get("type") == "Building"
     )
-    require_equal(parent_ids, tuple(expected_parent_ids), f"{label} parent set/order")
+    expected_parent_ids = tuple(str(value) for value in expected_parent_ids)
+    require_exact_unique_ids(
+        parent_ids_in_serialization_order,
+        expected_parent_ids,
+        f"{label} parent IDs",
+    )
     ownership: dict[str, tuple[str, ...]] = {}
     child_owner: dict[str, str] = {}
-    for parent_id in parent_ids:
+    # CityObjects is an object, so insertion order is serialization detail rather
+    # than identity.  Build the audit mapping in the locked order after proving
+    # the exact unique parent-ID population.
+    for parent_id in expected_parent_ids:
         parent = cityobjects[parent_id]
         children_raw = parent.get("children", [])
         if not isinstance(children_raw, list):
@@ -991,7 +1246,9 @@ def validate_ownership_graph(
     orphan_parts = sorted(all_parts - set(child_owner))
     if orphan_parts:
         raise RuntimeError(f"{label} orphan BuildingPart objects: {orphan_parts}")
-    unexpected = sorted(set(cityobjects) - set(parent_ids) - all_parts)
+    unexpected = sorted(
+        set(cityobjects) - set(parent_ids_in_serialization_order) - all_parts
+    )
     if unexpected:
         raise RuntimeError(f"{label} unexpected CityObject types/IDs: {unexpected}")
     return ownership
@@ -1035,7 +1292,11 @@ def load_raw_features(
     marker: Mapping[str, Any],
     marker_path: Path,
     expected_ids: Sequence[str],
-) -> tuple[tuple[RawFeature, ...], tuple[dict[str, Any], ...]]:
+) -> tuple[
+    tuple[RawFeature, ...],
+    tuple[dict[str, Any], ...],
+    tuple[str, ...],
+]:
     records = _jsonseq_records_from_marker(marker)
     declared_paths = [str(record.get("path", "")) for record in records]
     require_equal(declared_paths, sorted(declared_paths), "Roofer JSONSeq file order")
@@ -1093,12 +1354,22 @@ def load_raw_features(
             require_equal(
                 int(record["feature_count"]), feature_count, f"JSONSeq feature count {path}"
             )
-    require_equal(
-        tuple(feature.building_id for feature in features),
-        tuple(expected_ids),
-        "raw CityJSONSeq feature/root order",
+    feature_ids_in_read_order = tuple(feature.building_id for feature in features)
+    expected_ids = tuple(str(value) for value in expected_ids)
+    require_exact_unique_ids(
+        feature_ids_in_read_order,
+        expected_ids,
+        "raw CityJSONSeq feature/root IDs",
     )
-    return tuple(features), tuple(raw_payloads)
+    feature_by_id = {feature.building_id: feature for feature in features}
+    payload_by_id = {
+        feature.building_id: payload for feature, payload in zip(features, raw_payloads)
+    }
+    return (
+        tuple(feature_by_id[building_id] for building_id in expected_ids),
+        tuple(payload_by_id[building_id] for building_id in expected_ids),
+        feature_ids_in_read_order,
+    )
 
 
 def _fallback(parent: Mapping[str, Any], zero_roof: bool) -> tuple[bool, str]:
@@ -1227,6 +1498,14 @@ def validate_roofer(
     )
     require_equal(final_argv["path"], prepare_argv["path"], "prepare/final argv path")
     require_equal(final_argv["sha256"], prepare_argv["sha256"], "prepare/final argv SHA256")
+    execution_binding = validate_execution_binding(
+        marker,
+        marker_path=marker_path,
+        inputs=inputs,
+        prepare_path=prepare_marker_path.resolve(),
+        prepare_sha256=prepare_marker_sha,
+        argv=final_argv,
+    )
 
     outputs = prepare_payload.get("outputs")
     if not isinstance(outputs, Mapping):
@@ -1250,7 +1529,9 @@ def validate_roofer(
         flat_prefixes=("merged_cityjson", "cityjson"),
     )
     require_equal(cityjson_path, merged_cityjson.resolve(), "Roofer merged CityJSON path")
-    raw_features, _raw_payloads = load_raw_features(marker, marker_path, lock.ids)
+    raw_features, _raw_payloads, raw_feature_ids_in_read_order = load_raw_features(
+        marker, marker_path, lock.ids
+    )
     raw_record = marker.get("raw_jsonseq")
     if not isinstance(raw_record, Mapping):
         raise RuntimeError("Roofer v2 marker lacks raw_jsonseq")
@@ -1292,14 +1573,23 @@ def validate_roofer(
         sha256_json({"files": canonical_file_records}),
         "raw JSONSeq bundle SHA256",
     )
-    require_equal(
-        tuple(str(value) for value in raw_record.get("feature_ids_in_read_order", [])),
+    marker_feature_ids_in_read_order = tuple(
+        str(value) for value in raw_record.get("feature_ids_in_read_order", [])
+    )
+    require_exact_unique_ids(
+        marker_feature_ids_in_read_order,
         lock.ids,
-        "raw JSONSeq feature IDs",
+        "raw JSONSeq marker feature IDs",
+    )
+    require_equal(
+        marker_feature_ids_in_read_order,
+        raw_feature_ids_in_read_order,
+        "raw JSONSeq marker/read order",
     )
     require_equal(int(raw_record.get("root_building_count", -1)), len(lock.ids), "raw root count")
-    require_equal(
-        tuple(str(value) for value in raw_record.get("root_building_ids", [])),
+    raw_root_ids = tuple(str(value) for value in raw_record.get("root_building_ids", []))
+    require_exact_unique_ids(
+        raw_root_ids,
         lock.ids,
         "raw root Building IDs",
     )
@@ -1309,6 +1599,11 @@ def validate_roofer(
     cityobjects = merged.get("CityObjects")
     if not isinstance(cityobjects, Mapping):
         raise RuntimeError("merged CityJSON lacks CityObjects")
+    merged_root_ids_in_serialization_order = tuple(
+        str(object_id)
+        for object_id, obj in cityobjects.items()
+        if isinstance(obj, Mapping) and obj.get("type") == "Building"
+    )
     ownership = validate_ownership_graph(cityobjects, lock.ids, label="merged CityJSON")
     merged_record = marker.get("merged_cityjson")
     if not isinstance(merged_record, Mapping):
@@ -1319,8 +1614,11 @@ def validate_roofer(
         "merged CityJSON size",
     )
     require_equal(int(merged_record.get("root_building_count", -1)), len(lock.ids), "merged root count")
-    require_equal(
-        tuple(str(value) for value in merged_record.get("root_building_ids", [])),
+    merged_marker_root_ids = tuple(
+        str(value) for value in merged_record.get("root_building_ids", [])
+    )
+    require_exact_unique_ids(
+        merged_marker_root_ids,
         lock.ids,
         "merged root Building IDs",
     )
@@ -1384,6 +1682,13 @@ def validate_roofer(
         "raw_matches": tuple(raw_matches),
         "parent_hashes": tuple(parent_hashes),
         "raw_features": raw_features,
+        "raw_feature_ids_in_read_order": raw_feature_ids_in_read_order,
+        "raw_marker_root_ids": raw_root_ids,
+        "merged_root_ids_in_serialization_order": merged_root_ids_in_serialization_order,
+        "merged_marker_root_ids": merged_marker_root_ids,
+        "execution_receipt_path": execution_binding["path"],
+        "execution_receipt_sha256": execution_binding["sha256"],
+        "roofer_execution": execution_binding["normalized"],
     }
 
 
@@ -1489,31 +1794,58 @@ def build_matrix(
             float(footprint.intersection(roof).area) if roof_area > 0.0 else 0.0
             for footprint in footprints
         ]
+        containment_tolerance = max(1e-6, roof_area * 1e-8)
+        argmax_indices: list[int] = []
         if roof_area > 1e-12:
             maximum = max(intersections)
             tolerance = max(1e-9, abs(maximum) * 1e-9)
-            owners = [
-                index for index, value in enumerate(intersections) if abs(value - maximum) <= tolerance
-            ]
-            require(maximum > 1e-12, f"nonempty output roof has no locked footprint owner: {output_id}")
-            require_equal(len(owners), 1, f"non-unique spatial owner for {output_id}")
-            owner_index = owners[0]
-            owner_id = lock.ids[owner_index]
-            require_equal(owner_id, output_id, f"spatial owner for {output_id}")
-            owner_ratio: float | None = intersections[owner_index] / roof_area
-            owner_unique = True
+            if maximum > 1e-12:
+                argmax_indices = [
+                    index
+                    for index, value in enumerate(intersections)
+                    if abs(value - maximum) <= tolerance
+                ]
+            if len(argmax_indices) == 1:
+                owner_index = argmax_indices[0]
+                owner_id = lock.ids[owner_index]
+                owner_ratio: float | None = intersections[owner_index] / roof_area
+                owner_unique = True
+                outside_owner_area = float(roof.difference(footprints[owner_index]).area)
+                owner_contained = outside_owner_area <= containment_tolerance
+                owner_containment_ratio: float | None = max(
+                    0.0, min(1.0, 1.0 - outside_owner_area / roof_area)
+                )
+            else:
+                owner_index = None
+                owner_id = ""
+                owner_ratio = None
+                owner_unique = False
+                outside_owner_area = roof_area
+                owner_containment_ratio = 0.0
+                owner_contained = False
         else:
             owner_index = None
             owner_id = ""
             owner_ratio = None
             owner_unique = False
+            outside_owner_area = 0.0
+            owner_containment_ratio = None
+            owner_contained = False
         if roof_area > 1e-12:
             offdiag = [
                 (value / roof_area, index)
                 for index, value in enumerate(intersections)
                 if index != output_index - 1
             ]
-            strongest_ratio, strongest_index = max(offdiag, default=(0.0, -1))
+            strongest_ratio = max((value for value, _index in offdiag), default=0.0)
+            strongest_index = min(
+                (
+                    index
+                    for value, index in offdiag
+                    if math.isclose(value, strongest_ratio, rel_tol=0.0, abs_tol=1e-15)
+                ),
+                default=-1,
+            )
         else:
             strongest_ratio, strongest_index = 0.0, -1
         columns.append(
@@ -1523,6 +1855,11 @@ def build_matrix(
                 "owner_ratio": owner_ratio,
                 "owner_unique": owner_unique,
                 "owner_matches": owner_id == output_id if owner_index is not None else None,
+                "owner_candidate_count": len(argmax_indices),
+                "containment_tolerance_m2": containment_tolerance,
+                "outside_owner_area_m2": outside_owner_area,
+                "owner_containment_ratio": owner_containment_ratio,
+                "owner_contained": owner_contained,
                 "strongest_offdiag_id": lock.ids[strongest_index] if strongest_index >= 0 else "",
                 "strongest_offdiag_ratio": strongest_ratio,
             }
@@ -1547,42 +1884,20 @@ def build_matrix(
                     ),
                     "is_diagonal": locked_index == output_index,
                     "output_zero_roof": roof_area <= 1e-12,
-                    "is_column_argmax": owner_index == locked_index - 1,
+                    "argmax_candidate_count": len(argmax_indices),
+                    "is_column_argmax": locked_index - 1 in argmax_indices,
                     "owner_assignment": owner_index == locked_index - 1,
+                    "assigned_owner_building_id": owner_id,
+                    "assigned_owner_selection_rank": (
+                        owner_index + 1 if owner_index is not None else None
+                    ),
+                    "containment_tolerance_m2": containment_tolerance,
+                    "outside_assigned_owner_area_m2": outside_owner_area,
+                    "assigned_owner_containment_ratio": owner_containment_ratio,
+                    "assigned_owner_contained": owner_contained,
                 }
             )
     require_equal(len(rows), len(lock.ids) ** 2, "spatial matrix row count")
-    nonempty_output_indices = {
-        index
-        for index, roof in enumerate(roof_unions, start=1)
-        if not roof.is_empty and float(roof.area) > 1e-12
-    }
-    column_sums = {
-        index: sum(
-            int(bool(row["owner_assignment"]))
-            for row in rows
-            if int(row["output_selection_rank"]) == index
-        )
-        for index in nonempty_output_indices
-    }
-    require(
-        all(value == 1 for value in column_sums.values()),
-        f"owner-assignment nonempty column sums drift: {column_sums}",
-    )
-    row_sums = {
-        index: sum(
-            int(bool(row["owner_assignment"]))
-            for row in rows
-            if int(row["locked_selection_rank"]) == index
-            and int(row["output_selection_rank"]) in nonempty_output_indices
-        )
-        for index in range(1, len(lock.ids) + 1)
-    }
-    require(
-        all(value in {0, 1} for value in row_sums.values()),
-        f"owner-assignment row is shared: {row_sums}",
-    )
-    require_equal(sum(row_sums.values()), len(nonempty_output_indices), "owner-assignment total")
     diagonal_sum = sum(
         int(bool(row["owner_assignment"]))
         for row in rows
@@ -1593,8 +1908,6 @@ def build_matrix(
         for row in rows
         if not bool(row["is_diagonal"])
     )
-    require_equal(diagonal_sum, len(nonempty_output_indices), "owner-assignment diagonal sum")
-    require_equal(offdiagonal_sum, 0, "owner-assignment off-diagonal sum")
     full_column_sums = {
         index: sum(
             int(bool(row["owner_assignment"]))
@@ -1621,12 +1934,22 @@ def build_matrix(
         "diagonal_sum": diagonal_sum,
         "offdiagonal_sum": offdiagonal_sum,
         "expected_diagonal_sum": len(lock.ids),
+        "containment_match_count": sum(
+            int(bool(column["owner_contained"])) for column in columns
+        ),
+        "containment_mismatch_count": sum(
+            not bool(column["owner_contained"]) for column in columns
+        ),
+        "all_assigned_roofs_contained": all(
+            bool(column["owner_contained"]) for column in columns
+        ),
     }
     gate["pass"] = bool(
         gate["all_row_sums_equal_1"]
         and gate["all_column_sums_equal_1"]
         and diagonal_sum == len(lock.ids)
         and offdiagonal_sum == 0
+        and gate["containment_mismatch_count"] == 0
     )
     return rows, columns, gate
 
@@ -1772,6 +2095,12 @@ def audit_run(
                 "classified_pointcloud_sha256": classification["pointcloud_sha256"],
                 "roofer_marker_path": str(roofer["path"]),
                 "roofer_marker_sha256": roofer["sha256"],
+                "roofer_execution_receipt_path": str(
+                    roofer["execution_receipt_path"]
+                ),
+                "roofer_execution_receipt_sha256": roofer[
+                    "execution_receipt_sha256"
+                ],
                 "jsonseq_path": str(raw.source_path),
                 "jsonseq_sha256": raw.source_sha256,
                 "jsonseq_line_number": raw.line_number,
@@ -1803,6 +2132,7 @@ def audit_run(
                 "jsonseq_id_match": raw_match,
                 "merged_parent_id_match": merged_match,
                 "score_id_match": score_match,
+                "spatial_owner_candidate_count": column["owner_candidate_count"],
                 "spatial_owner_building_id": column["owner_id"],
                 "spatial_owner_selection_rank": (
                     column["owner_index"] + 1 if column["owner_index"] is not None else None
@@ -1811,6 +2141,10 @@ def audit_run(
                 "spatial_owner_unique": column["owner_unique"],
                 "spatial_owner_matches_parent": column["owner_matches"],
                 "cityjson_owner_match": column["owner_matches"],
+                "containment_tolerance_m2": column["containment_tolerance_m2"],
+                "outside_owner_area_m2": column["outside_owner_area_m2"],
+                "owner_containment_ratio": column["owner_containment_ratio"],
+                "owner_contained": column["owner_contained"],
                 "strongest_offdiag_building_id": column["strongest_offdiag_id"],
                 "strongest_offdiag_ratio": column["strongest_offdiag_ratio"],
                 "all_four_match": all_four,
@@ -1837,7 +2171,19 @@ def audit_run(
         "ordered_building_ids": list(lock.ids),
         "ordered_ids_sha256": lock.ordered_ids_sha256,
         "selection_sha256": lock.selection_sha256,
+        "roofer_output_orders": {
+            "raw_feature_ids_in_read_order": list(
+                roofer["raw_feature_ids_in_read_order"]
+            ),
+            "raw_marker_root_ids": list(roofer["raw_marker_root_ids"]),
+            "merged_root_ids_in_serialization_order": list(
+                roofer["merged_root_ids_in_serialization_order"]
+            ),
+            "merged_marker_root_ids": list(roofer["merged_marker_root_ids"]),
+            "audit_rows_reordered_to_locked_ids": True,
+        },
         "zero_roof_count": sum(bool(value) for value in (row["zero_roof"] for row in building_rows)),
+        "containment_mismatch_count": matrix_gate["containment_mismatch_count"],
         "source_artifacts": {
             "pilot_set": {"path": str(lock.pilot_set_path), "sha256": lock.pilot_set_sha256},
             "pilot_manifest": {"path": str(lock.manifest_path), "sha256": lock.manifest_sha256},
@@ -1848,6 +2194,10 @@ def audit_run(
             "roofprints": {"path": str(roofprints["path"]), "sha256": roofprints["sha256"]},
             "classified_pointcloud": {"path": str(classification["pointcloud_path"]), "sha256": classification["pointcloud_sha256"]},
             "roofer_marker": {"path": str(roofer["path"]), "sha256": roofer["sha256"]},
+            "roofer_execution_receipt": {
+                "path": str(roofer["execution_receipt_path"]),
+                "sha256": roofer["execution_receipt_sha256"],
+            },
             "merged_cityjson": {"path": str(roofer["cityjson_path"]), "sha256": roofer["cityjson_sha256"]},
             "score_marker": {"path": str(scores["path"]), "sha256": scores["sha256"]},
             "score_csv": {"path": str(scores["csv_path"]), "sha256": scores["csv_sha256"]},
@@ -1996,6 +2346,10 @@ def audit_batch(
         "pass_run_count": sum(int(value["hard_gate_passed"]) for value in per_run),
         "fail_run_count": sum(not value["hard_gate_passed"] for value in per_run),
         "zero_roof_count": sum(int(value["zero_roof_count"]) for value in per_run),
+        "containment_mismatch_count": sum(
+            int(value["owner_assignment_gate"]["containment_mismatch_count"])
+            for value in per_run
+        ),
         "owner_assignment_count": sum(
             str(row["owner_assignment"]).lower() == "true" for row in all_matrix_rows
         ),
@@ -2014,6 +2368,7 @@ def audit_batch(
         global_gate["pass_run_count"] == len(run_inputs)
         and global_gate["fail_run_count"] == 0
         and global_gate["zero_roof_count"] == 0
+        and global_gate["containment_mismatch_count"] == 0
         and global_gate["owner_assignment_count"] == len(run_inputs) * population
         and global_gate["diagonal_assignment_count"] == len(run_inputs) * population
         and global_gate["offdiagonal_assignment_count"] == 0

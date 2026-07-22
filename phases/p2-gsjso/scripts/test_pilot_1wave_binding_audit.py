@@ -40,6 +40,16 @@ def record(path: Path) -> dict[str, Any]:
     return {"path": str(path), "sha256": audit.sha256_file(path)}
 
 
+def repo_record(path: Path, *, include_size: bool = False) -> dict[str, Any]:
+    value: dict[str, Any] = {
+        "path": audit.repo_relative(path),
+        "sha256": audit.sha256_file(path),
+    }
+    if include_size:
+        value["size"] = path.stat().st_size
+    return value
+
+
 def polygons() -> dict[str, Polygon | MultiPolygon]:
     return {
         "BUILDING_A": Polygon(
@@ -144,6 +154,7 @@ class Fixture:
         root: Path,
         *,
         geometry_owner: Mapping[str, str] | None = None,
+        output_geometry: Mapping[str, Polygon | MultiPolygon] | None = None,
         zero_ids: set[str] | None = None,
     ) -> None:
         self.root = root
@@ -151,6 +162,7 @@ class Fixture:
         self.ids = IDS
         self.polygons = polygons()
         geometry_owner = geometry_owner or {building_id: building_id for building_id in IDS}
+        output_geometry = output_geometry or {}
         zero_ids = zero_ids or set()
 
         self.pilot = root / "pilot.csv"
@@ -288,7 +300,7 @@ class Fixture:
         self.features = [
             feature_for(
                 building_id,
-                self.polygons[geometry_owner[building_id]],
+                output_geometry.get(building_id, self.polygons[geometry_owner[building_id]]),
                 zero_roof=building_id in zero_ids,
             )
             for building_id in IDS
@@ -331,7 +343,7 @@ class Fixture:
                 "schema": "jointbuildgs.pilot_1wave.roofer_argv.v1",
                 "condition_id": CONDITION,
                 "seed": SEED,
-                "image": "synthetic",
+                "image": audit.ROOFER_IMAGE,
                 "arguments": ["roofer"],
             },
         )
@@ -347,15 +359,15 @@ class Fixture:
                 "ordered_ids_sha256": "synthetic-ordered-ids",
                 "ordered_building_ids": list(IDS),
                 "runtime_contract": {"docker_sentinel": "/.dockerenv"},
-                "roofer_image": "synthetic",
+                "roofer_image": audit.ROOFER_IMAGE,
                 "roofer_parameters": "synthetic parameters",
                 "footprints": self.footprint_record,
                 "roofer_argv": {
-                    **record(self.argv),
+                    **repo_record(self.argv),
                     "schema": "jointbuildgs.pilot_1wave.roofer_argv.v1",
                     "condition_id": CONDITION,
                     "seed": SEED,
-                    "image": "synthetic",
+                    "image": audit.ROOFER_IMAGE,
                     "arguments": ["roofer"],
                 },
                 "pointcloud_path": str(self.pointcloud),
@@ -370,6 +382,117 @@ class Fixture:
                     "merged_cityjson_path": str(self.cityjson),
                     "marker_path": str(root / "roofer_invocation.json"),
                 },
+            },
+        )
+        self.container_id = "a" * 64
+        self.container_name = (
+            f"{audit.ROOFER_CONTAINER_NAME_PREFIX}-{CONDITION}-seed{SEED}-roofer"
+        )
+        self.job_id = f"{CONDITION}_seed{SEED}"
+        self.contract_sha256 = audit.sha256_json(
+            {
+                "job_id": self.job_id,
+                "prepare_sha256": audit.sha256_file(self.prepare),
+                "argv_sha256": audit.sha256_file(self.argv),
+                "image": audit.ROOFER_IMAGE,
+                "arguments": ["roofer"],
+            }
+        )
+        self.start_attempts = [{"attempt": 1, "state": "started"}]
+        self.launch = root / "container_launch.json"
+        self.process = root / "process_complete.json"
+        self.container_log = root / "container.log"
+        write_json(
+            self.launch,
+            {
+                "job_id": self.job_id,
+                "container_id": self.container_id,
+                "container_name": self.container_name,
+                "start_attempts": self.start_attempts,
+                "start_attempt_count": 1,
+                "contract_sha256": self.contract_sha256,
+            },
+        )
+        write_json(
+            self.process,
+            {
+                "job_id": self.job_id,
+                "container_name": self.container_name,
+                "contract_sha256": self.contract_sha256,
+                "exit_code": 0,
+                "wait_exit_code": 0,
+            },
+        )
+        self.container_log.write_text("synthetic Roofer log\n", encoding="utf-8")
+        self.execution_receipt = root / "roofer_execution_receipt.json"
+        self.normalized_execution = {
+            "schema": audit.ROOFER_EXECUTION_SCHEMA,
+            "state": "complete",
+            "condition_id": CONDITION,
+            "seed": SEED,
+            "job_id": self.job_id,
+            "roofer_invocation_count": 1,
+            "prepare_receipt": repo_record(self.prepare),
+            "roofer_argv": repo_record(self.argv),
+            "roofer_image_reference": audit.ROOFER_IMAGE,
+            "roofer_local_image_id": audit.ROOFER_IMAGE_ID,
+            "container_id": self.container_id,
+            "container_name": self.container_name,
+            "roofer_entrypoint": list(audit.ROOFER_ENTRYPOINT),
+            "roofer_command": ["roofer"],
+            "contract_sha256": self.contract_sha256,
+            "container_labels": {
+                "jointbuildgs.p1w.job": self.job_id,
+                "jointbuildgs.p1w.contract": self.contract_sha256,
+            },
+            "network_mode": "none",
+            "repo_bind": f"{audit.REPO.resolve()}:{audit.ROOFER_CONTAINER_REPO}",
+            "docker_state": "exited",
+            "wait_exit_code": 0,
+            "start_attempt_count": 1,
+            "restart_count": 0,
+            "launch_receipt": repo_record(self.launch),
+            "process_receipt": repo_record(self.process),
+            "logs": repo_record(self.container_log, include_size=True),
+        }
+        write_json(
+            self.execution_receipt,
+            {
+                "schema": audit.ROOFER_EXECUTION_SCHEMA,
+                "state": "complete",
+                "condition_id": CONDITION,
+                "seed": SEED,
+                "job_id": self.job_id,
+                "roofer_invocation_count": 1,
+                "prepare_receipt": repo_record(self.prepare),
+                "roofer_argv": repo_record(self.argv),
+                "container": {
+                    "image_reference": audit.ROOFER_IMAGE,
+                    "image_id": audit.ROOFER_IMAGE_ID,
+                    "config_image": audit.ROOFER_IMAGE,
+                    "entrypoint": list(audit.ROOFER_ENTRYPOINT),
+                    "cmd": ["roofer"],
+                    "labels": {
+                        "jointbuildgs.p1w.job": self.job_id,
+                        "jointbuildgs.p1w.contract": self.contract_sha256,
+                    },
+                    "binds": [
+                        f"{audit.REPO.resolve()}:{audit.ROOFER_CONTAINER_REPO}"
+                    ],
+                    "network_mode": "none",
+                    "restart_count": 0,
+                    "id": self.container_id,
+                    "name": self.container_name,
+                },
+                "execution": {
+                    "docker_state": "exited",
+                    "wait_exit_code": 0,
+                    "start_attempt_count": 1,
+                    "start_attempts": self.start_attempts,
+                },
+                "launch_receipt": repo_record(self.launch),
+                "process_receipt": repo_record(self.process),
+                "logs": repo_record(self.container_log, include_size=True),
             },
         )
         self.roofer = root / "roofer_invocation.json"
@@ -403,19 +526,21 @@ class Fixture:
                 "ordered_ids_sha256": "synthetic-ordered-ids",
                 "ordered_building_ids": list(IDS),
                 "runtime_contract": {"docker_sentinel": "/.dockerenv"},
-                "roofer_image": "synthetic",
+                "roofer_image": audit.ROOFER_IMAGE,
                 "roofer_parameters": "synthetic parameters",
                 "pointcloud_path": str(self.pointcloud),
                 "pointcloud_sha256": audit.sha256_file(self.pointcloud),
                 "pointcloud": record(self.pointcloud),
                 "classification_receipt": record(self.classification),
                 "prepare_receipt": record(self.prepare),
+                "execution_receipt": repo_record(self.execution_receipt),
+                "roofer_execution": self.normalized_execution,
                 "roofer_argv": {
-                    **record(self.argv),
+                    **repo_record(self.argv),
                     "schema": "jointbuildgs.pilot_1wave.roofer_argv.v1",
                     "condition_id": CONDITION,
                     "seed": SEED,
-                    "image": "synthetic",
+                    "image": audit.ROOFER_IMAGE,
                     "arguments": ["roofer"],
                 },
                 "readout_lineage": self.lineage,
@@ -534,6 +659,7 @@ class PilotOneWaveBindingAuditTests(unittest.TestCase):
             self.assertEqual(before, after)
             self.assertTrue(first["hard_gate_passed"])
             self.assertEqual(first["owner_assignment_gate"]["diagonal_sum"], 3)
+            self.assertEqual(first["containment_mismatch_count"], 0)
             with (fixture.root / "binding.csv").open(newline="", encoding="utf-8") as stream:
                 rows = list(csv.DictReader(stream))
             self.assertEqual([row["expected_building_id"] for row in rows], list(IDS))
@@ -550,11 +676,67 @@ class PilotOneWaveBindingAuditTests(unittest.TestCase):
                     "BUILDING_C": "BUILDING_C",
                 },
             )
-            with self.assertRaisesRegex(RuntimeError, "spatial owner"):
-                fixture.run()
+            receipt = fixture.run()
+            self.assertFalse(receipt["hard_gate_passed"])
+            self.assertEqual(receipt["owner_assignment_gate"]["diagonal_sum"], 1)
+            self.assertEqual(receipt["owner_assignment_gate"]["offdiagonal_sum"], 2)
+            with (fixture.root / "binding.csv").open(newline="", encoding="utf-8") as stream:
+                buildings = list(csv.DictReader(stream))
+            with (fixture.root / "matrix.csv").open(newline="", encoding="utf-8") as stream:
+                matrix = list(csv.DictReader(stream))
+            self.assertEqual(len(buildings), 3)
+            self.assertEqual(len(matrix), 9)
+            self.assertEqual(buildings[0]["spatial_owner_building_id"], "BUILDING_B")
+            self.assertEqual(buildings[1]["spatial_owner_building_id"], "BUILDING_A")
+            self.assertEqual(buildings[0]["all_four_match"], "false")
+            self.assertEqual(buildings[1]["all_four_match"], "false")
+
+    def test_roofer_output_serialization_reorder_passes(self) -> None:
+        with self.temporary_directory() as raw:
+            fixture = Fixture(Path(raw))
+            fixture.features = [
+                fixture.features[index] for index in (2, 0, 1)
+            ]
+            header = {
+                "type": "CityJSON",
+                "version": "2.0",
+                "transform": TRANSFORM,
+                "CityObjects": {},
+                "vertices": [],
+            }
+            with fixture.jsonseq.open("w", encoding="utf-8") as stream:
+                stream.write(audit.canonical_json(header) + "\n")
+                for feature in fixture.features:
+                    stream.write(audit.canonical_json(feature) + "\n")
+
+            merged = json.loads(fixture.cityjson.read_text(encoding="utf-8"))
+            objects = merged["CityObjects"]
+            merged["CityObjects"] = {
+                object_id: objects[object_id] for object_id in reversed(tuple(objects))
+            }
+            write_json(fixture.cityjson, merged)
+            fixture.write_scores(list(IDS))
+            fixture.refresh_roofer_marker()
+            fixture.refresh_score_marker()
+
+            receipt = fixture.run()
+            self.assertTrue(receipt["hard_gate_passed"])
+            output_orders = receipt["roofer_output_orders"]
+            self.assertEqual(
+                output_orders["raw_feature_ids_in_read_order"],
+                ["BUILDING_C", "BUILDING_A", "BUILDING_B"],
+            )
+            self.assertEqual(
+                output_orders["merged_root_ids_in_serialization_order"],
+                ["BUILDING_C", "BUILDING_B", "BUILDING_A"],
+            )
+            with (fixture.root / "binding.csv").open(newline="", encoding="utf-8") as stream:
+                rows = list(csv.DictReader(stream))
+            self.assertEqual([row["expected_building_id"] for row in rows], list(IDS))
+            self.assertTrue(all(row["all_four_match"] == "true" for row in rows))
 
     def test_missing_and_extra_parent_fail(self) -> None:
-        for mutation, expected in (("missing", "parent set/order"), ("extra", "parent set/order")):
+        for mutation, expected in (("missing", "parent IDs count"), ("extra", "parent IDs count")):
             with self.subTest(mutation=mutation), self.temporary_directory() as raw:
                 fixture = Fixture(Path(raw))
                 city = json.loads(fixture.cityjson.read_text(encoding="utf-8"))
@@ -610,12 +792,21 @@ class PilotOneWaveBindingAuditTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "SHA256"):
                 fixture.run()
 
+    def test_roofer_execution_log_tamper_fails_closed(self) -> None:
+        with self.temporary_directory() as raw:
+            fixture = Fixture(Path(raw))
+            with fixture.container_log.open("a", encoding="utf-8") as stream:
+                stream.write("tamper\n")
+            with self.assertRaisesRegex(RuntimeError, "SHA256|size"):
+                fixture.run()
+
     def test_zero_roof_is_flagged_without_owner_or_invented_geometry(self) -> None:
         with self.temporary_directory() as raw:
             fixture = Fixture(Path(raw), zero_ids={"BUILDING_C"})
             receipt = fixture.run()
             self.assertFalse(receipt["hard_gate_passed"])
             self.assertEqual(receipt["zero_roof_count"], 1)
+            self.assertEqual(receipt["containment_mismatch_count"], 1)
             self.assertEqual(receipt["owner_assignment_gate"]["diagonal_sum"], 2)
             with (fixture.root / "binding.csv").open(newline="", encoding="utf-8") as stream:
                 rows = list(csv.DictReader(stream))
@@ -627,6 +818,70 @@ class PilotOneWaveBindingAuditTests(unittest.TestCase):
                 matrix = list(csv.DictReader(stream))
             column = [row for row in matrix if row["output_parent_id"] == "BUILDING_C"]
             self.assertEqual(sum(row["owner_assignment"] == "true" for row in column), 0)
+
+    def test_tie_and_no_overlap_emit_full_evidence_with_false_gate(self) -> None:
+        with self.temporary_directory() as raw:
+            tie = MultiPolygon(
+                [
+                    Polygon([(100, 200), (102, 200), (102, 202), (100, 202), (100, 200)]),
+                    Polygon([(120, 200), (122, 200), (122, 202), (120, 202), (120, 200)]),
+                ]
+            )
+            no_overlap = Polygon(
+                [(160, 200), (164, 200), (164, 204), (160, 204), (160, 200)]
+            )
+            fixture = Fixture(
+                Path(raw),
+                output_geometry={"BUILDING_A": tie, "BUILDING_C": no_overlap},
+            )
+            receipt = fixture.run()
+            self.assertFalse(receipt["hard_gate_passed"])
+            self.assertEqual(receipt["owner_assignment_gate"]["containment_mismatch_count"], 2)
+            with (fixture.root / "binding.csv").open(newline="", encoding="utf-8") as stream:
+                buildings = list(csv.DictReader(stream))
+            with (fixture.root / "matrix.csv").open(newline="", encoding="utf-8") as stream:
+                matrix = list(csv.DictReader(stream))
+            self.assertEqual(len(buildings), 3)
+            self.assertEqual(len(matrix), 9)
+            self.assertEqual(buildings[0]["spatial_owner_candidate_count"], "2")
+            self.assertEqual(buildings[0]["spatial_owner_building_id"], "")
+            self.assertEqual(buildings[2]["spatial_owner_candidate_count"], "0")
+            self.assertEqual(buildings[2]["spatial_owner_building_id"], "")
+            self.assertEqual(buildings[0]["outside_owner_area_m2"], "8.000000000000")
+            self.assertEqual(buildings[2]["outside_owner_area_m2"], "16.000000000000")
+
+    def test_unique_owner_outside_area_fails_literal_containment_gate(self) -> None:
+        with self.temporary_directory() as raw:
+            spilling = Polygon(
+                [(100, 200), (112, 200), (112, 210), (100, 210), (100, 200)]
+            )
+            fixture = Fixture(Path(raw), output_geometry={"BUILDING_A": spilling})
+            receipt = fixture.run()
+            self.assertFalse(receipt["hard_gate_passed"])
+            self.assertEqual(receipt["containment_mismatch_count"], 1)
+            with (fixture.root / "binding.csv").open(newline="", encoding="utf-8") as stream:
+                row = list(csv.DictReader(stream))[0]
+            self.assertEqual(row["spatial_owner_building_id"], "BUILDING_A")
+            self.assertEqual(row["spatial_owner_matches_parent"], "true")
+            self.assertEqual(row["owner_contained"], "false")
+            self.assertAlmostEqual(float(row["outside_owner_area_m2"]), 36.0, places=6)
+            self.assertAlmostEqual(float(row["owner_containment_ratio"]), 0.7, places=6)
+            self.assertAlmostEqual(float(row["containment_tolerance_m2"]), 1.2e-6, places=12)
+
+    def test_owner_row_collision_emits_full_evidence_with_false_gate(self) -> None:
+        with self.temporary_directory() as raw:
+            fixture = Fixture(
+                Path(raw), output_geometry={"BUILDING_B": polygons()["BUILDING_A"]}
+            )
+            receipt = fixture.run()
+            gate = receipt["owner_assignment_gate"]
+            self.assertFalse(receipt["hard_gate_passed"])
+            self.assertEqual(gate["row_sums"][1], 2)
+            self.assertEqual(gate["row_sums"][2], 0)
+            with (fixture.root / "binding.csv").open(newline="", encoding="utf-8") as stream:
+                self.assertEqual(len(list(csv.DictReader(stream))), 3)
+            with (fixture.root / "matrix.csv").open(newline="", encoding="utf-8") as stream:
+                self.assertEqual(len(list(csv.DictReader(stream))), 9)
 
     def test_batch_helper_emits_deterministic_aggregate_files(self) -> None:
         with self.temporary_directory() as raw:
