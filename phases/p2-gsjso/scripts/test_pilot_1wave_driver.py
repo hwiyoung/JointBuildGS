@@ -265,17 +265,41 @@ class DriverContractTest(unittest.TestCase):
             verifier_source_sha256=self.verifier_sha,
         )
 
+    @staticmethod
+    def _expected_identity() -> dict:
+        return {
+            "real_uid": driver.REQUIRED_HOST_UID,
+            "real_gid": driver.REQUIRED_HOST_GID,
+            "effective_uid": driver.REQUIRED_HOST_UID,
+            "effective_gid": driver.REQUIRED_HOST_GID,
+            "required_uid": driver.REQUIRED_HOST_UID,
+            "required_gid": driver.REQUIRED_HOST_GID,
+            "training_container_user": driver.TRAINING_CONTAINER_USER,
+        }
+
     def test_dry_run_has_ten_docker_only_commands_and_two_gpu_preview(self) -> None:
         _payload, jobs = driver.load_resolved_jobs(self.repo, self.manifest)
-        preview = driver._dry_run_payload(
-            self.repo,
-            self.manifest,
-            jobs,
-            "sha256:" + "a" * 64,
-            "b" * 40,
-        )
+        with mock.patch.object(
+            driver,
+            "require_host_driver_identity",
+            return_value=self._expected_identity(),
+        ):
+            preview = driver._dry_run_payload(
+                self.repo,
+                self.manifest,
+                jobs,
+                "sha256:" + "a" * 64,
+                "b" * 40,
+            )
         self.assertEqual(preview["state"], "dry_run_validated")
         self.assertEqual(preview["learning_runs_started"], 0)
+        self.assertEqual(
+            preview["runtime"]["training_container_user"], "1000:1000"
+        )
+        self.assertEqual(
+            preview["runtime"]["host_driver_identity"],
+            self._expected_identity(),
+        )
         self.assertEqual(len(preview["jobs"]), 10)
         self.assertEqual({row["queue_gpu_preview"] for row in preview["jobs"]}, {0, 1})
         for row in preview["jobs"]:
@@ -284,10 +308,34 @@ class DriverContractTest(unittest.TestCase):
             self.assertIn("NVIDIA_VISIBLE_DEVICES=", row["command_string"])
             self.assertIn("--name", row["command"])
             self.assertIn(row["container_name"], row["command"])
+            self.assertEqual(row["container_user"], "1000:1000")
+            user_index = row["command"].index("--user")
+            self.assertEqual(row["command"][user_index + 1], "1000:1000")
             self.assertRegex(
                 row["container_name"],
                 r"^jointbuildgs-p1w-20260721-(?:01|02|03|04a|04b)-seed(?:1001|1002)$",
             )
+
+    def test_host_identity_is_exact_and_fails_closed(self) -> None:
+        with (
+            mock.patch.object(driver.os, "getuid", return_value=1000),
+            mock.patch.object(driver.os, "getgid", return_value=1000),
+            mock.patch.object(driver.os, "geteuid", return_value=1000),
+            mock.patch.object(driver.os, "getegid", return_value=1000),
+        ):
+            self.assertEqual(
+                driver.require_host_driver_identity(), self._expected_identity()
+            )
+        with (
+            mock.patch.object(driver.os, "getuid", return_value=1000),
+            mock.patch.object(driver.os, "getgid", return_value=1000),
+            mock.patch.object(driver.os, "geteuid", return_value=0),
+            mock.patch.object(driver.os, "getegid", return_value=0),
+        ):
+            with self.assertRaisesRegex(
+                driver.DriverError, "exact host UID:GID 1000:1000"
+            ):
+                driver.require_host_driver_identity()
 
     def test_start_and_9h_guard_boundaries(self) -> None:
         self.assertTrue(driver.may_start_new_run(driver.STOP_START_SECONDS - 1e-6))
@@ -579,6 +627,11 @@ class DriverContractTest(unittest.TestCase):
             mock.patch.object(
                 driver, "query_image_id", return_value="sha256:" + "a" * 64
             ),
+            mock.patch.object(
+                driver,
+                "require_host_driver_identity",
+                return_value=self._expected_identity(),
+            ),
             mock.patch.object(driver, "_assert_container_absent"),
             mock.patch.object(driver, "_stop_container", stop),
             mock.patch.object(driver, "_cleanup_container", cleanup),
@@ -625,6 +678,11 @@ class DriverContractTest(unittest.TestCase):
             mock.patch.object(driver, "query_git_head", return_value="b" * 40),
             mock.patch.object(
                 driver, "query_image_id", return_value="sha256:" + "a" * 64
+            ),
+            mock.patch.object(
+                driver,
+                "require_host_driver_identity",
+                return_value=self._expected_identity(),
             ),
         ):
             with self.assertRaisesRegex(driver.DriverError, "Compose config changed"):
@@ -753,6 +811,11 @@ class DriverContractTest(unittest.TestCase):
             ),
             mock.patch.object(driver, "query_git_head", return_value="b" * 40),
             mock.patch.object(driver, "query_image_id", return_value="sha256:" + "a" * 64),
+            mock.patch.object(
+                driver,
+                "require_host_driver_identity",
+                return_value=self._expected_identity(),
+            ),
             mock.patch.object(driver, "_signal_running", side_effect=fake_signal),
             mock.patch.object(driver, "_assert_container_absent"),
             mock.patch.object(driver, "_cleanup_container"),
@@ -777,6 +840,10 @@ class DriverContractTest(unittest.TestCase):
         self.assertEqual(result["state"], "guarded_partial")
         self.assertTrue(result["guard"]["triggered"])
         self.assertEqual(result["runtime"]["compose_config_sha256"], "c" * 64)
+        self.assertEqual(result["runtime"]["training_container_user"], "1000:1000")
+        self.assertEqual(
+            result["runtime"]["host_driver_identity"], self._expected_identity()
+        )
         self.assertTrue(result["runtime"]["execution_tree"]["clean"])
         self.assertTrue(
             result["runtime"]["materialized_input_validation"]["validated"]
@@ -786,6 +853,14 @@ class DriverContractTest(unittest.TestCase):
         self.assertEqual(states[:2], ["partial_guarded", "partial_guarded"])
         self.assertEqual(states[2:], ["deferred_8p5h_gate"] * 8)
         commands = [row["command"] for row in result["jobs"][:2]]
+        self.assertEqual(
+            [row["container_user"] for row in result["jobs"][:2]],
+            ["1000:1000", "1000:1000"],
+        )
+        self.assertEqual(
+            [command[command.index("--user") + 1] for command in commands],
+            ["1000:1000", "1000:1000"],
+        )
         self.assertIn("NVIDIA_VISIBLE_DEVICES=0", commands[0])
         self.assertIn("NVIDIA_VISIBLE_DEVICES=1", commands[1])
         self.assertEqual(

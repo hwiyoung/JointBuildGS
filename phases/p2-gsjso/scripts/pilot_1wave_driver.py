@@ -37,6 +37,9 @@ RESOLVED_SCHEMA = "jointbuildgs.pilot_1wave.resolved_configs.v1"
 DRIVER_SCHEMA = "jointbuildgs.pilot_1wave.driver_manifest.v1"
 IMAGE_TAG = "jointbuildgs:dev"
 CONTAINER_REPO = Path("/workspace/JointBuildGS")
+REQUIRED_HOST_UID = 1000
+REQUIRED_HOST_GID = 1000
+TRAINING_CONTAINER_USER = f"{REQUIRED_HOST_UID}:{REQUIRED_HOST_GID}"
 CHECKPOINT_STEPS = (5000, 10000, 15000, 20000)
 STOP_START_SECONDS = 8.5 * 3600.0
 WALL_GUARD_SECONDS = 9.0 * 3600.0
@@ -173,6 +176,40 @@ def host_from_container(repo: Path, path: str) -> Path:
     return (repo / relative).resolve()
 
 
+def require_host_driver_identity() -> dict[str, Any]:
+    """Bind host writes and training-container writes to one exact identity."""
+
+    identity = {
+        "real_uid": os.getuid(),
+        "real_gid": os.getgid(),
+        "effective_uid": os.geteuid(),
+        "effective_gid": os.getegid(),
+        "required_uid": REQUIRED_HOST_UID,
+        "required_gid": REQUIRED_HOST_GID,
+        "training_container_user": TRAINING_CONTAINER_USER,
+    }
+    observed = (
+        identity["real_uid"],
+        identity["real_gid"],
+        identity["effective_uid"],
+        identity["effective_gid"],
+    )
+    required = (
+        REQUIRED_HOST_UID,
+        REQUIRED_HOST_GID,
+        REQUIRED_HOST_UID,
+        REQUIRED_HOST_GID,
+    )
+    if observed != required:
+        raise DriverError(
+            "P1W driver must run as exact host UID:GID "
+            f"{TRAINING_CONTAINER_USER} (real/effective); observed "
+            f"real={identity['real_uid']}:{identity['real_gid']} "
+            f"effective={identity['effective_uid']}:{identity['effective_gid']}"
+        )
+    return identity
+
+
 def container_name_for(job_id: str) -> str:
     if re.fullmatch(r"(?:01|02|03|04a|04b)_seed(?:1001|1002)", job_id) is None:
         raise DriverError(f"cannot derive a safe container name from job ID: {job_id!r}")
@@ -189,6 +226,8 @@ def command_for(config_path: str, gpu: int, *, container_name: str | None = None
         "--rm",
         "--no-deps",
         "-T",
+        "--user",
+        TRAINING_CONTAINER_USER,
     ]
     if container_name is not None:
         if re.fullmatch(r"[a-zA-Z0-9][a-zA-Z0-9_.-]+", container_name) is None:
@@ -1341,6 +1380,7 @@ def _initial_job_record(
         "config_sha256": job.config_sha256,
         "out_dir": job.out_container,
         "container_name": job.container_name,
+        "container_user": TRAINING_CONTAINER_USER,
         "materialized_input_inventory": {
             "path": repo_relative(repo, job.materialized_inventory_host),
             "sha256": job.materialized_inventory_sha256,
@@ -1404,6 +1444,7 @@ def _dry_run_payload(
     image_id: str,
     git_head: str,
 ) -> dict[str, Any]:
+    host_identity = require_host_driver_identity()
     planned = []
     for index, job in enumerate(jobs):
         gpu = index % 2
@@ -1420,6 +1461,7 @@ def _dry_run_payload(
                 "job_id": job.job_id,
                 "queue_gpu_preview": gpu,
                 "container_name": job.container_name,
+                "container_user": TRAINING_CONTAINER_USER,
                 "command": command,
                 "command_string": shlex.join(command),
                 "config_sha256": job.config_sha256,
@@ -1431,7 +1473,13 @@ def _dry_run_payload(
         "state": "dry_run_validated",
         "learning_runs_started": 0,
         "resolved_manifest": {"path": repo_relative(repo, manifest_path), "sha256": sha256_file(manifest_path)},
-        "runtime": {"image_tag": IMAGE_TAG, "image_id": image_id, "git_head": git_head},
+        "runtime": {
+            "image_tag": IMAGE_TAG,
+            "image_id": image_id,
+            "git_head": git_head,
+            "host_driver_identity": host_identity,
+            "training_container_user": TRAINING_CONTAINER_USER,
+        },
         "guard": {
             "stop_starting_new_runs_seconds": STOP_START_SECONDS,
             "wall_guard_seconds": WALL_GUARD_SECONDS,
@@ -1476,6 +1524,7 @@ def _execute_queue_locked(
     sleeper: Callable[[float], None] = time.sleep,
     popen_factory: Callable[..., subprocess.Popen] = subprocess.Popen,
 ) -> dict[str, Any]:
+    host_identity = require_host_driver_identity()
     expected_manifest_shas = {job.resolved_manifest_sha256 for job in jobs}
     if len(expected_manifest_shas) != 1:
         raise DriverError("job matrix does not share one resolved manifest snapshot")
@@ -1567,6 +1616,8 @@ def _execute_queue_locked(
                 "status_porcelain_sha256": execution_status_sha256,
             },
             "compose_config_sha256": compose_config_sha256,
+            "host_driver_identity": host_identity,
+            "training_container_user": TRAINING_CONTAINER_USER,
             "materialized_input_validation": materialized_validation,
             "checkpoint_verifier": {
                 "path": repo_relative(repo, verifier_source),
@@ -1906,6 +1957,9 @@ def execute_queue(
     sleeper: Callable[[float], None] = time.sleep,
     popen_factory: Callable[..., subprocess.Popen] = subprocess.Popen,
 ) -> dict[str, Any]:
+    # Fail before creating the lock/manifest if this host process cannot share
+    # ownership with the hard-coded training-container identity.
+    require_host_driver_identity()
     if driver_manifest_path.is_symlink():
         raise DriverError("driver manifest must not be a symlink")
     driver_manifest_path = driver_manifest_path.resolve()
