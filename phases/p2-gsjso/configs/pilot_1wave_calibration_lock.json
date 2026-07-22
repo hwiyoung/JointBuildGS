@@ -67,6 +67,21 @@
     "residual": "differentiable point-to-plane L1",
     "flattening": "2DGS fixed-thickness audit only"
   },
+  "plane_guided_initialization": {
+    "conditions": ["04a", "04b"],
+    "source": "condition plane mask AND MVS depth-valid AND MVS world-normal-valid over fixed training views",
+    "application": "fresh run only; initialize dense MVS seed quaternion local +Z toward matched +Z-hemisphere normal before optimizer creation",
+    "unmatched_normal_world": [0.0, 0.0, 1.0],
+    "pilot_plane_init_stride_px": 8,
+    "pilot_plane_init_grid_offset_px": 4,
+    "pilot_plane_init_knn": 4,
+    "pilot_plane_init_tolerance_m": 0.5,
+    "pilot_plane_init_min_coverage": 0.05,
+    "pilot_plane_init_query_chunk_size": 100000,
+    "neighbor_engine": "scipy.spatial.cKDTree workers=1",
+    "resume": "recompute and verify input binding only; checkpoint quaternion is authoritative and initializer is not reapplied",
+    "failure_policy": "zero evidence, zero matches, coverage below 0.05, or binding mismatch stops before optimizer creation"
+  },
   "view_selection": {
     "inventory": "481 image names sorted lexicographically from the projected-footprint mask manifest",
     "training_role": "index modulo 10 is not 9",

@@ -77,6 +77,21 @@ class CalibrationLockTest(unittest.TestCase):
         self.assertEqual(budget["wall_guard_hours"], 9.0)
         self.assertFalse(budget["partial_is_winner_eligible"])
 
+    def test_plane_guided_init_is_explicit_and_shared_by_medium_pair(self) -> None:
+        init = self.lock["plane_guided_initialization"]
+        self.assertEqual(init["conditions"], ["04a", "04b"])
+        self.assertEqual(init["pilot_plane_init_stride_px"], 8)
+        self.assertEqual(init["pilot_plane_init_grid_offset_px"], 4)
+        self.assertLess(
+            init["pilot_plane_init_grid_offset_px"],
+            init["pilot_plane_init_stride_px"],
+        )
+        self.assertEqual(init["pilot_plane_init_knn"], 4)
+        self.assertEqual(init["pilot_plane_init_tolerance_m"], 0.5)
+        self.assertEqual(init["pilot_plane_init_min_coverage"], 0.05)
+        self.assertEqual(init["unmatched_normal_world"], [0.0, 0.0, 1.0])
+        self.assertIn("not reapplied", init["resume"])
+
 
 if __name__ == "__main__":
     unittest.main()
