@@ -1,0 +1,25 @@
+{
+  "checks": [
+    "input image SHA256",
+    "camera SHA256",
+    "output file SHA256",
+    "shape HxWx3",
+    "dtype float32",
+    "finite values",
+    "unit normal max error <= 2e-4",
+    "world-frame contract"
+  ],
+  "created_utc": "2026-07-22T02:08:26.499920+00:00",
+  "generation_manifest": "phases/p2-gsjso/runs/20260721_pilot_1wave/prep_artifacts/mono_normal_manifest.json",
+  "generation_manifest_sha256": "f8911b28d0eea881e7e37027eb1a73000e126d7f99178d1075969c2b23406071",
+  "learning_runs_started": 0,
+  "lock": "phases/p2-gsjso/configs/pilot_1wave_omnidata_normal_lock.json",
+  "lock_sha256": "f8c28db3e9b89e92237d5b11644de1854b5078a7ca3caed717d554a253cf2aa4",
+  "new_mononormal_inference_runs": 0,
+  "normal_receipt_sha256": "4a1258346235359137b4af4af0df1a51143f2969274b7ab302211232c610004c",
+  "run_id": "20260721_pilot_1wave",
+  "schema": "jointbuildgs.pilot_1wave.omnidata_normal.verification.v1",
+  "status": "pass",
+  "task_id": "P1W-MONO",
+  "view_count": 481
+}
