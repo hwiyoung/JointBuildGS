@@ -48,3 +48,8 @@ evidence-to-CityGML read-out으로 변환해 CityGML LOD2 semantic shell을 생�
 8. **Stage 3는 Roofer-style evidence-to-CityGML read-out** — 외부 roofprint 미사용.
 9. **GT 사용 분리** — building id는 per-building sanity(E1·E3 oracle split) 입력 가능;
    footprint·roof type·final roof model은 **evaluation only(입력 금지)**; 최종 end-to-end(E4)는 GT 일체 미사용.
+   - **(iii) 1파 범위 예외** — 승인 잠금판
+     `docs/사전등록서_품질축본선_승인잠금v4_20260721.md`에만 LoD2
+     `GroundSurface` **XY**를 기존 C001/E5와 동일한 공통 표준 footprint로 허용한다.
+     이 출처를 non-GT로 재분류하지 않고 manifest에 기록하며, honest arm에 LoD2 Z·
+     `RoofSurface`·roof type·semantic class·final roof model을 입력하지 않는다. E4 금지는 유지한다.
