@@ -131,6 +131,23 @@
       "license_basis": "Segment Anything repository Apache-2.0 license; SA-1B dataset terms are separate"
     }
   },
+  "language_model_snapshots": {
+    "bert_base_uncased": {
+      "repository": "google-bert/bert-base-uncased",
+      "revision": "86b5e0934494bd15c9632b12f734a8a67f723594",
+      "state": "unfetched",
+      "tracked_in_git": false,
+      "runtime_rule": "receipt-verified local snapshot path replaces the official config literal bert-base-uncased before GroundingDINO model construction",
+      "primary_source_verification": {
+        "groundingdino_config_url": "https://raw.githubusercontent.com/IDEA-Research/GroundingDINO/856dde20aee659246248e20734ef9ba5214f5e44/groundingdino/config/GroundingDINO_SwinT_OGC.py",
+        "groundingdino_config_sha256": "172e80017f9395668a9cb5d1b8bd9d061c0e360471c6ed673c83b69bb14399f1",
+        "field": "text_encoder_type",
+        "value": "bert-base-uncased",
+        "tokenizer_loader_url": "https://raw.githubusercontent.com/IDEA-Research/GroundingDINO/856dde20aee659246248e20734ef9ba5214f5e44/groundingdino/util/get_tokenlizer.py",
+        "tokenizer_loader_sha256": "bedc47db390249eb2230c2031b114d1d5f470ed6dbc1d3905e97e742289cb3b3"
+      }
+    }
+  },
   "artifact_policy": {
     "download_on_validation": false,
     "weight_files_in_git": "forbidden",
@@ -174,7 +191,15 @@
     },
     "vision_fusion": {
       "candidate_source": "per-view GroundedSAM roof candidates only; no GT",
-      "cross_view_consistency": "consume a boolean cross-view-consistent SAM mask from a separately parameter-locked image-derived reprojection stage",
+      "cross_view_consistency": {
+        "minimum_support_views_including_source": 2,
+        "maximum_pose_neighbors_per_source": 4,
+        "maximum_optical_axis_angle_deg": 20.0,
+        "minimum_camera_baseline_m": 0.5,
+        "reprojection_mask_tolerance_px": 3,
+        "target_depth_consistency": "abs(target_mvs_depth-projected_depth) <= max(0.5m, 0.02*abs(projected_depth))",
+        "no_valid_neighbor_policy": "candidate inconsistent then core fallback"
+      },
       "footprint_projection": "image-derived projection only; no LoD2 z, roof face, type, or semantic input",
       "footprint_dilation_px": 5,
       "footprint_core_erosion_px_default": 5,
@@ -194,10 +219,12 @@
       "stage_1_pretraining": "report footprint-overlap statistics for the vision mask",
       "stage_2_posthoc_score_only": "score-only report of IoU against GT after inference; GT is forbidden from mask selection, fusion, training, calibration, or rerun decisions"
     },
-    "unresolved_execution_dependency": {
+    "resolved_execution_dependency": {
       "item": "GroundingDINO BERT tokenizer/model bootstrap snapshot",
-      "state": "must be revision-pinned in the inference-runtime lock before model execution",
-      "reason": "the five user-approved Git revisions do not pin a Hugging Face snapshot"
+      "repository": "google-bert/bert-base-uncased",
+      "revision": "86b5e0934494bd15c9632b12f734a8a67f723594",
+      "state": "revision-pinned; still unfetched and requires the mask-producer asset receipt before inference",
+      "producer_lock": "phases/p2-gsjso/configs/pilot_1wave_mask_producer_lock.json"
     }
   }
 }

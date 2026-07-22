@@ -1,0 +1,161 @@
+{
+  "schema": "jointbuildgs.pilot_1wave.mask_producer_lock.v1",
+  "lock_date": "2026-07-22",
+  "run_id": "20260721_pilot_1wave",
+  "training_started_by_this_lock": false,
+  "inference_started_by_this_lock": false,
+  "reference_lock": "phases/p2-gsjso/configs/pilot_1wave_reference_lock.json",
+  "runtime_environment": {
+    "docker_image_tag": "jointbuildgs:dev",
+    "docker_image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396"
+  },
+  "runtime_dependency_gate": {
+    "required_python_modules": [
+      "torch",
+      "torchvision",
+      "transformers",
+      "timm",
+      "addict",
+      "yapf"
+    ],
+    "required_groundingdino_extension_glob": "groundingdino/_C*.so",
+    "policy": "all modules and the extension must be present in the receipt-pinned Docker/source runtime before 04a inference"
+  },
+  "runtime_assets": {
+    "groundingdino_source": {
+      "kind": "source_tree",
+      "repository": "https://github.com/IDEA-Research/GroundingDINO.git",
+      "revision": "856dde20aee659246248e20734ef9ba5214f5e44",
+      "cache_relative_path": "sources/GroundingDINO"
+    },
+    "segment_anything_source": {
+      "kind": "source_tree",
+      "repository": "https://github.com/facebookresearch/segment-anything.git",
+      "revision": "dca509fe793f601edb92606367a655c15ac00fdf",
+      "cache_relative_path": "sources/segment-anything"
+    },
+    "groundingdino_swint_ogc": {
+      "kind": "file",
+      "url": "https://github.com/IDEA-Research/GroundingDINO/releases/download/v0.1.0-alpha/groundingdino_swint_ogc.pth",
+      "filename": "groundingdino_swint_ogc.pth",
+      "cache_relative_path": "weights/groundingdino_swint_ogc.pth"
+    },
+    "sam_vit_h": {
+      "kind": "file",
+      "url": "https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth",
+      "filename": "sam_vit_h_4b8939.pth",
+      "cache_relative_path": "weights/sam_vit_h_4b8939.pth"
+    },
+    "bert_base_uncased": {
+      "kind": "huggingface_snapshot",
+      "repository": "google-bert/bert-base-uncased",
+      "revision": "86b5e0934494bd15c9632b12f734a8a67f723594",
+      "cache_relative_path": "snapshots/google-bert_bert-base-uncased_86b5e0934494bd15",
+      "required_files": [
+        "config.json",
+        "tokenizer_config.json",
+        "tokenizer.json",
+        "vocab.txt"
+      ],
+      "required_weight_alternatives": [
+        "model.safetensors",
+        "pytorch_model.bin"
+      ],
+      "fetch_weight_file": "model.safetensors"
+    }
+  },
+  "groundingdino_primary_source_evidence": {
+    "config_url": "https://raw.githubusercontent.com/IDEA-Research/GroundingDINO/856dde20aee659246248e20734ef9ba5214f5e44/groundingdino/config/GroundingDINO_SwinT_OGC.py",
+    "config_sha256": "172e80017f9395668a9cb5d1b8bd9d061c0e360471c6ed673c83b69bb14399f1",
+    "locked_field": "text_encoder_type",
+    "locked_value": "bert-base-uncased",
+    "model_source_url": "https://raw.githubusercontent.com/IDEA-Research/GroundingDINO/856dde20aee659246248e20734ef9ba5214f5e44/groundingdino/models/GroundingDINO/groundingdino.py",
+    "model_source_sha256": "cdfb48d5b15d6b98f3d2002f59ae4730740a1ecfbaeba324f6840c5e4666a5b8",
+    "tokenizer_loader_url": "https://raw.githubusercontent.com/IDEA-Research/GroundingDINO/856dde20aee659246248e20734ef9ba5214f5e44/groundingdino/util/get_tokenlizer.py",
+    "tokenizer_loader_sha256": "bedc47db390249eb2230c2031b114d1d5f470ed6dbc1d3905e97e742289cb3b3",
+    "runtime_rule": "verify official config value, then replace it with the receipt-verified local snapshot path before model construction"
+  },
+  "grounded_sam": {
+    "prompt_literal": "roof",
+    "effective_caption": "roof.",
+    "box_threshold_strict_gt": 0.25,
+    "text_threshold_strict_gt": 0.25,
+    "nms_iou": 0.8,
+    "groundingdino_rgb_preprocess": {
+      "pil_mode": "RGB",
+      "short_side": 800,
+      "max_side": 1333,
+      "tensor_range": [0.0, 1.0],
+      "mean": [0.485, 0.456, 0.406],
+      "std": [0.229, 0.224, 0.225]
+    },
+    "sam": {
+      "model_type": "vit_h",
+      "longest_side": 1024,
+      "multimask_output": false,
+      "mask_threshold": 0.0
+    }
+  },
+  "cross_view_consistency": {
+    "minimum_support_views_including_source": 2,
+    "maximum_pose_neighbors_per_source": 4,
+    "maximum_optical_axis_angle_deg": 20.0,
+    "minimum_camera_baseline_m": 0.5,
+    "reprojection_mask_tolerance_px": 3,
+    "target_depth_absolute_tolerance_m": 0.5,
+    "target_depth_relative_tolerance": 0.02,
+    "target_depth_rule": "abs(target_mvs_depth-projected_depth) <= max(0.5m, 0.02*abs(projected_depth))",
+    "no_valid_neighbor_policy": "candidate_inconsistent_then_core_fallback",
+    "neighbor_order": "eligible camera-centre baseline ascending, then lexical view_id; keep first four",
+    "pixel_rule": "source pixel centre backprojection; nearest target pixel after reprojection; disk tolerance"
+  },
+  "vision_fusion": {
+    "footprint_dilation_radius_px": 5,
+    "footprint_core_erosion_radius_px": 5,
+    "small_core_retry_erosion_radius_px": 1,
+    "structuring_element": "closed Euclidean disk",
+    "formula": "(cross_view_consistent_sam AND dilate(projected_footprint,5px)) OR per-building eroded footprint core",
+    "no_candidate_policy": "retain core and record core_only_fallback",
+    "gt_used": false
+  },
+  "gt_upperbound": {
+    "source": "LoD2 CityGML semantic surfaces",
+    "raycast_occluders": [
+      "RoofSurface",
+      "WallSurface",
+      "GroundSurface"
+    ],
+    "positive_class": "selected-building RoofSurface",
+    "coordinate_rule": "x=E-world_offset_x; y=N-world_offset_y; z=H_ortho+geoid-world_offset_z",
+    "world_offset": [690953.0, 5336071.0, 604.0],
+    "projection_datum_path": "configs/projection_datum.json",
+    "projection_datum_sha256": "096a49b46fc5661d74f9d3b54c4f3777676cfc6b27e577b52bb2dabeee8b480c",
+    "orthometric_geoid_m": 45.7,
+    "polygon_planarity_tolerance_m": 0.01,
+    "archive_contract": "bool HxW mask only; no roof Z, hit depth, face ID, building ID, class raster, or primitive ID"
+  },
+  "controlled_pair": {
+    "allowed_training_config_difference_paths": [
+      "plane_region_mask.source",
+      "plane_region_mask.manifest_path",
+      "plane_region_mask.manifest_sha256"
+    ],
+    "vision_source": "vision_groundedsam_roof",
+    "gt_source": "lod2_roofsurface_gt_upperbound",
+    "hard_fail_on_any_other_difference": true
+  },
+  "asset_receipt": {
+    "schema": "jointbuildgs.pilot_1wave.mask_producer_asset_receipt.v1",
+    "required_artifact_ids": [
+      "groundingdino_source",
+      "segment_anything_source",
+      "groundingdino_swint_ogc",
+      "sam_vit_h",
+      "bert_base_uncased"
+    ],
+    "download_during_preflight": false,
+    "symlinks_allowed": false,
+    "verify_each_file_sha256_and_size": true,
+    "verify_directory_tree_sha256_and_size": true
+  }
+}
