@@ -47,6 +47,11 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
+from pilot_1wave_readout_lineage import (  # noqa: E402
+    LINEAGE_SCHEMA as READOUT_LINEAGE_SCHEMA,
+    validate_classification_receipt,
+)
+
 TASK_ID = "P1W-SCORE"
 RUN_ID = "20260721_pilot_1wave"
 SCHEMA_VERSION = "jointbuildgs.pilot_1wave.scoring.v1"
@@ -829,6 +834,28 @@ def validate_roofer_marker(
     require_equal(int(footprints.get("feature_count", -1)), EXPECTED_POPULATION, "Roofer footprint count")
     pointcloud = _resolve_declared_path(marker.get("pointcloud_path"), declaring_file=marker_path)
     require_equal(sha256_file(pointcloud), marker.get("pointcloud_sha256"), "Roofer pointcloud SHA256")
+    receipt_record = marker.get("classification_receipt")
+    if not isinstance(receipt_record, Mapping):
+        raise RuntimeError("Roofer marker lacks classification receipt binding")
+    receipt_path = _resolve_declared_path(
+        receipt_record.get("path"), declaring_file=marker_path
+    )
+    require_equal(
+        sha256_file(receipt_path),
+        receipt_record.get("sha256"),
+        "Roofer classification receipt SHA256",
+    )
+    classification = validate_classification_receipt(
+        receipt_path,
+        pointcloud_path=pointcloud,
+        expected_condition=condition_id,
+        expected_seed=seed,
+    )
+    require_equal(
+        marker.get("readout_lineage"),
+        classification["readout_lineage"],
+        "Roofer/read-out lineage",
+    )
     footprint_path = _resolve_declared_path(footprints.get("path"), declaring_file=marker_path)
     require_equal(sha256_file(footprint_path), footprints.get("sha256"), "Roofer footprint SHA256")
     return {
@@ -841,7 +868,63 @@ def validate_roofer_marker(
         "cityjson_sha256": cityjson_sha,
         "pointcloud_path": rel(pointcloud),
         "pointcloud_sha256": marker.get("pointcloud_sha256"),
+        "classification_receipt_path": rel(receipt_path),
+        "classification_receipt_sha256": classification["sha256"],
+        "scene_npz_path": rel(classification["scene_npz_path"]),
+        "scene_npz_sha256": classification["scene_npz_sha256"],
+        "readout_lineage": classification["readout_lineage"],
     }
+
+
+def bind_readout_lineage_to_run(
+    condition_id: str,
+    seed: int,
+    run_provenance: Mapping[str, Any],
+    roofer_provenance: Mapping[str, Any],
+) -> dict[str, Any]:
+    """Require the Roofer input to originate from the scored full state."""
+
+    lineage = roofer_provenance.get("readout_lineage")
+    if not isinstance(lineage, Mapping):
+        raise RuntimeError("Roofer provenance lacks read-out lineage")
+    require_equal(lineage.get("schema"), READOUT_LINEAGE_SCHEMA, "read-out lineage schema")
+    require_equal(lineage.get("condition_id"), condition_id, "read-out condition")
+    require_equal(int(lineage.get("seed", -1)), int(seed), "read-out seed")
+    checkpoint = lineage.get("checkpoint")
+    full_state = lineage.get("full_state_manifest")
+    if not isinstance(checkpoint, Mapping) or not isinstance(full_state, Mapping):
+        raise RuntimeError("read-out lineage lacks checkpoint/full-state records")
+    require_equal(
+        checkpoint.get("sha256"),
+        run_provenance.get("latest_full_checkpoint_sha256"),
+        "read-out/scored checkpoint SHA256",
+    )
+    require_equal(
+        int(checkpoint.get("completed_steps", -1)),
+        int(run_provenance.get("latest_full_checkpoint_steps", -1)),
+        "read-out/scored checkpoint step",
+    )
+    require_equal(
+        rel(Path(str(checkpoint.get("path")))),
+        run_provenance.get("latest_full_checkpoint_path"),
+        "read-out/scored checkpoint path",
+    )
+    require_equal(
+        full_state.get("sha256"),
+        run_provenance.get("full_state_manifest_sha256"),
+        "read-out/scored full-state SHA256",
+    )
+    require_equal(
+        rel(Path(str(full_state.get("path")))),
+        run_provenance.get("full_state_manifest_path"),
+        "read-out/scored full-state path",
+    )
+    require_equal(
+        bool(lineage.get("eligible_20k_full_state")),
+        bool(run_provenance.get("eligible_20k_full_state")),
+        "read-out/scored 20k eligibility",
+    )
+    return dict(lineage)
 
 
 def validate_score_marker(
@@ -1084,6 +1167,7 @@ def assemble_pointcloud_once(
     condition_id: str,
     seed: int,
     pointcloud: Path,
+    classification_receipt: Path,
     output_dir: Path,
     lock: PilotLock,
 ) -> tuple[Path, dict[str, Any]]:
@@ -1091,6 +1175,12 @@ def assemble_pointcloud_once(
 
     validate_condition_seed(condition_id, seed)
     pointcloud_record = validate_roofer_pointcloud(pointcloud)
+    classification_record = validate_classification_receipt(
+        classification_receipt,
+        pointcloud_path=pointcloud,
+        expected_condition=condition_id,
+        expected_seed=seed,
+    )
     output_dir.mkdir(parents=True, exist_ok=True)
     marker = output_dir / "roofer_invocation.json"
     cityjson = output_dir / "assembled.city.json"
@@ -1100,6 +1190,8 @@ def assemble_pointcloud_once(
             state.get("condition_id") == condition_id
             and int(state.get("seed", -1)) == seed
             and state.get("pointcloud_sha256") == sha256_file(pointcloud)
+            and (state.get("classification_receipt") or {}).get("sha256")
+            == classification_record["sha256"]
             and int(state.get("roofer_invocation_count", 0)) == 1
             and state.get("state") == "complete"
             and cityjson.is_file()
@@ -1122,6 +1214,13 @@ def assemble_pointcloud_once(
         "pointcloud_path": pointcloud_record["path"],
         "pointcloud_sha256": pointcloud_record["sha256"],
         "pointcloud": pointcloud_record,
+        "classification_receipt": {
+            "path": rel(classification_record["path"]),
+            "sha256": classification_record["sha256"],
+            "scene_npz_path": rel(classification_record["scene_npz_path"]),
+            "scene_npz_sha256": classification_record["scene_npz_sha256"],
+        },
+        "readout_lineage": classification_record["readout_lineage"],
         "footprints": footprint_record,
         "roofer_image": ROOFER_IMAGE,
         "roofer_parameters": ROOFER_PARAMETERS,
@@ -1558,6 +1657,9 @@ def score_bound_run_once(
     roofer_provenance = validate_roofer_marker(
         condition_id, seed, roofer_marker_path, cityjson, lock
     )
+    bound_readout_lineage = bind_readout_lineage_to_run(
+        condition_id, seed, run_provenance, roofer_provenance
+    )
     marker: dict[str, Any] = {
         "schema": SCORE_MARKER_SCHEMA,
         "condition_id": condition_id,
@@ -1571,6 +1673,13 @@ def score_bound_run_once(
         "roofer_marker_sha256": sha256_file(roofer_marker_path),
         "full_state_manifest_path": rel(full_state_manifest_path),
         "full_state_manifest_sha256": sha256_file(full_state_manifest_path),
+        "classification_receipt_path": roofer_provenance[
+            "classification_receipt_path"
+        ],
+        "classification_receipt_sha256": roofer_provenance[
+            "classification_receipt_sha256"
+        ],
+        "readout_lineage": bound_readout_lineage,
         "guard_status": guard_status,
         "guard_reason": guard_reason,
         "val3dity_invocation_count": 0,
@@ -2670,6 +2779,7 @@ def cli() -> argparse.Namespace:
     assemble.add_argument("--condition", choices=ALL_CONDITIONS, required=True)
     assemble.add_argument("--seed", choices=EXPECTED_SEEDS, type=int, required=True)
     assemble.add_argument("--pointcloud", type=Path, required=True)
+    assemble.add_argument("--classification-receipt", type=Path, required=True)
     assemble.add_argument("--output-dir", type=Path, required=True)
     score = sub.add_parser("score-cityjson")
     score.add_argument("--condition", choices=ALL_CONDITIONS, required=True)
@@ -2703,7 +2813,14 @@ def main() -> None:
         print(json.dumps(validate_roofer_pointcloud(args.pointcloud), ensure_ascii=False))
         return
     if args.command == "assemble-pointcloud":
-        cityjson, state = assemble_pointcloud_once(args.condition, args.seed, args.pointcloud, args.output_dir, lock)
+        cityjson, state = assemble_pointcloud_once(
+            args.condition,
+            args.seed,
+            args.pointcloud,
+            args.classification_receipt,
+            args.output_dir,
+            lock,
+        )
         print(json.dumps({"cityjson": rel(cityjson), "cityjson_sha256": sha256_file(cityjson), "roofer_invocation_count": state["roofer_invocation_count"]}))
         return
     if args.command == "score-cityjson":

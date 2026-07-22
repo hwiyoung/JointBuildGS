@@ -13,16 +13,28 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import re
 import sys
 from pathlib import Path
-from typing import Any
+from typing import Any, Mapping
 
 import numpy as np
 import torch
 
+SCRIPT_DIR = Path(__file__).resolve().parent
+if str(SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR))
 sys.path.insert(0, "/workspace/JointBuildGS")
 
 from gsplat import rasterization_2dgs
+from pilot_1wave_readout_lineage import (
+    CONDITION_ARMS,
+    FULL_STATE_CHECKPOINT_FORMAT,
+    LINEAGE_SCHEMA,
+    canonical_repo_path,
+    sha256_file,
+    validate_full_state_binding,
+)
 from src.stage2.colmap_io import read_cameras_bin, read_images_bin
 
 
@@ -54,6 +66,7 @@ OFF = 1 << 20
 MUL = 1 << 21
 ROOF = 1
 WALL = 2
+_STEP_RE = re.compile(r"^step_(\d{6,})\.pt$")
 
 
 def parse_args() -> argparse.Namespace:
@@ -76,8 +89,162 @@ def parse_args() -> argparse.Namespace:
     ap.add_argument("--no-sem", action="store_true")
     ap.add_argument("--coverage-csv", default=None)
     ap.add_argument("--metrics-json", default=None)
+    ap.add_argument("--provenance-json", default=None)
+    ap.add_argument("--condition", choices=tuple(CONDITION_ARMS), default=None)
+    ap.add_argument("--seed", type=int, default=None)
+    ap.add_argument("--checkpoint-step", type=int, default=None)
+    ap.add_argument("--full-state-manifest", default=None)
     ap.add_argument("--coverage-grid", type=float, default=0.5)
     return ap.parse_args()
+
+
+def _canonical_condition_seed(checkpoint_path: Path) -> tuple[str | None, int | None]:
+    """Infer only the canonical ``runs/<condition>/seed_<seed>/ckpt`` layout."""
+
+    parts = checkpoint_path.resolve().parts
+    if len(parts) < 4 or parts[-2] != "ckpt" or not parts[-3].startswith("seed_"):
+        return None, None
+    condition = parts[-4]
+    try:
+        seed = int(parts[-3].removeprefix("seed_"))
+    except ValueError:
+        return None, None
+    if condition not in CONDITION_ARMS:
+        return None, None
+    return condition, seed
+
+
+def _checkpoint_identity(
+    checkpoint_path: Path,
+    payload: Mapping[str, Any],
+    *,
+    condition: str | None,
+    seed: int | None,
+    checkpoint_step: int | None,
+    full_state_manifest: str | None,
+) -> tuple[Mapping[str, torch.Tensor], dict[str, Any]]:
+    """Return a model state and immutable provenance for both checkpoint formats."""
+
+    inferred_condition, inferred_seed = _canonical_condition_seed(checkpoint_path)
+    condition_id = condition or inferred_condition
+    resolved_seed = seed if seed is not None else inferred_seed
+    if condition_id is None or resolved_seed is None:
+        raise RuntimeError(
+            "checkpoint condition/seed are not canonical; pass --condition and --seed"
+        )
+    if condition is not None and inferred_condition is not None and condition != inferred_condition:
+        raise RuntimeError(
+            f"checkpoint path/--condition mismatch: {inferred_condition} != {condition}"
+        )
+    if seed is not None and inferred_seed is not None and int(seed) != inferred_seed:
+        raise RuntimeError(f"checkpoint path/--seed mismatch: {inferred_seed} != {seed}")
+
+    checkpoint_path = checkpoint_path.resolve()
+    checkpoint_sha = sha256_file(checkpoint_path)
+    if payload.get("checkpoint_format") == FULL_STATE_CHECKPOINT_FORMAT:
+        model = payload.get("model")
+        if not isinstance(model, Mapping) or not isinstance(model.get("state_dict"), Mapping):
+            raise RuntimeError("full-state checkpoint lacks model.state_dict")
+        completed_steps = int(payload.get("completed_steps", -1))
+        if checkpoint_step is not None and int(checkpoint_step) != completed_steps:
+            raise RuntimeError(
+                f"checkpoint payload/--checkpoint-step mismatch: "
+                f"{completed_steps} != {checkpoint_step}"
+            )
+        manifest_path = (
+            Path(full_state_manifest)
+            if full_state_manifest
+            else checkpoint_path.parent.parent / "full_state_manifest.json"
+        )
+        lineage = validate_full_state_binding(
+            checkpoint_path=checkpoint_path,
+            checkpoint_sha256=checkpoint_sha,
+            completed_steps=completed_steps,
+            condition_id=condition_id,
+            seed=int(resolved_seed),
+            manifest_path=manifest_path,
+            checkpoint_binding_sha256=payload.get("binding_sha256"),
+        )
+        return model["state_dict"], lineage
+
+    state_dict = payload.get("state_dict")
+    if not isinstance(state_dict, Mapping):
+        raise RuntimeError(
+            "unsupported checkpoint: expected full-state model.state_dict or legacy state_dict"
+        )
+    match = _STEP_RE.fullmatch(checkpoint_path.name)
+    payload_step = payload.get("it")
+    completed_steps = (
+        int(checkpoint_step)
+        if checkpoint_step is not None
+        else int(payload_step)
+        if payload_step is not None
+        else int(match.group(1))
+        if match is not None
+        else -1
+    )
+    if completed_steps < 0:
+        raise RuntimeError("legacy checkpoint step is unknown; pass --checkpoint-step")
+    if payload_step is not None and int(payload_step) != completed_steps:
+        raise RuntimeError(
+            f"legacy checkpoint payload/step mismatch: {payload_step} != {completed_steps}"
+        )
+    lineage = {
+        "schema": LINEAGE_SCHEMA,
+        "condition_id": condition_id,
+        "seed": int(resolved_seed),
+        "checkpoint": {
+            "format": "legacy_state_dict",
+            "path": canonical_repo_path(checkpoint_path),
+            "sha256": checkpoint_sha,
+            "completed_steps": completed_steps,
+            "step_semantics": "legacy_iteration",
+        },
+        "full_state_manifest": None,
+        "training_config": None,
+        "verified_full_state": False,
+        "eligible_20k_full_state": False,
+    }
+    return state_dict, lineage
+
+
+def _write_provenance(
+    args: argparse.Namespace,
+    *,
+    lineage: Mapping[str, Any],
+    point_count: int,
+) -> Path:
+    output = Path(args.out).resolve()
+    path = (
+        Path(args.provenance_json).resolve()
+        if args.provenance_json
+        else Path(f"{output}.provenance.json")
+    )
+    payload = {
+        "schema": "jointbuildgs.pilot_1wave.readout_extraction.v1",
+        "state": "complete",
+        "output_npz": {
+            "path": str(output),
+            "sha256": sha256_file(output),
+            "point_count": int(point_count),
+        },
+        "readout_lineage": dict(lineage),
+        "geometry_only": bool(args.no_sem),
+        "crs": "EPSG:25832",
+        "reference_inputs": {
+            "groundsurface_xy_footprint": str(Path(args.geojson).resolve()),
+            "lod2_z": False,
+            "roofsurface": False,
+            "semantic_class": False,
+            "als": False,
+        },
+    }
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2, allow_nan=False) + "\n",
+        encoding="utf-8",
+    )
+    return path
 
 
 def target_ids(short_ids: list[str] | None) -> list[str]:
@@ -205,8 +372,23 @@ def main() -> None:
     footprints, boxes = load_footprints(args.geojson, target_short_ids)
     print(f"[boxes] {len(boxes)} target footprint boxes")
 
-    ckpt = torch.load(args.ckpt, map_location=dev, weights_only=False)
-    sd = ckpt["state_dict"]
+    checkpoint_path = Path(args.ckpt).resolve()
+    ckpt = torch.load(checkpoint_path, map_location="cpu", weights_only=False)
+    if not isinstance(ckpt, Mapping):
+        raise RuntimeError("checkpoint payload must be a mapping")
+    sd, readout_lineage = _checkpoint_identity(
+        checkpoint_path,
+        ckpt,
+        condition=args.condition,
+        seed=args.seed,
+        checkpoint_step=args.checkpoint_step,
+        full_state_manifest=args.full_state_manifest,
+    )
+    del ckpt
+    readout_lineage = {
+        **readout_lineage,
+        "geometry_only": bool(args.no_sem),
+    }
     means = sd["means"].to(dev)
     quats = sd["quats"].to(dev)
     scales = torch.exp(sd["log_scales"]).to(dev)
@@ -220,7 +402,12 @@ def main() -> None:
         print(f"[sem] GS-semantic feature pass ON (K={sem.shape[-1]})")
     else:
         print("[sem] GS-semantic OFF")
-    print(f"[model] N={means.shape[0]} ckpt={args.ckpt}")
+    print(
+        f"[model] N={means.shape[0]} ckpt={args.ckpt} "
+        f"condition={readout_lineage['condition_id']} "
+        f"seed={readout_lineage['seed']} "
+        f"step={readout_lineage['checkpoint']['completed_steps']}"
+    )
 
     data_root = Path(args.data_root)
     sparse_dir = data_root / "sparse"
@@ -330,12 +517,44 @@ def main() -> None:
     if not keylist:
         Path(args.out).parent.mkdir(parents=True, exist_ok=True)
         empty = np.empty((0, 3), dtype=np.float64)
-        np.savez(args.out, P_utm=empty, P_utm_clean=empty, voxel=args.voxel, downscale=args.downscale)
+        np.savez(
+            args.out,
+            P_utm=empty,
+            P_utm_clean=empty,
+            voxel=args.voxel,
+            downscale=args.downscale,
+            readout_lineage_json=np.array(
+                json.dumps(
+                    readout_lineage,
+                    ensure_ascii=False,
+                    sort_keys=True,
+                    separators=(",", ":"),
+                    allow_nan=False,
+                )
+            ),
+        )
         write_csv(args.coverage_csv, [])
+        provenance_path = _write_provenance(
+            args, lineage=readout_lineage, point_count=0
+        )
         if args.metrics_json:
             Path(args.metrics_json).parent.mkdir(parents=True, exist_ok=True)
-            Path(args.metrics_json).write_text(json.dumps({"surf_backproj": 0, "fused_all": 0}, indent=2) + "\n", encoding="utf-8")
-        print(f"[done] no points -> {args.out}")
+            Path(args.metrics_json).write_text(
+                json.dumps(
+                    {
+                        "surf_backproj": 0,
+                        "fused_all": 0,
+                        "readout_lineage": readout_lineage,
+                        "provenance_json": str(provenance_path),
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                    allow_nan=False,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+        print(f"[done] no points -> {args.out} provenance={provenance_path}")
         return
 
     all_keys = torch.cat(keylist)
@@ -399,6 +618,15 @@ def main() -> None:
         "sor": np.array(args.sor),
         "sor_std": args.sor_std,
         "sor_neighbors": args.sor_neighbors,
+        "readout_lineage_json": np.array(
+            json.dumps(
+                readout_lineage,
+                ensure_ascii=False,
+                sort_keys=True,
+                separators=(",", ":"),
+                allow_nan=False,
+            )
+        ),
     }
     if p_class is not None:
         save.update(
@@ -426,10 +654,18 @@ def main() -> None:
         "sor_std": float(args.sor_std),
         "sor_neighbors": int(args.sor_neighbors),
     }
+    provenance_path = _write_provenance(
+        args, lineage=readout_lineage, point_count=len(p_utm_clean)
+    )
+    metrics["readout_lineage"] = readout_lineage
+    metrics["provenance_json"] = str(provenance_path)
     if args.metrics_json:
         Path(args.metrics_json).parent.mkdir(parents=True, exist_ok=True)
         Path(args.metrics_json).write_text(json.dumps(metrics, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"[done] surf_backproj={n_surf} fused={len(p_utm)} clean={len(p_utm_clean)} -> {args.out}")
+    print(
+        f"[done] surf_backproj={n_surf} fused={len(p_utm)} "
+        f"clean={len(p_utm_clean)} -> {args.out} provenance={provenance_path}"
+    )
 
 
 if __name__ == "__main__":

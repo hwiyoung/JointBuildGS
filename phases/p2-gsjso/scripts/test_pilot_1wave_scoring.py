@@ -26,7 +26,7 @@ class PilotOneWaveScoringTests(unittest.TestCase):
         cls.lock = score.load_pilot_lock()
 
     def temporary_directory(self) -> tempfile.TemporaryDirectory[str]:
-        return tempfile.TemporaryDirectory(prefix="p1w_score_")
+        return tempfile.TemporaryDirectory(prefix=".p1w_score_", dir=SCRIPT_DIR)
 
     def full_state_fixture(
         self,
@@ -61,6 +61,7 @@ class PilotOneWaveScoringTests(unittest.TestCase):
             "config_file_sha256": score.sha256_file(config_path),
             "max_iter": score.MAX_ITER,
             "checkpoint_steps": list(score.FULL_CHECKPOINT_STEPS),
+            "step_semantics": "completed_optimizer_updates",
             "learning_runs_started": 1,
             "latest_full_checkpoint": {
                 "path": str(checkpoint),
@@ -81,10 +82,87 @@ class PilotOneWaveScoringTests(unittest.TestCase):
         condition: str,
         seed: int,
         cityjson: Path,
+        full_state: Path,
     ) -> Path:
         root.mkdir(parents=True, exist_ok=True)
         pointcloud = root / "classified.laz"
         pointcloud.write_bytes(b"synthetic classified pointcloud")
+        run_provenance = score.validate_full_state_manifest(
+            condition,
+            seed,
+            full_state,
+            guard_status=(
+                "not_triggered"
+                if json.loads(full_state.read_text(encoding="utf-8")).get(
+                    "process_completed"
+                )
+                else "triggered_checkpoint_stop"
+            ),
+            guard_reason=(
+                ""
+                if json.loads(full_state.read_text(encoding="utf-8")).get(
+                    "process_completed"
+                )
+                else "9h guard"
+            ),
+        )
+        lineage = {
+            "schema": score.READOUT_LINEAGE_SCHEMA,
+            "condition_id": condition,
+            "seed": seed,
+            "checkpoint": {
+                "format": "jointbuildgs.stage2.full_state",
+                "path": run_provenance["latest_full_checkpoint_path"],
+                "sha256": run_provenance["latest_full_checkpoint_sha256"],
+                "completed_steps": run_provenance[
+                    "latest_full_checkpoint_steps"
+                ],
+                "step_semantics": "completed_optimizer_updates",
+            },
+            "full_state_manifest": {
+                "path": score.rel(full_state),
+                "sha256": score.sha256_file(full_state),
+                "schema": score.FULL_STATE_MANIFEST_SCHEMA,
+            },
+            "training_config": {
+                "path": run_provenance["training_config_path"],
+                "sha256": run_provenance["training_config_sha256"],
+                "pilot_arm": run_provenance["pilot_arm"],
+            },
+            "verified_full_state": True,
+            "eligible_20k_full_state": run_provenance[
+                "eligible_20k_full_state"
+            ],
+            "geometry_only": True,
+        }
+        scene_npz = root / "scene_geometry.npz"
+        np.savez(
+            scene_npz,
+            P_utm_clean=np.asarray([[690800.0, 5336000.0, 570.0]]),
+            readout_lineage_json=np.array(
+                json.dumps(lineage, sort_keys=True, separators=(",", ":"))
+            ),
+        )
+        classification_receipt = root / "scene_classification.receipt.json"
+        classification_receipt.write_text(
+            json.dumps(
+                {
+                    "schema": "jointbuildgs.pilot_1wave.scene_classification.v1",
+                    "state": "complete",
+                    "source_scene_npz": {
+                        "path": str(scene_npz),
+                        "sha256": score.sha256_file(scene_npz),
+                    },
+                    "classified_las": {
+                        "path": str(pointcloud),
+                        "sha256": score.sha256_file(pointcloud),
+                    },
+                    "readout_lineage": lineage,
+                }
+            )
+            + "\n",
+            encoding="utf-8",
+        )
         footprints = root / "locked_30.geojson"
         footprints.write_text("{}\n", encoding="utf-8")
         marker = root / "roofer_invocation.json"
@@ -98,6 +176,11 @@ class PilotOneWaveScoringTests(unittest.TestCase):
                     "roofer_invocation_count": 1,
                     "pointcloud_path": str(pointcloud),
                     "pointcloud_sha256": score.sha256_file(pointcloud),
+                    "classification_receipt": {
+                        "path": str(classification_receipt),
+                        "sha256": score.sha256_file(classification_receipt),
+                    },
+                    "readout_lineage": lineage,
                     "footprints": {
                         "path": str(footprints),
                         "sha256": score.sha256_file(footprints),
@@ -130,7 +213,7 @@ class PilotOneWaveScoringTests(unittest.TestCase):
             root / "train", condition, seed, completed_steps=completed_steps
         )
         roofer_marker = self.roofer_marker_fixture(
-            root / "roofer", condition, seed, cityjson
+            root / "roofer", condition, seed, cityjson, full_state
         )
         calls: list[tuple[Path, Path]] = []
 
@@ -423,6 +506,43 @@ class PilotOneWaveScoringTests(unittest.TestCase):
             report.write_text("{}\n", encoding="utf-8")
             with self.assertRaisesRegex(RuntimeError, "val3dity report SHA256"):
                 score.validate_score_marker("04a", 1001, marker)
+
+    def test_manifest_lineage_drift_fails_before_val3dity(self) -> None:
+        with self.temporary_directory() as raw:
+            root = Path(raw)
+            cityjson, _unused_report, references = self.synthetic_fixture(root)
+            full_state = self.full_state_fixture(
+                root / "train", "01", 1001, completed_steps=20000
+            )
+            roofer_marker = self.roofer_marker_fixture(
+                root / "roofer", "01", 1001, cityjson, full_state
+            )
+            payload = json.loads(full_state.read_text(encoding="utf-8"))
+            payload["post_lineage_mutation"] = True
+            full_state.write_text(json.dumps(payload) + "\n", encoding="utf-8")
+            calls: list[tuple[Path, Path]] = []
+
+            def forbidden_val3dity(
+                path: Path, report: Path
+            ) -> tuple[dict[str, bool], int, str]:
+                calls.append((path, report))
+                raise AssertionError("val3dity must not run after lineage drift")
+
+            with self.assertRaisesRegex(RuntimeError, "full-state manifest SHA256"):
+                score.score_bound_run_once(
+                    "01",
+                    1001,
+                    cityjson,
+                    roofer_marker,
+                    full_state,
+                    root / "scores.csv",
+                    root / "score_marker.json",
+                    self.lock,
+                    guard_status="not_triggered",
+                    references=references,
+                    val3dity_runner=forbidden_val3dity,
+                )
+            self.assertEqual(calls, [])
 
     def test_face_rule_uses_abs_of_median_ratio(self) -> None:
         with self.temporary_directory() as raw:

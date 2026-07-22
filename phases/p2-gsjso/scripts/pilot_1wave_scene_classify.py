@@ -22,6 +22,7 @@ import hashlib
 import json
 import math
 import subprocess
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable
@@ -29,6 +30,15 @@ from typing import Any, Iterable
 import laspy
 import numpy as np
 from pyproj import CRS as PyprojCRS
+
+SCRIPT_DIR = Path(__file__).resolve().parent
+if str(SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR))
+
+from pilot_1wave_readout_lineage import (
+    LINEAGE_SCHEMA,
+    validate_readout_lineage,
+)
 
 
 SCHEMA = "jointbuildgs.pilot_1wave.scene_classification.v1"
@@ -138,6 +148,38 @@ def load_scene_points(path: Path) -> tuple[np.ndarray, str]:
     return points, key
 
 
+def load_scene_lineage(path: Path) -> dict[str, Any]:
+    """Load a non-pickled scalar lineage and verify all named source bytes."""
+
+    if not path.is_file():
+        raise FileNotFoundError(path)
+    try:
+        with np.load(path, allow_pickle=False) as payload:
+            if "readout_lineage_json" not in payload:
+                raise RuntimeError("scene NPZ lacks readout_lineage_json")
+            encoded = np.asarray(payload["readout_lineage_json"])
+    except ValueError as exc:
+        raise RuntimeError(
+            "scene NPZ readout_lineage_json must not require pickle"
+        ) from exc
+    if encoded.shape != () or encoded.dtype.kind not in {"U", "S"}:
+        raise RuntimeError(
+            "scene NPZ readout_lineage_json must be a non-object scalar string"
+        )
+    raw = encoded.item()
+    if isinstance(raw, bytes):
+        raw = raw.decode("utf-8")
+    try:
+        lineage = json.loads(str(raw))
+    except json.JSONDecodeError as exc:
+        raise RuntimeError("scene NPZ readout_lineage_json is invalid JSON") from exc
+    if not isinstance(lineage, dict):
+        raise RuntimeError("scene NPZ readout lineage must be an object")
+    if lineage.get("schema") != LINEAGE_SCHEMA:
+        raise RuntimeError(f"scene NPZ readout lineage schema drift: {lineage.get('schema')!r}")
+    return validate_readout_lineage(lineage)
+
+
 def write_raw_las(path: Path, points: np.ndarray) -> None:
     if path.exists():
         raise RuntimeError(f"raw LAS already exists: {path}")
@@ -214,7 +256,9 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             raise RuntimeError(f"refusing to overwrite readout artifact: {path}")
 
     roofprint_record = validate_roofprints(args.roofprints.resolve())
-    points, source_key = load_scene_points(args.scene_npz.resolve())
+    scene_npz = args.scene_npz.resolve()
+    points, source_key = load_scene_points(scene_npz)
+    readout_lineage = load_scene_lineage(scene_npz)
     write_raw_las(raw_las, points)
     pipeline = pdal_pipeline(raw_las, args.roofprints.resolve(), output_las)
     atomic_json(pipeline_path, pipeline)
@@ -259,12 +303,13 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             "phases/p2-gsjso/scripts/_mob_prep_las.py"
         ),
         "source_scene_npz": {
-            "path": str(args.scene_npz.resolve()),
-            "sha256": sha256_file(args.scene_npz.resolve()),
+            "path": str(scene_npz),
+            "sha256": sha256_file(scene_npz),
             "array": source_key,
             "point_count": len(points),
             "bounds": bounds,
         },
+        "readout_lineage": readout_lineage,
         "roofprints": {
             **roofprint_record,
             "role": "approved historical LoD2 GroundSurface XY support only",

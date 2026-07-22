@@ -104,6 +104,22 @@ class SceneClassifierTest(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "non-finite"):
                 MODULE.load_scene_points(path)
 
+    def test_scene_lineage_is_required_and_never_pickled(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "scene.npz"
+            points = np.array([[690800.0, 5336000.0, 570.0]])
+            np.savez(path, P_utm_clean=points)
+            with self.assertRaisesRegex(RuntimeError, "lacks readout_lineage_json"):
+                MODULE.load_scene_lineage(path)
+
+            np.savez(
+                path,
+                P_utm_clean=points,
+                readout_lineage_json=np.array({"unsafe": True}, dtype=object),
+            )
+            with self.assertRaisesRegex(RuntimeError, "must not require pickle"):
+                MODULE.load_scene_lineage(path)
+
     def test_raw_las_has_epsg_and_unclassified_input(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "raw.las"
