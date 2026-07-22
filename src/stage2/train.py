@@ -14,11 +14,10 @@ import csv
 import hashlib
 import json
 import math
-import os
 import random
 import time
 from pathlib import Path
-from typing import Dict, Iterable, Optional
+from typing import Any, Dict, Iterable, Optional
 
 import numpy as np
 import torch
@@ -26,6 +25,12 @@ import yaml
 from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
 
+from .checkpoint import (
+    discover_latest_checkpoint,
+    restore_rng_state,
+    restore_training_checkpoint,
+    save_training_checkpoint,
+)
 from .dataloader import ColmapDataset, resolve_view_roles
 from .densification import build_optimizers, build_param_dict, build_strategy
 from .geometry_partition import assign_partition_ids, load_xy_partitions
@@ -42,6 +47,21 @@ from .loss.structure import l_structure
 from .model import GaussianModel2D
 from .renderer import render
 from .seed_control import apply_mvs_seed_init_opacity
+from .train_resume import (
+    FULL_STATE_BINDING_EXCLUDED_CONFIG_KEYS,
+    FULL_STATE_MANIFEST_SCHEMA,
+    atomic_write_json,
+    capture_loss_csv_cursor,
+    capture_trainer_runtime_state,
+    full_state_binding_sha256,
+    full_state_checkpoint_due,
+    full_state_options,
+    learning_runs_for_process,
+    read_learning_runs_started,
+    restore_loss_csv_cursor,
+    restore_trainer_runtime_state,
+    training_view_index,
+)
 
 
 def _build_mvc_neighbors(frames, train_idx, k, max_angle_deg, min_baseline):
@@ -1038,8 +1058,10 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--config", required=True)
     args = ap.parse_args()
-    with open(args.config) as f:
+    config_path = Path(args.config)
+    with config_path.open() as f:
         cfg = yaml.safe_load(f)
+    full_state = full_state_options(cfg)
 
     set_seed(cfg.get("seed", 0))
     device = cfg.get("device", "cuda")
@@ -1234,16 +1256,19 @@ def main():
     )
     model = model.to(device)
 
+    def _configured_optimizers(candidate_model: GaussianModel2D):
+        return build_optimizers(
+            candidate_model,
+            lr_means=cfg.get("lr_means", 1.6e-4),
+            lr_scales=cfg.get("lr_scales", 5e-3),
+            lr_quats=cfg.get("lr_quats", 1e-3),
+            lr_opacities=cfg.get("lr_opacities", 5e-2),
+            lr_sh0=cfg.get("lr_sh0", 2.5e-3),
+            lr_shN=cfg.get("lr_shN", 1.25e-4),
+        )
+
     params = build_param_dict(model)
-    optimizers = build_optimizers(
-        model,
-        lr_means=cfg.get("lr_means", 1.6e-4),
-        lr_scales=cfg.get("lr_scales", 5e-3),
-        lr_quats=cfg.get("lr_quats", 1e-3),
-        lr_opacities=cfg.get("lr_opacities", 5e-2),
-        lr_sh0=cfg.get("lr_sh0", 2.5e-3),
-        lr_shN=cfg.get("lr_shN", 1.25e-4),
-    )
+    optimizers = _configured_optimizers(model)
 
     # scene scale (for DefaultStrategy)
     scene_scale = float(np.linalg.norm(ds.points_xyz - ds.points_xyz.mean(0), axis=1).mean())
@@ -1910,6 +1935,184 @@ def main():
                 ],
             }
         )
+    if full_state["enabled"]:
+        effective_config.update(
+            {
+                "full_state_checkpoint_enabled": True,
+                "full_state_checkpoint_steps": list(full_state["checkpoint_steps"]),
+                "full_state_loss_csv_paths": list(full_state["loss_csv_paths"]),
+                "full_state_step_semantics": "completed_optimizer_updates",
+            }
+        )
+
+    start_completed_steps = 0
+    pending_resume_rng_state = None
+    learning_runs_started = 0
+    full_state_binding: dict[str, str] = {}
+    full_state_manifest: dict[str, Any] = {}
+    full_state_manifest_path = out_dir / "full_state_manifest.json"
+    resume_selected_path: Optional[Path] = None
+    resume_selected_sha256: Optional[str] = None
+    resume_skipped: list[dict[str, str]] = []
+    loss_cursor_actions: list[str] = []
+
+    if full_state["enabled"]:
+        # Hash only the stable, training-effective section. Runtime selection
+        # metadata is added below after strict binding has been resolved.
+        full_state_binding = full_state_binding_sha256(
+            cfg=cfg,
+            effective_training_config=effective_config,
+            out_dir=out_dir,
+        )
+        resume_request = full_state["resume_request"]
+        selected_checkpoint: Any = None
+        if resume_request is not None and resume_request.lower() in {"auto", "latest"}:
+            discovery = discover_latest_checkpoint(
+                out_dir / "ckpt",
+                expected_binding_sha256=full_state_binding,
+                map_location="cpu",
+            )
+            for skipped in discovery.skipped:
+                record = {
+                    "path": str(skipped.path),
+                    "error_type": skipped.error_type,
+                    "reason": skipped.reason,
+                }
+                resume_skipped.append(record)
+                print(
+                    f"[resume] skipped {skipped.path.name}: "
+                    f"{skipped.error_type}: {skipped.reason}",
+                    flush=True,
+                )
+            selected_checkpoint = discovery.selected
+            if selected_checkpoint is None:
+                if resume_request.lower() == "latest" or discovery.skipped:
+                    raise RuntimeError(
+                        "full_state_resume requested a checkpoint, but no valid "
+                        "binding-matched checkpoint remains after discovery"
+                    )
+                print("[resume] auto found no checkpoint; starting fresh", flush=True)
+        elif resume_request is not None:
+            selected_checkpoint = Path(resume_request)
+
+        if selected_checkpoint is not None:
+            restored = restore_training_checkpoint(
+                selected_checkpoint,
+                expected_binding_sha256=full_state_binding,
+                device=device,
+                optimizer_builder=_configured_optimizers,
+                restore_rng=False,
+                strict_cuda_rng=bool(full_state["strict_cuda_rng"]),
+            )
+            model = restored.model
+            optimizers = restored.optimizers
+            strategy = restored.strategy
+            strategy_state = restored.strategy_state
+            params = build_param_dict(model)
+            strategy.check_sanity(params, optimizers)
+            (
+                _grp,
+                semantic_target_observations,
+                semantic_pi_audited_targets,
+            ) = restore_trainer_runtime_state(
+                restored.grouping_state,
+                semantic_geometry=semantic_geometry,
+                expected_semantic_targets=set(semantic_pi_target_buildings),
+            )
+            start_completed_steps = restored.completed_steps
+            if start_completed_steps > max_iter:
+                raise RuntimeError(
+                    "resume checkpoint is beyond configured max_iter: "
+                    f"completed={start_completed_steps}, max_iter={max_iter}"
+                )
+            loss_cursor_actions = restore_loss_csv_cursor(
+                out_dir,
+                full_state["loss_csv_paths"],
+                restored.loss_log_cursor,
+                expected_completed_steps=start_completed_steps,
+            )
+            for action in loss_cursor_actions:
+                print(f"[resume] loss CSV rollback: {action}", flush=True)
+            learning_runs_started = restored.learning_runs_started
+            pending_resume_rng_state = restored.checkpoint.payload["rng_state"]
+            resume_selected_path = restored.checkpoint.path.resolve()
+            resume_selected_sha256 = restored.checkpoint.sha256
+            print(
+                f"[resume] selected {resume_selected_path.name} "
+                f"completed_updates={start_completed_steps}; "
+                f"next_update={start_completed_steps + 1}",
+                flush=True,
+            )
+        else:
+            prior_runs = read_learning_runs_started(full_state_manifest_path)
+            learning_runs_started = prior_runs
+
+        planned_learning_runs_started, learning_run_increment_pending = (
+            learning_runs_for_process(
+                learning_runs_started,
+                resuming=selected_checkpoint is not None,
+                will_train=max_iter > start_completed_steps,
+            )
+        )
+        # The preregistered counter changes only after optimizer update 1 has
+        # actually completed.  Keep the durable manifest at the prior value
+        # during setup (and if setup fails before the first update).
+        learning_run_incremented = False
+        if not learning_run_increment_pending:
+            learning_runs_started = planned_learning_runs_started
+        full_state_manifest = {
+            "schema": FULL_STATE_MANIFEST_SCHEMA,
+            "output_path": str(out_dir.resolve()),
+            "config_path": str(config_path.resolve()),
+            "config_file_sha256": hashlib.sha256(config_path.read_bytes()).hexdigest(),
+            "binding_excluded_config_keys": sorted(
+                FULL_STATE_BINDING_EXCLUDED_CONFIG_KEYS
+            ),
+            "binding_sha256": full_state_binding,
+            "resume_requested": full_state["resume_request"],
+            "resume_selected": (
+                str(resume_selected_path) if resume_selected_path is not None else None
+            ),
+            "resume_selected_sha256": resume_selected_sha256,
+            "resume_skipped": resume_skipped,
+            "loss_csv_rollback_actions": loss_cursor_actions,
+            "start_completed_steps": start_completed_steps,
+            "next_update": (
+                start_completed_steps + 1
+                if start_completed_steps < max_iter
+                else None
+            ),
+            "max_iter": max_iter,
+            "checkpoint_steps": list(full_state["checkpoint_steps"]),
+            "step_semantics": "completed_optimizer_updates",
+            "loss_csv_paths": list(full_state["loss_csv_paths"]),
+            "learning_runs_started": learning_runs_started,
+            "learning_runs_incremented_this_process": learning_run_incremented,
+            "learning_run_increment_pending_first_optimizer_update": (
+                learning_run_increment_pending
+            ),
+            "latest_full_checkpoint": (
+                {
+                    "path": str(resume_selected_path),
+                    "sha256": resume_selected_sha256,
+                    "completed_steps": start_completed_steps,
+                }
+                if resume_selected_path is not None
+                else None
+            ),
+            "last_completed_steps": start_completed_steps,
+        }
+        atomic_write_json(full_state_manifest_path, full_state_manifest)
+        effective_config["full_state_runtime"] = {
+            "binding_sha256": full_state_binding,
+            "manifest": str(full_state_manifest_path),
+            "resume_requested": full_state["resume_request"],
+            "resume_selected": full_state_manifest["resume_selected"],
+            "start_completed_steps": start_completed_steps,
+            "next_update": full_state_manifest["next_update"],
+            "learning_runs_started": learning_runs_started,
+            "learning_runs_incremented_this_process": learning_run_incremented,
+        }
     (out_dir / "effective_config.json").write_text(json.dumps(effective_config, indent=2) + "\n")
     (out_dir / "view_roles.json").write_text(
         json.dumps(view_role_audit, indent=2) + "\n"
@@ -1919,13 +2122,31 @@ def main():
             json.dumps(surface_seed_audit, indent=2) + "\n"
         )
 
-    print(f"[train] max_iter={max_iter}  out={out_dir}")
-    pbar = tqdm(range(max_iter), desc="train")
+    if full_state["enabled"]:
+        print(
+            f"[train] max_iter={max_iter} start_completed={start_completed_steps} "
+            f"out={out_dir}"
+        )
+    else:
+        print(f"[train] max_iter={max_iter}  out={out_dir}")
+    pbar = tqdm(range(start_completed_steps, max_iter), desc="train")
     t0 = time.time()
+
+    # Restore after every setup action so the first view/neighbor draw is the
+    # exact draw that followed the saved completed optimizer update.
+    if pending_resume_rng_state is not None:
+        restore_rng_state(
+            pending_resume_rng_state,
+            strict_cuda=bool(full_state["strict_cuda_rng"]),
+        )
 
     for it in pbar:
         # pick a random training view
-        idx = train_idx[it % len(train_idx)] if cfg.get("sequential", False) else random.choice(train_idx)
+        idx = training_view_index(
+            train_idx,
+            iteration=it,
+            sequential=bool(cfg.get("sequential", False)),
+        )
         batch = ds[idx]
         rgb_gt = batch["rgb"].to(device)
         w2c = batch["w2c"].to(device)
@@ -2454,6 +2675,22 @@ def main():
         for opt in optimizers.values():
             opt.step()
 
+        if full_state["enabled"] and learning_run_increment_pending:
+            # This is the first point at which the approved definition
+            # "optimizer step 1 executed" is true for a fresh process.
+            learning_runs_started = planned_learning_runs_started
+            learning_run_increment_pending = False
+            learning_run_incremented = True
+            full_state_manifest["learning_runs_started"] = learning_runs_started
+            full_state_manifest["learning_runs_incremented_this_process"] = True
+            full_state_manifest[
+                "learning_run_increment_pending_first_optimizer_update"
+            ] = False
+            full_state_manifest["learning_run_counter_incremented_at_completed_step"] = (
+                it + 1
+            )
+            atomic_write_json(full_state_manifest_path, full_state_manifest)
+
         # SH warmup
         if (it + 1) % sh_up_every == 0:
             model.oneup_sh_degree()
@@ -2602,7 +2839,54 @@ def main():
                 allow_explicit_empty=(view_role_audit["mode"] == "explicit_locked_roles"),
             )
 
-        if it % cfg.get("ckpt_every", 5000) == 0 and it > 0:
+        completed_steps = it + 1
+        if full_state_checkpoint_due(
+            full_state, completed_steps=completed_steps
+        ):
+            # All optimizer.step calls and SH warmup for this update have
+            # completed. The checkpoint name therefore has no legacy +1 drift.
+            loss_log_cursor = capture_loss_csv_cursor(
+                out_dir,
+                full_state["loss_csv_paths"],
+                completed_steps=completed_steps,
+            )
+            trainer_runtime_state = capture_trainer_runtime_state(
+                structure_groups=_grp,
+                semantic_geometry=semantic_geometry,
+                semantic_target_observations=semantic_target_observations,
+                semantic_pi_audited_targets=semantic_pi_audited_targets,
+            )
+            saved = save_training_checkpoint(
+                out_dir / "ckpt",
+                completed_steps=completed_steps,
+                model=model,
+                optimizers=optimizers,
+                strategy=strategy,
+                strategy_state=strategy_state,
+                grouping_state=trainer_runtime_state,
+                binding_sha256=full_state_binding,
+                loss_log_cursor=loss_log_cursor,
+                learning_runs_started=learning_runs_started,
+            )
+            full_state_manifest["latest_full_checkpoint"] = {
+                "path": str(saved.path.resolve()),
+                "sha256": saved.sha256,
+                "completed_steps": saved.completed_steps,
+            }
+            full_state_manifest["last_completed_steps"] = completed_steps
+            atomic_write_json(full_state_manifest_path, full_state_manifest)
+            print(
+                f"[checkpoint] atomic full state {saved.path.name} "
+                f"completed_updates={completed_steps} sha256={saved.sha256}",
+                flush=True,
+            )
+        elif (
+            not full_state["enabled"]
+            and it % cfg.get("ckpt_every", 5000) == 0
+            and it > 0
+        ):
+            # Legacy inference snapshot behavior is retained only when the new
+            # full-state mode is absent, including its historical it semantics.
             checkpoint = {
                 "it": it,
                 "state_dict": model.state_dict(),
@@ -2695,6 +2979,14 @@ def main():
         allow_explicit_empty=(view_role_audit["mode"] == "explicit_locked_roles"),
     )
     dt = time.time() - t0
+    if full_state["enabled"]:
+        full_state_manifest["process_completed"] = True
+        full_state_manifest["process_completed_steps"] = max_iter
+        full_state_manifest["optimizer_updates_this_process"] = (
+            max_iter - start_completed_steps
+        )
+        full_state_manifest["elapsed_seconds_this_process"] = dt
+        atomic_write_json(full_state_manifest_path, full_state_manifest)
     print(f"[done] {max_iter} iter in {dt/60:.1f} min.  final N={model.num_points}")
 
 
