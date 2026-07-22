@@ -3,8 +3,8 @@
 
 The adapter is intentionally split at the reconstruction/scoring boundary:
 
-* a Roofer-compatible classified LAS/LAZ can be assembled once with the pinned
-  image and canonical recipe; or an already assembled CityJSON can be supplied;
+* p0-tools prepares immutable Roofer argv without Docker access, a separate
+  host executor runs the pinned image, and p0-tools finalizes raw CityJSONSeq;
 * LoD2 reference geometry is opened only by the scoring path;
 * the metric implementations are imported from ``e5_c001_8way.py`` and
   ``qs_baseline178_rescore.py`` instead of being redefined here;
@@ -50,6 +50,7 @@ if str(SCRIPT_DIR) not in sys.path:
 from pilot_1wave_readout_lineage import (  # noqa: E402
     LINEAGE_SCHEMA as READOUT_LINEAGE_SCHEMA,
     validate_classification_receipt,
+    validate_roofprint_file,
 )
 
 TASK_ID = "P1W-SCORE"
@@ -117,7 +118,9 @@ RMS_SPEC_THRESHOLDS_M = (0.3, 1.0)
 MAX_ITER = 20_000
 FULL_CHECKPOINT_STEPS = (5_000, 10_000, 15_000, 20_000)
 FULL_STATE_MANIFEST_SCHEMA = "jointbuildgs.stage2.resume_manifest.v1"
-ROOFER_MARKER_SCHEMA = "jointbuildgs.pilot_1wave.roofer_invocation.v1"
+ROOFER_PREPARE_SCHEMA = "jointbuildgs.pilot_1wave.roofer_prepare.v1"
+ROOFER_ARGV_SCHEMA = "jointbuildgs.pilot_1wave.roofer_argv.v1"
+ROOFER_MARKER_SCHEMA = "jointbuildgs.pilot_1wave.roofer_invocation.v2"
 SCORE_MARKER_SCHEMA = "jointbuildgs.pilot_1wave.score_invocation.v1"
 GUARD_STATUSES = (
     "not_triggered",
@@ -125,6 +128,12 @@ GUARD_STATUSES = (
     "triggered_emergency_previous_checkpoint",
 )
 P0_TOOLS_IMAGE = "jointbuildgs-p0-tools:t0"
+P0_TOOLS_IMAGE_ID = (
+    "sha256:87bea02e5598a3d53a119b754191673497d52641bd8ea4106ffee653407579b0"
+)
+P0_TOOLS_SENTINEL_ENV = "P1W_INSIDE_P0_TOOLS"
+P0_TOOLS_IMAGE_ID_ENV = "P1W_P0_TOOLS_IMAGE_ID"
+DOCKER_SENTINEL = Path("/.dockerenv")
 CHEAP_REFINE_CONDITION = "cell050_win2_pass1"
 
 _metric_module: Any | None = None
@@ -134,10 +143,20 @@ ROOFER_IMAGE = (
     "3dgi/roofer@sha256:"
     "dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2"
 )
-ROOFER_PARAMETERS = (
-    "--id-attribute building_id --jobs 3 --srs EPSG:25832 "
-    "--bld-class 6 --grnd-class 2 --lod22"
+ROOFER_PARAMETER_ARGV = (
+    "--id-attribute",
+    "building_id",
+    "--jobs",
+    "3",
+    "--srs",
+    "EPSG:25832",
+    "--bld-class",
+    "6",
+    "--grnd-class",
+    "2",
+    "--lod22",
 )
+ROOFER_PARAMETERS = " ".join(ROOFER_PARAMETER_ARGV)
 VAL3DITY_VERSION = "2.6.0"
 LOCKED_LOD2_SHA256 = {
     "690_5334.gml": "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314",
@@ -810,86 +829,80 @@ def validate_roofer_marker(
     cityjson: Path,
     lock: PilotLock,
 ) -> dict[str, Any]:
-    """Require the one canonical Roofer call that produced this CityJSON."""
+    """Re-open the complete v2 prepare/raw/merge provenance chain."""
 
+    require_p0_tools_runtime()
     validate_condition_seed(condition_id, seed)
     marker_path = marker_path.resolve()
     cityjson = cityjson.resolve()
     if not marker_path.is_file() or not cityjson.is_file():
         raise FileNotFoundError(marker_path if not marker_path.is_file() else cityjson)
     marker = json.loads(marker_path.read_text(encoding="utf-8"))
+    if not isinstance(marker, dict):
+        raise RuntimeError("Roofer marker root must be an object")
     require_equal(marker.get("schema"), ROOFER_MARKER_SCHEMA, "Roofer marker schema")
     require_equal(marker.get("condition_id"), condition_id, "Roofer marker condition")
     require_equal(int(marker.get("seed", -1)), int(seed), "Roofer marker seed")
     require_equal(marker.get("state"), "complete", "Roofer marker state")
     require_equal(int(marker.get("roofer_invocation_count", 0)), 1, "Roofer invocation count")
-    require_equal(marker.get("roofer_image"), ROOFER_IMAGE, "Roofer image")
-    require_equal(marker.get("roofer_parameters"), ROOFER_PARAMETERS, "Roofer parameters")
-    require_equal(marker.get("selection_sha256"), lock.selection_sha256, "Roofer selection SHA256")
-    marker_cityjson = _resolve_declared_path(marker.get("cityjson_path"), declaring_file=marker_path)
-    require_equal(marker_cityjson, cityjson, "Roofer marker CityJSON path")
-    cityjson_sha = sha256_file(cityjson)
-    require_equal(marker.get("cityjson_sha256"), cityjson_sha, "Roofer marker CityJSON SHA256")
-    footprints = marker.get("footprints")
-    if not isinstance(footprints, Mapping):
-        raise RuntimeError("Roofer marker lacks a roofprint record")
-    pointcloud = _resolve_declared_path(marker.get("pointcloud_path"), declaring_file=marker_path)
-    require_equal(sha256_file(pointcloud), marker.get("pointcloud_sha256"), "Roofer pointcloud SHA256")
-    receipt_record = marker.get("classification_receipt")
-    if not isinstance(receipt_record, Mapping):
-        raise RuntimeError("Roofer marker lacks classification receipt binding")
-    receipt_path = _resolve_declared_path(
-        receipt_record.get("path"), declaring_file=marker_path
+
+    prepare_record = marker.get("prepare_receipt")
+    if not isinstance(prepare_record, Mapping):
+        raise RuntimeError("Roofer v2 marker lacks prepare receipt binding")
+    prepare_path = _resolve_declared_path(
+        prepare_record.get("path"), declaring_file=marker_path
     )
     require_equal(
-        sha256_file(receipt_path),
-        receipt_record.get("sha256"),
-        "Roofer classification receipt SHA256",
+        sha256_file(prepare_path),
+        prepare_record.get("sha256"),
+        "Roofer prepare receipt SHA256",
     )
-    classification = validate_classification_receipt(
-        receipt_path,
-        pointcloud_path=pointcloud,
+    prepared = validate_roofer_prepare_receipt(
+        prepare_path,
+        lock,
         expected_condition=condition_id,
         expected_seed=seed,
-        expected_building_ids=lock.ids,
-        require_verified_crop=True,
     )
-    require_equal(
-        marker.get("readout_lineage"),
-        classification["readout_lineage"],
-        "Roofer/read-out lineage",
-    )
-    require_equal(
-        marker.get("crop_contract"),
-        classification["crop_contract"],
-        "Roofer/classification crop contract",
-    )
-    footprint_path = _resolve_declared_path(
-        footprints.get("path"), declaring_file=marker_path
-    )
-    receipt_roofprint_path = Path(classification["roofprints"]["path"]).resolve()
-    require_equal(
-        footprint_path,
-        receipt_roofprint_path,
-        "Roofer/classification roofprint path",
-    )
-    for field in (
-        "sha256",
-        "feature_count",
-        "building_ids",
-        "crs",
-        "coordinate_dimension",
+    require_equal(prepared["outputs"]["marker_path"], marker_path, "prepare marker path")
+    require_equal(prepared["outputs"]["merged_cityjson_path"], cityjson, "prepare CityJSON path")
+
+    for field, expected in (
+        ("runtime_contract", prepared["runtime_contract"]),
+        ("roofer_image", ROOFER_IMAGE),
+        ("roofer_parameters", ROOFER_PARAMETERS),
+        ("selection_sha256", lock.selection_sha256),
+        ("ordered_ids_sha256", lock.ordered_ids_sha256),
+        ("ordered_building_ids", list(lock.ids)),
+        ("roofer_argv", prepared["roofer_argv"]),
+        ("pointcloud", prepared["pointcloud"]),
+        ("classification_receipt", prepared["classification_receipt"]),
+        ("readout_lineage", prepared["readout_lineage"]),
+        ("crop_contract", prepared["crop_contract"]),
+        ("footprints", prepared["footprints"]),
     ):
-        require_equal(
-            footprints.get(field),
-            classification["roofprints"][field],
-            f"Roofer/classification roofprints {field}",
-        )
-    require_equal(
-        sha256_file(footprint_path),
-        classification["roofprints"]["sha256"],
-        "Roofer footprint SHA256",
+        require_equal(marker.get(field), expected, f"Roofer marker {field}")
+
+    raw_inventory = inventory_roofer_jsonseq(
+        prepared["outputs"]["raw_jsonseq_dir"], lock
     )
+    require_equal(marker.get("raw_jsonseq"), raw_inventory, "Roofer raw JSONSeq bundle")
+    merged_record = validate_merged_cityjson(cityjson, lock)
+    require_equal(
+        merged_record["child_count"],
+        raw_inventory["child_count"],
+        "raw/merged Roofer child count",
+    )
+    require_equal(marker.get("merged_cityjson"), merged_record, "Roofer merged CityJSON")
+    require_equal(
+        _resolve_declared_path(marker.get("cityjson_path"), declaring_file=marker_path),
+        cityjson,
+        "Roofer marker CityJSON path",
+    )
+    require_equal(marker.get("cityjson_sha256"), merged_record["sha256"], "Roofer CityJSON SHA256")
+
+    classification = prepared["classification"]
+    pointcloud = prepared["pointcloud_path"]
+    receipt_path = prepared["classification_receipt_path"]
     return {
         "roofer_invocation_count": 1,
         "roofer_marker_path": rel(marker_path),
@@ -897,7 +910,7 @@ def validate_roofer_marker(
         "roofer_image": ROOFER_IMAGE,
         "roofer_parameters": ROOFER_PARAMETERS,
         "cityjson_path": rel(cityjson),
-        "cityjson_sha256": cityjson_sha,
+        "cityjson_sha256": merged_record["sha256"],
         "pointcloud_path": rel(pointcloud),
         "pointcloud_sha256": marker.get("pointcloud_sha256"),
         "classification_receipt_path": rel(receipt_path),
@@ -907,6 +920,10 @@ def validate_roofer_marker(
         "readout_lineage": classification["readout_lineage"],
         "crop_contract": classification["crop_contract"],
         "roofprints": classification["roofprints"],
+        "prepare_receipt_path": rel(prepare_path),
+        "prepare_receipt_sha256": prepare_record.get("sha256"),
+        "raw_jsonseq": raw_inventory,
+        "merged_cityjson": merged_record,
     }
 
 
@@ -1059,49 +1076,79 @@ def materialize_locked_roofprints(lock: PilotLock, output: Path) -> dict[str, An
     if any(feature["properties"].get("class") != 6 for feature in features):
         raise RuntimeError("locked roofprint PDAL class drift")
     atomic_text(output, json.dumps(result, ensure_ascii=False, separators=(",", ":")) + "\n")
+    validated = validate_roofprint_file(
+        output, expected_building_ids=lock.ids
+    )
     return {
+        **validated,
         "path": rel(output),
-        "sha256": sha256_file(output),
-        "feature_count": len(features),
         "source_path": rel(FOOTPRINT_SOURCE),
         "source_sha256": FOOTPRINT_SOURCE_SHA256,
     }
 
 
-def roofer_docker_command(pointcloud: Path, roofprints: Path, output_dir: Path) -> list[str]:
-    for path, label in ((pointcloud, "pointcloud"), (roofprints, "roofprints"), (output_dir, "output")):
-        try:
-            path.resolve().relative_to(REPO.resolve())
-        except ValueError as exc:
-            raise RuntimeError(f"{label} must be inside repository: {path}") from exc
-    workspace = Path("/workspace/JointBuildGS")
-    uid_gid = f"{os.getuid()}:{os.getgid()}"
-    return [
-        "docker",
-        "run",
-        "--rm",
-        "--user",
-        uid_gid,
-        "-v",
-        f"{REPO}:/workspace/JointBuildGS",
-        "-w",
-        str(workspace),
-        ROOFER_IMAGE,
-        "--id-attribute",
-        "building_id",
-        "--jobs",
-        "3",
-        "--srs",
-        CRS,
-        "--bld-class",
-        "6",
-        "--grnd-class",
-        "2",
-        "--lod22",
-        str(workspace / pointcloud.resolve().relative_to(REPO.resolve())),
-        str(workspace / roofprints.resolve().relative_to(REPO.resolve())),
-        str(workspace / output_dir.resolve().relative_to(REPO.resolve())),
-    ]
+def _require_repo_path(path: Path, label: str) -> Path:
+    resolved = path.resolve()
+    try:
+        resolved.relative_to(REPO.resolve())
+    except ValueError as exc:
+        raise RuntimeError(f"{label} must be inside repository: {resolved}") from exc
+    return resolved
+
+
+def require_p0_tools_runtime() -> dict[str, Any]:
+    """Require explicit proof that this boundary is running in pinned p0-tools."""
+
+    if not DOCKER_SENTINEL.is_file():
+        raise RuntimeError("Roofer boundary requires the Docker sentinel /.dockerenv")
+    if os.environ.get(P0_TOOLS_SENTINEL_ENV) != "1":
+        raise RuntimeError(f"Roofer boundary lacks {P0_TOOLS_SENTINEL_ENV}=1")
+    image_id = os.environ.get(P0_TOOLS_IMAGE_ID_ENV, "").strip()
+    require_equal(image_id, P0_TOOLS_IMAGE_ID, "p0-tools image ID attestation")
+    require_equal(sha256_file(W2_SCRIPT), W2_SCRIPT_SHA256, "Roofer W2 script SHA256")
+    return {
+        "docker_sentinel": str(DOCKER_SENTINEL),
+        "p0_tools_image": P0_TOOLS_IMAGE,
+        "p0_tools_expected_local_image_id": P0_TOOLS_IMAGE_ID,
+        "p0_tools_attested_local_image_id": image_id,
+        "scoring_script": {
+            "path": rel(Path(__file__)),
+            "sha256": sha256_file(Path(__file__)),
+        },
+        "w2_script": {
+            "path": rel(W2_SCRIPT),
+            "sha256": W2_SCRIPT_SHA256,
+        },
+    }
+
+
+def _container_repo_path(path: Path, label: str) -> str:
+    relative = _require_repo_path(path, label).relative_to(REPO.resolve())
+    return str(Path("/workspace/JointBuildGS") / relative)
+
+
+def roofer_argv_payload(
+    condition_id: str,
+    seed: int,
+    pointcloud: Path,
+    roofprints: Path,
+    raw_jsonseq_dir: Path,
+) -> dict[str, Any]:
+    """Return immutable Roofer-container argv; never invoke Docker here."""
+
+    validate_condition_seed(condition_id, seed)
+    return {
+        "schema": ROOFER_ARGV_SCHEMA,
+        "condition_id": condition_id,
+        "seed": int(seed),
+        "image": ROOFER_IMAGE,
+        "arguments": [
+            *ROOFER_PARAMETER_ARGV,
+            _container_repo_path(pointcloud, "pointcloud"),
+            _container_repo_path(roofprints, "roofprints"),
+            _container_repo_path(raw_jsonseq_dir, "raw JSONSeq output"),
+        ],
+    }
 
 
 def validate_roofer_pointcloud(path: Path) -> dict[str, Any]:
@@ -1197,19 +1244,49 @@ def validate_roofer_pointcloud_in_tools(path: Path) -> dict[str, Any]:
     return record
 
 
-def assemble_pointcloud_once(
+def _classification_receipt_binding(record: Mapping[str, Any]) -> dict[str, Any]:
+    return {
+        "path": rel(record["path"]),
+        "sha256": record["sha256"],
+        "scene_npz_path": rel(record["scene_npz_path"]),
+        "scene_npz_sha256": record["scene_npz_sha256"],
+    }
+
+
+def prepare_roofer(
     condition_id: str,
     seed: int,
     pointcloud: Path,
     classification_receipt: Path,
     output_dir: Path,
     lock: PilotLock,
-) -> tuple[Path, dict[str, Any]]:
-    """Execute exactly one Roofer process for a condition/seed point cloud."""
+) -> dict[str, Any]:
+    """Validate inputs and publish immutable Roofer argv without executing it."""
 
+    runtime_contract = require_p0_tools_runtime()
     validate_condition_seed(condition_id, seed)
+    pointcloud = _require_repo_path(pointcloud, "pointcloud")
+    classification_receipt = _require_repo_path(
+        classification_receipt, "classification receipt"
+    )
+    output_dir = _require_repo_path(output_dir, "Roofer runtime output")
+    if output_dir.exists():
+        if not output_dir.is_dir():
+            raise RuntimeError(f"Roofer runtime output is not a directory: {output_dir}")
+        if any(output_dir.iterdir()):
+            raise RuntimeError(f"Roofer runtime output is not empty: {output_dir}")
+    else:
+        output_dir.mkdir(parents=True)
+
+    prepare_path = output_dir / "roofer_prepare.json"
+    argv_path = output_dir / "roofer_argv.json"
+    raw_jsonseq_dir = output_dir / "raw_jsonseq"
+    cityjson = output_dir / "assembled.city.json"
+    marker = output_dir / "roofer_invocation.json"
+    raw_jsonseq_dir.mkdir()
+
     pointcloud_record = validate_roofer_pointcloud(pointcloud)
-    classification_record = validate_classification_receipt(
+    classification = validate_classification_receipt(
         classification_receipt,
         pointcloud_path=pointcloud,
         expected_condition=condition_id,
@@ -1217,107 +1294,428 @@ def assemble_pointcloud_once(
         expected_building_ids=lock.ids,
         require_verified_crop=True,
     )
-    output_dir.mkdir(parents=True, exist_ok=True)
-    marker = output_dir / "roofer_invocation.json"
-    cityjson = output_dir / "assembled.city.json"
-    if marker.exists():
-        state = json.loads(marker.read_text(encoding="utf-8"))
-        if (
-            state.get("condition_id") == condition_id
-            and int(state.get("seed", -1)) == seed
-            and state.get("pointcloud_sha256") == sha256_file(pointcloud)
-            and (state.get("classification_receipt") or {}).get("sha256")
-            == classification_record["sha256"]
-            and int(state.get("roofer_invocation_count", 0)) == 1
-            and state.get("state") == "complete"
-            and cityjson.is_file()
-            and state.get("cityjson_sha256") == sha256_file(cityjson)
-        ):
-            validate_roofer_marker(
-                condition_id,
-                seed,
-                marker,
-                cityjson,
-                lock,
-            )
-            return cityjson, state
-        raise RuntimeError(f"Roofer invocation marker already exists: {marker}")
+    footprints = dict(classification["roofprints"])
+    roofprint_path = _require_repo_path(Path(footprints["path"]), "roofprints")
+    require_equal(tuple(footprints["building_ids"]), lock.ids, "Roofer roofprint order")
+    require_equal(
+        sha256_file(roofprint_path), footprints["sha256"], "Roofer roofprint SHA256"
+    )
 
-    footprint_record = dict(classification_record["roofprints"])
-    roofprints = Path(footprint_record["path"]).resolve()
-    require_equal(
-        tuple(footprint_record["building_ids"]),
-        lock.ids,
-        "receipt-bound Roofer roofprint order",
+    argv_payload = roofer_argv_payload(
+        condition_id, seed, pointcloud, roofprint_path, raw_jsonseq_dir
     )
-    require_equal(
-        sha256_file(roofprints),
-        footprint_record["sha256"],
-        "receipt-bound Roofer roofprint SHA256",
-    )
-    jsonseq_dir = output_dir / "jsonseq"
-    jsonseq_dir.mkdir(parents=True, exist_ok=True)
-    state = {
-        "schema": "jointbuildgs.pilot_1wave.roofer_invocation.v1",
+    atomic_json(argv_path, argv_payload)
+    argv_record = {
+        "path": rel(argv_path),
+        "sha256": sha256_file(argv_path),
+        "schema": ROOFER_ARGV_SCHEMA,
+        "image": ROOFER_IMAGE,
+        "arguments": argv_payload["arguments"],
+    }
+    receipt = {
+        "schema": ROOFER_PREPARE_SCHEMA,
+        "state": "prepared",
         "condition_id": condition_id,
-        "seed": seed,
-        "state": "started",
-        "started_utc": now(),
-        "roofer_invocation_count": 1,
+        "seed": int(seed),
+        "created_utc": now(),
+        "selection_sha256": lock.selection_sha256,
+        "ordered_ids_sha256": lock.ordered_ids_sha256,
+        "ordered_building_ids": list(lock.ids),
+        "runtime_contract": runtime_contract,
+        "roofer_image": ROOFER_IMAGE,
+        "roofer_parameters": ROOFER_PARAMETERS,
+        "roofer_argv": argv_record,
         "pointcloud_path": pointcloud_record["path"],
         "pointcloud_sha256": pointcloud_record["sha256"],
         "pointcloud": pointcloud_record,
-        "classification_receipt": {
-            "path": rel(classification_record["path"]),
-            "sha256": classification_record["sha256"],
-            "scene_npz_path": rel(classification_record["scene_npz_path"]),
-            "scene_npz_sha256": classification_record["scene_npz_sha256"],
+        "classification_receipt": _classification_receipt_binding(classification),
+        "readout_lineage": classification["readout_lineage"],
+        "crop_contract": classification["crop_contract"],
+        "footprints": footprints,
+        "outputs": {
+            "runtime_dir": rel(output_dir),
+            "raw_jsonseq_dir": rel(raw_jsonseq_dir),
+            "merged_cityjson_path": rel(cityjson),
+            "marker_path": rel(marker),
         },
-        "readout_lineage": classification_record["readout_lineage"],
-        "crop_contract": classification_record["crop_contract"],
-        "footprints": footprint_record,
+    }
+    atomic_json(prepare_path, receipt)
+    return {
+        **receipt,
+        "path": str(prepare_path),
+        "sha256": sha256_file(prepare_path),
+    }
+
+
+def validate_roofer_prepare_receipt(
+    prepare_path: Path,
+    lock: PilotLock,
+    *,
+    expected_condition: str | None = None,
+    expected_seed: int | None = None,
+) -> dict[str, Any]:
+    """Re-open every prepare-bound byte and rebuild the canonical argv."""
+
+    runtime_contract = require_p0_tools_runtime()
+    prepare_path = _require_repo_path(prepare_path, "Roofer prepare receipt")
+    if not prepare_path.is_file():
+        raise FileNotFoundError(prepare_path)
+    require_equal(prepare_path.name, "roofer_prepare.json", "Roofer prepare filename")
+    payload = json.loads(prepare_path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
+        raise RuntimeError("Roofer prepare receipt root must be an object")
+    require_equal(payload.get("schema"), ROOFER_PREPARE_SCHEMA, "Roofer prepare schema")
+    require_equal(payload.get("state"), "prepared", "Roofer prepare state")
+    condition_id = str(payload.get("condition_id", ""))
+    seed = int(payload.get("seed", -1))
+    validate_condition_seed(condition_id, seed)
+    if expected_condition is not None:
+        require_equal(condition_id, expected_condition, "Roofer prepare condition")
+    if expected_seed is not None:
+        require_equal(seed, int(expected_seed), "Roofer prepare seed")
+    require_equal(payload.get("selection_sha256"), lock.selection_sha256, "prepare selection SHA256")
+    require_equal(payload.get("ordered_ids_sha256"), lock.ordered_ids_sha256, "prepare ordered IDs SHA256")
+    require_equal(payload.get("ordered_building_ids"), list(lock.ids), "prepare ordered building IDs")
+    require_equal(payload.get("runtime_contract"), runtime_contract, "prepare runtime contract")
+    require_equal(payload.get("roofer_image"), ROOFER_IMAGE, "prepare Roofer image")
+    require_equal(payload.get("roofer_parameters"), ROOFER_PARAMETERS, "prepare Roofer parameters")
+
+    output_dir = prepare_path.parent.resolve()
+    outputs = payload.get("outputs")
+    if not isinstance(outputs, Mapping):
+        raise RuntimeError("Roofer prepare receipt lacks output paths")
+    expected_outputs = {
+        "runtime_dir": output_dir,
+        "raw_jsonseq_dir": output_dir / "raw_jsonseq",
+        "merged_cityjson_path": output_dir / "assembled.city.json",
+        "marker_path": output_dir / "roofer_invocation.json",
+    }
+    resolved_outputs: dict[str, Path] = {}
+    for field, expected in expected_outputs.items():
+        require_equal(outputs.get(field), rel(expected), f"prepare output {field}")
+        resolved_outputs[field] = _require_repo_path(expected, f"prepare output {field}")
+    if not resolved_outputs["raw_jsonseq_dir"].is_dir():
+        raise RuntimeError("prepared raw JSONSeq output is not a directory")
+    if (output_dir / "raw_jsonseq").is_symlink():
+        raise RuntimeError("prepared raw JSONSeq output must not be a symlink")
+
+    pointcloud = _resolve_declared_path(
+        payload.get("pointcloud_path"), declaring_file=prepare_path
+    )
+    pointcloud_record = validate_roofer_pointcloud(pointcloud)
+    require_equal(payload.get("pointcloud_sha256"), pointcloud_record["sha256"], "prepare pointcloud SHA256")
+    require_equal(payload.get("pointcloud"), pointcloud_record, "prepare pointcloud record")
+
+    receipt_binding = payload.get("classification_receipt")
+    if not isinstance(receipt_binding, Mapping):
+        raise RuntimeError("Roofer prepare lacks classification receipt binding")
+    classification_receipt = _resolve_declared_path(
+        receipt_binding.get("path"), declaring_file=prepare_path
+    )
+    classification = validate_classification_receipt(
+        classification_receipt,
+        pointcloud_path=pointcloud,
+        expected_condition=condition_id,
+        expected_seed=seed,
+        expected_building_ids=lock.ids,
+        require_verified_crop=True,
+    )
+    require_equal(
+        receipt_binding,
+        _classification_receipt_binding(classification),
+        "prepare classification receipt",
+    )
+    for payload_field, classification_field in (
+        ("readout_lineage", "readout_lineage"),
+        ("crop_contract", "crop_contract"),
+        ("footprints", "roofprints"),
+    ):
+        require_equal(
+            payload.get(payload_field),
+            classification[classification_field],
+            f"prepare {payload_field}",
+        )
+
+    argv_record = payload.get("roofer_argv")
+    if not isinstance(argv_record, Mapping):
+        raise RuntimeError("Roofer prepare lacks argv binding")
+    argv_path = _resolve_declared_path(argv_record.get("path"), declaring_file=prepare_path)
+    require_equal(argv_path, output_dir / "roofer_argv.json", "Roofer argv path")
+    require_equal(sha256_file(argv_path), argv_record.get("sha256"), "Roofer argv SHA256")
+    argv_payload = json.loads(argv_path.read_text(encoding="utf-8"))
+    roofprint_path = Path(classification["roofprints"]["path"])
+    expected_argv = roofer_argv_payload(
+        condition_id,
+        seed,
+        pointcloud,
+        roofprint_path,
+        resolved_outputs["raw_jsonseq_dir"],
+    )
+    require_equal(argv_payload, expected_argv, "Roofer argv contents")
+    normalized_argv = {
+        "path": rel(argv_path),
+        "sha256": sha256_file(argv_path),
+        "schema": ROOFER_ARGV_SCHEMA,
+        "image": ROOFER_IMAGE,
+        "arguments": expected_argv["arguments"],
+    }
+    require_equal(argv_record, normalized_argv, "Roofer argv record")
+    return {
+        "path": str(prepare_path),
+        "sha256": sha256_file(prepare_path),
+        "condition_id": condition_id,
+        "seed": seed,
+        "runtime_contract": runtime_contract,
+        "roofer_argv": normalized_argv,
+        "pointcloud_path": pointcloud,
+        "pointcloud": pointcloud_record,
+        "classification_receipt_path": classification_receipt,
+        "classification_receipt": _classification_receipt_binding(classification),
+        "classification": classification,
+        "readout_lineage": classification["readout_lineage"],
+        "crop_contract": classification["crop_contract"],
+        "footprints": classification["roofprints"],
+        "outputs": resolved_outputs,
+    }
+
+
+def _validate_cityobject_ownership(
+    cityobjects: Any,
+    expected_root_ids: Sequence[str],
+    label: str,
+) -> dict[str, Any]:
+    if not isinstance(cityobjects, Mapping):
+        raise RuntimeError(f"{label} CityObjects must be an object")
+    objects = {str(key): value for key, value in cityobjects.items()}
+    if any(not isinstance(value, Mapping) for value in objects.values()):
+        raise RuntimeError(f"{label} CityObject must be an object")
+    roots = [
+        object_id
+        for object_id, value in objects.items()
+        if value.get("type") == "Building" and not value.get("parents")
+    ]
+    require_equal(set(roots), set(expected_root_ids), f"{label} root Building IDs")
+    require_equal(len(roots), len(expected_root_ids), f"{label} root Building count")
+    owners: dict[str, str] = {}
+    for root_id in roots:
+        children = objects[root_id].get("children") or []
+        if not isinstance(children, list) or any(not isinstance(child, str) for child in children):
+            raise RuntimeError(f"{label} root children are invalid: {root_id}")
+        require_equal(len(children), len(set(children)), f"{label} duplicate children {root_id}")
+        for child_id in children:
+            if child_id not in objects:
+                raise RuntimeError(f"{label} missing child object: {child_id}")
+            if child_id in owners:
+                raise RuntimeError(f"{label} shared child object: {child_id}")
+            owners[child_id] = root_id
+    non_roots = set(objects) - set(roots)
+    require_equal(set(owners), non_roots, f"{label} orphan child objects")
+    for child_id, owner in owners.items():
+        parents = objects[child_id].get("parents")
+        require_equal(parents, [owner], f"{label} child parent {child_id}")
+    return {
+        "root_building_count": len(roots),
+        "root_building_ids": list(expected_root_ids),
+        "child_count": len(owners),
+        "child_ids": sorted(owners),
+    }
+
+
+def inventory_roofer_jsonseq(raw_jsonseq_dir: Path, lock: PilotLock) -> dict[str, Any]:
+    """Hash and structurally validate every raw Roofer CityJSONSeq file."""
+
+    raw_jsonseq_dir = _require_repo_path(raw_jsonseq_dir, "raw JSONSeq directory")
+    if not raw_jsonseq_dir.is_dir():
+        raise FileNotFoundError(raw_jsonseq_dir)
+    entries = sorted(raw_jsonseq_dir.iterdir(), key=lambda path: path.name)
+    unexpected = [
+        path.name
+        for path in entries
+        if path.is_symlink() or not path.is_file() or not path.name.endswith(".city.jsonl")
+    ]
+    if unexpected:
+        raise RuntimeError(f"unexpected raw JSONSeq entries: {unexpected}")
+    files = [path.resolve() for path in entries]
+    if not files:
+        raise RuntimeError("raw JSONSeq bundle is missing")
+
+    file_records: list[dict[str, Any]] = []
+    feature_ids: list[str] = []
+    child_ids: set[str] = set()
+    object_ids: set[str] = set()
+    for path in files:
+        size = path.stat().st_size
+        if size <= 0:
+            raise RuntimeError(f"raw JSONSeq file is empty: {path}")
+        file_records.append(
+            {"path": rel(path), "size_bytes": size, "sha256": sha256_file(path)}
+        )
+        with path.open(encoding="utf-8") as stream:
+            header_line = stream.readline()
+            try:
+                header = json.loads(header_line)
+            except json.JSONDecodeError as exc:
+                raise RuntimeError(f"invalid CityJSONSeq header: {path}") from exc
+            if not isinstance(header, dict) or header.get("type") != "CityJSON":
+                raise RuntimeError(f"invalid CityJSONSeq header object: {path}")
+            require_equal(
+                header.get("CityObjects"), {}, f"CityJSONSeq header CityObjects {path}"
+            )
+            require_equal(header.get("vertices"), [], f"CityJSONSeq header vertices {path}")
+            file_feature_count = 0
+            for line_number, line in enumerate(stream, 2):
+                if not line.strip():
+                    continue
+                try:
+                    feature = json.loads(line)
+                except json.JSONDecodeError as exc:
+                    raise RuntimeError(
+                        f"invalid CityJSONFeature JSON: {path}:{line_number}"
+                    ) from exc
+                if not isinstance(feature, dict) or feature.get("type") != "CityJSONFeature":
+                    raise RuntimeError(f"invalid CityJSONFeature: {path}:{line_number}")
+                feature_id = str(feature.get("id", ""))
+                if not feature_id:
+                    raise RuntimeError(f"CityJSONFeature lacks id: {path}:{line_number}")
+                ownership = _validate_cityobject_ownership(
+                    feature.get("CityObjects"), [feature_id], f"raw feature {feature_id}"
+                )
+                current_objects = set(str(key) for key in feature["CityObjects"])
+                overlap = object_ids.intersection(current_objects)
+                if overlap:
+                    raise RuntimeError(f"duplicate raw CityObject IDs: {sorted(overlap)}")
+                object_ids.update(current_objects)
+                current_children = set(ownership["child_ids"])
+                shared = child_ids.intersection(current_children)
+                if shared:
+                    raise RuntimeError(f"shared raw child ownership: {sorted(shared)}")
+                child_ids.update(current_children)
+                feature_ids.append(feature_id)
+                file_feature_count += 1
+            if file_feature_count == 0:
+                raise RuntimeError(f"raw JSONSeq file has no CityJSONFeature: {path}")
+    require_equal(len(feature_ids), EXPECTED_POPULATION, "raw CityJSONFeature count")
+    require_equal(len(set(feature_ids)), EXPECTED_POPULATION, "raw CityJSONFeature unique IDs")
+    require_equal(set(feature_ids), set(lock.ids), "raw CityJSONFeature IDs")
+    return {
+        "directory_path": rel(raw_jsonseq_dir),
+        "file_count": len(file_records),
+        "files": file_records,
+        "bundle_sha256": canonical_json_sha256({"files": file_records}),
+        "feature_count": len(feature_ids),
+        "feature_ids_in_read_order": feature_ids,
+        "root_building_count": EXPECTED_POPULATION,
+        "root_building_ids": list(lock.ids),
+        "child_count": len(child_ids),
+    }
+
+
+def validate_merged_cityjson(cityjson: Path, lock: PilotLock) -> dict[str, Any]:
+    cityjson = _require_repo_path(cityjson, "merged CityJSON")
+    if not cityjson.is_file():
+        raise FileNotFoundError(cityjson)
+    payload = json.loads(cityjson.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict) or payload.get("type") != "CityJSON":
+        raise RuntimeError("merged CityJSON root/type is invalid")
+    ownership = _validate_cityobject_ownership(
+        payload.get("CityObjects"), lock.ids, "merged CityJSON"
+    )
+    if not isinstance(payload.get("vertices"), list):
+        raise RuntimeError("merged CityJSON vertices must be an array")
+    return {
+        "path": rel(cityjson),
+        "sha256": sha256_file(cityjson),
+        "size_bytes": cityjson.stat().st_size,
+        "root_building_count": ownership["root_building_count"],
+        "root_building_ids": ownership["root_building_ids"],
+        "child_count": ownership["child_count"],
+    }
+
+
+def finalize_roofer(
+    prepare_path: Path,
+    lock: PilotLock,
+    *,
+    expected_condition: str | None = None,
+    expected_seed: int | None = None,
+) -> tuple[Path, dict[str, Any]]:
+    """Validate raw Roofer bytes, merge once, and publish the v2 marker last."""
+
+    prepared = validate_roofer_prepare_receipt(
+        prepare_path,
+        lock,
+        expected_condition=expected_condition,
+        expected_seed=expected_seed,
+    )
+    outputs = prepared["outputs"]
+    cityjson = outputs["merged_cityjson_path"]
+    marker = outputs["marker_path"]
+    temporary = cityjson.with_name(f".{cityjson.name}.tmp")
+    for path, label in (
+        (cityjson, "merged CityJSON"),
+        (marker, "Roofer v2 marker"),
+        (temporary, "stale merge temporary"),
+    ):
+        if path.exists():
+            raise RuntimeError(f"refusing second/stale Roofer finalize; {label} exists: {path}")
+
+    raw_inventory = inventory_roofer_jsonseq(outputs["raw_jsonseq_dir"], lock)
+    raw_paths = [
+        _resolve_declared_path(
+            record["path"], declaring_file=Path(prepared["path"])
+        )
+        for record in raw_inventory["files"]
+    ]
+    w2 = load_module("pilot_1wave_w2_finalize", W2_SCRIPT)
+    w2.combine_cityjsonseq(raw_paths, temporary)
+    validate_merged_cityjson(temporary, lock)
+    require_equal(
+        inventory_roofer_jsonseq(outputs["raw_jsonseq_dir"], lock),
+        raw_inventory,
+        "raw JSONSeq changed during merge",
+    )
+    os.replace(temporary, cityjson)
+    merged_record = validate_merged_cityjson(cityjson, lock)
+    require_equal(
+        merged_record["child_count"],
+        raw_inventory["child_count"],
+        "raw/merged Roofer child count",
+    )
+    classification = prepared["classification"]
+    state = {
+        "schema": ROOFER_MARKER_SCHEMA,
+        "state": "complete",
+        "condition_id": prepared["condition_id"],
+        "seed": prepared["seed"],
+        "finalized_utc": now(),
+        "roofer_invocation_count": 1,
+        "selection_sha256": lock.selection_sha256,
+        "ordered_ids_sha256": lock.ordered_ids_sha256,
+        "ordered_building_ids": list(lock.ids),
+        "runtime_contract": prepared["runtime_contract"],
         "roofer_image": ROOFER_IMAGE,
         "roofer_parameters": ROOFER_PARAMETERS,
-        "selection_sha256": lock.selection_sha256,
-        "scoring_bbox": list(lock.scoring_bbox),
+        "prepare_receipt": {
+            "path": rel(prepared["path"]),
+            "sha256": prepared["sha256"],
+        },
+        "roofer_argv": prepared["roofer_argv"],
+        "pointcloud_path": prepared["pointcloud"]["path"],
+        "pointcloud_sha256": prepared["pointcloud"]["sha256"],
+        "pointcloud": prepared["pointcloud"],
+        "classification_receipt": prepared["classification_receipt"],
+        "readout_lineage": classification["readout_lineage"],
+        "crop_contract": classification["crop_contract"],
+        "footprints": classification["roofprints"],
+        "raw_jsonseq": raw_inventory,
+        "cityjson_path": rel(cityjson),
+        "cityjson_sha256": merged_record["sha256"],
+        "merged_cityjson": merged_record,
     }
     atomic_json(marker, state)
-    require_equal(
-        sha256_file(roofprints),
-        footprint_record["sha256"],
-        "Roofer-bound roofprint SHA256 before invocation",
+    validate_roofer_marker(
+        prepared["condition_id"], prepared["seed"], marker, cityjson, lock
     )
-    command = roofer_docker_command(pointcloud, roofprints, jsonseq_dir)
-    process = subprocess.run(
-        command,
-        cwd=REPO,
-        text=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-        check=False,
-    )
-    atomic_text(output_dir / "roofer.log", "+ " + " ".join(command) + "\n" + (process.stdout or ""))
-    state.update({"ended_utc": now(), "roofer_exit_code": int(process.returncode)})
-    if process.returncode != 0:
-        state["state"] = "error"
-        atomic_json(marker, state)
-        raise RuntimeError(f"Roofer exited {process.returncode}; marker prevents a second invocation")
-    jsonseq_files = sorted(jsonseq_dir.glob("*.city.jsonl"))
-    if not jsonseq_files:
-        state["state"] = "error"
-        atomic_json(marker, state)
-        raise RuntimeError("Roofer returned no CityJSONSeq; marker prevents a second invocation")
-    w2 = load_module("pilot_1wave_w2", W2_SCRIPT)
-    w2.combine_cityjsonseq(jsonseq_files, cityjson)
-    state.update(
-        {
-            "state": "complete",
-            "jsonseq_count": len(jsonseq_files),
-            "cityjson_path": rel(cityjson),
-            "cityjson_sha256": sha256_file(cityjson),
-        }
-    )
-    atomic_json(marker, state)
     return cityjson, state
 
 
@@ -2834,12 +3232,28 @@ def cli() -> argparse.Namespace:
     footprints.add_argument("--output", type=Path, required=True)
     validate_cloud = sub.add_parser("validate-pointcloud")
     validate_cloud.add_argument("--pointcloud", type=Path, required=True)
-    assemble = sub.add_parser("assemble-pointcloud")
-    assemble.add_argument("--condition", choices=ALL_CONDITIONS, required=True)
-    assemble.add_argument("--seed", choices=EXPECTED_SEEDS, type=int, required=True)
-    assemble.add_argument("--pointcloud", type=Path, required=True)
-    assemble.add_argument("--classification-receipt", type=Path, required=True)
-    assemble.add_argument("--output-dir", type=Path, required=True)
+    prepare_roofer_parser = sub.add_parser("prepare-roofer")
+    prepare_roofer_parser.add_argument(
+        "--condition", choices=ALL_CONDITIONS, required=True
+    )
+    prepare_roofer_parser.add_argument(
+        "--seed", choices=EXPECTED_SEEDS, type=int, required=True
+    )
+    prepare_roofer_parser.add_argument("--pointcloud", type=Path, required=True)
+    prepare_roofer_parser.add_argument(
+        "--classification-receipt", type=Path, required=True
+    )
+    prepare_roofer_parser.add_argument("--output-dir", type=Path, required=True)
+    finalize_roofer_parser = sub.add_parser("finalize-roofer")
+    finalize_roofer_parser.add_argument(
+        "--condition", choices=ALL_CONDITIONS, required=True
+    )
+    finalize_roofer_parser.add_argument(
+        "--seed", choices=EXPECTED_SEEDS, type=int, required=True
+    )
+    finalize_roofer_parser.add_argument(
+        "--prepare-receipt", type=Path, required=True
+    )
     score = sub.add_parser("score-cityjson")
     score.add_argument("--condition", choices=ALL_CONDITIONS, required=True)
     score.add_argument("--seed", choices=EXPECTED_SEEDS, type=int, required=True)
@@ -2871,8 +3285,8 @@ def main() -> None:
     if args.command == "validate-pointcloud":
         print(json.dumps(validate_roofer_pointcloud(args.pointcloud), ensure_ascii=False))
         return
-    if args.command == "assemble-pointcloud":
-        cityjson, state = assemble_pointcloud_once(
+    if args.command == "prepare-roofer":
+        prepared = prepare_roofer(
             args.condition,
             args.seed,
             args.pointcloud,
@@ -2880,7 +3294,36 @@ def main() -> None:
             args.output_dir,
             lock,
         )
-        print(json.dumps({"cityjson": rel(cityjson), "cityjson_sha256": sha256_file(cityjson), "roofer_invocation_count": state["roofer_invocation_count"]}))
+        print(
+            json.dumps(
+                {
+                    "prepare_receipt": rel(prepared["path"]),
+                    "prepare_receipt_sha256": prepared["sha256"],
+                    "roofer_argv": prepared["roofer_argv"],
+                },
+                ensure_ascii=False,
+            )
+        )
+        return
+    if args.command == "finalize-roofer":
+        cityjson, state = finalize_roofer(
+            args.prepare_receipt,
+            lock,
+            expected_condition=args.condition,
+            expected_seed=args.seed,
+        )
+        print(
+            json.dumps(
+                {
+                    "cityjson": rel(cityjson),
+                    "cityjson_sha256": state["cityjson_sha256"],
+                    "roofer_marker": rel(
+                        args.prepare_receipt.parent / "roofer_invocation.json"
+                    ),
+                },
+                ensure_ascii=False,
+            )
+        )
         return
     if args.command == "score-cityjson":
         marker = args.score_marker or args.output.with_suffix(".score.json")

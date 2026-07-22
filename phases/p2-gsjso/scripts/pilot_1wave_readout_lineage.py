@@ -234,6 +234,8 @@ def validate_roofprint_file(
     if crs_code != "25832":
         raise RuntimeError(f"roofprint CRS drift: {crs!r}")
     building_ids: list[str] = []
+    feature_properties: list[dict[str, Any]] = []
+    ordered_geometry: list[dict[str, Any]] = []
     for feature in features:
         if not isinstance(feature, Mapping):
             raise RuntimeError("roofprint feature must be an object")
@@ -249,7 +251,27 @@ def validate_roofprint_file(
                 f"roofprint overlay class drift for {building_id}: "
                 f"{properties.get('class')!r} != 6"
             )
+        if expected is not None:
+            require_equal(
+                building_id,
+                expected[len(building_ids)],
+                "roofprint ordered building IDs",
+            )
+            expected_properties = {
+                "building_id": expected[len(building_ids)],
+                "selection_rank": len(building_ids) + 1,
+                "class": 6,
+            }
+            require_equal(
+                dict(properties),
+                expected_properties,
+                f"roofprint properties {building_id}",
+            )
         building_ids.append(building_id)
+        feature_properties.append(dict(properties))
+        ordered_geometry.append(
+            {"building_id": building_id, "geometry": dict(geometry)}
+        )
         lengths = list(
             _all_coordinate_lengths(geometry.get("coordinates"))
         )
@@ -263,6 +285,10 @@ def validate_roofprint_file(
         "sha256": sha256_file(path),
         "feature_count": len(features),
         "building_ids": building_ids,
+        "feature_properties": feature_properties,
+        "ordered_feature_geometry_sha256": hashlib.sha256(
+            canonical_json(ordered_geometry).encode("utf-8")
+        ).hexdigest(),
         "crs": "EPSG:25832",
         "coordinate_dimension": 2,
     }
@@ -716,6 +742,8 @@ def validate_classification_receipt(
         "sha256",
         "feature_count",
         "building_ids",
+        "feature_properties",
+        "ordered_feature_geometry_sha256",
         "crs",
         "coordinate_dimension",
     ):

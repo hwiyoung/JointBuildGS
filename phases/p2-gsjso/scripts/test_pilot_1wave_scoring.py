@@ -2,9 +2,11 @@
 """Docker synthetic tests for the P1W expanded-30 scoring adapter."""
 from __future__ import annotations
 
+import copy
 import csv
 import hashlib
 import json
+import os
 import shutil
 import sys
 import tempfile
@@ -26,10 +28,112 @@ import pilot_1wave_readout_lineage as lineage_contract
 class PilotOneWaveScoringTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
+        cls.p0_environment = mock.patch.dict(
+            os.environ,
+            {
+                score.P0_TOOLS_SENTINEL_ENV: "1",
+                score.P0_TOOLS_IMAGE_ID_ENV: score.P0_TOOLS_IMAGE_ID,
+            },
+        )
+        cls.p0_environment.start()
         cls.lock = score.load_pilot_lock()
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        cls.p0_environment.stop()
 
     def temporary_directory(self) -> tempfile.TemporaryDirectory[str]:
         return tempfile.TemporaryDirectory(prefix=".p1w_score_", dir=SCRIPT_DIR)
+
+    def repo_path(self, value: str) -> Path:
+        path = Path(value)
+        return path if path.is_absolute() else score.REPO / path
+
+    def write_classified_las(self, path: Path) -> None:
+        metric_module = score.get_metric_module()
+        header = metric_module.laspy.LasHeader(point_format=6, version="1.4")
+        header.add_crs(CRS.from_epsg(25832))
+        cloud = metric_module.laspy.LasData(header)
+        cloud.x = np.asarray([690800.0, 690801.0])
+        cloud.y = np.asarray([5336000.0, 5336001.0])
+        cloud.z = np.asarray([500.0, 510.0])
+        cloud.classification = np.asarray([2, 6], dtype=np.uint8)
+        cloud.write(path)
+
+    def write_roofer_jsonseq(self, source_cityjson: Path, raw_dir: Path) -> Path:
+        source = json.loads(source_cityjson.read_text(encoding="utf-8"))
+        source_vertices = source["vertices"]
+        source_transform = source.get("transform")
+        scale = [0.001, 0.001, 0.001]
+        translate = [0.0, 0.0, 0.0]
+
+        def absolute_vertex(vertex: list[float]) -> list[float]:
+            if source_transform is None:
+                return [float(value) for value in vertex]
+            return [
+                float(vertex[index]) * float(source_transform["scale"][index])
+                + float(source_transform["translate"][index])
+                for index in range(3)
+            ]
+
+        def indices(value: object) -> list[int]:
+            if isinstance(value, int):
+                return [value]
+            if isinstance(value, list):
+                return [index for item in value for index in indices(item)]
+            return []
+
+        def remap(value: object, mapping: dict[int, int]) -> object:
+            if isinstance(value, int):
+                return mapping[value]
+            if isinstance(value, list):
+                return [remap(item, mapping) for item in value]
+            return value
+
+        header = {
+            "type": "CityJSON",
+            "version": "2.0",
+            "transform": {"scale": scale, "translate": translate},
+            "metadata": {
+                "referenceSystem": "https://www.opengis.net/def/crs/EPSG/0/25832"
+            },
+            "CityObjects": {},
+            "vertices": [],
+        }
+        lines = [json.dumps(header, separators=(",", ":"))]
+        for building_id in self.lock.ids:
+            cityobject = copy.deepcopy(source["CityObjects"][building_id])
+            used = sorted(
+                set(
+                    index
+                    for geometry in cityobject.get("geometry", [])
+                    for index in indices(geometry.get("boundaries"))
+                )
+            )
+            mapping = {old: new for new, old in enumerate(used)}
+            for geometry in cityobject.get("geometry", []):
+                geometry["boundaries"] = remap(geometry["boundaries"], mapping)
+            vertices = [
+                [
+                    int(round((coordinate - translate[index]) / scale[index]))
+                    for index, coordinate in enumerate(absolute_vertex(source_vertices[old]))
+                ]
+                for old in used
+            ]
+            lines.append(
+                json.dumps(
+                    {
+                        "type": "CityJSONFeature",
+                        "id": building_id,
+                        "CityObjects": {building_id: cityobject},
+                        "vertices": vertices,
+                    },
+                    separators=(",", ":"),
+                )
+            )
+        output = raw_dir / "synthetic.city.jsonl"
+        output.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        return output
 
     def full_state_fixture(
         self,
@@ -86,10 +190,10 @@ class PilotOneWaveScoringTests(unittest.TestCase):
         seed: int,
         cityjson: Path,
         full_state: Path,
-    ) -> Path:
+    ) -> tuple[Path, Path]:
         root.mkdir(parents=True, exist_ok=True)
         pointcloud = root / "classified.laz"
-        pointcloud.write_bytes(b"synthetic classified pointcloud")
+        self.write_classified_las(pointcloud)
         run_provenance = score.validate_full_state_manifest(
             condition,
             seed,
@@ -213,35 +317,23 @@ class PilotOneWaveScoringTests(unittest.TestCase):
             + "\n",
             encoding="utf-8",
         )
-        marker = root / "roofer_invocation.json"
-        marker.write_text(
-            json.dumps(
-                {
-                    "schema": score.ROOFER_MARKER_SCHEMA,
-                    "condition_id": condition,
-                    "seed": seed,
-                    "state": "complete",
-                    "roofer_invocation_count": 1,
-                    "pointcloud_path": str(pointcloud),
-                    "pointcloud_sha256": score.sha256_file(pointcloud),
-                    "classification_receipt": {
-                        "path": str(classification_receipt),
-                        "sha256": score.sha256_file(classification_receipt),
-                    },
-                    "readout_lineage": lineage,
-                    "crop_contract": crop_contract,
-                    "footprints": roofprint_record,
-                    "roofer_image": score.ROOFER_IMAGE,
-                    "roofer_parameters": score.ROOFER_PARAMETERS,
-                    "selection_sha256": self.lock.selection_sha256,
-                    "cityjson_path": str(cityjson),
-                    "cityjson_sha256": score.sha256_file(cityjson),
-                }
-            )
-            + "\n",
-            encoding="utf-8",
+        prepared = score.prepare_roofer(
+            condition,
+            seed,
+            pointcloud,
+            classification_receipt,
+            root / "runtime",
+            self.lock,
         )
-        return marker
+        raw_dir = score.REPO / prepared["outputs"]["raw_jsonseq_dir"]
+        self.write_roofer_jsonseq(cityjson, raw_dir)
+        merged, _state = score.finalize_roofer(
+            Path(prepared["path"]),
+            self.lock,
+            expected_condition=condition,
+            expected_seed=seed,
+        )
+        return merged.parent / "roofer_invocation.json", merged
 
     def bound_score_fixture(
         self,
@@ -257,7 +349,7 @@ class PilotOneWaveScoringTests(unittest.TestCase):
         full_state = self.full_state_fixture(
             root / "train", condition, seed, completed_steps=completed_steps
         )
-        roofer_marker = self.roofer_marker_fixture(
+        roofer_marker, cityjson = self.roofer_marker_fixture(
             root / "roofer", condition, seed, cityjson, full_state
         )
         calls: list[tuple[Path, Path]] = []
@@ -559,7 +651,7 @@ class PilotOneWaveScoringTests(unittest.TestCase):
             full_state = self.full_state_fixture(
                 root / "train", "01", 1001, completed_steps=20000
             )
-            roofer_marker = self.roofer_marker_fixture(
+            roofer_marker, cityjson = self.roofer_marker_fixture(
                 root / "roofer", "01", 1001, cityjson, full_state
             )
             payload = json.loads(full_state.read_text(encoding="utf-8"))
@@ -788,6 +880,14 @@ class PilotOneWaveScoringTests(unittest.TestCase):
                 lineage_contract.validate_roofprint_file(
                     roofprints, expected_building_ids=self.lock.ids
                 )
+            score.materialize_locked_roofprints(self.lock, roofprints)
+            payload = json.loads(roofprints.read_text(encoding="utf-8"))
+            payload["features"][0]["properties"]["unexpected"] = True
+            roofprints.write_text(json.dumps(payload) + "\n", encoding="utf-8")
+            with self.assertRaisesRegex(RuntimeError, "roofprint properties"):
+                lineage_contract.validate_roofprint_file(
+                    roofprints, expected_building_ids=self.lock.ids
+                )
 
             bound_root = root / "bound"
             bound_root.mkdir()
@@ -795,7 +895,7 @@ class PilotOneWaveScoringTests(unittest.TestCase):
             full_state = self.full_state_fixture(
                 root / "bound/train", "01", 1001, completed_steps=score.MAX_ITER
             )
-            marker = self.roofer_marker_fixture(
+            marker, _merged = self.roofer_marker_fixture(
                 root / "bound/roofer", "01", 1001, cityjson, full_state
             )
             marker_payload = json.loads(marker.read_text(encoding="utf-8"))
@@ -815,14 +915,14 @@ class PilotOneWaveScoringTests(unittest.TestCase):
                 )
 
     def test_classification_receipt_rejects_roofprint_path_and_sha_mismatch(self) -> None:
-        for drift in ("path", "sha256"):
+        for drift in ("path", "sha256", "geometry_sha256"):
             with self.subTest(drift=drift), self.temporary_directory() as raw:
                 root = Path(raw)
                 cityjson, _report, _references = self.synthetic_fixture(root)
                 full_state = self.full_state_fixture(
                     root / "train", "02", 1002, completed_steps=score.MAX_ITER
                 )
-                marker = self.roofer_marker_fixture(
+                marker, _merged = self.roofer_marker_fixture(
                     root / "roofer", "02", 1002, cityjson, full_state
                 )
                 marker_payload = json.loads(marker.read_text(encoding="utf-8"))
@@ -835,8 +935,17 @@ class PilotOneWaveScoringTests(unittest.TestCase):
                     receipt_payload["roofprints"]["path"] = str(replacement)
                     expected_error = "classification pipeline roofprint path"
                 else:
-                    receipt_payload["roofprints"]["sha256"] = "0" * 64
-                    expected_error = "classification receipt roofprints sha256"
+                    if drift == "sha256":
+                        receipt_payload["roofprints"]["sha256"] = "0" * 64
+                        expected_error = "classification receipt roofprints sha256"
+                    else:
+                        receipt_payload["roofprints"][
+                            "ordered_feature_geometry_sha256"
+                        ] = "0" * 64
+                        expected_error = (
+                            "classification receipt roofprints "
+                            "ordered_feature_geometry_sha256"
+                        )
                 receipt.write_text(json.dumps(receipt_payload) + "\n", encoding="utf-8")
                 with self.assertRaisesRegex(RuntimeError, expected_error):
                     lineage_contract.validate_classification_receipt(
@@ -854,7 +963,7 @@ class PilotOneWaveScoringTests(unittest.TestCase):
             full_state = self.full_state_fixture(
                 root / "train", "03", 1001, completed_steps=score.MAX_ITER
             )
-            marker = self.roofer_marker_fixture(
+            marker, _merged = self.roofer_marker_fixture(
                 root / "roofer", "03", 1001, cityjson, full_state
             )
             marker_payload = json.loads(marker.read_text(encoding="utf-8"))
@@ -891,60 +1000,227 @@ class PilotOneWaveScoringTests(unittest.TestCase):
                     expected_seed=1001,
                 )
 
-    def test_roofer_boundary_uses_exact_receipt_bound_roofprint_file(self) -> None:
+    def test_prepare_roofer_is_p0_only_immutable_and_uses_receipt_roofprints(self) -> None:
         with self.temporary_directory() as raw:
             root = Path(raw)
             cityjson, _report, _references = self.synthetic_fixture(root)
             full_state = self.full_state_fixture(
                 root / "train", "04a", 1001, completed_steps=score.MAX_ITER
             )
-            fixture_marker = self.roofer_marker_fixture(
+            fixture_marker, _merged = self.roofer_marker_fixture(
                 root / "fixture", "04a", 1001, cityjson, full_state
             )
             fixture_payload = json.loads(
                 fixture_marker.read_text(encoding="utf-8")
             )
-            receipt = Path(fixture_payload["classification_receipt"]["path"])
-            pointcloud = Path(fixture_payload["pointcloud_path"])
+            receipt = self.repo_path(fixture_payload["classification_receipt"]["path"])
+            pointcloud = self.repo_path(fixture_payload["pointcloud_path"])
             roofprints = Path(fixture_payload["footprints"]["path"]).resolve()
-            calls: list[list[str]] = []
-
-            def stop_before_roofer(command: list[str], **_kwargs: object) -> mock.Mock:
-                calls.append(command)
-                return mock.Mock(returncode=23, stdout="synthetic no-Roofer stop")
-
-            pointcloud_record = {
-                "path": score.rel(pointcloud),
-                "sha256": score.sha256_file(pointcloud),
-                "point_count": 2,
-                "epsg": 25832,
-                "classes_required": [2, 6],
-                "validation_runtime": "synthetic",
-            }
-            output_dir = root / "assemble"
+            output_dir = root / "prepare_only"
             with mock.patch.object(
-                score,
-                "validate_roofer_pointcloud",
-                return_value=pointcloud_record,
-            ), mock.patch.object(score.subprocess, "run", side_effect=stop_before_roofer):
-                with self.assertRaisesRegex(RuntimeError, "Roofer exited 23"):
-                    score.assemble_pointcloud_once(
-                        "04a", 1001, pointcloud, receipt, output_dir, self.lock
-                    )
-            self.assertEqual(len(calls), 1)
+                score.subprocess,
+                "run",
+                side_effect=AssertionError("prepare must not execute subprocess"),
+            ):
+                prepared = score.prepare_roofer(
+                    "04a", 1001, pointcloud, receipt, output_dir, self.lock
+                )
             expected_container_path = str(
                 Path("/workspace/JointBuildGS")
                 / roofprints.relative_to(score.REPO.resolve())
             )
-            self.assertEqual(calls[0][-2], expected_container_path)
-            state = json.loads(
-                (output_dir / "roofer_invocation.json").read_text(encoding="utf-8")
-            )
-            self.assertEqual(Path(state["footprints"]["path"]).resolve(), roofprints)
             self.assertEqual(
-                state["footprints"]["sha256"], score.sha256_file(roofprints)
+                prepared["roofer_argv"]["arguments"][-2], expected_container_path
             )
-            self.assertFalse((output_dir / "locked_30_footprints.geojson").exists())
+            self.assertEqual(
+                prepared["footprints"]["ordered_feature_geometry_sha256"],
+                fixture_payload["footprints"]["ordered_feature_geometry_sha256"],
+            )
+            self.assertEqual(
+                prepared["footprints"]["feature_properties"],
+                fixture_payload["footprints"]["feature_properties"],
+            )
+            self.assertEqual(list((output_dir / "raw_jsonseq").iterdir()), [])
+            self.assertFalse((output_dir / "assembled.city.json").exists())
+            self.assertFalse((output_dir / "roofer_invocation.json").exists())
+
+            stale = root / "stale"
+            stale.mkdir()
+            (stale / "old.output").write_text("stale", encoding="utf-8")
+            with self.assertRaisesRegex(RuntimeError, "not empty"):
+                score.prepare_roofer(
+                    "04a", 1001, pointcloud, receipt, stale, self.lock
+                )
+            with mock.patch.dict(
+                os.environ, {score.P0_TOOLS_SENTINEL_ENV: "0"}
+            ):
+                with self.assertRaisesRegex(RuntimeError, "lacks P1W_INSIDE_P0_TOOLS"):
+                    score.prepare_roofer(
+                        "04a", 1001, pointcloud, receipt, root / "outside", self.lock
+                    )
+            with mock.patch.object(score, "DOCKER_SENTINEL", root / "not-docker"):
+                with self.assertRaisesRegex(RuntimeError, "Docker sentinel"):
+                    score.require_p0_tools_runtime()
+            with mock.patch.dict(
+                os.environ, {score.P0_TOOLS_IMAGE_ID_ENV: "sha256:" + "0" * 64}
+            ):
+                with self.assertRaisesRegex(RuntimeError, "image ID attestation"):
+                    score.require_p0_tools_runtime()
+
+    def test_finalize_v2_marker_is_exact_and_second_finalize_is_refused(self) -> None:
+        with self.temporary_directory() as raw:
+            root = Path(raw)
+            cityjson, _report, _references = self.synthetic_fixture(root)
+            full_state = self.full_state_fixture(
+                root / "train", "04b", 1002, completed_steps=score.MAX_ITER
+            )
+            marker, merged = self.roofer_marker_fixture(
+                root / "roofer", "04b", 1002, cityjson, full_state
+            )
+            validated = score.validate_roofer_marker(
+                "04b", 1002, marker, merged, self.lock
+            )
+            marker_payload = json.loads(marker.read_text(encoding="utf-8"))
+            self.assertEqual(marker_payload["schema"], score.ROOFER_MARKER_SCHEMA)
+            self.assertEqual(marker_payload["raw_jsonseq"]["feature_count"], 30)
+            self.assertEqual(marker_payload["raw_jsonseq"]["root_building_count"], 30)
+            self.assertEqual(marker_payload["merged_cityjson"]["root_building_count"], 30)
+            self.assertEqual(
+                marker_payload["footprints"]["ordered_feature_geometry_sha256"],
+                validated["roofprints"]["ordered_feature_geometry_sha256"],
+            )
+            prepare_path = self.repo_path(marker_payload["prepare_receipt"]["path"])
+            with self.assertRaisesRegex(RuntimeError, "second/stale Roofer finalize"):
+                score.finalize_roofer(
+                    prepare_path,
+                    self.lock,
+                    expected_condition="04b",
+                    expected_seed=1002,
+                )
+
+            marker_payload["schema"] = "jointbuildgs.pilot_1wave.roofer_invocation.v1"
+            marker.write_text(json.dumps(marker_payload) + "\n", encoding="utf-8")
+            with self.assertRaisesRegex(RuntimeError, "Roofer marker schema"):
+                score.validate_roofer_marker("04b", 1002, marker, merged, self.lock)
+
+    def test_v2_marker_rejects_raw_jsonseq_tamper_add_and_delete(self) -> None:
+        for drift in ("tamper", "add", "delete"):
+            with self.subTest(drift=drift), self.temporary_directory() as raw:
+                root = Path(raw)
+                cityjson, _report, _references = self.synthetic_fixture(root)
+                full_state = self.full_state_fixture(
+                    root / "train", "01", 1001, completed_steps=score.MAX_ITER
+                )
+                marker, merged = self.roofer_marker_fixture(
+                    root / "roofer", "01", 1001, cityjson, full_state
+                )
+                marker_payload = json.loads(marker.read_text(encoding="utf-8"))
+                raw_dir = self.repo_path(
+                    marker_payload["raw_jsonseq"]["directory_path"]
+                )
+                raw_file = next(raw_dir.glob("*.city.jsonl"))
+                if drift == "tamper":
+                    raw_file.write_bytes(raw_file.read_bytes() + b"\n")
+                    expected = "raw JSONSeq bundle"
+                elif drift == "add":
+                    shutil.copyfile(raw_file, raw_dir / "extra.city.jsonl")
+                    expected = "duplicate raw CityObject IDs"
+                else:
+                    raw_file.unlink()
+                    expected = "raw JSONSeq bundle is missing"
+                with self.assertRaisesRegex(RuntimeError, expected):
+                    score.validate_roofer_marker(
+                        "01", 1001, marker, merged, self.lock
+                    )
+
+    def test_finalize_rejects_missing_extra_duplicate_and_orphan_raw_features(self) -> None:
+        for drift in ("missing", "extra", "duplicate", "orphan"):
+            with self.subTest(drift=drift), self.temporary_directory() as raw:
+                root = Path(raw)
+                cityjson, _report, _references = self.synthetic_fixture(root)
+                full_state = self.full_state_fixture(
+                    root / "train", "02", 1001, completed_steps=score.MAX_ITER
+                )
+                marker, merged = self.roofer_marker_fixture(
+                    root / "roofer", "02", 1001, cityjson, full_state
+                )
+                marker_payload = json.loads(marker.read_text(encoding="utf-8"))
+                prepare_path = self.repo_path(
+                    marker_payload["prepare_receipt"]["path"]
+                )
+                raw_dir = self.repo_path(
+                    marker_payload["raw_jsonseq"]["directory_path"]
+                )
+                raw_file = next(raw_dir.glob("*.city.jsonl"))
+                marker.unlink()
+                merged.unlink()
+                if drift == "missing":
+                    raw_file.unlink()
+                    expected = "raw JSONSeq bundle is missing"
+                elif drift == "extra":
+                    shutil.copyfile(raw_file, raw_dir / "extra.city.jsonl")
+                    expected = "duplicate raw CityObject IDs"
+                else:
+                    lines = raw_file.read_text(encoding="utf-8").splitlines()
+                    if drift == "duplicate":
+                        lines[-1] = lines[1]
+                        expected = "duplicate raw CityObject IDs"
+                    else:
+                        feature = json.loads(lines[1])
+                        feature["CityObjects"]["orphan-part"] = {
+                            "type": "BuildingPart",
+                            "geometry": [],
+                        }
+                        lines[1] = json.dumps(feature, separators=(",", ":"))
+                        expected = "orphan child objects"
+                    raw_file.write_text("\n".join(lines) + "\n", encoding="utf-8")
+                with self.assertRaisesRegex(RuntimeError, expected):
+                    score.finalize_roofer(
+                        prepare_path,
+                        self.lock,
+                        expected_condition="02",
+                        expected_seed=1001,
+                    )
+
+    def test_finalize_preserves_one_uniquely_owned_child(self) -> None:
+        with self.temporary_directory() as raw:
+            root = Path(raw)
+            cityjson, _report, _references = self.synthetic_fixture(root)
+            full_state = self.full_state_fixture(
+                root / "train", "03", 1002, completed_steps=score.MAX_ITER
+            )
+            marker, merged = self.roofer_marker_fixture(
+                root / "roofer", "03", 1002, cityjson, full_state
+            )
+            marker_payload = json.loads(marker.read_text(encoding="utf-8"))
+            prepare_path = self.repo_path(marker_payload["prepare_receipt"]["path"])
+            raw_dir = self.repo_path(marker_payload["raw_jsonseq"]["directory_path"])
+            raw_file = next(raw_dir.glob("*.city.jsonl"))
+            marker.unlink()
+            merged.unlink()
+            lines = raw_file.read_text(encoding="utf-8").splitlines()
+            feature = json.loads(lines[1])
+            root_id = feature["id"]
+            child_id = root_id + "-part"
+            feature["CityObjects"][root_id]["children"] = [child_id]
+            feature["CityObjects"][child_id] = {
+                "type": "BuildingPart",
+                "parents": [root_id],
+                "geometry": [],
+            }
+            lines[1] = json.dumps(feature, separators=(",", ":"))
+            raw_file.write_text("\n".join(lines) + "\n", encoding="utf-8")
+            merged, state = score.finalize_roofer(
+                prepare_path,
+                self.lock,
+                expected_condition="03",
+                expected_seed=1002,
+            )
+            self.assertEqual(state["raw_jsonseq"]["child_count"], 1)
+            self.assertEqual(state["merged_cityjson"]["child_count"], 1)
+            score.validate_roofer_marker(
+                "03", 1002, merged.parent / "roofer_invocation.json", merged, self.lock
+            )
 
     def test_roofer_recipe_and_locked_footprints(self) -> None:
         with self.temporary_directory() as raw:
@@ -953,6 +1229,8 @@ class PilotOneWaveScoringTests(unittest.TestCase):
             record = score.materialize_locked_roofprints(self.lock, roofprints)
             payload = json.loads(roofprints.read_text(encoding="utf-8"))
             self.assertEqual(record["feature_count"], 30)
+            self.assertEqual(len(record["feature_properties"]), 30)
+            self.assertRegex(record["ordered_feature_geometry_sha256"], r"^[0-9a-f]{64}$")
             self.assertEqual(
                 [feature["properties"]["building_id"] for feature in payload["features"]],
                 list(self.lock.ids),
@@ -968,8 +1246,11 @@ class PilotOneWaveScoringTests(unittest.TestCase):
             pointcloud = score.RUN_DIR / "synthetic_not_created.laz"
             command_roofprints = score.RUN_DIR / "synthetic_not_created.geojson"
             output = score.RUN_DIR / "synthetic_not_created_roofer"
-            command = score.roofer_docker_command(pointcloud, command_roofprints, output)
-            self.assertEqual(command.count(score.ROOFER_IMAGE), 1)
+            argv = score.roofer_argv_payload(
+                "01", 1001, pointcloud, command_roofprints, output
+            )
+            command = argv["arguments"]
+            self.assertEqual(argv["image"], score.ROOFER_IMAGE)
             self.assertIn("--lod22", command)
             self.assertNotIn("--box", command)
             self.assertEqual(command.count("--id-attribute"), 1)
