@@ -183,6 +183,18 @@ SCORE_OUTPUTS = (
     "pilot_1wave_seg_upperbound_gap.csv",
     "pilot_1wave_winner.csv",
 )
+LOSS_OUTPUT_NAME = "pilot_1wave_loss_shares.csv"
+LOSS_RECEIPT_NAME = "pilot_1wave_loss_shares_receipt.json"
+LOSS_OUTPUT_FIELDS = (
+    "schema_version", "condition_id", "seed", "checkpoint_step",
+    "checkpoint_sha256", "iter", "term", "raw", "weighted", "share",
+    "roof_share",
+)
+LOSS_RUN_RECEIPT_OUTPUTS = tuple(
+    f"loss_share_receipts/{condition}_seed{seed}.json"
+    for condition in CONDITIONS
+    for seed in EXPECTED_SEEDS
+)
 PUBLISH_ALLOWLIST = (
     "pilot_1wave_pilot_set.csv",
     "pilot_1wave_pilot_set_manifest.json",
@@ -190,8 +202,9 @@ PUBLISH_ALLOWLIST = (
     "pilot_1wave_ordered_30_ids.txt",
     "pilot_1wave_locked_roofprints.geojson",
     *SCORE_OUTPUTS,
-    "pilot_1wave_loss_shares.csv",
-    "pilot_1wave_loss_shares_receipt.json",
+    LOSS_OUTPUT_NAME,
+    LOSS_RECEIPT_NAME,
+    *LOSS_RUN_RECEIPT_OUTPUTS,
     "binding_audit.csv",
     "binding_audit_spatial_matrix.csv",
     "binding_audit_receipt.json",
@@ -1844,11 +1857,98 @@ def run_score_barrier(jobs: Sequence[Job]) -> None:
         score_attempt(job)
 
 
-def run_numeric_aggregate(jobs: Sequence[Job]) -> Path:
+def validate_loss_aggregate_outputs(loss_dir: Path) -> dict[str, Any]:
+    """Re-open the complete 10-run loss cursor bundle and its SHA ledger."""
+
+    output = loss_dir / LOSS_OUTPUT_NAME
+    receipt_path = loss_dir / LOSS_RECEIPT_NAME
+    receipt = load_json(receipt_path)
+    require_equal(
+        receipt.get("schema"),
+        "jointbuildgs.pilot_1wave.loss_cursor_aggregate_receipt.v1",
+        "loss aggregate receipt schema",
+    )
+    require_equal(receipt.get("state"), "complete", "loss aggregate state")
+    require_equal(int(receipt.get("aggregate_row_count", -1)), 14_000,
+                  "loss aggregate row count")
+    require_equal(int(receipt.get("run_count", -1)), 10,
+                  "loss aggregate run count")
+    aggregate = receipt.get("aggregate_output") or {}
+    require_equal(
+        _resolve_declared_path(aggregate.get("path"), declaring_file=receipt_path),
+        output.resolve(),
+        "loss aggregate output path",
+    )
+    require_equal(aggregate.get("sha256"), sha256_file(output),
+                  "loss aggregate output SHA")
+    with output.open(newline="", encoding="utf-8") as stream:
+        reader = csv.DictReader(stream)
+        rows = list(reader)
+    require_equal(tuple(reader.fieldnames or ()), LOSS_OUTPUT_FIELDS,
+                  "loss aggregate CSV fields")
+    require_equal(len(rows), 14_000, "loss aggregate CSV rows")
+    require_equal(tuple(aggregate.get("fields", ())), LOSS_OUTPUT_FIELDS,
+                  "loss aggregate receipt fields")
+
+    records = receipt.get("run_receipts")
+    if not isinstance(records, list):
+        raise DriverError("loss aggregate run receipt ledger is missing")
+    require_equal(len(records), 10, "loss cursor run receipt count")
+    normalized: list[dict[str, Any]] = []
+    for (condition, seed), record in zip(_job_order(), records, strict=True):
+        if not isinstance(record, Mapping):
+            raise DriverError("loss aggregate run receipt record is not an object")
+        require_equal(record.get("condition_id"), condition,
+                      "loss run receipt condition")
+        require_equal(int(record.get("seed", -1)), seed,
+                      "loss run receipt seed")
+        expected_path = loss_dir / "run_receipts" / f"{condition}_seed{seed}.json"
+        declared = _resolve_declared_path(record.get("path"), declaring_file=receipt_path)
+        require_equal(declared, expected_path.resolve(), "loss run receipt path")
+        require_sha(declared, str(record.get("sha256")), "loss run receipt")
+        normalized.append({
+            "condition_id": condition,
+            "seed": seed,
+            "path": declared,
+            "sha256": str(record.get("sha256")),
+        })
+    return {
+        "output": output,
+        "output_sha256": sha256_file(output),
+        "receipt": receipt_path,
+        "receipt_sha256": sha256_file(receipt_path),
+        "run_receipts": normalized,
+    }
+
+
+def validate_numeric_loss_binding(output_dir: Path, loss_dir: Path) -> dict[str, Any]:
+    """Prove the scoring manifest attests the exact 14k loss cursor bytes."""
+
+    loss = validate_loss_aggregate_outputs(loss_dir)
+    aggregate_copy = output_dir / LOSS_OUTPUT_NAME
+    require_equal(sha256_file(aggregate_copy), loss["output_sha256"],
+                  "numeric/loss cursor SHA")
+    with aggregate_copy.open(newline="", encoding="utf-8") as stream:
+        require_equal(len(list(csv.DictReader(stream))), 14_000,
+                      "numeric loss cursor rows")
+    scoring_manifest = load_json(output_dir / "pilot_1wave_manifest.json")
+    record = (scoring_manifest.get("outputs") or {}).get(LOSS_OUTPUT_NAME)
+    if not isinstance(record, Mapping):
+        raise DriverError("scoring manifest lacks the loss cursor output record")
+    require_equal(record.get("sha256"), loss["output_sha256"],
+                  "scoring manifest loss cursor SHA")
+    require_equal(int(record.get("row_count", -1)), 14_000,
+                  "scoring manifest loss cursor rows")
+    return loss
+
+
+def run_numeric_aggregate(jobs: Sequence[Job], loss_dir: Path) -> Path:
     root = global_stage_root("aggregate")
     complete = completed_attempt(root, "aggregate", "global")
     if complete is not None:
-        return complete / "output"
+        output = complete / "output"
+        validate_numeric_loss_binding(output, loss_dir)
+        return output
     attempt = next_attempt(root)
     output = attempt / "output"
     init = p0_command([
@@ -1856,6 +1956,10 @@ def run_numeric_aggregate(jobs: Sequence[Job]) -> Path:
         "--output-dir", container_path(output),
     ])
     stage_command(init, attempt, "aggregate_init")
+    loss = validate_loss_aggregate_outputs(loss_dir)
+    atomic_bytes(output / LOSS_OUTPUT_NAME, loss["output"].read_bytes())
+    require_equal(sha256_file(output / LOSS_OUTPUT_NAME), loss["output_sha256"],
+                  "copied loss cursor SHA")
     aggregate_args = [
         "python3", container_path(SCORING), "aggregate-scores",
         "--output-dir", container_path(output),
@@ -1867,7 +1971,10 @@ def run_numeric_aggregate(jobs: Sequence[Job]) -> Path:
         process = run_host(command, stdout=log, stderr=subprocess.STDOUT, check=False)
     if process.returncode != 0:
         raise DriverError(f"numeric aggregate failed; see {attempt/'aggregate.log'}")
-    expected = [output / name for name in (*SCORE_OUTPUTS, "pilot_1wave_manifest.json")]
+    expected = [
+        output / name
+        for name in (*SCORE_OUTPUTS, LOSS_OUTPUT_NAME, "pilot_1wave_manifest.json")
+    ]
     for path in expected:
         if not path.is_file() or path.stat().st_size <= 0:
             raise DriverError(f"numeric aggregate output missing/empty: {path}")
@@ -1879,7 +1986,12 @@ def run_numeric_aggregate(jobs: Sequence[Job]) -> Path:
         require_equal(len(list(csv.DictReader(stream))), 60, "segmentation gap rows")
     with (output / "pilot_1wave_winner.csv").open(newline="", encoding="utf-8") as stream:
         require_equal(len(list(csv.DictReader(stream))), 4, "winner rows")
-    write_stage_marker(attempt, "aggregate", "global", expected, {"run_score_count": 10})
+    validate_numeric_loss_binding(output, loss_dir)
+    write_stage_marker(attempt, "aggregate", "global", expected, {
+        "run_score_count": 10,
+        "loss_cursor_rows": 14_000,
+        "loss_cursor_sha256": loss["output_sha256"],
+    })
     return output
 
 
@@ -1887,10 +1999,11 @@ def run_loss_aggregate() -> Path:
     root = global_stage_root("loss_cursor")
     complete = completed_attempt(root, "loss_cursor", "global")
     if complete is not None:
+        validate_loss_aggregate_outputs(complete)
         return complete
     attempt = next_attempt(root)
-    output = attempt / "pilot_1wave_loss_shares.csv"
-    receipt = attempt / "pilot_1wave_loss_shares_receipt.json"
+    output = attempt / LOSS_OUTPUT_NAME
+    receipt = attempt / LOSS_RECEIPT_NAME
     receipts = attempt / "run_receipts"
     command = p0_command([
         "python3", container_path(LOSS_AGGREGATE),
@@ -1900,18 +2013,8 @@ def run_loss_aggregate() -> Path:
         "--run-receipt-dir", container_path(receipts),
     ])
     stage_command(command, attempt, "loss_cursor")
-    payload = load_json(receipt)
-    require_equal(payload.get("schema"),
-                  "jointbuildgs.pilot_1wave.loss_cursor_aggregate_receipt.v1",
-                  "loss aggregate receipt schema")
-    require_equal((payload.get("aggregate_output") or {}).get("sha256"), sha256_file(output),
-                  "loss aggregate output SHA")
-    require_equal(int(payload.get("aggregate_row_count", -1)), 14_000,
-                  "loss aggregate row count")
-    require_equal(int(payload.get("run_count", -1)), 10,
-                  "loss aggregate run count")
-    run_receipts = sorted(receipts.glob("*.json"))
-    require_equal(len(run_receipts), 10, "loss cursor run receipt count")
+    loss = validate_loss_aggregate_outputs(attempt)
+    run_receipts = tuple(record["path"] for record in loss["run_receipts"])
     write_stage_marker(attempt, "loss_cursor", "global",
                        (output, receipt, *run_receipts), {"run_receipt_count": 10})
     return attempt
@@ -2336,6 +2439,23 @@ def postprocess_receipt_payload(
     }
 
 
+def final_preflight_provenance(preflight_payload: Mapping[str, Any]) -> dict[str, Any]:
+    """Select the complete verified preflight facts required by the package."""
+
+    require_equal(preflight_payload.get("tracked_tree_clean"), True,
+                  "published preflight tracked tree")
+    correction_head = str(preflight_payload.get("correction_head", ""))
+    if re.fullmatch(r"[0-9a-f]{40}", correction_head) is None:
+        raise DriverError("published preflight correction HEAD is invalid")
+    result: dict[str, Any] = {"correction_head": correction_head}
+    for key in ("committed_runtime_sources", "crop_lock", "gsplat_extension"):
+        value = preflight_payload.get(key)
+        if not isinstance(value, Mapping) or not value:
+            raise DriverError(f"published preflight {key} is missing")
+        result[key] = json.loads(canonical_json(dict(value)))
+    return result
+
+
 def publish_results(
     *, jobs: Sequence[Job], preflight_payload: Mapping[str, Any],
     aggregate_dir: Path, loss_dir: Path, binding_dir: Path,
@@ -2350,6 +2470,8 @@ def publish_results(
         raise DriverError("publication snapshot Wave 2 record is missing")
     if not isinstance(publication_timestamps, Mapping):
         raise DriverError("publication snapshot timestamps are missing")
+    provenance = final_preflight_provenance(preflight_payload)
+    loss = validate_numeric_loss_binding(aggregate_dir, loss_dir)
     existing_manifest = PUBLICATION_ROOT / FINAL_MANIFEST_NAME
     if existing_manifest.is_file():
         existing = load_json(existing_manifest)
@@ -2360,6 +2482,9 @@ def publish_results(
         require_equal(existing.get("correction_head"),
                       preflight_payload["correction_head"],
                       "existing publication correction HEAD")
+        for key in ("committed_runtime_sources", "crop_lock", "gsplat_extension"):
+            require_equal(existing.get(key), provenance[key],
+                          f"existing publication {key}")
         outputs = existing.get("outputs")
         if not isinstance(outputs, Mapping):
             raise DriverError("existing publication output ledger is missing")
@@ -2420,13 +2545,17 @@ def publish_results(
         "pilot_1wave_ordered_30_ids.txt": ordered_ids_path,
         "pilot_1wave_locked_roofprints.geojson": roofprints,
         **{name: aggregate_dir / name for name in SCORE_OUTPUTS},
-        "pilot_1wave_loss_shares.csv": loss_dir / "pilot_1wave_loss_shares.csv",
-        "pilot_1wave_loss_shares_receipt.json": loss_dir / "pilot_1wave_loss_shares_receipt.json",
+        LOSS_OUTPUT_NAME: aggregate_dir / LOSS_OUTPUT_NAME,
+        LOSS_RECEIPT_NAME: loss["receipt"],
         "binding_audit.csv": binding_dir / "binding_audit.csv",
         "binding_audit_spatial_matrix.csv": binding_dir / "binding_audit_spatial_matrix.csv",
         "binding_audit_receipt.json": binding_dir / "binding_audit_receipt.json",
         "pilot_1wave_scoring_manifest.json": aggregate_dir / "pilot_1wave_manifest.json",
     }
+    for published_name, record in zip(
+        LOSS_RUN_RECEIPT_OUTPUTS, loss["run_receipts"], strict=True
+    ):
+        sources[published_name] = record["path"]
     gates_path = staging / "pilot_1wave_machine_gates.json"
     atomic_json(gates_path, gates)
     sources[gates_path.name] = gates_path
@@ -2463,7 +2592,7 @@ def publish_results(
         "published_utc": publication_timestamps["published_utc"],
         "source_run_id": SOURCE_RUN_ID,
         "readout_run_id": READOUT_RUN_ID,
-        "correction_head": preflight_payload["correction_head"],
+        **provenance,
         "selection_sha256": SELECTION_SHA256,
         "ordered_ids_sha256": ORDERED_IDS_SHA256,
         "pilot_set_sha256": PILOT_SET_SHA256,
@@ -2481,6 +2610,18 @@ def publish_results(
         "machine_gates": gates,
         "wave2_launch": dict(wave2),
         "outputs": publication_records,
+        "loss_share_run_receipts": [
+            {
+                "condition_id": condition,
+                "seed": seed,
+                "published_path": published_name,
+                "source": publication_records[published_name]["source"],
+                "sha256": publication_records[published_name]["sha256"],
+            }
+            for (condition, seed), published_name in zip(
+                _job_order(), LOSS_RUN_RECEIPT_OUTPUTS, strict=True
+            )
+        ],
         "manifest_published_last": True,
         "learning_runs_started_by_postprocess": 0,
         "interpretation_or_verdict": None,
@@ -2524,7 +2665,8 @@ def dry_run_plan(jobs: Sequence[Job], preflight_payload: Mapping[str, Any]) -> d
         "schema": DRIVER_SCHEMA, "mode": "dry-run", "preflight": preflight_payload,
         "barriers": ["extract_10_two_gpu", "classify_10_one_roofprint", "prepare_10",
                      "roofer_10_exact_once", "finalize_10", "score_10_after_finalize",
-                     "aggregate", "loss_cursor_and_binding", "publish_manifest_last"],
+                     "loss_cursor", "aggregate_with_bound_loss", "binding",
+                     "publish_manifest_last"],
         "commands": commands,
         "gpu_work_started": 0, "roofer_invocations_started": 0,
         "score_invocations_started": 0,
@@ -2602,8 +2744,8 @@ def execute_resume(jobs: Sequence[Job], preflight_payload: Mapping[str, Any]) ->
         state["barriers"] = barrier_status(jobs); save_state(state)
         run_score_barrier(jobs)
         state["barriers"] = barrier_status(jobs); save_state(state)
-        aggregate = run_numeric_aggregate(jobs)
         loss = run_loss_aggregate()
+        aggregate = run_numeric_aggregate(jobs, loss)
         binding = run_binding_batch(jobs)
         publication_snapshot = freeze_publication_snapshot(
             state,

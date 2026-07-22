@@ -874,6 +874,43 @@ class PilotOneWaveScoringTests(unittest.TestCase):
             with (aggregate / score.OUTPUT_NAMES["scores"]).open(newline="", encoding="utf-8") as handle:
                 self.assertEqual(tuple(next(csv.reader(handle))), score.SCORE_FIELDS)
 
+    def test_numeric_writer_attests_prepopulated_loss_cursor_without_replacing_it(self) -> None:
+        with self.temporary_directory() as raw:
+            root = Path(raw)
+            candidate, _marker, _calls = self.bound_score_fixture(
+                root / "run", "01", 1001, completed_steps=5000
+            )
+            aggregate = root / "aggregate"
+            score.initialize_output_schemas(aggregate, self.lock)
+            loss_path = aggregate / score.OUTPUT_NAMES["loss_shares"]
+            loss_rows = [
+                {
+                    "schema_version": score.SCHEMA_VERSION,
+                    "condition_id": "01",
+                    "seed": 1001,
+                    "checkpoint_step": 20_000,
+                    "checkpoint_sha256": "a" * 64,
+                    "iter": 100,
+                    "term": "pho",
+                    "raw": 1.0,
+                    "weighted": 1.0,
+                    "share": 1.0,
+                    "roof_share": 1.0,
+                }
+            ]
+            score.atomic_csv(loss_path, loss_rows, score.LOSS_SHARE_FIELDS)
+            expected = loss_path.read_bytes()
+            manifest = score.write_numeric_outputs(aggregate, candidate, self.lock)
+            self.assertEqual(loss_path.read_bytes(), expected)
+            self.assertEqual(
+                manifest["outputs"][score.OUTPUT_NAMES["loss_shares"]]["sha256"],
+                score.sha256_file(loss_path),
+            )
+            self.assertEqual(
+                manifest["outputs"][score.OUTPUT_NAMES["loss_shares"]]["row_count"],
+                1,
+            )
+
     def test_seg_gap_is_control_pair_and_winner_hard_excludes_04b(self) -> None:
         fixture: list[dict[str, object]] = []
         for condition, rms in (("04a", 0.3), ("04b", 0.2)):

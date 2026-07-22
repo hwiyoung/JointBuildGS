@@ -38,6 +38,67 @@ def write_csv(path: Path, rows: list[dict[str, object]]) -> Path:
     return path
 
 
+def write_loss_bundle(root: Path) -> tuple[Path, Path]:
+    loss_dir = root / "loss"
+    output = loss_dir / driver.LOSS_OUTPUT_NAME
+    rows = []
+    for index in range(14_000):
+        row = {field: "" for field in driver.LOSS_OUTPUT_FIELDS}
+        row.update({
+            "schema_version": "test",
+            "condition_id": "01",
+            "seed": 1001,
+            "checkpoint_step": 20_000,
+            "checkpoint_sha256": "a" * 64,
+            "iter": index,
+            "term": "pho",
+            "raw": 1.0,
+            "weighted": 1.0,
+            "share": 1.0,
+            "roof_share": 1.0,
+        })
+        rows.append(row)
+    write_csv(output, rows)
+    run_records = []
+    for condition, seed in driver._job_order():
+        path = loss_dir / "run_receipts" / f"{condition}_seed{seed}.json"
+        write_json(path, {
+            "schema": "jointbuildgs.pilot_1wave.loss_cursor_run_receipt.v1",
+            "condition_id": condition,
+            "seed": seed,
+        })
+        run_records.append({
+            "condition_id": condition,
+            "seed": seed,
+            "path": str(path.resolve()),
+            "sha256": driver.sha256_file(path),
+        })
+    write_json(loss_dir / driver.LOSS_RECEIPT_NAME, {
+        "schema": "jointbuildgs.pilot_1wave.loss_cursor_aggregate_receipt.v1",
+        "state": "complete",
+        "run_count": 10,
+        "aggregate_row_count": 14_000,
+        "aggregate_output": {
+            "path": str(output.resolve()),
+            "sha256": driver.sha256_file(output),
+            "fields": list(driver.LOSS_OUTPUT_FIELDS),
+        },
+        "run_receipts": run_records,
+    })
+    aggregate = root / "aggregate"
+    aggregate.mkdir(parents=True)
+    shutil.copyfile(output, aggregate / driver.LOSS_OUTPUT_NAME)
+    write_json(aggregate / "pilot_1wave_manifest.json", {
+        "outputs": {
+            driver.LOSS_OUTPUT_NAME: {
+                "sha256": driver.sha256_file(output),
+                "row_count": 14_000,
+            }
+        }
+    })
+    return loss_dir, aggregate
+
+
 def fake_job(condition: str = "01", seed: int = 1001, sequence: int = 1) -> driver.Job:
     base = driver.REPO / "test-fixture" / condition / str(seed)
     return driver.Job(
@@ -211,6 +272,33 @@ class CommandContractTest(unittest.TestCase):
         self.assertEqual(
             captured[root_index], driver.container_path(driver.TRAINING_ROOT / "runs")
         )
+
+    def test_numeric_manifest_binds_exact_real_loss_bundle(self) -> None:
+        temporary = Path(tempfile.mkdtemp(prefix=".p1w-loss-binding-", dir=SCRIPT.parent))
+        self.addCleanup(shutil.rmtree, temporary)
+        loss_dir, aggregate = write_loss_bundle(temporary)
+        result = driver.validate_numeric_loss_binding(aggregate, loss_dir)
+        self.assertEqual(result["output_sha256"], driver.sha256_file(
+            aggregate / driver.LOSS_OUTPUT_NAME
+        ))
+        self.assertEqual(len(result["run_receipts"]), 10)
+        write_csv(aggregate / driver.LOSS_OUTPUT_NAME, [{"placeholder": "empty"}])
+        with self.assertRaisesRegex(driver.DriverError, "numeric/loss cursor SHA"):
+            driver.validate_numeric_loss_binding(aggregate, loss_dir)
+
+    def test_loss_receipt_allowlist_is_complete_and_ordered(self) -> None:
+        self.assertEqual(len(driver.LOSS_RUN_RECEIPT_OUTPUTS), 10)
+        self.assertEqual(
+            driver.LOSS_RUN_RECEIPT_OUTPUTS[0],
+            "loss_share_receipts/01_seed1001.json",
+        )
+        self.assertEqual(
+            driver.LOSS_RUN_RECEIPT_OUTPUTS[-1],
+            "loss_share_receipts/04b_seed1002.json",
+        )
+        self.assertTrue(set(driver.LOSS_RUN_RECEIPT_OUTPUTS).issubset(
+            driver.PUBLISH_ALLOWLIST
+        ))
 
 
 class RetainedContainerStateMachineTest(unittest.TestCase):
@@ -479,6 +567,34 @@ class MachineGateTest(unittest.TestCase):
 
 
 class Wave2AndPublicationTest(unittest.TestCase):
+    def test_final_manifest_preflight_provenance_is_complete_copy(self) -> None:
+        preflight = {
+            "correction_head": "a" * 40,
+            "tracked_tree_clean": True,
+            "committed_runtime_sources": {"driver.py": "b" * 64},
+            "crop_lock": {
+                "inventory_sha256": driver.INVENTORY_SHA256,
+                "inventory_records_sha256": driver.INVENTORY_RECORDS_SHA256,
+                "checked_file_count": 1_927,
+                "checked_total_bytes": 12_335_728_234,
+                "crop_area_m2": driver.CROP_AREA_M2,
+            },
+            "gsplat_extension": {
+                "path": "runtime/gsplat_cuda.so",
+                "sha256": driver.GSPLAT_EXTENSION_SHA256,
+            },
+        }
+        result = driver.final_preflight_provenance(preflight)
+        self.assertEqual(set(result), {
+            "correction_head", "committed_runtime_sources", "crop_lock",
+            "gsplat_extension",
+        })
+        self.assertEqual(result["crop_lock"]["inventory_sha256"],
+                         driver.INVENTORY_SHA256)
+        preflight["crop_lock"]["inventory_sha256"] = "mutated"
+        self.assertEqual(result["crop_lock"]["inventory_sha256"],
+                         driver.INVENTORY_SHA256)
+
     def test_resume_never_mixes_correction_heads_or_source_maps(self) -> None:
         state = {
             "correction_head": "a" * 40,
