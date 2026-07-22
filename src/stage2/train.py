@@ -64,6 +64,10 @@ from .plane_guided_init import (
     build_plane_guided_initialization,
     verify_resume_initialization_audit,
 )
+from .pilot_input_inventory import (
+    PilotInputInventoryError,
+    validate_pilot_config_materialized_inputs,
+)
 from .renderer import render
 from .seed_control import apply_mvs_seed_init_opacity
 from .train_resume import (
@@ -1405,6 +1409,23 @@ def main():
     full_state = full_state_options(cfg)
     pilot_arm = _validate_pilot_config_contract(cfg, full_state)
 
+    # This is deliberately before RNG setup, output-directory creation,
+    # ColmapDataset construction, and GaussianModel2D construction.  The pilot
+    # cannot create writable run state until every registered RGB/SfM/MVS/
+    # Omnidata byte has passed its pinned full-SHA inventory.
+    pilot_input_startup_verification: Optional[dict[str, Any]] = None
+    if pilot_arm is not None:
+        pilot_input_startup_verification = {
+            **validate_pilot_config_materialized_inputs(cfg),
+            "gate": "before_out_dir_dataset_model_creation",
+        }
+        print(
+            "[pilot-input] startup full-SHA gate passed: "
+            f"views={pilot_input_startup_verification['view_count']} "
+            f"files={pilot_input_startup_verification['file_count']}",
+            flush=True,
+        )
+
     set_seed(cfg.get("seed", 0))
     device = cfg.get("device", "cuda")
     out_dir = Path(cfg["out_dir"])
@@ -2352,10 +2373,14 @@ def main():
         "structure_semantic_logits_used": structure_grouping != "g2_geometry",
     }
     if pilot_arm is not None:
+        assert pilot_input_startup_verification is not None
         effective_config.update(
             {
                 "mono_normal_dir": auxiliary_normal_dir,
                 "pilot_arm": pilot_arm,
+                "pilot_materialized_input_verification": {
+                    "startup": pilot_input_startup_verification,
+                },
                 "pilot_mask_binding": ds.pilot_mask_audit,
                 "w_mono_normal_aux": w_mono_normal_aux,
                 "mono_normal_aux_schedule": "same_fraction_as_primary_normal_schedule",
@@ -2623,6 +2648,10 @@ def main():
             ),
             "last_completed_steps": start_completed_steps,
         }
+        if pilot_input_startup_verification is not None:
+            full_state_manifest["pilot_materialized_input_verification"] = {
+                "startup": pilot_input_startup_verification,
+            }
         atomic_write_json(full_state_manifest_path, full_state_manifest)
         effective_config["full_state_runtime"] = {
             "binding_sha256": full_state_binding,
@@ -3982,6 +4011,33 @@ def main():
     )
     dt = time.time() - t0
     if full_state["enabled"]:
+        if pilot_arm is not None:
+            try:
+                pilot_input_completion_verification = {
+                    **validate_pilot_config_materialized_inputs(cfg),
+                    "gate": "immediately_before_process_completed_true",
+                }
+            except PilotInputInventoryError as exc:
+                full_state_manifest["pilot_materialized_input_verification"][
+                    "completion"
+                ] = {
+                    "status": "failed",
+                    "gate": "immediately_before_process_completed_true",
+                    "error_type": type(exc).__name__,
+                    "reason": str(exc),
+                }
+                full_state_manifest["process_completed"] = False
+                atomic_write_json(full_state_manifest_path, full_state_manifest)
+                raise
+            full_state_manifest["pilot_materialized_input_verification"][
+                "completion"
+            ] = pilot_input_completion_verification
+            print(
+                "[pilot-input] completion full-SHA gate passed: "
+                f"views={pilot_input_completion_verification['view_count']} "
+                f"files={pilot_input_completion_verification['file_count']}",
+                flush=True,
+            )
         full_state_manifest["process_completed"] = True
         full_state_manifest["process_completed_steps"] = max_iter
         full_state_manifest["optimizer_updates_this_process"] = (
