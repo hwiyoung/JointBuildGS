@@ -619,7 +619,10 @@ def materialize_scene_crop(
         "view_count": len(plans),
         "sfm_points_clipped": int(len(clipped_points)),
         "mvs_map_counts": map_counts,
-        "view_crop_csv": str(view_csv),
+        # The staging directory is atomically renamed at publication time, so
+        # persisting its absolute name would leave a dead path in the final
+        # manifest.  This path is relative to the prep-artifact root.
+        "view_crop_csv": "view_crops.csv",
         "semantic_directory_created": False,
     }
 
