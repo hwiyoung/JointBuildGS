@@ -49,9 +49,11 @@ class Frame:
     image_path: Path
     depth_path: Optional[Path]
     normal_path: Optional[Path]
+    mono_normal_path: Optional[Path]
     mono_depth_path: Optional[Path]
     depth_format: str                   # "colmap_bin" | "exr" | None
     normal_format: str                  # "colmap_bin" | "exr" | None
+    mono_normal_format: str             # "npy_world" | "exr" | None
     mono_depth_format: str              # "npy" | "exr" | None
     K: np.ndarray
     R: np.ndarray
@@ -158,6 +160,7 @@ class ColmapDataset(Dataset):
         load_normal: bool = True,
         load_semantic: bool = False,
         normal_dir: Optional[str | Path] = None,
+        mono_normal_dir: Optional[str | Path] = None,
         mono_depth_dir: Optional[str | Path] = None,
         depth_far_sentinel: Optional[float] = 28000.0,
         mono_depth_far_sentinel: Optional[float] = 28000.0,
@@ -173,6 +176,7 @@ class ColmapDataset(Dataset):
         self.load_semantic = load_semantic
         self.semantic_dir = self.root / "semantic"
         self.override_normal_dir = self._resolve_aux_dir(normal_dir)
+        self.mono_normal_dir = self._resolve_aux_dir(mono_normal_dir)
         self.mono_depth_dir = self._resolve_aux_dir(mono_depth_dir)
         self.depth_far_sentinel = depth_far_sentinel
         self.mono_depth_far_sentinel = mono_depth_far_sentinel
@@ -207,6 +211,7 @@ class ColmapDataset(Dataset):
 
             dpath, dfmt = self._find_depth(img.name)
             npath, nfmt = self._find_normal(img.name)
+            mnpath, mnfmt = self._find_mono_normal(img.name)
             mdpath, mdfmt = self._find_mono_depth(img.name)
 
             self.frames.append(
@@ -215,6 +220,7 @@ class ColmapDataset(Dataset):
                     image_path=img_path,
                     depth_path=dpath, depth_format=dfmt,
                     normal_path=npath, normal_format=nfmt,
+                    mono_normal_path=mnpath, mono_normal_format=mnfmt,
                     mono_depth_path=mdpath, mono_depth_format=mdfmt,
                     K=cam.K(), R=img.R(), t=img.tvec.copy(),
                     width=cam.width, height=cam.height,
@@ -289,6 +295,18 @@ class ColmapDataset(Dataset):
                 return p, fmt
         return None, None
 
+    def _find_mono_normal(
+        self, img_name: str
+    ) -> Tuple[Optional[Path], Optional[str]]:
+        if self.mono_normal_dir is None:
+            return None, None
+        stem = Path(img_name).stem
+        for suffix, fmt in [(".npy", "npy_world"), (".exr", "exr")]:
+            path = self.mono_normal_dir / f"{stem}{suffix}"
+            if path.exists():
+                return path, fmt
+        return None, None
+
     def __len__(self) -> int:
         return len(self.frames)
 
@@ -342,16 +360,23 @@ class ColmapDataset(Dataset):
             mask &= d < self.mono_depth_far_sentinel
         return np.where(mask, d, 0.0).astype(np.float32), mask
 
-    def _load_normal(self, fr: Frame, H: int, W: int):
+    def _load_normal_path(
+        self,
+        fr: Frame,
+        path: Optional[Path],
+        normal_format: Optional[str],
+        H: int,
+        W: int,
+    ):
         """Load normal map and return in WORLD frame.
 
         COLMAP PatchMatch normals are in camera frame → transform to world using R_c2w.
         MatrixCity EXR normals are already in world frame.
         """
-        if fr.normal_path is None:
+        if path is None:
             return None, None
-        if fr.normal_format == "npy_world":
-            n = np.load(fr.normal_path).astype(np.float32)
+        if normal_format == "npy_world":
+            n = np.load(path, allow_pickle=False).astype(np.float32)
             if n.ndim == 3 and n.shape[0] == 3 and n.shape[-1] != 3:
                 n = np.moveaxis(n, 0, -1)
             n = _resize_float(n, (H, W))
@@ -359,8 +384,8 @@ class ColmapDataset(Dataset):
             mask = norm[..., 0] > 0.5
             n = np.where(norm > 1e-6, n / np.maximum(norm, 1e-6), 0.0)
             return n.astype(np.float32), mask
-        if fr.normal_format == "colmap_bin":
-            n_cam = read_array(fr.normal_path)
+        if normal_format == "colmap_bin":
+            n_cam = read_array(path)
             n_cam = _resize_float(n_cam, (H, W))
             norm = np.linalg.norm(n_cam, axis=-1, keepdims=True)
             mask = norm[..., 0] > 1e-3
@@ -370,7 +395,9 @@ class ColmapDataset(Dataset):
             n_world = n_cam @ R_c2w.T
             return n_world.astype(np.float32), mask
         # EXR (MatrixCity): BGR(A) → RGB, (n+1)/2 decode; already in WORLD frame
-        raw = cv2.imread(str(fr.normal_path), cv2.IMREAD_UNCHANGED)
+        if normal_format != "exr":
+            raise ValueError(f"unsupported normal format: {normal_format!r}")
+        raw = cv2.imread(str(path), cv2.IMREAD_UNCHANGED)
         if raw is None:
             return None, None
         n_enc = raw[..., :3][..., ::-1].astype(np.float32)
@@ -381,6 +408,16 @@ class ColmapDataset(Dataset):
         n = _resize_float(n, (H, W))
         mask = _resize_float(mask.astype(np.float32), (H, W)) > 0.5
         return n.astype(np.float32), mask
+
+    def _load_normal(self, fr: Frame, H: int, W: int):
+        return self._load_normal_path(
+            fr, fr.normal_path, fr.normal_format, H, W
+        )
+
+    def _load_mono_normal(self, fr: Frame, H: int, W: int):
+        return self._load_normal_path(
+            fr, fr.mono_normal_path, fr.mono_normal_format, H, W
+        )
 
     def __getitem__(self, idx: int) -> dict:
         fr = self.frames[idx]
@@ -401,6 +438,8 @@ class ColmapDataset(Dataset):
         normal, normal_mask = (None, None)
         if self.load_normal:
             normal, normal_mask = self._load_normal(fr, H, W)
+
+        mono_normal, mono_normal_mask = self._load_mono_normal(fr, H, W)
 
         semantic = None
         if self.load_semantic:
@@ -435,6 +474,11 @@ class ColmapDataset(Dataset):
         if normal is not None:
             out["normal"] = torch.from_numpy(normal)
             out["normal_mask"] = torch.from_numpy(normal_mask.astype(np.bool_))
+        if mono_normal is not None:
+            out["mono_normal"] = torch.from_numpy(mono_normal)
+            out["mono_normal_mask"] = torch.from_numpy(
+                mono_normal_mask.astype(np.bool_)
+            )
         if semantic is not None:
             out["semantic"] = torch.from_numpy(semantic)
         return out
