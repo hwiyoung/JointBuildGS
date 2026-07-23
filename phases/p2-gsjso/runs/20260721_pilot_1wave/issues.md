@@ -1,5 +1,32 @@
 # P1W run issues
 
+## 2026-07-23 — postprocess attempt 2 parallel extract host OOM
+
+- Issue ID: `P1W-POSTPROCESS-ATTEMPT2-PARALLEL-OOM`.
+- The first read-out under correction HEAD
+  `160f1af6e1f56c487c6eb54a9621de52cf77aeb7` completed five extract jobs:
+  both seeds of 01 and 02 plus `03_seed1002`. `03_seed1001` exited 137 at
+  `2026-07-22T17:54:13.940822+00:00`; classify, Roofer, score, binding, and
+  publication counts remained zero.
+- Host OOM evidence: `03_seed1001/extract/attempt_001` has immutable
+  `started.json`, `stdout.log`, and `failure.json` SHA256 values
+  `588c7be9...68dabe`, `84117166...0163ad`, and `764777f7...89c192`.
+  The aborted driver-state SHA256 is `a1099d24...373016` and records
+  `learning_runs_started_by_postprocess=0`.
+- Cause: the scheduler ran one extractor on each physical GPU concurrently.
+  The two 03 processes reached about 45.3 GiB combined RSS while host swap was
+  exhausted. A normal resume would again pair the failed job with the next arm.
+- Preservation: move the whole aborted postprocess root without deletion to
+  `training/postprocess_failed_attempts/attempt2_160f1af_extract_oom/` before
+  the replacement run. The extract policy lock validates the archived driver
+  state and all three failure-evidence hashes before GPU work.
+- Recovery: a fresh correction HEAD re-extracts all ten existing 20k
+  checkpoints serially in canonical order; no archived extract is adopted and
+  no learning run is started. Each extractor has a 24 GiB memory/no-swap cgroup.
+  Key decoding uses the same integer/float arithmetic in bounded chunks, and
+  all-voxel coverage is computed in the original row order before releasing
+  that array ahead of SOR.
+
 ## 2026-07-22 — 04a inference attempt 1 failed before output publication
 
 - Issue ID: `P1W-MASK-04A-ATTEMPT1-SMALL-CORE`

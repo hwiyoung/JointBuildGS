@@ -8,7 +8,8 @@ not imported here.
 
 Execution is deliberately barriered:
 
-    ten 20k extracts (two GPUs) -> one locked roofprint -> ten classifications
+    ten 20k extracts (serial, seed-pinned across two GPUs) -> one locked roofprint
+    -> ten classifications
     -> ten Roofer preparations -> ten exact-once retained Roofer containers
     -> ten finalizations -> ten scores -> numeric aggregate
     -> loss-cursor aggregate + binding batch -> manifest-last publication
@@ -58,7 +59,7 @@ PUBLICATION_SNAPSHOT_SCHEMA = (
 BINDING_SPEC_SCHEMA = "jointbuildgs.pilot_1wave.binding_batch_spec.v1"
 FINAL_PREFLIGHT_PROVENANCE_KEYS = (
     "committed_runtime_sources", "crop_lock", "gsplat_extension",
-    "gpu_device_probe",
+    "gpu_device_probe", "extract_policy_lock",
 )
 
 DEV_IMAGE_TAG = "jointbuildgs:dev"
@@ -146,6 +147,15 @@ INVENTORY = SOURCE_RUN / "calibration/scaffolds/materialized_input_inventory.jso
 PREP_MANIFEST = SOURCE_RUN / "prep_artifacts/prep_manifest.json"
 RESOLVED_MANIFEST = TRAINING_ROOT / "resolved_configs/resolved_configs_manifest.json"
 TRAINING_DRIVER_MANIFEST = TRAINING_ROOT / "pilot_1wave_driver_manifest.json"
+EXTRACT_POLICY_LOCK = (
+    REPO / "phases/p2-gsjso/configs/pilot_1wave_postprocess_extract_policy_lock.json"
+)
+EXTRACT_POLICY_LOCK_SHA256 = (
+    "ac7d5210b59ac04d5aeb7e853ed93514f1178308a771923f02ccaa33554155c7"
+)
+EXTRACT_POLICY_SCHEMA = "jointbuildgs.pilot_1wave.extract_policy_lock.v1"
+EXTRACT_CONTAINER_MEMORY = "24g"
+EXTRACT_CONTAINER_MEMORY_BYTES = 24 * 1024**3
 
 EXTRACTOR = REPO / "phases/p2-gsjso/scripts/e5_c001_readout_extract_ablation.py"
 CLASSIFIER = REPO / "phases/p2-gsjso/scripts/pilot_1wave_scene_classify.py"
@@ -159,6 +169,7 @@ GSPLAT_EXTENSION_SHA256 = (
     "b291971546d350951760d34863ff96068c8ef018dcdeaaf0d61ec21471baadd5"
 )
 REQUIRED_COMMITTED_PATHS = (
+    Path("phases/p2-gsjso/configs/pilot_1wave_postprocess_extract_policy_lock.json"),
     Path("phases/p2-gsjso/scripts/pilot_1wave_postprocess_driver.py"),
     Path("phases/p2-gsjso/scripts/e5_c001_readout_extract_ablation.py"),
     Path("phases/p2-gsjso/scripts/pilot_1wave_readout_lineage.py"),
@@ -604,6 +615,105 @@ def historical_postprocess_attempt_records(
     return records
 
 
+def validate_extract_policy_lock() -> dict[str, Any]:
+    """Validate the committed serial-recovery policy and archived OOM evidence."""
+
+    require_sha(EXTRACT_POLICY_LOCK, EXTRACT_POLICY_LOCK_SHA256,
+                "extract policy lock")
+    policy = load_json(EXTRACT_POLICY_LOCK)
+    require_equal(policy.get("schema"), EXTRACT_POLICY_SCHEMA,
+                  "extract policy schema")
+    require_equal(policy.get("state"), "locked", "extract policy state")
+    require_equal(policy.get("mode"), "serial", "extract policy mode")
+    require_equal(policy.get("max_parallel"), 1,
+                  "extract policy max parallel")
+    expected_job_order = [
+        f"{condition}_seed{seed}" for condition, seed in _job_order()
+    ]
+    require_equal(policy.get("job_order"), expected_job_order,
+                  "extract policy job order")
+    require_equal(policy.get("physical_gpu_by_seed"), {"1001": 0, "1002": 1},
+                  "extract policy physical GPU map")
+    require_equal(
+        policy.get("docker_device_request_by_seed"),
+        {"1001": "device=0", "1002": "device=1"},
+        "extract policy Docker device map",
+    )
+    require_equal(policy.get("container_cuda_visible_devices"), "0",
+                  "extract policy container CUDA device")
+    require_equal(policy.get("container_memory_limit_bytes"),
+                  EXTRACT_CONTAINER_MEMORY_BYTES,
+                  "extract policy container memory limit")
+    require_equal(policy.get("container_memory_swap_limit_bytes"),
+                  EXTRACT_CONTAINER_MEMORY_BYTES,
+                  "extract policy container memory+swap limit")
+    require_equal(
+        policy.get("memory_implementation"),
+        "chunked_bitwise_equivalent_decode_and_lifetime_release",
+        "extract policy memory implementation",
+    )
+    require_equal(policy.get("archived_extract_reuse"), False,
+                  "extract policy archived reuse")
+    require_equal(policy.get("retraining"), False,
+                  "extract policy retraining")
+    require_equal(policy.get("scientific_configuration_changed"), False,
+                  "extract policy scientific configuration")
+    require_equal(policy.get("reason_code"), "host_oom_parallel_extract",
+                  "extract policy reason")
+
+    superseded = policy.get("superseded_attempt")
+    if not isinstance(superseded, Mapping):
+        raise DriverError("extract policy superseded attempt is missing")
+    archive_name = str(superseded.get("archive_name", ""))
+    if re.fullmatch(r"attempt\d+_[0-9a-f]{7}_extract_oom", archive_name) is None:
+        raise DriverError(f"invalid extract policy archive name: {archive_name!r}")
+    archive = POSTPROCESS_FAILED_ATTEMPTS_ROOT / archive_name
+    state_path = archive / "driver_state.json"
+    require_sha(state_path, str(superseded.get("driver_state_sha256")),
+                "superseded postprocess driver state")
+    archived_state = load_json(state_path)
+    require_equal(archived_state.get("schema"), DRIVER_SCHEMA,
+                  "superseded postprocess schema")
+    require_equal(archived_state.get("state"), "aborted",
+                  "superseded postprocess state")
+    require_equal(archived_state.get("correction_head"),
+                  superseded.get("correction_head"),
+                  "superseded postprocess correction HEAD")
+    abort_events = archived_state.get("abort_events")
+    if not isinstance(abort_events, list) or not abort_events:
+        raise DriverError("superseded postprocess abort evidence is missing")
+
+    failed_job = str(superseded.get("failed_job_id", ""))
+    failed_stage = str(superseded.get("failed_stage", ""))
+    failed_attempt = str(superseded.get("failed_attempt", ""))
+    evidence = archive / "attempts" / failed_job / failed_stage / failed_attempt
+    require_sha(evidence / "started.json",
+                str(superseded.get("started_json_sha256")),
+                "superseded extract started receipt")
+    require_sha(evidence / "stdout.log",
+                str(superseded.get("stdout_log_sha256")),
+                "superseded extract stdout")
+    require_sha(evidence / "failure.json",
+                str(superseded.get("failure_json_sha256")),
+                "superseded extract failure receipt")
+    failure = load_json(evidence / "failure.json")
+    require_equal(failure.get("job_id"), failed_job,
+                  "superseded extract failure job")
+    require_equal(failure.get("stage"), failed_stage,
+                  "superseded extract failure stage")
+    require_equal(failure.get("return_code"), superseded.get("return_code"),
+                  "superseded extract return code")
+
+    result = json.loads(canonical_json(policy))
+    result.update({
+        "path": repo_relative(EXTRACT_POLICY_LOCK),
+        "sha256": EXTRACT_POLICY_LOCK_SHA256,
+        "superseded_archive_path": repo_relative(archive),
+        "superseded_evidence_checked": True,
+    })
+    return result
+
+
 def validate_training_artifacts() -> tuple[list[Job], dict[str, Any]]:
     resolved = load_json(RESOLVED_MANIFEST)
     training = load_json(TRAINING_DRIVER_MANIFEST)
@@ -787,6 +897,8 @@ def preflight(expected_head: str, wave2_lock: Path | None = None,
     gpu_device_probe = probe_gpu_device_bindings()
     crop = validate_crop_locks()
     jobs, training = validate_training_artifacts()
+    extract_policy = validate_extract_policy_lock()
+    extract_policy["cgroup_probe"] = probe_extract_memory_limit()
     for required in (
         GSPLAT_RUNTIME / "home", GSPLAT_RUNTIME / "xdg_cache",
         GSPLAT_RUNTIME / "torch_extensions",
@@ -811,6 +923,7 @@ def preflight(expected_head: str, wave2_lock: Path | None = None,
             "sha256": GSPLAT_EXTENSION_SHA256,
         },
         "training": training,
+        "extract_policy_lock": extract_policy,
         "wave2_launch": wave2,
         "learning_runs_started_by_postprocess": 0,
     }
@@ -895,9 +1008,36 @@ def probe_gpu_device_bindings() -> dict[str, Any]:
     }
 
 
+def probe_extract_memory_limit() -> dict[str, Any]:
+    """Prove that Docker enforces the locked no-swap 24 GiB cgroup."""
+
+    command = [
+        "docker", "run", "--rm", "--network", "none",
+        "--memory", EXTRACT_CONTAINER_MEMORY,
+        "--memory-swap", EXTRACT_CONTAINER_MEMORY,
+        "--entrypoint", "/bin/sh", DEV_IMAGE_ID,
+        "-c", "cat /sys/fs/cgroup/memory.max; cat /sys/fs/cgroup/memory.swap.max",
+    ]
+    process = run_host(command)
+    lines = [line.strip() for line in process.stdout.splitlines() if line.strip()]
+    require_equal(lines, [str(EXTRACT_CONTAINER_MEMORY_BYTES), "0"],
+                  "extract cgroup memory probe")
+    return {
+        "schema": "jointbuildgs.pilot_1wave.extract_memory_probe.v1",
+        "state": "pass",
+        "memory_max_bytes": EXTRACT_CONTAINER_MEMORY_BYTES,
+        "swap_max_bytes": 0,
+        "command": command,
+        "gpu_work_started": 0,
+        "learning_runs_started": 0,
+    }
+
+
 def dev_extract_command(job: Job, attempt: Path) -> list[str]:
     command = [
         "docker", "run", "--rm", "--network", "none",
+        "--memory", EXTRACT_CONTAINER_MEMORY,
+        "--memory-swap", EXTRACT_CONTAINER_MEMORY,
         *docker_gpu_device_request(job.gpu),
         "--user", f"{os.getuid()}:{os.getgid()}",
         "-e", "CUDA_VISIBLE_DEVICES=0",
@@ -1277,40 +1417,51 @@ def stage_command(command: Sequence[str], attempt: Path, label: str) -> None:
 
 
 def gpu_waves(pending: Sequence[Job]) -> list[list[Job]]:
-    """Make waves with at most one job for each physical GPU."""
+    """Return deterministic singleton waves in canonical job order."""
 
-    queues = {
-        gpu: [job for job in pending if job.gpu == gpu]
-        for gpu in (0, 1)
-    }
-    waves: list[list[Job]] = []
-    while queues[0] or queues[1]:
-        wave = []
-        for gpu in (0, 1):
-            if queues[gpu]:
-                wave.append(queues[gpu].pop(0))
-        waves.append(wave)
-    if sorted(job.job_id for wave in waves for job in wave) != sorted(
-        job.job_id for job in pending
-    ):
-        raise DriverError("GPU wave scheduler lost or duplicated a job")
-    if any(len({job.gpu for job in wave}) != len(wave) for wave in waves):
-        raise DriverError("GPU wave scheduler assigned two jobs to one GPU")
+    canonical = [f"{condition}_seed{seed}" for condition, seed in _job_order()]
+    positions = {job_id: index for index, job_id in enumerate(canonical)}
+    job_ids = [job.job_id for job in pending]
+    if len(job_ids) != len(set(job_ids)):
+        raise DriverError("serial GPU scheduler received a duplicate job")
+    if any(job_id not in positions for job_id in job_ids):
+        raise DriverError("serial GPU scheduler received a noncanonical job")
+    if job_ids != sorted(job_ids, key=positions.__getitem__):
+        raise DriverError("serial GPU scheduler input is not in canonical order")
+    waves = [[job] for job in pending]
+    if [wave[0].job_id for wave in waves] != job_ids:
+        raise DriverError("serial GPU scheduler lost or reordered a job")
     return waves
 
 
-def run_extract_barrier(jobs: Sequence[Job]) -> None:
+def run_extract_barrier(jobs: Sequence[Job],
+                        extract_policy: Mapping[str, Any]) -> None:
+    require_equal(extract_policy.get("sha256"), EXTRACT_POLICY_LOCK_SHA256,
+                  "extract barrier policy SHA")
+    require_equal(extract_policy.get("mode"), "serial",
+                  "extract barrier policy mode")
+    require_equal(extract_policy.get("max_parallel"), 1,
+                  "extract barrier max parallel")
+    policy_order = extract_policy.get("job_order")
+    require_equal(policy_order,
+                  [f"{condition}_seed{seed}" for condition, seed in _job_order()],
+                  "extract barrier policy job order")
     pending = [job for job in jobs if completed_attempt(
         stage_root(job, "extract"), "extract", job.job_id
     ) is None]
     for wave in gpu_waves(pending):
+        require_equal(len(wave), 1, "extract serial wave size")
         running: list[tuple[Job, Path, subprocess.Popen[str], TextIO]] = []
         for job in wave:
+            serial_ordinal = list(policy_order).index(job.job_id) + 1
             attempt = next_attempt(stage_root(job, "extract"))
             command = dev_extract_command(job, attempt)
             atomic_json(attempt / "started.json", {
                 "schema": STAGE_MARKER_SCHEMA, "state": "started", "stage": "extract",
                 "job_id": job.job_id, "gpu": job.gpu, "started_utc": now(),
+                "extract_policy_sha256": EXTRACT_POLICY_LOCK_SHA256,
+                "extract_max_parallel": 1, "serial_ordinal": serial_ordinal,
+                "container_memory_limit_bytes": EXTRACT_CONTAINER_MEMORY_BYTES,
                 "command": command,
             })
             log = (attempt / "stdout.log").open("w", encoding="utf-8")
@@ -1338,7 +1489,14 @@ def run_extract_barrier(jobs: Sequence[Job]) -> None:
                 write_stage_marker(attempt, "extract", job.job_id, (
                     attempt / "scene_geometry.npz", attempt / "coverage.csv",
                     attempt / "metrics.json", attempt / "provenance.json",
-                ), {"gpu": job.gpu, "checkpoint_sha256": job.checkpoint_sha256})
+                ), {
+                    "gpu": job.gpu,
+                    "checkpoint_sha256": job.checkpoint_sha256,
+                    "extract_policy_sha256": EXTRACT_POLICY_LOCK_SHA256,
+                    "extract_max_parallel": 1,
+                    "serial_ordinal": serial_ordinal,
+                    "container_memory_limit_bytes": EXTRACT_CONTAINER_MEMORY_BYTES,
+                })
             except Exception as exc:
                 atomic_json(attempt / "failure.json", {
                     "schema": STAGE_MARKER_SCHEMA, "state": "error",
@@ -2771,9 +2929,14 @@ def barrier_status(jobs: Sequence[Job]) -> dict[str, Any]:
 
 def dry_run_plan(jobs: Sequence[Job], preflight_payload: Mapping[str, Any]) -> dict[str, Any]:
     commands = []
-    for job in jobs:
+    policy = preflight_payload.get("extract_policy_lock") or {}
+    require_equal(policy.get("max_parallel"), 1, "dry-run extract max parallel")
+    require_equal(policy.get("sha256"), EXTRACT_POLICY_LOCK_SHA256,
+                  "dry-run extract policy SHA")
+    for serial_ordinal, job in enumerate(jobs, 1):
         placeholder = stage_root(job, "extract") / "attempt_NNN"
         commands.append({"stage": "extract", "job_id": job.job_id, "gpu": job.gpu,
+                         "serial_ordinal": serial_ordinal, "max_parallel": 1,
                          "command": dev_extract_command(job, placeholder)})
     commands.append({
         "stage": "roofprint", "job_id": "global",
@@ -2782,10 +2945,15 @@ def dry_run_plan(jobs: Sequence[Job], preflight_payload: Mapping[str, Any]) -> d
     })
     return {
         "schema": DRIVER_SCHEMA, "mode": "dry-run", "preflight": preflight_payload,
-        "barriers": ["extract_10_two_gpu", "classify_10_one_roofprint", "prepare_10",
+        "barriers": ["extract_10_serial_seed_pinned", "classify_10_one_roofprint", "prepare_10",
                      "roofer_10_exact_once", "finalize_10", "score_10_after_finalize",
                      "loss_cursor", "aggregate_with_bound_loss", "binding",
                      "publish_manifest_last"],
+        "extract_schedule": {
+            "mode": "serial", "max_parallel": 1,
+            "policy_sha256": EXTRACT_POLICY_LOCK_SHA256,
+            "job_order": [job.job_id for job in jobs],
+        },
         "commands": commands,
         "gpu_work_started": 0, "roofer_invocations_started": 0,
         "score_invocations_started": 0,
@@ -2828,6 +2996,10 @@ def require_resume_contract(state: Mapping[str, Any],
     current_sources = preflight_payload.get("committed_runtime_sources")
     if previous_sources is not None and previous_sources != current_sources:
         raise DriverError("postprocess runtime source SHA map changed across resume")
+    previous_policy = ((state.get("preflight") or {}).get("extract_policy_lock"))
+    current_policy = preflight_payload.get("extract_policy_lock")
+    if previous_policy is not None and previous_policy != current_policy:
+        raise DriverError("postprocess extract policy changed across resume")
 
 
 def save_state(state: Mapping[str, Any]) -> None:
@@ -2851,7 +3023,7 @@ def execute_resume(jobs: Sequence[Job], preflight_payload: Mapping[str, Any]) ->
     state.setdefault("abort_events", [])
     save_state(state)
     try:
-        run_extract_barrier(jobs)
+        run_extract_barrier(jobs, preflight_payload["extract_policy_lock"])
         state["barriers"] = barrier_status(jobs); save_state(state)
         roofprints = prepare_global_roofprint()
         run_classify_barrier(jobs, roofprints)

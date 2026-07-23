@@ -1,0 +1,46 @@
+{
+  "schema": "jointbuildgs.pilot_1wave.extract_policy_lock.v1",
+  "state": "locked",
+  "mode": "serial",
+  "max_parallel": 1,
+  "job_order": [
+    "01_seed1001",
+    "01_seed1002",
+    "02_seed1001",
+    "02_seed1002",
+    "03_seed1001",
+    "03_seed1002",
+    "04a_seed1001",
+    "04a_seed1002",
+    "04b_seed1001",
+    "04b_seed1002"
+  ],
+  "physical_gpu_by_seed": {
+    "1001": 0,
+    "1002": 1
+  },
+  "docker_device_request_by_seed": {
+    "1001": "device=0",
+    "1002": "device=1"
+  },
+  "container_cuda_visible_devices": "0",
+  "container_memory_limit_bytes": 25769803776,
+  "container_memory_swap_limit_bytes": 25769803776,
+  "memory_implementation": "chunked_bitwise_equivalent_decode_and_lifetime_release",
+  "archived_extract_reuse": false,
+  "retraining": false,
+  "scientific_configuration_changed": false,
+  "reason_code": "host_oom_parallel_extract",
+  "superseded_attempt": {
+    "archive_name": "attempt2_160f1af_extract_oom",
+    "correction_head": "160f1af6e1f56c487c6eb54a9621de52cf77aeb7",
+    "driver_state_sha256": "a1099d24014d9ccea14288777acb2266fbd2724710b91d84e465f72f55373016",
+    "failed_job_id": "03_seed1001",
+    "failed_stage": "extract",
+    "failed_attempt": "attempt_001",
+    "return_code": 137,
+    "started_json_sha256": "588c7be9518c8b1c51604a565bdda08980a1fb9aa038df3a598d2d3e7768dabe",
+    "stdout_log_sha256": "84117166c3071dc721d88827fc44238d850648b34afdb6d3e8f21f97660163ad",
+    "failure_json_sha256": "764777f73deec3636c7d55def3093001a13ca2850b24d9be461f0a8e8c89c192"
+  }
+}

@@ -825,14 +825,31 @@ def coverage_rows(points: np.ndarray, classes: np.ndarray | None, footprints: di
     return rows
 
 
-def decode_keys(keys: torch.Tensor, voxel: float) -> np.ndarray:
-    k = keys.detach().cpu().numpy().astype(np.int64, copy=True)
-    iz = (k % MUL) - OFF
-    k //= MUL
-    iy = (k % MUL) - OFF
-    ix = (k // MUL) - OFF
-    local = (np.stack([ix, iy, iz], axis=1).astype(np.float64) + 0.5) * voxel
-    return local + SHIFT
+def decode_keys(keys: torch.Tensor, voxel: float,
+                chunk_size: int = 1_000_000) -> np.ndarray:
+    """Decode voxel keys with the original arithmetic and bounded temporaries."""
+
+    if keys.ndim != 1:
+        raise ValueError(f"voxel keys must be one-dimensional, got {keys.shape}")
+    if chunk_size <= 0:
+        raise ValueError(f"decode chunk size must be positive, got {chunk_size}")
+    encoded = keys.detach().cpu().numpy()
+    result = np.empty((len(encoded), 3), dtype=np.float64)
+    for start in range(0, len(encoded), chunk_size):
+        stop = min(start + chunk_size, len(encoded))
+        work = encoded[start:stop].astype(np.int64, copy=True)
+        result[start:stop, 2] = (
+            ((work % MUL) - OFF).astype(np.float64) + 0.5
+        ) * voxel + SHIFT[2]
+        work //= MUL
+        result[start:stop, 1] = (
+            ((work % MUL) - OFF).astype(np.float64) + 0.5
+        ) * voxel + SHIFT[1]
+        work //= MUL
+        result[start:stop, 0] = (
+            (work - OFF).astype(np.float64) + 0.5
+        ) * voxel + SHIFT[0]
+    return result
 
 
 def write_csv(path: str | None, rows: list[dict[str, Any]]) -> None:
@@ -899,7 +916,11 @@ def main() -> None:
         sem = sem.unsqueeze(0) if sem.ndim == 2 else sem
         print(f"[sem] GS-semantic feature pass ON (K={sem.shape[-1]})")
     else:
+        sem = None
         print("[sem] GS-semantic OFF")
+    # GPU tensors above own the read-out values.  The full CPU state dict is
+    # no longer needed and retaining it adds 1--2 GiB for the larger arms.
+    del sd
     print(
         f"[model] N={means.shape[0]} ckpt={args.ckpt} "
         f"condition={readout_lineage['condition_id']} "
@@ -1019,6 +1040,9 @@ def main() -> None:
         if (i + 1) % 200 == 0:
             print(f"  view {i + 1}/{len(imgs)}", flush=True)
 
+    del means, quats, scales, opac, colors, sem
+    torch.cuda.empty_cache()
+
     if not keylist:
         Path(args.out).parent.mkdir(parents=True, exist_ok=True)
         empty = np.empty((0, 3), dtype=np.float64)
@@ -1067,8 +1091,12 @@ def main() -> None:
         return
 
     all_keys = torch.cat(keylist)
+    keylist.clear()
+    del keylist
     if do_sem:
         all_classes = torch.cat(clslist)
+        clslist.clear()
+        del clslist
         uk_all, inv_all = torch.unique(all_keys, return_inverse=True)
         counts = torch.bincount(inv_all, minlength=uk_all.shape[0])
         hist = torch.zeros((uk_all.shape[0], KC))
@@ -1078,17 +1106,44 @@ def main() -> None:
         uk = uk_all[keep]
         classes = classes_all[keep]
     else:
+        clslist.clear()
+        del clslist
         uk_all, counts = torch.unique(all_keys, return_counts=True)
         classes_all = None
         keep = counts >= args.min_obs
         uk = uk_all[keep]
         classes = None
-    print(f"[consensus] min_obs={args.min_obs}: kept {len(uk)}/{len(uk_all)} voxels")
+    fused_all_count = int(len(uk_all))
+    minobs_kept_count = int(len(uk))
+    print(
+        f"[consensus] min_obs={args.min_obs}: "
+        f"kept {minobs_kept_count}/{fused_all_count} voxels"
+    )
+
+    p_class_all = (
+        classes_all.numpy().astype(np.int32) if classes_all is not None else None
+    )
+    p_class = classes.numpy().astype(np.int32) if classes is not None else None
+    del all_keys, counts, keep
+    if do_sem:
+        del all_classes, inv_all, hist, classes_all, classes
 
     p_all = decode_keys(uk_all, args.voxel)
+    del uk_all
     p_utm = decode_keys(uk, args.voxel)
-    p_class_all = classes_all.numpy().astype(np.int32) if classes_all is not None else None
-    p_class = classes.numpy().astype(np.int32) if classes is not None else None
+    del uk
+
+    # Preserve the original CSV row order while releasing the all-voxel array
+    # before Open3D builds its SOR neighbor index.  P_all is not an NPZ output.
+    coverage: list[dict[str, Any]] = []
+    coverage.extend(coverage_rows(
+        p_all, p_class_all, footprints, "voxel_all_pre_minobs", args.coverage_grid
+    ))
+    del p_all, p_class_all
+    coverage.extend(coverage_rows(
+        p_utm, p_class, footprints, "minobs_post_gate_pre_sor", args.coverage_grid
+    ))
+
     p_utm_clean = p_utm
     p_class_clean = p_class
     sor_status = "off"
@@ -1110,10 +1165,9 @@ def main() -> None:
     else:
         print("[sor] off")
 
-    coverage: list[dict[str, Any]] = []
-    coverage.extend(coverage_rows(p_all, p_class_all, footprints, "voxel_all_pre_minobs", args.coverage_grid))
-    coverage.extend(coverage_rows(p_utm, p_class, footprints, "minobs_post_gate_pre_sor", args.coverage_grid))
-    coverage.extend(coverage_rows(p_utm_clean, p_class_clean, footprints, "sor_post_clean", args.coverage_grid))
+    coverage.extend(coverage_rows(
+        p_utm_clean, p_class_clean, footprints, "sor_post_clean", args.coverage_grid
+    ))
     write_csv(args.coverage_csv, coverage)
 
     Path(args.out).parent.mkdir(parents=True, exist_ok=True)
@@ -1153,7 +1207,7 @@ def main() -> None:
 
     metrics = {
         "surf_backproj": int(n_surf),
-        "fused_all": int(len(uk_all)),
+        "fused_all": fused_all_count,
         "minobs_kept": int(len(p_utm)),
         "sor_kept": int(len(p_utm_clean)),
         "minobs": int(args.min_obs),

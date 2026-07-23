@@ -115,6 +115,17 @@ def fake_job(condition: str = "01", seed: int = 1001, sequence: int = 1) -> driv
     )
 
 
+def fake_extract_policy() -> dict[str, object]:
+    return {
+        "mode": "serial",
+        "max_parallel": 1,
+        "sha256": driver.EXTRACT_POLICY_LOCK_SHA256,
+        "job_order": [
+            f"{condition}_seed{seed}" for condition, seed in driver._job_order()
+        ],
+    }
+
+
 def docker_record(*, name: str, job_id: str, contract_sha: str,
                   status: str, exit_code: int = 0,
                   image_id: str = driver.ROOFER_IMAGE_ID) -> dict:
@@ -164,7 +175,7 @@ class CommandContractTest(unittest.TestCase):
                 for index, (condition, seed) in enumerate(driver._job_order(), 1)]
         self.assertEqual([job.gpu for job in jobs], [0, 1] * 5)
 
-    def test_resume_gpu_waves_never_pair_same_gpu(self) -> None:
+    def test_resume_gpu_waves_are_singleton_and_canonical(self) -> None:
         # Models an asymmetric resume where several seed1002 outputs already
         # completed and the pending list is no longer pair-aligned.
         pending = [
@@ -175,13 +186,18 @@ class CommandContractTest(unittest.TestCase):
         ]
         waves = driver.gpu_waves(pending)
         self.assertEqual([[job.gpu for job in wave] for wave in waves],
-                         [[0, 1], [0], [0]])
-        self.assertCountEqual(
+                         [[0], [0], [1], [0]])
+        self.assertEqual(
             [job.job_id for wave in waves for job in wave],
             [job.job_id for job in pending],
         )
 
-    def test_extract_wave_reaps_all_children_before_first_validation_error(self) -> None:
+    def test_resume_gpu_waves_reject_noncanonical_input_order(self) -> None:
+        pending = [fake_job("01", 1002, 2), fake_job("01", 1001, 1)]
+        with self.assertRaisesRegex(driver.DriverError, "not in canonical order"):
+            driver.gpu_waves(pending)
+
+    def test_extract_serial_waits_validates_and_marks_before_next_start(self) -> None:
         temporary = Path(tempfile.mkdtemp(prefix="p1w-wave-reap-"))
         self.addCleanup(shutil.rmtree, temporary)
         jobs = [fake_job("01", 1001, 1), fake_job("01", 1002, 2)]
@@ -200,24 +216,37 @@ class CommandContractTest(unittest.TestCase):
                 events.append(f"wait:{self.label}")
                 return 0
 
-        processes = iter((Process("gpu0"), Process("gpu1")))
+        def start(command: list[str], *_args: object, **_kwargs: object) -> Process:
+            label = command[-1]
+            events.append(f"start:{label}")
+            return Process(label)
 
         def validate(job: driver.Job, _attempt: Path) -> None:
-            events.append(f"validate:{job.gpu}")
-            if job.gpu == 0:
-                raise driver.DriverError("synthetic validation failure")
+            events.append(f"validate:{job.job_id}")
 
-        with mock.patch.object(driver, "completed_attempt", return_value=None), \
+        def marker(_attempt: Path, _stage: str, job_id: str,
+                   _outputs: object, _extra: object) -> None:
+            events.append(f"marker:{job_id}")
+
+        with mock.patch.object(
+            driver, "completed_attempt",
+            side_effect=[None, None, attempts[0], attempts[1]],
+        ), \
              mock.patch.object(driver, "next_attempt", side_effect=attempts), \
-             mock.patch.object(driver, "dev_extract_command", return_value=["mock-extract"]), \
-             mock.patch.object(driver.subprocess, "Popen", side_effect=lambda *_a, **_k: next(processes)), \
+             mock.patch.object(
+                 driver, "dev_extract_command",
+                 side_effect=lambda job, _attempt: ["mock-extract", job.job_id],
+             ), \
+             mock.patch.object(driver.subprocess, "Popen", side_effect=start), \
              mock.patch.object(driver, "validate_extract", side_effect=validate), \
-             mock.patch.object(driver, "write_stage_marker"):
-            with self.assertRaisesRegex(driver.DriverError, "extract wave failed"):
-                driver.run_extract_barrier(jobs)
-        first_validation = next(index for index, value in enumerate(events)
-                                if value.startswith("validate:"))
-        self.assertEqual(events[:first_validation], ["wait:gpu0", "wait:gpu1"])
+             mock.patch.object(driver, "write_stage_marker", side_effect=marker):
+            driver.run_extract_barrier(jobs, fake_extract_policy())
+        self.assertEqual(events, [
+            "start:01_seed1001", "wait:01_seed1001",
+            "validate:01_seed1001", "marker:01_seed1001",
+            "start:01_seed1002", "wait:01_seed1002",
+            "validate:01_seed1002", "marker:01_seed1002",
+        ])
 
     def test_extract_recipe_is_fixed_and_has_no_legacy_crop_args(self) -> None:
         job = fake_job()
@@ -225,6 +254,8 @@ class CommandContractTest(unittest.TestCase):
         command = driver.dev_extract_command(job, attempt)
         self.assertIn(driver.DEV_IMAGE_ID, command)
         self.assertEqual(command[command.index("--gpus") + 1], "device=0")
+        self.assertEqual(command[command.index("--memory") + 1], "24g")
+        self.assertEqual(command[command.index("--memory-swap") + 1], "24g")
         self.assertNotIn("all", command)
         self.assertFalse(any(
             argument.startswith("NVIDIA_VISIBLE_DEVICES=") for argument in command
@@ -257,7 +288,10 @@ class CommandContractTest(unittest.TestCase):
     def test_dry_run_has_ten_extracts_and_starts_nothing(self) -> None:
         jobs = [fake_job(condition, seed, index)
                 for index, (condition, seed) in enumerate(driver._job_order(), 1)]
-        payload = driver.dry_run_plan(jobs, {"state": "preflight_passed"})
+        payload = driver.dry_run_plan(jobs, {
+            "state": "preflight_passed",
+            "extract_policy_lock": fake_extract_policy(),
+        })
         extracts = [row for row in payload["commands"] if row["stage"] == "extract"]
         self.assertEqual(len(extracts), 10)
         self.assertEqual(
@@ -274,6 +308,8 @@ class CommandContractTest(unittest.TestCase):
         for row in extracts:
             command = row["command"]
             self.assertEqual(command.count("--gpus"), 1)
+            self.assertEqual(command[command.index("--memory") + 1], "24g")
+            self.assertEqual(command[command.index("--memory-swap") + 1], "24g")
             self.assertNotIn("all", command)
             self.assertFalse(any(
                 argument.startswith("NVIDIA_VISIBLE_DEVICES=")
@@ -283,6 +319,11 @@ class CommandContractTest(unittest.TestCase):
         self.assertEqual(payload["gpu_work_started"], 0)
         self.assertEqual(payload["roofer_invocations_started"], 0)
         self.assertEqual(payload["score_invocations_started"], 0)
+        self.assertEqual(payload["extract_schedule"]["mode"], "serial")
+        self.assertEqual(payload["extract_schedule"]["max_parallel"], 1)
+        self.assertEqual(
+            [row["serial_ordinal"] for row in extracts], list(range(1, 11))
+        )
 
     def test_gpu_device_request_rejects_every_noncanonical_device(self) -> None:
         self.assertEqual(driver.docker_gpu_device_request(0),
@@ -340,6 +381,24 @@ class CommandContractTest(unittest.TestCase):
             with self.assertRaisesRegex(driver.DriverError, "two distinct UUIDs"):
                 driver.probe_gpu_device_bindings()
 
+    def test_extract_memory_probe_requires_24g_and_zero_swap(self) -> None:
+        response = subprocess.CompletedProcess(
+            ["docker"], 0, f"{driver.EXTRACT_CONTAINER_MEMORY_BYTES}\n0\n", ""
+        )
+        with mock.patch.object(driver, "run_host", return_value=response) as run:
+            result = driver.probe_extract_memory_limit()
+        command = run.call_args.args[0]
+        self.assertEqual(command[command.index("--memory") + 1], "24g")
+        self.assertEqual(command[command.index("--memory-swap") + 1], "24g")
+        self.assertEqual(result["memory_max_bytes"], 24 * 1024**3)
+        self.assertEqual(result["swap_max_bytes"], 0)
+        self.assertEqual(result["gpu_work_started"], 0)
+
+        bad = subprocess.CompletedProcess(["docker"], 0, "max\nmax\n", "")
+        with mock.patch.object(driver, "run_host", return_value=bad):
+            with self.assertRaisesRegex(driver.DriverError, "cgroup memory probe"):
+                driver.probe_extract_memory_limit()
+
     def test_failed_postprocess_archive_is_recorded_but_not_resumed(self) -> None:
         temporary = Path(tempfile.mkdtemp(
             prefix=".p1w-failed-postprocess-", dir=SCRIPT.parent
@@ -360,6 +419,61 @@ class CommandContractTest(unittest.TestCase):
         self.assertEqual(records[0]["abort_event_count"], 1)
         self.assertEqual(records[0]["driver_state_sha256"],
                          driver.sha256_file(state))
+
+    def test_extract_policy_lock_verifies_archived_oom_evidence(self) -> None:
+        temporary = Path(tempfile.mkdtemp(
+            prefix=".p1w-extract-policy-", dir=SCRIPT.parent
+        ))
+        self.addCleanup(shutil.rmtree, temporary)
+        archive_root = temporary / "archives"
+        archive = archive_root / "attempt2_160f1af_extract_oom"
+        state = write_json(archive / "driver_state.json", {
+            "schema": driver.DRIVER_SCHEMA,
+            "state": "aborted",
+            "correction_head": "160f1af6e1f56c487c6eb54a9621de52cf77aeb7",
+            "abort_events": [{"type": "DriverError", "message": "exit=137"}],
+        })
+        evidence = archive / "attempts/03_seed1001/extract/attempt_001"
+        started = write_json(evidence / "started.json", {"state": "started"})
+        stdout = evidence / "stdout.log"
+        stdout.write_text("Killed\n", encoding="utf-8")
+        failure = write_json(evidence / "failure.json", {
+            "schema": driver.STAGE_MARKER_SCHEMA,
+            "state": "error",
+            "stage": "extract",
+            "job_id": "03_seed1001",
+            "return_code": 137,
+        })
+        policy = json.loads(driver.EXTRACT_POLICY_LOCK.read_text(encoding="utf-8"))
+        policy["superseded_attempt"].update({
+            "driver_state_sha256": driver.sha256_file(state),
+            "started_json_sha256": driver.sha256_file(started),
+            "stdout_log_sha256": driver.sha256_file(stdout),
+            "failure_json_sha256": driver.sha256_file(failure),
+        })
+        policy_path = write_json(temporary / "policy.json", policy)
+        with mock.patch.object(driver, "EXTRACT_POLICY_LOCK", policy_path), \
+             mock.patch.object(
+                 driver, "EXTRACT_POLICY_LOCK_SHA256", driver.sha256_file(policy_path)
+             ), \
+             mock.patch.object(
+                 driver, "POSTPROCESS_FAILED_ATTEMPTS_ROOT", archive_root
+             ):
+            result = driver.validate_extract_policy_lock()
+        self.assertTrue(result["superseded_evidence_checked"])
+        self.assertEqual(result["max_parallel"], 1)
+
+        policy["max_parallel"] = 2
+        write_json(policy_path, policy)
+        with mock.patch.object(driver, "EXTRACT_POLICY_LOCK", policy_path), \
+             mock.patch.object(
+                 driver, "EXTRACT_POLICY_LOCK_SHA256", driver.sha256_file(policy_path)
+             ), \
+             mock.patch.object(
+                 driver, "POSTPROCESS_FAILED_ATTEMPTS_ROOT", archive_root
+             ):
+            with self.assertRaisesRegex(driver.DriverError, "max parallel"):
+                driver.validate_extract_policy_lock()
 
     def test_loss_aggregate_discovers_condition_seed_under_runs(self) -> None:
         captured: list[str] = []
@@ -697,11 +811,12 @@ class Wave2AndPublicationTest(unittest.TestCase):
                 "schema": "jointbuildgs.pilot_1wave.gpu_device_probe.v1",
                 "state": "pass",
             },
+            "extract_policy_lock": fake_extract_policy(),
         }
         result = driver.final_preflight_provenance(preflight)
         self.assertEqual(set(result), {
             "correction_head", "committed_runtime_sources", "crop_lock",
-            "gsplat_extension", "gpu_device_probe",
+            "gsplat_extension", "gpu_device_probe", "extract_policy_lock",
         })
         self.assertEqual(result["crop_lock"]["inventory_sha256"],
                          driver.INVENTORY_SHA256)
@@ -717,6 +832,7 @@ class Wave2AndPublicationTest(unittest.TestCase):
         same = {
             "correction_head": "a" * 40,
             "committed_runtime_sources": {"x.py": "1" * 64},
+            "extract_policy_lock": fake_extract_policy(),
         }
         driver.require_resume_contract(state, same, has_stage_outputs=True)
         changed_head = dict(same, correction_head="b" * 40)
@@ -725,6 +841,15 @@ class Wave2AndPublicationTest(unittest.TestCase):
         changed_source = dict(same, committed_runtime_sources={"x.py": "2" * 64})
         with self.assertRaisesRegex(driver.DriverError, "source SHA map changed"):
             driver.require_resume_contract(state, changed_source, has_stage_outputs=True)
+        state["preflight"]["extract_policy_lock"] = fake_extract_policy()
+        changed_policy = dict(
+            same,
+            extract_policy_lock={**fake_extract_policy(), "max_parallel": 2},
+        )
+        with self.assertRaisesRegex(driver.DriverError, "extract policy changed"):
+            driver.require_resume_contract(
+                state, changed_policy, has_stage_outputs=True
+            )
 
     def test_missing_wave2_lock_is_explicitly_blocked(self) -> None:
         self.assertEqual(driver.validate_wave2_lock(None, None), {

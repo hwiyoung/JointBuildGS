@@ -21,6 +21,38 @@ SPEC.loader.exec_module(EXTRACT)
 
 
 class PilotReadoutLineageTests(unittest.TestCase):
+    def test_chunked_voxel_decode_is_bitwise_equal_to_original_formula(self) -> None:
+        q = EXTRACT.torch.tensor([
+            [-37, 0, 81],
+            [0, 0, 0],
+            [1, -1, 2],
+            [EXTRACT.OFF - 1, -EXTRACT.OFF + 1, 17],
+            [-EXTRACT.OFF + 2, EXTRACT.OFF - 2, -19],
+        ], dtype=EXTRACT.torch.int64)
+        shifted = q + EXTRACT.OFF
+        keys = (
+            (shifted[:, 0] * EXTRACT.MUL + shifted[:, 1]) * EXTRACT.MUL
+            + shifted[:, 2]
+        )
+
+        work = keys.detach().cpu().numpy().astype(EXTRACT.np.int64, copy=True)
+        iz = (work % EXTRACT.MUL) - EXTRACT.OFF
+        work //= EXTRACT.MUL
+        iy = (work % EXTRACT.MUL) - EXTRACT.OFF
+        ix = (work // EXTRACT.MUL) - EXTRACT.OFF
+        expected = (
+            EXTRACT.np.stack([ix, iy, iz], axis=1).astype(EXTRACT.np.float64)
+            + 0.5
+        ) * 0.05 + EXTRACT.SHIFT
+
+        for chunk_size in (1, 2, len(keys), len(keys) + 10):
+            with self.subTest(chunk_size=chunk_size):
+                actual = EXTRACT.decode_keys(keys, 0.05, chunk_size=chunk_size)
+                self.assertTrue(EXTRACT.np.array_equal(actual, expected))
+
+        with self.assertRaisesRegex(ValueError, "must be positive"):
+            EXTRACT.decode_keys(keys, 0.05, chunk_size=0)
+
     def test_locked_pilot_crop_contract_is_exact_and_single_box(self) -> None:
         contract = EXTRACT.build_pilot_crop_contract()
         self.assertEqual(
