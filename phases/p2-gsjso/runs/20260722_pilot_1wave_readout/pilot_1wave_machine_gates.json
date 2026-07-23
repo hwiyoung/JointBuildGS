@@ -1,0 +1,195 @@
+{
+  "schema": "jointbuildgs.pilot_1wave.machine_gates.v1",
+  "created_utc": "2026-07-23T15:19:03.511829+00:00",
+  "G1": {
+    "gate": "G1",
+    "status": "fail",
+    "binding_rows": 300,
+    "spatial_rows": 9000,
+    "crop_or_receipt_sha_mismatch_count": 0,
+    "cityjson_xy_owner_argmax_mismatch_count": 112,
+    "assigned_owner_containment_mismatch_count": 296,
+    "runs": [
+      {
+        "condition_id": "01",
+        "seed": 1001,
+        "matrix_rows": 900,
+        "owner_assignments": 22,
+        "row_sum_one_count": 22,
+        "column_sum_one_count": 22,
+        "diagonal_assignments": 22,
+        "offdiagonal_assignments": 0,
+        "pass": false
+      },
+      {
+        "condition_id": "01",
+        "seed": 1002,
+        "matrix_rows": 900,
+        "owner_assignments": 19,
+        "row_sum_one_count": 19,
+        "column_sum_one_count": 19,
+        "diagonal_assignments": 19,
+        "offdiagonal_assignments": 0,
+        "pass": false
+      },
+      {
+        "condition_id": "02",
+        "seed": 1001,
+        "matrix_rows": 900,
+        "owner_assignments": 20,
+        "row_sum_one_count": 20,
+        "column_sum_one_count": 20,
+        "diagonal_assignments": 20,
+        "offdiagonal_assignments": 0,
+        "pass": false
+      },
+      {
+        "condition_id": "02",
+        "seed": 1002,
+        "matrix_rows": 900,
+        "owner_assignments": 18,
+        "row_sum_one_count": 18,
+        "column_sum_one_count": 18,
+        "diagonal_assignments": 18,
+        "offdiagonal_assignments": 0,
+        "pass": false
+      },
+      {
+        "condition_id": "03",
+        "seed": 1001,
+        "matrix_rows": 900,
+        "owner_assignments": 21,
+        "row_sum_one_count": 21,
+        "column_sum_one_count": 21,
+        "diagonal_assignments": 21,
+        "offdiagonal_assignments": 0,
+        "pass": false
+      },
+      {
+        "condition_id": "03",
+        "seed": 1002,
+        "matrix_rows": 900,
+        "owner_assignments": 20,
+        "row_sum_one_count": 20,
+        "column_sum_one_count": 20,
+        "diagonal_assignments": 20,
+        "offdiagonal_assignments": 0,
+        "pass": false
+      },
+      {
+        "condition_id": "04a",
+        "seed": 1001,
+        "matrix_rows": 900,
+        "owner_assignments": 14,
+        "row_sum_one_count": 14,
+        "column_sum_one_count": 14,
+        "diagonal_assignments": 14,
+        "offdiagonal_assignments": 0,
+        "pass": false
+      },
+      {
+        "condition_id": "04a",
+        "seed": 1002,
+        "matrix_rows": 900,
+        "owner_assignments": 18,
+        "row_sum_one_count": 18,
+        "column_sum_one_count": 18,
+        "diagonal_assignments": 18,
+        "offdiagonal_assignments": 0,
+        "pass": false
+      },
+      {
+        "condition_id": "04b",
+        "seed": 1001,
+        "matrix_rows": 900,
+        "owner_assignments": 21,
+        "row_sum_one_count": 21,
+        "column_sum_one_count": 21,
+        "diagonal_assignments": 21,
+        "offdiagonal_assignments": 0,
+        "pass": false
+      },
+      {
+        "condition_id": "04b",
+        "seed": 1002,
+        "matrix_rows": 900,
+        "owner_assignments": 15,
+        "row_sum_one_count": 15,
+        "column_sum_one_count": 15,
+        "diagonal_assignments": 15,
+        "offdiagonal_assignments": 0,
+        "pass": false
+      }
+    ]
+  },
+  "G2": {
+    "gate": "G2",
+    "status": "fail",
+    "honest_row_count": 4,
+    "honest_condition_set_exact": true,
+    "unique_minimum_count": 0,
+    "winner_condition_id": null,
+    "co_minimum_count": null,
+    "both_seeds_rule_abcd": false
+  },
+  "G3": {
+    "gate": "G3",
+    "status": "fail",
+    "best_honest_worst_seed_rms_median_m": null,
+    "threshold_m": 2.0,
+    "strictly_below_threshold": false
+  },
+  "G4": {
+    "gate": "G4",
+    "status": "pass",
+    "canonical_definition": "exact 10 bound manifests completed at 20k; collapse=0; divergence=0; guard_abort=0; postprocess_abort=0",
+    "canonical_training_run_count": 10,
+    "canonical_training_completed_20k_count": 10,
+    "canonical_training_collapse_count": 0,
+    "canonical_training_divergence_count": 0,
+    "canonical_training_guard_abort_count": 0,
+    "postprocess_abort_count": 0,
+    "historical_learning_runs_started": 16,
+    "historical_failed_attempt_archive_count": 4,
+    "historical_failed_attempt_archives": [
+      "attempt1_pre5k_root_uid",
+      "attempt2_preupdate_torch_cache",
+      "attempt3_preupdate_parallel_jit_oom",
+      "attempt4_checkpoint_seed_mask"
+    ],
+    "historical_failed_postprocess_attempt_archive_count": 4,
+    "historical_failed_postprocess_attempt_archives": [
+      {
+        "name": "attempt1_ce2fdab_gpu_device_overlap",
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess_failed_attempts/attempt1_ce2fdab_gpu_device_overlap",
+        "correction_head": "ce2fdab53d072adbb63dc05be6cda8da52ebd68d",
+        "driver_state_sha256": "fab4274f0df6ffe399e8793f757b30c26335382551e9df0cf9786af6873d0e55",
+        "abort_event_count": 1
+      },
+      {
+        "name": "attempt2_160f1af_extract_oom",
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess_failed_attempts/attempt2_160f1af_extract_oom",
+        "correction_head": "160f1af6e1f56c487c6eb54a9621de52cf77aeb7",
+        "driver_state_sha256": "a1099d24014d9ccea14288777acb2266fbd2724710b91d84e465f72f55373016",
+        "abort_event_count": 1
+      },
+      {
+        "name": "attempt3_1dfdcb5_classify_validator_schema",
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess_failed_attempts/attempt3_1dfdcb5_classify_validator_schema",
+        "correction_head": "1dfdcb5ed204d88001bd6aaba4c04bef5f222c4d",
+        "driver_state_sha256": "55578a334bb4ed19d81debc424685cda549df255e06edba576568eb1d222c44f",
+        "abort_event_count": 1
+      },
+      {
+        "name": "attempt4_1dfdcb5_aggregate_overlay_roundtrip",
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess_failed_attempts/attempt4_1dfdcb5_aggregate_overlay_roundtrip",
+        "correction_head": "1dfdcb5ed204d88001bd6aaba4c04bef5f222c4d",
+        "driver_state_sha256": "e3e6aee9522d9277bcc0e9a1f1b28c20243bba9c720edc2db62b4cc3fce3d400",
+        "abort_event_count": 1
+      }
+    ],
+    "history_excluded_from_canonical_gate_counts": true
+  },
+  "raw_numeric_status_only": true,
+  "interpretation_or_verdict": null
+}

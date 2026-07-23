@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/workspace/JointBuildGS/phases/p2-gsjso/scripts/pilot_1wave_scoring.py", line 3800, in <module>
+    main()
+    ~~~~^^
+  File "/workspace/JointBuildGS/phases/p2-gsjso/scripts/pilot_1wave_scoring.py", line 3794, in main
+    write_numeric_outputs(args.output_dir, candidate_rows, lock)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/JointBuildGS/phases/p2-gsjso/scripts/pilot_1wave_scoring.py", line 3559, in write_numeric_outputs
+    run_records[key] = _validate_candidate_group(*key, group, lock)
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/workspace/JointBuildGS/phases/p2-gsjso/scripts/pilot_1wave_scoring.py", line 3455, in _validate_candidate_group
+    raise RuntimeError(
+        f"candidate row differs from score-marker output: {condition}/{seed}/{building_id}"
+    )
+RuntimeError: candidate row differs from score-marker output: 01/1001/DEBY_LOD2_4906966

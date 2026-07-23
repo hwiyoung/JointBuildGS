@@ -1,0 +1,91 @@
+{
+  "schema": "jointbuildgs.pilot_1wave.postprocess_stage.v1",
+  "state": "complete",
+  "stage": "aggregate",
+  "job_id": "global",
+  "completed_utc": "2026-07-23T15:12:38.658090+00:00",
+  "outputs": [
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/_global/aggregate/attempt_002/output/pilot_1wave_scores.csv",
+      "size": 719042,
+      "sha256": "10523bca674edb3f3f43824b777ad15fda6609b8a93bd8768b7b159e33aa6e2f"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/_global/aggregate/attempt_002/output/pilot_1wave_summary.csv",
+      "size": 96572,
+      "sha256": "a90f56b0d178e97e8ad4886c5a7bf07d35fbab7c487ece53f2b85df69f07df5a"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/_global/aggregate/attempt_002/output/pilot_1wave_seg_upperbound_gap.csv",
+      "size": 17849,
+      "sha256": "e39d37968affbc10942481e3476d736db8368c3b6ea227e5b86441d2f549e7df"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/_global/aggregate/attempt_002/output/pilot_1wave_winner.csv",
+      "size": 894,
+      "sha256": "5b0f54ba3ae3cba07304388eb2e87097ccb99df4b1f1b0302d12f244cb75aed6"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/_global/aggregate/attempt_002/output/pilot_1wave_loss_shares.csv",
+      "size": 2584291,
+      "sha256": "01104b91c6faab26c40042bdf5bb510248b6dcd4a6736233087f593c8afe4a45"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/_global/aggregate/attempt_002/output/pilot_1wave_manifest.json",
+      "size": 31481,
+      "sha256": "240cb8f76b1a28117a462bf47d4d7e6bfc5eabe6fd9f98a5b22e42cadc54ea1a"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/_global/aggregate/attempt_002/output/aggregate_overlay_reconciliation.json",
+      "size": 6515,
+      "sha256": "a37bb366f6eb1992b1e8c7a86bb2acec1167b2603ec2ce0b373456ba693babba"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/_global/aggregate/attempt_002/aggregate_controller_reconciliation.json",
+      "size": 2422,
+      "sha256": "5640935d512260d122e335bfea2ef9e0e15b82a526fa827b5f2c021c47901b6e"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/recovery_helpers/p1w_same_head_aggregate_recovery.py",
+      "size": 56955,
+      "sha256": "6f39e1bb0cfafef5b545875fdc7fe7bb23f61ba066bcb52ed8807d19bc6fa137"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/recovery_helpers/p1w_same_head_aggregate_recovery.sha256",
+      "size": 102,
+      "sha256": "8846100685fcd2634917e32489c4d7610b83d1ccebabb5af2e8ff737a49722d9"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/recovery_helpers/p1w_same_head_aggregate_wrapper.py",
+      "size": 27890,
+      "sha256": "fe67fdffdd5d925bc9c77c96cd8e2e27260840695914faea7511dcee6ea1b315"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/recovery_helpers/p1w_same_head_aggregate_wrapper.sha256",
+      "size": 101,
+      "sha256": "53b0e53488b83a12576afe69be7e3e8c503005ca0bdee40d68e3b37ce11f3a77"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/recovery_helpers/p1w_same_head_receipt_recovery.py",
+      "size": 67597,
+      "sha256": "c912785408b5f794f822798d6d206234bb702442016fa34944624f63f39408e7"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/recovery_helpers/p1w_same_head_receipt_recovery.sha256",
+      "size": 100,
+      "sha256": "c79de929d3d16544ee354a29f1123fcd7295726a204a86b742effeec79e8acfe"
+    }
+  ],
+  "correction_head": "1dfdcb5ed204d88001bd6aaba4c04bef5f222c4d",
+  "runtime_sources_sha256": "03f0e756d4ba8b51827725973b4f0f5e594aa7857d365344bde025caf3e692d9",
+  "run_score_count": 10,
+  "loss_cursor_rows": 14000,
+  "loss_cursor_sha256": "01104b91c6faab26c40042bdf5bb510248b6dcd4a6736233087f593c8afe4a45",
+  "aggregate_recovery_helper_sha256": "6f39e1bb0cfafef5b545875fdc7fe7bb23f61ba066bcb52ed8807d19bc6fa137",
+  "aggregate_wrapper_sha256": "fe67fdffdd5d925bc9c77c96cd8e2e27260840695914faea7511dcee6ea1b315",
+  "first_recovery_helper_sha256": "c912785408b5f794f822798d6d206234bb702442016fa34944624f63f39408e7",
+  "aggregate_failure_archive_sha256": "1c601cc29f64f31b74eaf9947433ad2f25423813f208e88827fef08cf0e9d04a",
+  "candidate_rows_preserved": 300,
+  "summary_rows": 234,
+  "contract_sha256": "21198f986fa108b4c2270aa80cd6ba57829c5d2094e0e5da0364b6c0c9ccda58"
+}

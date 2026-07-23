@@ -1,0 +1,70 @@
+{
+  "schema": "jointbuildgs.pilot_1wave.postprocess_driver.v1",
+  "state": "complete",
+  "completed_utc": "2026-07-23T15:19:03.511837+00:00",
+  "source_run_id": "20260721_pilot_1wave",
+  "readout_run_id": "20260722_pilot_1wave_readout",
+  "correction_head": "1dfdcb5ed204d88001bd6aaba4c04bef5f222c4d",
+  "learning_runs_started_by_postprocess": 0,
+  "roofer_invocation_count": 10,
+  "score_invocation_count": 10,
+  "roofer_execution_receipts": {
+    "01_seed1001": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/01_seed1001/prepare/attempt_001/runtime/roofer_execution_receipt.json",
+      "sha256": "c524fa1e5b2c1470cc440513bd66ab89139c0cd69af153fcadc12009621262b9"
+    },
+    "01_seed1002": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/01_seed1002/prepare/attempt_001/runtime/roofer_execution_receipt.json",
+      "sha256": "0840b6e9662116a70221699bbaf89dcd93676973c3cffdaffee98b21bcf2e498"
+    },
+    "02_seed1001": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/02_seed1001/prepare/attempt_001/runtime/roofer_execution_receipt.json",
+      "sha256": "41a5dec321aaed2831ca94b252dbd211007db429c3cdb9c0c47c64c45e1d918b"
+    },
+    "02_seed1002": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/02_seed1002/prepare/attempt_001/runtime/roofer_execution_receipt.json",
+      "sha256": "000c4cf5575266e62f78d1cc29cdb13254b8b9a164bdb950d00aa7bac3d974b7"
+    },
+    "03_seed1001": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/03_seed1001/prepare/attempt_001/runtime/roofer_execution_receipt.json",
+      "sha256": "5be102dff9d482d728049e2b9b1c5d7c1d1b226d5a943d1df83c1ebc8d6572c3"
+    },
+    "03_seed1002": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/03_seed1002/prepare/attempt_001/runtime/roofer_execution_receipt.json",
+      "sha256": "0f88bd36d3adbcb3abfbebe402e4c5472f8378ae09d2fc917d173715356cb3d5"
+    },
+    "04a_seed1001": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04a_seed1001/prepare/attempt_001/runtime/roofer_execution_receipt.json",
+      "sha256": "0163a780cf76e23237ea81866df029d9875c007b6de8be40a1b7449562be9653"
+    },
+    "04a_seed1002": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04a_seed1002/prepare/attempt_001/runtime/roofer_execution_receipt.json",
+      "sha256": "2d74deba8bb594ac6d29e29ef7cdab74555419dbbac5ca7f61c226e960241584"
+    },
+    "04b_seed1001": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04b_seed1001/prepare/attempt_001/runtime/roofer_execution_receipt.json",
+      "sha256": "f56b9dbdd6e16c3f81218f90e6fe8c0cdad0a5307da37408d5e52c3daf6f8366"
+    },
+    "04b_seed1002": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04b_seed1002/prepare/attempt_001/runtime/roofer_execution_receipt.json",
+      "sha256": "e70755fa6db88f9331f071135d0f3a55e32271bf39d830f0ffb2d14f51428fed"
+    }
+  },
+  "job_order": [
+    "01_seed1001",
+    "01_seed1002",
+    "02_seed1001",
+    "02_seed1002",
+    "03_seed1001",
+    "03_seed1002",
+    "04a_seed1001",
+    "04a_seed1002",
+    "04b_seed1001",
+    "04b_seed1002"
+  ],
+  "wave2_launch": {
+    "launch_performed": false,
+    "status": "blocked_missing_wave2_lock"
+  },
+  "abort_events": []
+}

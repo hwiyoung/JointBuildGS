@@ -1,0 +1,703 @@
+{
+  "schema": "jointbuildgs.pilot_1wave.manifest.v1",
+  "created_utc": "2026-07-23T15:06:40.728256+00:00",
+  "task_id": "P1W-SCORE",
+  "run_id": "20260721_pilot_1wave",
+  "state": "numeric_outputs_written",
+  "crs": "EPSG:25832",
+  "learning_runs_started": 16,
+  "roofer_invocations_started": 10,
+  "score_rows": 390,
+  "guard_triggered": false,
+  "partial_run_count": 0,
+  "selection_lock": {
+    "population_count": 30,
+    "small_lt50m2_count": 5,
+    "non_small_ge50m2_count": 25,
+    "selection_sha256": "e98daa670a0753198e8a54502b260a07bcefe2bca42976931c0a08b766c5b3cd",
+    "ordered_ids_sha256": "ae5cbc664941c3b8bb4238767f1d0833a1f7684928a03837047065f85093bb01",
+    "scoring_bbox": [
+      690722.296661349,
+      5335966.948661349,
+      690911.966338651,
+      5336172.663338651
+    ],
+    "pilot_set_path": "phases/p2-gsjso/runs/20260721_pilot_1wave/pilot_1wave_pilot_set.csv",
+    "pilot_set_sha256": "db5ecb6c838499dd3a5f96a4b1abae85414c3d38318d976b7ee598982b566ffc",
+    "pilot_manifest_path": "phases/p2-gsjso/runs/20260721_pilot_1wave/pilot_1wave_pilot_set_manifest.json",
+    "pilot_manifest_sha256": "803d18862db926fff353c641e08a03c5938cedf3fb49cc4859751189e83855e2",
+    "dense_bar_median_m": 0.640884566,
+    "observation_size_strata_source_path": "docs/regression_input_snapshot.csv",
+    "observation_size_strata_source_sha256": "3cabed76b37625fdf8f9a72ed5c5b1f7c90ba23a839d6f1a61fc3727870cee82"
+  },
+  "conditions": {
+    "honest": [
+      "01",
+      "02",
+      "03",
+      "04a"
+    ],
+    "seg_upperbound": "04b",
+    "seeds": [
+      1001,
+      1002
+    ],
+    "pilot_arm": {
+      "01": "01_surface",
+      "02": "02_photo_control",
+      "03": "03_plane_soft",
+      "04a": "04a_plane_medium_vision",
+      "04b": "04b_plane_medium_gt_upperbound"
+    },
+    "segmentation_source": {
+      "01": "none",
+      "02": "none",
+      "03": "none_segmentation_free_geometry",
+      "04a": "vision_groundedsam_roof",
+      "04b": "lod2_roofsurface_gt_upperbound"
+    }
+  },
+  "run_states": {
+    "01_seed1001": {
+      "condition_id": "01",
+      "seed": 1001,
+      "status": "scored_complete_20k",
+      "learning_runs_started": 3,
+      "eligible_20k_full_state": true,
+      "partial": false,
+      "guard_status": "not_triggered",
+      "guard_reason": "",
+      "max_iter": 20000,
+      "last_completed_steps": 20000,
+      "process_completed": true,
+      "process_completed_steps": 20000,
+      "pilot_arm": "01_surface",
+      "segmentation_source": "none",
+      "plane_region_mask_manifest": null,
+      "training_config": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/resolved_configs/01_seed1001.yaml",
+        "sha256": "22442754901ee5ebede0079a1fe35149821706d34174b951c94fb0a2f40eb73a"
+      },
+      "full_state_manifest": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/01/seed_1001/full_state_manifest.json",
+        "sha256": "6eb6878876b25ff088fd4ff7e68c7a97f73af7531ea6f70449ed759c96827368"
+      },
+      "latest_full_checkpoint": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/01/seed_1001/ckpt/step_020000.pt",
+        "sha256": "484208e4835a29764c52e3f7e3a44874f6a3dbd323501ecb0a913ad0184281c6",
+        "completed_steps": 20000
+      },
+      "roofer_marker": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/01_seed1001/prepare/attempt_001/runtime/roofer_invocation.json",
+        "sha256": "a7351c7949386eda24b0d7103076aba2990e0e16b94de2dff47a5dd95e85ae85"
+      },
+      "score_marker": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/01_seed1001/score/attempt_001/score_invocation.json",
+        "sha256": "7178c413efabe567019756db5c769f7e45e0060e72455d1bec9493f711fe37a9"
+      }
+    },
+    "01_seed1002": {
+      "condition_id": "01",
+      "seed": 1002,
+      "status": "scored_complete_20k",
+      "learning_runs_started": 3,
+      "eligible_20k_full_state": true,
+      "partial": false,
+      "guard_status": "not_triggered",
+      "guard_reason": "",
+      "max_iter": 20000,
+      "last_completed_steps": 20000,
+      "process_completed": true,
+      "process_completed_steps": 20000,
+      "pilot_arm": "01_surface",
+      "segmentation_source": "none",
+      "plane_region_mask_manifest": null,
+      "training_config": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/resolved_configs/01_seed1002.yaml",
+        "sha256": "e7c54c59db4196ebf1d24f3ba5cb538b8af97bcf120473677f01e9e0e065c516"
+      },
+      "full_state_manifest": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/01/seed_1002/full_state_manifest.json",
+        "sha256": "517bf80b5fb01f8b946db8214e76ba512fcf84d1a926f8b2fd4988867680177d"
+      },
+      "latest_full_checkpoint": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/01/seed_1002/ckpt/step_020000.pt",
+        "sha256": "a71b58762937ae0760b5525ae52f36e0ad7aa5bf584758aa7b6f464978a20cd0",
+        "completed_steps": 20000
+      },
+      "roofer_marker": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/01_seed1002/prepare/attempt_001/runtime/roofer_invocation.json",
+        "sha256": "9a69c51a3f00f8d2e43db853d3b95f1be306c2a3429d62b36ef74a0b3b74bdd7"
+      },
+      "score_marker": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/01_seed1002/score/attempt_001/score_invocation.json",
+        "sha256": "0e93947e3e491d74c796e9cfad54d5d70c71731050e22b44e4ed63577fa5d0a5"
+      }
+    },
+    "02_seed1001": {
+      "condition_id": "02",
+      "seed": 1001,
+      "status": "scored_complete_20k",
+      "learning_runs_started": 2,
+      "eligible_20k_full_state": true,
+      "partial": false,
+      "guard_status": "not_triggered",
+      "guard_reason": "",
+      "max_iter": 20000,
+      "last_completed_steps": 20000,
+      "process_completed": true,
+      "process_completed_steps": 20000,
+      "pilot_arm": "02_photo_control",
+      "segmentation_source": "none",
+      "plane_region_mask_manifest": null,
+      "training_config": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/resolved_configs/02_seed1001.yaml",
+        "sha256": "47e3f10335bc7ced21bfe842c8ea33387bded5e3f198234d7ac8037840d69a40"
+      },
+      "full_state_manifest": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/02/seed_1001/full_state_manifest.json",
+        "sha256": "84fea5113577c662f9598f18b4941c091fb9c607af8513d16d331962f6d0080c"
+      },
+      "latest_full_checkpoint": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/02/seed_1001/ckpt/step_020000.pt",
+        "sha256": "1396b3e3100bfad4a3474678e50ff207aef488a0f19963b38d8e7fdfc3a39f11",
+        "completed_steps": 20000
+      },
+      "roofer_marker": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/02_seed1001/prepare/attempt_001/runtime/roofer_invocation.json",
+        "sha256": "816e96f52530acee14d381f74e78ccd22a572cdf69f964ad4a58653e39f9fabf"
+      },
+      "score_marker": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/02_seed1001/score/attempt_001/score_invocation.json",
+        "sha256": "9a2354d36e96bf52359dbe9079281ff4f41716eb1790d5157c939b9870f20a18"
+      }
+    },
+    "02_seed1002": {
+      "condition_id": "02",
+      "seed": 1002,
+      "status": "scored_complete_20k",
+      "learning_runs_started": 2,
+      "eligible_20k_full_state": true,
+      "partial": false,
+      "guard_status": "not_triggered",
+      "guard_reason": "",
+      "max_iter": 20000,
+      "last_completed_steps": 20000,
+      "process_completed": true,
+      "process_completed_steps": 20000,
+      "pilot_arm": "02_photo_control",
+      "segmentation_source": "none",
+      "plane_region_mask_manifest": null,
+      "training_config": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/resolved_configs/02_seed1002.yaml",
+        "sha256": "9b3642d94cb5769b91398d8ccbbd723247380c1480709516676386e66a13e290"
+      },
+      "full_state_manifest": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/02/seed_1002/full_state_manifest.json",
+        "sha256": "4b5ac0c670aa5292c533ae255d25cd94007602648acc39d5ebcfa9f766224e8d"
+      },
+      "latest_full_checkpoint": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/02/seed_1002/ckpt/step_020000.pt",
+        "sha256": "84a69a89cfc41507577926635f53cd5311211ed8418c620fe68d15aa7caa8312",
+        "completed_steps": 20000
+      },
+      "roofer_marker": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/02_seed1002/prepare/attempt_001/runtime/roofer_invocation.json",
+        "sha256": "80a55acb7726bb52135d10d5399af43f29508c5399b83017f6e74b40339811cf"
+      },
+      "score_marker": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/02_seed1002/score/attempt_001/score_invocation.json",
+        "sha256": "000901b5845be2e9121eced2cb51b86aa069e714a0fec564d71e949127344552"
+      }
+    },
+    "03_seed1001": {
+      "condition_id": "03",
+      "seed": 1001,
+      "status": "scored_complete_20k",
+      "learning_runs_started": 1,
+      "eligible_20k_full_state": true,
+      "partial": false,
+      "guard_status": "not_triggered",
+      "guard_reason": "",
+      "max_iter": 20000,
+      "last_completed_steps": 20000,
+      "process_completed": true,
+      "process_completed_steps": 20000,
+      "pilot_arm": "03_plane_soft",
+      "segmentation_source": "none_segmentation_free_geometry",
+      "plane_region_mask_manifest": null,
+      "training_config": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/resolved_configs/03_seed1001.yaml",
+        "sha256": "8ea828b9fee226e6d4f67bf6f821c85412c9b5f9e14ea39dfaacd730fad0c49d"
+      },
+      "full_state_manifest": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/03/seed_1001/full_state_manifest.json",
+        "sha256": "165866d6543ae215cd02b7cd99d10e8bad411b5a93e56fbbb818b80daaf0c91c"
+      },
+      "latest_full_checkpoint": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/03/seed_1001/ckpt/step_020000.pt",
+        "sha256": "c1c8d1bbc81d96b2c58a5b4805db510f93c04abcfc7c8173c2e3c643acc80dd1",
+        "completed_steps": 20000
+      },
+      "roofer_marker": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/03_seed1001/prepare/attempt_001/runtime/roofer_invocation.json",
+        "sha256": "4c73aecfd4ba831180496193bf65de4318ba1c33be5d65eb51f168caf514831a"
+      },
+      "score_marker": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/03_seed1001/score/attempt_001/score_invocation.json",
+        "sha256": "0c4123703db0c5bed0ea972283f9b3a1159e42212f8140aba85f3bdd4142045e"
+      }
+    },
+    "03_seed1002": {
+      "condition_id": "03",
+      "seed": 1002,
+      "status": "scored_complete_20k",
+      "learning_runs_started": 1,
+      "eligible_20k_full_state": true,
+      "partial": false,
+      "guard_status": "not_triggered",
+      "guard_reason": "",
+      "max_iter": 20000,
+      "last_completed_steps": 20000,
+      "process_completed": true,
+      "process_completed_steps": 20000,
+      "pilot_arm": "03_plane_soft",
+      "segmentation_source": "none_segmentation_free_geometry",
+      "plane_region_mask_manifest": null,
+      "training_config": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/resolved_configs/03_seed1002.yaml",
+        "sha256": "661b59fc1c296dda13699b08a9ab90c76b96eb7d6f7c1a74958cf3028403c2ab"
+      },
+      "full_state_manifest": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/03/seed_1002/full_state_manifest.json",
+        "sha256": "fd815ec33a91f0dcd5944d0c8408c42fe247c8d85a2e27d09ab93ce7e7197868"
+      },
+      "latest_full_checkpoint": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/03/seed_1002/ckpt/step_020000.pt",
+        "sha256": "2162af17a5c83e1fe11fe1b3613b0ccb2999c59383abee435597bfadd1f9c87d",
+        "completed_steps": 20000
+      },
+      "roofer_marker": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/03_seed1002/prepare/attempt_001/runtime/roofer_invocation.json",
+        "sha256": "aff08653507b2d6c2f516f8ccecc285f020ff87ea9cdad92ba47ea38f2ad05e3"
+      },
+      "score_marker": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/03_seed1002/score/attempt_001/score_invocation.json",
+        "sha256": "e8aebe8ea3b6f5115123a45be8d601afdde553a940ccb1b0cb71e5f160238498"
+      }
+    },
+    "04a_seed1001": {
+      "condition_id": "04a",
+      "seed": 1001,
+      "status": "scored_complete_20k",
+      "learning_runs_started": 1,
+      "eligible_20k_full_state": true,
+      "partial": false,
+      "guard_status": "not_triggered",
+      "guard_reason": "",
+      "max_iter": 20000,
+      "last_completed_steps": 20000,
+      "process_completed": true,
+      "process_completed_steps": 20000,
+      "pilot_arm": "04a_plane_medium_vision",
+      "segmentation_source": "vision_groundedsam_roof",
+      "plane_region_mask_manifest": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/prep_artifacts/plane_masks_04a/mask_manifest.json",
+        "sha256": "db93653318d2adad7b6bf14177f55ab778df04f7966c2f5189e6dc8ec1ed86b7",
+        "source": "vision_groundedsam_roof"
+      },
+      "training_config": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/resolved_configs/04a_seed1001.yaml",
+        "sha256": "9f1be4764f257383fe626dff22344d12103c09a0e386f57407f7f9a0ba0c9360"
+      },
+      "full_state_manifest": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/04a/seed_1001/full_state_manifest.json",
+        "sha256": "d9f4d578552d87aee320c6a2de5a86425001e3d03330b535c6a5f8395c968084"
+      },
+      "latest_full_checkpoint": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/04a/seed_1001/ckpt/step_020000.pt",
+        "sha256": "e4ecf1fa4294e78f7a3d5cc63c2e67374cb6978a13f88ff0d2420f738e24951c",
+        "completed_steps": 20000
+      },
+      "roofer_marker": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04a_seed1001/prepare/attempt_001/runtime/roofer_invocation.json",
+        "sha256": "872aad4e2aa0e4538dccca697d7b9d7dd53b111bc800590225a2bb770591aee4"
+      },
+      "score_marker": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04a_seed1001/score/attempt_001/score_invocation.json",
+        "sha256": "0a25fce3b1417e9194ee28f2801578e5be3250144488bd86c3aebf73bae09813"
+      }
+    },
+    "04a_seed1002": {
+      "condition_id": "04a",
+      "seed": 1002,
+      "status": "scored_complete_20k",
+      "learning_runs_started": 1,
+      "eligible_20k_full_state": true,
+      "partial": false,
+      "guard_status": "not_triggered",
+      "guard_reason": "",
+      "max_iter": 20000,
+      "last_completed_steps": 20000,
+      "process_completed": true,
+      "process_completed_steps": 20000,
+      "pilot_arm": "04a_plane_medium_vision",
+      "segmentation_source": "vision_groundedsam_roof",
+      "plane_region_mask_manifest": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/prep_artifacts/plane_masks_04a/mask_manifest.json",
+        "sha256": "db93653318d2adad7b6bf14177f55ab778df04f7966c2f5189e6dc8ec1ed86b7",
+        "source": "vision_groundedsam_roof"
+      },
+      "training_config": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/resolved_configs/04a_seed1002.yaml",
+        "sha256": "ae0bd8f33649cb0f9fe3e544365a9e69453ade8c20942a2808727cebe3a1a24a"
+      },
+      "full_state_manifest": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/04a/seed_1002/full_state_manifest.json",
+        "sha256": "0b32cb18e961db2485698bceb56beb8874fbae363ebbdc7c36a9451aa3d7ed85"
+      },
+      "latest_full_checkpoint": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/04a/seed_1002/ckpt/step_020000.pt",
+        "sha256": "508ff33b5d6b71b04814c8d72c273f06ca8d2e9b38645676dacc57645a69a00c",
+        "completed_steps": 20000
+      },
+      "roofer_marker": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04a_seed1002/prepare/attempt_001/runtime/roofer_invocation.json",
+        "sha256": "0861eaf1e4e3c811f69564cdfd65e0716a29b0fb0b0ed713c17b7f510f12bb1a"
+      },
+      "score_marker": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04a_seed1002/score/attempt_001/score_invocation.json",
+        "sha256": "be6416aabf08ffdad7416ff78b1ae21e77a5f2a187d1e40a62f709fa4ec7482c"
+      }
+    },
+    "04b_seed1001": {
+      "condition_id": "04b",
+      "seed": 1001,
+      "status": "scored_complete_20k",
+      "learning_runs_started": 1,
+      "eligible_20k_full_state": true,
+      "partial": false,
+      "guard_status": "not_triggered",
+      "guard_reason": "",
+      "max_iter": 20000,
+      "last_completed_steps": 20000,
+      "process_completed": true,
+      "process_completed_steps": 20000,
+      "pilot_arm": "04b_plane_medium_gt_upperbound",
+      "segmentation_source": "lod2_roofsurface_gt_upperbound",
+      "plane_region_mask_manifest": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/prep_artifacts/plane_masks_04b/mask_manifest.json",
+        "sha256": "14af4b14288d6ecf772c5f4426a507cc80ab5c354f2ebfaa81383220a5849b16",
+        "source": "lod2_roofsurface_gt_upperbound"
+      },
+      "training_config": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/resolved_configs/04b_seed1001.yaml",
+        "sha256": "5fc49b0e6accf73c2eb1c964bcbfd17010235f5464d4b278cac959c1449882ec"
+      },
+      "full_state_manifest": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/04b/seed_1001/full_state_manifest.json",
+        "sha256": "9fb26593193ead413f9ed491f0daf71a9a9223e2f4214fa483c71cf81a14b76f"
+      },
+      "latest_full_checkpoint": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/04b/seed_1001/ckpt/step_020000.pt",
+        "sha256": "aa1da75afe72c08388a67ca8ba9e97181c842cfc2aecb15cef33c37c6e6d25e0",
+        "completed_steps": 20000
+      },
+      "roofer_marker": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04b_seed1001/prepare/attempt_001/runtime/roofer_invocation.json",
+        "sha256": "5320a2f44c8638ed5235b5e9149ada5d6f7db47ab96029c694ce48ee11d2829f"
+      },
+      "score_marker": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04b_seed1001/score/attempt_001/score_invocation.json",
+        "sha256": "64bfc0d95c9e947cc278d48d8c90d76a56fc4377c28b54e67541fbad12ee3578"
+      }
+    },
+    "04b_seed1002": {
+      "condition_id": "04b",
+      "seed": 1002,
+      "status": "scored_complete_20k",
+      "learning_runs_started": 1,
+      "eligible_20k_full_state": true,
+      "partial": false,
+      "guard_status": "not_triggered",
+      "guard_reason": "",
+      "max_iter": 20000,
+      "last_completed_steps": 20000,
+      "process_completed": true,
+      "process_completed_steps": 20000,
+      "pilot_arm": "04b_plane_medium_gt_upperbound",
+      "segmentation_source": "lod2_roofsurface_gt_upperbound",
+      "plane_region_mask_manifest": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/prep_artifacts/plane_masks_04b/mask_manifest.json",
+        "sha256": "14af4b14288d6ecf772c5f4426a507cc80ab5c354f2ebfaa81383220a5849b16",
+        "source": "lod2_roofsurface_gt_upperbound"
+      },
+      "training_config": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/resolved_configs/04b_seed1002.yaml",
+        "sha256": "39269d4734e3801e0f55354e936958152b28c5bd3a7974a3c793b9399d120d0f"
+      },
+      "full_state_manifest": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/04b/seed_1002/full_state_manifest.json",
+        "sha256": "ea853aa64c5e1982291f42c870f40be68a412959a230ccfa4ff1b4a89ba8eeaf"
+      },
+      "latest_full_checkpoint": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/04b/seed_1002/ckpt/step_020000.pt",
+        "sha256": "6708bbbadd60d934bca4fffab9f11af6c552fe5fe6bbf62fe9c2dac60e448279",
+        "completed_steps": 20000
+      },
+      "roofer_marker": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04b_seed1002/prepare/attempt_001/runtime/roofer_invocation.json",
+        "sha256": "baaab746de8dafc8eae04e29767fb330bd9179f1ac05f10ea646b54ea96a3a77"
+      },
+      "score_marker": {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04b_seed1002/score/attempt_001/score_invocation.json",
+        "sha256": "57dc7b1db5d0225fca54823ed2cfe11f540c934df6dab9722b24aa6a8bf77ee5"
+      }
+    }
+  },
+  "metrics": {
+    "distance_definition": "phases/p2-gsjso/scripts/e5_c001_8way.py",
+    "distance_definition_sha256": "12322a7fd49c0904eaf7160946c7ef3b521ed091038452f9a863bef37f0bcbdc",
+    "completeness_definition_source": "phases/p2-gsjso/scripts/qs_baseline178_rescore.py",
+    "completeness_definition_source_sha256": "0d752dade0b8677460b55d381a69db77f7bf611061fb7479710434358db33e9d",
+    "roof_completeness_definition": "area(union(model roof XY) intersect union(reference roof XY)) / area(union(reference roof XY))",
+    "face_count_ratio_definition": "model RoofSurface count / reference RoofSurface count",
+    "face_count_ratio_target": 1.0,
+    "completeness_thresholds": [
+      0.8,
+      0.9,
+      0.95
+    ],
+    "rms_spec_thresholds_m": [
+      0.3,
+      1.0
+    ],
+    "als_gap_closed_fraction_definition": "(dense_roof_rms_m - candidate_roof_rms_m) / (dense_roof_rms_m - als_roof_rms_m); 0=dense and 1=ALS",
+    "effective_lod2_definition": "lod=2.2 geometry present AND rf_success is not false AND rf_pointcloud_unusable is not true AND rf_extrusion_mode is neither skip nor lod11_fallback",
+    "summary_denominators": {
+      "all": 30,
+      "small_lt50m2": 5,
+      "non_small_ge50m2": 25,
+      "observation": {
+        "low": 8,
+        "mid": 10,
+        "high": 12
+      },
+      "size_area": {
+        "low": 8,
+        "mid": 12,
+        "high": 10
+      },
+      "observation_x_size": {
+        "low__low": 1,
+        "low__mid": 5,
+        "low__high": 2,
+        "mid__low": 2,
+        "mid__mid": 6,
+        "mid__high": 2,
+        "high__low": 5,
+        "high__mid": 1,
+        "high__high": 6
+      },
+      "metric_rates": "metric-specific measurable_count; missing values are excluded",
+      "completeness_threshold_rates": "completeness_measurable_count"
+    },
+    "val3dity_version": "2.6.0"
+  },
+  "numeric_rule": {
+    "candidate_conditions": [
+      "01",
+      "02",
+      "03",
+      "04a"
+    ],
+    "excluded_condition": "04b",
+    "rms_and_hausdorff_aggregate": "median across locked 30; lower is nonworse",
+    "face_count_aggregate": "abs(median(model/reference) - 1); lower is nonworse",
+    "validity_and_lod2_aggregate": "count across locked 30; higher is nonworse",
+    "completeness_gate": "per building >= max(dense building value, threshold)",
+    "primary_completeness_threshold": 0.9,
+    "sensitivity_completeness_thresholds": [
+      0.8,
+      0.95
+    ],
+    "two_seed_order": "minimum of max(seed1001 RMS median, seed1002 RMS median)",
+    "eligibility_gate": "both seeds require max_iter=20000, process_completed_steps=20000, last_completed_steps=20000, and verified latest 20000 full checkpoint",
+    "tie_rule": "all values equal within absolute tolerance 1e-12 are co-minima"
+  },
+  "controls": {
+    "dense": {
+      "path": "docs/qs_baseline178_scores.csv",
+      "sha256": "a3b89f1907e6e61aead702efe6b742b5c012615df77d90bdb2a859b5418d85ab",
+      "expected_count": 30
+    },
+    "als": {
+      "path": "docs/qs_baseline178_scores.csv",
+      "sha256": "a3b89f1907e6e61aead702efe6b742b5c012615df77d90bdb2a859b5418d85ab",
+      "expected_count": 30
+    },
+    "cheap_refine_mls_default": {
+      "path": "docs/qs_cheap_refine_sweep.csv",
+      "sha256": "fb3fa5c82edca975018f6c08982e48e85ea7ccba623cce97166fc0c0ffb89fd8",
+      "condition_id": "cell050_win2_pass1",
+      "selected_population_measured_count": 10,
+      "selected_population_missing_count": 20,
+      "missing_value_policy": "empty; no substitution"
+    }
+  },
+  "roofer": {
+    "image": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+    "parameters": "--id-attribute building_id --jobs 3 --srs EPSG:25832 --bld-class 6 --grnd-class 2 --lod22",
+    "assembly_count_per_condition_seed": 1
+  },
+  "outputs": {
+    "pilot_1wave_scores.csv": {
+      "sha256": "10523bca674edb3f3f43824b777ad15fda6609b8a93bd8768b7b159e33aa6e2f",
+      "row_count": 390
+    },
+    "pilot_1wave_summary.csv": {
+      "sha256": "a90f56b0d178e97e8ad4886c5a7bf07d35fbab7c487ece53f2b85df69f07df5a",
+      "row_count": 234
+    },
+    "pilot_1wave_seg_upperbound_gap.csv": {
+      "sha256": "e39d37968affbc10942481e3476d736db8368c3b6ea227e5b86441d2f549e7df",
+      "row_count": 60
+    },
+    "pilot_1wave_loss_shares.csv": {
+      "sha256": "01104b91c6faab26c40042bdf5bb510248b6dcd4a6736233087f593c8afe4a45",
+      "row_count": 14000
+    },
+    "pilot_1wave_winner.csv": {
+      "sha256": "5b0f54ba3ae3cba07304388eb2e87097ccb99df4b1f1b0302d12f244cb75aed6",
+      "row_count": 4
+    },
+    "aggregate_overlay_reconciliation.json": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/_global/aggregate/attempt_002/output/aggregate_overlay_reconciliation.json",
+      "record_type": "json_provenance",
+      "size": 6515,
+      "sha256": "a37bb366f6eb1992b1e8c7a86bb2acec1167b2603ec2ce0b373456ba693babba"
+    }
+  },
+  "interpretation_or_verdict": null,
+  "updated_utc": "2026-07-23T15:12:38.040377+00:00",
+  "learning_condition_seed_count": 10,
+  "score_invocations_completed": 10,
+  "candidate_score_rows": 300,
+  "summary_rows": 234,
+  "seg_gap_rows": 60,
+  "winner_rows": 4,
+  "aggregate_recovery": {
+    "schema": "jointbuildgs.pilot_1wave.aggregate_overlay_reconciliation.v1",
+    "state": "pass",
+    "reason": "marker_bound_dense_overlay_csv_roundtrip_idempotency",
+    "committed_scoring": {
+      "path": "phases/p2-gsjso/scripts/pilot_1wave_scoring.py",
+      "sha256": "7e40371708ab580c132b08e2ba411a3de530feddf35e908af74e4a086c102dcf"
+    },
+    "wrapper": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/recovery_helpers/p1w_same_head_aggregate_wrapper.py",
+      "sha256": "fe67fdffdd5d925bc9c77c96cd8e2e27260840695914faea7511dcee6ea1b315"
+    },
+    "controller": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/recovery_helpers/p1w_same_head_aggregate_recovery.py",
+      "sha256": "6f39e1bb0cfafef5b545875fdc7fe7bb23f61ba066bcb52ed8807d19bc6fa137"
+    },
+    "reconciliation": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/_global/aggregate/attempt_002/output/aggregate_overlay_reconciliation.json",
+      "record_type": "json_provenance",
+      "size": 6515,
+      "sha256": "a37bb366f6eb1992b1e8c7a86bb2acec1167b2603ec2ce0b373456ba693babba"
+    },
+    "patch_scope": "aggregate_attach_dense_controls_only",
+    "row_action": "preserve_exact_marker_bound_candidate_rows",
+    "candidate_scientific_scores_recomputed": false,
+    "aggregate_outputs_computed": true,
+    "committed_aggregate_deep_validation_executed": true,
+    "candidate_rows": 300,
+    "unchanged_rows": 222,
+    "affected_rows": 78,
+    "affected_rows_by_run": {
+      "01_seed1001": 9,
+      "01_seed1002": 6,
+      "02_seed1001": 9,
+      "02_seed1002": 8,
+      "03_seed1001": 8,
+      "03_seed1002": 11,
+      "04a_seed1001": 6,
+      "04a_seed1002": 8,
+      "04b_seed1001": 8,
+      "04b_seed1002": 5
+    },
+    "changed_fields": [
+      "als_gap_closed_fraction"
+    ],
+    "max_abs_drift": 2.4999735614983365e-08,
+    "max_allowed_abs_drift": 3e-08,
+    "affected_building_delta_fingerprint_sha256": "e88e894612eb8207eb8cd4293105da2c947300ecc66b188cafc387a6e52dc1ce",
+    "run_score_inputs": [
+      {
+        "source_id": "01_seed1001",
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/01_seed1001/score/attempt_001/scores.csv",
+        "size": 65022,
+        "sha256": "a3a8311c3587e02ddea8bc272a1037c471bbe91471f746abfed7230bfd566ce0"
+      },
+      {
+        "source_id": "01_seed1002",
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/01_seed1002/score/attempt_001/scores.csv",
+        "size": 64754,
+        "sha256": "ff5f055410069c2d0bb6b98961be7de84ba79af1cd3a61067939fce1d33c28db"
+      },
+      {
+        "source_id": "02_seed1001",
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/02_seed1001/score/attempt_001/scores.csv",
+        "size": 65034,
+        "sha256": "746d0af3ec87862c4188addefbb2f7797676d5a879ebf35f8524af06a91916c2"
+      },
+      {
+        "source_id": "02_seed1002",
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/02_seed1002/score/attempt_001/scores.csv",
+        "size": 64871,
+        "sha256": "85e9e2dd7c19d69129c7d7112e6d8ae63bc67a1357f42eb2a206c8a0e0a7e6ca"
+      },
+      {
+        "source_id": "03_seed1001",
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/03_seed1001/score/attempt_001/scores.csv",
+        "size": 65867,
+        "sha256": "960ad75e686e9e629b05611cd220951bdaac98f3dabeaa4e05109b10ac8e955f"
+      },
+      {
+        "source_id": "03_seed1002",
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/03_seed1002/score/attempt_001/scores.csv",
+        "size": 65767,
+        "sha256": "bcf92d331b9a020490bd7dee789bd689d1beac42d71798b75a93212d5c61d02e"
+      },
+      {
+        "source_id": "04a_seed1001",
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04a_seed1001/score/attempt_001/scores.csv",
+        "size": 65589,
+        "sha256": "f1a7269e4c226716e9fa4a26b16a0efe73055646d80b61fcac69a91c48318c3c"
+      },
+      {
+        "source_id": "04a_seed1002",
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04a_seed1002/score/attempt_001/scores.csv",
+        "size": 65939,
+        "sha256": "367326fe5dbc305f3c7d6a7f481ea7ebd659e7aa614214d2a53263b06727d568"
+      },
+      {
+        "source_id": "04b_seed1001",
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04b_seed1001/score/attempt_001/scores.csv",
+        "size": 66862,
+        "sha256": "98a849becdd86bc87ec74e0bd7134178d4dbc78c00e29264326f0deb4cca1747"
+      },
+      {
+        "source_id": "04b_seed1002",
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04b_seed1002/score/attempt_001/scores.csv",
+        "size": 66341,
+        "sha256": "9f82abf45d9993322ddda01b9a43a6f16f388f97d53dc82814460add2d71640f"
+      }
+    ],
+    "training_started": 0,
+    "roofer_started": 0,
+    "score_started": 0
+  }
+}

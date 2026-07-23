@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/recovery_helpers/p1w_same_head_receipt_recovery.py", line 1668, in <module>
+    raise SystemExit(main())
+  File "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/recovery_helpers/p1w_same_head_receipt_recovery.py", line 1662, in main
+    result = execute_recovery(driver)
+  File "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/recovery_helpers/p1w_same_head_receipt_recovery.py", line 1560, in execute_recovery
+    final = driver.execute_resume(jobs, checked)
+  File "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS/phases/p2-gsjso/scripts/pilot_1wave_postprocess_driver.py", line 3039, in execute_resume
+    aggregate = run_numeric_aggregate(jobs, loss)
+  File "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS/phases/p2-gsjso/scripts/pilot_1wave_postprocess_driver.py", line 2244, in run_numeric_aggregate
+    raise DriverError(f"numeric aggregate failed; see {attempt/'aggregate.log'}")
+p1w_committed_postprocess_driver.DriverError: numeric aggregate failed; see /media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/_global/aggregate/attempt_001/aggregate.log

@@ -1,0 +1,106 @@
+{
+  "schema": "jointbuildgs.pilot_1wave.aggregate_overlay_reconciliation.v1",
+  "state": "pass",
+  "mode": "audit-only",
+  "committed_scoring": {
+    "path": "phases/p2-gsjso/scripts/pilot_1wave_scoring.py",
+    "sha256": "7e40371708ab580c132b08e2ba411a3de530feddf35e908af74e4a086c102dcf"
+  },
+  "wrapper": {
+    "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/recovery_helpers/p1w_same_head_aggregate_wrapper.py",
+    "sha256": "fe67fdffdd5d925bc9c77c96cd8e2e27260840695914faea7511dcee6ea1b315"
+  },
+  "controller": {
+    "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/recovery_helpers/p1w_same_head_aggregate_recovery.py",
+    "sha256": "6f39e1bb0cfafef5b545875fdc7fe7bb23f61ba066bcb52ed8807d19bc6fa137"
+  },
+  "audit": {
+    "state": "pass",
+    "candidate_rows": 300,
+    "unchanged_rows": 222,
+    "affected_rows": 78,
+    "affected_rows_by_run": {
+      "01_seed1001": 9,
+      "01_seed1002": 6,
+      "02_seed1001": 9,
+      "02_seed1002": 8,
+      "03_seed1001": 8,
+      "03_seed1002": 11,
+      "04a_seed1001": 6,
+      "04a_seed1002": 8,
+      "04b_seed1001": 8,
+      "04b_seed1002": 5
+    },
+    "changed_fields": [
+      "als_gap_closed_fraction"
+    ],
+    "max_abs_drift": 2.4999735614983365e-08,
+    "min_abs_drift": 9.999894245993346e-10,
+    "max_allowed_abs_drift": 3e-08,
+    "affected_building_delta_fingerprint_sha256": "e88e894612eb8207eb8cd4293105da2c947300ecc66b188cafc387a6e52dc1ce",
+    "deep_score_marker_validation": false,
+    "run_scores": [
+      {
+        "source_id": "01_seed1001",
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/01_seed1001/score/attempt_001/scores.csv",
+        "size": 65022,
+        "sha256": "a3a8311c3587e02ddea8bc272a1037c471bbe91471f746abfed7230bfd566ce0"
+      },
+      {
+        "source_id": "01_seed1002",
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/01_seed1002/score/attempt_001/scores.csv",
+        "size": 64754,
+        "sha256": "ff5f055410069c2d0bb6b98961be7de84ba79af1cd3a61067939fce1d33c28db"
+      },
+      {
+        "source_id": "02_seed1001",
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/02_seed1001/score/attempt_001/scores.csv",
+        "size": 65034,
+        "sha256": "746d0af3ec87862c4188addefbb2f7797676d5a879ebf35f8524af06a91916c2"
+      },
+      {
+        "source_id": "02_seed1002",
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/02_seed1002/score/attempt_001/scores.csv",
+        "size": 64871,
+        "sha256": "85e9e2dd7c19d69129c7d7112e6d8ae63bc67a1357f42eb2a206c8a0e0a7e6ca"
+      },
+      {
+        "source_id": "03_seed1001",
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/03_seed1001/score/attempt_001/scores.csv",
+        "size": 65867,
+        "sha256": "960ad75e686e9e629b05611cd220951bdaac98f3dabeaa4e05109b10ac8e955f"
+      },
+      {
+        "source_id": "03_seed1002",
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/03_seed1002/score/attempt_001/scores.csv",
+        "size": 65767,
+        "sha256": "bcf92d331b9a020490bd7dee789bd689d1beac42d71798b75a93212d5c61d02e"
+      },
+      {
+        "source_id": "04a_seed1001",
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04a_seed1001/score/attempt_001/scores.csv",
+        "size": 65589,
+        "sha256": "f1a7269e4c226716e9fa4a26b16a0efe73055646d80b61fcac69a91c48318c3c"
+      },
+      {
+        "source_id": "04a_seed1002",
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04a_seed1002/score/attempt_001/scores.csv",
+        "size": 65939,
+        "sha256": "367326fe5dbc305f3c7d6a7f481ea7ebd659e7aa614214d2a53263b06727d568"
+      },
+      {
+        "source_id": "04b_seed1001",
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04b_seed1001/score/attempt_001/scores.csv",
+        "size": 66862,
+        "sha256": "98a849becdd86bc87ec74e0bd7134178d4dbc78c00e29264326f0deb4cca1747"
+      },
+      {
+        "source_id": "04b_seed1002",
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04b_seed1002/score/attempt_001/scores.csv",
+        "size": 66341,
+        "sha256": "9f82abf45d9993322ddda01b9a43a6f16f388f97d53dc82814460add2d71640f"
+      }
+    ]
+  },
+  "persistent_scientific_mutations": 0
+}
