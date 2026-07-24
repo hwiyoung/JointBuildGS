@@ -1,0 +1,26 @@
+{
+  "bindings": {
+    "config_sha256": "9a33279145645dadcebbfc9dcaaf90cbc256675f36d04b334b74b303a8601496",
+    "implementation_sha256": "aafcaa0b0ac27caebc9df84bf26c32dff280c22ba445e51528d5c82bb8501ae6",
+    "input_sha256": "ee2f9499c54c61be66e8599b90167904cb4dd8b9b4478fc7179d03b3a20ff77f",
+    "view_sha256": "829e10f82b6c7cf458ae51cc68fbe0ea533db1a18d47aee974aa93a8d3e23b04"
+  },
+  "created_utc": "2026-07-24T22:51:22.478392+00:00",
+  "details": {
+    "building_ids": [
+      "DEBY_LOD2_42364609",
+      "DEBY_LOD2_42364659",
+      "DEBY_LOD2_42364663"
+    ],
+    "consecutive_building_count": 3,
+    "error_type": "GateContractError",
+    "rule": "same_error_type_across_three_consecutive_buildings"
+  },
+  "identity_key": "5acff3750a9b0767d59d64486449d2d5379d5bcd1a8a76f52c1511af0fc54933",
+  "learning_allowed": false,
+  "reason": "same_error_type_across_three_consecutive_buildings",
+  "receipt_id": "83af8e848ea893262b1793018f51bb5767a8d2a8ebc59d5fe1848bb164f658fe",
+  "receipt_sha256": "f2bbca2bc7e14512a350961121f613442bfc16bc9eb10bdd4f9c01c720af33c9",
+  "schema": "jointbuildgs.fusion_w1.alignment_checkpoint.blocked.v1",
+  "status": "BLOCKED"
+}

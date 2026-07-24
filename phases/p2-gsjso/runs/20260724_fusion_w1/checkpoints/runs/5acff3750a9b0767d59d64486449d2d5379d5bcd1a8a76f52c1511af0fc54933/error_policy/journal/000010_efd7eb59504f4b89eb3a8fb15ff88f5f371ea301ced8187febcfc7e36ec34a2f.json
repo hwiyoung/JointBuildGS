@@ -1,0 +1,22 @@
+{
+  "created_utc": "2026-07-24T22:51:22.439762+00:00",
+  "details": {
+    "building_ids": [
+      "DEBY_LOD2_42364609",
+      "DEBY_LOD2_42364659",
+      "DEBY_LOD2_42364663"
+    ],
+    "consecutive_building_count": 3,
+    "error_type": "GateContractError",
+    "rule": "same_error_type_across_three_consecutive_buildings"
+  },
+  "event": "STAGE_STOP",
+  "event_sha256": "efd7eb59504f4b89eb3a8fb15ff88f5f371ea301ced8187febcfc7e36ec34a2f",
+  "identity_key": "5acff3750a9b0767d59d64486449d2d5379d5bcd1a8a76f52c1511af0fc54933",
+  "previous_event_sha256": "f37f86bd5356aacb55f051329a263259f46ac81c10cdfad196d887c05d741e52",
+  "schema": "jointbuildgs.fusion_w1.alignment_checkpoint.journal_event.v1",
+  "scope": {
+    "policy": "jointbuildgs.fusion_w1.alignment_checkpoint.error_policy.v1"
+  },
+  "sequence": 10
+}
