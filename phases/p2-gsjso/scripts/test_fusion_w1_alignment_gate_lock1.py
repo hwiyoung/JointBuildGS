@@ -763,6 +763,122 @@ class FusionW1AlignmentGateLock1Tests(unittest.TestCase):
                 "completed",
             )
 
+    def test_stage_stop_is_raised_only_after_third_checkpoint_is_durable(
+        self,
+    ) -> None:
+        targets = [
+            gate.Target(f"B{index}", index, "core", "surface")
+            for index in range(1, 4)
+        ]
+        views = [
+            gate.SelectedView(
+                target.building_id,
+                1,
+                f"{target.building_id}.png",
+                1,
+                1,
+                "x",
+                30,
+                0.2,
+                20.0,
+            )
+            for target in targets
+        ]
+        identity = gate.CheckpointIdentity(
+            config_sha256="a" * 64,
+            input_sha256="b" * 64,
+            view_sha256="c" * 64,
+            implementation_sha256="d" * 64,
+        )
+
+        def exception_row(building_id: str) -> dict[str, object]:
+            return {
+                "building_id": building_id,
+                "attempt": gate.RAW_ATTEMPT,
+                "valid": gate.CSV_FALSE,
+                "status_reason": (
+                    "GateContractError:robust translation IRLS did not converge"
+                ),
+                "view": f"{building_id}.png",
+                "view_order": 1,
+                "registration_split": "fit",
+                "diagnostic_only": gate.CSV_TRUE,
+            }
+
+        def fake_measure_all(selected_targets, *_args, **_kwargs):
+            return [exception_row(selected_targets[0].building_id)]
+
+        def fake_measure_view(selected_view, *_args, **_kwargs):
+            return exception_row(selected_view.building_id)
+
+        with tempfile.TemporaryDirectory() as temporary:
+            store = gate.AlignmentCheckpointStore(Path(temporary) / "checkpoints")
+            arguments = (
+                targets,
+                views,
+                {target.building_id: object() for target in targets},
+                {1: object()},
+                {view.name: object() for view in views},
+                {view.name: Path(view.name) for view in views},
+                {},
+                "orthometric",
+                0.0,
+                Path("datum.json"),
+                self.config["boundary_extraction"],
+                self.config["edge_extraction"],
+                self.config["alignment"],
+                self.config["confidence"],
+                {target.building_id: (0.0, 0.0) for target in targets},
+                {target.building_id: "not_applicable" for target in targets},
+                gate.RAW_ATTEMPT,
+                Path("images.bin"),
+                "e" * 64,
+                Path("cameras.bin"),
+                "f" * 64,
+                store,
+                identity,
+                self.config["gate"],
+                self.config["view_selection"],
+                self.config["micro_registration"],
+            )
+            with (
+                mock.patch.object(
+                    gate, "measure_all", side_effect=fake_measure_all
+                ),
+                mock.patch.object(
+                    gate, "measure_view", side_effect=fake_measure_view
+                ),
+                mock.patch.object(
+                    gate,
+                    "_representative_overlay_bytes",
+                    return_value=b"\x89PNG\r\n\x1a\nsynthetic",
+                ),
+            ):
+                with self.assertRaisesRegex(
+                    gate.GateContractError,
+                    "same error type reached three consecutive buildings",
+                ):
+                    gate.measure_all_checkpointed(*arguments)
+
+            for target in targets:
+                self.assertEqual(
+                    store.resume_status(
+                        identity, target.building_id, gate.RAW_ATTEMPT
+                    ).state,
+                    "completed",
+                )
+                rows = gate._read_completed_checkpoint_rows(
+                    store,
+                    identity,
+                    target.building_id,
+                    gate.RAW_ATTEMPT,
+                )
+                self.assertEqual(len(rows), 1)
+                self.assertEqual(
+                    rows[0]["status_reason"],
+                    "GateContractError:robust translation IRLS did not converge",
+                )
+
     def test_version_publish_switches_one_current_pointer(self) -> None:
         publication = self.config["publication"]
         outputs = self.config["outputs"]

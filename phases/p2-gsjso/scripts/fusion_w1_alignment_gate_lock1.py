@@ -3758,6 +3758,7 @@ def measure_all_checkpointed(
         resume = checkpoint_store.resume_status(
             checkpoint_identity, target.building_id, attempt
         )
+        stop_stage_after_checkpoint = False
         if resume.state == "completed":
             if (
                 resume.checkpoint is None
@@ -3852,11 +3853,7 @@ def measure_all_checkpointed(
                         message=reason,
                     )
                 assert decision is not None
-                if decision.stop_stage:
-                    raise GateContractError(
-                        "same error type reached three consecutive buildings; "
-                        "durable BLOCKED receipt written"
-                    )
+                stop_stage_after_checkpoint = decision.stop_stage
             else:
                 checkpoint_store.mark_building_success(
                     checkpoint_identity, building_id=target.building_id
@@ -3909,6 +3906,11 @@ def measure_all_checkpointed(
                 )
         all_rows.extend(building_rows)
         refs.append(CheckpointRef(target.building_id, attempt))
+        if stop_stage_after_checkpoint:
+            raise GateContractError(
+                "same error type reached three consecutive buildings; "
+                "durable BLOCKED receipt written"
+            )
     return all_rows, refs
 
 

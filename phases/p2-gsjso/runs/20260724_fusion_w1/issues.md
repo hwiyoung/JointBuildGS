@@ -107,3 +107,14 @@
 - Dominant non-IRLS validity observations: the first building's 9/9 numeric rows failed reverse support, P90-minus-median, spatial-null, and both coherence locks. The second building's 27/27 numeric rows failed P90-minus-median and P90 coherence; 26/27 also failed reverse support.
 - Integrity: blocked receipt SHA-256 `9bcba8bbc49de566bd784eb030e2ecf59ba9b1252562f9983fcb4e3c81716edb`; execution-guard SHA-256 `eda2d9637b51a3e749f74645760b568274bd30d384617cf35c861996ba484d05`; run-log SHA-256 `bfa210560f2a2c7412d910cdf1ff9f5954dee07b087335c6ed47287231589925`.
 - Counters: `edge_residual_buildings_measured=3`, `edge_residual_views_measured=71`, `durable_building_bundles=2`, `micro_registration_attempts=0`, `learning_runs_started=0`, `readout_runs_started=0`, `scoring_runs_started=0`.
+
+## FUS-W1-ALIGN-DEV-004 — terminal building checkpoint now precedes stage-stop raise
+
+- Recorded: 2026-07-25 07:58 KST
+- Stage: post-BLOCKED artifact-persistence audit; no measurement rerun
+- Status: RECOVERED FOR FUTURE EXECUTION
+- Defect: `measure_all_checkpointed` raised the registered three-consecutive-building stage stop immediately after recording the third building's error decision, before calling `summarize_buildings` and `complete_attempt`. The run therefore retained the global error journal and BLOCKED receipt but lost the already computed third-building residual rows and overlay.
+- Recovery: the stop decision is now latched, the current building's residual CSV, summary, overlay, and checkpoint are completed and fsynced, and only then is the same `GateContractError` raised. The numeric criteria, error counts, `STAGE_STOP`/BLOCKED receipt generation, and learning prohibition are unchanged.
+- Regression lock: a synthetic three-building sequence now asserts that the same error still raises the stage stop and that all three building checkpoints are durable and readable afterward.
+- Verification: Gate/test SHA-256 `74a8eda3c321a9e001b25378db4ff4ad990401d32bc08b0c10b5780a7f89ee73` / `80eb6fe0ca42f197511c6949e1a839e20f84158806186a18b76f36d612ac728b`; pinned read-only Docker tests passed Gate 25/25, runtime guard 15/15, checkpoint 10/10 (50/50).
+- Run disposition: RUN-004 remains BLOCKED and its third-building bundle is not reconstructed or represented as recovered. No Gate measurement was rerun and no learning/readout/scoring process was started.
