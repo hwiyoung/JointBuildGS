@@ -33,3 +33,34 @@
 - Action: changed ownership of exactly those two untracked generated files to the workspace user through the pinned tools container, then reran the unchanged locked generation command.
 - Verification: Docker tests 14/14 passed and `--verify-only` passed; regenerated CSV has 178 unique rows and `sha256=256d376080dca7c496aa3f34c9bcbbd1a8e52d0b25d6e98f7eec388b3f6cc943`.
 - Scientific impact: none; no alignment measurement, learning, readout, Roofer, or scoring was started before recovery.
+
+## FUS-W1-ALIGN-DEV-001 — direct-residual proxy rejected before measurement
+
+- Recorded: 2026-07-25 01:25 KST
+- Stage: Gate A result-blind implementation review
+- Status: RECOVERED BEFORE MEASUREMENT
+- Evidence: an independent synthetic audit showed that the draft translation-norm proxy could report a small value even when a strong displaced edge remained. The draft was stopped before any training-image residual was read.
+- Recovery: the isolated lock1 implementation reports forward and reverse point-distribution median/P90 in pixels and metres, uses `abs(n_img^T J_xy q_ALS_exposed)` pointwise for metre conversion, retains unmatched observations as censored values, and treats translation only as a diagnostic. Strong-distractor, oblique-q, clean integer, subpixel, and ambiguity regressions are locked in `test_fusion_w1_alignment_gate_lock1.py`.
+- Verified implementation: Gate SHA-256 `92380e748a1f86e764bf4736595caa9b329ac1395a8c5a4734f37998ef332311`; config SHA-256 `1ad25404f14cba82b16bc7365ccf1531608fe1e025155cd95686188b16ee5571`; Gate test SHA-256 `e9c0a3c386c75303649997c0519757700c0943025eaf584ad58f6b880eaeb4df`; pinned-Docker Gate tests 16/16 passed.
+- Scientific impact: none. `gate_a_measurements_started=0`, `learning_runs_started=0`, `readout_runs_started=0`.
+
+## FUS-W1-ALIGN-DEV-002 — concurrent stale draft writer isolated
+
+- Recorded: 2026-07-25 01:37 KST
+- Stage: uncommitted Gate A implementation only
+- Status: RECOVERED BY PATH ISOLATION
+- Evidence: while the designated writer was performing read-only inspection, the standard draft changed from SHA-256 `a5b499a57ee343e96acf50cb999a0e88a1c1a1cd84894586b1fac3cdf17448f2` to `d0f7a9c53466b0fa84ddd65fabf3b9d367a531619b8cfb3355945ebd8cf6690b`; observed mtime was `2026-07-25 01:34:11.503376424 +0900`. The mixed draft referenced new output variables from an old numerical body and was not executable as a measurement workflow.
+- Recovery: all six collision-prone files were moved with the file patch tool to unique `*_lock1` paths; internal config, imports, runtime guard, child argv, wrapper, and tests now bind only those paths. The standard v1 paths were not read or edited after isolation. Checkpoint helper paths remained unchanged because their mtimes/hashes were stable.
+- Verification: lock1 Gate/config/test hashes are the values recorded in FUS-W1-ALIGN-DEV-001; runtime guard/test/wrapper SHA-256 are `b5199d01165635997a861b73e8b090aa4fa46a978b824f60135ea3fb5e7578f4`, `85d96ed886ddb176f364c40e052151fb1cee9653f5f31f3f3d15b48c01d9ff35`, and `5f5d22908bbea059f2441eb15725b6cbd5c6bcef3c1a068dd90277d247286dbc`; checkpoint helper/test SHA-256 are `1aea00576caabd1ffdfecc6bcd15a23c7da43e59cd8c9ca04f1592712bc1626b` and `e83108b4d59adea17733210ab9d2584a9adf2f07df0f643da71e7277fc51689b`. Pinned-Docker tests passed Gate 16/16, runtime guard 14/14, checkpoint 10/10.
+- Scientific impact: none. The collision affected only untracked, pre-measurement drafts; `gate_a_measurements_started=0`, `learning_runs_started=0`, `readout_runs_started=0`, `scoring_runs_started=0`.
+
+## FUS-W1-ALIGN-DEV-003 — primary direction and metre conversion corrected
+
+- Recorded: 2026-07-25 07:27 KST
+- Stage: Gate A result-blind numerical contract review
+- Status: RECOVERED BEFORE MEASUREMENT; supersedes the numerical method recorded in DEV-001
+- Evidence: an independent audit found that the isolated draft used `max(forward, reverse)` as the official median/P90 and divided pixel residuals by the direction-dependent scalar `abs(n^T J_xy q_ALS_exposed)`. The locked contract instead requires the forward ALS-boundary-to-image-edge point distribution as the primary residual and the pointwise normal-Jacobian row norm `||n^T J_xy||_2` for pixel-to-metre conversion.
+- Recovery: `median_residual_*` and `p90_residual_*` now use only the forward distribution, including search-radius-censored unmatched ALS boundary points. Reverse image-edge support remains in separate fields and validity checks only. Matched samples use `||n_edge^T J_xy||_2`; censored unmatched samples use `||n_boundary^T J_xy||_2`; result-blind view selection uses the same boundary-normal row norm.
+- Regression locks: direct square-side offsets (median 6 px, P90 7 px rather than translation norm), 40/60 asymmetric median, varying pointwise Jacobians (median 0.30 m, P90 0.68 m), censored unmatched inclusion, wrong-normal rejection, deterministic spatial-null rejection, equal-building weighting under unequal view counts, rank-deficient fail-closed, front/rear z-buffer selection, and footprint perturbation versus class-6 source movement.
+- Verification: Gate/config/test SHA-256 are `e640118c37e3909e7c4fea61a18c98355d55c6848956e5cc43be61c7bbdab252`, `db936d742f3933c6d29a7d7ae5796ae63a44470108c7f8439025fb5a10bb55c8`, and `2f30a28f0854beef12f50dad1ec5adc3a0ddf5dae715e4a03d4a032f038f2c30`. The pinned read-only Docker run passed Gate 24/24, runtime guard 14/14, and checkpoint 10/10 (48/48).
+- Scientific impact: none. The correction was completed before any training-image Gate residual was read; `gate_a_measurements_started=0`, `learning_runs_started=0`, `readout_runs_started=0`, `scoring_runs_started=0`.
