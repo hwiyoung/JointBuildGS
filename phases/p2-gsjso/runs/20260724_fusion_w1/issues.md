@@ -22,3 +22,14 @@
 - Resume preflight receipt: `preflight_resume.json`, `sha256=a38fbaf03999d3d6738dab72ce40024fcad15d608cf52d09bd9cee486c9c1b78`.
 - Continuation scope: target resolution and Gate A only. Learning remains forbidden until the per-building LiDAR–image alignment gate passes.
 - Counters remain `learning_runs_started=0`, `gate_a_measurements_started=0`, `readout_runs_started=0`.
+
+## FUS-W1-TGT-001 — root-owned provisional target artifacts
+
+- Recorded: 2026-07-25 00:42 KST
+- Stage: §1 fixed-output regeneration
+- Status: RECOVERED
+- Repetition count: 1
+- Evidence: the first locked Docker regeneration stopped before target calculation because the two untracked provisional outputs, `w1_targets.csv` and `w1_targets_manifest.json`, were owned by `root:root` with mode `0644`.
+- Action: changed ownership of exactly those two untracked generated files to the workspace user through the pinned tools container, then reran the unchanged locked generation command.
+- Verification: Docker tests 14/14 passed and `--verify-only` passed; regenerated CSV has 178 unique rows and `sha256=256d376080dca7c496aa3f34c9bcbbd1a8e52d0b25d6e98f7eec388b3f6cc943`.
+- Scientific impact: none; no alignment measurement, learning, readout, Roofer, or scoring was started before recovery.

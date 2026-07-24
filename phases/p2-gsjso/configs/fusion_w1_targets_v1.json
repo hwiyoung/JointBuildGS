@@ -1,0 +1,141 @@
+{
+  "schema": "jointbuildgs.fusion_w1.targets.lock.v1",
+  "task_id": "FUS-W1-TARGETS-20260724",
+  "expected_population_count": 178,
+  "expected_core_source_counts": {
+    "p0_dim_failure": 8,
+    "c001_dense_success": 10,
+    "height_primary": 4,
+    "outline_rank_spread": 4,
+    "textured_control": 2
+  },
+  "sources": {
+    "population_ladder": "docs/boundary_map_v4_1_ladder.csv",
+    "p0_paired_status": "phases/p0-audit/docs/W3_2c_canonical_paired_status.csv",
+    "c001_quality_pairs": "docs/qs_rescore_pairs.csv",
+    "height_primary_lock": "phases/p2-gsjso/configs/primary4_assembly_validation_v2.json"
+  },
+  "protocol_locks": {
+    "dispatch": {
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/REMOTE_PROMPT_DISPATCH_V3_20260724.md",
+      "sha256": "4d08a45a740de1f4e9754500280c9e564b1dcf3b8b5fcfa6e8bd904e9e2b8430"
+    },
+    "cutoff_amendment": {
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/PROTOCOL_AMENDMENT_V3A_20260725.md",
+      "sha256": "59353767128397296234a717846a82d9ad296d54a3b486782e960eb05a776954"
+    },
+    "cutoff_amendment_receipt": {
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/protocol_amendment_v3a.json",
+      "sha256": "107a6dd530ec1ca7c511cfe2ba68ebe13a62dcde33266a6fe0a31daea7594331"
+    },
+    "preflight_resume_receipt": {
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preflight_resume.json",
+      "sha256": "a38fbaf03999d3d6738dab72ce40024fcad15d608cf52d09bd9cee486c9c1b78"
+    },
+    "preflight_resume_status": {
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preflight_resume_status.json",
+      "sha256": "f1d90df777fb68a5be7a76eecda6f99e004bad9d1d6cc933329b44dba287ad27"
+    }
+  },
+  "generation_lock": {
+    "generation_parent_commit": "3a40e1d03eb9728f793596ced336c504b7e9da5d",
+    "generation_parent_branch": "exp/fusion-w1",
+    "resolver_path": "phases/p2-gsjso/scripts/fusion_w1_targets.py",
+    "test_path": "phases/p2-gsjso/scripts/test_fusion_w1_targets.py",
+    "runtime": {
+      "docker_image_reference": "jointbuildgs-p0-tools:t0",
+      "docker_image_id": "sha256:87bea02e5598a3d53a119b754191673497d52641bd8ea4106ffee653407579b0",
+      "python_executable": "python",
+      "python_version": "3.13.13",
+      "container_workdir": "/workspace/JointBuildGS",
+      "repository_mount_mode": "rw_for_fixed_output_generation",
+      "root_filesystem": "read_only",
+      "tmpfs": "/tmp:rw,nosuid,nodev,size=64m",
+      "python_dont_write_bytecode": true
+    }
+  },
+  "population_lock": {
+    "population_scope_field": "population_scope",
+    "population_scope_value": "canonical_raw_lidar_assembled_178",
+    "crs_field": "crs",
+    "crs_value": "EPSG:25832",
+    "allowed_cell_labels": [
+      "cell_1_assembled",
+      "cell_2_anchored",
+      "cell_3_outline_only"
+    ]
+  },
+  "tier_mapping": {
+    "cell_1_assembled": "surface",
+    "cell_2_anchored": "height",
+    "cell_3_outline_only": "outline"
+  },
+  "p0_dim_failure": {
+    "filters": {
+      "coverage_control_population": "yes",
+      "dim_failure_bucket_v1": "roof_matching_assembly_failure"
+    }
+  },
+  "c001_dense_success": {
+    "filters": {
+      "row_type": "building",
+      "dense_has_lod22": "true"
+    }
+  },
+  "height_primary": {
+    "json_field": "targets_in_output_order",
+    "required_tier": "height"
+  },
+  "outline_rank_spread": {
+    "required_tier": "outline",
+    "score_field": "texture_low_gradient_fraction",
+    "score_order": "ascending",
+    "exclude_all_previously_selected_core": true,
+    "rank_fractions": [
+      "0/3",
+      "1/3",
+      "2/3",
+      "3/3"
+    ],
+    "rank_rounding": "nearest_half_up",
+    "tie_break": "canonical_building_id_numeric_ascending"
+  },
+  "textured_control": {
+    "shortlist_numeric_id_min": 4908023,
+    "shortlist_numeric_id_max": 4908028,
+    "required_shortlist_count": 6,
+    "required_tier": "surface",
+    "anchor_rule": "minimum_numeric_id_in_locked_shortlist",
+    "second_rule": "minimum_texture_low_gradient_fraction_excluding_anchor",
+    "score_field": "texture_low_gradient_fraction",
+    "tie_break": "canonical_building_id_numeric_ascending"
+  },
+  "gs4buildings": {
+    "repository": "zqlin0521/GS4Buildings",
+    "repository_url": "https://github.com/zqlin0521/GS4Buildings",
+    "checked_ref": "refs/heads/main",
+    "checked_commit": "1d25dac38d44a72cbf60a0bab730eed7f9e3663a",
+    "checked_at_utc": "2026-07-24T15:30:10Z",
+    "requested_public_subset_count": 9,
+    "status": "unresolvable_public_artifact_missing",
+    "reason": "official_public_per_building_id_or_georeferenced_footprint_crosswalk_not_available",
+    "id_inference_allowed": false,
+    "overlap_resolution": "unknown",
+    "overlap_count": null,
+    "overlap_ids": null
+  },
+  "core_priority_order": [
+    "p0_dim_failure",
+    "gs4buildings_overlap",
+    "c001_dense_success",
+    "height_primary",
+    "outline_rank_spread",
+    "textured_control"
+  ],
+  "extension_tier_round_robin": [
+    "surface",
+    "height",
+    "outline"
+  ],
+  "extension_within_tier_order": "canonical_building_id_numeric_ascending"
+}

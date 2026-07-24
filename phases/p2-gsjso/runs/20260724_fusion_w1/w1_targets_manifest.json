@@ -1,0 +1,242 @@
+{
+  "schema": "jointbuildgs.fusion_w1.targets.manifest.v1",
+  "task_id": "FUS-W1-TARGETS-20260724",
+  "generated_utc": "2026-07-24T15:42:44.897628+00:00",
+  "status": "provisional_external_public_artifact_gap",
+  "queue_status": "provisional_gs4_overlap_unresolved",
+  "core_priority_complete": false,
+  "population_count": 178,
+  "unique_building_count": 178,
+  "final_core_count": null,
+  "final_extension_count": null,
+  "resolved_core_lower_bound_count": 28,
+  "provisional_extension_count": 150,
+  "counts_by_tier": {
+    "surface": 114,
+    "height": 23,
+    "outline": 41
+  },
+  "resolved_core_lower_bound_counts_by_tier": {
+    "surface": 13,
+    "height": 9,
+    "outline": 6
+  },
+  "core_source_counts": {
+    "p0_dim_failure": 8,
+    "gs4buildings_overlap": null,
+    "c001_dense_success": 10,
+    "height_primary": 4,
+    "outline_rank_spread": 4,
+    "textured_control": 2
+  },
+  "core_priority_order": [
+    "p0_dim_failure",
+    "gs4buildings_overlap",
+    "c001_dense_success",
+    "height_primary",
+    "outline_rank_spread",
+    "textured_control"
+  ],
+  "extension_rule": {
+    "tier_round_robin": [
+      "surface",
+      "height",
+      "outline"
+    ],
+    "within_tier_order": "canonical_building_id_numeric_ascending"
+  },
+  "outline_rank_spread": {
+    "candidate_count_after_core_exclusion": 39,
+    "score_field": "texture_low_gradient_fraction",
+    "score_order": "ascending",
+    "rank_fractions": [
+      "0/3",
+      "1/3",
+      "2/3",
+      "3/3"
+    ],
+    "rank_indices_zero_based": [
+      0,
+      13,
+      25,
+      38
+    ],
+    "rank_rounding": "nearest_half_up",
+    "selected": [
+      {
+        "building_id": "DEBY_LOD2_4908051",
+        "score": "0.197000",
+        "rank_one_based": 1
+      },
+      {
+        "building_id": "DEBY_LOD2_108247350",
+        "score": "0.490000",
+        "rank_one_based": 14
+      },
+      {
+        "building_id": "DEBY_LOD2_4907168",
+        "score": "0.574000",
+        "rank_one_based": 26
+      },
+      {
+        "building_id": "DEBY_LOD2_4908164",
+        "score": "0.734000",
+        "rank_one_based": 39
+      }
+    ]
+  },
+  "gs4buildings": {
+    "repository": "zqlin0521/GS4Buildings",
+    "repository_url": "https://github.com/zqlin0521/GS4Buildings",
+    "checked_ref": "refs/heads/main",
+    "checked_commit": "1d25dac38d44a72cbf60a0bab730eed7f9e3663a",
+    "checked_at_utc": "2026-07-24T15:30:10Z",
+    "requested_public_subset_count": 9,
+    "status": "unresolvable_public_artifact_missing",
+    "reason": "official_public_per_building_id_or_georeferenced_footprint_crosswalk_not_available",
+    "id_inference_allowed": false,
+    "overlap_resolution": "unknown",
+    "overlap_count": null,
+    "overlap_ids": null
+  },
+  "source_records": {
+    "docs/boundary_map_v4_1_ladder.csv": {
+      "sha256": "ae16170177ac0815eb6dd853b0469325c9a1018eeeac9b790b063927cbd7e7e2",
+      "bytes": 136916
+    },
+    "phases/p0-audit/docs/W3_2c_canonical_paired_status.csv": {
+      "sha256": "8c2d53651eb413d62c9fc35a199080f8b551ef2efe01590e747242b6313835e6",
+      "bytes": 41528
+    },
+    "docs/qs_rescore_pairs.csv": {
+      "sha256": "57f54fcd196e696200365622ab9fe067ba15f7bd90e40b8be02786b20abe92e3",
+      "bytes": 8136
+    },
+    "phases/p2-gsjso/configs/primary4_assembly_validation_v2.json": {
+      "sha256": "5130f6db16e7ebb97ed994a597c2cec3ff0a40974fd24da91a78a9b3ea2f13a2",
+      "bytes": 5190
+    }
+  },
+  "protocol_records": {
+    "dispatch": {
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/REMOTE_PROMPT_DISPATCH_V3_20260724.md",
+      "sha256": "4d08a45a740de1f4e9754500280c9e564b1dcf3b8b5fcfa6e8bd904e9e2b8430",
+      "bytes": 10698
+    },
+    "cutoff_amendment": {
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/PROTOCOL_AMENDMENT_V3A_20260725.md",
+      "sha256": "59353767128397296234a717846a82d9ad296d54a3b486782e960eb05a776954",
+      "bytes": 2143
+    },
+    "cutoff_amendment_receipt": {
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/protocol_amendment_v3a.json",
+      "sha256": "107a6dd530ec1ca7c511cfe2ba68ebe13a62dcde33266a6fe0a31daea7594331",
+      "bytes": 1290
+    },
+    "preflight_resume_receipt": {
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preflight_resume.json",
+      "sha256": "a38fbaf03999d3d6738dab72ce40024fcad15d608cf52d09bd9cee486c9c1b78",
+      "bytes": 281012
+    },
+    "preflight_resume_status": {
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preflight_resume_status.json",
+      "sha256": "f1d90df777fb68a5be7a76eecda6f99e004bad9d1d6cc933329b44dba287ad27",
+      "bytes": 4145
+    }
+  },
+  "generation": {
+    "generation_parent_commit": "3a40e1d03eb9728f793596ced336c504b7e9da5d",
+    "generation_parent_branch": "exp/fusion-w1",
+    "source_state": "generated_against_parent_before_target_artifact_commit",
+    "resolver": {
+      "path": "phases/p2-gsjso/scripts/fusion_w1_targets.py",
+      "sha256": "5940cd4cec9a20cfa4c485ba88d2671f52ec98ab50bb71ec50491f5d80262316",
+      "bytes": 39896
+    },
+    "tests": {
+      "path": "phases/p2-gsjso/scripts/test_fusion_w1_targets.py",
+      "sha256": "45bd758f2284cf6bc7969f83f7b0bc470a973b071fff2496fe714d2343631f91",
+      "bytes": 17069
+    },
+    "runtime": {
+      "docker_image_reference": "jointbuildgs-p0-tools:t0",
+      "docker_image_id": "sha256:87bea02e5598a3d53a119b754191673497d52641bd8ea4106ffee653407579b0",
+      "python_executable": "python",
+      "python_version": "3.13.13",
+      "container_workdir": "/workspace/JointBuildGS",
+      "repository_mount_mode": "rw_for_fixed_output_generation",
+      "root_filesystem": "read_only",
+      "tmpfs": "/tmp:rw,nosuid,nodev,size=64m",
+      "python_dont_write_bytecode": true,
+      "observed_python_version": "3.13.13"
+    },
+    "command": {
+      "mode": "docker_python_cli",
+      "container_workdir": "/workspace/JointBuildGS",
+      "argv": [
+        "python",
+        "phases/p2-gsjso/scripts/fusion_w1_targets.py",
+        "--repo-root",
+        ".",
+        "--config",
+        "phases/p2-gsjso/configs/fusion_w1_targets_v1.json",
+        "--output",
+        "phases/p2-gsjso/runs/20260724_fusion_w1/w1_targets.csv",
+        "--metadata-output",
+        "phases/p2-gsjso/runs/20260724_fusion_w1/w1_targets_manifest.json"
+      ]
+    }
+  },
+  "selected_ids_by_source": {
+    "p0_dim_failure": [
+      "DEBY_LOD2_42364609",
+      "DEBY_LOD2_42364659",
+      "DEBY_LOD2_42364663",
+      "DEBY_LOD2_4907182",
+      "DEBY_LOD2_4907510",
+      "DEBY_LOD2_4908050",
+      "DEBY_LOD2_4908166",
+      "DEBY_LOD2_4908176"
+    ],
+    "gs4buildings_overlap": null,
+    "c001_dense_success": [
+      "DEBY_LOD2_4907184",
+      "DEBY_LOD2_4907185",
+      "DEBY_LOD2_4907186",
+      "DEBY_LOD2_4907188",
+      "DEBY_LOD2_4907195",
+      "DEBY_LOD2_4907198",
+      "DEBY_LOD2_4907202",
+      "DEBY_LOD2_4908168",
+      "DEBY_LOD2_4908178",
+      "DEBY_LOD2_60098"
+    ],
+    "height_primary": [
+      "DEBY_LOD2_4907199",
+      "DEBY_LOD2_4908049",
+      "DEBY_LOD2_104586480",
+      "DEBY_LOD2_4908048"
+    ],
+    "outline_rank_spread": [
+      "DEBY_LOD2_4908051",
+      "DEBY_LOD2_108247350",
+      "DEBY_LOD2_4907168",
+      "DEBY_LOD2_4908164"
+    ],
+    "textured_control": [
+      "DEBY_LOD2_4908023",
+      "DEBY_LOD2_4908028"
+    ]
+  },
+  "verdict": null,
+  "output": {
+    "path": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_targets.csv",
+    "sha256": "256d376080dca7c496aa3f34c9bcbbd1a8e52d0b25d6e98f7eec388b3f6cc943",
+    "bytes": 84637
+  },
+  "config": {
+    "path": "phases/p2-gsjso/configs/fusion_w1_targets_v1.json",
+    "sha256": "bccb225714d115c979d29ff822820a19ef83333ff62ddd66699f0270a3111df3",
+    "bytes": 5036
+  }
+}
