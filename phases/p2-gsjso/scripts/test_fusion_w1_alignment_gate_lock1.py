@@ -70,7 +70,7 @@ class FusionW1AlignmentGateLock1Tests(unittest.TestCase):
         selection = cfg["view_selection"]
         self.assertEqual(selection["selection_edge_localization_sigma_px"], 0.1)
         self.assertEqual(
-            selection["maximum_predicted_p90_metric_uncertainty_m"], 0.3
+            selection["predicted_uncertainty_reference_m"], 0.3
         )
         self.assertEqual(selection["azimuth_bin_count"], 8)
         self.assertEqual(selection["minimum_selected_azimuth_bins"], 1)
@@ -93,7 +93,7 @@ class FusionW1AlignmentGateLock1Tests(unittest.TestCase):
     def test_missing_observability_key_fails_at_config_load(self) -> None:
         payload = copy.deepcopy(self.config)
         del payload["view_selection"][
-            "maximum_predicted_p90_metric_uncertainty_m"
+            "predicted_uncertainty_reference_m"
         ]
         with tempfile.TemporaryDirectory() as temporary:
             path = Path(temporary) / "config.json"
@@ -147,7 +147,8 @@ class FusionW1AlignmentGateLock1Tests(unittest.TestCase):
             visible_fraction=1.0,
         )
         selection = copy.deepcopy(self.config["view_selection"])
-        selection["maximum_views_per_building"] = 10
+        selection["minimum_views_per_building"] = 16
+        selection["maximum_views_per_building"] = 16
 
         def fake_project(points, *_args, **_kwargs):
             return np.tile([50.0, 50.0], (len(points), 1)), np.ones(
@@ -156,7 +157,11 @@ class FusionW1AlignmentGateLock1Tests(unittest.TestCase):
 
         def fake_jacobians(_points, image, *_args, **_kwargs):
             # The first candidate in each bin has twice the normal-row sensitivity.
-            scale = 2.0 if image.name.endswith("_0.png") else 1.0
+            scale = (
+                0.2
+                if image.name == "b0_1.png"
+                else (2.0 if image.name.endswith("_0.png") else 1.0)
+            )
             return (
                 np.tile(np.array([[scale, 0.0], [0.0, 1.0]]), (32, 1, 1)),
                 np.ones(32),
@@ -187,11 +192,11 @@ class FusionW1AlignmentGateLock1Tests(unittest.TestCase):
                 self.config["boundary_extraction"],
                 self.config["alignment"],
             )
-        self.assertEqual(len(chosen), 10)
+        self.assertEqual(len(chosen), 16)
         self.assertEqual({item.azimuth_bin for item in chosen[:8]}, set(range(8)))
         self.assertTrue(all(item.name.endswith("_0.png") for item in chosen[:8]))
         self.assertTrue(
-            all(item.predicted_metric_uncertainty_m <= 0.3 for item in chosen)
+            any(item.predicted_metric_uncertainty_m > 0.3 for item in chosen)
         )
 
     def test_als_exposed_direction_does_not_use_footprint_perimeter(self) -> None:

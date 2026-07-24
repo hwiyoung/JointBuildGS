@@ -84,3 +84,13 @@
 - Contract correction: the dispatch locks 10..30 observed training views per building but does not preregister a minimum number of camera-azimuth bins. The draft-only four-bin hard gate was therefore removed. Eight-bin labels and observability-first deterministic round-robin selection remain, so available angular diversity is still maximized and reported without becoming a new eligibility criterion.
 - Verification: Gate/config/test SHA-256 are `e8391b59745842c95067bbb6b3dbbf8b25df97eaa7a3b224c2578c92660d5e15`, `d9dd48de14870c091586534a2ab74f55cc5dda515db9811a9363becfcc9654c0`, and `0b946f2153e3339501898d2953542479efb2e5009a3b60cdad63dc392700234d`. Pinned read-only Docker tests passed Gate 24/24, runtime 15/15, and checkpoint 10/10 (49/49).
 - Scientific impact: no image intensities, edges, or residual distributions were read before the stop; `edge_residual_views_measured=0`, `learning_runs_started=0`, `readout_runs_started=0`, `scoring_runs_started=0`.
+
+## FUS-W1-ALIGN-RUN-003 — predicted uncertainty retained as ranking, not exclusion
+
+- Recorded: 2026-07-25 07:39 KST
+- Stage: ALS-only result-blind view selection, before image-edge extraction
+- Status: RECOVERED BEFORE RESIDUAL MEASUREMENT
+- Evidence: the third committed launch passed preflight and the corrected azimuth policy but stopped because `DEBY_LOD2_4908051` had only 9 candidates below the draft's predicted 0.30 m uncertainty threshold. The dispatch requires 10..30 observed views and does not define a predicted premeasurement exclusion.
+- Contract correction: the 10-view minimum remains unchanged. All projectable candidates satisfying the class-6, boundary, Jacobian-rank, and sensitivity contracts remain eligible; predicted uncertainty is used only for result-blind ordering and reporting. Actual edge-localization uncertainty is measured after edge extraction, and any view above the locked 0.30 m measured limit remains invalid and therefore causes the all-views-valid building gate to fail honestly.
+- Verification: Gate/config/test SHA-256 are `1e827c86b6543ac484cce79a0a72b4ccfb37d4288d1d4b700b7fa30717a6903d`, `9a33279145645dadcebbfc9dcaaf90cbc256675f36d04b334b74b303a8601496`, and `770df226a60e66a5833ed1d19441a01d930a6cdea46c84bc6730d5eef07322b1`. Pinned read-only Docker tests passed 49/49; the view-selection regression requires all 16 synthetic views including one whose predicted uncertainty is above the 0.30 m reporting reference.
+- Scientific impact: no image intensities, edges, or residual distributions were read before the stop; `edge_residual_views_measured=0`, `learning_runs_started=0`, `readout_runs_started=0`, `scoring_runs_started=0`.

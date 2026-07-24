@@ -430,7 +430,7 @@ def load_config(path: Path) -> dict[str, Any]:
         "selection_projection_point_cap",
         "selection_boundary_point_cap",
         "selection_edge_localization_sigma_px",
-        "maximum_predicted_p90_metric_uncertainty_m",
+        "predicted_uncertainty_reference_m",
         "azimuth_bin_count",
         "minimum_selected_azimuth_bins",
         "ranking",
@@ -445,7 +445,7 @@ def load_config(path: Path) -> dict[str, Any]:
         0.1,
         abs_tol=1e-12,
     ) or not math.isclose(
-        float(selection["maximum_predicted_p90_metric_uncertainty_m"]),
+        float(selection["predicted_uncertainty_reference_m"]),
         0.3,
         abs_tol=1e-12,
     ):
@@ -1223,8 +1223,8 @@ def auto_select_views(
     point_cap = int(selection_cfg["selection_projection_point_cap"])
     boundary_cap = int(selection_cfg["selection_boundary_point_cap"])
     sigma_px = float(selection_cfg["selection_edge_localization_sigma_px"])
-    maximum_uncertainty_m = float(
-        selection_cfg["maximum_predicted_p90_metric_uncertainty_m"]
+    uncertainty_reference_m = float(
+        selection_cfg["predicted_uncertainty_reference_m"]
     )
     bin_count = int(selection_cfg["azimuth_bin_count"])
     minimum_bins = int(selection_cfg["minimum_selected_azimuth_bins"])
@@ -1338,7 +1338,7 @@ def auto_select_views(
                     np.percentile(metres_per_px, 90)
                 )
                 predicted_uncertainty = sigma_px * observability_p90
-                if predicted_uncertainty > maximum_uncertainty_m:
+                if not np.isfinite(predicted_uncertainty):
                     continue
             except GateContractError:
                 continue
@@ -1368,6 +1368,7 @@ def auto_select_views(
                     "nadir": nadir,
                     "observability_p90": observability_p90,
                     "predicted_uncertainty": predicted_uncertainty,
+                    "uncertainty_reference_m": uncertainty_reference_m,
                     "azimuth_bin": azimuth_bin,
                 }
             )
