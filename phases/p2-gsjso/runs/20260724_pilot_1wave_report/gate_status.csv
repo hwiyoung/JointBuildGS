@@ -1,0 +1,5 @@
+gate,status,requirement,observed
+G1,fail,10런 모두 30×30 결속·containment·SHA 통과,"owner 188/300, zero-roof 112, off-diagonal 0, containment mismatch 296, SHA mismatch 0"
+G2,fail,honest 4조합 중 두 seed가 A–D를 통과한 유일 승자 1개,"eligible 조건 0, winner null"
+G3,fail,G2 승자의 두 seed 최악 RMS 중앙 < 2.0m,G2 대상 없음 → published null
+G4,pass,"10런 20k 완료, collapse/divergence/guard/postprocess abort 0","10/10 완료, 0/0/0/0"

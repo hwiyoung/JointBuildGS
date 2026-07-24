@@ -1,0 +1,6 @@
+rule,requirement,published_result,datum_audit_effect
+A,RMS 30/30 측정 + 중앙 < dense bar 0.640884566m,0/8 honest 런,0/8 유지: 중앙은 낮아졌으나 30/30 미달·bar 초과
+B,면수비 편차·valid·LoD2 중 1개가 dense보다 개선,5/8 honest 런,거리 datum과 독립
+C,RMS·Hausdorff 포함 전 지표 비열화 없음 + 30/30,0/8 honest 런,missing·valid·LoD2·completeness 실패는 유지
+D,"전 30동 completeness ≥ max(dense, 0.9); 0.8/0.95 민감도",0/8; 민감도도 0/8,거리 datum과 독립
+E,동일 honest 조건 두 seed 모두 A–D 통과,0/4 조건,유지

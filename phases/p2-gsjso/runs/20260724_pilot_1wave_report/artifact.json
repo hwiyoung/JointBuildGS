@@ -1,0 +1,1399 @@
+{
+  "surface": "report",
+  "manifest": {
+    "version": 1,
+    "surface": "report",
+    "title": "1파 확장 파일럿 기술 검수 보고서",
+    "generatedAt": "2026-07-24T00:00:00+09:00",
+    "cards": [
+      {
+        "id": "execution_card",
+        "dataset": "headline",
+        "sourceId": "machine_gates",
+        "metrics": [
+          {
+            "label": "20k 완료 런",
+            "field": "completed_20k_runs",
+            "format": "number"
+          },
+          {
+            "label": "canonical 런",
+            "field": "canonical_runs",
+            "format": "number"
+          }
+        ]
+      },
+      {
+        "id": "gate_card",
+        "dataset": "headline",
+        "sourceId": "machine_gates",
+        "metrics": [
+          {
+            "label": "통과 관문",
+            "field": "passed_machine_gates",
+            "format": "number"
+          },
+          {
+            "label": "전체 관문",
+            "field": "total_machine_gates",
+            "format": "number"
+          }
+        ]
+      },
+      {
+        "id": "binding_card",
+        "dataset": "headline",
+        "sourceId": "binding_audit",
+        "metrics": [
+          {
+            "label": "zero-roof 행",
+            "field": "zero_roof_rows",
+            "format": "number"
+          }
+        ]
+      },
+      {
+        "id": "elapsed_card",
+        "dataset": "headline",
+        "sourceId": "runtime_audit",
+        "metrics": [
+          {
+            "label": "달력 경과",
+            "field": "calendar_hours",
+            "format": "number"
+          },
+          {
+            "label": "Roofer 본체",
+            "field": "roofer_core_minutes",
+            "format": "number"
+          }
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "rms_treatment_chart",
+        "title": "Arm-seed별 공개 RMS와 datum 보정 RMS",
+        "type": "bar",
+        "dataset": "rms_comparison",
+        "sourceId": "datum_audit",
+        "encodings": {
+          "x": {
+            "field": "run_label",
+            "type": "ordinal",
+            "label": "Arm / seed"
+          },
+          "y": {
+            "field": "rms_m",
+            "type": "quantitative",
+            "label": "RMS 중앙",
+            "unit": "m"
+          },
+          "color": {
+            "field": "metric_treatment",
+            "type": "nominal",
+            "label": "Z datum 처리"
+          },
+          "tooltip": [
+            {
+              "field": "rms_measurable_n",
+              "type": "quantitative",
+              "label": "RMS 측정 동"
+            }
+          ]
+        },
+        "legend": {
+          "title": "Z datum 처리",
+          "position": "bottom"
+        }
+      },
+      {
+        "id": "binding_chart",
+        "title": "Arm-seed별 owner assignment 수",
+        "type": "bar",
+        "dataset": "binding_long",
+        "sourceId": "binding_audit",
+        "encodings": {
+          "x": {
+            "field": "run_label",
+            "type": "ordinal",
+            "label": "Arm / seed"
+          },
+          "y": {
+            "field": "building_count",
+            "type": "quantitative",
+            "label": "건물 수",
+            "unit": "동"
+          },
+          "color": {
+            "field": "series",
+            "type": "nominal",
+            "label": "구분"
+          }
+        },
+        "legend": {
+          "title": "구분",
+          "position": "bottom"
+        }
+      },
+      {
+        "id": "runtime_chart",
+        "title": "파이프라인 단계별 관측 벽시계",
+        "type": "bar",
+        "dataset": "runtime_breakdown",
+        "sourceId": "runtime_audit",
+        "encodings": {
+          "x": {
+            "field": "stage",
+            "type": "ordinal",
+            "label": "단계"
+          },
+          "y": {
+            "field": "hours",
+            "type": "quantitative",
+            "label": "벽시계",
+            "unit": "시간"
+          }
+        }
+      }
+    ],
+    "tables": [
+      {
+        "id": "gate_table",
+        "title": "조건부 2파 기계 관문",
+        "dataset": "gate_status",
+        "sourceId": "machine_gates",
+        "defaultSort": {
+          "field": "gate",
+          "direction": "asc"
+        },
+        "columns": [
+          {
+            "field": "gate",
+            "label": "관문",
+            "type": "text"
+          },
+          {
+            "field": "status",
+            "label": "상태",
+            "type": "text"
+          },
+          {
+            "field": "requirement",
+            "label": "요구",
+            "type": "text"
+          },
+          {
+            "field": "observed",
+            "label": "관측",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "id": "acceptance_table",
+        "title": "A–E 성공·승자 규칙",
+        "dataset": "acceptance_status",
+        "sourceId": "report_tables",
+        "defaultSort": {
+          "field": "rule",
+          "direction": "asc"
+        },
+        "columns": [
+          {
+            "field": "rule",
+            "label": "규칙",
+            "type": "text"
+          },
+          {
+            "field": "requirement",
+            "label": "합격조건",
+            "type": "text"
+          },
+          {
+            "field": "published_result",
+            "label": "공개 결과",
+            "type": "text"
+          },
+          {
+            "field": "datum_audit_effect",
+            "label": "datum 감사 후",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "id": "arm_table",
+        "title": "Arm-seed별 30동 결과",
+        "dataset": "arm_seed",
+        "sourceId": "published_summary",
+        "defaultSort": {
+          "field": "run_label",
+          "direction": "asc"
+        },
+        "columns": [
+          {
+            "field": "run_label",
+            "label": "Arm/seed",
+            "type": "text"
+          },
+          {
+            "field": "role",
+            "label": "지위",
+            "type": "text"
+          },
+          {
+            "field": "rms_measurable_n",
+            "label": "RMS 측정",
+            "type": "number",
+            "unit": "/30"
+          },
+          {
+            "field": "datum_corrected_rms_m",
+            "label": "datum 보정 RMS",
+            "type": "number",
+            "format": "number",
+            "unit": "m"
+          },
+          {
+            "field": "completeness_median",
+            "label": "완전율 중앙",
+            "type": "percent",
+            "format": "percent"
+          },
+          {
+            "field": "val3dity_valid_n",
+            "label": "valid",
+            "type": "number",
+            "unit": "/30"
+          },
+          {
+            "field": "lod2_n",
+            "label": "LoD2",
+            "type": "number",
+            "unit": "/30"
+          }
+        ]
+      },
+      {
+        "id": "seg_gap_table",
+        "title": "④b GT 상한 − ④a vision paired gap",
+        "dataset": "seg_gap",
+        "sourceId": "report_tables",
+        "defaultSort": {
+          "field": "seed",
+          "direction": "asc"
+        },
+        "columns": [
+          {
+            "field": "seed",
+            "label": "Seed",
+            "type": "text"
+          },
+          {
+            "field": "paired_rms_n",
+            "label": "paired n",
+            "type": "number"
+          },
+          {
+            "field": "rms_median_delta_m",
+            "label": "RMS Δ 중앙",
+            "type": "number",
+            "format": "number",
+            "unit": "m"
+          },
+          {
+            "field": "hausdorff_median_delta_m",
+            "label": "Hausdorff Δ 중앙",
+            "type": "number",
+            "format": "number",
+            "unit": "m"
+          },
+          {
+            "field": "completeness_median_delta",
+            "label": "완전율 Δ 중앙",
+            "type": "number"
+          },
+          {
+            "field": "lod2_count_delta",
+            "label": "LoD2 Δ",
+            "type": "number"
+          },
+          {
+            "field": "valid_count_delta",
+            "label": "valid Δ",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "id": "loss_table",
+        "title": "강 arm plane/photo 등가점 행",
+        "dataset": "loss_equivalence",
+        "sourceId": "report_tables",
+        "defaultSort": {
+          "field": "run_label",
+          "direction": "asc"
+        },
+        "columns": [
+          {
+            "field": "run_label",
+            "label": "Arm/seed",
+            "type": "text"
+          },
+          {
+            "field": "rows_in_0p5_to_2x",
+            "label": "허용 행",
+            "type": "number"
+          },
+          {
+            "field": "defined_rows",
+            "label": "정의 행",
+            "type": "number"
+          },
+          {
+            "field": "rate",
+            "label": "유지율",
+            "type": "percent",
+            "format": "percent"
+          },
+          {
+            "field": "first_iter",
+            "label": "최초 iter",
+            "type": "number"
+          },
+          {
+            "field": "first_ratio",
+            "label": "최초 ratio",
+            "type": "number",
+            "format": "number"
+          }
+        ]
+      },
+      {
+        "id": "file_table",
+        "title": "원본 파일 권장 읽기 순서",
+        "dataset": "file_guide",
+        "sourceId": "report_tables",
+        "defaultSort": {
+          "field": "order",
+          "direction": "asc"
+        },
+        "columns": [
+          {
+            "field": "order",
+            "label": "#",
+            "type": "number"
+          },
+          {
+            "field": "file",
+            "label": "파일",
+            "type": "text"
+          },
+          {
+            "field": "purpose",
+            "label": "확인 내용",
+            "type": "text"
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "published_summary",
+        "label": "Wave-1 published all-stratum summary",
+        "path": "pilot_1wave_summary.csv"
+      },
+      {
+        "id": "machine_gates",
+        "label": "Wave-1 machine gates",
+        "path": "pilot_1wave_machine_gates.json"
+      },
+      {
+        "id": "datum_audit",
+        "label": "Independent canonical datum-shift audit",
+        "path": "datum_shift_run_audit.csv"
+      },
+      {
+        "id": "runtime_audit",
+        "label": "Observed Wave-1 runtime audit",
+        "path": "runtime_breakdown.csv"
+      },
+      {
+        "id": "binding_audit",
+        "label": "Published binding audit",
+        "path": "binding_audit.csv"
+      },
+      {
+        "id": "report_tables",
+        "label": "Derived review tables",
+        "path": "arm_seed.csv"
+      }
+    ],
+    "blocks": [
+      {
+        "id": "title",
+        "type": "markdown",
+        "body": "# 1파 확장 파일럿 기술 검수 보고서"
+      },
+      {
+        "id": "executive_summary",
+        "type": "markdown",
+        "body": "## 결론\n\n**1파 계산과 후처리는 완료됐지만 합격은 아니다.** canonical 10런은 모두 20k 학습·Roofer·채점을 끝냈고 G4는 통과했다. 그러나 G1 결속, G2 유일 승자, G3 2m 관문이 실패해 2파는 발사되지 않았다.\n\n또한 공개 RMS 44.8–48.8m는 GS에 필요한 -45.7m 수직 datum 변환을 채점기가 적용하지 않은 값이다. 독립 재계산에서 0m 경로는 공개값과 최대 5e-10m까지 일치했고, -45.7m 적용 후 ①–③은 0.90–1.61m였다. 따라서 공개 거리값을 성능 결론에 그대로 쓰면 안 된다. 다만 30동 완결성, zero-roof, containment, valid·LoD2·completeness 실패는 datum과 독립이므로 승자 없음과 2파 미발사는 유지된다."
+      },
+      {
+        "id": "headline_metrics",
+        "type": "metric-strip",
+        "cardIds": [
+          "execution_card",
+          "gate_card",
+          "binding_card",
+          "elapsed_card"
+        ]
+      },
+      {
+        "id": "completion_scope",
+        "type": "markdown",
+        "body": "## 무엇이 완료됐고 무엇이 남았나\n\n학습은 5조건×2seed=10런 모두 20k full-state checkpoint까지 완료됐다. 후처리도 추출·분류·Roofer 10회·val3dity·6지표·binding audit·발행까지 끝났다. 즉 미완료는 계산이 아니라 **합격조건 충족과 과학적으로 유효한 최종 재채점**이다. Wave 2 launch는 false다."
+      },
+      {
+        "id": "gate_table_block",
+        "type": "table",
+        "tableId": "gate_table",
+        "layout": "full"
+      },
+      {
+        "id": "acceptance_heading",
+        "type": "markdown",
+        "body": "## 합격조건과 미충족 이유\n\nA–D를 한 seed가 모두 만족하고, 같은 honest 조합의 두 seed가 이를 재현해야 E가 성립한다. ④b는 GT 세그 상한이라 승자에서 제외된다."
+      },
+      {
+        "id": "acceptance_table_block",
+        "type": "table",
+        "tableId": "acceptance_table",
+        "layout": "full"
+      },
+      {
+        "id": "datum_heading",
+        "type": "markdown",
+        "body": "## 거리 채점의 수직 datum 누락\n\ncanonical 거리 코드에는 GS prediction을 LoD2 reference에 맞추는 -45.7m 이동이 잠겨 있다. 그러나 1파 scoring 경로는 prediction을 그대로 compare_building에 넘기고 score_time_z_shift_m=0.0을 기록했다. 아래 재계산은 원본 CityJSON·참조·표본 순서를 그대로 두고 Z 이동만 바꾼 읽기 전용 감사다."
+      },
+      {
+        "id": "rms_chart_block",
+        "type": "chart",
+        "chartId": "rms_treatment_chart",
+        "layout": "full"
+      },
+      {
+        "id": "binding_heading",
+        "type": "markdown",
+        "body": "## G1 결속 관문\n\ncrop-contract와 receipt SHA 불일치는 0이고, 생성된 roof의 off-diagonal owner assignment도 0이다. 즉 예전 crop/receipt 오결속은 재현되지 않았다. 실패 원인은 300 building-run 중 112 zero-roof, owner assignment 188/300, containment mismatch 296이다."
+      },
+      {
+        "id": "binding_chart_block",
+        "type": "chart",
+        "chartId": "binding_chart",
+        "layout": "full"
+      },
+      {
+        "id": "arm_heading",
+        "type": "markdown",
+        "body": "## 전체 arm-seed 결과\n\nRMS 측정 분모가 14–22/30으로 서로 다르므로 중앙값만으로 랭킹하면 안 된다. datum 보정 후 measurable subset에서 ②가 0.903/0.907m로 가장 낮지만, 18–20동만 측정됐고 A–D를 통과하지 않아 승자로 볼 수 없다."
+      },
+      {
+        "id": "arm_table_block",
+        "type": "table",
+        "tableId": "arm_table",
+        "layout": "full"
+      },
+      {
+        "id": "seg_heading",
+        "type": "markdown",
+        "body": "## 세그 상한과 평면 손실\n\n④b−④a gap은 seed 1001에서 개선, seed 1002에서 악화해 방향이 일관되지 않았다. plane/photo roof-share 0.5–2× 행은 강 arm 네 런 모두 최소 1개 있어 발주문의 존재 조건은 통과했다. 다만 유지율은 5.5–14.5%라 지속적 등가점으로 해석할 수 없다."
+      },
+      {
+        "id": "seg_table_block",
+        "type": "table",
+        "tableId": "seg_gap_table",
+        "layout": "full"
+      },
+      {
+        "id": "loss_table_block",
+        "type": "table",
+        "tableId": "loss_table",
+        "layout": "full"
+      },
+      {
+        "id": "runtime_heading",
+        "type": "markdown",
+        "body": "## 왜 오래 걸렸나\n\n학습 시작부터 최종 manifest까지 약 33시간 44분이었다. 오류 없는 현재 구조의 10런 전체 예상은 약 19시간 36분이다. 가장 큰 병목은 Roofer가 아니라 체크포인트→장면 기하 추출 11시간 9분이다.\n\n두 extractor를 GPU 0·1에서 병렬로 돌렸을 때 합산 host RSS가 약 45.3GiB에 도달하고 swap이 소진되어 exit 137이 발생했다. CUDA VRAM OOM이 아니라 host-RAM OOM이다. 복구 후 max_parallel=1, 런당 24GiB, swap 0으로 10런을 직렬 재추출했다. Roofer 본체 10회 합계는 3분 42초뿐이었다. classifier nested receipt 복구와 aggregate 반올림 복구도 일회성 시간을 더했다."
+      },
+      {
+        "id": "runtime_chart_block",
+        "type": "chart",
+        "chartId": "runtime_chart",
+        "layout": "full"
+      },
+      {
+        "id": "methodology",
+        "type": "markdown",
+        "body": "## 방법과 한계\n\n공개 gate·summary·scores는 변경하지 않았다. datum 감사 CSV만 별도 생성했으며 같은 188개 measurable building-run에서 공개 0m 계산을 수치적으로 재현했다. corrected RMS는 공식 재발행값이 아니고 원인 규명용이다. A–E와 G1–G4를 다시 판정하려면 scoring 코드에 canonical shift를 적용하고 300행 전체를 재집계해야 한다. G1의 zero-roof와 containment 실패는 이 거리 재채점으로 해결되지 않는다."
+      },
+      {
+        "id": "next_steps",
+        "type": "markdown",
+        "body": "## 다음 작업\n\n1. scoring 경로에 source별 canonical Z shift를 적용하고 기존 CityJSON을 재채점한다. 재학습·Roofer 재실행은 필요 없다.\n\n2. 112 zero-roof와 296 containment mismatch를 building/run별로 분해해 readout·footprint geometry 문제를 고친다. 먼저 기존 checkpoint/scene geometry로 재후처리하고, 입력 자체 결함이 확인될 때만 해당 런 재학습을 검토한다.\n\n3. G1 통과 후 A–E, G2, G3를 재집계한다. 그 전에는 ②를 포함한 어떤 arm도 승자로 확정하지 않고 Wave 2를 발사하지 않는다."
+      },
+      {
+        "id": "files_heading",
+        "type": "markdown",
+        "body": "## 봐야 할 파일\n\n아래 순서로 보면 실행 완료 여부, 관문 실패, 조합별 결과, 결속과 손실 로그를 가장 빠르게 대조할 수 있다. 원본 readout 파일은 `../20260722_pilot_1wave_readout/`, datum 감사 파일은 이 보고서 디렉터리에 있다."
+      },
+      {
+        "id": "file_table_block",
+        "type": "table",
+        "tableId": "file_table",
+        "layout": "full"
+      },
+      {
+        "id": "further_questions",
+        "type": "markdown",
+        "body": "## 추가 확인 질문\n\n남은 핵심은 두 가지다: containment mismatch가 CityJSON footprint 형상·좌표 문제인지, owner 판정 규칙 문제인지; zero-roof가 classifier 분류 소실인지 Roofer skip/fallback인지. 둘을 분리하면 재학습 없이 복구 가능한 범위를 결정할 수 있다."
+      }
+    ]
+  },
+  "snapshot": {
+    "version": 1,
+    "generatedAt": "2026-07-24T00:00:00+09:00",
+    "status": "ready",
+    "datasets": {
+      "headline": [
+        {
+          "canonical_runs": 10,
+          "completed_20k_runs": 10,
+          "passed_machine_gates": 1,
+          "total_machine_gates": 4,
+          "zero_roof_rows": 112,
+          "calendar_hours": 33.733,
+          "roofer_core_minutes": 3.699
+        }
+      ],
+      "gate_status": [
+        {
+          "gate": "G1",
+          "status": "fail",
+          "requirement": "10런 모두 30×30 결속·containment·SHA 통과",
+          "observed": "owner 188/300, zero-roof 112, off-diagonal 0, containment mismatch 296, SHA mismatch 0"
+        },
+        {
+          "gate": "G2",
+          "status": "fail",
+          "requirement": "honest 4조합 중 두 seed가 A–D를 통과한 유일 승자 1개",
+          "observed": "eligible 조건 0, winner null"
+        },
+        {
+          "gate": "G3",
+          "status": "fail",
+          "requirement": "G2 승자의 두 seed 최악 RMS 중앙 < 2.0m",
+          "observed": "G2 대상 없음 → published null"
+        },
+        {
+          "gate": "G4",
+          "status": "pass",
+          "requirement": "10런 20k 완료, collapse/divergence/guard/postprocess abort 0",
+          "observed": "10/10 완료, 0/0/0/0"
+        }
+      ],
+      "acceptance_status": [
+        {
+          "rule": "A",
+          "requirement": "RMS 30/30 측정 + 중앙 < dense bar 0.640884566m",
+          "published_result": "0/8 honest 런",
+          "datum_audit_effect": "0/8 유지: 중앙은 낮아졌으나 30/30 미달·bar 초과"
+        },
+        {
+          "rule": "B",
+          "requirement": "면수비 편차·valid·LoD2 중 1개가 dense보다 개선",
+          "published_result": "5/8 honest 런",
+          "datum_audit_effect": "거리 datum과 독립"
+        },
+        {
+          "rule": "C",
+          "requirement": "RMS·Hausdorff 포함 전 지표 비열화 없음 + 30/30",
+          "published_result": "0/8 honest 런",
+          "datum_audit_effect": "missing·valid·LoD2·completeness 실패는 유지"
+        },
+        {
+          "rule": "D",
+          "requirement": "전 30동 completeness ≥ max(dense, 0.9); 0.8/0.95 민감도",
+          "published_result": "0/8; 민감도도 0/8",
+          "datum_audit_effect": "거리 datum과 독립"
+        },
+        {
+          "rule": "E",
+          "requirement": "동일 honest 조건 두 seed 모두 A–D 통과",
+          "published_result": "0/4 조건",
+          "datum_audit_effect": "유지"
+        }
+      ],
+      "arm_seed": [
+        {
+          "run_label": "01/1001",
+          "arm": "① 표면",
+          "condition_id": "01",
+          "seed": "1001",
+          "role": "honest",
+          "population_n": 30,
+          "rms_measurable_n": 22,
+          "published_rms_m": 46.523225975,
+          "datum_corrected_rms_m": 1.1808858555846529,
+          "datum_corrected_hausdorff_m": 5.047018604832601,
+          "completeness_median": 0.904283625,
+          "completeness_ge_0p9_n": 16,
+          "val3dity_valid_n": 26,
+          "lod2_n": 22,
+          "rule_a": false,
+          "rule_b": true,
+          "rule_c": false,
+          "rule_d": false,
+          "rule_abcd": false
+        },
+        {
+          "run_label": "01/1002",
+          "arm": "① 표면",
+          "condition_id": "01",
+          "seed": "1002",
+          "role": "honest",
+          "population_n": 30,
+          "rms_measurable_n": 19,
+          "published_rms_m": 46.142043069,
+          "datum_corrected_rms_m": 1.1521524591791086,
+          "datum_corrected_hausdorff_m": 5.252041390859972,
+          "completeness_median": 0.917999372,
+          "completeness_ge_0p9_n": 17,
+          "val3dity_valid_n": 27,
+          "lod2_n": 19,
+          "rule_a": false,
+          "rule_b": false,
+          "rule_c": false,
+          "rule_d": false,
+          "rule_abcd": false
+        },
+        {
+          "run_label": "02/1001",
+          "arm": "② +사진 통제",
+          "condition_id": "02",
+          "seed": "1001",
+          "role": "honest",
+          "population_n": 30,
+          "rms_measurable_n": 20,
+          "published_rms_m": 46.16791169,
+          "datum_corrected_rms_m": 0.9025034081807283,
+          "datum_corrected_hausdorff_m": 7.061631053836891,
+          "completeness_median": 0.99904325,
+          "completeness_ge_0p9_n": 19,
+          "val3dity_valid_n": 26,
+          "lod2_n": 20,
+          "rule_a": false,
+          "rule_b": true,
+          "rule_c": false,
+          "rule_d": false,
+          "rule_abcd": false
+        },
+        {
+          "run_label": "02/1002",
+          "arm": "② +사진 통제",
+          "condition_id": "02",
+          "seed": "1002",
+          "role": "honest",
+          "population_n": 30,
+          "rms_measurable_n": 18,
+          "published_rms_m": 46.216379677,
+          "datum_corrected_rms_m": 0.9072511930373521,
+          "datum_corrected_hausdorff_m": 3.2927495527792985,
+          "completeness_median": 0.590783346,
+          "completeness_ge_0p9_n": 13,
+          "val3dity_valid_n": 28,
+          "lod2_n": 18,
+          "rule_a": false,
+          "rule_b": true,
+          "rule_c": false,
+          "rule_d": false,
+          "rule_abcd": false
+        },
+        {
+          "run_label": "03/1001",
+          "arm": "③ +평면 약",
+          "condition_id": "03",
+          "seed": "1001",
+          "role": "honest",
+          "population_n": 30,
+          "rms_measurable_n": 21,
+          "published_rms_m": 46.453891436,
+          "datum_corrected_rms_m": 1.6132311590194806,
+          "datum_corrected_hausdorff_m": 5.2010659067199185,
+          "completeness_median": 0.639920588,
+          "completeness_ge_0p9_n": 11,
+          "val3dity_valid_n": 26,
+          "lod2_n": 19,
+          "rule_a": false,
+          "rule_b": true,
+          "rule_c": false,
+          "rule_d": false,
+          "rule_abcd": false
+        },
+        {
+          "run_label": "03/1002",
+          "arm": "③ +평면 약",
+          "condition_id": "03",
+          "seed": "1002",
+          "role": "honest",
+          "population_n": 30,
+          "rms_measurable_n": 20,
+          "published_rms_m": 46.357164815,
+          "datum_corrected_rms_m": 1.1064328999238713,
+          "datum_corrected_hausdorff_m": 2.908706366711556,
+          "completeness_median": 0.248434994,
+          "completeness_ge_0p9_n": 7,
+          "val3dity_valid_n": 26,
+          "lod2_n": 19,
+          "rule_a": false,
+          "rule_b": true,
+          "rule_c": false,
+          "rule_d": false,
+          "rule_abcd": false
+        },
+        {
+          "run_label": "04a/1001",
+          "arm": "④a +평면 강·vision",
+          "condition_id": "04a",
+          "seed": "1001",
+          "role": "honest",
+          "population_n": 30,
+          "rms_measurable_n": 14,
+          "published_rms_m": 48.778362097,
+          "datum_corrected_rms_m": 7.300038826522236,
+          "datum_corrected_hausdorff_m": 18.46770591779773,
+          "completeness_median": 0.0,
+          "completeness_ge_0p9_n": 5,
+          "val3dity_valid_n": 27,
+          "lod2_n": 14,
+          "rule_a": false,
+          "rule_b": false,
+          "rule_c": false,
+          "rule_d": false,
+          "rule_abcd": false
+        },
+        {
+          "run_label": "04a/1002",
+          "arm": "④a +평면 강·vision",
+          "condition_id": "04a",
+          "seed": "1002",
+          "role": "honest",
+          "population_n": 30,
+          "rms_measurable_n": 18,
+          "published_rms_m": 44.815522613,
+          "datum_corrected_rms_m": 4.108350333162838,
+          "datum_corrected_hausdorff_m": 7.230227899071622,
+          "completeness_median": 0.082669302,
+          "completeness_ge_0p9_n": 8,
+          "val3dity_valid_n": 25,
+          "lod2_n": 18,
+          "rule_a": false,
+          "rule_b": false,
+          "rule_c": false,
+          "rule_d": false,
+          "rule_abcd": false
+        },
+        {
+          "run_label": "04b/1001",
+          "arm": "④b +평면 강·GT 상한",
+          "condition_id": "04b",
+          "seed": "1001",
+          "role": "GT upper bound",
+          "population_n": 30,
+          "rms_measurable_n": 21,
+          "published_rms_m": 45.040129272,
+          "datum_corrected_rms_m": 3.8348069055462095,
+          "datum_corrected_hausdorff_m": 11.281033470625857,
+          "completeness_median": 0.924132136,
+          "completeness_ge_0p9_n": 15,
+          "val3dity_valid_n": 20,
+          "lod2_n": 21,
+          "rule_a": false,
+          "rule_b": true,
+          "rule_c": false,
+          "rule_d": false,
+          "rule_abcd": false
+        },
+        {
+          "run_label": "04b/1002",
+          "arm": "④b +평면 강·GT 상한",
+          "condition_id": "04b",
+          "seed": "1002",
+          "role": "GT upper bound",
+          "population_n": 30,
+          "rms_measurable_n": 15,
+          "published_rms_m": 46.842713238,
+          "datum_corrected_rms_m": 5.984301152909939,
+          "datum_corrected_hausdorff_m": 17.803668307738803,
+          "completeness_median": 0.001994283,
+          "completeness_ge_0p9_n": 10,
+          "val3dity_valid_n": 24,
+          "lod2_n": 15,
+          "rule_a": false,
+          "rule_b": false,
+          "rule_c": false,
+          "rule_d": false,
+          "rule_abcd": false
+        }
+      ],
+      "rms_comparison": [
+        {
+          "run_label": "01/1001",
+          "arm": "① 표면",
+          "seed": "1001",
+          "metric_treatment": "공개값 · Z shift 0m",
+          "rms_m": 46.523225975,
+          "rms_measurable_n": 22
+        },
+        {
+          "run_label": "01/1001",
+          "arm": "① 표면",
+          "seed": "1001",
+          "metric_treatment": "독립감사 · Z shift -45.7m",
+          "rms_m": 1.1808858555846529,
+          "rms_measurable_n": 22
+        },
+        {
+          "run_label": "01/1002",
+          "arm": "① 표면",
+          "seed": "1002",
+          "metric_treatment": "공개값 · Z shift 0m",
+          "rms_m": 46.142043069,
+          "rms_measurable_n": 19
+        },
+        {
+          "run_label": "01/1002",
+          "arm": "① 표면",
+          "seed": "1002",
+          "metric_treatment": "독립감사 · Z shift -45.7m",
+          "rms_m": 1.1521524591791086,
+          "rms_measurable_n": 19
+        },
+        {
+          "run_label": "02/1001",
+          "arm": "② +사진 통제",
+          "seed": "1001",
+          "metric_treatment": "공개값 · Z shift 0m",
+          "rms_m": 46.16791169,
+          "rms_measurable_n": 20
+        },
+        {
+          "run_label": "02/1001",
+          "arm": "② +사진 통제",
+          "seed": "1001",
+          "metric_treatment": "독립감사 · Z shift -45.7m",
+          "rms_m": 0.9025034081807283,
+          "rms_measurable_n": 20
+        },
+        {
+          "run_label": "02/1002",
+          "arm": "② +사진 통제",
+          "seed": "1002",
+          "metric_treatment": "공개값 · Z shift 0m",
+          "rms_m": 46.216379677,
+          "rms_measurable_n": 18
+        },
+        {
+          "run_label": "02/1002",
+          "arm": "② +사진 통제",
+          "seed": "1002",
+          "metric_treatment": "독립감사 · Z shift -45.7m",
+          "rms_m": 0.9072511930373521,
+          "rms_measurable_n": 18
+        },
+        {
+          "run_label": "03/1001",
+          "arm": "③ +평면 약",
+          "seed": "1001",
+          "metric_treatment": "공개값 · Z shift 0m",
+          "rms_m": 46.453891436,
+          "rms_measurable_n": 21
+        },
+        {
+          "run_label": "03/1001",
+          "arm": "③ +평면 약",
+          "seed": "1001",
+          "metric_treatment": "독립감사 · Z shift -45.7m",
+          "rms_m": 1.6132311590194806,
+          "rms_measurable_n": 21
+        },
+        {
+          "run_label": "03/1002",
+          "arm": "③ +평면 약",
+          "seed": "1002",
+          "metric_treatment": "공개값 · Z shift 0m",
+          "rms_m": 46.357164815,
+          "rms_measurable_n": 20
+        },
+        {
+          "run_label": "03/1002",
+          "arm": "③ +평면 약",
+          "seed": "1002",
+          "metric_treatment": "독립감사 · Z shift -45.7m",
+          "rms_m": 1.1064328999238713,
+          "rms_measurable_n": 20
+        },
+        {
+          "run_label": "04a/1001",
+          "arm": "④a +평면 강·vision",
+          "seed": "1001",
+          "metric_treatment": "공개값 · Z shift 0m",
+          "rms_m": 48.778362097,
+          "rms_measurable_n": 14
+        },
+        {
+          "run_label": "04a/1001",
+          "arm": "④a +평면 강·vision",
+          "seed": "1001",
+          "metric_treatment": "독립감사 · Z shift -45.7m",
+          "rms_m": 7.300038826522236,
+          "rms_measurable_n": 14
+        },
+        {
+          "run_label": "04a/1002",
+          "arm": "④a +평면 강·vision",
+          "seed": "1002",
+          "metric_treatment": "공개값 · Z shift 0m",
+          "rms_m": 44.815522613,
+          "rms_measurable_n": 18
+        },
+        {
+          "run_label": "04a/1002",
+          "arm": "④a +평면 강·vision",
+          "seed": "1002",
+          "metric_treatment": "독립감사 · Z shift -45.7m",
+          "rms_m": 4.108350333162838,
+          "rms_measurable_n": 18
+        },
+        {
+          "run_label": "04b/1001",
+          "arm": "④b +평면 강·GT 상한",
+          "seed": "1001",
+          "metric_treatment": "공개값 · Z shift 0m",
+          "rms_m": 45.040129272,
+          "rms_measurable_n": 21
+        },
+        {
+          "run_label": "04b/1001",
+          "arm": "④b +평면 강·GT 상한",
+          "seed": "1001",
+          "metric_treatment": "독립감사 · Z shift -45.7m",
+          "rms_m": 3.8348069055462095,
+          "rms_measurable_n": 21
+        },
+        {
+          "run_label": "04b/1002",
+          "arm": "④b +평면 강·GT 상한",
+          "seed": "1002",
+          "metric_treatment": "공개값 · Z shift 0m",
+          "rms_m": 46.842713238,
+          "rms_measurable_n": 15
+        },
+        {
+          "run_label": "04b/1002",
+          "arm": "④b +평면 강·GT 상한",
+          "seed": "1002",
+          "metric_treatment": "독립감사 · Z shift -45.7m",
+          "rms_m": 5.984301152909939,
+          "rms_measurable_n": 15
+        }
+      ],
+      "binding_long": [
+        {
+          "run_label": "01/1001",
+          "series": "실제 owner assignment",
+          "building_count": 22
+        },
+        {
+          "run_label": "01/1001",
+          "series": "요구값",
+          "building_count": 30
+        },
+        {
+          "run_label": "01/1002",
+          "series": "실제 owner assignment",
+          "building_count": 19
+        },
+        {
+          "run_label": "01/1002",
+          "series": "요구값",
+          "building_count": 30
+        },
+        {
+          "run_label": "02/1001",
+          "series": "실제 owner assignment",
+          "building_count": 20
+        },
+        {
+          "run_label": "02/1001",
+          "series": "요구값",
+          "building_count": 30
+        },
+        {
+          "run_label": "02/1002",
+          "series": "실제 owner assignment",
+          "building_count": 18
+        },
+        {
+          "run_label": "02/1002",
+          "series": "요구값",
+          "building_count": 30
+        },
+        {
+          "run_label": "03/1001",
+          "series": "실제 owner assignment",
+          "building_count": 21
+        },
+        {
+          "run_label": "03/1001",
+          "series": "요구값",
+          "building_count": 30
+        },
+        {
+          "run_label": "03/1002",
+          "series": "실제 owner assignment",
+          "building_count": 20
+        },
+        {
+          "run_label": "03/1002",
+          "series": "요구값",
+          "building_count": 30
+        },
+        {
+          "run_label": "04a/1001",
+          "series": "실제 owner assignment",
+          "building_count": 14
+        },
+        {
+          "run_label": "04a/1001",
+          "series": "요구값",
+          "building_count": 30
+        },
+        {
+          "run_label": "04a/1002",
+          "series": "실제 owner assignment",
+          "building_count": 18
+        },
+        {
+          "run_label": "04a/1002",
+          "series": "요구값",
+          "building_count": 30
+        },
+        {
+          "run_label": "04b/1001",
+          "series": "실제 owner assignment",
+          "building_count": 21
+        },
+        {
+          "run_label": "04b/1001",
+          "series": "요구값",
+          "building_count": 30
+        },
+        {
+          "run_label": "04b/1002",
+          "series": "실제 owner assignment",
+          "building_count": 15
+        },
+        {
+          "run_label": "04b/1002",
+          "series": "요구값",
+          "building_count": 30
+        }
+      ],
+      "runtime_breakdown": [
+        {
+          "stage": "20k 학습 10런",
+          "hours": 7.5158,
+          "note": "2 GPU; canonical 10/10 complete"
+        },
+        {
+          "stage": "체크포인트→기하 추출 10런",
+          "hours": 11.157,
+          "note": "host-RAM OOM 후 직렬 max_parallel=1"
+        },
+        {
+          "stage": "classifier 실제 벽시계",
+          "hours": 1.2211,
+          "note": "순수 처리 0.1467h + receipt schema 복구"
+        },
+        {
+          "stage": "Roofer 준비→최종화",
+          "hours": 0.2271,
+          "note": "Roofer 본체 합계는 0.0616h"
+        },
+        {
+          "stage": "6지표 채점",
+          "hours": 0.0783,
+          "note": "10런 전체"
+        },
+        {
+          "stage": "aggregate",
+          "hours": 0.0998,
+          "note": "성공 시도"
+        },
+        {
+          "stage": "binding audit",
+          "hours": 0.0694,
+          "note": "300 + 9,000행"
+        },
+        {
+          "stage": "publication",
+          "hours": 0.0147,
+          "note": "최종 발행"
+        }
+      ],
+      "seg_gap": [
+        {
+          "seed": "1001",
+          "paired_rms_n": 14,
+          "rms_median_delta_m": -2.979875509,
+          "hausdorff_median_delta_m": -9.65,
+          "completeness_median_delta": 0.1151,
+          "lod2_count_delta": 7,
+          "valid_count_delta": -7
+        },
+        {
+          "seed": "1002",
+          "paired_rms_n": 15,
+          "rms_median_delta_m": 1.915949884,
+          "hausdorff_median_delta_m": 14.345,
+          "completeness_median_delta": 0.0,
+          "lod2_count_delta": -3,
+          "valid_count_delta": -1
+        }
+      ],
+      "loss_equivalence": [
+        {
+          "run_label": "04a/1001",
+          "rows_in_0p5_to_2x": 29,
+          "defined_rows": 200,
+          "rate": 0.145,
+          "first_iter": 100,
+          "first_ratio": 1.4919
+        },
+        {
+          "run_label": "04a/1002",
+          "rows_in_0p5_to_2x": 25,
+          "defined_rows": 200,
+          "rate": 0.125,
+          "first_iter": 400,
+          "first_ratio": 1.9171
+        },
+        {
+          "run_label": "04b/1001",
+          "rows_in_0p5_to_2x": 19,
+          "defined_rows": 200,
+          "rate": 0.095,
+          "first_iter": 100,
+          "first_ratio": 1.4247
+        },
+        {
+          "run_label": "04b/1002",
+          "rows_in_0p5_to_2x": 11,
+          "defined_rows": 200,
+          "rate": 0.055,
+          "first_iter": 400,
+          "first_ratio": 1.8014
+        }
+      ],
+      "file_guide": [
+        {
+          "order": 1,
+          "file": "pilot_1wave_manifest.json",
+          "purpose": "전체 provenance·10개 checkpoint·Wave2 미발사 상태"
+        },
+        {
+          "order": 2,
+          "file": "pilot_1wave_machine_gates.json",
+          "purpose": "G1–G4 기계 관문 원문"
+        },
+        {
+          "order": 3,
+          "file": "pilot_1wave_summary.csv",
+          "purpose": "조합×seed 요약; 우선 stratum=all"
+        },
+        {
+          "order": 4,
+          "file": "datum_shift_run_audit.csv",
+          "purpose": "공개 0m vs canonical -45.7m 독립 재계산"
+        },
+        {
+          "order": 5,
+          "file": "binding_audit_receipt.json / binding_audit.csv",
+          "purpose": "zero-roof·owner·containment·SHA 결속"
+        },
+        {
+          "order": 6,
+          "file": "pilot_1wave_scores.csv",
+          "purpose": "30동×13 source 동별 6지표와 missingness"
+        },
+        {
+          "order": 7,
+          "file": "pilot_1wave_winner.csv",
+          "purpose": "honest 4조합의 2-seed eligibility와 winner null"
+        },
+        {
+          "order": 8,
+          "file": "pilot_1wave_seg_upperbound_gap.csv",
+          "purpose": "④a vision vs ④b GT 상한 paired gap"
+        },
+        {
+          "order": 9,
+          "file": "pilot_1wave_loss_shares_receipt.json / pilot_1wave_loss_shares.csv",
+          "purpose": "plane/photo 등가점 검증과 iter별 손실"
+        },
+        {
+          "order": 10,
+          "file": "training/pilot_1wave_driver_manifest.json / issues.md",
+          "purpose": "학습 시간·guard·OOM 및 복구 이력"
+        }
+      ]
+    }
+  },
+  "sources": [
+    {
+      "id": "published_summary",
+      "label": "Wave-1 published all-stratum summary",
+      "path": "pilot_1wave_summary.csv",
+      "query": {
+        "engine": "duckdb",
+        "language": "sql",
+        "sql": "SELECT * FROM read_csv_auto('pilot_1wave_summary.csv') WHERE stratum='all'",
+        "description": "Loads reviewed all-stratum control and arm-seed summary rows.",
+        "tables_used": [
+          "pilot_1wave_summary.csv"
+        ],
+        "filters": [
+          "stratum = all"
+        ],
+        "metric_definitions": [
+          "Roof RMS and Hausdorff are in metres.",
+          "Completeness is a fraction over the locked 30-building population."
+        ]
+      }
+    },
+    {
+      "id": "machine_gates",
+      "label": "Wave-1 machine gates",
+      "path": "pilot_1wave_machine_gates.json",
+      "query": {
+        "engine": "duckdb",
+        "language": "sql",
+        "sql": "SELECT * FROM read_json_auto('pilot_1wave_machine_gates.json')",
+        "description": "Loads the published G1 through G4 gate receipt.",
+        "tables_used": [
+          "pilot_1wave_machine_gates.json"
+        ],
+        "filters": [],
+        "metric_definitions": [
+          "All four gates must pass before Wave 2 can launch."
+        ]
+      }
+    },
+    {
+      "id": "datum_audit",
+      "label": "Independent canonical datum-shift audit",
+      "path": "datum_shift_run_audit.csv",
+      "query": {
+        "engine": "duckdb",
+        "language": "sql",
+        "sql": "SELECT * FROM read_csv_auto('datum_shift_run_audit.csv')",
+        "description": "Recomputes the same published CityJSON with 0m and -45.7m Z shifts.",
+        "tables_used": [
+          "datum_shift_run_audit.csv",
+          "datum_shift_building_audit.csv"
+        ],
+        "filters": [
+          "10 candidate arm-seed runs",
+          "locked 30-building population"
+        ],
+        "metric_definitions": [
+          "Canonical GS-to-reference vertical shift is -45.7m.",
+          "RMS medians use buildings that contain parsed roof surfaces."
+        ]
+      }
+    },
+    {
+      "id": "runtime_audit",
+      "label": "Observed Wave-1 runtime audit",
+      "path": "runtime_breakdown.csv",
+      "query": {
+        "engine": "duckdb",
+        "language": "sql",
+        "sql": "SELECT * FROM read_csv_auto('runtime_breakdown.csv')",
+        "description": "Loads reviewed wall-clock durations from manifests and receipts.",
+        "tables_used": [
+          "runtime_breakdown.csv"
+        ],
+        "filters": [
+          "canonical run and successful postprocess boundaries"
+        ],
+        "metric_definitions": [
+          "Stage durations use wall-clock time and are not necessarily additive.",
+          "Calendar duration from training start to final manifest is 33h44m."
+        ]
+      }
+    },
+    {
+      "id": "binding_audit",
+      "label": "Published binding audit",
+      "path": "binding_audit.csv",
+      "query": {
+        "engine": "duckdb",
+        "language": "sql",
+        "sql": "SELECT * FROM read_csv_auto('binding_audit.csv')",
+        "description": "Loads the 300 building-run binding audit rows.",
+        "tables_used": [
+          "binding_audit.csv",
+          "binding_audit_spatial_matrix.csv"
+        ],
+        "filters": [
+          "30 buildings x 10 runs"
+        ],
+        "metric_definitions": [
+          "A passing run requires 30 diagonal owner assignments and containment.",
+          "Receipt and crop-contract SHA mismatches must be zero."
+        ]
+      }
+    },
+    {
+      "id": "report_tables",
+      "label": "Derived review tables",
+      "path": "arm_seed.csv",
+      "query": {
+        "engine": "duckdb",
+        "language": "sql",
+        "sql": "SELECT * FROM read_csv_auto('arm_seed.csv')",
+        "description": "Loads reviewed, source-backed rows used in this report.",
+        "tables_used": [
+          "arm_seed.csv",
+          "acceptance_status.csv",
+          "seg_gap.csv",
+          "loss_equivalence.csv",
+          "file_guide.csv"
+        ],
+        "filters": [],
+        "metric_definitions": [
+          "Derived rows preserve the values in the cited canonical receipts."
+        ]
+      }
+    }
+  ],
+  "package_info": {
+    "artifact_id": "jointbuildgs-wave1-technical-readout-20260724",
+    "source_readout": "20260722_pilot_1wave_readout",
+    "assessment": "needs_revision"
+  }
+}

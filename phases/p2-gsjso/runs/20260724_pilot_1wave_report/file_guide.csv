@@ -1,0 +1,11 @@
+order,file,purpose
+1,pilot_1wave_manifest.json,전체 provenance·10개 checkpoint·Wave2 미발사 상태
+2,pilot_1wave_machine_gates.json,G1–G4 기계 관문 원문
+3,pilot_1wave_summary.csv,조합×seed 요약; 우선 stratum=all
+4,datum_shift_run_audit.csv,공개 0m vs canonical -45.7m 독립 재계산
+5,binding_audit_receipt.json / binding_audit.csv,zero-roof·owner·containment·SHA 결속
+6,pilot_1wave_scores.csv,30동×13 source 동별 6지표와 missingness
+7,pilot_1wave_winner.csv,honest 4조합의 2-seed eligibility와 winner null
+8,pilot_1wave_seg_upperbound_gap.csv,④a vision vs ④b GT 상한 paired gap
+9,pilot_1wave_loss_shares_receipt.json / pilot_1wave_loss_shares.csv,plane/photo 등가점 검증과 iter별 손실
+10,training/pilot_1wave_driver_manifest.json / issues.md,학습 시간·guard·OOM 및 복구 이력
