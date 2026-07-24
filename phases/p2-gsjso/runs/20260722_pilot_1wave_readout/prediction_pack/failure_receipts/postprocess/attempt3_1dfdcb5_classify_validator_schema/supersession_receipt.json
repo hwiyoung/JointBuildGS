@@ -1,0 +1,20 @@
+{
+  "schema": "jointbuildgs.pilot_1wave.postprocess_abort_supersession.v1",
+  "state": "archived_before_live_reset",
+  "created_utc": "2026-07-23T13:36:22.168834+00:00",
+  "reason": "validator_schema_only_recovery_same_head",
+  "archive_name": "attempt3_1dfdcb5_classify_validator_schema",
+  "archive_path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess_failed_attempts/attempt3_1dfdcb5_classify_validator_schema",
+  "correction_head": "1dfdcb5ed204d88001bd6aaba4c04bef5f222c4d",
+  "driver_state_sha256": "55578a334bb4ed19d81debc424685cda549df255e06edba576568eb1d222c44f",
+  "evidence_ledger_sha256": "4bb0fc856a61942066bd424e48fbbb68e457f2b0f5a484f11d2d1b8e52e090c8",
+  "abort_events_sha256": "f2039c90480614d6f7e3b738680cc0e3bf926ab73188a2f05e2b225410696b81",
+  "recovery_helper": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/recovery_helpers/p1w_same_head_receipt_recovery.py",
+  "recovery_helper_sha256": "c912785408b5f794f822798d6d206234bb702442016fa34944624f63f39408e7",
+  "monkeypatch_scope": "validate_classification_and_classify_stage_marker_provenance",
+  "recovery_service_log_policy": "external_to_superseded_archive_during_active_recovery",
+  "scientific_outputs_changed": false,
+  "retraining": false,
+  "learning_runs_started": 0,
+  "gpu_work_started": 0
+}

@@ -1,0 +1,105 @@
+{
+  "binding_excluded_config_keys": [
+    "full_state_resume",
+    "full_state_resume_strict_cuda_rng"
+  ],
+  "binding_sha256": {
+    "effective_training_config": "623ae9c58a0b37d53cea99a8c5bdc0dddf98803c3e8b8e4e81c72bab32218425",
+    "output_path": "b29850c98a9c1381063efb9853e22dac6233f2921e2b74edb3c0265ef43fe7b5",
+    "training_config": "793a27709548aff39e60526429e840f228a59dfbfe6044571e4cda09c4036a1b"
+  },
+  "checkpoint_steps": [
+    5000,
+    10000,
+    15000,
+    20000
+  ],
+  "config_file_sha256": "8ea828b9fee226e6d4f67bf6f821c85412c9b5f9e14ea39dfaacd730fad0c49d",
+  "config_path": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/training/resolved_configs/03_seed1001.yaml",
+  "elapsed_seconds_this_process": 6177.876450538635,
+  "last_completed_steps": 20000,
+  "latest_full_checkpoint": {
+    "completed_steps": 20000,
+    "path": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/03/seed_1001/ckpt/step_020000.pt",
+    "sha256": "c1c8d1bbc81d96b2c58a5b4805db510f93c04abcfc7c8173c2e3c643acc80dd1"
+  },
+  "learning_run_counter_incremented_at_completed_step": 1,
+  "learning_run_increment_pending_first_optimizer_update": false,
+  "learning_runs_incremented_this_process": true,
+  "learning_runs_started": 1,
+  "loss_csv_paths": [
+    "audit/loss_grad_norms.csv",
+    "audit/pilot_loss_details.csv",
+    "audit/pilot_loss_shares.csv",
+    "audit/pilot_plane_photo_ratio.csv",
+    "audit/semantic_geometry.csv",
+    "audit/semantic_target_observations.csv"
+  ],
+  "loss_csv_rollback_actions": [],
+  "max_iter": 20000,
+  "next_update": 1,
+  "optimizer_updates_this_process": 20000,
+  "output_path": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/03/seed_1001",
+  "pilot_materialized_input_verification": {
+    "completion": {
+      "data_root": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/prep_artifacts/data",
+      "file_count": 1927,
+      "gate": "immediately_before_process_completed_true",
+      "inventory_schema": "jointbuildgs.pilot_1wave.materialized_input_inventory.v1",
+      "mono_normal_dir": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/prep_artifacts/mono_normal_omnidata_world_npy",
+      "path": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/calibration/scaffolds/materialized_input_inventory.json",
+      "records_sha256": "b99c38d31b37b59f1827537e520c20c76ca5a0ee0bfbc5baaaa879d4fff57271",
+      "role_counts": {
+        "mono_normal_omnidata": 481,
+        "mvs_depth_geometric": 481,
+        "mvs_normal_geometric": 481,
+        "rgb": 481,
+        "sfm_cameras": 1,
+        "sfm_images": 1,
+        "sfm_points3d": 1
+      },
+      "schema": "jointbuildgs.pilot_1wave.materialized_input_verification.v1",
+      "sha256": "30a3387275ee9ed29ad75bbdf7cb1979f2b8b2cd52640225e9dbe00895666450",
+      "status": "passed",
+      "total_bytes": 12335728234,
+      "verification": "full_sha256_all_materialized_files",
+      "view_count": 481,
+      "view_identity": "exact_sorted_colmap_images_bin_names"
+    },
+    "startup": {
+      "data_root": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/prep_artifacts/data",
+      "file_count": 1927,
+      "gate": "before_out_dir_dataset_model_creation",
+      "inventory_schema": "jointbuildgs.pilot_1wave.materialized_input_inventory.v1",
+      "mono_normal_dir": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/prep_artifacts/mono_normal_omnidata_world_npy",
+      "path": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/calibration/scaffolds/materialized_input_inventory.json",
+      "records_sha256": "b99c38d31b37b59f1827537e520c20c76ca5a0ee0bfbc5baaaa879d4fff57271",
+      "role_counts": {
+        "mono_normal_omnidata": 481,
+        "mvs_depth_geometric": 481,
+        "mvs_normal_geometric": 481,
+        "rgb": 481,
+        "sfm_cameras": 1,
+        "sfm_images": 1,
+        "sfm_points3d": 1
+      },
+      "schema": "jointbuildgs.pilot_1wave.materialized_input_verification.v1",
+      "sha256": "30a3387275ee9ed29ad75bbdf7cb1979f2b8b2cd52640225e9dbe00895666450",
+      "status": "passed",
+      "total_bytes": 12335728234,
+      "verification": "full_sha256_all_materialized_files",
+      "view_count": 481,
+      "view_identity": "exact_sorted_colmap_images_bin_names"
+    }
+  },
+  "precheckpoint_fresh_retry": true,
+  "process_completed": true,
+  "process_completed_steps": 20000,
+  "resume_requested": "auto",
+  "resume_selected": null,
+  "resume_selected_sha256": null,
+  "resume_skipped": [],
+  "schema": "jointbuildgs.stage2.resume_manifest.v1",
+  "start_completed_steps": 0,
+  "step_semantics": "completed_optimizer_updates"
+}

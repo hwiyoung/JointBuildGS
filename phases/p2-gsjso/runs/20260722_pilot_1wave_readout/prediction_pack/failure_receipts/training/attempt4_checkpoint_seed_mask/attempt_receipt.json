@@ -1,0 +1,61 @@
+{
+  "schema": "jointbuildgs.pilot_1wave.failed_attempt_receipt.v1",
+  "attempt": "attempt4_checkpoint_seed_mask",
+  "archived_at": "2026-07-22T14:16:00+09:00",
+  "git_head": "0c5c02c8788ed72edd6966156e64c1832dffb52b",
+  "reason": "full-state checkpoint validation rejected a stale surface_seed_mask after densification/pruning",
+  "failure_type": "src.stage2.checkpoint.CheckpointIntegrityError",
+  "failure_message": "surface_seed_mask must be bool with one row per saved Gaussian",
+  "durable_checkpoints_created": 0,
+  "driver_interrupted_after_failure": true,
+  "jobs": [
+    {
+      "condition": "01",
+      "seed": 1001,
+      "learning_runs_started": 2,
+      "optimizer_updates_before_checkpoint_failure": 5000,
+      "last_completed_steps_in_manifest": 0,
+      "return_code": 1
+    },
+    {
+      "condition": "01",
+      "seed": 1002,
+      "learning_runs_started": 2,
+      "optimizer_updates_before_checkpoint_failure": 5000,
+      "last_completed_steps_in_manifest": 0,
+      "return_code": 1
+    },
+    {
+      "condition": "02",
+      "seed": 1001,
+      "learning_runs_started": 1,
+      "last_observed_progress_display": 238,
+      "last_completed_steps_in_manifest": 0,
+      "stopped_by_operator": true
+    },
+    {
+      "condition": "02",
+      "seed": 1002,
+      "learning_runs_started": 1,
+      "last_observed_progress_display": 215,
+      "last_completed_steps_in_manifest": 0,
+      "stopped_by_operator": true
+    }
+  ],
+  "sha256": {
+    "pilot_1wave_driver_manifest.json": "2745f625e7355feb7d55420b51c6ef59300ddfabeade66ec620dfe17811f5a45",
+    "logs_cumulative_before_restart/01_seed1001.log": "82b55203de5cad8028706af01036367169bda1e0286336819dd2df0ee8705647",
+    "logs_cumulative_before_restart/01_seed1002.log": "ab2f30b33c25709d61d9583541ead9ef6b0c0c043f7dc8447e98539b662dd8e8",
+    "logs_cumulative_before_restart/02_seed1001.log": "5b2aa4aaf475823e70801ad2d44e06974c333d25cb913a4c84ceb4500fe6f16c",
+    "logs_cumulative_before_restart/02_seed1002.log": "17c01e985d47226cd106aab042ff4a4b2bac71cf8daa85b5b9de30b288420c3b",
+    "runs/01/seed_1001/full_state_manifest.json": "c0756dfc5f484a0c5b2ea16739840d15c4f56df2067dde17d7a8c87261bf6d51",
+    "runs/01/seed_1002/full_state_manifest.json": "86711dbebac537c14130dfe15ba07e4adca0d5aa610df51e1a786fb9e6d8d3f6",
+    "runs/02/seed_1001/full_state_manifest.json": "fc5a8995a38b401cb22607f512085d1d402941ae5929d1e45bc7e7c316616158",
+    "runs/02/seed_1002/full_state_manifest.json": "a145dab6c785c6a53da67f2f7c2d648b2921d03345c4b321f6e59b8a1e74e385"
+  },
+  "notes": [
+    "The archived logs are cumulative because the driver appends across pre-checkpoint retries.",
+    "The live run manifests were retained so cumulative learning_runs_started remains auditable on the next fresh retry.",
+    "No checkpoint payload or SHA sidecar was published by this attempt."
+  ]
+}

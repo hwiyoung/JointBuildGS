@@ -1,0 +1,379 @@
+{
+  "schema": "jointbuildgs.pilot_1wave.postprocess_driver.v1",
+  "state": "aborted",
+  "abort_events": [
+    {
+      "at": "2026-07-23T12:35:58.058004+00:00",
+      "type": "DriverError",
+      "message": "crop mode mismatch: None != 'single_locked_global_bbox'"
+    }
+  ],
+  "learning_runs_started_by_postprocess": 0,
+  "updated_utc": "2026-07-23T12:35:58.058023+00:00",
+  "correction_head": "1dfdcb5ed204d88001bd6aaba4c04bef5f222c4d",
+  "preflight": {
+    "schema": "jointbuildgs.pilot_1wave.postprocess_driver.v1",
+    "state": "preflight_passed",
+    "checked_utc": "2026-07-23T05:05:23.681688+00:00",
+    "correction_head": "1dfdcb5ed204d88001bd6aaba4c04bef5f222c4d",
+    "tracked_tree_clean": true,
+    "committed_runtime_sources": {
+      "phases/p2-gsjso/configs/pilot_1wave_postprocess_extract_policy_lock.json": "ac7d5210b59ac04d5aeb7e853ed93514f1178308a771923f02ccaa33554155c7",
+      "phases/p2-gsjso/scripts/pilot_1wave_postprocess_driver.py": "8ccf1755127058abb4005e816efaca0ad38451dfd04d4e7f466f783c1dd3cd25",
+      "phases/p2-gsjso/scripts/e5_c001_readout_extract_ablation.py": "560cd5540e529391957a74f5f9c9840d8932af613fe51bf981be723f012c8d6e",
+      "phases/p2-gsjso/scripts/pilot_1wave_readout_lineage.py": "69a6e037c7c9c22ebc97a2e30abca24d6c4c8d05a4b70a412f7e128c7bdc6d80",
+      "phases/p2-gsjso/scripts/pilot_1wave_scene_classify.py": "7acf1220f45f47afed01a6bc9532bdb4f70218dfed8aee657de6a6cbe027b36a",
+      "phases/p2-gsjso/scripts/pilot_1wave_scoring.py": "7e40371708ab580c132b08e2ba411a3de530feddf35e908af74e4a086c102dcf",
+      "phases/p2-gsjso/scripts/pilot_1wave_loss_cursor_aggregate.py": "d5bd5652017711cf0a0dd2bb205669782b12f3683b1e25471f9ffd4c2d801131",
+      "phases/p2-gsjso/scripts/pilot_1wave_binding_audit.py": "9bb3134bd13b8823c297ac6d99870146b91b032586c4356f51fe8d159e8fd012"
+    },
+    "images": {
+      "jointbuildgs:dev": {
+        "reference": "jointbuildgs:dev",
+        "image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396"
+      },
+      "jointbuildgs-p0-tools:t0": {
+        "reference": "jointbuildgs-p0-tools:t0",
+        "image_id": "sha256:87bea02e5598a3d53a119b754191673497d52641bd8ea4106ffee653407579b0"
+      },
+      "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2": {
+        "reference": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+        "image_id": "sha256:9c980b97fba4c3fd30f5bb4afb8f2621be211d4e72e4333ea2053e8cd69b2dba",
+        "repo_digest": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2"
+      }
+    },
+    "gpu_device_probe": {
+      "schema": "jointbuildgs.pilot_1wave.gpu_device_probe.v1",
+      "state": "pass",
+      "image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
+      "device_count": 2,
+      "unique_visible_uuid_count": 2,
+      "devices": [
+        {
+          "physical_gpu": 0,
+          "docker_device_request": "device=0",
+          "container_cuda_visible_devices": "0",
+          "visible_gpu_count": 1,
+          "visible_gpu_uuid": "GPU-4bdfcab8-1464-94b0-0a2f-dd9693ace2a0",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--network",
+            "none",
+            "--gpus",
+            "device=0",
+            "-e",
+            "CUDA_VISIBLE_DEVICES=0",
+            "--entrypoint",
+            "nvidia-smi",
+            "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
+            "--query-gpu=uuid",
+            "--format=csv,noheader"
+          ]
+        },
+        {
+          "physical_gpu": 1,
+          "docker_device_request": "device=1",
+          "container_cuda_visible_devices": "0",
+          "visible_gpu_count": 1,
+          "visible_gpu_uuid": "GPU-fab8b9b4-e6eb-9f2b-71e3-7997f092d21e",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--network",
+            "none",
+            "--gpus",
+            "device=1",
+            "-e",
+            "CUDA_VISIBLE_DEVICES=0",
+            "--entrypoint",
+            "nvidia-smi",
+            "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
+            "--query-gpu=uuid",
+            "--format=csv,noheader"
+          ]
+        }
+      ],
+      "nvidia_smi_only": true,
+      "learning_runs_started": 0,
+      "gpu_work_started": 0
+    },
+    "crop_lock": {
+      "pilot_set_sha256": "db5ecb6c838499dd3a5f96a4b1abae85414c3d38318d976b7ee598982b566ffc",
+      "pilot_manifest_sha256": "803d18862db926fff353c641e08a03c5938cedf3fb49cc4859751189e83855e2",
+      "selection_sha256": "e98daa670a0753198e8a54502b260a07bcefe2bca42976931c0a08b766c5b3cd",
+      "ordered_ids_sha256": "ae5cbc664941c3b8bb4238767f1d0833a1f7684928a03837047065f85093bb01",
+      "footprint_sha256": "ca7f5b13a52368e1d2ac47b77cc78f12887bad4d598d122ad57b882eb4920a82",
+      "inventory_sha256": "30a3387275ee9ed29ad75bbdf7cb1979f2b8b2cd52640225e9dbe00895666450",
+      "inventory_records_sha256": "b99c38d31b37b59f1827537e520c20c76ca5a0ee0bfbc5baaaa879d4fff57271",
+      "building_count": 30,
+      "view_count": 481,
+      "checked_file_count": 1927,
+      "checked_total_bytes": 12335728234,
+      "file_mismatch_count": 0,
+      "crop_bbox": [
+        690764.89,
+        5335918.4,
+        690964.53,
+        5336202.0
+      ],
+      "crop_area_m2": 56617.904
+    },
+    "gsplat_extension": {
+      "path": "results/tum_transfer/e5_s3ap_phase2/runtime/torch_extensions/gsplat_cuda/gsplat_cuda.so",
+      "sha256": "b291971546d350951760d34863ff96068c8ef018dcdeaaf0d61ec21471baadd5"
+    },
+    "training": {
+      "resolved_manifest_sha256": "04729c7de98400bb23f92f88d7a8d8683ba8519fcf16dbc17d329453ade13dc1",
+      "resolved_manifest_path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/resolved_configs/resolved_configs_manifest.json",
+      "training_driver_manifest_sha256": "ded233766cb708e24fa21b3b489ebf2e6d7c355e82b7592dcd3ee1693af03d01",
+      "training_driver_manifest_path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/pilot_1wave_driver_manifest.json",
+      "training_runtime_git_head": "d43e64e27ec279dd304a9a7d30b19c6e5c33a429",
+      "training_runtime_image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
+      "state": "complete",
+      "guard": {
+        "triggered": false,
+        "triggered_at": null,
+        "partial": false,
+        "completion": true,
+        "emergency_timeout": false,
+        "policy": "at 9h stop each active run immediately after its next durable 5k checkpoint"
+      },
+      "jobs": [
+        {
+          "job_id": "01_seed1001",
+          "full_state_manifest": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/01/seed_1001/full_state_manifest.json",
+          "full_state_manifest_sha256": "6eb6878876b25ff088fd4ff7e68c7a97f73af7531ea6f70449ed759c96827368",
+          "checkpoint": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/01/seed_1001/ckpt/step_020000.pt",
+          "checkpoint_sha256": "484208e4835a29764c52e3f7e3a44874f6a3dbd323501ecb0a913ad0184281c6",
+          "sidecar": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/01/seed_1001/ckpt/step_020000.pt.sha256",
+          "sidecar_sha256": "9474a923ee4f1b847054e6a85b02961d31b7e3bb715c7231affa52a0e9acb848"
+        },
+        {
+          "job_id": "01_seed1002",
+          "full_state_manifest": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/01/seed_1002/full_state_manifest.json",
+          "full_state_manifest_sha256": "517bf80b5fb01f8b946db8214e76ba512fcf84d1a926f8b2fd4988867680177d",
+          "checkpoint": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/01/seed_1002/ckpt/step_020000.pt",
+          "checkpoint_sha256": "a71b58762937ae0760b5525ae52f36e0ad7aa5bf584758aa7b6f464978a20cd0",
+          "sidecar": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/01/seed_1002/ckpt/step_020000.pt.sha256",
+          "sidecar_sha256": "aaeb848f6e6aca261861aca5fe179f37695a6681eec958d1a5c426a798512b7d"
+        },
+        {
+          "job_id": "02_seed1001",
+          "full_state_manifest": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/02/seed_1001/full_state_manifest.json",
+          "full_state_manifest_sha256": "84fea5113577c662f9598f18b4941c091fb9c607af8513d16d331962f6d0080c",
+          "checkpoint": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/02/seed_1001/ckpt/step_020000.pt",
+          "checkpoint_sha256": "1396b3e3100bfad4a3474678e50ff207aef488a0f19963b38d8e7fdfc3a39f11",
+          "sidecar": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/02/seed_1001/ckpt/step_020000.pt.sha256",
+          "sidecar_sha256": "9a27fa7b443108998e76ef2e481c2666a93878e35a7a6388c5636693196ec7a5"
+        },
+        {
+          "job_id": "02_seed1002",
+          "full_state_manifest": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/02/seed_1002/full_state_manifest.json",
+          "full_state_manifest_sha256": "4b5ac0c670aa5292c533ae255d25cd94007602648acc39d5ebcfa9f766224e8d",
+          "checkpoint": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/02/seed_1002/ckpt/step_020000.pt",
+          "checkpoint_sha256": "84a69a89cfc41507577926635f53cd5311211ed8418c620fe68d15aa7caa8312",
+          "sidecar": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/02/seed_1002/ckpt/step_020000.pt.sha256",
+          "sidecar_sha256": "0f90e62592d304ec767faf48983c39e987d682677701c0a8d6253d94bcfaff04"
+        },
+        {
+          "job_id": "03_seed1001",
+          "full_state_manifest": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/03/seed_1001/full_state_manifest.json",
+          "full_state_manifest_sha256": "165866d6543ae215cd02b7cd99d10e8bad411b5a93e56fbbb818b80daaf0c91c",
+          "checkpoint": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/03/seed_1001/ckpt/step_020000.pt",
+          "checkpoint_sha256": "c1c8d1bbc81d96b2c58a5b4805db510f93c04abcfc7c8173c2e3c643acc80dd1",
+          "sidecar": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/03/seed_1001/ckpt/step_020000.pt.sha256",
+          "sidecar_sha256": "724ad0ec57c85baebdd552c5c707b20da6840089c0ba36f5d953913911cf06b6"
+        },
+        {
+          "job_id": "03_seed1002",
+          "full_state_manifest": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/03/seed_1002/full_state_manifest.json",
+          "full_state_manifest_sha256": "fd815ec33a91f0dcd5944d0c8408c42fe247c8d85a2e27d09ab93ce7e7197868",
+          "checkpoint": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/03/seed_1002/ckpt/step_020000.pt",
+          "checkpoint_sha256": "2162af17a5c83e1fe11fe1b3613b0ccb2999c59383abee435597bfadd1f9c87d",
+          "sidecar": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/03/seed_1002/ckpt/step_020000.pt.sha256",
+          "sidecar_sha256": "cfaf20bf600647b93d48ca001ea8a41866aec5aa502bfe04c6e26487e6bb48de"
+        },
+        {
+          "job_id": "04a_seed1001",
+          "full_state_manifest": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/04a/seed_1001/full_state_manifest.json",
+          "full_state_manifest_sha256": "d9f4d578552d87aee320c6a2de5a86425001e3d03330b535c6a5f8395c968084",
+          "checkpoint": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/04a/seed_1001/ckpt/step_020000.pt",
+          "checkpoint_sha256": "e4ecf1fa4294e78f7a3d5cc63c2e67374cb6978a13f88ff0d2420f738e24951c",
+          "sidecar": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/04a/seed_1001/ckpt/step_020000.pt.sha256",
+          "sidecar_sha256": "abce395c5cee4a34222df38511f4f2800733c8632639aece1c5a8a5ae82bbaa6"
+        },
+        {
+          "job_id": "04a_seed1002",
+          "full_state_manifest": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/04a/seed_1002/full_state_manifest.json",
+          "full_state_manifest_sha256": "0b32cb18e961db2485698bceb56beb8874fbae363ebbdc7c36a9451aa3d7ed85",
+          "checkpoint": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/04a/seed_1002/ckpt/step_020000.pt",
+          "checkpoint_sha256": "508ff33b5d6b71b04814c8d72c273f06ca8d2e9b38645676dacc57645a69a00c",
+          "sidecar": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/04a/seed_1002/ckpt/step_020000.pt.sha256",
+          "sidecar_sha256": "5b7574193bc42aa9d3de20589a6b4caddbbd45d4938d722920254c81ef611b6f"
+        },
+        {
+          "job_id": "04b_seed1001",
+          "full_state_manifest": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/04b/seed_1001/full_state_manifest.json",
+          "full_state_manifest_sha256": "9fb26593193ead413f9ed491f0daf71a9a9223e2f4214fa483c71cf81a14b76f",
+          "checkpoint": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/04b/seed_1001/ckpt/step_020000.pt",
+          "checkpoint_sha256": "aa1da75afe72c08388a67ca8ba9e97181c842cfc2aecb15cef33c37c6e6d25e0",
+          "sidecar": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/04b/seed_1001/ckpt/step_020000.pt.sha256",
+          "sidecar_sha256": "579b60c9e249fe64a3f07d88f3bd9bee4fb3f177a6d3dbdb4de1607126305a82"
+        },
+        {
+          "job_id": "04b_seed1002",
+          "full_state_manifest": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/04b/seed_1002/full_state_manifest.json",
+          "full_state_manifest_sha256": "ea853aa64c5e1982291f42c870f40be68a412959a230ccfa4ff1b4a89ba8eeaf",
+          "checkpoint": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/04b/seed_1002/ckpt/step_020000.pt",
+          "checkpoint_sha256": "6708bbbadd60d934bca4fffab9f11af6c552fe5fe6bbf62fe9c2dac60e448279",
+          "sidecar": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/04b/seed_1002/ckpt/step_020000.pt.sha256",
+          "sidecar_sha256": "633e06360334b39334f1fd482d54f55354723607bfb8b6ed6c615c9bf8c9dd9f"
+        }
+      ],
+      "canonical_completed_20k_count": 10,
+      "canonical_collapse_count": 0,
+      "canonical_divergence_count": 0,
+      "canonical_guard_abort_count": 0,
+      "historical_learning_runs_started": 16,
+      "historical_failed_attempt_archive_count": 4,
+      "historical_failed_attempt_archives": [
+        "attempt1_pre5k_root_uid",
+        "attempt2_preupdate_torch_cache",
+        "attempt3_preupdate_parallel_jit_oom",
+        "attempt4_checkpoint_seed_mask"
+      ],
+      "historical_failed_postprocess_attempt_archive_count": 2,
+      "historical_failed_postprocess_attempt_archives": [
+        {
+          "name": "attempt1_ce2fdab_gpu_device_overlap",
+          "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess_failed_attempts/attempt1_ce2fdab_gpu_device_overlap",
+          "correction_head": "ce2fdab53d072adbb63dc05be6cda8da52ebd68d",
+          "driver_state_sha256": "fab4274f0df6ffe399e8793f757b30c26335382551e9df0cf9786af6873d0e55",
+          "abort_event_count": 1
+        },
+        {
+          "name": "attempt2_160f1af_extract_oom",
+          "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess_failed_attempts/attempt2_160f1af_extract_oom",
+          "correction_head": "160f1af6e1f56c487c6eb54a9621de52cf77aeb7",
+          "driver_state_sha256": "a1099d24014d9ccea14288777acb2266fbd2724710b91d84e465f72f55373016",
+          "abort_event_count": 1
+        }
+      ]
+    },
+    "extract_policy_lock": {
+      "archived_extract_reuse": false,
+      "container_cuda_visible_devices": "0",
+      "container_memory_limit_bytes": 25769803776,
+      "container_memory_swap_limit_bytes": 25769803776,
+      "docker_device_request_by_seed": {
+        "1001": "device=0",
+        "1002": "device=1"
+      },
+      "job_order": [
+        "01_seed1001",
+        "01_seed1002",
+        "02_seed1001",
+        "02_seed1002",
+        "03_seed1001",
+        "03_seed1002",
+        "04a_seed1001",
+        "04a_seed1002",
+        "04b_seed1001",
+        "04b_seed1002"
+      ],
+      "max_parallel": 1,
+      "memory_implementation": "chunked_bitwise_equivalent_decode_and_lifetime_release",
+      "mode": "serial",
+      "physical_gpu_by_seed": {
+        "1001": 0,
+        "1002": 1
+      },
+      "reason_code": "host_oom_parallel_extract",
+      "retraining": false,
+      "schema": "jointbuildgs.pilot_1wave.extract_policy_lock.v1",
+      "scientific_configuration_changed": false,
+      "state": "locked",
+      "superseded_attempt": {
+        "archive_name": "attempt2_160f1af_extract_oom",
+        "correction_head": "160f1af6e1f56c487c6eb54a9621de52cf77aeb7",
+        "driver_state_sha256": "a1099d24014d9ccea14288777acb2266fbd2724710b91d84e465f72f55373016",
+        "failed_attempt": "attempt_001",
+        "failed_job_id": "03_seed1001",
+        "failed_stage": "extract",
+        "failure_json_sha256": "764777f73deec3636c7d55def3093001a13ca2850b24d9be461f0a8e8c89c192",
+        "return_code": 137,
+        "started_json_sha256": "588c7be9518c8b1c51604a565bdda08980a1fb9aa038df3a598d2d3e7768dabe",
+        "stdout_log_sha256": "84117166c3071dc721d88827fc44238d850648b34afdb6d3e8f21f97660163ad"
+      },
+      "path": "phases/p2-gsjso/configs/pilot_1wave_postprocess_extract_policy_lock.json",
+      "sha256": "ac7d5210b59ac04d5aeb7e853ed93514f1178308a771923f02ccaa33554155c7",
+      "superseded_archive_path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess_failed_attempts/attempt2_160f1af_extract_oom",
+      "superseded_evidence_checked": true,
+      "cgroup_probe": {
+        "schema": "jointbuildgs.pilot_1wave.extract_memory_probe.v1",
+        "state": "pass",
+        "memory_max_bytes": 25769803776,
+        "swap_max_bytes": 0,
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--network",
+          "none",
+          "--memory",
+          "24g",
+          "--memory-swap",
+          "24g",
+          "--entrypoint",
+          "/bin/sh",
+          "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
+          "-c",
+          "cat /sys/fs/cgroup/memory.max; cat /sys/fs/cgroup/memory.swap.max"
+        ],
+        "gpu_work_started": 0,
+        "learning_runs_started": 0
+      }
+    },
+    "wave2_launch": {
+      "status": "blocked_missing_wave2_lock",
+      "launch_performed": false
+    },
+    "learning_runs_started_by_postprocess": 0
+  },
+  "started_utc": "2026-07-23T01:24:17.150361+00:00",
+  "barriers": {
+    "extract": {
+      "complete": 10,
+      "expected": 10,
+      "state": "complete"
+    },
+    "classify": {
+      "complete": 0,
+      "expected": 10,
+      "state": "pending"
+    },
+    "prepare": {
+      "complete": 0,
+      "expected": 10,
+      "state": "pending"
+    },
+    "finalize": {
+      "complete": 0,
+      "expected": 10,
+      "state": "pending"
+    },
+    "score": {
+      "complete": 0,
+      "expected": 10,
+      "state": "pending"
+    }
+  },
+  "last_error": {
+    "at": "2026-07-23T12:35:58.058004+00:00",
+    "type": "DriverError",
+    "message": "crop mode mismatch: None != 'single_locked_global_bbox'"
+  }
+}

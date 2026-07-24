@@ -1,0 +1,79 @@
+{
+  "schema": "jointbuildgs.pilot_1wave.roofer_execution.v1",
+  "state": "complete",
+  "condition_id": "01",
+  "seed": 1001,
+  "job_id": "01_seed1001",
+  "prepare_receipt": {
+    "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/01_seed1001/prepare/attempt_001/runtime/roofer_prepare.json",
+    "sha256": "5e20a6e23f8e1ef8a0dca9e58968478b46f2fcd73dac0dfe9076f87e29e232e5"
+  },
+  "roofer_argv": {
+    "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/01_seed1001/prepare/attempt_001/runtime/roofer_argv.json",
+    "sha256": "0c39039fdd1a97aa6f74fe6b3a3c3fc4b063384e31441dc478c6af4d49ad7604"
+  },
+  "container": {
+    "id": "6951d734122c72d8d6697d376a025247670947b634c16064abccecbda02aabeb",
+    "name": "jointbuildgs-p1w-20260722-01-seed1001-roofer",
+    "image_reference": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+    "image_id": "sha256:9c980b97fba4c3fd30f5bb4afb8f2621be211d4e72e4333ea2053e8cd69b2dba",
+    "config_image": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+    "entrypoint": [
+      "roofer"
+    ],
+    "cmd": [
+      "--id-attribute",
+      "building_id",
+      "--jobs",
+      "3",
+      "--srs",
+      "EPSG:25832",
+      "--bld-class",
+      "6",
+      "--grnd-class",
+      "2",
+      "--lod22",
+      "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/01_seed1001/classify/attempt_001/scene_classified.las",
+      "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/_global/roofprint/attempt_001/locked_roofprints.geojson",
+      "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/01_seed1001/prepare/attempt_001/runtime/raw_jsonseq"
+    ],
+    "labels": {
+      "jointbuildgs.p1w.contract": "e7e508f98599f61da8072e40cfcef2dcbb249913f48c73060c6a2d85a90fe723",
+      "jointbuildgs.p1w.job": "01_seed1001",
+      "org.opencontainers.image.version": "24.04"
+    },
+    "binds": [
+      "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS:/workspace/JointBuildGS"
+    ],
+    "network_mode": "none",
+    "restart_count": 0
+  },
+  "execution": {
+    "start_attempt_count": 1,
+    "start_attempts": [
+      {
+        "ordinal": 1,
+        "requested_utc": "2026-07-23T13:59:06.668837+00:00"
+      }
+    ],
+    "started_at": "2026-07-23T13:59:06.768658213Z",
+    "finished_at": "2026-07-23T13:59:34.728218984Z",
+    "wait_exit_code": 0,
+    "docker_state": "exited"
+  },
+  "logs": {
+    "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/01_seed1001/prepare/attempt_001/runtime/container.log",
+    "sha256": "ec26abc5987c6308abdf4fa952f095591df3557aa0b6e4b0b02c8009e201248e",
+    "size": 1678
+  },
+  "launch_receipt": {
+    "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/01_seed1001/prepare/attempt_001/runtime/container_launch.json",
+    "sha256": "955f1fa0f5198f9d44a98468cd6e853edea38ea8ce432806e573aff1cf6490a8"
+  },
+  "process_receipt": {
+    "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/01_seed1001/prepare/attempt_001/runtime/process_complete.json",
+    "sha256": "f8e987500bdbba1fede6e14edbb90f0e0380a8fece47f5f2fa2a6648da418889"
+  },
+  "created_utc": "2026-07-23T13:59:34.899243+00:00",
+  "roofer_invocation_count": 1
+}

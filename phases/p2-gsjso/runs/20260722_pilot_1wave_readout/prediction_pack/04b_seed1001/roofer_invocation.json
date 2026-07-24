@@ -1,0 +1,562 @@
+{
+  "schema": "jointbuildgs.pilot_1wave.roofer_invocation.v2",
+  "state": "complete",
+  "condition_id": "04b",
+  "seed": 1001,
+  "finalized_utc": "2026-07-23T14:06:31.190710+00:00",
+  "roofer_invocation_count": 1,
+  "selection_sha256": "e98daa670a0753198e8a54502b260a07bcefe2bca42976931c0a08b766c5b3cd",
+  "ordered_ids_sha256": "ae5cbc664941c3b8bb4238767f1d0833a1f7684928a03837047065f85093bb01",
+  "ordered_building_ids": [
+    "DEBY_LOD2_4906966",
+    "DEBY_LOD2_4907178",
+    "DEBY_LOD2_4907183",
+    "DEBY_LOD2_4907184",
+    "DEBY_LOD2_4907185",
+    "DEBY_LOD2_4907186",
+    "DEBY_LOD2_4907188",
+    "DEBY_LOD2_4907195",
+    "DEBY_LOD2_4907196",
+    "DEBY_LOD2_4907198",
+    "DEBY_LOD2_4907201",
+    "DEBY_LOD2_4907202",
+    "DEBY_LOD2_4907204",
+    "DEBY_LOD2_4907205",
+    "DEBY_LOD2_4907206",
+    "DEBY_LOD2_4908168",
+    "DEBY_LOD2_4908178",
+    "DEBY_LOD2_60098",
+    "DEBY_LOD2_4907207",
+    "DEBY_LOD2_4907165",
+    "DEBY_LOD2_4907177",
+    "DEBY_LOD2_4907179",
+    "DEBY_LOD2_42364665",
+    "DEBY_LOD2_4906965",
+    "DEBY_LOD2_42364667",
+    "DEBY_LOD2_4907176",
+    "DEBY_LOD2_4907180",
+    "DEBY_LOD2_4906967",
+    "DEBY_LOD2_4908023",
+    "DEBY_LOD2_4908024"
+  ],
+  "runtime_contract": {
+    "docker_sentinel": "/.dockerenv",
+    "p0_tools_image": "jointbuildgs-p0-tools:t0",
+    "p0_tools_expected_local_image_id": "sha256:87bea02e5598a3d53a119b754191673497d52641bd8ea4106ffee653407579b0",
+    "p0_tools_attested_local_image_id": "sha256:87bea02e5598a3d53a119b754191673497d52641bd8ea4106ffee653407579b0",
+    "scoring_script": {
+      "path": "phases/p2-gsjso/scripts/pilot_1wave_scoring.py",
+      "sha256": "7e40371708ab580c132b08e2ba411a3de530feddf35e908af74e4a086c102dcf"
+    },
+    "w2_script": {
+      "path": "phases/p0-audit/scripts/08_roofer_w2.py",
+      "sha256": "ae655090915c56bfeee2be830a28e27520c2430e97d19e515a0aa046e4c79e97"
+    }
+  },
+  "roofer_image": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+  "roofer_parameters": "--id-attribute building_id --jobs 3 --srs EPSG:25832 --bld-class 6 --grnd-class 2 --lod22",
+  "prepare_receipt": {
+    "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04b_seed1001/prepare/attempt_001/runtime/roofer_prepare.json",
+    "sha256": "1a797279f1f1a619610d25ee3926896b509ba0cb8e36ca0ed583337530de52b2"
+  },
+  "roofer_argv": {
+    "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04b_seed1001/prepare/attempt_001/runtime/roofer_argv.json",
+    "sha256": "1af08c9a099cc102296ddf1bc22ac11cba19f78724b7418a151a51e3778e0e67",
+    "schema": "jointbuildgs.pilot_1wave.roofer_argv.v1",
+    "image": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+    "arguments": [
+      "--id-attribute",
+      "building_id",
+      "--jobs",
+      "3",
+      "--srs",
+      "EPSG:25832",
+      "--bld-class",
+      "6",
+      "--grnd-class",
+      "2",
+      "--lod22",
+      "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04b_seed1001/classify/attempt_001/scene_classified.las",
+      "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/_global/roofprint/attempt_001/locked_roofprints.geojson",
+      "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04b_seed1001/prepare/attempt_001/runtime/raw_jsonseq"
+    ]
+  },
+  "execution_receipt": {
+    "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04b_seed1001/prepare/attempt_001/runtime/roofer_execution_receipt.json",
+    "sha256": "f56b9dbdd6e16c3f81218f90e6fe8c0cdad0a5307da37408d5e52c3daf6f8366"
+  },
+  "roofer_execution": {
+    "schema": "jointbuildgs.pilot_1wave.roofer_execution.v1",
+    "state": "complete",
+    "condition_id": "04b",
+    "seed": 1001,
+    "job_id": "04b_seed1001",
+    "roofer_invocation_count": 1,
+    "prepare_receipt": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04b_seed1001/prepare/attempt_001/runtime/roofer_prepare.json",
+      "sha256": "1a797279f1f1a619610d25ee3926896b509ba0cb8e36ca0ed583337530de52b2"
+    },
+    "roofer_argv": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04b_seed1001/prepare/attempt_001/runtime/roofer_argv.json",
+      "sha256": "1af08c9a099cc102296ddf1bc22ac11cba19f78724b7418a151a51e3778e0e67"
+    },
+    "roofer_image_reference": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+    "roofer_local_image_id": "sha256:9c980b97fba4c3fd30f5bb4afb8f2621be211d4e72e4333ea2053e8cd69b2dba",
+    "container_id": "f78d9df46d207f61549a4941060dce1aac2966f29f4dd6b3a76a1eb9347e506f",
+    "container_name": "jointbuildgs-p1w-20260722-04b-seed1001-roofer",
+    "roofer_entrypoint": [
+      "roofer"
+    ],
+    "roofer_command": [
+      "--id-attribute",
+      "building_id",
+      "--jobs",
+      "3",
+      "--srs",
+      "EPSG:25832",
+      "--bld-class",
+      "6",
+      "--grnd-class",
+      "2",
+      "--lod22",
+      "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04b_seed1001/classify/attempt_001/scene_classified.las",
+      "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/_global/roofprint/attempt_001/locked_roofprints.geojson",
+      "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04b_seed1001/prepare/attempt_001/runtime/raw_jsonseq"
+    ],
+    "contract_sha256": "83b5a7c261fd7c848b6163a92b45a76bafbe4cdacf93a56bb3a68f7b45adbc08",
+    "container_labels": {
+      "jointbuildgs.p1w.job": "04b_seed1001",
+      "jointbuildgs.p1w.contract": "83b5a7c261fd7c848b6163a92b45a76bafbe4cdacf93a56bb3a68f7b45adbc08"
+    },
+    "network_mode": "none",
+    "repo_bind": {
+      "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS",
+      "target": "/workspace/JointBuildGS",
+      "mode": "rw",
+      "docker_value": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS:/workspace/JointBuildGS",
+      "launch_value": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS:/workspace/JointBuildGS"
+    },
+    "docker_state": "exited",
+    "wait_exit_code": 0,
+    "start_attempt_count": 1,
+    "restart_count": 0,
+    "launch_receipt": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04b_seed1001/prepare/attempt_001/runtime/container_launch.json",
+      "sha256": "fbfefafdaece5cf77a768ba2a4da64ebbabc037fb2f50acce76b1c7cf99e4a95"
+    },
+    "process_receipt": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04b_seed1001/prepare/attempt_001/runtime/process_complete.json",
+      "sha256": "9b0d2d28a53dec0275126633827f00f340de1a682fe467bd6c23c27309c3ac00"
+    },
+    "logs": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04b_seed1001/prepare/attempt_001/runtime/container.log",
+      "sha256": "6a9a6b4c01dd47ba9182daf9c4eb960ae66b8f89d103a0a32595ba1d45e92bce",
+      "size": 1585
+    }
+  },
+  "pointcloud_path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04b_seed1001/classify/attempt_001/scene_classified.las",
+  "pointcloud_sha256": "fd7801423ede82a4073029a0a9b3f82bc9ff398081a1664f73b13c4d1ed462de",
+  "pointcloud": {
+    "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04b_seed1001/classify/attempt_001/scene_classified.las",
+    "sha256": "fd7801423ede82a4073029a0a9b3f82bc9ff398081a1664f73b13c4d1ed462de",
+    "point_count": 31549508,
+    "epsg": 25832,
+    "classes_required": [
+      2,
+      6
+    ],
+    "validation_runtime": "current_python"
+  },
+  "classification_receipt": {
+    "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04b_seed1001/classify/attempt_001/classification_receipt.json",
+    "sha256": "d6a37a8e1361541c53562e5c758b04ad7c8e1252fb2d0acdd39d3bde1ed233cd",
+    "scene_npz_path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04b_seed1001/extract/attempt_001/scene_geometry.npz",
+    "scene_npz_sha256": "371916c0911a84096c027147680785dbc59a193a7ae4a15f942e14b3c702f2c2"
+  },
+  "readout_lineage": {
+    "schema": "jointbuildgs.pilot_1wave.readout_lineage.v1",
+    "condition_id": "04b",
+    "seed": 1001,
+    "checkpoint": {
+      "format": "jointbuildgs.stage2.full_state",
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/04b/seed_1001/ckpt/step_020000.pt",
+      "sha256": "aa1da75afe72c08388a67ca8ba9e97181c842cfc2aecb15cef33c37c6e6d25e0",
+      "completed_steps": 20000,
+      "step_semantics": "completed_optimizer_updates"
+    },
+    "full_state_manifest": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/04b/seed_1001/full_state_manifest.json",
+      "sha256": "9fb26593193ead413f9ed491f0daf71a9a9223e2f4214fa483c71cf81a14b76f",
+      "schema": "jointbuildgs.stage2.resume_manifest.v1"
+    },
+    "training_config": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/resolved_configs/04b_seed1001.yaml",
+      "sha256": "5fc49b0e6accf73c2eb1c964bcbfd17010235f5464d4b278cac959c1449882ec",
+      "pilot_arm": "04b_plane_medium_gt_upperbound"
+    },
+    "verified_full_state": true,
+    "eligible_20k_full_state": true,
+    "geometry_only": true,
+    "crop_contract_json": "{\"crop\":{\"area_m2\":56617.904,\"bbox_utm\":[690764.89,5335918.4,690964.53,5336202.0],\"mode\":\"single_locked_global_bbox\"},\"crs\":\"EPSG:25832\",\"footprint_source\":{\"allowed_content\":\"LoD2 GroundSurface XY only\",\"path\":\"results/tum_transfer/analysis/footprints_aoi.geojson\",\"sha256\":\"ca7f5b13a52368e1d2ac47b77cc78f12887bad4d598d122ad57b882eb4920a82\"},\"materialized_input_inventory\":{\"data_root\":\"phases/p2-gsjso/runs/20260721_pilot_1wave/prep_artifacts/data\",\"path\":\"phases/p2-gsjso/runs/20260721_pilot_1wave/calibration/scaffolds/materialized_input_inventory.json\",\"records_sha256\":\"b99c38d31b37b59f1827537e520c20c76ca5a0ee0bfbc5baaaa879d4fff57271\",\"sha256\":\"30a3387275ee9ed29ad75bbdf7cb1979f2b8b2cd52640225e9dbe00895666450\",\"view_count\":481,\"view_ids_sha256\":\"25d691a8bda73f26e2b3513316918af625536bc867c164b41a18114c868365c9\"},\"pilot_set_csv\":{\"path\":\"phases/p2-gsjso/runs/20260721_pilot_1wave/pilot_1wave_pilot_set.csv\",\"sha256\":\"db5ecb6c838499dd3a5f96a4b1abae85414c3d38318d976b7ee598982b566ffc\"},\"pilot_set_manifest\":{\"path\":\"phases/p2-gsjso/runs/20260721_pilot_1wave/pilot_1wave_pilot_set_manifest.json\",\"sha256\":\"803d18862db926fff353c641e08a03c5938cedf3fb49cc4859751189e83855e2\"},\"population\":{\"count\":30,\"ordered_building_ids\":[\"DEBY_LOD2_4906966\",\"DEBY_LOD2_4907178\",\"DEBY_LOD2_4907183\",\"DEBY_LOD2_4907184\",\"DEBY_LOD2_4907185\",\"DEBY_LOD2_4907186\",\"DEBY_LOD2_4907188\",\"DEBY_LOD2_4907195\",\"DEBY_LOD2_4907196\",\"DEBY_LOD2_4907198\",\"DEBY_LOD2_4907201\",\"DEBY_LOD2_4907202\",\"DEBY_LOD2_4907204\",\"DEBY_LOD2_4907205\",\"DEBY_LOD2_4907206\",\"DEBY_LOD2_4908168\",\"DEBY_LOD2_4908178\",\"DEBY_LOD2_60098\",\"DEBY_LOD2_4907207\",\"DEBY_LOD2_4907165\",\"DEBY_LOD2_4907177\",\"DEBY_LOD2_4907179\",\"DEBY_LOD2_42364665\",\"DEBY_LOD2_4906965\",\"DEBY_LOD2_42364667\",\"DEBY_LOD2_4907176\",\"DEBY_LOD2_4907180\",\"DEBY_LOD2_4906967\",\"DEBY_LOD2_4908023\",\"DEBY_LOD2_4908024\"],\"ordered_ids_sha256\":\"ae5cbc664941c3b8bb4238767f1d0833a1f7684928a03837047065f85093bb01\"},\"schema\":\"jointbuildgs.pilot_1wave.readout_crop_contract.v1\"}",
+    "crop_contract_sha256": "6d0b4b9136a51e8a5483025fe45c3dba962c71d32dbdc97a11358ae8f0385dda"
+  },
+  "crop_contract": {
+    "schema": "jointbuildgs.pilot_1wave.readout_crop_contract.v1",
+    "json": "{\"crop\":{\"area_m2\":56617.904,\"bbox_utm\":[690764.89,5335918.4,690964.53,5336202.0],\"mode\":\"single_locked_global_bbox\"},\"crs\":\"EPSG:25832\",\"footprint_source\":{\"allowed_content\":\"LoD2 GroundSurface XY only\",\"path\":\"results/tum_transfer/analysis/footprints_aoi.geojson\",\"sha256\":\"ca7f5b13a52368e1d2ac47b77cc78f12887bad4d598d122ad57b882eb4920a82\"},\"materialized_input_inventory\":{\"data_root\":\"phases/p2-gsjso/runs/20260721_pilot_1wave/prep_artifacts/data\",\"path\":\"phases/p2-gsjso/runs/20260721_pilot_1wave/calibration/scaffolds/materialized_input_inventory.json\",\"records_sha256\":\"b99c38d31b37b59f1827537e520c20c76ca5a0ee0bfbc5baaaa879d4fff57271\",\"sha256\":\"30a3387275ee9ed29ad75bbdf7cb1979f2b8b2cd52640225e9dbe00895666450\",\"view_count\":481,\"view_ids_sha256\":\"25d691a8bda73f26e2b3513316918af625536bc867c164b41a18114c868365c9\"},\"pilot_set_csv\":{\"path\":\"phases/p2-gsjso/runs/20260721_pilot_1wave/pilot_1wave_pilot_set.csv\",\"sha256\":\"db5ecb6c838499dd3a5f96a4b1abae85414c3d38318d976b7ee598982b566ffc\"},\"pilot_set_manifest\":{\"path\":\"phases/p2-gsjso/runs/20260721_pilot_1wave/pilot_1wave_pilot_set_manifest.json\",\"sha256\":\"803d18862db926fff353c641e08a03c5938cedf3fb49cc4859751189e83855e2\"},\"population\":{\"count\":30,\"ordered_building_ids\":[\"DEBY_LOD2_4906966\",\"DEBY_LOD2_4907178\",\"DEBY_LOD2_4907183\",\"DEBY_LOD2_4907184\",\"DEBY_LOD2_4907185\",\"DEBY_LOD2_4907186\",\"DEBY_LOD2_4907188\",\"DEBY_LOD2_4907195\",\"DEBY_LOD2_4907196\",\"DEBY_LOD2_4907198\",\"DEBY_LOD2_4907201\",\"DEBY_LOD2_4907202\",\"DEBY_LOD2_4907204\",\"DEBY_LOD2_4907205\",\"DEBY_LOD2_4907206\",\"DEBY_LOD2_4908168\",\"DEBY_LOD2_4908178\",\"DEBY_LOD2_60098\",\"DEBY_LOD2_4907207\",\"DEBY_LOD2_4907165\",\"DEBY_LOD2_4907177\",\"DEBY_LOD2_4907179\",\"DEBY_LOD2_42364665\",\"DEBY_LOD2_4906965\",\"DEBY_LOD2_42364667\",\"DEBY_LOD2_4907176\",\"DEBY_LOD2_4907180\",\"DEBY_LOD2_4906967\",\"DEBY_LOD2_4908023\",\"DEBY_LOD2_4908024\"],\"ordered_ids_sha256\":\"ae5cbc664941c3b8bb4238767f1d0833a1f7684928a03837047065f85093bb01\"},\"schema\":\"jointbuildgs.pilot_1wave.readout_crop_contract.v1\"}",
+    "sha256": "6d0b4b9136a51e8a5483025fe45c3dba962c71d32dbdc97a11358ae8f0385dda",
+    "crs": "EPSG:25832",
+    "population_count": 30,
+    "ordered_building_ids": [
+      "DEBY_LOD2_4906966",
+      "DEBY_LOD2_4907178",
+      "DEBY_LOD2_4907183",
+      "DEBY_LOD2_4907184",
+      "DEBY_LOD2_4907185",
+      "DEBY_LOD2_4907186",
+      "DEBY_LOD2_4907188",
+      "DEBY_LOD2_4907195",
+      "DEBY_LOD2_4907196",
+      "DEBY_LOD2_4907198",
+      "DEBY_LOD2_4907201",
+      "DEBY_LOD2_4907202",
+      "DEBY_LOD2_4907204",
+      "DEBY_LOD2_4907205",
+      "DEBY_LOD2_4907206",
+      "DEBY_LOD2_4908168",
+      "DEBY_LOD2_4908178",
+      "DEBY_LOD2_60098",
+      "DEBY_LOD2_4907207",
+      "DEBY_LOD2_4907165",
+      "DEBY_LOD2_4907177",
+      "DEBY_LOD2_4907179",
+      "DEBY_LOD2_42364665",
+      "DEBY_LOD2_4906965",
+      "DEBY_LOD2_42364667",
+      "DEBY_LOD2_4907176",
+      "DEBY_LOD2_4907180",
+      "DEBY_LOD2_4906967",
+      "DEBY_LOD2_4908023",
+      "DEBY_LOD2_4908024"
+    ],
+    "ordered_ids_sha256": "ae5cbc664941c3b8bb4238767f1d0833a1f7684928a03837047065f85093bb01",
+    "crop_bbox_utm": [
+      690764.89,
+      5335918.4,
+      690964.53,
+      5336202.0
+    ],
+    "crop_area_m2": 56617.904
+  },
+  "footprints": {
+    "path": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/_global/roofprint/attempt_001/locked_roofprints.geojson",
+    "sha256": "ab0db85f371aef2c95dda0e06d098b735d331b3ce8921acd513aa2f0b10bbc53",
+    "feature_count": 30,
+    "building_ids": [
+      "DEBY_LOD2_4906966",
+      "DEBY_LOD2_4907178",
+      "DEBY_LOD2_4907183",
+      "DEBY_LOD2_4907184",
+      "DEBY_LOD2_4907185",
+      "DEBY_LOD2_4907186",
+      "DEBY_LOD2_4907188",
+      "DEBY_LOD2_4907195",
+      "DEBY_LOD2_4907196",
+      "DEBY_LOD2_4907198",
+      "DEBY_LOD2_4907201",
+      "DEBY_LOD2_4907202",
+      "DEBY_LOD2_4907204",
+      "DEBY_LOD2_4907205",
+      "DEBY_LOD2_4907206",
+      "DEBY_LOD2_4908168",
+      "DEBY_LOD2_4908178",
+      "DEBY_LOD2_60098",
+      "DEBY_LOD2_4907207",
+      "DEBY_LOD2_4907165",
+      "DEBY_LOD2_4907177",
+      "DEBY_LOD2_4907179",
+      "DEBY_LOD2_42364665",
+      "DEBY_LOD2_4906965",
+      "DEBY_LOD2_42364667",
+      "DEBY_LOD2_4907176",
+      "DEBY_LOD2_4907180",
+      "DEBY_LOD2_4906967",
+      "DEBY_LOD2_4908023",
+      "DEBY_LOD2_4908024"
+    ],
+    "feature_properties": [
+      {
+        "building_id": "DEBY_LOD2_4906966",
+        "selection_rank": 1,
+        "class": 6
+      },
+      {
+        "building_id": "DEBY_LOD2_4907178",
+        "selection_rank": 2,
+        "class": 6
+      },
+      {
+        "building_id": "DEBY_LOD2_4907183",
+        "selection_rank": 3,
+        "class": 6
+      },
+      {
+        "building_id": "DEBY_LOD2_4907184",
+        "selection_rank": 4,
+        "class": 6
+      },
+      {
+        "building_id": "DEBY_LOD2_4907185",
+        "selection_rank": 5,
+        "class": 6
+      },
+      {
+        "building_id": "DEBY_LOD2_4907186",
+        "selection_rank": 6,
+        "class": 6
+      },
+      {
+        "building_id": "DEBY_LOD2_4907188",
+        "selection_rank": 7,
+        "class": 6
+      },
+      {
+        "building_id": "DEBY_LOD2_4907195",
+        "selection_rank": 8,
+        "class": 6
+      },
+      {
+        "building_id": "DEBY_LOD2_4907196",
+        "selection_rank": 9,
+        "class": 6
+      },
+      {
+        "building_id": "DEBY_LOD2_4907198",
+        "selection_rank": 10,
+        "class": 6
+      },
+      {
+        "building_id": "DEBY_LOD2_4907201",
+        "selection_rank": 11,
+        "class": 6
+      },
+      {
+        "building_id": "DEBY_LOD2_4907202",
+        "selection_rank": 12,
+        "class": 6
+      },
+      {
+        "building_id": "DEBY_LOD2_4907204",
+        "selection_rank": 13,
+        "class": 6
+      },
+      {
+        "building_id": "DEBY_LOD2_4907205",
+        "selection_rank": 14,
+        "class": 6
+      },
+      {
+        "building_id": "DEBY_LOD2_4907206",
+        "selection_rank": 15,
+        "class": 6
+      },
+      {
+        "building_id": "DEBY_LOD2_4908168",
+        "selection_rank": 16,
+        "class": 6
+      },
+      {
+        "building_id": "DEBY_LOD2_4908178",
+        "selection_rank": 17,
+        "class": 6
+      },
+      {
+        "building_id": "DEBY_LOD2_60098",
+        "selection_rank": 18,
+        "class": 6
+      },
+      {
+        "building_id": "DEBY_LOD2_4907207",
+        "selection_rank": 19,
+        "class": 6
+      },
+      {
+        "building_id": "DEBY_LOD2_4907165",
+        "selection_rank": 20,
+        "class": 6
+      },
+      {
+        "building_id": "DEBY_LOD2_4907177",
+        "selection_rank": 21,
+        "class": 6
+      },
+      {
+        "building_id": "DEBY_LOD2_4907179",
+        "selection_rank": 22,
+        "class": 6
+      },
+      {
+        "building_id": "DEBY_LOD2_42364665",
+        "selection_rank": 23,
+        "class": 6
+      },
+      {
+        "building_id": "DEBY_LOD2_4906965",
+        "selection_rank": 24,
+        "class": 6
+      },
+      {
+        "building_id": "DEBY_LOD2_42364667",
+        "selection_rank": 25,
+        "class": 6
+      },
+      {
+        "building_id": "DEBY_LOD2_4907176",
+        "selection_rank": 26,
+        "class": 6
+      },
+      {
+        "building_id": "DEBY_LOD2_4907180",
+        "selection_rank": 27,
+        "class": 6
+      },
+      {
+        "building_id": "DEBY_LOD2_4906967",
+        "selection_rank": 28,
+        "class": 6
+      },
+      {
+        "building_id": "DEBY_LOD2_4908023",
+        "selection_rank": 29,
+        "class": 6
+      },
+      {
+        "building_id": "DEBY_LOD2_4908024",
+        "selection_rank": 30,
+        "class": 6
+      }
+    ],
+    "ordered_feature_geometry_sha256": "e535ff0c1116605d6353b2d5bf73ab18291ca2a63b27017ea68dff2108e0bcc6",
+    "crs": "EPSG:25832",
+    "coordinate_dimension": 2
+  },
+  "raw_jsonseq": {
+    "directory_path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04b_seed1001/prepare/attempt_001/runtime/raw_jsonseq",
+    "file_count": 1,
+    "files": [
+      {
+        "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04b_seed1001/prepare/attempt_001/runtime/raw_jsonseq/690784_5335938.city.jsonl",
+        "size_bytes": 300740,
+        "sha256": "04f2bf03b91e16c5f463e84d6241ea63c4edce1034096e6db02e5f9945b35b7a"
+      }
+    ],
+    "bundle_sha256": "dcaac8b0af3a37c000d5395f0b99bacbca515a4a789e1cdadbeb51d7420547b8",
+    "feature_count": 30,
+    "feature_ids_in_read_order": [
+      "DEBY_LOD2_4906966",
+      "DEBY_LOD2_4907178",
+      "DEBY_LOD2_4907183",
+      "DEBY_LOD2_4907184",
+      "DEBY_LOD2_4907185",
+      "DEBY_LOD2_4907186",
+      "DEBY_LOD2_4907188",
+      "DEBY_LOD2_4907195",
+      "DEBY_LOD2_4907196",
+      "DEBY_LOD2_4907198",
+      "DEBY_LOD2_4907201",
+      "DEBY_LOD2_4907202",
+      "DEBY_LOD2_4907204",
+      "DEBY_LOD2_4907205",
+      "DEBY_LOD2_4907206",
+      "DEBY_LOD2_4908168",
+      "DEBY_LOD2_4908178",
+      "DEBY_LOD2_60098",
+      "DEBY_LOD2_4907207",
+      "DEBY_LOD2_4907165",
+      "DEBY_LOD2_4907177",
+      "DEBY_LOD2_4907179",
+      "DEBY_LOD2_42364665",
+      "DEBY_LOD2_4906965",
+      "DEBY_LOD2_42364667",
+      "DEBY_LOD2_4907176",
+      "DEBY_LOD2_4907180",
+      "DEBY_LOD2_4906967",
+      "DEBY_LOD2_4908023",
+      "DEBY_LOD2_4908024"
+    ],
+    "root_building_count": 30,
+    "root_building_ids": [
+      "DEBY_LOD2_4906966",
+      "DEBY_LOD2_4907178",
+      "DEBY_LOD2_4907183",
+      "DEBY_LOD2_4907184",
+      "DEBY_LOD2_4907185",
+      "DEBY_LOD2_4907186",
+      "DEBY_LOD2_4907188",
+      "DEBY_LOD2_4907195",
+      "DEBY_LOD2_4907196",
+      "DEBY_LOD2_4907198",
+      "DEBY_LOD2_4907201",
+      "DEBY_LOD2_4907202",
+      "DEBY_LOD2_4907204",
+      "DEBY_LOD2_4907205",
+      "DEBY_LOD2_4907206",
+      "DEBY_LOD2_4908168",
+      "DEBY_LOD2_4908178",
+      "DEBY_LOD2_60098",
+      "DEBY_LOD2_4907207",
+      "DEBY_LOD2_4907165",
+      "DEBY_LOD2_4907177",
+      "DEBY_LOD2_4907179",
+      "DEBY_LOD2_42364665",
+      "DEBY_LOD2_4906965",
+      "DEBY_LOD2_42364667",
+      "DEBY_LOD2_4907176",
+      "DEBY_LOD2_4907180",
+      "DEBY_LOD2_4906967",
+      "DEBY_LOD2_4908023",
+      "DEBY_LOD2_4908024"
+    ],
+    "child_count": 27
+  },
+  "cityjson_path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04b_seed1001/prepare/attempt_001/runtime/assembled.city.json",
+  "cityjson_sha256": "9ecc1cc20e612bfbec18899171258844607a61ebb1b8ee88e0d21dfe66b2a277",
+  "merged_cityjson": {
+    "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04b_seed1001/prepare/attempt_001/runtime/assembled.city.json",
+    "sha256": "9ecc1cc20e612bfbec18899171258844607a61ebb1b8ee88e0d21dfe66b2a277",
+    "size_bytes": 312447,
+    "root_building_count": 30,
+    "root_building_ids": [
+      "DEBY_LOD2_4906966",
+      "DEBY_LOD2_4907178",
+      "DEBY_LOD2_4907183",
+      "DEBY_LOD2_4907184",
+      "DEBY_LOD2_4907185",
+      "DEBY_LOD2_4907186",
+      "DEBY_LOD2_4907188",
+      "DEBY_LOD2_4907195",
+      "DEBY_LOD2_4907196",
+      "DEBY_LOD2_4907198",
+      "DEBY_LOD2_4907201",
+      "DEBY_LOD2_4907202",
+      "DEBY_LOD2_4907204",
+      "DEBY_LOD2_4907205",
+      "DEBY_LOD2_4907206",
+      "DEBY_LOD2_4908168",
+      "DEBY_LOD2_4908178",
+      "DEBY_LOD2_60098",
+      "DEBY_LOD2_4907207",
+      "DEBY_LOD2_4907165",
+      "DEBY_LOD2_4907177",
+      "DEBY_LOD2_4907179",
+      "DEBY_LOD2_42364665",
+      "DEBY_LOD2_4906965",
+      "DEBY_LOD2_42364667",
+      "DEBY_LOD2_4907176",
+      "DEBY_LOD2_4907180",
+      "DEBY_LOD2_4906967",
+      "DEBY_LOD2_4908023",
+      "DEBY_LOD2_4908024"
+    ],
+    "child_count": 27
+  }
+}

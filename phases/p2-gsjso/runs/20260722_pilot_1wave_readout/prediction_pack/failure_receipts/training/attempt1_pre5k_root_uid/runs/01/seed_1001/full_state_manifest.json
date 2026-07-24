@@ -1,0 +1,72 @@
+{
+  "binding_excluded_config_keys": [
+    "full_state_resume",
+    "full_state_resume_strict_cuda_rng"
+  ],
+  "binding_sha256": {
+    "effective_training_config": "e27e25f8faf908a9fdb7e4ffd85ac88d16c5edd5b5530648176bd5a7edc8ec81",
+    "output_path": "ee74cea5857aa28d1b5499bf2e0018aeb42cbd7b8df09cc2c32e731f454d158f",
+    "training_config": "5bf1a02fe66485082b9cba60bf1cc909bf0c5a9f11c66b100d86b4708aff9c45"
+  },
+  "checkpoint_steps": [
+    5000,
+    10000,
+    15000,
+    20000
+  ],
+  "config_file_sha256": "22442754901ee5ebede0079a1fe35149821706d34174b951c94fb0a2f40eb73a",
+  "config_path": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/training/resolved_configs/01_seed1001.yaml",
+  "last_completed_steps": 0,
+  "latest_full_checkpoint": null,
+  "learning_run_counter_incremented_at_completed_step": 1,
+  "learning_run_increment_pending_first_optimizer_update": false,
+  "learning_runs_incremented_this_process": true,
+  "learning_runs_started": 1,
+  "loss_csv_paths": [
+    "audit/loss_grad_norms.csv",
+    "audit/pilot_loss_details.csv",
+    "audit/pilot_loss_shares.csv",
+    "audit/pilot_plane_photo_ratio.csv",
+    "audit/semantic_geometry.csv",
+    "audit/semantic_target_observations.csv"
+  ],
+  "loss_csv_rollback_actions": [],
+  "max_iter": 20000,
+  "next_update": 1,
+  "output_path": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/01/seed_1001",
+  "pilot_materialized_input_verification": {
+    "startup": {
+      "data_root": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/prep_artifacts/data",
+      "file_count": 1927,
+      "gate": "before_out_dir_dataset_model_creation",
+      "inventory_schema": "jointbuildgs.pilot_1wave.materialized_input_inventory.v1",
+      "mono_normal_dir": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/prep_artifacts/mono_normal_omnidata_world_npy",
+      "path": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/calibration/scaffolds/materialized_input_inventory.json",
+      "records_sha256": "b99c38d31b37b59f1827537e520c20c76ca5a0ee0bfbc5baaaa879d4fff57271",
+      "role_counts": {
+        "mono_normal_omnidata": 481,
+        "mvs_depth_geometric": 481,
+        "mvs_normal_geometric": 481,
+        "rgb": 481,
+        "sfm_cameras": 1,
+        "sfm_images": 1,
+        "sfm_points3d": 1
+      },
+      "schema": "jointbuildgs.pilot_1wave.materialized_input_verification.v1",
+      "sha256": "30a3387275ee9ed29ad75bbdf7cb1979f2b8b2cd52640225e9dbe00895666450",
+      "status": "passed",
+      "total_bytes": 12335728234,
+      "verification": "full_sha256_all_materialized_files",
+      "view_count": 481,
+      "view_identity": "exact_sorted_colmap_images_bin_names"
+    }
+  },
+  "precheckpoint_fresh_retry": false,
+  "resume_requested": "auto",
+  "resume_selected": null,
+  "resume_selected_sha256": null,
+  "resume_skipped": [],
+  "schema": "jointbuildgs.stage2.resume_manifest.v1",
+  "start_completed_steps": 0,
+  "step_semantics": "completed_optimizer_updates"
+}

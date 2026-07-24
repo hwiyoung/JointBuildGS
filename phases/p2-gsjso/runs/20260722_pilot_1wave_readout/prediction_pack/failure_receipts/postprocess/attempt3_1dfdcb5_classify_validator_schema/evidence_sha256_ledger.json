@@ -1,0 +1,148 @@
+{
+  "schema": "jointbuildgs.pilot_1wave.classify_validator_failure_evidence.v1",
+  "state": "complete",
+  "created_utc": "2026-07-23T13:36:20.648070+00:00",
+  "reason": "classification_receipt_wrapper_validator_schema_mismatch",
+  "correction_head": "1dfdcb5ed204d88001bd6aaba4c04bef5f222c4d",
+  "archived_driver_state": {
+    "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess_failed_attempts/attempt3_1dfdcb5_classify_validator_schema/driver_state.json",
+    "size": 18999,
+    "sha256": "55578a334bb4ed19d81debc424685cda549df255e06edba576568eb1d222c44f",
+    "byte_for_byte_copy": true
+  },
+  "copied_evidence": [
+    {
+      "source_path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/controller_systemd.log",
+      "archived_path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess_failed_attempts/attempt3_1dfdcb5_classify_validator_schema/controller_systemd.log",
+      "size": 1555,
+      "sha256": "063381de4eb1c73aae46a736705855fffc99717b7ef372193c0bba0a108d92be",
+      "byte_for_byte_copy": true
+    },
+    {
+      "source_path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/loss_precompute_systemd.log",
+      "archived_path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess_failed_attempts/attempt3_1dfdcb5_classify_validator_schema/loss_precompute_systemd.log",
+      "size": 1028,
+      "sha256": "94956290c2384d5bab8eacb427e7e5e5d8b6beb72407166a359166f34b3d73e4",
+      "byte_for_byte_copy": true
+    }
+  ],
+  "copied_evidence_count": 2,
+  "original_abort_events": [
+    {
+      "at": "2026-07-23T12:35:58.058004+00:00",
+      "type": "DriverError",
+      "message": "crop mode mismatch: None != 'single_locked_global_bbox'"
+    }
+  ],
+  "original_abort_events_sha256": "f2039c90480614d6f7e3b738680cc0e3bf926ab73188a2f05e2b225410696b81",
+  "evidence": [
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/01_seed1001/classify/attempt_001/started.json",
+      "size": 2044,
+      "sha256": "a28d88d2190f77a82d032737e7bfc0a73178535e05ad8da1849e3cd0f49d71ed"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/01_seed1001/classify/attempt_001/stdout.log",
+      "size": 342,
+      "sha256": "a788acbf74036de7b593f38122ade98a6b04ef9e88847aefecc3949654692d6b"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/01_seed1001/classify/attempt_001/scene_raw.las",
+      "size": 1213918087,
+      "sha256": "7a793c7a609d16345c5d3f202f6b3d09ec73bb6c56f30fc98c51469b503033ef"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/01_seed1001/classify/attempt_001/scene_classified.las",
+      "size": 1213917399,
+      "sha256": "94f1a73e2f3efa570576d516842d935ebf969d907a8ead02557f9345cb3f1429"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/01_seed1001/classify/attempt_001/pdal_pipeline.json",
+      "size": 1040,
+      "sha256": "c6cfdaf67a677846d41edbc2559f1a2666994a2e3d4f35dd2061acd5fa0c1920"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/01_seed1001/classify/attempt_001/classification_receipt.json",
+      "size": 13912,
+      "sha256": "ff452f11e6a35138c0839df7aba9b4cec62aafc2316d783a3cc5701efbf5336d"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/01_seed1001/classify/attempt_001/classification_receipt.log",
+      "size": 309,
+      "sha256": "aeb43ea4b7e47c15de2b4224f49d542e29fa0d6da185ff545eb0cba25feac044"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/_global/loss_cursor/attempt_001/started.json",
+      "size": 1535,
+      "sha256": "df06c352f023fe0dfa4fe356c29b64f50d0b0deebe983de818c25e4802a2ceca"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/_global/loss_cursor/attempt_001/stdout.log",
+      "size": 1453,
+      "sha256": "a31ef8daac38643f3b13afea9e36eb09abc77a00096b2a6f2de7dce26adb84df"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/_global/loss_cursor/attempt_001/pilot_1wave_loss_shares.csv",
+      "size": 2584291,
+      "sha256": "01104b91c6faab26c40042bdf5bb510248b6dcd4a6736233087f593c8afe4a45"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/_global/loss_cursor/attempt_001/pilot_1wave_loss_shares_receipt.json",
+      "size": 3760,
+      "sha256": "37703d6ec1f96095e759d7f6b919849de84587cb453a533f85d604d5340d5e70"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/_global/loss_cursor/attempt_001/run_receipts/01_seed1001.json",
+      "size": 3212,
+      "sha256": "1f2b1d8480717deeec983f8cf0c3384f35f43973704da505846b27646b90f850"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/_global/loss_cursor/attempt_001/run_receipts/01_seed1002.json",
+      "size": 3215,
+      "sha256": "e0837dd7ddd3661fb95628a21162b691b9089067d34fa28f5df8b6d12a603e9c"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/_global/loss_cursor/attempt_001/run_receipts/02_seed1001.json",
+      "size": 3215,
+      "sha256": "ab178d1444370fb96233d1e89378b59fbba41afca281b0fdc7d9052e4f48cd28"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/_global/loss_cursor/attempt_001/run_receipts/02_seed1002.json",
+      "size": 3215,
+      "sha256": "237e680003bba1ebe2311e03e41a1b4a579ccbb2c6090a033d85b590d5915d47"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/_global/loss_cursor/attempt_001/run_receipts/03_seed1001.json",
+      "size": 3218,
+      "sha256": "8fafd8695be9c6934a24b1867dd4ca1f073cbccf660fb1d0f1200f2e49fa4343"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/_global/loss_cursor/attempt_001/run_receipts/03_seed1002.json",
+      "size": 3218,
+      "sha256": "0478c53aa4a021b2b63c08340fb744c663577ca533b786a327efc0756868db38"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/_global/loss_cursor/attempt_001/run_receipts/04a_seed1001.json",
+      "size": 3713,
+      "sha256": "5bb6e89e89903b27ae61ecd26fd6f9cfd9c01d7a23b2576e598f83a04eb53d35"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/_global/loss_cursor/attempt_001/run_receipts/04a_seed1002.json",
+      "size": 3685,
+      "sha256": "6e495fbd67689e5f525e43d4cd79f3c8429b93f500e67d15078deb1f3e2ba110"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/_global/loss_cursor/attempt_001/run_receipts/04b_seed1001.json",
+      "size": 3711,
+      "sha256": "88527a3d18f63f066bdc0f131f5b90794efa2bf4e69f3157e36d336419b7b5a9"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/_global/loss_cursor/attempt_001/run_receipts/04b_seed1002.json",
+      "size": 3715,
+      "sha256": "3c86c25ea05e1cfe5e8d1766e46c395f699882b67215ad3cbfba38fc6423ea08"
+    }
+  ],
+  "evidence_file_count": 21,
+  "learning_runs_started": 0,
+  "gpu_work_started": 0
+}

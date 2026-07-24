@@ -1,0 +1,34 @@
+{
+  "schema": "jointbuildgs.pilot_1wave.postprocess_stage.v1",
+  "state": "complete",
+  "stage": "extract",
+  "job_id": "01_seed1002",
+  "completed_utc": "2026-07-22T16:55:36.389040+00:00",
+  "outputs": [
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/01_seed1002/extract/attempt_001/scene_geometry.npz",
+      "size": 1986591624,
+      "sha256": "5e768bf316b05359dfc7b19268500040edceb74a32e3513b288c7e24d66dd85f"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/01_seed1002/extract/attempt_001/coverage.csv",
+      "size": 5471,
+      "sha256": "da4f6d8f5064226835dceaf8b6dab687b7af5bf9363b1c8a30e31f96a86afdc9"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/01_seed1002/extract/attempt_001/metrics.json",
+      "size": 3774,
+      "sha256": "334b9c66c61c4862b73bde1c78bf12834f59670ddbc91630fa7949d53d1e57a3"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/01_seed1002/extract/attempt_001/provenance.json",
+      "size": 6283,
+      "sha256": "5ade9a7c4caf6362a562c052148547ad84e8fee08b97dd4f8d19cc2bccdc6bbb"
+    }
+  ],
+  "correction_head": "160f1af6e1f56c487c6eb54a9621de52cf77aeb7",
+  "runtime_sources_sha256": "b4e01e5b6b5cfde18e5de733c6f943ad9b65b7975974db53c77aa87976082e50",
+  "gpu": 1,
+  "checkpoint_sha256": "a71b58762937ae0760b5525ae52f36e0ad7aa5bf584758aa7b6f464978a20cd0",
+  "contract_sha256": "eb8dd36e15e4d8f9f2138517a0736b647fe1f1753e537285eb378c4f924fab2e"
+}

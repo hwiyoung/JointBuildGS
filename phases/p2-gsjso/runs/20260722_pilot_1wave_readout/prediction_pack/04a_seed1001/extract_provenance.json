@@ -1,0 +1,47 @@
+{
+  "schema": "jointbuildgs.pilot_1wave.readout_extraction.v1",
+  "state": "complete",
+  "output_npz": {
+    "path": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/04a_seed1001/extract/attempt_001/scene_geometry.npz",
+    "sha256": "eb33a2d95d2174dcf578473e4b2c9d929c30bb39a63149effd15b2f63f57fc0f",
+    "point_count": 6011505
+  },
+  "readout_lineage": {
+    "schema": "jointbuildgs.pilot_1wave.readout_lineage.v1",
+    "condition_id": "04a",
+    "seed": 1001,
+    "checkpoint": {
+      "format": "jointbuildgs.stage2.full_state",
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/04a/seed_1001/ckpt/step_020000.pt",
+      "sha256": "e4ecf1fa4294e78f7a3d5cc63c2e67374cb6978a13f88ff0d2420f738e24951c",
+      "completed_steps": 20000,
+      "step_semantics": "completed_optimizer_updates"
+    },
+    "full_state_manifest": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/04a/seed_1001/full_state_manifest.json",
+      "sha256": "d9f4d578552d87aee320c6a2de5a86425001e3d03330b535c6a5f8395c968084",
+      "schema": "jointbuildgs.stage2.resume_manifest.v1"
+    },
+    "training_config": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/resolved_configs/04a_seed1001.yaml",
+      "sha256": "9f1be4764f257383fe626dff22344d12103c09a0e386f57407f7f9a0ba0c9360",
+      "pilot_arm": "04a_plane_medium_vision"
+    },
+    "verified_full_state": true,
+    "eligible_20k_full_state": true,
+    "geometry_only": true,
+    "crop_contract_json": "{\"crop\":{\"area_m2\":56617.904,\"bbox_utm\":[690764.89,5335918.4,690964.53,5336202.0],\"mode\":\"single_locked_global_bbox\"},\"crs\":\"EPSG:25832\",\"footprint_source\":{\"allowed_content\":\"LoD2 GroundSurface XY only\",\"path\":\"results/tum_transfer/analysis/footprints_aoi.geojson\",\"sha256\":\"ca7f5b13a52368e1d2ac47b77cc78f12887bad4d598d122ad57b882eb4920a82\"},\"materialized_input_inventory\":{\"data_root\":\"phases/p2-gsjso/runs/20260721_pilot_1wave/prep_artifacts/data\",\"path\":\"phases/p2-gsjso/runs/20260721_pilot_1wave/calibration/scaffolds/materialized_input_inventory.json\",\"records_sha256\":\"b99c38d31b37b59f1827537e520c20c76ca5a0ee0bfbc5baaaa879d4fff57271\",\"sha256\":\"30a3387275ee9ed29ad75bbdf7cb1979f2b8b2cd52640225e9dbe00895666450\",\"view_count\":481,\"view_ids_sha256\":\"25d691a8bda73f26e2b3513316918af625536bc867c164b41a18114c868365c9\"},\"pilot_set_csv\":{\"path\":\"phases/p2-gsjso/runs/20260721_pilot_1wave/pilot_1wave_pilot_set.csv\",\"sha256\":\"db5ecb6c838499dd3a5f96a4b1abae85414c3d38318d976b7ee598982b566ffc\"},\"pilot_set_manifest\":{\"path\":\"phases/p2-gsjso/runs/20260721_pilot_1wave/pilot_1wave_pilot_set_manifest.json\",\"sha256\":\"803d18862db926fff353c641e08a03c5938cedf3fb49cc4859751189e83855e2\"},\"population\":{\"count\":30,\"ordered_building_ids\":[\"DEBY_LOD2_4906966\",\"DEBY_LOD2_4907178\",\"DEBY_LOD2_4907183\",\"DEBY_LOD2_4907184\",\"DEBY_LOD2_4907185\",\"DEBY_LOD2_4907186\",\"DEBY_LOD2_4907188\",\"DEBY_LOD2_4907195\",\"DEBY_LOD2_4907196\",\"DEBY_LOD2_4907198\",\"DEBY_LOD2_4907201\",\"DEBY_LOD2_4907202\",\"DEBY_LOD2_4907204\",\"DEBY_LOD2_4907205\",\"DEBY_LOD2_4907206\",\"DEBY_LOD2_4908168\",\"DEBY_LOD2_4908178\",\"DEBY_LOD2_60098\",\"DEBY_LOD2_4907207\",\"DEBY_LOD2_4907165\",\"DEBY_LOD2_4907177\",\"DEBY_LOD2_4907179\",\"DEBY_LOD2_42364665\",\"DEBY_LOD2_4906965\",\"DEBY_LOD2_42364667\",\"DEBY_LOD2_4907176\",\"DEBY_LOD2_4907180\",\"DEBY_LOD2_4906967\",\"DEBY_LOD2_4908023\",\"DEBY_LOD2_4908024\"],\"ordered_ids_sha256\":\"ae5cbc664941c3b8bb4238767f1d0833a1f7684928a03837047065f85093bb01\"},\"schema\":\"jointbuildgs.pilot_1wave.readout_crop_contract.v1\"}",
+    "crop_contract_sha256": "6d0b4b9136a51e8a5483025fe45c3dba962c71d32dbdc97a11358ae8f0385dda"
+  },
+  "geometry_only": true,
+  "crs": "EPSG:25832",
+  "reference_inputs": {
+    "groundsurface_xy_footprint": "/workspace/JointBuildGS/results/tum_transfer/analysis/footprints_aoi.geojson",
+    "lod2_z": false,
+    "roofsurface": false,
+    "semantic_class": false,
+    "als": false
+  },
+  "crop_contract_json": "{\"crop\":{\"area_m2\":56617.904,\"bbox_utm\":[690764.89,5335918.4,690964.53,5336202.0],\"mode\":\"single_locked_global_bbox\"},\"crs\":\"EPSG:25832\",\"footprint_source\":{\"allowed_content\":\"LoD2 GroundSurface XY only\",\"path\":\"results/tum_transfer/analysis/footprints_aoi.geojson\",\"sha256\":\"ca7f5b13a52368e1d2ac47b77cc78f12887bad4d598d122ad57b882eb4920a82\"},\"materialized_input_inventory\":{\"data_root\":\"phases/p2-gsjso/runs/20260721_pilot_1wave/prep_artifacts/data\",\"path\":\"phases/p2-gsjso/runs/20260721_pilot_1wave/calibration/scaffolds/materialized_input_inventory.json\",\"records_sha256\":\"b99c38d31b37b59f1827537e520c20c76ca5a0ee0bfbc5baaaa879d4fff57271\",\"sha256\":\"30a3387275ee9ed29ad75bbdf7cb1979f2b8b2cd52640225e9dbe00895666450\",\"view_count\":481,\"view_ids_sha256\":\"25d691a8bda73f26e2b3513316918af625536bc867c164b41a18114c868365c9\"},\"pilot_set_csv\":{\"path\":\"phases/p2-gsjso/runs/20260721_pilot_1wave/pilot_1wave_pilot_set.csv\",\"sha256\":\"db5ecb6c838499dd3a5f96a4b1abae85414c3d38318d976b7ee598982b566ffc\"},\"pilot_set_manifest\":{\"path\":\"phases/p2-gsjso/runs/20260721_pilot_1wave/pilot_1wave_pilot_set_manifest.json\",\"sha256\":\"803d18862db926fff353c641e08a03c5938cedf3fb49cc4859751189e83855e2\"},\"population\":{\"count\":30,\"ordered_building_ids\":[\"DEBY_LOD2_4906966\",\"DEBY_LOD2_4907178\",\"DEBY_LOD2_4907183\",\"DEBY_LOD2_4907184\",\"DEBY_LOD2_4907185\",\"DEBY_LOD2_4907186\",\"DEBY_LOD2_4907188\",\"DEBY_LOD2_4907195\",\"DEBY_LOD2_4907196\",\"DEBY_LOD2_4907198\",\"DEBY_LOD2_4907201\",\"DEBY_LOD2_4907202\",\"DEBY_LOD2_4907204\",\"DEBY_LOD2_4907205\",\"DEBY_LOD2_4907206\",\"DEBY_LOD2_4908168\",\"DEBY_LOD2_4908178\",\"DEBY_LOD2_60098\",\"DEBY_LOD2_4907207\",\"DEBY_LOD2_4907165\",\"DEBY_LOD2_4907177\",\"DEBY_LOD2_4907179\",\"DEBY_LOD2_42364665\",\"DEBY_LOD2_4906965\",\"DEBY_LOD2_42364667\",\"DEBY_LOD2_4907176\",\"DEBY_LOD2_4907180\",\"DEBY_LOD2_4906967\",\"DEBY_LOD2_4908023\",\"DEBY_LOD2_4908024\"],\"ordered_ids_sha256\":\"ae5cbc664941c3b8bb4238767f1d0833a1f7684928a03837047065f85093bb01\"},\"schema\":\"jointbuildgs.pilot_1wave.readout_crop_contract.v1\"}",
+  "crop_contract_sha256": "6d0b4b9136a51e8a5483025fe45c3dba962c71d32dbdc97a11358ae8f0385dda"
+}

@@ -248,3 +248,16 @@ phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase2_prepare/runner/logs/
 /phases/p2-gsjso/runs/20260721_pilot_1wave/prep_artifacts/data/
 /phases/p2-gsjso/runs/20260721_pilot_1wave/prep_artifacts/seeds/
 /phases/p2-gsjso/runs/20260721_pilot_1wave/prep_artifacts/mono_normal_omnidata_world_npy/
+
+# P1W retention: keep only compact canonical evidence in Git.  The local 20k
+# checkpoints and geometry NPZ recovery cache remain ignored runtime payloads.
+/phases/p2-gsjso/runs/20260721_pilot_1wave/training/logs/
+/phases/p2-gsjso/runs/20260721_pilot_1wave/training/failed_attempts/
+/phases/p2-gsjso/runs/20260721_pilot_1wave/training/runs/
+/phases/p2-gsjso/runs/20260721_pilot_1wave/training/pilot_1wave_driver_manifest.json
+/phases/p2-gsjso/runs/20260721_pilot_1wave/training/pilot_1wave_driver_manifest.json.lock
+/phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/attempts/
+/phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess_failed_attempts/
+/phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/*.lock
+/phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/*.log
+/phases/p2-gsjso/runs/20260721_pilot_1wave/training/postprocess/roofprint_binding_receipt.json
