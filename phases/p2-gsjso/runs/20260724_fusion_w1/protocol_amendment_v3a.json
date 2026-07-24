@@ -1,0 +1,34 @@
+{
+  "schema": "jointbuildgs.fusion_w1.protocol_amendment.v1",
+  "amendment_id": "FUS-W1-AMEND-V3A-20260725",
+  "authorized_by": "김휘영",
+  "authorized_at": "2026-07-25T00:20:29+09:00",
+  "authorization_parent_commit": "94752ff643a484b7d1269a3de3c0271d72a3d154",
+  "dispatch_path": "phases/p2-gsjso/runs/20260724_fusion_w1/REMOTE_PROMPT_DISPATCH_V3_20260724.md",
+  "dispatch_sha256": "4d08a45a740de1f4e9754500280c9e564b1dcf3b8b5fcfa6e8bd904e9e2b8430",
+  "scope": "section_7_cutoff_only",
+  "result_state_at_authorization": {
+    "gate_a_measurements_started": 0,
+    "learning_runs_started": 0,
+    "readout_runs_started": 0,
+    "scoring_runs_started": 0
+  },
+  "cutoff_policy": {
+    "hard_cutoff_removed": true,
+    "snapshot_at": "2026-07-25T06:30:00+09:00",
+    "snapshot_stops_execution": false,
+    "cancel_in_progress_run": false,
+    "continue_priority_queue_after_snapshot": true,
+    "minimum_execution_objective": "core_group_arm_a_repeat_2_complete",
+    "extension_queue_continues": true
+  },
+  "unchanged_locks": [
+    "section_0_preflight",
+    "section_2_gate_a",
+    "section_4_arm_and_30k_iteration_definitions",
+    "section_5_serial_readout",
+    "section_7_priority_and_catastrophe_rules",
+    "section_8_judgment_scales"
+  ],
+  "interpretation_or_verdict": null
+}
