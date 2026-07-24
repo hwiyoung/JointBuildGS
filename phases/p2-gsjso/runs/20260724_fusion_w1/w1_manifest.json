@@ -1,0 +1,257 @@
+{
+  "schema": "jointbuildgs.fusion_w1.manifest.v1",
+  "created_utc": "2026-07-24T14:28:00Z",
+  "created_kst": "2026-07-24T23:28:00+09:00",
+  "task_id": "FUS-W1-20260724",
+  "run_status": "BLOCKED",
+  "blocked_stage": "section_0_preflight",
+  "blocked_reason_code": "missing_canonical_source_document",
+  "interpretation_or_verdict": null,
+  "git": {
+    "repository": "JointBuildGS",
+    "branch": "exp/fusion-w1",
+    "canonical_base_commit": "c094cd3c30da2ba51df62064a13555185e65460f",
+    "dispatch_lock_commit": "e8da94f411bac5df289f5dbfaccf3dac72c77c1a",
+    "canonical_base_exists": true,
+    "dispatch_lock_commit_exists": true,
+    "dispatch_path": "phases/p2-gsjso/runs/20260724_fusion_w1/REMOTE_PROMPT_DISPATCH_V3_20260724.md",
+    "dispatch_sha256": "4d08a45a740de1f4e9754500280c9e564b1dcf3b8b5fcfa6e8bd904e9e2b8430",
+    "tracked_worktree_clean_at_preflight": true,
+    "upstream_configured": false
+  },
+  "preflight": {
+    "overall_status": "BLOCKED",
+    "passed_pin_count": 4,
+    "total_pin_count": 5,
+    "pins": [
+      {
+        "pin": 1,
+        "name": "commit_existence",
+        "status": "passed",
+        "evidence": {
+          "canonical_base_type": "commit",
+          "dispatch_lock_type": "commit"
+        }
+      },
+      {
+        "pin": 2,
+        "name": "docker_service_versions",
+        "status": "passed",
+        "evidence": {
+          "gs_training": {
+            "reference": "jointbuildgs:dev",
+            "image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
+            "repo_digests": [],
+            "python": "3.11.15",
+            "torch": "2.4.1+cu121",
+            "torch_cuda_build": "12.1",
+            "gsplat": "1.4.0"
+          },
+          "roofer": {
+            "reference": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+            "image_id": "sha256:9c980b97fba4c3fd30f5bb4afb8f2621be211d4e72e4333ea2053e8cd69b2dba",
+            "version": "roofer 1.0.0 (v1.0.0)"
+          },
+          "tools": {
+            "reference": "jointbuildgs-p0-tools:t0",
+            "image_id": "sha256:87bea02e5598a3d53a119b754191673497d52641bd8ea4106ffee653407579b0",
+            "repo_digests": [],
+            "python": "3.13.13",
+            "numpy": "2.4.6",
+            "laspy": "2.6.1",
+            "pyproj": "3.7.2"
+          }
+        }
+      },
+      {
+        "pin": 3,
+        "name": "gpu_and_cuda_arithmetic",
+        "status": "passed",
+        "evidence": {
+          "host_driver": "580.82.07",
+          "host_gpus": [
+            {
+              "index": 0,
+              "uuid": "GPU-4bdfcab8-1464-94b0-0a2f-dd9693ace2a0",
+              "name": "NVIDIA GeForce RTX 3090",
+              "memory_total_mib": 24576
+            },
+            {
+              "index": 1,
+              "uuid": "GPU-fab8b9b4-e6eb-9f2b-71e3-7997f092d21e",
+              "name": "NVIDIA GeForce RTX 3090",
+              "memory_total_mib": 24576
+            }
+          ],
+          "container_visible_physical_gpu": 1,
+          "container_visible_uuid": "GPU-fab8b9b4-e6eb-9f2b-71e3-7997f092d21e",
+          "arithmetic": "cuda matmul",
+          "cuda_matmul_finite": true,
+          "cuda_checksum": 5559680.0,
+          "allocated_bytes": 9043968
+        }
+      },
+      {
+        "pin": 4,
+        "name": "canonical_input_sha256",
+        "status": "passed",
+        "evidence": {
+          "files": [
+            {
+              "role": "als_laz",
+              "path": "phases/p0-audit/data/raw/als/690_5335.laz",
+              "bytes": 110979201,
+              "sha256": "01602b7385aaf7324f89da6183df3dbdeffa237f85bf57dc27208b554b4fc0b3"
+            },
+            {
+              "role": "als_laz",
+              "path": "phases/p0-audit/data/raw/als/690_5336.laz",
+              "bytes": 119749181,
+              "sha256": "98ab7ad7f4c5108ebf41bc62186b336c6cd8a70b82fceec57136a56c0188b566"
+            },
+            {
+              "role": "als_laz",
+              "path": "phases/p0-audit/data/raw/als/691_5335.laz",
+              "bytes": 107359041,
+              "sha256": "9e14119bb0af7d5a300aa3a2a19074219b4d6d290923b4b90277c317e8b33720"
+            },
+            {
+              "role": "als_laz",
+              "path": "phases/p0-audit/data/raw/als/691_5336.laz",
+              "bytes": 132681326,
+              "sha256": "63c64002fc55d8b99a49749b5a2e36d802186186a950c89779463274e3cb950d"
+            },
+            {
+              "role": "uav_image_archive",
+              "path": "phases/p0-audit/data/raw/uav/Images.zip",
+              "bytes": 5906891973,
+              "sha256": "078056d16c8ed7e75d5f22206fdb635327a1ed80e5a4e5890930ba17a43fb34d"
+            },
+            {
+              "role": "colmap_cameras",
+              "path": "results/tum_transfer/data_geoidfix/sparse/0/cameras.bin",
+              "resolved_path": "phases/p0-audit/data/work/mvs/colmap_dense/sparse/cameras.bin",
+              "bytes": 64,
+              "sha256": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99"
+            },
+            {
+              "role": "colmap_image_poses",
+              "path": "results/tum_transfer/data_geoidfix/sparse/0/images.bin",
+              "resolved_path": "phases/p0-audit/data/work/mvs/colmap_dense/sparse/images.bin",
+              "bytes": 114415526,
+              "sha256": "dfc779496ee3b13f8df5dd28fae465746ce0adf4aca7922d38cbed275a2fd951"
+            },
+            {
+              "role": "colmap_points3d",
+              "path": "results/tum_transfer/data_geoidfix/sparse/0/points3D.bin",
+              "resolved_path": "phases/p0-audit/data/work/mvs/colmap_dense/sparse/points3D.bin",
+              "bytes": 33476840,
+              "sha256": "bf93766e9773bdc59ce393cf1a36de4b3801cadc1bf834ea705396f5e9a706c3"
+            },
+            {
+              "role": "footprint_gpkg",
+              "path": "phases/p0-audit/data/work/footprints/lod2_ground_plan.gpkg",
+              "bytes": 5521408,
+              "sha256": "259cf04ec0c9411e669e75f61c37ea634290fcd40b230f6ed9b67328041c87fa"
+            },
+            {
+              "role": "reference_gml",
+              "path": "phases/p0-audit/data/raw/lod2/690_5334.gml",
+              "bytes": 156656509,
+              "sha256": "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314"
+            },
+            {
+              "role": "reference_gml",
+              "path": "phases/p0-audit/data/raw/lod2/690_5336.gml",
+              "bytes": 147865939,
+              "sha256": "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674"
+            }
+          ],
+          "resolved_training_image_set": {
+            "path": "results/tum_transfer/data_geoidfix/images",
+            "resolved_path": "phases/p0-audit/data/work/mvs/colmap_dense/images",
+            "file_count": 937,
+            "total_bytes": 910980034,
+            "ordered_per_file_sha256_aggregate": "dedc4251e491a9ae40d7c91073410cbf504023b6fe3143238b2528dc3146308a"
+          }
+        }
+      },
+      {
+        "pin": 5,
+        "name": "mount_freshness_against_canonical_document",
+        "status": "blocked",
+        "evidence": {
+          "required_canonical_document": "docs/W_면담정리_생성축재개·시드prior·문헌재조사_20260724.md",
+          "host_exists": false,
+          "mounted_container_exists": false,
+          "git_tracked_in_any_ref": false,
+          "sibling_checkout_match_found": false,
+          "existing_mount_control_files_match": true,
+          "mount_control_files": [
+            {
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/REMOTE_PROMPT_DISPATCH_V3_20260724.md",
+              "host_container_sha256_match": true,
+              "sha256": "4d08a45a740de1f4e9754500280c9e564b1dcf3b8b5fcfa6e8bd904e9e2b8430"
+            },
+            {
+              "path": "docs/boundary_map_v4_1_ladder.csv",
+              "host_container_sha256_match": true,
+              "sha256": "ae16170177ac0815eb6dd853b0469325c9a1018eeeac9b790b063927cbd7e7e2"
+            },
+            {
+              "path": "docs/사전등록서_품질축본선_승인잠금v4_20260721.md",
+              "host_container_sha256_match": true,
+              "sha256": "39b7b641a324dda7b5ea9d01906407223b75443d62b6d71580c3d598566464ec"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "coordinate_and_classification_lock": {
+    "crs": "EPSG:25832",
+    "ground_class": 2,
+    "building_class": 6,
+    "projection_datum_config": "configs/projection_datum.json",
+    "projection_datum_config_sha256": "096a49b46fc5661d74f9d3b54c4f3777676cfc6b27e577b52bb2dabeee8b480c",
+    "active_default_orthometric_geoid_m": 45.7,
+    "recorded_a1_zeta_hat_m": 48.125535,
+    "datum_selection_for_w1": "not_executed_preflight_blocked"
+  },
+  "resource_lock": {
+    "host_memory_bytes": 134910935040,
+    "host_memory_available_bytes_at_preflight": 61702225920,
+    "host_swap_bytes": 2147479552,
+    "host_swap_used_bytes_at_preflight": 2102161408,
+    "docker_cgroup_version": 2,
+    "readout_execution_mode": "serial_only",
+    "readout_concurrent_with_training": false,
+    "readout_memory_limit": "24g",
+    "readout_memory_swap_limit": "24g",
+    "readout_limit_applied": false,
+    "readout_limit_not_applied_reason": "no readout launched"
+  },
+  "execution_counters": {
+    "background_driver_launched": false,
+    "learning_runs_started": 0,
+    "gate_a_measurements_started": 0,
+    "micro_registration_attempts": 0,
+    "seed_preparations_started": 0,
+    "p0prime_roofer_runs_started": 0,
+    "readout_runs_started": 0,
+    "scoring_runs_started": 0,
+    "target_queue_generated": false
+  },
+  "cutoff": {
+    "timezone": "Asia/Seoul",
+    "cutoff_local": "2026-07-25T06:30:00+09:00",
+    "activated": false,
+    "reason": "preflight blocked before driver launch"
+  },
+  "required_recovery": [
+    "Provide the canonical document at docs/W_면담정리_생성축재개·시드prior·문헌재조사_20260724.md.",
+    "Commit or otherwise provide a verifiable source hash and mtime for that document.",
+    "Rerun all five preflight pins and resolve the W1 datum value from the canonical source before Gate A.",
+    "Do not reuse this BLOCKED manifest as a passed preflight receipt."
+  ]
+}
