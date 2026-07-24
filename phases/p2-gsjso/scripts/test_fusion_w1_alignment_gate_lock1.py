@@ -73,7 +73,8 @@ class FusionW1AlignmentGateLock1Tests(unittest.TestCase):
             selection["maximum_predicted_p90_metric_uncertainty_m"], 0.3
         )
         self.assertEqual(selection["azimuth_bin_count"], 8)
-        self.assertEqual(selection["minimum_selected_azimuth_bins"], 4)
+        self.assertEqual(selection["minimum_selected_azimuth_bins"], 1)
+        self.assertIn("does not preregister", selection["azimuth_coverage_role"])
         self.assertIn("observability-first", selection["ranking"])
         self.assertIn(
             "||n^T J_xy||_2",

@@ -454,11 +454,12 @@ def load_config(path: Path) -> dict[str, Any]:
         )
     if (
         int(selection["azimuth_bin_count"]) != 8
-        or int(selection["minimum_selected_azimuth_bins"]) != 4
+        or int(selection["minimum_selected_azimuth_bins"]) != 1
         or "observability-first" not in str(selection["ranking"])
     ):
         raise GateContractError(
-            "view selection must remain observability-first with 8/4 azimuth locks"
+            "view selection must remain observability-first with an 8-bin "
+            "diagnostic round-robin and no unregistered coverage gate"
         )
     confidence = payload.get("confidence", {})
     required_confidence = {
@@ -1229,7 +1230,7 @@ def auto_select_views(
     minimum_bins = int(selection_cfg["minimum_selected_azimuth_bins"])
     if not 10 <= minimum <= maximum <= 30:
         raise GateContractError("view-selection count lock must remain within 10..30")
-    if boundary_cap < 24 or bin_count != 8 or minimum_bins != 4:
+    if boundary_cap < 24 or bin_count != 8 or minimum_bins != 1:
         raise GateContractError("view-selection boundary/azimuth locks drifted")
     selected: list[SelectedView] = []
     ordered_images = sorted(images_by_name.values(), key=lambda item: item.name)

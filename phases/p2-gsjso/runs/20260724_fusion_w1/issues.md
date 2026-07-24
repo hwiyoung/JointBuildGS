@@ -74,3 +74,13 @@
 - Recovery: the guard still resolves and constrains the directory to the repository for safe file reads, but constructs the hash stream with the immutable logical repo-relative prefix. The recomputed aggregate is `dedc4251e491a9ae40d7c91073410cbf504023b6fe3143238b2528dc3146308a`, exactly matching preflight. A symlink-path regression test was added.
 - Verification: runtime guard/test SHA-256 are `e5ab71b2b03c9d5e0f906d8b5015cd9945c0aba07704579cf276553da5a5b73b` and `b512cc04f97b095d2b8bf2db007435fed8b560c0fbdbe5dd1d3a223e6e75ac1c`. Pinned read-only Docker tests passed Gate 24/24, runtime 15/15, checkpoint 10/10 (49/49); a live in-container rehash returned the locked aggregate, count, and bytes.
 - Scientific impact: none. The first launch stopped in the runtime guard before view selection or training-image residual measurement; `gate_a_measurements_started=0`, `learning_runs_started=0`, `readout_runs_started=0`, `scoring_runs_started=0`.
+
+## FUS-W1-ALIGN-RUN-002 — unregistered azimuth-bin hard gate removed
+
+- Recorded: 2026-07-25 07:35 KST
+- Stage: ALS-only result-blind view selection, before image-edge extraction
+- Status: RECOVERED BEFORE RESIDUAL MEASUREMENT
+- Evidence: the second committed launch passed the runtime guard, matched the 937-image lock, and loaded class-2/6 ALS for all 28 core targets. It then stopped at `DEBY_LOD2_42364609: observable views span only 3 azimuth bins; required 4`.
+- Contract correction: the dispatch locks 10..30 observed training views per building but does not preregister a minimum number of camera-azimuth bins. The draft-only four-bin hard gate was therefore removed. Eight-bin labels and observability-first deterministic round-robin selection remain, so available angular diversity is still maximized and reported without becoming a new eligibility criterion.
+- Verification: Gate/config/test SHA-256 are `e8391b59745842c95067bbb6b3dbbf8b25df97eaa7a3b224c2578c92660d5e15`, `d9dd48de14870c091586534a2ab74f55cc5dda515db9811a9363becfcc9654c0`, and `0b946f2153e3339501898d2953542479efb2e5009a3b60cdad63dc392700234d`. Pinned read-only Docker tests passed Gate 24/24, runtime 15/15, and checkpoint 10/10 (49/49).
+- Scientific impact: no image intensities, edges, or residual distributions were read before the stop; `edge_residual_views_measured=0`, `learning_runs_started=0`, `readout_runs_started=0`, `scoring_runs_started=0`.
