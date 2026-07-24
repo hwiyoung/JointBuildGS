@@ -1,0 +1,92 @@
+{
+  "actual_readout_started": false,
+  "actual_training_started": false,
+  "caveat_checks": [
+    "host_container_mount_and_resume_provenance",
+    "epsg_class_and_datum_lock"
+  ],
+  "commit_created_by_preflight": false,
+  "continuation_authorized": true,
+  "created_kst": "2026-07-25T00:40:40.811261+09:00",
+  "created_utc": "2026-07-24T15:40:40.811250Z",
+  "event_log": {
+    "path": "phases/p2-gsjso/runs/20260724_fusion_w1/logs/preflight_resume.jsonl"
+  },
+  "failed_checks": [],
+  "five_pin_passed_or_caveated_count": 5,
+  "five_pin_total_count": 5,
+  "future_gpu_stage_launch_blocked_at_receipt": false,
+  "future_launcher_requirements": [
+    "Rerun the known-training and unknown-GPU-compute guard immediately before Gate A or any later GPU stage.",
+    "Before readout, acquire the single serial lock and apply --memory=24g --memory-swap=24g."
+  ],
+  "implementation_provenance": {
+    "all_working_and_head_match": true,
+    "files": [
+      {
+        "head_blob_exists": true,
+        "head_committed_blob_sha256": "d34e4f8ab73f1d00875fe57d20c096164578522c11dd643db6565424152845ce",
+        "path": "phases/p2-gsjso/configs/fusion_w1_preflight_resume_v1.json",
+        "role": "config",
+        "working_and_head_match": true,
+        "working_tree_sha256": "d34e4f8ab73f1d00875fe57d20c096164578522c11dd643db6565424152845ce"
+      },
+      {
+        "head_blob_exists": true,
+        "head_committed_blob_sha256": "eddc47fa398733cb29c062c8a66c07f0220a538c583340db1a473006193e88a4",
+        "path": "phases/p2-gsjso/scripts/fusion_w1_preflight_resume.py",
+        "role": "script",
+        "working_and_head_match": true,
+        "working_tree_sha256": "eddc47fa398733cb29c062c8a66c07f0220a538c583340db1a473006193e88a4"
+      },
+      {
+        "head_blob_exists": true,
+        "head_committed_blob_sha256": "03db74f6bcb2f65b6e4a3e52d04da33ba4bc6791bb7756dd17386d6ccc348732",
+        "path": "phases/p2-gsjso/scripts/run_fusion_w1_preflight_resume.sh",
+        "role": "wrapper",
+        "working_and_head_match": true,
+        "working_tree_sha256": "03db74f6bcb2f65b6e4a3e52d04da33ba4bc6791bb7756dd17386d6ccc348732"
+      },
+      {
+        "head_blob_exists": true,
+        "head_committed_blob_sha256": "bb66242eed24a6fd234ffe82f4b0572e5baa556b3ded1a14eb52b25de1aea054",
+        "path": "phases/p2-gsjso/scripts/test_fusion_w1_preflight_resume.py",
+        "role": "test",
+        "working_and_head_match": true,
+        "working_tree_sha256": "bb66242eed24a6fd234ffe82f4b0572e5baa556b3ded1a14eb52b25de1aea054"
+      }
+    ],
+    "head": "71e1a38ce88bbda7a448508cc95942b60402807e",
+    "tracked_worktree_changes": []
+  },
+  "learning_still_gated_by_gate_a": true,
+  "next_stage": "target resolution and per-building Gate A measurement",
+  "preflight_resource_plan_is_plan_only": true,
+  "preflight_resume": {
+    "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preflight_resume.json",
+    "sha256": "a38fbaf03999d3d6738dab72ce40024fcad15d608cf52d09bd9cee486c9c1b78"
+  },
+  "prior_blocked_manifest": {
+    "path": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_manifest.json",
+    "preserved_unchanged": true,
+    "recorded_status": "BLOCKED",
+    "sha256_after": "1fff804ea6e30ef2d18f702fb67f4a38c0e225d561840311e685f15d5b4a5c38",
+    "sha256_before": "1fff804ea6e30ef2d18f702fb67f4a38c0e225d561840311e685f15d5b4a5c38",
+    "superseded_or_overwritten": false
+  },
+  "run_id": "20260724_fusion_w1",
+  "schema": "jointbuildgs.fusion_w1.preflight_resume_status.v1",
+  "status": "PASSED",
+  "task_id": "FUS-W1-20260724",
+  "time_policy": {
+    "amendment_commit": "5fda90166c23e23d0792dea25279d4e4f566f50f",
+    "amendment_id": "FUS-W1-AMEND-V3A-20260725",
+    "authorization_provenance": "User approved removal of the 06:30 forced stop during the 2026-07-25 resume session.",
+    "continuation_scope": "Continue the locked priority queue after writing the 06:30 partial-status snapshot; normal gate and catastrophic-stop rules remain in force.",
+    "continue_after_snapshot": true,
+    "hard_stop_at_snapshot": false,
+    "snapshot_local_time": "06:30",
+    "snapshot_mode": "status_snapshot_only",
+    "timezone": "Asia/Seoul"
+  }
+}

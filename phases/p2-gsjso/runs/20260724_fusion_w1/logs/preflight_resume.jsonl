@@ -1,0 +1,42 @@
+{"config": "phases/p2-gsjso/configs/fusion_w1_preflight_resume_v1.json", "config_sha256": "d34e4f8ab73f1d00875fe57d20c096164578522c11dd643db6565424152845ce", "event": "preflight_started", "prior_blocked_manifest_sha256": "1fff804ea6e30ef2d18f702fb67f4a38c0e225d561840311e685f15d5b4a5c38", "timestamp_utc": "2026-07-24T15:40:18.798654Z"}
+{"check": "git_commit_branch_dispatch_lock", "event": "check_started", "timestamp_utc": "2026-07-24T15:40:18.798788Z"}
+{"check": "git_commit_branch_dispatch_lock", "error": null, "event": "check_finished", "status": "passed", "timestamp_utc": "2026-07-24T15:40:18.862603Z"}
+{"check": "docker_image_ids_and_versions", "event": "check_started", "timestamp_utc": "2026-07-24T15:40:18.862695Z"}
+{"check": "docker_image_ids_and_versions", "error": null, "event": "check_finished", "status": "passed", "timestamp_utc": "2026-07-24T15:40:23.303267Z"}
+{"check": "gpu_and_cuda_matmul", "event": "check_started", "timestamp_utc": "2026-07-24T15:40:23.303374Z"}
+{"check": "gpu_and_cuda_matmul", "error": null, "event": "check_finished", "status": "passed", "timestamp_utc": "2026-07-24T15:40:23.612900Z"}
+{"check": "canonical_input_sha256", "event": "check_started", "timestamp_utc": "2026-07-24T15:40:23.612977Z"}
+{"bytes": 110979201, "event": "input_hash_started", "path": "phases/p0-audit/data/raw/als/690_5335.laz", "timestamp_utc": "2026-07-24T15:40:23.613015Z"}
+{"event": "input_hash_finished", "matches_lock": true, "path": "phases/p0-audit/data/raw/als/690_5335.laz", "timestamp_utc": "2026-07-24T15:40:23.694020Z"}
+{"bytes": 119749181, "event": "input_hash_started", "path": "phases/p0-audit/data/raw/als/690_5336.laz", "timestamp_utc": "2026-07-24T15:40:23.694103Z"}
+{"event": "input_hash_finished", "matches_lock": true, "path": "phases/p0-audit/data/raw/als/690_5336.laz", "timestamp_utc": "2026-07-24T15:40:23.777425Z"}
+{"bytes": 107359041, "event": "input_hash_started", "path": "phases/p0-audit/data/raw/als/691_5335.laz", "timestamp_utc": "2026-07-24T15:40:23.777506Z"}
+{"event": "input_hash_finished", "matches_lock": true, "path": "phases/p0-audit/data/raw/als/691_5335.laz", "timestamp_utc": "2026-07-24T15:40:23.853202Z"}
+{"bytes": 132681326, "event": "input_hash_started", "path": "phases/p0-audit/data/raw/als/691_5336.laz", "timestamp_utc": "2026-07-24T15:40:23.853281Z"}
+{"event": "input_hash_finished", "matches_lock": true, "path": "phases/p0-audit/data/raw/als/691_5336.laz", "timestamp_utc": "2026-07-24T15:40:23.944144Z"}
+{"bytes": 5906891973, "event": "input_hash_started", "path": "phases/p0-audit/data/raw/uav/Images.zip", "timestamp_utc": "2026-07-24T15:40:23.944228Z"}
+{"event": "input_hash_finished", "matches_lock": true, "path": "phases/p0-audit/data/raw/uav/Images.zip", "timestamp_utc": "2026-07-24T15:40:32.977090Z"}
+{"bytes": 64, "event": "input_hash_started", "path": "results/tum_transfer/data_geoidfix/sparse/0/cameras.bin", "timestamp_utc": "2026-07-24T15:40:32.977188Z"}
+{"event": "input_hash_finished", "matches_lock": true, "path": "results/tum_transfer/data_geoidfix/sparse/0/cameras.bin", "timestamp_utc": "2026-07-24T15:40:32.977473Z"}
+{"bytes": 114415526, "event": "input_hash_started", "path": "results/tum_transfer/data_geoidfix/sparse/0/images.bin", "timestamp_utc": "2026-07-24T15:40:32.977502Z"}
+{"event": "input_hash_finished", "matches_lock": true, "path": "results/tum_transfer/data_geoidfix/sparse/0/images.bin", "timestamp_utc": "2026-07-24T15:40:33.061743Z"}
+{"bytes": 33476840, "event": "input_hash_started", "path": "results/tum_transfer/data_geoidfix/sparse/0/points3D.bin", "timestamp_utc": "2026-07-24T15:40:33.061826Z"}
+{"event": "input_hash_finished", "matches_lock": true, "path": "results/tum_transfer/data_geoidfix/sparse/0/points3D.bin", "timestamp_utc": "2026-07-24T15:40:33.092380Z"}
+{"bytes": 5521408, "event": "input_hash_started", "path": "phases/p0-audit/data/work/footprints/lod2_ground_plan.gpkg", "timestamp_utc": "2026-07-24T15:40:33.092458Z"}
+{"event": "input_hash_finished", "matches_lock": true, "path": "phases/p0-audit/data/work/footprints/lod2_ground_plan.gpkg", "timestamp_utc": "2026-07-24T15:40:33.097961Z"}
+{"bytes": 156656509, "event": "input_hash_started", "path": "phases/p0-audit/data/raw/lod2/690_5334.gml", "timestamp_utc": "2026-07-24T15:40:33.098008Z"}
+{"event": "input_hash_finished", "matches_lock": true, "path": "phases/p0-audit/data/raw/lod2/690_5334.gml", "timestamp_utc": "2026-07-24T15:40:33.210641Z"}
+{"bytes": 147865939, "event": "input_hash_started", "path": "phases/p0-audit/data/raw/lod2/690_5336.gml", "timestamp_utc": "2026-07-24T15:40:33.210728Z"}
+{"event": "input_hash_finished", "matches_lock": true, "path": "phases/p0-audit/data/raw/lod2/690_5336.gml", "timestamp_utc": "2026-07-24T15:40:33.319181Z"}
+{"event": "image_set_hash_started", "path": "results/tum_transfer/data_geoidfix/images", "timestamp_utc": "2026-07-24T15:40:33.319261Z"}
+{"event": "image_set_hash_finished", "file_count": 937, "matches_lock": true, "path": "results/tum_transfer/data_geoidfix/images", "timestamp_utc": "2026-07-24T15:40:33.905840Z", "total_bytes": 910980034}
+{"check": "canonical_input_sha256", "error": null, "event": "check_finished", "status": "passed", "timestamp_utc": "2026-07-24T15:40:33.906074Z"}
+{"check": "host_container_mount_and_resume_provenance", "event": "check_started", "timestamp_utc": "2026-07-24T15:40:33.906100Z"}
+{"check": "host_container_mount_and_resume_provenance", "error": null, "event": "check_finished", "status": "passed_with_caveat", "timestamp_utc": "2026-07-24T15:40:33.906715Z"}
+{"check": "epsg_class_and_datum_lock", "event": "check_started", "timestamp_utc": "2026-07-24T15:40:33.906742Z"}
+{"check": "epsg_class_and_datum_lock", "error": null, "event": "check_finished", "status": "passed_with_caveat", "timestamp_utc": "2026-07-24T15:40:40.514418Z"}
+{"check": "no_active_training_guard", "event": "check_started", "timestamp_utc": "2026-07-24T15:40:40.514513Z"}
+{"check": "no_active_training_guard", "error": null, "event": "check_finished", "status": "passed", "timestamp_utc": "2026-07-24T15:40:40.742093Z"}
+{"check": "readout_serial_24g_cgroup_plan", "event": "check_started", "timestamp_utc": "2026-07-24T15:40:40.742165Z"}
+{"check": "readout_serial_24g_cgroup_plan", "error": null, "event": "check_finished", "status": "passed", "timestamp_utc": "2026-07-24T15:40:40.772079Z"}
+{"event": "preflight_finished", "output": "phases/p2-gsjso/runs/20260724_fusion_w1/preflight_resume.json", "output_sha256": "a38fbaf03999d3d6738dab72ce40024fcad15d608cf52d09bd9cee486c9c1b78", "status": "PASSED", "status_receipt": "phases/p2-gsjso/runs/20260724_fusion_w1/preflight_resume_status.json", "timestamp_utc": "2026-07-24T15:40:40.845538Z"}
