@@ -845,11 +845,25 @@ def validate_host_control_mirror(
 
 def sha256sum_stream_aggregate(
     logical_root: Path,
+    *,
+    logical_prefix: str | None = None,
 ) -> tuple[str, int, int]:
     if not logical_root.is_dir():
         raise RuntimeGuardError(
             f"training image directory is missing: {logical_root}"
         )
+    prefix: str | None = None
+    if logical_prefix is not None:
+        prefix_path = Path(logical_prefix)
+        if (
+            prefix_path.is_absolute()
+            or ".." in prefix_path.parts
+            or not prefix_path.parts
+        ):
+            raise RuntimeGuardError(
+                "training image logical prefix must be repository-relative"
+            )
+        prefix = prefix_path.as_posix().rstrip("/")
     files = sorted(
         (path for path in logical_root.iterdir() if path.is_file()),
         key=lambda path: path.as_posix().encode("utf-8"),
@@ -860,7 +874,11 @@ def sha256sum_stream_aggregate(
         digest = sha256_file(path)
         size = path.stat().st_size
         total_bytes += size
-        logical = path.relative_to(REPO_ROOT).as_posix()
+        logical = (
+            f"{prefix}/{path.name}"
+            if prefix is not None
+            else path.relative_to(REPO_ROOT).as_posix()
+        )
         aggregate.update(f"{digest}  {logical}\n".encode("utf-8"))
     return aggregate.hexdigest(), len(files), total_bytes
 
@@ -1013,7 +1031,10 @@ def rehash_gate_inputs(
             "Gate image path differs from immutable preflight image path"
         )
     image_root = repo_path(image_relative)
-    aggregate, count, total_bytes = sha256sum_stream_aggregate(image_root)
+    aggregate, count, total_bytes = sha256sum_stream_aggregate(
+        image_root,
+        logical_prefix=image_relative,
+    )
     expected_aggregate = str(
         image_lock.get("expected_sha256sum_stream_aggregate")
         or image_lock.get("sha256sum_stream_aggregate")

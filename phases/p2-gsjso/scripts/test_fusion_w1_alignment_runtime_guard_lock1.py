@@ -215,6 +215,31 @@ class FusionW1AlignmentRuntimeGuardTests(unittest.TestCase):
             self.assertEqual(count, 2)
             self.assertEqual(total, 2)
 
+    def test_training_image_aggregate_preserves_locked_symlink_path(self) -> None:
+        with tempfile.TemporaryDirectory(
+            prefix="fusion_w1_guard_symlink_images."
+        ) as temporary:
+            root = Path(temporary)
+            physical = root / "physical" / "images"
+            physical.mkdir(parents=True)
+            (physical / "a.JPG").write_bytes(b"A")
+            logical_parent = root / "logical"
+            logical_parent.mkdir()
+            (logical_parent / "images").symlink_to(physical)
+            with mock.patch.object(guard, "REPO_ROOT", root):
+                resolved = guard.repo_path("logical/images")
+                observed, count, total = guard.sha256sum_stream_aggregate(
+                    resolved,
+                    logical_prefix="logical/images",
+                )
+            digest = hashlib.sha256(b"A").hexdigest()
+            expected = hashlib.sha256(
+                f"{digest}  logical/images/a.JPG\n".encode("utf-8")
+            ).hexdigest()
+            self.assertEqual(observed, expected)
+            self.assertEqual(count, 1)
+            self.assertEqual(total, 1)
+
     def test_process_scan_finds_training_and_ignores_guard(self) -> None:
         patterns = self.config["execution_guard"][
             "local_namespace_forbidden_command_regexes"

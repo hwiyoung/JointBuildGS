@@ -64,3 +64,13 @@
 - Regression locks: direct square-side offsets (median 6 px, P90 7 px rather than translation norm), 40/60 asymmetric median, varying pointwise Jacobians (median 0.30 m, P90 0.68 m), censored unmatched inclusion, wrong-normal rejection, deterministic spatial-null rejection, equal-building weighting under unequal view counts, rank-deficient fail-closed, front/rear z-buffer selection, and footprint perturbation versus class-6 source movement.
 - Verification: Gate/config/test SHA-256 are `e640118c37e3909e7c4fea61a18c98355d55c6848956e5cc43be61c7bbdab252`, `db936d742f3933c6d29a7d7ae5796ae63a44470108c7f8439025fb5a10bb55c8`, and `2f30a28f0854beef12f50dad1ec5adc3a0ddf5dae715e4a03d4a032f038f2c30`. The pinned read-only Docker run passed Gate 24/24, runtime guard 14/14, and checkpoint 10/10 (48/48).
 - Scientific impact: none. The correction was completed before any training-image Gate residual was read; `gate_a_measurements_started=0`, `learning_runs_started=0`, `readout_runs_started=0`, `scoring_runs_started=0`.
+
+## FUS-W1-ALIGN-RUN-001 — logical image-path aggregate restored
+
+- Recorded: 2026-07-25 07:32 KST
+- Stage: first committed Gate A launch, before residual measurement
+- Status: RECOVERED BEFORE MEASUREMENT
+- Evidence: the runtime guard stopped with `training image aggregate differs from immutable preflight`. The image directory is the locked logical symlink `results/tum_transfer/data_geoidfix/images`; resolving it before constructing `sha256sum` stream labels changed only the path prefix to the physical target. The resulting aggregate was `62760e95b4396192b2cfc2a4a9d32fad029d5d046266b82d2a40d8478f0bdcf0`, while file count and total bytes remained exactly `937` and `910980034`.
+- Recovery: the guard still resolves and constrains the directory to the repository for safe file reads, but constructs the hash stream with the immutable logical repo-relative prefix. The recomputed aggregate is `dedc4251e491a9ae40d7c91073410cbf504023b6fe3143238b2528dc3146308a`, exactly matching preflight. A symlink-path regression test was added.
+- Verification: runtime guard/test SHA-256 are `e5ab71b2b03c9d5e0f906d8b5015cd9945c0aba07704579cf276553da5a5b73b` and `b512cc04f97b095d2b8bf2db007435fed8b560c0fbdbe5dd1d3a223e6e75ac1c`. Pinned read-only Docker tests passed Gate 24/24, runtime 15/15, checkpoint 10/10 (49/49); a live in-container rehash returned the locked aggregate, count, and bytes.
+- Scientific impact: none. The first launch stopped in the runtime guard before view selection or training-image residual measurement; `gate_a_measurements_started=0`, `learning_runs_started=0`, `readout_runs_started=0`, `scoring_runs_started=0`.
