@@ -198,6 +198,20 @@ class DistortionScheduleTest(unittest.TestCase):
             100.0,
         )
 
+    def test_zero_weight_ablation_stays_exactly_zero_under_exp_decay(self) -> None:
+        for iteration in (0, 1, 14999, 29999):
+            self.assertEqual(
+                _scheduled_weight(
+                    0.0,
+                    iteration,
+                    0,
+                    "exp_decay",
+                    30000,
+                    final_weight=0.0,
+                ),
+                0.0,
+            )
+
 
 if __name__ == "__main__":
     unittest.main()

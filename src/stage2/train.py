@@ -622,6 +622,13 @@ def _scheduled_weight(
     mirrors CityGSV2's multiplicative decay, with an optional absolute final
     weight for experiments that state the endpoint directly.
     """
+    # An ablation that removes a term must remain exactly zero.  The logarithmic
+    # epsilon used by exponential interpolation must never resurrect a
+    # registered zero-weight loss as a tiny non-zero contribution.
+    if float(base_weight) == 0.0 and (
+        final_weight is None or float(final_weight) == 0.0
+    ):
+        return 0.0
     if schedule in ("constant", "ramp"):
         return base_weight * _ramp_weight_scale(it, warmup, schedule, ramp_steps)
     if it < warmup:
