@@ -54,6 +54,21 @@ class FusionW1TrainingTests(unittest.TestCase):
             "preprocess/",
             "training/",
         ]
+        amendment = json.loads(
+            (
+                REAL_CONFIG.parent
+                / "fusion_w1_cutoff_amendment_20260726.json"
+            ).read_text(encoding="utf-8")
+        )
+        amendment_path = self.repo / "cutoff_amendment.json"
+        amendment_path.write_text(
+            json.dumps(amendment, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        self.config["launch_contract"]["cutoff_amendment"] = {
+            "path": "cutoff_amendment.json",
+            "sha256": digest(amendment_path),
+        }
         self.building_id = "DEBY_LOD2_42364609"
         self.manifest_path = (
             self.repo
@@ -212,6 +227,9 @@ class FusionW1TrainingTests(unittest.TestCase):
 
     def test_locked_config_contains_required_recipe(self):
         cfg = fw.load_driver_config(REAL_CONFIG)
+        amendment = fw.validate_cutoff_amendment(fw.REPO, cfg)
+        self.assertEqual(amendment["status"], "PASSED")
+        self.assertEqual(amendment["decision"], "ABOLISH_0630_CUTOFF")
         recipe = cfg["recipe"]
         self.assertEqual(recipe["max_iter"], 30000)
         self.assertEqual(recipe["run_seeds"], {"r1": 1001, "r2": 1002})
@@ -484,6 +502,22 @@ class FusionW1TrainingTests(unittest.TestCase):
         before = at_cutoff.replace(minute=29, second=59)
         result = fw._cutoff_check(cutoff, now=before)
         self.assertEqual(result["seconds_remaining"], 1.0)
+
+    def test_human_amendment_allows_start_after_original_cutoff(self):
+        cutoff = self.config["launch_contract"]["cutoff_kst"]
+        amendment = fw.validate_cutoff_amendment(self.repo, self.config)
+        after = datetime.fromisoformat(cutoff).replace(hour=7, minute=0)
+        result = fw._cutoff_check(cutoff, now=after, amendment=amendment)
+        self.assertTrue(result["original_cutoff_reached"])
+        self.assertEqual(result["seconds_since_original_cutoff"], 1800.0)
+        self.assertEqual(result["policy"], "HUMAN_AMENDMENT_ABOLISHED_CUTOFF")
+        self.assertEqual(result["amendment"]["sha256"], amendment["sha256"])
+
+    def test_cutoff_amendment_hash_drift_fails_closed(self):
+        path = self.repo / self.config["launch_contract"]["cutoff_amendment"]["path"]
+        path.write_text("{}\n", encoding="utf-8")
+        with self.assertRaisesRegex(fw.ContractError, "cutoff amendment SHA-256"):
+            fw.validate_cutoff_amendment(self.repo, self.config)
 
     def test_exclusive_receipt_rejects_second_claim(self):
         path = self.repo / "started.json"

@@ -1,0 +1,25 @@
+{
+  "schema": "jointbuildgs.fusion_w1.cutoff_amendment.v1",
+  "status": "APPROVED",
+  "run_id": "20260724_fusion_w1",
+  "approved_by": "김휘영",
+  "approval_date_kst": "2026-07-26",
+  "decision": "ABOLISH_0630_CUTOFF",
+  "original_cutoff_kst": "2026-07-26T06:30:00+09:00",
+  "effective_scope": {
+    "allow_new_training_launch_after_original_cutoff": true,
+    "queue_continues_until_stopped_by_human_or_existing_catastrophic_stop_rule": true
+  },
+  "unchanged_locks": {
+    "target_list": true,
+    "scales_1_to_4": true,
+    "recipe_and_starting_weights": true,
+    "queue_order": true,
+    "scoring_scripts": true,
+    "corrected_pose_binding": true,
+    "gate_a_v2_pass": true,
+    "smoke_building_first": true,
+    "serial_readout_and_ram_cgroup": true
+  },
+  "instruction_record": "In-session explicit human direction abolished the 06:30 cutoff and requested background 30k training; all other preregistered locks remain unchanged."
+}

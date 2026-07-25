@@ -43,6 +43,10 @@
       "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/",
       "phases/p2-gsjso/runs/20260724_fusion_w1/p0prime/",
       "phases/p2-gsjso/runs/20260724_fusion_w1/training/",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/readout_v1/",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/partial_closeout_v1.lock",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/w1_scores_building.csv.lock",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/w1_seed_p0prime_scores.csv.lock",
       "phases/p2-gsjso/runs/20260724_fusion_w1/w1_loss_shares.csv",
       "phases/p2-gsjso/runs/20260724_fusion_w1/w1_loss_shares.csv.lock"
     ]
@@ -164,6 +168,10 @@
   },
   "launch_contract": {
     "cutoff_kst": "2026-07-26T06:30:00+09:00",
+    "cutoff_amendment": {
+      "path": "phases/p2-gsjso/configs/fusion_w1_cutoff_amendment_20260726.json",
+      "sha256": "0de46c6f4d458ef55b00ebc61a57a5eff44bb1f761e425b686d36ce6e4b33636"
+    },
     "physical_gpu_choices": [
       0,
       1

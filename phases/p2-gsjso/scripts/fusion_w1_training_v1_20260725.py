@@ -255,6 +255,88 @@ def load_driver_config(path: Path) -> dict[str, Any]:
     return payload
 
 
+def validate_cutoff_amendment(
+    repo: Path, config: Mapping[str, Any]
+) -> dict[str, Any]:
+    """Load the human-approved cutoff amendment and bind its exact bytes."""
+
+    launch_contract = config.get("launch_contract")
+    if not isinstance(launch_contract, Mapping):
+        raise ContractError("launch_contract is missing")
+    locked = launch_contract.get("cutoff_amendment")
+    if not isinstance(locked, Mapping):
+        raise ContractError("cutoff amendment is missing")
+    path_value = locked.get("path")
+    expected_sha = locked.get("sha256")
+    if not isinstance(path_value, str) or not path_value:
+        raise ContractError("cutoff amendment path is missing")
+    if not isinstance(expected_sha, str) or re.fullmatch(r"[0-9a-f]{64}", expected_sha) is None:
+        raise ContractError("cutoff amendment SHA-256 is invalid")
+    path = resolve_path(repo, path_value)
+    amendment, observed_sha = load_json_snapshot(path)
+    require_equal(observed_sha, expected_sha, "cutoff amendment SHA-256")
+    require_equal(
+        amendment.get("schema"),
+        "jointbuildgs.fusion_w1.cutoff_amendment.v1",
+        "cutoff amendment schema",
+    )
+    require_equal(amendment.get("status"), "APPROVED", "cutoff amendment status")
+    require_equal(amendment.get("run_id"), config.get("run_id"), "cutoff amendment run ID")
+    require_equal(amendment.get("approved_by"), "김휘영", "cutoff amendment approver")
+    require_equal(
+        amendment.get("decision"),
+        "ABOLISH_0630_CUTOFF",
+        "cutoff amendment decision",
+    )
+    require_equal(
+        amendment.get("original_cutoff_kst"),
+        launch_contract.get("cutoff_kst"),
+        "cutoff amendment original cutoff",
+    )
+    scope = amendment.get("effective_scope")
+    if not isinstance(scope, Mapping):
+        raise ContractError("cutoff amendment effective_scope is missing")
+    require_equal(
+        scope.get("allow_new_training_launch_after_original_cutoff"),
+        True,
+        "cutoff amendment post-cutoff launch approval",
+    )
+    require_equal(
+        scope.get(
+            "queue_continues_until_stopped_by_human_or_existing_catastrophic_stop_rule"
+        ),
+        True,
+        "cutoff amendment queue continuation",
+    )
+    unchanged = amendment.get("unchanged_locks")
+    required_unchanged = (
+        "target_list",
+        "scales_1_to_4",
+        "recipe_and_starting_weights",
+        "queue_order",
+        "scoring_scripts",
+        "corrected_pose_binding",
+        "gate_a_v2_pass",
+        "smoke_building_first",
+        "serial_readout_and_ram_cgroup",
+    )
+    if not isinstance(unchanged, Mapping):
+        raise ContractError("cutoff amendment unchanged_locks is missing")
+    for key in required_unchanged:
+        require_equal(unchanged.get(key), True, f"cutoff amendment unchanged lock {key}")
+    return {
+        "status": "PASSED",
+        "path": repo_relative(repo, path),
+        "sha256": observed_sha,
+        "approved_by": amendment["approved_by"],
+        "approval_date_kst": amendment.get("approval_date_kst"),
+        "decision": amendment["decision"],
+        "original_cutoff_kst": amendment["original_cutoff_kst"],
+        "effective_scope": dict(scope),
+        "unchanged_locks": {key: True for key in required_unchanged},
+    }
+
+
 def validate_optimizer_densification_base(
     repo: Path, config: Mapping[str, Any]
 ) -> dict[str, Any]:
@@ -965,6 +1047,7 @@ def materialize(
     if require_docker:
         require_docker_materializer()
     git = validate_git_state(repo, config)
+    cutoff_amendment = validate_cutoff_amendment(repo, config)
     bindings = validate_r1_r2(repo, config)
     preprocess = validate_preprocess(repo, config, building_id)
     target = job_dir(repo, config, building_id, arm, run)
@@ -1037,6 +1120,7 @@ def materialize(
         "git": git,
         "driver_config": repo_relative(repo, config_path),
         "driver_config_sha256": config_sha,
+        "cutoff_amendment": cutoff_amendment,
         "bindings": bindings,
         "preprocess": preprocess,
         "view_roles": {
@@ -1164,7 +1248,10 @@ def _verify_image(image: str, expected_id: str) -> dict[str, str]:
 
 
 def _cutoff_check(
-    cutoff_iso: str, *, now: datetime | None = None
+    cutoff_iso: str,
+    *,
+    now: datetime | None = None,
+    amendment: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
     cutoff = datetime.fromisoformat(cutoff_iso)
     if cutoff.tzinfo is None:
@@ -1172,16 +1259,41 @@ def _cutoff_check(
     observed = now or datetime.now(ZoneInfo("Asia/Seoul"))
     if observed.tzinfo is None:
         raise ContractError("observed launch time must be timezone-aware")
-    if observed >= cutoff:
+    reached = observed >= cutoff
+    if reached and amendment is None:
         raise ContractError(
             f"new training launch is forbidden at/after cutoff: now={observed.isoformat()} "
             f"cutoff={cutoff.isoformat()}"
+        )
+    if amendment is not None:
+        require_equal(amendment.get("status"), "PASSED", "validated cutoff amendment")
+        require_equal(
+            amendment.get("decision"),
+            "ABOLISH_0630_CUTOFF",
+            "validated cutoff amendment decision",
+        )
+        require_equal(
+            amendment.get("original_cutoff_kst"),
+            cutoff.isoformat(),
+            "validated cutoff amendment original cutoff",
         )
     return {
         "status": "PASSED",
         "observed_at": observed.isoformat(),
         "cutoff": cutoff.isoformat(),
-        "seconds_remaining": (cutoff - observed).total_seconds(),
+        "original_cutoff_reached": reached,
+        "seconds_remaining": (
+            (cutoff - observed).total_seconds() if not reached else None
+        ),
+        "seconds_since_original_cutoff": (
+            (observed - cutoff).total_seconds() if reached else None
+        ),
+        "policy": (
+            "HUMAN_AMENDMENT_ABOLISHED_CUTOFF"
+            if amendment is not None
+            else "ORIGINAL_CUTOFF"
+        ),
+        "amendment": dict(amendment) if amendment is not None else None,
     }
 
 
@@ -1544,6 +1656,12 @@ def launch(
         materialization["driver_config_sha256"],
         "driver config SHA-256 since materialization",
     )
+    cutoff_amendment = validate_cutoff_amendment(repo, config)
+    require_equal(
+        cutoff_amendment,
+        materialization.get("cutoff_amendment"),
+        "cutoff amendment snapshot since materialization",
+    )
     bindings = validate_r1_r2(repo, config)
     require_equal(bindings, materialization["bindings"], "R1/R2 binding snapshot")
     preprocess = validate_preprocess(repo, config, building_id)
@@ -1563,7 +1681,11 @@ def launch(
         materialization["resolved_config_sha256"],
         "resolved training config SHA-256",
     )
-    cutoff = _cutoff_check(config["launch_contract"]["cutoff_kst"], now=now)
+    cutoff = _cutoff_check(
+        config["launch_contract"]["cutoff_kst"],
+        now=now,
+        amendment=cutoff_amendment,
+    )
     process_guard = _probe_forbidden_processes(
         config["launch_contract"]["forbidden_process_patterns"]
     )
