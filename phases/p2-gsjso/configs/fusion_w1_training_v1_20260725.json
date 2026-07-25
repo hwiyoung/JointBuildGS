@@ -1,0 +1,188 @@
+{
+  "schema": "jointbuildgs.fusion_w1.training_driver.config.v1",
+  "task_id": "FUS-W1-TRAIN-DRIVER-20260725",
+  "run_id": "20260724_fusion_w1",
+  "branch": "exp/fusion-w1",
+  "scope": "section4_two_arm_30k_training_materialization_and_single_job_launch",
+  "inputs": {
+    "r1_pose_manifest": "phases/p2-gsjso/runs/20260724_fusion_w1/resume_v2/r1_pose_adoption_manifest.json",
+    "r1_pose_manifest_sha256": "f59cb9cc404dd1a262a3fb03df4df665514e2862d66be371baa05a372e825a42",
+    "r1_pose_manifest_schema": "jointbuildgs.fusion_w1.pose_adoption_v2.manifest.v1",
+    "r1_pose_json_pointer": "/derived_sha256/images.bin",
+    "corrected_images_sha256": "28b38383a0b6d82656108e8f0e5e79711dcda93948ab2e89c1cd8f47215962a5",
+    "required_transform_application_count": 1,
+    "r2_gate_manifest": "phases/p2-gsjso/runs/20260724_fusion_w1/resume_v2/r2_gate_a_v2_registration.json",
+    "r2_gate_manifest_sha256": "a24697f3413b8d4b2777703e26d58234befe1c835dd282ce5da428d1c562f967",
+    "r2_gate_manifest_schema": "jointbuildgs.fusion_w1.gate_a_v2_registration.manifest.v1",
+    "r2_gate_json_pointer": "/gate_slots/status",
+    "required_gate_status": "PASS",
+    "arm_pose_bindings": {
+      "A": {
+        "path": "phases/p2-gsjso/configs/fusion_w1_arm_A_pose_binding_v2_20260725.json",
+        "sha256": "0bae45ddcf66c2586e459ada07e3a7811a1f1856a2e2669cb4fffb1cf0757207"
+      },
+      "B": {
+        "path": "phases/p2-gsjso/configs/fusion_w1_arm_B_pose_binding_v2_20260725.json",
+        "sha256": "118d5e35499e6dd4ea655932348cb44b7d8422479d352a1c2f53594a163c542a"
+      }
+    },
+    "optimizer_densification_base": {
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/resolved_configs/02_seed1001.yaml",
+      "sha256": "47e3f10335bc7ced21bfe842c8ea33387bded5e3f198234d7ac8037840d69a40",
+      "condition": "02_photo_control",
+      "reuse": "common_survival_photo_optimizer_and_densification_base"
+    },
+    "preprocess_root": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826",
+    "preprocess_building_schema": "jointbuildgs.fusion_w1.preprocess_building.v1",
+    "preprocess_required_status": "PASSED"
+  },
+  "git_contract": {
+    "required_ancestor": "53ff2899ce974d939f8e2eaa4caa0a3e38e6ce63",
+    "materialization_head_is_launch_head": true,
+    "allowed_runtime_untracked_prefixes": [
+      "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/p0prime/",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/training/",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/w1_loss_shares.csv",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/w1_loss_shares.csv.lock"
+    ]
+  },
+  "recipe": {
+    "max_iter": 30000,
+    "run_seeds": {
+      "r1": 1001,
+      "r2": 1002
+    },
+    "init_pointcloud_mode": "replace",
+    "mvs_seed_init_opacity": 0.25,
+    "seed_protect": true,
+    "seed_protect_until_iter": null,
+    "downscale": 1.0,
+    "sh_degree": 3,
+    "sh_up_every": 1000,
+    "w_photo": 1.0,
+    "photo_lam": 0.2,
+    "load_depth": true,
+    "load_normal": true,
+    "depth_scale": 1.0,
+    "depth_schedule": "exp_decay",
+    "depth_warmup": 0,
+    "depth_ramp_steps": 30000,
+    "arm_A_depth_weight": 0.5,
+    "arm_A_depth_final_weight": 0.05,
+    "normal_schedule": "exp_decay",
+    "normal_warmup": 0,
+    "normal_ramp_steps": 30000,
+    "arm_A_normal_weight": 0.05,
+    "arm_A_normal_final_weight": 0.005,
+    "arm_B_depth_weight": 0.0,
+    "arm_B_depth_final_weight": 0.0,
+    "arm_B_normal_weight": 0.0,
+    "arm_B_normal_final_weight": 0.0,
+    "w_nc": 0.05,
+    "w_distort": 100.0,
+    "distort_normalization": "scene_scale_sq",
+    "distort_schedule": "ramp",
+    "distort_warmup": 15000,
+    "distort_ramp_steps": 5000,
+    "load_semantic": false,
+    "seed_semantic": false,
+    "w_sem": 0.0,
+    "w_mutual": 0.0,
+    "w_structure": 0.0,
+    "w_mvc": 0.0,
+    "w_plane": 0.0,
+    "w_mono_depth": 0.0,
+    "w_mono_normal_aux": 0.0,
+    "w_semdepth_smooth": 0.0,
+    "w_semdepth_plane": 0.0,
+    "w_boundary_normal": 0.0,
+    "lr_means": 0.00016,
+    "lr_scales": 0.005,
+    "lr_quats": 0.001,
+    "lr_opacities": 0.05,
+    "lr_sh0": 0.0025,
+    "lr_shN": 0.000125,
+    "prune_opa": 0.005,
+    "grow_grad2d": 0.001,
+    "grow_scale3d": 0.01,
+    "prune_scale3d": 0.1,
+    "refine_start_iter": 500,
+    "refine_stop_iter": 15000,
+    "refine_every": 200,
+    "reset_every": 3000,
+    "eval_every": 2000,
+    "ckpt_every": 5000,
+    "full_state_checkpoint": true,
+    "full_state_checkpoint_steps": [
+      5000,
+      10000,
+      15000,
+      20000,
+      25000,
+      30000
+    ],
+    "full_state_loss_csv_paths": [
+      "audit/loss_grad_norms.csv"
+    ],
+    "full_state_resume": "off",
+    "loss_grad_audit_every": 500
+  },
+  "view_contract": {
+    "minimum_preprocess_views": 10,
+    "maximum_preprocess_views": 30,
+    "minimum_training_views": 10,
+    "reserve_one_eval_when_total_at_least": 11,
+    "ten_view_policy": "all_train_explicit_empty_eval",
+    "eval_selection": "last_preprocess_selected_view"
+  },
+  "ablation_contract": {
+    "only_scientific_difference_keys": [
+      "w_depth",
+      "depth_final_weight",
+      "w_normal",
+      "normal_final_weight"
+    ],
+    "schedule_metadata_identical": true,
+    "maps_loaded_in_both_arms": true,
+    "photo_support_masks_identical": true
+  },
+  "outputs": {
+    "training_root": "phases/p2-gsjso/runs/20260724_fusion_w1/training",
+    "job_pattern": "by_building/<building_id>/arm_<A|B>/<r1|r2>",
+    "resolved_config": "resolved_config.yaml",
+    "materialization_manifest": "materialization_manifest.json",
+    "started_receipt": "started.json",
+    "completed_receipt": "completed.json",
+    "failed_receipt": "failed.json",
+    "job_log": "training.log",
+    "loss_share_csv": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_loss_shares.csv",
+    "loss_share_csv_lock": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_loss_shares.csv.lock",
+    "loss_share_aggregation_receipt": "loss_share_aggregation_receipt.json",
+    "aggregate_runtime_counter": "runtime_counters.json",
+    "aggregate_runtime_counter_lock": "runtime_counters.json.lock"
+  },
+  "launch_contract": {
+    "cutoff_kst": "2026-07-26T06:30:00+09:00",
+    "physical_gpu_choices": [
+      0,
+      1
+    ],
+    "container_visible_gpu": 0,
+    "docker_image": "jointbuildgs:dev",
+    "docker_image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
+    "docker_service": "dev",
+    "container_repo": "/workspace/JointBuildGS",
+    "network_processing_policy": "training_in_docker_only",
+    "forbidden_process_patterns": [
+      "tum_mob_tsdf_extract",
+      "pilot_1wave_postprocess_driver",
+      "fusion_w1_seed_p0prime",
+      "run_primary4_assembly_validation",
+      "08_roofer_w2.py",
+      "pilot_1wave_scoring.py",
+      "fusion_w1.*scor",
+      "3dgi/roofer"
+    ]
+  }
+}
