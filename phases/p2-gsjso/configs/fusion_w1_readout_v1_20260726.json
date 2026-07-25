@@ -97,7 +97,7 @@
   },
   "training": {
     "driver_config": "phases/p2-gsjso/configs/fusion_w1_training_v1_20260725.json",
-    "driver_config_sha256": "88004156b05ede24425c42cd70ddf31802754a1b9bddbe40ff83ed917a6479d0",
+    "driver_config_sha256": "523a6cfd856a96e77bc2c4bc72b550c8b42fdf1aef016498763afde5332f35a4",
     "trainer_source": "src/stage2/train.py",
     "trainer_source_sha256": "00c125e5de469ec43c1dbbf17393e91c9f700e52b93624309f76cc64bb5eb39e",
     "root": "phases/p2-gsjso/runs/20260724_fusion_w1/training",
@@ -117,7 +117,7 @@
   },
   "p0prime": {
     "driver": "phases/p2-gsjso/scripts/fusion_w1_seed_p0prime_20260725.py",
-    "driver_sha256": "2cf25a252552836be23a0fb6a8acd6fcf447b54bc680c0ac5b749196869a9b11",
+    "driver_sha256": "582011ed0d68e8552827b21105e1fb9355ed708cd59b337dd6165394a10ff248",
     "scores_csv": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_seed_p0prime_scores.csv",
     "job_template": "phases/p2-gsjso/runs/20260724_fusion_w1/p0prime/by_building/{building_id}",
     "complete_receipt": "complete.json",

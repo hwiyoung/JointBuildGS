@@ -42,6 +42,10 @@ STARTED_SCHEMA = "jointbuildgs.fusion_w1.training_started.v1"
 COMPLETED_SCHEMA = "jointbuildgs.fusion_w1.training_completed.v1"
 FAILED_SCHEMA = "jointbuildgs.fusion_w1.training_failed.v1"
 COUNTER_SCHEMA = "jointbuildgs.fusion_w1.training_runtime_counters.v1"
+RETRY_POLICY_SCHEMA = "jointbuildgs.fusion_w1.training_infra_retry_policy.v1"
+RETRY_STARTED_SCHEMA = "jointbuildgs.fusion_w1.training_infra_retry_started.v1"
+RETRY_COMPLETED_SCHEMA = "jointbuildgs.fusion_w1.training_infra_retry_completed.v1"
+RETRY_FAILED_SCHEMA = "jointbuildgs.fusion_w1.training_infra_retry_failed.v1"
 CONTAINER_REPO = Path("/workspace/JointBuildGS")
 RUNS = ("r1", "r2")
 ARMS = ("A", "B")
@@ -1304,13 +1308,14 @@ def docker_command(
     resolved_config: Path,
     gpu: int,
     job_key: str,
+    extra_environment: Mapping[str, str] | None = None,
 ) -> list[str]:
     choices = tuple(int(value) for value in config["launch_contract"]["physical_gpu_choices"])
     if gpu not in choices:
         raise ContractError(f"physical GPU must be one of {choices}, got {gpu}")
     suffix = sha256_bytes(job_key.encode("utf-8"))[:12]
     name = f"jointbuildgs-fusw1-{suffix}"
-    return [
+    command = [
         "docker",
         "compose",
         "run",
@@ -1325,13 +1330,344 @@ def docker_command(
         f"NVIDIA_VISIBLE_DEVICES={gpu}",
         "-e",
         f"CUDA_VISIBLE_DEVICES={config['launch_contract']['container_visible_gpu']}",
+    ]
+    for key, value in sorted((extra_environment or {}).items()):
+        if re.fullmatch(r"[A-Z][A-Z0-9_]*", key) is None:
+            raise ContractError(f"unsafe Docker environment key: {key!r}")
+        command.extend(("-e", f"{key}={value}"))
+    command.extend(
+        [
         config["launch_contract"]["docker_service"],
         "python",
         "-m",
         "src.stage2.train",
         "--config",
         container_path(repo, resolved_config),
+        ]
+    )
+    return command
+
+
+def validate_retry_policy(
+    repo: Path, policy_path: Path, config: Mapping[str, Any]
+) -> tuple[dict[str, Any], str]:
+    path = resolve_path(repo, str(policy_path))
+    policy, digest = load_json_snapshot(path)
+    require_equal(policy.get("schema"), RETRY_POLICY_SCHEMA, "retry policy schema")
+    require_equal(policy.get("status"), "APPROVED", "retry policy status")
+    require_equal(policy.get("run_id"), config.get("run_id"), "retry policy run ID")
+    require_equal(policy.get("approved_by"), "김휘영", "retry policy approver")
+    require_equal(
+        policy.get("retry_kind"),
+        "GSPLAT_JIT_CACHE_PERMISSION_PREOPTIMIZER",
+        "retry policy kind",
+    )
+    require_equal(policy.get("maximum_retries_per_job"), 1, "retry maximum")
+    materialization_head = policy.get("required_materialization_head")
+    if not isinstance(materialization_head, str) or re.fullmatch(
+        r"[0-9a-f]{40}", materialization_head
+    ) is None:
+        raise ContractError("retry required materialization HEAD is invalid")
+    require_equal(
+        policy.get("required_retry_commit_distance"), 1, "retry commit distance"
+    )
+    allowed_commit_paths = policy.get("allowed_retry_commit_paths")
+    if not isinstance(allowed_commit_paths, list) or not allowed_commit_paths:
+        raise ContractError("retry commit path allowlist is missing")
+    require_equal(policy.get("attempt_directory"), "infra_retry_01", "retry directory")
+    require_equal(
+        policy.get("allowed_resolved_config_differences"),
+        ["out_dir"],
+        "retry resolved-config difference allowlist",
+    )
+    environment = policy.get("writable_environment")
+    required_environment = {"HOME", "XDG_CACHE_HOME", "TORCH_EXTENSIONS_DIR"}
+    if not isinstance(environment, Mapping) or set(environment) != required_environment:
+        raise ContractError("retry writable environment must contain exactly HOME, XDG_CACHE_HOME, TORCH_EXTENSIONS_DIR")
+    for key, value in environment.items():
+        candidate = Path(str(value))
+        if candidate.is_absolute() or ".." in candidate.parts or not candidate.parts:
+            raise ContractError(f"unsafe retry environment path for {key}: {value!r}")
+    preservation = policy.get("preservation_contract")
+    if not isinstance(preservation, Mapping) or not all(
+        preservation.get(key) is True
+        for key in (
+            "original_started_receipt_immutable",
+            "original_failed_receipt_immutable",
+            "original_log_immutable",
+            "original_partial_outputs_immutable",
+            "retry_receipts_exclusive",
+            "retry_from_optimizer_step_zero",
+        )
+    ):
+        raise ContractError("retry preservation contract is incomplete")
+    required_failure = policy.get("required_failure")
+    if not isinstance(required_failure, Mapping):
+        raise ContractError("retry required failure contract is missing")
+    artifact_sha256 = required_failure.get("artifact_sha256")
+    required_artifacts = {"started", "failed", "log", "full_state"}
+    if not isinstance(artifact_sha256, Mapping) or set(artifact_sha256) != required_artifacts:
+        raise ContractError(
+            "retry original artifact SHA-256 contract must contain exactly "
+            "started, failed, log, full_state"
+        )
+    for label, digest_value in artifact_sha256.items():
+        if not isinstance(digest_value, str) or re.fullmatch(
+            r"[0-9a-f]{64}", digest_value
+        ) is None:
+            raise ContractError(
+                f"retry original {label} SHA-256 is invalid: {digest_value!r}"
+            )
+    return {
+        "path": repo_relative(repo, path),
+        "sha256": digest,
+        "schema": policy["schema"],
+        "status": policy["status"],
+        "run_id": policy["run_id"],
+        "approved_by": policy["approved_by"],
+        "approval_date_kst": policy.get("approval_date_kst"),
+        "retry_kind": policy["retry_kind"],
+        "required_materialization_head": materialization_head,
+        "required_retry_commit_distance": 1,
+        "allowed_retry_commit_paths": list(allowed_commit_paths),
+        "maximum_retries_per_job": 1,
+        "required_failure": {
+            **dict(required_failure),
+            "artifact_sha256": dict(artifact_sha256),
+        },
+        "attempt_directory": policy["attempt_directory"],
+        "writable_environment": dict(environment),
+        "allowed_resolved_config_differences": ["out_dir"],
+        "preservation_contract": dict(preservation),
+    }, digest
+
+
+def _job_file_snapshot(target: Path, *, excluded_directory: str) -> dict[str, str]:
+    snapshot: dict[str, str] = {}
+    for path in sorted(target.rglob("*")):
+        relative = path.relative_to(target)
+        if relative.parts and relative.parts[0] == excluded_directory:
+            continue
+        if path.is_symlink():
+            raise ContractError(f"retry source contains a symlink: {path}")
+        if path.is_file():
+            snapshot[str(relative)] = sha256_file(path)
+    return snapshot
+
+
+def _require_job_snapshot(
+    target: Path, expected: Mapping[str, str], *, excluded_directory: str
+) -> None:
+    observed = _job_file_snapshot(target, excluded_directory=excluded_directory)
+    require_equal(observed, dict(expected), "original failed-attempt file snapshot")
+
+
+def _verify_preoptimizer_cache_failure(
+    *,
+    repo: Path,
+    config: Mapping[str, Any],
+    target: Path,
+    materialization: Mapping[str, Any],
+    materialization_sha256: str,
+    policy: Mapping[str, Any],
+) -> dict[str, Any]:
+    outputs = config["outputs"]
+    started_path = target / outputs["started_receipt"]
+    failed_path = target / outputs["failed_receipt"]
+    completed_path = target / outputs["completed_receipt"]
+    log_path = target / outputs["job_log"]
+    full_state_path = target / "full_state_manifest.json"
+    if completed_path.exists() or completed_path.is_symlink():
+        raise ContractError("infrastructure retry forbidden after a completion receipt")
+    started, started_sha = load_json_snapshot(started_path)
+    failed, failed_sha = load_json_snapshot(failed_path)
+    full_state, full_state_sha = load_json_snapshot(full_state_path)
+    require_equal(started.get("schema"), STARTED_SCHEMA, "original started schema")
+    require_equal(failed.get("schema"), FAILED_SCHEMA, "original failed schema")
+    require_equal(
+        started.get("job_key"), failed.get("job_key"), "original failure job key"
+    )
+    require_equal(
+        started.get("materialization_manifest_sha256"),
+        materialization_sha256,
+        "original started materialization SHA-256",
+    )
+    required = policy["required_failure"]
+    pinned_sha256 = required["artifact_sha256"]
+    require_equal(started_sha, pinned_sha256["started"], "original started SHA-256")
+    require_equal(failed_sha, pinned_sha256["failed"], "original failed SHA-256")
+    require_equal(
+        full_state_sha,
+        pinned_sha256["full_state"],
+        "original full-state SHA-256",
+    )
+    require_equal(failed.get("return_code"), required["return_code"], "failure return code")
+    log_sha = sha256_file(log_path)
+    require_equal(log_sha, pinned_sha256["log"], "original training log SHA-256")
+    require_equal(log_sha, failed.get("log_sha256"), "original failed log SHA-256")
+    log_text = log_path.read_text(encoding="utf-8")
+    for marker in required["log_markers"]:
+        if marker not in log_text:
+            raise ContractError(f"required infrastructure failure marker is absent: {marker}")
+    require_equal(
+        full_state.get("schema"),
+        "jointbuildgs.stage2.resume_manifest.v1",
+        "preoptimizer full-state schema",
+    )
+    for key in ("learning_runs_started", "last_completed_steps", "start_completed_steps"):
+        require_equal(full_state.get(key), 0, f"preoptimizer {key}")
+    require_equal(
+        full_state.get("learning_runs_incremented_this_process"),
+        False,
+        "preoptimizer learning-run increment",
+    )
+    require_equal(
+        full_state.get("latest_full_checkpoint"),
+        required["latest_full_checkpoint"],
+        "preoptimizer latest checkpoint",
+    )
+    checkpoint_files = [path for path in (target / "ckpt").rglob("*") if path.is_file()] if (target / "ckpt").exists() else []
+    if checkpoint_files:
+        raise ContractError(f"preoptimizer retry found checkpoint files: {checkpoint_files[:3]}")
+    loss_files = [
+        target / "audit/loss_grad_norms.csv",
+        target / "audit/semantic_geometry.csv",
+        target / "audit/semantic_target_observations.csv",
     ]
+    existing_loss = [path for path in loss_files if path.exists() or path.is_symlink()]
+    if existing_loss:
+        raise ContractError(f"preoptimizer retry found loss CSV files: {existing_loss}")
+    attempt_name = str(policy["attempt_directory"])
+    attempt = target / attempt_name
+    if attempt.exists() or attempt.is_symlink():
+        raise ContractError("the one permitted infrastructure retry was already claimed")
+    snapshot = _job_file_snapshot(target, excluded_directory=attempt_name)
+    return {
+        "started": {"path": repo_relative(repo, started_path), "sha256": started_sha},
+        "failed": {"path": repo_relative(repo, failed_path), "sha256": failed_sha},
+        "log": {"path": repo_relative(repo, log_path), "sha256": log_sha},
+        "full_state": {
+            "path": repo_relative(repo, full_state_path),
+            "sha256": full_state_sha,
+            "learning_runs_started": 0,
+            "last_completed_steps": 0,
+            "latest_full_checkpoint": None,
+        },
+        "checkpoint_files": 0,
+        "loss_csv_files": 0,
+        "original_file_snapshot": snapshot,
+        "original_file_snapshot_sha256": sha256_bytes(canonical_json_bytes(snapshot)),
+    }
+
+
+def _validate_retry_git_state(
+    repo: Path,
+    config: Mapping[str, Any],
+    materialization: Mapping[str, Any],
+    policy: Mapping[str, Any],
+) -> dict[str, Any]:
+    git = validate_git_state(repo, config)
+    original_head = materialization.get("git", {}).get("head")
+    require_equal(
+        original_head,
+        policy["required_materialization_head"],
+        "retry materialization HEAD",
+    )
+    current_head = git["head"]
+    _run_git(repo, "merge-base", "--is-ancestor", original_head, current_head)
+    distance_text = _run_git(repo, "rev-list", "--count", f"{original_head}..{current_head}")
+    try:
+        distance = int(distance_text)
+    except ValueError as exc:
+        raise ContractError(f"invalid retry commit distance: {distance_text!r}") from exc
+    require_equal(
+        distance, policy["required_retry_commit_distance"], "retry commit distance"
+    )
+    observed_paths = sorted(
+        line
+        for line in _run_git(repo, "diff", "--name-only", original_head, current_head).splitlines()
+        if line
+    )
+    require_equal(
+        observed_paths,
+        sorted(policy["allowed_retry_commit_paths"]),
+        "retry implementation commit paths",
+    )
+    return {
+        **git,
+        "materialization_head": original_head,
+        "retry_head": current_head,
+        "commit_distance": distance,
+        "changed_paths": observed_paths,
+    }
+
+
+def _prepare_retry_attempt(
+    *,
+    repo: Path,
+    target: Path,
+    resolved: Path,
+    policy: Mapping[str, Any],
+) -> tuple[Path, Path, dict[str, str], dict[str, Any]]:
+    attempt = target / str(policy["attempt_directory"])
+    attempt.mkdir(parents=True, exist_ok=False)
+    try:
+        original = yaml.safe_load(resolved.read_text(encoding="utf-8"))
+    except (OSError, yaml.YAMLError) as exc:
+        raise ContractError(f"cannot load original resolved config for retry: {exc}") from exc
+    if not isinstance(original, Mapping):
+        raise ContractError("original resolved config root is not a mapping")
+    retry_config = dict(original)
+    if "out" in retry_config:
+        raise ContractError("resolved training config contains noncanonical output key 'out'")
+    if "out_dir" not in retry_config:
+        raise ContractError("resolved training config is missing canonical output key 'out_dir'")
+    original_out = retry_config.get("out_dir")
+    retry_config["out_dir"] = container_path(repo, attempt)
+    difference_keys = sorted(
+        key
+        for key in set(original) | set(retry_config)
+        if original.get(key) != retry_config.get(key)
+    )
+    require_equal(
+        difference_keys,
+        policy["allowed_resolved_config_differences"],
+        "infrastructure retry resolved-config differences",
+    )
+    retry_resolved = attempt / "resolved_config.yaml"
+    atomic_text(
+        retry_resolved,
+        yaml.safe_dump(
+            retry_config,
+            sort_keys=False,
+            allow_unicode=True,
+            default_flow_style=False,
+        ),
+    )
+    environment: dict[str, str] = {}
+    environment_paths: dict[str, str] = {}
+    for key, relative in policy["writable_environment"].items():
+        path = (attempt / str(relative)).resolve()
+        try:
+            path.relative_to(attempt.resolve())
+        except ValueError as exc:
+            raise ContractError(f"retry environment escapes attempt directory: {key}") from exc
+        path.mkdir(parents=True, exist_ok=False)
+        environment[key] = container_path(repo, path)
+        environment_paths[key] = repo_relative(repo, path)
+    provenance = {
+        "original_resolved_config": repo_relative(repo, resolved),
+        "original_resolved_config_sha256": sha256_file(resolved),
+        "retry_resolved_config": repo_relative(repo, retry_resolved),
+        "retry_resolved_config_sha256": sha256_file(retry_resolved),
+        "difference_keys": difference_keys,
+        "original_out": original_out,
+        "retry_out": retry_config["out_dir"],
+        "seed": retry_config.get("seed"),
+        "max_iter": retry_config.get("max_iter"),
+        "environment_paths": environment_paths,
+    }
+    return attempt, retry_resolved, environment, provenance
 
 
 def _counter_update(
@@ -1366,16 +1702,32 @@ def _counter_update(
             "docker_started": "docker_processes_started",
             "completed": "jobs_completed",
             "failed": "jobs_failed",
+            "infra_retry_claimed": "infrastructure_retries_claimed",
+            "infra_retry_failed": "infrastructure_retries_failed",
         }
-        if transition not in counts:
+        if transition == "infra_retry_docker_started":
+            payload["docker_processes_started"] = int(
+                payload.get("docker_processes_started", 0)
+            ) + 1
+            payload["infrastructure_retry_docker_processes_started"] = int(
+                payload.get("infrastructure_retry_docker_processes_started", 0)
+            ) + 1
+            counter_key = None
+        else:
+            counter_key = counts.get(transition)
+        if counter_key is None and transition != "infra_retry_docker_started":
             raise ContractError(f"unknown runtime counter transition: {transition}")
-        payload[counts[transition]] = int(payload[counts[transition]]) + 1
+        if counter_key is not None:
+            payload[counter_key] = int(payload.get(counter_key, 0)) + 1
         by_job = payload.setdefault("by_job", {})
         record = dict(by_job.get(job_key, {}))
         record["state"] = transition
         record[f"{transition}_at"] = utc_now()
         if extra:
             record.update(extra)
+        history = list(record.get("transition_history", []))
+        history.append({"transition": transition, "at": utc_now()})
+        record["transition_history"] = history
         by_job[job_key] = record
         payload["updated_at"] = utc_now()
         atomic_json(path, payload)
@@ -1472,6 +1824,7 @@ def aggregate_loss_shares(
     building_id: str,
     arm: str,
     run: str,
+    training_output_dir: Path | None = None,
 ) -> dict[str, Any]:
     """Append one completed job to the fixed W1 loss-share CSV atomically.
 
@@ -1479,7 +1832,9 @@ def aggregate_loss_shares(
     different row set for an already aggregated job fails closed.
     """
 
-    target = job_dir(repo, config, building_id, arm, run)
+    job_target = job_dir(repo, config, building_id, arm, run)
+    target = training_output_dir or job_target
+    repo_relative(repo, target)
     outputs = config["outputs"]
     materialization_path, materialization, materialization_sha = _materialization(
         repo, config, building_id, arm, run
@@ -1869,6 +2224,287 @@ def launch(
         raise
 
 
+def retry_infrastructure_failure(
+    *,
+    repo: Path,
+    config_path: Path,
+    config: Mapping[str, Any],
+    policy_path: Path,
+    building_id: str,
+    arm: str,
+    run: str,
+    gpu: int,
+    now: datetime | None = None,
+    popen_factory: Callable[..., Any] = subprocess.Popen,
+) -> dict[str, Any]:
+    """Run the single approved pre-optimizer infrastructure retry."""
+
+    target = job_dir(repo, config, building_id, arm, run)
+    outputs = config["outputs"]
+    materialization_path, materialization, materialization_sha = _materialization(
+        repo, config, building_id, arm, run
+    )
+    require_equal(
+        sha256_file(config_path),
+        materialization["driver_config_sha256"],
+        "original driver config SHA-256 for infrastructure retry",
+    )
+    policy, _ = validate_retry_policy(repo, policy_path, config)
+    git = _validate_retry_git_state(repo, config, materialization, policy)
+    cutoff_amendment = validate_cutoff_amendment(repo, config)
+    require_equal(
+        cutoff_amendment,
+        materialization.get("cutoff_amendment"),
+        "cutoff amendment snapshot for infrastructure retry",
+    )
+    bindings = validate_r1_r2(repo, config)
+    require_equal(bindings, materialization["bindings"], "retry R1/R2 binding snapshot")
+    preprocess = validate_preprocess(repo, config, building_id)
+    require_equal(
+        preprocess["full_snapshot_sha256"],
+        materialization["preprocess"]["full_snapshot_sha256"],
+        "retry preprocess full publication SHA-256",
+    )
+    resolved = target / outputs["resolved_config"]
+    require_equal(
+        sha256_file(resolved),
+        materialization["resolved_config_sha256"],
+        "original resolved config SHA-256 for infrastructure retry",
+    )
+    cutoff = _cutoff_check(
+        config["launch_contract"]["cutoff_kst"],
+        now=now,
+        amendment=cutoff_amendment,
+    )
+    eligibility = _verify_preoptimizer_cache_failure(
+        repo=repo,
+        config=config,
+        target=target,
+        materialization=materialization,
+        materialization_sha256=materialization_sha,
+        policy=policy,
+    )
+    process_guard = _probe_forbidden_processes(
+        config["launch_contract"]["forbidden_process_patterns"]
+    )
+    image = _verify_image(
+        config["launch_contract"]["docker_image"],
+        config["launch_contract"]["docker_image_id"],
+    )
+    attempt, retry_resolved, environment, retry_config = _prepare_retry_attempt(
+        repo=repo,
+        target=target,
+        resolved=resolved,
+        policy=policy,
+    )
+    require_equal(retry_config["seed"], materialization["seed"], "retry seed")
+    require_equal(
+        retry_config["max_iter"], config["recipe"]["max_iter"], "retry max_iter"
+    )
+    job_key = f"{building_id}/arm_{arm}/{run}"
+    retry_key = f"{job_key}/{policy['attempt_directory']}"
+    command = docker_command(
+        repo=repo,
+        config=config,
+        resolved_config=retry_resolved,
+        gpu=gpu,
+        job_key=retry_key,
+        extra_environment=environment,
+    )
+    retry_started_path = attempt / "retry_started.json"
+    retry_started = {
+        "schema": RETRY_STARTED_SCHEMA,
+        "run_id": config["run_id"],
+        "job_key": job_key,
+        "retry_key": retry_key,
+        "building_id": building_id,
+        "arm": arm,
+        "replicate": run,
+        "seed": materialization["seed"],
+        "started_at": utc_now(),
+        "physical_gpu": gpu,
+        "command": command,
+        "git": git,
+        "cutoff_gate": cutoff,
+        "process_guard": process_guard,
+        "docker_image": image,
+        "policy": policy,
+        "materialization": {
+            "path": repo_relative(repo, materialization_path),
+            "sha256": materialization_sha,
+        },
+        "original_failure": eligibility,
+        "retry_config": retry_config,
+        "environment": environment,
+        "optimizer_restart_completed_steps": 0,
+        "claim_mode": "atomic_O_EXCL_one_time_infrastructure_retry",
+    }
+    exclusive_json(retry_started_path, retry_started)
+    _counter_update(
+        repo,
+        config,
+        job_key,
+        "infra_retry_claimed",
+        {
+            "retry_key": retry_key,
+            "retry_started_receipt": repo_relative(repo, retry_started_path),
+            "physical_gpu": gpu,
+        },
+    )
+    retry_log = attempt / outputs["job_log"]
+    launch_started = time.monotonic()
+    return_code: int | None = None
+    docker_pid: int | None = None
+    try:
+        with retry_log.open("x", encoding="utf-8", buffering=1) as log:
+            process = popen_factory(
+                command,
+                cwd=repo,
+                stdout=log,
+                stderr=subprocess.STDOUT,
+                text=True,
+            )
+            docker_pid = int(process.pid)
+            _counter_update(
+                repo,
+                config,
+                job_key,
+                "infra_retry_docker_started",
+                {"retry_key": retry_key, "docker_compose_pid": docker_pid},
+            )
+            return_code = int(process.wait())
+        elapsed = time.monotonic() - launch_started
+        if return_code != 0:
+            raise ContractError(f"Docker infrastructure retry exited with code {return_code}")
+        completion = _verify_training_completion(
+            attempt, int(config["recipe"]["max_iter"]), repo=repo
+        )
+        loss_share_aggregation = aggregate_loss_shares(
+            repo=repo,
+            config=config,
+            building_id=building_id,
+            arm=arm,
+            run=run,
+            training_output_dir=attempt,
+        )
+        _require_job_snapshot(
+            target,
+            eligibility["original_file_snapshot"],
+            excluded_directory=str(policy["attempt_directory"]),
+        )
+        retry_completed_path = attempt / "retry_completed.json"
+        retry_completed = {
+            "schema": RETRY_COMPLETED_SCHEMA,
+            "run_id": config["run_id"],
+            "job_key": job_key,
+            "retry_key": retry_key,
+            "completed_at": utc_now(),
+            "return_code": return_code,
+            "elapsed_seconds": elapsed,
+            "docker_compose_pid": docker_pid,
+            "retry_started_receipt": {
+                "path": repo_relative(repo, retry_started_path),
+                "sha256": sha256_file(retry_started_path),
+            },
+            "original_failure_snapshot_sha256": eligibility[
+                "original_file_snapshot_sha256"
+            ],
+            "training_completion": completion,
+            "loss_share_aggregation": loss_share_aggregation,
+            "log": repo_relative(repo, retry_log),
+            "log_sha256": sha256_file(retry_log),
+        }
+        exclusive_json(retry_completed_path, retry_completed)
+        completed_payload = {
+            "schema": COMPLETED_SCHEMA,
+            "run_id": config["run_id"],
+            "job_key": job_key,
+            "building_id": building_id,
+            "arm": arm,
+            "replicate": run,
+            "seed": materialization["seed"],
+            "completed_at": retry_completed["completed_at"],
+            "return_code": return_code,
+            "elapsed_seconds": elapsed,
+            "docker_compose_pid": docker_pid,
+            "materialization": {
+                "path": repo_relative(repo, materialization_path),
+                "sha256": materialization_sha,
+                "resolved_config": materialization["resolved_config"],
+                "resolved_config_sha256": materialization["resolved_config_sha256"],
+            },
+            "pose_gate_binding": materialization["bindings"],
+            "preprocess_binding": materialization["preprocess"],
+            "training_completion": completion,
+            "loss_share_aggregation": loss_share_aggregation,
+            "infrastructure_retry": {
+                "policy": policy,
+                "original_started_receipt": eligibility["started"],
+                "original_failed_receipt": eligibility["failed"],
+                "retry_started_receipt": {
+                    "path": repo_relative(repo, retry_started_path),
+                    "sha256": sha256_file(retry_started_path),
+                },
+                "retry_completed_receipt": {
+                    "path": repo_relative(repo, retry_completed_path),
+                    "sha256": sha256_file(retry_completed_path),
+                },
+                "original_file_snapshot_sha256": eligibility[
+                    "original_file_snapshot_sha256"
+                ],
+                "resolved_config_difference_keys": ["out_dir"],
+                "optimizer_restart_completed_steps": 0,
+            },
+            "log": repo_relative(repo, retry_log),
+            "log_sha256": sha256_file(retry_log),
+        }
+        exclusive_json(target / outputs["completed_receipt"], completed_payload)
+        _counter_update(
+            repo,
+            config,
+            job_key,
+            "completed",
+            {"elapsed_seconds": elapsed, "completed_via": "infra_retry_01"},
+        )
+        return completed_payload
+    except BaseException as exc:
+        elapsed = time.monotonic() - launch_started
+        retry_failed_path = attempt / "retry_failed.json"
+        retry_failed = {
+            "schema": RETRY_FAILED_SCHEMA,
+            "run_id": config["run_id"],
+            "job_key": job_key,
+            "retry_key": retry_key,
+            "failed_at": utc_now(),
+            "return_code": return_code,
+            "elapsed_seconds": elapsed,
+            "docker_compose_pid": docker_pid,
+            "error_type": type(exc).__name__,
+            "reason": str(exc),
+            "retry_started_receipt": {
+                "path": repo_relative(repo, retry_started_path),
+                "sha256": sha256_file(retry_started_path),
+            },
+            "original_file_snapshot_sha256": eligibility[
+                "original_file_snapshot_sha256"
+            ],
+            "log": repo_relative(repo, retry_log),
+            "log_sha256": sha256_file(retry_log) if retry_log.is_file() else None,
+            "original_failed_attempt_preserved": True,
+            "another_retry_allowed": False,
+        }
+        if not retry_failed_path.exists():
+            exclusive_json(retry_failed_path, retry_failed)
+        _counter_update(
+            repo,
+            config,
+            job_key,
+            "infra_retry_failed",
+            {"elapsed_seconds": elapsed, "reason": str(exc)},
+        )
+        raise
+
+
 def check_materialization(
     *,
     repo: Path,
@@ -1908,6 +2544,13 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
             "phases/p2-gsjso/configs/fusion_w1_training_v1_20260725.json"
         ),
     )
+    parser.add_argument(
+        "--retry-policy",
+        type=Path,
+        default=Path(
+            "phases/p2-gsjso/configs/fusion_w1_training_infra_retry_20260726.json"
+        ),
+    )
     subparsers = parser.add_subparsers(dest="command", required=True)
     for command in ("materialize", "check", "aggregate-loss-shares"):
         sub = subparsers.add_parser(command)
@@ -1919,6 +2562,11 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     launch_parser.add_argument("--arm", choices=ARMS, required=True)
     launch_parser.add_argument("--run", choices=RUNS, required=True)
     launch_parser.add_argument("--gpu", type=int, choices=(0, 1), required=True)
+    retry_parser = subparsers.add_parser("retry-infra")
+    retry_parser.add_argument("--building-id", required=True)
+    retry_parser.add_argument("--arm", choices=ARMS, required=True)
+    retry_parser.add_argument("--run", choices=RUNS, required=True)
+    retry_parser.add_argument("--gpu", type=int, choices=(0, 1), required=True)
     return parser.parse_args(argv)
 
 
@@ -1949,6 +2597,17 @@ def main(argv: Sequence[str] | None = None) -> int:
             repo=REPO,
             config_path=config_path,
             config=config,
+            building_id=args.building_id,
+            arm=args.arm,
+            run=args.run,
+            gpu=args.gpu,
+        )
+    elif args.command == "retry-infra":
+        result = retry_infrastructure_failure(
+            repo=REPO,
+            config_path=config_path,
+            config=config,
+            policy_path=args.retry_policy,
             building_id=args.building_id,
             arm=args.arm,
             run=args.run,

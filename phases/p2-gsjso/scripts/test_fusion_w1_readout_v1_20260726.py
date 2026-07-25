@@ -168,6 +168,164 @@ def make_training_job(
     }
 
 
+def make_infrastructure_retry_success(
+    root: Path,
+    paths: dict[str, Path],
+) -> dict[str, Path]:
+    job = paths["job"]
+    attempt = job / "infra_retry_01"
+    moved: dict[str, Path] = {}
+    for key, relative in (
+        ("checkpoint", Path("ckpt/step_030000.pt")),
+        ("final_checkpoint", Path("ckpt/final.pt")),
+        ("full_state", Path("full_state_manifest.json")),
+    ):
+        destination = attempt / relative
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        paths[key].replace(destination)
+        moved[key] = destination
+
+    expected_job_key = "DEBY_LOD2_42364609/arm_A/r1"
+    original_log = job / "training.log"
+    original_log.write_text(
+        "gsplat/cuda/_backend.py\n"
+        "PermissionError: [Errno 13] Permission denied: '/.cache'\n",
+        encoding="utf-8",
+    )
+    original_started = job / "started.json"
+    write_json(
+        original_started,
+        {
+            "schema": "jointbuildgs.fusion_w1.training_started.v1",
+            "job_key": expected_job_key,
+            "materialization_manifest_sha256": sha(paths["materialization"]),
+        },
+    )
+    original_failed = job / "failed.json"
+    write_json(
+        original_failed,
+        {
+            "schema": "jointbuildgs.fusion_w1.training_failed.v1",
+            "job_key": expected_job_key,
+            "return_code": 1,
+            "log_sha256": sha(original_log),
+        },
+    )
+    original_full_state = job / "full_state_manifest.json"
+    write_json(
+        original_full_state,
+        {
+            "schema": "jointbuildgs.stage2.resume_manifest.v1",
+            "learning_runs_started": 0,
+            "learning_runs_incremented_this_process": False,
+            "start_completed_steps": 0,
+            "last_completed_steps": 0,
+            "latest_full_checkpoint": None,
+        },
+    )
+    raw_policy = {
+        "schema": "jointbuildgs.fusion_w1.training_infra_retry_policy.v1",
+        "status": "APPROVED",
+        "attempt_directory": "infra_retry_01",
+        "required_failure": {
+            "artifact_sha256": {
+                "started": sha(original_started),
+                "failed": sha(original_failed),
+                "log": sha(original_log),
+                "full_state": sha(original_full_state),
+            }
+        },
+    }
+    policy_path = root / "retry_policy.json"
+    write_json(policy_path, raw_policy)
+    policy = {
+        "path": str(policy_path.relative_to(root)),
+        "sha256": sha(policy_path),
+        **raw_policy,
+    }
+
+    retry_key = f"{expected_job_key}/infra_retry_01"
+    snapshot_sha = "a" * 64
+    retry_started = attempt / "retry_started.json"
+    write_json(
+        retry_started,
+        {
+            "schema": "jointbuildgs.fusion_w1.training_infra_retry_started.v1",
+            "job_key": expected_job_key,
+            "retry_key": retry_key,
+            "policy": policy,
+            "materialization": {
+                "path": str(paths["materialization"].relative_to(root)),
+                "sha256": sha(paths["materialization"]),
+            },
+        },
+    )
+
+    completed = json.loads(paths["completed"].read_text(encoding="utf-8"))
+    training_completion = completed["training_completion"]
+    training_completion.update(
+        {
+            "checkpoint": str(moved["checkpoint"].relative_to(root)),
+            "checkpoint_sha256": sha(moved["checkpoint"]),
+            "final_checkpoint": str(moved["final_checkpoint"].relative_to(root)),
+            "final_checkpoint_sha256": sha(moved["final_checkpoint"]),
+            "full_state_manifest": str(moved["full_state"].relative_to(root)),
+            "full_state_manifest_sha256": sha(moved["full_state"]),
+        }
+    )
+    retry_completed = attempt / "retry_completed.json"
+    write_json(
+        retry_completed,
+        {
+            "schema": "jointbuildgs.fusion_w1.training_infra_retry_completed.v1",
+            "job_key": expected_job_key,
+            "retry_key": retry_key,
+            "return_code": 0,
+            "retry_started_receipt": {
+                "path": str(retry_started.relative_to(root)),
+                "sha256": sha(retry_started),
+            },
+            "original_failure_snapshot_sha256": snapshot_sha,
+            "training_completion": training_completion,
+        },
+    )
+    completed["infrastructure_retry"] = {
+        "policy": policy,
+        "original_started_receipt": {
+            "path": str(original_started.relative_to(root)),
+            "sha256": sha(original_started),
+        },
+        "original_failed_receipt": {
+            "path": str(original_failed.relative_to(root)),
+            "sha256": sha(original_failed),
+        },
+        "retry_started_receipt": {
+            "path": str(retry_started.relative_to(root)),
+            "sha256": sha(retry_started),
+        },
+        "retry_completed_receipt": {
+            "path": str(retry_completed.relative_to(root)),
+            "sha256": sha(retry_completed),
+        },
+        "original_file_snapshot_sha256": snapshot_sha,
+        "resolved_config_difference_keys": ["out_dir"],
+        "optimizer_restart_completed_steps": 0,
+    }
+    write_json(paths["completed"], completed)
+    return {
+        **paths,
+        **moved,
+        "attempt": attempt,
+        "original_started": original_started,
+        "original_failed": original_failed,
+        "original_full_state": original_full_state,
+        "original_log": original_log,
+        "retry_started": retry_started,
+        "retry_completed": retry_completed,
+        "policy": policy_path,
+    }
+
+
 class ConfigContractTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
@@ -401,6 +559,63 @@ class TrainingLineageTests(unittest.TestCase):
     def test_training_failed_receipt_blocks_readout(self) -> None:
         write_json(self.paths["job"] / "failed.json", {"schema": "failed"})
         with self.assertRaisesRegex(MODULE.ReadoutError, "failed receipt"):
+            self.resolve()
+
+    def test_verified_infrastructure_retry_with_preserved_failure_is_consumable(self) -> None:
+        self.paths = make_infrastructure_retry_success(self.root, self.paths)
+        self.assertTrue(
+            MODULE.shallow_training_complete(
+                self.config,
+                "DEBY_LOD2_42364609",
+                "A",
+                "r1",
+                repo=self.root,
+            )
+        )
+        result = self.resolve()
+        self.assertTrue(self.paths["original_failed"].is_file())
+        self.assertEqual(result["checkpoint"], self.paths["final_checkpoint"])
+        self.assertEqual(result["checkpoint"].parents[1], self.paths["attempt"])
+
+    def test_infrastructure_retry_receipt_hash_drift_is_rejected(self) -> None:
+        self.paths = make_infrastructure_retry_success(self.root, self.paths)
+        retry_started = json.loads(
+            self.paths["retry_started"].read_text(encoding="utf-8")
+        )
+        retry_started["unapproved_drift"] = True
+        write_json(self.paths["retry_started"], retry_started)
+        with self.assertRaisesRegex(MODULE.ReadoutError, "SHA256 mismatch"):
+            self.resolve()
+
+    def test_infrastructure_retry_checkpoint_outside_attempt_is_rejected(self) -> None:
+        self.paths = make_infrastructure_retry_success(self.root, self.paths)
+        arbitrary = self.root / "arbitrary/final.pt"
+        arbitrary.parent.mkdir(parents=True)
+        arbitrary.write_bytes(self.paths["final_checkpoint"].read_bytes())
+        completed = json.loads(self.paths["completed"].read_text(encoding="utf-8"))
+        completed["training_completion"]["final_checkpoint"] = str(
+            arbitrary.relative_to(self.root)
+        )
+        completed["training_completion"]["final_checkpoint_sha256"] = sha(arbitrary)
+        retry_completed = json.loads(
+            self.paths["retry_completed"].read_text(encoding="utf-8")
+        )
+        retry_completed["training_completion"] = completed["training_completion"]
+        write_json(self.paths["retry_completed"], retry_completed)
+        completed["infrastructure_retry"]["retry_completed_receipt"]["sha256"] = sha(
+            self.paths["retry_completed"]
+        )
+        write_json(self.paths["completed"], completed)
+        self.assertFalse(
+            MODULE.shallow_training_complete(
+                self.config,
+                "DEBY_LOD2_42364609",
+                "A",
+                "r1",
+                repo=self.root,
+            )
+        )
+        with self.assertRaisesRegex(MODULE.ReadoutError, "extract checkpoint path"):
             self.resolve()
 
     def test_checkpoint_hash_drift_fails_closed(self) -> None:

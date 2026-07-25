@@ -1,0 +1,54 @@
+{
+  "schema": "jointbuildgs.fusion_w1.training_infra_retry_policy.v1",
+  "status": "APPROVED",
+  "run_id": "20260724_fusion_w1",
+  "approved_by": "김휘영",
+  "approval_date_kst": "2026-07-26",
+  "retry_kind": "GSPLAT_JIT_CACHE_PERMISSION_PREOPTIMIZER",
+  "required_materialization_head": "52aed8bd35066beb0bc8f0ce254e17df9187444e",
+  "required_retry_commit_distance": 1,
+  "allowed_retry_commit_paths": [
+    "phases/p2-gsjso/configs/fusion_w1_readout_v1_20260726.json",
+    "phases/p2-gsjso/configs/fusion_w1_training_infra_retry_20260726.json",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/issues.md",
+    "phases/p2-gsjso/scripts/fusion_w1_readout_v1_20260726.py",
+    "phases/p2-gsjso/scripts/fusion_w1_training_v1_20260725.py",
+    "phases/p2-gsjso/scripts/run_fusion_w1_training_v1_20260725.sh",
+    "phases/p2-gsjso/scripts/test_fusion_w1_readout_v1_20260726.py",
+    "phases/p2-gsjso/scripts/test_fusion_w1_training_v1_20260725.py"
+  ],
+  "maximum_retries_per_job": 1,
+  "required_failure": {
+    "return_code": 1,
+    "artifact_sha256": {
+      "started": "1e926bfdb96e33d1bcb77fd28b69e26102413fd5deb4be76459d9fd8988bf9f3",
+      "failed": "729c0d76a2468bd8f1c7e2c49f26ba32251e1ea51f48418070bce19048b59ecf",
+      "log": "bd3fbc73e8535a5062b9d06fac6f6d3714ca3112b33a446d18c4b4df9aaea817",
+      "full_state": "29e9023353c15a15072339b831c767e72f2245f5d90ee3ffd4657ff5c5f9a60d"
+    },
+    "log_markers": [
+      "gsplat/cuda/_backend.py",
+      "PermissionError: [Errno 13] Permission denied: '/.cache'"
+    ],
+    "learning_runs_started": 0,
+    "last_completed_steps": 0,
+    "latest_full_checkpoint": null
+  },
+  "attempt_directory": "infra_retry_01",
+  "writable_environment": {
+    "HOME": "runtime_env/home",
+    "XDG_CACHE_HOME": "runtime_env/xdg_cache",
+    "TORCH_EXTENSIONS_DIR": "runtime_env/torch_extensions"
+  },
+  "allowed_resolved_config_differences": [
+    "out_dir"
+  ],
+  "preservation_contract": {
+    "original_started_receipt_immutable": true,
+    "original_failed_receipt_immutable": true,
+    "original_log_immutable": true,
+    "original_partial_outputs_immutable": true,
+    "retry_receipts_exclusive": true,
+    "retry_from_optimizer_step_zero": true
+  }
+}

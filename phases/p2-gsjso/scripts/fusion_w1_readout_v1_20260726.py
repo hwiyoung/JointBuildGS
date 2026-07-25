@@ -45,6 +45,12 @@ JOB_SCHEMA = "jointbuildgs.fusion_w1.readout_job.v1"
 MATERIALIZATION_SCHEMA = (
     "jointbuildgs.fusion_w1.readout_materialization.v1"
 )
+TRAINING_STARTED_SCHEMA = "jointbuildgs.fusion_w1.training_started.v1"
+TRAINING_FAILED_SCHEMA = "jointbuildgs.fusion_w1.training_failed.v1"
+RETRY_POLICY_SCHEMA = "jointbuildgs.fusion_w1.training_infra_retry_policy.v1"
+RETRY_STARTED_SCHEMA = "jointbuildgs.fusion_w1.training_infra_retry_started.v1"
+RETRY_COMPLETED_SCHEMA = "jointbuildgs.fusion_w1.training_infra_retry_completed.v1"
+RETRY_ATTEMPT_DIRECTORY = "infra_retry_01"
 
 ARMS = ("A", "B")
 RUNS = ("r1", "r2")
@@ -574,6 +580,216 @@ def verify_static_inputs(
     return observed
 
 
+def _verified_receipt_reference(
+    reference: Any,
+    expected_path: Path,
+    label: str,
+    *,
+    repo: Path,
+) -> tuple[dict[str, Any], str]:
+    if not isinstance(reference, Mapping):
+        raise ReadoutError(f"{label} reference is missing")
+    path_value = reference.get("path")
+    digest_value = reference.get("sha256")
+    if not isinstance(path_value, str) or not isinstance(digest_value, str):
+        raise ReadoutError(f"{label} reference path/SHA256 is invalid")
+    observed_path = repo_path(path_value, repo=repo)
+    require_equal(observed_path, expected_path.resolve(), f"{label} path")
+    digest = verify_hash(observed_path, digest_value, label)
+    return load_json(observed_path), digest
+
+
+def _validate_infrastructure_retry_chain(
+    *,
+    completed: Mapping[str, Any],
+    target: Path,
+    materialization_path: Path,
+    materialization_sha256: str,
+    failed_path: Path,
+    expected_job_key: str,
+    training_contract: Mapping[str, Any],
+    repo: Path,
+) -> Path | None:
+    chain = completed.get("infrastructure_retry")
+    if chain is None:
+        return None
+    if not isinstance(chain, Mapping):
+        raise ReadoutError("infrastructure retry chain is not an object")
+
+    attempt = target / RETRY_ATTEMPT_DIRECTORY
+    if attempt.is_symlink() or not attempt.is_dir():
+        raise ReadoutError(f"infrastructure retry directory is invalid: {attempt}")
+    root_started_path = target / "started.json"
+    root_full_state_path = target / "full_state_manifest.json"
+    root_log_path = target / "training.log"
+    retry_started_path = attempt / "retry_started.json"
+    retry_completed_path = attempt / "retry_completed.json"
+
+    policy = chain.get("policy")
+    if not isinstance(policy, Mapping):
+        raise ReadoutError("infrastructure retry policy binding is missing")
+    require_equal(policy.get("schema"), RETRY_POLICY_SCHEMA, "retry policy schema")
+    require_equal(policy.get("status"), "APPROVED", "retry policy status")
+    require_equal(
+        policy.get("attempt_directory"),
+        RETRY_ATTEMPT_DIRECTORY,
+        "retry attempt directory",
+    )
+    policy_path_value = policy.get("path")
+    policy_sha256 = policy.get("sha256")
+    if not isinstance(policy_path_value, str) or not isinstance(policy_sha256, str):
+        raise ReadoutError("infrastructure retry policy path/SHA256 is invalid")
+    verify_hash(
+        repo_path(policy_path_value, repo=repo),
+        policy_sha256,
+        "infrastructure retry policy",
+    )
+    required_failure = policy.get("required_failure")
+    if not isinstance(required_failure, Mapping):
+        raise ReadoutError("retry required-failure binding is missing")
+    pinned = required_failure.get("artifact_sha256")
+    if not isinstance(pinned, Mapping) or set(pinned) != {
+        "started",
+        "failed",
+        "log",
+        "full_state",
+    }:
+        raise ReadoutError("retry original artifact SHA256 binding is incomplete")
+
+    original_started, original_started_sha = _verified_receipt_reference(
+        chain.get("original_started_receipt"),
+        root_started_path,
+        "original training started receipt",
+        repo=repo,
+    )
+    original_failed, original_failed_sha = _verified_receipt_reference(
+        chain.get("original_failed_receipt"),
+        failed_path,
+        "original training failed receipt",
+        repo=repo,
+    )
+    require_equal(
+        original_started.get("schema"),
+        TRAINING_STARTED_SCHEMA,
+        "original training started schema",
+    )
+    require_equal(
+        original_failed.get("schema"),
+        TRAINING_FAILED_SCHEMA,
+        "original training failed schema",
+    )
+    require_equal(original_started.get("job_key"), expected_job_key, "original started job key")
+    require_equal(original_failed.get("job_key"), expected_job_key, "original failed job key")
+    require_equal(original_started_sha, pinned.get("started"), "pinned original started SHA256")
+    require_equal(original_failed_sha, pinned.get("failed"), "pinned original failed SHA256")
+    verify_hash(root_log_path, str(pinned.get("log")), "original training log")
+    verify_hash(
+        root_full_state_path,
+        str(pinned.get("full_state")),
+        "original failed full-state manifest",
+    )
+    require_equal(
+        original_failed.get("log_sha256"),
+        pinned.get("log"),
+        "original failed/log SHA256 binding",
+    )
+
+    retry_started, retry_started_sha = _verified_receipt_reference(
+        chain.get("retry_started_receipt"),
+        retry_started_path,
+        "infrastructure retry started receipt",
+        repo=repo,
+    )
+    retry_completed, retry_completed_sha = _verified_receipt_reference(
+        chain.get("retry_completed_receipt"),
+        retry_completed_path,
+        "infrastructure retry completed receipt",
+        repo=repo,
+    )
+    expected_retry_key = f"{expected_job_key}/{RETRY_ATTEMPT_DIRECTORY}"
+    require_equal(retry_started.get("schema"), RETRY_STARTED_SCHEMA, "retry started schema")
+    require_equal(
+        retry_completed.get("schema"),
+        RETRY_COMPLETED_SCHEMA,
+        "retry completed schema",
+    )
+    for payload, label in (
+        (retry_started, "retry started"),
+        (retry_completed, "retry completed"),
+    ):
+        require_equal(payload.get("job_key"), expected_job_key, f"{label} job key")
+        require_equal(payload.get("retry_key"), expected_retry_key, f"{label} retry key")
+    require_equal(retry_completed.get("return_code"), 0, "retry return code")
+    require_equal(retry_started.get("policy"), dict(policy), "retry started policy binding")
+    retry_materialization = retry_started.get("materialization")
+    if not isinstance(retry_materialization, Mapping):
+        raise ReadoutError("retry started materialization binding is missing")
+    require_equal(
+        repo_path(str(retry_materialization.get("path")), repo=repo),
+        materialization_path.resolve(),
+        "retry materialization path",
+    )
+    require_equal(
+        retry_materialization.get("sha256"),
+        materialization_sha256,
+        "retry materialization SHA256",
+    )
+    nested_started = retry_completed.get("retry_started_receipt")
+    if not isinstance(nested_started, Mapping):
+        raise ReadoutError("retry completed/started receipt binding is missing")
+    require_equal(
+        repo_path(str(nested_started.get("path")), repo=repo),
+        retry_started_path.resolve(),
+        "retry completed/started path",
+    )
+    require_equal(
+        nested_started.get("sha256"),
+        retry_started_sha,
+        "retry completed/started SHA256",
+    )
+    require_equal(
+        retry_completed.get("training_completion"),
+        completed.get("training_completion"),
+        "retry/root training completion",
+    )
+    training_completion = completed.get("training_completion")
+    if not isinstance(training_completion, Mapping):
+        raise ReadoutError("retry training completion is missing")
+    for field, relative_key, label in (
+        ("checkpoint", "full_state_checkpoint_relpath", "30k full-state checkpoint"),
+        ("final_checkpoint", "extract_checkpoint_relpath", "extract checkpoint"),
+        ("full_state_manifest", "full_state_relpath", "full-state manifest"),
+    ):
+        path_value = training_completion.get(field)
+        if not isinstance(path_value, str):
+            raise ReadoutError(f"retry {label} path is invalid")
+        require_equal(
+            repo_path(path_value, repo=repo),
+            (attempt / str(training_contract[relative_key])).resolve(),
+            f"retry {label} path",
+        )
+    require_equal(
+        chain.get("optimizer_restart_completed_steps"),
+        0,
+        "retry optimizer restart step",
+    )
+    require_equal(
+        chain.get("resolved_config_difference_keys"),
+        ["out_dir"],
+        "retry resolved-config differences",
+    )
+    require_equal(
+        chain.get("original_file_snapshot_sha256"),
+        retry_completed.get("original_failure_snapshot_sha256"),
+        "retry original snapshot binding",
+    )
+    # Keep the validated receipt digests live in the chain checks above; these
+    # assignments also make accidental removal of either verification obvious.
+    if not retry_started_sha or not retry_completed_sha:
+        raise ReadoutError("infrastructure retry receipt SHA256 is empty")
+    return attempt
+
+
 def resolve_training_artifacts(
     config: Mapping[str, Any],
     building_id: str,
@@ -588,10 +804,6 @@ def resolve_training_artifacts(
         config, building_id, arm, run, repo=repo
     )
     failed = target / config["training"]["failed"]
-    if failed.exists() or failed.is_symlink():
-        raise ReadoutError(
-            f"training job has failed receipt; readout forbidden: {failed}"
-        )
     materialization_path = target / config["training"]["materialization"]
     completed_path = target / config["training"]["completed"]
     materialization = load_json(materialization_path)
@@ -617,6 +829,23 @@ def resolve_training_artifacts(
     require_equal(completed.get("job_key"), job_key(building_id, arm, run), "training job key")
     require_equal(completed.get("return_code"), 0, "training return code")
 
+    materialization_sha = sha256_file(materialization_path)
+    retry_output = _validate_infrastructure_retry_chain(
+        completed=completed,
+        target=target,
+        materialization_path=materialization_path,
+        materialization_sha256=materialization_sha,
+        failed_path=failed,
+        expected_job_key=job_key(building_id, arm, run),
+        training_contract=config["training"],
+        repo=repo,
+    )
+    if (failed.exists() or failed.is_symlink()) and retry_output is None:
+        raise ReadoutError(
+            f"training job has failed receipt; readout forbidden: {failed}"
+        )
+    expected_training_root = retry_output or target
+
     completion = completed.get("training_completion")
     if not isinstance(completion, Mapping):
         raise ReadoutError("training_completion object is missing")
@@ -629,7 +858,7 @@ def resolve_training_artifacts(
     )
     full_state_checkpoint = repo_path(completion["checkpoint"], repo=repo)
     expected_full_state_checkpoint = (
-        target / config["training"]["full_state_checkpoint_relpath"]
+        expected_training_root / config["training"]["full_state_checkpoint_relpath"]
     ).resolve()
     require_equal(
         full_state_checkpoint,
@@ -643,7 +872,7 @@ def resolve_training_artifacts(
     )
     checkpoint = repo_path(completion["final_checkpoint"], repo=repo)
     expected_checkpoint = (
-        target / config["training"]["extract_checkpoint_relpath"]
+        expected_training_root / config["training"]["extract_checkpoint_relpath"]
     ).resolve()
     require_equal(checkpoint, expected_checkpoint, "extract checkpoint path")
     checkpoint_sha = verify_hash(
@@ -652,7 +881,9 @@ def resolve_training_artifacts(
         "extract final checkpoint",
     )
     full_state_path = repo_path(completion["full_state_manifest"], repo=repo)
-    expected_full_state = (target / config["training"]["full_state_relpath"]).resolve()
+    expected_full_state = (
+        expected_training_root / config["training"]["full_state_relpath"]
+    ).resolve()
     require_equal(full_state_path, expected_full_state, "full-state manifest path")
     full_state_sha = verify_hash(
         full_state_path,
@@ -2809,13 +3040,27 @@ def shallow_training_complete(
     target = training_job_dir(
         config, building_id, arm, run, repo=repo
     )
-    if (target / config["training"]["failed"]).exists():
+    materialization_path = target / config["training"]["materialization"]
+    completed_path = target / config["training"]["completed"]
+    failed_path = target / config["training"]["failed"]
+    if not materialization_path.is_file() or not completed_path.is_file():
         return False
-    return (
-        target / config["training"]["completed"]
-    ).is_file() and (
-        target / config["training"]["materialization"]
-    ).is_file()
+    try:
+        completed = load_json(completed_path)
+        retry_output = _validate_infrastructure_retry_chain(
+            completed=completed,
+            target=target,
+            materialization_path=materialization_path,
+            materialization_sha256=sha256_file(materialization_path),
+            failed_path=failed_path,
+            expected_job_key=job_key(building_id, arm, run),
+            training_contract=config["training"],
+            repo=repo,
+        )
+    except ReadoutError:
+        return False
+    failed_present = failed_path.exists() or failed_path.is_symlink()
+    return not failed_present or retry_output is not None
 
 
 def is_readout_complete(

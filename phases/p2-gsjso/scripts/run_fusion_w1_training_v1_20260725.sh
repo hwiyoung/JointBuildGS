@@ -80,8 +80,23 @@ case "${1:-}" in
     exec python3 "$SCRIPT" --config "$CONFIG" launch \
       --building-id "$2" --arm "$3" --run "$4" --gpu "$5"
     ;;
+  retry-infra)
+    [[ $# -eq 5 ]] || {
+      echo "usage: $0 retry-infra DEBY_LOD2_<id> {A|B} {r1|r2} {0|1}" >&2
+      exit 2
+    }
+    [[ "$5" == "0" || "$5" == "1" ]] || {
+      echo "physical GPU must be 0 or 1" >&2
+      exit 2
+    }
+    assert_image
+    # The retry command preserves the original receipts and runs the one
+    # approved pre-optimizer infrastructure attempt in a separate namespace.
+    exec python3 "$SCRIPT" --config "$CONFIG" retry-infra \
+      --building-id "$2" --arm "$3" --run "$4" --gpu "$5"
+    ;;
   *)
-    echo "usage: $0 {test|materialize|check|aggregate-loss-shares|launch} ..." >&2
+    echo "usage: $0 {test|materialize|check|aggregate-loss-shares|launch|retry-infra} ..." >&2
     exit 2
     ;;
 esac

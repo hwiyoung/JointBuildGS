@@ -27,6 +27,11 @@ REAL_CONFIG = (
     / "configs"
     / "fusion_w1_training_v1_20260725.json"
 )
+REAL_RETRY_POLICY = (
+    Path(__file__).parents[1]
+    / "configs"
+    / "fusion_w1_training_infra_retry_20260726.json"
+)
 
 
 def digest(path: Path) -> str:
@@ -524,6 +529,180 @@ class FusionW1TrainingTests(unittest.TestCase):
         fw.exclusive_json(path, {"schema": fw.STARTED_SCHEMA})
         with self.assertRaisesRegex(fw.ContractError, "already exists"):
             fw.exclusive_json(path, {"schema": fw.STARTED_SCHEMA})
+
+    def test_preoptimizer_cache_failure_retry_is_env_only_and_preserves_root(self):
+        snapshot = self._snapshot()
+        fake_git = {
+            "branch": "exp/fusion-w1",
+            "head": "d" * 40,
+            "required_ancestor": self.config["git_contract"]["required_ancestor"],
+            "required_ancestor_of_head": True,
+            "unexpected_porcelain": [],
+            "allowed_runtime_untracked_count": 0,
+        }
+        fake_bindings = {"r1": "bound", "r2": "PASS"}
+        with mock.patch.object(fw, "validate_git_state", return_value=fake_git), mock.patch.object(
+            fw, "validate_r1_r2", return_value=fake_bindings
+        ), mock.patch.object(fw, "validate_preprocess", return_value=snapshot):
+            fw.materialize(
+                repo=self.repo,
+                config_path=self.config_path,
+                config=self.config,
+                building_id=self.building_id,
+                arm="A",
+                run="r1",
+                require_docker=False,
+            )
+        target = fw.job_dir(self.repo, self.config, self.building_id, "A", "r1")
+        materialization_path = target / "materialization_manifest.json"
+        materialization = json.loads(materialization_path.read_text(encoding="utf-8"))
+        job_key = f"{self.building_id}/arm_A/r1"
+        log_path = target / "training.log"
+        log_path.write_text(
+            "gsplat/cuda/_backend.py\n"
+            "PermissionError: [Errno 13] Permission denied: '/.cache'\n",
+            encoding="utf-8",
+        )
+        fw.atomic_json(
+            target / "started.json",
+            {
+                "schema": fw.STARTED_SCHEMA,
+                "job_key": job_key,
+                "materialization_manifest_sha256": digest(materialization_path),
+            },
+        )
+        fw.atomic_json(
+            target / "failed.json",
+            {
+                "schema": fw.FAILED_SCHEMA,
+                "job_key": job_key,
+                "return_code": 1,
+                "log_sha256": digest(log_path),
+            },
+        )
+        fw.atomic_json(
+            target / "full_state_manifest.json",
+            {
+                "schema": "jointbuildgs.stage2.resume_manifest.v1",
+                "learning_runs_started": 0,
+                "learning_runs_incremented_this_process": False,
+                "start_completed_steps": 0,
+                "last_completed_steps": 0,
+                "latest_full_checkpoint": None,
+            },
+        )
+        policy = json.loads(REAL_RETRY_POLICY.read_text(encoding="utf-8"))
+        policy["required_materialization_head"] = fake_git["head"]
+        pinned_paths = {
+            "started": target / "started.json",
+            "failed": target / "failed.json",
+            "log": log_path,
+            "full_state": target / "full_state_manifest.json",
+        }
+        policy["required_failure"]["artifact_sha256"] = {
+            label: digest(path) for label, path in pinned_paths.items()
+        }
+        policy_path = self.repo / "retry_policy.json"
+        policy_path.write_text(
+            json.dumps(policy, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        validated_policy = fw.validate_retry_policy(
+            self.repo, policy_path, self.config
+        )[0]
+        original_started = pinned_paths["started"].read_text(encoding="utf-8")
+        drifted_started = json.loads(original_started)
+        drifted_started["unapproved_drift"] = True
+        fw.atomic_json(pinned_paths["started"], drifted_started)
+        with self.assertRaisesRegex(fw.ContractError, "original started SHA-256"):
+            fw._verify_preoptimizer_cache_failure(
+                repo=self.repo,
+                config=self.config,
+                target=target,
+                materialization=materialization,
+                materialization_sha256=digest(materialization_path),
+                policy=validated_policy,
+            )
+        fw.atomic_text(pinned_paths["started"], original_started)
+        original = fw._job_file_snapshot(target, excluded_directory="infra_retry_01")
+        completion = {"status": "PASSED", "completed_optimizer_updates": 30000}
+        aggregate = {
+            "source_rows": 2,
+            "aggregate_rows_after_operation": 2,
+            "aggregate_sha256_after_operation": "c" * 64,
+        }
+        with mock.patch.object(
+            fw, "_validate_retry_git_state", return_value={**fake_git, "commit_distance": 1}
+        ), mock.patch.object(
+            fw, "validate_r1_r2", return_value=fake_bindings
+        ), mock.patch.object(
+            fw, "validate_preprocess", return_value=snapshot
+        ), mock.patch.object(
+            fw, "_probe_forbidden_processes", return_value={"status": "PASSED"}
+        ), mock.patch.object(
+            fw, "_verify_image", return_value={"image": "jointbuildgs:dev", "image_id": "pinned"}
+        ), mock.patch.object(
+            fw, "_verify_training_completion", return_value=completion
+        ), mock.patch.object(
+            fw, "aggregate_loss_shares", return_value=aggregate
+        ):
+            result = fw.retry_infrastructure_failure(
+                repo=self.repo,
+                config_path=self.config_path,
+                config=self.config,
+                policy_path=policy_path,
+                building_id=self.building_id,
+                arm="A",
+                run="r1",
+                gpu=1,
+                now=datetime(2026, 7, 26, 0, 0, tzinfo=timezone.utc),
+                popen_factory=FakeProcess,
+            )
+        self.assertEqual(result["return_code"], 0)
+        self.assertTrue((target / "started.json").is_file())
+        self.assertTrue((target / "failed.json").is_file())
+        self.assertTrue((target / "completed.json").is_file())
+        self.assertEqual(
+            fw._job_file_snapshot(target, excluded_directory="infra_retry_01"),
+            {**original, "completed.json": digest(target / "completed.json")},
+        )
+        attempt = target / "infra_retry_01"
+        retry_started = json.loads(
+            (attempt / "retry_started.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(
+            retry_started["retry_config"]["difference_keys"], ["out_dir"]
+        )
+        retry_yaml = __import__("yaml").safe_load(
+            (attempt / "resolved_config.yaml").read_text(encoding="utf-8")
+        )
+        self.assertIn("out_dir", retry_yaml)
+        self.assertNotIn("out", retry_yaml)
+        command = retry_started["command"]
+        self.assertIn(f"HOME={fw.container_path(self.repo, attempt / 'runtime_env/home')}", command)
+        self.assertIn(
+            f"XDG_CACHE_HOME={fw.container_path(self.repo, attempt / 'runtime_env/xdg_cache')}",
+            command,
+        )
+        self.assertIn(
+            f"TORCH_EXTENSIONS_DIR={fw.container_path(self.repo, attempt / 'runtime_env/torch_extensions')}",
+            command,
+        )
+        counters = json.loads(
+            (self.repo / "training/runtime_counters.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(counters["infrastructure_retries_claimed"], 1)
+        self.assertEqual(counters["infrastructure_retry_docker_processes_started"], 1)
+        self.assertEqual(counters["jobs_completed"], 1)
+        with self.assertRaisesRegex(fw.ContractError, "completion receipt"):
+            fw._verify_preoptimizer_cache_failure(
+                repo=self.repo,
+                config=self.config,
+                target=target,
+                materialization=materialization,
+                materialization_sha256=digest(materialization_path),
+                policy=fw.validate_retry_policy(self.repo, policy_path, self.config)[0],
+            )
 
 
 if __name__ == "__main__":

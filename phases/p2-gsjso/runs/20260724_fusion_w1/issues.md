@@ -388,3 +388,46 @@
 - P0′ 1동은 Roofer 1회와 scoring 1회를 완료해 LoD2 조립 성공 및
   val3dity 유효를 각각 기록했다. 이는 학습 전 시드 귀속 통제이며
   arm A/B 학습 결과나 눈금 1~4 판정값으로 사용하지 않는다.
+
+## FUS-W1-TRAIN-ENV-001 — gsplat JIT 캐시 쓰기 권한 오류
+
+- Recorded: 2026-07-26 08:13 KST
+- Stage: §7 smoke `DEBY_LOD2_42364609` arm A r1, 30k launch
+- Status: INFRASTRUCTURE RETRY AUTHORIZED; 원 실패 보존, 재시도 미착수
+- 최초 Docker 프로세스는 데이터·30뷰·시드 7,993점·depth/normal 감독을
+  읽고 optimizer step 1 이전 gsplat CUDA extension lazy build에서
+  `PermissionError: [Errno 13] Permission denied: '/.cache'`로 4.31초 만에
+  종료했다. 이는 ALS–영상 정합이나 학습 수렴 오류로 기록하지 않는다.
+- `full_state_manifest.json`은 `learning_runs_started=0`,
+  `start_completed_steps=0`, `last_completed_steps=0`, checkpoint 없음이며,
+  loss CSV도 생성되지 않았다. 따라서 과학적 학습 런은 시작되지 않았다.
+- 원 기록 SHA-256은 `started.json`
+  `1e926bfdb96e33d1bcb77fd28b69e26102413fd5deb4be76459d9fd8988bf9f3`,
+  `failed.json`
+  `729c0d76a2468bd8f1c7e2c49f26ba32251e1ea51f48418070bce19048b59ecf`,
+  `training.log`
+  `bd3fbc73e8535a5062b9d06fac6f6d3714ca3112b33a446d18c4b4df9aaea817`,
+  `full_state_manifest.json`
+  `29e9023353c15a15072339b831c767e72f2245f5d90ee3ffd4657ff5c5f9a60d`다.
+- 승인된 1회 재시도는 원 파일을 삭제·덮어쓰지 않고
+  `infra_retry_01/` 별도 namespace를 사용한다. 원 resolved config에서
+  허용되는 차이는 출력 경로 `out_dir` 하나뿐이며 seed 1001·arm A recipe·
+  30k·입력·포즈·감독은 동일하다. 컨테이너 환경만 job 내부 쓰기 가능
+  `HOME`, `XDG_CACHE_HOME`, `TORCH_EXTENSIONS_DIR`로 고정한다.
+- 재시도는 exclusive receipt로 한 번만 claim하며, 현재 HEAD는 원
+  materialization HEAD `52aed8bd35066beb0bc8f0ce254e17df9187444e`의
+  정확히 한 커밋 후속이고 그 커밋의 경로가 retry 정책 allowlist와
+  일치할 때만 허용한다.
+- retry 정책은 위에 기록한 원 `started.json`·`failed.json`·`training.log`·
+  `full_state_manifest.json`의 SHA-256을 각각 고정하며, claim 전에 네 파일의
+  현재 바이트가 모두 일치해야 한다. 단순 상태 필드·로그 marker 일치만으로는
+  원 실패를 대체할 수 없다.
+- 후속 readout은 원 `failed.json`을 삭제하지 않는다. 대신 root
+  `completed.json`이 검증된 `infra_retry_01` started/completed receipt chain을
+  SHA-256으로 결속하고, 30k checkpoint·final checkpoint·full-state manifest가
+  정확히 원 job의 `infra_retry_01/` 아래에 있을 때만 그 성공 산출물을 소비한다.
+  임의 외부 경로, retry receipt hash drift, job-key 불일치에는 기존 failed
+  receipt 차단을 유지한다.
+- 이 호환성 검증과 함께 readout의 정적 입력 잠금은 현재 커밋된 training
+  config와 P0′ driver의 실제 SHA-256으로 갱신했으며, recipe·시드·입력·점수
+  정의에는 변경이 없다.
