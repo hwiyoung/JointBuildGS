@@ -166,3 +166,35 @@
   exceptions, not scientific input mutations. Every substantive validation,
   selection, residual measurement, and pose publication command uses the
   pinned Docker images.
+
+## FUS-W1-COREG-RUN-001 — lock1 stopped before trigger residual evaluation
+
+- Recorded: 2026-07-25 KST
+- Stage: ALS-fixed camera co-registration, fit complete and trigger sampling
+  opened
+- Status: BLOCKED; exact-once lock1 will not be resumed
+- Execution binding: branch `exp/fusion-w1`, HEAD
+  `e21fbe40e042cd72764c00a1f01305bd35f3c830`, coreg config SHA-256
+  `2a6e350faa8a1f30b2baa5e64691f0e4a9c7c49c030ec20bb418228ba914c2a4`.
+- ALS integrity: class 2/6 materialization contains 3,315,854 points; source
+  ALS SHA-256 remained
+  `ac5cd0dc9c368a15e1f8fd5a18ad8d96ddbbd8cbaf8e1b608fd675430d6e9225`.
+- Fit result: the 18 fit controls produced a valid rank-6 candidate with
+  rotation `0.0080702577 deg`, pivot translation `0.1079020267 m`, and maximum
+  control displacement `0.1332284124 m`. Neither identity nor the candidate
+  passed the fit controls' absolute criteria; both building-balanced medians
+  and P90 values were censored at `0.35 m`. Fit values are diagnostic only and
+  did not select a transform.
+- Stop evidence: after `select_open.json` was written, trigger geometry
+  preparation failed closed with
+  `controls without both usable roof and ground:
+  ['DEBY_LOD2_4907165']`. No `global_selection.json`, trigger residual CSV,
+  frozen transform, independent check, or derived pose model was produced.
+- Exposure accounting: 18 fit buildings have alignment residuals; trigger
+  alignment residuals evaluated `0`; all 36 lock1 controls are nevertheless
+  treated as calibration-exposed and excluded from recovery.
+- Recovery: v3c creates a fresh lock2 namespace, excludes all 36 lock1 controls,
+  and applies a counts-only roof/ground geometry-feasibility screen before
+  assigning fit/trigger/check roles. It does not delete or overwrite lock1.
+- Counters: `learning_runs_started=0`, `readout_runs_started=0`,
+  `roofer_runs_started=0`, `scoring_runs_started=0`.
