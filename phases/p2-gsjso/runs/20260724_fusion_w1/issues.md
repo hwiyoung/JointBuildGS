@@ -118,3 +118,51 @@
 - Regression lock: a synthetic three-building sequence now asserts that the same error still raises the stage stop and that all three building checkpoints are durable and readable afterward.
 - Verification: Gate/test SHA-256 `74a8eda3c321a9e001b25378db4ff4ad990401d32bc08b0c10b5780a7f89ee73` / `80eb6fe0ca42f197511c6949e1a839e20f84158806186a18b76f36d612ac728b`; pinned read-only Docker tests passed Gate 25/25, runtime guard 15/15, checkpoint 10/10 (50/50).
 - Run disposition: RUN-004 remains BLOCKED and its third-building bundle is not reconstructed or represented as recovered. No Gate measurement was rerun and no learning/readout/scoring process was started.
+
+## FUS-W1-COREG-LOCK-001 — ALS-fixed camera co-registration preregistered
+
+- Recorded: 2026-07-25 KST
+- Stage: post-RUN-004 protocol amendment, before any new ALS/photo residual
+- Status: PREREGISTERED; MEASUREMENT NOT YET STARTED
+- Authorization: 김휘영 explicitly authorized the proposed alignment while
+  requiring preservation of LiDAR as seed and loss source. The verbatim
+  authorization and scope are recorded in
+  `PROTOCOL_AMENDMENT_V3B_COREG_20260725.md`.
+- Root-cause guard: the direct image-edge Gate failure is not treated by itself
+  as proof that the camera frame is wrong. Existing read-only 3D evidence
+  (`datum_tie.md`) reports a 0.060 m same-surface median height difference and
+  auxiliary XY values of 0.00/0.00/-0.01 m, so the locked procedure is
+  identity-first and may publish identity when a nonzero SE(3) is not supported.
+- Immutable treatment: source ALS LAZ/coordinates/classes/SHA remain fixed,
+  EPSG:25832 and zeta 45.700 m remain fixed, scale remains 1, and only the
+  camera/photo frame may move. Arm A/B must use the same frozen camera hash.
+- Result-blind controls: 36 extension-surface buildings were selected from
+  pre-existing W2 support and GroundSurface XY centroids only: fit 18, trigger
+  9, independent check 9. Core use is 0; minimum footprint distance to the 28
+  core buildings is 20.111315 m. All 36 are calibration-exposed and excluded
+  from later extension-only interpretation.
+- Capture blocks: original OPF capture time gaps greater than 600 seconds fix
+  three blocks before residual measurement: 194, 147, and 596 COLMAP images.
+- Verification before measurement: pinned-Docker combined coreg/Gate/runtime/
+  checkpoint tests 78/78 passed. Coreg-specific tests are 26/26. They cover
+  known small-SE(3) recovery, non-convergence and rank rejection, valid-normal
+  filtering, both-surface and exact cohort contracts, exact-once parent chains,
+  frozen-selection tamper rejection, full COLMAP binary round-trip, block-pose
+  shared-point detachment, pose projection invariance, pivot conjugation,
+  quaternion round-trip near 180 degrees, geoid-before-transform, analytic
+  Jacobian, input hashes, core exclusion, role counts, and the 937-image block
+  inventory. Gate A2 is committed as a distinct zero-micro-registration mode.
+- Counters at lock: `new_coreg_residual_buildings=0`,
+  `new_coreg_residual_views=0`, `learning_runs_started=0`,
+  `readout_runs_started=0`, `scoring_runs_started=0`.
+
+### Execution-process disclosure
+
+- During the read-only design audit, two agent-side host `python3` invocations
+  opened existing CSV metadata/header text only, and one later host
+  `python3 -m json.tool` invocation parsed the edited Gate config for syntax.
+  They wrote no file, loaded no ALS/photo geometry or image intensity, and
+  produced no alignment measurement. These were Docker-execution-rule process
+  exceptions, not scientific input mutations. Every substantive validation,
+  selection, residual measurement, and pose publication command uses the
+  pinned Docker images.

@@ -90,6 +90,28 @@ class FusionW1AlignmentGateLock1Tests(unittest.TestCase):
             approval_sha256,
         )
 
+    def test_coreg_lock2_activation_binds_derived_poses_and_zero_micro(self) -> None:
+        activated = gate.activate_coreg_gate_lock2(self.config)
+        section = self.config["coreg_gate_lock2"]
+        self.assertEqual(
+            activated["inputs"]["colmap_sparse_dir"],
+            section["derived_colmap_sparse_dir"],
+        )
+        self.assertEqual(
+            activated["micro_registration"]["maximum_attempts"], 0
+        )
+        self.assertTrue(
+            activated["micro_registration"][
+                "all_post_coreg_xy_micro_registration_forbidden"
+            ]
+        )
+        self.assertEqual(
+            activated["outputs"]["gate_json"], "w1_align2_gate.json"
+        )
+        self.assertEqual(
+            activated["publication"]["current_pointer"], "w1_align2_current"
+        )
+
     def test_missing_observability_key_fails_at_config_load(self) -> None:
         payload = copy.deepcopy(self.config)
         del payload["view_selection"][

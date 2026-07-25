@@ -392,6 +392,33 @@ class FusionW1AlignmentRuntimeGuardTests(unittest.TestCase):
                 receipt,
             )
 
+    def test_child_argv_accepts_only_locked_coreg_gate_mode(self) -> None:
+        receipt = (
+            REPO
+            / "phases/p2-gsjso/runs/20260724_fusion_w1"
+            / "w1_align2_execution_guard.json"
+        )
+        valid = [
+            "python",
+            guard.LOCKED_GATE_SCRIPT,
+            "--config",
+            str(CONFIG_PATH),
+            "--execution-guard",
+            str(receipt),
+            "--coreg-lock2",
+        ]
+        self.assertEqual(
+            guard.validate_child_argv(valid, CONFIG_PATH, receipt), valid
+        )
+        config = copy.deepcopy(self.config)
+        config["coreg_gate_lock2"]["enabled"] = False
+        with self.assertRaisesRegex(
+            guard.RuntimeGuardError, "mode is not locked"
+        ):
+            guard.validate_child_argv(
+                valid, CONFIG_PATH, receipt, config=config
+            )
+
     def test_views_override_is_disabled_without_path_and_sha_lock(self) -> None:
         receipt = (
             REPO

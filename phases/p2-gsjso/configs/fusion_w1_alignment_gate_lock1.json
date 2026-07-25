@@ -18,7 +18,17 @@
       "phases/p2-gsjso/scripts/fusion_w1_alignment_runtime_guard_lock1.py",
       "phases/p2-gsjso/scripts/test_fusion_w1_alignment_runtime_guard_lock1.py",
       "phases/p2-gsjso/scripts/fusion_w1_alignment_checkpoint.py",
-      "phases/p2-gsjso/scripts/test_fusion_w1_alignment_checkpoint.py"
+      "phases/p2-gsjso/scripts/test_fusion_w1_alignment_checkpoint.py",
+      "phases/p2-gsjso/scripts/run_fusion_w1_alignment_gate_lock2.sh",
+      "phases/p2-gsjso/configs/fusion_w1_coreg_lock1.json",
+      "phases/p2-gsjso/scripts/fusion_w1_coreg_lock1.py",
+      "phases/p2-gsjso/scripts/run_fusion_w1_coreg_lock1.sh",
+      "phases/p2-gsjso/scripts/test_fusion_w1_coreg_lock1.py",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/PROTOCOL_AMENDMENT_V3B_COREG_20260725.md",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/w1_coreg_splits.csv",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/w1_coreg_camera_blocks.csv",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/w1_coreg_prereg_manifest.json",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/w1_coreg_prereg_split.png"
     ],
     "policy": "Every implementation file must be a tracked blob identical to committed HEAD and the tracked worktree/index must be clean. This locks all result-blind critical semantics before any image residual is read."
   },
@@ -296,6 +306,39 @@
     "gate_json": "w1_align_gate.json",
     "manifest_json": "w1_align_manifest.json",
     "overlay_dir": "w1_align_overlays"
+  },
+  "coreg_gate_lock2": {
+    "enabled": true,
+    "task_id": "FUS-W1-GATE-A2-20260725",
+    "treatment": "LiDAR-assisted camera co-registration + LiDAR seed/supervision",
+    "pose_publication_manifest": "results/tum_transfer/fusion_w1_coreg_lock1/pose_publication_manifest.json",
+    "coreg_runtime_dir": "results/tum_transfer/fusion_w1_coreg_lock1",
+    "coreg_config": "phases/p2-gsjso/configs/fusion_w1_coreg_lock1.json",
+    "derived_colmap_sparse_dir": "results/tum_transfer/fusion_w1_coreg_lock1/derived_sparse/0",
+    "maximum_post_coreg_xy_micro_registration_attempts": 0,
+    "original_run004_exposed_core_ids": [
+      "DEBY_LOD2_42364609",
+      "DEBY_LOD2_42364659",
+      "DEBY_LOD2_42364663"
+    ],
+    "primary_untouched_core_count": 25,
+    "output_overrides": {
+      "residuals_csv": "w1_align2_residuals.csv",
+      "views_csv": "w1_align2_views.csv",
+      "buildings_csv": "w1_align2_buildings.csv",
+      "gate_json": "w1_align2_gate.json",
+      "manifest_json": "w1_align2_manifest.json",
+      "overlay_dir": "w1_align2_overlays"
+    },
+    "publication_overrides": {
+      "versions_dir": "w1_align2_versions",
+      "current_pointer": "w1_align2_current",
+      "single_run_lock": "w1_align2_gate.lock",
+      "per_building_checkpoint_dir": "w1_align2_checkpoints"
+    },
+    "guard_receipt": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_align2_execution_guard.json",
+    "lock_file": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_align2_gate.lock",
+    "result_policy": "run once on all 28 core buildings; report the 25 untouched primary buildings separately from the three RUN-004-exposed diagnostic repeats; no additional XY micro-registration"
   },
   "time_policy": {
     "hard_cutoff": null,

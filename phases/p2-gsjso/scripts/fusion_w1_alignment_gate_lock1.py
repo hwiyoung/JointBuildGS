@@ -26,6 +26,7 @@ from __future__ import annotations
 
 import argparse
 from collections import deque
+import copy
 import csv
 import fcntl
 import hashlib
@@ -518,6 +519,164 @@ def load_config(path: Path) -> dict[str, Any]:
     ):
         raise GateContractError("approved GroundSurface XY exception is not explicit")
     return payload
+
+
+def activate_coreg_gate_lock2(
+    config: Mapping[str, Any],
+) -> dict[str, Any]:
+    """Activate the preregistered corrected-camera Gate without a new config."""
+
+    section = config.get("coreg_gate_lock2")
+    if not isinstance(section, Mapping) or section.get("enabled") is not True:
+        raise GateContractError("corrected-camera Gate lock2 is not enabled")
+    if int(section.get("maximum_post_coreg_xy_micro_registration_attempts", -1)) != 0:
+        raise GateContractError(
+            "corrected-camera Gate must forbid every additional XY micro-registration"
+        )
+    activated = copy.deepcopy(dict(config))
+    activated["task_id"] = str(section["task_id"])
+    activated["inputs"]["colmap_sparse_dir"] = str(
+        section["derived_colmap_sparse_dir"]
+    )
+    activated["outputs"].update(dict(section["output_overrides"]))
+    activated["publication"].update(dict(section["publication_overrides"]))
+    activated["micro_registration"]["maximum_attempts"] = 0
+    activated["micro_registration"]["method"] = (
+        "forbidden after the single preregistered ALS-fixed camera "
+        "co-registration composite procedure"
+    )
+    activated["micro_registration"][
+        "all_post_coreg_xy_micro_registration_forbidden"
+    ] = True
+    activated["_active_coreg_gate_lock2"] = dict(section)
+    return activated
+
+
+def validate_pose_publication_contract(
+    config: Mapping[str, Any],
+) -> dict[str, Any]:
+    """Bind lock2 to the exact passed coreg receipt and derived COLMAP model."""
+
+    section = config.get("_active_coreg_gate_lock2")
+    if not isinstance(section, Mapping):
+        raise GateContractError("corrected-camera Gate mode is not active")
+    manifest_path = repo_path(str(section["pose_publication_manifest"]))
+    coreg_runtime = repo_path(str(section["coreg_runtime_dir"]))
+    coreg_config_path = repo_path(str(section["coreg_config"]))
+    derived_sparse = repo_path(str(section["derived_colmap_sparse_dir"]))
+    if derived_sparse.resolve() != repo_path(
+        config["inputs"]["colmap_sparse_dir"]
+    ).resolve():
+        raise GateContractError("lock2 sparse directory differs from its pose contract")
+    if not manifest_path.is_file():
+        raise GateContractError("passed coreg pose publication manifest is missing")
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if (
+        manifest.get("schema")
+        != "jointbuildgs.fusion_w1.coreg_pose_publication.v1"
+        or manifest.get("status") != "PASSED"
+        or manifest.get("learning_allowed") is not False
+        or manifest.get("als_source_modified") is not False
+    ):
+        raise GateContractError("coreg pose publication status/invariants are invalid")
+    if manifest.get("derived_sparse") != repo_relative(derived_sparse):
+        raise GateContractError("coreg manifest names a different derived sparse model")
+
+    stage_binding = manifest.get("stage_binding")
+    if not isinstance(stage_binding, Mapping):
+        raise GateContractError("coreg pose manifest lacks immutable stage binding")
+    head = _run_text(["git", "rev-parse", "HEAD"]).stdout.strip()
+    branch = _run_text(["git", "branch", "--show-current"]).stdout.strip()
+    if stage_binding.get("head") != head or stage_binding.get("branch") != branch:
+        raise GateContractError(
+            "coreg measurement HEAD/branch differs from corrected-camera Gate HEAD"
+        )
+    if stage_binding.get("config_sha256") != sha256_file(coreg_config_path):
+        raise GateContractError("coreg stage binding config SHA-256 mismatch")
+
+    check_path = coreg_runtime / "independent_check.json"
+    frozen_path = coreg_runtime / "frozen_transform.json"
+    open_path = coreg_runtime / "publish_poses_open.json"
+    if not check_path.is_file() or not frozen_path.is_file() or not open_path.is_file():
+        raise GateContractError("coreg check/frozen/stage-open receipt chain is incomplete")
+    check = json.loads(check_path.read_text(encoding="utf-8"))
+    frozen = json.loads(frozen_path.read_text(encoding="utf-8"))
+    opened = json.loads(open_path.read_text(encoding="utf-8"))
+    if (
+        check.get("status") != "PASSED"
+        or check.get("stage_binding") != stage_binding
+        or frozen.get("stage_binding") != stage_binding
+        or opened.get("stage_binding") != stage_binding
+    ):
+        raise GateContractError("coreg check/frozen/publish stages do not share a binding")
+    if manifest.get("independent_check_sha256") != sha256_file(check_path):
+        raise GateContractError("coreg independent-check receipt hash mismatch")
+    if manifest.get("stage_open_receipt_sha256") != sha256_file(open_path):
+        raise GateContractError("coreg pose stage-open receipt hash mismatch")
+    parents = opened.get("parent_receipt_sha256") or {}
+    if (
+        parents.get("independent_check") != sha256_file(check_path)
+        or parents.get("frozen_transform") != sha256_file(frozen_path)
+    ):
+        raise GateContractError("coreg pose stage-open parent chain mismatch")
+    if (
+        manifest.get("selected_transform_sha256")
+        != check.get("selected_transform_sha256")
+        or manifest.get("selected_transform_sha256")
+        != frozen.get("selected_transform_sha256")
+    ):
+        raise GateContractError("coreg selected transform hash chain mismatch")
+
+    observed_derived: dict[str, str] = {}
+    for name in ("cameras.bin", "images.bin", "points3D.bin"):
+        path = derived_sparse / name
+        if not path.is_file():
+            raise GateContractError(f"coreg derived sparse file is missing: {name}")
+        observed_derived[name] = sha256_file(path)
+        if observed_derived[name] != manifest.get("derived_sha256", {}).get(name):
+            raise GateContractError(f"coreg derived sparse SHA-256 mismatch: {name}")
+    if int(manifest.get("image_count", -1)) != int(
+        config["input_locks"]["expected_training_pose_image_intersection"]
+    ):
+        raise GateContractError("coreg pose publication does not cover all 937 images")
+    arm_contract = manifest.get("arm_pose_contract") or {}
+    if (
+        arm_contract.get("identical") is not True
+        or arm_contract.get("arm_A_required_pose_sha256")
+        != observed_derived["images.bin"]
+        or arm_contract.get("arm_B_required_pose_sha256")
+        != observed_derived["images.bin"]
+    ):
+        raise GateContractError("arm A/B corrected-camera pose contract is not identical")
+
+    coreg_config = json.loads(coreg_config_path.read_text(encoding="utf-8"))
+    als_relative = str(coreg_config["inputs"]["als_aoi_laz"])
+    als_sha = sha256_file(repo_path(als_relative))
+    expected_als = coreg_config["input_locks"]["expected_sha256"][als_relative]
+    if (
+        als_sha != expected_als
+        or manifest.get("als_source_sha256_after") != expected_als
+        or stage_binding.get("source_als_sha256") != expected_als
+    ):
+        raise GateContractError("ALS changed across coreg and corrected-camera Gate")
+
+    return {
+        "status": "PASSED",
+        "mode": "coreg_gate_lock2",
+        "pose_publication_manifest": repo_relative(manifest_path),
+        "pose_publication_manifest_sha256": sha256_file(manifest_path),
+        "coreg_measurement_head": head,
+        "selected_transform_sha256": manifest["selected_transform_sha256"],
+        "choice": manifest["choice"],
+        "derived_sparse": repo_relative(derived_sparse),
+        "derived_sha256": observed_derived,
+        "image_count": manifest["image_count"],
+        "als_source_sha256_unchanged": expected_als,
+        "post_coreg_xy_micro_registration_attempts_allowed": 0,
+        "sparse_points3d_usable_for_learning": manifest[
+            "sparse_points3d_usable_for_learning"
+        ],
+    }
 
 
 def validate_source_hashes(config: Mapping[str, Any]) -> dict[str, str]:
@@ -4497,6 +4656,8 @@ def run_gate(args: argparse.Namespace) -> tuple[int, dict[str, Any]]:
     if config_path.resolve() != DEFAULT_CONFIG.resolve():
         raise GateContractError("alternate Gate A config is forbidden")
     config = load_config(config_path)
+    if args.coreg_lock2:
+        config = activate_coreg_gate_lock2(config)
     implementation_provenance = validate_implementation_provenance(config)
     immutable_preflight = validate_baseline_preflight(config["execution_guard"])
     if args.input_datum is not None and args.input_datum != config["input_locks"][
@@ -4528,6 +4689,20 @@ def run_gate(args: argparse.Namespace) -> tuple[int, dict[str, Any]]:
     guard_path = repo_path(args.execution_guard)
     execution_guard = validate_runtime_guard_receipt(guard_path, config_path)
     source_hashes = validate_source_hashes(config)
+    pose_publication_contract = (
+        validate_pose_publication_contract(config)
+        if args.coreg_lock2
+        else None
+    )
+    if pose_publication_contract is not None:
+        source_hashes.update(
+            {
+                f"{pose_publication_contract['derived_sparse']}/{name}": digest
+                for name, digest in pose_publication_contract[
+                    "derived_sha256"
+                ].items()
+            }
+        )
     output_dir = (
         repo_path(args.output_dir)
         if args.output_dir
@@ -4728,11 +4903,18 @@ def run_gate(args: argparse.Namespace) -> tuple[int, dict[str, Any]]:
     micro_attempt_count = 0
     micro_rows: list[dict[str, Any]] = []
     micro_buildings: list[dict[str, Any]] = []
+    maximum_micro_attempts = int(
+        config["micro_registration"]["maximum_attempts"]
+    )
     global_micro_metadata: dict[str, Any] = {
         "reason": "raw_gate_met_no_micro_registration",
         "shift": None,
     }
-    if raw_gate["numeric_gate_met"]:
+    if maximum_micro_attempts == 0 and not raw_gate["numeric_gate_met"]:
+        global_micro_metadata["reason"] = (
+            "post_coreg_xy_micro_registration_forbidden"
+        )
+    if raw_gate["numeric_gate_met"] or maximum_micro_attempts == 0:
         final_rows = raw_rows
         final_buildings = raw_buildings
         final_systematic = raw_systematic
@@ -4803,7 +4985,7 @@ def run_gate(args: argparse.Namespace) -> tuple[int, dict[str, Any]]:
         )
         final_gate = evaluate_gate(micro_buildings, final_systematic)
         final_attempt = MICRO_ATTEMPT
-    if raw_gate["numeric_gate_met"]:
+    if raw_gate["numeric_gate_met"] or maximum_micro_attempts == 0:
         micro_checkpoint_refs = []
 
     for row in raw_rows:
@@ -4836,12 +5018,14 @@ def run_gate(args: argparse.Namespace) -> tuple[int, dict[str, Any]]:
         },
         "micro_registration": {
             "attempt_count": micro_attempt_count,
-            "maximum_attempts": 1,
+            "maximum_attempts": maximum_micro_attempts,
             "second_attempt_forbidden": True,
             "method": config["micro_registration"]["method"],
             "global_shared_shift": global_micro_metadata,
-            "same_shift_for_every_building": True,
-            "post_registration_gate_split": "heldout",
+            "same_shift_for_every_building": micro_attempt_count == 1,
+            "post_registration_gate_split": (
+                "heldout" if micro_attempt_count == 1 else "not_applicable"
+            ),
         },
         "final": {
             "gate": final_gate,
@@ -4856,6 +5040,24 @@ def run_gate(args: argparse.Namespace) -> tuple[int, dict[str, Any]]:
             ],
         },
         "execution_guard": execution_guard,
+        "pose_publication_contract": pose_publication_contract,
+        "coreg_evaluation_scope": (
+            {
+                "primary_untouched_core_count": int(
+                    config["_active_coreg_gate_lock2"][
+                        "primary_untouched_core_count"
+                    ]
+                ),
+                "run004_exposed_diagnostic_core_ids": list(
+                    config["_active_coreg_gate_lock2"][
+                        "original_run004_exposed_core_ids"
+                    ]
+                ),
+                "post_coreg_xy_micro_registration_attempts": 0,
+            }
+            if args.coreg_lock2
+            else None
+        ),
         "queue_scope": {
             "queue_status": config["target_queue_contract"][
                 "required_queue_status"
@@ -4966,6 +5168,7 @@ def run_gate(args: argparse.Namespace) -> tuple[int, dict[str, Any]]:
                 ),
                 **selected_image_revalidation,
             },
+            "pose_publication_contract": pose_publication_contract,
             "datum": {
                 "crs": "EPSG:25832",
                 "input_vertical_datum": input_datum,
@@ -5008,6 +5211,9 @@ def run_gate(args: argparse.Namespace) -> tuple[int, dict[str, Any]]:
                 "readout_runs_started": 0,
                 "scoring_runs_started": 0,
                 "micro_registration_attempt_count": micro_attempt_count,
+                "post_coreg_xy_micro_registration_forbidden": bool(
+                    args.coreg_lock2
+                ),
                 "elapsed_seconds": time.monotonic() - started,
                 "time_cutoff_applied": False,
                 "snapshot_0630_stops_execution": False,
@@ -5118,6 +5324,14 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="replace only the fixed w1_align_* outputs after explicit review",
     )
+    parser.add_argument(
+        "--coreg-lock2",
+        action="store_true",
+        help=(
+            "activate the committed corrected-camera Gate A2 contract; "
+            "no additional XY micro-registration is permitted"
+        ),
+    )
     return parser
 
 
@@ -5141,7 +5355,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         + (
             "locked numeric criteria met; human judgment remains unset"
             if status == 0
-            else "BLOCKED after the single permitted micro-registration attempt"
+            else (
+                "BLOCKED with post-coreg XY micro-registration forbidden"
+                if args.coreg_lock2
+                else "BLOCKED after the single permitted micro-registration attempt"
+            )
         )
     )
     print(json.dumps(_json_sanitize(payload["final"]), ensure_ascii=False))

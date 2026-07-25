@@ -1458,6 +1458,26 @@ def validate_child_argv(
         )
 
     locked_config = load_json(config_path) if config is None else config
+    coreg_mode_count = argv.count("--coreg-lock2")
+    if coreg_mode_count > 1 or any(
+        value.startswith("--coreg-lock2=") for value in argv
+    ):
+        raise RuntimeGuardError("corrected-camera Gate mode flag is malformed")
+    if coreg_mode_count == 1:
+        coreg_section = locked_config.get("coreg_gate_lock2")
+        if (
+            not isinstance(coreg_section, Mapping)
+            or coreg_section.get("enabled") is not True
+            or int(
+                coreg_section.get(
+                    "maximum_post_coreg_xy_micro_registration_attempts", -1
+                )
+            )
+            != 0
+        ):
+            raise RuntimeGuardError(
+                "corrected-camera Gate mode is not locked with zero micro attempts"
+            )
 
     def require_optional_locked_path(
         option: str,
