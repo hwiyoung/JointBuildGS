@@ -1617,6 +1617,521 @@ def score_one(
     return complete
 
 
+def _panel_input(
+    path: Path,
+    *,
+    label: str,
+    expected_sha256: str | None = None,
+    published_path: str | None = None,
+) -> dict[str, Any]:
+    if not path.is_file() or path.stat().st_size <= 0:
+        raise P0PrimeError(f"panel input is missing/empty: {label}")
+    try:
+        path.resolve(strict=True).relative_to(REPO.resolve())
+    except (OSError, ValueError) as exc:
+        raise P0PrimeError(f"panel input escapes repository: {label}") from exc
+    digest = sha256_file(path)
+    if expected_sha256 is not None and digest != expected_sha256:
+        raise P0PrimeError(f"panel input SHA256 drift: {label}")
+    return {
+        "label": label,
+        "path": published_path or repo_relative(path),
+        "sha256": digest,
+        "size": path.stat().st_size,
+    }
+
+
+def _first_photo_support(
+    preprocess_path: Path,
+    preprocess: Mapping[str, Any],
+) -> dict[str, Any]:
+    """Resolve the selection-order-1 image and its published support mask."""
+
+    supervision = preprocess.get("supervision")
+    if not isinstance(supervision, Mapping) or not isinstance(
+        supervision.get("index"), Mapping
+    ):
+        raise P0PrimeError("preprocess manifest lacks supervision index")
+    index_record = supervision["index"]
+    index_path = resolve_declared_path(
+        index_record.get("path"), declaring_file=preprocess_path
+    )
+    index_input = _panel_input(
+        index_path,
+        label="preprocess supervision index",
+        expected_sha256=str(index_record.get("sha256", "")),
+    )
+    rows = read_csv(index_path)
+    try:
+        rows.sort(key=lambda row: int(row["selection_order"]))
+    except (KeyError, TypeError, ValueError) as exc:
+        raise P0PrimeError("invalid supervision selection_order") from exc
+    if not rows or int(rows[0]["selection_order"]) != 1:
+        raise P0PrimeError("supervision index lacks selection-order-1 view")
+    first = rows[0]
+    building_id = preprocess.get("building", {}).get("building_id")
+    if first.get("building_id") != building_id:
+        raise P0PrimeError("first supervision view building mismatch")
+    image_name = first.get("image_name", "")
+    if not image_name or Path(image_name).name != image_name:
+        raise P0PrimeError("unsafe first supervision image name")
+    data_root_value = preprocess.get("data_root")
+    if not isinstance(data_root_value, str) or not data_root_value:
+        raise P0PrimeError("preprocess data_root is missing")
+    image_rel = str(Path(data_root_value) / "images" / image_name)
+    image_path = REPO / image_rel
+    mask_value = first.get("photo_support_mask_path")
+    if not isinstance(mask_value, str) or not mask_value:
+        raise P0PrimeError("first supervision view lacks photo support mask")
+    mask_path = resolve_declared_path(mask_value, declaring_file=index_path)
+    artifacts = preprocess.get("artifact_sha256")
+    if not isinstance(artifacts, Mapping):
+        raise P0PrimeError("preprocess artifact SHA inventory is missing")
+    image_expected = artifacts.get(image_rel)
+    mask_rel = str(Path(mask_value))
+    mask_expected = artifacts.get(mask_rel)
+    if not isinstance(image_expected, str) or not isinstance(mask_expected, str):
+        raise P0PrimeError("first image/mask is absent from artifact SHA inventory")
+    image_input = _panel_input(
+        image_path,
+        label="selected first image",
+        expected_sha256=image_expected,
+        published_path=image_rel,
+    )
+    mask_input = _panel_input(
+        mask_path,
+        label="selected first photo support mask",
+        expected_sha256=mask_expected,
+        published_path=mask_rel,
+    )
+    return {
+        "selection_order": 1,
+        "image_name": image_name,
+        "supervision_index": index_input,
+        "image": image_input,
+        "image_path": image_path,
+        "mask": mask_input,
+        "mask_path": mask_path,
+        "declared_valid_pixels_n": int(first["photo_support_valid_pixels_n"]),
+    }
+
+
+def _surface_polygons(surfaces: Sequence[Any]) -> Iterable[Any]:
+    for surface in surfaces:
+        polygon = surface.polygon
+        if polygon.geom_type == "Polygon":
+            yield polygon
+        elif polygon.geom_type == "MultiPolygon":
+            yield from polygon.geoms
+
+
+def _plot_roof_topview(
+    axis: Any,
+    surfaces: Sequence[Any],
+    *,
+    face_color: str,
+    edge_color: str,
+) -> int:
+    polygons = list(_surface_polygons(surfaces))
+    for polygon in polygons:
+        x, y = polygon.exterior.xy
+        axis.fill(x, y, facecolor=face_color, edgecolor=edge_color, alpha=0.55)
+        for interior in polygon.interiors:
+            ix, iy = interior.xy
+            axis.plot(ix, iy, color=edge_color, linewidth=0.7)
+    if not polygons:
+        axis.text(
+            0.5,
+            0.5,
+            "roof surfaces n=0",
+            ha="center",
+            va="center",
+            transform=axis.transAxes,
+        )
+    axis.set_aspect("equal", adjustable="datalim")
+    axis.set_xlabel("Easting (m)")
+    axis.set_ylabel("Northing (m)")
+    return len(polygons)
+
+
+def _atomic_panel_figure(figure: Any, output: Path) -> None:
+    output.parent.mkdir(parents=True, exist_ok=True)
+    temporary = output.with_name(f".{output.name}.{os.getpid()}.tmp")
+    try:
+        figure.savefig(
+            temporary,
+            format="png",
+            dpi=150,
+            bbox_inches="tight",
+            metadata={"Software": "JointBuildGS Fusion W1 P0-prime"},
+        )
+        with temporary.open("rb+") as handle:
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary, output)
+    finally:
+        if temporary.exists():
+            temporary.unlink()
+
+
+def panel_one(
+    config: Mapping[str, Any], building_id: str
+) -> dict[str, Any]:
+    """Render the four-panel P0-prime, pre-learning observation record."""
+
+    if re.fullmatch(r"DEBY_LOD2_[0-9]+", building_id) is None:
+        raise P0PrimeError(f"unsafe building ID: {building_id!r}")
+    target = target_row(config, building_id)
+    panel_root = repo_path(Path(config["run_dir"]) / "w1_panels")
+    panel_path = panel_root / f"{building_id}__p0prime.png"
+    receipt_path = panel_root / f"{building_id}__p0prime.receipt.json"
+    if (
+        panel_path.exists()
+        or panel_path.is_symlink()
+        or receipt_path.exists()
+        or receipt_path.is_symlink()
+    ):
+        raise P0PrimeError("P0-prime panel or receipt already exists")
+
+    job = building_dir(config, building_id)
+    complete_path = job / "complete.json"
+    complete = validate_receipt_file(
+        complete_path,
+        schema=BUILDING_RECEIPT_SCHEMA,
+        state="COMPLETE",
+    )
+    if complete.get("building_id") != building_id:
+        raise P0PrimeError("P0-prime complete receipt building mismatch")
+    complete_input = _panel_input(complete_path, label="P0-prime complete receipt")
+
+    classification_path = job / "classification_receipt.json"
+    classification = validate_receipt_file(
+        classification_path,
+        schema="jointbuildgs.fusion_w1.seed_p0prime.classification_receipt.v1",
+        state="PASSED",
+    )
+    if classification.get("building_id") != building_id:
+        raise P0PrimeError("classification receipt building mismatch")
+    classification_input = _panel_input(
+        classification_path, label="P0-prime classification receipt"
+    )
+    preprocess_record = classification["preprocess_manifest"]
+    preprocess_path = repo_path(preprocess_record["path"])
+    preprocess_input = _panel_input(
+        preprocess_path,
+        label="preprocess building manifest",
+        expected_sha256=preprocess_record["sha256"],
+    )
+    preprocess = load_json(preprocess_path)
+    if preprocess.get("building", {}).get("building_id") != building_id:
+        raise P0PrimeError("preprocess manifest building mismatch")
+    photo = _first_photo_support(preprocess_path, preprocess)
+
+    seed_record = classification["classified_seed_las"]
+    seed_path = repo_path(seed_record["path"])
+    seed_input = _panel_input(
+        seed_path,
+        label="actual P0-prime seed LAS",
+        expected_sha256=seed_record["sha256"],
+    )
+
+    # Freeze and verify Roofer evidence before any evaluation-only reference
+    # helper or GML is opened.
+    roofer_invocation_path = job / "roofer_invocation.json"
+    roofer_invocation = validate_receipt_file(
+        roofer_invocation_path,
+        schema="jointbuildgs.fusion_w1.seed_p0prime.roofer_invocation.v1",
+        state="AUTHORIZED",
+    )
+    roofer_invocation_input = _panel_input(
+        roofer_invocation_path, label="P0-prime Roofer invocation"
+    )
+    roofer_receipt_path = job / "roofer_receipt.json"
+    roofer_receipt = validate_receipt_file(
+        roofer_receipt_path,
+        schema="jointbuildgs.fusion_w1.seed_p0prime.roofer_receipt.v1",
+        state="COMPLETE",
+    )
+    if roofer_receipt.get("building_id") != building_id:
+        raise P0PrimeError("Roofer receipt building mismatch")
+    if (
+        roofer_receipt["invocation"]["path"]
+        != repo_relative(roofer_invocation_path)
+        or roofer_receipt["invocation"]["sha256"]
+        != roofer_invocation_input["sha256"]
+    ):
+        raise P0PrimeError("Roofer receipt/invocation binding mismatch")
+    roofer_receipt_input = _panel_input(
+        roofer_receipt_path, label="frozen P0-prime Roofer receipt"
+    )
+    jsonseq_inputs = []
+    for record in roofer_receipt.get("jsonseq_outputs", []):
+        jsonseq_inputs.append(
+            _panel_input(
+                repo_path(record["path"]),
+                label="frozen Roofer CityJSONSeq",
+                expected_sha256=record["sha256"],
+            )
+        )
+    if not jsonseq_inputs:
+        raise P0PrimeError("Roofer receipt has no frozen CityJSONSeq output")
+
+    score_receipt_path = repo_path(complete["score_receipt"]["path"])
+    score_receipt_input = _panel_input(
+        score_receipt_path,
+        label="P0-prime score receipt",
+        expected_sha256=complete["score_receipt"]["sha256"],
+    )
+    score_receipt = validate_receipt_file(
+        score_receipt_path,
+        schema="jointbuildgs.fusion_w1.seed_p0prime.score_receipt.v1",
+        state="MEASURED",
+    )
+    score_row = score_receipt.get("row")
+    if not isinstance(score_row, Mapping) or score_row.get("building_id") != building_id:
+        raise P0PrimeError("score receipt row building mismatch")
+    if (
+        score_row.get("roofer_receipt") != repo_relative(roofer_receipt_path)
+        or score_row.get("roofer_receipt_sha256")
+        != roofer_receipt_input["sha256"]
+    ):
+        raise P0PrimeError("score row/Roofer receipt binding mismatch")
+    cityjson_path = repo_path(score_row["cityjson"])
+    cityjson_input = _panel_input(
+        cityjson_path,
+        label="P0-prime combined CityJSON",
+        expected_sha256=score_row["cityjson_sha256"],
+    )
+    roofer_frozen = True
+
+    # This call verifies the locked reference GML hashes. It deliberately
+    # occurs only after the Roofer receipt and every frozen output above.
+    _, metric, _ = load_helpers(config)
+    parsed = metric.parse_cityjson_roofs(cityjson_path, {building_id})
+    prediction = list(parsed.get(building_id, []))
+    reference = metric.parse_lod2_roofs(
+        repo_path(config["reference"]["lod2_dir"]), {building_id}
+    )
+    if building_id not in reference:
+        raise P0PrimeError(f"reference roof is missing: {building_id}")
+    reference_surfaces = list(reference[building_id])
+    reference_inputs = [
+        _panel_input(
+            repo_path(path),
+            label="evaluation-only reference GML",
+            expected_sha256=expected,
+        )
+        for path, expected in config["reference"]["locked_files"].items()
+    ]
+
+    try:
+        import laspy
+        import matplotlib
+        import numpy as np
+        from PIL import Image
+
+        matplotlib.use("Agg", force=True)
+        import matplotlib.pyplot as plt
+        from matplotlib.patches import Rectangle
+    except ImportError as exc:
+        raise P0PrimeError(
+            "panel-one requires laspy, matplotlib, numpy, and Pillow"
+        ) from exc
+
+    mask = np.load(photo["mask_path"], allow_pickle=False)
+    if mask.ndim != 2:
+        raise P0PrimeError("photo support mask is not 2-D")
+    mask = np.asarray(mask, dtype=bool)
+    ys, xs = np.nonzero(mask)
+    if len(xs) == 0:
+        raise P0PrimeError("photo support mask has no true pixels")
+    if len(xs) != photo["declared_valid_pixels_n"]:
+        raise P0PrimeError("photo support mask pixel count drift")
+    with Image.open(photo["image_path"]) as image_source:
+        image = image_source.convert("RGB")
+        if mask.shape != (image.height, image.width):
+            raise P0PrimeError("photo support mask/image shape mismatch")
+        x0_raw, x1_raw = int(xs.min()), int(xs.max())
+        y0_raw, y1_raw = int(ys.min()), int(ys.max())
+        padding = max(12, int(0.08 * max(x1_raw - x0_raw + 1, y1_raw - y0_raw + 1)))
+        x0 = max(0, x0_raw - padding)
+        y0 = max(0, y0_raw - padding)
+        x1 = min(image.width - 1, x1_raw + padding)
+        y1 = min(image.height - 1, y1_raw + padding)
+        image_crop = np.asarray(image.crop((x0, y0, x1 + 1, y1 + 1)))
+    mask_crop = mask[y0 : y1 + 1, x0 : x1 + 1]
+
+    las = laspy.read(seed_path)
+    seed_x = np.asarray(las.x, dtype=np.float64)
+    seed_y = np.asarray(las.y, dtype=np.float64)
+    seed_class = np.asarray(las.classification, dtype=np.uint8)
+    observed_counts = {
+        str(value): int((seed_class == value).sum()) for value in (2, 6)
+    }
+    declared_counts = {
+        str(key): int(value)
+        for key, value in seed_record["class_counts"].items()
+    }
+    if observed_counts != declared_counts or int(len(seed_x)) != int(
+        seed_record["point_count"]
+    ):
+        raise P0PrimeError("seed LAS panel counts differ from classification receipt")
+
+    figure, axes = plt.subplots(1, 4, figsize=(18, 4.8))
+    axes[0].imshow(image_crop)
+    if mask_crop.any() and (~mask_crop).any():
+        axes[0].contour(
+            mask_crop.astype(np.uint8),
+            levels=[0.5],
+            colors=["#ffeb3b"],
+            linewidths=1.0,
+        )
+    else:
+        axes[0].add_patch(
+            Rectangle(
+                (x0_raw - x0, y0_raw - y0),
+                x1_raw - x0_raw + 1,
+                y1_raw - y0_raw + 1,
+                fill=False,
+                edgecolor="#ffeb3b",
+                linewidth=1.0,
+            )
+        )
+    axes[0].set_axis_off()
+    axes[0].set_title(
+        "P0-prime / pre-learning\n"
+        f"selected view #1; support pixels={len(xs)}",
+        fontsize=9,
+    )
+
+    displayed_counts: dict[str, int] = {}
+    for value, color, label in (
+        (2, "#777777", "class 2 ground"),
+        (6, "#d62728", "class 6 building"),
+    ):
+        indices = np.flatnonzero(seed_class == value)
+        if len(indices) > 60000:
+            indices = indices[
+                np.linspace(0, len(indices) - 1, 60000, dtype=np.int64)
+            ]
+        displayed_counts[str(value)] = int(len(indices))
+        axes[1].scatter(
+            seed_x[indices], seed_y[indices], s=1.0, alpha=0.65, c=color, label=label
+        )
+    axes[1].set_aspect("equal", adjustable="datalim")
+    axes[1].set_xlabel("Easting (m)")
+    axes[1].set_ylabel("Northing (m)")
+    axes[1].legend(loc="best", fontsize=7, markerscale=3)
+    axes[1].set_title(
+        "P0-prime / pre-learning\n"
+        f"actual seed LAS; class2={observed_counts['2']}, class6={observed_counts['6']}",
+        fontsize=9,
+    )
+
+    prediction_faces_n = _plot_roof_topview(
+        axes[2], prediction, face_color="#4c78a8", edge_color="#1f3552"
+    )
+    axes[2].set_title(
+        "P0-prime / pre-learning\n"
+        f"Roofer CityJSON roof; faces={prediction_faces_n}",
+        fontsize=9,
+    )
+    reference_faces_n = _plot_roof_topview(
+        axes[3], reference_surfaces, face_color="#f2cf5b", edge_color="#6d5b13"
+    )
+    axes[3].set_title(
+        "P0-prime / pre-learning (evaluation-only)\n"
+        f"reference GML roof; faces={reference_faces_n}",
+        fontsize=9,
+    )
+    figure.suptitle(
+        f"{building_id} — P0-prime (pre-learning) observation panel",
+        fontsize=11,
+    )
+    figure.tight_layout(rect=(0, 0, 1, 0.92))
+    try:
+        _atomic_panel_figure(figure, panel_path)
+    finally:
+        plt.close(figure)
+
+    inputs = {
+        "complete_receipt": complete_input,
+        "classification_receipt": classification_input,
+        "preprocess_manifest": preprocess_input,
+        "supervision_index": photo["supervision_index"],
+        "selected_first_image": photo["image"],
+        "photo_support_mask": photo["mask"],
+        "seed_las": seed_input,
+        "roofer_invocation": roofer_invocation_input,
+        "roofer_receipt": roofer_receipt_input,
+        "roofer_jsonseq": jsonseq_inputs,
+        "score_receipt": score_receipt_input,
+        "cityjson": cityjson_input,
+        "reference_gml": reference_inputs,
+    }
+    flattened = [
+        value
+        for value in inputs.values()
+        if isinstance(value, Mapping)
+    ] + jsonseq_inputs + reference_inputs
+    for record in flattened:
+        if sha256_file(repo_path(record["path"])) != record["sha256"]:
+            raise P0PrimeError(f"panel input changed while rendering: {record['label']}")
+
+    receipt = {
+        "schema": "jointbuildgs.fusion_w1.seed_p0prime.panel_receipt.v1",
+        "state": "COMPLETE",
+        "created_utc": now_iso(),
+        "building_id": building_id,
+        "processing_order": int(target["processing_order"]),
+        "tier": target["tier"],
+        "cohort": target["cohort"],
+        "panel_role": "P0-prime_pre-learning_observation",
+        "panel": {
+            "path": repo_relative(panel_path),
+            "sha256": sha256_file(panel_path),
+            "size": panel_path.stat().st_size,
+            "panels_n": 4,
+            "headless_matplotlib": True,
+        },
+        "panels": [
+            {
+                "index": 1,
+                "role": "selected_first_image_photo_support_bbox_crop_and_outline",
+                "image_name": photo["image_name"],
+                "selection_order": 1,
+                "support_pixels_n": int(len(xs)),
+                "bbox_xyxy_inclusive": [x0_raw, y0_raw, x1_raw, y1_raw],
+                "crop_xyxy_inclusive": [x0, y0, x1, y1],
+            },
+            {
+                "index": 2,
+                "role": "actual_seed_LAS_topview_class2_class6",
+                "class_counts": observed_counts,
+                "displayed_counts": displayed_counts,
+            },
+            {
+                "index": 3,
+                "role": "P0-prime_Roofer_CityJSON_roof_topview",
+                "roof_faces_n": prediction_faces_n,
+            },
+            {
+                "index": 4,
+                "role": "evaluation-only_reference_GML_roof_topview",
+                "roof_faces_n": reference_faces_n,
+            },
+        ],
+        "inputs": inputs,
+        "roofer_output_frozen_before_reference_open": roofer_frozen,
+        "reference_role": config["reference"]["role"],
+        "original_inputs_modified": False,
+        "learning_runs_started": 0,
+        "new_inference_runs": 0,
+    }
+    exclusive_json(receipt_path, receipt)
+    return receipt
+
+
 def upsert_score_row(
     config: Mapping[str, Any], row: Mapping[str, Any]
 ) -> None:
@@ -1786,6 +2301,9 @@ def parser() -> argparse.ArgumentParser:
         sub = commands.add_parser(name)
         sub.add_argument("--building-id", required=True)
 
+    panel = commands.add_parser("panel-one")
+    panel.add_argument("--building-id", required=True)
+
     paths = commands.add_parser("roofer-paths")
     paths.add_argument("--building-id", required=True)
 
@@ -1853,6 +2371,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         elif command == "score-one":
             verify_git_runtime(config)
             print_json(score_one(config, building_id))
+        elif command == "panel-one":
+            verify_git_runtime(config)
+            print_json(panel_one(config, building_id))
         elif command == "record-failure":
             verify_git_runtime(config)
             print_json(
@@ -1876,6 +2397,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             "authorize-roofer",
             "accept-roofer",
             "score-one",
+            "panel-one",
         }:
             try:
                 record_failure(

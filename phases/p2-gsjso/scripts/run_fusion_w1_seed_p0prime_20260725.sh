@@ -155,6 +155,16 @@ case "${1:-}" in
     acquire_driver_lock
     run_one "$2"
     ;;
+  panel-one)
+    [[ -n "${2:-}" ]] || {
+      echo "usage: $0 panel-one DEBY_LOD2_<id>" >&2
+      exit 2
+    }
+    acquire_driver_lock
+    assert_no_learning_or_other_readout
+    run_tools "$SCRIPT" --config "$CONFIG" panel-one \
+      --building-id "$2"
+    ;;
   all-ready)
     acquire_driver_lock
     mapfile -t pending < <(
@@ -173,7 +183,7 @@ case "${1:-}" in
     run_tools "$SCRIPT" --config "$CONFIG" finalize --require-all
     ;;
   *)
-    echo "usage: $0 {test|check [BUILDING_ID]|one BUILDING_ID|all-ready|finalize|finalize-all}" >&2
+    echo "usage: $0 {test|check [BUILDING_ID]|one BUILDING_ID|panel-one BUILDING_ID|all-ready|finalize|finalize-all}" >&2
     exit 2
     ;;
 esac
