@@ -1530,6 +1530,7 @@ def main():
         normal_encoding=cfg.get("normal_encoding", "half_range"),
         visible_views=cfg.get("visible_views"),
         photo_mask_manifest=cfg.get("photo_mask_manifest"),
+        photo_mask_dir=cfg.get("photo_mask_dir"),
         roof_audit_mask_manifest=cfg.get("roof_audit_mask_manifest"),
         plane_region_mask_manifest=cfg.get("plane_region_mask_manifest"),
         pilot_arm=pilot_arm,
@@ -2414,6 +2415,8 @@ def main():
         "depth_final_factor": depth_final_factor,
         "depth_weight_floor": depth_weight_floor,
         "normal_dir": primary_normal_dir,
+        "photo_mask_dir": cfg.get("photo_mask_dir"),
+        "photo_mask_dir_audit": ds.photo_mask_dir_audit,
         "mono_depth_dir": cfg.get("mono_depth_dir"),
         "mono_depth_base_weight": w_mono_depth,
         "mono_depth_schedule": mono_depth_schedule,
@@ -2939,6 +2942,12 @@ def main():
                 if "photo_mask" not in batch:
                     raise RuntimeError(f"{pilot_arm} batch is missing required photo_mask")
                 photo_loss_mask = batch["photo_mask"].to(device)
+        elif cfg.get("photo_mask_dir") is not None:
+            if "photo_mask" not in batch:
+                raise RuntimeError(
+                    "photo_mask_dir is configured but the active view has no mask"
+                )
+            photo_loss_mask = batch["photo_mask"].to(device)
         loss_photo = L.l_photo(
             rgb_pred,
             rgb_gt,

@@ -399,6 +399,7 @@ class ColmapDataset(Dataset):
         normal_encoding: str = "half_range",
         visible_views: Optional[Sequence[str]] = None,
         photo_mask_manifest: Optional[str | Path] = None,
+        photo_mask_dir: Optional[str | Path] = None,
         roof_audit_mask_manifest: Optional[str | Path] = None,
         plane_region_mask_manifest: Optional[str | Path] = None,
         pilot_arm: Optional[str] = None,
@@ -418,6 +419,11 @@ class ColmapDataset(Dataset):
         self.mono_depth_scale = float(mono_depth_scale)
         self.normal_encoding = normal_encoding
         self.pilot_arm = _validate_pilot_arm(pilot_arm)
+        self.photo_mask_dir = self._resolve_aux_dir(photo_mask_dir)
+        if photo_mask_manifest is not None and self.photo_mask_dir is not None:
+            raise ValueError(
+                "photo_mask_manifest and photo_mask_dir are mutually exclusive"
+            )
 
         self.image_dir = self.root / "images"
         # COLMAP PatchMatch layout
@@ -492,6 +498,24 @@ class ColmapDataset(Dataset):
                 pilot_arm=self.pilot_arm,
                 role="photo",
             )
+        self.photo_mask_dir_audit = None
+        if self.photo_mask_dir is not None:
+            missing_photo_masks = [
+                frame.name
+                for frame in self.frames
+                if not (self.photo_mask_dir / f"{Path(frame.name).stem}.npy").is_file()
+            ]
+            if missing_photo_masks:
+                raise FileNotFoundError(
+                    "photo_mask_dir misses visible views: "
+                    f"{missing_photo_masks}"
+                )
+            self.photo_mask_dir_audit = {
+                "mode": "per_view_npy_bool",
+                "directory": str(self.photo_mask_dir.resolve()),
+                "view_count": len(self.frames),
+                "inventory_match": "exact_visible_view_coverage",
+            }
         self.roof_audit_mask_binding = None
         if roof_audit_mask_manifest is not None:
             self.roof_audit_mask_binding = _bind_pilot_mask_manifest(
@@ -700,6 +724,26 @@ class ColmapDataset(Dataset):
             fr, fr.mono_normal_path, fr.mono_normal_format, H, W
         )
 
+    def _load_photo_mask_dir(self, fr: Frame, H: int, W: int):
+        if self.photo_mask_dir is None:
+            return None
+        path = self.photo_mask_dir / f"{Path(fr.name).stem}.npy"
+        mask = np.load(path, allow_pickle=False)
+        if mask.ndim != 2 or mask.dtype != np.bool_:
+            raise ValueError(
+                f"photo support mask must be bool HxW, got {mask.dtype} "
+                f"{mask.shape}: {path}"
+            )
+        if mask.shape != (H, W):
+            mask = cv2.resize(
+                mask.astype(np.uint8),
+                (W, H),
+                interpolation=cv2.INTER_NEAREST,
+            ).astype(np.bool_)
+        if not bool(mask.any()):
+            raise ValueError(f"photo support mask is empty: {path}")
+        return mask
+
     def __getitem__(self, idx: int) -> dict:
         fr = self.frames[idx]
         H = int(round(fr.height * self.downscale))
@@ -731,6 +775,7 @@ class ColmapDataset(Dataset):
                 if lbl.shape[:2] != (H, W):
                     lbl = cv2.resize(lbl, (W, H), interpolation=cv2.INTER_NEAREST)
                 semantic = lbl.astype(np.int64)
+        simple_photo_mask = self._load_photo_mask_dir(fr, H, W)
 
         w2c = np.eye(4, dtype=np.float32)
         w2c[:3, :3] = fr.R
@@ -764,6 +809,8 @@ class ColmapDataset(Dataset):
             out["photo_mask"] = torch.from_numpy(
                 self.photo_mask_binding.load(fr, (H, W))
             )
+        elif simple_photo_mask is not None:
+            out["photo_mask"] = torch.from_numpy(simple_photo_mask)
         roof_audit_binding = getattr(self, "roof_audit_mask_binding", None)
         if roof_audit_binding is not None:
             out["roof_audit_mask"] = torch.from_numpy(
