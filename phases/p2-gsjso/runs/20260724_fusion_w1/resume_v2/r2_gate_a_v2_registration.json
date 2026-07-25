@@ -1,0 +1,210 @@
+{
+  "created_at": "2026-07-25T14:54:09.021935+00:00",
+  "forbidden_call_audit": {
+    "called": false,
+    "functions": [
+      "measure_view",
+      "extract_subpixel_edges",
+      "match_oriented_edges",
+      "direct_edge_distance_metric",
+      "render_overlays"
+    ]
+  },
+  "gate_a_version": "v2",
+  "gate_slots": {
+    "auxiliary_statistics_used_for_gate": false,
+    "capable_matched_median_le_0p3_n": 132,
+    "core_capable_building_ids": [
+      "DEBY_LOD2_104586480",
+      "DEBY_LOD2_42364609",
+      "DEBY_LOD2_42364659",
+      "DEBY_LOD2_42364663",
+      "DEBY_LOD2_4907168",
+      "DEBY_LOD2_4907182",
+      "DEBY_LOD2_4907184",
+      "DEBY_LOD2_4907185",
+      "DEBY_LOD2_4907186",
+      "DEBY_LOD2_4907188",
+      "DEBY_LOD2_4907195",
+      "DEBY_LOD2_4907198",
+      "DEBY_LOD2_4907202",
+      "DEBY_LOD2_4907510",
+      "DEBY_LOD2_4908023",
+      "DEBY_LOD2_4908028",
+      "DEBY_LOD2_4908048",
+      "DEBY_LOD2_4908049",
+      "DEBY_LOD2_4908050",
+      "DEBY_LOD2_4908166",
+      "DEBY_LOD2_4908168",
+      "DEBY_LOD2_4908176",
+      "DEBY_LOD2_4908178",
+      "DEBY_LOD2_60098"
+    ],
+    "core_capable_matched_median_le_0p3_n": 24,
+    "core_correspondence_capable_n": 24,
+    "core_population_n": 28,
+    "correspondence_capable_n": 132,
+    "incapable_tier_counts": {
+      "height": 11,
+      "outline": 33,
+      "surface": 2
+    },
+    "n_threshold": 40,
+    "numeric_source_role": "reuse_only_no_remeasurement",
+    "population_n": 178,
+    "status": "PASS"
+  },
+  "git_lock": {
+    "allowed_generated_paths": [
+      "phases/p2-gsjso/runs/20260724_fusion_w1/resume_v2/r2_gate_a_v2_start.json"
+    ],
+    "branch": "exp/fusion-w1",
+    "head": "e444b41043d3a0c7b7f5b83732354dc2b47bc482",
+    "required_ancestor": "03f6a71c883ea2bb5e371f6cb185e4d921841d8e",
+    "required_ancestor_of_head": true,
+    "required_files": [
+      {
+        "path": "phases/p2-gsjso/configs/fusion_w1_gate_a_v2_registration_20260725.json",
+        "tracked_at_head": true
+      },
+      {
+        "path": "phases/p2-gsjso/scripts/fusion_w1_gate_a_v2_registration_20260725.py",
+        "tracked_at_head": true
+      },
+      {
+        "path": "phases/p2-gsjso/scripts/run_fusion_w1_gate_a_v2_registration_20260725.sh",
+        "tracked_at_head": true
+      },
+      {
+        "path": "phases/p2-gsjso/scripts/test_fusion_w1_gate_a_v2_registration_20260725.py",
+        "tracked_at_head": true
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260724_fusion_w1/resume_v2/r1_pose_adoption_manifest.json",
+        "tracked_at_head": true
+      }
+    ],
+    "unexpected_porcelain": []
+  },
+  "input_sha256": {
+    "configs/projection_datum.json": "096a49b46fc5661d74f9d3b54c4f3777676cfc6b27e577b52bb2dabeee8b480c",
+    "phases/p0-audit/data/raw/als/690_5335.laz": "01602b7385aaf7324f89da6183df3dbdeffa237f85bf57dc27208b554b4fc0b3",
+    "phases/p0-audit/data/raw/als/690_5336.laz": "98ab7ad7f4c5108ebf41bc62186b336c6cd8a70b82fceec57136a56c0188b566",
+    "phases/p0-audit/data/raw/als/691_5335.laz": "9e14119bb0af7d5a300aa3a2a19074219b4d6d290923b4b90277c317e8b33720",
+    "phases/p0-audit/data/raw/als/691_5336.laz": "63c64002fc55d8b99a49749b5a2e36d802186186a950c89779463274e3cb950d",
+    "phases/p0-audit/data/work/footprints/lod2_ground_plan.gpkg": "259cf04ec0c9411e669e75f61c37ea634290fcd40b230f6ed9b67328041c87fa",
+    "phases/p0-audit/data/work/opf/opf/scene_reference_frame.json": "fb408e9c97bdad6af7ad4a6e94be823be294030907ce92e395bd63490f77daf6",
+    "phases/p2-gsjso/configs/fusion_w1_alignment_gate_lock1.json": "c402ca77b2cbb6d46dfb72ba0bde806f2180789a7aaa71ce16912913f8dfa232",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/PREREG_GATE_A_V2_SE3_ADOPTION_20260725.md": "2950511bba207553e48d67efa4a635131ecc2ebdd1854bd826838f9789e52031",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/W_GATE_A_DIAGNOSTIC_20260725.md": "fef277ec844678da3be5df846f074207c99cdf08239059bcd62f367288077f0b",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_building_residuals.csv": "c20baf91c02be8b12527a1bf70fc2b4192961fc07d5e6ad790f4efa35fb60783",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_manifest.json": "512ec1f2a325c0923800508a73316eedc909780554619e2545c8fe4b9e4f6c58",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/w1_targets.csv": "256d376080dca7c496aa3f34c9bcbbd1a8e52d0b25d6e98f7eec388b3f6cc943",
+    "phases/p2-gsjso/scripts/fusion_w1_alignment_gate_lock1.py": "9cbeb50133045c6895be792899cfad373515b2643150c4e96f17e2f2ae41a9c8"
+  },
+  "numeric_measurement": {
+    "edge_matches_computed": 0,
+    "new_residuals_measured": 0,
+    "reused_from": "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_building_residuals.csv",
+    "reused_sha256": "c20baf91c02be8b12527a1bf70fc2b4192961fc07d5e6ad790f4efa35fb60783"
+  },
+  "publication": {
+    "exact_once": true,
+    "issues_md_modified": false,
+    "manifest_written_last": true
+  },
+  "qualitative_overlays": {
+    "count": 28,
+    "index_path": "phases/p2-gsjso/runs/20260724_fusion_w1/resume_v2/r2_overlay_index.csv",
+    "index_sha256": "974dedebfaf16f3334d523152b3798ad194f646164915d2c3f47072045d0ebee",
+    "overlay_dir": "phases/p2-gsjso/runs/20260724_fusion_w1/resume_v2/w1_align_overlays_v2",
+    "png_sha256": {
+      "001__DEBY_LOD2_42364609__DJI_20241217084827_0177_D.png": "9dc96ccc88a14f8942f224205cbf411260909f9f5fbb61186b474e02bb129055",
+      "002__DEBY_LOD2_42364659__DJI_20241217091009_0067_D.png": "722465218c9064e51ec2f26ec265614d1c39697d42030f7025255553b943fe32",
+      "003__DEBY_LOD2_42364663__DJI_20241217084725_0146_D.png": "ce88588b7a901aa980ee943d05cdd0f7fe302c2707ba3d22cd2a7439a0db021a",
+      "004__DEBY_LOD2_4907182__DJI_20241217094534_0023_D.png": "79e91a0aff03880f8a86f3e289b3d8f56d5e7a01be940e97093b8622a74341b9",
+      "005__DEBY_LOD2_4907510__DJI_20241217084637_0122_D.png": "69e88ed4b003219e8deb9b3823aa12138c61075a04b455461b76f7b13255d527",
+      "006__DEBY_LOD2_4908050__DJI_20241217084813_0170_D.png": "55c661d5cc54ebf8b9dc48b93ef03c1b1a38aa4cda064b30e3c64ab45615d3f2",
+      "007__DEBY_LOD2_4908166__DJI_20241217084825_0176_D.png": "967d7c7acf9e5c513002c3c7e6ebaef23ed1290a36e702e508da0932a705b2e7",
+      "008__DEBY_LOD2_4908176__DJI_20241217084853_0190_D.png": "209411a21200a444e496f75cd14cfcdf96d46c6f5171caaae848ca6df32e2f42",
+      "009__DEBY_LOD2_4907184__DJI_20241217084847_0187_D.png": "ada8782603db37ba01f029d0592d5710b0dbc536a5aa38d1f3838a9895961e6e",
+      "010__DEBY_LOD2_4907185__DJI_20241217094534_0023_D.png": "da2b0850122809373ebcbd0fb27d61381156c9f21334edf4d9dfe6b611bb2376",
+      "011__DEBY_LOD2_4907186__DJI_20241217094534_0023_D.png": "e6a5ebe8c12b40107e29cb81664cf7fb00a01544286a219439c40cd298f39920",
+      "012__DEBY_LOD2_4907188__DJI_20241217094534_0023_D.png": "550b13470be5ce7efa3c1b9ec1199fe4717b6526211ebb2f10e4fa2bc73fc4fc",
+      "013__DEBY_LOD2_4907195__DJI_20241217094534_0023_D.png": "66e4629bcc872f90ccf19552f567cef21aa800d39f637f2db3fa464f34b9a70b",
+      "014__DEBY_LOD2_4907198__DJI_20241217094534_0023_D.png": "48ed0d122d521ae8ae1e5e78da5084476b48c1ca9ca97f974896b92f7d411f77",
+      "015__DEBY_LOD2_4907202__DJI_20241217094534_0023_D.png": "7070e90bb5da99dc488f38020c91e767d452a50a542484ff0918a223aa344292",
+      "016__DEBY_LOD2_4908168__DJI_20241217084841_0184_D.png": "f891c83aebcb643cc002a1f971b138fb31089fc534f49c0410a28ca7167c0590",
+      "017__DEBY_LOD2_4908178__DJI_20241217094534_0023_D.png": "87937a9d2b2f268da00d5af8e03813b88d9010d506045b27ae9123bef418119a",
+      "018__DEBY_LOD2_60098__DJI_20241217094534_0023_D.png": "694bea365d7f09179e534bf871de801e277dd4d75df836b59f16590ba14d0932",
+      "019__DEBY_LOD2_4907199__DJI_20241217094534_0023_D.png": "5dd5dc688bb7ee0f58219659ba75c8994fbbe4af18bf45faa67442253fbfb43b",
+      "020__DEBY_LOD2_4908049__DJI_20241217084813_0170_D.png": "e4dcb58cffc668ba99b9db06f481d52a49914b5f6bd0b95aeea25063a7dd8eb0",
+      "021__DEBY_LOD2_104586480__DJI_20241217084609_0108_D.png": "3990e5aa24b1165eaf86fb8f210fe4ecedf2d8c4cae58c4dfe75dd95dfd1482d",
+      "022__DEBY_LOD2_4908048__DJI_20241217084813_0170_D.png": "983875182b057c239265ef3a32bf620ce9e83653746b9fb2cf3279bf30fe277e",
+      "023__DEBY_LOD2_4908051__DJI_20241217094947_0020_D.png": "51ca5e4b1254525ab9fb825888376cd69018f192d8c200587ee83324fe035483",
+      "024__DEBY_LOD2_108247350__DJI_20241217094534_0023_D.png": "beef69fd452355f7de190b52852e283a26728fec51163f5591441e758c7f095a",
+      "025__DEBY_LOD2_4907168__DJI_20241217094534_0023_D.png": "61f8f5a2f6ba919c1a136480a233171319cb3223a1adc0031e9fab4b87b83250",
+      "026__DEBY_LOD2_4908164__DJI_20241217094534_0023_D.png": "416e9a9ee1813eb17d6c3dc307ff159d6e22bf3937865b91ea8d65811520a681",
+      "027__DEBY_LOD2_4908023__DJI_20241217084721_0144_D.png": "20f55da63f19c2cdc83c83dccafca9b85cb7f18ba7ac2c21c6e2a2c9b7fb84f5",
+      "028__DEBY_LOD2_4908028__DJI_20241217084539_0093_D.png": "b1eeb9e85a112b7da5e1296d971e8d37f4aaa312ff26362c6faffe1fe033528e"
+    },
+    "population": "all_core_28",
+    "role": "qualitative_only_not_a_gate"
+  },
+  "r1_pose_consumer": {
+    "additional_transform_applied_by_r2": false,
+    "als_transform_applied_by_r2": false,
+    "derived_sparse": "results/tum_transfer/fusion_w1_pose_adoption_v2/derived_sparse/0",
+    "manifest_path": "phases/p2-gsjso/runs/20260724_fusion_w1/resume_v2/r1_pose_adoption_manifest.json",
+    "manifest_sha256": "f59cb9cc404dd1a262a3fb03df4df665514e2862d66be371baa05a372e825a42",
+    "pose_sha256": "28b38383a0b6d82656108e8f0e5e79711dcda93948ab2e89c1cd8f47215962a5",
+    "projection_xy_shift_m": [
+      0.0,
+      0.0
+    ],
+    "transform_application_count_in_r1": 1
+  },
+  "run_id": "20260724_fusion_w1",
+  "schema": "jointbuildgs.fusion_w1.gate_a_v2_registration.manifest.v1",
+  "source_immutability": {
+    "input_sha256_after": {
+      "configs/projection_datum.json": "096a49b46fc5661d74f9d3b54c4f3777676cfc6b27e577b52bb2dabeee8b480c",
+      "phases/p0-audit/data/raw/als/690_5335.laz": "01602b7385aaf7324f89da6183df3dbdeffa237f85bf57dc27208b554b4fc0b3",
+      "phases/p0-audit/data/raw/als/690_5336.laz": "98ab7ad7f4c5108ebf41bc62186b336c6cd8a70b82fceec57136a56c0188b566",
+      "phases/p0-audit/data/raw/als/691_5335.laz": "9e14119bb0af7d5a300aa3a2a19074219b4d6d290923b4b90277c317e8b33720",
+      "phases/p0-audit/data/raw/als/691_5336.laz": "63c64002fc55d8b99a49749b5a2e36d802186186a950c89779463274e3cb950d",
+      "phases/p0-audit/data/work/footprints/lod2_ground_plan.gpkg": "259cf04ec0c9411e669e75f61c37ea634290fcd40b230f6ed9b67328041c87fa",
+      "phases/p0-audit/data/work/opf/opf/scene_reference_frame.json": "fb408e9c97bdad6af7ad4a6e94be823be294030907ce92e395bd63490f77daf6",
+      "phases/p2-gsjso/configs/fusion_w1_alignment_gate_lock1.json": "c402ca77b2cbb6d46dfb72ba0bde806f2180789a7aaa71ce16912913f8dfa232",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/PREREG_GATE_A_V2_SE3_ADOPTION_20260725.md": "2950511bba207553e48d67efa4a635131ecc2ebdd1854bd826838f9789e52031",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/W_GATE_A_DIAGNOSTIC_20260725.md": "fef277ec844678da3be5df846f074207c99cdf08239059bcd62f367288077f0b",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_building_residuals.csv": "c20baf91c02be8b12527a1bf70fc2b4192961fc07d5e6ad790f4efa35fb60783",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_manifest.json": "512ec1f2a325c0923800508a73316eedc909780554619e2545c8fe4b9e4f6c58",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/w1_targets.csv": "256d376080dca7c496aa3f34c9bcbbd1a8e52d0b25d6e98f7eec388b3f6cc943",
+      "phases/p2-gsjso/scripts/fusion_w1_alignment_gate_lock1.py": "9cbeb50133045c6895be792899cfad373515b2643150c4e96f17e2f2ae41a9c8"
+    },
+    "input_sha256_before": {
+      "configs/projection_datum.json": "096a49b46fc5661d74f9d3b54c4f3777676cfc6b27e577b52bb2dabeee8b480c",
+      "phases/p0-audit/data/raw/als/690_5335.laz": "01602b7385aaf7324f89da6183df3dbdeffa237f85bf57dc27208b554b4fc0b3",
+      "phases/p0-audit/data/raw/als/690_5336.laz": "98ab7ad7f4c5108ebf41bc62186b336c6cd8a70b82fceec57136a56c0188b566",
+      "phases/p0-audit/data/raw/als/691_5335.laz": "9e14119bb0af7d5a300aa3a2a19074219b4d6d290923b4b90277c317e8b33720",
+      "phases/p0-audit/data/raw/als/691_5336.laz": "63c64002fc55d8b99a49749b5a2e36d802186186a950c89779463274e3cb950d",
+      "phases/p0-audit/data/work/footprints/lod2_ground_plan.gpkg": "259cf04ec0c9411e669e75f61c37ea634290fcd40b230f6ed9b67328041c87fa",
+      "phases/p0-audit/data/work/opf/opf/scene_reference_frame.json": "fb408e9c97bdad6af7ad4a6e94be823be294030907ce92e395bd63490f77daf6",
+      "phases/p2-gsjso/configs/fusion_w1_alignment_gate_lock1.json": "c402ca77b2cbb6d46dfb72ba0bde806f2180789a7aaa71ce16912913f8dfa232",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/PREREG_GATE_A_V2_SE3_ADOPTION_20260725.md": "2950511bba207553e48d67efa4a635131ecc2ebdd1854bd826838f9789e52031",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/W_GATE_A_DIAGNOSTIC_20260725.md": "fef277ec844678da3be5df846f074207c99cdf08239059bcd62f367288077f0b",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_building_residuals.csv": "c20baf91c02be8b12527a1bf70fc2b4192961fc07d5e6ad790f4efa35fb60783",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_manifest.json": "512ec1f2a325c0923800508a73316eedc909780554619e2545c8fe4b9e4f6c58",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/w1_targets.csv": "256d376080dca7c496aa3f34c9bcbbd1a8e52d0b25d6e98f7eec388b3f6cc943",
+      "phases/p2-gsjso/scripts/fusion_w1_alignment_gate_lock1.py": "9cbeb50133045c6895be792899cfad373515b2643150c4e96f17e2f2ae41a9c8"
+    },
+    "r1_manifest_sha256_after": "f59cb9cc404dd1a262a3fb03df4df665514e2862d66be371baa05a372e825a42",
+    "r1_manifest_sha256_before": "f59cb9cc404dd1a262a3fb03df4df665514e2862d66be371baa05a372e825a42",
+    "r1_pose_sha256_after": "28b38383a0b6d82656108e8f0e5e79711dcda93948ab2e89c1cd8f47215962a5",
+    "r1_pose_sha256_before": "28b38383a0b6d82656108e8f0e5e79711dcda93948ab2e89c1cd8f47215962a5",
+    "unchanged": true
+  },
+  "status": "PASS",
+  "task_id": "FUS-W1-GATE-A-V2-REGISTRATION-20260725"
+}
