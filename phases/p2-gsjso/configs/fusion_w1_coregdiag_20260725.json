@@ -1,0 +1,206 @@
+{
+  "schema": "jointbuildgs.fusion_w1.coregdiag.v1",
+  "task_id": "FUS-W1-COREGDIAG-20260725",
+  "run_id": "20260724_fusion_w1",
+  "scope": "learning_zero_diagnostic_only",
+  "base_head": "b7c9dc02405ace61068fda57a363f643af49bdf8",
+  "branch": "exp/fusion-w1",
+  "implementation_files": [
+    "phases/p2-gsjso/configs/fusion_w1_coregdiag_20260725.json",
+    "phases/p2-gsjso/scripts/fusion_w1_coregdiag_20260725.py",
+    "phases/p2-gsjso/scripts/run_fusion_w1_coregdiag_20260725.sh",
+    "phases/p2-gsjso/scripts/test_fusion_w1_coregdiag_20260725.py"
+  ],
+  "inputs": {
+    "targets_csv": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_targets.csv",
+    "boundary_ladder_csv": "docs/boundary_map_v4_1_ladder.csv",
+    "footprints_geojson": "results/tum_transfer/analysis/footprints_aoi.geojson",
+    "source_als_laz": "results/tum_transfer/mob_analysis/p0c_step2/als_aoi.laz",
+    "materialized_als_npz": "results/tum_transfer/fusion_w1_coreg_lock2/als_fixed_class2_6_ellipsoidal_zeta45p7.npz",
+    "materialized_als_receipt": "results/tum_transfer/fusion_w1_coreg_lock2/als_materialization_receipt.json",
+    "photo_dense_npz": "results/tum_transfer/mob/raw/raw_dense.npz",
+    "coreg_config": "phases/p2-gsjso/configs/fusion_w1_coreg_lock1.json",
+    "coreg_implementation": "phases/p2-gsjso/scripts/fusion_w1_coreg_lock1.py",
+    "global_selection": "phases/p2-gsjso/runs/20260724_fusion_w1/coreg_lock2/global_selection.json",
+    "block_selection": "phases/p2-gsjso/runs/20260724_fusion_w1/coreg_lock2/block_selection.json",
+    "camera_blocks_csv": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_coreg2_camera_blocks.csv"
+  },
+  "input_sha256": {
+    "phases/p2-gsjso/runs/20260724_fusion_w1/w1_targets.csv": "256d376080dca7c496aa3f34c9bcbbd1a8e52d0b25d6e98f7eec388b3f6cc943",
+    "docs/boundary_map_v4_1_ladder.csv": "ae16170177ac0815eb6dd853b0469325c9a1018eeeac9b790b063927cbd7e7e2",
+    "results/tum_transfer/analysis/footprints_aoi.geojson": "ca7f5b13a52368e1d2ac47b77cc78f12887bad4d598d122ad57b882eb4920a82",
+    "results/tum_transfer/mob_analysis/p0c_step2/als_aoi.laz": "ac5cd0dc9c368a15e1f8fd5a18ad8d96ddbbd8cbaf8e1b608fd675430d6e9225",
+    "results/tum_transfer/fusion_w1_coreg_lock2/als_fixed_class2_6_ellipsoidal_zeta45p7.npz": "fc077ed02dd0df7c5c90d5e415eb1a028faad8d39415cbf695c9f1df1e256612",
+    "results/tum_transfer/fusion_w1_coreg_lock2/als_materialization_receipt.json": "0b424b6c390332cf1bad8a6d960d95eeb050dc78504ad1b3a45a3bf91f70b9b8",
+    "results/tum_transfer/mob/raw/raw_dense.npz": "712e7b6e182e1955223585ce8958acf2d11588caacc8754fac4aec9bfb2dd69a",
+    "phases/p2-gsjso/configs/fusion_w1_coreg_lock1.json": "c246b28bf3a87468fe39db2b46fa199b633b263cf317cfc3b1d796d915695f28",
+    "phases/p2-gsjso/scripts/fusion_w1_coreg_lock1.py": "de812f7b1c1baacaeca101fffcd647f1be50e3fcfc3ad4caef2448d83259c820",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/coreg_lock2/global_selection.json": "7b633689a4f1a184f8941533de2b36ed075654318c503fb8035d1d639804dfe9",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/coreg_lock2/block_selection.json": "ac830a797463b030db9be46d70eb4126c9992f265f53b0481b899d0b5942c81f",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/w1_coreg2_camera_blocks.csv": "613171fc839d52ff78e7b2a8bc4db5eb8d11ac153c351f77ad8a14f245954a0c"
+  },
+  "population": {
+    "expected_buildings": 178,
+    "id_source": "targets_csv",
+    "tier_source": "boundary_ladder_csv_joined_one_to_one",
+    "tiers": [
+      "surface",
+      "height",
+      "outline"
+    ],
+    "missing_buildings_retained": true
+  },
+  "coordinate_contract": {
+    "horizontal_crs": "EPSG:25832",
+    "source_als_vertical_datum": "DHHN2016_orthometric",
+    "materialized_als_vertical_datum": "ellipsoidal_via_fixed_zeta",
+    "orthometric_to_ellipsoidal_zeta_m": 45.7,
+    "photo_dense_vertical_datum": "ellipsoidal",
+    "transform_direction": "photo_ellipsoidal_global_to_als_ellipsoidal_global",
+    "source_als_modification_forbidden": true,
+    "source_photo_modification_forbidden": true,
+    "source_pose_modification_forbidden": true,
+    "horizontal_datum_caveat": "OPF WKT records EPSG:32632 while the legacy conversion retained UTM coordinate numbers; numeric-range agreement is not a geodetic datum proof."
+  },
+  "sampling": {
+    "roof_inner_buffer_m": 0.5,
+    "ground_inner_exclusion_buffer_m": 1.0,
+    "ground_outer_buffer_m": 6.0,
+    "dense_roof_vertical_margin_m": 2.0,
+    "dense_ground_vertical_margin_m": 1.5,
+    "voxel_m": 0.4,
+    "maximum_points_per_building_surface": 2500,
+    "minimum_points_per_building_surface": 40,
+    "normal_knn": 16,
+    "normal_radius_m": 1.5,
+    "minimum_normal_neighbors": 6,
+    "maximum_surface_variation": 0.15,
+    "inventory_lock": "Crop, z-window, voxel sample, and valid-normal membership are computed once in the raw frame and reused unchanged for identity and diagnostic-candidate states."
+  },
+  "states": {
+    "before": {
+      "label": "identity_before",
+      "matrix": [
+        [1.0, 0.0, 0.0, 0.0],
+        [0.0, 1.0, 0.0, 0.0],
+        [0.0, 0.0, 1.0, 0.0],
+        [0.0, 0.0, 0.0, 1.0]
+      ]
+    },
+    "after": {
+      "label": "diagnostic_global_candidate_not_adopted",
+      "source_key": "global_selection.block_base_photo_to_als_global_pivot_matrix",
+      "matrix_sha256": "275c19c7810de497f275a6b063dda84ea5a957c02eb9d33474944e8887fc5c42",
+      "matrix": [
+        [0.9999999920820789, 0.00004935722310131579, -0.00011575709527824024, 0.04058084505260015],
+        [-0.000049364547421409374, 0.9999999967799484, -0.00006327118183728546, 0.02084012147731406],
+        [0.00011575397201547453, 0.00006327689563327827, 0.9999999912985266, -0.09778410766699293],
+        [0.0, 0.0, 0.0, 1.0]
+      ],
+      "adopted_for_learning": false
+    },
+    "rotation_pivot_global_m": [
+      690953.0,
+      5336071.0,
+      604.0
+    ]
+  },
+  "correspondence": {
+    "radius_m": 0.35,
+    "directions": [
+      "photo_to_als",
+      "als_to_photo"
+    ],
+    "residual": "signed point-to-plane in metres using the nearest target surface normal; absolute residual is used for median and P90",
+    "sign": "photo_minus_als in E,N,Z for both directions",
+    "censoring": "Every unmatched source observation is represented only in censored columns by +0.35 m; measured matched columns never substitute the censor value.",
+    "building_pooling": "roof and ground, both directions, point-count weighted; surface-stratified columns are retained separately"
+  },
+  "correspondence_capability": {
+    "n_definition": "before-state minimum of pooled forward-matched and reverse-matched counts across all usable roof and ground surfaces; directional counts and their sum remain separate outcome columns",
+    "distribution": "all 178 buildings including n=0",
+    "quantile": 0.1,
+    "quantile_method": "nearest_rank",
+    "minimum_bidirectional_matches": 40,
+    "threshold_rule": "max(40, nearest-rank Q10 of n_before over all 178 buildings)",
+    "threshold_may_not_be_retuned_after_results": true,
+    "gate_statistic": "after-state measured matched absolute point-to-plane building median <= 0.3 m",
+    "statistic_scope": "conditional_matched_reference_only; radius-truncated at 0.35 m and not sufficient by itself to establish whole-population alignment",
+    "capability_scope": "baseline-correspondence-conditioned cohort, not a transform-independent geometry-availability cohort",
+    "gate_numeric_threshold_m": 0.3,
+    "p90_and_support_are_auxiliary_only": true
+  },
+  "low_support": {
+    "population": "correspondence-capable buildings only",
+    "metric": "before-state minimum of pooled forward and reverse matched fractions",
+    "quantile": 0.25,
+    "quantile_method": "nearest_rank",
+    "definition": "support_before <= nearest-rank Q25",
+    "cutoff_may_not_be_retuned_after_results": true,
+    "tier_group_positive": [
+      "height",
+      "outline"
+    ],
+    "tier_group_reference": [
+      "surface"
+    ],
+    "test": "two-sided Fisher exact; auxiliary observation only"
+  },
+  "tail": {
+    "matched_tail_definition": "matched absolute point-to-plane residual strictly greater than the building-state matched P90",
+    "censored_tail_definition": "all unmatched source observations, retained separately at the 0.35 m censor radius",
+    "roof_boundary_distance_m": 1.0,
+    "above_ground_clutter_dz_m": 0.75,
+    "below_ground_or_occlusion_dz_m": -0.5,
+    "proxy_priority": [
+      "roof_edge_or_facade_proxy",
+      "roof_interior_class6_proxy",
+      "above_ground_vegetation_or_moving_clutter_proxy",
+      "below_ground_or_occlusion_proxy",
+      "ground_class2_proxy"
+    ],
+    "proxy_limit": "Vegetation and moving objects are not separable without semantic or temporal labels; the height proxy combines them.",
+    "unmatched_proxy_pairing": "For proxy classification only, an unmatched source retains its nearest out-of-radius opposite-cloud point; it remains censored/unmatched and is never counted as a measured correspondence.",
+    "capture_block_population": "locked-stride geometric-depth regeneration for lock2 fit and trigger controls only",
+    "capture_block_not_available_for_raw_dense": true,
+    "plan_plot_state": "after",
+    "representative_rule": "correspondence-capable building with largest after-state matched-tail plus censored-unmatched count; ties by building_id"
+  },
+  "offsets": {
+    "sign": "photo_minus_als",
+    "components": [
+      "dE_m",
+      "dN_m",
+      "dZ_m"
+    ],
+    "horizontal_scalar": "hypot(median_dE, median_dN), unsigned",
+    "horizontal_interpretation_limit": "Matched-pair dE/dN include planar nearest-neighbour tangential sliding and are not a rigid XY transform estimate without boundary or design-rank evidence.",
+    "point_to_plane_decomposition": "r_horizontal=nE*dE+nN*dN; r_vertical=nZ*dZ; r_total=r_horizontal+r_vertical",
+    "reliability_floor_matches_per_direction": 30,
+    "reliability_min_fraction_per_direction": 0.7,
+    "unreliable_values_retained_with_flag": true
+  },
+  "outputs": {
+    "run_dir": "phases/p2-gsjso/runs/20260724_fusion_w1",
+    "method_lock": "coregdiag_method_lock.json",
+    "measurement_start": "coregdiag_measurement_start.json",
+    "building_residuals": "coregdiag_building_residuals.csv",
+    "tier_summary": "coregdiag_tier_summary.csv",
+    "tail_breakdown": "coregdiag_tail_breakdown.csv",
+    "support_tier_confusion": "coregdiag_support_tier_confusion.csv",
+    "building_offsets": "coregdiag_building_offsets.csv",
+    "tail_plan_figure": "coregdiag_tail_plan.png",
+    "tail_representative_figure": "coregdiag_tail_representative.png",
+    "manifest": "coregdiag_manifest.json"
+  },
+  "execution": {
+    "tools_image": "jointbuildgs-p0-tools:t0",
+    "tools_image_id": "sha256:87bea02e5598a3d53a119b754191673497d52641bd8ea4106ffee653407579b0",
+    "dev_image": "jointbuildgs:dev",
+    "dev_image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
+    "memory": "24g",
+    "serial": true,
+    "learning_forbidden": true,
+    "gpu_forbidden": true
+  }
+}

@@ -292,3 +292,38 @@
 - Counters: `learning_runs_started=0`, `gate_a2_runs_started=0`,
   `readout_runs_started=0`, `roofer_runs_started=0`,
   `scoring_runs_started=0`.
+
+## FUS-W1-COREGDIAG-001 — Gate A 사전등록 초과 구현 확인
+
+- Recorded: 2026-07-25 KST
+- Stage: learning-zero Gate A diagnostic
+- Status: RECORDED; 기준 변경·transform 채택·학습 재개 없음
+- 원 발주 관문 A의 수치 조건은 동별 잔차 중앙 `≤0.3 m`였으나,
+  `coreg_lock2` 선택 계약은 동별 중앙 `≤0.15 m`, censored P90
+  `≤0.3 m`, 지지율 `≥0.7`, 최대 절대 bias `≤0.1 m`를 동시에
+  요구하고 후보 채택에 절대 `0.05 m` 및 상대 `20%` 개선폭을 추가했다.
+  따라서 P90·지지율·bias·개선폭을 원 관문 판정 조건으로 사용한 부분은
+  사전등록 문안을 초과한 구현이다.
+- 측정량도 원 문안의 학습 뷰별 ALS 지붕 경계↔영상 에지 직접 잔차가
+  아니라 영상 유래 dense DIM/MVS 3D 점군↔ALS의 양방향
+  point-to-plane 잔차다. 둘은 같은 이름으로 대체하지 않는다.
+- 진단에서는 원 수치 0.3 m를 유지하고, 사전 잠금한 보정 전 대응수
+  문턱 `n≥40`의 132동에서 conditional matched 중앙을 표로
+  분리했다. P90·censored P90·지지율은 보조 통계로만 기록했다.
+- Counters: `learning_runs_started=0`, `readout_runs_started=0`,
+  `roofer_runs_started=0`, `scoring_runs_started=0`.
+
+### T4 조건부 이슈 — 사람 검수 전 보류
+
+- Recorded: 2026-07-25 KST
+- Stage: low-support × tier auxiliary diagnostic
+- Status: OBSERVATION ONLY; 조건부 이슈 ID를 부여하지 않음
+- 대응 가능 132동 안에서 보정 전 지지율 nearest-rank Q25
+  비반올림값 `0.200652528548124` 이하를 low-support로 잠갔다
+  (CSV 표시값 `0.200652528548`). 높이+윤곽은
+  low/not-low `7/13`, 표면은 `26/86`이었고, 양측 Fisher exact는
+  odds ratio `1.7811`, `p=0.2716`이었다.
+- 전 178동의 기술 집계는 높이+윤곽
+  `대응 불가/가능-low/가능-not-low=44/7/13`, 표면
+  `2/26/86`이다. 수치만 기록하며, “지지율 요구의 범주 오류” 등재
+  여부는 김휘영 검수에 남긴다.

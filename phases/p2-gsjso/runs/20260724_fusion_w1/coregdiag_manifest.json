@@ -1,0 +1,1639 @@
+{
+  "artifacts": {
+    "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_building_offsets.csv": "550ec1e9a7025bff32a613c929865260c57faa58830f04e65f2f208c9f0c507e",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_building_residuals.csv": "c20baf91c02be8b12527a1bf70fc2b4192961fc07d5e6ad790f4efa35fb60783",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_measurement_start.json": "96788818cf60551410ba2d8d0532efa70ad288c18fc8d6f11df239a71cedf3f3",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_support_tier_confusion.csv": "d2bffa111bdca4b2e2958adad70592a068dc03a599daee0b0fa02ff5e53a3631",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_tail_breakdown.csv": "6612cccc43700dbfe06d377a8593245d9d8aa9d111486e42f276be0085acb797",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_tail_plan.png": "cbe996a5192e0d696660001db2806feded48a7e7c7f1796b6b1c92c4cf27b9b3",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_tail_representative.png": "df89bed43af3d208810c479c667e8bce683f18013c3ee9023ce0eadd1d33161d",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_tier_summary.csv": "952e29a64ed2ba0697900c7f18b544a29695e2feb578f75b4b7f4a1c0d6e1fc6"
+  },
+  "block_candidate_disposition": {
+    "choice": "none",
+    "evaluated_by_this_diagnostic": false,
+    "status": "BLOCKED",
+    "tail_state": "identity and rejected global candidate stratified by locked capture block"
+  },
+  "branch": "exp/fusion-w1",
+  "candidate": {
+    "adopted_for_learning": false,
+    "global_selection_choice": "none",
+    "global_selection_status": "BLOCK_REQUIRED",
+    "label": "diagnostic_global_candidate_not_adopted",
+    "matrix": [
+      [
+        0.9999999920820789,
+        4.935722310131579e-05,
+        -0.00011575709527824024,
+        0.04058084505260015
+      ],
+      [
+        -4.9364547421409374e-05,
+        0.9999999967799484,
+        -6.327118183728546e-05,
+        0.02084012147731406
+      ],
+      [
+        0.00011575397201547453,
+        6.327689563327827e-05,
+        0.9999999912985266,
+        -0.09778410766699293
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "translation_components_m": [
+      0.04058084505260015,
+      0.02084012147731406,
+      -0.09778410766699293
+    ]
+  },
+  "capture_block_audit": {
+    "blocks": [
+      "capture_block_01",
+      "capture_block_02",
+      "capture_block_03"
+    ],
+    "building_count": 27,
+    "complete_inventory_row_count": 162,
+    "coverage_rows": [
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_42364665",
+        "moving_points": 516,
+        "observation_views": 25,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_42364665",
+        "moving_points": 99,
+        "observation_views": 20,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4906969",
+        "moving_points": 282,
+        "observation_views": 27,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4906969",
+        "moving_points": 678,
+        "observation_views": 22,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4906974",
+        "moving_points": 1032,
+        "observation_views": 36,
+        "role": "trigger",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4906974",
+        "moving_points": 1354,
+        "observation_views": 33,
+        "role": "trigger",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4906980",
+        "moving_points": 144,
+        "observation_views": 15,
+        "role": "trigger",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4906980",
+        "moving_points": 47,
+        "observation_views": 15,
+        "role": "trigger",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4906981",
+        "moving_points": 890,
+        "observation_views": 36,
+        "role": "trigger",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4906981",
+        "moving_points": 2453,
+        "observation_views": 29,
+        "role": "trigger",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4906982",
+        "moving_points": 1866,
+        "observation_views": 37,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4906982",
+        "moving_points": 2462,
+        "observation_views": 22,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4906984",
+        "moving_points": 40,
+        "observation_views": 6,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4907505",
+        "moving_points": 120,
+        "observation_views": 13,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4907505",
+        "moving_points": 214,
+        "observation_views": 10,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4907507",
+        "moving_points": 651,
+        "observation_views": 30,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4907507",
+        "moving_points": 1306,
+        "observation_views": 17,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4907515",
+        "moving_points": 849,
+        "observation_views": 41,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4907515",
+        "moving_points": 1590,
+        "observation_views": 24,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4907518",
+        "moving_points": 1357,
+        "observation_views": 36,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4907518",
+        "moving_points": 1242,
+        "observation_views": 23,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4907519",
+        "moving_points": 1022,
+        "observation_views": 36,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4907519",
+        "moving_points": 1335,
+        "observation_views": 28,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4907521",
+        "moving_points": 463,
+        "observation_views": 20,
+        "role": "trigger",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4907521",
+        "moving_points": 678,
+        "observation_views": 13,
+        "role": "trigger",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4959320",
+        "moving_points": 632,
+        "observation_views": 14,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4959322",
+        "moving_points": 713,
+        "observation_views": 24,
+        "role": "trigger",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4959322",
+        "moving_points": 1751,
+        "observation_views": 18,
+        "role": "trigger",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4959323",
+        "moving_points": 970,
+        "observation_views": 30,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4959323",
+        "moving_points": 2467,
+        "observation_views": 22,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4959457",
+        "moving_points": 399,
+        "observation_views": 24,
+        "role": "trigger",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4959457",
+        "moving_points": 2243,
+        "observation_views": 21,
+        "role": "trigger",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4959459",
+        "moving_points": 1111,
+        "observation_views": 37,
+        "role": "trigger",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4959459",
+        "moving_points": 1595,
+        "observation_views": 35,
+        "role": "trigger",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4959460",
+        "moving_points": 2333,
+        "observation_views": 55,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4959460",
+        "moving_points": 1100,
+        "observation_views": 50,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4959461",
+        "moving_points": 0,
+        "observation_views": 2,
+        "role": "fit",
+        "surface": "ground",
+        "used": false
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_108580335",
+        "moving_points": 1307,
+        "observation_views": 44,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_108580335",
+        "moving_points": 2468,
+        "observation_views": 31,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_42364657",
+        "moving_points": 176,
+        "observation_views": 6,
+        "role": "trigger",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_42364657",
+        "moving_points": 146,
+        "observation_views": 6,
+        "role": "trigger",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4906982",
+        "moving_points": 2318,
+        "observation_views": 48,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4906982",
+        "moving_points": 2441,
+        "observation_views": 24,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4906984",
+        "moving_points": 320,
+        "observation_views": 28,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4906984",
+        "moving_points": 701,
+        "observation_views": 24,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4906989",
+        "moving_points": 674,
+        "observation_views": 19,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4906989",
+        "moving_points": 765,
+        "observation_views": 14,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4959322",
+        "moving_points": 779,
+        "observation_views": 31,
+        "role": "trigger",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4959322",
+        "moving_points": 1803,
+        "observation_views": 28,
+        "role": "trigger",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4959323",
+        "moving_points": 806,
+        "observation_views": 22,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4959323",
+        "moving_points": 1406,
+        "observation_views": 14,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4959325",
+        "moving_points": 2274,
+        "observation_views": 55,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4959325",
+        "moving_points": 2457,
+        "observation_views": 33,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4959340",
+        "moving_points": 857,
+        "observation_views": 27,
+        "role": "trigger",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4959340",
+        "moving_points": 1157,
+        "observation_views": 18,
+        "role": "trigger",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4959459",
+        "moving_points": 811,
+        "observation_views": 22,
+        "role": "trigger",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4959459",
+        "moving_points": 1390,
+        "observation_views": 22,
+        "role": "trigger",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4959460",
+        "moving_points": 2076,
+        "observation_views": 98,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4959460",
+        "moving_points": 759,
+        "observation_views": 90,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4959461",
+        "moving_points": 2138,
+        "observation_views": 60,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4959461",
+        "moving_points": 2397,
+        "observation_views": 33,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4959464",
+        "moving_points": 1267,
+        "observation_views": 45,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4959464",
+        "moving_points": 1070,
+        "observation_views": 24,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_8573848",
+        "moving_points": 1201,
+        "observation_views": 39,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_8573848",
+        "moving_points": 2291,
+        "observation_views": 28,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_42364665",
+        "moving_points": 1102,
+        "observation_views": 47,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_42364665",
+        "moving_points": 294,
+        "observation_views": 98,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4906969",
+        "moving_points": 181,
+        "observation_views": 33,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4906969",
+        "moving_points": 656,
+        "observation_views": 76,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4906974",
+        "moving_points": 711,
+        "observation_views": 49,
+        "role": "trigger",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4906974",
+        "moving_points": 730,
+        "observation_views": 71,
+        "role": "trigger",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4906980",
+        "moving_points": 158,
+        "observation_views": 24,
+        "role": "trigger",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4906980",
+        "moving_points": 0,
+        "observation_views": 13,
+        "role": "trigger",
+        "surface": "roof",
+        "used": false
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4906981",
+        "moving_points": 2426,
+        "observation_views": 54,
+        "role": "trigger",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4906981",
+        "moving_points": 2337,
+        "observation_views": 59,
+        "role": "trigger",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4906982",
+        "moving_points": 1000,
+        "observation_views": 31,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4906982",
+        "moving_points": 436,
+        "observation_views": 28,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4907505",
+        "moving_points": 6,
+        "observation_views": 8,
+        "role": "fit",
+        "surface": "ground",
+        "used": false
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4907505",
+        "moving_points": 335,
+        "observation_views": 16,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4907507",
+        "moving_points": 1108,
+        "observation_views": 33,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4907507",
+        "moving_points": 1598,
+        "observation_views": 55,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4907515",
+        "moving_points": 1078,
+        "observation_views": 27,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4907515",
+        "moving_points": 1683,
+        "observation_views": 42,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4907518",
+        "moving_points": 1680,
+        "observation_views": 38,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4907518",
+        "moving_points": 1376,
+        "observation_views": 56,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4907519",
+        "moving_points": 553,
+        "observation_views": 16,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4907519",
+        "moving_points": 1929,
+        "observation_views": 46,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4907521",
+        "moving_points": 467,
+        "observation_views": 20,
+        "role": "trigger",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4907521",
+        "moving_points": 94,
+        "observation_views": 16,
+        "role": "trigger",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4959320",
+        "moving_points": 161,
+        "observation_views": 30,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4959322",
+        "moving_points": 752,
+        "observation_views": 32,
+        "role": "trigger",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4959322",
+        "moving_points": 1985,
+        "observation_views": 56,
+        "role": "trigger",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4959323",
+        "moving_points": 2412,
+        "observation_views": 64,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4959323",
+        "moving_points": 2354,
+        "observation_views": 81,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4959457",
+        "moving_points": 2006,
+        "observation_views": 56,
+        "role": "trigger",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4959457",
+        "moving_points": 2017,
+        "observation_views": 75,
+        "role": "trigger",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4959459",
+        "moving_points": 311,
+        "observation_views": 17,
+        "role": "trigger",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4959459",
+        "moving_points": 978,
+        "observation_views": 66,
+        "role": "trigger",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4959460",
+        "moving_points": 2433,
+        "observation_views": 79,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4959460",
+        "moving_points": 2086,
+        "observation_views": 88,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      }
+    ],
+    "depth_set_lock": {
+      "file_count": 937,
+      "sha256sum_stream_aggregate": "f139071c5b0c3f5129aa3ac1b23fa99ac1a497213f2760a57b0ada44e3448625",
+      "total_bytes": 2843932739
+    },
+    "depth_stride": 16,
+    "expected_blocks": [
+      "capture_block_01",
+      "capture_block_02",
+      "capture_block_03"
+    ],
+    "group_count": 97,
+    "population_limit": "lock2 fit and trigger controls only",
+    "population_tier_limit": "all 27 controls are surface tier",
+    "reverse_direction_limitation": "The same fixed ALS template is conditioned once per visible block; only photo_to_als rates are eligible for block concentration observation.",
+    "role_counts": {
+      "fit": 18,
+      "trigger": 9
+    },
+    "source_population": "per_view_stride16_lock2_fit_trigger",
+    "template_audit": {
+      "als_materialization_sha256": "fc077ed02dd0df7c5c90d5e415eb1a028faad8d39415cbf695c9f1df1e256612",
+      "building_count": 27,
+      "photo_dense_sha256": "712e7b6e182e1955223585ce8958acf2d11588caacc8754fac4aec9bfb2dd69a",
+      "roles": [
+        "fit",
+        "trigger"
+      ],
+      "rows": [
+        {
+          "building_id": "DEBY_LOD2_42364665",
+          "fixed_als_points": 351,
+          "fixed_valid_normals": 348,
+          "moving_photo_points": 789,
+          "moving_valid_normals": 673,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_42364665",
+          "fixed_als_points": 1231,
+          "fixed_valid_normals": 1223,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 1901,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_8573848",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 1882,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2304,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_8573848",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2482,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2122,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4959320",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 794,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2170,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4959320",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2428,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2481,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4907519",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 621,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 1069,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4907519",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2460,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2236,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4906982",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2438,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2331,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4906982",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2482,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 1995,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4959323",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2442,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2388,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4959323",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2496,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2319,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4907505",
+          "fixed_als_points": 1766,
+          "fixed_valid_normals": 1739,
+          "moving_photo_points": 751,
+          "moving_valid_normals": 711,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4907505",
+          "fixed_als_points": 1635,
+          "fixed_valid_normals": 1635,
+          "moving_photo_points": 639,
+          "moving_valid_normals": 593,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_108580335",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2467,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2384,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_108580335",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2500,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2363,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4906989",
+          "fixed_als_points": 2428,
+          "fixed_valid_normals": 2375,
+          "moving_photo_points": 2287,
+          "moving_valid_normals": 2222,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4906989",
+          "fixed_als_points": 2143,
+          "fixed_valid_normals": 2143,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2433,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4959461",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2460,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2287,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4959461",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2494,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2148,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4907515",
+          "fixed_als_points": 2057,
+          "fixed_valid_normals": 2041,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2298,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4907515",
+          "fixed_als_points": 2274,
+          "fixed_valid_normals": 2274,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 1963,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4959460",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 427,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 617,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4959460",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2188,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 1892,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4906969",
+          "fixed_als_points": 1334,
+          "fixed_valid_normals": 1239,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 1394,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4906969",
+          "fixed_als_points": 1777,
+          "fixed_valid_normals": 1770,
+          "moving_photo_points": 1735,
+          "moving_valid_normals": 1527,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4906984",
+          "fixed_als_points": 1440,
+          "fixed_valid_normals": 1417,
+          "moving_photo_points": 2453,
+          "moving_valid_normals": 2216,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4906984",
+          "fixed_als_points": 631,
+          "fixed_valid_normals": 628,
+          "moving_photo_points": 1947,
+          "moving_valid_normals": 1506,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4959464",
+          "fixed_als_points": 1363,
+          "fixed_valid_normals": 1328,
+          "moving_photo_points": 2337,
+          "moving_valid_normals": 1949,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4959464",
+          "fixed_als_points": 2366,
+          "fixed_valid_normals": 2364,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2213,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4907518",
+          "fixed_als_points": 1599,
+          "fixed_valid_normals": 1568,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2285,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4907518",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2500,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2240,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4959325",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2434,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2301,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4959325",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2490,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2354,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4907507",
+          "fixed_als_points": 2495,
+          "fixed_valid_normals": 2455,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2345,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4907507",
+          "fixed_als_points": 1482,
+          "fixed_valid_normals": 1481,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 1871,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4906980",
+          "fixed_als_points": 247,
+          "fixed_valid_normals": 244,
+          "moving_photo_points": 530,
+          "moving_valid_normals": 444,
+          "role": "trigger",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4906980",
+          "fixed_als_points": 479,
+          "fixed_valid_normals": 479,
+          "moving_photo_points": 1266,
+          "moving_valid_normals": 988,
+          "role": "trigger",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4959340",
+          "fixed_als_points": 2322,
+          "fixed_valid_normals": 2320,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2473,
+          "role": "trigger",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4959340",
+          "fixed_als_points": 2434,
+          "fixed_valid_normals": 2432,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2286,
+          "role": "trigger",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_42364657",
+          "fixed_als_points": 540,
+          "fixed_valid_normals": 540,
+          "moving_photo_points": 698,
+          "moving_valid_normals": 698,
+          "role": "trigger",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_42364657",
+          "fixed_als_points": 1607,
+          "fixed_valid_normals": 1605,
+          "moving_photo_points": 1372,
+          "moving_valid_normals": 1327,
+          "role": "trigger",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4907521",
+          "fixed_als_points": 2071,
+          "fixed_valid_normals": 2034,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2494,
+          "role": "trigger",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4907521",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2500,
+          "moving_photo_points": 2021,
+          "moving_valid_normals": 1788,
+          "role": "trigger",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4906974",
+          "fixed_als_points": 1941,
+          "fixed_valid_normals": 1937,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2321,
+          "role": "trigger",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4906974",
+          "fixed_als_points": 2248,
+          "fixed_valid_normals": 2248,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2054,
+          "role": "trigger",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4959322",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2379,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2351,
+          "role": "trigger",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4959322",
+          "fixed_als_points": 1517,
+          "fixed_valid_normals": 1517,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2224,
+          "role": "trigger",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4959457",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2257,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 1923,
+          "role": "trigger",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4959457",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2498,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2408,
+          "role": "trigger",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4906981",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2418,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2436,
+          "role": "trigger",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4906981",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2500,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2292,
+          "role": "trigger",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4959459",
+          "fixed_als_points": 2481,
+          "fixed_valid_normals": 2358,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 1743,
+          "role": "trigger",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4959459",
+          "fixed_als_points": 1289,
+          "fixed_valid_normals": 1287,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2040,
+          "role": "trigger",
+          "surface": "ground",
+          "used": "true"
+        }
+      ],
+      "source_als_sha256": "ac5cd0dc9c368a15e1f8fd5a18ad8d96ddbbd8cbaf8e1b608fd675430d6e9225",
+      "surface_groups": 54
+    }
+  },
+  "config_sha256": "443b27ec7451efe98b65614d5b11a02c853922e3d9b6c9243e2d35e7457222b4",
+  "counters": {
+    "learning_runs_started": 0,
+    "new_diagnostic_residual_buildings": 178,
+    "readout_runs_started": 0,
+    "roofer_runs_started": 0,
+    "scoring_runs_started": 0,
+    "source_data_modified": false
+  },
+  "created_at": "2026-07-25T03:47:49+00:00",
+  "elapsed_seconds": 807.4458358287811,
+  "input_sha256": {
+    "docs/boundary_map_v4_1_ladder.csv": "ae16170177ac0815eb6dd853b0469325c9a1018eeeac9b790b063927cbd7e7e2",
+    "phases/p2-gsjso/configs/fusion_w1_coreg_lock1.json": "c246b28bf3a87468fe39db2b46fa199b633b263cf317cfc3b1d796d915695f28",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/coreg_lock2/block_selection.json": "ac830a797463b030db9be46d70eb4126c9992f265f53b0481b899d0b5942c81f",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/coreg_lock2/global_selection.json": "7b633689a4f1a184f8941533de2b36ed075654318c503fb8035d1d639804dfe9",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/w1_coreg2_camera_blocks.csv": "613171fc839d52ff78e7b2a8bc4db5eb8d11ac153c351f77ad8a14f245954a0c",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/w1_targets.csv": "256d376080dca7c496aa3f34c9bcbbd1a8e52d0b25d6e98f7eec388b3f6cc943",
+    "phases/p2-gsjso/scripts/fusion_w1_coreg_lock1.py": "de812f7b1c1baacaeca101fffcd647f1be50e3fcfc3ad4caef2448d83259c820",
+    "results/tum_transfer/analysis/footprints_aoi.geojson": "ca7f5b13a52368e1d2ac47b77cc78f12887bad4d598d122ad57b882eb4920a82",
+    "results/tum_transfer/fusion_w1_coreg_lock2/als_fixed_class2_6_ellipsoidal_zeta45p7.npz": "fc077ed02dd0df7c5c90d5e415eb1a028faad8d39415cbf695c9f1df1e256612",
+    "results/tum_transfer/fusion_w1_coreg_lock2/als_materialization_receipt.json": "0b424b6c390332cf1bad8a6d960d95eeb050dc78504ad1b3a45a3bf91f70b9b8",
+    "results/tum_transfer/mob/raw/raw_dense.npz": "712e7b6e182e1955223585ce8958acf2d11588caacc8754fac4aec9bfb2dd69a",
+    "results/tum_transfer/mob_analysis/p0c_step2/als_aoi.laz": "ac5cd0dc9c368a15e1f8fd5a18ad8d96ddbbd8cbaf8e1b608fd675430d6e9225"
+  },
+  "inventory_audit": {
+    "building_with_group_count": 134,
+    "group_count": 248,
+    "inventory_reused_across_states": true,
+    "materialized_als_sha256": "fc077ed02dd0df7c5c90d5e415eb1a028faad8d39415cbf695c9f1df1e256612",
+    "photo_dense_sha256": "712e7b6e182e1955223585ce8958acf2d11588caacc8754fac4aec9bfb2dd69a",
+    "source_als_sha256": "ac5cd0dc9c368a15e1f8fd5a18ad8d96ddbbd8cbaf8e1b608fd675430d6e9225",
+    "target_count": 178
+  },
+  "low_support": {
+    "capable_population_n": 132,
+    "height_outline_low_support_n": 7,
+    "low_support_cutoff_q25": 0.200652528548124,
+    "low_support_n": 33,
+    "odds_ratio": 1.7810650887573964,
+    "pvalue": 0.271551958692154,
+    "table": [
+      [
+        7,
+        13
+      ],
+      [
+        26,
+        86
+      ]
+    ]
+  },
+  "manifest_self_hash_omitted": true,
+  "measurement_definitions": {
+    "capability_scope": "baseline-correspondence-conditioned cohort, not a transform-independent geometry-availability cohort",
+    "censored_value_is_measured": false,
+    "censored_value_m": 0.35,
+    "gate_statistic": "after-state measured matched absolute point-to-plane building median <= 0.3 m",
+    "gate_statistic_scope": "conditional_matched_reference_only; radius-truncated at 0.35 m and not sufficient by itself to establish whole-population alignment",
+    "horizontal_datum_caveat": "OPF WKT records EPSG:32632 while the legacy conversion retained UTM coordinate numbers; numeric-range agreement is not a geodetic datum proof.",
+    "horizontal_offset_interpretation_limit": "Matched-pair dE/dN include planar nearest-neighbour tangential sliding and are not a rigid XY transform estimate without boundary or design-rank evidence.",
+    "offset_sign": "photo_minus_als",
+    "p90_support_are_auxiliary": true
+  },
+  "measurement_head": "8d1c692836539957835dd84572e393169c6569f9",
+  "measurement_start_path": "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_measurement_start.json",
+  "measurement_start_sha256": "96788818cf60551410ba2d8d0532efa70ad288c18fc8d6f11df239a71cedf3f3",
+  "method_lock_path": "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_method_lock.json",
+  "method_lock_sha256": "fee15d92ddc579a9eadb4ebc6cbc7ebe3575ccecc1e334c468c52f32fbfcd161",
+  "method_sha256": "06d9991b81071a207e4a0c55c450ae1eff44c9e01d0e97b1c2b589f72d55d82c",
+  "population": {
+    "buildings": 178,
+    "cohorts": {
+      "core": 28,
+      "extension": 150
+    },
+    "correspondence_capable_n": 132,
+    "correspondence_n_distribution": {
+      "maximum": 3278,
+      "median_nearest_rank": 457.0,
+      "minimum": 0,
+      "q05_nearest_rank": 0.0,
+      "q10_nearest_rank": 0,
+      "q25_nearest_rank": 15.0,
+      "threshold": 40,
+      "threshold_rule": "max(40, nearest-rank Q10 of n_before over all 178 buildings)"
+    },
+    "tiers": {
+      "height": 23,
+      "outline": 41,
+      "surface": 114
+    }
+  },
+  "representative_building": "DEBY_LOD2_4959326",
+  "schema": "jointbuildgs.fusion_w1.coregdiag_manifest.v1",
+  "script_sha256": "cafe5099d92588cca975622aed6c02d5efbc66647d8731d525d073e95bc94470",
+  "source_als_sha256_after": "ac5cd0dc9c368a15e1f8fd5a18ad8d96ddbbd8cbaf8e1b608fd675430d6e9225",
+  "source_photo_sha256_after": "712e7b6e182e1955223585ce8958acf2d11588caacc8754fac4aec9bfb2dd69a",
+  "task_id": "FUS-W1-COREGDIAG-20260725"
+}
