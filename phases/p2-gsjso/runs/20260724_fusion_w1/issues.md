@@ -327,3 +327,23 @@
   `대응 불가/가능-low/가능-not-low=44/7/13`, 표면
   `2/26/86`이다. 수치만 기록하며, “지지율 요구의 범주 오류” 등재
   여부는 김휘영 검수에 남긴다.
+
+## FUS-W1-COREGDIAG-002 — 지지율 요구의 범주 오류 확정
+
+- Recorded: 2026-07-25 KST
+- Stage: learning-zero Gate A v2 registration prerequisite
+- Status: CONFIRMED by the human preregistration decision; 수치 기준 완화가 아니라 측정 모집단 정정
+- 대응 불가 46동의 층 분포는 표면 2·높이 11·윤곽 33이다. 대응 가능 132동 내부의 low-support×층 검정은 Fisher OR 1.7811, p=0.2716이었다.
+- `docs/사전등록_관문A_v2·SE3채택재판정_20260725.md` §5에 따라, 무텍스처 동의 영상 증거 부재를 정합 실패로 오독한 지지율 요구를 범주 오류로 기록한다. P90·censored P90·지지율은 관문 A v2의 보조 기록만이며 판정 조건이 아니다.
+- Counters at adoption publication: `learning_runs_started=0`, `readout_runs_started=0`, `roofer_runs_started=0`, `scoring_runs_started=0`.
+
+## FUS-W1-COREG-ADOPT-001 — 전역 SE(3) 채택 재판정 기록
+
+- Recorded: 2026-07-25 KST
+- Stage: R1 corrected-pose publication before Gate A v2 registration
+- Status: ADOPTED by 김휘영 under `docs/사전등록_관문A_v2·SE3채택재판정_20260725.md` §4; downstream interpretation 없음
+- lock2의 기존 채택 계약은 중앙 개선 `0.0300055814 m` (`19.6795%`)로 잠금 마진 `0.05 m`와 `20%`에 모두 미달해 `choice=none`·미동결이었다. 이번 채택은 그 계약을 재적용한 결과가 아니라 §4의 별도 인간 판정이다.
+- 채택 변환은 `fit_candidate.candidate_photo_to_als_global_pivot_matrix`에서 직접 읽은 전역 SE(3)이며, 회전 `0.0080702577°`, 이동 `(+0.040581, +0.020840, −0.097784) m`, rank 6, 최종 대응 33,969이다. 937개 카메라 포즈에 동일 변환을 1회 적용하고 블록별·동별 변환은 적용하지 않는다.
+- 원 sparse 모델·ALS LAZ·영상 픽셀·footprint·참조 GML은 수정하지 않고, `ζ=45.7 m`를 다시 적용하지 않는다. 보정판은 별도 경로에 발행하며 arm A/B는 동일한 보정판 `images.bin` SHA-256을 소비해야 한다.
+- R1 manifest는 왕복·투영 불변·카메라 중심·원본 전후 해시·진단 재현 `132/132`, 핵심 `24/24`, 동별 중앙의 중앙 `0.0723671171799 m`, T5 총 잔차 `0.004186 m` 검증표를 기록한다.
+- Counters at adoption publication: `learning_runs_started=0`, `readout_runs_started=0`, `roofer_runs_started=0`, `scoring_runs_started=0`.

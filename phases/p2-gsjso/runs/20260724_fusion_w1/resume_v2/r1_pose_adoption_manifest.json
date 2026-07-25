@@ -1,0 +1,469 @@
+{
+  "adopted_bundle_sha256": "c9759356973329ee38dd0f462640a55f1d1ccee21fe06f0173cdf1631bdbdf7c",
+  "adopted_matrix_sha256": "275c19c7810de497f275a6b063dda84ea5a957c02eb9d33474944e8887fc5c42",
+  "adoption_authority": {
+    "approved_by": "김휘영",
+    "decision": "global_se3_candidate_adopted_for_camera_pose_publication",
+    "preregistration_path": "docs/사전등록_관문A_v2·SE3채택재판정_20260725.md",
+    "preregistration_sha256": "2950511bba207553e48d67efa4a635131ecc2ebdd1854bd826838f9789e52031",
+    "resume_dispatch_path": "docs/원격프롬프트_생성축1파_재개_포즈채택·관문Av2_20260725.md",
+    "resume_dispatch_sha256": "c4d01adfaaa9a81aee068bf4555dc66105c65effc430a3e757d5381b3a154d03",
+    "run_copy_path": "phases/p2-gsjso/runs/20260724_fusion_w1/PREREG_GATE_A_V2_SE3_ADOPTION_20260725.md",
+    "run_copy_sha256": "2950511bba207553e48d67efa4a635131ecc2ebdd1854bd826838f9789e52031",
+    "section": "§4"
+  },
+  "als_source_modified": false,
+  "application_scope": "all_937_camera_poses_once",
+  "arm_pose_contract": {
+    "arm_A_depth_normal_initial_weights": [
+      0.5,
+      0.05
+    ],
+    "arm_A_required_pose_sha256": "28b38383a0b6d82656108e8f0e5e79711dcda93948ab2e89c1cd8f47215962a5",
+    "arm_B_depth_normal_supervision_removed": true,
+    "arm_B_required_pose_sha256": "28b38383a0b6d82656108e8f0e5e79711dcda93948ab2e89c1cd8f47215962a5",
+    "config_paths": {
+      "arm_A": "phases/p2-gsjso/configs/fusion_w1_arm_A_pose_binding_v2_20260725.json",
+      "arm_B": "phases/p2-gsjso/configs/fusion_w1_arm_B_pose_binding_v2_20260725.json"
+    },
+    "config_sha256": {
+      "arm_A": "0bae45ddcf66c2586e459ada07e3a7811a1f1856a2e2669cb4fffb1cf0757207",
+      "arm_B": "118d5e35499e6dd4ea655932348cb44b7d8422479d352a1c2f53594a163c542a"
+    },
+    "identical": true,
+    "identical_pose_binding": true,
+    "iterations": 30000,
+    "pose_binding": {
+      "cache_key_must_include_images_sha256": true,
+      "derived_sparse_json_pointer": "/derived_sparse",
+      "images_sha256_json_pointer": "/derived_sha256/images.bin",
+      "manifest": "phases/p2-gsjso/runs/20260724_fusion_w1/resume_v2/r1_pose_adoption_manifest.json",
+      "manifest_schema": "jointbuildgs.fusion_w1.pose_adoption_v2.manifest.v1",
+      "required_transform_application_count": 1,
+      "source_sparse_pose_consumption_forbidden": true
+    }
+  },
+  "branch": "exp/fusion-w1",
+  "candidate_source": {
+    "bundle_sha256": "c9759356973329ee38dd0f462640a55f1d1ccee21fe06f0173cdf1631bdbdf7c",
+    "final_correspondences": 33969,
+    "final_rank": 6,
+    "matrix_sha256": "275c19c7810de497f275a6b063dda84ea5a957c02eb9d33474944e8887fc5c42",
+    "old_consumer_guard": {
+      "block_choice": "none",
+      "block_status": "BLOCKED",
+      "block_transforms": {},
+      "global_choice": "none",
+      "global_status": "BLOCK_REQUIRED",
+      "human_override_source": "adoption_authority"
+    },
+    "rotation_deg": 0.008070257721994174,
+    "source": "phases/p2-gsjso/runs/20260724_fusion_w1/coreg_lock2/fit_candidate.json",
+    "source_key": "fit_candidate.candidate_photo_to_als_global_pivot_matrix",
+    "three_way_exact_matrix_match": true,
+    "translation_components_m": [
+      0.04058084505260015,
+      0.02084012147731406,
+      -0.09778410766699293
+    ]
+  },
+  "claim_path": "phases/p2-gsjso/runs/20260724_fusion_w1/resume_v2/r1_pose_adoption.claim.json",
+  "claim_sha256": "41bff8b0f1233fd5a4ec75029423b94793e165cd51eed3f2fc6f88309d26bdad",
+  "coordinate_datum": {
+    "geo_crs": "EPSG:25832",
+    "input_vertical_datum_default": "orthometric",
+    "orthometric_geoid_m": 45.7,
+    "path": "configs/projection_datum.json",
+    "scale": 1.0,
+    "sha256": "096a49b46fc5661d74f9d3b54c4f3777676cfc6b27e577b52bb2dabeee8b480c",
+    "zeta_application_count_during_r1": 0
+  },
+  "created_at": "2026-07-25T14:45:06.904979+00:00",
+  "crs_unchanged": true,
+  "derived_pose_differs_from_source": true,
+  "derived_sha256": {
+    "cameras.bin": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99",
+    "images.bin": "28b38383a0b6d82656108e8f0e5e79711dcda93948ab2e89c1cd8f47215962a5",
+    "points3D.bin": "a822c0967a3201cb7366193ed61b285568dd0e0102058b995008abdef6e4a914"
+  },
+  "derived_sparse": "results/tum_transfer/fusion_w1_pose_adoption_v2/derived_sparse/0",
+  "diagnostic_reproduction": {
+    "building_balanced_median_of_matched_medians_m": 0.07236711717994171,
+    "candidate_applied_in_memory_to_raw_dense_count": 1,
+    "core_correspondence_capable_n": 24,
+    "core_matched_median_le_0p3_n": 24,
+    "core_population_n": 28,
+    "corrected_images_bin_directly_consumed": false,
+    "correspondence_capable_n": 132,
+    "current_input_sha256": {
+      "docs/boundary_map_v4_1_ladder.csv": "ae16170177ac0815eb6dd853b0469325c9a1018eeeac9b790b063927cbd7e7e2",
+      "phases/p2-gsjso/configs/fusion_w1_coreg_lock1.json": "c246b28bf3a87468fe39db2b46fa199b633b263cf317cfc3b1d796d915695f28",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/coreg_lock2/block_selection.json": "ac830a797463b030db9be46d70eb4126c9992f265f53b0481b899d0b5942c81f",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/coreg_lock2/global_selection.json": "7b633689a4f1a184f8941533de2b36ed075654318c503fb8035d1d639804dfe9",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/w1_coreg2_camera_blocks.csv": "613171fc839d52ff78e7b2a8bc4db5eb8d11ac153c351f77ad8a14f245954a0c",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/w1_targets.csv": "256d376080dca7c496aa3f34c9bcbbd1a8e52d0b25d6e98f7eec388b3f6cc943",
+      "phases/p2-gsjso/scripts/fusion_w1_coreg_lock1.py": "de812f7b1c1baacaeca101fffcd647f1be50e3fcfc3ad4caef2448d83259c820",
+      "results/tum_transfer/analysis/footprints_aoi.geojson": "ca7f5b13a52368e1d2ac47b77cc78f12887bad4d598d122ad57b882eb4920a82",
+      "results/tum_transfer/fusion_w1_coreg_lock2/als_fixed_class2_6_ellipsoidal_zeta45p7.npz": "fc077ed02dd0df7c5c90d5e415eb1a028faad8d39415cbf695c9f1df1e256612",
+      "results/tum_transfer/fusion_w1_coreg_lock2/als_materialization_receipt.json": "0b424b6c390332cf1bad8a6d960d95eeb050dc78504ad1b3a45a3bf91f70b9b8",
+      "results/tum_transfer/mob/raw/raw_dense.npz": "712e7b6e182e1955223585ce8958acf2d11588caacc8754fac4aec9bfb2dd69a",
+      "results/tum_transfer/mob_analysis/p0c_step2/als_aoi.laz": "ac5cd0dc9c368a15e1f8fd5a18ad8d96ddbbd8cbaf8e1b608fd675430d6e9225"
+    },
+    "learning_runs_started": 0,
+    "matched_median_le_0p3_n": 132,
+    "maximum_candidate_offset_row_difference": 4.976019596369952e-13,
+    "maximum_candidate_residual_row_difference": 4.994893387788579e-13,
+    "membership_matches_published_building_ids": true,
+    "method": "locked_coregdiag_functions_without_measure_command",
+    "n_threshold": 40,
+    "offsets_observed_n": 134,
+    "per_building_candidate_offset_rows_reproduced_n": 178,
+    "per_building_candidate_residual_rows_reproduced_n": 178,
+    "population_n": 178,
+    "pose_frame_equivalence_basis": "same adopted transform hash plus all-camera center/projection/roundtrip checks",
+    "raw_dense_or_source_pose_modified": false,
+    "readout_runs_started": 0,
+    "reference_outputs_verified": {
+      "artifacts": {
+        "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_building_offsets.csv": "550ec1e9a7025bff32a613c929865260c57faa58830f04e65f2f208c9f0c507e",
+        "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_building_residuals.csv": "c20baf91c02be8b12527a1bf70fc2b4192961fc07d5e6ad790f4efa35fb60783",
+        "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_manifest.json": "512ec1f2a325c0923800508a73316eedc909780554619e2545c8fe4b9e4f6c58",
+        "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_measurement_start.json": "96788818cf60551410ba2d8d0532efa70ad288c18fc8d6f11df239a71cedf3f3",
+        "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_method_lock.json": "fee15d92ddc579a9eadb4ebc6cbc7ebe3575ccecc1e334c468c52f32fbfcd161",
+        "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_support_tier_confusion.csv": "d2bffa111bdca4b2e2958adad70592a068dc03a599daee0b0fa02ff5e53a3631",
+        "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_tail_breakdown.csv": "6612cccc43700dbfe06d377a8593245d9d8aa9d111486e42f276be0085acb797",
+        "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_tail_plan.png": "cbe996a5192e0d696660001db2806feded48a7e7c7f1796b6b1c92c4cf27b9b3",
+        "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_tail_representative.png": "df89bed43af3d208810c479c667e8bce683f18013c3ee9023ce0eadd1d33161d",
+        "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_tier_summary.csv": "952e29a64ed2ba0697900c7f18b544a29695e2feb578f75b4b7f4a1c0d6e1fc6"
+      },
+      "building_rows": 178,
+      "learning_runs_started": 0,
+      "offset_rows": 178,
+      "status": "VERIFIED",
+      "tail_rows": 7868,
+      "tier_summary_rows": 8
+    },
+    "roofer_runs_started": 0,
+    "schema": "jointbuildgs.fusion_w1.pose_adoption_v2.diagnostic_reproduction.v1",
+    "scoring_runs_started": 0,
+    "status": "PASSED",
+    "t5_building_balanced_median_r_total_m": 0.004186004000697177,
+    "tolerances": {
+      "rounded_report_m": 1e-06,
+      "unrounded_m": 1e-10
+    }
+  },
+  "diagnostic_reproduction_path": "phases/p2-gsjso/runs/20260724_fusion_w1/resume_v2/r1_diagnostic_reproduction.json",
+  "event_log_sha256": "eea8e46b73b6e90f876d3340249141c4329ab7ead5e1ffd54452c85de2302743",
+  "footprint_modified": false,
+  "head": "f2f9fc8b2e5b44565edc7344a356476fe746cf9f",
+  "image_count": 937,
+  "image_pixels_modified": false,
+  "immutable_inputs_after": {
+    "files": [
+      {
+        "bytes": 110979201,
+        "path": "phases/p0-audit/data/raw/als/690_5335.laz",
+        "role": "als_laz",
+        "sha256": "01602b7385aaf7324f89da6183df3dbdeffa237f85bf57dc27208b554b4fc0b3"
+      },
+      {
+        "bytes": 119749181,
+        "path": "phases/p0-audit/data/raw/als/690_5336.laz",
+        "role": "als_laz",
+        "sha256": "98ab7ad7f4c5108ebf41bc62186b336c6cd8a70b82fceec57136a56c0188b566"
+      },
+      {
+        "bytes": 107359041,
+        "path": "phases/p0-audit/data/raw/als/691_5335.laz",
+        "role": "als_laz",
+        "sha256": "9e14119bb0af7d5a300aa3a2a19074219b4d6d290923b4b90277c317e8b33720"
+      },
+      {
+        "bytes": 132681326,
+        "path": "phases/p0-audit/data/raw/als/691_5336.laz",
+        "role": "als_laz",
+        "sha256": "63c64002fc55d8b99a49749b5a2e36d802186186a950c89779463274e3cb950d"
+      },
+      {
+        "bytes": 5521408,
+        "path": "phases/p0-audit/data/work/footprints/lod2_ground_plan.gpkg",
+        "role": "footprint_gpkg",
+        "sha256": "259cf04ec0c9411e669e75f61c37ea634290fcd40b230f6ed9b67328041c87fa"
+      },
+      {
+        "bytes": 156656509,
+        "path": "phases/p0-audit/data/raw/lod2/690_5334.gml",
+        "role": "reference_gml",
+        "sha256": "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314"
+      },
+      {
+        "bytes": 147865939,
+        "path": "phases/p0-audit/data/raw/lod2/690_5336.gml",
+        "role": "reference_gml",
+        "sha256": "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674"
+      },
+      {
+        "bytes": 962,
+        "path": "configs/projection_datum.json",
+        "role": "projection_datum_config",
+        "sha256": "096a49b46fc5661d74f9d3b54c4f3777676cfc6b27e577b52bb2dabeee8b480c"
+      }
+    ],
+    "training_image_set": {
+      "algorithm": "sha256 of LC_ALL=C path-sorted `sha256sum` output lines using the logical repo-relative paths",
+      "file_count": 937,
+      "path": "results/tum_transfer/data_geoidfix/images",
+      "sha256sum_stream_aggregate": "dedc4251e491a9ae40d7c91073410cbf504023b6fe3143238b2528dc3146308a",
+      "total_bytes": 910980034
+    }
+  },
+  "immutable_inputs_before": {
+    "files": [
+      {
+        "bytes": 110979201,
+        "path": "phases/p0-audit/data/raw/als/690_5335.laz",
+        "role": "als_laz",
+        "sha256": "01602b7385aaf7324f89da6183df3dbdeffa237f85bf57dc27208b554b4fc0b3"
+      },
+      {
+        "bytes": 119749181,
+        "path": "phases/p0-audit/data/raw/als/690_5336.laz",
+        "role": "als_laz",
+        "sha256": "98ab7ad7f4c5108ebf41bc62186b336c6cd8a70b82fceec57136a56c0188b566"
+      },
+      {
+        "bytes": 107359041,
+        "path": "phases/p0-audit/data/raw/als/691_5335.laz",
+        "role": "als_laz",
+        "sha256": "9e14119bb0af7d5a300aa3a2a19074219b4d6d290923b4b90277c317e8b33720"
+      },
+      {
+        "bytes": 132681326,
+        "path": "phases/p0-audit/data/raw/als/691_5336.laz",
+        "role": "als_laz",
+        "sha256": "63c64002fc55d8b99a49749b5a2e36d802186186a950c89779463274e3cb950d"
+      },
+      {
+        "bytes": 5521408,
+        "path": "phases/p0-audit/data/work/footprints/lod2_ground_plan.gpkg",
+        "role": "footprint_gpkg",
+        "sha256": "259cf04ec0c9411e669e75f61c37ea634290fcd40b230f6ed9b67328041c87fa"
+      },
+      {
+        "bytes": 156656509,
+        "path": "phases/p0-audit/data/raw/lod2/690_5334.gml",
+        "role": "reference_gml",
+        "sha256": "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314"
+      },
+      {
+        "bytes": 147865939,
+        "path": "phases/p0-audit/data/raw/lod2/690_5336.gml",
+        "role": "reference_gml",
+        "sha256": "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674"
+      },
+      {
+        "bytes": 962,
+        "path": "configs/projection_datum.json",
+        "role": "projection_datum_config",
+        "sha256": "096a49b46fc5661d74f9d3b54c4f3777676cfc6b27e577b52bb2dabeee8b480c"
+      }
+    ],
+    "training_image_set": {
+      "algorithm": "sha256 of LC_ALL=C path-sorted `sha256sum` output lines using the logical repo-relative paths",
+      "file_count": 937,
+      "path": "results/tum_transfer/data_geoidfix/images",
+      "sha256sum_stream_aggregate": "dedc4251e491a9ae40d7c91073410cbf504023b6fe3143238b2528dc3146308a",
+      "total_bytes": 910980034
+    }
+  },
+  "immutable_inputs_unchanged": true,
+  "input_sha256": {
+    "docs/사전등록_관문A_v2·SE3채택재판정_20260725.md": "2950511bba207553e48d67efa4a635131ecc2ebdd1854bd826838f9789e52031",
+    "docs/원격프롬프트_생성축1파_재개_포즈채택·관문Av2_20260725.md": "c4d01adfaaa9a81aee068bf4555dc66105c65effc430a3e757d5381b3a154d03",
+    "phases/p2-gsjso/configs/fusion_w1_coreg_lock1.json": "c246b28bf3a87468fe39db2b46fa199b633b263cf317cfc3b1d796d915695f28",
+    "phases/p2-gsjso/configs/fusion_w1_coregdiag_20260725.json": "443b27ec7451efe98b65614d5b11a02c853922e3d9b6c9243e2d35e7457222b4",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/PREREG_GATE_A_V2_SE3_ADOPTION_20260725.md": "2950511bba207553e48d67efa4a635131ecc2ebdd1854bd826838f9789e52031",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/REMOTE_PROMPT_RESUME_POSE_ADOPTION_GATE_A_V2_20260725.md": "c4d01adfaaa9a81aee068bf4555dc66105c65effc430a3e757d5381b3a154d03",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/coreg_lock2/block_selection.json": "ac830a797463b030db9be46d70eb4126c9992f265f53b0481b899d0b5942c81f",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/coreg_lock2/fit_candidate.json": "80345cb96fa4bed59e4df3a162c0dfd23825ed01c28f15f332a063a3192ddea5",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/coreg_lock2/global_selection.json": "7b633689a4f1a184f8941533de2b36ed075654318c503fb8035d1d639804dfe9",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_building_offsets.csv": "550ec1e9a7025bff32a613c929865260c57faa58830f04e65f2f208c9f0c507e",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_building_residuals.csv": "c20baf91c02be8b12527a1bf70fc2b4192961fc07d5e6ad790f4efa35fb60783",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_manifest.json": "512ec1f2a325c0923800508a73316eedc909780554619e2545c8fe4b9e4f6c58",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_method_lock.json": "fee15d92ddc579a9eadb4ebc6cbc7ebe3575ccecc1e334c468c52f32fbfcd161",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_tier_summary.csv": "952e29a64ed2ba0697900c7f18b544a29695e2feb578f75b4b7f4a1c0d6e1fc6",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/issues.md": "4002a131d3c35cd05b1efc7bb6702ee89ff805d8737cc95f0e1c6bc568660898",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/w1_coreg2_camera_blocks.csv": "613171fc839d52ff78e7b2a8bc4db5eb8d11ac153c351f77ad8a14f245954a0c",
+    "phases/p2-gsjso/scripts/fusion_w1_coreg_lock1.py": "de812f7b1c1baacaeca101fffcd647f1be50e3fcfc3ad4caef2448d83259c820",
+    "phases/p2-gsjso/scripts/fusion_w1_coregdiag_20260725.py": "cafe5099d92588cca975622aed6c02d5efbc66647d8731d525d073e95bc94470",
+    "results/tum_transfer/data_geoidfix/sparse/0/cameras.bin": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99",
+    "results/tum_transfer/data_geoidfix/sparse/0/images.bin": "dfc779496ee3b13f8df5dd28fae465746ce0adf4aca7922d38cbed275a2fd951",
+    "results/tum_transfer/data_geoidfix/sparse/0/points3D.bin": "bf93766e9773bdc59ce393cf1a36de4b3801cadc1bf834ea705396f5e9a706c3",
+    "results/tum_transfer/mob_analysis/p0c_step2/als_aoi.laz": "ac5cd0dc9c368a15e1f8fd5a18ad8d96ddbbd8cbaf8e1b608fd675430d6e9225"
+  },
+  "issues_append": {
+    "after_sha256": "a658e3357d135585be9829ddd3afe7342046ec29d3fdeea0ae735e1ec8698977",
+    "append_count": 2,
+    "append_only_on_success": true,
+    "before_sha256": "4002a131d3c35cd05b1efc7bb6702ee89ff805d8737cc95f0e1c6bc568660898",
+    "entries_appended": [
+      "## FUS-W1-COREGDIAG-002 — 지지율 요구의 범주 오류 확정\n\n- Recorded: 2026-07-25 KST\n- Stage: learning-zero Gate A v2 registration prerequisite\n- Status: CONFIRMED by the human preregistration decision; 수치 기준 완화가 아니라 측정 모집단 정정\n- 대응 불가 46동의 층 분포는 표면 2·높이 11·윤곽 33이다. 대응 가능 132동 내부의 low-support×층 검정은 Fisher OR 1.7811, p=0.2716이었다.\n- `docs/사전등록_관문A_v2·SE3채택재판정_20260725.md` §5에 따라, 무텍스처 동의 영상 증거 부재를 정합 실패로 오독한 지지율 요구를 범주 오류로 기록한다. P90·censored P90·지지율은 관문 A v2의 보조 기록만이며 판정 조건이 아니다.\n- Counters at adoption publication: `learning_runs_started=0`, `readout_runs_started=0`, `roofer_runs_started=0`, `scoring_runs_started=0`.",
+      "## FUS-W1-COREG-ADOPT-001 — 전역 SE(3) 채택 재판정 기록\n\n- Recorded: 2026-07-25 KST\n- Stage: R1 corrected-pose publication before Gate A v2 registration\n- Status: ADOPTED by 김휘영 under `docs/사전등록_관문A_v2·SE3채택재판정_20260725.md` §4; downstream interpretation 없음\n- lock2의 기존 채택 계약은 중앙 개선 `0.0300055814 m` (`19.6795%`)로 잠금 마진 `0.05 m`와 `20%`에 모두 미달해 `choice=none`·미동결이었다. 이번 채택은 그 계약을 재적용한 결과가 아니라 §4의 별도 인간 판정이다.\n- 채택 변환은 `fit_candidate.candidate_photo_to_als_global_pivot_matrix`에서 직접 읽은 전역 SE(3)이며, 회전 `0.0080702577°`, 이동 `(+0.040581, +0.020840, −0.097784) m`, rank 6, 최종 대응 33,969이다. 937개 카메라 포즈에 동일 변환을 1회 적용하고 블록별·동별 변환은 적용하지 않는다.\n- 원 sparse 모델·ALS LAZ·영상 픽셀·footprint·참조 GML은 수정하지 않고, `ζ=45.7 m`를 다시 적용하지 않는다. 보정판은 별도 경로에 발행하며 arm A/B는 동일한 보정판 `images.bin` SHA-256을 소비해야 한다.\n- R1 manifest는 왕복·투영 불변·카메라 중심·원본 전후 해시·진단 재현 `132/132`, 핵심 `24/24`, 동별 중앙의 중앙 `0.0723671171799 m`, T5 총 잔차 `0.004186 m` 검증표를 기록한다.\n- Counters at adoption publication: `learning_runs_started=0`, `readout_runs_started=0`, `roofer_runs_started=0`, `scoring_runs_started=0`."
+    ],
+    "path": "phases/p2-gsjso/runs/20260724_fusion_w1/issues.md"
+  },
+  "issues_sha256_after": "a658e3357d135585be9829ddd3afe7342046ec29d3fdeea0ae735e1ec8698977",
+  "learning_allowed": false,
+  "learning_runs_started": 0,
+  "next_step": "R2 Gate A v2 registration and qualitative overlays",
+  "orthometric_to_ellipsoidal_zeta_m_unchanged": 45.7,
+  "photo_to_als_canonical_homogeneous": [
+    [
+      0.9999999920820789,
+      4.935722310131579e-05,
+      -0.00011575709527824024,
+      0.04058084508869797
+    ],
+    [
+      -4.9364547421409374e-05,
+      0.9999999967799484,
+      -6.327118183728546e-05,
+      0.020840121433138847
+    ],
+    [
+      0.00011575397201547453,
+      6.327689563327827e-05,
+      0.9999999912985266,
+      -0.09778410766693924
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "photo_to_als_global_homogeneous": [
+    [
+      0.9999999920820789,
+      4.935722310131579e-05,
+      -0.00011575709527824024,
+      -263.25767778946437
+    ],
+    [
+      -4.9364547421409374e-05,
+      0.9999999967799484,
+      -6.327118183728546e-05,
+      34.1848204732383
+    ],
+    [
+      0.00011575397201547453,
+      6.327689563327827e-05,
+      0.9999999912985266,
+      -417.72834083674803
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "photo_to_als_pivot_matrix": [
+    [
+      0.9999999920820789,
+      4.935722310131579e-05,
+      -0.00011575709527824024,
+      0.04058084505260015
+    ],
+    [
+      -4.9364547421409374e-05,
+      0.9999999967799484,
+      -6.327118183728546e-05,
+      0.02084012147731406
+    ],
+    [
+      0.00011575397201547453,
+      6.327689563327827e-05,
+      0.9999999912985266,
+      -0.09778410766699293
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "pivot_global_m": [
+    690953.0,
+    5336071.0,
+    604.0
+  ],
+  "points3d_coordinate_companion_transform": true,
+  "points3d_is_not_an_independent_alignment_treatment": true,
+  "pose_validation": {
+    "camera_block_inventory_count": 937,
+    "camera_intrinsics_copied_byte_identical": true,
+    "camera_pose_records_transformed_once": 937,
+    "image_count": 937,
+    "maximum_camera_center_error_m": 3.694822225952521e-13,
+    "maximum_pose_roundtrip_rotation_matrix_error": 1.6653345369377348e-15,
+    "maximum_pose_roundtrip_translation_error_m": 1.4210854715202004e-14,
+    "maximum_projection_invariance_error": 5.115907697472721e-13,
+    "points2d_tails_preserved": true,
+    "points3d_coordinate_companion_transform": true,
+    "points3d_is_not_an_independent_alignment_treatment": true,
+    "points3d_validation": {
+      "ids_rgb_error_tracks_byte_identical": true,
+      "maximum_forward_error_m": 0.0,
+      "maximum_inverse_roundtrip_error_m": 4.547473508864641e-13,
+      "record_count": 371808
+    },
+    "transformed_point3d_count": 371808
+  },
+  "r0_gate": {
+    "continuation": {
+      "learning_authorized_by_r0": false,
+      "r1_pose_publication_authorized_if_passed": true,
+      "r2_must_wait_for_r1_all_checks": true
+    },
+    "execution_counters": {
+      "learning_runs_started": 0,
+      "readout_runs_started": 0,
+      "roofer_runs_started": 0,
+      "scoring_runs_started": 0
+    },
+    "path": "phases/p2-gsjso/runs/20260724_fusion_w1/resume_v2/r0_preflight.json",
+    "schema": "jointbuildgs.fusion_w1.resume_r0_v2.preflight.v1",
+    "sha256": "d82bd7b824b45b5e77306bd4322fb4e96b86638a9b33d026fb740d4ade51f95e",
+    "status": "PASSED"
+  },
+  "r2_overlay_and_gate_record_ready": true,
+  "readout_runs_started": 0,
+  "reference_gml_modified": false,
+  "roofer_runs_started": 0,
+  "run_id": "20260724_fusion_w1",
+  "scale_unchanged": true,
+  "schema": "jointbuildgs.fusion_w1.pose_adoption_v2.manifest.v1",
+  "scoring_runs_started": 0,
+  "source_pose_modified": false,
+  "source_sha256": {
+    "cameras.bin": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99",
+    "images.bin": "dfc779496ee3b13f8df5dd28fae465746ce0adf4aca7922d38cbed275a2fd951",
+    "points3D.bin": "bf93766e9773bdc59ce393cf1a36de4b3801cadc1bf834ea705396f5e9a706c3"
+  },
+  "source_sha256_after": {
+    "cameras.bin": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99",
+    "images.bin": "dfc779496ee3b13f8df5dd28fae465746ce0adf4aca7922d38cbed275a2fd951",
+    "points3D.bin": "bf93766e9773bdc59ce393cf1a36de4b3801cadc1bf834ea705396f5e9a706c3"
+  },
+  "source_sparse": "results/tum_transfer/data/sparse/0",
+  "status": "PASSED",
+  "task_id": "FUS-W1-POSE-ADOPTION-V2-20260725",
+  "transform_application_count": 1,
+  "transform_direction": "photo_ellipsoidal_global_to_als_ellipsoidal_global",
+  "transformed_point3d_count": 371808,
+  "zeta_applied_during_pose_publication": false
+}
