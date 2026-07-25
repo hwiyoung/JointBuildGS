@@ -641,6 +641,38 @@ def _scheduled_weight(
     )
 
 
+def _resolve_init_pointcloud_rgb(
+    seed_xyz: np.ndarray,
+    seed_rgb: Optional[np.ndarray],
+    scene_rgb: np.ndarray,
+) -> np.ndarray:
+    """Return validated RGB for an external init point cloud.
+
+    Coloured init artifacts keep their per-point colour.  The historical scene
+    mean is used only when the init artifact has no colour channel.
+    """
+    xyz = np.asarray(seed_xyz)
+    if xyz.ndim != 2 or xyz.shape[1:] != (3,) or len(xyz) == 0:
+        raise ValueError("seed_xyz must have nonempty shape (N,3)")
+    if not np.isfinite(xyz).all():
+        raise ValueError("seed_xyz must be finite")
+
+    if seed_rgb is None:
+        mean = np.asarray(scene_rgb, dtype=np.float32)
+        if mean.shape != (3,) or not np.isfinite(mean).all():
+            raise ValueError("scene_rgb must be finite with shape (3,)")
+        if np.any((mean < 0.0) | (mean > 1.0)):
+            raise ValueError("scene_rgb must lie in [0,1]")
+        return np.broadcast_to(mean, (len(xyz), 3)).copy()
+
+    rgb = np.asarray(seed_rgb, dtype=np.float32)
+    if rgb.shape != xyz.shape:
+        raise ValueError(f"seed_rgb must have shape {xyz.shape}")
+    if not np.isfinite(rgb).all() or np.any((rgb < 0.0) | (rgb > 1.0)):
+        raise ValueError("seed_rgb must be finite and lie in [0,1]")
+    return np.ascontiguousarray(rgb, dtype=np.float32)
+
+
 def _height_values(centers: torch.Tensor, e_gravity: torch.Tensor) -> torch.Tensor:
     ax = int(e_gravity.abs().argmax().item())
     sign = -torch.sign(e_gravity[ax])
@@ -1608,18 +1640,24 @@ def main():
     # (dense=DIM / acmp=ACMP), produced offline by tum_mob_seed_prep.sh (AOI crop + per-cloud
     # geoid shift + voxel<=~3M + outlier clip). Default mode "concat": add the MVS points onto
     # the SfM base so the full scene stays trainable (ACMP exists only over the AOI), while the
-    # 11 eval buildings get dense init. RGB = scene mean (same as the semantic seeds; L_photo
-    # recolours during training). scene_scale is intentionally left on ds.points_xyz (the SfM
-    # extent) so densification thresholds are unchanged by the AOI-concentrated seeds.
+    # 11 eval buildings get dense init. Per-point RGB from a coloured init artifact is
+    # preserved; legacy XYZ-only artifacts fall back to the scene mean. scene_scale is
+    # intentionally left on ds.points_xyz (the SfM extent) so densification thresholds are
+    # unchanged by the AOI-concentrated seeds.
     mvs_seed_mask = None   # (P2 make-or-break C) bool over final init rows: True = MVS seed
     init_pc = cfg.get("init_pointcloud")
     if init_pc:
-        from .pointcloud_io import read_init_pointcloud
+        from .pointcloud_io import read_init_pointcloud_with_rgb
 
         mode = cfg.get("init_pointcloud_mode", "concat")
-        seed_xyz = read_init_pointcloud(init_pc)                      # (M,3) GS-LOCAL
+        seed_xyz, supplied_seed_rgb = read_init_pointcloud_with_rgb(init_pc)
         scene_rgb = ds.points_rgb.mean(axis=0)
-        seed_rgb = np.broadcast_to(scene_rgb, (len(seed_xyz), 3)).astype(np.float32).copy()
+        seed_rgb = _resolve_init_pointcloud_rgb(
+            seed_xyz,
+            supplied_seed_rgb,
+            scene_rgb,
+        )
+        rgb_source = "pointcloud" if supplied_seed_rgb is not None else "scene_mean"
         n0 = points_xyz.shape[0]
         if mode == "replace":
             points_xyz = seed_xyz.astype(np.float32)
@@ -1644,7 +1682,7 @@ def main():
         else:
             raise ValueError(f"init_pointcloud_mode must be concat|replace, got {mode!r}")
         print(f"[mvs-seed] {mode} {len(seed_xyz)} MVS init pts from {init_pc}: "
-              f"N {n0} -> {points_xyz.shape[0]}")
+              f"N {n0} -> {points_xyz.shape[0]} rgb={rgb_source}")
         mvs_seed_mask = np.zeros(points_xyz.shape[0], dtype=bool)
         mvs_seed_mask[(0 if mode == "replace" else n0):] = True   # replace=all, concat=appended rows
 
@@ -1950,7 +1988,25 @@ def main():
     if target_region_priors and mono_target_min_pixels < 64:
         raise ValueError("mono_target_min_pixels must be >=64")
     w_nc = cfg.get("w_nc", 0.05)
-    w_distort = cfg.get("w_distort", 100.0)   # 2DGS distortion reg
+    w_distort = float(cfg.get("w_distort", 100.0))   # 2DGS distortion reg
+    # Optional stage-2 activation for surface regularization.  The defaults
+    # preserve the historical constant weight from iteration zero.
+    distort_warmup = int(cfg.get("distort_warmup", 0))
+    distort_schedule = str(cfg.get("distort_schedule", "constant"))
+    distort_ramp_steps = int(cfg.get("distort_ramp_steps", 0))
+    distort_final_weight = cfg.get("distort_final_weight")
+    distort_final_factor = cfg.get("distort_final_factor")
+    if distort_warmup < 0 or distort_ramp_steps < 0:
+        raise ValueError("distort_warmup/distort_ramp_steps must be non-negative")
+    if distort_schedule not in {
+        "constant",
+        "ramp",
+        "exp_decay",
+        "exponential_decay",
+    }:
+        raise ValueError(
+            "distort_schedule must be constant|ramp|exp_decay|exponential_decay"
+        )
     distort_normalization = cfg.get("distort_normalization", "none")
     distort_norm_denominator = 1.0
     if distort_normalization in ("none", None):
@@ -2333,6 +2389,7 @@ def main():
     if w_distort > 0:
         print(
             f"[distort] w_distort={w_distort:g} normalization={distort_normalization} "
+            f"schedule={distort_schedule}@{distort_warmup}+{distort_ramp_steps} "
             f"denom={distort_norm_denominator:.6g} "
             f"(scene_extent_bbox={scene_extent_bbox:.6g}m; scene_scale={scene_scale:.6g}m)"
         )
@@ -2342,8 +2399,13 @@ def main():
         "scene_extent_bbox_m": scene_extent_bbox,
         "distort_normalization": distort_normalization,
         "distort_norm_denominator": distort_norm_denominator,
-        "distort_formula": "loss_distort = mean(rend_dist) / denominator; total += w_distort * loss_distort",
+        "distort_formula": "loss_distort = mean(rend_dist) / denominator; total += w_distort_effective * loss_distort",
         "w_distort": w_distort,
+        "distort_schedule": distort_schedule,
+        "distort_warmup": distort_warmup,
+        "distort_ramp_steps": distort_ramp_steps,
+        "distort_final_weight": distort_final_weight,
+        "distort_final_factor": distort_final_factor,
         "depth_schedule": depth_schedule,
         "depth_warmup": depth_warmup,
         "depth_ramp_steps": depth_ramp_steps,
@@ -3063,7 +3125,16 @@ def main():
 
         loss_dist_raw = distort.mean()
         loss_dist = loss_dist_raw / distort_norm_denominator
-        loss_total = loss_total + w_distort * loss_dist
+        w_distort_eff = _scheduled_weight(
+            w_distort,
+            it,
+            distort_warmup,
+            distort_schedule,
+            distort_ramp_steps,
+            final_weight=distort_final_weight,
+            final_factor=distort_final_factor,
+        )
+        loss_total = loss_total + w_distort_eff * loss_dist
 
         # First-wave plane ladder.  Every plane arm uses the same local rendered-
         # depth windows and edge guard.  The medium pair merely restricts those
@@ -3668,7 +3739,11 @@ def main():
                     ),
                 ),
                 "nc": (loss_nc, float(w_nc), w_nc * loss_nc),
-                "distort": (loss_dist, float(w_distort), w_distort * loss_dist),
+                "distort": (
+                    loss_dist,
+                    float(w_distort_eff),
+                    w_distort_eff * loss_dist,
+                ),
                 "semantic": (loss_sem, float(w_sem), w_sem * loss_sem),
                 "mvc": (loss_mvc, float(w_mvc_eff), w_mvc_eff * loss_mvc),
                 "mutual": (loss_mut_total, float(w_mutual * mutual_weight_scale), (w_mutual * mutual_weight_scale) * loss_mut_total),
@@ -3820,7 +3895,7 @@ def main():
             writer.add_scalar("loss_weight/depth", float(w_depth_eff), it)
             writer.add_scalar("loss_weight/mono_depth", float(w_mono_depth_eff), it)
             writer.add_scalar("loss_weight/normal", float(w_normal_eff), it)
-            writer.add_scalar("loss_weight/distort", float(w_distort), it)
+            writer.add_scalar("loss_weight/distort", float(w_distort_eff), it)
             if target_region_priors:
                 writer.add_scalar(
                     "stats/mono_depth_eligible_regions",
@@ -4127,6 +4202,103 @@ def main():
     print(f"[done] {max_iter} iter in {dt/60:.1f} min.  final N={model.num_points}")
 
 
+def _encode_expected_depth_png(
+    depth: torch.Tensor | np.ndarray,
+) -> tuple[np.ndarray, Dict[str, Any]]:
+    """Encode finite positive expected depth as deterministic uint16 PNG data.
+
+    Code zero is reserved for invalid/non-positive pixels.  Valid codes 1..65535
+    linearly span the per-image finite positive range; the returned receipt
+    provides the exact metric decoding parameters.
+    """
+    if torch.is_tensor(depth):
+        values = depth.detach().cpu().numpy()
+    else:
+        values = np.asarray(depth)
+    if values.ndim != 2:
+        raise ValueError("expected-depth render must have shape (H,W)")
+    values = np.asarray(values, dtype=np.float64)
+    valid = np.isfinite(values) & (values > 0.0)
+    encoded = np.zeros(values.shape, dtype=np.uint16)
+    valid_count = int(valid.sum())
+    receipt: Dict[str, Any] = {
+        "schema": "jointbuildgs.stage2.expected_depth_png.v1",
+        "source": "renderer_expected_depth",
+        "unit": "m",
+        "shape_hw": [int(values.shape[0]), int(values.shape[1])],
+        "valid_rule": "isfinite(depth) AND depth>0",
+        "invalid_code": 0,
+        "valid_code_min": 1,
+        "valid_code_max": 65535,
+        "valid_pixel_count": valid_count,
+        "valid_pixel_fraction": (
+            float(valid_count / values.size) if values.size else 0.0
+        ),
+    }
+    if valid_count == 0:
+        receipt.update(
+            {
+                "status": "no_finite_positive_depth",
+                "depth_min_m": None,
+                "depth_max_m": None,
+                "decode_offset_m": None,
+                "decode_scale_m_per_code_step": None,
+                "decode_formula": None,
+            }
+        )
+        return encoded, receipt
+
+    finite_positive = values[valid]
+    depth_min = float(finite_positive.min())
+    depth_max = float(finite_positive.max())
+    if depth_max == depth_min:
+        scale = 0.0
+        encoded[valid] = np.uint16(1)
+        formula = "depth_m = decode_offset_m for every valid code"
+    else:
+        scale = (depth_max - depth_min) / 65534.0
+        codes = np.rint((finite_positive - depth_min) / scale).astype(np.int64) + 1
+        encoded[valid] = np.clip(codes, 1, 65535).astype(np.uint16)
+        formula = (
+            "depth_m = decode_offset_m + "
+            "(code-1)*decode_scale_m_per_code_step"
+        )
+    receipt.update(
+        {
+            "status": "encoded",
+            "depth_min_m": depth_min,
+            "depth_max_m": depth_max,
+            "decode_offset_m": depth_min,
+            "decode_scale_m_per_code_step": scale,
+            "decode_formula": formula,
+        }
+    )
+    return encoded, receipt
+
+
+def _save_expected_depth_png(
+    depth: torch.Tensor | np.ndarray,
+    png_path: Path,
+    *,
+    context: Optional[Dict[str, Any]] = None,
+) -> Path:
+    """Write one depth PNG and its adjacent deterministic JSON receipt."""
+    import imageio.v2 as imageio
+
+    encoded, encoding_receipt = _encode_expected_depth_png(depth)
+    imageio.imwrite(png_path, encoded)
+    receipt = dict(context or {})
+    receipt.update(encoding_receipt)
+    receipt["png"] = png_path.name
+    receipt["png_sha256"] = hashlib.sha256(png_path.read_bytes()).hexdigest()
+    receipt_path = png_path.with_suffix(".json")
+    receipt_path.write_text(
+        json.dumps(receipt, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    return receipt_path
+
+
 @torch.no_grad()
 def _eval_and_save(
     model,
@@ -4174,6 +4346,20 @@ def _eval_and_save(
         import imageio.v2 as imageio
         rgb8 = (rgb_p.cpu().numpy() * 255).astype(np.uint8)
         imageio.imwrite(out_dir / "renders" / f"it{it:06d}_v{k}_rgb.png", rgb8)
+        depth_png = out_dir / "renders" / f"it{it:06d}_v{k}_depth.png"
+        _save_expected_depth_png(
+            out["depth"],
+            depth_png,
+            context={
+                "iteration": int(it),
+                "eval_slot": int(k),
+                "dataset_index": int(idx),
+                "view_name": str(b.get("name", "")),
+                "render_mode": "RGB+ED",
+                "depth_mode": "expected",
+                "tag": str(tag or "periodic"),
+            },
+        )
 
     writer.add_scalar("eval/psnr", float(np.mean(psnrs)), it)
     if depth_maes:
