@@ -347,3 +347,44 @@
 - 원 sparse 모델·ALS LAZ·영상 픽셀·footprint·참조 GML은 수정하지 않고, `ζ=45.7 m`를 다시 적용하지 않는다. 보정판은 별도 경로에 발행하며 arm A/B는 동일한 보정판 `images.bin` SHA-256을 소비해야 한다.
 - R1 manifest는 왕복·투영 불변·카메라 중심·원본 전후 해시·진단 재현 `132/132`, 핵심 `24/24`, 동별 중앙의 중앙 `0.0723671171799 m`, T5 총 잔차 `0.004186 m` 검증표를 기록한다.
 - Counters at adoption publication: `learning_runs_started=0`, `readout_runs_started=0`, `roofer_runs_started=0`, `scoring_runs_started=0`.
+
+## FUS-W1-PREPROCESS-001 — 투영 TIN 화면 토폴로지 구현 오류
+
+- Recorded: 2026-07-26 07:14 KST
+- Stage: §3 smoke seed/supervision preparation for `DEBY_LOD2_42364609`
+- Status: RESOLVED in commit `d8af989`; 최초 실패 staging 보존, 원본 입력 불변
+- 최초 실행은 `DJI_20241217084827_0177_D.JPG`에서
+  `projected TIN topology is invalid: Triangulation is invalid`로 중단됐다.
+  해당 실행은 `views.csv`와 seed 3종까지만 고유 `.staging/` 경로에 남겼고,
+  동별·stable `preprocess_manifest.json`은 발행하지 않았다.
+- 보존 데이터의 첫 실패 뷰에서 화면 투영 삼각형은 class 6
+  `483/483`, class 2 `14,801/14,801`가 모두 negative winding이었고,
+  positive winding과 화면 퇴화 삼각형은 각각 0개였다. 오류는
+  `matplotlib.tri`의 평면 mesh topology 제약과 투영 삼각형의 방향·겹침이
+  충돌한 구현 문제이며, ALS–카메라 정합 잔차나 원본 ALS 분류의 실패로
+  기록하지 않는다.
+- 화면 mesh 탐색을 겹침·뒤집힘을 허용하는 deterministic
+  per-triangle barycentric nearest-z rasterizer로 교체했다. Docker 회귀시험
+  `16/16`을 통과했고, 보존 seed와 30뷰의 class 6/2 총 60 raster 읽기 전용
+  검증은 `4.27 s`였으며 유효 픽셀 합은 class 6 `4,683`, class 2
+  `166,402`였다.
+- 재실행은 새 고유 staging을 사용해 `PARTIAL` stable manifest와
+  `w1_seed_stats.csv` 1행을 발행했다. 실제 시드는 입력/출력 `7,993/7,993`
+  점, class 2/6 `7,644/349`, 다운샘플 없음, RGB 미표본 0점이다.
+- 이 오류와 수정 동안 `learning_runs_started=0`; ALS LAZ·영상·원 포즈·
+  보정 포즈·footprint·참조 GML은 수정하지 않았다.
+
+## FUS-W1-CUTOFF-001 — 06:30 컷 시점 신규 학습 미착수
+
+- Recorded: 2026-07-26 07:15 KST
+- Stage: §7 cutoff transition
+- Status: PARTIAL CLOSEOUT; 해석·판정 없음
+- 잠금된 컷은 `2026-07-26T06:30:00+09:00`이며, 현재 호스트 시각 확인 시
+  이미 컷 이후였다. 완료 또는 진행 중인 30k 학습이 없었으므로 새 학습을
+  시작하지 않았고 `learning_runs_started=0`을 유지했다.
+- 컷 이후 실행 범위는 위 전처리 구현 오류의 수정·재검증, 첫 동의 실제
+  투입 시드 P0′ 조립·채점 1회, 고정 형식의 부분 집계·보고 발행으로
+  제한했다. 학습 후 pointcloudification/readout은 시작하지 않았다.
+- P0′ 1동은 Roofer 1회와 scoring 1회를 완료해 LoD2 조립 성공 및
+  val3dity 유효를 각각 기록했다. 이는 학습 전 시드 귀속 통제이며
+  arm A/B 학습 결과나 눈금 1~4 판정값으로 사용하지 않는다.
