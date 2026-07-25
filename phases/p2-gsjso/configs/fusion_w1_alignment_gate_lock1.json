@@ -28,9 +28,16 @@
       "phases/p2-gsjso/runs/20260724_fusion_w1/w1_coreg_splits.csv",
       "phases/p2-gsjso/runs/20260724_fusion_w1/w1_coreg_camera_blocks.csv",
       "phases/p2-gsjso/runs/20260724_fusion_w1/w1_coreg_prereg_manifest.json",
-      "phases/p2-gsjso/runs/20260724_fusion_w1/w1_coreg_prereg_split.png"
+      "phases/p2-gsjso/runs/20260724_fusion_w1/w1_coreg_prereg_split.png",
+      "phases/p2-gsjso/scripts/run_fusion_w1_coreg_lock2.sh",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/PROTOCOL_AMENDMENT_V3C_COREG_RECOVERY_20260725.md",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/w1_coreg2_splits.csv",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/w1_coreg2_camera_blocks.csv",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/w1_coreg2_prereg_manifest.json",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/w1_coreg2_prereg_split.png",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/w1_coreg2_prereg_failures.jsonl"
     ],
-    "policy": "Every implementation file must be a tracked blob identical to committed HEAD and the tracked worktree/index must be clean. This locks all result-blind critical semantics before any image residual is read."
+    "policy": "Every implementation file must be a tracked blob identical to committed HEAD and the tracked worktree/index must be clean. This locks all critical semantics and disclosed support-screen conditioning before any image residual is read."
   },
   "inputs": {
     "targets_csv": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_targets.csv",
@@ -311,10 +318,10 @@
     "enabled": true,
     "task_id": "FUS-W1-GATE-A2-20260725",
     "treatment": "LiDAR-assisted camera co-registration + LiDAR seed/supervision",
-    "pose_publication_manifest": "results/tum_transfer/fusion_w1_coreg_lock1/pose_publication_manifest.json",
-    "coreg_runtime_dir": "results/tum_transfer/fusion_w1_coreg_lock1",
+    "pose_publication_manifest": "results/tum_transfer/fusion_w1_coreg_lock2/pose_publication_manifest.json",
+    "coreg_runtime_dir": "results/tum_transfer/fusion_w1_coreg_lock2",
     "coreg_config": "phases/p2-gsjso/configs/fusion_w1_coreg_lock1.json",
-    "derived_colmap_sparse_dir": "results/tum_transfer/fusion_w1_coreg_lock1/derived_sparse/0",
+    "derived_colmap_sparse_dir": "results/tum_transfer/fusion_w1_coreg_lock2/derived_sparse/0",
     "maximum_post_coreg_xy_micro_registration_attempts": 0,
     "original_run004_exposed_core_ids": [
       "DEBY_LOD2_42364609",

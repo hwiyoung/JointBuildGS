@@ -596,19 +596,35 @@ def validate_pose_publication_contract(
 
     check_path = coreg_runtime / "independent_check.json"
     frozen_path = coreg_runtime / "frozen_transform.json"
+    check_open_path = coreg_runtime / "check_open.json"
     open_path = coreg_runtime / "publish_poses_open.json"
-    if not check_path.is_file() or not frozen_path.is_file() or not open_path.is_file():
+    if (
+        not check_path.is_file()
+        or not frozen_path.is_file()
+        or not check_open_path.is_file()
+        or not open_path.is_file()
+    ):
         raise GateContractError("coreg check/frozen/stage-open receipt chain is incomplete")
     check = json.loads(check_path.read_text(encoding="utf-8"))
     frozen = json.loads(frozen_path.read_text(encoding="utf-8"))
+    check_opened = json.loads(check_open_path.read_text(encoding="utf-8"))
     opened = json.loads(open_path.read_text(encoding="utf-8"))
     if (
         check.get("status") != "PASSED"
         or check.get("stage_binding") != stage_binding
         or frozen.get("stage_binding") != stage_binding
+        or check_opened.get("stage_binding") != stage_binding
         or opened.get("stage_binding") != stage_binding
     ):
         raise GateContractError("coreg check/frozen/publish stages do not share a binding")
+    if (
+        check.get("stage_open_receipt_sha256") != sha256_file(check_open_path)
+        or (check_opened.get("parent_receipt_sha256") or {}).get(
+            "frozen_transform"
+        )
+        != sha256_file(frozen_path)
+    ):
+        raise GateContractError("coreg independent-check stage-open chain mismatch")
     if manifest.get("independent_check_sha256") != sha256_file(check_path):
         raise GateContractError("coreg independent-check receipt hash mismatch")
     if manifest.get("stage_open_receipt_sha256") != sha256_file(open_path):

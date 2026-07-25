@@ -376,6 +376,82 @@ class CoregProtocolTests(unittest.TestCase):
         exposed = set(self.config["split"]["run004_exposed_core_ids"])
         self.assertFalse(controls & exposed)
 
+    def test_recovery_lock2_uses_fresh_namespace_and_exposure_policy(self) -> None:
+        recovered = coreg.activate_recovery_lock2(self.config)
+        self.assertEqual(
+            recovered["inputs"]["runtime_dir"],
+            "results/tum_transfer/fusion_w1_coreg_lock2",
+        )
+        self.assertTrue(
+            recovered["split"]["geometry_feasibility_screen_required"]
+        )
+        self.assertEqual(
+            recovered["split"]["prior_fit_residual_exposure_policy"],
+            "fit_only",
+        )
+        self.assertEqual(
+            self.config["inputs"]["splits_csv"],
+            recovered["split"]["prior_exposure_split_csv"],
+        )
+        self.assertEqual(
+            recovered["recovery_lock2"][
+                "geometry_feasibility_screen_uses_correspondence_residuals"
+            ],
+            False,
+        )
+        self.assertTrue(
+            recovered["split"][
+                "geometry_feasibility_screen_nominal_alignment_sensitive"
+            ]
+        )
+        self.assertEqual(
+            recovered["split"]["alignment_judgment_scope"],
+            "coreg evidence conditional on support screen; final decision is "
+            "predeclared core-building Gate A2",
+        )
+
+    def test_recovery_predecessor_and_prereg_ledgers_are_locked(self) -> None:
+        recovered = coreg.activate_recovery_lock2(self.config)
+        predecessor = coreg.validate_recovery_predecessor(
+            self.config, self.config["recovery_lock2"]
+        )
+        self.assertEqual(len(predecessor), 8)
+        ledger = coreg.verify_recovery_prereg_ledger_separation(recovered)
+        self.assertTrue(ledger["active"])
+        self.assertEqual(ledger["prereg_failure_count"], 2)
+
+        tampered = copy.deepcopy(self.config)
+        tampered["recovery_lock2"]["predecessor_contract"]["file_sha256"][
+            tampered["recovery_lock2"]["predecessor_contract"][
+                "publication_manifest"
+            ]
+        ] = "0" * 64
+        with self.assertRaises(coreg.CoregError):
+            coreg.activate_recovery_lock2(tampered)
+
+    def test_recovery_split_keeps_prior_fit_exposure_out_of_holdout(self) -> None:
+        recovered = coreg.activate_recovery_lock2(self.config)
+        rows = coreg._read_csv(recovered["inputs"]["splits_csv"])
+        self.assertEqual(len(rows), 36)
+        self.assertEqual(sum(row["role"] == "fit" for row in rows), 18)
+        self.assertEqual(sum(row["role"] == "trigger" for row in rows), 9)
+        self.assertEqual(sum(row["role"] == "check" for row in rows), 9)
+        self.assertTrue(
+            all(row["geometry_feasibility_pass"] == "true" for row in rows)
+        )
+        self.assertFalse(
+            any(
+                row["prior_fit_residual_exposed"] == "true"
+                and row["role"] in {"trigger", "check"}
+                for row in rows
+            )
+        )
+        self.assertNotIn(
+            "DEBY_LOD2_4907165",
+            {row["building_id"] for row in rows},
+        )
+        coreg.verify_generated_locks(recovered)
+
 
 if __name__ == "__main__":
     unittest.main()

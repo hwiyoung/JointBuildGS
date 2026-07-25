@@ -144,7 +144,7 @@
 - Capture blocks: original OPF capture time gaps greater than 600 seconds fix
   three blocks before residual measurement: 194, 147, and 596 COLMAP images.
 - Verification before measurement: pinned-Docker combined coreg/Gate/runtime/
-  checkpoint tests 78/78 passed. Coreg-specific tests are 26/26. They cover
+  checkpoint tests 81/81 passed. Coreg-specific tests are 29/29. They cover
   known small-SE(3) recovery, non-convergence and rank rejection, valid-normal
   filtering, both-surface and exact cohort contracts, exact-once parent chains,
   frozen-selection tamper rejection, full COLMAP binary round-trip, block-pose
@@ -191,10 +191,31 @@
   ['DEBY_LOD2_4907165']`. No `global_selection.json`, trigger residual CSV,
   frozen transform, independent check, or derived pose model was produced.
 - Exposure accounting: 18 fit buildings have alignment residuals; trigger
-  alignment residuals evaluated `0`; all 36 lock1 controls are nevertheless
-  treated as calibration-exposed and excluded from recovery.
-- Recovery: v3c creates a fresh lock2 namespace, excludes all 36 lock1 controls,
-  and applies a counts-only roof/ground geometry-feasibility screen before
-  assigning fit/trigger/check roles. It does not delete or overwrite lock1.
+  alignment residuals evaluated `0`. All 36 lock1 controls are
+  calibration-selection-exposed, but only the 18 fit buildings are
+  alignment-residual-exposed.
+- Recovery: v3c creates a fresh lock2 namespace and applies a counts-only
+  roof/ground geometry-feasibility screen before assigning roles. Two
+  no-residual dry preparations showed that excluding all 36 prior controls
+  leaves only 18 feasible buildings, even when all extension tiers are
+  admitted. The final exposure-aware split therefore confines all 18 prior
+  fit-residual-exposed buildings to lock2 fit and selects trigger/check only
+  from buildings with zero prior alignment-residual exposure. It does not
+  delete or overwrite lock1.
+- Support-screen scope: the screen forms no correspondence or distance
+  residual, but it is nominal-alignment-sensitive because it counts both
+  sources in a shared footprint crop and tests photo Z support against ALS
+  windows. Lock2 fit/trigger/check therefore apply only to this
+  support-conditioned population. They cannot replace corrected-camera Gate
+  A2 on the predeclared core buildings, and Gate A2 failure still blocks
+  learning.
+- Predecessor lineage: lock2 now pins and validates the committed lock1
+  publication manifest, its exact artifact inventory, fit/select stage
+  receipts, select failure receipt, ALS-after hash, and absence of later-stage
+  published outputs before accepting the fit-18/trigger-0 exposure account.
+- Ledger separation: the two premeasurement preparation failures are retained
+  verbatim in `w1_coreg2_prereg_failures.jsonl`; the formal lock2 runtime
+  `failures.jsonl` begins empty so prereg exploration is not mixed with
+  measurement failures.
 - Counters: `learning_runs_started=0`, `readout_runs_started=0`,
   `roofer_runs_started=0`, `scoring_runs_started=0`.

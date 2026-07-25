@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """FUS-W1 ALS-fixed camera/photo co-registration.
 
-The script deliberately separates result-blind preparation from measurement:
+The script deliberately separates locked preparation from measurement:
 
   prepare-controls  -> select and publish fit/trigger/check + capture blocks
   prepare-als       -> materialize immutable class-2/6 ALS at fixed zeta
@@ -11,11 +11,17 @@ The script deliberately separates result-blind preparation from measurement:
   publish-poses     -> write a derived COLMAP model after a passed check
 
 No command modifies the source ALS or source COLMAP model.
+
+Lock2's pre-role availability screen does not form correspondences or distance
+residuals, but it does use the nominal shared frame to test joint support. Its
+fit/trigger/check evidence is therefore explicitly conditional on that support
+screen; the predeclared core-building Gate A2 remains the final alignment gate.
 """
 
 from __future__ import annotations
 
 import argparse
+import copy
 import csv
 import hashlib
 import json
@@ -121,6 +127,183 @@ def load_config(path: str | Path = DEFAULT_CONFIG) -> dict[str, Any]:
     ):
         raise CoregError("transform direction differs from locked contract")
     return payload
+
+
+def validate_recovery_predecessor(
+    config: Mapping[str, Any], section: Mapping[str, Any]
+) -> dict[str, str]:
+    """Bind lock2 exposure claims to lock1's committed compact publication."""
+
+    contract = section.get("predecessor_contract")
+    if not isinstance(contract, Mapping):
+        raise CoregError("recovery predecessor contract is missing")
+    locked_files = contract.get("file_sha256")
+    if not isinstance(locked_files, Mapping) or not locked_files:
+        raise CoregError("recovery predecessor file hashes are missing")
+    observed: dict[str, str] = {}
+    for raw_path, expected in locked_files.items():
+        path = repo_path(str(raw_path))
+        if not path.is_file():
+            raise CoregError(f"recovery predecessor file is missing: {relative(path)}")
+        actual = sha256_file(path)
+        if actual != str(expected):
+            raise CoregError(
+                f"recovery predecessor hash mismatch for {relative(path)}"
+            )
+        observed[str(raw_path)] = actual
+
+    manifest_path = repo_path(str(contract["publication_manifest"]))
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    expected_artifacts = dict(contract["published_artifact_sha256"])
+    if manifest.get("schema") != "jointbuildgs.fusion_w1.coreg_publication.v1":
+        raise CoregError("unexpected recovery predecessor publication schema")
+    if manifest.get("artifacts") != expected_artifacts:
+        raise CoregError("recovery predecessor publication inventory mismatch")
+    if int(manifest.get("learning_runs_started", -1)) != 0:
+        raise CoregError("recovery predecessor unexpectedly started learning")
+    if manifest.get("source_als_sha256_after") != config["input_locks"][
+        "expected_sha256"
+    ][config["inputs"]["als_aoi_laz"]]:
+        raise CoregError("recovery predecessor ALS lineage mismatch")
+
+    previous = section["previous_run"]
+    fit_open = json.loads(
+        repo_path(str(contract["fit_open"])).read_text(encoding="utf-8")
+    )
+    select_open = json.loads(
+        repo_path(str(contract["select_open"])).read_text(encoding="utf-8")
+    )
+    expected_head = str(previous["head"])
+    if (
+        fit_open.get("stage") != "fit"
+        or fit_open.get("status") != "OPENED_EXACT_ONCE"
+        or fit_open.get("stage_binding", {}).get("head") != expected_head
+    ):
+        raise CoregError("recovery predecessor fit receipt mismatch")
+    if (
+        select_open.get("stage") != "select"
+        or select_open.get("status") != "OPENED_EXACT_ONCE"
+        or select_open.get("stage_binding", {}).get("head") != expected_head
+    ):
+        raise CoregError("recovery predecessor select receipt mismatch")
+    fit_candidate_path = str(contract["fit_candidate"])
+    if select_open.get("parent_receipt_sha256", {}).get(
+        "fit_candidate"
+    ) != expected_artifacts.get(fit_candidate_path):
+        raise CoregError("recovery predecessor fit-to-select chain mismatch")
+
+    failure_path = repo_path(str(contract["failures"]))
+    failure_rows = [
+        json.loads(line)
+        for line in failure_path.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+    if not failure_rows:
+        raise CoregError("recovery predecessor failure receipt is empty")
+    last_failure = failure_rows[-1]
+    if (
+        last_failure.get("command") != "select"
+        or last_failure.get("head") != expected_head
+        or last_failure.get("error") != previous["failure"]
+        or int(last_failure.get("learning_runs_started", -1)) != 0
+    ):
+        raise CoregError("recovery predecessor failure receipt mismatch")
+    if int(previous["trigger_residual_buildings_evaluated"]) != 0:
+        raise CoregError("recovery predecessor trigger exposure is not zero")
+    forbidden_outputs = set(contract["forbidden_published_outputs"])
+    published_names = {Path(path).name for path in expected_artifacts}
+    if published_names & forbidden_outputs:
+        raise CoregError("recovery predecessor unexpectedly published later-stage output")
+    return observed
+
+
+def activate_recovery_lock2(config: Mapping[str, Any]) -> dict[str, Any]:
+    section = config.get("recovery_lock2")
+    if not isinstance(section, Mapping) or section.get("enabled") is not True:
+        raise CoregError("coreg recovery lock2 is not enabled")
+    if section.get("geometry_feasibility_screen_required") is not True:
+        raise CoregError("recovery requires a pre-role geometry feasibility screen")
+    if section.get("geometry_feasibility_screen_uses_correspondence_residuals") is not False:
+        raise CoregError("recovery feasibility screen must not use alignment residuals")
+    if section.get("geometry_feasibility_screen_nominal_alignment_sensitive") is not True:
+        raise CoregError("recovery must disclose nominal-frame support sensitivity")
+    if section.get("alignment_judgment_scope") != (
+        "coreg evidence conditional on support screen; final decision is "
+        "predeclared core-building Gate A2"
+    ):
+        raise CoregError("recovery conditional judgment scope is not locked")
+    validate_recovery_predecessor(config, section)
+    activated = copy.deepcopy(dict(config))
+    activated["task_id"] = str(section["task_id"])
+    activated["inputs"].update(dict(section["input_overrides"]))
+    activated["split"]["excluded_calibration_split_csvs"] = list(
+        section["excluded_split_csvs"]
+    )
+    activated["split"]["prior_exposure_split_csv"] = str(
+        section["prior_exposure_split_csv"]
+    )
+    activated["split"]["prior_fit_residual_exposure_policy"] = str(
+        section["prior_fit_residual_exposure_policy"]
+    )
+    activated["split"]["prior_trigger_check_residuals_evaluated"] = int(
+        section["prior_trigger_check_residuals_evaluated"]
+    )
+    activated["split"]["geometry_feasibility_screen_required"] = True
+    activated["split"]["geometry_feasibility_screen_nominal_alignment_sensitive"] = True
+    activated["split"]["alignment_judgment_scope"] = str(
+        section["alignment_judgment_scope"]
+    )
+    activated["split"]["calibration_tiers"] = list(
+        section["calibration_tiers"]
+    )
+    activated["split"]["stable_tie_seed"] = str(section["stable_tie_seed"])
+    activated["input_locks"]["generated_lock_sha256"] = dict(
+        section["generated_lock_sha256"]
+    )
+    activated["git_lock"]["implementation_files"].extend(
+        str(value) for value in section["implementation_files_append"]
+    )
+    activated["_prereg_manifest_path"] = str(section["prereg_manifest"])
+    activated["_prereg_figure_path"] = str(section["prereg_figure"])
+    activated["_active_recovery_lock2"] = dict(section)
+    return activated
+
+
+def verify_recovery_prereg_ledger_separation(
+    config: Mapping[str, Any],
+) -> dict[str, Any]:
+    section = config.get("_active_recovery_lock2")
+    if not isinstance(section, Mapping):
+        return {"active": False}
+    prereg_path = repo_path(str(section["prereg_failure_ledger"]))
+    if not prereg_path.is_file():
+        raise CoregError("recovery prereg failure ledger is missing")
+    actual = sha256_file(prereg_path)
+    if actual != section["prereg_failure_ledger_sha256"]:
+        raise CoregError("recovery prereg failure ledger hash mismatch")
+    rows = [
+        json.loads(line)
+        for line in prereg_path.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+    if len(rows) != 2 or any(
+        row.get("command") != "prepare-controls"
+        or row.get("error") != "only 18 eligible controls for required 36"
+        or int(row.get("learning_runs_started", -1)) != 0
+        for row in rows
+    ):
+        raise CoregError("unexpected recovery prereg failure ledger contents")
+    formal_path = repo_path(config["inputs"]["runtime_dir"]) / "failures.jsonl"
+    if formal_path.exists():
+        raise CoregError(
+            "formal lock2 measurement failure ledger is not fresh before launch"
+        )
+    return {
+        "active": True,
+        "prereg_failure_count": len(rows),
+        "prereg_failure_ledger_sha256": actual,
+        "formal_measurement_failure_ledger_absent": True,
+    }
 
 
 def verify_input_hashes(
@@ -236,10 +419,122 @@ def _load_footprints(path: str | Path) -> dict[str, Any]:
     return output
 
 
-def _stable_tie(building_id: str) -> str:
+def _stable_tie(building_id: str, seed: str = "FUS-W1-COREG-SPLIT-LOCK1") -> str:
     return hashlib.sha256(
-        f"FUS-W1-COREG-SPLIT-LOCK1:{building_id}".encode()
+        f"{seed}:{building_id}".encode()
     ).hexdigest()
+
+
+def screen_geometry_availability(
+    config: Mapping[str, Any],
+    candidate_ids: Sequence[str],
+) -> dict[str, dict[str, Any]]:
+    """Check sample/normal availability only; never form cross-cloud residuals."""
+
+    runtime = repo_path(config["inputs"]["runtime_dir"])
+    als_path = runtime / "als_fixed_class2_6_ellipsoidal_zeta45p7.npz"
+    receipt_path = runtime / "als_materialization_receipt.json"
+    if not als_path.is_file() or not receipt_path.is_file():
+        raise CoregError(
+            "recovery geometry screen requires prepare-als in its own runtime"
+        )
+    receipt = json.loads(receipt_path.read_text())
+    if (
+        sha256_file(als_path) != receipt.get("output_sha256")
+        or sha256_file(repo_path(config["inputs"]["als_aoi_laz"]))
+        != receipt.get("source_sha256")
+    ):
+        raise CoregError("recovery geometry screen ALS receipt mismatch")
+    with np.load(als_path) as payload:
+        als_xyz = np.asarray(payload["xyz"], dtype=np.float64)
+        als_cls = np.asarray(payload["classification"], dtype=np.uint8)
+    with np.load(repo_path(config["inputs"]["photo_dense_npz"])) as payload:
+        dense_xyz = np.asarray(payload["P_utm"], dtype=np.float64)
+    als_index = XIndex(als_xyz, als_cls)
+    dense_index = XIndex(dense_xyz)
+    footprints = _load_footprints(config["inputs"]["footprints_geojson"])
+    sampling = config["surface_sampling"]
+    minimum = int(sampling["minimum_points_per_building_surface"])
+    ground_class = int(config["input_locks"]["als_ground_class"])
+    building_class = int(config["input_locks"]["als_building_class"])
+    output: dict[str, dict[str, Any]] = {}
+    for bid in sorted(candidate_ids):
+        polygon = footprints[bid]
+        definitions = {
+            "roof": _inner_polygon(polygon, sampling["roof_inner_buffer_m"]),
+            "ground": polygon.buffer(
+                sampling["ground_outer_buffer_m"]
+            ).difference(
+                polygon.buffer(sampling["ground_inner_exclusion_buffer_m"])
+            ),
+        }
+        record: dict[str, Any] = {
+            "building_id": bid,
+            "screen_uses_correspondence_residuals": False,
+        }
+        both_pass = True
+        for surface, geometry in definitions.items():
+            class_value = building_class if surface == "roof" else ground_class
+            fixed = als_index.query_bounds(geometry.bounds, class_value)
+            fixed = fixed[polygon_mask(geometry, fixed)]
+            moving = dense_index.query_bounds(geometry.bounds)
+            moving = moving[polygon_mask(geometry, moving)]
+            if len(fixed) > 0 and len(moving) > 0:
+                if surface == "roof":
+                    lo, hi = np.quantile(fixed[:, 2], [0.01, 0.99])
+                    margin = float(sampling["dense_roof_vertical_margin_m"])
+                else:
+                    lo, hi = np.quantile(fixed[:, 2], [0.02, 0.98])
+                    margin = float(sampling["dense_ground_vertical_margin_m"])
+                moving = moving[
+                    (moving[:, 2] >= lo - margin)
+                    & (moving[:, 2] <= hi + margin)
+                ]
+            fixed = deterministic_voxel(
+                fixed,
+                sampling["voxel_m"],
+                sampling["maximum_points_per_building_surface"],
+            )
+            moving = deterministic_voxel(
+                moving,
+                sampling["voxel_m"],
+                sampling["maximum_points_per_building_surface"],
+            )
+            fixed_valid_count = 0
+            moving_valid_count = 0
+            if len(fixed) >= minimum:
+                _, fixed_valid = estimate_normals(
+                    fixed,
+                    sampling["normal_knn"],
+                    sampling["normal_radius_m"],
+                    sampling["minimum_normal_neighbors"],
+                    sampling["maximum_surface_variation"],
+                )
+                fixed_valid_count = int(np.sum(fixed_valid))
+            if len(moving) >= minimum:
+                _, moving_valid = estimate_normals(
+                    moving,
+                    sampling["normal_knn"],
+                    sampling["normal_radius_m"],
+                    sampling["minimum_normal_neighbors"],
+                    sampling["maximum_surface_variation"],
+                )
+                moving_valid_count = int(np.sum(moving_valid))
+            surface_pass = (
+                len(fixed) >= minimum
+                and len(moving) >= minimum
+                and fixed_valid_count >= minimum
+                and moving_valid_count >= minimum
+            )
+            record[f"screen_{surface}_fixed_points"] = len(fixed)
+            record[f"screen_{surface}_moving_points"] = len(moving)
+            record[f"screen_{surface}_fixed_valid_normals"] = fixed_valid_count
+            record[f"screen_{surface}_moving_valid_normals"] = moving_valid_count
+            record[f"screen_{surface}_pass"] = str(surface_pass).lower()
+            both_pass = both_pass and surface_pass
+        record["geometry_feasibility_pass"] = str(both_pass).lower()
+        output[bid] = record
+    return output
 
 
 def select_control_rows(config: Mapping[str, Any]) -> list[dict[str, Any]]:
@@ -254,6 +549,11 @@ def select_control_rows(config: Mapping[str, Any]) -> list[dict[str, Any]]:
     footprints = _load_footprints(config["inputs"]["footprints_geojson"])
     split_cfg = config["split"]
     core_ids = {bid for bid, row in targets.items() if row["cohort"] == "core"}
+    excluded_calibration_ids: set[str] = set()
+    for split_path in split_cfg.get("excluded_calibration_split_csvs", []):
+        excluded_calibration_ids.update(
+            row["building_id"] for row in _read_csv(split_path)
+        )
     if len(core_ids) != 28:
         raise CoregError(f"expected 28 core ids, observed {len(core_ids)}")
     core_geometries = [footprints[bid] for bid in sorted(core_ids) if bid in footprints]
@@ -266,9 +566,19 @@ def select_control_rows(config: Mapping[str, Any]) -> list[dict[str, Any]]:
     for bid, target in targets.items():
         if target["cohort"] != split_cfg["calibration_cohort"]:
             continue
-        if target["tier"] != split_cfg["calibration_tier"]:
+        allowed_tiers = set(
+            split_cfg.get(
+                "calibration_tiers", [split_cfg["calibration_tier"]]
+            )
+        )
+        if target["tier"] not in allowed_tiers:
             continue
-        if bid in core_ids or bid not in footprints or bid not in status:
+        if (
+            bid in core_ids
+            or bid in excluded_calibration_ids
+            or bid not in footprints
+            or bid not in status
+        ):
             continue
         current = status[bid]
         if current.get("als_has_lod22") != "True":
@@ -299,52 +609,131 @@ def select_control_rows(config: Mapping[str, Any]) -> list[dict[str, Any]]:
                 "als_density_pts_m2": als_density,
                 "dim_density_pts_m2": dim_density,
                 "support_geomean_pts_m2": support,
-                "stable_tie_sha256": _stable_tie(bid),
+                "stable_tie_sha256": _stable_tie(
+                    bid,
+                    str(
+                        split_cfg.get(
+                            "stable_tie_seed", "FUS-W1-COREG-SPLIT-LOCK1"
+                        )
+                    ),
+                ),
             }
         )
+    if bool(split_cfg.get("geometry_feasibility_screen_required", False)):
+        screen = screen_geometry_availability(
+            config, [row["building_id"] for row in eligible]
+        )
+        screened: list[dict[str, Any]] = []
+        for row in eligible:
+            evidence = screen[row["building_id"]]
+            if evidence["geometry_feasibility_pass"] != "true":
+                continue
+            row.update(evidence)
+            screened.append(row)
+        eligible = screened
     count = int(split_cfg["selected_count"])
     if len(eligible) < count:
         raise CoregError(f"only {len(eligible)} eligible controls for required {count}")
 
+    def pop_maximin(
+        pool: list[dict[str, Any]], selected_rows: Sequence[Mapping[str, Any]]
+    ) -> dict[str, Any]:
+        if not pool:
+            raise CoregError("maximin role pool exhausted")
+        if not selected_rows:
+            pool.sort(
+                key=lambda row: (
+                    -row["support_geomean_pts_m2"],
+                    row["stable_tie_sha256"],
+                )
+            )
+            selected_row = pool.pop(0)
+            selected_row["maximin_distance_m"] = float("nan")
+            return selected_row
+        for row in pool:
+            row["maximin_distance_m"] = min(
+                math.hypot(
+                    row["centroid_x_m"] - other["centroid_x_m"],
+                    row["centroid_y_m"] - other["centroid_y_m"],
+                )
+                for other in selected_rows
+            )
+        pool.sort(
+            key=lambda row: (
+                -row["maximin_distance_m"],
+                -row["support_geomean_pts_m2"],
+                row["stable_tie_sha256"],
+            )
+        )
+        return pool.pop(0)
+
     chosen: list[dict[str, Any]] = []
-    remaining = list(eligible)
-    while len(chosen) < count:
-        if not chosen:
-            remaining.sort(
-                key=lambda row: (
-                    -row["support_geomean_pts_m2"],
-                    row["stable_tie_sha256"],
-                )
-            )
-            selected = remaining.pop(0)
-            selected["maximin_distance_m"] = float("nan")
-        else:
-            for row in remaining:
-                row["maximin_distance_m"] = min(
-                    math.hypot(
-                        row["centroid_x_m"] - other["centroid_x_m"],
-                        row["centroid_y_m"] - other["centroid_y_m"],
-                    )
-                    for other in chosen
-                )
-            remaining.sort(
-                key=lambda row: (
-                    -row["maximin_distance_m"],
-                    -row["support_geomean_pts_m2"],
-                    row["stable_tie_sha256"],
-                )
-            )
-            selected = remaining.pop(0)
-        selected["selection_rank"] = len(chosen) + 1
-        pattern = split_cfg["role_pattern"]
-        selected["role"] = pattern[len(chosen) % len(pattern)]
+    prior_split_path = split_cfg.get("prior_exposure_split_csv")
+    if prior_split_path:
+        if split_cfg.get("prior_fit_residual_exposure_policy") != "fit_only":
+            raise CoregError("prior fit-residual exposure must remain fit-only")
+        if int(split_cfg.get("prior_trigger_check_residuals_evaluated", -1)) != 0:
+            raise CoregError("prior trigger/check residual exposure is not zero")
+        prior_roles = {
+            row["building_id"]: row["role"]
+            for row in _read_csv(prior_split_path)
+        }
+        for row in eligible:
+            prior_role = prior_roles.get(row["building_id"], "")
+            row["prior_lock1_role"] = prior_role
+            row["prior_fit_residual_exposed"] = str(
+                prior_role == "fit"
+            ).lower()
+        fit_count = int(split_cfg["role_counts"]["fit"])
+        prior_fit_pool = [
+            row for row in eligible if row["prior_fit_residual_exposed"] == "true"
+        ]
+        other_pool = [
+            row for row in eligible if row["prior_fit_residual_exposed"] != "true"
+        ]
+        while len(chosen) < fit_count and prior_fit_pool:
+            selected = pop_maximin(prior_fit_pool, chosen)
+            selected["role"] = "fit"
+            chosen.append(selected)
+        while len(chosen) < fit_count:
+            selected = pop_maximin(other_pool, chosen)
+            selected["role"] = "fit"
+            chosen.append(selected)
+        holdout_pool = [
+            row
+            for row in other_pool + prior_fit_pool
+            if row["building_id"]
+            not in {chosen_row["building_id"] for chosen_row in chosen}
+        ]
+        holdout_roles = ["trigger", "check"] * int(
+            split_cfg["role_counts"]["trigger"]
+        )
+        for role in holdout_roles:
+            selected = pop_maximin(holdout_pool, chosen)
+            selected["role"] = role
+            chosen.append(selected)
+    else:
+        remaining = list(eligible)
+        while len(chosen) < count:
+            selected = pop_maximin(remaining, chosen)
+            pattern = split_cfg["role_pattern"]
+            selected["role"] = pattern[len(chosen) % len(pattern)]
+            chosen.append(selected)
+
+    for index, selected in enumerate(chosen, 1):
+        selected["selection_rank"] = index
         selected["calibration_exposed"] = "true"
         selected["later_extension_judgment_eligible"] = "false"
         selected["selection_reason"] = (
-            "extension_surface_both_assembled;positive_density;"
-            "no_core_overlap;core_distance_ge_20m;support_seed_then_centroid_maximin"
+            "extension_allowed_tier_both_assembled;positive_density;"
+            "no_core_overlap;core_distance_ge_20m;"
+            + (
+                "pre_role_geometry_feasibility_pass;"
+                if split_cfg.get("geometry_feasibility_screen_required")
+                else ""
+            )
+            + "support_seed_then_centroid_maximin"
         )
-        chosen.append(selected)
 
     observed_roles: dict[str, int] = {}
     for row in chosen:
@@ -561,6 +950,26 @@ def prepare_controls(config: Mapping[str, Any]) -> dict[str, Any]:
         "stable_tie_sha256",
         "selection_reason",
     ]
+    screen_fields = [
+        "screen_uses_correspondence_residuals",
+        "screen_roof_fixed_points",
+        "screen_roof_moving_points",
+        "screen_roof_fixed_valid_normals",
+        "screen_roof_moving_valid_normals",
+        "screen_roof_pass",
+        "screen_ground_fixed_points",
+        "screen_ground_moving_points",
+        "screen_ground_fixed_valid_normals",
+        "screen_ground_moving_valid_normals",
+        "screen_ground_pass",
+        "geometry_feasibility_pass",
+    ]
+    if config["split"].get("geometry_feasibility_screen_required"):
+        fields.extend(screen_fields)
+    if config["split"].get("prior_exposure_split_csv"):
+        fields.extend(
+            ["prior_lock1_role", "prior_fit_residual_exposed"]
+        )
     serial_rows: list[dict[str, Any]] = []
     for row in rows:
         current = dict(row)
@@ -595,9 +1004,16 @@ def prepare_controls(config: Mapping[str, Any]) -> dict[str, Any]:
         block_rows,
     )
     run_root = split_path.parent
-    figure = run_root / "w1_coreg_prereg_split.png"
+    figure = repo_path(
+        config.get("_prereg_figure_path", run_root / "w1_coreg_prereg_split.png")
+    )
     render_prereg_split(config, rows, figure)
-    manifest_path = run_root / "w1_coreg_prereg_manifest.json"
+    manifest_path = repo_path(
+        config.get(
+            "_prereg_manifest_path",
+            run_root / "w1_coreg_prereg_manifest.json",
+        )
+    )
     manifest = {
         "schema": "jointbuildgs.fusion_w1.coreg_prereg_manifest.v1",
         "status": "PREPARED_BEFORE_RESIDUAL_MEASUREMENT",
@@ -616,6 +1032,37 @@ def prepare_controls(config: Mapping[str, Any]) -> dict[str, Any]:
             "core_count_used": 0,
             "minimum_core_distance_m": min(
                 float(row["core_footprint_distance_m"]) for row in rows
+            ),
+            "geometry_feasibility_screen_required": bool(
+                config["split"].get("geometry_feasibility_screen_required")
+            ),
+            "geometry_feasibility_screen_uses_correspondence_residuals": False,
+            "geometry_feasibility_screen_nominal_alignment_sensitive": bool(
+                config["split"].get(
+                    "geometry_feasibility_screen_nominal_alignment_sensitive"
+                )
+            ),
+            "alignment_judgment_scope": config["split"].get(
+                "alignment_judgment_scope"
+            ),
+            "excluded_prior_calibration_count": len(
+                {
+                    prior["building_id"]
+                    for path in config["split"].get(
+                        "excluded_calibration_split_csvs", []
+                    )
+                    for prior in _read_csv(path)
+                }
+            ),
+            "prior_fit_residual_exposed_reused_as_fit_count": sum(
+                row.get("prior_fit_residual_exposed") == "true"
+                and row["role"] == "fit"
+                for row in rows
+            ),
+            "prior_fit_residual_exposed_in_holdout_count": sum(
+                row.get("prior_fit_residual_exposed") == "true"
+                and row["role"] in {"trigger", "check"}
+                for row in rows
             ),
         },
         "capture_blocks": {
@@ -1730,8 +2177,11 @@ def verify_generated_locks(config: Mapping[str, Any]) -> dict[str, str]:
         "splits_csv": repo_path(config["inputs"]["splits_csv"]),
         "camera_blocks_csv": repo_path(config["inputs"]["camera_blocks_csv"]),
         "prereg_manifest": repo_path(
-            Path(config["inputs"]["splits_csv"]).parent
-            / "w1_coreg_prereg_manifest.json"
+            config.get(
+                "_prereg_manifest_path",
+                Path(config["inputs"]["splits_csv"]).parent
+                / "w1_coreg_prereg_manifest.json",
+            )
         ),
     }
     observed: dict[str, str] = {}
@@ -2757,6 +3207,15 @@ def publish_poses_command(config: Mapping[str, Any]) -> dict[str, Any]:
     stage_binding = current_stage_binding(config, provenance)
     verify_parent_binding(check, stage_binding, label="check-to-pose")
     verify_parent_binding(frozen, stage_binding, label="frozen-to-pose")
+    verify_frozen_selection_chain(runtime, frozen)
+    check_open_path = runtime / "check_open.json"
+    if not check_open_path.is_file() or check.get(
+        "stage_open_receipt_sha256"
+    ) != sha256_file(check_open_path):
+        raise CoregError("independent check stage-open receipt hash mismatch")
+    verify_stage_open_parent(
+        runtime, "check", "frozen_transform", frozen_path
+    )
     stage_open = open_exact_stage(
         runtime,
         "publish_poses",
@@ -3039,6 +3498,14 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         default=DEFAULT_CONFIG,
         help="lock1 config path",
     )
+    parser.add_argument(
+        "--recovery-lock2",
+        action="store_true",
+        help=(
+            "activate the committed fresh-control recovery after lock1's "
+            "pre-trigger geometry-availability block"
+        ),
+    )
     sub = parser.add_subparsers(dest="command", required=True)
     sub.add_parser("prepare-controls")
     sub.add_parser("prepare-als")
@@ -3055,8 +3522,11 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
 
 def main(argv: Sequence[str] | None = None) -> int:
     args = parse_args(argv)
-    config = load_config(args.config)
+    config: dict[str, Any] | None = None
     try:
+        config = load_config(args.config)
+        if args.recovery_lock2:
+            config = activate_recovery_lock2(config)
         if args.command == "prepare-controls":
             result = prepare_controls(config)
         elif args.command == "prepare-als":
@@ -3077,15 +3547,24 @@ def main(argv: Sequence[str] | None = None) -> int:
             result = publish_small_artifacts(config)
         elif args.command == "verify":
             result = {
-                "input_sha256": verify_input_hashes(config),
+                "input_sha256": verify_input_hashes(
+                    config, verify_depth_set=True
+                ),
                 "generated_sha256": verify_generated_locks(config),
                 "implementation": verify_committed_implementation(config),
+                "prereg_ledger_separation": (
+                    verify_recovery_prereg_ledger_separation(config)
+                ),
             }
         else:
             raise CoregError(f"unsupported command {args.command}")
-    except CoregError as exc:
-        record_failure(config, args.command, exc)
-        print(f"[FUS-W1-COREG] BLOCKED: {exc}", file=sys.stderr)
+    except Exception as exc:
+        if config is not None:
+            record_failure(config, args.command, exc)
+        print(
+            f"[FUS-W1-COREG] BLOCKED: {type(exc).__name__}: {exc}",
+            file=sys.stderr,
+        )
         return 2
     print(json.dumps(json_safe(result), indent=2, sort_keys=True, allow_nan=False))
     return 0
