@@ -1,0 +1,36 @@
+{
+  "learning_runs_started": 0,
+  "parent_receipt_sha256": {
+    "fit_candidate": "80345cb96fa4bed59e4df3a162c0dfd23825ed01c28f15f332a063a3192ddea5"
+  },
+  "schema": "jointbuildgs.fusion_w1.coreg_stage_open.v1",
+  "stage": "select",
+  "stage_binding": {
+    "als_materialization_output_sha256": "fc077ed02dd0df7c5c90d5e415eb1a028faad8d39415cbf695c9f1df1e256612",
+    "als_materialization_receipt_sha256": "0b424b6c390332cf1bad8a6d960d95eeb050dc78504ad1b3a45a3bf91f70b9b8",
+    "branch": "exp/fusion-w1",
+    "config_sha256": "c246b28bf3a87468fe39db2b46fa199b633b263cf317cfc3b1d796d915695f28",
+    "generated_lock_sha256": {
+      "camera_blocks_csv": "613171fc839d52ff78e7b2a8bc4db5eb8d11ac153c351f77ad8a14f245954a0c",
+      "prereg_manifest": "9f5098e46441ff058fcaec06266efc5b45e9dc1bdd560e88c9e4ffc89995298c",
+      "splits_csv": "52737a346d6750d2888953a65b8c6c8cb48af7283d24980ec0735e2252355502"
+    },
+    "head": "93c0fa679e0a2415393ae8d02a7764415a401c93",
+    "input_sha256": {
+      "docs/boundary_map_v4_1_ladder.csv": "ae16170177ac0815eb6dd853b0469325c9a1018eeeac9b790b063927cbd7e7e2",
+      "phases/p0-audit/data/work/opf/opf/camera_list.json": "917d639a3483569ef3d12f1f3b8b5781e7db263ad7c982767fbd1229fe13d890",
+      "phases/p0-audit/data/work/opf/opf/input_cameras.json": "5334d43248195cf7428a97d65f7b7cbcbc7a8adf811be89672cd2f5fded88f11",
+      "phases/p0-audit/data/work/opf/opf/scene_reference_frame.json": "fb408e9c97bdad6af7ad4a6e94be823be294030907ce92e395bd63490f77daf6",
+      "phases/p0-audit/runs/w2_1d_bucket_relabel_20260612_final/docs/W2_1c_paired_status.csv": "a564345d9080d24e60929a9a68dd06b70dceee530953f747b9b09746b53a0fa4",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/w1_targets.csv": "256d376080dca7c496aa3f34c9bcbbd1a8e52d0b25d6e98f7eec388b3f6cc943",
+      "results/tum_transfer/analysis/footprints_aoi.geojson": "ca7f5b13a52368e1d2ac47b77cc78f12887bad4d598d122ad57b882eb4920a82",
+      "results/tum_transfer/data_geoidfix/sparse/0/cameras.bin": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99",
+      "results/tum_transfer/data_geoidfix/sparse/0/images.bin": "dfc779496ee3b13f8df5dd28fae465746ce0adf4aca7922d38cbed275a2fd951",
+      "results/tum_transfer/data_geoidfix/sparse/0/points3D.bin": "bf93766e9773bdc59ce393cf1a36de4b3801cadc1bf834ea705396f5e9a706c3",
+      "results/tum_transfer/mob/raw/raw_dense.npz": "712e7b6e182e1955223585ce8958acf2d11588caacc8754fac4aec9bfb2dd69a",
+      "results/tum_transfer/mob_analysis/p0c_step2/als_aoi.laz": "ac5cd0dc9c368a15e1f8fd5a18ad8d96ddbbd8cbaf8e1b608fd675430d6e9225"
+    },
+    "source_als_sha256": "ac5cd0dc9c368a15e1f8fd5a18ad8d96ddbbd8cbaf8e1b608fd675430d6e9225"
+  },
+  "status": "OPENED_EXACT_ONCE"
+}

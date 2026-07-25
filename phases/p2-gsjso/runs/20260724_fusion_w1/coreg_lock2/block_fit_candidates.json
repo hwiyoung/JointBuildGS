@@ -1,0 +1,3242 @@
+{
+  "block_base_choice": "global_candidate",
+  "block_base_photo_to_als_global_pivot_matrix": [
+    [
+      0.9999999920820789,
+      4.935722310131579e-05,
+      -0.00011575709527824024,
+      0.04058084505260015
+    ],
+    [
+      -4.9364547421409374e-05,
+      0.9999999967799484,
+      -6.327118183728546e-05,
+      0.02084012147731406
+    ],
+    [
+      0.00011575397201547453,
+      6.327689563327827e-05,
+      0.9999999912985266,
+      -0.09778410766699293
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "block_base_transform_sha256": "275c19c7810de497f275a6b063dda84ea5a957c02eb9d33474944e8887fc5c42",
+  "candidates": {
+    "capture_block_01": {
+      "block_bounds_pass": true,
+      "block_id": "capture_block_01",
+      "candidate_valid": true,
+      "delta_matrix": [
+        [
+          0.9999999439911154,
+          -0.00032666644831681117,
+          7.284776918842278e-05,
+          -0.02649191509785872
+        ],
+        [
+          0.00032664447151532354,
+          0.9999999012037898,
+          0.00030148930195097854,
+          -0.007466657656716017
+        ],
+        [
+          -7.294624843082634e-05,
+          -0.00030146548974387523,
+          0.9999999518987004,
+          0.030586899946402735
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "delta_rotation_deg": 0.025808959927929084,
+      "delta_transform_sha256": "a02cb21c9e0477344c05e3d4a5868c3b986b277c331991c75fcaf7dfe99305ab",
+      "delta_translation_m": 0.04114767296513865,
+      "diagnostics": {
+        "candidate_valid": true,
+        "final_correspondences": 13158,
+        "final_level_converged": true,
+        "final_normalized_condition": 10.954174010168726,
+        "final_rank": 6,
+        "final_singular_values": [
+          4.328323529181155,
+          2.92600659677909,
+          1.3413950565557393,
+          1.0619387135585112,
+          0.7963563842390342,
+          0.3951300686992178
+        ],
+        "invalid_reason": "",
+        "lever_arm_m": 151.1971623545739,
+        "maximum_control_displacement_m": 0.10989237009150457,
+        "pivot_translation_m": 0.04114767296513865,
+        "rotation_deg": 0.025808959927929084,
+        "trace": [
+          {
+            "correspondences": 19526,
+            "huber_delta_m": 0.25,
+            "increment_rotation_rad": 0.0004527747011843005,
+            "increment_translation_m": 0.016107539401979152,
+            "iteration": 1,
+            "level": 1,
+            "maximum_distance_m": 1.0,
+            "median_abs_point_to_plane_m": 0.06201664644414903,
+            "normalized_condition": 10.841858490582824,
+            "p90_abs_point_to_plane_m": 0.21397601361212848,
+            "rank": 6,
+            "singular_values": [
+              4.683299492717133,
+              3.0554031608953185,
+              1.4370566569451992,
+              1.1950459016591009,
+              0.8975690208224137,
+              0.43196463934527646
+            ]
+          },
+          {
+            "correspondences": 19513,
+            "huber_delta_m": 0.25,
+            "increment_rotation_rad": 3.136172311619555e-05,
+            "increment_translation_m": 0.00276061231810928,
+            "iteration": 2,
+            "level": 1,
+            "maximum_distance_m": 1.0,
+            "median_abs_point_to_plane_m": 0.0523032057173353,
+            "normalized_condition": 10.868974417670287,
+            "p90_abs_point_to_plane_m": 0.19695198260253258,
+            "rank": 6,
+            "singular_values": [
+              4.689690300187503,
+              3.057634407393378,
+              1.4383855264885645,
+              1.1955108996475208,
+              0.8970286514919752,
+              0.4314749598235521
+            ]
+          },
+          {
+            "correspondences": 19517,
+            "huber_delta_m": 0.25,
+            "increment_rotation_rad": 4.2578700225591555e-06,
+            "increment_translation_m": 0.0008215824291361638,
+            "iteration": 3,
+            "level": 1,
+            "maximum_distance_m": 1.0,
+            "median_abs_point_to_plane_m": 0.051827332918923816,
+            "normalized_condition": 10.866500578460286,
+            "p90_abs_point_to_plane_m": 0.1968820306773684,
+            "rank": 6,
+            "singular_values": [
+              4.689260023897147,
+              3.05773144232294,
+              1.4383711983265106,
+              1.1960350302944909,
+              0.8969673822588515,
+              0.4315335917058945
+            ]
+          },
+          {
+            "correspondences": 19518,
+            "huber_delta_m": 0.25,
+            "increment_rotation_rad": 5.645513977825396e-07,
+            "increment_translation_m": 5.726916738088796e-05,
+            "iteration": 4,
+            "level": 1,
+            "maximum_distance_m": 1.0,
+            "median_abs_point_to_plane_m": 0.0517431052566779,
+            "normalized_condition": 10.86814732160417,
+            "p90_abs_point_to_plane_m": 0.19711667065590932,
+            "rank": 6,
+            "singular_values": [
+              4.68906971594326,
+              3.0577215112825855,
+              1.4383575709363736,
+              1.1962411073612458,
+              0.8969080198466589,
+              0.43145069506208533
+            ]
+          },
+          {
+            "correspondences": 19518,
+            "huber_delta_m": 0.25,
+            "increment_rotation_rad": 6.179283885290464e-08,
+            "increment_translation_m": 4.710046748542119e-06,
+            "iteration": 5,
+            "level": 1,
+            "maximum_distance_m": 1.0,
+            "median_abs_point_to_plane_m": 0.05172754466843685,
+            "normalized_condition": 10.868127753281438,
+            "p90_abs_point_to_plane_m": 0.19718332660563104,
+            "rank": 6,
+            "singular_values": [
+              4.689057863130042,
+              3.0577193330122037,
+              1.4383552022733848,
+              1.1962428055584526,
+              0.8969066638237648,
+              0.4314503812962876
+            ]
+          },
+          {
+            "correspondences": 17749,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 8.821999474239714e-05,
+            "increment_translation_m": 0.011339889970002043,
+            "iteration": 1,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.04973961937097944,
+            "normalized_condition": 10.733085194149838,
+            "p90_abs_point_to_plane_m": 0.16272163595395644,
+            "rank": 6,
+            "singular_values": [
+              4.564229777242346,
+              3.025324479801236,
+              1.4063592549866168,
+              1.1453726305246943,
+              0.8594323761211673,
+              0.42524863025685466
+            ]
+          },
+          {
+            "correspondences": 17744,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 1.9830789713728084e-05,
+            "increment_translation_m": 0.0020128056988293662,
+            "iteration": 2,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.04652966962573725,
+            "normalized_condition": 10.735846572366057,
+            "p90_abs_point_to_plane_m": 0.1612223653585392,
+            "rank": 6,
+            "singular_values": [
+              4.569343439469491,
+              3.0248204385870636,
+              1.405441781851398,
+              1.145038460430054,
+              0.8603490081931665,
+              0.42561556824320934
+            ]
+          },
+          {
+            "correspondences": 17741,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 5.958014645235153e-06,
+            "increment_translation_m": 0.0004429750076637308,
+            "iteration": 3,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.04610139753247345,
+            "normalized_condition": 10.737817182408998,
+            "p90_abs_point_to_plane_m": 0.16055369664851826,
+            "rank": 6,
+            "singular_values": [
+              4.569853011718359,
+              3.024546297539007,
+              1.4052795304947068,
+              1.1469697916959007,
+              0.8610073001808833,
+              0.4255849148935804
+            ]
+          },
+          {
+            "correspondences": 17743,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 1.1496514547957962e-06,
+            "increment_translation_m": 0.00024067096840005002,
+            "iteration": 4,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.046012982164178186,
+            "normalized_condition": 10.739861811311036,
+            "p90_abs_point_to_plane_m": 0.16090795206203437,
+            "rank": 6,
+            "singular_values": [
+              4.569904927665398,
+              3.024505056867284,
+              1.4049727310426308,
+              1.1467977070809434,
+              0.860971477720355,
+              0.4255087270166227
+            ]
+          },
+          {
+            "correspondences": 17744,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 7.277071803706974e-07,
+            "increment_translation_m": 0.00023245959711474935,
+            "iteration": 5,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.046005901490345266,
+            "normalized_condition": 10.740209090159418,
+            "p90_abs_point_to_plane_m": 0.16095241577162983,
+            "rank": 6,
+            "singular_values": [
+              4.569837031968841,
+              3.0245178271300617,
+              1.404948792340589,
+              1.1470010342081405,
+              0.8610592456374061,
+              0.4254886467858337
+            ]
+          },
+          {
+            "correspondences": 17744,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 2.2316901648085532e-07,
+            "increment_translation_m": 7.224330154836198e-05,
+            "iteration": 6,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.04600616340166935,
+            "normalized_condition": 10.740619376913951,
+            "p90_abs_point_to_plane_m": 0.16098284084435122,
+            "rank": 6,
+            "singular_values": [
+              4.56981016710058,
+              3.0245070859861736,
+              1.4049422675360805,
+              1.1470518526527351,
+              0.8610364763560535,
+              0.4254698920737289
+            ]
+          },
+          {
+            "correspondences": 17743,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 2.271771968814579e-07,
+            "increment_translation_m": 4.055511063804071e-05,
+            "iteration": 7,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.04600974741369853,
+            "normalized_condition": 10.73982636551915,
+            "p90_abs_point_to_plane_m": 0.16100291799474184,
+            "rank": 6,
+            "singular_values": [
+              4.569801704455391,
+              3.0245287146695654,
+              1.4049503420326201,
+              1.147061029007066,
+              0.8610101040653394,
+              0.4255005201133429
+            ]
+          },
+          {
+            "correspondences": 17744,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 2.544719042525256e-07,
+            "increment_translation_m": 4.372070172942402e-05,
+            "iteration": 8,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.04600777972482628,
+            "normalized_condition": 10.740643431510005,
+            "p90_abs_point_to_plane_m": 0.16100853130735313,
+            "rank": 6,
+            "singular_values": [
+              4.569814920514261,
+              3.024508656701259,
+              1.4049434752640109,
+              1.1470561519016935,
+              0.8610377910293271,
+              0.42546938176047433
+            ]
+          },
+          {
+            "correspondences": 17743,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 2.492063359105082e-07,
+            "increment_translation_m": 4.2956294332514016e-05,
+            "iteration": 9,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.04601117225046447,
+            "normalized_condition": 10.739825881635193,
+            "p90_abs_point_to_plane_m": 0.1610099751998985,
+            "rank": 6,
+            "singular_values": [
+              4.569802935597455,
+              3.024529826472377,
+              1.404950755637602,
+              1.1470615214866071,
+              0.8610105022338842,
+              0.42550065391764796
+            ]
+          },
+          {
+            "correspondences": 17744,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 2.500677821146825e-07,
+            "increment_translation_m": 4.3065986383575806e-05,
+            "iteration": 10,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.04600752937540725,
+            "normalized_condition": 10.740643573580586,
+            "p90_abs_point_to_plane_m": 0.16100911990029923,
+            "rank": 6,
+            "singular_values": [
+              4.569815094708676,
+              3.0245087060764515,
+              1.4049435350391402,
+              1.1470562182829744,
+              0.8610378400793328,
+              0.4254693923508762
+            ]
+          },
+          {
+            "correspondences": 17743,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 2.499384164988583e-07,
+            "increment_translation_m": 4.305226647380541e-05,
+            "iteration": 11,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.0460112312007478,
+            "normalized_condition": 10.739825927593577,
+            "p90_abs_point_to_plane_m": 0.16101001025177933,
+            "rank": 6,
+            "singular_values": [
+              4.569802964890168,
+              3.024529825070491,
+              1.4049507655573736,
+              1.1470615296553996,
+              0.8610105071939634,
+              0.4255006548243099
+            ]
+          },
+          {
+            "correspondences": 17744,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 2.4995623263221786e-07,
+            "increment_translation_m": 4.305358498545078e-05,
+            "iteration": 12,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.04600753621151306,
+            "normalized_condition": 10.74064358401425,
+            "p90_abs_point_to_plane_m": 0.16100912772098394,
+            "rank": 6,
+            "singular_values": [
+              4.569815100009938,
+              3.024508705126521,
+              1.404943536809839,
+              1.1470562190871667,
+              0.8610378403005069,
+              0.4254693924311375
+            ]
+          },
+          {
+            "correspondences": 17743,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 2.499539723535068e-07,
+            "increment_translation_m": 4.305355450853648e-05,
+            "iteration": 13,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.046011232162621804,
+            "normalized_condition": 10.739825929724631,
+            "p90_abs_point_to_plane_m": 0.1610100105471469,
+            "rank": 6,
+            "singular_values": [
+              4.569802965864132,
+              3.0245298248568706,
+              1.4049507658832967,
+              1.147061529663561,
+              0.8610105071104693,
+              0.4255006548305668
+            ]
+          },
+          {
+            "correspondences": 17744,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 2.499541120343067e-07,
+            "increment_translation_m": 4.305350888026716e-05,
+            "iteration": 14,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.04600753652774957,
+            "normalized_condition": 10.740643584475253,
+            "p90_abs_point_to_plane_m": 0.1610091279069918,
+            "rank": 6,
+            "singular_values": [
+              4.569815100178125,
+              3.0245087050841066,
+              1.404943536867738,
+              1.1470562190548288,
+              0.8610378402551022,
+              0.42546939242853465
+            ]
+          },
+          {
+            "correspondences": 17743,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 2.499541579095734e-07,
+            "increment_translation_m": 4.3053518391031574e-05,
+            "iteration": 15,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.04601123220973424,
+            "normalized_condition": 10.739825929771053,
+            "p90_abs_point_to_plane_m": 0.16101001054885175,
+            "rank": 6,
+            "singular_values": [
+              4.569802965897757,
+              3.024529824850328,
+              1.4049507658942866,
+              1.1470615296523186,
+              0.8610105071019428,
+              0.4255006548318585
+            ]
+          },
+          {
+            "correspondences": 17744,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 2.4995420674339645e-07,
+            "increment_translation_m": 4.305352314495085e-05,
+            "iteration": 16,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.04600753653763808,
+            "normalized_condition": 10.740643584490334,
+            "p90_abs_point_to_plane_m": 0.16100912790408858,
+            "rank": 6,
+            "singular_values": [
+              4.569815100184443,
+              3.02450870508299,
+              1.404943536869793,
+              1.1470562190527485,
+              0.8610378402524995,
+              0.42546939242852555
+            ]
+          },
+          {
+            "correspondences": 17743,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 2.4995419237900277e-07,
+            "increment_translation_m": 4.305352236857662e-05,
+            "iteration": 17,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.046011232209104844,
+            "normalized_condition": 10.739825929779755,
+            "p90_abs_point_to_plane_m": 0.1610100105480597,
+            "rank": 6,
+            "singular_values": [
+              4.569802965898858,
+              3.0245298248492647,
+              1.4049507658946094,
+              1.1470615296521522,
+              0.8610105071017156,
+              0.4255006548316163
+            ]
+          },
+          {
+            "correspondences": 17744,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 2.4995419679200467e-07,
+            "increment_translation_m": 4.3053522538342764e-05,
+            "iteration": 18,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.046007536537979066,
+            "normalized_condition": 10.740643584485284,
+            "p90_abs_point_to_plane_m": 0.1610091279041503,
+            "rank": 6,
+            "singular_values": [
+              4.569815100184728,
+              3.024508705082945,
+              1.404943536869906,
+              1.147056219052726,
+              0.8610378402531945,
+              0.42546939242875215
+            ]
+          },
+          {
+            "correspondences": 17743,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 2.4995419537121453e-07,
+            "increment_translation_m": 4.3053522552483464e-05,
+            "iteration": 19,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.046011232209104844,
+            "normalized_condition": 10.739825929779883,
+            "p90_abs_point_to_plane_m": 0.1610100105480344,
+            "rank": 6,
+            "singular_values": [
+              4.569802965898921,
+              3.0245298248492514,
+              1.4049507658946259,
+              1.147061529652144,
+              0.86101050710171,
+              0.4255006548316171
+            ]
+          },
+          {
+            "correspondences": 17744,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 2.499541954775887e-07,
+            "increment_translation_m": 4.305352233513735e-05,
+            "iteration": 20,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.046007536537979066,
+            "normalized_condition": 10.740643584485314,
+            "p90_abs_point_to_plane_m": 0.16100912790418315,
+            "rank": 6,
+            "singular_values": [
+              4.569815100184733,
+              3.0245087050829436,
+              1.4049435368699075,
+              1.1470562190527251,
+              0.8610378402531937,
+              0.42546939242875137
+            ]
+          },
+          {
+            "correspondences": 17743,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 2.4995419538720487e-07,
+            "increment_translation_m": 4.3053522554891254e-05,
+            "iteration": 21,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.046011232209104844,
+            "normalized_condition": 10.739825929779972,
+            "p90_abs_point_to_plane_m": 0.1610100105480344,
+            "rank": 6,
+            "singular_values": [
+              4.569802965898963,
+              3.024529824849255,
+              1.4049507658946274,
+              1.1470615296521456,
+              0.8610105071017106,
+              0.4255006548316174
+            ]
+          },
+          {
+            "correspondences": 17744,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 2.4995419310698333e-07,
+            "increment_translation_m": 4.3053522665762276e-05,
+            "iteration": 22,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.046007536537979066,
+            "normalized_condition": 10.740643584485307,
+            "p90_abs_point_to_plane_m": 0.16100912790418315,
+            "rank": 6,
+            "singular_values": [
+              4.569815100184746,
+              3.024508705082969,
+              1.4049435368699081,
+              1.1470562190527267,
+              0.8610378402531941,
+              0.42546939242875287
+            ]
+          },
+          {
+            "correspondences": 17743,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 2.4995419415163314e-07,
+            "increment_translation_m": 4.305352261579929e-05,
+            "iteration": 23,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.04601123220899995,
+            "normalized_condition": 10.739825929779975,
+            "p90_abs_point_to_plane_m": 0.16101001054794348,
+            "rank": 6,
+            "singular_values": [
+              4.569802965898882,
+              3.0245298248492394,
+              1.4049507658946156,
+              1.1470615296521574,
+              0.8610105071017102,
+              0.4255006548316098
+            ]
+          },
+          {
+            "correspondences": 17744,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 2.499541965235583e-07,
+            "increment_translation_m": 4.305352254085473e-05,
+            "iteration": 24,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.046007536537979066,
+            "normalized_condition": 10.74064358448514,
+            "p90_abs_point_to_plane_m": 0.16100912790418315,
+            "rank": 6,
+            "singular_values": [
+              4.569815100184656,
+              3.02450870508296,
+              1.4049435368698806,
+              1.1470562190527123,
+              0.8610378402531583,
+              0.42546939242875115
+            ]
+          },
+          {
+            "correspondences": 17743,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 2.4995419421035016e-07,
+            "increment_translation_m": 4.3053522561095804e-05,
+            "iteration": 25,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.04601123220899995,
+            "normalized_condition": 10.739825929779999,
+            "p90_abs_point_to_plane_m": 0.16101001054794348,
+            "rank": 6,
+            "singular_values": [
+              4.569802965898956,
+              3.024529824849249,
+              1.404950765894631,
+              1.1470615296521427,
+              0.8610105071017099,
+              0.4255006548316157
+            ]
+          },
+          {
+            "correspondences": 13142,
+            "huber_delta_m": 0.06,
+            "increment_rotation_rad": 4.4550804639518296e-05,
+            "increment_translation_m": 0.008468067034312774,
+            "iteration": 1,
+            "level": 3,
+            "maximum_distance_m": 0.35,
+            "median_abs_point_to_plane_m": 0.045123076050412436,
+            "normalized_condition": 10.94738743481467,
+            "p90_abs_point_to_plane_m": 0.1345408078240041,
+            "rank": 6,
+            "singular_values": [
+              4.321342089467579,
+              2.9177010814623903,
+              1.3406982145204935,
+              1.0606191332113948,
+              0.7934431237537075,
+              0.39473729373319977
+            ]
+          },
+          {
+            "correspondences": 13151,
+            "huber_delta_m": 0.06,
+            "increment_rotation_rad": 9.956267634521154e-06,
+            "increment_translation_m": 0.0026323871092357185,
+            "iteration": 2,
+            "level": 3,
+            "maximum_distance_m": 0.35,
+            "median_abs_point_to_plane_m": 0.0439521470386587,
+            "normalized_condition": 10.963981672637848,
+            "p90_abs_point_to_plane_m": 0.13351083360463106,
+            "rank": 6,
+            "singular_values": [
+              4.325769660512982,
+              2.9209519546205764,
+              1.3405838489364241,
+              1.0605856014607373,
+              0.7939487668514567,
+              0.39454367853501127
+            ]
+          },
+          {
+            "correspondences": 13158,
+            "huber_delta_m": 0.06,
+            "increment_rotation_rad": 4.455437534463752e-06,
+            "increment_translation_m": 0.000843683069429413,
+            "iteration": 3,
+            "level": 3,
+            "maximum_distance_m": 0.35,
+            "median_abs_point_to_plane_m": 0.04374285142658737,
+            "normalized_condition": 10.963626664268578,
+            "p90_abs_point_to_plane_m": 0.1332413489736735,
+            "rank": 6,
+            "singular_values": [
+              4.3261422093481166,
+              2.921103670956117,
+              1.3407166438241467,
+              1.0615730760151028,
+              0.795607010564799,
+              0.3945904345181138
+            ]
+          },
+          {
+            "correspondences": 13156,
+            "huber_delta_m": 0.06,
+            "increment_rotation_rad": 2.4200548029826625e-06,
+            "increment_translation_m": 0.0003839363976653127,
+            "iteration": 4,
+            "level": 3,
+            "maximum_distance_m": 0.35,
+            "median_abs_point_to_plane_m": 0.04366512742287528,
+            "normalized_condition": 10.956649951360632,
+            "p90_abs_point_to_plane_m": 0.1331600309323331,
+            "rank": 6,
+            "singular_values": [
+              4.327582200353391,
+              2.9259061783910973,
+              1.3412910979407742,
+              1.0620333851146277,
+              0.7962055288126983,
+              0.39497311856859846
+            ]
+          },
+          {
+            "correspondences": 13157,
+            "huber_delta_m": 0.06,
+            "increment_rotation_rad": 1.1665841808992648e-06,
+            "increment_translation_m": 0.00020189305483150208,
+            "iteration": 5,
+            "level": 3,
+            "maximum_distance_m": 0.35,
+            "median_abs_point_to_plane_m": 0.04359617269226472,
+            "normalized_condition": 10.953181910769471,
+            "p90_abs_point_to_plane_m": 0.1332567744664185,
+            "rank": 6,
+            "singular_values": [
+              4.328083777668378,
+              2.9260819359710153,
+              1.3413889889819177,
+              1.0619520133680094,
+              0.7962881259214828,
+              0.39514396938965163
+            ]
+          },
+          {
+            "correspondences": 13158,
+            "huber_delta_m": 0.06,
+            "increment_rotation_rad": 4.978825585704182e-07,
+            "increment_translation_m": 6.92093419615822e-05,
+            "iteration": 6,
+            "level": 3,
+            "maximum_distance_m": 0.35,
+            "median_abs_point_to_plane_m": 0.043576226658711754,
+            "normalized_condition": 10.953663506489404,
+            "p90_abs_point_to_plane_m": 0.13331760180282073,
+            "rank": 6,
+            "singular_values": [
+              4.3281687546797825,
+              2.92601590897904,
+              1.3413714295391015,
+              1.0619732671718924,
+              0.7963437724972994,
+              0.39513435410131015
+            ]
+          },
+          {
+            "correspondences": 13158,
+            "huber_delta_m": 0.06,
+            "increment_rotation_rad": 1.3912670421877877e-07,
+            "increment_translation_m": 2.539626557024355e-05,
+            "iteration": 7,
+            "level": 3,
+            "maximum_distance_m": 0.35,
+            "median_abs_point_to_plane_m": 0.043580060972128715,
+            "normalized_condition": 10.953930589579286,
+            "p90_abs_point_to_plane_m": 0.13333223573489522,
+            "rank": 6,
+            "singular_values": [
+              4.328239578401301,
+              2.926005563920099,
+              1.3413857384850003,
+              1.061983238874142,
+              0.7963529545334247,
+              0.3951311853773156
+            ]
+          },
+          {
+            "correspondences": 13158,
+            "huber_delta_m": 0.06,
+            "increment_rotation_rad": 4.6080842980259415e-08,
+            "increment_translation_m": 1.781156999529548e-05,
+            "iteration": 8,
+            "level": 3,
+            "maximum_distance_m": 0.35,
+            "median_abs_point_to_plane_m": 0.04357539766458658,
+            "normalized_condition": 10.954173489544429,
+            "p90_abs_point_to_plane_m": 0.1333432685286112,
+            "rank": 6,
+            "singular_values": [
+              4.328323658772815,
+              2.9260076440459764,
+              1.3413956728180596,
+              1.061938522815936,
+              0.7963548486361774,
+              0.3951300993091013
+            ]
+          },
+          {
+            "correspondences": 13158,
+            "huber_delta_m": 0.06,
+            "increment_rotation_rad": 2.170844505316053e-08,
+            "increment_translation_m": 4.707027254420309e-06,
+            "iteration": 9,
+            "level": 3,
+            "maximum_distance_m": 0.35,
+            "median_abs_point_to_plane_m": 0.043572242176197144,
+            "normalized_condition": 10.954174307895768,
+            "p90_abs_point_to_plane_m": 0.13334414004973377,
+            "rank": 6,
+            "singular_values": [
+              4.328323497310403,
+              2.9260067777097825,
+              1.3413952106872398,
+              1.0619386453148125,
+              0.796355954203169,
+              0.39513005505038823
+            ]
+          }
+        ]
+      },
+      "fit_building_count": 10,
+      "fit_buildings": [
+        "DEBY_LOD2_42364665",
+        "DEBY_LOD2_4906969",
+        "DEBY_LOD2_4906982",
+        "DEBY_LOD2_4907505",
+        "DEBY_LOD2_4907507",
+        "DEBY_LOD2_4907515",
+        "DEBY_LOD2_4907518",
+        "DEBY_LOD2_4907519",
+        "DEBY_LOD2_4959323",
+        "DEBY_LOD2_4959460"
+      ],
+      "fit_observations": 568,
+      "invalid_reason": "",
+      "maximum_control_displacement_m": 0.10989237009150457,
+      "total_photo_to_als_matrix": [
+        [
+          0.9999999606313548,
+          -0.00027730461734736754,
+          -4.288865166802299e-05,
+          0.01407499655928246
+        ],
+        [
+          0.0002773148249688203,
+          0.9999999331833097,
+          0.0002381803123260336,
+          0.013357236407996454
+        ],
+        [
+          4.282260030177872e-05,
+          -0.00023819219660782163,
+          0.9999999707153511,
+          -0.06720644581487975
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "total_transform_sha256": "2e241fb7c30f25235465be4531fb61595c2d019fdc66c3312941997f8dc38bd0"
+    },
+    "capture_block_02": {
+      "block_bounds_pass": true,
+      "block_id": "capture_block_02",
+      "candidate_valid": true,
+      "delta_matrix": [
+        [
+          0.9999998056594008,
+          -4.982270433091105e-05,
+          -0.0006214489999078352,
+          -0.02955593908751903
+        ],
+        [
+          4.972127189930275e-05,
+          0.9999999854412905,
+          -0.0001632336188063133,
+          0.010017935548669544
+        ],
+        [
+          0.0006214571236006965,
+          0.00016320268784866134,
+          0.9999997935779419,
+          -0.055630004312083835
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "delta_rotation_deg": 0.03692451308901847,
+      "delta_transform_sha256": "316db8e6fcac649af00c29848b899d979af80fc9b5092681cb5975fa27f41b63",
+      "delta_translation_m": 0.06378565628544476,
+      "diagnostics": {
+        "candidate_valid": true,
+        "final_correspondences": 17099,
+        "final_level_converged": true,
+        "final_normalized_condition": 32.75438595749148,
+        "final_rank": 6,
+        "final_singular_values": [
+          5.555728375114395,
+          1.1248655065612514,
+          0.7779094179860122,
+          0.6940764613667525,
+          0.47856044069179693,
+          0.16961784544899114
+        ],
+        "invalid_reason": "",
+        "lever_arm_m": 217.6541894690189,
+        "maximum_control_displacement_m": 0.09854903721079984,
+        "pivot_translation_m": 0.06378565628544476,
+        "rotation_deg": 0.03692451308901847,
+        "trace": [
+          {
+            "correspondences": 27442,
+            "huber_delta_m": 0.25,
+            "increment_rotation_rad": 0.000662795924408341,
+            "increment_translation_m": 0.0915028338200529,
+            "iteration": 1,
+            "level": 1,
+            "maximum_distance_m": 1.0,
+            "median_abs_point_to_plane_m": 0.06790660472789094,
+            "normalized_condition": 31.672352087668205,
+            "p90_abs_point_to_plane_m": 0.3050745380516489,
+            "rank": 6,
+            "singular_values": [
+              5.8412169034398955,
+              1.1784506507746753,
+              0.8499491208190222,
+              0.7688135382868324,
+              0.5814607221893234,
+              0.1844263693227319
+            ]
+          },
+          {
+            "correspondences": 27453,
+            "huber_delta_m": 0.25,
+            "increment_rotation_rad": 9.028192213404641e-05,
+            "increment_translation_m": 0.01012444124600407,
+            "iteration": 2,
+            "level": 1,
+            "maximum_distance_m": 1.0,
+            "median_abs_point_to_plane_m": 0.06740220905316671,
+            "normalized_condition": 31.68694516844493,
+            "p90_abs_point_to_plane_m": 0.29580789309561345,
+            "rank": 6,
+            "singular_values": [
+              5.842623701544784,
+              1.1781559061924332,
+              0.8502097377058209,
+              0.7692976460006262,
+              0.5797821387456533,
+              0.1843858305206111
+            ]
+          },
+          {
+            "correspondences": 27461,
+            "huber_delta_m": 0.25,
+            "increment_rotation_rad": 1.2943108772400825e-05,
+            "increment_translation_m": 0.002003146332036116,
+            "iteration": 3,
+            "level": 1,
+            "maximum_distance_m": 1.0,
+            "median_abs_point_to_plane_m": 0.06877011712949051,
+            "normalized_condition": 31.6777963575998,
+            "p90_abs_point_to_plane_m": 0.2951624698722787,
+            "rank": 6,
+            "singular_values": [
+              5.841893508576149,
+              1.1777287935395768,
+              0.8503135562992963,
+              0.7693128725229793,
+              0.579769328274371,
+              0.1844160320569339
+            ]
+          },
+          {
+            "correspondences": 27459,
+            "huber_delta_m": 0.25,
+            "increment_rotation_rad": 1.1433491120851012e-05,
+            "increment_translation_m": 0.0007345645940054687,
+            "iteration": 4,
+            "level": 1,
+            "maximum_distance_m": 1.0,
+            "median_abs_point_to_plane_m": 0.06895008711835078,
+            "normalized_condition": 31.681389855095244,
+            "p90_abs_point_to_plane_m": 0.29520551422743657,
+            "rank": 6,
+            "singular_values": [
+              5.842288962509879,
+              1.1777610098889604,
+              0.8495992667646238,
+              0.7689484754560753,
+              0.5797123045194529,
+              0.18440759667525372
+            ]
+          },
+          {
+            "correspondences": 27459,
+            "huber_delta_m": 0.25,
+            "increment_rotation_rad": 3.6764344539009984e-07,
+            "increment_translation_m": 0.002040620035680545,
+            "iteration": 5,
+            "level": 1,
+            "maximum_distance_m": 1.0,
+            "median_abs_point_to_plane_m": 0.06892336946172391,
+            "normalized_condition": 31.718594002927965,
+            "p90_abs_point_to_plane_m": 0.2955599863055391,
+            "rank": 6,
+            "singular_values": [
+              5.842352645041586,
+              1.177800551061163,
+              0.8493725655498693,
+              0.7688703244083802,
+              0.5788891264373391,
+              0.18419330454881686
+            ]
+          },
+          {
+            "correspondences": 27456,
+            "huber_delta_m": 0.25,
+            "increment_rotation_rad": 1.8093090511625034e-06,
+            "increment_translation_m": 0.0003701419913203377,
+            "iteration": 6,
+            "level": 1,
+            "maximum_distance_m": 1.0,
+            "median_abs_point_to_plane_m": 0.06891305320118443,
+            "normalized_condition": 31.727795420035132,
+            "p90_abs_point_to_plane_m": 0.29565016334919547,
+            "rank": 6,
+            "singular_values": [
+              5.8423056314317074,
+              1.177801878789001,
+              0.849417633367486,
+              0.7688490473595454,
+              0.5788844369435167,
+              0.18413840464132816
+            ]
+          },
+          {
+            "correspondences": 27456,
+            "huber_delta_m": 0.25,
+            "increment_rotation_rad": 1.1526624659548378e-07,
+            "increment_translation_m": 1.4194037083551722e-05,
+            "iteration": 7,
+            "level": 1,
+            "maximum_distance_m": 1.0,
+            "median_abs_point_to_plane_m": 0.0689188445171419,
+            "normalized_condition": 31.727211148146896,
+            "p90_abs_point_to_plane_m": 0.295675519256139,
+            "rank": 6,
+            "singular_values": [
+              5.842301686161223,
+              1.1778018185479027,
+              0.8494410617279162,
+              0.7688416479617195,
+              0.5788842212780784,
+              0.18414167128907757
+            ]
+          },
+          {
+            "correspondences": 27456,
+            "huber_delta_m": 0.25,
+            "increment_rotation_rad": 1.6543001584064146e-08,
+            "increment_translation_m": 6.278776857551401e-06,
+            "iteration": 8,
+            "level": 1,
+            "maximum_distance_m": 1.0,
+            "median_abs_point_to_plane_m": 0.06892001897165886,
+            "normalized_condition": 31.727212050866097,
+            "p90_abs_point_to_plane_m": 0.2956739371641315,
+            "rank": 6,
+            "singular_values": [
+              5.842302174557638,
+              1.1778020130989146,
+              0.8494395796594365,
+              0.7688435348860428,
+              0.5788836048104966,
+              0.18414168144339532
+            ]
+          },
+          {
+            "correspondences": 24246,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 8.866610929749211e-05,
+            "increment_translation_m": 0.02779127227906052,
+            "iteration": 1,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.064313290363242,
+            "normalized_condition": 32.26940707818261,
+            "p90_abs_point_to_plane_m": 0.18695721572254825,
+            "rank": 6,
+            "singular_values": [
+              5.775302992404597,
+              1.1661314909723486,
+              0.818556788577716,
+              0.7407800011326088,
+              0.5420591807586047,
+              0.17897146292189817
+            ]
+          },
+          {
+            "correspondences": 24203,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 1.4727388491457157e-05,
+            "increment_translation_m": 0.004590252505435926,
+            "iteration": 2,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.05496764966195434,
+            "normalized_condition": 32.32140587659175,
+            "p90_abs_point_to_plane_m": 0.18646280468567283,
+            "rank": 6,
+            "singular_values": [
+              5.782978700204241,
+              1.1655331989536106,
+              0.8207324896559951,
+              0.743049706748071,
+              0.5417716027314814,
+              0.17892101359342386
+            ]
+          },
+          {
+            "correspondences": 24203,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 3.7189560944789167e-06,
+            "increment_translation_m": 0.0012127068790979917,
+            "iteration": 3,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.053724526032492094,
+            "normalized_condition": 32.301583395845114,
+            "p90_abs_point_to_plane_m": 0.1868465932933344,
+            "rank": 6,
+            "singular_values": [
+              5.7816123445400285,
+              1.1650630059390714,
+              0.8215648450595034,
+              0.7436584727354281,
+              0.5413100816670656,
+              0.1789885119156018
+            ]
+          },
+          {
+            "correspondences": 24205,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 1.050464918658682e-06,
+            "increment_translation_m": 0.0005316696083095598,
+            "iteration": 4,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.05358633041142179,
+            "normalized_condition": 32.29896371583161,
+            "p90_abs_point_to_plane_m": 0.18687776034970593,
+            "rank": 6,
+            "singular_values": [
+              5.781698862786101,
+              1.1650018980359598,
+              0.8215102456127817,
+              0.7434704698156608,
+              0.5413664490008303,
+              0.17900570785037762
+            ]
+          },
+          {
+            "correspondences": 24207,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 4.4538361290564704e-08,
+            "increment_translation_m": 9.414502541088425e-05,
+            "iteration": 5,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.0535553838825754,
+            "normalized_condition": 32.29972942020241,
+            "p90_abs_point_to_plane_m": 0.18688790201062971,
+            "rank": 6,
+            "singular_values": [
+              5.781725946030085,
+              1.1649874771353572,
+              0.8214747194061773,
+              0.7434130049381731,
+              0.5413560369376795,
+              0.1790023027999054
+            ]
+          },
+          {
+            "correspondences": 24207,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 2.7148318630056505e-07,
+            "increment_translation_m": 4.872554274037962e-05,
+            "iteration": 6,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.05356234149951011,
+            "normalized_condition": 32.29964127818012,
+            "p90_abs_point_to_plane_m": 0.18689106533903116,
+            "rank": 6,
+            "singular_values": [
+              5.781716392136623,
+              1.1649857163586894,
+              0.8214730749753294,
+              0.7434141118673673,
+              0.5413577593165896,
+              0.1790024954872312
+            ]
+          },
+          {
+            "correspondences": 24208,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 1.0867988855943308e-07,
+            "increment_translation_m": 1.845966505256559e-05,
+            "iteration": 7,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.05356901950979606,
+            "normalized_condition": 32.29949294713426,
+            "p90_abs_point_to_plane_m": 0.1868953010472247,
+            "rank": 6,
+            "singular_values": [
+              5.781675158959753,
+              1.1649814410406407,
+              0.8214509620242583,
+              0.7434006853733871,
+              0.5413561289389646,
+              0.17900204094295932
+            ]
+          },
+          {
+            "correspondences": 24208,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 1.3232014202689143e-08,
+            "increment_translation_m": 2.050539778905431e-06,
+            "iteration": 8,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.05356769882940479,
+            "normalized_condition": 32.29951282590002,
+            "p90_abs_point_to_plane_m": 0.18688144264283124,
+            "rank": 6,
+            "singular_values": [
+              5.781677657452846,
+              1.164981912423931,
+              0.8214513493268684,
+              0.7434010203559553,
+              0.5413560598726972,
+              0.17900200812987777
+            ]
+          },
+          {
+            "correspondences": 17106,
+            "huber_delta_m": 0.06,
+            "increment_rotation_rad": 3.7940942023349306e-05,
+            "increment_translation_m": 0.010864159506850816,
+            "iteration": 1,
+            "level": 3,
+            "maximum_distance_m": 0.35,
+            "median_abs_point_to_plane_m": 0.049342865283424915,
+            "normalized_condition": 32.77726522088256,
+            "p90_abs_point_to_plane_m": 0.13063466794370188,
+            "rank": 6,
+            "singular_values": [
+              5.545614194375456,
+              1.1264237268173367,
+              0.7747564599155075,
+              0.6926101068614938,
+              0.47766214055360223,
+              0.16919087535229502
+            ]
+          },
+          {
+            "correspondences": 17096,
+            "huber_delta_m": 0.06,
+            "increment_rotation_rad": 1.6470645984659204e-05,
+            "increment_translation_m": 0.003107205582430997,
+            "iteration": 2,
+            "level": 3,
+            "maximum_distance_m": 0.35,
+            "median_abs_point_to_plane_m": 0.046972576576027894,
+            "normalized_condition": 32.774879531495124,
+            "p90_abs_point_to_plane_m": 0.13217714629325186,
+            "rank": 6,
+            "singular_values": [
+              5.554323422355968,
+              1.1258875106227924,
+              0.7767653133393685,
+              0.6931870752031595,
+              0.4776550507074458,
+              0.16946891954304588
+            ]
+          },
+          {
+            "correspondences": 17097,
+            "huber_delta_m": 0.06,
+            "increment_rotation_rad": 7.382099749904744e-06,
+            "increment_translation_m": 0.0012614588994001614,
+            "iteration": 3,
+            "level": 3,
+            "maximum_distance_m": 0.35,
+            "median_abs_point_to_plane_m": 0.04616563418106129,
+            "normalized_condition": 32.77035856807399,
+            "p90_abs_point_to_plane_m": 0.1327904355356742,
+            "rank": 6,
+            "singular_values": [
+              5.556848927689932,
+              1.125820879916796,
+              0.7768564300078686,
+              0.6933735899074651,
+              0.4781610537640609,
+              0.16956936605214953
+            ]
+          },
+          {
+            "correspondences": 17099,
+            "huber_delta_m": 0.06,
+            "increment_rotation_rad": 7.2634480625244945e-06,
+            "increment_translation_m": 0.0011497527549679373,
+            "iteration": 4,
+            "level": 3,
+            "maximum_distance_m": 0.35,
+            "median_abs_point_to_plane_m": 0.04598491507237102,
+            "normalized_condition": 32.76204788052535,
+            "p90_abs_point_to_plane_m": 0.13318254130724866,
+            "rank": 6,
+            "singular_values": [
+              5.55534512468097,
+              1.124912824847763,
+              0.7777837227730802,
+              0.6937348841829855,
+              0.4785813431644575,
+              0.16956647963338145
+            ]
+          },
+          {
+            "correspondences": 17094,
+            "huber_delta_m": 0.06,
+            "increment_rotation_rad": 1.058232455616254e-06,
+            "increment_translation_m": 0.0003194162781020986,
+            "iteration": 5,
+            "level": 3,
+            "maximum_distance_m": 0.35,
+            "median_abs_point_to_plane_m": 0.04589221806511909,
+            "normalized_condition": 32.744977283163465,
+            "p90_abs_point_to_plane_m": 0.13325251578418965,
+            "rank": 6,
+            "singular_values": [
+              5.55592330736731,
+              1.124932799646398,
+              0.7778171227350396,
+              0.6941847958366082,
+              0.4784616369243566,
+              0.16967253509819988
+            ]
+          },
+          {
+            "correspondences": 17093,
+            "huber_delta_m": 0.06,
+            "increment_rotation_rad": 1.3297733759853691e-06,
+            "increment_translation_m": 0.00018667680526145183,
+            "iteration": 6,
+            "level": 3,
+            "maximum_distance_m": 0.35,
+            "median_abs_point_to_plane_m": 0.045891249381631555,
+            "normalized_condition": 32.757005005343714,
+            "p90_abs_point_to_plane_m": 0.13333956956629214,
+            "rank": 6,
+            "singular_values": [
+              5.556020958806175,
+              1.1249253688508558,
+              0.7779399408647002,
+              0.69390431676182,
+              0.47856013344091564,
+              0.16961321579612698
+            ]
+          },
+          {
+            "correspondences": 17095,
+            "huber_delta_m": 0.06,
+            "increment_rotation_rad": 2.5601750728564396e-07,
+            "increment_translation_m": 0.00010612891718026553,
+            "iteration": 7,
+            "level": 3,
+            "maximum_distance_m": 0.35,
+            "median_abs_point_to_plane_m": 0.04590196626548561,
+            "normalized_condition": 32.75485962894984,
+            "p90_abs_point_to_plane_m": 0.13338906180056267,
+            "rank": 6,
+            "singular_values": [
+              5.555689269155016,
+              1.1248843885417887,
+              0.77796334972592,
+              0.6941026306223887,
+              0.47854065434831183,
+              0.169614198689611
+            ]
+          },
+          {
+            "correspondences": 17099,
+            "huber_delta_m": 0.06,
+            "increment_rotation_rad": 2.09911026651479e-07,
+            "increment_translation_m": 5.192881107140538e-05,
+            "iteration": 8,
+            "level": 3,
+            "maximum_distance_m": 0.35,
+            "median_abs_point_to_plane_m": 0.0459009316982808,
+            "normalized_condition": 32.75513389748193,
+            "p90_abs_point_to_plane_m": 0.13341382210444866,
+            "rank": 6,
+            "singular_values": [
+              5.5557082519211916,
+              1.1248818025396645,
+              0.7779202843527726,
+              0.6940769983791709,
+              0.47854951015312575,
+              0.1696133579947994
+            ]
+          },
+          {
+            "correspondences": 17100,
+            "huber_delta_m": 0.06,
+            "increment_rotation_rad": 1.2767978324438494e-07,
+            "increment_translation_m": 5.5020990418147545e-05,
+            "iteration": 9,
+            "level": 3,
+            "maximum_distance_m": 0.35,
+            "median_abs_point_to_plane_m": 0.045902202155650135,
+            "normalized_condition": 32.75470259096563,
+            "p90_abs_point_to_plane_m": 0.13342188467895208,
+            "rank": 6,
+            "singular_values": [
+              5.555721468739998,
+              1.124857380260551,
+              0.7778954201750942,
+              0.6940780886806334,
+              0.47855420727778086,
+              0.16961599493418608
+            ]
+          },
+          {
+            "correspondences": 17100,
+            "huber_delta_m": 0.06,
+            "increment_rotation_rad": 4.173369701506139e-08,
+            "increment_translation_m": 1.98048015639164e-05,
+            "iteration": 10,
+            "level": 3,
+            "maximum_distance_m": 0.35,
+            "median_abs_point_to_plane_m": 0.04590877450095533,
+            "normalized_condition": 32.754585761335775,
+            "p90_abs_point_to_plane_m": 0.13342980579991265,
+            "rank": 6,
+            "singular_values": [
+              5.55574521556466,
+              1.1248584722630928,
+              0.7778962019389298,
+              0.6940757779372768,
+              0.47855926890483647,
+              0.16961732491585294
+            ]
+          },
+          {
+            "correspondences": 17099,
+            "huber_delta_m": 0.06,
+            "increment_rotation_rad": 9.081553540690594e-08,
+            "increment_translation_m": 1.9357917139347084e-05,
+            "iteration": 11,
+            "level": 3,
+            "maximum_distance_m": 0.35,
+            "median_abs_point_to_plane_m": 0.04591649401413024,
+            "normalized_condition": 32.754332919533965,
+            "p90_abs_point_to_plane_m": 0.13343769179121298,
+            "rank": 6,
+            "singular_values": [
+              5.55572610628163,
+              1.1248645918186984,
+              0.7779101987115858,
+              0.6940772135333138,
+              0.47856132445953026,
+              0.16961805083712503
+            ]
+          },
+          {
+            "correspondences": 17099,
+            "huber_delta_m": 0.06,
+            "increment_rotation_rad": 2.668183173993439e-08,
+            "increment_translation_m": 5.231006335670828e-06,
+            "iteration": 12,
+            "level": 3,
+            "maximum_distance_m": 0.35,
+            "median_abs_point_to_plane_m": 0.04592024459906367,
+            "normalized_condition": 32.75436668864287,
+            "p90_abs_point_to_plane_m": 0.13343711002568412,
+            "rank": 6,
+            "singular_values": [
+              5.555728489452956,
+              1.1248653713501509,
+              0.777909784120938,
+              0.6940767502524071,
+              0.47856161128631,
+              0.16961794872313404
+            ]
+          }
+        ]
+      },
+      "fit_building_count": 10,
+      "fit_buildings": [
+        "DEBY_LOD2_108580335",
+        "DEBY_LOD2_4906982",
+        "DEBY_LOD2_4906984",
+        "DEBY_LOD2_4906989",
+        "DEBY_LOD2_4959323",
+        "DEBY_LOD2_4959325",
+        "DEBY_LOD2_4959460",
+        "DEBY_LOD2_4959461",
+        "DEBY_LOD2_4959464",
+        "DEBY_LOD2_8573848"
+      ],
+      "fit_observations": 773,
+      "invalid_reason": "",
+      "maximum_control_displacement_m": 0.09854903721079984,
+      "total_photo_to_als_matrix": [
+        [
+          0.9999997282657664,
+          -5.048140247844634e-07,
+          -0.0007372029149408649,
+          0.011084627603281327
+        ],
+        [
+          3.378298631450783e-07,
+          0.9999999743464263,
+          -0.00022651055389208763,
+          0.03087603610756532
+        ],
+        [
+          0.0007372030103745259,
+          0.00022651024329256898,
+          0.9999997026123718,
+          -0.15338547137520014
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "total_transform_sha256": "58111c1ee855d7020989524c7f69921d4706dd4c62a0a35cd38be3960b9ef3f0"
+    },
+    "capture_block_03": {
+      "block_bounds_pass": true,
+      "block_id": "capture_block_03",
+      "candidate_valid": true,
+      "delta_matrix": [
+        [
+          0.999999962490578,
+          0.0002618867504889761,
+          8.021328781102844e-05,
+          0.027800537642661997
+        ],
+        [
+          -0.0002618921145623697,
+          0.9999999634704991,
+          6.686942846879756e-05,
+          -0.03979987087676324
+        ],
+        [
+          -8.01957726635894e-05,
+          -6.689043318811504e-05,
+          0.9999999945471543,
+          0.045814453131884265
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "delta_rotation_deg": 0.01615413522495833,
+      "delta_transform_sha256": "8c9c5dd4843602193f63cdd73c91466bfc8b24f7fc7c700e58de2e00cb692307",
+      "delta_translation_m": 0.06675225637236328,
+      "diagnostics": {
+        "candidate_valid": true,
+        "final_correspondences": 12929,
+        "final_level_converged": true,
+        "final_normalized_condition": 10.55186720788637,
+        "final_rank": 6,
+        "final_singular_values": [
+          4.214040868908522,
+          2.8655163544201847,
+          1.3757481635899413,
+          0.8591637664096036,
+          0.6241015136467474,
+          0.39936447131925484
+        ],
+        "invalid_reason": "",
+        "lever_arm_m": 147.98192784953045,
+        "maximum_control_displacement_m": 0.09385198092426067,
+        "pivot_translation_m": 0.06675225637236328,
+        "rotation_deg": 0.01615413522495833,
+        "trace": [
+          {
+            "correspondences": 19009,
+            "huber_delta_m": 0.25,
+            "increment_rotation_rad": 0.0002437554733457059,
+            "increment_translation_m": 0.04692975548243752,
+            "iteration": 1,
+            "level": 1,
+            "maximum_distance_m": 1.0,
+            "median_abs_point_to_plane_m": 0.06952582775028822,
+            "normalized_condition": 9.845330079033351,
+            "p90_abs_point_to_plane_m": 0.27565359937028816,
+            "rank": 6,
+            "singular_values": [
+              4.302863558851885,
+              2.9579682489125076,
+              1.4068148342766016,
+              0.9227893181434651,
+              0.7042618918404671,
+              0.43704614515822865
+            ]
+          },
+          {
+            "correspondences": 18991,
+            "huber_delta_m": 0.25,
+            "increment_rotation_rad": 4.873383272344234e-05,
+            "increment_translation_m": 0.012337485491241324,
+            "iteration": 2,
+            "level": 1,
+            "maximum_distance_m": 1.0,
+            "median_abs_point_to_plane_m": 0.06055933437512515,
+            "normalized_condition": 9.82099709707062,
+            "p90_abs_point_to_plane_m": 0.2731133566167934,
+            "rank": 6,
+            "singular_values": [
+              4.302215072777533,
+              2.958808608078546,
+              1.4064775400782943,
+              0.92290022601905,
+              0.7062880533011575,
+              0.4380629614543706
+            ]
+          },
+          {
+            "correspondences": 18993,
+            "huber_delta_m": 0.25,
+            "increment_rotation_rad": 8.512490514823992e-06,
+            "increment_translation_m": 0.0033690718197312564,
+            "iteration": 3,
+            "level": 1,
+            "maximum_distance_m": 1.0,
+            "median_abs_point_to_plane_m": 0.05954156178438756,
+            "normalized_condition": 9.838678694379661,
+            "p90_abs_point_to_plane_m": 0.27241007703472675,
+            "rank": 6,
+            "singular_values": [
+              4.302683531599724,
+              2.9588948996666695,
+              1.4063930845302803,
+              0.9217793257317844,
+              0.7072647230899362,
+              0.4373233098929869
+            ]
+          },
+          {
+            "correspondences": 18993,
+            "huber_delta_m": 0.25,
+            "increment_rotation_rad": 2.409428967141071e-05,
+            "increment_translation_m": 0.0034481065746212224,
+            "iteration": 4,
+            "level": 1,
+            "maximum_distance_m": 1.0,
+            "median_abs_point_to_plane_m": 0.05923543124542265,
+            "normalized_condition": 9.864949800038312,
+            "p90_abs_point_to_plane_m": 0.272411419974316,
+            "rank": 6,
+            "singular_values": [
+              4.302709540249205,
+              2.9598167564496003,
+              1.4065501040760537,
+              0.9217981594581042,
+              0.7072623309975508,
+              0.4361613213918731
+            ]
+          },
+          {
+            "correspondences": 18990,
+            "huber_delta_m": 0.25,
+            "increment_rotation_rad": 3.485047295724026e-06,
+            "increment_translation_m": 0.00044446054042376773,
+            "iteration": 5,
+            "level": 1,
+            "maximum_distance_m": 1.0,
+            "median_abs_point_to_plane_m": 0.058932328933480785,
+            "normalized_condition": 9.868214688808903,
+            "p90_abs_point_to_plane_m": 0.27220491386039575,
+            "rank": 6,
+            "singular_values": [
+              4.302834907334249,
+              2.9600876793500315,
+              1.4066194360308475,
+              0.9217811426238629,
+              0.7073426481113593,
+              0.436029721993574
+            ]
+          },
+          {
+            "correspondences": 18990,
+            "huber_delta_m": 0.25,
+            "increment_rotation_rad": 3.9688506278757254e-07,
+            "increment_translation_m": 0.00010655514557417558,
+            "iteration": 6,
+            "level": 1,
+            "maximum_distance_m": 1.0,
+            "median_abs_point_to_plane_m": 0.05890029554060737,
+            "normalized_condition": 9.866877273955621,
+            "p90_abs_point_to_plane_m": 0.27222226379912884,
+            "rank": 6,
+            "singular_values": [
+              4.3028155793062925,
+              2.9600982882601166,
+              1.4066175506521796,
+              0.9218285904699116,
+              0.7073287562591202,
+              0.43608686515883843
+            ]
+          },
+          {
+            "correspondences": 18990,
+            "huber_delta_m": 0.25,
+            "increment_rotation_rad": 2.921352844496415e-07,
+            "increment_translation_m": 3.00441583114688e-05,
+            "iteration": 7,
+            "level": 1,
+            "maximum_distance_m": 1.0,
+            "median_abs_point_to_plane_m": 0.058897391190207427,
+            "normalized_condition": 9.866839562374315,
+            "p90_abs_point_to_plane_m": 0.2722248371267499,
+            "rank": 6,
+            "singular_values": [
+              4.3028146896091535,
+              2.9601121373132915,
+              1.4066335748053982,
+              0.9218129133978973,
+              0.707328417651004,
+              0.43608844173541444
+            ]
+          },
+          {
+            "correspondences": 18990,
+            "huber_delta_m": 0.25,
+            "increment_rotation_rad": 2.4246379302560952e-08,
+            "increment_translation_m": 3.9433376376728026e-06,
+            "iteration": 8,
+            "level": 1,
+            "maximum_distance_m": 1.0,
+            "median_abs_point_to_plane_m": 0.05889543104652797,
+            "normalized_condition": 9.866852478015788,
+            "p90_abs_point_to_plane_m": 0.2722114472414375,
+            "rank": 6,
+            "singular_values": [
+              4.3028153102758955,
+              2.9601100109909035,
+              1.4066334682323685,
+              0.9218132004873721,
+              0.7073283563025323,
+              0.4360879338028966
+            ]
+          },
+          {
+            "correspondences": 16745,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 5.250479827992014e-05,
+            "increment_translation_m": 0.022118774119826604,
+            "iteration": 1,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.056150608359242835,
+            "normalized_condition": 10.375818262421879,
+            "p90_abs_point_to_plane_m": 0.15906485777944077,
+            "rank": 6,
+            "singular_values": [
+              4.2798279285319945,
+              2.9439771642261627,
+              1.3957728337203954,
+              0.8932095992986117,
+              0.6752141247026231,
+              0.41248100345321737
+            ]
+          },
+          {
+            "correspondences": 16703,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 2.4906690326788112e-05,
+            "increment_translation_m": 0.0063319560493142295,
+            "iteration": 2,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.04120448303831384,
+            "normalized_condition": 10.370062725840516,
+            "p90_abs_point_to_plane_m": 0.15647405247773308,
+            "rank": 6,
+            "singular_values": [
+              4.277836315367766,
+              2.94095933032683,
+              1.395795338144275,
+              0.8946176213158765,
+              0.6753775889932941,
+              0.4125178823372101
+            ]
+          },
+          {
+            "correspondences": 16707,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 1.9679225777008705e-06,
+            "increment_translation_m": 0.001560408318164239,
+            "iteration": 3,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.03942123304218712,
+            "normalized_condition": 10.355782649941666,
+            "p90_abs_point_to_plane_m": 0.15624383632998948,
+            "rank": 6,
+            "singular_values": [
+              4.2757790701745835,
+              2.940865353254232,
+              1.3954806076669355,
+              0.8951039853113502,
+              0.6756852707697575,
+              0.4128880659926431
+            ]
+          },
+          {
+            "correspondences": 16702,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 3.401549503280053e-07,
+            "increment_translation_m": 0.0012435200444429174,
+            "iteration": 4,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.039161356334742825,
+            "normalized_condition": 10.358856081946264,
+            "p90_abs_point_to_plane_m": 0.15617605535504026,
+            "rank": 6,
+            "singular_values": [
+              4.275624384002566,
+              2.941121513823862,
+              1.395588120811194,
+              0.8953753321091448,
+              0.6758080285034462,
+              0.4127506309750028
+            ]
+          },
+          {
+            "correspondences": 16702,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 1.1491935108052898e-06,
+            "increment_translation_m": 0.0002791500672103595,
+            "iteration": 5,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.03918724972494394,
+            "normalized_condition": 10.35870406119818,
+            "p90_abs_point_to_plane_m": 0.15606734121892307,
+            "rank": 6,
+            "singular_values": [
+              4.275688972586616,
+              2.94148337731371,
+              1.3956032200523225,
+              0.8952068676339971,
+              0.6758989954047259,
+              0.41276292355938315
+            ]
+          },
+          {
+            "correspondences": 16703,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 3.1572741286149396e-06,
+            "increment_translation_m": 0.00039860206260300765,
+            "iteration": 6,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.03917629613096858,
+            "normalized_condition": 10.352903019103387,
+            "p90_abs_point_to_plane_m": 0.1559955965173284,
+            "rank": 6,
+            "singular_values": [
+              4.275611018554129,
+              2.941272047892296,
+              1.3955790456460908,
+              0.8952159990095352,
+              0.6759185136434074,
+              0.41298667732757516
+            ]
+          },
+          {
+            "correspondences": 16702,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 1.2649602103575754e-06,
+            "increment_translation_m": 0.00021374309977664977,
+            "iteration": 7,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.03916386608492855,
+            "normalized_condition": 10.351868335491275,
+            "p90_abs_point_to_plane_m": 0.15597093952058216,
+            "rank": 6,
+            "singular_values": [
+              4.275671290045741,
+              2.941064411251879,
+              1.39553603062029,
+              0.8953783801872007,
+              0.6759005863380735,
+              0.4130337782008534
+            ]
+          },
+          {
+            "correspondences": 16704,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 3.4507760014677286e-07,
+            "increment_translation_m": 5.787972600728363e-05,
+            "iteration": 8,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.03917074363246064,
+            "normalized_condition": 10.352752589996541,
+            "p90_abs_point_to_plane_m": 0.15608361457999154,
+            "rank": 6,
+            "singular_values": [
+              4.275736894838678,
+              2.941072351546885,
+              1.395566318582437,
+              0.8953533778610951,
+              0.6758868367785296,
+              0.4130048368943111
+            ]
+          },
+          {
+            "correspondences": 16704,
+            "huber_delta_m": 0.12,
+            "increment_rotation_rad": 4.8744859426587235e-08,
+            "increment_translation_m": 9.71138423656049e-06,
+            "iteration": 9,
+            "level": 2,
+            "maximum_distance_m": 0.6,
+            "median_abs_point_to_plane_m": 0.03916544561664219,
+            "normalized_condition": 10.352844121345763,
+            "p90_abs_point_to_plane_m": 0.15608408241586144,
+            "rank": 6,
+            "singular_values": [
+              4.275742411512084,
+              2.9410654162660377,
+              1.3955664260920992,
+              0.895352378592389,
+              0.6758857470410079,
+              0.4130017183100678
+            ]
+          },
+          {
+            "correspondences": 12946,
+            "huber_delta_m": 0.06,
+            "increment_rotation_rad": 3.469315681077343e-05,
+            "increment_translation_m": 0.010495275956056179,
+            "iteration": 1,
+            "level": 3,
+            "maximum_distance_m": 0.35,
+            "median_abs_point_to_plane_m": 0.034736693016839355,
+            "normalized_condition": 10.61947574539384,
+            "p90_abs_point_to_plane_m": 0.10023050871441677,
+            "rank": 6,
+            "singular_values": [
+              4.210503728054284,
+              2.8674214020632607,
+              1.3702494717463884,
+              0.8570563707775549,
+              0.6236166637656587,
+              0.39648885020341745
+            ]
+          },
+          {
+            "correspondences": 12932,
+            "huber_delta_m": 0.06,
+            "increment_rotation_rad": 1.5030099473472287e-05,
+            "increment_translation_m": 0.0035701757554909394,
+            "iteration": 2,
+            "level": 3,
+            "maximum_distance_m": 0.35,
+            "median_abs_point_to_plane_m": 0.028498546020299324,
+            "normalized_condition": 10.587533377586507,
+            "p90_abs_point_to_plane_m": 0.09838225025494515,
+            "rank": 6,
+            "singular_values": [
+              4.215910027412711,
+              2.8672908103384898,
+              1.3756389873258674,
+              0.858910241958331,
+              0.624266554156386,
+              0.3981956776011368
+            ]
+          },
+          {
+            "correspondences": 12936,
+            "huber_delta_m": 0.06,
+            "increment_rotation_rad": 2.932641850637926e-06,
+            "increment_translation_m": 0.0011013030719393521,
+            "iteration": 3,
+            "level": 3,
+            "maximum_distance_m": 0.35,
+            "median_abs_point_to_plane_m": 0.027376399967399642,
+            "normalized_condition": 10.557013738611731,
+            "p90_abs_point_to_plane_m": 0.09806834029325531,
+            "rank": 6,
+            "singular_values": [
+              4.214334960080799,
+              2.865774110317669,
+              1.3757695514803965,
+              0.859341201264377,
+              0.6240808088255902,
+              0.3991976390697577
+            ]
+          },
+          {
+            "correspondences": 12931,
+            "huber_delta_m": 0.06,
+            "increment_rotation_rad": 1.0478600108338937e-06,
+            "increment_translation_m": 0.0002977666420787162,
+            "iteration": 4,
+            "level": 3,
+            "maximum_distance_m": 0.35,
+            "median_abs_point_to_plane_m": 0.027188751222449806,
+            "normalized_condition": 10.552986687097649,
+            "p90_abs_point_to_plane_m": 0.09810139739269817,
+            "rank": 6,
+            "singular_values": [
+              4.2141384004197056,
+              2.865576529360761,
+              1.375774075372931,
+              0.8591637844083296,
+              0.6240818989456287,
+              0.3993313481170235
+            ]
+          },
+          {
+            "correspondences": 12929,
+            "huber_delta_m": 0.06,
+            "increment_rotation_rad": 2.6552881650402777e-07,
+            "increment_translation_m": 8.349165807389017e-05,
+            "iteration": 5,
+            "level": 3,
+            "maximum_distance_m": 0.35,
+            "median_abs_point_to_plane_m": 0.0271032645944714,
+            "normalized_condition": 10.552155826768743,
+            "p90_abs_point_to_plane_m": 0.09821849461902037,
+            "rank": 6,
+            "singular_values": [
+              4.214048142728329,
+              2.865526741538351,
+              1.3757492370800746,
+              0.85918860803355,
+              0.6240970571320382,
+              0.39935423736238973
+            ]
+          },
+          {
+            "correspondences": 12929,
+            "huber_delta_m": 0.06,
+            "increment_rotation_rad": 6.97836908110101e-08,
+            "increment_translation_m": 1.624344221432436e-05,
+            "iteration": 6,
+            "level": 3,
+            "maximum_distance_m": 0.35,
+            "median_abs_point_to_plane_m": 0.027095624294658453,
+            "normalized_condition": 10.551933976492856,
+            "p90_abs_point_to_plane_m": 0.09821917653106468,
+            "rank": 6,
+            "singular_values": [
+              4.214043970861614,
+              2.865517578035097,
+              1.3757479769591983,
+              0.8591633274828918,
+              0.6240999935976309,
+              0.3993622382635714
+            ]
+          },
+          {
+            "correspondences": 12929,
+            "huber_delta_m": 0.06,
+            "increment_rotation_rad": 1.580774924780748e-08,
+            "increment_translation_m": 3.323601014822392e-06,
+            "iteration": 7,
+            "level": 3,
+            "maximum_distance_m": 0.35,
+            "median_abs_point_to_plane_m": 0.027102977021202856,
+            "normalized_condition": 10.55187876823364,
+            "p90_abs_point_to_plane_m": 0.09821857161188352,
+            "rank": 6,
+            "singular_values": [
+              4.214041373489007,
+              2.8655165335875483,
+              1.3757481403332108,
+              0.8591636757743412,
+              0.624101230142954,
+              0.39936408160557624
+            ]
+          }
+        ]
+      },
+      "fit_building_count": 9,
+      "fit_buildings": [
+        "DEBY_LOD2_42364665",
+        "DEBY_LOD2_4906969",
+        "DEBY_LOD2_4906982",
+        "DEBY_LOD2_4907507",
+        "DEBY_LOD2_4907515",
+        "DEBY_LOD2_4907518",
+        "DEBY_LOD2_4907519",
+        "DEBY_LOD2_4959323",
+        "DEBY_LOD2_4959460"
+      ],
+      "fit_observations": 938,
+      "invalid_reason": "",
+      "maximum_control_displacement_m": 0.09385198092426067,
+      "total_photo_to_als_matrix": [
+        [
+          0.9999999509297429,
+          0.00031124904654348336,
+          -3.556037370741481e-05,
+          0.06837899534001997
+        ],
+        [
+          -0.000311248917704924,
+          0.9999999515554701,
+          3.6285642313722556e-06,
+          -0.018976916731442993
+        ],
+        [
+          3.556150137164154e-05,
+          -3.6174959251284073e-06,
+          0.9999999993611474,
+          -0.051974302418884656
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "total_transform_sha256": "b8cc0a05a2d693c7cb0c795bae11887a7b01caeb29bce0246088aac30105d784"
+    }
+  },
+  "global_selection_receipt_sha256": "7b633689a4f1a184f8941533de2b36ed075654318c503fb8035d1d639804dfe9",
+  "roles_opened": [
+    "fit"
+  ],
+  "sampling_audit": {
+    "blocks": [
+      "capture_block_01",
+      "capture_block_02",
+      "capture_block_03"
+    ],
+    "buildings": 18,
+    "depth_set_lock": {
+      "file_count": 937,
+      "sha256sum_stream_aggregate": "f139071c5b0c3f5129aa3ac1b23fa99ac1a497213f2760a57b0ada44e3448625",
+      "total_bytes": 2843932739
+    },
+    "depth_stride": 16,
+    "groups": 62,
+    "roles": [
+      "fit"
+    ],
+    "rows": [
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_42364665",
+        "moving_points": 516,
+        "observation_views": 25,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_42364665",
+        "moving_points": 99,
+        "observation_views": 20,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4906969",
+        "moving_points": 282,
+        "observation_views": 27,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4906969",
+        "moving_points": 678,
+        "observation_views": 22,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4906982",
+        "moving_points": 1866,
+        "observation_views": 37,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4906982",
+        "moving_points": 2462,
+        "observation_views": 22,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4906984",
+        "moving_points": 40,
+        "observation_views": 6,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4907505",
+        "moving_points": 120,
+        "observation_views": 13,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4907505",
+        "moving_points": 214,
+        "observation_views": 10,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4907507",
+        "moving_points": 651,
+        "observation_views": 30,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4907507",
+        "moving_points": 1306,
+        "observation_views": 17,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4907515",
+        "moving_points": 849,
+        "observation_views": 41,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4907515",
+        "moving_points": 1590,
+        "observation_views": 24,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4907518",
+        "moving_points": 1357,
+        "observation_views": 36,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4907518",
+        "moving_points": 1242,
+        "observation_views": 23,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4907519",
+        "moving_points": 1022,
+        "observation_views": 36,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4907519",
+        "moving_points": 1335,
+        "observation_views": 28,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4959320",
+        "moving_points": 632,
+        "observation_views": 14,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4959323",
+        "moving_points": 970,
+        "observation_views": 30,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4959323",
+        "moving_points": 2467,
+        "observation_views": 22,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4959460",
+        "moving_points": 2333,
+        "observation_views": 55,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4959460",
+        "moving_points": 1100,
+        "observation_views": 50,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_01",
+        "building_id": "DEBY_LOD2_4959461",
+        "moving_points": 0,
+        "observation_views": 2,
+        "role": "fit",
+        "surface": "ground",
+        "used": false
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_108580335",
+        "moving_points": 1307,
+        "observation_views": 44,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_108580335",
+        "moving_points": 2468,
+        "observation_views": 31,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4906982",
+        "moving_points": 2318,
+        "observation_views": 48,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4906982",
+        "moving_points": 2441,
+        "observation_views": 24,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4906984",
+        "moving_points": 320,
+        "observation_views": 28,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4906984",
+        "moving_points": 701,
+        "observation_views": 24,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4906989",
+        "moving_points": 674,
+        "observation_views": 19,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4906989",
+        "moving_points": 765,
+        "observation_views": 14,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4959323",
+        "moving_points": 806,
+        "observation_views": 22,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4959323",
+        "moving_points": 1406,
+        "observation_views": 14,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4959325",
+        "moving_points": 2274,
+        "observation_views": 55,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4959325",
+        "moving_points": 2457,
+        "observation_views": 33,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4959460",
+        "moving_points": 2076,
+        "observation_views": 98,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4959460",
+        "moving_points": 759,
+        "observation_views": 90,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4959461",
+        "moving_points": 2138,
+        "observation_views": 60,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4959461",
+        "moving_points": 2397,
+        "observation_views": 33,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4959464",
+        "moving_points": 1267,
+        "observation_views": 45,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_4959464",
+        "moving_points": 1070,
+        "observation_views": 24,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_8573848",
+        "moving_points": 1201,
+        "observation_views": 39,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_02",
+        "building_id": "DEBY_LOD2_8573848",
+        "moving_points": 2291,
+        "observation_views": 28,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_42364665",
+        "moving_points": 1102,
+        "observation_views": 47,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_42364665",
+        "moving_points": 294,
+        "observation_views": 98,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4906969",
+        "moving_points": 181,
+        "observation_views": 33,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4906969",
+        "moving_points": 656,
+        "observation_views": 76,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4906982",
+        "moving_points": 1000,
+        "observation_views": 31,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4906982",
+        "moving_points": 436,
+        "observation_views": 28,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4907505",
+        "moving_points": 6,
+        "observation_views": 8,
+        "role": "fit",
+        "surface": "ground",
+        "used": false
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4907505",
+        "moving_points": 335,
+        "observation_views": 16,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4907507",
+        "moving_points": 1108,
+        "observation_views": 33,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4907507",
+        "moving_points": 1598,
+        "observation_views": 55,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4907515",
+        "moving_points": 1078,
+        "observation_views": 27,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4907515",
+        "moving_points": 1683,
+        "observation_views": 42,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4907518",
+        "moving_points": 1680,
+        "observation_views": 38,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4907518",
+        "moving_points": 1376,
+        "observation_views": 56,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4907519",
+        "moving_points": 553,
+        "observation_views": 16,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4907519",
+        "moving_points": 1929,
+        "observation_views": 46,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4959320",
+        "moving_points": 161,
+        "observation_views": 30,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4959323",
+        "moving_points": 2412,
+        "observation_views": 64,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4959323",
+        "moving_points": 2354,
+        "observation_views": 81,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4959460",
+        "moving_points": 2433,
+        "observation_views": 79,
+        "role": "fit",
+        "surface": "ground",
+        "used": true
+      },
+      {
+        "block_id": "capture_block_03",
+        "building_id": "DEBY_LOD2_4959460",
+        "moving_points": 2086,
+        "observation_views": 88,
+        "role": "fit",
+        "surface": "roof",
+        "used": true
+      }
+    ],
+    "template_audit": {
+      "als_materialization_sha256": "fc077ed02dd0df7c5c90d5e415eb1a028faad8d39415cbf695c9f1df1e256612",
+      "building_count": 18,
+      "photo_dense_sha256": "712e7b6e182e1955223585ce8958acf2d11588caacc8754fac4aec9bfb2dd69a",
+      "roles": [
+        "fit"
+      ],
+      "rows": [
+        {
+          "building_id": "DEBY_LOD2_42364665",
+          "fixed_als_points": 351,
+          "fixed_valid_normals": 348,
+          "moving_photo_points": 789,
+          "moving_valid_normals": 673,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_42364665",
+          "fixed_als_points": 1231,
+          "fixed_valid_normals": 1223,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 1901,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_8573848",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 1882,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2304,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_8573848",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2482,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2122,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4959320",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 794,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2170,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4959320",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2428,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2481,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4907519",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 621,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 1069,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4907519",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2460,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2236,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4906982",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2438,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2331,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4906982",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2482,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 1995,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4959323",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2442,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2388,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4959323",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2496,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2319,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4907505",
+          "fixed_als_points": 1766,
+          "fixed_valid_normals": 1739,
+          "moving_photo_points": 751,
+          "moving_valid_normals": 711,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4907505",
+          "fixed_als_points": 1635,
+          "fixed_valid_normals": 1635,
+          "moving_photo_points": 639,
+          "moving_valid_normals": 593,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_108580335",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2467,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2384,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_108580335",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2500,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2363,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4906989",
+          "fixed_als_points": 2428,
+          "fixed_valid_normals": 2375,
+          "moving_photo_points": 2287,
+          "moving_valid_normals": 2222,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4906989",
+          "fixed_als_points": 2143,
+          "fixed_valid_normals": 2143,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2433,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4959461",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2460,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2287,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4959461",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2494,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2148,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4907515",
+          "fixed_als_points": 2057,
+          "fixed_valid_normals": 2041,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2298,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4907515",
+          "fixed_als_points": 2274,
+          "fixed_valid_normals": 2274,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 1963,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4959460",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 427,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 617,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4959460",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2188,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 1892,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4906969",
+          "fixed_als_points": 1334,
+          "fixed_valid_normals": 1239,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 1394,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4906969",
+          "fixed_als_points": 1777,
+          "fixed_valid_normals": 1770,
+          "moving_photo_points": 1735,
+          "moving_valid_normals": 1527,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4906984",
+          "fixed_als_points": 1440,
+          "fixed_valid_normals": 1417,
+          "moving_photo_points": 2453,
+          "moving_valid_normals": 2216,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4906984",
+          "fixed_als_points": 631,
+          "fixed_valid_normals": 628,
+          "moving_photo_points": 1947,
+          "moving_valid_normals": 1506,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4959464",
+          "fixed_als_points": 1363,
+          "fixed_valid_normals": 1328,
+          "moving_photo_points": 2337,
+          "moving_valid_normals": 1949,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4959464",
+          "fixed_als_points": 2366,
+          "fixed_valid_normals": 2364,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2213,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4907518",
+          "fixed_als_points": 1599,
+          "fixed_valid_normals": 1568,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2285,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4907518",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2500,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2240,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4959325",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2434,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2301,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4959325",
+          "fixed_als_points": 2500,
+          "fixed_valid_normals": 2490,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2354,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4907507",
+          "fixed_als_points": 2495,
+          "fixed_valid_normals": 2455,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 2345,
+          "role": "fit",
+          "surface": "roof",
+          "used": "true"
+        },
+        {
+          "building_id": "DEBY_LOD2_4907507",
+          "fixed_als_points": 1482,
+          "fixed_valid_normals": 1481,
+          "moving_photo_points": 2500,
+          "moving_valid_normals": 1871,
+          "role": "fit",
+          "surface": "ground",
+          "used": "true"
+        }
+      ],
+      "source_als_sha256": "ac5cd0dc9c368a15e1f8fd5a18ad8d96ddbbd8cbaf8e1b608fd675430d6e9225",
+      "surface_groups": 36
+    }
+  },
+  "schema": "jointbuildgs.fusion_w1.coreg_block_fit_candidates.v1",
+  "stage_binding": {
+    "als_materialization_output_sha256": "fc077ed02dd0df7c5c90d5e415eb1a028faad8d39415cbf695c9f1df1e256612",
+    "als_materialization_receipt_sha256": "0b424b6c390332cf1bad8a6d960d95eeb050dc78504ad1b3a45a3bf91f70b9b8",
+    "branch": "exp/fusion-w1",
+    "config_sha256": "c246b28bf3a87468fe39db2b46fa199b633b263cf317cfc3b1d796d915695f28",
+    "generated_lock_sha256": {
+      "camera_blocks_csv": "613171fc839d52ff78e7b2a8bc4db5eb8d11ac153c351f77ad8a14f245954a0c",
+      "prereg_manifest": "9f5098e46441ff058fcaec06266efc5b45e9dc1bdd560e88c9e4ffc89995298c",
+      "splits_csv": "52737a346d6750d2888953a65b8c6c8cb48af7283d24980ec0735e2252355502"
+    },
+    "head": "93c0fa679e0a2415393ae8d02a7764415a401c93",
+    "input_sha256": {
+      "docs/boundary_map_v4_1_ladder.csv": "ae16170177ac0815eb6dd853b0469325c9a1018eeeac9b790b063927cbd7e7e2",
+      "phases/p0-audit/data/work/opf/opf/camera_list.json": "917d639a3483569ef3d12f1f3b8b5781e7db263ad7c982767fbd1229fe13d890",
+      "phases/p0-audit/data/work/opf/opf/input_cameras.json": "5334d43248195cf7428a97d65f7b7cbcbc7a8adf811be89672cd2f5fded88f11",
+      "phases/p0-audit/data/work/opf/opf/scene_reference_frame.json": "fb408e9c97bdad6af7ad4a6e94be823be294030907ce92e395bd63490f77daf6",
+      "phases/p0-audit/runs/w2_1d_bucket_relabel_20260612_final/docs/W2_1c_paired_status.csv": "a564345d9080d24e60929a9a68dd06b70dceee530953f747b9b09746b53a0fa4",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/w1_targets.csv": "256d376080dca7c496aa3f34c9bcbbd1a8e52d0b25d6e98f7eec388b3f6cc943",
+      "results/tum_transfer/analysis/footprints_aoi.geojson": "ca7f5b13a52368e1d2ac47b77cc78f12887bad4d598d122ad57b882eb4920a82",
+      "results/tum_transfer/data_geoidfix/sparse/0/cameras.bin": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99",
+      "results/tum_transfer/data_geoidfix/sparse/0/images.bin": "dfc779496ee3b13f8df5dd28fae465746ce0adf4aca7922d38cbed275a2fd951",
+      "results/tum_transfer/data_geoidfix/sparse/0/points3D.bin": "bf93766e9773bdc59ce393cf1a36de4b3801cadc1bf834ea705396f5e9a706c3",
+      "results/tum_transfer/mob/raw/raw_dense.npz": "712e7b6e182e1955223585ce8958acf2d11588caacc8754fac4aec9bfb2dd69a",
+      "results/tum_transfer/mob_analysis/p0c_step2/als_aoi.laz": "ac5cd0dc9c368a15e1f8fd5a18ad8d96ddbbd8cbaf8e1b608fd675430d6e9225"
+    },
+    "source_als_sha256": "ac5cd0dc9c368a15e1f8fd5a18ad8d96ddbbd8cbaf8e1b608fd675430d6e9225"
+  },
+  "stage_open_receipt_sha256": "95b86c9806e230d400a3c23feac3cc1497b04966c8155f29d108c44825f7f051",
+  "status": "BLOCK_CANDIDATES_ESTIMATED",
+  "trigger_or_check_opened": false
+}

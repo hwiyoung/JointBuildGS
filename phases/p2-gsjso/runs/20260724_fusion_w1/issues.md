@@ -219,3 +219,76 @@
   measurement failures.
 - Counters: `learning_runs_started=0`, `readout_runs_started=0`,
   `roofer_runs_started=0`, `scoring_runs_started=0`.
+
+## FUS-W1-COREG2-RUN-001 — no transform satisfied the frozen trigger contract
+
+- Recorded: 2026-07-25 KST
+- Stage: exposure-aware ALS-fixed camera co-registration through the
+  predeclared three-capture-block fallback
+- Status: `BLOCKED`; lock2 is exact-once and will not be resumed
+- Calibration scope: the actual 36 controls are all tagged `surface`
+  (fit 18 / trigger 9 / unopened check 9); height/outline calibration evidence
+  is 0.
+- Execution binding: branch `exp/fusion-w1`, measurement HEAD
+  `93c0fa679e0a2415393ae8d02a7764415a401c93`, coreg config SHA-256
+  `c246b28bf3a87468fe39db2b46fa199b633b263cf317cfc3b1d796d915695f28`.
+  The premeasurement verification passed the committed implementation,
+  predecessor chain, 937-file depth aggregate, generated locks, ALS hash, and
+  fresh formal failure-ledger checks.
+- ALS integrity: the fixed materialization contains 3,315,854 class-2/6
+  points; the source ALS SHA-256 remained
+  `ac5cd0dc9c368a15e1f8fd5a18ad8d96ddbbd8cbaf8e1b608fd675430d6e9225`.
+- Global fit: the 18 fit controls produced a valid rank-6 candidate from
+  33,969 final correspondences, normalized condition `6.9378544332`,
+  rotation `0.0080702577 deg`, pivot translation `0.1079020267 m`, and
+  maximum control displacement `0.1332284124 m`. On the fit controls, both
+  identity and candidate had building-balanced median/P90 `0.35/0.35 m` and
+  `all_buildings_pass=false`. The optimizer's matched-correspondence
+  median/P90 was `0.07390/0.20868 m`; the difference from the all-support
+  values is due to low unmatched-point coverage and censoring.
+- Global trigger: on the nine trigger controls, identity had
+  median/P90 `0.1524711988/0.35 m`, minimum support `0.3886435331`, maximum
+  absolute bias `0.1274965342 m`, and `all_buildings_pass=false`. The global
+  candidate had `0.1224656173/0.35 m`, support `0.4203995794`, bias
+  `0.0662427387 m`, and `all_buildings_pass=false`. Its median improvement
+  was `0.0300055814 m` (`19.6795%`), below both locked adoption margins
+  (`0.05 m` and `20%`). Neither transform was frozen.
+- Predeclared block trigger:
+  - `capture_block_01`: 7 buildings / 356 observations; median improvement
+    `-0.0026994218 m` (`-1.1172%`); not adopted.
+  - `capture_block_02`: 4 buildings / 160 observations; median improvement
+    `0.0426690996 m` (`32.7081%`), below the locked absolute `0.05 m`
+    adoption margin. Candidate P90 remained `0.35 m`, minimum support was
+    `0.2461538462`, maximum absolute bias was `0.1212644086 m`, and
+    `all_buildings_pass=false`; not adopted.
+  - `capture_block_03`: 6 buildings / 571 observations; median improvement
+    `0.0 m`; not adopted.
+- Stop evidence: `block_selection.json` records
+  `status=BLOCKED` and
+  `reason=conditional_blocks_do_not_satisfy_full_trigger_contract`. No frozen
+  transform, independent-check result, corrected COLMAP model, or pose
+  publication manifest exists. Corrected-camera Gate A2 did not start.
+- Consumer guard: `block_selection.json` retains a diagnostic matrix field
+  even when `choice=none`; it must not be consumed as a selected transform.
+  The authoritative guards are `status`, `choice`, empty `block_transforms`,
+  and absence of `frozen_transform.json`.
+- Wrapper issue: after the scientific block result, the serial wrapper called
+  `check` once because `select-blocks` returned a JSON `BLOCKED` status with a
+  zero process exit code. `check` failed with `frozen transform is missing`;
+  this is a secondary pipeline-control error, not the cause of the block.
+- Post-launch audit notes: predecessor-validation failure would currently
+  target the lock1 failure ledger before lock2 activation completes, and the
+  formal freshness guard checks `failures.jsonl` but not every possible stale
+  stage artifact. Neither path occurred in this run: predecessor validation
+  passed; the lock1 failure ledger remains SHA-256
+  `76a74d7dbc11c2f99006292b865d8edfec903129faec82a12c0dd56f3aacff12`;
+  and lock2 began with only its two deterministic ALS-materialization files.
+  These guards require correction before any future coreg namespace is
+  launched.
+- Compact publication manifest SHA-256:
+  `4bf6779028161e19efd34a1f3851de3d30689ad4fb8f84f65a87e121e992cfee`.
+  The two residual comparison PNGs and all fit/trigger/block numeric artifacts
+  are included under `coreg_lock2/`.
+- Counters: `learning_runs_started=0`, `gate_a2_runs_started=0`,
+  `readout_runs_started=0`, `roofer_runs_started=0`,
+  `scoring_runs_started=0`.
