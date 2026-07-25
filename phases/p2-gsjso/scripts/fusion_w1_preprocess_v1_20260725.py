@@ -69,6 +69,8 @@ DEFAULT_CONFIG = (
 BUILDING_SCHEMA = "jointbuildgs.fusion_w1.preprocess_building.v1"
 RUN_SCHEMA = "jointbuildgs.fusion_w1.preprocess_run.v1"
 CONFIG_SCHEMA = "jointbuildgs.fusion_w1.preprocess.config.v1"
+SCREEN_RASTER_MAX_BBOX_SAMPLES = 1_000_000
+SCREEN_TRIANGLE_DENOMINATOR_EPS = 1.0e-12
 
 
 class PreprocessError(RuntimeError):
@@ -914,12 +916,15 @@ def rasterize_tin(
     edge_margin: float,
     erosion_pixels: int,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, dict[str, int]]:
-    from matplotlib.tri import Triangulation
-
     height = int(camera.height)
     width = int(camera.width)
-    depth = np.full((height, width), np.inf, dtype=np.float32)
-    normal = np.zeros((height, width, 3), dtype=np.float32)
+    if not 0.0 <= float(edge_margin) < (1.0 / 3.0):
+        raise ValueError("edge_margin must be in [0, 1/3)")
+    if int(erosion_pixels) < 0:
+        raise ValueError("erosion_pixels must be non-negative")
+    pixel_count = height * width
+    depth_flat = np.full(pixel_count, np.inf, dtype=np.float64)
+    owner_flat = np.full(pixel_count, len(tin.simplices), dtype=np.int64)
     camera_xyz = (image.R() @ tin.vertices.T).T + image.tvec
     camera_depth = camera_xyz[:, 2]
     uv = np.full((len(tin.vertices), 2), np.nan, dtype=np.float64)
@@ -929,102 +934,150 @@ def rasterize_tin(
     triangle_front = np.all(front[tin.simplices], axis=1)
     triangle_finite = np.isfinite(uv[tin.simplices]).all(axis=(1, 2))
     usable_triangles = triangle_front & triangle_finite
-    projected_triangles = 0
+    triangle_has_candidate = np.zeros(len(tin.simplices), dtype=bool)
     candidate_pixels = 0
+    screen_degenerate_n = 0
+    screen_offframe_n = 0
+    raster_chunks_n = 0
+    maximum_chunk_samples_n = 0
     if np.any(usable_triangles):
-        triangulation_uv = uv.copy()
-        invalid_vertex = ~np.isfinite(triangulation_uv).all(axis=1)
-        if np.any(invalid_vertex):
-            invalid_index = np.flatnonzero(invalid_vertex).astype(np.float64)
-            triangulation_uv[invalid_vertex, 0] = -1.0e9 - invalid_index
-            triangulation_uv[invalid_vertex, 1] = -1.0e9
-        try:
-            projected = Triangulation(
-                triangulation_uv[:, 0],
-                triangulation_uv[:, 1],
-                triangles=tin.simplices,
-                mask=~usable_triangles,
+        usable_ids = np.flatnonzero(usable_triangles)
+        triangle_uv = uv[tin.simplices[usable_ids]]
+        x0 = triangle_uv[:, 0, 0]
+        y0 = triangle_uv[:, 0, 1]
+        x1 = triangle_uv[:, 1, 0]
+        y1 = triangle_uv[:, 1, 1]
+        x2 = triangle_uv[:, 2, 0]
+        y2 = triangle_uv[:, 2, 1]
+        denominator = (y1 - y2) * (x0 - x2) + (x2 - x1) * (y0 - y2)
+        nondegenerate = np.abs(denominator) > SCREEN_TRIANGLE_DENOMINATOR_EPS
+        screen_degenerate_n = int((~nondegenerate).sum())
+        usable_ids = usable_ids[nondegenerate]
+        triangle_uv = triangle_uv[nondegenerate]
+        denominator = denominator[nondegenerate]
+        if len(usable_ids):
+            minimum_x = np.min(triangle_uv[:, :, 0], axis=1)
+            maximum_x = np.max(triangle_uv[:, :, 0], axis=1)
+            minimum_y = np.min(triangle_uv[:, :, 1], axis=1)
+            maximum_y = np.max(triangle_uv[:, :, 1], axis=1)
+            overlaps_frame = (
+                (maximum_x >= 0.5)
+                & (minimum_x <= float(width) - 0.5)
+                & (maximum_y >= 0.5)
+                & (minimum_y <= float(height) - 0.5)
             )
-            finder = projected.get_trifinder()
-        except Exception as exc:
-            raise PreprocessError(
-                f"projected TIN topology is invalid for {image.name}: {exc}"
-            ) from exc
-        used_vertices = tin.simplices[usable_triangles].reshape(-1)
-        xmin = max(
-            0,
-            int(math.floor(float(np.min(uv[used_vertices, 0])))),
-        )
-        xmax = min(
-            width - 1,
-            int(math.ceil(float(np.max(uv[used_vertices, 0])))),
-        )
-        ymin = max(
-            0,
-            int(math.floor(float(np.min(uv[used_vertices, 1])))),
-        )
-        ymax = min(
-            height - 1,
-            int(math.ceil(float(np.max(uv[used_vertices, 1])))),
-        )
-        if xmax >= xmin and ymax >= ymin:
-            yy, xx = np.mgrid[ymin : ymax + 1, xmin : xmax + 1]
-            px = xx.astype(np.float64) + 0.5
-            py = yy.astype(np.float64) + 0.5
-            triangle_index = np.asarray(finder(px, py), dtype=np.int64)
-            found = triangle_index >= 0
-            candidate_pixels = int(found.sum())
-            if np.any(found):
-                rows, columns = np.nonzero(found)
-                index = triangle_index[rows, columns]
-                simplex = tin.simplices[index]
-                q = uv[simplex]
-                z = camera_depth[simplex]
-                sample_x = px[rows, columns]
-                sample_y = py[rows, columns]
-                x0, y0 = q[:, 0, 0], q[:, 0, 1]
-                x1, y1 = q[:, 1, 0], q[:, 1, 1]
-                x2, y2 = q[:, 2, 0], q[:, 2, 1]
-                denominator = (
-                    (y1 - y2) * (x0 - x2)
-                    + (x2 - x1) * (y0 - y2)
+            screen_offframe_n = int((~overlaps_frame).sum())
+            usable_ids = usable_ids[overlaps_frame]
+            denominator = denominator[overlaps_frame]
+            minimum_x = minimum_x[overlaps_frame]
+            maximum_x = maximum_x[overlaps_frame]
+            minimum_y = minimum_y[overlaps_frame]
+            maximum_y = maximum_y[overlaps_frame]
+        if len(usable_ids):
+            xmin = np.clip(np.floor(minimum_x), 0, width - 1).astype(np.int64)
+            xmax = np.clip(np.ceil(maximum_x), 0, width - 1).astype(np.int64)
+            ymin = np.clip(np.floor(minimum_y), 0, height - 1).astype(np.int64)
+            ymax = np.clip(np.ceil(maximum_y), 0, height - 1).astype(np.int64)
+            box_width = xmax - xmin + 1
+            box_height = ymax - ymin + 1
+            box_samples = box_width * box_height
+            cursor = 0
+            while cursor < len(usable_ids):
+                end = cursor
+                sample_count = 0
+                while end < len(usable_ids):
+                    next_count = int(box_samples[end])
+                    if end > cursor and (
+                        sample_count + next_count
+                        > SCREEN_RASTER_MAX_BBOX_SAMPLES
+                    ):
+                        break
+                    sample_count += next_count
+                    end += 1
+                    if sample_count >= SCREEN_RASTER_MAX_BBOX_SAMPLES:
+                        break
+                chunk_areas = box_samples[cursor:end]
+                starts = np.cumsum(
+                    np.r_[np.int64(0), chunk_areas[:-1]], dtype=np.int64
                 )
-                finite_denominator = np.abs(denominator) > 1.0e-12
-                w0 = np.zeros(len(index), dtype=np.float64)
-                w1 = np.zeros(len(index), dtype=np.float64)
-                w0[finite_denominator] = (
-                    (y1[finite_denominator] - y2[finite_denominator])
-                    * (sample_x[finite_denominator] - x2[finite_denominator])
-                    + (x2[finite_denominator] - x1[finite_denominator])
-                    * (sample_y[finite_denominator] - y2[finite_denominator])
-                ) / denominator[finite_denominator]
-                w1[finite_denominator] = (
-                    (y2[finite_denominator] - y0[finite_denominator])
-                    * (sample_x[finite_denominator] - x2[finite_denominator])
-                    + (x0[finite_denominator] - x2[finite_denominator])
-                    * (sample_y[finite_denominator] - y2[finite_denominator])
-                ) / denominator[finite_denominator]
+                local_triangle = np.repeat(
+                    np.arange(end - cursor, dtype=np.int64), chunk_areas
+                )
+                local_sample = (
+                    np.arange(sample_count, dtype=np.int64)
+                    - starts[local_triangle]
+                )
+                chunk_width = box_width[cursor:end]
+                sample_x_int = (
+                    xmin[cursor:end][local_triangle]
+                    + local_sample % chunk_width[local_triangle]
+                )
+                sample_y_int = (
+                    ymin[cursor:end][local_triangle]
+                    + local_sample // chunk_width[local_triangle]
+                )
+                triangle_id = usable_ids[cursor:end][local_triangle]
+                sample_x = sample_x_int.astype(np.float64) + 0.5
+                sample_y = sample_y_int.astype(np.float64) + 0.5
+                q = uv[tin.simplices[triangle_id]]
+                d = denominator[cursor:end][local_triangle]
+                w0 = (
+                    (q[:, 1, 1] - q[:, 2, 1]) * (sample_x - q[:, 2, 0])
+                    + (q[:, 2, 0] - q[:, 1, 0]) * (sample_y - q[:, 2, 1])
+                ) / d
+                w1 = (
+                    (q[:, 2, 1] - q[:, 0, 1]) * (sample_x - q[:, 2, 0])
+                    + (q[:, 0, 0] - q[:, 2, 0]) * (sample_y - q[:, 2, 1])
+                ) / d
                 w2 = 1.0 - w0 - w1
                 inside = (
-                    finite_denominator
-                    & (w0 >= float(edge_margin))
+                    (w0 >= float(edge_margin))
                     & (w1 >= float(edge_margin))
                     & (w2 >= float(edge_margin))
                 )
-                inverse_depth = (
-                    w0 / z[:, 0] + w1 / z[:, 1] + w2 / z[:, 2]
+                z = camera_depth[tin.simplices[triangle_id]]
+                inverse_depth = w0 / z[:, 0] + w1 / z[:, 1] + w2 / z[:, 2]
+                good = inside & np.isfinite(inverse_depth) & (inverse_depth > 0.0)
+                if np.any(good):
+                    candidate_triangle = triangle_id[good]
+                    candidate_depth = 1.0 / inverse_depth[good]
+                    linear = (
+                        sample_y_int[good] * width + sample_x_int[good]
+                    )
+                    triangle_has_candidate[candidate_triangle] = True
+                    candidate_pixels += int(good.sum())
+                    chunk_depth = np.full(pixel_count, np.inf, dtype=np.float64)
+                    np.minimum.at(chunk_depth, linear, candidate_depth)
+                    at_chunk_minimum = candidate_depth == chunk_depth[linear]
+                    chunk_owner = np.full(
+                        pixel_count, len(tin.simplices), dtype=np.int64
+                    )
+                    np.minimum.at(
+                        chunk_owner,
+                        linear[at_chunk_minimum],
+                        candidate_triangle[at_chunk_minimum],
+                    )
+                    active = np.flatnonzero(chunk_owner < len(tin.simplices))
+                    closer = chunk_depth[active] < depth_flat[active]
+                    equal_but_earlier = (
+                        (chunk_depth[active] == depth_flat[active])
+                        & (chunk_owner[active] < owner_flat[active])
+                    )
+                    update = active[closer | equal_but_earlier]
+                    depth_flat[update] = chunk_depth[update]
+                    owner_flat[update] = chunk_owner[update]
+                raster_chunks_n += 1
+                maximum_chunk_samples_n = max(
+                    maximum_chunk_samples_n, int(sample_count)
                 )
-                good = inside & (inverse_depth > 0)
-                global_rows = rows[good] + ymin
-                global_columns = columns[good] + xmin
-                depth[global_rows, global_columns] = (
-                    1.0 / inverse_depth[good]
-                ).astype(np.float32)
-                normal[global_rows, global_columns] = tin.normals_world[
-                    index[good]
-                ].astype(np.float32)
-                projected_triangles = int(np.unique(index[good]).size)
-    valid_before = np.isfinite(depth)
+                cursor = end
+    valid_before = np.isfinite(depth_flat).reshape(height, width)
+    depth = depth_flat.reshape(height, width).astype(np.float32)
+    normal = np.zeros((height, width, 3), dtype=np.float32)
+    owned = owner_flat < len(tin.simplices)
+    normal.reshape(-1, 3)[owned] = tin.normals_world[
+        owner_flat[owned]
+    ].astype(np.float32)
     valid = valid_before.copy()
     for _ in range(int(erosion_pixels)):
         if not np.any(valid):
@@ -1041,11 +1094,16 @@ def rasterize_tin(
     depth[~valid] = 0.0
     normal[~valid] = 0.0
     return depth, normal, valid, {
-        "triangles_projected_n": int(projected_triangles),
+        "triangles_projected_n": int(triangle_has_candidate.sum()),
         "candidate_pixel_writes_n": int(candidate_pixels),
         "valid_pixels_before_outer_edge_mask_n": int(valid_before.sum()),
         "valid_pixels_after_outer_edge_mask_n": int(valid.sum()),
         "outer_edge_masked_pixels_n": int(valid_before.sum() - valid.sum()),
+        "triangles_front_finite_n": int(usable_triangles.sum()),
+        "triangles_screen_degenerate_n": int(screen_degenerate_n),
+        "triangles_screen_offframe_n": int(screen_offframe_n),
+        "raster_chunks_n": int(raster_chunks_n),
+        "maximum_chunk_bbox_samples_n": int(maximum_chunk_samples_n),
     }
 
 

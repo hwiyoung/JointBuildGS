@@ -129,6 +129,98 @@ class GeometryTests(unittest.TestCase):
                 minimum_xy_triangle_area_m2=0.01,
             )
 
+    def test_screen_rasterizer_handles_overlap_flip_and_degenerate(self) -> None:
+        # The first two triangles project to exactly the same footprint. The
+        # near triangle is deliberately flipped, while the last triangle is
+        # non-degenerate in 3D but edge-on and degenerate after projection.
+        vertices = np.asarray(
+            [
+                [-1.0, -1.0, 5.0],
+                [1.0, -1.0, 5.0],
+                [0.0, 1.0, 5.0],
+                [-2.0, -2.0, 10.0],
+                [2.0, -2.0, 10.0],
+                [0.0, 2.0, 10.0],
+                [3.0, 0.0, 5.0],
+                [4.0, 0.0, 5.0],
+                [6.0, 0.0, 10.0],
+            ],
+            dtype=np.float64,
+        )
+        tin = prep.Tin(
+            vertices=vertices,
+            simplices=np.asarray(
+                [[3, 4, 5], [0, 2, 1], [6, 7, 8]], dtype=np.int64
+            ),
+            normals_world=np.asarray(
+                [[0.0, 1.0, 0.0], [0.0, 0.0, 1.0], [1.0, 0.0, 0.0]],
+                dtype=np.float64,
+            ),
+            stats={},
+        )
+        previous_chunk_limit = prep.SCREEN_RASTER_MAX_BBOX_SAMPLES
+        prep.SCREEN_RASTER_MAX_BBOX_SAMPLES = 100
+        try:
+            first = prep.rasterize_tin(
+                FakeGate(),
+                tin,
+                image(),
+                camera(),
+                edge_margin=0.0,
+                erosion_pixels=0,
+            )
+            second = prep.rasterize_tin(
+                FakeGate(),
+                tin,
+                image(),
+                camera(),
+                edge_margin=0.0,
+                erosion_pixels=0,
+            )
+        finally:
+            prep.SCREEN_RASTER_MAX_BBOX_SAMPLES = previous_chunk_limit
+        depth, normal, valid, stats = first
+        self.assertTrue(valid[32, 32])
+        self.assertAlmostEqual(float(depth[32, 32]), 5.0, places=6)
+        self.assertEqual(normal[32, 32].tolist(), [0.0, 0.0, 1.0])
+        self.assertEqual(stats["triangles_screen_degenerate_n"], 1)
+        self.assertEqual(stats["triangles_projected_n"], 2)
+        self.assertEqual(stats["raster_chunks_n"], 2)
+        self.assertGreater(
+            stats["candidate_pixel_writes_n"],
+            stats["valid_pixels_before_outer_edge_mask_n"],
+        )
+        for observed, repeated in zip(first[:3], second[:3]):
+            self.assertTrue(np.array_equal(observed, repeated))
+        self.assertEqual(first[3], second[3])
+
+    def test_screen_rasterizer_keeps_pixel_center_boundary_sliver(self) -> None:
+        # This triangle only reaches the frame through the final pixel centre
+        # x=63.5. A vertex-domain [0,width-1] overlap test drops it incorrectly.
+        projected_uv = np.asarray(
+            [[63.4, 31.4], [64.2, 32.0], [63.4, 32.6]], dtype=np.float64
+        )
+        z = 10.0
+        vertices = np.column_stack(
+            [
+                (projected_uv[:, 0] - 32.0) * z / 40.0,
+                (projected_uv[:, 1] - 32.0) * z / 40.0,
+                np.full(3, z),
+            ]
+        )
+        tin = prep.Tin(
+            vertices=vertices,
+            simplices=np.asarray([[0, 1, 2]], dtype=np.int64),
+            normals_world=np.asarray([[0.0, 0.0, 1.0]], dtype=np.float64),
+            stats={},
+        )
+        depth, _normal, valid, stats = prep.rasterize_tin(
+            FakeGate(), tin, image(), camera(), edge_margin=0.0, erosion_pixels=0
+        )
+        self.assertTrue(valid[32, 63])
+        self.assertAlmostEqual(float(depth[32, 63]), z, places=6)
+        self.assertEqual(stats["triangles_screen_offframe_n"], 0)
+
     def test_combined_supervision_selects_nearest_class(self) -> None:
         depth6 = np.asarray([[5.0, 0.0], [8.0, 0.0]], dtype=np.float32)
         depth2 = np.asarray([[7.0, 6.0], [4.0, 0.0]], dtype=np.float32)
