@@ -1,0 +1,62 @@
+{
+  "argv": [
+    "--id-attribute",
+    "building_id",
+    "--jobs",
+    "3",
+    "--srs",
+    "EPSG:25832",
+    "--bld-class",
+    "6",
+    "--grnd-class",
+    "2",
+    "--lod22",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/seed_epsg25832.las",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/p0prime/by_building/DEBY_LOD2_42364609/footprint.gpkg",
+    "phases/p2-gsjso/runs/20260724_fusion_w1/p0prime/by_building/DEBY_LOD2_42364609/roofer"
+  ],
+  "building_id": "DEBY_LOD2_42364609",
+  "classification_receipt": {
+    "path": "phases/p2-gsjso/runs/20260724_fusion_w1/p0prime/by_building/DEBY_LOD2_42364609/classification_receipt.json",
+    "sha256": "946ca6aceb32de861e5af0ae3309ba58e43b648c605085c500749ddf3a767485"
+  },
+  "classified_las": {
+    "class_counts": {
+      "2": 7644,
+      "6": 349
+    },
+    "epsg": 25832,
+    "las_version": "1.4",
+    "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/seed_epsg25832.las",
+    "point_count": 7993,
+    "point_format": 3,
+    "rgb_dimensions_present": true,
+    "sha256": "f6d744892c816ea6c72fc4f5646b7cb3b6b1a943d3dcc8b59ec954c2cf7d13e6",
+    "vertical_datum": "orthometric"
+  },
+  "created_utc": "2026-07-25T22:26:59.997145+00:00",
+  "footprint": {
+    "crs": "EPSG:25832",
+    "feature_count": 1,
+    "path": "phases/p2-gsjso/runs/20260724_fusion_w1/p0prime/by_building/DEBY_LOD2_42364609/footprint.gpkg",
+    "sha256": "11b7a77c6ddac95a4b681147a0ebcfda2d88f54441a9f00210655432964d4939",
+    "source_path": "phases/p0-audit/data/work/footprints/lod2_ground_plan.gpkg",
+    "source_role": "approved_LoD2_GroundSurface_XY_only",
+    "source_sha256": "259cf04ec0c9411e669e75f61c37ea634290fcd40b230f6ed9b67328041c87fa"
+  },
+  "image": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+  "learning_runs_started": 0,
+  "new_inference_runs": 0,
+  "outer_parallelism": 1,
+  "output_dir": "phases/p2-gsjso/runs/20260724_fusion_w1/p0prime/by_building/DEBY_LOD2_42364609/roofer",
+  "resource_contract": {
+    "concurrent_with_learning": false,
+    "concurrent_with_readout": false,
+    "memory": "24g",
+    "memory_swap": "24g",
+    "network": "none",
+    "serial_buildings": true
+  },
+  "schema": "jointbuildgs.fusion_w1.seed_p0prime.roofer_invocation.v1",
+  "state": "AUTHORIZED"
+}

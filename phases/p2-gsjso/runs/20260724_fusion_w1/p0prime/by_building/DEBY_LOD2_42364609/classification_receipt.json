@@ -1,0 +1,66 @@
+{
+  "building_id": "DEBY_LOD2_42364609",
+  "classified_seed_las": {
+    "class_counts": {
+      "2": 7644,
+      "6": 349
+    },
+    "epsg": 25832,
+    "las_version": "1.4",
+    "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/seed_epsg25832.las",
+    "point_count": 7993,
+    "point_format": 3,
+    "rgb_dimensions_present": true,
+    "sha256": "f6d744892c816ea6c72fc4f5646b7cb3b6b1a943d3dcc8b59ec954c2cf7d13e6",
+    "vertical_datum": "orthometric"
+  },
+  "cohort": "core",
+  "created_utc": "2026-07-25T22:26:59.502204+00:00",
+  "footprint": {
+    "crs": "EPSG:25832",
+    "feature_count": 1,
+    "path": "phases/p2-gsjso/runs/20260724_fusion_w1/p0prime/by_building/DEBY_LOD2_42364609/footprint.gpkg",
+    "sha256": "11b7a77c6ddac95a4b681147a0ebcfda2d88f54441a9f00210655432964d4939",
+    "source_path": "phases/p0-audit/data/work/footprints/lod2_ground_plan.gpkg",
+    "source_role": "approved_LoD2_GroundSurface_XY_only",
+    "source_sha256": "259cf04ec0c9411e669e75f61c37ea634290fcd40b230f6ed9b67328041c87fa"
+  },
+  "footprint_role_for_next_stage": "Roofer GroundSurface XY input",
+  "footprint_used_for_classification": false,
+  "learning_runs_started": 0,
+  "method": "validated_preclassified_passthrough",
+  "mutation": {
+    "classification_changed": false,
+    "file_rewritten": false,
+    "geometry_changed": false,
+    "overlay_runs_started": 0,
+    "smrf_runs_started": 0,
+    "vertical_datum_changed": false
+  },
+  "new_inference_runs": 0,
+  "preprocess_manifest": {
+    "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/preprocess_manifest.json",
+    "schema": "jointbuildgs.fusion_w1.preprocess_building.v1",
+    "sha256": "6a762e5631b78b8d93cdd45819fc179882cd1eabaa8c4e8be0159b19b02344b1",
+    "status": "PASSED"
+  },
+  "preprocess_resolver": {
+    "cache_namespace": "pose_28b38383a0b6d826",
+    "cache_run_manifest": {
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/preprocess_run_manifest.json",
+      "sha256": "00d8c24a8b0d76bdfb590e01ca1234f4492d1a9c60172234d09d6fd41d900e9f"
+    },
+    "preprocess_index": {
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/preprocess_index.csv",
+      "sha256": "e2e8825a9616cf413f05dc5aebc255ec9d60afc9a34d2f9dd332156c55ed00ec"
+    },
+    "stable_run_manifest": {
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/preprocess_manifest.json",
+      "sha256": "9f24b12794e12340e7b13178c086844d70048ca65615df129f81a89e583f5fc5"
+    }
+  },
+  "processing_order": 1,
+  "schema": "jointbuildgs.fusion_w1.seed_p0prime.classification_receipt.v1",
+  "state": "PASSED",
+  "tier": "height"
+}

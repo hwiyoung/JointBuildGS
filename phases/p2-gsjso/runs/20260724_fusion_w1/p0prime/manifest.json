@@ -1,0 +1,94 @@
+{
+  "canonical_helpers": {
+    "coverage_and_xy": {
+      "path": "phases/p2-gsjso/scripts/qs_baseline178_rescore.py",
+      "sha256": "0d752dade0b8677460b55d381a69db77f7bf611061fb7479710434358db33e9d"
+    },
+    "roof_metrics": {
+      "path": "phases/p2-gsjso/scripts/e5_c001_8way.py",
+      "sha256": "12322a7fd49c0904eaf7160946c7ef3b521ed091038452f9a863bef37f0bcbdc"
+    },
+    "roofer_status": {
+      "path": "phases/p0-audit/scripts/08_roofer_w2.py",
+      "sha256": "ae655090915c56bfeee2be830a28e27520c2430e97d19e515a0aa046e4c79e97"
+    }
+  },
+  "completion_records": [
+    {
+      "building_id": "DEBY_LOD2_42364609",
+      "complete_receipt": "phases/p2-gsjso/runs/20260724_fusion_w1/p0prime/by_building/DEBY_LOD2_42364609/complete.json",
+      "complete_receipt_sha256": "75f027a9c408a418d35e1728cd52c2b2ad9183025dae1fb2d9483340cd0e3469",
+      "processing_order": 1
+    }
+  ],
+  "created_utc": "2026-07-25T22:29:38.809657+00:00",
+  "input_schema_assumptions": [
+    "Stable preprocess_v1/preprocess_manifest.json is the only namespace resolver; P0-prime never hand-enters the pose cache namespace.",
+    "The stable manifest has cache_binding.cache_run_manifest and cache_binding.preprocess_index path/SHA records; the index building_manifest_path column resolves each per-building manifest.",
+    "The index columns are processing_order, building_id, tier, cohort, status, data_root, building_manifest_path, building_manifest_sha256, views_n, seed_points_n, class2_n, class6_n, and pose_sha256.",
+    "Manifest root schema is jointbuildgs.fusion_w1.preprocess_building.v1 and status is PASSED.",
+    "building contains building_id, processing_order, tier, and cohort.",
+    "seed.source_points_n equals seed.output_points_n, seed.downsample_applied is false, and seed.classification_counts has only string keys 2 and 6.",
+    "seed.base_las contains repo-relative path, sha256, crs=EPSG:25832, and vertical_datum=orthometric.",
+    "The base LAS is LAS 1.4 with RGB and is already classified; P0-prime validates it byte-for-byte and does not run SMRF or overlay again.",
+    "The trainer canonical NPZ and supervision artifacts are outside P0-prime; only seed.base_las is consumed."
+  ],
+  "learning_runs_started": 0,
+  "manifest_written_last": true,
+  "new_inference_runs": 0,
+  "population": {
+    "assembly_and_val3dity_are_independent": true,
+    "assembly_lod2_success_count": 1,
+    "completed_count": 1,
+    "target_count": 178,
+    "val3dity_valid_count": 1
+  },
+  "progress": {
+    "path": "phases/p2-gsjso/runs/20260724_fusion_w1/p0prime/progress.json",
+    "sha256": "08baeafaece9e7704facdbf1bcd3ab5d75f65b52d3c649f260854059456603a3"
+  },
+  "reference": {
+    "absolute_metric_caveat": "reference GML is a laser-derived product; absolute interpretation remains reserved",
+    "locked_files": {
+      "phases/p0-audit/data/raw/lod2/690_5334.gml": "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314",
+      "phases/p0-audit/data/raw/lod2/690_5336.gml": "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674"
+    },
+    "lod2_dir": "phases/p0-audit/data/raw/lod2",
+    "role": "evaluation_only_after_roofer_output_frozen",
+    "score_time_z_shift_m": 0.0
+  },
+  "resource_lock": {
+    "concurrent_with_learning": false,
+    "concurrent_with_readout": false,
+    "memory": "24g",
+    "memory_swap": "24g",
+    "network": "none",
+    "serial_buildings": true
+  },
+  "roofer": {
+    "image": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+    "outer_parallelism": 1,
+    "parameters": [
+      "--id-attribute",
+      "building_id",
+      "--jobs",
+      "3",
+      "--srs",
+      "EPSG:25832",
+      "--bld-class",
+      "6",
+      "--grnd-class",
+      "2",
+      "--lod22"
+    ],
+    "timeout_seconds_per_building": 900
+  },
+  "schema": "jointbuildgs.fusion_w1.seed_p0prime.manifest.v1",
+  "scores_csv": {
+    "path": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_seed_p0prime_scores.csv",
+    "row_count": 1,
+    "sha256": "971e3b0787bb8eeb5fbd0c56627b90c6937217da49e08a882f4165da4b4a8e90"
+  },
+  "state": "PARTIAL",
+  "task_id": "FUS-W1-P0PRIME-20260725"
+}

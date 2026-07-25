@@ -1,257 +1,465 @@
 {
-  "schema": "jointbuildgs.fusion_w1.manifest.v1",
-  "created_utc": "2026-07-24T14:28:00Z",
-  "created_kst": "2026-07-24T23:28:00+09:00",
-  "task_id": "FUS-W1-20260724",
-  "run_status": "BLOCKED",
-  "blocked_stage": "section_0_preflight",
-  "blocked_reason_code": "missing_canonical_source_document",
-  "interpretation_or_verdict": null,
-  "git": {
-    "repository": "JointBuildGS",
-    "branch": "exp/fusion-w1",
-    "canonical_base_commit": "c094cd3c30da2ba51df62064a13555185e65460f",
-    "dispatch_lock_commit": "e8da94f411bac5df289f5dbfaccf3dac72c77c1a",
-    "canonical_base_exists": true,
-    "dispatch_lock_commit_exists": true,
-    "dispatch_path": "phases/p2-gsjso/runs/20260724_fusion_w1/REMOTE_PROMPT_DISPATCH_V3_20260724.md",
-    "dispatch_sha256": "4d08a45a740de1f4e9754500280c9e564b1dcf3b8b5fcfa6e8bd904e9e2b8430",
-    "tracked_worktree_clean_at_preflight": true,
-    "upstream_configured": false
+  "authority_chain": {
+    "r0": {
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/resume_v2/r0_preflight.json",
+      "sha256": "d82bd7b824b45b5e77306bd4322fb4e96b86638a9b33d026fb740d4ade51f95e",
+      "status": "PASSED"
+    },
+    "r1": {
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/resume_v2/r1_pose_adoption_manifest.json",
+      "sha256": "f59cb9cc404dd1a262a3fb03df4df665514e2862d66be371baa05a372e825a42",
+      "status": "PASSED"
+    },
+    "r2": {
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/resume_v2/r2_gate_a_v2_registration.json",
+      "sha256": "a24697f3413b8d4b2777703e26d58234befe1c835dd282ce5da428d1c562f967",
+      "status": "PASS"
+    }
   },
-  "preflight": {
-    "overall_status": "BLOCKED",
-    "passed_pin_count": 4,
-    "total_pin_count": 5,
-    "pins": [
-      {
-        "pin": 1,
-        "name": "commit_existence",
-        "status": "passed",
-        "evidence": {
-          "canonical_base_type": "commit",
-          "dispatch_lock_type": "commit"
-        }
-      },
-      {
-        "pin": 2,
-        "name": "docker_service_versions",
-        "status": "passed",
-        "evidence": {
-          "gs_training": {
-            "reference": "jointbuildgs:dev",
-            "image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
-            "repo_digests": [],
-            "python": "3.11.15",
-            "torch": "2.4.1+cu121",
-            "torch_cuda_build": "12.1",
-            "gsplat": "1.4.0"
-          },
-          "roofer": {
-            "reference": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
-            "image_id": "sha256:9c980b97fba4c3fd30f5bb4afb8f2621be211d4e72e4333ea2053e8cd69b2dba",
-            "version": "roofer 1.0.0 (v1.0.0)"
-          },
-          "tools": {
-            "reference": "jointbuildgs-p0-tools:t0",
-            "image_id": "sha256:87bea02e5598a3d53a119b754191673497d52641bd8ea4106ffee653407579b0",
-            "repo_digests": [],
-            "python": "3.13.13",
-            "numpy": "2.4.6",
-            "laspy": "2.6.1",
-            "pyproj": "3.7.2"
-          }
-        }
-      },
-      {
-        "pin": 3,
-        "name": "gpu_and_cuda_arithmetic",
-        "status": "passed",
-        "evidence": {
-          "host_driver": "580.82.07",
-          "host_gpus": [
-            {
-              "index": 0,
-              "uuid": "GPU-4bdfcab8-1464-94b0-0a2f-dd9693ace2a0",
-              "name": "NVIDIA GeForce RTX 3090",
-              "memory_total_mib": 24576
-            },
-            {
-              "index": 1,
-              "uuid": "GPU-fab8b9b4-e6eb-9f2b-71e3-7997f092d21e",
-              "name": "NVIDIA GeForce RTX 3090",
-              "memory_total_mib": 24576
-            }
-          ],
-          "container_visible_physical_gpu": 1,
-          "container_visible_uuid": "GPU-fab8b9b4-e6eb-9f2b-71e3-7997f092d21e",
-          "arithmetic": "cuda matmul",
-          "cuda_matmul_finite": true,
-          "cuda_checksum": 5559680.0,
-          "allocated_bytes": 9043968
-        }
-      },
-      {
-        "pin": 4,
-        "name": "canonical_input_sha256",
-        "status": "passed",
-        "evidence": {
-          "files": [
-            {
-              "role": "als_laz",
-              "path": "phases/p0-audit/data/raw/als/690_5335.laz",
-              "bytes": 110979201,
-              "sha256": "01602b7385aaf7324f89da6183df3dbdeffa237f85bf57dc27208b554b4fc0b3"
-            },
-            {
-              "role": "als_laz",
-              "path": "phases/p0-audit/data/raw/als/690_5336.laz",
-              "bytes": 119749181,
-              "sha256": "98ab7ad7f4c5108ebf41bc62186b336c6cd8a70b82fceec57136a56c0188b566"
-            },
-            {
-              "role": "als_laz",
-              "path": "phases/p0-audit/data/raw/als/691_5335.laz",
-              "bytes": 107359041,
-              "sha256": "9e14119bb0af7d5a300aa3a2a19074219b4d6d290923b4b90277c317e8b33720"
-            },
-            {
-              "role": "als_laz",
-              "path": "phases/p0-audit/data/raw/als/691_5336.laz",
-              "bytes": 132681326,
-              "sha256": "63c64002fc55d8b99a49749b5a2e36d802186186a950c89779463274e3cb950d"
-            },
-            {
-              "role": "uav_image_archive",
-              "path": "phases/p0-audit/data/raw/uav/Images.zip",
-              "bytes": 5906891973,
-              "sha256": "078056d16c8ed7e75d5f22206fdb635327a1ed80e5a4e5890930ba17a43fb34d"
-            },
-            {
-              "role": "colmap_cameras",
-              "path": "results/tum_transfer/data_geoidfix/sparse/0/cameras.bin",
-              "resolved_path": "phases/p0-audit/data/work/mvs/colmap_dense/sparse/cameras.bin",
-              "bytes": 64,
-              "sha256": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99"
-            },
-            {
-              "role": "colmap_image_poses",
-              "path": "results/tum_transfer/data_geoidfix/sparse/0/images.bin",
-              "resolved_path": "phases/p0-audit/data/work/mvs/colmap_dense/sparse/images.bin",
-              "bytes": 114415526,
-              "sha256": "dfc779496ee3b13f8df5dd28fae465746ce0adf4aca7922d38cbed275a2fd951"
-            },
-            {
-              "role": "colmap_points3d",
-              "path": "results/tum_transfer/data_geoidfix/sparse/0/points3D.bin",
-              "resolved_path": "phases/p0-audit/data/work/mvs/colmap_dense/sparse/points3D.bin",
-              "bytes": 33476840,
-              "sha256": "bf93766e9773bdc59ce393cf1a36de4b3801cadc1bf834ea705396f5e9a706c3"
-            },
-            {
-              "role": "footprint_gpkg",
-              "path": "phases/p0-audit/data/work/footprints/lod2_ground_plan.gpkg",
-              "bytes": 5521408,
-              "sha256": "259cf04ec0c9411e669e75f61c37ea634290fcd40b230f6ed9b67328041c87fa"
-            },
-            {
-              "role": "reference_gml",
-              "path": "phases/p0-audit/data/raw/lod2/690_5334.gml",
-              "bytes": 156656509,
-              "sha256": "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314"
-            },
-            {
-              "role": "reference_gml",
-              "path": "phases/p0-audit/data/raw/lod2/690_5336.gml",
-              "bytes": 147865939,
-              "sha256": "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674"
-            }
-          ],
-          "resolved_training_image_set": {
-            "path": "results/tum_transfer/data_geoidfix/images",
-            "resolved_path": "phases/p0-audit/data/work/mvs/colmap_dense/images",
-            "file_count": 937,
-            "total_bytes": 910980034,
-            "ordered_per_file_sha256_aggregate": "dedc4251e491a9ae40d7c91073410cbf504023b6fe3143238b2528dc3146308a"
-          }
-        }
-      },
-      {
-        "pin": 5,
-        "name": "mount_freshness_against_canonical_document",
-        "status": "blocked",
-        "evidence": {
-          "required_canonical_document": "docs/W_면담정리_생성축재개·시드prior·문헌재조사_20260724.md",
-          "host_exists": false,
-          "mounted_container_exists": false,
-          "git_tracked_in_any_ref": false,
-          "sibling_checkout_match_found": false,
-          "existing_mount_control_files_match": true,
-          "mount_control_files": [
-            {
-              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/REMOTE_PROMPT_DISPATCH_V3_20260724.md",
-              "host_container_sha256_match": true,
-              "sha256": "4d08a45a740de1f4e9754500280c9e564b1dcf3b8b5fcfa6e8bd904e9e2b8430"
-            },
-            {
-              "path": "docs/boundary_map_v4_1_ladder.csv",
-              "host_container_sha256_match": true,
-              "sha256": "ae16170177ac0815eb6dd853b0469325c9a1018eeeac9b790b063927cbd7e7e2"
-            },
-            {
-              "path": "docs/사전등록서_품질축본선_승인잠금v4_20260721.md",
-              "host_container_sha256_match": true,
-              "sha256": "39b7b641a324dda7b5ea9d01906407223b75443d62b6d71580c3d598566464ec"
-            }
-          ]
-        }
-      }
-    ]
-  },
-  "coordinate_and_classification_lock": {
-    "crs": "EPSG:25832",
-    "ground_class": 2,
-    "building_class": 6,
-    "projection_datum_config": "configs/projection_datum.json",
-    "projection_datum_config_sha256": "096a49b46fc5661d74f9d3b54c4f3777676cfc6b27e577b52bb2dabeee8b480c",
-    "active_default_orthometric_geoid_m": 45.7,
-    "recorded_a1_zeta_hat_m": 48.125535,
-    "datum_selection_for_w1": "not_executed_preflight_blocked"
-  },
-  "resource_lock": {
-    "host_memory_bytes": 134910935040,
-    "host_memory_available_bytes_at_preflight": 61702225920,
-    "host_swap_bytes": 2147479552,
-    "host_swap_used_bytes_at_preflight": 2102161408,
-    "docker_cgroup_version": 2,
-    "readout_execution_mode": "serial_only",
-    "readout_concurrent_with_training": false,
-    "readout_memory_limit": "24g",
-    "readout_memory_swap_limit": "24g",
-    "readout_limit_applied": false,
-    "readout_limit_not_applied_reason": "no readout launched"
-  },
-  "execution_counters": {
-    "background_driver_launched": false,
-    "learning_runs_started": 0,
-    "gate_a_measurements_started": 0,
-    "micro_registration_attempts": 0,
-    "seed_preparations_started": 0,
-    "p0prime_roofer_runs_started": 0,
-    "readout_runs_started": 0,
-    "scoring_runs_started": 0,
-    "target_queue_generated": false
-  },
+  "created_at": "2026-07-25T22:57:59.421101+00:00",
   "cutoff": {
-    "timezone": "Asia/Seoul",
-    "cutoff_local": "2026-07-25T06:30:00+09:00",
-    "activated": false,
-    "reason": "preflight blocked before driver launch"
+    "at_or_after_cutoff": true,
+    "locked_kst": "2026-07-26T06:30:00+09:00",
+    "new_training_launch_forbidden": true,
+    "observed_kst": "2026-07-26T07:57:59.322402+09:00"
   },
-  "required_recovery": [
-    "Provide the canonical document at docs/W_면담정리_생성축재개·시드prior·문헌재조사_20260724.md.",
-    "Commit or otherwise provide a verifiable source hash and mtime for that document.",
-    "Rerun all five preflight pins and resolve the W1 datum value from the canonical source before Gate A.",
-    "Do not reuse this BLOCKED manifest as a passed preflight receipt."
-  ]
+  "fixed_outputs": {
+    "partial_report": {
+      "content_state": "PRESENT",
+      "exists": true,
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/W_FUSION_W1_PARTIAL_REPORT_20260726.md",
+      "sha256": "986294ac1919628592f5d19bac00a197bdf0fd9d8e8315637e780e98348d6ef9"
+    },
+    "w1_align_residuals": {
+      "content_state": "PRESENT_EXACT_COPY",
+      "exists": true,
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_align_residuals.csv",
+      "row_count": 178,
+      "sha256": "c20baf91c02be8b12527a1bf70fc2b4192961fc07d5e6ad790f4efa35fb60783"
+    },
+    "w1_loss_shares": {
+      "content_state": "HEADER_ONLY",
+      "exists": true,
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_loss_shares.csv",
+      "row_count": 0,
+      "sha256": "8e7eb0857fbf3db56b2c4cadb36c39ba358a330791a4356aabdff9efa46b250d"
+    },
+    "w1_panels": {
+      "building_id": "DEBY_LOD2_42364609",
+      "bytes": 217035,
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_panels/DEBY_LOD2_42364609__p0prime.png",
+      "receipt": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_panels/DEBY_LOD2_42364609__p0prime.receipt.json",
+      "receipt_schema": "jointbuildgs.fusion_w1.seed_p0prime.panel_receipt.v1",
+      "receipt_sha256": "d1ca6d459d3ed2ed2b164fb540c269a984942f3838e796ce3a1fcfcdbaea6b1a",
+      "receipt_state": "COMPLETE",
+      "role": "pre_learning_p0prime_qualitative_panel",
+      "sha256": "973aa51a327615e5a2888772914ae63a14345390f8e8f3195e8c1ac18bdd5c7c",
+      "status": "PRESENT"
+    },
+    "w1_scores_building": {
+      "content_state": "HEADER_ONLY",
+      "exists": true,
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_scores_building.csv",
+      "row_count": 0,
+      "sha256": "8bf0410ef2ce710c9aeb1ecfe7d29342c295e009d8f5ccb39798acc92c03f2ba"
+    },
+    "w1_seed_p0prime_scores": {
+      "content_state": "PRESENT_MEASURED",
+      "exists": true,
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_seed_p0prime_scores.csv",
+      "row_count": 1,
+      "sha256": "971e3b0787bb8eeb5fbd0c56627b90c6937217da49e08a882f4165da4b4a8e90"
+    },
+    "w1_seed_stats": {
+      "content_state": "PRESENT",
+      "exists": true,
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_seed_stats.csv",
+      "row_count": 1,
+      "sha256": "6a2896781336b29a5e251ad2f04a913c4eb8fb6b3258bc4e8885ce0fea8fef12"
+    },
+    "w1_summary": {
+      "content_state": "PLACEHOLDER_NOT_MEASURED",
+      "exists": true,
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_summary.csv",
+      "row_count": 12,
+      "sha256": "afd07fe303e94dbec36f626d445d3be53889f3db005117c13a676fa41bcede11"
+    },
+    "w1_targets": {
+      "content_state": "PRESENT",
+      "exists": true,
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_targets.csv",
+      "row_count": 178,
+      "sha256": "256d376080dca7c496aa3f34c9bcbbd1a8e52d0b25d6e98f7eec388b3f6cc943"
+    }
+  },
+  "git": {
+    "branch": "exp/fusion-w1",
+    "head": "095cd4ec996d00d1d2861f36ae64061944c5fb93",
+    "implementation_files_match_head": true,
+    "required_ancestor": "20c7e49d362eefb0dc09ea3f9ef8e23a56faabeb",
+    "required_ancestor_of_head": true,
+    "status_porcelain_lines_n": 12,
+    "status_porcelain_sha256": "34931c9143df7d6f53e680442894139885bd21efcf9687b53d962a4898e4d52e",
+    "tracked_worktree_clean_before_closeout": true
+  },
+  "incomplete_stages": [
+    {
+      "completed_n": 1,
+      "remaining_n": 177,
+      "stage": "preprocess",
+      "state": "PARTIAL",
+      "target_n": 178
+    },
+    {
+      "completed_n": 1,
+      "remaining_n": 177,
+      "stage": "p0prime",
+      "state": "PARTIAL",
+      "target_n": 178
+    },
+    {
+      "completed_n": 0,
+      "stage": "training",
+      "state": "NOT_STARTED"
+    },
+    {
+      "completed_n": 0,
+      "stage": "section5_readout_roofer_scoring",
+      "state": "NOT_STARTED"
+    },
+    {
+      "completed_n": 0,
+      "stage": "judgment_scales_1_to_4",
+      "state": "NOT_MEASURED"
+    }
+  ],
+  "interpretation_or_verdict": false,
+  "issues": {
+    "headings": [
+      "FUS-W1-PF-001 — canonical source document missing",
+      "FUS-W1-TGT-001 — root-owned provisional target artifacts",
+      "FUS-W1-ALIGN-DEV-001 — direct-residual proxy rejected before measurement",
+      "FUS-W1-ALIGN-DEV-002 — concurrent stale draft writer isolated",
+      "FUS-W1-ALIGN-DEV-003 — primary direction and metre conversion corrected",
+      "FUS-W1-ALIGN-RUN-001 — logical image-path aggregate restored",
+      "FUS-W1-ALIGN-RUN-002 — unregistered azimuth-bin hard gate removed",
+      "FUS-W1-ALIGN-RUN-003 — predicted uncertainty retained as ranking, not exclusion",
+      "FUS-W1-ALIGN-RUN-004 — core Gate A stopped after the third consecutive building error",
+      "FUS-W1-ALIGN-DEV-004 — terminal building checkpoint now precedes stage-stop raise",
+      "FUS-W1-COREG-LOCK-001 — ALS-fixed camera co-registration preregistered",
+      "FUS-W1-COREG-RUN-001 — lock1 stopped before trigger residual evaluation",
+      "FUS-W1-COREG2-RUN-001 — no transform satisfied the frozen trigger contract",
+      "FUS-W1-COREGDIAG-001 — Gate A 사전등록 초과 구현 확인",
+      "FUS-W1-COREGDIAG-002 — 지지율 요구의 범주 오류 확정",
+      "FUS-W1-COREG-ADOPT-001 — 전역 SE(3) 채택 재판정 기록",
+      "FUS-W1-PREPROCESS-001 — 투영 TIN 화면 토폴로지 구현 오류",
+      "FUS-W1-CUTOFF-001 — 06:30 컷 시점 신규 학습 미착수"
+    ],
+    "issue_count": 18,
+    "modified_by_closeout": false,
+    "path": "phases/p2-gsjso/runs/20260724_fusion_w1/issues.md",
+    "sha256": "b69cd1a4956dedd91326763bd6cc1ec5716d91e2d6b82b90745651576d8e301e"
+  },
+  "judgment_scales": [
+    {
+      "measurement_basis": "two_run_training_measurements_n=0",
+      "name": "assembly_establishment",
+      "scale": "1",
+      "status": "NOT_MEASURED",
+      "value": ""
+    },
+    {
+      "measurement_basis": "two_run_training_measurements_n=0",
+      "name": "seed_retention",
+      "scale": "2",
+      "status": "NOT_MEASURED",
+      "value": ""
+    },
+    {
+      "measurement_basis": "two_run_training_measurements_n=0",
+      "name": "textured_boundary_improvement",
+      "scale": "3",
+      "status": "NOT_MEASURED",
+      "value": ""
+    },
+    {
+      "measurement_basis": "two_run_training_measurements_n=0",
+      "name": "supervision_removal_control",
+      "scale": "4",
+      "status": "NOT_MEASURED",
+      "value": ""
+    }
+  ],
+  "observation_only": true,
+  "postlearning_fusion_counters": {
+    "counter_truth": "immutable_STARTED_receipts_and_zero_locked_CSV_rows",
+    "learning_runs_started": 0,
+    "readout_counter": {
+      "exists": false
+    },
+    "readout_runs_started": 0,
+    "roofer_runs_started": 0,
+    "scoring_runs_started": 0,
+    "section5_started_receipts_n": 0,
+    "training_counter": {
+      "exists": false
+    },
+    "training_materializations_n": 0,
+    "training_receipts_n": 0
+  },
+  "publication": {
+    "alignment_exact_bytes": true,
+    "issues_md_modified": false,
+    "loss_share_header_only_zero_rows": true,
+    "manifest_atomic_replace_written_last": true,
+    "report_written_before_manifest": true,
+    "stage_counters_touched": false,
+    "stage_receipts_created": false
+  },
+  "r1_verification": {
+    "derived_sha256": {
+      "cameras.bin": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99",
+      "images.bin": "28b38383a0b6d82656108e8f0e5e79711dcda93948ab2e89c1cd8f47215962a5",
+      "points3D.bin": "a822c0967a3201cb7366193ed61b285568dd0e0102058b995008abdef6e4a914"
+    },
+    "diagnostic_reproduction": {
+      "building_balanced_median_of_matched_medians_m": 0.07236711717994171,
+      "candidate_applied_in_memory_to_raw_dense_count": 1,
+      "core_correspondence_capable_n": 24,
+      "core_matched_median_le_0p3_n": 24,
+      "core_population_n": 28,
+      "corrected_images_bin_directly_consumed": false,
+      "correspondence_capable_n": 132,
+      "current_input_sha256": {
+        "docs/boundary_map_v4_1_ladder.csv": "ae16170177ac0815eb6dd853b0469325c9a1018eeeac9b790b063927cbd7e7e2",
+        "phases/p2-gsjso/configs/fusion_w1_coreg_lock1.json": "c246b28bf3a87468fe39db2b46fa199b633b263cf317cfc3b1d796d915695f28",
+        "phases/p2-gsjso/runs/20260724_fusion_w1/coreg_lock2/block_selection.json": "ac830a797463b030db9be46d70eb4126c9992f265f53b0481b899d0b5942c81f",
+        "phases/p2-gsjso/runs/20260724_fusion_w1/coreg_lock2/global_selection.json": "7b633689a4f1a184f8941533de2b36ed075654318c503fb8035d1d639804dfe9",
+        "phases/p2-gsjso/runs/20260724_fusion_w1/w1_coreg2_camera_blocks.csv": "613171fc839d52ff78e7b2a8bc4db5eb8d11ac153c351f77ad8a14f245954a0c",
+        "phases/p2-gsjso/runs/20260724_fusion_w1/w1_targets.csv": "256d376080dca7c496aa3f34c9bcbbd1a8e52d0b25d6e98f7eec388b3f6cc943",
+        "phases/p2-gsjso/scripts/fusion_w1_coreg_lock1.py": "de812f7b1c1baacaeca101fffcd647f1be50e3fcfc3ad4caef2448d83259c820",
+        "results/tum_transfer/analysis/footprints_aoi.geojson": "ca7f5b13a52368e1d2ac47b77cc78f12887bad4d598d122ad57b882eb4920a82",
+        "results/tum_transfer/fusion_w1_coreg_lock2/als_fixed_class2_6_ellipsoidal_zeta45p7.npz": "fc077ed02dd0df7c5c90d5e415eb1a028faad8d39415cbf695c9f1df1e256612",
+        "results/tum_transfer/fusion_w1_coreg_lock2/als_materialization_receipt.json": "0b424b6c390332cf1bad8a6d960d95eeb050dc78504ad1b3a45a3bf91f70b9b8",
+        "results/tum_transfer/mob/raw/raw_dense.npz": "712e7b6e182e1955223585ce8958acf2d11588caacc8754fac4aec9bfb2dd69a",
+        "results/tum_transfer/mob_analysis/p0c_step2/als_aoi.laz": "ac5cd0dc9c368a15e1f8fd5a18ad8d96ddbbd8cbaf8e1b608fd675430d6e9225"
+      },
+      "learning_runs_started": 0,
+      "matched_median_le_0p3_n": 132,
+      "maximum_candidate_offset_row_difference": 4.976019596369952e-13,
+      "maximum_candidate_residual_row_difference": 4.994893387788579e-13,
+      "membership_matches_published_building_ids": true,
+      "method": "locked_coregdiag_functions_without_measure_command",
+      "n_threshold": 40,
+      "offsets_observed_n": 134,
+      "per_building_candidate_offset_rows_reproduced_n": 178,
+      "per_building_candidate_residual_rows_reproduced_n": 178,
+      "population_n": 178,
+      "pose_frame_equivalence_basis": "same adopted transform hash plus all-camera center/projection/roundtrip checks",
+      "raw_dense_or_source_pose_modified": false,
+      "readout_runs_started": 0,
+      "reference_outputs_verified": {
+        "artifacts": {
+          "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_building_offsets.csv": "550ec1e9a7025bff32a613c929865260c57faa58830f04e65f2f208c9f0c507e",
+          "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_building_residuals.csv": "c20baf91c02be8b12527a1bf70fc2b4192961fc07d5e6ad790f4efa35fb60783",
+          "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_manifest.json": "512ec1f2a325c0923800508a73316eedc909780554619e2545c8fe4b9e4f6c58",
+          "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_measurement_start.json": "96788818cf60551410ba2d8d0532efa70ad288c18fc8d6f11df239a71cedf3f3",
+          "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_method_lock.json": "fee15d92ddc579a9eadb4ebc6cbc7ebe3575ccecc1e334c468c52f32fbfcd161",
+          "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_support_tier_confusion.csv": "d2bffa111bdca4b2e2958adad70592a068dc03a599daee0b0fa02ff5e53a3631",
+          "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_tail_breakdown.csv": "6612cccc43700dbfe06d377a8593245d9d8aa9d111486e42f276be0085acb797",
+          "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_tail_plan.png": "cbe996a5192e0d696660001db2806feded48a7e7c7f1796b6b1c92c4cf27b9b3",
+          "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_tail_representative.png": "df89bed43af3d208810c479c667e8bce683f18013c3ee9023ce0eadd1d33161d",
+          "phases/p2-gsjso/runs/20260724_fusion_w1/coregdiag_tier_summary.csv": "952e29a64ed2ba0697900c7f18b544a29695e2feb578f75b4b7f4a1c0d6e1fc6"
+        },
+        "building_rows": 178,
+        "learning_runs_started": 0,
+        "offset_rows": 178,
+        "status": "VERIFIED",
+        "tail_rows": 7868,
+        "tier_summary_rows": 8
+      },
+      "roofer_runs_started": 0,
+      "schema": "jointbuildgs.fusion_w1.pose_adoption_v2.diagnostic_reproduction.v1",
+      "scoring_runs_started": 0,
+      "status": "PASSED",
+      "t5_building_balanced_median_r_total_m": 0.004186004000697177,
+      "tolerances": {
+        "rounded_report_m": 1e-06,
+        "unrounded_m": 1e-10
+      }
+    },
+    "pose_validation": {
+      "camera_block_inventory_count": 937,
+      "camera_intrinsics_copied_byte_identical": true,
+      "camera_pose_records_transformed_once": 937,
+      "image_count": 937,
+      "maximum_camera_center_error_m": 3.694822225952521e-13,
+      "maximum_pose_roundtrip_rotation_matrix_error": 1.6653345369377348e-15,
+      "maximum_pose_roundtrip_translation_error_m": 1.4210854715202004e-14,
+      "maximum_projection_invariance_error": 5.115907697472721e-13,
+      "points2d_tails_preserved": true,
+      "points3d_coordinate_companion_transform": true,
+      "points3d_is_not_an_independent_alignment_treatment": true,
+      "points3d_validation": {
+        "ids_rgb_error_tracks_byte_identical": true,
+        "maximum_forward_error_m": 0.0,
+        "maximum_inverse_roundtrip_error_m": 4.547473508864641e-13,
+        "record_count": 371808
+      },
+      "transformed_point3d_count": 371808
+    },
+    "source_sha256": {
+      "cameras.bin": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99",
+      "images.bin": "dfc779496ee3b13f8df5dd28fae465746ce0adf4aca7922d38cbed275a2fd951",
+      "points3D.bin": "bf93766e9773bdc59ce393cf1a36de4b3801cadc1bf834ea705396f5e9a706c3"
+    }
+  },
+  "r2_registration": {
+    "gate_slots": {
+      "auxiliary_statistics_used_for_gate": false,
+      "capable_matched_median_le_0p3_n": 132,
+      "core_capable_building_ids": [
+        "DEBY_LOD2_104586480",
+        "DEBY_LOD2_42364609",
+        "DEBY_LOD2_42364659",
+        "DEBY_LOD2_42364663",
+        "DEBY_LOD2_4907168",
+        "DEBY_LOD2_4907182",
+        "DEBY_LOD2_4907184",
+        "DEBY_LOD2_4907185",
+        "DEBY_LOD2_4907186",
+        "DEBY_LOD2_4907188",
+        "DEBY_LOD2_4907195",
+        "DEBY_LOD2_4907198",
+        "DEBY_LOD2_4907202",
+        "DEBY_LOD2_4907510",
+        "DEBY_LOD2_4908023",
+        "DEBY_LOD2_4908028",
+        "DEBY_LOD2_4908048",
+        "DEBY_LOD2_4908049",
+        "DEBY_LOD2_4908050",
+        "DEBY_LOD2_4908166",
+        "DEBY_LOD2_4908168",
+        "DEBY_LOD2_4908176",
+        "DEBY_LOD2_4908178",
+        "DEBY_LOD2_60098"
+      ],
+      "core_capable_matched_median_le_0p3_n": 24,
+      "core_correspondence_capable_n": 24,
+      "core_population_n": 28,
+      "correspondence_capable_n": 132,
+      "incapable_tier_counts": {
+        "height": 11,
+        "outline": 33,
+        "surface": 2
+      },
+      "n_threshold": 40,
+      "numeric_source_role": "reuse_only_no_remeasurement",
+      "population_n": 178,
+      "status": "PASS"
+    },
+    "qualitative_overlays": {
+      "count": 28,
+      "index_path": "phases/p2-gsjso/runs/20260724_fusion_w1/resume_v2/r2_overlay_index.csv",
+      "index_sha256": "974dedebfaf16f3334d523152b3798ad194f646164915d2c3f47072045d0ebee",
+      "overlay_dir": "phases/p2-gsjso/runs/20260724_fusion_w1/resume_v2/w1_align_overlays_v2",
+      "png_sha256": {
+        "001__DEBY_LOD2_42364609__DJI_20241217084827_0177_D.png": "9dc96ccc88a14f8942f224205cbf411260909f9f5fbb61186b474e02bb129055",
+        "002__DEBY_LOD2_42364659__DJI_20241217091009_0067_D.png": "722465218c9064e51ec2f26ec265614d1c39697d42030f7025255553b943fe32",
+        "003__DEBY_LOD2_42364663__DJI_20241217084725_0146_D.png": "ce88588b7a901aa980ee943d05cdd0f7fe302c2707ba3d22cd2a7439a0db021a",
+        "004__DEBY_LOD2_4907182__DJI_20241217094534_0023_D.png": "79e91a0aff03880f8a86f3e289b3d8f56d5e7a01be940e97093b8622a74341b9",
+        "005__DEBY_LOD2_4907510__DJI_20241217084637_0122_D.png": "69e88ed4b003219e8deb9b3823aa12138c61075a04b455461b76f7b13255d527",
+        "006__DEBY_LOD2_4908050__DJI_20241217084813_0170_D.png": "55c661d5cc54ebf8b9dc48b93ef03c1b1a38aa4cda064b30e3c64ab45615d3f2",
+        "007__DEBY_LOD2_4908166__DJI_20241217084825_0176_D.png": "967d7c7acf9e5c513002c3c7e6ebaef23ed1290a36e702e508da0932a705b2e7",
+        "008__DEBY_LOD2_4908176__DJI_20241217084853_0190_D.png": "209411a21200a444e496f75cd14cfcdf96d46c6f5171caaae848ca6df32e2f42",
+        "009__DEBY_LOD2_4907184__DJI_20241217084847_0187_D.png": "ada8782603db37ba01f029d0592d5710b0dbc536a5aa38d1f3838a9895961e6e",
+        "010__DEBY_LOD2_4907185__DJI_20241217094534_0023_D.png": "da2b0850122809373ebcbd0fb27d61381156c9f21334edf4d9dfe6b611bb2376",
+        "011__DEBY_LOD2_4907186__DJI_20241217094534_0023_D.png": "e6a5ebe8c12b40107e29cb81664cf7fb00a01544286a219439c40cd298f39920",
+        "012__DEBY_LOD2_4907188__DJI_20241217094534_0023_D.png": "550b13470be5ce7efa3c1b9ec1199fe4717b6526211ebb2f10e4fa2bc73fc4fc",
+        "013__DEBY_LOD2_4907195__DJI_20241217094534_0023_D.png": "66e4629bcc872f90ccf19552f567cef21aa800d39f637f2db3fa464f34b9a70b",
+        "014__DEBY_LOD2_4907198__DJI_20241217094534_0023_D.png": "48ed0d122d521ae8ae1e5e78da5084476b48c1ca9ca97f974896b92f7d411f77",
+        "015__DEBY_LOD2_4907202__DJI_20241217094534_0023_D.png": "7070e90bb5da99dc488f38020c91e767d452a50a542484ff0918a223aa344292",
+        "016__DEBY_LOD2_4908168__DJI_20241217084841_0184_D.png": "f891c83aebcb643cc002a1f971b138fb31089fc534f49c0410a28ca7167c0590",
+        "017__DEBY_LOD2_4908178__DJI_20241217094534_0023_D.png": "87937a9d2b2f268da00d5af8e03813b88d9010d506045b27ae9123bef418119a",
+        "018__DEBY_LOD2_60098__DJI_20241217094534_0023_D.png": "694bea365d7f09179e534bf871de801e277dd4d75df836b59f16590ba14d0932",
+        "019__DEBY_LOD2_4907199__DJI_20241217094534_0023_D.png": "5dd5dc688bb7ee0f58219659ba75c8994fbbe4af18bf45faa67442253fbfb43b",
+        "020__DEBY_LOD2_4908049__DJI_20241217084813_0170_D.png": "e4dcb58cffc668ba99b9db06f481d52a49914b5f6bd0b95aeea25063a7dd8eb0",
+        "021__DEBY_LOD2_104586480__DJI_20241217084609_0108_D.png": "3990e5aa24b1165eaf86fb8f210fe4ecedf2d8c4cae58c4dfe75dd95dfd1482d",
+        "022__DEBY_LOD2_4908048__DJI_20241217084813_0170_D.png": "983875182b057c239265ef3a32bf620ce9e83653746b9fb2cf3279bf30fe277e",
+        "023__DEBY_LOD2_4908051__DJI_20241217094947_0020_D.png": "51ca5e4b1254525ab9fb825888376cd69018f192d8c200587ee83324fe035483",
+        "024__DEBY_LOD2_108247350__DJI_20241217094534_0023_D.png": "beef69fd452355f7de190b52852e283a26728fec51163f5591441e758c7f095a",
+        "025__DEBY_LOD2_4907168__DJI_20241217094534_0023_D.png": "61f8f5a2f6ba919c1a136480a233171319cb3223a1adc0031e9fab4b87b83250",
+        "026__DEBY_LOD2_4908164__DJI_20241217094534_0023_D.png": "416e9a9ee1813eb17d6c3dc307ff159d6e22bf3937865b91ea8d65811520a681",
+        "027__DEBY_LOD2_4908023__DJI_20241217084721_0144_D.png": "20f55da63f19c2cdc83c83dccafca9b85cb7f18ba7ac2c21c6e2a2c9b7fb84f5",
+        "028__DEBY_LOD2_4908028__DJI_20241217084539_0093_D.png": "b1eeb9e85a112b7da5e1296d971e8d37f4aaa312ff26362c6faffe1fe033528e"
+      },
+      "population": "all_core_28",
+      "role": "qualitative_only_not_a_gate"
+    },
+    "status": "PASS"
+  },
+  "report": {
+    "path": "phases/p2-gsjso/runs/20260724_fusion_w1/W_FUSION_W1_PARTIAL_REPORT_20260726.md",
+    "sha256": "986294ac1919628592f5d19bac00a197bdf0fd9d8e8315637e780e98348d6ef9"
+  },
+  "run_id": "20260724_fusion_w1",
+  "schema": "jointbuildgs.fusion_w1.partial_closeout_manifest.v1",
+  "stage_inventory": {
+    "p0prime": {
+      "completed_n": 1,
+      "counter_scope": "separate_pre_learning_seed_attribution",
+      "final_manifest_published": true,
+      "remaining_namespace_contract": "new_approved_namespace_or_reopen_contract_required",
+      "roofer_completed_n": 1,
+      "scoring_completed_n": 1,
+      "state": "PARTIAL",
+      "target_n": 178
+    },
+    "preprocess": {
+      "completed_n": 1,
+      "status": "PARTIAL",
+      "target_n": 178
+    },
+    "section5": {
+      "measured_rows_n": 0,
+      "readout_started_n": 0,
+      "roofer_started_n": 0,
+      "scoring_started_n": 0,
+      "state": "NOT_STARTED"
+    },
+    "training": {
+      "completed_n": 0,
+      "failed_n": 0,
+      "materialized_n": 0,
+      "started_n": 0,
+      "state": "NOT_STARTED"
+    }
+  },
+  "state": "PARTIAL",
+  "supersedes": {
+    "path": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_manifest.json",
+    "reason": "legacy_initial_manifest_superseded_by_resume_v2_and_partial_closeout",
+    "run_status": "BLOCKED",
+    "schema": "jointbuildgs.fusion_w1.manifest.v1",
+    "sha256": "1fff804ea6e30ef2d18f702fb67f4a38c0e225d561840311e685f15d5b4a5c38"
+  },
+  "target_population": {
+    "core_priority_complete": false,
+    "population_n": 178,
+    "provisional_extension_n": 150,
+    "queue_status": "provisional_gs4_overlap_unresolved",
+    "resolved_core_lower_bound_n": 28,
+    "tier_counts": {
+      "height": 23,
+      "outline": 41,
+      "surface": 114
+    }
+  },
+  "task_id": "FUS-W1-PARTIAL-CLOSEOUT-20260726",
+  "training_throughput": {
+    "completed_n": 0,
+    "scope": "one_30k_training_run",
+    "started_n": 0,
+    "status": "NOT_MEASURED"
+  }
 }

@@ -1,0 +1,155 @@
+{
+  "building_id": "DEBY_LOD2_42364609",
+  "cohort": "core",
+  "created_utc": "2026-07-25T22:48:51.829772+00:00",
+  "inputs": {
+    "cityjson": {
+      "label": "P0-prime combined CityJSON",
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/p0prime/by_building/DEBY_LOD2_42364609/cityjson/seed_p0prime.city.json",
+      "sha256": "6f2611a6b114c53b20b67e3f87b94afb0ba1229c4a9568a7ae7287c89248bfe1",
+      "size": 2243
+    },
+    "classification_receipt": {
+      "label": "P0-prime classification receipt",
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/p0prime/by_building/DEBY_LOD2_42364609/classification_receipt.json",
+      "sha256": "946ca6aceb32de861e5af0ae3309ba58e43b648c605085c500749ddf3a767485",
+      "size": 2774
+    },
+    "complete_receipt": {
+      "label": "P0-prime complete receipt",
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/p0prime/by_building/DEBY_LOD2_42364609/complete.json",
+      "sha256": "75f027a9c408a418d35e1728cd52c2b2ad9183025dae1fb2d9483340cd0e3469",
+      "size": 827
+    },
+    "photo_support_mask": {
+      "label": "selected first photo support mask",
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/photo_support_masks/DJI_20241217084827_0177_D.npy",
+      "sha256": "9016b168f7f66c767d0b718d608bf8bac9e695adf6c6e22968ff5360c803ee7c",
+      "size": 1418328
+    },
+    "preprocess_manifest": {
+      "label": "preprocess building manifest",
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/preprocess_manifest.json",
+      "sha256": "6a762e5631b78b8d93cdd45819fc179882cd1eabaa8c4e8be0159b19b02344b1",
+      "size": 135831
+    },
+    "reference_gml": [
+      {
+        "label": "evaluation-only reference GML",
+        "path": "phases/p0-audit/data/raw/lod2/690_5334.gml",
+        "sha256": "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314",
+        "size": 156656509
+      },
+      {
+        "label": "evaluation-only reference GML",
+        "path": "phases/p0-audit/data/raw/lod2/690_5336.gml",
+        "sha256": "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674",
+        "size": 147865939
+      }
+    ],
+    "roofer_invocation": {
+      "label": "P0-prime Roofer invocation",
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/p0prime/by_building/DEBY_LOD2_42364609/roofer_invocation.json",
+      "sha256": "b38beaa4deee7ad0fbd65bc45a28da961f6ebe3c6c1b59b83e109e8d303e588a",
+      "size": 2397
+    },
+    "roofer_jsonseq": [
+      {
+        "label": "frozen Roofer CityJSONSeq",
+        "path": "phases/p2-gsjso/runs/20260724_fusion_w1/p0prime/by_building/DEBY_LOD2_42364609/roofer/690860_5336180.city.jsonl",
+        "sha256": "cec41cee79042f7f1d77058a05f3c43b04c20046f547efb2d2f81e439c8b7c4a",
+        "size": 2280
+      }
+    ],
+    "roofer_receipt": {
+      "label": "frozen P0-prime Roofer receipt",
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/p0prime/by_building/DEBY_LOD2_42364609/roofer_receipt.json",
+      "sha256": "000a132a5a9161e3d3889cc654776af180e8e55c0a15cb2eabf0a2be4cd40a89",
+      "size": 1419
+    },
+    "score_receipt": {
+      "label": "P0-prime score receipt",
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/p0prime/by_building/DEBY_LOD2_42364609/score_receipt.json",
+      "sha256": "6aa318e33588d810aadba9044b2549ba2c08bf1b9fe548cf2c9767bf5d2ace41",
+      "size": 6018
+    },
+    "seed_las": {
+      "label": "actual P0-prime seed LAS",
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/seed_epsg25832.las",
+      "sha256": "f6d744892c816ea6c72fc4f5646b7cb3b6b1a943d3dcc8b59ec954c2cf7d13e6",
+      "size": 272298
+    },
+    "selected_first_image": {
+      "label": "selected first image",
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/images/DJI_20241217084827_0177_D.JPG",
+      "sha256": "ec27f0832e3c31fb7157d63081e7c9a30c09a1c7e4da9c0dfd537105c053019f",
+      "size": 934930
+    },
+    "supervision_index": {
+      "label": "preprocess supervision index",
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision_index.csv",
+      "sha256": "4ebfdb43626175aff379be29b6da858d414a0ecfb0501f97c6e8d84a6ca01b82",
+      "size": 34260
+    }
+  },
+  "learning_runs_started": 0,
+  "new_inference_runs": 0,
+  "original_inputs_modified": false,
+  "panel": {
+    "headless_matplotlib": true,
+    "panels_n": 4,
+    "path": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_panels/DEBY_LOD2_42364609__p0prime.png",
+    "sha256": "973aa51a327615e5a2888772914ae63a14345390f8e8f3195e8c1ac18bdd5c7c",
+    "size": 217035
+  },
+  "panel_role": "P0-prime_pre-learning_observation",
+  "panels": [
+    {
+      "bbox_xyxy_inclusive": [
+        1190,
+        118,
+        1258,
+        173
+      ],
+      "crop_xyxy_inclusive": [
+        1178,
+        106,
+        1270,
+        185
+      ],
+      "image_name": "DJI_20241217084827_0177_D.JPG",
+      "index": 1,
+      "role": "selected_first_image_photo_support_bbox_crop_and_outline",
+      "selection_order": 1,
+      "support_pixels_n": 2674
+    },
+    {
+      "class_counts": {
+        "2": 7644,
+        "6": 349
+      },
+      "displayed_counts": {
+        "2": 7644,
+        "6": 349
+      },
+      "index": 2,
+      "role": "actual_seed_LAS_topview_class2_class6"
+    },
+    {
+      "index": 3,
+      "role": "P0-prime_Roofer_CityJSON_roof_topview",
+      "roof_faces_n": 1
+    },
+    {
+      "index": 4,
+      "role": "evaluation-only_reference_GML_roof_topview",
+      "roof_faces_n": 1
+    }
+  ],
+  "processing_order": 1,
+  "reference_role": "evaluation_only_after_roofer_output_frozen",
+  "roofer_output_frozen_before_reference_open": true,
+  "schema": "jointbuildgs.fusion_w1.seed_p0prime.panel_receipt.v1",
+  "state": "COMPLETE",
+  "tier": "height"
+}

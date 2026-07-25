@@ -1,0 +1,102 @@
+{
+  "buildings": [
+    {
+      "building_id": "DEBY_LOD2_42364609",
+      "building_manifest_path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/preprocess_manifest.json",
+      "building_manifest_sha256": "6a762e5631b78b8d93cdd45819fc179882cd1eabaa8c4e8be0159b19b02344b1",
+      "class2_n": 7644,
+      "class6_n": 349,
+      "cohort": "core",
+      "data_root": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609",
+      "pose_sha256": "28b38383a0b6d82656108e8f0e5e79711dcda93948ab2e89c1cd8f47215962a5",
+      "processing_order": 1,
+      "seed_points_n": 7993,
+      "status": "PASSED",
+      "tier": "height",
+      "views_n": 30
+    }
+  ],
+  "cache_binding": {
+    "cache_dir": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826",
+    "cache_run_manifest": {
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/preprocess_run_manifest.json",
+      "sha256": "00d8c24a8b0d76bdfb590e01ca1234f4492d1a9c60172234d09d6fd41d900e9f"
+    },
+    "namespace": "pose_28b38383a0b6d826",
+    "preprocess_index": {
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/preprocess_index.csv",
+      "sha256": "e2e8825a9616cf413f05dc5aebc255ec9d60afc9a34d2f9dd332156c55ed00ec"
+    },
+    "w1_seed_stats": {
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_seed_stats.csv",
+      "sha256": "6a2896781336b29a5e251ad2f04a913c4eb8fb6b3258bc4e8885ce0fea8fef12"
+    }
+  },
+  "completed_buildings_n": 1,
+  "core_completed_n": 1,
+  "core_expected_n": 28,
+  "created_at": "2026-07-25T22:26:20.010364+00:00",
+  "fixed_outputs": {
+    "w1_seed_stats": {
+      "incremental_atomic_rebuild": true,
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_seed_stats.csv",
+      "rows_n": 1,
+      "sha256": "6a2896781336b29a5e251ad2f04a913c4eb8fb6b3258bc4e8885ce0fea8fef12"
+    }
+  },
+  "git_lock": {
+    "branch": "exp/fusion-w1",
+    "head": "d8af9898a4952f927bfd955fb753c1328ac1bcf3",
+    "required_files": [
+      {
+        "path": "phases/p2-gsjso/configs/fusion_w1_preprocess_v1_20260725.json",
+        "sha256": "80031775a40c1847fa67c586ea4e5493be796b4bf89dd693a198c355e61f462e"
+      },
+      {
+        "path": "phases/p2-gsjso/scripts/fusion_w1_preprocess_v1_20260725.py",
+        "sha256": "8ab18f9c0563420917f40a459465f9b23632d29fea7dc380de24fdf0dcd6a2e9"
+      },
+      {
+        "path": "phases/p2-gsjso/scripts/run_fusion_w1_preprocess_v1_20260725.sh",
+        "sha256": "78ac69cba89069464eceb37f25fcde9c537e63706a4d7044dcd35383d794ea56"
+      },
+      {
+        "path": "phases/p2-gsjso/scripts/test_fusion_w1_preprocess_v1_20260725.py",
+        "sha256": "5b7f6d3c00050ccf6d8faec3e4d32a2b9031445fde60b17d139f08d6f17a7ede"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260724_fusion_w1/resume_v2/r1_pose_adoption_manifest.json",
+        "sha256": "f59cb9cc404dd1a262a3fb03df4df665514e2862d66be371baa05a372e825a42"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260724_fusion_w1/resume_v2/r2_gate_a_v2_registration.json",
+        "sha256": "a24697f3413b8d4b2777703e26d58234befe1c835dd282ce5da428d1c562f967"
+      }
+    ]
+  },
+  "pose_binding": {
+    "cache_namespace": "pose_28b38383a0b6d826",
+    "corrected_images_sha256": "28b38383a0b6d82656108e8f0e5e79711dcda93948ab2e89c1cd8f47215962a5",
+    "r1_manifest": "phases/p2-gsjso/runs/20260724_fusion_w1/resume_v2/r1_pose_adoption_manifest.json",
+    "r1_manifest_sha256": "f59cb9cc404dd1a262a3fb03df4df665514e2862d66be371baa05a372e825a42"
+  },
+  "preprocess_index": {
+    "building_manifest_column": "building_manifest_path",
+    "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/preprocess_index.csv",
+    "sha256": "e2e8825a9616cf413f05dc5aebc255ec9d60afc9a34d2f9dd332156c55ed00ec"
+  },
+  "publication": {
+    "cache_manifest_written_after_index": true,
+    "learning_runs_started": 0,
+    "partial_buildings_reviewable": true,
+    "readout_runs_started": 0,
+    "roofer_runs_started": 0,
+    "scoring_runs_started": 0,
+    "stable_manifest_pending": false,
+    "stable_manifest_written_last": true
+  },
+  "run_id": "20260724_fusion_w1",
+  "schema": "jointbuildgs.fusion_w1.preprocess_run.v1",
+  "status": "PARTIAL",
+  "task_id": "FUS-W1-PREPROCESS-20260725"
+}

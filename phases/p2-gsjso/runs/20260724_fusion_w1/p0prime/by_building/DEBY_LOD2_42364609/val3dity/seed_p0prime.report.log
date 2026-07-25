@@ -1,0 +1,43 @@
++ val3dity /workspace/JointBuildGS/phases/p2-gsjso/runs/20260724_fusion_w1/p0prime/by_building/DEBY_LOD2_42364609/cityjson/seed_p0prime.city.json --report /workspace/JointBuildGS/phases/p2-gsjso/runs/20260724_fusion_w1/p0prime/by_building/DEBY_LOD2_42364609/val3dity/seed_p0prime.report.json
+---
+val3dity Copyright (c) 2011-2026, 3D geoinformation research group, TU Delft  
+This program comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to redistribute it
+under certain conditions; for details run val3dity with the '--license' option.
+---
+CityJSON input file
+# City Objects found: 2
+Parameters used for validation:
+   snap_tol                 0.001
+   planarity_d2p_tol         0.01
+   planarity_n_tol             20
+   overlap_tol               none
+
+Validation of 1 feature(s):
+
+[==================================================] 100%     
+
++++++++++++++++++++ SUMMARY +++++++++++++++++++
+VALID :)
++++++
+Input file type:
+  CityJSON
++++++
+Total # of Features:          1
+  # valid:                    1 (100.0%)
+  # invalid:                  0 (0.0%)
+Types:
+  Building
++++++
+Total # of primitives:        2
+  # valid:                    2 (100.0%)
+  # invalid:                  0 (0.0%)
+Types:
+  Solid
+  MultiSurface
++++++++++++++++++++++++++++++++++++++++++++++++
+
+Validation report saved to "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260724_fusion_w1/p0prime/by_building/DEBY_LOD2_42364609/val3dity/seed_p0prime.report.json"
+Browse its content:
+==>http://geovalidation.bk.tudelft.nl/val3dity/browser/
+
