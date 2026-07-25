@@ -1,0 +1,46 @@
+{"at": "2026-07-25T13:45:32.219813+00:00", "claim": "phases/p2-gsjso/runs/20260724_fusion_w1/resume_v2/r0_preflight.claim.json", "config": "phases/p2-gsjso/configs/fusion_w1_resume_r0_v2_20260725.json", "config_sha256": "9470f14bfd5d759d4b998c7f363d1861715bd81bef948d98ccebb777089774c9", "event": "r0_started"}
+{"at": "2026-07-25T13:45:32.268063+00:00", "check": "git_commit_branch_and_document_lock", "event": "check_started"}
+{"at": "2026-07-25T13:45:32.364656+00:00", "check": "git_commit_branch_and_document_lock", "error": null, "event": "check_finished", "status": "passed"}
+{"at": "2026-07-25T13:45:32.385524+00:00", "check": "docker_image_ids_and_versions", "event": "check_started"}
+{"at": "2026-07-25T13:45:36.909827+00:00", "check": "docker_image_ids_and_versions", "error": null, "event": "check_finished", "status": "passed"}
+{"at": "2026-07-25T13:45:36.939943+00:00", "check": "gpu_and_cuda_matmul", "event": "check_started"}
+{"at": "2026-07-25T13:45:37.263880+00:00", "check": "gpu_and_cuda_matmul", "error": null, "event": "check_finished", "status": "passed"}
+{"at": "2026-07-25T13:45:37.288876+00:00", "check": "canonical_input_sha256", "event": "check_started"}
+{"at": "2026-07-25T13:45:37.312427+00:00", "bytes": 110979201, "event": "input_hash_started", "path": "phases/p0-audit/data/raw/als/690_5335.laz"}
+{"at": "2026-07-25T13:45:37.422570+00:00", "event": "input_hash_finished", "matches_lock": true, "path": "phases/p0-audit/data/raw/als/690_5335.laz"}
+{"at": "2026-07-25T13:45:37.448460+00:00", "bytes": 119749181, "event": "input_hash_started", "path": "phases/p0-audit/data/raw/als/690_5336.laz"}
+{"at": "2026-07-25T13:45:37.555416+00:00", "event": "input_hash_finished", "matches_lock": true, "path": "phases/p0-audit/data/raw/als/690_5336.laz"}
+{"at": "2026-07-25T13:45:37.586779+00:00", "bytes": 107359041, "event": "input_hash_started", "path": "phases/p0-audit/data/raw/als/691_5335.laz"}
+{"at": "2026-07-25T13:45:37.685975+00:00", "event": "input_hash_finished", "matches_lock": true, "path": "phases/p0-audit/data/raw/als/691_5335.laz"}
+{"at": "2026-07-25T13:45:37.714434+00:00", "bytes": 132681326, "event": "input_hash_started", "path": "phases/p0-audit/data/raw/als/691_5336.laz"}
+{"at": "2026-07-25T13:45:37.829016+00:00", "event": "input_hash_finished", "matches_lock": true, "path": "phases/p0-audit/data/raw/als/691_5336.laz"}
+{"at": "2026-07-25T13:45:37.852724+00:00", "bytes": 5906891973, "event": "input_hash_started", "path": "phases/p0-audit/data/raw/uav/Images.zip"}
+{"at": "2026-07-25T13:45:47.166489+00:00", "event": "input_hash_finished", "matches_lock": true, "path": "phases/p0-audit/data/raw/uav/Images.zip"}
+{"at": "2026-07-25T13:45:47.196379+00:00", "bytes": 64, "event": "input_hash_started", "path": "results/tum_transfer/data_geoidfix/sparse/0/cameras.bin"}
+{"at": "2026-07-25T13:45:47.225254+00:00", "event": "input_hash_finished", "matches_lock": true, "path": "results/tum_transfer/data_geoidfix/sparse/0/cameras.bin"}
+{"at": "2026-07-25T13:45:47.249735+00:00", "bytes": 114415526, "event": "input_hash_started", "path": "results/tum_transfer/data_geoidfix/sparse/0/images.bin"}
+{"at": "2026-07-25T13:45:47.359739+00:00", "event": "input_hash_finished", "matches_lock": true, "path": "results/tum_transfer/data_geoidfix/sparse/0/images.bin"}
+{"at": "2026-07-25T13:45:47.384634+00:00", "bytes": 33476840, "event": "input_hash_started", "path": "results/tum_transfer/data_geoidfix/sparse/0/points3D.bin"}
+{"at": "2026-07-25T13:45:47.439290+00:00", "event": "input_hash_finished", "matches_lock": true, "path": "results/tum_transfer/data_geoidfix/sparse/0/points3D.bin"}
+{"at": "2026-07-25T13:45:47.469746+00:00", "bytes": 5521408, "event": "input_hash_started", "path": "phases/p0-audit/data/work/footprints/lod2_ground_plan.gpkg"}
+{"at": "2026-07-25T13:45:47.500611+00:00", "event": "input_hash_finished", "matches_lock": true, "path": "phases/p0-audit/data/work/footprints/lod2_ground_plan.gpkg"}
+{"at": "2026-07-25T13:45:47.522935+00:00", "bytes": 156656509, "event": "input_hash_started", "path": "phases/p0-audit/data/raw/lod2/690_5334.gml"}
+{"at": "2026-07-25T13:45:47.684345+00:00", "event": "input_hash_finished", "matches_lock": true, "path": "phases/p0-audit/data/raw/lod2/690_5334.gml"}
+{"at": "2026-07-25T13:45:47.760897+00:00", "bytes": 147865939, "event": "input_hash_started", "path": "phases/p0-audit/data/raw/lod2/690_5336.gml"}
+{"at": "2026-07-25T13:45:47.891145+00:00", "event": "input_hash_finished", "matches_lock": true, "path": "phases/p0-audit/data/raw/lod2/690_5336.gml"}
+{"at": "2026-07-25T13:45:47.915321+00:00", "event": "image_set_hash_started", "path": "results/tum_transfer/data_geoidfix/images"}
+{"at": "2026-07-25T13:45:48.528912+00:00", "event": "image_set_hash_finished", "file_count": 937, "matches_lock": true, "path": "results/tum_transfer/data_geoidfix/images", "total_bytes": 910980034}
+{"at": "2026-07-25T13:45:48.553758+00:00", "check": "canonical_input_sha256", "error": null, "event": "check_finished", "status": "passed"}
+{"at": "2026-07-25T13:45:48.580322+00:00", "check": "host_container_mount_and_resume_provenance", "event": "check_started"}
+{"at": "2026-07-25T13:45:48.608198+00:00", "check": "host_container_mount_and_resume_provenance", "error": null, "event": "check_finished", "status": "passed_with_caveat"}
+{"at": "2026-07-25T13:45:48.633646+00:00", "check": "epsg_class_and_datum_lock", "event": "check_started"}
+{"at": "2026-07-25T13:45:53.372105+00:00", "check": "epsg_class_and_datum_lock", "error": null, "event": "check_finished", "status": "passed_with_caveat"}
+{"at": "2026-07-25T13:45:53.394150+00:00", "check": "no_active_training_guard", "event": "check_started"}
+{"at": "2026-07-25T13:45:53.683566+00:00", "check": "no_active_training_guard", "error": null, "event": "check_finished", "status": "passed"}
+{"at": "2026-07-25T13:45:53.708404+00:00", "check": "readout_serial_24g_cgroup_plan", "event": "check_started"}
+{"at": "2026-07-25T13:45:53.765431+00:00", "check": "readout_serial_24g_cgroup_plan", "error": null, "event": "check_finished", "status": "passed"}
+{"at": "2026-07-25T13:45:53.793615+00:00", "check": "coreg_lock2_evidence_and_zero_counters", "event": "check_started"}
+{"at": "2026-07-25T13:45:53.860204+00:00", "check": "coreg_lock2_evidence_and_zero_counters", "error": null, "event": "check_finished", "status": "passed"}
+{"at": "2026-07-25T13:45:53.889493+00:00", "check": "r0_source_pose_before_authorized_r1", "event": "check_started"}
+{"at": "2026-07-25T13:45:54.011500+00:00", "check": "r0_source_pose_before_authorized_r1", "error": null, "event": "check_finished", "status": "passed"}
+{"at": "2026-07-25T13:45:54.100117+00:00", "event": "r0_finished", "preflight_sha256": "d82bd7b824b45b5e77306bd4322fb4e96b86638a9b33d026fb740d4ade51f95e", "status": "PASSED"}
