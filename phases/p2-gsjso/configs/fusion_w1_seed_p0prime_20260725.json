@@ -1,0 +1,184 @@
+{
+  "schema": "jointbuildgs.fusion_w1.seed_p0prime.lock.v1",
+  "task_id": "FUS-W1-P0PRIME-20260725",
+  "branch": "exp/fusion-w1",
+  "implementation_files": [
+    "phases/p2-gsjso/configs/fusion_w1_seed_p0prime_20260725.json",
+    "phases/p2-gsjso/scripts/fusion_w1_seed_p0prime_20260725.py",
+    "phases/p2-gsjso/scripts/run_fusion_w1_seed_p0prime_20260725.sh",
+    "phases/p2-gsjso/scripts/test_fusion_w1_seed_p0prime_20260725.py"
+  ],
+  "run_dir": "phases/p2-gsjso/runs/20260724_fusion_w1",
+  "targets_csv": {
+    "path": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_targets.csv",
+    "sha256": "256d376080dca7c496aa3f34c9bcbbd1a8e52d0b25d6e98f7eec388b3f6cc943",
+    "id_field": "building_id",
+    "order_field": "processing_order",
+    "expected_population": 178
+  },
+  "preprocess_consumer": {
+    "run_manifest": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/preprocess_manifest.json",
+    "run_schema": "jointbuildgs.fusion_w1.preprocess_run.v1",
+    "allowed_run_status": [
+      "PARTIAL",
+      "PASSED"
+    ],
+    "index_required_columns": [
+      "processing_order",
+      "building_id",
+      "tier",
+      "cohort",
+      "status",
+      "data_root",
+      "building_manifest_path",
+      "building_manifest_sha256",
+      "views_n",
+      "seed_points_n",
+      "class2_n",
+      "class6_n",
+      "pose_sha256"
+    ],
+    "schema": "jointbuildgs.fusion_w1.preprocess_building.v1",
+    "required_status": "PASSED",
+    "base_las_filename": "seed_epsg25832.las",
+    "base_las_role": "actual_postprocessing_seed_before_trainer_frame_conversion",
+    "required_crs": "EPSG:25832",
+    "required_vertical_datum": "orthometric",
+    "required_classes": [
+      2,
+      6
+    ],
+    "require_only_required_classes": true,
+    "require_rgb_dimensions": true,
+    "require_downsample_applied": false,
+    "require_source_output_point_count_equal": true,
+    "classification_stage": "validated_preclassified_passthrough",
+    "classification_mutates_geometry_or_classes": false
+  },
+  "footprint": {
+    "path": "phases/p0-audit/data/work/footprints/lod2_ground_plan.gpkg",
+    "sha256": "259cf04ec0c9411e669e75f61c37ea634290fcd40b230f6ed9b67328041c87fa",
+    "layer": "lod2_ground_plan",
+    "id_field": "building_id",
+    "crs": "EPSG:25832",
+    "role": "approved_LoD2_GroundSurface_XY_only",
+    "forbidden_as_input": [
+      "LoD2 Z",
+      "RoofSurface",
+      "roof type",
+      "semantic class",
+      "final roof model"
+    ]
+  },
+  "reference": {
+    "lod2_dir": "phases/p0-audit/data/raw/lod2",
+    "locked_files": {
+      "phases/p0-audit/data/raw/lod2/690_5334.gml": "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314",
+      "phases/p0-audit/data/raw/lod2/690_5336.gml": "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674"
+    },
+    "role": "evaluation_only_after_roofer_output_frozen",
+    "score_time_z_shift_m": 0.0,
+    "absolute_metric_caveat": "reference GML is a laser-derived product; absolute interpretation remains reserved"
+  },
+  "canonical_helpers": {
+    "roofer_status": {
+      "path": "phases/p0-audit/scripts/08_roofer_w2.py",
+      "sha256": "ae655090915c56bfeee2be830a28e27520c2430e97d19e515a0aa046e4c79e97"
+    },
+    "roof_metrics": {
+      "path": "phases/p2-gsjso/scripts/e5_c001_8way.py",
+      "sha256": "12322a7fd49c0904eaf7160946c7ef3b521ed091038452f9a863bef37f0bcbdc"
+    },
+    "coverage_and_xy": {
+      "path": "phases/p2-gsjso/scripts/qs_baseline178_rescore.py",
+      "sha256": "0d752dade0b8677460b55d381a69db77f7bf611061fb7479710434358db33e9d"
+    }
+  },
+  "p0_refl_baseline": {
+    "path": "docs/qs_baseline178_scores.csv",
+    "sha256": "a3b89f1907e6e61aead702efe6b742b5c012615df77d90bdb2a859b5418d85ab",
+    "model_id": "als_w2_1",
+    "role": "als",
+    "expected_population": 178,
+    "expected_lod2_count": 178,
+    "comparison_role": "attribution_control_only"
+  },
+  "roofer": {
+    "image": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+    "parameters": [
+      "--id-attribute",
+      "building_id",
+      "--jobs",
+      "3",
+      "--srs",
+      "EPSG:25832",
+      "--bld-class",
+      "6",
+      "--grnd-class",
+      "2",
+      "--lod22"
+    ],
+    "outer_parallelism": 1,
+    "timeout_seconds_per_building": 900
+  },
+  "tools": {
+    "image": "jointbuildgs-p0-tools:t0",
+    "image_id": "sha256:87bea02e5598a3d53a119b754191673497d52641bd8ea4106ffee653407579b0",
+    "val3dity_version": "2.6.0"
+  },
+  "resource_lock": {
+    "memory": "24g",
+    "memory_swap": "24g",
+    "network": "none",
+    "serial_buildings": true,
+    "concurrent_with_learning": false,
+    "concurrent_with_readout": false
+  },
+  "score_contract": {
+    "assembly_lod2_success_definition": "Roofer feature exists AND rf_success is not false AND rf_pointcloud_unusable is not true AND rf_extrusion_mode is neither skip nor lod11_fallback AND CityJSON contains lod=2.2",
+    "val3dity_is_independent_from_assembly": true,
+    "plane_f1_definition": "harmonic mean of canonical plane correctness and plane completeness",
+    "metrics": [
+      "assembly_lod2_success",
+      "has_lod22_geometry",
+      "lod1_fallback",
+      "val3dity_valid",
+      "plane_precision",
+      "plane_recall",
+      "plane_f1",
+      "roof_rms_m",
+      "roof_hausdorff_m",
+      "roof_completeness",
+      "face_count_ratio"
+    ],
+    "learning_runs_started": 0,
+    "new_inference_runs": 0
+  },
+  "outputs": {
+    "root": "phases/p2-gsjso/runs/20260724_fusion_w1/p0prime",
+    "building_dir_template": "phases/p2-gsjso/runs/20260724_fusion_w1/p0prime/by_building/{building_id}",
+    "scores_csv": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_seed_p0prime_scores.csv",
+    "progress": "phases/p2-gsjso/runs/20260724_fusion_w1/p0prime/progress.json",
+    "failures_jsonl": "phases/p2-gsjso/runs/20260724_fusion_w1/p0prime/failures.jsonl",
+    "final_manifest": "phases/p2-gsjso/runs/20260724_fusion_w1/p0prime/manifest.json",
+    "driver_lock": "phases/p2-gsjso/runs/20260724_fusion_w1/p0prime/driver.lock"
+  },
+  "publication": {
+    "scores_incremental_atomic_upsert": true,
+    "one_row_per_building": true,
+    "per_building_complete_receipt_written_after_scores_csv": true,
+    "final_manifest_written_last": true,
+    "refuse_work_after_final_manifest": true
+  },
+  "input_schema_assumptions": [
+    "Stable preprocess_v1/preprocess_manifest.json is the only namespace resolver; P0-prime never hand-enters the pose cache namespace.",
+    "The stable manifest has cache_binding.cache_run_manifest and cache_binding.preprocess_index path/SHA records; the index building_manifest_path column resolves each per-building manifest.",
+    "The index columns are processing_order, building_id, tier, cohort, status, data_root, building_manifest_path, building_manifest_sha256, views_n, seed_points_n, class2_n, class6_n, and pose_sha256.",
+    "Manifest root schema is jointbuildgs.fusion_w1.preprocess_building.v1 and status is PASSED.",
+    "building contains building_id, processing_order, tier, and cohort.",
+    "seed.source_points_n equals seed.output_points_n, seed.downsample_applied is false, and seed.classification_counts has only string keys 2 and 6.",
+    "seed.base_las contains repo-relative path, sha256, crs=EPSG:25832, and vertical_datum=orthometric.",
+    "The base LAS is LAS 1.4 with RGB and is already classified; P0-prime validates it byte-for-byte and does not run SMRF or overlay again.",
+    "The trainer canonical NPZ and supervision artifacts are outside P0-prime; only seed.base_las is consumed."
+  ]
+}
