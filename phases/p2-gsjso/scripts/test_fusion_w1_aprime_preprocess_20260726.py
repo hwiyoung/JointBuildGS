@@ -7,6 +7,7 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 import numpy as np
 
@@ -201,6 +202,46 @@ class MaskTests(unittest.TestCase):
         self.assertLess(fraction, 1.0)
         self.assertGreater(rendered["stats"]["outer_edge_masked_pixels_n"], 0)
 
+    def test_empty_Mj_candidate_is_removed_before_shared_learning_view_set(self) -> None:
+        candidates = selected_views(3)
+
+        def fake_render(_gate: object, _tin: object, view: object, _cfg: object) -> dict[str, np.ndarray]:
+            pixels = 0 if view.image.name == "view_02.png" else 2
+            mask = np.zeros((2, 2), dtype=bool)
+            mask.flat[:pixels] = True
+            return {"valid_M_j": mask}
+
+        with patch.object(prep, "render_roof_supervision", side_effect=fake_render):
+            retained, rendered, dropped = prep.retain_nonempty_supervision_views(
+                gate=object(),
+                tin=object(),
+                candidate_views=candidates,
+                tin_config={},
+                minimum_views=2,
+                building_id="DEBY_LOD2_TEST",
+            )
+        self.assertEqual(
+            [view.image.name for view in retained], ["view_01.png", "view_03.png"]
+        )
+        self.assertEqual(set(rendered), {"view_01.png", "view_03.png"})
+        self.assertEqual([row["image_name"] for row in dropped], ["view_02.png"])
+
+    def test_empty_Mj_filter_enforces_post_filter_minimum(self) -> None:
+        with patch.object(
+            prep,
+            "render_roof_supervision",
+            return_value={"valid_M_j": np.zeros((2, 2), dtype=bool)},
+        ):
+            with self.assertRaisesRegex(prep.AprimePreprocessError, "minimum=2"):
+                prep.retain_nonempty_supervision_views(
+                    gate=object(),
+                    tin=object(),
+                    candidate_views=selected_views(2),
+                    tin_config={},
+                    minimum_views=2,
+                    building_id="DEBY_LOD2_TEST",
+                )
+
 class ArtifactTests(unittest.TestCase):
     def setUp(self) -> None:
         self.config = prep.load_config(
@@ -293,6 +334,8 @@ class ContractTests(unittest.TestCase):
             1.0,
         )
         self.assertIn("aprime", self.config["outputs"]["cache_namespace"])
+        self.assertTrue(self.config["outputs"]["cache_namespace"].endswith("_v2"))
+        self.assertEqual(self.config["task_id"], "FUS-W1-APRIME-PREPROCESS-002")
         self.assertNotEqual(
             self.config["outputs"]["cache_namespace"], "pose_28b38383a0b6d826"
         )

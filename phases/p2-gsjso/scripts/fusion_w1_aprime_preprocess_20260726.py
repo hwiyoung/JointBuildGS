@@ -169,6 +169,13 @@ def load_config(path: Path) -> dict[str, Any]:
         raise AprimePreprocessError(
             "P1 visibility votes must be counted over the learning-view set"
         )
+    if config["view_selection"].get("candidate_empty_M_j_policy") != (
+        "render_TIN_first_drop_empty_then_require_minimum_and_use_retained_set_for_"
+        "training_visibility_and_RGB"
+    ):
+        raise AprimePreprocessError(
+            "empty-M_j candidates must be removed before the shared learning-view set"
+        )
     if not math.isclose(
         float(config["data_root_contract"].get("training_downscale_required", math.nan)),
         1.0,
@@ -766,6 +773,50 @@ def verify_building_manifest(path: Path, config: Mapping[str, Any]) -> dict[str,
     return payload
 
 
+def retain_nonempty_supervision_views(
+    *,
+    gate: Any,
+    tin: Any,
+    candidate_views: Sequence[Any],
+    tin_config: Mapping[str, Any],
+    minimum_views: int,
+    building_id: str,
+) -> tuple[list[Any], dict[str, dict[str, Any]], list[dict[str, Any]]]:
+    """Establish one shared learning-view set after exact-M_j feasibility.
+
+    View ranking is geometry-only and may legitimately include a grazing view
+    whose valid roof TIN support disappears after the preregistered boundary
+    and one-pixel erosion masks.  Such a view cannot participate in any A-prime
+    loss.  It is therefore rejected before visibility votes or RGB sampling so
+    every retained view has the same role in supervision, seed filtering, and
+    training.  Candidate rejection is recorded rather than hidden.
+    """
+    retained: list[Any] = []
+    rendered_by_name: dict[str, dict[str, Any]] = {}
+    dropped: list[dict[str, Any]] = []
+    for view in candidate_views:
+        rendered = render_roof_supervision(gate, tin, view, tin_config)
+        mask_pixels = int(np.asarray(rendered["valid_M_j"], dtype=bool).sum())
+        if mask_pixels == 0:
+            dropped.append(
+                {
+                    "selection_order": int(view.selection_order),
+                    "image_name": view.image.name,
+                    "reason": "empty_exact_M_j_after_TIN_filters_and_erosion",
+                    "mask_pixels_n": 0,
+                }
+            )
+            continue
+        retained.append(view)
+        rendered_by_name[view.image.name] = rendered
+    if len(retained) < int(minimum_views):
+        raise AprimePreprocessError(
+            f"{building_id}: only {len(retained)} nonempty-M_j learning views "
+            f"remain from {len(candidate_views)} candidates; minimum={minimum_views}"
+        )
+    return retained, rendered_by_name, dropped
+
+
 def materialize_building(
     *,
     gate: Any,
@@ -799,7 +850,7 @@ def materialize_building(
         input_datum=coordinate["base_vertical_datum"],
         geoid_m=float(coordinate["orthometric_to_ellipsoidal_geoid_m"]),
     )
-    selected = V1.select_views(
+    candidate_selected = V1.select_views(
         gate,
         class6_base,
         cameras,
@@ -807,11 +858,6 @@ def materialize_building(
         scene_reference,
         config,
     )
-    photo_stems = [Path(view.image.name).stem for view in selected]
-    if len(photo_stems) != len(set(photo_stems)):
-        raise AprimePreprocessError(
-            f"{target.building_id}: selected image stems collide in photo-mask layout"
-        )
     tin_config = config["tin_supervision"]
     tin = V1.build_tin(
         class6_canonical,
@@ -819,6 +865,19 @@ def materialize_building(
         maximum_slope_deg=float(tin_config["maximum_slope_deg"]),
         minimum_xy_triangle_area_m2=float(tin_config["minimum_xy_triangle_area_m2"]),
     )
+    selected, rendered_by_name, empty_mj_dropped = retain_nonempty_supervision_views(
+        gate=gate,
+        tin=tin,
+        candidate_views=candidate_selected,
+        tin_config=tin_config,
+        minimum_views=int(config["view_selection"]["minimum_views"]),
+        building_id=target.building_id,
+    )
+    photo_stems = [Path(view.image.name).stem for view in selected]
+    if len(photo_stems) != len(set(photo_stems)):
+        raise AprimePreprocessError(
+            f"{target.building_id}: retained image stems collide in photo-mask layout"
+        )
     votes, visible_matrix, visibility_rows, vote_histogram = raycast_seed_visibility(
         gate,
         class6_canonical,
@@ -907,12 +966,10 @@ def materialize_building(
     supervision_rows: list[dict[str, Any]] = []
     per_view_supervision: list[dict[str, Any]] = []
     for view in selected:
-        rendered = render_roof_supervision(gate, tin, view, tin_config)
+        rendered = rendered_by_name[view.image.name]
         valid = rendered["valid_M_j"]
         if int(valid.sum()) < 1:
-            raise AprimePreprocessError(
-                f"{target.building_id}/{view.image.name}: empty roof M_j"
-            )
+            raise AprimePreprocessError("retained supervision view unexpectedly has empty M_j")
         class6_path = (
             staging_root / "supervision" / "class6" / f"{view.image.name}.npz"
         )
@@ -1091,6 +1148,8 @@ def materialize_building(
                 "sha256": artifact_hashes[relative(final_root / config["outputs"]["views_csv"])],
             },
             "count": len(selected),
+            "candidate_count": len(candidate_selected),
+            "candidate_names": [view.image.name for view in candidate_selected],
             "minimum": int(config["view_selection"]["minimum_views"]),
             "maximum": int(config["view_selection"]["maximum_views"]),
             "selected_names": selected_names,
@@ -1098,6 +1157,11 @@ def materialize_building(
             "role_policy": config["view_selection"]["role_policy"],
             "training_names": selected_names,
             "evaluation_names": [],
+            "empty_M_j_candidate_policy": config["view_selection"][
+                "candidate_empty_M_j_policy"
+            ],
+            "empty_M_j_dropped_count": len(empty_mj_dropped),
+            "empty_M_j_dropped": empty_mj_dropped,
             "visibility_vote_views_equal_training_views": True,
             "inventory_equality_verified": True,
         },
@@ -1327,6 +1391,8 @@ RUN_INDEX_FIELDS = [
     "building_manifest_path",
     "building_manifest_sha256",
     "views_n",
+    "candidate_views_n",
+    "empty_M_j_dropped_n",
     "seed_before_n",
     "seed_after_n",
     "seed_retention_fraction",
@@ -1346,6 +1412,9 @@ T5_SUMMARY_FIELDS = [
     "cohort",
     "status",
     "views_n",
+    "candidate_views_n",
+    "empty_M_j_dropped_n",
+    "empty_M_j_dropped_names_json",
     "seed_filter_before_n",
     "seed_filter_after_n",
     "seed_filter_removed_n",
@@ -1415,6 +1484,10 @@ def publish_run_manifest(
                 **common,
                 "data_root": payload["data_root"],
                 "views_n": payload["views"]["count"],
+                "candidate_views_n": payload["views"]["candidate_count"],
+                "empty_M_j_dropped_n": payload["views"][
+                    "empty_M_j_dropped_count"
+                ],
                 "seed_before_n": seed["source_unfiltered_points_n"],
                 "seed_after_n": seed["filtered_points_n"],
                 "seed_retention_fraction": seed["retention_fraction"],
@@ -1431,6 +1504,15 @@ def publish_run_manifest(
                 "tier": target.tier,
                 "cohort": target.cohort,
                 "views_n": payload["views"]["count"],
+                "candidate_views_n": payload["views"]["candidate_count"],
+                "empty_M_j_dropped_n": payload["views"][
+                    "empty_M_j_dropped_count"
+                ],
+                "empty_M_j_dropped_names_json": json.dumps(
+                    [row["image_name"] for row in payload["views"]["empty_M_j_dropped"]],
+                    ensure_ascii=False,
+                    separators=(",", ":"),
+                ),
                 "seed_filter_before_n": seed["source_unfiltered_points_n"],
                 "seed_filter_after_n": seed["filtered_points_n"],
                 "seed_filter_removed_n": seed["removed_points_n"],
