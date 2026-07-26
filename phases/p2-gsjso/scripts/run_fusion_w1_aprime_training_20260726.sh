@@ -19,7 +19,12 @@ case "$command_name" in
     docker compose run --rm --no-deps -T dev python "$test_driver" "$@"
     ;;
   materialize|check|queue-plan|queue-next)
-    docker compose run --rm --no-deps -T dev python "$driver" "$command_name" "$@"
+    # Bind-mounted run artifacts must remain writable by the host-side launcher.
+    # The Compose service otherwise defaults to root and leaves materialized job
+    # directories unable to accept started/completed/failed receipts.
+    docker compose run --rm --no-deps -T \
+      --user "$(id -u):$(id -g)" \
+      dev python "$driver" "$command_name" "$@"
     ;;
   launch)
     python3 "$driver" launch "$@"
