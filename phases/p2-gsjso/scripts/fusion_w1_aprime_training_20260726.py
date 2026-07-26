@@ -1755,8 +1755,48 @@ def _verify_effective_config(
 
 
 def _verify_seed_trajectory(
-    path: Path, *, expected_initial_opacity: float
+    path: Path, initialization_path: Path, *, expected_initial_opacity: float
 ) -> dict[str, Any]:
+    initialization = load_json(initialization_path)
+    require_equal(
+        initialization.get("schema"),
+        "jointbuildgs.stage2.seed_initialization_audit.v1",
+        "seed initialization schema",
+    )
+    require_equal(initialization.get("status"), "OBSERVED", "seed initialization status")
+    require_equal(initialization.get("iteration"), 0, "seed initialization iteration")
+    require_equal(
+        initialization.get("observation_phase"),
+        "initialization_pre_dynamics",
+        "seed initialization phase",
+    )
+    require_equal(
+        initialization.get("strategy_step_post_backward_calls"),
+        0,
+        "seed initialization strategy calls",
+    )
+    require_equal(
+        initialization.get("optimizer_updates_completed"),
+        0,
+        "seed initialization optimizer updates",
+    )
+    require_equal(initialization.get("intervention"), False, "seed initialization intervention")
+    require_equal(initialization.get("scientific_verdict"), None, "seed initialization verdict")
+    if int(initialization.get("seed_lineage_count", 0)) <= 0:
+        raise ContractError("seed initialization audit has no lineage roots")
+    if not math.isclose(
+        float(initialization.get("requested_opacity", float("nan"))),
+        expected_initial_opacity,
+        rel_tol=0.0,
+        abs_tol=1e-6,
+    ) or not math.isclose(
+        float(initialization.get("opacity_median", float("nan"))),
+        expected_initial_opacity,
+        rel_tol=0.0,
+        abs_tol=1e-6,
+    ):
+        raise ContractError("observed pre-dynamics seed opacity is not 0.1")
+
     rows = [row for row in _read_csv_rows(path) if row.get("scope") == "all_seed_lineage"]
     if not rows:
         raise ContractError("seed lineage audit has no all_seed_lineage rows")
@@ -1766,10 +1806,6 @@ def _verify_seed_trajectory(
         raise ContractError("seed lineage audit omits iteration zero")
     if int(first["seed_lineage_count"]) <= 0:
         raise ContractError("seed lineage audit begins with no seed roots")
-    if not math.isclose(
-        float(first["opacity_median"]), expected_initial_opacity, rel_tol=0.0, abs_tol=1e-6
-    ):
-        raise ContractError("observed initial seed opacity is not 0.1")
     if any(str(row["seed_protect_active"]).lower() not in {"false", "0"} for row in rows):
         raise ContractError("seed protection became active during A-prime observation")
     if any(int(row["cum_prune_seed_protected"]) != 0 for row in rows):
@@ -1780,6 +1816,13 @@ def _verify_seed_trajectory(
         "path": str(path),
         "rows_n": len(rows),
         "initial": {
+            "iteration": int(initialization["iteration"]),
+            "observation_phase": str(initialization["observation_phase"]),
+            "seed_lineage_count": int(initialization["seed_lineage_count"]),
+            "opacity_median": float(initialization["opacity_median"]),
+            "requested_opacity": float(initialization["requested_opacity"]),
+        },
+        "first_post_dynamics_observation": {
             "iteration": int(first["iteration"]),
             "seed_lineage_count": int(first["seed_lineage_count"]),
             "opacity_median": float(first["opacity_median"]),
@@ -1847,6 +1890,7 @@ def verify_training_completion(
     sidecar = Path(f"{checkpoint}.sha256")
     loss_path = target / "audit/loss_grad_norms.csv"
     seed_path = target / "audit/seed_lineage.csv"
+    seed_initialization_path = target / "audit/seed_initialization.json"
     for path in (
         manifest_path,
         effective_path,
@@ -1855,6 +1899,7 @@ def verify_training_completion(
         sidecar,
         loss_path,
         seed_path,
+        seed_initialization_path,
     ):
         if not path.is_file() or path.stat().st_size <= 0:
             raise ContractError(f"completed trainer output missing or empty: {path}")
@@ -1879,6 +1924,7 @@ def verify_training_completion(
     effective_evidence = _verify_effective_config(effective, resolved)
     seed_evidence = _verify_seed_trajectory(
         seed_path,
+        seed_initialization_path,
         expected_initial_opacity=float(
             config["mini_smoke_profile"]["required_seed_init_opacity"]
         ),
@@ -1910,6 +1956,10 @@ def verify_training_completion(
             **seed_evidence,
             "path": relative(repo, seed_path),
             "sha256": sha256_file(seed_path),
+            "initialization_receipt": {
+                "path": relative(repo, seed_initialization_path),
+                "sha256": sha256_file(seed_initialization_path),
+            },
         },
         "mini_smoke_term_evidence": mini_evidence,
     }

@@ -257,6 +257,62 @@ def _log_seed_survival(
         print(msg, flush=True)
 
 
+def _write_seed_initialization_audit(
+    *,
+    model,
+    is_seed,
+    out_dir,
+    requested_opacity,
+):
+    """Freeze the seed opacity before DefaultStrategy applies any dynamics.
+
+    gsplat's default strategy performs its first opacity reset in the
+    ``step_post_backward(step=0)`` callback.  The ordinary seed-lineage CSV is
+    intentionally recorded after that callback, so it cannot prove the
+    configured initialization by itself.  This one-time receipt captures the
+    actual model probability before any strategy callback or optimizer update
+    without changing either operation.
+    """
+
+    path = Path(out_dir) / "audit" / "seed_initialization.json"
+    if path.exists() or path.is_symlink():
+        raise RuntimeError(f"seed initialization audit already exists: {path}")
+    with torch.no_grad():
+        mask = is_seed.detach()
+        if mask.dtype != torch.bool or mask.ndim != 1:
+            raise RuntimeError("seed initialization mask must be a bool vector")
+        n_seed = int(mask.sum().item())
+        if n_seed <= 0:
+            raise RuntimeError("seed initialization audit has no lineage roots")
+        opacity = model.opacities.detach().flatten()
+        if opacity.shape != mask.shape:
+            raise RuntimeError("seed initialization opacity/mask shape mismatch")
+        median = float(torch.quantile(opacity[mask].float(), 0.5).item())
+        payload = {
+            "schema": "jointbuildgs.stage2.seed_initialization_audit.v1",
+            "status": "OBSERVED",
+            "iteration": 0,
+            "observation_phase": "initialization_pre_dynamics",
+            "gaussians_total": int(model.num_points),
+            "seed_lineage_count": n_seed,
+            "requested_opacity": float(requested_opacity),
+            "opacity_median": median,
+            "strategy_step_post_backward_calls": 0,
+            "optimizer_updates_completed": 0,
+            "intervention": False,
+            "scientific_verdict": None,
+        }
+    path.parent.mkdir(parents=True, exist_ok=True)
+    atomic_write_json(path, payload)
+    print(
+        "[seed-survival] phase=initialization_pre_dynamics "
+        f"it=0 N={model.num_points} seeds={n_seed} "
+        f"opacity_median={median:.8f}",
+        flush=True,
+    )
+    return payload
+
+
 def _append_densify_audit(out_dir: Path, events: list[dict]) -> None:
     """Append recording-only per-footprint split/duplicate counts."""
     if not events:
@@ -2763,6 +2819,12 @@ def main():
             if normal_prior_orientation == "signed"
             else "legacy_L.l_normal=mean_M(1-abs(dot(normalize(n_render),normalize(n_prior))))"
         ),
+        "normal_schedule": normal_schedule,
+        "normal_warmup": normal_warmup,
+        "normal_ramp_steps": normal_ramp_steps,
+        "normal_base_weight": w_normal,
+        "normal_final_weight": normal_final_weight,
+        "normal_final_factor": normal_final_factor,
         "normal_dir": primary_normal_dir,
         "photo_mask_dir": cfg.get("photo_mask_dir"),
         "photo_mask_dir_audit": ds.photo_mask_dir_audit,
@@ -3243,6 +3305,18 @@ def main():
         restore_rng_state(
             pending_resume_rng_state,
             strict_cuda=bool(full_state["strict_cuda_rng"]),
+        )
+
+    if (seed_protect or seed_lineage_audit) and start_completed_steps == 0:
+        _write_seed_initialization_audit(
+            model=model,
+            is_seed=strategy_state["is_seed"],
+            out_dir=out_dir,
+            requested_opacity=(
+                float(mvs_seed_init_opacity)
+                if mvs_seed_init_opacity is not None
+                else 0.10
+            ),
         )
 
     for it in pbar:

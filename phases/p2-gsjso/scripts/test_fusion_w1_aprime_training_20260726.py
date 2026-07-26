@@ -2,6 +2,7 @@
 """Regression tests for the locked A-prime trainer materializer/launcher."""
 from __future__ import annotations
 
+import ast
 import csv
 import importlib.util
 import json
@@ -16,6 +17,7 @@ import yaml
 
 REPO = Path(__file__).resolve().parents[3]
 DRIVER_PATH = REPO / "phases/p2-gsjso/scripts/fusion_w1_aprime_training_20260726.py"
+TRAINER_PATH = REPO / "src/stage2/train.py"
 SPEC = importlib.util.spec_from_file_location("aprime_training_driver", DRIVER_PATH)
 assert SPEC is not None and SPEC.loader is not None
 driver = importlib.util.module_from_spec(SPEC)
@@ -287,6 +289,25 @@ class AprimeTrainingContractTests(unittest.TestCase):
                 "elongation_filter": False,
             }
             (target / "effective_config.json").write_text(json.dumps(effective), encoding="utf-8")
+            (target / "audit/seed_initialization.json").write_text(
+                json.dumps(
+                    {
+                        "schema": "jointbuildgs.stage2.seed_initialization_audit.v1",
+                        "status": "OBSERVED",
+                        "iteration": 0,
+                        "observation_phase": "initialization_pre_dynamics",
+                        "gaussians_total": 295,
+                        "seed_lineage_count": 295,
+                        "requested_opacity": 0.1,
+                        "opacity_median": 0.1,
+                        "strategy_step_post_backward_calls": 0,
+                        "optimizer_updates_completed": 0,
+                        "intervention": False,
+                        "scientific_verdict": None,
+                    }
+                ),
+                encoding="utf-8",
+            )
             fields = [
                 "step", "component", "raw_loss", "weight", "weighted_loss",
                 "weighted_loss_share", "grad_norm", "grad_norm_share",
@@ -318,7 +339,10 @@ class AprimeTrainingContractTests(unittest.TestCase):
                     {
                         "iteration": 0, "scope": "all_seed_lineage",
                         "gaussians_total": 295, "seed_lineage_count": 295,
-                        "opacity_median": 0.1, "last_prune_step": -1,
+                        # gsplat DefaultStrategy resets to 2*prune_opa in its
+                        # first post-backward callback; pre-dynamics 0.1 is
+                        # proven separately by seed_initialization.json.
+                        "opacity_median": 0.01, "last_prune_step": -1,
                         "last_prune_candidates": 0, "last_pruned": 0,
                         "last_prune_seed_protected": 0, "cum_prune_candidates": 0,
                         "cum_pruned": 0, "cum_prune_seed_protected": 0,
@@ -347,9 +371,31 @@ class AprimeTrainingContractTests(unittest.TestCase):
                 evidence["seed_lineage_audit"]["maximum_cumulative_pruned"], 0
             )
             self.assertEqual(
+                evidence["seed_lineage_audit"]["initial"]["opacity_median"], 0.1
+            )
+            self.assertEqual(
+                evidence["seed_lineage_audit"]["first_post_dynamics_observation"][
+                    "opacity_median"
+                ],
+                0.01,
+            )
+            self.assertEqual(
                 set(evidence["mini_smoke_term_evidence"]["component_evidence"]),
                 {"depth", "normal", "nc", "distort"},
             )
+
+    def test_trainer_freezes_pre_dynamics_seed_init_and_emits_normal_schedule(self) -> None:
+        source = TRAINER_PATH.read_text(encoding="utf-8")
+        ast.parse(source)
+        for fragment in (
+            '"schema": "jointbuildgs.stage2.seed_initialization_audit.v1"',
+            '"observation_phase": "initialization_pre_dynamics"',
+            '"normal_schedule": normal_schedule',
+            '"normal_warmup": normal_warmup',
+            '"normal_ramp_steps": normal_ramp_steps',
+            '"normal_final_weight": normal_final_weight',
+        ):
+            self.assertIn(fragment, source)
 
     def test_final_v2_42364609_dataloader_roundtrip_is_exact(self) -> None:
         snapshot = driver.validate_preprocess(
