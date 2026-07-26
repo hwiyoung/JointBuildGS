@@ -23,7 +23,7 @@ import xml.etree.ElementTree as ET
 from collections import Counter, defaultdict
 from dataclasses import dataclass
 from datetime import datetime, timezone
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any, Iterable, Mapping, MutableMapping, Sequence
 
 import matplotlib
@@ -38,12 +38,31 @@ REPO = Path(__file__).resolve().parents[3]
 DEFAULT_CONFIG = (
     REPO / "phases/p2-gsjso/configs/fusion_w1_aprime_report_20260726.json"
 )
-CONFIG_SCHEMA = "jointbuildgs.fusion_w1_aprime.report.config.v1"
-MANIFEST_SCHEMA = "jointbuildgs.fusion_w1_aprime.report.manifest.v1"
-RECEIPT_SCHEMA = "jointbuildgs.fusion_w1_aprime.report.receipt.v1"
-LATEST_SCHEMA = "jointbuildgs.fusion_w1_aprime.report.latest.v1"
+CONFIG_SCHEMA = "jointbuildgs.fusion_w1_aprime.report.config.v2"
+MANIFEST_SCHEMA = "jointbuildgs.fusion_w1_aprime.report.manifest.v2"
+RECEIPT_SCHEMA = "jointbuildgs.fusion_w1_aprime.report.receipt.v2"
+LATEST_SCHEMA = "jointbuildgs.fusion_w1_aprime.report.latest.v2"
 READOUT_COMPLETE_SCHEMA = "jointbuildgs.fusion_w1_aprime.readout.complete.v1"
 SEED_INITIALIZATION_SCHEMA = "jointbuildgs.stage2.seed_initialization_audit.v1"
+QUEUE_CONFIG_SCHEMA = "jointbuildgs.fusion_w1_aprime.unattended.config.v1"
+QUEUE_PLAN_SCHEMA = "jointbuildgs.fusion_w1_aprime.unattended.plan.v1"
+QUEUE_STAGE_RECORD_SCHEMA = "jointbuildgs.fusion_w1_aprime.unattended.stage_record.v1"
+QUEUE_ARCHIVE_SCHEMA = "jointbuildgs.fusion_w1_aprime.unattended.training_archive.v1"
+QUEUE_ARCHIVE_LEDGER_SCHEMA = (
+    "jointbuildgs.fusion_w1_aprime.unattended.training_archive_ledger.v1"
+)
+QUEUE_STAGE_STOP_SCHEMA = "jointbuildgs.fusion_w1_aprime.unattended.stage_stop.v1"
+QUEUE_COMPLETE_SCHEMA = "jointbuildgs.fusion_w1_aprime.unattended.complete.v1"
+RECOVERY_CONTROLLER_SCHEMA = (
+    "jointbuildgs.fusion_w1_aprime.unattended.recovery_controller.v1"
+)
+RECOVERY_INTENT_SCHEMA = (
+    "jointbuildgs.fusion_w1_aprime.unattended.rehydration_intent.v1"
+)
+RECOVERY_RECEIPT_SCHEMA = (
+    "jointbuildgs.fusion_w1_aprime.unattended.rehydration_receipt.v1"
+)
+T4_RECEIPT_SCHEMA = "jointbuildgs.fusion_w1_aprime.t4_smoke_collapse.v1"
 TRUE_VALUES = {"true", "1", "yes"}
 FALSE_VALUES = {"false", "0", "no"}
 TERMINAL_STATES = {"measured", "failed", "censored", "skipped"}
@@ -179,7 +198,9 @@ def csv_value(value: Any) -> Any:
     return value
 
 
-def load_config(path: Path = DEFAULT_CONFIG) -> dict[str, Any]:
+def load_config(
+    path: Path = DEFAULT_CONFIG, *, verify_locked_files: bool = True
+) -> dict[str, Any]:
     config = load_json(path)
     if config.get("schema") != CONFIG_SCHEMA:
         raise ReportContractError("report config schema drift")
@@ -202,12 +223,92 @@ def load_config(path: Path = DEFAULT_CONFIG) -> dict[str, Any]:
         raise ReportContractError("report config contains a scientific verdict")
     if contract.get("interpretation") is not None:
         raise ReportContractError("report config contains an interpretation")
+    queue = config["queue_contract"]
+    if int(queue.get("expected_stage_entries", -1)) != 22:
+        raise ReportContractError("queue stage-entry cardinality drift")
+    if int(queue.get("expected_jobs", -1)) != 21:
+        raise ReportContractError("queue unique-job cardinality drift")
+    if queue.get("time_cutoff") is not None:
+        raise ReportContractError("report queue time cutoff drift")
+    provenance = config["provenance_contract"]
+    execution_head = str(provenance.get("execution_head", ""))
+    if execution_head != "de8852c00c737eced081f2627b49bcedddade652":
+        raise ReportContractError("execution HEAD lock drift")
+    report_files = list(provenance.get("report_implementation_files", []))
+    if report_files != list(config.get("implementation_files", [])):
+        raise ReportContractError("report implementation provenance drift")
+    recovery = config["recovery_contract"]
+    controller_files = list(recovery.get("controller_files", []))
+    recovery_paths = [str(record.get("path", "")) for record in controller_files]
+    recovery_exact = list(
+        provenance.get("recovery_exact_descendant_allowlist", [])
+    )
+    expected_recovery_exact = recovery_paths + [recovery["controller"]["path"]]
+    if recovery_exact != expected_recovery_exact or len(set(recovery_exact)) != len(
+        recovery_exact
+    ):
+        raise ReportContractError("recovery descendant exact allowlist drift")
+    operational_exact = list(
+        provenance.get("operational_evidence_exact_descendant_allowlist", [])
+    )
+    if operational_exact != [config["sources"]["issues"]]:
+        raise ReportContractError("operational evidence descendant allowlist drift")
+    recovery_globs = list(
+        provenance.get("recovery_glob_descendant_allowlist", [])
+    )
+    if len(recovery_globs) != 2 or not all(
+        pattern.endswith(("/intent.json", "/receipt.json"))
+        for pattern in recovery_globs
+    ):
+        raise ReportContractError("recovery descendant glob allowlist drift")
+    if provenance.get("history_paths_not_only_final_tree") is not True:
+        raise ReportContractError("descendant history-path provenance drift")
+    if provenance.get("report_files_must_match_generation_head") is not True:
+        raise ReportContractError("report worktree/HEAD binding drift")
+    if provenance.get("recovery_files_must_match_controller_receipt") is not True:
+        raise ReportContractError("recovery/controller provenance drift")
+    controller = recovery["controller"]
+    if (
+        controller.get("path") != config["sources"]["queue_recovery_controller"]
+        or controller.get("schema") != RECOVERY_CONTROLLER_SCHEMA
+        or recovery.get("rehydration_intent_schema") != RECOVERY_INTENT_SCHEMA
+        or recovery.get("rehydration_receipt_schema") != RECOVERY_RECEIPT_SCHEMA
+    ):
+        raise ReportContractError("queue recovery schema/path contract drift")
+    if recovery.get("producer_receipts_rewritten") is not False:
+        raise ReportContractError("queue recovery producer-receipt policy drift")
+    if recovery.get("append_only_source_preserved") is not True:
+        raise ReportContractError("queue recovery archive-preservation policy drift")
+    for item in [recovery["committed_queue_driver"], *controller_files]:
+        path_value = item.get("path") if isinstance(item, Mapping) else None
+        expected = item.get("sha256") if isinstance(item, Mapping) else None
+        expected_bytes = item.get("bytes") if isinstance(item, Mapping) else None
+        if (
+            not path_value
+            or not isinstance(expected, str)
+            or re.fullmatch(r"[0-9a-f]{64}", expected) is None
+            or not isinstance(expected_bytes, int)
+        ):
+            raise ReportContractError("queue recovery file contract incomplete")
+        if verify_locked_files:
+            path_obj = repo_path(path_value)
+            if (
+                not path_obj.is_file()
+                or path_obj.stat().st_size != expected_bytes
+                or sha256_file(path_obj) != expected
+            ):
+                raise ReportContractError(f"queue recovery file drift: {path_value}")
+    for name, item in config["t4_contract"].items():
+        if name not in {"receipt", "csv", "figure"}:
+            raise ReportContractError(f"unexpected T4 contract role: {name}")
+        if not isinstance(item, Mapping) or not item.get("path") or not item.get("sha256"):
+            raise ReportContractError(f"incomplete T4 contract role: {name}")
     for record in config["locked_inputs"].values():
         records = record if isinstance(record, list) else [record]
         for item in records:
             path_value = item.get("path") if isinstance(item, Mapping) else None
             expected = item.get("sha256") if isinstance(item, Mapping) else None
-            if expected and path_value:
+            if verify_locked_files and expected and path_value:
                 path_obj = repo_path(path_value)
                 if not path_obj.is_file() or sha256_file(path_obj) != expected:
                     raise ReportContractError(f"locked input drift: {path_value}")
@@ -216,6 +317,10 @@ def load_config(path: Path = DEFAULT_CONFIG) -> dict[str, Any]:
     if readout_path.is_file():
         if load_json(readout_path).get("schema") != readout["schema"]:
             raise ReportContractError("readout config schema drift")
+    queue_config = config["locked_inputs"]["queue_config"]
+    queue_path = repo_path(queue_config["path"])
+    if load_json(queue_path).get("schema") != QUEUE_CONFIG_SCHEMA:
+        raise ReportContractError("queue config schema drift")
     return config
 
 
@@ -299,6 +404,1041 @@ def file_record(
     elif required:
         raise ReportContractError(f"required report source missing: {repo_relative(path)}")
     return record
+
+
+def receipt_binding(path: Path) -> dict[str, Any]:
+    if not path.is_file():
+        raise ReportContractError(f"receipt-bound file missing: {repo_relative(path)}")
+    return {
+        "path": repo_relative(path),
+        "sha256": sha256_file(path),
+        "bytes": path.stat().st_size,
+    }
+
+
+def verify_file_binding(value: Any, label: str) -> tuple[Path, dict[str, Any]]:
+    if not isinstance(value, Mapping):
+        raise ReportContractError(f"{label} is not a file binding")
+    raw_path = value.get("path")
+    expected_sha = value.get("sha256")
+    if not isinstance(raw_path, str) or not raw_path:
+        raise ReportContractError(f"{label} path is missing")
+    if not isinstance(expected_sha, str) or not re.fullmatch(r"[0-9a-f]{64}", expected_sha):
+        raise ReportContractError(f"{label} SHA-256 is missing or malformed")
+    path = repo_path(raw_path)
+    observed = receipt_binding(path)
+    if observed["path"] != raw_path:
+        raise ReportContractError(f"{label} path is not canonical: {raw_path}")
+    if observed["sha256"] != expected_sha:
+        raise ReportContractError(f"{label} SHA-256 drift: {raw_path}")
+    if value.get("bytes") is not None and int(value["bytes"]) != observed["bytes"]:
+        raise ReportContractError(f"{label} byte count drift: {raw_path}")
+    return path, observed
+
+
+def load_t4_bundle(config: Mapping[str, Any]) -> dict[str, Any]:
+    contract = config["t4_contract"]
+    files: dict[str, dict[str, Any]] = {}
+    paths: dict[str, Path] = {}
+    for role in ("receipt", "csv", "figure"):
+        path, observed = verify_file_binding(contract[role], f"T4 {role}")
+        files[role] = observed
+        paths[role] = path
+    payload = load_json(paths["receipt"])
+    if payload.get("schema") != T4_RECEIPT_SCHEMA:
+        raise ReportContractError("T4 receipt schema drift")
+    if payload.get("status") != "COMPLETED" or payload.get("role") != "record_only_not_verdict":
+        raise ReportContractError("T4 receipt status/role drift")
+    for role in ("csv", "figure"):
+        embedded = nested_get(payload, f"outputs.{role}")
+        if not isinstance(embedded, Mapping):
+            raise ReportContractError(f"T4 receipt output binding missing: {role}")
+        if embedded.get("path") != files[role]["path"]:
+            raise ReportContractError(f"T4 receipt output path drift: {role}")
+        if embedded.get("sha256") != files[role]["sha256"]:
+            raise ReportContractError(f"T4 receipt output SHA drift: {role}")
+    return {"payload": payload, "files": files, "paths": paths}
+
+
+def t4_bundle_links(config: Mapping[str, Any]) -> dict[str, str]:
+    root = str(config["outputs"]["t4_bundle_dir"]).rstrip("/")
+    return {
+        "receipt": f"{root}/receipt.json",
+        "csv": f"{root}/arm_A_roof_opacity_trajectory.csv",
+        "figure": f"{root}/arm_A_roof_opacity_trajectory.png",
+        "manifest": config["outputs"]["t4_bundle_manifest"],
+    }
+
+
+def publish_t4_bundle(
+    snapshot: Path, config: Mapping[str, Any], bundle: Mapping[str, Any]
+) -> dict[str, Any]:
+    links = t4_bundle_links(config)
+    published: dict[str, dict[str, Any]] = {}
+    for role in ("receipt", "csv", "figure"):
+        source = bundle["paths"][role]
+        destination = snapshot / links[role]
+        atomic_bytes(destination, source.read_bytes())
+        observed = receipt_binding(destination)
+        expected = bundle["files"][role]["sha256"]
+        if observed["sha256"] != expected:
+            raise ReportContractError(f"snapshot-local T4 {role} SHA drift")
+        published[role] = {
+            "source": dict(bundle["files"][role]),
+            "snapshot_path": links[role],
+            "snapshot_sha256": observed["sha256"],
+            "snapshot_bytes": observed["bytes"],
+        }
+    manifest = {
+        "schema": "jointbuildgs.fusion_w1_aprime.report.t4_bundle.v1",
+        "role": "snapshot_local_record_only_evidence",
+        "files": published,
+        "source_receipt_status": bundle["payload"].get("status"),
+        "scientific_verdict": None,
+    }
+    atomic_json(snapshot / links["manifest"], manifest)
+    return manifest
+
+
+def queue_job_key(entry: Mapping[str, Any]) -> str:
+    return f"{entry['building_id']}/arm_{entry['arm']}/{entry['replicate']}"
+
+
+def expected_queue_stage_specs(
+    jobs: Sequence[Job], config: Mapping[str, Any]
+) -> list[dict[str, Any]]:
+    queue = config["queue_contract"]
+    if len(jobs) != int(queue["expected_jobs"]):
+        raise ReportContractError("queue/report unique job mismatch")
+    smoke_job = jobs[0]
+    smoke_identity = (smoke_job.building_id, smoke_job.arm, smoke_job.run)
+    if smoke_identity != (
+        queue["smoke_building_id"],
+        queue["smoke_arm"],
+        queue["smoke_run"],
+    ):
+        raise ReportContractError("queue smoke identity drift")
+    stages = [
+        (0, queue["smoke_stage_key"], [smoke_job]),
+        (1, queue["reuse_stage_key"], list(jobs[:9])),
+        (2, "aprime_r2", list(jobs[9:18])),
+        (3, "B_r1", list(jobs[18:])),
+    ]
+    training_config = load_json(
+        repo_path(config["locked_inputs"]["training_config"]["path"])
+    )
+    run_seeds = nested_get(training_config, "recipe.run_seeds")
+    if not isinstance(run_seeds, Mapping):
+        raise ReportContractError("training run-seed contract missing")
+    result: list[dict[str, Any]] = []
+    for stage_order, stage_key, members in stages:
+        for stage_entry_order, job in enumerate(members, 1):
+            result.append(
+                {
+                    "global_entry_order": len(result) + 1,
+                    "stage_order": stage_order,
+                    "stage_key": stage_key,
+                    "stage_entry_order": stage_entry_order,
+                    "queue_order": job.queue_order,
+                    "building_id": job.building_id,
+                    "aprime_order": int(job.target["aprime_order"]),
+                    "target_role": job.target["target_role"],
+                    "arm": job.arm,
+                    "replicate": job.run,
+                    "profile": "full",
+                    "seed": int(run_seeds[job.run]),
+                    "smoke_barrier_entry": stage_order == 0,
+                    "reuse_completed_smoke": stage_order == 1 and stage_entry_order == 1,
+                }
+            )
+    if len(result) != int(queue["expected_stage_entries"]):
+        raise ReportContractError("queue stage-entry derivation drift")
+    return result
+
+
+def queue_stage_record_path(
+    config: Mapping[str, Any], entry: Mapping[str, Any]
+) -> Path:
+    root = repo_path(config["sources"]["queue_stage_records"])
+    return root / (
+        f"stage_{int(entry['stage_order']):02d}_{entry['stage_key']}/"
+        f"entry_{int(entry['stage_entry_order']):02d}_{entry['building_id']}_"
+        f"arm_{entry['arm']}_{entry['replicate']}.json"
+    )
+
+
+def _entry_matches_spec(entry: Mapping[str, Any], spec: Mapping[str, Any]) -> bool:
+    return all(entry.get(key) == value for key, value in spec.items())
+
+
+def _queue_top_source_records(config: Mapping[str, Any]) -> list[dict[str, Any]]:
+    sources = config["sources"]
+    return [
+        file_record(repo_path(sources[name]), name)
+        for name in (
+            "queue_plan",
+            "queue_status_json",
+            "queue_status_csv",
+            "queue_stage_stop",
+            "queue_complete",
+            "queue_events",
+            "queue_event_sequence",
+        )
+    ]
+
+
+def _validate_queue_complete(
+    config: Mapping[str, Any], plan_path: Path, present_stage: Mapping[str, Mapping[str, Any]]
+) -> dict[str, Any] | None:
+    complete_path = repo_path(config["sources"]["queue_complete"])
+    if not complete_path.is_file():
+        return None
+    payload = load_json(complete_path)
+    if payload.get("schema") != QUEUE_COMPLETE_SCHEMA:
+        raise ReportContractError("queue complete schema drift")
+    state = str(payload.get("state", ""))
+    if state != "COMPLETE" and not state.startswith("STOPPED_"):
+        raise ReportContractError("queue complete terminal state drift")
+    if payload.get("run_id") != config["run_id"]:
+        raise ReportContractError("queue complete run identity drift")
+    if payload.get("git_head") != config["provenance_contract"]["execution_head"]:
+        raise ReportContractError("queue execution HEAD drift")
+    _, observed_plan = verify_file_binding(payload.get("plan"), "queue complete plan")
+    if observed_plan != receipt_binding(plan_path):
+        raise ReportContractError("queue complete/plan binding drift")
+    complete_records = payload.get("stage_records")
+    if not isinstance(complete_records, list):
+        raise ReportContractError("queue complete stage-record inventory missing")
+    bound_paths: set[str] = set()
+    for index, item in enumerate(complete_records):
+        if not isinstance(item, Mapping):
+            raise ReportContractError("queue complete stage-record row drift")
+        _, observed = verify_file_binding(
+            item.get("receipt"), f"queue complete stage record {index + 1}"
+        )
+        entry = item.get("entry")
+        if not isinstance(entry, Mapping):
+            raise ReportContractError("queue complete stage-record entry missing")
+        path = observed["path"]
+        current = present_stage.get(path)
+        if path in bound_paths:
+            raise ReportContractError("queue complete contains duplicate stage-record receipt")
+        if (
+            current is None
+            or current.get("entry") != entry
+            or current.get("status") != item.get("status")
+        ):
+            raise ReportContractError("queue complete/stage-record status drift")
+        bound_paths.add(path)
+    if bound_paths != set(present_stage):
+        raise ReportContractError("queue complete/stage-record inventory drift")
+    if state == "COMPLETE" and len(complete_records) != int(
+        config["queue_contract"]["expected_stage_entries"]
+    ):
+        raise ReportContractError("queue COMPLETE lacks all stage records")
+    if int(payload.get("stage_entries_n", -1)) != int(
+        config["queue_contract"]["expected_stage_entries"]
+    ):
+        raise ReportContractError("queue complete stage-entry count drift")
+    if int(payload.get("unique_jobs_n", -1)) != int(
+        config["queue_contract"]["expected_jobs"]
+    ):
+        raise ReportContractError("queue complete unique-job count drift")
+    complete_sources = {
+        "status_json": "queue_status_json",
+        "status_csv": "queue_status_csv",
+        "events": "queue_events",
+        "event_sequence": "queue_event_sequence",
+    }
+    for name, source_name in complete_sources.items():
+        _path, observed = verify_file_binding(
+            payload.get(name), f"queue complete {name}"
+        )
+        if observed["path"] != config["sources"][source_name]:
+            raise ReportContractError(f"queue complete {name} path drift")
+    stage_stop = payload.get("stage_stop")
+    if state == "COMPLETE" and stage_stop is not None:
+        raise ReportContractError("queue COMPLETE unexpectedly binds a stage-stop receipt")
+    if state.startswith("STOPPED_") and stage_stop is None:
+        raise ReportContractError("stopped queue complete lacks stage-stop receipt")
+    if stage_stop is not None:
+        stage_stop_path, _observed = verify_file_binding(
+            stage_stop, "queue complete stage stop"
+        )
+        if repo_relative(stage_stop_path) != config["sources"]["queue_stage_stop"]:
+            raise ReportContractError("queue complete stage-stop path drift")
+        stage_stop_payload = load_json(stage_stop_path)
+        if stage_stop_payload.get("schema") != QUEUE_STAGE_STOP_SCHEMA:
+            raise ReportContractError("queue stage-stop schema drift")
+        if stage_stop_payload.get("state") != state:
+            raise ReportContractError("queue complete/stage-stop state drift")
+    return payload
+
+
+def _queue_archive_rows(
+    jobs: Sequence[Job], config: Mapping[str, Any]
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    root = repo_path(config["sources"]["queue_training_failure_archive"])
+    known = {job.key for job in jobs}
+    rows: list[dict[str, Any]] = []
+    sources: list[dict[str, Any]] = []
+    if not root.is_dir():
+        return rows, sources
+    pattern = "by_building/*/arm_*/*/attempt_*"
+    by_job_attempts: dict[str, list[int]] = defaultdict(list)
+    for directory in sorted(root.glob(pattern)):
+        if not directory.is_dir() or directory.is_symlink():
+            continue
+        match = re.fullmatch(r"attempt_([0-9]{3})(\.incomplete)?", directory.name)
+        if match is None:
+            raise ReportContractError(
+                f"queue archive directory name drift: {repo_relative(directory)}"
+            )
+        building_id = directory.parents[2].name
+        arm_dir = directory.parents[1].name
+        replicate = directory.parent.name
+        if not arm_dir.startswith("arm_"):
+            raise ReportContractError("queue archive arm directory drift")
+        arm = arm_dir[4:]
+        key = f"{building_id}/arm_{arm}/{replicate}"
+        if key not in known:
+            raise ReportContractError(f"queue archive identity outside report queue: {key}")
+        attempt = int(match.group(1))
+        incomplete = match.group(2) is not None
+        if not incomplete:
+            by_job_attempts[key].append(attempt)
+        row: dict[str, Any] = {
+            "job_key": key,
+            "building_id": building_id,
+            "arm": arm,
+            "run": replicate,
+            "attempt": attempt,
+            "archive_state": "INCOMPLETE" if incomplete else "ARCHIVED",
+            "archive_path": repo_relative(directory),
+            "receipt_path": "",
+            "receipt_sha256": None,
+            "error_type": None,
+            "error_signature": None,
+            "artifact_count": None,
+        }
+        if incomplete:
+            for name in ("move_intent.json", "pre_move_ledger.json", "archive_receipt.json"):
+                path = directory / name
+                if path.is_file():
+                    sources.append(file_record(path, f"queue_archive_incomplete_{key}_{attempt}_{name}"))
+            rows.append(row)
+            continue
+        receipt_path = directory / "archive_receipt.json"
+        sources.append(file_record(receipt_path, f"queue_archive_receipt_{key}_{attempt}", required=True))
+        payload = load_json(receipt_path)
+        if payload.get("schema") != QUEUE_ARCHIVE_SCHEMA or payload.get("state") != "ARCHIVED":
+            raise ReportContractError("queue archive receipt schema/state drift")
+        identity = payload.get("identity")
+        if identity != {
+            "building_id": building_id,
+            "arm": arm,
+            "replicate": replicate,
+            "profile": "full",
+        }:
+            raise ReportContractError("queue archive receipt identity drift")
+        if int(payload.get("attempt", -1)) != attempt:
+            raise ReportContractError("queue archive attempt drift")
+        if payload.get("git_head") != config["provenance_contract"]["execution_head"]:
+            raise ReportContractError("queue archive execution HEAD drift")
+        if payload.get("append_only_archive") is not True:
+            raise ReportContractError("queue archive append-only flag drift")
+        if payload.get("destination_path") != repo_relative(directory):
+            raise ReportContractError("queue archive destination path drift")
+        source_path = payload.get("source_path")
+        if not isinstance(source_path, str) or not source_path:
+            raise ReportContractError("queue archive source path missing")
+        _, archived_terminal = verify_file_binding(
+            payload.get("archived_terminal_receipt"), "queue archived terminal receipt"
+        )
+        original = payload.get("original_terminal_receipt")
+        if (
+            not isinstance(original, Mapping)
+            or original.get("sha256") != archived_terminal["sha256"]
+            or int(original.get("bytes", -1)) != archived_terminal["bytes"]
+        ):
+            raise ReportContractError("queue archive terminal SHA binding drift")
+        ledger_path, _ledger_record = verify_file_binding(
+            payload.get("pre_move_ledger"), "queue archive pre-move ledger"
+        )
+        ledger = load_json(ledger_path)
+        if ledger.get("schema") != QUEUE_ARCHIVE_LEDGER_SCHEMA:
+            raise ReportContractError("queue archive ledger schema drift")
+        if ledger.get("source_path") != source_path:
+            raise ReportContractError("queue archive ledger source path drift")
+        ledger_artifacts = ledger.get("artifacts")
+        if not isinstance(ledger_artifacts, list) or not ledger_artifacts:
+            raise ReportContractError("queue archive ledger artifacts missing")
+        if int(ledger.get("artifact_count", -1)) != len(ledger_artifacts):
+            raise ReportContractError("queue archive ledger artifact count drift")
+        sources.append(file_record(ledger_path, f"queue_archive_ledger_{key}_{attempt}"))
+        verification = payload.get("move_verification")
+        if not isinstance(verification, list) or not verification:
+            raise ReportContractError("queue archive move verification missing")
+        if int(payload.get("artifact_count", -1)) != len(verification):
+            raise ReportContractError("queue archive artifact count drift")
+        if len(ledger_artifacts) != len(verification):
+            raise ReportContractError("queue archive ledger/move count drift")
+        relative_names: set[str] = set()
+        original_paths: dict[str, str] = {}
+        archived_paths: set[str] = set()
+        for index, (original_record, record) in enumerate(
+            zip(ledger_artifacts, verification)
+        ):
+            if not isinstance(original_record, Mapping) or not isinstance(record, Mapping):
+                raise ReportContractError("queue archive ledger row drift")
+            relative_name = original_record.get("relative_to_root")
+            if not isinstance(relative_name, str) or not relative_name:
+                raise ReportContractError("queue archive ledger relative path missing")
+            relative = Path(relative_name)
+            if (
+                relative.is_absolute()
+                or relative.as_posix() != relative_name
+                or any(part in {"", ".", ".."} for part in relative.parts)
+                or relative_name in relative_names
+            ):
+                raise ReportContractError("queue archive ledger relative path drift")
+            relative_names.add(relative_name)
+            expected_original = repo_relative(repo_path(source_path) / relative)
+            expected_archived = repo_relative(directory / "training_job" / relative)
+            if original_record.get("path") != expected_original:
+                raise ReportContractError("queue archive original artifact path drift")
+            if record.get("path") != expected_archived or expected_archived in archived_paths:
+                raise ReportContractError("queue archive moved artifact path drift")
+            original_paths[expected_original] = relative_name
+            archived_paths.add(expected_archived)
+            if (
+                original_record.get("sha256") != record.get("sha256")
+                or int(original_record.get("bytes", -1)) != int(record.get("bytes", -2))
+            ):
+                raise ReportContractError("queue archive ledger/move SHA drift")
+            path, _observed = verify_file_binding(
+                record, f"queue archived artifact {key} attempt {attempt} item {index + 1}"
+            )
+            sources.append(file_record(path, f"queue_archived_artifact_{key}_{attempt}"))
+        original_terminal_path = original.get("path") if isinstance(original, Mapping) else None
+        terminal_relative = original_paths.get(str(original_terminal_path))
+        if terminal_relative is None or archived_terminal["path"] != repo_relative(
+            directory / "training_job" / terminal_relative
+        ):
+            raise ReportContractError("queue archive terminal path correspondence drift")
+        receipt = receipt_binding(receipt_path)
+        row.update(
+            {
+                "receipt_path": receipt["path"],
+                "receipt_sha256": receipt["sha256"],
+                "error_type": payload.get("error_type"),
+                "error_signature": payload.get("error_signature"),
+                "artifact_count": payload.get("artifact_count"),
+            }
+        )
+        rows.append(row)
+    for key, attempts in by_job_attempts.items():
+        if sorted(attempts) != list(range(1, len(attempts) + 1)):
+            raise ReportContractError(f"queue archive attempt sequence drift: {key}")
+    return rows, sources
+
+
+def _safe_recovery_relative(value: Any, label: str) -> Path:
+    if not isinstance(value, str) or not value:
+        raise ReportContractError(f"{label} relative path missing")
+    relative = Path(value)
+    if (
+        relative.is_absolute()
+        or relative.as_posix() != value
+        or any(part in {"", ".", ".."} for part in relative.parts)
+    ):
+        raise ReportContractError(f"{label} relative path drift: {value}")
+    return relative
+
+
+def _recovery_signatures(
+    value: Any, label: str
+) -> dict[str, dict[str, Any]]:
+    if not isinstance(value, list) or not value:
+        raise ReportContractError(f"{label} artifact signatures missing")
+    result: dict[str, dict[str, Any]] = {}
+    for item in value:
+        if not isinstance(item, Mapping):
+            raise ReportContractError(f"{label} artifact row drift")
+        relative = _safe_recovery_relative(item.get("relative_to_root"), label)
+        key = relative.as_posix()
+        digest = item.get("sha256")
+        if (
+            key in result
+            or not isinstance(digest, str)
+            or re.fullmatch(r"[0-9a-f]{64}", digest) is None
+            or not isinstance(item.get("bytes"), int)
+        ):
+            raise ReportContractError(f"{label} artifact signature drift: {key}")
+        result[key] = dict(item)
+    return result
+
+
+def _verify_recovery_tree(
+    root: Path,
+    signatures: Mapping[str, Mapping[str, Any]],
+    *,
+    excluded: Sequence[str],
+    label: str,
+    role_prefix: str,
+) -> list[dict[str, Any]]:
+    if not root.is_dir() or root.is_symlink():
+        raise ReportContractError(f"{label} root missing: {repo_relative(root)}")
+    excluded_set = set(excluded)
+    for value in excluded_set:
+        _safe_recovery_relative(value, f"{label} excluded")
+    observed: set[str] = set()
+    for path in root.rglob("*"):
+        if path.is_symlink():
+            raise ReportContractError(f"{label} symlink forbidden: {repo_relative(path)}")
+        if path.is_file():
+            observed.add(path.relative_to(root).as_posix())
+    expected = set(signatures) | excluded_set
+    if observed != expected:
+        raise ReportContractError(f"{label} artifact path-set drift")
+    records: list[dict[str, Any]] = []
+    for relative_name, signature in sorted(signatures.items()):
+        path = root / relative_name
+        record = file_record(
+            path,
+            f"{role_prefix}_{relative_name}",
+            expected_sha256=str(signature["sha256"]),
+            required=True,
+        )
+        if int(signature["bytes"]) != int(record["bytes"]):
+            raise ReportContractError(f"{label} artifact byte drift: {relative_name}")
+        records.append(record)
+    for relative_name in sorted(excluded_set):
+        records.append(
+            file_record(
+                root / relative_name,
+                f"{role_prefix}_excluded_{relative_name}",
+                required=True,
+            )
+        )
+    return records
+
+
+def _load_queue_recovery_evidence(
+    jobs: Sequence[Job],
+    entries: Sequence[Mapping[str, Any]],
+    config: Mapping[str, Any],
+) -> dict[str, Any]:
+    contract = config["recovery_contract"]
+    root = repo_path(config["sources"]["queue_recovery_root"])
+    controller_path = repo_path(config["sources"]["queue_recovery_controller"])
+    sources = [file_record(controller_path, "queue_recovery_controller")]
+    attempt_dirs = (
+        sorted(root.glob("by_building/*/arm_*/*/rehydration_attempt_*"))
+        if root.is_dir()
+        else []
+    )
+    if not controller_path.is_file():
+        if attempt_dirs:
+            raise ReportContractError("queue recovery attempts exist without controller")
+        return {"controller": None, "rows": [], "source_records": sources}
+
+    controller = load_json(controller_path)
+    controller_spec = contract["controller"]
+    if (
+        controller.get("schema") != controller_spec["schema"]
+        or controller.get("state") != controller_spec["state"]
+        or controller.get("task_id") != controller_spec["task_id"]
+        or controller.get("run_id") != config["run_id"]
+        or controller.get("execution_head")
+        != config["provenance_contract"]["execution_head"]
+    ):
+        raise ReportContractError("queue recovery controller identity drift")
+    if (
+        controller.get("producer_receipts_rewritten") is not False
+        or controller.get("interpretation_or_verdict") is not None
+    ):
+        raise ReportContractError("queue recovery controller policy drift")
+    controller_binding = receipt_binding(controller_path)
+    _, plan_binding = verify_file_binding(
+        controller.get("queue_plan"), "queue recovery controller plan"
+    )
+    if plan_binding != receipt_binding(repo_path(config["sources"]["queue_plan"])):
+        raise ReportContractError("queue recovery controller/plan binding drift")
+    _, driver_binding = verify_file_binding(
+        controller.get("committed_queue_driver"),
+        "queue recovery committed queue driver",
+    )
+    if driver_binding != dict(contract["committed_queue_driver"]):
+        raise ReportContractError("queue recovery committed driver drift")
+    sources.append(
+        file_record(
+            repo_path(driver_binding["path"]),
+            "queue_recovery_committed_driver",
+            expected_sha256=driver_binding["sha256"],
+            required=True,
+        )
+    )
+    recovery_files = controller.get("recovery_files")
+    if recovery_files != contract["controller_files"]:
+        raise ReportContractError("queue recovery controller file inventory drift")
+    for index, expected in enumerate(contract["controller_files"], 1):
+        _path, observed = verify_file_binding(
+            expected, f"queue recovery controller file {index}"
+        )
+        if observed != dict(expected):
+            raise ReportContractError("queue recovery controller file SHA/byte drift")
+        sources.append(
+            file_record(
+                repo_path(expected["path"]),
+                f"queue_recovery_controller_file_{index}",
+                expected_sha256=expected["sha256"],
+                required=True,
+            )
+        )
+
+    known_jobs = {job.key: job for job in jobs}
+    expected_entries = [dict(entry) for entry in entries]
+    rows: list[dict[str, Any]] = []
+    for directory in attempt_dirs:
+        if not directory.is_dir() or directory.is_symlink():
+            raise ReportContractError("queue recovery attempt directory drift")
+        match = re.fullmatch(r"rehydration_attempt_([0-9]{3})", directory.name)
+        if match is None:
+            raise ReportContractError("queue recovery attempt name drift")
+        attempt = int(match.group(1))
+        building_id = directory.parents[2].name
+        arm_dir = directory.parents[1].name
+        replicate = directory.parent.name
+        if not arm_dir.startswith("arm_"):
+            raise ReportContractError("queue recovery arm directory drift")
+        arm = arm_dir[4:]
+        key = f"{building_id}/arm_{arm}/{replicate}"
+        job = known_jobs.get(key)
+        if job is None:
+            raise ReportContractError(f"queue recovery identity outside queue: {key}")
+        unexpected = [
+            path.name
+            for path in directory.iterdir()
+            if path.name not in {"intent.json", "receipt.json"}
+        ]
+        if unexpected:
+            raise ReportContractError("queue recovery attempt contains unexpected files")
+        intent_path = directory / "intent.json"
+        sources.append(
+            file_record(
+                intent_path,
+                f"queue_recovery_intent_{key}_{attempt}",
+                required=True,
+            )
+        )
+        intent = load_json(intent_path)
+        if (
+            intent.get("schema") != contract["rehydration_intent_schema"]
+            or intent.get("state") != "PLANNED"
+            or intent.get("execution_head")
+            != config["provenance_contract"]["execution_head"]
+            or intent.get("entry") not in expected_entries
+            or intent.get("producer_receipts_rewritten") is not False
+            or intent.get("interpretation_or_verdict") is not None
+        ):
+            raise ReportContractError("queue recovery intent identity/policy drift")
+        entry = intent["entry"]
+        if queue_job_key(entry) != key:
+            raise ReportContractError("queue recovery directory/entry identity drift")
+        _, observed_controller = verify_file_binding(
+            intent.get("controller"), "queue recovery intent controller"
+        )
+        if observed_controller != controller_binding:
+            raise ReportContractError("queue recovery intent/controller binding drift")
+        archive_root = (
+            repo_path(config["sources"]["queue_training_failure_archive"])
+            / "by_building"
+            / building_id
+            / f"arm_{arm}"
+            / replicate
+            / f"attempt_{attempt:03d}"
+        )
+        source_root = archive_root / "training_job"
+        expected_archive_receipt = receipt_binding(archive_root / "archive_receipt.json")
+        _, archive_binding = verify_file_binding(
+            intent.get("source_archive_receipt"),
+            "queue recovery intent source archive",
+        )
+        if archive_binding != expected_archive_receipt:
+            raise ReportContractError("queue recovery source archive binding drift")
+        sources.append(
+            file_record(
+                archive_root / "archive_receipt.json",
+                f"queue_recovery_source_archive_{key}_{attempt}",
+                required=True,
+            )
+        )
+        if intent.get("source_training_root") != repo_relative(source_root):
+            raise ReportContractError("queue recovery source training root drift")
+        destination_root, _readout = job_dirs(job, config)
+        if intent.get("destination_training_root") != repo_relative(destination_root):
+            raise ReportContractError("queue recovery destination training root drift")
+        excluded = intent.get("excluded_artifacts")
+        if excluded != contract["excluded_artifacts"]:
+            raise ReportContractError("queue recovery excluded artifact drift")
+        copied = _recovery_signatures(intent.get("copied_artifacts"), "queue recovery intent")
+        sources.extend(
+            _verify_recovery_tree(
+                source_root,
+                copied,
+                excluded=excluded,
+                label="queue recovery archive source",
+                role_prefix=f"queue_recovery_source_{key}_{attempt}",
+            )
+        )
+        completion = intent.get("source_completion_evidence")
+        if not isinstance(completion, Mapping) or int(
+            completion.get("completed_optimizer_updates", -1)
+        ) != 30000:
+            raise ReportContractError("queue recovery completion evidence drift")
+        for name in ("completed", "final_checkpoint", "materialization", "started"):
+            path, observed = verify_file_binding(
+                completion.get(name), f"queue recovery completion {name}"
+            )
+            try:
+                relative_name = path.resolve().relative_to(source_root.resolve()).as_posix()
+            except ValueError as exc:
+                raise ReportContractError(
+                    "queue recovery completion evidence escaped source archive"
+                ) from exc
+            signature = copied.get(relative_name)
+            if signature is None or (
+                observed["sha256"] != signature["sha256"]
+                or observed["bytes"] != signature["bytes"]
+            ):
+                raise ReportContractError("queue recovery completion/artifact drift")
+            sources.append(
+                file_record(path, f"queue_recovery_completion_{key}_{attempt}_{name}")
+            )
+
+        receipt_path = directory / "receipt.json"
+        receipt_payload: dict[str, Any] | None = None
+        receipt_state = "PLANNED"
+        if receipt_path.is_file():
+            sources.append(
+                file_record(
+                    receipt_path,
+                    f"queue_recovery_receipt_{key}_{attempt}",
+                    required=True,
+                )
+            )
+            receipt_payload = load_json(receipt_path)
+            if (
+                receipt_payload.get("schema")
+                != contract["rehydration_receipt_schema"]
+                or receipt_payload.get("state")
+                != contract["rehydration_receipt_state"]
+                or receipt_payload.get("entry") != entry
+                or receipt_payload.get("execution_head")
+                != config["provenance_contract"]["execution_head"]
+                or receipt_payload.get("producer_receipts_rewritten") is not False
+                or receipt_payload.get("append_only_source_preserved") is not True
+                or receipt_payload.get("interpretation_or_verdict") is not None
+            ):
+                raise ReportContractError("queue recovery receipt identity/policy drift")
+            _, intent_binding = verify_file_binding(
+                receipt_payload.get("intent"), "queue recovery receipt intent"
+            )
+            if intent_binding != receipt_binding(intent_path):
+                raise ReportContractError("queue recovery receipt/intent binding drift")
+            _, receipt_archive = verify_file_binding(
+                receipt_payload.get("source_archive_receipt"),
+                "queue recovery receipt source archive",
+            )
+            if receipt_archive != archive_binding:
+                raise ReportContractError("queue recovery receipt/archive binding drift")
+            if (
+                receipt_payload.get("destination_training_root")
+                != repo_relative(destination_root)
+                or receipt_payload.get("excluded_artifacts") != excluded
+            ):
+                raise ReportContractError("queue recovery receipt destination drift")
+            destination = _recovery_signatures(
+                receipt_payload.get("destination_artifacts"),
+                "queue recovery receipt",
+            )
+            if destination != copied:
+                raise ReportContractError("queue recovery source/destination ledger drift")
+            defect = receipt_payload.get("defect")
+            if not isinstance(defect, Mapping) or (
+                defect.get("error_type") != "ReceiptShapeMismatch"
+                or defect.get("reason")
+                != "training_receipts_or_materialization_do_not_match_runtime_head"
+                or defect.get("producer_shape") != ["path", "sha256"]
+                or defect.get("queue_shape") != ["path", "sha256", "bytes"]
+            ):
+                raise ReportContractError("queue recovery defect record drift")
+            sources.extend(
+                _verify_recovery_tree(
+                    destination_root,
+                    destination,
+                    excluded=[],
+                    label="queue recovery destination",
+                    role_prefix=f"queue_recovery_destination_{key}_{attempt}",
+                )
+            )
+            receipt_state = str(receipt_payload["state"])
+        rows.append(
+            {
+                "job_key": key,
+                "building_id": building_id,
+                "arm": arm,
+                "run": replicate,
+                "archive_attempt": attempt,
+                "recovery_state": receipt_state,
+                "intent_path": repo_relative(intent_path),
+                "intent_sha256": sha256_file(intent_path),
+                "receipt_path": repo_relative(receipt_path),
+                "receipt_sha256": (
+                    sha256_file(receipt_path) if receipt_path.is_file() else None
+                ),
+                "source_artifacts_n": len(copied),
+                "destination_artifacts_n": (
+                    len(receipt_payload.get("destination_artifacts", []))
+                    if receipt_payload is not None
+                    else None
+                ),
+                "producer_receipts_rewritten": False,
+                "append_only_source_preserved": (
+                    receipt_payload.get("append_only_source_preserved")
+                    if receipt_payload is not None
+                    else None
+                ),
+            }
+        )
+    return {"controller": controller, "rows": rows, "source_records": sources}
+
+
+def load_queue_evidence(
+    jobs: Sequence[Job], config: Mapping[str, Any]
+) -> dict[str, Any]:
+    specs = expected_queue_stage_specs(jobs, config)
+    source_records = _queue_top_source_records(config)
+    plan_path = repo_path(config["sources"]["queue_plan"])
+    plan: dict[str, Any] | None = None
+    entries: list[dict[str, Any]] = [dict(spec) for spec in specs]
+    if plan_path.is_file():
+        plan = load_json(plan_path)
+        if plan.get("schema") != QUEUE_PLAN_SCHEMA or plan.get("run_id") != config["run_id"]:
+            raise ReportContractError("queue plan schema/run drift")
+        if plan.get("state") != "ACTIVE":
+            raise ReportContractError("queue plan state drift")
+        queue_config_payload = load_json(
+            repo_path(config["locked_inputs"]["queue_config"]["path"])
+        )
+        if plan.get("task_id") != queue_config_payload.get("task_id"):
+            raise ReportContractError("queue plan task identity drift")
+        if int(plan.get("stage_entries_n", -1)) != int(
+            config["queue_contract"]["expected_stage_entries"]
+        ):
+            raise ReportContractError("queue plan declared stage-entry count drift")
+        if int(plan.get("unique_jobs_n", -1)) != int(
+            config["queue_contract"]["expected_jobs"]
+        ):
+            raise ReportContractError("queue plan declared unique-job count drift")
+        if plan.get("actual_training_started_at_publication") is not False:
+            raise ReportContractError("queue plan publication-state drift")
+        if plan.get("interpretation_or_verdict") is not None:
+            raise ReportContractError("queue plan contains interpretation or verdict")
+        plan_entries = plan.get("entries")
+        if not isinstance(plan_entries, list) or len(plan_entries) != len(specs):
+            raise ReportContractError("queue plan stage-entry count drift")
+        entries = []
+        for observed, spec in zip(plan_entries, specs):
+            if not isinstance(observed, Mapping) or not _entry_matches_spec(observed, spec):
+                raise ReportContractError("queue plan entry order/identity drift")
+            entries.append(dict(observed))
+        unique = {queue_job_key(entry) for entry in entries}
+        expected = {job.key for job in jobs}
+        if unique != expected:
+            raise ReportContractError("queue plan 22-to-21 identity dedup drift")
+        queue_config = config["locked_inputs"]["queue_config"]
+        _, queue_config_observed = verify_file_binding(
+            plan.get("config"), "queue plan config"
+        )
+        if queue_config_observed["path"] != queue_config["path"] or queue_config_observed[
+            "sha256"
+        ] != queue_config["sha256"]:
+            raise ReportContractError("queue plan/config binding drift")
+        git_lock = plan.get("git_lock")
+        if not isinstance(git_lock, Mapping) or git_lock.get("head") != config[
+            "provenance_contract"
+        ]["execution_head"]:
+            raise ReportContractError("queue plan execution HEAD drift")
+
+    stage_rows: list[dict[str, Any]] = []
+    present_by_path: dict[str, dict[str, Any]] = {}
+    for entry in entries:
+        path = queue_stage_record_path(config, entry)
+        source_records.append(file_record(path, f"queue_stage_record_{entry['global_entry_order']}"))
+        payload: dict[str, Any] | None = None
+        source_receipts: list[dict[str, Any]] = []
+        if path.is_file():
+            if plan is None:
+                raise ReportContractError("queue stage record exists without queue plan")
+            payload = load_json(path)
+            if payload.get("schema") != QUEUE_STAGE_RECORD_SCHEMA:
+                raise ReportContractError("queue stage-record schema drift")
+            if payload.get("entry") != entry:
+                raise ReportContractError("queue stage-record entry drift")
+            if payload.get("status") not in {"MEASURED", "SKIPPED"}:
+                raise ReportContractError("queue stage-record terminal status drift")
+            raw_receipts = payload.get("source_receipts")
+            if not isinstance(raw_receipts, list) or not raw_receipts:
+                raise ReportContractError("queue stage-record source receipts missing")
+            if payload["status"] == "MEASURED" and len(raw_receipts) != 1:
+                raise ReportContractError("queue MEASURED source receipt count drift")
+            if payload["status"] == "SKIPPED":
+                if len(raw_receipts) != 3 or int(
+                    payload.get("same_signature_attempts", -1)
+                ) != 3:
+                    raise ReportContractError("queue SKIPPED retry receipt count drift")
+                if not payload.get("error_type") or not payload.get("error_signature"):
+                    raise ReportContractError("queue SKIPPED error identity missing")
+            for index, record in enumerate(raw_receipts):
+                _path, observed = verify_file_binding(
+                    record,
+                    f"queue stage-record {entry['global_entry_order']} source {index + 1}",
+                )
+                source_receipts.append(observed)
+            current = receipt_binding(path)
+            present_by_path[current["path"]] = payload
+        stage_rows.append(
+            {
+                **{key: entry.get(key) for key in specs[0]},
+                "job_key": queue_job_key(entry),
+                "stage_record_state": payload.get("status") if payload else "MISSING",
+                "stage_record_path": repo_relative(path),
+                "stage_record_sha256": sha256_file(path) if path.is_file() else None,
+                "source_receipts_json": source_receipts,
+                "smoke_reuse_json": payload.get("smoke_reuse") if payload else None,
+                "payload": payload,
+            }
+        )
+
+    by_key: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for row in stage_rows:
+        by_key[row["job_key"]].append(row)
+    canonical: dict[str, dict[str, Any]] = {}
+    smoke_key = jobs[0].key
+    for job in jobs:
+        candidates = by_key[job.key]
+        expected_n = 2 if job.key == smoke_key else 1
+        if len(candidates) != expected_n:
+            raise ReportContractError(f"queue stage multiplicity drift: {job.key}")
+        present = [row for row in candidates if row["payload"] is not None]
+        if job.key == smoke_key:
+            smoke = next(row for row in candidates if row["stage_key"] == config["queue_contract"]["smoke_stage_key"])
+            reuse = next(row for row in candidates if row["stage_key"] == config["queue_contract"]["reuse_stage_key"])
+            if reuse["payload"] is not None:
+                if smoke["payload"] is None:
+                    raise ReportContractError("queue smoke reuse exists before smoke stage record")
+                if smoke["stage_record_state"] != "MEASURED" or reuse["stage_record_state"] != "MEASURED":
+                    raise ReportContractError("queue duplicate smoke status diverged")
+                if smoke["source_receipts_json"] != reuse["source_receipts_json"]:
+                    raise ReportContractError("queue duplicate smoke source receipt drift")
+                reuse_contract = reuse["payload"].get("smoke_reuse")
+                if not isinstance(reuse_contract, Mapping) or reuse_contract.get("reused") is not True:
+                    raise ReportContractError("queue smoke reuse binding missing")
+                _, smoke_observed = verify_file_binding(
+                    reuse_contract.get("smoke_stage_record"), "queue smoke stage-record reuse"
+                )
+                if smoke_observed["path"] != smoke["stage_record_path"] or smoke_observed[
+                    "sha256"
+                ] != smoke["stage_record_sha256"]:
+                    raise ReportContractError("queue smoke stage-record SHA drift")
+                if reuse_contract.get("identical_readout_complete_receipt") != reuse[
+                    "source_receipts_json"
+                ][0]:
+                    raise ReportContractError("queue smoke readout receipt reuse drift")
+            selected = reuse if reuse["payload"] is not None else smoke
+        else:
+            selected = candidates[0]
+        payload = selected["payload"]
+        measured_payload = None
+        if payload is not None and payload.get("status") == "MEASURED":
+            source_path, _observed = verify_file_binding(
+                payload["source_receipts"][0], "queue measured readout receipt"
+            )
+            measured_payload = load_json(source_path)
+            if measured_payload.get("schema") != READOUT_COMPLETE_SCHEMA or measured_payload.get(
+                "state"
+            ) != "COMPLETE":
+                raise ReportContractError("queue measured readout receipt drift")
+            if measured_payload.get("identity") != {
+                "building_id": job.building_id,
+                "arm": job.arm,
+                "replicate": job.run,
+                "profile": "full",
+            }:
+                raise ReportContractError("queue measured readout identity drift")
+            if nested_get(
+                measured_payload, "primary.eligible_for_preregistered_judgment"
+            ) is not True:
+                raise ReportContractError("queue measured primary eligibility drift")
+            if nested_get(
+                measured_payload, "legacy_alpha.eligible_for_preregistered_judgment"
+            ) is not False:
+                raise ReportContractError("queue measured legacy eligibility drift")
+        canonical[job.key] = {
+            "stage_record": selected,
+            "terminal_status": payload.get("status") if payload else None,
+            "measured_payload": measured_payload,
+            "deduplicated_stage_entries_n": len(candidates),
+        }
+
+    archive_rows, archive_sources = _queue_archive_rows(jobs, config)
+    source_records.extend(archive_sources)
+    archives_by_job: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for row in archive_rows:
+        archives_by_job[row["job_key"]].append(row)
+    for key, value in canonical.items():
+        value["archives"] = archives_by_job.get(key, [])
+
+    recovery = _load_queue_recovery_evidence(jobs, entries, config)
+    source_records.extend(recovery["source_records"])
+    recovery_by_job: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for row in recovery["rows"]:
+        recovery_by_job[row["job_key"]].append(row)
+    for key, value in canonical.items():
+        value["recoveries"] = recovery_by_job.get(key, [])
+
+    complete = _validate_queue_complete(config, plan_path, present_by_path) if plan else None
+    unique_sources: dict[tuple[str, str], dict[str, Any]] = {}
+    for row in source_records:
+        unique_sources[(row["role"], row["path"])] = row
+    return {
+        "plan": plan,
+        "complete": complete,
+        "recovery_controller": recovery["controller"],
+        "stage_rows": stage_rows,
+        "archive_rows": archive_rows,
+        "recovery_rows": recovery["rows"],
+        "jobs": canonical,
+        "source_records": sorted(
+            unique_sources.values(), key=lambda row: (row["role"], row["path"])
+        ),
+        "stage_entries_n": len(stage_rows),
+        "unique_jobs_n": len(canonical),
+        "terminal_unique_jobs_n": sum(
+            value["terminal_status"] in {"MEASURED", "SKIPPED"}
+            for value in canonical.values()
+        ),
+        "incomplete_archives_n": sum(
+            row["archive_state"] == "INCOMPLETE" for row in archive_rows
+        ),
+        "rehydrated_attempts_n": sum(
+            row["recovery_state"]
+            == config["recovery_contract"]["rehydration_receipt_state"]
+            for row in recovery["rows"]
+        ),
+    }
 
 
 def nested_get(payload: Mapping[str, Any], path: str) -> Any:
@@ -692,6 +1832,7 @@ def build_score_rows(
     config: Mapping[str, Any],
     p0prime: Mapping[str, Mapping[str, Any]],
     t5: Mapping[str, Mapping[str, str]],
+    queue_evidence: Mapping[str, Any] | None = None,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, dict[str, Any]]]:
     contract = config["measurement_contract"]
     metrics = list(contract["metric_fields"])
@@ -701,7 +1842,35 @@ def build_score_rows(
     runtime: dict[str, dict[str, Any]] = {}
     for job in jobs:
         training_dir, readout_dir = job_dirs(job, config)
-        terminal, evidence, receipt = terminal_evidence(readout_dir, training_dir)
+        raw_terminal, raw_evidence, raw_receipt = terminal_evidence(
+            readout_dir, training_dir
+        )
+        queue_job = (
+            queue_evidence.get("jobs", {}).get(job.key)
+            if isinstance(queue_evidence, Mapping)
+            else None
+        )
+        if isinstance(queue_job, Mapping):
+            queue_status = queue_job.get("terminal_status")
+            stage = queue_job["stage_record"]
+            if queue_status == "MEASURED":
+                terminal = "measured"
+                evidence = stage["stage_record_path"]
+                receipt = queue_job.get("measured_payload")
+            elif queue_status == "SKIPPED":
+                terminal = "skipped"
+                evidence = stage["stage_record_path"]
+                receipt = stage.get("payload")
+            else:
+                terminal = (
+                    "queue_pending"
+                    if raw_terminal in TERMINAL_STATES
+                    else raw_terminal
+                )
+                evidence = raw_evidence
+                receipt = None
+        else:
+            terminal, evidence, receipt = raw_terminal, raw_evidence, raw_receipt
         censored = terminal == "censored"
         primary_candidate = find_score_row(receipt, "primary") if receipt else None
         alpha_candidate = find_score_row(receipt, "legacy_alpha") if receipt else None
@@ -716,7 +1885,13 @@ def build_score_rows(
         primary_observation = branch_observation(receipt, "primary")
         alpha_observation = branch_observation(receipt, "legacy_alpha")
         if terminal == "measured" and primary is None:
+            if isinstance(queue_job, Mapping):
+                raise ReportContractError(
+                    f"queue MEASURED receipt lacks primary score: {job.key}"
+                )
             terminal = "failed"
+        if terminal == "measured" and contains_censored((receipt or {}).get("primary")):
+            raise ReportContractError("queue measured primary receipt is censored")
         primary_state = "censored" if censored else (
             "measured" if primary is not None else "missing"
         )
@@ -731,6 +1906,11 @@ def build_score_rows(
         target = job.target
         seed = t5.get(job.building_id, {})
         evidence_path = repo_path(evidence) if evidence else None
+        queue_stage = queue_job.get("stage_record", {}) if isinstance(queue_job, Mapping) else {}
+        queue_archives = queue_job.get("archives", []) if isinstance(queue_job, Mapping) else []
+        queue_recoveries = (
+            queue_job.get("recoveries", []) if isinstance(queue_job, Mapping) else []
+        )
         base: dict[str, Any] = {
             "schema": "jointbuildgs.fusion_w1_aprime.report.score_row.v1",
             "task_id": config["task_id"],
@@ -757,6 +1937,27 @@ def build_score_rows(
                 if evidence_path is not None and evidence_path.is_file()
                 else None
             ),
+            "queue_stage_key": queue_stage.get("stage_key"),
+            "queue_stage_entry_order": queue_stage.get("stage_entry_order"),
+            "queue_stage_record_path": queue_stage.get("stage_record_path"),
+            "queue_stage_record_sha256": queue_stage.get("stage_record_sha256"),
+            "queue_deduplicated_stage_entries_n": (
+                queue_job.get("deduplicated_stage_entries_n")
+                if isinstance(queue_job, Mapping)
+                else None
+            ),
+            "queue_archived_attempts_n": sum(
+                row.get("archive_state") == "ARCHIVED" for row in queue_archives
+            ),
+            "queue_incomplete_archives_n": sum(
+                row.get("archive_state") == "INCOMPLETE" for row in queue_archives
+            ),
+            "queue_rehydrated_attempts_n": sum(
+                row.get("recovery_state")
+                == config["recovery_contract"]["rehydration_receipt_state"]
+                for row in queue_recoveries
+            ),
+            "queue_recovery_receipts_json": queue_recoveries,
             "primary_readout_role": contract["primary_readout_role"],
             "primary_eligible_for_preregistered_gauges": True,
             "primary_measurement_state": primary_state,
@@ -1253,7 +2454,10 @@ def preflight_rows(config: Mapping[str, Any]) -> list[dict[str, Any]]:
                     payload, "population.completed_count"
                 )
             elif name == "T4":
+                bundle = load_t4_bundle(config)
                 details["observation_rows_n"] = len(payload.get("observations") or [])
+                details["source_hashes_verified"] = True
+                details["snapshot_local_bundle_links"] = t4_bundle_links(config)
         rows.append(
             {
                 "item": name,
@@ -1261,7 +2465,11 @@ def preflight_rows(config: Mapping[str, Any]) -> list[dict[str, Any]]:
                 "observed_status": observed,
                 "contract_status": expected,
                 "status_matches_contract": observed == expected if observed is not None else None,
-                "evidence_path": repo_relative(path),
+                "evidence_path": (
+                    t4_bundle_links(config)["receipt"]
+                    if name == "T4" and path.is_file()
+                    else repo_relative(path)
+                ),
                 "evidence_sha256": sha256_file(path) if path.is_file() else None,
                 "details_json": details,
                 "scientific_verdict": None,
@@ -2029,7 +3237,11 @@ def generate_visuals(
 
 
 def source_inventory(
-    jobs: Sequence[Job], config: Mapping[str, Any]
+    jobs: Sequence[Job],
+    config: Mapping[str, Any],
+    *,
+    queue_evidence: Mapping[str, Any] | None = None,
+    t4_bundle: Mapping[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     rows.append(file_record(DEFAULT_CONFIG, "report_config", required=True))
@@ -2052,6 +3264,7 @@ def source_inventory(
         "p0prime_config",
         "preprocess_config",
         "readout_config",
+        "queue_config",
     ):
         record = config["locked_inputs"][config_name]
         method_config_path = repo_path(record["path"])
@@ -2080,6 +3293,22 @@ def source_inventory(
         "issues",
     ):
         rows.append(file_record(repo_path(config["sources"][name]), name))
+    t4 = t4_bundle if t4_bundle is not None else load_t4_bundle(config)
+    for role in ("receipt", "csv", "figure"):
+        rows.append(
+            file_record(
+                t4["paths"][role],
+                f"T4_bundle_{role}",
+                expected_sha256=t4["files"][role]["sha256"],
+                required=True,
+            )
+        )
+    queue = (
+        queue_evidence
+        if queue_evidence is not None
+        else load_queue_evidence(jobs, config)
+    )
+    rows.extend(dict(record) for record in queue["source_records"])
     for job in jobs:
         training_dir, readout_dir = job_dirs(job, config)
         rows.append(
@@ -2141,7 +3370,10 @@ def source_inventory(
 
 
 def source_fingerprint(
-    rows: Sequence[Mapping[str, Any]], config: Mapping[str, Any]
+    rows: Sequence[Mapping[str, Any]],
+    config: Mapping[str, Any],
+    *,
+    provenance: Mapping[str, Any] | None = None,
 ) -> str:
     payload = [
         {
@@ -2155,8 +3387,9 @@ def source_fingerprint(
     ]
     return canonical_sha(
         {
-            "schema": "jointbuildgs.fusion_w1_aprime.report.inputs.v1",
+            "schema": "jointbuildgs.fusion_w1_aprime.report.inputs.v2",
             "run_id": config["run_id"],
+            "report_provenance": dict(provenance) if provenance is not None else None,
             "sources": payload,
         }
     )
@@ -2188,6 +3421,7 @@ def build_one_page_markdown(
     snapshot_id: str,
     config: Mapping[str, Any],
 ) -> str:
+    t4_links = t4_bundle_links(config)
     terminal = sum(row["job_terminal_state"] in TERMINAL_STATES for row in scores)
     measured = sum(row["primary_measurement_state"] == "measured" for row in scores)
     censored = sum(row["primary_measurement_state"] == "censored" for row in scores)
@@ -2269,6 +3503,10 @@ def build_one_page_markdown(
                 for row in preflight
             ],
         ),
+        "",
+        "T4 snapshot-local 증거: "
+        f"[receipt]({t4_links['receipt']}) · [CSV]({t4_links['csv']}) · "
+        f"[figure]({t4_links['figure']}) · [bundle manifest]({t4_links['manifest']})",
         "",
         "## GS4Buildings 겹침 식별 기록",
         "",
@@ -2484,6 +3722,10 @@ def build_report_markdown(
             "- P0′: [w1_seed_p0prime_scores.csv](w1_seed_p0prime_scores.csv)",
             "- alpha 비교: [w1_alpha_comparison.csv](w1_alpha_comparison.csv)",
             "- opacity 전 동 궤적: [w1_opacity_trajectories.csv](w1_opacity_trajectories.csv)",
+            "- queue stage receipt 정규화: [w1_queue_stage_records.csv](w1_queue_stage_records.csv)",
+            "- queue training archive: [w1_queue_archives.csv](w1_queue_archives.csv)",
+            "- queue recovery evidence: [w1_queue_recoveries.csv](w1_queue_recoveries.csv)",
+            f"- T4 snapshot-local bundle: [receipt]({t4_bundle_links(config)['receipt']}) · [CSV]({t4_bundle_links(config)['csv']}) · [figure]({t4_bundle_links(config)['figure']})",
             "- 정성 패널 폴더: [w1_panels](w1_panels)",
             "- source/artifact 해시: [w1_manifest.json](w1_manifest.json)",
             "",
@@ -2633,6 +3875,162 @@ def git_identity() -> dict[str, Any]:
     }
 
 
+def validate_report_descendant_paths(
+    changed_paths: Iterable[str],
+    allowlist: Iterable[str],
+    glob_allowlist: Iterable[str] = (),
+) -> list[str]:
+    allowed = set(allowlist)
+    patterns = list(glob_allowlist)
+    changed = sorted(set(changed_paths))
+    unexpected = [
+        path
+        for path in changed
+        if path not in allowed
+        and not any(PurePosixPath(path).match(pattern) for pattern in patterns)
+    ]
+    if unexpected:
+        raise ReportContractError(
+            "report generation descendant contains non-report paths: "
+            + ", ".join(unexpected)
+        )
+    return changed
+
+
+def report_provenance(config: Mapping[str, Any]) -> dict[str, Any]:
+    def run(*args: str, check: bool = True) -> subprocess.CompletedProcess[str]:
+        result = subprocess.run(
+            ["git", "-c", f"safe.directory={REPO}", "-C", str(REPO), *args],
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=False,
+        )
+        if check and result.returncode:
+            raise ReportContractError(
+                result.stderr.strip() or result.stdout.strip() or "git provenance query failed"
+            )
+        return result
+
+    contract = config["provenance_contract"]
+    execution_head = str(contract["execution_head"])
+    generation_head = run("rev-parse", "HEAD").stdout.strip()
+    ancestor = run(
+        "merge-base", "--is-ancestor", execution_head, generation_head, check=False
+    ).returncode == 0
+    if not ancestor:
+        raise ReportContractError("execution HEAD is not an ancestor of report generation HEAD")
+    report_files = list(contract["report_implementation_files"])
+    exact_allowlist = [
+        *report_files,
+        *contract["recovery_exact_descendant_allowlist"],
+        *contract["operational_evidence_exact_descendant_allowlist"],
+    ]
+    glob_allowlist = list(contract["recovery_glob_descendant_allowlist"])
+    history_changed = validate_report_descendant_paths(
+        [
+            path
+            for path in run(
+                "log",
+                "--format=",
+                "--name-only",
+                "--no-renames",
+                f"{execution_head}..{generation_head}",
+            ).stdout.splitlines()
+            if path
+        ],
+        exact_allowlist,
+        glob_allowlist,
+    )
+    final_tree_changed = validate_report_descendant_paths(
+        run("diff", "--name-only", "--no-renames", f"{execution_head}..{generation_head}")
+        .stdout.splitlines(),
+        exact_allowlist,
+        glob_allowlist,
+    )
+    implementation = []
+    for logical in report_files:
+        if run("ls-files", "--error-unmatch", logical, check=False).returncode:
+            raise ReportContractError(f"report implementation is not tracked: {logical}")
+        head_blob = run("rev-parse", f"{generation_head}:{logical}", check=False)
+        if head_blob.returncode:
+            raise ReportContractError(f"report implementation absent at generation HEAD: {logical}")
+        worktree_blob = run("hash-object", "--", logical).stdout.strip()
+        matches = worktree_blob == head_blob.stdout.strip()
+        if contract.get("report_files_must_match_generation_head") is True and not matches:
+            raise ReportContractError(
+                f"report implementation differs from generation HEAD: {logical}"
+            )
+        implementation.append(
+            {
+                "path": logical,
+                "git_blob": worktree_blob,
+                "sha256": sha256_file(repo_path(logical)),
+                "worktree_matches_generation_head": matches,
+            }
+        )
+    recovery_expected = {
+        record["path"]: record
+        for record in config["recovery_contract"]["controller_files"]
+    }
+    operational = []
+    for logical in history_changed:
+        if logical in report_files:
+            continue
+        if run("ls-files", "--error-unmatch", logical, check=False).returncode:
+            raise ReportContractError(
+                f"allowed operational descendant path is not tracked: {logical}"
+            )
+        head_blob = run("rev-parse", f"{generation_head}:{logical}", check=False)
+        if head_blob.returncode:
+            raise ReportContractError(
+                f"allowed operational descendant path absent at generation HEAD: {logical}"
+            )
+        worktree_blob = run("hash-object", "--", logical).stdout.strip()
+        matches = worktree_blob == head_blob.stdout.strip()
+        if not matches:
+            raise ReportContractError(
+                f"operational evidence differs from generation HEAD: {logical}"
+            )
+        digest = sha256_file(repo_path(logical))
+        expected = recovery_expected.get(logical)
+        if expected is not None and (
+            digest != expected["sha256"]
+            or repo_path(logical).stat().st_size != int(expected["bytes"])
+        ):
+            raise ReportContractError(
+                f"recovery implementation differs from controller contract: {logical}"
+            )
+        operational.append(
+            {
+                "path": logical,
+                "git_blob": worktree_blob,
+                "sha256": digest,
+                "worktree_matches_generation_head": matches,
+                "controller_hash_bound": expected is not None,
+            }
+        )
+    return {
+        "execution_head": execution_head,
+        "report_generation_head": generation_head,
+        "execution_head_is_ancestor": ancestor,
+        "report_and_recovery_only_descendant": True,
+        "descendant_history_changed_paths": history_changed,
+        "descendant_final_tree_changed_paths": final_tree_changed,
+        "report_implementation_files_allowlist": report_files,
+        "recovery_exact_descendant_allowlist": list(
+            contract["recovery_exact_descendant_allowlist"]
+        ),
+        "operational_evidence_exact_descendant_allowlist": list(
+            contract["operational_evidence_exact_descendant_allowlist"]
+        ),
+        "recovery_glob_descendant_allowlist": glob_allowlist,
+        "report_generation_branch": run("branch", "--show-current").stdout.strip(),
+        "implementation_files": implementation,
+        "operational_descendant_files": operational,
+    }
+
+
 def artifact_records(root: Path, *, exclude: set[str] | None = None) -> list[dict[str, Any]]:
     excluded = exclude or set()
     result: list[dict[str, Any]] = []
@@ -2649,8 +4047,56 @@ def artifact_records(root: Path, *, exclude: set[str] | None = None) -> list[dic
     return result
 
 
+def validate_snapshot_artifacts(
+    snapshot: Path,
+    manifest_payload: Mapping[str, Any],
+    config: Mapping[str, Any],
+) -> None:
+    records = manifest_payload.get("artifacts")
+    if not isinstance(records, list):
+        raise ReportContractError("existing report artifact inventory missing")
+    expected: dict[str, Mapping[str, Any]] = {}
+    for record in records:
+        if not isinstance(record, Mapping):
+            raise ReportContractError("existing report artifact row drift")
+        raw_path = record.get("path")
+        if not isinstance(raw_path, str) or not raw_path:
+            raise ReportContractError("existing report artifact path missing")
+        relative = Path(raw_path)
+        if (
+            relative.is_absolute()
+            or relative.as_posix() != raw_path
+            or any(part in {"", ".", ".."} for part in relative.parts)
+        ):
+            raise ReportContractError(f"unsafe existing report artifact path: {raw_path}")
+        if raw_path in expected:
+            raise ReportContractError(f"duplicate existing report artifact path: {raw_path}")
+        expected[raw_path] = record
+    excluded = {config["outputs"]["manifest"], config["outputs"]["receipt"]}
+    observed = {
+        path.relative_to(snapshot).as_posix()
+        for path in snapshot.rglob("*")
+        if path.is_file() and path.relative_to(snapshot).as_posix() not in excluded
+    }
+    if observed != set(expected):
+        raise ReportContractError("existing report artifact inventory/path set drift")
+    for raw_path, record in expected.items():
+        path = snapshot / raw_path
+        if path.is_symlink() or not path.is_file():
+            raise ReportContractError(f"existing report artifact missing: {raw_path}")
+        if int(record.get("bytes", -1)) != path.stat().st_size:
+            raise ReportContractError(f"existing report artifact byte drift: {raw_path}")
+        if record.get("sha256") != sha256_file(path):
+            raise ReportContractError(f"existing report artifact SHA drift: {raw_path}")
+
+
 def validate_existing_snapshot(
-    snapshot: Path, config: Mapping[str, Any], fingerprint: str
+    snapshot: Path,
+    config: Mapping[str, Any],
+    fingerprint: str,
+    *,
+    require_terminal: bool = False,
+    current_provenance: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
     receipt = snapshot / config["outputs"]["receipt"]
     manifest = snapshot / config["outputs"]["manifest"]
@@ -2663,6 +4109,22 @@ def validate_existing_snapshot(
         raise ReportContractError("existing report snapshot fingerprint collision")
     if nested_get(payload, "manifest.sha256") != sha256_file(manifest):
         raise ReportContractError("existing report manifest hash drift")
+    manifest_payload = load_json(manifest)
+    if manifest_payload.get("schema") != MANIFEST_SCHEMA:
+        raise ReportContractError("existing report manifest schema drift")
+    if payload.get("state") not in {"PARTIAL", "TERMINAL"}:
+        raise ReportContractError("existing report snapshot state drift")
+    if manifest_payload.get("state") != payload.get("state"):
+        raise ReportContractError("existing report receipt/manifest state drift")
+    if current_provenance is not None and (
+        canonical_sha(payload.get("provenance")) != canonical_sha(current_provenance)
+        or canonical_sha(manifest_payload.get("provenance"))
+        != canonical_sha(current_provenance)
+    ):
+        raise ReportContractError("existing report generation provenance drift")
+    validate_snapshot_artifacts(snapshot, manifest_payload, config)
+    if require_terminal and payload.get("state") != "TERMINAL":
+        raise ReportContractError("final mode refuses cached PARTIAL report snapshot")
     return payload
 
 
@@ -2682,6 +4144,10 @@ def publish_latest(
             "sha256": sha256_file(snapshot / config["outputs"]["receipt"]),
         },
         "state": receipt["state"],
+        "execution_head": nested_get(receipt, "provenance.execution_head"),
+        "report_generation_head": nested_get(
+            receipt, "provenance.report_generation_head"
+        ),
         "scientific_verdict": None,
     }
     atomic_json(output_root / config["outputs"]["latest"], payload)
@@ -2690,29 +4156,53 @@ def publish_latest(
 def build_snapshot(
     config: Mapping[str, Any], *, require_terminal: bool = False
 ) -> dict[str, Any]:
+    provenance = report_provenance(config)
     targets = load_targets(config)
     jobs = expected_jobs(targets, config)
-    sources = source_inventory(jobs, config)
-    fingerprint = source_fingerprint(sources, config)
+    queue = load_queue_evidence(jobs, config)
+    t4 = load_t4_bundle(config)
+    sources = source_inventory(
+        jobs, config, queue_evidence=queue, t4_bundle=t4
+    )
+    fingerprint = source_fingerprint(sources, config, provenance=provenance)
     snapshot_id = fingerprint[:16]
     output_root = repo_path(config["outputs"]["root"])
     snapshots = output_root / config["outputs"]["snapshots"]
     snapshot = snapshots / snapshot_id
     if snapshot.exists():
-        receipt = validate_existing_snapshot(snapshot, config, fingerprint)
+        receipt = validate_existing_snapshot(
+            snapshot,
+            config,
+            fingerprint,
+            require_terminal=require_terminal,
+            current_provenance=provenance,
+        )
         publish_latest(output_root, snapshot, receipt, config)
         return dict(receipt)
 
     p0prime = load_p0prime_scores(config)
     t5 = load_t5(config)
-    scores, alpha, runtime = build_score_rows(jobs, config, p0prime, t5)
+    scores, alpha, runtime = build_score_rows(
+        jobs, config, p0prime, t5, queue_evidence=queue
+    )
     pending = [
         row for row in scores if row["job_terminal_state"] not in TERMINAL_STATES
     ]
-    if require_terminal and pending:
-        raise ReportContractError(
-            f"require-terminal requested with {len(pending)} nonterminal jobs"
-        )
+    queue_complete = queue.get("complete")
+    queue_terminal_state = (
+        queue_complete.get("state")
+        if isinstance(queue_complete, Mapping)
+        else None
+    )
+    if require_terminal:
+        if queue_terminal_state != "COMPLETE":
+            raise ReportContractError("final mode requires queue state COMPLETE")
+        if int(queue.get("incomplete_archives_n", 0)):
+            raise ReportContractError("final mode refuses incomplete queue training archive")
+        if pending:
+            raise ReportContractError(
+                f"queue COMPLETE has {len(pending)} nonterminal unique jobs"
+            )
 
     snapshots.mkdir(parents=True, exist_ok=True)
     staging = snapshots / f".staging_{snapshot_id}_{os.getpid()}"
@@ -2720,6 +4210,7 @@ def build_snapshot(
         raise ReportContractError(f"report staging path already exists: {staging}")
     staging.mkdir(parents=True)
     try:
+        t4_bundle_manifest = publish_t4_bundle(staging, config, t4)
         opacity = generate_visuals(scores, runtime, staging, config)
         summary = build_summary(scores, config)
         replicate = build_replicate_medians(scores, config)
@@ -2747,6 +4238,15 @@ def build_snapshot(
         write_csv(staging / outputs["incomplete_csv"], incomplete)
         write_csv(staging / outputs["issues_csv"], issues)
         write_csv(staging / outputs["opacity_csv"], opacity)
+        write_csv(
+            staging / outputs["queue_stage_records_csv"],
+            [
+                {key: value for key, value in row.items() if key != "payload"}
+                for row in queue["stage_rows"]
+            ],
+        )
+        write_csv(staging / outputs["queue_archives_csv"], queue["archive_rows"])
+        write_csv(staging / outputs["queue_recoveries_csv"], queue["recovery_rows"])
         write_csv(staging / outputs["source_inventory_csv"], sources)
         atomic_json(staging / outputs["quality_notes_json"], quality_notes(config))
 
@@ -2780,9 +4280,20 @@ def build_snapshot(
         artifacts = artifact_records(
             staging, exclude={outputs["manifest"], outputs["receipt"]}
         )
-        final_sources = source_inventory(jobs, config)
-        if source_fingerprint(final_sources, config) != fingerprint:
+        final_queue = load_queue_evidence(jobs, config)
+        final_t4 = load_t4_bundle(config)
+        final_sources = source_inventory(
+            jobs,
+            config,
+            queue_evidence=final_queue,
+            t4_bundle=final_t4,
+        )
+        if source_fingerprint(
+            final_sources, config, provenance=provenance
+        ) != fingerprint:
             raise ReportContractError("report sources changed during snapshot build")
+        if canonical_sha(report_provenance(config)) != canonical_sha(provenance):
+            raise ReportContractError("report provenance changed during snapshot build")
         terminal_n = sum(
             row["job_terminal_state"] in TERMINAL_STATES for row in scores
         )
@@ -2792,7 +4303,7 @@ def build_snapshot(
         censored_n = sum(
             row["primary_measurement_state"] == "censored" for row in scores
         )
-        state = "TERMINAL" if terminal_n == len(scores) else "PARTIAL"
+        state = "TERMINAL" if queue_terminal_state == "COMPLETE" else "PARTIAL"
         manifest_payload = {
             "schema": MANIFEST_SCHEMA,
             "created_at": utc_now(),
@@ -2802,9 +4313,23 @@ def build_snapshot(
             "input_fingerprint": fingerprint,
             "state": state,
             "git": git_identity(),
+            "provenance": provenance,
             "queue": {
                 "expected_jobs": len(scores),
+                "expected_stage_entries": int(
+                    config["queue_contract"]["expected_stage_entries"]
+                ),
+                "observed_stage_entries": int(queue["stage_entries_n"]),
+                "unique_jobs_after_smoke_reuse_dedup": int(queue["unique_jobs_n"]),
                 "terminal_jobs": terminal_n,
+                "terminal_unique_jobs_from_stage_records": int(
+                    queue["terminal_unique_jobs_n"]
+                ),
+                "terminal_queue_receipt_present": queue_terminal_state is not None,
+                "terminal_queue_state": queue_terminal_state,
+                "incomplete_training_archives": int(queue["incomplete_archives_n"]),
+                "recovery_controller_present": queue["recovery_controller"] is not None,
+                "rehydrated_attempts": int(queue["rehydrated_attempts_n"]),
                 "primary_measured_jobs": measured_n,
                 "primary_censored_jobs": censored_n,
                 "primary_missing_jobs": len(scores) - measured_n - censored_n,
@@ -2812,12 +4337,20 @@ def build_snapshot(
             "preflight": preflight,
             "measurement_contract": config["measurement_contract"],
             "visual_contract": config["visual_contract"],
+            "t4_bundle": t4_bundle_manifest,
             "sources": sources,
             "artifacts": artifacts,
             "publication": {
                 "content_addressed": True,
                 "staging_before_publish": True,
                 "source_inventory_rehashed_before_publish": True,
+                "queue_stage_receipts_sha_verified": True,
+                "queue_archive_receipts_sha_verified": True,
+                "queue_recovery_receipts_sha_verified": True,
+                "smoke_reuse_deduplicated_to_unique_job": True,
+                "cached_partial_rejected_for_final": True,
+                "t4_bundle_hash_verified_before_copy": True,
+                "report_and_recovery_descendant_provenance_required": True,
                 "receipt_written_last": True,
                 "partial_allowed": True,
             },
@@ -2835,6 +4368,7 @@ def build_snapshot(
             "input_fingerprint": fingerprint,
             "state": state,
             "counts": manifest_payload["queue"],
+            "provenance": provenance,
             "manifest": {
                 "path": outputs["manifest"],
                 "sha256": sha256_file(manifest_path),
@@ -2855,13 +4389,25 @@ def build_snapshot(
 
 
 def check_inputs(config: Mapping[str, Any]) -> dict[str, Any]:
+    provenance = report_provenance(config)
     targets = load_targets(config)
     jobs = expected_jobs(targets, config)
-    inventory = source_inventory(jobs, config)
+    queue = load_queue_evidence(jobs, config)
+    t4 = load_t4_bundle(config)
+    inventory = source_inventory(
+        jobs, config, queue_evidence=queue, t4_bundle=t4
+    )
     return {
-        "schema": "jointbuildgs.fusion_w1_aprime.report.check.v1",
+        "schema": "jointbuildgs.fusion_w1_aprime.report.check.v2",
         "targets_n": len(targets),
         "jobs_n": len(jobs),
+        "queue_stage_entries_n": queue["stage_entries_n"],
+        "queue_unique_jobs_n": queue["unique_jobs_n"],
+        "queue_terminal_unique_jobs_n": queue["terminal_unique_jobs_n"],
+        "queue_incomplete_archives_n": queue["incomplete_archives_n"],
+        "queue_rehydrated_attempts_n": queue["rehydrated_attempts_n"],
+        "t4_source_hashes_verified": True,
+        "provenance": provenance,
         "sources_present_n": sum(row["state"] == "present" for row in inventory),
         "sources_missing_n": sum(row["state"] == "missing" for row in inventory),
         "missing_roles": [row["role"] for row in inventory if row["state"] == "missing"],

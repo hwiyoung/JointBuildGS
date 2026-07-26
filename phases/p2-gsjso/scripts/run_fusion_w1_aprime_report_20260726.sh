@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Docker-only observational aggregation and panel generator for arm A-prime.
+# Docker-only report-v2 aggregation with queue/T4/provenance binding.
 set -Eeuo pipefail
 
 REPO_ROOT="$(git rev-parse --show-toplevel)"
@@ -10,6 +10,14 @@ EXPECTED_IMAGE_ID="sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324da
 CONFIG="phases/p2-gsjso/configs/fusion_w1_aprime_report_20260726.json"
 SCRIPT="phases/p2-gsjso/scripts/fusion_w1_aprime_report_20260726.py"
 TEST="phases/p2-gsjso/scripts/test_fusion_w1_aprime_report_20260726.py"
+GIT_COMMON_DIR="$(git rev-parse --path-format=absolute --git-common-dir)"
+GIT_MOUNTS=()
+if [[ "$GIT_COMMON_DIR" != "$REPO_ROOT/.git" ]]; then
+  # A detached linked worktree stores an absolute gitdir pointer outside its
+  # checkout.  Mount only the common Git metadata, read-only, so provenance
+  # checks see the detached HEAD without exposing or mounting the live tree.
+  GIT_MOUNTS=(--volume "$GIT_COMMON_DIR:$GIT_COMMON_DIR:ro")
+fi
 
 observed_image_id="$(docker image inspect "$IMAGE" --format '{{.Id}}')"
 if [[ "$observed_image_id" != "$EXPECTED_IMAGE_ID" ]]; then
@@ -30,6 +38,7 @@ run_python() {
     --env XDG_CACHE_HOME=/tmp/cache \
     --env PYTHONDONTWRITEBYTECODE=1 \
     --volume "$REPO_ROOT:/workspace/JointBuildGS" \
+    "${GIT_MOUNTS[@]}" \
     --workdir /workspace/JointBuildGS \
     --entrypoint python3 \
     "$IMAGE" "$@"
