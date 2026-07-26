@@ -89,10 +89,30 @@ def complete_payload(*, legacy_state: str | None = None) -> dict:
     }
 
 
+def queue_fixture_config(config: dict, root: Path) -> dict:
+    value = copy.deepcopy(config)
+    queue_root = root / "unattended_queue"
+    for name, relative in {
+        "queue_plan": "queue_plan.json",
+        "queue_stage_records": "stage_records",
+        "queue_training_failure_archive": "training_failure_archive",
+        "queue_status_json": "status.json",
+        "queue_status_csv": "status.csv",
+        "queue_stage_stop": "stage_stop.json",
+        "queue_complete": "complete.json",
+        "queue_events": "events.jsonl",
+        "queue_event_sequence": "event_sequence.json",
+    }.items():
+        value["sources"][name] = str(queue_root / relative)
+    value["sources"]["training_root"] = str(root / "training")
+    value["sources"]["readout_root"] = str(root / "readout")
+    return value
+
+
 class ContractTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        cls.config = report.load_config()
+        cls.config = report.load_config(verify_locked_files=False)
         cls.targets = report.load_targets(cls.config)
 
     def test_metric_state_and_queue_contracts_are_exact(self) -> None:
@@ -123,6 +143,11 @@ class ContractTests(unittest.TestCase):
         )
         self.assertEqual(contract["comparison_nonmeasurement_state"], "not_applicable")
         self.assertIsNone(self.config["queue_contract"]["time_cutoff"])
+        self.assertEqual(self.config["queue_contract"]["expected_stage_entries"], 22)
+        self.assertEqual(
+            self.config["provenance_contract"]["execution_head"],
+            "de8852c00c737eced081f2627b49bcedddade652",
+        )
 
         jobs = report.expected_jobs(self.targets, self.config)
         self.assertEqual(len(jobs), 21)
@@ -149,6 +174,9 @@ class ContractTests(unittest.TestCase):
             "scores_csv",
             "alpha_comparison_csv",
             "opacity_csv",
+            "queue_stage_records_csv",
+            "queue_archives_csv",
+            "t4_bundle_manifest",
             "panels_dir",
             "manifest",
             "receipt",
@@ -160,6 +188,9 @@ class ContractTests(unittest.TestCase):
         self.assertTrue(publication["receipt_written_last_inside_snapshot"])
         self.assertTrue(publication["source_inventory_rehashed_before_publish"])
         self.assertTrue(publication["partial_outputs_allowed"])
+        self.assertTrue(publication["cached_partial_rejected_for_final"])
+        self.assertTrue(publication["queue_stage_receipts_sha_verified"])
+        self.assertTrue(publication["queue_archive_receipts_sha_verified"])
 
     def test_docker_wrapper_is_nonnetworked_and_nonroot(self) -> None:
         wrapper = (
@@ -169,6 +200,8 @@ class ContractTests(unittest.TestCase):
         self.assertIn('--user "$(id -u):$(id -g)"', wrapper)
         self.assertIn("--pull=never", wrapper)
         self.assertIn("EXPECTED_IMAGE_ID=", wrapper)
+        self.assertIn("GIT_COMMON_DIR=", wrapper)
+        self.assertIn('GIT_MOUNTS=(--volume "$GIT_COMMON_DIR:$GIT_COMMON_DIR:ro")', wrapper)
         self.assertNotIn("--gpus", wrapper)
         for mode in ("test)", "check)", "partial)", "final)"):
             self.assertIn(mode, wrapper)
@@ -219,7 +252,7 @@ class ContractTests(unittest.TestCase):
 class MeasurementStateTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        cls.config = report.load_config()
+        cls.config = report.load_config(verify_locked_files=False)
 
     def test_false_and_zero_are_measured_not_missing(self) -> None:
         value, state = report.metric_value(
@@ -379,10 +412,279 @@ class MeasurementStateTests(unittest.TestCase):
         self.assertEqual(rows[1]["text"], "- Status: RECORDED")
 
 
+class QueueEvidenceTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.base_config = report.load_config(verify_locked_files=False)
+        cls.targets = report.load_targets(cls.base_config)
+
+    def _plan(self, config: dict) -> tuple[list[report.Job], list[dict]]:
+        jobs = report.expected_jobs(self.targets, config)
+        entries = report.expected_queue_stage_specs(jobs, config)
+        queue_config = report.repo_path(config["locked_inputs"]["queue_config"]["path"])
+        write_json(
+            Path(config["sources"]["queue_plan"]),
+            {
+                "schema": report.QUEUE_PLAN_SCHEMA,
+                "state": "ACTIVE",
+                "run_id": config["run_id"],
+                "task_id": "FUS-W1-APRIME-QUEUE-001",
+                "config": report.receipt_binding(queue_config),
+                "git_lock": {
+                    "head": config["provenance_contract"]["execution_head"],
+                    "branch": config["branch"],
+                },
+                "entries": entries,
+                "stage_entries_n": 22,
+                "unique_jobs_n": 21,
+                "actual_training_started_at_publication": False,
+                "interpretation_or_verdict": None,
+            },
+        )
+        return jobs, entries
+
+    @staticmethod
+    def _stage_payload(entry: dict, source: dict, *, status: str = "MEASURED") -> dict:
+        return {
+            "schema": report.QUEUE_STAGE_RECORD_SCHEMA,
+            "status": status,
+            "entry": entry,
+            "source": "readout_complete" if status == "MEASURED" else "test_failure",
+            "source_receipts": [source],
+            "error_type": None if status == "MEASURED" else "TestFailure",
+            "error_signature": None if status == "MEASURED" else "same",
+            "same_signature_attempts": None if status == "MEASURED" else 1,
+            "smoke_reuse": None,
+            "partial_results_reviewable": True,
+            "interpretation_or_verdict": None,
+        }
+
+    def _smoke_and_reuse(
+        self, config: dict, entries: list[dict], source_path: Path
+    ) -> tuple[Path, Path]:
+        source = report.receipt_binding(source_path)
+        smoke, reuse = entries[0], entries[1]
+        smoke_path = report.queue_stage_record_path(config, smoke)
+        write_json(smoke_path, self._stage_payload(smoke, source))
+        reuse_payload = self._stage_payload(reuse, source)
+        reuse_payload["smoke_reuse"] = {
+            "reused": True,
+            "smoke_stage_record": report.receipt_binding(smoke_path),
+            "identical_readout_complete_receipt": source,
+        }
+        reuse_path = report.queue_stage_record_path(config, reuse)
+        write_json(reuse_path, reuse_payload)
+        return smoke_path, reuse_path
+
+    def test_stage_records_deduplicate_smoke_22_to_21_with_exact_sha(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            config = queue_fixture_config(self.base_config, root)
+            jobs, entries = self._plan(config)
+            readout = root / "receipts/readout_complete.json"
+            readout_payload = complete_payload(legacy_state="NOT_ASSEMBLED")
+            readout_payload["identity"] = {
+                "building_id": jobs[0].building_id,
+                "arm": jobs[0].arm,
+                "replicate": jobs[0].run,
+                "profile": "full",
+            }
+            write_json(readout, readout_payload)
+            smoke_path, reuse_path = self._smoke_and_reuse(config, entries, readout)
+            evidence = report.load_queue_evidence(jobs, config)
+            rows, _, _ = report.build_score_rows(
+                [jobs[0]], config, {}, {}, queue_evidence=evidence
+            )
+            for name in (
+                "queue_status_json",
+                "queue_status_csv",
+                "queue_events",
+                "queue_event_sequence",
+            ):
+                write_json(Path(config["sources"][name]), {"name": name})
+            write_json(
+                Path(config["sources"]["queue_stage_stop"]),
+                {
+                    "schema": report.QUEUE_STAGE_STOP_SCHEMA,
+                    "state": "STOPPED_SAME_ERROR_TYPE_THREE_CONSECUTIVE_BUILDINGS",
+                },
+            )
+            write_json(
+                Path(config["sources"]["queue_complete"]),
+                {
+                    "schema": report.QUEUE_COMPLETE_SCHEMA,
+                    "state": "STOPPED_SAME_ERROR_TYPE_THREE_CONSECUTIVE_BUILDINGS",
+                    "run_id": config["run_id"],
+                    "git_head": config["provenance_contract"]["execution_head"],
+                    "plan": report.receipt_binding(Path(config["sources"]["queue_plan"])),
+                    "stage_stop": report.receipt_binding(
+                        Path(config["sources"]["queue_stage_stop"])
+                    ),
+                    "stage_records": [
+                        {
+                            "entry": entries[0],
+                            "status": "MEASURED",
+                            "receipt": report.receipt_binding(smoke_path),
+                        },
+                        {
+                            "entry": entries[1],
+                            "status": "MEASURED",
+                            "receipt": report.receipt_binding(reuse_path),
+                        },
+                    ],
+                    "stage_entries_n": 22,
+                    "unique_jobs_n": 21,
+                    "status_json": report.receipt_binding(
+                        Path(config["sources"]["queue_status_json"])
+                    ),
+                    "status_csv": report.receipt_binding(
+                        Path(config["sources"]["queue_status_csv"])
+                    ),
+                    "events": report.receipt_binding(
+                        Path(config["sources"]["queue_events"])
+                    ),
+                    "event_sequence": report.receipt_binding(
+                        Path(config["sources"]["queue_event_sequence"])
+                    ),
+                },
+            )
+            stopped = report.load_queue_evidence(jobs, config)
+
+        self.assertEqual(evidence["stage_entries_n"], 22)
+        self.assertEqual(evidence["unique_jobs_n"], 21)
+        self.assertEqual(evidence["terminal_unique_jobs_n"], 1)
+        self.assertEqual(
+            evidence["jobs"][jobs[0].key]["deduplicated_stage_entries_n"], 2
+        )
+        self.assertEqual(
+            evidence["jobs"][jobs[0].key]["stage_record"]["stage_record_path"],
+            report.repo_relative(reuse_path),
+        )
+        self.assertNotEqual(report.repo_relative(smoke_path), report.repo_relative(reuse_path))
+        self.assertEqual(rows[0]["job_terminal_state"], "measured")
+        self.assertEqual(rows[0]["queue_deduplicated_stage_entries_n"], 2)
+        self.assertEqual(rows[0]["terminal_evidence"], report.repo_relative(reuse_path))
+        self.assertEqual(
+            stopped["complete"]["state"],
+            "STOPPED_SAME_ERROR_TYPE_THREE_CONSECUTIVE_BUILDINGS",
+        )
+
+    def test_smoke_reuse_divergence_and_source_tamper_are_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            config = queue_fixture_config(self.base_config, root)
+            jobs, entries = self._plan(config)
+            readout = root / "receipts/readout_complete.json"
+            readout_payload = complete_payload()
+            readout_payload["identity"] = {
+                "building_id": jobs[0].building_id,
+                "arm": jobs[0].arm,
+                "replicate": jobs[0].run,
+                "profile": "full",
+            }
+            write_json(readout, readout_payload)
+            _smoke, reuse_path = self._smoke_and_reuse(config, entries, readout)
+            reuse = json.loads(reuse_path.read_text(encoding="utf-8"))
+            reuse["status"] = "SKIPPED"
+            reuse["source_receipts"] = reuse["source_receipts"] * 3
+            reuse["same_signature_attempts"] = 3
+            reuse["error_type"] = "TestFailure"
+            reuse["error_signature"] = "same"
+            write_json(reuse_path, reuse)
+            with self.assertRaisesRegex(
+                report.ReportContractError, "duplicate smoke status diverged"
+            ):
+                report.load_queue_evidence(jobs, config)
+
+            reuse["status"] = "MEASURED"
+            reuse["source_receipts"] = reuse["source_receipts"][:1]
+            reuse["same_signature_attempts"] = None
+            reuse["error_type"] = None
+            reuse["error_signature"] = None
+            write_json(reuse_path, reuse)
+            write_json(readout, {"schema": "tampered"})
+            with self.assertRaisesRegex(report.ReportContractError, "SHA-256 drift"):
+                report.load_queue_evidence(jobs, config)
+
+    def test_archived_receipts_are_verified_and_incomplete_archive_stays_nonterminal(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            config = queue_fixture_config(self.base_config, root)
+            jobs, _entries = self._plan(config)
+            job = jobs[0]
+            archive_root = (
+                Path(config["sources"]["queue_training_failure_archive"])
+                / "by_building"
+                / job.building_id
+                / f"arm_{job.arm}"
+                / job.run
+            )
+            attempt = archive_root / "attempt_001"
+            terminal = attempt / "training_job/failed.json"
+            write_json(terminal, {"status": "FAILED", "error_type": "RuntimeError"})
+            terminal_record = report.receipt_binding(terminal)
+            source_root = root / "canonical_training_job"
+            original_terminal_record = {
+                "path": str(source_root / "failed.json"),
+                "sha256": terminal_record["sha256"],
+                "bytes": terminal_record["bytes"],
+            }
+            ledger = attempt / "pre_move_ledger.json"
+            write_json(
+                ledger,
+                {
+                    "schema": report.QUEUE_ARCHIVE_LEDGER_SCHEMA,
+                    "source_path": str(source_root),
+                    "artifacts": [
+                        {**original_terminal_record, "relative_to_root": "failed.json"}
+                    ],
+                    "artifact_count": 1,
+                },
+            )
+            write_json(
+                attempt / "archive_receipt.json",
+                {
+                    "schema": report.QUEUE_ARCHIVE_SCHEMA,
+                    "state": "ARCHIVED",
+                    "attempt": 1,
+                    "identity": {
+                        "building_id": job.building_id,
+                        "arm": job.arm,
+                        "replicate": job.run,
+                        "profile": "full",
+                    },
+                    "source_path": str(source_root),
+                    "destination_path": report.repo_relative(attempt),
+                    "original_terminal_receipt": original_terminal_record,
+                    "archived_terminal_receipt": terminal_record,
+                    "pre_move_ledger": report.receipt_binding(ledger),
+                    "move_verification": [terminal_record],
+                    "artifact_count": 1,
+                    "error_type": "RuntimeError",
+                    "error_signature": "same",
+                    "git_head": config["provenance_contract"]["execution_head"],
+                    "append_only_archive": True,
+                },
+            )
+            incomplete = archive_root / "attempt_002.incomplete/move_intent.json"
+            write_json(incomplete, {"state": "MOVING"})
+            evidence = report.load_queue_evidence(jobs, config)
+            self.assertEqual(
+                [row["archive_state"] for row in evidence["archive_rows"]],
+                ["ARCHIVED", "INCOMPLETE"],
+            )
+            self.assertEqual(evidence["incomplete_archives_n"], 1)
+            self.assertEqual(evidence["terminal_unique_jobs_n"], 0)
+
+            write_json(terminal, {"status": "TAMPERED"})
+            with self.assertRaisesRegex(report.ReportContractError, "SHA-256 drift"):
+                report.load_queue_evidence(jobs, config)
+
+
 class VisualAndPublicationTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        cls.config = report.load_config()
+        cls.config = report.load_config(verify_locked_files=False)
 
     def test_opacity_prefers_exact_building_scope(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -552,20 +854,98 @@ class VisualAndPublicationTests(unittest.TestCase):
             snapshot = Path(temporary)
             manifest = snapshot / self.config["outputs"]["manifest"]
             receipt = snapshot / self.config["outputs"]["receipt"]
-            write_json(manifest, {"schema": report.MANIFEST_SCHEMA})
+            write_json(
+                manifest,
+                {
+                    "schema": report.MANIFEST_SCHEMA,
+                    "state": "PARTIAL",
+                    "artifacts": [],
+                },
+            )
             write_json(
                 receipt,
                 {
                     "schema": report.RECEIPT_SCHEMA,
                     "input_fingerprint": "abc",
+                    "state": "PARTIAL",
                     "manifest": {"sha256": report.sha256_file(manifest)},
                 },
             )
             payload = report.validate_existing_snapshot(snapshot, self.config, "abc")
             self.assertEqual(payload["input_fingerprint"], "abc")
+            with self.assertRaisesRegex(
+                report.ReportContractError, "refuses cached PARTIAL"
+            ):
+                report.validate_existing_snapshot(
+                    snapshot, self.config, "abc", require_terminal=True
+                )
             write_json(manifest, {"schema": "tampered"})
             with self.assertRaises(report.ReportContractError):
                 report.validate_existing_snapshot(snapshot, self.config, "abc")
+
+    def test_t4_receipt_binds_sources_and_publishes_snapshot_local_bundle(self) -> None:
+        original = report.load_t4_bundle(self.config)
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            config = copy.deepcopy(self.config)
+            csv_path = root / "source/trajectory.csv"
+            figure_path = root / "source/trajectory.png"
+            csv_path.parent.mkdir(parents=True)
+            csv_path.write_bytes(original["paths"]["csv"].read_bytes())
+            figure_path.write_bytes(original["paths"]["figure"].read_bytes())
+            receipt_payload = copy.deepcopy(original["payload"])
+            receipt_payload["outputs"]["csv"] = {
+                "path": str(csv_path),
+                "sha256": report.sha256_file(csv_path),
+            }
+            receipt_payload["outputs"]["figure"] = {
+                "path": str(figure_path),
+                "sha256": report.sha256_file(figure_path),
+            }
+            receipt_path = root / "source/receipt.json"
+            write_json(receipt_path, receipt_payload)
+            config["t4_contract"] = {
+                "receipt": {
+                    "path": str(receipt_path),
+                    "sha256": report.sha256_file(receipt_path),
+                },
+                "csv": {
+                    "path": str(csv_path),
+                    "sha256": report.sha256_file(csv_path),
+                },
+                "figure": {
+                    "path": str(figure_path),
+                    "sha256": report.sha256_file(figure_path),
+                },
+            }
+            bundle = report.load_t4_bundle(config)
+            manifest = report.publish_t4_bundle(root / "snapshot", config, bundle)
+            links = report.t4_bundle_links(config)
+            self.assertEqual(
+                manifest["files"]["figure"]["snapshot_sha256"],
+                config["t4_contract"]["figure"]["sha256"],
+            )
+            self.assertTrue((root / "snapshot" / links["receipt"]).is_file())
+            self.assertTrue((root / "snapshot" / links["figure"]).is_file())
+
+            figure_path.write_bytes(figure_path.read_bytes() + b"tamper")
+            with self.assertRaisesRegex(report.ReportContractError, "T4 figure SHA-256 drift"):
+                report.load_t4_bundle(config)
+
+    def test_report_descendant_allowlist_rejects_nonreport_paths(self) -> None:
+        allowlist = self.config["provenance_contract"][
+            "report_implementation_files"
+        ]
+        self.assertEqual(
+            report.validate_report_descendant_paths(allowlist[:2], allowlist),
+            sorted(allowlist[:2]),
+        )
+        with self.assertRaisesRegex(
+            report.ReportContractError, "contains non-report paths"
+        ):
+            report.validate_report_descendant_paths(
+                [allowlist[0], "phases/p2-gsjso/scripts/producer.py"], allowlist
+            )
 
     def test_source_fingerprint_tracks_missing_to_present_transition(self) -> None:
         missing = [{"role": "attempt", "path": "attempt.json", "state": "missing"}]
