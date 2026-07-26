@@ -1,0 +1,153 @@
+{
+  "schema": "jointbuildgs.fusion_w1_aprime.t4_smoke_collapse.v1",
+  "task_id": "FUS-W1-APRIME-T4-001",
+  "created_utc": "2026-07-26T12:16:12.129158+00:00",
+  "status": "COMPLETED",
+  "role": "record_only_not_verdict",
+  "building_id": "DEBY_LOD2_42364609",
+  "arm": "prior_arm_A",
+  "proxy": {
+    "xy": "inclusive initial class6 XY bounding box",
+    "z": "strictly greater than initial class2 maximum canonical z",
+    "xy_min": [
+      -92.52399999997579,
+      110.05800000019372
+    ],
+    "xy_max": [
+      -86.89899999997579,
+      114.52500000037253
+    ],
+    "roof_z_floor": -43.23799999999994,
+    "initial_exact_class6_n": 349,
+    "initial_proxy_n": 330,
+    "limitation": "geometry proxy; checkpoint does not preserve class2/class6 lineage labels"
+  },
+  "time_limit_minutes": 30,
+  "execution_wall_seconds": 2.0168271884322166,
+  "within_time_limit": true,
+  "inputs": {
+    "seed": {
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/seed_canonical.npz",
+      "sha256": "06aa49b515555f8294d2b6a1880192150bbd8d6c5a699484afd34050dc98614b"
+    },
+    "checkpoint_dir": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/ckpt"
+  },
+  "observations": [
+    {
+      "iteration": 0,
+      "source": "seed_class6_fixed_geometry_proxy",
+      "model_gaussians_n": 7993,
+      "roof_proxy_n": 330,
+      "opacity_q25": 0.25,
+      "opacity_median": 0.25,
+      "opacity_q75": 0.25,
+      "opacity_gt_0p5_n": 0,
+      "cum_prune_candidates": 0,
+      "cum_prune_seed_protected": 0,
+      "cum_pruned": 0,
+      "checkpoint_path": "initial_seed_config",
+      "checkpoint_sha256": ""
+    },
+    {
+      "iteration": 5000,
+      "source": "full_state_fixed_geometry_proxy",
+      "model_gaussians_n": 118931,
+      "roof_proxy_n": 7408,
+      "opacity_q25": 0.00177973389509134,
+      "opacity_median": 0.00293738697655499,
+      "opacity_q75": 0.003790007613133639,
+      "opacity_gt_0p5_n": 0,
+      "cum_prune_candidates": 806220,
+      "cum_prune_seed_protected": 806220,
+      "cum_pruned": 0,
+      "checkpoint_path": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/ckpt/step_005000.pt",
+      "checkpoint_sha256": "c828fe40c14a8258df7c882c2450bc6e8973ae0a301fd8c63518244d5120dac2"
+    },
+    {
+      "iteration": 10000,
+      "source": "full_state_fixed_geometry_proxy",
+      "model_gaussians_n": 260460,
+      "roof_proxy_n": 12003,
+      "opacity_q25": 0.001615353743545711,
+      "opacity_median": 0.0026959734968841076,
+      "opacity_q75": 0.0036307001719251275,
+      "opacity_gt_0p5_n": 0,
+      "cum_prune_candidates": 4242838,
+      "cum_prune_seed_protected": 4242838,
+      "cum_pruned": 0,
+      "checkpoint_path": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/ckpt/step_010000.pt",
+      "checkpoint_sha256": "c5e2a82580a35b05880d2e8160c48a2068f0775f614ffec372760ab01aa735bd"
+    },
+    {
+      "iteration": 15000,
+      "source": "full_state_fixed_geometry_proxy",
+      "model_gaussians_n": 405896,
+      "roof_proxy_n": 14970,
+      "opacity_q25": 0.0016010361432563514,
+      "opacity_median": 0.0026559256948530674,
+      "opacity_q75": 0.003608947852626443,
+      "opacity_gt_0p5_n": 0,
+      "cum_prune_candidates": 10589306,
+      "cum_prune_seed_protected": 10589306,
+      "cum_pruned": 0,
+      "checkpoint_path": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/ckpt/step_015000.pt",
+      "checkpoint_sha256": "f1fd762bf5b56f8500b6df5265f99f18ca88bc93b2f34a91b57f8ab8d5d827f9"
+    },
+    {
+      "iteration": 20000,
+      "source": "full_state_fixed_geometry_proxy",
+      "model_gaussians_n": 405896,
+      "roof_proxy_n": 14965,
+      "opacity_q25": 0.00160084234084934,
+      "opacity_median": 0.0026552823837846518,
+      "opacity_q75": 0.00360338413156569,
+      "opacity_gt_0p5_n": 0,
+      "cum_prune_candidates": 10589306,
+      "cum_prune_seed_protected": 10589306,
+      "cum_pruned": 0,
+      "checkpoint_path": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/ckpt/step_020000.pt",
+      "checkpoint_sha256": "2027ef6872be2b9c2c373ca81234d8654007d1427f81d99e2eb7bf5d3c9a09b7"
+    },
+    {
+      "iteration": 25000,
+      "source": "full_state_fixed_geometry_proxy",
+      "model_gaussians_n": 405896,
+      "roof_proxy_n": 14964,
+      "opacity_q25": 0.0016007931844796985,
+      "opacity_median": 0.0026551499031484127,
+      "opacity_q75": 0.003601672127842903,
+      "opacity_gt_0p5_n": 0,
+      "cum_prune_candidates": 10589306,
+      "cum_prune_seed_protected": 10589306,
+      "cum_pruned": 0,
+      "checkpoint_path": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/ckpt/step_025000.pt",
+      "checkpoint_sha256": "134835b7d6b05d83b9c93ef390ce40b23193a054b91d2b4fac6fedbe255bcc3f"
+    },
+    {
+      "iteration": 30000,
+      "source": "full_state_fixed_geometry_proxy",
+      "model_gaussians_n": 405896,
+      "roof_proxy_n": 14966,
+      "opacity_q25": 0.0016008768288884312,
+      "opacity_median": 0.002655460499227047,
+      "opacity_q75": 0.003599102725274861,
+      "opacity_gt_0p5_n": 0,
+      "cum_prune_candidates": 10589306,
+      "cum_prune_seed_protected": 10589306,
+      "cum_pruned": 0,
+      "checkpoint_path": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/ckpt/step_030000.pt",
+      "checkpoint_sha256": "5e1342f2326451c91c916d8ea67c18dd6d893e31e2838a1dbcf4c92ed39a372b"
+    }
+  ],
+  "outputs": {
+    "csv": {
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T4/arm_A_roof_opacity_trajectory.csv",
+      "sha256": "a810bed446b428356f03d4436806c56050a086578374d8bc9cd508bb46e29736"
+    },
+    "figure": {
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T4/arm_A_roof_opacity_trajectory.png",
+      "sha256": "2a594100a1ff986ac3af9cf9cae48c4c29ecc1cceedc6f621cc3e733db5f4fcd"
+    }
+  },
+  "verdict": null
+}
