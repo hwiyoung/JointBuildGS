@@ -188,8 +188,11 @@
       "variables": {
         "HOME": "home",
         "XDG_CACHE_HOME": "xdg_cache",
-        "TORCH_EXTENSIONS_DIR": "torch_extensions"
+        "TORCH_EXTENSIONS_DIR": "torch_extensions_seeded_v2"
       }
+    },
+    "jit_build_environment": {
+      "MAX_JOBS": "1"
     },
     "forbidden_process_patterns": [
       "tum_mob_tsdf_extract",

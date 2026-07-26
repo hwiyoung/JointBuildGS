@@ -1107,6 +1107,7 @@ def materialize(
         config=config,
         target=target,
     )
+    jit_environment = jit_build_environment_contract(config)
     resolved_text = yaml.safe_dump(
         selected,
         sort_keys=False,
@@ -1150,6 +1151,7 @@ def materialize(
         },
         "ablation_validation": ablation,
         "writable_environment": writable_environment,
+        "jit_build_environment": jit_environment,
         "resolved_config": repo_relative(repo, resolved_path),
         "resolved_config_sha256": resolved_sha,
         "output_dir": repo_relative(repo, target),
@@ -1446,6 +1448,19 @@ def writable_environment_contract(
         "validated_within_run_root": True,
         "symlinks_forbidden": True,
     }
+
+
+def jit_build_environment_contract(config: Mapping[str, Any]) -> dict[str, str]:
+    launch_contract = config.get("launch_contract")
+    if not isinstance(launch_contract, Mapping):
+        raise ContractError("launch_contract is missing")
+    declared = launch_contract.get("jit_build_environment")
+    require_equal(
+        declared,
+        {"MAX_JOBS": "1"},
+        "normal-launch JIT build environment",
+    )
+    return {"MAX_JOBS": "1"}
 
 
 def prepare_writable_environment(
@@ -2224,6 +2239,12 @@ def launch(
         materialization.get("writable_environment"),
         "normal-launch writable environment since materialization",
     )
+    jit_environment = jit_build_environment_contract(config)
+    require_equal(
+        jit_environment,
+        materialization.get("jit_build_environment"),
+        "normal-launch JIT build environment since materialization",
+    )
     job_key = f"{building_id}/arm_{arm}/{run}"
     command = docker_command(
         repo=repo,
@@ -2231,7 +2252,10 @@ def launch(
         resolved_config=resolved,
         gpu=gpu,
         job_key=job_key,
-        extra_environment=writable_environment["contract"]["variables"],
+        extra_environment={
+            **writable_environment["contract"]["variables"],
+            **jit_environment,
+        },
     )
     started_path = target / outputs["started_receipt"]
     started_payload = {
@@ -2253,6 +2277,7 @@ def launch(
         "process_guard": process_guard,
         "docker_image": image,
         "writable_environment": writable_environment,
+        "jit_build_environment": jit_environment,
         "materialization_manifest": repo_relative(repo, materialization_path),
         "materialization_manifest_sha256": materialization_sha,
         "resolved_config_sha256": materialization["resolved_config_sha256"],
@@ -2342,6 +2367,7 @@ def launch(
                 ],
             },
             "writable_environment": writable_environment,
+            "jit_build_environment": jit_environment,
             "training_completion": completion,
             "loss_share_aggregation": {
                 "receipt": repo_relative(repo, loss_share_receipt_path),
@@ -2382,6 +2408,7 @@ def launch(
             "log_sha256": sha256_file(log_path) if log_path.is_file() else None,
             "partial_outputs_preserved": True,
             "writable_environment": writable_environment,
+            "jit_build_environment": jit_environment,
         }
         failed_path = target / outputs["failed_receipt"]
         if not failed_path.exists():

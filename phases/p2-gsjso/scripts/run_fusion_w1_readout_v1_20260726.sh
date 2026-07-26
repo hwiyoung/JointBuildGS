@@ -7,6 +7,7 @@ cd "$ROOT"
 
 CONFIG="phases/p2-gsjso/configs/fusion_w1_readout_v1_20260726.json"
 RETRY_POLICY="phases/p2-gsjso/configs/fusion_w1_readout_infra_retry_20260726.json"
+RECOVERY2_POLICY="phases/p2-gsjso/configs/fusion_w1_readout_infra_retry2_20260726.json"
 SCRIPT="phases/p2-gsjso/scripts/fusion_w1_readout_v1_20260726.py"
 TEST="phases/p2-gsjso/scripts/test_fusion_w1_readout_v1_20260726.py"
 RUN_REL="phases/p2-gsjso/runs/20260724_fusion_w1"
@@ -162,9 +163,9 @@ run_one() {
   while IFS= read -r value; do
     [[ -n "$value" ]] && environment_args+=(--env "$value")
   done < <(printf '%s\n' "$environment_text")
-  [[ "${#environment_args[@]}" -eq 6 ]] || {
+  [[ "${#environment_args[@]}" -eq 8 ]] || {
     record_external_failure "$building_id" "$arm" "$run" "readout_environment" \
-      "readout environment does not contain exactly three variables"
+      "readout environment does not contain the three cache variables plus MAX_JOBS=1"
     return 1
   }
   started="$(date +%s)"
@@ -378,6 +379,115 @@ run_extract_infra_retry() {
   run_one "$building_id" "$arm" "$run" "$gpu" post-extract
 }
 
+run_extract_infra_recovery2() {
+  local building_id="$1"
+  local arm="$2"
+  local run="$3"
+  local gpu="$4"
+  local job_rel="$READOUT_REL/by_building/$building_id/arm_$arm/$run"
+  local attempt_rel="$job_rel/infra_retry_02"
+  local started ended wall argv_text environment_text value
+  local -a argv
+  local -a environment_args
+
+  assert_no_training_or_other_readout || return $?
+  if ! run_tools "$SCRIPT" --config "$CONFIG" \
+      --recovery2-policy "$RECOVERY2_POLICY" \
+      prepare-extract-infra-recovery2 \
+      --building-id "$building_id" --arm "$arm" --run "$run"
+  then
+    run_tools "$SCRIPT" --config "$CONFIG" \
+      record-extract-infra-recovery2-failure \
+      --building-id "$building_id" --arm "$arm" --run "$run" \
+      --message "recovery2 preflight, cache seed, or authorization failed" || true
+    return 1
+  fi
+  if ! argv_text="$(
+      run_tools "$SCRIPT" --config "$CONFIG" \
+        --recovery2-policy "$RECOVERY2_POLICY" \
+        recovery2-extract-argv \
+        --building-id "$building_id" --arm "$arm" --run "$run"
+    )"
+  then
+    run_tools "$SCRIPT" --config "$CONFIG" \
+      record-extract-infra-recovery2-failure \
+      --building-id "$building_id" --arm "$arm" --run "$run" \
+      --message "failed to resolve immutable recovery2 argv" || true
+    return 1
+  fi
+  mapfile -t argv < <(printf '%s\n' "$argv_text")
+  [[ "${#argv[@]}" -gt 1 ]] || {
+    run_tools "$SCRIPT" --config "$CONFIG" \
+      record-extract-infra-recovery2-failure \
+      --building-id "$building_id" --arm "$arm" --run "$run" \
+      --message "recovery2 argv is empty" || true
+    return 1
+  }
+  if ! environment_text="$(
+      run_tools "$SCRIPT" --config "$CONFIG" \
+        --recovery2-policy "$RECOVERY2_POLICY" \
+        recovery2-extract-environment \
+        --building-id "$building_id" --arm "$arm" --run "$run"
+    )"
+  then
+    run_tools "$SCRIPT" --config "$CONFIG" \
+      record-extract-infra-recovery2-failure \
+      --building-id "$building_id" --arm "$arm" --run "$run" \
+      --message "failed to resolve immutable recovery2 environment" || true
+    return 1
+  fi
+  environment_args=()
+  while IFS= read -r value; do
+    [[ -n "$value" ]] && environment_args+=(--env "$value")
+  done < <(printf '%s\n' "$environment_text")
+  [[ "${#environment_args[@]}" -eq 8 ]] || {
+    run_tools "$SCRIPT" --config "$CONFIG" \
+      record-extract-infra-recovery2-failure \
+      --building-id "$building_id" --arm "$arm" --run "$run" \
+      --message "recovery2 environment lacks the three cache variables plus MAX_JOBS=1" || true
+    return 1
+  }
+
+  started="$(date +%s)"
+  if ! docker run --rm \
+      --pull=never \
+      --network=none \
+      --memory="$MEMORY_LIMIT" \
+      --memory-swap="$MEMORY_LIMIT" \
+      --shm-size=4g \
+      --gpus "device=$gpu" \
+      --user "$(id -u):$(id -g)" \
+      --env CUDA_VISIBLE_DEVICES=0 \
+      --env PYTHONDONTWRITEBYTECODE=1 \
+      "${environment_args[@]}" \
+      --volume "$ROOT:/workspace/JointBuildGS" \
+      --workdir /workspace/JointBuildGS \
+      --entrypoint python3 \
+      "$READOUT_IMAGE" "${argv[@]}" \
+      >"$attempt_rel/extract.stdout.log" 2>&1
+  then
+    run_tools "$SCRIPT" --config "$CONFIG" \
+      record-extract-infra-recovery2-failure \
+      --building-id "$building_id" --arm "$arm" --run "$run" \
+      --message "point-cloud recovery2 failed; see $attempt_rel/extract.stdout.log" || true
+    return 1
+  fi
+  ended="$(date +%s)"
+  wall="$((ended - started))"
+  if ! run_tools "$SCRIPT" --config "$CONFIG" \
+      accept-extract-infra-recovery2 \
+      --building-id "$building_id" --arm "$arm" --run "$run" \
+      --wall-seconds "$wall"
+  then
+    run_tools "$SCRIPT" --config "$CONFIG" \
+      record-extract-infra-recovery2-failure \
+      --building-id "$building_id" --arm "$arm" --run "$run" \
+      --message "recovery2 output validation or adoption failed" || true
+    return 1
+  fi
+  run_one "$building_id" "$arm" "$run" "$gpu" post-extract
+}
+
 case "${1:-}" in
   test)
     verify_images
@@ -415,6 +525,16 @@ case "${1:-}" in
     verify_images
     acquire_serial_lock
     run_extract_infra_retry "$2" "$3" "$4" "$5"
+    ;;
+  recover-extract-infra2)
+    [[ -n "${2:-}" && -n "${3:-}" && -n "${4:-}" && -n "${5:-}" ]] || {
+      echo "usage: $0 recover-extract-infra2 BUILDING_ID ARM RUN GPU" >&2
+      exit 2
+    }
+    validate_gpu "$5"
+    verify_images
+    acquire_serial_lock
+    run_extract_infra_recovery2 "$2" "$3" "$4" "$5"
     ;;
   all-ready)
     [[ -n "${2:-}" ]] || {
@@ -488,7 +608,7 @@ case "${1:-}" in
     run_tools "$SCRIPT" --config "$CONFIG" finalize-partial
     ;;
   *)
-    echo "usage: $0 {test|check [BUILDING_ID ARM RUN]|one BUILDING_ID ARM RUN GPU|retry-extract-infra BUILDING_ID ARM RUN GPU|all-ready GPU|finalize-partial}" >&2
+    echo "usage: $0 {test|check [BUILDING_ID ARM RUN]|one BUILDING_ID ARM RUN GPU|retry-extract-infra BUILDING_ID ARM RUN GPU|recover-extract-infra2 BUILDING_ID ARM RUN GPU|all-ready GPU|finalize-partial}" >&2
     exit 2
     ;;
 esac

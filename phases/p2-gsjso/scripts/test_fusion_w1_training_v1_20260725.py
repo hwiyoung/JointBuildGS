@@ -268,7 +268,7 @@ class FusionW1TrainingTests(unittest.TestCase):
                 "variables": {
                     "HOME": "home",
                     "XDG_CACHE_HOME": "xdg_cache",
-                    "TORCH_EXTENSIONS_DIR": "torch_extensions",
+                    "TORCH_EXTENSIONS_DIR": "torch_extensions_seeded_v2",
                 },
             },
         )
@@ -373,6 +373,7 @@ class FusionW1TrainingTests(unittest.TestCase):
         self.assertEqual(environment["scope"], "shared_fusion_w1_run")
         self.assertEqual(environment["environment_root"], "runtime_env")
         self.assertTrue(environment["validated_within_run_root"])
+        self.assertEqual(result["jit_build_environment"], {"MAX_JOBS": "1"})
         self.assertFalse((self.repo / "runtime_env").exists())
 
     def test_launch_uses_docker_and_atomic_receipts_without_real_docker(self):
@@ -448,10 +449,12 @@ class FusionW1TrainingTests(unittest.TestCase):
         started = json.loads((target / "started.json").read_text(encoding="utf-8"))
         self.assertEqual(started["command"][:3], ["docker", "compose", "run"])
         self.assertIn("NVIDIA_VISIBLE_DEVICES=1", started["command"])
+        self.assertIn("MAX_JOBS=1", started["command"])
+        self.assertEqual(started["jit_build_environment"], {"MAX_JOBS": "1"})
         environment = started["writable_environment"]
         expected = {
             "HOME": self.repo / "runtime_env/home",
-            "TORCH_EXTENSIONS_DIR": self.repo / "runtime_env/torch_extensions",
+            "TORCH_EXTENSIONS_DIR": self.repo / "runtime_env/torch_extensions_seeded_v2",
             "XDG_CACHE_HOME": self.repo / "runtime_env/xdg_cache",
         }
         for key, path in expected.items():
@@ -475,6 +478,10 @@ class FusionW1TrainingTests(unittest.TestCase):
         self.assertTrue(environment["prepared_before_started_receipt"])
         self.assertEqual(started["claim_mode"], "atomic_O_EXCL")
         self.assertTrue((target / "completed.json").is_file())
+        completed = json.loads(
+            (target / "completed.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(completed["jit_build_environment"], {"MAX_JOBS": "1"})
         self.assertFalse((target / "failed.json").exists())
         counters = json.loads(
             (self.repo / "training/runtime_counters.json").read_text(encoding="utf-8")
@@ -496,7 +503,9 @@ class FusionW1TrainingTests(unittest.TestCase):
         self.assertEqual(contract["environment_root"], "runtime_env")
         self.assertEqual(
             contract["variables"]["TORCH_EXTENSIONS_DIR"],
-            fw.container_path(self.repo, self.repo / "runtime_env/torch_extensions"),
+            fw.container_path(
+                self.repo, self.repo / "runtime_env/torch_extensions_seeded_v2"
+            ),
         )
 
         escaped = copy.deepcopy(self.config)
@@ -541,6 +550,36 @@ class FusionW1TrainingTests(unittest.TestCase):
                 config=self.config,
                 target=target,
             )
+
+    def test_normal_jit_build_environment_is_fixed_and_fail_closed(self):
+        self.assertEqual(
+            fw.jit_build_environment_contract(self.config),
+            {"MAX_JOBS": "1"},
+        )
+
+        missing = copy.deepcopy(self.config)
+        del missing["launch_contract"]["jit_build_environment"]
+        with self.assertRaisesRegex(
+            fw.ContractError, "normal-launch JIT build environment"
+        ):
+            fw.jit_build_environment_contract(missing)
+
+        wrong = copy.deepcopy(self.config)
+        wrong["launch_contract"]["jit_build_environment"] = {"MAX_JOBS": "2"}
+        with self.assertRaisesRegex(
+            fw.ContractError, "normal-launch JIT build environment"
+        ):
+            fw.jit_build_environment_contract(wrong)
+
+        extra = copy.deepcopy(self.config)
+        extra["launch_contract"]["jit_build_environment"] = {
+            "MAX_JOBS": "1",
+            "NINJAFLAGS": "-j1",
+        }
+        with self.assertRaisesRegex(
+            fw.ContractError, "normal-launch JIT build environment"
+        ):
+            fw.jit_build_environment_contract(extra)
 
     def test_incremental_loss_share_aggregation_is_atomic_and_idempotent(self):
         snapshot = self._snapshot()

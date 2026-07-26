@@ -31,6 +31,10 @@ CONFIG_PATH = (
     REPO
     / "phases/p2-gsjso/configs/fusion_w1_readout_v1_20260726.json"
 )
+RECOVERY2_POLICY_PATH = (
+    REPO
+    / "phases/p2-gsjso/configs/fusion_w1_readout_infra_retry2_20260726.json"
+)
 WRAPPER = SCRIPT.with_name("run_fusion_w1_readout_v1_20260726.sh")
 
 
@@ -78,7 +82,7 @@ def minimal_repo_config(root: Path) -> dict:
     config["pointcloudification"]["writable_environment"] = {
         "HOME": "runtime_env/home",
         "XDG_CACHE_HOME": "runtime_env/xdg_cache",
-        "TORCH_EXTENSIONS_DIR": "runtime_env/torch_extensions",
+        "TORCH_EXTENSIONS_DIR": "runtime_env/torch_extensions_seeded_v2",
     }
     return config
 
@@ -457,9 +461,11 @@ def make_readout_preoutput_cache_failure(
             "allowed_retry_commit_paths": ["synthetic-retry-change"],
             "maximum_retries_per_job": 1,
             "attempt_directory": MODULE.READOUT_RETRY_ATTEMPT_DIRECTORY,
-            "writable_environment": config["pointcloudification"][
-                "writable_environment"
-            ],
+            "writable_environment": {
+                "HOME": "runtime_env/home",
+                "XDG_CACHE_HOME": "runtime_env/xdg_cache",
+                "TORCH_EXTENSIONS_DIR": "runtime_env/torch_extensions",
+            },
             "allowed_invocation_differences": [
                 "output",
                 "argv_value_after_--out",
@@ -514,6 +520,209 @@ def make_readout_preoutput_cache_failure(
         "failed": failed,
         "output": output,
         "policy": policy,
+    }
+
+
+def make_readout_recovery2_fixture(
+    root: Path,
+    config: dict,
+) -> dict[str, Path]:
+    paths = make_readout_preoutput_cache_failure(root, config)
+    building_id = "DEBY_LOD2_42364609"
+    key = f"{building_id}/arm_A/r1"
+    MODULE.prepare_extract_infra_retry(
+        config,
+        paths["policy"],
+        building_id,
+        "A",
+        "r1",
+        repo=root,
+        validate_git=False,
+    )
+    prior_attempt = paths["job"] / MODULE.READOUT_RETRY_ATTEMPT_DIRECTORY
+    prior_log = prior_attempt / "extract.stdout.log"
+    prior_log.write_text(
+        "Error building extension 'gsplat_cuda'\n"
+        "returned non-zero exit status 137\n"
+        "Killed\n"
+        "ninja: build stopped: subcommand failed\n",
+        encoding="utf-8",
+    )
+    MODULE.record_extract_infra_retry_failure(
+        config,
+        building_id,
+        "A",
+        "r1",
+        message="synthetic cache-build OOM",
+        repo=root,
+    )
+
+    common_cache = root / "runtime_env/torch_extensions/gsplat_cuda"
+    common_cache.mkdir(parents=True)
+    (common_cache / "build.ninja").write_text("partial-build\n", encoding="utf-8")
+    (common_cache / "partial.cuda.o").write_bytes(b"partial-object")
+
+    training_attempt = root / "training-success/infra_retry_01"
+    source_cache = training_attempt / "runtime_env/torch_extensions/gsplat_cuda"
+    source_cache.mkdir(parents=True)
+    (source_cache / "build.ninja").write_text("complete-build\n", encoding="utf-8")
+    (source_cache / "gsplat_cuda.so").write_bytes(b"synthetic-complete-extension")
+    (source_cache / "kernel.cuda.o").write_bytes(b"synthetic-kernel-object")
+    training_log = training_attempt / "training.log"
+    training_log.write_text("training completed 30000\n", encoding="utf-8")
+    training_started = training_attempt / "retry_started.json"
+    write_json(
+        training_started,
+        {
+            "schema": MODULE.RETRY_STARTED_SCHEMA,
+            "job_key": key,
+            "retry_key": f"{key}/{MODULE.RETRY_ATTEMPT_DIRECTORY}",
+            "docker_image": {
+                "image": config["pointcloudification"]["image"],
+                "image_id": config["pointcloudification"]["image_id"],
+            },
+            "environment": {
+                "TORCH_EXTENSIONS_DIR": (
+                    "/workspace/JointBuildGS/"
+                    + str(source_cache.parent.relative_to(root))
+                )
+            },
+        },
+    )
+    training_completed = training_attempt / "retry_completed.json"
+    write_json(
+        training_completed,
+        {
+            "schema": MODULE.RETRY_COMPLETED_SCHEMA,
+            "job_key": key,
+            "return_code": 0,
+            "training_completion": {
+                "status": "PASSED",
+                "completed_optimizer_updates": 30000,
+            },
+        },
+    )
+    completed = root / "training-success/completed.json"
+    write_json(
+        completed,
+        {
+            "schema": "jointbuildgs.fusion_w1.training_completed.v1",
+            "job_key": key,
+            "return_code": 0,
+            "log_sha256": sha(training_log),
+            "infrastructure_retry": {
+                "retry_completed_receipt": {
+                    "path": str(training_completed.relative_to(root)),
+                    "sha256": sha(training_completed),
+                }
+            },
+        },
+    )
+
+    original = {
+        "materialization": paths["materialization"],
+        "invocation": paths["invocation"],
+        "started": paths["started"],
+        "log": paths["log"],
+        "failed": paths["failed"],
+    }
+    prior = {
+        "retry_started": prior_attempt / "retry_started.json",
+        "invocation": prior_attempt / "extract_invocation.json",
+        "log": prior_log,
+        "retry_failed": prior_attempt / "retry_failed.json",
+    }
+    source_inventory = MODULE._cache_inventory(source_cache, repo=root)
+    common_inventory = MODULE._cache_inventory(common_cache, repo=root)
+    policy_payload = copy.deepcopy(
+        json.loads(RECOVERY2_POLICY_PATH.read_text(encoding="utf-8"))
+    )
+    policy_payload["required_pre_recovery_head"] = "a" * 40
+    policy_payload["allowed_recovery_commit_paths"] = ["synthetic-recovery2-change"]
+    policy_payload["allowed_recovery_commit_paths"].append(
+        MODULE.READOUT_RECOVERY2_POLICY_RELATIVE.as_posix()
+    )
+    policy_payload["required_original_failure"]["artifact_sha256"] = {
+        label: sha(path) for label, path in original.items()
+    }
+    policy_payload["required_prior_retry_failure"]["artifact_sha256"] = {
+        label: sha(path) for label, path in prior.items()
+    }
+    policy_payload["writable_environment"] = config["pointcloudification"][
+        "writable_environment"
+    ]
+    policy_payload["successful_training_cache_source"].update(
+        {
+            key_name: source_inventory[key_name]
+            for key_name in (
+                "root",
+                "inventory_format",
+                "inventory_sha256",
+                "files_n",
+                "bytes_n",
+            )
+        }
+    )
+    policy_payload["successful_training_cache_source"]["required_key_files"] = {
+        "gsplat_cuda.so": sha(source_cache / "gsplat_cuda.so"),
+        "build.ninja": sha(source_cache / "build.ninja"),
+    }
+    policy_payload["successful_training_cache_source"][
+        "successful_training_artifacts"
+    ] = {
+        "completed": {
+            "path": str(completed.relative_to(root)),
+            "sha256": sha(completed),
+        },
+        "retry_started": {
+            "path": str(training_started.relative_to(root)),
+            "sha256": sha(training_started),
+        },
+        "retry_completed": {
+            "path": str(training_completed.relative_to(root)),
+            "sha256": sha(training_completed),
+        },
+        "log": {
+            "path": str(training_log.relative_to(root)),
+            "sha256": sha(training_log),
+        },
+    }
+    policy_payload["successful_training_cache_source"]["docker_image_id"] = (
+        config["pointcloudification"]["image_id"]
+    )
+    policy_payload["required_common_cache_before_seed"].update(
+        {
+            key_name: common_inventory[key_name]
+            for key_name in (
+                "root",
+                "inventory_format",
+                "inventory_sha256",
+                "files_n",
+                "bytes_n",
+            )
+        }
+    )
+    seed_destination = (
+        root / "runtime_env/torch_extensions_seeded_v2/gsplat_cuda"
+    )
+    policy_payload["required_seed_destination_absent"] = {
+        "root": str(seed_destination.relative_to(root)),
+        "must_be_absent_before_publish": True,
+    }
+    policy = root / MODULE.READOUT_RECOVERY2_POLICY_RELATIVE
+    write_json(policy, policy_payload)
+    return {
+        **paths,
+        "prior_attempt": prior_attempt,
+        "prior_log": prior_log,
+        "source_cache": source_cache,
+        "common_cache": common_cache,
+        "seed_destination": seed_destination,
+        "training_started": training_started,
+        "training_completed": training_completed,
+        "training_log": training_log,
+        "training_root_completed": completed,
+        "recovery2_policy": policy,
     }
 
 
@@ -591,7 +800,7 @@ class ConfigContractTests(unittest.TestCase):
         expected = {
             "HOME": "phases/p2-gsjso/runs/20260724_fusion_w1/runtime_env/home",
             "XDG_CACHE_HOME": "phases/p2-gsjso/runs/20260724_fusion_w1/runtime_env/xdg_cache",
-            "TORCH_EXTENSIONS_DIR": "phases/p2-gsjso/runs/20260724_fusion_w1/runtime_env/torch_extensions",
+            "TORCH_EXTENSIONS_DIR": "phases/p2-gsjso/runs/20260724_fusion_w1/runtime_env/torch_extensions_seeded_v2",
         }
         self.assertEqual(
             self.config["pointcloudification"]["writable_environment"], expected
@@ -614,6 +823,14 @@ class ConfigContractTests(unittest.TestCase):
                 for key in training_environment["variables"]
             },
             expected,
+        )
+        self.assertEqual(
+            self.config["pointcloudification"]["jit_build_environment"],
+            {"MAX_JOBS": "1"},
+        )
+        self.assertEqual(
+            training["launch_contract"]["jit_build_environment"],
+            {"MAX_JOBS": "1"},
         )
 
     def test_classification_reuses_p0_smrf_without_downsampling(self) -> None:
@@ -669,6 +886,8 @@ class ConfigContractTests(unittest.TestCase):
         self.assertIn("record-extract-infra-retry-failure", text)
         self.assertGreaterEqual(text.count('"${environment_args[@]}"'), 2)
         self.assertIn("output validation or adoption failed", text)
+        self.assertIn("recover-extract-infra2", text)
+        self.assertIn("MAX_JOBS=1", text)
 
     def test_score_frame_subtracts_locked_geoid_once(self) -> None:
         reference = self.config["scoring"]["reference"]
@@ -1507,6 +1726,247 @@ class ReadoutInfrastructureRetryTests(unittest.TestCase):
             state = MODULE._validate_readout_retry_git_state(self.root, policy)
         self.assertTrue(state["pre_retry_head_is_ancestor"])
         self.assertIn(("merge-base", "--is-ancestor", base, head), seen)
+
+
+class ReadoutInfrastructureRecovery2Tests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.temporary = tempfile.TemporaryDirectory()
+        self.root = Path(self.temporary.name)
+        self.config = minimal_repo_config(self.root)
+        self.paths = make_readout_recovery2_fixture(self.root, self.config)
+        self.bid = "DEBY_LOD2_42364609"
+
+    def tearDown(self) -> None:
+        self.temporary.cleanup()
+
+    def prepare(self) -> dict:
+        return MODULE.prepare_extract_infra_recovery2(
+            self.config,
+            self.paths["recovery2_policy"],
+            self.bid,
+            "A",
+            "r1",
+            repo=self.root,
+            validate_git=False,
+        )
+
+    def write_output(self) -> Path:
+        import numpy as np
+
+        invocation_path = (
+            self.paths["job"]
+            / MODULE.READOUT_RECOVERY2_ATTEMPT_DIRECTORY
+            / "extract_invocation.json"
+        )
+        invocation = json.loads(invocation_path.read_text(encoding="utf-8"))
+        output = self.root / invocation["output"]
+        output.parent.mkdir(parents=True, exist_ok=True)
+        points = np.asarray(
+            [[690000.0, 5330000.0, 530.0], [690001.0, 5330001.0, 531.0]],
+            dtype=np.float64,
+        )
+        np.savez(
+            output,
+            P_utm=points,
+            P_utm_clean=points,
+            voxel=0.05,
+            downscale=1.0,
+        )
+        return output
+
+    def test_cache_seeded_exact_one_recovery_adopts_without_counter_increment(self) -> None:
+        immutable = {
+            path: sha(path)
+            for path in (
+                self.paths["materialization"],
+                self.paths["invocation"],
+                self.paths["started"],
+                self.paths["log"],
+                self.paths["failed"],
+                self.paths["prior_attempt"] / "retry_started.json",
+                self.paths["prior_attempt"] / "extract_invocation.json",
+                self.paths["prior_log"],
+                self.paths["prior_attempt"] / "retry_failed.json",
+            )
+        }
+        source_before = MODULE._cache_inventory(
+            self.paths["source_cache"], repo=self.root
+        )
+        common_before = MODULE._cache_inventory(
+            self.paths["common_cache"], repo=self.root
+        )
+        prepared = self.prepare()
+        self.assertEqual(prepared["counter_increment"], 0)
+        self.assertEqual(prepared["jit_build_environment"], {"MAX_JOBS": "1"})
+        self.assertEqual(
+            MODULE._cache_inventory(self.paths["common_cache"], repo=self.root)[
+                "inventory_sha256"
+            ],
+            common_before["inventory_sha256"],
+        )
+        self.assertEqual(
+            MODULE._cache_inventory(
+                self.paths["seed_destination"], repo=self.root
+            )["inventory_sha256"],
+            source_before["inventory_sha256"],
+        )
+        seed_manifest_path = (
+            self.paths["job"]
+            / MODULE.READOUT_RECOVERY2_ATTEMPT_DIRECTORY
+            / "cache_seed_manifest.json"
+        )
+        seed_manifest = json.loads(seed_manifest_path.read_text(encoding="utf-8"))
+        self.assertTrue(seed_manifest["prior_common_cache_unchanged_after_publish"])
+        self.assertTrue(seed_manifest["single_atomic_directory_rename_publish"])
+        self.assertEqual(
+            seed_manifest["prior_common_cache_preserved_in_place_at"],
+            str(self.paths["common_cache"].relative_to(self.root)),
+        )
+        self.assertEqual(
+            MODULE._cache_inventory(self.paths["source_cache"], repo=self.root),
+            source_before,
+        )
+        environment = MODULE.recovery2_extract_environment(
+            self.config, self.bid, "A", "r1", repo=self.root
+        )
+        self.assertIn("MAX_JOBS=1", environment)
+        self.assertEqual(len(environment), 4)
+        argv = MODULE.recovery2_extract_argv(
+            self.config, self.bid, "A", "r1", repo=self.root
+        )
+        original = json.loads(self.paths["invocation"].read_text(encoding="utf-8"))
+        self.assertEqual(
+            argv,
+            MODULE._replace_only_output(
+                original["argv"], original["output"], prepared["recovery_output"]
+            ),
+        )
+        with self.assertRaisesRegex(MODULE.ReadoutError, "already claimed"):
+            self.prepare()
+
+        output = self.write_output()
+        receipt = MODULE.accept_extract_infra_recovery2(
+            self.config,
+            self.bid,
+            "A",
+            "r1",
+            wall_seconds=2.0,
+            repo=self.root,
+        )
+        self.assertEqual(receipt["pointcloud"]["path"], str(output.relative_to(self.root)))
+        self.assertEqual(receipt["infrastructure_recovery2"]["counter_increment"], 0)
+        MODULE.ensure_not_failed(self.paths["job"], repo=self.root)
+        counters = MODULE.reconcile_runtime_counters(self.config, repo=self.root)
+        self.assertEqual(counters["readout_runs_started"], 1)
+        self.assertEqual(counters["roofer_runs_started"], 0)
+        self.assertEqual(counters["scoring_runs_started"], 0)
+        for path, digest in immutable.items():
+            self.assertEqual(sha(path), digest, str(path))
+
+    def test_nonzero_prior_output_blocks_before_recovery2_claim(self) -> None:
+        prior_output = self.paths["prior_attempt"] / "pointcloud/readout.npz"
+        prior_output.parent.mkdir(parents=True)
+        prior_output.write_bytes(b"forbidden-partial-output")
+        with self.assertRaisesRegex(MODULE.ReadoutError, "forbidden output"):
+            self.prepare()
+        self.assertFalse(
+            (
+                self.paths["job"]
+                / MODULE.READOUT_RECOVERY2_ATTEMPT_DIRECTORY
+            ).exists()
+        )
+
+    def test_training_cache_drift_blocks_before_seed(self) -> None:
+        (self.paths["source_cache"] / "gsplat_cuda.so").write_bytes(b"drift")
+        with self.assertRaisesRegex(MODULE.ReadoutError, "SHA256 mismatch|inventory_sha256"):
+            self.prepare()
+        self.assertFalse(
+            (
+                self.paths["job"]
+                / MODULE.READOUT_RECOVERY2_ATTEMPT_DIRECTORY
+            ).exists()
+        )
+
+    def test_symlink_in_training_cache_blocks_before_seed(self) -> None:
+        (self.paths["source_cache"] / "forbidden-link").symlink_to(
+            self.paths["source_cache"] / "build.ninja"
+        )
+        with self.assertRaisesRegex(MODULE.ReadoutError, "symlink"):
+            self.prepare()
+
+    def test_recovery2_failure_is_terminal_and_cannot_be_reclaimed(self) -> None:
+        self.prepare()
+        failed = MODULE.record_extract_infra_recovery2_failure(
+            self.config,
+            self.bid,
+            "A",
+            "r1",
+            message="synthetic recovery2 failure",
+            repo=self.root,
+        )
+        self.assertFalse(failed["another_recovery_allowed"])
+        self.assertEqual(failed["counter_increment"], 0)
+        with self.assertRaisesRegex(MODULE.ReadoutError, "already failed"):
+            MODULE.recovery2_extract_argv(
+                self.config, self.bid, "A", "r1", repo=self.root
+            )
+        with self.assertRaisesRegex(MODULE.ReadoutError, "already claimed"):
+            self.prepare()
+
+    def test_noncanonical_absolute_policy_path_is_rejected(self) -> None:
+        outside = self.root.parent / f"{self.root.name}_outside_recovery2.json"
+        write_json(outside, {"schema": MODULE.READOUT_RECOVERY2_POLICY_SCHEMA})
+        self.addCleanup(lambda: outside.unlink(missing_ok=True))
+        with self.assertRaisesRegex(MODULE.ReadoutError, "canonical recovery2 policy"):
+            MODULE.validate_readout_recovery2_policy(
+                self.config, outside, repo=self.root
+            )
+
+    def test_symlinked_job_parent_is_rejected_before_atomic_claim(self) -> None:
+        job = self.paths["job"]
+        real_job = job.with_name("r1-real")
+        job.rename(real_job)
+        job.symlink_to(real_job.name, target_is_directory=True)
+        with self.assertRaisesRegex(MODULE.ReadoutError, "contains a symlink"):
+            self.prepare()
+        self.assertFalse(
+            (real_job / MODULE.READOUT_RECOVERY2_ATTEMPT_DIRECTORY).exists()
+        )
+
+    def test_versioned_destination_must_be_absent_before_claim(self) -> None:
+        self.paths["seed_destination"].mkdir(parents=True)
+        (self.paths["seed_destination"] / "unexpected").write_bytes(b"occupied")
+        with self.assertRaisesRegex(MODULE.ReadoutError, "is not absent"):
+            self.prepare()
+        self.assertFalse(
+            (
+                self.paths["job"]
+                / MODULE.READOUT_RECOVERY2_ATTEMPT_DIRECTORY
+            ).exists()
+        )
+
+    def test_single_rename_failure_preserves_old_cache_and_never_hides_path(self) -> None:
+        common_before = MODULE._cache_inventory(
+            self.paths["common_cache"], repo=self.root
+        )
+        with mock.patch.object(
+            MODULE.os, "rename", side_effect=OSError("synthetic publish interruption")
+        ) as rename:
+            with self.assertRaisesRegex(OSError, "synthetic publish interruption"):
+                self.prepare()
+        self.assertEqual(rename.call_count, 1)
+        self.assertEqual(
+            MODULE._cache_inventory(self.paths["common_cache"], repo=self.root),
+            common_before,
+        )
+        self.assertFalse(self.paths["seed_destination"].exists())
+        self.assertTrue(
+            (
+                self.paths["job"]
+                / MODULE.READOUT_RECOVERY2_ATTEMPT_DIRECTORY
+                / "retry_failed.json"
+            ).is_file()
+        )
 
 
 class PointCloudAndQueueTests(unittest.TestCase):

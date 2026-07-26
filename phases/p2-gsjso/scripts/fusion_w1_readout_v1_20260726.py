@@ -28,6 +28,8 @@ import math
 import os
 from pathlib import Path
 import re
+import shutil
+import stat
 import subprocess
 import sys
 import time
@@ -44,6 +46,12 @@ DEFAULT_CONFIG = (
 DEFAULT_READOUT_RETRY_POLICY = (
     REPO
     / "phases/p2-gsjso/configs/fusion_w1_readout_infra_retry_20260726.json"
+)
+READOUT_RECOVERY2_POLICY_RELATIVE = Path(
+    "phases/p2-gsjso/configs/fusion_w1_readout_infra_retry2_20260726.json"
+)
+DEFAULT_READOUT_RECOVERY2_POLICY = (
+    REPO / READOUT_RECOVERY2_POLICY_RELATIVE
 )
 CONFIG_SCHEMA = "jointbuildgs.fusion_w1.readout_driver.config.v1"
 COUNTER_SCHEMA = "jointbuildgs.fusion_w1.readout_counters.v1"
@@ -73,6 +81,26 @@ READOUT_RETRY_INVOCATION_SCHEMA = (
     "jointbuildgs.fusion_w1.extract_infra_retry_invocation.v1"
 )
 READOUT_RETRY_ATTEMPT_DIRECTORY = "infra_retry_01"
+READOUT_RECOVERY2_POLICY_SCHEMA = (
+    "jointbuildgs.fusion_w1.readout_infra_retry2_policy.v1"
+)
+READOUT_RECOVERY2_STARTED_SCHEMA = (
+    "jointbuildgs.fusion_w1.readout_infra_retry2_started.v1"
+)
+READOUT_RECOVERY2_SEED_SCHEMA = (
+    "jointbuildgs.fusion_w1.gsplat_cache_seed_manifest.v1"
+)
+READOUT_RECOVERY2_INVOCATION_SCHEMA = (
+    "jointbuildgs.fusion_w1.extract_infra_retry2_invocation.v1"
+)
+READOUT_RECOVERY2_COMPLETED_SCHEMA = (
+    "jointbuildgs.fusion_w1.readout_infra_retry2_completed.v1"
+)
+READOUT_RECOVERY2_FAILED_SCHEMA = (
+    "jointbuildgs.fusion_w1.readout_infra_retry2_failed.v1"
+)
+READOUT_RECOVERY2_ATTEMPT_DIRECTORY = "infra_retry_02"
+JIT_BUILD_ENVIRONMENT = {"MAX_JOBS": "1"}
 WRITABLE_ENVIRONMENT_KEYS = frozenset(
     {"HOME", "XDG_CACHE_HOME", "TORCH_EXTENSIONS_DIR"}
 )
@@ -308,10 +336,15 @@ def writable_readout_environment(
     repo: Path = REPO,
     create: bool = False,
     require_ready: bool = False,
+    declared_paths: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
-    """Resolve the exact writable cache contract used by every extractor."""
+    """Resolve a normal or immutable historical writable-cache contract."""
 
-    raw = config.get("pointcloudification", {}).get("writable_environment")
+    raw = (
+        declared_paths
+        if declared_paths is not None
+        else config.get("pointcloudification", {}).get("writable_environment")
+    )
     if not isinstance(raw, Mapping) or set(raw) != WRITABLE_ENVIRONMENT_KEYS:
         raise ReadoutError(
             "pointcloud writable environment must contain exactly HOME, "
@@ -374,6 +407,12 @@ def writable_readout_environment(
     }
 
 
+def jit_build_environment(config: Mapping[str, Any]) -> dict[str, str]:
+    raw = config.get("pointcloudification", {}).get("jit_build_environment")
+    require_equal(raw, JIT_BUILD_ENVIRONMENT, "readout JIT build environment")
+    return dict(JIT_BUILD_ENVIRONMENT)
+
+
 def load_config(path: Path) -> dict[str, Any]:
     config = load_json(path)
     require_equal(config.get("schema"), CONFIG_SCHEMA, "driver config schema")
@@ -411,6 +450,7 @@ def load_config(path: Path) -> dict[str, Any]:
         "smoke job key",
     )
     writable_readout_environment(config, repo=path.resolve().parents[3])
+    jit_build_environment(config)
     expected_queue = [
         ("core", "A", "r1"),
         ("core", "A", "r2"),
@@ -1109,7 +1149,9 @@ def ensure_not_failed(job: Path, *, repo: Path = REPO) -> None:
         )
     failed = job / "failed.json"
     if failed.exists() or failed.is_symlink():
-        if _validate_adopted_extract_retry(job, repo=repo):
+        if _validate_adopted_extract_retry(
+            job, repo=repo
+        ) or _validate_adopted_extract_recovery2(job, repo=repo):
             return
         raise ReadoutError(
             f"job has failed receipt; retries are forbidden: {failed}"
@@ -1172,10 +1214,15 @@ def validate_readout_retry_policy(
     environment = policy.get("writable_environment")
     if not isinstance(environment, Mapping) or set(environment) != WRITABLE_ENVIRONMENT_KEYS:
         raise ReadoutError("readout retry writable environment is incomplete")
+    historical_environment = writable_readout_environment(
+        config,
+        repo=repo,
+        declared_paths=environment,
+    )
     require_equal(
+        historical_environment["host_paths"],
         dict(environment),
-        dict(config["pointcloudification"]["writable_environment"]),
-        "normal/retry writable environment",
+        "readout retry policy writable environment",
     )
     required = policy.get("required_failure")
     if not isinstance(required, Mapping):
@@ -1497,7 +1544,12 @@ def prepare_extract_infra_retry(
     verified = _verify_preoutput_cache_failure(config, policy, building_id, arm, run, repo=repo)
     job = verified["job"]
     attempt = job / READOUT_RETRY_ATTEMPT_DIRECTORY
-    environment = writable_readout_environment(config, repo=repo, create=True)
+    environment = writable_readout_environment(
+        config,
+        repo=repo,
+        create=True,
+        declared_paths=policy["writable_environment"],
+    )
     require_equal(environment["host_paths"], policy["writable_environment"], "retry policy/environment paths")
     started_path = attempt / "retry_started.json"
     original_refs = {
@@ -1598,7 +1650,11 @@ def _load_active_extract_retry(
     if not allow_completed and (completed_retry.exists() or completed_retry.is_symlink()):
         raise ReadoutError("readout infrastructure retry already completed")
     environment = writable_readout_environment(
-        config, repo=repo, create=False, require_ready=True
+        config,
+        repo=repo,
+        create=False,
+        require_ready=True,
+        declared_paths=verified_policy["writable_environment"],
     )
     require_equal(invocation.get("environment"), environment, "readout retry invocation environment")
     original_invocation = load_json(job / "extract_invocation.json")
@@ -1999,6 +2055,1238 @@ def _validate_adopted_extract_retry(job: Path, *, repo: Path = REPO) -> bool:
     return True
 
 
+def _cache_inventory(root: Path, *, repo: Path = REPO) -> dict[str, Any]:
+    """Hash a regular-file-only cache tree with a stable reviewable format."""
+
+    repository = repo.resolve()
+    try:
+        relative_root = root.relative_to(repository)
+    except ValueError as exc:
+        raise ReadoutError(f"cache root is outside repository: {root}") from exc
+    cursor = repository
+    for part in relative_root.parts:
+        cursor = cursor / part
+        if cursor.is_symlink():
+            raise ReadoutError(f"cache path contains a symlink: {cursor}")
+    if not root.is_dir() or root.is_symlink():
+        raise ReadoutError(f"cache root is not a regular directory: {root}")
+    records: list[dict[str, Any]] = []
+    lines: list[str] = []
+    for path in sorted(root.rglob("*")):
+        if path.is_symlink():
+            raise ReadoutError(f"cache tree contains a symlink: {path}")
+        if path.is_dir():
+            continue
+        if not path.is_file():
+            raise ReadoutError(f"cache tree contains a non-regular entry: {path}")
+        relative = path.relative_to(root).as_posix()
+        file_stat = path.stat()
+        mode = format(stat.S_IMODE(file_stat.st_mode), "o")
+        size = int(file_stat.st_size)
+        digest = sha256_file(path)
+        records.append(
+            {
+                "path": relative,
+                "mode_octal": mode,
+                "size_bytes": size,
+                "sha256": digest,
+            }
+        )
+        lines.append(f"{relative}\t{mode}\t{size}\t{digest}\n")
+    return {
+        "root": repo_relative(root, repo=repo),
+        "inventory_format": (
+            "relative_path_tab_mode_octal_tab_size_bytes_tab_sha256_newline"
+        ),
+        "inventory_sha256": sha256_bytes("".join(lines).encode("utf-8")),
+        "files_n": len(records),
+        "bytes_n": sum(int(record["size_bytes"]) for record in records),
+        "files": records,
+    }
+
+
+def _require_cache_inventory(
+    observed: Mapping[str, Any], expected: Mapping[str, Any], label: str
+) -> None:
+    for key in ("root", "inventory_format", "inventory_sha256", "files_n", "bytes_n"):
+        require_equal(observed.get(key), expected.get(key), f"{label} {key}")
+
+
+def _canonical_recovery2_policy_path(policy_path: Path, *, repo: Path) -> Path:
+    """Require the one committed policy path without following symlink aliases."""
+
+    repository = repo.resolve()
+    expected = repository / READOUT_RECOVERY2_POLICY_RELATIVE
+    candidate = policy_path if policy_path.is_absolute() else repository / policy_path
+    candidate = Path(os.path.abspath(candidate))
+    require_equal(candidate, expected, "canonical recovery2 policy path")
+    cursor = repository
+    for part in READOUT_RECOVERY2_POLICY_RELATIVE.parts:
+        cursor = cursor / part
+        if cursor.is_symlink():
+            raise ReadoutError(f"recovery2 policy path contains a symlink: {cursor}")
+    require_regular(expected, "canonical recovery2 policy")
+    return expected
+
+
+def validate_readout_recovery2_policy(
+    config: Mapping[str, Any],
+    policy_path: Path,
+    *,
+    repo: Path = REPO,
+) -> tuple[dict[str, Any], str]:
+    path = _canonical_recovery2_policy_path(policy_path, repo=repo)
+    policy = load_json(path)
+    digest = sha256_file(path)
+    require_equal(policy.get("schema"), READOUT_RECOVERY2_POLICY_SCHEMA, "recovery2 policy schema")
+    require_equal(policy.get("status"), "APPROVED", "recovery2 policy status")
+    require_equal(policy.get("run_id"), config.get("run_id"), "recovery2 run ID")
+    require_equal(policy.get("approved_by"), "김휘영", "recovery2 approver")
+    require_equal(
+        policy.get("recovery_kind"),
+        "GSPLAT_SUCCESSFUL_TRAINING_CACHE_SEED_PREOUTPUT",
+        "recovery2 kind",
+    )
+    require_equal(policy.get("stage"), "readout", "recovery2 stage")
+    require_equal(policy.get("maximum_recoveries_per_job"), 1, "recovery2 maximum")
+    require_equal(policy.get("prior_attempt_directory"), READOUT_RETRY_ATTEMPT_DIRECTORY, "recovery2 prior attempt")
+    require_equal(policy.get("attempt_directory"), READOUT_RECOVERY2_ATTEMPT_DIRECTORY, "recovery2 attempt")
+    require_equal(policy.get("allowed_argv_differences"), ["value_after_--out"], "recovery2 argv differences")
+    require_equal(policy.get("jit_build_environment"), JIT_BUILD_ENVIRONMENT, "recovery2 JIT build environment")
+    require_equal(jit_build_environment(config), JIT_BUILD_ENVIRONMENT, "configured recovery2 JIT build environment")
+    environment = policy.get("writable_environment")
+    if not isinstance(environment, Mapping) or set(environment) != WRITABLE_ENVIRONMENT_KEYS:
+        raise ReadoutError("recovery2 writable environment is incomplete")
+    require_equal(
+        dict(environment),
+        dict(config["pointcloudification"]["writable_environment"]),
+        "recovery2 writable environment",
+    )
+    base = policy.get("required_pre_recovery_head")
+    if not isinstance(base, str) or re.fullmatch(r"[0-9a-f]{40}", base) is None:
+        raise ReadoutError("recovery2 pre-recovery HEAD is invalid")
+    require_equal(policy.get("required_recovery_commit_distance"), 1, "recovery2 commit distance")
+    allowed_paths = policy.get("allowed_recovery_commit_paths")
+    if not isinstance(allowed_paths, list) or not allowed_paths or len(set(allowed_paths)) != len(allowed_paths):
+        raise ReadoutError("recovery2 implementation path allowlist is invalid")
+    if READOUT_RECOVERY2_POLICY_RELATIVE.as_posix() not in allowed_paths:
+        raise ReadoutError(
+            "canonical recovery2 policy is absent from the recovery commit allowlist"
+        )
+    required_hash_groups = (
+        ("required_original_failure", {"materialization", "invocation", "started", "log", "failed"}),
+        ("required_prior_retry_failure", {"retry_started", "invocation", "log", "retry_failed"}),
+    )
+    for group_name, expected_labels in required_hash_groups:
+        group = policy.get(group_name)
+        pinned = group.get("artifact_sha256") if isinstance(group, Mapping) else None
+        if not isinstance(pinned, Mapping) or set(pinned) != expected_labels:
+            raise ReadoutError(f"recovery2 {group_name} SHA binding is incomplete")
+        for label, value in pinned.items():
+            if not isinstance(value, str) or re.fullmatch(r"[0-9a-f]{64}", value) is None:
+                raise ReadoutError(f"invalid recovery2 SHA256 for {group_name}/{label}")
+    zero = policy.get("required_zero_output")
+    if not isinstance(zero, Mapping) or zero.get("required_file_count") != 0:
+        raise ReadoutError("recovery2 zero-output contract is invalid")
+    for key in ("output_roots", "required_absent_paths"):
+        values = zero.get(key)
+        if not isinstance(values, list) or not values:
+            raise ReadoutError(f"recovery2 zero-output {key} is invalid")
+        for value in values:
+            candidate = Path(str(value))
+            if candidate.is_absolute() or ".." in candidate.parts or not candidate.parts:
+                raise ReadoutError(f"unsafe recovery2 zero-output path: {value!r}")
+    source = policy.get("successful_training_cache_source")
+    common = policy.get("required_common_cache_before_seed")
+    for label, value in (("source", source), ("common", common)):
+        if not isinstance(value, Mapping):
+            raise ReadoutError(f"recovery2 {label} cache contract is missing")
+        for field in ("root", "inventory_format", "inventory_sha256", "files_n", "bytes_n"):
+            if field not in value:
+                raise ReadoutError(f"recovery2 {label} cache {field} is missing")
+    if not isinstance(source.get("successful_training_artifacts"), Mapping):
+        raise ReadoutError("recovery2 successful-training artifact bindings are missing")
+    for label, binding in source["successful_training_artifacts"].items():
+        if not isinstance(binding, Mapping) or set(binding) != {"path", "sha256"}:
+            raise ReadoutError(f"invalid successful-training binding: {label}")
+        if re.fullmatch(r"[0-9a-f]{64}", str(binding["sha256"])) is None:
+            raise ReadoutError(f"invalid successful-training SHA256: {label}")
+    destination = policy.get("required_seed_destination_absent")
+    if not isinstance(destination, Mapping):
+        raise ReadoutError("recovery2 seed destination contract is missing")
+    destination_root = Path(str(destination.get("root", "")))
+    if (
+        destination_root.is_absolute()
+        or ".." in destination_root.parts
+        or not destination_root.parts
+    ):
+        raise ReadoutError("recovery2 seed destination path is unsafe")
+    require_equal(
+        destination.get("must_be_absent_before_publish"),
+        True,
+        "recovery2 seed destination absence",
+    )
+    copy_contract = policy.get("cache_seed_contract")
+    required_copy_contract = {
+        "source_read_only": True,
+        "prior_common_cache_preserved_in_place": True,
+        "staged_copy_verified_before_atomic_publish": True,
+        "destination_inventory_must_equal_source": True,
+        "provenance_manifest_required_before_launch": True,
+        "single_atomic_directory_rename": True,
+        "seed_scope": "TORCH_EXTENSIONS_DIR/gsplat_cuda_only",
+    }
+    require_equal(copy_contract, required_copy_contract, "recovery2 cache seed contract")
+    return {
+        **dict(policy),
+        "path": repo_relative(path, repo=repo),
+        "sha256": digest,
+        "allowed_recovery_commit_paths": list(allowed_paths),
+        "writable_environment": dict(environment),
+        "jit_build_environment": dict(JIT_BUILD_ENVIRONMENT),
+    }, digest
+
+
+def _validate_readout_recovery2_git_state(
+    repo: Path, policy: Mapping[str, Any]
+) -> dict[str, Any]:
+    branch = _run_git(repo, "branch", "--show-current")
+    require_equal(branch, "exp/fusion-w1", "recovery2 branch")
+    head = _run_git(repo, "rev-parse", "HEAD")
+    base = str(policy["required_pre_recovery_head"])
+    _run_git(repo, "merge-base", "--is-ancestor", base, head)
+    distance = int(_run_git(repo, "rev-list", "--count", f"{base}..{head}"))
+    require_equal(distance, 1, "recovery2 commit distance")
+    changed = sorted(
+        line for line in _run_git(repo, "diff", "--name-only", base, head).splitlines() if line
+    )
+    require_equal(
+        changed,
+        sorted(str(value) for value in policy["allowed_recovery_commit_paths"]),
+        "recovery2 implementation commit paths",
+    )
+    porcelain = _run_git(repo, "status", "--porcelain=v1", "--untracked-files=all")
+    runtime_prefix = "phases/p2-gsjso/runs/20260724_fusion_w1/"
+    unexpected: list[str] = []
+    allowed_runtime: list[str] = []
+    for line in porcelain.splitlines():
+        if line.startswith("?? ") and line[3:].startswith(runtime_prefix):
+            allowed_runtime.append(line[3:])
+        elif line:
+            unexpected.append(line)
+    if unexpected:
+        raise ReadoutError(
+            "recovery2 worktree has tracked or non-runtime changes: "
+            + "; ".join(unexpected[:20])
+        )
+    return {
+        "branch": branch,
+        "pre_recovery_head": base,
+        "recovery_head": head,
+        "pre_recovery_head_is_ancestor": True,
+        "commit_distance": distance,
+        "changed_paths": changed,
+        "tracked_changes": 0,
+        "allowed_runtime_untracked_count": len(allowed_runtime),
+    }
+
+
+def _recovery2_artifact_paths(job: Path) -> tuple[dict[str, Path], dict[str, Path]]:
+    original = {
+        "materialization": job / "materialization.json",
+        "invocation": job / "extract_invocation.json",
+        "started": job / "readout_started.json",
+        "log": job / "extract.stdout.log",
+        "failed": job / "failed.json",
+    }
+    prior = {
+        "retry_started": job / READOUT_RETRY_ATTEMPT_DIRECTORY / "retry_started.json",
+        "invocation": job / READOUT_RETRY_ATTEMPT_DIRECTORY / "extract_invocation.json",
+        "log": job / READOUT_RETRY_ATTEMPT_DIRECTORY / "extract.stdout.log",
+        "retry_failed": job / READOUT_RETRY_ATTEMPT_DIRECTORY / "retry_failed.json",
+    }
+    return original, prior
+
+
+def _verify_successful_training_cache_source(
+    config: Mapping[str, Any], policy: Mapping[str, Any], *, repo: Path = REPO
+) -> dict[str, Any]:
+    source = policy["successful_training_cache_source"]
+    bindings: dict[str, Any] = {}
+    payloads: dict[str, Any] = {}
+    for label, binding in source["successful_training_artifacts"].items():
+        path = repo_path(str(binding["path"]), repo=repo)
+        verify_hash(path, str(binding["sha256"]), f"successful training {label}")
+        bindings[label] = {"path": repo_relative(path, repo=repo), "sha256": sha256_file(path)}
+        if label != "log":
+            payloads[label] = load_json(path)
+    key = str(policy["job_key"])
+    completed = payloads["completed"]
+    retry_started = payloads["retry_started"]
+    retry_completed = payloads["retry_completed"]
+    require_equal(completed.get("schema"), "jointbuildgs.fusion_w1.training_completed.v1", "successful training completion schema")
+    require_equal(completed.get("job_key"), key, "successful training completion job")
+    require_equal(completed.get("return_code"), 0, "successful training return code")
+    require_equal(retry_started.get("schema"), RETRY_STARTED_SCHEMA, "successful training retry STARTED schema")
+    require_equal(retry_started.get("job_key"), key, "successful training retry STARTED job")
+    require_equal(retry_started.get("retry_key"), f"{key}/{RETRY_ATTEMPT_DIRECTORY}", "successful training retry key")
+    require_equal(retry_started.get("docker_image", {}).get("image_id"), source.get("docker_image_id"), "successful training image ID")
+    require_equal(retry_completed.get("schema"), RETRY_COMPLETED_SCHEMA, "successful training retry completion schema")
+    require_equal(retry_completed.get("job_key"), key, "successful training retry completion job")
+    require_equal(retry_completed.get("return_code"), 0, "successful training retry return code")
+    require_equal(retry_completed.get("training_completion", {}).get("status"), "PASSED", "successful training status")
+    require_equal(retry_completed.get("training_completion", {}).get("completed_optimizer_updates"), 30000, "successful training optimizer updates")
+    root_retry = completed.get("infrastructure_retry", {}).get("retry_completed_receipt", {})
+    require_equal(root_retry, bindings["retry_completed"], "successful training root/retry completion binding")
+    require_equal(completed.get("log_sha256"), bindings["log"]["sha256"], "successful training log binding")
+    cache_root = repo_path(str(source["root"]), repo=repo)
+    expected_environment = str(CONTAINER_REPO / Path(source["root"]).parent)
+    require_equal(
+        retry_started.get("environment", {}).get("TORCH_EXTENSIONS_DIR"),
+        expected_environment,
+        "successful training cache environment",
+    )
+    inventory = _cache_inventory(cache_root, repo=repo)
+    _require_cache_inventory(inventory, source, "successful training cache")
+    for relative, digest in source.get("required_key_files", {}).items():
+        verify_hash(cache_root / relative, str(digest), f"successful training cache {relative}")
+    require_equal(
+        source.get("docker_image_id"),
+        config["pointcloudification"]["image_id"],
+        "training/readout cache image ID",
+    )
+    return {"artifacts": bindings, "inventory": inventory, "root": cache_root}
+
+
+def _require_recovery2_job_directory(
+    config: Mapping[str, Any],
+    building_id: str,
+    arm: str,
+    run: str,
+    *,
+    repo: Path,
+) -> Path:
+    """Reject any symlink component in the recovery claim's parent path."""
+
+    safe_identity(building_id, arm, run)
+    relative = Path(
+        str(config["outputs"]["job_template"]).format(
+            building_id=building_id,
+            arm=arm,
+            run=run,
+        )
+    )
+    if relative.is_absolute() or ".." in relative.parts or not relative.parts:
+        raise ReadoutError("recovery2 job directory path is unsafe")
+    cursor = repo.resolve()
+    for part in relative.parts:
+        cursor = cursor / part
+        if cursor.is_symlink():
+            raise ReadoutError(
+                f"recovery2 job directory path contains a symlink: {cursor}"
+            )
+    if not cursor.is_dir():
+        raise ReadoutError(f"recovery2 job directory is missing: {cursor}")
+    require_equal(
+        cursor,
+        job_dir(config, building_id, arm, run, repo=repo),
+        "recovery2 job directory",
+    )
+    return cursor
+
+
+def _claim_recovery2_attempt(attempt: Path) -> None:
+    """Atomically claim the only permitted attempt with a real directory."""
+
+    try:
+        attempt.mkdir(mode=0o755, parents=False, exist_ok=False)
+    except FileExistsError as exc:
+        raise ReadoutError(
+            "the one permitted recovery2 attempt was already claimed"
+        ) from exc
+    except OSError as exc:
+        raise ReadoutError(f"cannot atomically claim recovery2 attempt: {exc}") from exc
+    claimed = os.lstat(attempt)
+    if stat.S_ISLNK(claimed.st_mode) or not stat.S_ISDIR(claimed.st_mode):
+        raise ReadoutError("recovery2 atomic claim is not a real directory")
+
+
+def _verify_recovery2_preconditions(
+    config: Mapping[str, Any],
+    policy: Mapping[str, Any],
+    building_id: str,
+    arm: str,
+    run: str,
+    *,
+    repo: Path = REPO,
+) -> dict[str, Any]:
+    key = job_key(building_id, arm, run)
+    require_equal(key, policy.get("job_key"), "recovery2 job key")
+    job = _require_recovery2_job_directory(
+        config, building_id, arm, run, repo=repo
+    )
+    original, prior = _recovery2_artifact_paths(job)
+    groups = (
+        (original, policy["required_original_failure"]["artifact_sha256"], "original"),
+        (prior, policy["required_prior_retry_failure"]["artifact_sha256"], "prior retry"),
+    )
+    refs: dict[str, Any] = {}
+    for paths, pinned, prefix in groups:
+        refs[prefix] = {}
+        for label, path in paths.items():
+            verify_hash(path, str(pinned[label]), f"recovery2 {prefix} {label}")
+            refs[prefix][label] = {
+                "path": repo_relative(path, repo=repo),
+                "sha256": sha256_file(path),
+            }
+    original_invocation = load_receipt(
+        original["invocation"],
+        schema="jointbuildgs.fusion_w1.extract_invocation.v1",
+        state="AUTHORIZED",
+    )
+    require_equal(original_invocation.get("job_key"), key, "recovery2 original invocation job")
+    require_equal(original_invocation.get("retry_allowed"), False, "recovery2 original retry flag")
+    prior_started = load_receipt(prior["retry_started"], schema=READOUT_RETRY_STARTED_SCHEMA, state="STARTED")
+    prior_invocation = load_receipt(prior["invocation"], schema=READOUT_RETRY_INVOCATION_SCHEMA, state="AUTHORIZED")
+    prior_failed = load_receipt(prior["retry_failed"], schema=READOUT_RETRY_FAILED_SCHEMA, state="FAILED")
+    require_equal(prior_started.get("job_key"), key, "recovery2 prior STARTED job")
+    require_equal(prior_invocation.get("job_key"), key, "recovery2 prior invocation job")
+    require_equal(prior_failed.get("job_key"), key, "recovery2 prior failure job")
+    require_equal(prior_failed.get("another_retry_allowed"), False, "recovery2 prior retry flag")
+    require_equal(prior_failed.get("counter_increment"), 0, "recovery2 prior retry counter")
+    require_equal(prior_failed.get("retry_started"), refs["prior retry"]["retry_started"], "recovery2 prior STARTED binding")
+    require_equal(prior_failed.get("retry_invocation"), refs["prior retry"]["invocation"], "recovery2 prior invocation binding")
+    prior_log = prior["log"].read_text(encoding="utf-8")
+    for marker in policy["required_prior_retry_failure"].get("log_markers", []):
+        if marker not in prior_log:
+            raise ReadoutError(f"recovery2 prior retry log marker is absent: {marker}")
+    attempt = job / READOUT_RECOVERY2_ATTEMPT_DIRECTORY
+    if attempt.exists() or attempt.is_symlink():
+        raise ReadoutError("the one permitted recovery2 attempt was already claimed")
+    zero = policy["required_zero_output"]
+    for relative in zero["required_absent_paths"]:
+        path = job / str(relative)
+        if path.exists() or path.is_symlink():
+            raise ReadoutError(f"recovery2 preflight found forbidden output: {path}")
+    output_files: list[str] = []
+    for relative in zero["output_roots"]:
+        root = job / str(relative)
+        if root.is_symlink():
+            raise ReadoutError(f"recovery2 output root is a symlink: {root}")
+        if root.exists():
+            if not root.is_dir():
+                raise ReadoutError(f"recovery2 output root is not a directory: {root}")
+            for path in root.rglob("*"):
+                if path.is_symlink() or path.is_file():
+                    output_files.append(repo_relative(path, repo=repo))
+    require_equal(len(output_files), zero["required_file_count"], "recovery2 pre-existing output files")
+    counters = reconcile_runtime_counters(config, repo=repo)
+    for name, value in policy["required_counter_values"].items():
+        require_equal(counters.get(name), value, f"recovery2 counter {name}")
+    training_cache = _verify_successful_training_cache_source(config, policy, repo=repo)
+    environment = writable_readout_environment(
+        config, repo=repo, create=False, require_ready=False
+    )
+    common_root = repo_path(
+        str(policy["required_common_cache_before_seed"]["root"]), repo=repo
+    )
+    common_inventory = _cache_inventory(common_root, repo=repo)
+    _require_cache_inventory(common_inventory, policy["required_common_cache_before_seed"], "recovery2 pre-seed common cache")
+    seed_destination = (
+        repo_path(environment["host_paths"]["TORCH_EXTENSIONS_DIR"], repo=repo)
+        / "gsplat_cuda"
+    )
+    require_equal(
+        repo_relative(seed_destination, repo=repo),
+        policy["required_seed_destination_absent"]["root"],
+        "recovery2 versioned seed destination",
+    )
+    if seed_destination.exists() or seed_destination.is_symlink():
+        raise ReadoutError(
+            f"recovery2 versioned seed destination is not absent: {seed_destination}"
+        )
+    return {
+        "job": job,
+        "attempt": attempt,
+        "original_paths": original,
+        "prior_paths": prior,
+        "original_invocation": original_invocation,
+        "artifact_refs": refs,
+        "counters": counters,
+        "training_cache": training_cache,
+        "common_root": common_root,
+        "common_inventory": common_inventory,
+        "seed_destination": seed_destination,
+        "environment": environment,
+    }
+
+
+def _seed_recovery2_cache(
+    policy: Mapping[str, Any],
+    verified: Mapping[str, Any],
+    started_path: Path,
+    *,
+    repo: Path = REPO,
+) -> tuple[Path, dict[str, Any]]:
+    attempt = verified["attempt"]
+    source = verified["training_cache"]["root"]
+    prior_common = verified["common_root"]
+    destination = verified["seed_destination"]
+    stage = destination.parent / ".gsplat_cuda.infra_retry_02.staging"
+    manifest_path = attempt / "cache_seed_manifest.json"
+    for path, label in (
+        (stage, "staging cache"),
+        (destination, "versioned seed destination"),
+        (manifest_path, "cache seed manifest"),
+    ):
+        if path.exists() or path.is_symlink():
+            raise ReadoutError(f"recovery2 {label} already exists: {path}")
+    source_before = _cache_inventory(source, repo=repo)
+    _require_cache_inventory(source_before, policy["successful_training_cache_source"], "recovery2 source before seed")
+    shutil.copytree(source, stage, copy_function=shutil.copy2)
+    staged = _cache_inventory(stage, repo=repo)
+    require_equal(
+        {key: value for key, value in staged.items() if key != "root"},
+        {key: value for key, value in source_before.items() if key != "root"},
+        "recovery2 staged/source cache inventory",
+    )
+    prior_common_before = _cache_inventory(prior_common, repo=repo)
+    require_equal(
+        prior_common_before,
+        verified["common_inventory"],
+        "recovery2 prior common cache before atomic publish",
+    )
+    os.rename(stage, destination)
+    seeded = _cache_inventory(destination, repo=repo)
+    require_equal(
+        {key: value for key, value in seeded.items() if key != "root"},
+        {key: value for key, value in source_before.items() if key != "root"},
+        "recovery2 seeded/source cache inventory",
+    )
+    preserved = _cache_inventory(prior_common, repo=repo)
+    require_equal(
+        preserved,
+        verified["common_inventory"],
+        "recovery2 prior common cache preserved in place",
+    )
+    source_after = _cache_inventory(source, repo=repo)
+    require_equal(source_after, source_before, "recovery2 source cache immutability")
+    manifest = {
+        "schema": READOUT_RECOVERY2_SEED_SCHEMA,
+        "state": "COMPLETE",
+        "created_at": now_iso(),
+        "run_id": policy["run_id"],
+        "job_key": policy["job_key"],
+        "recovery_key": f"{policy['job_key']}/{READOUT_RECOVERY2_ATTEMPT_DIRECTORY}",
+        "policy": {"path": policy["path"], "sha256": policy["sha256"]},
+        "recovery_started": {
+            "path": repo_relative(started_path, repo=repo),
+            "sha256": sha256_file(started_path),
+        },
+        "successful_training_artifacts": verified["training_cache"]["artifacts"],
+        "source_cache": source_before,
+        "pre_seed_common_cache": verified["common_inventory"],
+        "prior_common_cache_preserved_in_place_at": repo_relative(
+            prior_common, repo=repo
+        ),
+        "seeded_common_cache": seeded,
+        "copy_contract": policy["cache_seed_contract"],
+        "source_unchanged_after_copy": True,
+        "prior_common_cache_unchanged_after_publish": True,
+        "destination_absent_before_publish": True,
+        "staged_inventory_verified": True,
+        "single_atomic_directory_rename_publish": True,
+    }
+    exclusive_json(manifest_path, manifest)
+    return manifest_path, manifest
+
+
+def _validate_recovery2_invocation_difference(
+    original: Mapping[str, Any], retry: Mapping[str, Any], *, retry_output: str
+) -> None:
+    expected_new = {
+        "original_invocation",
+        "prior_retry_artifacts",
+        "recovery_started",
+        "cache_seed_manifest",
+        "environment",
+        "jit_build_environment",
+        "allowed_differences",
+    }
+    require_equal(set(retry) - set(original), expected_new, "recovery2 invocation provenance keys")
+    for key in set(original) - {"schema", "created_at", "output", "argv"}:
+        require_equal(retry.get(key), original.get(key), f"recovery2 invocation {key}")
+    require_equal(retry.get("schema"), READOUT_RECOVERY2_INVOCATION_SCHEMA, "recovery2 invocation schema")
+    require_equal(retry.get("output"), retry_output, "recovery2 invocation output")
+    original_argv = original.get("argv")
+    retry_argv = retry.get("argv")
+    if not isinstance(original_argv, list) or not isinstance(retry_argv, list):
+        raise ReadoutError("recovery2 invocation argv is invalid")
+    require_equal(
+        retry_argv,
+        _replace_only_output(original_argv, str(original.get("output")), retry_output),
+        "recovery2 argv --out-only difference",
+    )
+    require_equal(retry.get("allowed_differences"), ["value_after_--out"], "recovery2 invocation difference declaration")
+    require_equal(retry.get("jit_build_environment"), JIT_BUILD_ENVIRONMENT, "recovery2 invocation MAX_JOBS")
+
+
+def _record_recovery2_failure_unchecked(
+    config: Mapping[str, Any],
+    building_id: str,
+    arm: str,
+    run: str,
+    *,
+    message: str,
+    detail: str = "",
+    repo: Path = REPO,
+) -> dict[str, Any]:
+    job = job_dir(config, building_id, arm, run, repo=repo)
+    attempt = job / READOUT_RECOVERY2_ATTEMPT_DIRECTORY
+    started_path = attempt / "recovery_started.json"
+    started = load_receipt(started_path, schema=READOUT_RECOVERY2_STARTED_SCHEMA, state="STARTED")
+    failed_path = attempt / "retry_failed.json"
+    if failed_path.exists() or failed_path.is_symlink():
+        return load_receipt(failed_path, schema=READOUT_RECOVERY2_FAILED_SCHEMA, state="FAILED")
+    bindings: dict[str, Any] = {
+        "recovery_started": {
+            "path": repo_relative(started_path, repo=repo),
+            "sha256": sha256_file(started_path),
+        }
+    }
+    for label, filename in (("cache_seed_manifest", "cache_seed_manifest.json"), ("recovery_invocation", "extract_invocation.json")):
+        path = attempt / filename
+        if path.is_file() and not path.is_symlink():
+            bindings[label] = {"path": repo_relative(path, repo=repo), "sha256": sha256_file(path)}
+    payload = {
+        "schema": READOUT_RECOVERY2_FAILED_SCHEMA,
+        "state": "FAILED",
+        "created_at": now_iso(),
+        "run_id": config["run_id"],
+        "job_key": job_key(building_id, arm, run),
+        "recovery_key": started["recovery_key"],
+        "message": message,
+        "detail": detail[-12000:],
+        **bindings,
+        "partial_outputs_preserved": True,
+        "another_recovery_allowed": False,
+        "counter_increment": 0,
+    }
+    exclusive_json(failed_path, payload)
+    return payload
+
+
+def prepare_extract_infra_recovery2(
+    config: Mapping[str, Any],
+    policy_path: Path,
+    building_id: str,
+    arm: str,
+    run: str,
+    *,
+    repo: Path = REPO,
+    validate_git: bool = True,
+) -> dict[str, Any]:
+    policy, _ = validate_readout_recovery2_policy(config, policy_path, repo=repo)
+    git = _validate_readout_recovery2_git_state(repo, policy) if validate_git else {"validation": "TEST_BYPASS"}
+    verified = _verify_recovery2_preconditions(config, policy, building_id, arm, run, repo=repo)
+    environment = writable_readout_environment(config, repo=repo, create=True)
+    require_equal(environment["host_paths"], policy["writable_environment"], "recovery2 policy/environment paths")
+    attempt = verified["attempt"]
+    _claim_recovery2_attempt(attempt)
+    started_path = attempt / "recovery_started.json"
+    started = {
+        "schema": READOUT_RECOVERY2_STARTED_SCHEMA,
+        "state": "STARTED",
+        "created_at": now_iso(),
+        "run_id": config["run_id"],
+        "job_key": job_key(building_id, arm, run),
+        "recovery_key": f"{job_key(building_id, arm, run)}/{READOUT_RECOVERY2_ATTEMPT_DIRECTORY}",
+        "policy": policy,
+        "git": git,
+        "original_artifacts": verified["artifact_refs"]["original"],
+        "prior_retry_artifacts": verified["artifact_refs"]["prior retry"],
+        "zero_output_file_count": 0,
+        "successful_training_artifacts": verified["training_cache"]["artifacts"],
+        "successful_training_cache_inventory": verified["training_cache"]["inventory"],
+        "pre_seed_common_cache_inventory": verified["common_inventory"],
+        "environment": environment,
+        "jit_build_environment": dict(JIT_BUILD_ENVIRONMENT),
+        "counter_increment": 0,
+        "claim_mode": "atomic_O_EXCL_exactly_one_cache_seeded_preoutput_recovery",
+    }
+    exclusive_json(started_path, started)
+    try:
+        seed_path, _ = _seed_recovery2_cache(policy, verified, started_path, repo=repo)
+        original = verified["original_invocation"]
+        output = attempt / "pointcloud" / "readout.npz"
+        output_rel = repo_relative(output, repo=repo)
+        original_argv = original.get("argv")
+        if not isinstance(original_argv, list) or not all(isinstance(value, str) for value in original_argv):
+            raise ReadoutError("recovery2 original argv is invalid")
+        invocation = {
+            **dict(original),
+            "schema": READOUT_RECOVERY2_INVOCATION_SCHEMA,
+            "created_at": now_iso(),
+            "output": output_rel,
+            "argv": _replace_only_output(original_argv, str(original["output"]), output_rel),
+            "original_invocation": verified["artifact_refs"]["original"]["invocation"],
+            "prior_retry_artifacts": verified["artifact_refs"]["prior retry"],
+            "recovery_started": {"path": repo_relative(started_path, repo=repo), "sha256": sha256_file(started_path)},
+            "cache_seed_manifest": {"path": repo_relative(seed_path, repo=repo), "sha256": sha256_file(seed_path)},
+            "environment": environment,
+            "jit_build_environment": dict(JIT_BUILD_ENVIRONMENT),
+            "allowed_differences": ["value_after_--out"],
+            "retry_allowed": False,
+        }
+        _validate_recovery2_invocation_difference(original, invocation, retry_output=output_rel)
+        invocation_path = attempt / "extract_invocation.json"
+        exclusive_json(invocation_path, invocation)
+    except Exception as exc:
+        _record_recovery2_failure_unchecked(
+            config,
+            building_id,
+            arm,
+            run,
+            message="recovery2 cache seed or authorization failed",
+            detail="".join(traceback.format_exception(type(exc), exc, exc.__traceback__)),
+            repo=repo,
+        )
+        raise
+    return {
+        "status": "AUTHORIZED",
+        "attempt": repo_relative(attempt, repo=repo),
+        "recovery_started": repo_relative(started_path, repo=repo),
+        "cache_seed_manifest": repo_relative(seed_path, repo=repo),
+        "recovery_invocation": repo_relative(invocation_path, repo=repo),
+        "recovery_output": output_rel,
+        "environment": environment,
+        "jit_build_environment": dict(JIT_BUILD_ENVIRONMENT),
+        "counter_increment": 0,
+    }
+
+
+def _verify_recovery2_pinned_artifacts(
+    job: Path, policy: Mapping[str, Any], *, repo: Path = REPO
+) -> dict[str, Any]:
+    original, prior = _recovery2_artifact_paths(job)
+    refs: dict[str, Any] = {}
+    for paths, pinned, group in (
+        (original, policy["required_original_failure"]["artifact_sha256"], "original"),
+        (prior, policy["required_prior_retry_failure"]["artifact_sha256"], "prior retry"),
+    ):
+        refs[group] = {}
+        for label, path in paths.items():
+            verify_hash(path, str(pinned[label]), f"recovery2 pinned {group} {label}")
+            refs[group][label] = {"path": repo_relative(path, repo=repo), "sha256": sha256_file(path)}
+    return refs
+
+
+def _validate_recovery2_seed_manifest(
+    config: Mapping[str, Any],
+    policy: Mapping[str, Any],
+    attempt: Path,
+    started_path: Path,
+    *,
+    repo: Path = REPO,
+    require_destination_exact: bool,
+) -> tuple[Path, dict[str, Any]]:
+    path = attempt / "cache_seed_manifest.json"
+    manifest = load_receipt(path, schema=READOUT_RECOVERY2_SEED_SCHEMA, state="COMPLETE")
+    require_equal(manifest.get("job_key"), policy["job_key"], "recovery2 cache manifest job")
+    require_equal(
+        manifest.get("recovery_key"),
+        f"{policy['job_key']}/{READOUT_RECOVERY2_ATTEMPT_DIRECTORY}",
+        "recovery2 cache manifest key",
+    )
+    require_equal(
+        manifest.get("policy"),
+        {"path": policy["path"], "sha256": policy["sha256"]},
+        "recovery2 cache manifest policy",
+    )
+    require_equal(
+        manifest.get("recovery_started"),
+        {"path": repo_relative(started_path, repo=repo), "sha256": sha256_file(started_path)},
+        "recovery2 cache manifest STARTED binding",
+    )
+    require_equal(
+        manifest.get("successful_training_artifacts"),
+        policy["successful_training_cache_source"]["successful_training_artifacts"],
+        "recovery2 cache manifest training provenance",
+    )
+    _require_cache_inventory(
+        manifest.get("source_cache", {}),
+        policy["successful_training_cache_source"],
+        "recovery2 cache manifest source",
+    )
+    _require_cache_inventory(
+        manifest.get("pre_seed_common_cache", {}),
+        policy["required_common_cache_before_seed"],
+        "recovery2 cache manifest pre-seed common",
+    )
+    require_equal(manifest.get("copy_contract"), policy["cache_seed_contract"], "recovery2 cache copy contract")
+    for field in (
+        "source_unchanged_after_copy",
+        "prior_common_cache_unchanged_after_publish",
+        "destination_absent_before_publish",
+        "staged_inventory_verified",
+        "single_atomic_directory_rename_publish",
+    ):
+        require_equal(manifest.get(field), True, f"recovery2 cache manifest {field}")
+    source_root = repo_path(str(policy["successful_training_cache_source"]["root"]), repo=repo)
+    source_inventory = _cache_inventory(source_root, repo=repo)
+    _require_cache_inventory(source_inventory, policy["successful_training_cache_source"], "recovery2 current source cache")
+    prior_common = repo_path(
+        str(manifest.get("prior_common_cache_preserved_in_place_at")), repo=repo
+    )
+    require_equal(
+        repo_relative(prior_common, repo=repo),
+        policy["required_common_cache_before_seed"]["root"],
+        "recovery2 prior common cache preserved path",
+    )
+    prior_common_inventory = _cache_inventory(prior_common, repo=repo)
+    require_equal(
+        prior_common_inventory,
+        dict(manifest["pre_seed_common_cache"]),
+        "recovery2 prior common cache inventory",
+    )
+    environment = writable_readout_environment(config, repo=repo, create=False, require_ready=True)
+    destination = repo_path(environment["host_paths"]["TORCH_EXTENSIONS_DIR"], repo=repo) / "gsplat_cuda"
+    seeded = manifest.get("seeded_common_cache")
+    if not isinstance(seeded, Mapping):
+        raise ReadoutError("recovery2 seeded common cache manifest is missing")
+    require_equal(seeded.get("root"), repo_relative(destination, repo=repo), "recovery2 seeded cache root")
+    key_sha = policy["successful_training_cache_source"]["required_key_files"]["gsplat_cuda.so"]
+    verify_hash(destination / "gsplat_cuda.so", str(key_sha), "recovery2 seeded gsplat_cuda.so")
+    if require_destination_exact:
+        destination_inventory = _cache_inventory(destination, repo=repo)
+        require_equal(destination_inventory, dict(seeded), "recovery2 seeded cache launch inventory")
+    return path, manifest
+
+
+def _load_active_extract_recovery2(
+    config: Mapping[str, Any],
+    building_id: str,
+    arm: str,
+    run: str,
+    *,
+    repo: Path = REPO,
+    allow_completed: bool = False,
+    require_destination_exact: bool = True,
+) -> tuple[Path, dict[str, Any], Path, dict[str, Any], Path, dict[str, Any]]:
+    job = job_dir(config, building_id, arm, run, repo=repo)
+    attempt = job / READOUT_RECOVERY2_ATTEMPT_DIRECTORY
+    if not attempt.is_dir() or attempt.is_symlink():
+        raise ReadoutError("recovery2 attempt directory is invalid")
+    started_path = attempt / "recovery_started.json"
+    started = load_receipt(started_path, schema=READOUT_RECOVERY2_STARTED_SCHEMA, state="STARTED")
+    key = job_key(building_id, arm, run)
+    require_equal(started.get("job_key"), key, "recovery2 STARTED job")
+    require_equal(started.get("recovery_key"), f"{key}/{READOUT_RECOVERY2_ATTEMPT_DIRECTORY}", "recovery2 STARTED key")
+    policy_binding = started.get("policy")
+    if not isinstance(policy_binding, Mapping):
+        raise ReadoutError("recovery2 STARTED policy binding is missing")
+    policy_path = repo_path(str(policy_binding.get("path")), repo=repo)
+    policy, _ = validate_readout_recovery2_policy(config, policy_path, repo=repo)
+    require_equal(dict(policy_binding), policy, "recovery2 STARTED policy")
+    refs = _verify_recovery2_pinned_artifacts(job, policy, repo=repo)
+    require_equal(started.get("original_artifacts"), refs["original"], "recovery2 STARTED original artifacts")
+    require_equal(started.get("prior_retry_artifacts"), refs["prior retry"], "recovery2 STARTED prior retry artifacts")
+    require_equal(started.get("zero_output_file_count"), 0, "recovery2 STARTED output count")
+    require_equal(started.get("counter_increment"), 0, "recovery2 STARTED counter increment")
+    failed_path = attempt / "retry_failed.json"
+    if failed_path.exists() or failed_path.is_symlink():
+        raise ReadoutError("recovery2 already failed")
+    completed_path = attempt / "recovery_completed.json"
+    if not allow_completed and (completed_path.exists() or completed_path.is_symlink()):
+        raise ReadoutError("recovery2 already completed")
+    seed_path, seed = _validate_recovery2_seed_manifest(
+        config,
+        policy,
+        attempt,
+        started_path,
+        repo=repo,
+        require_destination_exact=require_destination_exact,
+    )
+    invocation_path = attempt / "extract_invocation.json"
+    invocation = load_receipt(invocation_path, schema=READOUT_RECOVERY2_INVOCATION_SCHEMA, state="AUTHORIZED")
+    require_equal(invocation.get("job_key"), key, "recovery2 invocation job")
+    require_equal(
+        invocation.get("recovery_started"),
+        {"path": repo_relative(started_path, repo=repo), "sha256": sha256_file(started_path)},
+        "recovery2 invocation STARTED binding",
+    )
+    require_equal(
+        invocation.get("cache_seed_manifest"),
+        {"path": repo_relative(seed_path, repo=repo), "sha256": sha256_file(seed_path)},
+        "recovery2 invocation cache seed binding",
+    )
+    environment = writable_readout_environment(config, repo=repo, create=False, require_ready=True)
+    require_equal(invocation.get("environment"), environment, "recovery2 invocation environment")
+    require_equal(invocation.get("jit_build_environment"), jit_build_environment(config), "recovery2 invocation JIT environment")
+    _validate_recovery2_invocation_difference(
+        load_json(job / "extract_invocation.json"),
+        invocation,
+        retry_output=str(invocation.get("output")),
+    )
+    return attempt, started, invocation_path, invocation, seed_path, seed
+
+
+def recovery2_extract_argv(
+    config: Mapping[str, Any], building_id: str, arm: str, run: str, *, repo: Path = REPO
+) -> list[str]:
+    _, _, _, invocation, _, _ = _load_active_extract_recovery2(
+        config, building_id, arm, run, repo=repo
+    )
+    argv = invocation.get("argv")
+    if not isinstance(argv, list) or not all(isinstance(value, str) and value for value in argv):
+        raise ReadoutError("recovery2 argv is invalid")
+    return list(argv)
+
+
+def recovery2_extract_environment(
+    config: Mapping[str, Any], building_id: str, arm: str, run: str, *, repo: Path = REPO
+) -> list[str]:
+    _, _, _, invocation, _, _ = _load_active_extract_recovery2(
+        config, building_id, arm, run, repo=repo
+    )
+    values = dict(invocation["environment"]["container_values"])
+    values.update(invocation["jit_build_environment"])
+    require_equal(values.get("MAX_JOBS"), "1", "recovery2 launch MAX_JOBS")
+    return [f"{key}={values[key]}" for key in sorted(values)]
+
+
+def record_extract_infra_recovery2_failure(
+    config: Mapping[str, Any],
+    building_id: str,
+    arm: str,
+    run: str,
+    *,
+    message: str,
+    detail: str = "",
+    repo: Path = REPO,
+) -> dict[str, Any]:
+    job = job_dir(config, building_id, arm, run, repo=repo)
+    if (job / "extract_receipt.json").exists() or (job / "extract_receipt.json").is_symlink():
+        try:
+            adopted = _validate_adopted_extract_recovery2(job, repo=repo)
+        except ReadoutError:
+            adopted = False
+        if adopted:
+            raise ReadoutError("recovery2 was already successfully adopted")
+    return _record_recovery2_failure_unchecked(
+        config,
+        building_id,
+        arm,
+        run,
+        message=message,
+        detail=detail,
+        repo=repo,
+    )
+
+
+def _validate_recovery2_completion_chain(
+    *,
+    attempt: Path,
+    started: Mapping[str, Any],
+    invocation_path: Path,
+    invocation: Mapping[str, Any],
+    seed_path: Path,
+    attempt_receipt_path: Path,
+    attempt_receipt: Mapping[str, Any],
+    completed_path: Path,
+    completed: Mapping[str, Any],
+    pointcloud: Mapping[str, Any],
+    repo: Path = REPO,
+) -> None:
+    key = str(started["job_key"])
+    recovery_key = f"{key}/{READOUT_RECOVERY2_ATTEMPT_DIRECTORY}"
+    refs = {
+        "recovery_started": {"path": repo_relative(attempt / "recovery_started.json", repo=repo), "sha256": sha256_file(attempt / "recovery_started.json")},
+        "recovery_invocation": {"path": repo_relative(invocation_path, repo=repo), "sha256": sha256_file(invocation_path)},
+        "cache_seed_manifest": {"path": repo_relative(seed_path, repo=repo), "sha256": sha256_file(seed_path)},
+        "extract_receipt": {"path": repo_relative(attempt_receipt_path, repo=repo), "sha256": sha256_file(attempt_receipt_path)},
+    }
+    require_equal(attempt_receipt.get("job_key"), key, "recovery2 extract receipt job")
+    require_equal(attempt_receipt.get("recovery_key"), recovery_key, "recovery2 extract receipt key")
+    require_equal(attempt_receipt.get("invocation"), refs["recovery_invocation"], "recovery2 extract receipt invocation")
+    require_equal(attempt_receipt.get("cache_seed_manifest"), refs["cache_seed_manifest"], "recovery2 extract receipt cache seed")
+    require_equal(attempt_receipt.get("pointcloud"), dict(pointcloud), "recovery2 extract receipt point cloud")
+    require_equal(attempt_receipt.get("counter_increment"), 0, "recovery2 extract receipt counter")
+    require_equal(completed.get("job_key"), key, "recovery2 completion job")
+    require_equal(completed.get("recovery_key"), recovery_key, "recovery2 completion key")
+    require_equal(completed.get("return_code"), 0, "recovery2 completion return code")
+    for label in ("recovery_started", "recovery_invocation", "cache_seed_manifest", "extract_receipt"):
+        require_equal(completed.get(label), refs[label], f"recovery2 completion {label}")
+    require_equal(completed.get("pointcloud"), dict(pointcloud), "recovery2 completion point cloud")
+    require_equal(
+        completed.get("post_execution_common_cache_inventory"),
+        attempt_receipt.get("post_execution_common_cache_inventory"),
+        "recovery2 completion post-execution cache inventory",
+    )
+    require_equal(completed.get("counter_increment"), 0, "recovery2 completion counter")
+    require_regular(completed_path, "recovery2 completion receipt")
+
+
+def accept_extract_infra_recovery2(
+    config: Mapping[str, Any],
+    building_id: str,
+    arm: str,
+    run: str,
+    *,
+    wall_seconds: float,
+    repo: Path = REPO,
+) -> dict[str, Any]:
+    job = job_dir(config, building_id, arm, run, repo=repo)
+    root_receipt = job / "extract_receipt.json"
+    if root_receipt.exists() or root_receipt.is_symlink():
+        root = load_receipt(root_receipt, schema="jointbuildgs.fusion_w1.extract_receipt.v1", state="COMPLETE")
+        if not _validate_adopted_extract_recovery2(job, repo=repo):
+            raise ReadoutError("existing root extract receipt is not an adopted recovery2")
+        return root
+    attempt, started, invocation_path, invocation, seed_path, seed = _load_active_extract_recovery2(
+        config,
+        building_id,
+        arm,
+        run,
+        repo=repo,
+        allow_completed=True,
+        require_destination_exact=False,
+    )
+    checkpoint = repo_path(str(invocation["training_checkpoint"]["path"]), repo=repo)
+    verify_hash(checkpoint, str(invocation["training_checkpoint"]["sha256"]), "checkpoint before accepting recovery2")
+    output = _resolve_retry_output_before_receipt(invocation, attempt, repo=repo)
+    stats = inspect_npz(output, config, repo=repo)
+    _verify_recovery2_pinned_artifacts(job, started["policy"], repo=repo)
+    for relative in (
+        "classification_invocation.json",
+        "classification_receipt.json",
+        "roofer_invocation.json",
+        "roofer_receipt.json",
+        "score_receipt.json",
+        "complete.json",
+    ):
+        path = job / relative
+        if path.exists() or path.is_symlink():
+            raise ReadoutError(f"recovery2 found downstream output before adoption: {path}")
+    post_cache = _cache_inventory(
+        repo_path(invocation["environment"]["host_paths"]["TORCH_EXTENSIONS_DIR"], repo=repo) / "gsplat_cuda",
+        repo=repo,
+    )
+    attempt_receipt_path = attempt / "extract_receipt.json"
+    attempt_receipt = {
+        "schema": "jointbuildgs.fusion_w1.extract_infra_retry2_receipt.v1",
+        "state": "COMPLETE",
+        "created_at": now_iso(),
+        "job_key": job_key(building_id, arm, run),
+        "recovery_key": started["recovery_key"],
+        "invocation": {"path": repo_relative(invocation_path, repo=repo), "sha256": sha256_file(invocation_path)},
+        "cache_seed_manifest": {"path": repo_relative(seed_path, repo=repo), "sha256": sha256_file(seed_path)},
+        "pointcloud": stats,
+        "post_execution_common_cache_inventory": post_cache,
+        "wall_seconds": float(wall_seconds),
+        "counter_increment": 0,
+    }
+    exclusive_json(attempt_receipt_path, attempt_receipt)
+    completed_path = attempt / "recovery_completed.json"
+    completed = {
+        "schema": READOUT_RECOVERY2_COMPLETED_SCHEMA,
+        "state": "COMPLETE",
+        "completed_at": now_iso(),
+        "run_id": config["run_id"],
+        "job_key": job_key(building_id, arm, run),
+        "recovery_key": started["recovery_key"],
+        "return_code": 0,
+        "recovery_started": {"path": repo_relative(attempt / "recovery_started.json", repo=repo), "sha256": sha256_file(attempt / "recovery_started.json")},
+        "recovery_invocation": {"path": repo_relative(invocation_path, repo=repo), "sha256": sha256_file(invocation_path)},
+        "cache_seed_manifest": {"path": repo_relative(seed_path, repo=repo), "sha256": sha256_file(seed_path)},
+        "extract_receipt": {"path": repo_relative(attempt_receipt_path, repo=repo), "sha256": sha256_file(attempt_receipt_path)},
+        "pointcloud": stats,
+        "post_execution_common_cache_inventory": post_cache,
+        "counter_increment": 0,
+    }
+    exclusive_json(completed_path, completed)
+    _validate_recovery2_completion_chain(
+        attempt=attempt,
+        started=started,
+        invocation_path=invocation_path,
+        invocation=invocation,
+        seed_path=seed_path,
+        attempt_receipt_path=attempt_receipt_path,
+        attempt_receipt=attempt_receipt,
+        completed_path=completed_path,
+        completed=completed,
+        pointcloud=stats,
+        repo=repo,
+    )
+    root = {
+        "schema": "jointbuildgs.fusion_w1.extract_receipt.v1",
+        "state": "COMPLETE",
+        "created_at": completed["completed_at"],
+        "job_key": job_key(building_id, arm, run),
+        "building_id": building_id,
+        "arm": arm,
+        "replicate": run,
+        "invocation": {"path": repo_relative(invocation_path, repo=repo), "sha256": sha256_file(invocation_path)},
+        "pointcloud": stats,
+        "wall_seconds": float(wall_seconds),
+        "resource_contract": config["resource_lock"],
+        "partial_output_accepted": False,
+        "infrastructure_recovery2": {
+            "policy": started["policy"],
+            "original_artifacts": started["original_artifacts"],
+            "prior_retry_artifacts": started["prior_retry_artifacts"],
+            "recovery_started": completed["recovery_started"],
+            "cache_seed_manifest": completed["cache_seed_manifest"],
+            "recovery_invocation": completed["recovery_invocation"],
+            "recovery_completed": {"path": repo_relative(completed_path, repo=repo), "sha256": sha256_file(completed_path)},
+            "counter_increment": 0,
+            "allowed_argv_differences": ["value_after_--out"],
+        },
+    }
+    exclusive_json(root_receipt, root)
+    if not _validate_adopted_extract_recovery2(job, repo=repo):
+        raise ReadoutError("published recovery2 root receipt failed validation")
+    return root
+
+
+def _validate_adopted_extract_recovery2(job: Path, *, repo: Path = REPO) -> bool:
+    root_path = job / "extract_receipt.json"
+    if not root_path.is_file() or root_path.is_symlink():
+        return False
+    root = load_receipt(root_path, schema="jointbuildgs.fusion_w1.extract_receipt.v1", state="COMPLETE")
+    chain = root.get("infrastructure_recovery2")
+    if not isinstance(chain, Mapping):
+        return False
+    policy_binding = chain.get("policy")
+    if not isinstance(policy_binding, Mapping):
+        raise ReadoutError("adopted recovery2 policy binding is missing")
+    policy_path = _canonical_recovery2_policy_path(
+        Path(str(policy_binding.get("path"))), repo=repo
+    )
+    verify_hash(policy_path, str(policy_binding.get("sha256")), "adopted recovery2 policy")
+    policy = load_json(policy_path)
+    require_equal(policy.get("schema"), READOUT_RECOVERY2_POLICY_SCHEMA, "adopted recovery2 policy schema")
+    expected_policy_binding = {
+        **policy,
+        "path": repo_relative(policy_path, repo=repo),
+        "sha256": sha256_file(policy_path),
+        "allowed_recovery_commit_paths": list(
+            policy["allowed_recovery_commit_paths"]
+        ),
+        "writable_environment": dict(policy["writable_environment"]),
+        "jit_build_environment": dict(JIT_BUILD_ENVIRONMENT),
+    }
+    require_equal(
+        dict(policy_binding),
+        expected_policy_binding,
+        "adopted recovery2 canonical policy binding",
+    )
+    attempt = job / READOUT_RECOVERY2_ATTEMPT_DIRECTORY
+    if not attempt.is_dir() or attempt.is_symlink():
+        raise ReadoutError("adopted recovery2 attempt is invalid")
+    paths = {
+        "recovery_started": attempt / "recovery_started.json",
+        "cache_seed_manifest": attempt / "cache_seed_manifest.json",
+        "recovery_invocation": attempt / "extract_invocation.json",
+        "recovery_completed": attempt / "recovery_completed.json",
+    }
+    for label, path in paths.items():
+        binding = chain.get(label)
+        if not isinstance(binding, Mapping):
+            raise ReadoutError(f"adopted recovery2 {label} binding is missing")
+        require_equal(repo_path(str(binding.get("path")), repo=repo), path.resolve(), f"adopted recovery2 {label} path")
+        verify_hash(path, str(binding.get("sha256")), f"adopted recovery2 {label}")
+    started = load_receipt(paths["recovery_started"], schema=READOUT_RECOVERY2_STARTED_SCHEMA, state="STARTED")
+    invocation = load_receipt(paths["recovery_invocation"], schema=READOUT_RECOVERY2_INVOCATION_SCHEMA, state="AUTHORIZED")
+    completed = load_receipt(paths["recovery_completed"], schema=READOUT_RECOVERY2_COMPLETED_SCHEMA, state="COMPLETE")
+    seed = load_receipt(paths["cache_seed_manifest"], schema=READOUT_RECOVERY2_SEED_SCHEMA, state="COMPLETE")
+    require_equal(started.get("policy"), dict(policy_binding), "adopted recovery2 STARTED policy")
+    key = str(policy["job_key"])
+    recovery_key = f"{key}/{READOUT_RECOVERY2_ATTEMPT_DIRECTORY}"
+    require_equal(started.get("job_key"), key, "adopted recovery2 STARTED job")
+    require_equal(started.get("recovery_key"), recovery_key, "adopted recovery2 STARTED key")
+    require_equal(started.get("zero_output_file_count"), 0, "adopted recovery2 STARTED output count")
+    require_equal(started.get("counter_increment"), 0, "adopted recovery2 STARTED counter")
+    require_equal(started.get("jit_build_environment"), JIT_BUILD_ENVIRONMENT, "adopted recovery2 STARTED MAX_JOBS")
+    refs = _verify_recovery2_pinned_artifacts(job, policy, repo=repo)
+    require_equal(chain.get("original_artifacts"), refs["original"], "adopted recovery2 original artifacts")
+    require_equal(chain.get("prior_retry_artifacts"), refs["prior retry"], "adopted recovery2 prior artifacts")
+    require_equal(started.get("original_artifacts"), refs["original"], "adopted recovery2 STARTED original artifacts")
+    require_equal(started.get("prior_retry_artifacts"), refs["prior retry"], "adopted recovery2 STARTED prior artifacts")
+    extract_binding = completed.get("extract_receipt")
+    if not isinstance(extract_binding, Mapping):
+        raise ReadoutError("adopted recovery2 extract receipt binding is missing")
+    attempt_receipt_path = repo_path(str(extract_binding.get("path")), repo=repo)
+    attempt_receipt = load_receipt(attempt_receipt_path, schema="jointbuildgs.fusion_w1.extract_infra_retry2_receipt.v1", state="COMPLETE")
+    pointcloud = completed.get("pointcloud")
+    if not isinstance(pointcloud, Mapping):
+        raise ReadoutError("adopted recovery2 point cloud is missing")
+    _validate_recovery2_completion_chain(
+        attempt=attempt,
+        started=started,
+        invocation_path=paths["recovery_invocation"],
+        invocation=invocation,
+        seed_path=paths["cache_seed_manifest"],
+        attempt_receipt_path=attempt_receipt_path,
+        attempt_receipt=attempt_receipt,
+        completed_path=paths["recovery_completed"],
+        completed=completed,
+        pointcloud=pointcloud,
+        repo=repo,
+    )
+    output = _resolve_retry_output_before_receipt(invocation, attempt, repo=repo)
+    verify_hash(output, str(pointcloud.get("sha256")), "adopted recovery2 point cloud")
+    require_equal(seed.get("job_key"), key, "adopted recovery2 cache manifest job")
+    require_equal(seed.get("recovery_key"), recovery_key, "adopted recovery2 cache manifest key")
+    require_equal(
+        seed.get("policy"),
+        {"path": policy_binding["path"], "sha256": policy_binding["sha256"]},
+        "adopted recovery2 cache manifest policy",
+    )
+    require_equal(seed.get("copy_contract"), policy["cache_seed_contract"], "adopted recovery2 cache contract")
+    _require_cache_inventory(
+        seed.get("source_cache", {}),
+        policy["successful_training_cache_source"],
+        "adopted recovery2 source cache manifest",
+    )
+    _require_cache_inventory(
+        seed.get("pre_seed_common_cache", {}),
+        policy["required_common_cache_before_seed"],
+        "adopted recovery2 prior common cache manifest",
+    )
+    current_prior = _cache_inventory(
+        repo_path(policy["required_common_cache_before_seed"]["root"], repo=repo),
+        repo=repo,
+    )
+    _require_cache_inventory(
+        current_prior,
+        policy["required_common_cache_before_seed"],
+        "adopted recovery2 current prior common cache",
+    )
+    destination = repo_path(policy["required_seed_destination_absent"]["root"], repo=repo)
+    seeded = seed.get("seeded_common_cache")
+    if not isinstance(seeded, Mapping):
+        raise ReadoutError("adopted recovery2 seeded cache manifest is missing")
+    require_equal(seeded.get("root"), repo_relative(destination, repo=repo), "adopted recovery2 seeded cache path")
+    verify_hash(
+        destination / "gsplat_cuda.so",
+        str(policy["successful_training_cache_source"]["required_key_files"]["gsplat_cuda.so"]),
+        "adopted recovery2 seeded gsplat extension",
+    )
+    require_equal(root.get("pointcloud"), dict(pointcloud), "adopted recovery2 root point cloud")
+    require_equal(root.get("invocation"), chain.get("recovery_invocation"), "adopted recovery2 root invocation")
+    require_equal(root.get("job_key"), started.get("job_key"), "adopted recovery2 root job")
+    require_equal(root.get("building_id"), invocation.get("building_id"), "adopted recovery2 root building")
+    require_equal(root.get("arm"), invocation.get("arm"), "adopted recovery2 root arm")
+    require_equal(root.get("replicate"), invocation.get("replicate"), "adopted recovery2 root replicate")
+    require_equal(root.get("partial_output_accepted"), False, "adopted recovery2 partial output")
+    require_equal(chain.get("counter_increment"), 0, "adopted recovery2 counter")
+    require_equal(chain.get("allowed_argv_differences"), ["value_after_--out"], "adopted recovery2 argv difference")
+    require_equal(seed.get("recovery_started"), chain.get("recovery_started"), "adopted recovery2 seed STARTED")
+    _validate_recovery2_invocation_difference(load_json(job / "extract_invocation.json"), invocation, retry_output=repo_relative(output, repo=repo))
+    return True
+
+
 def load_receipt(
     path: Path,
     *,
@@ -2041,7 +3329,10 @@ def record_failure(
     }
     failed = job / "failed.json"
     if failed.exists() or failed.is_symlink():
-        if not _validate_adopted_extract_retry(job, repo=repo):
+        if not (
+            _validate_adopted_extract_retry(job, repo=repo)
+            or _validate_adopted_extract_recovery2(job, repo=repo)
+        ):
             return load_json(failed)
         failed = job / "failed_after_infrastructure_retry.json"
         payload["schema"] = (
@@ -2499,6 +3790,7 @@ def authorize_extract(
     if invocation_path.exists() or invocation_path.is_symlink():
         raise ReadoutError("readout invocation already exists; retry forbidden")
     environment = writable_readout_environment(config, repo=repo, create=True)
+    jit_environment = jit_build_environment(config)
     invocation = {
         "schema": "jointbuildgs.fusion_w1.extract_invocation.v1",
         "state": "AUTHORIZED",
@@ -2525,6 +3817,7 @@ def authorize_extract(
         "reference_inputs_present": False,
         "resource_contract": config["resource_lock"],
         "environment": environment,
+        "jit_build_environment": jit_environment,
         "retry_allowed": False,
     }
     exclusive_json(invocation_path, invocation)
@@ -2604,7 +3897,14 @@ def invocation_environment(
     )
     require_equal(invocation.get("environment"), environment, f"{filename} environment")
     values = environment["container_values"]
-    return [f"{key}={values[key]}" for key in sorted(WRITABLE_ENVIRONMENT_KEYS)]
+    jit_environment = jit_build_environment(config)
+    require_equal(
+        invocation.get("jit_build_environment"),
+        jit_environment,
+        f"{filename} JIT build environment",
+    )
+    combined = {**values, **jit_environment}
+    return [f"{key}={combined[key]}" for key in sorted(combined)]
 
 
 def verify_started_invocation_binding(
@@ -4255,6 +5555,11 @@ def parser() -> argparse.ArgumentParser:
     result.add_argument(
         "--retry-policy", type=Path, default=DEFAULT_READOUT_RETRY_POLICY
     )
+    result.add_argument(
+        "--recovery2-policy",
+        type=Path,
+        default=DEFAULT_READOUT_RECOVERY2_POLICY,
+    )
     sub = result.add_subparsers(dest="command", required=True)
     check_parser = sub.add_parser("check")
     check_parser.add_argument("--building-id")
@@ -4271,6 +5576,11 @@ def parser() -> argparse.ArgumentParser:
         "retry-extract-environment",
         "accept-extract-infra-retry",
         "record-extract-infra-retry-failure",
+        "prepare-extract-infra-recovery2",
+        "recovery2-extract-argv",
+        "recovery2-extract-environment",
+        "accept-extract-infra-recovery2",
+        "record-extract-infra-recovery2-failure",
         "authorize-classification",
         "classification-argv",
         "accept-classification",
@@ -4287,7 +5597,11 @@ def parser() -> argparse.ArgumentParser:
         command.add_argument("--run", choices=RUNS, required=True)
         if name.startswith("accept-"):
             command.add_argument("--wall-seconds", type=float, required=True)
-        if name in {"record-failure", "record-extract-infra-retry-failure"}:
+        if name in {
+            "record-failure",
+            "record-extract-infra-retry-failure",
+            "record-extract-infra-recovery2-failure",
+        }:
             if name == "record-failure":
                 command.add_argument("--stage", required=True)
             command.add_argument("--message", required=True)
@@ -4379,6 +5693,33 @@ def main(argv: Sequence[str] | None = None) -> int:
                     detail=args.detail,
                 )
             )
+        elif command == "prepare-extract-infra-recovery2":
+            print_json(
+                prepare_extract_infra_recovery2(
+                    config, args.recovery2_policy, *identity
+                )
+            )
+        elif command == "recovery2-extract-argv":
+            for value in recovery2_extract_argv(config, *identity):
+                print(value)
+        elif command == "recovery2-extract-environment":
+            for value in recovery2_extract_environment(config, *identity):
+                print(value)
+        elif command == "accept-extract-infra-recovery2":
+            print_json(
+                accept_extract_infra_recovery2(
+                    config, *identity, wall_seconds=args.wall_seconds
+                )
+            )
+        elif command == "record-extract-infra-recovery2-failure":
+            print_json(
+                record_extract_infra_recovery2_failure(
+                    config,
+                    *identity,
+                    message=args.message,
+                    detail=args.detail,
+                )
+            )
         elif command == "authorize-classification":
             print_json(authorize_classification(config, *identity))
         elif command == "classification-argv":
@@ -4464,6 +5805,11 @@ def main(argv: Sequence[str] | None = None) -> int:
             "retry-extract-environment",
             "accept-extract-infra-retry",
             "record-extract-infra-retry-failure",
+            "prepare-extract-infra-recovery2",
+            "recovery2-extract-argv",
+            "recovery2-extract-environment",
+            "accept-extract-infra-recovery2",
+            "record-extract-infra-recovery2-failure",
             "classification-argv",
             "roofer-argv",
             "failure-stage",
