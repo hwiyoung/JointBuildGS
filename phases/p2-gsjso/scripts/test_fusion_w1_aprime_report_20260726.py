@@ -104,6 +104,10 @@ def queue_fixture_config(config: dict, root: Path) -> dict:
         "queue_event_sequence": "event_sequence.json",
     }.items():
         value["sources"][name] = str(queue_root / relative)
+    value["sources"]["queue_recovery_root"] = str(queue_root / "recovery")
+    value["sources"]["queue_recovery_controller"] = str(
+        queue_root / "recovery" / "controller.json"
+    )
     value["sources"]["training_root"] = str(root / "training")
     value["sources"]["readout_root"] = str(root / "readout")
     return value
