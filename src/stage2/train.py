@@ -619,8 +619,12 @@ def _scheduled_weight(
     """Return the effective scalar for depth/normal priors.
 
     Existing configs use ``constant`` or ``ramp`` and are unchanged. ``exp_decay``
-    mirrors CityGSV2's multiplicative decay, with an optional absolute final
-    weight for experiments that state the endpoint directly.
+    mirrors CityGSV2's multiplicative decay after a zero-weight warm-up, with an
+    optional absolute final weight for experiments that state the endpoint
+    directly. ``constant_then_exp_decay`` instead treats ``warmup`` as a phase
+    transition: the base weight stays active before it, then decays from the
+    base value at ``warmup`` to the endpoint at
+    ``warmup + ramp_steps - 1``.
     """
     # An ablation that removes a term must remain exactly zero.  The logarithmic
     # epsilon used by exponential interpolation must never resurrect a
@@ -631,6 +635,18 @@ def _scheduled_weight(
         return 0.0
     if schedule in ("constant", "ramp"):
         return base_weight * _ramp_weight_scale(it, warmup, schedule, ramp_steps)
+    if schedule == "constant_then_exp_decay":
+        if it < warmup:
+            return float(base_weight)
+        if final_weight is None:
+            factor = 0.01 if final_factor is None else float(final_factor)
+            final_weight = float(base_weight) * factor
+        if ramp_steps <= 1:
+            return float(final_weight)
+        start = max(float(base_weight), 1e-12)
+        end = max(float(final_weight), 1e-12)
+        t = min(1.0, float(it - warmup) / float(ramp_steps - 1))
+        return float(math.exp(math.log(start) * (1.0 - t) + math.log(end) * t))
     if it < warmup:
         return 0.0
     if schedule in ("exp_decay", "exponential_decay"):
@@ -644,8 +660,136 @@ def _scheduled_weight(
         t = min(1.0, float(it - warmup + 1) / float(ramp_steps))
         return float(math.exp(math.log(start) * (1.0 - t) + math.log(end) * t))
     raise ValueError(
-        f"Unsupported schedule={schedule!r}; expected 'constant', 'ramp', or 'exp_decay'"
+        f"Unsupported schedule={schedule!r}; expected 'constant', 'ramp', "
+        "'exp_decay', or 'constant_then_exp_decay'"
     )
+
+
+def _aligned_depth_prior_l1(
+    depth_pred: torch.Tensor,
+    depth_prior: torch.Tensor,
+    mask: torch.Tensor,
+    *,
+    detach_scale: bool = True,
+) -> tuple[torch.Tensor, torch.Tensor, int]:
+    """Return an exactly mask-normalized depth-prior loss after scale alignment.
+
+    The scalar ``alpha`` is the no-intercept least-squares fit that maps the
+    rendered expected depth to the metric prior inside ``mask``::
+
+        alpha = sum(D_render * D_prior) / sum(D_render ** 2)
+
+    The reported loss is then ``mean(abs(alpha * D_render - D_prior))`` over
+    that exact, fixed mask.  A zero rendered depth is retained as a supervised
+    miss (its residual still contributes to ``|M_j|``); only non-finite or
+    negative rendered values, and non-positive prior values, violate the input
+    contract.  By default the per-view fit is detached: it adjusts the scale
+    of the depth-prior comparison without adding a second gradient path through
+    the scale estimator.
+
+    This helper is opt-in at the trainer level, so historical configs retain
+    their byte-for-byte ``L.l_depth`` execution path.
+    """
+
+    if not (
+        depth_pred.ndim == depth_prior.ndim == mask.ndim == 2
+        and depth_pred.shape == depth_prior.shape == mask.shape
+    ):
+        raise ValueError(
+            "aligned depth prior expects same-shape HxW prediction, prior, and mask"
+        )
+    if mask.dtype != torch.bool:
+        raise ValueError("aligned depth-prior mask must be bool")
+    valid = mask
+    valid_count = int(mask.sum().detach().cpu().item())
+    if valid_count == 0:
+        raise ValueError("aligned depth prior requires at least one valid masked pixel")
+
+    rendered = depth_pred[valid]
+    prior = depth_prior[valid]
+    if not bool(
+        (
+            torch.isfinite(rendered)
+            & torch.isfinite(prior)
+            & (rendered >= 0)
+            & (prior > 0)
+        ).all().item()
+    ):
+        raise ValueError(
+            "aligned depth prior requires finite nonnegative rendered depths and "
+            "finite positive prior depths at every masked pixel"
+        )
+    denominator = rendered.square().sum()
+    # Some exact-M_j pixels may have no rendered support yet.  The denominator
+    # must nevertheless have support somewhere in the fixed mask; otherwise a
+    # per-view scale is not identifiable and the run fails closed.
+    if not bool(torch.isfinite(denominator).item()) or not bool(
+        (denominator > torch.finfo(rendered.dtype).tiny).item()
+    ):
+        raise ValueError("aligned depth-prior scale denominator is degenerate")
+    alpha = (rendered * prior).sum() / denominator
+    if not bool(torch.isfinite(alpha).item()) or not bool((alpha > 0).item()):
+        raise ValueError("aligned depth-prior scale must be finite and positive")
+    if detach_scale:
+        alpha = alpha.detach()
+    loss = (alpha * rendered - prior).abs().sum() / float(valid_count)
+    return loss, alpha, valid_count
+
+
+def _signed_normal_prior_loss(
+    normal_pred: torch.Tensor,
+    normal_prior: torch.Tensor,
+    mask: torch.Tensor,
+) -> tuple[torch.Tensor, int]:
+    """Return the signed GS4B-style normal prior over the exact fixed mask.
+
+    Both inputs are normalized per pixel before evaluating
+    ``sum_M(1 - dot(n_render, n_prior)) / |M|``.  Unlike the historical
+    sign-invariant normal prior, an opposite-facing normal therefore has loss
+    two rather than zero.  A zero rendered normal is retained as a supervised
+    miss with dot product zero; prior normals must remain finite and nonzero.
+    Values outside ``mask`` cannot change either numerator or denominator.
+    """
+
+    if not (
+        normal_pred.ndim == normal_prior.ndim == 3
+        and normal_pred.shape == normal_prior.shape
+        and normal_pred.shape[-1] == 3
+        and mask.ndim == 2
+        and mask.shape == normal_pred.shape[:2]
+    ):
+        raise ValueError(
+            "signed normal prior expects same-shape HxWx3 normals and an HxW mask"
+        )
+    if mask.dtype != torch.bool:
+        raise ValueError("signed normal-prior mask must be bool")
+    valid_count = int(mask.sum().detach().cpu().item())
+    if valid_count == 0:
+        raise ValueError("signed normal prior requires at least one masked pixel")
+
+    rendered = normal_pred[mask]
+    prior = normal_prior[mask]
+    rendered_norm = torch.linalg.vector_norm(rendered, dim=-1)
+    prior_norm = torch.linalg.vector_norm(prior, dim=-1)
+    if not bool(
+        (
+            torch.isfinite(rendered).all(dim=-1)
+            & torch.isfinite(prior).all(dim=-1)
+            & torch.isfinite(rendered_norm)
+            & torch.isfinite(prior_norm)
+            & (prior_norm > torch.finfo(prior.dtype).tiny)
+        ).all().item()
+    ):
+        raise ValueError(
+            "signed normal prior requires finite rendered normals and finite "
+            "nonzero prior normals at every masked pixel"
+        )
+    rendered_unit = torch.nn.functional.normalize(rendered, dim=-1, eps=1.0e-6)
+    prior_unit = prior / prior_norm[:, None]
+    loss = (1.0 - (rendered_unit * prior_unit).sum(dim=-1)).sum() / float(
+        valid_count
+    )
+    return loss, valid_count
 
 
 def _resolve_init_pointcloud_rgb(
@@ -1966,11 +2110,26 @@ def main():
     depth_final_weight = cfg.get("depth_final_weight")
     depth_final_factor = cfg.get("depth_final_factor")
     depth_weight_floor = cfg.get("depth_weight_floor")
+    depth_prior_alignment = str(cfg.get("depth_prior_alignment", "none"))
+    if depth_prior_alignment == "least_squares_scale":
+        depth_prior_alignment = "alpha_lsq"
+    if depth_prior_alignment not in {"none", "alpha_lsq"}:
+        raise ValueError(
+            "depth_prior_alignment must be none|alpha_lsq|least_squares_scale"
+        )
+    depth_alignment_detach_scale = bool(
+        cfg.get("depth_alignment_detach_scale", True)
+    )
     normal_warmup = int(cfg.get("normal_warmup", 0))
     normal_schedule = cfg.get("normal_schedule", "constant")
     normal_ramp_steps = int(cfg.get("normal_ramp_steps", 0))
     normal_final_weight = cfg.get("normal_final_weight")
     normal_final_factor = cfg.get("normal_final_factor")
+    normal_prior_orientation = str(
+        cfg.get("normal_prior_orientation", "unsigned")
+    ).lower()
+    if normal_prior_orientation not in {"unsigned", "signed"}:
+        raise ValueError("normal_prior_orientation must be unsigned|signed")
     w_mono_depth = float(cfg.get("w_mono_depth", 0.0) or 0.0)
     mono_depth_warmup = int(cfg.get("mono_depth_warmup", 0))
     mono_depth_schedule = cfg.get("mono_depth_schedule", "constant")
@@ -1983,6 +2142,10 @@ def main():
         raise ValueError("mono_depth_loss must be absolute_l1|ssi")
     if mono_normal_loss not in {"global", "target_region"}:
         raise ValueError("mono_normal_loss must be global|target_region")
+    if normal_prior_orientation == "signed" and mono_normal_loss != "global":
+        raise ValueError(
+            "signed normal_prior_orientation requires mono_normal_loss=global"
+        )
     mono_target_buildings = {
         _short_building_id(value) for value in cfg.get("mono_target_buildings", [])
     }
@@ -1995,7 +2158,28 @@ def main():
         raise ValueError("target-region mono priors require mono_target_buildings")
     if target_region_priors and mono_target_min_pixels < 64:
         raise ValueError("mono_target_min_pixels must be >=64")
-    w_nc = cfg.get("w_nc", 0.05)
+    w_nc = float(cfg.get("w_nc", 0.05))
+    # Normal-consistency is the second 2DGS surface regularizer.  Keep the
+    # historical constant-from-step-zero behavior unless an experiment opts in
+    # to a delayed/ramped schedule (for example A-prime's phase-two activation).
+    nc_warmup = int(cfg.get("nc_warmup", 0))
+    nc_schedule = str(cfg.get("nc_schedule", "constant"))
+    nc_ramp_steps = int(cfg.get("nc_ramp_steps", 0))
+    nc_final_weight = cfg.get("nc_final_weight")
+    nc_final_factor = cfg.get("nc_final_factor")
+    if nc_warmup < 0 or nc_ramp_steps < 0:
+        raise ValueError("nc_warmup/nc_ramp_steps must be non-negative")
+    if nc_schedule not in {
+        "constant",
+        "ramp",
+        "exp_decay",
+        "exponential_decay",
+        "constant_then_exp_decay",
+    }:
+        raise ValueError(
+            "nc_schedule must be constant|ramp|exp_decay|exponential_decay|"
+            "constant_then_exp_decay"
+        )
     w_distort = float(cfg.get("w_distort", 100.0))   # 2DGS distortion reg
     # Optional stage-2 activation for surface regularization.  The defaults
     # preserve the historical constant weight from iteration zero.
@@ -2011,9 +2195,11 @@ def main():
         "ramp",
         "exp_decay",
         "exponential_decay",
+        "constant_then_exp_decay",
     }:
         raise ValueError(
-            "distort_schedule must be constant|ramp|exp_decay|exponential_decay"
+            "distort_schedule must be constant|ramp|exp_decay|exponential_decay|"
+            "constant_then_exp_decay"
         )
     distort_normalization = cfg.get("distort_normalization", "none")
     distort_norm_denominator = 1.0
@@ -2401,6 +2587,22 @@ def main():
             f"denom={distort_norm_denominator:.6g} "
             f"(scene_extent_bbox={scene_extent_bbox:.6g}m; scene_scale={scene_scale:.6g}m)"
         )
+    if w_nc > 0:
+        print(
+            f"[normal-consistency] w_nc={w_nc:g} "
+            f"schedule={nc_schedule}@{nc_warmup}+{nc_ramp_steps}"
+        )
+    if depth_prior_alignment != "none":
+        print(
+            f"[depth-alignment] mode={depth_prior_alignment} "
+            f"detach_scale={depth_alignment_detach_scale} "
+            "normalization=1/valid_mask_pixel_count"
+        )
+    if normal_prior_orientation == "signed":
+        print(
+            "[normal-prior] orientation=signed "
+            "formula=mean_M(1-dot(normalize(render),normalize(prior)))"
+        )
 
     effective_config = {
         "scene_scale_strategy_m": scene_scale,
@@ -2414,6 +2616,12 @@ def main():
         "distort_ramp_steps": distort_ramp_steps,
         "distort_final_weight": distort_final_weight,
         "distort_final_factor": distort_final_factor,
+        "w_nc": w_nc,
+        "nc_schedule": nc_schedule,
+        "nc_warmup": nc_warmup,
+        "nc_ramp_steps": nc_ramp_steps,
+        "nc_final_weight": nc_final_weight,
+        "nc_final_factor": nc_final_factor,
         "depth_schedule": depth_schedule,
         "depth_warmup": depth_warmup,
         "depth_ramp_steps": depth_ramp_steps,
@@ -2421,6 +2629,22 @@ def main():
         "depth_final_weight": depth_final_weight,
         "depth_final_factor": depth_final_factor,
         "depth_weight_floor": depth_weight_floor,
+        "depth_prior_alignment": depth_prior_alignment,
+        "depth_alignment_detach_scale": depth_alignment_detach_scale,
+        "depth_prior_loss_normalization": "sum_masked_absolute_error/valid_mask_pixel_count",
+        "depth_alignment_formula": (
+            "alpha=sum(D_render*D_prior)/sum(D_render^2); "
+            "L_depth=mean_M(|alpha*D_render-D_prior|)"
+            if depth_prior_alignment == "alpha_lsq"
+            else "legacy_L.l_depth"
+        ),
+        "normal_prior_orientation": normal_prior_orientation,
+        "normal_prior_loss_normalization": "sum_masked_one_minus_dot/mask_pixel_count",
+        "normal_prior_formula": (
+            "L_normal=sum_M(1-dot(normalize(n_render),normalize(n_prior)))/|M|"
+            if normal_prior_orientation == "signed"
+            else "legacy_L.l_normal=mean_M(1-abs(dot(normalize(n_render),normalize(n_prior))))"
+        ),
         "normal_dir": primary_normal_dir,
         "photo_mask_dir": cfg.get("photo_mask_dir"),
         "photo_mask_dir_audit": ds.photo_mask_dir_audit,
@@ -2966,7 +3190,21 @@ def main():
         if "depth" in batch:
             d_gt = batch["depth"].to(device)
             d_m = batch["depth_mask"].to(device)
-            loss_depth = L.l_depth(depth_pred, d_gt, d_m)
+            if depth_prior_alignment == "alpha_lsq":
+                (
+                    loss_depth,
+                    depth_alignment_alpha,
+                    depth_prior_valid_pixel_count,
+                ) = _aligned_depth_prior_l1(
+                    depth_pred,
+                    d_gt,
+                    d_m,
+                    detach_scale=depth_alignment_detach_scale,
+                )
+            else:
+                loss_depth = L.l_depth(depth_pred, d_gt, d_m)
+                depth_alignment_alpha = torch.tensor(1.0, device=device)
+                depth_prior_valid_pixel_count = int(d_m.sum().detach().cpu().item())
             w_depth_eff = _scheduled_weight(
                 w_depth,
                 it,
@@ -2982,6 +3220,8 @@ def main():
         else:
             loss_depth = torch.tensor(0.0, device=device)
             w_depth_eff = 0.0
+            depth_alignment_alpha = torch.tensor(float("nan"), device=device)
+            depth_prior_valid_pixel_count = 0
 
         if "mono_depth" in batch:
             md_gt = batch["mono_depth"].to(device)
@@ -3041,13 +3281,23 @@ def main():
             "eligible_patch_count": 0,
             "gated_pixel_count": 0,
         }
+        normal_prior_valid_pixel_count = 0
         if "normal" in batch:
             n_gt = batch["normal"].to(device)
             n_m = batch["normal_mask"].to(device)
             if pilot_arm is not None:
                 # Locked first-wave primary: MVS remains active on every valid
                 # MVS pixel and is never narrowed to the mono gate.
-                loss_n_mvs = L.l_normal(n_render, n_gt, w2c, n_m)
+                if normal_prior_orientation == "signed":
+                    (
+                        loss_n_mvs,
+                        normal_prior_valid_pixel_count,
+                    ) = _signed_normal_prior_loss(n_render, n_gt, n_m)
+                else:
+                    loss_n_mvs = L.l_normal(n_render, n_gt, w2c, n_m)
+                    normal_prior_valid_pixel_count = int(
+                        n_m.sum().detach().cpu().item()
+                    )
                 if "mono_normal" not in batch or "mono_normal_mask" not in batch:
                     raise RuntimeError(
                         f"pilot Omnidata normal missing for active view {batch['name']!r}"
@@ -3105,7 +3355,16 @@ def main():
                         "mode": "target_region_weight_zero",
                     }
             else:
-                loss_n = L.l_normal(n_render, n_gt, w2c, n_m)
+                if normal_prior_orientation == "signed":
+                    (
+                        loss_n,
+                        normal_prior_valid_pixel_count,
+                    ) = _signed_normal_prior_loss(n_render, n_gt, n_m)
+                else:
+                    loss_n = L.l_normal(n_render, n_gt, w2c, n_m)
+                    normal_prior_valid_pixel_count = int(
+                        n_m.sum().detach().cpu().item()
+                    )
                 mono_normal_stats = {
                     "eligible_region_count": 0,
                     "mode": "legacy_global",
@@ -3137,7 +3396,16 @@ def main():
             mono_normal_stats = {"eligible_region_count": 0, "mode": "map_absent"}
 
         loss_nc = L.l_nc(n_render, n_surf, alpha=alpha.detach())
-        loss_total = loss_total + w_nc * loss_nc
+        w_nc_eff = _scheduled_weight(
+            w_nc,
+            it,
+            nc_warmup,
+            nc_schedule,
+            nc_ramp_steps,
+            final_weight=nc_final_weight,
+            final_factor=nc_final_factor,
+        )
+        loss_total = loss_total + w_nc_eff * loss_nc
 
         loss_dist_raw = distort.mean()
         loss_dist = loss_dist_raw / distort_norm_denominator
@@ -3492,12 +3760,19 @@ def main():
                 )
             else:
                 loss_depth_roof = depth_pred.sum() * 0.0
-            loss_n_mvs_roof = L.l_normal(
-                n_render,
-                n_gt,
-                w2c,
-                n_m & roof_audit_mask,
-            )
+            if normal_prior_orientation == "signed":
+                loss_n_mvs_roof, _ = _signed_normal_prior_loss(
+                    n_render,
+                    n_gt,
+                    n_m & roof_audit_mask,
+                )
+            else:
+                loss_n_mvs_roof = L.l_normal(
+                    n_render,
+                    n_gt,
+                    w2c,
+                    n_m & roof_audit_mask,
+                )
             assert mono_gt is not None and mono_gate is not None
             loss_n_aux_roof = l_auxiliary_mono_normal(
                 n_render,
@@ -3597,7 +3872,7 @@ def main():
                 "pho": w_photo * loss_photo,
                 "dep": w_depth_eff * loss_depth,
                 "nrm": nrm_weighted_public,
-                "nc": w_nc * loss_nc,
+                "nc": w_nc_eff * loss_nc,
                 "str.na": w_structure * w_structure_na * loss_str_na,
                 "str.cp": w_structure * w_structure_cp * loss_str_cp,
                 "plane": w_plane * loss_plane,
@@ -3606,7 +3881,7 @@ def main():
                 "pho": w_photo * loss_photo_roof,
                 "dep": w_depth_eff * loss_depth_roof,
                 "nrm": nrm_roof_weighted_public,
-                "nc": w_nc * loss_nc_roof,
+                "nc": w_nc_eff * loss_nc_roof,
                 "str.na": w_structure * w_structure_na * loss_str_na_roof,
                 "str.cp": w_structure * w_structure_cp * loss_str_cp_roof,
                 "plane": w_plane * loss_plane_roof,
@@ -3754,7 +4029,7 @@ def main():
                         else w_normal_eff * loss_n
                     ),
                 ),
-                "nc": (loss_nc, float(w_nc), w_nc * loss_nc),
+                "nc": (loss_nc, float(w_nc_eff), w_nc_eff * loss_nc),
                 "distort": (
                     loss_dist,
                     float(w_distort_eff),
@@ -3911,7 +4186,25 @@ def main():
             writer.add_scalar("loss_weight/depth", float(w_depth_eff), it)
             writer.add_scalar("loss_weight/mono_depth", float(w_mono_depth_eff), it)
             writer.add_scalar("loss_weight/normal", float(w_normal_eff), it)
+            writer.add_scalar("loss_weight/nc", float(w_nc_eff), it)
             writer.add_scalar("loss_weight/distort", float(w_distort_eff), it)
+            if normal_prior_orientation == "signed" and normal_prior_valid_pixel_count > 0:
+                writer.add_scalar(
+                    "stats/normal_prior_valid_pixel_count",
+                    normal_prior_valid_pixel_count,
+                    it,
+                )
+            if depth_prior_alignment != "none" and depth_prior_valid_pixel_count > 0:
+                writer.add_scalar(
+                    "stats/depth_alignment_alpha",
+                    float(depth_alignment_alpha.detach().cpu().item()),
+                    it,
+                )
+                writer.add_scalar(
+                    "stats/depth_prior_valid_pixel_count",
+                    depth_prior_valid_pixel_count,
+                    it,
+                )
             if target_region_priors:
                 writer.add_scalar(
                     "stats/mono_depth_eligible_regions",

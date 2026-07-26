@@ -10,16 +10,19 @@ from pathlib import Path
 
 import imageio.v2 as imageio
 import numpy as np
+import torch
 
 from src.stage2.pointcloud_io import (
     read_init_pointcloud,
     read_init_pointcloud_with_rgb,
 )
 from src.stage2.train import (
+    _aligned_depth_prior_l1,
     _encode_expected_depth_png,
     _resolve_init_pointcloud_rgb,
     _save_expected_depth_png,
     _scheduled_weight,
+    _signed_normal_prior_loss,
 )
 
 
@@ -210,6 +213,162 @@ class DistortionScheduleTest(unittest.TestCase):
                     final_weight=0.0,
                 ),
                 0.0,
+            )
+
+    def test_nc_schedule_can_activate_only_in_phase_two(self) -> None:
+        self.assertEqual(
+            _scheduled_weight(0.05, 14999, 15000, "constant", 0),
+            0.0,
+        )
+        self.assertEqual(
+            _scheduled_weight(0.05, 15000, 15000, "constant", 0),
+            0.05,
+        )
+
+    def test_prior_stays_constant_then_decays_over_phase_two(self) -> None:
+        kwargs = {
+            "base_weight": 0.5,
+            "warmup": 15000,
+            "schedule": "constant_then_exp_decay",
+            "ramp_steps": 15000,
+            "final_weight": 0.05,
+        }
+        self.assertEqual(_scheduled_weight(it=14999, **kwargs), 0.5)
+        self.assertAlmostEqual(_scheduled_weight(it=15000, **kwargs), 0.5)
+        self.assertAlmostEqual(_scheduled_weight(it=29999, **kwargs), 0.05)
+        midpoint = _scheduled_weight(it=22499, **kwargs)
+        self.assertGreater(midpoint, 0.05)
+        self.assertLess(midpoint, 0.5)
+
+
+class AlignedDepthPriorTest(unittest.TestCase):
+    def test_lsq_alpha_and_loss_use_only_masked_valid_pixels(self) -> None:
+        prediction = torch.tensor(
+            [[1.0, 3.0], [999.0, float("nan")]],
+            dtype=torch.float64,
+            requires_grad=True,
+        )
+        prior = torch.tensor(
+            [[2.0, 5.0], [1.0e9, 1.0e9]],
+            dtype=torch.float64,
+        )
+        mask = torch.tensor([[True, True], [False, False]])
+
+        loss, alpha, valid_count = _aligned_depth_prior_l1(
+            prediction,
+            prior,
+            mask,
+        )
+
+        # (1*2 + 3*5) / (1^2 + 3^2) = 1.7; residual mean=(.3+.1)/2=.2.
+        self.assertAlmostEqual(float(alpha), 1.7, places=12)
+        self.assertAlmostEqual(float(loss), 0.2, places=12)
+        self.assertEqual(valid_count, 2)
+        self.assertFalse(alpha.requires_grad)
+        loss.backward()
+        self.assertEqual(float(prediction.grad[1, 0]), 0.0)
+        self.assertEqual(float(prediction.grad[1, 1]), 0.0)
+
+    def test_exact_scale_match_has_zero_mask_normalized_loss(self) -> None:
+        prediction = torch.tensor([[1.0, 2.0], [10.0, 20.0]])
+        prior = torch.tensor([[2.0, 4.0], [999.0, 999.0]])
+        mask = torch.tensor([[True, True], [False, False]])
+        loss, alpha, valid_count = _aligned_depth_prior_l1(
+            prediction,
+            prior,
+            mask,
+            detach_scale=False,
+        )
+        self.assertEqual(float(alpha), 2.0)
+        self.assertEqual(float(loss), 0.0)
+        self.assertEqual(valid_count, 2)
+
+    def test_empty_or_wrong_dtype_mask_fails_closed(self) -> None:
+        prediction = torch.ones((2, 2))
+        prior = torch.ones((2, 2))
+        with self.assertRaisesRegex(ValueError, "mask must be bool"):
+            _aligned_depth_prior_l1(
+                prediction,
+                prior,
+                torch.ones((2, 2)),
+            )
+        with self.assertRaisesRegex(ValueError, "at least one valid"):
+            _aligned_depth_prior_l1(
+                prediction,
+                prior,
+                torch.zeros((2, 2), dtype=torch.bool),
+            )
+        invalid_prior = prior.clone()
+        invalid_prior[0, 0] = float("nan")
+        with self.assertRaisesRegex(ValueError, "finite positive prior depths"):
+            _aligned_depth_prior_l1(
+                prediction,
+                invalid_prior,
+                torch.tensor([[True, False], [False, False]]),
+            )
+
+    def test_zero_rendered_depth_keeps_exact_mask_denominator(self) -> None:
+        prediction = torch.tensor([[1.0, 0.0]], requires_grad=True)
+        prior = torch.tensor([[2.0, 3.0]])
+        mask = torch.tensor([[True, True]])
+        loss, alpha, valid_count = _aligned_depth_prior_l1(
+            prediction,
+            prior,
+            mask,
+        )
+        self.assertEqual(float(alpha), 2.0)
+        self.assertEqual(float(loss), 1.5)
+        self.assertEqual(valid_count, 2)
+
+
+class SignedNormalPriorTest(unittest.TestCase):
+    def test_signed_orientation_penalizes_opposite_normal_by_two(self) -> None:
+        prediction = torch.tensor([[[0.0, 0.0, 3.0], [0.0, 2.0, 0.0]]])
+        prior = torch.tensor([[[0.0, 0.0, -4.0], [0.0, 5.0, 0.0]]])
+        mask = torch.tensor([[True, True]])
+        loss, count = _signed_normal_prior_loss(prediction, prior, mask)
+        # Per-pixel errors are 2 (opposite) and 0 (same), hence mean 1.
+        self.assertEqual(float(loss), 1.0)
+        self.assertEqual(count, 2)
+
+    def test_mask_is_exact_and_outside_values_have_no_gradient(self) -> None:
+        prediction = torch.tensor(
+            [[[1.0, 0.0, 0.0], [float("nan"), 0.0, 0.0]]],
+            requires_grad=True,
+        )
+        prior = torch.tensor(
+            [[[0.0, 1.0, 0.0], [float("nan"), 0.0, 0.0]]]
+        )
+        mask = torch.tensor([[True, False]])
+        loss, count = _signed_normal_prior_loss(prediction, prior, mask)
+        self.assertEqual(float(loss), 1.0)
+        self.assertEqual(count, 1)
+        loss.backward()
+        self.assertTrue(torch.equal(prediction.grad[0, 1], torch.zeros(3)))
+
+    def test_zero_rendered_normal_is_a_masked_miss(self) -> None:
+        normals = torch.tensor([[[1.0, 0.0, 0.0]]])
+        loss, count = _signed_normal_prior_loss(
+            torch.zeros_like(normals),
+            normals,
+            torch.tensor([[True]]),
+        )
+        self.assertEqual(float(loss), 1.0)
+        self.assertEqual(count, 1)
+
+    def test_invalid_or_empty_masked_normal_fails_closed(self) -> None:
+        normals = torch.tensor([[[1.0, 0.0, 0.0]]])
+        with self.assertRaisesRegex(ValueError, "at least one masked pixel"):
+            _signed_normal_prior_loss(
+                normals,
+                normals,
+                torch.tensor([[False]]),
+            )
+        with self.assertRaisesRegex(ValueError, "nonzero prior normals"):
+            _signed_normal_prior_loss(
+                normals,
+                torch.zeros_like(normals),
+                torch.tensor([[True]]),
             )
 
 
