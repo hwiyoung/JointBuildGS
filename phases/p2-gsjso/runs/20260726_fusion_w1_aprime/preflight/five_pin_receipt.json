@@ -1,0 +1,715 @@
+{
+  "appendix": {
+    "elapsed_seconds": 0.000307,
+    "evidence": {
+      "expected": {
+        "additional_transform_applied_by_gate": false,
+        "als_transform_applied_by_gate": false,
+        "gate_manifest_schema": "jointbuildgs.fusion_w1.gate_a_v2_registration.manifest.v1",
+        "gate_pose_application_count": 1,
+        "gate_status": "PASS",
+        "gate_version": "v2",
+        "pose_binding_required_transform_application_count": 1,
+        "pose_image_count": 937,
+        "pose_manifest_schema": "jointbuildgs.fusion_w1.pose_adoption_v2.manifest.v1",
+        "pose_status": "PASSED",
+        "transform_application_count": 1,
+        "zeta_application_count_during_pose_adoption": 0
+      },
+      "observed": {
+        "additional_transform_applied_by_gate": false,
+        "als_transform_applied_by_gate": false,
+        "gate_manifest_schema": "jointbuildgs.fusion_w1.gate_a_v2_registration.manifest.v1",
+        "gate_pose_application_count": 1,
+        "gate_status": "PASS",
+        "gate_version": "v2",
+        "pose_binding_required_transform_application_count": 1,
+        "pose_image_count": 937,
+        "pose_manifest_schema": "jointbuildgs.fusion_w1.pose_adoption_v2.manifest.v1",
+        "pose_status": "PASSED",
+        "transform_application_count": 1,
+        "zeta_application_count_during_pose_adoption": 0
+      }
+    },
+    "name": "pose_application_and_gate_a_v2_appendix",
+    "status": "passed"
+  },
+  "config": {
+    "path": "phases/p2-gsjso/configs/fusion_w1_aprime_preflight_20260726.json",
+    "sha256": "e22b92a054c8a0c2ed73b68a899479f154b808fae3f369855f66a042231f8724"
+  },
+  "created_kst": "2026-07-26T21:19:28.583577+09:00",
+  "created_utc": "2026-07-26T12:19:28.583398Z",
+  "execution_counters": {
+    "readout_runs_started": 0,
+    "roofer_runs_started": 0,
+    "scoring_runs_started": 0,
+    "training_runs_started": 0
+  },
+  "five_pins": {
+    "items": [
+      {
+        "elapsed_seconds": 0.06232,
+        "evidence": {
+          "branch": "exp/fusion-w1",
+          "dirty_worktree": {
+            "affects_this_measurement_receipt": false,
+            "counts": {
+              "concurrent_aprime_worktree_change": 2,
+              "current_preflight_implementation_or_output": 6,
+              "preexisting_user_run_artifact": 28,
+              "shared_T1_code_diff": 2
+            },
+            "note": "Existing run evidence and concurrent T1 code changes are classified only. A fresh committed-HEAD launch gate is required before any training process.",
+            "policy": {
+              "allowed_current_preflight_paths": [
+                "phases/p2-gsjso/configs/fusion_w1_aprime_preflight_20260726.json",
+                "phases/p2-gsjso/scripts/fusion_w1_aprime_preflight_20260726.py",
+                "phases/p2-gsjso/scripts/run_fusion_w1_aprime_preflight_20260726.sh",
+                "phases/p2-gsjso/scripts/test_fusion_w1_aprime_preflight_20260726.py",
+                "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/"
+              ],
+              "allowed_user_artifact_prefixes": [
+                "phases/p2-gsjso/runs/20260724_fusion_w1/"
+              ],
+              "concurrent_aprime_work_prefixes": [
+                "phases/p2-gsjso/configs/fusion_w1_aprime_",
+                "phases/p2-gsjso/scripts/fusion_w1_aprime_"
+              ],
+              "known_shared_t1_code_paths": [
+                "src/stage2/train.py",
+                "phases/p2-gsjso/scripts/test_stage2_rgb_init_depth_and_distort.py"
+              ],
+              "mode": "record_and_classify_only",
+              "training_launch_gate_evaluated": false
+            },
+            "rows": [
+              {
+                "category": "preexisting_user_run_artifact",
+                "path": "phases/p2-gsjso/runs/20260724_fusion_w1/readout_v1/failures.jsonl",
+                "porcelain_code": " M"
+              },
+              {
+                "category": "preexisting_user_run_artifact",
+                "path": "phases/p2-gsjso/runs/20260724_fusion_w1/readout_v1/runtime_counters.json",
+                "porcelain_code": " M"
+              },
+              {
+                "category": "shared_T1_code_diff",
+                "path": "phases/p2-gsjso/scripts/test_stage2_rgb_init_depth_and_distort.py",
+                "porcelain_code": " M"
+              },
+              {
+                "category": "shared_T1_code_diff",
+                "path": "src/stage2/train.py",
+                "porcelain_code": " M"
+              },
+              {
+                "category": "current_preflight_implementation_or_output",
+                "path": "phases/p2-gsjso/configs/fusion_w1_aprime_preflight_20260726.json",
+                "porcelain_code": "??"
+              },
+              {
+                "category": "concurrent_aprime_worktree_change",
+                "path": "phases/p2-gsjso/configs/fusion_w1_aprime_preprocess_20260726.json",
+                "porcelain_code": "??"
+              },
+              {
+                "category": "preexisting_user_run_artifact",
+                "path": "phases/p2-gsjso/runs/20260724_fusion_w1/p0prime/driver.lock",
+                "porcelain_code": "??"
+              },
+              {
+                "category": "preexisting_user_run_artifact",
+                "path": "phases/p2-gsjso/runs/20260724_fusion_w1/partial_closeout_v1.lock",
+                "porcelain_code": "??"
+              },
+              {
+                "category": "preexisting_user_run_artifact",
+                "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/.staging/",
+                "porcelain_code": "??"
+              },
+              {
+                "category": "preexisting_user_run_artifact",
+                "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/images/",
+                "porcelain_code": "??"
+              },
+              {
+                "category": "preexisting_user_run_artifact",
+                "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/photo_support_masks/",
+                "porcelain_code": "??"
+              },
+              {
+                "category": "preexisting_user_run_artifact",
+                "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/stereo/",
+                "porcelain_code": "??"
+              },
+              {
+                "category": "preexisting_user_run_artifact",
+                "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/",
+                "porcelain_code": "??"
+              },
+              {
+                "category": "preexisting_user_run_artifact",
+                "path": "phases/p2-gsjso/runs/20260724_fusion_w1/readout_v1/by_building/DEBY_LOD2_42364609/arm_A/r1/classification.stdout.log",
+                "porcelain_code": "??"
+              },
+              {
+                "category": "preexisting_user_run_artifact",
+                "path": "phases/p2-gsjso/runs/20260724_fusion_w1/readout_v1/by_building/DEBY_LOD2_42364609/arm_A/r1/classification/",
+                "porcelain_code": "??"
+              },
+              {
+                "category": "preexisting_user_run_artifact",
+                "path": "phases/p2-gsjso/runs/20260724_fusion_w1/readout_v1/by_building/DEBY_LOD2_42364609/arm_A/r1/classification_invocation.json",
+                "porcelain_code": "??"
+              },
+              {
+                "category": "preexisting_user_run_artifact",
+                "path": "phases/p2-gsjso/runs/20260724_fusion_w1/readout_v1/by_building/DEBY_LOD2_42364609/arm_A/r1/extract_receipt.json",
+                "porcelain_code": "??"
+              },
+              {
+                "category": "preexisting_user_run_artifact",
+                "path": "phases/p2-gsjso/runs/20260724_fusion_w1/readout_v1/by_building/DEBY_LOD2_42364609/arm_A/r1/failed_after_infrastructure_retry.json",
+                "porcelain_code": "??"
+              },
+              {
+                "category": "preexisting_user_run_artifact",
+                "path": "phases/p2-gsjso/runs/20260724_fusion_w1/readout_v1/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_02/",
+                "porcelain_code": "??"
+              },
+              {
+                "category": "preexisting_user_run_artifact",
+                "path": "phases/p2-gsjso/runs/20260724_fusion_w1/readout_v1/driver.lock",
+                "porcelain_code": "??"
+              },
+              {
+                "category": "preexisting_user_run_artifact",
+                "path": "phases/p2-gsjso/runs/20260724_fusion_w1/readout_v1/recovery2_systemd.log",
+                "porcelain_code": "??"
+              },
+              {
+                "category": "preexisting_user_run_artifact",
+                "path": "phases/p2-gsjso/runs/20260724_fusion_w1/readout_v1/runtime_counters.json.lock",
+                "porcelain_code": "??"
+              },
+              {
+                "category": "preexisting_user_run_artifact",
+                "path": "phases/p2-gsjso/runs/20260724_fusion_w1/runtime_env/",
+                "porcelain_code": "??"
+              },
+              {
+                "category": "preexisting_user_run_artifact",
+                "path": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/runtime_env/",
+                "porcelain_code": "??"
+              },
+              {
+                "category": "preexisting_user_run_artifact",
+                "path": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/tb/",
+                "porcelain_code": "??"
+              },
+              {
+                "category": "preexisting_user_run_artifact",
+                "path": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/training.log",
+                "porcelain_code": "??"
+              },
+              {
+                "category": "preexisting_user_run_artifact",
+                "path": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/tb/",
+                "porcelain_code": "??"
+              },
+              {
+                "category": "preexisting_user_run_artifact",
+                "path": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/training.log",
+                "porcelain_code": "??"
+              },
+              {
+                "category": "preexisting_user_run_artifact",
+                "path": "phases/p2-gsjso/runs/20260724_fusion_w1/training/runtime_counters.json.lock",
+                "porcelain_code": "??"
+              },
+              {
+                "category": "preexisting_user_run_artifact",
+                "path": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_loss_shares.csv.lock",
+                "porcelain_code": "??"
+              },
+              {
+                "category": "preexisting_user_run_artifact",
+                "path": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_scores_building.csv.lock",
+                "porcelain_code": "??"
+              },
+              {
+                "category": "preexisting_user_run_artifact",
+                "path": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_seed_p0prime_scores.csv.lock",
+                "porcelain_code": "??"
+              },
+              {
+                "category": "current_preflight_implementation_or_output",
+                "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/five_pin_receipt.json",
+                "porcelain_code": "??"
+              },
+              {
+                "category": "current_preflight_implementation_or_output",
+                "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/five_pin_status.json",
+                "porcelain_code": "??"
+              },
+              {
+                "category": "current_preflight_implementation_or_output",
+                "path": "phases/p2-gsjso/scripts/fusion_w1_aprime_preflight_20260726.py",
+                "porcelain_code": "??"
+              },
+              {
+                "category": "concurrent_aprime_worktree_change",
+                "path": "phases/p2-gsjso/scripts/fusion_w1_aprime_preprocess_20260726.py",
+                "porcelain_code": "??"
+              },
+              {
+                "category": "current_preflight_implementation_or_output",
+                "path": "phases/p2-gsjso/scripts/run_fusion_w1_aprime_preflight_20260726.sh",
+                "porcelain_code": "??"
+              },
+              {
+                "category": "current_preflight_implementation_or_output",
+                "path": "phases/p2-gsjso/scripts/test_fusion_w1_aprime_preflight_20260726.py",
+                "porcelain_code": "??"
+              }
+            ],
+            "training_launch_authorized": false,
+            "training_launch_gate_evaluated": false
+          },
+          "expected_branch": "exp/fusion-w1",
+          "head": "83d6503c204416b4f6b259ba3bd3dff6bfdf6a87",
+          "locked_documents": [
+            {
+              "bytes": 9015,
+              "expected_bytes": 9015,
+              "expected_sha256": "4808b1e54ca04b8bd3c925e5592afdedb6f8cd4d2e518cfd39016dcd79559af6",
+              "matches_lock": true,
+              "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/REMOTE_PROMPT_APRIME_GS4B_ALIGNED_20260726.md",
+              "present_in_required_commit": true,
+              "required_commit_blob_sha256": "4808b1e54ca04b8bd3c925e5592afdedb6f8cd4d2e518cfd39016dcd79559af6",
+              "role": "aprime_dispatch",
+              "tracked_in_current_index": true,
+              "working_tree_sha256": "4808b1e54ca04b8bd3c925e5592afdedb6f8cd4d2e518cfd39016dcd79559af6"
+            },
+            {
+              "bytes": 4996,
+              "expected_bytes": 4996,
+              "expected_sha256": "1c892b0fff0e715d9400dd44b437bed65314e08593715e66cd0dbc4f12afe9ec",
+              "matches_lock": true,
+              "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/PREREG_APRIME_LOCK_20260726.md",
+              "present_in_required_commit": true,
+              "required_commit_blob_sha256": "1c892b0fff0e715d9400dd44b437bed65314e08593715e66cd0dbc4f12afe9ec",
+              "role": "aprime_preregistration",
+              "tracked_in_current_index": true,
+              "working_tree_sha256": "1c892b0fff0e715d9400dd44b437bed65314e08593715e66cd0dbc4f12afe9ec"
+            },
+            {
+              "bytes": 9057,
+              "expected_bytes": null,
+              "expected_sha256": "c39b43b03c5e2be1814021134075f3ee4f05070a86b6d97262ef67f14688fd96",
+              "matches_lock": true,
+              "path": "phases/p2-gsjso/configs/fusion_w1_aprime_prereg_lock_20260726.json",
+              "present_in_required_commit": true,
+              "required_commit_blob_sha256": "c39b43b03c5e2be1814021134075f3ee4f05070a86b6d97262ef67f14688fd96",
+              "role": "aprime_machine_preregistration",
+              "tracked_in_current_index": true,
+              "working_tree_sha256": "c39b43b03c5e2be1814021134075f3ee4f05070a86b6d97262ef67f14688fd96"
+            }
+          ],
+          "repository": "/workspace/JointBuildGS",
+          "required_commit_exists": true,
+          "required_commit_is_ancestor_of_head": true,
+          "required_preregistration_commit": "5084b4bebfb49473c9283dc2731ef3d7382898bd"
+        },
+        "name": "git_branch_commit_and_prereg",
+        "status": "passed"
+      },
+      {
+        "elapsed_seconds": 3.604916,
+        "evidence": {
+          "docker_server": {
+            "ApiVersion": "1.49",
+            "Arch": "amd64",
+            "BuildTime": "2025-04-18T09:52:10.000000000+00:00",
+            "Components": [
+              {
+                "Details": {
+                  "ApiVersion": "1.49",
+                  "Arch": "amd64",
+                  "BuildTime": "Fri Apr 18 09:52:10 2025",
+                  "Experimental": "false",
+                  "GitCommit": "01f442b",
+                  "GoVersion": "go1.23.8",
+                  "KernelVersion": "6.8.0-107-generic",
+                  "MinAPIVersion": "1.24",
+                  "Os": "linux"
+                },
+                "Name": "Engine",
+                "Version": "28.1.1"
+              },
+              {
+                "Details": {
+                  "GitCommit": "05044ec0a9a75232cad458027ca83437aae3f4da"
+                },
+                "Name": "containerd",
+                "Version": "1.7.27"
+              },
+              {
+                "Details": {
+                  "GitCommit": "v1.2.5-0-g59923ef"
+                },
+                "Name": "runc",
+                "Version": "1.2.5"
+              },
+              {
+                "Details": {
+                  "GitCommit": "de40ad0"
+                },
+                "Name": "docker-init",
+                "Version": "0.19.0"
+              }
+            ],
+            "GitCommit": "01f442b",
+            "GoVersion": "go1.23.8",
+            "KernelVersion": "6.8.0-107-generic",
+            "MinAPIVersion": "1.24",
+            "Os": "linux",
+            "Platform": {
+              "Name": "Docker Engine - Community"
+            },
+            "Version": "28.1.1"
+          },
+          "images": {
+            "gs": {
+              "created": "2026-04-21T12:31:47.4711821Z",
+              "image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
+              "reference": "jointbuildgs:dev",
+              "repo_digests": [],
+              "repo_tags": [
+                "jointbuildgs:dev"
+              ]
+            },
+            "roofer": {
+              "created": "2026-04-20T18:12:05.826630046Z",
+              "image_id": "sha256:9c980b97fba4c3fd30f5bb4afb8f2621be211d4e72e4333ea2053e8cd69b2dba",
+              "reference": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+              "repo_digests": [
+                "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2"
+              ],
+              "repo_tags": [
+                "3dgi/roofer:v1.0.0"
+              ]
+            },
+            "tools": {
+              "created": "2026-06-12T21:08:27.467582469+09:00",
+              "image_id": "sha256:87bea02e5598a3d53a119b754191673497d52641bd8ea4106ffee653407579b0",
+              "reference": "jointbuildgs-p0-tools:t0",
+              "repo_digests": [],
+              "repo_tags": [
+                "jointbuildgs-p0-tools:t0"
+              ]
+            }
+          },
+          "versions": {
+            "gs": {
+              "gsplat": "1.4.0",
+              "python": "3.11.15",
+              "torch": "2.4.1+cu121",
+              "torch_cuda_build": "12.1"
+            },
+            "roofer": "roofer 1.0.0 (v1.0.0)",
+            "tools": {
+              "citygml_tools": "citygml-tools 2.5.0\nCopyright (C) 2018-2026 Claus Nagel <claus.nagel@gmail.com>",
+              "gdal": "GDAL 3.13.1 \"Iowa City\", released 2026/06/01",
+              "laspy": "2.6.1",
+              "numpy": "2.4.6",
+              "pdal": "--------------------------------------------------------------------------------\npdal 2.10.1 (git-version: 3ef768)\n--------------------------------------------------------------------------------",
+              "pyproj": "3.7.2",
+              "python": "3.13.13",
+              "val3dity": "val3dity  version: 2.6.0"
+            }
+          }
+        },
+        "name": "docker_image_ids_and_versions",
+        "status": "passed"
+      },
+      {
+        "elapsed_seconds": 0.305275,
+        "evidence": {
+          "cuda_visible_devices": "0",
+          "expected_first_value": 64.0,
+          "finite": true,
+          "first_value": 64.0,
+          "matrix_size": 64,
+          "nvidia_smi": [
+            {
+              "driver_version": "580.82.07",
+              "index": 0,
+              "memory_total_mib": 24576,
+              "name": "NVIDIA GeForce RTX 3090",
+              "uuid": "GPU-fab8b9b4-e6eb-9f2b-71e3-7997f092d21e"
+            }
+          ],
+          "operation": "float32 ones matrix multiplication on CUDA",
+          "torch_cuda_available": true,
+          "torch_cuda_build": "12.1",
+          "torch_device_name": "NVIDIA GeForce RTX 3090",
+          "torch_logical_device": 0
+        },
+        "name": "nvidia_smi_and_cuda_matmul",
+        "status": "passed"
+      },
+      {
+        "elapsed_seconds": 1.271935,
+        "evidence": {
+          "aprime_prereg_cross_checks": {
+            "corrected_images_sha256": true,
+            "gate_manifest_sha256": true,
+            "gate_required_status": true,
+            "pose_manifest_sha256": true,
+            "transform_application_count": true
+          },
+          "files": [
+            {
+              "bytes": 110979201,
+              "expected_bytes": 110979201,
+              "expected_sha256": "01602b7385aaf7324f89da6183df3dbdeffa237f85bf57dc27208b554b4fc0b3",
+              "locked_source_values": {
+                "fusion_w1_preprocess_config": "01602b7385aaf7324f89da6183df3dbdeffa237f85bf57dc27208b554b4fc0b3",
+                "pose_adoption_immutable_inputs": "01602b7385aaf7324f89da6183df3dbdeffa237f85bf57dc27208b554b4fc0b3"
+              },
+              "locked_sources_match_expected": true,
+              "matches_lock": true,
+              "path": "phases/p0-audit/data/raw/als/690_5335.laz",
+              "role": "als_laz",
+              "sha256": "01602b7385aaf7324f89da6183df3dbdeffa237f85bf57dc27208b554b4fc0b3"
+            },
+            {
+              "bytes": 119749181,
+              "expected_bytes": 119749181,
+              "expected_sha256": "98ab7ad7f4c5108ebf41bc62186b336c6cd8a70b82fceec57136a56c0188b566",
+              "locked_source_values": {
+                "fusion_w1_preprocess_config": "98ab7ad7f4c5108ebf41bc62186b336c6cd8a70b82fceec57136a56c0188b566",
+                "pose_adoption_immutable_inputs": "98ab7ad7f4c5108ebf41bc62186b336c6cd8a70b82fceec57136a56c0188b566"
+              },
+              "locked_sources_match_expected": true,
+              "matches_lock": true,
+              "path": "phases/p0-audit/data/raw/als/690_5336.laz",
+              "role": "als_laz",
+              "sha256": "98ab7ad7f4c5108ebf41bc62186b336c6cd8a70b82fceec57136a56c0188b566"
+            },
+            {
+              "bytes": 107359041,
+              "expected_bytes": 107359041,
+              "expected_sha256": "9e14119bb0af7d5a300aa3a2a19074219b4d6d290923b4b90277c317e8b33720",
+              "locked_source_values": {
+                "fusion_w1_preprocess_config": "9e14119bb0af7d5a300aa3a2a19074219b4d6d290923b4b90277c317e8b33720",
+                "pose_adoption_immutable_inputs": "9e14119bb0af7d5a300aa3a2a19074219b4d6d290923b4b90277c317e8b33720"
+              },
+              "locked_sources_match_expected": true,
+              "matches_lock": true,
+              "path": "phases/p0-audit/data/raw/als/691_5335.laz",
+              "role": "als_laz",
+              "sha256": "9e14119bb0af7d5a300aa3a2a19074219b4d6d290923b4b90277c317e8b33720"
+            },
+            {
+              "bytes": 132681326,
+              "expected_bytes": 132681326,
+              "expected_sha256": "63c64002fc55d8b99a49749b5a2e36d802186186a950c89779463274e3cb950d",
+              "locked_source_values": {
+                "fusion_w1_preprocess_config": "63c64002fc55d8b99a49749b5a2e36d802186186a950c89779463274e3cb950d",
+                "pose_adoption_immutable_inputs": "63c64002fc55d8b99a49749b5a2e36d802186186a950c89779463274e3cb950d"
+              },
+              "locked_sources_match_expected": true,
+              "matches_lock": true,
+              "path": "phases/p0-audit/data/raw/als/691_5336.laz",
+              "role": "als_laz",
+              "sha256": "63c64002fc55d8b99a49749b5a2e36d802186186a950c89779463274e3cb950d"
+            },
+            {
+              "bytes": 64,
+              "expected_bytes": 64,
+              "expected_sha256": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99",
+              "locked_source_values": {
+                "fusion_w1_preprocess_config": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99",
+                "pose_adoption_derived_sha256": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99"
+              },
+              "locked_sources_match_expected": true,
+              "matches_lock": true,
+              "path": "results/tum_transfer/fusion_w1_pose_adoption_v2/derived_sparse/0/cameras.bin",
+              "role": "corrected_cameras",
+              "sha256": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99"
+            },
+            {
+              "bytes": 114415526,
+              "expected_bytes": 114415526,
+              "expected_sha256": "28b38383a0b6d82656108e8f0e5e79711dcda93948ab2e89c1cd8f47215962a5",
+              "locked_source_values": {
+                "fusion_w1_preprocess_config": "28b38383a0b6d82656108e8f0e5e79711dcda93948ab2e89c1cd8f47215962a5",
+                "pose_adoption_derived_sha256": "28b38383a0b6d82656108e8f0e5e79711dcda93948ab2e89c1cd8f47215962a5"
+              },
+              "locked_sources_match_expected": true,
+              "matches_lock": true,
+              "path": "results/tum_transfer/fusion_w1_pose_adoption_v2/derived_sparse/0/images.bin",
+              "role": "corrected_images",
+              "sha256": "28b38383a0b6d82656108e8f0e5e79711dcda93948ab2e89c1cd8f47215962a5"
+            },
+            {
+              "bytes": 33476840,
+              "expected_bytes": 33476840,
+              "expected_sha256": "a822c0967a3201cb7366193ed61b285568dd0e0102058b995008abdef6e4a914",
+              "locked_source_values": {
+                "fusion_w1_preprocess_config": "a822c0967a3201cb7366193ed61b285568dd0e0102058b995008abdef6e4a914",
+                "pose_adoption_derived_sha256": "a822c0967a3201cb7366193ed61b285568dd0e0102058b995008abdef6e4a914"
+              },
+              "locked_sources_match_expected": true,
+              "matches_lock": true,
+              "path": "results/tum_transfer/fusion_w1_pose_adoption_v2/derived_sparse/0/points3D.bin",
+              "role": "corrected_points3d",
+              "sha256": "a822c0967a3201cb7366193ed61b285568dd0e0102058b995008abdef6e4a914"
+            },
+            {
+              "bytes": 5521408,
+              "expected_bytes": 5521408,
+              "expected_sha256": "259cf04ec0c9411e669e75f61c37ea634290fcd40b230f6ed9b67328041c87fa",
+              "locked_source_values": {
+                "fusion_w1_preprocess_config": "259cf04ec0c9411e669e75f61c37ea634290fcd40b230f6ed9b67328041c87fa",
+                "pose_adoption_immutable_inputs": "259cf04ec0c9411e669e75f61c37ea634290fcd40b230f6ed9b67328041c87fa"
+              },
+              "locked_sources_match_expected": true,
+              "matches_lock": true,
+              "path": "phases/p0-audit/data/work/footprints/lod2_ground_plan.gpkg",
+              "role": "footprint_gpkg",
+              "sha256": "259cf04ec0c9411e669e75f61c37ea634290fcd40b230f6ed9b67328041c87fa"
+            },
+            {
+              "bytes": 156656509,
+              "expected_bytes": 156656509,
+              "expected_sha256": "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314",
+              "locked_source_values": {
+                "pose_adoption_immutable_inputs": "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314"
+              },
+              "locked_sources_match_expected": true,
+              "matches_lock": true,
+              "path": "phases/p0-audit/data/raw/lod2/690_5334.gml",
+              "role": "reference_gml",
+              "sha256": "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314"
+            },
+            {
+              "bytes": 147865939,
+              "expected_bytes": 147865939,
+              "expected_sha256": "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674",
+              "locked_source_values": {
+                "pose_adoption_immutable_inputs": "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674"
+              },
+              "locked_sources_match_expected": true,
+              "matches_lock": true,
+              "path": "phases/p0-audit/data/raw/lod2/690_5336.gml",
+              "role": "reference_gml",
+              "sha256": "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674"
+            }
+          ],
+          "locked_sources": [
+            {
+              "expected_sha256": "c39b43b03c5e2be1814021134075f3ee4f05070a86b6d97262ef67f14688fd96",
+              "matches_lock": true,
+              "observed_sha256": "c39b43b03c5e2be1814021134075f3ee4f05070a86b6d97262ef67f14688fd96",
+              "path": "phases/p2-gsjso/configs/fusion_w1_aprime_prereg_lock_20260726.json",
+              "role": "aprime_prereg_config"
+            },
+            {
+              "expected_sha256": "f59cb9cc404dd1a262a3fb03df4df665514e2862d66be371baa05a372e825a42",
+              "matches_lock": true,
+              "observed_sha256": "f59cb9cc404dd1a262a3fb03df4df665514e2862d66be371baa05a372e825a42",
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/resume_v2/r1_pose_adoption_manifest.json",
+              "role": "pose_adoption_manifest"
+            },
+            {
+              "expected_sha256": "a24697f3413b8d4b2777703e26d58234befe1c835dd282ce5da428d1c562f967",
+              "matches_lock": true,
+              "observed_sha256": "a24697f3413b8d4b2777703e26d58234befe1c835dd282ce5da428d1c562f967",
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/resume_v2/r2_gate_a_v2_registration.json",
+              "role": "gate_a_v2_manifest"
+            },
+            {
+              "expected_sha256": "80031775a40c1847fa67c586ea4e5493be796b4bf89dd693a198c355e61f462e",
+              "matches_lock": true,
+              "observed_sha256": "80031775a40c1847fa67c586ea4e5493be796b4bf89dd693a198c355e61f462e",
+              "path": "phases/p2-gsjso/configs/fusion_w1_preprocess_v1_20260725.json",
+              "role": "fusion_w1_preprocess_config"
+            }
+          ],
+          "training_images": {
+            "algorithm": "sha256 of path-sorted sha256sum lines using repository-relative logical paths",
+            "expected_file_count": 937,
+            "expected_sha256sum_stream_aggregate": "dedc4251e491a9ae40d7c91073410cbf504023b6fe3143238b2528dc3146308a",
+            "expected_total_bytes": 910980034,
+            "file_count": 937,
+            "locked_pose_manifest_values_match": true,
+            "matches_lock": true,
+            "path": "results/tum_transfer/data_geoidfix/images",
+            "sha256sum_stream_aggregate": "dedc4251e491a9ae40d7c91073410cbf504023b6fe3143238b2528dc3146308a",
+            "total_bytes": 910980034
+          }
+        },
+        "name": "immutable_inputs_and_image_inventory",
+        "status": "passed"
+      },
+      {
+        "elapsed_seconds": 0.000182,
+        "evidence": {
+          "container_repo_root": "/workspace/JointBuildGS",
+          "documents": [
+            {
+              "container_bytes": 9015,
+              "container_mtime_ns": 1785067033487471319,
+              "container_sha256": "4808b1e54ca04b8bd3c925e5592afdedb6f8cd4d2e518cfd39016dcd79559af6",
+              "expected_sha256": "4808b1e54ca04b8bd3c925e5592afdedb6f8cd4d2e518cfd39016dcd79559af6",
+              "host_container_hash_size_mtime_match": true,
+              "host_control_bytes": 9015,
+              "host_control_mtime_ns": 1785067033487471319,
+              "host_control_sha256": "4808b1e54ca04b8bd3c925e5592afdedb6f8cd4d2e518cfd39016dcd79559af6",
+              "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/REMOTE_PROMPT_APRIME_GS4B_ALIGNED_20260726.md",
+              "role": "aprime_dispatch"
+            },
+            {
+              "container_bytes": 4996,
+              "container_mtime_ns": 1785067359147388870,
+              "container_sha256": "1c892b0fff0e715d9400dd44b437bed65314e08593715e66cd0dbc4f12afe9ec",
+              "expected_sha256": "1c892b0fff0e715d9400dd44b437bed65314e08593715e66cd0dbc4f12afe9ec",
+              "host_container_hash_size_mtime_match": true,
+              "host_control_bytes": 4996,
+              "host_control_mtime_ns": 1785067359147388870,
+              "host_control_sha256": "1c892b0fff0e715d9400dd44b437bed65314e08593715e66cd0dbc4f12afe9ec",
+              "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/PREREG_APRIME_LOCK_20260726.md",
+              "role": "aprime_preregistration"
+            }
+          ],
+          "host_control_root": "/host-control/JointBuildGS",
+          "mount_mode": "same_host_repo_second_read_only_bind"
+        },
+        "name": "one_off_bind_mount_freshness",
+        "status": "passed"
+      }
+    ],
+    "passed_count": 5,
+    "total_count": 5
+  },
+  "implementation": {
+    "path": "phases/p2-gsjso/scripts/fusion_w1_aprime_preflight_20260726.py",
+    "sha256": "410cd9cb33d90bbb8cb9263c7bc0304be50844558a287e553b6edf3d7c691685"
+  },
+  "launch_contract": {
+    "reason": "This receipt measures the five pins while shared T1 code may be changing. T1/T2/T3 and a fresh committed-HEAD start gate remain mandatory.",
+    "training_launch_authorized_by_this_receipt": false,
+    "training_launch_gate_evaluated": false
+  },
+  "purpose": "five_pin_measurement_receipt_not_a_training_launch_gate",
+  "run_id": "20260726_fusion_w1_aprime",
+  "schema": "jointbuildgs.fusion_w1_aprime.five_pin_receipt.v1",
+  "status": "PASSED",
+  "task_id": "FUS-W1-APRIME-PREFLIGHT-001",
+  "verdict": null
+}
