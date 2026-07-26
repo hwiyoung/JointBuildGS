@@ -1,0 +1,228 @@
+{
+  "schema": "jointbuildgs.fusion_w1_aprime.prereg_lock.v1",
+  "task_id": "FUS-W1-APRIME-PREREG-001",
+  "run_id": "20260726_fusion_w1_aprime",
+  "branch": "exp/fusion-w1",
+  "scope": "GS4B_aligned_transfer_with_LoD2_mesh_prior_replaced_by_ALS_class6_points",
+  "terminology": {
+    "required": "GS4B transfer",
+    "forbidden": "GS4B reproduction",
+    "reason": "public GS4Buildings code and per-scene data/crosswalk are unavailable"
+  },
+  "inputs": {
+    "pose_adoption_manifest": "phases/p2-gsjso/runs/20260724_fusion_w1/resume_v2/r1_pose_adoption_manifest.json",
+    "pose_adoption_manifest_sha256": "f59cb9cc404dd1a262a3fb03df4df665514e2862d66be371baa05a372e825a42",
+    "corrected_images_bin": "results/tum_transfer/fusion_w1_pose_adoption_v2/derived_sparse/0/images.bin",
+    "corrected_images_sha256": "28b38383a0b6d82656108e8f0e5e79711dcda93948ab2e89c1cd8f47215962a5",
+    "transform_application_count": 1,
+    "reapply_pose_transform": false,
+    "gate_a_v2_manifest": "phases/p2-gsjso/runs/20260724_fusion_w1/resume_v2/r2_gate_a_v2_registration.json",
+    "gate_a_v2_manifest_sha256": "a24697f3413b8d4b2777703e26d58234befe1c835dd282ce5da428d1c562f967",
+    "gate_a_v2_required_status": "PASS",
+    "canonical_targets": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_targets.csv",
+    "canonical_targets_sha256": "256d376080dca7c496aa3f34c9bcbbd1a8e52d0b25d6e98f7eec388b3f6cc943",
+    "aprime_targets": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/aprime_targets.csv",
+    "aprime_targets_sha256": "f5f5893f8b5c1aa51143a751c637d12707fac4d5a62ff7e0a1a2f7770c5dc528",
+    "training_images": "results/tum_transfer/data_geoidfix/images",
+    "als_files_and_hashes": "inherit_exactly_from_fusion_w1_preprocess_v1_20260725.json",
+    "reference_gml_role": "evaluation_only_after_output_freeze"
+  },
+  "p1_seed": {
+    "training_seed_classes": [6],
+    "class2_training_seed_forbidden": true,
+    "sfm_training_seed_forbidden": true,
+    "walls_synthesized": false,
+    "seed_source": "ALS class 6 points strictly inside approved GroundSurface XY",
+    "visibility_geometry": "class6_2p5D_Delaunay_TIN_first_ray_intersection",
+    "visibility_epsilon_m": 0.05,
+    "minimum_visible_views_k": 3,
+    "minimum_seed_warning_count": 50,
+    "low_seed_policy": "continue_with_seed_too_small_tag",
+    "rgb_method": "existing_corrected_pose_occlusion_checked_multiview_mean",
+    "cache_policy": "new_namespace_only_no_arm_A_preprocess_cache_reuse"
+  },
+  "p2_supervision": {
+    "geometry": "class6_roof_TIN_only",
+    "ground_supervision": false,
+    "wall_supervision": false,
+    "photo_scope": "building_only_exact_M_j",
+    "depth_scope": "exact_M_j",
+    "normal_scope": "exact_M_j",
+    "mask_normalization": "sum_over_M_j_divided_by_cardinality_M_j",
+    "minimum_valid_mask_pixels": 1,
+    "depth_definition": "positive_camera_z_m",
+    "depth_alignment": {
+      "mode": "alpha_lsq",
+      "formula": "alpha=sum(D_render*D_prior)/sum(D_render^2) over M_j",
+      "detach_alpha": true,
+      "clipping": null,
+      "invalid_or_zero_denominator": "fail_closed",
+      "provenance": "preregistered_transfer_choice_GS4B_does_not_publish_alpha_estimator"
+    },
+    "boundary_mask": "TIN_outer_valid_mask_erosion_1px",
+    "maximum_roof_triangle_slope_deg": 75.0,
+    "normal_frame": "COLMAP_canonical_world"
+  },
+  "p3_loss_and_schedule": {
+    "max_iter": 30000,
+    "phase_transition_iter": 15000,
+    "phase1_iterations": [0, 14999],
+    "phase2_iterations": [15000, 29999],
+    "objective": "L_c + lambda_d*L_distortion + lambda_n*L_normal_consistency + lambda_db*L_depth_prior + lambda_nb*L_normal_prior",
+    "photo": {
+      "w_photo": 1.0,
+      "lambda_dssim": 0.2
+    },
+    "depth_prior": {
+      "initial_weight": 0.5,
+      "phase1_schedule": "constant",
+      "phase2_schedule": "exponential_decay",
+      "final_weight": 0.05,
+      "attribution": "CityGaussianV2_family_not_GS4B"
+    },
+    "normal_prior": {
+      "initial_weight": 0.05,
+      "phase1_schedule": "constant",
+      "phase2_schedule": "exponential_decay",
+      "final_weight": 0.005,
+      "attribution": "DN-Splatter_family_range_not_GS4B"
+    },
+    "normal_consistency": {
+      "target_weight": 0.05,
+      "phase1_weight": 0.0,
+      "phase2_activation": "linear_ramp",
+      "ramp_steps": 5000
+    },
+    "distortion": {
+      "target_weight": 100.0,
+      "normalization": "scene_scale_sq",
+      "phase1_weight": 0.0,
+      "phase2_activation": "linear_ramp",
+      "ramp_steps": 5000,
+      "provenance": "existing_meter_frame_2DGS_port_setting_carried_from_arm_A"
+    },
+    "arm_B_only_difference": {
+      "depth_prior_initial_and_final_weight": 0.0,
+      "normal_prior_initial_and_final_weight": 0.0,
+      "maps_still_loaded": true
+    }
+  },
+  "p4_dynamics": {
+    "seed_protect": false,
+    "surface_seed_protect": false,
+    "seed_lineage_intervention": false,
+    "mvs_seed_init_opacity": 0.1,
+    "prune_opa": 0.005,
+    "grow_grad2d": 0.0002,
+    "grow_scale3d": 0.01,
+    "prune_scale3d": 0.1,
+    "refine_start_iter": 500,
+    "refine_stop_iter": 15000,
+    "refine_every": 100,
+    "reset_every": 3000,
+    "source": "gsplat_DefaultStrategy_public_defaults",
+    "required_observations": [
+      "seed_lineage_count",
+      "roof_region_opacity_median",
+      "roof_region_opacity_gt_0p5_count",
+      "prune_candidates",
+      "pruned_count",
+      "opacity_reset_count"
+    ]
+  },
+  "optimizer_unchanged": {
+    "sh_degree": 3,
+    "sh_up_every": 1000,
+    "lr_means": 0.00016,
+    "lr_scales": 0.005,
+    "lr_quats": 0.001,
+    "lr_opacities": 0.05,
+    "lr_sh0": 0.0025,
+    "lr_shN": 0.000125
+  },
+  "p5_readout": {
+    "primary": {
+      "rendered_depth": "2DGS_surface_depth",
+      "integration_mask": "exact_M_j",
+      "alpha_threshold": null,
+      "tsdf_implementation": "Open3D_ScalableTSDFVolume",
+      "voxel_size_m": 0.05,
+      "sdf_trunc_m": 0.25,
+      "depth_trunc_m": "max(2*minimum_camera_radius,max_valid_prior_depth_m+1.0)",
+      "color_type": "RGB8",
+      "marching_cubes": "Open3D_extract_triangle_mesh",
+      "mesh_component_filter": "remove_components_with_fewer_than_50_triangles",
+      "mesh_sample_spacing_m": 0.1,
+      "mesh_sample_class": 6,
+      "mesh_vertical_conversion": "canonical_ellipsoidal_to_EPSG25832_orthometric_once",
+      "ground_join": "unaltered_preprocess_class2_points_within_20m_ground_buffer",
+      "ground_class": 2,
+      "roofer_mode": "defaults_lod22_classes_2_and_6"
+    },
+    "comparison_only": {
+      "name": "legacy_W1_alpha_point_readout",
+      "voxel_size_m": 0.05,
+      "alpha_threshold": 0.5,
+      "minimum_observations": 3,
+      "used_for_verdict": false
+    }
+  },
+  "p6_scales": {
+    "assembly": "LoD2_success_or_fallback",
+    "seed_retention": "paired_RMS_Aprime <= paired_RMS_P0prime_Aprime + 0.05m",
+    "improvement_observation": ["texture_layer", "boundary"],
+    "arm_B_contrast": true,
+    "human_verdict_only": true,
+    "arm_A_smoke_used_for_verdict": false
+  },
+  "p7_targets": {
+    "overlap_status": "unresolved_unknown_not_zero",
+    "fallback_applied": true,
+    "population_source": "aprime_targets.csv machine join",
+    "arm_Aprime_r1": "all_9_in_order",
+    "arm_Aprime_r2": "all_9_in_order",
+    "arm_B_r1": "first_2_dim_failures_plus_textured_control",
+    "arm_B_r2": false,
+    "run_seeds": {"r1": 1001, "r2": 1002}
+  },
+  "preflight": {
+    "learning_gate": "T1_and_T2_and_T3_all_PASS",
+    "T1_mini_smoke": {
+      "iterations": 600,
+      "compressed_transition_iter": 300,
+      "compressed_surface_ramp_steps": 100,
+      "compressed_refine_start_iter": 50,
+      "compressed_refine_stop_iter": 500,
+      "compressed_refine_every": 25,
+      "compressed_reset_every": 300,
+      "pass": "post_transition distortion and normal-consistency raw_loss, effective_weight, weighted_loss, grad_norm, and weighted_share all > 0; seed protection off; pruned_count > 0"
+    },
+    "T2_checkpoint": {
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/ckpt/final.pt",
+      "sha256": "9db46440bbb432904ab912729c7230d5a06a0b2f5855be1b3bd003d9168b3b65",
+      "purpose": "path_rehearsal_not_roof_recovery"
+    },
+    "T3": "all_9_Aprime_seed_plus_original_class2_ground_learning_zero",
+    "T4_time_limit_minutes": 30,
+    "T5": "all_9_mask_pixel_fraction_and_seed_before_after_counts"
+  },
+  "execution": {
+    "smoke_building": "first_aprime_target",
+    "smoke_arm": "Aprime",
+    "smoke_run": "r1",
+    "smoke_requires_readout_and_score": true,
+    "no_user_questions": true,
+    "time_cutoff": null,
+    "save_after_each_building": true,
+    "same_error_three_times": "skip_building_and_record",
+    "same_error_type_three_consecutive_buildings": "stop_stage_and_report_partial",
+    "readout_outer_parallelism": 1,
+    "readout_memory_cgroup": "24g"
+  },
+  "reporting": {
+    "quantitative_table_and_qualitative_figure_per_stage": true,
+    "interpretive_or_verdict_sentences": false,
+    "censored_values_must_not_be_reported_as_measured": true
+  },
+  "verdict": null
+}

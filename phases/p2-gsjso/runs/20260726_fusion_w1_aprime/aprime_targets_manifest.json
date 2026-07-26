@@ -1,0 +1,38 @@
+{
+  "schema": "jointbuildgs.fusion_w1_aprime.targets.v1",
+  "task_id": "FUS-W1-APRIME-TARGETS-001",
+  "created_utc": "2026-07-26T11:58:22.743753+00:00",
+  "selection_mode": "P7_fallback_exact_overlap_unresolved",
+  "overlap_interpretation": "unknown_not_zero",
+  "manual_building_id_entry": false,
+  "input": {
+    "path": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_targets.csv",
+    "sha256": "256d376080dca7c496aa3f34c9bcbbd1a8e52d0b25d6e98f7eec388b3f6cc943",
+    "rows": 178
+  },
+  "join_predicates": {
+    "dim_failures": "priority_bucket == 01_p0_dim_failure",
+    "textured_control": "selection_reason startswith textured_positive_control_anchor:"
+  },
+  "counts": {
+    "dim_failure": 8,
+    "textured_control": 1,
+    "total": 9
+  },
+  "ordered_building_ids": [
+    "DEBY_LOD2_42364609",
+    "DEBY_LOD2_42364659",
+    "DEBY_LOD2_42364663",
+    "DEBY_LOD2_4907182",
+    "DEBY_LOD2_4907510",
+    "DEBY_LOD2_4908050",
+    "DEBY_LOD2_4908166",
+    "DEBY_LOD2_4908176",
+    "DEBY_LOD2_4908023"
+  ],
+  "output": {
+    "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/aprime_targets.csv",
+    "sha256": "f5f5893f8b5c1aa51143a751c637d12707fac4d5a62ff7e0a1a2f7770c5dc528"
+  },
+  "verdict": null
+}
