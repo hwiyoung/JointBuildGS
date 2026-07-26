@@ -478,3 +478,32 @@
 - 정상 후속 training과 readout 모두 같은 pinned image/UID 범위의 writable cache
   계약을 사용하도록 일반화하되, recipe·시드·포즈·loss·extractor argv·채점 정의는
   변경하지 않는다.
+
+## FUS-W1-READOUT-ENV-002 — 공통 캐시 최초 병렬 JIT의 RAM cgroup 초과
+
+- Recorded: 2026-07-26 18:33 KST
+- Stage: §5 smoke point-cloud readout, approved `infra_retry_01`
+- Status: INFRASTRUCTURE RETRY FAILED; 원 실패·retry 실패 보존, 학습 후 점군 출력 0
+- writable `HOME`·`XDG_CACHE_HOME`·`TORCH_EXTENSIONS_DIR` 적용으로 기존
+  `/.cache` 권한 오류는 재발하지 않았다. 완료된 30k checkpoint의 Gaussian
+  `405,896`개를 연 뒤 gsplat CUDA extension 최초 빌드가 `ninja -j10`으로
+  실행됐고, NVCC 두 작업이 code 137(`Killed`)로 종료되어 전체 빌드가 실패했다.
+- Docker 메모리·swap cgroup은 발주 잠금대로 각각 `24g`였다. 이번 오류는 첫
+  rasterization 계산 전 CUDA extension 컴파일 단계에서 발생했으며
+  `readout.npz`·classification·Roofer·scoring 산출물은 없다. runtime counter는
+  `readout_runs_started=1`, `roofer_runs_started=0`, `scoring_runs_started=0`을
+  유지한다.
+- `infra_retry_01`의 고정 SHA-256은 `retry_started.json`
+  `19a923725a69be6e604bef94e70a4ab13c4225fa3cda68ae9ea283da7be0fb40`,
+  `extract_invocation.json`
+  `06f7604df76a1b5cb7cbf563a4ee11d1cf95979c9bc3e674c35126fcd3180ed7`,
+  `extract.stdout.log`
+  `6709a5779dd26ac8dbb6ecea6c73a49be285d79a58b039828e2f3746cdb37855`,
+  `retry_failed.json`
+  `a5be5a8800a8fd05f8778e21e75fdc2882b8e487a1a276ecdde4cc8a4993c149`다.
+- 동일 pinned training image에서 30k 학습을 완료한 기존
+  `training/.../infra_retry_01/runtime_env/torch_extensions/gsplat_cuda/`에는
+  `gsplat_cuda.so`를 포함한 완성 cache가 존재한다. 이 cache의 image·ABI·CUDA·
+  compute capability와 파일 SHA를 별도 검증하고, 검증된 복사본을 공통 cache에
+  provenance manifest와 함께 발행할 수 있는지는 후속 인프라 진단 대상으로
+  기록한다. 기존 training cache와 두 readout 실패 namespace는 수정하지 않는다.
