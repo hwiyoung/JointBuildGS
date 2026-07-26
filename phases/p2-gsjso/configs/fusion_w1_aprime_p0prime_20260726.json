@@ -1,0 +1,177 @@
+{
+  "schema": "jointbuildgs.fusion_w1_aprime.p0prime.config.v1",
+  "task_id": "FUS-W1-APRIME-T3-001",
+  "run_id": "20260726_fusion_w1_aprime",
+  "branch": "exp/fusion-w1",
+  "role": "P0prime_Aprime_filtered_class6_seed_plus_original_class2_ground_learning_zero_reference",
+  "implementation_files": [
+    "phases/p2-gsjso/configs/fusion_w1_aprime_p0prime_20260726.json",
+    "phases/p2-gsjso/scripts/fusion_w1_aprime_p0prime_20260726.py",
+    "phases/p2-gsjso/scripts/run_fusion_w1_aprime_p0prime_20260726.sh",
+    "phases/p2-gsjso/scripts/test_fusion_w1_aprime_p0prime_20260726.py"
+  ],
+  "targets": {
+    "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/aprime_targets.csv",
+    "sha256": "f5f5893f8b5c1aa51143a751c637d12707fac4d5a62ff7e0a1a2f7770c5dc528",
+    "id_field": "building_id",
+    "order_field": "aprime_order",
+    "expected_population": 9,
+    "manual_id_entry_forbidden": true
+  },
+  "preprocess_consumer": {
+    "stable_run_manifest": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/preprocess_manifest.json",
+    "run_schema": "jointbuildgs.fusion_w1_aprime.preprocess_run.v1",
+    "allowed_run_status": ["PARTIAL", "PASSED"],
+    "building_schema": "jointbuildgs.fusion_w1_aprime.preprocess_building.v1",
+    "required_building_status": "PASSED",
+    "required_cache_namespace": "aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2",
+    "required_pose_sha256": "28b38383a0b6d82656108e8f0e5e79711dcda93948ab2e89c1cd8f47215962a5",
+    "required_transform_application_count": 1,
+    "required_additional_transform_application_count": 0,
+    "seed_record": "seed.base_las",
+    "seed_role": "visibility_filtered_ALS_class6_training_seed",
+    "ground_record": "ground_readout_only.base_las",
+    "ground_role": "P0prime_and_readout_join_only_never_trainer",
+    "ground_source": "unaltered_original_ALS_class2_rows_within_20m_ground_buffer",
+    "required_crs": "EPSG:25832",
+    "required_vertical_datum": "orthometric",
+    "required_seed_class": 6,
+    "required_ground_class": 2,
+    "required_downsample_applied": false,
+    "required_ground_trainer_path_reference": false,
+    "required_ground_coordinate_rows_unaltered": true,
+    "required_ground_source_row_order_preserved": false,
+    "ground_preprocess_row_order_note": "ALS tile access is deterministically x-sorted",
+    "allow_seed_too_small": true,
+    "old_arm_a_inputs_forbidden": [
+      "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/p0prime",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/training",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/readout_v1"
+    ]
+  },
+  "join_contract": {
+    "method": "semantic_row_exact_concatenation_class6_then_class2",
+    "class_order": [6, 2],
+    "geometry_changed": false,
+    "classification_changed": false,
+    "row_order_changed_within_source": false,
+    "rows_removed": 0,
+    "rows_added": 0,
+    "downsample_applied": false,
+    "las_version": "1.4",
+    "point_format": 3,
+    "scale_m": [0.001, 0.001, 0.001],
+    "require_rgb": true,
+    "coordinate_equality_tolerance_m": 1e-9,
+    "output_filename": "p0prime_aprime_class6_plus_class2_epsg25832.las"
+  },
+  "prereg_lock": {
+    "path": "phases/p2-gsjso/configs/fusion_w1_aprime_prereg_lock_20260726.json",
+    "sha256": "c39b43b03c5e2be1814021134075f3ee4f05070a86b6d97262ef67f14688fd96"
+  },
+  "footprint": {
+    "path": "phases/p0-audit/data/work/footprints/lod2_ground_plan.gpkg",
+    "sha256": "259cf04ec0c9411e669e75f61c37ea634290fcd40b230f6ed9b67328041c87fa",
+    "layer": "lod2_ground_plan",
+    "id_field": "building_id",
+    "crs": "EPSG:25832",
+    "role": "approved_LoD2_GroundSurface_XY_only",
+    "forbidden_as_input": ["LoD2 Z", "RoofSurface", "roof type", "semantic class", "final roof model"]
+  },
+  "reference": {
+    "lod2_dir": "phases/p0-audit/data/raw/lod2",
+    "locked_files": {
+      "phases/p0-audit/data/raw/lod2/690_5334.gml": "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314",
+      "phases/p0-audit/data/raw/lod2/690_5336.gml": "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674"
+    },
+    "role": "evaluation_only_after_roofer_output_frozen",
+    "score_time_z_shift_m": 0.0,
+    "absolute_metric_caveat": "reference GML is a laser-derived product; absolute interpretation remains reserved"
+  },
+  "canonical_helpers": {
+    "roofer_status": {
+      "path": "phases/p0-audit/scripts/08_roofer_w2.py",
+      "sha256": "ae655090915c56bfeee2be830a28e27520c2430e97d19e515a0aa046e4c79e97"
+    },
+    "roof_metrics": {
+      "path": "phases/p2-gsjso/scripts/e5_c001_8way.py",
+      "sha256": "12322a7fd49c0904eaf7160946c7ef3b521ed091038452f9a863bef37f0bcbdc"
+    },
+    "coverage_and_xy": {
+      "path": "phases/p2-gsjso/scripts/qs_baseline178_rescore.py",
+      "sha256": "0d752dade0b8677460b55d381a69db77f7bf611061fb7479710434358db33e9d"
+    },
+    "p0prime_execution_engine": {
+      "path": "phases/p2-gsjso/scripts/fusion_w1_seed_p0prime_20260725.py",
+      "sha256": "582011ed0d68e8552827b21105e1fb9355ed708cd59b337dd6165394a10ff248",
+      "reuse_scope": "Roofer_CityJSON_val3dity_metric_and_incremental_publication_conventions_only",
+      "old_preprocess_or_old_p0prime_result_consumption": false
+    }
+  },
+  "p0_refl_baseline": {
+    "path": "docs/qs_baseline178_scores.csv",
+    "sha256": "a3b89f1907e6e61aead702efe6b742b5c012615df77d90bdb2a859b5418d85ab",
+    "model_id": "als_w2_1",
+    "role": "als",
+    "expected_population": 178,
+    "expected_lod2_count": 178,
+    "comparison_role": "observational_attribution_control_only"
+  },
+  "roofer": {
+    "image": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+    "parameters": ["--id-attribute", "building_id", "--jobs", "3", "--srs", "EPSG:25832", "--bld-class", "6", "--grnd-class", "2", "--lod22"],
+    "reconstruction_parameter_overrides": [],
+    "default_reconstruction_parameters_preserved": true,
+    "outer_parallelism": 1,
+    "timeout_seconds_per_building": null
+  },
+  "tools": {
+    "image": "jointbuildgs-p0-tools:t0",
+    "image_id": "sha256:87bea02e5598a3d53a119b754191673497d52641bd8ea4106ffee653407579b0",
+    "val3dity_version": "2.6.0"
+  },
+  "resource_lock": {
+    "memory": "24g",
+    "memory_swap": "24g",
+    "network": "none",
+    "serial_buildings": true,
+    "concurrent_with_learning": false,
+    "concurrent_with_readout": false
+  },
+  "score_contract": {
+    "baseline_role": "P0prime_Aprime_seed_only_learning_zero",
+    "rms_role": "P0prime_Aprime_reference_for_preregistered_seed_retention_gauge_2",
+    "assembly_lod2_success_definition": "Roofer feature exists AND rf_success is not false AND rf_pointcloud_unusable is not true AND rf_extrusion_mode is neither skip nor lod11_fallback AND CityJSON contains lod=2.2",
+    "val3dity_is_independent_from_assembly": true,
+    "metrics": ["assembly_lod2_success", "has_lod22_geometry", "lod1_fallback", "val3dity_valid", "plane_precision", "plane_recall", "plane_f1", "roof_rms_m", "roof_hausdorff_m", "roof_completeness", "face_count_ratio"],
+    "learning_runs_started": 0,
+    "new_inference_runs": 0,
+    "interpretation_or_verdict": null
+  },
+  "outputs": {
+    "root": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T3",
+    "building_dir_template": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T3/by_building/{building_id}",
+    "scores_csv": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T3/p0prime_aprime_scores.csv",
+    "progress": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T3/progress.json",
+    "failures_jsonl": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T3/failures.jsonl",
+    "final_manifest": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T3/manifest.json",
+    "driver_lock": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T3/driver.lock"
+  },
+  "publication": {
+    "scores_incremental_atomic_upsert": true,
+    "one_row_per_building": true,
+    "per_building_complete_receipt_written_after_scores_csv": true,
+    "partial_buildings_reviewable": true,
+    "failures_append_only": true,
+    "final_manifest_written_last": true,
+    "refuse_work_after_final_manifest": true
+  },
+  "input_schema_assumptions": [
+    "Only the A-prime stable preprocess manifest resolves a per-building seed and readout-only ground artifact.",
+    "The filtered class-6 LAS and separately published original class-2 LAS are concatenated class-6-first without row filtering, downsampling, coordinate movement, classification change, or reordering relative to either published LAS; the preprocess manifest separately records deterministic x-sorting relative to ALS tile access.",
+    "The approved GroundSurface XY is used only as the common Roofer footprint; no LoD2 Z, RoofSurface, roof type, semantic class, or final roof model enters assembly.",
+    "Reference GML is opened only after Roofer output is frozen, for scoring only.",
+    "No old arm-A preprocessing, training, readout, or old P0-prime result is a numeric input."
+  ]
+}
