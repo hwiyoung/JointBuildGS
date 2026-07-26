@@ -1,0 +1,100 @@
+{
+  "arm": "A",
+  "building_id": "DEBY_LOD2_42364609",
+  "claim_mode": "atomic_O_EXCL",
+  "command": [
+    "docker",
+    "compose",
+    "run",
+    "--rm",
+    "--no-deps",
+    "-T",
+    "--user",
+    "1000:1000",
+    "--name",
+    "jointbuildgs-fusw1-4b735631e6be",
+    "-e",
+    "NVIDIA_VISIBLE_DEVICES=1",
+    "-e",
+    "CUDA_VISIBLE_DEVICES=0",
+    "dev",
+    "python",
+    "-m",
+    "src.stage2.train",
+    "--config",
+    "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/resolved_config.yaml"
+  ],
+  "container_cuda_visible_devices": 0,
+  "cutoff_gate": {
+    "amendment": {
+      "approval_date_kst": "2026-07-26",
+      "approved_by": "김휘영",
+      "decision": "ABOLISH_0630_CUTOFF",
+      "effective_scope": {
+        "allow_new_training_launch_after_original_cutoff": true,
+        "queue_continues_until_stopped_by_human_or_existing_catastrophic_stop_rule": true
+      },
+      "original_cutoff_kst": "2026-07-26T06:30:00+09:00",
+      "path": "phases/p2-gsjso/configs/fusion_w1_cutoff_amendment_20260726.json",
+      "sha256": "0de46c6f4d458ef55b00ebc61a57a5eff44bb1f761e425b686d36ce6e4b33636",
+      "status": "PASSED",
+      "unchanged_locks": {
+        "corrected_pose_binding": true,
+        "gate_a_v2_pass": true,
+        "queue_order": true,
+        "recipe_and_starting_weights": true,
+        "scales_1_to_4": true,
+        "scoring_scripts": true,
+        "serial_readout_and_ram_cgroup": true,
+        "smoke_building_first": true,
+        "target_list": true
+      }
+    },
+    "cutoff": "2026-07-26T06:30:00+09:00",
+    "observed_at": "2026-07-26T08:13:22.951268+09:00",
+    "original_cutoff_reached": true,
+    "policy": "HUMAN_AMENDMENT_ABOLISHED_CUTOFF",
+    "seconds_remaining": null,
+    "seconds_since_original_cutoff": 6202.951268,
+    "status": "PASSED"
+  },
+  "docker_image": {
+    "image": "jointbuildgs:dev",
+    "image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396"
+  },
+  "git": {
+    "allowed_runtime_untracked_count": 281,
+    "branch": "exp/fusion-w1",
+    "head": "52aed8bd35066beb0bc8f0ce254e17df9187444e",
+    "required_ancestor": "53ff2899ce974d939f8e2eaa4caa0a3e38e6ce63",
+    "required_ancestor_of_head": true,
+    "unexpected_porcelain": []
+  },
+  "job_key": "DEBY_LOD2_42364609/arm_A/r1",
+  "materialization_manifest": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/materialization_manifest.json",
+  "materialization_manifest_sha256": "e33be9d5a35898025339a504ad022c66cd7ada6a5880181cd8dcd97d68346349",
+  "physical_gpu": 1,
+  "preprocess_full_snapshot_sha256": "0e7efe41051424ac88b1145250f073d2c255833d87f9a1d1df9c7883194a0f5f",
+  "prior_started_receipt": false,
+  "process_guard": {
+    "docker_matches": [],
+    "host_matches": [],
+    "patterns": [
+      "tum_mob_tsdf_extract",
+      "pilot_1wave_postprocess_driver",
+      "fusion_w1_seed_p0prime",
+      "run_primary4_assembly_validation",
+      "08_roofer_w2.py",
+      "pilot_1wave_scoring.py",
+      "fusion_w1.*scor",
+      "3dgi/roofer"
+    ],
+    "status": "PASSED"
+  },
+  "replicate": "r1",
+  "resolved_config_sha256": "8740ec2fc7fc47afa208b1ace51691e9fdfc706d7e39a2d15621e262b0f68140",
+  "run_id": "20260724_fusion_w1",
+  "schema": "jointbuildgs.fusion_w1.training_started.v1",
+  "seed": 1001,
+  "started_at": "2026-07-25T23:13:23.154604+00:00"
+}

@@ -1,0 +1,43 @@
+{
+  "by_job": {
+    "DEBY_LOD2_42364609/arm_A/r1": {
+      "claimed_at": "2026-07-25T23:13:23.181721+00:00",
+      "completed_at": "2026-07-26T07:17:54.739216+00:00",
+      "completed_via": "infra_retry_01",
+      "docker_compose_pid": 635779,
+      "docker_started_at": "2026-07-25T23:13:23.225081+00:00",
+      "elapsed_seconds": 4701.339036461897,
+      "failed_at": "2026-07-25T23:13:27.567055+00:00",
+      "infra_retry_claimed_at": "2026-07-26T05:59:32.934091+00:00",
+      "infra_retry_docker_started_at": "2026-07-26T05:59:32.972305+00:00",
+      "physical_gpu": 1,
+      "reason": "Docker training exited with code 1",
+      "retry_key": "DEBY_LOD2_42364609/arm_A/r1/infra_retry_01",
+      "retry_started_receipt": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/retry_started.json",
+      "state": "completed",
+      "transition_history": [
+        {
+          "at": "2026-07-26T05:59:32.934102+00:00",
+          "transition": "infra_retry_claimed"
+        },
+        {
+          "at": "2026-07-26T05:59:32.972315+00:00",
+          "transition": "infra_retry_docker_started"
+        },
+        {
+          "at": "2026-07-26T07:17:54.739227+00:00",
+          "transition": "completed"
+        }
+      ]
+    }
+  },
+  "docker_processes_started": 2,
+  "infrastructure_retries_claimed": 1,
+  "infrastructure_retry_docker_processes_started": 1,
+  "jobs_claimed": 1,
+  "jobs_completed": 1,
+  "jobs_failed": 1,
+  "run_id": "20260724_fusion_w1",
+  "schema": "jointbuildgs.fusion_w1.training_runtime_counters.v1",
+  "updated_at": "2026-07-26T07:17:54.739229+00:00"
+}

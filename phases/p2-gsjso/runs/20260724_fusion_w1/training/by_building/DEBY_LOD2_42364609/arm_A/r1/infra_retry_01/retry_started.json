@@ -1,0 +1,233 @@
+{
+  "arm": "A",
+  "building_id": "DEBY_LOD2_42364609",
+  "claim_mode": "atomic_O_EXCL_one_time_infrastructure_retry",
+  "command": [
+    "docker",
+    "compose",
+    "run",
+    "--rm",
+    "--no-deps",
+    "-T",
+    "--user",
+    "1000:1000",
+    "--name",
+    "jointbuildgs-fusw1-6dfdf3ebac1a",
+    "-e",
+    "NVIDIA_VISIBLE_DEVICES=1",
+    "-e",
+    "CUDA_VISIBLE_DEVICES=0",
+    "-e",
+    "HOME=/workspace/JointBuildGS/phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/runtime_env/home",
+    "-e",
+    "TORCH_EXTENSIONS_DIR=/workspace/JointBuildGS/phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/runtime_env/torch_extensions",
+    "-e",
+    "XDG_CACHE_HOME=/workspace/JointBuildGS/phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/runtime_env/xdg_cache",
+    "dev",
+    "python",
+    "-m",
+    "src.stage2.train",
+    "--config",
+    "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/resolved_config.yaml"
+  ],
+  "cutoff_gate": {
+    "amendment": {
+      "approval_date_kst": "2026-07-26",
+      "approved_by": "김휘영",
+      "decision": "ABOLISH_0630_CUTOFF",
+      "effective_scope": {
+        "allow_new_training_launch_after_original_cutoff": true,
+        "queue_continues_until_stopped_by_human_or_existing_catastrophic_stop_rule": true
+      },
+      "original_cutoff_kst": "2026-07-26T06:30:00+09:00",
+      "path": "phases/p2-gsjso/configs/fusion_w1_cutoff_amendment_20260726.json",
+      "sha256": "0de46c6f4d458ef55b00ebc61a57a5eff44bb1f761e425b686d36ce6e4b33636",
+      "status": "PASSED",
+      "unchanged_locks": {
+        "corrected_pose_binding": true,
+        "gate_a_v2_pass": true,
+        "queue_order": true,
+        "recipe_and_starting_weights": true,
+        "scales_1_to_4": true,
+        "scoring_scripts": true,
+        "serial_readout_and_ram_cgroup": true,
+        "smoke_building_first": true,
+        "target_list": true
+      }
+    },
+    "cutoff": "2026-07-26T06:30:00+09:00",
+    "observed_at": "2026-07-26T14:59:32.642248+09:00",
+    "original_cutoff_reached": true,
+    "policy": "HUMAN_AMENDMENT_ABOLISHED_CUTOFF",
+    "seconds_remaining": null,
+    "seconds_since_original_cutoff": 30572.642248,
+    "status": "PASSED"
+  },
+  "docker_image": {
+    "image": "jointbuildgs:dev",
+    "image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396"
+  },
+  "environment": {
+    "HOME": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/runtime_env/home",
+    "TORCH_EXTENSIONS_DIR": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/runtime_env/torch_extensions",
+    "XDG_CACHE_HOME": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/runtime_env/xdg_cache"
+  },
+  "git": {
+    "allowed_runtime_untracked_count": 289,
+    "branch": "exp/fusion-w1",
+    "changed_paths": [
+      "phases/p2-gsjso/configs/fusion_w1_readout_v1_20260726.json",
+      "phases/p2-gsjso/configs/fusion_w1_training_infra_retry_20260726.json",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/issues.md",
+      "phases/p2-gsjso/scripts/fusion_w1_readout_v1_20260726.py",
+      "phases/p2-gsjso/scripts/fusion_w1_training_v1_20260725.py",
+      "phases/p2-gsjso/scripts/run_fusion_w1_training_v1_20260725.sh",
+      "phases/p2-gsjso/scripts/test_fusion_w1_readout_v1_20260726.py",
+      "phases/p2-gsjso/scripts/test_fusion_w1_training_v1_20260725.py"
+    ],
+    "commit_distance": 1,
+    "head": "8746d44be5f0eaaa75104bd801704596dfd8bea0",
+    "materialization_head": "52aed8bd35066beb0bc8f0ce254e17df9187444e",
+    "required_ancestor": "53ff2899ce974d939f8e2eaa4caa0a3e38e6ce63",
+    "required_ancestor_of_head": true,
+    "retry_head": "8746d44be5f0eaaa75104bd801704596dfd8bea0",
+    "unexpected_porcelain": []
+  },
+  "job_key": "DEBY_LOD2_42364609/arm_A/r1",
+  "materialization": {
+    "path": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/materialization_manifest.json",
+    "sha256": "e33be9d5a35898025339a504ad022c66cd7ada6a5880181cd8dcd97d68346349"
+  },
+  "optimizer_restart_completed_steps": 0,
+  "original_failure": {
+    "checkpoint_files": 0,
+    "failed": {
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/failed.json",
+      "sha256": "729c0d76a2468bd8f1c7e2c49f26ba32251e1ea51f48418070bce19048b59ecf"
+    },
+    "full_state": {
+      "last_completed_steps": 0,
+      "latest_full_checkpoint": null,
+      "learning_runs_started": 0,
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/full_state_manifest.json",
+      "sha256": "29e9023353c15a15072339b831c767e72f2245f5d90ee3ffd4657ff5c5f9a60d"
+    },
+    "log": {
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/training.log",
+      "sha256": "bd3fbc73e8535a5062b9d06fac6f6d3714ca3112b33a446d18c4b4df9aaea817"
+    },
+    "loss_csv_files": 0,
+    "original_file_snapshot": {
+      "effective_config.json": "34bf941f5b0fe3e1fc55c8cd3a928b164556eb8db296fb1bac654ab23af872ea",
+      "failed.json": "729c0d76a2468bd8f1c7e2c49f26ba32251e1ea51f48418070bce19048b59ecf",
+      "full_state_manifest.json": "29e9023353c15a15072339b831c767e72f2245f5d90ee3ffd4657ff5c5f9a60d",
+      "materialization_manifest.json": "e33be9d5a35898025339a504ad022c66cd7ada6a5880181cd8dcd97d68346349",
+      "resolved_config.yaml": "8740ec2fc7fc47afa208b1ace51691e9fdfc706d7e39a2d15621e262b0f68140",
+      "started.json": "1e926bfdb96e33d1bcb77fd28b69e26102413fd5deb4be76459d9fd8988bf9f3",
+      "tb/events.out.tfevents.1785021206.d57f260c8e29.1.0": "af4cee48b5b8bf8a7818124c400b77c6aae0f2ef61b6e5693be034371a019c85",
+      "training.log": "bd3fbc73e8535a5062b9d06fac6f6d3714ca3112b33a446d18c4b4df9aaea817",
+      "view_roles.json": "1d2de3308250e84dafdb894cb50870964fb640ee44c3a8c53f62b65eafd92cd8"
+    },
+    "original_file_snapshot_sha256": "0bf2a1b10272c16dcf5383169816b41781305f37e3a266c4d074f33b2f77c8dd",
+    "started": {
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/started.json",
+      "sha256": "1e926bfdb96e33d1bcb77fd28b69e26102413fd5deb4be76459d9fd8988bf9f3"
+    }
+  },
+  "physical_gpu": 1,
+  "policy": {
+    "allowed_resolved_config_differences": [
+      "out_dir"
+    ],
+    "allowed_retry_commit_paths": [
+      "phases/p2-gsjso/configs/fusion_w1_readout_v1_20260726.json",
+      "phases/p2-gsjso/configs/fusion_w1_training_infra_retry_20260726.json",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/issues.md",
+      "phases/p2-gsjso/scripts/fusion_w1_readout_v1_20260726.py",
+      "phases/p2-gsjso/scripts/fusion_w1_training_v1_20260725.py",
+      "phases/p2-gsjso/scripts/run_fusion_w1_training_v1_20260725.sh",
+      "phases/p2-gsjso/scripts/test_fusion_w1_readout_v1_20260726.py",
+      "phases/p2-gsjso/scripts/test_fusion_w1_training_v1_20260725.py"
+    ],
+    "approval_date_kst": "2026-07-26",
+    "approved_by": "김휘영",
+    "attempt_directory": "infra_retry_01",
+    "maximum_retries_per_job": 1,
+    "path": "phases/p2-gsjso/configs/fusion_w1_training_infra_retry_20260726.json",
+    "preservation_contract": {
+      "original_failed_receipt_immutable": true,
+      "original_log_immutable": true,
+      "original_partial_outputs_immutable": true,
+      "original_started_receipt_immutable": true,
+      "retry_from_optimizer_step_zero": true,
+      "retry_receipts_exclusive": true
+    },
+    "required_failure": {
+      "artifact_sha256": {
+        "failed": "729c0d76a2468bd8f1c7e2c49f26ba32251e1ea51f48418070bce19048b59ecf",
+        "full_state": "29e9023353c15a15072339b831c767e72f2245f5d90ee3ffd4657ff5c5f9a60d",
+        "log": "bd3fbc73e8535a5062b9d06fac6f6d3714ca3112b33a446d18c4b4df9aaea817",
+        "started": "1e926bfdb96e33d1bcb77fd28b69e26102413fd5deb4be76459d9fd8988bf9f3"
+      },
+      "last_completed_steps": 0,
+      "latest_full_checkpoint": null,
+      "learning_runs_started": 0,
+      "log_markers": [
+        "gsplat/cuda/_backend.py",
+        "PermissionError: [Errno 13] Permission denied: '/.cache'"
+      ],
+      "return_code": 1
+    },
+    "required_materialization_head": "52aed8bd35066beb0bc8f0ce254e17df9187444e",
+    "required_retry_commit_distance": 1,
+    "retry_kind": "GSPLAT_JIT_CACHE_PERMISSION_PREOPTIMIZER",
+    "run_id": "20260724_fusion_w1",
+    "schema": "jointbuildgs.fusion_w1.training_infra_retry_policy.v1",
+    "sha256": "a4509b3989654edc822a052da6568577cf139056affb40c99415118c4baadbcb",
+    "status": "APPROVED",
+    "writable_environment": {
+      "HOME": "runtime_env/home",
+      "TORCH_EXTENSIONS_DIR": "runtime_env/torch_extensions",
+      "XDG_CACHE_HOME": "runtime_env/xdg_cache"
+    }
+  },
+  "process_guard": {
+    "docker_matches": [],
+    "host_matches": [],
+    "patterns": [
+      "tum_mob_tsdf_extract",
+      "pilot_1wave_postprocess_driver",
+      "fusion_w1_seed_p0prime",
+      "run_primary4_assembly_validation",
+      "08_roofer_w2.py",
+      "pilot_1wave_scoring.py",
+      "fusion_w1.*scor",
+      "3dgi/roofer"
+    ],
+    "status": "PASSED"
+  },
+  "replicate": "r1",
+  "retry_config": {
+    "difference_keys": [
+      "out_dir"
+    ],
+    "environment_paths": {
+      "HOME": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/runtime_env/home",
+      "TORCH_EXTENSIONS_DIR": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/runtime_env/torch_extensions",
+      "XDG_CACHE_HOME": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/runtime_env/xdg_cache"
+    },
+    "max_iter": 30000,
+    "original_out": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1",
+    "original_resolved_config": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/resolved_config.yaml",
+    "original_resolved_config_sha256": "8740ec2fc7fc47afa208b1ace51691e9fdfc706d7e39a2d15621e262b0f68140",
+    "retry_out": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01",
+    "retry_resolved_config": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/resolved_config.yaml",
+    "retry_resolved_config_sha256": "5095f58e29a29fb6aed0339ca5de94a7fdd1af4e1b60e7377bf6175363172475",
+    "seed": 1001
+  },
+  "retry_key": "DEBY_LOD2_42364609/arm_A/r1/infra_retry_01",
+  "run_id": "20260724_fusion_w1",
+  "schema": "jointbuildgs.fusion_w1.training_infra_retry_started.v1",
+  "seed": 1001,
+  "started_at": "2026-07-26T05:59:32.910617+00:00"
+}

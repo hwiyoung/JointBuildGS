@@ -1,0 +1,275 @@
+{
+  "arm": "A",
+  "building_id": "DEBY_LOD2_42364609",
+  "completed_at": "2026-07-26T07:17:54.687871+00:00",
+  "docker_compose_pid": 635779,
+  "elapsed_seconds": 4701.339036461897,
+  "infrastructure_retry": {
+    "optimizer_restart_completed_steps": 0,
+    "original_failed_receipt": {
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/failed.json",
+      "sha256": "729c0d76a2468bd8f1c7e2c49f26ba32251e1ea51f48418070bce19048b59ecf"
+    },
+    "original_file_snapshot_sha256": "0bf2a1b10272c16dcf5383169816b41781305f37e3a266c4d074f33b2f77c8dd",
+    "original_started_receipt": {
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/started.json",
+      "sha256": "1e926bfdb96e33d1bcb77fd28b69e26102413fd5deb4be76459d9fd8988bf9f3"
+    },
+    "policy": {
+      "allowed_resolved_config_differences": [
+        "out_dir"
+      ],
+      "allowed_retry_commit_paths": [
+        "phases/p2-gsjso/configs/fusion_w1_readout_v1_20260726.json",
+        "phases/p2-gsjso/configs/fusion_w1_training_infra_retry_20260726.json",
+        "phases/p2-gsjso/runs/20260724_fusion_w1/issues.md",
+        "phases/p2-gsjso/scripts/fusion_w1_readout_v1_20260726.py",
+        "phases/p2-gsjso/scripts/fusion_w1_training_v1_20260725.py",
+        "phases/p2-gsjso/scripts/run_fusion_w1_training_v1_20260725.sh",
+        "phases/p2-gsjso/scripts/test_fusion_w1_readout_v1_20260726.py",
+        "phases/p2-gsjso/scripts/test_fusion_w1_training_v1_20260725.py"
+      ],
+      "approval_date_kst": "2026-07-26",
+      "approved_by": "김휘영",
+      "attempt_directory": "infra_retry_01",
+      "maximum_retries_per_job": 1,
+      "path": "phases/p2-gsjso/configs/fusion_w1_training_infra_retry_20260726.json",
+      "preservation_contract": {
+        "original_failed_receipt_immutable": true,
+        "original_log_immutable": true,
+        "original_partial_outputs_immutable": true,
+        "original_started_receipt_immutable": true,
+        "retry_from_optimizer_step_zero": true,
+        "retry_receipts_exclusive": true
+      },
+      "required_failure": {
+        "artifact_sha256": {
+          "failed": "729c0d76a2468bd8f1c7e2c49f26ba32251e1ea51f48418070bce19048b59ecf",
+          "full_state": "29e9023353c15a15072339b831c767e72f2245f5d90ee3ffd4657ff5c5f9a60d",
+          "log": "bd3fbc73e8535a5062b9d06fac6f6d3714ca3112b33a446d18c4b4df9aaea817",
+          "started": "1e926bfdb96e33d1bcb77fd28b69e26102413fd5deb4be76459d9fd8988bf9f3"
+        },
+        "last_completed_steps": 0,
+        "latest_full_checkpoint": null,
+        "learning_runs_started": 0,
+        "log_markers": [
+          "gsplat/cuda/_backend.py",
+          "PermissionError: [Errno 13] Permission denied: '/.cache'"
+        ],
+        "return_code": 1
+      },
+      "required_materialization_head": "52aed8bd35066beb0bc8f0ce254e17df9187444e",
+      "required_retry_commit_distance": 1,
+      "retry_kind": "GSPLAT_JIT_CACHE_PERMISSION_PREOPTIMIZER",
+      "run_id": "20260724_fusion_w1",
+      "schema": "jointbuildgs.fusion_w1.training_infra_retry_policy.v1",
+      "sha256": "a4509b3989654edc822a052da6568577cf139056affb40c99415118c4baadbcb",
+      "status": "APPROVED",
+      "writable_environment": {
+        "HOME": "runtime_env/home",
+        "TORCH_EXTENSIONS_DIR": "runtime_env/torch_extensions",
+        "XDG_CACHE_HOME": "runtime_env/xdg_cache"
+      }
+    },
+    "resolved_config_difference_keys": [
+      "out_dir"
+    ],
+    "retry_completed_receipt": {
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/retry_completed.json",
+      "sha256": "cc7c8590841fd9cd7762dd991bba6f4db4ac88024623e1af20d265f769e2ab21"
+    },
+    "retry_started_receipt": {
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/retry_started.json",
+      "sha256": "3cda8f8ec284b247d85120f3aa312a0a79c2f104a9c2bd8110a0a0b49d3603b3"
+    }
+  },
+  "job_key": "DEBY_LOD2_42364609/arm_A/r1",
+  "log": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/training.log",
+  "log_sha256": "7cb5502f4b95a59447f4c8c5ef927d8cd66ef7440a15cd3c4b80b0bc00da1d74",
+  "loss_share_aggregation": {
+    "aggregate_csv": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_loss_shares.csv",
+    "aggregate_rows_after_operation": 600,
+    "aggregate_sha256_after_operation": "9e588c9c3123a24262a0bb101ac4189ddba2f068f75a87dd727ec105f9e4cc7d",
+    "append_performed": true,
+    "arm": "A",
+    "building_id": "DEBY_LOD2_42364609",
+    "created_at": "2026-07-26T07:17:54.636100+00:00",
+    "idempotent_existing_rows": false,
+    "job_rows_sha256": "664e447256182a1c0ae5160abcee326cc36eeaf6e4199c386528ed634e5bcda5",
+    "lock": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_loss_shares.csv.lock",
+    "materialization_manifest": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/materialization_manifest.json",
+    "materialization_manifest_sha256": "e33be9d5a35898025339a504ad022c66cd7ada6a5880181cd8dcd97d68346349",
+    "publication": {
+      "aggregate_csv_atomic_replace": true,
+      "aggregation_executed_under_flock": true,
+      "receipt_written_after_csv": true
+    },
+    "replicate": "r1",
+    "run_id": "20260724_fusion_w1",
+    "schema": "jointbuildgs.fusion_w1.loss_share_aggregation.v1",
+    "seed": 1001,
+    "source_csv": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/audit/loss_grad_norms.csv",
+    "source_csv_sha256": "245648d2f2819fa160aba1d3d93a57baa5c2ece6943791b3f1a1b08f59d75656",
+    "source_rows": 600,
+    "status": "PASSED"
+  },
+  "materialization": {
+    "path": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/materialization_manifest.json",
+    "resolved_config": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/resolved_config.yaml",
+    "resolved_config_sha256": "8740ec2fc7fc47afa208b1ace51691e9fdfc706d7e39a2d15621e262b0f68140",
+    "sha256": "e33be9d5a35898025339a504ad022c66cd7ada6a5880181cd8dcd97d68346349"
+  },
+  "pose_gate_binding": {
+    "arm_binding_sha256": {
+      "A": "0bae45ddcf66c2586e459ada07e3a7811a1f1856a2e2669cb4fffb1cf0757207",
+      "B": "118d5e35499e6dd4ea655932348cb44b7d8422479d352a1c2f53594a163c542a"
+    },
+    "corrected_images_sha256": "28b38383a0b6d82656108e8f0e5e79711dcda93948ab2e89c1cd8f47215962a5",
+    "optimizer_densification_base": {
+      "condition": "02_photo_control",
+      "exact_inherited_keys": [
+        "mvs_seed_init_opacity",
+        "seed_protect",
+        "seed_protect_until_iter",
+        "w_photo",
+        "photo_lam",
+        "w_nc",
+        "load_depth",
+        "load_normal",
+        "lr_means",
+        "lr_scales",
+        "lr_quats",
+        "lr_opacities",
+        "lr_sh0",
+        "lr_shN",
+        "prune_opa",
+        "grow_grad2d",
+        "grow_scale3d",
+        "prune_scale3d",
+        "refine_start_iter",
+        "refine_stop_iter",
+        "refine_every",
+        "reset_every",
+        "eval_every",
+        "ckpt_every"
+      ],
+      "fusion_specific_recipe_changes": [
+        "per_building_data_and_photo_support_paths",
+        "init_pointcloud_mode_replace_with_colored_ALS",
+        "max_iter_30000",
+        "depth_normal_exp_decay",
+        "distortion_stage2_activation",
+        "full_state_30k_and_loss_share_audit_runtime_controls"
+      ],
+      "path": "phases/p2-gsjso/runs/20260721_pilot_1wave/training/resolved_configs/02_seed1001.yaml",
+      "reuse": "common_survival_photo_optimizer_and_densification_base",
+      "sha256": "47e3f10335bc7ced21bfe842c8ea33387bded5e3f198234d7ac8037840d69a40"
+    },
+    "r1_manifest": "phases/p2-gsjso/runs/20260724_fusion_w1/resume_v2/r1_pose_adoption_manifest.json",
+    "r1_manifest_sha256": "f59cb9cc404dd1a262a3fb03df4df665514e2862d66be371baa05a372e825a42",
+    "r1_pose_json_pointer": "/derived_sha256/images.bin",
+    "r2_gate_json_pointer": "/gate_slots/status",
+    "r2_gate_status": "PASS",
+    "r2_manifest": "phases/p2-gsjso/runs/20260724_fusion_w1/resume_v2/r2_gate_a_v2_registration.json",
+    "r2_manifest_sha256": "a24697f3413b8d4b2777703e26d58234befe1c835dd282ce5da428d1c562f967",
+    "transform_application_count": 1
+  },
+  "preprocess_binding": {
+    "artifact_count": 248,
+    "artifact_records_sha256": "047438698d5920a9cf381bbf2d7a4dbd1b4ead817bdc88ae008661d24ca40d58",
+    "building_id": "DEBY_LOD2_42364609",
+    "corrected_images_sha256": "28b38383a0b6d82656108e8f0e5e79711dcda93948ab2e89c1cd8f47215962a5",
+    "data_root": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609",
+    "full_snapshot_sha256": "0e7efe41051424ac88b1145250f073d2c255833d87f9a1d1df9c7883194a0f5f",
+    "manifest": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/preprocess_manifest.json",
+    "manifest_sha256": "6a762e5631b78b8d93cdd45819fc179882cd1eabaa8c4e8be0159b19b02344b1",
+    "photo_mask_dir": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/photo_support_masks",
+    "photo_mask_paths": {
+      "DJI_20241217084825_0176_D.JPG": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/photo_support_masks/DJI_20241217084825_0176_D.npy",
+      "DJI_20241217084827_0177_D.JPG": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/photo_support_masks/DJI_20241217084827_0177_D.npy",
+      "DJI_20241217084829_0178_D.JPG": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/photo_support_masks/DJI_20241217084829_0178_D.npy",
+      "DJI_20241217084831_0179_D.JPG": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/photo_support_masks/DJI_20241217084831_0179_D.npy",
+      "DJI_20241217084833_0180_D.JPG": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/photo_support_masks/DJI_20241217084833_0180_D.npy",
+      "DJI_20241217084835_0181_D.JPG": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/photo_support_masks/DJI_20241217084835_0181_D.npy",
+      "DJI_20241217084837_0182_D.JPG": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/photo_support_masks/DJI_20241217084837_0182_D.npy",
+      "DJI_20241217094536_0024_D.JPG": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/photo_support_masks/DJI_20241217094536_0024_D.npy",
+      "DJI_20241217094953_0023_D.JPG": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/photo_support_masks/DJI_20241217094953_0023_D.npy",
+      "DJI_20241217095011_0032_D.JPG": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/photo_support_masks/DJI_20241217095011_0032_D.npy",
+      "DJI_20241217095013_0033_D.JPG": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/photo_support_masks/DJI_20241217095013_0033_D.npy",
+      "DJI_20241217095103_0058_D.JPG": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/photo_support_masks/DJI_20241217095103_0058_D.npy",
+      "DJI_20241217095121_0067_D.JPG": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/photo_support_masks/DJI_20241217095121_0067_D.npy",
+      "DJI_20241217095123_0068_D.JPG": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/photo_support_masks/DJI_20241217095123_0068_D.npy",
+      "DJI_20241217095125_0069_D.JPG": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/photo_support_masks/DJI_20241217095125_0069_D.npy",
+      "DJI_20241217095127_0070_D.JPG": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/photo_support_masks/DJI_20241217095127_0070_D.npy",
+      "DJI_20241217095139_0076_D.JPG": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/photo_support_masks/DJI_20241217095139_0076_D.npy",
+      "DJI_20241217095141_0077_D.JPG": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/photo_support_masks/DJI_20241217095141_0077_D.npy",
+      "DJI_20241217095143_0078_D.JPG": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/photo_support_masks/DJI_20241217095143_0078_D.npy",
+      "DJI_20241217095145_0079_D.JPG": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/photo_support_masks/DJI_20241217095145_0079_D.npy",
+      "DJI_20241217095147_0080_D.JPG": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/photo_support_masks/DJI_20241217095147_0080_D.npy",
+      "DJI_20241217095149_0081_D.JPG": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/photo_support_masks/DJI_20241217095149_0081_D.npy",
+      "DJI_20241217101341_0023_D.JPG": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/photo_support_masks/DJI_20241217101341_0023_D.npy",
+      "DJI_20241217101453_0037_D.JPG": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/photo_support_masks/DJI_20241217101453_0037_D.npy",
+      "DJI_20241217101542_0008_D.JPG": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/photo_support_masks/DJI_20241217101542_0008_D.npy",
+      "DJI_20241217102529_0017_D.JPG": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/photo_support_masks/DJI_20241217102529_0017_D.npy",
+      "DJI_20241217102933_0012_D.JPG": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/photo_support_masks/DJI_20241217102933_0012_D.npy",
+      "DJI_20241217102935_0013_D.JPG": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/photo_support_masks/DJI_20241217102935_0013_D.npy",
+      "DJI_20241217102937_0014_D.JPG": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/photo_support_masks/DJI_20241217102937_0014_D.npy",
+      "DJI_20241217102939_0015_D.JPG": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/photo_support_masks/DJI_20241217102939_0015_D.npy"
+    },
+    "seed_canonical_npz": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/seed_canonical.npz",
+    "seed_canonical_npz_sha256": "06aa49b515555f8294d2b6a1880192150bbd8d6c5a699484afd34050dc98614b",
+    "selected_names": [
+      "DJI_20241217084827_0177_D.JPG",
+      "DJI_20241217095127_0070_D.JPG",
+      "DJI_20241217102933_0012_D.JPG",
+      "DJI_20241217084829_0178_D.JPG",
+      "DJI_20241217084825_0176_D.JPG",
+      "DJI_20241217095139_0076_D.JPG",
+      "DJI_20241217102935_0013_D.JPG",
+      "DJI_20241217102939_0015_D.JPG",
+      "DJI_20241217095141_0077_D.JPG",
+      "DJI_20241217084837_0182_D.JPG",
+      "DJI_20241217084833_0180_D.JPG",
+      "DJI_20241217095125_0069_D.JPG",
+      "DJI_20241217102529_0017_D.JPG",
+      "DJI_20241217102937_0014_D.JPG",
+      "DJI_20241217095121_0067_D.JPG",
+      "DJI_20241217094536_0024_D.JPG",
+      "DJI_20241217084835_0181_D.JPG",
+      "DJI_20241217095149_0081_D.JPG",
+      "DJI_20241217094953_0023_D.JPG",
+      "DJI_20241217084831_0179_D.JPG",
+      "DJI_20241217095123_0068_D.JPG",
+      "DJI_20241217095013_0033_D.JPG",
+      "DJI_20241217101453_0037_D.JPG",
+      "DJI_20241217095145_0079_D.JPG",
+      "DJI_20241217095011_0032_D.JPG",
+      "DJI_20241217101341_0023_D.JPG",
+      "DJI_20241217095143_0078_D.JPG",
+      "DJI_20241217095103_0058_D.JPG",
+      "DJI_20241217101542_0008_D.JPG",
+      "DJI_20241217095147_0080_D.JPG"
+    ],
+    "subset_corrected_images_sha256": "46e94dc3efa30f433de323b6ae27562ddfe278af6683d7ee55472b570a66bb16",
+    "supervision_index": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision_index.csv",
+    "view_count": 30,
+    "views_csv": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/views.csv"
+  },
+  "replicate": "r1",
+  "return_code": 0,
+  "run_id": "20260724_fusion_w1",
+  "schema": "jointbuildgs.fusion_w1.training_completed.v1",
+  "seed": 1001,
+  "training_completion": {
+    "checkpoint": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/ckpt/step_030000.pt",
+    "checkpoint_sha256": "5e1342f2326451c91c916d8ea67c18dd6d893e31e2838a1dbcf4c92ed39a372b",
+    "completed_optimizer_updates": 30000,
+    "final_checkpoint": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/ckpt/final.pt",
+    "final_checkpoint_sha256": "9db46440bbb432904ab912729c7230d5a06a0b2f5855be1b3bd003d9168b3b65",
+    "full_state_manifest": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/full_state_manifest.json",
+    "full_state_manifest_sha256": "192f761a4b31f2c1739eb86f85eb058bcbc4b11920f1ea0bf190d7f77d752b3d",
+    "loss_share_csv": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/audit/loss_grad_norms.csv",
+    "loss_share_csv_sha256": "245648d2f2819fa160aba1d3d93a57baa5c2ece6943791b3f1a1b08f59d75656",
+    "status": "PASSED"
+  }
+}

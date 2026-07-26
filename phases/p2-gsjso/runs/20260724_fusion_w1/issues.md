@@ -431,3 +431,50 @@
 - 이 호환성 검증과 함께 readout의 정적 입력 잠금은 현재 커밋된 training
   config와 P0′ driver의 실제 SHA-256으로 갱신했으며, recipe·시드·입력·점수
   정의에는 변경이 없다.
+
+## FUS-W1-TRAIN-001 — 첫 arm A r1 융합학습 30k 완료
+
+- Recorded: 2026-07-26 17:15 KST
+- Stage: §7 smoke `DEBY_LOD2_42364609` arm A r1, approved infrastructure retry
+- Status: TRAINING COMPLETE; readout 전 관찰 기록, 판정 없음
+- `infra_retry_01`은 optimizer update `30,000/30,000`을 완료했고 return code 0,
+  wall time `4,701.339 s`(78.36분), 최종 Gaussian 수 `405,896`을 기록했다.
+- 실제 recipe는 보정 포즈의 29 train view와 색 부여 ALS 시드 7,993점을 사용해
+  photo loss `1.0`, ALS 유래 depth `0.5 -> 0.05`, normal `0.05 -> 0.005`,
+  normal consistency `0.05`, 후반 distortion regularization을 함께 최적화했다.
+  따라서 이 런은 관문/시드 점검이 아니라 원 발주 §4의 arm A 융합학습이다.
+- 완료 영수증은 원 pre-optimizer 실패 영수증을 삭제하지 않고 retry started/completed,
+  30k full-state manifest, final checkpoint, loss-share 600행을 SHA-256으로 결속한다.
+- 고정 검증 `run_fusion_w1_training_v1_20260725.sh check
+  DEBY_LOD2_42364609 A r1`은 `PASSED`; readout 회귀시험은 `39/39 OK`였다.
+
+## FUS-W1-ORCH-001 — 첫 readout systemd 작업 디렉터리 누락
+
+- Recorded: 2026-07-26 17:06 KST
+- Stage: §7 smoke readout systemd dispatch
+- Status: RESOLVED DISPATCH ERROR; readout counter 0, 과학 산출 0
+- 최초 transient unit은 systemd에 repo working directory를 명시하지 않아 wrapper의
+  `git rev-parse --show-toplevel` 이전 status 128로 종료됐다. readout wrapper,
+  Docker, 점군 추출에는 진입하지 않았고 run 산출물·카운터를 만들지 않았다.
+- 후속 dispatch는 절대 wrapper 경로와 repo working directory를 명시했다. 이 오류는
+  ALS·영상·포즈·학습 수렴 또는 점군 추출 실패로 분류하지 않는다.
+
+## FUS-W1-READOUT-ENV-001 — 점군 추출 gsplat JIT 캐시 쓰기 권한 오류
+
+- Recorded: 2026-07-26 17:10 KST
+- Stage: §5 smoke point-cloud readout
+- Status: INFRASTRUCTURE RETRY AUTHORIZED BY HUMAN; 원 실패 보존, 재시도 미착수
+- readout은 완료된 30k checkpoint(N=405,896)를 열고 첫 2DGS rasterization 호출에서
+  gsplat CUDA lazy build가 `/.cache`를 만들려다
+  `PermissionError: [Errno 13] Permission denied: '/.cache'`로 종료됐다.
+  `readout.npz`는 생성되지 않았고 classification·Roofer·scoring에는 진입하지 않았다.
+- 원 `extract_invocation.json`, `readout_started.json`, `extract.stdout.log`,
+  `failed.json`과 부분 footprint/materialization은 보존한다. 실패 영수증의
+  `retry_allowed=false`를 수정·삭제하지 않는다.
+- 김휘영의 2026-07-26 메시지 "캐시 설정을 적용하고 후속 작업을 진행"을 동일
+  pre-output 인프라 실패에 대한 명시적 재시도 승인으로 기록한다. 재시도는 별도
+  namespace·고정 원 파일 SHA·쓰기 가능한 HOME/XDG/TORCH cache·최대 1회 계약을
+  새로 발행한 뒤에만 허용한다.
+- 정상 후속 training과 readout 모두 같은 pinned image/UID 범위의 writable cache
+  계약을 사용하도록 일반화하되, recipe·시드·포즈·loss·extractor argv·채점 정의는
+  변경하지 않는다.

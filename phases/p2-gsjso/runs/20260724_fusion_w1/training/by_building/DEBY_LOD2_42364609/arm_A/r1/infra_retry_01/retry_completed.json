@@ -1,0 +1,56 @@
+{
+  "completed_at": "2026-07-26T07:17:54.687871+00:00",
+  "docker_compose_pid": 635779,
+  "elapsed_seconds": 4701.339036461897,
+  "job_key": "DEBY_LOD2_42364609/arm_A/r1",
+  "log": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/training.log",
+  "log_sha256": "7cb5502f4b95a59447f4c8c5ef927d8cd66ef7440a15cd3c4b80b0bc00da1d74",
+  "loss_share_aggregation": {
+    "aggregate_csv": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_loss_shares.csv",
+    "aggregate_rows_after_operation": 600,
+    "aggregate_sha256_after_operation": "9e588c9c3123a24262a0bb101ac4189ddba2f068f75a87dd727ec105f9e4cc7d",
+    "append_performed": true,
+    "arm": "A",
+    "building_id": "DEBY_LOD2_42364609",
+    "created_at": "2026-07-26T07:17:54.636100+00:00",
+    "idempotent_existing_rows": false,
+    "job_rows_sha256": "664e447256182a1c0ae5160abcee326cc36eeaf6e4199c386528ed634e5bcda5",
+    "lock": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_loss_shares.csv.lock",
+    "materialization_manifest": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/materialization_manifest.json",
+    "materialization_manifest_sha256": "e33be9d5a35898025339a504ad022c66cd7ada6a5880181cd8dcd97d68346349",
+    "publication": {
+      "aggregate_csv_atomic_replace": true,
+      "aggregation_executed_under_flock": true,
+      "receipt_written_after_csv": true
+    },
+    "replicate": "r1",
+    "run_id": "20260724_fusion_w1",
+    "schema": "jointbuildgs.fusion_w1.loss_share_aggregation.v1",
+    "seed": 1001,
+    "source_csv": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/audit/loss_grad_norms.csv",
+    "source_csv_sha256": "245648d2f2819fa160aba1d3d93a57baa5c2ece6943791b3f1a1b08f59d75656",
+    "source_rows": 600,
+    "status": "PASSED"
+  },
+  "original_failure_snapshot_sha256": "0bf2a1b10272c16dcf5383169816b41781305f37e3a266c4d074f33b2f77c8dd",
+  "retry_key": "DEBY_LOD2_42364609/arm_A/r1/infra_retry_01",
+  "retry_started_receipt": {
+    "path": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/retry_started.json",
+    "sha256": "3cda8f8ec284b247d85120f3aa312a0a79c2f104a9c2bd8110a0a0b49d3603b3"
+  },
+  "return_code": 0,
+  "run_id": "20260724_fusion_w1",
+  "schema": "jointbuildgs.fusion_w1.training_infra_retry_completed.v1",
+  "training_completion": {
+    "checkpoint": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/ckpt/step_030000.pt",
+    "checkpoint_sha256": "5e1342f2326451c91c916d8ea67c18dd6d893e31e2838a1dbcf4c92ed39a372b",
+    "completed_optimizer_updates": 30000,
+    "final_checkpoint": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/ckpt/final.pt",
+    "final_checkpoint_sha256": "9db46440bbb432904ab912729c7230d5a06a0b2f5855be1b3bd003d9168b3b65",
+    "full_state_manifest": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/full_state_manifest.json",
+    "full_state_manifest_sha256": "192f761a4b31f2c1739eb86f85eb058bcbc4b11920f1ea0bf190d7f77d752b3d",
+    "loss_share_csv": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/audit/loss_grad_norms.csv",
+    "loss_share_csv_sha256": "245648d2f2819fa160aba1d3d93a57baa5c2ece6943791b3f1a1b08f59d75656",
+    "status": "PASSED"
+  }
+}

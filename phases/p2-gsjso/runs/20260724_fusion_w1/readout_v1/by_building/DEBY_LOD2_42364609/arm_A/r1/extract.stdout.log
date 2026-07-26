@@ -1,0 +1,40 @@
+[boxes] 1 target footprint boxes
+[sem] GS-semantic OFF (no sem_logits in ckpt or --no-sem); XYZ-only fusion
+[model] N=405896 ckpt=phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/ckpt/final.pt
+Traceback (most recent call last):
+  File "/opt/conda/lib/python3.11/site-packages/gsplat/cuda/_backend.py", line 83, in <module>
+    from gsplat import csrc as _C
+ImportError: cannot import name 'csrc' from 'gsplat' (/opt/conda/lib/python3.11/site-packages/gsplat/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/JointBuildGS/phases/p2-gsjso/scripts/tum_mob_tsdf_extract.py", line 185, in <module>
+    main()
+  File "/workspace/JointBuildGS/phases/p2-gsjso/scripts/tum_mob_tsdf_extract.py", line 112, in main
+    out = rasterization_2dgs(means=means, quats=quats, scales=scales, opacities=opac, colors=colors,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/lib/python3.11/site-packages/gsplat/rendering.py", line 1158, in rasterization_2dgs
+    proj_results = fully_fused_projection_2dgs(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/lib/python3.11/site-packages/gsplat/cuda/_wrapper.py", line 1331, in fully_fused_projection_2dgs
+    return _FullyFusedProjection2DGS.apply(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/lib/python3.11/site-packages/torch/autograd/function.py", line 574, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/lib/python3.11/site-packages/gsplat/cuda/_wrapper.py", line 1364, in forward
+    radii, means2d, depths, ray_transforms, normals = _make_lazy_cuda_func(
+                                                      ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/lib/python3.11/site-packages/gsplat/cuda/_wrapper.py", line 12, in call_cuda
+    from ._backend import _C
+  File "/opt/conda/lib/python3.11/site-packages/gsplat/cuda/_backend.py", line 88, in <module>
+    build_dir = _get_build_directory(name, verbose=False)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/lib/python3.11/site-packages/torch/utils/cpp_extension.py", line 2050, in _get_build_directory
+    os.makedirs(build_directory, exist_ok=True)
+  File "<frozen os>", line 215, in makedirs
+  File "<frozen os>", line 215, in makedirs
+  File "<frozen os>", line 215, in makedirs
+  File "<frozen os>", line 225, in makedirs
+PermissionError: [Errno 13] Permission denied: '/.cache'

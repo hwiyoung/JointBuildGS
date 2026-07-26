@@ -1,0 +1,30 @@
+{
+  "dataset_index": 29,
+  "decode_formula": "depth_m = decode_offset_m + (code-1)*decode_scale_m_per_code_step",
+  "decode_offset_m": 228.3478546142578,
+  "decode_scale_m_per_code_step": 0.0008148527248707494,
+  "depth_max_m": 281.7484130859375,
+  "depth_min_m": 228.3478546142578,
+  "depth_mode": "expected",
+  "eval_slot": 0,
+  "invalid_code": 0,
+  "iteration": 30000,
+  "png": "it030000_v0_depth.png",
+  "png_sha256": "2e256f2a989d2300d53e002061e7078d050e95a90ffb1e2ea9b287dc8502d99a",
+  "render_mode": "RGB+ED",
+  "schema": "jointbuildgs.stage2.expected_depth_png.v1",
+  "shape_hw": [
+    1013,
+    1400
+  ],
+  "source": "renderer_expected_depth",
+  "status": "encoded",
+  "tag": "final",
+  "unit": "m",
+  "valid_code_max": 65535,
+  "valid_code_min": 1,
+  "valid_pixel_count": 4623,
+  "valid_pixel_fraction": 0.003259765900437174,
+  "valid_rule": "isfinite(depth) AND depth>0",
+  "view_name": "DJI_20241217095147_0080_D.JPG"
+}
