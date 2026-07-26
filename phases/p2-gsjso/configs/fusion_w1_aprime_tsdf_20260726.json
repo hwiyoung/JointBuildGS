@@ -1,0 +1,67 @@
+{
+  "schema": "jointbuildgs.fusion_w1_aprime.tsdf.config.v1",
+  "task_id": "FUS-W1-APRIME-T2-001",
+  "run_id": "20260726_fusion_w1_aprime",
+  "branch": "exp/fusion-w1",
+  "implementation_files": [
+    "phases/p2-gsjso/configs/fusion_w1_aprime_tsdf_20260726.json",
+    "phases/p2-gsjso/scripts/fusion_w1_aprime_tsdf_20260726.py",
+    "phases/p2-gsjso/scripts/run_fusion_w1_aprime_t2_20260726.sh",
+    "phases/p2-gsjso/scripts/test_fusion_w1_aprime_tsdf_20260726.py"
+  ],
+  "prereg_binding": {
+    "path": "phases/p2-gsjso/configs/fusion_w1_aprime_prereg_lock_20260726.json",
+    "sha256": "c39b43b03c5e2be1814021134075f3ee4f05070a86b6d97262ef67f14688fd96",
+    "P5": "TSDF_fusion_plus_Marching_Cubes_then_0p1m_class6_surface_samples"
+  },
+  "aprime_custom_input_contract": {
+    "required_cache_namespace": "aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2",
+    "required_pose_sha256": "28b38383a0b6d82656108e8f0e5e79711dcda93948ab2e89c1cd8f47215962a5",
+    "required_preprocess_status": "PASSED",
+    "training_classes": [6],
+    "ground_or_sfm_training_rows": 0
+  },
+  "method": {
+    "rendered_depth": "gsplat_2dgs_surf_depth_render_median",
+    "integration_mask": "exact_class6_roof_TIN_M_j",
+    "alpha_threshold": null,
+    "tsdf_implementation": "Open3D_ScalableTSDFVolume",
+    "marching_cubes": "Open3D_extract_triangle_mesh",
+    "voxel_size_m": 0.05,
+    "sdf_trunc_m": 0.25,
+    "depth_truncation": "max(2*minimum_camera_radius,max_valid_prior_depth_m+1.0)",
+    "color_type": "RGB8",
+    "minimum_component_triangles": 50,
+    "mesh_sample_spacing_m": 0.1,
+    "mesh_sample_classification": 6,
+    "near_plane_m": 0.01,
+    "far_plane_m": 10000000000.0,
+    "downscale": 1.0,
+    "random_seed": 20260726
+  },
+  "coordinate_contract": {
+    "scene_reference_frame": "phases/p0-audit/data/work/opf/opf/scene_reference_frame.json",
+    "scene_reference_sha256": "fb408e9c97bdad6af7ad4a6e94be823be294030907ce92e395bd63490f77daf6",
+    "projection_datum_config": "configs/projection_datum.json",
+    "projection_datum_sha256": "096a49b46fc5661d74f9d3b54c4f3777676cfc6b27e577b52bb2dabeee8b480c",
+    "canonical_frame": "COLMAP_canonical_local_ellipsoidal",
+    "output_crs": "EPSG:25832",
+    "output_vertical_datum": "orthometric",
+    "orthometric_geoid_m": 45.7,
+    "vertical_conversion_application_count": 1
+  },
+  "rehearsal": {
+    "building_id": "DEBY_LOD2_42364609",
+    "condition": "arm_A",
+    "replicate": "r1",
+    "checkpoint": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/ckpt/final.pt",
+    "checkpoint_sha256": "9db46440bbb432904ab912729c7230d5a06a0b2f5855be1b3bd003d9168b3b65",
+    "training_config": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/resolved_config.yaml",
+    "training_config_sha256": "5095f58e29a29fb6aed0339ca5de94a7fdd1af4e1b60e7377bf6175363172475",
+    "data_root": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609",
+    "preprocess_manifest": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/preprocess_manifest.json",
+    "preprocess_manifest_sha256": "6a762e5631b78b8d93cdd45819fc179882cd1eabaa8c4e8be0159b19b02344b1",
+    "output_dir": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T2"
+  },
+  "issues_path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/issues.md"
+}
