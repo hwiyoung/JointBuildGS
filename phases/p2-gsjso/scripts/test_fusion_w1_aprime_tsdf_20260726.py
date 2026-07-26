@@ -58,6 +58,7 @@ class AprimeTsdfTests(unittest.TestCase):
             '-e "TORCH_EXTENSIONS_DIR=/tmp/aprime-t2-torch-extensions"',
             WRAPPER,
         )
+        self.assertIn('-e "MAX_JOBS=2"', WRAPPER)
 
     def test_committed_gate_and_stale_receipt_archive_are_wired(self) -> None:
         self.assertIn("verify_git_runtime(config)", SOURCE)
