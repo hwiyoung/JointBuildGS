@@ -52,6 +52,12 @@ class AprimeTsdfTests(unittest.TestCase):
         self.assertIn("--pull=never", WRAPPER)
         self.assertIn('--user "$HOST_UID:$HOST_GID"', WRAPPER)
         self.assertIn("--memory 24g", WRAPPER)
+        self.assertIn('-e "HOME=/tmp/aprime-t2-home"', WRAPPER)
+        self.assertIn('-e "XDG_CACHE_HOME=/tmp/aprime-t2-cache"', WRAPPER)
+        self.assertIn(
+            '-e "TORCH_EXTENSIONS_DIR=/tmp/aprime-t2-torch-extensions"',
+            WRAPPER,
+        )
 
     def test_committed_gate_and_stale_receipt_archive_are_wired(self) -> None:
         self.assertIn("verify_git_runtime(config)", SOURCE)

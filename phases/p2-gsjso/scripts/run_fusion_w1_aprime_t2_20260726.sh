@@ -15,6 +15,9 @@ docker run --rm --pull=never --network none --gpus all \
   --memory 24g \
   --cpus 12 \
   --user "$HOST_UID:$HOST_GID" \
+  -e "HOME=/tmp/aprime-t2-home" \
+  -e "XDG_CACHE_HOME=/tmp/aprime-t2-cache" \
+  -e "TORCH_EXTENSIONS_DIR=/tmp/aprime-t2-torch-extensions" \
   -e "CUDA_VISIBLE_DEVICES=$GPU_INDEX" \
   -e "APRIME_CONTAINER_IMAGE=$IMAGE_REF" \
   -e "APRIME_CONTAINER_IMAGE_ID=$IMAGE_ID" \
