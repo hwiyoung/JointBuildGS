@@ -65,6 +65,24 @@ run_tools() {
     "$TOOLS_IMAGE" "$@"
 }
 
+# The strict training-binding check imports the locked training driver, whose
+# config parser requires PyYAML.  Keep that control-only step in the pinned dev
+# image; geometry, LAS, scoring, and report commands remain in the tools image.
+run_control() {
+  docker run --rm \
+    --pull=never \
+    --network=none \
+    --memory="$MEMORY_LIMIT" \
+    --memory-swap="$MEMORY_LIMIT" \
+    --cpus="$CPU_LIMIT" \
+    --user "$HOST_UID:$HOST_GID" \
+    --env PYTHONDONTWRITEBYTECODE=1 \
+    --volume "$REPO_ROOT:/workspace/JointBuildGS" \
+    --workdir /workspace/JointBuildGS \
+    --entrypoint python3 \
+    "$DEV_IMAGE" "$@"
+}
+
 run_dev() {
   docker run --rm \
     --pull=never \
@@ -168,10 +186,10 @@ run_one() {
 
   CURRENT_STAGE="preflight"
   assert_no_training
-  run_tools "$SCRIPT" --config "$CONFIG" check \
+  run_control "$SCRIPT" --config "$CONFIG" check \
     --building-id "$building_id" --arm "$arm" --run "$replicate"
   CURRENT_STAGE="begin_attempt"
-  attempt="$(run_tools "$SCRIPT" --config "$CONFIG" begin \
+  attempt="$(run_control "$SCRIPT" --config "$CONFIG" begin \
     --building-id "$building_id" --arm "$arm" --run "$replicate")"
   [[ "$attempt" =~ ^[1-9][0-9]{0,2}$ ]] || {
     echo "invalid attempt number from driver: $attempt" >&2
@@ -282,7 +300,7 @@ case "${1:-}" in
       echo "usage: $0 check DEBY_LOD2_<id> {Aprime|B} {r1|r2}" >&2
       exit 2
     }
-    run_tools "$SCRIPT" --config "$CONFIG" check \
+    run_control "$SCRIPT" --config "$CONFIG" check \
       --building-id "$2" --arm "$3" --run "$4"
     ;;
   one)

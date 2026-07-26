@@ -227,6 +227,13 @@ class AprimeReadoutTests(unittest.TestCase):
         self.assertNotIn("timeout ", self.wrapper)
         self.assertIn("run_roofer_and_score", self.wrapper)
 
+    def test_training_binding_control_steps_use_pyyaml_capable_pinned_dev_image(self):
+        self.assertIn("run_control()", self.wrapper)
+        self.assertIn('"$DEV_IMAGE" "$@"', self.wrapper)
+        self.assertIn('run_control "$SCRIPT" --config "$CONFIG" check', self.wrapper)
+        self.assertIn('attempt="$(run_control "$SCRIPT" --config "$CONFIG" begin', self.wrapper)
+        self.assertIn('run_tools "$SCRIPT" --config "$CONFIG" prepare-primary', self.wrapper)
+
     def test_wrapper_runs_primary_before_legacy_and_finalizes_last(self):
         primary = self.wrapper.index("prepare-primary")
         alpha = self.wrapper.index("authorize-alpha-extract")
