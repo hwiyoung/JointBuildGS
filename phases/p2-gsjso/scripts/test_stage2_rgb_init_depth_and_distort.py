@@ -7,6 +7,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
 
 import imageio.v2 as imageio
 import numpy as np
@@ -16,9 +17,11 @@ from src.stage2.pointcloud_io import (
     read_init_pointcloud,
     read_init_pointcloud_with_rgb,
 )
+from src.stage2.densification import build_seed_protect_strategy
 from src.stage2.train import (
     _aligned_depth_prior_l1,
     _encode_expected_depth_png,
+    _log_seed_survival,
     _resolve_init_pointcloud_rgb,
     _save_expected_depth_png,
     _scheduled_weight,
@@ -370,6 +373,86 @@ class SignedNormalPriorTest(unittest.TestCase):
                 torch.zeros_like(normals),
                 torch.tensor([[True]]),
             )
+
+
+class UnprotectedSeedLineageAuditTest(unittest.TestCase):
+    def test_audit_strategy_prunes_seed_and_records_no_protection(self) -> None:
+        count = 2
+        params = {
+            "means": torch.nn.Parameter(torch.zeros(count, 3)),
+            "scales": torch.nn.Parameter(
+                torch.full((count, 3), float(np.log(0.001)))
+            ),
+            "quats": torch.nn.Parameter(
+                torch.tensor([[1.0, 0.0, 0.0, 0.0]] * count)
+            ),
+            "opacities": torch.nn.Parameter(
+                torch.logit(torch.tensor([0.001, 0.9]))
+            ),
+            "sh0": torch.nn.Parameter(torch.zeros(count, 1, 3)),
+            "shN": torch.nn.Parameter(torch.zeros(count, 0, 3)),
+        }
+        optimizers = {
+            key: torch.optim.Adam([value], lr=1.0e-3)
+            for key, value in params.items()
+        }
+        state = {
+            "is_seed": torch.tensor([True, False]),
+            "scene_scale": 1.0,
+            "radii": torch.zeros(count),
+        }
+        strategy = build_seed_protect_strategy(
+            prune_opa=0.005,
+            seed_protect_until_iter=0,
+        )
+        self.assertEqual(strategy._prune_gs(params, optimizers, state, 500), 1)
+        self.assertFalse(state["last_seed_protect_active"])
+        self.assertEqual(state["last_prune_seed_protected"], 0)
+        self.assertEqual(state["last_pruned"], 1)
+        self.assertEqual(int(state["is_seed"].sum()), 0)
+
+    def test_csv_and_tensorboard_include_seed_opacity_trajectory(self) -> None:
+        class Writer:
+            def __init__(self) -> None:
+                self.values: dict[str, float] = {}
+
+            def add_scalar(self, name, value, _step) -> None:
+                self.values[name] = float(value)
+
+        writer = Writer()
+        model = SimpleNamespace(
+            num_points=3,
+            means=torch.zeros(3, 3),
+            opacities=torch.tensor([[0.1], [0.4], [0.8]]),
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            _log_seed_survival(
+                5000,
+                model,
+                torch.tensor([True, True, False]),
+                None,
+                writer,
+                Path(directory),
+                {
+                    "last_prune_step": 4900,
+                    "last_prune_candidates": 2,
+                    "last_pruned": 2,
+                    "last_prune_seed_protected": 0,
+                    "cum_prune_candidates": 7,
+                    "cum_pruned": 7,
+                    "cum_prune_seed_protected": 0,
+                    "last_seed_protect_active": False,
+                    "effective_prune_opa": 0.005,
+                },
+            )
+            rows = (
+                Path(directory) / "audit" / "seed_lineage.csv"
+            ).read_text(encoding="utf-8").splitlines()
+        self.assertEqual(writer.values["seed/surviving"], 2.0)
+        self.assertAlmostEqual(writer.values["seed/opacity_median"], 0.25)
+        self.assertEqual(len(rows), 2)
+        self.assertIn("all_seed_lineage", rows[1])
+        self.assertIn("False,0.005", rows[1])
 
 
 if __name__ == "__main__":

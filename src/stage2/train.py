@@ -148,21 +148,112 @@ def _load_footprint_boxes_local(geojson_path, world_offset, building_ids=None):
     return boxes
 
 
-def _log_seed_survival(it, model, is_seed, boxes, writer):
-    """(P2 C) log surviving seed count (+ per-building footprint seed count / median opacity)."""
+def _log_seed_survival(
+    it, model, is_seed, boxes, writer, out_dir, strategy_state
+):
+    """Log seed-lineage survival and opacity without changing optimization.
+
+    ``is_seed`` is carried through gsplat duplicate/split/remove operations as a
+    strategy-state tensor.  The audit therefore remains observational even
+    when protection is disabled: it reports the surviving lineage and its
+    median opacity but never changes a pruning decision.
+    """
     with torch.no_grad():
         n_seed = int(is_seed.sum().item())
-        msg = f"[seed-survival] it={it} N={model.num_points} seeds={n_seed}"
+        opacity = model.opacities.detach().flatten()
+        seed_median = (
+            float(torch.quantile(opacity[is_seed].float(), 0.5).item())
+            if n_seed > 0
+            else 0.0
+        )
+        msg = (
+            f"[seed-survival] it={it} N={model.num_points} seeds={n_seed} "
+            f"opacity_median={seed_median:.8f}"
+        )
         writer.add_scalar("seed/surviving", n_seed, it)
+        writer.add_scalar("seed/opacity_median", seed_median, it)
+        prune_audit = {
+            "last_prune_step": int(strategy_state.get("last_prune_step", -1)),
+            "last_prune_candidates": int(
+                strategy_state.get("last_prune_candidates", 0)
+            ),
+            "last_pruned": int(strategy_state.get("last_pruned", 0)),
+            "last_prune_seed_protected": int(
+                strategy_state.get("last_prune_seed_protected", 0)
+            ),
+            "cum_prune_candidates": int(
+                strategy_state.get("cum_prune_candidates", 0)
+            ),
+            "cum_pruned": int(strategy_state.get("cum_pruned", 0)),
+            "cum_prune_seed_protected": int(
+                strategy_state.get("cum_prune_seed_protected", 0)
+            ),
+            "seed_protect_active": bool(
+                strategy_state.get("last_seed_protect_active", False)
+            ),
+            "effective_prune_opa": float(
+                strategy_state.get("effective_prune_opa", float("nan"))
+            ),
+        }
+        rows = [
+            {
+                "iteration": int(it),
+                "scope": "all_seed_lineage",
+                "gaussians_total": int(model.num_points),
+                "seed_lineage_count": n_seed,
+                "opacity_median": seed_median,
+                **prune_audit,
+            }
+        ]
         if boxes:
-            m = model.means.detach(); op = model.opacities.detach().flatten()
+            m = model.means.detach()
             for bid, (x0, y0, x1, y1) in boxes.items():
                 inb = (m[:, 0] >= x0) & (m[:, 0] <= x1) & (m[:, 1] >= y0) & (m[:, 1] <= y1) & is_seed
                 c = int(inb.sum().item())
-                medop = float(op[inb].median().item()) if c > 0 else 0.0
+                medop = (
+                    float(torch.quantile(opacity[inb].float(), 0.5).item())
+                    if c > 0
+                    else 0.0
+                )
                 short = bid.replace("DEBY_LOD2_", "")
                 msg += f" | {short}={c}(op{medop:.2f})"
                 writer.add_scalar(f"seed/fp_{short}", c, it)
+                writer.add_scalar(f"seed/fp_{short}_opacity_median", medop, it)
+                rows.append(
+                    {
+                        "iteration": int(it),
+                        "scope": str(bid),
+                        "gaussians_total": int(model.num_points),
+                        "seed_lineage_count": c,
+                        "opacity_median": medop,
+                        **prune_audit,
+                    }
+                )
+        audit_dir = Path(out_dir) / "audit"
+        audit_dir.mkdir(parents=True, exist_ok=True)
+        path = audit_dir / "seed_lineage.csv"
+        fields = [
+            "iteration",
+            "scope",
+            "gaussians_total",
+            "seed_lineage_count",
+            "opacity_median",
+            "last_prune_step",
+            "last_prune_candidates",
+            "last_pruned",
+            "last_prune_seed_protected",
+            "cum_prune_candidates",
+            "cum_pruned",
+            "cum_prune_seed_protected",
+            "seed_protect_active",
+            "effective_prune_opa",
+        ]
+        write_header = not path.exists()
+        with path.open("a", newline="", encoding="utf-8") as stream:
+            output = csv.DictWriter(stream, fieldnames=fields)
+            if write_header:
+                output.writeheader()
+            output.writerows(rows)
         print(msg, flush=True)
 
 
@@ -2004,8 +2095,16 @@ def main():
         seed_protect_until_iter = int(seed_protect_until_iter)
 
     seed_protect = legacy_mvs_seed_protect or surface_seed_protect
+    seed_lineage_audit = bool(cfg.get("seed_lineage_audit", False))
+    seed_lineage_audit_every = int(cfg.get("seed_lineage_audit_every", 5000))
+    if seed_lineage_audit_every <= 0:
+        raise ValueError("seed_lineage_audit_every must be positive")
     seed_protect_mask = np.zeros(len(points_xyz), dtype=np.bool_)
     if legacy_mvs_seed_protect:
+        seed_protect_mask |= mvs_seed_mask
+    elif seed_lineage_audit and mvs_seed_mask is not None:
+        # Observation-only A-prime still follows every initial ALS seed root;
+        # this mask affects state bookkeeping only because protection ends at 0.
         seed_protect_mask |= mvs_seed_mask
     if surface_seed_protect:
         seed_protect_mask |= surface_seed_mask
@@ -2032,6 +2131,16 @@ def main():
             axis_ratio_threshold=elongation_axis_ratio_threshold,
             **_strat_kwargs,
         )
+    elif seed_lineage_audit:
+        # Reuse the byte-matched upstream prune implementation in the wrapper,
+        # but set its protection boundary to iteration zero.  Prune decisions
+        # are therefore identical to unprotected DefaultStrategy while the
+        # per-Gaussian ``is_seed`` tensor and prune counters remain observable.
+        from .densification import build_seed_protect_strategy
+        strategy = build_seed_protect_strategy(
+            seed_protect_until_iter=0,
+            **_strat_kwargs,
+        )
     else:
         strategy = build_strategy(**_strat_kwargs)
     strategy.check_sanity(params, optimizers)
@@ -2045,8 +2154,14 @@ def main():
             model.surface_seed_mask.detach().clone()
         )
     seed_log_boxes = None
-    if seed_protect:
+    if seed_protect or seed_lineage_audit:
         strategy_state["is_seed"] = torch.from_numpy(seed_protect_mask).to(device)
+        seed_log_boxes = _load_footprint_boxes_local(
+            cfg.get("seed_log_footprints"),
+            cfg.get("world_offset", [690953.0, 5336071.0, 604.0]),
+            cfg.get("seed_log_buildings"),
+        )
+    if seed_protect:
         release_msg = "for all refine steps" if seed_protect_until_iter is None else f"until iter {seed_protect_until_iter}"
         protected_kind = (
             "surface+MVS" if surface_seed_protect and legacy_mvs_seed_protect
@@ -2055,9 +2170,12 @@ def main():
         )
         print(f"[seed-protect] protecting {int(seed_protect_mask.sum())} {protected_kind}-lineage "
               f"Gaussians from prune (of {len(seed_protect_mask)}) {release_msg}")
-        seed_log_boxes = _load_footprint_boxes_local(
-            cfg.get("seed_log_footprints"), cfg.get("world_offset", [690953.0, 5336071.0, 604.0]),
-            cfg.get("seed_log_buildings"))
+    elif seed_lineage_audit:
+        print(
+            "[seed-lineage-audit] protection=off pruning=default "
+            f"roots={int(seed_protect_mask.sum())} every={seed_lineage_audit_every}",
+            flush=True,
+        )
     if elongation_filter:
         print(
             f"[elongation-filter] in-plane min(scale0,scale1)/max(scale0,scale1) "
@@ -2671,6 +2789,8 @@ def main():
         "surface_seed_protect": surface_seed_protect,
         "legacy_mvs_seed_protect": legacy_mvs_seed_protect,
         "seed_protect": seed_protect,
+        "seed_lineage_audit": seed_lineage_audit,
+        "seed_lineage_audit_every": seed_lineage_audit_every,
         "seed_protect_until_iter": seed_protect_until_iter,
         "mvs_seed_init_opacity": (
             float(mvs_seed_init_opacity)
@@ -4120,9 +4240,20 @@ def main():
         # sync params dict -> model (gsplat strategy may replace nn.Parameters on grow/prune)
         _sync_params_to_model(params, model, strategy_state)
 
-        # (P2 make-or-break C) seed-survival diagnostic (every 5k + at 500 for pre-check)
-        if seed_protect and (it == 500 or (it > 0 and it % 5000 == 0)):
-            _log_seed_survival(it, model, strategy_state["is_seed"], seed_log_boxes, writer)
+        # Recording only: protection and unprotected A-prime both retain a
+        # lineage trajectory, but only ``seed_protect`` can alter pruning.
+        if (seed_protect or seed_lineage_audit) and (
+            it == 0 or (it > 0 and it % seed_lineage_audit_every == 0)
+        ):
+            _log_seed_survival(
+                it,
+                model,
+                strategy_state["is_seed"],
+                seed_log_boxes,
+                writer,
+                out_dir,
+                strategy_state,
+            )
 
         for opt in optimizers.values():
             opt.step()
