@@ -52,10 +52,14 @@ class AprimeTsdfTests(unittest.TestCase):
         self.assertIn("--pull=never", WRAPPER)
         self.assertIn('--user "$HOST_UID:$HOST_GID"', WRAPPER)
         self.assertIn("--memory 24g", WRAPPER)
-        self.assertIn('-e "HOME=/tmp/aprime-t2-home"', WRAPPER)
-        self.assertIn('-e "XDG_CACHE_HOME=/tmp/aprime-t2-cache"', WRAPPER)
+        self.assertIn('RUNTIME_REL="phases/p2-gsjso/runs/20260726_fusion_w1_aprime/runtime_env"', WRAPPER)
+        self.assertIn('-e "HOME=/workspace/JointBuildGS/$RUNTIME_REL/home"', WRAPPER)
         self.assertIn(
-            '-e "TORCH_EXTENSIONS_DIR=/tmp/aprime-t2-torch-extensions"',
+            '-e "XDG_CACHE_HOME=/workspace/JointBuildGS/$RUNTIME_REL/xdg_cache"',
+            WRAPPER,
+        )
+        self.assertIn(
+            '-e "TORCH_EXTENSIONS_DIR=/workspace/JointBuildGS/$RUNTIME_REL/torch_extensions"',
             WRAPPER,
         )
         self.assertIn('-e "MAX_JOBS=2"', WRAPPER)
