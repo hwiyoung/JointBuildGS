@@ -52,6 +52,9 @@ ARMS = ("A", "B")
 ABLATION_DIFFERENCES = frozenset(
     {"w_depth", "depth_final_weight", "w_normal", "normal_final_weight"}
 )
+WRITABLE_ENVIRONMENT_KEYS = frozenset(
+    {"HOME", "XDG_CACHE_HOME", "TORCH_EXTENSIONS_DIR"}
+)
 LOSS_SHARE_FIELDS = (
     "building_id",
     "arm",
@@ -1099,6 +1102,11 @@ def materialize(
         out_dir=target,
     )
     target.mkdir(parents=True, exist_ok=True)
+    writable_environment = writable_environment_contract(
+        repo=repo,
+        config=config,
+        target=target,
+    )
     resolved_text = yaml.safe_dump(
         selected,
         sort_keys=False,
@@ -1141,6 +1149,7 @@ def materialize(
             ),
         },
         "ablation_validation": ablation,
+        "writable_environment": writable_environment,
         "resolved_config": repo_relative(repo, resolved_path),
         "resolved_config_sha256": resolved_sha,
         "output_dir": repo_relative(repo, target),
@@ -1346,6 +1355,155 @@ def docker_command(
         ]
     )
     return command
+
+
+def writable_environment_contract(
+    *,
+    repo: Path,
+    config: Mapping[str, Any],
+    target: Path,
+) -> dict[str, Any]:
+    """Resolve the shared writable environment strictly inside the W1 run."""
+
+    launch_contract = config.get("launch_contract")
+    if not isinstance(launch_contract, Mapping):
+        raise ContractError("launch_contract is missing")
+    declared = launch_contract.get("writable_environment")
+    if not isinstance(declared, Mapping) or set(declared) != {"root", "variables"}:
+        raise ContractError(
+            "normal-launch writable environment must contain exactly root and variables"
+        )
+    variables_declared = declared.get("variables")
+    if (
+        not isinstance(variables_declared, Mapping)
+        or set(variables_declared) != WRITABLE_ENVIRONMENT_KEYS
+    ):
+        raise ContractError(
+            "normal-launch writable environment must contain exactly "
+            "HOME, XDG_CACHE_HOME, and TORCH_EXTENSIONS_DIR"
+        )
+
+    training_root = resolve_path(repo, config["outputs"]["training_root"])
+    run_root = training_root.parent.resolve()
+    expected_root_path = run_root / "runtime_env"
+    if expected_root_path.is_symlink():
+        raise ContractError("normal-launch writable environment root is a symlink")
+    expected_root = expected_root_path.resolve()
+    root_value = declared.get("root")
+    if not isinstance(root_value, str) or not root_value:
+        raise ContractError("normal-launch writable environment root is invalid")
+    root_relative = Path(root_value)
+    if root_relative.is_absolute() or ".." in root_relative.parts:
+        raise ContractError("normal-launch writable environment root must be repo-relative")
+    require_equal(
+        root_relative.as_posix(),
+        repo_relative(repo, expected_root_path),
+        "normal-launch writable environment declared run root",
+    )
+    environment_root = resolve_path(repo, root_value)
+    require_equal(
+        environment_root,
+        expected_root,
+        "normal-launch writable environment fixed run root",
+    )
+    target_resolved = target.resolve()
+    try:
+        target_resolved.relative_to(training_root)
+    except ValueError as exc:
+        raise ContractError("training job path escapes the configured training root") from exc
+    relative_paths: dict[str, str] = {}
+    host_paths: dict[str, str] = {}
+    variables: dict[str, str] = {}
+    for key in sorted(WRITABLE_ENVIRONMENT_KEYS):
+        raw = variables_declared.get(key)
+        if not isinstance(raw, str) or not raw:
+            raise ContractError(f"normal-launch writable environment path is invalid: {key}")
+        relative = Path(raw)
+        if relative.is_absolute() or ".." in relative.parts or not relative.parts:
+            raise ContractError(
+                f"normal-launch writable environment path escapes run root: {key}={raw!r}"
+            )
+        path = (environment_root / relative).resolve()
+        try:
+            path.relative_to(environment_root)
+        except ValueError as exc:
+            raise ContractError(
+                f"normal-launch writable environment escapes run root: {key}"
+            ) from exc
+        relative_paths[key] = relative.as_posix()
+        host_paths[key] = repo_relative(repo, path)
+        variables[key] = container_path(repo, path)
+
+    if len(set(host_paths.values())) != len(WRITABLE_ENVIRONMENT_KEYS):
+        raise ContractError("normal-launch writable environment paths must be distinct")
+    return {
+        "scope": "shared_fusion_w1_run",
+        "run_root": repo_relative(repo, run_root),
+        "environment_root": repo_relative(repo, environment_root),
+        "relative_paths": relative_paths,
+        "host_paths": host_paths,
+        "variables": variables,
+        "validated_within_run_root": True,
+        "symlinks_forbidden": True,
+    }
+
+
+def prepare_writable_environment(
+    *,
+    repo: Path,
+    config: Mapping[str, Any],
+    target: Path,
+) -> dict[str, Any]:
+    """Create and verify the shared normal-launch cache without symlinks."""
+
+    contract = writable_environment_contract(repo=repo, config=config, target=target)
+    environment_root = resolve_path(repo, contract["environment_root"])
+    run_root = resolve_path(repo, contract["run_root"])
+    current = run_root
+    for part in environment_root.relative_to(run_root).parts:
+        current = current / part
+        if current.is_symlink():
+            raise ContractError("normal-launch writable environment root is a symlink")
+    environment_root.mkdir(parents=True, exist_ok=True)
+    directory_state: dict[str, dict[str, Any]] = {}
+    for key, relative_text in contract["relative_paths"].items():
+        relative = Path(relative_text)
+        path = environment_root / relative
+        current = environment_root
+        for part in relative.parts:
+            current = current / part
+            if current.is_symlink():
+                raise ContractError(
+                    f"normal-launch writable environment contains a symlink: {key}"
+                )
+        path.mkdir(parents=True, exist_ok=True)
+        current = environment_root
+        for part in relative.parts:
+            current = current / part
+            if current.is_symlink():
+                raise ContractError(
+                    f"normal-launch writable environment contains a symlink: {key}"
+                )
+        if not path.is_dir():
+            raise ContractError(
+                f"normal-launch writable environment is not a directory: {key}"
+            )
+        if not os.access(path, os.W_OK | os.X_OK):
+            raise ContractError(
+                f"normal-launch writable environment is not writable: {key}"
+            )
+        directory_state[key] = {
+            "path": contract["host_paths"][key],
+            "exists": True,
+            "is_directory": True,
+            "is_symlink": False,
+            "writable_and_searchable": True,
+        }
+    return {
+        "contract": contract,
+        "directory_state": directory_state,
+        "prepared_before_started_receipt": True,
+    }
 
 
 def validate_retry_policy(
@@ -2056,6 +2214,16 @@ def launch(
         if (target / name).exists():
             raise ContractError(f"job output has a prior runtime receipt: {name}")
 
+    writable_environment = prepare_writable_environment(
+        repo=repo,
+        config=config,
+        target=target,
+    )
+    require_equal(
+        writable_environment["contract"],
+        materialization.get("writable_environment"),
+        "normal-launch writable environment since materialization",
+    )
     job_key = f"{building_id}/arm_{arm}/{run}"
     command = docker_command(
         repo=repo,
@@ -2063,6 +2231,7 @@ def launch(
         resolved_config=resolved,
         gpu=gpu,
         job_key=job_key,
+        extra_environment=writable_environment["contract"]["variables"],
     )
     started_path = target / outputs["started_receipt"]
     started_payload = {
@@ -2083,6 +2252,7 @@ def launch(
         "cutoff_gate": cutoff,
         "process_guard": process_guard,
         "docker_image": image,
+        "writable_environment": writable_environment,
         "materialization_manifest": repo_relative(repo, materialization_path),
         "materialization_manifest_sha256": materialization_sha,
         "resolved_config_sha256": materialization["resolved_config_sha256"],
@@ -2171,6 +2341,7 @@ def launch(
                     "seed_canonical_npz_sha256"
                 ],
             },
+            "writable_environment": writable_environment,
             "training_completion": completion,
             "loss_share_aggregation": {
                 "receipt": repo_relative(repo, loss_share_receipt_path),
@@ -2210,6 +2381,7 @@ def launch(
             "log": repo_relative(repo, log_path),
             "log_sha256": sha256_file(log_path) if log_path.is_file() else None,
             "partial_outputs_preserved": True,
+            "writable_environment": writable_environment,
         }
         failed_path = target / outputs["failed_receipt"]
         if not failed_path.exists():

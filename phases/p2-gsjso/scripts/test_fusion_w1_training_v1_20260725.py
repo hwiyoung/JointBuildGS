@@ -55,8 +55,12 @@ class FusionW1TrainingTests(unittest.TestCase):
         self.config = json.loads(REAL_CONFIG.read_text(encoding="utf-8"))
         self.config["inputs"]["preprocess_root"] = "preprocess"
         self.config["outputs"]["training_root"] = "training"
+        self.config["launch_contract"]["writable_environment"]["root"] = (
+            "runtime_env"
+        )
         self.config["git_contract"]["allowed_runtime_untracked_prefixes"] = [
             "preprocess/",
+            "runtime_env/",
             "training/",
         ]
         amendment = json.loads(
@@ -257,6 +261,21 @@ class FusionW1TrainingTests(unittest.TestCase):
             [5000, 10000, 15000, 20000, 25000, 30000],
         )
         self.assertEqual(recipe["loss_grad_audit_every"], 500)
+        self.assertEqual(
+            cfg["launch_contract"]["writable_environment"],
+            {
+                "root": "phases/p2-gsjso/runs/20260724_fusion_w1/runtime_env",
+                "variables": {
+                    "HOME": "home",
+                    "XDG_CACHE_HOME": "xdg_cache",
+                    "TORCH_EXTENSIONS_DIR": "torch_extensions",
+                },
+            },
+        )
+        self.assertIn(
+            "phases/p2-gsjso/runs/20260724_fusion_w1/runtime_env/",
+            cfg["git_contract"]["allowed_runtime_untracked_prefixes"],
+        )
         base = fw.validate_optimizer_densification_base(fw.REPO, cfg)
         self.assertEqual(
             base["sha256"],
@@ -350,6 +369,11 @@ class FusionW1TrainingTests(unittest.TestCase):
             self.assertFalse((target / receipt).exists())
         self.assertEqual(result["view_roles"]["train_n"], 10)
         self.assertEqual(result["view_roles"]["eval_n"], 1)
+        environment = result["writable_environment"]
+        self.assertEqual(environment["scope"], "shared_fusion_w1_run")
+        self.assertEqual(environment["environment_root"], "runtime_env")
+        self.assertTrue(environment["validated_within_run_root"])
+        self.assertFalse((self.repo / "runtime_env").exists())
 
     def test_launch_uses_docker_and_atomic_receipts_without_real_docker(self):
         snapshot = self._snapshot()
@@ -424,6 +448,31 @@ class FusionW1TrainingTests(unittest.TestCase):
         started = json.loads((target / "started.json").read_text(encoding="utf-8"))
         self.assertEqual(started["command"][:3], ["docker", "compose", "run"])
         self.assertIn("NVIDIA_VISIBLE_DEVICES=1", started["command"])
+        environment = started["writable_environment"]
+        expected = {
+            "HOME": self.repo / "runtime_env/home",
+            "TORCH_EXTENSIONS_DIR": self.repo / "runtime_env/torch_extensions",
+            "XDG_CACHE_HOME": self.repo / "runtime_env/xdg_cache",
+        }
+        for key, path in expected.items():
+            self.assertTrue(path.is_dir())
+            self.assertFalse(path.is_symlink())
+            self.assertIn(
+                f"{key}={fw.container_path(self.repo, path)}",
+                started["command"],
+            )
+            self.assertTrue(
+                environment["directory_state"][key]["writable_and_searchable"]
+            )
+        self.assertEqual(
+            environment["contract"],
+            json.loads(
+                (target / "materialization_manifest.json").read_text(
+                    encoding="utf-8"
+                )
+            )["writable_environment"],
+        )
+        self.assertTrue(environment["prepared_before_started_receipt"])
         self.assertEqual(started["claim_mode"], "atomic_O_EXCL")
         self.assertTrue((target / "completed.json").is_file())
         self.assertFalse((target / "failed.json").exists())
@@ -434,6 +483,64 @@ class FusionW1TrainingTests(unittest.TestCase):
         self.assertEqual(counters["docker_processes_started"], 1)
         self.assertEqual(counters["jobs_completed"], 1)
         self.assertEqual(counters["jobs_failed"], 0)
+
+    def test_normal_writable_environment_is_fixed_shared_and_fail_closed(self):
+        target = fw.job_dir(
+            self.repo, self.config, self.building_id, "A", "r1"
+        )
+        contract = fw.writable_environment_contract(
+            repo=self.repo,
+            config=self.config,
+            target=target,
+        )
+        self.assertEqual(contract["environment_root"], "runtime_env")
+        self.assertEqual(
+            contract["variables"]["TORCH_EXTENSIONS_DIR"],
+            fw.container_path(self.repo, self.repo / "runtime_env/torch_extensions"),
+        )
+
+        escaped = copy.deepcopy(self.config)
+        escaped["launch_contract"]["writable_environment"]["variables"][
+            "HOME"
+        ] = "../outside"
+        with self.assertRaisesRegex(fw.ContractError, "escapes run root"):
+            fw.writable_environment_contract(
+                repo=self.repo,
+                config=escaped,
+                target=target,
+            )
+
+        wrong_root = copy.deepcopy(self.config)
+        wrong_root["launch_contract"]["writable_environment"]["root"] = (
+            "other_runtime_env"
+        )
+        with self.assertRaisesRegex(fw.ContractError, "declared run root"):
+            fw.writable_environment_contract(
+                repo=self.repo,
+                config=wrong_root,
+                target=target,
+            )
+
+        duplicate = copy.deepcopy(self.config)
+        duplicate["launch_contract"]["writable_environment"]["variables"][
+            "HOME"
+        ] = "xdg_cache"
+        with self.assertRaisesRegex(fw.ContractError, "must be distinct"):
+            fw.writable_environment_contract(
+                repo=self.repo,
+                config=duplicate,
+                target=target,
+            )
+
+        outside = self.repo / "outside"
+        outside.mkdir()
+        (self.repo / "runtime_env").symlink_to(outside, target_is_directory=True)
+        with self.assertRaisesRegex(fw.ContractError, "root is a symlink"):
+            fw.prepare_writable_environment(
+                repo=self.repo,
+                config=self.config,
+                target=target,
+            )
 
     def test_incremental_loss_share_aggregation_is_atomic_and_idempotent(self):
         snapshot = self._snapshot()

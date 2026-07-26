@@ -97,7 +97,7 @@
   },
   "training": {
     "driver_config": "phases/p2-gsjso/configs/fusion_w1_training_v1_20260725.json",
-    "driver_config_sha256": "523a6cfd856a96e77bc2c4bc72b550c8b42fdf1aef016498763afde5332f35a4",
+    "driver_config_sha256": "5ac66faa95d15597bf490d10cedb70e5b48ae9d2bcc6a0f4ec55976870ac0d9a",
     "trainer_source": "src/stage2/train.py",
     "trainer_source_sha256": "00c125e5de469ec43c1dbbf17393e91c9f700e52b93624309f76cc64bb5eb39e",
     "root": "phases/p2-gsjso/runs/20260724_fusion_w1/training",
@@ -140,7 +140,12 @@
     "sor_neighbors": 20,
     "sor_std_ratio": 2.0,
     "crs": "EPSG:25832",
-    "frame_contract": "trainer local frame plus extractor locked SHIFT exactly once"
+    "frame_contract": "trainer local frame plus extractor locked SHIFT exactly once",
+    "writable_environment": {
+      "HOME": "phases/p2-gsjso/runs/20260724_fusion_w1/runtime_env/home",
+      "XDG_CACHE_HOME": "phases/p2-gsjso/runs/20260724_fusion_w1/runtime_env/xdg_cache",
+      "TORCH_EXTENSIONS_DIR": "phases/p2-gsjso/runs/20260724_fusion_w1/runtime_env/torch_extensions"
+    }
   },
   "classification": {
     "image": "jointbuildgs-p0-tools:t0",

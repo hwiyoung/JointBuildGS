@@ -16,6 +16,7 @@ import sys
 import tempfile
 from types import SimpleNamespace
 import unittest
+from unittest import mock
 
 
 SCRIPT = Path(__file__).with_name("fusion_w1_readout_v1_20260726.py")
@@ -60,6 +61,7 @@ def config_copy() -> dict:
 def minimal_repo_config(root: Path) -> dict:
     config = config_copy()
     config["training"]["root"] = "training"
+    config["outputs"]["root"] = "readout"
     config["outputs"]["job_template"] = (
         "readout/by_building/{building_id}/arm_{arm}/{run}"
     )
@@ -73,6 +75,11 @@ def minimal_repo_config(root: Path) -> dict:
     config["outputs"]["failures_jsonl"] = "readout/failures.jsonl"
     config["p0prime"]["scores_csv"] = "p0prime/scores.csv"
     config["p0prime"]["job_template"] = "p0prime/by_building/{building_id}"
+    config["pointcloudification"]["writable_environment"] = {
+        "HOME": "runtime_env/home",
+        "XDG_CACHE_HOME": "runtime_env/xdg_cache",
+        "TORCH_EXTENSIONS_DIR": "runtime_env/torch_extensions",
+    }
     return config
 
 
@@ -326,6 +333,190 @@ def make_infrastructure_retry_success(
     }
 
 
+def make_readout_preoutput_cache_failure(
+    root: Path,
+    config: dict,
+    *,
+    building_id: str = "DEBY_LOD2_42364609",
+    arm: str = "A",
+    run: str = "r1",
+) -> dict[str, Path]:
+    """Build the exact immutable pre-output failure needed by the retry gate."""
+
+    job = MODULE.job_dir(config, building_id, arm, run, repo=root)
+    job.mkdir(parents=True)
+    key = MODULE.job_key(building_id, arm, run)
+    checkpoint = root / "training/checkpoint.pt"
+    checkpoint.parent.mkdir(parents=True)
+    checkpoint.write_bytes(b"synthetic-readout-checkpoint")
+    materialization = job / "materialization.json"
+    write_json(
+        materialization,
+        {
+            "schema": MODULE.MATERIALIZATION_SCHEMA,
+            "state": "PASSED",
+            "job_key": key,
+            "building_id": building_id,
+            "arm": arm,
+            "replicate": run,
+        },
+    )
+    output = job / "pointcloud/readout.npz"
+    output_rel = str(output.relative_to(root))
+    invocation = job / "extract_invocation.json"
+    write_json(
+        invocation,
+        {
+            "schema": "jointbuildgs.fusion_w1.extract_invocation.v1",
+            "state": "AUTHORIZED",
+            "created_at": "2026-07-26T00:00:00+09:00",
+            "run_id": config["run_id"],
+            "job_key": key,
+            "building_id": building_id,
+            "arm": arm,
+            "replicate": run,
+            "training_checkpoint": {
+                "path": str(checkpoint.relative_to(root)),
+                "sha256": sha(checkpoint),
+            },
+            "output": output_rel,
+            "argv": [
+                "phases/p2-gsjso/scripts/tum_mob_tsdf_extract.py",
+                "--checkpoint",
+                str(checkpoint.relative_to(root)),
+                "--out",
+                output_rel,
+                "--no-sem",
+            ],
+            "retry_allowed": False,
+        },
+    )
+    started = job / "readout_started.json"
+    write_json(
+        started,
+        {
+            "schema": MODULE.JOB_SCHEMA,
+            "state": "STARTED",
+            "created_at": "2026-07-26T00:00:01+09:00",
+            "run_id": config["run_id"],
+            "job_key": key,
+            "building_id": building_id,
+            "arm": arm,
+            "replicate": run,
+            "stage": "readout",
+            "invocation": {
+                "path": str(invocation.relative_to(root)),
+                "sha256": sha(invocation),
+            },
+            "retry_allowed": False,
+        },
+    )
+    log = job / "extract.stdout.log"
+    log.write_text(
+        "gsplat/cuda/_backend.py\n"
+        "PermissionError: [Errno 13] Permission denied: '/.cache'\n",
+        encoding="utf-8",
+    )
+    failed = job / "failed.json"
+    write_json(
+        failed,
+        {
+            "schema": "jointbuildgs.fusion_w1.readout_failure.v1",
+            "state": "FAILED",
+            "created_at": "2026-07-26T00:00:02+09:00",
+            "run_id": config["run_id"],
+            "job_key": key,
+            "building_id": building_id,
+            "arm": arm,
+            "replicate": run,
+            "stage": "readout",
+            "message": "point-cloud readout failed",
+            "retry_allowed": False,
+        },
+    )
+    artifact_paths = {
+        "materialization": materialization,
+        "invocation": invocation,
+        "started": started,
+        "log": log,
+        "failed": failed,
+    }
+    policy = root / "configs/readout_retry.json"
+    write_json(
+        policy,
+        {
+            "schema": MODULE.READOUT_RETRY_POLICY_SCHEMA,
+            "status": "APPROVED",
+            "run_id": config["run_id"],
+            "approved_by": "김휘영",
+            "retry_kind": "GSPLAT_JIT_CACHE_PERMISSION_PREOUTPUT",
+            "job_key": key,
+            "stage": "readout",
+            "required_pre_retry_head": "a" * 40,
+            "required_retry_commit_distance": 1,
+            "allowed_retry_commit_paths": ["synthetic-retry-change"],
+            "maximum_retries_per_job": 1,
+            "attempt_directory": MODULE.READOUT_RETRY_ATTEMPT_DIRECTORY,
+            "writable_environment": config["pointcloudification"][
+                "writable_environment"
+            ],
+            "allowed_invocation_differences": [
+                "output",
+                "argv_value_after_--out",
+            ],
+            "required_failure": {
+                "artifact_sha256": {
+                    label: sha(path) for label, path in artifact_paths.items()
+                },
+                "log_markers": [
+                    "gsplat/cuda/_backend.py",
+                    "PermissionError: [Errno 13] Permission denied: '/.cache'",
+                ],
+                "required_absent_outputs": [
+                    "pointcloud/readout.npz",
+                    "extract_receipt.json",
+                    "classification_invocation.json",
+                    "classification_receipt.json",
+                    "roofer_invocation.json",
+                    "roofer_receipt.json",
+                    "score_receipt.json",
+                    "complete.json",
+                ],
+                "required_counter_values": {
+                    "readout_runs_started": 1,
+                    "roofer_runs_started": 0,
+                    "scoring_runs_started": 0,
+                },
+            },
+            "preservation_contract": {
+                "original_materialization_immutable": True,
+                "original_invocation_immutable": True,
+                "original_started_receipt_immutable": True,
+                "original_failed_receipt_immutable": True,
+                "original_log_immutable": True,
+                "retry_receipts_exclusive": True,
+                "retry_output_namespace_separate": True,
+            },
+            "counter_contract": {
+                "retry_is_same_authorized_readout": True,
+                "second_readout_started_receipt_forbidden": True,
+                "readout_runs_started_increment": 0,
+            },
+        },
+    )
+    return {
+        "job": job,
+        "checkpoint": checkpoint,
+        "materialization": materialization,
+        "invocation": invocation,
+        "started": started,
+        "log": log,
+        "failed": failed,
+        "output": output,
+        "policy": policy,
+    }
+
+
 class ConfigContractTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
@@ -396,6 +587,35 @@ class ConfigContractTests(unittest.TestCase):
             trainer,
         )
 
+    def test_readout_and_training_share_the_locked_run_level_cache(self) -> None:
+        expected = {
+            "HOME": "phases/p2-gsjso/runs/20260724_fusion_w1/runtime_env/home",
+            "XDG_CACHE_HOME": "phases/p2-gsjso/runs/20260724_fusion_w1/runtime_env/xdg_cache",
+            "TORCH_EXTENSIONS_DIR": "phases/p2-gsjso/runs/20260724_fusion_w1/runtime_env/torch_extensions",
+        }
+        self.assertEqual(
+            self.config["pointcloudification"]["writable_environment"], expected
+        )
+        training = json.loads(
+            (
+                REPO
+                / "phases/p2-gsjso/configs/fusion_w1_training_v1_20260725.json"
+            ).read_text(encoding="utf-8")
+        )
+        training_environment = training["launch_contract"][
+            "writable_environment"
+        ]
+        self.assertEqual(
+            {
+                key: str(
+                    Path(training_environment["root"])
+                    / training_environment["variables"][key]
+                )
+                for key in training_environment["variables"]
+            },
+            expected,
+        )
+
     def test_classification_reuses_p0_smrf_without_downsampling(self) -> None:
         classification = self.config["classification"]
         self.assertEqual(classification["target_density"], 0.0)
@@ -444,6 +664,11 @@ class ConfigContractTests(unittest.TestCase):
         self.assertIn("CATASTROPHE_STOP_N=3", text)
         self.assertIn("recorded and skipped failed job without retry", text)
         self.assertIn("finalize-partial", text)
+        self.assertIn("extract-environment", text)
+        self.assertIn("retry-extract-infra", text)
+        self.assertIn("record-extract-infra-retry-failure", text)
+        self.assertGreaterEqual(text.count('"${environment_args[@]}"'), 2)
+        self.assertIn("output validation or adoption failed", text)
 
     def test_score_frame_subtracts_locked_geoid_once(self) -> None:
         reference = self.config["scoring"]["reference"]
@@ -936,6 +1161,352 @@ class StateCounterAndPublicationTests(unittest.TestCase):
         source = inspect.getsource(MODULE.finalize_partial)
         self.assertNotIn("begin_stage(", source)
         self.assertNotIn("reconcile_runtime_counters(", source)
+
+
+class ReadoutInfrastructureRetryTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.temporary = tempfile.TemporaryDirectory()
+        self.root = Path(self.temporary.name)
+        self.config = minimal_repo_config(self.root)
+        self.paths = make_readout_preoutput_cache_failure(
+            self.root, self.config
+        )
+        self.bid = "DEBY_LOD2_42364609"
+
+    def tearDown(self) -> None:
+        self.temporary.cleanup()
+
+    def prepare(self) -> dict:
+        return MODULE.prepare_extract_infra_retry(
+            self.config,
+            self.paths["policy"],
+            self.bid,
+            "A",
+            "r1",
+            repo=self.root,
+            validate_git=False,
+        )
+
+    def write_retry_npz(self) -> Path:
+        import numpy as np
+
+        invocation = json.loads(
+            (
+                self.paths["job"]
+                / MODULE.READOUT_RETRY_ATTEMPT_DIRECTORY
+                / "extract_invocation.json"
+            ).read_text(encoding="utf-8")
+        )
+        output = self.root / invocation["output"]
+        output.parent.mkdir(parents=True, exist_ok=True)
+        points = np.asarray(
+            [[690000.0, 5330000.0, 530.0], [690001.0, 5330001.0, 531.0]],
+            dtype=np.float64,
+        )
+        np.savez(
+            output,
+            P_utm=points,
+            P_utm_clean=points,
+            voxel=0.05,
+            downscale=1.0,
+        )
+        return output
+
+    def test_writable_environment_is_exact_shared_and_symlink_safe(self) -> None:
+        with self.assertRaisesRegex(MODULE.ReadoutError, "not ready"):
+            MODULE.writable_readout_environment(
+                self.config, repo=self.root, require_ready=True
+            )
+        environment = MODULE.writable_readout_environment(
+            self.config, repo=self.root, create=True
+        )
+        self.assertEqual(
+            set(environment["host_paths"]), MODULE.WRITABLE_ENVIRONMENT_KEYS
+        )
+        self.assertEqual(environment["runtime_root"], "runtime_env")
+        for key, relative in environment["host_paths"].items():
+            self.assertTrue((self.root / relative).is_dir(), key)
+            self.assertEqual(
+                environment["container_values"][key],
+                f"/workspace/JointBuildGS/{relative}",
+            )
+
+        escaping = copy.deepcopy(self.config)
+        escaping["pointcloudification"]["writable_environment"]["HOME"] = (
+            "../escape"
+        )
+        with self.assertRaisesRegex(MODULE.ReadoutError, "unsafe"):
+            MODULE.writable_readout_environment(escaping, repo=self.root)
+
+        linked = copy.deepcopy(self.config)
+        actual = self.root / "runtime_env/actual"
+        actual.mkdir(parents=True)
+        link = self.root / "runtime_env/link"
+        link.symlink_to(actual, target_is_directory=True)
+        linked["pointcloudification"]["writable_environment"]["HOME"] = (
+            "runtime_env/link/cache"
+        )
+        with self.assertRaisesRegex(MODULE.ReadoutError, "symlink"):
+            MODULE.writable_readout_environment(linked, repo=self.root)
+
+    def test_symlinked_retry_output_namespace_is_rejected_before_receipts(self) -> None:
+        import numpy as np
+
+        self.prepare()
+        attempt = (
+            self.paths["job"] / MODULE.READOUT_RETRY_ATTEMPT_DIRECTORY
+        )
+        diverted = self.root / "diverted-pointcloud"
+        diverted.mkdir()
+        (attempt / "pointcloud").symlink_to(diverted, target_is_directory=True)
+        points = np.asarray([[1.0, 2.0, 3.0]], dtype=np.float64)
+        np.savez(
+            diverted / "readout.npz",
+            P_utm=points,
+            P_utm_clean=points,
+            voxel=0.05,
+            downscale=1.0,
+        )
+        with self.assertRaisesRegex(MODULE.ReadoutError, "contains a symlink"):
+            MODULE.accept_extract_infra_retry(
+                self.config,
+                self.bid,
+                "A",
+                "r1",
+                wall_seconds=1.0,
+                repo=self.root,
+            )
+        self.assertFalse((attempt / "extract_receipt.json").exists())
+        self.assertFalse((attempt / "retry_completed.json").exists())
+        self.assertFalse((self.paths["job"] / "extract_receipt.json").exists())
+
+    def test_one_retry_adopts_output_without_increment_or_original_drift(self) -> None:
+        original_hashes = {
+            name: sha(path)
+            for name, path in self.paths.items()
+            if name
+            in {"materialization", "invocation", "started", "log", "failed"}
+        }
+        prepared = self.prepare()
+        self.assertEqual(prepared["status"], "AUTHORIZED")
+        self.assertIn("infra_retry_01/pointcloud/readout.npz", prepared["retry_output"])
+        retry_argv = MODULE.retry_extract_argv(
+            self.config, self.bid, "A", "r1", repo=self.root
+        )
+        self.assertEqual(retry_argv.count("--out"), 1)
+        self.assertEqual(
+            retry_argv[retry_argv.index("--out") + 1],
+            prepared["retry_output"],
+        )
+        retry_environment = MODULE.retry_extract_environment(
+            self.config, self.bid, "A", "r1", repo=self.root
+        )
+        self.assertEqual(len(retry_environment), 3)
+        with self.assertRaisesRegex(MODULE.ReadoutError, "already claimed"):
+            self.prepare()
+
+        output = self.write_retry_npz()
+        receipt = MODULE.accept_extract_infra_retry(
+            self.config,
+            self.bid,
+            "A",
+            "r1",
+            wall_seconds=3.0,
+            repo=self.root,
+        )
+        self.assertEqual(receipt["pointcloud"]["path"], str(output.relative_to(self.root)))
+        self.assertEqual(receipt["infrastructure_retry"]["counter_increment"], 0)
+        self.assertTrue(MODULE._validate_adopted_extract_retry(self.paths["job"], repo=self.root))
+        MODULE.ensure_not_failed(self.paths["job"], repo=self.root)
+        counters = MODULE.reconcile_runtime_counters(self.config, repo=self.root)
+        self.assertEqual(counters["readout_runs_started"], 1)
+        self.assertEqual(counters["roofer_runs_started"], 0)
+        self.assertEqual(counters["scoring_runs_started"], 0)
+        for name, digest in original_hashes.items():
+            self.assertEqual(sha(self.paths[name]), digest, name)
+
+        # Downstream receipts are permitted after adoption and do not weaken
+        # the immutable original-file checks.
+        write_json(
+            self.paths["job"] / "classification_invocation.json",
+            {"schema": "synthetic-downstream"},
+        )
+        MODULE.ensure_not_failed(self.paths["job"], repo=self.root)
+
+    def test_original_drift_or_preexisting_output_blocks_before_claim(self) -> None:
+        self.paths["log"].write_text("tampered\n", encoding="utf-8")
+        with self.assertRaisesRegex(MODULE.ReadoutError, "SHA256 mismatch"):
+            self.prepare()
+        self.assertFalse(
+            (self.paths["job"] / MODULE.READOUT_RETRY_ATTEMPT_DIRECTORY).exists()
+        )
+
+    def test_acceptance_rejects_unexpected_root_file_and_records_retry_failure(self) -> None:
+        self.prepare()
+        self.write_retry_npz()
+        write_json(
+            self.paths["job"] / "classification_invocation.json",
+            {"schema": "unexpected-before-adoption"},
+        )
+        with self.assertRaisesRegex(
+            MODULE.ReadoutError, "pre-adoption original readout file inventory"
+        ):
+            MODULE.accept_extract_infra_retry(
+                self.config,
+                self.bid,
+                "A",
+                "r1",
+                wall_seconds=1.0,
+                repo=self.root,
+            )
+        failed = MODULE.record_extract_infra_retry_failure(
+            self.config,
+            self.bid,
+            "A",
+            "r1",
+            message="acceptance validation failed",
+            repo=self.root,
+        )
+        self.assertFalse(failed["another_retry_allowed"])
+        self.assertTrue(
+            (
+                self.paths["job"]
+                / MODULE.READOUT_RETRY_ATTEMPT_DIRECTORY
+                / "retry_failed.json"
+            ).is_file()
+        )
+        with self.assertRaisesRegex(MODULE.ReadoutError, "already failed"):
+            MODULE.retry_extract_argv(
+                self.config, self.bid, "A", "r1", repo=self.root
+            )
+
+    def test_downstream_failure_after_adoption_has_distinct_terminal_receipt(self) -> None:
+        self.prepare()
+        self.write_retry_npz()
+        MODULE.accept_extract_infra_retry(
+            self.config,
+            self.bid,
+            "A",
+            "r1",
+            wall_seconds=1.0,
+            repo=self.root,
+        )
+        original_failure_sha = sha(self.paths["failed"])
+        failure = MODULE.record_failure(
+            self.config,
+            self.bid,
+            "A",
+            "r1",
+            stage="classification",
+            message="synthetic downstream failure",
+            repo=self.root,
+        )
+        self.assertEqual(
+            failure["schema"],
+            "jointbuildgs.fusion_w1.readout_failure_after_infrastructure_retry.v1",
+        )
+        self.assertEqual(sha(self.paths["failed"]), original_failure_sha)
+        with self.assertRaisesRegex(MODULE.ReadoutError, "failed after"):
+            MODULE.ensure_not_failed(self.paths["job"], repo=self.root)
+
+    def test_adopted_validator_rejects_rehashed_completed_chain_drift(self) -> None:
+        self.prepare()
+        self.write_retry_npz()
+        MODULE.accept_extract_infra_retry(
+            self.config,
+            self.bid,
+            "A",
+            "r1",
+            wall_seconds=1.0,
+            repo=self.root,
+        )
+        attempt = self.paths["job"] / MODULE.READOUT_RETRY_ATTEMPT_DIRECTORY
+        completed_path = attempt / "retry_completed.json"
+        completed = json.loads(completed_path.read_text(encoding="utf-8"))
+        completed["retry_key"] = "DEBY_LOD2_42364609/arm_A/r1/unauthorized"
+        write_json(completed_path, completed)
+        root_receipt = self.paths["job"] / "extract_receipt.json"
+        root = json.loads(root_receipt.read_text(encoding="utf-8"))
+        root["infrastructure_retry"]["retry_completed"]["sha256"] = sha(
+            completed_path
+        )
+        write_json(root_receipt, root)
+        with self.assertRaisesRegex(MODULE.ReadoutError, "completed readout retry key"):
+            MODULE._validate_adopted_extract_retry(
+                self.paths["job"], repo=self.root
+            )
+
+    def test_successful_adoption_cannot_be_poisoned_by_retry_failure_command(self) -> None:
+        self.prepare()
+        self.write_retry_npz()
+        MODULE.accept_extract_infra_retry(
+            self.config,
+            self.bid,
+            "A",
+            "r1",
+            wall_seconds=1.0,
+            repo=self.root,
+        )
+        with self.assertRaisesRegex(MODULE.ReadoutError, "successfully adopted"):
+            MODULE.record_extract_infra_retry_failure(
+                self.config,
+                self.bid,
+                "A",
+                "r1",
+                message="must not poison success",
+                repo=self.root,
+            )
+        self.assertFalse(
+            (
+                self.paths["job"]
+                / MODULE.READOUT_RETRY_ATTEMPT_DIRECTORY
+                / "retry_failed.json"
+            ).exists()
+        )
+
+    def test_retry_invocation_rejects_non_output_scientific_drift(self) -> None:
+        self.prepare()
+        original = json.loads(self.paths["invocation"].read_text(encoding="utf-8"))
+        retry_path = (
+            self.paths["job"]
+            / MODULE.READOUT_RETRY_ATTEMPT_DIRECTORY
+            / "extract_invocation.json"
+        )
+        retry = json.loads(retry_path.read_text(encoding="utf-8"))
+        retry["training_checkpoint"] = {
+            **retry["training_checkpoint"],
+            "sha256": "f" * 64,
+        }
+        with self.assertRaisesRegex(MODULE.ReadoutError, "training_checkpoint"):
+            MODULE._validate_retry_invocation_difference(
+                original, retry, retry_output=retry["output"]
+            )
+
+    def test_git_gate_checks_ancestor_before_exact_one_commit_diff(self) -> None:
+        base = "a" * 40
+        head = "b" * 40
+        policy = {
+            "required_pre_retry_head": base,
+            "allowed_retry_commit_paths": ["allowed.py"],
+        }
+        seen: list[tuple[str, ...]] = []
+
+        def fake_git(_repo: Path, *args: str) -> str:
+            seen.append(args)
+            responses = {
+                ("branch", "--show-current"): "exp/fusion-w1",
+                ("rev-parse", "HEAD"): head,
+                ("merge-base", "--is-ancestor", base, head): "",
+                ("rev-list", "--count", f"{base}..{head}"): "1",
+                ("diff", "--name-only", base, head): "allowed.py",
+                ("status", "--porcelain=v1", "--untracked-files=all"): "",
+            }
+            return responses[args]
+
+        with mock.patch.object(MODULE, "_run_git", side_effect=fake_git):
+            state = MODULE._validate_readout_retry_git_state(self.root, policy)
+        self.assertTrue(state["pre_retry_head_is_ancestor"])
+        self.assertIn(("merge-base", "--is-ancestor", base, head), seen)
 
 
 class PointCloudAndQueueTests(unittest.TestCase):

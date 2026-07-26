@@ -5,8 +5,9 @@ The driver consumes only immutable, completed 30k training jobs.  It wraps the
 locked ``tum_mob_tsdf_extract.py`` point-cloud readout, the P0 SMRF/footprint
 classification helper, the pinned default Roofer image, and the canonical P0
 CityJSON scoring helpers.  Every external stage is authorized by an immutable
-receipt and counted exactly once.  A failed or partially started job is never
-retried by this driver.
+receipt and counted exactly once.  Failed or partially started jobs are never
+retried, except for the one human-approved, byte-pinned pre-output gsplat cache
+failure represented by the dedicated infrastructure-retry policy.
 
 The shell wrapper owns Docker, GPU, cgroup, timeout, and host process guards.
 This module owns input validation, lineage, state transitions, counters,
@@ -35,9 +36,14 @@ from typing import Any, Iterable, Mapping, Sequence
 
 
 REPO = Path(__file__).resolve().parents[3]
+CONTAINER_REPO = Path("/workspace/JointBuildGS")
 DEFAULT_CONFIG = (
     REPO
     / "phases/p2-gsjso/configs/fusion_w1_readout_v1_20260726.json"
+)
+DEFAULT_READOUT_RETRY_POLICY = (
+    REPO
+    / "phases/p2-gsjso/configs/fusion_w1_readout_infra_retry_20260726.json"
 )
 CONFIG_SCHEMA = "jointbuildgs.fusion_w1.readout_driver.config.v1"
 COUNTER_SCHEMA = "jointbuildgs.fusion_w1.readout_counters.v1"
@@ -51,6 +57,25 @@ RETRY_POLICY_SCHEMA = "jointbuildgs.fusion_w1.training_infra_retry_policy.v1"
 RETRY_STARTED_SCHEMA = "jointbuildgs.fusion_w1.training_infra_retry_started.v1"
 RETRY_COMPLETED_SCHEMA = "jointbuildgs.fusion_w1.training_infra_retry_completed.v1"
 RETRY_ATTEMPT_DIRECTORY = "infra_retry_01"
+READOUT_RETRY_POLICY_SCHEMA = (
+    "jointbuildgs.fusion_w1.readout_infra_retry_policy.v1"
+)
+READOUT_RETRY_STARTED_SCHEMA = (
+    "jointbuildgs.fusion_w1.readout_infra_retry_started.v1"
+)
+READOUT_RETRY_COMPLETED_SCHEMA = (
+    "jointbuildgs.fusion_w1.readout_infra_retry_completed.v1"
+)
+READOUT_RETRY_FAILED_SCHEMA = (
+    "jointbuildgs.fusion_w1.readout_infra_retry_failed.v1"
+)
+READOUT_RETRY_INVOCATION_SCHEMA = (
+    "jointbuildgs.fusion_w1.extract_infra_retry_invocation.v1"
+)
+READOUT_RETRY_ATTEMPT_DIRECTORY = "infra_retry_01"
+WRITABLE_ENVIRONMENT_KEYS = frozenset(
+    {"HOME", "XDG_CACHE_HOME", "TORCH_EXTENSIONS_DIR"}
+)
 
 ARMS = ("A", "B")
 RUNS = ("r1", "r2")
@@ -277,6 +302,78 @@ def job_key(building_id: str, arm: str, run: str) -> str:
     return f"{building_id}/arm_{arm}/{run}"
 
 
+def writable_readout_environment(
+    config: Mapping[str, Any],
+    *,
+    repo: Path = REPO,
+    create: bool = False,
+    require_ready: bool = False,
+) -> dict[str, Any]:
+    """Resolve the exact writable cache contract used by every extractor."""
+
+    raw = config.get("pointcloudification", {}).get("writable_environment")
+    if not isinstance(raw, Mapping) or set(raw) != WRITABLE_ENVIRONMENT_KEYS:
+        raise ReadoutError(
+            "pointcloud writable environment must contain exactly HOME, "
+            "XDG_CACHE_HOME, TORCH_EXTENSIONS_DIR"
+        )
+    runtime_root = repo_path(
+        Path(str(config["outputs"]["root"])).parent / "runtime_env",
+        repo=repo,
+    )
+    host_paths: dict[str, str] = {}
+    container_values: dict[str, str] = {}
+    for key in sorted(WRITABLE_ENVIRONMENT_KEYS):
+        value = raw[key]
+        if not isinstance(value, str) or not value:
+            raise ReadoutError(f"writable environment path is invalid for {key}")
+        relative = Path(value)
+        if relative.is_absolute() or ".." in relative.parts:
+            raise ReadoutError(f"unsafe writable environment path for {key}: {value!r}")
+        unresolved = repo / relative
+        cursor = unresolved
+        while cursor != repo and cursor != cursor.parent:
+            if cursor.exists() and cursor.is_symlink():
+                raise ReadoutError(
+                    f"writable environment path contains a symlink for {key}: {cursor}"
+                )
+            cursor = cursor.parent
+        path = repo_path(relative, repo=repo)
+        try:
+            path.relative_to(runtime_root)
+        except ValueError as exc:
+            raise ReadoutError(
+                f"writable environment path escapes Fusion-W1 runtime root for {key}: {value!r}"
+            ) from exc
+        if path == runtime_root:
+            raise ReadoutError(f"writable environment leaf is missing for {key}")
+        if create:
+            path.mkdir(parents=True, exist_ok=True)
+            if not path.is_dir() or path.is_symlink():
+                raise ReadoutError(f"writable environment is not a directory for {key}: {path}")
+            if not os.access(path, os.W_OK | os.X_OK):
+                raise ReadoutError(f"writable environment is not writable for {key}: {path}")
+        elif require_ready:
+            if not path.is_dir() or path.is_symlink():
+                raise ReadoutError(
+                    f"writable environment is not ready for {key}: {path}"
+                )
+            if not os.access(path, os.W_OK | os.X_OK):
+                raise ReadoutError(
+                    f"writable environment is not writable for {key}: {path}"
+                )
+        elif path.exists() and (not path.is_dir() or path.is_symlink()):
+            raise ReadoutError(f"writable environment is invalid for {key}: {path}")
+        host_paths[key] = repo_relative(path, repo=repo)
+        container_values[key] = str(CONTAINER_REPO / Path(host_paths[key]))
+    return {
+        "host_paths": host_paths,
+        "container_values": container_values,
+        "runtime_root": repo_relative(runtime_root, repo=repo),
+        "shared_by_training_and_serial_readout": True,
+    }
+
+
 def load_config(path: Path) -> dict[str, Any]:
     config = load_json(path)
     require_equal(config.get("schema"), CONFIG_SCHEMA, "driver config schema")
@@ -313,6 +410,7 @@ def load_config(path: Path) -> dict[str, Any]:
         ),
         "smoke job key",
     )
+    writable_readout_environment(config, repo=path.resolve().parents[3])
     expected_queue = [
         ("core", "A", "r1"),
         ("core", "A", "r2"),
@@ -1003,12 +1101,902 @@ def p0prime_binding(
     }
 
 
-def ensure_not_failed(job: Path) -> None:
+def ensure_not_failed(job: Path, *, repo: Path = REPO) -> None:
+    recovered_failure = job / "failed_after_infrastructure_retry.json"
+    if recovered_failure.exists() or recovered_failure.is_symlink():
+        raise ReadoutError(
+            f"job failed after the approved infrastructure retry: {recovered_failure}"
+        )
     failed = job / "failed.json"
     if failed.exists() or failed.is_symlink():
+        if _validate_adopted_extract_retry(job, repo=repo):
+            return
         raise ReadoutError(
             f"job has failed receipt; retries are forbidden: {failed}"
         )
+
+
+def _run_git(repo: Path, *args: str) -> str:
+    completed = subprocess.run(
+        ["git", "-c", f"safe.directory={repo}", *args],
+        cwd=repo,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        check=False,
+    )
+    if completed.returncode != 0:
+        raise ReadoutError(
+            f"git command failed ({' '.join(args)}): {completed.stderr.strip()}"
+        )
+    return completed.stdout.strip()
+
+
+def validate_readout_retry_policy(
+    config: Mapping[str, Any],
+    policy_path: Path,
+    *,
+    repo: Path = REPO,
+) -> tuple[dict[str, Any], str]:
+    path = policy_path if policy_path.is_absolute() else repo_path(policy_path, repo=repo)
+    policy = load_json(path)
+    digest = sha256_file(path)
+    require_equal(policy.get("schema"), READOUT_RETRY_POLICY_SCHEMA, "readout retry policy schema")
+    require_equal(policy.get("status"), "APPROVED", "readout retry policy status")
+    require_equal(policy.get("run_id"), config.get("run_id"), "readout retry run ID")
+    require_equal(policy.get("approved_by"), "김휘영", "readout retry approver")
+    require_equal(
+        policy.get("retry_kind"),
+        "GSPLAT_JIT_CACHE_PERMISSION_PREOUTPUT",
+        "readout retry kind",
+    )
+    require_equal(policy.get("stage"), "readout", "readout retry stage")
+    require_equal(policy.get("maximum_retries_per_job"), 1, "readout retry maximum")
+    require_equal(
+        policy.get("attempt_directory"),
+        READOUT_RETRY_ATTEMPT_DIRECTORY,
+        "readout retry attempt directory",
+    )
+    require_equal(
+        policy.get("allowed_invocation_differences"),
+        ["output", "argv_value_after_--out"],
+        "readout retry invocation difference allowlist",
+    )
+    head = policy.get("required_pre_retry_head")
+    if not isinstance(head, str) or re.fullmatch(r"[0-9a-f]{40}", head) is None:
+        raise ReadoutError("readout retry pre-retry HEAD is invalid")
+    require_equal(policy.get("required_retry_commit_distance"), 1, "readout retry commit distance")
+    allowed_paths = policy.get("allowed_retry_commit_paths")
+    if not isinstance(allowed_paths, list) or not allowed_paths or len(set(allowed_paths)) != len(allowed_paths):
+        raise ReadoutError("readout retry implementation path allowlist is invalid")
+    environment = policy.get("writable_environment")
+    if not isinstance(environment, Mapping) or set(environment) != WRITABLE_ENVIRONMENT_KEYS:
+        raise ReadoutError("readout retry writable environment is incomplete")
+    require_equal(
+        dict(environment),
+        dict(config["pointcloudification"]["writable_environment"]),
+        "normal/retry writable environment",
+    )
+    required = policy.get("required_failure")
+    if not isinstance(required, Mapping):
+        raise ReadoutError("readout retry required failure is missing")
+    pinned = required.get("artifact_sha256")
+    required_artifacts = {"materialization", "invocation", "started", "log", "failed"}
+    if not isinstance(pinned, Mapping) or set(pinned) != required_artifacts:
+        raise ReadoutError("readout retry original artifact SHA256 binding is incomplete")
+    for label, value in pinned.items():
+        if not isinstance(value, str) or re.fullmatch(r"[0-9a-f]{64}", value) is None:
+            raise ReadoutError(f"invalid pinned readout retry SHA256 for {label}")
+    absent = required.get("required_absent_outputs")
+    if not isinstance(absent, list) or not absent:
+        raise ReadoutError("readout retry absent-output contract is missing")
+    for value in absent:
+        candidate = Path(str(value))
+        if candidate.is_absolute() or ".." in candidate.parts or not candidate.parts:
+            raise ReadoutError(f"unsafe absent-output path in retry policy: {value!r}")
+    preservation = policy.get("preservation_contract")
+    required_preservation = {
+        "original_materialization_immutable",
+        "original_invocation_immutable",
+        "original_started_receipt_immutable",
+        "original_failed_receipt_immutable",
+        "original_log_immutable",
+        "retry_receipts_exclusive",
+        "retry_output_namespace_separate",
+    }
+    if not isinstance(preservation, Mapping) or not all(
+        preservation.get(key) is True for key in required_preservation
+    ):
+        raise ReadoutError("readout retry preservation contract is incomplete")
+    counter = policy.get("counter_contract")
+    if not isinstance(counter, Mapping):
+        raise ReadoutError("readout retry counter contract is missing")
+    require_equal(counter.get("retry_is_same_authorized_readout"), True, "readout retry counter identity")
+    require_equal(counter.get("second_readout_started_receipt_forbidden"), True, "readout retry second STARTED")
+    require_equal(counter.get("readout_runs_started_increment"), 0, "readout retry counter increment")
+    return {
+        **dict(policy),
+        "path": repo_relative(path, repo=repo),
+        "sha256": digest,
+        "writable_environment": dict(environment),
+        "required_failure": {
+            **dict(required),
+            "artifact_sha256": dict(pinned),
+            "required_absent_outputs": list(absent),
+        },
+        "preservation_contract": dict(preservation),
+        "counter_contract": dict(counter),
+        "allowed_retry_commit_paths": list(allowed_paths),
+    }, digest
+
+
+def _validate_readout_retry_git_state(
+    repo: Path, policy: Mapping[str, Any]
+) -> dict[str, Any]:
+    branch = _run_git(repo, "branch", "--show-current")
+    require_equal(branch, "exp/fusion-w1", "readout retry branch")
+    head = _run_git(repo, "rev-parse", "HEAD")
+    base = str(policy["required_pre_retry_head"])
+    _run_git(repo, "merge-base", "--is-ancestor", base, head)
+    distance_text = _run_git(repo, "rev-list", "--count", f"{base}..{head}")
+    try:
+        distance = int(distance_text)
+    except ValueError as exc:
+        raise ReadoutError(f"invalid readout retry commit distance: {distance_text!r}") from exc
+    require_equal(distance, 1, "readout retry commit distance")
+    changed = sorted(
+        line for line in _run_git(repo, "diff", "--name-only", base, head).splitlines() if line
+    )
+    require_equal(
+        changed,
+        sorted(str(value) for value in policy["allowed_retry_commit_paths"]),
+        "readout retry implementation commit paths",
+    )
+    porcelain = _run_git(repo, "status", "--porcelain=v1", "--untracked-files=all")
+    allowed_runtime_prefix = "phases/p2-gsjso/runs/20260724_fusion_w1/"
+    unexpected: list[str] = []
+    allowed_untracked: list[str] = []
+    for line in porcelain.splitlines():
+        if not line:
+            continue
+        status = line[:2]
+        path = line[3:]
+        if status == "??" and path.startswith(allowed_runtime_prefix):
+            allowed_untracked.append(path)
+        else:
+            unexpected.append(line)
+    if unexpected:
+        raise ReadoutError(
+            "readout retry worktree has tracked or non-runtime changes: "
+            + "; ".join(unexpected[:20])
+        )
+    return {
+        "branch": branch,
+        "pre_retry_head": base,
+        "retry_head": head,
+        "pre_retry_head_is_ancestor": True,
+        "commit_distance": distance,
+        "changed_paths": changed,
+        "tracked_changes": 0,
+        "allowed_runtime_untracked_count": len(allowed_untracked),
+    }
+
+
+def _readout_job_file_snapshot(job: Path) -> dict[str, str]:
+    snapshot: dict[str, str] = {}
+    if not job.is_dir() or job.is_symlink():
+        raise ReadoutError(f"readout job directory is invalid: {job}")
+    for path in sorted(job.rglob("*")):
+        relative = path.relative_to(job)
+        if relative.parts and relative.parts[0] == READOUT_RETRY_ATTEMPT_DIRECTORY:
+            continue
+        if relative == Path("extract_receipt.json"):
+            continue
+        if path.is_symlink():
+            raise ReadoutError(f"readout retry source contains a symlink: {path}")
+        if path.is_file():
+            snapshot[str(relative)] = sha256_file(path)
+    return snapshot
+
+
+def _snapshot_sha256(snapshot: Mapping[str, str]) -> str:
+    return sha256_bytes(canonical_json(dict(sorted(snapshot.items()))))
+
+
+def _require_original_snapshot_unchanged(
+    job: Path, expected: Mapping[str, str]
+) -> None:
+    for relative, digest in expected.items():
+        path = job / relative
+        require_regular(path, f"original readout snapshot {relative}")
+        require_equal(
+            sha256_file(path), digest, f"original readout snapshot {relative} SHA256"
+        )
+
+
+def _require_pre_adoption_snapshot_exact(
+    job: Path, expected: Mapping[str, str]
+) -> None:
+    """Allow no new root-job files before the retry is adopted."""
+
+    observed = _readout_job_file_snapshot(job)
+    require_equal(
+        observed,
+        dict(expected),
+        "pre-adoption original readout file inventory",
+    )
+
+
+def _resolve_retry_output_before_receipt(
+    invocation: Mapping[str, Any],
+    attempt: Path,
+    *,
+    repo: Path = REPO,
+) -> Path:
+    """Validate the fixed retry namespace without following a symlink first."""
+
+    raw_value = invocation.get("output")
+    if not isinstance(raw_value, str) or not raw_value:
+        raise ReadoutError("readout retry output path is invalid")
+    raw = Path(raw_value)
+    if raw.is_absolute() or ".." in raw.parts:
+        raise ReadoutError(f"unsafe readout retry output path: {raw_value!r}")
+    repository = repo.resolve()
+    try:
+        attempt_relative = attempt.relative_to(repository)
+    except ValueError as exc:
+        raise ReadoutError("readout retry attempt escapes repository") from exc
+    expected = attempt_relative / "pointcloud" / "readout.npz"
+    require_equal(raw, expected, "readout retry fixed output namespace")
+    cursor = repository
+    for part in raw.parts:
+        cursor = cursor / part
+        if cursor.is_symlink():
+            raise ReadoutError(
+                f"readout retry output path contains a symlink: {cursor}"
+            )
+    return repo_path(raw, repo=repo)
+
+
+def _validate_retry_invocation_difference(
+    original: Mapping[str, Any],
+    retry: Mapping[str, Any],
+    *,
+    retry_output: str,
+) -> None:
+    expected_new_keys = {
+        "original_invocation",
+        "retry_started",
+        "environment",
+        "allowed_differences",
+    }
+    require_equal(
+        set(retry) - set(original),
+        expected_new_keys,
+        "readout retry invocation provenance keys",
+    )
+    for key in set(original) - {"schema", "created_at", "output", "argv"}:
+        require_equal(retry.get(key), original.get(key), f"readout retry invocation {key}")
+    require_equal(retry.get("schema"), READOUT_RETRY_INVOCATION_SCHEMA, "readout retry invocation schema")
+    require_equal(retry.get("output"), retry_output, "readout retry invocation output")
+    original_argv = original.get("argv")
+    retry_argv = retry.get("argv")
+    if not isinstance(original_argv, list) or not isinstance(retry_argv, list):
+        raise ReadoutError("readout retry invocation argv is invalid")
+    require_equal(
+        retry_argv,
+        _replace_only_output(original_argv, str(original.get("output")), retry_output),
+        "readout retry argv output-only difference",
+    )
+    require_equal(
+        retry.get("allowed_differences"),
+        ["output", "argv_value_after_--out"],
+        "readout retry invocation difference declaration",
+    )
+
+
+def _verify_preoutput_cache_failure(
+    config: Mapping[str, Any],
+    policy: Mapping[str, Any],
+    building_id: str,
+    arm: str,
+    run: str,
+    *,
+    repo: Path = REPO,
+) -> dict[str, Any]:
+    key = job_key(building_id, arm, run)
+    require_equal(key, policy.get("job_key"), "readout retry job key")
+    job = job_dir(config, building_id, arm, run, repo=repo)
+    paths = {
+        "materialization": job / "materialization.json",
+        "invocation": job / "extract_invocation.json",
+        "started": job / "readout_started.json",
+        "log": job / "extract.stdout.log",
+        "failed": job / "failed.json",
+    }
+    pinned = policy["required_failure"]["artifact_sha256"]
+    payloads: dict[str, dict[str, Any]] = {}
+    for label, path in paths.items():
+        require_regular(path, f"original readout {label}")
+        require_equal(sha256_file(path), pinned[label], f"original readout {label} SHA256")
+        if label != "log":
+            payloads[label] = load_json(path)
+    require_equal(payloads["materialization"].get("schema"), MATERIALIZATION_SCHEMA, "original readout materialization schema")
+    require_equal(payloads["materialization"].get("job_key"), key, "original readout materialization job")
+    require_equal(payloads["invocation"].get("schema"), "jointbuildgs.fusion_w1.extract_invocation.v1", "original extract invocation schema")
+    require_equal(payloads["invocation"].get("state"), "AUTHORIZED", "original extract invocation state")
+    require_equal(payloads["invocation"].get("job_key"), key, "original extract invocation job")
+    require_equal(payloads["invocation"].get("retry_allowed"), False, "original invocation retry flag")
+    require_equal(payloads["started"].get("schema"), JOB_SCHEMA, "original readout STARTED schema")
+    require_equal(payloads["started"].get("state"), "STARTED", "original readout STARTED state")
+    require_equal(payloads["started"].get("stage"), "readout", "original readout STARTED stage")
+    require_equal(payloads["started"].get("job_key"), key, "original readout STARTED job")
+    require_equal(payloads["started"].get("retry_allowed"), False, "original STARTED retry flag")
+    started_invocation = payloads["started"].get("invocation")
+    if not isinstance(started_invocation, Mapping):
+        raise ReadoutError("original readout STARTED invocation binding is missing")
+    require_equal(started_invocation.get("path"), repo_relative(paths["invocation"], repo=repo), "original STARTED invocation path")
+    require_equal(started_invocation.get("sha256"), pinned["invocation"], "original STARTED invocation SHA256")
+    require_equal(payloads["failed"].get("schema"), "jointbuildgs.fusion_w1.readout_failure.v1", "original readout failure schema")
+    require_equal(payloads["failed"].get("state"), "FAILED", "original readout failure state")
+    require_equal(payloads["failed"].get("stage"), "readout", "original readout failure stage")
+    require_equal(payloads["failed"].get("job_key"), key, "original readout failure job")
+    require_equal(payloads["failed"].get("retry_allowed"), False, "original failure retry flag")
+    log_text = paths["log"].read_text(encoding="utf-8")
+    for marker in policy["required_failure"].get("log_markers", []):
+        if marker not in log_text:
+            raise ReadoutError(f"required readout cache-failure marker is absent: {marker}")
+    for relative in policy["required_failure"]["required_absent_outputs"]:
+        path = job / str(relative)
+        if path.exists() or path.is_symlink():
+            raise ReadoutError(f"pre-output retry found forbidden output: {path}")
+    pointcloud = job / "pointcloud"
+    if pointcloud.exists() and any(pointcloud.iterdir()):
+        raise ReadoutError("pre-output retry found an unexpected point-cloud artifact")
+    attempt = job / READOUT_RETRY_ATTEMPT_DIRECTORY
+    if attempt.exists() or attempt.is_symlink():
+        raise ReadoutError("the one permitted readout infrastructure retry was already claimed")
+    counters = reconcile_runtime_counters(config, repo=repo)
+    for name, value in policy["required_failure"]["required_counter_values"].items():
+        require_equal(counters.get(name), value, f"pre-output retry counter {name}")
+    snapshot = _readout_job_file_snapshot(job)
+    return {
+        "job": job,
+        "paths": paths,
+        "payloads": payloads,
+        "snapshot": snapshot,
+        "snapshot_sha256": _snapshot_sha256(snapshot),
+    }
+
+
+def _replace_only_output(argv: Sequence[str], original: str, replacement: str) -> list[str]:
+    values = list(argv)
+    positions = [index for index, value in enumerate(values) if value == "--out"]
+    if len(positions) != 1:
+        raise ReadoutError("extract argv must contain exactly one --out option")
+    index = positions[0]
+    if index + 1 >= len(values):
+        raise ReadoutError("extract argv --out value is missing")
+    require_equal(values[index + 1], original, "original extract argv output")
+    values[index + 1] = replacement
+    return values
+
+
+def prepare_extract_infra_retry(
+    config: Mapping[str, Any],
+    policy_path: Path,
+    building_id: str,
+    arm: str,
+    run: str,
+    *,
+    repo: Path = REPO,
+    validate_git: bool = True,
+) -> dict[str, Any]:
+    policy, _ = validate_readout_retry_policy(config, policy_path, repo=repo)
+    git = _validate_readout_retry_git_state(repo, policy) if validate_git else {"validation": "TEST_BYPASS"}
+    verified = _verify_preoutput_cache_failure(config, policy, building_id, arm, run, repo=repo)
+    job = verified["job"]
+    attempt = job / READOUT_RETRY_ATTEMPT_DIRECTORY
+    environment = writable_readout_environment(config, repo=repo, create=True)
+    require_equal(environment["host_paths"], policy["writable_environment"], "retry policy/environment paths")
+    started_path = attempt / "retry_started.json"
+    original_refs = {
+        label: {"path": repo_relative(path, repo=repo), "sha256": sha256_file(path)}
+        for label, path in verified["paths"].items()
+    }
+    started = {
+        "schema": READOUT_RETRY_STARTED_SCHEMA,
+        "state": "STARTED",
+        "created_at": now_iso(),
+        "run_id": config["run_id"],
+        "job_key": job_key(building_id, arm, run),
+        "retry_key": f"{job_key(building_id, arm, run)}/{READOUT_RETRY_ATTEMPT_DIRECTORY}",
+        "policy": policy,
+        "git": git,
+        "original_artifacts": original_refs,
+        "original_file_snapshot": verified["snapshot"],
+        "original_file_snapshot_sha256": verified["snapshot_sha256"],
+        "environment": environment,
+        "counter_increment": 0,
+        "claim_mode": "atomic_O_EXCL_one_time_preoutput_infrastructure_retry",
+    }
+    exclusive_json(started_path, started)
+    original = verified["payloads"]["invocation"]
+    output = attempt / "pointcloud" / "readout.npz"
+    output_rel = repo_relative(output, repo=repo)
+    original_argv = original.get("argv")
+    if not isinstance(original_argv, list) or not all(isinstance(value, str) for value in original_argv):
+        raise ReadoutError("original extract argv is invalid")
+    argv = _replace_only_output(original_argv, str(original["output"]), output_rel)
+    invocation = {
+        **dict(original),
+        "schema": READOUT_RETRY_INVOCATION_SCHEMA,
+        "created_at": now_iso(),
+        "output": output_rel,
+        "argv": argv,
+        "original_invocation": original_refs["invocation"],
+        "retry_started": {
+            "path": repo_relative(started_path, repo=repo),
+            "sha256": sha256_file(started_path),
+        },
+        "environment": environment,
+        "allowed_differences": ["output", "argv_value_after_--out"],
+        "retry_allowed": False,
+    }
+    invocation_path = attempt / "extract_invocation.json"
+    _validate_retry_invocation_difference(
+        original, invocation, retry_output=output_rel
+    )
+    exclusive_json(invocation_path, invocation)
+    return {
+        "status": "AUTHORIZED",
+        "attempt": repo_relative(attempt, repo=repo),
+        "retry_started": repo_relative(started_path, repo=repo),
+        "retry_invocation": repo_relative(invocation_path, repo=repo),
+        "retry_output": output_rel,
+        "environment": environment,
+    }
+
+
+def _load_active_extract_retry(
+    config: Mapping[str, Any],
+    building_id: str,
+    arm: str,
+    run: str,
+    *,
+    repo: Path = REPO,
+    allow_completed: bool = False,
+) -> tuple[Path, dict[str, Any], Path, dict[str, Any]]:
+    job = job_dir(config, building_id, arm, run, repo=repo)
+    attempt = job / READOUT_RETRY_ATTEMPT_DIRECTORY
+    started_path = attempt / "retry_started.json"
+    invocation_path = attempt / "extract_invocation.json"
+    started = load_receipt(started_path, schema=READOUT_RETRY_STARTED_SCHEMA, state="STARTED")
+    invocation = load_receipt(invocation_path, schema=READOUT_RETRY_INVOCATION_SCHEMA, state="AUTHORIZED")
+    key = job_key(building_id, arm, run)
+    require_equal(started.get("job_key"), key, "readout retry STARTED job")
+    require_equal(invocation.get("job_key"), key, "readout retry invocation job")
+    binding = invocation.get("retry_started")
+    if not isinstance(binding, Mapping):
+        raise ReadoutError("readout retry invocation/STARTED binding is missing")
+    require_equal(binding.get("path"), repo_relative(started_path, repo=repo), "retry STARTED path")
+    require_equal(binding.get("sha256"), sha256_file(started_path), "retry STARTED SHA256")
+    policy = started.get("policy")
+    if not isinstance(policy, Mapping):
+        raise ReadoutError("readout retry policy binding is missing")
+    policy_path = repo_path(str(policy.get("path")), repo=repo)
+    verified_policy, _ = validate_readout_retry_policy(config, policy_path, repo=repo)
+    require_equal(dict(policy), verified_policy, "readout retry policy binding")
+    original_snapshot = started.get("original_file_snapshot")
+    if not isinstance(original_snapshot, Mapping):
+        raise ReadoutError("readout retry original snapshot is missing")
+    _require_original_snapshot_unchanged(job, dict(original_snapshot))
+    failed_retry = attempt / "retry_failed.json"
+    if failed_retry.exists() or failed_retry.is_symlink():
+        raise ReadoutError("readout infrastructure retry already failed")
+    completed_retry = attempt / "retry_completed.json"
+    if not allow_completed and (completed_retry.exists() or completed_retry.is_symlink()):
+        raise ReadoutError("readout infrastructure retry already completed")
+    environment = writable_readout_environment(
+        config, repo=repo, create=False, require_ready=True
+    )
+    require_equal(invocation.get("environment"), environment, "readout retry invocation environment")
+    original_invocation = load_json(job / "extract_invocation.json")
+    _validate_retry_invocation_difference(
+        original_invocation,
+        invocation,
+        retry_output=str(invocation.get("output")),
+    )
+    return attempt, started, invocation_path, invocation
+
+
+def retry_extract_argv(
+    config: Mapping[str, Any], building_id: str, arm: str, run: str, *, repo: Path = REPO
+) -> list[str]:
+    _, _, _, invocation = _load_active_extract_retry(config, building_id, arm, run, repo=repo)
+    argv = invocation.get("argv")
+    if not isinstance(argv, list) or not all(isinstance(value, str) and value for value in argv):
+        raise ReadoutError("readout retry argv is invalid")
+    return list(argv)
+
+
+def retry_extract_environment(
+    config: Mapping[str, Any], building_id: str, arm: str, run: str, *, repo: Path = REPO
+) -> list[str]:
+    _, _, _, invocation = _load_active_extract_retry(config, building_id, arm, run, repo=repo)
+    environment = invocation["environment"]["container_values"]
+    return [f"{key}={environment[key]}" for key in sorted(WRITABLE_ENVIRONMENT_KEYS)]
+
+
+def record_extract_infra_retry_failure(
+    config: Mapping[str, Any],
+    building_id: str,
+    arm: str,
+    run: str,
+    *,
+    message: str,
+    detail: str = "",
+    repo: Path = REPO,
+) -> dict[str, Any]:
+    job = job_dir(config, building_id, arm, run, repo=repo)
+    if (job / "extract_receipt.json").exists() or (
+        job / "extract_receipt.json"
+    ).is_symlink():
+        try:
+            already_adopted = _validate_adopted_extract_retry(job, repo=repo)
+        except ReadoutError:
+            already_adopted = False
+        if already_adopted:
+            raise ReadoutError(
+                "readout infrastructure retry was already successfully adopted"
+            )
+    attempt, started, invocation_path, _ = _load_active_extract_retry(
+        config, building_id, arm, run, repo=repo, allow_completed=True
+    )
+    payload = {
+        "schema": READOUT_RETRY_FAILED_SCHEMA,
+        "state": "FAILED",
+        "created_at": now_iso(),
+        "run_id": config["run_id"],
+        "job_key": job_key(building_id, arm, run),
+        "retry_key": started["retry_key"],
+        "message": message,
+        "detail": detail[-12000:],
+        "retry_started": {"path": repo_relative(attempt / "retry_started.json", repo=repo), "sha256": sha256_file(attempt / "retry_started.json")},
+        "retry_invocation": {"path": repo_relative(invocation_path, repo=repo), "sha256": sha256_file(invocation_path)},
+        "partial_outputs_preserved": True,
+        "another_retry_allowed": False,
+        "counter_increment": 0,
+    }
+    exclusive_json(attempt / "retry_failed.json", payload)
+    return payload
+
+
+def _validate_retry_completion_chain(
+    *,
+    attempt: Path,
+    started: Mapping[str, Any],
+    invocation_path: Path,
+    invocation: Mapping[str, Any],
+    attempt_receipt_path: Path,
+    attempt_receipt: Mapping[str, Any],
+    completed_path: Path,
+    completed: Mapping[str, Any],
+    pointcloud: Mapping[str, Any],
+    repo: Path = REPO,
+) -> None:
+    """Pin every link in the successful retry chain before root adoption."""
+
+    key = str(started.get("job_key"))
+    retry_key = f"{key}/{READOUT_RETRY_ATTEMPT_DIRECTORY}"
+    require_equal(started.get("retry_key"), retry_key, "readout retry STARTED key")
+    require_equal(invocation.get("job_key"), key, "readout retry invocation job")
+    started_binding = {
+        "path": repo_relative(attempt / "retry_started.json", repo=repo),
+        "sha256": sha256_file(attempt / "retry_started.json"),
+    }
+    invocation_binding = {
+        "path": repo_relative(invocation_path, repo=repo),
+        "sha256": sha256_file(invocation_path),
+    }
+    attempt_receipt_binding = {
+        "path": repo_relative(attempt_receipt_path, repo=repo),
+        "sha256": sha256_file(attempt_receipt_path),
+    }
+    require_equal(
+        invocation.get("retry_started"),
+        started_binding,
+        "readout retry invocation STARTED binding",
+    )
+    require_equal(attempt_receipt.get("job_key"), key, "retry extract receipt job")
+    require_equal(
+        attempt_receipt.get("retry_key"), retry_key, "retry extract receipt key"
+    )
+    require_equal(
+        attempt_receipt.get("invocation"),
+        invocation_binding,
+        "retry extract receipt invocation binding",
+    )
+    require_equal(
+        attempt_receipt.get("pointcloud"),
+        dict(pointcloud),
+        "retry extract receipt point cloud",
+    )
+    require_equal(
+        attempt_receipt.get("counter_increment"),
+        0,
+        "retry extract receipt counter increment",
+    )
+    require_equal(completed.get("job_key"), key, "completed readout retry job")
+    require_equal(
+        completed.get("retry_key"), retry_key, "completed readout retry key"
+    )
+    require_equal(completed.get("return_code"), 0, "completed readout retry return code")
+    require_equal(
+        completed.get("retry_started"),
+        started_binding,
+        "completed readout retry STARTED binding",
+    )
+    require_equal(
+        completed.get("retry_invocation"),
+        invocation_binding,
+        "completed readout retry invocation binding",
+    )
+    require_equal(
+        completed.get("extract_receipt"),
+        attempt_receipt_binding,
+        "completed readout retry extract receipt binding",
+    )
+    require_equal(
+        completed.get("pointcloud"),
+        dict(pointcloud),
+        "completed readout retry point cloud",
+    )
+    require_equal(
+        completed.get("original_file_snapshot_sha256"),
+        started.get("original_file_snapshot_sha256"),
+        "completed readout retry original snapshot SHA256",
+    )
+    require_equal(
+        completed.get("counter_increment"),
+        0,
+        "completed readout retry counter increment",
+    )
+    require_regular(completed_path, "completed readout retry receipt")
+
+
+def accept_extract_infra_retry(
+    config: Mapping[str, Any],
+    building_id: str,
+    arm: str,
+    run: str,
+    *,
+    wall_seconds: float,
+    repo: Path = REPO,
+) -> dict[str, Any]:
+    job = job_dir(config, building_id, arm, run, repo=repo)
+    root_receipt = job / "extract_receipt.json"
+    if root_receipt.exists() or root_receipt.is_symlink():
+        payload = load_receipt(root_receipt, schema="jointbuildgs.fusion_w1.extract_receipt.v1", state="COMPLETE")
+        if not _validate_adopted_extract_retry(job, repo=repo):
+            raise ReadoutError("existing root extract receipt is not an adopted retry")
+        return payload
+    attempt, started, invocation_path, invocation = _load_active_extract_retry(
+        config, building_id, arm, run, repo=repo, allow_completed=True
+    )
+    checkpoint = repo_path(invocation["training_checkpoint"]["path"], repo=repo)
+    verify_hash(checkpoint, invocation["training_checkpoint"]["sha256"], "checkpoint before accepting retry readout")
+    output = _resolve_retry_output_before_receipt(
+        invocation, attempt, repo=repo
+    )
+    stats = inspect_npz(output, config, repo=repo)
+    _require_pre_adoption_snapshot_exact(job, started["original_file_snapshot"])
+    attempt_receipt_path = attempt / "extract_receipt.json"
+    if attempt_receipt_path.exists():
+        attempt_receipt = load_receipt(
+            attempt_receipt_path,
+            schema="jointbuildgs.fusion_w1.extract_infra_retry_receipt.v1",
+            state="COMPLETE",
+        )
+        require_equal(attempt_receipt.get("pointcloud"), stats, "retry point-cloud receipt")
+    else:
+        attempt_receipt = {
+            "schema": "jointbuildgs.fusion_w1.extract_infra_retry_receipt.v1",
+            "state": "COMPLETE",
+            "created_at": now_iso(),
+            "job_key": job_key(building_id, arm, run),
+            "retry_key": started["retry_key"],
+            "invocation": {"path": repo_relative(invocation_path, repo=repo), "sha256": sha256_file(invocation_path)},
+            "pointcloud": stats,
+            "wall_seconds": float(wall_seconds),
+            "counter_increment": 0,
+        }
+        exclusive_json(attempt_receipt_path, attempt_receipt)
+    completed_path = attempt / "retry_completed.json"
+    if completed_path.exists():
+        completed = load_receipt(completed_path, schema=READOUT_RETRY_COMPLETED_SCHEMA, state="COMPLETE")
+    else:
+        completed = {
+            "schema": READOUT_RETRY_COMPLETED_SCHEMA,
+            "state": "COMPLETE",
+            "completed_at": now_iso(),
+            "run_id": config["run_id"],
+            "job_key": job_key(building_id, arm, run),
+            "retry_key": started["retry_key"],
+            "return_code": 0,
+            "retry_started": {"path": repo_relative(attempt / "retry_started.json", repo=repo), "sha256": sha256_file(attempt / "retry_started.json")},
+            "retry_invocation": {"path": repo_relative(invocation_path, repo=repo), "sha256": sha256_file(invocation_path)},
+            "extract_receipt": {"path": repo_relative(attempt_receipt_path, repo=repo), "sha256": sha256_file(attempt_receipt_path)},
+            "pointcloud": stats,
+            "original_file_snapshot_sha256": started["original_file_snapshot_sha256"],
+            "counter_increment": 0,
+        }
+        exclusive_json(completed_path, completed)
+    _validate_retry_completion_chain(
+        attempt=attempt,
+        started=started,
+        invocation_path=invocation_path,
+        invocation=invocation,
+        attempt_receipt_path=attempt_receipt_path,
+        attempt_receipt=attempt_receipt,
+        completed_path=completed_path,
+        completed=completed,
+        pointcloud=stats,
+        repo=repo,
+    )
+    root = {
+        "schema": "jointbuildgs.fusion_w1.extract_receipt.v1",
+        "state": "COMPLETE",
+        "created_at": completed["completed_at"],
+        "job_key": job_key(building_id, arm, run),
+        "building_id": building_id,
+        "arm": arm,
+        "replicate": run,
+        "invocation": {"path": repo_relative(invocation_path, repo=repo), "sha256": sha256_file(invocation_path)},
+        "pointcloud": stats,
+        "wall_seconds": float(attempt_receipt["wall_seconds"]),
+        "resource_contract": config["resource_lock"],
+        "partial_output_accepted": False,
+        "infrastructure_retry": {
+            "policy": started["policy"],
+            "original_artifacts": started["original_artifacts"],
+            "retry_started": {"path": repo_relative(attempt / "retry_started.json", repo=repo), "sha256": sha256_file(attempt / "retry_started.json")},
+            "retry_invocation": {"path": repo_relative(invocation_path, repo=repo), "sha256": sha256_file(invocation_path)},
+            "retry_completed": {"path": repo_relative(completed_path, repo=repo), "sha256": sha256_file(completed_path)},
+            "counter_increment": 0,
+            "allowed_invocation_differences": ["output", "argv_value_after_--out"],
+        },
+    }
+    exclusive_json(root_receipt, root)
+    if not _validate_adopted_extract_retry(job, repo=repo):
+        raise ReadoutError("published root extract retry adoption failed validation")
+    return root
+
+
+def _validate_adopted_extract_retry(job: Path, *, repo: Path = REPO) -> bool:
+    root_receipt = job / "extract_receipt.json"
+    if not root_receipt.is_file() or root_receipt.is_symlink():
+        return False
+    root = load_receipt(root_receipt, schema="jointbuildgs.fusion_w1.extract_receipt.v1", state="COMPLETE")
+    chain = root.get("infrastructure_retry")
+    if not isinstance(chain, Mapping):
+        return False
+    policy = chain.get("policy")
+    if not isinstance(policy, Mapping):
+        raise ReadoutError("adopted readout retry policy binding is missing")
+    require_equal(policy.get("schema"), READOUT_RETRY_POLICY_SCHEMA, "adopted readout retry policy schema")
+    policy_path = repo_path(str(policy.get("path")), repo=repo)
+    verify_hash(policy_path, str(policy.get("sha256")), "adopted readout retry policy")
+    attempt = job / str(policy.get("attempt_directory"))
+    if not attempt.is_dir() or attempt.is_symlink():
+        raise ReadoutError("adopted readout retry attempt directory is invalid")
+    refs = {
+        "retry_started": attempt / "retry_started.json",
+        "retry_invocation": attempt / "extract_invocation.json",
+        "retry_completed": attempt / "retry_completed.json",
+    }
+    for label, expected in refs.items():
+        binding = chain.get(label)
+        if not isinstance(binding, Mapping):
+            raise ReadoutError(f"adopted readout {label} binding is missing")
+        require_equal(repo_path(str(binding.get("path")), repo=repo), expected.resolve(), f"adopted readout {label} path")
+        verify_hash(expected, str(binding.get("sha256")), f"adopted readout {label}")
+    started = load_receipt(refs["retry_started"], schema=READOUT_RETRY_STARTED_SCHEMA, state="STARTED")
+    invocation = load_receipt(refs["retry_invocation"], schema=READOUT_RETRY_INVOCATION_SCHEMA, state="AUTHORIZED")
+    completed = load_receipt(refs["retry_completed"], schema=READOUT_RETRY_COMPLETED_SCHEMA, state="COMPLETE")
+    attempt_receipt_path = attempt / "extract_receipt.json"
+    attempt_receipt = load_receipt(
+        attempt_receipt_path,
+        schema="jointbuildgs.fusion_w1.extract_infra_retry_receipt.v1",
+        state="COMPLETE",
+    )
+    pointcloud = completed.get("pointcloud")
+    if not isinstance(pointcloud, Mapping):
+        raise ReadoutError("completed readout retry point-cloud binding is missing")
+    _validate_retry_completion_chain(
+        attempt=attempt,
+        started=started,
+        invocation_path=refs["retry_invocation"],
+        invocation=invocation,
+        attempt_receipt_path=attempt_receipt_path,
+        attempt_receipt=attempt_receipt,
+        completed_path=refs["retry_completed"],
+        completed=completed,
+        pointcloud=pointcloud,
+        repo=repo,
+    )
+    require_equal(chain.get("counter_increment"), 0, "adopted readout retry counter increment")
+    original = started.get("original_artifacts")
+    pinned = policy.get("required_failure", {}).get("artifact_sha256", {})
+    if not isinstance(original, Mapping) or not isinstance(pinned, Mapping):
+        raise ReadoutError("adopted readout retry original bindings are missing")
+    original_paths = {
+        "materialization": job / "materialization.json",
+        "invocation": job / "extract_invocation.json",
+        "started": job / "readout_started.json",
+        "log": job / "extract.stdout.log",
+        "failed": job / "failed.json",
+    }
+    for label, path in original_paths.items():
+        binding = original.get(label)
+        if not isinstance(binding, Mapping):
+            raise ReadoutError(f"adopted original {label} binding is missing")
+        require_equal(repo_path(str(binding.get("path")), repo=repo), path.resolve(), f"adopted original {label} path")
+        require_equal(binding.get("sha256"), pinned.get(label), f"adopted original {label} pinned SHA256")
+        verify_hash(path, str(binding.get("sha256")), f"adopted original readout {label}")
+    original_snapshot = started.get("original_file_snapshot")
+    if not isinstance(original_snapshot, Mapping):
+        raise ReadoutError("adopted original readout snapshot is missing")
+    require_equal(
+        started.get("original_file_snapshot_sha256"),
+        _snapshot_sha256(original_snapshot),
+        "adopted original readout snapshot SHA256",
+    )
+    require_equal(
+        started.get("counter_increment"),
+        0,
+        "adopted readout retry STARTED counter increment",
+    )
+    _require_original_snapshot_unchanged(job, original_snapshot)
+    require_equal(root.get("invocation", {}).get("path"), repo_relative(refs["retry_invocation"], repo=repo), "adopted root invocation path")
+    require_equal(root.get("invocation", {}).get("sha256"), sha256_file(refs["retry_invocation"]), "adopted root invocation SHA256")
+    root_pointcloud = root.get("pointcloud")
+    if not isinstance(root_pointcloud, Mapping):
+        raise ReadoutError("adopted retry point-cloud binding is missing")
+    output = _resolve_retry_output_before_receipt(
+        invocation, attempt, repo=repo
+    )
+    require_equal(
+        root_pointcloud.get("path"),
+        repo_relative(output, repo=repo),
+        "adopted retry point-cloud path",
+    )
+    verify_hash(output, str(root_pointcloud.get("sha256")), "adopted retry point cloud")
+    require_equal(invocation.get("output"), repo_relative(output, repo=repo), "adopted retry invocation output")
+    _validate_retry_invocation_difference(
+        load_json(job / "extract_invocation.json"),
+        invocation,
+        retry_output=repo_relative(output, repo=repo),
+    )
+    require_equal(completed.get("pointcloud"), dict(root_pointcloud), "adopted retry completed point cloud")
+    key = started.get("job_key")
+    require_equal(root.get("job_key"), key, "adopted root job key")
+    require_equal(root.get("building_id"), invocation.get("building_id"), "adopted root building")
+    require_equal(root.get("arm"), invocation.get("arm"), "adopted root arm")
+    require_equal(root.get("replicate"), invocation.get("replicate"), "adopted root replicate")
+    require_equal(root.get("partial_output_accepted"), False, "adopted root partial output")
+    require_equal(chain.get("policy"), started.get("policy"), "adopted retry policy chain")
+    require_equal(
+        chain.get("original_artifacts"),
+        started.get("original_artifacts"),
+        "adopted retry original artifact chain",
+    )
+    require_equal(
+        chain.get("allowed_invocation_differences"),
+        ["output", "argv_value_after_--out"],
+        "adopted retry invocation difference chain",
+    )
+    return True
 
 
 def load_receipt(
@@ -1053,8 +2041,22 @@ def record_failure(
     }
     failed = job / "failed.json"
     if failed.exists() or failed.is_symlink():
-        prior = load_json(failed)
-        return prior
+        if not _validate_adopted_extract_retry(job, repo=repo):
+            return load_json(failed)
+        failed = job / "failed_after_infrastructure_retry.json"
+        payload["schema"] = (
+            "jointbuildgs.fusion_w1.readout_failure_after_infrastructure_retry.v1"
+        )
+        payload["original_failure"] = {
+            "path": repo_relative(job / "failed.json", repo=repo),
+            "sha256": sha256_file(job / "failed.json"),
+        }
+        payload["adopted_extract_receipt"] = {
+            "path": repo_relative(job / "extract_receipt.json", repo=repo),
+            "sha256": sha256_file(job / "extract_receipt.json"),
+        }
+        if failed.exists() or failed.is_symlink():
+            return load_json(failed)
     exclusive_json(failed, payload)
     append_jsonl(
         repo_path(config["outputs"]["failures_jsonl"], repo=repo),
@@ -1184,7 +2186,7 @@ def begin_stage(
     if stage not in STAGE_COUNTERS:
         raise ReadoutError(f"unknown counted stage: {stage}")
     job = job_dir(config, building_id, arm, run, repo=repo)
-    ensure_not_failed(job)
+    ensure_not_failed(job, repo=repo)
     require_regular(invocation_path, f"{stage} invocation")
     started_path = job / STAGE_STARTED_FILES[stage]
     counter_path = repo_path(config["outputs"]["runtime_counters"], repo=repo)
@@ -1195,7 +2197,7 @@ def begin_stage(
     key = job_key(building_id, arm, run)
     with lock_path.open("a+b") as lock:
         fcntl.flock(lock.fileno(), fcntl.LOCK_EX)
-        ensure_not_failed(job)
+        ensure_not_failed(job, repo=repo)
         if started_path.exists() or started_path.is_symlink():
             # The STARTED receipt is authoritative.  Rebuild the materialized
             # counter view before refusing a retry, so an interruption between
@@ -1317,7 +2319,7 @@ def prepare_one(
     )
     p0prime = p0prime_binding(config, building_id, repo=repo)
     job = job_dir(config, building_id, arm, run, repo=repo)
-    ensure_not_failed(job)
+    ensure_not_failed(job, repo=repo)
     materialization_path = job / "materialization.json"
     if job.exists() and any(job.iterdir()):
         raise ReadoutError(
@@ -1392,7 +2394,7 @@ def validate_materialization(
     repo: Path = REPO,
 ) -> tuple[Path, dict[str, Any]]:
     job = job_dir(config, building_id, arm, run, repo=repo)
-    ensure_not_failed(job)
+    ensure_not_failed(job, repo=repo)
     path = job / "materialization.json"
     payload = load_receipt(
         path, schema=MATERIALIZATION_SCHEMA, state="PASSED"
@@ -1496,6 +2498,7 @@ def authorize_extract(
     invocation_path = job / "extract_invocation.json"
     if invocation_path.exists() or invocation_path.is_symlink():
         raise ReadoutError("readout invocation already exists; retry forbidden")
+    environment = writable_readout_environment(config, repo=repo, create=True)
     invocation = {
         "schema": "jointbuildgs.fusion_w1.extract_invocation.v1",
         "state": "AUTHORIZED",
@@ -1521,6 +2524,7 @@ def authorize_extract(
         "footprint": materialization["footprint"],
         "reference_inputs_present": False,
         "resource_contract": config["resource_lock"],
+        "environment": environment,
         "retry_allowed": False,
     }
     exclusive_json(invocation_path, invocation)
@@ -1547,7 +2551,7 @@ def invocation_argv(
     repo: Path = REPO,
 ) -> list[str]:
     job = job_dir(config, building_id, arm, run, repo=repo)
-    ensure_not_failed(job)
+    ensure_not_failed(job, repo=repo)
     invocation = load_receipt(
         job / filename, schema=schema, state="AUTHORIZED"
     )
@@ -1573,6 +2577,34 @@ def invocation_argv(
             repo=repo,
         )
     return list(argv)
+
+
+def invocation_environment(
+    config: Mapping[str, Any],
+    building_id: str,
+    arm: str,
+    run: str,
+    filename: str,
+    schema: str,
+    *,
+    repo: Path = REPO,
+) -> list[str]:
+    job = job_dir(config, building_id, arm, run, repo=repo)
+    ensure_not_failed(job, repo=repo)
+    invocation_path = job / filename
+    invocation = load_receipt(invocation_path, schema=schema, state="AUTHORIZED")
+    require_equal(
+        invocation.get("job_key"),
+        job_key(building_id, arm, run),
+        f"{filename} environment job key",
+    )
+    verify_started_invocation_binding(job, "readout", invocation_path, repo=repo)
+    environment = writable_readout_environment(
+        config, repo=repo, create=False, require_ready=True
+    )
+    require_equal(invocation.get("environment"), environment, f"{filename} environment")
+    values = environment["container_values"]
+    return [f"{key}={values[key]}" for key in sorted(WRITABLE_ENVIRONMENT_KEYS)]
 
 
 def verify_started_invocation_binding(
@@ -1672,7 +2704,7 @@ def accept_extract(
     repo: Path = REPO,
 ) -> dict[str, Any]:
     job = job_dir(config, building_id, arm, run, repo=repo)
-    ensure_not_failed(job)
+    ensure_not_failed(job, repo=repo)
     invocation_path = job / "extract_invocation.json"
     invocation = load_receipt(
         invocation_path,
@@ -1839,7 +2871,7 @@ def accept_classification(
     repo: Path = REPO,
 ) -> dict[str, Any]:
     job = job_dir(config, building_id, arm, run, repo=repo)
-    ensure_not_failed(job)
+    ensure_not_failed(job, repo=repo)
     invocation_path = job / "classification_invocation.json"
     invocation = load_receipt(
         invocation_path,
@@ -2005,7 +3037,7 @@ def accept_roofer(
     repo: Path = REPO,
 ) -> dict[str, Any]:
     job = job_dir(config, building_id, arm, run, repo=repo)
-    ensure_not_failed(job)
+    ensure_not_failed(job, repo=repo)
     invocation_path = job / "roofer_invocation.json"
     invocation = load_receipt(
         invocation_path,
@@ -2703,7 +3735,7 @@ def score_one(
         config, building_id, arm, run, repo=repo
     )
     job = materialization_path.parent
-    ensure_not_failed(job)
+    ensure_not_failed(job, repo=repo)
     roofer_path = job / "roofer_receipt.json"
     roofer = load_receipt(
         roofer_path,
@@ -3090,7 +4122,7 @@ def list_pending(
         repo=repo,
     )
     if (smoke_job / "failed.json").exists():
-        raise ReadoutError("smoke readout failed; queue is fail-closed")
+        ensure_not_failed(smoke_job, repo=repo)
     smoke_complete = is_readout_complete(
         config,
         smoke["building_id"],
@@ -3220,6 +4252,9 @@ def check(
 def parser() -> argparse.ArgumentParser:
     result = argparse.ArgumentParser(description=__doc__)
     result.add_argument("--config", type=Path, default=DEFAULT_CONFIG)
+    result.add_argument(
+        "--retry-policy", type=Path, default=DEFAULT_READOUT_RETRY_POLICY
+    )
     sub = result.add_subparsers(dest="command", required=True)
     check_parser = sub.add_parser("check")
     check_parser.add_argument("--building-id")
@@ -3229,7 +4264,13 @@ def parser() -> argparse.ArgumentParser:
         "prepare-one",
         "authorize-extract",
         "extract-argv",
+        "extract-environment",
         "accept-extract",
+        "prepare-extract-infra-retry",
+        "retry-extract-argv",
+        "retry-extract-environment",
+        "accept-extract-infra-retry",
+        "record-extract-infra-retry-failure",
         "authorize-classification",
         "classification-argv",
         "accept-classification",
@@ -3246,8 +4287,9 @@ def parser() -> argparse.ArgumentParser:
         command.add_argument("--run", choices=RUNS, required=True)
         if name.startswith("accept-"):
             command.add_argument("--wall-seconds", type=float, required=True)
-        if name == "record-failure":
-            command.add_argument("--stage", required=True)
+        if name in {"record-failure", "record-extract-infra-retry-failure"}:
+            if name == "record-failure":
+                command.add_argument("--stage", required=True)
             command.add_argument("--message", required=True)
             command.add_argument("--detail", default="")
     sub.add_parser("list-pending")
@@ -3296,10 +4338,45 @@ def main(argv: Sequence[str] | None = None) -> int:
                 "jointbuildgs.fusion_w1.extract_invocation.v1",
             ):
                 print(value)
+        elif command == "extract-environment":
+            for value in invocation_environment(
+                config,
+                *identity,
+                "extract_invocation.json",
+                "jointbuildgs.fusion_w1.extract_invocation.v1",
+            ):
+                print(value)
         elif command == "accept-extract":
             print_json(
                 accept_extract(
                     config, *identity, wall_seconds=args.wall_seconds
+                )
+            )
+        elif command == "prepare-extract-infra-retry":
+            print_json(
+                prepare_extract_infra_retry(
+                    config, args.retry_policy, *identity
+                )
+            )
+        elif command == "retry-extract-argv":
+            for value in retry_extract_argv(config, *identity):
+                print(value)
+        elif command == "retry-extract-environment":
+            for value in retry_extract_environment(config, *identity):
+                print(value)
+        elif command == "accept-extract-infra-retry":
+            print_json(
+                accept_extract_infra_retry(
+                    config, *identity, wall_seconds=args.wall_seconds
+                )
+            )
+        elif command == "record-extract-infra-retry-failure":
+            print_json(
+                record_extract_infra_retry_failure(
+                    config,
+                    *identity,
+                    message=args.message,
+                    detail=args.detail,
                 )
             )
         elif command == "authorize-classification":
@@ -3347,11 +4424,20 @@ def main(argv: Sequence[str] | None = None) -> int:
                 )
             )
         elif command == "failure-stage":
-            failed = load_receipt(
-                job_dir(config, *identity) / "failed.json",
-                schema="jointbuildgs.fusion_w1.readout_failure.v1",
-                state="FAILED",
-            )
+            job = job_dir(config, *identity)
+            recovered_failure = job / "failed_after_infrastructure_retry.json"
+            if recovered_failure.is_file() and not recovered_failure.is_symlink():
+                failed = load_receipt(
+                    recovered_failure,
+                    schema="jointbuildgs.fusion_w1.readout_failure_after_infrastructure_retry.v1",
+                    state="FAILED",
+                )
+            else:
+                failed = load_receipt(
+                    job / "failed.json",
+                    schema="jointbuildgs.fusion_w1.readout_failure.v1",
+                    state="FAILED",
+                )
             require_equal(
                 failed.get("job_key"),
                 job_key(*identity),
@@ -3372,6 +4458,12 @@ def main(argv: Sequence[str] | None = None) -> int:
             "check",
             "record-failure",
             "extract-argv",
+            "extract-environment",
+            "prepare-extract-infra-retry",
+            "retry-extract-argv",
+            "retry-extract-environment",
+            "accept-extract-infra-retry",
+            "record-extract-infra-retry-failure",
             "classification-argv",
             "roofer-argv",
             "failure-stage",

@@ -42,6 +42,7 @@
     "allowed_runtime_untracked_prefixes": [
       "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/",
       "phases/p2-gsjso/runs/20260724_fusion_w1/p0prime/",
+      "phases/p2-gsjso/runs/20260724_fusion_w1/runtime_env/",
       "phases/p2-gsjso/runs/20260724_fusion_w1/training/",
       "phases/p2-gsjso/runs/20260724_fusion_w1/readout_v1/",
       "phases/p2-gsjso/runs/20260724_fusion_w1/partial_closeout_v1.lock",
@@ -182,6 +183,14 @@
     "docker_service": "dev",
     "container_repo": "/workspace/JointBuildGS",
     "network_processing_policy": "training_in_docker_only",
+    "writable_environment": {
+      "root": "phases/p2-gsjso/runs/20260724_fusion_w1/runtime_env",
+      "variables": {
+        "HOME": "home",
+        "XDG_CACHE_HOME": "xdg_cache",
+        "TORCH_EXTENSIONS_DIR": "torch_extensions"
+      }
+    },
     "forbidden_process_patterns": [
       "tum_mob_tsdf_extract",
       "pilot_1wave_postprocess_driver",

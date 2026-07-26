@@ -6,6 +6,7 @@ ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
 
 CONFIG="phases/p2-gsjso/configs/fusion_w1_readout_v1_20260726.json"
+RETRY_POLICY="phases/p2-gsjso/configs/fusion_w1_readout_infra_retry_20260726.json"
 SCRIPT="phases/p2-gsjso/scripts/fusion_w1_readout_v1_20260726.py"
 TEST="phases/p2-gsjso/scripts/test_fusion_w1_readout_v1_20260726.py"
 RUN_REL="phases/p2-gsjso/runs/20260724_fusion_w1"
@@ -118,11 +119,14 @@ run_one() {
   local arm="$2"
   local run="$3"
   local gpu="$4"
+  local mode="${5:-full}"
   local job_rel="$READOUT_REL/by_building/$building_id/arm_$arm/$run"
   local started ended wall
-  local argv_text
+  local argv_text environment_text
   local -a argv
+  local -a environment_args
 
+  if [[ "$mode" != "post-extract" ]]; then
   assert_no_training_or_other_readout || return $?
   run_tools "$SCRIPT" --config "$CONFIG" prepare-one \
     --building-id "$building_id" --arm "$arm" --run "$run" || return $?
@@ -145,6 +149,24 @@ run_one() {
       "readout argv is empty"
     return 1
   }
+  if ! environment_text="$(
+      run_tools "$SCRIPT" --config "$CONFIG" extract-environment \
+        --building-id "$building_id" --arm "$arm" --run "$run"
+    )"
+  then
+    record_external_failure "$building_id" "$arm" "$run" "readout_environment" \
+      "failed to resolve the immutable readout environment"
+    return 1
+  fi
+  environment_args=()
+  while IFS= read -r value; do
+    [[ -n "$value" ]] && environment_args+=(--env "$value")
+  done < <(printf '%s\n' "$environment_text")
+  [[ "${#environment_args[@]}" -eq 6 ]] || {
+    record_external_failure "$building_id" "$arm" "$run" "readout_environment" \
+      "readout environment does not contain exactly three variables"
+    return 1
+  }
   started="$(date +%s)"
   if ! docker run --rm \
       --pull=never \
@@ -156,6 +178,7 @@ run_one() {
       --user "$(id -u):$(id -g)" \
       --env CUDA_VISIBLE_DEVICES=0 \
       --env PYTHONDONTWRITEBYTECODE=1 \
+      "${environment_args[@]}" \
       --volume "$ROOT:/workspace/JointBuildGS" \
       --workdir /workspace/JointBuildGS \
       --entrypoint python3 \
@@ -171,6 +194,7 @@ run_one() {
   run_tools "$SCRIPT" --config "$CONFIG" accept-extract \
     --building-id "$building_id" --arm "$arm" --run "$run" \
     --wall-seconds "$wall" || return $?
+  fi
 
   assert_no_training_or_other_readout || return $?
   run_tools "$SCRIPT" --config "$CONFIG" authorize-classification \
@@ -256,6 +280,104 @@ run_one() {
   return 0
 }
 
+run_extract_infra_retry() {
+  local building_id="$1"
+  local arm="$2"
+  local run="$3"
+  local gpu="$4"
+  local job_rel="$READOUT_REL/by_building/$building_id/arm_$arm/$run"
+  local attempt_rel="$job_rel/infra_retry_01"
+  local started ended wall argv_text environment_text value
+  local -a argv
+  local -a environment_args
+
+  assert_no_training_or_other_readout || return $?
+  run_tools "$SCRIPT" --config "$CONFIG" --retry-policy "$RETRY_POLICY" \
+    prepare-extract-infra-retry \
+    --building-id "$building_id" --arm "$arm" --run "$run" || return $?
+  if ! argv_text="$(
+      run_tools "$SCRIPT" --config "$CONFIG" --retry-policy "$RETRY_POLICY" \
+        retry-extract-argv \
+        --building-id "$building_id" --arm "$arm" --run "$run"
+    )"
+  then
+    run_tools "$SCRIPT" --config "$CONFIG" \
+      record-extract-infra-retry-failure \
+      --building-id "$building_id" --arm "$arm" --run "$run" \
+      --message "failed to resolve immutable retry argv" || true
+    return 1
+  fi
+  mapfile -t argv < <(printf '%s\n' "$argv_text")
+  [[ "${#argv[@]}" -gt 1 ]] || {
+    run_tools "$SCRIPT" --config "$CONFIG" \
+      record-extract-infra-retry-failure \
+      --building-id "$building_id" --arm "$arm" --run "$run" \
+      --message "readout retry argv is empty" || true
+    return 1
+  }
+  if ! environment_text="$(
+      run_tools "$SCRIPT" --config "$CONFIG" --retry-policy "$RETRY_POLICY" \
+        retry-extract-environment \
+        --building-id "$building_id" --arm "$arm" --run "$run"
+    )"
+  then
+    run_tools "$SCRIPT" --config "$CONFIG" \
+      record-extract-infra-retry-failure \
+      --building-id "$building_id" --arm "$arm" --run "$run" \
+      --message "failed to resolve immutable retry environment" || true
+    return 1
+  fi
+  environment_args=()
+  while IFS= read -r value; do
+    [[ -n "$value" ]] && environment_args+=(--env "$value")
+  done < <(printf '%s\n' "$environment_text")
+  [[ "${#environment_args[@]}" -eq 6 ]] || {
+    run_tools "$SCRIPT" --config "$CONFIG" \
+      record-extract-infra-retry-failure \
+      --building-id "$building_id" --arm "$arm" --run "$run" \
+      --message "retry environment does not contain exactly three variables" || true
+    return 1
+  }
+
+  started="$(date +%s)"
+  if ! docker run --rm \
+      --pull=never \
+      --network=none \
+      --memory="$MEMORY_LIMIT" \
+      --memory-swap="$MEMORY_LIMIT" \
+      --shm-size=4g \
+      --gpus "device=$gpu" \
+      --user "$(id -u):$(id -g)" \
+      --env CUDA_VISIBLE_DEVICES=0 \
+      --env PYTHONDONTWRITEBYTECODE=1 \
+      "${environment_args[@]}" \
+      --volume "$ROOT:/workspace/JointBuildGS" \
+      --workdir /workspace/JointBuildGS \
+      --entrypoint python3 \
+      "$READOUT_IMAGE" "${argv[@]}" \
+      >"$attempt_rel/extract.stdout.log" 2>&1
+  then
+    run_tools "$SCRIPT" --config "$CONFIG" \
+      record-extract-infra-retry-failure \
+      --building-id "$building_id" --arm "$arm" --run "$run" \
+      --message "point-cloud infrastructure retry failed; see $attempt_rel/extract.stdout.log" || true
+    return 1
+  fi
+  ended="$(date +%s)"
+  wall="$((ended - started))"
+  if ! run_tools "$SCRIPT" --config "$CONFIG" accept-extract-infra-retry \
+      --building-id "$building_id" --arm "$arm" --run "$run" \
+      --wall-seconds "$wall"
+  then
+    run_tools "$SCRIPT" --config "$CONFIG" \
+      record-extract-infra-retry-failure \
+      --building-id "$building_id" --arm "$arm" --run "$run" \
+      --message "readout retry output validation or adoption failed" || true
+    return 1
+  fi
+  run_one "$building_id" "$arm" "$run" "$gpu" post-extract
+}
+
 case "${1:-}" in
   test)
     verify_images
@@ -283,6 +405,16 @@ case "${1:-}" in
     verify_images
     acquire_serial_lock
     run_one "$2" "$3" "$4" "$5"
+    ;;
+  retry-extract-infra)
+    [[ -n "${2:-}" && -n "${3:-}" && -n "${4:-}" && -n "${5:-}" ]] || {
+      echo "usage: $0 retry-extract-infra BUILDING_ID ARM RUN GPU" >&2
+      exit 2
+    }
+    validate_gpu "$5"
+    verify_images
+    acquire_serial_lock
+    run_extract_infra_retry "$2" "$3" "$4" "$5"
     ;;
   all-ready)
     [[ -n "${2:-}" ]] || {
@@ -356,7 +488,7 @@ case "${1:-}" in
     run_tools "$SCRIPT" --config "$CONFIG" finalize-partial
     ;;
   *)
-    echo "usage: $0 {test|check [BUILDING_ID ARM RUN]|one BUILDING_ID ARM RUN GPU|all-ready GPU|finalize-partial}" >&2
+    echo "usage: $0 {test|check [BUILDING_ID ARM RUN]|one BUILDING_ID ARM RUN GPU|retry-extract-infra BUILDING_ID ARM RUN GPU|all-ready GPU|finalize-partial}" >&2
     exit 2
     ;;
 esac
