@@ -14,7 +14,9 @@
     "phases/p2-gsjso/configs/fusion_w1_aprime_job_qualitative_v3_20260727.json",
     "phases/p2-gsjso/scripts/fusion_w1_aprime_job_qualitative_v3_20260727.py",
     "phases/p2-gsjso/scripts/run_fusion_w1_aprime_job_qualitative_v3_20260727.sh",
-    "phases/p2-gsjso/scripts/test_fusion_w1_aprime_job_qualitative_v3_20260727.py"
+    "phases/p2-gsjso/scripts/test_fusion_w1_aprime_job_qualitative_v3_20260727.py",
+    "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/REPAIR_LOCK.json",
+    "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/REPAIR_LOCK.md"
   ],
   "locked_inputs": {
     "continuation_contract": {
@@ -24,6 +26,14 @@
     "continuation_contract_markdown": {
       "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/CONTINUATION_LOCK.md",
       "sha256": "d8f7a637d8369bf7382afb5ef43747cf4de4c0d8151d59d498a358dbb17ec493"
+    },
+    "repair_contract": {
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/REPAIR_LOCK.json",
+      "sha256": "30ea0a94d4fe5f9bd40c4fc9bef12ba1f74ca60fbc3dca50ef37e1de6d82cb19"
+    },
+    "repair_contract_markdown": {
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/REPAIR_LOCK.md",
+      "sha256": "0c7c87cdbf030bbc9ba25ddb95a3df7904fb636a882a8c48853c336035351389"
     },
     "source_v2_config": {
       "path": "phases/p2-gsjso/configs/fusion_w1_aprime_queue_continuation_20260727.json",
@@ -126,14 +136,14 @@
     "lanes": {
       "gpu0": {
         "physical_gpu": 0,
-        "lock": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/locks/training_gpu0.lock",
-        "runtime_environment": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/runtime_env/gpu0",
+        "lock": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/locks/training_gpu0.lock",
+        "runtime_environment": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/runtime_env/gpu0",
         "container_namespace": "aprime-v3-gpu0"
       },
       "gpu1": {
         "physical_gpu": 1,
-        "lock": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/locks/training_gpu1.lock",
-        "runtime_environment": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/runtime_env/gpu1",
+        "lock": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/locks/training_gpu1.lock",
+        "runtime_environment": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/runtime_env/gpu1",
         "container_namespace": "aprime-v3-gpu1"
       }
     },
@@ -141,7 +151,7 @@
     "readout_global_serial": true,
     "readout_concurrent_with_training": false,
     "readout_physical_gpu": 1,
-    "readout_lock": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/locks/readout_global.lock",
+    "readout_lock": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/locks/readout_global.lock",
     "qualitative_global_serial": true,
     "qualitative_concurrent_with_training": false,
     "gpu_boundary_gate": {
@@ -207,7 +217,7 @@
     "scientific_verdict": null
   },
   "outputs": {
-    "root": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3",
+    "root": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1",
     "plan": "queue_plan.json",
     "source_boundary_receipt": "source_boundary_receipt.json",
     "events": "events.jsonl",

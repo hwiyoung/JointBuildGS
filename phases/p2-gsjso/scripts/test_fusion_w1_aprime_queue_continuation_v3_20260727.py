@@ -40,6 +40,11 @@ class V3ContractTests(unittest.TestCase):
         self.assertEqual(self.config["resources"]["maximum_concurrent_training"], 2)
         self.assertTrue(self.config["resources"]["readout_global_serial"])
         self.assertFalse(self.config["resources"]["readout_concurrent_with_training"])
+        self.assertTrue(
+            self.config["outputs"]["root"].endswith(
+                "unattended_queue_continuation_v3_repair1"
+            )
+        )
 
     def test_02_all_locked_sha256_match(self) -> None:
         for record in self.config["locked_inputs"].values():
@@ -163,6 +168,9 @@ class V3ContractTests(unittest.TestCase):
             renderer = mock.Mock(); renderer.verify_bundle.return_value = payload
             with mock.patch.object(v3, "qualitative_context", return_value=(renderer, {})):
                 self.assertIsNotNone(v3.verify_qualitative_complete(config, entry))
+                renderer.verify_bundle.assert_called_once_with(
+                    {}, entry["building_id"], entry["arm"], entry["replicate"], None
+                )
                 payload["interpretation"] = "forbidden"; receipt.write_text(json.dumps(payload))
                 with self.assertRaises(v3.V3Error): v3.verify_qualitative_complete(config, entry)
 
@@ -399,6 +407,16 @@ rows=()
         source = DRIVER.read_text(encoding="utf-8")
         block = source[source.index("def verify(") : source.index("def add_entry_args(")]
         self.assertIn('"training_preflight": verify_training_preflight(config)', block)
+
+    def test_38_repair_lock_binds_failed_generation_and_schedule(self) -> None:
+        result = v3.verify_repair_contract(self.config, self.entries, self.pairs)
+        self.assertFalse(result["scientific_recipe_changed"])
+        self.assertFalse(result["target_list_changed"])
+        self.assertFalse(result["pair_schedule_changed"])
+        self.assertEqual(
+            result["contract"]["sha256"],
+            self.config["locked_inputs"]["repair_contract"]["sha256"],
+        )
 
 
 if __name__ == "__main__":

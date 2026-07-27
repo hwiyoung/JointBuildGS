@@ -889,11 +889,52 @@ def linger_state() -> str:
     return "ENABLED" if value == "yes" else "DISABLED" if value == "no" else "UNKNOWN"
 
 
+def loaded_append_log_matches(
+    config: Mapping[str, Any],
+    properties: Mapping[str, str],
+    directive: str,
+    *,
+    unit_path: Path | None = None,
+) -> bool:
+    expected = f"append:{repo_path(config['service']['log'])}"
+    observed = properties.get(directive)
+    if observed == expected:
+        return True
+    # systemd 252 reports only the sink kind ("append") through `show`, while
+    # the path remains in the loaded fragment.  Accept that normalized form
+    # only when the exact, drop-in-free fragment still binds the expected path.
+    if observed != "append" or properties.get("DropInPaths", "").strip():
+        return False
+    expected_unit = unit_path or user_unit_path(config)
+    if properties.get("FragmentPath") != os.fspath(expected_unit):
+        return False
+    try:
+        if expected_unit.is_symlink() or not expected_unit.is_file():
+            return False
+        section = ""
+        values: list[str] = []
+        for raw_line in expected_unit.read_text(encoding="utf-8").splitlines():
+            line = raw_line.strip()
+            if not line or line.startswith(("#", ";")):
+                continue
+            if line.startswith("[") and line.endswith("]"):
+                section = line[1:-1]
+                continue
+            if section == "Service" and "=" in line:
+                key, value = line.split("=", 1)
+                if key.strip() == directive:
+                    values.append(value.strip())
+    except (OSError, UnicodeError):
+        return False
+    return bool(values) and values[-1] == expected
+
+
 def terminal_close_runtime_evidence(
     config: Mapping[str, Any],
     properties: Mapping[str, str],
     *,
     proc_root: Path = Path("/proc"),
+    unit_path: Path | None = None,
 ) -> dict[str, Any]:
     service = config["service"]
     expected_log = f"append:{repo_path(service['log'])}"
@@ -950,8 +991,12 @@ def terminal_close_runtime_evidence(
         "main_pid_in_systemd_control_group": pid_in_control_group,
         "main_pid_stdin_is_dev_null": stdin_dev_null,
         "unit_standard_input_is_null": properties.get("StandardInput") == "null",
-        "unit_stdout_is_append_log": properties.get("StandardOutput") == expected_log,
-        "unit_stderr_is_append_log": properties.get("StandardError") == expected_log,
+        "unit_stdout_is_append_log": loaded_append_log_matches(
+            config, properties, "StandardOutput", unit_path=unit_path
+        ),
+        "unit_stderr_is_append_log": loaded_append_log_matches(
+            config, properties, "StandardError", unit_path=unit_path
+        ),
     }
     return {
         "checks": checks,
@@ -980,6 +1025,7 @@ def service_status(config: Mapping[str, Any]) -> dict[str, Any]:
         "ExecMainStatus",
         "NRestarts",
         "FragmentPath",
+        "DropInPaths",
         "ControlGroup",
         "StandardInput",
         "StandardOutput",

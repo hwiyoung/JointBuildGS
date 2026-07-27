@@ -46,7 +46,7 @@ class ConfigAndUnitTests(unittest.TestCase):
             config["queue"]["wrapper"],
             "phases/p2-gsjso/scripts/run_fusion_w1_aprime_queue_continuation_v3_20260727.sh",
         )
-        self.assertTrue(config["queue"]["root"].endswith("unattended_queue_continuation_v3"))
+        self.assertTrue(config["queue"]["root"].endswith("unattended_queue_continuation_v3_repair1"))
         self.assertIn("/review_v3/", config["review_index"]["publication_root"])
         self.assertNotIn("continuation_v2", config["queue"]["root"])
 
@@ -147,9 +147,9 @@ class ConfigAndUnitTests(unittest.TestCase):
         self.assertEqual(len(groups["service_implementation"]), 4)
         self.assertEqual(len(groups["queue_v3_implementation"]), 4)
         self.assertEqual(len(groups["qualitative_v3_implementation"]), 4)
-        self.assertEqual(len(groups["queue_v3_locked_dependencies"]), 15)
-        self.assertEqual(len(scope["paths"]), 23)
-        self.assertEqual(len(set(scope["paths"])), 23)
+        self.assertEqual(len(groups["queue_v3_locked_dependencies"]), 17)
+        self.assertEqual(len(scope["paths"]), 25)
+        self.assertEqual(len(set(scope["paths"])), 25)
         self.assertEqual(
             set(scope["queue_locked_inputs"]),
             set(config["fixed_head_contract"]["required_queue_locked_input_names"]),
@@ -625,6 +625,47 @@ class ServiceStatusTests(unittest.TestCase):
         self.assertFalse(evidence["terminal_close_safe_now"])
         self.assertFalse(evidence["checks"]["unit_stdout_is_append_log"])
         self.assertFalse(evidence["checks"]["unit_stderr_is_append_log"])
+
+    def test_terminal_close_accepts_systemd_normalized_append_with_exact_fragment(self):
+        pid = 4545
+        cgroup = "/app.slice/" + config["service"]["unit_name"]
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.make_proc(root, pid, stdin_target="/dev/null", cgroup=cgroup)
+            unit_path = root / config["service"]["unit_name"]
+            expected_log = os.fspath(controller.repo_path(config["service"]["log"]))
+            unit_path.write_text(
+                "\n".join(
+                    (
+                        "[Service]",
+                        "StandardInput=null",
+                        f"StandardOutput=append:{expected_log}",
+                        f"StandardError=append:{expected_log}",
+                    )
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            evidence = controller.terminal_close_runtime_evidence(
+                config,
+                {
+                    "LoadState": "loaded",
+                    "ActiveState": "active",
+                    "SubState": "running",
+                    "MainPID": str(pid),
+                    "ControlGroup": cgroup,
+                    "StandardInput": "null",
+                    "StandardOutput": "append",
+                    "StandardError": "append",
+                    "FragmentPath": os.fspath(unit_path),
+                    "DropInPaths": "",
+                },
+                proc_root=root,
+                unit_path=unit_path,
+            )
+        self.assertTrue(evidence["terminal_close_safe_now"])
+        self.assertTrue(evidence["checks"]["unit_stdout_is_append_log"])
+        self.assertTrue(evidence["checks"]["unit_stderr_is_append_log"])
 
     def test_status_separates_capability_from_safe_now_measurement(self):
         systemctl_output = "\n".join(

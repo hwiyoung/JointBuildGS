@@ -421,6 +421,90 @@ def verify_continuation_contract(config: Mapping[str, Any], entries: Sequence[Ma
     return {"contract": file_record(contract_path), "markdown": file_record(repo_path(config["locked_inputs"]["continuation_contract_markdown"]["path"])), "source_head": source_head, "source_head_is_ancestor": True, "status": file_record(status_path), "pair_schedule_verified": True}
 
 
+def verify_repair_contract(
+    config: Mapping[str, Any],
+    entries: Sequence[Mapping[str, Any]],
+    pairs: Sequence[Mapping[str, Any]],
+) -> dict[str, Any]:
+    contract_path = repo_path(config["locked_inputs"]["repair_contract"]["path"])
+    contract = load_json(contract_path)
+    require_equal(
+        contract.get("schema"),
+        "jointbuildgs.fusion_w1_aprime.unattended_continuation_v3.repair_lock.v1",
+        "repair contract schema",
+    )
+    require_equal(contract.get("task_id"), config["task_id"], "repair contract task")
+    require_equal(contract.get("branch"), config["branch"], "repair contract branch")
+    require_equal(contract.get("interpretation_or_verdict"), None, "repair contract verdict")
+    source = contract["source_failed_control"]
+    old_root = repo_path(config["locked_inputs"]["continuation_contract"]["path"]).parent
+    require_equal(source.get("namespace"), relative(old_root), "repair source namespace")
+    if re.fullmatch(r"[0-9a-f]{40}", str(source.get("git_head", ""))) is None:
+        raise V3Error("repair source HEAD is invalid")
+    source_records = {}
+    for name in ("queue_plan", "source_boundary", "stop_post_audit"):
+        observed = file_record(verify_record(source[name], f"repair source {name}"))
+        require_equal(observed, source[name], f"repair source {name} record")
+        source_records[name] = observed
+    require_equal(source.get("service_exit_status"), 2, "repair source exit status")
+    require_equal(
+        source.get("failure"),
+        "qualitative verifier omitted required output_root argument",
+        "repair source failure",
+    )
+    reused = contract["reused_measured_job"]
+    first = entries[0]
+    for key in ("building_id", "arm", "replicate"):
+        require_equal(reused.get(key), first[key], f"repair reused {key}")
+    reused_records = {}
+    for name in ("qualitative_complete", "panel"):
+        observed = file_record(verify_record(reused[name], f"repair reused {name}"))
+        require_equal(observed, reused[name], f"repair reused {name} record")
+        reused_records[name] = observed
+    for key in ("recompute_training", "recompute_readout", "recompute_qualitative"):
+        require_equal(reused.get(key), False, f"repair reused {key}")
+    repair = contract["repair_scope"]
+    require_equal(repair.get("scientific_recipe_changed"), False, "repair scientific recipe")
+    require_equal(repair.get("target_list_changed"), False, "repair target list")
+    require_equal(repair.get("pair_schedule_changed"), False, "repair pair schedule")
+    require_equal(repair.get("failure_thresholds_changed"), False, "repair failure thresholds")
+    require_equal(repair.get("new_training_jobs"), 19, "repair training jobs")
+    require_equal(repair.get("maximum_concurrent_training"), 2, "repair concurrency")
+    require_equal(repair.get("readout_remains_global_serial"), True, "repair readout serialization")
+    require_equal(repair.get("new_control_namespace"), config["outputs"]["root"], "repair output namespace")
+    require_equal(repair.get("old_control_namespace_mutation_allowed"), False, "repair old namespace mutation")
+    expected_first_pair = pairs[0]
+    first_pair = contract["first_new_pair"]
+    require_equal(first_pair.get("pair_id"), expected_first_pair["pair_id"], "repair first pair ID")
+    by_gpu = {
+        int(member["physical_gpu"]): f"{member['building_id']}/{member['arm']}/{member['replicate']}"
+        for member in expected_first_pair["members"]
+    }
+    require_equal(first_pair.get("gpu0"), by_gpu.get(0), "repair first pair GPU0")
+    require_equal(first_pair.get("gpu1"), by_gpu.get(1), "repair first pair GPU1")
+    require_equal(first_pair.get("materialized_before_repair"), False, "repair pre-materialization")
+    t2 = contract["t2_control"]
+    for key in (
+        "final_repair_head_requires_new_receipt",
+        "previous_receipt_must_be_archived",
+        "geometry_and_sample_artifact_hashes_must_remain_unchanged",
+    ):
+        require_equal(t2.get(key), True, f"repair T2 {key}")
+    require_equal(contract.get("partial_artifacts_preserved"), True, "repair partial preservation")
+    return {
+        "contract": file_record(contract_path),
+        "markdown": file_record(
+            repo_path(config["locked_inputs"]["repair_contract_markdown"]["path"])
+        ),
+        "source_head": source["git_head"],
+        "source_records": source_records,
+        "reused_records": reused_records,
+        "scientific_recipe_changed": False,
+        "target_list_changed": False,
+        "pair_schedule_changed": False,
+    }
+
+
 def identity(entry: Mapping[str, Any]) -> dict[str, str]:
     return {"building_id": str(entry["building_id"]), "arm": str(entry["arm"]), "replicate": str(entry["replicate"]), "profile": "full"}
 
@@ -542,6 +626,7 @@ def initialize(config: Mapping[str, Any], config_path: Path) -> dict[str, Any]:
     source, source_record = source_plan(config)
     entries, pairs = build_v3_plan(source["entries"])
     continuation_contract = verify_continuation_contract(config, entries, pairs)
+    repair_contract = verify_repair_contract(config, entries, pairs)
     source_gate = verify_source_reuse(config, entries[0])
     plan_path = output_path(config, "plan")
     boundary_path = output_path(config, "source_boundary_receipt")
@@ -555,6 +640,7 @@ def initialize(config: Mapping[str, Any], config_path: Path) -> dict[str, Any]:
         require_equal(boundary.get("source_v2_plan"), source_record, "source boundary plan")
         require_equal(boundary.get("source_v2_gate"), source_gate, "source boundary gate")
         require_equal(boundary.get("continuation_contract"), continuation_contract, "source boundary continuation contract")
+        require_equal(boundary.get("repair_contract"), repair_contract, "source boundary repair contract")
         require_equal(boundary.get("source_v2_driver_lock_free"), True, "source boundary lock proof")
         require_equal(boundary.get("source_v2_namespace_rewritten"), False, "source boundary immutability")
     else:
@@ -569,6 +655,7 @@ def initialize(config: Mapping[str, Any], config_path: Path) -> dict[str, Any]:
             "source_v2_plan": source_record,
             "source_v2_gate": source_gate,
             "continuation_contract": continuation_contract,
+            "repair_contract": repair_contract,
             "source_v2_driver_lock": file_record(source_lock, allow_empty=True),
             "source_v2_driver_lock_free": True,
             "source_not_advanced": no_advance,
@@ -589,6 +676,7 @@ def initialize(config: Mapping[str, Any], config_path: Path) -> dict[str, Any]:
         "source_v2_plan_snapshot_sha256": hashlib.sha256(canonical_json(source)).hexdigest(),
         "source_v2_gate": source_gate,
         "continuation_contract": continuation_contract,
+        "repair_contract": repair_contract,
         "source_boundary_receipt": file_record(boundary_path),
         "source_v2_namespace_rewritten": False,
         "sequence_contract": config["sequence_contract"],
@@ -620,9 +708,11 @@ def load_plan(config: Mapping[str, Any], *, runtime_gate: bool = True) -> dict[s
     require_equal(plan.get("source_v2_plan_snapshot_sha256"), hashlib.sha256(canonical_json(source)).hexdigest(), "v3/source plan snapshot")
     entries, pairs = build_v3_plan(source["entries"])
     continuation_contract = verify_continuation_contract(config, entries, pairs)
+    repair_contract = verify_repair_contract(config, entries, pairs)
     require_equal(plan.get("entries"), entries, "v3 plan entries")
     require_equal(plan.get("pairs"), pairs, "v3 plan pairs")
     require_equal(plan.get("continuation_contract"), continuation_contract, "v3 continuation contract")
+    require_equal(plan.get("repair_contract"), repair_contract, "v3 repair contract")
     boundary_path = output_path(config, "source_boundary_receipt")
     boundary = load_json(boundary_path)
     require_equal(boundary.get("schema"), "jointbuildgs.fusion_w1_aprime.unattended_continuation_v3.source_boundary.v1", "source boundary schema")
@@ -630,6 +720,7 @@ def load_plan(config: Mapping[str, Any], *, runtime_gate: bool = True) -> dict[s
     require_equal(boundary.get("source_v2_plan"), source_record, "source boundary/current source plan")
     require_equal(boundary.get("source_v2_gate"), verify_source_reuse(config, entries[0]), "source boundary/current source gate")
     require_equal(boundary.get("continuation_contract"), continuation_contract, "source boundary/current continuation contract")
+    require_equal(boundary.get("repair_contract"), repair_contract, "source boundary/current repair contract")
     require_equal(boundary.get("source_v2_driver_lock_free"), True, "source boundary lock free")
     if lock_is_busy_readonly(repo_path(config["source_v2"]["driver_lock"]), require_exists=True):
         raise V3Error("source v2 driver lock became busy")
@@ -728,7 +819,13 @@ def verify_qualitative_complete(config: Mapping[str, Any], entry: Mapping[str, A
     payload = load_json(path)
     renderer, qualitative_config = qualitative_context(config)
     try:
-        fully_verified = renderer.verify_bundle(qualitative_config, entry["building_id"], entry["arm"], entry["replicate"])
+        fully_verified = renderer.verify_bundle(
+            qualitative_config,
+            entry["building_id"],
+            entry["arm"],
+            entry["replicate"],
+            None,
+        )
     except Exception as exc:
         raise V3Error(f"qualitative full bundle verification failed: {exc}") from exc
     require_equal(fully_verified, payload, "qualitative renderer full verification payload")
@@ -1578,7 +1675,7 @@ def verify(config: Mapping[str, Any]) -> dict[str, Any]:
         raise V3Error("source v2 driver lock is held")
     result = {"state": "VERIFIED", "git_lock": verify_method(config), "locked_inputs": verify_locked_inputs(config), "training_preflight": verify_training_preflight(config)}
     source, record = source_plan(config); entries, pairs = build_v3_plan(source["entries"])
-    result.update({"source_plan": record, "source_gate": verify_source_reuse(config, entries[0]), "continuation_contract": verify_continuation_contract(config, entries, pairs), "entries_n": len(entries), "pairs_n": len(pairs), "source_v2_driver_lock_free": True})
+    result.update({"source_plan": record, "source_gate": verify_source_reuse(config, entries[0]), "continuation_contract": verify_continuation_contract(config, entries, pairs), "repair_contract": verify_repair_contract(config, entries, pairs), "entries_n": len(entries), "pairs_n": len(pairs), "source_v2_driver_lock_free": True})
     if output_path(config, "plan").is_file():
         result["v3_plan"] = file_record(output_path(config, "plan")); load_plan(config)
     return result

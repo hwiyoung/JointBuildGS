@@ -15,9 +15,9 @@
     "driver": "phases/p2-gsjso/scripts/fusion_w1_aprime_queue_continuation_v3_20260727.py",
     "config": "phases/p2-gsjso/configs/fusion_w1_aprime_queue_continuation_v3_20260727.json",
     "test": "phases/p2-gsjso/scripts/test_fusion_w1_aprime_queue_continuation_v3_20260727.py",
-    "root": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3",
-    "driver_lock": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/driver.lock",
-    "source_boundary_receipt": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/source_boundary_receipt.json"
+    "root": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1",
+    "driver_lock": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/driver.lock",
+    "source_boundary_receipt": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/source_boundary_receipt.json"
   },
   "qualitative": {
     "config": "phases/p2-gsjso/configs/fusion_w1_aprime_job_qualitative_v3_20260727.json",
@@ -61,13 +61,13 @@
     "active_aprime_container_must_be_absent": true
   },
   "service": {
-    "unit_name": "jointbuildgs-fusion-w1-aprime-continuation-v3.service",
-    "description": "JointBuildGS A-prime 20-job continuation v3 control service",
+    "unit_name": "jointbuildgs-fusion-w1-aprime-continuation-v3-repair1.service",
+    "description": "JointBuildGS A-prime 20-job continuation v3 repair1 control service",
     "working_directory": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS",
-    "control_root": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/service_control",
-    "log": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/service.log",
-    "install_receipt": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/service_control/install_receipt.json",
-    "unit_snapshot": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/service_control/unit_snapshot.service",
+    "control_root": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/service_control",
+    "log": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/service.log",
+    "install_receipt": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/service_control/install_receipt.json",
+    "unit_snapshot": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/service_control/unit_snapshot.service",
     "type": "exec",
     "kill_mode": "control-group",
     "kill_signal": "SIGTERM",
@@ -95,7 +95,7 @@
     "manual_stop_allowed": true,
     "audit_before_signal": true,
     "audit_after_stop": true,
-    "audit_root": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/service_control/stop_audits",
+    "audit_root": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/service_control/stop_audits",
     "graceful_signal": "SIGTERM",
     "graceful_timeout_seconds": 300,
     "emergency_signal_after_timeout": "SIGKILL",
@@ -117,6 +117,8 @@
     "required_queue_locked_input_names": [
       "continuation_contract",
       "continuation_contract_markdown",
+      "repair_contract",
+      "repair_contract_markdown",
       "source_v2_config",
       "source_v2_driver",
       "source_v2_wrapper",
@@ -149,7 +151,7 @@
   "review_index": {
     "schema": "jointbuildgs.fusion_w1_aprime.continuation_v3.review_index.v1",
     "mode": "READ_ONLY_SOURCE_INDEX",
-    "publication_root": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/review_v3/service_index",
+    "publication_root": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/review_v3/service_index_repair1",
     "exclusive_publication": true,
     "overwrite_allowed": false,
     "source_mutation_allowed": false,
@@ -157,24 +159,24 @@
     "observational_only": true,
     "interpretation_or_verdict": null,
     "control_files": [
-      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/queue_plan.json",
-      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/source_boundary_receipt.json",
-      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/status.json",
-      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/status.csv",
-      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/events.jsonl",
-      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/stage_stop.json",
-      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/complete.json",
-      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/service.log",
-      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/service_control/install_receipt.json",
-      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/service_control/unit_snapshot.service"
+      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/queue_plan.json",
+      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/source_boundary_receipt.json",
+      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/status.json",
+      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/status.csv",
+      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/events.jsonl",
+      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/stage_stop.json",
+      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/complete.json",
+      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/service.log",
+      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/service_control/install_receipt.json",
+      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/service_control/unit_snapshot.service"
     ],
     "reference_roots": [
       "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building",
       "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/readout/by_building",
       "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/review_v3/by_building",
-      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/action_logs",
-      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/stage_records",
-      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/service_control/stop_audits"
+      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/action_logs",
+      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/stage_records",
+      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/service_control/stop_audits"
     ]
   },
   "publication": {
