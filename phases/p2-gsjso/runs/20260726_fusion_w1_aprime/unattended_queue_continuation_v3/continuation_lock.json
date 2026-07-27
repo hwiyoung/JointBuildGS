@@ -1,0 +1,102 @@
+{
+  "schema": "jointbuildgs.fusion_w1_aprime.continuation_v3.lock.v1",
+  "task_id": "FUS-W1-APRIME-QUEUE-CONTINUATION-V3-001",
+  "recorded_at": "2026-07-27T14:32:24+09:00",
+  "branch": "exp/fusion-w1",
+  "source_git_head": "598eff0805e315b7f2e05da1041afa745b9f8a8b",
+  "interpretation_or_verdict": null,
+  "source_v2": {
+    "plan": {
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v2/queue_plan.json",
+      "sha256": "ead4e563a3a86f9595ff289f6550ad209886be585c7381f7abec5a7086e7c253"
+    },
+    "status": {
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v2/status.json",
+      "sha256": "fcdf856fc8caf40bd52ac11008d07180c71e605866fc3feda7c882d193e7ad66",
+      "counts": {"MEASURED": 1, "MISSING": 19, "FAILED": 0, "SKIPPED": 0}
+    },
+    "reused_job": {
+      "building_id": "DEBY_LOD2_42364659",
+      "arm": "Aprime",
+      "replicate": "r1",
+      "stage_record_sha256": "2fc876f94a3c5a618504edb9529f61aa7fec5facf9abea9c935a3b0a8fc63a97",
+      "training_complete_sha256": "9911510f3365e8b8471ae40ef77fdb6ad5f0a81fed6fd6d97b8d0354efb7445b",
+      "readout_complete_sha256": "80a66f0aafba8000eae44e2a037e588ceb3fa4c261499d2ecaf9ee8ad4192477",
+      "qualitative_required_before_v3_terminal": true
+    },
+    "next_job_not_materialized": "DEBY_LOD2_42364663/Aprime/r1",
+    "v2_files_immutable": true
+  },
+  "resources": {
+    "maximum_concurrent_training": 2,
+    "physical_gpus": [0, 1],
+    "independent_lane_locks_and_caches": true,
+    "training_pair_barrier_before_readout": true,
+    "readout_global_serial": true,
+    "readout_concurrent_with_training": false,
+    "qualitative_global_serial": true,
+    "readout_memory_cgroup": "24g",
+    "scientific_recipe_changed": false
+  },
+  "pairs": [
+    {"stage": "aprime_r1", "pair": 1, "gpu0": "DEBY_LOD2_42364663", "gpu1": "DEBY_LOD2_4907182"},
+    {"stage": "aprime_r1", "pair": 2, "gpu0": "DEBY_LOD2_4907510", "gpu1": "DEBY_LOD2_4908050"},
+    {"stage": "aprime_r1", "pair": 3, "gpu0": "DEBY_LOD2_4908166", "gpu1": "DEBY_LOD2_4908176"},
+    {"stage": "aprime_r1", "pair": 4, "gpu0": "DEBY_LOD2_4908023", "gpu1": null},
+    {"stage": "aprime_r2", "pair": 1, "gpu0": "DEBY_LOD2_42364609", "gpu1": "DEBY_LOD2_42364659"},
+    {"stage": "aprime_r2", "pair": 2, "gpu0": "DEBY_LOD2_42364663", "gpu1": "DEBY_LOD2_4907182"},
+    {"stage": "aprime_r2", "pair": 3, "gpu0": "DEBY_LOD2_4907510", "gpu1": "DEBY_LOD2_4908050"},
+    {"stage": "aprime_r2", "pair": 4, "gpu0": "DEBY_LOD2_4908166", "gpu1": "DEBY_LOD2_4908176"},
+    {"stage": "aprime_r2", "pair": 5, "gpu0": "DEBY_LOD2_4908023", "gpu1": null},
+    {"stage": "B_r1", "pair": 1, "gpu0": "DEBY_LOD2_42364609", "gpu1": "DEBY_LOD2_42364659"},
+    {"stage": "B_r1", "pair": 2, "gpu0": "DEBY_LOD2_4908023", "gpu1": null}
+  ],
+  "terminal_contract": {
+    "required": [
+      "training_complete",
+      "tsdf_mc_and_surface_samples",
+      "roofer_cityjson_2_0",
+      "primary_quantitative_score",
+      "legacy_alpha_comparison",
+      "qualitative_A_to_I_panel",
+      "opacity_csv",
+      "qualitative_complete_receipt"
+    ],
+    "canonical_city_model": "Roofer CityJSON 2.0 per preregistered P5",
+    "xml_citygml": {
+      "status": "CENSORED",
+      "availability": "UNAVAILABLE",
+      "reason_code": "NO_TRUSTED_CITYJSON_TO_CITYGML_CONVERTER_IN_PINNED_REPO_OR_IMAGE",
+      "blocks_measured_status": false
+    },
+    "placeholder_count_required": 0,
+    "partial_results_reviewable": true
+  },
+  "qualitative_order": [
+    "A_full_image_target_outline",
+    "B_zoom_crop_valid_Mj",
+    "C_pretraining_ALS_seed",
+    "D_TSDF_mesh",
+    "E_surface_samples",
+    "F_principal_section",
+    "G_Roofer_CityJSON",
+    "H_output_reference_overlay_evaluation_only",
+    "I_seed_lineage_opacity"
+  ],
+  "failure_contract": {
+    "same_error_signature_attempts_before_skip": 3,
+    "same_error_type_consecutive_buildings_before_stage_stop": 3,
+    "partial_artifacts_preserved": true,
+    "delete_or_overwrite_allowed": false,
+    "user_prompts": false,
+    "time_cutoff": null
+  },
+  "service_contract": {
+    "user_systemd": true,
+    "codex_terminal_close_persistence": true,
+    "fixed_head_and_branch_verified_on_start_and_restart": true,
+    "auto_enable_linger": false,
+    "os_logout_or_reboot_persistence_guaranteed": false
+  },
+  "cleanup_before_terminal_queue": false
+}
