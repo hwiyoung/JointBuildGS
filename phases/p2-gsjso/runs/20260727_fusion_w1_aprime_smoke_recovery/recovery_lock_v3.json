@@ -1,0 +1,106 @@
+{
+  "schema": "jointbuildgs.fusion_w1_aprime.smoke_recovery.lock.v3",
+  "task_id": "FUS-W1-APRIME-SMOKE-RECOVERY-LOCK-003",
+  "created_at": "2026-07-27T11:35:00+09:00",
+  "branch": "exp/fusion-w1",
+  "authorization": {
+    "actor": "김휘영",
+    "message": "그럼 42364609 나머지 진행하자.",
+    "date": "2026-07-27"
+  },
+  "supersedes_after_preserved_failure": {
+    "path": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/recovery_lock_v2.json",
+    "sha256": "ce6d629b24de7d4c743ca5967a16ceb0ea94e9c314a7297c9a752f4013e2c425",
+    "bytes": 2642
+  },
+  "scope": {
+    "building_id": "DEBY_LOD2_42364609",
+    "arm": "Aprime",
+    "replicate": "r1",
+    "profile": "full",
+    "continuation_attempt": 5,
+    "preserved_recovery_attempts": [4],
+    "new_training_runs_allowed": 0,
+    "other_queue_jobs_allowed": 0
+  },
+  "preserved_attempt_004": {
+    "root": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/readout/by_building/DEBY_LOD2_42364609/arm_Aprime/r1/attempts/attempt_004",
+    "files_n": 47,
+    "bytes_total": 4246166,
+    "tree_sha256": "1be09fe5f59eb5852bff2afb667e27f69aa60284de6e4135960ad710ffddd358",
+    "failure": {
+      "relative_to_root": "failure.json",
+      "sha256": "43405be5d24014ecb89954fed61615f8a77a07c7fa51866e5a6e997d35b4e03b",
+      "bytes": 913,
+      "stage": "finalize",
+      "error_signature": "6e36fc27cf8f5f189e60abce9759a49274b9503a8dae60a52d12728a86c00997"
+    },
+    "tsdf_receipt": {
+      "relative_to_root": "tsdf/tsdf_receipt.json",
+      "sha256": "4e88be7a192437a8c16145b3b6e8eeb074ebf8c2f938b02d6c47c718d2c4ce71",
+      "bytes": 17992
+    },
+    "primary_score": {
+      "relative_to_root": "primary/score.json",
+      "sha256": "0cfca3db1798656824f791207c3c096a12ff6c27b3e72f1a4115367ce2785692",
+      "bytes": 7295
+    },
+    "legacy_alpha_score": {
+      "relative_to_root": "legacy_alpha/score.json",
+      "sha256": "9e3a95bdc1ce9f3271253342f6d77d33ec50207401a491be17eae8a6d8705edf",
+      "bytes": 1819
+    },
+    "empty_lock": {
+      "relative_to_root": "primary/engine/scores.csv.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  },
+  "retry_contract": {
+    "attempt": 5,
+    "reason": "first distinct post-permission error; final artifact ledger rejected one closed zero-byte synchronization lock",
+    "retraining": false,
+    "reuse_attempt_004_outputs": false,
+    "attempt_004_rewrite": false,
+    "automatic_attempt_006": false
+  },
+  "ephemeral_lock_policy": {
+    "allowed_relative_suffix": "/engine/scores.csv.lock",
+    "required_bytes": 0,
+    "required_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "action": "move_after_scorer_close_to_append_only_recovery_quarantine_before_finalize",
+    "scientific_artifact_move_allowed": false
+  },
+  "runtime_namespace": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery",
+  "readout_namespace": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/readout",
+  "allowed_descendant_paths": [
+    "phases/p2-gsjso/configs/fusion_w1_aprime_report_20260726.json",
+    "phases/p2-gsjso/configs/fusion_w1_aprime_smoke_recovery_20260727.json",
+    "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/issues.md",
+    "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/RECOVERY_LOCK.md",
+    "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/RECOVERY_LOCK_V2.md",
+    "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/RECOVERY_LOCK_V3.md",
+    "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/RECOVERY_REPORT.md",
+    "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/issues.md",
+    "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/recovery_lock.json",
+    "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/recovery_lock_v2.json",
+    "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/recovery_lock_v3.json",
+    "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/recovery_report.json",
+    "phases/p2-gsjso/scripts/fusion_w1_aprime_queue_recovery_20260727.py",
+    "phases/p2-gsjso/scripts/fusion_w1_aprime_report_20260726.py",
+    "phases/p2-gsjso/scripts/fusion_w1_aprime_smoke_recovery_20260727.py",
+    "phases/p2-gsjso/scripts/run_fusion_w1_aprime_queue_recovery_20260727.sh",
+    "phases/p2-gsjso/scripts/run_fusion_w1_aprime_report_20260726.sh",
+    "phases/p2-gsjso/scripts/run_fusion_w1_aprime_smoke_recovery_20260727.sh",
+    "phases/p2-gsjso/scripts/test_fusion_w1_aprime_queue_recovery_20260727.py",
+    "phases/p2-gsjso/scripts/test_fusion_w1_aprime_report_20260726.py",
+    "phases/p2-gsjso/scripts/test_fusion_w1_aprime_smoke_recovery_20260727.py"
+  ],
+  "original_queue_rewrite_allowed": false,
+  "original_attempts_001_to_003_rewrite_allowed": false,
+  "recovery_attempt_004_rewrite_allowed": false,
+  "original_readout_code_change_allowed": false,
+  "retraining_allowed": false,
+  "other_jobs_allowed": false,
+  "scientific_verdict": null
+}
