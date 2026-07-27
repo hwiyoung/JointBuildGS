@@ -1,0 +1,212 @@
+{
+  "schema": "jointbuildgs.fusion_w1_aprime.readout.config.v1",
+  "task_id": "FUS-W1-APRIME-READOUT-CACHEFIX-001",
+  "run_id": "20260726_fusion_w1_aprime",
+  "branch": "exp/fusion-w1",
+  "role": "cache-fixed per-job primary TSDF-MC assembly and legacy alpha-point comparison",
+  "implementation_files": [
+    "phases/p2-gsjso/configs/fusion_w1_aprime_readout_cachefix_20260727.json",
+    "phases/p2-gsjso/scripts/fusion_w1_aprime_readout_cachefix_20260727.py",
+    "phases/p2-gsjso/scripts/run_fusion_w1_aprime_readout_cachefix_20260727.sh",
+    "phases/p2-gsjso/scripts/test_fusion_w1_aprime_readout_cachefix_20260727.py",
+    "phases/p2-gsjso/scripts/fusion_w1_aprime_readout_20260726.py"
+  ],
+  "locked_inputs": {
+    "prereg": {
+      "path": "phases/p2-gsjso/configs/fusion_w1_aprime_prereg_lock_20260726.json",
+      "sha256": "c39b43b03c5e2be1814021134075f3ee4f05070a86b6d97262ef67f14688fd96"
+    },
+    "targets": {
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/aprime_targets.csv",
+      "sha256": "f5f5893f8b5c1aa51143a751c637d12707fac4d5a62ff7e0a1a2f7770c5dc528",
+      "population": 9
+    },
+    "training_config": {
+      "path": "phases/p2-gsjso/configs/fusion_w1_aprime_training_20260726.json",
+      "sha256": "b650b59e9314f09cf80234e8fcd33a5d7618becd467976d6a1756773ae68a726"
+    },
+    "training_driver": {
+      "path": "phases/p2-gsjso/scripts/fusion_w1_aprime_training_20260726.py",
+      "sha256": "7b22a4c5aa2a9652931db5e77ef92bea16ebf7de91f02761c7d30695551cb65f"
+    },
+    "tsdf_config": {
+      "path": "phases/p2-gsjso/configs/fusion_w1_aprime_tsdf_20260726.json",
+      "sha256": "7c67f863d1c4e67dd97556281ebed8c75c63fab068dd5c23907dcb93a0965e3f"
+    },
+    "tsdf_driver": {
+      "path": "phases/p2-gsjso/scripts/fusion_w1_aprime_tsdf_20260726.py",
+      "sha256": "43ba874a8ccc9665d2ab74498b6ad33eea459006c367aceda8b53f884d296463"
+    },
+    "p0prime_config": {
+      "path": "phases/p2-gsjso/configs/fusion_w1_aprime_p0prime_20260726.json",
+      "sha256": "c14dce57c8f4e100bcd9cd6288a8bc3184119fc0198db5a959d6911ea662f80e"
+    },
+    "p0prime_adapter": {
+      "path": "phases/p2-gsjso/scripts/fusion_w1_aprime_p0prime_20260726.py",
+      "sha256": "eb2b014840a4a31c33ecff530014182ccfc35d5ca066e51a1707d87470ca8fb0"
+    },
+    "p0prime_engine": {
+      "path": "phases/p2-gsjso/scripts/fusion_w1_seed_p0prime_20260725.py",
+      "sha256": "582011ed0d68e8552827b21105e1fb9355ed708cd59b337dd6165394a10ff248"
+    },
+    "legacy_alpha_extractor": {
+      "path": "phases/p2-gsjso/scripts/tum_mob_tsdf_extract.py",
+      "sha256": "914cbad783b1eee27d1d2de24e702eb65e5caae1cd7bb142ebbe0fac200325bc"
+    },
+    "legacy_classifier": {
+      "path": "phases/p2-gsjso/scripts/_mob_prep_las.py",
+      "sha256": "3ce3a14b57f6f3521ba02d5bb81a490a16b4e5b0e8d8e0a4b1b02ef1f05978f3"
+    }
+  },
+  "identity_contract": {
+    "profile": "full",
+    "arms": ["Aprime", "B"],
+    "runs": ["r1", "r2"],
+    "B_allowed": [
+      "DEBY_LOD2_42364609",
+      "DEBY_LOD2_42364659",
+      "DEBY_LOD2_4908023"
+    ],
+    "expected_queue_jobs": 21
+  },
+  "primary": {
+    "readout_role": "preregistered_TSDF_MC_class6_plus_original_ALS_class2",
+    "tsdf_receipt_schema": "jointbuildgs.fusion_w1_aprime.tsdf.receipt.v1",
+    "tsdf_required_checks": [
+      "real_scalable_tsdf_volume",
+      "marching_cubes_mesh_nonempty",
+      "component_filter_applied",
+      "surface_sample_nonempty",
+      "only_exact_M_j_support",
+      "no_alpha_threshold",
+      "training_view_inventory_exact",
+      "checkpoint_equals_training_final_step",
+      "training_data_root_equals_preprocess_data_root",
+      "building_identity_bound",
+      "staged_artifacts_published_before_receipt",
+      "receipt_written_last"
+    ],
+    "surface_npz_name": "tsdf_surface_samples.npz",
+    "surface_class": 6,
+    "ground_class": 2,
+    "join_method": "semantic_row_exact_concatenation_TSDF_class6_then_original_ALS_class2",
+    "joined_las_name": "aprime_tsdf_class6_plus_original_class2_epsg25832.las",
+    "las_version": "1.4",
+    "point_format": 3,
+    "scale_m": [0.001, 0.001, 0.001],
+    "crs": "EPSG:25832",
+    "vertical_datum": "orthometric",
+    "score_time_z_shift_m": 0.0,
+    "eligible_for_preregistered_judgment": true
+  },
+  "legacy_alpha_comparison": {
+    "readout_role": "historical_W1_alpha_pointcloud_comparison_only",
+    "alpha_min_exclusive": 0.5,
+    "minimum_observations": 3,
+    "voxel_m": 0.05,
+    "downscale": 1.0,
+    "footprint_buffer_m": 15.0,
+    "maximum_views": 0,
+    "sh_degree": 3,
+    "semantic_pass": false,
+    "classification_method": "P0_T4_PDAL_SMRF_then_non_ground_footprint_overlay",
+    "classification_target_density": 0.0,
+    "required_classes": [2, 6],
+    "allowed_classes": [1, 2, 6],
+    "score_time_z_shift_m": -45.7,
+    "eligible_for_preregistered_judgment": false,
+    "comparison_only": true
+  },
+  "roofer": {
+    "image": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+    "parameters": ["--id-attribute", "building_id", "--jobs", "3", "--srs", "EPSG:25832", "--bld-class", "6", "--grnd-class", "2", "--lod22"],
+    "reconstruction_parameter_overrides": [],
+    "default_reconstruction_parameters_preserved": true,
+    "outer_parallelism": 1,
+    "timeout_seconds_per_building": null
+  },
+  "containers": {
+    "dev_image": "jointbuildgs:dev",
+    "dev_image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
+    "tools_image": "jointbuildgs-p0-tools:t0",
+    "tools_image_id": "sha256:87bea02e5598a3d53a119b754191673497d52641bd8ea4106ffee653407579b0",
+    "network": "none",
+    "memory": "24g",
+    "memory_swap": "24g",
+    "cpus": 12,
+    "time_cutoff": null,
+    "serial_jobs": true,
+    "concurrent_with_training": false,
+    "concurrent_with_other_readout": false
+  },
+  "retry_contract": {
+    "attempt_number_min": 1,
+    "attempt_number_max": 999,
+    "same_error_attempts_before_skip": 3,
+    "same_error_type_consecutive_buildings_before_stage_stop": 3,
+    "attempts_are_append_only": true,
+    "partial_artifacts_preserved": true
+  },
+  "outputs": {
+    "root": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/readout",
+    "job_template": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/readout/by_building/{building_id}/arm_{arm}/{run}",
+    "failures_jsonl": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/readout/failures.jsonl",
+    "driver_lock": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/readout/driver.lock",
+    "issues": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/issues.md",
+    "runtime_environment": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/runtime_env"
+  },
+  "cachefix_contract": {
+    "schema": "jointbuildgs.fusion_w1_aprime.readout_cachefix.contract.v1",
+    "base_readout_config": {
+      "path": "phases/p2-gsjso/configs/fusion_w1_aprime_readout_20260726.json",
+      "sha256": "82a65f94acdff956974366169246da0130194750eef594db3ed83d7abf85e3a4",
+      "bytes": 6878
+    },
+    "base_readout_driver": {
+      "path": "phases/p2-gsjso/scripts/fusion_w1_aprime_readout_20260726.py",
+      "sha256": "354955f7cbceb018c3fce6546d17adf12bd9040694ba660fb33a0fa6359abe98",
+      "bytes": 77643
+    },
+    "continuation_lock": {
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v2/continuation_lock.json",
+      "sha256": "e1076ce7bfef0e66c496910dcfe2e52509a2170cfe49a128ded2c07d3dce8137",
+      "bytes": 6796
+    },
+    "shared_t2_runtime_environment": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/runtime_env",
+    "container_environment": {
+      "HOME": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/runtime_env/home",
+      "XDG_CACHE_HOME": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/runtime_env/xdg_cache",
+      "TORCH_EXTENSIONS_DIR": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/runtime_env/torch_extensions",
+      "MAX_JOBS": "2"
+    },
+    "preexisting_gsplat_extension": {
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/runtime_env/torch_extensions/gsplat_cuda/gsplat_cuda.so",
+      "sha256": "ca43f10b5d8adacb8e40fdc9685a661d459cf80bed9eec955cf2ecff0d555ca1",
+      "bytes": 9115720
+    },
+    "reuse_only": true,
+    "compilation_allowed": false,
+    "required_gpu_default": 1,
+    "required_nonroot": true,
+    "continuation_root": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v2",
+    "cache_probe_receipt": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v2/readout_cachefix/cache_probe.json",
+    "ephemeral_lock_quarantine": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v2/readout_cachefix/ephemeral_lock_quarantine",
+    "allowed_lock_relative_paths": [
+      "primary/engine/scores.csv.lock",
+      "legacy_alpha/engine/scores.csv.lock"
+    ],
+    "required_lock_bytes": 0,
+    "required_lock_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scientific_artifact_move_allowed": false,
+    "new_training_runs_allowed": 0
+  },
+  "publication": {
+    "per_stage_receipt_after_artifacts": true,
+    "attempt_outputs_never_overwritten": true,
+    "root_complete_receipt_written_last": true,
+    "artifact_ledger_in_complete_receipt": true,
+    "partial_results_reviewable": true,
+    "reference_opened_only_after_roofer_output_frozen": true,
+    "interpretation_or_verdict": null
+  }
+}

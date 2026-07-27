@@ -27,7 +27,7 @@
   - `XDG_CACHE_HOME=/workspace/JointBuildGS/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/runtime_env/xdg_cache`
   - `TORCH_EXTENSIONS_DIR=/workspace/JointBuildGS/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/runtime_env/torch_extensions`
 - control: host UID/GID `1000:1000`, 비-symlink, 쓰기 가능, gsplat extension 로드를 각 job 시작 전 영수증으로 남기고 `/.cache` fallback을 허용하지 않는다.
-- disposition: `FIX_REQUIRED_IN_CONTINUATION_IMPLEMENTATION`
+- disposition: `RESOLVED_IN_CONTINUATION_IMPLEMENTATION`; GPU 1 강제·비-root cache probe·기존 gsplat extension SHA/load/tree 불변 검사를 training 직전과 readout 시작 전에 실행한다.
 
 ## FUS-W1-APRIME-CONT-V2-GPU-CONTENTION-001 — 외부 all-GPU worker 충돌 가능성
 
@@ -37,7 +37,7 @@
 - external_workers: aerial-survey-manager 1개와 NBM engine 2개의 Celery worker가 `all GPUs`를 볼 수 있는 상태로 대기 중이었다.
 - system_memory: `49 GiB available`; swap `2 GiB / 2 GiB used`.
 - control: continuation은 GPU 1에서 한 job씩만 실행하고 job 경계마다 compute PID/VRAM을 기록한다. 외부 compute가 관찰되면 새 job 시작을 보류하고 사용자 질의·시간 cutoff 없이 재검사한다.
-- disposition: `CONDITIONAL_SERIAL_EXECUTION`
+- disposition: `CONTROL_IMPLEMENTED_CONDITIONAL_SERIAL_EXECUTION`; job 경계와 각 CUDA action 직전에 GPU 1 compute process를 검사하고, 외부 compute가 있으면 30초 간격으로 무기한 대기한다.
 
 ## FUS-W1-APRIME-CONT-V2-SOURCE-IMMUTABILITY-001 — terminal queue는 resume 대상이 아님
 
@@ -47,3 +47,29 @@
 - recovered_smoke_complete_sha256: `9a2bfa641761e2081e49ef7b66f78ee468eb18f5c100951d8f957de4f3eed8c6`
 - control: 원 queue의 terminal receipt/status/events와 smoke recovery attempts 004–005는 읽기 전용으로 고정한다. 잔여 20 jobs의 controller·training·readout·report는 `unattended_queue_continuation_v2/`에서만 발행한다.
 - disposition: `NEW_NAMESPACE_ONLY`
+
+## FUS-W1-APRIME-CONT-V2-PRESTART-AUDIT-001 — 무인 queue 재개 결함 사전 차단
+
+- observed_at: `2026-07-27T12:57:00+09:00`
+- scope: 잔여 20 jobs 시작 전 controller·cachefix·정성 관문 읽기/회귀 감사.
+- observations:
+  - 원 controller는 `ARCHIVE_TRAINING` 자체의 동일 action 오류가 3회 누적돼도 skip 검사보다 archive를 먼저 반환할 수 있었다.
+  - 원 queue verifier는 readout completion의 `artifact_ledger` 전체 SHA/bytes와 실제 attempt 파일 집합의 exact coverage를 재검증하지 않았다.
+  - readout wrapper의 활성 attempt는 `ERR` 외 `TERM`/`INT` 중단에서 failure receipt 없이 남을 수 있었다.
+  - training 직전에는 공유 gsplat cache의 exact extension load/reuse-only 확인이 없었다.
+- controls:
+  - 동일 `ARCHIVE_TRAINING` action signature 3회는 해당 job의 `RECORD_SKIPPED`로 먼저 전환한다.
+  - 완료 readout은 ledger 전 항목 SHA/bytes, 중복, attempt 내부 exact file coverage, symlink/special file 부재, 성공 attempt의 failure 부재를 재검증한다.
+  - 활성 readout attempt는 `ERR`/`TERM`/`INT`에서 one-shot failure receipt를 발행하고 기존 failure 또는 authoritative complete와의 중복·모순 기록을 억제한다.
+  - 각 training launch 직전 cache probe로 non-root HOME/XDG/TORCH, pinned gsplat extension SHA/load, cache tree 불변을 확인한다. 이후 readout probe가 같은 singleton receipt/tree를 다시 대조한다.
+- regression: Docker 단위시험 `61/61` 통과(정성 9 + cachefix 17 + continuation 35); 새 학습·TSDF·Roofer 실행 `0`.
+- disposition: `RESOLVED_BEFORE_FIRST_REMAINING_JOB`
+- scientific_verdict: `null`
+
+## FUS-W1-APRIME-CONT-V2-GPU-MAPPING-001 — physical GPU 1 표기 명확화
+
+- locked_device: `physical GPU 1`.
+- training_mapping: host `NVIDIA_VISIBLE_DEVICES=1` 뒤 container `CUDA_VISIBLE_DEVICES=0`으로 physical GPU 1을 logical GPU 0에 remap한다.
+- readout_mapping: host all-visible 컨테이너에서 `CUDA_VISIBLE_DEVICES=1`로 physical GPU 1을 선택한다.
+- observation: 두 경로 모두 같은 physical GPU 1을 사용한다. training에 readout의 container index 표기를 기계 적용하지 않는다.
+- scientific_verdict: `null`
