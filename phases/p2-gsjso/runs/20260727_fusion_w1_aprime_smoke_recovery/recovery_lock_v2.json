@@ -1,0 +1,49 @@
+{
+  "schema": "jointbuildgs.fusion_w1_aprime.smoke_recovery.lock.v2",
+  "task_id": "FUS-W1-APRIME-SMOKE-RECOVERY-LOCK-002",
+  "created_at": "2026-07-27T11:02:17+09:00",
+  "branch": "exp/fusion-w1",
+  "supersedes_layout_only": {
+    "path": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/recovery_lock.json",
+    "sha256": "12071c765f69301a9b62b9cd4ea346d334835614082de7a5c4ee9c8f9da400b3",
+    "bytes": 5494
+  },
+  "scope": {
+    "building_id": "DEBY_LOD2_42364609",
+    "arm": "Aprime",
+    "replicate": "r1",
+    "profile": "full",
+    "continuation_attempt": 4,
+    "new_training_runs_allowed": 0,
+    "other_queue_jobs_allowed": 0
+  },
+  "source_execution_head": "de8852c00c737eced081f2627b49bcedddade652",
+  "source_terminal_state": "STOPPED_SMOKE_BARRIER_NOT_MEASURED",
+  "source_failure_signature": "00fa59bf782c96a81dabb741788c22b6b7a650099188c3192adbf4a15e533012",
+  "runtime_namespace": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery",
+  "readout_namespace": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/readout",
+  "shared_t2_cache_namespace": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/runtime_env",
+  "allowed_descendant_paths": [
+    "phases/p2-gsjso/configs/fusion_w1_aprime_report_20260726.json",
+    "phases/p2-gsjso/configs/fusion_w1_aprime_smoke_recovery_20260727.json",
+    "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/issues.md",
+    "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/RECOVERY_LOCK.md",
+    "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/RECOVERY_LOCK_V2.md",
+    "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/recovery_lock.json",
+    "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/recovery_lock_v2.json",
+    "phases/p2-gsjso/scripts/fusion_w1_aprime_queue_recovery_20260727.py",
+    "phases/p2-gsjso/scripts/fusion_w1_aprime_report_20260726.py",
+    "phases/p2-gsjso/scripts/fusion_w1_aprime_smoke_recovery_20260727.py",
+    "phases/p2-gsjso/scripts/run_fusion_w1_aprime_queue_recovery_20260727.sh",
+    "phases/p2-gsjso/scripts/run_fusion_w1_aprime_report_20260726.sh",
+    "phases/p2-gsjso/scripts/run_fusion_w1_aprime_smoke_recovery_20260727.sh",
+    "phases/p2-gsjso/scripts/test_fusion_w1_aprime_queue_recovery_20260727.py",
+    "phases/p2-gsjso/scripts/test_fusion_w1_aprime_report_20260726.py",
+    "phases/p2-gsjso/scripts/test_fusion_w1_aprime_smoke_recovery_20260727.py"
+  ],
+  "original_queue_rewrite_allowed": false,
+  "original_readout_code_change_allowed": false,
+  "original_report_change_allowed": false,
+  "retraining_allowed": false,
+  "scientific_verdict": null
+}
