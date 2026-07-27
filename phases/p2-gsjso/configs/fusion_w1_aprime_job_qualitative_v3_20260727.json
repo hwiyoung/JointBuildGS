@@ -1,0 +1,220 @@
+{
+  "schema": "jointbuildgs.fusion_w1_aprime.job_qualitative.config.v3",
+  "task_id": "FUS-W1-APRIME-JOB-QUALITATIVE-V3-001",
+  "run_id": "20260726_fusion_w1_aprime",
+  "branch": "exp/fusion-w1",
+  "purpose": "Generic receipt-led 3x3 A-I qualitative bundle for one measured A-prime or arm-B job",
+  "implementation_files": [
+    "phases/p2-gsjso/configs/fusion_w1_aprime_job_qualitative_v3_20260727.json",
+    "phases/p2-gsjso/scripts/fusion_w1_aprime_job_qualitative_v3_20260727.py",
+    "phases/p2-gsjso/scripts/run_fusion_w1_aprime_job_qualitative_v3_20260727.sh",
+    "phases/p2-gsjso/scripts/test_fusion_w1_aprime_job_qualitative_v3_20260727.py"
+  ],
+  "sources": {
+    "run_root": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime",
+    "canonical_readout_complete_template": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/readout/by_building/{building_id}/arm_{arm}/{replicate}/complete.json",
+    "training_complete_template": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/{building_id}/arm_{arm}/{replicate}/completed.json",
+    "readout_complete_overrides": {
+      "DEBY_LOD2_42364609/arm_Aprime/r1": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/readout/by_building/DEBY_LOD2_42364609/arm_Aprime/r1/complete.json"
+    }
+  },
+  "locked_inputs": {
+    "targets": {
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/aprime_targets.csv",
+      "sha256": "f5f5893f8b5c1aa51143a751c637d12707fac4d5a62ff7e0a1a2f7770c5dc528",
+      "bytes": 3855
+    },
+    "report_module": {
+      "path": "phases/p2-gsjso/scripts/fusion_w1_aprime_report_20260726.py",
+      "sha256": "5c35b05efe07728063fdc047a391e7abdced3ef587be0c56e2b4ee74a7fc221b",
+      "bytes": 186776
+    },
+    "requirements": {
+      "path": "requirements.txt",
+      "sha256": "74e14760f519e8bced497ff9f87810488a6e10bd774bb2fb559643dc6d9e8e48",
+      "bytes": 550
+    },
+    "stage3_cityjson_exporter": {
+      "path": "src/stage3/citygml_export.py",
+      "sha256": "c9145b32aaec7378067a73260e9c7e0fcf7566cbd4f1304988f88c5f1fec2220",
+      "bytes": 6871
+    },
+    "reference_gml": [
+      {
+        "path": "phases/p0-audit/data/raw/lod2/690_5334.gml",
+        "sha256": "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314",
+        "bytes": 156656509,
+        "runtime_verification": "path_bytes_and_actual_sha256_rehash_on_every_render_or_check"
+      },
+      {
+        "path": "phases/p0-audit/data/raw/lod2/690_5336.gml",
+        "sha256": "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674",
+        "bytes": 147865939,
+        "runtime_verification": "path_bytes_and_actual_sha256_rehash_on_every_render_or_check"
+      }
+    ]
+  },
+  "identity_contract": {
+    "building_id_pattern": "^DEBY_LOD2_[0-9]+$",
+    "arms": ["Aprime", "B"],
+    "replicates": ["r1", "r2"],
+    "aprime_replicates": ["r1", "r2"],
+    "B_replicates": ["r1"],
+    "B_buildings": [
+      "DEBY_LOD2_42364609",
+      "DEBY_LOD2_42364659",
+      "DEBY_LOD2_4908023"
+    ],
+    "readout_complete_schema": "jointbuildgs.fusion_w1_aprime.readout.complete.v1",
+    "required_readout_state": "COMPLETE",
+    "required_primary_measurement_status": "MEASURED"
+  },
+  "visual_contract": {
+    "rows": 3,
+    "columns": 3,
+    "component_order": ["A", "B", "C", "D", "E", "F", "G", "H", "I"],
+    "placeholders_allowed_for_measured": false,
+    "crop_padding_fraction": 0.2,
+    "maximum_scatter_points": 80000,
+    "maximum_mesh_faces": 100000,
+    "transition_iteration": 15000,
+    "surface_ramp_end_iteration": 20000,
+    "opacity_initial_observation_phase": "initialization_pre_dynamics",
+    "opacity_line_observation_phase": "post_dynamics",
+    "panel_dpi": 150,
+    "panel_inches": [18, 13.5],
+    "minimum_panel_pixels": [2400, 1700],
+    "cjk_font": {
+      "container_path": "/opt/jointbuildgs-fonts/NotoSansCJK-Regular.ttc",
+      "host_path": "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+      "sha256": "b76b0433203017ca80401b2ee0dd69350349871c4b19d504c34dbdd80541690a",
+      "bytes": 19484784
+    },
+    "palette": {
+      "blue": "#1f5a94",
+      "blue_light": "#9abbd8",
+      "orange": "#d07a23",
+      "gold": "#c59b2b",
+      "charcoal": "#252a31",
+      "grey": "#7c8794",
+      "light_grey": "#e3e7eb",
+      "mask": "#00b5d8"
+    },
+    "components": [
+      {
+        "key": "A",
+        "title_ko": "원본 전체와 대상 지붕 실루엣(M_j)",
+        "title_en": "Full image with target roof silhouette (M_j)",
+        "legend_bilingual": "범례/Legend: 주황 실선=대상 지붕 실루엣(M_j), 평면 footprint 아님 / orange=target roof silhouette (M_j), not a planimetric footprint; 흰 점선=확대 상자 / white dashed=crop box",
+        "geometry_semantics": "target roof silhouette M_j; not a planimetric footprint",
+        "source_roles": ["selected_full_image", "selected_M_j"]
+      },
+      {
+        "key": "B",
+        "title_ko": "확대 영상과 지붕 마스크",
+        "title_en": "Zoomed crop with roof mask",
+        "legend_bilingual": "범례/Legend: 청록 음영=유효 M_j / cyan=valid M_j; 원영상=RGB / base=RGB",
+        "source_roles": ["selected_full_image", "selected_M_j"]
+      },
+      {
+        "key": "C",
+        "title_ko": "학습 전 ALS 시드",
+        "title_en": "Pre-training ALS seed",
+        "legend_bilingual": "범례/Legend: 점=가시성 필터 후 class 6 / points=visibility-filtered class 6; 색=투영 RGB / color=projected RGB",
+        "source_roles": ["pretraining_seed"]
+      },
+      {
+        "key": "D",
+        "title_ko": "TSDF 메시 탑뷰",
+        "title_en": "TSDF mesh top view",
+        "legend_bilingual": "범례/Legend: 파랑 면·모서리=필터 TSDF 삼각면 / blue faces and edges=filtered TSDF triangles; 좌표=EPSG:25832 / coordinates=EPSG:25832",
+        "source_roles": ["tsdf_mesh"]
+      },
+      {
+        "key": "E",
+        "title_ko": "표면 샘플 탑뷰",
+        "title_en": "Surface samples top view",
+        "legend_bilingual": "범례/Legend: 점=TSDF 표면 class 6 샘플 / points=TSDF class 6 surface samples; 색=저장 RGB / color=stored RGB",
+        "source_roles": ["tsdf_surface_samples"]
+      },
+      {
+        "key": "F",
+        "title_ko": "표면 샘플 주축 단면",
+        "title_en": "Principal section of surface samples",
+        "legend_bilingual": "범례/Legend: 가로=XY 주성분 / horizontal=XY principal axis; 세로=정표고 Z / vertical=orthometric Z",
+        "source_roles": ["tsdf_surface_samples"]
+      },
+      {
+        "key": "G",
+        "title_ko": "Roofer 조립 출력",
+        "title_en": "Roofer assembled output",
+        "legend_bilingual": "범례/Legend: 파랑 선=canonical Roofer CityJSON 면 경계 / blue=canonical Roofer CityJSON surface rings",
+        "source_roles": ["canonical_roofer_cityjson"]
+      },
+      {
+        "key": "H",
+        "title_ko": "출력-참조 중첩 (평가 전용)",
+        "title_en": "Output-reference overlay (evaluation only)",
+        "legend_bilingual": "범례/Legend: 파랑=Roofer 출력 / blue=Roofer output; 주황 점선=참조 GML / orange dashed=reference GML; 참조는 평가 전용 / reference is evaluation-only",
+        "source_roles": ["canonical_roofer_cityjson", "evaluation_only_reference_gml"]
+      },
+      {
+        "key": "I",
+        "title_ko": "지붕 시드 계보 opacity 궤적",
+        "title_en": "Roof seed-lineage opacity trajectory",
+        "legend_bilingual": "범례/Legend: 파랑=관찰값 / blue=observed; 주황 파선=15k 전환 / orange dashed=15k transition; 금색 점선=20k ramp 종료 / gold dotted=20k ramp end",
+        "source_roles": ["seed_initialization", "seed_lineage"]
+      }
+    ]
+  },
+  "serialization_audit": {
+    "canonical_roofer_cityjson_required": true,
+    "canonical_cityjson_bundle_copy_name": "roofer.city.json",
+    "trusted_cityjson_to_citygml_converter_available": false,
+    "arbitrary_citygml_conversion_allowed": false,
+    "cjio": {
+      "required_version": "0.10.1",
+      "observed_export_formats": ["b3dm", "glb", "jsonl", "obj", "stl"],
+      "citygml_or_gml_export_supported": false
+    },
+    "repo_exporter_audit": {
+      "path": "src/stage3/citygml_export.py",
+      "observed_role": "CityJSON 2.0 and PLY producer",
+      "cityjson_to_citygml_serializer_present": false
+    },
+    "citygml_unavailable_state": "CENSORED",
+    "citygml_unavailable_availability": "UNAVAILABLE",
+    "citygml_unavailable_reason_code": "NO_TRUSTED_CITYJSON_TO_CITYGML_CONVERTER_IN_PINNED_REPO_OR_IMAGE",
+    "derived_gml_copy_rule": "only a separately provenance-bound GML artifact already listed in readout complete may be copied; this renderer never invents a conversion"
+  },
+  "outputs": {
+    "root": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/review_v3",
+    "job_template": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/review_v3/by_building/{building_id}/arm_{arm}/{replicate}",
+    "panel": "panel.png",
+    "opacity_csv": "opacity.csv",
+    "canonical_roofer_cityjson": "roofer.city.json",
+    "complete": "complete.json"
+  },
+  "publication": {
+    "measured_jobs_only": true,
+    "placeholder_count_required": 0,
+    "all_A_to_I_components_required": true,
+    "job_directory_atomic_publish": true,
+    "overwrite_allowed": false,
+    "source_inputs_rehashed_after_render": true,
+    "receipt_written_last": true,
+    "reference_role": "evaluation_only",
+    "scientific_verdict": null,
+    "interpretation": null
+  },
+  "execution": {
+    "container_image": "jointbuildgs:dev",
+    "container_image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
+    "network": "none",
+    "gpus_required": false,
+    "nonroot": true,
+    "cpus": 6,
+    "memory": "12g",
+    "memory_swap": "12g"
+  }
+}

@@ -1,0 +1,187 @@
+{
+  "schema": "jointbuildgs.fusion_w1_aprime.continuation_v3_service.config.v1",
+  "task_id": "FUS-W1-APRIME-CONTINUATION-V3-SERVICE-001",
+  "branch": "exp/fusion-w1",
+  "repository": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS",
+  "container_repository": "/workspace/JointBuildGS",
+  "implementation_files": [
+    "phases/p2-gsjso/configs/fusion_w1_aprime_continuation_v3_service_20260727.json",
+    "phases/p2-gsjso/scripts/fusion_w1_aprime_continuation_v3_service_20260727.py",
+    "phases/p2-gsjso/scripts/run_fusion_w1_aprime_continuation_v3_service_20260727.sh",
+    "phases/p2-gsjso/scripts/test_fusion_w1_aprime_continuation_v3_service_20260727.py"
+  ],
+  "queue": {
+    "wrapper": "phases/p2-gsjso/scripts/run_fusion_w1_aprime_queue_continuation_v3_20260727.sh",
+    "driver": "phases/p2-gsjso/scripts/fusion_w1_aprime_queue_continuation_v3_20260727.py",
+    "config": "phases/p2-gsjso/configs/fusion_w1_aprime_queue_continuation_v3_20260727.json",
+    "test": "phases/p2-gsjso/scripts/test_fusion_w1_aprime_queue_continuation_v3_20260727.py",
+    "root": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3",
+    "driver_lock": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/driver.lock",
+    "source_boundary_receipt": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/source_boundary_receipt.json"
+  },
+  "qualitative": {
+    "config": "phases/p2-gsjso/configs/fusion_w1_aprime_job_qualitative_v3_20260727.json",
+    "driver": "phases/p2-gsjso/scripts/fusion_w1_aprime_job_qualitative_v3_20260727.py",
+    "wrapper": "phases/p2-gsjso/scripts/run_fusion_w1_aprime_job_qualitative_v3_20260727.sh",
+    "test": "phases/p2-gsjso/scripts/test_fusion_w1_aprime_job_qualitative_v3_20260727.py"
+  },
+  "source_v2": {
+    "wrapper": "phases/p2-gsjso/scripts/run_fusion_w1_aprime_queue_continuation_20260727.sh",
+    "driver_lock": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v2/driver.lock",
+    "reused_stage_record": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v2/stage_records/stage_01_aprime_r1/entry_02_DEBY_LOD2_42364659_arm_Aprime_r1.json",
+    "required_status": "MEASURED",
+    "required_identity": {
+      "building_id": "DEBY_LOD2_42364659",
+      "arm": "Aprime",
+      "replicate": "r1",
+      "stage_key": "aprime_r1",
+      "stage_order": 1,
+      "stage_entry_order": 2
+    },
+    "referenced_receipt_hash_verification_owner": "queue_v3_verify_initialize",
+    "old_wrapper_process_must_be_absent": true,
+    "driver_lock_must_be_nonblocking": true,
+    "blocking_active_container_name_regex": "^jointbuildgs-aprime-.*$",
+    "container_primary_detection": {
+      "requires_repository_bind_mount": true,
+      "inspect_fields": [
+        "Config.Cmd",
+        "Config.Env",
+        "Args"
+      ],
+      "scientific_markers": [
+        "fusion_w1_aprime",
+        "src.stage2.train",
+        "resolved_config.yaml",
+        "runtime_compose_override.yaml"
+      ]
+    },
+    "container_name_regex_is_auxiliary_only": true,
+    "blocking_scope_includes_source_v2_and_orphaned_v3": true,
+    "active_aprime_container_must_be_absent": true
+  },
+  "service": {
+    "unit_name": "jointbuildgs-fusion-w1-aprime-continuation-v3.service",
+    "description": "JointBuildGS A-prime 20-job continuation v3 control service",
+    "working_directory": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS",
+    "control_root": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/service_control",
+    "log": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/service.log",
+    "install_receipt": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/service_control/install_receipt.json",
+    "unit_snapshot": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/service_control/unit_snapshot.service",
+    "type": "exec",
+    "kill_mode": "control-group",
+    "kill_signal": "SIGTERM",
+    "send_sigkill": true,
+    "timeout_stop_sec": 300,
+    "final_kill_signal": "SIGKILL",
+    "refuse_manual_stop": false,
+    "restart": "on-failure",
+    "restart_sec": 30,
+    "restart_prevent_exit_status": [
+      2,
+      78
+    ],
+    "start_limit_interval_sec": 0,
+    "standard_input": "null",
+    "standard_output": "append",
+    "standard_error": "append",
+    "enable_on_install": false,
+    "terminal_close_capability_declared": true,
+    "terminal_close_safe_now_requires_runtime_evidence": true,
+    "logout_persistence_requires_linger": true,
+    "auto_enable_linger": false
+  },
+  "stop_control": {
+    "manual_stop_allowed": true,
+    "audit_before_signal": true,
+    "audit_after_stop": true,
+    "audit_root": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/service_control/stop_audits",
+    "graceful_signal": "SIGTERM",
+    "graceful_timeout_seconds": 300,
+    "emergency_signal_after_timeout": "SIGKILL",
+    "control_group_scope": true,
+    "partial_artifacts_preserved": true,
+    "partial_artifacts_deleted": false,
+    "deterministic_resume_after_stop": true,
+    "audit_overwrite_allowed": false
+  },
+  "fixed_head_contract": {
+    "expected_head_is_explicit_at_install": true,
+    "expected_head_length": 40,
+    "branch_must_match": true,
+    "all_implementation_files_tracked_at_head": true,
+    "all_implementation_worktree_files_match_head": true,
+    "queue_files_bound_to_same_head": true,
+    "qualitative_four_bound_to_same_head": true,
+    "queue_locked_code_dependencies_bound_to_same_head": true,
+    "required_queue_locked_input_names": [
+      "continuation_contract",
+      "continuation_contract_markdown",
+      "source_v2_config",
+      "source_v2_driver",
+      "source_v2_wrapper",
+      "training_config",
+      "training_driver",
+      "training_wrapper",
+      "readout_config",
+      "readout_driver",
+      "readout_wrapper",
+      "qualitative_config",
+      "qualitative_renderer",
+      "qualitative_wrapper",
+      "qualitative_test"
+    ],
+    "verify_again_on_every_service_start": true,
+    "allow_head_drift": false
+  },
+  "boundary_gate": {
+    "handoff_owner": "external_terminal_boundary_watcher",
+    "service_sends_signals_to_v2": false,
+    "reused_v2_stage_record_must_be_measured": true,
+    "reused_receipt_hash_verification_delegated_to_v3": true,
+    "old_wrapper_process_must_be_absent": true,
+    "v2_driver_lock_must_be_nonblocking": true,
+    "active_aprime_container_must_be_absent": true,
+    "v3_verify_required_before_service_start": true,
+    "source_boundary_receipt_written_by_v3_initialize": true,
+    "time_cutoff": null
+  },
+  "review_index": {
+    "schema": "jointbuildgs.fusion_w1_aprime.continuation_v3.review_index.v1",
+    "mode": "READ_ONLY_SOURCE_INDEX",
+    "publication_root": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/review_v3/service_index",
+    "exclusive_publication": true,
+    "overwrite_allowed": false,
+    "source_mutation_allowed": false,
+    "recursive_scientific_payload_hashing": false,
+    "observational_only": true,
+    "interpretation_or_verdict": null,
+    "control_files": [
+      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/queue_plan.json",
+      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/source_boundary_receipt.json",
+      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/status.json",
+      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/status.csv",
+      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/events.jsonl",
+      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/stage_stop.json",
+      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/complete.json",
+      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/service.log",
+      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/service_control/install_receipt.json",
+      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/service_control/unit_snapshot.service"
+    ],
+    "reference_roots": [
+      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building",
+      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/readout/by_building",
+      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/review_v3/by_building",
+      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/action_logs",
+      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/stage_records",
+      "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/service_control/stop_audits"
+    ]
+  },
+  "publication": {
+    "scientific_outputs_rewritten": false,
+    "queue_v3_namespace_used": true,
+    "review_v3_namespace_used": true,
+    "source_v2_namespace_read_only": true,
+    "interpretation_or_verdict": null
+  }
+}
