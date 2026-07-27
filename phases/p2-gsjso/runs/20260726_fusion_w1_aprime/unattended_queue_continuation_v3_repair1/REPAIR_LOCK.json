@@ -1,0 +1,72 @@
+{
+  "schema": "jointbuildgs.fusion_w1_aprime.unattended_continuation_v3.repair_lock.v1",
+  "task_id": "FUS-W1-APRIME-QUEUE-CONTINUATION-V3-001",
+  "recorded_at": "2026-07-27T15:35:06+09:00",
+  "branch": "exp/fusion-w1",
+  "source_failed_control": {
+    "namespace": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3",
+    "git_head": "ca8089f5f29a1405d90dbe3300ab21cac924a752",
+    "queue_plan": {
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/queue_plan.json",
+      "bytes": 50367,
+      "sha256": "4bdc3d2b8ee06b36e8b0ccc9ee67d94704024e48e83c854878b0191dc26595c1"
+    },
+    "source_boundary": {
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/source_boundary_receipt.json",
+      "bytes": 30550,
+      "sha256": "dd5ec67ec30f81c168a8b7507d97be296847f9d7c28ebfbf46251b726c5be2cd"
+    },
+    "stop_post_audit": {
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/service_control/stop_audits/20260727T062811.406062Z_2368166_post.json",
+      "bytes": 14767,
+      "sha256": "0578cc489b47d1c983ebd58adfb5978711d440e798308a33de2dd0d3c5561f06"
+    },
+    "service_exit_status": 2,
+    "failure": "qualitative verifier omitted required output_root argument"
+  },
+  "reused_measured_job": {
+    "building_id": "DEBY_LOD2_42364659",
+    "arm": "Aprime",
+    "replicate": "r1",
+    "qualitative_complete": {
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/review_v3/by_building/DEBY_LOD2_42364659/arm_Aprime/r1/complete.json",
+      "bytes": 15131,
+      "sha256": "c273b3758c8522bee1651cec301af169af1d6aafd2646718d3db5a831cef92a7"
+    },
+    "panel": {
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/review_v3/by_building/DEBY_LOD2_42364659/arm_Aprime/r1/panel.png",
+      "bytes": 1743730,
+      "sha256": "7104d4b34cda3c965a584048bcbdd054c70d708a5daa1044799eb88bc696087c"
+    },
+    "recompute_training": false,
+    "recompute_readout": false,
+    "recompute_qualitative": false
+  },
+  "repair_scope": {
+    "queue_change": "pass production output_root=None to the existing qualitative verifier",
+    "service_status_change": "accept systemd normalized append only with exact drop-in-free fragment binding",
+    "scientific_recipe_changed": false,
+    "target_list_changed": false,
+    "pair_schedule_changed": false,
+    "failure_thresholds_changed": false,
+    "new_training_jobs": 19,
+    "maximum_concurrent_training": 2,
+    "readout_remains_global_serial": true,
+    "new_control_namespace": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1",
+    "old_control_namespace_mutation_allowed": false
+  },
+  "first_new_pair": {
+    "pair_id": "pair_01_stage_01_aprime_r1_01",
+    "gpu0": "DEBY_LOD2_42364663/Aprime/r1",
+    "gpu1": "DEBY_LOD2_4907182/Aprime/r1",
+    "materialized_before_repair": false
+  },
+  "t2_control": {
+    "final_repair_head_requires_new_receipt": true,
+    "previous_receipt_must_be_archived": true,
+    "geometry_and_sample_artifact_hashes_must_remain_unchanged": true,
+    "reason": "training preflight binds T2 execution HEAD"
+  },
+  "partial_artifacts_preserved": true,
+  "interpretation_or_verdict": null
+}

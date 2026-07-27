@@ -2,6 +2,35 @@
 
 판정 필드는 두지 않는다. 상태, 수치, 예외, 처리만 누적한다.
 
+## FUS-W1-APRIME-CONT-V3-RUNTIME-001 — 정성 bundle 검증 호출 누락
+
+- Recorded: 2026-07-27 15:35 KST
+- Status: REPAIR IN PROGRESS; FIRST NEW TRAINING NOT ENTERED
+- user-systemd service는 2026-07-27 15:27:52 KST에 시작하여 재사용 job
+  `DEBY_LOD2_42364659 / A′ / r1`의 개정 정성 bundle을 정상 발행했으나,
+  queue의 후속 full verification이 `verify_bundle()` 필수 인자 `output_root`를
+  전달하지 않아 15:28:11 KST에 status `2`로 종료됐다.
+- 정성 `complete.json`은 `MEASURED`, A-I 전 항목 `true`, placeholder `0`으로
+  독립 verify를 통과했다. v3 stage record와 status는 아직 발행되지 않았고,
+  신규 training materialization·launch는 0건이다.
+- 처리: production root를 뜻하는 `output_root=None`을 명시 전달하고 해당 5인자
+  호출을 회귀시험으로 고정한다. 실패 service log·stop-post audit·정성 bundle은
+  삭제하거나 덮어쓰지 않는다.
+- scientific_verdict: `null`
+
+## FUS-W1-APRIME-CONT-V3-SERVICE-STATUS-001 — systemd append 표기 정규화
+
+- Recorded: 2026-07-27 15:35 KST
+- Status: REPAIR IN PROGRESS
+- 설치 unit은 `StandardOutput/StandardError=append:<absolute service.log>`였으나
+  이 호스트의 `systemctl show`는 두 속성을 경로 없이 `append`로 정규화해 반환했다.
+  기존 status 검사는 이를 false-negative로 기록했다.
+- 처리: 축약형 `append`는 `FragmentPath`가 기대 user unit과 같고 `DropInPaths`가
+  비어 있으며, 실제 `[Service]`의 마지막 directive가 정확한 절대 로그 경로를
+  가리키는 경우에만 통과시킨다. terminal detach 여부와 OS logout/reboot
+  지속성(linger disabled)은 계속 분리한다.
+- scientific_verdict: `null`
+
 ## FUS-W1-APRIME-ATTR-001 — prior 가중치 귀속 정정
 
 - Recorded: 2026-07-26 21:00 KST
