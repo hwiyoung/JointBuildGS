@@ -971,9 +971,12 @@ def validate_cache_receipt(
     config: Mapping[str, Any],
     payload: Mapping[str, Any],
     contract: Mapping[str, Any],
+    *,
+    expected_git_head: str | None = None,
 ) -> None:
     expected_extension = config["cache_contract"]["preexisting_gsplat_extension"]
     expected_module = str(CONTAINER_REPO / str(expected_extension["path"]))
+    cache_head = expected_git_head or str(contract["provenance"]["head"])
     checks = (
         (payload.get("schema"), CACHE_SCHEMA, "cache receipt schema"),
         (payload.get("state"), "PASSED", "cache receipt state"),
@@ -982,7 +985,7 @@ def validate_cache_receipt(
         (payload.get("scope"), config["scope"], "cache receipt scope"),
         (
             payload.get("git_head"),
-            contract["provenance"]["head"],
+            cache_head,
             "cache receipt HEAD",
         ),
         (payload.get("nonroot"), True, "cache receipt nonroot"),
@@ -1357,13 +1360,26 @@ def verify_complete(config: Mapping[str, Any]) -> dict[str, Any]:
     require_equal(payload.get("recovery_namespace"), namespace, "recovery namespace")
     require_equal(payload.get("complete_receipt_written_last"), True, "receipt ordering")
     require_equal(payload.get("scientific_verdict"), None, "complete verdict")
+    execution_head = str(payload.get("git_head", ""))
+    if not execution_head:
+        raise SmokeRecoveryError("complete receipt lacks execution HEAD")
+    current_head = str(contract["provenance"]["head"])
+    if git("merge-base", "--is-ancestor", execution_head, current_head, check=False).returncode:
+        raise SmokeRecoveryError(
+            f"readout execution HEAD is not an ancestor: {execution_head}..{current_head}"
+        )
     for key in (
         "materialization", "cache_probe", "derived_readout_config", "readout_job_complete",
         "finalize_hygiene",
     ):
         verify_record(payload[key], f"complete {key}")
     cache = load_json(repo_path(payload["cache_probe"]["path"]))
-    validate_cache_receipt(config, cache, contract)
+    validate_cache_receipt(
+        config,
+        cache,
+        contract,
+        expected_git_head=execution_head,
+    )
     job_complete = load_json(repo_path(payload["readout_job_complete"]["path"]))
     require_equal(job_complete.get("state"), "COMPLETE", "readout complete state")
     require_equal(job_complete.get("attempt"), 5, "readout complete attempt")

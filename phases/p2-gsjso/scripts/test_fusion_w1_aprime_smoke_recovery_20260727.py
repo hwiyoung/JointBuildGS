@@ -253,6 +253,8 @@ class AprimeSmokeRecoveryTests(unittest.TestCase):
         self.assertIn('["attempt_004", "attempt_005"]', self.source)
         self.assertNotIn('"scientific_verdict": "PASS"', self.source)
         self.assertNotIn('"scientific_verdict": "FAIL"', self.source)
+        self.assertIn("expected_git_head=execution_head", self.source)
+        self.assertIn('"--is-ancestor", execution_head, current_head', self.source)
 
 
 if __name__ == "__main__":
