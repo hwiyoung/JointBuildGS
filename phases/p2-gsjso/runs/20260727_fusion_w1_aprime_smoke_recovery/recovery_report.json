@@ -1,0 +1,120 @@
+{
+  "schema": "jointbuildgs.fusion_w1_aprime.smoke_recovery.report.v1",
+  "created_at": "2026-07-27T11:43:00+09:00",
+  "technical_state": "COMPLETE",
+  "scope": {
+    "building_id": "DEBY_LOD2_42364609",
+    "arm": "Aprime",
+    "replicate": "r1",
+    "new_training_runs": 0,
+    "other_queue_jobs_started": 0
+  },
+  "execution": {
+    "branch": "exp/fusion-w1",
+    "head": "38de83882c1dacb5491ea22050c453b594b345a9",
+    "successful_attempt": 5,
+    "attempt_004_preserved": true,
+    "recovery_complete_sha256": "9a2bfa641761e2081e49ef7b66f78ee468eb18f5c100951d8f957de4f3eed8c6",
+    "artifact_count": 46
+  },
+  "reused_inputs": {
+    "checkpoint": {
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_42364609/arm_Aprime/r1/ckpt/final.pt",
+      "sha256": "20e1e625b90487201e3574b102dbcc10d559b17ee1de59073b893fc71a0019b9",
+      "bytes": 1928727,
+      "optimizer_updates": 30000
+    },
+    "preprocess_manifest": {
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364609/preprocess_manifest.json",
+      "sha256": "ad780ba86c2d89434d6b480901a4d49dda6efa2128d63e8b7bdd91b94feb7ed0"
+    },
+    "retraining_performed": false
+  },
+  "cache_preflight": {
+    "state": "PASSED",
+    "uid": 1000,
+    "cuda_device": "NVIDIA GeForce RTX 3090",
+    "max_jobs": 2,
+    "permission_error_observed": false,
+    "cache_tree_unchanged": true,
+    "gsplat_extension_sha256": "ca43f10b5d8adacb8e40fdc9685a661d459cf80bed9eec955cf2ecff0d555ca1",
+    "receipt_sha256": "796f8f2f7765386ec51968ec33312125e2c997328737c50bea06159c38502cf5"
+  },
+  "attempt_004_exception": {
+    "state": "FAILED",
+    "stage": "finalize",
+    "tree_files_n": 47,
+    "tree_bytes": 4246166,
+    "tree_sha256": "1be09fe5f59eb5852bff2afb667e27f69aa60284de6e4135960ad710ffddd358",
+    "cause": "artifact ledger rejected primary/engine/scores.csv.lock because it was zero bytes",
+    "permission_error": false,
+    "rewritten": false
+  },
+  "attempt_005_tsdf_mc": {
+    "state": "COMPLETED",
+    "voxel_size_m": 0.05,
+    "sdf_trunc_m": 0.25,
+    "raw_vertices_n": 10268,
+    "raw_triangles_n": 17773,
+    "filtered_vertices_n": 9931,
+    "filtered_triangles_n": 17442,
+    "components_before_n": 61,
+    "components_removed_n": 58,
+    "surface_samples_n": 1450,
+    "surface_area_m2": 14.499830166563298,
+    "surface_class": 6,
+    "receipt_path": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/readout/by_building/DEBY_LOD2_42364609/arm_Aprime/r1/attempts/attempt_005/tsdf/tsdf_receipt.json",
+    "all_required_checks": true
+  },
+  "attempt_005_primary": {
+    "state": "MEASURED",
+    "joined_points_n": 9094,
+    "class2_points_n": 7644,
+    "class6_points_n": 1450,
+    "assembly_lod2_success": true,
+    "has_lod22_geometry": true,
+    "lod1_fallback": false,
+    "val3dity_valid": true,
+    "plane_precision": 1.0,
+    "plane_recall": 1.0,
+    "plane_f1": 1.0,
+    "roof_rms_m": 0.1327324803180677,
+    "roof_hausdorff_m": 0.2594924859290586,
+    "roof_completeness": 0.9997154433621155,
+    "face_count_ratio": 1.0,
+    "xy_overlap_ratio": 1.0,
+    "p0_refl_roof_rms_m": 0.090516271,
+    "delta_roof_rms_vs_p0_refl_m": 0.0422162093180677,
+    "delta_roof_completeness_vs_p0_refl": 0.000012621362115439183,
+    "cityjson_path": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/readout/by_building/DEBY_LOD2_42364609/arm_Aprime/r1/attempts/attempt_005/primary/engine/by_building/DEBY_LOD2_42364609/cityjson/seed_p0prime.city.json",
+    "cityjson_sha256": "fd6f9c19d5216eadc4cba94e49b8f886895b9adbe52e6019d190748f60cb1970"
+  },
+  "attempt_005_legacy_alpha": {
+    "comparison_only": true,
+    "eligible_for_preregistered_judgment": false,
+    "state": "NOT_ASSEMBLED",
+    "reason_code": "zero_class6_inside_footprint_after_SMRF_overlay",
+    "classified_points_n": 3060,
+    "class_counts": {
+      "2": 3060
+    },
+    "class6_inside_footprint_n": 0,
+    "roofer_runs_started": 0
+  },
+  "finalize_hygiene": {
+    "state": "PASSED",
+    "moved_files_n": 1,
+    "moved_file_bytes": 0,
+    "exclusive_lock_acquired_after_scorer_close": true,
+    "scientific_artifacts_moved": false,
+    "receipt_sha256": "cad09153d833811279f5c0ca05b196cf2fb7948c0daf350abcf000a6c143da1c"
+  },
+  "remaining_queue_definition": {
+    "jobs_n": 20,
+    "aprime_r1_other_buildings_n": 8,
+    "aprime_r2_all_buildings_n": 9,
+    "arm_b_r1_subset_n": 3,
+    "started_in_this_recovery": 0
+  },
+  "scientific_verdict": null
+}
