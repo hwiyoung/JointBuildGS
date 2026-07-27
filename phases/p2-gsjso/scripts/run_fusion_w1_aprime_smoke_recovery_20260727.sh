@@ -11,12 +11,12 @@ BASE_DRIVER="phases/p2-gsjso/scripts/fusion_w1_aprime_readout_20260726.py"
 TEST="phases/p2-gsjso/scripts/test_fusion_w1_aprime_smoke_recovery_20260727.py"
 RECOVERY_ROOT="phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery"
 READOUT_ROOT="$RECOVERY_ROOT/readout"
-DERIVED_CONFIG="$RECOVERY_ROOT/derived_readout_config.json"
+DERIVED_CONFIG="$RECOVERY_ROOT/derived_readout_config_retry5.json"
 RUNTIME_REL="phases/p2-gsjso/runs/20260726_fusion_w1_aprime/runtime_env"
 BUILDING_ID="DEBY_LOD2_42364609"
 ARM="Aprime"
 REPLICATE="r1"
-ATTEMPT="4"
+ATTEMPT="5"
 
 DEV_IMAGE="jointbuildgs:dev"
 DEV_IMAGE_ID="sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396"
@@ -149,7 +149,7 @@ base() {
 
 run_roofer_and_score() {
   local mode="$1"
-  local attempt_rel="$READOUT_ROOT/by_building/$BUILDING_ID/arm_$ARM/$REPLICATE/attempts/attempt_004"
+  local attempt_rel="$READOUT_ROOT/by_building/$BUILDING_ID/arm_$ARM/$REPLICATE/attempts/attempt_$(printf '%03d' "$ATTEMPT")"
   local log_rel="$attempt_rel/$mode/roofer.stdout.log"
   local started ended wall_seconds
   local -a paths
@@ -198,7 +198,7 @@ run_roofer_and_score() {
 }
 
 run_one() {
-  local attempt_rel="$READOUT_ROOT/by_building/$BUILDING_ID/arm_$ARM/$REPLICATE/attempts/attempt_004"
+  local attempt_rel="$READOUT_ROOT/by_building/$BUILDING_ID/arm_$ARM/$REPLICATE/attempts/attempt_$(printf '%03d' "$ATTEMPT")"
   local started ended wall_seconds alpha_disposition value
   local -a argv environment env_args=()
 
@@ -304,6 +304,8 @@ run_one() {
     return 1
   fi
 
+  CURRENT_STAGE="finalize_hygiene"
+  run_control "$ADAPTER" --config "$CONFIG" quarantine-locks
   CURRENT_STAGE="finalize"
   base finalize \
     --building-id "$BUILDING_ID" --arm "$ARM" --run "$REPLICATE" \

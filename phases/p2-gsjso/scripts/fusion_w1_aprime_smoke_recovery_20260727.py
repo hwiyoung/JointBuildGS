@@ -3,9 +3,10 @@
 
 The stopped unattended queue and its original readout attempts remain
 immutable.  This adapter verifies their SHA-pinned evidence, proves that the
-current commit is an allowlisted descendant of the training execution commit,
-and materializes one new readout namespace for
-DEBY_LOD2_42364609/Aprime/r1/attempt_004.  Downstream geometry and scoring are
+current commit is an allowlisted descendant of the training execution commit.
+The finalize-only failure in recovery attempt 004 remains immutable; this
+adapter materializes the single authorized retry at
+DEBY_LOD2_42364609/Aprime/r1/attempt_005.  Downstream geometry and scoring are
 delegated to the locked original readout driver.
 """
 from __future__ import annotations
@@ -13,6 +14,7 @@ from __future__ import annotations
 import argparse
 import copy
 from datetime import datetime, timezone
+import fcntl
 import hashlib
 import importlib.util
 import json
@@ -31,6 +33,7 @@ DEFAULT_CONFIG = (
 CONFIG_SCHEMA = "jointbuildgs.fusion_w1_aprime.smoke_recovery.config.v1"
 LOCK_V1_SCHEMA = "jointbuildgs.fusion_w1_aprime.smoke_recovery.lock.v1"
 LOCK_V2_SCHEMA = "jointbuildgs.fusion_w1_aprime.smoke_recovery.lock.v2"
+LOCK_V3_SCHEMA = "jointbuildgs.fusion_w1_aprime.smoke_recovery.lock.v3"
 MATERIALIZATION_SCHEMA = (
     "jointbuildgs.fusion_w1_aprime.smoke_recovery.materialization.v1"
 )
@@ -165,7 +168,8 @@ def load_config(path: Path = DEFAULT_CONFIG) -> dict[str, Any]:
             "arm": "Aprime",
             "replicate": "r1",
             "profile": "full",
-            "continuation_attempt": 4,
+            "continuation_attempt": 5,
+            "preserved_recovery_attempts": [4],
             "new_training_runs_allowed": 0,
             "other_queue_jobs_allowed": 0,
         },
@@ -180,6 +184,16 @@ def load_config(path: Path = DEFAULT_CONFIG) -> dict[str, Any]:
         "cache compilation",
     )
     require_equal(config["publication"].get("retraining_forbidden"), True, "retraining")
+    require_equal(
+        config["publication"].get("attempt_004_preserved_after_finalize_failure"),
+        True,
+        "attempt 004 preservation",
+    )
+    require_equal(
+        config["publication"].get("attempt_005_is_only_retry"),
+        True,
+        "attempt 005 retry",
+    )
     require_equal(
         config["publication"].get("scientific_verdict"), None, "scientific verdict"
     )
@@ -220,6 +234,89 @@ def tree_ledger(root: Path) -> list[dict[str, Any]]:
     if not rows:
         raise SmokeRecoveryError(f"source tree is empty: {relative(root)}")
     return rows
+
+
+def compact_tree_summary(root: Path) -> dict[str, Any]:
+    if not root.is_dir() or root.is_symlink():
+        raise SmokeRecoveryError(f"tree root missing/non-directory: {relative(root)}")
+    rows: list[dict[str, Any]] = []
+    for path in sorted(root.rglob("*")):
+        if path.is_symlink():
+            raise SmokeRecoveryError(f"tree symlink forbidden: {relative(path)}")
+        if path.is_file():
+            rows.append({
+                "relative_to_root": str(path.relative_to(root)),
+                "sha256": sha256_file(path),
+                "bytes": int(path.stat().st_size),
+            })
+    if not rows:
+        raise SmokeRecoveryError(f"tree is empty: {relative(root)}")
+    return {
+        "files_n": len(rows),
+        "bytes_total": sum(int(row["bytes"]) for row in rows),
+        "tree_sha256": hashlib.sha256(canonical_json(rows)).hexdigest(),
+    }
+
+
+def verify_zero_record(root: Path, record: Mapping[str, Any], label: str) -> Path:
+    path = root / str(record["relative_to_root"])
+    if not path.is_file() or path.is_symlink():
+        raise SmokeRecoveryError(f"{label} missing/non-regular")
+    require_equal(path.stat().st_size, int(record["bytes"]), f"{label} bytes")
+    require_equal(sha256_file(path), record["sha256"], f"{label} SHA256")
+    return path
+
+
+def verify_preserved_attempt_004(
+    config: Mapping[str, Any], v3: Mapping[str, Any]
+) -> dict[str, Any]:
+    contract = v3["preserved_attempt_004"]
+    root = repo_path(str(contract["root"]))
+    summary = compact_tree_summary(root)
+    require_equal(
+        summary,
+        {
+            "files_n": int(contract["files_n"]),
+            "bytes_total": int(contract["bytes_total"]),
+            "tree_sha256": contract["tree_sha256"],
+        },
+        "preserved attempt 004 tree",
+    )
+    selected: dict[str, dict[str, Any]] = {}
+    for name in (
+        "failure", "tsdf_receipt", "primary_score", "legacy_alpha_score", "empty_lock"
+    ):
+        record = contract[name]
+        path = verify_zero_record(root, record, f"attempt 004 {name}")
+        selected[name] = {
+            "path": relative(path),
+            "sha256": record["sha256"],
+            "bytes": int(record["bytes"]),
+        }
+    failure = load_json(root / str(contract["failure"]["relative_to_root"]))
+    require_equal(failure.get("state"), "FAILED", "attempt 004 failure state")
+    require_equal(failure.get("attempt"), 4, "attempt 004 failure identity")
+    require_equal(failure.get("stage"), contract["failure"]["stage"], "attempt 004 stage")
+    require_equal(
+        failure.get("error_signature"),
+        config["preserved_recovery_failure_signature"],
+        "attempt 004 failure signature",
+    )
+    primary = load_json(root / str(contract["primary_score"]["relative_to_root"]))
+    legacy = load_json(root / str(contract["legacy_alpha_score"]["relative_to_root"]))
+    require_equal(primary.get("state"), "MEASURED", "attempt 004 primary score")
+    require_equal(legacy.get("state"), "NOT_ASSEMBLED", "attempt 004 legacy score")
+    zero_files = sorted(
+        str(path.relative_to(root))
+        for path in root.rglob("*")
+        if path.is_file() and path.stat().st_size == 0
+    )
+    require_equal(
+        zero_files,
+        [str(contract["empty_lock"]["relative_to_root"])],
+        "attempt 004 zero-byte inventory",
+    )
+    return {"root": relative(root), **summary, "selected": selected}
 
 
 def require_scope(
@@ -280,7 +377,13 @@ def recovery_namespace_inventory(config: Mapping[str, Any]) -> dict[str, Any]:
     expected_building = str(scope["building_id"])
     expected_arm = f"arm_{scope['arm']}"
     expected_run = str(scope["replicate"])
-    expected_attempt = f"attempt_{int(scope['continuation_attempt']):03d}"
+    expected_attempts = {
+        f"attempt_{int(number):03d}"
+        for number in [
+            *scope.get("preserved_recovery_attempts", []),
+            scope["continuation_attempt"],
+        ]
+    }
     levels = (
         (by_building, expected_building, "building"),
         (by_building / expected_building, expected_arm, "arm"),
@@ -320,7 +423,7 @@ def recovery_namespace_inventory(config: Mapping[str, Any]) -> dict[str, Any]:
         if not attempts_root.is_dir() or attempts_root.is_symlink():
             raise SmokeRecoveryError("recovery attempts root is not a real directory")
         for path in sorted(attempts_root.iterdir()):
-            if path.name != expected_attempt:
+            if path.name not in expected_attempts:
                 raise SmokeRecoveryError(f"unauthorized recovery attempt: {path.name}")
             if not path.is_dir() or path.is_symlink():
                 raise SmokeRecoveryError("authorized attempt is not a real directory")
@@ -341,28 +444,47 @@ def recovery_namespace_inventory(config: Mapping[str, Any]) -> dict[str, Any]:
 
 def load_locks(
     config: Mapping[str, Any]
-) -> tuple[dict[str, Any], dict[str, Any]]:
+) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
     v1 = load_json(verify_record(config["locked_inputs"]["recovery_lock_v1"], "lock v1"))
     v2 = load_json(verify_record(config["locked_inputs"]["recovery_lock_v2"], "lock v2"))
+    v3 = load_json(verify_record(config["locked_inputs"]["recovery_lock_v3"], "lock v3"))
     require_equal(v1.get("schema"), LOCK_V1_SCHEMA, "lock v1 schema")
     require_equal(v2.get("schema"), LOCK_V2_SCHEMA, "lock v2 schema")
-    require_equal(v1.get("scope"), config["scope"], "lock v1 scope")
-    require_equal(v2.get("scope"), config["scope"], "lock v2 scope")
+    require_equal(v3.get("schema"), LOCK_V3_SCHEMA, "lock v3 schema")
+    initial_scope = {
+        "building_id": "DEBY_LOD2_42364609",
+        "arm": "Aprime",
+        "replicate": "r1",
+        "profile": "full",
+        "continuation_attempt": 4,
+        "new_training_runs_allowed": 0,
+        "other_queue_jobs_allowed": 0,
+    }
+    require_equal(v1.get("scope"), initial_scope, "lock v1 scope")
+    require_equal(v2.get("scope"), initial_scope, "lock v2 scope")
+    require_equal(v3.get("scope"), config["scope"], "lock v3 scope")
     require_equal(
         v2.get("supersedes_layout_only"),
         config["locked_inputs"]["recovery_lock_v1"],
         "lock v2/v1 binding",
+    )
+    require_equal(
+        v3.get("supersedes_after_preserved_failure"),
+        config["locked_inputs"]["recovery_lock_v2"],
+        "lock v3/v2 binding",
     )
     for key in ("source_execution_head", "source_terminal_state", "source_failure_signature"):
         require_equal(v1.get(key), config[key], f"lock v1 {key}")
         require_equal(v2.get(key), config[key], f"lock v2 {key}")
     require_equal(v1.get("retraining_allowed"), False, "lock v1 retraining")
     require_equal(v2.get("retraining_allowed"), False, "lock v2 retraining")
-    return v1, v2
+    require_equal(v3.get("retraining_allowed"), False, "lock v3 retraining")
+    require_equal(v3.get("other_jobs_allowed"), False, "lock v3 other jobs")
+    return v1, v2, v3
 
 
 def verify_git_provenance(
-    config: Mapping[str, Any], v2: Mapping[str, Any]
+    config: Mapping[str, Any], v3: Mapping[str, Any]
 ) -> dict[str, Any]:
     branch = git("branch", "--show-current").stdout.strip()
     head = git("rev-parse", "HEAD").stdout.strip()
@@ -371,7 +493,7 @@ def verify_git_provenance(
     ancestor = git("merge-base", "--is-ancestor", source, head, check=False)
     if ancestor.returncode != 0:
         raise SmokeRecoveryError(f"source execution HEAD is not an ancestor: {source}..{head}")
-    allowed = set(v2["allowed_descendant_paths"])
+    allowed = set(v3["allowed_descendant_paths"])
     final_paths = {
         value.strip()
         for value in git("diff", "--name-only", f"{source}..{head}").stdout.splitlines()
@@ -483,15 +605,18 @@ def verify_source_evidence(
 
 def verify_contract(config: Mapping[str, Any]) -> dict[str, Any]:
     locked = verify_locked_inputs(config)
-    v1, v2 = load_locks(config)
-    provenance = verify_git_provenance(config, v2)
+    v1, v2, v3 = load_locks(config)
+    provenance = verify_git_provenance(config, v3)
     sources = verify_source_evidence(config, v1)
+    preserved = verify_preserved_attempt_004(config, v3)
     return {
         "locked_inputs": locked,
         "lock_v1": v1,
         "lock_v2": v2,
+        "lock_v3": v3,
         "provenance": provenance,
         "sources": sources,
+        "preserved_attempt_004": preserved,
     }
 
 
@@ -509,13 +634,17 @@ def derived_readout_config(
     derived["role"] = "one-job post-terminal smoke readout continuation; no retraining"
     derived["implementation_files"] = list(config["implementation_files"])
     derived["identity_contract"]["expected_queue_jobs"] = 1
-    derived["retry_contract"]["attempt_number_min"] = 4
-    derived["retry_contract"]["attempt_number_max"] = 4
+    attempt_number = int(config["scope"]["continuation_attempt"])
+    derived["retry_contract"]["attempt_number_min"] = attempt_number
+    derived["retry_contract"]["attempt_number_max"] = attempt_number
     derived["locked_inputs"]["recovery_lock_v1"] = dict(
         config["locked_inputs"]["recovery_lock_v1"]
     )
     derived["locked_inputs"]["recovery_lock_v2"] = dict(
         config["locked_inputs"]["recovery_lock_v2"]
+    )
+    derived["locked_inputs"]["recovery_lock_v3"] = dict(
+        config["locked_inputs"]["recovery_lock_v3"]
     )
     derived["outputs"] = {
         "root": outputs["readout_root"],
@@ -544,6 +673,8 @@ def derived_readout_config(
         "source_failure_signature": config["source_failure_signature"],
         "recovery_lock_v1": contract["locked_inputs"]["recovery_lock_v1"],
         "recovery_lock_v2": contract["locked_inputs"]["recovery_lock_v2"],
+        "recovery_lock_v3": contract["locked_inputs"]["recovery_lock_v3"],
+        "preserved_attempt_004": contract["preserved_attempt_004"],
         "new_training_runs_allowed": 0,
         "other_queue_jobs_allowed": 0,
         "scientific_verdict": None,
@@ -578,6 +709,7 @@ def prepare(config: Mapping[str, Any]) -> dict[str, Any]:
         "source_records": contract["sources"]["source_records"],
         "source_training_tree": contract["sources"]["training_tree"],
         "source_attempt_trees": contract["sources"]["original_attempt_trees"],
+        "preserved_attempt_004": contract["preserved_attempt_004"],
         "derived_readout_config": file_record(output),
         "new_training_runs_started": 0,
         "other_queue_jobs_started": 0,
@@ -590,6 +722,7 @@ def prepare(config: Mapping[str, Any]) -> dict[str, Any]:
             "schema", "state", "run_id", "task_id", "scope", "git_lock",
             "provenance", "locked_inputs", "source_records",
             "source_training_tree", "source_attempt_trees",
+            "preserved_attempt_004",
             "derived_readout_config", "new_training_runs_started",
             "other_queue_jobs_started", "source_queue_rewritten",
             "scientific_verdict",
@@ -754,8 +887,11 @@ def begin(config: Mapping[str, Any]) -> dict[str, Any]:
         raise SmokeRecoveryError("recovery job already has complete.json")
     attempts_root = job / "attempts"
     existing = sorted(path.name for path in attempts_root.iterdir()) if attempts_root.is_dir() else []
-    if existing:
-        raise SmokeRecoveryError(f"single-use recovery already has attempts: {existing}")
+    expected_existing = [
+        f"attempt_{int(number):03d}"
+        for number in scope["preserved_recovery_attempts"]
+    ]
+    require_equal(existing, expected_existing, "preserved recovery attempts before retry")
     method = base.verify_git_runtime(derived)
     locked = base.verify_locked_inputs(derived)
     training = source_training_binding(config, contract)
@@ -793,6 +929,7 @@ def begin(config: Mapping[str, Any]) -> dict[str, Any]:
         "continuation": {
             "recovery_lock_v1": contract["locked_inputs"]["recovery_lock_v1"],
             "recovery_lock_v2": contract["locked_inputs"]["recovery_lock_v2"],
+            "recovery_lock_v3": contract["locked_inputs"]["recovery_lock_v3"],
             "materialization": file_record(
                 repo_path(config["outputs"]["materialization_receipt"])
             ),
@@ -800,6 +937,8 @@ def begin(config: Mapping[str, Any]) -> dict[str, Any]:
             "source_terminal_state": config["source_terminal_state"],
             "source_failure_signature": config["source_failure_signature"],
             "source_attempts_preserved": [1, 2, 3],
+            "recovery_attempts_preserved": list(scope["preserved_recovery_attempts"]),
+            "preserved_attempt_004": contract["preserved_attempt_004"],
             "source_queue_rewritten": False,
             "retraining_performed": False,
             "other_queue_jobs_started": 0,
@@ -808,6 +947,7 @@ def begin(config: Mapping[str, Any]) -> dict[str, Any]:
         "publication": {
             "append_only_attempt": True,
             "single_use_post_terminal_continuation": True,
+            "single_use_finalize_retry": True,
             "external_stage_started": False,
             "scientific_verdict": None,
         },
@@ -974,6 +1114,95 @@ def cache_probe(config: Mapping[str, Any]) -> dict[str, Any]:
     return payload
 
 
+def quarantine_ephemeral_locks(config: Mapping[str, Any]) -> dict[str, Any]:
+    """Move only closed zero-byte scorer locks out of attempt 005 before ledgering."""
+
+    base = load_base_driver(config)
+    contract = verify_contract(config)
+    derived = base.load_config(repo_path(config["outputs"]["derived_readout_config"]))
+    scope = config["scope"]
+    attempt_number = int(scope["continuation_attempt"])
+    require_scope(
+        config,
+        scope["building_id"],
+        scope["arm"],
+        scope["replicate"],
+        attempt_number,
+    )
+    attempt, _materialization = base.load_attempt(
+        derived,
+        scope["building_id"],
+        scope["arm"],
+        scope["replicate"],
+        attempt_number,
+    )
+    receipt_path = attempt / "finalize_hygiene.json"
+    if receipt_path.exists() or receipt_path.is_symlink():
+        raise SmokeRecoveryError("finalize hygiene was already applied")
+    all_zero = sorted(
+        path
+        for path in attempt.rglob("*")
+        if path.is_file() and path.stat().st_size == 0
+    )
+    candidates = sorted(attempt.rglob("scores.csv.lock"))
+    if not candidates:
+        raise SmokeRecoveryError("no scorer synchronization lock was found")
+    require_equal(all_zero, candidates, "zero-byte attempt files/scorer locks")
+    policy = contract["lock_v3"]["ephemeral_lock_policy"]
+    quarantine = (
+        repo_path(config["outputs"]["ephemeral_lock_quarantine"])
+        / f"attempt_{attempt_number:03d}"
+    )
+    quarantine.mkdir(parents=True, exist_ok=False)
+    records: list[dict[str, Any]] = []
+    for source in candidates:
+        relative_source = str(source.relative_to(attempt))
+        if not f"/{relative_source}".endswith(str(policy["allowed_relative_suffix"])):
+            raise SmokeRecoveryError(f"unauthorized zero-byte file: {relative_source}")
+        require_equal(source.stat().st_size, int(policy["required_bytes"]), "lock bytes")
+        require_equal(sha256_file(source), policy["required_sha256"], "lock SHA256")
+        with source.open("a+b") as stream:
+            try:
+                fcntl.flock(stream.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except BlockingIOError as exc:
+                raise SmokeRecoveryError(f"scorer lock is still held: {relative_source}") from exc
+            fcntl.flock(stream.fileno(), fcntl.LOCK_UN)
+        destination = quarantine / relative_source.replace("/", "__")
+        if destination.exists() or destination.is_symlink():
+            raise SmokeRecoveryError(f"quarantine destination exists: {relative(destination)}")
+        os.replace(source, destination)
+        require_equal(destination.stat().st_size, 0, "quarantined lock bytes")
+        require_equal(sha256_file(destination), policy["required_sha256"], "quarantined lock SHA")
+        records.append({
+            "source_path": relative(source),
+            "destination_path": relative(destination),
+            "sha256": policy["required_sha256"],
+            "bytes": 0,
+            "exclusive_lock_acquired_after_scorer_close": True,
+        })
+    remaining = sorted(str(path.relative_to(attempt)) for path in attempt.rglob("*.lock"))
+    require_equal(remaining, [], "attempt lock files after quarantine")
+    payload = {
+        "schema": "jointbuildgs.fusion_w1_aprime.smoke_recovery.finalize_hygiene.v1",
+        "state": "PASSED",
+        "created_at": now_iso(),
+        "run_id": config["run_id"],
+        "task_id": config["task_id"],
+        "scope": dict(scope),
+        "git_head": contract["provenance"]["head"],
+        "attempt": attempt_number,
+        "cause_observed_in_preserved_attempt_004": contract["preserved_attempt_004"],
+        "policy": dict(policy),
+        "moved_ephemeral_locks": records,
+        "scientific_artifacts_moved": False,
+        "new_training_runs_started": 0,
+        "other_queue_jobs_started": 0,
+        "scientific_verdict": None,
+    }
+    base.exclusive_json(receipt_path, payload)
+    return payload
+
+
 def source_snapshots_from_materialization(
     config: Mapping[str, Any]
 ) -> tuple[list[dict[str, Any]], dict[str, list[dict[str, Any]]]]:
@@ -1016,12 +1245,31 @@ def publish(config: Mapping[str, Any]) -> dict[str, Any]:
     job = base.job_dir(derived, scope["building_id"], scope["arm"], scope["replicate"])
     attempts_root = job / "attempts"
     attempts = sorted(path.name for path in attempts_root.iterdir())
-    require_equal(attempts, ["attempt_004"], "single-use attempt namespace")
+    require_equal(
+        attempts,
+        ["attempt_004", "attempt_005"],
+        "preserved failure plus single retry namespace",
+    )
+    retry_attempt = attempts_root / "attempt_005"
+    hygiene_path = retry_attempt / "finalize_hygiene.json"
+    hygiene = load_json(hygiene_path)
+    require_equal(hygiene.get("state"), "PASSED", "finalize hygiene state")
+    require_equal(hygiene.get("attempt"), 5, "finalize hygiene attempt")
+    require_equal(hygiene.get("scientific_artifacts_moved"), False, "hygiene artifact move")
+    quarantined = list(hygiene.get("moved_ephemeral_locks") or [])
+    if not quarantined:
+        raise SmokeRecoveryError("finalize hygiene has no quarantined lock")
+    for record in quarantined:
+        path = repo_path(str(record["destination_path"]))
+        if not path.is_file() or path.is_symlink():
+            raise SmokeRecoveryError("quarantined scorer lock is missing/non-regular")
+        require_equal(path.stat().st_size, int(record["bytes"]), "quarantine bytes")
+        require_equal(sha256_file(path), record["sha256"], "quarantine SHA256")
     job_complete_path = job / "complete.json"
     job_complete = load_json(job_complete_path)
     require_equal(job_complete.get("schema"), base.COMPLETE_SCHEMA, "job complete schema")
     require_equal(job_complete.get("state"), "COMPLETE", "job complete state")
-    require_equal(job_complete.get("attempt"), 4, "successful continuation attempt")
+    require_equal(job_complete.get("attempt"), 5, "successful continuation attempt")
     require_equal(
         job_complete.get("identity"),
         {
@@ -1046,11 +1294,14 @@ def publish(config: Mapping[str, Any]) -> dict[str, Any]:
         "source_queue_state": config["source_terminal_state"],
         "source_queue_rewritten": False,
         "source_attempts_001_to_003_preserved": True,
+        "recovery_attempt_004_preserved": True,
         "source_training_tree_preserved": True,
         "new_training_runs_started": 0,
         "other_queue_jobs_started": 0,
         "recovery_namespace": namespace,
-        "successful_continuation_attempt": 4,
+        "successful_continuation_attempt": 5,
+        "finalize_hygiene": file_record(hygiene_path),
+        "quarantined_ephemeral_locks": quarantined,
         "materialization": file_record(
             repo_path(config["outputs"]["materialization_receipt"])
         ),
@@ -1097,24 +1348,36 @@ def verify_complete(config: Mapping[str, Any]) -> dict[str, Any]:
     )
     require_equal(payload.get("new_training_runs_started"), 0, "new training runs")
     require_equal(payload.get("other_queue_jobs_started"), 0, "other queue jobs")
-    require_equal(payload.get("successful_continuation_attempt"), 4, "attempt")
+    require_equal(
+        payload.get("recovery_attempt_004_preserved"),
+        True,
+        "recovery attempt 004 preserved",
+    )
+    require_equal(payload.get("successful_continuation_attempt"), 5, "attempt")
     require_equal(payload.get("recovery_namespace"), namespace, "recovery namespace")
     require_equal(payload.get("complete_receipt_written_last"), True, "receipt ordering")
     require_equal(payload.get("scientific_verdict"), None, "complete verdict")
     for key in (
-        "materialization", "cache_probe", "derived_readout_config", "readout_job_complete"
+        "materialization", "cache_probe", "derived_readout_config", "readout_job_complete",
+        "finalize_hygiene",
     ):
         verify_record(payload[key], f"complete {key}")
     cache = load_json(repo_path(payload["cache_probe"]["path"]))
     validate_cache_receipt(config, cache, contract)
     job_complete = load_json(repo_path(payload["readout_job_complete"]["path"]))
     require_equal(job_complete.get("state"), "COMPLETE", "readout complete state")
-    require_equal(job_complete.get("attempt"), 4, "readout complete attempt")
+    require_equal(job_complete.get("attempt"), 5, "readout complete attempt")
     require_equal(payload.get("primary"), job_complete.get("primary"), "primary payload")
     require_equal(
         payload.get("legacy_alpha"), job_complete.get("legacy_alpha"), "legacy payload"
     )
     require_equal(payload.get("artifact_count"), job_complete.get("artifact_count"), "artifact count")
+    for record in payload.get("quarantined_ephemeral_locks") or []:
+        path = repo_path(str(record["destination_path"]))
+        if not path.is_file() or path.is_symlink():
+            raise SmokeRecoveryError("verified quarantine lock is missing/non-regular")
+        require_equal(path.stat().st_size, int(record["bytes"]), "verified quarantine bytes")
+        require_equal(sha256_file(path), record["sha256"], "verified quarantine SHA256")
     return payload
 
 
@@ -1123,7 +1386,10 @@ def parser() -> argparse.ArgumentParser:
     result.add_argument("--config", default=str(DEFAULT_CONFIG))
     result.add_argument(
         "command",
-        choices=("check", "prepare", "begin", "cache-probe", "publish", "verify"),
+        choices=(
+            "check", "prepare", "begin", "cache-probe", "quarantine-locks",
+            "publish", "verify",
+        ),
     )
     return result
 
@@ -1143,6 +1409,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         "prepare": prepare,
         "begin": begin,
         "cache-probe": cache_probe,
+        "quarantine-locks": quarantine_ephemeral_locks,
         "publish": publish,
         "verify": verify_complete,
     }

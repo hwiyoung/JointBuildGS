@@ -59,19 +59,21 @@ class AprimeSmokeRecoveryTests(unittest.TestCase):
                 "arm": "Aprime",
                 "replicate": "r1",
                 "profile": "full",
-                "continuation_attempt": 4,
+                "continuation_attempt": 5,
+                "preserved_recovery_attempts": [4],
                 "new_training_runs_allowed": 0,
                 "other_queue_jobs_allowed": 0,
             },
         )
         self.module.require_scope(
-            self.config, "DEBY_LOD2_42364609", "Aprime", "r1", 4
+            self.config, "DEBY_LOD2_42364609", "Aprime", "r1", 5
         )
         for identity in (
-            ("DEBY_LOD2_42364659", "Aprime", "r1", 4),
-            ("DEBY_LOD2_42364609", "Aprime", "r2", 4),
-            ("DEBY_LOD2_42364609", "B", "r1", 4),
-            ("DEBY_LOD2_42364609", "Aprime", "r1", 5),
+            ("DEBY_LOD2_42364659", "Aprime", "r1", 5),
+            ("DEBY_LOD2_42364609", "Aprime", "r2", 5),
+            ("DEBY_LOD2_42364609", "B", "r1", 5),
+            ("DEBY_LOD2_42364609", "Aprime", "r1", 4),
+            ("DEBY_LOD2_42364609", "Aprime", "r1", 6),
         ):
             with self.subTest(identity=identity), self.assertRaises(
                 self.module.SmokeRecoveryError
@@ -80,11 +82,14 @@ class AprimeSmokeRecoveryTests(unittest.TestCase):
 
     def test_derived_readout_config_is_one_job_attempt_four_in_new_namespace(self):
         locked = self.module.verify_locked_inputs(self.config)
-        contract = {"locked_inputs": locked}
+        contract = {
+            "locked_inputs": locked,
+            "preserved_attempt_004": {"tree_sha256": "locked-in-v3"},
+        }
         derived = self.module.derived_readout_config(self.config, contract)
         self.assertEqual(derived["identity_contract"]["expected_queue_jobs"], 1)
-        self.assertEqual(derived["retry_contract"]["attempt_number_min"], 4)
-        self.assertEqual(derived["retry_contract"]["attempt_number_max"], 4)
+        self.assertEqual(derived["retry_contract"]["attempt_number_min"], 5)
+        self.assertEqual(derived["retry_contract"]["attempt_number_max"], 5)
         self.assertIn("20260727_fusion_w1_aprime_smoke_recovery", derived["outputs"]["root"])
         self.assertNotIn(
             "20260726_fusion_w1_aprime/readout/by_building",
@@ -99,14 +104,17 @@ class AprimeSmokeRecoveryTests(unittest.TestCase):
         self.assertTrue(derived["publication"]["retraining_forbidden"])
 
     def test_lock_v2_allows_only_the_dedicated_implementation_layout(self):
-        v1, v2 = self.module.load_locks(self.config)
-        self.assertEqual(v1["scope"], self.config["scope"])
-        self.assertEqual(v2["scope"], self.config["scope"])
-        allowed = set(v2["allowed_descendant_paths"])
+        v1, v2, v3 = self.module.load_locks(self.config)
+        self.assertEqual(v1["scope"]["continuation_attempt"], 4)
+        self.assertEqual(v2["scope"]["continuation_attempt"], 4)
+        self.assertEqual(v3["scope"], self.config["scope"])
+        allowed = set(v3["allowed_descendant_paths"])
         self.assertTrue(set(self.config["implementation_files"][:4]).issubset(allowed))
         self.assertFalse(v2["original_queue_rewrite_allowed"])
         self.assertFalse(v2["original_readout_code_change_allowed"])
         self.assertFalse(v2["retraining_allowed"])
+        self.assertFalse(v3["recovery_attempt_004_rewrite_allowed"])
+        self.assertFalse(v3["other_jobs_allowed"])
 
     def test_locked_original_driver_config_queue_and_failures_are_unchanged(self):
         locked = self.config["locked_inputs"]
@@ -118,7 +126,7 @@ class AprimeSmokeRecoveryTests(unittest.TestCase):
             self.module.sha256_file(BASE_DRIVER),
             locked["base_readout_driver"]["sha256"],
         )
-        v1, _v2 = self.module.load_locks(self.config)
+        v1, _v2, v3 = self.module.load_locks(self.config)
         records = v1["source_records"]
         for number in range(1, 4):
             failure_path = self.module.verify_record(
@@ -140,6 +148,12 @@ class AprimeSmokeRecoveryTests(unittest.TestCase):
             path = self.module.verify_record(records[name], name)
             payload = json.loads(path.read_text(encoding="utf-8"))
             self.assertEqual(payload["state"], self.config["source_terminal_state"])
+        preserved = self.module.verify_preserved_attempt_004(self.config, v3)
+        self.assertEqual(preserved["files_n"], 47)
+        self.assertEqual(
+            preserved["tree_sha256"],
+            "1be09fe5f59eb5852bff2afb667e27f69aa60284de6e4135960ad710ffddd358",
+        )
 
     def test_adapter_checks_both_final_and_history_allowlists(self):
         self.assertIn('("final", final_paths)', self.source)
@@ -168,7 +182,7 @@ class AprimeSmokeRecoveryTests(unittest.TestCase):
                 with self.assertRaises(self.module.SmokeRecoveryError):
                     self.module.recovery_namespace_inventory(config)
                 foreign.rmdir()
-                foreign_attempt = authorized.parent / "attempt_005"
+                foreign_attempt = authorized.parent / "attempt_006"
                 foreign_attempt.mkdir()
                 with self.assertRaises(self.module.SmokeRecoveryError):
                     self.module.recovery_namespace_inventory(config)
@@ -208,7 +222,7 @@ class AprimeSmokeRecoveryTests(unittest.TestCase):
             r"fusion_w1_aprime_training_20260726\.py\s+(materialize|launch)",
         )
         self.assertNotIn("unattended_queue", self.wrapper)
-        self.assertIn('ATTEMPT="4"', self.wrapper)
+        self.assertIn('ATTEMPT="5"', self.wrapper)
         self.assertIn('[[ "$#" -eq 1 ]]', self.wrapper)
 
     def test_wrapper_order_is_probe_begin_primary_legacy_finalize_publish(self):
@@ -217,12 +231,15 @@ class AprimeSmokeRecoveryTests(unittest.TestCase):
         primary = self.wrapper.index('CURRENT_STAGE="primary_tsdf"')
         legacy = self.wrapper.index('CURRENT_STAGE="legacy_alpha_authorize"')
         finalize = self.wrapper.index('CURRENT_STAGE="finalize"')
+        hygiene = self.wrapper.index('CURRENT_STAGE="finalize_hygiene"')
         publish = self.wrapper.index('CURRENT_STAGE="publish"')
         verify = self.wrapper.index('CURRENT_STAGE="verify"')
         self.assertLess(probe, begin)
         self.assertLess(begin, primary)
         self.assertLess(primary, legacy)
         self.assertLess(legacy, finalize)
+        self.assertLess(legacy, hygiene)
+        self.assertLess(hygiene, finalize)
         self.assertLess(finalize, publish)
         self.assertLess(publish, verify)
         between = self.wrapper[finalize:publish]
@@ -232,8 +249,8 @@ class AprimeSmokeRecoveryTests(unittest.TestCase):
         self.assertTrue(self.config["publication"]["single_use_attempt"])
         self.assertTrue(self.config["publication"]["complete_receipt_written_last"])
         self.assertIsNone(self.config["publication"]["scientific_verdict"])
-        self.assertIn('if existing:', self.source)
-        self.assertIn('["attempt_004"]', self.source)
+        self.assertIn('require_equal(existing, expected_existing', self.source)
+        self.assertIn('["attempt_004", "attempt_005"]', self.source)
         self.assertNotIn('"scientific_verdict": "PASS"', self.source)
         self.assertNotIn('"scientific_verdict": "FAIL"', self.source)
 

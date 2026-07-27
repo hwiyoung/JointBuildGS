@@ -8,13 +8,15 @@
     "arm": "Aprime",
     "replicate": "r1",
     "profile": "full",
-    "continuation_attempt": 4,
+    "continuation_attempt": 5,
+    "preserved_recovery_attempts": [4],
     "new_training_runs_allowed": 0,
     "other_queue_jobs_allowed": 0
   },
   "source_execution_head": "de8852c00c737eced081f2627b49bcedddade652",
   "source_terminal_state": "STOPPED_SMOKE_BARRIER_NOT_MEASURED",
   "source_failure_signature": "00fa59bf782c96a81dabb741788c22b6b7a650099188c3192adbf4a15e533012",
+  "preserved_recovery_failure_signature": "6e36fc27cf8f5f189e60abce9759a49274b9503a8dae60a52d12728a86c00997",
   "implementation_files": [
     "phases/p2-gsjso/configs/fusion_w1_aprime_smoke_recovery_20260727.json",
     "phases/p2-gsjso/scripts/fusion_w1_aprime_smoke_recovery_20260727.py",
@@ -32,6 +34,11 @@
       "path": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/recovery_lock_v2.json",
       "sha256": "ce6d629b24de7d4c743ca5967a16ceb0ea94e9c314a7297c9a752f4013e2c425",
       "bytes": 2642
+    },
+    "recovery_lock_v3": {
+      "path": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/recovery_lock_v3.json",
+      "sha256": "cdb9361238183653d2ee8836b642c705e9d3c4a82bd966affa01632f8cfa5fa5",
+      "bytes": 5044
     },
     "base_readout_config": {
       "path": "phases/p2-gsjso/configs/fusion_w1_aprime_readout_20260726.json",
@@ -77,19 +84,22 @@
     "root": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery",
     "readout_root": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/readout",
     "readout_job_template": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/readout/by_building/{building_id}/arm_{arm}/{run}",
-    "derived_readout_config": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/derived_readout_config.json",
-    "materialization_receipt": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/materialization.json",
-    "cache_probe_receipt": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/cache_probe.json",
+    "derived_readout_config": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/derived_readout_config_retry5.json",
+    "materialization_receipt": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/materialization_retry5.json",
+    "cache_probe_receipt": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/cache_probe_retry5.json",
     "complete_receipt": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/completed.json",
     "failure_log": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/readout/failures.jsonl",
     "issues": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/issues.md",
     "driver_lock": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/readout/driver.lock",
+    "ephemeral_lock_quarantine": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/ephemeral_lock_quarantine",
     "shared_t2_runtime_environment": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/runtime_env"
   },
   "publication": {
     "source_queue_immutable": true,
     "source_failures_immutable": true,
     "single_use_attempt": true,
+    "attempt_004_preserved_after_finalize_failure": true,
+    "attempt_005_is_only_retry": true,
     "retraining_forbidden": true,
     "other_jobs_forbidden": true,
     "complete_receipt_written_last": true,
