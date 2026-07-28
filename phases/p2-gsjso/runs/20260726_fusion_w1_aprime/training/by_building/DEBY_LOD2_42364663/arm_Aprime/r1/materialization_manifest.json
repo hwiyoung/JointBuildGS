@@ -1,0 +1,1166 @@
+{
+  "ablation_validation": {
+    "all_other_keys_identical": true,
+    "difference_keys": [
+      "depth_final_weight",
+      "normal_final_weight",
+      "w_depth",
+      "w_normal"
+    ],
+    "maps_and_exact_M_j_loaded_in_both_arms": true,
+    "status": "PASSED"
+  },
+  "arm": "Aprime",
+  "building_id": "DEBY_LOD2_42364663",
+  "compose_override": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_42364663/arm_Aprime/r1/runtime_compose_override.yaml",
+  "compose_override_sha256": "4b66ac7c5a4d1ef98582c279b134c9b4f6249dd017e1e867f401e1b9607f986f",
+  "created_at": "2026-07-27T06:51:33.320001+00:00",
+  "driver_config": "phases/p2-gsjso/configs/fusion_w1_aprime_training_20260726.json",
+  "driver_config_sha256": "b650b59e9314f09cf80234e8fcd33a5d7618becd467976d6a1756773ae68a726",
+  "git": {
+    "branch": "exp/fusion-w1",
+    "files": [
+      {
+        "path": "phases/p2-gsjso/configs/fusion_w1_aprime_training_20260726.json",
+        "sha256": "b650b59e9314f09cf80234e8fcd33a5d7618becd467976d6a1756773ae68a726"
+      },
+      {
+        "path": "phases/p2-gsjso/scripts/fusion_w1_aprime_training_20260726.py",
+        "sha256": "7b22a4c5aa2a9652931db5e77ef92bea16ebf7de91f02761c7d30695551cb65f"
+      },
+      {
+        "path": "phases/p2-gsjso/scripts/run_fusion_w1_aprime_training_20260726.sh",
+        "sha256": "83929f4f340a8871b31245b1a42526dfdb4fe9cf74a051ab6a2d5dc8720aa77d"
+      },
+      {
+        "path": "phases/p2-gsjso/scripts/test_fusion_w1_aprime_training_20260726.py",
+        "sha256": "1a4557087918eb22ff9e22fcef754c49f3ae56f3a406bb31c41de315de69eaa0"
+      },
+      {
+        "path": "src/stage2/train.py",
+        "sha256": "efc41b30bbdd15a3aadc056453d00393a1b16636afc9ba06afadafc2d121c750"
+      },
+      {
+        "path": "src/stage2/densification.py",
+        "sha256": "249b6ee870562e050532e632166c6c5fb8e6d217adc4d4efd134241a724e6fbe"
+      }
+    ],
+    "head": "191b5652be6d38a81a3cba7ab05cd3db4ffbe796"
+  },
+  "learning_runs_started": 0,
+  "locked_inputs": {
+    "gate_manifest": {
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/resume_v2/r2_gate_a_v2_registration.json",
+      "sha256": "a24697f3413b8d4b2777703e26d58234befe1c835dd282ce5da428d1c562f967"
+    },
+    "pose_manifest": {
+      "path": "phases/p2-gsjso/runs/20260724_fusion_w1/resume_v2/r1_pose_adoption_manifest.json",
+      "sha256": "f59cb9cc404dd1a262a3fb03df4df665514e2862d66be371baa05a372e825a42"
+    },
+    "prereg_lock": {
+      "path": "phases/p2-gsjso/configs/fusion_w1_aprime_prereg_lock_20260726.json",
+      "sha256": "c39b43b03c5e2be1814021134075f3ee4f05070a86b6d97262ef67f14688fd96"
+    },
+    "targets_csv": {
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/aprime_targets.csv",
+      "sha256": "f5f5893f8b5c1aa51143a751c637d12707fac4d5a62ff7e0a1a2f7770c5dc528"
+    },
+    "targets_manifest": {
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/aprime_targets_manifest.json",
+      "sha256": "7d6304c79dda41463e6092c792db034dfed5a5171b04d6499f57557097b56471"
+    }
+  },
+  "network_mode": "none",
+  "output_dir": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_42364663/arm_Aprime/r1",
+  "preprocess": {
+    "building_id": "DEBY_LOD2_42364663",
+    "cache_policy": {
+      "namespace": "aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2",
+      "old_arm_A_cache_read_count": 0,
+      "old_arm_A_cache_reused": false,
+      "supervision_and_seed_regenerated": true
+    },
+    "data_root": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663",
+    "dataloader_roundtrip": {
+      "all_depth_normal_photo_masks_exactly_equal_saved_M_j": true,
+      "downscale": 1.0,
+      "implementation": "src.stage2.dataloader.ColmapDataset",
+      "mask_pixels_total": 31850,
+      "per_view": [
+        {
+          "depth_equals_M_j": true,
+          "image_name": "DJI_20241217084541_0094_D.JPG",
+          "mask_pixels_n": 484,
+          "normal_equals_M_j": true,
+          "photo_equals_M_j": true,
+          "shape": [
+            1013,
+            1400
+          ]
+        },
+        {
+          "depth_equals_M_j": true,
+          "image_name": "DJI_20241217084543_0095_D.JPG",
+          "mask_pixels_n": 836,
+          "normal_equals_M_j": true,
+          "photo_equals_M_j": true,
+          "shape": [
+            1013,
+            1400
+          ]
+        },
+        {
+          "depth_equals_M_j": true,
+          "image_name": "DJI_20241217084723_0145_D.JPG",
+          "mask_pixels_n": 770,
+          "normal_equals_M_j": true,
+          "photo_equals_M_j": true,
+          "shape": [
+            1013,
+            1400
+          ]
+        },
+        {
+          "depth_equals_M_j": true,
+          "image_name": "DJI_20241217084725_0146_D.JPG",
+          "mask_pixels_n": 888,
+          "normal_equals_M_j": true,
+          "photo_equals_M_j": true,
+          "shape": [
+            1013,
+            1400
+          ]
+        },
+        {
+          "depth_equals_M_j": true,
+          "image_name": "DJI_20241217084727_0147_D.JPG",
+          "mask_pixels_n": 1010,
+          "normal_equals_M_j": true,
+          "photo_equals_M_j": true,
+          "shape": [
+            1013,
+            1400
+          ]
+        },
+        {
+          "depth_equals_M_j": true,
+          "image_name": "DJI_20241217084729_0148_D.JPG",
+          "mask_pixels_n": 1019,
+          "normal_equals_M_j": true,
+          "photo_equals_M_j": true,
+          "shape": [
+            1013,
+            1400
+          ]
+        },
+        {
+          "depth_equals_M_j": true,
+          "image_name": "DJI_20241217084731_0149_D.JPG",
+          "mask_pixels_n": 1091,
+          "normal_equals_M_j": true,
+          "photo_equals_M_j": true,
+          "shape": [
+            1013,
+            1400
+          ]
+        },
+        {
+          "depth_equals_M_j": true,
+          "image_name": "DJI_20241217084837_0182_D.JPG",
+          "mask_pixels_n": 968,
+          "normal_equals_M_j": true,
+          "photo_equals_M_j": true,
+          "shape": [
+            1013,
+            1400
+          ]
+        },
+        {
+          "depth_equals_M_j": true,
+          "image_name": "DJI_20241217084841_0184_D.JPG",
+          "mask_pixels_n": 983,
+          "normal_equals_M_j": true,
+          "photo_equals_M_j": true,
+          "shape": [
+            1013,
+            1400
+          ]
+        },
+        {
+          "depth_equals_M_j": true,
+          "image_name": "DJI_20241217095607_0066_D.JPG",
+          "mask_pixels_n": 110,
+          "normal_equals_M_j": true,
+          "photo_equals_M_j": true,
+          "shape": [
+            1013,
+            1400
+          ]
+        },
+        {
+          "depth_equals_M_j": true,
+          "image_name": "DJI_20241217095609_0067_D.JPG",
+          "mask_pixels_n": 100,
+          "normal_equals_M_j": true,
+          "photo_equals_M_j": true,
+          "shape": [
+            1013,
+            1400
+          ]
+        },
+        {
+          "depth_equals_M_j": true,
+          "image_name": "DJI_20241217095611_0068_D.JPG",
+          "mask_pixels_n": 125,
+          "normal_equals_M_j": true,
+          "photo_equals_M_j": true,
+          "shape": [
+            1013,
+            1400
+          ]
+        },
+        {
+          "depth_equals_M_j": true,
+          "image_name": "DJI_20241217095613_0069_D.JPG",
+          "mask_pixels_n": 107,
+          "normal_equals_M_j": true,
+          "photo_equals_M_j": true,
+          "shape": [
+            1013,
+            1400
+          ]
+        },
+        {
+          "depth_equals_M_j": true,
+          "image_name": "DJI_20241217095635_0080_D.JPG",
+          "mask_pixels_n": 95,
+          "normal_equals_M_j": true,
+          "photo_equals_M_j": true,
+          "shape": [
+            1013,
+            1400
+          ]
+        },
+        {
+          "depth_equals_M_j": true,
+          "image_name": "DJI_20241217095637_0081_D.JPG",
+          "mask_pixels_n": 80,
+          "normal_equals_M_j": true,
+          "photo_equals_M_j": true,
+          "shape": [
+            1013,
+            1400
+          ]
+        },
+        {
+          "depth_equals_M_j": true,
+          "image_name": "DJI_20241217100257_0003_D.JPG",
+          "mask_pixels_n": 44,
+          "normal_equals_M_j": true,
+          "photo_equals_M_j": true,
+          "shape": [
+            1013,
+            1400
+          ]
+        },
+        {
+          "depth_equals_M_j": true,
+          "image_name": "DJI_20241217100259_0004_D.JPG",
+          "mask_pixels_n": 38,
+          "normal_equals_M_j": true,
+          "photo_equals_M_j": true,
+          "shape": [
+            1013,
+            1400
+          ]
+        },
+        {
+          "depth_equals_M_j": true,
+          "image_name": "DJI_20241217100301_0005_D.JPG",
+          "mask_pixels_n": 38,
+          "normal_equals_M_j": true,
+          "photo_equals_M_j": true,
+          "shape": [
+            1013,
+            1400
+          ]
+        },
+        {
+          "depth_equals_M_j": true,
+          "image_name": "DJI_20241217100319_0014_D.JPG",
+          "mask_pixels_n": 35,
+          "normal_equals_M_j": true,
+          "photo_equals_M_j": true,
+          "shape": [
+            1013,
+            1400
+          ]
+        },
+        {
+          "depth_equals_M_j": true,
+          "image_name": "DJI_20241217101108_0003_D.JPG",
+          "mask_pixels_n": 1,
+          "normal_equals_M_j": true,
+          "photo_equals_M_j": true,
+          "shape": [
+            1013,
+            1400
+          ]
+        },
+        {
+          "depth_equals_M_j": true,
+          "image_name": "DJI_20241217101110_0004_D.JPG",
+          "mask_pixels_n": 2,
+          "normal_equals_M_j": true,
+          "photo_equals_M_j": true,
+          "shape": [
+            1013,
+            1400
+          ]
+        },
+        {
+          "depth_equals_M_j": true,
+          "image_name": "DJI_20241217102531_0018_D.JPG",
+          "mask_pixels_n": 22,
+          "normal_equals_M_j": true,
+          "photo_equals_M_j": true,
+          "shape": [
+            1013,
+            1400
+          ]
+        },
+        {
+          "depth_equals_M_j": true,
+          "image_name": "DJI_20241217102931_0011_D.JPG",
+          "mask_pixels_n": 11172,
+          "normal_equals_M_j": true,
+          "photo_equals_M_j": true,
+          "shape": [
+            1013,
+            1400
+          ]
+        },
+        {
+          "depth_equals_M_j": true,
+          "image_name": "DJI_20241217103001_0026_D.JPG",
+          "mask_pixels_n": 4286,
+          "normal_equals_M_j": true,
+          "photo_equals_M_j": true,
+          "shape": [
+            1013,
+            1400
+          ]
+        },
+        {
+          "depth_equals_M_j": true,
+          "image_name": "DJI_20241217103005_0028_D.JPG",
+          "mask_pixels_n": 2986,
+          "normal_equals_M_j": true,
+          "photo_equals_M_j": true,
+          "shape": [
+            1013,
+            1400
+          ]
+        },
+        {
+          "depth_equals_M_j": true,
+          "image_name": "DJI_20241217103007_0029_D.JPG",
+          "mask_pixels_n": 2655,
+          "normal_equals_M_j": true,
+          "photo_equals_M_j": true,
+          "shape": [
+            1013,
+            1400
+          ]
+        },
+        {
+          "depth_equals_M_j": true,
+          "image_name": "DJI_20241217103019_0035_D.JPG",
+          "mask_pixels_n": 1905,
+          "normal_equals_M_j": true,
+          "photo_equals_M_j": true,
+          "shape": [
+            1013,
+            1400
+          ]
+        }
+      ],
+      "status": "PASSED",
+      "views_n": 27
+    },
+    "evaluation_names": [],
+    "full_snapshot_sha256": "d526a5cd3e6614a30578cdc019671757b4223a38579d801a56fde1d1d63a5efb",
+    "manifest": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/preprocess_manifest.json",
+    "manifest_sha256": "b349d58bdab9587854303bfc5c91e7af52577cce02d14f042923cd7255eda91f",
+    "method_binding": {
+      "generation_head": "0482b6c9fa97bdd185c43d66df4848b05edf2130",
+      "required_files": [
+        {
+          "path": "phases/p2-gsjso/configs/fusion_w1_aprime_preprocess_20260726.json",
+          "sha256": "17fd50fcc52557369b38791a8494e997afa16dd4ba199ea2fb02275951e448d8"
+        },
+        {
+          "path": "phases/p2-gsjso/scripts/fusion_w1_aprime_preprocess_20260726.py",
+          "sha256": "43f68dfe2037eb192f77b69a98727c03626390ea91abb85028519aa87d9c5c85"
+        },
+        {
+          "path": "phases/p2-gsjso/scripts/test_fusion_w1_aprime_preprocess_20260726.py",
+          "sha256": "4f2598140b60fdb7c3eb7927cf9b3d20f6f01ba75887d63e80f34384b9d57d54"
+        },
+        {
+          "path": "phases/p2-gsjso/scripts/test_fusion_w1_aprime_mask_roundtrip_20260726.py",
+          "sha256": "e512e8ff64eebb6bafe28ff1833d32cb209f5d35ece804013b414944146ca861"
+        },
+        {
+          "path": "phases/p2-gsjso/scripts/run_fusion_w1_aprime_preprocess_20260726.sh",
+          "sha256": "5a33e56f05a9bcc82ba7a8b128b32b542afef03bea96b45b9bd45e835fb1a300"
+        },
+        {
+          "path": "phases/p2-gsjso/configs/fusion_w1_aprime_prereg_lock_20260726.json",
+          "sha256": "c39b43b03c5e2be1814021134075f3ee4f05070a86b6d97262ef67f14688fd96"
+        },
+        {
+          "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/aprime_targets.csv",
+          "sha256": "f5f5893f8b5c1aa51143a751c637d12707fac4d5a62ff7e0a1a2f7770c5dc528"
+        },
+        {
+          "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/aprime_targets_manifest.json",
+          "sha256": "7d6304c79dda41463e6092c792db034dfed5a5171b04d6499f57557097b56471"
+        },
+        {
+          "path": "phases/p2-gsjso/scripts/fusion_w1_preprocess_v1_20260725.py",
+          "sha256": "8ab18f9c0563420917f40a459465f9b23632d29fea7dc380de24fdf0dcd6a2e9"
+        }
+      ]
+    },
+    "pose_binding": {
+      "additional_transform_application_count": 0,
+      "cache_namespace": "aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2",
+      "corrected_images_sha256": "28b38383a0b6d82656108e8f0e5e79711dcda93948ab2e89c1cd8f47215962a5",
+      "corrected_sparse": "results/tum_transfer/fusion_w1_pose_adoption_v2/derived_sparse/0",
+      "r1_manifest": "phases/p2-gsjso/runs/20260724_fusion_w1/resume_v2/r1_pose_adoption_manifest.json",
+      "r1_manifest_sha256": "f59cb9cc404dd1a262a3fb03df4df665514e2862d66be371baa05a372e825a42",
+      "transform_application_count": 1
+    },
+    "seed_canonical_npz": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/seed_class6_filtered_canonical.npz",
+    "seed_canonical_npz_sha256": "2a99e136170aa06e7dfdad4e9ce1b2c6989c222569d6d25c7514fc8988e72199",
+    "seed_points_n": 421,
+    "seed_too_small": false,
+    "selected_names": [
+      "DJI_20241217084541_0094_D.JPG",
+      "DJI_20241217084543_0095_D.JPG",
+      "DJI_20241217084723_0145_D.JPG",
+      "DJI_20241217084725_0146_D.JPG",
+      "DJI_20241217084727_0147_D.JPG",
+      "DJI_20241217084729_0148_D.JPG",
+      "DJI_20241217084731_0149_D.JPG",
+      "DJI_20241217084837_0182_D.JPG",
+      "DJI_20241217084841_0184_D.JPG",
+      "DJI_20241217095607_0066_D.JPG",
+      "DJI_20241217095609_0067_D.JPG",
+      "DJI_20241217095611_0068_D.JPG",
+      "DJI_20241217095613_0069_D.JPG",
+      "DJI_20241217095635_0080_D.JPG",
+      "DJI_20241217095637_0081_D.JPG",
+      "DJI_20241217100257_0003_D.JPG",
+      "DJI_20241217100259_0004_D.JPG",
+      "DJI_20241217100301_0005_D.JPG",
+      "DJI_20241217100319_0014_D.JPG",
+      "DJI_20241217101108_0003_D.JPG",
+      "DJI_20241217101110_0004_D.JPG",
+      "DJI_20241217102531_0018_D.JPG",
+      "DJI_20241217102931_0011_D.JPG",
+      "DJI_20241217103001_0026_D.JPG",
+      "DJI_20241217103005_0028_D.JPG",
+      "DJI_20241217103007_0029_D.JPG",
+      "DJI_20241217103019_0035_D.JPG"
+    ],
+    "status": "PASSED",
+    "supervision_index": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision_index.csv",
+    "supervision_index_sha256": "edf93a0b49105b1f822a0088f2645c0234bff3cc6aac5cf750a8abaec0e0838a",
+    "training_artifact_snapshot_sha256": "e689b4e2ac38ef0dc481e5363dd24383ea8e83d0c46054e56c209b9cd79a82e2",
+    "training_artifacts": [
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/photo_support_masks/DJI_20241217084541_0094_D.npy",
+        "sha256": "c470643c641a28a5d979a99a1dab3ab924830a43f33ed6366d5ad3a5dd57095b"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/photo_support_masks/DJI_20241217084543_0095_D.npy",
+        "sha256": "400e031456c43f96f5b8616e9c531b85653ff88f135a3a0269e734ddc4b44d6f"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/photo_support_masks/DJI_20241217084723_0145_D.npy",
+        "sha256": "dbfd56c8440920a505e5c795ee4c64f822195778446bf37fa9f94bd97b1680c8"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/photo_support_masks/DJI_20241217084725_0146_D.npy",
+        "sha256": "ad8b3d30a866923bdd27a9021083b3c4853b019ddbd38bbdb3c01657224ccf16"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/photo_support_masks/DJI_20241217084727_0147_D.npy",
+        "sha256": "33c47101aa0a914be81df03036347f8b1c8de01c45894ad6d0387c47c812f2e0"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/photo_support_masks/DJI_20241217084729_0148_D.npy",
+        "sha256": "362d3e49112d0d5b2ec284559e882b6aafc871f73c915ee99c95312925084628"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/photo_support_masks/DJI_20241217084731_0149_D.npy",
+        "sha256": "b728ef53ce63d6dfd8a12821cb53ba0e298d965687dd31081a09b65d39b87c92"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/photo_support_masks/DJI_20241217084837_0182_D.npy",
+        "sha256": "5cbf92f9ef1eef5c3974881362c162b05dfffb43529d592ffa7a9c4142d164d6"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/photo_support_masks/DJI_20241217084841_0184_D.npy",
+        "sha256": "a508914b9a59a11e03aac894d6233a53f2fd50ccda3abc32acd9776d93af53c8"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/photo_support_masks/DJI_20241217095607_0066_D.npy",
+        "sha256": "4b6947f4db35d512e6d43538bb7d775a796a83aedb17b987e328c130423fce08"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/photo_support_masks/DJI_20241217095609_0067_D.npy",
+        "sha256": "914313098a1fc3d877b4f245fcaa49b65c722774f6025c6e52c0b7127a556bc4"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/photo_support_masks/DJI_20241217095611_0068_D.npy",
+        "sha256": "a19c21c72d7226916c08440aef94b7b7ffb9c40cc20f08a50e199d268df85f06"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/photo_support_masks/DJI_20241217095613_0069_D.npy",
+        "sha256": "e79a3feb21f3f9a807bce804ee806b92d20c20ec2e1e6d173d76aad09e09e04a"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/photo_support_masks/DJI_20241217095635_0080_D.npy",
+        "sha256": "2031ace119162694a394e712f30f47d98e47c6e69c5fc073ddadc59c361c6d76"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/photo_support_masks/DJI_20241217095637_0081_D.npy",
+        "sha256": "a44390890cfbd12aa75d0d34ad1c1e3f0c85643d0af22a4b0db73d827526a03a"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/photo_support_masks/DJI_20241217100257_0003_D.npy",
+        "sha256": "092c65f4bbae0da0c069f9b6568eea0e0d11e881bdfcdfb79539cdc6959fdd07"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/photo_support_masks/DJI_20241217100259_0004_D.npy",
+        "sha256": "fa557f5ab760f706b630cd5b28e9cda2c2d84bea0ed19a7630659a70a94e8e3d"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/photo_support_masks/DJI_20241217100301_0005_D.npy",
+        "sha256": "a73c99d7ee69bb8ce1f88248b90626318fb25eedab1d1e988b1a9a3f37f603dd"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/photo_support_masks/DJI_20241217100319_0014_D.npy",
+        "sha256": "3661bb4d83043b32702b544516f2d9fec95dc152cc5776f763a4150d8ca7d119"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/photo_support_masks/DJI_20241217101108_0003_D.npy",
+        "sha256": "a65c69f05cb71255ea1340da15a6c3d71f059e0b7bd9e95fa9f92c6a78e376d1"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/photo_support_masks/DJI_20241217101110_0004_D.npy",
+        "sha256": "1bafe5fc8ccd96fe7f758bb85ba39d5212007dd5f8fcbf07668e3c15d75536ca"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/photo_support_masks/DJI_20241217102531_0018_D.npy",
+        "sha256": "095a93df43227d606184d7020434e567240845eb00dbe472402a96d224868fdb"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/photo_support_masks/DJI_20241217102931_0011_D.npy",
+        "sha256": "f45095eb257c53d94c5515c7980de78dc98b76206e5e9bcb1c8a56f61aca6b7f"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/photo_support_masks/DJI_20241217103001_0026_D.npy",
+        "sha256": "291941c543f95cb48634649cabc502629534bec6f6c2fc486943beadf6109a47"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/photo_support_masks/DJI_20241217103005_0028_D.npy",
+        "sha256": "512896209e68321951ca4a1470cfbdf451042dbddb8546dd94a2dc5e357211ac"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/photo_support_masks/DJI_20241217103007_0029_D.npy",
+        "sha256": "54167faaca41d6c3398bb797741633e9e0344538e46edff4012b85386d64364e"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/photo_support_masks/DJI_20241217103019_0035_D.npy",
+        "sha256": "cf39735c4aff73bf23ddc63ed1fc3026790dcd027d7a6ce5368a6eda89795c50"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/seed_class6_filtered_canonical.npz",
+        "sha256": "2a99e136170aa06e7dfdad4e9ce1b2c6989c222569d6d25c7514fc8988e72199"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/sparse/0/cameras.bin",
+        "sha256": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/sparse/0/images.bin",
+        "sha256": "e3acf64df380bda235346cadd2a0e15ca9e7269464547aae899cb751ab1e9732"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/sparse/0/points3D.bin",
+        "sha256": "288378f906fabb3a699cc27b514e47ff4e3463060cf18410732f7e94ca3de4cf"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/depth_maps/DJI_20241217084541_0094_D.JPG.geometric.bin",
+        "sha256": "f2741c7ebb737452359530baf5dd7a28fc0bf02c68eb1a696dddf15928fe3759"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/depth_maps/DJI_20241217084543_0095_D.JPG.geometric.bin",
+        "sha256": "1269dc79c83916eea0123d1f20eb778a71ec9293d051d8fe50886c1b7b082356"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/depth_maps/DJI_20241217084723_0145_D.JPG.geometric.bin",
+        "sha256": "1be0256efa5f13064d9089fb3d138293bc0aeb5268a86337cd2698e4ca24d2d9"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/depth_maps/DJI_20241217084725_0146_D.JPG.geometric.bin",
+        "sha256": "bec8fa3cad9dc87caf90affc0cb904c318ac2b0d30b89fe31d0fd94140217172"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/depth_maps/DJI_20241217084727_0147_D.JPG.geometric.bin",
+        "sha256": "0531255f5e40f1d5cae37fb7a516abccf75697db7ed136d4834d69404051b931"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/depth_maps/DJI_20241217084729_0148_D.JPG.geometric.bin",
+        "sha256": "d1cfa488856aa90e806153f730aa500ab2b78dcc46db3dbb24a82a52407f55e9"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/depth_maps/DJI_20241217084731_0149_D.JPG.geometric.bin",
+        "sha256": "da0d8b3bd0a6faee89c9ffcd1dcc6b407a78c245bf7918b48bbd5ac926288100"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/depth_maps/DJI_20241217084837_0182_D.JPG.geometric.bin",
+        "sha256": "65ba7173bc57931bfbf34dd09f829173e5d0685cb8cf756a5fdc85436b3ea5fe"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/depth_maps/DJI_20241217084841_0184_D.JPG.geometric.bin",
+        "sha256": "18ce1315ebc928efcb482f0424f98bebcdc864ea74adb67390aad122b5304a13"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/depth_maps/DJI_20241217095607_0066_D.JPG.geometric.bin",
+        "sha256": "8e7e09bf0b7bffd3448a149dd116e959eca7ff939aa9a28412a98994001f472e"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/depth_maps/DJI_20241217095609_0067_D.JPG.geometric.bin",
+        "sha256": "b757fadfdc09d9a4edef780dd641aca8dd266a2b98b98df0f68f4f2be41772f7"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/depth_maps/DJI_20241217095611_0068_D.JPG.geometric.bin",
+        "sha256": "4d5576a939c89509faa6acaf159ad07bf8b5b44aec0325e4c706cf979ecb4a75"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/depth_maps/DJI_20241217095613_0069_D.JPG.geometric.bin",
+        "sha256": "637f6a6717751d9411bddd4268cefb961be89339cefee04c13e97b4d8ba27d4e"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/depth_maps/DJI_20241217095635_0080_D.JPG.geometric.bin",
+        "sha256": "e8eb761e234dd3ed011bd03e5daf4eb1588aad1e2adca63c8e8c1a53d2d1aa2b"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/depth_maps/DJI_20241217095637_0081_D.JPG.geometric.bin",
+        "sha256": "e853b902821840082495a65d6454397c1de75a5384d5241550779c642b61c824"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/depth_maps/DJI_20241217100257_0003_D.JPG.geometric.bin",
+        "sha256": "af9032235f62aacc46bccb08c7d0984c0f8593af9077fefc632ff965780c1688"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/depth_maps/DJI_20241217100259_0004_D.JPG.geometric.bin",
+        "sha256": "d66132edcc58dc10466c9901f8c0d0336cae13180d2dbe8770d9741002929316"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/depth_maps/DJI_20241217100301_0005_D.JPG.geometric.bin",
+        "sha256": "cd9d1d13bf39aec4dc98f2ec54217a54b0509fa16e88685697d50f10d561b944"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/depth_maps/DJI_20241217100319_0014_D.JPG.geometric.bin",
+        "sha256": "29fd092983c1ab87adb96a4a6b66efa2ef007b8add5903cade74eb1b923dc2bc"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/depth_maps/DJI_20241217101108_0003_D.JPG.geometric.bin",
+        "sha256": "90ed9fd3b945fc6f36113b9b6f05a07f64bf08d60bc972a36e43545620957dc4"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/depth_maps/DJI_20241217101110_0004_D.JPG.geometric.bin",
+        "sha256": "06bdd1ab65295f21b045782a9eae98c3239bfb6c916129c72bc487ff9a535505"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/depth_maps/DJI_20241217102531_0018_D.JPG.geometric.bin",
+        "sha256": "197a86b99feea0ae7f75660e7d2f5b34fdb478f1c32ae023e92df5842923cfae"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/depth_maps/DJI_20241217102931_0011_D.JPG.geometric.bin",
+        "sha256": "1eb5cb389cb34cc78f2c8f2c126aaa6c61812edb53f9f66005de46d5ebcc395c"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/depth_maps/DJI_20241217103001_0026_D.JPG.geometric.bin",
+        "sha256": "b716e0585477bad0f8a7062c002af4620f4cda2dda520bbdd4b445f28f68e570"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/depth_maps/DJI_20241217103005_0028_D.JPG.geometric.bin",
+        "sha256": "785a56a94c8674580c360224b74a375addffd5356f0059b7776f244188767ddd"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/depth_maps/DJI_20241217103007_0029_D.JPG.geometric.bin",
+        "sha256": "03879d49a2bb43db66609c46151d91aa64eaed09c00ee727895bcf2cbea3c80a"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/depth_maps/DJI_20241217103019_0035_D.JPG.geometric.bin",
+        "sha256": "0e1bffbba5be7b44d478b91685ead4d7610fc373e2412b935da7595803d8daab"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/normal_maps/DJI_20241217084541_0094_D.JPG.geometric.bin",
+        "sha256": "3c19a4353ca07e830d6ed157dca15618494c34aa2b44f1794e414ee35ff7ec81"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/normal_maps/DJI_20241217084543_0095_D.JPG.geometric.bin",
+        "sha256": "bf62a928de45af49856397dc13499945eadf3b63f3f2c0c774fdbf69df85499a"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/normal_maps/DJI_20241217084723_0145_D.JPG.geometric.bin",
+        "sha256": "e93241a474a7aec513ce45166aeebaf02d08e4b2761e04d6a838691122ff9f74"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/normal_maps/DJI_20241217084725_0146_D.JPG.geometric.bin",
+        "sha256": "c7cf835dc677b2c2bed072b702653f6b2f261155f102e6288d92b066656a71a6"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/normal_maps/DJI_20241217084727_0147_D.JPG.geometric.bin",
+        "sha256": "c186c008c3dc660ede8bb8464be6a182a9e5c0b6b633130145ebe9dbd41c94d7"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/normal_maps/DJI_20241217084729_0148_D.JPG.geometric.bin",
+        "sha256": "cf4969341595b3681a3fa547b7619ec49b0f23e5f3d89992af54119d15ef69fd"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/normal_maps/DJI_20241217084731_0149_D.JPG.geometric.bin",
+        "sha256": "241ba85df9f0e54d9109f8b735d9a92068ec4e2df188a2351f1f599fe6f7c9cf"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/normal_maps/DJI_20241217084837_0182_D.JPG.geometric.bin",
+        "sha256": "73db6e1ae7eaa77e8d2d78c6609eac8b5a9d5c2b6b48f610c30934cfb1c48a8c"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/normal_maps/DJI_20241217084841_0184_D.JPG.geometric.bin",
+        "sha256": "10b641333a791a90b0e7ae7c8a8dc38f67ab3bfb95eeae58422b5249e7423977"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/normal_maps/DJI_20241217095607_0066_D.JPG.geometric.bin",
+        "sha256": "da2cbd76e72c03fc3af7002a8ec3cd7e27a7697ca8e515c0706f052579b2cbe8"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/normal_maps/DJI_20241217095609_0067_D.JPG.geometric.bin",
+        "sha256": "c1a5cc4c9c3e7bf208b3d677e7b074457d90342ed339a04b33972deeeaedae10"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/normal_maps/DJI_20241217095611_0068_D.JPG.geometric.bin",
+        "sha256": "46e538d11030e615ee5d2464c3d18ec5c16fbe500f35a3cbd55eca3663c21d3f"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/normal_maps/DJI_20241217095613_0069_D.JPG.geometric.bin",
+        "sha256": "c50a619e57b680913a703a49ce0d5c2fea88ff5d7346a8cd1ee6657f8103c9a4"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/normal_maps/DJI_20241217095635_0080_D.JPG.geometric.bin",
+        "sha256": "21abe8a4249e7efd519903542ac536697064b5e5a9252a45d1b1f35c0792ff10"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/normal_maps/DJI_20241217095637_0081_D.JPG.geometric.bin",
+        "sha256": "08d19e7480c7f5d6d65f800dd10f4daafa2e9e2f6ae8688c0988f54c88835863"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/normal_maps/DJI_20241217100257_0003_D.JPG.geometric.bin",
+        "sha256": "f17e395e1496bc33e03dd2e367b8aae6de86fcd62726b5838b94b3f5ba689f98"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/normal_maps/DJI_20241217100259_0004_D.JPG.geometric.bin",
+        "sha256": "f12d8a08e8f592b3b7320975ad5acb5d2a32c504873f8749cf495b74d16e54a0"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/normal_maps/DJI_20241217100301_0005_D.JPG.geometric.bin",
+        "sha256": "63daf4664cfa2148004a86746a437166e75e1eb9ca69b10a6b50620091dbc242"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/normal_maps/DJI_20241217100319_0014_D.JPG.geometric.bin",
+        "sha256": "a99ce8f6c48dcb625229043f67df63cab6ffe67cc68ad7a8be21839cb00b600a"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/normal_maps/DJI_20241217101108_0003_D.JPG.geometric.bin",
+        "sha256": "8ef5b30f76f86680db72c017b14b0730193b7cf142f4ee1aded2919daf39e2c4"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/normal_maps/DJI_20241217101110_0004_D.JPG.geometric.bin",
+        "sha256": "a86b0ecb25e252bf8b11d7a8c0bc9f957eaca3e0f9ce0a88636a6440a92ba1a7"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/normal_maps/DJI_20241217102531_0018_D.JPG.geometric.bin",
+        "sha256": "cdc123fd2872abeb27c05b3e858f66e8a0fdeb84ae5ecb8e08a6328312a45574"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/normal_maps/DJI_20241217102931_0011_D.JPG.geometric.bin",
+        "sha256": "fa61c2a25b2a02f1dfa2912735394b6857d1a7890711379a559c08d8297fd7fc"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/normal_maps/DJI_20241217103001_0026_D.JPG.geometric.bin",
+        "sha256": "dda8f93f531cbc513d5bb7e82bbc646c35c34cfb3d47225cf08f3c73ded2ea21"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/normal_maps/DJI_20241217103005_0028_D.JPG.geometric.bin",
+        "sha256": "74807e6e28d1bd1c74a9950442d3c21289a9ac56c6cc15afc8b48ab19a550d38"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/normal_maps/DJI_20241217103007_0029_D.JPG.geometric.bin",
+        "sha256": "8e7300cf2137c1d0435416c16e90415107faa07e3322b419622418cb40de426b"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/stereo/normal_maps/DJI_20241217103019_0035_D.JPG.geometric.bin",
+        "sha256": "632cc25dba1b2d8a38678228c159780020b27acaa0de235d72182287957774e6"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/class6/DJI_20241217084541_0094_D.JPG.npz",
+        "sha256": "f1a644982a36856f510cf615213cee6ca0e54c89bcad303df2bac4d170d194ec"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/class6/DJI_20241217084543_0095_D.JPG.npz",
+        "sha256": "fd073f0805289df1e0d546c26860cc3075cc75b7386668b1712303361f0b8922"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/class6/DJI_20241217084723_0145_D.JPG.npz",
+        "sha256": "f4e73857bb5eed1d00e1d0402043edc8fb955e7df21cb91014ef8bea0b16a47f"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/class6/DJI_20241217084725_0146_D.JPG.npz",
+        "sha256": "03c3f29fe5703599aeede38b81050743356542c3177684e18af1d0f995c300d4"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/class6/DJI_20241217084727_0147_D.JPG.npz",
+        "sha256": "bd3a13281559bb86c8fd71b8aa3c4e989fb5c8d5ddb9d4ed6391ea2e67a5143f"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/class6/DJI_20241217084729_0148_D.JPG.npz",
+        "sha256": "894c10e80b31113b89b940f52404424b862d32516bb47ae04bf5a2d11cc70333"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/class6/DJI_20241217084731_0149_D.JPG.npz",
+        "sha256": "f3e3f95eafceed84a041c9d569f8aaf7a19a1bbef6fa05eef3892470f8f27a21"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/class6/DJI_20241217084837_0182_D.JPG.npz",
+        "sha256": "4f683a2f55805657eb5c3cca64ba7fa779b194b07ecc4c801e109858cc4ae59e"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/class6/DJI_20241217084841_0184_D.JPG.npz",
+        "sha256": "3559bb58dc65dbd4a9d316dc130936c12cbdd947466be2963f00bfc5cecf95e8"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/class6/DJI_20241217095607_0066_D.JPG.npz",
+        "sha256": "a095aad2ff46bdeaec83f3edc9435364353ffdb77a5188b181241232c797f445"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/class6/DJI_20241217095609_0067_D.JPG.npz",
+        "sha256": "0204346eaa41d8ba4acd45f1c13393885cc5ac22e8162362f3746760c4cc12e8"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/class6/DJI_20241217095611_0068_D.JPG.npz",
+        "sha256": "d8a047a856c0b32802b149a0cacbcfa5f956c576ab914e5b6c27392517c3e84b"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/class6/DJI_20241217095613_0069_D.JPG.npz",
+        "sha256": "58efdfef4674274414d26cd7cfdabab1786e8732d3bf2a08c8f6b5324c0ca35d"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/class6/DJI_20241217095635_0080_D.JPG.npz",
+        "sha256": "51a7c81f8a62c7de178a0d9f8018e7c2dfb0e3b25e6059a30059c35f347d9217"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/class6/DJI_20241217095637_0081_D.JPG.npz",
+        "sha256": "992b6c43f9c01f607d927aea1f20da2fc3ea932b5b33d330680cdacc8f3442ee"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/class6/DJI_20241217100257_0003_D.JPG.npz",
+        "sha256": "2f4a00898b6ca706fc7a14051758686caeaba7b0cce81eed22a8034c36ec0651"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/class6/DJI_20241217100259_0004_D.JPG.npz",
+        "sha256": "16733d6ef66f67e45264a6d95f22da97a924f04d66b55c27ed7855e0abdf73ee"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/class6/DJI_20241217100301_0005_D.JPG.npz",
+        "sha256": "340f1839478bbf87445af60793f71d7c667aa5179439fac345479b77b8304763"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/class6/DJI_20241217100319_0014_D.JPG.npz",
+        "sha256": "16b34999fc225aba597f7e73fb5fb63f91687fd7c643052e8c67e4fcd030d174"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/class6/DJI_20241217101108_0003_D.JPG.npz",
+        "sha256": "b329605a7d312c12b1756a7c067a63d4861d6faac3db4e1a8ce7ed3249126bdf"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/class6/DJI_20241217101110_0004_D.JPG.npz",
+        "sha256": "61fd5e2aaba163a3afea677844b7b40722cac75198c82cfd5b8b49bcb6ae8220"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/class6/DJI_20241217102531_0018_D.JPG.npz",
+        "sha256": "cdb55728646bf28a92c1cd806ec3051e149ab97f4d78c437b418a28a579dbc83"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/class6/DJI_20241217102931_0011_D.JPG.npz",
+        "sha256": "fa955b50f8862ba3cdd21cc8146eaf8ec25ab8952e04c87ee8537ea368ed7b75"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/class6/DJI_20241217103001_0026_D.JPG.npz",
+        "sha256": "d15d7fd448665bcff0d3d3f32b819d3a5df36ff25ea5d148289f006b20b82127"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/class6/DJI_20241217103005_0028_D.JPG.npz",
+        "sha256": "91a7b5f658f96f2c202df8eeebda117e96b6d6c7166d98987db7bfdebfdecbd3"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/class6/DJI_20241217103007_0029_D.JPG.npz",
+        "sha256": "ff80c97e4830f11cbe57989c4d0f7562c24eaf69e24582c91b29f1c4a0a646ae"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/class6/DJI_20241217103019_0035_D.JPG.npz",
+        "sha256": "3a1e77a95518b3f3f0e54755f1ccc540ca8538bf049110fe50107430bb315907"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/valid_masks/DJI_20241217084541_0094_D.JPG.npy",
+        "sha256": "c470643c641a28a5d979a99a1dab3ab924830a43f33ed6366d5ad3a5dd57095b"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/valid_masks/DJI_20241217084543_0095_D.JPG.npy",
+        "sha256": "400e031456c43f96f5b8616e9c531b85653ff88f135a3a0269e734ddc4b44d6f"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/valid_masks/DJI_20241217084723_0145_D.JPG.npy",
+        "sha256": "dbfd56c8440920a505e5c795ee4c64f822195778446bf37fa9f94bd97b1680c8"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/valid_masks/DJI_20241217084725_0146_D.JPG.npy",
+        "sha256": "ad8b3d30a866923bdd27a9021083b3c4853b019ddbd38bbdb3c01657224ccf16"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/valid_masks/DJI_20241217084727_0147_D.JPG.npy",
+        "sha256": "33c47101aa0a914be81df03036347f8b1c8de01c45894ad6d0387c47c812f2e0"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/valid_masks/DJI_20241217084729_0148_D.JPG.npy",
+        "sha256": "362d3e49112d0d5b2ec284559e882b6aafc871f73c915ee99c95312925084628"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/valid_masks/DJI_20241217084731_0149_D.JPG.npy",
+        "sha256": "b728ef53ce63d6dfd8a12821cb53ba0e298d965687dd31081a09b65d39b87c92"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/valid_masks/DJI_20241217084837_0182_D.JPG.npy",
+        "sha256": "5cbf92f9ef1eef5c3974881362c162b05dfffb43529d592ffa7a9c4142d164d6"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/valid_masks/DJI_20241217084841_0184_D.JPG.npy",
+        "sha256": "a508914b9a59a11e03aac894d6233a53f2fd50ccda3abc32acd9776d93af53c8"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/valid_masks/DJI_20241217095607_0066_D.JPG.npy",
+        "sha256": "4b6947f4db35d512e6d43538bb7d775a796a83aedb17b987e328c130423fce08"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/valid_masks/DJI_20241217095609_0067_D.JPG.npy",
+        "sha256": "914313098a1fc3d877b4f245fcaa49b65c722774f6025c6e52c0b7127a556bc4"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/valid_masks/DJI_20241217095611_0068_D.JPG.npy",
+        "sha256": "a19c21c72d7226916c08440aef94b7b7ffb9c40cc20f08a50e199d268df85f06"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/valid_masks/DJI_20241217095613_0069_D.JPG.npy",
+        "sha256": "e79a3feb21f3f9a807bce804ee806b92d20c20ec2e1e6d173d76aad09e09e04a"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/valid_masks/DJI_20241217095635_0080_D.JPG.npy",
+        "sha256": "2031ace119162694a394e712f30f47d98e47c6e69c5fc073ddadc59c361c6d76"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/valid_masks/DJI_20241217095637_0081_D.JPG.npy",
+        "sha256": "a44390890cfbd12aa75d0d34ad1c1e3f0c85643d0af22a4b0db73d827526a03a"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/valid_masks/DJI_20241217100257_0003_D.JPG.npy",
+        "sha256": "092c65f4bbae0da0c069f9b6568eea0e0d11e881bdfcdfb79539cdc6959fdd07"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/valid_masks/DJI_20241217100259_0004_D.JPG.npy",
+        "sha256": "fa557f5ab760f706b630cd5b28e9cda2c2d84bea0ed19a7630659a70a94e8e3d"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/valid_masks/DJI_20241217100301_0005_D.JPG.npy",
+        "sha256": "a73c99d7ee69bb8ce1f88248b90626318fb25eedab1d1e988b1a9a3f37f603dd"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/valid_masks/DJI_20241217100319_0014_D.JPG.npy",
+        "sha256": "3661bb4d83043b32702b544516f2d9fec95dc152cc5776f763a4150d8ca7d119"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/valid_masks/DJI_20241217101108_0003_D.JPG.npy",
+        "sha256": "a65c69f05cb71255ea1340da15a6c3d71f059e0b7bd9e95fa9f92c6a78e376d1"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/valid_masks/DJI_20241217101110_0004_D.JPG.npy",
+        "sha256": "1bafe5fc8ccd96fe7f758bb85ba39d5212007dd5f8fcbf07668e3c15d75536ca"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/valid_masks/DJI_20241217102531_0018_D.JPG.npy",
+        "sha256": "095a93df43227d606184d7020434e567240845eb00dbe472402a96d224868fdb"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/valid_masks/DJI_20241217102931_0011_D.JPG.npy",
+        "sha256": "f45095eb257c53d94c5515c7980de78dc98b76206e5e9bcb1c8a56f61aca6b7f"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/valid_masks/DJI_20241217103001_0026_D.JPG.npy",
+        "sha256": "291941c543f95cb48634649cabc502629534bec6f6c2fc486943beadf6109a47"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/valid_masks/DJI_20241217103005_0028_D.JPG.npy",
+        "sha256": "512896209e68321951ca4a1470cfbdf451042dbddb8546dd94a2dc5e357211ac"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/valid_masks/DJI_20241217103007_0029_D.JPG.npy",
+        "sha256": "54167faaca41d6c3398bb797741633e9e0344538e46edff4012b85386d64364e"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision/valid_masks/DJI_20241217103019_0035_D.JPG.npy",
+        "sha256": "cf39735c4aff73bf23ddc63ed1fc3026790dcd027d7a6ce5368a6eda89795c50"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/supervision_index.csv",
+        "sha256": "edf93a0b49105b1f822a0088f2645c0234bff3cc6aac5cf750a8abaec0e0838a"
+      },
+      {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364663/views.csv",
+        "sha256": "49545b9d0ba66314ba2f77280fbb6414f2f072efbab60c3483c4bccf1c3dc0fc"
+      }
+    ],
+    "training_names": [
+      "DJI_20241217084541_0094_D.JPG",
+      "DJI_20241217084543_0095_D.JPG",
+      "DJI_20241217084723_0145_D.JPG",
+      "DJI_20241217084725_0146_D.JPG",
+      "DJI_20241217084727_0147_D.JPG",
+      "DJI_20241217084729_0148_D.JPG",
+      "DJI_20241217084731_0149_D.JPG",
+      "DJI_20241217084837_0182_D.JPG",
+      "DJI_20241217084841_0184_D.JPG",
+      "DJI_20241217095607_0066_D.JPG",
+      "DJI_20241217095609_0067_D.JPG",
+      "DJI_20241217095611_0068_D.JPG",
+      "DJI_20241217095613_0069_D.JPG",
+      "DJI_20241217095635_0080_D.JPG",
+      "DJI_20241217095637_0081_D.JPG",
+      "DJI_20241217100257_0003_D.JPG",
+      "DJI_20241217100259_0004_D.JPG",
+      "DJI_20241217100301_0005_D.JPG",
+      "DJI_20241217100319_0014_D.JPG",
+      "DJI_20241217101108_0003_D.JPG",
+      "DJI_20241217101110_0004_D.JPG",
+      "DJI_20241217102531_0018_D.JPG",
+      "DJI_20241217102931_0011_D.JPG",
+      "DJI_20241217103001_0026_D.JPG",
+      "DJI_20241217103005_0028_D.JPG",
+      "DJI_20241217103007_0029_D.JPG",
+      "DJI_20241217103019_0035_D.JPG"
+    ],
+    "view_count": 27
+  },
+  "profile": "full",
+  "publication": {
+    "actual_training_started": false,
+    "compose_override_written_before_manifest": true,
+    "manifest_written_last": true,
+    "resolved_config_written_first": true
+  },
+  "recipe": {
+    "full_recipe_sha256": "0fb1a7cf76b7e868353b6cc739eb22148be116f12ed2387036a253dd7a47fdd8",
+    "profile_overrides": {},
+    "resolved_scientific_config_sha256": "a60b115fc4ee6381d131a6486c17b51cc0721214bfdc7cd722e4eced49579640"
+  },
+  "replicate": "r1",
+  "resolved_config": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_42364663/arm_Aprime/r1/resolved_config.yaml",
+  "resolved_config_sha256": "277fada581344211c97dc4dc3a42e69cb4d045b37b179679bbd708026ed68ad8",
+  "run_id": "20260726_fusion_w1_aprime",
+  "runtime_receipts_present_at_publication": {
+    "completed.json": false,
+    "failed.json": false,
+    "started.json": false
+  },
+  "schema": "jointbuildgs.fusion_w1_aprime.training_materialization.v1",
+  "seed": 1001,
+  "status": "PASSED",
+  "task_id": "FUS-W1-APRIME-TRAIN-001",
+  "view_roles": {
+    "all_selected_views_are_training_views": true,
+    "evaluation_views": [],
+    "training_views": [
+      "DJI_20241217084541_0094_D.JPG",
+      "DJI_20241217084543_0095_D.JPG",
+      "DJI_20241217084723_0145_D.JPG",
+      "DJI_20241217084725_0146_D.JPG",
+      "DJI_20241217084727_0147_D.JPG",
+      "DJI_20241217084729_0148_D.JPG",
+      "DJI_20241217084731_0149_D.JPG",
+      "DJI_20241217084837_0182_D.JPG",
+      "DJI_20241217084841_0184_D.JPG",
+      "DJI_20241217095607_0066_D.JPG",
+      "DJI_20241217095609_0067_D.JPG",
+      "DJI_20241217095611_0068_D.JPG",
+      "DJI_20241217095613_0069_D.JPG",
+      "DJI_20241217095635_0080_D.JPG",
+      "DJI_20241217095637_0081_D.JPG",
+      "DJI_20241217100257_0003_D.JPG",
+      "DJI_20241217100259_0004_D.JPG",
+      "DJI_20241217100301_0005_D.JPG",
+      "DJI_20241217100319_0014_D.JPG",
+      "DJI_20241217101108_0003_D.JPG",
+      "DJI_20241217101110_0004_D.JPG",
+      "DJI_20241217102531_0018_D.JPG",
+      "DJI_20241217102931_0011_D.JPG",
+      "DJI_20241217103001_0026_D.JPG",
+      "DJI_20241217103005_0028_D.JPG",
+      "DJI_20241217103007_0029_D.JPG",
+      "DJI_20241217103019_0035_D.JPG"
+    ],
+    "visible_views": [
+      "DJI_20241217084541_0094_D.JPG",
+      "DJI_20241217084543_0095_D.JPG",
+      "DJI_20241217084723_0145_D.JPG",
+      "DJI_20241217084725_0146_D.JPG",
+      "DJI_20241217084727_0147_D.JPG",
+      "DJI_20241217084729_0148_D.JPG",
+      "DJI_20241217084731_0149_D.JPG",
+      "DJI_20241217084837_0182_D.JPG",
+      "DJI_20241217084841_0184_D.JPG",
+      "DJI_20241217095607_0066_D.JPG",
+      "DJI_20241217095609_0067_D.JPG",
+      "DJI_20241217095611_0068_D.JPG",
+      "DJI_20241217095613_0069_D.JPG",
+      "DJI_20241217095635_0080_D.JPG",
+      "DJI_20241217095637_0081_D.JPG",
+      "DJI_20241217100257_0003_D.JPG",
+      "DJI_20241217100259_0004_D.JPG",
+      "DJI_20241217100301_0005_D.JPG",
+      "DJI_20241217100319_0014_D.JPG",
+      "DJI_20241217101108_0003_D.JPG",
+      "DJI_20241217101110_0004_D.JPG",
+      "DJI_20241217102531_0018_D.JPG",
+      "DJI_20241217102931_0011_D.JPG",
+      "DJI_20241217103001_0026_D.JPG",
+      "DJI_20241217103005_0028_D.JPG",
+      "DJI_20241217103007_0029_D.JPG",
+      "DJI_20241217103019_0035_D.JPG"
+    ]
+  }
+}

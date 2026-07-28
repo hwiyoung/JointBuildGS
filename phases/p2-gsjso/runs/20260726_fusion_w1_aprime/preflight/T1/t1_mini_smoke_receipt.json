@@ -1,0 +1,102 @@
+{
+  "created_at": "2026-07-26T13:56:41.816406+00:00",
+  "mini_smoke_completed_receipt": {
+    "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T1/mini_smoke/by_building/DEBY_LOD2_42364609/arm_Aprime/r1/completed.json",
+    "sha256": "bfb75c09632c273f6d38595700c0482e9f999e119471b88823f3692753d3ee76"
+  },
+  "requirements": {
+    "actual_prune_count_positive": true,
+    "cumulative_seed_protected_zero": true,
+    "post_transition_term_fields_strictly_positive": true,
+    "protection_off_for_all_observations": true,
+    "scientific_verdict": null,
+    "seed_init_opacity_0_1_observed": true
+  },
+  "role": "T1_surface_regularization_actual_activation_and_unprotected_prune_evidence",
+  "run_id": "20260726_fusion_w1_aprime",
+  "schema": "jointbuildgs.fusion_w1_aprime.t1_mini_smoke.receipt.v1",
+  "seed_lineage_evidence": {
+    "cumulative_seed_protected": 0,
+    "final_observation": {
+      "iteration": 575,
+      "opacity_median": 0.0706343725323677,
+      "seed_lineage_count": 4908
+    },
+    "first_post_dynamics_observation": {
+      "iteration": 0,
+      "opacity_median": 0.009999998845160007,
+      "seed_lineage_count": 295
+    },
+    "initial": {
+      "iteration": 0,
+      "observation_phase": "initialization_pre_dynamics",
+      "opacity_median": 0.10000000149011612,
+      "requested_opacity": 0.1,
+      "seed_lineage_count": 295
+    },
+    "initialization_receipt": {
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T1/mini_smoke/by_building/DEBY_LOD2_42364609/arm_Aprime/r1/audit/seed_initialization.json",
+      "sha256": "8c5f022986d28973361d0d07be8a6fa9b600fa2b1aee487cb2cc340ca63a5dcd"
+    },
+    "maximum_cumulative_prune_candidates": 428,
+    "maximum_cumulative_pruned": 428,
+    "minimum_seed_lineage_count": 295,
+    "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T1/mini_smoke/by_building/DEBY_LOD2_42364609/arm_Aprime/r1/audit/seed_lineage.csv",
+    "protection_active": false,
+    "rows_n": 24,
+    "sha256": "a828906459dfa7278c83a40afd5018a122f7c04b67efd0bb9483b9f77171bd34",
+    "status": "PASSED"
+  },
+  "status": "PASSED",
+  "task_id": "FUS-W1-APRIME-TRAIN-001",
+  "term_evidence": {
+    "component_evidence": {
+      "depth": {
+        "grad_norm": 0.0015913748648017645,
+        "grad_norm_share": 0.011885434808858637,
+        "raw_loss": 0.019469648599624634,
+        "step": 575,
+        "weight": 0.06015026747116622,
+        "weighted_loss": 0.0011711044935509562,
+        "weighted_loss_share": 0.016906388657951663
+      },
+      "distort": {
+        "grad_norm": 0.0003129717952106148,
+        "grad_norm_share": 0.0023374793401997017,
+        "raw_loss": 3.4686927392613143e-06,
+        "step": 575,
+        "weight": 100.0,
+        "weighted_loss": 0.00034686928847804666,
+        "weighted_loss_share": 0.0050075010699818885
+      },
+      "nc": {
+        "grad_norm": 0.001068939920514822,
+        "grad_norm_share": 0.007983546819088458,
+        "raw_loss": 0.012292404659092426,
+        "step": 575,
+        "weight": 0.05,
+        "weighted_loss": 0.0006146202213130891,
+        "weighted_loss_share": 0.0088728276560944
+      },
+      "normal": {
+        "grad_norm": 8.748294203542173e-05,
+        "grad_norm_share": 0.0006533801855533813,
+        "raw_loss": 0.01653088815510273,
+        "step": 575,
+        "weight": 0.006015026747116621,
+        "weighted_loss": 9.943373879650608e-05,
+        "weighted_loss_share": 0.0014354529788454212
+      }
+    },
+    "required_fields_strictly_positive": [
+      "raw_loss",
+      "weight",
+      "weighted_loss",
+      "weighted_loss_share",
+      "grad_norm",
+      "grad_norm_share"
+    ],
+    "status": "PASSED",
+    "transition_iteration": 300
+  }
+}

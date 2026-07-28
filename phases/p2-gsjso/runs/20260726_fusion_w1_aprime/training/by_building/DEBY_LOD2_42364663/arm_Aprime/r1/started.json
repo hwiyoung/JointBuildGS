@@ -1,0 +1,467 @@
+{
+  "arm": "Aprime",
+  "building_id": "DEBY_LOD2_42364663",
+  "claim_mode": "atomic_O_EXCL",
+  "command": [
+    "docker",
+    "compose",
+    "-f",
+    "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS/docker-compose.yml",
+    "-f",
+    "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_42364663/arm_Aprime/r1/runtime_compose_override.yaml",
+    "run",
+    "--rm",
+    "--no-deps",
+    "-T",
+    "--user",
+    "1000:1000",
+    "--name",
+    "aprime-v3-gpu0-7df3fae30076",
+    "-e",
+    "NVIDIA_VISIBLE_DEVICES=0",
+    "-e",
+    "CUDA_VISIBLE_DEVICES=0",
+    "-e",
+    "HOME=/workspace/JointBuildGS/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/runtime_env/gpu0/home",
+    "-e",
+    "MAX_JOBS=1",
+    "-e",
+    "TORCH_EXTENSIONS_DIR=/workspace/JointBuildGS/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/runtime_env/gpu0/torch_extensions",
+    "-e",
+    "XDG_CACHE_HOME=/workspace/JointBuildGS/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/runtime_env/gpu0/xdg_cache",
+    "dev",
+    "python",
+    "-m",
+    "src.stage2.train",
+    "--config",
+    "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_42364663/arm_Aprime/r1/resolved_config.yaml"
+  ],
+  "container_visible_gpu": 0,
+  "created_at": "2026-07-27T06:51:38.185832+00:00",
+  "docker_image": {
+    "image": "jointbuildgs:dev",
+    "image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396"
+  },
+  "foreground_single_job_lock": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/locks/training_gpu0.lock",
+  "job_key": "full/DEBY_LOD2_42364663/arm_Aprime/r1",
+  "materialization": {
+    "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_42364663/arm_Aprime/r1/materialization_manifest.json",
+    "sha256": "3a815c7cbda1112f8b9c80683508baf7829265dbb050003731840b486cea8639"
+  },
+  "method": {
+    "branch": "exp/fusion-w1",
+    "files": [
+      {
+        "path": "phases/p2-gsjso/configs/fusion_w1_aprime_training_20260726.json",
+        "sha256": "b650b59e9314f09cf80234e8fcd33a5d7618becd467976d6a1756773ae68a726"
+      },
+      {
+        "path": "phases/p2-gsjso/scripts/fusion_w1_aprime_training_20260726.py",
+        "sha256": "7b22a4c5aa2a9652931db5e77ef92bea16ebf7de91f02761c7d30695551cb65f"
+      },
+      {
+        "path": "phases/p2-gsjso/scripts/run_fusion_w1_aprime_training_20260726.sh",
+        "sha256": "83929f4f340a8871b31245b1a42526dfdb4fe9cf74a051ab6a2d5dc8720aa77d"
+      },
+      {
+        "path": "phases/p2-gsjso/scripts/test_fusion_w1_aprime_training_20260726.py",
+        "sha256": "1a4557087918eb22ff9e22fcef754c49f3ae56f3a406bb31c41de315de69eaa0"
+      },
+      {
+        "path": "src/stage2/train.py",
+        "sha256": "efc41b30bbdd15a3aadc056453d00393a1b16636afc9ba06afadafc2d121c750"
+      },
+      {
+        "path": "src/stage2/densification.py",
+        "sha256": "249b6ee870562e050532e632166c6c5fb8e6d217adc4d4efd134241a724e6fbe"
+      }
+    ],
+    "head": "191b5652be6d38a81a3cba7ab05cd3db4ffbe796"
+  },
+  "network_mode": "none",
+  "physical_gpu": 0,
+  "preflight": {
+    "profile": "full",
+    "records": {
+      "T1": {
+        "accepted_status": "PASSED",
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T1/t1_mini_smoke_receipt.json",
+        "schema": "jointbuildgs.fusion_w1_aprime.t1_mini_smoke.receipt.v1",
+        "sha256": "075fe2b421222e7abd15ac276b0cdb59a80cf994219d714622ccbd60a9436b2b",
+        "status_field": "status"
+      },
+      "T2": {
+        "accepted_status": "COMPLETED",
+        "artifact_records": [
+          {
+            "bytes": 12444,
+            "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T2/per_view_integration.csv",
+            "sha256": "504451591c4e4a2dd65ba8264a05070af81555ad5d44ddd7fb32423ca0382a24"
+          },
+          {
+            "bytes": 898075,
+            "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T2/tsdf_mesh_raw_canonical.ply",
+            "sha256": "6ab7f6039175b35fd39b2e0327c3319384593314f86e34f4994e93f6917cf51d"
+          },
+          {
+            "bytes": 898075,
+            "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T2/tsdf_mesh_raw_epsg25832_orthometric.ply",
+            "sha256": "f71348643dd7dac17f8359c1585b4c2a299d113d955095b53ebefd6b5a6487a0"
+          },
+          {
+            "bytes": 789501,
+            "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T2/tsdf_mesh_filtered_canonical.ply",
+            "sha256": "4a9054a13787d2f56cf1f4f548dacf8b2d13295ad21e3a54bde80a5f54a57e7d"
+          },
+          {
+            "bytes": 789501,
+            "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T2/tsdf_mesh_filtered_epsg25832_orthometric.ply",
+            "sha256": "1e77d5bd82108f85c7a704e4be48df0786265fa475afffa3dfbf9ee7de90da9e"
+          },
+          {
+            "bytes": 79467,
+            "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T2/tsdf_surface_samples_canonical.ply",
+            "sha256": "1f81b8badeee5b51707a7b8caacf9f06dcb1536bd10fcc005b0244aa26b0ffe1"
+          },
+          {
+            "bytes": 79467,
+            "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T2/tsdf_surface_samples_epsg25832_orthometric.ply",
+            "sha256": "4c7a985f58a4aa1c6b0b354151b452a5de6555787581e330ea5e4120f2c39292"
+          },
+          {
+            "bytes": 101023,
+            "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T2/tsdf_surface_samples.npz",
+            "sha256": "4bfa6716018a6d6858d9d21e2b70618b0e143d123c790532c51054c7ef9b831d"
+          }
+        ],
+        "checks": {
+          "building_identity_bound": true,
+          "checkpoint_equals_training_final_step": true,
+          "component_filter_applied": true,
+          "marching_cubes_mesh_nonempty": true,
+          "no_alpha_threshold": true,
+          "only_exact_M_j_support": true,
+          "real_scalable_tsdf_volume": true,
+          "receipt_written_last": true,
+          "staged_artifacts_published_before_receipt": true,
+          "surface_sample_nonempty": true,
+          "training_data_root_equals_preprocess_data_root": true,
+          "training_view_inventory_exact": true
+        },
+        "consumed_preprocess_artifacts": [
+          {
+            "bytes": 64,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/sparse/0/cameras.bin",
+            "sha256": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99"
+          },
+          {
+            "bytes": 3068,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/sparse/0/images.bin",
+            "sha256": "46e94dc3efa30f433de323b6ae27562ddfe278af6683d7ee55472b570a66bb16"
+          },
+          {
+            "bytes": 157707,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/seed_canonical.npz",
+            "sha256": "06aa49b515555f8294d2b6a1880192150bbd8d6c5a699484afd34050dc98614b"
+          },
+          {
+            "bytes": 31663,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217084827_0177_D.JPG.npz",
+            "sha256": "939c379276160686ffe079631c47aaa952e0cae8b09a7faef1ff9639f7ca7705"
+          },
+          {
+            "bytes": 24136,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217095127_0070_D.JPG.npz",
+            "sha256": "604cff0100bb56fde026473ff11448198df7099321b18a9a171b09e0bfb69453"
+          },
+          {
+            "bytes": 27215,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217102933_0012_D.JPG.npz",
+            "sha256": "67605a82e9cc38a507d1f07b16bc87d3cad1e0aafa90141cbc4d7c098469e9c0"
+          },
+          {
+            "bytes": 31198,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217084829_0178_D.JPG.npz",
+            "sha256": "0c7b06b12fbce2cab202e7d8f9d86cf36683e0582bad2a61e9bc0f0708c85d43"
+          },
+          {
+            "bytes": 31031,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217084825_0176_D.JPG.npz",
+            "sha256": "b0996da88a40811212612bedb74141478689bf8fb7e58139c555d0f8f3e8ecb6"
+          },
+          {
+            "bytes": 24073,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217095139_0076_D.JPG.npz",
+            "sha256": "0e8c3bab84e56e748a03a6b2f722d485346df94928cd391f7f8ae78af03c819f"
+          },
+          {
+            "bytes": 26702,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217102935_0013_D.JPG.npz",
+            "sha256": "c926e19d80c04e330fe42583c9e0c3be9542432cefe3d47050766825677da2a6"
+          },
+          {
+            "bytes": 26704,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217102939_0015_D.JPG.npz",
+            "sha256": "ad46879789592ddadb51cd6b104cb18bb76a159889dc08959059561808348c48"
+          },
+          {
+            "bytes": 24073,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217095141_0077_D.JPG.npz",
+            "sha256": "0e8c3bab84e56e748a03a6b2f722d485346df94928cd391f7f8ae78af03c819f"
+          },
+          {
+            "bytes": 30501,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217084837_0182_D.JPG.npz",
+            "sha256": "cee8fccd8b419e976c3079e44a37ae031cbb340c864bb1fc224610b628f214a7"
+          },
+          {
+            "bytes": 30947,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217084833_0180_D.JPG.npz",
+            "sha256": "56e66863192ce3f44934496e54086f73bed658520998f53bb5f105be4f2699c0"
+          },
+          {
+            "bytes": 24073,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217095125_0069_D.JPG.npz",
+            "sha256": "0e8c3bab84e56e748a03a6b2f722d485346df94928cd391f7f8ae78af03c819f"
+          },
+          {
+            "bytes": 24285,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217102529_0017_D.JPG.npz",
+            "sha256": "34f05b5fe41dcb5000ed77e06c4f4249fc9a9a4b78972d6c01cb054209586974"
+          },
+          {
+            "bytes": 26528,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217102937_0014_D.JPG.npz",
+            "sha256": "d5093a73fae554a1b6591a9eb3f553f0372bef7df00c7e872d65db479d8972c6"
+          },
+          {
+            "bytes": 24073,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217095121_0067_D.JPG.npz",
+            "sha256": "0e8c3bab84e56e748a03a6b2f722d485346df94928cd391f7f8ae78af03c819f"
+          },
+          {
+            "bytes": 24073,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217094536_0024_D.JPG.npz",
+            "sha256": "0e8c3bab84e56e748a03a6b2f722d485346df94928cd391f7f8ae78af03c819f"
+          },
+          {
+            "bytes": 31177,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217084835_0181_D.JPG.npz",
+            "sha256": "36681aa241449039adb767deaae38cf2a93198cfbb6ab579da446c5155e35c0e"
+          },
+          {
+            "bytes": 24073,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217095149_0081_D.JPG.npz",
+            "sha256": "0e8c3bab84e56e748a03a6b2f722d485346df94928cd391f7f8ae78af03c819f"
+          },
+          {
+            "bytes": 24073,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217094953_0023_D.JPG.npz",
+            "sha256": "0e8c3bab84e56e748a03a6b2f722d485346df94928cd391f7f8ae78af03c819f"
+          },
+          {
+            "bytes": 31300,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217084831_0179_D.JPG.npz",
+            "sha256": "8b279b3341e1e1c23ec46ed96e565ebf12ad43b30cb994da81d1d27bebe411b3"
+          },
+          {
+            "bytes": 24118,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217095123_0068_D.JPG.npz",
+            "sha256": "c2c926861c97d969a06143f0b7beb0df06868775a01456dda028e7f220fee1cd"
+          },
+          {
+            "bytes": 24073,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217095013_0033_D.JPG.npz",
+            "sha256": "0e8c3bab84e56e748a03a6b2f722d485346df94928cd391f7f8ae78af03c819f"
+          },
+          {
+            "bytes": 24247,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217101453_0037_D.JPG.npz",
+            "sha256": "1c1da71904ff340d1cccd72545c428b14c12aac844dea9dcc6bf623b16d1a87e"
+          },
+          {
+            "bytes": 24073,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217095145_0079_D.JPG.npz",
+            "sha256": "0e8c3bab84e56e748a03a6b2f722d485346df94928cd391f7f8ae78af03c819f"
+          },
+          {
+            "bytes": 24073,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217095011_0032_D.JPG.npz",
+            "sha256": "0e8c3bab84e56e748a03a6b2f722d485346df94928cd391f7f8ae78af03c819f"
+          },
+          {
+            "bytes": 24073,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217101341_0023_D.JPG.npz",
+            "sha256": "0e8c3bab84e56e748a03a6b2f722d485346df94928cd391f7f8ae78af03c819f"
+          },
+          {
+            "bytes": 24073,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217095143_0078_D.JPG.npz",
+            "sha256": "0e8c3bab84e56e748a03a6b2f722d485346df94928cd391f7f8ae78af03c819f"
+          },
+          {
+            "bytes": 24115,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217095103_0058_D.JPG.npz",
+            "sha256": "946db4f326e861dbe73a9ddb6bcf7e874c66528d51914dc49b3e12a9151004e1"
+          },
+          {
+            "bytes": 24073,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217101542_0008_D.JPG.npz",
+            "sha256": "0e8c3bab84e56e748a03a6b2f722d485346df94928cd391f7f8ae78af03c819f"
+          }
+        ],
+        "consumer_validation": "full_current_hash_bytes_and_cross_binding",
+        "exact_M_j_inventory_sha256": "d26815bc0712c55df06ea659c6dd354945c515997dec13d86efb076e1d38d7f4",
+        "git_lock": {
+          "branch": "exp/fusion-w1",
+          "head": "191b5652be6d38a81a3cba7ab05cd3db4ffbe796",
+          "implementation_files": [
+            {
+              "bytes": 3474,
+              "git_blob": "afcec91a5b844c6e7414f5fb09985174a09cbfaa",
+              "path": "phases/p2-gsjso/configs/fusion_w1_aprime_tsdf_20260726.json",
+              "sha256": "7c67f863d1c4e67dd97556281ebed8c75c63fab068dd5c23907dcb93a0965e3f"
+            },
+            {
+              "bytes": 53789,
+              "git_blob": "5393c6f0d915d24f6e00bd2c857da891b52e89e2",
+              "path": "phases/p2-gsjso/scripts/fusion_w1_aprime_tsdf_20260726.py",
+              "sha256": "43ba874a8ccc9665d2ab74498b6ad33eea459006c367aceda8b53f884d296463"
+            },
+            {
+              "bytes": 1344,
+              "git_blob": "8ebb5e272d906a8ba61607d0aaeb38a6d08c2e7e",
+              "path": "phases/p2-gsjso/scripts/run_fusion_w1_aprime_t2_20260726.sh",
+              "sha256": "d502dcbf85741d7d9a76144eaa56e2379b304d2015419f0c833be93e2a9de49e"
+            },
+            {
+              "bytes": 8705,
+              "git_blob": "593d03efbce37f1d6582408a56702b066086bc32",
+              "path": "phases/p2-gsjso/scripts/test_fusion_w1_aprime_tsdf_20260726.py",
+              "sha256": "1a1ea3c0b1ac8dfc93b9cb0dbb526fbb628665ddfa3f5926aeb43e81351cf775"
+            }
+          ]
+        },
+        "identity": {
+          "building_id": "DEBY_LOD2_42364609",
+          "condition": "arm_A",
+          "rehearsal_defaults": true,
+          "replicate": "r1"
+        },
+        "input_records": {
+          "cameras_bin": {
+            "bytes": 64,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/sparse/0/cameras.bin",
+            "sha256": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99"
+          },
+          "checkpoint": {
+            "bytes": 105951191,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/ckpt/final.pt",
+            "sha256": "9db46440bbb432904ab912729c7230d5a06a0b2f5855be1b3bd003d9168b3b65"
+          },
+          "class6_seed": {
+            "bytes": 157707,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/seed_canonical.npz",
+            "sha256": "06aa49b515555f8294d2b6a1880192150bbd8d6c5a699484afd34050dc98614b"
+          },
+          "config": {
+            "bytes": 3474,
+            "path": "phases/p2-gsjso/configs/fusion_w1_aprime_tsdf_20260726.json",
+            "sha256": "7c67f863d1c4e67dd97556281ebed8c75c63fab068dd5c23907dcb93a0965e3f"
+          },
+          "images_bin": {
+            "bytes": 3068,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/sparse/0/images.bin",
+            "sha256": "46e94dc3efa30f433de323b6ae27562ddfe278af6683d7ee55472b570a66bb16"
+          },
+          "preprocess_manifest": {
+            "bytes": 135831,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/preprocess_manifest.json",
+            "sha256": "6a762e5631b78b8d93cdd45819fc179882cd1eabaa8c4e8be0159b19b02344b1"
+          },
+          "projection_datum_config": {
+            "bytes": 962,
+            "path": "configs/projection_datum.json",
+            "sha256": "096a49b46fc5661d74f9d3b54c4f3777676cfc6b27e577b52bb2dabeee8b480c"
+          },
+          "scene_reference_frame": {
+            "bytes": 1232,
+            "path": "phases/p0-audit/data/work/opf/opf/scene_reference_frame.json",
+            "sha256": "fb408e9c97bdad6af7ad4a6e94be823be294030907ce92e395bd63490f77daf6"
+          },
+          "script": {
+            "bytes": 53789,
+            "path": "phases/p2-gsjso/scripts/fusion_w1_aprime_tsdf_20260726.py",
+            "sha256": "43ba874a8ccc9665d2ab74498b6ad33eea459006c367aceda8b53f884d296463"
+          },
+          "training_config": {
+            "bytes": 3918,
+            "path": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/resolved_config.yaml",
+            "sha256": "5095f58e29a29fb6aed0339ca5de94a7fdd1af4e1b60e7377bf6175363172475"
+          }
+        },
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T2/t2_tsdf_rehearsal_receipt.json",
+        "schema": "jointbuildgs.fusion_w1_aprime.tsdf.receipt.v1",
+        "sha256": "9b089d20674e866322c29751fcd463927e3b5ab0b5da3ba706dfeaaab5b7ca62",
+        "status_field": "status"
+      },
+      "T3": {
+        "accepted_status": "COMPLETE",
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T3/manifest.json",
+        "schema": "jointbuildgs.fusion_w1_aprime.p0prime.manifest.v1",
+        "sha256": "09a0e86fa3fbf6ec9d31198594c3be149cc11de533e0dab911d42690b7c095aa",
+        "status_field": "state"
+      },
+      "five_pin": {
+        "accepted_status": "PASSED",
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/five_pin_status.json",
+        "schema": "jointbuildgs.fusion_w1_aprime.five_pin_status.v1",
+        "sha256": "442795498840f0713b658b7043964909dbe09359d9d39565268aafb6fba716e0",
+        "status_field": "status"
+      }
+    },
+    "required_gates": [
+      "five_pin",
+      "T1",
+      "T2",
+      "T3"
+    ],
+    "status": "PASSED"
+  },
+  "profile": "full",
+  "replicate": "r1",
+  "run_id": "20260726_fusion_w1_aprime",
+  "schema": "jointbuildgs.fusion_w1_aprime.training_started.v1",
+  "seed": 1001,
+  "status": "STARTED",
+  "task_id": "FUS-W1-APRIME-TRAIN-001",
+  "writable_environment": {
+    "directories": {
+      "HOME": {
+        "container_path": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/runtime_env/gpu0/home",
+        "host_path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/runtime_env/gpu0/home",
+        "is_symlink": false,
+        "writable": true
+      },
+      "TORCH_EXTENSIONS_DIR": {
+        "container_path": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/runtime_env/gpu0/torch_extensions",
+        "host_path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/runtime_env/gpu0/torch_extensions",
+        "is_symlink": false,
+        "writable": true
+      },
+      "XDG_CACHE_HOME": {
+        "container_path": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/runtime_env/gpu0/xdg_cache",
+        "host_path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/runtime_env/gpu0/xdg_cache",
+        "is_symlink": false,
+        "writable": true
+      }
+    },
+    "root": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/runtime_env/gpu0",
+    "variables": {
+      "HOME": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/runtime_env/gpu0/home",
+      "MAX_JOBS": "1",
+      "TORCH_EXTENSIONS_DIR": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/runtime_env/gpu0/torch_extensions",
+      "XDG_CACHE_HOME": "/workspace/JointBuildGS/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/runtime_env/gpu0/xdg_cache"
+    }
+  }
+}

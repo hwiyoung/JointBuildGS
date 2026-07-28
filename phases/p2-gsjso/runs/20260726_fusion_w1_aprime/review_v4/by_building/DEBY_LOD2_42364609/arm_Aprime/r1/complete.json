@@ -1,0 +1,442 @@
+{
+  "citygml_export": {
+    "arbitrary_conversion_prohibited": true,
+    "availability": "UNAVAILABLE",
+    "cjio": {
+      "citygml_or_gml_export_supported": false,
+      "observed_export_formats": [
+        "b3dm",
+        "glb",
+        "jsonl",
+        "obj",
+        "stl"
+      ],
+      "version": "0.10.1"
+    },
+    "derived_export_rule": "only a separately provenance-bound GML artifact already listed in readout complete may be copied; this renderer never invents a conversion",
+    "generated_artifact": null,
+    "generation_attempted": false,
+    "reason_code": "NO_TRUSTED_CITYJSON_TO_CITYGML_CONVERTER_IN_PINNED_REPO_OR_IMAGE",
+    "repo_exporter": {
+      "bytes": 6871,
+      "cityjson_to_citygml_serializer_present": false,
+      "observed_role": "CityJSON 2.0 and PLY producer",
+      "path": "src/stage3/citygml_export.py",
+      "sha256": "c9145b32aaec7378067a73260e9c7e0fcf7566cbd4f1304988f88c5f1fec2220"
+    },
+    "state": "CENSORED"
+  },
+  "created_at": "2026-07-27T14:19:43.377868+00:00",
+  "font": {
+    "bytes": 19484784,
+    "path": "/opt/jointbuildgs-fonts/NotoSansCJK-Regular.ttc",
+    "sha256": "b76b0433203017ca80401b2ee0dd69350349871c4b19d504c34dbdd80541690a"
+  },
+  "identity": {
+    "arm": "Aprime",
+    "building_id": "DEBY_LOD2_42364609",
+    "replicate": "r1",
+    "run_id": "20260726_fusion_w1_aprime"
+  },
+  "implementation": [
+    {
+      "bytes": 6200,
+      "path": "phases/p2-gsjso/configs/fusion_w1_aprime_job_panel_v4_20260727.json",
+      "sha256": "763927accac8b3c7ff9634bc96966371fd1694377b33a53319682c7aa93b0a6e"
+    },
+    {
+      "bytes": 76585,
+      "path": "phases/p2-gsjso/scripts/fusion_w1_aprime_job_panel_v4_20260727.py",
+      "sha256": "491d4ebe20cd940355beec7991c54b8fc529fda20f60fb47a3ee661ed7f58702"
+    },
+    {
+      "bytes": 4328,
+      "path": "phases/p2-gsjso/scripts/run_fusion_w1_aprime_job_panel_v4_20260727.sh",
+      "sha256": "fdb9272136a1511276e97d71d6d9fde7ae7778210abb3ed7af27944dacd34133"
+    },
+    {
+      "bytes": 12536,
+      "path": "phases/p2-gsjso/scripts/test_fusion_w1_aprime_job_panel_v4_20260727.py",
+      "sha256": "c67e988f7aa875716e478cf265cb99efba561a387767713ec876e31792898a00"
+    },
+    {
+      "bytes": 9779,
+      "path": "phases/p2-gsjso/configs/fusion_w1_aprime_job_qualitative_v3_20260727.json",
+      "sha256": "886fd4612e060c9d97570e9776514930aaddec5c2058210c4f7fc01bae03ec9d"
+    },
+    {
+      "bytes": 53489,
+      "path": "phases/p2-gsjso/scripts/fusion_w1_aprime_job_qualitative_v3_20260727.py",
+      "sha256": "208eb1f31556c15ba9e86ac6faeb179b6e7b520e7fb46ab95f372f509f7d17cb"
+    },
+    {
+      "bytes": 5452,
+      "path": "src/stage2/colmap_io.py",
+      "sha256": "7185fc2c8d292a81213b25608d6ce4639e5c44b6a8669ea8126a7de89ee9343d"
+    }
+  ],
+  "interpretation": null,
+  "measurement_state": "MEASURED",
+  "outputs": {
+    "canonical_roofer_cityjson": {
+      "bytes": 2275,
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/review_v4/by_building/DEBY_LOD2_42364609/arm_Aprime/r1/roofer.city.json",
+      "sha256": "fd6f9c19d5216eadc4cba94e49b8f886895b9adbe52e6019d190748f60cb1970"
+    },
+    "opacity_csv": {
+      "bytes": 14791,
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/review_v4/by_building/DEBY_LOD2_42364609/arm_Aprime/r1/opacity.csv",
+      "sha256": "127e4aa7641930833807e4d3e4f1b8b75d27bfd82c3eb2310c8a59fed688d100"
+    },
+    "panel": {
+      "bytes": 2922649,
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/review_v4/by_building/DEBY_LOD2_42364609/arm_Aprime/r1/panel.png",
+      "sha256": "edb88ec3ab237595eeaf3a2ca6fc4e9640d9a2ca6d208cfb74acbee154b5face"
+    }
+  },
+  "p0prime_deltas": {
+    "delta_face_count_ratio_vs_p0_refl": 0.000000,
+    "delta_roof_completeness_vs_p0_refl": 0.000013,
+    "delta_roof_rms_vs_p0_refl_m": 0.042216
+  },
+  "panel_contract": {
+    "placeholders": 0,
+    "render": {
+      "cityjson": {
+        "interior_ring_render_policy": "unfilled_surface_with_all_boundary_rings",
+        "interior_rings_n": 0,
+        "lod": 2.200000,
+        "rings_n": 6,
+        "semantic_counts": {
+          "GroundSurface": 1,
+          "RoofSurface": 1,
+          "WallSurface": 4
+        },
+        "surfaces_n": 6,
+        "surfaces_with_interior_rings_n": 0,
+        "vertices_n": 8
+      },
+      "cityjson_render": {
+        "filled_surfaces_n": 6,
+        "hole_policy": "unfilled_surface_with_all_boundary_rings",
+        "interior_rings_n": 0,
+        "wireframe_only_surfaces_n": 0
+      },
+      "column_order": [
+        "top",
+        "oblique_a",
+        "oblique_b",
+        "principal_side",
+        "detail"
+      ],
+      "frame": {
+        "axis": {
+          "azimuth_deg_from_east": 158.862147,
+          "eigenvalue_ratio": 1.955428,
+          "near_isotropic_fallback": false,
+          "source": "canonical_roofer_cityjson_GroundSurface",
+          "vector_east_north": [
+            -0.932715,
+            0.360613
+          ]
+        },
+        "bounds_source": "frozen_filtered_ALS_seed_plus_TSDF_plus_output_plus_evaluation_only_reference",
+        "cameras": [
+          {
+            "azimuth_deg": 270.000000,
+            "elevation_deg": 90.000000,
+            "key": "top",
+            "projection": "orthographic",
+            "title_en": "Top orthographic",
+            "title_ko": "탑뷰"
+          },
+          {
+            "azimuth_deg": 203.862147,
+            "elevation_deg": 30.000000,
+            "key": "oblique_a",
+            "projection": "orthographic",
+            "title_en": "Oblique A",
+            "title_ko": "사선 A"
+          },
+          {
+            "azimuth_deg": 23.862147,
+            "elevation_deg": 30.000000,
+            "key": "oblique_b",
+            "projection": "orthographic",
+            "title_en": "Opposite oblique B",
+            "title_ko": "반대 사선 B"
+          },
+          {
+            "azimuth_deg": 248.862147,
+            "elevation_deg": 5.000000,
+            "key": "principal_side",
+            "projection": "orthographic",
+            "title_en": "Principal side elevation",
+            "title_ko": "주축 측면"
+          }
+        ],
+        "crs": "EPSG:25832",
+        "local_bounds_xyz": [
+          [
+            -3.156950,
+            3.155950
+          ],
+          [
+            -2.717000,
+            2.717000
+          ],
+          [
+            -0.157488,
+            3.307239
+          ]
+        ],
+        "local_origin_epsg25832_xyz": [
+          690863.257000,
+          5336183.221000,
+          514.484000
+        ],
+        "reference_shared_bounds_influence": true,
+        "reference_view_orientation_influence": false,
+        "source_maximum_xyz": [
+          690866.126000,
+          5336185.691000,
+          517.633751
+        ],
+        "source_minimum_xyz": [
+          690860.387000,
+          5336180.751000,
+          514.484000
+        ],
+        "view_orientation_source": "canonical_roofer_cityjson_GroundSurface",
+        "z_exaggeration": 1.000000
+      },
+      "input_locator": {
+        "footprint_role": "approved GroundSurface XY target locator only; no reference Z, roof faces, roof type, semantics, or final model",
+        "mask_alignment": {
+          "all_views_max": 0.991243,
+          "all_views_median": 0.881975,
+          "all_views_min": 0.000000,
+          "selected_containment_in_projected_locator": 0.980738,
+          "worst_containment": 0.000000,
+          "worst_image_name": "DJI_20241217095127_0070_D.JPG"
+        },
+        "overlay_layers": [
+          "approved_GroundSurface_XY_at_filtered_ALS_q80_upper_median_Z",
+          "actual_filtered_ALS_class6_seed_projection",
+          "actual_valid_supervision_support_M_j"
+        ],
+        "pose_transform_reapplication_count": 0,
+        "projection_height_canonical_z": -40.744000,
+        "selected_image": "DJI_20241217084831_0179_D.JPG",
+        "selection": {
+          "M_j_or_image_pixels_used_for_ranking": false,
+          "candidates_n": 16,
+          "frame_radius": 0.974162,
+          "geometry_eligible_n": 6,
+          "method": "footprint fully in frame, sufficient projected area, then nadir_deg ascending, frame_radius ascending, footprint area descending, selection_order ascending",
+          "nadir_deg": 32.791668,
+          "projected_footprint_area_px2": 2598.904168,
+          "seed_inframe_fraction": 1.000000
+        }
+      },
+      "layout": "5_rows_x_5_columns_single_png",
+      "mesh_faces_displayed_per_view": 17442,
+      "mesh_topology": {
+        "boundary_edges_n": 2742,
+        "edges_n": 27534,
+        "faces_n": 17442,
+        "manifold_edges_n": 24792,
+        "nonmanifold_edges_n": 0
+      },
+      "output_reference_comparison": {
+        "exact_XYZ_coordinate_set_equal": false,
+        "exact_XY_coordinate_set_equal": false,
+        "output_cityjson_sha256": "fd6f9c19d5216eadc4cba94e49b8f886895b9adbe52e6019d190748f60cb1970",
+        "output_unique_xyz_n": 8,
+        "reference_gml_sha256": [
+          "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314",
+          "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674"
+        ],
+        "reference_unique_xyz_n": 8,
+        "roofer_footprint_source_role": "approved_LoD2_GroundSurface_XY_only",
+        "roofer_footprint_source_sha256": "259cf04ec0c9411e669e75f61c37ea634290fcd40b230f6ed9b67328041c87fa"
+      },
+      "row_order": [
+        "input_training",
+        "filtered_als_class6_seed",
+        "tsdf_mesh",
+        "roofer_cityjson_lod22",
+        "output_reference_evaluation_only"
+      ],
+      "seed_points_displayed_per_view": 295
+    },
+    "single_visual_file": true,
+    "visual_filename": "panel.png"
+  },
+  "primary_measurements": {
+    "assembly_lod2_success": true,
+    "assembly_reason": "lod22_geometry_present",
+    "face_count_ratio": 1.000000,
+    "has_lod22_geometry": true,
+    "lod1_fallback": false,
+    "plane_f1": 1.000000,
+    "plane_precision": 1.000000,
+    "plane_recall": 1.000000,
+    "roof_completeness": 0.999715,
+    "roof_hausdorff_m": 0.259492,
+    "roof_rms_m": 0.132732,
+    "val3dity_valid": true,
+    "xy_overlap_ratio": 1.000000
+  },
+  "publication": {
+    "job_directory_atomic_publish": true,
+    "measured_job_only": true,
+    "one_visual_panel_per_job": true,
+    "overwrite_allowed": false,
+    "receipt_written_last": true,
+    "source_inputs_rehashed_after_render": true,
+    "source_inputs_unchanged": true
+  },
+  "reference_gml": {
+    "opened_after_primary_readout_complete": true,
+    "records": [
+      {
+        "bytes": 156656509,
+        "path": "phases/p0-audit/data/raw/lod2/690_5334.gml",
+        "runtime_verification": "path_bytes_and_actual_sha256_rehash_on_every_render_or_check",
+        "sha256": "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314"
+      },
+      {
+        "bytes": 147865939,
+        "path": "phases/p0-audit/data/raw/lod2/690_5336.gml",
+        "runtime_verification": "path_bytes_and_actual_sha256_rehash_on_every_render_or_check",
+        "sha256": "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674"
+      }
+    ],
+    "role": "evaluation_only",
+    "shared_bounds_influence": true,
+    "view_orientation_influence": false
+  },
+  "render_quality": {
+    "height": 4125,
+    "sampled_rgb_std": 53.283120,
+    "sampled_unique_colors": 5424,
+    "width": 4500
+  },
+  "schema": "jointbuildgs.fusion_w1_aprime.job_panel.complete.v4",
+  "scientific_verdict": null,
+  "source_readout_complete": {
+    "bytes": 18095,
+    "path": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/readout/by_building/DEBY_LOD2_42364609/arm_Aprime/r1/complete.json",
+    "sha256": "bfe7e8425efb43ee4ee14fd955c09412b76e8cce5ed58e0563fef03ec436360e"
+  },
+  "source_records": {
+    "approved_footprint_XY": {
+      "bytes": 5521408,
+      "path": "phases/p0-audit/data/work/footprints/lod2_ground_plan.gpkg",
+      "sha256": "259cf04ec0c9411e669e75f61c37ea634290fcd40b230f6ed9b67328041c87fa"
+    },
+    "attempt": {
+      "bytes": 13801,
+      "path": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/readout/by_building/DEBY_LOD2_42364609/arm_Aprime/r1/attempts/attempt_005/attempt.json",
+      "sha256": "ca3670d816d3e1da8fb93d48c4950d89fedf0aabcf3193736653a82eb775409a"
+    },
+    "canonical_roofer_cityjson": {
+      "bytes": 2275,
+      "path": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/readout/by_building/DEBY_LOD2_42364609/arm_Aprime/r1/attempts/attempt_005/primary/engine/by_building/DEBY_LOD2_42364609/cityjson/seed_p0prime.city.json",
+      "sha256": "fd6f9c19d5216eadc4cba94e49b8f886895b9adbe52e6019d190748f60cb1970"
+    },
+    "corrected_cameras": {
+      "bytes": 64,
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364609/sparse/0/cameras.bin",
+      "sha256": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99"
+    },
+    "corrected_poses": {
+      "bytes": 1640,
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364609/sparse/0/images.bin",
+      "sha256": "ae970f81806be8c6addc90bd361d9bd648b1dabd48203dda2c93ceab58f3f01f"
+    },
+    "preprocess_manifest": {
+      "bytes": 98668,
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364609/preprocess_manifest.json",
+      "sha256": "ad780ba86c2d89434d6b480901a4d49dda6efa2128d63e8b7bdd91b94feb7ed0"
+    },
+    "pretraining_seed": {
+      "bytes": 8784,
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364609/seed_class6_filtered_canonical.npz",
+      "sha256": "b45d72aef59ce2a9ee38d7661374c76b930d000b462afa259d8be35c82cacb64"
+    },
+    "primary_roofer_prepare": {
+      "bytes": 10948,
+      "path": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/readout/by_building/DEBY_LOD2_42364609/arm_Aprime/r1/attempts/attempt_005/primary/prepare_receipt.json",
+      "sha256": "259a3204d3d0a7f1cb64dc6e1ded9f97dae09d856cab7c8c104a5193892062dc"
+    },
+    "primary_score": {
+      "bytes": 7295,
+      "path": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/readout/by_building/DEBY_LOD2_42364609/arm_Aprime/r1/attempts/attempt_005/primary/score.json",
+      "sha256": "ae431c661bc162f16e8d786ede8817d82dd3126ab4daa206b9a21dfb7cdb3088"
+    },
+    "readout_complete": {
+      "bytes": 18095,
+      "path": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/readout/by_building/DEBY_LOD2_42364609/arm_Aprime/r1/complete.json",
+      "sha256": "bfe7e8425efb43ee4ee14fd955c09412b76e8cce5ed58e0563fef03ec436360e"
+    },
+    "scene_reference_frame": {
+      "bytes": 1232,
+      "path": "phases/p0-audit/data/work/opf/opf/scene_reference_frame.json",
+      "sha256": "fb408e9c97bdad6af7ad4a6e94be823be294030907ce92e395bd63490f77daf6"
+    },
+    "seed_initialization": {
+      "bytes": 420,
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_42364609/arm_Aprime/r1/audit/seed_initialization.json",
+      "sha256": "8c5f022986d28973361d0d07be8a6fa9b600fa2b1aee487cb2cc340ca63a5dcd"
+    },
+    "seed_lineage": {
+      "bytes": 5818,
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_42364609/arm_Aprime/r1/audit/seed_lineage.csv",
+      "sha256": "592e4ad4604b45b1097bcd93d1fbd0e90e40b50066609fd52fe2b4d69e70e161"
+    },
+    "selected_M_j": {
+      "bytes": 31308,
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217084831_0179_D.JPG.npz",
+      "sha256": "83b4b6fbc48d445dad53238e7c942fbb6cd80d94788fa032b6f7a7884f3dc1b3"
+    },
+    "selected_full_image": {
+      "bytes": 917868,
+      "path": "phases/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217084831_0179_D.JPG",
+      "sha256": "baf2bb255d62977b2486c2c72311af909dab3ae6c43eb3932a57ff39b98cb17b"
+    },
+    "selected_views": {
+      "bytes": 7355,
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364609/views.csv",
+      "sha256": "f2125c52e27b2e3392a83cdcc074acd4f957fa8d94e78985d1d11db34bd3f547"
+    },
+    "supervision_index": {
+      "bytes": 19218,
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_42364609/supervision_index.csv",
+      "sha256": "768329ef32b40c6b8bb044f013a9eb307c2ccabb60b57fb60d78e13b92c572c1"
+    },
+    "training_complete": {
+      "bytes": 5419,
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_42364609/arm_Aprime/r1/completed.json",
+      "sha256": "7e3588d0912bd279549c18e18f148877f4629028afb2623f44f6dc3039ea0f7f"
+    },
+    "tsdf_mesh": {
+      "bytes": 733550,
+      "path": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/readout/by_building/DEBY_LOD2_42364609/arm_Aprime/r1/attempts/attempt_005/tsdf/tsdf_mesh_filtered_epsg25832_orthometric.ply",
+      "sha256": "217d30f0594e9817c1f7d2e6f8a1d8c23b14ae0b6c8abb83658f9a4db24c40bb"
+    },
+    "tsdf_receipt": {
+      "bytes": 17992,
+      "path": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/readout/by_building/DEBY_LOD2_42364609/arm_Aprime/r1/attempts/attempt_005/tsdf/tsdf_receipt.json",
+      "sha256": "992f569f85e8f0b863685c8b38c02c2293cac7c529e5d38a3ca1e1d9f4596bcf"
+    },
+    "tsdf_surface_samples": {
+      "bytes": 94439,
+      "path": "phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/readout/by_building/DEBY_LOD2_42364609/arm_Aprime/r1/attempts/attempt_005/tsdf/tsdf_surface_samples.npz",
+      "sha256": "c8f9c37faa863d7d1b0ef080a98e59c37fb98d6adb6b75b5d552109b8954f48b"
+    }
+  },
+  "state": "COMPLETE",
+  "task_id": "FUS-W1-APRIME-JOB-PANEL-V4-001"
+}

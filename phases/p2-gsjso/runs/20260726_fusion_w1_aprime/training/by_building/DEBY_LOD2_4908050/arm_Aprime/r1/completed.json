@@ -1,0 +1,127 @@
+{
+  "arm": "Aprime",
+  "building_id": "DEBY_LOD2_4908050",
+  "created_at": "2026-07-27T10:18:13.881287+00:00",
+  "docker_compose_pid": 3031607,
+  "elapsed_seconds": 4846.695263631642,
+  "job_key": "full/DEBY_LOD2_4908050/arm_Aprime/r1",
+  "log": {
+    "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_4908050/arm_Aprime/r1/training.log",
+    "sha256": "43353ca4798ec607a745e9ced59d78abfa9a9c67e1bb56d5081e1c5690020b8b"
+  },
+  "materialization": {
+    "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_4908050/arm_Aprime/r1/materialization_manifest.json",
+    "sha256": "d35f00ed404473f0ca6502fe6e3eac5009a5164902ba4181e7183e5014cf1453"
+  },
+  "profile": "full",
+  "replicate": "r1",
+  "return_code": 0,
+  "run_id": "20260726_fusion_w1_aprime",
+  "schema": "jointbuildgs.fusion_w1_aprime.training_completed.v1",
+  "scientific_verdict": null,
+  "seed": 1001,
+  "started_receipt": {
+    "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_4908050/arm_Aprime/r1/started.json",
+    "sha256": "0e0e9b457b9c68b632fb3999efc62a9e6429c8f1d715d0fe428b6ded04fea7a4"
+  },
+  "status": "COMPLETED",
+  "task_id": "FUS-W1-APRIME-TRAIN-001",
+  "training_completion": {
+    "checkpoint": {
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_4908050/arm_Aprime/r1/ckpt/step_030000.pt",
+      "sha256": "87b0d4fc7a8850e1f216593d3379632d3031a4d915e8b51c304eac5c5a8d6c61"
+    },
+    "completed_optimizer_updates": 30000,
+    "effective_config": {
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_4908050/arm_Aprime/r1/effective_config.json",
+      "sha256": "3df1f20b08d01a8acde320fc80e3d121669c37387514e2844e9314cf2b9f556a",
+      "validation": {
+        "checked": {
+          "depth_alignment_detach_scale": true,
+          "depth_base_weight": 0.5,
+          "depth_final_weight": 0.05,
+          "depth_prior_alignment": "alpha_lsq",
+          "depth_ramp_steps": 15000,
+          "depth_schedule": "constant_then_exp_decay",
+          "depth_warmup": 15000,
+          "distort_normalization": "scene_scale_sq",
+          "distort_ramp_steps": 5000,
+          "distort_schedule": "ramp",
+          "distort_warmup": 15000,
+          "elongation_filter": false,
+          "final_prune_opa": 0.0,
+          "grow_grad2d": 0.0002,
+          "legacy_mvs_seed_protect": false,
+          "mvs_seed_init_opacity": 0.1,
+          "nc_ramp_steps": 5000,
+          "nc_schedule": "ramp",
+          "nc_warmup": 15000,
+          "normal_final_weight": 0.005,
+          "normal_prior_orientation": "signed",
+          "normal_ramp_steps": 15000,
+          "normal_schedule": "constant_then_exp_decay",
+          "normal_warmup": 15000,
+          "prune_opa": 0.005,
+          "refine_every": 100,
+          "refine_start_iter": 500,
+          "refine_stop_iter": 15000,
+          "reset_every": 3000,
+          "seed_lineage_audit": true,
+          "seed_protect": false,
+          "seed_protected_lineage": "none",
+          "surface_seed_protect": false,
+          "w_distort": 100.0,
+          "w_nc": 0.05
+        },
+        "status": "PASSED"
+      }
+    },
+    "final_checkpoint": {
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_4908050/arm_Aprime/r1/ckpt/final.pt",
+      "sha256": "24fa620dd8b1e424d17377ce9d57fdad845419071afc00b3917374364a6d3cda"
+    },
+    "full_state_manifest": {
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_4908050/arm_Aprime/r1/full_state_manifest.json",
+      "sha256": "eb90e5479426cdee94a735fe4a1daa21af583066de95e942c8cc9689a3b99579"
+    },
+    "loss_grad_audit": {
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_4908050/arm_Aprime/r1/audit/loss_grad_norms.csv",
+      "sha256": "6fa1769305613472fd06eab3e1eb9baf141452db4eb0d05ed62c89414ec745f7"
+    },
+    "mini_smoke_term_evidence": null,
+    "profile": "full",
+    "seed_lineage_audit": {
+      "cumulative_seed_protected": 0,
+      "final_observation": {
+        "iteration": 29500,
+        "opacity_median": 0.017750633880496025,
+        "seed_lineage_count": 357066
+      },
+      "first_post_dynamics_observation": {
+        "iteration": 0,
+        "opacity_median": 0.009999998845160007,
+        "seed_lineage_count": 1404
+      },
+      "initial": {
+        "iteration": 0,
+        "observation_phase": "initialization_pre_dynamics",
+        "opacity_median": 0.10000000149011612,
+        "requested_opacity": 0.1,
+        "seed_lineage_count": 1404
+      },
+      "initialization_receipt": {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_4908050/arm_Aprime/r1/audit/seed_initialization.json",
+        "sha256": "a18ce40555f59aaa2df16a744f80690b843d0b7fe0ccd8dd3fd2a0693171dfe9"
+      },
+      "maximum_cumulative_prune_candidates": 412474,
+      "maximum_cumulative_pruned": 412474,
+      "minimum_seed_lineage_count": 1404,
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_4908050/arm_Aprime/r1/audit/seed_lineage.csv",
+      "protection_active": false,
+      "rows_n": 60,
+      "sha256": "9918e30bead5b1f6585a062dc8e92e64508d3dc98e087c4451f2554ce2e64c23",
+      "status": "PASSED"
+    },
+    "status": "PASSED"
+  }
+}
