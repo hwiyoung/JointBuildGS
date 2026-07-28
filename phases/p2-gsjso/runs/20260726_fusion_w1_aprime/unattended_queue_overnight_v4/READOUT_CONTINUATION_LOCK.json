@@ -1,0 +1,20 @@
+{
+  "schema": "jointbuildgs.fusion_w1_aprime.queue_continuation_lock.v1",
+  "task_id": "FUS-W1-APRIME-READOUT-CACHEFIX-OVERNIGHT-V4-LOCK-001",
+  "state": "LOCKED_BEFORE_REMAINING_JOB_START",
+  "created_at": "2026-07-27T23:26:54+09:00",
+  "branch": "exp/fusion-w1",
+  "scope": {
+    "remaining_jobs": 20,
+    "physical_gpu": 1
+  },
+  "binding": {
+    "continuation_root": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_overnight_v4",
+    "purpose": "readout_cache_probe_and_ephemeral_lock_quarantine_only",
+    "existing_v2_namespace_mutated": false,
+    "scientific_configuration_changed": false,
+    "new_training_runs_allowed": 0
+  },
+  "scientific_verdict": null,
+  "interpretation": null
+}

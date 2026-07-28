@@ -268,3 +268,39 @@ ninja: build stopped: subcommand failed.
 - error_type: `ExternalStageError`
 - message: `wrapper stage exited nonzero: status=1`
 - action: attempt artifacts and failure receipt retained; no verdict emitted.
+
+## FUS-W1-APRIME-QUEUE-CACHE-PROVENANCE-002 — 공용 cache probe HEAD 충돌로 continuation 중단
+
+- Recorded: 2026-07-27 23:30 KST
+- Status: SOURCE FAILURE PRESERVED; NEW-NAMESPACE RECOVERY PREPARED
+- 대상 제어 namespace:
+  `unattended_queue_continuation_v3_repair1` (HEAD
+  `191b5652be6d38a81a3cba7ab05cd3db4ffbe796`).
+- `DEBY_LOD2_42364663`, `DEBY_LOD2_4907182`, `DEBY_LOD2_4907510`의 readout은
+  scientific attempt 생성 전에 같은 cache probe 오류를 각각 3회 기록했다:
+  기존 receipt HEAD `598eff0805e315b7f2e05da1041afa745b9f8a8b` 대 실행 HEAD
+  `191b5652be6d38a81a3cba7ab05cd3db4ffbe796` 불일치.
+- 같은 오류 유형 3동 연속 규칙에 따라 기존 namespace는
+  `STOPPED_THREE_CONSECUTIVE_BUILDING_SKIPS`로 닫혔고, 해당 stage-stop·complete·action
+  logs는 수정하지 않는다. 이는 `PermissionError`가 아니라 append-only cache probe
+  provenance 경로를 서로 다른 실행 HEAD가 공유한 제어 오류다.
+- 회복은 기존 receipt를 삭제·완화하지 않고 새
+  `unattended_queue_overnight_v4` 아래 별도 cache probe receipt와 quarantine을
+  발행하는 방식으로 제한한다. 과학 레시피·명단·failure threshold는 바꾸지 않는다.
+- 본 항목은 실행 상태·오류·회복 범위 기록이며 과학적 판정을 포함하지 않는다.
+
+## FUS-W1-APRIME-PANEL-SEMANTICS-001 — v3 첫 행의 M_j 오표기·대표뷰 선택 혼동
+
+- Recorded: 2026-07-27 23:30 KST
+- Status: CORRECTED IN REVIEW V4; V3 ARTIFACTS PRESERVED
+- v3 패널 첫 행은 실제 투영 ALS 시드나 지붕 실루엣이 아니라 유효 감독 마스크
+  `M_j`를 표시했지만 제목은 target roof silhouette로 표기했고, 대표 영상도
+  `mask_pixels_n` 최대값으로 골라 건물 위치와 감독 범위를 구분하기 어려웠다.
+- v4는 승인된 GroundSurface XY locator(금색), 실제 filtered ALS class 6 투영(녹색),
+  실제 `M_j`(청록)를 분리한다. 대표뷰는 영상·M_j 픽셀값을 순위에 쓰지 않고
+  footprint in-frame, 투영 면적, nadir, frame radius 순의 기하 기준으로 고정한다.
+- ALS 시드, TSDF mesh, Roofer CityJSON, output/reference는 동일한 top·양방향 사선·
+  주축 측면 카메라와 Z 배율 1로 한 PNG에 배치한다. 참조 GML은 readout 동결 뒤
+  evaluation-only 중첩에만 사용한다.
+- 기존 v3 파일은 소급 덮어쓰지 않고 `review_v4`를 별도 namespace로 발행한다.
+- 본 항목은 표시 계약의 수정 기록이며 결과 해석이나 합격/불합격 판정을 포함하지 않는다.

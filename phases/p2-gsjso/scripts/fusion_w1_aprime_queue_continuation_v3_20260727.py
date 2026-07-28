@@ -34,6 +34,10 @@ REPO = Path(__file__).resolve().parents[3]
 CONTAINER_REPO = Path("/workspace/JointBuildGS")
 DEFAULT_CONFIG = REPO / "phases/p2-gsjso/configs/fusion_w1_aprime_queue_continuation_v3_20260727.json"
 CONFIG_SCHEMA = "jointbuildgs.fusion_w1_aprime.unattended_continuation_v3.config.v1"
+CONFIG_SCHEMAS = {
+    CONFIG_SCHEMA,
+    "jointbuildgs.fusion_w1_aprime.unattended_queue_overnight_v4.config.v1",
+}
 PLAN_SCHEMA = "jointbuildgs.fusion_w1_aprime.unattended_continuation_v3.plan.v1"
 PAIR_SCHEMA = "jointbuildgs.fusion_w1_aprime.unattended_continuation_v3.pair_barrier.v1"
 STAGE_RECORD_SCHEMA = "jointbuildgs.fusion_w1_aprime.unattended_continuation_v3.stage_record.v1"
@@ -48,9 +52,10 @@ STATUS_SCHEMA = "jointbuildgs.fusion_w1_aprime.unattended_continuation_v3.status
 STOP_SCHEMA = "jointbuildgs.fusion_w1_aprime.unattended_continuation_v3.stage_stop.v1"
 COMPLETE_SCHEMA = "jointbuildgs.fusion_w1_aprime.unattended_continuation_v3.complete.v1"
 QUAL_SCHEMA = "jointbuildgs.fusion_w1_aprime.job_qualitative.complete.v3"
+PANEL_V4_SCHEMA = "jointbuildgs.fusion_w1_aprime.job_panel.complete.v4"
 TERMINAL = {"MEASURED", "SKIPPED"}
 TRAINING_READY = {"TRAINED", "READOUT", "READOUT_FAILED", "QUANTITATIVE_COMPLETE", "READY_MEASURED", "MEASURED", "SKIPPED"}
-_QUALITATIVE_CONTEXT: tuple[Any, dict[str, Any]] | None = None
+_QUALITATIVE_CONTEXT: dict[tuple[str, str, str], tuple[Any, dict[str, Any], dict[str, Any] | None]] = {}
 
 
 class V3Error(RuntimeError):
@@ -201,15 +206,38 @@ def output_path(config: Mapping[str, Any], key: str) -> Path:
     return repo_path(value) if len(value.parts) > 1 else root / value
 
 
+def _deep_update(target: dict[str, Any], updates: Mapping[str, Any]) -> dict[str, Any]:
+    for key, value in updates.items():
+        if isinstance(value, Mapping) and isinstance(target.get(key), dict):
+            _deep_update(target[key], value)
+        else:
+            target[key] = copy.deepcopy(value)
+    return target
+
+
 def load_config(path: Path = DEFAULT_CONFIG) -> dict[str, Any]:
     config_path = repo_path(path)
     config = load_json(config_path)
-    require_equal(config.get("schema"), CONFIG_SCHEMA, "v3 config schema")
-    require_equal(config.get("task_id"), "FUS-W1-APRIME-QUEUE-CONTINUATION-V3-001", "task")
+    if config.get("schema") == "jointbuildgs.fusion_w1_aprime.unattended_queue_overnight_v4.config.v1" and "extends" in config:
+        base_record = config["extends"]
+        base_path = verify_record(base_record, "overnight base queue config")
+        base = load_json(base_path)
+        overrides = config.get("overrides")
+        if not isinstance(overrides, Mapping):
+            raise V3Error("overnight config overrides are absent")
+        merged = _deep_update(copy.deepcopy(base), overrides)
+        merged["schema"] = config["schema"]
+        merged["extends"] = dict(base_record)
+        config = merged
+    if config.get("schema") not in CONFIG_SCHEMAS:
+        raise V3Error(f"unsupported queue config schema: {config.get('schema')!r}")
+    if not isinstance(config.get("task_id"), str) or not config["task_id"]:
+        raise V3Error("queue task ID is absent")
     require_equal(config.get("branch"), "exp/fusion-w1", "branch")
     require_equal(config["sequence_contract"].get("source_entries"), 20, "source entries")
     require_equal(config["sequence_contract"].get("reused_jobs"), 1, "reused jobs")
-    require_equal(config["sequence_contract"].get("new_training_jobs"), 19, "new jobs")
+    expected_new_jobs = 15 if config.get("contract_profile") == "overnight_v4" else 19
+    require_equal(config["sequence_contract"].get("new_training_jobs"), expected_new_jobs, "new jobs")
     require_equal(config["sequence_contract"].get("terminal_jobs"), 20, "terminal jobs")
     require_equal(config["sequence_contract"].get("pair_count"), 11, "pair count")
     require_equal(config["resources"].get("maximum_concurrent_training"), 2, "training concurrency")
@@ -218,7 +246,19 @@ def load_config(path: Path = DEFAULT_CONFIG) -> dict[str, Any]:
     require_equal(config["resources"].get("readout_concurrent_with_training"), False, "readout overlap")
     require_equal(config["failure_contract"].get("same_error_signature_attempts_before_skip"), 3, "retry threshold")
     require_equal(config["failure_contract"].get("same_error_type_consecutive_buildings_before_stage_stop"), 3, "stage-stop threshold")
-    require_equal(config["qualitative_hook"].get("receipt_schema"), QUAL_SCHEMA, "qualitative schema")
+    hook = config["qualitative_hook"]
+    kind = hook.get("kind", "qualitative_v3")
+    if kind not in {"qualitative_v3", "panel_v4"}:
+        raise V3Error(f"unsupported qualitative hook kind: {kind!r}")
+    expected_schema = QUAL_SCHEMA if kind == "qualitative_v3" else PANEL_V4_SCHEMA
+    require_equal(hook.get("receipt_schema"), expected_schema, "qualitative hook schema")
+    if not isinstance(hook.get("locked_input_keys"), Mapping):
+        hook["locked_input_keys"] = {
+            "config": "qualitative_config",
+            "renderer": "qualitative_renderer",
+            "wrapper": "qualitative_wrapper",
+            "test": "qualitative_test",
+        }
     require_equal(config["publication"].get("interpretation_or_verdict"), None, "verdict lock")
     require_equal(relative(config_path), config["implementation_files"][0], "config path")
     return config
@@ -505,6 +545,92 @@ def verify_repair_contract(
     }
 
 
+def _verify_record_tree(value: Any, label: str) -> list[dict[str, Any]]:
+    records: list[dict[str, Any]] = []
+    if isinstance(value, Mapping):
+        if isinstance(value.get("path"), str) and isinstance(value.get("sha256"), str):
+            path = verify_record(value, label)
+            observed = file_record(path, allow_empty=int(value.get("bytes", 1)) == 0)
+            require_equal(observed, dict(value), f"{label} record")
+            records.append(observed)
+        else:
+            for key, nested in value.items():
+                records.extend(_verify_record_tree(nested, f"{label}.{key}"))
+    elif isinstance(value, list):
+        for index, nested in enumerate(value):
+            records.extend(_verify_record_tree(nested, f"{label}[{index}]"))
+    return records
+
+
+def verify_overnight_recovery_contract(
+    config: Mapping[str, Any],
+    entries: Sequence[Mapping[str, Any]],
+    pairs: Sequence[Mapping[str, Any]],
+) -> dict[str, Any]:
+    expected = config["locked_inputs"]["recovery_contract"]
+    path = repo_path(expected["path"])
+    require_equal(file_record(path)["sha256"], expected["sha256"], "overnight recovery lock SHA")
+    contract = load_json(path)
+    require_equal(contract.get("schema"), "jointbuildgs.fusion_w1_aprime.unattended_queue_overnight_v4.recovery_lock.v1", "overnight recovery schema")
+    require_equal(contract.get("state"), "LOCKED_FOR_OVERNIGHT_RECOVERY", "overnight recovery state")
+    require_equal(contract.get("task_id"), config["task_id"], "overnight recovery task")
+    require_equal(contract.get("branch"), config["branch"], "overnight recovery branch")
+    require_equal(contract.get("interpretation_or_verdict"), None, "overnight recovery verdict")
+    source = contract["source_failed_control"]
+    require_equal(source.get("namespace"), config["recovery_contract"]["source_namespace"], "overnight source namespace")
+    require_equal(source.get("terminal_state"), "STOPPED_THREE_CONSECUTIVE_BUILDING_SKIPS", "overnight source terminal state")
+    failure = source["failure"]
+    require_equal(failure.get("error_type"), "CacheProbeHeadMismatch", "overnight failure type")
+    require_equal(failure.get("producer_head"), config["historical_training_reuse_contract"]["producer_head"], "overnight failure producer HEAD")
+    require_equal(failure.get("source_fixed"), True, "overnight source-fixed flag")
+    records = _verify_record_tree(source.get("records"), "overnight source record")
+    reuse = contract["historical_training_reuse"]
+    require_equal(reuse.get("producer_head"), config["historical_training_reuse_contract"]["producer_head"], "overnight reuse producer HEAD")
+    require_equal(reuse.get("allowed_jobs"), config["historical_training_reuse_contract"]["allowed_jobs"], "overnight reuse jobs")
+    require_equal(reuse.get("producer_head_must_be_ancestor"), True, "overnight ancestor rule")
+    require_equal(reuse.get("method_files_must_be_current_identical"), True, "overnight method rule")
+    records.extend(_verify_record_tree(reuse.get("records"), "overnight historical training record"))
+    scope = contract["recovery_scope"]
+    require_equal(scope.get("new_control_namespace"), config["outputs"]["root"], "overnight output namespace")
+    require_equal(scope.get("old_control_namespace_mutation_allowed"), False, "overnight old namespace mutation")
+    require_equal(scope.get("scientific_recipe_changed"), False, "overnight scientific recipe")
+    require_equal(scope.get("target_list_changed"), False, "overnight target list")
+    require_equal(scope.get("pair_schedule_changed"), False, "overnight pair schedule")
+    require_equal(scope.get("panel_hook"), config["qualitative_hook"]["wrapper"], "overnight panel hook")
+    readout_record = scope.get("source_fixed_readout_config")
+    if not isinstance(readout_record, Mapping):
+        raise V3Error("overnight source-fixed readout config record is absent")
+    require_equal(readout_record, config["locked_inputs"]["readout_config"], "overnight/readout config lock")
+    records.extend(_verify_record_tree(readout_record, "overnight source-fixed readout config"))
+    records.extend(_verify_record_tree(scope.get("readout_continuation_lock"), "overnight readout continuation lock"))
+    require_equal(len(entries), 20, "overnight entries")
+    require_equal(len(pairs), 11, "overnight pairs")
+    return {
+        "contract": file_record(path),
+        "markdown": file_record(repo_path(config["locked_inputs"]["recovery_contract_markdown"]["path"])),
+        "source_records_n": len(records),
+        "producer_head": reuse["producer_head"],
+        "old_namespace_mutation_allowed": False,
+        "scientific_recipe_changed": False,
+    }
+
+
+def control_contracts(
+    config: Mapping[str, Any],
+    entries: Sequence[Mapping[str, Any]],
+    pairs: Sequence[Mapping[str, Any]],
+) -> dict[str, Any]:
+    profile = config.get("contract_profile", "continuation_v3_repair1")
+    if profile == "continuation_v3_repair1":
+        return {
+            "continuation_contract": verify_continuation_contract(config, entries, pairs),
+            "repair_contract": verify_repair_contract(config, entries, pairs),
+        }
+    if profile == "overnight_v4":
+        return {"recovery_contract": verify_overnight_recovery_contract(config, entries, pairs)}
+    raise V3Error(f"unsupported queue contract profile: {profile!r}")
+
+
 def identity(entry: Mapping[str, Any]) -> dict[str, str]:
     return {"building_id": str(entry["building_id"]), "arm": str(entry["arm"]), "replicate": str(entry["replicate"]), "profile": "full"}
 
@@ -625,8 +751,7 @@ def initialize(config: Mapping[str, Any], config_path: Path) -> dict[str, Any]:
     preflight = verify_training_preflight(config)
     source, source_record = source_plan(config)
     entries, pairs = build_v3_plan(source["entries"])
-    continuation_contract = verify_continuation_contract(config, entries, pairs)
-    repair_contract = verify_repair_contract(config, entries, pairs)
+    contracts = control_contracts(config, entries, pairs)
     source_gate = verify_source_reuse(config, entries[0])
     plan_path = output_path(config, "plan")
     boundary_path = output_path(config, "source_boundary_receipt")
@@ -639,12 +764,20 @@ def initialize(config: Mapping[str, Any], config_path: Path) -> dict[str, Any]:
         require_equal(boundary.get("training_preflight"), preflight, "source boundary/current preflight")
         require_equal(boundary.get("source_v2_plan"), source_record, "source boundary plan")
         require_equal(boundary.get("source_v2_gate"), source_gate, "source boundary gate")
-        require_equal(boundary.get("continuation_contract"), continuation_contract, "source boundary continuation contract")
-        require_equal(boundary.get("repair_contract"), repair_contract, "source boundary repair contract")
+        for key, value in contracts.items():
+            require_equal(boundary.get(key), value, f"source boundary {key}")
         require_equal(boundary.get("source_v2_driver_lock_free"), True, "source boundary lock proof")
         require_equal(boundary.get("source_v2_namespace_rewritten"), False, "source boundary immutability")
     else:
-        no_advance = ensure_source_not_advanced(config, entries)
+        no_advance = (
+            ensure_source_not_advanced(config, entries)
+            if config.get("contract_profile", "continuation_v3_repair1") == "continuation_v3_repair1"
+            else {
+                "recovery_source_rehashed": True,
+                "historical_canonical_training_outputs_preserved": True,
+                "source_control_namespace_rewritten": False,
+            }
+        )
         boundary = {
             "schema": "jointbuildgs.fusion_w1_aprime.unattended_continuation_v3.source_boundary.v1",
             "state": "LOCKED",
@@ -654,8 +787,7 @@ def initialize(config: Mapping[str, Any], config_path: Path) -> dict[str, Any]:
             "training_preflight": preflight,
             "source_v2_plan": source_record,
             "source_v2_gate": source_gate,
-            "continuation_contract": continuation_contract,
-            "repair_contract": repair_contract,
+            **contracts,
             "source_v2_driver_lock": file_record(source_lock, allow_empty=True),
             "source_v2_driver_lock_free": True,
             "source_not_advanced": no_advance,
@@ -675,16 +807,15 @@ def initialize(config: Mapping[str, Any], config_path: Path) -> dict[str, Any]:
         "source_v2_plan": source_record,
         "source_v2_plan_snapshot_sha256": hashlib.sha256(canonical_json(source)).hexdigest(),
         "source_v2_gate": source_gate,
-        "continuation_contract": continuation_contract,
-        "repair_contract": repair_contract,
+        **contracts,
         "source_boundary_receipt": file_record(boundary_path),
         "source_v2_namespace_rewritten": False,
         "sequence_contract": config["sequence_contract"],
         "failure_contract": config["failure_contract"],
         "entries": entries,
         "pairs": pairs,
-        "terminal_jobs_n": 20,
-        "new_training_jobs_n": 19,
+        "terminal_jobs_n": int(config["sequence_contract"]["terminal_jobs"]),
+        "new_training_jobs_n": int(config["sequence_contract"]["new_training_jobs"]),
         "interpretation_or_verdict": None,
     }
     if plan_path.exists() or plan_path.is_symlink():
@@ -694,7 +825,7 @@ def initialize(config: Mapping[str, Any], config_path: Path) -> dict[str, Any]:
         return {**observed, "publication_reused": True}
     expected["created_at"] = now_iso()
     exclusive_json(plan_path, expected)
-    append_event(config, "V3_QUEUE_INITIALIZED", {"plan": file_record(plan_path), "source_gate": source_gate, "pairs_n": 11})
+    append_event(config, "QUEUE_INITIALIZED", {"plan": file_record(plan_path), "source_gate": source_gate, "pairs_n": len(pairs), "contract_profile": config.get("contract_profile", "continuation_v3_repair1")})
     return expected
 
 
@@ -707,20 +838,19 @@ def load_plan(config: Mapping[str, Any], *, runtime_gate: bool = True) -> dict[s
     require_equal(plan.get("source_v2_plan"), source_record, "v3/source plan record")
     require_equal(plan.get("source_v2_plan_snapshot_sha256"), hashlib.sha256(canonical_json(source)).hexdigest(), "v3/source plan snapshot")
     entries, pairs = build_v3_plan(source["entries"])
-    continuation_contract = verify_continuation_contract(config, entries, pairs)
-    repair_contract = verify_repair_contract(config, entries, pairs)
+    contracts = control_contracts(config, entries, pairs)
     require_equal(plan.get("entries"), entries, "v3 plan entries")
     require_equal(plan.get("pairs"), pairs, "v3 plan pairs")
-    require_equal(plan.get("continuation_contract"), continuation_contract, "v3 continuation contract")
-    require_equal(plan.get("repair_contract"), repair_contract, "v3 repair contract")
+    for key, value in contracts.items():
+        require_equal(plan.get(key), value, f"queue plan {key}")
     boundary_path = output_path(config, "source_boundary_receipt")
     boundary = load_json(boundary_path)
     require_equal(boundary.get("schema"), "jointbuildgs.fusion_w1_aprime.unattended_continuation_v3.source_boundary.v1", "source boundary schema")
     require_equal(plan.get("source_boundary_receipt"), file_record(boundary_path), "plan/source boundary")
     require_equal(boundary.get("source_v2_plan"), source_record, "source boundary/current source plan")
     require_equal(boundary.get("source_v2_gate"), verify_source_reuse(config, entries[0]), "source boundary/current source gate")
-    require_equal(boundary.get("continuation_contract"), continuation_contract, "source boundary/current continuation contract")
-    require_equal(boundary.get("repair_contract"), repair_contract, "source boundary/current repair contract")
+    for key, value in contracts.items():
+        require_equal(boundary.get(key), value, f"source boundary/current {key}")
     require_equal(boundary.get("source_v2_driver_lock_free"), True, "source boundary lock free")
     if lock_is_busy_readonly(repo_path(config["source_v2"]["driver_lock"]), require_exists=True):
         raise V3Error("source v2 driver lock became busy")
@@ -799,17 +929,25 @@ def _file_records(value: Any) -> list[Mapping[str, Any]]:
     return records
 
 
-def qualitative_context(config: Mapping[str, Any]) -> tuple[Any, dict[str, Any]]:
-    global _QUALITATIVE_CONTEXT
-    for key in ("qualitative_config", "qualitative_renderer", "qualitative_wrapper", "qualitative_test"):
+def qualitative_context(config: Mapping[str, Any]) -> tuple[Any, dict[str, Any], dict[str, Any] | None]:
+    hook = config["qualitative_hook"]
+    kind = hook.get("kind", "qualitative_v3")
+    keys = hook["locked_input_keys"]
+    for role in ("config", "renderer", "wrapper", "test"):
+        key = keys[role]
         expected = config["locked_inputs"][key]
         require_equal(sha256_file(repo_path(expected["path"])), expected["sha256"], f"qualitative method {key}")
-    if _QUALITATIVE_CONTEXT is None:
-        renderer_path = repo_path(config["locked_inputs"]["qualitative_renderer"]["path"])
-        renderer = load_module("fusion_w1_aprime_job_qualitative_for_queue_v3", renderer_path)
-        qualitative_config_path = repo_path(config["locked_inputs"]["qualitative_config"]["path"])
-        _QUALITATIVE_CONTEXT = (renderer, renderer.load_config(qualitative_config_path))
-    return _QUALITATIVE_CONTEXT
+    renderer_path = repo_path(config["locked_inputs"][keys["renderer"]]["path"])
+    qualitative_config_path = repo_path(config["locked_inputs"][keys["config"]]["path"])
+    cache_key = (kind, relative(renderer_path), relative(qualitative_config_path))
+    if cache_key not in _QUALITATIVE_CONTEXT:
+        renderer = load_module(f"fusion_w1_aprime_job_review_for_queue_{kind}", renderer_path)
+        if kind == "panel_v4":
+            panel_config, base_config = renderer.load_panel_config(qualitative_config_path)
+            _QUALITATIVE_CONTEXT[cache_key] = (renderer, panel_config, base_config)
+        else:
+            _QUALITATIVE_CONTEXT[cache_key] = (renderer, renderer.load_config(qualitative_config_path), None)
+    return _QUALITATIVE_CONTEXT[cache_key]
 
 
 def verify_qualitative_complete(config: Mapping[str, Any], entry: Mapping[str, Any]) -> dict[str, Any] | None:
@@ -817,24 +955,35 @@ def verify_qualitative_complete(config: Mapping[str, Any], entry: Mapping[str, A
     if not path.exists() and not path.is_symlink():
         return None
     payload = load_json(path)
-    renderer, qualitative_config = qualitative_context(config)
+    context = qualitative_context(config)
+    if len(context) == 2:  # compatibility with v3 test doubles and older callers
+        renderer, qualitative_config = context
+        base_config = None
+    else:
+        renderer, qualitative_config, base_config = context
     try:
-        fully_verified = renderer.verify_bundle(
-            qualitative_config,
-            entry["building_id"],
-            entry["arm"],
-            entry["replicate"],
-            None,
-        )
+        if config["qualitative_hook"].get("kind", "qualitative_v3") == "panel_v4":
+            fully_verified = renderer.verify_bundle(
+                qualitative_config, base_config, entry["building_id"], entry["arm"], entry["replicate"], None
+            )
+        else:
+            fully_verified = renderer.verify_bundle(
+                qualitative_config, entry["building_id"], entry["arm"], entry["replicate"], None
+            )
     except Exception as exc:
         raise V3Error(f"qualitative full bundle verification failed: {exc}") from exc
     require_equal(fully_verified, payload, "qualitative renderer full verification payload")
-    require_equal(payload.get("schema"), QUAL_SCHEMA, "qualitative receipt schema")
+    require_equal(payload.get("schema"), config["qualitative_hook"]["receipt_schema"], "qualitative receipt schema")
     require_equal(payload.get("state"), "COMPLETE", "qualitative state")
     require_equal(payload.get("measurement_state"), "MEASURED", "qualitative measurement state")
     require_equal(payload.get("identity"), {"run_id": config["run_id"], "building_id": entry["building_id"], "arm": entry["arm"], "replicate": entry["replicate"]}, "qualitative identity")
-    require_equal(payload.get("placeholder_count"), 0, "qualitative placeholders")
-    require_equal(payload.get("components"), {key: True for key in "ABCDEFGHI"}, "qualitative components")
+    if config["qualitative_hook"].get("kind", "qualitative_v3") == "panel_v4":
+        require_equal(payload.get("panel_contract", {}).get("placeholders"), 0, "panel v4 placeholders")
+        require_equal(payload.get("panel_contract", {}).get("single_visual_file"), True, "panel v4 single visual")
+        require_equal(payload.get("publication", {}).get("one_visual_panel_per_job"), True, "panel v4 publication")
+    else:
+        require_equal(payload.get("placeholder_count"), 0, "qualitative placeholders")
+        require_equal(payload.get("components"), {key: True for key in "ABCDEFGHI"}, "qualitative components")
     if payload.get("scientific_verdict") is not None or payload.get("interpretation_or_verdict") is not None or payload.get("interpretation") is not None:
         raise V3Error("qualitative receipt contains a scientific verdict")
     source = payload.get("source_readout_complete")
@@ -853,8 +1002,8 @@ def verify_qualitative_complete(config: Mapping[str, Any], entry: Mapping[str, A
     artifact_paths = [verify_record(record, "qualitative artifact") for record in records]
     if path.stat().st_mtime_ns < max(item.stat().st_mtime_ns for item in artifact_paths):
         raise V3Error("qualitative complete receipt was not written after its artifacts")
-    # verify_bundle above independently rehashes all source_records, locked
-    # reference GML, and its current four-file implementation snapshot.
+    # The selected renderer independently rehashes its full implementation and
+    # source/reference closure before this queue accepts the receipt.
     return {"receipt": file_record(path), "payload": payload, "source_readout_complete": file_record(source_path)}
 
 
@@ -862,6 +1011,86 @@ def training_job(config: Mapping[str, Any], entry: Mapping[str, Any]) -> tuple[A
     module, training_config, config_path = training_context(config)
     path = module.job_dir(REPO, training_config, entry["building_id"], entry["arm"], entry["replicate"], "full")
     return module, training_config, config_path, path
+
+
+def _producer_record(path: Path) -> dict[str, Any]:
+    record = file_record(path)
+    return {"path": record["path"], "sha256": record["sha256"]}
+
+
+def verify_historical_training_binding(
+    config: Mapping[str, Any],
+    module: Any,
+    training_config: Mapping[str, Any],
+    entry: Mapping[str, Any],
+    materialized: Path,
+    completed: Path,
+) -> dict[str, Any]:
+    contract = config.get("historical_training_reuse_contract")
+    if not isinstance(contract, Mapping) or contract.get("enabled") is not True:
+        raise V3Error("historical training reuse is not enabled")
+    expected_identity = identity(entry)
+    if expected_identity not in contract.get("allowed_jobs", []):
+        raise V3Error(f"historical training job is not allowlisted: {expected_identity}")
+    materialization = load_json(materialized)
+    require_equal(materialization.get("schema"), module.MATERIALIZATION_SCHEMA, "historical materialization schema")
+    require_equal(materialization.get("status"), "PASSED", "historical materialization status")
+    for key, expected in expected_identity.items():
+        require_equal(materialization.get("replicate" if key == "replicate" else key), expected, f"historical materialization {key}")
+    producer_method = materialization.get("git")
+    if not isinstance(producer_method, Mapping):
+        raise V3Error("historical producer method is absent")
+    producer_head = str(producer_method.get("head", ""))
+    require_equal(producer_head, contract["producer_head"], "historical producer HEAD")
+    current_method = module.committed_method_gate(REPO, training_config)
+    current_head = str(current_method["head"])
+    if re.fullmatch(r"[0-9a-f]{40}", producer_head) is None:
+        raise V3Error("historical producer HEAD is malformed")
+    if git("merge-base", "--is-ancestor", producer_head, current_head, check=False).returncode:
+        raise V3Error("historical producer HEAD is not an ancestor of current HEAD")
+    require_equal(producer_method.get("branch"), current_method.get("branch"), "historical method branch")
+    require_equal(producer_method.get("files"), current_method.get("files"), "historical/current method file SHA list")
+    for record in current_method["files"]:
+        path = str(record["path"])
+        producer_blob = git("rev-parse", f"{producer_head}:{path}").stdout.strip()
+        current_blob = git("rev-parse", f"{current_head}:{path}").stdout.strip()
+        require_equal(producer_blob, current_blob, f"historical/current git blob {path}")
+        require_equal(sha256_file(repo_path(path)), record["sha256"], f"historical/current SHA {path}")
+    completion = load_json(completed)
+    require_equal(completion.get("schema"), module.COMPLETED_SCHEMA, "historical completion schema")
+    require_equal(completion.get("status"), "COMPLETED", "historical completion status")
+    require_equal(completion.get("return_code"), 0, "historical completion return code")
+    for key, expected in expected_identity.items():
+        require_equal(completion.get("replicate" if key == "replicate" else key), expected, f"historical completion {key}")
+    require_equal(completion.get("materialization"), _producer_record(materialized), "historical completion/materialization")
+    started_path = verify_record(completion["started_receipt"], "historical started receipt")
+    started = load_json(started_path)
+    require_equal(started.get("schema"), module.STARTED_SCHEMA, "historical started schema")
+    require_equal(started.get("status"), "STARTED", "historical started status")
+    require_equal(started.get("method"), producer_method, "historical started/producer method")
+    require_equal(started.get("materialization"), _producer_record(materialized), "historical started/materialization")
+    for key, expected in expected_identity.items():
+        require_equal(started.get("replicate" if key == "replicate" else key), expected, f"historical started {key}")
+    training = completion.get("training_completion")
+    if not isinstance(training, Mapping):
+        raise V3Error("historical training completion evidence is absent")
+    require_equal(training.get("status"), "PASSED", "historical training completion status")
+    require_equal(training.get("profile"), "full", "historical training profile")
+    require_equal(training.get("completed_optimizer_updates"), 30000, "historical optimizer updates")
+    checkpoint_path = verify_record(training["checkpoint"], "historical step-30000 checkpoint")
+    final_checkpoint_path = verify_record(training["final_checkpoint"], "historical final checkpoint")
+    return {
+        "reuse_mode": "ancestor_identical_method",
+        "producer_head": producer_head,
+        "current_head": current_head,
+        "producer_head_is_ancestor": True,
+        "method_files_current_identical": True,
+        "materialization": file_record(materialized),
+        "started": file_record(started_path),
+        "completed": file_record(completed),
+        "checkpoint": file_record(checkpoint_path),
+        "final_checkpoint": file_record(final_checkpoint_path),
+    }
 
 
 def verify_training_complete(config: Mapping[str, Any], entry: Mapping[str, Any], *, allow_launch_reconcile: bool = True) -> dict[str, Any] | None:
@@ -874,8 +1103,23 @@ def verify_training_complete(config: Mapping[str, Any], entry: Mapping[str, Any]
     if not completed.exists() and not completed.is_symlink():
         return None
     v2 = source_v2_module(config)
-    binding = v2.queue.verify_training_binding(module, training_config, entry, materialized, completed)
-    launch = ensure_launch_receipt(config, entry, allow_publish=allow_launch_reconcile)
+    try:
+        binding = v2.queue.verify_training_binding(module, training_config, entry, materialized, completed)
+    except Exception as strict_error:
+        try:
+            binding = verify_historical_training_binding(config, module, training_config, entry, materialized, completed)
+        except Exception as historical_error:
+            raise V3Error(
+                f"strict current training binding failed ({strict_error}); historical reuse failed ({historical_error})"
+            ) from historical_error
+    if binding.get("reuse_mode") == "ancestor_identical_method":
+        launch = {
+            "reuse_mode": "ancestor_identical_method",
+            "started": binding["started"],
+            "producer_head": binding["producer_head"],
+        }
+    else:
+        launch = ensure_launch_receipt(config, entry, allow_publish=allow_launch_reconcile)
     return {"receipt": file_record(completed), "binding": binding, "lane_launch": launch}
 
 
@@ -1506,7 +1750,10 @@ def pair_training_ready(config: Mapping[str, Any], pair_id: str) -> dict[str, An
         if inspection["state"] not in TRAINING_READY:
             raise V3Error(f"pair training barrier not ready: {entry['building_id']} state={inspection['state']}")
         if inspection["state"] != "SKIPPED" and load_stage_record(config, entry) is None:
-            ensure_launch_receipt(config, entry, allow_publish=True)
+            training_complete = inspection.get("training_complete")
+            binding = training_complete.get("binding", {}) if isinstance(training_complete, Mapping) else {}
+            if binding.get("reuse_mode") != "ancestor_identical_method":
+                ensure_launch_receipt(config, entry, allow_publish=True)
         states.append({"entry": dict(entry), "state": inspection["state"], "action": inspection["action"]})
     no_training = assert_no_training(config, inspect_processes=False)
     root = output_path(config, "pairs") / pair_id
@@ -1675,10 +1922,34 @@ def verify(config: Mapping[str, Any]) -> dict[str, Any]:
         raise V3Error("source v2 driver lock is held")
     result = {"state": "VERIFIED", "git_lock": verify_method(config), "locked_inputs": verify_locked_inputs(config), "training_preflight": verify_training_preflight(config)}
     source, record = source_plan(config); entries, pairs = build_v3_plan(source["entries"])
-    result.update({"source_plan": record, "source_gate": verify_source_reuse(config, entries[0]), "continuation_contract": verify_continuation_contract(config, entries, pairs), "repair_contract": verify_repair_contract(config, entries, pairs), "entries_n": len(entries), "pairs_n": len(pairs), "source_v2_driver_lock_free": True})
+    result.update({"source_plan": record, "source_gate": verify_source_reuse(config, entries[0]), **control_contracts(config, entries, pairs), "entries_n": len(entries), "pairs_n": len(pairs), "source_v2_driver_lock_free": True})
     if output_path(config, "plan").is_file():
         result["v3_plan"] = file_record(output_path(config, "plan")); load_plan(config)
     return result
+
+
+def runtime_contract(config: Mapping[str, Any]) -> dict[str, Any]:
+    hook = config["qualitative_hook"]
+    command = hook.get("command")
+    if not isinstance(command, list) or command != ["one", "{building_id}", "{arm}", "{replicate}"]:
+        raise V3Error("review hook command contract drift")
+    first = config["source_v2"]["reused_first_job"]
+    return {
+        "queue_root": config["outputs"]["root"],
+        "training_wrapper": config["locked_inputs"]["training_wrapper"]["path"],
+        "readout_wrapper": config["locked_inputs"]["readout_wrapper"]["path"],
+        "review_wrapper": hook["wrapper"],
+        "review_command": command[0],
+        "pair_member_rows": 19,
+        "pair_count": int(config["sequence_contract"]["pair_count"]),
+        "readout_lock": config["resources"]["readout_lock"],
+        "service_log": str(output_path(config, "service_log").relative_to(REPO)),
+        "reused_stage_key": first["stage_key"],
+        "reused_stage_entry_order": int(first["stage_entry_order"]),
+        "reused_building_id": first["building_id"],
+        "reused_arm": first["arm"],
+        "reused_replicate": first["replicate"],
+    }
 
 
 def add_entry_args(parser: argparse.ArgumentParser) -> None:
@@ -1691,6 +1962,7 @@ def parser() -> argparse.ArgumentParser:
     result.add_argument("--config", type=Path, default=DEFAULT_CONFIG)
     commands = result.add_subparsers(dest="command", required=True)
     commands.add_parser("verify"); commands.add_parser("initialize"); commands.add_parser("status"); commands.add_parser("finalize")
+    runtime = commands.add_parser("runtime-contract"); runtime.add_argument("--format", choices=("json", "tsv"), default="json")
     pairs = commands.add_parser("pairs"); pairs.add_argument("--format", choices=("json", "tsv"), default="json")
     inspect = commands.add_parser("inspect"); add_entry_args(inspect); inspect.add_argument("--format", choices=("json", "tsv"), default="json")
     launch = commands.add_parser("launch-training"); add_entry_args(launch); launch.add_argument("--gpu", type=int, choices=(0, 1), required=True)
@@ -1718,6 +1990,15 @@ def main(argv: Sequence[str] | None = None) -> int:
     elif args.command == "initialize": value = initialize(config, config_path)
     elif args.command == "status": value = publish_status(config)
     elif args.command == "finalize": value = finalize(config)
+    elif args.command == "runtime-contract":
+        value = runtime_contract(config)
+        if args.format == "tsv":
+            print("\t".join(str(value[key]) for key in (
+                "queue_root", "training_wrapper", "readout_wrapper", "review_wrapper", "review_command",
+                "pair_member_rows", "pair_count", "readout_lock", "service_log", "reused_stage_key",
+                "reused_stage_entry_order", "reused_building_id", "reused_arm", "reused_replicate",
+            )))
+            return 0
     elif args.command == "pairs":
         plan = load_plan(config); value = plan["pairs"]
         if args.format == "tsv":

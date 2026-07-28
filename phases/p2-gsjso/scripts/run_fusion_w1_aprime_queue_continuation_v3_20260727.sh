@@ -5,16 +5,25 @@ set -Eeuo pipefail
 REPO_ROOT="$(git rev-parse --show-toplevel)"
 cd "$REPO_ROOT"
 
-CONFIG="phases/p2-gsjso/configs/fusion_w1_aprime_queue_continuation_v3_20260727.json"
-DRIVER="phases/p2-gsjso/scripts/fusion_w1_aprime_queue_continuation_v3_20260727.py"
-TEST="phases/p2-gsjso/scripts/test_fusion_w1_aprime_queue_continuation_v3_20260727.py"
-TRAINING_WRAPPER="phases/p2-gsjso/scripts/run_fusion_w1_aprime_training_20260726.sh"
-READOUT_WRAPPER="phases/p2-gsjso/scripts/run_fusion_w1_aprime_readout_cachefix_20260727.sh"
-QUALITATIVE_WRAPPER="phases/p2-gsjso/scripts/run_fusion_w1_aprime_job_qualitative_v3_20260727.sh"
-QUEUE_ROOT="phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1"
-ACTION_LOG_ROOT="$QUEUE_ROOT/action_logs"
-READOUT_LOCK="$QUEUE_ROOT/locks/readout_global.lock"
-SERVICE_LOG="$QUEUE_ROOT/service.log"
+CONFIG="${APRIME_QUEUE_CONFIG:-phases/p2-gsjso/configs/fusion_w1_aprime_queue_continuation_v3_20260727.json}"
+DRIVER="${APRIME_QUEUE_DRIVER:-phases/p2-gsjso/scripts/fusion_w1_aprime_queue_continuation_v3_20260727.py}"
+TEST="${APRIME_QUEUE_TEST:-phases/p2-gsjso/scripts/test_fusion_w1_aprime_queue_continuation_v3_20260727.py}"
+TRAINING_WRAPPER=""
+READOUT_WRAPPER=""
+REVIEW_WRAPPER=""
+QUALITATIVE_WRAPPER=""
+REVIEW_COMMAND=""
+QUEUE_ROOT=""
+ACTION_LOG_ROOT=""
+READOUT_LOCK=""
+SERVICE_LOG=""
+PAIR_MEMBER_ROWS=""
+PAIR_COUNT=""
+REUSED_STAGE_KEY=""
+REUSED_STAGE_ENTRY_ORDER=""
+REUSED_BUILDING_ID=""
+REUSED_ARM=""
+REUSED_REPLICATE=""
 CONTROL_IMAGE="jointbuildgs:dev"
 CONTROL_IMAGE_ID="sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396"
 HOST_UID="$(id -u)"
@@ -34,6 +43,24 @@ run_tools() {
     --user "$HOST_UID:$HOST_GID" --env PYTHONDONTWRITEBYTECODE=1 \
     --volume "$REPO_ROOT:/workspace/JointBuildGS" --workdir /workspace/JointBuildGS \
     --entrypoint python3 "$CONTROL_IMAGE" "$@"
+}
+
+load_runtime_contract() {
+  local line
+  line="$(run_tools "$DRIVER" --config "$CONFIG" runtime-contract --format tsv)"
+  IFS=$'\t' read -r QUEUE_ROOT TRAINING_WRAPPER READOUT_WRAPPER REVIEW_WRAPPER REVIEW_COMMAND \
+    PAIR_MEMBER_ROWS PAIR_COUNT READOUT_LOCK SERVICE_LOG REUSED_STAGE_KEY \
+    REUSED_STAGE_ENTRY_ORDER REUSED_BUILDING_ID REUSED_ARM REUSED_REPLICATE <<<"$line"
+  [[ -n "$QUEUE_ROOT" && -n "$TRAINING_WRAPPER" && -n "$READOUT_WRAPPER" && -n "$REVIEW_WRAPPER" ]] || {
+    echo "queue runtime contract is incomplete" >&2
+    return 2
+  }
+  [[ "$REVIEW_COMMAND" == "one" && "$PAIR_MEMBER_ROWS" =~ ^[0-9]+$ && "$PAIR_COUNT" =~ ^[0-9]+$ ]] || {
+    echo "queue runtime contract has invalid command/counts" >&2
+    return 2
+  }
+  ACTION_LOG_ROOT="$QUEUE_ROOT/action_logs"
+  QUALITATIVE_WRAPPER="$REVIEW_WRAPPER"
 }
 
 acquire_driver_lock() {
@@ -197,7 +224,7 @@ drive_post_training_member() {
 }
 
 bootstrap_reused_source() {
-  drive_post_training_member "aprime_r1" 2 "DEBY_LOD2_42364659" "Aprime" "r1"
+  drive_post_training_member "$REUSED_STAGE_KEY" "$REUSED_STAGE_ENTRY_ORDER" "$REUSED_BUILDING_ID" "$REUSED_ARM" "$REUSED_REPLICATE"
   run_tools "$DRIVER" --config "$CONFIG" stage-stop-check
 }
 
@@ -214,8 +241,9 @@ load_pair_schedule() {
     return "$producer_status"
   fi
   mapfile -t target_rows <<<"$pair_tsv"
+  [[ "$PAIR_MEMBER_ROWS" == 19 && "$PAIR_COUNT" == 11 ]] || return 2
   if [[ "${#target_rows[@]}" -ne 19 ]]; then
-    echo "pair schedule row count mismatch: expected=19 observed=${#target_rows[@]}" >&2
+    echo "pair schedule row count mismatch: expected=$PAIR_MEMBER_ROWS observed=${#target_rows[@]}" >&2
     return 2
   fi
   for row in "${target_rows[@]}"; do
@@ -227,7 +255,7 @@ load_pair_schedule() {
     unique_pair_ids["$pair_id"]=1
   done
   if [[ "${#unique_pair_ids[@]}" -ne 11 ]]; then
-    echo "pair schedule unique pair count mismatch: expected=11 observed=${#unique_pair_ids[@]}" >&2
+    echo "pair schedule unique pair count mismatch: expected=$PAIR_COUNT observed=${#unique_pair_ids[@]}" >&2
     return 2
   fi
 }
@@ -253,10 +281,11 @@ wait_for_training_pair() {
 run_queue() {
   local -a pair_rows current_rows pids
   local row pair_order pair_id stage_order stage_key member_order gpu stage_entry_order building_id arm replicate current_pair=""
+  verify_control_image
+  load_runtime_contract
   acquire_driver_lock
   mkdir -p "$QUEUE_ROOT/locks"
   start_service_log
-  verify_control_image
   run_tools "$DRIVER" --config "$CONFIG" verify
   run_tools "$DRIVER" --config "$CONFIG" initialize
   if [[ -f "$QUEUE_ROOT/complete.json" ]]; then
