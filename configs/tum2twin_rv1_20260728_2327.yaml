@@ -1,0 +1,59 @@
+{
+  "schema": "jointbuildgs.tum2twin_rv1.v1",
+  "run_id": "20260728_2327",
+  "provisional": true,
+  "scientific_status": "R_v1 is a relative, provisional stratification for experiment selection. It is not a final scientific readiness or quality certification.",
+  "crs": "EPSG:25832",
+  "sources": {
+    "population_manifest": "docs/regression_input_snapshot.csv",
+    "population_arm": "raw_lidar",
+    "population_filter": "assembled=true",
+    "footprints": "results/tum_transfer/analysis/footprints_aoi.geojson",
+    "footprint_id_field": "building_id",
+    "dense_mvs_pointcloud": "phases/p0-audit/data/work/w2/dim_v1_classified_z_minus0p174.laz",
+    "surface_reference_pointclouds": [
+      "results/tum_transfer/mob_analysis/p0c_step2/als_aoi.laz"
+    ],
+    "surface_reference_role": "canonical raw_lidar fallback ALS AOI; aligned EPSG:25832 orthometric class-2/class-6 reference",
+    "roofer_status": "phases/p0-audit/runs/w2_1_roofer_default_20260612_152729/building_reconstruction_status.csv",
+    "roofer_input_label": "DIM",
+    "roofer_cityjson": "phases/p0-audit/runs/w2_1_roofer_default_20260612_152729/cityjson/dim_roofer.city.json",
+    "reference_lod2_directory": "phases/p0-audit/data/raw/lod2",
+    "existing_lod2_metrics": "docs/qs_baseline178_scores.csv",
+    "existing_pointcloud_diagnostics": "docs/pointcloud_attributes_v1_3.csv",
+    "camera_pose_manifest": "results/tum_transfer/fusion_w1_pose_adoption_v2/derived_sparse/0/images.bin",
+    "image_directory": "phases/p0-audit/data/work/mvs/colmap_dense/images",
+    "existing_per_building_views_glob": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/*/by_building/{building_id}/views.csv"
+  },
+  "processing": {
+    "crop_buffer_m": 1.0,
+    "voxel_size_m": 0.1,
+    "chunk_size_points": 1000000,
+    "distance_query_chunk_size": 200000,
+    "worker_count": 1,
+    "distance_thresholds_m": [0.1, 0.2, 0.5],
+    "roof_plane_overlap_threshold": 0.5,
+    "quantile_sensitivity": [0.4, 0.5, 0.6],
+    "normal_estimation_enabled": false,
+    "normal_knn": 16,
+    "resume": true,
+    "cache": true,
+    "per_building_timeout_seconds": 600,
+    "heartbeat_interval_seconds": 60,
+    "diagnostic_grid_m": 1.0,
+    "max_surface_points_per_direction": 250000
+  },
+  "appearance": {
+    "include_in_rv1": false,
+    "held_out_render_protocol": null,
+    "textured_mesh_protocol": null,
+    "missing_reason": "No existing baseline held-out rendering split or final texture-atlas evaluation protocol was found during N0."
+  },
+  "outputs": {
+    "root": "reports/nightly_rv1_20260728_2327",
+    "cache_root": "reports/nightly_rv1_20260728_2327/cache",
+    "per_building_root": "reports/nightly_rv1_20260728_2327/building_results",
+    "candidate_root": "reports/nightly_rv1_20260728_2327/candidates",
+    "write_parquet_if_available": true
+  }
+}
