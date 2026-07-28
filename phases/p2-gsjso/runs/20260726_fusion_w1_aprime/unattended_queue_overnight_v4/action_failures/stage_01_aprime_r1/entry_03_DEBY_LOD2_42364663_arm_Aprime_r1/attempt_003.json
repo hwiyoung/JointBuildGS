@@ -1,0 +1,40 @@
+{
+  "action": "RUN_READOUT",
+  "attempt": 3,
+  "created_at": "2026-07-28T02:08:52.090261+00:00",
+  "entry": {
+    "aprime_order": 3,
+    "arm": "Aprime",
+    "assigned_gpu": 0,
+    "building_id": "DEBY_LOD2_42364663",
+    "global_entry_order": 2,
+    "pair_id": "pair_01_stage_01_aprime_r1_01",
+    "pair_member_order": 1,
+    "profile": "full",
+    "queue_order": 3,
+    "replicate": "r1",
+    "reuse_completed_smoke": false,
+    "reuse_source_v2": false,
+    "seed": 1001,
+    "smoke_barrier_entry": false,
+    "stage_entry_order": 3,
+    "stage_key": "aprime_r1",
+    "stage_order": 1,
+    "target_role": "dim_failure",
+    "v3_global_order": 2
+  },
+  "error_signature": "ff27e4f7c863c624b46617be99aa07d79bfa4f94458ccb7674f117b17b0b4a99",
+  "error_type": "RUN_READOUTExternalError",
+  "interpretation_or_verdict": null,
+  "invocation_id": "aprime_r1.3.RUN_READOUT.action_003_RUN_READOUT",
+  "log": {
+    "bytes": 15566,
+    "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_overnight_v4/action_logs/stage_aprime_r1/entry_03_DEBY_LOD2_42364663_arm_Aprime_r1/action_003_RUN_READOUT.log",
+    "sha256": "c66433e7e042427fe362602ff97dcb7d319f8dff8d5ae4a3ee82320c7f6e70be"
+  },
+  "message": "external action diagnostic: fusion_w1_aprime_readout_training.ContractError: launch HEAD vs materialization HEAD: observed='8d1c1472c763d117a9c7972d2a8e03932010280b', expected='191b5652be6d38a81a3cba7ab05cd3db4ffbe796'",
+  "partial_artifacts_preserved": true,
+  "return_code": 1,
+  "schema": "jointbuildgs.fusion_w1_aprime.unattended_continuation_v3.action_failure.v1",
+  "state": "FAILED"
+}

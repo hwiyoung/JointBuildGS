@@ -1,0 +1,161 @@
+{
+  "counts": {
+    "FAILED": 0,
+    "MEASURED": 1,
+    "MISSING": 16,
+    "SKIPPED": 3
+  },
+  "created_at": "2026-07-28T02:10:33.113943+00:00",
+  "events": {
+    "bytes": 18400,
+    "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_overnight_v4/events.jsonl",
+    "sha256": "88ce5bc439919715a112c241791cd9ab6c2498a48020983d47e74c548d2a8bf7"
+  },
+  "git_head": "8d1c1472c763d117a9c7972d2a8e03932010280b",
+  "interpretation_or_verdict": null,
+  "partial_results_reviewable": true,
+  "plan": {
+    "bytes": 53795,
+    "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_overnight_v4/queue_plan.json",
+    "sha256": "230d832c5ae9995b6719cc202ba13dbfe2cc9ab90e621784af0490ffad256665"
+  },
+  "root_complete_receipt_written_last": true,
+  "run_id": "20260726_fusion_w1_aprime",
+  "schema": "jointbuildgs.fusion_w1_aprime.unattended_continuation_v3.complete.v1",
+  "stage_records": [
+    {
+      "entry": {
+        "aprime_order": 2,
+        "arm": "Aprime",
+        "assigned_gpu": null,
+        "building_id": "DEBY_LOD2_42364659",
+        "global_entry_order": 1,
+        "pair_id": null,
+        "pair_member_order": null,
+        "profile": "full",
+        "queue_order": 2,
+        "replicate": "r1",
+        "reuse_completed_smoke": false,
+        "reuse_source_v2": true,
+        "seed": 1001,
+        "smoke_barrier_entry": false,
+        "stage_entry_order": 2,
+        "stage_key": "aprime_r1",
+        "stage_order": 1,
+        "target_role": "dim_failure",
+        "v3_global_order": 1
+      },
+      "receipt": {
+        "bytes": 4263,
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_overnight_v4/stage_records/stage_01_aprime_r1/entry_02_DEBY_LOD2_42364659_arm_Aprime_r1.json",
+        "sha256": "67603efc9e7edf2dd4eba5f000352ad684e4483ac738a15cd7c6ffd7944f7bce"
+      },
+      "status": "MEASURED"
+    },
+    {
+      "entry": {
+        "aprime_order": 3,
+        "arm": "Aprime",
+        "assigned_gpu": 0,
+        "building_id": "DEBY_LOD2_42364663",
+        "global_entry_order": 2,
+        "pair_id": "pair_01_stage_01_aprime_r1_01",
+        "pair_member_order": 1,
+        "profile": "full",
+        "queue_order": 3,
+        "replicate": "r1",
+        "reuse_completed_smoke": false,
+        "reuse_source_v2": false,
+        "seed": 1001,
+        "smoke_barrier_entry": false,
+        "stage_entry_order": 3,
+        "stage_key": "aprime_r1",
+        "stage_order": 1,
+        "target_role": "dim_failure",
+        "v3_global_order": 2
+      },
+      "receipt": {
+        "bytes": 1970,
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_overnight_v4/stage_records/stage_01_aprime_r1/entry_03_DEBY_LOD2_42364663_arm_Aprime_r1.json",
+        "sha256": "e1e920e2bbb520f3750ad6d66f90273307addcfb432de259e0b7b6c3eb4fa10b"
+      },
+      "status": "SKIPPED"
+    },
+    {
+      "entry": {
+        "aprime_order": 4,
+        "arm": "Aprime",
+        "assigned_gpu": 1,
+        "building_id": "DEBY_LOD2_4907182",
+        "global_entry_order": 3,
+        "pair_id": "pair_01_stage_01_aprime_r1_01",
+        "pair_member_order": 2,
+        "profile": "full",
+        "queue_order": 4,
+        "replicate": "r1",
+        "reuse_completed_smoke": false,
+        "reuse_source_v2": false,
+        "seed": 1001,
+        "smoke_barrier_entry": false,
+        "stage_entry_order": 4,
+        "stage_key": "aprime_r1",
+        "stage_order": 1,
+        "target_role": "dim_failure",
+        "v3_global_order": 3
+      },
+      "receipt": {
+        "bytes": 1966,
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_overnight_v4/stage_records/stage_01_aprime_r1/entry_04_DEBY_LOD2_4907182_arm_Aprime_r1.json",
+        "sha256": "5d4d681ed0f4b20661646cb50b233fb344251862f9fbb4d0b48a3b59d099cdc6"
+      },
+      "status": "SKIPPED"
+    },
+    {
+      "entry": {
+        "aprime_order": 5,
+        "arm": "Aprime",
+        "assigned_gpu": 0,
+        "building_id": "DEBY_LOD2_4907510",
+        "global_entry_order": 4,
+        "pair_id": "pair_02_stage_01_aprime_r1_02",
+        "pair_member_order": 1,
+        "profile": "full",
+        "queue_order": 5,
+        "replicate": "r1",
+        "reuse_completed_smoke": false,
+        "reuse_source_v2": false,
+        "seed": 1001,
+        "smoke_barrier_entry": false,
+        "stage_entry_order": 5,
+        "stage_key": "aprime_r1",
+        "stage_order": 1,
+        "target_role": "dim_failure",
+        "v3_global_order": 4
+      },
+      "receipt": {
+        "bytes": 1966,
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_overnight_v4/stage_records/stage_01_aprime_r1/entry_05_DEBY_LOD2_4907510_arm_Aprime_r1.json",
+        "sha256": "f5fae31b1c764eeb9f5d380bcf4c3325f77d6cd71f0ab797eec3b8c2108691a4"
+      },
+      "status": "SKIPPED"
+    }
+  ],
+  "stage_stop": {
+    "bytes": 2117,
+    "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_overnight_v4/stage_stop.json",
+    "sha256": "f1bf3af556281d87358ab52f11ddf5876038d995dfd863cb3434638951999f59"
+  },
+  "state": "STOPPED_THREE_CONSECUTIVE_BUILDING_SKIPS",
+  "status_csv": {
+    "bytes": 3417,
+    "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_overnight_v4/status.csv",
+    "sha256": "c32136470e66fa6fb4bfad71ce97c2a8d362b15a421f38f942ffd4085d527e3c"
+  },
+  "status_json": {
+    "bytes": 13983,
+    "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_overnight_v4/status.json",
+    "sha256": "1d9fcffd1ed575959b3da3f56eebd532120f6d370a3de446d7cb7bc8c7c9ebfa"
+  },
+  "task_id": "FUS-W1-APRIME-QUEUE-OVERNIGHT-V4-001",
+  "terminal_jobs_n": 4
+}

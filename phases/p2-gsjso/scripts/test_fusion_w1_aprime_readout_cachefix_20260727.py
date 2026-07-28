@@ -98,6 +98,31 @@ class ConfigAndWrapperTests(unittest.TestCase):
         self.assertTrue(loaded["cachefix_contract"]["reuse_only"])
         self.assertFalse(loaded["cachefix_contract"]["compilation_allowed"])
 
+    def test_historical_readout_contract_is_closed_and_awaits_recovery_lock(self) -> None:
+        contract = self.config["historical_training_readout_reuse_contract"]
+        self.assertTrue(contract["enabled"])
+        self.assertTrue(contract["strict_current_head_default"])
+        self.assertEqual(
+            contract["producer_head"],
+            "191b5652be6d38a81a3cba7ab05cd3db4ffbe796",
+        )
+        self.assertEqual(
+            contract["allowed_jobs"],
+            [
+                {"building_id": "DEBY_LOD2_42364663", "arm": "Aprime", "replicate": "r1", "profile": "full"},
+                {"building_id": "DEBY_LOD2_4907182", "arm": "Aprime", "replicate": "r1", "profile": "full"},
+                {"building_id": "DEBY_LOD2_4907510", "arm": "Aprime", "replicate": "r1", "profile": "full"},
+                {"building_id": "DEBY_LOD2_4908050", "arm": "Aprime", "replicate": "r1", "profile": "full"},
+            ],
+        )
+        self.assertEqual(contract["completed_optimizer_updates"], 30000)
+        self.assertTrue(contract["producer_head_must_be_ancestor"])
+        self.assertTrue(contract["method_files_must_be_current_identical"])
+        recovery = contract["recovery_lock"]
+        path = REPO / recovery["path"]
+        self.assertEqual(recovery["sha256"], sha256(path))
+        self.assertEqual(recovery["bytes"], path.stat().st_size)
+
     def test_cachefix_outputs_are_under_locked_continuation(self) -> None:
         contract = self.config["cachefix_contract"]
         root = Path(contract["continuation_root"])

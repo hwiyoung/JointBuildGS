@@ -3,9 +3,12 @@
 from __future__ import annotations
 
 import ast
+import hashlib
 import importlib.util
 import json
+import subprocess
 import tempfile
+import types
 import unittest
 from pathlib import Path
 from unittest.mock import patch
@@ -35,6 +38,235 @@ class AprimeReadoutTests(unittest.TestCase):
         cls.source = SCRIPT.read_text(encoding="utf-8")
         cls.wrapper = WRAPPER.read_text(encoding="utf-8")
 
+    def make_training_binding_fixture(self, *, historical: bool):
+        temporary = tempfile.TemporaryDirectory()
+        root = Path(temporary.name)
+
+        def digest(path: Path) -> str:
+            return hashlib.sha256(path.read_bytes()).hexdigest()
+
+        def rel(path: Path) -> str:
+            return str(path.relative_to(root))
+
+        def record(path: Path) -> dict[str, object]:
+            return {
+                "path": rel(path),
+                "sha256": digest(path),
+                "bytes": path.stat().st_size,
+            }
+
+        def producer_record(path: Path) -> dict[str, str]:
+            return {"path": rel(path), "sha256": digest(path)}
+
+        identity = dict(self.module.HISTORICAL_TRAINING_ALLOWED_JOBS[0])
+        producer_head = self.module.HISTORICAL_TRAINING_PRODUCER_HEAD
+        current_head = "8" * 40
+        target = root / "training/job"
+        target.mkdir(parents=True)
+        data_root = root / "preprocess/data"
+        data_root.mkdir(parents=True)
+        preprocess_manifest = root / "preprocess/manifest.json"
+        preprocess_manifest.write_text('{"state":"PASSED"}\n', encoding="utf-8")
+        method_path = root / "method.py"
+        method_path.write_text("METHOD = 'locked'\n", encoding="utf-8")
+        training_config_path = root / "training_config.json"
+        training_config_path.write_text('{"locked":true}\n', encoding="utf-8")
+        training_driver_path = root / "training_driver.py"
+        training_driver_path.write_text("DRIVER = 'locked'\n", encoding="utf-8")
+        resolved_path = target / "resolved.json"
+        resolved_payload = {"identity": identity, "recipe": "unchanged"}
+        resolved_path.write_text(json.dumps(resolved_payload) + "\n", encoding="utf-8")
+        override_path = target / "compose.json"
+        override_path.write_text('{"network_mode":"none"}\n', encoding="utf-8")
+        checkpoint_path = target / "ckpt/step_030000.pt"
+        checkpoint_path.parent.mkdir()
+        checkpoint_path.write_bytes(b"checkpoint-30000")
+        final_checkpoint_path = target / "ckpt/final.pt"
+        final_checkpoint_path.write_bytes(b"final-checkpoint")
+
+        method_record = {"path": rel(method_path), "sha256": digest(method_path)}
+        producer_method = {
+            "branch": "exp/fusion-w1",
+            "head": producer_head if historical else current_head,
+            "files": [method_record],
+        }
+        current_method = {
+            "branch": "exp/fusion-w1",
+            "head": current_head,
+            "files": [method_record],
+        }
+        preprocess = {
+            "manifest": rel(preprocess_manifest),
+            "manifest_sha256": digest(preprocess_manifest),
+            "data_root": rel(data_root),
+            "full_snapshot_sha256": "1" * 64,
+            "training_artifact_snapshot_sha256": "2" * 64,
+            "seed_canonical_npz_sha256": "3" * 64,
+            "supervision_index_sha256": "4" * 64,
+        }
+        canonical_digest = lambda value: hashlib.sha256(
+            self.module.canonical_json(value)
+        ).hexdigest()
+        materialization_path = target / "materialization.json"
+        materialization = {
+            "schema": "materialization.v1",
+            "status": "PASSED",
+            **identity,
+            "git": producer_method,
+            "driver_config": rel(training_config_path),
+            "driver_config_sha256": digest(training_config_path),
+            "locked_inputs": {"locked": "same"},
+            "preprocess": preprocess,
+            "recipe": {
+                "resolved_scientific_config_sha256": canonical_digest(resolved_payload)
+            },
+            "resolved_config": rel(resolved_path),
+            "resolved_config_sha256": digest(resolved_path),
+            "compose_override": rel(override_path),
+            "compose_override_sha256": digest(override_path),
+            "output_dir": rel(target),
+        }
+        materialization_path.write_text(
+            json.dumps(materialization, sort_keys=True) + "\n", encoding="utf-8"
+        )
+        started_path = target / "started.json"
+        started = {
+            "schema": "started.v1",
+            "status": "STARTED",
+            **identity,
+            "method": producer_method,
+            "materialization": producer_record(materialization_path),
+        }
+        started_path.write_text(json.dumps(started, sort_keys=True) + "\n", encoding="utf-8")
+        completed_path = target / "completed.json"
+        completed = {
+            "schema": "completed.v1",
+            "status": "COMPLETED",
+            **identity,
+            "return_code": 0,
+            "started_receipt": producer_record(started_path),
+            "materialization": producer_record(materialization_path),
+            "training_completion": {
+                "status": "PASSED",
+                "profile": "full",
+                "completed_optimizer_updates": 30000,
+                "checkpoint": producer_record(checkpoint_path),
+                "final_checkpoint": producer_record(final_checkpoint_path),
+            },
+        }
+        completed_path.write_text(
+            json.dumps(completed, sort_keys=True) + "\n", encoding="utf-8"
+        )
+
+        allowed = [dict(row) for row in self.module.HISTORICAL_TRAINING_ALLOWED_JOBS]
+        locked_artifacts = {
+            "materialization": record(materialization_path),
+            "started": record(started_path),
+            "completed": record(completed_path),
+            "final_checkpoint": record(final_checkpoint_path),
+        }
+        recovery_path = root / "recovery.json"
+        recovery = {
+            "schema": self.module.HISTORICAL_TRAINING_RECOVERY_LOCK_SCHEMA,
+            "state": "LOCKED_FOR_HISTORICAL_READOUT_RECOVERY",
+            "branch": "exp/fusion-w1",
+            "historical_training_reuse": {
+                "producer_head": producer_head,
+                "producer_head_must_be_ancestor": True,
+                "method_files_must_be_current_identical": True,
+                "allowed_jobs": allowed,
+                "records": [
+                    {"identity": row, **locked_artifacts}
+                    for row in allowed
+                ],
+            },
+        }
+        recovery_path.write_text(
+            json.dumps(recovery, sort_keys=True) + "\n", encoding="utf-8"
+        )
+        contract = {
+            "schema": self.module.HISTORICAL_TRAINING_CONTRACT_SCHEMA,
+            "enabled": True,
+            "strict_current_head_default": True,
+            "producer_head": producer_head,
+            "allowed_jobs": allowed,
+            "producer_head_must_be_ancestor": True,
+            "method_files_must_be_current_identical": True,
+            "completed_optimizer_updates": 30000,
+            "recovery_lock_schema": self.module.HISTORICAL_TRAINING_RECOVERY_LOCK_SCHEMA,
+            "recovery_lock_state": "LOCKED_FOR_HISTORICAL_READOUT_RECOVERY",
+            "recovery_lock": record(recovery_path),
+        }
+        config = {
+            "branch": "exp/fusion-w1",
+            "historical_training_readout_reuse_contract": contract,
+            "locked_inputs": {
+                "training_driver": {
+                    "path": rel(training_driver_path),
+                    "sha256": digest(training_driver_path),
+                }
+            },
+        }
+        training_config = {
+            "branch": "exp/fusion-w1",
+            "method_files": [rel(method_path)],
+            "outputs": {
+                "materialization_manifest": "materialization.json",
+                "started_receipt": "started.json",
+                "completed_receipt": "completed.json",
+                "failed_receipt": "failed.json",
+                "resolved_config": "resolved.json",
+                "compose_override": "compose.json",
+            },
+        }
+
+        def check_materialization(**_kwargs):
+            if historical:
+                raise RuntimeError("launch HEAD vs materialization HEAD")
+            return {
+                "method_head": current_head,
+                "resolved_config": rel(resolved_path),
+                "resolved_config_sha256": digest(resolved_path),
+            }
+
+        fake_module = types.SimpleNamespace(
+            MATERIALIZATION_SCHEMA="materialization.v1",
+            STARTED_SCHEMA="started.v1",
+            COMPLETED_SCHEMA="completed.v1",
+            yaml=types.SimpleNamespace(safe_load=lambda stream: json.load(stream)),
+            canonical_json_sha256=canonical_digest,
+            job_dir=lambda *_args, **_kwargs: target,
+            check_materialization=check_materialization,
+            committed_method_gate=lambda *_args, **_kwargs: current_method,
+            validate_locked_inputs=lambda *_args, **_kwargs: {"locked": "same"},
+            validate_preprocess=lambda *_args, **_kwargs: dict(preprocess),
+            build_training_config=lambda **_kwargs: dict(resolved_payload),
+        )
+
+        def fake_git(*arguments: str, check: bool = True):
+            del check
+            if arguments == ("rev-parse", "HEAD"):
+                return subprocess.CompletedProcess(arguments, 0, current_head + "\n", "")
+            if arguments[:2] == ("merge-base", "--is-ancestor"):
+                return subprocess.CompletedProcess(arguments, 0, "", "")
+            if arguments and arguments[0] == "rev-parse" and ":" in arguments[1]:
+                return subprocess.CompletedProcess(arguments, 0, "blob-identical\n", "")
+            raise AssertionError(f"unexpected git call: {arguments}")
+
+        return temporary, {
+            "root": root,
+            "config": config,
+            "training_config": training_config,
+            "training_config_path": training_config_path,
+            "training_driver_path": training_driver_path,
+            "fake_module": fake_module,
+            "fake_git": fake_git,
+            "identity": identity,
+            "current_head": current_head,
+            "recovery_path": recovery_path,
+            "completed_path": completed_path,
+        }
+
     def test_python_source_parses_and_config_has_four_method_files(self):
         ast.parse(self.source)
         self.assertEqual(len(self.config["implementation_files"]), 4)
@@ -52,6 +284,163 @@ class AprimeReadoutTests(unittest.TestCase):
         self.assertEqual(primary["score_time_z_shift_m"], 0.0)
         self.assertEqual(alpha["score_time_z_shift_m"], -45.7)
         self.assertNotEqual(primary["readout_role"], alpha["readout_role"])
+
+    def test_strict_current_head_training_binding_remains_default(self):
+        temporary, fixture = self.make_training_binding_fixture(historical=False)
+        self.addCleanup(temporary.cleanup)
+        with (
+            patch.object(self.module, "REPO", fixture["root"]),
+            patch.object(self.module, "git", side_effect=fixture["fake_git"]),
+            patch.object(
+                self.module,
+                "training_module",
+                return_value=(
+                    fixture["fake_module"],
+                    fixture["training_config"],
+                    fixture["training_config_path"],
+                ),
+            ),
+        ):
+            result = self.module.resolve_training_binding(
+                fixture["config"],
+                fixture["identity"]["building_id"],
+                fixture["identity"]["arm"],
+                fixture["identity"]["replicate"],
+            )
+        self.assertEqual(result["binding_mode"], "strict_current_head")
+        self.assertEqual(result["producer_head"], fixture["current_head"])
+        self.assertIsNone(result["historical_reuse_proof"])
+
+    def test_exact_allowlisted_historical_training_binding_revalidates_full_chain(self):
+        temporary, fixture = self.make_training_binding_fixture(historical=True)
+        self.addCleanup(temporary.cleanup)
+        with (
+            patch.object(self.module, "REPO", fixture["root"]),
+            patch.object(self.module, "git", side_effect=fixture["fake_git"]),
+            patch.object(
+                self.module,
+                "training_module",
+                return_value=(
+                    fixture["fake_module"],
+                    fixture["training_config"],
+                    fixture["training_config_path"],
+                ),
+            ),
+        ):
+            result = self.module.resolve_training_binding(
+                fixture["config"],
+                fixture["identity"]["building_id"],
+                fixture["identity"]["arm"],
+                fixture["identity"]["replicate"],
+            )
+        self.assertEqual(result["binding_mode"], "ancestor_identical_method")
+        proof = result["historical_reuse_proof"]
+        self.assertEqual(proof["producer_head"], self.module.HISTORICAL_TRAINING_PRODUCER_HEAD)
+        self.assertEqual(proof["current_head"], fixture["current_head"])
+        self.assertEqual(proof["preprocess_full_snapshot_sha256"], "1" * 64)
+        self.assertEqual(proof["completed"]["path"], "training/job/completed.json")
+        self.assertEqual(len(proof["method_blob_records"]), 1)
+
+    def test_historical_fallback_is_closed_to_nonallowlisted_identity(self):
+        temporary, fixture = self.make_training_binding_fixture(historical=True)
+        self.addCleanup(temporary.cleanup)
+        with (
+            patch.object(self.module, "REPO", fixture["root"]),
+            patch.object(self.module, "git", side_effect=fixture["fake_git"]),
+            patch.object(
+                self.module,
+                "training_module",
+                return_value=(
+                    fixture["fake_module"],
+                    fixture["training_config"],
+                    fixture["training_config_path"],
+                ),
+            ),
+        ):
+            with self.assertRaisesRegex(
+                self.module.AprimeReadoutError, "strict current-HEAD training binding failed"
+            ):
+                self.module.resolve_training_binding(
+                    fixture["config"], "DEBY_LOD2_4908166", "Aprime", "r1"
+                )
+
+    def test_historical_binding_rejects_recovery_hash_and_method_blob_drift(self):
+        temporary, fixture = self.make_training_binding_fixture(historical=True)
+        self.addCleanup(temporary.cleanup)
+        bad_hash = json.loads(json.dumps(fixture["config"]))
+        bad_hash["historical_training_readout_reuse_contract"]["recovery_lock"][
+            "sha256"
+        ] = "0" * 64
+        with (
+            patch.object(self.module, "REPO", fixture["root"]),
+            patch.object(self.module, "git", side_effect=fixture["fake_git"]),
+        ):
+            with self.assertRaisesRegex(self.module.AprimeReadoutError, "recovery lock SHA256"):
+                self.module.verify_historical_training_binding(
+                    config=bad_hash,
+                    module=fixture["fake_module"],
+                    training_config=fixture["training_config"],
+                    config_path=fixture["training_config_path"],
+                    building_id=fixture["identity"]["building_id"],
+                    arm="Aprime",
+                    run="r1",
+                )
+
+        def blob_drift(*arguments: str, check: bool = True):
+            result = fixture["fake_git"](*arguments, check=check)
+            if arguments and arguments[0] == "rev-parse" and arguments[1].startswith(
+                fixture["current_head"]
+            ):
+                return subprocess.CompletedProcess(arguments, 0, "blob-drift\n", "")
+            return result
+
+        with (
+            patch.object(self.module, "REPO", fixture["root"]),
+            patch.object(self.module, "git", side_effect=blob_drift),
+        ):
+            with self.assertRaisesRegex(self.module.AprimeReadoutError, "git blob"):
+                self.module.verify_historical_training_binding(
+                    config=fixture["config"],
+                    module=fixture["fake_module"],
+                    training_config=fixture["training_config"],
+                    config_path=fixture["training_config_path"],
+                    building_id=fixture["identity"]["building_id"],
+                    arm="Aprime",
+                    run="r1",
+                )
+
+    def test_historical_contract_is_exactly_four_jobs_at_locked_producer(self):
+        contract = {
+            "schema": self.module.HISTORICAL_TRAINING_CONTRACT_SCHEMA,
+            "enabled": True,
+            "strict_current_head_default": True,
+            "producer_head": self.module.HISTORICAL_TRAINING_PRODUCER_HEAD,
+            "allowed_jobs": [
+                dict(row) for row in self.module.HISTORICAL_TRAINING_ALLOWED_JOBS
+            ],
+            "producer_head_must_be_ancestor": True,
+            "method_files_must_be_current_identical": True,
+            "completed_optimizer_updates": 30000,
+            "recovery_lock_schema": self.module.HISTORICAL_TRAINING_RECOVERY_LOCK_SCHEMA,
+            "recovery_lock_state": "LOCKED_FOR_HISTORICAL_READOUT_RECOVERY",
+            "recovery_lock": {
+                "path": "future-lock.json",
+                "sha256": "__PLACEHOLDER_SHA256__",
+                "bytes": "__PLACEHOLDER_BYTES__",
+            },
+        }
+        observed = self.module.historical_training_contract(
+            {"historical_training_readout_reuse_contract": contract}
+        )
+        self.assertEqual(len(observed["allowed_jobs"]), 4)
+        tampered = json.loads(json.dumps(contract))
+        tampered["allowed_jobs"].append(
+            {"building_id": "DEBY_LOD2_4908166", "arm": "Aprime", "replicate": "r1", "profile": "full"}
+        )
+        with self.assertRaisesRegex(self.module.AprimeReadoutError, "exact allowlist"):
+            self.module.historical_training_contract(
+                {"historical_training_readout_reuse_contract": tampered}
+            )
 
     def test_primary_contract_is_exact_Mj_no_alpha_and_original_ground(self):
         required = set(self.config["primary"]["tsdf_required_checks"])

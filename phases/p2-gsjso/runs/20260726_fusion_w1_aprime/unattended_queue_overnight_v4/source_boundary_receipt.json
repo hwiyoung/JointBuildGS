@@ -1,0 +1,643 @@
+{
+  "created_at": "2026-07-28T02:06:17.682648+00:00",
+  "git_lock": {
+    "branch": "exp/fusion-w1",
+    "files": [
+      {
+        "bytes": 7843,
+        "git_blob": "9222962d1ebff23125ce9deea98aa728ff82e3ae",
+        "path": "phases/p2-gsjso/configs/fusion_w1_aprime_queue_overnight_v4_20260727.json",
+        "sha256": "339000413c8b0121f16d2f50fd55f71c6561d31bb0299f2880e5682039703165"
+      },
+      {
+        "bytes": 119604,
+        "git_blob": "27b65fdefc1454de2158c496cfa94ad1b07f2141",
+        "path": "phases/p2-gsjso/scripts/fusion_w1_aprime_queue_continuation_v3_20260727.py",
+        "sha256": "c0dca8087e56e9b8d10bd64bc4f29316bf487b4187a0613a2303323fb8326295"
+      },
+      {
+        "bytes": 13536,
+        "git_blob": "2a88b061289931b29076894ab7a8f4e33047bfe2",
+        "path": "phases/p2-gsjso/scripts/run_fusion_w1_aprime_queue_continuation_v3_20260727.sh",
+        "sha256": "8cd00c043ed31ff8ae4cd34347d1c05ed3770b75cb36b45f1037085fa3d68750"
+      },
+      {
+        "bytes": 581,
+        "git_blob": "e271159f51cef17843b712700cb7de71bc75cd84",
+        "path": "phases/p2-gsjso/scripts/run_fusion_w1_aprime_queue_overnight_v4_20260727.sh",
+        "sha256": "bac8083c7d7b6348c7d07b412ba538b331e7a0edfdd533cd7be0ad53d7ee1255"
+      },
+      {
+        "bytes": 3847,
+        "git_blob": "9c7ff5e3894e11d8c06131a41c1c10c0123810c3",
+        "path": "phases/p2-gsjso/scripts/test_fusion_w1_aprime_queue_overnight_v4_20260727.py",
+        "sha256": "60663e18da21f7143f4342da0b41a158b567bedd8fa52ef669bbf57b7aa27372"
+      },
+      {
+        "bytes": 11834,
+        "git_blob": "22bb91075f32d5db576a504734a128244e3ed74c",
+        "path": "phases/p2-gsjso/configs/fusion_w1_aprime_queue_continuation_v3_20260727.json",
+        "sha256": "cea887ee9fc98ee34f807884d7a0163d3fbb949eeedfc21c87eada7e0959573e"
+      },
+      {
+        "bytes": 8403,
+        "git_blob": "78439aff70223a5bcd51c67675aa8afe9c3d89b5",
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_overnight_v4/RECOVERY_LOCK.json",
+        "sha256": "d4ee8225c4266c02acc22acebb24c0882f03561916c25c2d188533b6cc85c337"
+      },
+      {
+        "bytes": 1105,
+        "git_blob": "cbbc63600ffebb32270478b1f2fc4ef234e966c2",
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_overnight_v4/RECOVERY_LOCK.md",
+        "sha256": "67682252749e6f4e442bf1cd15a4cab135a43f3b9ac938dcfa541f5e0c29982f"
+      },
+      {
+        "bytes": 712,
+        "git_blob": "5e91937734ed2473573c3d66351519a7fb3ea6af",
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_overnight_v4/READOUT_CONTINUATION_LOCK.json",
+        "sha256": "5959d80a92fb750ea219765617866bc57633dcbdafcb98b7e761e4cf11d88371"
+      },
+      {
+        "bytes": 6200,
+        "git_blob": "8ca1fe5f4fb741e05471f885a0fe9460fc832fa7",
+        "path": "phases/p2-gsjso/configs/fusion_w1_aprime_job_panel_v4_20260727.json",
+        "sha256": "763927accac8b3c7ff9634bc96966371fd1694377b33a53319682c7aa93b0a6e"
+      },
+      {
+        "bytes": 76585,
+        "git_blob": "5eb34eed7ef696c811b15988d04cf3f0ace54a34",
+        "path": "phases/p2-gsjso/scripts/fusion_w1_aprime_job_panel_v4_20260727.py",
+        "sha256": "491d4ebe20cd940355beec7991c54b8fc529fda20f60fb47a3ee661ed7f58702"
+      },
+      {
+        "bytes": 4328,
+        "git_blob": "526dba81988b0ff3c5b6f67aa27606a98aef3349",
+        "path": "phases/p2-gsjso/scripts/run_fusion_w1_aprime_job_panel_v4_20260727.sh",
+        "sha256": "fdb9272136a1511276e97d71d6d9fde7ae7778210abb3ed7af27944dacd34133"
+      },
+      {
+        "bytes": 12536,
+        "git_blob": "75205b9e81a7626804dab3a3f872396f0e6b4d9f",
+        "path": "phases/p2-gsjso/scripts/test_fusion_w1_aprime_job_panel_v4_20260727.py",
+        "sha256": "c67e988f7aa875716e478cf265cb99efba561a387767713ec876e31792898a00"
+      }
+    ],
+    "head": "8d1c1472c763d117a9c7972d2a8e03932010280b"
+  },
+  "interpretation_or_verdict": null,
+  "locked_inputs": {
+    "continuation_contract": {
+      "bytes": 4372,
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/continuation_lock.json",
+      "sha256": "07255b1788b161b6ecd92eb374eeaea567f1be20295a3d83aeee6faaf6cbb8d4"
+    },
+    "continuation_contract_markdown": {
+      "bytes": 5149,
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3/CONTINUATION_LOCK.md",
+      "sha256": "d8f7a637d8369bf7382afb5ef43747cf4de4c0d8151d59d498a358dbb17ec493"
+    },
+    "panel_config": {
+      "bytes": 6200,
+      "path": "phases/p2-gsjso/configs/fusion_w1_aprime_job_panel_v4_20260727.json",
+      "sha256": "763927accac8b3c7ff9634bc96966371fd1694377b33a53319682c7aa93b0a6e"
+    },
+    "panel_renderer": {
+      "bytes": 76585,
+      "path": "phases/p2-gsjso/scripts/fusion_w1_aprime_job_panel_v4_20260727.py",
+      "sha256": "491d4ebe20cd940355beec7991c54b8fc529fda20f60fb47a3ee661ed7f58702"
+    },
+    "panel_test": {
+      "bytes": 12536,
+      "path": "phases/p2-gsjso/scripts/test_fusion_w1_aprime_job_panel_v4_20260727.py",
+      "sha256": "c67e988f7aa875716e478cf265cb99efba561a387767713ec876e31792898a00"
+    },
+    "panel_wrapper": {
+      "bytes": 4328,
+      "path": "phases/p2-gsjso/scripts/run_fusion_w1_aprime_job_panel_v4_20260727.sh",
+      "sha256": "fdb9272136a1511276e97d71d6d9fde7ae7778210abb3ed7af27944dacd34133"
+    },
+    "qualitative_config": {
+      "bytes": 9779,
+      "path": "phases/p2-gsjso/configs/fusion_w1_aprime_job_qualitative_v3_20260727.json",
+      "sha256": "886fd4612e060c9d97570e9776514930aaddec5c2058210c4f7fc01bae03ec9d"
+    },
+    "qualitative_renderer": {
+      "bytes": 53489,
+      "path": "phases/p2-gsjso/scripts/fusion_w1_aprime_job_qualitative_v3_20260727.py",
+      "sha256": "208eb1f31556c15ba9e86ac6faeb179b6e7b520e7fb46ab95f372f509f7d17cb"
+    },
+    "qualitative_test": {
+      "bytes": 12433,
+      "path": "phases/p2-gsjso/scripts/test_fusion_w1_aprime_job_qualitative_v3_20260727.py",
+      "sha256": "0b57bfecb2228f1f91195b7d09e0adcdd23b1d4a9cd57df7d4045f8597223c7e"
+    },
+    "qualitative_wrapper": {
+      "bytes": 4205,
+      "path": "phases/p2-gsjso/scripts/run_fusion_w1_aprime_job_qualitative_v3_20260727.sh",
+      "sha256": "b6272bd9067ee698089fa0712ce67305502dc02933a3bf5ab13e9d40bd3691ad"
+    },
+    "readout_config": {
+      "bytes": 9448,
+      "path": "phases/p2-gsjso/configs/fusion_w1_aprime_readout_cachefix_20260727.json",
+      "sha256": "4486b727fd94bc9baf0706fac529d3a3aa1b8996d238773a2a148800b80d349a"
+    },
+    "readout_driver": {
+      "bytes": 29132,
+      "path": "phases/p2-gsjso/scripts/fusion_w1_aprime_readout_cachefix_20260727.py",
+      "sha256": "3f6251d03c49cc6867cf8d5b5b88bafd37dbf95257cb221183daf1ce142af65d"
+    },
+    "readout_wrapper": {
+      "bytes": 15018,
+      "path": "phases/p2-gsjso/scripts/run_fusion_w1_aprime_readout_cachefix_20260727.sh",
+      "sha256": "1bd8ca0cdd04d8d0535b81a38c2d2c05c82d8c90558b069790cfadd56d851d3d"
+    },
+    "recovery_contract": {
+      "bytes": 8403,
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_overnight_v4/RECOVERY_LOCK.json",
+      "sha256": "d4ee8225c4266c02acc22acebb24c0882f03561916c25c2d188533b6cc85c337"
+    },
+    "recovery_contract_markdown": {
+      "bytes": 1105,
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_overnight_v4/RECOVERY_LOCK.md",
+      "sha256": "67682252749e6f4e442bf1cd15a4cab135a43f3b9ac938dcfa541f5e0c29982f"
+    },
+    "repair_contract": {
+      "bytes": 3275,
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/REPAIR_LOCK.json",
+      "sha256": "30ea0a94d4fe5f9bd40c4fc9bef12ba1f74ca60fbc3dca50ef37e1de6d82cb19"
+    },
+    "repair_contract_markdown": {
+      "bytes": 2144,
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1/REPAIR_LOCK.md",
+      "sha256": "0c7c87cdbf030bbc9ba25ddb95a3df7904fb636a882a8c48853c336035351389"
+    },
+    "source_v2_config": {
+      "bytes": 10089,
+      "path": "phases/p2-gsjso/configs/fusion_w1_aprime_queue_continuation_20260727.json",
+      "sha256": "68554568bfe2cd44d059f2fdd7671f717912b9cb24afe20384b798bf2e3c906a"
+    },
+    "source_v2_driver": {
+      "bytes": 38686,
+      "path": "phases/p2-gsjso/scripts/fusion_w1_aprime_queue_continuation_20260727.py",
+      "sha256": "03c3b07931cc4d1d53c1cd29bbbb7f6f986b57379c93c8ef6163a748ba649319"
+    },
+    "source_v2_wrapper": {
+      "bytes": 10325,
+      "path": "phases/p2-gsjso/scripts/run_fusion_w1_aprime_queue_continuation_20260727.sh",
+      "sha256": "3ac9576bbae89a897e4ef71558aae3adf516471c7629b6b9d1f880b6c5982f9f"
+    },
+    "training_config": {
+      "bytes": 10363,
+      "path": "phases/p2-gsjso/configs/fusion_w1_aprime_training_20260726.json",
+      "sha256": "b650b59e9314f09cf80234e8fcd33a5d7618becd467976d6a1756773ae68a726"
+    },
+    "training_driver": {
+      "bytes": 100263,
+      "path": "phases/p2-gsjso/scripts/fusion_w1_aprime_training_20260726.py",
+      "sha256": "7b22a4c5aa2a9652931db5e77ef92bea16ebf7de91f02761c7d30695551cb65f"
+    },
+    "training_wrapper": {
+      "bytes": 1073,
+      "path": "phases/p2-gsjso/scripts/run_fusion_w1_aprime_training_20260726.sh",
+      "sha256": "83929f4f340a8871b31245b1a42526dfdb4fe9cf74a051ab6a2d5dc8720aa77d"
+    }
+  },
+  "recovery_contract": {
+    "contract": {
+      "bytes": 8403,
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_overnight_v4/RECOVERY_LOCK.json",
+      "sha256": "d4ee8225c4266c02acc22acebb24c0882f03561916c25c2d188533b6cc85c337"
+    },
+    "markdown": {
+      "bytes": 1105,
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_overnight_v4/RECOVERY_LOCK.md",
+      "sha256": "67682252749e6f4e442bf1cd15a4cab135a43f3b9ac938dcfa541f5e0c29982f"
+    },
+    "old_namespace_mutation_allowed": false,
+    "producer_head": "191b5652be6d38a81a3cba7ab05cd3db4ffbe796",
+    "scientific_recipe_changed": false,
+    "source_records_n": 23
+  },
+  "schema": "jointbuildgs.fusion_w1_aprime.unattended_continuation_v3.source_boundary.v1",
+  "source_not_advanced": {
+    "historical_canonical_training_outputs_preserved": true,
+    "recovery_source_rehashed": true,
+    "source_control_namespace_rewritten": false
+  },
+  "source_v2_driver_lock": {
+    "bytes": 0,
+    "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v2/driver.lock",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "source_v2_driver_lock_free": true,
+  "source_v2_gate": {
+    "primary_score": {
+      "bytes": 7227,
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/readout/by_building/DEBY_LOD2_42364659/arm_Aprime/r1/attempts/attempt_001/primary/score.json",
+      "sha256": "3f2522c896f39534fcb428b95286c5fdcf4cb56d7bcd5a837a386438da11557a"
+    },
+    "readout_complete": {
+      "bytes": 21304,
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/readout/by_building/DEBY_LOD2_42364659/arm_Aprime/r1/complete.json",
+      "sha256": "80a66f0aafba8000eae44e2a037e588ceb3fa4c261499d2ecaf9ee8ad4192477"
+    },
+    "stage_record": {
+      "bytes": 1042,
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v2/stage_records/stage_01_aprime_r1/entry_02_DEBY_LOD2_42364659_arm_Aprime_r1.json",
+      "sha256": "2fc876f94a3c5a618504edb9529f61aa7fec5facf9abea9c935a3b0a8fc63a97"
+    },
+    "training_complete": {
+      "bytes": 5425,
+      "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_42364659/arm_Aprime/r1/completed.json",
+      "sha256": "9911510f3365e8b8471ae40ef77fdb6ad5f0a81fed6fd6d97b8d0354efb7445b"
+    }
+  },
+  "source_v2_namespace_rewritten": false,
+  "source_v2_plan": {
+    "bytes": 46543,
+    "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_continuation_v2/queue_plan.json",
+    "sha256": "ead4e563a3a86f9595ff289f6550ad209886be585c7381f7abec5a7086e7c253"
+  },
+  "state": "LOCKED",
+  "training_preflight": {
+    "T2_exact_head_republication_required": true,
+    "gates": {
+      "profile": "full",
+      "records": {
+        "T1": {
+          "accepted_status": "PASSED",
+          "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T1/t1_mini_smoke_receipt.json",
+          "schema": "jointbuildgs.fusion_w1_aprime.t1_mini_smoke.receipt.v1",
+          "sha256": "075fe2b421222e7abd15ac276b0cdb59a80cf994219d714622ccbd60a9436b2b",
+          "status_field": "status"
+        },
+        "T2": {
+          "accepted_status": "COMPLETED",
+          "artifact_records": [
+            {
+              "bytes": 12444,
+              "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T2/per_view_integration.csv",
+              "sha256": "504451591c4e4a2dd65ba8264a05070af81555ad5d44ddd7fb32423ca0382a24"
+            },
+            {
+              "bytes": 898075,
+              "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T2/tsdf_mesh_raw_canonical.ply",
+              "sha256": "6ab7f6039175b35fd39b2e0327c3319384593314f86e34f4994e93f6917cf51d"
+            },
+            {
+              "bytes": 898075,
+              "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T2/tsdf_mesh_raw_epsg25832_orthometric.ply",
+              "sha256": "f71348643dd7dac17f8359c1585b4c2a299d113d955095b53ebefd6b5a6487a0"
+            },
+            {
+              "bytes": 789501,
+              "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T2/tsdf_mesh_filtered_canonical.ply",
+              "sha256": "4a9054a13787d2f56cf1f4f548dacf8b2d13295ad21e3a54bde80a5f54a57e7d"
+            },
+            {
+              "bytes": 789501,
+              "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T2/tsdf_mesh_filtered_epsg25832_orthometric.ply",
+              "sha256": "1e77d5bd82108f85c7a704e4be48df0786265fa475afffa3dfbf9ee7de90da9e"
+            },
+            {
+              "bytes": 79467,
+              "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T2/tsdf_surface_samples_canonical.ply",
+              "sha256": "1f81b8badeee5b51707a7b8caacf9f06dcb1536bd10fcc005b0244aa26b0ffe1"
+            },
+            {
+              "bytes": 79467,
+              "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T2/tsdf_surface_samples_epsg25832_orthometric.ply",
+              "sha256": "4c7a985f58a4aa1c6b0b354151b452a5de6555787581e330ea5e4120f2c39292"
+            },
+            {
+              "bytes": 101023,
+              "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T2/tsdf_surface_samples.npz",
+              "sha256": "4bfa6716018a6d6858d9d21e2b70618b0e143d123c790532c51054c7ef9b831d"
+            }
+          ],
+          "checks": {
+            "building_identity_bound": true,
+            "checkpoint_equals_training_final_step": true,
+            "component_filter_applied": true,
+            "marching_cubes_mesh_nonempty": true,
+            "no_alpha_threshold": true,
+            "only_exact_M_j_support": true,
+            "real_scalable_tsdf_volume": true,
+            "receipt_written_last": true,
+            "staged_artifacts_published_before_receipt": true,
+            "surface_sample_nonempty": true,
+            "training_data_root_equals_preprocess_data_root": true,
+            "training_view_inventory_exact": true
+          },
+          "consumed_preprocess_artifacts": [
+            {
+              "bytes": 64,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/sparse/0/cameras.bin",
+              "sha256": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99"
+            },
+            {
+              "bytes": 3068,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/sparse/0/images.bin",
+              "sha256": "46e94dc3efa30f433de323b6ae27562ddfe278af6683d7ee55472b570a66bb16"
+            },
+            {
+              "bytes": 157707,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/seed_canonical.npz",
+              "sha256": "06aa49b515555f8294d2b6a1880192150bbd8d6c5a699484afd34050dc98614b"
+            },
+            {
+              "bytes": 31663,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217084827_0177_D.JPG.npz",
+              "sha256": "939c379276160686ffe079631c47aaa952e0cae8b09a7faef1ff9639f7ca7705"
+            },
+            {
+              "bytes": 24136,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217095127_0070_D.JPG.npz",
+              "sha256": "604cff0100bb56fde026473ff11448198df7099321b18a9a171b09e0bfb69453"
+            },
+            {
+              "bytes": 27215,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217102933_0012_D.JPG.npz",
+              "sha256": "67605a82e9cc38a507d1f07b16bc87d3cad1e0aafa90141cbc4d7c098469e9c0"
+            },
+            {
+              "bytes": 31198,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217084829_0178_D.JPG.npz",
+              "sha256": "0c7b06b12fbce2cab202e7d8f9d86cf36683e0582bad2a61e9bc0f0708c85d43"
+            },
+            {
+              "bytes": 31031,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217084825_0176_D.JPG.npz",
+              "sha256": "b0996da88a40811212612bedb74141478689bf8fb7e58139c555d0f8f3e8ecb6"
+            },
+            {
+              "bytes": 24073,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217095139_0076_D.JPG.npz",
+              "sha256": "0e8c3bab84e56e748a03a6b2f722d485346df94928cd391f7f8ae78af03c819f"
+            },
+            {
+              "bytes": 26702,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217102935_0013_D.JPG.npz",
+              "sha256": "c926e19d80c04e330fe42583c9e0c3be9542432cefe3d47050766825677da2a6"
+            },
+            {
+              "bytes": 26704,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217102939_0015_D.JPG.npz",
+              "sha256": "ad46879789592ddadb51cd6b104cb18bb76a159889dc08959059561808348c48"
+            },
+            {
+              "bytes": 24073,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217095141_0077_D.JPG.npz",
+              "sha256": "0e8c3bab84e56e748a03a6b2f722d485346df94928cd391f7f8ae78af03c819f"
+            },
+            {
+              "bytes": 30501,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217084837_0182_D.JPG.npz",
+              "sha256": "cee8fccd8b419e976c3079e44a37ae031cbb340c864bb1fc224610b628f214a7"
+            },
+            {
+              "bytes": 30947,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217084833_0180_D.JPG.npz",
+              "sha256": "56e66863192ce3f44934496e54086f73bed658520998f53bb5f105be4f2699c0"
+            },
+            {
+              "bytes": 24073,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217095125_0069_D.JPG.npz",
+              "sha256": "0e8c3bab84e56e748a03a6b2f722d485346df94928cd391f7f8ae78af03c819f"
+            },
+            {
+              "bytes": 24285,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217102529_0017_D.JPG.npz",
+              "sha256": "34f05b5fe41dcb5000ed77e06c4f4249fc9a9a4b78972d6c01cb054209586974"
+            },
+            {
+              "bytes": 26528,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217102937_0014_D.JPG.npz",
+              "sha256": "d5093a73fae554a1b6591a9eb3f553f0372bef7df00c7e872d65db479d8972c6"
+            },
+            {
+              "bytes": 24073,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217095121_0067_D.JPG.npz",
+              "sha256": "0e8c3bab84e56e748a03a6b2f722d485346df94928cd391f7f8ae78af03c819f"
+            },
+            {
+              "bytes": 24073,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217094536_0024_D.JPG.npz",
+              "sha256": "0e8c3bab84e56e748a03a6b2f722d485346df94928cd391f7f8ae78af03c819f"
+            },
+            {
+              "bytes": 31177,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217084835_0181_D.JPG.npz",
+              "sha256": "36681aa241449039adb767deaae38cf2a93198cfbb6ab579da446c5155e35c0e"
+            },
+            {
+              "bytes": 24073,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217095149_0081_D.JPG.npz",
+              "sha256": "0e8c3bab84e56e748a03a6b2f722d485346df94928cd391f7f8ae78af03c819f"
+            },
+            {
+              "bytes": 24073,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217094953_0023_D.JPG.npz",
+              "sha256": "0e8c3bab84e56e748a03a6b2f722d485346df94928cd391f7f8ae78af03c819f"
+            },
+            {
+              "bytes": 31300,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217084831_0179_D.JPG.npz",
+              "sha256": "8b279b3341e1e1c23ec46ed96e565ebf12ad43b30cb994da81d1d27bebe411b3"
+            },
+            {
+              "bytes": 24118,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217095123_0068_D.JPG.npz",
+              "sha256": "c2c926861c97d969a06143f0b7beb0df06868775a01456dda028e7f220fee1cd"
+            },
+            {
+              "bytes": 24073,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217095013_0033_D.JPG.npz",
+              "sha256": "0e8c3bab84e56e748a03a6b2f722d485346df94928cd391f7f8ae78af03c819f"
+            },
+            {
+              "bytes": 24247,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217101453_0037_D.JPG.npz",
+              "sha256": "1c1da71904ff340d1cccd72545c428b14c12aac844dea9dcc6bf623b16d1a87e"
+            },
+            {
+              "bytes": 24073,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217095145_0079_D.JPG.npz",
+              "sha256": "0e8c3bab84e56e748a03a6b2f722d485346df94928cd391f7f8ae78af03c819f"
+            },
+            {
+              "bytes": 24073,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217095011_0032_D.JPG.npz",
+              "sha256": "0e8c3bab84e56e748a03a6b2f722d485346df94928cd391f7f8ae78af03c819f"
+            },
+            {
+              "bytes": 24073,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217101341_0023_D.JPG.npz",
+              "sha256": "0e8c3bab84e56e748a03a6b2f722d485346df94928cd391f7f8ae78af03c819f"
+            },
+            {
+              "bytes": 24073,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217095143_0078_D.JPG.npz",
+              "sha256": "0e8c3bab84e56e748a03a6b2f722d485346df94928cd391f7f8ae78af03c819f"
+            },
+            {
+              "bytes": 24115,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217095103_0058_D.JPG.npz",
+              "sha256": "946db4f326e861dbe73a9ddb6bcf7e874c66528d51914dc49b3e12a9151004e1"
+            },
+            {
+              "bytes": 24073,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/supervision/class6/DJI_20241217101542_0008_D.JPG.npz",
+              "sha256": "0e8c3bab84e56e748a03a6b2f722d485346df94928cd391f7f8ae78af03c819f"
+            }
+          ],
+          "consumer_validation": "full_current_hash_bytes_and_cross_binding",
+          "exact_M_j_inventory_sha256": "d26815bc0712c55df06ea659c6dd354945c515997dec13d86efb076e1d38d7f4",
+          "git_lock": {
+            "branch": "exp/fusion-w1",
+            "head": "8d1c1472c763d117a9c7972d2a8e03932010280b",
+            "implementation_files": [
+              {
+                "bytes": 3474,
+                "git_blob": "afcec91a5b844c6e7414f5fb09985174a09cbfaa",
+                "path": "phases/p2-gsjso/configs/fusion_w1_aprime_tsdf_20260726.json",
+                "sha256": "7c67f863d1c4e67dd97556281ebed8c75c63fab068dd5c23907dcb93a0965e3f"
+              },
+              {
+                "bytes": 53789,
+                "git_blob": "5393c6f0d915d24f6e00bd2c857da891b52e89e2",
+                "path": "phases/p2-gsjso/scripts/fusion_w1_aprime_tsdf_20260726.py",
+                "sha256": "43ba874a8ccc9665d2ab74498b6ad33eea459006c367aceda8b53f884d296463"
+              },
+              {
+                "bytes": 1344,
+                "git_blob": "8ebb5e272d906a8ba61607d0aaeb38a6d08c2e7e",
+                "path": "phases/p2-gsjso/scripts/run_fusion_w1_aprime_t2_20260726.sh",
+                "sha256": "d502dcbf85741d7d9a76144eaa56e2379b304d2015419f0c833be93e2a9de49e"
+              },
+              {
+                "bytes": 8705,
+                "git_blob": "593d03efbce37f1d6582408a56702b066086bc32",
+                "path": "phases/p2-gsjso/scripts/test_fusion_w1_aprime_tsdf_20260726.py",
+                "sha256": "1a1ea3c0b1ac8dfc93b9cb0dbb526fbb628665ddfa3f5926aeb43e81351cf775"
+              }
+            ]
+          },
+          "identity": {
+            "building_id": "DEBY_LOD2_42364609",
+            "condition": "arm_A",
+            "rehearsal_defaults": true,
+            "replicate": "r1"
+          },
+          "input_records": {
+            "cameras_bin": {
+              "bytes": 64,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/sparse/0/cameras.bin",
+              "sha256": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99"
+            },
+            "checkpoint": {
+              "bytes": 105951191,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/ckpt/final.pt",
+              "sha256": "9db46440bbb432904ab912729c7230d5a06a0b2f5855be1b3bd003d9168b3b65"
+            },
+            "class6_seed": {
+              "bytes": 157707,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/seed_canonical.npz",
+              "sha256": "06aa49b515555f8294d2b6a1880192150bbd8d6c5a699484afd34050dc98614b"
+            },
+            "config": {
+              "bytes": 3474,
+              "path": "phases/p2-gsjso/configs/fusion_w1_aprime_tsdf_20260726.json",
+              "sha256": "7c67f863d1c4e67dd97556281ebed8c75c63fab068dd5c23907dcb93a0965e3f"
+            },
+            "images_bin": {
+              "bytes": 3068,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/sparse/0/images.bin",
+              "sha256": "46e94dc3efa30f433de323b6ae27562ddfe278af6683d7ee55472b570a66bb16"
+            },
+            "preprocess_manifest": {
+              "bytes": 135831,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/preprocess_v1/pose_28b38383a0b6d826/by_building/DEBY_LOD2_42364609/preprocess_manifest.json",
+              "sha256": "6a762e5631b78b8d93cdd45819fc179882cd1eabaa8c4e8be0159b19b02344b1"
+            },
+            "projection_datum_config": {
+              "bytes": 962,
+              "path": "configs/projection_datum.json",
+              "sha256": "096a49b46fc5661d74f9d3b54c4f3777676cfc6b27e577b52bb2dabeee8b480c"
+            },
+            "scene_reference_frame": {
+              "bytes": 1232,
+              "path": "phases/p0-audit/data/work/opf/opf/scene_reference_frame.json",
+              "sha256": "fb408e9c97bdad6af7ad4a6e94be823be294030907ce92e395bd63490f77daf6"
+            },
+            "script": {
+              "bytes": 53789,
+              "path": "phases/p2-gsjso/scripts/fusion_w1_aprime_tsdf_20260726.py",
+              "sha256": "43ba874a8ccc9665d2ab74498b6ad33eea459006c367aceda8b53f884d296463"
+            },
+            "training_config": {
+              "bytes": 3918,
+              "path": "phases/p2-gsjso/runs/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/resolved_config.yaml",
+              "sha256": "5095f58e29a29fb6aed0339ca5de94a7fdd1af4e1b60e7377bf6175363172475"
+            }
+          },
+          "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T2/t2_tsdf_rehearsal_receipt.json",
+          "schema": "jointbuildgs.fusion_w1_aprime.tsdf.receipt.v1",
+          "sha256": "6f48e5ff736ae51d091ffaeefdf81ff2fc2788b559a931889b4cc317ff595caf",
+          "status_field": "status"
+        },
+        "T3": {
+          "accepted_status": "COMPLETE",
+          "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T3/manifest.json",
+          "schema": "jointbuildgs.fusion_w1_aprime.p0prime.manifest.v1",
+          "sha256": "09a0e86fa3fbf6ec9d31198594c3be149cc11de533e0dab911d42690b7c095aa",
+          "status_field": "state"
+        },
+        "five_pin": {
+          "accepted_status": "PASSED",
+          "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/five_pin_status.json",
+          "schema": "jointbuildgs.fusion_w1_aprime.five_pin_status.v1",
+          "sha256": "442795498840f0713b658b7043964909dbe09359d9d39565268aafb6fba716e0",
+          "status_field": "status"
+        }
+      },
+      "required_gates": [
+        "five_pin",
+        "T1",
+        "T2",
+        "T3"
+      ],
+      "status": "PASSED"
+    },
+    "method": {
+      "branch": "exp/fusion-w1",
+      "files": [
+        {
+          "path": "phases/p2-gsjso/configs/fusion_w1_aprime_training_20260726.json",
+          "sha256": "b650b59e9314f09cf80234e8fcd33a5d7618becd467976d6a1756773ae68a726"
+        },
+        {
+          "path": "phases/p2-gsjso/scripts/fusion_w1_aprime_training_20260726.py",
+          "sha256": "7b22a4c5aa2a9652931db5e77ef92bea16ebf7de91f02761c7d30695551cb65f"
+        },
+        {
+          "path": "phases/p2-gsjso/scripts/run_fusion_w1_aprime_training_20260726.sh",
+          "sha256": "83929f4f340a8871b31245b1a42526dfdb4fe9cf74a051ab6a2d5dc8720aa77d"
+        },
+        {
+          "path": "phases/p2-gsjso/scripts/test_fusion_w1_aprime_training_20260726.py",
+          "sha256": "1a4557087918eb22ff9e22fcef754c49f3ae56f3a406bb31c41de315de69eaa0"
+        },
+        {
+          "path": "src/stage2/train.py",
+          "sha256": "efc41b30bbdd15a3aadc056453d00393a1b16636afc9ba06afadafc2d121c750"
+        },
+        {
+          "path": "src/stage2/densification.py",
+          "sha256": "249b6ee870562e050532e632166c6c5fb8e6d217adc4d4efd134241a724e6fbe"
+        }
+      ],
+      "head": "8d1c1472c763d117a9c7972d2a8e03932010280b"
+    }
+  }
+}

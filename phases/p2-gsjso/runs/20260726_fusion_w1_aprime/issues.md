@@ -304,3 +304,26 @@ ninja: build stopped: subcommand failed.
   evaluation-only 중첩에만 사용한다.
 - 기존 v3 파일은 소급 덮어쓰지 않고 `review_v4`를 별도 namespace로 발행한다.
 - 본 항목은 표시 계약의 수정 기록이며 결과 해석이나 합격/불합격 판정을 포함하지 않는다.
+
+## FUS-W1-APRIME-READOUT-HISTORICAL-BINDING-003 — queue 허용 계약의 base readout 전달 누락
+
+- Recorded: 2026-07-28 11:29 KST
+- Status: V4 TERMINAL PRESERVED; REPAIR1 BINDING IMPLEMENTED
+- 대상 제어 namespace: `unattended_queue_overnight_v4` (HEAD
+  `8d1c1472c763d117a9c7972d2a8e03932010280b`).
+- queue inspect는 `42364663`, `4907182`, `4907510`, `4908050`의 producer HEAD
+  `191b5652be6d38a81a3cba7ab05cd3db4ffbe796` 학습을 ancestor+동일 training-method
+  증명으로 허용했지만, cachefix wrapper가 독립 호출한 base readout은 materialization
+  HEAD와 launch HEAD의 엄격 일치만 검사했다.
+- `42364663`, `4907182`, `4907510`이 각각 같은
+  `RUN_READOUTExternalError` signature
+  `ff27e4f7c863c624b46617be99aa07d79bfa4f94458ccb7674f117b17b0b4a99`를 3회
+  기록해 사전등록 파국 규칙대로 stage가 중단됐다. `4908050`은 미시도다.
+- 네 동 모두 canonical readout attempt/complete가 생성되기 전 실패했으며 training
+  checkpoint와 기존 `42364609`·`42364659` 후처리 결과는 변경되지 않았다.
+- `unattended_queue_overnight_v4_repair1`은 기존 v4를 수정하지 않는다. historical
+  fallback은 위 네 identity에만 적용하며 producer ancestor, current/producer training
+  git blob 전량 동일, preprocess/resolved config, materialization/started/completed,
+  30k 및 final checkpoint hash를 독립 재검증한다. 그 밖의 job과 신규 15개 학습은
+  current-HEAD strict 계약을 유지한다.
+- 본 항목은 실행 상태·오류·회복 범위 기록이며 과학적 판정을 포함하지 않는다.

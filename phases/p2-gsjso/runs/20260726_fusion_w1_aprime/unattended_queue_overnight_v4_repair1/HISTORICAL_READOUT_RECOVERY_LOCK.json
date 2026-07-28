@@ -1,0 +1,90 @@
+{
+  "schema": "jointbuildgs.fusion_w1_aprime.readout_historical_training_recovery_lock.v1",
+  "state": "LOCKED_FOR_HISTORICAL_READOUT_RECOVERY",
+  "created_at": "2026-07-28T11:29:09+09:00",
+  "branch": "exp/fusion-w1",
+  "source_failure": {
+    "namespace": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_overnight_v4",
+    "terminal_state": "STOPPED_THREE_CONSECUTIVE_BUILDING_SKIPS",
+    "error_type": "RUN_READOUTExternalError",
+    "error_signature": "ff27e4f7c863c624b46617be99aa07d79bfa4f94458ccb7674f117b17b0b4a99",
+    "observed_launch_head": "8d1c1472c763d117a9c7972d2a8e03932010280b",
+    "historical_materialization_head": "191b5652be6d38a81a3cba7ab05cd3db4ffbe796",
+    "canonical_readout_attempt_created": false,
+    "records": {
+      "stage_stop": {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_overnight_v4/stage_stop.json",
+        "sha256": "f1bf3af556281d87358ab52f11ddf5876038d995dfd863cb3434638951999f59",
+        "bytes": 2117
+      },
+      "complete": {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_overnight_v4/complete.json",
+        "sha256": "3684367c112c379b10cc3e86b5d206ceef9d71db81f6744ff73ce8e56ebc8527",
+        "bytes": 5683
+      },
+      "failure_42364663": {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_overnight_v4/action_failures/stage_01_aprime_r1/entry_03_DEBY_LOD2_42364663_arm_Aprime_r1/attempt_003.json",
+        "sha256": "3f26c76f904f449a6929249cc38df29ad95456d2323a45b1318211ca2c5b10ec",
+        "bytes": 1604
+      },
+      "failure_4907182": {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_overnight_v4/action_failures/stage_01_aprime_r1/entry_04_DEBY_LOD2_4907182_arm_Aprime_r1/attempt_003.json",
+        "sha256": "8a757962af03cc3b03af2b46ccfe03f5c68c873cc69e75af077657bdeb5da432",
+        "bytes": 1602
+      },
+      "failure_4907510": {
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_overnight_v4/action_failures/stage_01_aprime_r1/entry_05_DEBY_LOD2_4907510_arm_Aprime_r1/attempt_003.json",
+        "sha256": "d2b53af3cd92d25036b237d9f92a19a279f6df684fbf0a24fadd2b9d923a590a",
+        "bytes": 1602
+      }
+    }
+  },
+  "historical_training_reuse": {
+    "producer_head": "191b5652be6d38a81a3cba7ab05cd3db4ffbe796",
+    "producer_head_must_be_ancestor": true,
+    "method_files_must_be_current_identical": true,
+    "allowed_jobs": [
+      {"building_id": "DEBY_LOD2_42364663", "arm": "Aprime", "replicate": "r1", "profile": "full"},
+      {"building_id": "DEBY_LOD2_4907182", "arm": "Aprime", "replicate": "r1", "profile": "full"},
+      {"building_id": "DEBY_LOD2_4907510", "arm": "Aprime", "replicate": "r1", "profile": "full"},
+      {"building_id": "DEBY_LOD2_4908050", "arm": "Aprime", "replicate": "r1", "profile": "full"}
+    ],
+    "records": [
+      {
+        "identity": {"building_id": "DEBY_LOD2_42364663", "arm": "Aprime", "replicate": "r1", "profile": "full"},
+        "materialization": {"path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_42364663/arm_Aprime/r1/materialization_manifest.json", "sha256": "3a815c7cbda1112f8b9c80683508baf7829265dbb050003731840b486cea8639", "bytes": 67163},
+        "started": {"path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_42364663/arm_Aprime/r1/started.json", "sha256": "48eef0ed3ee42e2783744d23c2bf05fc6ef2048d95418b256fefcd33536eedc3", "bytes": 24693},
+        "completed": {"path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_42364663/arm_Aprime/r1/completed.json", "sha256": "5d626260dcc834d21e405ef74b0fcf4b6aefd5605e6d564bdadbf5a94e814519", "bytes": 5427},
+        "final_checkpoint": {"path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_42364663/arm_Aprime/r1/ckpt/final.pt", "sha256": "f0ec6c5ae5ae07e40d3beebfc816632034ebefc747f5abf08e8a749e4b861007", "bytes": 385581911}
+      },
+      {
+        "identity": {"building_id": "DEBY_LOD2_4907182", "arm": "Aprime", "replicate": "r1", "profile": "full"},
+        "materialization": {"path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_4907182/arm_Aprime/r1/materialization_manifest.json", "sha256": "9112fcac1707203bdfd0a87dbc113c30467f89a51445cba1764479c188cda42a", "bytes": 73270},
+        "started": {"path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_4907182/arm_Aprime/r1/started.json", "sha256": "ec90967a37ffb3a34df214e0e0a44ce98c86582b81a5d1c523591458d83acffa", "bytes": 24688},
+        "completed": {"path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_4907182/arm_Aprime/r1/completed.json", "sha256": "2a2077fda71d0c6ead67121e73913ba35328887de177d0fdfc9004bae4aa32ff", "bytes": 5414},
+        "final_checkpoint": {"path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_4907182/arm_Aprime/r1/ckpt/final.pt", "sha256": "ffa4220cf0d9ea4a91752f25c191324d5b722d3a1a6f687d95570595ac8350f1", "bytes": 21488919}
+      },
+      {
+        "identity": {"building_id": "DEBY_LOD2_4907510", "arm": "Aprime", "replicate": "r1", "profile": "full"},
+        "materialization": {"path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_4907510/arm_Aprime/r1/materialization_manifest.json", "sha256": "b0d7b6a999c6167e480aac8e93081cfc4f022a72058e74e6253f332e16b3f456", "bytes": 73292},
+        "started": {"path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_4907510/arm_Aprime/r1/started.json", "sha256": "cae28ffe67f7b52fa8758de5d3566802c3a322e5c7a8665ac2e59e7efa891382", "bytes": 24688},
+        "completed": {"path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_4907510/arm_Aprime/r1/completed.json", "sha256": "935b439f71762affc6eecfb82469caf13687fa03e12799c6f2108b2c5b3558b6", "bytes": 5414},
+        "final_checkpoint": {"path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_4907510/arm_Aprime/r1/ckpt/final.pt", "sha256": "dd235fbd14547ad12a44a3557cdc391e867a4947fad162be64f2b2f92ec36260", "bytes": 19265111}
+      },
+      {
+        "identity": {"building_id": "DEBY_LOD2_4908050", "arm": "Aprime", "replicate": "r1", "profile": "full"},
+        "materialization": {"path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_4908050/arm_Aprime/r1/materialization_manifest.json", "sha256": "d35f00ed404473f0ca6502fe6e3eac5009a5164902ba4181e7183e5014cf1453", "bytes": 73261},
+        "started": {"path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_4908050/arm_Aprime/r1/started.json", "sha256": "0e0e9b457b9c68b632fb3999efc62a9e6429c8f1d715d0fe428b6ded04fea7a4", "bytes": 24688},
+        "completed": {"path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_4908050/arm_Aprime/r1/completed.json", "sha256": "d05ffdd21a60d711a88a76595f8c5eb8a36ac625771817f2d1c5ca234509c42d", "bytes": 5415},
+        "final_checkpoint": {"path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/by_building/DEBY_LOD2_4908050/arm_Aprime/r1/ckpt/final.pt", "sha256": "24fa620dd8b1e424d17377ce9d57fdad845419071afc00b3917374364a6d3cda", "bytes": 93229591}
+      }
+    ]
+  },
+  "scope": {
+    "new_training_runs_allowed_by_readout": 0,
+    "strict_current_head_for_all_other_jobs": true,
+    "scientific_recipe_changed": false,
+    "source_namespace_mutation_allowed": false
+  },
+  "interpretation_or_verdict": null
+}

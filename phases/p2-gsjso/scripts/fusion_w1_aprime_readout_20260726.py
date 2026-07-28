@@ -49,6 +49,41 @@ COMPLETE_SCHEMA = "jointbuildgs.fusion_w1_aprime.readout.complete.v1"
 PRIMARY_PREP_SCHEMA = "jointbuildgs.fusion_w1_aprime.readout.primary_prepare.v1"
 ALPHA_EXTRACT_SCHEMA = "jointbuildgs.fusion_w1_aprime.readout.alpha_extract.v1"
 ALPHA_CLASSIFY_SCHEMA = "jointbuildgs.fusion_w1_aprime.readout.alpha_classify.v1"
+HISTORICAL_TRAINING_CONTRACT_SCHEMA = (
+    "jointbuildgs.fusion_w1_aprime.readout_historical_training_reuse.contract.v1"
+)
+HISTORICAL_TRAINING_RECOVERY_LOCK_SCHEMA = (
+    "jointbuildgs.fusion_w1_aprime.readout_historical_training_recovery_lock.v1"
+)
+HISTORICAL_TRAINING_PRODUCER_HEAD = (
+    "191b5652be6d38a81a3cba7ab05cd3db4ffbe796"
+)
+HISTORICAL_TRAINING_ALLOWED_JOBS = (
+    {
+        "building_id": "DEBY_LOD2_42364663",
+        "arm": "Aprime",
+        "replicate": "r1",
+        "profile": "full",
+    },
+    {
+        "building_id": "DEBY_LOD2_4907182",
+        "arm": "Aprime",
+        "replicate": "r1",
+        "profile": "full",
+    },
+    {
+        "building_id": "DEBY_LOD2_4907510",
+        "arm": "Aprime",
+        "replicate": "r1",
+        "profile": "full",
+    },
+    {
+        "building_id": "DEBY_LOD2_4908050",
+        "arm": "Aprime",
+        "replicate": "r1",
+        "profile": "full",
+    },
+)
 ALPHA_NONASSEMBLY_REASONS = (
     "too_few_points_before_classification",
     "required_class_missing_after_SMRF_overlay",
@@ -253,7 +288,95 @@ def load_config(path: Path = DEFAULT_CONFIG) -> dict[str, Any]:
     require_equal(config["containers"].get("serial_jobs"), True, "serial readout")
     require_equal(config["retry_contract"].get("same_error_attempts_before_skip"), 3, "retry count")
     require_equal(config["publication"].get("interpretation_or_verdict"), None, "verdict lock")
+    if "historical_training_readout_reuse_contract" in config:
+        historical_training_contract(config)
     return config
+
+
+def historical_training_identity(
+    building_id: str, arm: str, run: str
+) -> dict[str, str]:
+    return {
+        "building_id": building_id,
+        "arm": arm,
+        "replicate": run,
+        "profile": "full",
+    }
+
+
+def historical_training_contract(
+    config: Mapping[str, Any],
+) -> Mapping[str, Any] | None:
+    """Validate the closed historical-reuse policy without opening its lock.
+
+    The recovery-lock file record is deliberately verified only if the strict
+    current-HEAD materialization check fails for one of the four jobs.  This
+    keeps the ordinary path independent and makes an unresolved publication
+    placeholder fail closed exactly at historical reuse.
+    """
+
+    raw = config.get("historical_training_readout_reuse_contract")
+    if raw is None:
+        return None
+    if not isinstance(raw, Mapping):
+        raise AprimeReadoutError("historical training readout contract is not an object")
+    require_equal(
+        raw.get("schema"),
+        HISTORICAL_TRAINING_CONTRACT_SCHEMA,
+        "historical training contract schema",
+    )
+    require_equal(raw.get("enabled"), True, "historical training reuse enabled")
+    require_equal(
+        raw.get("strict_current_head_default"),
+        True,
+        "historical training strict default",
+    )
+    require_equal(
+        raw.get("producer_head"),
+        HISTORICAL_TRAINING_PRODUCER_HEAD,
+        "historical training producer HEAD",
+    )
+    require_equal(
+        raw.get("allowed_jobs"),
+        [dict(row) for row in HISTORICAL_TRAINING_ALLOWED_JOBS],
+        "historical training exact allowlist",
+    )
+    require_equal(
+        raw.get("producer_head_must_be_ancestor"),
+        True,
+        "historical training ancestor requirement",
+    )
+    require_equal(
+        raw.get("method_files_must_be_current_identical"),
+        True,
+        "historical training method identity requirement",
+    )
+    require_equal(
+        raw.get("completed_optimizer_updates"),
+        30000,
+        "historical training optimizer updates",
+    )
+    require_equal(
+        raw.get("recovery_lock_schema"),
+        HISTORICAL_TRAINING_RECOVERY_LOCK_SCHEMA,
+        "historical recovery lock schema contract",
+    )
+    require_equal(
+        raw.get("recovery_lock_state"),
+        "LOCKED_FOR_HISTORICAL_READOUT_RECOVERY",
+        "historical recovery lock state contract",
+    )
+    recovery = raw.get("recovery_lock")
+    if not isinstance(recovery, Mapping):
+        raise AprimeReadoutError("historical recovery lock record is missing")
+    if set(recovery) != {"path", "sha256", "bytes"}:
+        raise AprimeReadoutError(
+            "historical recovery lock record must contain only path/SHA256/bytes"
+        )
+    for key in ("path", "sha256", "bytes"):
+        if not isinstance(recovery.get(key), (str, int)):
+            raise AprimeReadoutError(f"historical recovery lock {key} is malformed")
+    return raw
 
 
 def verify_locked_inputs(config: Mapping[str, Any]) -> dict[str, dict[str, Any]]:
@@ -351,22 +474,417 @@ def training_module(config: Mapping[str, Any]) -> tuple[Any, dict[str, Any], Pat
     return module, training_config, config_path
 
 
-def resolve_training_binding(
-    config: Mapping[str, Any], building_id: str, arm: str, run: str
+def producer_record(path: Path) -> dict[str, str]:
+    return {"path": relative(path), "sha256": sha256_file(path)}
+
+
+def verify_historical_recovery_job(
+    config: Mapping[str, Any], identity: Mapping[str, str]
 ) -> dict[str, Any]:
-    module, training_config, config_path = training_module(config)
-    check = module.check_materialization(
+    contract = historical_training_contract(config)
+    if contract is None:
+        raise AprimeReadoutError("historical training readout reuse is not configured")
+    if dict(identity) not in contract["allowed_jobs"]:
+        raise AprimeReadoutError(
+            f"historical training job is not allowlisted: {dict(identity)}"
+        )
+    recovery_path = verify_record(
+        contract["recovery_lock"], "historical training recovery lock"
+    )
+    recovery = load_json(recovery_path)
+    require_equal(
+        recovery.get("schema"),
+        contract["recovery_lock_schema"],
+        "historical recovery lock schema",
+    )
+    require_equal(
+        recovery.get("state"),
+        contract["recovery_lock_state"],
+        "historical recovery lock state",
+    )
+    require_equal(recovery.get("branch"), config["branch"], "historical recovery branch")
+    section = recovery.get("historical_training_reuse")
+    if not isinstance(section, Mapping):
+        raise AprimeReadoutError("historical recovery lock lacks training reuse section")
+    require_equal(
+        section.get("producer_head"),
+        contract["producer_head"],
+        "recovery/contract producer HEAD",
+    )
+    require_equal(
+        section.get("producer_head_must_be_ancestor"),
+        True,
+        "recovery ancestor requirement",
+    )
+    require_equal(
+        section.get("method_files_must_be_current_identical"),
+        True,
+        "recovery method identity requirement",
+    )
+    require_equal(
+        section.get("allowed_jobs"),
+        contract["allowed_jobs"],
+        "recovery exact allowlist",
+    )
+    records = section.get("records")
+    if not isinstance(records, list):
+        raise AprimeReadoutError("historical recovery lock records are missing")
+    require_equal(
+        [record.get("identity") for record in records if isinstance(record, Mapping)],
+        contract["allowed_jobs"],
+        "historical recovery record identities",
+    )
+    matches = [
+        record
+        for record in records
+        if isinstance(record, Mapping) and record.get("identity") == dict(identity)
+    ]
+    if len(matches) != 1:
+        raise AprimeReadoutError(
+            f"historical recovery record is not unique for {dict(identity)}"
+        )
+    record = matches[0]
+    for name in ("materialization", "started", "completed", "final_checkpoint"):
+        value = record.get(name)
+        if not isinstance(value, Mapping) or not {"path", "sha256", "bytes"}.issubset(value):
+            raise AprimeReadoutError(
+                f"historical recovery job record lacks {name} path/SHA256/bytes"
+            )
+    return {
+        "lock": file_record(recovery_path),
+        "job": dict(record),
+    }
+
+
+def verify_historical_training_binding(
+    *,
+    config: Mapping[str, Any],
+    module: Any,
+    training_config: Mapping[str, Any],
+    config_path: Path,
+    building_id: str,
+    arm: str,
+    run: str,
+) -> dict[str, Any]:
+    """Revalidate one locked producer-HEAD training job for current readout.
+
+    This is intentionally a complete provenance proof rather than a relaxed
+    call to ``check_materialization``.  It is reachable only after the strict
+    current-HEAD check failed and the exact identity was found in the closed
+    four-job recovery allowlist.
+    """
+
+    identity = historical_training_identity(building_id, arm, run)
+    recovery = verify_historical_recovery_job(config, identity)
+    contract = historical_training_contract(config)
+    assert contract is not None
+    target = module.job_dir(
+        REPO, training_config, building_id, arm, run, "full"
+    )
+    outputs = training_config["outputs"]
+    materialization_path = target / outputs["materialization_manifest"]
+    started_path = target / outputs["started_receipt"]
+    completed_path = target / outputs["completed_receipt"]
+    failed_path = target / outputs["failed_receipt"]
+    if failed_path.exists() or failed_path.is_symlink():
+        raise AprimeReadoutError(
+            f"historical training job has failure receipt: {relative(failed_path)}"
+        )
+
+    materialization = load_json(materialization_path)
+    require_equal(
+        materialization.get("schema"),
+        module.MATERIALIZATION_SCHEMA,
+        "historical materialization schema",
+    )
+    require_equal(
+        materialization.get("status"), "PASSED", "historical materialization status"
+    )
+    for key, expected in identity.items():
+        require_equal(
+            materialization.get(key), expected, f"historical materialization {key}"
+        )
+    require_equal(
+        materialization.get("driver_config"),
+        relative(config_path),
+        "historical materialization training config path",
+    )
+    require_equal(
+        materialization.get("driver_config_sha256"),
+        sha256_file(config_path),
+        "historical materialization training config hash",
+    )
+    require_equal(
+        materialization.get("output_dir"),
+        relative(target),
+        "historical materialization output directory",
+    )
+
+    producer_method = materialization.get("git")
+    if not isinstance(producer_method, Mapping):
+        raise AprimeReadoutError("historical materialization method snapshot is missing")
+    producer_head = str(producer_method.get("head", ""))
+    require_equal(
+        producer_head,
+        contract["producer_head"],
+        "historical materialization producer HEAD",
+    )
+    if re.fullmatch(r"[0-9a-f]{40}", producer_head) is None:
+        raise AprimeReadoutError("historical producer HEAD is malformed")
+    current_method = module.committed_method_gate(REPO, training_config)
+    current_head = str(current_method.get("head", ""))
+    ancestor = git(
+        "merge-base", "--is-ancestor", producer_head, current_head, check=False
+    )
+    if ancestor.returncode:
+        raise AprimeReadoutError(
+            "historical producer HEAD is not an ancestor of current HEAD"
+        )
+    require_equal(
+        producer_method.get("branch"),
+        current_method.get("branch"),
+        "historical/current training branch",
+    )
+    producer_files = producer_method.get("files")
+    current_files = current_method.get("files")
+    require_equal(
+        producer_files,
+        current_files,
+        "historical/current training method file list",
+    )
+    if not isinstance(current_files, list):
+        raise AprimeReadoutError("current training method files are malformed")
+    require_equal(
+        [record.get("path") for record in current_files if isinstance(record, Mapping)],
+        list(training_config["method_files"]),
+        "historical training configured method files",
+    )
+    method_blob_records = []
+    for record in current_files:
+        if not isinstance(record, Mapping):
+            raise AprimeReadoutError("training method file record is malformed")
+        logical = str(record["path"])
+        producer_blob = git("rev-parse", f"{producer_head}:{logical}").stdout.strip()
+        current_blob = git("rev-parse", f"{current_head}:{logical}").stdout.strip()
+        require_equal(
+            producer_blob, current_blob, f"historical/current git blob {logical}"
+        )
+        path = repo_path(logical)
+        require_equal(
+            sha256_file(path), record["sha256"], f"historical/current SHA {logical}"
+        )
+        method_blob_records.append(
+            {
+                "path": logical,
+                "sha256": record["sha256"],
+                "producer_blob": producer_blob,
+                "current_blob": current_blob,
+            }
+        )
+
+    locked_inputs = module.validate_locked_inputs(REPO, training_config)
+    require_equal(
+        locked_inputs,
+        materialization.get("locked_inputs"),
+        "historical materialization locked inputs",
+    )
+    preprocess = module.validate_preprocess(
+        REPO,
+        training_config,
+        building_id,
+        roundtrip=False,
+        hash_artifacts=True,
+    )
+    materialized_preprocess = materialization.get("preprocess")
+    if not isinstance(materialized_preprocess, Mapping):
+        raise AprimeReadoutError("historical materialization lacks preprocess binding")
+    for key in (
+        "manifest_sha256",
+        "full_snapshot_sha256",
+        "training_artifact_snapshot_sha256",
+        "seed_canonical_npz_sha256",
+        "supervision_index_sha256",
+    ):
+        require_equal(
+            preprocess.get(key),
+            materialized_preprocess.get(key),
+            f"historical preprocess {key}",
+        )
+    require_equal(
+        preprocess.get("data_root"),
+        materialized_preprocess.get("data_root"),
+        "historical preprocess data root",
+    )
+
+    resolved_path = target / outputs["resolved_config"]
+    override_path = target / outputs["compose_override"]
+    require_equal(
+        materialization.get("resolved_config"),
+        relative(resolved_path),
+        "historical resolved config path",
+    )
+    require_equal(
+        sha256_file(resolved_path),
+        materialization.get("resolved_config_sha256"),
+        "historical resolved config hash",
+    )
+    require_equal(
+        materialization.get("compose_override"),
+        relative(override_path),
+        "historical compose override path",
+    )
+    require_equal(
+        sha256_file(override_path),
+        materialization.get("compose_override_sha256"),
+        "historical compose override hash",
+    )
+    with resolved_path.open("r", encoding="utf-8") as stream:
+        resolved = module.yaml.safe_load(stream)
+    expected_resolved = module.build_training_config(
         repo=REPO,
-        config_path=config_path,
         config=training_config,
+        preprocess=preprocess,
         building_id=building_id,
         arm=arm,
         run=run,
         profile="full",
-        roundtrip=False,
+        out_dir=target,
     )
+    require_equal(
+        resolved, expected_resolved, "historical resolved training config reconstruction"
+    )
+    require_equal(
+        module.canonical_json_sha256(resolved),
+        materialization.get("recipe", {}).get("resolved_scientific_config_sha256"),
+        "historical resolved scientific config hash",
+    )
+
+    completed = load_json(completed_path)
+    require_equal(
+        completed.get("schema"), module.COMPLETED_SCHEMA, "historical completion schema"
+    )
+    require_equal(completed.get("status"), "COMPLETED", "historical completion status")
+    require_equal(completed.get("return_code"), 0, "historical completion return code")
+    for key, expected in identity.items():
+        require_equal(completed.get(key), expected, f"historical completion {key}")
+    require_equal(
+        completed.get("materialization"),
+        producer_record(materialization_path),
+        "historical completion/materialization binding",
+    )
+    require_equal(
+        completed.get("started_receipt"),
+        producer_record(started_path),
+        "historical completion/started binding",
+    )
+
+    started = load_json(started_path)
+    require_equal(started.get("schema"), module.STARTED_SCHEMA, "historical started schema")
+    require_equal(started.get("status"), "STARTED", "historical started status")
+    for key, expected in identity.items():
+        require_equal(started.get(key), expected, f"historical started {key}")
+    require_equal(
+        started.get("method"), producer_method, "historical started/producer method"
+    )
+    require_equal(
+        started.get("materialization"),
+        producer_record(materialization_path),
+        "historical started/materialization binding",
+    )
+
+    completion = completed.get("training_completion")
+    if not isinstance(completion, Mapping):
+        raise AprimeReadoutError("historical training completion evidence is missing")
+    require_equal(completion.get("status"), "PASSED", "historical trainer status")
+    require_equal(completion.get("profile"), "full", "historical trainer profile")
+    require_equal(
+        completion.get("completed_optimizer_updates"),
+        contract["completed_optimizer_updates"],
+        "historical optimizer updates",
+    )
+    checkpoint_path = verify_record(
+        completion["checkpoint"], "historical step-30000 checkpoint"
+    )
+    final_checkpoint_path = verify_record(
+        completion["final_checkpoint"], "historical final checkpoint"
+    )
+
+    locked_job = recovery["job"]
+    for name, path in (
+        ("materialization", materialization_path),
+        ("started", started_path),
+        ("completed", completed_path),
+        ("final_checkpoint", final_checkpoint_path),
+    ):
+        require_equal(
+            file_record(path), locked_job[name], f"historical recovery job {name}"
+        )
+    return {
+        "status": "PASSED",
+        "binding_mode": "ancestor_identical_method",
+        "producer_head": producer_head,
+        "current_head": current_head,
+        "materialization_manifest": relative(materialization_path),
+        "materialization_manifest_sha256": sha256_file(materialization_path),
+        "resolved_config": relative(resolved_path),
+        "resolved_config_sha256": sha256_file(resolved_path),
+        "preprocess_full_snapshot_sha256": preprocess["full_snapshot_sha256"],
+        "started": file_record(started_path),
+        "completed": file_record(completed_path),
+        "checkpoint": file_record(checkpoint_path),
+        "final_checkpoint": file_record(final_checkpoint_path),
+        "recovery_lock": recovery["lock"],
+        "method_blob_records": method_blob_records,
+    }
+
+
+def resolve_training_binding(
+    config: Mapping[str, Any], building_id: str, arm: str, run: str
+) -> dict[str, Any]:
+    module, training_config, config_path = training_module(config)
     head = git("rev-parse", "HEAD").stdout.strip()
-    require_equal(check["method_head"], head, "training method HEAD/current HEAD")
+    binding_mode = "strict_current_head"
+    historical: dict[str, Any] | None = None
+    try:
+        check = module.check_materialization(
+            repo=REPO,
+            config_path=config_path,
+            config=training_config,
+            building_id=building_id,
+            arm=arm,
+            run=run,
+            profile="full",
+            roundtrip=False,
+        )
+        require_equal(check["method_head"], head, "training method HEAD/current HEAD")
+    except Exception as strict_error:
+        identity = historical_training_identity(building_id, arm, run)
+        contract = historical_training_contract(config)
+        if contract is None or identity not in contract["allowed_jobs"]:
+            raise AprimeReadoutError(
+                f"strict current-HEAD training binding failed: {strict_error}"
+            ) from strict_error
+        try:
+            historical = verify_historical_training_binding(
+                config=config,
+                module=module,
+                training_config=training_config,
+                config_path=config_path,
+                building_id=building_id,
+                arm=arm,
+                run=run,
+            )
+        except Exception as historical_error:
+            raise AprimeReadoutError(
+                "strict current-HEAD training binding failed "
+                f"({strict_error}); historical training reuse failed "
+                f"({historical_error})"
+            ) from historical_error
+        require_equal(
+            historical.get("current_head"), head, "historical/current readout HEAD"
+        )
+        check = historical
+        binding_mode = "ancestor_identical_method"
     target = module.job_dir(REPO, training_config, building_id, arm, run, "full")
     materialization_path = target / training_config["outputs"]["materialization_manifest"]
     completed_path = target / training_config["outputs"]["completed_receipt"]
@@ -382,7 +900,14 @@ def resolve_training_binding(
         require_equal(completed.get(key), expected, f"training completion {key}")
     require_equal(completed.get("return_code"), 0, "training return code")
     materialization = load_json(materialization_path)
-    require_equal(materialization.get("git", {}).get("head"), head, "training materialization HEAD")
+    expected_materialization_head = (
+        head if binding_mode == "strict_current_head" else HISTORICAL_TRAINING_PRODUCER_HEAD
+    )
+    require_equal(
+        materialization.get("git", {}).get("head"),
+        expected_materialization_head,
+        "training materialization HEAD",
+    )
     require_equal(
         completed.get("materialization"),
         {"path": relative(materialization_path), "sha256": sha256_file(materialization_path)},
@@ -413,6 +938,8 @@ def resolve_training_binding(
             "replicate": run,
             "profile": "full",
         },
+        "binding_mode": binding_mode,
+        "producer_head": expected_materialization_head,
         "current_head": head,
         "training_config": file_record(config_path),
         "training_driver": file_record(repo_path(config["locked_inputs"]["training_driver"]["path"])),
@@ -424,6 +951,7 @@ def resolve_training_binding(
         "data_root": relative(data_root),
         "preprocess_full_snapshot_sha256": preprocess["full_snapshot_sha256"],
         "completed_receipt_payload_sha256": sha256_bytes(canonical_json(completed)),
+        "historical_reuse_proof": historical,
     }
 
 

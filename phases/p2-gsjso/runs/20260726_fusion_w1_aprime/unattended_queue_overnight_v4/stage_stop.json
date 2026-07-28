@@ -1,0 +1,57 @@
+{
+  "cause": {
+    "consecutive_buildings": [
+      "DEBY_LOD2_42364663",
+      "DEBY_LOD2_4907182",
+      "DEBY_LOD2_4907510"
+    ],
+    "error_type": "RUN_READOUTExternalError",
+    "reason_code": "SAME_ERROR_TYPE_THREE_CONSECUTIVE_BUILDINGS",
+    "stage_record_receipts": [
+      {
+        "bytes": 1970,
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_overnight_v4/stage_records/stage_01_aprime_r1/entry_03_DEBY_LOD2_42364663_arm_Aprime_r1.json",
+        "sha256": "e1e920e2bbb520f3750ad6d66f90273307addcfb432de259e0b7b6c3eb4fa10b"
+      },
+      {
+        "bytes": 1966,
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_overnight_v4/stage_records/stage_01_aprime_r1/entry_04_DEBY_LOD2_4907182_arm_Aprime_r1.json",
+        "sha256": "5d4d681ed0f4b20661646cb50b233fb344251862f9fbb4d0b48a3b59d099cdc6"
+      },
+      {
+        "bytes": 1966,
+        "path": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_overnight_v4/stage_records/stage_01_aprime_r1/entry_05_DEBY_LOD2_4907510_arm_Aprime_r1.json",
+        "sha256": "f5fae31b1c764eeb9f5d380bcf4c3325f77d6cd71f0ab797eec3b8c2108691a4"
+      }
+    ]
+  },
+  "created_at": "2026-07-28T02:10:18.599770+00:00",
+  "interpretation_or_verdict": null,
+  "last_entry": {
+    "aprime_order": 5,
+    "arm": "Aprime",
+    "assigned_gpu": 0,
+    "building_id": "DEBY_LOD2_4907510",
+    "global_entry_order": 4,
+    "pair_id": "pair_02_stage_01_aprime_r1_02",
+    "pair_member_order": 1,
+    "profile": "full",
+    "queue_order": 5,
+    "replicate": "r1",
+    "reuse_completed_smoke": false,
+    "reuse_source_v2": false,
+    "seed": 1001,
+    "smoke_barrier_entry": false,
+    "stage_entry_order": 5,
+    "stage_key": "aprime_r1",
+    "stage_order": 1,
+    "target_role": "dim_failure",
+    "v3_global_order": 4
+  },
+  "later_stages_not_started_by_orchestrator": true,
+  "partial_results_reviewable": true,
+  "schema": "jointbuildgs.fusion_w1_aprime.unattended_continuation_v3.stage_stop.v1",
+  "stage_key": "aprime_r1",
+  "stage_order": 1,
+  "state": "STOPPED_THREE_CONSECUTIVE_BUILDING_SKIPS"
+}

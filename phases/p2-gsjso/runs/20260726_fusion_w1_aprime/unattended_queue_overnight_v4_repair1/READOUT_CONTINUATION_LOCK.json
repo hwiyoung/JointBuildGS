@@ -1,0 +1,31 @@
+{
+  "schema": "jointbuildgs.fusion_w1_aprime.queue_continuation_lock.v1",
+  "task_id": "FUS-W1-APRIME-READOUT-HEAD-REPAIR1-LOCK-001",
+  "state": "LOCKED_BEFORE_REMAINING_JOB_START",
+  "created_at": "2026-07-28T00:00:00+09:00",
+  "branch": "exp/fusion-w1",
+  "scope": {
+    "remaining_jobs": 20,
+    "physical_gpu": 1
+  },
+  "binding": {
+    "continuation_root": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_overnight_v4_repair1",
+    "source_terminal_root": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue_overnight_v4",
+    "purpose": "historical_training_ancestor_identical_method_readout_HEAD_binding_only",
+    "existing_v4_namespace_mutated": false,
+    "scientific_configuration_changed": false,
+    "new_training_runs_allowed_by_readout": 0,
+    "historical_training_jobs_allowed": 4,
+    "new_queue_training_jobs_after_historical_postprocess": 15
+  },
+  "historical_head_contract": {
+    "producer_head": "191b5652be6d38a81a3cba7ab05cd3db4ffbe796",
+    "failed_queue_head": "8d1c1472c763d117a9c7972d2a8e03932010280b",
+    "producer_head_must_be_ancestor": true,
+    "training_method_git_blobs_must_be_identical": true,
+    "materialization_started_completed_checkpoint_binding_required": true,
+    "strict_current_head_required_for_all_new_training": true
+  },
+  "scientific_verdict": null,
+  "interpretation": null
+}
