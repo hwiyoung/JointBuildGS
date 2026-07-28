@@ -299,3 +299,46 @@ phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase2_prepare/runner/logs/
 /phases/p2-gsjso/runs/20260726_fusion_w1_aprime/report_v2/
 /phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/readout/
 /phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/ephemeral_lock_quarantine/
+
+# Active-run hygiene follow-up: local payload only.  Compact canonical
+# receipts, score tables, review_v4 panels, CityJSON, and queue terminals stay
+# visible for explicit curation.
+/phases/p2-gsjso/runs/20260724_fusion_w1/training/**/runtime_env/
+/phases/p2-gsjso/runs/20260724_fusion_w1/readout_v1/by_building/
+/phases/p2-gsjso/runs/20260724_fusion_w1/p0prime/driver.lock
+/phases/p2-gsjso/runs/20260724_fusion_w1/partial_closeout_v1.lock
+/phases/p2-gsjso/runs/20260724_fusion_w1/readout_v1/driver.lock
+/phases/p2-gsjso/runs/20260724_fusion_w1/readout_v1/runtime_counters.json.lock
+/phases/p2-gsjso/runs/20260724_fusion_w1/training/runtime_counters.json.lock
+/phases/p2-gsjso/runs/20260724_fusion_w1/w1_loss_shares.csv.lock
+/phases/p2-gsjso/runs/20260724_fusion_w1/w1_scores_building.csv.lock
+/phases/p2-gsjso/runs/20260724_fusion_w1/w1_seed_p0prime_scores.csv.lock
+
+/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/**/*.lock
+/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T1/mini_smoke/
+/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T3/by_building/
+/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preflight/T3/progress.json
+/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/**/audit/
+/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/**/ckpt/
+/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/**/effective_config.json
+/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/**/full_state_manifest.json
+/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/**/resolved_config.yaml
+/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/**/runtime_compose_override.yaml
+/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/**/view_roles.json
+/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/training/runtime_counters.json
+/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue/training_failure_archive/
+/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue/recovery/
+/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue*/action_failures/
+/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue*/launches/
+/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue*/pairs/
+/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue*/readout_cachefix/
+/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/unattended_queue*/service_control/
+/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v1/
+/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/t5_mask_inventory.csv
+/phases/p2-gsjso/runs/20260726_fusion_w1_aprime/t5_preprocess_summary.csv
+
+/phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/cache_probe*.json
+/phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/derived_readout_config*.json
+/phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/materialization*.json
+/phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/completed.json
+/phases/p2-gsjso/runs/20260727_fusion_w1_aprime_smoke_recovery/qualitative_smoke/
