@@ -8,7 +8,7 @@ The reason and admission rule for every top-level directory are authoritative in
 
 The current paths remain valid until a separate family-scoped migration is approved and verified. The catalogs beside this document describe the current state; this document describes the intended state.
 
-`boundary_map` is the first completed family pilot. A second verified wave organized 70 research, experiment, and archive documents without changing their payload bytes; exact relocations and four compatibility mirrors are recorded in `docs/catalog/migrations/DOCUMENT_FAMILIES_WAVE1_PATHS.csv`. Phase run receipts and immutable experiment contents remain in place.
+`boundary_map` was the first completed family pilot. Later verified waves organized the research, E5 C001, versioned evidence, compact-result, P0 G1, and reusable P2 code families. Exact mappings and hashes are retained in `docs/catalog/migrations/`. Phase run receipts and immutable experiment contents remain in place.
 
 The catalog's own generated files and navigation/control documents are excluded from its row set. This prevents self-referential size, Git-state, and commit-history churn while keeping the research-document inventory reproducible after commit.
 
@@ -20,7 +20,7 @@ The catalog's own generated files and navigation/control documents are excluded 
 4. Allow at most one approved `canonical` document for a `canonical_for` purpose.
 5. Preserve superseded and retracted material with an explicit status and successor link. Do not silently overwrite or delete it.
 6. Store a report once. Run records and indexes link to it instead of copying it into several locations.
-7. Keep root GS-JSO implementation paths where the repository rules currently require them.
+7. Keep GS-JSO library code at root; promote only reviewed reusable experiment drivers and tests from phase-local paths.
 
 ## Target tree
 
@@ -60,15 +60,15 @@ JointBuildGS/
       runs/
         <YYYYMMDD_run_id>/      # compact immutable execution/provenance receipt
 
-  artifacts/
+  artifacts/                    # reserved; create with the first approved class-C backend
     manifests/
-      <artifact_id>.yaml        # tracked resolver for externally stored class-C payloads
+      <artifact_id>.yaml        # future tracked resolver for external payloads
 
   external/                     # conditional: documented third-party source only
   legacy/                       # conditional: inactive reference-code quarantine only
 ```
 
-`artifacts/manifests/` and `docs/evidence/` are target paths only; they are not created by this task. External payload bytes do not live below `artifacts/`.
+`docs/evidence/` now contains reviewed frozen packages. `artifacts/` is intentionally absent until an external backend and manifest schema are approved; external payload bytes must not be copied there merely to make the directory exist.
 
 ## Ownership boundaries
 
@@ -153,7 +153,7 @@ Large payloads remain class C or D. A run directory is not considered documented
 4. Pilot `boundary_map`, because it spans reports, tables, manifests, figures, scripts, and runs across several versions. **Family pilot completed.**
 5. Produce an exact old-to-new path manifest and reference rewrite preview for that family. **Completed in `BOUNDARY_MAP_PATHS.csv`.**
 6. Move only the approved pilot in separate commits and run link/provenance checks. **Document payload and dedicated-script migrations completed; shared P2 helpers and run receipts remain in place.**
-7. Repeat by family. **Wave 1 and the 242-file E5 C001 chain are completed; versioned evidence packages remain separately gated.**
+7. Repeat by family. **Research wave 1, the 242-file E5 C001 chain, versioned evidence packages, compact results, P0 G1 evidence, and P2 reusable-code wave 1 are completed.**
 8. Adopt external artifact storage and selected LFS in separate policy tasks.
 
 No physical migration step was executed by the design tasks `DOC-IA-01` or `DOC-IA-01A`; the approved pilot moves are recorded as later migration tasks.
