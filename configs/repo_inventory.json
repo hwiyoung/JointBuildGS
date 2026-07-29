@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "document_roots": [
+    "docs"
+  ],
+  "phase_document_globs": [
+    "phases/README.md",
+    "phases/*/README.md",
+    "phases/*/AGENTS.md",
+    "phases/*/CLAUDE.md",
+    "phases/*/docs/**"
+  ],
+  "run_roots": [
+    {
+      "phase": "P0",
+      "path": "phases/p0-audit/runs"
+    },
+    {
+      "phase": "P2",
+      "path": "phases/p2-gsjso/runs"
+    }
+  ],
+  "generated_paths": [
+    "docs/catalog/DOCUMENT_CATALOG.csv",
+    "docs/catalog/DOCUMENT_LINEAGE.csv",
+    "docs/catalog/CANONICAL_MAP.md",
+    "docs/catalog/CATALOG_ISSUES.md",
+    "phases/RUN_CATALOG.csv"
+  ],
+  "inventory_control_paths": [
+    "docs/README.md",
+    "docs/catalog/TARGET_INFORMATION_ARCHITECTURE.md",
+    "phases/README.md"
+  ],
+  "canonical_documents": [
+    {
+      "path": "docs/RESEARCH_CONTEXT.md",
+      "canonical_for": "research_context",
+      "reason": "Root AGENTS.md names this as a primary research-context document."
+    },
+    {
+      "path": "docs/EXPERIMENT_PLAN.md",
+      "canonical_for": "experiment_plan",
+      "reason": "Root AGENTS.md names this as a primary experiment-plan document."
+    },
+    {
+      "path": "docs/사전등록서_품질축본선_승인잠금v4_20260721.md",
+      "canonical_for": "quality_axis_main_preregistration_lock",
+      "reason": "Root AGENTS.md explicitly defines this v4 file as the approval lock."
+    }
+  ],
+  "family_rules": [
+    {
+      "pattern": "(?i)^docs/evidence_cards(?:_v[0-9]+)?/",
+      "family_id": "evidence_cards"
+    },
+    {
+      "pattern": "(?i)^docs/judgment_kit(?:_v[0-9]+)?/",
+      "family_id": "judgment_kit"
+    },
+    {
+      "pattern": "(?i)anchor[_-]census[_-]supplement",
+      "family_id": "anchor_census_supplement"
+    },
+    {
+      "pattern": "(?i)anchor[_-]census",
+      "family_id": "anchor_census"
+    },
+    {
+      "pattern": "(?i)boundary[_-]map",
+      "family_id": "boundary_map"
+    },
+    {
+      "pattern": "(?i)degradation[_-]curve",
+      "family_id": "degradation_curve"
+    },
+    {
+      "pattern": "(?i)fusion[_-]w1",
+      "family_id": "fusion_w1"
+    },
+    {
+      "pattern": "(?i)pointcloud[_-]attributes",
+      "family_id": "pointcloud_attributes"
+    },
+    {
+      "pattern": "(?i)projection[_-]gate",
+      "family_id": "projection_gate"
+    },
+    {
+      "pattern": "(?i)e5[_-]c001[_-]s3ap",
+      "family_id": "e5_c001_s3ap"
+    },
+    {
+      "pattern": "(?i)e5[_-]c001[_-]s3b",
+      "family_id": "e5_c001_s3b"
+    },
+    {
+      "pattern": "(?i)e5[_-]c001[_-]s3",
+      "family_id": "e5_c001_s3"
+    },
+    {
+      "pattern": "(?i)e5[_-]c001[_-]s2p",
+      "family_id": "e5_c001_s2p"
+    },
+    {
+      "pattern": "(?i)e5[_-]c001[_-]s2",
+      "family_id": "e5_c001_s2"
+    },
+    {
+      "pattern": "(?i)e5[_-]c001",
+      "family_id": "e5_c001"
+    }
+  ],
+  "implicit_version_rules": [
+    {
+      "family_id": "boundary_map",
+      "pattern": "(?i)^docs/(?:W_)?boundary_map_(?!v[0-9])",
+      "version": "v1"
+    }
+  ],
+  "text_extensions": [
+    ".csv",
+    ".json",
+    ".md",
+    ".rst",
+    ".toml",
+    ".txt",
+    ".yaml",
+    ".yml"
+  ],
+  "max_text_scan_bytes": 8388608,
+  "max_markdown_issue_rows": 250
+}
