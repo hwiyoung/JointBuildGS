@@ -32,7 +32,7 @@ configs
 scripts
 tools
 tests
-env
+docs/catalog
 docs/research
 docs/experiments
 phases/p0-audit/docs
@@ -57,8 +57,8 @@ git clone \
 cd JointBuildGS-control
 git sparse-checkout init --cone
 git sparse-checkout set \
-  src configs scripts tools tests env \
-  docs/research docs/experiments \
+  src configs scripts tools tests \
+  docs/catalog docs/research docs/experiments \
   phases/p0-audit/docs phases/p0-audit/scripts \
   phases/p2-gsjso/configs phases/p2-gsjso/docs phases/p2-gsjso/scripts
 git checkout exp/fusion-w1

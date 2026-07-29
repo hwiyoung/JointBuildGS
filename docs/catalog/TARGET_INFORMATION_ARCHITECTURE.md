@@ -2,13 +2,13 @@
 
 ## Status and boundary
 
-This document defines the target organization and records approved family-scoped migrations. It does not authorize deletions, `.gitignore` changes, artifact uploads, Git LFS conversion, or history rewriting.
+This document defines the target organization and records completed family-scoped migrations. It does not authorize deletions, `.gitignore` changes, artifact uploads, Git LFS conversion, history rewriting, or bulk payload movement.
 
 The reason and admission rule for every top-level directory are authoritative in [`TOP_LEVEL_DIRECTORY_CONTRACT.md`](TOP_LEVEL_DIRECTORY_CONTRACT.md). This document applies that contract to the internal tree.
 
-The current paths remain valid until a separate family-scoped migration is approved and verified. The catalogs beside this document describe the current state; this document describes the intended state.
+Unmigrated and compatibility paths remain valid until a family-scoped migration is approved and verified. The catalogs beside this document describe the current state; this document describes the intended owner model and its completed applications.
 
-`boundary_map` was the first completed family pilot. Later verified waves organized the research, E5 C001, versioned evidence, compact-result, P0 G1, and reusable P2 code families. Exact mappings and hashes are retained in `docs/catalog/migrations/`. Phase run receipts and immutable experiment contents remain in place.
+`boundary_map` was the first completed family pilot. Later verified waves organized the research, E5 C001, versioned evidence, compact-result, P0 G1, docs-root, and reusable P2 code families. Exact mappings and hashes are retained in `docs/catalog/migrations/`. Phase run receipts and immutable experiment contents remain in place.
 
 The catalog's own generated files and navigation/control documents are excluded from its row set. This prevents self-referential size, Git-state, and commit-history churn while keeping the research-document inventory reproducible after commit.
 
@@ -153,7 +153,7 @@ Large payloads remain class C or D. A run directory is not considered documented
 4. Pilot `boundary_map`, because it spans reports, tables, manifests, figures, scripts, and runs across several versions. **Family pilot completed.**
 5. Produce an exact old-to-new path manifest and reference rewrite preview for that family. **Completed in `BOUNDARY_MAP_PATHS.csv`.**
 6. Move only the approved pilot in separate commits and run link/provenance checks. **Document payload and dedicated-script migrations completed; shared P2 helpers and run receipts remain in place.**
-7. Repeat by family. **Research wave 1, the 242-file E5 C001 chain, versioned evidence packages, compact results, P0 G1 evidence, and P2 reusable-code wave 1 are completed.**
+7. Repeat by family. **Research wave 1, the 242-file E5 C001 chain, versioned evidence packages, compact results, P0 G1 evidence, final docs-root waves, and P2 reusable-code wave 1 are completed.**
 8. Adopt external artifact storage and selected LFS in separate policy tasks.
 
 No physical migration step was executed by the design tasks `DOC-IA-01` or `DOC-IA-01A`; the approved pilot moves are recorded as later migration tasks.

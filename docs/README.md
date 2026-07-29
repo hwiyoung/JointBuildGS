@@ -9,6 +9,7 @@ This is the entry point for repository documentation. Reviewed material is organ
 - Repository and phase rules: [`../AGENTS.md`](../AGENTS.md), [`../phases/README.md`](../phases/README.md)
 - Top-level directory contract: [`catalog/TOP_LEVEL_DIRECTORY_CONTRACT.md`](catalog/TOP_LEVEL_DIRECTORY_CONTRACT.md)
 - Target information architecture: [`catalog/TARGET_INFORMATION_ARCHITECTURE.md`](catalog/TARGET_INFORMATION_ARCHITECTURE.md)
+- Final folder result: [`catalog/REPOSITORY_STRUCTURE_FINAL.md`](catalog/REPOSITORY_STRUCTURE_FINAL.md)
 - Boundary-map experiment family: [`experiments/boundary_map/README.md`](experiments/boundary_map/README.md)
 - Reviewed boundary-map canonical map: [`catalog/families/BOUNDARY_MAP.md`](catalog/families/BOUNDARY_MAP.md)
 - Wave-1 document family map: [`catalog/families/DOCUMENT_FAMILIES_WAVE1.md`](catalog/families/DOCUMENT_FAMILIES_WAVE1.md)

@@ -21,7 +21,7 @@ Root-level legacy P2 `versions.txt` receipts were consolidated into `phases/p2-g
 
 Presence on disk is not proof that a run is canonical, complete, reproducible, or backed up. Those claims require an approved run receipt and artifact manifest.
 
-`phases/` owns phase rules and compact execution provenance only. Canonical reports and promoted evidence belong in `docs/`; reusable configs and drivers belong in root `configs/` and `scripts/`; large payloads belong in external artifact storage or ignored workspace paths. Existing phase-owned paths remain unchanged until a separate migration is approved.
+`phases/` owns phase rules and compact execution provenance only. Canonical reports and promoted evidence belong in `docs/`; reusable configs and drivers belong in root `configs/` and `scripts/`; large payloads belong in external artifact storage or ignored workspace paths. Verified reusable P2 drivers were promoted through migration ledgers; remaining phase-owned paths stay in place until separately reviewed and approved.
 
 ## Future run layout
 

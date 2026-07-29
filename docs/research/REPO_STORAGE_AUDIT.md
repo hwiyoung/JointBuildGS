@@ -8,6 +8,25 @@ The repository does not currently require history cleanup. The largest committed
 
 The much larger 457.691 GiB working tree is a different problem: 456.544 GiB is ignored local data and generated artifacts. Sparse checkout does not remove or manage those ignored files. They need an external artifact contract and manifests, not Git history surgery.
 
+## Post-reorganization refresh — 2026-07-30
+
+The measurements below refresh the control-plane and push boundary after the verified information-architecture migrations. They do not replace the immutable 2026-07-29 audit snapshot in the remaining sections.
+
+| Measure | Refreshed value |
+|---|---:|
+| Live `origin/exp/fusion-w1` | `97f6b3ef3159360b88ba0b25cca4b280c14fdcb8` |
+| Live pushed tree | 6,016 files / 767,935,421 bytes / 732.360 MiB |
+| Local pre-final-doc `HEAD` | `388819155cc65983dc6de1c6f49fab99a529f3a1` |
+| Local tree at that checkpoint | 6,158 files / 774,673,431 bytes / 738.786 MiB |
+| Ahead/behind at that checkpoint | 17 / 0 |
+| Local `.git` apparent bytes | 1,920,692,651 bytes / 1.789 GiB |
+| Loose objects | 3,560 / 247.21 MiB |
+| Packed objects | 14,819 in 10 packs / 1.55 GiB |
+
+The live remote was verified with read-only `git ls-remote`; no fetch or push was performed. The remote still contains the old tracked `env/`, `reports/`, and root `runs/` ranges because the structure commits are local. Locally those tracked owners are empty, verified documents/evidence are organized under `docs/`, reusable drivers/tests are under root `scripts/` and `tests/`, and compact receipts are under `phases/`.
+
+The full working-tree size was not rescanned because the migrations intentionally did not delete or mutate bulk payloads. The last complete 457.691 GiB measurement remains the storage baseline. See [`../catalog/REPOSITORY_STRUCTURE_FINAL.md`](../catalog/REPOSITORY_STRUCTURE_FINAL.md) for the folder-level result and deliberate transition areas.
+
 ## Scope and safety
 
 - Measurement window: 2026-07-29 19:53–19:59 KST.

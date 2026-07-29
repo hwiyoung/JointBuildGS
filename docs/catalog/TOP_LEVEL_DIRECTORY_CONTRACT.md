@@ -2,9 +2,9 @@
 
 ## Status
 
-This contract defines why each top-level directory may exist and which information it owns. It is the prerequisite for document-family review and later path migration.
+This contract defines why each top-level directory may exist and which information it owns. The control-plane migrations recorded under `docs/catalog/migrations/` have now applied this contract to verified document, evidence, receipt, script, and test families.
 
-It does not move or delete current files, change `.gitignore`, rewrite references, upload artifacts, configure Git LFS, or alter Git history. Existing paths remain authoritative until a separate migration is approved.
+The contract does not authorize deletion, `.gitignore` changes, artifact upload, Git LFS conversion, history rewriting, or blind movement of bulk payloads. Historical and hash/path-locked compatibility paths remain authoritative where the migration ledgers say so.
 
 ## Admission rule
 
@@ -89,7 +89,7 @@ These roots may remain only while their special boundary is real and documented.
 | `external/` | Vendored or submodule-managed third-party source may need isolation from project code. | Upstream URL/version, license, local modifications, and update procedure must be recorded. Project-owned code is forbidden. | Currently has no indexed files. Do not populate it without an approved dependency contract. |
 | `legacy/` | Inactive historical/reference implementation may need to remain available without being mistaken for active `src/`. | `README.md` must state why it is retained, whether live code imports it, and the replacement path. New feature work is forbidden. | Seven indexed files currently form a PlanarSplat reference quarantine. Retention or later external archiving needs separate review. |
 
-The repository-wide instructions currently freeze several existing root paths, including `external/`, `legacy/`, and `results/`. This contract does not override that rule or authorize movement; a later migration must update the governing instructions explicitly.
+The repository-wide instructions retain several existing root paths, including `external/`, `legacy/`, and `results/`. This contract does not override their scientific or storage boundary; verified compact evidence may be promoted through an explicit migration ledger, while bulk payload movement still requires separate approval.
 
 ## Current non-target and transitional roots
 
@@ -117,11 +117,12 @@ Some repository-wide concerns are clearer as a small set of root files rather th
 
 A new top-level directory must not be created merely to hold one such file.
 
-## Consequences for the next tasks
+## Applied consequences and remaining gates
 
-1. Correct the target tree so `phases/<phase>/` no longer owns duplicate `configs/`, `scripts/`, or canonical `docs/` in the long-term model.
-2. Review one experiment family, beginning with `boundary_map`, using the boundary tests above.
-3. Produce an old-to-new mapping preview that separates report, receipt, and payload before any move.
-4. Treat `results/`, `reports/`, `runs/`, and `fair-pilot/` as migration inputs, not templates for new top-level roots.
+1. Verified reusable P2 drivers and tests now live under root `scripts/experiments/` and `tests/experiments/`; scientifically locked or still phase-specific implementations remain phase-local.
+2. `boundary_map` and later document/evidence families were moved only with old-to-new path ledgers and reference validation.
+3. Root `env/` and `runs/` no longer own tracked information; tracked `reports/` material was promoted to its document/figure owners.
+4. `results/`, local `reports/`, and `fair-pilot/` remain explicit migration inputs, not templates for new roots.
+5. Bulk `data/`, run payload, checkpoint, and geometry movement waits for an approved external backend and class-C manifest contract.
 
-No physical migration is authorized by this contract.
+The resulting folder state and deliberate exceptions are recorded in [`REPOSITORY_STRUCTURE_FINAL.md`](REPOSITORY_STRUCTURE_FINAL.md).
