@@ -66,7 +66,7 @@ CROSS = DOCS / "bucket_crosswalk_v2.csv"
 LOWTEX_CSV = DOCS / "lowtex_v5.csv"
 ANCHOR_CSV = DOCS / "lowtex_v5_anchor_check.csv"
 REPORT_MD = DOCS / "aux_v4b_change_report.md"
-CARDDIR = DOCS / "evidence_cards_v3"
+CARDDIR = DOCS / "evidence" / "evidence_cards_v3"
 OVERLAY_DIR = DOCS / "figs/datum_tie_overlay"
 OVERLAY_MD = DOCS / "datum_tie_overlay.md"
 

@@ -72,10 +72,7 @@ Start from Profile 1, then add only the curated evidence collection needed for a
 
 ```bash
 git sparse-checkout add \
-  docs/evidence_cards \
-  docs/evidence_cards_v2 \
-  docs/evidence_cards_v3 \
-  docs/judgment_kit_v4
+  docs/evidence
 ```
 
 Do not add all of `docs/` casually: it currently contains 498.474 MiB, including 351.948 MiB under `docs/figs/`. Add a specific figure directory only when needed:

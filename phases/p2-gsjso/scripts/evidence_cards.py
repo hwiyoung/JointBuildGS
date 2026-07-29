@@ -24,7 +24,7 @@ GEOJSON = REPO / "results/tum_transfer/analysis/footprints_aoi.geojson"
 DIM_CLOUD = DATA / "work/w2/dim_v1_classified_z_minus0p174.laz"   # full-extent classified DIM (covers AOI-edge
 # buildings; source of Roofer rf_pt_density). dim_aoi_crop.laz is clipped at x>=690792 -> edge buildings sparse.
 ALS_TILES = sorted(glob.glob(str(DATA / "raw/als/*.la[sz]")))
-CARDDIR = REPO / "docs/evidence_cards"
+CARDDIR = REPO / "docs/evidence/evidence_cards_v1"
 import xml.etree.ElementTree as ET
 
 

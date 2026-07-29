@@ -51,7 +51,7 @@ from projection_datum import describe_projection_config, projection_geoid_m  # n
 RUN_ID = "20260703_cards_v4_kit"
 RUN_DIR = REPO / "phases" / "p2-gsjso" / "runs" / RUN_ID
 DOCS = REPO / "docs"
-OUT_DIR = DOCS / "judgment_kit_v4"
+OUT_DIR = DOCS / "evidence" / "judgment_kit_v4"
 POP = DOCS / "population_aux_v4.csv"
 LOWTEX = DOCS / "lowtex_v5.csv"
 CROSS = DOCS / "bucket_crosswalk_v2.csv"
@@ -741,7 +741,7 @@ def render_time_locator(
         "dim_source": "",
         "als_points_in_footprint": "",
         "als_points_plotted": "",
-        "als_source": "docs/evidence_cards_v3/manifest.csv for old ALS count",
+        "als_source": "docs/evidence/evidence_cards_v3/manifest.csv for old ALS count",
         "als_marker_scale": "",
         "observation": "nonblocking locator cut; render only.",
     }
@@ -823,9 +823,9 @@ def write_report(
         "",
         "## 1. 산출",
         "",
-        f"- `docs/judgment_kit_v4/*.png`: 수동판정 4칸 카드 {len(manual_cards)}장.",
+        f"- `docs/evidence/judgment_kit_v4/*.png`: 수동판정 4칸 카드 {len(manual_cards)}장.",
         f"- 비차단 시간차 locator: {len(time_cards)}장.",
-        f"- manifest: `docs/judgment_kit_v4/manifest.csv`.",
+        f"- manifest: `docs/evidence/judgment_kit_v4/manifest.csv`.",
         f"- locator neighbor rings: min={neighbor_min}, lt2={neighbor_lt2}.",
         f"- footprint shape flags: `docs/footprint_shape_flags.csv` ({len(shape_rows)}동, small={small}, elong={elong}).",
         f"- run versions: `phases/p2-gsjso/runs/{RUN_ID}/versions.txt`.",
@@ -837,7 +837,7 @@ def write_report(
         "| ① 47장 중 30장 footprint 링 부재 | locator 패널을 새로 만들고 target=굵은 빨강 roof-height footprint, neighbor=가는 회색 roof-height footprint+ID로 고정했다. | manifest에 `neighbor_rings_drawn`을 기록했다. |",
         "| ② 초소형 동 crop이 너무 넓음 | locator와 별개로 같은 view의 roof close-up 패널을 두고, target footprint bbox 기준 tight crop을 사용했다. | `small_flag(<50m2)` 동은 shape flags에서 추적 가능하다. |",
         "| ③ 정의 없는 빨간 채널 | v4 footer에 모든 색 규약을 명시했다. | " + red_note + " |",
-        "| ④ 구 점군 패널의 오염 투영 혼란 | `docs/evidence_cards/`와 v2 사진 링을 재사용하지 않고, `configs/projection_datum.json` 기본 45.700 경로로 재투영했다. | top-view는 사진 투영 링 없이 EPSG:25832 footprint만 사용했다. |",
+        "| ④ 구 점군 패널의 오염 투영 혼란 | `docs/evidence/evidence_cards_v1/`과 v2 사진 링을 재사용하지 않고, `configs/projection_datum.json` 기본 45.700 경로로 재투영했다. | top-view는 사진 투영 링 없이 EPSG:25832 footprint만 사용했다. |",
         "| ⑤ ALS 34~287점 동에서 점이 작음 | ALS class-6 in-footprint <500이면 top-view 마커를 3배 키웠다. | 대상: " + ", ".join(als_lt500[:20]) + (" ..." if len(als_lt500) > 20 else "") + f" ({len(als_lt500)}동). |",
         "| ⑥ 4906999 시간차 강기울기 산개 | v3 코드는 class-6 footprint 내부 ALS를 image에 투영하되 사진 occlusion/depth 선별은 하지 않았다. | v4 수동판정 카드에서는 사진 위 ALS 점을 제거하고, 점 증거는 DIM/ALS top-view로 분리했다. |",
         "",

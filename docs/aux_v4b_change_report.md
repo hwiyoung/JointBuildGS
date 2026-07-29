@@ -60,8 +60,8 @@
 - manual_review cards: 44.
 - time_diff cards: 3.
 - skipped: 0.
-- manifest: `docs/evidence_cards_v3/manifest.csv`.
-- README: `docs/evidence_cards_v3/README.md`.
+- manifest: `docs/evidence/evidence_cards_v3/manifest.csv`.
+- README: `docs/evidence/evidence_cards_v3/README.md`.
 
 ## 5. datum_tie_overlay corner zoom refresh
 

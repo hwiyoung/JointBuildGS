@@ -2,7 +2,7 @@
 
 > **박사연구 GS-JSO · evidence-cards-v2.** 브랜치 `feat/p2-structure-learn`. EPSG:25832 geo / 32632 OPF. Docker(`--user`).
 > **읽기 + 소규모 계산**(투영·표), 재구성/재학습 없음. 관찰만, **라벨/τ/철거 판정=김휘영**(라벨 미부착). 커밋 `evidence-cards-v2`.
-> 재현 `phases/p2-gsjso/scripts/evidence_cards_v2.py`(tools:t0). 산출 `docs/evidence_cards_v2/*.png` + 본 문서.
+> 재현 `phases/p2-gsjso/scripts/evidence_cards_v2.py`(tools:t0). 산출 `docs/evidence/evidence_cards_v2/*.png` + 본 문서.
 
 ## 0. 무엇을 고쳤나 (투영)
 
