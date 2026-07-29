@@ -365,7 +365,7 @@ def render_snaps(args: argparse.Namespace) -> None:
 
     try:
         ds = ColmapDataset(root=str(DATA_ROOT), downscale=0.5, load_depth=True, load_normal=True, load_semantic=True)
-        view_rows = pd.read_csv(REPO / "docs/lowtex_v5.csv")
+        view_rows = pd.read_csv(REPO / "docs/experiments/lowtex_v5/tables/lowtex_v5.csv")
         lowtex = dict(zip(view_rows["building_id"], view_rows["lowtex_v5_view"]))
         name_to_idx = {fr.name: i for i, fr in enumerate(ds.frames)}
         ckpt = CORR_RUN_ROOT / "gs_e5_C001_corrected_s1_dense_r1/ckpt/final.pt"

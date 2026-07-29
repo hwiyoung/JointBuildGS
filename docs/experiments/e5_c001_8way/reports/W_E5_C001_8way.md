@@ -5,7 +5,7 @@
 ## 시작 전 확인
 
 - 브랜치·HEAD: `feat/p2-structure-learn` · `4c3c71e8ed6fd289076461e6e7bfd5479a73cafb`.
-- 기존 게이트 보고: `docs/W_E5_pilot_gate.md`, `docs/W_E5_pilot_gate_검수·판정회부_20260707.md`.
+- 기존 게이트 보고: `docs/experiments/e5_pilot/reports/W_E5_pilot_gate.md`, `docs/W_E5_pilot_gate_검수·판정회부_20260707.md`.
 - GS 점군화·지문: `phases/p2-gsjso/runs/e5p_train_20260707_C001/`.
 - GS 조립 출력: `phases/p0-audit/runs/e5p_gate_20260707_C001/`.
 - 새 학습·새 파라미터·새 Roofer 조립은 하지 않았다.

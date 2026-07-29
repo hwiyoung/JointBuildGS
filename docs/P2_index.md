@@ -16,16 +16,16 @@
 
 ## P2 방법 설계 (근거 문서)
 
-- [docs/GSJSO_loss_audit.md](GSJSO_loss_audit.md) — **P2 방법 설계**: 구현 손실 ↔ 스케치 설계 대조 audit.
+- [docs/experiments/gsjso_loss_audit/reports/GSJSO_loss_audit.md](GSJSO_loss_audit.md) — **P2 방법 설계**: 구현 손실 ↔ 스케치 설계 대조 audit.
 
 ## P2 준비 (도구 적합성 점검 — 의미 라벨/prior 켜기 전 단계)
 
 | 순서 | 활동 | 문서 | 이전 별칭 |
 |---|---|---|---|
-| P2 준비-1 | 엔진 전이 점검 | [docs/TUM_transfer_check.md](TUM_transfer_check.md) | 단계 1 / P2-2 |
-| P2 준비-2 | 건물 품질·커버리지 | [docs/TUM_quality_coverage.md](TUM_quality_coverage.md) | 단계 1b / P2-3 |
-| P2 준비-3 | TSDF·Roofer 바닥·1동 end-to-end | [docs/TUM_tsdf_roofer_probe.md](TUM_tsdf_roofer_probe.md) | 단계 1c / P2-4 |
-| P2 준비-4 | 노이즈 정리 확인 (control 1동, proper settings) | [docs/TUM_noise_check.md](TUM_noise_check.md) | — |
+| P2 준비-1 | 엔진 전이 점검 | [docs/experiments/tum_transfer_preflight/reports/TUM_transfer_check.md](TUM_transfer_check.md) | 단계 1 / P2-2 |
+| P2 준비-2 | 건물 품질·커버리지 | [docs/experiments/tum_transfer_preflight/reports/TUM_quality_coverage.md](TUM_quality_coverage.md) | 단계 1b / P2-3 |
+| P2 준비-3 | TSDF·Roofer 바닥·1동 end-to-end | [docs/experiments/tum_transfer_preflight/reports/TUM_tsdf_roofer_probe.md](TUM_tsdf_roofer_probe.md) | 단계 1c / P2-4 |
+| P2 준비-4 | 노이즈 정리 확인 (control 1동, proper settings) | [docs/experiments/tum_transfer_preflight/reports/TUM_noise_check.md](TUM_noise_check.md) | — |
 
 **P2 준비 요지(누적):** 엔진은 TUM에 전이됨(준비-1). GS *센터* 점군은 ALS 대비 희박(준비-2). 표준 depth→TSDF는
 밀도·모델생성을 해소해 end-to-end 유효 모델이 나오나, 7k-vanilla depth 노이즈가 Roofer를 과분할시킴(준비-3:
@@ -35,7 +35,7 @@
 
 | 순서 | 활동 | 문서 |
 |---|---|---|
-| 효과검증 (깨끗한 라벨 arm) | sem·mutual·structure ablation (복구·품질·컴포넌트 기여) | [docs/P2_makeorbreak_clean.md](P2_makeorbreak_clean.md) · 예전결과 [experiments/p2_mob_past_results.md](experiments/p2_mob_past_results.md) |
+| 효과검증 (깨끗한 라벨 arm) | sem·mutual·structure ablation (복구·품질·컴포넌트 기여) | [docs/experiments/p2_makeorbreak/reports/P2_makeorbreak_clean.md](P2_makeorbreak_clean.md) · 예전결과 [experiments/p2_mob_past_results.md](experiments/p2_mob_past_results.md) |
 
 ## 현재 상태 · 다음 순서 (세션 핸드오프)
 

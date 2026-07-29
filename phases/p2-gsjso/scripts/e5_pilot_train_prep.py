@@ -470,7 +470,7 @@ def main() -> None:
     parser.add_argument("--out-root", default="results/tum_transfer/e5_pilot/C001")
     parser.add_argument("--config-dir", default="configs/tum_mob/e5_pilot")
     parser.add_argument("--versions", default=f"phases/p2-gsjso/runs/{RUN_ID}/versions.txt")
-    parser.add_argument("--report", default="docs/e5_pilot_train_prep.md")
+    parser.add_argument("--report", default="docs/experiments/e5_pilot/reports/e5_pilot_train_prep.md")
     args = parser.parse_args()
 
     out_root = Path(args.out_root)

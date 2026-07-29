@@ -92,7 +92,7 @@ DRIVER_SCRIPT = (
     REPO / "phases/p2-gsjso/scripts/run_qs_cheap_refine_pilot_20260717.sh"
 )
 
-OUTPUT_CSV = REPO / "docs/qs_cheap_refine_pilot.csv"
+OUTPUT_CSV = REPO / "docs/experiments/qs_cheap_refine_pilot/tables/qs_cheap_refine_pilot.csv"
 FIGURE = REPO / "docs/figs/qs_cheap_refine_pilot.png"
 
 CRS = "EPSG:25832"

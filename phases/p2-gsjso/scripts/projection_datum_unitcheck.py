@@ -34,8 +34,8 @@ from projection_datum import describe_projection_config, projection_geoid_m  # n
 
 
 RUN_ID = "20260702_A0_projection_fix"
-OUT_CSV = REPO / "docs/projection_datum_unitcheck.csv"
-OUT_MD = REPO / "docs/projection_datum_fix.md"
+OUT_CSV = REPO / "docs/experiments/projection_datum/tables/projection_datum_unitcheck.csv"
+OUT_MD = REPO / "docs/experiments/projection_datum/reports/projection_datum_fix.md"
 RUN_DIR = REPO / "phases" / "p2-gsjso" / "runs" / RUN_ID
 BUILDING = "4906972"
 
@@ -162,7 +162,7 @@ def write_report(rows: list[dict[str, object]]) -> None:
             "",
             "## Missing External Spec",
             "",
-            "- Root file `원격발주_투영fix·LS정합·재게이트·재계산체인_레시피감사_20260702.md` was not present in this checkout; this A0 follows `CLAUDE.md`, `docs/projection_geoid_rootcause.md`, and the retracted `docs/archive/projection_gate/v1/reports/projection_gate.md` note.",
+            "- Root file `원격발주_투영fix·LS정합·재게이트·재계산체인_레시피감사_20260702.md` was not present in this checkout; this A0 follows `CLAUDE.md`, `docs/experiments/projection_datum/reports/projection_geoid_rootcause.md`, and the retracted `docs/archive/projection_gate/v1/reports/projection_gate.md` note.",
             "",
             "## 판정 필요 지점",
             "",

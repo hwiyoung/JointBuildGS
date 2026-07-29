@@ -827,7 +827,7 @@ def write_report(
         f"- 비차단 시간차 locator: {len(time_cards)}장.",
         f"- manifest: `docs/evidence/judgment_kit_v4/manifest.csv`.",
         f"- locator neighbor rings: min={neighbor_min}, lt2={neighbor_lt2}.",
-        f"- footprint shape flags: `docs/footprint_shape_flags.csv` ({len(shape_rows)}동, small={small}, elong={elong}).",
+        f"- footprint shape flags: `docs/evidence/judgment_kit_v4/support/footprint_shape_flags.csv` ({len(shape_rows)}동, small={small}, elong={elong}).",
         f"- run versions: `phases/p2-gsjso/runs/{RUN_ID}/versions.txt`.",
         "",
         "## 2. 결함별 조치",

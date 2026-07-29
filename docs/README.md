@@ -1,6 +1,6 @@
 # JointBuildGS research documents
 
-This is the entry point for repository documentation. The current tree is being cataloged before any family is moved or renamed.
+This is the entry point for repository documentation. Reviewed material is organized by research, experiment, evidence, and archive ownership; the few remaining direct files are explicit compatibility mirrors, path-locked inputs, or lineage holds.
 
 ## Start here
 
@@ -13,6 +13,7 @@ This is the entry point for repository documentation. The current tree is being 
 - Reviewed boundary-map canonical map: [`catalog/families/BOUNDARY_MAP.md`](catalog/families/BOUNDARY_MAP.md)
 - Wave-1 document family map: [`catalog/families/DOCUMENT_FAMILIES_WAVE1.md`](catalog/families/DOCUMENT_FAMILIES_WAVE1.md)
 - E5 C001 family map: [`catalog/families/E5_C001.md`](catalog/families/E5_C001.md)
+- Final docs-root family waves: [`catalog/families/DOCS_ROOT_FINAL_WAVES.md`](catalog/families/DOCS_ROOT_FINAL_WAVES.md)
 - Experiment-family index: [`experiments/README.md`](experiments/README.md)
 - Research-control index: [`research/README.md`](research/README.md)
 - Superseded-document archive: [`archive/README.md`](archive/README.md)

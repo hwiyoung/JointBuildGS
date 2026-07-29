@@ -350,8 +350,8 @@ def write_report(args: argparse.Namespace) -> None:
     repeat_rows = read_csv(Path(args.train_run_dir) / "repeat_flip_table.csv")
     seed_rows = build_seed_pair_rows(args)
     summary_rows = build_summary_rows(seed_rows)
-    write_csv(Path("docs/e5_pilot_seed_pair_status.csv"), seed_rows)
-    write_csv(Path("docs/e5_pilot_seed_pair_summary.csv"), summary_rows)
+    write_csv(Path("docs/experiments/e5_pilot/tables/e5_pilot_seed_pair_status.csv"), seed_rows)
+    write_csv(Path("docs/experiments/e5_pilot/tables/e5_pilot_seed_pair_summary.csv"), summary_rows)
 
     q_run, q_bid = pick_quality_case(seed_rows, repeat_rows)
     gen_fig = Path(args.fig_dir) / "e5_generation_DEBY_LOD2_8568391.png"
@@ -374,7 +374,7 @@ def write_report(args: argparse.Namespace) -> None:
                 "has_lod22 run_1": f"{sum(tf(r['has_lod22']) for r in sub)}/18" if sub else "",
             }
         )
-    write_csv(Path("docs/e5_pilot_completion_checklist.csv"), checklist)
+    write_csv(Path("docs/experiments/e5_pilot/tables/e5_pilot_completion_checklist.csv"), checklist)
 
     flip_rows = [r for r in seed_rows if r["r1_r2_flip"] == "True"]
     repeat_flip_rows = [r for r in repeat_rows if r["repeat_flip"] == "True"]
@@ -405,7 +405,7 @@ def write_report(args: argparse.Namespace) -> None:
         "",
         f"- r1 vs r2 조립 성공 동 집합 flip: {len(flip_rows)}건.",
         f"- 조립 3회 내부 flip: {len(repeat_flip_rows)}건.",
-        "- 전체 flip 목록: `docs/e5_pilot_seed_pair_status.csv`, `phases/p2-gsjso/runs/e5p_train_20260707_C001/repeat_flip_table.csv`.",
+        "- 전체 flip 목록: `docs/experiments/e5_pilot/tables/e5_pilot_seed_pair_status.csv`, `phases/p2-gsjso/runs/e5p_train_20260707_C001/repeat_flip_table.csv`.",
         "",
         "## 그림 쌍",
         "",
@@ -435,7 +435,7 @@ def build_argparser() -> argparse.ArgumentParser:
     parser.add_argument("--train-run-dir", default="phases/p2-gsjso/runs/e5p_train_20260707_C001")
     parser.add_argument("--gate-run-dir", default="phases/p0-audit/runs/e5p_gate_20260707_C001")
     parser.add_argument("--fig-dir", default="docs/figs/e5_pilot")
-    parser.add_argument("--report", default="docs/W_E5_pilot_gate.md")
+    parser.add_argument("--report", default="docs/experiments/e5_pilot/reports/W_E5_pilot_gate.md")
     return parser
 
 

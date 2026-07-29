@@ -441,7 +441,7 @@ def render_snaps(args: argparse.Namespace) -> None:
         merge_issues(issues)
         return
 
-    lowtex = {r["building_id"]: r.get("lowtex_v5_view", "") for r in read_csv(REPO / "docs/lowtex_v5.csv")}
+    lowtex = {r["building_id"]: r.get("lowtex_v5_view", "") for r in read_csv(REPO / "docs/experiments/lowtex_v5/tables/lowtex_v5.csv")}
     name_to_idx = {fr.name: i for i, fr in enumerate(ds.frames)}
     ckpt = S1_RUN_ROOT / S1_RUNS["dense"] / "ckpt/final.pt"
     try:

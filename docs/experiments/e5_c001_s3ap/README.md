@@ -13,6 +13,7 @@ This directory is the reader entry point for the `e5_c001_s3ap` evidence family.
 | report | [`W_E5_C001_S3Ap_Phase0_20260715.md`](reports/W_E5_C001_S3Ap_Phase0_20260715.md) | canonical | `e5_c001_s3ap_phase0_report` |
 | report | [`W_E5_C001_S3Ap_Phase1_20260715.md`](reports/W_E5_C001_S3Ap_Phase1_20260715.md) | canonical | `e5_c001_s3ap_phase1_report` |
 | report | [`W_E5_C001_S3Ap_Phase3_20260715.md`](reports/W_E5_C001_S3Ap_Phase3_20260715.md) | canonical | `e5_c001_s3ap_phase3_report` |
+| report | [`W_재소집안건지_S3A프라임_20260714.md`](reports/W_재소집안건지_S3A프라임_20260714.md) | supporting | `-` |
 | table | [`e5_c001_s3ap_anchor_inventory.csv`](tables/e5_c001_s3ap_anchor_inventory.csv) | supporting | `-` |
 | table | [`e5_c001_s3ap_boundary_propagation.csv`](tables/e5_c001_s3ap_boundary_propagation.csv) | supporting | `-` |
 | table | [`e5_c001_s3ap_fm_dense_dial.csv`](tables/e5_c001_s3ap_fm_dense_dial.csv) | supporting | `-` |

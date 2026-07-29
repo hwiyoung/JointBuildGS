@@ -674,7 +674,7 @@ def write_report(
         "## 시작 전 확인",
         "",
         f"- 브랜치·HEAD: `{branch}` · `{head}`.",
-        f"- 입력 보고서·표: `{REPORT_PATH.with_name('W_E5_pilot_gate.md')}`, `docs/e5_pilot_seed_pair_status.csv`.",
+        f"- 입력 보고서·표: `{REPORT_PATH.with_name('W_E5_pilot_gate.md')}`, `docs/experiments/e5_pilot/tables/e5_pilot_seed_pair_status.csv`.",
         f"- 조립 출력: `{GATE_RUN_DIR}/`.",
         f"- 점군화·지문: `{TRAIN_RUN_DIR}/`.",
         "- 참조 지붕 구조: LoD2 참조 CityGML의 RoofSurface 수·형상. W_D6 형상 교정본을 준용했고, 4906969는 단차 평지붕이며 D6 작업동의 곡면 지붕은 0동으로 기록한다.",

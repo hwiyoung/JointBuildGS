@@ -7,7 +7,7 @@
 cd "$(dirname "$0")/../../.." || exit 1
 OUT=results/tum_transfer/mob; WS=/workspace/JointBuildGS; U="$(id -u):$(id -g)"
 GEOJSON=results/tum_transfer/analysis/footprints_aoi.geojson
-ISSUES=docs/issues.md; SUMMARY=docs/overnight_summary.md
+ISSUES=docs/issues.md; SUMMARY=docs/archive/overnight_coordination/temporary/reports/overnight_summary.md
 TOOLS="docker run --rm --user $U -v $PWD:/workspace/JointBuildGS -w /workspace/JointBuildGS jointbuildgs-p0-tools:t0"
 mkdir -p "$OUT/overnight_logs"
 log(){ echo "[$(date '+%F %T')] $*"; }
@@ -28,14 +28,14 @@ log "===== TASK A (D12 metric-final) start ====="
   $TOOLS python3 phases/p2-gsjso/scripts/d12_metric_final.py --targets-file "$OUT/d12_targets_79.txt" \
     > "$OUT/overnight_logs/taskA_metric_final.log" 2>&1 \
     && log "Task A metric-final OK" || issue "Task A d12_metric_final.py failed (see taskA_metric_final.log)"
-  git add docs/W_D12_metric_final.md phases/p2-gsjso/scripts/d12_metric_final.py \
+  git add docs/experiments/w_d12_metric/reports/W_D12_metric_final.md phases/p2-gsjso/scripts/d12_metric_final.py \
           results/tum_transfer/mob/overseg_lever/d12_metric_final.csv 2>/dev/null
   git commit -q -m "d12-metric-final
 
 D12 metric finalization (no retrain, recompute over 78-set): common-dz height + absolute,
 support-gated point-weighted slope, facet-match-rate horizontal. textureless 0.55<survivor
 1.48 (relative); abs ~2.6m both (textureless=uniform slab shift). B1 weak (dH-0.01/dSupp+0.046).
-Report docs/W_D12_metric_final.md.
+Report docs/experiments/w_d12_metric/reports/W_D12_metric_final.md.
 
 Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>" 2>/dev/null \
     && log "Task A committed d12-metric-final" || log "Task A: nothing new to commit"
@@ -109,14 +109,14 @@ log "===== TASK B (generation 8-way) start ====="
     # Step2 — aggregate + report
     $TOOLS python3 phases/p2-gsjso/scripts/gen_8way_aggregate.py > "$OUT/overnight_logs/taskB_aggregate.log" 2>&1 \
       && log "aggregate OK" || issue "Task B gen_8way_aggregate.py failed"
-    git add docs/W_generation_8way.md phases/p2-gsjso/scripts/d12_buckets.py \
+    git add docs/experiments/w_generation_8way/reports/W_generation_8way.md phases/p2-gsjso/scripts/d12_buckets.py \
             phases/p2-gsjso/scripts/gen_8way_aggregate.py phases/p2-gsjso/scripts/run_overnight.sh 2>/dev/null
     git commit -q -m "gen-8way-fail
 
 Generation 8-way over the P0 failure population (64, no retrain): eval existing
 gs_seed_{sparse,dense,acmp} + raw_{sparse,dense,acmp,lidar} per mechanism bucket
 (① textureless / ② assembly / ③ coverage / ④ impossible). Same Roofer global setting.
-Report docs/W_generation_8way.md.
+Report docs/experiments/w_generation_8way/reports/W_generation_8way.md.
 
 Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>" 2>/dev/null \
       && log "Task B committed gen-8way-fail" || log "Task B: nothing new to commit"
@@ -129,8 +129,8 @@ log "===== TASK B done ====="
   echo "# overnight_summary — 무인 런 아침 요약 ($(date '+%F %T'))"
   echo ""
   echo "## 완료 여부"
-  echo "- Task A (D12 metric-final): $([ -f docs/W_D12_metric_final.md ] && echo '완료' || echo '미완') · 커밋 $(git log --oneline | grep -m1 d12-metric-final | awk '{print $1}' || echo none)"
-  echo "- Task B (generation 8-way): $([ -f docs/W_generation_8way.md ] && echo '완료' || echo '미완') · 커밋 $(git log --oneline | grep -m1 gen-8way-fail | awk '{print $1}' || echo none)"
+  echo "- Task A (D12 metric-final): $([ -f docs/experiments/w_d12_metric/reports/W_D12_metric_final.md ] && echo '완료' || echo '미완') · 커밋 $(git log --oneline | grep -m1 d12-metric-final | awk '{print $1}' || echo none)"
+  echo "- Task B (generation 8-way): $([ -f docs/experiments/w_generation_8way/reports/W_generation_8way.md ] && echo '완료' || echo '미완') · 커밋 $(git log --oneline | grep -m1 gen-8way-fail | awk '{print $1}' || echo none)"
   echo ""
   echo "## 생성 처리/미처리 (버킷)"
   [ -f "$OUT/overseg_lever/d12_buckets.csv" ] && awk -F, 'NR>1{c[$2]++} END{for(b in c) printf "- %s: %d동\n", b, c[b]}' "$OUT/overseg_lever/d12_buckets.csv"
@@ -145,7 +145,7 @@ log "===== TASK B done ====="
   echo "- [ ] issues.md 실패 항목 검토 (생성 누락 동·OOM 청크)"
   echo "- [ ] 미푸시 — 푸시 여부 판정 (판정=김휘영)"
 } > "$SUMMARY"
-git add "$SUMMARY" "$ISSUES" docs/W_generation_8way.md 2>/dev/null
+git add "$SUMMARY" "$ISSUES" docs/experiments/w_generation_8way/reports/W_generation_8way.md 2>/dev/null
 git commit -q -m "overnight-summary
 
 overnight unattended run summary + issues log.

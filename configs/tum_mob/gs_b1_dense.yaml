@@ -5,7 +5,7 @@
 # to the multi-view consistency term ALONE (task: "이 항만 격리"). cp stays at 0.01 (NOT zeroed).
 # L_mvc = PGSR/ULSR-style: reproject src rendered depth into a covisible neighbour, penalize
 # depth+normal disagreement (occlusion-filtered). NO GT labels. Engine change = additive only.
-# Report: docs/W_phaseB_structure.md. branch feat/p2-structure-learn.
+# Report: docs/experiments/w_phase_b_structure/reports/W_phaseB_structure.md. branch feat/p2-structure-learn.
 seed: 0
 device: cuda
 

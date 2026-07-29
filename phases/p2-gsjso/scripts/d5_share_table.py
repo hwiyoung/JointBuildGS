@@ -7,14 +7,14 @@ The "push-force balance" each arm applies is the weighted contribution share of 
 renormalised to 100%. cp's effective scalar = w_structure * w_structure_cp (w_structure = 1.0 here).
 
 Raw means are the LOCKED D-run statistics (gs_prior_full TB, mean[20000-30000], i.e. post cp-gate steady
-state) reported in docs/W_D4_precheck.md §3 / P2_D4_사양서 §3. They reproduce the D4 spec's locked shares
+state) reported in docs/experiments/w_d4/reports/W_D4_precheck.md §3 / P2_D4_사양서 §3. They reproduce the D4 spec's locked shares
 (photo 30.7 / depth 16.6 / normal 0 / nc 2.1 / sem 19.0 / cp 31.4 / na ~0). Reproducible, no GPU / no deps.
 
 Expected (spec): cp share = OFF 0% (D5a) / FAIR 31% (D5c = D4 magnitude) / HARD ~57% (D5b).
 """
 from pathlib import Path
 
-# LOCKED D-run raw means (mean[20000-30000]); docs/W_D4_precheck.md §3.
+# LOCKED D-run raw means (mean[20000-30000]); docs/experiments/w_d4/reports/W_D4_precheck.md §3.
 # sem raw ~1.09 (W_D4_precheck "~1.1") back-solved to reproduce the D4-locked sem share 19.0%.
 RAW_MEAN = {"photo": 0.176, "depth": 3.174, "normal": 0.322, "nc": 0.244,
             "sem": 1.088, "cp": 18.01, "na": 0.003}
@@ -44,7 +44,7 @@ def main():
         lines.append(s); print(s)
 
     out("# P2-D5 pre-check ① — cp push-force balance (analytic weighted shares, %; 관찰만, 판정=사람)\n")
-    out("Raw means = LOCKED D-run mean[20-30k] (docs/W_D4_precheck.md §3). De-noise FIXED = D4 across all arms.\n")
+    out("Raw means = LOCKED D-run mean[20-30k] (docs/experiments/w_d4/reports/W_D4_precheck.md §3). De-noise FIXED = D4 across all arms.\n")
     hdr = f"{'arm':>18} | " + " ".join(f"{t:>6}" for t in ORDER) + " | maxterm"
     out(hdr); out("-" * len(hdr))
     for name, cp, gate in ARMS:

@@ -12,7 +12,7 @@
 -# Effective scalar = weight that multiplies the RAW loss in train.py loss_total
 -#   (cp = w_structure*w_structure_cp ; na = w_structure*w_structure_na ; others = their w_).
 -# Predicted weighted shares (D-run means): cp 31% / photo 31% / sem 19% / depth 17% / nc 2% / normal 0
--#   -> no term > 40% (vs reported D cp 68%). See docs/W_D4_precheck.md / P2_D4_사양서_사전등록_20260625.md §2.
+-#   -> no term > 40% (vs reported D cp 68%). See docs/experiments/w_d4/reports/W_D4_precheck.md / P2_D4_사양서_사전등록_20260625.md §2.
 -seed: 0
 +seed: 1001
  device: cuda

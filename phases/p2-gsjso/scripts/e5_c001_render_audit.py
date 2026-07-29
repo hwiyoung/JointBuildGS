@@ -93,7 +93,7 @@ def parse_args() -> argparse.Namespace:
     ap.add_argument("--train-fingerprints", default="phases/p2-gsjso/runs/e5p_train_20260707_C001/train_fingerprints.csv")
     ap.add_argument("--readout-fingerprints", default="phases/p2-gsjso/runs/e5p_train_20260707_C001/readout_fingerprints.csv")
     ap.add_argument("--gsdiag-snapshot-dir", default="phases/p2-gsjso/runs/20260707_e5_c001_gsdiag/snapshots")
-    ap.add_argument("--lowtex-v5", default="docs/lowtex_v5.csv")
+    ap.add_argument("--lowtex-v5", default="docs/experiments/lowtex_v5/tables/lowtex_v5.csv")
     ap.add_argument("--projection-zeta", default="docs/experiments/projection_zeta_ls/tables/projection_zeta_ls.csv")
     ap.add_argument("--out-run", default="phases/p2-gsjso/runs/20260708_e5_c001_render_audit")
     ap.add_argument("--fig-dir", default="docs/figs/e5_c001_render")

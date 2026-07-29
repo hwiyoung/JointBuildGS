@@ -360,7 +360,7 @@
 | ALS | 199 | 93 | 93 | 0 | 5 | 54/0.0000/-0.0000-0.0000/-0.2116/0.1354 | 16/0.0000/0.0000-0.0000/-2.0000/2.0000 |
 | DIM | 199 | 93 | 93 | 1 | 5 | 64/0.0000/-0.0009-0.0002/-12.0512/0.3405 | 36/0.0000/0.0000-0.0000/-23.0000/10.0000 |
 
-- 겹치는 동별 델타 CSV: `docs/W_canonical_run_delta.csv`.
+- 겹치는 동별 델타 CSV: `docs/experiments/pointcloud_attributes/tables/W_canonical_run_delta.csv`.
 - 조립 성공 flip IDs:
   - DIM DEBY_LOD2_42364663: w2=True, run_2=False
 - 유효성 flip IDs:
@@ -380,7 +380,7 @@
 
 | building_id | LoD2 creationDate | LoD2 source | ALS date material | ALS source | UAV capture date | UAV source |
 |---|---|---|---|---|---|---|
-| DEBY_LOD2_104586480 | 2025-04-04 | `phases/p0-audit/data/raw/lod2/690_5334.gml` | LAZ header creation date 2022-06-16; adjusted GPS time 2022-02-27 | `phases/p0-audit/docs/data_inventory.md` | 2024-12-17 | `docs/flight_meta_summary.md` |
+| DEBY_LOD2_104586480 | 2025-04-04 | `phases/p0-audit/data/raw/lod2/690_5334.gml` | LAZ header creation date 2022-06-16; adjusted GPS time 2022-02-27 | `phases/p0-audit/docs/data_inventory.md` | 2024-12-17 | `docs/experiments/pointcloud_attributes/reports/flight_meta_summary.md` |
 
 ## 입력 지문
 

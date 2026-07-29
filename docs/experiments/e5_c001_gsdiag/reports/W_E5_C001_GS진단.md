@@ -134,7 +134,7 @@
 ## 조건·불안정성
 
 - 조건 층화는 영상층 표의 텍스처/관측 열과 `docs/e5_c001_8way_strata_summary.csv`를 같이 읽는다.
-- 씨드 불안정성은 `docs/e5_pilot_seed_pair_status.csv`의 r1/r2 flip과 생성 상세표의 `seed_flag`로 연결했다. 2씨드라 방향만 기록했다.
+- 씨드 불안정성은 `docs/experiments/e5_pilot/tables/e5_pilot_seed_pair_status.csv`의 r1/r2 flip과 생성 상세표의 `seed_flag`로 연결했다. 2씨드라 방향만 기록했다.
 
 ## 종합·라우팅
 
@@ -150,7 +150,7 @@
 
 - `사전등록서_본비교실험E5·기준레시피_v1_20260706.md` §4(측정)·§5(생성/유효성/품질 축)·§10(규약).
 - `기준문서_방법론·모집단·비교설계_v1.md` 부록 A/D.
-- `docs/W_E5_C001_8way.md`, `docs/e5_baselines_199_manifest.json`.
+- `docs/W_E5_C001_8way.md`, `docs/experiments/e5_pilot/manifests/e5_baselines_199_manifest.json`.
 - P0 텍스처/유효성 진단: `phases/p0-audit/docs/G1_package/t9_failure_surface_cause_building_metrics.csv`, `phases/p0-audit/docs/G1_package/t11_survivor_texture_refine_building_metrics.csv`, `phases/p0-audit/docs/G1_package/t13_validity_error_breakdown_type_by_input.csv`.
 - 요청문에 적힌 `docs/W_E5_C001_8way_분석·199판단_20260707.md`는 현재 checkout에서 발견하지 못했다. 잠금본과 어긋나는 경우 잠금본을 우선한다.
 

@@ -9,6 +9,7 @@ This directory is the reader entry point for the `e5_c001_3b_s1` evidence family
 | report | [`W_E5_C001_3b_S1_readout_tmp.md`](../../archive/e5_c001_3b_s1/temporary/reports/W_E5_C001_3b_S1_readout_tmp.md) | temporary | `-` |
 | report | [`W_E5_C001_③b_S1_검수·라우팅_20260708.md`](reports/W_E5_C001_③b_S1_검수·라우팅_20260708.md) | canonical | `e5_c001_3b_s1_review` |
 | report | [`W_E5_C001_③b_S1_표면복원.md`](reports/W_E5_C001_③b_S1_표면복원.md) | supporting | `-` |
+| report | [`W_③b_레시피설계_레퍼런스기반_20260707.md`](reports/W_③b_레시피설계_레퍼런스기반_20260707.md) | supporting; old-path mirror retained | `-` |
 | table | [`e5_c001_3b_s1_coverage.csv`](tables/e5_c001_3b_s1_coverage.csv) | supporting | `-` |
 | table | [`e5_c001_3b_s1_delta.csv`](tables/e5_c001_3b_s1_delta.csv) | supporting | `-` |
 | table | [`e5_c001_3b_s1_filter_contrib.csv`](tables/e5_c001_3b_s1_filter_contrib.csv) | supporting | `-` |

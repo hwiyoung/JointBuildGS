@@ -77,7 +77,7 @@ def write_versions(path: Path, run_id: str, doc: Path) -> None:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--run-id", default=datetime.now().strftime("e5p_sparse_config_%Y%m%d_%H%M%S"))
-    ap.add_argument("--out", default="docs/e5_gs_sparse_config_diff.md")
+    ap.add_argument("--out", default="docs/experiments/e5_pilot/reports/e5_gs_sparse_config_diff.md")
     args = ap.parse_args()
 
     dense = top_level_scalars(DENSE)

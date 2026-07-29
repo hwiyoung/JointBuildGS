@@ -693,10 +693,10 @@ def build_argparser() -> argparse.ArgumentParser:
 
     m = sub.add_parser("manifest")
     m.add_argument("--attributes", default="docs/archive/pointcloud_attributes/v1_2/tables/pointcloud_attributes_v1_2.csv")
-    m.add_argument("--out", default="docs/e5_baselines_199_manifest.json")
+    m.add_argument("--out", default="docs/experiments/e5_pilot/manifests/e5_baselines_199_manifest.json")
 
     pf = sub.add_parser("preflight")
-    pf.add_argument("--out", default="docs/e5_baseline_preflight.md")
+    pf.add_argument("--out", default="docs/experiments/e5_pilot/reports/e5_baseline_preflight.md")
 
     prep = sub.add_parser("prepare")
     prep.add_argument("--arm", required=True, choices=sorted(ARM_LABELS))

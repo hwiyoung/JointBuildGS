@@ -3,7 +3,7 @@
 # mirroring run_d4.sh: PARALLEL 2-GPU train (gs_b1_dense host-GPU1 | gs_b1_acmp host-GPU0)
 #   -> semantic TSDF -> eval (gssem + smrf). B1 = D4 + L_mvc (the only added term). MUST-EQ otherwise.
 # Baseline to compare against = gs_d4_{dense,acmp} (already trained; same harness).
-# Report: docs/W_phaseB_structure.md. EPSG:25832. branch feat/p2-structure-learn.
+# Report: docs/experiments/w_phase_b_structure/reports/W_phaseB_structure.md. EPSG:25832. branch feat/p2-structure-learn.
 # PREREQ: depth/normal maps staged at data_geoidfix/stereo (prior_full_stereo.sh) — same as D4
 #         (B1 keeps w_depth=0.03, so the stereo maps are still required).
 # Launch: setsid nohup bash phases/p2-gsjso/scripts/run_b1.sh > results/tum_transfer/mob/b1.log 2>&1 &
