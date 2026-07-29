@@ -7,6 +7,7 @@ This is the entry point for repository documentation. The current tree is being 
 - Research context: [`RESEARCH_CONTEXT.md`](RESEARCH_CONTEXT.md)
 - Experiment plan: [`EXPERIMENT_PLAN.md`](EXPERIMENT_PLAN.md)
 - Repository and phase rules: [`../AGENTS.md`](../AGENTS.md), [`../phases/README.md`](../phases/README.md)
+- Top-level directory contract: [`catalog/TOP_LEVEL_DIRECTORY_CONTRACT.md`](catalog/TOP_LEVEL_DIRECTORY_CONTRACT.md)
 - Target information architecture: [`catalog/TARGET_INFORMATION_ARCHITECTURE.md`](catalog/TARGET_INFORMATION_ARCHITECTURE.md)
 - Storage audit and policy: [`research/REPO_STORAGE_AUDIT.md`](research/REPO_STORAGE_AUDIT.md), [`research/PROPOSED_STORAGE_POLICY.md`](research/PROPOSED_STORAGE_POLICY.md)
 

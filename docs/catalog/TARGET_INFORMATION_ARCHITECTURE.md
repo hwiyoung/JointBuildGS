@@ -4,6 +4,8 @@
 
 This document defines the target organization for later review and migration. It does not authorize or perform file moves, deletions, bulk reference rewrites, `.gitignore` changes, artifact uploads, Git LFS conversion, or history rewriting.
 
+The reason and admission rule for every top-level directory are authoritative in [`TOP_LEVEL_DIRECTORY_CONTRACT.md`](TOP_LEVEL_DIRECTORY_CONTRACT.md). This document applies that contract to the internal tree.
+
 The current paths remain valid until a separate family-scoped migration is approved and verified. The catalogs beside this document describe the current state; this document describes the intended state.
 
 The catalog's own generated files and navigation/control documents are excluded from its row set. This prevents self-referential size, Git-state, and commit-history churn while keeping the research-document inventory reproducible after commit.
@@ -53,15 +55,15 @@ JointBuildGS/
     <phase_id>/
       README.md                 # phase orientation
       AGENTS.md / CLAUDE.md     # phase rules
-      configs/                  # phase-owned configs
-      scripts/                  # phase-owned reproducible drivers
-      docs/                     # operating notes specific to the phase
       runs/
-        <YYYYMMDD_run_id>/      # immutable execution receipt and compact tracked record
+        <YYYYMMDD_run_id>/      # compact immutable execution/provenance receipt
 
   artifacts/
     manifests/
       <artifact_id>.yaml        # tracked resolver for externally stored class-C payloads
+
+  external/                     # conditional: documented third-party source only
+  legacy/                       # conditional: inactive reference-code quarantine only
 ```
 
 `artifacts/manifests/` and `docs/evidence/` are target paths only; they are not created by this task. External payload bytes do not live below `artifacts/`.
@@ -73,7 +75,7 @@ JointBuildGS/
 | Research contract | `docs/research/` | context, plan, preregistration, decisions, storage policy | A |
 | Experiment family | `docs/experiments/<family_id>/` | family index, reports, compact tables, manifests | A |
 | Curated visual evidence | `docs/figs/<family_id>/`, later review packages | approved final figures only | selected B |
-| Execution receipt | `phases/<phase>/runs/<run_id>/` | config, commit/container receipt, aggregate metrics, issues, artifact references | A |
+| Execution receipt | `phases/<phase>/runs/<run_id>/` | config path/hash, commit/container receipt, aggregate status, issues, artifact references | A |
 | Raw or irreplaceable payload | external storage + `artifacts/manifests/` | datasets, checkpoints, dense geometry, full-resolution imagery, archives | C |
 | Mutable/generated runtime state | ignored work/run locations | caches, logs, temporary panels, rerunnable intermediate output | D |
 
@@ -143,12 +145,13 @@ Large payloads remain class C or D. A run directory is not considered documented
 
 ## Migration order
 
-1. Generate and review the current document/run inventory.
-2. Approve canonical entries and unresolved lineage one family at a time.
-3. Pilot `boundary_map`, because it spans reports, tables, manifests, figures, scripts, and runs across several versions.
-4. Produce an exact old-to-new path manifest and reference rewrite preview for that family.
-5. Move only the approved pilot in a separate commit, run link/provenance checks, and obtain human review.
-6. Repeat by family; consolidate versioned evidence-package directories only after their canonical contents are agreed.
-7. Adopt external artifact storage and selected LFS in separate policy tasks.
+1. Approve the top-level directory contract.
+2. Generate and review the current document/run inventory.
+3. Approve canonical entries and unresolved lineage one family at a time.
+4. Pilot `boundary_map`, because it spans reports, tables, manifests, figures, scripts, and runs across several versions.
+5. Produce an exact old-to-new path manifest and reference rewrite preview for that family.
+6. Move only the approved pilot in a separate commit, run link/provenance checks, and obtain human review.
+7. Repeat by family; consolidate versioned evidence-package directories only after their canonical contents are agreed.
+8. Adopt external artifact storage and selected LFS in separate policy tasks.
 
-No migration step after item 1 is executed by `DOC-IA-01`.
+No physical migration step is executed by `DOC-IA-01` or `DOC-IA-01A`.

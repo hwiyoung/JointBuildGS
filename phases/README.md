@@ -19,6 +19,8 @@ This is the phase-level entry point. Repository-wide rules remain in [`../AGENTS
 
 Presence on disk is not proof that a run is canonical, complete, reproducible, or backed up. Those claims require an approved run receipt and artifact manifest.
 
+`phases/` owns phase rules and compact execution provenance only. Canonical reports and promoted evidence belong in `docs/`; reusable configs and drivers belong in root `configs/` and `scripts/`; large payloads belong in external artifact storage or ignored workspace paths. Existing phase-owned paths remain unchanged until a separate migration is approved.
+
 ## Future run layout
 
 New runs should use `phases/<phase>/runs/<YYYYMMDD_run_id>/` and preserve one compact tracked receipt. Raw checkpoints, dense geometry, caches, and mutable logs remain outside normal Git according to the A-D storage policy. Existing run directories are not renamed by the catalog task.
