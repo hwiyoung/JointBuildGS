@@ -34,5 +34,6 @@ Each directory below owns promoted reports, compact evidence tables, and provena
 - [`qs_baseline178/`](qs_baseline178/README.md)
 - [`qs_cheap_refine_sweep/`](qs_cheap_refine_sweep/README.md)
 - [`qs_rescore/`](qs_rescore/README.md)
+- [`tum2twin_surface_proxy_rv1/`](tum2twin_surface_proxy_rv1/README.md)
 
 Families still awaiting canonical-lineage review remain outside this list. Their absence is a migration hold, not a deletion or scientific judgment.

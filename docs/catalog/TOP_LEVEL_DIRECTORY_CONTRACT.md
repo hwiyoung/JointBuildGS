@@ -100,8 +100,8 @@ Snapshot counts below are indexed-file counts observed during `DOC-IA-01A`; they
 | `data/` | 1 | Local dataset/work-volume mount placeholder. | Not a durable Git information root. Raw inputs become external class C; local hydration remains a workspace concern. |
 | `env/` | 0 | Its former repository-wide `versions.md` was migrated in `ROOT-IA-01`. | No tracked content remains; repository-wide environment knowledge is under `docs/research/reproducibility/`. |
 | `fair-pilot/` | 32 | A self-contained pilot copied configs, scripts, docs, and run records under one root. | Decompose by role into the permanent roots after lineage review; do not create more project-shaped roots. |
-| `reports/` | 9 | Nightly post-analysis mixed final prose, figures, manifests, and runtime material. | Promote durable report/evidence to `docs/`; route payloads to C/D; retire the root only after exact mapping. |
-| `results/` | 323 | Historical experiment trees combine reports, metrics, configs, viewers, and generated payloads. | Split by role: promoted evidence to `docs/`, receipts to `phases/`, payloads to C/D. Current root rule prohibits immediate movement. |
+| `reports/` | 0 | Its nine tracked nightly post-analysis files were promoted by `DOC-IA-REPORT-01`; untracked runtime state remains local. | No tracked owner role remains. Runtime output stays class D until reviewed and promoted. |
+| `results/` | 311 | Historical experiment trees combine reports, metrics, configs, viewers, and generated payloads; 12 pre-TUM archive files were promoted by `DOC-IA-ARCHIVE-01`. | Split remaining files only with writer/output and artifact-backend decisions. Current root rule prohibits blanket movement. |
 | `runs/` | 0 | Fourteen older P2 receipts were migrated in `ROOT-IA-01`. | No tracked content remains; producers now write to `phases/p2-gsjso/runs/`. |
 
 Local tool-state directories such as `.agents/`, `.claude/`, and `.codex/` are not research information roots. They must not become owners of source, evidence, run receipts, or artifacts.

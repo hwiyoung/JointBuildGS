@@ -15,7 +15,7 @@ sys.path.insert(0, str(REPO))
 from scripts.analyze_tum2twin_surface_proxy_rv1 import classify_surface_proxy, percentile_rank
 
 
-OUTPUT = REPO / "reports/nightly_rv1_20260728_2327/post_analysis"
+OUTPUT = REPO / "docs/experiments/tum2twin_surface_proxy_rv1"
 
 
 def test_percentile_rank_uses_average_ties_and_inverse_order() -> None:
@@ -30,7 +30,7 @@ def test_percentile_rank_uses_average_ties_and_inverse_order() -> None:
 
 
 def test_classification_population_and_stability_counts() -> None:
-    frame = pd.read_csv(OUTPUT / "surface_proxy_R_v1.csv", low_memory=False)
+    frame = pd.read_csv(OUTPUT / "tables/surface_proxy_R_v1.csv", low_memory=False)
     assert len(frame) == 178
     assert frame["building_id"].nunique() == 178
     assert int(frame["surface_proxy_metric_valid"].sum()) == 135
@@ -59,7 +59,7 @@ def test_saved_classification_matches_fresh_metric_only_recompute() -> None:
         low_memory=False,
     )
     expected, _ = classify_surface_proxy(source)
-    actual = pd.read_csv(OUTPUT / "surface_proxy_R_v1.csv", low_memory=False)
+    actual = pd.read_csv(OUTPUT / "tables/surface_proxy_R_v1.csv", low_memory=False)
     assert expected["building_id"].tolist() == actual["building_id"].tolist()
     for field in ("completeness_score", "reliability_score", "surface_proxy_score"):
         assert np.allclose(expected[field], actual[field], equal_nan=True)
@@ -73,7 +73,7 @@ def test_saved_classification_matches_fresh_metric_only_recompute() -> None:
 
 
 def test_oracle_candidates_are_complete_and_group_balanced() -> None:
-    payload = json.loads((OUTPUT / "oracle_candidates.yaml").read_text(encoding="utf-8"))
+    payload = json.loads((OUTPUT / "tables/oracle_candidates.yaml").read_text(encoding="utf-8"))
     candidates = payload["candidates"]
     assert [item["surface_proxy_R_v1"] for item in candidates] == [
         "R0",
@@ -89,7 +89,7 @@ def test_oracle_candidates_are_complete_and_group_balanced() -> None:
 
 
 def test_manifest_records_unchanged_sources_and_nonempty_figures() -> None:
-    manifest = json.loads((OUTPUT / "analysis_manifest.json").read_text(encoding="utf-8"))
+    manifest = json.loads((OUTPUT / "manifests/analysis_manifest.json").read_text(encoding="utf-8"))
     source_rows = manifest["source_snapshot_audit"]
     assert len(source_rows) == 8
     assert all(row["exists"] and row["size_match"] and row["mtime_match"] for row in source_rows)
@@ -98,7 +98,7 @@ def test_manifest_records_unchanged_sources_and_nonempty_figures() -> None:
         "recall_vs_precision.png",
         "surface_vs_lod2.png",
     ):
-        assert (OUTPUT / "figures" / name).stat().st_size > 50_000
+        assert (REPO / "docs/figs/tum2twin_surface_proxy_rv1" / name).stat().st_size > 50_000
 
 
 if __name__ == "__main__":
