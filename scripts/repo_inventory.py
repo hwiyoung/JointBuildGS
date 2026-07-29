@@ -13,6 +13,7 @@ import posixpath
 import re
 import subprocess
 import sys
+import tempfile
 import unicodedata
 from collections import Counter, defaultdict
 from dataclasses import dataclass
@@ -1220,9 +1221,14 @@ def parse_args(argv: Sequence[str]) -> argparse.Namespace:
     return parser.parse_args(argv)
 
 
-def generate(repo_root: Path, config: dict[str, Any]) -> dict[str, bytes]:
+def generate(
+    repo_root: Path,
+    config: dict[str, Any],
+    output_root: Path | None = None,
+) -> dict[str, bytes]:
     rows, relations, run_rows = build_inventory(repo_root, config)
-    outputs = {path: repo_root / path for path in config["generated_paths"]}
+    destination = output_root or repo_root
+    outputs = {path: destination / path for path in config["generated_paths"]}
 
     document_fields = [
         "path",
@@ -1301,7 +1307,8 @@ def main(argv: Sequence[str] | None = None) -> int:
             path: (repo_root / path).read_bytes() if (repo_root / path).exists() else None
             for path in config["generated_paths"]
         }
-        after = generate(repo_root, config)
+        with tempfile.TemporaryDirectory(prefix="jointbuildgs-repo-inventory-") as temporary:
+            after = generate(repo_root, config, Path(temporary))
         changed = [path for path in config["generated_paths"] if before[path] != after[path]]
         if changed:
             print("inventory outputs are stale:", file=sys.stderr)
