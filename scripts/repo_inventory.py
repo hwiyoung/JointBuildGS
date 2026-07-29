@@ -180,10 +180,39 @@ def apply_path_migrations(
     migrations: dict[str, dict[str, str]],
 ) -> list[Relation]:
     resolved: list[Relation] = []
+    old_source_by_new_path = {row["new_path"]: old_path for old_path, row in migrations.items()}
     for relation in relations:
-        migration = migrations.get(relation.target_path)
+        target_path = relation.target_path
+        confidence = relation.confidence
+
+        # A byte-preserving document move also preserves its historical relative
+        # link text. Resolve that text from the former source directory before
+        # applying target migrations, rather than rewriting frozen evidence.
+        old_source_path = old_source_by_new_path.get(relation.source_path)
+        if old_source_path is not None and relation.target_exists == "no":
+            historical = resolve_reference(old_source_path, relation.evidence, repo_root)
+            if historical is not None:
+                historical_target, historical_exists = historical
+                if historical_target in migrations or historical_exists == "yes":
+                    target_path = historical_target
+                    confidence = f"{confidence}+historical_source_path"
+
+        migration = migrations.get(target_path)
         if migration is None:
-            resolved.append(relation)
+            if target_path == relation.target_path:
+                resolved.append(relation)
+            else:
+                resolved.append(
+                    Relation(
+                        relation.source_path,
+                        relation.relation,
+                        target_path,
+                        "yes" if (repo_root / target_path).exists() else "no",
+                        relation.evidence,
+                        confidence,
+                        relation.line,
+                    )
+                )
             continue
         new_path = migration["new_path"]
         resolved.append(
@@ -193,7 +222,7 @@ def apply_path_migrations(
                 new_path,
                 "yes" if (repo_root / new_path).exists() else "no",
                 relation.evidence,
-                f"{relation.confidence}+path_migration",
+                f"{confidence}+path_migration",
                 relation.line,
             )
         )

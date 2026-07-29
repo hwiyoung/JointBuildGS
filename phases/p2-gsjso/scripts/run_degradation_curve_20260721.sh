@@ -370,14 +370,14 @@ finalize_noise() {
     finalize --scope noise > "$LOG_DIR/noise_finalize.log" 2>&1
   run_tools python3 phases/p2-gsjso/scripts/degradation_curve_v3_qa.py \
     --scope noise > "$LOG_DIR/noise_qa.log" 2>&1
-  issue "DC-NOISE partial complete: stages=6/12; rows=1068/2136; measurements_sha256=$(sha docs/degradation_curve_measurements.csv); summary_sha256=$(sha docs/degradation_curve_summary.csv); manifest_sha256=$(sha docs/degradation_curve_manifest.json); noise_figure_sha256=$(sha docs/figs/degradation_curve/degradation_curve_noise.png); learning_runs_started=0; new_inference_runs=0"
+  issue "DC-NOISE partial complete: stages=6/12; rows=1068/2136; measurements_sha256=$(sha docs/experiments/degradation_curve/tables/degradation_curve_measurements.csv); summary_sha256=$(sha docs/experiments/degradation_curve/tables/degradation_curve_summary.csv); manifest_sha256=$(sha docs/experiments/degradation_curve/manifests/degradation_curve_manifest.json); noise_figure_sha256=$(sha docs/figs/degradation_curve/degradation_curve_noise.png); learning_runs_started=0; new_inference_runs=0"
   commit_paths \
     "DC-NOISE: measure canonical noise axis" \
     docs/issues.md \
-    docs/degradation_curve_measurements.csv \
-    docs/degradation_curve_summary.csv \
-    docs/degradation_curve_manifest.json \
-    docs/W_degradation_curve_summary_20260721.md \
+    docs/experiments/degradation_curve/tables/degradation_curve_measurements.csv \
+    docs/experiments/degradation_curve/tables/degradation_curve_summary.csv \
+    docs/experiments/degradation_curve/manifests/degradation_curve_manifest.json \
+    docs/experiments/degradation_curve/reports/W_degradation_curve_summary_20260721.md \
     docs/figs/degradation_curve/degradation_curve_noise.png \
     "$RUN_REL/zero_stage_validation.json"
   NOISE_COMMIT="$(git rev-parse HEAD)"
@@ -391,14 +391,14 @@ finalize_full() {
     finalize --scope full > "$LOG_DIR/full_finalize.log" 2>&1
   run_tools python3 phases/p2-gsjso/scripts/degradation_curve_v3_qa.py \
     --scope full > "$LOG_DIR/full_qa.log" 2>&1
-  issue "DC-FULL measurement complete: stages=12/12; rows=2136; measurements_sha256=$(sha docs/degradation_curve_measurements.csv); summary_sha256=$(sha docs/degradation_curve_summary.csv); manifest_sha256=$(sha docs/degradation_curve_manifest.json); noise_figure_sha256=$(sha docs/figs/degradation_curve/degradation_curve_noise.png); density_figure_sha256=$(sha docs/figs/degradation_curve/degradation_curve_density.png); one_page_sha256=$(sha docs/W_degradation_curve_summary_20260721.md); learning_runs_started=0; new_inference_runs=0"
+  issue "DC-FULL measurement complete: stages=12/12; rows=2136; measurements_sha256=$(sha docs/experiments/degradation_curve/tables/degradation_curve_measurements.csv); summary_sha256=$(sha docs/experiments/degradation_curve/tables/degradation_curve_summary.csv); manifest_sha256=$(sha docs/experiments/degradation_curve/manifests/degradation_curve_manifest.json); noise_figure_sha256=$(sha docs/figs/degradation_curve/degradation_curve_noise.png); density_figure_sha256=$(sha docs/figs/degradation_curve/degradation_curve_density.png); one_page_sha256=$(sha docs/experiments/degradation_curve/reports/W_degradation_curve_summary_20260721.md); learning_runs_started=0; new_inference_runs=0"
   commit_paths \
     "DC-FULL: measure 178-building degradation curve" \
     docs/issues.md \
-    docs/degradation_curve_measurements.csv \
-    docs/degradation_curve_summary.csv \
-    docs/degradation_curve_manifest.json \
-    docs/W_degradation_curve_summary_20260721.md \
+    docs/experiments/degradation_curve/tables/degradation_curve_measurements.csv \
+    docs/experiments/degradation_curve/tables/degradation_curve_summary.csv \
+    docs/experiments/degradation_curve/manifests/degradation_curve_manifest.json \
+    docs/experiments/degradation_curve/reports/W_degradation_curve_summary_20260721.md \
     docs/figs/degradation_curve/degradation_curve_noise.png \
     docs/figs/degradation_curve/degradation_curve_density.png \
     "$RUN_REL/zero_stage_validation.json"
@@ -408,7 +408,7 @@ finalize_full() {
 
 finalize_ledger() {
   CURRENT_WAVE="ledger"
-  issue "DC-LEDGER commits: prep=$PREP_COMMIT; noise=$NOISE_COMMIT; full=$FINAL_COMMIT; manifest_sha256=$(sha docs/degradation_curve_manifest.json); issues_sha256_before_ledger_commit=$(sha docs/issues.md)"
+  issue "DC-LEDGER commits: prep=$PREP_COMMIT; noise=$NOISE_COMMIT; full=$FINAL_COMMIT; manifest_sha256=$(sha docs/experiments/degradation_curve/manifests/degradation_curve_manifest.json); issues_sha256_before_ledger_commit=$(sha docs/issues.md)"
   commit_paths \
     "DC-LEDGER: record degradation-curve commits" \
     docs/issues.md

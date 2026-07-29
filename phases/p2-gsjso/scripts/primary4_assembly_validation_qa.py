@@ -15,9 +15,9 @@ import numpy as np
 REPO = Path(__file__).resolve().parents[3]
 CONFIG = REPO / "phases/p2-gsjso/configs/primary4_assembly_validation_v2.json"
 RUN_DIR = REPO / "phases/p2-gsjso/runs/20260721_primary4_assembly_validation"
-CSV_PATH = REPO / "docs/primary4_assembly_validation_measurements.csv"
-SUMMARY = REPO / "docs/W_primary4_assembly_validation_summary_20260721.md"
-MANIFEST = REPO / "docs/primary4_assembly_validation_manifest.json"
+CSV_PATH = REPO / "docs/experiments/primary4_assembly_validation/tables/primary4_assembly_validation_measurements.csv"
+SUMMARY = REPO / "docs/experiments/primary4_assembly_validation/reports/W_primary4_assembly_validation_summary_20260721.md"
+MANIFEST = REPO / "docs/experiments/primary4_assembly_validation/manifests/primary4_assembly_validation_manifest.json"
 
 
 def sha256_file(path: Path, block_size: int = 1 << 20) -> str:

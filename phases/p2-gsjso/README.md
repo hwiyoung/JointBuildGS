@@ -30,7 +30,7 @@ P2 구현은 레포 루트의 기존 GS-JSO 코드를 사용/확장한다. **이
 - `configs/` — 실험 config
 - `scripts/`, `tools/` — 루트 GS-JSO 스크립트·도구
 - `results/` — 실험 산출(REPORT.md 등)
-- 연구 맥락: `docs/RESEARCH_CONTEXT.md`(손실·파라미터), `docs/EXPERIMENT_PLAN.md`(실험 순서)
+- 연구 맥락: `docs/research/RESEARCH_CONTEXT.md`(손실·파라미터), `docs/research/EXPERIMENT_PLAN.md`(실험 순서)
 
 > 로컬 데이터·런 산출은 gitignore된다. P2 데이터/런 디렉토리는 추가 시 루트 `.gitignore`에
 > `phases/p2-gsjso/data/`·`phases/p2-gsjso/runs/` 패턴으로 등록한다(P0와 동일 규약).

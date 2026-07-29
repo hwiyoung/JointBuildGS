@@ -417,7 +417,7 @@ def write_report(args: argparse.Namespace) -> None:
         "- 학습 지문: `phases/p2-gsjso/runs/e5p_train_20260707_C001/train_fingerprints.csv`.",
         "- 점군화 지문: `phases/p2-gsjso/runs/e5p_train_20260707_C001/readout_fingerprints.csv`.",
         "- 조립 지문: `phases/p0-audit/runs/e5p_gate_20260707_C001/versions.txt`.",
-        "- 속성 검산: `docs/e5_pilot_pointcloud_attributes_v1_3_check.json`.",
+        "- 속성 검산: `docs/experiments/pointcloud_attributes/tables/e5_pilot_pointcloud_attributes_v1_3_check.json`.",
         "",
         "## 관찰",
         "",

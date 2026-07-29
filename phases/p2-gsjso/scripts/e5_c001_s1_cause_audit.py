@@ -518,7 +518,7 @@ def source_key(row: dict[str, str]) -> str:
 def build_joined_tables() -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
     base_rows = read_csv(REPO / "docs/e5_c001_8way_metrics.csv")
     s1_rows = [r for r in read_csv(REPO / "docs/e5_c001_3b_s1_metrics.csv") if r.get("setting") == "base"]
-    aux = {r["building_id"]: r for r in read_csv(REPO / "docs/population_aux_v4.csv")}
+    aux = {r["building_id"]: r for r in read_csv(REPO / "docs/experiments/population_aux/tables/population_aux_v4.csv")}
     cov_rows = read_csv(REPO / "docs/e5_c001_3b_s1_render_readout_coverage.csv")
     cov_by_bid: dict[str, dict[str, list[float]]] = {}
     for row in cov_rows:
@@ -687,7 +687,7 @@ def corr(x: list[float], y: list[float], spearman: bool = False) -> float | None
 def build_a3_correlation(joined: list[dict[str, Any]], routing_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     s0_rows = read_csv(REPO / "docs/e5_c001_8way_metrics.csv")
     s1_rows = [r for r in read_csv(REPO / "docs/e5_c001_3b_s1_metrics.csv") if r.get("setting") == "base"]
-    aux = {r["building_id"]: r for r in read_csv(REPO / "docs/population_aux_v4.csv")}
+    aux = {r["building_id"]: r for r in read_csv(REPO / "docs/experiments/population_aux/tables/population_aux_v4.csv")}
     cov = {r["building_id"]: r for r in routing_rows}
     rows: list[dict[str, Any]] = []
     for bid in sorted(aux):

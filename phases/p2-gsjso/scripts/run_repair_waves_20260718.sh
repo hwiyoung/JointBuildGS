@@ -404,9 +404,9 @@ import json
 import math
 from pathlib import Path
 
-scores = list(csv.DictReader(Path("docs/qs_rescore_scores.csv").open()))
-panel = list(csv.DictReader(Path("docs/qs_rescore_topview_panel.csv").open()))
-spot = list(csv.DictReader(Path("docs/qs_rescore_hausdorff_spotcheck.csv").open()))
+scores = list(csv.DictReader(Path("docs/experiments/qs_rescore/tables/qs_rescore_scores.csv").open()))
+panel = list(csv.DictReader(Path("docs/experiments/qs_rescore/tables/qs_rescore_topview_panel.csv").open()))
+spot = list(csv.DictReader(Path("docs/experiments/qs_rescore/tables/qs_rescore_hausdorff_spotcheck.csv").open()))
 manifest = json.loads(Path(
     "phases/p2-gsjso/runs/20260718_qs_rescore_completeness_panel/manifest.json"
 ).read_text())
@@ -435,7 +435,7 @@ if manifest["dense_success_building_count"] != 10:
     raise SystemExit("R2 dense-success population drift")
 for path in (
     Path("docs/figs/qs_rescore/qs_rescore_topview_10x4.png"),
-    Path("docs/W_qs_rescore_completeness_panel_20260718.md"),
+    Path("docs/experiments/qs_rescore/reports/W_qs_rescore_completeness_panel_20260718.md"),
 ):
     if not path.is_file():
         raise SystemExit(f"R2 output missing: {path}")
@@ -445,14 +445,14 @@ PY
     issue "RW-R2 QA command exited nonzero; log=$RUN_REL/logs/R2_qa.log"
     return 1
   fi
-  issue "RW-R2 measurement complete: scores_sha256=$(sha docs/qs_rescore_scores.csv); panel_sha256=$(sha docs/qs_rescore_topview_panel.csv); spot_sha256=$(sha docs/qs_rescore_hausdorff_spotcheck.csv); manifest_sha256=$(sha phases/p2-gsjso/runs/20260718_qs_rescore_completeness_panel/manifest.json); figure_sha256=$(sha docs/figs/qs_rescore/qs_rescore_topview_10x4.png); learning_runs_started=0; new_inference_runs=0"
+  issue "RW-R2 measurement complete: scores_sha256=$(sha docs/experiments/qs_rescore/tables/qs_rescore_scores.csv); panel_sha256=$(sha docs/experiments/qs_rescore/tables/qs_rescore_topview_panel.csv); spot_sha256=$(sha docs/experiments/qs_rescore/tables/qs_rescore_hausdorff_spotcheck.csv); manifest_sha256=$(sha phases/p2-gsjso/runs/20260718_qs_rescore_completeness_panel/manifest.json); figure_sha256=$(sha docs/figs/qs_rescore/qs_rescore_topview_10x4.png); learning_runs_started=0; new_inference_runs=0"
   if ! commit_paths \
     "RW-R2: add roof completeness and 10x4 panel" \
     docs/issues.md \
-    docs/qs_rescore_scores.csv \
-    docs/qs_rescore_topview_panel.csv \
-    docs/qs_rescore_hausdorff_spotcheck.csv \
-    docs/W_qs_rescore_completeness_panel_20260718.md \
+    docs/experiments/qs_rescore/tables/qs_rescore_scores.csv \
+    docs/experiments/qs_rescore/tables/qs_rescore_topview_panel.csv \
+    docs/experiments/qs_rescore/tables/qs_rescore_hausdorff_spotcheck.csv \
+    docs/experiments/qs_rescore/reports/W_qs_rescore_completeness_panel_20260718.md \
     docs/figs/qs_rescore/qs_rescore_topview_10x4.png \
     phases/p2-gsjso/runs/20260718_qs_rescore_completeness_panel; then
     return 1
@@ -475,9 +475,9 @@ import json
 from collections import Counter
 from pathlib import Path
 
-scores = list(csv.DictReader(Path("docs/qs_baseline178_scores.csv").open()))
-summary = list(csv.DictReader(Path("docs/qs_baseline178_summary.csv").open()))
-manifest = json.loads(Path("docs/qs_baseline178_manifest.json").read_text())
+scores = list(csv.DictReader(Path("docs/experiments/qs_baseline178/tables/qs_baseline178_scores.csv").open()))
+summary = list(csv.DictReader(Path("docs/experiments/qs_baseline178/tables/qs_baseline178_summary.csv").open()))
+manifest = json.loads(Path("docs/experiments/qs_baseline178/manifests/qs_baseline178_manifest.json").read_text())
 roles = Counter(row["role"] for row in scores)
 if len(scores) != 534 or roles != Counter({"dense": 178, "als": 178, "reference": 178}):
     raise SystemExit(f"R3 cardinality drift rows={len(scores)} roles={dict(roles)}")
@@ -511,13 +511,13 @@ PY
     issue "RW-R3 QA command exited nonzero; log=$RUN_REL/logs/R3_qa.log"
     return 1
   fi
-  issue "RW-R3 measurement complete: scores_sha256=$(sha docs/qs_baseline178_scores.csv); summary_sha256=$(sha docs/qs_baseline178_summary.csv); manifest_sha256=$(sha docs/qs_baseline178_manifest.json); figure_sha256=$(sha docs/figs/qs_baseline178/dense_vs_als_rms_distribution.png); learning_runs_started=0; new_inference_runs=0"
+  issue "RW-R3 measurement complete: scores_sha256=$(sha docs/experiments/qs_baseline178/tables/qs_baseline178_scores.csv); summary_sha256=$(sha docs/experiments/qs_baseline178/tables/qs_baseline178_summary.csv); manifest_sha256=$(sha docs/experiments/qs_baseline178/manifests/qs_baseline178_manifest.json); figure_sha256=$(sha docs/figs/qs_baseline178/dense_vs_als_rms_distribution.png); learning_runs_started=0; new_inference_runs=0"
   if ! commit_paths \
     "RW-R3: rescore canonical 178 dense and ALS baselines" \
     docs/issues.md \
-    docs/qs_baseline178_scores.csv \
-    docs/qs_baseline178_summary.csv \
-    docs/qs_baseline178_manifest.json \
+    docs/experiments/qs_baseline178/tables/qs_baseline178_scores.csv \
+    docs/experiments/qs_baseline178/tables/qs_baseline178_summary.csv \
+    docs/experiments/qs_baseline178/manifests/qs_baseline178_manifest.json \
     docs/figs/qs_baseline178 \
     phases/p2-gsjso/runs/20260718_qs_baseline178_rescore; then
     return 1
@@ -541,9 +541,9 @@ import math
 from collections import Counter
 from pathlib import Path
 
-scores = list(csv.DictReader(Path("docs/qs_cheap_refine_sweep.csv").open()))
-summary = list(csv.DictReader(Path("docs/qs_cheap_refine_sweep_summary.csv").open()))
-manifest = json.loads(Path("docs/qs_cheap_refine_sweep_manifest.json").read_text())
+scores = list(csv.DictReader(Path("docs/experiments/qs_cheap_refine_sweep/tables/qs_cheap_refine_sweep.csv").open()))
+summary = list(csv.DictReader(Path("docs/experiments/qs_cheap_refine_sweep/tables/qs_cheap_refine_sweep_summary.csv").open()))
+manifest = json.loads(Path("docs/experiments/qs_cheap_refine_sweep/manifests/qs_cheap_refine_sweep_manifest.json").read_text())
 if len(scores) != 324 or len(summary) != 18:
     raise SystemExit(f"R4 cardinality drift scores={len(scores)} summary={len(summary)}")
 condition_counts = Counter(row["condition_id"] for row in scores)
@@ -573,13 +573,13 @@ PY
     issue "RW-R4 QA command exited nonzero; log=$RUN_REL/logs/R4_qa.log"
     return 1
   fi
-  issue "RW-R4 measurement complete: scores_sha256=$(sha docs/qs_cheap_refine_sweep.csv); summary_sha256=$(sha docs/qs_cheap_refine_sweep_summary.csv); manifest_sha256=$(sha docs/qs_cheap_refine_sweep_manifest.json); figure_sha256=$(sha docs/figs/qs_cheap_refine_sweep/parameter_grid.png); learning_runs_started=0; new_inference_runs=0"
+  issue "RW-R4 measurement complete: scores_sha256=$(sha docs/experiments/qs_cheap_refine_sweep/tables/qs_cheap_refine_sweep.csv); summary_sha256=$(sha docs/experiments/qs_cheap_refine_sweep/tables/qs_cheap_refine_sweep_summary.csv); manifest_sha256=$(sha docs/experiments/qs_cheap_refine_sweep/manifests/qs_cheap_refine_sweep_manifest.json); figure_sha256=$(sha docs/figs/qs_cheap_refine_sweep/parameter_grid.png); learning_runs_started=0; new_inference_runs=0"
   if ! commit_paths \
     "RW-R4: sweep C001 cheap-refinement parameters" \
     docs/issues.md \
-    docs/qs_cheap_refine_sweep.csv \
-    docs/qs_cheap_refine_sweep_summary.csv \
-    docs/qs_cheap_refine_sweep_manifest.json \
+    docs/experiments/qs_cheap_refine_sweep/tables/qs_cheap_refine_sweep.csv \
+    docs/experiments/qs_cheap_refine_sweep/tables/qs_cheap_refine_sweep_summary.csv \
+    docs/experiments/qs_cheap_refine_sweep/manifests/qs_cheap_refine_sweep_manifest.json \
     docs/figs/qs_cheap_refine_sweep \
     phases/p2-gsjso/runs/20260718_qs_cheap_refine_sweep; then
     return 1
@@ -608,10 +608,10 @@ commit_partial_r2() {
   commit_paths \
     "RW-R2-PARTIAL: preserve completeness panel measurements" \
     docs/issues.md \
-    docs/qs_rescore_scores.csv \
-    docs/qs_rescore_topview_panel.csv \
-    docs/qs_rescore_hausdorff_spotcheck.csv \
-    docs/W_qs_rescore_completeness_panel_20260718.md \
+    docs/experiments/qs_rescore/tables/qs_rescore_scores.csv \
+    docs/experiments/qs_rescore/tables/qs_rescore_topview_panel.csv \
+    docs/experiments/qs_rescore/tables/qs_rescore_hausdorff_spotcheck.csv \
+    docs/experiments/qs_rescore/reports/W_qs_rescore_completeness_panel_20260718.md \
     docs/figs/qs_rescore/qs_rescore_topview_10x4.png \
     phases/p2-gsjso/runs/20260718_qs_rescore_completeness_panel
 }
@@ -620,9 +620,9 @@ commit_partial_r3() {
   commit_paths \
     "RW-R3-PARTIAL: preserve baseline 178 measurements" \
     docs/issues.md \
-    docs/qs_baseline178_scores.csv \
-    docs/qs_baseline178_summary.csv \
-    docs/qs_baseline178_manifest.json \
+    docs/experiments/qs_baseline178/tables/qs_baseline178_scores.csv \
+    docs/experiments/qs_baseline178/tables/qs_baseline178_summary.csv \
+    docs/experiments/qs_baseline178/manifests/qs_baseline178_manifest.json \
     docs/figs/qs_baseline178 \
     phases/p2-gsjso/runs/20260718_qs_baseline178_rescore
 }
@@ -631,16 +631,16 @@ commit_partial_r4() {
   commit_paths \
     "RW-R4-PARTIAL: preserve cheap-refinement sweep measurements" \
     docs/issues.md \
-    docs/qs_cheap_refine_sweep.csv \
-    docs/qs_cheap_refine_sweep_summary.csv \
-    docs/qs_cheap_refine_sweep_manifest.json \
+    docs/experiments/qs_cheap_refine_sweep/tables/qs_cheap_refine_sweep.csv \
+    docs/experiments/qs_cheap_refine_sweep/tables/qs_cheap_refine_sweep_summary.csv \
+    docs/experiments/qs_cheap_refine_sweep/manifests/qs_cheap_refine_sweep_manifest.json \
     docs/figs/qs_cheap_refine_sweep \
     phases/p2-gsjso/runs/20260718_qs_cheap_refine_sweep
 }
 
 finalize_ledger() {
   issue "RW-20260718 commit ledger: prep_commit=$PREP_COMMIT; R1_commit=${R1_COMMIT:-none}; R2_commit=${R2_COMMIT:-none}; R3_commit=${R3_COMMIT:-none}; R4_commit=${R4_COMMIT:-none}; R1_rc=$R1_RC; R2_rc=$R2_RC; R3_rc=$R3_RC; R4_rc=$R4_RC; learning_runs_started=0."
-  issue "RW-20260718 artifact ledger: R1_manifest_sha256=$(sha docs/experiments/boundary_map/manifests/boundary_map_v2_manifest.json); R2_manifest_sha256=$(sha phases/p2-gsjso/runs/20260718_qs_rescore_completeness_panel/manifest.json); R3_manifest_sha256=$(sha docs/qs_baseline178_manifest.json); R4_manifest_sha256=$(sha docs/qs_cheap_refine_sweep_manifest.json)."
+  issue "RW-20260718 artifact ledger: R1_manifest_sha256=$(sha docs/experiments/boundary_map/manifests/boundary_map_v2_manifest.json); R2_manifest_sha256=$(sha phases/p2-gsjso/runs/20260718_qs_rescore_completeness_panel/manifest.json); R3_manifest_sha256=$(sha docs/experiments/qs_baseline178/manifests/qs_baseline178_manifest.json); R4_manifest_sha256=$(sha docs/experiments/qs_cheap_refine_sweep/manifests/qs_cheap_refine_sweep_manifest.json)."
   if [[ "$R1_RC" -eq 0 && "$R2_RC" -eq 0 && "$R3_RC" -eq 0 && "$R4_RC" -eq 0 ]]; then
     write_status "R1-R4" "complete" "all four waves committed"
   else

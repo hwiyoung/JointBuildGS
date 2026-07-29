@@ -73,7 +73,7 @@ def main():
 
     # ---- map: AOI footprints + 69 near-nadir==0 buildings + camera centres ----
     feats = json.load(open(REPO/"results/tum_transfer/analysis/footprints_aoi.geojson"))["features"]
-    v3 = {r["building_id"].replace("DEBY_LOD2_", ""): r for r in csv.DictReader(open(REPO/"docs/population_aux_v3.csv"))}
+    v3 = {r["building_id"].replace("DEBY_LOD2_", ""): r for r in csv.DictReader(open(REPO/"docs/archive/population_aux/v3/tables/population_aux_v3.csv"))}
     nn0 = {b for b, r in v3.items() if r.get("n_views_nadir") not in ("", None) and float(r["n_views_nadir"]) == 0.0}
     print(f"\nbuildings with n_views_nadir==0: {len(nn0)}")
     # spatial correspondence: nearest near-nadir camera (tilt<=20) XY distance, nn0 vs rest

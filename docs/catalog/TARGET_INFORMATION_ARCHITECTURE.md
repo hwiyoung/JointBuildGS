@@ -8,7 +8,7 @@ The reason and admission rule for every top-level directory are authoritative in
 
 The current paths remain valid until a separate family-scoped migration is approved and verified. The catalogs beside this document describe the current state; this document describes the intended state.
 
-`boundary_map` is the first completed family pilot. Its reports, tables, manifests, figures, archive files, and dedicated drivers use the target tree; exact relocations are recorded in `docs/catalog/migrations/BOUNDARY_MAP_PATHS.csv` and `BOUNDARY_MAP_SCRIPT_PATHS.csv`. Phase run receipts and immutable experiment contents remain in place.
+`boundary_map` is the first completed family pilot. A second verified wave organized 70 research, experiment, and archive documents without changing their payload bytes; exact relocations and four compatibility mirrors are recorded in `docs/catalog/migrations/DOCUMENT_FAMILIES_WAVE1_PATHS.csv`. Phase run receipts and immutable experiment contents remain in place.
 
 The catalog's own generated files and navigation/control documents are excluded from its row set. This prevents self-referential size, Git-state, and commit-history churn while keeping the research-document inventory reproducible after commit.
 
@@ -153,7 +153,7 @@ Large payloads remain class C or D. A run directory is not considered documented
 4. Pilot `boundary_map`, because it spans reports, tables, manifests, figures, scripts, and runs across several versions. **Family pilot completed.**
 5. Produce an exact old-to-new path manifest and reference rewrite preview for that family. **Completed in `BOUNDARY_MAP_PATHS.csv`.**
 6. Move only the approved pilot in separate commits and run link/provenance checks. **Document payload and dedicated-script migrations completed; shared P2 helpers and run receipts remain in place.**
-7. Repeat by family; consolidate versioned evidence-package directories only after their canonical contents are agreed.
+7. Repeat by family. **Wave 1 completed for the families listed in `docs/catalog/families/DOCUMENT_FAMILIES_WAVE1.md`; unresolved E5 and versioned evidence packages remain separately gated.**
 8. Adopt external artifact storage and selected LFS in separate policy tasks.
 
 No physical migration step was executed by the design tasks `DOC-IA-01` or `DOC-IA-01A`; the approved pilot moves are recorded as later migration tasks.

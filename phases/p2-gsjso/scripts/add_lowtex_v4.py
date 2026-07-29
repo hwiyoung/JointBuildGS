@@ -12,7 +12,7 @@ sys.path.insert(0, "/workspace/JointBuildGS/phases/p2-gsjso/scripts")
 from population_aux_v3 import parse_cam_model, parse_cameras, gml_building, DATA, REPO
 from texture_anchor_check import build_crop, lowtex, T11_THR
 
-CSV = REPO / "docs/population_aux_v3.csv"
+CSV = REPO / "docs/archive/population_aux/v3/tables/population_aux_v3.csv"
 CSV_RESULTS = REPO / "results/tum_transfer/mob/overseg_lever/population_aux_v3.csv"
 BVIEW = REPO / "results/tum_transfer/mob/overseg_lever/population_aux_v3_bestview.json"
 

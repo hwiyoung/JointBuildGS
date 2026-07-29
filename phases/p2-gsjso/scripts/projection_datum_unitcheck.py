@@ -162,7 +162,7 @@ def write_report(rows: list[dict[str, object]]) -> None:
             "",
             "## Missing External Spec",
             "",
-            "- Root file `원격발주_투영fix·LS정합·재게이트·재계산체인_레시피감사_20260702.md` was not present in this checkout; this A0 follows `CLAUDE.md`, `docs/projection_geoid_rootcause.md`, and the retracted `docs/projection_gate.md` note.",
+            "- Root file `원격발주_투영fix·LS정합·재게이트·재계산체인_레시피감사_20260702.md` was not present in this checkout; this A0 follows `CLAUDE.md`, `docs/projection_geoid_rootcause.md`, and the retracted `docs/archive/projection_gate/v1/reports/projection_gate.md` note.",
             "",
             "## 판정 필요 지점",
             "",

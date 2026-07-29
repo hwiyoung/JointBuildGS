@@ -309,7 +309,7 @@ def main():
     cams = parse_cameras(DATA/"work/colmap/sparse/0/images.txt", sr)
     cam_by = {c.name: c for c in cams}
     bview = {k.replace("DEBY_LOD2_", ""): v for k, v in json.load(open(BVIEW)).items()}
-    v3 = {r["building_id"].replace("DEBY_LOD2_", ""): r for r in csv.DictReader(open(REPO/"docs/population_aux_v3.csv"))}
+    v3 = {r["building_id"].replace("DEBY_LOD2_", ""): r for r in csv.DictReader(open(REPO/"docs/archive/population_aux/v3/tables/population_aux_v3.csv"))}
     canon = glob.glob(str(REPO/"phases/p0-audit/runs/w2_1_roofer_default_*/building_reconstruction_status.csv"))[0]
     dimdens = {r["building_id"].replace("DEBY_LOD2_", ""): r.get("rf_pt_density", "") for r in csv.DictReader(open(canon)) if r["input"].lower() == "dim"}
     feats = json.load(open(GEOJSON))["features"]
@@ -319,7 +319,7 @@ def main():
         g = f["geometry"]; ring = np.array(g["coordinates"][0] if g["type"] == "Polygon" else max((p[0] for p in g["coordinates"]), key=len), float)
         if b not in fp or len(ring) > len(fp[b]): fp[b] = ring
     # 27 non-A + [3] targets union for cloud AOI
-    xw = list(csv.DictReader(open(REPO/"docs/bucket_crosswalk.csv")))
+    xw = list(csv.DictReader(open(REPO/"docs/archive/bucket_crosswalk/v1/tables/bucket_crosswalk.csv")))
     A = {"A1_촬영확실", "A2_촬영경계", "경계_방법회복"}
     nonA = [r["building_id"].replace("DEBY_LOD2_", "") for r in xw if r["new_class"] not in A]
     targets = sorted(set(nonA) | set(TD_TARGETS))

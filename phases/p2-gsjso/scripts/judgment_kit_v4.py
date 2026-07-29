@@ -818,7 +818,7 @@ def write_report(
         f"- image-projection zeta: `{describe_projection_config()}`.",
         "- 3D/씨드 경로 `-556`은 건드리지 않았다.",
         "- 지오 산출물 CRS: EPSG:25832. OPF/COLMAP frame: EPSG:32632.",
-        f"- 수동판정 대상: `docs/bucket_crosswalk_v2.csv`의 `new_class=수동판정` {len(manual_bids)}동.",
+        f"- 수동판정 대상: `docs/experiments/bucket_crosswalk/tables/bucket_crosswalk_v2.csv`의 `new_class=수동판정` {len(manual_bids)}동.",
         f"- `docs/manual_review_judgments.csv`: {'없음 - 배치 열은 비움' if manual_missing else '읽음'}.",
         "",
         "## 1. 산출",

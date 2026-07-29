@@ -24,7 +24,7 @@ from typing import Any
 
 RUN_ROOT = Path("phases/p0-audit/runs")
 P2_RUN_ROOT = Path("phases/p2-gsjso/runs")
-POPULATION = Path("docs/population_aux_v4.csv")
+POPULATION = Path("docs/experiments/population_aux/tables/population_aux_v4.csv")
 FOOTPRINTS_GPKG = Path("phases/p0-audit/data/work/w2/footprints_scene_aoi.gpkg")
 FOOTPRINTS_GEOJSON = Path("results/tum_transfer/analysis/footprints_aoi.geojson")
 ROOFER_BBOX = (690766.0, 5335839.0, 691180.0, 5336379.0)
@@ -692,7 +692,7 @@ def build_argparser() -> argparse.ArgumentParser:
     sub = parser.add_subparsers(dest="cmd", required=True)
 
     m = sub.add_parser("manifest")
-    m.add_argument("--attributes", default="docs/pointcloud_attributes_v1_2.csv")
+    m.add_argument("--attributes", default="docs/archive/pointcloud_attributes/v1_2/tables/pointcloud_attributes_v1_2.csv")
     m.add_argument("--out", default="docs/e5_baselines_199_manifest.json")
 
     pf = sub.add_parser("preflight")

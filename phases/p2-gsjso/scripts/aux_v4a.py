@@ -465,8 +465,8 @@ def write_crosswalk(rows: list[dict[str, object]], metrics: dict[str, object]) -
             "",
             "## 파일",
             "",
-            "- CSV: `docs/bucket_crosswalk_v2.csv`",
-            "- 관측기하: `docs/population_aux_v4.csv`",
+            "- CSV: `docs/experiments/bucket_crosswalk/tables/bucket_crosswalk_v2.csv`",
+            "- 관측기하: `docs/experiments/population_aux/tables/population_aux_v4.csv`",
         ]
     )
     CROSS_MD.write_text("\n".join(lines) + "\n")
@@ -542,9 +542,9 @@ def write_report(rows: list[dict[str, object]], cross: list[dict[str, object]], 
         "",
         "## 1. 산출",
         "",
-        "- `docs/population_aux_v4.csv`: v3와 같은 관측기하 정의로 199동 재계산.",
+        "- `docs/experiments/population_aux/tables/population_aux_v4.csv`: v3와 같은 관측기하 정의로 199동 재계산.",
         "- lowtex 관련 컬럼은 v3 값을 이월하고 `lowtex_version=v4a_carryover_v3_contaminated`로 표시.",
-        "- `docs/bucket_crosswalk_v2.csv`, `docs/bucket_crosswalk_v2.md`: 48동 old->new 이동표.",
+        "- `docs/experiments/bucket_crosswalk/tables/bucket_crosswalk_v2.csv`, `docs/experiments/bucket_crosswalk/reports/bucket_crosswalk_v2.md`: 48동 old->new 이동표.",
         f"- 그림: `{(FIG_DIR / 'aux_v4a_v3_vs_v4_scatter.png').relative_to(REPO)}`, `{(FIG_DIR / 'aux_v4a_class_counts.png').relative_to(REPO)}`.",
         "",
         "## 2. 재산출 임계",

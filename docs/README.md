@@ -4,13 +4,17 @@ This is the entry point for repository documentation. The current tree is being 
 
 ## Start here
 
-- Research context: [`RESEARCH_CONTEXT.md`](RESEARCH_CONTEXT.md)
-- Experiment plan: [`EXPERIMENT_PLAN.md`](EXPERIMENT_PLAN.md)
+- Research context: [`research/RESEARCH_CONTEXT.md`](research/RESEARCH_CONTEXT.md)
+- Experiment plan: [`research/EXPERIMENT_PLAN.md`](research/EXPERIMENT_PLAN.md)
 - Repository and phase rules: [`../AGENTS.md`](../AGENTS.md), [`../phases/README.md`](../phases/README.md)
 - Top-level directory contract: [`catalog/TOP_LEVEL_DIRECTORY_CONTRACT.md`](catalog/TOP_LEVEL_DIRECTORY_CONTRACT.md)
 - Target information architecture: [`catalog/TARGET_INFORMATION_ARCHITECTURE.md`](catalog/TARGET_INFORMATION_ARCHITECTURE.md)
 - Boundary-map experiment family: [`experiments/boundary_map/README.md`](experiments/boundary_map/README.md)
 - Reviewed boundary-map canonical map: [`catalog/families/BOUNDARY_MAP.md`](catalog/families/BOUNDARY_MAP.md)
+- Wave-1 document family map: [`catalog/families/DOCUMENT_FAMILIES_WAVE1.md`](catalog/families/DOCUMENT_FAMILIES_WAVE1.md)
+- Experiment-family index: [`experiments/README.md`](experiments/README.md)
+- Research-control index: [`research/README.md`](research/README.md)
+- Superseded-document archive: [`archive/README.md`](archive/README.md)
 - Storage audit and policy: [`research/REPO_STORAGE_AUDIT.md`](research/REPO_STORAGE_AUDIT.md), [`research/PROPOSED_STORAGE_POLICY.md`](research/PROPOSED_STORAGE_POLICY.md)
 
 ## Current catalog
@@ -33,6 +37,6 @@ docker compose run --rm dev \
 
 Generated `_candidate` values are not scientific or document-governance decisions. Canonical status remains human-approved.
 
-## Current-path rule
+## Path migration rule
 
-Existing documents, figures, and run records keep their present paths during the inventory stage. Follow current links until a separate family migration commit provides an old-to-new path manifest and passes reference checks.
+Use the owner paths under `research/`, `experiments/`, and `archive/` for new links. Frozen manifests and run receipts may retain historical paths; the migration CSVs under `catalog/migrations/` resolve those references. Four hash-bound scientific inputs retain byte-identical compatibility mirrors at their former paths.

@@ -102,7 +102,7 @@ def main():
     W, H, params = parse_cam_model(DATA/"work/colmap/sparse/0/cameras.txt")
     cams = {c.name: c for c in parse_cameras(DATA/"work/colmap/sparse/0/images.txt")}
     bview = {k.replace("DEBY_LOD2_", ""): v for k, v in json.load(open(REPO/"results/tum_transfer/mob/overseg_lever/population_aux_v3_bestview.json")).items()}
-    v3 = {r["building_id"].replace("DEBY_LOD2_", ""): r for r in csv.DictReader(open(REPO/"docs/population_aux_v3.csv"))}
+    v3 = {r["building_id"].replace("DEBY_LOD2_", ""): r for r in csv.DictReader(open(REPO/"docs/archive/population_aux/v3/tables/population_aux_v3.csv"))}
     canon = glob.glob(str(REPO/"phases/p0-audit/runs/w2_1_roofer_default_*/building_reconstruction_status.csv"))[0]
     dimdens = {}
     for r in csv.DictReader(open(canon)):
@@ -113,7 +113,7 @@ def main():
         g = f["geometry"]; ring = np.array(g["coordinates"][0] if g["type"] == "Polygon" else max((p[0] for p in g["coordinates"]), key=len), float)
         if b not in fp or len(ring) > len(fp[b]): fp[b] = ring
     # unclassified list from crosswalk
-    uncls = [r["building_id"].replace("DEBY_LOD2_", "") for r in csv.DictReader(open(REPO/"docs/bucket_crosswalk.csv")) if r["new_class"] == "미분류"]
+    uncls = [r["building_id"].replace("DEBY_LOD2_", "") for r in csv.DictReader(open(REPO/"docs/archive/bucket_crosswalk/v1/tables/bucket_crosswalk.csv")) if r["new_class"] == "미분류"]
     print(f"unclassified: {len(uncls)} -> {uncls}")
     # AOI bbox from unclassified footprints
     allr = np.vstack([fp[b] for b in uncls if b in fp])

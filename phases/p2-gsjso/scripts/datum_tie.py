@@ -40,8 +40,8 @@ RAW_SCRIPT = ROOT / "phases/p2-gsjso/scripts/tum_mob_raw_to_npz.py"
 FOOTPRINTS = ROOT / "results/tum_transfer/analysis/footprints_aoi.geojson"
 STATUS_114 = ROOT / "phases/p0-audit/runs/w2_1d_bucket_relabel_20260612_final/docs/W2_1c_paired_status.csv"
 GCG_GRID = ROOT / "phases/p0-audit/data/raw/geoid/de_bkg_gcg2016.tif"
-DOC = ROOT / "docs/datum_tie.md"
-CSV_OUT = ROOT / "docs/datum_tie_patches.csv"
+DOC = ROOT / "docs/experiments/datum_tie/reports/datum_tie.md"
+CSV_OUT = ROOT / "docs/experiments/datum_tie/tables/datum_tie_patches.csv"
 FIG_DIR = ROOT / "docs/figs/datum_tie"
 
 AOI_LON = 11.568962805555556
@@ -731,7 +731,7 @@ def write_doc(rows: list[PatchRow], summary: dict[str, Any], run_dir: Path) -> N
         "",
         f"- GCG2016(AOI): {summary['gcg_reference_m']:.3f} m (grid 직접 판독 {45.6627006530762:.3f} m, 문서 표기는 45.7 m 반올림).",
         f"- EGM96(AOI): {summary['egm96_aoi_m']:.3f} m (`pyproj` EPSG:4326+5773 -> EPSG:4979, lon/lat={AOI_LON:.6f}/{AOI_LAT:.6f}).",
-        f"- LS ζ 참고: {summary['ls_zeta_m']:.3f} ± 0.429 m (`docs/projection_zeta_ls.md`).",
+        f"- LS ζ 참고: {summary['ls_zeta_m']:.3f} ± 0.429 m (`docs/experiments/projection_zeta_ls/reports/projection_zeta_ls.md`).",
         f"- 서류상 기대 Delta: 카메라/원본 Photogrammetry가 EGM96 해수면 선언이면 `N_EGM96 - GCG2016 = {summary['paper_expected_delta_if_camera_egm96_m']:.3f} m`.",
         "",
         "## 2. 같은 표면 3D 실측 비교",
@@ -791,7 +791,7 @@ def write_doc(rows: list[PatchRow], summary: dict[str, Any], run_dir: Path) -> N
             "|---|---:|---|",
             f"| GCG2016(AOI) | {summary['gcg_reference_m']:.3f} | 공식 DHHN2016 변환 기준, grid 판독 45.663 m |",
             "| 관례 | 48.000 | 기존 파이프라인 상수 |",
-            f"| LS ζ 참고 | {summary['ls_zeta_m']:.3f} | `docs/projection_zeta_ls.md`의 사진 대응 LS 참고값 |",
+            f"| LS ζ 참고 | {summary['ls_zeta_m']:.3f} | `docs/experiments/projection_zeta_ls/reports/projection_zeta_ls.md`의 사진 대응 LS 참고값 |",
             f"| 실측 유효 ζ | {summary['effective_zeta_m']:.3f} | 이번 점군 대 점군 Delta 중앙값 반영 |",
             f"| 서류상 EGM96 기대 Delta | {summary['paper_expected_delta_if_camera_egm96_m']:.3f} | EGM96 - GCG2016 |",
             f"| 실측 Delta | {summary['delta_median_m']:.3f} | 전체 패치 중앙값 |",

@@ -28,30 +28,33 @@
     "phases/RUN_CATALOG.csv"
   ],
   "path_migration_manifests": [
-    "docs/catalog/migrations/BOUNDARY_MAP_PATHS.csv"
+    "docs/catalog/migrations/BOUNDARY_MAP_PATHS.csv",
+    "docs/catalog/migrations/DOCUMENT_FAMILIES_WAVE1_PATHS.csv"
   ],
   "inventory_control_paths": [
     "docs/README.md",
     "docs/catalog/families/BOUNDARY_MAP.md",
     "docs/catalog/migrations/BOUNDARY_MAP_PATHS.csv",
     "docs/catalog/migrations/BOUNDARY_MAP_SCRIPT_PATHS.csv",
+    "docs/catalog/migrations/DOCUMENT_FAMILIES_WAVE1_PATHS.csv",
+    "docs/catalog/families/DOCUMENT_FAMILIES_WAVE1.md",
     "docs/catalog/TOP_LEVEL_DIRECTORY_CONTRACT.md",
     "docs/catalog/TARGET_INFORMATION_ARCHITECTURE.md",
     "phases/README.md"
   ],
   "canonical_documents": [
     {
-      "path": "docs/RESEARCH_CONTEXT.md",
+      "path": "docs/research/RESEARCH_CONTEXT.md",
       "canonical_for": "research_context",
       "reason": "Root AGENTS.md names this as a primary research-context document."
     },
     {
-      "path": "docs/EXPERIMENT_PLAN.md",
+      "path": "docs/research/EXPERIMENT_PLAN.md",
       "canonical_for": "experiment_plan",
       "reason": "Root AGENTS.md names this as a primary experiment-plan document."
     },
     {
-      "path": "docs/사전등록서_품질축본선_승인잠금v4_20260721.md",
+      "path": "docs/research/preregistration/quality_axis/사전등록서_품질축본선_승인잠금v4_20260721.md",
       "canonical_for": "quality_axis_main_preregistration_lock",
       "reason": "Root AGENTS.md explicitly defines this v4 file as the approval lock."
     }

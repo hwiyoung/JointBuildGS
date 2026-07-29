@@ -84,7 +84,7 @@ BASELINE_CITYJSON = (
     / "phases/p0-audit/runs/w2_1_roofer_default_20260612_152729"
     / "cityjson/dim_roofer.city.json"
 )
-BASELINE_SCORES = REPO / "docs/qs_rescore_scores.csv"
+BASELINE_SCORES = REPO / "docs/experiments/qs_rescore/tables/qs_rescore_scores.csv"
 LOD2_DIR = REPO / "phases/p0-audit/data/raw/lod2"
 W2_SCRIPT = REPO / "phases/p0-audit/scripts/08_roofer_w2.py"
 SMOOTH_SCRIPT = REPO / "phases/p2-gsjso/scripts/overseg_smooth.py"

@@ -801,7 +801,7 @@ def write_report(
         "",
         f"- dense: `{DENSE_MODEL_ID}`",
         f"- GS fixed: `{FIXED_MODEL_ID}`",
-        "- GS oracle: `docs/qs_rescore_oracle_audit.csv`의 기존 "
+        "- GS oracle: `docs/experiments/qs_rescore/tables/qs_rescore_oracle_audit.csv`의 기존 "
         "`per_building_oracle_upper_bound_not_fixed_condition` 주소.",
         "",
         "판정·게이트 해석 없음.",
@@ -892,7 +892,7 @@ def write_manifest(
         "gt_role": "LoD2 reference used for scoring, XY completeness, figures, and self-check only",
         "interpretation_or_verdict": None,
         "source_sha256": {
-            **{"docs/qs_rescore_scores.csv@before_backfill": score_before_sha256},
+            **{"docs/experiments/qs_rescore/tables/qs_rescore_scores.csv@before_backfill": score_before_sha256},
             **{
                 rel(path): sha256_file(path)
                 for path in sorted(source_files, key=lambda value: rel(value))

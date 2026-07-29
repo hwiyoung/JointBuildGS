@@ -94,7 +94,7 @@ class RepoInventoryUnitTests(unittest.TestCase):
         self.assertFalse(
             repo_inventory.is_document_scope("docs/catalog/DOCUMENT_CATALOG.csv", config)
         )
-        self.assertTrue(repo_inventory.is_document_scope("docs/RESEARCH_CONTEXT.md", config))
+        self.assertTrue(repo_inventory.is_document_scope("docs/research/RESEARCH_CONTEXT.md", config))
 
     def test_filename_candidate_lineage_is_not_an_approval(self):
         rows = []
@@ -208,6 +208,46 @@ class RepoInventoryUnitTests(unittest.TestCase):
             )
             self.assertEqual(resolved[0].target_exists, "yes")
             self.assertEqual(resolved[0].confidence, "text+path_migration")
+
+    def test_path_migration_resolves_relative_link_from_historical_source_directory(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            table = root / "docs" / "experiments" / "family" / "tables" / "table.csv"
+            table.parent.mkdir(parents=True)
+            table.write_bytes(b"id,value\nA,1\n")
+            report = root / "docs" / "experiments" / "family" / "reports" / "report.md"
+            report.parent.mkdir(parents=True)
+            report.write_text("[table](table.csv)\n", encoding="utf-8")
+            table_digest = hashlib.sha256(table.read_bytes()).hexdigest()
+            report_digest = hashlib.sha256(report.read_bytes()).hexdigest()
+            migrations = {
+                "docs/report.md": {
+                    "old_path": "docs/report.md",
+                    "new_path": "docs/experiments/family/reports/report.md",
+                    "sha256": report_digest,
+                },
+                "docs/table.csv": {
+                    "old_path": "docs/table.csv",
+                    "new_path": "docs/experiments/family/tables/table.csv",
+                    "sha256": table_digest,
+                },
+            }
+            relation = repo_inventory.Relation(
+                "docs/experiments/family/reports/report.md",
+                "references",
+                "docs/experiments/family/reports/table.csv",
+                "no",
+                "table.csv",
+                "explicit",
+                1,
+            )
+            resolved = repo_inventory.apply_path_migrations(root, [relation], migrations)
+            self.assertEqual(resolved[0].target_path, "docs/experiments/family/tables/table.csv")
+            self.assertEqual(resolved[0].target_exists, "yes")
+            self.assertEqual(
+                resolved[0].confidence,
+                "explicit+historical_source_path+path_migration",
+            )
 
 
 if __name__ == "__main__":

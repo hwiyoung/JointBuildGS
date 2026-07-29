@@ -840,7 +840,7 @@ def write_report(path: Path, rows: list[dict], args, provenance: dict[str, str])
         "",
         "## 입력·규약",
         "",
-        f"- 모집단: `docs/population_aux_v4.csv`의 199동 전수, arm 3종 = raw_dense(DIM) · raw_acmp · raw_lidar(상한).",
+        f"- 모집단: `docs/experiments/population_aux/tables/population_aux_v4.csv`의 199동 전수, arm 3종 = raw_dense(DIM) · raw_acmp · raw_lidar(상한).",
         f"- Footprint: `{args.footprints}` (EPSG:25832, 199 features).",
         f"- Status 대조: `{provenance['status_path']}` ({provenance['status_note']}).",
         f"- 기존 클립: `phases/p0-audit/runs/mob_eval/raw_{{dense,acmp,lidar}}/<ID>_orig_classified.las`.",
@@ -961,8 +961,8 @@ def write_versions(path: Path, args, provenance: dict[str, str], rows: list[dict
     lines += [
         "",
         "outputs:",
-        "  docs/pointcloud_attributes_v1.csv",
-        "  docs/W_pointcloud_attributes.md",
+        "  docs/archive/pointcloud_attributes/v1/tables/pointcloud_attributes_v1.csv",
+        "  docs/experiments/pointcloud_attributes/reports/W_pointcloud_attributes.md",
         "  docs/figs/pointcloud_attributes_v1/arm_distribution.png",
         "  docs/figs/pointcloud_attributes_v1/als_scatter.png",
     ]
@@ -971,13 +971,13 @@ def write_versions(path: Path, args, provenance: dict[str, str], rows: list[dict
 
 def build_argparser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--population", default="docs/population_aux_v4.csv")
+    ap.add_argument("--population", default="docs/experiments/population_aux/tables/population_aux_v4.csv")
     ap.add_argument("--status", default="docs/building_reconstruction_status.csv")
     ap.add_argument("--footprints", default="phases/p0-audit/data/work/w2/footprints_scene_aoi.gpkg")
     ap.add_argument("--lod2-gml-dir", default="phases/p0-audit/data/raw/lod2")
     ap.add_argument("--acmp-fallback-laz", default="results/tum_transfer/mob_analysis/p0c_step2/acmp_classified.laz")
-    ap.add_argument("--out-csv", default="docs/pointcloud_attributes_v1.csv")
-    ap.add_argument("--out-report", default="docs/W_pointcloud_attributes.md")
+    ap.add_argument("--out-csv", default="docs/archive/pointcloud_attributes/v1/tables/pointcloud_attributes_v1.csv")
+    ap.add_argument("--out-report", default="docs/experiments/pointcloud_attributes/reports/W_pointcloud_attributes.md")
     ap.add_argument("--fig-dir", default="docs/figs/pointcloud_attributes_v1")
     ap.add_argument("--versions", default=f"runs/{RUN_ID}/versions.txt")
     ap.add_argument("--grid-cell-m", type=float, default=0.5)

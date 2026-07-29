@@ -1173,7 +1173,7 @@ def write_report(
         "",
         "## 입력·결측 규약",
         "",
-        "- attr 입력: `docs/pointcloud_attributes_v1_2.csv`.",
+        "- attr 입력: `docs/archive/pointcloud_attributes/v1_2/tables/pointcloud_attributes_v1_2.csv`.",
         "- 결과 정본 런: w2_1. DIM·LiDAR는 각 199동 전수. ACMP는 `gen_8way` 64동 보조 대장.",
         "- 조립 성공 변수는 status CSV의 `has_lod22`를 썼다. 이는 §3.2의 `roofer_ok·roof_surfaces>0` 정의를 W2 status에서 건물 단위로 저장한 열이다.",
         "- no_points 행은 회귀 입력에서 밀도 0·커버리지 0으로 재코딩했다. 노이즈·M3C2·부유·라벨 미정의는 결측 유지, 모델별 complete-case n을 표에 기록했다.",
@@ -1283,7 +1283,7 @@ def write_report(
         )
     lines += [
         "",
-        "감도 계수 전수는 `docs/attr_outcome_regression_sensitivity_v1.csv`에 기록했다.",
+        "감도 계수 전수는 `docs/experiments/attr_outcome_regression/tables/attr_outcome_regression_sensitivity_v1.csv`에 기록했다.",
         "",
         "일반 추정(OLS)과 로버스트 추정(Huber) 부호 불일치:",
         "",
@@ -1314,7 +1314,7 @@ def write_report(
         )
     lines += [
         "",
-        "영향점 제외 재추정 계수는 `docs/attr_outcome_regression_coefficients_v1.csv`의 `*_cook_excluded` variant에 기록했다. 영향점 목록 전수는 `docs/attr_outcome_regression_diagnostics_v1.csv`에 기록했다.",
+        "영향점 제외 재추정 계수는 `docs/experiments/attr_outcome_regression/tables/attr_outcome_regression_coefficients_v1.csv`의 `*_cook_excluded` variant에 기록했다. 영향점 목록 전수는 `docs/experiments/attr_outcome_regression/tables/attr_outcome_regression_diagnostics_v1.csv`에 기록했다.",
         "",
         "## 층화 병기",
         "",
@@ -1348,9 +1348,9 @@ def write_report(
         "## 산출 파일",
         "",
         f"- 회귀 입력 스냅샷: `{out_paths['snapshot']}`",
-        "- 계수 전수: `docs/attr_outcome_regression_coefficients_v1.csv`",
-        "- 영향점 전수: `docs/attr_outcome_regression_diagnostics_v1.csv`",
-        "- 감도 전수: `docs/attr_outcome_regression_sensitivity_v1.csv`",
+        "- 계수 전수: `docs/experiments/attr_outcome_regression/tables/attr_outcome_regression_coefficients_v1.csv`",
+        "- 영향점 전수: `docs/experiments/attr_outcome_regression/tables/attr_outcome_regression_diagnostics_v1.csv`",
+        "- 감도 전수: `docs/experiments/attr_outcome_regression/tables/attr_outcome_regression_sensitivity_v1.csv`",
         f"- versions: `{out_paths['versions']}`",
     ]
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -1419,16 +1419,16 @@ def source_fingerprints(repo: Path, args) -> dict[str, tuple[str, str]]:
 
 def build_argparser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--attr-csv", default="docs/pointcloud_attributes_v1_2.csv")
-    ap.add_argument("--population", default="docs/population_aux_v4.csv")
+    ap.add_argument("--attr-csv", default="docs/archive/pointcloud_attributes/v1_2/tables/pointcloud_attributes_v1_2.csv")
+    ap.add_argument("--population", default="docs/experiments/population_aux/tables/population_aux_v4.csv")
     ap.add_argument("--manual-judgments", default="docs/manual_review_judgments.csv")
     ap.add_argument("--w2-status", default="phases/p0-audit/runs/w2_1_roofer_default_20260612_152729/building_reconstruction_status.csv")
     ap.add_argument("--gen-8way", default="results/tum_transfer/mob/overseg_lever/gen_8way.csv")
-    ap.add_argument("--out-report", default="docs/W_attr_outcome_regression.md")
+    ap.add_argument("--out-report", default="docs/experiments/attr_outcome_regression/reports/W_attr_outcome_regression.md")
     ap.add_argument("--out-snapshot", default="docs/regression_input_snapshot.csv")
-    ap.add_argument("--out-coefs", default="docs/attr_outcome_regression_coefficients_v1.csv")
-    ap.add_argument("--out-diag", default="docs/attr_outcome_regression_diagnostics_v1.csv")
-    ap.add_argument("--out-sens", default="docs/attr_outcome_regression_sensitivity_v1.csv")
+    ap.add_argument("--out-coefs", default="docs/experiments/attr_outcome_regression/tables/attr_outcome_regression_coefficients_v1.csv")
+    ap.add_argument("--out-diag", default="docs/experiments/attr_outcome_regression/tables/attr_outcome_regression_diagnostics_v1.csv")
+    ap.add_argument("--out-sens", default="docs/experiments/attr_outcome_regression/tables/attr_outcome_regression_sensitivity_v1.csv")
     ap.add_argument("--fig-dir", default="docs/figs/attr_outcome_regression_v1")
     ap.add_argument("--versions", default=f"runs/{RUN_ID}/versions.txt")
     return ap

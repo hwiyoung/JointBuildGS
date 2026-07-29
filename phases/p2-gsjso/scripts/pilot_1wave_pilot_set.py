@@ -36,7 +36,7 @@ DEFAULT_OUTPUT_DIR = REPO / "phases/p2-gsjso/runs" / RUN_ID
 CSV_NAME = "pilot_1wave_pilot_set.csv"
 MANIFEST_NAME = "pilot_1wave_pilot_set_manifest.json"
 
-PROTOCOL = REPO / "docs/사전등록서_품질축본선_승인잠금v4_20260721.md"
+PROTOCOL = REPO / "docs/research/preregistration/quality_axis/사전등록서_품질축본선_승인잠금v4_20260721.md"
 POPULATION = REPO / "docs/regression_input_snapshot.csv"
 STATUS = (
     REPO
@@ -44,8 +44,8 @@ STATUS = (
     / "building_reconstruction_status.csv"
 )
 FOOTPRINTS = REPO / "results/tum_transfer/analysis/footprints_aoi.geojson"
-BASELINE_SCORES = REPO / "docs/qs_baseline178_scores.csv"
-BASELINE_MANIFEST = REPO / "docs/qs_baseline178_manifest.json"
+BASELINE_SCORES = REPO / "docs/experiments/qs_baseline178/tables/qs_baseline178_scores.csv"
+BASELINE_MANIFEST = REPO / "docs/experiments/qs_baseline178/manifests/qs_baseline178_manifest.json"
 PRIOR_C001_MANIFEST = (
     REPO / "results/tum_transfer/e5_pilot/C001/C001_train_prep_manifest.json"
 )
@@ -81,7 +81,7 @@ CORE10 = (
 # current filesystem.  Full-file verification happens only after the ID lock
 # for tables that physically contain RMS columns.
 EXPECTED_SHA256 = {
-    "docs/사전등록서_품질축본선_승인잠금v4_20260721.md":
+    "docs/research/preregistration/quality_axis/사전등록서_품질축본선_승인잠금v4_20260721.md":
         "39b7b641a324dda7b5ea9d01906407223b75443d62b6d71580c3d598566464ec",
     "docs/regression_input_snapshot.csv":
         "3cabed76b37625fdf8f9a72ed5c5b1f7c90ba23a839d6f1a61fc3727870cee82",
@@ -89,9 +89,9 @@ EXPECTED_SHA256 = {
         "4412ee47f8665e1a12663629dd66f9c9612f2e9adca54be38c188f2bc521a9b6",
     "results/tum_transfer/analysis/footprints_aoi.geojson":
         "ca7f5b13a52368e1d2ac47b77cc78f12887bad4d598d122ad57b882eb4920a82",
-    "docs/qs_baseline178_scores.csv":
+    "docs/experiments/qs_baseline178/tables/qs_baseline178_scores.csv":
         "a3b89f1907e6e61aead702efe6b742b5c012615df77d90bdb2a859b5418d85ab",
-    "docs/qs_baseline178_manifest.json":
+    "docs/experiments/qs_baseline178/manifests/qs_baseline178_manifest.json":
         "039623166b1be724b67a565d463de148d551db0c2e52c2ee5d88e3e5e8a0ad38",
     "results/tum_transfer/e5_pilot/C001/C001_train_prep_manifest.json":
         "eca68a7890116c52557ab467361b58c4c784047807f9bee857a2517ac0b40b58",

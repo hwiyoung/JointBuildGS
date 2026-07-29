@@ -139,7 +139,7 @@ def main():
     sr = json.load(open(DATA/"work/opf/opf/scene_reference_frame.json"))
     W, H, params = parse_cam_model(DATA/"work/colmap/sparse/0/cameras.txt")
     cams = parse_cameras(DATA/"work/colmap/sparse/0/images.txt", sr)
-    v3 = {r["building_id"].replace("DEBY_LOD2_", ""): r for r in __import__("csv").DictReader(open(REPO/"docs/population_aux_v3.csv"))}
+    v3 = {r["building_id"].replace("DEBY_LOD2_", ""): r for r in __import__("csv").DictReader(open(REPO/"docs/archive/population_aux/v3/tables/population_aux_v3.csv"))}
     bview = json.load(open(REPO/"results/tum_transfer/mob/overseg_lever/population_aux_v3_bestview.json"))
     bview = {k.replace("DEBY_LOD2_", ""): v for k, v in bview.items()}
     cam_by = {c.name: c for c in cams}

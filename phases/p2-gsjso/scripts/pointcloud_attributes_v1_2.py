@@ -878,8 +878,8 @@ def write_versions(path: Path, args, rows: list[dict[str, object]], gate: dict[s
         f"  label_proxy_roof_minus_m: {args.label_proxy_roof_minus_m}",
         "",
         "outputs:",
-        "  docs/pointcloud_attributes_v1_2.csv",
-        "  docs/W_pointcloud_attributes.md",
+        "  docs/archive/pointcloud_attributes/v1_2/tables/pointcloud_attributes_v1_2.csv",
+        "  docs/experiments/pointcloud_attributes/reports/W_pointcloud_attributes.md",
         "  docs/W_canonical_run_delta.csv",
         "  docs/figs/pointcloud_attributes_v1_2/arm_distribution.png",
         "  docs/figs/pointcloud_attributes_v1_2/als_scatter.png",
@@ -890,12 +890,12 @@ def write_versions(path: Path, args, rows: list[dict[str, object]], gate: dict[s
 
 def build_argparser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--population", default="docs/population_aux_v4.csv")
+    ap.add_argument("--population", default="docs/experiments/population_aux/tables/population_aux_v4.csv")
     ap.add_argument("--footprints", default="phases/p0-audit/data/work/w2/footprints_scene_aoi.gpkg")
     ap.add_argument("--lod2-gml-dir", default="phases/p0-audit/data/raw/lod2")
-    ap.add_argument("--v1-1-csv", default="docs/pointcloud_attributes_v1_1.csv")
-    ap.add_argument("--out-csv", default="docs/pointcloud_attributes_v1_2.csv")
-    ap.add_argument("--out-report", default="docs/W_pointcloud_attributes.md")
+    ap.add_argument("--v1-1-csv", default="docs/archive/pointcloud_attributes/v1_1/tables/pointcloud_attributes_v1_1.csv")
+    ap.add_argument("--out-csv", default="docs/archive/pointcloud_attributes/v1_2/tables/pointcloud_attributes_v1_2.csv")
+    ap.add_argument("--out-report", default="docs/experiments/pointcloud_attributes/reports/W_pointcloud_attributes.md")
     ap.add_argument("--out-delta-csv", default="docs/W_canonical_run_delta.csv")
     ap.add_argument("--fig-dir", default="docs/figs/pointcloud_attributes_v1_2")
     ap.add_argument("--versions", default=f"runs/{RUN_ID}/versions.txt")

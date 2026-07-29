@@ -215,7 +215,7 @@ def main():
     out = REPO/"results/tum_transfer/mob/overseg_lever/projection_gate.csv"
     with open(out, "w", newline="") as fo:
         w = csv.DictWriter(fo, fieldnames=cols); w.writeheader(); w.writerows(rows)
-    import shutil; shutil.copy(out, REPO/"docs/projection_gate.csv")
+    import shutil; shutil.copy(out, REPO/"docs/archive/projection_gate/v1/tables/projection_gate.csv")
     # summary
     def med(key, filt=lambda r: True):
         v = [float(r[key]) for r in rows if r[key] != "" and filt(r)]

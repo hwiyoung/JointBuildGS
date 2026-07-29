@@ -18,7 +18,7 @@ P0가 보인 점군 중간표현의 약점(무텍스처·노이즈 → 구조화
 inter `L_structure`)하여 우회한다. P2-spike는 이 공동 최적화 기계장치가 **실제로 surface
 evidence를 개선하는지**를 작은 장면에서 최소 비용으로 검증한다(go/no-go).
 
-## 2. GS-JSO 맥락 요약 (상세: 루트 `docs/RESEARCH_CONTEXT.md`·`docs/EXPERIMENT_PLAN.md`)
+## 2. GS-JSO 맥락 요약 (상세: 루트 `docs/research/RESEARCH_CONTEXT.md`·`docs/research/EXPERIMENT_PLAN.md`)
 
 **손실**
 ```

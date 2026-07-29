@@ -182,10 +182,10 @@ import json
 from pathlib import Path
 
 paths = [
-    Path("docs/qs_rescore_inventory.csv"),
-    Path("docs/qs_rescore_scores.csv"),
-    Path("docs/qs_rescore_pairs.csv"),
-    Path("docs/qs_rescore_summary.csv"),
+    Path("docs/experiments/qs_rescore/tables/qs_rescore_inventory.csv"),
+    Path("docs/experiments/qs_rescore/tables/qs_rescore_scores.csv"),
+    Path("docs/experiments/qs_rescore/tables/qs_rescore_pairs.csv"),
+    Path("docs/experiments/qs_rescore/tables/qs_rescore_summary.csv"),
     Path("docs/figs/qs_rescore/qs_rescore_face_count_scatter.png"),
     Path("docs/figs/qs_rescore/qs_rescore_rms_pairs.png"),
     Path("docs/figs/qs_rescore/qs_rescore_topview_examples.png"),
@@ -212,14 +212,14 @@ PY
     write_status "A" "failed" "output QA failed"
     return 1
   fi
-  issue "OVN-A measurement complete: manifest_sha256=$(sha phases/p2-gsjso/runs/20260716_qs_rescore/manifest.json); inventory_sha256=$(sha docs/qs_rescore_inventory.csv); pairs_sha256=$(sha docs/qs_rescore_pairs.csv); learning_runs_started=0"
+  issue "OVN-A measurement complete: manifest_sha256=$(sha phases/p2-gsjso/runs/20260716_qs_rescore/manifest.json); inventory_sha256=$(sha docs/experiments/qs_rescore/tables/qs_rescore_inventory.csv); pairs_sha256=$(sha docs/experiments/qs_rescore/tables/qs_rescore_pairs.csv); learning_runs_started=0"
   if ! commit_paths \
     "OVN-A: rescore C001 quality inventory" \
     docs/issues.md \
-    docs/qs_rescore_inventory.csv \
-    docs/qs_rescore_scores.csv \
-    docs/qs_rescore_pairs.csv \
-    docs/qs_rescore_summary.csv \
+    docs/experiments/qs_rescore/tables/qs_rescore_inventory.csv \
+    docs/experiments/qs_rescore/tables/qs_rescore_scores.csv \
+    docs/experiments/qs_rescore/tables/qs_rescore_pairs.csv \
+    docs/experiments/qs_rescore/tables/qs_rescore_summary.csv \
     docs/figs/qs_rescore \
     phases/p2-gsjso/runs/20260716_qs_rescore; then
     write_status "A" "partial" "outputs complete; commit or push failed"
