@@ -106,7 +106,29 @@ def load_config(path: Path) -> dict[str, Any]:
         config = json.load(handle)
     if config.get("schema_version") != 1:
         raise ValueError("repo inventory config schema_version must be 1")
+    reviewed_document_map(config)
     return config
+
+
+def reviewed_document_map(config: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    allowed_statuses = {"canonical", "supporting", "superseded", "retracted", "draft", "temporary"}
+    reviewed: dict[str, dict[str, Any]] = {}
+    for family in config.get("reviewed_family_maps", []):
+        family_id = str(family["family_id"])
+        decision_record = str(family["decision_record"])
+        for document in family.get("documents", []):
+            item = dict(document)
+            path = str(item["path"])
+            status = str(item["status"])
+            if status not in allowed_statuses:
+                raise ValueError(f"unsupported reviewed status for {path}: {status}")
+            if path in reviewed:
+                raise ValueError(f"duplicate reviewed document path: {path}")
+            item["reviewed_family_id"] = family_id
+            item["decision_record"] = decision_record
+            item["reviewed_on"] = str(family.get("reviewed_on", ""))
+            reviewed[path] = item
+    return reviewed
 
 
 def find_repo_root(start: Path) -> Path:
@@ -482,6 +504,44 @@ def initial_status(path: str, canonical: dict[str, dict[str, str]]) -> tuple[str
     return "supporting", "default_inventory", "", "No explicit canonical or lifecycle marker was found."
 
 
+def add_reviewed_relations(
+    repo_root: Path,
+    reviewed: dict[str, dict[str, Any]],
+    relations: list[Relation],
+) -> None:
+    for path, item in reviewed.items():
+        successor = item.get("superseded_by")
+        if successor:
+            target = str(successor)
+            relations.append(
+                Relation(
+                    target,
+                    "supersedes",
+                    path,
+                    "yes" if (repo_root / path).exists() else "no",
+                    str(item["decision_record"]),
+                    "reviewed_family_map",
+                    "",
+                )
+            )
+        derived_from = item.get("derived_from", [])
+        if isinstance(derived_from, str):
+            derived_from = [derived_from]
+        for source in derived_from:
+            source_path = str(source)
+            relations.append(
+                Relation(
+                    path,
+                    "derived_from",
+                    source_path,
+                    "yes" if (repo_root / source_path).exists() else "no",
+                    str(item["decision_record"]),
+                    "reviewed_family_map",
+                    "",
+                )
+            )
+
+
 def add_version_candidates(rows: list[dict[str, Any]], relations: list[Relation]) -> None:
     groups: dict[tuple[str, str, str], list[dict[str, Any]]] = defaultdict(list)
     for row in rows:
@@ -504,7 +564,7 @@ def add_version_candidates(rows: list[dict[str, Any]], relations: list[Relation]
             parsed = version_tuple(row["version"])
             if row["artifact_kind"] == "figure":
                 continue
-            if row["proposed_status"] in {"canonical", "retracted", "draft", "temporary"}:
+            if row["status_source"] in {"explicit_repo_rule", "explicit_metadata", "reviewed_family_map"}:
                 continue
             if parsed == highest:
                 row["proposed_status"] = "canonical_candidate"
@@ -673,23 +733,46 @@ def target_bucket(family_id: str, rows: Sequence[dict[str, Any]]) -> str:
     return f"docs/experiments/{family_id}/"
 
 
-def write_canonical_map(path: Path, rows: list[dict[str, Any]], run_rows: list[dict[str, Any]]) -> None:
+def write_canonical_map(
+    path: Path,
+    rows: list[dict[str, Any]],
+    run_rows: list[dict[str, Any]],
+    config: dict[str, Any],
+) -> None:
     families: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for row in rows:
         families[row["family_id"]].append(row)
-    explicit = [row for row in rows if row["proposed_status"] == "canonical"]
+    explicit = [row for row in rows if row["status_source"] == "explicit_repo_rule"]
+    reviewed_paths = set(reviewed_document_map(config))
     candidate_families = sorted(
         (
             item
             for item in families.items()
-            if len(item[1]) > 1
-            or any(row["proposed_status"] in {"canonical", "canonical_candidate"} for row in item[1])
+            if not all(row["path"] in reviewed_paths for row in item[1])
+            and (
+                len(item[1]) > 1
+                or any(row["proposed_status"] in {"canonical", "canonical_candidate"} for row in item[1])
+            )
         ),
         key=lambda item: (-len(item[1]), item[0]),
     )
-    boundary_rows = sorted(families.get("boundary_map", []), key=lambda row: row["path"])
+    rows_by_path = {row["path"]: row for row in rows}
+    boundary_review = next(
+        (family for family in config.get("reviewed_family_maps", []) if family["family_id"] == "boundary_map"),
+        None,
+    )
+    boundary_rows = sorted(
+        (rows_by_path[item["path"]] for item in boundary_review.get("documents", []) if item["path"] in rows_by_path)
+        if boundary_review
+        else families.get("boundary_map", []),
+        key=lambda row: row["path"],
+    )
     boundary_runs = sorted(
-        (row for row in run_rows if "boundary_map" in row["run_id"].lower()),
+        (
+            row
+            for row in run_rows
+            if "boundary_map" in row["run_id"].lower() or "anchor_census" in row["run_id"].lower()
+        ),
         key=lambda row: row["run_id"],
     )
 
@@ -710,6 +793,31 @@ def write_canonical_map(path: Path, rows: list[dict[str, Any]], run_rows: list[d
         )
     else:
         lines.append("No explicit canonical seeds were configured.")
+
+    lines.extend(["", "## Reviewed family maps", ""])
+    reviewed_table: list[tuple[Any, ...]] = []
+    for family in config.get("reviewed_family_maps", []):
+        documents = family.get("documents", [])
+        counts = Counter(str(item["status"]) for item in documents)
+        reviewed_table.append(
+            (
+                family["family_id"],
+                f"`{family['decision_record']}`",
+                family.get("reviewed_on", ""),
+                counts["canonical"],
+                counts["supporting"],
+                counts["superseded"],
+            )
+        )
+    if reviewed_table:
+        lines.append(
+            markdown_table(
+                reviewed_table,
+                ["Family", "Decision record", "Reviewed", "Canonical", "Supporting", "Superseded"],
+            )
+        )
+    else:
+        lines.append("No family-level review has been completed.")
 
     lines.extend(
         [
@@ -735,10 +843,13 @@ def write_canonical_map(path: Path, rows: list[dict[str, Any]], run_rows: list[d
         )
     lines.append(markdown_table(family_table, ["Family", "Files", "Versions seen", "Canonical candidates", "Target owner path"]))
 
-    lines.extend(["", "## First migration pilot: boundary_map", ""])
-    lines.append(
-        "This family is the recommended pilot because it crosses narrative reports, tables, manifests, figures, scripts, and run receipts. Inventory does not approve a winner or move these paths."
-    )
+    lines.extend(["", "## Reviewed pilot: boundary_map", ""])
+    if boundary_review:
+        lines.append(
+            f"The lifecycle decisions below are reviewed in `{boundary_review['decision_record']}`. No file was moved, renamed, deleted, or scientifically reinterpreted."
+        )
+    else:
+        lines.append("This family remains an unreviewed migration pilot.")
     lines.append("")
     if boundary_rows:
         lines.append(
@@ -753,7 +864,7 @@ def write_canonical_map(path: Path, rows: list[dict[str, Any]], run_rows: list[d
                     )
                     for row in boundary_rows
                 ],
-                ["Current path", "Version", "Kind", "Proposed status", "Referenced run IDs"],
+                ["Current path", "Version", "Kind", "Lifecycle status", "Referenced run IDs"],
             )
         )
     else:
@@ -773,7 +884,7 @@ def write_canonical_map(path: Path, rows: list[dict[str, Any]], run_rows: list[d
             "",
             "## Approval rule",
             "",
-            "Before moving a family, a human reviewer must approve one `canonical_for` mapping, every supersession/retraction edge, the old-to-new path manifest, and the reference rewrite preview. The migration is a separate task and commit.",
+            "Before moving any family, approve the old-to-new path manifest and reference rewrite preview. Canonical review and path migration remain separate tasks and commits.",
             "",
         ]
     )
@@ -822,7 +933,7 @@ def write_issues(
             ["Measure", "Count"],
         ),
         "",
-        "### Proposed document statuses",
+        "### Catalog document statuses",
         "",
         markdown_table(sorted(status_counts.items()), ["Status", "Files"]),
         "",
@@ -922,6 +1033,7 @@ def build_inventory(repo_root: Path, config: dict[str, Any]) -> tuple[list[dict[
     scoped_paths = sorted(path for path in tracked_paths if is_document_scope(path, config))
     oldest, newest = history_map(repo_root, set(scoped_paths))
     canonical = {item["path"]: item for item in config.get("canonical_documents", [])}
+    reviewed = reviewed_document_map(config)
     text_extensions = set(config["text_extensions"])
     max_scan = int(config["max_text_scan_bytes"])
 
@@ -934,8 +1046,14 @@ def build_inventory(repo_root: Path, config: dict[str, Any]) -> tuple[list[dict[
         path_relations, run_ids, truncated, metadata = scan_relations(repo_root, path, text_extensions, max_scan)
         family_id = str(metadata.get("family_id") or family_id_for(path, config))
         status, status_source, canonical_for, status_note = initial_status(path, canonical)
+        if path in reviewed:
+            review = reviewed[path]
+            status = str(review["status"])
+            status_source = "reviewed_family_map"
+            canonical_for = str(review.get("canonical_for", ""))
+            status_note = str(review["reason"])
         metadata_status = str(metadata.get("status", ""))
-        if path not in canonical and metadata_status in {
+        if path not in canonical and path not in reviewed and metadata_status in {
             "canonical",
             "supporting",
             "superseded",
@@ -947,7 +1065,7 @@ def build_inventory(repo_root: Path, config: dict[str, Any]) -> tuple[list[dict[
             status = metadata_status
             status_source = "explicit_metadata"
             status_note = "Lifecycle status declared in machine-readable document metadata."
-        if path not in canonical and metadata.get("canonical_for"):
+        if path not in canonical and path not in reviewed and metadata.get("canonical_for"):
             canonical_for = str(metadata["canonical_for"])
         relations.extend(path_relations)
         run_ids_by_path[path] = run_ids
@@ -993,6 +1111,7 @@ def build_inventory(repo_root: Path, config: dict[str, Any]) -> tuple[list[dict[
             }
         )
 
+    add_reviewed_relations(repo_root, reviewed, relations)
     add_version_candidates(rows, relations)
     inbound = Counter(
         relation.target_path
@@ -1004,6 +1123,7 @@ def build_inventory(repo_root: Path, config: dict[str, Any]) -> tuple[list[dict[
         row["run_ids"] = ";".join(sorted(run_ids_by_path[row["path"]]))
         if (
             row["proposed_status"] == "supporting"
+            and row["status_source"] == "default_inventory"
             and row["inbound_reference_count"] == 0
             and row["document_type"] not in {"guide", "manifest_or_receipt"}
             and row["artifact_kind"] != "figure"
@@ -1087,7 +1207,7 @@ def generate(repo_root: Path, config: dict[str, Any]) -> dict[str, bytes]:
         [relation.__dict__ for relation in relations],
     )
     write_csv(outputs["phases/RUN_CATALOG.csv"], run_fields, run_rows)
-    write_canonical_map(outputs["docs/catalog/CANONICAL_MAP.md"], rows, run_rows)
+    write_canonical_map(outputs["docs/catalog/CANONICAL_MAP.md"], rows, run_rows, config)
     write_issues(
         outputs["docs/catalog/CATALOG_ISSUES.md"],
         rows,

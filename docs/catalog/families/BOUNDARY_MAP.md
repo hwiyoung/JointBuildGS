@@ -1,0 +1,70 @@
+# Boundary map 정본 지도
+
+검토일: 2026-07-29  
+범위: `boundary_map` v1-v4.1 문서, 표, manifest, 그림, 실행 영수증  
+성격: 문서 관리 결정이며 측정값·실험 결과·과학적 판정을 변경하지 않는다.
+
+## 지금 무엇을 봐야 하는가
+
+| 질문 | 정본 |
+|---|---|
+| 현재 178동의 셀 배정과 행별 근거 | `docs/boundary_map_v4_1_ladder.csv` |
+| v4 전체 census의 범위와 결과 설명 | `docs/W_anchor_census_boundary_map_v4_summary_20260720.md` |
+| v4.1에서 바뀐 9동과 보강 한계 설명 | `docs/W_anchor_census_supplement_boundary_map_v4_1_summary_20260720.md` |
+| v4 본 측정의 재현·hash 계보 | `docs/boundary_map_v4_manifest.json` |
+| v4.1 보강의 재현·불변성·low-independence 계보 | `docs/anchor_census_supplement_manifest.json` |
+
+읽는 순서는 **v4 본 요약 → v4.1 보강 요약 → v4.1 ladder**다. Manifest는 수치와 출처를 검증할 때 함께 본다. v4.1은 v4 설명 전체를 다시 쓴 문서가 아니라, v4에서 측정불능이던 고정 9동을 보강한 후속이다.
+
+## 핵심 결정
+
+- 현재 배정표는 `boundary_map_v4_1_ladder.csv` 하나다. 이후 Fusion W1 설정과 manifest가 이 경로를 실제 입력으로 사용한다.
+- `boundary_map_v4_ladder.csv`는 v4.1의 직접 입력이자 이전 스냅샷이다. 현재 배정에는 사용하지 않는다.
+- `boundary_map_v4_targets.csv`는 v4 당시 64동 스냅샷이다. v4.1이 9행을 보강했으므로 현재 target/셀 값은 v4.1 ladder를 필터링해 읽는다.
+- `docs/figs/boundary_map_v4/boundary_map_v4_map.png`는 최신 존재 그림이지만 현재 그림은 아니다. v4.1 manifest가 그림을 재생성하지 않았다고 명시하며, 이 그림에는 5동의 셀 변경이 반영되지 않는다.
+- v1-v3 파일은 삭제 대상이 아니다. 이전 규칙·측정·검증을 재현하는 역사 자료로 보존하되 현재 배정 근거로 사용하지 않는다.
+
+## 버전 계보
+
+```text
+v1 (20260716_boundary_map)
+  -> v2 (20260718_boundary_map_v2: canonical 178 재구성)
+    -> v3 (20260719_boundary_map_v3: 재측정·provenance QA)
+      -> v4 (20260720_anchor_census: neutral cell census)
+        -> v4.1 (20260720_anchor_census_supplement: 고정 9동 cache-only 보강)
+```
+
+Git에서도 각 공개 bundle은 순서대로 `52c84f7`, `5c1331b`, `17ab65d`/`1995494`, `2cd9e9d`, `e351c68`에 기록되어 있다. 파일 내용의 manifest 계보도 v3가 v2를, v4가 v3를, v4.1이 v4 ladder와 manifest를 입력으로 기록한다.
+
+## 역할별 상태
+
+| 역할 | canonical | supporting | superseded |
+|---|---|---|---|
+| 현재 배정 | v4.1 ladder | v4/v4.1 measurement tables | v1-v4 ladders, v4 targets |
+| 설명 | v4 본 요약 + v4.1 보강 요약 | - | v2-v3 요약 |
+| provenance | v4 manifest + v4.1 supplement manifest | v1-v3 manifests | - |
+| 검증표 | - | v2 boundary cases, v3 metrics/confusion/conditional targets, census·supplement tables | 직접 후속이 있는 v1-v2 표 |
+| 그림 | 현재 정본 없음 | v4 그림(보강 전임을 명시) | v1-v3 그림 |
+
+개별 파일의 기계 판독 상태와 `supersedes`/`derived_from` edge는 `configs/repo_inventory.json`의 `reviewed_family_maps`에 있으며, 생성된 `docs/catalog/DOCUMENT_CATALOG.csv`와 `docs/catalog/DOCUMENT_LINEAGE.csv`에 반영된다.
+
+## 실행 영수증
+
+| 버전 | 공개 결과 | 주요 실행 영수증 |
+|---|---|---|
+| v1 | `docs/boundary_map_*` | `phases/p2-gsjso/runs/20260716_boundary_map/` |
+| v2 | `docs/boundary_map_v2_*` | `phases/p2-gsjso/runs/20260718_boundary_map_v2/` |
+| v3 | `docs/boundary_map_v3_*` | `phases/p2-gsjso/runs/20260719_boundary_map_v3/` |
+| v4 | `docs/boundary_map_v4_*`, `docs/anchor_census_*` | `phases/p2-gsjso/runs/20260720_anchor_census/` |
+| v4.1 | `docs/boundary_map_v4_1_ladder.csv`, supplement bundle | `phases/p2-gsjso/runs/20260720_anchor_census_supplement/` |
+
+실행 디렉터리는 provenance 영수증과 세부 측정의 소유자다. 연구 문서의 정본 여부는 실행 디렉터리의 위치가 아니라 위 역할 지도와 manifest 연결로 판단한다.
+
+## 이동 전에 지켜야 할 것
+
+이번 결정은 경로를 바꾸지 않는다. 향후 `docs/experiments/boundary_map/` 같은 목표 위치로 옮기려면 별도 커밋에서 다음을 먼저 승인·검증한다.
+
+1. old path → new path manifest
+2. 코드·config·manifest·문서의 참조 rewrite 목록
+3. v4.1 ladder를 사용하는 후속 Fusion W1 입력의 무결성
+4. broken-link 0과 인벤토리 재현성

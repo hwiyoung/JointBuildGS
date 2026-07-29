@@ -121,6 +121,58 @@ class RepoInventoryUnitTests(unittest.TestCase):
         self.assertEqual(relations[0].relation, "candidate_supersedes")
         self.assertEqual(relations[0].confidence, "filename_candidate")
 
+    def test_reviewed_family_map_is_validated_and_flattened(self):
+        config = {
+            "reviewed_family_maps": [
+                {
+                    "family_id": "boundary_map",
+                    "decision_record": "docs/catalog/families/BOUNDARY_MAP.md",
+                    "reviewed_on": "2026-07-29",
+                    "documents": [
+                        {
+                            "path": "docs/boundary_map_v4_1_ladder.csv",
+                            "status": "canonical",
+                            "canonical_for": "current_ladder",
+                            "reason": "reviewed",
+                        }
+                    ],
+                }
+            ]
+        }
+        reviewed = repo_inventory.reviewed_document_map(config)
+        item = reviewed["docs/boundary_map_v4_1_ladder.csv"]
+        self.assertEqual(item["reviewed_family_id"], "boundary_map")
+        self.assertEqual(item["decision_record"], "docs/catalog/families/BOUNDARY_MAP.md")
+
+    def test_reviewed_status_is_not_replaced_by_filename_candidate(self):
+        rows = [
+            {
+                "path": "docs/boundary_map_v3_metrics.csv",
+                "family_id": "boundary_map",
+                "lineage_key": "boundary_map_metrics",
+                "extension": ".csv",
+                "artifact_kind": "table",
+                "version": "v3",
+                "proposed_status": "supporting",
+                "status_source": "reviewed_family_map",
+                "status_note": "reviewed",
+            },
+            {
+                "path": "docs/boundary_map_v4_metrics.csv",
+                "family_id": "boundary_map",
+                "lineage_key": "boundary_map_metrics",
+                "extension": ".csv",
+                "artifact_kind": "table",
+                "version": "v4",
+                "proposed_status": "canonical",
+                "status_source": "reviewed_family_map",
+                "status_note": "reviewed",
+            },
+        ]
+        repo_inventory.add_version_candidates(rows, [])
+        self.assertEqual(rows[0]["proposed_status"], "supporting")
+        self.assertEqual(rows[1]["proposed_status"], "canonical")
+
 
 if __name__ == "__main__":
     unittest.main()

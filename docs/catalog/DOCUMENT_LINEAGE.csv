@@ -895,6 +895,8 @@ docs/W_E5_pilot_substantiveness.md,mentions_path,phases/p2-gsjso/runs/e5p_train_
 docs/W_S2설계_손실비교·실험계획_20260710.md,mentions_path,docs/W_E5_C001_S1완성판_검수·회부_20260710.md,yes,docs/W_E5_C001_S1완성판_검수·회부_20260710.md,text,3
 docs/W_S2설계_손실비교·실험계획_20260710.md,mentions_path,docs/W_E5_C001_S2_*.md,no,docs/W_E5_C001_S2_*.md,text,121
 docs/W_S2설계_손실비교·실험계획_20260710.md,mentions_path,docs/issues.md,yes,docs/issues.md,text,121
+docs/W_anchor_census_boundary_map_v4_summary_20260720.md,supersedes,docs/W_boundary_map_v3_summary_20260719.md,yes,docs/catalog/families/BOUNDARY_MAP.md,reviewed_family_map,
+docs/W_anchor_census_supplement_boundary_map_v4_1_summary_20260720.md,derived_from,docs/W_anchor_census_boundary_map_v4_summary_20260720.md,yes,docs/catalog/families/BOUNDARY_MAP.md,reviewed_family_map,
 docs/W_assembly_fidelity.md,mentions_path,docs/figs/W_assembly,yes,docs/figs/W_assembly/,text,6
 docs/W_assembly_fidelity.md,mentions_path,phases/p2-gsjso/scripts/assembly_fidelity.py,yes,phases/p2-gsjso/scripts/assembly_fidelity.py,text,89
 docs/W_assembly_fidelity.md,references,docs/figs/W_assembly/42364659.png,yes,figs/W_assembly/42364659.png,explicit,66
@@ -920,6 +922,7 @@ docs/W_attr_outcome_regression.md,mentions_path,phases/p0-audit/runs/w3_2b_roofe
 docs/W_attr_outcome_regression.md,mentions_path,phases/p0-audit/runs/w3_2b_roofer_repeatability_20260612_220747/status/run_2/dim_default.csv,yes,phases/p0-audit/runs/w3_2b_roofer_repeatability_20260612_220747/status/run_2/dim_default.csv,text,18
 docs/W_attr_outcome_regression.md,mentions_path,phases/p0-audit/runs/w3_2b_roofer_repeatability_20260612_220747/versions.txt,yes,phases/p0-audit/runs/w3_2b_roofer_repeatability_20260612_220747/versions.txt,text,16
 docs/W_boundary_map_v3_summary_20260719.md,candidate_supersedes,docs/W_boundary_map_v2_summary_20260718.md,yes,matching family/lineage key and adjacent filename versions,filename_candidate,
+docs/W_boundary_map_v3_summary_20260719.md,supersedes,docs/W_boundary_map_v2_summary_20260718.md,yes,docs/catalog/families/BOUNDARY_MAP.md,reviewed_family_map,
 docs/W_complexity_survey.md,mentions_path,data/raw,no,data/raw,text,73
 docs/W_complexity_survey.md,mentions_path,docs/figs/W_complexity,yes,docs/figs/W_complexity/,text,5
 docs/W_complexity_survey.md,mentions_path,phases/p2-gsjso/scripts/complexity_metric.py,yes,phases/p2-gsjso/scripts/complexity_metric.py,text,73
@@ -1067,6 +1070,8 @@ docs/anchor_census_measurements.csv,mentions_path,phases/p0-audit/data/work/imag
 docs/anchor_census_measurements.csv,mentions_path,phases/p2-gsjso/runs/20260719_boundary_map_v3/fm_dense_measurements.csv,yes,phases/p2-gsjso/runs/20260719_boundary_map_v3/fm_dense_measurements.csv,text,60
 docs/anchor_census_measurements.csv,mentions_path,phases/p2-gsjso/runs/20260720_anchor_census/anchor_census_inference_measurements.csv,yes,phases/p2-gsjso/runs/20260720_anchor_census/anchor_census_inference_measurements.csv,text,2
 docs/anchor_census_measurements.csv,mentions_path,results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/images,yes,results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/images,text,60
+docs/anchor_census_supplement_manifest.json,derived_from,docs/boundary_map_v4_ladder.csv,yes,docs/catalog/families/BOUNDARY_MAP.md,reviewed_family_map,
+docs/anchor_census_supplement_manifest.json,derived_from,docs/boundary_map_v4_manifest.json,yes,docs/catalog/families/BOUNDARY_MAP.md,reviewed_family_map,
 docs/anchor_census_supplement_manifest.json,mentions_path,docs/W_anchor_census_supplement_boundary_map_v4_1_summary_20260720.md,yes,docs/W_anchor_census_supplement_boundary_map_v4_1_summary_20260720.md,text,581
 docs/anchor_census_supplement_manifest.json,mentions_path,docs/anchor_census_supplement_measurements.csv,yes,docs/anchor_census_supplement_measurements.csv,text,569
 docs/anchor_census_supplement_manifest.json,mentions_path,docs/anchor_census_supplement_pairs.csv,yes,docs/anchor_census_supplement_pairs.csv,text,568
@@ -1262,8 +1267,11 @@ docs/boundary_map_metrics.csv,mentions_path,docs/pointcloud_attributes_v1_3.csv,
 docs/boundary_map_metrics.csv,mentions_path,docs/regression_input_snapshot.csv,yes,docs/regression_input_snapshot.csv,text,2
 docs/boundary_map_metrics.csv,mentions_path,phases/p2-gsjso/runs/20260716_boundary_map/mast3r_correspondence.csv,yes,phases/p2-gsjso/runs/20260716_boundary_map/mast3r_correspondence.csv,text,2
 docs/boundary_map_v2_boundary_cases.csv,candidate_supersedes,docs/boundary_map_boundary_cases.csv,yes,matching family/lineage key and adjacent filename versions,filename_candidate,
+docs/boundary_map_v2_boundary_cases.csv,supersedes,docs/boundary_map_boundary_cases.csv,yes,docs/catalog/families/BOUNDARY_MAP.md,reviewed_family_map,
 docs/boundary_map_v2_confusion.csv,candidate_supersedes,docs/boundary_map_confusion.csv,yes,matching family/lineage key and adjacent filename versions,filename_candidate,
+docs/boundary_map_v2_confusion.csv,supersedes,docs/boundary_map_confusion.csv,yes,docs/catalog/families/BOUNDARY_MAP.md,reviewed_family_map,
 docs/boundary_map_v2_ladder.csv,candidate_supersedes,docs/boundary_map_ladder.csv,yes,matching family/lineage key and adjacent filename versions,filename_candidate,
+docs/boundary_map_v2_ladder.csv,supersedes,docs/boundary_map_ladder.csv,yes,docs/catalog/families/BOUNDARY_MAP.md,reviewed_family_map,
 docs/boundary_map_v2_manifest.json,candidate_supersedes,docs/boundary_map_manifest.json,yes,matching family/lineage key and adjacent filename versions,filename_candidate,
 docs/boundary_map_v2_manifest.json,mentions_path,configs/projection_datum.json,yes,configs/projection_datum.json,text,168
 docs/boundary_map_v2_manifest.json,mentions_path,docs/W_boundary_map_v2_summary_20260718.md,yes,docs/W_boundary_map_v2_summary_20260718.md,text,534
@@ -1316,9 +1324,13 @@ docs/boundary_map_v2_metrics.csv,mentions_path,docs/population_aux_v4.csv:frac_v
 docs/boundary_map_v2_metrics.csv,mentions_path,docs/population_aux_v4.csv:n_views_nadir,no,docs/population_aux_v4.csv:n_views_nadir,text,2
 docs/boundary_map_v2_metrics.csv,mentions_path,docs/population_aux_v4.csv:recon_score_median,no,docs/population_aux_v4.csv:recon_score_median,text,2
 docs/boundary_map_v2_metrics.csv,mentions_path,results/tum_transfer/analysis/footprints_aoi.geojson:area_m2,no,results/tum_transfer/analysis/footprints_aoi.geojson:area_m2,text,2
+docs/boundary_map_v2_metrics.csv,supersedes,docs/boundary_map_metrics.csv,yes,docs/catalog/families/BOUNDARY_MAP.md,reviewed_family_map,
 docs/boundary_map_v3_conditional_targets.csv,candidate_supersedes,docs/boundary_map_v2_conditional_targets.csv,yes,matching family/lineage key and adjacent filename versions,filename_candidate,
+docs/boundary_map_v3_conditional_targets.csv,supersedes,docs/boundary_map_v2_conditional_targets.csv,yes,docs/catalog/families/BOUNDARY_MAP.md,reviewed_family_map,
 docs/boundary_map_v3_confusion.csv,candidate_supersedes,docs/boundary_map_v2_confusion.csv,yes,matching family/lineage key and adjacent filename versions,filename_candidate,
+docs/boundary_map_v3_confusion.csv,supersedes,docs/boundary_map_v2_confusion.csv,yes,docs/catalog/families/BOUNDARY_MAP.md,reviewed_family_map,
 docs/boundary_map_v3_ladder.csv,candidate_supersedes,docs/boundary_map_v2_ladder.csv,yes,matching family/lineage key and adjacent filename versions,filename_candidate,
+docs/boundary_map_v3_ladder.csv,supersedes,docs/boundary_map_v2_ladder.csv,yes,docs/catalog/families/BOUNDARY_MAP.md,reviewed_family_map,
 docs/boundary_map_v3_manifest.json,candidate_supersedes,docs/boundary_map_v2_manifest.json,yes,matching family/lineage key and adjacent filename versions,filename_candidate,
 docs/boundary_map_v3_manifest.json,mentions_path,configs/projection_datum.json,yes,configs/projection_datum.json,text,1168
 docs/boundary_map_v3_manifest.json,mentions_path,docs/W_boundary_map_v3_summary_20260719.md,yes,docs/W_boundary_map_v3_summary_20260719.md,text,1764
@@ -1488,19 +1500,25 @@ docs/boundary_map_v3_metrics.csv,mentions_path,docs/population_aux_v4.csv:frac_v
 docs/boundary_map_v3_metrics.csv,mentions_path,docs/population_aux_v4.csv:n_views_nadir,no,docs/population_aux_v4.csv:n_views_nadir,text,2
 docs/boundary_map_v3_metrics.csv,mentions_path,docs/population_aux_v4.csv:recon_score_median,no,docs/population_aux_v4.csv:recon_score_median,text,2
 docs/boundary_map_v3_metrics.csv,mentions_path,results/tum_transfer/analysis/footprints_aoi.geojson:area_m2,no,results/tum_transfer/analysis/footprints_aoi.geojson:area_m2,text,2
+docs/boundary_map_v3_metrics.csv,supersedes,docs/boundary_map_v2_metrics.csv,yes,docs/catalog/families/BOUNDARY_MAP.md,reviewed_family_map,
 docs/boundary_map_v4_1_ladder.csv,candidate_supersedes,docs/boundary_map_v4_ladder.csv,yes,matching family/lineage key and adjacent filename versions,filename_candidate,
+docs/boundary_map_v4_1_ladder.csv,derived_from,docs/anchor_census_supplement_measurements.csv,yes,docs/catalog/families/BOUNDARY_MAP.md,reviewed_family_map,
+docs/boundary_map_v4_1_ladder.csv,derived_from,docs/boundary_map_v4_ladder.csv,yes,docs/catalog/families/BOUNDARY_MAP.md,reviewed_family_map,
 docs/boundary_map_v4_1_ladder.csv,mentions_path,docs/e5_c001_s3ap_fm_dense_dial.csv,yes,docs/e5_c001_s3ap_fm_dense_dial.csv,text,175
 docs/boundary_map_v4_1_ladder.csv,mentions_path,docs/regression_input_snapshot.csv,yes,docs/regression_input_snapshot.csv,text,2
 docs/boundary_map_v4_1_ladder.csv,mentions_path,phases/p0-audit/runs/w2_1_roofer_default_20260612_152729/building_reconstruction_status.csv,yes,phases/p0-audit/runs/w2_1_roofer_default_20260612_152729/building_reconstruction_status.csv,text,2
 docs/boundary_map_v4_1_ladder.csv,mentions_path,phases/p2-gsjso/runs/20260719_boundary_map_v3/fm_dense_measurements.csv,yes,phases/p2-gsjso/runs/20260719_boundary_map_v3/fm_dense_measurements.csv,text,95
 docs/boundary_map_v4_1_ladder.csv,mentions_path,phases/p2-gsjso/runs/20260720_anchor_census/anchor_census_inference_measurements.csv,yes,phases/p2-gsjso/runs/20260720_anchor_census/anchor_census_inference_measurements.csv,text,3
 docs/boundary_map_v4_1_ladder.csv,mentions_path,phases/p2-gsjso/runs/20260720_anchor_census_supplement/anchor_census_supplement_measurements.csv,yes,phases/p2-gsjso/runs/20260720_anchor_census_supplement/anchor_census_supplement_measurements.csv,text,14
+docs/boundary_map_v4_1_ladder.csv,supersedes,docs/boundary_map_v4_ladder.csv,yes,docs/catalog/families/BOUNDARY_MAP.md,reviewed_family_map,
+docs/boundary_map_v4_1_ladder.csv,supersedes,docs/boundary_map_v4_targets.csv,yes,docs/catalog/families/BOUNDARY_MAP.md,reviewed_family_map,
 docs/boundary_map_v4_ladder.csv,candidate_supersedes,docs/boundary_map_v3_ladder.csv,yes,matching family/lineage key and adjacent filename versions,filename_candidate,
 docs/boundary_map_v4_ladder.csv,mentions_path,docs/e5_c001_s3ap_fm_dense_dial.csv,yes,docs/e5_c001_s3ap_fm_dense_dial.csv,text,175
 docs/boundary_map_v4_ladder.csv,mentions_path,docs/regression_input_snapshot.csv,yes,docs/regression_input_snapshot.csv,text,2
 docs/boundary_map_v4_ladder.csv,mentions_path,phases/p0-audit/runs/w2_1_roofer_default_20260612_152729/building_reconstruction_status.csv,yes,phases/p0-audit/runs/w2_1_roofer_default_20260612_152729/building_reconstruction_status.csv,text,2
 docs/boundary_map_v4_ladder.csv,mentions_path,phases/p2-gsjso/runs/20260719_boundary_map_v3/fm_dense_measurements.csv,yes,phases/p2-gsjso/runs/20260719_boundary_map_v3/fm_dense_measurements.csv,text,95
 docs/boundary_map_v4_ladder.csv,mentions_path,phases/p2-gsjso/runs/20260720_anchor_census/anchor_census_inference_measurements.csv,yes,phases/p2-gsjso/runs/20260720_anchor_census/anchor_census_inference_measurements.csv,text,3
+docs/boundary_map_v4_ladder.csv,supersedes,docs/boundary_map_v3_ladder.csv,yes,docs/catalog/families/BOUNDARY_MAP.md,reviewed_family_map,
 docs/boundary_map_v4_manifest.json,candidate_supersedes,docs/boundary_map_v3_manifest.json,yes,matching family/lineage key and adjacent filename versions,filename_candidate,
 docs/boundary_map_v4_manifest.json,mentions_path,docs/W_anchor_census_boundary_map_v4_summary_20260720.md,yes,docs/W_anchor_census_boundary_map_v4_summary_20260720.md,text,333
 docs/boundary_map_v4_manifest.json,mentions_path,docs/anchor_census_ambiguous_1_99.csv,yes,docs/anchor_census_ambiguous_1_99.csv,text,330
@@ -5740,7 +5758,10 @@ docs/experiments/p2_mob_past_results.md,mentions_path,results/phase2_ablation_ci
 docs/experiments/p2_mob_past_results.md,mentions_path,results/phase2_ablation_citygml/mutual/eval_fixed/eval_summary.json,yes,results/phase2_ablation_citygml/mutual/eval_fixed/eval_summary.json,text,27
 docs/experiments/p2_mob_past_results.md,mentions_path,results/phase2_ablation_citygml/stage2_primitive_metrics.json,yes,results/phase2_ablation_citygml/stage2_primitive_metrics.json,text,24
 docs/experiments/p2_mob_past_results.md,mentions_path,results/phase2_ablation_citygml/structure/eval_fixed/eval_summary.json,yes,results/phase2_ablation_citygml/structure/eval_fixed/eval_summary.json,text,13
+docs/figs/boundary_map_v2/boundary_map_v2_ladder.png,supersedes,docs/figs/boundary_map/boundary_map_ladder.png,yes,docs/catalog/families/BOUNDARY_MAP.md,reviewed_family_map,
+docs/figs/boundary_map_v3/boundary_map_v3_map.png,supersedes,docs/figs/boundary_map_v2/boundary_map_v2_ladder.png,yes,docs/catalog/families/BOUNDARY_MAP.md,reviewed_family_map,
 docs/figs/boundary_map_v4/boundary_map_v4_map.png,candidate_supersedes,docs/figs/boundary_map_v3/boundary_map_v3_map.png,yes,matching family/lineage key and adjacent filename versions,filename_candidate,
+docs/figs/boundary_map_v4/boundary_map_v4_map.png,supersedes,docs/figs/boundary_map_v3/boundary_map_v3_map.png,yes,docs/catalog/families/BOUNDARY_MAP.md,reviewed_family_map,
 docs/figs/pointcloud_attributes_v1_1/als_scatter.png,candidate_supersedes,docs/figs/pointcloud_attributes_v1/als_scatter.png,yes,matching family/lineage key and adjacent filename versions,filename_candidate,
 docs/figs/pointcloud_attributes_v1_1/arm_distribution.png,candidate_supersedes,docs/figs/pointcloud_attributes_v1/arm_distribution.png,yes,matching family/lineage key and adjacent filename versions,filename_candidate,
 docs/figs/pointcloud_attributes_v1_2/als_scatter.png,candidate_supersedes,docs/figs/pointcloud_attributes_v1_1/als_scatter.png,yes,matching family/lineage key and adjacent filename versions,filename_candidate,

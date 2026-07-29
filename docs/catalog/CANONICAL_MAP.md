@@ -10,6 +10,12 @@
 | research_context | `docs/RESEARCH_CONTEXT.md` | Root AGENTS.md names this as a primary research-context document. |
 | quality_axis_main_preregistration_lock | `docs/사전등록서_품질축본선_승인잠금v4_20260721.md` | Root AGENTS.md explicitly defines this v4 file as the approval lock. |
 
+## Reviewed family maps
+
+| Family | Decision record | Reviewed | Canonical | Supporting | Superseded |
+|---|---|---|---|---|---|
+| boundary_map | `docs/catalog/families/BOUNDARY_MAP.md` | 2026-07-29 | 5 | 14 | 16 |
+
 ## Priority families requiring review
 
 This table shows multi-file families and explicit/candidate canonical families. Single-file families remain in `DOCUMENT_CATALOG.csv`.
@@ -25,7 +31,6 @@ This table shows multi-file families and explicit/candidate canonical families. 
 | e5_c001_s2p | 55 | v2 | 0 | docs/experiments/e5_c001_s2p/ |
 | judgment_kit | 48 | v4 | 0 | docs/evidence/judgment_kit/ |
 | e5_c001_s3b | 31 | v1 | 0 | docs/figs/e5_c001_s3b/ |
-| boundary_map | 26 | v1, v2, v3, v4, v4_1 | 7 | docs/experiments/boundary_map/ |
 | tum_transfer | 18 | v0, v2, v6 | 0 | docs/figs/tum_transfer/ |
 | e5_pilot | 15 | - | 0 | docs/figs/e5_pilot/ |
 | pointcloud_attributes | 15 | v1, v1_1, v1_2, v1_3 | 1 | docs/experiments/pointcloud_attributes/ |
@@ -39,10 +44,8 @@ This table shows multi-file families and explicit/candidate canonical families. 
 | degradation_curve | 6 | - | 0 | docs/experiments/degradation_curve/ |
 | w_assembly | 6 | - | 0 | docs/figs/w_assembly/ |
 | w_faithful | 6 | - | 0 | docs/figs/w_faithful/ |
-| anchor_census_supplement | 5 | v4_1 | 0 | docs/experiments/anchor_census_supplement/ |
 | w_d_qual | 5 | - | 0 | docs/figs/w_d_qual/ |
 | w_phaseb | 5 | - | 0 | docs/figs/w_phaseb/ |
-| anchor_census | 4 | v4 | 0 | docs/experiments/anchor_census/ |
 | attr_outcome_regression | 4 | v1 | 0 | docs/experiments/attr_outcome_regression/ |
 | attr_outcome_regression_v1 | 4 | v1 | 0 | docs/figs/attr_outcome_regression_v1/ |
 | bucket_crosswalk | 4 | v2 | 0 | docs/experiments/bucket_crosswalk/ |
@@ -73,37 +76,46 @@ This table shows multi-file families and explicit/candidate canonical families. 
 | research_context | 1 | - | 1 | docs/research/ |
 | 사전등록서_품질축본선_승인잠금 | 1 | v4_20260721 | 1 | docs/research/ |
 
-## First migration pilot: boundary_map
+## Reviewed pilot: boundary_map
 
-This family is the recommended pilot because it crosses narrative reports, tables, manifests, figures, scripts, and run receipts. Inventory does not approve a winner or move these paths.
+The lifecycle decisions below are reviewed in `docs/catalog/families/BOUNDARY_MAP.md`. No file was moved, renamed, deleted, or scientifically reinterpreted.
 
-| Current path | Version | Kind | Proposed status | Referenced run IDs |
+| Current path | Version | Kind | Lifecycle status | Referenced run IDs |
 |---|---|---|---|---|
-| `docs/W_boundary_map_v2_summary_20260718.md` | v2 | document | superseded_candidate | - |
-| `docs/W_boundary_map_v3_summary_20260719.md` | v3 | document | canonical_candidate | - |
-| `docs/boundary_map_boundary_cases.csv` | v1 | table | superseded_candidate | - |
-| `docs/boundary_map_confusion.csv` | v1 | table | superseded_candidate | - |
-| `docs/boundary_map_ladder.csv` | v1 | table | superseded_candidate | - |
-| `docs/boundary_map_manifest.json` | v1 | manifest | superseded_candidate | 20260716_boundary_map |
-| `docs/boundary_map_metrics.csv` | v1 | table | superseded_candidate | 20260716_boundary_map |
-| `docs/boundary_map_v2_boundary_cases.csv` | v2 | table | canonical_candidate | - |
-| `docs/boundary_map_v2_conditional_targets.csv` | v2 | table | superseded_candidate | - |
-| `docs/boundary_map_v2_confusion.csv` | v2 | table | superseded_candidate | - |
-| `docs/boundary_map_v2_ladder.csv` | v2 | table | superseded_candidate | - |
-| `docs/boundary_map_v2_manifest.json` | v2 | manifest | superseded_candidate | 20260716_C;20260716_boundary_map;20260718_boundary_map_v2;t3r_model_lock_matches_20260716 |
-| `docs/boundary_map_v2_metrics.csv` | v2 | table | superseded_candidate | 20260716_C |
-| `docs/boundary_map_v3_conditional_targets.csv` | v3 | table | canonical_candidate | - |
-| `docs/boundary_map_v3_confusion.csv` | v3 | table | canonical_candidate | - |
-| `docs/boundary_map_v3_ladder.csv` | v3 | table | superseded_candidate | - |
-| `docs/boundary_map_v3_manifest.json` | v3 | manifest | superseded_candidate | 20260714_e5_c001_s3ap_fm_env;20260718_boundary_map_v2;20260719_boundary_map_v3 |
-| `docs/boundary_map_v3_metrics.csv` | v3 | table | canonical_candidate | 20260716_C |
-| `docs/boundary_map_v4_1_ladder.csv` | v4_1 | table | canonical_candidate | 20260719_boundary_map_v3;20260720_anchor_census;20260720_anchor_census_supplement;w2_1_roofer_default_20260612_152729 |
-| `docs/boundary_map_v4_ladder.csv` | v4 | table | superseded_candidate | 20260719_boundary_map_v3;20260720_anchor_census;w2_1_roofer_default_20260612_152729 |
-| `docs/boundary_map_v4_manifest.json` | v4 | manifest | canonical_candidate | 20260719_boundary_map_v3;20260720_anchor_census;w2_1_roofer_default_20260612_152729 |
-| `docs/boundary_map_v4_targets.csv` | v4 | table | supporting | - |
-| `docs/figs/boundary_map/boundary_map_ladder.png` | - | figure | supporting | - |
-| `docs/figs/boundary_map_v2/boundary_map_v2_ladder.png` | v2 | figure | supporting | - |
-| `docs/figs/boundary_map_v3/boundary_map_v3_map.png` | v3 | figure | supporting | - |
+| `docs/W_anchor_census_boundary_map_v4_summary_20260720.md` | v4 | document | canonical | - |
+| `docs/W_anchor_census_supplement_boundary_map_v4_1_summary_20260720.md` | v4_1 | document | canonical | - |
+| `docs/W_boundary_map_v2_summary_20260718.md` | v2 | document | superseded | - |
+| `docs/W_boundary_map_v3_summary_20260719.md` | v3 | document | superseded | - |
+| `docs/anchor_census_ambiguous_1_99.csv` | - | table | supporting | - |
+| `docs/anchor_census_high_count_high_mad.csv` | - | table | supporting | - |
+| `docs/anchor_census_measurements.csv` | - | table | supporting | 20260719_boundary_map_v3;20260720_anchor_census |
+| `docs/anchor_census_supplement_manifest.json` | - | manifest | canonical | 20260719_boundary_map_v3;20260720_anchor_census;20260720_anchor_census_supplement |
+| `docs/anchor_census_supplement_measurements.csv` | - | table | supporting | 20260719_boundary_map_v3;20260720_anchor_census |
+| `docs/anchor_census_supplement_pairs.csv` | - | table | supporting | 20260719_boundary_map_v3;20260720_anchor_census |
+| `docs/anchor_census_supplement_same_block_reliability_pairs.csv` | - | table | supporting | 20260720_anchor_census |
+| `docs/boundary_map_boundary_cases.csv` | v1 | table | superseded | - |
+| `docs/boundary_map_confusion.csv` | v1 | table | superseded | - |
+| `docs/boundary_map_ladder.csv` | v1 | table | superseded | - |
+| `docs/boundary_map_manifest.json` | v1 | manifest | supporting | 20260716_boundary_map |
+| `docs/boundary_map_metrics.csv` | v1 | table | superseded | 20260716_boundary_map |
+| `docs/boundary_map_v2_boundary_cases.csv` | v2 | table | supporting | - |
+| `docs/boundary_map_v2_conditional_targets.csv` | v2 | table | superseded | - |
+| `docs/boundary_map_v2_confusion.csv` | v2 | table | superseded | - |
+| `docs/boundary_map_v2_ladder.csv` | v2 | table | superseded | - |
+| `docs/boundary_map_v2_manifest.json` | v2 | manifest | supporting | 20260716_C;20260716_boundary_map;20260718_boundary_map_v2;t3r_model_lock_matches_20260716 |
+| `docs/boundary_map_v2_metrics.csv` | v2 | table | superseded | 20260716_C |
+| `docs/boundary_map_v3_conditional_targets.csv` | v3 | table | supporting | - |
+| `docs/boundary_map_v3_confusion.csv` | v3 | table | supporting | - |
+| `docs/boundary_map_v3_ladder.csv` | v3 | table | superseded | - |
+| `docs/boundary_map_v3_manifest.json` | v3 | manifest | supporting | 20260714_e5_c001_s3ap_fm_env;20260718_boundary_map_v2;20260719_boundary_map_v3 |
+| `docs/boundary_map_v3_metrics.csv` | v3 | table | supporting | 20260716_C |
+| `docs/boundary_map_v4_1_ladder.csv` | v4_1 | table | canonical | 20260719_boundary_map_v3;20260720_anchor_census;20260720_anchor_census_supplement;w2_1_roofer_default_20260612_152729 |
+| `docs/boundary_map_v4_ladder.csv` | v4 | table | superseded | 20260719_boundary_map_v3;20260720_anchor_census;w2_1_roofer_default_20260612_152729 |
+| `docs/boundary_map_v4_manifest.json` | v4 | manifest | canonical | 20260719_boundary_map_v3;20260720_anchor_census;w2_1_roofer_default_20260612_152729 |
+| `docs/boundary_map_v4_targets.csv` | v4 | table | superseded | - |
+| `docs/figs/boundary_map/boundary_map_ladder.png` | - | figure | superseded | - |
+| `docs/figs/boundary_map_v2/boundary_map_v2_ladder.png` | v2 | figure | superseded | - |
+| `docs/figs/boundary_map_v3/boundary_map_v3_map.png` | v3 | figure | superseded | - |
 | `docs/figs/boundary_map_v4/boundary_map_v4_map.png` | v4 | figure | supporting | - |
 
 ### Related run directories
@@ -114,7 +126,11 @@ This family is the recommended pilot because it crosses narrative reports, table
 | 20260718_boundary_map_v2 | tracked_record_present | 3 | missing_tracked_versions;missing_tracked_report_or_index |
 | 20260719_boundary_map_v3 | tracked_record_present | 2 | missing_tracked_versions;missing_tracked_report_or_index |
 | 20260719_boundary_map_v3_driver | untracked_no_tracked_record | 0 | missing_tracked_manifest;missing_tracked_versions;missing_tracked_report_or_index;no_tracked_run_receipt |
+| 20260720_anchor_census | tracked_record_present | 3 | missing_tracked_versions;missing_tracked_report_or_index |
+| 20260720_anchor_census_driver | untracked_no_tracked_record | 0 | missing_tracked_manifest;missing_tracked_versions;missing_tracked_report_or_index;no_tracked_run_receipt |
+| 20260720_anchor_census_supplement | tracked_record_present | 1 | missing_tracked_versions;missing_tracked_report_or_index |
+| 20260720_anchor_census_supplement_driver | untracked_no_tracked_record | 0 | missing_tracked_manifest;missing_tracked_versions;missing_tracked_report_or_index;no_tracked_run_receipt |
 
 ## Approval rule
 
-Before moving a family, a human reviewer must approve one `canonical_for` mapping, every supersession/retraction edge, the old-to-new path manifest, and the reference rewrite preview. The migration is a separate task and commit.
+Before moving any family, approve the old-to-new path manifest and reference rewrite preview. Canonical review and path migration remain separate tasks and commits.

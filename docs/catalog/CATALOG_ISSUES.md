@@ -13,14 +13,15 @@
 | Run directories | 157 |
 | Run directories with one or more record gaps | 157 |
 
-### Proposed document statuses
+### Catalog document statuses
 
 | Status | Files |
 |---|---|
-| canonical | 3 |
-| canonical_candidate | 10 |
+| canonical | 8 |
+| canonical_candidate | 3 |
 | orphan_candidate | 260 |
-| superseded_candidate | 20 |
+| superseded | 16 |
+| superseded_candidate | 6 |
 | supporting | 1011 |
 | temporary | 4 |
 

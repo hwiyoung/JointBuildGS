@@ -29,6 +29,7 @@
   ],
   "inventory_control_paths": [
     "docs/README.md",
+    "docs/catalog/families/BOUNDARY_MAP.md",
     "docs/catalog/TOP_LEVEL_DIRECTORY_CONTRACT.md",
     "docs/catalog/TARGET_INFORMATION_ARCHITECTURE.md",
     "phases/README.md"
@@ -48,6 +49,223 @@
       "path": "docs/사전등록서_품질축본선_승인잠금v4_20260721.md",
       "canonical_for": "quality_axis_main_preregistration_lock",
       "reason": "Root AGENTS.md explicitly defines this v4 file as the approval lock."
+    }
+  ],
+  "reviewed_family_maps": [
+    {
+      "family_id": "boundary_map",
+      "decision_record": "docs/catalog/families/BOUNDARY_MAP.md",
+      "reviewed_on": "2026-07-29",
+      "scope_note": "Document-governance review only; measurements and scientific judgments are unchanged.",
+      "documents": [
+        {
+          "path": "docs/boundary_map_manifest.json",
+          "status": "supporting",
+          "reason": "Immutable v1 provenance record; retained for reproduction, not current assignment use."
+        },
+        {
+          "path": "docs/boundary_map_metrics.csv",
+          "status": "superseded",
+          "superseded_by": "docs/boundary_map_v2_metrics.csv",
+          "reason": "v1 metric snapshot was replaced by the canonical-population v2 measurement."
+        },
+        {
+          "path": "docs/boundary_map_ladder.csv",
+          "status": "superseded",
+          "superseded_by": "docs/boundary_map_v2_ladder.csv",
+          "reason": "v1 assignment ladder was replaced by v2."
+        },
+        {
+          "path": "docs/boundary_map_confusion.csv",
+          "status": "superseded",
+          "superseded_by": "docs/boundary_map_v2_confusion.csv",
+          "reason": "v1 validation snapshot was replaced by v2."
+        },
+        {
+          "path": "docs/boundary_map_boundary_cases.csv",
+          "status": "superseded",
+          "superseded_by": "docs/boundary_map_v2_boundary_cases.csv",
+          "reason": "v1 boundary-case table was replaced by v2."
+        },
+        {
+          "path": "docs/figs/boundary_map/boundary_map_ladder.png",
+          "status": "superseded",
+          "superseded_by": "docs/figs/boundary_map_v2/boundary_map_v2_ladder.png",
+          "reason": "v1 visualization is historical."
+        },
+        {
+          "path": "docs/W_boundary_map_v2_summary_20260718.md",
+          "status": "superseded",
+          "superseded_by": "docs/W_boundary_map_v3_summary_20260719.md",
+          "reason": "v2 narrative describes an older rule and assignment snapshot."
+        },
+        {
+          "path": "docs/boundary_map_v2_manifest.json",
+          "status": "supporting",
+          "reason": "Immutable v2 provenance record; retained because v3 explicitly derives from v2 inputs."
+        },
+        {
+          "path": "docs/boundary_map_v2_metrics.csv",
+          "status": "superseded",
+          "superseded_by": "docs/boundary_map_v3_metrics.csv",
+          "reason": "v2 metric snapshot was remeasured in v3."
+        },
+        {
+          "path": "docs/boundary_map_v2_ladder.csv",
+          "status": "superseded",
+          "superseded_by": "docs/boundary_map_v3_ladder.csv",
+          "reason": "v2 assignment ladder was replaced by v3."
+        },
+        {
+          "path": "docs/boundary_map_v2_confusion.csv",
+          "status": "superseded",
+          "superseded_by": "docs/boundary_map_v3_confusion.csv",
+          "reason": "v2 validation snapshot was replaced by v3."
+        },
+        {
+          "path": "docs/boundary_map_v2_boundary_cases.csv",
+          "status": "supporting",
+          "reason": "Historical v2 boundary-case evidence has no direct later-format replacement."
+        },
+        {
+          "path": "docs/boundary_map_v2_conditional_targets.csv",
+          "status": "superseded",
+          "superseded_by": "docs/boundary_map_v3_conditional_targets.csv",
+          "reason": "v2 conditional target snapshot was replaced by v3."
+        },
+        {
+          "path": "docs/figs/boundary_map_v2/boundary_map_v2_ladder.png",
+          "status": "superseded",
+          "superseded_by": "docs/figs/boundary_map_v3/boundary_map_v3_map.png",
+          "reason": "v2 visualization is historical."
+        },
+        {
+          "path": "docs/W_boundary_map_v3_summary_20260719.md",
+          "status": "superseded",
+          "superseded_by": "docs/W_anchor_census_boundary_map_v4_summary_20260720.md",
+          "reason": "v3 narrative uses the earlier tier assignment; v4 introduced the neutral cell census."
+        },
+        {
+          "path": "docs/boundary_map_v3_manifest.json",
+          "status": "supporting",
+          "reason": "Immutable v3 provenance record and explicit source of the v4 census."
+        },
+        {
+          "path": "docs/boundary_map_v3_metrics.csv",
+          "status": "supporting",
+          "reason": "Final v3 rule-measurement evidence retained as input provenance for v4, not current cell assignments."
+        },
+        {
+          "path": "docs/boundary_map_v3_ladder.csv",
+          "status": "superseded",
+          "superseded_by": "docs/boundary_map_v4_ladder.csv",
+          "reason": "v3 tier ladder was replaced by the v4 neutral cell ladder."
+        },
+        {
+          "path": "docs/boundary_map_v3_confusion.csv",
+          "status": "supporting",
+          "reason": "Final v3 validation evidence; it does not describe the current v4.1 cell map."
+        },
+        {
+          "path": "docs/boundary_map_v3_conditional_targets.csv",
+          "status": "supporting",
+          "reason": "Historical v3 conditional-generation list; it is not the current v4.1 assignment source."
+        },
+        {
+          "path": "docs/figs/boundary_map_v3/boundary_map_v3_map.png",
+          "status": "superseded",
+          "superseded_by": "docs/figs/boundary_map_v4/boundary_map_v4_map.png",
+          "reason": "v3 visualization predates the neutral v4 cell census."
+        },
+        {
+          "path": "docs/W_anchor_census_boundary_map_v4_summary_20260720.md",
+          "status": "canonical",
+          "canonical_for": "boundary_map_v4_base_census_summary",
+          "reason": "Complete base-census narrative for the v4 neutral cell map; read before the v4.1 supplement."
+        },
+        {
+          "path": "docs/boundary_map_v4_manifest.json",
+          "status": "canonical",
+          "canonical_for": "boundary_map_v4_base_provenance",
+          "reason": "Authoritative base-census manifest and direct source of the v4.1 supplement."
+        },
+        {
+          "path": "docs/boundary_map_v4_ladder.csv",
+          "status": "superseded",
+          "superseded_by": "docs/boundary_map_v4_1_ladder.csv",
+          "reason": "v4.1 mechanically updates the fixed nine formerly unmeasurable rows."
+        },
+        {
+          "path": "docs/boundary_map_v4_targets.csv",
+          "status": "superseded",
+          "superseded_by": "docs/boundary_map_v4_1_ladder.csv",
+          "reason": "This 64-row v4 snapshot predates the nine-row supplement; filter the current v4.1 ladder instead."
+        },
+        {
+          "path": "docs/anchor_census_measurements.csv",
+          "status": "supporting",
+          "reason": "Base-census measurement evidence used by the v4 manifest."
+        },
+        {
+          "path": "docs/anchor_census_ambiguous_1_99.csv",
+          "status": "supporting",
+          "reason": "Descriptive v4 ambiguous-zone evidence, not an assignment source."
+        },
+        {
+          "path": "docs/anchor_census_high_count_high_mad.csv",
+          "status": "supporting",
+          "reason": "Descriptive v4 high-count/high-MAD evidence, not an assignment source."
+        },
+        {
+          "path": "docs/figs/boundary_map_v4/boundary_map_v4_map.png",
+          "status": "supporting",
+          "reason": "Latest available figure, but the v4.1 manifest explicitly says it was not regenerated; it does not show five cell changes."
+        },
+        {
+          "path": "docs/W_anchor_census_supplement_boundary_map_v4_1_summary_20260720.md",
+          "status": "canonical",
+          "canonical_for": "boundary_map_v4_1_supplement_summary",
+          "derived_from": [
+            "docs/W_anchor_census_boundary_map_v4_summary_20260720.md"
+          ],
+          "reason": "Authoritative narrative of the nine-row v4.1 supplement; it complements rather than replaces the v4 base summary."
+        },
+        {
+          "path": "docs/anchor_census_supplement_manifest.json",
+          "status": "canonical",
+          "canonical_for": "boundary_map_v4_1_supplement_provenance",
+          "derived_from": [
+            "docs/boundary_map_v4_manifest.json",
+            "docs/boundary_map_v4_ladder.csv"
+          ],
+          "reason": "Authoritative v4.1 provenance, scope, invariance, and low-independence contract."
+        },
+        {
+          "path": "docs/boundary_map_v4_1_ladder.csv",
+          "status": "canonical",
+          "canonical_for": "boundary_map_current_178_assignment_ladder",
+          "derived_from": [
+            "docs/boundary_map_v4_ladder.csv",
+            "docs/anchor_census_supplement_measurements.csv"
+          ],
+          "reason": "Current 178-row assignment source; later Fusion W1 configs and manifests consume this exact path."
+        },
+        {
+          "path": "docs/anchor_census_supplement_measurements.csv",
+          "status": "supporting",
+          "reason": "Ten-row v4.1 supplement and reproduction measurement table."
+        },
+        {
+          "path": "docs/anchor_census_supplement_pairs.csv",
+          "status": "supporting",
+          "reason": "Pair-level evidence for the cache-only same-block supplement."
+        },
+        {
+          "path": "docs/anchor_census_supplement_same_block_reliability_pairs.csv",
+          "status": "supporting",
+          "reason": "Reliability comparison supporting the v4.1 low-independence caveat."
+        }
+      ]
     }
   ],
   "family_rules": [
