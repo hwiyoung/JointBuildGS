@@ -6,24 +6,24 @@
 
 | Measure | Count |
 |---|---|
-| Cataloged indexed files | 1311 |
-| Files directly under docs/ | 413 |
-| Distinct inferred families | 285 |
-| Local Markdown links/embeds that do not resolve | 2 |
-| Run directories | 157 |
-| Run directories with one or more record gaps | 157 |
+| Cataloged indexed files | 1548 |
+| Files directly under docs/ | 69 |
+| Distinct inferred families | 245 |
+| Local Markdown links/embeds that do not resolve | 5 |
+| Run directories | 171 |
+| Run directories with one or more record gaps | 171 |
 
 ### Catalog document statuses
 
 | Status | Files |
 |---|---|
-| canonical | 9 |
-| canonical_candidate | 3 |
-| orphan_candidate | 260 |
-| superseded | 16 |
-| superseded_candidate | 6 |
-| supporting | 1011 |
-| temporary | 6 |
+| canonical | 27 |
+| canonical_candidate | 9 |
+| orphan_candidate | 177 |
+| superseded | 39 |
+| superseded_candidate | 12 |
+| supporting | 1282 |
+| temporary | 2 |
 
 ### Run Git states
 
@@ -31,72 +31,75 @@
 |---|---|
 | ignored_no_tracked_record | 86 |
 | indexed_record_present | 2 |
-| tracked_record_present | 63 |
+| tracked_record_present | 77 |
 | untracked_no_tracked_record | 6 |
 
 ## Issue 1: docs-root sprawl
 
-`docs/` currently has 413 indexed files directly at its root. The target architecture gives each experiment family one owner directory; no file is moved by this task.
+`docs/` currently has 69 indexed files directly at its root. The target architecture gives each experiment family one owner directory; no file is moved by this task.
 
 | Inferred family | Root files |
 |---|---|
-| e5_c001 | 127 |
-| e5_c001_s3 | 36 |
-| e5_c001_s2 | 31 |
-| e5_c001_s2p | 30 |
-| e5_c001_s3ap | 17 |
-| pointcloud_attributes | 7 |
-| attr_outcome_regression | 4 |
-| degradation_curve | 4 |
-| bucket_crosswalk | 4 |
-| projection_gate | 4 |
-| primary4_assembly_validation | 3 |
-| population_aux | 3 |
-| qs_cheap_refine_sweep | 3 |
-| qs_rescore | 3 |
-| e5_pilot_substantiveness | 2 |
-| evidence | 2 |
+| e5_c001_s3ap | 7 |
 | boundary_map | 2 |
-| e5_pilot_block | 2 |
-| projection_zeta_ls | 2 |
-| qs_baseline178 | 2 |
-| claude_web_brief | 1 |
+| e5_c001_s2 | 2 |
 | codex_prompt_fig_mech1 | 1 |
 | context_for_review | 1 |
-| experiment_plan | 1 |
-| gsjso_loss_audit | 1 |
 | p2_index | 1 |
-| p2_makeorbreak_clean | 1 |
 | p2_현재프레임_핸드오프 | 1 |
 | progress_brief | 1 |
 | for_advisor | 1 |
-| research_context | 1 |
 | research_status | 1 |
 | session_handoff | 1 |
-| tum_noise_check | 1 |
-| tum_quality_coverage | 1 |
-| tum_transfer_check | 1 |
-| tum_tsdf_roofer_probe | 1 |
 | w3_overseg_diagnosis | 1 |
 | w4d_coacquired_crosscheck | 1 |
-| d12_metric | 1 |
-| d2_d3 | 1 |
-| d4 | 1 |
-| d4_precheck | 1 |
 | d4_손실config_감사 | 1 |
-| d5 | 1 |
-| d6_overseg_diag | 1 |
 | d6_prior_provenance | 1 |
 | d6_shape_audit | 1 |
 | d6_survey | 1 |
 | d6_textureless_fidelity | 1 |
+| e5_pilot_gate_검수_판정회부 | 1 |
+| assembly_fidelity | 1 |
+| observability_test | 1 |
+| opacity_diag | 1 |
+| overseg_faithfulness | 1 |
+| oversegmentation_lever | 1 |
+| 3b_레시피설계_레퍼런스기반 | 1 |
+| 관문a진단 | 1 |
+| 밤샘3과제_검수 | 1 |
+| 승부의지도_s3판정안건 | 1 |
+| genclose_density_assembly | 1 |
+| genclose_direct_plane | 1 |
+| genclose_flat_seed_scores | 1 |
+| issues | 1 |
+| manual_review_judgments | 1 |
+| mononormal_diag | 1 |
+| mvs_hole_check | 1 |
+| planefit_baseline | 1 |
+| pointcloud_attributes | 1 |
+| population_aux | 1 |
+| population_verify | 1 |
+| qs_baseline178_scores | 1 |
+| qs_rescore | 1 |
+| recipe_registry | 1 |
+| regression_input_snapshot | 1 |
+| s3b0_alpha_sweep | 1 |
+| s3b0_gate_scores | 1 |
+| s3b0_hsweep | 1 |
+| s3b0_mask_iou | 1 |
+| s3b0_mono_reliability | 1 |
+| s3b0_outline_observability | 1 |
+| s3b0_p0prime_scores | 1 |
 
 ## Issue 2: unresolved local Markdown links
 
 | Source | Line | Raw target | Resolved target |
 |---|---|---|---|
-| `docs/W_D2_D3.md` | 47 | docs/W2_3a_roofer_tuning.md | `docs/W2_3a_roofer_tuning.md` |
-| `docs/W_observability_inventory.md` | 83 | 0.5×0.5 km | `docs/0.5×0.5 km` |
+| `docs/archive/pre_tum_results/stage3_polyfit_analysis/phase1_REPORT.md` | 10 | ../phase2_ablation_citygml/figures/fig_polyfit_steps_large.png | `docs/archive/pre_tum_results/phase2_ablation_citygml/figures/fig_polyfit_steps_large.png` |
+| `docs/archive/pre_tum_results/stage3_polyfit_analysis/phase1_REPORT.md` | 6 | ../phase2_ablation_citygml/_gt_polyfit_test/summary.json | `docs/archive/pre_tum_results/phase2_ablation_citygml/_gt_polyfit_test/summary.json` |
+| `docs/archive/pre_tum_results/stage3_polyfit_analysis/phase1_REPORT.md` | 7 | ../../src/stage3/polyfit_cli.cpp | `docs/archive/src/stage3/polyfit_cli.cpp` |
+| `docs/archive/pre_tum_results/stage3_polyfit_analysis/phase1_REPORT.md` | 8 | ../../scripts/phase2_synthesis/gt_polyfit_test.py | `docs/archive/scripts/phase2_synthesis/gt_polyfit_test.py` |
+| `docs/archive/pre_tum_results/stage3_polyfit_analysis/phase1_REPORT.md` | 9 | ../phase2_ablation_citygml/REPORT.md | `docs/archive/pre_tum_results/phase2_ablation_citygml/REPORT.md` |
 
 ## Issue 3: run receipt gaps
 
@@ -195,7 +198,21 @@ These are gaps against the target run contract, not claims that a historical run
 | P0 | w3_1b_roofer_quality_20260612_212536 | ignored_no_tracked_record | missing_tracked_manifest;missing_tracked_versions;missing_tracked_report_or_index;no_tracked_run_receipt |
 | P0 | w3_2b_roofer_repeatability_20260612_220747 | ignored_no_tracked_record | missing_tracked_manifest;missing_tracked_versions;missing_tracked_report_or_index;no_tracked_run_receipt |
 | P0 | w3_2c_canonical_closeout_20260612_222618 | ignored_no_tracked_record | missing_tracked_manifest;missing_tracked_versions;missing_tracked_report_or_index;no_tracked_run_receipt |
+| P2 | 20260702_A0_projection_fix | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
+| P2 | 20260702_A1_zeta_ls | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
+| P2 | 20260702_A2_projection_gate_v2 | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
+| P2 | 20260703_aux_v4a | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
+| P2 | 20260703_aux_v4b | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
+| P2 | 20260703_cards_v4_kit | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
+| P2 | 20260703_datum_tie_overlay | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
+| P2 | 20260703_datum_tie_v3 | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
+| P2 | 20260703_recipe_audit | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
+| P2 | 20260704_attr_v1 | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
+| P2 | 20260706_attr_v1_1 | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
+| P2 | 20260706_attr_v1_2 | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
 | P2 | 20260706_attr_v1_3 | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
+| P2 | 20260706_regression_v1 | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
+| P2 | 20260706_regression_v1_1 | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
 | P2 | 20260707_e5_c001_8way | tracked_record_present | missing_tracked_report_or_index |
 | P2 | 20260707_e5_c001_gsdiag | tracked_record_present | missing_tracked_report_or_index |
 | P2 | 20260707_e5_pilot_attr_v1_3_append | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
@@ -271,156 +288,80 @@ A file is an orphan candidate only when it has no parsed inbound path reference 
 | `docs/CODEX_PROMPT_FIG_MECH1.md` | codex_prompt_fig_mech1 | document |
 | `docs/CONTEXT_FOR_REVIEW.md` | context_for_review | document |
 | `docs/P2_현재프레임_핸드오프.md` | p2_현재프레임_핸드오프 | document |
-| `docs/W_D_followup_audit.md` | d_followup_audit | report |
-| `docs/W_E5_C001_S1원인감사_검수·라우팅_20260708.md` | e5_c001 | report |
-| `docs/W_E5_C001_S2_checkpoint_20260710.md` | e5_c001_s2 | report |
-| `docs/W_E5_C001_S3Ap_FM재삼각측량_20260714.md` | e5_c001_s3ap | report |
-| `docs/W_E5_C001_S3Ap_FM재채점_20260715.md` | e5_c001_s3ap | report |
-| `docs/W_E5_C001_S3Ap_Phase0_20260715.md` | e5_c001_s3ap | report |
-| `docs/W_E5_C001_S3Ap_Phase1_20260715.md` | e5_c001_s3ap | report |
+| `docs/W_D4_손실config_감사.md` | d4_손실config_감사 | report |
 | `docs/W_E5_C001_S3Ap_Phase3_20260715.md` | e5_c001_s3ap | report |
-| `docs/W_E5_C001_S3_의미유도.md` | e5_c001_s3 | report |
-| `docs/W_E5_C001_corrected-S1_검수·라우팅_20260709.md` | e5_c001 | report |
-| `docs/W_E5_C001_③a_readout재실행.md` | e5_c001 | report |
-| `docs/W_E5_pilot_prep.md` | e5_pilot_prep | report |
-| `docs/W_attr_outcome_regression.md` | attr_outcome_regression | report |
-| `docs/W_matched_rms.md` | matched_rms | report |
-| `docs/W_qs_rescore_completeness_panel_20260718.md` | qs_rescore_completeness_panel | report |
-| `docs/W_report_evidence.csv` | evidence | report |
+| `docs/W_E5_pilot_gate_검수·판정회부_20260707.md` | e5_pilot_gate_검수_판정회부 | report |
+| `docs/W_③b_레시피설계_레퍼런스기반_20260707.md` | 3b_레시피설계_레퍼런스기반 | report |
+| `docs/W_관문A진단_20260725.md` | 관문a진단 | report |
 | `docs/W_밤샘3과제_검수_20260717.md` | 밤샘3과제_검수 | report |
 | `docs/W_승부의지도·S3판정안건_20260711.md` | 승부의지도_s3판정안건 | report |
-| `docs/W_재소집안건지_S3A프라임_20260714.md` | 재소집안건지_s3a프라임 | report |
-| `docs/aux_v4_change_report.md` | aux_change | report |
-| `docs/aux_v4b_change_report.md` | aux_v4b_change | report |
-| `docs/bucket_crosswalk.md` | bucket_crosswalk | document |
-| `docs/datum_tie.md` | datum_tie | document |
-| `docs/datum_tie_overlay.md` | datum_tie_overlay | document |
-| `docs/e5_c001_3b_s1_filter_contrib.csv` | e5_c001 | evidence_table |
-| `docs/e5_c001_3b_s1_inventory.csv` | e5_c001 | evidence_table |
-| `docs/e5_c001_3b_s1_issues.csv` | e5_c001 | issue_log |
-| `docs/e5_c001_3b_s1_render_cause_attribution.csv` | e5_c001 | evidence_table |
-| `docs/e5_c001_3b_s1_render_condition_strata.csv` | e5_c001 | evidence_table |
-| `docs/e5_c001_3b_s1_render_depth_supervision.csv` | e5_c001 | evidence_table |
-| `docs/e5_c001_3b_s1_render_eval_metrics.csv` | e5_c001 | evidence_table |
-| `docs/e5_c001_3b_s1_render_floater_metrics.csv` | e5_c001 | evidence_table |
-| `docs/e5_c001_3b_s1_render_readout_coverage.csv` | e5_c001 | evidence_table |
-| `docs/e5_c001_3b_s1_representative_buildings.csv` | e5_c001 | evidence_table |
-| `docs/e5_c001_3b_s1_summary.csv` | e5_c001 | report |
-| `docs/e5_c001_3b_s1_tradeoff.csv` | e5_c001 | evidence_table |
-| `docs/e5_c001_corrected_s1_filter_contrib.csv` | e5_c001 | evidence_table |
-| `docs/e5_c001_corrected_s1_inventory.csv` | e5_c001 | evidence_table |
-| `docs/e5_c001_corrected_s1_issues.csv` | e5_c001 | issue_log |
-| `docs/e5_c001_corrected_s1_recheck_building_8way.csv` | e5_c001 | evidence_table |
-| `docs/e5_c001_corrected_s1_recheck_filter_contrib.csv` | e5_c001 | evidence_table |
-| `docs/e5_c001_corrected_s1_recheck_inventory.csv` | e5_c001 | evidence_table |
-| `docs/e5_c001_corrected_s1_recheck_issues.csv` | e5_c001 | issue_log |
-| `docs/e5_c001_corrected_s1_recheck_preprune_coverage.csv` | e5_c001 | evidence_table |
-| `docs/e5_c001_corrected_s1_recheck_readout_issues.csv` | e5_c001 | issue_log |
-| `docs/e5_c001_corrected_s1_recheck_representative_buildings.csv` | e5_c001 | evidence_table |
-| `docs/e5_c001_corrected_s1_recheck_summary.csv` | e5_c001 | report |
-| `docs/e5_c001_corrected_s1_recheck_tradeoff.csv` | e5_c001 | evidence_table |
-| `docs/e5_c001_corrected_s1_representative_buildings.csv` | e5_c001 | evidence_table |
-| `docs/e5_c001_corrected_s1_summary.csv` | e5_c001 | report |
-| `docs/e5_c001_corrected_s1_tradeoff.csv` | e5_c001 | evidence_table |
-| `docs/e5_c001_s1_full_405_rescore_building.csv` | e5_c001 | evidence_table |
-| `docs/e5_c001_s1_full_405_rescore_issues.csv` | e5_c001 | issue_log |
-| `docs/e5_c001_s1_full_building_8way.csv` | e5_c001 | evidence_table |
-| `docs/e5_c001_s1_full_coverage.csv` | e5_c001 | evidence_table |
-| `docs/e5_c001_s1_full_filter_contrib.csv` | e5_c001 | evidence_table |
-| `docs/e5_c001_s1_full_inventory.csv` | e5_c001 | evidence_table |
-| `docs/e5_c001_s1_full_issues.csv` | e5_c001 | issue_log |
-| `docs/e5_c001_s1_full_normal_precheck_issues.csv` | e5_c001 | issue_log |
-| `docs/e5_c001_s1_full_normal_precheck_runtime.csv` | e5_c001 | evidence_table |
-| `docs/e5_c001_s1_full_pipeline_strips_issues.csv` | e5_c001 | issue_log |
-| `docs/e5_c001_s1_full_readout_inventory.csv` | e5_c001 | evidence_table |
-| `docs/e5_c001_s1_full_readout_issues.csv` | e5_c001 | issue_log |
-| `docs/e5_c001_s1_full_representative_buildings.csv` | e5_c001 | evidence_table |
-| `docs/e5_c001_s1_full_summary.csv` | e5_c001 | report |
-| `docs/e5_c001_s1_full_tradeoff.csv` | e5_c001 | evidence_table |
-| `docs/e5_c001_s2_405_repair_issues.csv` | e5_c001_s2 | issue_log |
-| `docs/e5_c001_s2_405_repair_status_building.csv` | e5_c001_s2 | evidence_table |
-| `docs/e5_c001_s2_405_rescore.csv` | e5_c001_s2 | evidence_table |
-| `docs/e5_c001_s2_a5_metric_prep.csv` | e5_c001_s2 | evidence_table |
-| `docs/e5_c001_s2_coverage.csv` | e5_c001_s2 | evidence_table |
-| `docs/e5_c001_s2_filter_contrib.csv` | e5_c001_s2 | evidence_table |
-| `docs/e5_c001_s2_implementation_check.csv` | e5_c001_s2 | evidence_table |
-| `docs/e5_c001_s2_inventory.csv` | e5_c001_s2 | evidence_table |
-| `docs/e5_c001_s2_issues.csv` | e5_c001_s2 | issue_log |
 | `docs/e5_c001_s2_mono_runtime.csv` | e5_c001_s2 | evidence_table |
-| `docs/e5_c001_s2_monodepth_resolution.csv` | e5_c001_s2 | evidence_table |
-| `docs/e5_c001_s2_pipeline_strips.csv` | e5_c001_s2 | evidence_table |
-| `docs/e5_c001_s2_pipeline_strips_issues.csv` | e5_c001_s2 | issue_log |
-| `docs/e5_c001_s2_readout_inventory.csv` | e5_c001_s2 | evidence_table |
-| `docs/e5_c001_s2_readout_issues.csv` | e5_c001_s2 | issue_log |
-| `docs/e5_c001_s2_representative_buildings.csv` | e5_c001_s2 | evidence_table |
-| `docs/e5_c001_s2_summary.csv` | e5_c001_s2 | report |
-| `docs/e5_c001_s2_tradeoff.csv` | e5_c001_s2 | evidence_table |
-| `docs/e5_c001_s2p_405_repair_issues.csv` | e5_c001_s2p | issue_log |
-| `docs/e5_c001_s2p_405_repair_status_building.csv` | e5_c001_s2p | evidence_table |
-| `docs/e5_c001_s2p_405_rescore.csv` | e5_c001_s2p | evidence_table |
-| `docs/e5_c001_s2p_8way_panel_inventory.csv` | e5_c001_s2p | evidence_table |
-| `docs/e5_c001_s2p_coverage.csv` | e5_c001_s2p | evidence_table |
-| `docs/e5_c001_s2p_filter_contrib.csv` | e5_c001_s2p | evidence_table |
-| `docs/e5_c001_s2p_monodepth_precheck_v2_image.csv` | e5_c001_s2p | evidence_table |
-| `docs/e5_c001_s2p_monodepth_precheck_v2_view.csv` | e5_c001_s2p | evidence_table |
-| `docs/e5_c001_s2p_monodepth_runtime_v2.csv` | e5_c001_s2p | evidence_table |
-| `docs/e5_c001_s2p_pipeline_strips.csv` | e5_c001_s2p | evidence_table |
-| `docs/e5_c001_s2p_pipeline_strips_issues.csv` | e5_c001_s2p | issue_log |
-| `docs/e5_c001_s2p_readout_inventory.csv` | e5_c001_s2p | evidence_table |
-| `docs/e5_c001_s2p_readout_issues.csv` | e5_c001_s2p | issue_log |
-| `docs/e5_c001_s2p_representative_buildings.csv` | e5_c001_s2p | evidence_table |
-| `docs/e5_c001_s2p_summary.csv` | e5_c001_s2p | report |
-| `docs/e5_c001_s2p_tradeoff.csv` | e5_c001_s2p | evidence_table |
-| `docs/e5_c001_s3_405_repair_issues.csv` | e5_c001_s3 | issue_log |
-| `docs/e5_c001_s3_coverage.csv` | e5_c001_s3 | evidence_table |
-| `docs/e5_c001_s3_filter_contrib.csv` | e5_c001_s3 | evidence_table |
-| `docs/e5_c001_s3_inventory.csv` | e5_c001_s3 | evidence_table |
-| `docs/e5_c001_s3_readout_inventory.csv` | e5_c001_s3 | evidence_table |
-| `docs/e5_c001_s3_readout_issues.csv` | e5_c001_s3 | issue_log |
-| `docs/e5_c001_s3_representative_buildings.csv` | e5_c001_s3 | evidence_table |
-| `docs/e5_c001_s3_semantic_gate_candidates.csv` | e5_c001_s3 | evidence_table |
-| `docs/e5_c001_s3_semantic_region_height_audit.csv` | e5_c001_s3 | evidence_table |
-| `docs/e5_c001_s3_semantic_region_inventory.csv` | e5_c001_s3 | evidence_table |
-| `docs/e5_c001_s3_semantic_region_mapping.csv` | e5_c001_s3 | evidence_table |
-| `docs/e5_c001_s3_semantic_region_projection_height_audit.csv` | e5_c001_s3 | evidence_table |
-| `docs/e5_c001_s3_summary.csv` | e5_c001_s3 | report |
-| `docs/e5_c001_s3_tradeoff.csv` | e5_c001_s3 | evidence_table |
-| `docs/e5_c001_s3ap_anchor_inventory.csv` | e5_c001_s3ap | evidence_table |
-| `docs/e5_c001_s3ap_fm_rescore.csv` | e5_c001_s3ap | evidence_table |
-| `docs/e5_c001_s3ap_fm_retri_registration.csv` | e5_c001_s3ap | evidence_table |
+| `docs/e5_c001_s2_monodepth_precheck.csv` | e5_c001_s2 | evidence_table |
+| `docs/e5_c001_s3ap_boundary_propagation.csv` | e5_c001_s3ap | evidence_table |
 | `docs/e5_c001_s3ap_fm_retri_rescore.csv` | e5_c001_s3ap | evidence_table |
-| `docs/e5_c001_s3ap_fm_retriangulation.csv` | e5_c001_s3ap | evidence_table |
 | `docs/e5_c001_s3ap_perturbation.csv` | e5_c001_s3ap | evidence_table |
 | `docs/e5_c001_s3ap_perturbation_cells.csv` | e5_c001_s3ap | evidence_table |
-| `docs/e5_pilot_block_candidates_summary.md` | e5_pilot_block | preregistration_or_lock |
-| `docs/e5_pilot_completion_checklist.csv` | e5_pilot_completion_checklist | evidence_table |
-| `docs/e5_pilot_seed_pair_summary.csv` | e5_pilot_seed_pair | report |
-| `docs/e5_pilot_train_prep.md` | e5_pilot_train_prep | document |
-| `docs/evidence_cards_v2_qA.md` | evidence_cards_qa | document |
-| `docs/experiments/FC_METHOD_CURRENT.md` | fc_method_current | document |
-| `docs/experiments/FC_S2_STAGE3_V1C_PROMPT.md` | fc_s2_stage3_v1c_prompt | document |
-| `docs/experiments/FC_S5_LOSS_DESIGN_SPEC_v2.md` | fc_s5_loss_design_spec | document |
-| `docs/experiments/FC_S6C_LMU5_8_DESIGN_FREEZE.md` | fc_s6c_lmu5_8_design_freeze | document |
-| `docs/experiments/FC_S6D_LMUTUAL_DIRECTIONAL_SPEC.md` | fc_s6d_lmutual_directional_spec | document |
+| `docs/e5_c001_s3ap_phase3_scores.csv` | e5_c001_s3ap | evidence_table |
+| `docs/evidence/evidence_cards_v2/evidence_cards_v2_qA.md` | evidence_cards | document |
+| `docs/evidence/judgment_kit_v4/judgment_kit_v4_report.md` | judgment_kit | report |
+| `docs/evidence/p0_g1_20260613/W3_failure_diagnosis.md` | p0_g1_20260613 | document |
+| `docs/evidence/p0_g1_20260613/W3_failure_surface_cause.md` | p0_g1_20260613 | document |
+| `docs/evidence/p0_g1_20260613/W3_overseg_diagnosis.md` | p0_g1_20260613 | document |
+| `docs/evidence/p0_g1_20260613/W3_qualitative_compare.md` | p0_g1_20260613 | document |
+| `docs/evidence/p0_g1_20260613/W3_survivor_texture_gap.md` | p0_g1_20260613 | document |
+| `docs/evidence/p0_g1_20260613/W3_survivor_texture_refine.md` | p0_g1_20260613 | document |
+| `docs/evidence/p0_g1_20260613/W3_validity_error_breakdown.md` | p0_g1_20260613 | document |
+| `docs/evidence/p0_g1_20260613/W4b_population_profile.md` | p0_g1_20260613 | document |
+| `docs/evidence/p0_g1_20260613/W4c_no_points_breakdown.csv` | p0_g1_20260613 | evidence_table |
+| `docs/evidence/p0_g1_20260613/W4c_no_points_breakdown.md` | p0_g1_20260613 | document |
+| `docs/evidence/p0_g1_20260613/W4d_coacquired_crosscheck.md` | p0_g1_20260613 | document |
+| `docs/evidence/p0_g1_20260613/W_D6_gen_status.csv` | p0_g1_20260613 | report |
+| `docs/evidence/p0_g1_20260613/W_D6_prior_provenance.md` | p0_g1_20260613 | report |
+| `docs/evidence/p0_g1_20260613/W_D6_shape_audit.csv` | p0_g1_20260613 | report |
+| `docs/evidence/p0_g1_20260613/W_D6_shape_audit.md` | p0_g1_20260613 | report |
+| `docs/evidence/p0_g1_20260613/W_D6_survey.md` | p0_g1_20260613 | report |
+| `docs/evidence/p0_g1_20260613/W_D6_survey_by_type.csv` | p0_g1_20260613 | report |
+| `docs/evidence/p0_g1_20260613/W_D6_survey_per_building.csv` | p0_g1_20260613 | report |
+| `docs/evidence/p0_g1_20260613/W_D6_textureless_fidelity.csv` | p0_g1_20260613 | report |
+| `docs/evidence/p0_g1_20260613/W_D6_textureless_fidelity.md` | p0_g1_20260613 | report |
+| `docs/evidence/p0_g1_20260613/W_assembly_fidelity.csv` | p0_g1_20260613 | report |
+| `docs/evidence/p0_g1_20260613/W_assembly_fidelity.md` | p0_g1_20260613 | report |
+| `docs/evidence/p0_g1_20260613/W_observability_test.md` | p0_g1_20260613 | report |
+| `docs/evidence/p0_g1_20260613/W_opacity_diag.md` | p0_g1_20260613 | report |
+| `docs/evidence/p0_g1_20260613/W_overseg_faithfulness.csv` | p0_g1_20260613 | report |
+| `docs/evidence/p0_g1_20260613/W_overseg_faithfulness.md` | p0_g1_20260613 | report |
+| `docs/evidence/p0_g1_20260613/W_oversegmentation_lever.csv` | p0_g1_20260613 | report |
+| `docs/evidence/p0_g1_20260613/W_oversegmentation_lever.md` | p0_g1_20260613 | report |
+| `docs/evidence/p0_g1_20260613/captions.md` | p0_g1_20260613 | document |
+| `docs/evidence/p0_g1_20260613/mcnemar_assembly.csv` | p0_g1_20260613 | evidence_table |
+| `docs/evidence/p0_g1_20260613/mcnemar_assembly.md` | p0_g1_20260613 | document |
+| `docs/evidence/p0_g1_20260613/source_mapping.md` | p0_g1_20260613 | document |
+| `docs/evidence/p0_g1_20260613/t10_survivor_texture_gap_building_metrics.csv` | p0_g1_20260613 | evidence_table |
+| `docs/evidence/p0_g1_20260613/t10_survivor_texture_gap_correlations.csv` | p0_g1_20260613 | evidence_table |
+| `docs/evidence/p0_g1_20260613/t10_survivor_texture_gap_strata.csv` | p0_g1_20260613 | evidence_table |
+| `docs/evidence/p0_g1_20260613/t11_survivor_texture_refine_correlations.csv` | p0_g1_20260613 | evidence_table |
+| `docs/evidence/p0_g1_20260613/t11_survivor_texture_refine_strata.csv` | p0_g1_20260613 | evidence_table |
+| `docs/evidence/p0_g1_20260613/t11_survivor_texture_refine_thresholds.csv` | p0_g1_20260613 | evidence_table |
+| `docs/evidence/p0_g1_20260613/t12_figure_failure_story_metadata.json` | p0_g1_20260613 | structured_record |
+| `docs/evidence/p0_g1_20260613/t13_validity_error_breakdown_building_errors.csv` | p0_g1_20260613 | evidence_table |
+| `docs/evidence/p0_g1_20260613/t13_validity_error_breakdown_quality_attribution.csv` | p0_g1_20260613 | evidence_table |
+| `docs/evidence/p0_g1_20260613/t7_failure_diagnosis_building_metrics.csv` | p0_g1_20260613 | evidence_table |
+| `docs/evidence/p0_g1_20260613/t7_failure_diagnosis_control_summary.csv` | p0_g1_20260613 | report |
+| `docs/evidence/p0_g1_20260613/t7_failure_diagnosis_thresholds.csv` | p0_g1_20260613 | evidence_table |
+| `docs/evidence/p0_g1_20260613/t9_failure_surface_cause_control_summary.csv` | p0_g1_20260613 | report |
+| `docs/evidence/p0_g1_20260613/t9_failure_surface_cause_thresholds.csv` | p0_g1_20260613 | evidence_table |
+| `docs/evidence/p0_g1_20260613/w4b_population_profile_building_metrics.csv` | p0_g1_20260613 | evidence_table |
+| `docs/evidence/p0_g1_20260613/w4b_population_profile_summary.csv` | p0_g1_20260613 | report |
 | `docs/experiments/er3_review_sources.md` | er3_review_sources | document |
+| `docs/experiments/tum2twin_surface_proxy_rv1/reports/metric_contract_rv1.md` | tum2twin_surface_proxy_rv1 | document |
+| `docs/experiments/tum2twin_surface_proxy_rv1/reports/repo_audit_rv1_20260728_2327.md` | tum2twin_surface_proxy_rv1 | document |
 | `docs/genclose_direct_plane.csv` | genclose_direct_plane | evidence_table |
-| `docs/judgment_kit_v4_report.md` | judgment_kit | report |
-| `docs/metric_contract_rv1.md` | metric_contract_rv1 | document |
 | `docs/mononormal_diag.csv` | mononormal_diag | evidence_table |
 | `docs/mvs_hole_check.csv` | mvs_hole_check | evidence_table |
-| `docs/overnight_summary.md` | overnight | report |
 | `docs/planefit_baseline.csv` | planefit_baseline | evidence_table |
-| `docs/projection_datum_unitcheck.csv` | projection_datum_unitcheck | evidence_table |
-| `docs/projection_gate_v2.md` | projection_gate | document |
-| `docs/projection_zeta_ls.csv` | projection_zeta_ls | evidence_table |
-| `docs/qs_cheap_refine_pilot.csv` | qs_cheap_refine_pilot | evidence_table |
-| `docs/qs_rescore_fixed_conditions.csv` | qs_rescore_fixed_conditions | evidence_table |
-| `docs/qs_rescore_hausdorff_spotcheck.csv` | qs_rescore_hausdorff_spotcheck | evidence_table |
+| `docs/qs_baseline178_scores.csv` | qs_baseline178_scores | evidence_table |
 | `docs/qs_rescore_pairs.csv` | qs_rescore | evidence_table |
-| `docs/qs_rescore_summary.csv` | qs_rescore | report |
-| `docs/qs_rescore_topview_panel.csv` | qs_rescore_topview_panel | evidence_table |
-| `docs/repo_audit_rv1_20260728_2327.md` | repo_audit_rv1_2327 | document |
-| `docs/research/REPO_STORAGE_AUDIT.md` | repo_storage_audit | document |
+| `docs/research/preregistration/fusion_w1/사전등록_관문A_v2·SE3채택재판정_20260725.md` | fusion_w1 | preregistration_or_lock |
 | `docs/s3b0_gate_scores.csv` | s3b0_gate_scores | evidence_table |
 | `docs/s3b0_hsweep.csv` | s3b0_hsweep | evidence_table |
 | `docs/s3b0_mask_iou.csv` | s3b0_mask_iou | evidence_table |
@@ -428,11 +369,10 @@ A file is an orphan candidate only when it has no parsed inbound path reference 
 | `docs/s3b0_outline_observability.csv` | s3b0_outline_observability | evidence_table |
 | `docs/s3b0_p0prime_scores.csv` | s3b0_p0prime_scores | evidence_table |
 | `docs/s3b0_semantic_lineage.md` | s3b0_semantic_lineage | document |
-| `docs/texture_anchor_check.md` | texture_anchor_check | document |
 | `docs/사전등록_관문A_v2·SE3채택재판정_20260725.md` | 사전등록_관문a_se3채택재판정 | preregistration_or_lock |
+| `docs/사전등록서_품질축본선_승인잠금v4_20260721.md` | 사전등록서_품질축본선_승인잠금 | preregistration_or_lock |
 | `docs/사전등록서_품질축본선_초안v1.2_20260718.md` | 사전등록서_품질축본선_초안 | preregistration_or_lock |
 | `docs/원격프롬프트_S2_방향자리_사슬4arm·선행묶음_20260710.md` | 원격프롬프트_s2_방향자리_사슬4arm_선행묶음 | document |
-| `docs/품질축본선_1파_구현부록잠금v1_20260722.md` | 품질축본선_1파_구현부록잠금 | preregistration_or_lock |
 | `phases/p0-audit/docs/P0_입력치환Audit_실험설계서_v1_20260610.docx` | p0_입력치환audit_실험설계서 | binary_document |
 | `phases/p0-audit/docs/W2_1_roofer_default.md` | w2_1_roofer_default | document |
 | `phases/p0-audit/docs/W2_1b_als_roofer_failure_memo.csv` | w2_1b_als_roofer_failure_memo | evidence_table |
@@ -460,7 +400,6 @@ A file is an orphan candidate only when it has no parsed inbound path reference 
 | `phases/p0-audit/docs/W2_3a_dev_subset.csv` | w2_3a_dev_subset | evidence_table |
 | `phases/p0-audit/docs/W2_3a_grid_results.csv` | w2_3a_grid_results | evidence_table |
 | `phases/p0-audit/docs/W2_3a_paired_success.csv` | w2_3a_paired_success | evidence_table |
-| `phases/p0-audit/docs/W2_3a_roofer_tuning.md` | w2_3a_roofer_tuning | document |
 | `phases/p0-audit/docs/W2_3a_selected_params.csv` | w2_3a_selected_params | evidence_table |
 | `phases/p0-audit/docs/W2_3a_tuned_paired_status.csv` | w2_3a_tuned_paired_status | evidence_table |
 | `phases/p0-audit/docs/W2_3b_bucket_summary.csv` | w2_3b_bucket | report |
@@ -502,13 +441,10 @@ A file is an orphan candidate only when it has no parsed inbound path reference 
 | `phases/p0-audit/docs/W3_failure_surface_cause_control_summary.csv` | w3_failure_surface_cause_control | report |
 | `phases/p0-audit/docs/W3_failure_surface_cause_thresholds.csv` | w3_failure_surface_cause_thresholds | evidence_table |
 | `phases/p0-audit/docs/W3_figure_failure_story_metadata.json` | w3_figure_failure_story_metadata | structured_record |
-| `phases/p0-audit/docs/W3_qualitative_compare.md` | w3_qualitative_compare | document |
-| `phases/p0-audit/docs/W3_summary.md` | w3 | report |
 | `phases/p0-audit/docs/W3_survivor_texture_gap.md` | w3_survivor_texture_gap | document |
 | `phases/p0-audit/docs/W3_survivor_texture_gap_building_metrics.csv` | w3_survivor_texture_gap_building | evidence_table |
 | `phases/p0-audit/docs/W3_survivor_texture_gap_correlations.csv` | w3_survivor_texture_gap_correlations | evidence_table |
 | `phases/p0-audit/docs/W3_survivor_texture_gap_strata.csv` | w3_survivor_texture_gap_strata | evidence_table |
-| `phases/p0-audit/docs/W3_survivor_texture_refine.md` | w3_survivor_texture_refine | document |
 | `phases/p0-audit/docs/W3_survivor_texture_refine_building_metrics.csv` | w3_survivor_texture_refine_building | evidence_table |
 | `phases/p0-audit/docs/W3_survivor_texture_refine_correlations.csv` | w3_survivor_texture_refine_correlations | evidence_table |
 | `phases/p0-audit/docs/W3_survivor_texture_refine_strata.csv` | w3_survivor_texture_refine_strata | evidence_table |
@@ -517,9 +453,15 @@ A file is an orphan candidate only when it has no parsed inbound path reference 
 | `phases/p0-audit/docs/W3_validity_error_breakdown_building_errors.csv` | w3_validity_error_breakdown_building_errors | evidence_table |
 | `phases/p0-audit/docs/W3_validity_error_breakdown_quality_attribution.csv` | w3_validity_error_breakdown_quality_attribution | evidence_table |
 | `phases/p0-audit/docs/W3_validity_error_breakdown_type_by_input.csv` | w3_validity_error_breakdown_type_by_input | evidence_table |
-| `phases/p0-audit/docs/W4b_population_profile.md` | w4b_population_profile | document |
-
-Only the first 250 of 260 orphan candidates are shown.
+| `phases/p0-audit/docs/W4b_population_profile_building_metrics.csv` | w4b_population_profile_building | evidence_table |
+| `phases/p0-audit/docs/W4b_population_profile_summary.csv` | w4b_population_profile | report |
+| `phases/p0-audit/docs/W4c_no_points_breakdown.csv` | w4c_no_points_breakdown | evidence_table |
+| `phases/p0-audit/docs/W4c_no_points_breakdown_meta.json` | w4c_no_points_breakdown_meta | structured_record |
+| `phases/p0-audit/docs/dim_v1_classification_stats.md` | dim_classification_stats | document |
+| `phases/p0-audit/docs/dim_v1_stats.md` | dim_stats | document |
+| `phases/p0-audit/docs/footprints_summary.md` | footprints | report |
+| `phases/p0-audit/docs/opf2colmap_summary.md` | opf2colmap | report |
+| `phases/p0-audit/docs/scene_aoi_buildings.csv` | scene_aoi_buildings | evidence_table |
 
 ## Required human decisions before migration
 

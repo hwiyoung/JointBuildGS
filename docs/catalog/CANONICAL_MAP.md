@@ -6,9 +6,27 @@
 
 | Canonical purpose | Path | Evidence |
 |---|---|---|
-| experiment_plan | `docs/EXPERIMENT_PLAN.md` | Root AGENTS.md names this as a primary experiment-plan document. |
-| research_context | `docs/RESEARCH_CONTEXT.md` | Root AGENTS.md names this as a primary research-context document. |
-| quality_axis_main_preregistration_lock | `docs/사전등록서_품질축본선_승인잠금v4_20260721.md` | Root AGENTS.md explicitly defines this v4 file as the approval lock. |
+| e5_c001_3b_s1_review | `docs/experiments/e5_c001_3b_s1/reports/W_E5_C001_③b_S1_검수·라우팅_20260708.md` | Reviewed E5 C001 migration decision for the 3b S1 review. |
+| e5_c001_8way_report | `docs/experiments/e5_c001_8way/reports/W_E5_C001_8way.md` | Reviewed E5 C001 migration decision for the 8-way report. |
+| e5_c001_corrected_s1_review | `docs/experiments/e5_c001_corrected_s1/reports/W_E5_C001_corrected-S1_검수·라우팅_20260709.md` | Reviewed E5 C001 migration decision for the corrected S1 review. |
+| e5_c001_corrected_s1_recheck_review | `docs/experiments/e5_c001_corrected_s1_recheck/reports/W_E5_C001_corrected-S1_재점검_검수·해석_20260709.md` | Reviewed E5 C001 migration decision for the corrected S1 recheck. |
+| e5_c001_gs_diagnostic_report | `docs/experiments/e5_c001_gsdiag/reports/W_E5_C001_GS진단.md` | Reviewed E5 C001 migration decision for the GS diagnostic report. |
+| e5_c001_readout_ablation_report | `docs/experiments/e5_c001_readout_ablation/reports/W_E5_C001_③a_readout재실행.md` | Reviewed E5 C001 migration decision for the readout ablation report. |
+| e5_c001_render_floater_audit | `docs/experiments/e5_c001_render/reports/W_E5_C001_렌더플로터점검.md` | Reviewed E5 C001 migration decision for the render floater audit. |
+| e5_c001_s1_audit_review | `docs/experiments/e5_c001_s1_audit/reports/W_E5_C001_S1원인감사_검수·라우팅_20260708.md` | Reviewed E5 C001 migration decision for the S1 cause audit review. |
+| e5_c001_s1_full_review | `docs/experiments/e5_c001_s1_full/reports/W_E5_C001_S1완성판_검수·회부_20260710.md` | Reviewed E5 C001 migration decision for the S1 full review. |
+| e5_c001_s2_interim_review | `docs/experiments/e5_c001_s2/reports/W_E5_C001_S2_중간검수·Arm3회부_20260710.md` | Reviewed E5 C001 migration decision for the S2 interim review. |
+| e5_c001_s2_design | `docs/experiments/e5_c001_s2/reports/W_S2설계_손실비교·실험계획_20260710.md` | Reviewed E5 C001 migration decision for the S2 design. |
+| e5_c001_s2p_final_review | `docs/experiments/e5_c001_s2p/reports/W_E5_C001_S2p_검수·회부_20260711.md` | Reviewed E5 C001 migration decision for the S2p review. |
+| e5_c001_s3_report | `docs/experiments/e5_c001_s3/reports/W_E5_C001_S3_의미유도.md` | Reviewed E5 C001 migration decision for the S3 semantic-guided report. |
+| e5_c001_s3ap_fm_retriangulation_report | `docs/experiments/e5_c001_s3ap/reports/W_E5_C001_S3Ap_FM재삼각측량_20260714.md` | Reviewed E5 C001 migration decision for the S3Ap FM retriangulation report. |
+| e5_c001_s3ap_fm_rescore_report | `docs/experiments/e5_c001_s3ap/reports/W_E5_C001_S3Ap_FM재채점_20260715.md` | Reviewed E5 C001 migration decision for the S3Ap FM rescore report. |
+| e5_c001_s3ap_phase0_report | `docs/experiments/e5_c001_s3ap/reports/W_E5_C001_S3Ap_Phase0_20260715.md` | Reviewed E5 C001 migration decision for the S3Ap phase 0 report. |
+| e5_c001_s3ap_phase1_report | `docs/experiments/e5_c001_s3ap/reports/W_E5_C001_S3Ap_Phase1_20260715.md` | Reviewed E5 C001 migration decision for the S3Ap phase 1 report. |
+| e5_c001_s3ap_phase3_report | `docs/experiments/e5_c001_s3ap/reports/W_E5_C001_S3Ap_Phase3_20260715.md` | Reviewed E5 C001 migration decision for the S3Ap phase 3 report. |
+| experiment_plan | `docs/research/EXPERIMENT_PLAN.md` | Root AGENTS.md names this as a primary experiment-plan document. |
+| research_context | `docs/research/RESEARCH_CONTEXT.md` | Root AGENTS.md names this as a primary research-context document. |
+| quality_axis_main_preregistration_lock | `docs/research/preregistration/quality_axis/사전등록서_품질축본선_승인잠금v4_20260721.md` | Root AGENTS.md explicitly defines this v4 file as the approval lock. |
 
 ## Reviewed family maps
 
@@ -22,59 +40,86 @@ This table shows multi-file families and explicit/candidate canonical families. 
 
 | Family | Files | Versions seen | Canonical candidates | Target owner path |
 |---|---|---|---|---|
-| e5_c001 | 288 | - | 0 | docs/experiments/e5_c001/ |
-| evidence_cards | 110 | v2, v3 | 0 | docs/evidence/evidence_cards/ |
-| e5_c001_s3 | 94 | - | 0 | docs/experiments/e5_c001_s3/ |
-| e5_c001_s3ap | 71 | - | 0 | docs/experiments/e5_c001_s3ap/ |
-| projection_gate | 61 | v2 | 0 | docs/experiments/projection_gate/ |
-| e5_c001_s2 | 58 | - | 0 | docs/experiments/e5_c001_s2/ |
-| e5_c001_s2p | 55 | v2 | 0 | docs/experiments/e5_c001_s2p/ |
-| judgment_kit | 48 | v4 | 0 | docs/evidence/judgment_kit/ |
+| e5_c001 | 298 | - | 9 | docs/experiments/e5_c001/ |
+| p0_g1_20260613 | 123 | v6 | 0 | docs/experiments/p0_g1_20260613/ |
+| evidence_cards | 113 | v1, v2, v3 | 1 | docs/evidence/evidence_cards/ |
+| e5_c001_s3 | 95 | - | 1 | docs/experiments/e5_c001_s3/ |
+| e5_c001_s3ap | 80 | - | 5 | docs/experiments/e5_c001_s3ap/ |
+| e5_c001_s2 | 62 | - | 2 | docs/experiments/e5_c001_s2/ |
+| projection_gate | 62 | v1, v2 | 2 | docs/experiments/projection_gate/ |
+| e5_c001_s2p | 56 | v2 | 1 | docs/experiments/e5_c001_s2p/ |
+| judgment_kit | 50 | v4 | 0 | docs/evidence/judgment_kit/ |
 | e5_c001_s3b | 31 | v1 | 0 | docs/figs/e5_c001_s3b/ |
+| e5_pilot | 27 | - | 0 | docs/experiments/e5_pilot/ |
+| pointcloud_attributes | 19 | v1, v1_1, v1_2, v1_3 | 2 | docs/experiments/pointcloud_attributes/ |
 | tum_transfer | 18 | v0, v2, v6 | 0 | docs/figs/tum_transfer/ |
-| e5_pilot | 15 | - | 0 | docs/figs/e5_pilot/ |
-| pointcloud_attributes | 15 | v1, v1_1, v1_2, v1_3 | 1 | docs/experiments/pointcloud_attributes/ |
-| datum_tie_overlay | 13 | - | 0 | docs/experiments/datum_tie_overlay/ |
-| texture_anchor_check | 13 | - | 0 | docs/experiments/texture_anchor_check/ |
+| qs_rescore | 16 | - | 0 | docs/experiments/qs_rescore/ |
+| datum_tie_overlay | 14 | - | 0 | docs/experiments/datum_tie_overlay/ |
+| texture_anchor_check | 14 | - | 0 | docs/experiments/texture_anchor_check/ |
+| pre_tum_results | 13 | - | 0 | docs/archive/pre_tum_results/ |
+| tum2twin_surface_proxy_rv1 | 13 | v1 | 0 | docs/experiments/tum2twin_surface_proxy_rv1/ |
 | w_d6_shape | 12 | - | 0 | docs/figs/w_d6_shape/ |
 | w_complexity | 11 | - | 0 | docs/figs/w_complexity/ |
 | w_d12 | 9 | - | 0 | docs/figs/w_d12/ |
-| qs_rescore | 8 | - | 0 | docs/experiments/qs_rescore/ |
+| degradation_curve | 7 | - | 0 | docs/experiments/degradation_curve/ |
+| readme | 7 | - | 0 | docs/experiments/readme/ |
 | w_overseg | 7 | - | 0 | docs/figs/w_overseg/ |
-| degradation_curve | 6 | - | 0 | docs/experiments/degradation_curve/ |
+| datum_tie | 6 | - | 0 | docs/experiments/datum_tie/ |
+| e5_pilot_substantiveness | 6 | - | 0 | docs/experiments/e5_pilot_substantiveness/ |
+| footprint_conditioned | 6 | v2 | 0 | docs/experiments/footprint_conditioned/ |
+| population_aux | 6 | v3, v4 | 1 | docs/experiments/population_aux/ |
 | w_assembly | 6 | - | 0 | docs/figs/w_assembly/ |
 | w_faithful | 6 | - | 0 | docs/figs/w_faithful/ |
+| w_report_evidence | 6 | - | 0 | docs/experiments/w_report_evidence/ |
+| attr_outcome_regression | 5 | v1 | 0 | docs/experiments/attr_outcome_regression/ |
+| bucket_crosswalk | 5 | v1, v2 | 2 | docs/experiments/bucket_crosswalk/ |
+| fusion_w1 | 5 | v2 | 0 | docs/experiments/fusion_w1/ |
+| qs_baseline178 | 5 | - | 0 | docs/experiments/qs_baseline178/ |
+| qs_cheap_refine_sweep | 5 | - | 0 | docs/experiments/qs_cheap_refine_sweep/ |
+| tum_transfer_preflight | 5 | - | 0 | docs/experiments/tum_transfer_preflight/ |
 | w_d_qual | 5 | - | 0 | docs/figs/w_d_qual/ |
+| w_gssem_requal | 5 | - | 0 | docs/experiments/w_gssem_requal/ |
 | w_phaseb | 5 | - | 0 | docs/figs/w_phaseb/ |
-| attr_outcome_regression | 4 | v1 | 0 | docs/experiments/attr_outcome_regression/ |
 | attr_outcome_regression_v1 | 4 | v1 | 0 | docs/figs/attr_outcome_regression_v1/ |
-| bucket_crosswalk | 4 | v2 | 0 | docs/experiments/bucket_crosswalk/ |
-| datum_tie | 4 | - | 0 | docs/experiments/datum_tie/ |
-| qs_cheap_refine_sweep | 4 | - | 0 | docs/experiments/qs_cheap_refine_sweep/ |
+| aux_v4a | 4 | v3, v4 | 0 | docs/experiments/aux_v4a/ |
+| claude_web_brief | 4 | v3, v4, v5 | 1 | docs/experiments/claude_web_brief/ |
+| e5_pilot_block | 4 | - | 0 | docs/experiments/e5_pilot_block/ |
+| primary4_assembly_validation | 4 | - | 0 | docs/experiments/primary4_assembly_validation/ |
+| projection_datum | 4 | - | 0 | docs/experiments/projection_datum/ |
+| projection_zeta_ls | 4 | - | 0 | docs/experiments/projection_zeta_ls/ |
+| w_d4 | 4 | - | 0 | docs/experiments/w_d4/ |
 | w_d4_qual | 4 | - | 0 | docs/figs/w_d4_qual/ |
 | w_d6_textureless | 4 | - | 0 | docs/figs/w_d6_textureless/ |
-| claude_web_brief | 3 | v3, v4, v5 | 1 | docs/experiments/claude_web_brief/ |
-| e5_pilot_block | 3 | - | 0 | docs/experiments/e5_pilot_block/ |
-| population_aux | 3 | v3, v4 | 1 | docs/experiments/population_aux/ |
-| primary4_assembly_validation | 3 | - | 0 | docs/experiments/primary4_assembly_validation/ |
-| projection_zeta_ls | 3 | - | 0 | docs/experiments/projection_zeta_ls/ |
-| qs_baseline178 | 3 | - | 0 | docs/experiments/qs_baseline178/ |
+| lowtex_v5 | 3 | v5 | 0 | docs/experiments/lowtex_v5/ |
+| p0_completeness | 3 | - | 0 | docs/experiments/p0_completeness/ |
+| qs_cheap_refine_pilot | 3 | - | 0 | docs/experiments/qs_cheap_refine_pilot/ |
 | w3_1_roofer_quality | 3 | - | 0 | phases/p0-audit/docs/ |
 | w_d6 | 3 | - | 0 | docs/figs/w_d6/ |
-| w_gssem_requal | 3 | - | 0 | docs/figs/w_gssem_requal/ |
-| w_report_evidence | 3 | - | 0 | docs/figs/w_report_evidence/ |
-| aux_v4a | 2 | v3 | 0 | docs/figs/aux_v4a/ |
-| e5_pilot_substantiveness | 2 | - | 0 | docs/experiments/e5_pilot_substantiveness/ |
-| evidence | 2 | - | 0 | docs/experiments/evidence/ |
-| qs_cheap_refine_pilot | 2 | - | 0 | docs/experiments/qs_cheap_refine_pilot/ |
+| w_matched_rms | 3 | - | 0 | docs/experiments/w_matched_rms/ |
+| aux_v4b | 2 | - | 0 | docs/experiments/aux_v4b/ |
+| gsjso_loss_audit | 2 | - | 0 | docs/research/ |
+| overnight_coordination | 2 | - | 0 | docs/archive/overnight_coordination/ |
+| p2_makeorbreak | 2 | - | 0 | docs/experiments/p2_makeorbreak/ |
 | w3_1b_internal_boundary | 2 | - | 0 | phases/p0-audit/docs/ |
 | w3_2c_canonical_internal_boundary | 2 | - | 0 | phases/p0-audit/docs/ |
 | w3_2c_canonical_roofer_quality | 2 | - | 0 | phases/p0-audit/docs/ |
 | w4b_population_profile | 2 | - | 0 | phases/p0-audit/docs/ |
 | w4c_no_points_breakdown | 2 | - | 0 | phases/p0-audit/docs/ |
+| w_complexity_survey | 2 | - | 0 | docs/experiments/w_complexity_survey/ |
+| w_d12_metric | 2 | - | 0 | docs/experiments/w_d12_metric/ |
+| w_d2_d3 | 2 | - | 0 | docs/experiments/w_d2_d3/ |
+| w_d5 | 2 | - | 0 | docs/experiments/w_d5/ |
+| w_d6_overseg_diag | 2 | - | 0 | docs/experiments/w_d6_overseg_diag/ |
+| w_d_followup_audit | 2 | - | 0 | docs/research/ |
+| w_d_loss_audit | 2 | - | 0 | docs/research/ |
+| w_d_prior_full | 2 | - | 0 | docs/experiments/w_d_prior_full/ |
+| w_generation_8way | 2 | - | 0 | docs/experiments/w_generation_8way/ |
+| w_observability | 2 | - | 0 | docs/experiments/w_observability/ |
+| w_phase_b_structure | 2 | - | 0 | docs/experiments/w_phase_b_structure/ |
+| w_results_consolidation | 2 | - | 0 | docs/experiments/w_results_consolidation/ |
+| 사전등록서_품질축본선_승인잠금 | 2 | v4_20260721 | 1 | docs/research/ |
 | experiment_plan | 1 | - | 1 | docs/research/ |
 | research_context | 1 | - | 1 | docs/research/ |
-| 사전등록서_품질축본선_승인잠금 | 1 | v4_20260721 | 1 | docs/research/ |
 
 ## Reviewed pilot: boundary_map
 
