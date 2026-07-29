@@ -55,8 +55,8 @@ DATA_ROOT = "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20"
 TORCH_EXTENSIONS = "results/tum_transfer/e5_s1_full_factor/C001/torch_extensions_eval"
 FIG_DIR = REPO / "docs/figs/e5_c001_s1_full_factor"
 READOUT_FIG_DIR = FIG_DIR / "readout"
-REPORT_PATH = REPO / "docs/W_E5_C001_S1완성판_요인.md"
-TEMP_READOUT_REPORT = REPO / "docs/W_E5_C001_S1_full_factor_readout_tmp.md"
+REPORT_PATH = REPO / "docs/experiments/e5_c001_s1_full/reports/W_E5_C001_S1완성판_요인.md"
+TEMP_READOUT_REPORT = REPO / "docs/archive/e5_c001_s1_full/temporary/reports/W_E5_C001_S1_full_factor_readout_tmp.md"
 
 BASE_CONFIG = REPO / "configs/tum_mob/e5_corrected_s1_recheck/gs_e5_C001_corrected_s1_preprune_dense_r1.yaml"
 REUSE_SOURCE_RUN = "gs_e5_C001_corrected_s1_preprune_keepall_dense_r1"
@@ -65,16 +65,16 @@ REUSE_RUN = "gs_e5_C001_s1fac_w100_p050_dense_reuse"
 SHIFT_UTM = np.array([690953.0, 5336071.0, 604.0], dtype=np.float64)
 FOOTPRINTS_GEOJSON = REPO / "phases/p0-audit/data/work/footprints/lod2_ground_plan.geojson"
 
-CSV_GRAD_SHARE = REPO / "docs/e5_c001_s1_full_grad_share.csv"
-CSV_TIMELINE = REPO / "docs/e5_c001_s1_full_timeline_roofcrop.csv"
-CSV_SHEET = REPO / "docs/e5_c001_s1_full_sheet_identity.csv"
-CSV_FACTOR = REPO / "docs/e5_c001_s1_full_factor_cells.csv"
-CSV_DEPTH_SOURCE = REPO / "docs/e5_c001_s1_full_depth_source.csv"
-CSV_INVENTORY = REPO / "docs/e5_c001_s1_full_inventory.csv"
-CSV_ISSUES = REPO / "docs/e5_c001_s1_full_issues.csv"
-CSV_405_REPAIR = REPO / "docs/e5_c001_s1_full_405_rescore.csv"
-CSV_NORMAL_PRECHECK = REPO / "docs/e5_c001_s1_full_normal_precheck.csv"
-CSV_PIPELINE_STRIPS = REPO / "docs/e5_c001_s1_full_pipeline_strips.csv"
+CSV_GRAD_SHARE = REPO / "docs/experiments/e5_c001_s1_full/tables/e5_c001_s1_full_grad_share.csv"
+CSV_TIMELINE = REPO / "docs/experiments/e5_c001_s1_full/tables/e5_c001_s1_full_timeline_roofcrop.csv"
+CSV_SHEET = REPO / "docs/experiments/e5_c001_s1_full/tables/e5_c001_s1_full_sheet_identity.csv"
+CSV_FACTOR = REPO / "docs/experiments/e5_c001_s1_full/tables/e5_c001_s1_full_factor_cells.csv"
+CSV_DEPTH_SOURCE = REPO / "docs/experiments/e5_c001_s1_full/tables/e5_c001_s1_full_depth_source.csv"
+CSV_INVENTORY = REPO / "docs/experiments/e5_c001_s1_full/tables/e5_c001_s1_full_inventory.csv"
+CSV_ISSUES = REPO / "docs/experiments/e5_c001_s1_full/tables/e5_c001_s1_full_issues.csv"
+CSV_405_REPAIR = REPO / "docs/experiments/e5_c001_s1_full/tables/e5_c001_s1_full_405_rescore.csv"
+CSV_NORMAL_PRECHECK = REPO / "docs/experiments/e5_c001_s1_full/tables/e5_c001_s1_full_normal_precheck.csv"
+CSV_PIPELINE_STRIPS = REPO / "docs/experiments/e5_c001_s1_full/tables/e5_c001_s1_full_pipeline_strips.csv"
 
 TIMELINE_IDS_DENSE = ["4907202", "4908178", "4908168", "4907184"]
 TIMELINE_IDS_OTHER = ["4907202"]
@@ -503,14 +503,14 @@ def configure_ablation_module(weight: int | None = None) -> list[Cell]:
     ab.TORCH_EXTENSIONS = TORCH_EXTENSIONS
     ab.FIG_DIR = READOUT_FIG_DIR
     ab.REPORT_PATH = TEMP_READOUT_REPORT
-    ab.COVERAGE_CSV = REPO / "docs/e5_c001_s1_full_coverage.csv"
-    ab.FILTER_CSV = REPO / "docs/e5_c001_s1_full_filter_contrib.csv"
-    ab.METRICS_CSV = REPO / "docs/e5_c001_s1_full_building_8way.csv"
-    ab.SUMMARY_CSV = REPO / "docs/e5_c001_s1_full_summary.csv"
-    ab.TRADEOFF_CSV = REPO / "docs/e5_c001_s1_full_tradeoff.csv"
-    ab.CASE_CSV = REPO / "docs/e5_c001_s1_full_representative_buildings.csv"
-    ab.INVENTORY_CSV = REPO / "docs/e5_c001_s1_full_readout_inventory.csv"
-    ab.ISSUES_CSV = REPO / "docs/e5_c001_s1_full_readout_issues.csv"
+    ab.COVERAGE_CSV = REPO / "docs/experiments/e5_c001_s1_full/tables/e5_c001_s1_full_coverage.csv"
+    ab.FILTER_CSV = REPO / "docs/experiments/e5_c001_s1_full/tables/e5_c001_s1_full_filter_contrib.csv"
+    ab.METRICS_CSV = REPO / "docs/experiments/e5_c001_s1_full/tables/e5_c001_s1_full_building_8way.csv"
+    ab.SUMMARY_CSV = REPO / "docs/experiments/e5_c001_s1_full/tables/e5_c001_s1_full_summary.csv"
+    ab.TRADEOFF_CSV = REPO / "docs/experiments/e5_c001_s1_full/tables/e5_c001_s1_full_tradeoff.csv"
+    ab.CASE_CSV = REPO / "docs/experiments/e5_c001_s1_full/tables/e5_c001_s1_full_representative_buildings.csv"
+    ab.INVENTORY_CSV = REPO / "docs/experiments/e5_c001_s1_full/tables/e5_c001_s1_full_readout_inventory.csv"
+    ab.ISSUES_CSV = REPO / "docs/experiments/e5_c001_s1_full/tables/e5_c001_s1_full_readout_issues.csv"
     ab.RENDER_COVERAGE = REPO / "docs/e5_c001_s1_full_render_readout_coverage.csv"
     ab.SETTINGS = [ab.Setting("base", "S1 factor-cell canonical readout", min_obs=3, voxel=0.05, sor="on", sor_std=2.0)]
 
@@ -889,8 +889,8 @@ def coverage_mean(run_name: str) -> float | None:
 def build_factor_cells(args: argparse.Namespace) -> None:
     cells = configure_ablation_module(args.weight)
     metrics = read_csv(ab.METRICS_CSV)
-    raw = read_csv(REPO / "docs/e5_c001_8way_metrics.csv")
-    s1 = read_csv(REPO / "docs/e5_c001_3b_s1_metrics.csv")
+    raw = read_csv(REPO / "docs/experiments/e5_c001_8way/tables/e5_c001_8way_metrics.csv")
+    s1 = read_csv(REPO / "docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_metrics.csv")
     raw_by = {(r.get("source_run", ""), r.get("building_id", "")): r for r in raw}
     s1_by = {(r.get("source_run", ""), r.get("building_id", "")): r for r in s1}
     metric_by = {(r.get("run_name", ""), r.get("building_id", "")): r for r in metrics if r.get("setting") == "base"}

@@ -36,11 +36,11 @@ MODEL_REPO_HOST="/home/innopam/.cache/huggingface/hub/models--naver--MASt3R_ViTL
 MODEL_HOST="$MODEL_REPO_HOST/snapshots/$MODEL_REVISION"
 MODEL_REPO_CONTAINER="/models/mast3r_metric"
 MODEL_CONTAINER="$MODEL_REPO_CONTAINER/snapshots/$MODEL_REVISION"
-ENV_MANIFEST="docs/e5_c001_s3ap_fm_env_manifest.json"
+ENV_MANIFEST="docs/experiments/e5_c001_s3ap/manifests/e5_c001_s3ap_fm_env_manifest.json"
 ENV_MANIFEST_SHA256="7246a77569a7af1b931ad60eda7012e6e3e8f4ff81b5e10f2e3c1a2efea80d68"
 DENSE_DIAL_CONFIG="phases/p2-gsjso/configs/e5_c001_s3ap_fm_dense_dial.json"
 DENSE_DIAL_CONFIG_SHA256="72d0bef6578b9e5cbe96fb32cbf81802d3a87a92a8da5a6b5b497baba18491c9"
-DENSE_DIAL_CSV="docs/e5_c001_s3ap_fm_dense_dial.csv"
+DENSE_DIAL_CSV="docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_fm_dense_dial.csv"
 DENSE_DIAL_CSV_SHA256="5a743961cd58dc099dce3200a2465d0838dc9b4dce4f59fb787769064d4a9a26"
 PIP_FREEZE="phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_env/pip_freeze.txt"
 PIP_FREEZE_SHA256="1c556c3be3304703a2971d82b4fd320fc96d2dd682787388123130db0a586b77"
@@ -645,7 +645,7 @@ building_path = run / "fm_dense_measurements.csv"
 pair_path = run / "fm_dense_pairs.csv"
 progress_path = run / "fm_dense_progress.json"
 manifest_path = run / "fm_dense_manifest.json"
-env_path = Path("docs/e5_c001_s3ap_fm_env_manifest.json")
+env_path = Path("docs/experiments/e5_c001_s3ap/manifests/e5_c001_s3ap_fm_env_manifest.json")
 config_path = Path(
     "phases/p2-gsjso/configs/e5_c001_s3ap_fm_dense_dial.json"
 )
@@ -1629,7 +1629,7 @@ for label in ("source_sha256", "output_sha256"):
 required_sources = {
     "scripts/experiments/boundary_map/boundary_map_v3_dense.py",
     "phases/p2-gsjso/runs/20260719_boundary_map_v3/fm_dense_jobs.json",
-    "docs/e5_c001_s3ap_fm_env_manifest.json",
+    "docs/experiments/e5_c001_s3ap/manifests/e5_c001_s3ap_fm_env_manifest.json",
     "phases/p2-gsjso/configs/e5_c001_s3ap_fm_dense_dial.json",
 }
 if not required_sources <= set(manifest["source_sha256"]):
@@ -1895,9 +1895,9 @@ expected_sources = {
     "scripts/experiments/boundary_map/boundary_map_v2.py",
     "scripts/experiments/boundary_map/boundary_map_v3_dense.py",
     "scripts/experiments/boundary_map/run_boundary_map_v3_20260719.sh",
-    "docs/e5_c001_s3ap_fm_env_manifest.json",
+    "docs/experiments/e5_c001_s3ap/manifests/e5_c001_s3ap_fm_env_manifest.json",
     "phases/p2-gsjso/configs/e5_c001_s3ap_fm_dense_dial.json",
-    "docs/e5_c001_s3ap_fm_dense_dial.csv",
+    "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_fm_dense_dial.csv",
     (
         "results/tum_transfer/e5_s3_semantic_guided/C001/runs/"
         "gs_e5_C001_s3a_semantic_guided_gate/audit/"

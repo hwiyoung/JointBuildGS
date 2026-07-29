@@ -52,8 +52,8 @@ DEFAULT_MANIFEST = (
     REPO
     / "phases/p2-gsjso/runs/20260713_e5_c001_s3_track0/semantic_region_manifest.json"
 )
-OUTPUT_CSV = REPO / "docs/e5_c001_s3_idmap_class_agreement.csv"
-OUTPUT_MANIFEST = REPO / "docs/e5_c001_s3_idmap_class_agreement_manifest.json"
+OUTPUT_CSV = REPO / "docs/experiments/e5_c001_s3/tables/e5_c001_s3_idmap_class_agreement.csv"
+OUTPUT_MANIFEST = REPO / "docs/experiments/e5_c001_s3/manifests/e5_c001_s3_idmap_class_agreement_manifest.json"
 
 
 def _load_producer():

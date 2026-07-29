@@ -81,12 +81,12 @@ ORGANIZATION_TARGETS = ("4907199",)
 ALL_TARGETS = COLLAPSE_TARGETS + ORGANIZATION_TARGETS
 VIEWS_PER_BUILDING = 3
 
-TIMELINE_CSV = REPO / "docs/e5_c001_s3_timeline_roofcrop.csv"
-CACHE_INVENTORY = REPO / "docs/e5_c001_s3_semantic_region_inventory.csv"
+TIMELINE_CSV = REPO / "docs/experiments/e5_c001_s3/tables/e5_c001_s3_timeline_roofcrop.csv"
+CACHE_INVENTORY = REPO / "docs/experiments/e5_c001_s3/tables/e5_c001_s3_semantic_region_inventory.csv"
 PRIOR_FIXED_VIEW_AUDIT = (
-    REPO / "docs/e5_c001_s3_semantic_region_projection_height_audit.csv"
+    REPO / "docs/experiments/e5_c001_s3/tables/e5_c001_s3_semantic_region_projection_height_audit.csv"
 )
-OUTPUT_CSV = REPO / "docs/e5_c001_s3_checkpoint_gradient_pairing.csv"
+OUTPUT_CSV = REPO / "docs/experiments/e5_c001_s3/tables/e5_c001_s3_checkpoint_gradient_pairing.csv"
 FIG_SURVIVAL = REPO / "docs/figs/e5_c001_s3/timeline/survival_gradient_pairing.png"
 FIG_ORGANIZATION = REPO / "docs/figs/e5_c001_s3/timeline/organization_plane_residual.png"
 OUTPUT_MANIFEST = RUN_DIR / "checkpoint_gradient_pairing.json"

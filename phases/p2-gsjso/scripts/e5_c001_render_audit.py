@@ -97,7 +97,7 @@ def parse_args() -> argparse.Namespace:
     ap.add_argument("--projection-zeta", default="docs/experiments/projection_zeta_ls/tables/projection_zeta_ls.csv")
     ap.add_argument("--out-run", default="phases/p2-gsjso/runs/20260708_e5_c001_render_audit")
     ap.add_argument("--fig-dir", default="docs/figs/e5_c001_render")
-    ap.add_argument("--doc-path", default="docs/W_E5_C001_렌더플로터점검.md")
+    ap.add_argument("--doc-path", default="docs/experiments/e5_c001_render/reports/W_E5_C001_렌더플로터점검.md")
     ap.add_argument("--docs-prefix", default="docs/e5_c001_render", help="Prefix for CSV outputs before _eval_metrics.csv, etc.")
     ap.add_argument("--max-render-views", type=int, default=4)
     ap.add_argument("--max-depth-coverage-views", type=int, default=0, help="0 means all frames.")
@@ -636,7 +636,7 @@ def build_report(
 
 ## 산출 파일
 
-- 표: {p('docs/e5_c001_render_eval_metrics.csv')}, {p('docs/e5_c001_render_floater_metrics.csv')}, {p('docs/e5_c001_render_depth_supervision.csv')}, {p('docs/e5_c001_render_readout_coverage.csv')}, {p('docs/e5_c001_render_condition_strata.csv')}, {p('docs/e5_c001_render_cause_attribution.csv')}.
+- 표: {p('docs/experiments/e5_c001_render/tables/e5_c001_render_eval_metrics.csv')}, {p('docs/experiments/e5_c001_render/tables/e5_c001_render_floater_metrics.csv')}, {p('docs/experiments/e5_c001_render/tables/e5_c001_render_depth_supervision.csv')}, {p('docs/experiments/e5_c001_render/tables/e5_c001_render_readout_coverage.csv')}, {p('docs/experiments/e5_c001_render/tables/e5_c001_render_condition_strata.csv')}, {p('docs/experiments/e5_c001_render/tables/e5_c001_render_cause_attribution.csv')}.
 - 그림: {p(rel(repo, fig_dir))}/.
 - run 기록: {p(rel(repo, out_run / 'versions.txt'))}.
 

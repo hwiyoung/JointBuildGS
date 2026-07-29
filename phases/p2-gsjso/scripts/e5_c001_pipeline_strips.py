@@ -35,8 +35,8 @@ SHIFT_UTM = np.array([690953.0, 5336071.0, 604.0], dtype=np.float64)
 DATA_ROOT = REPO / "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20"
 FOOTPRINTS_GEOJSON = REPO / "phases/p0-audit/data/work/footprints/lod2_ground_plan.geojson"
 FIG_DIR = REPO / "docs/figs/e5_c001_s1_full_factor/pipeline_strips"
-CSV_STRIPS = REPO / "docs/e5_c001_s1_full_pipeline_strips.csv"
-CSV_ISSUES = REPO / "docs/e5_c001_s1_full_pipeline_strips_issues.csv"
+CSV_STRIPS = REPO / "docs/experiments/e5_c001_s1_full/tables/e5_c001_s1_full_pipeline_strips.csv"
+CSV_ISSUES = REPO / "docs/experiments/e5_c001_s1_full/tables/e5_c001_s1_full_pipeline_strips_issues.csv"
 REPAIR_ROOT = REPO / "phases/p0-audit/runs/e5p_405_repair_20260709_C001"
 TARGET_INITIAL = ["4907202", "4908168", "4907185", "4907184", "60098", "8568392"]
 TARGET_FACTOR = ["4907202", "4908168", "4907185", "4907184"]
@@ -427,8 +427,8 @@ def initial_conditions() -> list[StripCondition]:
             "S1 dense",
             "gs_e5_C001_s1_dense_r1",
             REPO / "results/tum_transfer/e5_3b_s1/C001/runs/gs_e5_C001_s1_dense_r1/ckpt/final.pt",
-            REPO / "docs/e5_c001_3b_s1_coverage.csv",
-            REPO / "docs/e5_c001_3b_s1_metrics.csv",
+            REPO / "docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_coverage.csv",
+            REPO / "docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_metrics.csv",
             "e5p_3b_s1_20260708_C001",
         ),
         StripCondition(
@@ -436,8 +436,8 @@ def initial_conditions() -> list[StripCondition]:
             "corrected recheck keepall dense",
             "gs_e5_C001_corrected_s1_preprune_keepall_dense_r1",
             REPO / "results/tum_transfer/e5_corrected_s1_recheck/C001/runs/gs_e5_C001_corrected_s1_preprune_keepall_dense_r1/ckpt/final.pt",
-            REPO / "docs/e5_c001_corrected_s1_recheck_preprune_coverage.csv",
-            REPO / "docs/e5_c001_corrected_s1_recheck_building_8way.csv",
+            REPO / "docs/experiments/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_preprune_coverage.csv",
+            REPO / "docs/experiments/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_building_8way.csv",
             "e5p_corrected_s1_recheck_20260709_C001",
         ),
     ]
@@ -452,8 +452,8 @@ def factor_conditions(weight: int | None) -> list[StripCondition]:
             cell.role,
             cell.run_name,
             factor.CKPT_ROOT / cell.run_name / "ckpt/final.pt",
-            REPO / "docs/e5_c001_s1_full_coverage.csv",
-            REPO / "docs/e5_c001_s1_full_building_8way.csv",
+            REPO / "docs/experiments/e5_c001_s1_full/tables/e5_c001_s1_full_coverage.csv",
+            REPO / "docs/experiments/e5_c001_s1_full/tables/e5_c001_s1_full_building_8way.csv",
             factor.P0_RUN_ID,
         )
         for cell in cells

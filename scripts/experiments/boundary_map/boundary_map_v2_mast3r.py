@@ -72,7 +72,7 @@ SCENE_REF = DATA / "work/opf/opf/scene_reference_frame.json"
 CAMERAS = DATA / "work/colmap/sparse/0/cameras.txt"
 IMAGES = DATA / "work/colmap/sparse/0/images.txt"
 PROJECTION_DATUM = REPO / "configs/projection_datum.json"
-ENV_MANIFEST = REPO / "docs/e5_c001_s3ap_fm_env_manifest.json"
+ENV_MANIFEST = REPO / "docs/experiments/e5_c001_s3ap/manifests/e5_c001_s3ap_fm_env_manifest.json"
 AUX_SCRIPT = P2_SHARED_SCRIPT_DIR / "population_aux_v3.py"
 DATUM_SCRIPT = P2_SHARED_SCRIPT_DIR / "projection_datum.py"
 

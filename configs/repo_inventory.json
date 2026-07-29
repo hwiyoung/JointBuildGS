@@ -29,7 +29,8 @@
   ],
   "path_migration_manifests": [
     "docs/catalog/migrations/BOUNDARY_MAP_PATHS.csv",
-    "docs/catalog/migrations/DOCUMENT_FAMILIES_WAVE1_PATHS.csv"
+    "docs/catalog/migrations/DOCUMENT_FAMILIES_WAVE1_PATHS.csv",
+    "docs/catalog/migrations/E5_C001_PATHS.csv"
   ],
   "inventory_control_paths": [
     "docs/README.md",
@@ -37,7 +38,9 @@
     "docs/catalog/migrations/BOUNDARY_MAP_PATHS.csv",
     "docs/catalog/migrations/BOUNDARY_MAP_SCRIPT_PATHS.csv",
     "docs/catalog/migrations/DOCUMENT_FAMILIES_WAVE1_PATHS.csv",
+    "docs/catalog/migrations/E5_C001_PATHS.csv",
     "docs/catalog/families/DOCUMENT_FAMILIES_WAVE1.md",
+    "docs/catalog/families/E5_C001.md",
     "docs/catalog/TOP_LEVEL_DIRECTORY_CONTRACT.md",
     "docs/catalog/TARGET_INFORMATION_ARCHITECTURE.md",
     "phases/README.md"
@@ -57,6 +60,96 @@
       "path": "docs/research/preregistration/quality_axis/사전등록서_품질축본선_승인잠금v4_20260721.md",
       "canonical_for": "quality_axis_main_preregistration_lock",
       "reason": "Root AGENTS.md explicitly defines this v4 file as the approval lock."
+    },
+    {
+      "path": "docs/experiments/e5_c001_8way/reports/W_E5_C001_8way.md",
+      "canonical_for": "e5_c001_8way_report",
+      "reason": "Reviewed E5 C001 migration decision for the 8-way report."
+    },
+    {
+      "path": "docs/experiments/e5_c001_gsdiag/reports/W_E5_C001_GS진단.md",
+      "canonical_for": "e5_c001_gs_diagnostic_report",
+      "reason": "Reviewed E5 C001 migration decision for the GS diagnostic report."
+    },
+    {
+      "path": "docs/experiments/e5_c001_s1_full/reports/W_E5_C001_S1완성판_검수·회부_20260710.md",
+      "canonical_for": "e5_c001_s1_full_review",
+      "reason": "Reviewed E5 C001 migration decision for the S1 full review."
+    },
+    {
+      "path": "docs/experiments/e5_c001_s1_audit/reports/W_E5_C001_S1원인감사_검수·라우팅_20260708.md",
+      "canonical_for": "e5_c001_s1_audit_review",
+      "reason": "Reviewed E5 C001 migration decision for the S1 cause audit review."
+    },
+    {
+      "path": "docs/experiments/e5_c001_s2/reports/W_E5_C001_S2_중간검수·Arm3회부_20260710.md",
+      "canonical_for": "e5_c001_s2_interim_review",
+      "reason": "Reviewed E5 C001 migration decision for the S2 interim review."
+    },
+    {
+      "path": "docs/experiments/e5_c001_s2p/reports/W_E5_C001_S2p_검수·회부_20260711.md",
+      "canonical_for": "e5_c001_s2p_final_review",
+      "reason": "Reviewed E5 C001 migration decision for the S2p review."
+    },
+    {
+      "path": "docs/experiments/e5_c001_s3ap/reports/W_E5_C001_S3Ap_FM재삼각측량_20260714.md",
+      "canonical_for": "e5_c001_s3ap_fm_retriangulation_report",
+      "reason": "Reviewed E5 C001 migration decision for the S3Ap FM retriangulation report."
+    },
+    {
+      "path": "docs/experiments/e5_c001_s3ap/reports/W_E5_C001_S3Ap_FM재채점_20260715.md",
+      "canonical_for": "e5_c001_s3ap_fm_rescore_report",
+      "reason": "Reviewed E5 C001 migration decision for the S3Ap FM rescore report."
+    },
+    {
+      "path": "docs/experiments/e5_c001_s3ap/reports/W_E5_C001_S3Ap_Phase0_20260715.md",
+      "canonical_for": "e5_c001_s3ap_phase0_report",
+      "reason": "Reviewed E5 C001 migration decision for the S3Ap phase 0 report."
+    },
+    {
+      "path": "docs/experiments/e5_c001_s3ap/reports/W_E5_C001_S3Ap_Phase1_20260715.md",
+      "canonical_for": "e5_c001_s3ap_phase1_report",
+      "reason": "Reviewed E5 C001 migration decision for the S3Ap phase 1 report."
+    },
+    {
+      "path": "docs/experiments/e5_c001_s3ap/reports/W_E5_C001_S3Ap_Phase3_20260715.md",
+      "canonical_for": "e5_c001_s3ap_phase3_report",
+      "reason": "Reviewed E5 C001 migration decision for the S3Ap phase 3 report."
+    },
+    {
+      "path": "docs/experiments/e5_c001_s3/reports/W_E5_C001_S3_의미유도.md",
+      "canonical_for": "e5_c001_s3_report",
+      "reason": "Reviewed E5 C001 migration decision for the S3 semantic-guided report."
+    },
+    {
+      "path": "docs/experiments/e5_c001_corrected_s1/reports/W_E5_C001_corrected-S1_검수·라우팅_20260709.md",
+      "canonical_for": "e5_c001_corrected_s1_review",
+      "reason": "Reviewed E5 C001 migration decision for the corrected S1 review."
+    },
+    {
+      "path": "docs/experiments/e5_c001_corrected_s1_recheck/reports/W_E5_C001_corrected-S1_재점검_검수·해석_20260709.md",
+      "canonical_for": "e5_c001_corrected_s1_recheck_review",
+      "reason": "Reviewed E5 C001 migration decision for the corrected S1 recheck."
+    },
+    {
+      "path": "docs/experiments/e5_c001_readout_ablation/reports/W_E5_C001_③a_readout재실행.md",
+      "canonical_for": "e5_c001_readout_ablation_report",
+      "reason": "Reviewed E5 C001 migration decision for the readout ablation report."
+    },
+    {
+      "path": "docs/experiments/e5_c001_3b_s1/reports/W_E5_C001_③b_S1_검수·라우팅_20260708.md",
+      "canonical_for": "e5_c001_3b_s1_review",
+      "reason": "Reviewed E5 C001 migration decision for the 3b S1 review."
+    },
+    {
+      "path": "docs/experiments/e5_c001_render/reports/W_E5_C001_렌더플로터점검.md",
+      "canonical_for": "e5_c001_render_floater_audit",
+      "reason": "Reviewed E5 C001 migration decision for the render floater audit."
+    },
+    {
+      "path": "docs/experiments/e5_c001_s2/reports/W_S2설계_손실비교·실험계획_20260710.md",
+      "canonical_for": "e5_c001_s2_design",
+      "reason": "Reviewed E5 C001 migration decision for the S2 design."
     }
   ],
   "reviewed_family_maps": [

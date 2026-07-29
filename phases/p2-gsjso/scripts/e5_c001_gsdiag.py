@@ -34,20 +34,20 @@ from e5_pilot_gate_tools import C001_IDS, READOUT_STRING
 REPO = Path(__file__).resolve().parents[3]
 RUN_ID = "20260707_e5_c001_gsdiag"
 RUN_DIR = Path("phases/p2-gsjso/runs") / RUN_ID
-REPORT_PATH = Path("docs/W_E5_C001_GS진단.md")
+REPORT_PATH = Path("docs/experiments/e5_c001_gsdiag/reports/W_E5_C001_GS진단.md")
 FIG_DIR = Path("docs/figs/e5_c001_gsdiag")
 
-PC_METRICS_CSV = Path("docs/e5_c001_gsdiag_pointcloud_metrics.csv")
-PC_SUMMARY_CSV = Path("docs/e5_c001_gsdiag_pointcloud_source_summary.csv")
-PAIR_DELTA_CSV = Path("docs/e5_c001_gsdiag_pair_deltas.csv")
-VIDEO_CSV = Path("docs/e5_c001_gsdiag_video_layer.csv")
-GEN_FAILURE_CSV = Path("docs/e5_c001_gsdiag_generation_failures.csv")
-SHAPE_CSV = Path("docs/e5_c001_gsdiag_shape_metrics.csv")
-FLATTENING_CSV = Path("docs/e5_c001_gsdiag_flattening_location.csv")
-VALIDITY_CSV = Path("docs/e5_c001_gsdiag_validity_errors.csv")
-VALIDITY_SUMMARY_CSV = Path("docs/e5_c001_gsdiag_validity_error_summary.csv")
-ROUTING_CSV = Path("docs/e5_c001_gsdiag_routing.csv")
-SUMMARY_CSV = Path("docs/e5_c001_gsdiag_headline_summary.csv")
+PC_METRICS_CSV = Path("docs/experiments/e5_c001_gsdiag/tables/e5_c001_gsdiag_pointcloud_metrics.csv")
+PC_SUMMARY_CSV = Path("docs/experiments/e5_c001_gsdiag/tables/e5_c001_gsdiag_pointcloud_source_summary.csv")
+PAIR_DELTA_CSV = Path("docs/experiments/e5_c001_gsdiag/tables/e5_c001_gsdiag_pair_deltas.csv")
+VIDEO_CSV = Path("docs/experiments/e5_c001_gsdiag/tables/e5_c001_gsdiag_video_layer.csv")
+GEN_FAILURE_CSV = Path("docs/experiments/e5_c001_gsdiag/tables/e5_c001_gsdiag_generation_failures.csv")
+SHAPE_CSV = Path("docs/experiments/e5_c001_gsdiag/tables/e5_c001_gsdiag_shape_metrics.csv")
+FLATTENING_CSV = Path("docs/experiments/e5_c001_gsdiag/tables/e5_c001_gsdiag_flattening_location.csv")
+VALIDITY_CSV = Path("docs/experiments/e5_c001_gsdiag/tables/e5_c001_gsdiag_validity_errors.csv")
+VALIDITY_SUMMARY_CSV = Path("docs/experiments/e5_c001_gsdiag/tables/e5_c001_gsdiag_validity_error_summary.csv")
+ROUTING_CSV = Path("docs/experiments/e5_c001_gsdiag/tables/e5_c001_gsdiag_routing.csv")
+SUMMARY_CSV = Path("docs/experiments/e5_c001_gsdiag/tables/e5_c001_gsdiag_headline_summary.csv")
 
 RNG = np.random.default_rng(20260707)
 GRID_CELL_M = 0.50
@@ -905,7 +905,7 @@ def write_report(
         "",
         "## 조건·불안정성",
         "",
-        "- 조건 층화는 영상층 표의 텍스처/관측 열과 `docs/e5_c001_8way_strata_summary.csv`를 같이 읽는다.",
+        "- 조건 층화는 영상층 표의 텍스처/관측 열과 `docs/experiments/e5_c001_8way/tables/e5_c001_8way_strata_summary.csv`를 같이 읽는다.",
         "- 씨드 불안정성은 `docs/e5_pilot_seed_pair_status.csv`의 r1/r2 flip과 생성 상세표의 `seed_flag`로 연결했다. 2씨드라 방향만 기록했다.",
         "",
         "## 종합·라우팅",
@@ -916,7 +916,7 @@ def write_report(
         "",
         "- `사전등록서_본비교실험E5·기준레시피_v1_20260706.md` §4(측정)·§5(생성/유효성/품질 축)·§10(규약).",
         "- `기준문서_방법론·모집단·비교설계_v1.md` 부록 A/D.",
-        "- `docs/W_E5_C001_8way.md`, `docs/e5_baselines_199_manifest.json`.",
+        "- `docs/experiments/e5_c001_8way/reports/W_E5_C001_8way.md`, `docs/e5_baselines_199_manifest.json`.",
         "- P0 텍스처/유효성 진단: `phases/p0-audit/docs/G1_package/t9_failure_surface_cause_building_metrics.csv`, `phases/p0-audit/docs/G1_package/t11_survivor_texture_refine_building_metrics.csv`, `phases/p0-audit/docs/G1_package/t13_validity_error_breakdown_type_by_input.csv`.",
         "- 요청문에 적힌 `docs/W_E5_C001_8way_분석·199판단_20260707.md`는 현재 checkout에서 발견하지 못했다. 잠금본과 어긋나는 경우 잠금본을 우선한다.",
         "",

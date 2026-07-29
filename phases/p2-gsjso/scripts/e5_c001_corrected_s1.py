@@ -29,8 +29,8 @@ DATA_ROOT = "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20"
 TORCH_EXTENSIONS = "results/tum_transfer/e5_corrected_s1/C001/torch_extensions_eval"
 FIG_DIR = REPO / "docs/figs/e5_c001_corrected_s1"
 READOUT_FIG_DIR = FIG_DIR / "readout"
-REPORT_PATH = REPO / "docs/W_E5_C001_corrected_S1.md"
-TEMP_READOUT_REPORT = REPO / "docs/W_E5_C001_corrected_S1_readout_tmp.md"
+REPORT_PATH = REPO / "docs/experiments/e5_c001_corrected_s1/reports/W_E5_C001_corrected_S1.md"
+TEMP_READOUT_REPORT = REPO / "docs/archive/e5_c001_corrected_s1/temporary/reports/W_E5_C001_corrected_S1_readout_tmp.md"
 
 RUN_NAMES = [
     "gs_e5_C001_corrected_s1_sparse_r1",
@@ -64,14 +64,14 @@ def configure() -> None:
     s1.TEMP_READOUT_REPORT = TEMP_READOUT_REPORT
     s1.S1_RUN_NAMES = RUN_NAMES
     s1.configure_ablation_module()
-    s1.ab.COVERAGE_CSV = REPO / "docs/e5_c001_corrected_s1_coverage.csv"
-    s1.ab.FILTER_CSV = REPO / "docs/e5_c001_corrected_s1_filter_contrib.csv"
-    s1.ab.METRICS_CSV = REPO / "docs/e5_c001_corrected_s1_building_8way.csv"
-    s1.ab.SUMMARY_CSV = REPO / "docs/e5_c001_corrected_s1_summary.csv"
-    s1.ab.TRADEOFF_CSV = REPO / "docs/e5_c001_corrected_s1_tradeoff.csv"
-    s1.ab.CASE_CSV = REPO / "docs/e5_c001_corrected_s1_representative_buildings.csv"
-    s1.ab.INVENTORY_CSV = REPO / "docs/e5_c001_corrected_s1_inventory.csv"
-    s1.ab.ISSUES_CSV = REPO / "docs/e5_c001_corrected_s1_issues.csv"
+    s1.ab.COVERAGE_CSV = REPO / "docs/experiments/e5_c001_corrected_s1/tables/e5_c001_corrected_s1_coverage.csv"
+    s1.ab.FILTER_CSV = REPO / "docs/experiments/e5_c001_corrected_s1/tables/e5_c001_corrected_s1_filter_contrib.csv"
+    s1.ab.METRICS_CSV = REPO / "docs/experiments/e5_c001_corrected_s1/tables/e5_c001_corrected_s1_building_8way.csv"
+    s1.ab.SUMMARY_CSV = REPO / "docs/experiments/e5_c001_corrected_s1/tables/e5_c001_corrected_s1_summary.csv"
+    s1.ab.TRADEOFF_CSV = REPO / "docs/experiments/e5_c001_corrected_s1/tables/e5_c001_corrected_s1_tradeoff.csv"
+    s1.ab.CASE_CSV = REPO / "docs/experiments/e5_c001_corrected_s1/tables/e5_c001_corrected_s1_representative_buildings.csv"
+    s1.ab.INVENTORY_CSV = REPO / "docs/experiments/e5_c001_corrected_s1/tables/e5_c001_corrected_s1_inventory.csv"
+    s1.ab.ISSUES_CSV = REPO / "docs/experiments/e5_c001_corrected_s1/tables/e5_c001_corrected_s1_issues.csv"
     s1.ab.RENDER_COVERAGE = REPO / "docs/e5_c001_corrected_s1_render_readout_coverage.csv"
 
 

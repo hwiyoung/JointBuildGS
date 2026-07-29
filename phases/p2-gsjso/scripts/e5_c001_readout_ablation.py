@@ -57,17 +57,17 @@ CANON_GATE_DIR = REPO / "phases/p0-audit/runs/e5p_gate_20260707_C001"
 DATA_ROOT = "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20"
 TORCH_EXTENSIONS = "results/tum_transfer/e5_pilot/C001/torch_extensions"
 FIG_DIR = REPO / "docs/figs/e5_c001_readout_ablation"
-REPORT_PATH = REPO / "docs/W_E5_C001_③a_readout재실행.md"
-COVERAGE_CSV = REPO / "docs/e5_c001_readout_ablation_coverage.csv"
-FILTER_CSV = REPO / "docs/e5_c001_readout_ablation_filter_contrib.csv"
-METRICS_CSV = REPO / "docs/e5_c001_readout_ablation_metrics.csv"
-SUMMARY_CSV = REPO / "docs/e5_c001_readout_ablation_summary.csv"
-TRADEOFF_CSV = REPO / "docs/e5_c001_readout_ablation_tradeoff.csv"
-CASE_CSV = REPO / "docs/e5_c001_readout_ablation_representative_buildings.csv"
-INVENTORY_CSV = REPO / "docs/e5_c001_readout_ablation_inventory.csv"
-ISSUES_CSV = REPO / "docs/e5_c001_readout_ablation_issues.csv"
-BASELINE_METRICS = REPO / "docs/e5_c001_8way_metrics.csv"
-RENDER_COVERAGE = REPO / "docs/e5_c001_render_readout_coverage.csv"
+REPORT_PATH = REPO / "docs/experiments/e5_c001_readout_ablation/reports/W_E5_C001_③a_readout재실행.md"
+COVERAGE_CSV = REPO / "docs/experiments/e5_c001_readout_ablation/tables/e5_c001_readout_ablation_coverage.csv"
+FILTER_CSV = REPO / "docs/experiments/e5_c001_readout_ablation/tables/e5_c001_readout_ablation_filter_contrib.csv"
+METRICS_CSV = REPO / "docs/experiments/e5_c001_readout_ablation/tables/e5_c001_readout_ablation_metrics.csv"
+SUMMARY_CSV = REPO / "docs/experiments/e5_c001_readout_ablation/tables/e5_c001_readout_ablation_summary.csv"
+TRADEOFF_CSV = REPO / "docs/experiments/e5_c001_readout_ablation/tables/e5_c001_readout_ablation_tradeoff.csv"
+CASE_CSV = REPO / "docs/experiments/e5_c001_readout_ablation/tables/e5_c001_readout_ablation_representative_buildings.csv"
+INVENTORY_CSV = REPO / "docs/experiments/e5_c001_readout_ablation/tables/e5_c001_readout_ablation_inventory.csv"
+ISSUES_CSV = REPO / "docs/experiments/e5_c001_readout_ablation/tables/e5_c001_readout_ablation_issues.csv"
+BASELINE_METRICS = REPO / "docs/experiments/e5_c001_8way/tables/e5_c001_8way_metrics.csv"
+RENDER_COVERAGE = REPO / "docs/experiments/e5_c001_render/tables/e5_c001_render_readout_coverage.csv"
 Z_SHIFT_TO_REF_M = -45.7
 eight = None
 
@@ -1019,8 +1019,8 @@ def write_report(
         f"- 브랜치·HEAD: `{branch}` · `{head}`.",
         f"- 체크포인트: `{rel(CKPT_ROOT)}/gs_e5_C001_*_*/ckpt/final.pt` 6개.",
         f"- 기존 학습 지문: `{rel(TRAIN_RUN_DIR / 'train_fingerprints.csv')}`.",
-        f"- 정본 조립 입력/기준선: `{rel(CANON_GATE_DIR)}`와 `docs/e5_c001_8way_metrics.csv`.",
-        f"- ② readout 귀속 근거: `docs/W_E5_C001_렌더플로터점검.md`, `docs/e5_c001_render_readout_coverage.csv`.",
+        f"- 정본 조립 입력/기준선: `{rel(CANON_GATE_DIR)}`와 `docs/experiments/e5_c001_8way/tables/e5_c001_8way_metrics.csv`.",
+        f"- ② readout 귀속 근거: `docs/experiments/e5_c001_render/reports/W_E5_C001_렌더플로터점검.md`, `docs/experiments/e5_c001_render/tables/e5_c001_render_readout_coverage.csv`.",
         "- 변경한 것은 extractor의 `min_obs`, `voxel`, `SOR`뿐이다. Roofer 설정과 GS-semantic LAS prep은 기존 경로를 그대로 썼다.",
         "",
         "## ablation 매트릭스",
@@ -1051,7 +1051,7 @@ def write_report(
         "",
         "## 대표 건물",
         "",
-        "- 60098과 8568391은 ②에서 readout 폐기가 큰 사례로 지정된 두 동이다. 전체 행은 `docs/e5_c001_readout_ablation_representative_buildings.csv`에 둔다.",
+        "- 60098과 8568391은 ②에서 readout 폐기가 큰 사례로 지정된 두 동이다. 전체 행은 `docs/experiments/e5_c001_readout_ablation/tables/e5_c001_readout_ablation_representative_buildings.csv`에 둔다.",
         "",
         *md_table(
             [row for row in cases if row["setting"] in {"base", "relaxed"}],
@@ -1083,7 +1083,7 @@ def write_report(
         "",
         "## 인용",
         "",
-        "- ② 회신: `docs/W_E5_C001_렌더플로터점검.md`.",
+        "- ② 회신: `docs/experiments/e5_c001_render/reports/W_E5_C001_렌더플로터점검.md`.",
         "- 분석 연결: `docs/W_E5_C001_렌더플로터_분석·③라우팅_20260707.md`(파일이 있으면 잠금본 우선).",
         "- config 감사: `docs/W_D4_손실config_감사.md` §6.",
         "- 2DGS: [arXiv 2403.17888](https://arxiv.org/abs/2403.17888).",

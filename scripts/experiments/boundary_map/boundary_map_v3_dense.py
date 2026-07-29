@@ -70,7 +70,7 @@ MANIFEST = RUN_DIR / "fm_dense_manifest.json"
 RUN_LOG = RUN_DIR / "fm_dense.log"
 RAW_DIR = RUN_DIR / "fm_dense_raw"
 
-ENV_MANIFEST = REPO / "docs/e5_c001_s3ap_fm_env_manifest.json"
+ENV_MANIFEST = REPO / "docs/experiments/e5_c001_s3ap/manifests/e5_c001_s3ap_fm_env_manifest.json"
 S3AP_DIAL_CONFIG = (
     REPO / "phases/p2-gsjso/configs/e5_c001_s3ap_fm_dense_dial.json"
 )

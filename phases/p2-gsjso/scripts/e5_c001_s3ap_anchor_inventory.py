@@ -91,7 +91,7 @@ CKPTS = {
     "render_arm1p_r1": CKPT_ROOT / "gs_e5_C001_s2p_arm1p_dense_r1/ckpt/final.pt",
     "render_arm1p_r2": CKPT_ROOT / "gs_e5_C001_s2p_arm1p_dense_r2/ckpt/final.pt",
 }
-OUT_CSV = REPO / "docs/e5_c001_s3ap_anchor_inventory.csv"
+OUT_CSV = REPO / "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_anchor_inventory.csv"
 FIG_DIR = REPO / "docs/figs/e5_c001_s3ap_anchor_inventory"
 MANIFEST = RUN_DIR / "manifest.json"
 VIEW_CSV = RUN_DIR / "render_view_inventory.csv"

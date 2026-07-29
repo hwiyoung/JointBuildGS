@@ -67,10 +67,10 @@ TORCH_EXTENSIONS = RESULTS_ROOT / "torch_extensions"
 SEMANTIC_REGION_CACHE = REPO / "results/tum_transfer/e5_s3/C001/semantic_regions"
 DATA_ROOT = REPO / "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20"
 
-CSV_INVENTORY = REPO / "docs/e5_c001_s3_inventory.csv"
-CSV_GATE_AUDIT = REPO / "docs/e5_c001_s3_loss_gate_audit.csv"
-CSV_SEED_INVENTORY = REPO / "docs/e5_c001_s3_seed_inventory.csv"
-CACHE_INVENTORY = REPO / "docs/e5_c001_s3_semantic_region_inventory.csv"
+CSV_INVENTORY = REPO / "docs/experiments/e5_c001_s3/tables/e5_c001_s3_inventory.csv"
+CSV_GATE_AUDIT = REPO / "docs/experiments/e5_c001_s3/tables/e5_c001_s3_loss_gate_audit.csv"
+CSV_SEED_INVENTORY = REPO / "docs/experiments/e5_c001_s3/tables/e5_c001_s3_seed_inventory.csv"
+CACHE_INVENTORY = REPO / "docs/experiments/e5_c001_s3/tables/e5_c001_s3_semantic_region_inventory.csv"
 CACHE_MANIFEST = (
     REPO
     / "phases/p2-gsjso/runs/20260713_e5_c001_s3_track0/semantic_region_manifest.json"

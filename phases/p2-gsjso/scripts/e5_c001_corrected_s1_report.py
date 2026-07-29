@@ -38,7 +38,7 @@ RUN_ID = "20260709_e5_c001_corrected_s1"
 RUN_DIR = REPO / "phases/p2-gsjso/runs" / RUN_ID
 SNAP_DIR = RUN_DIR / "snapshots"
 FIG_DIR = REPO / "docs/figs/e5_c001_corrected_s1"
-REPORT = REPO / "docs/W_E5_C001_corrected_S1.md"
+REPORT = REPO / "docs/experiments/e5_c001_corrected_s1/reports/W_E5_C001_corrected_S1.md"
 
 S1_P0_RUN = REPO / "phases/p0-audit/runs/e5p_3b_s1_20260708_C001"
 CORR_P0_RUN = REPO / "phases/p0-audit/runs/e5p_corrected_s1_20260709_C001"
@@ -166,11 +166,11 @@ def coverage_by_arm(cov: pd.DataFrame, arm: str, setting: str = "base") -> float
 
 
 def make_comparison_tables() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-    s0 = pd.read_csv(REPO / "docs/e5_c001_8way_metrics.csv")
-    s1 = pd.read_csv(REPO / "docs/e5_c001_3b_s1_metrics.csv")
-    corr = pd.read_csv(REPO / "docs/e5_c001_corrected_s1_building_8way.csv")
-    s1_delta = pd.read_csv(REPO / "docs/e5_c001_3b_s1_delta.csv")
-    corr_cov = pd.read_csv(REPO / "docs/e5_c001_corrected_s1_coverage.csv")
+    s0 = pd.read_csv(REPO / "docs/experiments/e5_c001_8way/tables/e5_c001_8way_metrics.csv")
+    s1 = pd.read_csv(REPO / "docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_metrics.csv")
+    corr = pd.read_csv(REPO / "docs/experiments/e5_c001_corrected_s1/tables/e5_c001_corrected_s1_building_8way.csv")
+    s1_delta = pd.read_csv(REPO / "docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_delta.csv")
+    corr_cov = pd.read_csv(REPO / "docs/experiments/e5_c001_corrected_s1/tables/e5_c001_corrected_s1_coverage.csv")
 
     rows: list[dict[str, Any]] = []
     for arm in ["sparse", "dense", "acmp"]:
@@ -206,7 +206,7 @@ def make_comparison_tables() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
         rows.append(row)
 
     delta = pd.DataFrame(rows)
-    delta.to_csv(REPO / "docs/e5_c001_corrected_s1_delta.csv", index=False)
+    delta.to_csv(REPO / "docs/experiments/e5_c001_corrected_s1/tables/e5_c001_corrected_s1_delta.csv", index=False)
 
     breakdown = (
         corr[corr["setting"] == "base"]
@@ -215,7 +215,7 @@ def make_comparison_tables() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
         .reset_index(name="n_buildings")
         .sort_values(["arm", "status_reason"])
     )
-    breakdown.to_csv(REPO / "docs/e5_c001_corrected_s1_validity_breakdown.csv", index=False)
+    breakdown.to_csv(REPO / "docs/experiments/e5_c001_corrected_s1/tables/e5_c001_corrected_s1_validity_breakdown.csv", index=False)
 
     target_rows: list[dict[str, Any]] = []
     all_rows = pd.concat([s0, s1, corr], ignore_index=True)
@@ -245,7 +245,7 @@ def make_comparison_tables() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
                 row[f"{label}_roof_planes"] = r.get("roof_planes")
             target_rows.append(row)
     target = pd.DataFrame(target_rows)
-    target.to_csv(REPO / "docs/e5_c001_corrected_s1_target_observations.csv", index=False)
+    target.to_csv(REPO / "docs/experiments/e5_c001_corrected_s1/tables/e5_c001_corrected_s1_target_observations.csv", index=False)
     return delta, breakdown, target
 
 
@@ -523,9 +523,9 @@ def make_case_panels() -> list[Path]:
 
 
 def build_report(delta: pd.DataFrame, breakdown: pd.DataFrame, target: pd.DataFrame) -> None:
-    loss = pd.read_csv(REPO / "docs/e5_c001_corrected_s1_loss.csv")
-    density = pd.read_csv(REPO / "docs/e5_c001_corrected_s1_densification.csv")
-    summary = pd.read_csv(REPO / "docs/e5_c001_corrected_s1_summary.csv")
+    loss = pd.read_csv(REPO / "docs/experiments/e5_c001_corrected_s1/tables/e5_c001_corrected_s1_loss.csv")
+    density = pd.read_csv(REPO / "docs/experiments/e5_c001_corrected_s1/tables/e5_c001_corrected_s1_densification.csv")
+    summary = pd.read_csv(REPO / "docs/experiments/e5_c001_corrected_s1/tables/e5_c001_corrected_s1_summary.csv")
     train_fp = pd.read_csv(RUN_DIR / "train_fingerprints.csv")
     issues = pd.read_csv(REPO / "docs/e5_c001_corrected_s1_report_issues.csv") if (REPO / "docs/e5_c001_corrected_s1_report_issues.csv").exists() else pd.DataFrame(columns=["part", "severity", "message", "path"])
     tail = loss[loss["step"] >= 20000].groupby("arm").agg(
@@ -611,12 +611,12 @@ def build_report(delta: pd.DataFrame, breakdown: pd.DataFrame, target: pd.DataFr
         "",
         "## CSV 산출",
         "",
-        f"- loss: `{rel(REPO / 'docs/e5_c001_corrected_s1_loss.csv')}`",
-        f"- densification/prune: `{rel(REPO / 'docs/e5_c001_corrected_s1_densification.csv')}`",
-        f"- building 8-way: `{rel(REPO / 'docs/e5_c001_corrected_s1_building_8way.csv')}`",
-        f"- validity breakdown: `{rel(REPO / 'docs/e5_c001_corrected_s1_validity_breakdown.csv')}`",
-        f"- delta: `{rel(REPO / 'docs/e5_c001_corrected_s1_delta.csv')}`",
-        f"- target observations: `{rel(REPO / 'docs/e5_c001_corrected_s1_target_observations.csv')}`",
+        f"- loss: `{rel(REPO / 'docs/experiments/e5_c001_corrected_s1/tables/e5_c001_corrected_s1_loss.csv')}`",
+        f"- densification/prune: `{rel(REPO / 'docs/experiments/e5_c001_corrected_s1/tables/e5_c001_corrected_s1_densification.csv')}`",
+        f"- building 8-way: `{rel(REPO / 'docs/experiments/e5_c001_corrected_s1/tables/e5_c001_corrected_s1_building_8way.csv')}`",
+        f"- validity breakdown: `{rel(REPO / 'docs/experiments/e5_c001_corrected_s1/tables/e5_c001_corrected_s1_validity_breakdown.csv')}`",
+        f"- delta: `{rel(REPO / 'docs/experiments/e5_c001_corrected_s1/tables/e5_c001_corrected_s1_delta.csv')}`",
+        f"- target observations: `{rel(REPO / 'docs/experiments/e5_c001_corrected_s1/tables/e5_c001_corrected_s1_target_observations.csv')}`",
         "",
         "## 이슈·지문",
         "",
@@ -661,9 +661,9 @@ def run_report(_args: argparse.Namespace) -> None:
     copy_snapshots(
         [
             REPORT,
-            REPO / "docs/e5_c001_corrected_s1_delta.csv",
-            REPO / "docs/e5_c001_corrected_s1_validity_breakdown.csv",
-            REPO / "docs/e5_c001_corrected_s1_target_observations.csv",
+            REPO / "docs/experiments/e5_c001_corrected_s1/tables/e5_c001_corrected_s1_delta.csv",
+            REPO / "docs/experiments/e5_c001_corrected_s1/tables/e5_c001_corrected_s1_validity_breakdown.csv",
+            REPO / "docs/experiments/e5_c001_corrected_s1/tables/e5_c001_corrected_s1_target_observations.csv",
             REPO / "docs/e5_c001_corrected_s1_report_issues.csv",
         ]
     )

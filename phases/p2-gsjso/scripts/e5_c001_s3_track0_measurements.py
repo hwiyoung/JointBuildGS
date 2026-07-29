@@ -74,8 +74,8 @@ ARM1P_CONFIG = REPO / "configs/tum_mob/e5_s2p_interaction/gs_e5_C001_s2p_arm1p_d
 DATUM_CONFIG = REPO / "configs/projection_datum.json"
 NORMAL_DIR = REPO / "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy"
 
-CSV_SEED = REPO / "docs/e5_c001_s3_seed_inventory.csv"
-CSV_NORMAL = REPO / "docs/e5_c001_s3_normal_multiview.csv"
+CSV_SEED = REPO / "docs/experiments/e5_c001_s3/tables/e5_c001_s3_seed_inventory.csv"
+CSV_NORMAL = REPO / "docs/experiments/e5_c001_s3/tables/e5_c001_s3_normal_multiview.csv"
 MANIFEST = RUN_DIR / "t0_2_t0_3_manifest.json"
 
 SEED_TARGETS = ["4907199", "8568391", "8568392", "4907202", "4908168", "4908178"]

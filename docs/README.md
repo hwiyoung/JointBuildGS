@@ -12,6 +12,7 @@ This is the entry point for repository documentation. The current tree is being 
 - Boundary-map experiment family: [`experiments/boundary_map/README.md`](experiments/boundary_map/README.md)
 - Reviewed boundary-map canonical map: [`catalog/families/BOUNDARY_MAP.md`](catalog/families/BOUNDARY_MAP.md)
 - Wave-1 document family map: [`catalog/families/DOCUMENT_FAMILIES_WAVE1.md`](catalog/families/DOCUMENT_FAMILIES_WAVE1.md)
+- E5 C001 family map: [`catalog/families/E5_C001.md`](catalog/families/E5_C001.md)
 - Experiment-family index: [`experiments/README.md`](experiments/README.md)
 - Research-control index: [`research/README.md`](research/README.md)
 - Superseded-document archive: [`archive/README.md`](archive/README.md)

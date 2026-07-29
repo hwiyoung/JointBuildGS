@@ -73,9 +73,9 @@ PJPL = (
 )
 FOOTPRINTS = REPO / "results/tum_transfer/analysis/footprints_aoi.geojson"
 TRAIN_MANIFEST = REPO / "results/tum_transfer/e5_pilot/C001/C001_train_prep_manifest.json"
-ANCHOR_CSV = REPO / "docs/e5_c001_s3ap_anchor_inventory.csv"
-ENV_MANIFEST = REPO / "docs/e5_c001_s3ap_fm_env_manifest.json"
-OUT_CSV = REPO / "docs/e5_c001_s3ap_fm_rescore.csv"
+ANCHOR_CSV = REPO / "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_anchor_inventory.csv"
+ENV_MANIFEST = REPO / "docs/experiments/e5_c001_s3ap/manifests/e5_c001_s3ap_fm_env_manifest.json"
+OUT_CSV = REPO / "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_fm_rescore.csv"
 FIG_DIR = REPO / "docs/figs/e5_c001_s3ap_fm_rescore"
 PAIR_JSON = RUN_DIR / "pair_details.json"
 MANIFEST = RUN_DIR / "manifest.json"

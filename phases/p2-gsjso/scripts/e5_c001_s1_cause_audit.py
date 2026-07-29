@@ -39,7 +39,7 @@ RUN_ID = "20260708_e5_c001_s1_cause_audit"
 RUN_DIR = REPO / "phases/p2-gsjso/runs" / RUN_ID
 SNAP_DIR = RUN_DIR / "snapshots"
 FIG_DIR = REPO / "docs/figs/e5_c001_s1_audit"
-REPORT_PATH = REPO / "docs/W_E5_C001_S1원인감사.md"
+REPORT_PATH = REPO / "docs/experiments/e5_c001_s1_audit/reports/W_E5_C001_S1원인감사.md"
 
 S1_TRAIN_RUN = REPO / "phases/p2-gsjso/runs/20260708_e5_c001_3b_s1"
 S1_RUN_ROOT = REPO / "results/tum_transfer/e5_3b_s1/C001/runs"
@@ -47,18 +47,18 @@ S1_P0_RUN = REPO / "phases/p0-audit/runs/e5p_3b_s1_20260708_C001"
 S1_READOUT_ROOT = REPO / "results/tum_transfer/e5_3b_s1/C001/readout_ablation"
 DATA_ROOT = REPO / "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20"
 
-LOSS_CSV = REPO / "docs/e5_c001_s1_audit_loss.csv"
-DENSITY_CSV = REPO / "docs/e5_c001_s1_audit_densification.csv"
+LOSS_CSV = REPO / "docs/experiments/e5_c001_s1_audit/tables/e5_c001_s1_audit_loss.csv"
+DENSITY_CSV = REPO / "docs/experiments/e5_c001_s1_audit/tables/e5_c001_s1_audit_densification.csv"
 SERIES_CSV = REPO / "docs/e5_c001_s1_audit_event_series.csv"
-A3_CSV = REPO / "docs/e5_c001_s1_audit_a3_texture_correlation.csv"
-EIGHT_JOINED_CSV = REPO / "docs/e5_c001_s1_audit_8way_joined.csv"
-ROUTING_CSV = REPO / "docs/e5_c001_s1_audit_building_routing.csv"
-THRESHOLD_CSV = REPO / "docs/e5_c001_s1_audit_threshold_sensitivity.csv"
-ISSUES_CSV = REPO / "docs/e5_c001_s1_audit_issues.csv"
+A3_CSV = REPO / "docs/experiments/e5_c001_s1_audit/tables/e5_c001_s1_audit_a3_texture_correlation.csv"
+EIGHT_JOINED_CSV = REPO / "docs/experiments/e5_c001_s1_audit/tables/e5_c001_s1_audit_8way_joined.csv"
+ROUTING_CSV = REPO / "docs/experiments/e5_c001_s1_audit/tables/e5_c001_s1_audit_building_routing.csv"
+THRESHOLD_CSV = REPO / "docs/experiments/e5_c001_s1_audit/tables/e5_c001_s1_audit_threshold_sensitivity.csv"
+ISSUES_CSV = REPO / "docs/experiments/e5_c001_s1_audit/tables/e5_c001_s1_audit_issues.csv"
 
 RECIPE_DOC = REPO / "docs/W_③b_레시피설계_레퍼런스기반_20260707.md"
-REVIEW_DOC = REPO / "docs/W_E5_C001_③b_S1_검수·라우팅_20260708.md"
-S1_REPORT = REPO / "docs/W_E5_C001_③b_S1_표면복원.md"
+REVIEW_DOC = REPO / "docs/experiments/e5_c001_3b_s1/reports/W_E5_C001_③b_S1_검수·라우팅_20260708.md"
+S1_REPORT = REPO / "docs/experiments/e5_c001_3b_s1/reports/W_E5_C001_③b_S1_표면복원.md"
 
 S1_RUNS = {
     "sparse": "gs_e5_C001_s1_sparse_r1",
@@ -516,10 +516,10 @@ def source_key(row: dict[str, str]) -> str:
 
 
 def build_joined_tables() -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
-    base_rows = read_csv(REPO / "docs/e5_c001_8way_metrics.csv")
-    s1_rows = [r for r in read_csv(REPO / "docs/e5_c001_3b_s1_metrics.csv") if r.get("setting") == "base"]
+    base_rows = read_csv(REPO / "docs/experiments/e5_c001_8way/tables/e5_c001_8way_metrics.csv")
+    s1_rows = [r for r in read_csv(REPO / "docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_metrics.csv") if r.get("setting") == "base"]
     aux = {r["building_id"]: r for r in read_csv(REPO / "docs/experiments/population_aux/tables/population_aux_v4.csv")}
-    cov_rows = read_csv(REPO / "docs/e5_c001_3b_s1_render_readout_coverage.csv")
+    cov_rows = read_csv(REPO / "docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_render_readout_coverage.csv")
     cov_by_bid: dict[str, dict[str, list[float]]] = {}
     for row in cov_rows:
         bid = row["building_id"]
@@ -685,8 +685,8 @@ def corr(x: list[float], y: list[float], spearman: bool = False) -> float | None
 
 
 def build_a3_correlation(joined: list[dict[str, Any]], routing_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    s0_rows = read_csv(REPO / "docs/e5_c001_8way_metrics.csv")
-    s1_rows = [r for r in read_csv(REPO / "docs/e5_c001_3b_s1_metrics.csv") if r.get("setting") == "base"]
+    s0_rows = read_csv(REPO / "docs/experiments/e5_c001_8way/tables/e5_c001_8way_metrics.csv")
+    s1_rows = [r for r in read_csv(REPO / "docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_metrics.csv") if r.get("setting") == "base"]
     aux = {r["building_id"]: r for r in read_csv(REPO / "docs/experiments/population_aux/tables/population_aux_v4.csv")}
     cov = {r["building_id"]: r for r in routing_rows}
     rows: list[dict[str, Any]] = []
@@ -748,13 +748,13 @@ def build_a3_correlation(joined: list[dict[str, Any]], routing_rows: list[dict[s
                 "x_definition": "positive texture/coverage means easier input except lowtex raw columns are inverted",
             }
         )
-    write_csv(REPO / "docs/e5_c001_s1_audit_a3_building_delta.csv", rows)
+    write_csv(REPO / "docs/experiments/e5_c001_s1_audit/tables/e5_c001_s1_audit_a3_building_delta.csv", rows)
     return out
 
 
 def make_figures(joined: list[dict[str, Any]], routing_rows: list[dict[str, Any]], corr_rows: list[dict[str, Any]]) -> None:
     FIG_DIR.mkdir(parents=True, exist_ok=True)
-    delta_rows = read_csv(REPO / "docs/e5_c001_s1_audit_a3_building_delta.csv")
+    delta_rows = read_csv(REPO / "docs/experiments/e5_c001_s1_audit/tables/e5_c001_s1_audit_a3_building_delta.csv")
     if delta_rows:
         x = [num(r.get("texture_signal_1_minus_lowtex_frac")) for r in delta_rows]
         y = [num(r.get("delta_rms_s0_minus_s1_m")) for r in delta_rows]
@@ -841,7 +841,7 @@ def report(args: argparse.Namespace) -> None:
 
 def snapshot_outputs() -> None:
     SNAP_DIR.mkdir(parents=True, exist_ok=True)
-    for path in [LOSS_CSV, DENSITY_CSV, A3_CSV, EIGHT_JOINED_CSV, ROUTING_CSV, THRESHOLD_CSV, ISSUES_CSV, REPO / "docs/e5_c001_s1_audit_a3_building_delta.csv"]:
+    for path in [LOSS_CSV, DENSITY_CSV, A3_CSV, EIGHT_JOINED_CSV, ROUTING_CSV, THRESHOLD_CSV, ISSUES_CSV, REPO / "docs/experiments/e5_c001_s1_audit/tables/e5_c001_s1_audit_a3_building_delta.csv"]:
         if path.exists():
             target = SNAP_DIR / path.name
             target.write_bytes(path.read_bytes())
@@ -936,7 +936,7 @@ def write_report() -> None:
         "### A3 이득의 texture 의존성",
         "",
         f"- 관찰 한 줄: ΔRMS(S0-S1)와 `1-roof_lowtex_frac`의 Pearson r={a3_primary.get('pearson_r', '')}, Spearman r={a3_primary.get('spearman_r', '')}. per-building MVS roof depth coverage는 건물별 완제품으로 없어서 `population_aux_v4` texture/observation proxy와 render-backprojection coverage로 대체했다.",
-        f"- 표: `{rel(A3_CSV)}`, `{rel(REPO / 'docs/e5_c001_s1_audit_a3_building_delta.csv')}`. 짝 그림: `{rel(FIG_DIR / 'a3_delta_rms_texture_scatter.png')}`.",
+        f"- 표: `{rel(A3_CSV)}`, `{rel(REPO / 'docs/experiments/e5_c001_s1_audit/tables/e5_c001_s1_audit_a3_building_delta.csv')}`. 짝 그림: `{rel(FIG_DIR / 'a3_delta_rms_texture_scatter.png')}`.",
         "",
         md_table(corr_rows, ["proxy", "n", "pearson_r", "spearman_r"], 10),
         "",
