@@ -18,16 +18,16 @@ run_ids:
 
 ## 현재 읽는 순서
 
-1. [`W_anchor_census_boundary_map_v4_summary_20260720.md`](reports/W_anchor_census_boundary_map_v4_summary_20260720.md) — v4 전체 census
-2. [`W_anchor_census_supplement_boundary_map_v4_1_summary_20260720.md`](reports/W_anchor_census_supplement_boundary_map_v4_1_summary_20260720.md) — 고정 9동 보강
+1. [`W_anchor_census_boundary_map_v4_summary_20260720.md`](./reports/W_anchor_census_boundary_map_v4_summary_20260720.md) — v4 전체 census
+2. [`W_anchor_census_supplement_boundary_map_v4_1_summary_20260720.md`](./reports/W_anchor_census_supplement_boundary_map_v4_1_summary_20260720.md) — 고정 9동 보강
 3. [`boundary_map_v4_1_ladder.csv`](tables/boundary_map_v4_1_ladder.csv) — 현재 178동 셀 배정
 
 ## 정본
 
 | 목적 | 경로 |
 |---|---|
-| v4 base census summary | [`reports/W_anchor_census_boundary_map_v4_summary_20260720.md`](reports/W_anchor_census_boundary_map_v4_summary_20260720.md) |
-| v4.1 supplement summary | [`reports/W_anchor_census_supplement_boundary_map_v4_1_summary_20260720.md`](reports/W_anchor_census_supplement_boundary_map_v4_1_summary_20260720.md) |
+| v4 base census summary | [`reports/W_anchor_census_boundary_map_v4_summary_20260720.md`](./reports/W_anchor_census_boundary_map_v4_summary_20260720.md) |
+| v4.1 supplement summary | [`reports/W_anchor_census_supplement_boundary_map_v4_1_summary_20260720.md`](./reports/W_anchor_census_supplement_boundary_map_v4_1_summary_20260720.md) |
 | current 178-row assignment ladder | [`tables/boundary_map_v4_1_ladder.csv`](tables/boundary_map_v4_1_ladder.csv) |
 | v4 base provenance | [`manifests/boundary_map_v4_manifest.json`](manifests/boundary_map_v4_manifest.json) |
 | v4.1 supplement provenance | [`manifests/anchor_census_supplement_manifest.json`](manifests/anchor_census_supplement_manifest.json) |

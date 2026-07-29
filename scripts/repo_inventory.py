@@ -915,7 +915,9 @@ def write_canonical_map(
     lines.extend(["", "## Reviewed pilot: boundary_map", ""])
     if boundary_review:
         lines.append(
-            f"The lifecycle decisions below are reviewed in `{boundary_review['decision_record']}`. No file was moved, renamed, deleted, or scientifically reinterpreted."
+            f"The lifecycle decisions below are reviewed in `{boundary_review['decision_record']}`. "
+            "The paths shown are current; the exact boundary-map relocations are recorded in "
+            "`docs/catalog/migrations/BOUNDARY_MAP_PATHS.csv`, with payload bytes and scientific judgments unchanged."
         )
     else:
         lines.append("This family remains an unreviewed migration pilot.")

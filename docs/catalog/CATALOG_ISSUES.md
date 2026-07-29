@@ -6,8 +6,8 @@
 
 | Measure | Count |
 |---|---|
-| Cataloged indexed files | 1308 |
-| Files directly under docs/ | 442 |
+| Cataloged indexed files | 1311 |
+| Files directly under docs/ | 413 |
 | Distinct inferred families | 285 |
 | Local Markdown links/embeds that do not resolve | 2 |
 | Run directories | 157 |
@@ -17,13 +17,13 @@
 
 | Status | Files |
 |---|---|
-| canonical | 8 |
+| canonical | 9 |
 | canonical_candidate | 3 |
 | orphan_candidate | 260 |
 | superseded | 16 |
 | superseded_candidate | 6 |
 | supporting | 1011 |
-| temporary | 4 |
+| temporary | 6 |
 
 ### Run Git states
 
@@ -36,7 +36,7 @@
 
 ## Issue 1: docs-root sprawl
 
-`docs/` currently has 442 indexed files directly at its root. The target architecture gives each experiment family one owner directory; no file is moved by this task.
+`docs/` currently has 413 indexed files directly at its root. The target architecture gives each experiment family one owner directory; no file is moved by this task.
 
 | Inferred family | Root files |
 |---|---|
@@ -44,11 +44,8 @@
 | e5_c001_s3 | 36 |
 | e5_c001_s2 | 31 |
 | e5_c001_s2p | 30 |
-| boundary_map | 22 |
 | e5_c001_s3ap | 17 |
 | pointcloud_attributes | 7 |
-| anchor_census_supplement | 5 |
-| anchor_census | 4 |
 | attr_outcome_regression | 4 |
 | degradation_curve | 4 |
 | bucket_crosswalk | 4 |
@@ -59,6 +56,7 @@
 | qs_rescore | 3 |
 | e5_pilot_substantiveness | 2 |
 | evidence | 2 |
+| boundary_map | 2 |
 | e5_pilot_block | 2 |
 | projection_zeta_ls | 2 |
 | qs_baseline178 | 2 |
@@ -90,6 +88,8 @@
 | d6_overseg_diag | 1 |
 | d6_prior_provenance | 1 |
 | d6_shape_audit | 1 |
+| d6_survey | 1 |
+| d6_textureless_fidelity | 1 |
 
 ## Issue 2: unresolved local Markdown links
 

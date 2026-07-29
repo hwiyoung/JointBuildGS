@@ -12,9 +12,9 @@
 
 ## Reviewed family maps
 
-| Family | Decision record | Reviewed | Canonical | Supporting | Superseded |
-|---|---|---|---|---|---|
-| boundary_map | `docs/catalog/families/BOUNDARY_MAP.md` | 2026-07-29 | 5 | 14 | 16 |
+| Family | Decision record | Reviewed | Canonical | Supporting | Superseded | Temporary |
+|---|---|---|---|---|---|---|
+| boundary_map | `docs/catalog/families/BOUNDARY_MAP.md` | 2026-07-29 | 6 | 14 | 16 | 2 |
 
 ## Priority families requiring review
 
@@ -78,45 +78,48 @@ This table shows multi-file families and explicit/candidate canonical families. 
 
 ## Reviewed pilot: boundary_map
 
-The lifecycle decisions below are reviewed in `docs/catalog/families/BOUNDARY_MAP.md`. No file was moved, renamed, deleted, or scientifically reinterpreted.
+The lifecycle decisions below are reviewed in `docs/catalog/families/BOUNDARY_MAP.md`. The paths shown are current; the exact boundary-map relocations are recorded in `docs/catalog/migrations/BOUNDARY_MAP_PATHS.csv`, with payload bytes and scientific judgments unchanged.
 
 | Current path | Version | Kind | Lifecycle status | Referenced run IDs |
 |---|---|---|---|---|
-| `docs/W_anchor_census_boundary_map_v4_summary_20260720.md` | v4 | document | canonical | - |
-| `docs/W_anchor_census_supplement_boundary_map_v4_1_summary_20260720.md` | v4_1 | document | canonical | - |
-| `docs/W_boundary_map_v2_summary_20260718.md` | v2 | document | superseded | - |
-| `docs/W_boundary_map_v3_summary_20260719.md` | v3 | document | superseded | - |
-| `docs/anchor_census_ambiguous_1_99.csv` | - | table | supporting | - |
-| `docs/anchor_census_high_count_high_mad.csv` | - | table | supporting | - |
-| `docs/anchor_census_measurements.csv` | - | table | supporting | 20260719_boundary_map_v3;20260720_anchor_census |
-| `docs/anchor_census_supplement_manifest.json` | - | manifest | canonical | 20260719_boundary_map_v3;20260720_anchor_census;20260720_anchor_census_supplement |
-| `docs/anchor_census_supplement_measurements.csv` | - | table | supporting | 20260719_boundary_map_v3;20260720_anchor_census |
-| `docs/anchor_census_supplement_pairs.csv` | - | table | supporting | 20260719_boundary_map_v3;20260720_anchor_census |
-| `docs/anchor_census_supplement_same_block_reliability_pairs.csv` | - | table | supporting | 20260720_anchor_census |
-| `docs/boundary_map_boundary_cases.csv` | v1 | table | superseded | - |
-| `docs/boundary_map_confusion.csv` | v1 | table | superseded | - |
-| `docs/boundary_map_ladder.csv` | v1 | table | superseded | - |
-| `docs/boundary_map_manifest.json` | v1 | manifest | supporting | 20260716_boundary_map |
-| `docs/boundary_map_metrics.csv` | v1 | table | superseded | 20260716_boundary_map |
-| `docs/boundary_map_v2_boundary_cases.csv` | v2 | table | supporting | - |
-| `docs/boundary_map_v2_conditional_targets.csv` | v2 | table | superseded | - |
-| `docs/boundary_map_v2_confusion.csv` | v2 | table | superseded | - |
-| `docs/boundary_map_v2_ladder.csv` | v2 | table | superseded | - |
-| `docs/boundary_map_v2_manifest.json` | v2 | manifest | supporting | 20260716_C;20260716_boundary_map;20260718_boundary_map_v2;t3r_model_lock_matches_20260716 |
-| `docs/boundary_map_v2_metrics.csv` | v2 | table | superseded | 20260716_C |
-| `docs/boundary_map_v3_conditional_targets.csv` | v3 | table | supporting | - |
-| `docs/boundary_map_v3_confusion.csv` | v3 | table | supporting | - |
-| `docs/boundary_map_v3_ladder.csv` | v3 | table | superseded | - |
-| `docs/boundary_map_v3_manifest.json` | v3 | manifest | supporting | 20260714_e5_c001_s3ap_fm_env;20260718_boundary_map_v2;20260719_boundary_map_v3 |
-| `docs/boundary_map_v3_metrics.csv` | v3 | table | supporting | 20260716_C |
-| `docs/boundary_map_v4_1_ladder.csv` | v4_1 | table | canonical | 20260719_boundary_map_v3;20260720_anchor_census;20260720_anchor_census_supplement;w2_1_roofer_default_20260612_152729 |
-| `docs/boundary_map_v4_ladder.csv` | v4 | table | superseded | 20260719_boundary_map_v3;20260720_anchor_census;w2_1_roofer_default_20260612_152729 |
-| `docs/boundary_map_v4_manifest.json` | v4 | manifest | canonical | 20260719_boundary_map_v3;20260720_anchor_census;w2_1_roofer_default_20260612_152729 |
-| `docs/boundary_map_v4_targets.csv` | v4 | table | superseded | - |
-| `docs/figs/boundary_map/boundary_map_ladder.png` | - | figure | superseded | - |
-| `docs/figs/boundary_map_v2/boundary_map_v2_ladder.png` | v2 | figure | superseded | - |
-| `docs/figs/boundary_map_v3/boundary_map_v3_map.png` | v3 | figure | superseded | - |
-| `docs/figs/boundary_map_v4/boundary_map_v4_map.png` | v4 | figure | supporting | - |
+| `docs/archive/boundary_map/v1/figs/boundary_map_ladder.png` | v1 | figure | superseded | - |
+| `docs/archive/boundary_map/v1/tables/boundary_map_boundary_cases.csv` | v1 | table | superseded | - |
+| `docs/archive/boundary_map/v1/tables/boundary_map_confusion.csv` | v1 | table | superseded | - |
+| `docs/archive/boundary_map/v1/tables/boundary_map_ladder.csv` | v1 | table | superseded | - |
+| `docs/archive/boundary_map/v1/tables/boundary_map_metrics.csv` | v1 | table | superseded | 20260716_boundary_map |
+| `docs/archive/boundary_map/v2/figs/boundary_map_v2_ladder.png` | v2 | figure | superseded | - |
+| `docs/archive/boundary_map/v2/reports/W_boundary_map_v2_summary_20260718.md` | v2 | document | superseded | - |
+| `docs/archive/boundary_map/v2/tables/boundary_map_v2_conditional_targets.csv` | v2 | table | superseded | - |
+| `docs/archive/boundary_map/v2/tables/boundary_map_v2_confusion.csv` | v2 | table | superseded | - |
+| `docs/archive/boundary_map/v2/tables/boundary_map_v2_ladder.csv` | v2 | table | superseded | - |
+| `docs/archive/boundary_map/v2/tables/boundary_map_v2_metrics.csv` | v2 | table | superseded | 20260716_C |
+| `docs/archive/boundary_map/v3/figs/boundary_map_v3_map.png` | v3 | figure | superseded | - |
+| `docs/archive/boundary_map/v3/reports/W_boundary_map_v3_summary_20260719.md` | v3 | document | superseded | - |
+| `docs/archive/boundary_map/v3/tables/boundary_map_v3_ladder.csv` | v3 | table | superseded | - |
+| `docs/archive/boundary_map/v4/tables/boundary_map_v4_ladder.csv` | v4 | table | superseded | 20260719_boundary_map_v3;20260720_anchor_census;w2_1_roofer_default_20260612_152729 |
+| `docs/archive/boundary_map/v4/tables/boundary_map_v4_targets.csv` | v4 | table | superseded | - |
+| `docs/boundary_map_v2_ladder.csv` | v2 | table | temporary | - |
+| `docs/boundary_map_v4_1_ladder.csv` | v4_1 | table | temporary | 20260719_boundary_map_v3;20260720_anchor_census;20260720_anchor_census_supplement;w2_1_roofer_default_20260612_152729 |
+| `docs/experiments/boundary_map/README.md` | - | document | canonical | 20260716_boundary_map;20260718_boundary_map_v2;20260719_boundary_map_v3;20260720_anchor_census;20260720_anchor_census_supplement |
+| `docs/experiments/boundary_map/manifests/anchor_census_supplement_manifest.json` | - | manifest | canonical | 20260719_boundary_map_v3;20260720_anchor_census;20260720_anchor_census_supplement |
+| `docs/experiments/boundary_map/manifests/boundary_map_manifest.json` | - | manifest | supporting | 20260716_boundary_map |
+| `docs/experiments/boundary_map/manifests/boundary_map_v2_manifest.json` | v2 | manifest | supporting | 20260716_C;20260716_boundary_map;20260718_boundary_map_v2;t3r_model_lock_matches_20260716 |
+| `docs/experiments/boundary_map/manifests/boundary_map_v3_manifest.json` | v3 | manifest | supporting | 20260714_e5_c001_s3ap_fm_env;20260718_boundary_map_v2;20260719_boundary_map_v3 |
+| `docs/experiments/boundary_map/manifests/boundary_map_v4_manifest.json` | v4 | manifest | canonical | 20260719_boundary_map_v3;20260720_anchor_census;w2_1_roofer_default_20260612_152729 |
+| `docs/experiments/boundary_map/reports/W_anchor_census_boundary_map_v4_summary_20260720.md` | v4 | document | canonical | - |
+| `docs/experiments/boundary_map/reports/W_anchor_census_supplement_boundary_map_v4_1_summary_20260720.md` | v4_1 | document | canonical | - |
+| `docs/experiments/boundary_map/tables/anchor_census_ambiguous_1_99.csv` | - | table | supporting | - |
+| `docs/experiments/boundary_map/tables/anchor_census_high_count_high_mad.csv` | - | table | supporting | - |
+| `docs/experiments/boundary_map/tables/anchor_census_measurements.csv` | - | table | supporting | 20260719_boundary_map_v3;20260720_anchor_census |
+| `docs/experiments/boundary_map/tables/anchor_census_supplement_measurements.csv` | - | table | supporting | 20260719_boundary_map_v3;20260720_anchor_census |
+| `docs/experiments/boundary_map/tables/anchor_census_supplement_pairs.csv` | - | table | supporting | 20260719_boundary_map_v3;20260720_anchor_census |
+| `docs/experiments/boundary_map/tables/anchor_census_supplement_same_block_reliability_pairs.csv` | - | table | supporting | 20260720_anchor_census |
+| `docs/experiments/boundary_map/tables/boundary_map_v2_boundary_cases.csv` | v2 | table | supporting | - |
+| `docs/experiments/boundary_map/tables/boundary_map_v3_conditional_targets.csv` | v3 | table | supporting | - |
+| `docs/experiments/boundary_map/tables/boundary_map_v3_confusion.csv` | v3 | table | supporting | - |
+| `docs/experiments/boundary_map/tables/boundary_map_v3_metrics.csv` | v3 | table | supporting | 20260716_C |
+| `docs/experiments/boundary_map/tables/boundary_map_v4_1_ladder.csv` | v4_1 | table | canonical | 20260719_boundary_map_v3;20260720_anchor_census;20260720_anchor_census_supplement;w2_1_roofer_default_20260612_152729 |
+| `docs/figs/boundary_map/boundary_map_v4_map.png` | v4 | figure | supporting | - |
 
 ### Related run directories
 
