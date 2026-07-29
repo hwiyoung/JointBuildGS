@@ -10,6 +10,7 @@ x-p0-common: &p0-common
     - ../runs:/workspace/runs
     - ../scripts:/workspace/scripts:ro
     - ../docs:/workspace/docs
+    - ../../../docs/evidence/p0_g1_20260613:/workspace/docs/G1_package
 
 services:
   colmap:
