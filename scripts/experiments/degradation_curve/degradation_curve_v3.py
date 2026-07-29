@@ -66,10 +66,10 @@ NOISE_FIGURE = FIGURE_DIR / "degradation_curve_noise.png"
 DENSITY_FIGURE = FIGURE_DIR / "degradation_curve_density.png"
 
 SNAPSHOT = DOCS / "regression_input_snapshot.csv"
-LADDER = DOCS / "boundary_map_v4_1_ladder.csv"
-BASELINE_SCORES = DOCS / "qs_baseline178_scores.csv"
-BASELINE_SUMMARY = DOCS / "qs_baseline178_summary.csv"
-BASELINE_MANIFEST = DOCS / "qs_baseline178_manifest.json"
+LADDER = DOCS / "experiments/boundary_map/tables/boundary_map_v4_1_ladder.csv"
+BASELINE_SCORES = DOCS / "experiments/qs_baseline178/tables/qs_baseline178_scores.csv"
+BASELINE_SUMMARY = DOCS / "experiments/qs_baseline178/tables/qs_baseline178_summary.csv"
+BASELINE_MANIFEST = DOCS / "experiments/qs_baseline178/manifests/qs_baseline178_manifest.json"
 FOOTPRINTS_GPKG = (
     REPO / "phases/p0-audit/data/work/w2/footprints_scene_aoi.gpkg"
 )

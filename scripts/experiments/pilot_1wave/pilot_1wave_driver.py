@@ -79,6 +79,7 @@ CONDITION_ARMS = {
 }
 EXECUTION_TREE_PATHS = (
     "src",
+    "scripts/experiments/pilot_1wave",
     "phases/p2-gsjso/scripts",
     "phases/p2-gsjso/configs",
     "Dockerfile",

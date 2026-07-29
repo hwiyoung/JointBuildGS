@@ -659,6 +659,9 @@ class DriverContractTest(unittest.TestCase):
                 driver.require_clean_execution_tree(self.repo)
         self.assertNotIn("docs", driver.EXECUTION_TREE_PATHS)
         self.assertNotIn("phases/p2-gsjso/runs", driver.EXECUTION_TREE_PATHS)
+        self.assertIn(
+            "scripts/experiments/pilot_1wave", driver.EXECUTION_TREE_PATHS
+        )
 
     def test_config_cannot_rebind_materialized_inventory(self) -> None:
         payload = json.loads(self.manifest.read_text())

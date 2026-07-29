@@ -262,6 +262,13 @@ class CommandContractTest(unittest.TestCase):
             argument.startswith("NVIDIA_VISIBLE_DEVICES=") for argument in command
         ))
         self.assertEqual(command.count("CUDA_VISIBLE_DEVICES=0"), 1)
+        self.assertEqual(
+            command.count(
+                "PYTHONPATH=/workspace/JointBuildGS/scripts/experiments/"
+                "pilot_1wave:/workspace/JointBuildGS"
+            ),
+            1,
+        )
         self.assertEqual(command.count("--sor"), 1)
         self.assertEqual(command[command.index("--sor") + 1], "on")
         self.assertIn("--no-sem", command)

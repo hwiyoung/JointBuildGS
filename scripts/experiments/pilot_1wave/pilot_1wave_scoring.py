@@ -45,8 +45,9 @@ except ModuleNotFoundError:  # pragma: no cover - exercised in the pinned tools 
 REPO = Path(__file__).resolve().parents[3]
 SCRIPT_DIR = Path(__file__).resolve().parent
 P2_SHARED_SCRIPT_DIR = REPO / "phases/p2-gsjso/scripts"
-if str(SCRIPT_DIR) not in sys.path:
-    sys.path.insert(0, str(SCRIPT_DIR))
+for import_path in (P2_SHARED_SCRIPT_DIR, SCRIPT_DIR):
+    if str(import_path) not in sys.path:
+        sys.path.insert(0, str(import_path))
 
 from pilot_1wave_readout_lineage import (  # noqa: E402
     LINEAGE_SCHEMA as READOUT_LINEAGE_SCHEMA,

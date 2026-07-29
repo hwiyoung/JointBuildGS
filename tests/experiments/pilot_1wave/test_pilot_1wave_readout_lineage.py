@@ -5,6 +5,7 @@ from __future__ import annotations
 import importlib.util
 import json
 import shutil
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -14,6 +15,9 @@ import torch
 
 
 REPO = Path(__file__).resolve().parents[3]
+PILOT_SCRIPT_DIR = REPO / "scripts/experiments/pilot_1wave"
+if str(PILOT_SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(PILOT_SCRIPT_DIR))
 SCRIPT = REPO / "phases/p2-gsjso/scripts/e5_c001_readout_extract_ablation.py"
 SPEC = importlib.util.spec_from_file_location("p1w_readout_extract", SCRIPT)
 assert SPEC is not None and SPEC.loader is not None

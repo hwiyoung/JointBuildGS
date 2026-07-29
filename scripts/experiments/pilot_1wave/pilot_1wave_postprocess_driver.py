@@ -1045,6 +1045,11 @@ def dev_extract_command(job: Job, attempt: Path) -> list[str]:
         "-e", f"XDG_CACHE_HOME={container_path(GSPLAT_RUNTIME / 'xdg_cache')}",
         "-e", f"TORCH_EXTENSIONS_DIR={container_path(GSPLAT_RUNTIME / 'torch_extensions')}",
         "-e", "PYTHONDONTWRITEBYTECODE=1",
+        "-e", (
+            "PYTHONPATH="
+            f"{CONTAINER_REPO / 'scripts/experiments/pilot_1wave'}:"
+            f"{CONTAINER_REPO}"
+        ),
         "-v", f"{REPO}:{CONTAINER_REPO}",
         "-w", str(CONTAINER_REPO),
         DEV_IMAGE_ID,
