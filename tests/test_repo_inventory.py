@@ -1,4 +1,5 @@
 import importlib.util
+import hashlib
 import sys
 import tempfile
 import unittest
@@ -172,6 +173,41 @@ class RepoInventoryUnitTests(unittest.TestCase):
         repo_inventory.add_version_candidates(rows, [])
         self.assertEqual(rows[0]["proposed_status"], "supporting")
         self.assertEqual(rows[1]["proposed_status"], "canonical")
+
+    def test_path_migration_resolves_old_reference_and_checks_hash(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            new_path = root / "docs" / "experiments" / "boundary_map" / "tables" / "ladder.csv"
+            new_path.parent.mkdir(parents=True)
+            new_path.write_bytes(b"building_id,cell\nA,1\n")
+            digest = hashlib.sha256(new_path.read_bytes()).hexdigest()
+            manifest = root / "docs" / "catalog" / "migrations" / "paths.csv"
+            manifest.parent.mkdir(parents=True)
+            manifest.write_text(
+                "migration_id,old_path,new_path,lifecycle_status,old_path_retained,sha256\n"
+                f"T,docs/old.csv,docs/experiments/boundary_map/tables/ladder.csv,canonical,false,{digest}\n",
+                encoding="utf-8",
+            )
+            migrations = repo_inventory.load_path_migrations(
+                root,
+                {"path_migration_manifests": ["docs/catalog/migrations/paths.csv"]},
+            )
+            relation = repo_inventory.Relation(
+                "docs/report.md",
+                "mentions_path",
+                "docs/old.csv",
+                "no",
+                "docs/old.csv",
+                "text",
+                4,
+            )
+            resolved = repo_inventory.apply_path_migrations(root, [relation], migrations)
+            self.assertEqual(
+                resolved[0].target_path,
+                "docs/experiments/boundary_map/tables/ladder.csv",
+            )
+            self.assertEqual(resolved[0].target_exists, "yes")
+            self.assertEqual(resolved[0].confidence, "text+path_migration")
 
 
 if __name__ == "__main__":

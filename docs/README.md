@@ -9,6 +9,7 @@ This is the entry point for repository documentation. The current tree is being 
 - Repository and phase rules: [`../AGENTS.md`](../AGENTS.md), [`../phases/README.md`](../phases/README.md)
 - Top-level directory contract: [`catalog/TOP_LEVEL_DIRECTORY_CONTRACT.md`](catalog/TOP_LEVEL_DIRECTORY_CONTRACT.md)
 - Target information architecture: [`catalog/TARGET_INFORMATION_ARCHITECTURE.md`](catalog/TARGET_INFORMATION_ARCHITECTURE.md)
+- Boundary-map experiment family: [`experiments/boundary_map/README.md`](experiments/boundary_map/README.md)
 - Reviewed boundary-map canonical map: [`catalog/families/BOUNDARY_MAP.md`](catalog/families/BOUNDARY_MAP.md)
 - Storage audit and policy: [`research/REPO_STORAGE_AUDIT.md`](research/REPO_STORAGE_AUDIT.md), [`research/PROPOSED_STORAGE_POLICY.md`](research/PROPOSED_STORAGE_POLICY.md)
 

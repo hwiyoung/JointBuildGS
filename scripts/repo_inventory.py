@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import csv
 import fnmatch
+import hashlib
 import json
 import os
 import posixpath
@@ -129,6 +130,73 @@ def reviewed_document_map(config: dict[str, Any]) -> dict[str, dict[str, Any]]:
             item["reviewed_on"] = str(family.get("reviewed_on", ""))
             reviewed[path] = item
     return reviewed
+
+
+def load_path_migrations(repo_root: Path, config: dict[str, Any]) -> dict[str, dict[str, str]]:
+    migrations: dict[str, dict[str, str]] = {}
+    new_paths: set[str] = set()
+    required = {"migration_id", "old_path", "new_path", "lifecycle_status", "old_path_retained", "sha256"}
+    for manifest_path in config.get("path_migration_manifests", []):
+        absolute = repo_root / str(manifest_path)
+        if not absolute.is_file():
+            raise ValueError(f"path migration manifest is absent: {manifest_path}")
+        with absolute.open("r", encoding="utf-8", newline="") as handle:
+            reader = csv.DictReader(handle)
+            if reader.fieldnames is None or not required.issubset(reader.fieldnames):
+                raise ValueError(f"path migration manifest schema mismatch: {manifest_path}")
+            for row in reader:
+                old_path = row["old_path"]
+                new_path = row["new_path"]
+                if old_path in migrations:
+                    raise ValueError(f"duplicate migrated old path: {old_path}")
+                if new_path in new_paths:
+                    raise ValueError(f"duplicate migrated new path: {new_path}")
+                retained = row["old_path_retained"]
+                if retained not in {"true", "false"}:
+                    raise ValueError(f"invalid old_path_retained for {old_path}: {retained}")
+                expected_sha = row["sha256"]
+                if not re.fullmatch(r"[0-9a-f]{64}", expected_sha):
+                    raise ValueError(f"invalid migration SHA-256 for {old_path}")
+                new_absolute = repo_root / new_path
+                if not new_absolute.is_file():
+                    raise ValueError(f"migrated target is absent: {new_path}")
+                actual_sha = hashlib.sha256(new_absolute.read_bytes()).hexdigest()
+                if actual_sha != expected_sha:
+                    raise ValueError(f"migrated target hash mismatch: {new_path}")
+                old_absolute = repo_root / old_path
+                if old_absolute.exists() != (retained == "true"):
+                    raise ValueError(f"old-path retention mismatch: {old_path}")
+                if retained == "true" and hashlib.sha256(old_absolute.read_bytes()).hexdigest() != expected_sha:
+                    raise ValueError(f"compatibility mirror hash mismatch: {old_path}")
+                migrations[old_path] = dict(row)
+                new_paths.add(new_path)
+    return migrations
+
+
+def apply_path_migrations(
+    repo_root: Path,
+    relations: Sequence[Relation],
+    migrations: dict[str, dict[str, str]],
+) -> list[Relation]:
+    resolved: list[Relation] = []
+    for relation in relations:
+        migration = migrations.get(relation.target_path)
+        if migration is None:
+            resolved.append(relation)
+            continue
+        new_path = migration["new_path"]
+        resolved.append(
+            Relation(
+                relation.source_path,
+                relation.relation,
+                new_path,
+                "yes" if (repo_root / new_path).exists() else "no",
+                relation.evidence,
+                f"{relation.confidence}+path_migration",
+                relation.line,
+            )
+        )
+    return resolved
 
 
 def find_repo_root(start: Path) -> Path:
@@ -807,13 +875,14 @@ def write_canonical_map(
                 counts["canonical"],
                 counts["supporting"],
                 counts["superseded"],
+                counts["temporary"],
             )
         )
     if reviewed_table:
         lines.append(
             markdown_table(
                 reviewed_table,
-                ["Family", "Decision record", "Reviewed", "Canonical", "Supporting", "Superseded"],
+                ["Family", "Decision record", "Reviewed", "Canonical", "Supporting", "Superseded", "Temporary"],
             )
         )
     else:
@@ -1034,6 +1103,7 @@ def build_inventory(repo_root: Path, config: dict[str, Any]) -> tuple[list[dict[
     oldest, newest = history_map(repo_root, set(scoped_paths))
     canonical = {item["path"]: item for item in config.get("canonical_documents", [])}
     reviewed = reviewed_document_map(config)
+    migrations = load_path_migrations(repo_root, config)
     text_extensions = set(config["text_extensions"])
     max_scan = int(config["max_text_scan_bytes"])
 
@@ -1113,6 +1183,7 @@ def build_inventory(repo_root: Path, config: dict[str, Any]) -> tuple[list[dict[
 
     add_reviewed_relations(repo_root, reviewed, relations)
     add_version_candidates(rows, relations)
+    relations = apply_path_migrations(repo_root, relations, migrations)
     inbound = Counter(
         relation.target_path
         for relation in relations

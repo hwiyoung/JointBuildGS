@@ -426,12 +426,12 @@ run_finalize() {
     issue "AC-C3 finalize failure: log=$DRIVER_REL/logs/finalize.log; learning_runs_started=0."
     commit_stage \
       "AC-C3-PARTIAL: retain anchor census finalize failure" \
-      docs/issues.md "$RUN_REL" docs/anchor_census_measurements.csv \
-      docs/boundary_map_v4_ladder.csv docs/boundary_map_v4_targets.csv \
-      docs/anchor_census_ambiguous_1_99.csv \
-      docs/anchor_census_high_count_high_mad.csv \
-      docs/boundary_map_v4_manifest.json \
-      docs/W_anchor_census_boundary_map_v4_summary_20260720.md \
+      docs/issues.md "$RUN_REL" docs/experiments/boundary_map/tables/anchor_census_measurements.csv \
+      docs/archive/boundary_map/v4/tables/boundary_map_v4_ladder.csv docs/archive/boundary_map/v4/tables/boundary_map_v4_targets.csv \
+      docs/experiments/boundary_map/tables/anchor_census_ambiguous_1_99.csv \
+      docs/experiments/boundary_map/tables/anchor_census_high_count_high_mad.csv \
+      docs/experiments/boundary_map/manifests/boundary_map_v4_manifest.json \
+      docs/experiments/boundary_map/reports/W_anchor_census_boundary_map_v4_summary_20260720.md \
       docs/figs/boundary_map_v4 || true
     write_status "C-3" "failed" "finalize command failed"
     write_state "C-3" "failed" "finalize command failed"
@@ -442,26 +442,26 @@ run_finalize() {
     issue "AC-C3 public QA failure: generated outputs retained; log=$DRIVER_REL/logs/public_qa.log; learning_runs_started=0."
     commit_stage \
       "AC-C3-PARTIAL: retain boundary-map-v4 QA failure" \
-      docs/issues.md "$RUN_REL" docs/anchor_census_measurements.csv \
-      docs/boundary_map_v4_ladder.csv docs/boundary_map_v4_targets.csv \
-      docs/anchor_census_ambiguous_1_99.csv \
-      docs/anchor_census_high_count_high_mad.csv \
-      docs/boundary_map_v4_manifest.json \
-      docs/W_anchor_census_boundary_map_v4_summary_20260720.md \
+      docs/issues.md "$RUN_REL" docs/experiments/boundary_map/tables/anchor_census_measurements.csv \
+      docs/archive/boundary_map/v4/tables/boundary_map_v4_ladder.csv docs/archive/boundary_map/v4/tables/boundary_map_v4_targets.csv \
+      docs/experiments/boundary_map/tables/anchor_census_ambiguous_1_99.csv \
+      docs/experiments/boundary_map/tables/anchor_census_high_count_high_mad.csv \
+      docs/experiments/boundary_map/manifests/boundary_map_v4_manifest.json \
+      docs/experiments/boundary_map/reports/W_anchor_census_boundary_map_v4_summary_20260720.md \
       docs/figs/boundary_map_v4 || true
     write_status "C-3" "failed" "public QA failed"
     write_state "C-3" "failed" "public QA failed"
     return 1
   fi
-  issue "AC-C3 boundary_map_v4 recorded: measurements_sha256=$(sha docs/anchor_census_measurements.csv); run_manifest_sha256=$(sha "$RUN_MANIFEST"); ladder_sha256=$(sha docs/boundary_map_v4_ladder.csv); targets_sha256=$(sha docs/boundary_map_v4_targets.csv); lowcount_sha256=$(sha docs/anchor_census_ambiguous_1_99.csv); highmad_sha256=$(sha docs/anchor_census_high_count_high_mad.csv); public_manifest_sha256=$(sha docs/boundary_map_v4_manifest.json); figure_sha256=$(sha docs/figs/boundary_map_v4/boundary_map_v4_map.png); summary_sha256=$(sha docs/W_anchor_census_boundary_map_v4_summary_20260720.md); learning_runs_started=0."
+  issue "AC-C3 boundary_map_v4 recorded: measurements_sha256=$(sha docs/experiments/boundary_map/tables/anchor_census_measurements.csv); run_manifest_sha256=$(sha "$RUN_MANIFEST"); ladder_sha256=$(sha docs/archive/boundary_map/v4/tables/boundary_map_v4_ladder.csv); targets_sha256=$(sha docs/archive/boundary_map/v4/tables/boundary_map_v4_targets.csv); lowcount_sha256=$(sha docs/experiments/boundary_map/tables/anchor_census_ambiguous_1_99.csv); highmad_sha256=$(sha docs/experiments/boundary_map/tables/anchor_census_high_count_high_mad.csv); public_manifest_sha256=$(sha docs/experiments/boundary_map/manifests/boundary_map_v4_manifest.json); figure_sha256=$(sha docs/figs/boundary_map/boundary_map_v4_map.png); summary_sha256=$(sha docs/experiments/boundary_map/reports/W_anchor_census_boundary_map_v4_summary_20260720.md); learning_runs_started=0."
   if ! commit_stage \
     "AC-C3: aggregate neutral boundary-map-v4 cells" \
-    docs/issues.md "$RUN_REL" docs/anchor_census_measurements.csv \
-    docs/boundary_map_v4_ladder.csv docs/boundary_map_v4_targets.csv \
-    docs/anchor_census_ambiguous_1_99.csv \
-    docs/anchor_census_high_count_high_mad.csv \
-    docs/boundary_map_v4_manifest.json \
-    docs/W_anchor_census_boundary_map_v4_summary_20260720.md \
+    docs/issues.md "$RUN_REL" docs/experiments/boundary_map/tables/anchor_census_measurements.csv \
+    docs/archive/boundary_map/v4/tables/boundary_map_v4_ladder.csv docs/archive/boundary_map/v4/tables/boundary_map_v4_targets.csv \
+    docs/experiments/boundary_map/tables/anchor_census_ambiguous_1_99.csv \
+    docs/experiments/boundary_map/tables/anchor_census_high_count_high_mad.csv \
+    docs/experiments/boundary_map/manifests/boundary_map_v4_manifest.json \
+    docs/experiments/boundary_map/reports/W_anchor_census_boundary_map_v4_summary_20260720.md \
     docs/figs/boundary_map_v4; then
     write_status "C-3" "failed" "public commit or push failed"
     write_state "C-3" "failed" "public commit or push failed"

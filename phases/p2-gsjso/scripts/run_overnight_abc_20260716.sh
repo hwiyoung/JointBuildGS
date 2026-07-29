@@ -363,10 +363,10 @@ import csv
 import json
 from pathlib import Path
 
-metrics = list(csv.DictReader(Path("docs/boundary_map_metrics.csv").open()))
-ladder = list(csv.DictReader(Path("docs/boundary_map_ladder.csv").open()))
-confusion = list(csv.DictReader(Path("docs/boundary_map_confusion.csv").open()))
-cases = list(csv.DictReader(Path("docs/boundary_map_boundary_cases.csv").open()))
+metrics = list(csv.DictReader(Path("docs/archive/boundary_map/v1/tables/boundary_map_metrics.csv").open()))
+ladder = list(csv.DictReader(Path("docs/archive/boundary_map/v1/tables/boundary_map_ladder.csv").open()))
+confusion = list(csv.DictReader(Path("docs/archive/boundary_map/v1/tables/boundary_map_confusion.csv").open()))
+cases = list(csv.DictReader(Path("docs/archive/boundary_map/v1/tables/boundary_map_boundary_cases.csv").open()))
 if len(metrics) != 178 or len(ladder) != 178:
     raise SystemExit(f"population drift metrics={len(metrics)} ladder={len(ladder)}")
 if not confusion or not (10 <= len(cases) <= 20):
@@ -374,10 +374,10 @@ if not confusion or not (10 <= len(cases) <= 20):
 for rows, name in [(metrics, "metrics"), (ladder, "ladder"), (confusion, "confusion"), (cases, "cases")]:
     if any(row.get("learning_runs_started") != "0" for row in rows):
         raise SystemExit(f"{name} learning flag drift")
-manifest = json.loads(Path("docs/boundary_map_manifest.json").read_text())
+manifest = json.loads(Path("docs/experiments/boundary_map/manifests/boundary_map_manifest.json").read_text())
 if manifest["evaluation_population"] != 178 or manifest["learning_runs_started"] != 0:
     raise SystemExit("manifest QA failed")
-if not Path("docs/figs/boundary_map/boundary_map_ladder.png").is_file():
+if not Path("docs/archive/boundary_map/v1/figs/boundary_map_ladder.png").is_file():
     raise SystemExit("map figure missing")
 print({
     "metrics_rows": len(metrics),
@@ -391,22 +391,22 @@ PY
     write_status "C" "failed" "output QA failed"
     return 1
   fi
-  issue "OVN-C measurement complete: manifest_sha256=$(sha docs/boundary_map_manifest.json); metrics_sha256=$(sha docs/boundary_map_metrics.csv); ladder_sha256=$(sha docs/boundary_map_ladder.csv); learning_runs_started=0; new_inference=MASt3R_correspondence_only"
+  issue "OVN-C measurement complete: manifest_sha256=$(sha docs/experiments/boundary_map/manifests/boundary_map_manifest.json); metrics_sha256=$(sha docs/archive/boundary_map/v1/tables/boundary_map_metrics.csv); ladder_sha256=$(sha docs/archive/boundary_map/v1/tables/boundary_map_ladder.csv); learning_runs_started=0; new_inference=MASt3R_correspondence_only"
   if ! commit_paths \
     "OVN-C: measure 178-building boundary map" \
     docs/issues.md \
-    docs/boundary_map_metrics.csv \
-    docs/boundary_map_ladder.csv \
-    docs/boundary_map_confusion.csv \
-    docs/boundary_map_boundary_cases.csv \
-    docs/boundary_map_manifest.json \
+    docs/archive/boundary_map/v1/tables/boundary_map_metrics.csv \
+    docs/archive/boundary_map/v1/tables/boundary_map_ladder.csv \
+    docs/archive/boundary_map/v1/tables/boundary_map_confusion.csv \
+    docs/archive/boundary_map/v1/tables/boundary_map_boundary_cases.csv \
+    docs/experiments/boundary_map/manifests/boundary_map_manifest.json \
     docs/figs/boundary_map \
     phases/p2-gsjso/runs/20260716_boundary_map; then
     write_status "C" "partial" "outputs complete; commit or push failed"
     return 1
   fi
   C_COMMIT="$(git rev-parse HEAD)"
-  issue "OVN-C commit ledger: commit=$C_COMMIT; manifest_sha256=$(sha docs/boundary_map_manifest.json)"
+  issue "OVN-C commit ledger: commit=$C_COMMIT; manifest_sha256=$(sha docs/experiments/boundary_map/manifests/boundary_map_manifest.json)"
   write_status "C" "complete" "commit=$C_COMMIT"
   log "C complete commit=$C_COMMIT"
 }

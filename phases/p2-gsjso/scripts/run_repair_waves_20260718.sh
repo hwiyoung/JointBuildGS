@@ -371,17 +371,17 @@ PY
     issue "RW-R1 QA command exited nonzero; log=$RUN_REL/logs/R1_qa.log"
     return 1
   fi
-  issue "RW-R1 measurement complete: metrics_sha256=$(sha docs/boundary_map_v2_metrics.csv); ladder_sha256=$(sha docs/boundary_map_v2_ladder.csv); manifest_sha256=$(sha docs/boundary_map_v2_manifest.json); figure_sha256=$(sha docs/figs/boundary_map_v2/boundary_map_v2_ladder.png); learning_runs_started=0; new_inference=R1-2_crop_pair_and_R1-4_FM_only"
+  issue "RW-R1 measurement complete: metrics_sha256=$(sha docs/archive/boundary_map/v2/tables/boundary_map_v2_metrics.csv); ladder_sha256=$(sha docs/archive/boundary_map/v2/tables/boundary_map_v2_ladder.csv); manifest_sha256=$(sha docs/experiments/boundary_map/manifests/boundary_map_v2_manifest.json); figure_sha256=$(sha docs/archive/boundary_map/v2/figs/boundary_map_v2_ladder.png); learning_runs_started=0; new_inference=R1-2_crop_pair_and_R1-4_FM_only"
   if ! commit_paths \
     "RW-R1: rebuild canonical boundary map v2" \
     docs/issues.md \
-    docs/boundary_map_v2_metrics.csv \
-    docs/boundary_map_v2_ladder.csv \
-    docs/boundary_map_v2_confusion.csv \
-    docs/boundary_map_v2_boundary_cases.csv \
-    docs/boundary_map_v2_conditional_targets.csv \
-    docs/boundary_map_v2_manifest.json \
-    docs/W_boundary_map_v2_summary_20260718.md \
+    docs/archive/boundary_map/v2/tables/boundary_map_v2_metrics.csv \
+    docs/archive/boundary_map/v2/tables/boundary_map_v2_ladder.csv \
+    docs/archive/boundary_map/v2/tables/boundary_map_v2_confusion.csv \
+    docs/experiments/boundary_map/tables/boundary_map_v2_boundary_cases.csv \
+    docs/archive/boundary_map/v2/tables/boundary_map_v2_conditional_targets.csv \
+    docs/experiments/boundary_map/manifests/boundary_map_v2_manifest.json \
+    docs/archive/boundary_map/v2/reports/W_boundary_map_v2_summary_20260718.md \
     docs/figs/boundary_map_v2 \
     phases/p2-gsjso/runs/20260718_boundary_map_v2; then
     return 1
@@ -593,13 +593,13 @@ commit_partial_r1() {
   commit_paths \
     "RW-R1-PARTIAL: preserve boundary map measurements" \
     docs/issues.md \
-    docs/boundary_map_v2_metrics.csv \
-    docs/boundary_map_v2_ladder.csv \
-    docs/boundary_map_v2_confusion.csv \
-    docs/boundary_map_v2_boundary_cases.csv \
-    docs/boundary_map_v2_conditional_targets.csv \
-    docs/boundary_map_v2_manifest.json \
-    docs/W_boundary_map_v2_summary_20260718.md \
+    docs/archive/boundary_map/v2/tables/boundary_map_v2_metrics.csv \
+    docs/archive/boundary_map/v2/tables/boundary_map_v2_ladder.csv \
+    docs/archive/boundary_map/v2/tables/boundary_map_v2_confusion.csv \
+    docs/experiments/boundary_map/tables/boundary_map_v2_boundary_cases.csv \
+    docs/archive/boundary_map/v2/tables/boundary_map_v2_conditional_targets.csv \
+    docs/experiments/boundary_map/manifests/boundary_map_v2_manifest.json \
+    docs/archive/boundary_map/v2/reports/W_boundary_map_v2_summary_20260718.md \
     docs/figs/boundary_map_v2 \
     phases/p2-gsjso/runs/20260718_boundary_map_v2
 }
@@ -640,7 +640,7 @@ commit_partial_r4() {
 
 finalize_ledger() {
   issue "RW-20260718 commit ledger: prep_commit=$PREP_COMMIT; R1_commit=${R1_COMMIT:-none}; R2_commit=${R2_COMMIT:-none}; R3_commit=${R3_COMMIT:-none}; R4_commit=${R4_COMMIT:-none}; R1_rc=$R1_RC; R2_rc=$R2_RC; R3_rc=$R3_RC; R4_rc=$R4_RC; learning_runs_started=0."
-  issue "RW-20260718 artifact ledger: R1_manifest_sha256=$(sha docs/boundary_map_v2_manifest.json); R2_manifest_sha256=$(sha phases/p2-gsjso/runs/20260718_qs_rescore_completeness_panel/manifest.json); R3_manifest_sha256=$(sha docs/qs_baseline178_manifest.json); R4_manifest_sha256=$(sha docs/qs_cheap_refine_sweep_manifest.json)."
+  issue "RW-20260718 artifact ledger: R1_manifest_sha256=$(sha docs/experiments/boundary_map/manifests/boundary_map_v2_manifest.json); R2_manifest_sha256=$(sha phases/p2-gsjso/runs/20260718_qs_rescore_completeness_panel/manifest.json); R3_manifest_sha256=$(sha docs/qs_baseline178_manifest.json); R4_manifest_sha256=$(sha docs/qs_cheap_refine_sweep_manifest.json)."
   if [[ "$R1_RC" -eq 0 && "$R2_RC" -eq 0 && "$R3_RC" -eq 0 && "$R4_RC" -eq 0 ]]; then
     write_status "R1-R4" "complete" "all four waves committed"
   else

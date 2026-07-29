@@ -8,6 +8,8 @@ The reason and admission rule for every top-level directory are authoritative in
 
 The current paths remain valid until a separate family-scoped migration is approved and verified. The catalogs beside this document describe the current state; this document describes the intended state.
 
+`boundary_map` is the first completed document-family pilot. Its reports, tables, manifests, figures, and archive files use the target tree; exact relocations are recorded in `docs/catalog/migrations/BOUNDARY_MAP_PATHS.csv`. Phase run receipts and immutable experiment contents remain in place.
+
 The catalog's own generated files and navigation/control documents are excluded from its row set. This prevents self-referential size, Git-state, and commit-history churn while keeping the research-document inventory reproducible after commit.
 
 ## Design rules
@@ -148,9 +150,9 @@ Large payloads remain class C or D. A run directory is not considered documented
 1. Approve the top-level directory contract.
 2. Generate and review the current document/run inventory.
 3. Approve canonical entries and unresolved lineage one family at a time.
-4. Pilot `boundary_map`, because it spans reports, tables, manifests, figures, scripts, and runs across several versions.
-5. Produce an exact old-to-new path manifest and reference rewrite preview for that family.
-6. Move only the approved pilot in a separate commit, run link/provenance checks, and obtain human review.
+4. Pilot `boundary_map`, because it spans reports, tables, manifests, figures, scripts, and runs across several versions. **Document-family pilot completed.**
+5. Produce an exact old-to-new path manifest and reference rewrite preview for that family. **Completed in `BOUNDARY_MAP_PATHS.csv`.**
+6. Move only the approved pilot in a separate commit, run link/provenance checks, and obtain human review. **Document payload migration completed; phase scripts remain a separate code-refactor boundary.**
 7. Repeat by family; consolidate versioned evidence-package directories only after their canonical contents are agreed.
 8. Adopt external artifact storage and selected LFS in separate policy tasks.
 

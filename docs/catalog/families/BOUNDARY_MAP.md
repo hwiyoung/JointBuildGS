@@ -4,24 +4,26 @@
 범위: `boundary_map` v1-v4.1 문서, 표, manifest, 그림, 실행 영수증  
 성격: 문서 관리 결정이며 측정값·실험 결과·과학적 판정을 변경하지 않는다.
 
+사람이 탐색할 때는 [`docs/experiments/boundary_map/README.md`](../../experiments/boundary_map/README.md)를 진입점으로 사용한다.
+
 ## 지금 무엇을 봐야 하는가
 
 | 질문 | 정본 |
 |---|---|
-| 현재 178동의 셀 배정과 행별 근거 | `docs/boundary_map_v4_1_ladder.csv` |
-| v4 전체 census의 범위와 결과 설명 | `docs/W_anchor_census_boundary_map_v4_summary_20260720.md` |
-| v4.1에서 바뀐 9동과 보강 한계 설명 | `docs/W_anchor_census_supplement_boundary_map_v4_1_summary_20260720.md` |
-| v4 본 측정의 재현·hash 계보 | `docs/boundary_map_v4_manifest.json` |
-| v4.1 보강의 재현·불변성·low-independence 계보 | `docs/anchor_census_supplement_manifest.json` |
+| 현재 178동의 셀 배정과 행별 근거 | `docs/experiments/boundary_map/tables/boundary_map_v4_1_ladder.csv` |
+| v4 전체 census의 범위와 결과 설명 | `docs/experiments/boundary_map/reports/W_anchor_census_boundary_map_v4_summary_20260720.md` |
+| v4.1에서 바뀐 9동과 보강 한계 설명 | `docs/experiments/boundary_map/reports/W_anchor_census_supplement_boundary_map_v4_1_summary_20260720.md` |
+| v4 본 측정의 재현·hash 계보 | `docs/experiments/boundary_map/manifests/boundary_map_v4_manifest.json` |
+| v4.1 보강의 재현·불변성·low-independence 계보 | `docs/experiments/boundary_map/manifests/anchor_census_supplement_manifest.json` |
 
 읽는 순서는 **v4 본 요약 → v4.1 보강 요약 → v4.1 ladder**다. Manifest는 수치와 출처를 검증할 때 함께 본다. v4.1은 v4 설명 전체를 다시 쓴 문서가 아니라, v4에서 측정불능이던 고정 9동을 보강한 후속이다.
 
 ## 핵심 결정
 
-- 현재 배정표는 `boundary_map_v4_1_ladder.csv` 하나다. 이후 Fusion W1 설정과 manifest가 이 경로를 실제 입력으로 사용한다.
-- `boundary_map_v4_ladder.csv`는 v4.1의 직접 입력이자 이전 스냅샷이다. 현재 배정에는 사용하지 않는다.
-- `boundary_map_v4_targets.csv`는 v4 당시 64동 스냅샷이다. v4.1이 9행을 보강했으므로 현재 target/셀 값은 v4.1 ladder를 필터링해 읽는다.
-- `docs/figs/boundary_map_v4/boundary_map_v4_map.png`는 최신 존재 그림이지만 현재 그림은 아니다. v4.1 manifest가 그림을 재생성하지 않았다고 명시하며, 이 그림에는 5동의 셀 변경이 반영되지 않는다.
+- 현재 배정표는 `docs/experiments/boundary_map/tables/boundary_map_v4_1_ladder.csv` 하나다. 새 consumer는 이 경로를 사용한다.
+- `docs/archive/boundary_map/v4/tables/boundary_map_v4_ladder.csv`는 v4.1의 직접 입력이자 이전 스냅샷이다. 현재 배정에는 사용하지 않는다.
+- `docs/archive/boundary_map/v4/tables/boundary_map_v4_targets.csv`는 v4 당시 64동 스냅샷이다. v4.1이 9행을 보강했으므로 현재 target/셀 값은 v4.1 ladder를 필터링해 읽는다.
+- `docs/figs/boundary_map/boundary_map_v4_map.png`는 최신 존재 그림이지만 현재 그림은 아니다. v4.1 manifest가 그림을 재생성하지 않았다고 명시하며, 이 그림에는 5동의 셀 변경이 반영되지 않는다.
 - v1-v3 파일은 삭제 대상이 아니다. 이전 규칙·측정·검증을 재현하는 역사 자료로 보존하되 현재 배정 근거로 사용하지 않는다.
 
 ## 버전 계보
@@ -52,19 +54,20 @@ Git에서도 각 공개 bundle은 순서대로 `52c84f7`, `5c1331b`, `17ab65d`/`
 
 | 버전 | 공개 결과 | 주요 실행 영수증 |
 |---|---|---|
-| v1 | `docs/boundary_map_*` | `phases/p2-gsjso/runs/20260716_boundary_map/` |
-| v2 | `docs/boundary_map_v2_*` | `phases/p2-gsjso/runs/20260718_boundary_map_v2/` |
-| v3 | `docs/boundary_map_v3_*` | `phases/p2-gsjso/runs/20260719_boundary_map_v3/` |
-| v4 | `docs/boundary_map_v4_*`, `docs/anchor_census_*` | `phases/p2-gsjso/runs/20260720_anchor_census/` |
-| v4.1 | `docs/boundary_map_v4_1_ladder.csv`, supplement bundle | `phases/p2-gsjso/runs/20260720_anchor_census_supplement/` |
+| v1 | `docs/archive/boundary_map/v1/` + v1 manifest | `phases/p2-gsjso/runs/20260716_boundary_map/` |
+| v2 | `docs/archive/boundary_map/v2/` + supporting v2 files | `phases/p2-gsjso/runs/20260718_boundary_map_v2/` |
+| v3 | `docs/archive/boundary_map/v3/` + supporting v3 files | `phases/p2-gsjso/runs/20260719_boundary_map_v3/` |
+| v4 | current report/manifest/tables + `docs/archive/boundary_map/v4/` | `phases/p2-gsjso/runs/20260720_anchor_census/` |
+| v4.1 | current ladder + supplement bundle | `phases/p2-gsjso/runs/20260720_anchor_census_supplement/` |
 
 실행 디렉터리는 provenance 영수증과 세부 측정의 소유자다. 연구 문서의 정본 여부는 실행 디렉터리의 위치가 아니라 위 역할 지도와 manifest 연결로 판단한다.
 
-## 이동 전에 지켜야 할 것
+## 경로 이동 상태
 
-이번 결정은 경로를 바꾸지 않는다. 향후 `docs/experiments/boundary_map/` 같은 목표 위치로 옮기려면 별도 커밋에서 다음을 먼저 승인·검증한다.
+`DOC-IA-03`에서 35개 원본의 목표 경로와 SHA-256을 [`BOUNDARY_MAP_PATHS.csv`](../migrations/BOUNDARY_MAP_PATHS.csv)에 고정했다. 원본 CSV·JSON·Markdown·PNG 내용과 run receipt는 수정하지 않는다.
 
-1. old path → new path manifest
-2. 코드·config·manifest·문서의 참조 rewrite 목록
-3. v4.1 ladder를 사용하는 후속 Fusion W1 입력의 무결성
-4. broken-link 0과 인벤토리 재현성
+- 33개 이전 경로는 새 owner 디렉터리로 이동한다.
+- `docs/boundary_map_v2_ladder.csv`와 `docs/boundary_map_v4_1_ladder.csv`는 기존 staged/hash-locked workflow 보호를 위해 동일 SHA의 compatibility mirror로 남긴다.
+- 두 mirror는 정본이 아니다. 새 문서·코드·config는 새 owner 경로를 사용해야 한다.
+- 과거 manifest와 run receipt의 old path 문자열은 당시 provenance이므로 rewrite하지 않고 migration manifest로 해석한다.
+- phase run 디렉터리와 원본 실험 결과는 이동하지 않는다.

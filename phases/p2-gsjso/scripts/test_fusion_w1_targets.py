@@ -47,7 +47,7 @@ class FusionW1TargetTests(unittest.TestCase):
         population = {
             row["building_id"]
             for row in MODULE._read_csv(
-                self.repo_root / "docs/boundary_map_v4_1_ladder.csv"
+                self.repo_root / "docs/experiments/boundary_map/tables/boundary_map_v4_1_ladder.csv"
             )
         }
         self.assertEqual(set(ids), population)

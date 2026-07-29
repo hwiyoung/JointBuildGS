@@ -1108,7 +1108,7 @@ primary = list(csv.DictReader((run / "primary_predictions.csv").open()))
 jobs = json.loads((run / "fm_dense_jobs.json").read_text())
 metrics = {
     row["building_id"]: row
-    for row in csv.DictReader(Path("docs/boundary_map_v2_metrics.csv").open())
+    for row in csv.DictReader(Path("docs/archive/boundary_map/v2/tables/boundary_map_v2_metrics.csv").open())
 }
 if inventory["canonical_count"] != 178:
     raise SystemExit("canonical population drift")
@@ -1683,12 +1683,12 @@ run_r1p4() {
     > "$LOG_DIR/R1P4_finalize.log" 2>&1; then
     commit_partial "R1P4" "hard_error" \
       "finalize command exited nonzero; log=$RUN_REL/logs/R1P4_finalize.log" \
-      docs/boundary_map_v3_metrics.csv \
-      docs/boundary_map_v3_ladder.csv \
-      docs/boundary_map_v3_confusion.csv \
-      docs/boundary_map_v3_conditional_targets.csv \
-      docs/boundary_map_v3_manifest.json \
-      docs/W_boundary_map_v3_summary_20260719.md \
+      docs/experiments/boundary_map/tables/boundary_map_v3_metrics.csv \
+      docs/archive/boundary_map/v3/tables/boundary_map_v3_ladder.csv \
+      docs/experiments/boundary_map/tables/boundary_map_v3_confusion.csv \
+      docs/experiments/boundary_map/tables/boundary_map_v3_conditional_targets.csv \
+      docs/experiments/boundary_map/manifests/boundary_map_v3_manifest.json \
+      docs/archive/boundary_map/v3/reports/W_boundary_map_v3_summary_20260719.md \
       docs/figs/boundary_map_v3 \
       "$MEASURE_REL" || true
     return 1
@@ -1888,9 +1888,9 @@ if (
 expected_sources = {
     "docs/regression_input_snapshot.csv",
     "docs/manual_review_judgments.csv",
-    "docs/boundary_map_v2_metrics.csv",
-    "docs/boundary_map_v2_ladder.csv",
-    "docs/boundary_map_v2_manifest.json",
+    "docs/archive/boundary_map/v2/tables/boundary_map_v2_metrics.csv",
+    "docs/archive/boundary_map/v2/tables/boundary_map_v2_ladder.csv",
+    "docs/experiments/boundary_map/manifests/boundary_map_v2_manifest.json",
     "phases/p2-gsjso/runs/20260718_boundary_map_v2/all_projection_jobs.json",
     "phases/p2-gsjso/scripts/boundary_map_v2.py",
     "phases/p2-gsjso/scripts/boundary_map_v3_dense.py",
@@ -1914,12 +1914,12 @@ expected_sources = {
     str(run / "fm_dense_manifest.json"),
 }
 expected_outputs = {
-    "docs/boundary_map_v3_metrics.csv",
-    "docs/boundary_map_v3_ladder.csv",
-    "docs/boundary_map_v3_confusion.csv",
-    "docs/boundary_map_v3_conditional_targets.csv",
-    "docs/figs/boundary_map_v3/boundary_map_v3_map.png",
-    "docs/W_boundary_map_v3_summary_20260719.md",
+    "docs/experiments/boundary_map/tables/boundary_map_v3_metrics.csv",
+    "docs/archive/boundary_map/v3/tables/boundary_map_v3_ladder.csv",
+    "docs/experiments/boundary_map/tables/boundary_map_v3_confusion.csv",
+    "docs/experiments/boundary_map/tables/boundary_map_v3_conditional_targets.csv",
+    "docs/archive/boundary_map/v3/figs/boundary_map_v3_map.png",
+    "docs/archive/boundary_map/v3/reports/W_boundary_map_v3_summary_20260719.md",
     str(run / "primary_predictions.csv"),
     str(run / "decision_rule.json"),
     str(run / "label_inventory.json"),
@@ -1962,26 +1962,26 @@ PY
   then
     commit_partial "R1P4" "hard_error" \
       "QA command exited nonzero; log=$RUN_REL/logs/R1P4_qa.log" \
-      docs/boundary_map_v3_metrics.csv \
-      docs/boundary_map_v3_ladder.csv \
-      docs/boundary_map_v3_confusion.csv \
-      docs/boundary_map_v3_conditional_targets.csv \
-      docs/boundary_map_v3_manifest.json \
-      docs/W_boundary_map_v3_summary_20260719.md \
+      docs/experiments/boundary_map/tables/boundary_map_v3_metrics.csv \
+      docs/archive/boundary_map/v3/tables/boundary_map_v3_ladder.csv \
+      docs/experiments/boundary_map/tables/boundary_map_v3_confusion.csv \
+      docs/experiments/boundary_map/tables/boundary_map_v3_conditional_targets.csv \
+      docs/experiments/boundary_map/manifests/boundary_map_v3_manifest.json \
+      docs/archive/boundary_map/v3/reports/W_boundary_map_v3_summary_20260719.md \
       docs/figs/boundary_map_v3 \
       "$MEASURE_REL" || true
     return 1
   fi
-  issue "R1P-4 measurement complete: metrics_sha256=$(sha docs/boundary_map_v3_metrics.csv); ladder_sha256=$(sha docs/boundary_map_v3_ladder.csv); confusion_sha256=$(sha docs/boundary_map_v3_confusion.csv); targets_sha256=$(sha docs/boundary_map_v3_conditional_targets.csv); manifest_sha256=$(sha docs/boundary_map_v3_manifest.json); figure_sha256=$(sha docs/figs/boundary_map_v3/boundary_map_v3_map.png); summary_sha256=$(sha docs/W_boundary_map_v3_summary_20260719.md); learning_runs_started=0; new_inference=R1prime-3_FM_dense_dial_2px_only"
+  issue "R1P-4 measurement complete: metrics_sha256=$(sha docs/experiments/boundary_map/tables/boundary_map_v3_metrics.csv); ladder_sha256=$(sha docs/archive/boundary_map/v3/tables/boundary_map_v3_ladder.csv); confusion_sha256=$(sha docs/experiments/boundary_map/tables/boundary_map_v3_confusion.csv); targets_sha256=$(sha docs/experiments/boundary_map/tables/boundary_map_v3_conditional_targets.csv); manifest_sha256=$(sha docs/experiments/boundary_map/manifests/boundary_map_v3_manifest.json); figure_sha256=$(sha docs/archive/boundary_map/v3/figs/boundary_map_v3_map.png); summary_sha256=$(sha docs/archive/boundary_map/v3/reports/W_boundary_map_v3_summary_20260719.md); learning_runs_started=0; new_inference=R1prime-3_FM_dense_dial_2px_only"
   if ! commit_stage "R1P4" "complete" \
     "R1P-4: publish boundary map v3 measurements" \
     docs/issues.md \
-    docs/boundary_map_v3_metrics.csv \
-    docs/boundary_map_v3_ladder.csv \
-    docs/boundary_map_v3_confusion.csv \
-    docs/boundary_map_v3_conditional_targets.csv \
-    docs/boundary_map_v3_manifest.json \
-    docs/W_boundary_map_v3_summary_20260719.md \
+    docs/experiments/boundary_map/tables/boundary_map_v3_metrics.csv \
+    docs/archive/boundary_map/v3/tables/boundary_map_v3_ladder.csv \
+    docs/experiments/boundary_map/tables/boundary_map_v3_confusion.csv \
+    docs/experiments/boundary_map/tables/boundary_map_v3_conditional_targets.csv \
+    docs/experiments/boundary_map/manifests/boundary_map_v3_manifest.json \
+    docs/archive/boundary_map/v3/reports/W_boundary_map_v3_summary_20260719.md \
     docs/figs/boundary_map_v3 \
     "$MEASURE_REL"; then
     return 1

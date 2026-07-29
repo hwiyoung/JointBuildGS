@@ -1362,7 +1362,7 @@ def prepare_fit() -> None:
         ),
         "rule_features": list(RULE_FEATURES),
         "feature_sources": {
-            feature: f"docs/boundary_map_v2_metrics.csv::{feature}"
+            feature: f"docs/archive/boundary_map/v2/tables/boundary_map_v2_metrics.csv::{feature}"
             for feature in FEATURES_WITH_SMALL
         },
         "footprint_area_role": (

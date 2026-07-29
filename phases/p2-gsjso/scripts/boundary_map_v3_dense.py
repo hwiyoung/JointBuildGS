@@ -73,7 +73,7 @@ ENV_MANIFEST = REPO / "docs/e5_c001_s3ap_fm_env_manifest.json"
 S3AP_DIAL_CONFIG = (
     REPO / "phases/p2-gsjso/configs/e5_c001_s3ap_fm_dense_dial.json"
 )
-V2_METRICS = REPO / "docs/boundary_map_v2_metrics.csv"
+V2_METRICS = REPO / "docs/archive/boundary_map/v2/tables/boundary_map_v2_metrics.csv"
 V2_MAST3R_SCRIPT = SCRIPT_DIR / "boundary_map_v2_mast3r.py"
 P0_AUX_SCRIPT = SCRIPT_DIR / "population_aux_v3.py"
 P0_DATUM_SCRIPT = SCRIPT_DIR / "projection_datum.py"
