@@ -1,0 +1,310 @@
+{
+  "schema": "jointbuildgs.tum2twin.surface_proxy_rv1.post_analysis.v1",
+  "generated_at": "2026-07-29T03:07:33.713853+00:00",
+  "run_id": "20260728_2327",
+  "source_run_commit": "6f7366626cc491567926c64d96f8f028485559e0",
+  "source_branch": "exp/fusion-w1",
+  "scientific_status": "R_v1 is a relative, provisional stratification for experiment selection. It is not a final scientific readiness or quality certification.",
+  "no_new_training": true,
+  "no_geometry_distance_recomputation": true,
+  "analysis": {
+    "assessment": "Share with caveats",
+    "run_reliable": true,
+    "valid_surface_buildings": 135,
+    "missing_surface_buildings": 43,
+    "classification_counts": {
+      "R0": 33,
+      "R1": 14,
+      "R2": 13,
+      "R3": 25,
+      "RX": 93
+    },
+    "thresholds": {
+      "q40": {
+        "completeness": 0.3970149253731344,
+        "reliability": 0.38656716417910447
+      },
+      "q50": {
+        "completeness": 0.48507462686567165,
+        "reliability": 0.48134328358208955
+      },
+      "q60": {
+        "completeness": 0.5962686567164175,
+        "reliability": 0.5723880597014924
+      }
+    },
+    "missing_rates": {
+      "surface_recall_0p2m": 0.24157303370786518,
+      "reference_to_reconstruction_p95_m": 0.24157303370786518,
+      "surface_precision_0p2m": 0.24157303370786518,
+      "reconstruction_to_reference_p95_m": 0.24157303370786518,
+      "surface_thickness_p90_m": 0.24157303370786518,
+      "roof_plane_f1": 0.3595505617977528,
+      "rmsz_m": 0.3595505617977528
+    },
+    "relations": {
+      "completeness_vs_reliability": {
+        "n": 135,
+        "pearson": 0.3203288552345976,
+        "spearman": 0.33089928198022395
+      },
+      "surface_proxy_vs_roof_plane_f1": {
+        "n": 114,
+        "pearson": 0.4493788307985762,
+        "spearman": 0.4553915682050695
+      },
+      "surface_proxy_vs_rmsz": {
+        "n": 114,
+        "pearson": -0.656652103076931,
+        "spearman": -0.6828120412253511
+      },
+      "fscore_0p2_vs_roof_plane_f1": {
+        "n": 114,
+        "pearson": 0.39217344275087834,
+        "spearman": 0.3851943108816873
+      },
+      "fscore_0p2_vs_rmsz": {
+        "n": 114,
+        "pearson": -0.6469381925532368,
+        "spearman": -0.6591158542759361
+      }
+    },
+    "upstream_good_lod2_failure_ids": [
+      "DEBY_LOD2_4907520",
+      "DEBY_LOD2_60042"
+    ],
+    "upstream_bad_strong_lod2_ids": [
+      "DEBY_LOD2_42364667",
+      "DEBY_LOD2_4907020"
+    ],
+    "source_snapshot_current_match": true,
+    "panel_status_count": 9
+  },
+  "candidate_ids": [
+    "DEBY_LOD2_4908023",
+    "DEBY_LOD2_4908050",
+    "DEBY_LOD2_4908176",
+    "DEBY_LOD2_4906973",
+    "DEBY_LOD2_4906985"
+  ],
+  "source_files": [
+    {
+      "path": "reports/nightly_rv1_20260728_2327/run_state.json",
+      "sha256": "b24464afd218fb6ea20470a9f61f76864132035bc36faa471f975db4a16a3ff0",
+      "bytes": 412
+    },
+    {
+      "path": "reports/nightly_rv1_20260728_2327/run_metadata.json",
+      "sha256": "509f381c51f95b6cdea8d5a3a4361b179be13a2c8e208de83dddd3fb1f511d63",
+      "bytes": 1642
+    },
+    {
+      "path": "reports/nightly_rv1_20260728_2327/building_metrics.csv",
+      "sha256": "5fda42238fad83b033ebc7950bb3358d8a979d669f140ca68c6d0427a5af9865",
+      "bytes": 391045
+    },
+    {
+      "path": "reports/nightly_rv1_20260728_2327/classification_summary.md",
+      "sha256": "d85c7304e81b29eed0574a970aca16e3f96ddef55371650bc40c6b0d269b1566",
+      "bytes": 1008
+    },
+    {
+      "path": "configs/tum2twin_rv1_20260728_2327.yaml",
+      "sha256": "5274393b55a47bda1db58de62f02d561f6a6c032a86bc3626005a50179fb7d55",
+      "bytes": 2832
+    },
+    {
+      "path": "src/rv1_pipeline.py",
+      "sha256": "6fbf1622339eb6cc0c0319e842d4503d97aaaaf65ac4e1201e2b00684e42acbb",
+      "bytes": 47016
+    },
+    {
+      "path": "phases/p2-gsjso/docs/fusion_w1_dense_baseline_qualitative_v2_manual_qa_20260728.md",
+      "sha256": "09d18f5b41d3ce852d3dd483ba46c21145c60671a5fd7d4d86c57f74c1a5edae",
+      "bytes": 3506
+    }
+  ],
+  "analysis_code": [
+    {
+      "path": "scripts/analyze_tum2twin_surface_proxy_rv1.py",
+      "sha256": "139c9ea1522abf46168ef5c1e4924e4fe94d779af682a9ad9efce43a2b779c9d",
+      "bytes": 52052
+    },
+    {
+      "path": "tests/test_tum2twin_surface_proxy_rv1_analysis.py",
+      "sha256": "5f529b6466f29eb7f6cc422019a35e36732bcfcd6d1c1c57f2834f141ab27941",
+      "bytes": 4087
+    }
+  ],
+  "reproduction": {
+    "runtime": "existing jointbuildgs:dev container; no package installation",
+    "analysis_command": "python scripts/analyze_tum2twin_surface_proxy_rv1.py --run-root reports/nightly_rv1_20260728_2327 --output-dir reports/nightly_rv1_20260728_2327/post_analysis",
+    "validation_command": "python tests/test_tum2twin_surface_proxy_rv1_analysis.py",
+    "long_geometry_recalculation": false,
+    "gs_training": false
+  },
+  "source_snapshot_audit": [
+    {
+      "path": "docs/regression_input_snapshot.csv",
+      "exists": true,
+      "recorded_size": 157065,
+      "current_size": 157065,
+      "recorded_mtime_ns": 1783338169006130719,
+      "current_mtime_ns": 1783338169006130719,
+      "size_match": true,
+      "mtime_match": true,
+      "unchanged_by_size_and_mtime": true
+    },
+    {
+      "path": "results/tum_transfer/analysis/footprints_aoi.geojson",
+      "exists": true,
+      "recorded_size": 182648,
+      "current_size": 182648,
+      "recorded_mtime_ns": 1781758718553594510,
+      "current_mtime_ns": 1781758718553594510,
+      "size_match": true,
+      "mtime_match": true,
+      "unchanged_by_size_and_mtime": true
+    },
+    {
+      "path": "phases/p0-audit/data/work/w2/dim_v1_classified_z_minus0p174.laz",
+      "exists": true,
+      "recorded_size": 158828805,
+      "current_size": 158828805,
+      "recorded_mtime_ns": 1781245659373391299,
+      "current_mtime_ns": 1781245659373391299,
+      "size_match": true,
+      "mtime_match": true,
+      "unchanged_by_size_and_mtime": true
+    },
+    {
+      "path": "results/tum_transfer/mob_analysis/p0c_step2/als_aoi.laz",
+      "exists": true,
+      "recorded_size": 10399495,
+      "current_size": 10399495,
+      "recorded_mtime_ns": 1782121923700637934,
+      "current_mtime_ns": 1782121923700637934,
+      "size_match": true,
+      "mtime_match": true,
+      "unchanged_by_size_and_mtime": true
+    },
+    {
+      "path": "phases/p0-audit/runs/w2_1_roofer_default_20260612_152729/building_reconstruction_status.csv",
+      "exists": true,
+      "recorded_size": 52371,
+      "current_size": 52371,
+      "recorded_mtime_ns": 1781245723902027831,
+      "current_mtime_ns": 1781245723902027831,
+      "size_match": true,
+      "mtime_match": true,
+      "unchanged_by_size_and_mtime": true
+    },
+    {
+      "path": "phases/p0-audit/runs/w2_1_roofer_default_20260612_152729/cityjson/dim_roofer.city.json",
+      "exists": true,
+      "recorded_size": 978649,
+      "current_size": 978649,
+      "recorded_mtime_ns": 1781245723549007931,
+      "current_mtime_ns": 1781245723549007931,
+      "size_match": true,
+      "mtime_match": true,
+      "unchanged_by_size_and_mtime": true
+    },
+    {
+      "path": "phases/p0-audit/data/raw/lod2/690_5336.gml",
+      "exists": true,
+      "recorded_size": 147865939,
+      "current_size": 147865939,
+      "recorded_mtime_ns": 1781182736841388866,
+      "current_mtime_ns": 1781182736841388866,
+      "size_match": true,
+      "mtime_match": true,
+      "unchanged_by_size_and_mtime": true
+    },
+    {
+      "path": "phases/p0-audit/data/raw/lod2/690_5334.gml",
+      "exists": true,
+      "recorded_size": 156656509,
+      "current_size": 156656509,
+      "recorded_mtime_ns": 1781182718828383353,
+      "current_mtime_ns": 1781182718828383353,
+      "size_match": true,
+      "mtime_match": true,
+      "unchanged_by_size_and_mtime": true
+    }
+  ],
+  "chart_map": [
+    {
+      "file": "figures/completeness_vs_reliability.png",
+      "question": "Do completeness and reliability separate?",
+      "grain": "valid building",
+      "fields": [
+        "completeness_score",
+        "reliability_score",
+        "surface_proxy_R_v1"
+      ]
+    },
+    {
+      "file": "figures/recall_vs_precision.png",
+      "question": "How do directional 0.2 m rates differ?",
+      "grain": "valid building",
+      "fields": [
+        "surface_recall_0p2m",
+        "surface_precision_0p2m",
+        "surface_proxy_R_v1"
+      ]
+    },
+    {
+      "file": "figures/surface_vs_lod2.png",
+      "question": "How is upstream surface proxy related to roof-plane F1?",
+      "grain": "building with both metrics",
+      "fields": [
+        "surface_proxy_score",
+        "roof_plane_f1",
+        "surface_proxy_R_v1"
+      ]
+    }
+  ],
+  "output_files": [
+    {
+      "path": "reports/nightly_rv1_20260728_2327/post_analysis/POST_RUN_SUMMARY.md",
+      "sha256": "36fc3d30decdd947681716399cfb75f0c97e4f57245852b33d57c9e343287df5",
+      "bytes": 6006
+    },
+    {
+      "path": "reports/nightly_rv1_20260728_2327/post_analysis/surface_proxy_R_v1.csv",
+      "sha256": "a4d7d739d3ca86f85276ad589ae38078563b4fefa09b58947800bc9cc7220119",
+      "bytes": 414182
+    },
+    {
+      "path": "reports/nightly_rv1_20260728_2327/post_analysis/metric_audit.md",
+      "sha256": "01347b088c5a41f79cb92af7b4118519e14657f2e0c8dc0a63576fdf5fd1b737",
+      "bytes": 5134
+    },
+    {
+      "path": "reports/nightly_rv1_20260728_2327/post_analysis/oracle_candidates.yaml",
+      "sha256": "e6ad5597c1d9d39e8cc98b357feab0585305e91b40588b5858b25e3246c3a235",
+      "bytes": 14255
+    },
+    {
+      "path": "reports/nightly_rv1_20260728_2327/post_analysis/next_oracle_prompt.md",
+      "sha256": "94be28b8f1910b76b5a1a1cfdbeefe003517b3296cee5eec2e980f29244c6589",
+      "bytes": 5112
+    },
+    {
+      "path": "reports/nightly_rv1_20260728_2327/post_analysis/figures/completeness_vs_reliability.png",
+      "sha256": "e8186815773fc035254fcd23949323bc6b2d57d1322b0e4568b43c8e5474e8cf",
+      "bytes": 152181
+    },
+    {
+      "path": "reports/nightly_rv1_20260728_2327/post_analysis/figures/recall_vs_precision.png",
+      "sha256": "e8bac80776dc32ac5d84be58141736c31f6995029c90b65acb1e4921fb5053bb",
+      "bytes": 128748
+    },
+    {
+      "path": "reports/nightly_rv1_20260728_2327/post_analysis/figures/surface_vs_lod2.png",
+      "sha256": "44e722888f74e6769612c68423eb33addc19437390830b4452aca724071cf2c6",
+      "bytes": 104861
+    }
+  ]
+}
