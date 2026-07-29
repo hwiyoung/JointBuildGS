@@ -1,6 +1,6 @@
 # P0 G1 evidence package
 
-Promoted P0 input-substitution audit review package, dated 2026-06-13. The 112 original reports, tables, figures, and manifest files were moved byte-for-byte from `phases/p0-audit/docs/G1_package/` by `DOC-IA-08`.
+Promoted P0 input-substitution audit review package, dated 2026-06-13. The 112 original reports, tables, figures, and manifest files were moved byte-for-byte from `phases/p0-audit/docs/G1_package/` by `DOC-IA-08`. Ten figures referenced from those reports were completed in `DOC-IA-10` as byte-identical copies of `phases/p0-audit/docs/figs/`; the original phase figures remain in place.
 
 - [`REPORT_v6_protect.md`](REPORT_v6_protect.md) — protected report entry
 - [`core_table.md`](core_table.md) and [`g1_core_table.csv`](g1_core_table.csv) — core evidence

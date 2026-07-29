@@ -61,6 +61,30 @@ class RepoInventoryUnitTests(unittest.TestCase):
                 ("docs/figs/panel.png", "yes"),
             )
 
+    def test_known_root_prefix_prefers_existing_source_relative_path(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            local_report = root / "docs" / "experiments" / "demo" / "reports" / "report.md"
+            local_report.parent.mkdir(parents=True)
+            local_report.write_text("report", encoding="utf-8")
+            self.assertEqual(
+                repo_inventory.resolve_reference(
+                    "docs/experiments/demo/README.md", "reports/report.md", root
+                ),
+                ("docs/experiments/demo/reports/report.md", "yes"),
+            )
+
+    def test_parenthesized_numeric_prose_is_not_a_markdown_link(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source = root / "docs" / "report.md"
+            source.parent.mkdir(parents=True)
+            source.write_text("bbox x[0,1](0.5 x 0.5 km)", encoding="utf-8")
+            relations, _, _, _ = repo_inventory.scan_relations(
+                root, "docs/report.md", {".md"}, 1000
+            )
+            self.assertEqual(relations, [])
+
     def test_external_and_anchor_links_are_ignored(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

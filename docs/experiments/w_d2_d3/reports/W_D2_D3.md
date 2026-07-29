@@ -44,7 +44,7 @@ Roofer = **3dgi/roofer 1.0.0**(digest `dd2c415a…`, [docker-compose.p0.yml:29](
 | `--simplify` | footprint 근접정점 dedupe | 기본 true | 303/306 |
 | `--cj-scale` | 출력 정점 양자화(0.001) | 기본 | 302(근접정점 용접) |
 
-**watertight/snap/heal/repair 플래그는 help-all 전체에 없음** — Roofer 자체 위상수리 옵션 부재. P0 선례([13_roofer_tune_w2a.py:32-87,204](phases/p0-audit/scripts/13_roofer_tune_w2a.py#L32))서 epsilon·min-points·complexity 스윕이 **val3dity 유효수를 움직임(ALS 8→5, DIM 11→9)** = 이 파라미터가 shell 위상을 실제로 바꿈([docs/W2_3a_roofer_tuning.md:13-14](docs/W2_3a_roofer_tuning.md)).
+**watertight/snap/heal/repair 플래그는 help-all 전체에 없음** — Roofer 자체 위상수리 옵션 부재. P0 선례([13_roofer_tune_w2a.py:32-87,204](phases/p0-audit/scripts/13_roofer_tune_w2a.py#L32))서 epsilon·min-points·complexity 스윕이 **val3dity 유효수를 움직임(ALS 8→5, DIM 11→9)** = 이 파라미터가 shell 위상을 실제로 바꿈([phases/p0-audit/docs/W2_3a_roofer_tuning.md:13-14](../../../../phases/p0-audit/docs/W2_3a_roofer_tuning.md)).
 
 **오류별 판정**(무효 4동):
 - **302 비폐합(4907182)**: 워터타이트 옵션 無 → **별도 위상수리 필요**(약한 레버 `--no-clip-terrain`만).

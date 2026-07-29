@@ -418,7 +418,13 @@ def resolve_reference(source_path: str, raw_target: str, repo_root: Path) -> tup
     elif target.startswith("/"):
         target = target.lstrip("/")
     elif target.startswith(("docs/", "phases/", "results/", "reports/", "configs/", "scripts/", "src/", "tools/", "data/", "artifacts/")):
-        pass
+        # A family README commonly links to a child such as
+        # `reports/report.md`. Prefer that existing source-relative target;
+        # otherwise retain the repository-root interpretation used by plain
+        # provenance paths such as `phases/p2-gsjso/runs/...`.
+        relative_target = posixpath.normpath(posixpath.join(posixpath.dirname(source_path), target))
+        if (repo_root / relative_target).exists():
+            target = relative_target
     elif target.startswith("runs/") and source_path.startswith("phases/"):
         phase_root = "/".join(PurePosixPath(source_path).parts[:2])
         target = f"{phase_root}/{target}"
@@ -529,6 +535,11 @@ def scan_relations(
 
     for match in MARKDOWN_LINK_RE.finditer(text):
         raw_target = clean_markdown_target(match.group(2))
+        # CommonMark destinations cannot contain an unescaped space unless
+        # enclosed in angle brackets. This prevents numeric prose such as
+        # `x[0,1](0.5 km)` from becoming a synthetic broken link.
+        if re.search(r"\s", raw_target) and not match.group(2).strip().startswith("<"):
+            continue
         resolved = resolve_reference(source_path, raw_target, repo_root)
         if resolved is None:
             continue
