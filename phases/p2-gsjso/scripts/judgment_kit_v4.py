@@ -49,7 +49,7 @@ from projection_datum import describe_projection_config, projection_geoid_m  # n
 
 
 RUN_ID = "20260703_cards_v4_kit"
-RUN_DIR = REPO / "runs" / RUN_ID
+RUN_DIR = REPO / "phases" / "p2-gsjso" / "runs" / RUN_ID
 DOCS = REPO / "docs"
 OUT_DIR = DOCS / "judgment_kit_v4"
 POP = DOCS / "population_aux_v4.csv"
@@ -828,7 +828,7 @@ def write_report(
         f"- manifest: `docs/judgment_kit_v4/manifest.csv`.",
         f"- locator neighbor rings: min={neighbor_min}, lt2={neighbor_lt2}.",
         f"- footprint shape flags: `docs/footprint_shape_flags.csv` ({len(shape_rows)}동, small={small}, elong={elong}).",
-        f"- run versions: `runs/{RUN_ID}/versions.txt`.",
+        f"- run versions: `phases/p2-gsjso/runs/{RUN_ID}/versions.txt`.",
         "",
         "## 2. 결함별 조치",
         "",

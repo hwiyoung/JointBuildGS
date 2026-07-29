@@ -98,11 +98,11 @@ Snapshot counts below are indexed-file counts observed during `DOC-IA-01A`; they
 | Current root | Indexed files | Why it exists today | Target disposition, without action in this task |
 |---|---:|---|---|
 | `data/` | 1 | Local dataset/work-volume mount placeholder. | Not a durable Git information root. Raw inputs become external class C; local hydration remains a workspace concern. |
-| `env/` | 1 | A root-level `versions.md` records environment information. | Environment build definitions stay in root build files or an approved config namespace; immutable runtime versions belong in run receipts. Review before any move. |
+| `env/` | 0 | Its former repository-wide `versions.md` was migrated in `ROOT-IA-01`. | No tracked content remains; repository-wide environment knowledge is under `docs/research/reproducibility/`. |
 | `fair-pilot/` | 32 | A self-contained pilot copied configs, scripts, docs, and run records under one root. | Decompose by role into the permanent roots after lineage review; do not create more project-shaped roots. |
 | `reports/` | 9 | Nightly post-analysis mixed final prose, figures, manifests, and runtime material. | Promote durable report/evidence to `docs/`; route payloads to C/D; retire the root only after exact mapping. |
 | `results/` | 323 | Historical experiment trees combine reports, metrics, configs, viewers, and generated payloads. | Split by role: promoted evidence to `docs/`, receipts to `phases/`, payloads to C/D. Current root rule prohibits immediate movement. |
-| `runs/` | 14 | Older root-level run records predate the phase ledger convention. | Map compact receipts into the owning phase; externalize/ignore payloads after dependency review. |
+| `runs/` | 0 | Fourteen older P2 receipts were migrated in `ROOT-IA-01`. | No tracked content remains; producers now write to `phases/p2-gsjso/runs/`. |
 
 Local tool-state directories such as `.agents/`, `.claude/`, and `.codex/` are not research information roots. They must not become owners of source, evidence, run receipts, or artifacts.
 

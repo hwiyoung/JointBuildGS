@@ -728,7 +728,7 @@ def build_argparser() -> argparse.ArgumentParser:
     ap.add_argument("--out-csv", default="docs/archive/pointcloud_attributes/v1_1/tables/pointcloud_attributes_v1_1.csv")
     ap.add_argument("--out-report", default="docs/experiments/pointcloud_attributes/reports/W_pointcloud_attributes.md")
     ap.add_argument("--fig-dir", default="docs/figs/pointcloud_attributes_v1_1")
-    ap.add_argument("--versions", default=f"runs/{RUN_ID}/versions.txt")
+    ap.add_argument("--versions", default=f"phases/p2-gsjso/runs/{RUN_ID}/versions.txt")
     ap.add_argument("--grid-cell-m", type=float, default=0.5)
     ap.add_argument("--local-plane-radius-m", type=float, default=0.75)
     ap.add_argument("--local-plane-min-neighbors", type=int, default=10)

@@ -119,7 +119,7 @@
 |---|---|---|
 | P0 완전성 재검증 | 생성-실패 64동 중 **ACMP MVS로 20/64 회복**(cloud lever; Roofer-param 단독=0). 44 미회복 | `ec58090` |
 | P0 조립실패 원인 진단 | **Roofer 백엔드 무죄**(ALS@동일Roofer 64/64). 실패=입력측: SMRF가 ACMP 지붕 ground로 먹음(force-build 17→**42/64**) + 잔여 ~22 cloud-limited(dens~4) | `fcb79fe` |
-| repo 정리 (재현성) | 루트 `env/versions.md`·Dockerfile.acmp·P2 issues.md·자산 커밋 + main/feature push | `e28705b d70250f 605b692` |
+| repo 정리 (재현성) | `docs/research/reproducibility/GS_JSO_IMAGE_VERSIONS_20260622.md`·Dockerfile.acmp·P2 issues.md·자산 커밋 + main/feature push | `e28705b d70250f 605b692` |
 | repo 정리 (정돈) | phase1/2/3 추적그림 111개 ~390MB 추적해제(history 무변경) + 참조無 구단계 3개 archive | `ac822e5 0fa16bb` |
 | 무텍스처 신호진단(보류) | 스크립트 분리 보존 | `21054f4` @ `wip/textureless-signal` |
 
@@ -137,7 +137,7 @@
 - configs: `configs/tum_mob/*.yaml`(vanilla/baseline/mutual/structure/both/seed_semantic/depth_release_{range,oracle}), `configs/tum_gravity.json`
 - P0c 어댑터(재사용): `phases/p2-gsjso/scripts/p0c_{run_roofer.sh,roofer_eval.py,assembly_diag.py,acmp_*,als_aoi}` — 임의 클라우드를 P0 동일 Roofer/val3dity harness에 투입
 - 라벨/클라우드(gitignore): `results/tum_transfer/clean_labels_geoidfix/semantic`, `…/p0c_step2/{acmp_classified,als_aoi,acmp_forcebuild}.laz`
-- 이미지 digest: `env/versions.md`(GS-JSO·acmp), `phases/p0-audit/env/versions.md`(colmap/roofer/tools)
+- 이미지 digest: `docs/research/reproducibility/GS_JSO_IMAGE_VERSIONS_20260622.md`(GS-JSO·acmp), `phases/p0-audit/env/versions.md`(colmap/roofer/tools)
 
 ## 4) 핵심 좌표계/datum 메모 (재확인 필수)
 - GS-local = EPSG:25832 − [690953, 5336071, 604] (ELLIPSOIDAL). Munich geoid ≈ +48 m.

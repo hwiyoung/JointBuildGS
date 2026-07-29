@@ -2,6 +2,8 @@
 
 This is the phase-level entry point. Repository-wide rules remain in [`../AGENTS.md`](../AGENTS.md).
 
+Root-level legacy P2 `versions.txt` receipts were consolidated into `phases/p2-gsjso/runs/<run_id>/` by `ROOT-IA-01`. New P2 producers use the phase ledger and do not recreate a root `runs/` control plane.
+
 | Phase | Status | Orientation | Rules |
 |---|---|---|---|
 | P0 input-substitution audit | completed; G1 review context retained | [`p0-audit/CLAUDE.md`](p0-audit/CLAUDE.md) | [`p0-audit/AGENTS.md`](p0-audit/AGENTS.md) |

@@ -835,7 +835,7 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     run_id = args.run_id or datetime.now().strftime("datum_tie_%Y%m%d_%H%M%S")
-    run_dir = ROOT / "runs" / run_id
+    run_dir = ROOT / "phases" / "p2-gsjso" / "runs" / run_id
 
     als = read_als_index()
     dense = read_dense_index()

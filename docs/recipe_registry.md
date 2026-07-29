@@ -13,7 +13,7 @@
 |---|---|---|
 | `세션핸드오프_모집단잠금·기준문서_20260702.md` §1·§2 | 없음 | `docs/SESSION_HANDOFF.md`, `docs/population_verify.md`, `docs/W_report_evidence.md` |
 | `P2_실험기록_20260629.md` | 없음 | `docs/W_phaseB_structure.md`, `docs/W_observability_inventory.md`, `docs/W_observability_test.md`, `docs/W_D12_metric_final.md` |
-| `원격발주_투영fix·LS정합·재게이트·재계산체인_레시피감사_20260702.md` Task B | 없음 | `docs/projection_geoid_rootcause.md`, `docs/projection_datum_fix.md`, `configs/projection_datum.json`, `runs/20260702_*`, `runs/20260703_*` |
+| `원격발주_투영fix·LS정합·재게이트·재계산체인_레시피감사_20260702.md` Task B | 없음 | `docs/projection_geoid_rootcause.md`, `docs/projection_datum_fix.md`, `configs/projection_datum.json`, `phases/p2-gsjso/runs/20260702_*`, `phases/p2-gsjso/runs/20260703_*` |
 
 실제 대조에 사용한 주 근거는 다음이다.
 
@@ -23,7 +23,7 @@
 | D/D4/D5 사전등록 | `P2_D4_사양서_사전등록_20260625.md`, `P2_D5_cp_ablation_사양_사전등록_20260626.md` |
 | 실험 기록 | `docs/W_generation_8way.md`, `docs/W_opacity_diag.md`, `docs/W_D_prior_full.md`, `docs/W_D4.md`, `docs/W_D5.md`, `docs/W_D6_prior_provenance.md`, `docs/W_D6_overseg_diag.md`, `docs/W_observability_inventory.md`, `docs/W_observability_test.md`, `docs/W_D12_metric_final.md`, `docs/W_results_consolidation.md`, `docs/W_report_evidence.md`, `docs/SESSION_HANDOFF.md` |
 | config | `configs/tum_mob/*.yaml`, `configs/projection_datum.json` |
-| versions | `results/tum_transfer/mob/*/versions.txt`, `runs/20260702_*/*`, `runs/20260703_*/*` |
+| versions | `results/tum_transfer/mob/*/versions.txt`, `phases/p2-gsjso/runs/20260702_*/*`, `phases/p2-gsjso/runs/20260703_*/*` |
 | 코드 위치 | `src/stage2/*`, `phases/p2-gsjso/scripts/*`, `scripts/stage2/*` |
 
 ## 1. 레시피 대장
@@ -95,7 +95,7 @@
 | D12/B1 판정 문구 | `SESSION_HANDOFF.md`와 `W_observability_test.md`에 B1에 대한 강한 판정 표현 존재 | 본 작업 지시는 판정 금지 | 이 대장은 B1의 성분, ckpt, 사용 숫자 출처만 기록한다. |
 | 숫자 출처 혼재 | `W_report_evidence.md`가 generation 8-way, accuracy, overseg/formal metric의 GS 설정이 서로 다르다고 경고 | 디스크상 v6 seed, D4 dense, raw arms, D12 eval이 각각 다른 versions/config를 가짐 | "어느 숫자냐" 질문에는 반드시 레시피와 read-out을 같이 답해야 한다. |
 | geoid 값 전환 | A0/A1/A2는 48.0 또는 LS 48.125535를 사용한 흔적 | A3a/A3b와 현재 `configs/projection_datum.json` 기본은 45.700 | projection 숫자와 population aux 숫자는 run 날짜별 geoid flag가 필요하다. |
-| datum_tie_overlay config context | `runs/20260703_datum_tie_overlay/versions.txt`는 config context 48.125535를 남김 | overlay script는 좌/우 명시값 `45.7`/`48.126`을 렌더 | context와 패널별 explicit zeta를 구분해야 한다. |
+| datum_tie_overlay config context | `phases/p2-gsjso/runs/20260703_datum_tie_overlay/versions.txt`는 config context 48.125535를 남김 | overlay script는 좌/우 명시값 `45.7`/`48.126`을 렌더 | context와 패널별 explicit zeta를 구분해야 한다. |
 | numeric grep false positive | `45.7`, `48.0`, `604`가 CSV/OBJ/좌표값에도 다수 출현 | datum 선언은 config, versions, script constant, comments를 기준으로 분류해야 함 | `docs/population_aux_v4.csv` 같은 표의 숫자값은 geoid 사용처로 세지 않는다. |
 
 ## 4. "사실상 정본 = D4" 가설 검증
@@ -176,13 +176,13 @@
 
 | run/config | image-projection flag | 3D seed/train flag | 메모 |
 |---|---|---|---|
-| `runs/20260702_A0_projection_fix` | `orthometric_geoid_m=48.000000` | 해당 없음 | A0 projection fix 당시 기본값. |
-| `runs/20260702_A1_zeta_ls` | command `zeta0=48.0`; fit/config `48.125535` | 해당 없음 | LS 참고값. |
-| `runs/20260702_A2_projection_gate_v2` | `orthometric_geoid_m=48.125535` | 해당 없음 | A2 측정 불능/게이트 v2 이력. |
-| `runs/20260703_datum_tie_v3` | GCG 45.7, effective 45.76, old 48.0 snippet | raw dense versions `GS-LOCAL+[...604]` | datum tie measurement. |
-| `runs/20260703_datum_tie_overlay` | left 45.7, right 48.126; config context 48.125535 | 해당 없음 | 순수 렌더 시각 대조. |
-| `runs/20260703_aux_v4a` | `orthometric_geoid_m=45.700000`, `geoid_m=45.700000` | 3D/씨드 `-556` 건드리지 않음 | population aux v4a. |
-| `runs/20260703_aux_v4b` | `orthometric_geoid_m=45.700000`, `geoid_m=45.700000` | 3D/씨드 `-556` 건드리지 않음 | lowtex/cards v4b. |
+| `phases/p2-gsjso/runs/20260702_A0_projection_fix` | `orthometric_geoid_m=48.000000` | 해당 없음 | A0 projection fix 당시 기본값. |
+| `phases/p2-gsjso/runs/20260702_A1_zeta_ls` | command `zeta0=48.0`; fit/config `48.125535` | 해당 없음 | LS 참고값. |
+| `phases/p2-gsjso/runs/20260702_A2_projection_gate_v2` | `orthometric_geoid_m=48.125535` | 해당 없음 | A2 측정 불능/게이트 v2 이력. |
+| `phases/p2-gsjso/runs/20260703_datum_tie_v3` | GCG 45.7, effective 45.76, old 48.0 snippet | raw dense versions `GS-LOCAL+[...604]` | datum tie measurement. |
+| `phases/p2-gsjso/runs/20260703_datum_tie_overlay` | left 45.7, right 48.126; config context 48.125535 | 해당 없음 | 순수 렌더 시각 대조. |
+| `phases/p2-gsjso/runs/20260703_aux_v4a` | `orthometric_geoid_m=45.700000`, `geoid_m=45.700000` | 3D/씨드 `-556` 건드리지 않음 | population aux v4a. |
+| `phases/p2-gsjso/runs/20260703_aux_v4b` | `orthometric_geoid_m=45.700000`, `geoid_m=45.700000` | 3D/씨드 `-556` 건드리지 않음 | lowtex/cards v4b. |
 | `gs_seed_*`, `gs_seed_*_protect` | 해당 없음 | `GS-LOCAL -604`, dim `-604`, acmp `-556` | v6/C 계열. |
 | `gs_prior_full_*`, `gs_d4_*`, `gs_d5*`, `gs_b1_*` | 해당 없음 | `GS-LOCAL -604`, acmp `-556`; `data_geoidfix` | D/D4/D5/B1 계열. |
 | `depth_release_*` | 해당 없음 | labels `shift_z=556`, geoid 48 band logic | P2 impl 2. |

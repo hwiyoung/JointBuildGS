@@ -57,7 +57,7 @@ from projection_datum import as_ellipsoidal_points, describe_projection_config  
 
 
 RUN_ID = "20260703_aux_v4b"
-RUN_DIR = REPO / "runs" / RUN_ID
+RUN_DIR = REPO / "phases" / "p2-gsjso" / "runs" / RUN_ID
 DOCS = REPO / "docs"
 MOB = REPO / "results/tum_transfer/mob/overseg_lever"
 POP_V4 = DOCS / "population_aux_v4.csv"

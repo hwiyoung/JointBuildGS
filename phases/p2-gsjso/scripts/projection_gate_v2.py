@@ -45,7 +45,7 @@ from projection_zeta_ls import (  # noqa: E402
 
 
 RUN_ID = "20260702_A2_projection_gate_v2"
-RUN_DIR = REPO / "runs" / RUN_ID
+RUN_DIR = REPO / "phases" / "p2-gsjso" / "runs" / RUN_ID
 FIG_DIR = REPO / "docs/figs/projection_gate_v2"
 OUT_CSV = REPO / "docs/experiments/projection_gate/tables/projection_gate_v2.csv"
 OUT_MD = REPO / "docs/experiments/projection_gate/reports/projection_gate_v2.md"

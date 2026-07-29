@@ -36,7 +36,7 @@ from projection_datum import describe_projection_config, projection_geoid_m  # n
 RUN_ID = "20260702_A0_projection_fix"
 OUT_CSV = REPO / "docs/projection_datum_unitcheck.csv"
 OUT_MD = REPO / "docs/projection_datum_fix.md"
-RUN_DIR = REPO / "runs" / RUN_ID
+RUN_DIR = REPO / "phases" / "p2-gsjso" / "runs" / RUN_ID
 BUILDING = "4906972"
 
 

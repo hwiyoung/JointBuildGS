@@ -1430,7 +1430,7 @@ def build_argparser() -> argparse.ArgumentParser:
     ap.add_argument("--out-diag", default="docs/experiments/attr_outcome_regression/tables/attr_outcome_regression_diagnostics_v1.csv")
     ap.add_argument("--out-sens", default="docs/experiments/attr_outcome_regression/tables/attr_outcome_regression_sensitivity_v1.csv")
     ap.add_argument("--fig-dir", default="docs/figs/attr_outcome_regression_v1")
-    ap.add_argument("--versions", default=f"runs/{RUN_ID}/versions.txt")
+    ap.add_argument("--versions", default=f"phases/p2-gsjso/runs/{RUN_ID}/versions.txt")
     return ap
 
 
