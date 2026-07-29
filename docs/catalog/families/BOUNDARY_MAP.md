@@ -1,7 +1,7 @@
 # Boundary map 정본 지도
 
 검토일: 2026-07-29  
-범위: `boundary_map` v1-v4.1 문서, 표, manifest, 그림, 실행 영수증  
+범위: `boundary_map` v1-v4.1 문서, 표, manifest, 그림, 실행 코드, 실행 영수증
 성격: 문서 관리 결정이며 측정값·실험 결과·과학적 판정을 변경하지 않는다.
 
 사람이 탐색할 때는 [`docs/experiments/boundary_map/README.md`](../../experiments/boundary_map/README.md)를 진입점으로 사용한다.
@@ -62,6 +62,13 @@ Git에서도 각 공개 bundle은 순서대로 `52c84f7`, `5c1331b`, `17ab65d`/`
 
 실행 디렉터리는 provenance 영수증과 세부 측정의 소유자다. 연구 문서의 정본 여부는 실행 디렉터리의 위치가 아니라 위 역할 지도와 manifest 연결로 판단한다.
 
+## 실행 코드 소유권
+
+- Boundary-map 전용 driver 12개는 `scripts/experiments/boundary_map/`이 소유한다.
+- `population_aux_v3.py`, `projection_datum.py`, E5 retriangulation/rescore 계열처럼 다른 P2 실험도 쓰는 helper는 `phases/p2-gsjso/scripts/`에 남긴다.
+- 외부 multi-wave driver는 원래 phase 위치를 유지하고 새 family script 경로를 호출한다.
+- 정확한 old/new 경로와 이동 전후 SHA-256은 [`BOUNDARY_MAP_SCRIPT_PATHS.csv`](../migrations/BOUNDARY_MAP_SCRIPT_PATHS.csv)에 기록한다.
+
 ## 경로 이동 상태
 
 `DOC-IA-03`에서 35개 원본의 목표 경로와 SHA-256을 [`BOUNDARY_MAP_PATHS.csv`](../migrations/BOUNDARY_MAP_PATHS.csv)에 고정했다. 원본 CSV·JSON·Markdown·PNG 내용과 run receipt는 수정하지 않는다.
@@ -71,3 +78,4 @@ Git에서도 각 공개 bundle은 순서대로 `52c84f7`, `5c1331b`, `17ab65d`/`
 - 두 mirror는 정본이 아니다. 새 문서·코드·config는 새 owner 경로를 사용해야 한다.
 - 과거 manifest와 run receipt의 old path 문자열은 당시 provenance이므로 rewrite하지 않고 migration manifest로 해석한다.
 - phase run 디렉터리와 원본 실험 결과는 이동하지 않는다.
+- `DOC-IA-04`에서 boundary 전용 실행 코드만 family owner로 이동하고 공용 helper는 이동하지 않는다.

@@ -109,7 +109,7 @@ run_mast3r_queue() {
       -v "$MODEL_REPO_HOST:$MODEL_REPO_CONTAINER:ro" \
       -w /workspace/JointBuildGS \
       "$MAST3R_IMAGE" \
-      python3 phases/p2-gsjso/scripts/boundary_map_v2_mast3r.py "$mode" \
+      python3 scripts/experiments/boundary_map/boundary_map_v2_mast3r.py "$mode" \
         --model-dir "$MODEL_CONTAINER" \
         --device cuda \
         --max-seconds "$seconds"
@@ -217,12 +217,12 @@ run_r1() {
   write_status "R1" "running" "canonical 178, depth-2 rule, crop-pair 14, and FM queue"
   local r1_started
   r1_started="$(date +%s)"
-  if ! run_dev python3 phases/p2-gsjso/scripts/boundary_map_v2.py prepare \
+  if ! run_dev python3 scripts/experiments/boundary_map/boundary_map_v2.py prepare \
     > "$LOG_DIR/R1_prepare.log" 2>&1; then
     issue "RW-R1 prepare command exited nonzero; log=$RUN_REL/logs/R1_prepare.log"
     return 1
   fi
-  if ! run_dev python3 phases/p2-gsjso/scripts/boundary_map_v2.py fit-primary \
+  if ! run_dev python3 scripts/experiments/boundary_map/boundary_map_v2.py fit-primary \
     > "$LOG_DIR/R1_fit_primary.log" 2>&1; then
     issue "RW-R1 primary-rule command exited nonzero; log=$RUN_REL/logs/R1_fit_primary.log"
     return 1
@@ -258,7 +258,7 @@ run_r1() {
     return 1
   fi
 
-  if ! run_dev python3 phases/p2-gsjso/scripts/boundary_map_v2.py finalize \
+  if ! run_dev python3 scripts/experiments/boundary_map/boundary_map_v2.py finalize \
     > "$LOG_DIR/R1_finalize.log" 2>&1; then
     issue "RW-R1 finalize command exited nonzero; log=$RUN_REL/logs/R1_finalize.log"
     return 1
@@ -269,15 +269,15 @@ import json
 from pathlib import Path
 
 docs = Path("docs")
-metrics = list(csv.DictReader((docs / "boundary_map_v2_metrics.csv").open()))
-ladder = list(csv.DictReader((docs / "boundary_map_v2_ladder.csv").open()))
-confusion = list(csv.DictReader((docs / "boundary_map_v2_confusion.csv").open()))
-cases = list(csv.DictReader((docs / "boundary_map_v2_boundary_cases.csv").open()))
-targets = list(csv.DictReader((docs / "boundary_map_v2_conditional_targets.csv").open()))
+metrics = list(csv.DictReader((docs / "archive/boundary_map/v2/tables/boundary_map_v2_metrics.csv").open()))
+ladder = list(csv.DictReader((docs / "archive/boundary_map/v2/tables/boundary_map_v2_ladder.csv").open()))
+confusion = list(csv.DictReader((docs / "archive/boundary_map/v2/tables/boundary_map_v2_confusion.csv").open()))
+cases = list(csv.DictReader((docs / "experiments/boundary_map/tables/boundary_map_v2_boundary_cases.csv").open()))
+targets = list(csv.DictReader((docs / "archive/boundary_map/v2/tables/boundary_map_v2_conditional_targets.csv").open()))
 crop = list(csv.DictReader(Path(
     "phases/p2-gsjso/runs/20260718_boundary_map_v2/crop_pair_results.csv"
 ).open()))
-manifest = json.loads((docs / "boundary_map_v2_manifest.json").read_text())
+manifest = json.loads((docs / "experiments/boundary_map/manifests/boundary_map_v2_manifest.json").read_text())
 if len(metrics) != 178 or len(ladder) != 178:
     raise SystemExit(f"R1 population drift metrics={len(metrics)} ladder={len(ladder)}")
 repair_ids = {
@@ -350,13 +350,13 @@ if any(row["assignment"] not in {
 } for row in targets):
     raise SystemExit("R1 conditional target assignment drift")
 for path in (
-    docs / "boundary_map_v2_metrics.csv",
-    docs / "boundary_map_v2_ladder.csv",
-    docs / "boundary_map_v2_confusion.csv",
-    docs / "boundary_map_v2_boundary_cases.csv",
-    docs / "boundary_map_v2_manifest.json",
-    docs / "figs/boundary_map_v2/boundary_map_v2_ladder.png",
-    docs / "W_boundary_map_v2_summary_20260718.md",
+    docs / "archive/boundary_map/v2/tables/boundary_map_v2_metrics.csv",
+    docs / "archive/boundary_map/v2/tables/boundary_map_v2_ladder.csv",
+    docs / "archive/boundary_map/v2/tables/boundary_map_v2_confusion.csv",
+    docs / "experiments/boundary_map/tables/boundary_map_v2_boundary_cases.csv",
+    docs / "experiments/boundary_map/manifests/boundary_map_v2_manifest.json",
+    docs / "archive/boundary_map/v2/figs/boundary_map_v2_ladder.png",
+    docs / "archive/boundary_map/v2/reports/W_boundary_map_v2_summary_20260718.md",
 ):
     if not path.is_file():
         raise SystemExit(f"R1 output missing: {path}")
@@ -382,7 +382,7 @@ PY
     docs/archive/boundary_map/v2/tables/boundary_map_v2_conditional_targets.csv \
     docs/experiments/boundary_map/manifests/boundary_map_v2_manifest.json \
     docs/archive/boundary_map/v2/reports/W_boundary_map_v2_summary_20260718.md \
-    docs/figs/boundary_map_v2 \
+    docs/archive/boundary_map/v2/figs \
     phases/p2-gsjso/runs/20260718_boundary_map_v2; then
     return 1
   fi
@@ -600,7 +600,7 @@ commit_partial_r1() {
     docs/archive/boundary_map/v2/tables/boundary_map_v2_conditional_targets.csv \
     docs/experiments/boundary_map/manifests/boundary_map_v2_manifest.json \
     docs/archive/boundary_map/v2/reports/W_boundary_map_v2_summary_20260718.md \
-    docs/figs/boundary_map_v2 \
+    docs/archive/boundary_map/v2/figs \
     phases/p2-gsjso/runs/20260718_boundary_map_v2
 }
 

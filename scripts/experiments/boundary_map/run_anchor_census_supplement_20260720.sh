@@ -3,7 +3,7 @@
 # Launch from repository root:
 #   mkdir -p phases/p2-gsjso/runs/20260720_anchor_census_supplement_driver
 #   setsid nohup bash \
-#     phases/p2-gsjso/scripts/run_anchor_census_supplement_20260720.sh \
+#     scripts/experiments/boundary_map/run_anchor_census_supplement_20260720.sh \
 #     > phases/p2-gsjso/runs/20260720_anchor_census_supplement_driver/detached.log \
 #     2>&1 < /dev/null &
 set -uo pipefail
@@ -12,7 +12,7 @@ REPO="$(cd "$(dirname "$0")/../../.." && pwd)"
 cd "$REPO" || exit 1
 
 BRANCH="exp/3b-surface-restore-corrected"
-SCRIPT="phases/p2-gsjso/scripts/anchor_census_supplement.py"
+SCRIPT="scripts/experiments/boundary_map/anchor_census_supplement.py"
 RUN_REL="phases/p2-gsjso/runs/20260720_anchor_census_supplement"
 RUN="$REPO/$RUN_REL"
 DRIVER_REL="phases/p2-gsjso/runs/20260720_anchor_census_supplement_driver"

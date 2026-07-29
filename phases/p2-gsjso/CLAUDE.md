@@ -2,7 +2,8 @@
 
 > 레포 인덱스·§4 불변 규칙: 루트 `CLAUDE.md` / `AGENTS.md`. 사람 검토자: 김휘영.
 > 이 문서의 모든 상대 경로는 레포 루트 기준(GS-JSO 코어 코드는 루트 `src/`·`configs/`).
-> P2 단계 산출(스크립트·환경)은 `phases/p2-gsjso/` 기준.
+> P2 단계별 환경·공용 helper·run receipt는 `phases/p2-gsjso/` 기준. 재사용 가능한
+> boundary-map 실험 driver는 `scripts/experiments/boundary_map/`이 소유한다.
 
 > ⚠️ **DRAFT 골격 (확인 요망):** 아래 **P2-spike 태스크**·**5-way 비교**·**성공기준**은
 > 착수 메시지에 명시되지 않아 프로젝트 맥락(루트 GS-JSO 문서의 손실/메커니즘/Ablation 4조건,
@@ -56,7 +57,8 @@ f_i(N,4) 의미론(BG/Roof/Wall/Terrain) · color_i(SH).
 - **계측**: 렌더 normal–depth normal consistency, 벽 법선 수평오차, roof/terrain 높이 순서,
   semantic mIoU, PSNR(품질 회귀 확인), 그리고 **MVS 대비 correction gain**(P0가 약점 보인
   무텍스처·노이즈 영역에서 GS-JSO surface evidence가 MVS를 회복/상회하는지).
-- **산출**: `phases/p2-gsjso/`에 번호 순 스크립트, `results/`에 REPORT.md + 시각 산출(필수),
+- **산출**: phase-local 번호 순 스크립트는 `phases/p2-gsjso/`, family-scoped 재사용 driver는
+  `scripts/experiments/<family_id>/`, `results/`에 REPORT.md + 시각 산출(필수),
   5-way 비교표 + per-condition 시각화.
 
 ## 4. 5-way 비교 (DRAFT — 1 MVS 기준선 + 4 Ablation)

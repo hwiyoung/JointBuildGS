@@ -2,7 +2,7 @@
 # Detached learning-zero boundary-map-v3 driver.
 # Launch from the repository root:
 #   mkdir -p phases/p2-gsjso/runs/20260719_boundary_map_v3_driver
-#   setsid nohup bash phases/p2-gsjso/scripts/run_boundary_map_v3_20260719.sh \
+#   setsid nohup bash scripts/experiments/boundary_map/run_boundary_map_v3_20260719.sh \
 #     > phases/p2-gsjso/runs/20260719_boundary_map_v3_driver/detached.log \
 #     2>&1 < /dev/null &
 set -uo pipefail
@@ -46,9 +46,9 @@ PIP_FREEZE="phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_env/pip_freeze.txt"
 PIP_FREEZE_SHA256="1c556c3be3304703a2971d82b4fd320fc96d2dd682787388123130db0a586b77"
 MAST3R_DOCKERFILE="phases/p2-gsjso/docker/s3ap-mast3r/Dockerfile"
 MAST3R_DOCKERFILE_SHA256="2ada6809de7e5d8e66a9c62875edaf47fe9ee584c4a1aec228732b7e3e0fc3fc"
-V3_SCRIPT="phases/p2-gsjso/scripts/boundary_map_v3.py"
-V3_DENSE_SCRIPT="phases/p2-gsjso/scripts/boundary_map_v3_dense.py"
-DRIVER_SCRIPT="phases/p2-gsjso/scripts/run_boundary_map_v3_20260719.sh"
+V3_SCRIPT="scripts/experiments/boundary_map/boundary_map_v3.py"
+V3_DENSE_SCRIPT="scripts/experiments/boundary_map/boundary_map_v3_dense.py"
+DRIVER_SCRIPT="scripts/experiments/boundary_map/run_boundary_map_v3_20260719.sh"
 UID_GID="$(id -u):$(id -g)"
 START_EPOCH="$(date +%s)"
 FM_BUDGET_SECONDS=21600
@@ -650,7 +650,7 @@ config_path = Path(
     "phases/p2-gsjso/configs/e5_c001_s3ap_fm_dense_dial.json"
 )
 dense_script = Path(
-    "phases/p2-gsjso/scripts/boundary_map_v3_dense.py"
+    "scripts/experiments/boundary_map/boundary_map_v3_dense.py"
 )
 jobs_payload = json.loads(jobs_path.read_text(encoding="utf-8"))
 jobs = jobs_payload["jobs"]
@@ -1627,7 +1627,7 @@ for label in ("source_sha256", "output_sha256"):
         if measured != expected:
             raise SystemExit(f"dense {label} drift: {relative}")
 required_sources = {
-    "phases/p2-gsjso/scripts/boundary_map_v3_dense.py",
+    "scripts/experiments/boundary_map/boundary_map_v3_dense.py",
     "phases/p2-gsjso/runs/20260719_boundary_map_v3/fm_dense_jobs.json",
     "docs/e5_c001_s3ap_fm_env_manifest.json",
     "phases/p2-gsjso/configs/e5_c001_s3ap_fm_dense_dial.json",
@@ -1689,7 +1689,7 @@ run_r1p4() {
       docs/experiments/boundary_map/tables/boundary_map_v3_conditional_targets.csv \
       docs/experiments/boundary_map/manifests/boundary_map_v3_manifest.json \
       docs/archive/boundary_map/v3/reports/W_boundary_map_v3_summary_20260719.md \
-      docs/figs/boundary_map_v3 \
+      docs/archive/boundary_map/v3/figs \
       "$MEASURE_REL" || true
     return 1
   fi
@@ -1705,12 +1705,12 @@ def rows(path):
     with path.open(newline="", encoding="utf-8") as handle:
         return list(csv.DictReader(handle))
 
-metrics = rows(docs / "boundary_map_v3_metrics.csv")
-ladder = rows(docs / "boundary_map_v3_ladder.csv")
-confusion = rows(docs / "boundary_map_v3_confusion.csv")
-targets = rows(docs / "boundary_map_v3_conditional_targets.csv")
+metrics = rows(docs / "experiments/boundary_map/tables/boundary_map_v3_metrics.csv")
+ladder = rows(docs / "archive/boundary_map/v3/tables/boundary_map_v3_ladder.csv")
+confusion = rows(docs / "experiments/boundary_map/tables/boundary_map_v3_confusion.csv")
+targets = rows(docs / "experiments/boundary_map/tables/boundary_map_v3_conditional_targets.csv")
 manifest = json.loads(
-    (docs / "boundary_map_v3_manifest.json").read_text(encoding="utf-8")
+    (docs / "experiments/boundary_map/manifests/boundary_map_v3_manifest.json").read_text(encoding="utf-8")
 )
 metric_ids = [row["building_id"] for row in metrics]
 ladder_ids = [row["building_id"] for row in ladder]
@@ -1892,9 +1892,9 @@ expected_sources = {
     "docs/archive/boundary_map/v2/tables/boundary_map_v2_ladder.csv",
     "docs/experiments/boundary_map/manifests/boundary_map_v2_manifest.json",
     "phases/p2-gsjso/runs/20260718_boundary_map_v2/all_projection_jobs.json",
-    "phases/p2-gsjso/scripts/boundary_map_v2.py",
-    "phases/p2-gsjso/scripts/boundary_map_v3_dense.py",
-    "phases/p2-gsjso/scripts/run_boundary_map_v3_20260719.sh",
+    "scripts/experiments/boundary_map/boundary_map_v2.py",
+    "scripts/experiments/boundary_map/boundary_map_v3_dense.py",
+    "scripts/experiments/boundary_map/run_boundary_map_v3_20260719.sh",
     "docs/e5_c001_s3ap_fm_env_manifest.json",
     "phases/p2-gsjso/configs/e5_c001_s3ap_fm_dense_dial.json",
     "docs/e5_c001_s3ap_fm_dense_dial.csv",
@@ -1903,7 +1903,7 @@ expected_sources = {
         "gs_e5_C001_s3a_semantic_guided_gate/audit/"
         "pjpl_depth_anchor_views.csv"
     ),
-    "phases/p2-gsjso/scripts/boundary_map_v3.py",
+    "scripts/experiments/boundary_map/boundary_map_v3.py",
     str(run / "primary_predictions.csv"),
     str(run / "decision_rule.json"),
     str(run / "label_inventory.json"),
@@ -1945,8 +1945,8 @@ for label in ("source_sha256", "output_sha256"):
     if measured != expected:
         raise SystemExit(f"manifest {label} SHA drift: {relative}")
 for path in (
-    docs / "W_boundary_map_v3_summary_20260719.md",
-    docs / "figs/boundary_map_v3/boundary_map_v3_map.png",
+    docs / "archive/boundary_map/v3/reports/W_boundary_map_v3_summary_20260719.md",
+    docs / "archive/boundary_map/v3/figs/boundary_map_v3_map.png",
 ):
     if not path.is_file():
         raise SystemExit(f"v3 output missing: {path}")
@@ -1968,7 +1968,7 @@ PY
       docs/experiments/boundary_map/tables/boundary_map_v3_conditional_targets.csv \
       docs/experiments/boundary_map/manifests/boundary_map_v3_manifest.json \
       docs/archive/boundary_map/v3/reports/W_boundary_map_v3_summary_20260719.md \
-      docs/figs/boundary_map_v3 \
+      docs/archive/boundary_map/v3/figs \
       "$MEASURE_REL" || true
     return 1
   fi
@@ -1982,7 +1982,7 @@ PY
     docs/experiments/boundary_map/tables/boundary_map_v3_conditional_targets.csv \
     docs/experiments/boundary_map/manifests/boundary_map_v3_manifest.json \
     docs/archive/boundary_map/v3/reports/W_boundary_map_v3_summary_20260719.md \
-    docs/figs/boundary_map_v3 \
+    docs/archive/boundary_map/v3/figs \
     "$MEASURE_REL"; then
     return 1
   fi

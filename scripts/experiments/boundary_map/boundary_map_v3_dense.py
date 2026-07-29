@@ -59,6 +59,7 @@ from shapely.ops import unary_union
 
 REPO = Path(__file__).resolve().parents[3]
 SCRIPT_DIR = Path(__file__).resolve().parent
+P2_SHARED_SCRIPT_DIR = REPO / "phases/p2-gsjso/scripts"
 RUN_ID = "20260719_boundary_map_v3"
 RUN_DIR = REPO / "phases/p2-gsjso/runs" / RUN_ID
 JOBS = RUN_DIR / "fm_dense_jobs.json"
@@ -75,12 +76,12 @@ S3AP_DIAL_CONFIG = (
 )
 V2_METRICS = REPO / "docs/archive/boundary_map/v2/tables/boundary_map_v2_metrics.csv"
 V2_MAST3R_SCRIPT = SCRIPT_DIR / "boundary_map_v2_mast3r.py"
-P0_AUX_SCRIPT = SCRIPT_DIR / "population_aux_v3.py"
-P0_DATUM_SCRIPT = SCRIPT_DIR / "projection_datum.py"
+P0_AUX_SCRIPT = P2_SHARED_SCRIPT_DIR / "population_aux_v3.py"
+P0_DATUM_SCRIPT = P2_SHARED_SCRIPT_DIR / "projection_datum.py"
 P0_PROJECTION_CONFIG = REPO / "configs/projection_datum.json"
-RETRI_SCRIPT = SCRIPT_DIR / "e5_c001_s3ap_fm_retriangulation.py"
-RESCORE_SCRIPT = SCRIPT_DIR / "e5_c001_s3ap_fm_retri_rescore.py"
-BASE_SCRIPT = SCRIPT_DIR / "e5_c001_s3ap_fm_rescore.py"
+RETRI_SCRIPT = P2_SHARED_SCRIPT_DIR / "e5_c001_s3ap_fm_retriangulation.py"
+RESCORE_SCRIPT = P2_SHARED_SCRIPT_DIR / "e5_c001_s3ap_fm_retri_rescore.py"
+BASE_SCRIPT = P2_SHARED_SCRIPT_DIR / "e5_c001_s3ap_fm_rescore.py"
 JOB_PRODUCER = SCRIPT_DIR / "boundary_map_v3.py"
 P0_IMAGE_DIR = REPO / "phases/p0-audit/data/work/images/Images"
 P0_CAMERAS = REPO / "phases/p0-audit/data/work/colmap/sparse/0/cameras.txt"
@@ -200,6 +201,8 @@ def load_module(name: str, path: Path) -> Any:
 
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
+if str(P2_SHARED_SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(P2_SHARED_SCRIPT_DIR))
 
 retri = load_module("boundary_map_v3_s3ap_retri", RETRI_SCRIPT)
 rescore = load_module("boundary_map_v3_s3ap_rescore", RESCORE_SCRIPT)

@@ -2,7 +2,7 @@
 # Detached learning-zero anchor-census driver.
 # Launch from the repository root:
 #   mkdir -p phases/p2-gsjso/runs/20260720_anchor_census_driver
-#   setsid nohup bash phases/p2-gsjso/scripts/run_anchor_census_20260720.sh \
+#   setsid nohup bash scripts/experiments/boundary_map/run_anchor_census_20260720.sh \
 #     > phases/p2-gsjso/runs/20260720_anchor_census_driver/detached.log \
 #     2>&1 < /dev/null &
 set -uo pipefail
@@ -23,8 +23,8 @@ PID_FILE="$DRIVER/launcher.pid"
 CID_FILE="$DRIVER/fm_container.cid"
 ISSUES="$REPO/docs/issues.md"
 
-SCRIPT="phases/p2-gsjso/scripts/anchor_census.py"
-DENSE_SCRIPT="phases/p2-gsjso/scripts/anchor_census_dense.py"
+SCRIPT="scripts/experiments/boundary_map/anchor_census.py"
+DENSE_SCRIPT="scripts/experiments/boundary_map/anchor_census_dense.py"
 JOBS="$RUN_REL/anchor_census_jobs.json"
 PREP_MANIFEST="$RUN_REL/anchor_census_prepare_manifest.json"
 INFERENCE_CSV="$RUN_REL/anchor_census_inference_measurements.csv"
@@ -432,7 +432,7 @@ run_finalize() {
       docs/experiments/boundary_map/tables/anchor_census_high_count_high_mad.csv \
       docs/experiments/boundary_map/manifests/boundary_map_v4_manifest.json \
       docs/experiments/boundary_map/reports/W_anchor_census_boundary_map_v4_summary_20260720.md \
-      docs/figs/boundary_map_v4 || true
+      docs/figs/boundary_map || true
     write_status "C-3" "failed" "finalize command failed"
     write_state "C-3" "failed" "finalize command failed"
     return 1
@@ -448,7 +448,7 @@ run_finalize() {
       docs/experiments/boundary_map/tables/anchor_census_high_count_high_mad.csv \
       docs/experiments/boundary_map/manifests/boundary_map_v4_manifest.json \
       docs/experiments/boundary_map/reports/W_anchor_census_boundary_map_v4_summary_20260720.md \
-      docs/figs/boundary_map_v4 || true
+      docs/figs/boundary_map || true
     write_status "C-3" "failed" "public QA failed"
     write_state "C-3" "failed" "public QA failed"
     return 1
@@ -462,7 +462,7 @@ run_finalize() {
     docs/experiments/boundary_map/tables/anchor_census_high_count_high_mad.csv \
     docs/experiments/boundary_map/manifests/boundary_map_v4_manifest.json \
     docs/experiments/boundary_map/reports/W_anchor_census_boundary_map_v4_summary_20260720.md \
-    docs/figs/boundary_map_v4; then
+    docs/figs/boundary_map; then
     write_status "C-3" "failed" "public commit or push failed"
     write_state "C-3" "failed" "public commit or push failed"
     return 1

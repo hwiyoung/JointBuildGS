@@ -55,9 +55,9 @@ RUN_DIR = REPO / "phases/p2-gsjso/runs/20260719_boundary_map_v3"
 
 SNAPSHOT = DOCS / "regression_input_snapshot.csv"
 MANUAL = DOCS / "manual_review_judgments.csv"
-V2_METRICS = DOCS / "boundary_map_v2_metrics.csv"
-V2_LADDER = DOCS / "boundary_map_v2_ladder.csv"
-V2_MANIFEST = DOCS / "boundary_map_v2_manifest.json"
+V2_METRICS = DOCS / "archive/boundary_map/v2/tables/boundary_map_v2_metrics.csv"
+V2_LADDER = DOCS / "archive/boundary_map/v2/tables/boundary_map_v2_ladder.csv"
+V2_MANIFEST = DOCS / "experiments/boundary_map/manifests/boundary_map_v2_manifest.json"
 V2_ALL_PROJECTION_JOBS = (
     REPO
     / "phases/p2-gsjso/runs/20260718_boundary_map_v2/all_projection_jobs.json"
@@ -90,13 +90,13 @@ FM_RUN_MANIFEST = RUN_DIR / "fm_dense_manifest.json"
 PARTIAL_MANIFEST = RUN_DIR / "partial_manifest.json"
 PARTIAL_SUMMARY = RUN_DIR / "partial_summary.md"
 
-METRICS = DOCS / "boundary_map_v3_metrics.csv"
-LADDER = DOCS / "boundary_map_v3_ladder.csv"
-CONFUSION = DOCS / "boundary_map_v3_confusion.csv"
-CONDITIONAL = DOCS / "boundary_map_v3_conditional_targets.csv"
-MANIFEST = DOCS / "boundary_map_v3_manifest.json"
-SUMMARY = DOCS / "W_boundary_map_v3_summary_20260719.md"
-FIGURE = DOCS / "figs/boundary_map_v3/boundary_map_v3_map.png"
+METRICS = DOCS / "experiments/boundary_map/tables/boundary_map_v3_metrics.csv"
+LADDER = DOCS / "archive/boundary_map/v3/tables/boundary_map_v3_ladder.csv"
+CONFUSION = DOCS / "experiments/boundary_map/tables/boundary_map_v3_confusion.csv"
+CONDITIONAL = DOCS / "experiments/boundary_map/tables/boundary_map_v3_conditional_targets.csv"
+MANIFEST = DOCS / "experiments/boundary_map/manifests/boundary_map_v3_manifest.json"
+SUMMARY = DOCS / "archive/boundary_map/v3/reports/W_boundary_map_v3_summary_20260719.md"
+FIGURE = DOCS / "archive/boundary_map/v3/figs/boundary_map_v3_map.png"
 
 MANUAL_SPLIT_SEED = 20260718
 DENSE_SPLIT_SEED = 20260719

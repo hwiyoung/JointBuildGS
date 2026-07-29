@@ -45,8 +45,9 @@ from mast3r.model import AsymmetricMASt3R  # noqa: E402
 
 REPO = Path(__file__).resolve().parents[3]
 SCRIPT_DIR = Path(__file__).resolve().parent
-if str(SCRIPT_DIR) not in sys.path:
-    sys.path.insert(0, str(SCRIPT_DIR))
+P2_SHARED_SCRIPT_DIR = REPO / "phases/p2-gsjso/scripts"
+if str(P2_SHARED_SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(P2_SHARED_SCRIPT_DIR))
 
 import population_aux_v3 as aux  # noqa: E402
 import projection_datum as datum  # noqa: E402
@@ -72,8 +73,8 @@ CAMERAS = DATA / "work/colmap/sparse/0/cameras.txt"
 IMAGES = DATA / "work/colmap/sparse/0/images.txt"
 PROJECTION_DATUM = REPO / "configs/projection_datum.json"
 ENV_MANIFEST = REPO / "docs/e5_c001_s3ap_fm_env_manifest.json"
-AUX_SCRIPT = SCRIPT_DIR / "population_aux_v3.py"
-DATUM_SCRIPT = SCRIPT_DIR / "projection_datum.py"
+AUX_SCRIPT = P2_SHARED_SCRIPT_DIR / "population_aux_v3.py"
+DATUM_SCRIPT = P2_SHARED_SCRIPT_DIR / "projection_datum.py"
 
 MODEL_REVISION = "06e7259f34c3060f322df5cb0c7b9094f57e41fc"
 MODEL_SHA256 = "0a615eb05fa9db654050aa655945ee5696e7c6c1b7f93f1ee8c37249010f6feb"

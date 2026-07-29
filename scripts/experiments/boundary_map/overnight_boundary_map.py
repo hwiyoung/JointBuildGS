@@ -40,8 +40,9 @@ from matplotlib.patches import Patch  # noqa: E402
 
 REPO = Path(__file__).resolve().parents[3]
 SCRIPT_DIR = Path(__file__).resolve().parent
-if str(SCRIPT_DIR) not in sys.path:
-    sys.path.insert(0, str(SCRIPT_DIR))
+P2_SHARED_SCRIPT_DIR = REPO / "phases/p2-gsjso/scripts"
+if str(P2_SHARED_SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(P2_SHARED_SCRIPT_DIR))
 
 import population_aux_v3 as aux  # noqa: E402
 from e5_pilot_gate_tools import C001_IDS  # noqa: E402
@@ -56,12 +57,12 @@ PREP_MANIFEST = RUN_DIR / "prepare_manifest.json"
 LOG = RUN_DIR / "run.log"
 
 DOCS = REPO / "docs"
-METRICS_CSV = DOCS / "boundary_map_metrics.csv"
-LADDER_CSV = DOCS / "boundary_map_ladder.csv"
-CONFUSION_CSV = DOCS / "boundary_map_confusion.csv"
-CASES_CSV = DOCS / "boundary_map_boundary_cases.csv"
-MANIFEST = DOCS / "boundary_map_manifest.json"
-FIGURE = DOCS / "figs/boundary_map/boundary_map_ladder.png"
+METRICS_CSV = DOCS / "archive/boundary_map/v1/tables/boundary_map_metrics.csv"
+LADDER_CSV = DOCS / "archive/boundary_map/v1/tables/boundary_map_ladder.csv"
+CONFUSION_CSV = DOCS / "archive/boundary_map/v1/tables/boundary_map_confusion.csv"
+CASES_CSV = DOCS / "archive/boundary_map/v1/tables/boundary_map_boundary_cases.csv"
+MANIFEST = DOCS / "experiments/boundary_map/manifests/boundary_map_manifest.json"
+FIGURE = DOCS / "archive/boundary_map/v1/figs/boundary_map_ladder.png"
 
 FOOTPRINTS = REPO / "results/tum_transfer/analysis/footprints_aoi.geojson"
 LOWTEX = DOCS / "lowtex_v5.csv"
