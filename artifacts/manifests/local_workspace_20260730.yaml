@@ -72,3 +72,12 @@ reviewed_cleanup:
   plan: artifacts/manifests/local_artifact_retention_plan_20260730.json
   receipt: artifacts/manifests/local_artifact_retention_receipt_20260730.json
   note: The original false value records the relocation-time authorization state; later explicit review authorized only the receipt's exact targets.
+reviewed_cleanup_pass2:
+  state: applied
+  applied_at: 2026-07-30T19:15:18+09:00
+  scope: exact-plan-only
+  plan: artifacts/manifests/local_artifact_retention_pass2_plan_20260730.json
+  receipt: artifacts/manifests/local_artifact_retention_pass2_receipt_20260730.json
+  removed_bytes: 28526243565
+  removed_files: 2949
+  note: Raw inputs, canonical P0 runs, compact results, regeneration NPZ files, and active Fusion payloads passed retained gates.

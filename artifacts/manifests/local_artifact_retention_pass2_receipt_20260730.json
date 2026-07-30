@@ -1,0 +1,38 @@
+{
+  "artifact_root": "/artifacts/JointBuildGS",
+  "git_head_at_finalize": "f6fb95f89da4e0cb858cd57f381b415346929772",
+  "plan_sha256": "2edbc05fab50a0c91fd81446fd13c15bafdac858d8825c3606a17ad98174320d",
+  "post": {
+    "bytes": 383694744147,
+    "dirs": 9737,
+    "files": 90094,
+    "symlinks": 11740
+  },
+  "pre": {
+    "bytes": 412220987712,
+    "dirs": 9914,
+    "files": 93043,
+    "symlinks": 11740
+  },
+  "removed_bytes": 28526243565,
+  "removed_files": 2949,
+  "retained_gate_groups": {
+    "canonical_p0_runs": 8,
+    "fair_pilot_records": 5,
+    "p0_data": 7,
+    "regeneration_inputs": 8
+  },
+  "retention_policy": {
+    "active_fusion_deleted": false,
+    "canonical_p0_run_deleted": false,
+    "compact_non_las_results_retained": true,
+    "expired_internal_prep_metrics_las_pointers": true,
+    "raw_data_deleted": false,
+    "retained_pilot_1wave_deleted": false
+  },
+  "schema": "jointbuildgs.local_artifact_retention_pass2_receipt.v1",
+  "sealed_utc": "2026-07-30T10:15:18.582702+00:00",
+  "state": "complete",
+  "target_count": 2425,
+  "unrelated_repository_files_deleted": false
+}
