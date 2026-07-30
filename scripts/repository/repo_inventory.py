@@ -115,6 +115,34 @@ def git_z_paths(repo_root: Path, args: Sequence[str]) -> list[str]:
     return [part.decode("utf-8", errors="surrogateescape") for part in output.split(b"\0") if part]
 
 
+@lru_cache(maxsize=None)
+def indexed_repository_paths(repo_root: Path) -> frozenset[str]:
+    """Return paths owned by the Git index for clone-stable reference checks."""
+    return frozenset(git_z_paths(repo_root, ["ls-files", "-z"]))
+
+
+@lru_cache(maxsize=None)
+def repository_path_exists(repo_root: Path, target: str) -> bool:
+    """Report repository existence without admitting ignored runtime payloads.
+
+    Generated inventories are committed and checked from clean or partial clones.
+    A local ignored directory must therefore not change a repository reference from
+    absent to present. Non-repository temporary roots retain filesystem semantics for
+    the resolver's focused unit tests.
+    """
+    if not (repo_root / ".git").exists():
+        try:
+            return (repo_root / target).exists()
+        except OSError:
+            return False
+    normalized = target.rstrip("/")
+    paths = indexed_repository_paths(repo_root)
+    if normalized in paths:
+        return True
+    prefix = f"{normalized}/"
+    return any(path.startswith(prefix) for path in paths)
+
+
 def load_config(path: Path) -> dict[str, Any]:
     with path.open("r", encoding="utf-8") as handle:
         config = json.load(handle)
@@ -607,7 +635,7 @@ def resolve_reference(source_path: str, raw_target: str, repo_root: Path) -> tup
         # otherwise retain the repository-root interpretation used by plain
         # provenance paths such as `phases/p2-gsjso/runs/...`.
         relative_target = posixpath.normpath(posixpath.join(posixpath.dirname(source_path), target))
-        if (repo_root / relative_target).exists():
+        if repository_path_exists(repo_root, relative_target):
             target = relative_target
     elif target.startswith("runs/") and source_path.startswith("phases/"):
         phase_root = "/".join(PurePosixPath(source_path).parts[:2])
@@ -617,10 +645,7 @@ def resolve_reference(source_path: str, raw_target: str, repo_root: Path) -> tup
     target = posixpath.normpath(target)
     if target == ".." or target.startswith("../"):
         return target, "no"
-    try:
-        exists = (repo_root / target).exists()
-    except OSError:
-        exists = False
+    exists = repository_path_exists(repo_root, target)
     return target, "yes" if exists else "no"
 
 

@@ -1,5 +1,6 @@
-import importlib.util
 import hashlib
+import importlib.util
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -72,6 +73,24 @@ class RepoInventoryUnitTests(unittest.TestCase):
                     "docs/experiments/demo/README.md", "reports/report.md", root
                 ),
                 ("docs/experiments/demo/reports/report.md", "yes"),
+            )
+
+    def test_ignored_runtime_directory_does_not_change_repository_existence(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            subprocess.run(["git", "init", "-q"], cwd=root, check=True)
+            source = root / "docs" / "report.md"
+            source.parent.mkdir(parents=True)
+            source.write_text("phases/p0-audit/data/", encoding="utf-8")
+            subprocess.run(["git", "add", "docs/report.md"], cwd=root, check=True)
+            ignored = root / "phases" / "p0-audit" / "data"
+            ignored.mkdir(parents=True)
+
+            self.assertEqual(
+                repo_inventory.resolve_reference(
+                    "docs/report.md", "phases/p0-audit/data/", root
+                ),
+                ("phases/p0-audit/data", "no"),
             )
 
     def test_parenthesized_numeric_prose_is_not_a_markdown_link(self):
