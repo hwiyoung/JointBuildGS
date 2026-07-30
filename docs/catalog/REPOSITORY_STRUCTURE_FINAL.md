@@ -59,7 +59,7 @@ JointBuildGS/
 
 ## Applied migrations
 
-The structure work is represented by 17 commits after the live pushed branch snapshot through `3888191`, with exact path maps in `docs/catalog/migrations/`.
+The structure work is represented by task-scoped commits after the live pushed branch snapshot, with exact path maps in `docs/catalog/migrations/`. Commit count is intentionally not treated as a structural invariant.
 
 | Migration family | Result |
 |---|---|
@@ -92,7 +92,7 @@ New documents must not expand this remainder. Former compatibility copies were p
 | Former root | Bytes moved | Final control-plane owner | Runtime resolution |
 |---|---:|---|---|
 | `data/` | 173,592,976,197 | `artifacts/manifests/` | Docker compatibility mount |
-| `results/` | 115,693,750,893 | 311 compact files under family `docs/experiments/`, figures, and configs | Docker compatibility mount |
+| `results/` | 115,693,750,893 | 311 compact files split into family reports/tables/metrics/manifests/models, phase receipts, figures, and configs | Docker compatibility mount |
 | `reports/` | 171,621,547 | artifact manifest only | Docker compatibility mount |
 | `fair-pilot/` | 2,279,659,141 | config/scripts/docs/phase receipt split by role | Docker compatibility mount |
 | `phases/p0-audit/data` | 72,627,527,687 | artifact manifest only | Docker compatibility mount |
@@ -123,6 +123,6 @@ The pre-migration local `.git` directory measured 1,920,692,651 bytes (1.789 GiB
 
 ## Final recommendation
 
-Choose **2. existing repo + partial clone/sparse checkout** for the control plane. There is no current single-blob emergency requiring history cleanup, while a new blob-filtered sparse checkout avoids hydrating unneeded tracked evidence. Sparse checkout is not an artifact manager, so class-C backend adoption remains the next storage milestone.
+Choose **2. existing repo + partial clone/sparse checkout** for the control plane. There is no current single-blob emergency requiring history cleanup, while a new blob-filtered sparse checkout avoids hydrating unneeded tracked evidence. Sparse checkout is not an artifact manager, so durable off-machine replication of the current class-C workspace remains the next storage milestone.
 
 Do not create a separate ResearchControl repository merely to compensate for unclear folders: the owner map and catalogs now provide that control plane inside the existing repository. Reconsider a split only for real access-control, publication, or independent lifecycle requirements.
