@@ -1,0 +1,58 @@
+{
+  "artifact_root": "/artifacts/JointBuildGS",
+  "before_broken_symlink_count": 3,
+  "before_regular_file_snapshot": {
+    "logical_regular_file_bytes": 383694408263,
+    "logical_regular_files": 90094,
+    "metadata_sha256": "3d08ee7e2a2d2b1a081921b5de7f427c41d52f6332c937271792bdfaa5dcb16f",
+    "unique_regular_file_bytes": 383694408263,
+    "unique_regular_files": 90094
+  },
+  "contract": {
+    "deletion_scope": "exactly three reviewed broken symlinks",
+    "empty_directory_cleanup": "data/seongsu",
+    "regular_files_and_payload_bytes": "must remain unchanged"
+  },
+  "created_at_utc": "2026-07-30T10:45:53.269788+00:00",
+  "entries": [
+    {
+      "action": "delete_stale_symlink",
+      "link_path": "data/seongsu/colmap_runs",
+      "old_gid": 1000,
+      "old_target": "/media/innopam/InnoPAM-8TB/hwiyoung/code/PlanarSplatting/planarSplat_ExpRes/seongsu_phase0/seongsu_colmap_example",
+      "old_uid": 1000,
+      "reason": "unreferenced broken pointer to unavailable external PlanarSplatting output"
+    },
+    {
+      "action": "delete_stale_symlink",
+      "link_path": "data/seongsu/colmap_sparse.ply",
+      "old_gid": 1000,
+      "old_target": "/media/innopam/InnoPAM-8TB/hwiyoung/code/PlanarSplatting/planarSplat_ExpRes/seongsu_phase0/colmap_sparse.ply",
+      "old_uid": 1000,
+      "reason": "unreferenced broken pointer to unavailable external PlanarSplatting output"
+    },
+    {
+      "action": "delete_stale_symlink",
+      "link_path": "data/seongsu/input_data.pth",
+      "old_gid": 1000,
+      "old_target": "/media/innopam/InnoPAM-8TB/hwiyoung/code/PlanarSplatting/planarSplat_ExpRes/seongsu_phase0/input_data.pth",
+      "old_uid": 1000,
+      "reason": "unreferenced broken pointer to unavailable external PlanarSplatting output"
+    }
+  ],
+  "plan_sha256": "eeb7b5003023aa91d9237fdedfed44c376298f910fd89cf600cc627fe90ea14d",
+  "remove_empty_directories": [
+    "data/seongsu"
+  ],
+  "repository_reference_scan": {
+    "active_reference_matches": 0,
+    "excluded_audit_or_cleanup_files": [
+      "artifacts/manifests/artifact_stale_symlink_cleanup_plan_20260730.json",
+      "artifacts/manifests/artifact_stale_symlink_cleanup_receipt_20260730.json",
+      "artifacts/manifests/artifact_symlink_retarget_plan_20260730.json",
+      "artifacts/manifests/artifact_symlink_retarget_receipt_20260730.json",
+      "scripts/repository/artifact_stale_symlink_cleanup.py"
+    ]
+  },
+  "schema": "jointbuildgs.artifact-stale-symlink-cleanup-plan.v1"
+}

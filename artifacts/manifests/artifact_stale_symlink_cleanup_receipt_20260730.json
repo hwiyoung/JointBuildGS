@@ -1,0 +1,33 @@
+{
+  "after_broken_symlink_count": 0,
+  "artifact_root": "/artifacts/JointBuildGS",
+  "created_at_utc": "2026-07-30T10:46:14.572353+00:00",
+  "deleted_symlink_count": 3,
+  "deleted_symlinks": [
+    "data/seongsu/colmap_runs",
+    "data/seongsu/colmap_sparse.ply",
+    "data/seongsu/input_data.pth"
+  ],
+  "plan_path": "artifacts/manifests/artifact_stale_symlink_cleanup_plan_20260730.json",
+  "plan_sha256": "eeb7b5003023aa91d9237fdedfed44c376298f910fd89cf600cc627fe90ea14d",
+  "receipt_sha256": "442e93686274856fa277f1b6ff33f40529b27eea6ace63e244d5f1c374189ce1",
+  "regular_file_snapshot_after": {
+    "logical_regular_file_bytes": 383694408263,
+    "logical_regular_files": 90094,
+    "metadata_sha256": "3d08ee7e2a2d2b1a081921b5de7f427c41d52f6332c937271792bdfaa5dcb16f",
+    "unique_regular_file_bytes": 383694408263,
+    "unique_regular_files": 90094
+  },
+  "regular_file_snapshot_before": {
+    "logical_regular_file_bytes": 383694408263,
+    "logical_regular_files": 90094,
+    "metadata_sha256": "3d08ee7e2a2d2b1a081921b5de7f427c41d52f6332c937271792bdfaa5dcb16f",
+    "unique_regular_file_bytes": 383694408263,
+    "unique_regular_files": 90094
+  },
+  "regular_file_snapshot_unchanged": true,
+  "removed_empty_directories": [
+    "data/seongsu"
+  ],
+  "schema": "jointbuildgs.artifact-stale-symlink-cleanup-receipt.v1"
+}
