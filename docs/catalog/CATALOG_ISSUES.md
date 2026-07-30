@@ -6,100 +6,262 @@
 
 | Measure | Count |
 |---|---|
-| Cataloged indexed files | 1548 |
-| Files directly under docs/ | 69 |
-| Distinct inferred families | 245 |
-| Local Markdown links/embeds that do not resolve | 5 |
-| Run directories | 171 |
-| Run directories with one or more record gaps | 171 |
+| Cataloged indexed files | 1830 |
+| Files directly under docs/ | 2 |
+| Distinct inferred families | 231 |
+| Local Markdown links/embeds that do not resolve | 215 |
+| Run directories | 177 |
+| Run directories with one or more record gaps | 177 |
 
 ### Catalog document statuses
 
 | Status | Files |
 |---|---|
 | canonical | 27 |
-| canonical_candidate | 9 |
-| orphan_candidate | 177 |
-| superseded | 39 |
+| canonical_candidate | 8 |
+| orphan_candidate | 432 |
+| superseded | 50 |
 | superseded_candidate | 12 |
-| supporting | 1282 |
-| temporary | 2 |
+| supporting | 1300 |
+| temporary | 1 |
 
 ### Run Git states
 
 | Git state | Runs |
 |---|---|
 | ignored_no_tracked_record | 86 |
-| indexed_record_present | 2 |
+| indexed_record_present | 8 |
 | tracked_record_present | 77 |
 | untracked_no_tracked_record | 6 |
 
 ## Issue 1: docs-root sprawl
 
-`docs/` currently has 69 indexed files directly at its root. The target architecture gives each experiment family one owner directory; no file is moved by this task.
+`docs/` currently has 2 indexed files directly at its root. The target architecture gives each experiment family one owner directory; no file is moved by this task.
 
 | Inferred family | Root files |
 |---|---|
-| e5_c001_s3ap | 7 |
-| boundary_map | 2 |
-| e5_c001_s2 | 2 |
-| codex_prompt_fig_mech1 | 1 |
-| context_for_review | 1 |
-| p2_index | 1 |
-| p2_현재프레임_핸드오프 | 1 |
-| progress_brief | 1 |
-| for_advisor | 1 |
-| research_status | 1 |
-| session_handoff | 1 |
-| w3_overseg_diagnosis | 1 |
-| w4d_coacquired_crosscheck | 1 |
-| d4_손실config_감사 | 1 |
-| d6_prior_provenance | 1 |
-| d6_shape_audit | 1 |
-| d6_survey | 1 |
-| d6_textureless_fidelity | 1 |
-| e5_pilot_gate_검수_판정회부 | 1 |
-| assembly_fidelity | 1 |
-| observability_test | 1 |
-| opacity_diag | 1 |
-| overseg_faithfulness | 1 |
-| oversegmentation_lever | 1 |
-| 3b_레시피설계_레퍼런스기반 | 1 |
-| 관문a진단 | 1 |
-| 밤샘3과제_검수 | 1 |
-| 승부의지도_s3판정안건 | 1 |
-| genclose_density_assembly | 1 |
-| genclose_direct_plane | 1 |
-| genclose_flat_seed_scores | 1 |
-| issues | 1 |
-| manual_review_judgments | 1 |
-| mononormal_diag | 1 |
-| mvs_hole_check | 1 |
-| planefit_baseline | 1 |
-| pointcloud_attributes | 1 |
-| population_aux | 1 |
-| population_verify | 1 |
-| qs_baseline178_scores | 1 |
-| qs_rescore | 1 |
-| recipe_registry | 1 |
+| boundary_map | 1 |
 | regression_input_snapshot | 1 |
-| s3b0_alpha_sweep | 1 |
-| s3b0_gate_scores | 1 |
-| s3b0_hsweep | 1 |
-| s3b0_mask_iou | 1 |
-| s3b0_mono_reliability | 1 |
-| s3b0_outline_observability | 1 |
-| s3b0_p0prime_scores | 1 |
 
 ## Issue 2: unresolved local Markdown links
 
 | Source | Line | Raw target | Resolved target |
 |---|---|---|---|
+| `docs/archive/handoffs/P2_index_legacy.md` | 19 | GSJSO_loss_audit.md | `docs/archive/handoffs/GSJSO_loss_audit.md` |
+| `docs/archive/handoffs/P2_index_legacy.md` | 25 | TUM_transfer_check.md | `docs/archive/handoffs/TUM_transfer_check.md` |
+| `docs/archive/handoffs/P2_index_legacy.md` | 26 | TUM_quality_coverage.md | `docs/archive/handoffs/TUM_quality_coverage.md` |
+| `docs/archive/handoffs/P2_index_legacy.md` | 27 | TUM_tsdf_roofer_probe.md | `docs/archive/handoffs/TUM_tsdf_roofer_probe.md` |
+| `docs/archive/handoffs/P2_index_legacy.md` | 28 | TUM_noise_check.md | `docs/archive/handoffs/TUM_noise_check.md` |
+| `docs/archive/handoffs/P2_index_legacy.md` | 38 | P2_makeorbreak_clean.md | `docs/archive/handoffs/P2_makeorbreak_clean.md` |
+| `docs/archive/handoffs/P2_index_legacy.md` | 38 | experiments/p2_mob_past_results.md | `docs/archive/handoffs/experiments/p2_mob_past_results.md` |
 | `docs/archive/pre_tum_results/stage3_polyfit_analysis/phase1_REPORT.md` | 10 | ../phase2_ablation_citygml/figures/fig_polyfit_steps_large.png | `docs/archive/pre_tum_results/phase2_ablation_citygml/figures/fig_polyfit_steps_large.png` |
 | `docs/archive/pre_tum_results/stage3_polyfit_analysis/phase1_REPORT.md` | 6 | ../phase2_ablation_citygml/_gt_polyfit_test/summary.json | `docs/archive/pre_tum_results/phase2_ablation_citygml/_gt_polyfit_test/summary.json` |
 | `docs/archive/pre_tum_results/stage3_polyfit_analysis/phase1_REPORT.md` | 7 | ../../src/stage3/polyfit_cli.cpp | `docs/archive/src/stage3/polyfit_cli.cpp` |
 | `docs/archive/pre_tum_results/stage3_polyfit_analysis/phase1_REPORT.md` | 8 | ../../scripts/phase2_synthesis/gt_polyfit_test.py | `docs/archive/scripts/phase2_synthesis/gt_polyfit_test.py` |
 | `docs/archive/pre_tum_results/stage3_polyfit_analysis/phase1_REPORT.md` | 9 | ../phase2_ablation_citygml/REPORT.md | `docs/archive/pre_tum_results/phase2_ablation_citygml/REPORT.md` |
+| `docs/experiments/p2_makeorbreak/reports/P2_makeorbreak_clean.md` | 3 | ../../../P2_index.md | `docs/P2_index.md` |
+| `docs/experiments/phase1_ablation/reports/REPORT.md` | 113 | figures/phase1_visual_check_maxdiff/v2597_panel.png | `docs/experiments/phase1_ablation/reports/figures/phase1_visual_check_maxdiff/v2597_panel.png` |
+| `docs/experiments/phase1_ablation/reports/REPORT.md` | 121 | figures/phase1_visual_check_maxdiff/v3984_panel.png | `docs/experiments/phase1_ablation/reports/figures/phase1_visual_check_maxdiff/v3984_panel.png` |
+| `docs/experiments/phase1_ablation/reports/REPORT.md` | 122 | figures/phase1_visual_check_maxdiff/v4008_panel.png | `docs/experiments/phase1_ablation/reports/figures/phase1_visual_check_maxdiff/v4008_panel.png` |
+| `docs/experiments/phase1_ablation/reports/REPORT.md` | 199 | figures/structure_4way_bars.png | `docs/experiments/phase1_ablation/reports/figures/structure_4way_bars.png` |
+| `docs/experiments/phase1_ablation/reports/REPORT.md` | 231 | figures/contribution_decomposition.png | `docs/experiments/phase1_ablation/reports/figures/contribution_decomposition.png` |
+| `docs/experiments/phase1_ablation/reports/REPORT.md` | 259 | ../../tools/gs3d_4way_viewer/ | `docs/experiments/tools/gs3d_4way_viewer` |
+| `docs/experiments/phase1_ablation/reports/REPORT.md` | 56 | figures/training_curves.png | `docs/experiments/phase1_ablation/reports/figures/training_curves.png` |
+| `docs/experiments/phase1_ablation/reports/REPORT.md` | 73 | figures/render_compare_4way/render_compare_4way.png | `docs/experiments/phase1_ablation/reports/figures/render_compare_4way/render_compare_4way.png` |
+| `docs/experiments/phase1_ablation/reports/REPORT.md` | 95 | figures/wall_normal_distribution.png | `docs/experiments/phase1_ablation/reports/figures/wall_normal_distribution.png` |
+| `docs/experiments/phase1_depth_normal/reports/REPORT.md` | 14 | figures/training_curves.png | `docs/experiments/phase1_depth_normal/reports/figures/training_curves.png` |
+| `docs/experiments/phase1_depth_normal/reports/REPORT.md` | 74 | figures/comparison_4views.png | `docs/experiments/phase1_depth_normal/reports/figures/comparison_4views.png` |
+| `docs/experiments/phase1_depth_normal/reports/REPORT.md` | 88 | figures/comparison_4views.png | `docs/experiments/phase1_depth_normal/reports/figures/comparison_4views.png` |
+| `docs/experiments/phase1_depth_normal/reports/REPORT.md` | 89 | figures/training_curves.png | `docs/experiments/phase1_depth_normal/reports/figures/training_curves.png` |
+| `docs/experiments/phase1_depth_normal/reports/REPORT.md` | 94 | run/tb/ | `docs/experiments/phase1_depth_normal/reports/run/tb` |
+| `docs/experiments/phase1_mutual/reports/REPORT.md` | 114 | figures/mutual_effect.png | `docs/experiments/phase1_mutual/reports/figures/mutual_effect.png` |
+| `docs/experiments/phase1_mutual/reports/REPORT.md` | 143 | figures/normal_distribution_all.png | `docs/experiments/phase1_mutual/reports/figures/normal_distribution_all.png` |
+| `docs/experiments/phase1_mutual/reports/REPORT.md` | 177 | figures/render_compare_step13_step14.png | `docs/experiments/phase1_mutual/reports/figures/render_compare_step13_step14.png` |
+| `docs/experiments/phase1_mutual/reports/REPORT.md` | 206 | figures/sem_compare_step13_step14.png | `docs/experiments/phase1_mutual/reports/figures/sem_compare_step13_step14.png` |
+| `docs/experiments/phase1_mutual/reports/REPORT.md` | 71 | figures/training_curves.png | `docs/experiments/phase1_mutual/reports/figures/training_curves.png` |
+| `docs/experiments/phase1_semantic/reports/REPORT.md` | 116 | figures/semantic_diagnostic.png | `docs/experiments/phase1_semantic/reports/figures/semantic_diagnostic.png` |
+| `docs/experiments/phase1_semantic/reports/REPORT.md` | 154 | figures/semantic_comparison.png | `docs/experiments/phase1_semantic/reports/figures/semantic_comparison.png` |
+| `docs/experiments/phase1_semantic/reports/REPORT.md` | 154 | run/sem_views/ | `docs/experiments/phase1_semantic/reports/run/sem_views` |
+| `docs/experiments/phase1_semantic/reports/REPORT.md` | 157 | figures/comparison_4views.png | `docs/experiments/phase1_semantic/reports/figures/comparison_4views.png` |
+| `docs/experiments/phase1_semantic/reports/REPORT.md` | 158 | figures/training_curves.png | `docs/experiments/phase1_semantic/reports/figures/training_curves.png` |
+| `docs/experiments/phase1_semantic/reports/REPORT.md` | 16 | figures/training_curves.png | `docs/experiments/phase1_semantic/reports/figures/training_curves.png` |
+| `docs/experiments/phase1_structure/reports/REPORT.md` | 117 | figures/render_compare_step13_step15.png | `docs/experiments/phase1_structure/reports/figures/render_compare_step13_step15.png` |
+| `docs/experiments/phase1_structure/reports/REPORT.md` | 125 | figures/sem_compare_step13_step15.png | `docs/experiments/phase1_structure/reports/figures/sem_compare_step13_step15.png` |
+| `docs/experiments/phase1_structure/reports/REPORT.md` | 82 | figures/training_curves.png | `docs/experiments/phase1_structure/reports/figures/training_curves.png` |
+| `docs/experiments/phase1_structure/reports/REPORT.md` | 97 | figures/structure_histograms.png | `docs/experiments/phase1_structure/reports/figures/structure_histograms.png` |
+| `docs/experiments/phase1_vanilla/reports/REPORT.md` | 105 | figures/comparison_4views.png | `docs/experiments/phase1_vanilla/reports/figures/comparison_4views.png` |
+| `docs/experiments/phase1_vanilla/reports/REPORT.md` | 139 | run/renders_final/ | `docs/experiments/phase1_vanilla/reports/run/renders_final` |
+| `docs/experiments/phase1_vanilla/reports/REPORT.md` | 14 | figures/training_curves.png | `docs/experiments/phase1_vanilla/reports/figures/training_curves.png` |
+| `docs/experiments/phase1_vanilla/reports/REPORT.md` | 142 | run/primitives.ply | `docs/experiments/phase1_vanilla/reports/run/primitives.ply` |
+| `docs/experiments/phase1_vanilla/reports/REPORT.md` | 143 | run/coverage/ | `docs/experiments/phase1_vanilla/reports/run/coverage` |
+| `docs/experiments/phase1_vanilla/reports/REPORT.md` | 144 | figures/comparison_4views.png | `docs/experiments/phase1_vanilla/reports/figures/comparison_4views.png` |
+| `docs/experiments/phase1_vanilla/reports/REPORT.md` | 145 | figures/training_curves.png | `docs/experiments/phase1_vanilla/reports/figures/training_curves.png` |
+| `docs/experiments/phase1_vanilla/reports/REPORT.md` | 147 | run/tb/ | `docs/experiments/phase1_vanilla/reports/run/tb` |
+| `docs/experiments/phase2_ablation_citygml/reports/REPORT.md` | 111 | figures/fig_d4_baseline_wall_tilt.png | `docs/experiments/phase2_ablation_citygml/reports/figures/fig_d4_baseline_wall_tilt.png` |
+| `docs/experiments/phase2_ablation_citygml/reports/REPORT.md` | 158 | figures/fig_d3_bid002_steps.png | `docs/experiments/phase2_ablation_citygml/reports/figures/fig_d3_bid002_steps.png` |
+| `docs/experiments/phase2_ablation_citygml/reports/REPORT.md` | 170 | figures/fig_d3_bid022_steps.png | `docs/experiments/phase2_ablation_citygml/reports/figures/fig_d3_bid022_steps.png` |
+| `docs/experiments/phase2_ablation_citygml/reports/REPORT.md` | 195 | figures/fig2_val3dity_bars.png | `docs/experiments/phase2_ablation_citygml/reports/figures/fig2_val3dity_bars.png` |
+| `docs/experiments/phase2_ablation_citygml/reports/REPORT.md` | 208 | figures/fig7_type_vs_condition.png | `docs/experiments/phase2_ablation_citygml/reports/figures/fig7_type_vs_condition.png` |
+| `docs/experiments/phase2_ablation_citygml/reports/REPORT.md` | 233 | figures/fig3_error_heatmap.png | `docs/experiments/phase2_ablation_citygml/reports/figures/fig3_error_heatmap.png` |
+| `docs/experiments/phase2_ablation_citygml/reports/REPORT.md` | 350 | figures/fig_polyfit_steps_large.png | `docs/experiments/phase2_ablation_citygml/reports/figures/fig_polyfit_steps_large.png` |
+| `docs/experiments/phase2_synthesis/reports/REPORT.md` | 121 | figures/texture_before_after.png | `docs/experiments/phase2_synthesis/reports/figures/texture_before_after.png` |
+| `docs/experiments/phase2_synthesis/reports/REPORT.md` | 16 | ../../scripts/phase2_synthesis/render_scene.py | `docs/experiments/scripts/phase2_synthesis/render_scene.py` |
+| `docs/experiments/phase2_synthesis/reports/REPORT.md` | 17 | ../../src/stage2/train.py | `docs/experiments/src/stage2/train.py` |
+| `docs/experiments/phase2_synthesis/reports/REPORT.md` | 170 | figures/render_samples.png | `docs/experiments/phase2_synthesis/reports/figures/render_samples.png` |
+| `docs/experiments/phase2_synthesis/reports/REPORT.md` | 201 | ../../scripts/phase2_synthesis/benchmark_iter_speed.py | `docs/experiments/scripts/phase2_synthesis/benchmark_iter_speed.py` |
+| `docs/experiments/phase2_synthesis/reports/REPORT.md` | 213 | ../../configs/phase2_smoke.yaml | `docs/experiments/configs/phase2_smoke.yaml` |
+| `docs/experiments/phase2_synthesis/reports/REPORT.md` | 215 | ../../scripts/phase2_synthesis/fc3_diagnose.py | `docs/experiments/scripts/phase2_synthesis/fc3_diagnose.py` |
+| `docs/experiments/phase2_synthesis/reports/REPORT.md` | 23 | ../../scripts/phase2_synthesis/select_block.py | `docs/experiments/scripts/phase2_synthesis/select_block.py` |
+| `docs/experiments/phase2_synthesis/reports/REPORT.md` | 30 | block_3d.png | `docs/experiments/phase2_synthesis/reports/block_3d.png` |
+| `docs/experiments/phase2_synthesis/reports/REPORT.md` | 36 | ../../scripts/phase2_synthesis/compose_scene.py | `docs/experiments/scripts/phase2_synthesis/compose_scene.py` |
+| `docs/experiments/phase2_synthesis/reports/REPORT.md` | 96 | figures/flight_plan.png | `docs/experiments/phase2_synthesis/reports/figures/flight_plan.png` |
+| `docs/experiments/primary4_assembly_validation/reports/W_assembly_fidelity.md` | 66 | figs/W_assembly/42364659.png | `docs/experiments/primary4_assembly_validation/reports/figs/W_assembly/42364659.png` |
+| `docs/experiments/primary4_assembly_validation/reports/W_assembly_fidelity.md` | 67 | figs/W_assembly/42364663.png | `docs/experiments/primary4_assembly_validation/reports/figs/W_assembly/42364663.png` |
+| `docs/experiments/primary4_assembly_validation/reports/W_assembly_fidelity.md` | 68 | figs/W_assembly/4907510.png | `docs/experiments/primary4_assembly_validation/reports/figs/W_assembly/4907510.png` |
+| `docs/experiments/primary4_assembly_validation/reports/W_assembly_fidelity.md` | 69 | figs/W_assembly/4906969.png | `docs/experiments/primary4_assembly_validation/reports/figs/W_assembly/4906969.png` |
+| `docs/experiments/primary4_assembly_validation/reports/W_assembly_fidelity.md` | 69 | figs/W_assembly/4906972.png | `docs/experiments/primary4_assembly_validation/reports/figs/W_assembly/4906972.png` |
+| `docs/experiments/primary4_assembly_validation/reports/W_assembly_fidelity.md` | 69 | figs/W_assembly/4908023.png | `docs/experiments/primary4_assembly_validation/reports/figs/W_assembly/4908023.png` |
+| `docs/experiments/stage3_polyfit_phase2/reports/REPORT.md` | 154 | stageA/ | `docs/experiments/stage3_polyfit_phase2/reports/stageA` |
+| `docs/experiments/stage3_polyfit_phase2/reports/REPORT.md` | 155 | stageB/ | `docs/experiments/stage3_polyfit_phase2/reports/stageB` |
+| `docs/experiments/stage3_polyfit_phase2/reports/REPORT.md` | 42 | bid3_diag/ | `docs/experiments/stage3_polyfit_phase2/reports/bid3_diag` |
+| `docs/experiments/stage3_polyfit_phase2/reports/REPORT.md` | 50 | figures/ | `docs/experiments/stage3_polyfit_phase2/reports/figures` |
+| `docs/experiments/stage3_polyfit_phase2/reports/REPORT.md` | 52 | figures/stageA_flat_b1.png | `docs/experiments/stage3_polyfit_phase2/reports/figures/stageA_flat_b1.png` |
+| `docs/experiments/stage3_polyfit_phase2/reports/REPORT.md` | 53 | figures/stageA_gable_b8.png | `docs/experiments/stage3_polyfit_phase2/reports/figures/stageA_gable_b8.png` |
+| `docs/experiments/stage3_polyfit_phase2/reports/REPORT.md` | 54 | figures/stageA_tri-slope_b0.png | `docs/experiments/stage3_polyfit_phase2/reports/figures/stageA_tri-slope_b0.png` |
+| `docs/experiments/stage3_polyfit_phase2/reports/REPORT.md` | 55 | figures/stageA_hip_b5.png | `docs/experiments/stage3_polyfit_phase2/reports/figures/stageA_hip_b5.png` |
+| `docs/experiments/stage3_polyfit_phase2/reports/REPORT.md` | 56 | figures/stageA_complex_b7.png | `docs/experiments/stage3_polyfit_phase2/reports/figures/stageA_complex_b7.png` |
+| `docs/experiments/stage3_polyfit_phase2/reports/REPORT.md` | 7 | ../../src/stage3/polyfit_cli.cpp | `docs/experiments/src/stage3/polyfit_cli.cpp` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 39 | B1/evidence_graph.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B1/evidence_graph.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 39 | B1/footprint_graph.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B1/footprint_graph.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 39 | B1/metrics.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B1/metrics.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 39 | B1/optional_roof_archetype.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B1/optional_roof_archetype.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 39 | B1/relation_readout.city.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B1/relation_readout.city.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 39 | B1/roof_surface_candidates.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B1/roof_surface_candidates.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 39 | B1/selected_surfaces.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B1/selected_surfaces.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 40 | B2/evidence_graph.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B2/evidence_graph.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 40 | B2/footprint_graph.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B2/footprint_graph.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 40 | B2/metrics.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B2/metrics.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 40 | B2/optional_roof_archetype.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B2/optional_roof_archetype.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 40 | B2/relation_readout.city.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B2/relation_readout.city.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 40 | B2/roof_surface_candidates.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B2/roof_surface_candidates.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 40 | B2/selected_surfaces.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B2/selected_surfaces.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 41 | B8/evidence_graph.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B8/evidence_graph.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 41 | B8/footprint_graph.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B8/footprint_graph.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 41 | B8/metrics.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B8/metrics.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 41 | B8/optional_roof_archetype.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B8/optional_roof_archetype.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 41 | B8/relation_readout.city.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B8/relation_readout.city.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 41 | B8/roof_surface_candidates.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B8/roof_surface_candidates.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 41 | B8/selected_surfaces.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B8/selected_surfaces.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 42 | B6/evidence_graph.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B6/evidence_graph.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 42 | B6/footprint_graph.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B6/footprint_graph.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 42 | B6/metrics.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B6/metrics.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 42 | B6/optional_roof_archetype.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B6/optional_roof_archetype.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 42 | B6/relation_readout.city.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B6/relation_readout.city.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 42 | B6/roof_surface_candidates.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B6/roof_surface_candidates.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 42 | B6/selected_surfaces.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B6/selected_surfaces.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 43 | B0/evidence_graph.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B0/evidence_graph.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 43 | B0/footprint_graph.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B0/footprint_graph.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 43 | B0/metrics.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B0/metrics.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 43 | B0/optional_roof_archetype.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B0/optional_roof_archetype.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 43 | B0/relation_readout.city.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B0/relation_readout.city.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 43 | B0/roof_surface_candidates.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B0/roof_surface_candidates.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 43 | B0/selected_surfaces.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B0/selected_surfaces.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 44 | B3/evidence_graph.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B3/evidence_graph.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 44 | B3/footprint_graph.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B3/footprint_graph.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 44 | B3/metrics.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B3/metrics.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 44 | B3/optional_roof_archetype.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B3/optional_roof_archetype.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 44 | B3/relation_readout.city.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B3/relation_readout.city.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 44 | B3/roof_surface_candidates.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B3/roof_surface_candidates.json` |
+| `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/REPORT.md` | 44 | B3/selected_surfaces.json | `docs/experiments/stage3_typed_readout/reports/P1_4a_gt_sanity/B3/selected_surfaces.json` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 56 | B1/audit_report.md | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B1/audit_report.md` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 56 | B1/gt_mesh_with_plane_groups.ply | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B1/gt_mesh_with_plane_groups.ply` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 56 | B1/input_points_by_class.ply | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B1/input_points_by_class.ply` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 56 | B1/input_points_by_plane.ply | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B1/input_points_by_plane.ply` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 56 | B1/input_vs_gt_overlay_oblique_by_plane.png | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B1/input_vs_gt_overlay_oblique_by_plane.png` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 56 | B1/input_vs_gt_overlay_side_by_plane.png | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B1/input_vs_gt_overlay_side_by_plane.png` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 56 | B1/input_vs_gt_overlay_top_by_plane.png | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B1/input_vs_gt_overlay_top_by_plane.png` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 57 | B2/audit_report.md | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B2/audit_report.md` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 57 | B2/gt_mesh_with_plane_groups.ply | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B2/gt_mesh_with_plane_groups.ply` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 57 | B2/input_points_by_class.ply | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B2/input_points_by_class.ply` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 57 | B2/input_points_by_plane.ply | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B2/input_points_by_plane.ply` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 57 | B2/input_vs_gt_overlay_oblique_by_plane.png | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B2/input_vs_gt_overlay_oblique_by_plane.png` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 57 | B2/input_vs_gt_overlay_side_by_plane.png | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B2/input_vs_gt_overlay_side_by_plane.png` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 57 | B2/input_vs_gt_overlay_top_by_plane.png | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B2/input_vs_gt_overlay_top_by_plane.png` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 58 | B6/audit_report.md | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B6/audit_report.md` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 58 | B6/gt_mesh_with_plane_groups.ply | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B6/gt_mesh_with_plane_groups.ply` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 58 | B6/input_points_by_class.ply | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B6/input_points_by_class.ply` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 58 | B6/input_points_by_plane.ply | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B6/input_points_by_plane.ply` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 58 | B6/input_vs_gt_overlay_oblique_by_plane.png | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B6/input_vs_gt_overlay_oblique_by_plane.png` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 58 | B6/input_vs_gt_overlay_side_by_plane.png | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B6/input_vs_gt_overlay_side_by_plane.png` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 58 | B6/input_vs_gt_overlay_top_by_plane.png | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B6/input_vs_gt_overlay_top_by_plane.png` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 59 | B8/audit_report.md | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B8/audit_report.md` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 59 | B8/gt_mesh_with_plane_groups.ply | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B8/gt_mesh_with_plane_groups.ply` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 59 | B8/input_points_by_class.ply | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B8/input_points_by_class.ply` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 59 | B8/input_points_by_plane.ply | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B8/input_points_by_plane.ply` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 59 | B8/input_vs_gt_overlay_oblique_by_plane.png | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B8/input_vs_gt_overlay_oblique_by_plane.png` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 59 | B8/input_vs_gt_overlay_side_by_plane.png | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B8/input_vs_gt_overlay_side_by_plane.png` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 59 | B8/input_vs_gt_overlay_top_by_plane.png | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B8/input_vs_gt_overlay_top_by_plane.png` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 60 | B0/audit_report.md | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B0/audit_report.md` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 60 | B0/gt_mesh_with_plane_groups.ply | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B0/gt_mesh_with_plane_groups.ply` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 60 | B0/input_points_by_class.ply | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B0/input_points_by_class.ply` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 60 | B0/input_points_by_plane.ply | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B0/input_points_by_plane.ply` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 60 | B0/input_vs_gt_overlay_oblique_by_plane.png | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B0/input_vs_gt_overlay_oblique_by_plane.png` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 60 | B0/input_vs_gt_overlay_side_by_plane.png | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B0/input_vs_gt_overlay_side_by_plane.png` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 60 | B0/input_vs_gt_overlay_top_by_plane.png | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B0/input_vs_gt_overlay_top_by_plane.png` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 61 | B3/audit_report.md | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B3/audit_report.md` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 61 | B3/gt_mesh_with_plane_groups.ply | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B3/gt_mesh_with_plane_groups.ply` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 61 | B3/input_points_by_class.ply | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B3/input_points_by_class.ply` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 61 | B3/input_points_by_plane.ply | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B3/input_points_by_plane.ply` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 61 | B3/input_vs_gt_overlay_oblique_by_plane.png | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B3/input_vs_gt_overlay_oblique_by_plane.png` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 61 | B3/input_vs_gt_overlay_side_by_plane.png | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B3/input_vs_gt_overlay_side_by_plane.png` |
+| `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/AUDIT_REPORT.md` | 61 | B3/input_vs_gt_overlay_top_by_plane.png | `docs/experiments/stage3_v4_validation/reports/polyfit_input_audit/B3/input_vs_gt_overlay_top_by_plane.png` |
+| `docs/experiments/synthetic_a/reports/REPORT.md` | 111 | images/noise_quality_cross.png | `docs/experiments/synthetic_a/reports/images/noise_quality_cross.png` |
+| `docs/experiments/synthetic_a/reports/REPORT.md` | 128 | images/sensitivity_ranking.png | `docs/experiments/synthetic_a/reports/images/sensitivity_ranking.png` |
+| `docs/experiments/synthetic_a/reports/REPORT.md` | 143 | images/combined_vs_single.png | `docs/experiments/synthetic_a/reports/images/combined_vs_single.png` |
+| `docs/experiments/synthetic_a/reports/REPORT.md` | 158 | images/roof_type_comparison.png | `docs/experiments/synthetic_a/reports/images/roof_type_comparison.png` |
+| `docs/experiments/synthetic_a/reports/REPORT.md` | 160 | images/roof_type_heatmap.png | `docs/experiments/synthetic_a/reports/images/roof_type_heatmap.png` |
+| `docs/experiments/synthetic_a/reports/REPORT.md` | 174 | images/structure_vs_semantic.png | `docs/experiments/synthetic_a/reports/images/structure_vs_semantic.png` |
+| `docs/experiments/synthetic_a/reports/REPORT.md` | 226 | images/gt_vs_result_comparison.png | `docs/experiments/synthetic_a/reports/images/gt_vs_result_comparison.png` |
+| `docs/experiments/tum_transfer_preflight/reports/TUM_noise_check.md` | 3 | ../../../P2_index.md | `docs/P2_index.md` |
+| `docs/experiments/tum_transfer_preflight/reports/TUM_quality_coverage.md` | 3 | ../../../P2_index.md | `docs/P2_index.md` |
+| `docs/experiments/tum_transfer_preflight/reports/TUM_transfer_check.md` | 3 | ../../../P2_index.md | `docs/P2_index.md` |
+| `docs/experiments/tum_transfer_preflight/reports/TUM_tsdf_roofer_probe.md` | 3 | ../../../P2_index.md | `docs/P2_index.md` |
+| `docs/experiments/w_d6_overseg_diag/reports/W_D6_shape_audit.md` | 17 | figs/W_D6_shape/42364659.png | `docs/experiments/w_d6_overseg_diag/reports/figs/W_D6_shape/42364659.png` |
+| `docs/experiments/w_d6_overseg_diag/reports/W_D6_shape_audit.md` | 17 | figs/W_D6_shape/42364663.png | `docs/experiments/w_d6_overseg_diag/reports/figs/W_D6_shape/42364663.png` |
+| `docs/experiments/w_d6_overseg_diag/reports/W_D6_shape_audit.md` | 17 | figs/W_D6_shape/4906969.png | `docs/experiments/w_d6_overseg_diag/reports/figs/W_D6_shape/4906969.png` |
+| `docs/experiments/w_d6_overseg_diag/reports/W_D6_shape_audit.md` | 17 | figs/W_D6_shape/4906972.png | `docs/experiments/w_d6_overseg_diag/reports/figs/W_D6_shape/4906972.png` |
+| `docs/experiments/w_d6_overseg_diag/reports/W_D6_shape_audit.md` | 17 | figs/W_D6_shape/4908023.png | `docs/experiments/w_d6_overseg_diag/reports/figs/W_D6_shape/4908023.png` |
+| `docs/experiments/w_d6_overseg_diag/reports/W_D6_shape_audit.md` | 18 | figs/W_D6_shape/42364609.png | `docs/experiments/w_d6_overseg_diag/reports/figs/W_D6_shape/42364609.png` |
+| `docs/experiments/w_d6_overseg_diag/reports/W_D6_shape_audit.md` | 18 | figs/W_D6_shape/4907182.png | `docs/experiments/w_d6_overseg_diag/reports/figs/W_D6_shape/4907182.png` |
+| `docs/experiments/w_d6_overseg_diag/reports/W_D6_shape_audit.md` | 18 | figs/W_D6_shape/4907510.png | `docs/experiments/w_d6_overseg_diag/reports/figs/W_D6_shape/4907510.png` |
+| `docs/experiments/w_d6_overseg_diag/reports/W_D6_shape_audit.md` | 18 | figs/W_D6_shape/4908050.png | `docs/experiments/w_d6_overseg_diag/reports/figs/W_D6_shape/4908050.png` |
+| `docs/experiments/w_d6_overseg_diag/reports/W_D6_shape_audit.md` | 18 | figs/W_D6_shape/4908166.png | `docs/experiments/w_d6_overseg_diag/reports/figs/W_D6_shape/4908166.png` |
+| `docs/experiments/w_d6_overseg_diag/reports/W_D6_shape_audit.md` | 18 | figs/W_D6_shape/4908176.png | `docs/experiments/w_d6_overseg_diag/reports/figs/W_D6_shape/4908176.png` |
+| `docs/experiments/w_d6_overseg_diag/reports/W_D6_shape_audit.md` | 19 | figs/W_D6_shape/4906969_yslice.png | `docs/experiments/w_d6_overseg_diag/reports/figs/W_D6_shape/4906969_yslice.png` |
+| `docs/experiments/w_d6_overseg_diag/reports/W_D6_survey.md` | 85 | figs/W_D6/survey_overseg.png | `docs/experiments/w_d6_overseg_diag/reports/figs/W_D6/survey_overseg.png` |
+| `docs/experiments/w_d6_overseg_diag/reports/W_D6_textureless_fidelity.md` | 29 | figs/W_D6_textureless/4907182.png | `docs/experiments/w_d6_overseg_diag/reports/figs/W_D6_textureless/4907182.png` |
+| `docs/experiments/w_d6_overseg_diag/reports/W_D6_textureless_fidelity.md` | 30 | figs/W_D6_textureless/42364609.png | `docs/experiments/w_d6_overseg_diag/reports/figs/W_D6_textureless/42364609.png` |
+| `docs/experiments/w_d6_overseg_diag/reports/W_D6_textureless_fidelity.md` | 30 | figs/W_D6_textureless/4908050.png | `docs/experiments/w_d6_overseg_diag/reports/figs/W_D6_textureless/4908050.png` |
+| `docs/experiments/w_d6_overseg_diag/reports/W_D6_textureless_fidelity.md` | 30 | figs/W_D6_textureless/4908166.png | `docs/experiments/w_d6_overseg_diag/reports/figs/W_D6_textureless/4908166.png` |
+| `docs/experiments/w_d6_overseg_diag/reports/W_overseg_faithfulness.md` | 28 | figs/W_D6_shape/4906969_yslice.png | `docs/experiments/w_d6_overseg_diag/reports/figs/W_D6_shape/4906969_yslice.png` |
+| `docs/experiments/w_d6_overseg_diag/reports/W_overseg_faithfulness.md` | 28 | figs/W_faithful/4906969_uav.png | `docs/experiments/w_d6_overseg_diag/reports/figs/W_faithful/4906969_uav.png` |
+| `docs/experiments/w_d6_overseg_diag/reports/W_overseg_faithfulness.md` | 65 | figs/W_faithful/42364659.png | `docs/experiments/w_d6_overseg_diag/reports/figs/W_faithful/42364659.png` |
+| `docs/experiments/w_d6_overseg_diag/reports/W_overseg_faithfulness.md` | 65 | figs/W_faithful/4906969.png | `docs/experiments/w_d6_overseg_diag/reports/figs/W_faithful/4906969.png` |
+| `docs/experiments/w_d6_overseg_diag/reports/W_overseg_faithfulness.md` | 65 | figs/W_faithful/4906972.png | `docs/experiments/w_d6_overseg_diag/reports/figs/W_faithful/4906972.png` |
+| `docs/experiments/w_d6_overseg_diag/reports/W_overseg_faithfulness.md` | 65 | figs/W_faithful/4907510.png | `docs/experiments/w_d6_overseg_diag/reports/figs/W_faithful/4907510.png` |
+| `docs/experiments/w_d6_overseg_diag/reports/W_overseg_faithfulness.md` | 66 | figs/W_faithful/42364659_uav.png | `docs/experiments/w_d6_overseg_diag/reports/figs/W_faithful/42364659_uav.png` |
+| `docs/experiments/w_d6_overseg_diag/reports/W_oversegmentation_lever.md` | 65 | figs/W_overseg/scatter.png | `docs/experiments/w_d6_overseg_diag/reports/figs/W_overseg/scatter.png` |
+| `docs/experiments/w_d6_overseg_diag/reports/W_oversegmentation_lever.md` | 66 | figs/W_overseg/42364659.png | `docs/experiments/w_d6_overseg_diag/reports/figs/W_overseg/42364659.png` |
+| `docs/experiments/w_d6_overseg_diag/reports/W_oversegmentation_lever.md` | 66 | figs/W_overseg/42364663.png | `docs/experiments/w_d6_overseg_diag/reports/figs/W_overseg/42364663.png` |
+| `docs/experiments/w_d6_overseg_diag/reports/W_oversegmentation_lever.md` | 66 | figs/W_overseg/4906969.png | `docs/experiments/w_d6_overseg_diag/reports/figs/W_overseg/4906969.png` |
+| `docs/experiments/w_d6_overseg_diag/reports/W_oversegmentation_lever.md` | 66 | figs/W_overseg/4906972.png | `docs/experiments/w_d6_overseg_diag/reports/figs/W_overseg/4906972.png` |
+| `docs/experiments/w_d6_overseg_diag/reports/W_oversegmentation_lever.md` | 66 | figs/W_overseg/4907510.png | `docs/experiments/w_d6_overseg_diag/reports/figs/W_overseg/4907510.png` |
+| `docs/experiments/w_d6_overseg_diag/reports/W_oversegmentation_lever.md` | 66 | figs/W_overseg/4908023.png | `docs/experiments/w_d6_overseg_diag/reports/figs/W_overseg/4908023.png` |
+| `docs/research/status/REPORT_FOR_ADVISOR.md` | 254 | ../results/phase1_ablation/figures/semantic_compare_4way/semantic_compare_4way.png | `docs/research/results/phase1_ablation/figures/semantic_compare_4way/semantic_compare_4way.png` |
+| `docs/research/status/REPORT_FOR_ADVISOR.md` | 275 | ../results/phase1_ablation/figures/structure_4way_bars.png | `docs/research/results/phase1_ablation/figures/structure_4way_bars.png` |
+| `docs/research/status/REPORT_FOR_ADVISOR.md` | 298 | ../results/phase1_ablation/figures/render_compare_4way/render_compare_4way.png | `docs/research/results/phase1_ablation/figures/render_compare_4way/render_compare_4way.png` |
+| `docs/research/status/REPORT_FOR_ADVISOR.md` | 310 | ../results/phase1_ablation/figures/contribution_decomposition.png | `docs/research/results/phase1_ablation/figures/contribution_decomposition.png` |
+| `docs/research/status/REPORT_FOR_ADVISOR.md` | 417 | ../results/phase2_ablation_citygml/figures/fig7_type_vs_condition.png | `docs/research/results/phase2_ablation_citygml/figures/fig7_type_vs_condition.png` |
 
 ## Issue 3: run receipt gaps
 
@@ -278,6 +440,12 @@ These are gaps against the target run contract, not claims that a historical run
 | P2 | e5p_prep_20260706_235306 | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
 | P2 | e5p_sparse_config_20260706_000204 | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
 | P2 | e5p_train_20260707_C001 | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
+| P2 | legacy-results-FC_S5_loss_ledger_instrumentation | indexed_record_present | missing_tracked_versions |
+| P2 | legacy-results-FC_S6C_lmutual_completion | indexed_record_present | missing_tracked_manifest;missing_tracked_versions;missing_tracked_report_or_index |
+| P2 | legacy-results-FC_S6D_directional_screening | indexed_record_present | missing_tracked_versions;missing_tracked_report_or_index |
+| P2 | legacy-results-FC_S6E_joint | indexed_record_present | missing_tracked_versions;missing_tracked_report_or_index |
+| P2 | legacy-results-FC_S6_componentwise_revised_lmutual_design_validation | indexed_record_present | missing_tracked_versions;missing_tracked_report_or_index |
+| P2 | legacy-results-footprint_conditioned_readout | indexed_record_present | missing_tracked_manifest;missing_tracked_versions;missing_tracked_report_or_index |
 
 ## Issue 4: orphan candidates
 
@@ -285,23 +453,8 @@ A file is an orphan candidate only when it has no parsed inbound path reference 
 
 | Path | Family | Type |
 |---|---|---|
-| `docs/CODEX_PROMPT_FIG_MECH1.md` | codex_prompt_fig_mech1 | document |
-| `docs/CONTEXT_FOR_REVIEW.md` | context_for_review | document |
-| `docs/P2_현재프레임_핸드오프.md` | p2_현재프레임_핸드오프 | document |
-| `docs/W_D4_손실config_감사.md` | d4_손실config_감사 | report |
-| `docs/W_E5_C001_S3Ap_Phase3_20260715.md` | e5_c001_s3ap | report |
-| `docs/W_E5_pilot_gate_검수·판정회부_20260707.md` | e5_pilot_gate_검수_판정회부 | report |
-| `docs/W_③b_레시피설계_레퍼런스기반_20260707.md` | 3b_레시피설계_레퍼런스기반 | report |
-| `docs/W_관문A진단_20260725.md` | 관문a진단 | report |
-| `docs/W_밤샘3과제_검수_20260717.md` | 밤샘3과제_검수 | report |
-| `docs/W_승부의지도·S3판정안건_20260711.md` | 승부의지도_s3판정안건 | report |
-| `docs/e5_c001_s2_mono_runtime.csv` | e5_c001_s2 | evidence_table |
-| `docs/e5_c001_s2_monodepth_precheck.csv` | e5_c001_s2 | evidence_table |
-| `docs/e5_c001_s3ap_boundary_propagation.csv` | e5_c001_s3ap | evidence_table |
-| `docs/e5_c001_s3ap_fm_retri_rescore.csv` | e5_c001_s3ap | evidence_table |
-| `docs/e5_c001_s3ap_perturbation.csv` | e5_c001_s3ap | evidence_table |
-| `docs/e5_c001_s3ap_perturbation_cells.csv` | e5_c001_s3ap | evidence_table |
-| `docs/e5_c001_s3ap_phase3_scores.csv` | e5_c001_s3ap | evidence_table |
+| `docs/catalog/migrations/DOCS_ROOT_FINAL_PATHS.csv` | docs_root_final_paths | evidence_table |
+| `docs/catalog/migrations/STORAGE_IA_01_20260730.md` | storage_ia_01 | document |
 | `docs/evidence/evidence_cards_v2/evidence_cards_v2_qA.md` | evidence_cards | document |
 | `docs/evidence/judgment_kit_v4/judgment_kit_v4_report.md` | judgment_kit | report |
 | `docs/evidence/p0_g1_20260613/W3_failure_diagnosis.md` | p0_g1_20260613 | document |
@@ -352,116 +505,206 @@ A file is an orphan candidate only when it has no parsed inbound path reference 
 | `docs/evidence/p0_g1_20260613/t9_failure_surface_cause_thresholds.csv` | p0_g1_20260613 | evidence_table |
 | `docs/evidence/p0_g1_20260613/w4b_population_profile_building_metrics.csv` | p0_g1_20260613 | evidence_table |
 | `docs/evidence/p0_g1_20260613/w4b_population_profile_summary.csv` | p0_g1_20260613 | report |
+| `docs/experiments/FC_S5_loss_ledger_instrumentation/reports/FC_S5_EXPERIMENT_REPORT.md` | fc_s5_loss_ledger_instrumentation | report |
+| `docs/experiments/FC_S5_loss_ledger_instrumentation/reports/phase1_instrumentation/INSTRUMENTATION_REPORT.md` | fc_s5_loss_ledger_instrumentation | report |
+| `docs/experiments/FC_S5_loss_ledger_instrumentation/reports/phase1_instrumentation/default_off_equivalence.md` | fc_s5_loss_ledger_instrumentation | document |
+| `docs/experiments/FC_S5_loss_ledger_instrumentation/reports/phase2_diagnostics/LOSS_DIAGNOSTIC_REPORT.md` | fc_s5_loss_ledger_instrumentation | report |
+| `docs/experiments/FC_S5_loss_ledger_instrumentation/tables/phase1_instrumentation/log_tag_check.csv` | fc_s5_loss_ledger_instrumentation | evidence_table |
+| `docs/experiments/FC_S5_loss_ledger_instrumentation/tables/phase2_diagnostics/B104_terrain_drift_summary.csv` | fc_s5_loss_ledger_instrumentation | report |
+| `docs/experiments/FC_S5_loss_ledger_instrumentation/tables/phase2_diagnostics/M10_metrics_by_bid.csv` | fc_s5_loss_ledger_instrumentation | evidence_table |
+| `docs/experiments/FC_S5_loss_ledger_instrumentation/tables/phase2_diagnostics/M3_metrics_by_bid.csv` | fc_s5_loss_ledger_instrumentation | evidence_table |
+| `docs/experiments/FC_S5_loss_ledger_instrumentation/tables/phase2_diagnostics/M5_metrics_by_bid.csv` | fc_s5_loss_ledger_instrumentation | evidence_table |
+| `docs/experiments/FC_S5_loss_ledger_instrumentation/tables/phase2_diagnostics/diagnostic_split_summary.csv` | fc_s5_loss_ledger_instrumentation | report |
+| `docs/experiments/FC_S6C_lmutual_completion/reports/phase0_design_freeze/FC_S6C_LMU5_8_DESIGN_FREEZE.md` | fc_s6c_lmutual_completion | document |
+| `docs/experiments/FC_S6C_lmutual_completion/reports/phase1_proxy_audit/LMU5_8_SMOKE_RECOMMENDATION.md` | fc_s6c_lmutual_completion | document |
+| `docs/experiments/FC_S6C_lmutual_completion/reports/phase1_proxy_audit/lmu5_8_proxy_metric_alignment.md` | fc_s6c_lmutual_completion | document |
+| `docs/experiments/FC_S6C_lmutual_completion/tables/phase1_proxy_audit/lmu5_8_proxy_by_bid.csv` | fc_s6c_lmutual_completion | evidence_table |
+| `docs/experiments/FC_S6C_lmutual_design_to_formula_audit/manifests/audit_boundary.json` | fc_s6c_lmutual_design_to_formula_audit | structured_record |
+| `docs/experiments/FC_S6C_lmutual_design_to_formula_audit/reports/LMU_DESIGN_TO_FORMULA_AUDIT.md` | fc_s6c_lmutual_design_to_formula_audit | document |
+| `docs/experiments/FC_S6C_lmutual_design_to_formula_audit/reports/lmu_next_step_decision.md` | fc_s6c_lmutual_design_to_formula_audit | document |
+| `docs/experiments/FC_S6C_lmutual_design_to_formula_audit/reports/lmu_revision_recommendations.md` | fc_s6c_lmutual_design_to_formula_audit | document |
+| `docs/experiments/FC_S6C_lmutual_design_to_formula_audit/tables/lmu_expected_metric_table.csv` | fc_s6c_lmutual_design_to_formula_audit | evidence_table |
+| `docs/experiments/FC_S6C_lmutual_design_to_formula_audit/tables/lmu_gate_validity_table.csv` | fc_s6c_lmutual_design_to_formula_audit | evidence_table |
+| `docs/experiments/FC_S6C_lmutual_design_to_formula_audit/tables/lmu_gradient_path_table.csv` | fc_s6c_lmutual_design_to_formula_audit | evidence_table |
+| `docs/experiments/FC_S6C_lmutual_design_to_formula_audit/tables/lmu_precondition_table.csv` | fc_s6c_lmutual_design_to_formula_audit | evidence_table |
+| `docs/experiments/FC_S6C_lmutual_design_to_formula_audit/tables/lmu_proxy_readiness_table.csv` | fc_s6c_lmutual_design_to_formula_audit | evidence_table |
+| `docs/experiments/FC_S6C_lmutual_design_to_formula_audit/tables/lmu_target_formula_alignment.csv` | fc_s6c_lmutual_design_to_formula_audit | evidence_table |
+| `docs/experiments/FC_S6D_directional_screening/reports/FC_S6D_DIRECTIONAL_SCREENING_REPORT.md` | fc_s6d_directional_screening | report |
+| `docs/experiments/FC_S6D_directional_screening/reports/FC_S6D_NEXT_STEP_DECISION.md` | fc_s6d_directional_screening | document |
+| `docs/experiments/FC_S6D_directional_screening/reports/phase0_config/A8_VS_GEO_CONFIG_CHECK.md` | fc_s6d_directional_screening | document |
+| `docs/experiments/FC_S6D_directional_screening/reports/phase1_equivalence/default_off_equivalence.md` | fc_s6d_directional_screening | document |
+| `docs/experiments/FC_S6D_directional_screening/reports/phase1_equivalence/gradient_scale_check.md` | fc_s6d_directional_screening | document |
+| `docs/experiments/FC_S6D_directional_screening/reports/phase3_eval/B104_guard_report.md` | fc_s6d_directional_screening | report |
+| `docs/experiments/FC_S6D_directional_screening/reports/phase3_eval/support_topology_report.md` | fc_s6d_directional_screening | report |
+| `docs/experiments/FC_S6D_directional_screening/reports/phase4_viewer/viewer_qa_notes.md` | fc_s6d_directional_screening | document |
+| `docs/experiments/FC_S6D_directional_screening/tables/phase0_config/a8_vs_geo_config_table.csv` | fc_s6d_directional_screening | evidence_table |
+| `docs/experiments/FC_S6D_directional_screening/tables/phase1_equivalence/formula_gradient_check.csv` | fc_s6d_directional_screening | evidence_table |
+| `docs/experiments/FC_S6D_directional_screening/tables/phase3_eval/a8_v2_geo_metrics_by_bid.csv` | fc_s6d_directional_screening | evidence_table |
+| `docs/experiments/FC_S6D_directional_screening/tables/phase3_eval/a8_v2_geo_split_summary.csv` | fc_s6d_directional_screening | report |
+| `docs/experiments/FC_S6D_directional_screening/tables/phase3_eval/a8_v2_geo_vs_a8_win_loss.csv` | fc_s6d_directional_screening | evidence_table |
+| `docs/experiments/FC_S6D_lmutual_directionality/reports/phase0_inventory/A8_ACTIVE_TERMS.md` | fc_s6d_lmutual_directionality | document |
+| `docs/experiments/FC_S6D_lmutual_directionality/reports/phase1_scale_audit/recommended_initial_weights.md` | fc_s6d_lmutual_directionality | document |
+| `docs/experiments/FC_S6D_lmutual_directionality/reports/phase2_screening/FC_S6D_DIRECTIONAL_DECISION.md` | fc_s6d_lmutual_directionality | document |
+| `docs/experiments/FC_S6D_lmutual_directionality/tables/phase0_inventory/directional_formula_table.csv` | fc_s6d_lmutual_directionality | evidence_table |
+| `docs/experiments/FC_S6D_lmutual_directionality/tables/phase0_inventory/lbase_weight_table.csv` | fc_s6d_lmutual_directionality | evidence_table |
+| `docs/experiments/FC_S6D_lmutual_directionality/tables/phase1_scale_audit/gradient_scale_audit.csv` | fc_s6d_lmutual_directionality | evidence_table |
+| `docs/experiments/FC_S6D_lmutual_directionality/tables/phase2_screening/directional_metrics_by_bid.csv` | fc_s6d_lmutual_directionality | evidence_table |
+| `docs/experiments/FC_S6D_lmutual_directionality/tables/phase2_screening/directional_split_summary.csv` | fc_s6d_lmutual_directionality | report |
+| `docs/experiments/FC_S6E_joint/reports/FC_S6E_JOINT_SCREENING_REPORT.md` | fc_s6e_joint | report |
+| `docs/experiments/FC_S6E_joint/reports/FC_S6E_NEXT_STEP_DECISION.md` | fc_s6e_joint | document |
+| `docs/experiments/FC_S6E_joint/reports/phase0_implementation/L_SEMCAL_IMPLEMENTATION.md` | fc_s6e_joint | document |
+| `docs/experiments/FC_S6E_joint/reports/phase0_implementation/default_off_equivalence.md` | fc_s6e_joint | document |
+| `docs/experiments/FC_S6E_joint/reports/phase1_gradient_audit/gradient_cosine_report.md` | fc_s6e_joint | report |
+| `docs/experiments/FC_S6E_joint/reports/phase1_gradient_audit/recommended_joint_weights.md` | fc_s6e_joint | document |
+| `docs/experiments/FC_S6E_joint/reports/phase3_eval/B104_guard_report.md` | fc_s6e_joint | report |
+| `docs/experiments/FC_S6E_joint/reports/phase3_eval/support_topology_report.md` | fc_s6e_joint | report |
+| `docs/experiments/FC_S6E_joint/reports/phase4_viewer/viewer_qa_notes.md` | fc_s6e_joint | document |
+| `docs/experiments/FC_S6E_joint/tables/phase0_implementation/semcal_formula_table.csv` | fc_s6e_joint | evidence_table |
+| `docs/experiments/FC_S6E_joint/tables/phase1_gradient_audit/gradient_scale_audit.csv` | fc_s6e_joint | evidence_table |
+| `docs/experiments/FC_S6E_joint/tables/phase3_eval/a8_v2_joint_metrics_by_bid.csv` | fc_s6e_joint | evidence_table |
+| `docs/experiments/FC_S6E_joint/tables/phase3_eval/a8_v2_joint_split_summary.csv` | fc_s6e_joint | report |
+| `docs/experiments/FC_S6E_joint/tables/phase3_eval/a8_v2_joint_vs_a8_vs_geo_win_loss.csv` | fc_s6e_joint | evidence_table |
+| `docs/experiments/FC_S6_componentwise_revised_lmutual_design_validation/reports/phase0_controls/IMPLEMENTATION_CONTROL_REPORT.md` | fc_s6_componentwise_revised_lmutual_design_validation | report |
+| `docs/experiments/FC_S6_componentwise_revised_lmutual_design_validation/reports/phase0_controls/default_off_equivalence.md` | fc_s6_componentwise_revised_lmutual_design_validation | document |
+| `docs/experiments/FC_S6_componentwise_revised_lmutual_design_validation/reports/phase1_existing_terms/TERM_DECOMPOSITION_REPORT.md` | fc_s6_componentwise_revised_lmutual_design_validation | report |
+| `docs/experiments/FC_S6_componentwise_revised_lmutual_design_validation/reports/phase2_terrain_safe/B104_TERRAIN_DRIFT_REPORT.md` | fc_s6_componentwise_revised_lmutual_design_validation | report |
+| `docs/experiments/FC_S6_componentwise_revised_lmutual_design_validation/reports/phase2_terrain_safe/TERRAIN_SAFE_REDESIGN_REPORT.md` | fc_s6_componentwise_revised_lmutual_design_validation | report |
+| `docs/experiments/FC_S6_componentwise_revised_lmutual_design_validation/reports/phase3_nonterrain_priors/NONTERRAIN_PRIOR_VALIDATION_REPORT.md` | fc_s6_componentwise_revised_lmutual_design_validation | report |
+| `docs/experiments/FC_S6_componentwise_revised_lmutual_design_validation/reports/phase4_revised_terms/REVISED_TERM_PROTOTYPE_REPORT.md` | fc_s6_componentwise_revised_lmutual_design_validation | report |
+| `docs/experiments/FC_S6_componentwise_revised_lmutual_design_validation/reports/phase5_candidate_selection/FC_S6_FINAL_DECISION.md` | fc_s6_componentwise_revised_lmutual_design_validation | document |
+| `docs/experiments/FC_S6_componentwise_revised_lmutual_design_validation/reports/phase_s6b_acceptance/FC_S6B_CANDIDATE_ACCEPTANCE_REPORT.md` | fc_s6_componentwise_revised_lmutual_design_validation | report |
+| `docs/experiments/FC_S6_componentwise_revised_lmutual_design_validation/reports/phase_s6b_acceptance/viewer_qa_notes.md` | fc_s6_componentwise_revised_lmutual_design_validation | document |
+| `docs/experiments/FC_S6_componentwise_revised_lmutual_design_validation/reports/phase_triage/FC_S6_ACTION_DECISION.md` | fc_s6_componentwise_revised_lmutual_design_validation | document |
+| `docs/experiments/FC_S6_componentwise_revised_lmutual_design_validation/tables/phase0_controls/lmutual_term_control_matrix.csv` | fc_s6_componentwise_revised_lmutual_design_validation | evidence_table |
+| `docs/experiments/FC_S6_componentwise_revised_lmutual_design_validation/tables/phase0_controls/logging_tags_available.csv` | fc_s6_componentwise_revised_lmutual_design_validation | evidence_table |
+| `docs/experiments/FC_S6_componentwise_revised_lmutual_design_validation/tables/phase1_existing_terms/term_ablation_metrics_by_bid.csv` | fc_s6_componentwise_revised_lmutual_design_validation | evidence_table |
+| `docs/experiments/FC_S6_componentwise_revised_lmutual_design_validation/tables/phase1_existing_terms/term_ablation_split_summary.csv` | fc_s6_componentwise_revised_lmutual_design_validation | report |
+| `docs/experiments/FC_S6_componentwise_revised_lmutual_design_validation/tables/phase1_existing_terms/term_ablation_win_loss.csv` | fc_s6_componentwise_revised_lmutual_design_validation | evidence_table |
+| `docs/experiments/FC_S6_componentwise_revised_lmutual_design_validation/tables/phase2_terrain_safe/terrain_safe_metrics_by_bid.csv` | fc_s6_componentwise_revised_lmutual_design_validation | evidence_table |
+| `docs/experiments/FC_S6_componentwise_revised_lmutual_design_validation/tables/phase2_terrain_safe/terrain_safe_split_summary.csv` | fc_s6_componentwise_revised_lmutual_design_validation | report |
+| `docs/experiments/FC_S6_componentwise_revised_lmutual_design_validation/tables/phase3_nonterrain_priors/nonterrain_prior_metrics_by_bid.csv` | fc_s6_componentwise_revised_lmutual_design_validation | evidence_table |
+| `docs/experiments/FC_S6_componentwise_revised_lmutual_design_validation/tables/phase3_nonterrain_priors/nonterrain_prior_split_summary.csv` | fc_s6_componentwise_revised_lmutual_design_validation | report |
+| `docs/experiments/FC_S6_componentwise_revised_lmutual_design_validation/tables/phase4_revised_terms/revised_term_metrics_by_bid.csv` | fc_s6_componentwise_revised_lmutual_design_validation | evidence_table |
+| `docs/experiments/FC_S6_componentwise_revised_lmutual_design_validation/tables/phase5_candidate_selection/revised_mutual_candidate_table.csv` | fc_s6_componentwise_revised_lmutual_design_validation | evidence_table |
+| `docs/experiments/FC_S6_componentwise_revised_lmutual_design_validation/tables/phase_s6b_acceptance/candidate_comparison_by_bid.csv` | fc_s6_componentwise_revised_lmutual_design_validation | evidence_table |
+| `docs/experiments/FC_S6_componentwise_revised_lmutual_design_validation/tables/phase_s6b_acceptance/classwise_support_comparison.csv` | fc_s6_componentwise_revised_lmutual_design_validation | evidence_table |
+| `docs/experiments/FC_S6_componentwise_revised_lmutual_design_validation/tables/phase_s6b_acceptance/topology_comparison.csv` | fc_s6_componentwise_revised_lmutual_design_validation | evidence_table |
+| `docs/experiments/FC_S6_componentwise_revised_lmutual_design_validation/tables/phase_triage/FC_S6_DECISION_TABLE.csv` | fc_s6_componentwise_revised_lmutual_design_validation | evidence_table |
+| `docs/experiments/e5_c001_s3ap/tables/mononormal_diag.csv` | e5_c001_s3ap | evidence_table |
+| `docs/experiments/e5_c001_s3ap/tables/mvs_hole_check.csv` | e5_c001_s3ap | evidence_table |
+| `docs/experiments/e5_c001_s3ap/tables/planefit_baseline.csv` | e5_c001_s3ap | evidence_table |
+| `docs/experiments/e5_c001_s3b0/reports/s3b0_semantic_lineage.md` | e5_c001_s3b | document |
+| `docs/experiments/e5_c001_s3b0/tables/s3b0_alpha_sweep.csv` | e5_c001_s3b | evidence_table |
+| `docs/experiments/e5_c001_s3b0/tables/s3b0_gate_scores.csv` | e5_c001_s3b | evidence_table |
+| `docs/experiments/e5_c001_s3b0/tables/s3b0_hsweep.csv` | e5_c001_s3b | evidence_table |
+| `docs/experiments/e5_c001_s3b0/tables/s3b0_mask_iou.csv` | e5_c001_s3b | evidence_table |
+| `docs/experiments/e5_c001_s3b0/tables/s3b0_mono_reliability.csv` | e5_c001_s3b | evidence_table |
+| `docs/experiments/e5_c001_s3b0/tables/s3b0_outline_observability.csv` | e5_c001_s3b | evidence_table |
+| `docs/experiments/e5_c001_s3b0/tables/s3b0_p0prime_scores.csv` | e5_c001_s3b | evidence_table |
+| `docs/experiments/e5_c001_s3b0/tables/s3b0_seed_survival_timeline.csv` | e5_c001_s3b | evidence_table |
 | `docs/experiments/er3_review_sources.md` | er3_review_sources | document |
-| `docs/experiments/tum2twin_surface_proxy_rv1/reports/metric_contract_rv1.md` | tum2twin_surface_proxy_rv1 | document |
-| `docs/experiments/tum2twin_surface_proxy_rv1/reports/repo_audit_rv1_20260728_2327.md` | tum2twin_surface_proxy_rv1 | document |
-| `docs/genclose_direct_plane.csv` | genclose_direct_plane | evidence_table |
-| `docs/mononormal_diag.csv` | mononormal_diag | evidence_table |
-| `docs/mvs_hole_check.csv` | mvs_hole_check | evidence_table |
-| `docs/planefit_baseline.csv` | planefit_baseline | evidence_table |
-| `docs/qs_baseline178_scores.csv` | qs_baseline178_scores | evidence_table |
-| `docs/qs_rescore_pairs.csv` | qs_rescore | evidence_table |
-| `docs/research/preregistration/fusion_w1/사전등록_관문A_v2·SE3채택재판정_20260725.md` | fusion_w1 | preregistration_or_lock |
-| `docs/s3b0_gate_scores.csv` | s3b0_gate_scores | evidence_table |
-| `docs/s3b0_hsweep.csv` | s3b0_hsweep | evidence_table |
-| `docs/s3b0_mask_iou.csv` | s3b0_mask_iou | evidence_table |
-| `docs/s3b0_mono_reliability.csv` | s3b0_mono_reliability | evidence_table |
-| `docs/s3b0_outline_observability.csv` | s3b0_outline_observability | evidence_table |
-| `docs/s3b0_p0prime_scores.csv` | s3b0_p0prime_scores | evidence_table |
-| `docs/s3b0_semantic_lineage.md` | s3b0_semantic_lineage | document |
-| `docs/사전등록_관문A_v2·SE3채택재판정_20260725.md` | 사전등록_관문a_se3채택재판정 | preregistration_or_lock |
-| `docs/사전등록서_품질축본선_승인잠금v4_20260721.md` | 사전등록서_품질축본선_승인잠금 | preregistration_or_lock |
-| `docs/사전등록서_품질축본선_초안v1.2_20260718.md` | 사전등록서_품질축본선_초안 | preregistration_or_lock |
-| `docs/원격프롬프트_S2_방향자리_사슬4arm·선행묶음_20260710.md` | 원격프롬프트_s2_방향자리_사슬4arm_선행묶음 | document |
-| `phases/p0-audit/docs/P0_입력치환Audit_실험설계서_v1_20260610.docx` | p0_입력치환audit_실험설계서 | binary_document |
-| `phases/p0-audit/docs/W2_1_roofer_default.md` | w2_1_roofer_default | document |
-| `phases/p0-audit/docs/W2_1b_als_roofer_failure_memo.csv` | w2_1b_als_roofer_failure_memo | evidence_table |
-| `phases/p0-audit/docs/W2_1b_missing_roofer_exclusions.csv` | w2_1b_missing_roofer_exclusions | evidence_table |
-| `phases/p0-audit/docs/W2_1b_paired_analysis.md` | w2_1b_paired_analysis | document |
-| `phases/p0-audit/docs/W2_1b_paired_status.csv` | w2_1b_paired_status | evidence_table |
-| `phases/p0-audit/docs/W2_1b_reason_crosstab.csv` | w2_1b_reason_crosstab | evidence_table |
-| `phases/p0-audit/docs/W2_1c_coverage_sensitivity.csv` | w2_1c_coverage | evidence_table |
-| `phases/p0-audit/docs/W2_1c_failure_bucket_summary.csv` | w2_1c_failure_bucket | report |
-| `phases/p0-audit/docs/W2_1c_paired_status.csv` | w2_1c_paired_status | evidence_table |
-| `phases/p0-audit/docs/W2_1c_quality_paired.md` | w2_1c_quality_paired | document |
-| `phases/p0-audit/docs/W2_1c_reference_mismatch_exclusions.csv` | w2_1c_reference_mismatch_exclusions | evidence_table |
-| `phases/p0-audit/docs/W2_1c_success_rates.csv` | w2_1c_success_rates | evidence_table |
-| `phases/p0-audit/docs/W2_2_city3d_default.md` | w2_2_city3d_default | document |
-| `phases/p0-audit/docs/W2_2_city3d_failure_reasons.csv` | w2_2_city3d_failure_reasons | evidence_table |
-| `phases/p0-audit/docs/W2_2_city3d_paired_status.csv` | w2_2_city3d_paired_status | evidence_table |
-| `phases/p0-audit/docs/W2_2_city3d_success_rates.csv` | w2_2_city3d_success_rates | evidence_table |
-| `phases/p0-audit/docs/W2_2_roofer_city3d_2x2.csv` | w2_2_roofer_city3d_2x2 | evidence_table |
-| `phases/p0-audit/docs/W2_2b_als_1200_sample.csv` | w2_2b_als_1200_sample | evidence_table |
-| `phases/p0-audit/docs/W2_2b_als_val3dity_error_codes.csv` | w2_2b_als_val3dity_error_codes | evidence_table |
-| `phases/p0-audit/docs/W2_2b_city3d_diagnosis.md` | w2_2b_city3d_diagnosis | document |
-| `phases/p0-audit/docs/W2_2b_obj_representatives.csv` | w2_2b_obj_representatives | evidence_table |
-| `phases/p0-audit/docs/W2_2b_val3dity_recheck_summary.csv` | w2_2b_val3dity_recheck | report |
-| `phases/p0-audit/docs/W2_3a_bucket_summary.csv` | w2_3a_bucket | report |
-| `phases/p0-audit/docs/W2_3a_dev_subset.csv` | w2_3a_dev_subset | evidence_table |
-| `phases/p0-audit/docs/W2_3a_grid_results.csv` | w2_3a_grid_results | evidence_table |
-| `phases/p0-audit/docs/W2_3a_paired_success.csv` | w2_3a_paired_success | evidence_table |
-| `phases/p0-audit/docs/W2_3a_selected_params.csv` | w2_3a_selected_params | evidence_table |
-| `phases/p0-audit/docs/W2_3a_tuned_paired_status.csv` | w2_3a_tuned_paired_status | evidence_table |
-| `phases/p0-audit/docs/W2_3b_bucket_summary.csv` | w2_3b_bucket | report |
-| `phases/p0-audit/docs/W2_3b_dim_variants.md` | w2_3b_dim_variants | document |
-| `phases/p0-audit/docs/W2_3b_roof_matching_recovery.csv` | w2_3b_roof_matching_recovery | evidence_table |
-| `phases/p0-audit/docs/W2_3b_variant_density_summary.csv` | w2_3b_variant_density | report |
-| `phases/p0-audit/docs/W2_3b_variant_pointcloud_stats.csv` | w2_3b_variant_pointcloud_stats | evidence_table |
-| `phases/p0-audit/docs/W2_3b_variant_status.csv` | w2_3b_variant_status | evidence_table |
-| `phases/p0-audit/docs/W2_3b_variant_success.csv` | w2_3b_variant_success | evidence_table |
-| `phases/p0-audit/docs/W3_1_roofer_quality.md` | w3_1_roofer_quality | document |
-| `phases/p0-audit/docs/W3_1_roofer_quality_metrics.csv` | w3_1_roofer_quality | evidence_table |
-| `phases/p0-audit/docs/W3_1_roofer_quality_summary.csv` | w3_1_roofer_quality | report |
-| `phases/p0-audit/docs/W3_1_threshold_position.csv` | w3_1_threshold_position | evidence_table |
-| `phases/p0-audit/docs/W3_1b_height_outlier_note.csv` | w3_1b_height_outlier_note | evidence_table |
-| `phases/p0-audit/docs/W3_1b_internal_boundary_metrics.csv` | w3_1b_internal_boundary | evidence_table |
-| `phases/p0-audit/docs/W3_1b_internal_boundary_summary.csv` | w3_1b_internal_boundary | report |
-| `phases/p0-audit/docs/W3_1b_matching_validation.md` | w3_1b_matching_validation | document |
-| `phases/p0-audit/docs/W3_1b_overlay_selection.csv` | w3_1b_overlay_selection | evidence_table |
-| `phases/p0-audit/docs/W3_2b_roofer_repeatability_noise.csv` | w3_2b_roofer_repeatability_noise | evidence_table |
-| `phases/p0-audit/docs/W3_2b_roofer_repeatability_success.csv` | w3_2b_roofer_repeatability_success | evidence_table |
-| `phases/p0-audit/docs/W3_2b_roofer_repeatability_unstable_buildings.csv` | w3_2b_roofer_repeatability_unstable_buildings | evidence_table |
-| `phases/p0-audit/docs/W3_2c_canonical_closeout.md` | w3_2c_canonical_closeout | document |
-| `phases/p0-audit/docs/W3_2c_canonical_input_bucket_summary.csv` | w3_2c_canonical_input_bucket | report |
-| `phases/p0-audit/docs/W3_2c_canonical_internal_boundary_metrics.csv` | w3_2c_canonical_internal_boundary | evidence_table |
-| `phases/p0-audit/docs/W3_2c_canonical_internal_boundary_summary.csv` | w3_2c_canonical_internal_boundary | report |
-| `phases/p0-audit/docs/W3_2c_canonical_paired_status.csv` | w3_2c_canonical_paired_status | evidence_table |
-| `phases/p0-audit/docs/W3_2c_canonical_priority_buckets.csv` | w3_2c_canonical_priority_buckets | evidence_table |
-| `phases/p0-audit/docs/W3_2c_canonical_roofer_quality_metrics.csv` | w3_2c_canonical_roofer_quality | evidence_table |
-| `phases/p0-audit/docs/W3_2c_canonical_roofer_quality_summary.csv` | w3_2c_canonical_roofer_quality | report |
-| `phases/p0-audit/docs/W3_2c_canonical_success_rates.csv` | w3_2c_canonical_success_rates | evidence_table |
-| `phases/p0-audit/docs/W3_2c_canonical_threshold_position.csv` | w3_2c_canonical_threshold_position | evidence_table |
-| `phases/p0-audit/docs/W3_2c_quality_median_change.csv` | w3_2c_quality_median_change | evidence_table |
-| `phases/p0-audit/docs/W3_failure_diagnosis.md` | w3_failure_diagnosis | document |
-| `phases/p0-audit/docs/W3_failure_diagnosis_building_metrics.csv` | w3_failure_diagnosis_building | evidence_table |
-| `phases/p0-audit/docs/W3_failure_diagnosis_control_summary.csv` | w3_failure_diagnosis_control | report |
-| `phases/p0-audit/docs/W3_failure_diagnosis_thresholds.csv` | w3_failure_diagnosis_thresholds | evidence_table |
-| `phases/p0-audit/docs/W3_failure_surface_cause.md` | w3_failure_surface_cause | document |
-| `phases/p0-audit/docs/W3_failure_surface_cause_building_metrics.csv` | w3_failure_surface_cause_building | evidence_table |
-| `phases/p0-audit/docs/W3_failure_surface_cause_control_summary.csv` | w3_failure_surface_cause_control | report |
-| `phases/p0-audit/docs/W3_failure_surface_cause_thresholds.csv` | w3_failure_surface_cause_thresholds | evidence_table |
-| `phases/p0-audit/docs/W3_figure_failure_story_metadata.json` | w3_figure_failure_story_metadata | structured_record |
-| `phases/p0-audit/docs/W3_survivor_texture_gap.md` | w3_survivor_texture_gap | document |
-| `phases/p0-audit/docs/W3_survivor_texture_gap_building_metrics.csv` | w3_survivor_texture_gap_building | evidence_table |
-| `phases/p0-audit/docs/W3_survivor_texture_gap_correlations.csv` | w3_survivor_texture_gap_correlations | evidence_table |
-| `phases/p0-audit/docs/W3_survivor_texture_gap_strata.csv` | w3_survivor_texture_gap_strata | evidence_table |
-| `phases/p0-audit/docs/W3_survivor_texture_refine_building_metrics.csv` | w3_survivor_texture_refine_building | evidence_table |
-| `phases/p0-audit/docs/W3_survivor_texture_refine_correlations.csv` | w3_survivor_texture_refine_correlations | evidence_table |
-| `phases/p0-audit/docs/W3_survivor_texture_refine_strata.csv` | w3_survivor_texture_refine_strata | evidence_table |
-| `phases/p0-audit/docs/W3_survivor_texture_refine_thresholds.csv` | w3_survivor_texture_refine_thresholds | evidence_table |
-| `phases/p0-audit/docs/W3_validity_error_breakdown.md` | w3_validity_error_breakdown | document |
-| `phases/p0-audit/docs/W3_validity_error_breakdown_building_errors.csv` | w3_validity_error_breakdown_building_errors | evidence_table |
-| `phases/p0-audit/docs/W3_validity_error_breakdown_quality_attribution.csv` | w3_validity_error_breakdown_quality_attribution | evidence_table |
-| `phases/p0-audit/docs/W3_validity_error_breakdown_type_by_input.csv` | w3_validity_error_breakdown_type_by_input | evidence_table |
-| `phases/p0-audit/docs/W4b_population_profile_building_metrics.csv` | w4b_population_profile_building | evidence_table |
-| `phases/p0-audit/docs/W4b_population_profile_summary.csv` | w4b_population_profile | report |
-| `phases/p0-audit/docs/W4c_no_points_breakdown.csv` | w4c_no_points_breakdown | evidence_table |
-| `phases/p0-audit/docs/W4c_no_points_breakdown_meta.json` | w4c_no_points_breakdown_meta | structured_record |
-| `phases/p0-audit/docs/dim_v1_classification_stats.md` | dim_classification_stats | document |
-| `phases/p0-audit/docs/dim_v1_stats.md` | dim_stats | document |
-| `phases/p0-audit/docs/footprints_summary.md` | footprints | report |
-| `phases/p0-audit/docs/opf2colmap_summary.md` | opf2colmap | report |
-| `phases/p0-audit/docs/scene_aoi_buildings.csv` | scene_aoi_buildings | evidence_table |
+| `docs/experiments/fair_pilot/STAGING.md` | fair_pilot | document |
+| `docs/experiments/fair_pilot/reports/baseline_mvs_stats.md` | fair_pilot | document |
+| `docs/experiments/fair_pilot/reports/data_inventory.md` | fair_pilot | document |
+| `docs/experiments/fair_pilot/tables/positive_control_candidates.csv` | fair_pilot | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/manifests/FC_S2_baseline_rendered_recovery_stage3_v1c/phaseA_e1_recovery/render_regeneration/phase1_render_export/baseline_rendered_sample_bank_metadata.json` | footprint_conditioned_readout | structured_record |
+| `docs/experiments/footprint_conditioned_readout/manifests/FC_S2_baseline_rendered_recovery_stage3_v1c/phaseA_e1_recovery/render_regeneration/phase2_fixed_export/baseline_fixed_export_metadata.json` | footprint_conditioned_readout | structured_record |
+| `docs/experiments/footprint_conditioned_readout/metrics/FC_S1_semantic_surface_readout/phase7_g2_feasibility/g2_groups.json` | footprint_conditioned_readout | structured_record |
+| `docs/experiments/footprint_conditioned_readout/metrics/FC_S1_semantic_surface_readout/phase8_final_decision.json` | footprint_conditioned_readout | structured_record |
+| `docs/experiments/footprint_conditioned_readout/metrics/FC_S1_semantic_surface_readout/val3dity_probe.json` | footprint_conditioned_readout | structured_record |
+| `docs/experiments/footprint_conditioned_readout/metrics/FC_S2_baseline_rendered_recovery_stage3_v1c/phaseA_e1_recovery/e1_acceptance_decision.json` | footprint_conditioned_readout | structured_record |
+| `docs/experiments/footprint_conditioned_readout/metrics/FC_S2_baseline_rendered_recovery_stage3_v1c/phaseA_e1_recovery/e1_inventory_decision.json` | footprint_conditioned_readout | structured_record |
+| `docs/experiments/footprint_conditioned_readout/metrics/FC_S2_baseline_rendered_recovery_stage3_v1c/phaseA_e1_recovery/scene_evidence_graph_E1_Baseline_rendered.json` | footprint_conditioned_readout | structured_record |
+| `docs/experiments/footprint_conditioned_readout/reports/FC_S1_semantic_surface_readout/REPORT.md` | footprint_conditioned_readout | report |
+| `docs/experiments/footprint_conditioned_readout/reports/FC_S2_baseline_rendered_recovery_stage3_v1c/phaseA_e1_recovery/E1_RECOVERY_REPORT.md` | footprint_conditioned_readout | report |
+| `docs/experiments/footprint_conditioned_readout/reports/FC_S2_baseline_rendered_recovery_stage3_v1c/phaseA_e1_recovery/RENDERED_COMPARISON_PRE_V1C.md` | footprint_conditioned_readout | document |
+| `docs/experiments/footprint_conditioned_readout/reports/FC_S2_baseline_rendered_recovery_stage3_v1c/phaseB_ground_closure/B104_GROUND_CLOSURE_REPORT.md` | footprint_conditioned_readout | report |
+| `docs/experiments/footprint_conditioned_readout/reports/FC_S2_baseline_rendered_recovery_stage3_v1c/phaseB_height_definition/B6_HEIGHT_DEFINITION_REPORT.md` | footprint_conditioned_readout | report |
+| `docs/experiments/footprint_conditioned_readout/reports/FC_S2_baseline_rendered_recovery_stage3_v1c/phaseB_roof_decomposition/ROOF_DECOMPOSITION_REPORT.md` | footprint_conditioned_readout | report |
+| `docs/experiments/footprint_conditioned_readout/reports/FC_S2_baseline_rendered_recovery_stage3_v1c/phaseB_support_attribution/RENDERED_SUPPORT_ATTRIBUTION_REPORT.md` | footprint_conditioned_readout | report |
+| `docs/experiments/footprint_conditioned_readout/reports/FC_S2_baseline_rendered_recovery_stage3_v1c/phaseC_stage3_v1c_ablation/PATCH_ABLATION_REPORT.md` | footprint_conditioned_readout | report |
+| `docs/experiments/footprint_conditioned_readout/reports/FC_S2_baseline_rendered_recovery_stage3_v1c/phaseD_final_decision/G2_READINESS_DECISION.md` | footprint_conditioned_readout | document |
+| `docs/experiments/footprint_conditioned_readout/reports/FC_S3_mutual_loss_alignment_g2_target_definition/phase1_full_e1_e2_comparison/E1_E2_FULL_COMPARISON_REPORT.md` | footprint_conditioned_readout | report |
+| `docs/experiments/footprint_conditioned_readout/reports/FC_S3_mutual_loss_alignment_g2_target_definition/phase2_mutual_loss_audit/MUTUAL_LOSS_ALIGNMENT_REPORT.md` | footprint_conditioned_readout | report |
+| `docs/experiments/footprint_conditioned_readout/reports/FC_S3_mutual_loss_alignment_g2_target_definition/phase3_evidence_distribution/EVIDENCE_DISTRIBUTION_AUDIT.md` | footprint_conditioned_readout | document |
+| `docs/experiments/footprint_conditioned_readout/reports/FC_S3_mutual_loss_alignment_g2_target_definition/phase4_field_replacement/B104_field_replacement_report.md` | footprint_conditioned_readout | report |
+| `docs/experiments/footprint_conditioned_readout/reports/FC_S3_mutual_loss_alignment_g2_target_definition/phase4_field_replacement/B6_field_replacement_report.md` | footprint_conditioned_readout | report |
+| `docs/experiments/footprint_conditioned_readout/reports/FC_S3_mutual_loss_alignment_g2_target_definition/phase4_field_replacement/FIELD_REPLACEMENT_SUMMARY.md` | footprint_conditioned_readout | report |
+| `docs/experiments/footprint_conditioned_readout/reports/FC_S3_mutual_loss_alignment_g2_target_definition/phase4_field_replacement/roof_cases_field_replacement_report.md` | footprint_conditioned_readout | report |
+| `docs/experiments/footprint_conditioned_readout/reports/FC_S3_mutual_loss_alignment_g2_target_definition/phase5_footprint_sensitivity/FOOTPRINT_MASKING_REPORT.md` | footprint_conditioned_readout | report |
+| `docs/experiments/footprint_conditioned_readout/reports/FC_S3_mutual_loss_alignment_g2_target_definition/phase6_mutual_ablation/MUTUAL_ABLATION_REPORT.md` | footprint_conditioned_readout | report |
+| `docs/experiments/footprint_conditioned_readout/reports/FC_S3_mutual_loss_alignment_g2_target_definition/phase7_g2_readiness/FC_S3_FINAL_DECISION.md` | footprint_conditioned_readout | document |
+| `docs/experiments/footprint_conditioned_readout/reports/FC_S3_mutual_loss_alignment_g2_target_definition/phase7_g2_readiness/g2_4way_pilot_plan.md` | footprint_conditioned_readout | document |
+| `docs/experiments/footprint_conditioned_readout/reports/Stage3_v1_auditable_readout_FC_S1_v0_v1_comparison/REPORT.md` | footprint_conditioned_readout | report |
+| `docs/experiments/footprint_conditioned_readout/reports/Stage3_v1_auditable_readout_FC_S1_v0_v1_comparison/viewer/stage3_qa.html` | footprint_conditioned_readout | other |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S1_semantic_surface_readout/phase0_inventory/target_buildings.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S1_semantic_surface_readout/phase1_evidence/evidence_summary.csv` | footprint_conditioned_readout | report |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S1_semantic_surface_readout/phase3_surface_eval/surface_metrics_by_bid.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S1_semantic_surface_readout/phase3_surface_eval/surface_metrics_summary.csv` | footprint_conditioned_readout | report |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S1_semantic_surface_readout/phase4_geometry_topology/geometry_metrics_by_bid.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S1_semantic_surface_readout/phase4_geometry_topology/summary_metrics.csv` | footprint_conditioned_readout | report |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S1_semantic_surface_readout/phase4_geometry_topology/topology_metrics_by_bid.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S1_semantic_surface_readout/phase5_comparison/baseline_vs_mutual.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S1_semantic_surface_readout/phase5_comparison/evidence_to_model_transfer.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S1_semantic_surface_readout/phase6_baseline_comparison/conventional_baseline_metrics.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S1_semantic_surface_readout/phase6_baseline_comparison/ours_vs_baseline.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S1_semantic_surface_readout/phase7_g2_feasibility/g2_group_metrics.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S2_baseline_rendered_recovery_stage3_v1c/phaseA_e1_recovery/e1_candidate_artifacts.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S2_baseline_rendered_recovery_stage3_v1c/phaseA_e1_recovery/e1_evidence_summary.csv` | footprint_conditioned_readout | report |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S2_baseline_rendered_recovery_stage3_v1c/phaseA_e1_recovery/e1_sanity_by_bid.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S2_baseline_rendered_recovery_stage3_v1c/phaseA_e1_recovery/e1_stage3_matrix_metrics_by_bid.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S2_baseline_rendered_recovery_stage3_v1c/phaseA_e1_recovery/e1_vs_e2_evidence_summary.csv` | footprint_conditioned_readout | report |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S2_baseline_rendered_recovery_stage3_v1c/phaseA_e1_recovery/render_regeneration/phase1_render_export/baseline_rendered_sample_bank_views.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S2_baseline_rendered_recovery_stage3_v1c/phaseA_e1_recovery/rendered_baseline_vs_mutual_pre_v1c.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S2_baseline_rendered_recovery_stage3_v1c/phaseB_diagnostics_by_case.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S2_baseline_rendered_recovery_stage3_v1c/phaseC_stage3_v1c_ablation/patch_ablation_deltas_by_bid.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S2_baseline_rendered_recovery_stage3_v1c/phaseC_stage3_v1c_ablation/patch_ablation_metrics_by_bid.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S2_baseline_rendered_recovery_stage3_v1c/phaseC_stage3_v1c_ablation/patch_ablation_summary.csv` | footprint_conditioned_readout | report |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S3_mutual_loss_alignment_g2_target_definition/phase1_full_e1_e2_comparison/e1_e2_paired_metrics_by_bid.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S3_mutual_loss_alignment_g2_target_definition/phase1_full_e1_e2_comparison/e1_e2_split_summary.csv` | footprint_conditioned_readout | report |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S3_mutual_loss_alignment_g2_target_definition/phase1_full_e1_e2_comparison/e1_e2_win_loss_by_metric.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S3_mutual_loss_alignment_g2_target_definition/phase2_mutual_loss_audit/gradient_norms_by_class.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S3_mutual_loss_alignment_g2_target_definition/phase2_mutual_loss_audit/gradient_norms_by_loss.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S3_mutual_loss_alignment_g2_target_definition/phase2_mutual_loss_audit/loss_to_metric_alignment_by_bid.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S3_mutual_loss_alignment_g2_target_definition/phase2_mutual_loss_audit/mutual_loss_components_by_class.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S3_mutual_loss_alignment_g2_target_definition/phase3_evidence_distribution/e1_e2_classwise_evidence_stats.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S3_mutual_loss_alignment_g2_target_definition/phase3_evidence_distribution/ground_y_distribution_by_bid.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S3_mutual_loss_alignment_g2_target_definition/phase3_evidence_distribution/roof_evidence_distribution_by_bid.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S3_mutual_loss_alignment_g2_target_definition/phase3_evidence_distribution/support_rejection_distribution_by_bid.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S3_mutual_loss_alignment_g2_target_definition/phase4_field_replacement/field_replacement_metrics_by_bid.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S3_mutual_loss_alignment_g2_target_definition/phase5_footprint_sensitivity/footprint_buffer_sweep_metrics.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S3_mutual_loss_alignment_g2_target_definition/phase5_footprint_sensitivity/footprint_sensitivity_by_split.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S3_mutual_loss_alignment_g2_target_definition/phase6_mutual_ablation/mutual_ablation_config_table.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S3_mutual_loss_alignment_g2_target_definition/phase6_mutual_ablation/mutual_ablation_evidence_summary.csv` | footprint_conditioned_readout | report |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S3_mutual_loss_alignment_g2_target_definition/phase6_mutual_ablation/mutual_ablation_stage3_metrics.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/FC_S3_mutual_loss_alignment_g2_target_definition/phase7_g2_readiness/g2_target_selection.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/Stage3_v1_auditable_readout_FC_S1_v0_v1_comparison/phase2_stage3_v1_readout/stage3_v1_patch_summary.csv` | footprint_conditioned_readout | report |
+| `docs/experiments/footprint_conditioned_readout/tables/Stage3_v1_auditable_readout_FC_S1_v0_v1_comparison/phase3_matrix/algorithm_effect_by_bid.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/Stage3_v1_auditable_readout_FC_S1_v0_v1_comparison/phase3_matrix/evaluator_effect_by_bid.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/Stage3_v1_auditable_readout_FC_S1_v0_v1_comparison/phase3_matrix/final_effect_by_bid.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/Stage3_v1_auditable_readout_FC_S1_v0_v1_comparison/phase3_matrix/matrix_metrics_by_bid.csv` | footprint_conditioned_readout | evidence_table |
+| `docs/experiments/footprint_conditioned_readout/tables/Stage3_v1_auditable_readout_FC_S1_v0_v1_comparison/phase3_matrix/matrix_summary_by_source.csv` | footprint_conditioned_readout | report |
+| `docs/experiments/phase1_ablation/metrics/figures/domain_metrics.json` | phase1_ablation | structured_record |
+| `docs/experiments/phase1_ablation/metrics/figures/geometry_metrics.json` | phase1_ablation | structured_record |
+| `docs/experiments/phase1_ablation/metrics/figures/rendering_metrics.json` | phase1_ablation | structured_record |
+| `docs/experiments/phase1_ablation/metrics/figures/semantic_metrics.json` | phase1_ablation | structured_record |
+| `docs/experiments/phase1_ablation/metrics/figures/structure_mutual_vs_base/structure_stats.json` | phase1_ablation | structured_record |
+| `docs/experiments/phase1_ablation/metrics/figures/structure_stats_step13_vs_step16.json` | phase1_ablation | structured_record |
+| `docs/experiments/phase1_ablation/metrics/figures/wall_thickness.json` | phase1_ablation | structured_record |
+| `docs/experiments/phase1_ablation/reports/REPORT.md` | phase1_ablation | report |
+| `docs/experiments/phase1_ablation/reports/notes/figures/phase1_visual_check/README.txt` | phase1_ablation | document |
+| `docs/experiments/phase1_ablation/reports/notes/figures/phase1_visual_check_maxdiff/README.txt` | phase1_ablation | document |
+| `docs/experiments/phase1_ablation/reports/notes/figures/render_compare_4way/README.txt` | phase1_ablation | document |
+| `docs/experiments/phase1_ablation/reports/notes/figures/semantic_compare_4way/README.txt` | phase1_ablation | document |
+| `docs/experiments/phase1_analysis/metrics/g1_vs_g2_summary.json` | phase1_analysis | report |
+| `docs/experiments/phase1_depth_normal/reports/REPORT.md` | phase1_depth_normal | report |
+| `docs/experiments/phase1_mutual/metrics/figures/geometry_metrics.json` | phase1_mutual | structured_record |
+| `docs/experiments/phase1_mutual/metrics/figures/mutual_effect.json` | phase1_mutual | structured_record |
+| `docs/experiments/phase1_mutual/metrics/figures/rendering_metrics.json` | phase1_mutual | structured_record |
+| `docs/experiments/phase1_mutual/metrics/figures/semantic_metrics.json` | phase1_mutual | structured_record |
+| `docs/experiments/phase1_mutual/reports/REPORT.md` | phase1_mutual | report |
+
+Only the first 250 of 432 orphan candidates are shown.
 
 ## Required human decisions before migration
 

@@ -1277,7 +1277,7 @@ def write_report(
         "## 시작 전 확인",
         "",
         f"- 브랜치·HEAD: `{branch}` · `{head}`.",
-        f"- 기존 게이트 보고: `docs/experiments/e5_pilot/reports/W_E5_pilot_gate.md`, `docs/W_E5_pilot_gate_검수·판정회부_20260707.md`.",
+        f"- 기존 게이트 보고: `docs/experiments/e5_pilot/reports/W_E5_pilot_gate.md`, `docs/experiments/e5_pilot/reports/W_E5_pilot_gate_검수·판정회부_20260707.md`.",
         f"- GS 점군화·지문: `{TRAIN_RUN_DIR}/`.",
         f"- GS 조립 출력: `{GATE_RUN_DIR}/`.",
         "- 새 학습·새 파라미터·새 Roofer 조립은 하지 않았다.",

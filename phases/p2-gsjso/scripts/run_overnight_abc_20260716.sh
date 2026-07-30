@@ -286,9 +286,9 @@ import csv
 import json
 from pathlib import Path
 
-score = list(csv.DictReader(Path("docs/genclose_flat_seed_scores.csv").open()))
-assembly = list(csv.DictReader(Path("docs/genclose_density_assembly.csv").open()))
-direct = list(csv.DictReader(Path("docs/genclose_direct_plane.csv").open()))
+score = list(csv.DictReader(Path("docs/experiments/primary4_assembly_validation/tables/genclose_flat_seed_scores.csv").open()))
+assembly = list(csv.DictReader(Path("docs/experiments/primary4_assembly_validation/tables/genclose_density_assembly.csv").open()))
+direct = list(csv.DictReader(Path("docs/experiments/primary4_assembly_validation/tables/genclose_direct_plane.csv").open()))
 if len(assembly) != 9:
     raise SystemExit(f"assembly rows={len(assembly)} != 9")
 for rows, name in [(score, "score"), (assembly, "assembly"), (direct, "direct")]:
@@ -307,13 +307,13 @@ PY
     write_status "B" "failed" "output QA failed"
     return 1
   fi
-  issue "OVN-B measurement complete: manifest_sha256=$(sha phases/p2-gsjso/runs/20260716_genclose_flat_density/manifest.json); flat_score_sha256=$(sha docs/genclose_flat_seed_scores.csv); assembly_sha256=$(sha docs/genclose_density_assembly.csv); learning_runs_started=0"
+  issue "OVN-B measurement complete: manifest_sha256=$(sha phases/p2-gsjso/runs/20260716_genclose_flat_density/manifest.json); flat_score_sha256=$(sha docs/experiments/primary4_assembly_validation/tables/genclose_flat_seed_scores.csv); assembly_sha256=$(sha docs/experiments/primary4_assembly_validation/tables/genclose_density_assembly.csv); learning_runs_started=0"
   if ! commit_paths \
     "OVN-B: measure flat-seed density assembly" \
     phases/p2-gsjso/docs/issues.md \
-    docs/genclose_flat_seed_scores.csv \
-    docs/genclose_density_assembly.csv \
-    docs/genclose_direct_plane.csv \
+    docs/experiments/primary4_assembly_validation/tables/genclose_flat_seed_scores.csv \
+    docs/experiments/primary4_assembly_validation/tables/genclose_density_assembly.csv \
+    docs/experiments/primary4_assembly_validation/tables/genclose_direct_plane.csv \
     docs/figs/genclose \
     phases/p2-gsjso/runs/20260716_genclose_flat_density; then
     write_status "B" "partial" "outputs complete; commit or push failed"

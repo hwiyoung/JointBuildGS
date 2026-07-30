@@ -66,4 +66,4 @@ Run 디렉터리는 이동하지 않는다. 실행 당시 코드·config·입출
 
 정확한 문서 이전 경로와 현재 경로, lifecycle 상태, 원본 SHA-256은 [`../../catalog/migrations/BOUNDARY_MAP_PATHS.csv`](../../catalog/migrations/BOUNDARY_MAP_PATHS.csv)에 있다. Script 이동과 필수 경로 수정은 별도 script relocation map에 기록한다. 과거 manifest와 run receipt 안의 이전 경로 문자열은 당시 사실이므로 rewrite하지 않는다. 인벤토리는 문서 migration manifest를 통해 그 문자열을 현재 경로로 해석한다.
 
-활성 staged workflow가 아직 고정한 v2·v4.1 ladder의 두 이전 경로는 동일 SHA의 compatibility mirror로 잠정 유지한다. 두 mirror는 정본이 아니며 새 코드와 문서는 이 디렉터리의 경로를 사용한다.
+활성 staged workflow가 아직 고정한 v2 ladder의 이전 경로 `docs/boundary_map_v2_ladder.csv`만 잠정 유지한다. v4.1의 이전 root copy는 `docs/archive/compatibility/root-mirrors/tables/`에 보존했으며, 새 코드와 문서는 이 디렉터리의 정본 경로를 사용한다.

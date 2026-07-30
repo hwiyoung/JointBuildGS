@@ -19,14 +19,14 @@ The wave includes Claude Web briefs, attribute regression, bucket crosswalk, dat
 
 ## Compatibility boundary
 
-Four scientific contract/input paths remain as byte-identical compatibility mirrors because active or hash-bound consumers still name the former path:
+Four scientific contract/input root copies were initially retained because active or hash-bound consumers named the former path:
 
 - `docs/pointcloud_attributes_v1_3.csv`
 - `docs/qs_baseline178_scores.csv`
 - `docs/qs_rescore_pairs.csv`
 - `docs/사전등록서_품질축본선_승인잠금v4_20260721.md`
 
-They are not canonical owner paths. New consumers use the target path recorded in the migration manifest. Compatibility copies may be retired only in a later dedicated task after all hash-bound consumers are replaced; this task does not delete them.
+They are not canonical owner paths. Active clean consumers now use the target path recorded in the migration manifest, and the byte-identical former root copies are preserved under `docs/archive/compatibility/root-mirrors/`. Historical strings remain unchanged.
 
 ## Frozen references
 

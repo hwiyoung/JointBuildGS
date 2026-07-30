@@ -32,7 +32,7 @@
 
 | Family | Decision record | Reviewed | Canonical | Supporting | Superseded | Temporary |
 |---|---|---|---|---|---|---|
-| boundary_map | `docs/catalog/families/BOUNDARY_MAP.md` | 2026-07-29 | 6 | 14 | 16 | 2 |
+| boundary_map | `docs/catalog/families/BOUNDARY_MAP.md` | 2026-07-29 | 6 | 14 | 16 | 1 |
 
 ## Priority families requiring review
 
@@ -44,39 +44,61 @@ This table shows multi-file families and explicit/candidate canonical families. 
 | p0_g1_20260613 | 123 | v6 | 0 | docs/experiments/p0_g1_20260613/ |
 | evidence_cards | 113 | v1, v2, v3 | 1 | docs/evidence/evidence_cards/ |
 | e5_c001_s3 | 95 | - | 1 | docs/experiments/e5_c001_s3/ |
-| e5_c001_s3ap | 80 | - | 5 | docs/experiments/e5_c001_s3ap/ |
-| e5_c001_s2 | 62 | - | 2 | docs/experiments/e5_c001_s2/ |
+| footprint_conditioned_readout | 83 | v1 | 0 | docs/experiments/footprint_conditioned_readout/ |
+| e5_c001_s3ap | 76 | - | 5 | docs/experiments/e5_c001_s3ap/ |
 | projection_gate | 62 | v1, v2 | 2 | docs/experiments/projection_gate/ |
+| e5_c001_s2 | 60 | - | 2 | docs/experiments/e5_c001_s2/ |
 | e5_c001_s2p | 56 | v2 | 1 | docs/experiments/e5_c001_s2p/ |
 | judgment_kit | 50 | v4 | 0 | docs/evidence/judgment_kit/ |
-| e5_c001_s3b | 31 | v1 | 0 | docs/figs/e5_c001_s3b/ |
+| e5_c001_s3b | 40 | v1 | 0 | docs/experiments/e5_c001_s3b/ |
+| phase2_ablation_citygml | 33 | v2 | 0 | docs/experiments/phase2_ablation_citygml/ |
 | e5_pilot | 27 | - | 0 | docs/experiments/e5_pilot/ |
-| pointcloud_attributes | 19 | v1, v1_1, v1_2, v1_3 | 2 | docs/experiments/pointcloud_attributes/ |
+| fc_s6_componentwise_revised_lmutual_design_validation | 26 | - | 0 | docs/experiments/fc_s6_componentwise_revised_lmutual_design_validation/ |
+| pointcloud_attributes | 18 | v1, v1_1, v1_2, v1_3 | 1 | docs/experiments/pointcloud_attributes/ |
 | tum_transfer | 18 | v0, v2, v6 | 0 | docs/figs/tum_transfer/ |
-| qs_rescore | 16 | - | 0 | docs/experiments/qs_rescore/ |
+| stage3_v4_validation | 17 | v4 | 0 | docs/experiments/stage3_v4_validation/ |
+| qs_rescore | 15 | - | 0 | docs/experiments/qs_rescore/ |
 | datum_tie_overlay | 14 | - | 0 | docs/experiments/datum_tie_overlay/ |
+| fc_s6e_joint | 14 | v2 | 0 | docs/experiments/fc_s6e_joint/ |
 | texture_anchor_check | 14 | - | 0 | docs/experiments/texture_anchor_check/ |
+| fc_s6d_directional_screening | 13 | v2 | 0 | docs/experiments/fc_s6d_directional_screening/ |
 | pre_tum_results | 13 | - | 0 | docs/archive/pre_tum_results/ |
 | tum2twin_surface_proxy_rv1 | 13 | v1 | 0 | docs/experiments/tum2twin_surface_proxy_rv1/ |
+| phase1_ablation | 12 | - | 0 | docs/experiments/phase1_ablation/ |
 | w_d6_shape | 12 | - | 0 | docs/figs/w_d6_shape/ |
+| stage3_polyfit_phase2 | 11 | - | 0 | docs/experiments/stage3_polyfit_phase2/ |
 | w_complexity | 11 | - | 0 | docs/figs/w_complexity/ |
+| fc_s5_loss_ledger_instrumentation | 10 | - | 0 | docs/experiments/fc_s5_loss_ledger_instrumentation/ |
+| fc_s6c_lmutual_design_to_formula_audit | 10 | - | 0 | docs/research/ |
 | w_d12 | 9 | - | 0 | docs/figs/w_d12/ |
+| w_d6_overseg_diag | 9 | - | 0 | docs/experiments/w_d6_overseg_diag/ |
+| fc_s6d_lmutual_directionality | 8 | - | 0 | docs/experiments/fc_s6d_lmutual_directionality/ |
+| primary4_assembly_validation | 8 | - | 0 | docs/experiments/primary4_assembly_validation/ |
+| stage3_typed_readout | 8 | - | 0 | docs/experiments/stage3_typed_readout/ |
 | degradation_curve | 7 | - | 0 | docs/experiments/degradation_curve/ |
+| phase2_synthesis | 7 | - | 0 | docs/experiments/phase2_synthesis/ |
+| population_aux | 7 | v3, v4 | 1 | docs/experiments/population_aux/ |
 | readme | 7 | - | 0 | docs/experiments/readme/ |
+| synthetic_a | 7 | 2.0 | 0 | docs/experiments/synthetic_a/ |
 | w_overseg | 7 | - | 0 | docs/figs/w_overseg/ |
 | datum_tie | 6 | - | 0 | docs/experiments/datum_tie/ |
 | e5_pilot_substantiveness | 6 | - | 0 | docs/experiments/e5_pilot_substantiveness/ |
 | footprint_conditioned | 6 | v2 | 0 | docs/experiments/footprint_conditioned/ |
-| population_aux | 6 | v3, v4 | 1 | docs/experiments/population_aux/ |
+| phase1_mutual | 6 | - | 0 | docs/experiments/phase1_mutual/ |
+| phase1_structure | 6 | - | 0 | docs/experiments/phase1_structure/ |
+| prompts | 6 | - | 0 | docs/archive/prompts/ |
+| tum_transfer_preflight | 6 | - | 0 | docs/experiments/tum_transfer_preflight/ |
 | w_assembly | 6 | - | 0 | docs/figs/w_assembly/ |
 | w_faithful | 6 | - | 0 | docs/figs/w_faithful/ |
 | w_report_evidence | 6 | - | 0 | docs/experiments/w_report_evidence/ |
 | attr_outcome_regression | 5 | v1 | 0 | docs/experiments/attr_outcome_regression/ |
 | bucket_crosswalk | 5 | v1, v2 | 2 | docs/experiments/bucket_crosswalk/ |
+| fair_pilot | 5 | - | 0 | docs/experiments/fair_pilot/ |
 | fusion_w1 | 5 | v2 | 0 | docs/experiments/fusion_w1/ |
+| phase1_semantic | 5 | - | 0 | docs/experiments/phase1_semantic/ |
 | qs_baseline178 | 5 | - | 0 | docs/experiments/qs_baseline178/ |
 | qs_cheap_refine_sweep | 5 | - | 0 | docs/experiments/qs_cheap_refine_sweep/ |
-| tum_transfer_preflight | 5 | - | 0 | docs/experiments/tum_transfer_preflight/ |
+| stage3_rendered_evidence | 5 | - | 0 | docs/experiments/stage3_rendered_evidence/ |
 | w_d_qual | 5 | - | 0 | docs/figs/w_d_qual/ |
 | w_gssem_requal | 5 | - | 0 | docs/experiments/w_gssem_requal/ |
 | w_phaseb | 5 | - | 0 | docs/figs/w_phaseb/ |
@@ -84,7 +106,8 @@ This table shows multi-file families and explicit/candidate canonical families. 
 | aux_v4a | 4 | v3, v4 | 0 | docs/experiments/aux_v4a/ |
 | claude_web_brief | 4 | v3, v4, v5 | 1 | docs/experiments/claude_web_brief/ |
 | e5_pilot_block | 4 | - | 0 | docs/experiments/e5_pilot_block/ |
-| primary4_assembly_validation | 4 | - | 0 | docs/experiments/primary4_assembly_validation/ |
+| fc_s6c_lmutual_completion | 4 | - | 0 | docs/experiments/fc_s6c_lmutual_completion/ |
+| phase1_vanilla | 4 | - | 0 | docs/experiments/phase1_vanilla/ |
 | projection_datum | 4 | - | 0 | docs/experiments/projection_datum/ |
 | projection_zeta_ls | 4 | - | 0 | docs/experiments/projection_zeta_ls/ |
 | w_d4 | 4 | - | 0 | docs/experiments/w_d4/ |
@@ -92,14 +115,19 @@ This table shows multi-file families and explicit/candidate canonical families. 
 | w_d6_textureless | 4 | - | 0 | docs/figs/w_d6_textureless/ |
 | lowtex_v5 | 3 | v5 | 0 | docs/experiments/lowtex_v5/ |
 | p0_completeness | 3 | - | 0 | docs/experiments/p0_completeness/ |
+| phase1_depth_normal | 3 | - | 0 | docs/experiments/phase1_depth_normal/ |
 | qs_cheap_refine_pilot | 3 | - | 0 | docs/experiments/qs_cheap_refine_pilot/ |
 | w3_1_roofer_quality | 3 | - | 0 | phases/p0-audit/docs/ |
 | w_d6 | 3 | - | 0 | docs/figs/w_d6/ |
+| w_d_prior_full | 3 | - | 0 | docs/experiments/w_d_prior_full/ |
 | w_matched_rms | 3 | - | 0 | docs/experiments/w_matched_rms/ |
+| w_observability | 3 | - | 0 | docs/experiments/w_observability/ |
 | aux_v4b | 2 | - | 0 | docs/experiments/aux_v4b/ |
 | gsjso_loss_audit | 2 | - | 0 | docs/research/ |
+| handoffs | 2 | - | 0 | docs/archive/handoffs/ |
 | overnight_coordination | 2 | - | 0 | docs/archive/overnight_coordination/ |
 | p2_makeorbreak | 2 | - | 0 | docs/experiments/p2_makeorbreak/ |
+| preregistration | 2 | v1_2_20260718, v1_5_20260720 | 0 | docs/research/ |
 | w3_1b_internal_boundary | 2 | - | 0 | phases/p0-audit/docs/ |
 | w3_2c_canonical_internal_boundary | 2 | - | 0 | phases/p0-audit/docs/ |
 | w3_2c_canonical_roofer_quality | 2 | - | 0 | phases/p0-audit/docs/ |
@@ -109,17 +137,14 @@ This table shows multi-file families and explicit/candidate canonical families. 
 | w_d12_metric | 2 | - | 0 | docs/experiments/w_d12_metric/ |
 | w_d2_d3 | 2 | - | 0 | docs/experiments/w_d2_d3/ |
 | w_d5 | 2 | - | 0 | docs/experiments/w_d5/ |
-| w_d6_overseg_diag | 2 | - | 0 | docs/experiments/w_d6_overseg_diag/ |
 | w_d_followup_audit | 2 | - | 0 | docs/research/ |
 | w_d_loss_audit | 2 | - | 0 | docs/research/ |
-| w_d_prior_full | 2 | - | 0 | docs/experiments/w_d_prior_full/ |
 | w_generation_8way | 2 | - | 0 | docs/experiments/w_generation_8way/ |
-| w_observability | 2 | - | 0 | docs/experiments/w_observability/ |
 | w_phase_b_structure | 2 | - | 0 | docs/experiments/w_phase_b_structure/ |
 | w_results_consolidation | 2 | - | 0 | docs/experiments/w_results_consolidation/ |
-| 사전등록서_품질축본선_승인잠금 | 2 | v4_20260721 | 1 | docs/research/ |
 | experiment_plan | 1 | - | 1 | docs/research/ |
 | research_context | 1 | - | 1 | docs/research/ |
+| 사전등록서_품질축본선_승인잠금 | 1 | v4_20260721 | 1 | docs/research/ |
 
 ## Reviewed pilot: boundary_map
 
@@ -144,7 +169,6 @@ The lifecycle decisions below are reviewed in `docs/catalog/families/BOUNDARY_MA
 | `docs/archive/boundary_map/v4/tables/boundary_map_v4_ladder.csv` | v4 | table | superseded | 20260719_boundary_map_v3;20260720_anchor_census;w2_1_roofer_default_20260612_152729 |
 | `docs/archive/boundary_map/v4/tables/boundary_map_v4_targets.csv` | v4 | table | superseded | - |
 | `docs/boundary_map_v2_ladder.csv` | v2 | table | temporary | - |
-| `docs/boundary_map_v4_1_ladder.csv` | v4_1 | table | temporary | 20260719_boundary_map_v3;20260720_anchor_census;20260720_anchor_census_supplement;w2_1_roofer_default_20260612_152729 |
 | `docs/experiments/boundary_map/README.md` | - | document | canonical | 20260716_boundary_map;20260718_boundary_map_v2;20260719_boundary_map_v3;20260720_anchor_census;20260720_anchor_census_supplement |
 | `docs/experiments/boundary_map/manifests/anchor_census_supplement_manifest.json` | - | manifest | canonical | 20260719_boundary_map_v3;20260720_anchor_census;20260720_anchor_census_supplement |
 | `docs/experiments/boundary_map/manifests/boundary_map_manifest.json` | - | manifest | supporting | 20260716_boundary_map |

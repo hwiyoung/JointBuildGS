@@ -84,7 +84,7 @@ class FusionW1TargetTests(unittest.TestCase):
         )
 
     def test_dense_success_filter_matches_night_a_c001_table(self) -> None:
-        source = MODULE._read_csv(self.repo_root / "docs/qs_rescore_pairs.csv")
+        source = MODULE._read_csv(self.repo_root / "docs/experiments/qs_rescore/tables/qs_rescore_pairs.csv")
         expected = [
             row["building_id"]
             for row in source

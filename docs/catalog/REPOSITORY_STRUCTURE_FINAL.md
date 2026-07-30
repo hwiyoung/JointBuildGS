@@ -2,9 +2,9 @@
 
 ## Outcome
 
-The **tracked control plane is organized** around one owner per information role. Verified documents, evidence packages, run receipts, environment records, compact result evidence, reusable experiment drivers, and tests were migrated with path ledgers and reference checks. No file was deleted, `.gitignore` was not changed, and no bulk research payload was modified.
+The **tracked control plane and bulk storage plane are now separated** around one owner per information role. Verified documents, evidence packages, run receipts, compact result evidence, reusable drivers, tests, and pilot controls were migrated with path ledgers and reference checks. No file was deleted, `.gitignore` was not changed, and no research payload byte was rewritten.
 
-This is not a claim that hundreds of GiB of local payload have been externalized. `data/`, generated run payloads, `results/`, and `fair-pilot/` remain explicit transition areas until an external artifact backend and immutable manifest workflow exist.
+`STORAGE-IA-01` moved 428,296,653,718 bytes to the sibling `../JointBuildGS-artifacts` backend by same-device atomic rename. `data`, `results`, `reports`, `fair-pilot`, and P0 bulk data/runs are no longer Git information roots. Docker supplies compatibility mounts for historical runtime paths.
 
 ## Final owner tree
 
@@ -25,7 +25,7 @@ JointBuildGS/
 ├── docs/                      # durable human knowledge and promoted evidence
 │   ├── README.md              # document router
 │   ├── research/              # context, plans, preregistration, decisions, policy
-│   ├── experiments/           # one landing page and evidence tree per family
+│   ├── experiments/           # family landing pages plus reports/tables/metrics/manifests/models
 │   ├── evidence/              # frozen reviewer/advisor evidence packages
 │   ├── figs/                  # curated figures, not raw render sweeps
 │   ├── archive/               # retained superseded/retracted material
@@ -37,7 +37,7 @@ JointBuildGS/
 │   ├── p0-audit/              # frozen P0 rules and receipts/evidence exceptions
 │   └── p2-gsjso/              # active P2 rules, issues, compact run receipts
 │
-├── artifacts/                 # absent until external backend approval
+├── artifacts/                 # tracked external-payload manifests/resolvers
 ├── external/                  # conditional third-party source only
 └── legacy/                    # conditional inactive reference-code quarantine
 ```
@@ -71,38 +71,34 @@ The structure work is represented by 17 commits after the live pushed branch sna
 | Compact results and nightly reports | Reviewed tracked evidence promoted to `docs/archive/`, `docs/experiments/`, and `docs/figs/`. |
 | P0 G1 | Frozen review package promoted under `docs/evidence/p0_g1_20260613/`. |
 | P2 reusable code | 64 driver/test paths promoted to `scripts/experiments/` and `tests/experiments/`; path contracts hardened. |
-| Final docs-root waves | 59 reviewed ASCII/Unicode owner placements recorded; compatibility and locked inputs retained deliberately. |
+| Final docs-root waves | 93 reviewed owner placements recorded; two in-flight path locks retained deliberately. |
 
 No migration ledger authorizes deletion. A retained old path can be a required byte-identical compatibility mirror, not an accidental duplicate.
 
 ## `docs/` direct-file remainder
 
-The physical `docs/` root now contains 70 files, down from more than 400 direct files. Every remainder has an explicit reason:
+The physical `docs/` root now contains three files, down from more than 400 direct files. Every remainder has an explicit reason:
 
 | Reason | Files |
 |---|---:|
 | `docs/README.md` entry point | 1 |
-| Declared compatibility mirrors | 20 |
-| Path-locked scientific inputs | 15 |
-| Lineage or ownership holds requiring scientific review | 34 |
+| Active staged boundary-map v2 input | 1 |
+| Current staged Fusion regression input | 1 |
 
-New documents must not expand this remainder. They go directly to `docs/research/`, `docs/experiments/<family>/`, `docs/evidence/`, or `docs/archive/`.
+New documents must not expand this remainder. Former compatibility copies were preserved without deletion under `docs/archive/compatibility/root-mirrors/`; active clean consumers now use canonical owner paths. The two direct CSVs remain only because changing the user's staged files would violate the working-tree boundary.
 
-Four additional research documents remain at repository root because active scripts, configs, receipts, or locked protocols consume their exact root paths. They are compatibility inputs, not a pattern for new root documents.
+## Physical payload relocation
 
-## Transitional and local payload roots
-
-| Root | Approximate local physical state at the transition audit | Tracked state after migration | Decision |
+| Former root | Bytes moved | Final control-plane owner | Runtime resolution |
 |---|---:|---|---|
-| `data/` | 162 GiB | `.gitkeep` only | Ignored local dataset volume; class C after backend approval. |
-| `results/` | 108 GiB | 311 compact/historical files remain | Mixed transition tree; move only reviewed families with writer and lineage checks. |
-| `phases/` | 186 GiB | rules, phase exceptions, receipts, selected evidence | Keep control records; externalize/ignore bulk run payload by manifest later. |
-| `fair-pilot/` | 2.2 GiB | 32 control files | Decompose only after embedded paths and its local payload contract are mapped. |
-| `reports/` | 164 MiB | zero tracked files | Remaining untracked runtime state stays untouched; do not treat as canonical evidence. |
-| `env/` | empty | zero tracked files | Migration complete; empty physical remnant retained because deletion was prohibited. |
-| `runs/` | empty directory skeletons | zero tracked files | Migration complete; canonical receipts are in `phases/p2-gsjso/runs/`. |
+| `data/` | 173,592,976,197 | `artifacts/manifests/` | Docker compatibility mount |
+| `results/` | 115,693,750,893 | 311 compact files under family `docs/experiments/`, figures, and configs | Docker compatibility mount |
+| `reports/` | 171,621,547 | artifact manifest only | Docker compatibility mount |
+| `fair-pilot/` | 2,279,659,141 | config/scripts/docs/phase receipt split by role | Docker compatibility mount |
+| `phases/p0-audit/data` | 72,627,527,687 | artifact manifest only | Docker compatibility mount |
+| P0 bulk runs | 63,931,118,253 | 189 compact tracked receipt files remain in phase | Docker compatibility mount |
 
-Blindly moving these bytes to another repository folder would only rename the storage problem and could break scientific paths. The next storage migration starts by approving a backend, manifest schema, hydration command, checksum/retention rules, and one pilot artifact.
+`env/` and root `runs/` had no files and were moved as empty historical placeholders. The only remaining large in-repository workspace is active `phases/p2-gsjso/runs/`; it is intentionally deferred until the current Fusion-W1 run closes.
 
 ## Storage classes at this milestone
 
@@ -110,8 +106,8 @@ Blindly moving these bytes to another repository folder would only rename the st
 |---|---|
 | A. regular Git | Code, configs, scripts, tests, research/control documents, compact evidence, manifests/receipts. |
 | B. selected Git LFS | Proposed only for an explicit allowlist of curated binary evidence; LFS is not configured. |
-| C. external artifact storage + manifest | Required future home for datasets, checkpoints, dense geometry, full image bundles, and immutable run archives; backend not yet selected. |
-| D. raw/generated/ignored | Current local caches, mutable logs, rerunnable panels/renders, and most run payloads. |
+| C. external artifact storage + manifest | Sibling local backend currently holds datasets, checkpoints, dense geometry, image bundles, and historical run workspaces; it is organized but is not yet a durable backup. |
+| D. raw/generated/ignored | Mutable caches/logs and active P2 runtime material; promote or externalize at run closeout. |
 
 ## Push and clone boundary
 
@@ -123,7 +119,7 @@ Live read-only remote verification on 2026-07-30 found `origin/exp/fusion-w1` at
 
 At the pre-final-document checkpoint, local `3888191` was 17 commits ahead, with 6,158 files and 774,673,431 bytes (738.786 MiB). The information-architecture commits are local until an explicit push. Remote packed storage or transfer size is not the same as tree bytes and cannot be inferred from a tree listing.
 
-The local `.git` directory measured 1,920,692,651 bytes (1.789 GiB); `git count-objects -vH` reported 3,560 loose objects / 247.21 MiB and 14,819 packed objects in 10 packs / 1.55 GiB. The last full payload scan remains 457.691 GiB excluding `.git`; this reorganization did not delete or mutate those payloads.
+The pre-migration local `.git` directory measured 1,920,692,651 bytes (1.789 GiB). After physical relocation, the main working tree excluding `.git` is approximately 59 GiB, dominated by the active P2 workspace; the moved 428,296,653,718 bytes remain on the same filesystem in `../JointBuildGS-artifacts`.
 
 ## Final recommendation
 

@@ -56,7 +56,7 @@ ROUTING_CSV = REPO / "docs/experiments/e5_c001_s1_audit/tables/e5_c001_s1_audit_
 THRESHOLD_CSV = REPO / "docs/experiments/e5_c001_s1_audit/tables/e5_c001_s1_audit_threshold_sensitivity.csv"
 ISSUES_CSV = REPO / "docs/experiments/e5_c001_s1_audit/tables/e5_c001_s1_audit_issues.csv"
 
-RECIPE_DOC = REPO / "docs/W_③b_레시피설계_레퍼런스기반_20260707.md"
+RECIPE_DOC = REPO / "docs/experiments/e5_c001_3b_s1/reports/W_③b_레시피설계_레퍼런스기반_20260707.md"
 REVIEW_DOC = REPO / "docs/experiments/e5_c001_3b_s1/reports/W_E5_C001_③b_S1_검수·라우팅_20260708.md"
 S1_REPORT = REPO / "docs/experiments/e5_c001_3b_s1/reports/W_E5_C001_③b_S1_표면복원.md"
 

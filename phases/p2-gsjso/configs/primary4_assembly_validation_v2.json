@@ -97,9 +97,9 @@
     "remote_output_role": "record boolean only; no K2 sentence verdict"
   },
   "source_paths": {
-    "anchor_ladder": "docs/boundary_map_v4_1_ladder.csv",
-    "b1_flat_scores": "docs/genclose_flat_seed_scores.csv",
-    "b1_assembly_scores": "docs/genclose_density_assembly.csv",
+    "anchor_ladder": "docs/experiments/boundary_map/tables/boundary_map_v4_1_ladder.csv",
+    "b1_flat_scores": "docs/experiments/primary4_assembly_validation/tables/genclose_flat_seed_scores.csv",
+    "b1_assembly_scores": "docs/experiments/primary4_assembly_validation/tables/genclose_density_assembly.csv",
     "b1_manifest": "phases/p2-gsjso/runs/20260716_genclose_flat_density/manifest.json",
     "b1_script": "phases/p2-gsjso/scripts/overnight_genclose.py",
     "p0_fill_script": "phases/p2-gsjso/scripts/e5_c001_s3ap_phase0_baselines.py",

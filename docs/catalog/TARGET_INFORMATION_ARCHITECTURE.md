@@ -60,15 +60,15 @@ JointBuildGS/
       runs/
         <YYYYMMDD_run_id>/      # compact immutable execution/provenance receipt
 
-  artifacts/                    # reserved; create with the first approved class-C backend
+  artifacts/                    # tracked external-payload resolvers and compatibility contracts
     manifests/
-      <artifact_id>.yaml        # future tracked resolver for external payloads
+      <artifact_id>.yaml        # tracked resolver for external payloads
 
   external/                     # conditional: documented third-party source only
   legacy/                       # conditional: inactive reference-code quarantine only
 ```
 
-`docs/evidence/` now contains reviewed frozen packages. `artifacts/` is intentionally absent until an external backend and manifest schema are approved; external payload bytes must not be copied there merely to make the directory exist.
+`docs/evidence/` contains reviewed frozen packages. `artifacts/` contains only tracked manifests and compatibility contracts; payload bytes live in the sibling `../JointBuildGS-artifacts` workspace. That workspace is locally organized but still requires durable backup and retention approval.
 
 ## Ownership boundaries
 

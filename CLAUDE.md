@@ -29,8 +29,12 @@ evidence-to-CityGML read-out으로 변환해 CityGML LOD2 semantic shell을 생�
   ALS 0건(McNemar p=0.0078), 점군 중간표현의 약점이 GS-JSO의 동기. G1 판정 대기.
 - **P2 진행 → `phases/p2-gsjso/`** — gsplat+2DGS 위 `L_mutual`·`L_structure` 공동 최적화 spike.
 - **GS-JSO 코어 구현 코드는 레포 루트에 그대로 둔다** (이동 금지, phase 문서는 참조만):
-  `src/`, `configs/`, `scripts/`, `tools/`, `results/`, `docs/`, `external/`, `legacy/`,
+  `src/`, `configs/`, `scripts/`, `tools/`, `tests/`, `docs/`, `phases/`, `artifacts/`,
+  `external/`, `legacy/`,
   `Dockerfile`, `docker-compose.yml`, `requirements.txt`.
+- 대용량 runtime payload는 sibling `../JointBuildGS-artifacts`에 있고, Docker가 과거
+  `data/`·`results/` 경로를 compatibility mount한다. Git 정본 결과는 `docs/experiments/`,
+  resolver는 `artifacts/manifests/`가 소유한다.
 
 ## §4 불변 규칙 (repo-wide)
 

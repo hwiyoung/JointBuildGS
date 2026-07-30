@@ -46,7 +46,7 @@ class RepoInventoryUnitTests(unittest.TestCase):
             "v1",
         )
         self.assertEqual(
-            repo_inventory.version_label_for("docs/boundary_map_v4_1_ladder.csv", "boundary_map", self.config),
+            repo_inventory.version_label_for("docs/experiments/boundary_map/tables/boundary_map_v4_1_ladder.csv", "boundary_map", self.config),
             "v4_1",
         )
         self.assertEqual(repo_inventory.version_tuple("v4_1"), (4, 1))
@@ -155,7 +155,7 @@ class RepoInventoryUnitTests(unittest.TestCase):
                     "reviewed_on": "2026-07-29",
                     "documents": [
                         {
-                            "path": "docs/boundary_map_v4_1_ladder.csv",
+                            "path": "docs/experiments/boundary_map/tables/boundary_map_v4_1_ladder.csv",
                             "status": "canonical",
                             "canonical_for": "current_ladder",
                             "reason": "reviewed",
@@ -165,7 +165,7 @@ class RepoInventoryUnitTests(unittest.TestCase):
             ]
         }
         reviewed = repo_inventory.reviewed_document_map(config)
-        item = reviewed["docs/boundary_map_v4_1_ladder.csv"]
+        item = reviewed["docs/experiments/boundary_map/tables/boundary_map_v4_1_ladder.csv"]
         self.assertEqual(item["reviewed_family_id"], "boundary_map")
         self.assertEqual(item["decision_record"], "docs/catalog/families/BOUNDARY_MAP.md")
 

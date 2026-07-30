@@ -8,6 +8,7 @@ Root-level legacy P2 `versions.txt` receipts were consolidated into `phases/p2-g
 |---|---|---|---|
 | P0 input-substitution audit | completed; G1 review context retained | [`p0-audit/CLAUDE.md`](p0-audit/CLAUDE.md) | [`p0-audit/AGENTS.md`](p0-audit/AGENTS.md) |
 | P2 GS-JSO core | active | [`p2-gsjso/README.md`](p2-gsjso/README.md) | [`p2-gsjso/CLAUDE.md`](p2-gsjso/CLAUDE.md) |
+| Vaihingen fair pilot | closed positive-control pilot | [`fair-pilot/README.md`](fair-pilot/README.md) | repository rules |
 
 ## Run catalog
 
@@ -21,7 +22,7 @@ Root-level legacy P2 `versions.txt` receipts were consolidated into `phases/p2-g
 
 Presence on disk is not proof that a run is canonical, complete, reproducible, or backed up. Those claims require an approved run receipt and artifact manifest.
 
-`phases/` owns phase rules and compact execution provenance only. Canonical reports and promoted evidence belong in `docs/`; reusable configs and drivers belong in root `configs/` and `scripts/`; large payloads belong in external artifact storage or ignored workspace paths. Verified reusable P2 drivers were promoted through migration ledgers; remaining phase-owned paths stay in place until separately reviewed and approved.
+`phases/` owns phase rules and compact execution provenance only. Canonical reports and promoted evidence belong in `docs/`; reusable configs and drivers belong in root `configs/` and `scripts/`; large payloads belong in external artifact storage. P0 bulk data and runs were externalized by `STORAGE-IA-01`; its Git tree now retains only compact control records. Active P2 payload remains local until the current Fusion-W1 work closes.
 
 ## Future run layout
 

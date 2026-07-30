@@ -2,7 +2,7 @@
 
 ## Decision
 
-Use a **new control-plane checkout** of the existing repository with both partial clone and cone-mode sparse checkout. Do not convert the current 457.691 GiB data-bearing checkout in place.
+Use a **new control-plane checkout** of the existing repository with both partial clone and cone-mode sparse checkout. Do not convert the current approximately 59 GiB active P2 checkout in place; its staged Fusion work and Docker compatibility mounts should remain undisturbed. The 457.691 GiB figure below refers to the pre-storage-migration baseline.
 
 Partial clone and sparse checkout solve different costs:
 

@@ -13,7 +13,7 @@
 | `tests/` | 코드·실행 계약·lineage의 자동 검증 | A |
 | `docs/` | 사람이 읽는 정본 연구 지식과 승격된 compact evidence | A, 일부 향후 B |
 | `phases/` | 단계별 규칙, issue ledger, compact run/provenance receipt | A |
-| `artifacts/` | 향후 외부 artifact를 가리키는 작은 manifest만 저장 | C manifest는 A |
+| `artifacts/` | 외부 artifact를 가리키는 작은 manifest와 호환 계약 | C manifest는 A |
 
 `docs/`와 `phases/`는 중복 폴더가 아니다. 결과 해석·보고서·승인된 표와 그림은 `docs/`가 소유하고, 그 결과가 어떤 규칙·commit·config·container·run에서 나왔는지는 `phases/`가 소유한다. 대용량 checkpoint, dataset, point cloud, mesh, 전체 image bundle은 외부 저장소와 manifest가 담당해야 한다.
 
@@ -39,19 +39,21 @@ report + compact evidence               -> external storage
 - 자동 run catalog: [`phases/RUN_CATALOG.csv`](phases/RUN_CATALOG.csv)
 - storage 감사와 정책: [`docs/research/REPO_STORAGE_AUDIT.md`](docs/research/REPO_STORAGE_AUDIT.md), [`docs/research/PROPOSED_STORAGE_POLICY.md`](docs/research/PROPOSED_STORAGE_POLICY.md)
 
-## 전환 영역
+## 로컬 artifact workspace
 
-다음 경로는 새 정보를 넣는 표준 소유자가 아니다.
+2026-07-30 물리 이전으로 `data`, `results`, `reports`, `fair-pilot`, P0 data/run
+payload 총 428,296,653,718바이트를 sibling backend
+`../JointBuildGS-artifacts`로 옮겼다. 원본 byte는 수정하지 않았고, 같은 filesystem의
+atomic rename과 inode 연속성을 확인했다. 상세 manifest는
+[`artifacts/manifests/local_workspace_20260730.yaml`](artifacts/manifests/local_workspace_20260730.yaml)에 있다.
 
-- `data/`: ignored local dataset/work volume. 외부 artifact backend 도입 전까지 원위치 보존한다.
-- `results/`: 과거 compact evidence와 대용량 generated payload가 섞인 전환 영역이다. 검증된 compact 자료만 `docs/`로 승격했다.
-- `reports/`: tracked 자료는 정본 owner로 승격했고, 남은 파일은 수정하지 않은 local runtime state다.
-- `fair-pilot/`: 자체 config/script/doc/run을 함께 가진 과거 pilot bundle이다. embedded path와 외부 backend를 함께 해결하기 전에는 일괄 이동하지 않는다.
-- `env/`, `runs/`: tracked migration은 끝났고 빈 물리 디렉터리만 남아 있다.
-- `external/`: 승인된 third-party source 계약이 있을 때만 사용한다.
-- `legacy/`: 현재 import 대상이 아닌 명시적 reference-code 격리 영역이다.
+Docker 실행 중에는 `data/`, `results/`, `reports/`, `fair-pilot/`이 빈 host mount-point로
+보일 수 있다. 이 경로들은 더 이상 Git 정보 소유자가 아니며 실제 payload는 외부 backend에
+있다. Compact result evidence는 역할에 따라 `docs/experiments/<family>/{reports,tables,metrics,manifests,models}/`, run provenance는 `phases/`로 이동했다. 활성 Fusion-W1 payload가
+있는 `phases/p2-gsjso/runs/`만 현재 작업 종료 전까지 local workspace로 유지한다.
 
-`artifacts/`는 아직 없다. 저장할 외부 backend, immutable URI, checksum, retention 계약 없이 빈 폴더나 payload 복사본부터 만들지 않는 것이 현재 정책이다.
+`external/`은 승인된 third-party source 계약이 있을 때만, `legacy/`는 inactive reference
+code 격리에만 사용한다.
 
 ## 실행 원칙
 

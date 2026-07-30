@@ -43,8 +43,8 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection  # noqa: E402
 REPO = Path(__file__).resolve().parents[3]
 CONFIG = REPO / "phases/p2-gsjso/configs/e5_c001_s3ap_phase0_baselines.json"
 RUN_DIR = REPO / "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase0_baselines"
-OUT_P0 = REPO / "docs/planefit_baseline.csv"
-OUT_MVS = REPO / "docs/mvs_hole_check.csv"
+OUT_P0 = REPO / "docs/experiments/e5_c001_s3ap/tables/planefit_baseline.csv"
+OUT_MVS = REPO / "docs/experiments/e5_c001_s3ap/tables/mvs_hole_check.csv"
 FIG_DIR = REPO / "docs/figs/e5_c001_s3ap_phase0"
 P0_FIG = FIG_DIR / "p0_planefit_baseline.png"
 MVS_FIG = FIG_DIR / "mvs_hole_check.png"

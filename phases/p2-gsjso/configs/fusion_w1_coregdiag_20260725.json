@@ -13,7 +13,7 @@
   ],
   "inputs": {
     "targets_csv": "phases/p2-gsjso/runs/20260724_fusion_w1/w1_targets.csv",
-    "boundary_ladder_csv": "docs/boundary_map_v4_1_ladder.csv",
+    "boundary_ladder_csv": "docs/experiments/boundary_map/tables/boundary_map_v4_1_ladder.csv",
     "footprints_geojson": "results/tum_transfer/analysis/footprints_aoi.geojson",
     "source_als_laz": "results/tum_transfer/mob_analysis/p0c_step2/als_aoi.laz",
     "materialized_als_npz": "results/tum_transfer/fusion_w1_coreg_lock2/als_fixed_class2_6_ellipsoidal_zeta45p7.npz",
@@ -27,7 +27,7 @@
   },
   "input_sha256": {
     "phases/p2-gsjso/runs/20260724_fusion_w1/w1_targets.csv": "256d376080dca7c496aa3f34c9bcbbd1a8e52d0b25d6e98f7eec388b3f6cc943",
-    "docs/boundary_map_v4_1_ladder.csv": "ae16170177ac0815eb6dd853b0469325c9a1018eeeac9b790b063927cbd7e7e2",
+    "docs/experiments/boundary_map/tables/boundary_map_v4_1_ladder.csv": "ae16170177ac0815eb6dd853b0469325c9a1018eeeac9b790b063927cbd7e7e2",
     "results/tum_transfer/analysis/footprints_aoi.geojson": "ca7f5b13a52368e1d2ac47b77cc78f12887bad4d598d122ad57b882eb4920a82",
     "results/tum_transfer/mob_analysis/p0c_step2/als_aoi.laz": "ac5cd0dc9c368a15e1f8fd5a18ad8d96ddbbd8cbaf8e1b608fd675430d6e9225",
     "results/tum_transfer/fusion_w1_coreg_lock2/als_fixed_class2_6_ellipsoidal_zeta45p7.npz": "fc077ed02dd0df7c5c90d5e415eb1a028faad8d39415cbf695c9f1df1e256612",

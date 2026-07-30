@@ -1,6 +1,6 @@
 # JointBuildGS research documents
 
-This is the entry point for repository documentation. Reviewed material is organized by research, experiment, evidence, and archive ownership; the few remaining direct files are explicit compatibility mirrors, path-locked inputs, or lineage holds.
+This is the entry point for repository documentation. Reviewed material is organized by research, experiment, evidence, and archive ownership. Only this README and two active path-locked CSV inputs remain directly under `docs/`; all other direct files have explicit owner paths.
 
 ## Start here
 
@@ -43,4 +43,4 @@ Generated `_candidate` values are not scientific or document-governance decision
 
 ## Path migration rule
 
-Use the owner paths under `research/`, `experiments/`, and `archive/` for new links. Frozen manifests and run receipts may retain historical paths; the migration CSVs under `catalog/migrations/` resolve those references. Four hash-bound scientific inputs retain byte-identical compatibility mirrors at their former paths.
+Use the owner paths under `research/`, `experiments/`, and `archive/` for new links. Frozen manifests and run receipts may retain historical paths; the migration CSVs under `catalog/migrations/` resolve those references. The two temporary direct CSVs are `boundary_map_v2_ladder.csv` and `regression_input_snapshot.csv`, both retained because the user's current staged Fusion work names those exact paths. They must not be copied as a placement pattern.

@@ -74,8 +74,8 @@ Git에서도 각 공개 bundle은 순서대로 `52c84f7`, `5c1331b`, `17ab65d`/`
 `DOC-IA-03`에서 35개 원본의 목표 경로와 SHA-256을 [`BOUNDARY_MAP_PATHS.csv`](../migrations/BOUNDARY_MAP_PATHS.csv)에 고정했다. 원본 CSV·JSON·Markdown·PNG 내용과 run receipt는 수정하지 않는다.
 
 - 33개 이전 경로는 새 owner 디렉터리로 이동한다.
-- `docs/boundary_map_v2_ladder.csv`와 `docs/boundary_map_v4_1_ladder.csv`는 기존 staged/hash-locked workflow 보호를 위해 동일 SHA의 compatibility mirror로 남긴다.
-- 두 mirror는 정본이 아니다. 새 문서·코드·config는 새 owner 경로를 사용해야 한다.
+- `docs/boundary_map_v2_ladder.csv`는 현재 staged workflow 보호를 위해 임시 direct input으로 남긴다.
+- v4.1 이전 root copy는 byte-identical 상태로 `docs/archive/compatibility/root-mirrors/tables/`에 보존했다. 새 문서·코드·config는 새 owner 경로를 사용해야 한다.
 - 과거 manifest와 run receipt의 old path 문자열은 당시 provenance이므로 rewrite하지 않고 migration manifest로 해석한다.
 - phase run 디렉터리와 원본 실험 결과는 이동하지 않는다.
 - `DOC-IA-04`에서 boundary 전용 실행 코드만 family owner로 이동하고 공용 helper는 이동하지 않는다.

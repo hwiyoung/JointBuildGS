@@ -694,7 +694,7 @@ semantic roof pixel 중 COLMAP MVS depth mask가 유효한 비율이다.
 
 ## 인용·근거
 
-- `docs/W_D4_손실config_감사.md`, `docs/W_D4config감사_분석·②연결_20260707.md`, `docs/W_문헌검증_GS기하_foundation·가중·평가_20260707.md`.
+- `docs/experiments/w_d4/reports/W_D4_손실config_감사.md`, `docs/W_D4config감사_분석·②연결_20260707.md`, `docs/W_문헌검증_GS기하_foundation·가중·평가_20260707.md`.
 - 2DGS: arXiv 2403.17888 (<https://arxiv.org/abs/2403.17888>), depth distortion/normal consistency가 geometry regularization으로 제시됨.
 - CityGaussianV2: arXiv 2411.00771 (<https://arxiv.org/abs/2411.00771>), large-scale reconstruction에서 depth regression과 geometry accuracy 이슈를 다룸.
 - AlignGS: arXiv 2510.07839 (<https://arxiv.org/abs/2510.07839>), semantic priors를 geometry regularizer로 쓰는 sparse-view reconstruction 방향.

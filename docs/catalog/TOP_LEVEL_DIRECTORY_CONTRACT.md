@@ -4,7 +4,7 @@
 
 This contract defines why each top-level directory may exist and which information it owns. The control-plane migrations recorded under `docs/catalog/migrations/` have now applied this contract to verified document, evidence, receipt, script, and test families.
 
-The contract does not authorize deletion, `.gitignore` changes, artifact upload, Git LFS conversion, history rewriting, or blind movement of bulk payloads. Historical and hash/path-locked compatibility paths remain authoritative where the migration ledgers say so.
+The contract does not authorize deletion, `.gitignore` changes, artifact upload, Git LFS conversion, or history rewriting. The 2026-07-30 storage migration used byte-preserving same-filesystem moves into a sibling local artifact workspace and recorded every bulk root in a manifest.
 
 ## Admission rule
 
@@ -30,7 +30,7 @@ The target control plane has eight permanent top-level directories.
 | `tests/` | Claims about code and contracts need executable regression checks. | Unit, integration, schema, lineage, and reproducibility tests plus small deterministic fixtures. | Full datasets, checkpoints, large images, result archives, manual QA reports. | Regular Git; fixtures follow explicit size gates. Test outputs are ephemeral. |
 | `docs/` | Humans need one authoritative knowledge and promoted-evidence surface. | Research context, plans, preregistration, decisions, canonical experiment reports, compact evidence tables, curated figures, review packages, document lineage. | Raw logs, mutable run state, checkpoints, full render sweeps, duplicate run receipts, caches. | Text and compact evidence in regular Git; selected binary evidence may use approved LFS later. One canonical document per declared purpose. |
 | `phases/` | The project has governed research stages with different rules and must preserve which run occurred under which stage contract. | Phase orientation/rules and compact run receipts: commit, config reference, container, inputs, outputs, status, exceptions, retraction/supersession links. | Canonical research reports, reusable source code, canonical config copies, raw payloads, large generated result trees. | Regular Git for rules and compact receipts. Phase closure freezes the ledger but does not duplicate its reports. |
-| `artifacts/` | Git needs stable resolvers for large or access-controlled evidence stored elsewhere. | Small manifests containing artifact ID, immutable URI, bytes, hash, producer, config, Git commit, access class, retention, and CRS. | Checkpoint, dataset, point-cloud, mesh, image-bundle, or archive bytes themselves. | Manifests in regular Git; payloads in approved external storage. The directory is created only when the first backend and manifest are approved. |
+| `artifacts/` | Git needs stable resolvers for large or access-controlled evidence stored elsewhere. | Small manifests containing artifact ID, URI/path, bytes, hash, producer, config, Git commit, access class, retention, and CRS. | Checkpoint, dataset, point-cloud, mesh, image-bundle, or archive bytes themselves. | Manifests in regular Git; payloads currently use the sibling local workspace and still need durable backup. |
 
 ## Why `docs/` and `phases/` are both necessary
 
@@ -89,20 +89,11 @@ These roots may remain only while their special boundary is real and documented.
 | `external/` | Vendored or submodule-managed third-party source may need isolation from project code. | Upstream URL/version, license, local modifications, and update procedure must be recorded. Project-owned code is forbidden. | Currently has no indexed files. Do not populate it without an approved dependency contract. |
 | `legacy/` | Inactive historical/reference implementation may need to remain available without being mistaken for active `src/`. | `README.md` must state why it is retained, whether live code imports it, and the replacement path. New feature work is forbidden. | Seven indexed files currently form a PlanarSplat reference quarantine. Retention or later external archiving needs separate review. |
 
-The repository-wide instructions retain several existing root paths, including `external/`, `legacy/`, and `results/`. This contract does not override their scientific or storage boundary; verified compact evidence may be promoted through an explicit migration ledger, while bulk payload movement still requires separate approval.
+Repository-wide instructions retain `external/` and `legacy/` as conditional source-code boundaries. Historical `results/` paths are runtime compatibility mounts only; compact evidence now has role-specific owners and bulk bytes live in the sibling artifact workspace.
 
-## Current non-target and transitional roots
+## Runtime compatibility roots
 
-Snapshot counts below are indexed-file counts observed during `DOC-IA-01A`; they are time-specific and do not include ignored payload volume.
-
-| Current root | Indexed files | Why it exists today | Target disposition, without action in this task |
-|---|---:|---|---|
-| `data/` | 1 | Local dataset/work-volume mount placeholder. | Not a durable Git information root. Raw inputs become external class C; local hydration remains a workspace concern. |
-| `env/` | 0 | Its former repository-wide `versions.md` was migrated in `ROOT-IA-01`. | No tracked content remains; repository-wide environment knowledge is under `docs/research/reproducibility/`. |
-| `fair-pilot/` | 32 | A self-contained pilot copied configs, scripts, docs, and run records under one root. | Decompose by role into the permanent roots after lineage review; do not create more project-shaped roots. |
-| `reports/` | 0 | Its nine tracked nightly post-analysis files were promoted by `DOC-IA-REPORT-01`; untracked runtime state remains local. | No tracked owner role remains. Runtime output stays class D until reviewed and promoted. |
-| `results/` | 311 | Historical experiment trees combine reports, metrics, configs, viewers, and generated payloads; 12 pre-TUM archive files were promoted by `DOC-IA-ARCHIVE-01`. | Split remaining files only with writer/output and artifact-backend decisions. Current root rule prohibits blanket movement. |
-| `runs/` | 0 | Fourteen older P2 receipts were migrated in `ROOT-IA-01`. | No tracked content remains; producers now write to `phases/p2-gsjso/runs/`. |
+`data/`, `results/`, `reports/`, and `fair-pilot/` may appear as empty host mount points while Docker is running. They own no Git information. Docker mounts the corresponding paths from `../JointBuildGS-artifacts`; P0 bulk data and historical runs use the same compatibility mechanism. Root `env/` and `runs/` contain no tracked information.
 
 Local tool-state directories such as `.agents/`, `.claude/`, and `.codex/` are not research information roots. They must not become owners of source, evidence, run receipts, or artifacts.
 
@@ -122,7 +113,7 @@ A new top-level directory must not be created merely to hold one such file.
 1. Verified reusable P2 drivers and tests now live under root `scripts/experiments/` and `tests/experiments/`; scientifically locked or still phase-specific implementations remain phase-local.
 2. `boundary_map` and later document/evidence families were moved only with old-to-new path ledgers and reference validation.
 3. Root `env/` and `runs/` no longer own tracked information; tracked `reports/` material was promoted to its document/figure owners.
-4. `results/`, local `reports/`, and `fair-pilot/` remain explicit migration inputs, not templates for new roots.
-5. Bulk `data/`, run payload, checkpoint, and geometry movement waits for an approved external backend and class-C manifest contract.
+4. `results/`, local `reports/`, and `fair-pilot/` were split by role; their former runtime paths are compatibility mounts, not templates for new roots.
+5. Historical bulk payload is in the sibling artifact workspace with a checked manifest. Active P2 runtime payload remains phase-local until the current Fusion work closes.
 
 The resulting folder state and deliberate exceptions are recorded in [`REPOSITORY_STRUCTURE_FINAL.md`](REPOSITORY_STRUCTURE_FINAL.md).

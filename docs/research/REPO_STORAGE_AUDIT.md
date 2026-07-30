@@ -4,9 +4,11 @@
 
 **Recommendation: 2. existing repo + partial clone/sparse checkout.**
 
+> Post-audit update (2026-07-30): `STORAGE-IA-01` moved 428,296,653,718 bytes of local datasets, historical results/reports, the fair pilot, and P0 bulk workspaces into `../JointBuildGS-artifacts` by same-filesystem atomic rename. The main checkout is now approximately 59 GiB excluding `.git`, dominated by active P2 work. The baseline measurements below remain the reproducible pre-migration snapshot; no push or history rewrite occurred.
+
 The repository does not currently require history cleanup. The largest committed-history blob is only 32.341 MiB and there are no current tracked or committed-history blobs at or above 50 MiB. The practical cost comes from accumulation: the current index contains 945 PNG files totaling 553.596 MiB, the current branch tree is 732.360 MiB, and the local Git object database is 1.794 GiB. A blob-filtered sparse clone gives a useful control-plane checkout without changing history or splitting research governance into another repository.
 
-The much larger 457.691 GiB working tree is a different problem: 456.544 GiB is ignored local data and generated artifacts. Sparse checkout does not remove or manage those ignored files. They need an external artifact contract and manifests, not Git history surgery.
+The pre-migration 457.691 GiB working tree was a different problem: 456.544 GiB was ignored local data and generated artifacts. Those bytes now use the sibling local artifact workspace and a tracked manifest. This is organized local storage, not yet a durable backup.
 
 ## Post-reorganization refresh — 2026-07-30
 
@@ -25,7 +27,7 @@ The measurements below refresh the control-plane and push boundary after the ver
 
 The live remote was verified with read-only `git ls-remote`; no fetch or push was performed. The remote still contains the old tracked `env/`, `reports/`, and root `runs/` ranges because the structure commits are local. Locally those tracked owners are empty, verified documents/evidence are organized under `docs/`, reusable drivers/tests are under root `scripts/` and `tests/`, and compact receipts are under `phases/`.
 
-The full working-tree size was not rescanned because the migrations intentionally did not delete or mutate bulk payloads. The last complete 457.691 GiB measurement remains the storage baseline. See [`../catalog/REPOSITORY_STRUCTURE_FINAL.md`](../catalog/REPOSITORY_STRUCTURE_FINAL.md) for the folder-level result and deliberate transition areas.
+The complete 457.691 GiB measurement below remains the pre-migration storage baseline. A post-migration top-level scan measured the main checkout at approximately 59 GiB excluding `.git`; exact moved-byte and inode evidence is in [`../../artifacts/manifests/local_workspace_20260730.yaml`](../../artifacts/manifests/local_workspace_20260730.yaml). See [`../catalog/REPOSITORY_STRUCTURE_FINAL.md`](../catalog/REPOSITORY_STRUCTURE_FINAL.md) for the current folder-level result.
 
 ## Scope and safety
 
@@ -185,7 +187,7 @@ The development container could not resolve the host-only SSH alias `github-hwiy
 |---|---|---|
 | **A. regular Git** | Source, configs, scripts, tests, small Markdown/CSV/JSON/YAML, compact manifests/receipts, small deterministic fixtures | This is the existing mechanism for all tracked content. Textual control-plane content fits well. |
 | **B. selected Git LFS** | A curated allowlist of canonical binary evidence that must travel with a checkout: final figures/panels, approved PDFs, or small fixed binary fixtures | No LFS is configured today. Candidate classification in the CSVs is prospective and does not claim current LFS storage. |
-| **C. external artifact storage + manifest** | Raw datasets, checkpoints, dense point clouds/meshes, full-resolution imagery, large arrays, irreplaceable run bundles; default for any file at least 100 MiB | No common external backend is wired today. Most such content is local ignored data with decentralized manifests. |
+| **C. external artifact storage + manifest** | Raw datasets, checkpoints, dense point clouds/meshes, full-resolution imagery, large arrays, irreplaceable run bundles; default for any file at least 100 MiB | The sibling `../JointBuildGS-artifacts` workspace is wired locally through Docker compatibility mounts and a tracked manifest. It is not yet an off-machine durable backup. |
 | **D. raw/generated/ignored data** | Reproducible renders, preprocess intermediates, TensorBoard, runtime environments, caches, locks, PIDs, mutable logs, temporary panels | This is already the dominant local policy, but several rules are experiment-specific and the current root nightly cache is an unignored gap. |
 
 Per-file provisional classes in the CSVs are path/role heuristics for review. They are not migration instructions. In particular, history-only generated result figures are marked D, while current curated binary evidence is generally marked B; geometry/array payloads are generally C unless explicitly justified as tiny test fixtures.

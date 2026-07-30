@@ -35,8 +35,10 @@ P2 구현은 레포 루트의 기존 GS-JSO 코드를 사용/확장한다. **이
 - `src/` — 모델·손실·grouping·train
 - `configs/` — 실험 config
 - `scripts/`, `tools/` — 재사용 드라이버와 레포 도구
-- `results/` — 실험 산출(REPORT.md 등)
+- `docs/experiments/<family>/{reports,tables,metrics,manifests,models}/` — 역할별로 승격된 compact result evidence
+- `artifacts/manifests/` — 외부 dataset/checkpoint/render/run payload resolver
 - 연구 맥락: `docs/research/RESEARCH_CONTEXT.md`(손실·파라미터), `docs/research/EXPERIMENT_PLAN.md`(실험 순서)
 
-> 현재 ignore 규칙과 기존 실행 데이터는 이번 구조 정리에서 변경하지 않았다. 새로운 저장
-> 정책이나 외부 artifact backend는 별도 승인 작업으로만 도입한다.
+> 2026-07-30에 P0 및 legacy result payload는 sibling artifact backend로 물리 이전했다.
+> 활성 Fusion-W1 작업이 있는 `runs/`는 staged/unstaged 작업을 보존하기 위해 phase-local로
+> 유지하며, run closeout 뒤 동일 manifest 절차로 분리한다.

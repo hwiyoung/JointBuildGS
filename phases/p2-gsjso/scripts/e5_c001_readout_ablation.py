@@ -1085,7 +1085,7 @@ def write_report(
         "",
         "- ② 회신: `docs/experiments/e5_c001_render/reports/W_E5_C001_렌더플로터점검.md`.",
         "- 분석 연결: `docs/W_E5_C001_렌더플로터_분석·③라우팅_20260707.md`(파일이 있으면 잠금본 우선).",
-        "- config 감사: `docs/W_D4_손실config_감사.md` §6.",
+        "- config 감사: `docs/experiments/w_d4/reports/W_D4_손실config_감사.md` §6.",
         "- 2DGS: [arXiv 2403.17888](https://arxiv.org/abs/2403.17888).",
         "- CityGaussianV2: [arXiv 2411.00771](https://arxiv.org/abs/2411.00771).",
     ]

@@ -1,7 +1,26 @@
 # Experiment families
 
-Each directory below owns promoted reports, compact evidence tables, and provenance manifests for one experiment family. Execution receipts stay under `phases/`; large generated payloads do not belong here.
+Each directory below owns one experiment family. Promoted compact material is split by information role; execution receipts and bulk payloads are deliberately outside this tree.
 
+## Family layout
+
+- `reports/` — human-readable reports, decisions, QA indexes, and notes
+- `tables/` — compact CSV evidence tables
+- `metrics/` — machine-readable summary metrics
+- `manifests/` — experiment provenance and compact model metadata
+- `models/` — exceptional small curated geometry/model evidence only
+
+Runtime status, job manifests, and self-verification receipts belong under `phases/`. External payload resolution belongs under `artifacts/manifests/`; full checkpoints, renders, images, point clouds, and generated geometry stay in the external artifact workspace.
+
+## Families
+
+- [`FC_S5_loss_ledger_instrumentation/`](FC_S5_loss_ledger_instrumentation/README.md)
+- [`FC_S6C_lmutual_completion/`](FC_S6C_lmutual_completion/README.md)
+- [`FC_S6C_lmutual_design_to_formula_audit/`](FC_S6C_lmutual_design_to_formula_audit/README.md)
+- [`FC_S6D_directional_screening/`](FC_S6D_directional_screening/README.md)
+- [`FC_S6D_lmutual_directionality/`](FC_S6D_lmutual_directionality/README.md)
+- [`FC_S6E_joint/`](FC_S6E_joint/README.md)
+- [`FC_S6_componentwise_revised_lmutual_design_validation/`](FC_S6_componentwise_revised_lmutual_design_validation/README.md)
 - [`attr_outcome_regression/`](attr_outcome_regression/README.md)
 - [`aux_v4a/`](aux_v4a/README.md)
 - [`aux_v4b/`](aux_v4b/README.md)
@@ -24,15 +43,27 @@ Each directory below owns promoted reports, compact evidence tables, and provena
 - [`e5_c001_s2p/`](e5_c001_s2p/README.md)
 - [`e5_c001_s3/`](e5_c001_s3/README.md)
 - [`e5_c001_s3ap/`](e5_c001_s3ap/README.md)
+- [`e5_c001_s3b0/`](e5_c001_s3b0/README.md)
 - [`e5_pilot/`](e5_pilot/README.md)
 - [`e5_pilot_block/`](e5_pilot_block/README.md)
 - [`e5_pilot_substantiveness/`](e5_pilot_substantiveness/README.md)
+- [`fair_pilot/`](fair_pilot/README.md)
 - [`footprint_conditioned/`](footprint_conditioned/README.md)
+- [`footprint_conditioned_readout/`](footprint_conditioned_readout/README.md)
 - [`fusion_w1/`](fusion_w1/README.md)
 - [`gsjso_loss_audit/`](gsjso_loss_audit/README.md)
 - [`lowtex_v5/`](lowtex_v5/README.md)
 - [`p0_completeness/`](p0_completeness/README.md)
 - [`p2_makeorbreak/`](p2_makeorbreak/README.md)
+- [`phase1_ablation/`](phase1_ablation/README.md)
+- [`phase1_analysis/`](phase1_analysis/README.md)
+- [`phase1_depth_normal/`](phase1_depth_normal/README.md)
+- [`phase1_mutual/`](phase1_mutual/README.md)
+- [`phase1_semantic/`](phase1_semantic/README.md)
+- [`phase1_structure/`](phase1_structure/README.md)
+- [`phase1_vanilla/`](phase1_vanilla/README.md)
+- [`phase2_ablation_citygml/`](phase2_ablation_citygml/README.md)
+- [`phase2_synthesis/`](phase2_synthesis/README.md)
 - [`pointcloud_attributes/`](pointcloud_attributes/README.md)
 - [`population_aux/`](population_aux/README.md)
 - [`primary4_assembly_validation/`](primary4_assembly_validation/README.md)
@@ -43,6 +74,11 @@ Each directory below owns promoted reports, compact evidence tables, and provena
 - [`qs_cheap_refine_pilot/`](qs_cheap_refine_pilot/README.md)
 - [`qs_cheap_refine_sweep/`](qs_cheap_refine_sweep/README.md)
 - [`qs_rescore/`](qs_rescore/README.md)
+- [`stage3_polyfit_phase2/`](stage3_polyfit_phase2/README.md)
+- [`stage3_rendered_evidence/`](stage3_rendered_evidence/README.md)
+- [`stage3_typed_readout/`](stage3_typed_readout/README.md)
+- [`stage3_v4_validation/`](stage3_v4_validation/README.md)
+- [`synthetic_a/`](synthetic_a/README.md)
 - [`texture_anchor_check/`](texture_anchor_check/README.md)
 - [`tum2twin_surface_proxy_rv1/`](tum2twin_surface_proxy_rv1/README.md)
 - [`tum_transfer_preflight/`](tum_transfer_preflight/README.md)

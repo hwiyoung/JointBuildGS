@@ -2,11 +2,13 @@
 
 ## Status
 
-This is a proposal only. It does not authorize deletion, movement, `.gitignore` edits, Git LFS migration, artifact upload, or history rewriting.
+This policy now governs local organization. It does not authorize deletion, `.gitignore` edits, Git LFS migration, artifact upload, or history rewriting. The sibling local artifact workspace is not yet an approved durable backup.
 
 ## Policy objective
 
 Keep JointBuildGS's control plane—code, preregistration, configs, manifests, compact evidence, and scientific lineage—reviewable in Git while keeping bulk data and reproducible runtime material out of normal clone paths. Ignore rules are a workspace hygiene mechanism, not a backup strategy.
+
+Implementation status (2026-07-30): `../JointBuildGS-artifacts` and [`../../artifacts/manifests/local_workspace_20260730.yaml`](../../artifacts/manifests/local_workspace_20260730.yaml) now provide local role separation and byte accounting. Off-machine durability, access control, and retention remain future backend requirements.
 
 ## Decision order
 

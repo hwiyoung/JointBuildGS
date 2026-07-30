@@ -11,22 +11,21 @@ Exact paths and target hashes are recorded in:
 - `docs/catalog/migrations/DOCS_ROOT_FAMILIES_WAVE2_PATHS.csv`
 - `docs/catalog/migrations/DOCS_ROOT_UNICODE_PATHS.csv`
 
-## Deliberate direct-file remainder
+## Final direct-file remainder
 
-After these waves, the physical `docs/` root has 70 files, divided by reason:
+Follow-up migrations routed the 34 lineage holds, the 15 locked inputs, and 19 clean compatibility copies to explicit owners without deleting a byte. The physical `docs/` root now has three files:
 
-| Reason | Files | Why direct placement remains |
-|---|---:|---|
-| Entry point | 1 | `docs/README.md` is the documentation router. |
-| Declared compatibility mirrors | 20 | Active or frozen exact-path/SHA consumers still require the old path. |
-| Path-locked scientific inputs | 15 | S3B0 (9), S3A′ (3), and Primary4 (3) locks cannot be rewritten without changing protocol bytes. |
-| Lineage/ownership holds | 34 | Canonical, superseded, prompt/receipt, or cross-family ownership remains scientifically ambiguous. |
+| File | Why direct placement remains |
+|---|---|
+| `README.md` | Documentation router. |
+| `boundary_map_v2_ladder.csv` | The user's current staged Fusion workflow names this exact source path. |
+| `regression_input_snapshot.csv` | The user's current staged Fusion workflow names this exact input path. |
 
-This remainder is an explicit compatibility and review surface, not an invitation to add new root documents. New documents go directly to `docs/research/`, `docs/experiments/<family>/`, `docs/evidence/`, or `docs/archive/`.
+Former root copies are preserved under `docs/archive/compatibility/root-mirrors/`. New documents go directly to `docs/research/`, `docs/experiments/<family>/`, `docs/evidence/`, or `docs/archive/`.
 
 ## Invariants
 
 - No frozen run receipt, historical manifest, original data, or experiment result was rewritten.
 - Compatibility targets and their retained old paths have equal SHA-256 values.
-- The 15 locked inputs and 34 lineage holds were not moved by filename inference.
+- Every later move was recorded by an explicit path/SHA ledger; no scientific content was inferred or rewritten.
 - The generated catalog reports remaining broken or ambiguous references; it does not silently choose a scientific canonical result.

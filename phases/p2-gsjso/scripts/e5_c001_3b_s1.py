@@ -71,7 +71,7 @@ CITYGSV2_SOURCE = {
     "elongation_axis_ratio_threshold": "scale_min/scale_max > 0.01",
     "prune_opacity_threshold": "cull_opacity_threshold=0.05 in vanilla_2dgs/appearance 2DGS configs",
 }
-DESIGN_MEMO_PATH = REPO / "docs/W_③b_레시피설계_레퍼런스기반_20260707.md"
+DESIGN_MEMO_PATH = REPO / "docs/experiments/e5_c001_3b_s1/reports/W_③b_레시피설계_레퍼런스기반_20260707.md"
 
 
 def configure_ablation_module() -> None:
