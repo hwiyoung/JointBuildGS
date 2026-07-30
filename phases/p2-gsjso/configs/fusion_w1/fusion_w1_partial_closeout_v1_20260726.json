@@ -1,0 +1,153 @@
+{
+  "schema": "jointbuildgs.fusion_w1.partial_closeout.config.v1",
+  "task_id": "FUS-W1-PARTIAL-CLOSEOUT-20260726",
+  "run_id": "20260724_fusion_w1",
+  "branch": "exp/fusion-w1",
+  "cutoff_kst": "2026-07-26T06:30:00+09:00",
+  "git_contract": {
+    "required_ancestor": "20c7e49d362eefb0dc09ea3f9ef8e23a56faabeb",
+    "implementation_paths": [
+      "phases/p2-gsjso/configs/fusion_w1/fusion_w1_partial_closeout_v1_20260726.json",
+      "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_partial_closeout_v1_20260726.py",
+      "phases/p2-gsjso/scripts/fusion_w1/run_fusion_w1_partial_closeout_v1_20260726.sh",
+      "tests/fusion_w1/test_fusion_w1_partial_closeout_v1_20260726.py"
+    ]
+  },
+  "inputs": {
+    "r0": {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/resume_v2/r0_preflight.json",
+      "sha256": "d82bd7b824b45b5e77306bd4322fb4e96b86638a9b33d026fb740d4ade51f95e",
+      "schema": "jointbuildgs.fusion_w1.resume_r0_v2.preflight.v1",
+      "status": "PASSED"
+    },
+    "r1": {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/resume_v2/r1_pose_adoption_manifest.json",
+      "sha256": "f59cb9cc404dd1a262a3fb03df4df665514e2862d66be371baa05a372e825a42",
+      "schema": "jointbuildgs.fusion_w1.pose_adoption_v2.manifest.v1",
+      "status": "PASSED"
+    },
+    "r2": {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/resume_v2/r2_gate_a_v2_registration.json",
+      "sha256": "a24697f3413b8d4b2777703e26d58234befe1c835dd282ce5da428d1c562f967",
+      "schema": "jointbuildgs.fusion_w1.gate_a_v2_registration.manifest.v1",
+      "status": "PASS"
+    },
+    "targets": {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_targets.csv",
+      "sha256": "256d376080dca7c496aa3f34c9bcbbd1a8e52d0b25d6e98f7eec388b3f6cc943",
+      "rows": 178
+    },
+    "targets_manifest": {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_targets_manifest.json",
+      "sha256": "13fa5464c014cd68d3fed6d77dbe65dbf0766247770e0449407fd9cb0ad62409",
+      "schema": "jointbuildgs.fusion_w1.targets.manifest.v1",
+      "status": "provisional_external_public_artifact_gap"
+    },
+    "alignment_source": {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coregdiag_building_residuals.csv",
+      "sha256": "c20baf91c02be8b12527a1bf70fc2b4192961fc07d5e6ad790f4efa35fb60783",
+      "publication_mode": "exact_bytes"
+    },
+    "preprocess_manifest": {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/preprocess_v1/preprocess_manifest.json",
+      "sha256": "9f24b12794e12340e7b13178c086844d70048ca65615df129f81a89e583f5fc5",
+      "schema": "jointbuildgs.fusion_w1.preprocess_run.v1",
+      "status": "PARTIAL"
+    },
+    "seed_stats": {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_seed_stats.csv",
+      "sha256": "6a2896781336b29a5e251ad2f04a913c4eb8fb6b3258bc4e8885ce0fea8fef12",
+      "rows": 1
+    },
+    "p0prime_manifest": {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/p0prime/manifest.json",
+      "sha256": "eaec893420105b24d0b760c5f0a53a1fabdc73af66a93edc3a1cf777e190b037",
+      "schema": "jointbuildgs.fusion_w1.seed_p0prime.manifest.v1",
+      "state": "PARTIAL"
+    },
+    "p0prime_driver": {
+      "path": "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_seed_p0prime_20260725.py",
+      "sha256": "582011ed0d68e8552827b21105e1fb9355ed708cd59b337dd6165394a10ff248"
+    },
+    "p0prime_scores": {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_seed_p0prime_scores.csv",
+      "sha256": "971e3b0787bb8eeb5fbd0c56627b90c6937217da49e08a882f4165da4b4a8e90",
+      "rows": 1
+    },
+    "scores": {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_scores_building.csv",
+      "sha256": "8bf0410ef2ce710c9aeb1ecfe7d29342c295e009d8f5ccb39798acc92c03f2ba",
+      "rows": 0
+    },
+    "summary": {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_summary.csv",
+      "sha256": "afd07fe303e94dbec36f626d445d3be53889f3db005117c13a676fa41bcede11",
+      "rows": 12,
+      "required_status": "NOT_MEASURED"
+    },
+    "training_driver": {
+      "path": "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_training_v1_20260725.py",
+      "sha256": "c1a2b53116c38f3216269f5dcec46a9e212b3c52e1238eead953ace1be1011f1"
+    },
+    "training_config": {
+      "path": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_training_v1_20260725.json",
+      "sha256": "88004156b05ede24425c42cd70ddf31802754a1b9bddbe40ff83ed917a6479d0"
+    },
+    "stale_manifest": {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_manifest.json",
+      "sha256": "1fff804ea6e30ef2d18f702fb67f4a38c0e225d561840311e685f15d5b4a5c38",
+      "schema": "jointbuildgs.fusion_w1.manifest.v1",
+      "run_status": "BLOCKED"
+    },
+    "issues": {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/issues.md",
+      "required_ids": [
+        "FUS-W1-COREGDIAG-002",
+        "FUS-W1-COREG-ADOPT-001",
+        "FUS-W1-PREPROCESS-001",
+        "FUS-W1-CUTOFF-001"
+      ]
+    },
+    "p0prime_panel": {
+      "building_id": "DEBY_LOD2_42364609",
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_panels/DEBY_LOD2_42364609__p0prime.png",
+      "receipt": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_panels/DEBY_LOD2_42364609__p0prime.receipt.json",
+      "required_pair": true
+    }
+  },
+  "counter_contract": {
+    "training_root": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/training",
+    "training_counter": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/training/runtime_counters.json",
+    "training_started_receipt": "started.json",
+    "training_completed_receipt": "completed.json",
+    "training_failed_receipt": "failed.json",
+    "readout_root": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/readout_v1",
+    "readout_counter": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/readout_v1/runtime_counters.json",
+    "readout_started_receipts": [
+      "readout_started.json",
+      "roofer_started.json",
+      "scoring_started.json"
+    ],
+    "required_zero": [
+      "learning_runs_started",
+      "readout_runs_started",
+      "roofer_runs_started",
+      "scoring_runs_started"
+    ]
+  },
+  "outputs": {
+    "align_residuals": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_align_residuals.csv",
+    "loss_shares": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_loss_shares.csv",
+    "manifest": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_manifest.json",
+    "report": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/W_FUSION_W1_PARTIAL_REPORT_20260726.md",
+    "lock": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/partial_closeout_v1.lock"
+  },
+  "publication": {
+    "alignment_exact_bytes": true,
+    "loss_share_header_only_zero_rows": true,
+    "manifest_atomic_replace": true,
+    "report_before_manifest": true,
+    "issues_md_modified": false,
+    "interpretation_or_verdict": false
+  }
+}

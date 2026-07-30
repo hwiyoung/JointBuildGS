@@ -1,0 +1,355 @@
+{
+  "schema": "jointbuildgs.fusion_w1.alignment_gate_config.v1",
+  "implementation_variant": "lock1",
+  "task_id": "FUS-W1-GATE-A-20260724",
+  "run_id": "20260724_fusion_w1",
+  "git_lock": {
+    "expected_branch": "exp/fusion-w1",
+    "required_ancestor_commits": [
+      "71e1a38ce88bbda7a448508cc95942b60402807e",
+      "3a40e1d03eb9728f793596ced336c504b7e9da5d",
+      "772a974db5edf385d5f136ea6408070f2a198f8b"
+    ],
+    "implementation_files": [
+      "phases/p2-gsjso/configs/fusion_w1/fusion_w1_alignment_gate_lock1.json",
+      "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_alignment_gate_lock1.py",
+      "phases/p2-gsjso/scripts/fusion_w1/run_fusion_w1_alignment_gate_lock1.sh",
+      "tests/fusion_w1/test_fusion_w1_alignment_gate_lock1.py",
+      "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_alignment_runtime_guard_lock1.py",
+      "tests/fusion_w1/test_fusion_w1_alignment_runtime_guard_lock1.py",
+      "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_alignment_checkpoint.py",
+      "tests/fusion_w1/test_fusion_w1_alignment_checkpoint.py",
+      "phases/p2-gsjso/scripts/fusion_w1/run_fusion_w1_alignment_gate_lock2.sh",
+      "phases/p2-gsjso/configs/fusion_w1/fusion_w1_coreg_lock1.json",
+      "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_coreg_lock1.py",
+      "phases/p2-gsjso/scripts/fusion_w1/run_fusion_w1_coreg_lock1.sh",
+      "tests/fusion_w1/test_fusion_w1_coreg_lock1.py",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/PROTOCOL_AMENDMENT_V3B_COREG_20260725.md",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_coreg_splits.csv",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_coreg_camera_blocks.csv",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_coreg_prereg_manifest.json",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_coreg_prereg_split.png",
+      "phases/p2-gsjso/scripts/fusion_w1/run_fusion_w1_coreg_lock2.sh",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/PROTOCOL_AMENDMENT_V3C_COREG_RECOVERY_20260725.md",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_coreg2_splits.csv",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_coreg2_camera_blocks.csv",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_coreg2_prereg_manifest.json",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_coreg2_prereg_split.png",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_coreg2_prereg_failures.jsonl"
+    ],
+    "policy": "Every implementation file must be a tracked blob identical to committed HEAD and the tracked worktree/index must be clean. This locks all critical semantics and disclosed support-screen conditioning before any image residual is read."
+  },
+  "inputs": {
+    "targets_csv": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_targets.csv",
+    "targets_manifest": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_targets_manifest.json",
+    "default_target_cohort": "core",
+    "footprint_xy": "phases/p0-audit/data/work/footprints/lod2_ground_plan.gpkg",
+    "footprint_layer": "lod2_ground_plan",
+    "footprint_id_field": "building_id",
+    "als_files": [
+      "phases/p0-audit/data/raw/als/690_5335.laz",
+      "phases/p0-audit/data/raw/als/690_5336.laz",
+      "phases/p0-audit/data/raw/als/691_5335.laz",
+      "phases/p0-audit/data/raw/als/691_5336.laz"
+    ],
+    "training_image_dir": "results/tum_transfer/data_geoidfix/images",
+    "colmap_sparse_dir": "results/tum_transfer/data_geoidfix/sparse/0",
+    "scene_reference_frame": "phases/p0-audit/data/work/opf/opf/scene_reference_frame.json",
+    "projection_datum_config": "configs/input_and_alignment/projection_datum.json",
+    "output_dir": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1"
+  },
+  "input_locks": {
+    "crs": "EPSG:25832",
+    "input_vertical_datum": "orthometric",
+    "projection_datum_config_sha256": "096a49b46fc5661d74f9d3b54c4f3777676cfc6b27e577b52bb2dabeee8b480c",
+    "expected_training_pose_image_intersection": 937,
+    "expected_training_image_set": {
+      "file_count": 937,
+      "total_bytes": 910980034,
+      "sha256sum_stream_aggregate": "dedc4251e491a9ae40d7c91073410cbf504023b6fe3143238b2528dc3146308a"
+    },
+    "als_ground_class": 2,
+    "als_building_class": 6,
+    "raw_als_missing_crs_vlr_policy": "assign EPSG:25832 by the locked W1 workflow contract and disclose it; do not infer another CRS",
+    "footprint_contract": {
+      "source_kind": "lod2_groundsurface_xy_scoped_exception",
+      "gt_derived": true,
+      "approved_exception_document": "docs/research/preregistration/quality_axis/사전등록서_품질축본선_승인잠금v4_20260721.md",
+      "approved_exception_document_sha256": "39b7b641a324dda7b5ea9d01906407223b75443d62b6d71580c3d598566464ec",
+      "approved_components_used": [
+        "GroundSurface XY"
+      ],
+      "coordinate_dimension_required": 2,
+      "forbidden_components": [
+        "LoD2 Z",
+        "RoofSurface",
+        "roof type",
+        "semantic class",
+        "final roof model"
+      ],
+      "forbidden_target_or_view_fields": [
+        "lod2_z",
+        "roof_z",
+        "roof_height",
+        "roof_type",
+        "roof_surface",
+        "semantic_class",
+        "final_roof_model"
+      ]
+    },
+    "expected_sha256": {
+      "docs/research/preregistration/quality_axis/사전등록서_품질축본선_승인잠금v4_20260721.md": "39b7b641a324dda7b5ea9d01906407223b75443d62b6d71580c3d598566464ec",
+      "phases/p0-audit/data/raw/als/690_5335.laz": "01602b7385aaf7324f89da6183df3dbdeffa237f85bf57dc27208b554b4fc0b3",
+      "phases/p0-audit/data/raw/als/690_5336.laz": "98ab7ad7f4c5108ebf41bc62186b336c6cd8a70b82fceec57136a56c0188b566",
+      "phases/p0-audit/data/raw/als/691_5335.laz": "9e14119bb0af7d5a300aa3a2a19074219b4d6d290923b4b90277c317e8b33720",
+      "phases/p0-audit/data/raw/als/691_5336.laz": "63c64002fc55d8b99a49749b5a2e36d802186186a950c89779463274e3cb950d",
+      "phases/p0-audit/data/work/footprints/lod2_ground_plan.gpkg": "259cf04ec0c9411e669e75f61c37ea634290fcd40b230f6ed9b67328041c87fa",
+      "phases/p0-audit/data/work/opf/opf/scene_reference_frame.json": "fb408e9c97bdad6af7ad4a6e94be823be294030907ce92e395bd63490f77daf6",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_targets.csv": "256d376080dca7c496aa3f34c9bcbbd1a8e52d0b25d6e98f7eec388b3f6cc943",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_targets_manifest.json": "13fa5464c014cd68d3fed6d77dbe65dbf0766247770e0449407fd9cb0ad62409",
+      "results/tum_transfer/data_geoidfix/sparse/0/cameras.bin": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99",
+      "results/tum_transfer/data_geoidfix/sparse/0/images.bin": "dfc779496ee3b13f8df5dd28fae465746ce0adf4aca7922d38cbed275a2fd951"
+    }
+  },
+  "target_queue_contract": {
+    "required_queue_status": "provisional_gs4_overlap_unresolved",
+    "gs4_overlap_interpretation": "unresolved is not zero overlap; do not infer or relabel public subset matches",
+    "cohort_resolution_status_field": "cohort_resolution_status",
+    "queue_status_field": "queue_status"
+  },
+  "scope_limitations": {
+    "implemented_driver_scope": "core cohort only for this lock1 Gate A implementation",
+    "extension_followup": "extension mode is not yet the full 178-building round-robin driver; only a separately reviewed single queue-next follow-up may be added after the core Gate is published",
+    "gs4_overlap_resolution": "still unknown and never inferred as no overlap",
+    "research_interpretation_allowed": false
+  },
+  "view_selection": {
+    "minimum_views_per_building": 10,
+    "maximum_views_per_building": 30,
+    "minimum_als_building_points_in_frame": 25,
+    "selection_projection_point_cap": 512,
+    "selection_boundary_point_cap": 96,
+    "selection_edge_localization_sigma_px": 0.1,
+    "predicted_uncertainty_reference_m": 0.3,
+    "azimuth_bin_count": 8,
+    "minimum_selected_azimuth_bins": 1,
+    "azimuth_coverage_role": "diagnostic and deterministic round-robin balancing only; the dispatch locks 10..30 observed views per building but does not preregister a minimum number of camera-azimuth bins",
+    "ranking": "result-blind observability-first ranking: select 10..30 projectable training views by deterministic azimuth-bin round robin ordered by predicted uncertainty ascending, pointwise p90(1/||n_boundary^T J_xy||_2) ascending, visible boundary count descending, normalized frame radius ascending, image name ascending; the 0.30 m value is a reporting reference and never a premeasurement exclusion threshold; measured edge-localization uncertainty determines view validity",
+    "measured_observability_contract": "the selected view remains valid only if measured edge-localization p90 divided pointwise by ||n_edge^T J_xy||_2 is at most 0.30 m",
+    "provided_views_csv_policy": "disabled unless an exact path and SHA256 are added to input_locks; if enabled, every listed view remains subject to the same measured observability fail-closed contract",
+    "provided_views_csv_path": null,
+    "provided_views_csv_sha256": null
+  },
+  "als_evidence": {
+    "footprint_building_buffer_m": 0.0,
+    "ground_context_buffer_m": 5.0,
+    "minimum_building_class_points": 25,
+    "minimum_ground_class_points": 10,
+    "building_class_role": "only class-6 points strictly inside the approved GroundSurface XY polygon may contribute; exposed cells of the largest connected class-6 XY occupancy supply all roof/eave residual XYZ and exterior directions",
+    "ground_class_role": "projected ground context and locked class-contract audit only; class 2 does not drive the roof-edge residual and no LoD2 Z is read"
+  },
+  "boundary_extraction": {
+    "xy_grid_cell_m": 0.35,
+    "minimum_main_component_occupied_fraction": 0.9,
+    "minimum_main_component_point_fraction": 0.9,
+    "occupancy_closing_iterations": 0,
+    "local_tangent_radius_m": 0.7,
+    "minimum_local_tangent_neighbors": 3,
+    "minimum_boundary_points": 24,
+    "maximum_boundary_points": 800,
+    "zbuffer_pixel_size": 2,
+    "zbuffer_depth_tolerance_m": 0.75,
+    "minimum_visible_boundary_fraction": 0.35,
+    "method": "strictly crop ALS class 6 by the approved GroundSurface XY mask; require the largest 8-connected occupied support to cover at least 90 percent of occupied cells; border-flood 4-connected exterior empty cells; from each exposed occupied cell select an actual class-6 source point furthest in the exposed direction; estimate local tangents from neighboring actual ALS boundary points; project and retain only candidates that win the target roof-cloud camera-depth z-buffer",
+    "footprint_role": "target addressing and strict 2D crop/mask only; footprint perimeter coordinates and directions are forbidden in the residual and no footprint Z is read",
+    "boundary_xyz_source": "actual ALS class-6 XYZ only",
+    "radial_star_silhouette_forbidden": true
+  },
+  "edge_extraction": {
+    "gaussian_kernel_1d": [
+      0.0625,
+      0.25,
+      0.375,
+      0.25,
+      0.0625
+    ],
+    "high_gradient_quantile": 0.85,
+    "high_gradient_floor_8bit": 20.0,
+    "low_to_high_ratio": 0.4,
+    "hysteresis_max_iterations": 512,
+    "minimum_edge_points": 32,
+    "maximum_edge_points": 16000,
+    "subpixel_quadratic_offset_limit_px": 0.5,
+    "method": "fixed Gaussian blur then fixed 3/10 Scharr gradient, normal-direction non-maximum suppression, locked quantile/floor hysteresis, concave-only quadratic subpixel peak interpolation, and curvature-to-noise localization sigma",
+    "result_blind": true
+  },
+  "confidence": {
+    "deterministic_null_shift_radii_px": [
+      12.0,
+      24.0,
+      36.0
+    ],
+    "deterministic_null_angles_per_radius": 12,
+    "minimum_valid_null_trials": 20,
+    "maximum_spatial_null_pvalue": 0.05,
+    "minimum_null_median_separation_px": 1.0,
+    "coherent_fit_median_abs_error_max_px": 2.0,
+    "coherent_fit_p90_abs_error_max_px": 6.0,
+    "maximum_edge_localization_uncertainty_p90_m": 0.3,
+    "maximum_view_p90_minus_median_px": 6.0,
+    "translation_diagnostic_search_radius_px": 80,
+    "translation_diagnostic_coarse_step_px": 8,
+    "translation_diagnostic_fine_radius_px": 8,
+    "translation_diagnostic_top_seed_count": 8,
+    "translation_diagnostic_minimum_boundary_support_fraction": 0.6,
+    "translation_diagnostic_minimum_hypothesis_separation_px": 8.0,
+    "translation_diagnostic_minimum_relative_margin": 0.08,
+    "method": "require forward and reverse ALS-boundary/image-edge support, measured edge-localization uncertainty, a fixed translated-boundary spatial null, robust normal-equation coherence, a separated multi-hypothesis translation diagnostic, and a locked P90-minus-median guard; translation is diagnostic only and never the residual",
+    "noise_or_distractor_fail_closed": true
+  },
+  "alignment": {
+    "edge_search_radius_px": 80.0,
+    "maximum_edge_normal_angle_deg": 25.0,
+    "maximum_tangent_offset_px": 3.0,
+    "minimum_oriented_match_fraction": 0.8,
+    "minimum_reverse_match_fraction": 0.5,
+    "nearest_edge_chunk_size": 128,
+    "xy_jacobian_step_m": 0.05,
+    "maximum_xy_jacobian_condition": 1000.0,
+    "metric_method": "at the unshifted/current projection measure forward ALS-boundary to image-edge absolute signed-normal distances for orientation-compatible nearest edges; unmatched ALS boundary samples remain search-radius censored in the median and P90",
+    "metre_conversion": "for every actual ALS boundary sample use its pointwise 2x2 XY projection Jacobian J_xy and r_m=abs(signed_normal_distance_px)/||n^T J_xy||_2; n is the oriented matched image-edge normal for matched samples and the projected ALS-boundary normal for censored unmatched samples; result-blind selection uses the identical pointwise ||n_boundary^T J_xy||_2 denominator; reject low-sensitivity or ill-conditioned observations",
+    "registration_diagnostic": "robust Huber IRLS solution over point observations n_img_i^T J_xy_i delta_xy=signed_normal_distance_px; candidate only, never the residual metric",
+    "minimum_normal_sensitivity_px_per_m": 0.1,
+    "robust_fit_huber_delta_px": 2.0,
+    "robust_fit_max_iterations": 25,
+    "robust_fit_convergence_m": 0.0001,
+    "maximum_robust_design_condition": 1000.0,
+    "translation_argmax_norm_as_metric_forbidden": true
+  },
+  "gate": {
+    "building_median_residual_max_m": 0.3,
+    "required_valid_view_fraction": 1.0,
+    "systematic_xy_norm_max_m": 0.1,
+    "systematic_bootstrap_ci_upper_max_m": 0.1,
+    "systematic_bootstrap_confidence": 0.95,
+    "systematic_bootstrap_samples": 2000,
+    "systematic_bootstrap_seed": 20260724,
+    "minimum_systematic_valid_views": 30,
+    "minimum_systematic_valid_buildings": 3,
+    "systematic_estimator": "coordinate-wise median of per-view robust normal-observation XY candidates; building-cluster bootstrap; after micro-registration use only deterministic held-out views",
+    "systematic_negligible_formula": "valid_views>=30 AND valid_buildings>=3 AND norm(global_coordinate_median_xy)<=0.10m AND cluster_bootstrap_CI95_upper(norm)<=0.10m",
+    "systematic_threshold_rationale": "0.10 m is one third of the preregistered 0.30 m building residual limit; this conservative margin reserves at least 0.20 m for view-local scatter and prevents a shared translation from being declared negligible by result-dependent tuning",
+    "building_pass_formula": "raw: all selected 10..30 views valid and median(per-view direct pointwise median_residual_m)<=0.30m; after micro1: every deterministic held-out view valid and the same held-out median<=0.30m",
+    "overall_pass_formula": "every requested building passes AND systematic_negligible"
+  },
+  "micro_registration": {
+    "maximum_attempts": 1,
+    "method": "one global shared EPSG:25832 XY translation fitted as the coordinate-wise median of direct-correspondence candidates from deterministic fit views across all requested buildings",
+    "fit_fraction": 0.5,
+    "split_seed": "FUS-W1-GATE-A-20260724-fit-heldout-v1",
+    "minimum_fit_views": 10,
+    "minimum_fit_buildings": 3,
+    "minimum_heldout_views": 10,
+    "minimum_heldout_buildings": 3,
+    "minimum_heldout_views_per_building": 5,
+    "maximum_xy_shift_norm_m": 1.5,
+    "maximum_shift_rationale": "1.5 m is five times the locked 0.30 m residual gate; a larger estimate is not treated as micro-registration and is blocked as a likely pose/correspondence failure",
+    "trigger": "raw overall gate failure",
+    "remeasurement": "apply the same single global XY translation to raw ALS class 2/6 and rerun every selected view once; post-registration building and systematic gates use deterministic held-out views only",
+    "same_view_per_building_fit_recheck_forbidden": true,
+    "post_registration_systematic_evaluation_split": "heldout",
+    "second_attempt_forbidden": true
+  },
+  "execution_guard": {
+    "execution_device": "cpu_numpy_only",
+    "cuda_used": false,
+    "immutable_baseline_receipt": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/preflight_resume.json",
+    "immutable_baseline_receipt_sha256": "a38fbaf03999d3d6738dab72ce40024fcad15d608cf52d09bd9cee486c9c1b78",
+    "immutable_baseline_status": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/preflight_resume_status.json",
+    "immutable_baseline_status_sha256": "f1d90df777fb68a5be7a76eecda6f99e004bad9d1d6cc933329b44dba287ad27",
+    "baseline_required_overall_status": "PASSED",
+    "baseline_status_required_status": "PASSED",
+    "baseline_require_continuation_authorized": true,
+    "baseline_require_implementation_all_working_and_head_match": true,
+    "baseline_mutation_forbidden": true,
+    "pinned_tools_image_reference": "jointbuildgs-p0-tools:t0",
+    "pinned_tools_image_id": "sha256:87bea02e5598a3d53a119b754191673497d52641bd8ea4106ffee653407579b0",
+    "required_wrapper_memory": "24g",
+    "required_wrapper_memory_swap": "24g",
+    "live_probe_at_gate_invocation_required": true,
+    "require_known_training_entry_points_absent": true,
+    "require_host_pid_namespace_visible": true,
+    "require_docker_container_probe": true,
+    "host_pid_namespace_detection": "the Gate process /proc/self/status NSpid field must contain exactly one PID, proving invocation in the host PID namespace",
+    "cpu_gate_unknown_gpu_policy": "record unknown GPU compute processes and preserve the downstream GPU-launch block; CPU-only Gate A itself requires a fresh host probe and zero known training matches",
+    "gpu_compute_probe_failure_policy": "record the query failure and preserve downstream_gpu_stage_launch_blocked=true; do not block this CPU-only Gate A when the live host process/container probe is clean",
+    "local_namespace_forbidden_command_regexes": [
+      "(^|[ /])src/stage2/train\\.py([ ]|$)",
+      "(^|[ /])src\\.stage2\\.train([ ]|$)",
+      "e5_c001_s3_semantic_guided\\.py[ ]+train-one",
+      "e5_c001_.*\\.py[ ]+train-one",
+      "pilot_1wave_driver\\.py[ ]+(run|launch)",
+      "fusion_w1.*(train|training).*\\.py"
+    ]
+  },
+  "error_policy": {
+    "same_error_repeats_within_building_skip_at": 3,
+    "same_error_type_consecutive_buildings_stop_stage_at": 3,
+    "preserve_partial_artifacts": true,
+    "overlay_failure_status": "BLOCKED"
+  },
+  "publication": {
+    "versions_dir": "w1_align_versions",
+    "current_pointer": "w1_align_current",
+    "single_run_lock": "w1_align_gate.lock",
+    "inprogress_suffix": ".inprogress",
+    "publish_method": "fsync files and version directory, atomic rename of complete version directory, then atomic symlink replacement of current pointer",
+    "per_building_checkpoint_dir": "checkpoints"
+  },
+  "outputs": {
+    "residuals_csv": "w1_align_residuals.csv",
+    "views_csv": "w1_align_views.csv",
+    "buildings_csv": "w1_align_buildings.csv",
+    "gate_json": "w1_align_gate.json",
+    "manifest_json": "w1_align_manifest.json",
+    "overlay_dir": "w1_align_overlays"
+  },
+  "coreg_gate_lock2": {
+    "enabled": true,
+    "task_id": "FUS-W1-GATE-A2-20260725",
+    "treatment": "LiDAR-assisted camera co-registration + LiDAR seed/supervision",
+    "pose_publication_manifest": "results/tum_transfer/fusion_w1_coreg_lock2/pose_publication_manifest.json",
+    "coreg_runtime_dir": "results/tum_transfer/fusion_w1_coreg_lock2",
+    "coreg_config": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_coreg_lock1.json",
+    "derived_colmap_sparse_dir": "results/tum_transfer/fusion_w1_coreg_lock2/derived_sparse/0",
+    "maximum_post_coreg_xy_micro_registration_attempts": 0,
+    "original_run004_exposed_core_ids": [
+      "DEBY_LOD2_42364609",
+      "DEBY_LOD2_42364659",
+      "DEBY_LOD2_42364663"
+    ],
+    "primary_untouched_core_count": 25,
+    "output_overrides": {
+      "residuals_csv": "w1_align2_residuals.csv",
+      "views_csv": "w1_align2_views.csv",
+      "buildings_csv": "w1_align2_buildings.csv",
+      "gate_json": "w1_align2_gate.json",
+      "manifest_json": "w1_align2_manifest.json",
+      "overlay_dir": "w1_align2_overlays"
+    },
+    "publication_overrides": {
+      "versions_dir": "w1_align2_versions",
+      "current_pointer": "w1_align2_current",
+      "single_run_lock": "w1_align2_gate.lock",
+      "per_building_checkpoint_dir": "w1_align2_checkpoints"
+    },
+    "guard_receipt": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_align2_execution_guard.json",
+    "lock_file": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_align2_gate.lock",
+    "result_policy": "run once on all 28 core buildings; report the 25 untouched primary buildings separately from the three RUN-004-exposed diagnostic repeats; no additional XY micro-registration"
+  },
+  "time_policy": {
+    "hard_cutoff": null,
+    "stop_at_0630": false,
+    "note": "Protocol amendment FUS-W1-AMEND-V3A-20260725 makes 06:30 a status snapshot only; Gate A has no time-based cancellation path."
+  }
+}

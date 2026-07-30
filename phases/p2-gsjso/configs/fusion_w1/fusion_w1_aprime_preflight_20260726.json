@@ -1,0 +1,208 @@
+{
+  "schema": "jointbuildgs.fusion_w1_aprime.preflight_config.v1",
+  "task_id": "FUS-W1-APRIME-PREFLIGHT-001",
+  "run_id": "20260726_fusion_w1_aprime",
+  "purpose": "five_pin_measurement_receipt_not_a_training_launch_gate",
+  "git": {
+    "expected_branch": "exp/fusion-w1",
+    "required_ancestor_commit": "5084b4bebfb49473c9283dc2731ef3d7382898bd",
+    "locked_documents": [
+      {
+        "role": "aprime_dispatch",
+        "path": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/REMOTE_PROMPT_APRIME_GS4B_ALIGNED_20260726.md",
+        "bytes": 9015,
+        "sha256": "4808b1e54ca04b8bd3c925e5592afdedb6f8cd4d2e518cfd39016dcd79559af6"
+      },
+      {
+        "role": "aprime_preregistration",
+        "path": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/PREREG_APRIME_LOCK_20260726.md",
+        "bytes": 4996,
+        "sha256": "1c892b0fff0e715d9400dd44b437bed65314e08593715e66cd0dbc4f12afe9ec"
+      },
+      {
+        "role": "aprime_machine_preregistration",
+        "path": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_prereg_lock_20260726.json",
+        "sha256": "c39b43b03c5e2be1814021134075f3ee4f05070a86b6d97262ef67f14688fd96"
+      }
+    ],
+    "dirty_state_policy": {
+      "mode": "record_and_classify_only",
+      "training_launch_gate_evaluated": false,
+      "known_shared_t1_code_paths": [
+        "src/stage2/train.py",
+        "tests/stage2/test_stage2_rgb_init_depth_and_distort.py"
+      ],
+      "allowed_user_artifact_prefixes": [
+        "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/"
+      ],
+      "allowed_current_preflight_paths": [
+        "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_preflight_20260726.json",
+        "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_aprime_preflight_20260726.py",
+        "phases/p2-gsjso/scripts/fusion_w1/run_fusion_w1_aprime_preflight_20260726.sh",
+        "tests/fusion_w1/test_fusion_w1_aprime_preflight_20260726.py",
+        "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/preflight/"
+      ],
+      "concurrent_aprime_work_prefixes": [
+        "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_",
+        "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_aprime_"
+      ]
+    }
+  },
+  "docker_images": {
+    "gs": {
+      "reference": "jointbuildgs:dev",
+      "image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
+      "versions": {
+        "python": "3.11.15",
+        "torch": "2.4.1+cu121",
+        "torch_cuda_build": "12.1",
+        "gsplat": "1.4.0"
+      }
+    },
+    "roofer": {
+      "reference": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+      "image_id": "sha256:9c980b97fba4c3fd30f5bb4afb8f2621be211d4e72e4333ea2053e8cd69b2dba",
+      "required_repo_digest": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+      "version_contains": "roofer 1.0.0 (v1.0.0)"
+    },
+    "tools": {
+      "reference": "jointbuildgs-p0-tools:t0",
+      "image_id": "sha256:87bea02e5598a3d53a119b754191673497d52641bd8ea4106ffee653407579b0",
+      "versions": {
+        "python": "3.13.13",
+        "numpy": "2.4.6",
+        "laspy": "2.6.1",
+        "pyproj": "3.7.2",
+        "pdal_contains": "pdal 2.10.1",
+        "gdal_contains": "GDAL 3.13.1",
+        "val3dity_contains": "val3dity  version: 2.6.0",
+        "citygml_tools_contains": "citygml-tools 2.5.0"
+      }
+    }
+  },
+  "cuda_smoke": {
+    "matrix_size": 64,
+    "expected_first_value": 64.0,
+    "absolute_tolerance": 0.001,
+    "required_finite": true
+  },
+  "locked_sources": {
+    "aprime_prereg_config": {
+      "path": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_prereg_lock_20260726.json",
+      "sha256": "c39b43b03c5e2be1814021134075f3ee4f05070a86b6d97262ef67f14688fd96"
+    },
+    "pose_adoption_manifest": {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/resume_v2/r1_pose_adoption_manifest.json",
+      "sha256": "f59cb9cc404dd1a262a3fb03df4df665514e2862d66be371baa05a372e825a42"
+    },
+    "gate_a_v2_manifest": {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/resume_v2/r2_gate_a_v2_registration.json",
+      "sha256": "a24697f3413b8d4b2777703e26d58234befe1c835dd282ce5da428d1c562f967"
+    },
+    "fusion_w1_preprocess_config": {
+      "path": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_preprocess_v1_20260725.json",
+      "sha256": "80031775a40c1847fa67c586ea4e5493be796b4bf89dd693a198c355e61f462e"
+    }
+  },
+  "canonical_inputs": {
+    "files": [
+      {
+        "role": "als_laz",
+        "path": "phases/p0-audit/data/raw/als/690_5335.laz",
+        "bytes": 110979201,
+        "sha256": "01602b7385aaf7324f89da6183df3dbdeffa237f85bf57dc27208b554b4fc0b3"
+      },
+      {
+        "role": "als_laz",
+        "path": "phases/p0-audit/data/raw/als/690_5336.laz",
+        "bytes": 119749181,
+        "sha256": "98ab7ad7f4c5108ebf41bc62186b336c6cd8a70b82fceec57136a56c0188b566"
+      },
+      {
+        "role": "als_laz",
+        "path": "phases/p0-audit/data/raw/als/691_5335.laz",
+        "bytes": 107359041,
+        "sha256": "9e14119bb0af7d5a300aa3a2a19074219b4d6d290923b4b90277c317e8b33720"
+      },
+      {
+        "role": "als_laz",
+        "path": "phases/p0-audit/data/raw/als/691_5336.laz",
+        "bytes": 132681326,
+        "sha256": "63c64002fc55d8b99a49749b5a2e36d802186186a950c89779463274e3cb950d"
+      },
+      {
+        "role": "corrected_cameras",
+        "path": "results/tum_transfer/fusion_w1_pose_adoption_v2/derived_sparse/0/cameras.bin",
+        "bytes": 64,
+        "sha256": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99"
+      },
+      {
+        "role": "corrected_images",
+        "path": "results/tum_transfer/fusion_w1_pose_adoption_v2/derived_sparse/0/images.bin",
+        "bytes": 114415526,
+        "sha256": "28b38383a0b6d82656108e8f0e5e79711dcda93948ab2e89c1cd8f47215962a5"
+      },
+      {
+        "role": "corrected_points3d",
+        "path": "results/tum_transfer/fusion_w1_pose_adoption_v2/derived_sparse/0/points3D.bin",
+        "bytes": 33476840,
+        "sha256": "a822c0967a3201cb7366193ed61b285568dd0e0102058b995008abdef6e4a914"
+      },
+      {
+        "role": "footprint_gpkg",
+        "path": "phases/p0-audit/data/work/footprints/lod2_ground_plan.gpkg",
+        "bytes": 5521408,
+        "sha256": "259cf04ec0c9411e669e75f61c37ea634290fcd40b230f6ed9b67328041c87fa"
+      },
+      {
+        "role": "reference_gml",
+        "path": "phases/p0-audit/data/raw/lod2/690_5334.gml",
+        "bytes": 156656509,
+        "sha256": "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314"
+      },
+      {
+        "role": "reference_gml",
+        "path": "phases/p0-audit/data/raw/lod2/690_5336.gml",
+        "bytes": 147865939,
+        "sha256": "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674"
+      }
+    ],
+    "training_images": {
+      "path": "results/tum_transfer/data_geoidfix/images",
+      "file_count": 937,
+      "total_bytes": 910980034,
+      "sha256sum_stream_aggregate": "dedc4251e491a9ae40d7c91073410cbf504023b6fe3143238b2528dc3146308a",
+      "algorithm": "sha256 of path-sorted sha256sum lines using repository-relative logical paths"
+    }
+  },
+  "mount_freshness": {
+    "host_control_root": "/host-control/JointBuildGS",
+    "documents": [
+      {
+        "role": "aprime_dispatch",
+        "path": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/REMOTE_PROMPT_APRIME_GS4B_ALIGNED_20260726.md",
+        "sha256": "4808b1e54ca04b8bd3c925e5592afdedb6f8cd4d2e518cfd39016dcd79559af6"
+      },
+      {
+        "role": "aprime_preregistration",
+        "path": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/PREREG_APRIME_LOCK_20260726.md",
+        "sha256": "1c892b0fff0e715d9400dd44b437bed65314e08593715e66cd0dbc4f12afe9ec"
+      }
+    ]
+  },
+  "appendix_contract": {
+    "pose_manifest_schema": "jointbuildgs.fusion_w1.pose_adoption_v2.manifest.v1",
+    "pose_status": "PASSED",
+    "pose_image_count": 937,
+    "transform_application_count": 1,
+    "gate_manifest_schema": "jointbuildgs.fusion_w1.gate_a_v2_registration.manifest.v1",
+    "gate_status": "PASS",
+    "gate_version": "v2",
+    "additional_transform_applied_by_gate": false
+  },
+  "outputs": {
+    "receipt": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/preflight/five_pin_receipt.json",
+    "status": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/preflight/five_pin_status.json"
+  },
+  "verdict": null
+}

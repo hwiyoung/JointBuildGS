@@ -1,0 +1,199 @@
+{
+  "schema": "jointbuildgs.fusion_w1.preprocess.config.v1",
+  "task_id": "FUS-W1-PREPROCESS-20260725",
+  "run_id": "20260724_fusion_w1",
+  "branch": "exp/fusion-w1",
+  "scope": "section3_seed_and_lidar_supervision_only_no_learning_no_roofer",
+  "implementation_files": [
+    "phases/p2-gsjso/configs/fusion_w1/fusion_w1_preprocess_v1_20260725.json",
+    "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_preprocess_v1_20260725.py",
+    "phases/p2-gsjso/scripts/fusion_w1/run_fusion_w1_preprocess_v1_20260725.sh",
+    "tests/fusion_w1/test_fusion_w1_preprocess_v1_20260725.py"
+  ],
+  "inputs": {
+    "r1_manifest": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/resume_v2/r1_pose_adoption_manifest.json",
+    "r2_manifest": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/resume_v2/r2_gate_a_v2_registration.json",
+    "targets_csv": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_targets.csv",
+    "targets_manifest": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_targets_manifest.json",
+    "corrected_sparse": "results/tum_transfer/fusion_w1_pose_adoption_v2/derived_sparse/0",
+    "training_image_dir": "results/tum_transfer/data_geoidfix/images",
+    "footprint_xy": "phases/p0-audit/data/work/footprints/lod2_ground_plan.gpkg",
+    "footprint_layer": "lod2_ground_plan",
+    "footprint_id_field": "building_id",
+    "scene_reference_frame": "phases/p0-audit/data/work/opf/opf/scene_reference_frame.json",
+    "projection_datum_config": "configs/input_and_alignment/projection_datum.json",
+    "alignment_helper_config": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_alignment_gate_lock1.json",
+    "alignment_helper_script": "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_alignment_gate_lock1.py",
+    "als_files": [
+      "phases/p0-audit/data/raw/als/690_5335.laz",
+      "phases/p0-audit/data/raw/als/690_5336.laz",
+      "phases/p0-audit/data/raw/als/691_5335.laz",
+      "phases/p0-audit/data/raw/als/691_5336.laz"
+    ]
+  },
+  "input_sha256": {
+    "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/resume_v2/r1_pose_adoption_manifest.json": "f59cb9cc404dd1a262a3fb03df4df665514e2862d66be371baa05a372e825a42",
+    "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/resume_v2/r2_gate_a_v2_registration.json": "a24697f3413b8d4b2777703e26d58234befe1c835dd282ce5da428d1c562f967",
+    "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_targets.csv": "256d376080dca7c496aa3f34c9bcbbd1a8e52d0b25d6e98f7eec388b3f6cc943",
+    "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_targets_manifest.json": "13fa5464c014cd68d3fed6d77dbe65dbf0766247770e0449407fd9cb0ad62409",
+    "phases/p0-audit/data/work/footprints/lod2_ground_plan.gpkg": "259cf04ec0c9411e669e75f61c37ea634290fcd40b230f6ed9b67328041c87fa",
+    "phases/p0-audit/data/work/opf/opf/scene_reference_frame.json": "fb408e9c97bdad6af7ad4a6e94be823be294030907ce92e395bd63490f77daf6",
+    "configs/input_and_alignment/projection_datum.json": "096a49b46fc5661d74f9d3b54c4f3777676cfc6b27e577b52bb2dabeee8b480c",
+    "phases/p2-gsjso/configs/fusion_w1/fusion_w1_alignment_gate_lock1.json": "c402ca77b2cbb6d46dfb72ba0bde806f2180789a7aaa71ce16912913f8dfa232",
+    "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_alignment_gate_lock1.py": "9cbeb50133045c6895be792899cfad373515b2643150c4e96f17e2f2ae41a9c8",
+    "phases/p0-audit/data/raw/als/690_5335.laz": "01602b7385aaf7324f89da6183df3dbdeffa237f85bf57dc27208b554b4fc0b3",
+    "phases/p0-audit/data/raw/als/690_5336.laz": "98ab7ad7f4c5108ebf41bc62186b336c6cd8a70b82fceec57136a56c0188b566",
+    "phases/p0-audit/data/raw/als/691_5335.laz": "9e14119bb0af7d5a300aa3a2a19074219b4d6d290923b4b90277c317e8b33720",
+    "phases/p0-audit/data/raw/als/691_5336.laz": "63c64002fc55d8b99a49749b5a2e36d802186186a950c89779463274e3cb950d",
+    "results/tum_transfer/fusion_w1_pose_adoption_v2/derived_sparse/0/cameras.bin": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99",
+    "results/tum_transfer/fusion_w1_pose_adoption_v2/derived_sparse/0/images.bin": "28b38383a0b6d82656108e8f0e5e79711dcda93948ab2e89c1cd8f47215962a5",
+    "results/tum_transfer/fusion_w1_pose_adoption_v2/derived_sparse/0/points3D.bin": "a822c0967a3201cb7366193ed61b285568dd0e0102058b995008abdef6e4a914"
+  },
+  "r1_contract": {
+    "schema": "jointbuildgs.fusion_w1.pose_adoption_v2.manifest.v1",
+    "status": "PASSED",
+    "derived_sparse": "results/tum_transfer/fusion_w1_pose_adoption_v2/derived_sparse/0",
+    "corrected_images_sha256": "28b38383a0b6d82656108e8f0e5e79711dcda93948ab2e89c1cd8f47215962a5",
+    "image_count": 937,
+    "transform_application_count": 1,
+    "source_sparse_pose_consumption_forbidden": true
+  },
+  "r2_contract": {
+    "schema": "jointbuildgs.fusion_w1.gate_a_v2_registration.manifest.v1",
+    "status": "PASS",
+    "gate_a_version": "v2",
+    "population_n": 178,
+    "core_population_n": 28,
+    "core_capable_matched_median_le_0p3_n": 24,
+    "numeric_source_role": "reuse_only_no_remeasurement"
+  },
+  "coordinate_contract": {
+    "base_crs": "EPSG:25832",
+    "base_vertical_datum": "orthometric",
+    "canonical_frame": "COLMAP_canonical_local_ellipsoidal",
+    "orthometric_to_ellipsoidal_geoid_m": 45.7,
+    "scene_shift_m": [
+      -690953.0,
+      -5336071.0,
+      -604.0
+    ],
+    "transform_application_count_in_preprocess": 0,
+    "corrected_poses_are_consumed_as_published": true
+  },
+  "subset_contract": {
+    "building_class": 6,
+    "ground_class": 2,
+    "building_crop": "strictly_inside_approved_GroundSurface_XY",
+    "ground_buffer_m": 20.0,
+    "ground_buffer_metric": "euclidean_distance_to_polygon_including_interior",
+    "minimum_building_points": 25,
+    "minimum_ground_points": 10,
+    "downsample_default": false,
+    "visibility_filter_geometry_drop_forbidden": true
+  },
+  "view_selection": {
+    "minimum_views": 10,
+    "maximum_views": 30,
+    "projection_point_cap_for_ranking_only": 4096,
+    "minimum_class6_inframe_points": 25,
+    "azimuth_bins": 8,
+    "ranking": "azimuth_round_robin_then_visible_class6_desc_frame_radius_asc_nadir_asc_name_asc",
+    "image_intensity_used_for_selection": false
+  },
+  "rgb_sampling": {
+    "method": "corrected_pose_joint_class2_class6_integer_pixel_zbuffer_then_bilinear_RGB_mean",
+    "zbuffer_pixel_size": 1,
+    "zbuffer_absolute_tolerance_m": 0.15,
+    "default_unsampled_rgb": [
+      128,
+      128,
+      128
+    ],
+    "unsampled_geometry_retained": true,
+    "sampled_rgb_dtype": "uint8"
+  },
+  "tin_supervision": {
+    "method": "independent_class_2p5D_Delaunay_TIN_projected_with_camera_zbuffer",
+    "class6": {
+      "maximum_xy_edge_m": 3.0,
+      "maximum_slope_deg": 75.0
+    },
+    "class2": {
+      "maximum_xy_edge_m": 5.0,
+      "maximum_slope_deg": 45.0
+    },
+    "minimum_xy_triangle_area_m2": 0.005,
+    "screen_barycentric_edge_margin": 0.02,
+    "outer_valid_mask_erosion_px": 1,
+    "depth_definition": "positive_camera_z_m",
+    "separate_class_artifacts": true,
+    "combined_colmap_artifact": "nearest_positive_camera_z_across_class6_and_class2",
+    "normal_separate_frame": "COLMAP_canonical_world",
+    "normal_colmap_bin_frame": "camera",
+    "invalid_depth": 0.0,
+    "invalid_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "walls_supervised": false
+  },
+  "photo_support_masks": {
+    "enabled": true,
+    "path_pattern": "photo_support_masks/<image_stem>.npy",
+    "method": "approved_target_GroundSurface_XY_projected_at_actual_ALS_class6_q80_upper_median_height",
+    "target_class6_only": true,
+    "buffered_class2_included": false,
+    "neighbor_building_class6_excluded": true,
+    "dtype": "bool",
+    "role": "existing_survival_protection_and_neighbor_masking"
+  },
+  "data_root_contract": {
+    "direct_colmap_dataset_layout": true,
+    "selected_image_policy": "relative_symlink_to_immutable_training_image_with_sha256",
+    "sparse_policy": "selected_corrected_pose_records_plus_20m_buffered_corrected_sparse_points",
+    "depth_path_pattern": "stereo/depth_maps/<full_image_name>.geometric.bin",
+    "normal_path_pattern": "stereo/normal_maps/<full_image_name>.geometric.bin",
+    "selected_name_inventories_must_match": [
+      "views.csv",
+      "images/",
+      "sparse/0/images.bin",
+      "stereo/depth_maps",
+      "stereo/normal_maps",
+      "supervision_index.csv",
+      "photo_support_masks"
+    ]
+  },
+  "outputs": {
+    "stable_root": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/preprocess_v1",
+    "cache_namespace": "pose_28b38383a0b6d826",
+    "cache_run_manifest": "preprocess_run_manifest.json",
+    "stable_run_manifest": "preprocess_manifest.json",
+    "run_index": "preprocess_index.csv",
+    "seed_stats_csv": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_seed_stats.csv",
+    "building_root": "by_building",
+    "building_manifest": "preprocess_manifest.json",
+    "views_csv": "views.csv",
+    "base_seed_las": "seed_epsg25832.las",
+    "canonical_seed_npz": "seed_canonical.npz",
+    "canonical_seed_ply": "seed_canonical.ply",
+    "supervision_index": "supervision_index.csv"
+  },
+  "publication_contract": {
+    "building_manifest_written_last": true,
+    "cache_run_manifest_written_after_index": true,
+    "stable_run_manifest_written_last": true,
+    "existing_passed_building_is_verified_and_reused": true,
+    "partial_buildings_remain_reviewable": true,
+    "learning_runs_started": 0,
+    "roofer_runs_started": 0,
+    "scoring_runs_started": 0
+  },
+  "docker": {
+    "image": "jointbuildgs-p0-tools:t0",
+    "image_id": "sha256:87bea02e5598a3d53a119b754191673497d52641bd8ea4106ffee653407579b0",
+    "network": "none",
+    "memory": "24g",
+    "cpus": 12
+  }
+}

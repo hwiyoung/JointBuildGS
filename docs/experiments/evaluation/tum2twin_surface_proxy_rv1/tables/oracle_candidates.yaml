@@ -18,9 +18,9 @@
     "lidar_oracle_seed": "results/tum_transfer/mob_analysis/p0c_step2/als_aoi.laz",
     "footprint_xy": "results/tum_transfer/analysis/footprints_aoi.geojson",
     "baseline_metrics": "reports/nightly_rv1_20260728_2327/building_metrics.csv",
-    "training_recipe_lock": "phases/p2-gsjso/configs/fusion_w1_aprime_training_20260726.json",
-    "mesh_recipe_lock": "phases/p2-gsjso/configs/fusion_w1_aprime_tsdf_20260726.json",
-    "roofer_recipe_lock": "phases/p2-gsjso/configs/fusion_w1_aprime_readout_20260726.json"
+    "training_recipe_lock": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_training_20260726.json",
+    "mesh_recipe_lock": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_tsdf_20260726.json",
+    "roofer_recipe_lock": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_readout_20260726.json"
   },
   "candidates": [
     {
@@ -39,7 +39,7 @@
       "surface_to_reference_p95_m": 0.802296651,
       "lidar_class6_points": 448,
       "view_count": 30,
-      "view_inventory_source": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_4908023/views.csv",
+      "view_inventory_source": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_4908023/views.csv",
       "image_names": [
         "DJI_20241217102935_0013_D.JPG",
         "DJI_20241217090851_0028_D.JPG",
@@ -100,7 +100,7 @@
       "surface_to_reference_p95_m": 0.798329749,
       "lidar_class6_points": 1403,
       "view_count": 30,
-      "view_inventory_source": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_4908050/views.csv",
+      "view_inventory_source": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_4908050/views.csv",
       "image_names": [
         "DJI_20241217090823_0014_D.JPG",
         "DJI_20241217102529_0017_D.JPG",
@@ -161,7 +161,7 @@
       "surface_to_reference_p95_m": 0.854355388,
       "lidar_class6_points": 660,
       "view_count": 30,
-      "view_inventory_source": "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_4908176/views.csv",
+      "view_inventory_source": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/preprocess_aprime/aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building/DEBY_LOD2_4908176/views.csv",
       "image_names": [
         "DJI_20241217095531_0048_D.JPG",
         "DJI_20241217095441_0023_D.JPG",
@@ -222,7 +222,7 @@
       "surface_to_reference_p95_m": 2.433165582,
       "lidar_class6_points": 887,
       "view_count": 30,
-      "view_inventory_source": "derived_read_only_with:phases/p2-gsjso/scripts/fusion_w1_preprocess_v1_20260725.py::select_views; config:phases/p2-gsjso/configs/fusion_w1_preprocess_v1_20260725.json",
+      "view_inventory_source": "derived_read_only_with:phases/p2-gsjso/scripts/fusion_w1/fusion_w1_preprocess_v1_20260725.py::select_views; config:phases/p2-gsjso/configs/fusion_w1/fusion_w1_preprocess_v1_20260725.json",
       "image_names": [
         "DJI_20241217101602_0018_D.JPG",
         "DJI_20241217084413_0050_D.JPG",
@@ -283,7 +283,7 @@
       "surface_to_reference_p95_m": 4.125960483,
       "lidar_class6_points": 9876,
       "view_count": 30,
-      "view_inventory_source": "derived_read_only_with:phases/p2-gsjso/scripts/fusion_w1_preprocess_v1_20260725.py::select_views; config:phases/p2-gsjso/configs/fusion_w1_preprocess_v1_20260725.json",
+      "view_inventory_source": "derived_read_only_with:phases/p2-gsjso/scripts/fusion_w1/fusion_w1_preprocess_v1_20260725.py::select_views; config:phases/p2-gsjso/configs/fusion_w1/fusion_w1_preprocess_v1_20260725.json",
       "image_names": [
         "DJI_20241217090937_0051_D.JPG",
         "DJI_20241217090941_0053_D.JPG",

@@ -1,0 +1,123 @@
+{
+  "schema": "jointbuildgs.fusion_w1.resume_r0_v2.config.v1",
+  "task_id": "FUS-W1-RESUME-R0-20260725",
+  "run_id": "20260724_fusion_w1",
+  "branch": "exp/fusion-w1",
+  "required_ancestors": {
+    "diagnostic": "45bce93c45b5f00e9984f2e86b4293f643c763fc",
+    "resume_document_lock": "e17f986c102fe6103c4ca56ab729aa3852f9f353"
+  },
+  "base_preflight": {
+    "config": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_preflight_resume_v1.json",
+    "config_sha256": "d34e4f8ab73f1d00875fe57d20c096164578522c11dd643db6565424152845ce",
+    "implementation": "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_preflight_resume.py",
+    "implementation_sha256": "eddc47fa398733cb29c062c8a66c07f0220a538c583340db1a473006193e88a4"
+  },
+  "implementation_files": [
+    "phases/p2-gsjso/configs/fusion_w1/fusion_w1_resume_r0_v2_20260725.json",
+    "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_resume_r0_v2_20260725.py",
+    "phases/p2-gsjso/scripts/fusion_w1/run_fusion_w1_resume_r0_v2_20260725.sh",
+    "tests/fusion_w1/test_fusion_w1_resume_r0_v2_20260725.py"
+  ],
+  "documents": [
+    {
+      "role": "original_dispatch",
+      "path": "docs/원격프롬프트_생성축1파_레이저영상융합_20260724.md",
+      "run_copy": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/REMOTE_PROMPT_DISPATCH_V3_20260724.md",
+      "sha256": "4d08a45a740de1f4e9754500280c9e564b1dcf3b8b5fcfa6e8bd904e9e2b8430"
+    },
+    {
+      "role": "gate_a_v2_preregistration",
+      "path": "docs/research/preregistration/fusion_w1/사전등록_관문A_v2·SE3채택재판정_20260725.md",
+      "run_copy": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/PREREG_GATE_A_V2_SE3_ADOPTION_20260725.md",
+      "sha256": "2950511bba207553e48d67efa4a635131ecc2ebdd1854bd826838f9789e52031"
+    },
+    {
+      "role": "gate_a_diagnostic",
+      "path": "docs/experiments/pilots/fusion_w1/reports/W_관문A진단_20260725.md",
+      "run_copy": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/W_GATE_A_DIAGNOSTIC_20260725.md",
+      "sha256": "fef277ec844678da3be5df846f074207c99cdf08239059bcd62f367288077f0b"
+    },
+    {
+      "role": "resume_dispatch",
+      "path": "docs/원격프롬프트_생성축1파_재개_포즈채택·관문Av2_20260725.md",
+      "run_copy": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/REMOTE_PROMPT_RESUME_POSE_ADOPTION_GATE_A_V2_20260725.md",
+      "sha256": "c4d01adfaaa9a81aee068bf4555dc66105c65effc430a3e757d5381b3a154d03"
+    }
+  ],
+  "coreg_lock2_evidence": [
+    {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock2/global_selection.json",
+      "sha256": "7b633689a4f1a184f8941533de2b36ed075654318c503fb8035d1d639804dfe9"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock2/block_selection.json",
+      "sha256": "ac830a797463b030db9be46d70eb4126c9992f265f53b0481b899d0b5942c81f"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock2/fit_candidate.json",
+      "sha256": "80345cb96fa4bed59e4df3a162c0dfd23825ed01c28f15f332a063a3192ddea5"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock2/fit_open.json",
+      "sha256": "0f44b738e6fbe77200bdb27a0f5a647d1ae49ab440a79d33a0fc7a31e6e243b7"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock2/fit_blocks_open.json",
+      "sha256": "95b86c9806e230d400a3c23feac3cc1497b04966c8155f29d108c44825f7f051"
+    },
+    {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock2/publication_manifest.json",
+      "sha256": "4bf6779028161e19efd34a1f3851de3d30689ad4fb8f84f65a87e121e992cfee"
+    }
+  ],
+  "counter_source": {
+    "path": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coregdiag_manifest.json",
+    "sha256": "512ec1f2a325c0923800508a73316eedc909780554619e2545c8fe4b9e4f6c58",
+    "required_zero": [
+      "learning_runs_started",
+      "readout_runs_started",
+      "roofer_runs_started",
+      "scoring_runs_started"
+    ]
+  },
+  "runtime_zero_evidence": {
+    "run_root": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1",
+    "counter_file_suffixes": [
+      ".json",
+      ".jsonl"
+    ],
+    "forbidden_downstream_paths": [
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/training",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/readout",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/seed",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/supervision",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/p0prime",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_seed_stats.csv",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_seed_p0prime_scores.csv",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_loss_shares.csv",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_scores_building.csv",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_summary.csv",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_panels"
+    ]
+  },
+  "pose_transition": {
+    "source_images_sha256": "dfc779496ee3b13f8df5dd28fae465746ce0adf4aca7922d38cbed275a2fd951",
+    "source_image_count": 937,
+    "r0_expected_state": "source pose hash remains canonical before R1",
+    "r1_authorized_difference": "Only the separately published corrected images.bin hash may differ after R1; source stays immutable."
+  },
+  "time_policy": {
+    "timezone": "Asia/Seoul",
+    "cutoff_at": "2026-07-26T06:30:00+09:00",
+    "cutoff_mode": "stop_new_training_then_finish_inflight_and_publish_partial_report",
+    "supersedes": "FUS-W1-AMEND-V3A-20260725 snapshot-only continuation for this resumed dispatch",
+    "source": "latest human resume dispatch R3 on 2026-07-25"
+  },
+  "outputs": {
+    "claim": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/resume_v2/r0_preflight.claim.json",
+    "preflight": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/resume_v2/r0_preflight.json",
+    "status": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/resume_v2/r0_preflight_status.json",
+    "event_log": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/resume_v2/r0_preflight.jsonl"
+  }
+}

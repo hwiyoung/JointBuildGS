@@ -1,0 +1,207 @@
+{
+  "schema": "jointbuildgs.fusion_w1_aprime.unattended_continuation.config.v1",
+  "task_id": "FUS-W1-APRIME-QUEUE-CONTINUATION-001",
+  "run_id": "20260726_fusion_w1_aprime",
+  "branch": "exp/fusion-w1",
+  "role": "unattended ordered continuation of the 20 jobs remaining after the externally completed smoke",
+  "implementation_files": [
+    "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_queue_continuation_20260727.json",
+    "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_aprime_queue_continuation_20260727.py",
+    "phases/p2-gsjso/scripts/fusion_w1/run_fusion_w1_aprime_queue_continuation_20260727.sh",
+    "tests/fusion_w1/test_fusion_w1_aprime_queue_continuation_20260727.py"
+  ],
+  "source_queue": {
+    "base_config": {
+      "path": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_queue_20260726.json",
+      "sha256": "079719050564ca26beee2449b9df35f0b51396e68a64330056aa7ab6ae70649f"
+    },
+    "base_driver": {
+      "path": "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_aprime_queue_20260726.py",
+      "sha256": "5f2ed650508e20929478ea308efbe6aba2e32f80b57a90d996bab1280079a043"
+    },
+    "recovery_shim": {
+      "path": "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_aprime_queue_recovery_20260727.py",
+      "sha256": "c98f8fc8f69b50096f3503d08775ef3204b6ab3d0b25579c257d56fe3c7921fa"
+    },
+    "source_plan": {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue/queue_plan.json",
+      "sha256": "18e6226cf4d4bcc3f2da6ba8d97964e4b8909c9b96e655884620cef271ee6837"
+    },
+    "source_stage_stop": {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue/stage_stop.json",
+      "sha256": "759569f0d5c3b33602e8f67fe3869a9007d936da6a438343cacd58412f7a0774"
+    },
+    "source_complete": {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue/complete.json",
+      "sha256": "7a37c2ea41edd194169415335f1412408748c24b9f0741d09372b04383f0b1e3"
+    },
+    "smoke_recovery_complete": {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260727_fusion_w1_aprime_smoke_recovery/completed.json",
+      "sha256": "9a2bfa641761e2081e49ef7b66f78ee468eb18f5c100951d8f957de4f3eed8c6"
+    },
+    "smoke_readout_job_complete": {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260727_fusion_w1_aprime_smoke_recovery/readout/by_building/DEBY_LOD2_42364609/arm_Aprime/r1/complete.json",
+      "sha256": "bfe7e8425efb43ee4ee14fd955c09412b76e8cce5ed58e0563fef03ec436360e"
+    }
+  },
+  "qualitative_gate": {
+    "config": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_smoke_qualitative_20260727.json",
+    "driver": "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_aprime_smoke_qualitative_20260727.py",
+    "root": "phases/p2-gsjso/runs/fusion_w1/20260727_fusion_w1_aprime_smoke_recovery/qualitative_smoke",
+    "publications_directory": "publications",
+    "receipt_name": "receipt.json",
+    "panel_name": "panel.png",
+    "opacity_name": "opacity.png",
+    "receipt_schema": "jointbuildgs.fusion_w1_aprime.smoke_qualitative.strict_head_receipt.v1",
+    "publication_key": "current_full_git_head",
+    "branch": "exp/fusion-w1",
+    "components": ["input_crop", "seed_top", "mesh_top", "points_top", "points_section", "assembled", "reference", "opacity"],
+    "placeholder_count": 0,
+    "source_snapshot_current_hash_required": true,
+    "legacy_top_level_current_hash_required": true,
+    "receipt_written_last_required": true
+  },
+  "locked_inputs": {
+    "continuation_lock": {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_continuation_v2/continuation_lock.json",
+      "sha256": "e1076ce7bfef0e66c496910dcfe2e52509a2170cfe49a128ded2c07d3dce8137"
+    },
+    "qualitative_config": {
+      "path": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_smoke_qualitative_20260727.json",
+      "sha256": "39c77127edb140c2203c8ece8fc95e57fdee4f5f89d25b3dbd27ad2b28f613b6"
+    },
+    "qualitative_driver": {
+      "path": "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_aprime_smoke_qualitative_20260727.py",
+      "sha256": "5e9b54bddf5275689d3fae975a4f51b5af6f4f4db45d839a08819e923d0c6a52"
+    },
+    "qualitative_wrapper": {
+      "path": "phases/p2-gsjso/scripts/fusion_w1/run_fusion_w1_aprime_smoke_qualitative_20260727.sh",
+      "sha256": "1181cf91d242c9e00e55c58b937ad1787616d8911dbd82d7f8f356b0f03a52a4"
+    },
+    "qualitative_test": {
+      "path": "tests/fusion_w1/test_fusion_w1_aprime_smoke_qualitative_20260727.py",
+      "sha256": "35e211c62bd21b859dccc165b623d49bcb5a397cd084b83d4b389d82ac77441e"
+    },
+    "prereg": {
+      "path": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_prereg_lock_20260726.json",
+      "sha256": "c39b43b03c5e2be1814021134075f3ee4f05070a86b6d97262ef67f14688fd96"
+    },
+    "targets": {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/aprime_targets.csv",
+      "sha256": "f5f5893f8b5c1aa51143a751c637d12707fac4d5a62ff7e0a1a2f7770c5dc528"
+    },
+    "training_config": {
+      "path": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_training_20260726.json",
+      "sha256": "b650b59e9314f09cf80234e8fcd33a5d7618becd467976d6a1756773ae68a726"
+    },
+    "training_driver": {
+      "path": "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_aprime_training_20260726.py",
+      "sha256": "7b22a4c5aa2a9652931db5e77ef92bea16ebf7de91f02761c7d30695551cb65f"
+    },
+    "training_wrapper": {
+      "path": "phases/p2-gsjso/scripts/fusion_w1/run_fusion_w1_aprime_training_20260726.sh",
+      "sha256": "83929f4f340a8871b31245b1a42526dfdb4fe9cf74a051ab6a2d5dc8720aa77d"
+    },
+    "readout_config": {
+      "path": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_readout_cachefix_20260727.json",
+      "sha256": "6c813cb3e4798e4a5eeebb9018fb510207c38cb3f55633a0a7d833826dc10b2e"
+    },
+    "readout_driver": {
+      "path": "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_aprime_readout_cachefix_20260727.py",
+      "sha256": "3f6251d03c49cc6867cf8d5b5b88bafd37dbf95257cb221183daf1ce142af65d"
+    },
+    "readout_wrapper": {
+      "path": "phases/p2-gsjso/scripts/fusion_w1/run_fusion_w1_aprime_readout_cachefix_20260727.sh",
+      "sha256": "1bd8ca0cdd04d8d0535b81a38c2d2c05c82d8c90558b069790cfadd56d851d3d"
+    }
+  },
+  "sequence_contract": {
+    "completed_external_smoke": {
+      "building_id": "DEBY_LOD2_42364609",
+      "arm": "Aprime",
+      "replicate": "r1",
+      "profile": "full",
+      "successful_continuation_attempt": 5
+    },
+    "source_stage_orders_retained": [1, 2, 3],
+    "source_entries_excluded": [
+      {"stage_order": 0, "stage_entry_order": 1, "reason": "external_smoke_complete"},
+      {"stage_order": 1, "stage_entry_order": 1, "reason": "same_job_as_external_smoke"}
+    ],
+    "stages": [
+      {"stage_order": 1, "stage_key": "aprime_r1", "stage_entries": 8},
+      {"stage_order": 2, "stage_key": "aprime_r2", "stage_entries": 9},
+      {"stage_order": 3, "stage_key": "B_r1", "stage_entries": 3}
+    ],
+    "stage_entries": 20,
+    "unique_jobs": 20,
+    "first_job": {
+      "building_id": "DEBY_LOD2_42364659",
+      "arm": "Aprime",
+      "replicate": "r1",
+      "stage_order": 1,
+      "stage_entry_order": 2
+    },
+    "user_prompts": false,
+    "time_cutoff": null
+  },
+  "failure_contract": {
+    "same_error_signature_attempts_before_skip": 3,
+    "same_error_type_consecutive_buildings_before_stage_stop": 3,
+    "training_failure_archive_append_only": true,
+    "training_failure_archive_before_rematerialization": true,
+    "partial_artifacts_preserved": true,
+    "no_delete_or_overwrite": true
+  },
+  "status_contract": {
+    "terminal_job_states": ["MEASURED", "SKIPPED"],
+    "nonterminal_job_states": ["MISSING", "MATERIALIZED", "TRAINING", "TRAINING_FAILED", "TRAINED", "READOUT", "READOUT_FAILED"],
+    "stage_stop_state": "STOPPED_SAME_ERROR_TYPE_THREE_CONSECUTIVE_BUILDINGS",
+    "scientific_verdict": null
+  },
+  "resources": {
+    "training_foreground_one_at_a_time": true,
+    "readout_serial": true,
+    "network": "none",
+    "memory": "24g",
+    "memory_swap": "24g",
+    "physical_gpu_choices": [1],
+    "default_physical_gpu": 1,
+    "gpu_job_boundary_guard": {
+      "enabled": true,
+      "physical_gpu": 1,
+      "poll_seconds": 30,
+      "only_before_first_action_of_each_job_identity": true,
+      "before_each_cuda_action": true,
+      "queue_descendant_processes_excluded": true,
+      "time_cutoff": null
+    },
+    "time_cutoff": null
+  },
+  "outputs": {
+    "root": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_continuation_v2",
+    "plan": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_continuation_v2/queue_plan.json",
+    "events": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_continuation_v2/events.jsonl",
+    "event_sequence": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_continuation_v2/event_sequence.json",
+    "stage_records": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_continuation_v2/stage_records",
+    "training_failure_archive": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_continuation_v2/training_failure_archive",
+    "action_failures": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_continuation_v2/action_failures",
+    "action_logs": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_continuation_v2/action_logs",
+    "status_json": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_continuation_v2/status.json",
+    "status_csv": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_continuation_v2/status.csv",
+    "stage_stop": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_continuation_v2/stage_stop.json",
+    "complete": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_continuation_v2/complete.json",
+    "driver_lock": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_continuation_v2/driver.lock"
+  },
+  "publication": {
+    "events_append_only": true,
+    "per_building_artifacts_immediate": true,
+    "deterministic_resume": true,
+    "exact_receipt_hash_binding": true,
+    "external_smoke_gate_required_on_every_resume": true,
+    "source_queue_immutable": true,
+    "status_snapshot_atomic": true,
+    "complete_written_last": true,
+    "interpretation_or_verdict": null
+  }
+}

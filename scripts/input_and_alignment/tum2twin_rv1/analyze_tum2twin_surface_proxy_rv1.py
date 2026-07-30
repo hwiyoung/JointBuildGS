@@ -249,7 +249,7 @@ def parse_manual_qa(path: Path) -> dict[str, str]:
 
 def existing_view_inventories() -> dict[str, dict[str, Any]]:
     root = REPO / (
-        "phases/p2-gsjso/runs/20260726_fusion_w1_aprime/preprocess_aprime/"
+        "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/preprocess_aprime/"
         "aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2/by_building"
     )
     inventories: dict[str, dict[str, Any]] = {}
@@ -276,8 +276,8 @@ def import_module(name: str, path: Path) -> Any:
 
 def derived_view_inventory(building_id: str, run_root: Path) -> dict[str, Any]:
     """Run the existing locked view selector only; never materialize a scene."""
-    script = REPO / "phases/p2-gsjso/scripts/fusion_w1_preprocess_v1_20260725.py"
-    config_path = REPO / "phases/p2-gsjso/configs/fusion_w1_preprocess_v1_20260725.json"
+    script = REPO / "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_preprocess_v1_20260725.py"
+    config_path = REPO / "phases/p2-gsjso/configs/fusion_w1/fusion_w1_preprocess_v1_20260725.json"
     module = import_module("tum2twin_post_analysis_view_selector", script)
     config = load_json(config_path)
     gate = module.import_module(
@@ -793,9 +793,9 @@ Run `scripts/input_and_alignment/tum2twin_rv1/analyze_tum2twin_surface_proxy_rv1
             "lidar_oracle_seed": config["sources"]["surface_reference_pointclouds"][0],
             "footprint_xy": config["sources"]["footprints"],
             "baseline_metrics": rel(run_root / "building_metrics.csv"),
-            "training_recipe_lock": "phases/p2-gsjso/configs/fusion_w1_aprime_training_20260726.json",
-            "mesh_recipe_lock": "phases/p2-gsjso/configs/fusion_w1_aprime_tsdf_20260726.json",
-            "roofer_recipe_lock": "phases/p2-gsjso/configs/fusion_w1_aprime_readout_20260726.json",
+            "training_recipe_lock": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_training_20260726.json",
+            "mesh_recipe_lock": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_tsdf_20260726.json",
+            "roofer_recipe_lock": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_readout_20260726.json",
         },
         "candidates": candidates,
         "r3_candidate": None,
@@ -907,7 +907,7 @@ def main(argv: list[str] | None = None) -> int:
     classified["existing_view_count"] = classified["building_id"].map(
         {key: value["view_count"] for key, value in existing_views.items()}
     )
-    manual_qa = REPO / "phases/p2-gsjso/docs/fusion_w1_dense_baseline_qualitative_v2_manual_qa_20260728.md"
+    manual_qa = REPO / "docs/experiments/pilots/fusion_w1/reports/fusion_w1_dense_baseline_qualitative_v2_manual_qa_20260728.md"
     panel_status = parse_manual_qa(manual_qa)
     classified["qualitative_panel_status"] = classified["building_id"].map(panel_status).fillna("not_in_panel")
     candidates = choose_candidates(classified, run_root, config, existing_views, panel_status)

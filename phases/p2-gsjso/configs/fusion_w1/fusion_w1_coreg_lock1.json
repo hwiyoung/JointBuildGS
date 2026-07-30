@@ -1,0 +1,298 @@
+{
+  "schema": "jointbuildgs.fusion_w1.camera_coreg_config.v1",
+  "implementation_variant": "lock1",
+  "task_id": "FUS-W1-COREG-20260725",
+  "run_id": "20260724_fusion_w1",
+  "treatment_name": "LiDAR-assisted camera co-registration + LiDAR seed/supervision",
+  "git_lock": {
+    "expected_branch": "exp/fusion-w1",
+    "implementation_files": [
+      "phases/p2-gsjso/configs/fusion_w1/fusion_w1_coreg_lock1.json",
+      "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_coreg_lock1.py",
+      "phases/p2-gsjso/scripts/fusion_w1/run_fusion_w1_coreg_lock1.sh",
+      "tests/fusion_w1/test_fusion_w1_coreg_lock1.py",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/PROTOCOL_AMENDMENT_V3B_COREG_20260725.md",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_coreg_splits.csv",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_coreg_camera_blocks.csv",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_coreg_prereg_manifest.json",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_coreg_prereg_split.png"
+    ],
+    "policy": "Every listed file must be a tracked blob identical to committed HEAD and the tracked index/worktree must be clean before any new ALS-photo residual is read."
+  },
+  "inputs": {
+    "targets_csv": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_targets.csv",
+    "w2_status_csv": "phases/p0-audit/runs/w2_1d_bucket_relabel_20260612_final/docs/W2_1c_paired_status.csv",
+    "boundary_ladder_csv": "docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v4_1_ladder.csv",
+    "footprints_geojson": "results/tum_transfer/analysis/footprints_aoi.geojson",
+    "als_aoi_laz": "results/tum_transfer/mob_analysis/p0c_step2/als_aoi.laz",
+    "photo_dense_npz": "results/tum_transfer/mob/raw/raw_dense.npz",
+    "geometric_depth_dir": "phases/p0-audit/data/work/mvs/colmap_dense/stereo/depth_maps",
+    "scene_reference_frame": "phases/p0-audit/data/work/opf/opf/scene_reference_frame.json",
+    "colmap_sparse_dir": "results/tum_transfer/data_geoidfix/sparse/0",
+    "opf_camera_list": "phases/p0-audit/data/work/opf/opf/camera_list.json",
+    "opf_input_cameras": "phases/p0-audit/data/work/opf/opf/input_cameras.json",
+    "splits_csv": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_coreg_splits.csv",
+    "camera_blocks_csv": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_coreg_camera_blocks.csv",
+    "runtime_dir": "results/tum_transfer/fusion_w1_coreg_lock1",
+    "publication_dir": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock1"
+  },
+  "input_locks": {
+    "crs": "EPSG:25832",
+    "als_vertical_datum": "DHHN2016 orthometric",
+    "photo_dense_vertical_datum": "ellipsoidal",
+    "orthometric_to_ellipsoidal_zeta_m": 45.7,
+    "scale": 1.0,
+    "als_ground_class": 2,
+    "als_building_class": 6,
+    "scene_global_to_canonical_shift_m": [
+      -690953.0,
+      -5336071.0,
+      -604.0
+    ],
+    "rotation_pivot_global_m": [
+      690953.0,
+      5336071.0,
+      604.0
+    ],
+    "transform_direction": "photo_ellipsoidal_global_to_als_ellipsoidal_global",
+    "expected_sha256": {
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_targets.csv": "256d376080dca7c496aa3f34c9bcbbd1a8e52d0b25d6e98f7eec388b3f6cc943",
+      "phases/p0-audit/runs/w2_1d_bucket_relabel_20260612_final/docs/W2_1c_paired_status.csv": "a564345d9080d24e60929a9a68dd06b70dceee530953f747b9b09746b53a0fa4",
+      "docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v4_1_ladder.csv": "ae16170177ac0815eb6dd853b0469325c9a1018eeeac9b790b063927cbd7e7e2",
+      "results/tum_transfer/analysis/footprints_aoi.geojson": "ca7f5b13a52368e1d2ac47b77cc78f12887bad4d598d122ad57b882eb4920a82",
+      "results/tum_transfer/mob_analysis/p0c_step2/als_aoi.laz": "ac5cd0dc9c368a15e1f8fd5a18ad8d96ddbbd8cbaf8e1b608fd675430d6e9225",
+      "results/tum_transfer/mob/raw/raw_dense.npz": "712e7b6e182e1955223585ce8958acf2d11588caacc8754fac4aec9bfb2dd69a",
+      "phases/p0-audit/data/work/opf/opf/scene_reference_frame.json": "fb408e9c97bdad6af7ad4a6e94be823be294030907ce92e395bd63490f77daf6",
+      "phases/p0-audit/data/work/opf/opf/camera_list.json": "917d639a3483569ef3d12f1f3b8b5781e7db263ad7c982767fbd1229fe13d890",
+      "phases/p0-audit/data/work/opf/opf/input_cameras.json": "5334d43248195cf7428a97d65f7b7cbcbc7a8adf811be89672cd2f5fded88f11",
+      "results/tum_transfer/data_geoidfix/sparse/0/cameras.bin": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99",
+      "results/tum_transfer/data_geoidfix/sparse/0/images.bin": "dfc779496ee3b13f8df5dd28fae465746ce0adf4aca7922d38cbed275a2fd951",
+      "results/tum_transfer/data_geoidfix/sparse/0/points3D.bin": "bf93766e9773bdc59ce393cf1a36de4b3801cadc1bf834ea705396f5e9a706c3"
+    },
+    "expected_geometric_depth_set": {
+      "file_count": 937,
+      "total_bytes": 2843932739,
+      "sha256sum_stream_aggregate": "f139071c5b0c3f5129aa3ac1b23fa99ac1a497213f2760a57b0ada44e3448625"
+    },
+    "generated_lock_sha256": {
+      "splits_csv": "1395720209f3447df821e9cfcd11fcc99c4b7778c79d1955d1479675dbde49d7",
+      "camera_blocks_csv": "613171fc839d52ff78e7b2a8bc4db5eb8d11ac153c351f77ad8a14f245954a0c",
+      "prereg_manifest": "05fe8f006eaaf28e4b792ac4b5c923e979ec409d616af11c899dc38a81ce0898"
+    },
+    "als_immutable": true,
+    "zeta_search_forbidden": true,
+    "scale_estimation_forbidden": true
+  },
+  "split": {
+    "calibration_cohort": "extension",
+    "calibration_tier": "surface",
+    "selected_count": 36,
+    "role_counts": {
+      "fit": 18,
+      "trigger": 9,
+      "check": 9
+    },
+    "minimum_core_footprint_distance_m": 20.0,
+    "required_w2_als_has_lod22": true,
+    "required_w2_dim_has_lod22": true,
+    "minimum_als_density_pts_m2": 0.000001,
+    "minimum_dim_density_pts_m2": 0.000001,
+    "selection": "support-first seed followed by deterministic footprint-centroid maximin; ties by support descending then SHA256 building id",
+    "role_pattern": [
+      "fit",
+      "trigger",
+      "fit",
+      "check"
+    ],
+    "core_ids_forbidden": true,
+    "calibration_exposed": true,
+    "run004_exposed_core_ids": [
+      "DEBY_LOD2_42364609",
+      "DEBY_LOD2_42364659",
+      "DEBY_LOD2_42364663"
+    ]
+  },
+  "surface_sampling": {
+    "roof_inner_buffer_m": 0.5,
+    "ground_inner_exclusion_buffer_m": 1.0,
+    "ground_outer_buffer_m": 6.0,
+    "dense_roof_vertical_margin_m": 2.0,
+    "dense_ground_vertical_margin_m": 1.5,
+    "voxel_m": 0.4,
+    "maximum_points_per_building_surface": 2500,
+    "minimum_points_per_building_surface": 40,
+    "normal_knn": 16,
+    "normal_radius_m": 1.5,
+    "minimum_normal_neighbors": 6,
+    "maximum_surface_variation": 0.15,
+    "both_roof_and_ground_required_per_control": true
+  },
+  "global_registration": {
+    "initial_transform": "identity",
+    "fixed_scale": 1.0,
+    "method": "deterministic multiscale robust point-to-plane SE3 with equal building-surface weighting",
+    "correspondence_distance_m": [
+      1.0,
+      0.6,
+      0.35
+    ],
+    "huber_delta_m": [
+      0.25,
+      0.12,
+      0.06
+    ],
+    "maximum_iterations": [
+      20,
+      25,
+      30
+    ],
+    "convergence_rotation_rad": 1e-6,
+    "convergence_translation_m": 1e-5,
+    "final_level_convergence_required": true,
+    "minimum_correspondences": 500,
+    "required_normalized_design_rank": 6,
+    "maximum_normalized_design_condition": 1000.0,
+    "lever_arm_definition": "RMS radius of locked fit source points about the fixed pivot, computed before residual matching",
+    "maximum_rotation_deg": 0.5,
+    "maximum_pivot_translation_m": 1.5,
+    "maximum_control_displacement_m": 1.5
+  },
+  "selection_gate": {
+    "absolute_symmetric_median_max_m": 0.15,
+    "absolute_all_support_p90_max_m": 0.3,
+    "minimum_bidirectional_matched_support": 0.7,
+    "absolute_signed_bias_max_m": 0.1,
+    "candidate_minimum_median_improvement_m": 0.05,
+    "candidate_minimum_relative_improvement": 0.2,
+    "maximum_per_building_worsening_m": 0.05,
+    "identity_first": true,
+    "check_failure_fallback_forbidden": true,
+    "unmatched_residual_policy": "censor at evaluation correspondence radius before P90"
+  },
+  "conditional_blocks": {
+    "definition": "OPF capture timestamps split at gaps greater than 600 seconds; mapping committed before residual measurement",
+    "gap_seconds": 600,
+    "source": "per-view COLMAP geometric depth only if the global/identity trigger gate requires a block stage",
+    "depth_pixel_stride": 16,
+    "minimum_depth_m": 0.1,
+    "maximum_depth_m": 200.0,
+    "depth_is_camera_z": true,
+    "observation_assignment": "unproject locked-stride geometric-depth pixels through the original COLMAP intrinsics/poses, convert canonical to photo ellipsoidal global, then apply the same predeclared roof/ground XY and fixed-z windows as the global stage",
+    "composition": "T_A_from_P_for_block = Delta_A_from_global_for_block @ T_A_from_P_global",
+    "minimum_fit_buildings": 3,
+    "minimum_observations": 30,
+    "minimum_trigger_buildings": 3,
+    "minimum_trigger_observations": 30,
+    "minimum_points_per_building_surface": 40,
+    "minimum_independent_check_buildings_per_adopted_block": 3,
+    "minimum_trigger_median_improvement_m": 0.05,
+    "minimum_trigger_relative_improvement": 0.2,
+    "maximum_trigger_building_worsening_m": 0.05,
+    "maximum_rotation_deg": 0.15,
+    "maximum_translation_m": 0.5,
+    "maximum_control_displacement_m": 0.5,
+    "arbitrary_post_result_blocks_forbidden": true
+  },
+  "execution": {
+    "pinned_tools_image": "jointbuildgs-p0-tools:t0",
+    "pinned_tools_image_id": "sha256:87bea02e5598a3d53a119b754191673497d52641bd8ea4106ffee653407579b0",
+    "dev_image": "jointbuildgs:dev",
+    "dev_image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
+    "memory": "24g",
+    "serial": true,
+    "learning_concurrent_forbidden": true
+  },
+  "recovery_lock2": {
+    "enabled": true,
+    "task_id": "FUS-W1-COREG2-20260725",
+    "reason": "lock1 stopped before trigger residual evaluation because one trigger control lacked both usable roof and ground; lock2 screens candidates before roles, confines every lock1 fit-residual-exposed building to fit, and permits lock1 trigger/check buildings only because no trigger/check alignment residual was evaluated",
+    "excluded_split_csvs": [],
+    "prior_exposure_split_csv": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_coreg_splits.csv",
+    "prior_fit_residual_exposure_policy": "fit_only",
+    "prior_trigger_check_residuals_evaluated": 0,
+    "geometry_feasibility_screen_required": true,
+    "geometry_feasibility_screen_uses_correspondence_residuals": false,
+    "geometry_feasibility_screen_nominal_alignment_sensitive": true,
+    "alignment_judgment_scope": "coreg evidence conditional on support screen; final decision is predeclared core-building Gate A2",
+    "calibration_tiers": [
+      "surface",
+      "height",
+      "outline"
+    ],
+    "stable_tie_seed": "FUS-W1-COREG-SPLIT-LOCK2-FRESH",
+    "input_overrides": {
+      "splits_csv": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_coreg2_splits.csv",
+      "camera_blocks_csv": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_coreg2_camera_blocks.csv",
+      "runtime_dir": "results/tum_transfer/fusion_w1_coreg_lock2",
+      "publication_dir": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock2"
+    },
+    "prereg_manifest": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_coreg2_prereg_manifest.json",
+    "prereg_figure": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_coreg2_prereg_split.png",
+    "prereg_failure_ledger": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_coreg2_prereg_failures.jsonl",
+    "prereg_failure_ledger_sha256": "538c2a001dd3794bee4b90e1235008fbd3476a81d70871e5ed84962152705766",
+    "generated_lock_sha256": {
+      "splits_csv": "52737a346d6750d2888953a65b8c6c8cb48af7283d24980ec0735e2252355502",
+      "camera_blocks_csv": "613171fc839d52ff78e7b2a8bc4db5eb8d11ac153c351f77ad8a14f245954a0c",
+      "prereg_manifest": "9f5098e46441ff058fcaec06266efc5b45e9dc1bdd560e88c9e4ffc89995298c"
+    },
+    "implementation_files_append": [
+      "phases/p2-gsjso/scripts/fusion_w1/run_fusion_w1_coreg_lock2.sh",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/PROTOCOL_AMENDMENT_V3C_COREG_RECOVERY_20260725.md",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_coreg2_splits.csv",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_coreg2_camera_blocks.csv",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_coreg2_prereg_manifest.json",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_coreg2_prereg_split.png",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_coreg2_prereg_failures.jsonl",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock1/publication_manifest.json",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock1/failures.jsonl",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock1/fit_candidate.csv",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock1/fit_candidate.json",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock1/fit_identity.csv",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock1/fit_open.json",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock1/fit_residual_comparison.png",
+      "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock1/select_open.json"
+    ],
+    "predecessor_contract": {
+      "publication_manifest": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock1/publication_manifest.json",
+      "fit_open": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock1/fit_open.json",
+      "select_open": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock1/select_open.json",
+      "fit_candidate": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock1/fit_candidate.json",
+      "failures": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock1/failures.jsonl",
+      "file_sha256": {
+        "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock1/publication_manifest.json": "220dc7cbed138e4a93962843f126a68b2e88989d223fbfbd3549f89f10972b13",
+        "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock1/failures.jsonl": "76a74d7dbc11c2f99006292b865d8edfec903129faec82a12c0dd56f3aacff12",
+        "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock1/fit_candidate.csv": "04a094716f8d64c2e24d3e408637db3c4be4d32c1ffd82ace211d46097d50df4",
+        "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock1/fit_candidate.json": "427e53d356f03d6595b61e9794289986475cca0bd044dabc8c7b01341b3ff360",
+        "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock1/fit_identity.csv": "7c1a59825d3aaeb8e84e2e2e6c561d1c55f0b8977380a423b6458d605cc23b0d",
+        "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock1/fit_open.json": "148f319ceffb6dea77695a925178be086edb733918a272a447fca33eaad82ff9",
+        "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock1/fit_residual_comparison.png": "57d6f6fc4f6024b777eb5281fc1da656a2a96e0838161effd79fa8abe65c9e8d",
+        "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock1/select_open.json": "28aa961b5e9fe0620da993bcc8b90647efd8199fc962f376ba20be4f9696c424"
+      },
+      "published_artifact_sha256": {
+        "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock1/failures.jsonl": "76a74d7dbc11c2f99006292b865d8edfec903129faec82a12c0dd56f3aacff12",
+        "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock1/fit_candidate.csv": "04a094716f8d64c2e24d3e408637db3c4be4d32c1ffd82ace211d46097d50df4",
+        "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock1/fit_candidate.json": "427e53d356f03d6595b61e9794289986475cca0bd044dabc8c7b01341b3ff360",
+        "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock1/fit_identity.csv": "7c1a59825d3aaeb8e84e2e2e6c561d1c55f0b8977380a423b6458d605cc23b0d",
+        "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock1/fit_open.json": "148f319ceffb6dea77695a925178be086edb733918a272a447fca33eaad82ff9",
+        "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock1/fit_residual_comparison.png": "57d6f6fc4f6024b777eb5281fc1da656a2a96e0838161effd79fa8abe65c9e8d",
+        "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coreg_lock1/select_open.json": "28aa961b5e9fe0620da993bcc8b90647efd8199fc962f376ba20be4f9696c424"
+      },
+      "forbidden_published_outputs": [
+        "trigger_identity.csv",
+        "trigger_candidate.csv",
+        "global_selection.json",
+        "frozen_transform.json",
+        "independent_check.json",
+        "pose_publication_manifest.json"
+      ]
+    },
+    "previous_run": {
+      "head": "e21fbe40e042cd72764c00a1f01305bd35f3c830",
+      "status": "BLOCKED_BEFORE_TRIGGER_RESIDUAL_EVALUATION",
+      "failure": "controls without both usable roof and ground: ['DEBY_LOD2_4907165']",
+      "fit_control_count_exposed": 18,
+      "trigger_residual_buildings_evaluated": 0,
+      "learning_runs_started": 0
+    }
+  }
+}

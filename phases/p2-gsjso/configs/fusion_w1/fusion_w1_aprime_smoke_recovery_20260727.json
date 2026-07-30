@@ -1,0 +1,108 @@
+{
+  "schema": "jointbuildgs.fusion_w1_aprime.smoke_recovery.config.v1",
+  "task_id": "FUS-W1-APRIME-SMOKE-RECOVERY-001",
+  "run_id": "20260727_fusion_w1_aprime_smoke_recovery",
+  "branch": "exp/fusion-w1",
+  "scope": {
+    "building_id": "DEBY_LOD2_42364609",
+    "arm": "Aprime",
+    "replicate": "r1",
+    "profile": "full",
+    "continuation_attempt": 5,
+    "preserved_recovery_attempts": [4],
+    "new_training_runs_allowed": 0,
+    "other_queue_jobs_allowed": 0
+  },
+  "source_execution_head": "de8852c00c737eced081f2627b49bcedddade652",
+  "source_terminal_state": "STOPPED_SMOKE_BARRIER_NOT_MEASURED",
+  "source_failure_signature": "00fa59bf782c96a81dabb741788c22b6b7a650099188c3192adbf4a15e533012",
+  "preserved_recovery_failure_signature": "6e36fc27cf8f5f189e60abce9759a49274b9503a8dae60a52d12728a86c00997",
+  "implementation_files": [
+    "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_smoke_recovery_20260727.json",
+    "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_aprime_smoke_recovery_20260727.py",
+    "phases/p2-gsjso/scripts/fusion_w1/run_fusion_w1_aprime_smoke_recovery_20260727.sh",
+    "tests/fusion_w1/test_fusion_w1_aprime_smoke_recovery_20260727.py",
+    "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_aprime_readout_20260726.py"
+  ],
+  "locked_inputs": {
+    "recovery_lock_v1": {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260727_fusion_w1_aprime_smoke_recovery/recovery_lock.json",
+      "sha256": "12071c765f69301a9b62b9cd4ea346d334835614082de7a5c4ee9c8f9da400b3",
+      "bytes": 5494
+    },
+    "recovery_lock_v2": {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260727_fusion_w1_aprime_smoke_recovery/recovery_lock_v2.json",
+      "sha256": "ce6d629b24de7d4c743ca5967a16ceb0ea94e9c314a7297c9a752f4013e2c425",
+      "bytes": 2642
+    },
+    "recovery_lock_v3": {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260727_fusion_w1_aprime_smoke_recovery/recovery_lock_v3.json",
+      "sha256": "cdb9361238183653d2ee8836b642c705e9d3c4a82bd966affa01632f8cfa5fa5",
+      "bytes": 5044
+    },
+    "base_readout_config": {
+      "path": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_readout_20260726.json",
+      "sha256": "82a65f94acdff956974366169246da0130194750eef594db3ed83d7abf85e3a4",
+      "bytes": 6878
+    },
+    "base_readout_driver": {
+      "path": "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_aprime_readout_20260726.py",
+      "sha256": "354955f7cbceb018c3fce6546d17adf12bd9040694ba660fb33a0fa6359abe98",
+      "bytes": 77643
+    },
+    "t2_wrapper": {
+      "path": "phases/p2-gsjso/scripts/fusion_w1/run_fusion_w1_aprime_t2_20260726.sh",
+      "sha256": "d502dcbf85741d7d9a76144eaa56e2379b304d2015419f0c833be93e2a9de49e"
+    }
+  },
+  "containers": {
+    "dev_image": "jointbuildgs:dev",
+    "dev_image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
+    "tools_image": "jointbuildgs-p0-tools:t0",
+    "tools_image_id": "sha256:87bea02e5598a3d53a119b754191673497d52641bd8ea4106ffee653407579b0",
+    "roofer_image": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+    "network": "none",
+    "memory": "24g",
+    "memory_swap": "24g",
+    "cpus": 12,
+    "max_compile_jobs": 2,
+    "gpu_default": 1,
+    "time_cutoff": null,
+    "serial_jobs": true,
+    "nonroot": true
+  },
+  "cache_contract": {
+    "reuse_only": true,
+    "compilation_allowed": false,
+    "preexisting_gsplat_extension": {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/runtime_env/torch_extensions/gsplat_cuda/gsplat_cuda.so",
+      "sha256": "ca43f10b5d8adacb8e40fdc9685a661d459cf80bed9eec955cf2ecff0d555ca1",
+      "bytes": 9115720
+    }
+  },
+  "outputs": {
+    "root": "phases/p2-gsjso/runs/fusion_w1/20260727_fusion_w1_aprime_smoke_recovery",
+    "readout_root": "phases/p2-gsjso/runs/fusion_w1/20260727_fusion_w1_aprime_smoke_recovery/readout",
+    "readout_job_template": "phases/p2-gsjso/runs/fusion_w1/20260727_fusion_w1_aprime_smoke_recovery/readout/by_building/{building_id}/arm_{arm}/{run}",
+    "derived_readout_config": "phases/p2-gsjso/runs/fusion_w1/20260727_fusion_w1_aprime_smoke_recovery/derived_readout_config_retry5.json",
+    "materialization_receipt": "phases/p2-gsjso/runs/fusion_w1/20260727_fusion_w1_aprime_smoke_recovery/materialization_retry5.json",
+    "cache_probe_receipt": "phases/p2-gsjso/runs/fusion_w1/20260727_fusion_w1_aprime_smoke_recovery/cache_probe_retry5.json",
+    "complete_receipt": "phases/p2-gsjso/runs/fusion_w1/20260727_fusion_w1_aprime_smoke_recovery/completed.json",
+    "failure_log": "phases/p2-gsjso/runs/fusion_w1/20260727_fusion_w1_aprime_smoke_recovery/readout/failures.jsonl",
+    "issues": "phases/p2-gsjso/runs/fusion_w1/20260727_fusion_w1_aprime_smoke_recovery/issues.md",
+    "driver_lock": "phases/p2-gsjso/runs/fusion_w1/20260727_fusion_w1_aprime_smoke_recovery/readout/driver.lock",
+    "ephemeral_lock_quarantine": "phases/p2-gsjso/runs/fusion_w1/20260727_fusion_w1_aprime_smoke_recovery/ephemeral_lock_quarantine",
+    "shared_t2_runtime_environment": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/runtime_env"
+  },
+  "publication": {
+    "source_queue_immutable": true,
+    "source_failures_immutable": true,
+    "single_use_attempt": true,
+    "attempt_004_preserved_after_finalize_failure": true,
+    "attempt_005_is_only_retry": true,
+    "retraining_forbidden": true,
+    "other_jobs_forbidden": true,
+    "complete_receipt_written_last": true,
+    "scientific_verdict": null
+  }
+}

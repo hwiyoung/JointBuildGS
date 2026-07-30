@@ -1,0 +1,209 @@
+{
+  "schema": "jointbuildgs.fusion_w1_aprime.unattended_queue_overnight_v4.config.v1",
+  "extends": {
+    "path": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_queue_continuation_v3_20260727.json",
+    "sha256": "cea887ee9fc98ee34f807884d7a0163d3fbb949eeedfc21c87eada7e0959573e",
+    "bytes": 11834
+  },
+  "overrides": {
+    "task_id": "FUS-W1-APRIME-QUEUE-OVERNIGHT-V4-REPAIR1-001",
+    "role": "preserve the terminal overnight-v4 namespace, repair only the historical-training readout HEAD binding in a new control namespace, re-run postprocessing for four allowlisted 30k trainings, then continue fifteen new trainings",
+    "contract_profile": "overnight_v4",
+    "implementation_files": [
+      "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_queue_overnight_v4_repair1_20260728.json",
+      "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_aprime_queue_continuation_v3_20260727.py",
+      "phases/p2-gsjso/scripts/fusion_w1/run_fusion_w1_aprime_queue_continuation_v3_20260727.sh",
+      "phases/p2-gsjso/scripts/fusion_w1/run_fusion_w1_aprime_queue_overnight_v4_repair1_20260728.sh",
+      "tests/fusion_w1/test_fusion_w1_aprime_queue_overnight_v4_repair1_20260728.py"
+    ],
+    "provenance_files": [
+      "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_queue_continuation_v3_20260727.json",
+      "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_overnight_v4_repair1/RECOVERY_LOCK.json",
+      "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_overnight_v4_repair1/RECOVERY_LOCK.md",
+      "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_overnight_v4_repair1/READOUT_CONTINUATION_LOCK.json",
+      "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_overnight_v4_repair1/HISTORICAL_READOUT_RECOVERY_LOCK.json",
+      "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_readout_cachefix_20260727.json",
+      "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_aprime_readout_cachefix_20260727.py",
+      "phases/p2-gsjso/scripts/fusion_w1/run_fusion_w1_aprime_readout_cachefix_20260727.sh",
+      "tests/fusion_w1/test_fusion_w1_aprime_readout_cachefix_20260727.py",
+      "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_aprime_readout_20260726.py",
+      "tests/fusion_w1/test_fusion_w1_aprime_readout_20260726.py",
+      "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_overnight_v4/stage_stop.json",
+      "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_overnight_v4/complete.json",
+      "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_overnight_v4/status.json",
+      "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_overnight_v4/source_boundary_receipt.json",
+      "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_overnight_v4/action_failures/stage_01_aprime_r1/entry_03_DEBY_LOD2_42364663_arm_Aprime_r1/attempt_003.json",
+      "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_overnight_v4/action_failures/stage_01_aprime_r1/entry_04_DEBY_LOD2_4907182_arm_Aprime_r1/attempt_003.json",
+      "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_overnight_v4/action_failures/stage_01_aprime_r1/entry_05_DEBY_LOD2_4907510_arm_Aprime_r1/attempt_003.json",
+      "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_job_panel_v4_20260727.json",
+      "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_aprime_job_panel_v4_20260727.py",
+      "phases/p2-gsjso/scripts/fusion_w1/run_fusion_w1_aprime_job_panel_v4_20260727.sh",
+      "tests/fusion_w1/test_fusion_w1_aprime_job_panel_v4_20260727.py"
+    ],
+    "locked_inputs": {
+      "recovery_contract": {
+        "path": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_overnight_v4_repair1/RECOVERY_LOCK.json",
+        "sha256": "3f14abe7255ff15f77e5b3d026935f95c71c15b46b911bfcef4f6265776571c2",
+        "bytes": 11908
+      },
+      "recovery_contract_markdown": {
+        "path": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_overnight_v4_repair1/RECOVERY_LOCK.md",
+        "sha256": "2cdff0204404cd69399bfe5acfef9a981a49fcdf6023fd015162e0835f573bea",
+        "bytes": 1318
+      },
+      "readout_continuation_lock": {
+        "path": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_overnight_v4_repair1/READOUT_CONTINUATION_LOCK.json",
+        "sha256": "e907ac72541b48f592038b4827cbaa8be81f92fb85c6b9cbf818d42ee3262168",
+        "bytes": 1363
+      },
+      "readout_head_repair_contract": {
+        "path": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_overnight_v4_repair1/HISTORICAL_READOUT_RECOVERY_LOCK.json",
+        "sha256": "d82f08bc43e061a0812421cc7fea49be82d3598b3b4452fc66210df493f3c29a",
+        "bytes": 7668
+      },
+      "readout_config": {
+        "path": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_readout_cachefix_20260727.json",
+        "sha256": "97e30bb763497d99f429f71fb2e461451ef08e38327c5658e207bdf1fa3c28e7",
+        "bytes": 10767
+      },
+      "readout_driver": {
+        "path": "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_aprime_readout_cachefix_20260727.py",
+        "sha256": "3f6251d03c49cc6867cf8d5b5b88bafd37dbf95257cb221183daf1ce142af65d",
+        "bytes": 29132
+      },
+      "readout_wrapper": {
+        "path": "phases/p2-gsjso/scripts/fusion_w1/run_fusion_w1_aprime_readout_cachefix_20260727.sh",
+        "sha256": "1bd8ca0cdd04d8d0535b81a38c2d2c05c82d8c90558b069790cfadd56d851d3d",
+        "bytes": 15018
+      },
+      "readout_test": {
+        "path": "tests/fusion_w1/test_fusion_w1_aprime_readout_cachefix_20260727.py",
+        "sha256": "f1ebf7b3ba20dc5104d6b7532ffca8ac615072bf9d2c4d827d6757a03d626763",
+        "bytes": 18419
+      },
+      "panel_config": {
+        "path": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_job_panel_v4_20260727.json",
+        "sha256": "763927accac8b3c7ff9634bc96966371fd1694377b33a53319682c7aa93b0a6e",
+        "bytes": 6200
+      },
+      "panel_renderer": {
+        "path": "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_aprime_job_panel_v4_20260727.py",
+        "sha256": "491d4ebe20cd940355beec7991c54b8fc529fda20f60fb47a3ee661ed7f58702",
+        "bytes": 76585
+      },
+      "panel_wrapper": {
+        "path": "phases/p2-gsjso/scripts/fusion_w1/run_fusion_w1_aprime_job_panel_v4_20260727.sh",
+        "sha256": "fdb9272136a1511276e97d71d6d9fde7ae7778210abb3ed7af27944dacd34133",
+        "bytes": 4328
+      },
+      "panel_test": {
+        "path": "tests/fusion_w1/test_fusion_w1_aprime_job_panel_v4_20260727.py",
+        "sha256": "c67e988f7aa875716e478cf265cb99efba561a387767713ec876e31792898a00",
+        "bytes": 12536
+      }
+    },
+    "sequence_contract": {
+      "source_entries": 20,
+      "reused_jobs": 1,
+      "historical_training_reuse_jobs": 4,
+      "new_training_jobs": 15,
+      "terminal_jobs": 20,
+      "stages": [
+        {"stage_order": 1, "stage_key": "aprime_r1", "jobs": 8, "reused_jobs": 1, "historical_training_reuse_jobs": 4, "new_training_jobs": 3},
+        {"stage_order": 2, "stage_key": "aprime_r2", "jobs": 9, "reused_jobs": 0, "historical_training_reuse_jobs": 0, "new_training_jobs": 9},
+        {"stage_order": 3, "stage_key": "B_r1", "jobs": 3, "reused_jobs": 0, "historical_training_reuse_jobs": 0, "new_training_jobs": 3}
+      ],
+      "pairing": "within_stage_contiguous_source_order",
+      "pair_member_jobs": 19,
+      "pair_count": 11,
+      "lane_assignment": "first_pending_entry_gpu0_second_pending_entry_gpu1_singleton_gpu0",
+      "user_prompts": false,
+      "time_cutoff": null
+    },
+    "resources": {
+      "lanes": {
+        "gpu0": {
+          "physical_gpu": 0,
+          "lock": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_overnight_v4_repair1/locks/training_gpu0.lock",
+          "runtime_environment": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_overnight_v4_repair1/runtime_env/gpu0",
+          "container_namespace": "aprime-overnight-v4-repair1-gpu0"
+        },
+        "gpu1": {
+          "physical_gpu": 1,
+          "lock": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_overnight_v4_repair1/locks/training_gpu1.lock",
+          "runtime_environment": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_overnight_v4_repair1/runtime_env/gpu1",
+          "container_namespace": "aprime-overnight-v4-repair1-gpu1"
+        }
+      },
+      "readout_lock": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_overnight_v4_repair1/locks/readout_global.lock"
+    },
+    "historical_training_reuse_contract": {
+      "enabled": true,
+      "producer_head": "191b5652be6d38a81a3cba7ab05cd3db4ffbe796",
+      "allowed_jobs": [
+        {"building_id": "DEBY_LOD2_42364663", "arm": "Aprime", "replicate": "r1", "profile": "full"},
+        {"building_id": "DEBY_LOD2_4907182", "arm": "Aprime", "replicate": "r1", "profile": "full"},
+        {"building_id": "DEBY_LOD2_4907510", "arm": "Aprime", "replicate": "r1", "profile": "full"},
+        {"building_id": "DEBY_LOD2_4908050", "arm": "Aprime", "replicate": "r1", "profile": "full"}
+      ],
+      "producer_head_must_be_ancestor": true,
+      "method_files_must_be_current_identical": true,
+      "materialization_started_completed_checkpoint_binding_required": true,
+      "new_training_requires_strict_current_head": true
+    },
+    "recovery_contract": {
+      "source_namespace": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_continuation_v3_repair1",
+      "source_namespace_mutation_allowed": false
+    },
+    "readout_head_repair_contract": {
+      "source_namespace": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_overnight_v4",
+      "source_terminal_state": "STOPPED_THREE_CONSECUTIVE_BUILDING_SKIPS",
+      "source_error_type": "RUN_READOUTExternalError",
+      "source_error_signature": "ff27e4f7c863c624b46617be99aa07d79bfa4f94458ccb7674f117b17b0b4a99",
+      "observed_launch_head": "8d1c1472c763d117a9c7972d2a8e03932010280b",
+      "historical_materialization_head": "191b5652be6d38a81a3cba7ab05cd3db4ffbe796",
+      "affected_buildings_in_queue_order": [
+        "DEBY_LOD2_42364663",
+        "DEBY_LOD2_4907182",
+        "DEBY_LOD2_4907510"
+      ],
+      "four_historical_jobs_reprocessed_before_new_training": true,
+      "source_namespace_mutation_allowed": false,
+      "scientific_recipe_changed": false
+    },
+    "qualitative_hook": {
+      "kind": "panel_v4",
+      "wrapper": "phases/p2-gsjso/scripts/fusion_w1/run_fusion_w1_aprime_job_panel_v4_20260727.sh",
+      "command": ["one", "{building_id}", "{arm}", "{replicate}"],
+      "receipt_template": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/review_v4/by_building/{building_id}/arm_{arm}/{replicate}/complete.json",
+      "receipt_schema": "jointbuildgs.fusion_w1_aprime.job_panel.complete.v4",
+      "required_state": "COMPLETE",
+      "required_placeholder_count": 0,
+      "receipt_written_last": true,
+      "scientific_verdict": null,
+      "locked_input_keys": {
+        "config": "panel_config",
+        "renderer": "panel_renderer",
+        "wrapper": "panel_wrapper",
+        "test": "panel_test"
+      }
+    },
+    "outputs": {
+      "root": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue_overnight_v4_repair1"
+    },
+    "publication": {
+      "append_only_receipts": true,
+      "atomic_status_snapshots": true,
+      "exact_head_required_on_every_resume": true,
+      "source_v2_rehashed_on_every_resume": true,
+      "source_v2_never_rewritten": true,
+      "source_v3_repair1_never_rewritten": true,
+      "source_overnight_v4_never_rewritten": true,
+      "historical_training_reuse_requires_ancestor_identical_method": true,
+      "new_training_requires_strict_current_head": true,
+      "per_job_terminal_written_after_all_four_components": true,
+      "complete_written_last": true,
+      "interpretation_or_verdict": null
+    }
+  }
+}

@@ -1,0 +1,148 @@
+{
+  "schema": "jointbuildgs.fusion_w1.readout_infra_retry2_policy.v1",
+  "status": "APPROVED",
+  "run_id": "20260724_fusion_w1",
+  "approved_by": "김휘영",
+  "approval_date_kst": "2026-07-26",
+  "approval_basis": "2026-07-26 user statement: 캐시 설정을 적용하고 후속 작업을 진행하면 되는거 아니야?; interpreted only for a separately byte-pinned pre-output infrastructure recovery after retry-1",
+  "recovery_kind": "GSPLAT_SUCCESSFUL_TRAINING_CACHE_SEED_PREOUTPUT",
+  "job_key": "DEBY_LOD2_42364609/arm_A/r1",
+  "stage": "readout",
+  "required_pre_recovery_head": "7e3b465467c6737a584343063328a8cff1c232b8",
+  "required_recovery_commit_distance": 1,
+  "allowed_recovery_commit_paths": [
+    "phases/p2-gsjso/configs/fusion_w1/fusion_w1_readout_infra_retry2_20260726.json",
+    "phases/p2-gsjso/configs/fusion_w1/fusion_w1_readout_v1_20260726.json",
+    "phases/p2-gsjso/configs/fusion_w1/fusion_w1_training_v1_20260725.json",
+    "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_readout_v1_20260726.py",
+    "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_training_v1_20260725.py",
+    "phases/p2-gsjso/scripts/fusion_w1/run_fusion_w1_readout_v1_20260726.sh",
+    "tests/fusion_w1/test_fusion_w1_readout_v1_20260726.py",
+    "tests/fusion_w1/test_fusion_w1_training_v1_20260725.py"
+  ],
+  "maximum_recoveries_per_job": 1,
+  "prior_attempt_directory": "infra_retry_01",
+  "attempt_directory": "infra_retry_02",
+  "writable_environment": {
+    "HOME": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/runtime_env/home",
+    "XDG_CACHE_HOME": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/runtime_env/xdg_cache",
+    "TORCH_EXTENSIONS_DIR": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/runtime_env/torch_extensions_seeded_v2"
+  },
+  "jit_build_environment": {
+    "MAX_JOBS": "1"
+  },
+  "allowed_argv_differences": [
+    "value_after_--out"
+  ],
+  "required_original_failure": {
+    "artifact_sha256": {
+      "materialization": "1689fe1d5b1b88816cb4588915e3d26cc50b81d7923942650ac8e2ba7b271cc1",
+      "invocation": "ce077fe673fe3d3fed83bfcc262ba5bab116c3b7b61d036ed33e02dbcdf81406",
+      "started": "d3286871958015a2d537dd84af7953720820f2ff79c169b0a29d30e259e95118",
+      "log": "1621073e1b1c8b26334cc9e91457b32756017a0d39f6ec38cde0d8bb7fe4881e",
+      "failed": "6486857235998dffb8be74a45e92040043250f98c41c6b88b314a1905de1e084"
+    }
+  },
+  "required_prior_retry_failure": {
+    "artifact_sha256": {
+      "retry_started": "19a923725a69be6e604bef94e70a4ab13c4225fa3cda68ae9ea283da7be0fb40",
+      "invocation": "06f7604df76a1b5cb7cbf563a4ee11d1cf95979c9bc3e674c35126fcd3180ed7",
+      "log": "6709a5779dd26ac8dbb6ecea6c73a49be285d79a58b039828e2f3746cdb37855",
+      "retry_failed": "a5be5a8800a8fd05f8778e21e75fdc2882b8e487a1a276ecdde4cc8a4993c149"
+    },
+    "log_markers": [
+      "Error building extension 'gsplat_cuda'",
+      "returned non-zero exit status 137",
+      "Killed",
+      "ninja: build stopped: subcommand failed"
+    ]
+  },
+  "required_zero_output": {
+    "output_roots": [
+      "pointcloud",
+      "infra_retry_01/pointcloud"
+    ],
+    "required_file_count": 0,
+    "required_absent_paths": [
+      "pointcloud/readout.npz",
+      "extract_receipt.json",
+      "classification_invocation.json",
+      "classification_receipt.json",
+      "roofer_invocation.json",
+      "roofer_receipt.json",
+      "score_receipt.json",
+      "complete.json",
+      "infra_retry_01/pointcloud/readout.npz",
+      "infra_retry_01/extract_receipt.json",
+      "infra_retry_01/retry_completed.json"
+    ]
+  },
+  "successful_training_cache_source": {
+    "root": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/runtime_env/torch_extensions/gsplat_cuda",
+    "inventory_format": "relative_path_tab_mode_octal_tab_size_bytes_tab_sha256_newline",
+    "inventory_sha256": "c732eec3db824eed66071525ba4c8a9a83001afd4b0e834ed0cbdaf44e30e06d",
+    "files_n": 29,
+    "bytes_n": 22545705,
+    "required_key_files": {
+      "gsplat_cuda.so": "b97efc6fae63b13738658f0966f20a882727e529fdd4701a2e2cb9e74fa656d5",
+      "build.ninja": "007252f3c76cc5c734b264914dcafbce890075b358300f8acc18c186f76e8b4a"
+    },
+    "successful_training_artifacts": {
+      "completed": {
+        "path": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/completed.json",
+        "sha256": "0e2a24bf675c5e5d42d7e31b210cf2dc73d442ba5f692873374cf417cdc91f17"
+      },
+      "retry_started": {
+        "path": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/retry_started.json",
+        "sha256": "3cda8f8ec284b247d85120f3aa312a0a79c2f104a9c2bd8110a0a0b49d3603b3"
+      },
+      "retry_completed": {
+        "path": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/retry_completed.json",
+        "sha256": "cc7c8590841fd9cd7762dd991bba6f4db4ac88024623e1af20d265f769e2ab21"
+      },
+      "log": {
+        "path": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/training/by_building/DEBY_LOD2_42364609/arm_A/r1/infra_retry_01/training.log",
+        "sha256": "7cb5502f4b95a59447f4c8c5ef927d8cd66ef7440a15cd3c4b80b0bc00da1d74"
+      }
+    },
+    "docker_image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396"
+  },
+  "required_common_cache_before_seed": {
+    "root": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/runtime_env/torch_extensions/gsplat_cuda",
+    "inventory_format": "relative_path_tab_mode_octal_tab_size_bytes_tab_sha256_newline",
+    "inventory_sha256": "8815c543eb2550078f4c4260e81d2a3f82fd886984efc60abcdda2edafa5fef5",
+    "files_n": 11,
+    "bytes_n": 3726065,
+    "origin": "preserved partial JIT cache from infra_retry_01 exit-status-137 failure"
+  },
+  "required_seed_destination_absent": {
+    "root": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/runtime_env/torch_extensions_seeded_v2/gsplat_cuda",
+    "must_be_absent_before_publish": true
+  },
+  "cache_seed_contract": {
+    "source_read_only": true,
+    "prior_common_cache_preserved_in_place": true,
+    "staged_copy_verified_before_atomic_publish": true,
+    "destination_inventory_must_equal_source": true,
+    "provenance_manifest_required_before_launch": true,
+    "single_atomic_directory_rename": true,
+    "seed_scope": "TORCH_EXTENSIONS_DIR/gsplat_cuda_only"
+  },
+  "preservation_contract": {
+    "original_five_artifacts_immutable": true,
+    "prior_retry_four_artifacts_immutable": true,
+    "prior_retry_output_zero": true,
+    "new_receipts_exclusive": true,
+    "new_output_namespace_separate": true
+  },
+  "counter_contract": {
+    "recovery_is_same_authorized_readout": true,
+    "second_readout_started_receipt_forbidden": true,
+    "readout_runs_started_increment": 0
+  },
+  "required_counter_values": {
+    "readout_runs_started": 1,
+    "roofer_runs_started": 0,
+    "scoring_runs_started": 0
+  }
+}

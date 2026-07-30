@@ -1,0 +1,157 @@
+{
+  "schema": "jointbuildgs.fusion_w1_aprime.job_panel.config.v4",
+  "task_id": "FUS-W1-APRIME-JOB-PANEL-V4-001",
+  "run_id": "20260726_fusion_w1_aprime",
+  "branch": "exp/fusion-w1",
+  "purpose": "One high-resolution per-job panel combining input, training trace, TSDF multiview, Roofer CityJSON multiview, evaluation-only reference overlay, and quantitative observations",
+  "base_contract": {
+    "config": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_job_qualitative_v3_20260727.json",
+    "renderer": "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_aprime_job_qualitative_v3_20260727.py"
+  },
+  "implementation_files": [
+    "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_job_panel_v4_20260727.json",
+    "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_aprime_job_panel_v4_20260727.py",
+    "phases/p2-gsjso/scripts/fusion_w1/run_fusion_w1_aprime_job_panel_v4_20260727.sh",
+    "tests/fusion_w1/test_fusion_w1_aprime_job_panel_v4_20260727.py",
+    "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_job_qualitative_v3_20260727.json",
+    "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_aprime_job_qualitative_v3_20260727.py",
+    "src/stage2/colmap_io.py"
+  ],
+  "input_locator_contract": {
+    "footprint_xy": "phases/p0-audit/data/work/footprints/lod2_ground_plan.gpkg",
+    "footprint_sha256": "259cf04ec0c9411e669e75f61c37ea634290fcd40b230f6ed9b67328041c87fa",
+    "footprint_layer": "lod2_ground_plan",
+    "footprint_id_field": "building_id",
+    "footprint_role": "approved GroundSurface XY target locator only; no reference Z, roof faces, roof type, semantics, or final model",
+    "scene_reference_frame": "phases/p0-audit/data/work/opf/opf/scene_reference_frame.json",
+    "scene_reference_sha256": "fb408e9c97bdad6af7ad4a6e94be823be294030907ce92e395bd63490f77daf6",
+    "projection_height": "filtered ALS class-6 canonical q80-upper median Z",
+    "camera_source": "per-building corrected sparse/0 cameras.bin and images.bin",
+    "pose_transform_reapplication_count": 0,
+    "view_selection": {
+      "scope": "selected training views only",
+      "minimum_seed_inframe_fraction": 0.95,
+      "minimum_projected_footprint_area_ratio_to_best": 0.5,
+      "rank": "footprint fully in frame, sufficient projected area, then nadir_deg ascending, frame_radius ascending, footprint area descending, selection_order ascending",
+      "image_pixels_or_M_j_pixels_used_for_ranking": false
+    }
+  },
+  "visual_contract": {
+    "rows": 5,
+    "columns": 5,
+    "row_order": [
+      "input_training",
+      "filtered_als_class6_seed",
+      "tsdf_mesh",
+      "roofer_cityjson_lod22",
+      "output_reference_evaluation_only"
+    ],
+    "column_order": [
+      "top",
+      "oblique_a",
+      "oblique_b",
+      "principal_side",
+      "detail"
+    ],
+    "single_visual_file": true,
+    "placeholders_allowed_for_measured": false,
+    "panel_inches": [30.0, 27.5],
+    "panel_dpi": 150,
+    "minimum_panel_pixels": [4400, 4000],
+    "maximum_mesh_faces": 250000,
+    "maximum_scatter_points": 80000,
+    "crop_padding_fraction": 0.2,
+    "transition_iteration": 15000,
+    "surface_ramp_end_iteration": 20000,
+    "camera_contract": {
+      "projection": "orthographic",
+      "z_axis": "up",
+      "z_exaggeration": 1.0,
+      "shared_scene_bounds_across_geometry_rows": true,
+      "bounds_padding_fraction": 0.05,
+      "bounds_source": "union of frozen filtered ALS seed, frozen TSDF mesh, frozen Roofer output, and evaluation-only reference; reference affects comparison framing only",
+      "axis_source": "canonical Roofer CityJSON GroundSurface, then all output surfaces; evaluation-only reference never selects the camera",
+      "principal_axis_sign_rule": "north-positive, then east-positive",
+      "near_isotropic_ratio_threshold": 1.1,
+      "near_isotropic_fallback": "east axis",
+      "views": [
+        {
+          "key": "top",
+          "title_ko": "탑뷰",
+          "title_en": "Top orthographic",
+          "elevation_deg": 90.0,
+          "azimuth_mode": "fixed",
+          "azimuth_deg": -90.0
+        },
+        {
+          "key": "oblique_a",
+          "title_ko": "사선 A",
+          "title_en": "Oblique A",
+          "elevation_deg": 30.0,
+          "azimuth_mode": "principal_offset",
+          "azimuth_offset_deg": 45.0
+        },
+        {
+          "key": "oblique_b",
+          "title_ko": "반대 사선 B",
+          "title_en": "Opposite oblique B",
+          "elevation_deg": 30.0,
+          "azimuth_mode": "principal_offset",
+          "azimuth_offset_deg": 225.0
+        },
+        {
+          "key": "principal_side",
+          "title_ko": "주축 측면",
+          "title_en": "Principal side elevation",
+          "elevation_deg": 5.0,
+          "azimuth_mode": "principal_offset",
+          "azimuth_offset_deg": 90.0
+        }
+      ]
+    },
+    "semantic_palette": {
+      "RoofSurface": "#2b6ea6",
+      "WallSurface": "#8c98a4",
+      "GroundSurface": "#a78962",
+      "UnknownSurface": "#c5cbd1",
+      "tsdf_light": "#9abbd8",
+      "tsdf_dark": "#1f5a94",
+      "reference": "#d07a23",
+      "mask": "#00b5d8",
+      "seed_projection": "#19a35b",
+      "target_locator": "#f2b134",
+      "charcoal": "#252a31",
+      "light_grey": "#e3e7eb",
+      "gold": "#c59b2b"
+    }
+  },
+  "outputs": {
+    "root": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/review_v4",
+    "job_template": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/review_v4/by_building/{building_id}/arm_{arm}/{replicate}",
+    "panel": "panel.png",
+    "opacity_csv": "opacity.csv",
+    "canonical_roofer_cityjson": "roofer.city.json",
+    "complete": "complete.json"
+  },
+  "publication": {
+    "measured_jobs_only": true,
+    "one_visual_panel_per_job": true,
+    "job_directory_atomic_publish": true,
+    "overwrite_allowed": false,
+    "source_inputs_rehashed_after_render": true,
+    "receipt_written_last": true,
+    "reference_role": "evaluation_only",
+    "scientific_verdict": null,
+    "interpretation": null
+  },
+  "execution": {
+    "container_image": "jointbuildgs:dev",
+    "container_image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
+    "network": "none",
+    "gpus_required": false,
+    "nonroot": true,
+    "cpus": 6,
+    "memory": "12g",
+    "memory_swap": "12g"
+  }
+}

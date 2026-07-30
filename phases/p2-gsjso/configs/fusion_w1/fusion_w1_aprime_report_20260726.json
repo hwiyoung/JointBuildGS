@@ -1,0 +1,301 @@
+{
+  "schema": "jointbuildgs.fusion_w1_aprime.report.config.v2",
+  "task_id": "FUS-W1-APRIME-REPORT-FIX-002",
+  "run_id": "20260726_fusion_w1_aprime",
+  "branch": "exp/fusion-w1",
+  "role": "observational quantitative aggregation and qualitative review panels",
+  "implementation_files": [
+    "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_report_20260726.json",
+    "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_aprime_report_20260726.py",
+    "phases/p2-gsjso/scripts/fusion_w1/run_fusion_w1_aprime_report_20260726.sh",
+    "tests/fusion_w1/test_fusion_w1_aprime_report_20260726.py"
+  ],
+  "locked_inputs": {
+    "targets": {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/aprime_targets.csv",
+      "sha256": "f5f5893f8b5c1aa51143a751c637d12707fac4d5a62ff7e0a1a2f7770c5dc528",
+      "population": 9,
+      "id_field": "building_id",
+      "order_field": "aprime_order"
+    },
+    "targets_manifest": {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/aprime_targets_manifest.json",
+      "sha256": "7d6304c79dda41463e6092c792db034dfed5a5171b04d6499f57557097b56471"
+    },
+    "p7_overlap_record": {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/P7_GS4B_OVERLAP_INVESTIGATION.md",
+      "sha256": "1e8f41805c9c057bb3de52c3e1dbe17abf350d5dfef96bd590cf3ea0a719cb0d"
+    },
+    "training_config": {
+      "path": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_training_20260726.json",
+      "sha256": "b650b59e9314f09cf80234e8fcd33a5d7618becd467976d6a1756773ae68a726"
+    },
+    "p0prime_config": {
+      "path": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_p0prime_20260726.json",
+      "sha256": "c14dce57c8f4e100bcd9cd6288a8bc3184119fc0198db5a959d6911ea662f80e"
+    },
+    "preprocess_config": {
+      "path": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_preprocess_20260726.json",
+      "sha256": "17fd50fcc52557369b38791a8494e997afa16dd4ba199ea2fb02275951e448d8"
+    },
+    "readout_config": {
+      "path": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_readout_20260726.json",
+      "schema": "jointbuildgs.fusion_w1_aprime.readout.config.v1"
+    },
+    "queue_config": {
+      "path": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_queue_20260726.json",
+      "sha256": "079719050564ca26beee2449b9df35f0b51396e68a64330056aa7ab6ae70649f"
+    },
+    "reference_gml": [
+      {
+        "path": "phases/p0-audit/data/raw/lod2/690_5334.gml",
+        "sha256": "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314"
+      },
+      {
+        "path": "phases/p0-audit/data/raw/lod2/690_5336.gml",
+        "sha256": "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674"
+      }
+    ]
+  },
+  "sources": {
+    "run_root": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime",
+    "preprocess_stable_manifest": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/preprocess_aprime/preprocess_manifest.json",
+    "preprocess_cache_namespace": "aprime_pose_28b38383a0b6d826_class6_e005_k3_rooftin_v2",
+    "t5_summary": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/t5_preprocess_summary_v2.csv",
+    "t5_mask_inventory": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/t5_mask_inventory_v2.csv",
+    "five_pin": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/preflight/five_pin_status.json",
+    "T1": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/preflight/T1/t1_mini_smoke_receipt.json",
+    "T2": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/preflight/T2/t2_tsdf_rehearsal_receipt.json",
+    "T2_failure": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/preflight/T2/t2_tsdf_failure_receipt.json",
+    "T3": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/preflight/T3/manifest.json",
+    "T3_scores": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/preflight/T3/p0prime_aprime_scores.csv",
+    "T4": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/preflight/T4/receipt.json",
+    "training_root": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/training",
+    "readout_root": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/readout",
+    "queue_plan": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue/queue_plan.json",
+    "queue_stage_records": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue/stage_records",
+    "queue_training_failure_archive": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue/training_failure_archive",
+    "queue_status_json": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue/status.json",
+    "queue_status_csv": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue/status.csv",
+    "queue_stage_stop": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue/stage_stop.json",
+    "queue_complete": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue/complete.json",
+    "queue_events": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue/events.jsonl",
+    "queue_event_sequence": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue/event_sequence.json",
+    "queue_recovery_controller": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue/recovery/controller.json",
+    "queue_recovery_root": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue/recovery",
+    "issues": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/issues.md"
+  },
+  "queue_contract": {
+    "Aprime_runs": ["r1", "r2"],
+    "B_runs": ["r1"],
+    "B_buildings": [
+      "DEBY_LOD2_42364609",
+      "DEBY_LOD2_42364659",
+      "DEBY_LOD2_4908023"
+    ],
+    "expected_stage_entries": 22,
+    "expected_jobs": 21,
+    "smoke_building_id": "DEBY_LOD2_42364609",
+    "smoke_arm": "Aprime",
+    "smoke_run": "r1",
+    "smoke_stage_key": "smoke_barrier",
+    "reuse_stage_key": "aprime_r1",
+    "time_cutoff": null
+  },
+  "recovery_contract": {
+    "controller": {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue/recovery/controller.json",
+      "schema": "jointbuildgs.fusion_w1_aprime.unattended.recovery_controller.v1",
+      "state": "ACTIVE",
+      "task_id": "FUS-W1-APRIME-QUEUE-RECOVERY-001"
+    },
+    "committed_queue_driver": {
+      "path": "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_aprime_queue_20260726.py",
+      "sha256": "5f2ed650508e20929478ea308efbe6aba2e32f80b57a90d996bab1280079a043",
+      "bytes": 77812
+    },
+    "controller_files": [
+      {
+        "path": "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_aprime_queue_recovery_20260727.py",
+        "sha256": "c98f8fc8f69b50096f3503d08775ef3204b6ab3d0b25579c257d56fe3c7921fa",
+        "bytes": 17048
+      },
+      {
+        "path": "phases/p2-gsjso/scripts/fusion_w1/run_fusion_w1_aprime_queue_recovery_20260727.sh",
+        "sha256": "5835c84d41c0354a3dfa90ae3080b57df1680eac1d0f2781f28e8f5c1991a18a",
+        "bytes": 6704
+      },
+      {
+        "path": "tests/fusion_w1/test_fusion_w1_aprime_queue_recovery_20260727.py",
+        "sha256": "c993b51bc0bdc6e88521b7debd7125bcff315aa4def966c9f2eb6c8711d9605d",
+        "bytes": 2562
+      }
+    ],
+    "rehydration_intent_schema": "jointbuildgs.fusion_w1_aprime.unattended.rehydration_intent.v1",
+    "rehydration_receipt_schema": "jointbuildgs.fusion_w1_aprime.unattended.rehydration_receipt.v1",
+    "rehydration_receipt_state": "REHYDRATED_VALID_COMPLETION",
+    "excluded_artifacts": ["orchestrator_orphan_failure.json"],
+    "producer_receipts_rewritten": false,
+    "append_only_source_preserved": true
+  },
+  "t4_contract": {
+    "receipt": {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/preflight/T4/receipt.json",
+      "sha256": "f405520eb2b77f2481e91dd499aeacd97c7155fd2cfbaa6aec8f9398e3e241e5"
+    },
+    "csv": {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/preflight/T4/arm_A_roof_opacity_trajectory.csv",
+      "sha256": "a810bed446b428356f03d4436806c56050a086578374d8bc9cd508bb46e29736"
+    },
+    "figure": {
+      "path": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/preflight/T4/arm_A_roof_opacity_trajectory.png",
+      "sha256": "2a594100a1ff986ac3af9cf9cae48c4c29ecc1cceedc6f621cc3e733db5f4fcd"
+    }
+  },
+  "provenance_contract": {
+    "execution_head": "de8852c00c737eced081f2627b49bcedddade652",
+    "report_implementation_files": [
+      "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_report_20260726.json",
+      "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_aprime_report_20260726.py",
+      "phases/p2-gsjso/scripts/fusion_w1/run_fusion_w1_aprime_report_20260726.sh",
+      "tests/fusion_w1/test_fusion_w1_aprime_report_20260726.py"
+    ],
+    "recovery_exact_descendant_allowlist": [
+      "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_aprime_queue_recovery_20260727.py",
+      "phases/p2-gsjso/scripts/fusion_w1/run_fusion_w1_aprime_queue_recovery_20260727.sh",
+      "tests/fusion_w1/test_fusion_w1_aprime_queue_recovery_20260727.py",
+      "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue/recovery/controller.json"
+    ],
+    "operational_evidence_exact_descendant_allowlist": [
+      "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/issues.md"
+    ],
+    "recovery_glob_descendant_allowlist": [
+      "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue/recovery/by_building/*/arm_*/*/rehydration_attempt_*/intent.json",
+      "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/unattended_queue/recovery/by_building/*/arm_*/*/rehydration_attempt_*/receipt.json"
+    ],
+    "report_files_must_match_generation_head": true,
+    "recovery_files_must_match_controller_receipt": true,
+    "history_paths_not_only_final_tree": true
+  },
+  "measurement_contract": {
+    "primary_readout_role": "preregistered_TSDF_MC_class6_plus_original_ALS_class2",
+    "comparison_readout_role": "historical_W1_alpha_pointcloud_comparison_only",
+    "comparison_eligible_for_preregistered_gauges": false,
+    "comparison_nonmeasurement_outcomes": ["NOT_ASSEMBLED", "UNCONSTRUCTABLE"],
+    "comparison_nonmeasurement_state": "not_applicable",
+    "comparison_nonmeasurement_policy": "preserve outcome, reason, and diagnostic counts; do not fail or censor primary TSDF readout",
+    "metric_fields": [
+      "assembly_lod2_success",
+      "has_lod22_geometry",
+      "lod1_fallback",
+      "val3dity_valid",
+      "plane_precision",
+      "plane_recall",
+      "plane_f1",
+      "roof_rms_m",
+      "roof_hausdorff_m",
+      "roof_completeness",
+      "face_count_ratio"
+    ],
+    "boolean_metrics": [
+      "assembly_lod2_success",
+      "has_lod22_geometry",
+      "lod1_fallback",
+      "val3dity_valid"
+    ],
+    "numeric_metrics": [
+      "plane_precision",
+      "plane_recall",
+      "plane_f1",
+      "roof_rms_m",
+      "roof_hausdorff_m",
+      "roof_completeness",
+      "face_count_ratio"
+    ],
+    "measurement_states": ["measured", "missing", "censored", "not_applicable"],
+    "censored_is_measured": false,
+    "missing_is_zero": false,
+    "p0prime_delta_definition": "primary_TSDF_metric_minus_P0prime_Aprime_seed_only_metric",
+    "rms_margin_m": 0.05,
+    "texture_field": "texture_low_gradient_fraction",
+    "texture_threshold": 0.804,
+    "textureless_rule": "texture_low_gradient_fraction > 0.804",
+    "textureless_label": "textureless",
+    "textured_label": "textured",
+    "reference_caveat": "reference GML is a laser-derived product; absolute interpretation remains reserved",
+    "scientific_verdict": null,
+    "interpretation": null
+  },
+  "visual_contract": {
+    "transition_iteration": 15000,
+    "surface_ramp_end_iteration": 20000,
+    "opacity_scope_preference": ["building_id", "all_seed_lineage"],
+    "opacity_initial_observation_phase": "initialization_pre_dynamics",
+    "opacity_line_observation_phase": "post_dynamics",
+    "opacity_proxy_label": "class6 seed-lineage within building footprint XY",
+    "opacity_proxy_limitation": "seed-lineage footprint proxy; no optimization intervention",
+    "input_crop_padding_fraction": 0.2,
+    "maximum_scatter_points": 80000,
+    "panel_dpi": 150,
+    "panel_inches": [18, 10],
+    "palette": {
+      "blue": "#1f5a94",
+      "blue_light": "#9abbd8",
+      "orange": "#d07a23",
+      "gold": "#c59b2b",
+      "charcoal": "#252a31",
+      "grey": "#7c8794",
+      "light_grey": "#e3e7eb"
+    }
+  },
+  "outputs": {
+    "root": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/report_v2",
+    "snapshots": "snapshots",
+    "latest": "latest.json",
+    "receipt": "completed.json",
+    "manifest": "w1_manifest.json",
+    "one_page_markdown": "ONE_PAGE_SUMMARY.md",
+    "report_markdown": "REPORT.md",
+    "targets_csv": "w1_targets.csv",
+    "seed_stats_csv": "w1_seed_stats.csv",
+    "p0prime_scores_csv": "w1_seed_p0prime_scores.csv",
+    "loss_shares_csv": "w1_loss_shares.csv",
+    "scores_csv": "w1_scores_building.csv",
+    "alpha_comparison_csv": "w1_alpha_comparison.csv",
+    "replicate_medians_csv": "w1_replicate_medians.csv",
+    "summary_csv": "w1_summary.csv",
+    "gauge_csv": "w1_gauges.csv",
+    "preflight_csv": "w1_preflight_t1_t5.csv",
+    "overlap_csv": "w1_gs4b_overlap.csv",
+    "incomplete_csv": "w1_incomplete.csv",
+    "issues_csv": "w1_issues.csv",
+    "opacity_csv": "w1_opacity_trajectories.csv",
+    "queue_stage_records_csv": "w1_queue_stage_records.csv",
+    "queue_archives_csv": "w1_queue_archives.csv",
+    "queue_recoveries_csv": "w1_queue_recoveries.csv",
+    "source_inventory_csv": "source_inventory.csv",
+    "artifact_inventory_csv": "artifact_inventory.csv",
+    "quality_notes_json": "quality_notes.json",
+    "panels_dir": "w1_panels",
+    "opacity_dir": "w1_opacity_trajectories",
+    "t4_bundle_dir": "evidence/T4",
+    "t4_bundle_manifest": "evidence/T4/bundle_manifest.json"
+  },
+  "publication": {
+    "immutable_content_addressed_snapshots": true,
+    "staging_before_snapshot_publish": true,
+    "latest_pointer_atomic": true,
+    "receipt_written_last_inside_snapshot": true,
+    "source_inventory_rehashed_before_publish": true,
+    "queue_stage_receipts_sha_verified": true,
+    "queue_archive_receipts_sha_verified": true,
+    "queue_recovery_receipts_sha_verified": true,
+    "smoke_reuse_deduplicated_to_unique_job": true,
+    "cached_partial_rejected_for_final": true,
+    "t4_bundle_hash_verified_before_copy": true,
+    "report_and_recovery_descendant_provenance_required": true,
+    "partial_outputs_allowed": true,
+    "terminal_failures_retained_in_incomplete_inventory": true,
+    "no_verdict_or_interpretation_language": true
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "schema": "jointbuildgs.fusion_w1.gate_a_v2_registration.config.v1",
+  "task_id": "FUS-W1-GATE-A-V2-REGISTRATION-20260725",
+  "run_id": "20260724_fusion_w1",
+  "branch": "exp/fusion-w1",
+  "scope": "locked_numeric_reuse_plus_qualitative_overlay_only",
+  "required_ancestor_commit": "03f6a71c883ea2bb5e371f6cb185e4d921841d8e",
+  "implementation_files": [
+    "phases/p2-gsjso/configs/fusion_w1/fusion_w1_gate_a_v2_registration_20260725.json",
+    "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_gate_a_v2_registration_20260725.py",
+    "phases/p2-gsjso/scripts/fusion_w1/run_fusion_w1_gate_a_v2_registration_20260725.sh",
+    "tests/fusion_w1/test_fusion_w1_gate_a_v2_registration_20260725.py"
+  ],
+  "r1_consumer_contract": {
+    "manifest": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/resume_v2/r1_pose_adoption_manifest.json",
+    "schema": "jointbuildgs.fusion_w1.pose_adoption_v2.manifest.v1",
+    "status": "PASSED",
+    "image_count": 937,
+    "application_scope": "all_937_camera_poses_once",
+    "transform_application_count": 1,
+    "adoption_authority": {
+      "approved_by": "김휘영",
+      "preregistration_path": "docs/research/preregistration/fusion_w1/사전등록_관문A_v2·SE3채택재판정_20260725.md",
+      "preregistration_sha256": "2950511bba207553e48d67efa4a635131ecc2ebdd1854bd826838f9789e52031",
+      "run_copy_path": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/PREREG_GATE_A_V2_SE3_ADOPTION_20260725.md",
+      "run_copy_sha256": "2950511bba207553e48d67efa4a635131ecc2ebdd1854bd826838f9789e52031",
+      "section": "§4"
+    }
+  },
+  "inputs": {
+    "targets_csv": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_targets.csv",
+    "diagnostic_residuals_csv": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coregdiag_building_residuals.csv",
+    "diagnostic_manifest": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coregdiag_manifest.json",
+    "diagnostic_report": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/W_GATE_A_DIAGNOSTIC_20260725.md",
+    "preregistration": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/PREREG_GATE_A_V2_SE3_ADOPTION_20260725.md",
+    "alignment_helper_config": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_alignment_gate_lock1.json",
+    "alignment_helper_script": "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_alignment_gate_lock1.py",
+    "footprint_xy": "phases/p0-audit/data/work/footprints/lod2_ground_plan.gpkg",
+    "training_image_dir": "results/tum_transfer/data_geoidfix/images",
+    "scene_reference_frame": "phases/p0-audit/data/work/opf/opf/scene_reference_frame.json",
+    "projection_datum_config": "configs/input_and_alignment/projection_datum.json",
+    "als_files": [
+      "phases/p0-audit/data/raw/als/690_5335.laz",
+      "phases/p0-audit/data/raw/als/690_5336.laz",
+      "phases/p0-audit/data/raw/als/691_5335.laz",
+      "phases/p0-audit/data/raw/als/691_5336.laz"
+    ]
+  },
+  "input_sha256": {
+    "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_targets.csv": "256d376080dca7c496aa3f34c9bcbbd1a8e52d0b25d6e98f7eec388b3f6cc943",
+    "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coregdiag_building_residuals.csv": "c20baf91c02be8b12527a1bf70fc2b4192961fc07d5e6ad790f4efa35fb60783",
+    "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/coregdiag_manifest.json": "512ec1f2a325c0923800508a73316eedc909780554619e2545c8fe4b9e4f6c58",
+    "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/W_GATE_A_DIAGNOSTIC_20260725.md": "fef277ec844678da3be5df846f074207c99cdf08239059bcd62f367288077f0b",
+    "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/PREREG_GATE_A_V2_SE3_ADOPTION_20260725.md": "2950511bba207553e48d67efa4a635131ecc2ebdd1854bd826838f9789e52031",
+    "phases/p2-gsjso/configs/fusion_w1/fusion_w1_alignment_gate_lock1.json": "c402ca77b2cbb6d46dfb72ba0bde806f2180789a7aaa71ce16912913f8dfa232",
+    "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_alignment_gate_lock1.py": "9cbeb50133045c6895be792899cfad373515b2643150c4e96f17e2f2ae41a9c8",
+    "phases/p0-audit/data/work/footprints/lod2_ground_plan.gpkg": "259cf04ec0c9411e669e75f61c37ea634290fcd40b230f6ed9b67328041c87fa",
+    "phases/p0-audit/data/work/opf/opf/scene_reference_frame.json": "fb408e9c97bdad6af7ad4a6e94be823be294030907ce92e395bd63490f77daf6",
+    "configs/input_and_alignment/projection_datum.json": "096a49b46fc5661d74f9d3b54c4f3777676cfc6b27e577b52bb2dabeee8b480c",
+    "phases/p0-audit/data/raw/als/690_5335.laz": "01602b7385aaf7324f89da6183df3dbdeffa237f85bf57dc27208b554b4fc0b3",
+    "phases/p0-audit/data/raw/als/690_5336.laz": "98ab7ad7f4c5108ebf41bc62186b336c6cd8a70b82fceec57136a56c0188b566",
+    "phases/p0-audit/data/raw/als/691_5335.laz": "9e14119bb0af7d5a300aa3a2a19074219b4d6d290923b4b90277c317e8b33720",
+    "phases/p0-audit/data/raw/als/691_5336.laz": "63c64002fc55d8b99a49749b5a2e36d802186186a950c89779463274e3cb950d"
+  },
+  "gate_a_v2_locked_slots": {
+    "status": "PASS",
+    "n_threshold": 40,
+    "population_n": 178,
+    "correspondence_capable_n": 132,
+    "capable_matched_median_le_0p3_n": 132,
+    "core_population_n": 28,
+    "core_correspondence_capable_n": 24,
+    "core_capable_matched_median_le_0p3_n": 24,
+    "incapable_tier_counts": {
+      "surface": 2,
+      "height": 11,
+      "outline": 33
+    },
+    "numeric_source_role": "reuse_only_no_remeasurement",
+    "auxiliary_statistics_used_for_gate": false
+  },
+  "overlay_contract": {
+    "population": "all_core_targets_including_four_correspondence_incapable",
+    "expected_buildings": 28,
+    "views_per_building": 1,
+    "selection_rule": "maximum_corrected_pose_class6_inframe_count_then_image_name",
+    "selection_role": "display_only_not_a_gate",
+    "class6_color": "cyan",
+    "class2_color": "#ff8c42",
+    "projection_xy_shift_m": [0.0, 0.0],
+    "input_vertical_datum": "orthometric",
+    "fixed_geoid_zeta_m": 45.7,
+    "selection_point_cap": 512,
+    "display_point_cap_per_class": 12000,
+    "crop_padding_px": 45,
+    "minimum_class6_inframe_for_render": 1,
+    "forbidden_calls": [
+      "measure_view",
+      "extract_subpixel_edges",
+      "match_oriented_edges",
+      "direct_edge_distance_metric",
+      "render_overlays"
+    ],
+    "figure_label": "QUALITATIVE ONLY — no edge matching, no residual, no gate statistic"
+  },
+  "outputs": {
+    "start_claim": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/resume_v2/r2_gate_a_v2_start.json",
+    "overlay_dir": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/resume_v2/w1_align_overlays_v2",
+    "overlay_index": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/resume_v2/r2_overlay_index.csv",
+    "failure": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/resume_v2/r2_gate_a_v2_failure.json",
+    "manifest": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/resume_v2/r2_gate_a_v2_registration.json",
+    "staging": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/resume_v2/.r2_gate_a_v2_staging"
+  },
+  "publication_contract": {
+    "exact_once": true,
+    "manifest_written_last": true,
+    "partial_numeric_remeasurement_forbidden": true,
+    "source_als_modification_forbidden": true,
+    "source_pose_modification_forbidden": true,
+    "issues_md_modification_forbidden": true
+  }
+}

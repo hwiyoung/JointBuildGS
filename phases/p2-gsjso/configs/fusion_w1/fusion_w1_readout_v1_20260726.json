@@ -1,0 +1,302 @@
+{
+  "schema": "jointbuildgs.fusion_w1.readout_driver.config.v1",
+  "task_id": "FUS-W1-READOUT-001",
+  "run_id": "20260724_fusion_w1",
+  "branch": "exp/fusion-w1",
+  "scope": "section5_serial_pointcloud_classification_roofer_cityjson_scoring",
+  "smoke_job": {
+    "building_id": "DEBY_LOD2_42364609",
+    "arm": "A",
+    "run": "r1",
+    "job_key": "DEBY_LOD2_42364609/arm_A/r1"
+  },
+  "queue_contract": {
+    "smoke_barrier": true,
+    "ordered_phases": [
+      {
+        "name": "core_arm_A_r1",
+        "cohort": "core",
+        "arm": "A",
+        "run": "r1"
+      },
+      {
+        "name": "core_arm_A_r2",
+        "cohort": "core",
+        "arm": "A",
+        "run": "r2"
+      },
+      {
+        "name": "core_arm_B_r1",
+        "cohort": "core",
+        "arm": "B",
+        "run": "r1",
+        "ready_training_jobs_only": true
+      },
+      {
+        "name": "core_arm_B_r2",
+        "cohort": "core",
+        "arm": "B",
+        "run": "r2",
+        "ready_training_jobs_only": true
+      },
+      {
+        "name": "extension_arm_A_r1",
+        "cohort": "extension",
+        "arm": "A",
+        "run": "r1"
+      },
+      {
+        "name": "extension_arm_A_r2",
+        "cohort": "extension",
+        "arm": "A",
+        "run": "r2",
+        "ready_training_jobs_only": true
+      },
+      {
+        "name": "extension_arm_B_r1",
+        "cohort": "extension",
+        "arm": "B",
+        "run": "r1",
+        "ready_training_jobs_only": true
+      },
+      {
+        "name": "extension_arm_B_r2",
+        "cohort": "extension",
+        "arm": "B",
+        "run": "r2",
+        "ready_training_jobs_only": true
+      }
+    ],
+    "within_phase_order": "w1_targets.processing_order ascending",
+    "missing_training_job": "not_ready_not_failure",
+    "failed_job": "record_once_skip_job_no_retry",
+    "same_error_type_consecutive_building_stop_n": 3
+  },
+  "targets": {
+    "path": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_targets.csv",
+    "sha256": "256d376080dca7c496aa3f34c9bcbbd1a8e52d0b25d6e98f7eec388b3f6cc943",
+    "expected_population": 178,
+    "id_field": "building_id",
+    "order_field": "processing_order"
+  },
+  "texture_join": {
+    "path": "docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v4_1_ladder.csv",
+    "sha256": "ae16170177ac0815eb6dd853b0469325c9a1018eeeac9b790b063927cbd7e7e2",
+    "id_field": "building_id",
+    "tier_source_field": "cell_label",
+    "tier_map": {
+      "cell_1_assembled": "surface",
+      "cell_2_anchored": "height",
+      "cell_3_outline_only": "outline"
+    },
+    "texture_field": "texture_low_gradient_fraction",
+    "t9_t11_threshold": 0.804,
+    "textureless_rule": "texture_low_gradient_fraction > 0.804",
+    "textured_label": "textured",
+    "textureless_label": "textureless"
+  },
+  "training": {
+    "driver_config": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_training_v1_20260725.json",
+    "driver_config_sha256": "b57e20aee2c475ed766884e2cd39b17ffca522c2773f57d771932faed96bb367",
+    "trainer_source": "src/stage2/train.py",
+    "trainer_source_sha256": "00c125e5de469ec43c1dbbf17393e91c9f700e52b93624309f76cc64bb5eb39e",
+    "root": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/training",
+    "job_template": "by_building/{building_id}/arm_{arm}/{run}",
+    "materialization": "materialization_manifest.json",
+    "materialization_schema": "jointbuildgs.fusion_w1.training_materialization.v1",
+    "completed": "completed.json",
+    "completed_schema": "jointbuildgs.fusion_w1.training_completed.v1",
+    "failed": "failed.json",
+    "full_state_schema": "jointbuildgs.stage2.resume_manifest.v1",
+    "required_optimizer_updates": 30000,
+    "full_state_checkpoint_relpath": "ckpt/step_030000.pt",
+    "extract_checkpoint_relpath": "ckpt/final.pt",
+    "extract_checkpoint_schema": "legacy export with top-level state_dict consumed by tum_mob_tsdf_extract.py",
+    "full_state_relpath": "full_state_manifest.json",
+    "concurrent_with_readout": false
+  },
+  "p0prime": {
+    "driver": "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_seed_p0prime_20260725.py",
+    "driver_sha256": "582011ed0d68e8552827b21105e1fb9355ed708cd59b337dd6165394a10ff248",
+    "scores_csv": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_seed_p0prime_scores.csv",
+    "job_template": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/p0prime/by_building/{building_id}",
+    "complete_receipt": "complete.json",
+    "required_score_status": "MEASURED",
+    "attribution_role": "seed_itself_before_learning"
+  },
+  "pointcloudification": {
+    "image": "jointbuildgs:dev",
+    "image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
+    "script": "phases/p2-gsjso/scripts/tum_mob_tsdf_extract.py",
+    "script_sha256": "914cbad783b1eee27d1d2de24e702eb65e5caae1cd7bb142ebbe0fac200325bc",
+    "downscale": 1.0,
+    "voxel_m": 0.05,
+    "alpha_min_exclusive": 0.5,
+    "minimum_observations": 3,
+    "footprint_buffer_m": 15.0,
+    "maximum_views": 0,
+    "sh_degree": 3,
+    "semantic_pass": false,
+    "sor_neighbors": 20,
+    "sor_std_ratio": 2.0,
+    "crs": "EPSG:25832",
+    "frame_contract": "trainer local frame plus extractor locked SHIFT exactly once",
+    "writable_environment": {
+      "HOME": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/runtime_env/home",
+      "XDG_CACHE_HOME": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/runtime_env/xdg_cache",
+      "TORCH_EXTENSIONS_DIR": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/runtime_env/torch_extensions_seeded_v2"
+    },
+    "jit_build_environment": {
+      "MAX_JOBS": "1"
+    }
+  },
+  "classification": {
+    "image": "jointbuildgs-p0-tools:t0",
+    "image_id": "sha256:87bea02e5598a3d53a119b754191673497d52641bd8ea4106ffee653407579b0",
+    "script": "scripts/input_and_alignment/p2_gsjso/_mob_prep_las.py",
+    "script_sha256": "3ce3a14b57f6f3521ba02d5bb81a490a16b4e5b0e8d8e0a4b1b02ef1f05978f3",
+    "method": "P0_T4_PDAL_SMRF_then_non_ground_footprint_overlay",
+    "target_density": 0.0,
+    "voxel_downsample": "disabled",
+    "smrf": {
+      "cell": 1.0,
+      "slope": 0.15,
+      "scalar": 1.25,
+      "threshold": 0.5,
+      "window": 18.0,
+      "ground_class": 2,
+      "other_class": 1
+    },
+    "overlay": {
+      "building_class": 6,
+      "where": "Classification != 2"
+    },
+    "required_classes": [
+      2,
+      6
+    ],
+    "allowed_classes": [
+      1,
+      2,
+      6
+    ],
+    "crs": "EPSG:25832"
+  },
+  "footprint": {
+    "path": "phases/p0-audit/data/work/footprints/lod2_ground_plan.gpkg",
+    "sha256": "259cf04ec0c9411e669e75f61c37ea634290fcd40b230f6ed9b67328041c87fa",
+    "layer": "lod2_ground_plan",
+    "id_field": "building_id",
+    "crs": "EPSG:25832",
+    "role": "approved_LoD2_GroundSurface_XY_only",
+    "forbidden_as_input": [
+      "LoD2 Z",
+      "RoofSurface",
+      "roof type",
+      "semantic class",
+      "final roof model"
+    ]
+  },
+  "roofer": {
+    "image": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+    "parameters": [
+      "--id-attribute",
+      "building_id",
+      "--jobs",
+      "3",
+      "--srs",
+      "EPSG:25832",
+      "--bld-class",
+      "6",
+      "--grnd-class",
+      "2",
+      "--lod22"
+    ],
+    "outer_parallelism": 1,
+    "timeout_seconds_per_building": 900
+  },
+  "scoring": {
+    "tools_image": "jointbuildgs-p0-tools:t0",
+    "tools_image_id": "sha256:87bea02e5598a3d53a119b754191673497d52641bd8ea4106ffee653407579b0",
+    "val3dity_version": "2.6.0",
+    "canonical_helpers": {
+      "roofer_status": {
+        "path": "phases/p0-audit/scripts/08_roofer_w2.py",
+        "sha256": "ae655090915c56bfeee2be830a28e27520c2430e97d19e515a0aa046e4c79e97"
+      },
+      "roof_metrics": {
+        "path": "scripts/e5_c001/p2_gsjso/e5_c001_8way.py",
+        "sha256": "12322a7fd49c0904eaf7160946c7ef3b521ed091038452f9a863bef37f0bcbdc"
+      },
+      "coverage_and_xy": {
+        "path": "scripts/quality_score/p2_gsjso/qs_baseline178_rescore.py",
+        "sha256": "0d752dade0b8677460b55d381a69db77f7bf611061fb7479710434358db33e9d"
+      }
+    },
+    "paired_baseline": {
+      "path": "docs/experiments/evaluation/qs_baseline178/tables/qs_baseline178_scores.csv",
+      "sha256": "a3b89f1907e6e61aead702efe6b742b5c012615df77d90bdb2a859b5418d85ab",
+      "laser_model_id": "als_w2_1",
+      "laser_role": "als",
+      "image_model_id": "canonical_dense_w2_1",
+      "image_role": "dense",
+      "pair_denominator": "same building and finite current roof_rms_m and finite baseline roof_rms_m"
+    },
+    "reference": {
+      "lod2_dir": "phases/p0-audit/data/raw/lod2",
+      "locked_files": {
+        "phases/p0-audit/data/raw/lod2/690_5334.gml": "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314",
+        "phases/p0-audit/data/raw/lod2/690_5336.gml": "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674"
+      },
+      "role": "evaluation_only_after_roofer_output_frozen",
+      "score_time_z_shift_m": -45.7,
+      "prediction_vertical_frame": "COLMAP_canonical_ellipsoidal_after_extractor_SHIFT",
+      "reference_vertical_frame": "EPSG:25832_orthometric",
+      "z_shift_contract": "score-time only; subtract the locked geoid once; do not mutate readout LAS or CityJSON",
+      "absolute_metric_caveat": "reference GML is a laser-derived product; absolute interpretation remains reserved"
+    },
+    "metrics": [
+      "assembly_lod2_success",
+      "lod1_fallback",
+      "val3dity_valid",
+      "plane_f1",
+      "roof_rms_m",
+      "roof_completeness",
+      "face_count_ratio",
+      "paired_rms_vs_laser_only",
+      "paired_rms_vs_image_pointcloud",
+      "delta_vs_p0prime"
+    ]
+  },
+  "resource_lock": {
+    "memory": "24g",
+    "memory_swap": "24g",
+    "network": "none",
+    "serial_jobs": true,
+    "concurrent_with_training": false,
+    "concurrent_with_other_readout": false,
+    "shared_training_launch_barrier": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/training/runtime_counters.json.lock",
+    "failed_job_retry": "forbidden",
+    "counter_truth": "immutable per-stage STARTED receipts; runtime_counters.json is a reconciled materialized view"
+  },
+  "outputs": {
+    "root": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/readout_v1",
+    "job_template": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/readout_v1/by_building/{building_id}/arm_{arm}/{run}",
+    "scores_csv": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_scores_building.csv",
+    "summary_csv": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_summary.csv",
+    "panels_dir": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_panels",
+    "runtime_counters": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/readout_v1/runtime_counters.json",
+    "runtime_counters_lock": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/readout_v1/runtime_counters.json.lock",
+    "driver_lock": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/readout_v1/driver.lock",
+    "failures_jsonl": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/readout_v1/failures.jsonl"
+  },
+  "publication": {
+    "one_row_per_building_arm_run": true,
+    "scores_incremental_atomic": true,
+    "complete_receipt_after_scores_and_panel": true,
+    "partial_results_morning_readable": true,
+    "partial_finalize_zero_measurement_rows": "tier x arm x run rows with status NOT_MEASURED",
+    "partial_finalize_increments_stage_counters": false,
+    "no_interpretation_or_verdict": true
+  }
+}
