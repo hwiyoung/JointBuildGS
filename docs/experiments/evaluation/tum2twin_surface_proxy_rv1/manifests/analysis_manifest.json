@@ -126,7 +126,7 @@
   ],
   "analysis_code": [
     {
-      "path": "scripts/analyze_tum2twin_surface_proxy_rv1.py",
+      "path": "scripts/input_and_alignment/tum2twin_rv1/analyze_tum2twin_surface_proxy_rv1.py",
       "sha256": "139c9ea1522abf46168ef5c1e4924e4fe94d779af682a9ad9efce43a2b779c9d",
       "bytes": 52052
     },
@@ -138,7 +138,7 @@
   ],
   "reproduction": {
     "runtime": "existing jointbuildgs:dev container; no package installation",
-    "analysis_command": "python scripts/analyze_tum2twin_surface_proxy_rv1.py --run-root reports/nightly_rv1_20260728_2327 --output-dir reports/nightly_rv1_20260728_2327/post_analysis",
+    "analysis_command": "python scripts/input_and_alignment/tum2twin_rv1/analyze_tum2twin_surface_proxy_rv1.py --run-root reports/nightly_rv1_20260728_2327 --output-dir reports/nightly_rv1_20260728_2327/post_analysis",
     "validation_command": "python tests/test_tum2twin_surface_proxy_rv1_analysis.py",
     "long_geometry_recalculation": false,
     "gs_training": false

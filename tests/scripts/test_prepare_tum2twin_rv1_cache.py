@@ -10,7 +10,7 @@ import numpy as np
 
 
 REPO = Path(__file__).resolve().parents[2]
-MODULE_PATH = REPO / "scripts/prepare_tum2twin_rv1_cache.py"
+MODULE_PATH = REPO / "scripts/input_and_alignment/tum2twin_rv1/prepare_tum2twin_rv1_cache.py"
 SPEC = importlib.util.spec_from_file_location("prepare_rv1", MODULE_PATH)
 assert SPEC and SPEC.loader
 PREP = importlib.util.module_from_spec(SPEC)

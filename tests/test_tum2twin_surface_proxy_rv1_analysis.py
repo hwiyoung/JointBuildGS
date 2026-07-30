@@ -12,7 +12,7 @@ import pandas as pd
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 
-from scripts.analyze_tum2twin_surface_proxy_rv1 import classify_surface_proxy, percentile_rank
+from scripts.input_and_alignment.tum2twin_rv1.analyze_tum2twin_surface_proxy_rv1 import classify_surface_proxy, percentile_rank
 
 
 OUTPUT = REPO / "docs/experiments/evaluation/tum2twin_surface_proxy_rv1"

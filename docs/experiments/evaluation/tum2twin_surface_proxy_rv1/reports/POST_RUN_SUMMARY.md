@@ -60,7 +60,7 @@ qualitative panel은 R 정답으로 사용하지 않았다. 9건 panel은 좌표
 `jointbuildgs:dev` 컨테이너의 repository root에서 다음을 실행한다. 이 명령은 기존 metric과 입력을 읽고 `post_analysis/`만 atomic write하며 geometry metric이나 GS 학습을 실행하지 않는다.
 
 ```bash
-python scripts/analyze_tum2twin_surface_proxy_rv1.py   --run-root reports/nightly_rv1_20260728_2327   --output-dir reports/nightly_rv1_20260728_2327/post_analysis
+python scripts/input_and_alignment/tum2twin_rv1/analyze_tum2twin_surface_proxy_rv1.py   --run-root reports/nightly_rv1_20260728_2327   --output-dir reports/nightly_rv1_20260728_2327/post_analysis
 python tests/test_tum2twin_surface_proxy_rv1_analysis.py
 ```
 

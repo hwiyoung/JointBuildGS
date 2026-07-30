@@ -70,4 +70,4 @@ No minimum geometry metric recalculation is required for the 135 valid buildings
 
 ## Reproduction
 
-Run `scripts/analyze_tum2twin_surface_proxy_rv1.py` inside the existing `jointbuildgs:dev` container with the completed run root and `post_analysis/` output directory. Then run `tests/test_tum2twin_surface_proxy_rv1_analysis.py`. The script reads frozen metrics and writes only post-analysis artifacts; it does not launch training, Roofer, ICP, or geometry-distance recomputation.
+Run `scripts/input_and_alignment/tum2twin_rv1/analyze_tum2twin_surface_proxy_rv1.py` inside the existing `jointbuildgs:dev` container with the completed run root and `post_analysis/` output directory. Then run `tests/test_tum2twin_surface_proxy_rv1_analysis.py`. The script reads frozen metrics and writes only post-analysis artifacts; it does not launch training, Roofer, ICP, or geometry-distance recomputation.
