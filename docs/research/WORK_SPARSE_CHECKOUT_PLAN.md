@@ -8,16 +8,16 @@
 - Sparse checkout은 working tree에 나타나는 tracked path를 제한한다.
 - 둘 다 external artifact hydration을 대신하지 않으며 기존 checkout의 ignored/untracked file을 제거하지 않는다.
 
-측정 기준 current checkout은 `.git` 제외 733.891 MiB, `.git` 1.801 GiB이고 live remote tree는 732.360 MiB다. 가장 큰 단일 current blob은 9.987 MiB지만 tracked image aggregate가 547.948 MiB이므로 이 조합의 효과가 있다.
+검증된 clean normal clone은 `.git` 제외 733.447 MiB, `.git` 1.242 GiB이고 live remote tree는 728.674 MiB다. 가장 큰 단일 current blob은 9.987 MiB지만 tracked image aggregate가 547.948 MiB이므로 partial+sparse 조합의 효과가 있다.
 
 ## 사전 조건
 
 1. 현재 `JointBuildGS` checkout과 linked worktree를 그대로 둔다.
-2. `git ls-remote`로 target branch를 확인한다. 2026-07-30 audit의 live `exp/fusion-w1`은 `97f6b3ef3159360b88ba0b25cca4b280c14fdcb8`이다.
+2. `git ls-remote --symref`로 target branch를 확인한다. 2026-07-30 closeout에서 remote default는 `main`이고 `main`과 `exp/fusion-w1`은 같은 audited control tree를 가리킨다.
 3. pilot은 새 sibling directory에서만 실행한다.
 4. remote가 blob filter를 지원하는지 확인한다.
 5. C-class payload는 manifest와 필요 범위를 확인하기 전 hydration하지 않는다.
-6. 현재 local branch는 remote보다 43 commits 앞서므로, push 전 pilot은 live remote 구조만 보인다는 점을 기록한다. 새 구조 acceptance test는 최종 구조 commit이 push된 뒤 다시 수행한다.
+6. 구조·storage cleanup이 remote에 반영된 뒤 pilot을 실행한다. Active Fusion의 uncommitted index/worktree는 기존 checkout에만 보존하고 pilot 입력에 섞지 않는다.
 
 ## Profile 1 — 최소 control plane
 
@@ -30,8 +30,8 @@ scripts/
 tests/
 artifacts/manifests/
 docs/research/
-phases/p0-audit/{AGENTS.md,CLAUDE.md,issues.md,scripts/}
-phases/p2-gsjso/{CLAUDE.md,configs/,docs/,scripts/}
+phases/p0-audit/{README.md,issues.md,env/,scripts/}
+phases/p2-gsjso/{README.md,configs/,docs/,scripts/}
 ```
 
 Cone mode는 선택한 directory의 ancestor에 직접 위치한 파일도 유지하므로 root `AGENTS.md`, `README.md`, Docker/Compose/requirements와 phase guide가 실제로 존재하는지 pilot에서 확인한다.
@@ -52,6 +52,7 @@ git sparse-checkout set \
   src configs scripts tests \
   artifacts/manifests \
   docs/research \
+  phases/p0-audit/env \
   phases/p0-audit/scripts \
   phases/p2-gsjso/configs \
   phases/p2-gsjso/docs \
@@ -160,4 +161,4 @@ Pilot은 새 checkout이므로 실패 시 사용을 중단하고 기존 checkout
 
 다음 조건에서만 history cleanup을 재검토한다: partial/sparse clean-clone 측정 후에도 transfer/storage가 허용 불가하거나 향후 50/100 MiB gate 위반 blob이 commit된 경우. 현재 감사 수치만으로는 history cleanup이 필요하지 않다.
 
-이 계획은 실행되지 않았다.
+2026-07-30에 comparison baseline인 single-branch normal fresh clone은 실행·검증했다. Partial clone과 sparse-checkout pilot 자체는 아직 실행하지 않았다.
