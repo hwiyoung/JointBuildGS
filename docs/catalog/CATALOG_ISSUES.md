@@ -65,7 +65,7 @@
 | `docs/experiments/joint-optimization/phase1_ablation/reports/REPORT.md` | 122 | figures/phase1_visual_check_maxdiff/v4008_panel.png | `docs/experiments/joint-optimization/phase1_ablation/reports/figures/phase1_visual_check_maxdiff/v4008_panel.png` |
 | `docs/experiments/joint-optimization/phase1_ablation/reports/REPORT.md` | 199 | figures/structure_4way_bars.png | `docs/experiments/joint-optimization/phase1_ablation/reports/figures/structure_4way_bars.png` |
 | `docs/experiments/joint-optimization/phase1_ablation/reports/REPORT.md` | 231 | figures/contribution_decomposition.png | `docs/experiments/joint-optimization/phase1_ablation/reports/figures/contribution_decomposition.png` |
-| `docs/experiments/joint-optimization/phase1_ablation/reports/REPORT.md` | 259 | ../../tools/gs3d_4way_viewer/ | `docs/experiments/tools/gs3d_4way_viewer` |
+| `docs/experiments/joint-optimization/phase1_ablation/reports/REPORT.md` | 259 | ../../src/apps/gs3d_4way_viewer/ | `docs/experiments/src/apps/gs3d_4way_viewer` |
 | `docs/experiments/joint-optimization/phase1_ablation/reports/REPORT.md` | 56 | figures/training_curves.png | `docs/experiments/joint-optimization/phase1_ablation/reports/figures/training_curves.png` |
 | `docs/experiments/joint-optimization/phase1_ablation/reports/REPORT.md` | 73 | figures/render_compare_4way/render_compare_4way.png | `docs/experiments/joint-optimization/phase1_ablation/reports/figures/render_compare_4way/render_compare_4way.png` |
 | `docs/experiments/joint-optimization/phase1_ablation/reports/REPORT.md` | 95 | figures/wall_normal_distribution.png | `docs/experiments/joint-optimization/phase1_ablation/reports/figures/wall_normal_distribution.png` |

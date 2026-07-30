@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title><!-- TITLE --></title>
+<title>Phase 2 Step 2-2 / Stage 3 CityGML (GT + 4 conds + minimap)</title>
 <style>
   :root {
     color-scheme: dark;
@@ -376,13 +376,13 @@ const resetBtn = document.getElementById('resetBtn');
 (async () => {
   statusEl.textContent = 'loading 1 GT + 4 conditions…';
   const conds = await Promise.all([
-    setupMeshPanel('vg', 'sg', '../../../../results/phase2_synthesis/scene.obj', true),
+    setupMeshPanel('vg', 'sg', '/artifacts/results/phase2_synthesis/scene.obj', true),
     setupMeshPanel('v0', 's0', 'assets/baseline.ply'),
     setupMeshPanel('v1', 's1', 'assets/mutual.ply'),
     setupMeshPanel('v2', 's2', 'assets/structure.ply'),
     setupMeshPanel('v3', 's3', 'assets/both.ply'),
   ]);
-  await setupMinimap('vm', 'sm', '../../../../results/phase2_synthesis/scene.obj', conds);
+  await setupMinimap('vm', 'sm', '/artifacts/results/phase2_synthesis/scene.obj', conds);
   statusEl.textContent = 'ready';
 
   // Sync cameras (GT is primary)

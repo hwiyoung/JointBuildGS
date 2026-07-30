@@ -1,6 +1,7 @@
 """Build experiment viewer dashboard.
 
-Scans results/ for completed experiments and builds per-experiment 4-way viewers:
+Scans the declared artifact root for completed experiments and builds
+per-experiment 4-way viewers:
   - Phase × Step × Stage (2 GS / 3 CityGML) directories
   - Each directory has index.html + assets/ (ksplat for Stage 2, PLY for Stage 3)
   - Root index.html lists all experiments with status and links
@@ -9,7 +10,7 @@ Experiment registry is hard-coded in EXPERIMENTS below — map Phase/Step to
 each condition's result directory + ckpt/stage3 output paths.
 
 Usage:
-    python tools/experiments/build_dashboard.py [--only phase2_2/stage2]
+    python scripts/inspection/experiment_dashboard/build_dashboard.py [--only phase2_2/stage2]
 
 Hooked into run_ablation.sh + run_post_training.sh to auto-rebuild after
 training or Stage 3 completes.
@@ -18,21 +19,30 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import shutil
 import subprocess
 import sys
 from pathlib import Path
 from typing import Optional
 
-ROOT = Path(__file__).resolve().parents[2]  # JointBuildGS/
-TOOLS = ROOT / "tools"
-EXP_DIR = TOOLS / "experiments"
+ROOT = Path(__file__).resolve().parents[3]  # JointBuildGS/
+EXP_DIR = ROOT / "src/apps/experiment_dashboard"
 SHARED = EXP_DIR / "_shared"
 TEMPLATE_GS_4WAY = SHARED / "gs_4way_template.html"
 TEMPLATE_GS_6PANEL = SHARED / "gs_6panel_template.html"
 TEMPLATE_CITYGML = SHARED / "citygml_6panel_template.html"
 
 CONDITIONS = ["baseline", "mutual", "structure", "both"]
+
+
+def _artifact_root() -> Path:
+    raw = os.environ.get("JBGS_ARTIFACT_ROOT")
+    if not raw:
+        raise RuntimeError(
+            "JBGS_ARTIFACT_ROOT is required; run this workflow in the project container"
+        )
+    return Path(raw).resolve()
 
 # Experiment registry. Each entry: (exp_key, label, per-condition ckpt path relative to ROOT)
 EXPERIMENTS = {
@@ -149,7 +159,7 @@ def _build_gs_viewer(exp_key: str, cfg: dict, entries: list) -> dict:
               "conditions": {}, "ready": False}
     ready_count = 0
     for cond, ckpt_rel in cfg["ckpts"].items():
-        ckpt = ROOT / ckpt_rel
+        ckpt = _artifact_root() / ckpt_rel
         if not ckpt.exists():
             status["conditions"][cond] = "missing"
             continue
@@ -189,7 +199,7 @@ def _build_citygml_viewer(exp_key: str, cfg: dict, entries: list) -> dict:
               "conditions": {}, "ready": False}
     ready_count = 0
     for cond, stage3_rel in cfg["plys"].items():
-        stage3_dir = ROOT / stage3_rel
+        stage3_dir = _artifact_root() / stage3_rel
         out_ply = assets_dir / f"{cond}.ply"
         if not stage3_dir.exists() or not any(stage3_dir.glob("building_*/lod2.ply")):
             status["conditions"][cond] = "missing"

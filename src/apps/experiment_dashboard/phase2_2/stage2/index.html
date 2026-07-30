@@ -403,7 +403,7 @@ function syncLoop() {
 (async () => {
   window.dbg('step1: THREE=' + !!THREE + ' GS3D=' + !!GaussianSplats3D + ' OC=' + !!GaussianSplats3D.OrbitControls);
   try {
-    gt = await setupGTPanel('vg', 'sg', '../../../../results/phase2_synthesis/scene.obj');
+    gt = await setupGTPanel('vg', 'sg', '/artifacts/results/phase2_synthesis/scene.obj');
     window.dbg('step2: gt ok, camera=' + !!gt.camera + ' controls=' + !!gt.controls);
     await setupPhotoPanel('../../_shared/phase2_cams/cams.json');
     window.dbg('step3: photo panel ok, cams=' + cams.length);

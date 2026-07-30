@@ -159,7 +159,7 @@ Roof/Terrain rule 도 만족 못 하면 → BG 로 수렴 (ignore_index = "commi
 프리미티브는 건물 표면 class 를 배정하지 않는다" 는 설계 규칙의 **전역 적용** 결과이며, artifact
 가 아닙니다.
 
-**3D 뷰어 관찰 (`tools/gs3d_4way_viewer/` semantic 모드)**:
+**3D 뷰어 관찰 (`src/apps/gs3d_4way_viewer/` semantic 모드)**:
 - 건물 주변부 (지면 경계, 하늘-건물 접합층, 주차 차량, 그림자 영역) 에서 큰 색감 변화
   → L_mutual 이 이런 애매한 프리미티브를 BG 로 정리
 - 건물 코어의 시각 변화 적음 → 건물 기하가 이미 명확해 Wall/Roof rule 을 깔끔히 통과하기 때문
@@ -256,7 +256,7 @@ gradient 없음. Both 에서 두 loss 가 n, c 에 동시 gradient 합산.
 ## 10. 3D 대화형 시각화
 
 4조건을 동일 카메라로 동기화해 비교하는 로컬 웹 뷰어를 제공합니다 —
-[tools/gs3d_4way_viewer/](../../tools/gs3d_4way_viewer/).
+[src/apps/gs3d_4way_viewer/](../../src/apps/gs3d_4way_viewer/).
 
 ### 포맷: 2DGS → ksplat
 
@@ -266,7 +266,7 @@ e^−7 ≈ 0.001m 로 강제 (매우 얇은 ellipsoid = disk 근사) 한 뒤 `.k
 ### 에셋 구성 (6 모드)
 
 ```
-tools/gs3d_4way_viewer/assets/
+src/apps/gs3d_4way_viewer/assets/
 ├── ksplat_2dgs_dense_rgb/         (full SH, 기본 포토리얼)
 ├── ksplat_2dgs_dense_normal/      (법선을 RGB 로 치환 — Mech2 증거)
 ├── ksplat_2dgs_dense_semantic/    (의미론 class 를 RGB 로 치환 — Mech1 증거)
@@ -280,7 +280,7 @@ tools/gs3d_4way_viewer/assets/
 ### 사용법
 
 ```bash
-cd tools/gs3d_4way_viewer && python serve.py   # 로컬 HTTP 서버
+cd src/apps/gs3d_4way_viewer && python serve.py   # 로컬 HTTP 서버
 # 브라우저에서 http://localhost:8000/index.html
 # 상단 LOD (dense/light), View (RGB/Normal/Semantic) 토글
 # "Sync camera" 체크 시 한 패널 드래그 → 4 패널 동시 갱신
@@ -343,7 +343,7 @@ results/phase1_ablation/
 `results/phase1_mutual/run/ckpt/final.pt` (Step 1-4),
 `results/phase1_structure/run/ckpt/final.pt` (Step 1-5).
 
-3D 대화형 뷰어 (§10): [tools/gs3d_4way_viewer/](../../tools/gs3d_4way_viewer/) — ksplat 6 모드.
+3D 대화형 뷰어 (§10): [src/apps/gs3d_4way_viewer/](../../src/apps/gs3d_4way_viewer/) — ksplat 6 모드.
 
 ## 13. 결론
 

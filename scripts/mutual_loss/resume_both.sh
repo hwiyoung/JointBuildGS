@@ -47,7 +47,7 @@ python scripts/inspection/make_figures.py --root "$OUT_ROOT" --scene "$SCENE" \
     >> "$LOG_MAIN" 2>&1 || echo "[resume] figures step failed (non-fatal)" | tee -a "$LOG_MAIN"
 
 echo "====== [$(date -u +%F\ %H:%M:%SZ)] rebuild dashboard ======" | tee -a "$LOG_MAIN"
-python tools/experiments/build_dashboard.py >> "$LOG_MAIN" 2>&1 || \
+python scripts/inspection/experiment_dashboard/build_dashboard.py >> "$LOG_MAIN" 2>&1 || \
     echo "[resume] dashboard rebuild failed (non-fatal)" | tee -a "$LOG_MAIN"
 
 echo "====== [$(date -u +%F\ %H:%M:%SZ)] resume complete ======" | tee -a "$LOG_MAIN"

@@ -288,7 +288,7 @@ Main comparison 후보:
 - Direct (93.9%), Convex (76.3%), 2.5D (67.2%)
 
 ### 시각화
-- 대시보드 (tools/experiments/): Phase 1/2 Stage 2 GS 뷰어, Phase 2 Stage 3 CityGML 6-panel 뷰어 (GT + 4 조건 + nearest Pix4D photo)
+- 대시보드 (src/apps/experiment_dashboard/): Phase 1/2 Stage 2 GS 뷰어, Phase 2 Stage 3 CityGML 6-panel 뷰어 (GT + 4 조건 + nearest Pix4D photo)
 - 5 개 figures (fig1-5, barchart, error heatmap, sample building 등)
 
 ### 문서
@@ -361,4 +361,4 @@ Main comparison 후보:
 - `src/stage3/building_2_5d.py` — 2.5D hybrid (1218 lines, legacy port + margin fix)
 - `src/stage3/polyfit_cli.cpp` — CGAL PolyFit (compiled but watertight 이슈)
 - `scripts/phase2_synthesis/` — 학습/평가/figure 스크립트
-- `tools/experiments/` — dashboard (Phase 1/2 Stage 2 + Phase 2 Stage 3 뷰어)
+- `src/apps/experiment_dashboard/` — dashboard (Phase 1/2 Stage 2 + Phase 2 Stage 3 뷰어)

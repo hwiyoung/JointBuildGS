@@ -7,11 +7,12 @@ Reads sparse/0/images.bin and produces:
 All positions/vectors are in the scene.obj world frame (Y-down, ground at Y=0).
 
 Usage:
-    python tools/experiments/_shared/extract_phase2_cams.py
+    python scripts/inspection/experiment_dashboard/extract_phase2_cams.py
 """
 from __future__ import annotations
 
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -23,9 +24,14 @@ sys.path.insert(0, str(ROOT))
 
 from src.stage2.colmap_io import read_images_bin  # noqa: E402
 
-SPARSE = ROOT / "results/phase2_synthesis/dataset/sparse/0/images.bin"
-IMGDIR = ROOT / "results/phase2_synthesis/dataset/images"
-OUTDIR = ROOT / "tools/experiments/_shared/phase2_cams"
+if not os.environ.get("JBGS_ARTIFACT_ROOT"):
+    raise RuntimeError(
+        "JBGS_ARTIFACT_ROOT is required; run this workflow in the project container"
+    )
+ARTIFACT_ROOT = Path(os.environ["JBGS_ARTIFACT_ROOT"]).resolve()
+SPARSE = ARTIFACT_ROOT / "results/phase2_synthesis/dataset/sparse/0/images.bin"
+IMGDIR = ARTIFACT_ROOT / "results/phase2_synthesis/dataset/images"
+OUTDIR = ROOT / "src/apps/experiment_dashboard/_shared/phase2_cams"
 THUMB_W = 800
 JPEG_Q = 82
 
