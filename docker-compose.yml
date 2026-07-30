@@ -8,9 +8,19 @@ services:
       - NVIDIA_VISIBLE_DEVICES=1
       - CUDA_VISIBLE_DEVICES=0
       - TORCH_CUDA_ARCH_LIST=8.6
+      - JBGS_ARTIFACT_ROOT=/artifacts/JointBuildGS
     volumes:
       - .:/workspace/JointBuildGS
       - /media/innopam/InnoPAM-8TB:/data
+      - ${JBGS_ARTIFACT_HOST_ROOT:-../JointBuildGS-artifacts}:/artifacts/JointBuildGS
+      # Historical runtime paths remain container-only compatibility mounts.
+      # The host repository stores no payload bytes at these paths.
+      - ${JBGS_ARTIFACT_HOST_ROOT:-../JointBuildGS-artifacts}/data:/workspace/JointBuildGS/data
+      - ${JBGS_ARTIFACT_HOST_ROOT:-../JointBuildGS-artifacts}/results:/workspace/JointBuildGS/results
+      - ${JBGS_ARTIFACT_HOST_ROOT:-../JointBuildGS-artifacts}/reports:/workspace/JointBuildGS/reports
+      - ${JBGS_ARTIFACT_HOST_ROOT:-../JointBuildGS-artifacts}/fair-pilot:/workspace/JointBuildGS/fair-pilot
+      - ${JBGS_ARTIFACT_HOST_ROOT:-../JointBuildGS-artifacts}/phase-payloads/p0-audit/data:/workspace/JointBuildGS/phases/p0-audit/data
+      - ${JBGS_ARTIFACT_HOST_ROOT:-../JointBuildGS-artifacts}/phase-payloads/p0-audit/runs:/workspace/JointBuildGS/phases/p0-audit/runs
     ports:
       - "6006:6006"      # TensorBoard
     shm_size: "16gb"

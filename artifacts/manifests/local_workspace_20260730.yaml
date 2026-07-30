@@ -1,0 +1,67 @@
+schema_version: 1
+artifact_id: jointbuildgs-local-workspace-20260730
+role: local-workspace-relocation
+created_at: 2026-07-30T10:41:11+09:00
+backend:
+  kind: local-filesystem
+  repository_relative_uri: file:../JointBuildGS-artifacts
+  docker_uri: file:/artifacts/JointBuildGS
+  durable_backup_claim: false
+integrity:
+  method: same-device-atomic-rename
+  filesystem_device: 2065
+  content_bytes_modified: false
+  directory_sha256: not-recomputed
+  note: Existing file hashes and run receipts remain authoritative; device and inode continuity was verified at relocation.
+totals:
+  bytes: 428296653718
+  files: 85375
+objects:
+  - source_path: data
+    uri: file:../JointBuildGS-artifacts/data
+    bytes: 173592976197
+    files: 26671
+    inode_before_after: 75040081
+    class: C
+  - source_path: results
+    uri: file:../JointBuildGS-artifacts/results
+    bytes: 115693750893
+    files: 21509
+    inode_before_after: 75040085
+    class: C_or_D
+  - source_path: reports
+    uri: file:../JointBuildGS-artifacts/reports
+    bytes: 171621547
+    files: 1114
+    inode_before_after: 75118224
+    class: D
+  - source_path: fair-pilot
+    uri: file:../JointBuildGS-artifacts/fair-pilot
+    bytes: 2279659141
+    files: 112
+    inode_before_after: 75106872
+    class: C_or_D
+  - source_path: phases/p0-audit/data
+    uri: file:../JointBuildGS-artifacts/phase-payloads/p0-audit/data
+    bytes: 72627527687
+    files: 6683
+    inode_before_after: 76087386
+    class: C
+  - source_path: phases/p0-audit/runs
+    uri: file:../JointBuildGS-artifacts/phase-payloads/p0-audit/runs
+    bytes: 63931118253
+    files: 29286
+    inode_before_after: 76087391
+    class: C_or_D
+compatibility:
+  docker_compose_mounts:
+    - data
+    - results
+    - reports
+    - fair-pilot
+    - phases/p0-audit/data
+    - phases/p0-audit/runs
+  host_repository_payload_roots_present: false
+retention:
+  policy: preserve-until-separate-reviewed-storage-migration
+  destructive_cleanup_authorized: false
