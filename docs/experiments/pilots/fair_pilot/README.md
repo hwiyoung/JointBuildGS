@@ -15,7 +15,7 @@ scripts/experiments/fair_pilot/run_05_stats_candidates.sh
 ```
 
 Every wrapper uses Docker with host UID/GID mapping and the image IDs locked in
-`configs/experiments/fair_pilot/vaihingen_area3.json`. The COLMAP wrapper exposes host GPU 1 as container
+`configs/fair_pilot/vaihingen_area3.json`. The COLMAP wrapper exposes host GPU 1 as container
 GPU 0. Whole-stage time bounds and thresholds are locked in the same config;
 incremental logs and full payload remain in the external artifact workspace.
 The promoted compact run record is in

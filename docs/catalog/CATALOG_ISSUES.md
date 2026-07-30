@@ -109,7 +109,7 @@
 | `docs/experiments/input-and-alignment/phase2_synthesis/reports/REPORT.md` | 17 | ../../src/stage2/train.py | `docs/experiments/src/stage2/train.py` |
 | `docs/experiments/input-and-alignment/phase2_synthesis/reports/REPORT.md` | 170 | figures/render_samples.png | `docs/experiments/input-and-alignment/phase2_synthesis/reports/figures/render_samples.png` |
 | `docs/experiments/input-and-alignment/phase2_synthesis/reports/REPORT.md` | 201 | ../../scripts/phase2_synthesis/benchmark_iter_speed.py | `docs/experiments/scripts/phase2_synthesis/benchmark_iter_speed.py` |
-| `docs/experiments/input-and-alignment/phase2_synthesis/reports/REPORT.md` | 213 | ../../configs/phase2_smoke.yaml | `docs/experiments/configs/phase2_smoke.yaml` |
+| `docs/experiments/input-and-alignment/phase2_synthesis/reports/REPORT.md` | 213 | ../../configs/mutual_loss/core_ablation/phase2_smoke.yaml | `docs/experiments/configs/mutual_loss/core_ablation/phase2_smoke.yaml` |
 | `docs/experiments/input-and-alignment/phase2_synthesis/reports/REPORT.md` | 215 | ../../scripts/phase2_synthesis/fc3_diagnose.py | `docs/experiments/scripts/phase2_synthesis/fc3_diagnose.py` |
 | `docs/experiments/input-and-alignment/phase2_synthesis/reports/REPORT.md` | 23 | ../../scripts/phase2_synthesis/select_block.py | `docs/experiments/scripts/phase2_synthesis/select_block.py` |
 | `docs/experiments/input-and-alignment/phase2_synthesis/reports/REPORT.md` | 30 | block_3d.png | `docs/experiments/input-and-alignment/phase2_synthesis/reports/block_3d.png` |

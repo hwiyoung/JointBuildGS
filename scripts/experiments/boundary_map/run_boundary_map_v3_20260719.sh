@@ -871,7 +871,7 @@ manifest.update({
                 "phases/p0-audit/data/work/opf/opf/"
                 "scene_reference_frame.json"
             ),
-            "projection_datum_config": "configs/projection_datum.json",
+            "projection_datum_config": "configs/input_and_alignment/projection_datum.json",
             "world_frame": "canonical_local_xyz",
             "crop_source": "projected_footprint",
             "addressed_pair_count": camera_branch_counts[

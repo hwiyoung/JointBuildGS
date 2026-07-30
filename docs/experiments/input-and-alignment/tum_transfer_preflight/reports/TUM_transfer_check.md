@@ -17,10 +17,10 @@
 - **어댑터:** `scripts/stage2/prep_tum_smoke.sh` — 상대 symlink로 `ColmapDataset` 기대 레이아웃
   (`data_root/images/` + `data_root/sparse/0/{cameras,images,points3D}.bin`) 구성. 소스 읽기 전용,
   stereo/frames/rigs 미스테이징(순수 vanilla). Docker bind-mount에서 호스트·컨테이너 동일 해석.
-- **config:** `configs/tum_vanilla_smoke.yaml` — `matrixcity_vanilla.yaml` 미러. `w_photo=1.0, w_nc=0.05`,
+- **config:** `configs/input_and_alignment/tum_vanilla_smoke.yaml` — `matrixcity_vanilla.yaml` 미러. `w_photo=1.0, w_nc=0.05`,
   `w_depth=w_normal=w_distort=w_sem=w_mutual=w_structure=0`, `load_semantic=false`(기본),
   `downscale=2.0`(700×506), `max_iter=7000`(3DGS 표준 조기 수렴 체크포인트), `reset_every=3000`.
-- **실행:** `docker compose run --rm -T dev python -m src.stage2.train --config configs/tum_vanilla_smoke.yaml`
+- **실행:** `docker compose run --rm -T dev python -m src.stage2.train --config configs/input_and_alignment/tum_vanilla_smoke.yaml`
   (GPU1 RTX 3090, gsplat 1.4.0). **§4: 도커 기반·재현 가능(스크립트+config)·한 커밋.**
 
 ## 2. 결과 (기존 출력만 — 새 export 없음)
@@ -59,7 +59,7 @@ floater pruning이면 선명해질 사안). **게이트: 쓰레기·미수렴 �
 
 ## 4. 변경분 (재현)
 
-- 추가: `scripts/stage2/prep_tum_smoke.sh`(어댑터), `configs/tum_vanilla_smoke.yaml`(config),
+- 추가: `scripts/stage2/prep_tum_smoke.sh`(어댑터), `configs/input_and_alignment/tum_vanilla_smoke.yaml`(config),
   `docs/experiments/input-and-alignment/tum_transfer_preflight/reports/TUM_transfer_check.md`(본 문서) + `docs/figs/tum_transfer/*.png`(증거 4장).
 - `.gitignore`에 `results/tum_transfer/`(스크래치 산출·symlink) 추가.
 - **엔진 로직(`src/stage2/*`) 무변경.** 출력·체크포인트는 기존 경로 그대로 사용(새 export 없음).

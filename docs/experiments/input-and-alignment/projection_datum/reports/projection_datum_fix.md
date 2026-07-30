@@ -23,7 +23,7 @@ Interpretation note: near-nadir can have small pixel movement, while oblique mov
 | path | impact |
 |---|---|
 | `phases/p2-gsjso/scripts/projection_datum.py` | new shared datum utility; config-driven zeta for orthometric image projection |
-| `configs/projection_datum.json` | config parameter for zeta; 45.7/48.0/A1-zeta are replaceable values |
+| `configs/input_and_alignment/projection_datum.json` | config parameter for zeta; 45.7/48.0/A1-zeta are replaceable values |
 | `phases/p2-gsjso/scripts/evidence_cards_v2.py` | card v2 LoD2/ALS/footprint projection, roof masks, view angle selection |
 | `phases/p2-gsjso/scripts/evidence_cards.py` | legacy evidence card projection path |
 | `phases/p2-gsjso/scripts/projection_gate.py` | historical retracted gate imports evidence_cards_v2 projection functions |

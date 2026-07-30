@@ -24,8 +24,8 @@ TARGET_PATHS = [
     Path("phases/p2-gsjso/scripts/tum_mob_raw_to_npz.py"),
     Path("phases/p2-gsjso/scripts/seed_depth_bands.py"),
     Path("phases/p2-gsjso/scripts/seed_material_audit.py"),
-    Path("configs/tum_mob/seed_semantic.yaml"),
-    Path("configs/tum_mob/gs_seed_acmp.yaml"),
+    Path("configs/input_and_alignment/tum_mob/seed_semantic.yaml"),
+    Path("configs/input_and_alignment/tum_mob/gs_seed_acmp.yaml"),
     Path("src/stage2/semantic_seed.py"),
 ]
 OLD_CONSTANT_RE = re.compile(r"(?<![\d.])(-556(?:\.0)?|556(?:\.0)?|48\.0|\+48|-558\.24)(?![\d.])")

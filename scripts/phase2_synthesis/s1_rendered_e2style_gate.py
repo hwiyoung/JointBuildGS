@@ -49,7 +49,7 @@ from src.stage2.renderer import render, render_semantic  # noqa: E402
 OUT_ROOT = ROOT / "results/stage3_rendered_evidence/S1_rendered_e2style_gate"
 SCENE = ROOT / "results/phase2_synthesis/scene.obj"
 MUTUAL_CKPT = ROOT / "results/phase2_ablation_citygml/mutual/ckpt/final.pt"
-MUTUAL_CONFIG = ROOT / "configs/phase2_mutual.yaml"
+MUTUAL_CONFIG = ROOT / "configs/mutual_loss/core_ablation/phase2_mutual.yaml"
 E2_REFERENCE = ROOT / "results/stage3_typed_readout/E2_gt_fullscene_auto_split"
 PRIMITIVE_NPZ = ROOT / "results/phase2_ablation_citygml/mutual/stage3/primitives.npz"
 

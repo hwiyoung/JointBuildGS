@@ -140,7 +140,7 @@ class PoseAdoptionV2Tests(unittest.TestCase):
 
     def test_projection_datum_semantics_fail_closed(self):
         payload = json.loads(
-            (REPO / "configs/projection_datum.json").read_text(encoding="utf-8")
+            (REPO / "configs/input_and_alignment/projection_datum.json").read_text(encoding="utf-8")
         )
         receipt = self.module.validate_coordinate_datum_payload(
             self.config, payload

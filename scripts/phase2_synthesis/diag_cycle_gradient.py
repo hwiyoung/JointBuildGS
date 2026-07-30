@@ -7,7 +7,7 @@ Quantifies "cycle 고리 1: L_structure → n_i" strength relative to other loss
 
 Usage:
     python scripts/phase2_synthesis/diag_cycle_gradient.py \
-        --config configs/phase2_structure.yaml \
+        --config configs/mutual_loss/core_ablation/phase2_structure.yaml \
         --ckpt   results/phase2_ablation_citygml/structure/ckpt/final.pt \
         --out    results/phase2_ablation_citygml/_diag/cycle_gradient_structure.json
 """

@@ -103,7 +103,7 @@ def write_jpeg(path: Path, rgb_float: np.ndarray, quality: int) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", default="configs/matrixcity_step1_6.yaml")
+    parser.add_argument("--config", default="configs/input_and_alignment/matrixcity_step1_6.yaml")
     parser.add_argument("--out-dir", default="tools/gs3d_4way_viewer/assets/turntable_2dgs")
     parser.add_argument("--start", type=int, default=5083)
     parser.add_argument("--end", type=int, default=5528)

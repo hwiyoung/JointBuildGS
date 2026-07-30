@@ -21,7 +21,7 @@ from src.stage2.loss.mutual import l_mutual
 
 
 OUT_ROOT = ROOT / "results/FC_S6_componentwise_revised_lmutual_design_validation"
-CONFIG_ROOT = ROOT / "configs/fc_s6"
+CONFIG_ROOT = ROOT / "configs/mutual_loss/fc_screening/fc_s6"
 JOB_ROOT = OUT_ROOT / "jobs"
 
 TARGET_BIDS = ["B0", "B1", "B2", "B8", "B6", "B3", "B123", "B126", "B50", "B104"]
@@ -575,7 +575,7 @@ case "$PHASE" in
 esac
 
 for ARM in $ARMS; do
-  CONFIG="configs/fc_s6/${{ARM}}.yaml"
+  CONFIG="configs/mutual_loss/fc_screening/fc_s6/${{ARM}}.yaml"
   if [ -n "$WINLOSS" ]; then
     bash "$JOB_ROOT/run_fc_s6_job.sh" "$ARM" "$CONFIG" "$METRICS" "$SPLIT" "$WINLOSS"
   else
@@ -760,12 +760,12 @@ python scripts/phase2_synthesis/fc_s6_collect_results.py
         manifest_rows.append({
             "job_name": arm.name,
             "phase": arm.phase,
-            "config_path": f"configs/fc_s6/{arm.name}.yaml",
+            "config_path": f"configs/mutual_loss/fc_screening/fc_s6/{arm.name}.yaml",
             "seed": cfg["seed"],
             "checkpoint_path": str(out_dir / "ckpt/final.pt"),
             "train_log_path": f"{rel(JOB_ROOT)}/logs/{arm.name}.log",
             "render_evidence_path": str(out_dir / "rendered_evidence"),
-            "stage3_evaluation_command": f"python scripts/phase2_synthesis/fc_s6_stage3_metric_v1_eval.py --run-name {arm.name} --config configs/fc_s6/{arm.name}.yaml --checkpoint {out_dir}/ckpt/final.pt --rendered-evidence-root {out_dir}/rendered_evidence --out-csv {metrics} --split-summary-csv {split}",
+            "stage3_evaluation_command": f"python scripts/phase2_synthesis/fc_s6_stage3_metric_v1_eval.py --run-name {arm.name} --config configs/mutual_loss/fc_screening/fc_s6/{arm.name}.yaml --checkpoint {out_dir}/ckpt/final.pt --rendered-evidence-root {out_dir}/rendered_evidence --out-csv {metrics} --split-summary-csv {split}",
             "output_directory": str(out_dir),
             "launch_status": "not_launched",
         })

@@ -50,7 +50,7 @@ OLD_PAIR_DIR = OLD_RUN / "pairs"
 OLD_MANIFEST = OLD_RUN / "manifest.json"
 OLD_RESCORE_CSV = REPO / "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_fm_retri_rescore.csv"
 ENV_MANIFEST = REPO / "docs/experiments/input-and-alignment/e5_c001_s3ap/manifests/e5_c001_s3ap_fm_env_manifest.json"
-PROJECTION_DATUM = REPO / "configs/projection_datum.json"
+PROJECTION_DATUM = REPO / "configs/input_and_alignment/projection_datum.json"
 
 
 def load_module(name: str, path: Path) -> Any:

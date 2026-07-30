@@ -6,7 +6,7 @@
 - Analysis grain: one row per canonical building, 178 rows / 178 unique IDs
 - Run branch: `exp/fusion-w1`
 - Run commit: `6f7366626cc491567926c64d96f8f028485559e0`
-- Config: `configs/tum2twin_rv1_20260728_2327.yaml`
+- Config: `configs/input_and_alignment/tum2twin_rv1_20260728_2327.yaml`
 - Completed: `2026-07-28T15:05:23.153532+00:00` (UTC timestamp; start state is recorded in KST)
 - No GS learning, Roofer rerun, ICP, or distance metric recomputation was performed in post-analysis.
 

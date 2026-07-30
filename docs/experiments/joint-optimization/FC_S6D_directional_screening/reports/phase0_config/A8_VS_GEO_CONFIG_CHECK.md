@@ -5,8 +5,8 @@
 `PASS`
 
 ## Inputs
-- A8 config: `configs/fc_s6/A8_no_terrain_terms.yaml`
-- A8_v2_geo source config: `configs/fc_s6d/A8_v2_geo.yaml`
+- A8 config: `configs/mutual_loss/fc_screening/fc_s6/A8_no_terrain_terms.yaml`
+- A8_v2_geo source config: `configs/mutual_loss/fc_screening/fc_s6d/A8_v2_geo.yaml`
 - A8_v2_geo screening config: `results/FC_S6D_directional_screening/configs/A8_v2_geo.yaml`
 
 ## Confirmed Active Terms

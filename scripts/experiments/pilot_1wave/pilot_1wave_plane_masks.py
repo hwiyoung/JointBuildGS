@@ -74,7 +74,7 @@ DEFAULT_DATA = DEFAULT_PREP / "data"
 DEFAULT_PHOTO_MASK = DEFAULT_PREP / "photo_support_masks/mask_manifest.json"
 DEFAULT_HEIGHT_AUDIT = DEFAULT_PREP / "sfm_mvs_height_audit.json"
 DEFAULT_FOOTPRINTS = REPO / "results/tum_transfer/analysis/footprints_aoi.geojson"
-DEFAULT_DATUM = REPO / "configs/projection_datum.json"
+DEFAULT_DATUM = REPO / "configs/input_and_alignment/projection_datum.json"
 RECEIPT_SCHEMA = "jointbuildgs.pilot_1wave.mask_producer_asset_receipt.v1"
 
 

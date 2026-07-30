@@ -12,8 +12,8 @@ from pathlib import Path
 
 
 REPO = Path(__file__).resolve().parents[3]
-DENSE = Path("configs/tum_mob/gs_d4_dense.yaml")
-SPARSE = Path("configs/tum_mob/gs_d4_sparse.yaml")
+DENSE = Path("configs/input_and_alignment/tum_mob/gs_d4_dense.yaml")
+SPARSE = Path("configs/input_and_alignment/tum_mob/gs_d4_sparse.yaml")
 SPARSE_SEED = Path("results/tum_transfer/mob_analysis/seed/seed_sparse.ply")
 SPARSE_SOURCE = Path("phases/p0-audit/data/work/mvs/openmvs/colmap_txt/sparse/points3D.txt")
 RECIPE = "GS(D4; seed-protect; pho1·sem0.1·nc0.05·dep0.03·nrm-off·str1[g2;na0.08;cp0.01;warm15k]; gssem)"

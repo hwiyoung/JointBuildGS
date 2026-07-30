@@ -37,9 +37,9 @@ EASY_CONTROL_BIDS = ["B0", "B1", "B2", "B8", "B50"]
 HARD_DIAGNOSTIC_BIDS = ["B6", "B3", "B123", "B126", "B104"]
 GUARD_BIDS = ["B104", "B6", "B3", "B123", "B126", "B2", "B0", "B1"]
 RUN_CONFIGS = {
-    "M3": ROOT / "configs/fc_s5/M3_reduced_mutual.yaml",
-    "M5": ROOT / "configs/fc_s5/M5_terrain_off.yaml",
-    "M10": ROOT / "configs/fc_s5/M10_ramped_mutual.yaml",
+    "M3": ROOT / "configs/mutual_loss/fc_screening/fc_s5/M3_reduced_mutual.yaml",
+    "M5": ROOT / "configs/mutual_loss/fc_screening/fc_s5/M5_terrain_off.yaml",
+    "M10": ROOT / "configs/mutual_loss/fc_screening/fc_s5/M10_ramped_mutual.yaml",
 }
 OUT_ROOT = ROOT / "results/FC_S5_loss_ledger_instrumentation"
 DIAG_ROOT = OUT_ROOT / "phase2_diagnostics"

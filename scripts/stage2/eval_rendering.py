@@ -3,7 +3,7 @@
 Usage (inside container):
     python scripts/stage2/eval_rendering.py \
         --ckpt results/phase1_vanilla/run/ckpt/final.pt \
-        --config configs/matrixcity_vanilla.yaml \
+        --config configs/input_and_alignment/matrixcity_vanilla.yaml \
         --out results/phase1_vanilla/run/eval_rendering \
         --test-ratio 0.1
 """

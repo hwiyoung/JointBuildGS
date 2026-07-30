@@ -23,8 +23,8 @@
 ## Unified Diff
 
 ```diff
---- configs/tum_mob/gs_d4_dense.yaml
-+++ configs/tum_mob/gs_d4_sparse.yaml
+--- configs/input_and_alignment/tum_mob/gs_d4_dense.yaml
++++ configs/input_and_alignment/tum_mob/gs_d4_sparse.yaml
 @@ -1,21 +1,13 @@
 -# P2-D4 (CORRECTED) — minimal "normalize cp only" re-train (flatten GS roof curvature).
 -# Base = gs_prior_full_dense.yaml (reported D). CORRECTION (2026-06-25, 김휘영): the earlier D4 OVER-APPLIED

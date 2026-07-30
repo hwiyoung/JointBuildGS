@@ -1,19 +1,27 @@
---- configs/tum_mob/gs_d4_sparse.yaml
-+++ configs/tum_mob/e5_pilot/gs_e5_C001_sparse_r2.yaml
-@@ -1,92 +1,77 @@
--# P2-D4 (CORRECTED) — sparse seed arm for E5 preregistration.
--# Derived from gs_d4_dense.yaml. Recipe terms are identical; init seed is the
--# native COLMAP sparse points3D cloud. out_dir is separated only to avoid
--# overwriting dense outputs.
+--- configs/input_and_alignment/tum_mob/gs_d4_dense.yaml
++++ configs/e5_c001/e5_pilot/gs_e5_C001_dense_r2.yaml
+@@ -1,100 +1,77 @@
+-# P2-D4 (CORRECTED) — minimal "normalize cp only" re-train (flatten GS roof curvature).
+-# Base = gs_prior_full_dense.yaml (reported D). CORRECTION (2026-06-25, 김휘영): the earlier D4 OVER-APPLIED
+-# per-term normalization (photo 5.6 / nc 2.1 / sem 0.92) -> early photo/psnr lag. Corrected D4 keeps D's
+-# HEALTHY terms (photo 1.0, nc 0.05, sem 0.1, na 0.08) and surgically fixes only the 3 problem terms:
+-#   cp     : effective 0.08 -> 0.01  (de-dominate; cp share 68% -> ~31%, to photo parity)
+-#   depth  : 0.1 -> 0.03             (de-noise: CV 1.74 noisy MVS target -> lower pin)
+-#   normal : 0.15 -> 0               (remove noisy external MVS normal)
+-# Engine UNCHANGED (config-only). NOT a goalpost-moving variant — a config-error correction; re-locked as D4.
+-# Effective scalar = weight that multiplies the RAW loss in train.py loss_total
+-#   (cp = w_structure*w_structure_cp ; na = w_structure*w_structure_na ; others = their w_).
+-# Predicted weighted shares (D-run means): cp 31% / photo 31% / sem 19% / depth 17% / nc 2% / normal 0
+-#   -> no term > 40% (vs reported D cp 68%). See docs/experiments/joint-optimization/w_d4/reports/W_D4_precheck.md / P2_D4_사양서_사전등록_20260625.md §2.
 -seed: 0
 +seed: 1002
  device: cuda
 -
 -data_root: /workspace/JointBuildGS/results/tum_transfer/data_geoidfix   # MUST-EQ
 -
--init_pointcloud: /workspace/JointBuildGS/results/tum_transfer/mob_analysis/seed/seed_sparse.ply   # MUST-EQ
+-init_pointcloud: /workspace/JointBuildGS/results/tum_transfer/mob_analysis/seed/seed_dense.ply   # MUST-EQ
 +data_root: /workspace/JointBuildGS/results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20
-+init_pointcloud: /workspace/JointBuildGS/results/tum_transfer/e5_pilot/C001/seeds/seed_sparse_C001_buf20.ply
++init_pointcloud: /workspace/JointBuildGS/results/tum_transfer/e5_pilot/C001/seeds/seed_dense_C001_buf20.ply
  init_pointcloud_mode: concat
 -seed_protect: true                                                       # MUST-EQ
 +seed_protect: true
@@ -141,5 +149,5 @@
 +max_iter: 30000
  eval_every: 2000
  ckpt_every: 10000
--out_dir: /workspace/JointBuildGS/results/tum_transfer/mob/gs_d4_sparse
-+out_dir: /workspace/JointBuildGS/results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_sparse_r2
+-out_dir: /workspace/JointBuildGS/results/tum_transfer/mob/gs_d4_dense
++out_dir: /workspace/JointBuildGS/results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_dense_r2

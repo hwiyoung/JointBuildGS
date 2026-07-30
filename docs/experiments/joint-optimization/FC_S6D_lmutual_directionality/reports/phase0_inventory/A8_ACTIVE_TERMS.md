@@ -4,7 +4,7 @@
 Inspection only. No training, Stage3, Metric-v1, L_structure, or G2 run was performed.
 
 ## A8 Reference
-- Config: `configs/fc_s6/A8_no_terrain_terms.yaml`
+- Config: `configs/mutual_loss/fc_screening/fc_s6/A8_no_terrain_terms.yaml`
 - Checkpoint: `results/FC_S6_componentwise_revised_lmutual_design_validation/phase1_existing_terms/runs/A8_no_terrain_terms/ckpt/final.pt`
 - `w_mutual`: `0.1`
 - `mutual_warmup`: `10000`

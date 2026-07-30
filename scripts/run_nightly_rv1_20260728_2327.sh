@@ -3,7 +3,7 @@ set -Eeuo pipefail
 
 RUN_ID="20260728_2327"
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-CONFIG="configs/tum2twin_rv1_20260728_2327.yaml"
+CONFIG="configs/input_and_alignment/tum2twin_rv1_20260728_2327.yaml"
 REPORT="$REPO/reports/nightly_rv1_${RUN_ID}"
 LOCK="$REPORT/nightly.lock"
 PID_FILE="$REPORT/nightly.pid"

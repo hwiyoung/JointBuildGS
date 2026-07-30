@@ -15,7 +15,7 @@ LOG_MAIN="$OUT_ROOT/_logs/resume_both.out"
 echo "====== [$(date -u +%F\ %H:%M:%SZ)] resume: train both ======" | tee -a "$LOG_MAIN"
 log="$OUT_ROOT/_logs/both.log"
 : > "$log"
-stdbuf -oL -eL python -m src.stage2.train --config configs/phase2_both.yaml \
+stdbuf -oL -eL python -m src.stage2.train --config configs/mutual_loss/core_ablation/phase2_both.yaml \
     >> "$log" 2>&1
 rc=$?
 echo "====== [$(date -u +%F\ %H:%M:%SZ)] done: train both (rc=$rc) ======" | tee -a "$LOG_MAIN"

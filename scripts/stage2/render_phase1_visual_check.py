@@ -64,7 +64,7 @@ def label_strip(text, width, height=30, color=(240, 240, 240)):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--config", default="configs/matrixcity_step1_6.yaml")
+    ap.add_argument("--config", default="configs/input_and_alignment/matrixcity_step1_6.yaml")
     ap.add_argument("--views", nargs="+", type=int, default=[408, 801, 4870, 27])
     ap.add_argument("--out-dir", default="results/phase1_ablation/figures/phase1_visual_check")
     args = ap.parse_args()

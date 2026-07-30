@@ -115,7 +115,7 @@ def main():
     ap.add_argument("--ckpt", required=True)
     ap.add_argument("--label", required=True)
     ap.add_argument("--out-dir", required=True)
-    ap.add_argument("--config", default="configs/matrixcity_step1_6.yaml")
+    ap.add_argument("--config", default="configs/input_and_alignment/matrixcity_step1_6.yaml")
     ap.add_argument("--views", nargs="+", type=int, default=[5368, 5083, 5528, 5328])
     ap.add_argument("--modes", nargs="+", default=["vert_wall", "horiz_terrain", "horiz_roof", "group_dev", "coplanar_dev"])
     args = ap.parse_args()

@@ -117,7 +117,7 @@
       },
       {
         "role": "projection_datum_config",
-        "path": "configs/projection_datum.json",
+        "path": "configs/input_and_alignment/projection_datum.json",
         "bytes": 962,
         "sha256": "096a49b46fc5661d74f9d3b54c4f3777676cfc6b27e577b52bb2dabeee8b480c"
       }
@@ -131,7 +131,7 @@
     }
   },
   "coordinate_datum_contract": {
-    "path": "configs/projection_datum.json",
+    "path": "configs/input_and_alignment/projection_datum.json",
     "sha256": "096a49b46fc5661d74f9d3b54c4f3777676cfc6b27e577b52bb2dabeee8b480c",
     "geo_crs": "EPSG:25832",
     "input_vertical_datum_default": "orthometric",

@@ -48,7 +48,7 @@ reference LoD2/3 의미면(`690_5334.gml`·`690_5336.gml`, 945동, 48,622 삼각
 ## 3. base config + distortion 결정
 
 base = `tum_vanilla_proper.yaml`(downscale1·30k·densify/prune·`w_nc=0.05`) 위에 의미·prior만 추가. gravity `e_gravity=[0,0,-1]`
-([configs/tum_gravity.json](../../../../configs/tum_gravity.json), EPSG:25832 Z-up). 5구성 동일 base: [configs/tum_mob/](../../../../configs/tum_mob).
+([configs/input_and_alignment/tum_gravity.json](../../../../configs/input_and_alignment/tum_gravity.json), EPSG:25832 Z-up). 5구성 동일 base: [configs/tum_mob/](../../../../configs/tum_mob).
 
 - **distortion: OFF로 fallback (기록).** 스케일보정 sweep 결과 **w=100/1.0/0.1 모두 PSNR 붕괴**, **w=0.01도 densification 불안정(N 371k→113k)**.
   TUM 큰 metric depth에서 distortion(~depth²) 폭주, 엔진 동결이라 scene-scale 정규화 불가 → 검증된 base(distortion off) 사용.
@@ -173,5 +173,5 @@ docker run … jointbuildgs-p0-tools:t0 python3 phases/p2-gsjso/scripts/tum_mob_
 docker run … jointbuildgs-p0-tools:t0 python3 phases/p2-gsjso/scripts/tum_mob_baselines.py …
 ```
 산출(gitignore 스크래치): `results/tum_transfer/mob/{train_*,tsdf_*,eval_results.*}`, `results/tum_transfer/mob_analysis/*`,
-`phases/p0-audit/runs/mob_eval/*`. 커밋: 본 문서 + `configs/tum_mob/*`·`configs/tum_gravity.json` + `phases/p2-gsjso/scripts/{make_clean_labels,run_mob_all,tum_mob_*,_mob_*}.py`
+`phases/p0-audit/runs/mob_eval/*`. 커밋: 본 문서 + `configs/tum_mob/*`·`configs/input_and_alignment/tum_gravity.json` + `phases/p2-gsjso/scripts/{make_clean_labels,run_mob_all,tum_mob_*,_mob_*}.py`
 + `docs/experiments/p2_mob_past_results.md` + `docs/figs/tum_transfer/mob_*.png`. 엔진 `src/stage2/*` 무변경.

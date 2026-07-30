@@ -55,7 +55,7 @@ DEV_IMAGE = "jointbuildgs:dev"
 RUN_ID = "20260713_e5_c001_s3_semantic_guided"
 RUN_DIR = REPO / "phases/p2-gsjso/runs" / RUN_ID
 
-BASE_CONFIG = REPO / "configs/tum_mob/e5_s2p_interaction/gs_e5_C001_s2p_arm1p_dense_r1.yaml"
+BASE_CONFIG = REPO / "configs/e5_c001/e5_s2p_interaction/gs_e5_C001_s2p_arm1p_dense_r1.yaml"
 CONFIG_DIR = REPO / "configs/tum_mob/e5_s3_semantic_guided"
 RESULTS_ROOT = REPO / "results/tum_transfer/e5_s3_semantic_guided/C001"
 CKPT_ROOT = RESULTS_ROOT / "runs"
@@ -201,7 +201,7 @@ CACHE_CLASS_ALIGNMENT_POLICY = (
 )
 CACHE_GLOBAL_INPUTS = [
     REPO / "results/tum_transfer/analysis/footprints_aoi.geojson",
-    REPO / "configs/projection_datum.json",
+    REPO / "configs/input_and_alignment/projection_datum.json",
     DATA_ROOT / "sparse/0/cameras.bin",
     DATA_ROOT / "sparse/0/images.bin",
     DATA_ROOT / "sparse/0/points3D.bin",

@@ -611,7 +611,7 @@ def write_versions(metrics: dict[str, object]) -> None:
 
 def main() -> None:
     if abs(projection_geoid_m() - GEOID_M) > 1e-6:
-        raise RuntimeError(f"configs/projection_datum.json must have orthometric_geoid_m={GEOID_M}, got {projection_geoid_m()}")
+        raise RuntimeError(f"configs/input_and_alignment/projection_datum.json must have orthometric_geoid_m={GEOID_M}, got {projection_geoid_m()}")
     rows, best_view = recompute_aux()
     write_aux(rows, best_view)
     cross, metrics = classify(rows)

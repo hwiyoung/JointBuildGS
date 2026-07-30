@@ -35,7 +35,7 @@ def load_model(ckpt, cfg, device, ds):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--config", default="configs/matrixcity_step1_6.yaml")
+    ap.add_argument("--config", default="configs/input_and_alignment/matrixcity_step1_6.yaml")
     ap.add_argument("--n-sample", type=int, default=200)
     ap.add_argument("--top-n", type=int, default=10)
     ap.add_argument("--seed", type=int, default=0)

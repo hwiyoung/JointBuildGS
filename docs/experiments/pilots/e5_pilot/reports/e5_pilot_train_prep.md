@@ -21,12 +21,12 @@
 
 | run | arm | replicate | random seed | config | out_dir |
 |---|---|---|---:|---|---|
-| gs_e5_C001_sparse_r1 | sparse | r1 | 1001 | `configs/tum_mob/e5_pilot/gs_e5_C001_sparse_r1.yaml` | `results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_sparse_r1` |
-| gs_e5_C001_sparse_r2 | sparse | r2 | 1002 | `configs/tum_mob/e5_pilot/gs_e5_C001_sparse_r2.yaml` | `results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_sparse_r2` |
-| gs_e5_C001_dense_r1 | dense | r1 | 1001 | `configs/tum_mob/e5_pilot/gs_e5_C001_dense_r1.yaml` | `results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_dense_r1` |
-| gs_e5_C001_dense_r2 | dense | r2 | 1002 | `configs/tum_mob/e5_pilot/gs_e5_C001_dense_r2.yaml` | `results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_dense_r2` |
-| gs_e5_C001_acmp_r1 | acmp | r1 | 1001 | `configs/tum_mob/e5_pilot/gs_e5_C001_acmp_r1.yaml` | `results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_acmp_r1` |
-| gs_e5_C001_acmp_r2 | acmp | r2 | 1002 | `configs/tum_mob/e5_pilot/gs_e5_C001_acmp_r2.yaml` | `results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_acmp_r2` |
+| gs_e5_C001_sparse_r1 | sparse | r1 | 1001 | `configs/e5_c001/e5_pilot/gs_e5_C001_sparse_r1.yaml` | `results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_sparse_r1` |
+| gs_e5_C001_sparse_r2 | sparse | r2 | 1002 | `configs/e5_c001/e5_pilot/gs_e5_C001_sparse_r2.yaml` | `results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_sparse_r2` |
+| gs_e5_C001_dense_r1 | dense | r1 | 1001 | `configs/e5_c001/e5_pilot/gs_e5_C001_dense_r1.yaml` | `results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_dense_r1` |
+| gs_e5_C001_dense_r2 | dense | r2 | 1002 | `configs/e5_c001/e5_pilot/gs_e5_C001_dense_r2.yaml` | `results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_dense_r2` |
+| gs_e5_C001_acmp_r1 | acmp | r1 | 1001 | `configs/e5_c001/e5_pilot/gs_e5_C001_acmp_r1.yaml` | `results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_acmp_r1` |
+| gs_e5_C001_acmp_r2 | acmp | r2 | 1002 | `configs/e5_c001/e5_pilot/gs_e5_C001_acmp_r2.yaml` | `results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_acmp_r2` |
 
 ## Training Runtime
 

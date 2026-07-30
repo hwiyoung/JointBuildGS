@@ -58,7 +58,7 @@ READOUT_FIG_DIR = FIG_DIR / "readout"
 REPORT_PATH = REPO / "docs/experiments/joint-optimization/e5_c001_s1_full/reports/W_E5_C001_S1완성판_요인.md"
 TEMP_READOUT_REPORT = REPO / "docs/archive/e5_c001_s1_full/temporary/reports/W_E5_C001_S1_full_factor_readout_tmp.md"
 
-BASE_CONFIG = REPO / "configs/tum_mob/e5_corrected_s1_recheck/gs_e5_C001_corrected_s1_preprune_dense_r1.yaml"
+BASE_CONFIG = REPO / "configs/e5_c001/e5_corrected_s1_recheck/gs_e5_C001_corrected_s1_preprune_dense_r1.yaml"
 REUSE_SOURCE_RUN = "gs_e5_C001_corrected_s1_preprune_keepall_dense_r1"
 REUSE_SOURCE_DIR = REPO / "results/tum_transfer/e5_corrected_s1_recheck/C001/runs" / REUSE_SOURCE_RUN
 REUSE_RUN = "gs_e5_C001_s1fac_w100_p050_dense_reuse"

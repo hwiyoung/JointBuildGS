@@ -191,7 +191,7 @@ def load_config(path: Path) -> dict[str, Any]:
         "phases/p0-audit/data/work/opf/opf/scene_reference_frame.json"
     ):
         raise TsdfReadoutError("scene-reference path lock drift")
-    if coordinate.get("projection_datum_config") != "configs/projection_datum.json":
+    if coordinate.get("projection_datum_config") != "configs/input_and_alignment/projection_datum.json":
         raise TsdfReadoutError("projection-datum path lock drift")
     for path_key, hash_key in (
         ("scene_reference_frame", "scene_reference_sha256"),

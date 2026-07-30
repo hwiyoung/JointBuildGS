@@ -5,7 +5,7 @@ Metrics: mIoU (overall), per-class IoU.
 Usage:
     python scripts/stage2/eval_semantic.py \
         --ckpt results/phase1_semantic/run/ckpt/final.pt \
-        --config configs/matrixcity_step1_3.yaml \
+        --config configs/input_and_alignment/matrixcity_step1_3.yaml \
         --out results/phase1_semantic/run/eval_semantic \
         --test-ratio 0.1 --max-views 100
 """

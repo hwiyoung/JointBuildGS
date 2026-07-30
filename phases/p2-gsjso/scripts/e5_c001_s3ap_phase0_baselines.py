@@ -66,7 +66,7 @@ ROOFER_FIG = FIG_DIR / "p0_roofer_readout.png"
 FOOTPRINTS = REPO / "results/tum_transfer/analysis/footprints_aoi.geojson"
 LOD2_DIR = REPO / "phases/p0-audit/data/raw/lod2"
 TRAIN_MANIFEST = REPO / "results/tum_transfer/e5_pilot/C001/C001_train_prep_manifest.json"
-PROJECTION_DATUM = REPO / "configs/projection_datum.json"
+PROJECTION_DATUM = REPO / "configs/input_and_alignment/projection_datum.json"
 GROUND_SOURCE = REPO / "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_fm_retri_rescore.csv"
 
 

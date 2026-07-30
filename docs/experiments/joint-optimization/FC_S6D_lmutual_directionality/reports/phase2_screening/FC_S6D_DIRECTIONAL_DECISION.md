@@ -10,9 +10,9 @@ This is not a claim that A8 is the final directional design. It means no directi
 
 - A8 existing Stage3Algo-v1 + Metric-v1 rows were copied from FC-S6b/FC-S6 phase outputs.
 - `A8_v2_geo` is config-preparable because existing `mutual_mode=sem2geo` detaches semantic probabilities.
-- Runnable geo config: `configs/fc_s6d/A8_v2_geo.yaml`.
+- Runnable geo config: `configs/mutual_loss/fc_screening/fc_s6d/A8_v2_geo.yaml`.
 - `A8_v2_joint` is not train-ready because the explicit KL semantic calibration term is not implemented in the Stage2 training path.
-- Joint stub is deliberately blocked at `configs/fc_s6d/A8_v2_joint_BLOCKED.yaml` to avoid accidentally running a geo-only substitute.
+- Joint stub is deliberately blocked at `configs/mutual_loss/fc_screening/fc_s6d/A8_v2_joint_BLOCKED.yaml` to avoid accidentally running a geo-only substitute.
 - No FC-S6D training, Stage3 evaluation, L_structure, or G2 run was launched.
 
 ## Phase 3 Recommendation

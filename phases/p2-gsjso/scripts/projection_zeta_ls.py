@@ -52,7 +52,7 @@ FIG_DIR = REPO / "docs/figs/projection_zeta_ls"
 OUT_CSV = REPO / "docs/experiments/input-and-alignment/projection_zeta_ls/tables/projection_zeta_ls.csv"
 OUT_MD = REPO / "docs/experiments/input-and-alignment/projection_zeta_ls/reports/projection_zeta_ls.md"
 RESULT_JSON = REPO / "results/tum_transfer/mob/overseg_lever/projection_zeta_ls.json"
-CONFIG = REPO / "configs/projection_datum.json"
+CONFIG = REPO / "configs/input_and_alignment/projection_datum.json"
 
 BUILDINGS = ["4906972", "4907520", "4959327", "4906985", "4959460", "4907184", "4906966", "4906982"]
 ANGLE_TARGETS = [

@@ -14,7 +14,7 @@
 - `src/stage2/densification.py` — gsplat DefaultStrategy 래퍼: 임계·옵티마이저 (3b)
 - `src/stage2/train.py` — 모델 생성·loss 집계·mutual/structure 호출·densify 훅 (1,3,4)
 - `configs/tum_mob/{vanilla,baseline,mutual,structure,both}.yaml` — 토글 키 (5)
-- `configs/tum_gravity.json` — e_gravity (1)
+- `configs/input_and_alignment/tum_gravity.json` — e_gravity (1)
 
 > **densify/clone/split/prune 알고리즘 본체는 외부 라이브러리 `gsplat.strategy.DefaultStrategy`에 있다**
 > (이 레포 아님). 레포는 `densification.py:build_strategy`로 임계만 주입하고, `train.py`에서 훅을 호출한다.
@@ -203,7 +203,7 @@ def l_mutual(
 ```
 > 가중치 키 = **`w_mutual`** (× warmup ramp `mutual_weight_scale`). 호출 게이트: `w_mutual>0 AND e_gravity 존재 AND model.sem_logits 존재`.
 
-#### `configs/tum_gravity.json` — `e_gravity`
+#### `configs/input_and_alignment/tum_gravity.json` — `e_gravity`
 ```json
 {
   "up": [0.0, 0.0, 1.0],
@@ -606,7 +606,7 @@ def l_structure(
 
 ## 5) 1~4를 토글하는 config 키 (`configs/tum_mob/*`)
 
-#### `configs/tum_mob/both.yaml:1-54` — 전부 ON (모든 토글 키가 보이는 대표 config)
+#### `configs/mutual_loss/tum_mob/both.yaml:1-54` — 전부 ON (모든 토글 키가 보이는 대표 config)
 ```yaml
 # P2 make-or-break ablation #5 BOTH = base + L_sem + L_mutual + L_structure (target config).
 seed: 0
@@ -647,7 +647,7 @@ mutual_warmup: 10000
 mutual_tau: 0.15
 mutual_height_th: 0.15
 mutual_mode: full
-gravity_file: /workspace/JointBuildGS/configs/tum_gravity.json   # L_mutual 필수
+gravity_file: /workspace/JointBuildGS/configs/input_and_alignment/tum_gravity.json   # L_mutual 필수
 w_structure: 0.1        # (4) L_structure on
 w_structure_na: 1.0
 w_structure_cp: 1.0

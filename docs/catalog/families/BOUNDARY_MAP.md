@@ -48,7 +48,7 @@ Git에서도 각 공개 bundle은 순서대로 `52c84f7`, `5c1331b`, `17ab65d`/`
 | 검증표 | - | v2 boundary cases, v3 metrics/confusion/conditional targets, census·supplement tables | 직접 후속이 있는 v1-v2 표 |
 | 그림 | 현재 정본 없음 | v4 그림(보강 전임을 명시) | v1-v3 그림 |
 
-개별 파일의 기계 판독 상태와 `supersedes`/`derived_from` edge는 `configs/repo_inventory.json`의 `reviewed_family_maps`에 있으며, 생성된 `docs/catalog/DOCUMENT_CATALOG.csv`와 `docs/catalog/DOCUMENT_LINEAGE.csv`에 반영된다.
+개별 파일의 기계 판독 상태와 `supersedes`/`derived_from` edge는 `configs/repository/repo_inventory.json`의 `reviewed_family_maps`에 있으며, 생성된 `docs/catalog/DOCUMENT_CATALOG.csv`와 `docs/catalog/DOCUMENT_LINEAGE.csv`에 반영된다.
 
 ## 실행 영수증
 

@@ -69,8 +69,8 @@ Gate material:
 
 | item | value |
 |---|---|
-| config | `configs/tum_mob/gs_d4_sparse.yaml` |
-| derived from | `configs/tum_mob/gs_d4_dense.yaml` |
+| config | `configs/input_and_alignment/tum_mob/gs_d4_sparse.yaml` |
+| derived from | `configs/input_and_alignment/tum_mob/gs_d4_dense.yaml` |
 | seed change | `init_pointcloud` -> `results/tum_transfer/mob_analysis/seed/seed_sparse.ply` |
 | sparse seed points | 369225 |
 | recipe diffs excluding seed path and output directory | 0 |

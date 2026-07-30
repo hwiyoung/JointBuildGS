@@ -718,7 +718,7 @@ python tests/test_tum2twin_surface_proxy_rv1_analysis.py
 - Analysis grain: one row per canonical building, 178 rows / 178 unique IDs
 - Run branch: `exp/fusion-w1`
 - Run commit: `{metadata['git_head']}`
-- Config: `configs/tum2twin_rv1_20260728_2327.yaml`
+- Config: `configs/input_and_alignment/tum2twin_rv1_20260728_2327.yaml`
 - Completed: `{metadata['completed_at']}` (UTC timestamp; start state is recorded in KST)
 - No GS learning, Roofer rerun, ICP, or distance metric recomputation was performed in post-analysis.
 
@@ -893,7 +893,7 @@ def main(argv: list[str] | None = None) -> int:
     state = load_json(run_root / "run_state.json")
     metadata = load_json(run_root / "run_metadata.json")
     cache_manifest = load_json(run_root / "cache_manifest.json")
-    config = load_json(REPO / "configs/tum2twin_rv1_20260728_2327.yaml")
+    config = load_json(REPO / "configs/input_and_alignment/tum2twin_rv1_20260728_2327.yaml")
     metrics = pd.read_csv(run_root / "building_metrics.csv")
     if state.get("run_id") != "20260728_2327" or metadata.get("run_id") != state.get("run_id"):
         raise RuntimeError("run ID mismatch")
@@ -928,7 +928,7 @@ def main(argv: list[str] | None = None) -> int:
     sources = [
         run_root / "run_state.json", run_root / "run_metadata.json",
         run_root / "building_metrics.csv", run_root / "classification_summary.md",
-        REPO / "configs/tum2twin_rv1_20260728_2327.yaml", REPO / "src/rv1_pipeline.py",
+        REPO / "configs/input_and_alignment/tum2twin_rv1_20260728_2327.yaml", REPO / "src/rv1_pipeline.py",
         manual_qa,
     ]
     outputs = [

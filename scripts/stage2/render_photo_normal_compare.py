@@ -89,7 +89,7 @@ def render_photo(model, w2c, K, W, H, device):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--config", default="configs/matrixcity_step1_6.yaml")
+    ap.add_argument("--config", default="configs/input_and_alignment/matrixcity_step1_6.yaml")
     ap.add_argument("--views", nargs="+", type=int, default=[5083, 5528, 5368, 5328])
     ap.add_argument("--out-dir", default="results/phase1_ablation/figures/photo_normal_4way")
     args = ap.parse_args()

@@ -80,7 +80,7 @@ SPARSE = DATA_ROOT / "sparse/0/points3D.bin"
 DENSE = REPO / "results/tum_transfer/e5_pilot/C001/seeds/seed_dense_C001_buf20.ply"
 FOOTPRINTS = REPO / "results/tum_transfer/analysis/footprints_aoi.geojson"
 TRAIN_MANIFEST = REPO / "results/tum_transfer/e5_pilot/C001/C001_train_prep_manifest.json"
-DATUM_CONFIG = REPO / "configs/projection_datum.json"
+DATUM_CONFIG = REPO / "configs/input_and_alignment/projection_datum.json"
 PJPL = (
     REPO
     / "results/tum_transfer/e5_s3_semantic_guided/C001/runs"

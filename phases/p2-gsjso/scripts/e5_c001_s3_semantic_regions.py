@@ -83,7 +83,7 @@ MCL = _load_clean_label_module()
 
 DEFAULT_DATA_ROOT = REPO / "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20"
 DEFAULT_FOOTPRINTS = REPO / "results/tum_transfer/analysis/footprints_aoi.geojson"
-DEFAULT_DATUM_CONFIG = REPO / "configs/projection_datum.json"
+DEFAULT_DATUM_CONFIG = REPO / "configs/input_and_alignment/projection_datum.json"
 DEFAULT_GML = [
     REPO / "phases/p0-audit/data/raw/lod2/690_5334.gml",
     REPO / "phases/p0-audit/data/raw/lod2/690_5336.gml",
@@ -93,7 +93,7 @@ DEFAULT_FIG_DIR = REPO / "docs/figs/e5_c001_s3/semantic_gate"
 DEFAULT_RUN_DIR = REPO / "phases/p2-gsjso/runs/20260713_e5_c001_s3_track0"
 DEFAULT_DENSE_INIT = REPO / "results/tum_transfer/e5_pilot/C001/seeds/seed_dense_C001_buf20.ply"
 DEFAULT_ARM1P_CONFIG = (
-    REPO / "configs/tum_mob/e5_s2p_interaction/gs_e5_C001_s2p_arm1p_dense_r1.yaml"
+    REPO / "configs/e5_c001/e5_s2p_interaction/gs_e5_C001_s2p_arm1p_dense_r1.yaml"
 )
 
 CORE9 = [

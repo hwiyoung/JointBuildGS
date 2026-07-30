@@ -39,9 +39,9 @@ OUT_ROOT = ROOT / "results/FC_S6D_lmutual_directionality"
 PHASE0 = OUT_ROOT / "phase0_inventory"
 PHASE1 = OUT_ROOT / "phase1_scale_audit"
 PHASE2 = OUT_ROOT / "phase2_screening"
-CONFIG_ROOT = ROOT / "configs/fc_s6d"
+CONFIG_ROOT = ROOT / "configs/mutual_loss/fc_screening/fc_s6d"
 
-A8_CONFIG = ROOT / "configs/fc_s6/A8_no_terrain_terms.yaml"
+A8_CONFIG = ROOT / "configs/mutual_loss/fc_screening/fc_s6/A8_no_terrain_terms.yaml"
 A8_CKPT = (
     ROOT
     / "results/FC_S6_componentwise_revised_lmutual_design_validation"
@@ -959,9 +959,9 @@ def write_phase2(cfg: Dict[str, Any], rec: Dict[str, Any]) -> None:
         "",
         "- A8 existing Stage3Algo-v1 + Metric-v1 rows were copied from FC-S6b/FC-S6 phase outputs.",
         "- `A8_v2_geo` is config-preparable because existing `mutual_mode=sem2geo` detaches semantic probabilities.",
-        "- Runnable geo config: `configs/fc_s6d/A8_v2_geo.yaml`.",
+        "- Runnable geo config: `configs/mutual_loss/fc_screening/fc_s6d/A8_v2_geo.yaml`.",
         "- `A8_v2_joint` is not train-ready because the explicit KL semantic calibration term is not implemented in the Stage2 training path.",
-        "- Joint stub is deliberately blocked at `configs/fc_s6d/A8_v2_joint_BLOCKED.yaml` to avoid accidentally running a geo-only substitute.",
+        "- Joint stub is deliberately blocked at `configs/mutual_loss/fc_screening/fc_s6d/A8_v2_joint_BLOCKED.yaml` to avoid accidentally running a geo-only substitute.",
         "- No FC-S6D training, Stage3 evaluation, L_structure, or G2 run was launched.",
         "",
         "## Phase 3 Recommendation",

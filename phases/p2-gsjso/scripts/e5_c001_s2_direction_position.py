@@ -71,7 +71,7 @@ PYDEPS = REPO / "results/tum_transfer/e5_s1_full_factor/C001/python_deps/timm_0_
 
 DATA_ROOT = REPO / "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20"
 DATA_ROOT_WS = "/workspace/JointBuildGS/results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20"
-BASE_CONFIG = REPO / "configs/tum_mob/e5_s1_full_factor/gs_e5_C001_s1fac_w100_p005_dense_r1.yaml"
+BASE_CONFIG = REPO / "configs/e5_c001/e5_s1_full_factor/gs_e5_C001_s1fac_w100_p005_dense_r1.yaml"
 SHIFT_UTM = np.array([690953.0, 5336071.0, 604.0], dtype=np.float64)
 ELLIP_TO_REF_SHIFT_M = float(eight.ELLIP_TO_REF_SHIFT_M)
 FOOTPRINTS_GEOJSON = REPO / "phases/p0-audit/data/work/footprints/lod2_ground_plan.geojson"

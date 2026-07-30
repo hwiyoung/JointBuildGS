@@ -35,7 +35,7 @@ def ply_vertices(path: Path) -> int | None:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", default="configs/experiments/fair_pilot/vaihingen_area3.json")
+    parser.add_argument("--config", default="configs/fair_pilot/vaihingen_area3.json")
     args = parser.parse_args()
     cfg = json.loads((ROOT / args.config).read_text(encoding="utf-8"))
     run_dir = ROOT / "fair-pilot" / "runs" / cfg["run_id"]

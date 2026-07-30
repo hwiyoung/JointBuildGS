@@ -9,7 +9,7 @@ Mirrors src/stage2/train.py's init + semantic-render path EXACTLY and asserts:
 
 Run in the dev container (GPU):
   docker compose run --rm -T dev python phases/p2-gsjso/scripts/seed_precheck.py \
-      --config configs/tum_mob/gs_seed_dense.yaml
+      --config configs/input_and_alignment/tum_mob/gs_seed_dense.yaml
 Observation only. Engine logic unchanged (standalone probe reusing engine modules).
 """
 import argparse

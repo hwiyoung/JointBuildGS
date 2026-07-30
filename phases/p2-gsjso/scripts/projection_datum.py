@@ -32,7 +32,7 @@ def _repo_root() -> Path:
 
 
 REPO = _repo_root()
-DEFAULT_CONFIG = REPO / "configs/projection_datum.json"
+DEFAULT_CONFIG = REPO / "configs/input_and_alignment/projection_datum.json"
 CONFIG_ENV = "JOINTBUILDGS_PROJECTION_CONFIG"
 ORTHOMETRIC = "orthometric"
 ELLIPSOIDAL = "ellipsoidal"

@@ -17,7 +17,7 @@ import time
 from pathlib import Path
 
 
-SMOKE_CFG = "configs/phase2_smoke.yaml"
+SMOKE_CFG = "configs/mutual_loss/core_ablation/phase2_smoke.yaml"
 N_ITER = 500
 OUT = Path("/tmp/fc2_benchmark.json")
 

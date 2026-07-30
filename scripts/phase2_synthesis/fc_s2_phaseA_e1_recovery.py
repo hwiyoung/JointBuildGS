@@ -47,9 +47,9 @@ E2_GRAPH = (
     E2_RENDER_ROOT
     / "phase3_fixed_quality/scene_evidence_graph_fixed_F2_class_normal_aware_voxel_0p05.json"
 )
-BASELINE_CONFIG = ROOT / "configs/phase2_baseline.yaml"
+BASELINE_CONFIG = ROOT / "configs/mutual_loss/core_ablation/phase2_baseline.yaml"
 BASELINE_CKPT = ROOT / "results/phase2_ablation_citygml/baseline/ckpt/final.pt"
-MUTUAL_CONFIG = ROOT / "configs/phase2_mutual.yaml"
+MUTUAL_CONFIG = ROOT / "configs/mutual_loss/core_ablation/phase2_mutual.yaml"
 MUTUAL_CKPT = ROOT / "results/phase2_ablation_citygml/mutual/ckpt/final.pt"
 
 CLASS_FIELDS = {0: "n_bg", 1: "n_roof", 2: "n_wall", 3: "n_ground"}

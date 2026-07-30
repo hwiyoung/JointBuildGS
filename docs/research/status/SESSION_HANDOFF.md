@@ -134,7 +134,7 @@
 
 ## 3) P2 재사용 자산 (경로)
 - 엔진: `src/stage2/{train,renderer,semantic_seed,model}.py` (renderer `sem_detach_geometry` 플래그)
-- configs: `configs/tum_mob/*.yaml`(vanilla/baseline/mutual/structure/both/seed_semantic/depth_release_{range,oracle}), `configs/tum_gravity.json`
+- configs: `configs/tum_mob/*.yaml`(vanilla/baseline/mutual/structure/both/seed_semantic/depth_release_{range,oracle}), `configs/input_and_alignment/tum_gravity.json`
 - P0c 어댑터(재사용): `phases/p2-gsjso/scripts/p0c_{run_roofer.sh,roofer_eval.py,assembly_diag.py,acmp_*,als_aoi}` — 임의 클라우드를 P0 동일 Roofer/val3dity harness에 투입
 - 라벨/클라우드(gitignore): `results/tum_transfer/clean_labels_geoidfix/semantic`, `…/p0c_step2/{acmp_classified,als_aoi,acmp_forcebuild}.laz`
 - 이미지 digest: `docs/research/reproducibility/GS_JSO_IMAGE_VERSIONS_20260622.md`(GS-JSO·acmp), `phases/p0-audit/env/versions.md`(colmap/roofer/tools)

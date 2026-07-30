@@ -67,7 +67,7 @@ WORLD_OFFSET = np.array([690953.0, 5336071.0, 604.0])
 TEXTURELESS_5 = {"42364609", "4907182", "4908050", "4908166", "4908176"}
 TARGETS = ["42364609", "42364659", "42364663", "4907182", "4907510",
            "4908050", "4908166", "4908176"]
-PRUNE_OPA = 0.005  # configs/tum_mob/seed_semantic.yaml
+PRUNE_OPA = 0.005  # configs/input_and_alignment/tum_mob/seed_semantic.yaml
 
 
 # --------------------------------------------------------------------------- #

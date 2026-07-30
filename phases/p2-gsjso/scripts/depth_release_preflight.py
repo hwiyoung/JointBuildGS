@@ -9,7 +9,7 @@ Checks (assert + print; if any fails, DO NOT launch the main runs):
   ⑤ ground position sane           — converted LiDAR ground_local in [-45,-41]±3 & below seed column
 (④ seed survival to 500 steps is run separately via train.py max_iter=500.)
 
-Runs in dev container (torch). Reads configs/tum_mob/depth_release_range.yaml.
+Runs in dev container (torch). Reads configs/input_and_alignment/tum_mob/depth_release_range.yaml.
 """
 import sys, json, yaml
 from pathlib import Path
@@ -34,7 +34,7 @@ def ring_local(geo, bid, shift):
 
 
 def main():
-    cfg = yaml.safe_load(open(f"{REPO}/configs/tum_mob/depth_release_range.yaml"))
+    cfg = yaml.safe_load(open(f"{REPO}/configs/input_and_alignment/tum_mob/depth_release_range.yaml"))
     dev = "cuda"
     sc = cfg["seed_cfg"]
     shift = sc["world_offset"]

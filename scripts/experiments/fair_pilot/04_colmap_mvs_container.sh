@@ -2,7 +2,7 @@
 set -u -o pipefail
 
 ROOT=/workspace/JointBuildGS
-CONFIG="${ROOT}/configs/experiments/fair_pilot/vaihingen_area3.json"
+CONFIG="${ROOT}/configs/fair_pilot/vaihingen_area3.json"
 RUN_DIR="${ROOT}/fair-pilot/runs/20260714_vaihingen_area3"
 WORKSPACE="${RUN_DIR}/workspace"
 LOG="${RUN_DIR}/run.log"

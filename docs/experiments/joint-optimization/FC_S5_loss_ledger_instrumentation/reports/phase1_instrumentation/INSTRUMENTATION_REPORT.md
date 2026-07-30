@@ -8,7 +8,7 @@ The trainer produced the requested FC-S5 mutual ledger tags, class stats, gradie
 
 ## Smoke Run
 
-- Config: `configs/fc_s5/smoke_audit.yaml`
+- Config: `configs/mutual_loss/fc_screening/fc_s5/smoke_audit.yaml`
 - Log: `results/FC_S5_loss_ledger_instrumentation/phase1_instrumentation/smoke_log.txt`
 - TensorBoard event: `results/FC_S5_loss_ledger_instrumentation/phase1_instrumentation/smoke_run/tb/events.out.tfevents.1778249083.innopam-AI.3315587.0`
 - Tag check: `results/FC_S5_loss_ledger_instrumentation/phase1_instrumentation/log_tag_check.csv`

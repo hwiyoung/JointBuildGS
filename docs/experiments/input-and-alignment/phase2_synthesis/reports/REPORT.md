@@ -210,7 +210,7 @@ Baseline 전용 이유: L_mutual warmup=10000, L_structure warmup=20000 → 5k i
 
 ### 5.4 FC-3 — 수렴 smoke (baseline 5k iter)
 
-**Config**: [configs/phase2_smoke.yaml](../../configs/phase2_smoke.yaml). L_mutual = L_structure = 0. eval_every = 1000.
+**Config**: [configs/mutual_loss/core_ablation/phase2_smoke.yaml](../../configs/mutual_loss/core_ablation/phase2_smoke.yaml). L_mutual = L_structure = 0. eval_every = 1000.
 
 **판정 기준 (7 지표, [fc3_diagnose.py](../../scripts/phase2_synthesis/fc3_diagnose.py) 자동 체크)**:
 
@@ -315,7 +315,7 @@ docker exec jointbuildgs-dev bash -c "cd /workspace/JointBuildGS && \
 
 # Feasibility checks
 docker exec jointbuildgs-dev python scripts/phase2_synthesis/benchmark_iter_speed.py  # FC-2
-docker exec jointbuildgs-dev python -m src.stage2.train --config configs/phase2_smoke.yaml  # FC-3
+docker exec jointbuildgs-dev python -m src.stage2.train --config configs/mutual_loss/core_ablation/phase2_smoke.yaml  # FC-3
 
 # Visualizations
 docker exec jointbuildgs-dev bash -c "cd /workspace/JointBuildGS && \

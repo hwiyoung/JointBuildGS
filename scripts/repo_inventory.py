@@ -1256,7 +1256,7 @@ def build_inventory(repo_root: Path, config: dict[str, Any]) -> tuple[list[dict[
 
 def parse_args(argv: Sequence[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--config", default="configs/repo_inventory.json", help="Path relative to the repository root")
+    parser.add_argument("--config", default="configs/repository/repo_inventory.json", help="Path relative to the repository root")
     parser.add_argument("--check", action="store_true", help="Regenerate in memory and fail if committed outputs differ")
     return parser.parse_args(argv)
 

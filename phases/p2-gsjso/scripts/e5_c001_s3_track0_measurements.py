@@ -21,7 +21,7 @@ Footprints and LoD2 references are EPSG:25832.  SfM and dense initialisation
 points use the C001 GS-local frame.  XY is translated by the frozen world
 offset.  Orthometric LoD2 roof heights are projected into the ellipsoidal
 camera frame with ``z_local = H_ortho + geoid - world_offset_z``.  The geoid
-value is read from ``configs/projection_datum.json`` and is asserted to be
+value is read from ``configs/input_and_alignment/projection_datum.json`` and is asserted to be
 45.7 m for this locked audit.
 """
 
@@ -70,8 +70,8 @@ SPARSE_POINTS = DATA_ROOT / "sparse/0/points3D.bin"
 DENSE_INIT = REPO / "results/tum_transfer/e5_pilot/C001/seeds/seed_dense_C001_buf20.ply"
 FOOTPRINTS = REPO / "results/tum_transfer/analysis/footprints_aoi.geojson"
 TRAIN_MANIFEST = REPO / "results/tum_transfer/e5_pilot/C001/C001_train_prep_manifest.json"
-ARM1P_CONFIG = REPO / "configs/tum_mob/e5_s2p_interaction/gs_e5_C001_s2p_arm1p_dense_r1.yaml"
-DATUM_CONFIG = REPO / "configs/projection_datum.json"
+ARM1P_CONFIG = REPO / "configs/e5_c001/e5_s2p_interaction/gs_e5_C001_s2p_arm1p_dense_r1.yaml"
+DATUM_CONFIG = REPO / "configs/input_and_alignment/projection_datum.json"
 NORMAL_DIR = REPO / "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/normal_omnidata_world_npy"
 
 CSV_SEED = REPO / "docs/experiments/joint-optimization/e5_c001_s3/tables/e5_c001_s3_seed_inventory.csv"

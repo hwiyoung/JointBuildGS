@@ -178,9 +178,9 @@ grouped primitive만(`mask=group_ids>=0`, `structure.py:37`). 대표평면 `(n_k
 
 ### ① 학습 진입점
 
-- **단일 조건:** `python -m src.stage2.train --config configs/phase2_baseline.yaml` (argparse는 `--config` 단 하나, required; `train.py:233-236`). CLI 손실 토글 없음 — 전부 YAML.
+- **단일 조건:** `python -m src.stage2.train --config configs/mutual_loss/core_ablation/phase2_baseline.yaml` (argparse는 `--config` 단 하나, required; `train.py:233-236`). CLI 손실 토글 없음 — 전부 YAML.
 - **4조건 순차:** `bash scripts/phase2_synthesis/run_ablation.sh` (`for cond in baseline mutual structure both`, `run_ablation.sh:21,26-28`, 단일 GPU 직렬, cwd `/workspace/JointBuildGS`).
-- backward `train.py:568`, step `train.py:575-576`. config 경로: `configs/phase2_{baseline,mutual,structure,both}.yaml`, vanilla `configs/matrixcity_vanilla.yaml`, fc_s6 `configs/fc_s6/{A0_baseline_w0,A1_original_mutual}.yaml`.
+- backward `train.py:568`, step `train.py:575-576`. config 경로: `configs/phase2_{baseline,mutual,structure,both}.yaml`, vanilla `configs/input_and_alignment/matrixcity_vanilla.yaml`, fc_s6 `configs/mutual_loss/fc_screening/fc_s6/{A0_baseline_w0,A1_original_mutual}.yaml`.
 
 ### ② P0 데이터 적재 (그대로 먹나 / 어댑터 필요)
 
@@ -208,7 +208,7 @@ grouped primitive만(`mask=group_ids>=0`, `structure.py:37`). 대표평면 `(n_k
 
 | 용도 | config 경로 | prior 상태 (핵심 플래그) |
 |------|------|------|
-| **vanilla (prior OFF)** | `configs/phase2_baseline.yaml` | `w_mutual:0.0`(`:26`), `w_structure:0.0`(`:27`), `w_sem:0.1`+`load_semantic:true`. 활성: photo+depth+normal+nc+sem. (순수 photo-only 비교는 `configs/matrixcity_vanilla.yaml` — w_depth/normal/sem 전부 0/부재 → photo+nc만) |
-| **GS-JSO (prior ON)** | `configs/phase2_both.yaml` | `w_mutual:0.1`(`:25`), `w_structure:0.1`(`:32`), `gravity_file` 지정(`:30`), `mutual_warmup:10000`, `structure_warmup:20000`. 활성: 전체 + L_mutual + L_structure |
+| **vanilla (prior OFF)** | `configs/mutual_loss/core_ablation/phase2_baseline.yaml` | `w_mutual:0.0`(`:26`), `w_structure:0.0`(`:27`), `w_sem:0.1`+`load_semantic:true`. 활성: photo+depth+normal+nc+sem. (순수 photo-only 비교는 `configs/input_and_alignment/matrixcity_vanilla.yaml` — w_depth/normal/sem 전부 0/부재 → photo+nc만) |
+| **GS-JSO (prior ON)** | `configs/mutual_loss/core_ablation/phase2_both.yaml` | `w_mutual:0.1`(`:25`), `w_structure:0.1`(`:32`), `gravity_file` 지정(`:30`), `mutual_warmup:10000`, `structure_warmup:20000`. 활성: 전체 + L_mutual + L_structure |
 
 **주의:** config의 `data_root`/`out_dir`/`gravity_file`은 컨테이너 절대경로(`/workspace/JointBuildGS/...`, `phase2_both.yaml:5-7,30`)로, 호스트 경로(`/media/innopam/...`)와 다름 → 컨테이너 안에서 실행하거나 경로 치환 필요. mutual ON은 가중치만으로 부족 — `gravity_file`이 존재해 `e_gravity` 로드돼야 활성(`train.py:366-371,456-457`).

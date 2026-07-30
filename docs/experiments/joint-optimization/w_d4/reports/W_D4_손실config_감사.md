@@ -26,12 +26,12 @@ GS(D4; seed-protect; pho1·sem0.1·nc0.05·dep0.03·nrm-off·str1[g2;na0.08;cp0.
 
 | run | config | sha256 | D4 대조 |
 |---|---|---:|---|
-| sparse r1 | `configs/tum_mob/e5_pilot/gs_e5_C001_sparse_r1.yaml` | `f6b1907c...b1a0ac87` | `gs_d4_sparse.yaml`에서 C001 data/seed/out_dir/replicate seed만 변경 |
-| sparse r2 | `configs/tum_mob/e5_pilot/gs_e5_C001_sparse_r2.yaml` | `0bfea53e...6e6a79266` | 동일 |
-| dense r1 | `configs/tum_mob/e5_pilot/gs_e5_C001_dense_r1.yaml` | `6a866d81...22572e93` | `gs_d4_dense.yaml`에서 C001 data/seed/out_dir/replicate seed만 변경 |
-| dense r2 | `configs/tum_mob/e5_pilot/gs_e5_C001_dense_r2.yaml` | `526e899e...45704420d` | 동일 |
-| acmp r1 | `configs/tum_mob/e5_pilot/gs_e5_C001_acmp_r1.yaml` | `c464c94e...9d134b` | `gs_d4_acmp.yaml`에서 C001 data/seed/out_dir/replicate seed만 변경 |
-| acmp r2 | `configs/tum_mob/e5_pilot/gs_e5_C001_acmp_r2.yaml` | `e32e16a7...7c394203` | 동일 |
+| sparse r1 | `configs/e5_c001/e5_pilot/gs_e5_C001_sparse_r1.yaml` | `f6b1907c...b1a0ac87` | `gs_d4_sparse.yaml`에서 C001 data/seed/out_dir/replicate seed만 변경 |
+| sparse r2 | `configs/e5_c001/e5_pilot/gs_e5_C001_sparse_r2.yaml` | `0bfea53e...6e6a79266` | 동일 |
+| dense r1 | `configs/e5_c001/e5_pilot/gs_e5_C001_dense_r1.yaml` | `6a866d81...22572e93` | `gs_d4_dense.yaml`에서 C001 data/seed/out_dir/replicate seed만 변경 |
+| dense r2 | `configs/e5_c001/e5_pilot/gs_e5_C001_dense_r2.yaml` | `526e899e...45704420d` | 동일 |
+| acmp r1 | `configs/e5_c001/e5_pilot/gs_e5_C001_acmp_r1.yaml` | `c464c94e...9d134b` | `gs_d4_acmp.yaml`에서 C001 data/seed/out_dir/replicate seed만 변경 |
+| acmp r2 | `configs/e5_c001/e5_pilot/gs_e5_C001_acmp_r2.yaml` | `e32e16a7...7c394203` | 동일 |
 
 관찰: 사전등록 문자열과 실제 C001 학습 config의 손실·스케줄·densification 값은 일치한다. 정본은 실제 C001 config 그대로 D4 성분 문자열과 같은 것으로 본다.
 

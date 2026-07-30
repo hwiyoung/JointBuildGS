@@ -46,9 +46,9 @@ TARGET = "C001"
 RANDOM_SEEDS = {"r1": 1001, "r2": 1002}
 ARMS = ("sparse", "dense", "acmp")
 BASE_CONFIGS = {
-    "sparse": Path("configs/tum_mob/gs_d4_sparse.yaml"),
-    "dense": Path("configs/tum_mob/gs_d4_dense.yaml"),
-    "acmp": Path("configs/tum_mob/gs_d4_acmp.yaml"),
+    "sparse": Path("configs/input_and_alignment/tum_mob/gs_d4_sparse.yaml"),
+    "dense": Path("configs/input_and_alignment/tum_mob/gs_d4_dense.yaml"),
+    "acmp": Path("configs/input_and_alignment/tum_mob/gs_d4_acmp.yaml"),
 }
 SOURCE_SEEDS = {
     "sparse": Path("results/tum_transfer/mob_analysis/seed/seed_sparse.ply"),

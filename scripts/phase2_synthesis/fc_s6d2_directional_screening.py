@@ -30,8 +30,8 @@ LOGS = OUT_ROOT / "logs"
 CHECKPOINTS = OUT_ROOT / "checkpoints"
 EVIDENCE = OUT_ROOT / "evidence_exports"
 
-A8_CONFIG = ROOT / "configs/fc_s6/A8_no_terrain_terms.yaml"
-GEO_SOURCE_CONFIG = ROOT / "configs/fc_s6d/A8_v2_geo.yaml"
+A8_CONFIG = ROOT / "configs/mutual_loss/fc_screening/fc_s6/A8_no_terrain_terms.yaml"
+GEO_SOURCE_CONFIG = ROOT / "configs/mutual_loss/fc_screening/fc_s6d/A8_v2_geo.yaml"
 PREV_GRAD_AUDIT = ROOT / "results/FC_S6D_lmutual_directionality/phase1_scale_audit/gradient_scale_audit.csv"
 PREV_WEIGHT_REC = ROOT / "results/FC_S6D_lmutual_directionality/phase1_scale_audit/recommended_initial_weights.md"
 A8_SPLIT = (
