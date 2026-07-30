@@ -5,9 +5,11 @@ x-p0-common: &p0-common
   user: "${P0_UID:-1000}:${P0_GID:-1000}"
   environment:
     HOME: /tmp
+    JBGS_ARTIFACT_ROOT: /artifacts/JointBuildGS
   volumes:
-    - ../data:/workspace/data
-    - ../runs:/workspace/runs
+    - ${JBGS_ARTIFACT_HOST_ROOT:-../../../../JointBuildGS-artifacts}:/artifacts/JointBuildGS
+    - ${JBGS_ARTIFACT_HOST_ROOT:-../../../../JointBuildGS-artifacts}/phase-payloads/p0-audit/data:/workspace/data
+    - ${JBGS_ARTIFACT_HOST_ROOT:-../../../../JointBuildGS-artifacts}/phase-payloads/p0-audit/runs:/workspace/runs
     - ../scripts:/workspace/scripts:ro
     - ../../../docs/evidence/p0-audit:/workspace/evidence/p0-audit
     - ../../../docs/evidence/p0_g1_20260613:/workspace/evidence/p0_g1_20260613

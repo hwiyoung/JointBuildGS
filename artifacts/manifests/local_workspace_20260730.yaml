@@ -53,7 +53,7 @@ objects:
     files: 29286
     inode_before_after: 76087391
     class: C_or_D
-compatibility:
+compatibility_snapshot_at_relocation:
   docker_compose_mounts:
     - data
     - results
@@ -62,6 +62,25 @@ compatibility:
     - phases/p0-audit/data
     - phases/p0-audit/runs
   host_repository_payload_roots_present: false
+current_resolver_contract:
+  canonical_host_root: file:../JointBuildGS-artifacts
+  canonical_container_root: file:/artifacts/JointBuildGS
+  environment_variable: JBGS_ARTIFACT_ROOT=/artifacts/JointBuildGS
+  top_level_compose:
+    repository: /workspace/JointBuildGS
+    artifact_root: /artifacts/JointBuildGS
+    host_data_volume: /data
+  p0_compose:
+    artifact_root: /artifacts/JointBuildGS
+    phase_data: /workspace/data
+    phase_runs: /workspace/runs
+  compatibility_scope: explicit-phase-compose-only
+  runtime_verification:
+    state: verified
+    verified_at: 2026-07-30T20:11:56+09:00
+    service: jointbuildgs-dev
+    canonical_artifact_mount_present: true
+    repo_local_payload_mounts_present: false
 retention:
   policy: preserve-until-separate-reviewed-storage-migration
   destructive_cleanup_authorized: false
