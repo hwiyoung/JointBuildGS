@@ -50,9 +50,9 @@
 
 ## Figures
 
-![8 failure point clips against ALS](figs/w3_failure_t7_point_clips.png)
+![8 failure point clips against ALS](../../../docs/evidence/p0_g1_20260613/figs/fig_10_t7_failure_point_clips.png)
 
-![classification counts](figs/w3_failure_t7_classification_counts.png)
+![classification counts](../../../docs/evidence/p0_g1_20260613/figs/fig_11_t7_failure_classification_counts.png)
 
 ## Observations
 

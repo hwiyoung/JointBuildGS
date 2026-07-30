@@ -22,7 +22,7 @@ top-view. A second row adds 4908023 (textured, DIM full) as contrast.
 | 4907182 | 0.0209 | 0.0177 | 100 |
 | 4908023 | 0.0987 | 0.0969 | 6395 |
 
-![texture to points](figs/w3_t14_figA_texture_to_points.png)
+![texture to points](../../../docs/evidence/p0_g1_20260613/figs/fig_17_t14_texture_to_points.png)
 
 - The 4907182 roof is **uniformly low-texture**: both sampled patches have mean
   image-gradient ~0.018-0.021 (DIM-empty 0.0209, DIM-points 0.0177), near the
@@ -57,7 +57,7 @@ left to the viewer (no arrow). `dens(fp)` is whole-footprint point density.
 | 4906969 | plane-F1 gap survivor | 20 | 284 | 3 | 15 | 4 | 11 | 3 | ALS F1 0.86, DIM F1 0.29 (dF1 -0.57) |
 | 4906972 | both-success control | 22 | 1046 | 5 | 6 | 3 | 3 | 3 | ALS F1 1.00, DIM F1 1.00 (dF1 0.00) |
 
-![input to output](figs/w3_t14_figB_input_to_output.png)
+![input to output](../../../docs/evidence/p0_g1_20260613/figs/fig_18_t14_input_to_output.png)
 
 - **4907182**: near-empty DIM roof cloud (DIM 3 vs ALS 21 pts/m2)
   -> no DIM LoD2.2 model; ALS and reference reconstruct a closed shell.
@@ -79,6 +79,6 @@ left to the viewer (no arrow). `dens(fp)` is whole-footprint point density.
 
 ## Files
 
-- Figure A: `docs/figs/w3_t14_figA_texture_to_points.png`
-- Figure B: `docs/figs/w3_t14_figB_input_to_output.png`
+- Figure A: `docs/evidence/p0_g1_20260613/figs/fig_17_t14_texture_to_points.png`
+- Figure B: `docs/evidence/p0_g1_20260613/figs/fig_18_t14_input_to_output.png`
 - Report: `docs/W3_qualitative_compare.md`

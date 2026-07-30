@@ -53,11 +53,11 @@
 | textured_survivor | DEBY_LOD2_4908023 | DJI_20241217103013_0032_D.JPG | 0.03054 | 0.0523 | 10.08 | 16384 | 128 |
 | textureless_failure | DEBY_LOD2_4907182 | DJI_20241217084841_0184_D.JPG | 0.00196 | 0.9887 | 6.92 | 2304 | 48 |
 
-![refined Figure 1.1 roof crops](figs/w3_t11_figure_1_1_roof_texture.png)
+![refined Figure 1.1 roof crops](../../../docs/evidence/p0_g1_20260613/figs/w3_t11_figure_1_1_roof_texture.png)
 
 ## Scatter
 
-![refined texture vs plane F1 gap](figs/w3_survivor_t11_texture_refine_scatter.png)
+![refined texture vs plane F1 gap](../../../docs/evidence/p0_g1_20260613/figs/fig_15_t11_survivor_texture_refine_scatter.png)
 
 ## Notes
 

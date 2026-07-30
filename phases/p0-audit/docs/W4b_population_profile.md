@@ -35,7 +35,7 @@ Median/IQR cells are formatted as `median [p25-p75]`.
 
 ## Figure
 
-![size-complexity scatter](figs/w4b_population_size_complexity.png)
+![size-complexity scatter](../../../docs/evidence/p0_g1_20260613/figs/fig_12_w4b_population_size_complexity.png)
 
 ## Observations
 

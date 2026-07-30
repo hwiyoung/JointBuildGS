@@ -10,15 +10,15 @@
 
 | bucket | building_id | ref_roof_planes | als_plane_f1 | dim_plane_f1 | mean_plane_f1 | selection_rule | figure |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| high | DEBY_LOD2_4959793 | 4 | 1.000000 | 1.000000 | 1.000000 | highest mean F1 group; tie-breaker larger ref_roof_planes | docs/figs/w3_1b_matching_overlay_high_DEBY_LOD2_4959793.png |
-| mid | DEBY_LOD2_4907518 | 12 | 0.500000 | 0.500000 | 0.500000 | closest to mean F1 0.5; tie-breaker larger ref_roof_planes | docs/figs/w3_1b_matching_overlay_mid_DEBY_LOD2_4907518.png |
-| low | DEBY_LOD2_4906987 | 5 | 0.000000 | 0.000000 | 0.000000 | lowest mean F1; tie-breaker larger ref_roof_planes | docs/figs/w3_1b_matching_overlay_low_DEBY_LOD2_4906987.png |
+| high | DEBY_LOD2_4959793 | 4 | 1.000000 | 1.000000 | 1.000000 | highest mean F1 group; tie-breaker larger ref_roof_planes | docs/evidence/p0_g1_20260613/figs/fig_07_matching_overlay_high_4959793.png |
+| mid | DEBY_LOD2_4907518 | 12 | 0.500000 | 0.500000 | 0.500000 | closest to mean F1 0.5; tie-breaker larger ref_roof_planes | docs/evidence/p0_g1_20260613/figs/fig_03_figure_1_1b_ridge_4907518.png |
+| low | DEBY_LOD2_4906987 | 5 | 0.000000 | 0.000000 | 0.000000 | lowest mean F1; tie-breaker larger ref_roof_planes | docs/evidence/p0_g1_20260613/figs/fig_08_matching_overlay_low_4906987.png |
 
-![high overlay](figs/w3_1b_matching_overlay_high_DEBY_LOD2_4959793.png)
+![high overlay](../../../docs/evidence/p0_g1_20260613/figs/fig_07_matching_overlay_high_4959793.png)
 
-![mid overlay](figs/w3_1b_matching_overlay_mid_DEBY_LOD2_4907518.png)
+![mid overlay](../../../docs/evidence/p0_g1_20260613/figs/fig_03_figure_1_1b_ridge_4907518.png)
 
-![low overlay](figs/w3_1b_matching_overlay_low_DEBY_LOD2_4906987.png)
+![low overlay](../../../docs/evidence/p0_g1_20260613/figs/fig_08_matching_overlay_low_4906987.png)
 
 ## Internal Boundary Summary
 

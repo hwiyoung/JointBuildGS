@@ -44,7 +44,7 @@
 
 ## Figure
 
-![texture vs plane F1 gap](figs/w3_survivor_t10_texture_gap_scatter.png)
+![texture vs plane F1 gap](../../../docs/evidence/p0_g1_20260613/figs/fig_14_t10_survivor_texture_gap_scatter.png)
 
 ## Notes
 

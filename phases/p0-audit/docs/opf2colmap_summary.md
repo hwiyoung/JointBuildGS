@@ -2,7 +2,7 @@
 
 - Generated at: 2026-06-11T13:40:24+00:00
 - COLMAP output: `data/work/colmap/sparse/0`
-- Overlay PNG: `docs/figs/t2_opf_pose_overlay.png`
+- Overlay PNG: `../../../docs/evidence/p0_g1_20260613/figs/fig_01_t2_camera_lod2_overlay.png`
 - Run directory: `runs/t2_opf2colmap_20260611_133906`
 - COLMAP camera model count: 1
 - COLMAP image / pose count: 937

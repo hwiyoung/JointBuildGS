@@ -48,7 +48,7 @@
 
 ## Figure
 
-![texture crop examples](figs/w3_failure_t9_texture_crops.png)
+![texture crop examples](../../../docs/evidence/p0_g1_20260613/figs/fig_13_t9_failure_texture_crops.png)
 
 ## Observations
 

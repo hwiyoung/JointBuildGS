@@ -28,11 +28,11 @@
 
 ## Figures
 
-![Plane F1](figs/w3_1_plane_f1_boxplot.png)
+![Plane F1](../../../docs/evidence/p0_g1_20260613/figs/fig_04_plane_f1_boxplot.png)
 
-![Boundary errors](figs/w3_1_boundary_error_boxplots.png)
+![Boundary errors](../../../docs/evidence/p0_g1_20260613/figs/fig_05_boundary_error_boxplots.png)
 
-![Height errors](figs/w3_1_height_error_boxplots.png)
+![Height errors](../../../docs/evidence/p0_g1_20260613/figs/fig_06_height_error_boxplots.png)
 
 ## Files
 

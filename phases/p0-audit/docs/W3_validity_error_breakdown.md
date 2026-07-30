@@ -33,7 +33,7 @@ val3dity error-instance counts.
 | 중복·퇴화 면 (degenerate/duplicate) | 102 | 0 | 6 | 0 | 12 |
 | **total invalid buildings** |  | **5** | **10** | 17 | 22 |
 
-![T13 error category by input](figs/w3_t13_validity_error_breakdown.png)
+![T13 error category by input](../../../docs/evidence/p0_g1_20260613/figs/fig_16_t13_validity_error_breakdown.png)
 
 ## 2. Per-building error codes (union of validity failures) ①
 
@@ -107,4 +107,4 @@ validity-failing buildings equals the W3-2c `validity` priority bucket (13).
 - Per-building errors: `docs/W3_validity_error_breakdown_building_errors.csv`
 - Error type × input: `docs/W3_validity_error_breakdown_type_by_input.csv`
 - Quality-pair attribution: `docs/W3_validity_error_breakdown_quality_attribution.csv`
-- Figure: `docs/figs/w3_t13_validity_error_breakdown.png`
+- Figure: `docs/evidence/p0_g1_20260613/figs/fig_16_t13_validity_error_breakdown.png`

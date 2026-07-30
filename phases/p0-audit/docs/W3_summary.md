@@ -100,7 +100,7 @@ Body case note: `DEBY_LOD2_4907510` is now used as the preprocessing-recovered t
 | figure | content | file |
 | --- | --- | --- |
 | Figure 1.1a | `DEBY_LOD2_4907182` canonical DIM roof-matching/assembly case that did not recover under wall removal or thinning | docs/figs/w3_2c_dim_unrecovered_missing_lod22_DEBY_LOD2_4907182.png |
-| Figure 1.1b | `DEBY_LOD2_4907518` matched roof planes and ridge/shared-boundary comparison spot check | docs/figs/w3_1b_matching_overlay_mid_DEBY_LOD2_4907518.png |
+| Figure 1.1b | `DEBY_LOD2_4907518` matched roof planes and ridge/shared-boundary comparison spot check | docs/evidence/p0_g1_20260613/figs/fig_03_figure_1_1b_ridge_4907518.png |
 | Figure 1.2 | canonical W3-2c plane F1 table source | docs/W3_2c_canonical_roofer_quality_summary.csv |
 | Figure 1.3 | canonical W3-2c exterior/internal boundary table source | docs/W3_2c_canonical_internal_boundary_summary.csv |
 | Figure 1.4 | canonical W3-2c height-error table source | docs/W3_2c_canonical_roofer_quality_summary.csv |

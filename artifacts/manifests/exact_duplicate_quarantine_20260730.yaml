@@ -1,0 +1,118 @@
+schema_version: 1
+artifact_id: jointbuildgs-docs-exact-duplicate-quarantine-20260730
+role: reversible-exact-duplicate-quarantine
+created_at: 2026-07-30T15:47:39+09:00
+source:
+  branch: exp/fusion-w1
+  head_before_move: fa027a87538857245e61b4023858dfd13527dc30
+backend:
+  kind: local-filesystem
+  repository_relative_uri: file:../JointBuildGS-artifacts/quarantine/20260730-semantic-restructure/exact-duplicates/docs
+integrity:
+  method: same-device-rename-plus-per-file-sha256
+  content_bytes_modified: false
+  source_and_canonical_hash_match_required: true
+  record_set_sha256: 2533e04ea93071f414f981310d15c3be86b17eabcdff08e7808602fc31854c84
+totals:
+  file_count: 18
+  apparent_bytes: 10396416
+reference_policy:
+  canonical_files_remain_in_repository: true
+  current_non_historical_references_retargeted: true
+  migration_catalogs_preserved: true
+  frozen_run_and_snapshot_provenance_preserved: true
+  active_fusion_paths_touched: false
+retention:
+  policy: preserve-until-reviewed
+  restore_rule: move each backend-relative quarantine_path back to source_path after confirming the source path is absent and the recorded SHA-256 still matches
+files:
+  - source_path: phases/p0-audit/docs/figs/t2_opf_pose_overlay.png
+    canonical_path: docs/evidence/p0_g1_20260613/figs/fig_01_t2_camera_lod2_overlay.png
+    quarantine_path: phases/p0-audit/docs/figs/t2_opf_pose_overlay.png
+    bytes: 1217027
+    sha256: d521abef87876b4b33fc52b62a81b3d57121747b1e36bed0eed77efdb498f4be
+  - source_path: phases/p0-audit/docs/figs/w3_1_boundary_error_boxplots.png
+    canonical_path: docs/evidence/p0_g1_20260613/figs/fig_05_boundary_error_boxplots.png
+    quarantine_path: phases/p0-audit/docs/figs/w3_1_boundary_error_boxplots.png
+    bytes: 88690
+    sha256: aab0bdd30ee6ce8bc08c21e8a86868d8ebebf9d53e2790654ee8cc8d99aab2fd
+  - source_path: phases/p0-audit/docs/figs/w3_1_height_error_boxplots.png
+    canonical_path: docs/evidence/p0_g1_20260613/figs/fig_06_height_error_boxplots.png
+    quarantine_path: phases/p0-audit/docs/figs/w3_1_height_error_boxplots.png
+    bytes: 103765
+    sha256: 801414b8cfaa7162a4b68b7486ba6f2be2fc68a1655c1dc41ea469dec971fdda
+  - source_path: phases/p0-audit/docs/figs/w3_1_plane_f1_boxplot.png
+    canonical_path: docs/evidence/p0_g1_20260613/figs/fig_04_plane_f1_boxplot.png
+    quarantine_path: phases/p0-audit/docs/figs/w3_1_plane_f1_boxplot.png
+    bytes: 95733
+    sha256: 3d83f62257205168cb0a752584dc2b4057f205917943fc317ebbfb2eeaf50f6e
+  - source_path: phases/p0-audit/docs/figs/w3_1b_matching_overlay_high_DEBY_LOD2_4959793.png
+    canonical_path: docs/evidence/p0_g1_20260613/figs/fig_07_matching_overlay_high_4959793.png
+    quarantine_path: phases/p0-audit/docs/figs/w3_1b_matching_overlay_high_DEBY_LOD2_4959793.png
+    bytes: 200091
+    sha256: ff9fa346160683a37edfd97ce69af5b21f41723400250ab8b7ea46b1551ee172
+  - source_path: phases/p0-audit/docs/figs/w3_1b_matching_overlay_low_DEBY_LOD2_4906987.png
+    canonical_path: docs/evidence/p0_g1_20260613/figs/fig_08_matching_overlay_low_4906987.png
+    quarantine_path: phases/p0-audit/docs/figs/w3_1b_matching_overlay_low_DEBY_LOD2_4906987.png
+    bytes: 179450
+    sha256: 10adfa5231a349cacf351658a467178c912ccd587bb00253dccab79bffa3a16c
+  - source_path: phases/p0-audit/docs/figs/w3_1b_matching_overlay_mid_DEBY_LOD2_4907518.png
+    canonical_path: docs/evidence/p0_g1_20260613/figs/fig_03_figure_1_1b_ridge_4907518.png
+    quarantine_path: phases/p0-audit/docs/figs/w3_1b_matching_overlay_mid_DEBY_LOD2_4907518.png
+    bytes: 251717
+    sha256: fe06ec5b0b32101609c0dbb7af3f0000fe23308d9c9b158eb463e7e68c60cc0a
+  - source_path: phases/p0-audit/docs/figs/w3_failure_t7_classification_counts.png
+    canonical_path: docs/evidence/p0_g1_20260613/figs/fig_11_t7_failure_classification_counts.png
+    quarantine_path: phases/p0-audit/docs/figs/w3_failure_t7_classification_counts.png
+    bytes: 43765
+    sha256: 2e3066cb74ecc5ff0f178d4f8d03d51717ca05d47dc21729da0b068733c9d9e7
+  - source_path: phases/p0-audit/docs/figs/w3_failure_t7_point_clips.png
+    canonical_path: docs/evidence/p0_g1_20260613/figs/fig_10_t7_failure_point_clips.png
+    quarantine_path: phases/p0-audit/docs/figs/w3_failure_t7_point_clips.png
+    bytes: 560114
+    sha256: 597bd1f67fb13339396bc0aaec552ae5a9bda1b7bf13f9e6eb2a39d4757c5c46
+  - source_path: phases/p0-audit/docs/figs/w3_failure_t9_texture_crops.png
+    canonical_path: docs/evidence/p0_g1_20260613/figs/fig_13_t9_failure_texture_crops.png
+    quarantine_path: phases/p0-audit/docs/figs/w3_failure_t9_texture_crops.png
+    bytes: 814983
+    sha256: 5cf525dbda7827110b1e179a29d55c6bdfcf741473f4da8a273fd7335f1fda29
+  - source_path: phases/p0-audit/docs/figs/w3_survivor_t10_texture_gap_scatter.png
+    canonical_path: docs/evidence/p0_g1_20260613/figs/fig_14_t10_survivor_texture_gap_scatter.png
+    quarantine_path: phases/p0-audit/docs/figs/w3_survivor_t10_texture_gap_scatter.png
+    bytes: 137929
+    sha256: 4a7a6af72bfa2744d65570c60167edcc859e672a635d3ccfd257cd78cfcdd252
+  - source_path: phases/p0-audit/docs/figs/w3_survivor_t11_texture_refine_scatter.png
+    canonical_path: docs/evidence/p0_g1_20260613/figs/fig_15_t11_survivor_texture_refine_scatter.png
+    quarantine_path: phases/p0-audit/docs/figs/w3_survivor_t11_texture_refine_scatter.png
+    bytes: 127814
+    sha256: 365df6b30099fa03e211c273f4a0b086e819f1340a0b19fb6e10e348334cbcfa
+  - source_path: phases/p0-audit/docs/figs/w3_t11_figure_1_1_roof_texture.png
+    canonical_path: docs/evidence/p0_g1_20260613/figs/w3_t11_figure_1_1_roof_texture.png
+    quarantine_path: phases/p0-audit/docs/figs/w3_t11_figure_1_1_roof_texture.png
+    bytes: 123143
+    sha256: a6398d461293c51916295f554ab095edd3e5e1887aaec635cdfe9919ba6f350f
+  - source_path: phases/p0-audit/docs/figs/w3_t12_figure_1_1_failure_story.png
+    canonical_path: docs/evidence/p0_g1_20260613/figs/fig_02_figure_1_1a_dim_unrecovered_4907182.png
+    quarantine_path: phases/p0-audit/docs/figs/w3_t12_figure_1_1_failure_story.png
+    bytes: 3800746
+    sha256: d4648ca33c41e6701c5bf32e16e1ff24fa2cae524a4897e81d4b938888a51865
+  - source_path: phases/p0-audit/docs/figs/w3_t13_validity_error_breakdown.png
+    canonical_path: docs/evidence/p0_g1_20260613/figs/fig_16_t13_validity_error_breakdown.png
+    quarantine_path: phases/p0-audit/docs/figs/w3_t13_validity_error_breakdown.png
+    bytes: 89920
+    sha256: a8b55e24104e15f5bdcc28934857f5bacb452d84e47a97d514b0bd06e647edac
+  - source_path: phases/p0-audit/docs/figs/w3_t14_figA_texture_to_points.png
+    canonical_path: docs/evidence/p0_g1_20260613/figs/fig_17_t14_texture_to_points.png
+    quarantine_path: phases/p0-audit/docs/figs/w3_t14_figA_texture_to_points.png
+    bytes: 975446
+    sha256: c88dd3c3af3cce10eb4ca7b10724e2fbdf8b60357597201aff0fe1e89373b140
+  - source_path: phases/p0-audit/docs/figs/w3_t14_figB_input_to_output.png
+    canonical_path: docs/evidence/p0_g1_20260613/figs/fig_18_t14_input_to_output.png
+    quarantine_path: phases/p0-audit/docs/figs/w3_t14_figB_input_to_output.png
+    bytes: 1411848
+    sha256: 5891e84cea252ebd9f93f6bc6fa0a5ccc3ca5983b99090bbeec2ebae7f95b404
+  - source_path: phases/p0-audit/docs/figs/w4b_population_size_complexity.png
+    canonical_path: docs/evidence/p0_g1_20260613/figs/fig_12_w4b_population_size_complexity.png
+    quarantine_path: phases/p0-audit/docs/figs/w4b_population_size_complexity.png
+    bytes: 174235
+    sha256: 30547f95c0edb02a1e0aeafa3d0b5cad5d3f7f74e37968593996c90d8d311f53
