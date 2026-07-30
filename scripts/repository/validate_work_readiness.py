@@ -42,6 +42,8 @@ WORK_REQUIRED_MARKERS = (
     "CHATGPT_WORK_CODEX_HANDOFF.md",
     "serialized ownership",
 )
+CATALOG_ISSUES = Path("docs/research/repository/CATALOG_ISSUES.md")
+ZERO_UNCLASSIFIED_MARKER = "| Local Markdown links/embeds that do not resolve | 0 |"
 
 
 def git_paths(repo: Path) -> set[str]:
@@ -67,6 +69,28 @@ def canonical_paths(config: dict) -> set[str]:
             if item.get("status") == "canonical"
         )
     return paths
+
+
+def is_sparse_checkout(repo: Path) -> bool:
+    result = subprocess.run(
+        ["git", "-c", f"safe.directory={repo}", "config", "--bool", "core.sparseCheckout"],
+        cwd=repo,
+        check=False,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    return result.returncode == 0 and result.stdout.strip() == "true"
+
+
+def validate_generated_catalog_summary(repo: Path, errors: list[str]) -> None:
+    path = repo / CATALOG_ISSUES
+    if not path.is_file() or path.is_symlink():
+        errors.append(f"generated catalog summary is unavailable: {CATALOG_ISSUES}")
+        return
+    report = path.read_text(encoding="utf-8")
+    if ZERO_UNCLASSIFIED_MARKER not in report:
+        errors.append("generated catalog does not prove zero unclassified Markdown references")
 
 
 def validate(repo: Path, config: dict, artifact_root: Path | None) -> list[str]:
@@ -126,13 +150,16 @@ def validate(repo: Path, config: dict, artifact_root: Path | None) -> list[str]:
             if artifact_root is not None and (artifact_root / target).exists():
                 errors.append(f"known-missing target now exists externally; review ledger: {target}")
 
-    _, relations, _ = inventory.build_inventory(repo, config)
-    unclassified = [
-        relation for relation in relations
-        if relation.relation in {"references", "embeds"} and relation.target_exists == "no"
-    ]
-    if unclassified:
-        errors.append(f"unclassified Markdown references remain: {len(unclassified)}")
+    if is_sparse_checkout(repo):
+        validate_generated_catalog_summary(repo, errors)
+    else:
+        _, relations, _ = inventory.build_inventory(repo, config)
+        unclassified = [
+            relation for relation in relations
+            if relation.relation in {"references", "embeds"} and relation.target_exists == "no"
+        ]
+        if unclassified:
+            errors.append(f"unclassified Markdown references remain: {len(unclassified)}")
 
     start = (repo / "docs/research/WORK_START_HERE.md").read_text(encoding="utf-8")
     for marker in WORK_REQUIRED_MARKERS:

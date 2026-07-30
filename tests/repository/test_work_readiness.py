@@ -1,5 +1,6 @@
 import importlib.util
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -60,6 +61,23 @@ class WorkReadinessTests(unittest.TestCase):
                 "missing_evidence",
             },
         )
+
+    def test_sparse_catalog_summary_requires_zero_unclassified_marker(self):
+        with tempfile.TemporaryDirectory() as temp:
+            repo = Path(temp)
+            report = repo / work_readiness.CATALOG_ISSUES
+            report.parent.mkdir(parents=True)
+            report.write_text("# report\n", encoding="utf-8")
+            errors = []
+            work_readiness.validate_generated_catalog_summary(repo, errors)
+            self.assertTrue(any("does not prove zero" in item for item in errors))
+            report.write_text(
+                work_readiness.ZERO_UNCLASSIFIED_MARKER + "\n",
+                encoding="utf-8",
+            )
+            errors = []
+            work_readiness.validate_generated_catalog_summary(repo, errors)
+            self.assertEqual([], errors)
 
 
 if __name__ == "__main__":
