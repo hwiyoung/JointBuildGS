@@ -1,0 +1,52 @@
+schema_version: 1
+artifact_id: jointbuildgs-quarantine-semantic-restructure-20260730
+role: reversible-quarantine
+created_at: 2026-07-30T00:00:00+09:00
+backend:
+  kind: local-filesystem
+  repository_relative_uri: file:../JointBuildGS-artifacts/quarantine/20260730-semantic-restructure
+integrity:
+  method: same-device-rename
+  content_bytes_modified: false
+  destructive_cleanup_authorized: false
+totals:
+  apparent_bytes: 11622326
+  cache_files: 185
+  cache_file_bytes: 11360182
+  empty_directories: 19
+empty_layouts:
+  - .agents
+  - .codex
+  - configs/experiments/footprint_conditioned_readout
+  - configs/experiments/stage3_rendered_evidence
+  - docs/evidence_cards
+  - docs/evidence_cards_v2
+  - docs/evidence_cards_v3
+  - docs/figs/boundary_map_v2
+  - docs/figs/boundary_map_v3
+  - docs/figs/boundary_map_v4
+  - docs/judgment_kit_v4
+  - phases/p0-audit/docs/G1_package/figs/W_D6_shape
+  - phases/p0-audit/docs/G1_package/figs/W_D6_textureless
+  - phases/p0-audit/docs/G1_package/figs/W_assembly
+  - phases/p0-audit/docs/G1_package/figs/W_faithful
+  - phases/p0-audit/docs/G1_package/figs/W_overseg
+  - scripts/comparison
+  - scripts/synthetic_b
+  - src/stage1
+generated_caches:
+  - phases/p2-gsjso/scripts/__pycache__
+  - phases/p0-audit/scripts/__pycache__
+  - tests/__pycache__
+  - tests/scripts/__pycache__
+  - tests/stage2/__pycache__
+  - src/__pycache__
+  - src/stage2/__pycache__
+  - scripts/phase2_synthesis/__pycache__
+  - scripts/__pycache__
+  - scripts/experiments/degradation_curve/__pycache__
+  - scripts/experiments/fair_pilot/__pycache__
+  - scripts/experiments/boundary_map/__pycache__
+retention:
+  policy: preserve-until-reviewed
+  restore_rule: move the recorded quarantine path back to its original repository-relative path
