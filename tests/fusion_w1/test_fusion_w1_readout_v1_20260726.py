@@ -385,7 +385,7 @@ def make_readout_preoutput_cache_failure(
             },
             "output": output_rel,
             "argv": [
-                "phases/p2-gsjso/scripts/tum_mob_tsdf_extract.py",
+                "scripts/stage3_readout/tum_mob_tsdf_extract.py",
                 "--checkpoint",
                 str(checkpoint.relative_to(root)),
                 "--out",
@@ -774,7 +774,7 @@ class ConfigContractTests(unittest.TestCase):
         pointcloud = self.config["pointcloudification"]
         self.assertEqual(
             pointcloud["script"],
-            "phases/p2-gsjso/scripts/tum_mob_tsdf_extract.py",
+            "scripts/stage3_readout/tum_mob_tsdf_extract.py",
         )
         self.assertFalse(pointcloud["semantic_pass"])
         self.assertEqual(pointcloud["footprint_buffer_m"], 15.0)
@@ -838,7 +838,7 @@ class ConfigContractTests(unittest.TestCase):
         self.assertEqual(classification["target_density"], 0.0)
         self.assertEqual(
             classification["script"],
-            "scripts/input_and_alignment/p2_gsjso/_mob_prep_las.py",
+            "scripts/input_and_alignment/tum_transfer/_mob_prep_las.py",
         )
         self.assertEqual(classification["smrf"]["ground_class"], 2)
         self.assertEqual(classification["overlay"]["building_class"], 6)

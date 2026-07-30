@@ -3,6 +3,55 @@
 > 실패·예외는 숨기지 말고 기록 후 보고. P0 이슈는 `phases/p0-audit/docs/issues.md`.
 > 신설 2026-06-22 — 이번까지의 P2 및 P0→P2 전이(P0c) 실패를 백필. 시간순(최근 위).
 
+## FUS-W1 dense qualitative v1 — 구형 P0 투영 consumer 회수 (2026-07-28)
+
+- **관찰 범위**: v1 `manifest.json`은 패널 **9개**, 패널당 사진 **3개**, 합계 **27개 photo receipt**를
+  기록한다. 27/27 receipt에 단일 `locator_z_m`와 투영 footprint vertex 수가 있고, source record
+  1건은 `phases/p0-audit/scripts/07_failure_diagnosis.py`를 직접 지목한다. 이 사진 행은 실제 XYZ
+  지붕 경계가 아니라 단일 높이 footprint 투영이며, 독립 영상 정합 측정값은 기록돼 있지 않다.
+- **보존·사용 제한**: v1 PNG 9개·PDF 1개·overview 1개·manifest/selection audit은 삭제하거나
+  덮어쓰지 않았다. run 루트의 `RETRACTED.md`에 사진-풋프린트 첫 행과 `photo_receipts`의 경계·정합
+  근거 사용 금지를 기록했다. 나머지 행과 selection 기록은 역사 산출물로만 남기며 재채점하지 않았다.
+- **활성 경로 조치**: v1 renderer/config/wrapper/test의 활성 파일 수는 **0개**, 대응 v2
+  renderer/config/wrapper/test는 별도 이름과 output namespace를 사용한다. 2026-07-28 v5 구현 회수와
+  v6 추가 후 정적 inventory의 P2 panel/qualitative 활성 진입점 **16개**를 검사하는 policy test를 추가해 구형 파일 경로,
+  `T7.project_points`, 로컬 `project_points`, 동일 AST 및 FULL_OPENCV distortion 수식 복제를 차단했다.
+  역사 재현용 P0 파일 1개는 삭제하지 않았다.
+- **v2 첫 렌더 중단과 추가 조치**: 최초 v2 렌더는 raw 원본 사진 `5280×3956`과 adopted COLMAP
+  camera `1400×1013`의 크기 불일치를 감지하고 출력 게시 전에 중단됐다. 이미지 입력을 동일 sparse 모델과
+  결합된 `phases/p0-audit/data/work/mvs/colmap_dense/images`의 `1400×1013` 픽셀로 교체하고,
+  선택된 모든 사진에서 image/camera 크기 완전 일치를 `check`와 렌더 양쪽에서 fail-closed 검증한다.
+- **v2 게시 기록**: 대체판은 패널 **9개**, 출력 ledger **13개**를 원자적으로 게시했고 `verify`를 통과했다.
+  공용 projector에 빈/singular scene transform fail-closed 검증을 추가한 뒤 기존 bundle을 임시 보관하고
+  동일 namespace에 다시 원자 게시했다. `verify`는 이제 manifest의 source ledger **49건**도 실제 파일
+  bytes/SHA-256으로 재검사한다. 최종 output-set SHA-256은
+  `d6850ae48a2142242143ae3ee0d95041752051b17513d5208cf968245329ab90`이다.
+
+## FUS-W1 A′ 4907182 panel v5 회수와 v6 관찰 (2026-07-28)
+
+- **v5 회수**: `review_v5_backfill` 첫 행은 GroundSurface XY를 한 개 median height에 올린 평면
+  locator였으므로 사진–지붕 정합 근거에서 제외했다. 기존 panel/receipt는 덮어쓰지 않고 run 루트
+  `RETRACTED.md`에 사용 제한을 기록했다. 오작동 재진입을 막기 위해 untracked 활성 위치의 v5
+  renderer/config/wrapper/test **4개는 제거**하고, 정적 policy test가 네 경로의 부재를 확인한다.
+- **v4 임시 예외**: v4에도 같은 계열의 flat-height locator가 남아 있으나, 2026-07-28 현재 실행 중인
+  `jointbuildgs-fusion-w1-aprime-overnight-v4-repair1.service`가 v4 네 파일과 현재 HEAD를 해시 잠금해
+  후속 job의 정성 hook으로 사용 중이다. 실행 중 파일 삭제·수정·HEAD 변경은 본 학습/후처리 큐를
+  중단시키므로 이번 변경에서는 v4를 건드리지 않았다. 정적 policy는 flat locator 정의가 이 한 renderer
+  밖으로 확산되지 않도록 검사하며, 큐 종료 뒤 layout helper 추출과 v4 네 실행 파일 회수가 필요하다.
+- **v6 대체 경로**: 원 visibility NPZ의 ALS class 6 unfiltered XYZ로 supervision과 같은 TIN을 다시
+  만들고 incidence-one actual-Z boundary **634개 선분, 31개 component, Z 514.751–526.961 m**와
+  k≥3 seed **1,751점**을 공용 explicit-datum projector로 투영했다. 선택 뷰에서 boundary endpoint
+  **1,268/1,268**, seed **1,751/1,751**가 유효·in-frame이고 additional pose transform은 0이다.
+  M_j·reference GML·output CityJSON은 뷰 선정·자격·crop에 사용하지 않았다.
+- **시각 관찰 제한**: v6는 좌표·출처 계약을 fail-closed로 검증하지만 선택 사진에서 target roof가
+  가림과 source support 복잡성 때문에 한눈에 식별되지 않는다. 따라서 첫 행은 `REVIEW_NEEDED`이며,
+  RGB 독립 roof segmentation/edge 또는 evaluation-only reference boundary를 선정 이후 별도 겹쳐 보는
+  관문 없이는 “항상 올바른 정합”으로 보고하지 않는다. 학습·readout·assembly·score는 변경하지 않았다.
+- **resolver 열람 공시**: 최종 v6 view ranking·eligibility·crop에는 actual boundary와 seed만 들어가지만,
+  재사용한 v3 base resolver는 그 전에 M_j와 evaluation reference를 읽는다. 최종 좌표 dataflow에는
+  연결되지 않으며 receipt에 `inherited_read_unused_by_v6_alignment`로 공시했다. v6를 1동 backfill 밖으로
+  일반화하기 전에는 first-row-free resolver 분리가 필요하다.
+
 ## E5 파일럿 B3 조립 — C001 근접 동 중복 산출 병합 실패 (2026-07-07)
 
 - **증상**: `e5p_gate_20260707_C001` 첫 조립 시 `sparse_r1/run_1` 병합 단계에서

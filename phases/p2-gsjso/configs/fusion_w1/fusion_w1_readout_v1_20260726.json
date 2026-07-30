@@ -127,7 +127,7 @@
   "pointcloudification": {
     "image": "jointbuildgs:dev",
     "image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
-    "script": "phases/p2-gsjso/scripts/tum_mob_tsdf_extract.py",
+    "script": "scripts/stage3_readout/tum_mob_tsdf_extract.py",
     "script_sha256": "914cbad783b1eee27d1d2de24e702eb65e5caae1cd7bb142ebbe0fac200325bc",
     "downscale": 1.0,
     "voxel_m": 0.05,
@@ -153,7 +153,7 @@
   "classification": {
     "image": "jointbuildgs-p0-tools:t0",
     "image_id": "sha256:87bea02e5598a3d53a119b754191673497d52641bd8ea4106ffee653407579b0",
-    "script": "scripts/input_and_alignment/p2_gsjso/_mob_prep_las.py",
+    "script": "scripts/input_and_alignment/tum_transfer/_mob_prep_las.py",
     "script_sha256": "3ce3a14b57f6f3521ba02d5bb81a490a16b4e5b0e8d8e0a4b1b02ef1f05978f3",
     "method": "P0_T4_PDAL_SMRF_then_non_ground_footprint_overlay",
     "target_density": 0.0,
@@ -225,11 +225,11 @@
         "sha256": "ae655090915c56bfeee2be830a28e27520c2430e97d19e515a0aa046e4c79e97"
       },
       "roof_metrics": {
-        "path": "scripts/e5_c001/p2_gsjso/e5_c001_8way.py",
+        "path": "scripts/e5_c001/e5_c001_8way.py",
         "sha256": "12322a7fd49c0904eaf7160946c7ef3b521ed091038452f9a863bef37f0bcbdc"
       },
       "coverage_and_xy": {
-        "path": "scripts/quality_score/p2_gsjso/qs_baseline178_rescore.py",
+        "path": "scripts/evaluation/quality_score/qs_baseline178_rescore.py",
         "sha256": "0d752dade0b8677460b55d381a69db77f7bf611061fb7479710434358db33e9d"
       }
     },
