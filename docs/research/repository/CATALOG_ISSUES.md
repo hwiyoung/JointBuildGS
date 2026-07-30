@@ -19,10 +19,10 @@
 |---|---|
 | canonical | 27 |
 | canonical_candidate | 5 |
-| orphan_candidate | 372 |
+| orphan_candidate | 371 |
 | superseded | 53 |
 | superseded_candidate | 8 |
-| supporting | 1420 |
+| supporting | 1421 |
 
 ### Run Git states
 
@@ -618,7 +618,7 @@ A file is an orphan candidate only when it has no parsed inbound path reference 
 | `docs/experiments/joint-optimization/FC_S5_loss_ledger_instrumentation/reports/phase2_diagnostics/LOSS_DIAGNOSTIC_REPORT.md` | joint_optimization | report |
 | `docs/experiments/joint-optimization/FC_S5_loss_ledger_instrumentation/tables/phase1_instrumentation/log_tag_check.csv` | joint_optimization | evidence_table |
 
-Only the first 250 of 372 orphan candidates are shown.
+Only the first 250 of 371 orphan candidates are shown.
 
 ## Required human decisions before migration
 
