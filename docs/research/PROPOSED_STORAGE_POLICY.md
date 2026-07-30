@@ -2,7 +2,7 @@
 
 ## 상태와 목표
 
-이 문서는 최종 7개 소유자 구조에 맞춘 **제안 정책**이다. 삭제, `.gitignore` 변경, Git LFS migration, artifact upload, history rewrite를 승인하지 않는다.
+이 문서는 최종 7개 소유자 구조에 맞춘 **제안 정책**이며 2026-07-30 closeout `HEAD` `9e1ff575aa901b5873fc104bda61774e0fa58583`에서 재검증되었다. 삭제, `.gitignore` 변경, Git LFS migration, artifact upload, history rewrite를 승인하지 않는다.
 
 목표는 코드·설정·검증·연구 계약·compact evidence·provenance를 Git에서 함께 검토하면서, raw/generated payload는 clone 경로 밖에서 manifest로 해석하는 것이다. 현재 sibling `../JointBuildGS-artifacts`는 local role separation을 구현했지만 durable backup이나 institutional artifact backend는 아니다.
 

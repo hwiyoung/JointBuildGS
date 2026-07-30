@@ -8,7 +8,7 @@
 - Sparse checkout은 working tree에 나타나는 tracked path를 제한한다.
 - 둘 다 external artifact hydration을 대신하지 않으며 기존 checkout의 ignored/untracked file을 제거하지 않는다.
 
-측정 기준 current checkout은 `.git` 제외 734.054 MiB, `.git` 1.799 GiB이고 live remote tree는 732.360 MiB다. 가장 큰 단일 current blob은 9.987 MiB지만 tracked image aggregate가 547.948 MiB이므로 이 조합의 효과가 있다.
+측정 기준 current checkout은 `.git` 제외 733.891 MiB, `.git` 1.801 GiB이고 live remote tree는 732.360 MiB다. 가장 큰 단일 current blob은 9.987 MiB지만 tracked image aggregate가 547.948 MiB이므로 이 조합의 효과가 있다.
 
 ## 사전 조건
 
@@ -17,7 +17,7 @@
 3. pilot은 새 sibling directory에서만 실행한다.
 4. remote가 blob filter를 지원하는지 확인한다.
 5. C-class payload는 manifest와 필요 범위를 확인하기 전 hydration하지 않는다.
-6. 현재 local branch는 remote보다 42 commits 앞서므로, push 전 pilot은 live remote 구조만 보인다는 점을 기록한다. 새 구조 acceptance test는 최종 구조 commit이 push된 뒤 다시 수행한다.
+6. 현재 local branch는 remote보다 43 commits 앞서므로, push 전 pilot은 live remote 구조만 보인다는 점을 기록한다. 새 구조 acceptance test는 최종 구조 commit이 push된 뒤 다시 수행한다.
 
 ## Profile 1 — 최소 control plane
 

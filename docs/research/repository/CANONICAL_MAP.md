@@ -44,7 +44,7 @@ This table shows multi-file families and explicit/candidate canonical families. 
 | joint_optimization | 154 | v2 | 0 | docs/experiments/joint_optimization/ |
 | citygml_readout | 140 | 2.0, v1, v2 | 0 | docs/experiments/citygml_readout/ |
 | p0_g1_20260613 | 123 | v6 | 0 | docs/experiments/p0_g1_20260613/ |
-| p0_audit | 116 | v1, v1_20260610 | 0 | docs/evidence/p0-audit/ |
+| p0_audit | 122 | v1, v1_20260610 | 0 | docs/evidence/p0-audit/ |
 | evidence_cards | 113 | v1, v2, v3 | 1 | docs/evidence/evidence_cards/ |
 | e5_c001_s3 | 95 | - | 1 | docs/experiments/e5_c001_s3/ |
 | evaluation | 93 | v1, v4 | 0 | docs/experiments/evaluation/ |
