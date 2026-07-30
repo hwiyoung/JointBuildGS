@@ -37,6 +37,11 @@ from matplotlib.collections import PolyCollection
 
 
 REPO = Path(__file__).resolve().parents[4]
+if str(REPO) not in sys.path:
+    sys.path.insert(0, str(REPO))
+
+from src.artifact_paths import logical_display_path, resolve_existing_path  # noqa: E402
+
 DEFAULT_CONFIG = (
     REPO
     / "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_job_qualitative_v3_20260727.json"
@@ -60,16 +65,11 @@ def utc_now() -> str:
 
 
 def repo_path(value: str | Path) -> Path:
-    path = Path(value)
-    return path if path.is_absolute() else REPO / path
+    return resolve_existing_path(REPO, value)
 
 
 def display_path(path: Path) -> str:
-    absolute = path.resolve()
-    try:
-        return absolute.relative_to(REPO.resolve()).as_posix()
-    except ValueError:
-        return str(absolute)
+    return logical_display_path(REPO, path)
 
 
 def is_within(path: Path, parent: Path) -> bool:
@@ -139,13 +139,58 @@ def verify_large_locked_record(record: Mapping[str, Any], label: str) -> dict[st
     return actual
 
 
+def verify_projection_config_migration(
+    source_hashes: Mapping[str, Any], migration: Mapping[str, Any]
+) -> dict[str, Any]:
+    """Verify one path-only projection-config migration against its source-lock."""
+
+    bound_path = str(migration.get("preprocess_bound_path", ""))
+    bound_sha = str(migration.get("preprocess_bound_sha256", ""))
+    require(source_hashes.get(bound_path) == bound_sha, "preprocess projection lock drift")
+    require(
+        migration.get("allowed_json_pointer_difference") == "/a1_zeta_ls/updated_by",
+        "projection migration difference scope drift",
+    )
+    current_path = repo_path(str(migration.get("current_path", "")))
+    current_record = file_record(current_path)
+    require(current_record["sha256"] == migration.get("current_sha256"), "current projection config drift")
+
+    artifact_root = os.environ.get("JBGS_ARTIFACT_ROOT")
+    require(bool(artifact_root), "JBGS_ARTIFACT_ROOT is required for projection migration verification")
+    locked_path = Path(str(artifact_root)) / str(migration.get("source_lock_artifact_path", ""))
+    locked_record = file_record(locked_path)
+    require(locked_record["sha256"] == bound_sha, "source-lock projection config drift")
+
+    locked = load_json(locked_path)
+    current = load_json(current_path)
+    locked_node = locked.get("a1_zeta_ls", {})
+    current_node = current.get("a1_zeta_ls", {})
+    require(locked_node.get("updated_by") == migration.get("locked_value"), "locked migration value drift")
+    require(current_node.get("updated_by") == migration.get("current_value"), "current migration value drift")
+    locked_node = dict(locked_node)
+    current_node = dict(current_node)
+    locked_node.pop("updated_by", None)
+    current_node.pop("updated_by", None)
+    locked["a1_zeta_ls"] = locked_node
+    current["a1_zeta_ls"] = current_node
+    require(locked == current, "projection config changed beyond the allowed path metadata")
+    return {
+        "preprocess_bound_path": bound_path,
+        "preprocess_bound_sha256": bound_sha,
+        "current_path": str(migration["current_path"]),
+        "current_sha256": str(migration["current_sha256"]),
+        "allowed_json_pointer_difference": str(migration["allowed_json_pointer_difference"]),
+        "scientific_fields_equal": True,
+    }
+
+
 def load_config(path: Path = DEFAULT_CONFIG) -> dict[str, Any]:
     config = load_json(path)
     require(config.get("schema") == CONFIG_SCHEMA, "job qualitative config schema drift")
     require(config.get("run_id") == "20260726_fusion_w1_aprime", "run ID drift")
     require(config.get("branch") == "exp/fusion-w1", "branch lock drift")
     implementation = config.get("implementation_files")
-    require(isinstance(implementation, list) and len(implementation) == 4, "implementation file set drift")
+    require(isinstance(implementation, list) and len(implementation) == 5, "implementation file set drift")
     for value in implementation:
         require(not Path(str(value)).is_absolute(), "implementation path must be repo-relative")
         require(repo_path(str(value)).is_file(), f"implementation absent: {value}")
@@ -550,8 +595,10 @@ def resolve_evidence(
     reference_stats = ring_stats(reference_rings, "evaluation-only reference GML")
 
     job = report.Job(1, building_id, arm, replicate, target)
+    training_logical_root = Path(str(training_record["path"])).parent
+    opacity_lineage = repo_path(training_logical_root / "audit/seed_lineage.csv")
     opacity_rows, opacity_state, opacity_scope = report.load_opacity_rows(
-        job, repo_path(training_record["path"]).parent
+        job, opacity_lineage.parent.parent
     )
     require(opacity_state == "measured", f"opacity trajectory is {opacity_state}: {opacity_scope}")
     initial_phase = config["visual_contract"]["opacity_initial_observation_phase"]

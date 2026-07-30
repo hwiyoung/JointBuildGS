@@ -1,6 +1,6 @@
 # 단계 1b — 건물 단위 품질·커버리지 점검 (빌드 A 진입 판단용)
 
-> 📑 **P2 준비 단계** 작업입니다. 통합 명칭과 순서는 [docs/P2_index.md](../../../P2_index.md) 참조. (이전 별칭: 단계 1b / P2-3)
+> 📑 **P2 준비 단계** 작업입니다. 통합 명칭과 순서는 [docs/P2_index.md](../../../../evidence/archive/handoffs/P2_index_legacy.md) 참조. (이전 별칭: 단계 1b / P2-3)
 
 > **일자:** 2026-06-18 · **branch:** `feature/p2-gsjso` · **판정은 사람 — 본 문서는 측정·관찰까지(판정 금지).**
 > **목적:** 단계 1(엔진 전이, 장면 전체 PASS) 이후, 빌드 A(GS→분류LAZ→Roofer)가 의존하는 **건물 단위 표면
@@ -34,7 +34,7 @@ roof density = 지면(+1.5 m) 위 점수/면적, plane RMS = 상부점 SVD 평�
 | 4908023 | 22 | ALS | 448 | 18.48 | 0.24 | 0.0 |
 
 그림(점군 top/side, GS 윗줄 vs ALS 아랫줄):
-[4906972](../../../figs/tum_transfer/qc_4906972.png) · [4906969](../../../figs/tum_transfer/qc_4906969.png) · [4908023](../../../figs/tum_transfer/qc_4908023.png).
+[4906972](../../../../figs/tum_transfer/qc_4906972.png) · [4906969](../../../../figs/tum_transfer/qc_4906969.png) · [4908023](../../../../figs/tum_transfer/qc_4908023.png).
 
 **관찰(판정 금지):**
 - GS(vanilla, 7k, downscale 2) 지붕 점밀도 **0.09–1.48 pts/m²** = ALS(**18–20**, known-good Roofer 입력)의

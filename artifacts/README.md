@@ -5,9 +5,11 @@ checkpoints, point clouds, meshes, images, logs, caches, and run workspaces are
 stored outside the Git working tree.
 
 The current local backend is the sibling directory
-`../JointBuildGS-artifacts`. Docker Compose mounts it at
-`/artifacts/JointBuildGS` and provides compatibility mounts for historical
-runtime paths. Override the host location with `JBGS_ARTIFACT_HOST_ROOT`.
+`../JointBuildGS-artifacts`. Top-level Docker Compose mounts it once at
+`/artifacts/JointBuildGS`. Historical compatibility mounts exist only in an
+explicit phase Compose contract; the top-level service does not recreate
+repo-local `data/`, `results/`, or `reports/` payload mounts. Override the host
+location with `JBGS_ARTIFACT_HOST_ROOT`.
 
 The local backend is an organization boundary, not a backup. Do not remove or
 replace payloads from it without a separate retention and recovery decision.

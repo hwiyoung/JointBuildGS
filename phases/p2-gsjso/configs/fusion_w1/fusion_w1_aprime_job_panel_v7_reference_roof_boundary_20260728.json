@@ -1,0 +1,218 @@
+{
+  "schema": "jointbuildgs.fusion_w1_aprime.job_panel_reference_roof_boundary.config.v7",
+  "task_id": "FUS-W1-APRIME-JOB-PANEL-V7-001",
+  "run_id": "20260726_fusion_w1_aprime",
+  "branch": "exp/fusion-w1",
+  "purpose": "Post-hoc qualitative backfill whose photo row uses only evaluation-only reference LoD2 RoofSurface exterior boundaries",
+  "base_contract": {
+    "config": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_job_qualitative_v3_20260727.json",
+    "layout_source": "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_aprime_job_panel_v4_20260727.py",
+    "layout_reuse_only": true,
+    "v4_flat_locator_used": false,
+    "v6_class6_tin_locator_used": false
+  },
+  "implementation_files": [
+    "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_job_panel_v7_reference_roof_boundary_20260728.json",
+    "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_aprime_job_panel_v7_reference_roof_boundary_20260728.py",
+    "phases/p2-gsjso/scripts/fusion_w1/run_fusion_w1_aprime_job_panel_v7_reference_roof_boundary_20260728.sh",
+    "tests/fusion_w1/test_fusion_w1_aprime_job_panel_v7_reference_roof_boundary_20260728.py",
+    "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_aprime_job_panel_v4_20260727.py",
+    "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_job_qualitative_v3_20260727.json",
+    "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_aprime_job_qualitative_v3_20260727.py",
+    "src/artifact_paths.py",
+    "src/stage2/image_projection.py",
+    "src/stage2/pilot_plane_mask_producer.py",
+    "src/stage2/pilot_mask_schema.py",
+    "src/geospatial/projection_datum.py",
+    "src/stage2/colmap_io.py"
+  ],
+  "backfill_contract": {
+    "allowed_identities": [
+      {"building_id": "DEBY_LOD2_42364609", "arm": "Aprime", "replicate": "r1"},
+      {"building_id": "DEBY_LOD2_42364659", "arm": "Aprime", "replicate": "r1"},
+      {"building_id": "DEBY_LOD2_42364663", "arm": "Aprime", "replicate": "r1"},
+      {"building_id": "DEBY_LOD2_4907182", "arm": "Aprime", "replicate": "r1"},
+      {"building_id": "DEBY_LOD2_4907510", "arm": "Aprime", "replicate": "r1"},
+      {"building_id": "DEBY_LOD2_4908050", "arm": "Aprime", "replicate": "r1"},
+      {"building_id": "DEBY_LOD2_4908166", "arm": "Aprime", "replicate": "r1"},
+      {"building_id": "DEBY_LOD2_4908176", "arm": "Aprime", "replicate": "r1"},
+      {"building_id": "DEBY_LOD2_4908023", "arm": "Aprime", "replicate": "r1"}
+    ],
+    "scope": "post_hoc_qualitative_visual_only",
+    "training_reused_unchanged": true,
+    "readout_reused_unchanged": true,
+    "assembly_reused_unchanged": true,
+    "score_reused_unchanged": true,
+    "reference_role": "evaluation_only_after_output_freeze_and_for_visual_selection_only",
+    "scientific_verdict": null,
+    "interpretation": null
+  },
+  "resolver_disclosure": {
+    "base_resolver_may_read_frozen_M_j_before_v7_adapter": true,
+    "base_resolver_may_read_reference_GML_before_v7_adapter": true,
+    "M_j_used_for_v7_view_selection_crop_or_overlay": false,
+    "ALS_seed_used_for_v7_view_selection_crop_or_overlay": false,
+    "class6_TIN_used_for_v7_view_selection_crop_or_overlay": false,
+    "output_CityJSON_used_for_v7_view_selection_crop_or_overlay": false,
+    "reference_RoofSurface_used_for_post_hoc_visual_selection_crop_and_overlay": true,
+    "reference_used_for_training_supervision_readout_assembly_or_scoring": false
+  },
+  "first_row_reference_contract": {
+    "geometry": "evaluation-only reference GML Building RoofSurface Polygon exterior LinearRing only",
+    "geometry_exclusions": [
+      "GroundSurface",
+      "WallSurface",
+      "interior rings",
+      "ALS seed points",
+      "class6 TIN points",
+      "class6 TIN boundary",
+      "M_j mask",
+      "Roofer output"
+    ],
+    "overlay_style": "unfilled boundary line only",
+    "coordinate_contract": {
+      "source_crs": "EPSG:25832",
+      "input_vertical_datum": "orthometric",
+      "orthometric_to_ellipsoidal_geoid_m": 45.7,
+      "projection_config": "configs/input_and_alignment/projection_datum.json",
+      "projection_config_sha256": "c1485f3a800665561e684c8c87441a08b53782a593e5e5e882e1ad93e528d2e4",
+      "projection_config_migration": {
+        "preprocess_bound_path": "configs/projection_datum.json",
+        "preprocess_bound_sha256": "096a49b46fc5661d74f9d3b54c4f3777676cfc6b27e577b52bb2dabeee8b480c",
+        "current_path": "configs/input_and_alignment/projection_datum.json",
+        "current_sha256": "c1485f3a800665561e684c8c87441a08b53782a593e5e5e882e1ad93e528d2e4",
+      "source_lock_artifact_path": "source-locks/fusion_w1/20260730-receipt-bound-v3/sources/configs/projection_datum.json",
+        "allowed_json_pointer_difference": "/a1_zeta_ls/updated_by",
+        "locked_value": "phases/p2-gsjso/scripts/projection_zeta_ls.py --update-config",
+        "current_value": "scripts/input_and_alignment/p2_gsjso/projection_zeta_ls.py --update-config"
+      },
+      "scene_reference_frame": "phases/p0-audit/data/work/opf/opf/scene_reference_frame.json",
+      "scene_reference_sha256": "fb408e9c97bdad6af7ad4a6e94be823be294030907ce92e395bd63490f77daf6",
+      "projection_engine": "src.stage2.image_projection.project_base_points",
+      "camera_source": "per-building corrected sparse/0 cameras.bin and images.bin",
+      "adopted_corrected_images_sha256": "28b38383a0b6d82656108e8f0e5e79711dcda93948ab2e89c1cd8f47215962a5",
+      "additional_transform_application_count": 0
+    },
+    "view_selection": {
+      "candidate_scope": "frozen selected training views in supervision_index.csv",
+      "required_boundary_margin_fraction": 0.04,
+      "minimum_margin_pixels": 24,
+      "minimum_projected_bbox_area_px2": 2500.0,
+      "visibility_gate": {
+        "method": "full-scene LoD2 RoofSurface/WallSurface/GroundSurface Open3D exact-first-primitive raycast",
+        "implementation": "v7 cached Open3D scene using src.stage2.pilot_plane_mask_producer exact primitive-ID ray core",
+        "source_scene_loader": "src.stage2.pilot_plane_mask_producer.load_lod2_citygml_scene",
+        "all_scene_surfaces_are_occluders": true,
+        "positive_hit": "selected-building RoofSurface only",
+        "minimum_visible_target_roof_pixels": 1,
+        "visible_boundary_mask_dilation_pixels": 2,
+        "ray_chunk_size": 400000,
+        "aoi_padding_m": 180.0,
+        "aoi_definition": "target reference RoofSurface XY bbox expanded by padding in canonical local coordinates",
+        "projection_prefilter_before_raycast": "all boundary vertices valid and full-in-frame; bbox area >= minimum_projected_bbox_area_px2",
+        "open3d_scene_builds_per_job": 1
+      },
+      "eligibility_tiers": [
+        "A: boundary full-in-frame with configured margin and visible target RoofSurface pixels > 0",
+        "B fallback: boundary full-in-frame and visible target RoofSurface pixels > 0"
+      ],
+      "rank": "within the first nonempty eligibility tier: projected reference RoofSurface bbox area descending; centrality ascending; nadir angle ascending; frame radius ascending; frozen order; filename",
+      "unique_visible_views_required": 1,
+      "additional_visible_view_policy": "use only if it passes the same visibility and full-in-frame gate; never substitute an occluded or clipped view",
+      "image_pixels_used_for_ranking": false,
+      "M_j_used_for_ranking_or_eligibility": false,
+      "ALS_or_TIN_used_for_ranking_or_eligibility": false,
+      "output_CityJSON_used_for_ranking_or_eligibility": false,
+      "reference_GML_used_for_post_hoc_visual_ranking": true
+    },
+    "crop": {
+      "geometry": "projected evaluation-only reference RoofSurface exterior boundary only",
+      "medium_padding_fraction": 0.55,
+      "tight_padding_fraction": 0.16,
+      "minimum_width_pixels": 360,
+      "minimum_height_pixels": 300,
+      "image_pixels_used_for_bounds": false,
+      "M_j_or_ALS_or_TIN_used_for_bounds": false,
+      "output_CityJSON_used_for_bounds": false
+    }
+  },
+  "visual_contract": {
+    "rows": 5,
+    "columns": 5,
+    "row_order": [
+      "input_training_photo_with_evaluation_only_reference_roof_boundary",
+      "filtered_als_class6_seed",
+      "tsdf_mesh",
+      "roofer_cityjson_lod22",
+      "output_reference_evaluation_only"
+    ],
+    "column_order": ["top", "oblique_a", "oblique_b", "principal_side", "detail"],
+    "single_visual_file": true,
+    "placeholders_allowed_for_measured": false,
+    "panel_inches": [30.0, 27.5],
+    "panel_dpi": 150,
+    "minimum_panel_pixels": [4400, 4000],
+    "maximum_mesh_faces": 250000,
+    "maximum_scatter_points": 80000,
+    "transition_iteration": 15000,
+    "surface_ramp_end_iteration": 20000,
+    "camera_contract": {
+      "projection": "orthographic",
+      "z_axis": "up",
+      "z_exaggeration": 1.0,
+      "shared_scene_bounds_across_geometry_rows": true,
+      "bounds_padding_fraction": 0.05,
+      "bounds_source": "union of frozen filtered ALS seed, frozen TSDF mesh, frozen Roofer output, and evaluation-only reference",
+      "axis_source": "canonical Roofer CityJSON GroundSurface, then all output surfaces; evaluation-only reference never selects the 3D comparison camera",
+      "principal_axis_sign_rule": "north-positive, then east-positive",
+      "near_isotropic_ratio_threshold": 1.1,
+      "near_isotropic_fallback": "east axis",
+      "views": [
+        {"key": "top", "title_ko": "탑뷰", "title_en": "Top orthographic", "elevation_deg": 90.0, "azimuth_mode": "fixed", "azimuth_deg": -90.0},
+        {"key": "oblique_a", "title_ko": "사선 A", "title_en": "Oblique A", "elevation_deg": 30.0, "azimuth_mode": "principal_offset", "azimuth_offset_deg": 45.0},
+        {"key": "oblique_b", "title_ko": "반대 사선 B", "title_en": "Opposite oblique B", "elevation_deg": 30.0, "azimuth_mode": "principal_offset", "azimuth_offset_deg": 225.0},
+        {"key": "principal_side", "title_ko": "주축 측면", "title_en": "Principal side elevation", "elevation_deg": 5.0, "azimuth_mode": "principal_offset", "azimuth_offset_deg": 90.0}
+      ]
+    },
+    "semantic_palette": {
+      "RoofSurface": "#2b6ea6",
+      "WallSurface": "#8c98a4",
+      "GroundSurface": "#a78962",
+      "UnknownSurface": "#c5cbd1",
+      "tsdf_light": "#9abbd8",
+      "tsdf_dark": "#1f5a94",
+      "reference": "#ff7a00",
+      "mask": "#00b5d8",
+      "seed_projection": "#19a35b",
+      "target_locator": "#ff7a00",
+      "charcoal": "#252a31",
+      "light_grey": "#e3e7eb",
+      "gold": "#c59b2b"
+    }
+  },
+  "outputs": {
+    "root": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/review_v7_reference_roof_boundary",
+    "panel": "panel.png",
+    "complete": "complete.json"
+  },
+  "publication": {
+    "overwrite_allowed": false,
+    "historical_v4_v5_v6_overwrite_or_delete_forbidden": true,
+    "job_directory_atomic_publish": true,
+    "receipt_written_last": true
+  },
+  "execution": {
+    "container_image": "jointbuildgs:dev",
+    "container_image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
+    "network": "none",
+    "gpus_required": false,
+    "gpu_devices_used": [],
+    "nonroot": true,
+    "cpus": 6,
+    "memory": "12g",
+    "memory_swap": "12g",
+    "unrelated_queue_allowed": true,
+    "target_source_hashes_verified_before_and_after_render": true,
+    "output_namespace_isolated_from_training": true
+  }
+}

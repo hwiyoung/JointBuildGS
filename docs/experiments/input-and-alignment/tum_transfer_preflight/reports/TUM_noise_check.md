@@ -1,6 +1,6 @@
 # P2 준비-4 — 노이즈 정리 확인 (control 4906972, proper settings)
 
-> 📑 **P2 준비 단계** 작업입니다. 통합 명칭과 순서는 [docs/P2_index.md](../../../P2_index.md) 참조. (P2 준비-3=1c의 후속)
+> 📑 **P2 준비 단계** 작업입니다. 통합 명칭과 순서는 [docs/P2_index.md](../../../../evidence/archive/handoffs/P2_index_legacy.md) 참조. (P2 준비-3=1c의 후속)
 > **일자:** 2026-06-18 · **branch:** `feature/p2-gsjso` · **판정은 사람 — 측정·관찰까지(판정 금지).**
 
 **목적.** P2 준비-3([TUM_tsdf_roofer_probe.md](TUM_tsdf_roofer_probe.md))에서 7k-vanilla TSDF가 Roofer를
@@ -36,7 +36,7 @@ densification/pruning·라벨 불요 기하 정규화)만으로 reference 수준
 | roof 점밀도 (pts/m²) | 2923 | 1288 | 20.2 | — |
 | 학습 PSNR(per-image) | ~14.5 | ~20.0 | — | — |
 
-그림(점군 7k vs proper, top/side): [noise_4906972.png](../../../figs/tum_transfer/noise_4906972.png) — proper의 side-view가 더
+그림(점군 7k vs proper, top/side): [noise_4906972.png](../../../../figs/tum_transfer/noise_4906972.png) — proper의 side-view가 더
 얇음(수직 노이즈↓), 잔존 floater 소수.
 
 ## ② 관찰 (한 줄, 판정 금지)

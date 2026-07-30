@@ -112,8 +112,8 @@
 3. 대조: 평지붕은 eps 0.3에서 GS 3≈LiDAR 3(이미 정합); 복합은 LiDAR 자체가 미조립(희박)이라 GS 6 vs LiDAR 0(밀도 비대칭).
 
 ## §5 그림 (docs/figs/W_D6/)
-- [4906969_gssem_vs_lidar.png](../../../figs/W_D6/4906969_gssem_vs_lidar.png) — (좌) 곡면 지붕 y-슬라이스 단면 GS vs LiDAR(같은 표면·GS 조밀); (우) 국소 평면잔차 분포 GS native·GS@LiDAR밀도·LiDAR **중첩**(GS 안 거침).
-- [facets_vs_epsilon.png](../../../figs/W_D6/facets_vs_epsilon.png) — (c) 3동 면수 vs epsilon: 곡면에서 GS·LiDAR 함께 내려가나 GS가 9에서 바닥(>LiDAR 5), 격차 비율 보존(임계로 미해소).
+- [4906969_gssem_vs_lidar.png](../../../../figs/W_D6/4906969_gssem_vs_lidar.png) — (좌) 곡면 지붕 y-슬라이스 단면 GS vs LiDAR(같은 표면·GS 조밀); (우) 국소 평면잔차 분포 GS native·GS@LiDAR밀도·LiDAR **중첩**(GS 안 거침).
+- [facets_vs_epsilon.png](../../../../figs/W_D6/facets_vs_epsilon.png) — (c) 3동 면수 vs epsilon: 곡면에서 GS·LiDAR 함께 내려가나 GS가 9에서 바닥(>LiDAR 5), 격차 비율 보존(임계로 미해소).
 
 ## §6 한 줄 관찰 — 레버 지시 (판정 금지)
 

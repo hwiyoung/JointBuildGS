@@ -4,7 +4,7 @@
 범위: `boundary_map` v1-v4.1 문서, 표, manifest, 그림, 실행 코드, 실행 영수증
 성격: 문서 관리 결정이며 측정값·실험 결과·과학적 판정을 변경하지 않는다.
 
-사람이 탐색할 때는 [`docs/experiments/input-and-alignment/boundary_map/README.md`](../../experiments/boundary_map/README.md)를 진입점으로 사용한다.
+사람이 탐색할 때는 [`docs/experiments/input-and-alignment/boundary_map/README.md`](../../../experiments/input-and-alignment/boundary_map/README.md)를 진입점으로 사용한다.
 
 ## 지금 무엇을 봐야 하는가
 
@@ -74,7 +74,7 @@ Git에서도 각 공개 bundle은 순서대로 `52c84f7`, `5c1331b`, `17ab65d`/`
 `DOC-IA-03`에서 35개 원본의 목표 경로와 SHA-256을 [`BOUNDARY_MAP_PATHS.csv`](../migrations/BOUNDARY_MAP_PATHS.csv)에 고정했다. 원본 CSV·JSON·Markdown·PNG 내용과 run receipt는 수정하지 않는다.
 
 - 33개 이전 경로는 새 owner 디렉터리로 이동한다.
-- `docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v2_ladder.csv`는 현재 staged workflow 보호를 위해 임시 direct input으로 남긴다.
+- `docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v2_ladder.csv`는 exact-version으로 잠긴 역사적 Fusion 입력을 재현할 때 사용하는 supporting input이다. 새 consumer의 일반 정본은 v4.1 ladder다.
 - v4.1 이전 root copy는 byte-identical 상태로 `docs/evidence/archive/compatibility/root-mirrors/tables/`에 보존했다. 새 문서·코드·config는 새 owner 경로를 사용해야 한다.
 - 과거 manifest와 run receipt의 old path 문자열은 당시 provenance이므로 rewrite하지 않고 migration manifest로 해석한다.
 - phase run 디렉터리와 원본 실험 결과는 이동하지 않는다.

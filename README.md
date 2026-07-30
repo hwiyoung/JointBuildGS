@@ -32,6 +32,7 @@ report + compact evidence               -> external storage
 
 ## 문서와 phase 진입점
 
+- ChatGPT Work 정본 진입점: [`docs/research/WORK_START_HERE.md`](docs/research/WORK_START_HERE.md)
 - 연구 문서: [`docs/README.md`](docs/README.md)
 - phase 및 run: [`phases/README.md`](phases/README.md)
 - 자동 문서 catalog: [`docs/research/repository/CANONICAL_MAP.md`](docs/research/repository/CANONICAL_MAP.md)
@@ -57,4 +58,4 @@ provenance는 `phases/`가 소유한다.
 
 ## 실행 원칙
 
-모든 연구 도구 실행은 Docker와 versioned config를 사용한다. 새 산출물은 역할에 따라 위 owner에 한 번만 저장하고, raw/generated payload를 `docs/`나 `phases/`에 복제하지 않는다. 단계별 추가 규칙은 해당 `phases/<phase>/AGENTS.md` 또는 `CLAUDE.md`를 따른다.
+모든 연구 도구 실행은 Docker와 versioned config를 사용한다. 새 산출물은 역할에 따라 위 owner에 한 번만 저장하고, raw/generated payload를 `docs/`나 `phases/`에 복제하지 않는다. 모든 agent 규칙은 루트 [`AGENTS.md`](AGENTS.md) 하나가 소유하며, phase README는 상태와 탐색 경로만 제공한다.

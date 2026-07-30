@@ -385,7 +385,7 @@ def make_readout_preoutput_cache_failure(
             },
             "output": output_rel,
             "argv": [
-                "phases/p2-gsjso/scripts/tum_mob_tsdf_extract.py",
+                "scripts/stage3_readout/tum_mob_tsdf_extract.py",
                 "--checkpoint",
                 str(checkpoint.relative_to(root)),
                 "--out",
@@ -774,7 +774,7 @@ class ConfigContractTests(unittest.TestCase):
         pointcloud = self.config["pointcloudification"]
         self.assertEqual(
             pointcloud["script"],
-            "phases/p2-gsjso/scripts/tum_mob_tsdf_extract.py",
+            "scripts/stage3_readout/tum_mob_tsdf_extract.py",
         )
         self.assertFalse(pointcloud["semantic_pass"])
         self.assertEqual(pointcloud["footprint_buffer_m"], 15.0)
@@ -838,7 +838,7 @@ class ConfigContractTests(unittest.TestCase):
         self.assertEqual(classification["target_density"], 0.0)
         self.assertEqual(
             classification["script"],
-            "scripts/input_and_alignment/p2_gsjso/_mob_prep_las.py",
+            "scripts/input_and_alignment/tum_transfer/_mob_prep_las.py",
         )
         self.assertEqual(classification["smrf"]["ground_class"], 2)
         self.assertEqual(classification["overlay"]["building_class"], 6)
@@ -846,6 +846,31 @@ class ConfigContractTests(unittest.TestCase):
     def test_all_locked_static_inputs_match_repository(self) -> None:
         observed = MODULE.verify_static_inputs(self.config, repo=REPO)
         self.assertGreaterEqual(len(observed), 8)
+
+    def test_receipt_era_inputs_allow_only_counted_path_migrations(self) -> None:
+        self.assertTrue(MODULE.os.environ.get("JBGS_ARTIFACT_ROOT"))
+        training = self.config["training"]
+        record = MODULE.verify_path_migration(
+            REPO / training["driver_config"],
+            training["driver_config_path_migration"],
+            label="training driver config",
+        )
+        self.assertEqual(record["replacement_counts"], [17, 1, 3])
+        texture = self.config["texture_join"]
+        record = MODULE.verify_path_migration(
+            REPO / texture["path"],
+            texture["path_migration"],
+            label="boundary map texture join",
+        )
+        self.assertEqual(record["replacement_counts"], [4, 50, 18])
+        drifted = copy.deepcopy(training["driver_config_path_migration"])
+        drifted["rewrites"][0]["expected_replacement_count"] = 16
+        with self.assertRaisesRegex(MODULE.ReadoutError, "replacement counts"):
+            MODULE.verify_path_migration(
+                REPO / training["driver_config"],
+                drifted,
+                label="training driver config",
+            )
 
     def test_fixed_score_header_covers_requested_metrics(self) -> None:
         required = {

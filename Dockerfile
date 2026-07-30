@@ -30,7 +30,11 @@ RUN pip install --no-cache-dir \
         scikit-learn==1.5.2 scikit-image==0.24.0 \
         plyfile==1.1 matplotlib==3.9.2
 
+RUN pip install --no-cache-dir 'laspy[lazrs]==2.6.1'
+
 RUN pip install --no-cache-dir gsplat==1.4.0
+
+RUN pip install --no-cache-dir cjio==0.10.1
 
 WORKDIR /workspace/JointBuildGS
 ENV PYTHONPATH=/workspace/JointBuildGS:$PYTHONPATH

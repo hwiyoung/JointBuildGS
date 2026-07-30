@@ -13,27 +13,27 @@
 
 | 실패 | 원인 | 대응 |
 |---|---|---|
-| eval PSNR 15, primitives 가 건물 모양 안 잡힘 | [render_scene.py](../../scripts/stage3_readout/render_scene.py) 의 `camera_pose_dict` 이 **Blender world frame** 으로 w2c 저장, scene.obj / points3D 는 **OBJ/COLMAP frame** → frame 불일치 | OBJ→Blender world 축변환을 카메라 export 에 반영 |
-| 특정 방위 held-out 전혀 학습 안 됨 | train/test split 이 `last 10%` 로, alphabetically 정렬된 frame 에서 **orbit_a04~a11 몰림** → 완전 OOD | [src/stage2/train.py](../../src/stage2/train.py) 에서 **interleave split (`i % 10 == 9`)** 로 변경 |
+| eval PSNR 15, primitives 가 건물 모양 안 잡힘 | [render_scene.py](../../../../../scripts/stage3_readout/render_scene.py) 의 `camera_pose_dict` 이 **Blender world frame** 으로 w2c 저장, scene.obj / points3D 는 **OBJ/COLMAP frame** → frame 불일치 | OBJ→Blender world 축변환을 카메라 export 에 반영 |
+| 특정 방위 held-out 전혀 학습 안 됨 | train/test split 이 `last 10%` 로, alphabetically 정렬된 frame 에서 **orbit_a04~a11 몰림** → 완전 OOD | [src/stage2/train.py](../../../../../src/stage2/train.py) 에서 **interleave split (`i % 10 == 9`)** 로 변경 |
 | 73 view 부족 | "smoke 기준" 으로 임의 결정, overlap / GSD 계산 기반 아님 | **Pix4D 표준 overlap** 기반 재계산 → 112 waypoints × 5 captures = **560 views** |
 | 인위적 grid scene | 건물 20 개를 18m spacing 으로 배치 → 실제 Amsterdam 도시 topology 아님 | **실제 Amsterdam Jordaan 200×200m 블록** 선정 (131 건물 자연 분포) |
 
 ## 3. 데이터 설계
 
-### 3.1 Scene 선정 ([select_block.py](../../scripts/stage3_readout/select_block.py))
+### 3.1 Scene 선정 ([select_block.py](../../../../../scripts/stage3_readout/select_block.py))
 
 - 3D BAG Amsterdam Jordaan 4 타일 (2,888 건물 중 footprint 폴리곤 재구성 가능 2,956 개) 에서 **200×200m sliding window** 로 후보 탐색
 - 조건: 80 ≤ 건물 수 ≤ 150, roof type ≥ 4 종
 - 최대 roof-type entropy 기준 선정: **center EPSG:7415 (120343.3, 486511.2)**, **131 건물**
 - 분포: flat 25 / gable 28 / hip 23 / tri-slope 26 / complex 29 (shed 0 — Jordaan 전체에 2 개만 존재)
 
-![block_3d](block_3d.png)
+![block_3d](../../../../figs/phase2_synthesis/block_3d.png)
 
 > **Panel (1)**: Amsterdam Jordaan 2,956 건물 ground footprint. 빨간 사각형이 선정 200×200m window.
 > **Panel (2)**: 선정 블록 확대 — 각 건물을 **실제 ground polygon** 으로 (bbox 아님) 표시. roof type 별 색상. 왼쪽 메인 블록 + 중앙 빈 공간 (실제 운하/도로) + 오른쪽 이웃 블록 구조가 보임.
 > **Panel (3)**: 3D bird's-eye (elev 55°). 지붕을 type 별 색상, 벽 회색. gable / hip / flat 의 실제 shape 구분 가능. 최고 높이 26m.
 
-### 3.2 Scene 구성 ([compose_scene.py](../../scripts/stage3_readout/compose_scene.py))
+### 3.2 Scene 구성 ([compose_scene.py](../../../../../scripts/stage3_readout/compose_scene.py))
 
 - 선정 131 건물의 **world 위치 (EPSG:7415 meters) 보존** — grid 재배치 없음, 건물 간 실제 인접성 + 공유 벽 유지
 - World → OBJ/COLMAP frame 변환: `(x, y, z)_world → (x − cx, −(z − z_ground), y − cy)` (EPSG Z → OBJ -Y, EPSG Y → OBJ Z)
@@ -41,7 +41,7 @@
 - Ground plane (Terrain 재질) 을 scene 둘레에 +15m padding 으로 배치
 - 결과: scene bbox X[-115, +115], Y[-26.2, 0] (최고 건물 26m), Z[-115, +115] = **230×230×26m**, 4,634 verts / 2,943 faces + 1 ground quad
 
-### 3.3 카메라 설계 ([render_scene.py](../../scripts/stage3_readout/render_scene.py))
+### 3.3 카메라 설계 ([render_scene.py](../../../../../scripts/stage3_readout/render_scene.py))
 
 8×14 = **112 nadir waypoints** (80% forward spacing 18.1m × 70% side spacing 36.2m). 각 waypoint 에서 **1 nadir + 4 cardinal oblique (45° tilt)** = **5 captures** → **총 560 views**.
 
@@ -100,7 +100,7 @@ UAV oblique 촬영은 업계에서 다음 3 방식이 혼용된다:
 
 ### 3.4 Procedural texture (RGB ≠ semantic)
 
-합성 씬의 **flat-color 한계** 해소용. [render_scene.py](../../scripts/stage3_readout/render_scene.py) `add_procedural_texture_to_materials()` 에서 Blender Cycles shader 노드로 각 material 에 3D Perlin noise 기반 brightness variation 추가.
+합성 씬의 **flat-color 한계** 해소용. [render_scene.py](../../../../../scripts/stage3_readout/render_scene.py) `add_procedural_texture_to_materials()` 에서 Blender Cycles shader 노드로 각 material 에 3D Perlin noise 기반 brightness variation 추가.
 
 **문제**: scene.mtl 이 Roof/Wall/Ground/Terrain 각각 단일 Kd 색만 정의 → 렌더 RGB ≈ semantic class. 이로 인해:
 - L_photo 와 L_sem 이 파라미터 경로는 다르지만 제공 신호가 중복 (둘 다 동일 class 로 수렴)
@@ -132,7 +132,7 @@ UAV oblique 촬영은 업계에서 다음 3 방식이 혼용된다:
 
 ### 3.5 Train/test split
 
-[src/stage2/train.py:99-104](../../src/stage2/train.py#L99-L104):
+[src/stage2/train.py:99-104](../../../../../src/stage2/train.py#L99-L104):
 
 ```python
 # v1: last 10% (failure — grouped all orbit views)
@@ -198,7 +198,7 @@ Baseline 전용 이유: L_mutual warmup=10000, L_structure warmup=20000 → 5k i
 
 ### 5.3 FC-2 — Throughput 벤치마크 ✓ (통과)
 
-[benchmark_iter_speed.py](../../scripts/mutual_loss/benchmark_iter_speed.py) — 500 iter baseline 학습 후 실측:
+[benchmark_iter_speed.py](../../../../../scripts/mutual_loss/benchmark_iter_speed.py) — 500 iter baseline 학습 후 실측:
 
 | 항목 | 값 |
 |---|---|
@@ -210,9 +210,9 @@ Baseline 전용 이유: L_mutual warmup=10000, L_structure warmup=20000 → 5k i
 
 ### 5.4 FC-3 — 수렴 smoke (baseline 5k iter)
 
-**Config**: [configs/mutual_loss/core_ablation/phase2_smoke.yaml](../../configs/mutual_loss/core_ablation/phase2_smoke.yaml). L_mutual = L_structure = 0. eval_every = 1000.
+**Config**: [configs/mutual_loss/core_ablation/phase2_smoke.yaml](../../../../../configs/mutual_loss/core_ablation/phase2_smoke.yaml). L_mutual = L_structure = 0. eval_every = 1000.
 
-**판정 기준 (7 지표, [fc3_diagnose.py](../../scripts/mutual_loss/fc3_diagnose.py) 자동 체크)**:
+**판정 기준 (7 지표, [fc3_diagnose.py](../../../../../scripts/mutual_loss/fc3_diagnose.py) 자동 체크)**:
 
 | 지표 | 건강한 값 @ 5k | 통과 의미 |
 |---|---|---|
@@ -245,7 +245,7 @@ Baseline 전용 이유: L_mutual warmup=10000, L_structure warmup=20000 → 5k i
 
 **판정: 7/7 GO**. 수렴 trajectory: iter 3000 의 `reset_every` opacity reset 에서 PSNR 일시 급락 후 2000 iter 내 완전 회복 (8.89 → 29.68 → 8.33 → 15.71 → 32.27) — 2DGS 표준 패턴.
 
-**eval normal_cos 버그 수정 (FC-3a 도중 발견)**: 기존 eval ([src/stage2/train.py:389](../../src/stage2/train.py#L389)) 이 world-frame 인 `n_render` 에 `@ R.T` (c2w) 회전을 추가 적용하여 near-random (0.515) 값을 출력했었음. L_normal 훈련 loss 는 world×world 로 정상 작동 중이었음을 확인해 eval 만 수정. 수정 전 0.515 → 수정 후 **0.968** (같은 ckpt 재평가).
+**eval normal_cos 버그 수정 (FC-3a 도중 발견)**: 기존 eval ([src/stage2/train.py:389](../../../../../src/stage2/train.py#L389)) 이 world-frame 인 `n_render` 에 `@ R.T` (c2w) 회전을 추가 적용하여 near-random (0.515) 값을 출력했었음. L_normal 훈련 loss 는 world×world 로 정상 작동 중이었음을 확인해 eval 만 수정. 수정 전 0.515 → 수정 후 **0.968** (같은 ckpt 재평가).
 
 #### 5.4.2 FC-3b — textured (§3.4 적용 후, 2026-04-23)
 

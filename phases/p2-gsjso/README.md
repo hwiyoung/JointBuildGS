@@ -22,6 +22,12 @@ Current owners:
 
 Treat the active Fusion W1 control plane and user changes as protected. Large payloads
 resolve through `JBGS_ARTIFACT_ROOT=/artifacts/JointBuildGS`; they are not owned by Git.
+The operator checkout's original uncommitted Fusion WIP is preserved by the external
+snapshot recorded in `artifacts/manifests/fusion_w1_local_wip_snapshot_20260730.json`.
+The committed technical handoff and its continuation boundary are owned by
+`docs/research/reproducibility/FUSION_W1_WIP_DISPOSITION_20260730.md`. Remote ChatGPT
+Work must follow `docs/research/WORK_START_HERE.md`, resolve external payloads through
+the manifest layer, and leave the scientific verdict to the human reviewer.
 
 ## Research context
 

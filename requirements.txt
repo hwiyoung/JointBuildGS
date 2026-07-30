@@ -12,12 +12,13 @@ shapely>=2.0
 
 # CityGML / CityJSON
 lxml>=4.9
-cjio>=0.9
+cjio==0.10.1
 
 # Image / IO
 Pillow>=10.0
 opencv-python>=4.8
 imageio>=2.31
+laspy[lazrs]>=2.6,<2.7
 
 # Training utilities
 tensorboard>=2.15

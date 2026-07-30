@@ -4,7 +4,7 @@
 
 **Pipeline**: input → PolyFit MIP → polygon_mesh_to_polygon_soup → merge_duplicate_points → repair_polygon_soup → orient_polygon_soup → polygon_soup_to_polygon_mesh → stitch_borders → triangulate_faces → orient_to_bound_a_volume → OFF.
 
-[src/stage3/polyfit_cli.cpp](../../src/stage3/polyfit_cli.cpp), recompiled with CGAL 5.6.2 + SCIP 10.
+[src/stage3/polyfit_cli.cpp](../../../../../src/stage3/polyfit_cli.cpp), recompiled with CGAL 5.6.2 + SCIP 10.
 
 ## Stage A — GT scene.obj input
 
@@ -47,13 +47,13 @@ Aggregate: **val3dity 4/10 (40%)** vs prior 0/9. **|Δh| 거의 모두 ≤ 0.5m*
 
 → **B 가설(파서 형식) 반증**. **C 가설(알고리즘 복잡도) 지지**: 66 planes의 candidate face arrangement에서 CGAL 내부 assertion 실패. PolyFit MIP는 plane 수에 super-polynomial 복잡도이고 66은 알고리즘 안정성 한계 위.
 
-### 시각적 figure (per-type 1건씩, [figures/](figures/))
+### 시각적 figure (per-type 1건씩, [figures/](../../../../figs/stage3_polyfit_phase2/figures/))
 
-- [stageA_flat_b1.png](figures/stageA_flat_b1.png) — flat ✓ (val3dity ✓, vol_ratio 1.00)
-- [stageA_gable_b8.png](figures/stageA_gable_b8.png) — gable ✓ (val3dity ✓ but coverage 5.7%)
-- [stageA_tri-slope_b0.png](figures/stageA_tri-slope_b0.png) — tri-slope ✗
-- [stageA_hip_b5.png](figures/stageA_hip_b5.png) — hip ✗
-- [stageA_complex_b7.png](figures/stageA_complex_b7.png) — complex ✗
+- [stageA_flat_b1.png](../../../../figs/stage3_polyfit_phase2/figures/stageA_flat_b1.png) — flat ✓ (val3dity ✓, vol_ratio 1.00)
+- [stageA_gable_b8.png](../../../../figs/stage3_polyfit_phase2/figures/stageA_gable_b8.png) — gable ✓ (val3dity ✓ but coverage 5.7%)
+- [stageA_tri-slope_b0.png](../../../../figs/stage3_polyfit_phase2/figures/stageA_tri-slope_b0.png) — tri-slope ✗
+- [stageA_hip_b5.png](../../../../figs/stage3_polyfit_phase2/figures/stageA_hip_b5.png) — hip ✗
+- [stageA_complex_b7.png](../../../../figs/stage3_polyfit_phase2/figures/stageA_complex_b7.png) — complex ✗
 
 ## Stage B — v4 envelope input
 
@@ -67,7 +67,7 @@ Aggregate: **val3dity 4/10 (40%)** vs prior 0/9. **|Δh| 거의 모두 ≤ 0.5m*
 
 Aggregate: val3dity 3/4 통과(75%) but **|Δh| 8-18m collapse 다수** — height조차 못 잡음.
 
-[figures/stageB_b{0,1,6,21}.png](figures/) — Stage A 보다 GT와 mismatch 더 큼.
+[figures/stageB_b{0,1,6,21}.png](../../../../figs/stage3_polyfit_phase2/figures/) — Stage A 보다 GT와 mismatch 더 큼.
 
 ## A vs B 비교 (clean cases)
 
@@ -153,6 +153,6 @@ v4 envelope을 PolyFit에 넣은 결과:
 - [metrics.json](metrics.json) — 전체 정량 데이터
 - [stageA/building_NN/](stageA/) — Stage A 10건 (input.txt, output.off, building.city.json, val3dity.json, polyfit_stderr.log)
 - [stageB/building_NN/](stageB/) — Stage B 5건
-- [figures/](figures/) — per-type side-by-side (Stage A 5 + Stage B 4)
+- [figures/](../../../../figs/stage3_polyfit_phase2/figures/) — per-type side-by-side (Stage A 5 + Stage B 4)
 - [bid3_diag/](bid3_diag/) — bid 3 입력 파일
-- [src/stage3/polyfit_cli.cpp](../../src/stage3/polyfit_cli.cpp) — 수정 소스 (5-step recipe + triangulate_faces)
+- [src/stage3/polyfit_cli.cpp](../../../../../src/stage3/polyfit_cli.cpp) — 수정 소스 (5-step recipe + triangulate_faces)

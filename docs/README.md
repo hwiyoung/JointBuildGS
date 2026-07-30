@@ -12,6 +12,7 @@
 
 ## 시작점
 
+- ChatGPT Work 정본 진입점: [`research/WORK_START_HERE.md`](research/WORK_START_HERE.md)
 - 연구 맥락: [`research/RESEARCH_CONTEXT.md`](research/RESEARCH_CONTEXT.md)
 - 실험 계획: [`research/EXPERIMENT_PLAN.md`](research/EXPERIMENT_PLAN.md)
 - 저장소 계약: [`research/repository/TOP_LEVEL_DIRECTORY_CONTRACT.md`](research/repository/TOP_LEVEL_DIRECTORY_CONTRACT.md)

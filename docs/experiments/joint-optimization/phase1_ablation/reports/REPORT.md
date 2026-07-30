@@ -256,7 +256,7 @@ gradient 없음. Both 에서 두 loss 가 n, c 에 동시 gradient 합산.
 ## 10. 3D 대화형 시각화
 
 4조건을 동일 카메라로 동기화해 비교하는 로컬 웹 뷰어를 제공합니다 —
-[src/apps/gs3d_4way_viewer/](../../src/apps/gs3d_4way_viewer/).
+[src/apps/gs3d_4way_viewer/](../../../../../src/apps/gs3d_4way_viewer/).
 
 ### 포맷: 2DGS → ksplat
 
@@ -343,7 +343,7 @@ results/phase1_ablation/
 `results/phase1_mutual/run/ckpt/final.pt` (Step 1-4),
 `results/phase1_structure/run/ckpt/final.pt` (Step 1-5).
 
-3D 대화형 뷰어 (§10): [src/apps/gs3d_4way_viewer/](../../src/apps/gs3d_4way_viewer/) — ksplat 6 모드.
+3D 대화형 뷰어 (§10): [src/apps/gs3d_4way_viewer/](../../../../../src/apps/gs3d_4way_viewer/) — ksplat 6 모드.
 
 ## 13. 결론
 

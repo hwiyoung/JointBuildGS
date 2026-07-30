@@ -200,7 +200,7 @@
 출처: gssem `runs/mob_eval/<cfg>/<bid>_orig_classified.las`(현 디스크) · smrf `runs/_matched_smrf_tmp/...`(재생성). 거리=tum_mob_ref_rms 동일 평면·dz 로직.
 
 ## 그림 (figs/W_matched_rms/)
-- [4906969_roofpts.png](../../../figs/W_matched_rms/4906969_roofpts.png) — 4906969 D4-dense 지붕분류점 **gssem(red) vs smrf(blue)**, top(xy)+side(xz).
+- [4906969_roofpts.png](../../../../figs/W_matched_rms/4906969_roofpts.png) — 4906969 D4-dense 지붕분류점 **gssem(red) vs smrf(blue)**, top(xy)+side(xz).
 
 ## 재현 / 출처
 - PART A: `scripts/input_and_alignment/p2_gsjso/matched_rms.py` (read-only, ref_rms_*.csv → `_matched_rms_partA.md`).

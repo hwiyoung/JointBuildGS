@@ -356,6 +356,66 @@ class RepoInventoryUnitTests(unittest.TestCase):
                 "explicit+historical_source_path+path_migration",
             )
 
+    def test_reference_resolution_manifest_requires_exact_reviewed_classes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source = root / "docs" / "report.md"
+            source.parent.mkdir(parents=True)
+            source.write_text("[payload](payload.json)\n", encoding="utf-8")
+            manifest = root / "docs" / "resolutions.csv"
+            manifest.write_text(
+                "source_path,relation,raw_target,line,class,resolved_target,verification\n"
+                "docs/report.md,references,payload.json,1,missing_evidence,"
+                "results/run/payload.json,absent_from_repo_and_artifact;no_safe_equivalent\n",
+                encoding="utf-8",
+            )
+            resolved = repo_inventory.load_reference_resolutions(
+                root, {"reference_resolution_manifest": "docs/resolutions.csv"}
+            )
+            self.assertEqual(
+                resolved[("docs/report.md", "references", "payload.json")]["class"],
+                "missing_evidence",
+            )
+
+    def test_reference_resolutions_keep_external_and_missing_distinct(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            relations = [
+                repo_inventory.Relation(
+                    "docs/report.md", "references", "docs/payload.json", "no",
+                    "payload.json", "explicit", 1,
+                ),
+                repo_inventory.Relation(
+                    "docs/report.md", "references", "docs/lost.json", "no",
+                    "lost.json", "explicit", 2,
+                ),
+            ]
+            resolutions = {
+                ("docs/report.md", "references", "payload.json"): {
+                    "class": "external_artifact",
+                    "resolved_target": "results/run/payload.json",
+                    "verification": "artifact_exists",
+                },
+                ("docs/report.md", "references", "lost.json"): {
+                    "class": "missing_evidence",
+                    "resolved_target": "results/run/lost.json",
+                    "verification": "absent_from_repo_and_artifact;no_safe_equivalent",
+                },
+            }
+            resolved = repo_inventory.apply_reference_resolutions(
+                root, relations, resolutions
+            )
+            self.assertEqual(resolved[0].target_exists, "external")
+            self.assertEqual(
+                resolved[0].target_path,
+                "artifact://JointBuildGS/results/run/payload.json",
+            )
+            self.assertEqual(resolved[1].target_exists, "missing")
+            self.assertEqual(
+                resolved[1].target_path,
+                "missing://JointBuildGS/results/run/lost.json",
+            )
+
 
 if __name__ == "__main__":
     unittest.main()

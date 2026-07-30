@@ -6,6 +6,8 @@
 
 | Canonical purpose | Path | Evidence |
 |---|---|---|
+| p0_audit_evidence_index | `docs/evidence/p0-audit/README.md` | Navigation index for the completed P0 evidence owner; individual scientific disposition remains in its reports and manifests. |
+| p0_g1_evidence_package_index | `docs/evidence/p0_g1_20260613/README.md` | Navigation index for the promoted frozen P0 G1 review package. |
 | e5_c001_readout_ablation_report | `docs/experiments/citygml-readout/e5_c001_readout_ablation/reports/W_E5_C001_③a_readout재실행.md` | Reviewed E5 C001 migration decision for the readout ablation report. |
 | e5_c001_8way_report | `docs/experiments/evaluation/e5_c001_8way/reports/W_E5_C001_8way.md` | Reviewed E5 C001 migration decision for the 8-way report. |
 | e5_c001_gs_diagnostic_report | `docs/experiments/evaluation/e5_c001_gsdiag/reports/W_E5_C001_GS진단.md` | Reviewed E5 C001 migration decision for the GS diagnostic report. |
@@ -24,9 +26,14 @@
 | e5_c001_s2_design | `docs/experiments/joint-optimization/e5_c001_s2/reports/W_S2설계_손실비교·실험계획_20260710.md` | Reviewed E5 C001 migration decision for the S2 design. |
 | e5_c001_s2p_final_review | `docs/experiments/joint-optimization/e5_c001_s2p/reports/W_E5_C001_S2p_검수·회부_20260711.md` | Reviewed E5 C001 migration decision for the S2p review. |
 | e5_c001_s3_report | `docs/experiments/joint-optimization/e5_c001_s3/reports/W_E5_C001_S3_의미유도.md` | Reviewed E5 C001 migration decision for the S3 semantic-guided report. |
+| fusion_w1_gate_a_diagnostic_owner | `docs/experiments/pilots/fusion_w1/reports/W_관문A진단_20260725.md` | Current owner of the Gate A diagnostic observations; this designation is not a success or approval verdict. |
 | experiment_plan | `docs/research/EXPERIMENT_PLAN.md` | Root AGENTS.md names this as a primary experiment-plan document. |
 | research_context | `docs/research/RESEARCH_CONTEXT.md` | Root AGENTS.md names this as a primary research-context document. |
+| chatgpt_work_entrypoint | `docs/research/WORK_START_HERE.md` | Exact allowlist and exclusion contract for remote ChatGPT Work tasks. |
+| fusion_w1_gate_a_v2_lock | `docs/research/preregistration/fusion_w1/사전등록_관문A_v2·SE3채택재판정_20260725.md` | The reviewed Fusion W1 preregistration index identifies this file as its canonical owner copy. |
 | quality_axis_main_preregistration_lock | `docs/research/preregistration/quality_axis/사전등록서_품질축본선_승인잠금v4_20260721.md` | Root AGENTS.md explicitly defines this v4 file as the approval lock. |
+| quality_axis_implementation_appendix_lock | `docs/research/preregistration/quality_axis/품질축본선_1파_구현부록잠금v1_20260722.md` | The reviewed quality-axis index identifies this file as the implementation appendix lock. |
+| fusion_w1_technical_reproducibility_handoff | `docs/research/reproducibility/FUSION_W1_WIP_DISPOSITION_20260730.md` | Reviewed disposition of the local WIP, exact receipt-era sources, exclusions, and technical gates; explicitly not a scientific verdict. |
 
 ## Reviewed family maps
 
@@ -43,8 +50,8 @@ This table shows multi-file families and explicit/candidate canonical families. 
 | e5_c001 | 299 | v1_20260706 | 9 | docs/experiments/e5_c001/ |
 | joint_optimization | 154 | v2 | 0 | docs/experiments/joint_optimization/ |
 | citygml_readout | 140 | 2.0, v1, v2 | 0 | docs/experiments/citygml_readout/ |
-| p0_g1_20260613 | 123 | v6 | 0 | docs/experiments/p0_g1_20260613/ |
-| p0_audit | 122 | v1, v1_20260610 | 0 | docs/evidence/p0-audit/ |
+| p0_g1_20260613 | 123 | v6 | 1 | docs/experiments/p0_g1_20260613/ |
+| p0_audit | 122 | v1, v1_20260610 | 1 | docs/evidence/p0-audit/ |
 | evidence_cards | 113 | v1, v2, v3 | 1 | docs/evidence/evidence_cards/ |
 | e5_c001_s3 | 95 | - | 1 | docs/experiments/e5_c001_s3/ |
 | evaluation | 93 | v1, v4 | 0 | docs/experiments/evaluation/ |
@@ -72,11 +79,11 @@ This table shows multi-file families and explicit/candidate canonical families. 
 | readme | 6 | - | 0 | docs/experiments/readme/ |
 | w_assembly | 6 | - | 0 | docs/figs/w_assembly/ |
 | w_faithful | 6 | - | 0 | docs/figs/w_faithful/ |
+| fusion_w1 | 5 | v2 | 3 | docs/experiments/fusion_w1/ |
 | qs_rescore | 5 | - | 0 | docs/figs/qs_rescore/ |
 | w_d_qual | 5 | - | 0 | docs/figs/w_d_qual/ |
 | w_phaseb | 5 | - | 0 | docs/figs/w_phaseb/ |
 | attr_outcome_regression_v1 | 4 | v1 | 0 | docs/figs/attr_outcome_regression_v1/ |
-| fusion_w1 | 4 | v2 | 0 | docs/experiments/fusion_w1/ |
 | tum2twin_surface_proxy_rv1 | 4 | - | 0 | docs/experiments/tum2twin_surface_proxy_rv1/ |
 | w_d4_qual | 4 | - | 0 | docs/figs/w_d4_qual/ |
 | w_d6_textureless | 4 | - | 0 | docs/figs/w_d6_textureless/ |
@@ -89,7 +96,9 @@ This table shows multi-file families and explicit/candidate canonical families. 
 | footprint_conditioned_readout | 2 | - | 0 | docs/figs/footprint_conditioned_readout/ |
 | experiment_plan | 1 | - | 1 | docs/research/ |
 | research_context | 1 | - | 1 | docs/research/ |
+| work_start_here | 1 | - | 1 | docs/experiments/work_start_here/ |
 | 사전등록서_품질축본선_승인잠금 | 1 | v4_20260721 | 1 | docs/research/ |
+| 품질축본선_1파_구현부록잠금 | 1 | v1_20260722 | 1 | docs/experiments/품질축본선_1파_구현부록잠금/ |
 
 ## Reviewed pilot: boundary_map
 

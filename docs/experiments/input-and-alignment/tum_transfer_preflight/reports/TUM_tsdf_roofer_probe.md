@@ -1,6 +1,6 @@
 # 단계 1c — TSDF 점추출 + Roofer 바닥 + 1동 end-to-end (build A 진입 결정)
 
-> 📑 **P2 준비 단계** 작업입니다. 통합 명칭과 순서는 [docs/P2_index.md](../../../P2_index.md) 참조. (이전 별칭: 단계 1c / P2-4)
+> 📑 **P2 준비 단계** 작업입니다. 통합 명칭과 순서는 [docs/P2_index.md](../../../../evidence/archive/handoffs/P2_index_legacy.md) 참조. (이전 별칭: 단계 1c / P2-4)
 
 > **일자:** 2026-06-18 · **branch:** `feature/p2-gsjso` · **판정은 사람 — 측정·관찰까지(판정 금지).**
 > **목적:** 1b에서 GS *센터* 점군이 ALS 대비 13~200× 희박·floater 많음이 확인됨. 표준 방법(2DGS depth→융합)으로
@@ -40,7 +40,7 @@
 ## ② TSDF 품질 — 센터(1b) vs TSDF vs ALS vs 바닥
 
 footprint 클립 후 지붕 점밀도·평면 RMS·floater%. 그림(top/side, 센터|TSDF|ALS):
-[4906972](../../../figs/tum_transfer/tsdf_4906972.png) · [4906969](../../../figs/tum_transfer/tsdf_4906969.png) · [4908023](../../../figs/tum_transfer/tsdf_4908023.png).
+[4906972](../../../../figs/tum_transfer/tsdf_4906972.png) · [4906969](../../../../figs/tum_transfer/tsdf_4906969.png) · [4908023](../../../../figs/tum_transfer/tsdf_4908023.png).
 
 | building | source | n_pts | roof_dens(pts/m²) | plane_RMS(m) | floater% |
 |---|---|---|---|---|---|

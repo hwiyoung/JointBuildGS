@@ -31,6 +31,7 @@
     "docs/research/repository/CATALOG_ISSUES.md",
     "phases/RUN_CATALOG.csv"
   ],
+  "reference_resolution_manifest": "docs/research/repository/DOCUMENT_REFERENCE_RESOLUTIONS.csv",
   "path_migration_manifests": [
     "docs/research/repository/migrations/BOUNDARY_MAP_PATHS.csv",
     "docs/research/repository/migrations/DOCUMENT_FAMILIES_WAVE1_PATHS.csv",
@@ -46,6 +47,7 @@
   ],
   "inventory_control_paths": [
     "docs/README.md",
+    "docs/research/repository/DOCUMENT_REFERENCE_RESOLUTIONS.csv",
     "docs/research/repository/families/BOUNDARY_MAP.md",
     "docs/research/repository/migrations/BOUNDARY_MAP_PATHS.csv",
     "docs/research/repository/migrations/BOUNDARY_MAP_SCRIPT_PATHS.csv",
@@ -95,6 +97,11 @@
   ],
   "canonical_documents": [
     {
+      "path": "docs/research/WORK_START_HERE.md",
+      "canonical_for": "chatgpt_work_entrypoint",
+      "reason": "Exact allowlist and exclusion contract for remote ChatGPT Work tasks."
+    },
+    {
       "path": "docs/research/RESEARCH_CONTEXT.md",
       "canonical_for": "research_context",
       "reason": "Root AGENTS.md names this as a primary research-context document."
@@ -108,6 +115,36 @@
       "path": "docs/research/preregistration/quality_axis/사전등록서_품질축본선_승인잠금v4_20260721.md",
       "canonical_for": "quality_axis_main_preregistration_lock",
       "reason": "Root AGENTS.md explicitly defines this v4 file as the approval lock."
+    },
+    {
+      "path": "docs/research/preregistration/quality_axis/품질축본선_1파_구현부록잠금v1_20260722.md",
+      "canonical_for": "quality_axis_implementation_appendix_lock",
+      "reason": "The reviewed quality-axis index identifies this file as the implementation appendix lock."
+    },
+    {
+      "path": "docs/research/preregistration/fusion_w1/사전등록_관문A_v2·SE3채택재판정_20260725.md",
+      "canonical_for": "fusion_w1_gate_a_v2_lock",
+      "reason": "The reviewed Fusion W1 preregistration index identifies this file as its canonical owner copy."
+    },
+    {
+      "path": "docs/experiments/pilots/fusion_w1/reports/W_관문A진단_20260725.md",
+      "canonical_for": "fusion_w1_gate_a_diagnostic_owner",
+      "reason": "Current owner of the Gate A diagnostic observations; this designation is not a success or approval verdict."
+    },
+    {
+      "path": "docs/research/reproducibility/FUSION_W1_WIP_DISPOSITION_20260730.md",
+      "canonical_for": "fusion_w1_technical_reproducibility_handoff",
+      "reason": "Reviewed disposition of the local WIP, exact receipt-era sources, exclusions, and technical gates; explicitly not a scientific verdict."
+    },
+    {
+      "path": "docs/evidence/p0-audit/README.md",
+      "canonical_for": "p0_audit_evidence_index",
+      "reason": "Navigation index for the completed P0 evidence owner; individual scientific disposition remains in its reports and manifests."
+    },
+    {
+      "path": "docs/evidence/p0_g1_20260613/README.md",
+      "canonical_for": "p0_g1_evidence_package_index",
+      "reason": "Navigation index for the promoted frozen P0 G1 review package."
     },
     {
       "path": "docs/experiments/evaluation/e5_c001_8way/reports/W_E5_C001_8way.md",

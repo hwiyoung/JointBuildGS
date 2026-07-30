@@ -2,6 +2,7 @@
 
 This directory owns durable repository-wide research context, plans, preregistration, decisions, and storage/repository policy.
 
+- [`WORK_START_HERE.md`](WORK_START_HERE.md) — exact authority and exclusion contract for remote ChatGPT Work
 - [`RESEARCH_CONTEXT.md`](RESEARCH_CONTEXT.md) — method and research context
 - [`EXPERIMENT_PLAN.md`](EXPERIMENT_PLAN.md) — experiment sequence and gates
 - [`preregistration/quality_axis/`](preregistration/quality_axis/README.md) — approved quality-axis lock and related preregistration documents

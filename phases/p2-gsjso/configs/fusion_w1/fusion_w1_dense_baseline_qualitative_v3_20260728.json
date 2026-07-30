@@ -1,0 +1,116 @@
+{
+  "schema": "jointbuildgs.fusion_w1.dense_baseline_qualitative.config.v3",
+  "task_id": "FUS-W1-DENSE-BASELINE-QUAL-V3-001",
+  "run_id": "20260728_fusion_w1_dense_baseline_qualitative_v3",
+  "branch": "exp/fusion-w1",
+  "purpose": "Re-publish the frozen dense LoD2 shape-output-success nine-building sample with only the evaluation-only reference LoD2 RoofSurface exterior boundary on the input photos; no dense/TIN/footprint overlay, no GS training, and no scientific verdict",
+  "base_config": {
+    "path": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_dense_baseline_qualitative_v2_20260728.json",
+    "sha256": "3fe6fcb0a8d23f61960a6f67e7314ec563acac17b44acebc3816484535d78eee",
+    "reuse": "population, frozen nine-cell sample, rows 2-4 geometry and comparison contracts"
+  },
+  "implementation_files": [
+    "phases/p2-gsjso/configs/fusion_w1/fusion_w1_dense_baseline_qualitative_v3_20260728.json",
+    "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_dense_baseline_qualitative_v3_20260728.py",
+    "phases/p2-gsjso/scripts/fusion_w1/run_fusion_w1_dense_baseline_qualitative_v3_20260728.sh",
+    "tests/fusion_w1/test_fusion_w1_dense_baseline_qualitative_v3_20260728.py",
+    "phases/p2-gsjso/configs/fusion_w1/fusion_w1_dense_baseline_qualitative_v2_20260728.json",
+    "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_dense_baseline_qualitative_v2_20260728.py",
+    "scripts/e5_c001/e5_c001_8way.py",
+    "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_aprime_job_panel_v4_20260727.py",
+    "src/artifact_paths.py",
+    "src/stage2/image_projection.py"
+  ],
+  "sample_freeze": {
+    "selected_building_ids": [
+      "DEBY_LOD2_4908178",
+      "DEBY_LOD2_104583447",
+      "DEBY_LOD2_4959753",
+      "DEBY_LOD2_60097",
+      "DEBY_LOD2_4907023",
+      "DEBY_LOD2_4908353",
+      "DEBY_LOD2_4907207",
+      "DEBY_LOD2_4959461",
+      "DEBY_LOD2_60042"
+    ],
+    "selected_set_sha256": "1335c1f138e9dd3cd83741fab07e2baac93f5db562e80034a9037505d290b92e",
+    "stage": "before opening evaluation-only reference LoD2 GML",
+    "selector_changes_from_v2": false
+  },
+  "photo_projection_contract": {
+    "projector": "src/stage2/image_projection.py",
+    "input_frame": "EPSG:25832 base",
+    "input_vertical_datum": "orthometric",
+    "geoid_m_source": "base_config.sources.projection_datum.orthometric_geoid_m",
+    "pose_source": "base_config.sources.corrected_colmap_images",
+    "additional_pose_transform_application_count": 0,
+    "overlay_source": "evaluation-only reference LoD2 GML RoofSurface exterior rings with original XYZ",
+    "overlay_role": "evaluation_only; opened only after population and nine-building sample freeze",
+    "allowed_photo_overlay": "reference RoofSurface exterior boundary only",
+    "dense_point_overlay_forbidden": true,
+    "dense_tin_boundary_overlay_forbidden": true,
+    "footprint_overlay_forbidden": true,
+    "filled_polygon_overlay_forbidden": true,
+    "interior_ring_overlay_forbidden": true,
+    "minimum_frame_margin_fraction": 0.05,
+    "minimum_projected_boundary_bbox_area_px2": 400.0,
+    "minimum_projected_boundary_bbox_fraction": 0.00025,
+    "visibility_gate": {
+      "geometry": "all RoofSurface, WallSurface, and GroundSurface exterior polygons from the surrounding reference LoD2 scene within 150 m XY of each frozen target",
+      "raycast_engine": "deterministic chunked NumPy Moller-Trumbore first-intersection test",
+      "target_samples": "deterministic interior barycentric samples of target reference RoofSurface triangles",
+      "maximum_target_samples": 280,
+      "minimum_visible_samples": 3,
+      "minimum_visible_fraction": 0.10,
+      "occlusion_epsilon_m": 0.15,
+      "surrounding_scene_aoi_margin_m": 150.0,
+      "triangle_chunk_size": 2048,
+      "reference_role": "evaluation_only_post_sample_freeze_visual_address_gate"
+    },
+    "eligibility_tiers": [
+      "tier_1_all_boundary_vertices_inside_5_percent_margin_and_target_roof_raycast_visible",
+      "tier_2_fallback_all_boundary_vertices_inside_full_frame_and_target_roof_raycast_visible"
+    ],
+    "view_ranking": "visibility fraction descending, normalized distance to frame centre ascending, boundary bbox area descending, nadir angle ascending, image name; occluded views never fill empty slots",
+    "crop_profiles": {
+      "full": {"padding_fraction": 0.0, "minimum_width_pixels": 1400, "minimum_height_pixels": 1013},
+      "medium": {"padding_fraction": 0.55, "minimum_width_pixels": 420, "minimum_height_pixels": 340},
+      "tight": {"padding_fraction": 0.18, "minimum_width_pixels": 260, "minimum_height_pixels": 220}
+    },
+    "slot_policy": "3 visible views -> three medium crops; 2 -> two medium plus primary tight; 1 -> primary full, medium, tight; never substitute an occluded view",
+    "validation_mode": "coordinate, datum, exact image binding, and evaluation-only source fail-closed"
+  },
+  "visual_overrides": {
+    "row_1": "three_post_sample_freeze_photos_with_only_evaluation_only_reference_lod2_roofsurface_exterior_boundary_plus_provenance_summary",
+    "rows_2_to_4": "unchanged_from_v2",
+    "reference_boundary_color": "#f2b134",
+    "reference_boundary_linewidth": 3.0,
+    "reference_boundary_halo_color": "#111111",
+    "reference_boundary_halo_linewidth": 5.2
+  },
+  "outputs": {
+    "root": "phases/p2-gsjso/runs/20260728_fusion_w1_dense_baseline_qualitative_v3",
+    "panel_directory": "panels",
+    "panel_template": "{building_id}.png",
+    "multipage_pdf": "dense_baseline_qualitative_v3.pdf",
+    "overview": "overview.png",
+    "selection_audit_csv": "selection_audit.csv",
+    "selection_audit_json": "selection_audit.json",
+    "manifest": "manifest.json"
+  },
+  "publication": {
+    "individual_panel_count": 9,
+    "single_multipage_pdf": true,
+    "overview_required": true,
+    "selection_audit_required": true,
+    "output_directory_atomic_publish": true,
+    "overwrite_allowed": false,
+    "source_inputs_rehashed_after_render": true,
+    "manifest_written_last": true,
+    "reference_role": "evaluation_only",
+    "learning_runs_started": 0,
+    "new_training_runs": 0,
+    "scientific_verdict": null,
+    "interpretation": null
+  }
+}

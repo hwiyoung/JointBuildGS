@@ -247,6 +247,59 @@ def load_path_migrations(repo_root: Path, config: dict[str, Any]) -> dict[str, d
     return migrations
 
 
+def load_reference_resolutions(
+    repo_root: Path, config: dict[str, Any]
+) -> dict[tuple[str, str, str], dict[str, str]]:
+    """Load reviewed resolutions for links that cannot resolve in a clean clone.
+
+    The ledger distinguishes external payloads and known missing evidence from
+    unreviewed broken links.  It never substitutes a same-named artifact from a
+    different experiment.
+    """
+    manifest_path = str(config.get("reference_resolution_manifest", ""))
+    if not manifest_path:
+        return {}
+    absolute = repo_root / manifest_path
+    required = {
+        "source_path",
+        "relation",
+        "raw_target",
+        "line",
+        "class",
+        "resolved_target",
+        "verification",
+    }
+    allowed_classes = {
+        "deterministic_current_path",
+        "external_artifact",
+        "historical_migration",
+        "missing_evidence",
+    }
+    resolutions: dict[tuple[str, str, str], dict[str, str]] = {}
+    with absolute.open("r", encoding="utf-8", newline="") as handle:
+        reader = csv.DictReader(handle)
+        if reader.fieldnames is None or set(reader.fieldnames) != required:
+            raise ValueError(f"reference resolution manifest schema mismatch: {manifest_path}")
+        for row in reader:
+            key = (row["source_path"], row["relation"], row["raw_target"])
+            if key in resolutions:
+                raise ValueError(f"duplicate reference resolution: {key}")
+            if row["class"] not in allowed_classes:
+                raise ValueError(f"unsupported reference resolution class: {row['class']}")
+            if row["relation"] not in {"references", "embeds"}:
+                raise ValueError(f"unsupported resolved relation: {row['relation']}")
+            if not (repo_root / row["source_path"]).is_file():
+                raise ValueError(f"reference resolution source is absent: {row['source_path']}")
+            if row["class"] == "deterministic_current_path" and not (
+                repo_root / row["resolved_target"].split("#", 1)[0]
+            ).exists():
+                raise ValueError(f"resolved repository target is absent: {row['resolved_target']}")
+            if row["class"] == "missing_evidence" and "no_safe_equivalent" not in row["verification"]:
+                raise ValueError(f"missing evidence lacks no-safe-equivalent review: {key}")
+            resolutions[key] = dict(row)
+    return resolutions
+
+
 def apply_path_migrations(
     repo_root: Path,
     relations: Sequence[Relation],
@@ -313,6 +366,47 @@ def apply_path_migrations(
                 "yes" if (repo_root / new_path).exists() else "no",
                 relation.evidence,
                 f"{confidence}+path_migration",
+                relation.line,
+            )
+        )
+    return resolved
+
+
+def apply_reference_resolutions(
+    repo_root: Path,
+    relations: Sequence[Relation],
+    resolutions: dict[tuple[str, str, str], dict[str, str]],
+) -> list[Relation]:
+    resolved: list[Relation] = []
+    for relation in relations:
+        if relation.target_exists != "no" or relation.relation not in {"references", "embeds"}:
+            resolved.append(relation)
+            continue
+        item = resolutions.get((relation.source_path, relation.relation, relation.evidence))
+        if item is None:
+            resolved.append(relation)
+            continue
+        resolution_class = item["class"]
+        target = item["resolved_target"]
+        verification = item["verification"]
+        if resolution_class == "deterministic_current_path":
+            state = "yes"
+        elif resolution_class == "historical_migration" and "repo_target_exists" in verification:
+            state = "yes"
+        elif resolution_class in {"external_artifact", "historical_migration"}:
+            state = "external"
+            target = f"artifact://JointBuildGS/{target}"
+        else:
+            state = "missing"
+            target = f"missing://JointBuildGS/{target}"
+        resolved.append(
+            Relation(
+                relation.source_path,
+                relation.relation,
+                target,
+                state,
+                relation.evidence,
+                f"{relation.confidence}+reviewed_reference:{resolution_class}",
                 relation.line,
             )
         )
@@ -1127,6 +1221,14 @@ def write_issues(
         ),
         key=lambda relation: (relation.source_path, str(relation.line), relation.target_path),
     )
+    external = sorted(
+        (relation for relation in relations if relation.target_exists == "external"),
+        key=lambda relation: (relation.source_path, str(relation.line), relation.target_path),
+    )
+    missing = sorted(
+        (relation for relation in relations if relation.target_exists == "missing"),
+        key=lambda relation: (relation.source_path, str(relation.line), relation.target_path),
+    )
     root_docs = [row for row in rows if row["path"].startswith("docs/") and row["path"].count("/") == 1]
     orphan_candidates = [row for row in rows if row["proposed_status"] == "orphan_candidate"]
     family_counts = Counter(row["family_id"] for row in root_docs)
@@ -1147,6 +1249,8 @@ def write_issues(
                 ("Files directly under docs/", len(root_docs)),
                 ("Distinct inferred families", len({row["family_id"] for row in rows})),
                 ("Local Markdown links/embeds that do not resolve", len(broken)),
+                ("Reviewed external artifact references", len(external)),
+                ("Reviewed missing evidence references", len(missing)),
                 ("Run directories", len(run_rows)),
                 ("Run directories with one or more record gaps", len(run_issues)),
             ],
@@ -1167,7 +1271,7 @@ def write_issues(
         "",
         markdown_table(family_counts.most_common(50), ["Inferred family", "Root files"]),
         "",
-        "## Issue 2: unresolved local Markdown links",
+        "## Issue 2: unclassified local Markdown links",
         "",
     ]
     if broken:
@@ -1189,7 +1293,24 @@ def write_issues(
             lines.append("")
             lines.append(f"Only the first {max_rows} of {len(broken)} unresolved links are shown; the lineage CSV retains all parsed relations.")
     else:
-        lines.append("No unresolved local Markdown links were found in the scanned text range.")
+        lines.append("No unclassified local Markdown links were found in the scanned text range.")
+
+    lines.extend(["", "## Reviewed external and missing references", ""])
+    lines.append(
+        "External references are manifest-backed payload locations that a remote clone does not contain. "
+        "Missing references were checked against both Git and the local artifact backend; no same-named "
+        "file from another experiment may be substituted."
+    )
+    lines.append("")
+    lines.append(
+        markdown_table(
+            [
+                ("external_artifact", len(external), "artifact://JointBuildGS/..."),
+                ("missing_evidence", len(missing), "missing://JointBuildGS/..."),
+            ],
+            ["Reviewed state", "References", "Lineage target"],
+        )
+    )
 
     lines.extend(
         [
@@ -1255,6 +1376,7 @@ def build_inventory(repo_root: Path, config: dict[str, Any]) -> tuple[list[dict[
     canonical = {item["path"]: item for item in config.get("canonical_documents", [])}
     reviewed = reviewed_document_map(config)
     migrations = load_path_migrations(repo_root, config)
+    reference_resolutions = load_reference_resolutions(repo_root, config)
     text_extensions = set(config["text_extensions"])
     max_scan = int(config["max_text_scan_bytes"])
 
@@ -1326,6 +1448,9 @@ def build_inventory(repo_root: Path, config: dict[str, Any]) -> tuple[list[dict[
                     relation.target_exists == "no" and relation.relation in {"references", "embeds"}
                     for relation in path_relations
                 ),
+                "unclassified_markdown_reference_count": 0,
+                "external_artifact_reference_count": 0,
+                "known_missing_evidence_reference_count": 0,
                 "git_first_commit": oldest.get(path, ""),
                 "git_last_commit": newest.get(path, ""),
                 "scan_truncated": "yes" if truncated else "no",
@@ -1335,12 +1460,27 @@ def build_inventory(repo_root: Path, config: dict[str, Any]) -> tuple[list[dict[
     add_reviewed_relations(repo_root, reviewed, relations)
     add_version_candidates(rows, relations)
     relations = apply_path_migrations(repo_root, relations, migrations)
+    relations = apply_reference_resolutions(repo_root, relations, reference_resolutions)
+    relations_by_source: dict[str, list[Relation]] = defaultdict(list)
+    for relation in relations:
+        relations_by_source[relation.source_path].append(relation)
     inbound = Counter(
         relation.target_path
         for relation in relations
         if relation.target_exists == "yes" and relation.relation in {"references", "embeds", "mentions_path"}
     )
     for row in rows:
+        row_relations = relations_by_source[row["path"]]
+        row["unclassified_markdown_reference_count"] = sum(
+            relation.target_exists == "no" and relation.relation in {"references", "embeds"}
+            for relation in row_relations
+        )
+        row["external_artifact_reference_count"] = sum(
+            relation.target_exists == "external" for relation in row_relations
+        )
+        row["known_missing_evidence_reference_count"] = sum(
+            relation.target_exists == "missing" for relation in row_relations
+        )
         row["inbound_reference_count"] = inbound[row["path"]]
         row["run_ids"] = ";".join(sorted(run_ids_by_path[row["path"]]))
         if (
@@ -1400,6 +1540,9 @@ def generate(
         "inbound_reference_count",
         "outbound_reference_count",
         "broken_markdown_reference_count",
+        "unclassified_markdown_reference_count",
+        "external_artifact_reference_count",
+        "known_missing_evidence_reference_count",
         "git_first_commit",
         "git_last_commit",
         "scan_truncated",

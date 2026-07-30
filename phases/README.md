@@ -6,9 +6,9 @@ Root-level legacy P2 `versions.txt` receipts were consolidated into `phases/p2-g
 
 | Phase | Status | Orientation | Rules |
 |---|---|---|---|
-| P0 input-substitution audit | completed; G1 review context retained | [`p0-audit/CLAUDE.md`](p0-audit/CLAUDE.md) | [`p0-audit/AGENTS.md`](p0-audit/AGENTS.md) |
-| P2 GS-JSO core | active | [`p2-gsjso/README.md`](p2-gsjso/README.md) | [`p2-gsjso/CLAUDE.md`](p2-gsjso/CLAUDE.md) |
-| Vaihingen fair pilot | closed positive-control pilot | [`fair-pilot/README.md`](fair-pilot/README.md) | repository rules |
+| P0 input-substitution audit | completed; G1 review context retained | [`p0-audit/README.md`](p0-audit/README.md) | root `AGENTS.md` |
+| P2 GS-JSO core | active | [`p2-gsjso/README.md`](p2-gsjso/README.md) | root `AGENTS.md` |
+| Vaihingen fair pilot | closed positive-control pilot | [`fair-pilot/README.md`](fair-pilot/README.md) | root `AGENTS.md` |
 
 ## Run catalog
 

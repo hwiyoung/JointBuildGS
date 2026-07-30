@@ -1,6 +1,6 @@
 # P2 효과 검증 (make-or-break) — 깨끗한 라벨 + ablation
 
-> 📑 **P2 (제안 방법 효과 검증)** 작업. 인덱스: [docs/P2_index.md](../../../P2_index.md). 사람 검토자: 김휘영.
+> 📑 **P2 (제안 방법 효과 검증)** 작업. 인덱스: [docs/P2_index.md](../../../../evidence/archive/handoffs/P2_index_legacy.md). 사람 검토자: 김휘영.
 > **일자:** 2026-06-19 · **branch:** `feature/p2-gsjso` · **판정은 사람 — 본 문서는 측정·관찰까지(판정 금지).**
 
 ## 0. 목적 (한 줄)
@@ -14,7 +14,7 @@
 
 ## 1. 예전 결과 (기대치 보정)
 
-L_sem/L_mutual/L_structure 과거 실험 전수조사: **[docs/experiments/p2_mob_past_results.md](../../p2_mob_past_results.md)** (157행 추출).
+L_sem/L_mutual/L_structure 과거 실험 전수조사: **[docs/experiments/p2_mob_past_results.md](../../../input-and-alignment/p2_mob/reports/past_results.md)** (157행 추출).
 요지:
 
 - 모든 기존 증거는 **합성 데이터**(MatrixCity Aerial / 3D BAG synthetic-B / FlatCity)뿐. **실항공·깨끗한라벨·밀도보정 facet 비교는 전무** → 본 실험이 그 공백을 메움.
@@ -31,7 +31,7 @@ L_sem/L_mutual/L_structure 과거 실험 전수조사: **[docs/experiments/p2_mo
 
 reference LoD2/3 의미면(`690_5334.gml`·`690_5336.gml`, 945동, 48,622 삼각형)을 **Open3D RaycastingScene**으로
 937 영상 포즈(COLMAP w2c)에 raycast → `semantic/<stem>.png`(uint8 0..3, Roof=1/Wall=2/Ground=3). **의미 클래스만**(기하 미반입).
-생성: [scripts/evidence_and_attributes/p2_gsjso/make_clean_labels.py](../../../../scripts/evidence_and_attributes/p2_gsjso/make_clean_labels.py).
+생성: [scripts/evidence_and_attributes/p2_gsjso/make_clean_labels.py](../../../../../scripts/evidence_and_attributes/review_packages/make_clean_labels.py).
 
 | QA 지표 | 값 |
 |---|---|
@@ -48,14 +48,14 @@ reference LoD2/3 의미면(`690_5334.gml`·`690_5336.gml`, 945동, 48,622 삼각
 ## 3. base config + distortion 결정
 
 base = `tum_vanilla_proper.yaml`(downscale1·30k·densify/prune·`w_nc=0.05`) 위에 의미·prior만 추가. gravity `e_gravity=[0,0,-1]`
-([configs/input_and_alignment/tum_gravity.json](../../../../configs/input_and_alignment/tum_gravity.json), EPSG:25832 Z-up). 5구성 동일 base: [configs/tum_mob/](../../../../configs/tum_mob).
+([configs/input_and_alignment/tum_gravity.json](../../../../../configs/input_and_alignment/tum_gravity.json), EPSG:25832 Z-up). 5구성 동일 base: [configs/tum_mob/](../../../../../configs/mutual_loss/tum_mob).
 
 - **distortion: OFF로 fallback (기록).** 스케일보정 sweep 결과 **w=100/1.0/0.1 모두 PSNR 붕괴**, **w=0.01도 densification 불안정(N 371k→113k)**.
   TUM 큰 metric depth에서 distortion(~depth²) 폭주, 엔진 동결이라 scene-scale 정규화 불가 → 검증된 base(distortion off) 사용.
 - **`structure_voxel_size=2.0`(metric):** G1 grouping 기본 0.05는 unit-scale → 500 m 장면에서 grouping 무력화되므로 metric 값으로.
 - **무회귀:** 5구성 30k 학습 안정, PSNR **19.9~20.6** (vanilla 20.34 = 검증된 run_proper 재현, N 1.02~1.19M).
 
-학습 실행: [scripts/input_and_alignment/p2_gsjso/run_mob_all.sh](../../../../scripts/input_and_alignment/p2_gsjso/run_mob_all.sh) (train→extract→eval 분리 파이프라인).
+학습 실행: [scripts/input_and_alignment/p2_gsjso/run_mob_all.sh](../../../../../scripts/input_and_alignment/tum_transfer/run_mob_all.sh) (train→extract→eval 분리 파이프라인).
 
 ---
 
@@ -123,8 +123,8 @@ footprint xy 내 SfM 초기점 / TSDF 표면점 (z-불변): [seeding_diag](../..
 
 ## 5. 그림
 
-- [docs/figs/tum_transfer/mob_quality_4906972.png](../../../figs/tum_transfer/mob_quality_4906972.png) — control 4906972 입력 TSDF(5구성, top/side, 높이색). structure의 side-view가 가장 얇음(노이즈↓).
-- [docs/figs/tum_transfer/mob_recovery_split.png](../../../figs/tum_transfer/mob_recovery_split.png) — 복구축 씨딩 갈림: 재구성(42364659·42364663) vs 무씨딩(4907182·4908176).
+- [docs/figs/tum_transfer/mob_quality_4906972.png](../../../../figs/tum_transfer/mob_quality_4906972.png) — control 4906972 입력 TSDF(5구성, top/side, 높이색). structure의 side-view가 가장 얇음(노이즈↓).
+- [docs/figs/tum_transfer/mob_recovery_split.png](../../../../figs/tum_transfer/mob_recovery_split.png) — 복구축 씨딩 갈림: 재구성(42364659·42364663) vs 무씨딩(4907182·4908176).
 
 ---
 

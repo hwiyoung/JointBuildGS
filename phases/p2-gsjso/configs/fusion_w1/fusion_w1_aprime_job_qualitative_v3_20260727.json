@@ -8,7 +8,8 @@
     "phases/p2-gsjso/configs/fusion_w1/fusion_w1_aprime_job_qualitative_v3_20260727.json",
     "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_aprime_job_qualitative_v3_20260727.py",
     "phases/p2-gsjso/scripts/fusion_w1/run_fusion_w1_aprime_job_qualitative_v3_20260727.sh",
-    "tests/fusion_w1/test_fusion_w1_aprime_job_qualitative_v3_20260727.py"
+    "tests/fusion_w1/test_fusion_w1_aprime_job_qualitative_v3_20260727.py",
+    "src/artifact_paths.py"
   ],
   "sources": {
     "run_root": "phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime",
@@ -26,13 +27,21 @@
     },
     "report_module": {
       "path": "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_aprime_report_20260726.py",
-      "sha256": "5c35b05efe07728063fdc047a391e7abdced3ef587be0c56e2b4ee74a7fc221b",
-      "bytes": 186776
+      "sha256": "5a7d45d2ffd4edff0de56ba31f06c3fd69ee6996b97df0117008f99e19e4275a",
+      "bytes": 186786
     },
     "requirements": {
       "path": "requirements.txt",
-      "sha256": "74e14760f519e8bced497ff9f87810488a6e10bd774bb2fb559643dc6d9e8e48",
-      "bytes": 550
+      "sha256": "d145c11f8aac81662a1458163a80000d7ea408ee4d73c9e79fb6413db3b3ad83",
+      "bytes": 576,
+      "content_migration": {
+        "historical_sha256": "74e14760f519e8bced497ff9f87810488a6e10bd774bb2fb559643dc6d9e8e48",
+        "historical_bytes": 550,
+        "current_sha256": "d145c11f8aac81662a1458163a80000d7ea408ee4d73c9e79fb6413db3b3ad83",
+        "current_bytes": 576,
+        "reason": "Add the laspy 2.6 plus lazrs runtime contract and pin cjio 0.10.1 as required by the canonical Docker Fusion verification suite",
+        "historical_source": "artifacts/manifests/fusion_w1_receipt_source_lock_20260730.json"
+      }
     },
     "stage3_cityjson_exporter": {
       "path": "src/stage3/citygml_export.py",

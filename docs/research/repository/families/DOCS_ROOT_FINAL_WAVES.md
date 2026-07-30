@@ -13,15 +13,13 @@ Exact paths and target hashes are recorded in:
 
 ## Final direct-file remainder
 
-Follow-up migrations routed the 34 lineage holds, the 15 locked inputs, and 19 clean compatibility copies to explicit owners without deleting a byte. The physical `docs/` root now has three files:
+Follow-up migrations routed the 34 lineage holds, the 15 locked inputs, and 19 clean compatibility copies to explicit owners. The physical `docs/` root now has one file:
 
 | File | Why direct placement remains |
 |---|---|
 | `README.md` | Documentation router. |
-| `boundary_map_v2_ladder.csv` | The user's current staged Fusion workflow names this exact source path. |
-| `regression_input_snapshot.csv` | The user's current staged Fusion workflow names this exact input path. |
 
-Former root copies are preserved under `docs/evidence/archive/compatibility/root-mirrors/`. New documents go directly to `docs/research/`, `docs/experiments/<family>/`, `docs/evidence/`, or `docs/evidence/archive/`.
+Former root paths are resolved by the migration ledgers; compatibility copies that must remain byte-addressable are preserved under `docs/evidence/archive/compatibility/root-mirrors/`. New documents go directly to `docs/research/`, `docs/experiments/<purpose>/<family>/`, `docs/evidence/`, or `docs/evidence/archive/`.
 
 ## Invariants
 

@@ -81,7 +81,31 @@
   },
   "texture_join": {
     "path": "docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v4_1_ladder.csv",
-    "sha256": "ae16170177ac0815eb6dd853b0469325c9a1018eeeac9b790b063927cbd7e7e2",
+    "sha256": "73a99ff1d20a6ee74295ed552724a777af4b6cdf61b539a68e87204a89129ba6",
+    "path_migration": {
+      "source_lock_artifact_path": "source-locks/fusion_w1/20260730-receipt-bound-v3/sources/docs/boundary_map_v4_1_ladder.csv",
+      "source_sha256": "ae16170177ac0815eb6dd853b0469325c9a1018eeeac9b790b063927cbd7e7e2",
+      "current_sha256": "73a99ff1d20a6ee74295ed552724a777af4b6cdf61b539a68e87204a89129ba6",
+      "format": "csv_dict_rows",
+      "rewrites": [
+        {
+          "from": "phases/p2-gsjso/runs/20260719_boundary_map_v3/fm_dense_measurements.csv",
+          "to": "phases/p2-gsjso/runs/boundary_and_robustness/20260719_boundary_map_v3/fm_dense_measurements.csv",
+          "expected_replacement_count": 4
+        },
+        {
+          "from": "phases/p2-gsjso/runs/20260720_anchor_census/anchor_census_inference_measurements.csv",
+          "to": "phases/p2-gsjso/runs/boundary_and_robustness/20260720_anchor_census/anchor_census_inference_measurements.csv",
+          "expected_replacement_count": 50
+        },
+        {
+          "from": "phases/p2-gsjso/runs/20260720_anchor_census_supplement/anchor_census_supplement_measurements.csv",
+          "to": "phases/p2-gsjso/runs/boundary_and_robustness/20260720_anchor_census_supplement/anchor_census_supplement_measurements.csv",
+          "expected_replacement_count": 18
+        }
+      ],
+      "allowed_difference": "only_the_counted_exact_rewrites_above"
+    },
     "id_field": "building_id",
     "tier_source_field": "cell_label",
     "tier_map": {
@@ -97,9 +121,40 @@
   },
   "training": {
     "driver_config": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_training_v1_20260725.json",
-    "driver_config_sha256": "b57e20aee2c475ed766884e2cd39b17ffca522c2773f57d771932faed96bb367",
+    "driver_config_sha256": "f135349e5e2813ad9d28fbe597b0cec12ccfa8f08ed96e3ae4ad60a0fbe31380",
+    "driver_config_path_migration": {
+      "source_lock_artifact_path": "source-locks/fusion_w1/20260730-receipt-bound-v3/sources/phases/p2-gsjso/configs/fusion_w1_training_v1_20260725.json",
+      "source_sha256": "b57e20aee2c475ed766884e2cd39b17ffca522c2773f57d771932faed96bb367",
+      "current_sha256": "f135349e5e2813ad9d28fbe597b0cec12ccfa8f08ed96e3ae4ad60a0fbe31380",
+      "format": "json",
+      "rewrites": [
+        {
+          "from": "phases/p2-gsjso/runs/20260724_fusion_w1",
+          "to": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1",
+          "expected_replacement_count": 17
+        },
+        {
+          "from": "phases/p2-gsjso/runs/20260721_pilot_1wave",
+          "to": "phases/p2-gsjso/runs/pilot_1wave/20260721_pilot_1wave",
+          "expected_replacement_count": 1
+        },
+        {
+          "from": "phases/p2-gsjso/configs/fusion_w1_",
+          "to": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_",
+          "expected_replacement_count": 3
+        }
+      ],
+      "allowed_difference": "only_the_counted_exact_rewrites_above"
+    },
     "trainer_source": "src/stage2/train.py",
     "trainer_source_sha256": "00c125e5de469ec43c1dbbf17393e91c9f700e52b93624309f76cc64bb5eb39e",
+    "trainer_source_current_sha256": "79e3a85c7130fae79ea6edc201202efe024cea043c26c4601bdbe697b382bd98",
+    "trainer_source_receipt_lock": {
+      "source_lock_artifact_path": "source-locks/fusion_w1/20260730-receipt-bound-v4/sources/src/stage2/train.py",
+      "source_sha256": "00c125e5de469ec43c1dbbf17393e91c9f700e52b93624309f76cc64bb5eb39e",
+      "role": "historical_training_lineage_only_not_executed_by_readout",
+      "current_worktree_substitution_allowed": false
+    },
     "root": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/training",
     "job_template": "by_building/{building_id}/arm_{arm}/{run}",
     "materialization": "materialization_manifest.json",
@@ -117,7 +172,26 @@
   },
   "p0prime": {
     "driver": "phases/p2-gsjso/scripts/fusion_w1/fusion_w1_seed_p0prime_20260725.py",
-    "driver_sha256": "582011ed0d68e8552827b21105e1fb9355ed708cd59b337dd6165394a10ff248",
+    "driver_sha256": "e118027f5038b480aac1a78c304d911457f90d136203a4b67390d53070bdbc73",
+    "driver_path_migration": {
+      "source_lock_artifact_path": "source-locks/fusion_w1/20260730-receipt-bound-v4/sources/phases/p2-gsjso/scripts/fusion_w1/fusion_w1_seed_p0prime_20260725.py",
+      "source_sha256": "582011ed0d68e8552827b21105e1fb9355ed708cd59b337dd6165394a10ff248",
+      "current_sha256": "e118027f5038b480aac1a78c304d911457f90d136203a4b67390d53070bdbc73",
+      "format": "utf8_text",
+      "rewrites": [
+        {
+          "from": "parents[3]",
+          "to": "parents[4]",
+          "expected_replacement_count": 1
+        },
+        {
+          "from": "phases/p2-gsjso/configs/fusion_w1_seed_p0prime_20260725.json",
+          "to": "phases/p2-gsjso/configs/fusion_w1/fusion_w1_seed_p0prime_20260725.json",
+          "expected_replacement_count": 1
+        }
+      ],
+      "allowed_difference": "only_the_counted_exact_rewrites_above"
+    },
     "scores_csv": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/w1_seed_p0prime_scores.csv",
     "job_template": "phases/p2-gsjso/runs/fusion_w1/20260724_fusion_w1/p0prime/by_building/{building_id}",
     "complete_receipt": "complete.json",
@@ -127,8 +201,22 @@
   "pointcloudification": {
     "image": "jointbuildgs:dev",
     "image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
-    "script": "phases/p2-gsjso/scripts/tum_mob_tsdf_extract.py",
-    "script_sha256": "914cbad783b1eee27d1d2de24e702eb65e5caae1cd7bb142ebbe0fac200325bc",
+    "script": "scripts/stage3_readout/tum_mob_tsdf_extract.py",
+    "script_sha256": "fcd06e27306bd6f1520dfa7c5bfc98b9ebb51a188123a358c8ccc7467ea75d4d",
+    "script_path_migration": {
+      "source_lock_artifact_path": "source-locks/fusion_w1/20260730-receipt-bound-v4/sources/scripts/stage3_readout/tum_mob_tsdf_extract.py",
+      "source_sha256": "914cbad783b1eee27d1d2de24e702eb65e5caae1cd7bb142ebbe0fac200325bc",
+      "current_sha256": "fcd06e27306bd6f1520dfa7c5bfc98b9ebb51a188123a358c8ccc7467ea75d4d",
+      "format": "utf8_text",
+      "rewrites": [
+        {
+          "from": "scripts/stage2/tum_tsdf_extract.py",
+          "to": "scripts/input_and_alignment/preparation/tum_tsdf_extract.py",
+          "expected_replacement_count": 1
+        }
+      ],
+      "allowed_difference": "only_the_counted_exact_rewrites_above"
+    },
     "downscale": 1.0,
     "voxel_m": 0.05,
     "alpha_min_exclusive": 0.5,
@@ -153,7 +241,7 @@
   "classification": {
     "image": "jointbuildgs-p0-tools:t0",
     "image_id": "sha256:87bea02e5598a3d53a119b754191673497d52641bd8ea4106ffee653407579b0",
-    "script": "scripts/input_and_alignment/p2_gsjso/_mob_prep_las.py",
+    "script": "scripts/input_and_alignment/tum_transfer/_mob_prep_las.py",
     "script_sha256": "3ce3a14b57f6f3521ba02d5bb81a490a16b4e5b0e8d8e0a4b1b02ef1f05978f3",
     "method": "P0_T4_PDAL_SMRF_then_non_ground_footprint_overlay",
     "target_density": 0.0,
@@ -222,20 +310,156 @@
     "canonical_helpers": {
       "roofer_status": {
         "path": "phases/p0-audit/scripts/08_roofer_w2.py",
-        "sha256": "ae655090915c56bfeee2be830a28e27520c2430e97d19e515a0aa046e4c79e97"
+        "sha256": "6ee9bc54450e7d4eeb1634b825c3e8224f6f926ce6a08dc239f4bded2a715988",
+        "path_migration": {
+          "source_lock_artifact_path": "source-locks/fusion_w1/20260730-receipt-bound-v4/sources/phases/p0-audit/scripts/08_roofer_w2.py",
+          "source_sha256": "ae655090915c56bfeee2be830a28e27520c2430e97d19e515a0aa046e4c79e97",
+          "current_sha256": "6ee9bc54450e7d4eeb1634b825c3e8224f6f926ce6a08dc239f4bded2a715988",
+          "format": "utf8_text",
+          "rewrites": [
+            {
+              "from": "from typing import Any\n\n\nTASK_ID",
+              "to": "from typing import Any\n\nfrom p0_paths import P0_EVIDENCE\n\n\nTASK_ID",
+              "expected_replacement_count": 1
+            },
+            {
+              "from": "    docs = root / \"docs\"",
+              "to": "    docs = P0_EVIDENCE",
+              "expected_replacement_count": 2
+            }
+          ],
+          "allowed_difference": "only_the_counted_exact_rewrites_above"
+        }
       },
       "roof_metrics": {
-        "path": "scripts/e5_c001/p2_gsjso/e5_c001_8way.py",
-        "sha256": "12322a7fd49c0904eaf7160946c7ef3b521ed091038452f9a863bef37f0bcbdc"
+        "path": "scripts/e5_c001/e5_c001_8way.py",
+        "sha256": "0d25acb6671b5cba24fe0ffac4686e16ea24a0cebd721cf739d61ca96d2e173d",
+        "path_migration": {
+          "source_lock_artifact_path": "source-locks/fusion_w1/20260730-receipt-bound-v4/sources/scripts/e5_c001/e5_c001_8way.py",
+          "source_sha256": "12322a7fd49c0904eaf7160946c7ef3b521ed091038452f9a863bef37f0bcbdc",
+          "current_sha256": "0d25acb6671b5cba24fe0ffac4686e16ea24a0cebd721cf739d61ca96d2e173d",
+          "format": "utf8_text",
+          "rewrites": [
+            {
+              "from": "parents[3]",
+              "to": "parents[2]",
+              "expected_replacement_count": 1
+            },
+            {
+              "from": "phases/p2-gsjso/runs/e5p_train_20260707_C001",
+              "to": "phases/p2-gsjso/runs/e5_c001/e5p_train_20260707_C001",
+              "expected_replacement_count": 1
+            },
+            {
+              "from": "docs/W_E5_C001_8way.md",
+              "to": "docs/experiments/evaluation/e5_c001_8way/reports/W_E5_C001_8way.md",
+              "expected_replacement_count": 1
+            },
+            {
+              "from": "docs/e5_c001_8way_metrics.csv",
+              "to": "docs/experiments/evaluation/e5_c001_8way/tables/e5_c001_8way_metrics.csv",
+              "expected_replacement_count": 1
+            },
+            {
+              "from": "docs/e5_c001_8way_source_summary.csv",
+              "to": "docs/experiments/evaluation/e5_c001_8way/tables/e5_c001_8way_source_summary.csv",
+              "expected_replacement_count": 1
+            },
+            {
+              "from": "docs/e5_c001_8way_correction_gain.csv",
+              "to": "docs/experiments/evaluation/e5_c001_8way/tables/e5_c001_8way_correction_gain.csv",
+              "expected_replacement_count": 1
+            },
+            {
+              "from": "docs/e5_c001_8way_correction_gain_summary.csv",
+              "to": "docs/experiments/evaluation/e5_c001_8way/tables/e5_c001_8way_correction_gain_summary.csv",
+              "expected_replacement_count": 1
+            },
+            {
+              "from": "docs/e5_c001_8way_strata_summary.csv",
+              "to": "docs/experiments/evaluation/e5_c001_8way/tables/e5_c001_8way_strata_summary.csv",
+              "expected_replacement_count": 1
+            },
+            {
+              "from": "docs/e5_c001_8way_inventory.csv",
+              "to": "docs/experiments/evaluation/e5_c001_8way/tables/e5_c001_8way_inventory.csv",
+              "expected_replacement_count": 1
+            },
+            {
+              "from": "docs/regression_input_snapshot.csv",
+              "to": "docs/experiments/evaluation/attr_outcome_regression/tables/regression_input_snapshot.csv",
+              "expected_replacement_count": 3
+            },
+            {
+              "from": "docs/manual_review_judgments.csv",
+              "to": "docs/research/methodology/tables/manual_review_judgments.csv",
+              "expected_replacement_count": 3
+            },
+            {
+              "from": "docs/W_E5_pilot_gate.md",
+              "to": "docs/experiments/pilots/e5_pilot/reports/W_E5_pilot_gate.md",
+              "expected_replacement_count": 1
+            },
+            {
+              "from": "docs/W_E5_pilot_gate_검수·판정회부_20260707.md",
+              "to": "docs/experiments/pilots/e5_pilot/reports/W_E5_pilot_gate_검수·판정회부_20260707.md",
+              "expected_replacement_count": 1
+            }
+          ],
+          "allowed_difference": "only_the_counted_exact_rewrites_above"
+        }
       },
       "coverage_and_xy": {
-        "path": "scripts/quality_score/p2_gsjso/qs_baseline178_rescore.py",
-        "sha256": "0d752dade0b8677460b55d381a69db77f7bf611061fb7479710434358db33e9d"
+        "path": "scripts/evaluation/quality_score/qs_baseline178_rescore.py",
+        "sha256": "ebdb28ee82644dee930f90b42318d98b84e2e4bb08415c2f6c07ba53fd84a4c9",
+        "path_migration": {
+          "source_lock_artifact_path": "source-locks/fusion_w1/20260730-receipt-bound-v4/sources/scripts/evaluation/quality_score/qs_baseline178_rescore.py",
+          "source_sha256": "0d752dade0b8677460b55d381a69db77f7bf611061fb7479710434358db33e9d",
+          "current_sha256": "ebdb28ee82644dee930f90b42318d98b84e2e4bb08415c2f6c07ba53fd84a4c9",
+          "format": "utf8_text",
+          "rewrites": [
+            {
+              "from": "docs/regression_input_snapshot.csv",
+              "to": "docs/experiments/evaluation/attr_outcome_regression/tables/regression_input_snapshot.csv",
+              "expected_replacement_count": 3
+            },
+            {
+              "from": "phases/p2-gsjso/scripts/overnight_qs_rescore.py",
+              "to": "scripts/evaluation/quality_score/overnight_qs_rescore.py",
+              "expected_replacement_count": 1
+            },
+            {
+              "from": "phases/p2-gsjso/scripts/e5_c001_8way.py",
+              "to": "scripts/e5_c001/e5_c001_8way.py",
+              "expected_replacement_count": 1
+            }
+          ],
+          "allowed_difference": "only_the_counted_exact_rewrites_above"
+        }
       }
     },
     "paired_baseline": {
       "path": "docs/experiments/evaluation/qs_baseline178/tables/qs_baseline178_scores.csv",
-      "sha256": "a3b89f1907e6e61aead702efe6b742b5c012615df77d90bdb2a859b5418d85ab",
+      "sha256": "ad91927223bc9e772606247b790f1b6c041603c53547471360069e84253946ac",
+      "path_migration": {
+        "source_lock_artifact_path": "source-locks/fusion_w1/20260730-receipt-bound-v4/sources/docs/experiments/evaluation/qs_baseline178/tables/qs_baseline178_scores.csv",
+        "source_sha256": "a3b89f1907e6e61aead702efe6b742b5c012615df77d90bdb2a859b5418d85ab",
+        "current_sha256": "ad91927223bc9e772606247b790f1b6c041603c53547471360069e84253946ac",
+        "format": "csv_dict_rows",
+        "rewrites": [
+          {
+            "from": "phases/p2-gsjso/runs/20260718_qs_baseline178_rescore/val3dity/01f4df46bd9b51786f3314c16f9fb87fc3c254f3156dc53c174abde81f3bbdae.json",
+            "to": "phases/p2-gsjso/runs/quality_score/20260718_qs_baseline178_rescore/val3dity/01f4df46bd9b51786f3314c16f9fb87fc3c254f3156dc53c174abde81f3bbdae.json",
+            "expected_replacement_count": 178
+          },
+          {
+            "from": "phases/p2-gsjso/runs/20260718_qs_baseline178_rescore/val3dity/4bd411c8ac705049b7ada6f059ea9c9f9275400458929434450333a34d6c81c5.json",
+            "to": "phases/p2-gsjso/runs/quality_score/20260718_qs_baseline178_rescore/val3dity/4bd411c8ac705049b7ada6f059ea9c9f9275400458929434450333a34d6c81c5.json",
+            "expected_replacement_count": 178
+          }
+        ],
+        "allowed_difference": "only_the_counted_exact_rewrites_above"
+      },
       "laser_model_id": "als_w2_1",
       "laser_role": "als",
       "image_model_id": "canonical_dense_w2_1",

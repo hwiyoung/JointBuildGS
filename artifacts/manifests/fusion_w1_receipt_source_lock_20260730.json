@@ -1,0 +1,19 @@
+{
+  "schema": "jointbuildgs.receipt_source_lock_receipt.v1",
+  "artifact_id": "fusion-w1-receipt-source-lock-v4-20260730",
+  "role": "immutable-reproduction-source-for-completed-fusion-w1-receipts",
+  "base_commit": "c90ef861a50338ef8c57916ef62f74b211912a68",
+  "source_branch": "exp/fusion-w1",
+  "artifact_uri": "file:/artifacts/JointBuildGS/source-locks/fusion_w1/20260730-receipt-bound-v4",
+  "host_uri": "file:../JointBuildGS-artifacts/source-locks/fusion_w1/20260730-receipt-bound-v4",
+  "manifest_sha256": "805c01a6f59db7cb94c91ba6cf23f660b7804e717fea8e2d5581ba2c4c184cf3",
+  "receipt_count": 11,
+  "source_record_count": 40,
+  "verification": {
+    "all_receipt_source_hashes_matched": true,
+    "all_git_blobs_materialized": true,
+    "all_materialized_files_rehashed": true
+  },
+  "durable_backup_claim": false,
+  "warning": "This source-lock reproduces completed output receipts; it does not certify the later dirty WIP or a scientific verdict."
+}

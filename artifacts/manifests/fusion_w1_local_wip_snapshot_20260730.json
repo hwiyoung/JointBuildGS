@@ -1,0 +1,47 @@
+{
+  "schema": "jointbuildgs.local_wip_snapshot_receipt.v1",
+  "snapshot_id": "fusion-w1-pre-work-readiness-20260730",
+  "role": "recoverable-local-wip-handoff",
+  "base_commit": "c90ef861a50338ef8c57916ef62f74b211912a68",
+  "source_branch": "exp/fusion-w1",
+  "artifact_uri": "file:/artifacts/JointBuildGS/wip-snapshots/fusion_w1/20260730-pre-work-readiness",
+  "host_uri": "file:../JointBuildGS-artifacts/wip-snapshots/fusion_w1/20260730-pre-work-readiness",
+  "manifest_sha256": "10ca829e5dadf1e03239a31e594f3f72e3a0ef9b2e197db71ea70d204e980711",
+  "counts": {
+    "staged_paths": 19,
+    "unstaged_paths": 20,
+    "untracked_paths": 16,
+    "unique_worktree_paths": 42
+  },
+  "components": {
+    "status_porcelain_v2": {
+      "bytes": 6532,
+      "sha256": "09966be9e3c2cc77f29a66f4f1b3d9b4677cfdf4f64acf15a1f01d5ed3eb1398"
+    },
+    "staged_patch": {
+      "bytes": 247354,
+      "sha256": "18d566611a3a33b1f928e18746ae35eab2de5a227998b00a691c0ea618eaf1e0"
+    },
+    "unstaged_patch": {
+      "bytes": 44194,
+      "sha256": "30ef8128c16fa4b96fe2226d3d1e03c4c6755bff58fdeb5b9b6073aab67eba80"
+    },
+    "staged_names": {
+      "bytes": 1404,
+      "sha256": "20e029eb1d48a6cb77b05abd176ba049edce794a6b4a91c89ba940a92b362188"
+    },
+    "working_files_tar": {
+      "bytes": 798720,
+      "sha256": "87f125fdd552ddeeba87df9c5d2a8a5fcd629ad4c2dd6d3a103d6428f261ebcd"
+    }
+  },
+  "restore_verification": {
+    "state": "passed",
+    "method": "disposable clone plus staged patch plus unstaged patch plus working-files extraction",
+    "status_porcelain_v2_byte_identical": true,
+    "diff_check": "passed"
+  },
+  "source_mutated": false,
+  "durable_backup_claim": false,
+  "warning": "This snapshot preserves the local WIP but does not certify its scientific or reproducibility gates."
+}

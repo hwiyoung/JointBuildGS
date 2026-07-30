@@ -38,6 +38,10 @@ from typing import Any, Iterable, Mapping, Sequence
 
 
 REPO = Path(__file__).resolve().parents[4]
+if str(REPO) not in sys.path:
+    sys.path.insert(0, str(REPO))
+from src.artifact_paths import resolve_existing_path  # noqa: E402
+
 CONTAINER_REPO = Path("/workspace/JointBuildGS")
 DEFAULT_CONFIG = (
     REPO
@@ -160,6 +164,22 @@ def repo_path(value: str | Path, *, repo: Path = REPO) -> Path:
         candidate.relative_to(repo.resolve())
     except ValueError as exc:
         raise ReadoutError(f"path escapes repository: {raw}") from exc
+    return candidate
+
+
+def input_path(value: str | Path, *, repo: Path = REPO) -> Path:
+    """Resolve one declared input through the exact repository/artifact mapping."""
+
+    raw = Path(value)
+    if raw.is_absolute():
+        raise ReadoutError(f"absolute input path is forbidden: {raw}")
+    candidate = resolve_existing_path(repo, raw).resolve()
+    roots = [repo.resolve()]
+    artifact_root = os.environ.get("JBGS_ARTIFACT_ROOT")
+    if artifact_root:
+        roots.append(Path(artifact_root).resolve())
+    if not any(candidate == root or root in candidate.parents for root in roots):
+        raise ReadoutError(f"input path escapes repository and artifact root: {raw}")
     return candidate
 
 
@@ -449,7 +469,7 @@ def load_config(path: Path) -> dict[str, Any]:
         ),
         "smoke job key",
     )
-    writable_readout_environment(config, repo=path.resolve().parents[3])
+    writable_readout_environment(config, repo=path.resolve().parents[4])
     jit_build_environment(config)
     expected_queue = [
         ("core", "A", "r1"),
@@ -568,11 +588,98 @@ def verify_hash(path: Path, expected: str, label: str) -> str:
     return observed
 
 
+def _source_lock_path(migration: Mapping[str, Any]) -> Path:
+    raw_root = os.environ.get("JBGS_ARTIFACT_ROOT")
+    if not raw_root:
+        raise ReadoutError(
+            "JBGS_ARTIFACT_ROOT is required for receipt-era path migration verification"
+        )
+    root = Path(raw_root).resolve()
+    relative = Path(str(migration.get("source_lock_artifact_path", "")))
+    if relative.is_absolute() or ".." in relative.parts:
+        raise ReadoutError(f"invalid source-lock artifact path: {relative}")
+    candidate = (root / relative).resolve()
+    try:
+        candidate.relative_to(root)
+    except ValueError as exc:
+        raise ReadoutError(f"source-lock path escapes artifact root: {relative}") from exc
+    return candidate
+
+
+def _rewrite_strings(
+    value: Any, rewrites: Sequence[Mapping[str, Any]], counts: list[int]
+) -> Any:
+    if isinstance(value, dict):
+        return {key: _rewrite_strings(item, rewrites, counts) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_rewrite_strings(item, rewrites, counts) for item in value]
+    if not isinstance(value, str):
+        return value
+    rewritten = value
+    for index, rule in enumerate(rewrites):
+        source = str(rule.get("from", ""))
+        target = str(rule.get("to", ""))
+        if not source or not target or source == target:
+            raise ReadoutError(f"invalid path migration rewrite at index {index}")
+        counts[index] += rewritten.count(source)
+        rewritten = rewritten.replace(source, target)
+    return rewritten
+
+
+def verify_path_migration(
+    current_path: Path,
+    migration: Mapping[str, Any],
+    *,
+    label: str,
+) -> dict[str, Any]:
+    """Prove that a current input differs from its receipt-era bytes only by locked paths."""
+
+    source_path = _source_lock_path(migration)
+    verify_hash(source_path, str(migration.get("source_sha256", "")), f"{label} source lock")
+    verify_hash(current_path, str(migration.get("current_sha256", "")), f"{label} current")
+    rewrites = migration.get("rewrites")
+    if not isinstance(rewrites, list) or not rewrites:
+        raise ReadoutError(f"{label} path migration rewrites are missing")
+    counts = [0] * len(rewrites)
+    data_format = migration.get("format")
+    if data_format == "json":
+        source_payload = load_json(source_path)
+        current_payload = load_json(current_path)
+    elif data_format == "utf8_text":
+        source_payload = source_path.read_text(encoding="utf-8")
+        current_payload = current_path.read_text(encoding="utf-8")
+    elif data_format == "csv_dict_rows":
+        source_payload = read_csv(source_path)
+        current_payload = read_csv(current_path)
+        with source_path.open("r", encoding="utf-8", newline="") as stream:
+            source_fields = csv.DictReader(stream).fieldnames
+        with current_path.open("r", encoding="utf-8", newline="") as stream:
+            current_fields = csv.DictReader(stream).fieldnames
+        require_equal(current_fields, source_fields, f"{label} CSV field order")
+    else:
+        raise ReadoutError(f"{label} path migration format is unsupported: {data_format}")
+    rewritten = _rewrite_strings(source_payload, rewrites, counts)
+    require_equal(rewritten, current_payload, f"{label} exact path-only migration")
+    expected_counts = [int(rule.get("expected_replacement_count", -1)) for rule in rewrites]
+    require_equal(counts, expected_counts, f"{label} replacement counts")
+    require_equal(
+        migration.get("allowed_difference"),
+        "only_the_counted_exact_rewrites_above",
+        f"{label} allowed difference policy",
+    )
+    return {
+        "source_lock_artifact_path": str(migration["source_lock_artifact_path"]),
+        "source_sha256": str(migration["source_sha256"]),
+        "current_sha256": str(migration["current_sha256"]),
+        "replacement_counts": counts,
+    }
+
+
 def target_rows(
     config: Mapping[str, Any], *, repo: Path = REPO
 ) -> list[dict[str, str]]:
     spec = config["targets"]
-    path = repo_path(spec["path"], repo=repo)
+    path = input_path(spec["path"], repo=repo)
     verify_hash(path, spec["sha256"], "w1_targets.csv")
     rows = read_csv(path)
     require_equal(len(rows), int(spec["expected_population"]), "target population")
@@ -600,7 +707,7 @@ def target_metadata(
         raise ReadoutError(f"target row is not unique: {building_id}")
     target_row = target[0]
     join = config["texture_join"]
-    ladder_path = repo_path(join["path"], repo=repo)
+    ladder_path = input_path(join["path"], repo=repo)
     verify_hash(ladder_path, join["sha256"], "boundary_map_v4_1_ladder.csv")
     ladder = [
         row
@@ -654,11 +761,6 @@ def verify_static_inputs(
             "training driver config",
         ),
         (
-            config["training"]["trainer_source"],
-            config["training"]["trainer_source_sha256"],
-            "trainer source for legacy final checkpoint export",
-        ),
-        (
             config["pointcloudification"]["script"],
             config["pointcloudification"]["script_sha256"],
             "pointcloudification script",
@@ -689,9 +791,59 @@ def verify_static_inputs(
     for path, expected in config["scoring"]["reference"]["locked_files"].items():
         locks.append((path, expected, f"reference {Path(path).name}"))
     observed: dict[str, str] = {}
+    trainer_path = input_path(config["training"]["trainer_source"], repo=repo)
+    observed[config["training"]["trainer_source"]] = verify_hash(
+        trainer_path,
+        config["training"]["trainer_source_current_sha256"],
+        "current trainer source",
+    )
+    trainer_lock = config["training"]["trainer_source_receipt_lock"]
+    locked_trainer_path = _source_lock_path(trainer_lock)
+    observed[f"receipt-lock:{config['training']['trainer_source']}"] = verify_hash(
+        locked_trainer_path,
+        trainer_lock["source_sha256"],
+        "receipt-era trainer source",
+    )
+    require_equal(
+        trainer_lock.get("current_worktree_substitution_allowed"),
+        False,
+        "receipt-era trainer substitution policy",
+    )
     for value, expected, label in locks:
-        path = repo_path(value, repo=repo)
+        path = input_path(value, repo=repo)
         observed[value] = verify_hash(path, expected, label)
+    verify_path_migration(
+        input_path(config["training"]["driver_config"], repo=repo),
+        config["training"]["driver_config_path_migration"],
+        label="training driver config",
+    )
+    verify_path_migration(
+        input_path(config["texture_join"]["path"], repo=repo),
+        config["texture_join"]["path_migration"],
+        label="boundary map texture join",
+    )
+    verify_path_migration(
+        input_path(config["p0prime"]["driver"], repo=repo),
+        config["p0prime"]["driver_path_migration"],
+        label="P0-prime driver",
+    )
+    verify_path_migration(
+        input_path(config["pointcloudification"]["script"], repo=repo),
+        config["pointcloudification"]["script_path_migration"],
+        label="pointcloudification script",
+    )
+    for name, helper in config["scoring"]["canonical_helpers"].items():
+        verify_path_migration(
+            input_path(helper["path"], repo=repo),
+            helper["path_migration"],
+            label=f"canonical helper {name}",
+        )
+    paired = config["scoring"]["paired_baseline"]
+    verify_path_migration(
+        input_path(paired["path"], repo=repo),
+        paired["path_migration"],
+        label="paired baseline",
+    )
     target_rows(config, repo=repo)
     training_config = load_json(
         repo_path(config["training"]["driver_config"], repo=repo)

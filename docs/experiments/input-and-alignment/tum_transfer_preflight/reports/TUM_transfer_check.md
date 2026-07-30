@@ -1,6 +1,6 @@
 # GS 엔진 TUM 전이 점검 — vanilla 2DGS (P2-2)
 
-> 📑 **P2 준비 단계** 작업입니다. 통합 명칭과 순서는 [docs/P2_index.md](../../../P2_index.md) 참조. (이전 별칭: 단계 1 / P2-2)
+> 📑 **P2 준비 단계** 작업입니다. 통합 명칭과 순서는 [docs/P2_index.md](../../../../evidence/archive/handoffs/P2_index_legacy.md) 참조. (이전 별칭: 단계 1 / P2-2)
 
 > **일자:** 2026-06-18 · **branch:** `feature/p2-gsjso` · **판정은 사람.**
 > **목적:** GS 학습 코드가 **TUM 항공 데이터에서 수렴해 멀쩡한 3D 표면을 내는지**를 새 코드(어댑터·config만)
@@ -36,13 +36,13 @@
 직후 회복). 최종(회복 후) **eval PSNR = 17.08**. 참고: 학습 tqdm의 `psnr=14.52`는 단일뷰 노이즈값(평가 아님).
 
 **렌더 PNG** (`<out>/renders/`, 1000 iter마다 4뷰, 총 28장):
-- [it1000 v0](../../../figs/tum_transfer/render_it1000_v0.png) → [it7000 v0](../../../figs/tum_transfer/render_it7000_v0.png),
-  [it7000 v2](../../../figs/tum_transfer/render_it7000_v2.png).
+- [it1000 v0](../../../../figs/tum_transfer/render_it1000_v0.png) → [it7000 v0](../../../../figs/tum_transfer/render_it7000_v0.png),
+  [it7000 v2](../../../../figs/tum_transfer/render_it7000_v2.png).
 - 장면(건물·지붕·식생)이 알아볼 만하게 렌더됨. 단 **soft/blurry + 대각 needle floater**(저반복·downscale2의
   미수렴 2DGS 전형).
 
 **점군 스냅샷** (`final.pt` Gaussian centers, opacity>0.05 필터 179,846점, p1–p99 클립):
-- [centers_top_side.png](../../../figs/tum_transfer/centers_top_side.png).
+- [centers_top_side.png](../../../../figs/tum_transfer/centers_top_side.png).
 - **TOP view(x-y): TUM 캠퍼스 건물 footprint가 또렷이 식별** — 직각 건물 블록·중정·벽/지붕 모서리.
 - SIDE view(x-z): 지면+건물의 일관된 수평 밴드 + 소수 고-z floater(렌더의 needle 동일 원인).
 - p1–p99 extent ≈ X 574 m · Y 548 m · Z 167 m (캠퍼스 AOI 합당; 전체 bbox의 z=467 outlier는 floater).

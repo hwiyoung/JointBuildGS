@@ -4,6 +4,17 @@ set -Eeuo pipefail
 
 ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
+ARTIFACT_HOST_ROOT="${JBGS_ARTIFACT_HOST_ROOT:-$(dirname "$ROOT")/JointBuildGS-artifacts}"
+ARTIFACT_CONTAINER_ROOT="/artifacts/JointBuildGS"
+P0_DATA_HOST_ROOT="$ARTIFACT_HOST_ROOT/phase-payloads/p0-audit/data"
+[[ -d "$ARTIFACT_HOST_ROOT" ]] || {
+  echo "artifact root is missing: $ARTIFACT_HOST_ROOT" >&2
+  exit 2
+}
+[[ -d "$P0_DATA_HOST_ROOT" ]] || {
+  echo "P0 artifact data root is missing: $P0_DATA_HOST_ROOT" >&2
+  exit 2
+}
 
 CONFIG="phases/p2-gsjso/configs/fusion_w1/fusion_w1_readout_v1_20260726.json"
 RETRY_POLICY="phases/p2-gsjso/configs/fusion_w1/fusion_w1_readout_infra_retry_20260726.json"
@@ -32,8 +43,11 @@ run_tools() {
     --user "$(id -u):$(id -g)" \
     --env MPLCONFIGDIR=/tmp/fusion-w1-matplotlib \
     --env XDG_CACHE_HOME=/tmp/fusion-w1-cache \
+    --env JBGS_ARTIFACT_ROOT="$ARTIFACT_CONTAINER_ROOT" \
     --env PYTHONDONTWRITEBYTECODE=1 \
     --volume "$ROOT:/workspace/JointBuildGS" \
+    --volume "$ARTIFACT_HOST_ROOT:$ARTIFACT_CONTAINER_ROOT:ro" \
+    --volume "$P0_DATA_HOST_ROOT:/workspace/JointBuildGS/phases/p0-audit/data:ro" \
     --workdir /workspace/JointBuildGS \
     --entrypoint python3 \
     "$TOOLS_IMAGE" "$@"
@@ -178,9 +192,12 @@ run_one() {
       --gpus "device=$gpu" \
       --user "$(id -u):$(id -g)" \
       --env CUDA_VISIBLE_DEVICES=0 \
+      --env JBGS_ARTIFACT_ROOT="$ARTIFACT_CONTAINER_ROOT" \
       --env PYTHONDONTWRITEBYTECODE=1 \
       "${environment_args[@]}" \
       --volume "$ROOT:/workspace/JointBuildGS" \
+      --volume "$ARTIFACT_HOST_ROOT:$ARTIFACT_CONTAINER_ROOT:ro" \
+      --volume "$P0_DATA_HOST_ROOT:/workspace/JointBuildGS/phases/p0-audit/data:ro" \
       --workdir /workspace/JointBuildGS \
       --entrypoint python3 \
       "$READOUT_IMAGE" "${argv[@]}" \
@@ -254,6 +271,8 @@ run_one() {
       --memory-swap="$MEMORY_LIMIT" \
       --user "$(id -u):$(id -g)" \
       --volume "$ROOT:/workspace/JointBuildGS" \
+      --volume "$ARTIFACT_HOST_ROOT:$ARTIFACT_CONTAINER_ROOT:ro" \
+      --volume "$P0_DATA_HOST_ROOT:/workspace/JointBuildGS/phases/p0-audit/data:ro" \
       --workdir /workspace/JointBuildGS \
       "$ROOFER_IMAGE" \
       "${argv[@]}" \
@@ -350,9 +369,12 @@ run_extract_infra_retry() {
       --gpus "device=$gpu" \
       --user "$(id -u):$(id -g)" \
       --env CUDA_VISIBLE_DEVICES=0 \
+      --env JBGS_ARTIFACT_ROOT="$ARTIFACT_CONTAINER_ROOT" \
       --env PYTHONDONTWRITEBYTECODE=1 \
       "${environment_args[@]}" \
       --volume "$ROOT:/workspace/JointBuildGS" \
+      --volume "$ARTIFACT_HOST_ROOT:$ARTIFACT_CONTAINER_ROOT:ro" \
+      --volume "$P0_DATA_HOST_ROOT:/workspace/JointBuildGS/phases/p0-audit/data:ro" \
       --workdir /workspace/JointBuildGS \
       --entrypoint python3 \
       "$READOUT_IMAGE" "${argv[@]}" \
@@ -458,9 +480,12 @@ run_extract_infra_recovery2() {
       --gpus "device=$gpu" \
       --user "$(id -u):$(id -g)" \
       --env CUDA_VISIBLE_DEVICES=0 \
+      --env JBGS_ARTIFACT_ROOT="$ARTIFACT_CONTAINER_ROOT" \
       --env PYTHONDONTWRITEBYTECODE=1 \
       "${environment_args[@]}" \
       --volume "$ROOT:/workspace/JointBuildGS" \
+      --volume "$ARTIFACT_HOST_ROOT:$ARTIFACT_CONTAINER_ROOT:ro" \
+      --volume "$P0_DATA_HOST_ROOT:/workspace/JointBuildGS/phases/p0-audit/data:ro" \
       --workdir /workspace/JointBuildGS \
       --entrypoint python3 \
       "$READOUT_IMAGE" "${argv[@]}" \

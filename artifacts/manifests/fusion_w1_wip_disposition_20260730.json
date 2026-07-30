@@ -1,0 +1,76 @@
+{
+  "schema": "jointbuildgs.fusion_w1.local_wip_disposition.v1",
+  "date": "2026-07-30",
+  "base_commit": "c90ef861a50338ef8c57916ef62f74b211912a68",
+  "source_branch": "exp/fusion-w1",
+  "source_checkout_mutated_during_disposition": false,
+  "snapshot": {
+    "receipt": "artifacts/manifests/fusion_w1_local_wip_snapshot_20260730.json",
+    "manifest_sha256": "10ca829e5dadf1e03239a31e594f3f72e3a0ef9b2e197db71ea70d204e980711",
+    "staged_paths": 19,
+    "unstaged_paths": 20,
+    "untracked_paths": 16,
+    "unique_worktree_paths": 42,
+    "restore_rehearsal": "passed_byte_identical"
+  },
+  "review_layer_entries": {
+    "C1_reusable_shared_implementation": 11,
+    "C2_relocatable_fusion_continuation": 35,
+    "C3_receipt_or_result_bound": 9,
+    "total_layer_entries": 55,
+    "note": "Layer entries count staged, unstaged, and untracked review roles; it is not a unique-path count."
+  },
+  "actions": {
+    "C1": "integrated_after_shared_projection_and_TIN_tests",
+    "C2": "integrated_at_semantic_paths_after_exact_path_migration_and_wrapper_tests",
+    "C3": "split_between_source_locked_completed_receipts_and_testable_current_continuation; never silently substituted",
+    "completed_external_outputs": "integrity_verified_external_unpromoted",
+    "scientific_promotion": "not_performed"
+  },
+  "excluded_from_git_promotion": [
+    {
+      "path": "docs/experiments/pilots/fusion_w1/reports/fusion_w1_dense_baseline_qualitative_v2_manual_qa_20260728.md",
+      "reason": "the V2 payload was superseded and removed under its cleanup contract; this manual QA remains recoverable only from the WIP snapshot"
+    }
+  ],
+  "source_lock": {
+    "receipt": "artifacts/manifests/fusion_w1_receipt_source_lock_20260730.json",
+    "artifact_id": "fusion-w1-receipt-source-lock-v4-20260730",
+    "manifest_sha256": "805c01a6f59db7cb94c91ba6cf23f660b7804e717fea8e2d5581ba2c4c184cf3",
+    "receipt_count": 11,
+    "source_record_count": 40,
+    "current_worktree_substitution_allowed": false
+  },
+  "external_completion_inventory": {
+    "path": "artifacts/manifests/fusion_w1_completed_visuals_20260730.json",
+    "sha256": "4c7c3671379c1ca4cfbda209536ce8d4eb5e3aa4555ec2421a435271d45e7838",
+    "verified_output_records": 45,
+    "completion_receipts": 11,
+    "canonical_evidence_claim": false
+  },
+  "technical_gates": {
+    "shared_projection_and_TIN": {
+      "passed": 21,
+      "failed": 0
+    },
+    "dense_v2_to_v5": {
+      "passed": 56,
+      "failed": 0
+    },
+    "panel_v6_and_v7": {
+      "passed": 20,
+      "failed": 0
+    },
+    "readout": {
+      "passed": 60,
+      "failed": 0
+    },
+    "total": {
+      "passed": 157,
+      "failed": 0
+    }
+  },
+  "final_state": "TECHNICALLY_REPRODUCIBLE_HANDOFF_SCIENTIFICALLY_UNPROMOTED",
+  "scientific_verdict": null,
+  "warning": "Passing technical gates and rehashing outputs do not approve a scientific conclusion."
+}
