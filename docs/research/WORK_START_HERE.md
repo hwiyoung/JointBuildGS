@@ -32,6 +32,7 @@ canonical review:
 - [Fusion W1 Gate A v2/SE3 lock](preregistration/fusion_w1/사전등록_관문A_v2·SE3채택재판정_20260725.md)
 - [Fusion W1 Gate A diagnostic owner](../experiments/pilots/fusion_w1/reports/W_관문A진단_20260725.md) — observations only, not a success verdict
 - [Fusion W1 WIP technical disposition](reproducibility/FUSION_W1_WIP_DISPOSITION_20260730.md) — reproducibility handoff and exclusions, not a scientific verdict
+- [Work–Codex two-host handoff contract](reproducibility/CHATGPT_WORK_CODEX_HANDOFF.md) — write ownership, commit, scope, and artifact-claim protocol
 - [P0 audit evidence index](../evidence/p0-audit/README.md)
 - [P0 G1 frozen package index](../evidence/p0_g1_20260613/README.md)
 - [boundary-map family index](../experiments/input-and-alignment/boundary_map/README.md)
@@ -89,6 +90,24 @@ Start with
 [`reproducibility/FUSION_W1_WIP_DISPOSITION_20260730.md`](reproducibility/FUSION_W1_WIP_DISPOSITION_20260730.md)
 and the exact task's config/receipt. Any new run gets a new namespace and receipt;
 existing completed artifacts are never overwritten.
+
+## Two-host write handoff
+
+ChatGPT Work and the local Experiment Host do not edit the same task concurrently.
+Every cross-host write transfer uses an immutable manifest conforming to
+[`two_host_handoff.schema.json`](../../artifacts/manifests/schemas/two_host_handoff.schema.json)
+and must pass [`validate_two_host_handoff.py`](../../scripts/repository/validate_two_host_handoff.py).
+
+- The current default is serialized ownership of durable branch `main`.
+- Work Host may claim `git_only`; only the artifact-aware Experiment Host may claim
+  `artifact_verified` after reading the declared payloads.
+- A stale base SHA, overlapping allowed/protected scope, or missing snapshot for dirty
+  WIP fails closed.
+- Technical verification never supplies a scientific verdict.
+
+Start with
+[`CHATGPT_WORK_CODEX_HANDOFF.md`](reproducibility/CHATGPT_WORK_CODEX_HANDOFF.md)
+before the first write intended for the Experiment Host.
 
 ## Catalog interpretation
 

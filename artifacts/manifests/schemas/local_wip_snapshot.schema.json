@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jointbuildgs.local/schemas/local_wip_snapshot.schema.json",
+  "title": "JointBuildGS local dirty-WIP recovery snapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "created_at",
+    "source_repo",
+    "branch",
+    "base_commit",
+    "counts",
+    "components",
+    "working_file_inventory",
+    "restore_verification"
+  ],
+  "properties": {
+    "schema": {"const": "jointbuildgs.local_wip_snapshot.v1"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "source_repo": {"type": "string", "minLength": 1},
+    "branch": {"type": "string", "minLength": 1},
+    "base_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "counts": {"$ref": "#/$defs/counts"},
+    "components": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "staged_patch",
+        "unstaged_patch",
+        "staged_names",
+        "unstaged_names",
+        "untracked_names",
+        "working_files"
+      ],
+      "properties": {
+        "status": {"$ref": "#/$defs/component"},
+        "staged_patch": {"$ref": "#/$defs/component"},
+        "unstaged_patch": {"$ref": "#/$defs/component"},
+        "staged_names": {"$ref": "#/$defs/component"},
+        "unstaged_names": {"$ref": "#/$defs/component"},
+        "untracked_names": {"$ref": "#/$defs/component"},
+        "working_files": {"$ref": "#/$defs/component"}
+      }
+    },
+    "working_file_inventory": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "state", "bytes", "sha256"],
+        "properties": {
+          "path": {"type": "string", "minLength": 1},
+          "state": {"const": "regular"},
+          "bytes": {"type": "integer", "minimum": 0},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        }
+      }
+    },
+    "restore_verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "verified_at",
+        "base_commit",
+        "restored_counts",
+        "path_sets_match",
+        "component_hashes_match"
+      ],
+      "properties": {
+        "status": {"const": "passed"},
+        "verified_at": {"type": "string", "format": "date-time"},
+        "base_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "restored_counts": {"$ref": "#/$defs/counts"},
+        "path_sets_match": {"const": true},
+        "component_hashes_match": {"const": true}
+      }
+    }
+  },
+  "$defs": {
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["staged_paths", "unstaged_paths", "untracked_paths", "archive_paths"],
+      "properties": {
+        "staged_paths": {"type": "integer", "minimum": 0},
+        "unstaged_paths": {"type": "integer", "minimum": 0},
+        "untracked_paths": {"type": "integer", "minimum": 0},
+        "archive_paths": {"type": "integer", "minimum": 1}
+      }
+    },
+    "component": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["file", "bytes", "sha256"],
+      "properties": {
+        "file": {"type": "string", "minLength": 1},
+        "bytes": {"type": "integer", "minimum": 0},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    }
+  }
+}

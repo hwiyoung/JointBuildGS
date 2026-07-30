@@ -6,9 +6,9 @@
 
 | Measure | Count |
 |---|---|
-| Cataloged indexed files | 1888 |
+| Cataloged indexed files | 1889 |
 | Files directly under docs/ | 0 |
-| Distinct inferred families | 96 |
+| Distinct inferred families | 97 |
 | Local Markdown links/embeds that do not resolve | 0 |
 | Reviewed external artifact references | 63 |
 | Reviewed missing evidence references | 87 |
@@ -19,7 +19,7 @@
 
 | Status | Files |
 |---|---|
-| canonical | 34 |
+| canonical | 35 |
 | canonical_candidate | 5 |
 | orphan_candidate | 367 |
 | superseded | 53 |

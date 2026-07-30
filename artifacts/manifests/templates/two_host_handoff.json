@@ -1,0 +1,50 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": true,
+  "handoff_id": "replace-with-immutable-handoff-id",
+  "task_id": "replace-with-task-id",
+  "created_at": "1970-01-01T00:00:00Z",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "offered",
+  "previous_receipt": null,
+  "transport": {
+    "mode": "serialized_main",
+    "branch": "main",
+    "target_branch": "main",
+    "exclusive_writer_ack": true
+  },
+  "commits": {
+    "base_main": "0000000000000000000000000000000000000000",
+    "offered_head": "SELF",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": ["replace/with/allowed/path"],
+    "protected_paths": ["replace/with/protected/path"],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "git_only",
+    "verifier_role": "work_host",
+    "docker_image_digest": null,
+    "commands": [],
+    "tests": []
+  },
+  "artifacts": {
+    "required_for_task": false,
+    "availability": {
+      "work_host": "none",
+      "experiment_host": "none"
+    },
+    "records": []
+  },
+  "scientific": {
+    "technical_state": "pending",
+    "scientific_verdict": null,
+    "promotion_status": "not_requested"
+  },
+  "receiver_ack": null
+}

@@ -18,3 +18,20 @@ Fusion W1 uses three linked manifests:
 - `fusion_w1_receipt_source_lock_20260730.json` binds completed receipts to 40 exact historical source files;
 - `fusion_w1_completed_visuals_20260730.json` rehashes 45 declared external outputs without promoting them;
 - `fusion_w1_wip_disposition_20260730.json` records the final technical disposition and exclusions.
+
+Cross-host task transfer uses:
+
+- `schemas/two_host_handoff.schema.json` — the machine-readable Work Host/Experiment Host contract;
+- `schemas/local_wip_snapshot.schema.json` — the required structure for a dirty-WIP
+  recovery snapshot, including component hashes, path ledgers, archive inventory,
+  and restore-rehearsal evidence;
+- `templates/two_host_handoff.json` — a deliberately invalid-until-filled template. Set
+  `template_only=false`, replace the base commit and scopes, and validate it before use.
+
+Actual handoff receipts, snapshot manifests, and snapshot components are immutable
+add-once task/run-specific files. Do not create a mutable global `current_handoff.json`.
+One event commit may add files only inside its current handoff directory and must not
+modify, delete, copy, or rename any existing handoff-subtree path.
+Receipt paths are fixed to `handoffs/<handoff_id>/000-offered.json`,
+`100-accepted.json`, `200-verified.json` or `200-blocked.json`, and
+`300-closed.json`; a handoff ID has exactly one offered root.

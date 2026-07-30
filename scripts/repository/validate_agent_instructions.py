@@ -34,6 +34,10 @@ REQUIRED_MARKERS = (
     "P0 `data/raw` is immutable",
     "external P0 `data/work`",
     "ground=2 and\n    building=6",
+    "Two-host handoff",
+    "validate_two_host_handoff.py",
+    "technical handoff always keeps `scientific_verdict` null",
+    "separate approval document",
 )
 FORBIDDEN_MARKERS = (
     "Use the manifest and Compose compatibility mounts",

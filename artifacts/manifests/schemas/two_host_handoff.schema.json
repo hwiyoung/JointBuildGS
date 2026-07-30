@@ -1,0 +1,265 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jointbuildgs.local/schemas/two_host_handoff.schema.json",
+  "title": "JointBuildGS two-host handoff event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "template_only",
+    "handoff_id",
+    "task_id",
+    "created_at",
+    "direction",
+    "sender_role",
+    "receiver_role",
+    "state",
+    "previous_receipt",
+    "transport",
+    "commits",
+    "scope",
+    "verification",
+    "artifacts",
+    "scientific",
+    "receiver_ack"
+  ],
+  "properties": {
+    "schema": {"const": "jointbuildgs.two_host_handoff.v1"},
+    "template_only": {"type": "boolean"},
+    "handoff_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+    "task_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "direction": {"enum": ["work_to_experiment", "experiment_to_work"]},
+    "sender_role": {"enum": ["work_host", "experiment_host"]},
+    "receiver_role": {"enum": ["work_host", "experiment_host"]},
+    "state": {"enum": ["offered", "accepted", "verified", "blocked", "closed"]},
+    "previous_receipt": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["path", "sha256"],
+          "properties": {
+            "path": {"type": "string", "minLength": 1},
+            "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+          }
+        }
+      ]
+    },
+    "transport": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "branch", "target_branch", "exclusive_writer_ack"],
+      "properties": {
+        "mode": {"const": "serialized_main"},
+        "branch": {"const": "main"},
+        "target_branch": {"const": "main"},
+        "exclusive_writer_ack": {"const": true}
+      }
+    },
+    "commits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["base_main", "offered_head", "receipt_head"],
+      "properties": {
+        "base_main": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "offered_head": {
+          "oneOf": [
+            {"const": "SELF"},
+            {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+          ]
+        },
+        "receipt_head": {"const": "SELF"}
+      }
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["allowed_paths", "protected_paths", "dirty_wip", "snapshot_manifest"],
+      "properties": {
+        "allowed_paths": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "protected_paths": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "dirty_wip": {"type": "boolean"},
+        "snapshot_manifest": {
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["path", "sha256", "restore_rehearsal"],
+              "properties": {
+                "path": {"type": "string", "minLength": 1},
+                "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+                "restore_rehearsal": {"const": "passed"}
+              }
+            }
+          ]
+        }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["level", "verifier_role", "docker_image_digest", "commands", "tests"],
+      "properties": {
+        "level": {"enum": ["git_only", "artifact_verified"]},
+        "verifier_role": {"enum": ["work_host", "experiment_host"]},
+        "docker_image_digest": {
+          "oneOf": [
+            {"type": "null"},
+            {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+          ]
+        },
+        "commands": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "tests": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "passed", "failed"],
+            "properties": {
+              "name": {"type": "string", "minLength": 1},
+              "passed": {"type": "integer", "minimum": 0},
+              "failed": {"type": "integer", "minimum": 0}
+            }
+          }
+        }
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required_for_task", "availability", "records"],
+      "properties": {
+        "required_for_task": {"type": "boolean"},
+        "availability": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["work_host", "experiment_host"],
+          "properties": {
+            "work_host": {"enum": ["none", "manifest_only", "verified_local"]},
+            "experiment_host": {"enum": ["none", "manifest_only", "verified_local"]}
+          }
+        },
+        "records": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "uri",
+              "bytes",
+              "sha256",
+              "verification_method",
+              "verified_by",
+              "verified_at"
+            ],
+            "properties": {
+              "uri": {"type": "string", "minLength": 1},
+              "bytes": {"type": "integer", "minimum": 0},
+              "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+              "verification_method": {
+                "enum": ["not_verified", "sha256_rehash"]
+              },
+              "verified_by": {
+                "type": ["string", "null"],
+                "enum": ["work_host", "experiment_host", null]
+              },
+              "verified_at": {
+                "oneOf": [
+                  {"type": "null"},
+                  {"type": "string", "format": "date-time"}
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "scientific": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["technical_state", "scientific_verdict", "promotion_status"],
+      "properties": {
+        "technical_state": {"enum": ["pending", "complete", "blocked"]},
+        "scientific_verdict": {"type": "null"},
+        "promotion_status": {
+          "enum": ["not_requested", "human_review_required", "human_approved_elsewhere"]
+        }
+      }
+    },
+    "receiver_ack": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["role", "accepted_at", "status", "issue"],
+          "properties": {
+            "role": {"enum": ["work_host", "experiment_host"]},
+            "accepted_at": {"type": "string", "format": "date-time"},
+            "status": {"enum": ["accepted", "verified", "blocked", "closed"]},
+            "issue": {"type": ["string", "null"]}
+          }
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {"state": {"const": "offered"}},
+        "required": ["state"]
+      },
+      "then": {
+        "properties": {
+          "previous_receipt": {"type": "null"},
+          "commits": {
+            "properties": {"offered_head": {"const": "SELF"}}
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "previous_receipt": {"type": "object"},
+          "commits": {
+            "properties": {
+              "offered_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "scope": {
+            "properties": {"dirty_wip": {"const": true}},
+            "required": ["dirty_wip"]
+          }
+        },
+        "required": ["scope"]
+      },
+      "then": {
+        "properties": {
+          "scope": {"properties": {"snapshot_manifest": {"type": "object"}}}
+        }
+      },
+      "else": {
+        "properties": {
+          "scope": {"properties": {"snapshot_manifest": {"type": "null"}}}
+        }
+      }
+    }
+  ]
+}

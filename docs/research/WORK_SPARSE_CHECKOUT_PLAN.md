@@ -2,163 +2,166 @@
 
 ## 결정
 
-기존 repository의 **새 control-plane checkout**을 `--filter=blob:none` partial clone + cone-mode sparse checkout으로 만든다. 현재 active checkout은 진행 중인 Fusion index/worktree와 sibling artifact workspace를 보존하기 위해 in-place 변환하지 않는다.
+ChatGPT Work는 GitHub `main`의 **새 독립 checkout**을 `--filter=blob:none`
+partial clone + cone-mode sparse checkout으로 사용한다. 기존 Fusion recovery
+checkout이나 linked worktree를 Work Host에 복사하지 않는다.
 
 - Partial clone은 접근하지 않은 Git blob download를 지연한다.
 - Sparse checkout은 working tree에 나타나는 tracked path를 제한한다.
-- 둘 다 external artifact hydration을 대신하지 않으며 기존 checkout의 ignored/untracked file을 제거하지 않는다.
+- 둘 다 external artifact hydration이나 backup을 대신하지 않는다.
+- Durable remote branch는 `main` 하나이며 삭제된 `exp/fusion-w1`을 clone하지 않는다.
 
-검증된 clean normal clone은 `.git` 제외 733.447 MiB, `.git` 1.242 GiB이고 live remote tree는 728.674 MiB다. 가장 큰 단일 current blob은 9.987 MiB지만 tracked image aggregate가 547.948 MiB이므로 partial+sparse 조합의 효과가 있다.
+## 원격 identity gate
 
-## 사전 조건
+Work Host마다 승인된 URL을 환경변수로 제공한다. Experiment Host의 SSH alias나
+credential을 repository로 복사하지 않는다.
 
-1. 현재 `JointBuildGS` checkout과 linked worktree를 그대로 둔다.
-2. `git ls-remote --symref`로 target branch를 확인한다. 2026-07-30 closeout에서 remote default는 `main`이고 `main`과 `exp/fusion-w1`은 같은 audited control tree를 가리킨다.
-3. pilot은 새 sibling directory에서만 실행한다.
-4. remote가 blob filter를 지원하는지 확인한다.
-5. C-class payload는 manifest와 필요 범위를 확인하기 전 hydration하지 않는다.
-6. 구조·storage cleanup이 remote에 반영된 뒤 pilot을 실행한다. Active Fusion의 uncommitted index/worktree는 기존 checkout에만 보존하고 pilot 입력에 섞지 않는다.
-
-## Profile 1 — 최소 control plane
-
-기본 개발·검토에 필요한 재사용 구현, 설정, 실행기, 테스트, manifest, 연구 계약만 포함한다.
-
-```text
-src/
-configs/
-scripts/
-tests/
-artifacts/manifests/
-docs/research/
-phases/p0-audit/{README.md,issues.md,env/,scripts/}
-phases/p2-gsjso/{README.md,configs/,docs/,scripts/}
+```bash
+JBGS_REMOTE_URL="${JBGS_REMOTE_URL:?approved GitHub URL required}"
+git ls-remote --symref "$JBGS_REMOTE_URL" HEAD refs/heads/main
+git ls-remote --heads "$JBGS_REMOTE_URL"
 ```
 
-Cone mode는 선택한 directory의 ancestor에 직접 위치한 파일도 유지하므로 root `AGENTS.md`, `README.md`, Docker/Compose/requirements와 phase guide가 실제로 존재하는지 pilot에서 확인한다.
+필수 결과:
 
-새 checkout 전용 명령 예시:
+- symbolic `HEAD`는 `refs/heads/main`이다.
+- remote head는 `main` 하나다.
+- remote identity는 승인된 `hwiyoung/JointBuildGS`다.
+- 감사를 고정한 SHA와 다르면 자동 수용하지 않고 handoff를 다시 검증한다.
+
+## Work acceptance profile
+
+기본 profile은 source/config/test뿐 아니라 `validate_work_readiness.py`가 직접
+읽는 canonical documents와 reviewed reference target을 포함한다.
 
 ```bash
 git clone \
   --filter=blob:none \
   --no-checkout \
-  --branch exp/fusion-w1 \
-  git@github-hwiyoung:hwiyoung/JointBuildGS.git \
-  JointBuildGS-control
+  --single-branch \
+  --branch main \
+  --no-tags \
+  "$JBGS_REMOTE_URL" \
+  JointBuildGS-work
 
-cd JointBuildGS-control
+cd JointBuildGS-work
 git sparse-checkout init --cone
 git sparse-checkout set \
   src configs scripts tests \
   artifacts/manifests \
   docs/research \
+  docs/experiments \
+  docs/evidence/archive \
+  docs/evidence/p0-audit \
+  docs/evidence/p0_g1_20260613 \
+  docs/figs/stage3_polyfit_phase2 \
+  docs/figs/tum2twin_surface_proxy_rv1 \
+  docs/figs/W_D6 \
+  docs/figs/W_matched_rms \
+  docs/figs/boundary_map \
+  docs/figs/phase2_synthesis \
+  docs/figs/tum_transfer \
+  docs/figs/W_D4_qual \
   phases/p0-audit/env \
   phases/p0-audit/scripts \
   phases/p2-gsjso/configs \
   phases/p2-gsjso/docs \
   phases/p2-gsjso/scripts
-git checkout exp/fusion-w1
+git checkout main
 ```
 
-실행 환경에서 `github-hwiyoung` SSH alias를 쓸 수 없으면 승인된 HTTPS URL 또는 해당 환경에 설정된 SSH host를 쓴다. credential을 repo에 복사하지 않는다.
+Cone mode가 ancestor의 root files를 포함하므로 `AGENTS.md`, `CLAUDE.md`,
+`README.md`, Docker/Compose/requirements와 phase README가 존재해야 한다.
 
-## Profile 2 — 실험 문서 검토
+## 단계별 확장
 
-Profile 1에 정본 report/table을 추가한다.
-
-```bash
-git sparse-checkout add docs/experiments
-```
-
-검토 package가 필요할 때만 구체 evidence family를 추가한다.
+특정 evidence package, figure family, compact run receipt가 필요할 때만 추가한다.
 
 ```bash
 git sparse-checkout add docs/evidence/<review-package>
-```
-
-완료된 P0 audit의 evidence는 phase control과 분리되어 있으므로 다음 경로를 선택한다.
-
-```bash
-git sparse-checkout add docs/evidence/p0-audit
-```
-
-`docs/evidence` 전체나 `docs/figs` 전체를 기본 profile에 넣지 않는다. 대표 figure set만 경로 단위로 추가한다.
-
-```bash
 git sparse-checkout add docs/figs/<approved-evidence-set>
+git sparse-checkout add phases/p2-gsjso/runs/<research-purpose>/<run_id>
 ```
 
-현재 `docs/figs`는 604 files / 361.506 MiB다. partial clone에서는 이 경로를 checkout하거나 파일을 열 때 blob이 on-demand fetch될 수 있다.
+Run path에는 compact receipt만 있어야 한다. dataset, checkpoint, render bundle,
+point cloud, mesh는 tracked manifest의 URI로 Artifact Store에서 resolve한다.
 
-## Profile 3 — 한 phase run 검토
-
-최종 구조의 run receipt는 연구 목적 아래 실행 단위로 찾는다.
-
-```bash
-git sparse-checkout add \
-  phases/p2-gsjso/runs/<research-purpose>/<run_id>
-```
-
-이 경로에는 compact receipt만 있어야 한다. dataset/checkpoint/render/point-cloud payload는 해당 receipt가 참조하는 `artifacts/manifests/<manifest>.yaml`을 통해 별도 C backend로 resolve한다. `phases/p2-gsjso/runs` 전체를 습관적으로 추가하지 않는다.
-
-## 검증 gate
-
-Pilot checkout에서 다음을 기록한다.
+## Git-only acceptance gate
 
 ```bash
 git rev-parse HEAD
+git rev-parse origin/main
 git rev-parse --is-shallow-repository
 git config --get remote.origin.promisor
 git config --get remote.origin.partialclonefilter
+git config --get remote.origin.tagOpt
 git config --get core.sparseCheckout
 git config --get core.sparseCheckoutCone
 git sparse-checkout list
 git status --short --branch
-git count-objects -vH
-du -sb --exclude=.git .
-du -sb .git
+GIT_NO_LAZY_FETCH=1 git rev-list --objects --all --missing=print
 ```
 
 필수 결과:
 
-- `HEAD`가 intended live origin SHA와 같다.
-- partial clone은 shallow clone이 아니다.
-- `remote.origin.promisor=true`, filter는 `blob:none` 또는 승인된 equivalent다.
-- sparse checkout과 cone mode가 enabled다.
-- 7개 permanent owner contract를 깨는 compatibility root가 생성되지 않는다.
-- source/config/test의 control-plane validation이 bulk artifact 없이 가능하다.
-- 원 dataset/result를 복사·이동·수정하지 않는다.
+- `HEAD == origin/main ==` handoff의 exact offered head다.
+- shallow clone이 아니고 promisor는 `true`, filter는 `blob:none`이다.
+- tag fetch는 비활성이고 archive tag가 Work clone에 들어오지 않는다.
+- sparse/cone mode가 켜져 있고 working tree는 clean이다.
+- 제외 blob 일부가 `?`로 남아 partial clone 효과가 유지된다.
+- 7개 permanent owner 이외 compatibility root를 만들지 않는다.
 
-Normal clone과 비교할 항목은 clone wall time, network bytes, `.git` size, checked-out size, 첫 evidence/run path 추가 시 on-demand fetch bytes와 latency다.
+Artifact를 mount하지 않은 read-only container에서 다음을 실행한다.
 
-## Artifact hydration contract
+```bash
+python scripts/repository/validate_agent_instructions.py
+python scripts/repository/validate_work_readiness.py
+python -m unittest tests.repository.test_agent_instruction_sync
+python -m unittest tests.repository.test_two_host_handoff
+```
 
-Sparse checkout은 artifact manager가 아니다. dataset/checkpoint가 필요한 run은 다음 순서를 따른다.
+Git-only readiness는 PASS여야 한다. 반대로 존재하지 않는 artifact root를
+지정한 검증과 Fusion payload rehash는 실패해야 정상이다. Work Host는 이 실패를
+payload 검증 성공으로 대체하거나 같은 이름의 다른 파일을 찾지 않는다.
 
-1. tracked C manifest를 읽는다.
-2. access와 free space를 확인한다.
-3. approved external/work volume으로만 다운로드한다.
-4. bytes/hash, dependency, CRS를 검증한다.
-5. `JBGS_ARTIFACT_ROOT=/artifacts/JointBuildGS`를 통해 Docker/config에서 resolve한다.
-6. resolved artifact ID와 URI를 compact run receipt에 기록한다.
+## Artifact-aware Experiment Host
 
-기존 `data/`, `results/`, `reports/`, phase payload tree를 새 checkout 안으로 재귀 복사하지 않는다. 과거 compatibility submount도 다시 만들지 않는다.
+Experiment Host는 normal working tree 또는 필요한 scope가 모두 포함된 sparse
+checkout에서 다음을 추가 검증한다.
 
-## 주의점
+1. `JBGS_ARTIFACT_ROOT=/artifacts/JointBuildGS`가 실제 backend를 가리킨다.
+2. bytes/hash/dependency/CRS를 검증한다.
+3. Docker image digest, command, config, input/output artifact를 receipt에 기록한다.
+4. 기존 완료 payload를 덮어쓰지 않고 새 run namespace만 쓴다.
+5. `artifact_verified` handoff는 Experiment Host만 생성한다.
 
-- history 전체 blob content를 읽는 Git 명령은 partial clone에서 대량 on-demand fetch를 일으킬 수 있다. metadata-only 점검을 우선한다.
-- Sparse checkout은 이미 존재하는 ignored/untracked file을 숨기지 않으므로 반드시 새 directory에서 pilot한다.
-- path가 sparse set에 포함되었다고 scientific input이 검증된 것은 아니다. C manifest gate가 별도로 필요하다.
-- 향후 Git LFS를 도입하면 partial clone과 독립적으로 `GIT_LFS_SKIP_SMUDGE=1` 및 selected fetch를 시험한다.
-- 현재 linked worktree는 shared Git config/object store를 사용하므로 pilot 대상으로 삼지 않는다.
-- frozen historical evidence 안의 과거 path 문자열은 snapshot이다. sparse plan을 맞추기 위해 기계적으로 rewrite하지 않는다.
+## Inventory 제약
 
-## Rollback과 재평가
+`repo_inventory.py`는 sparse에서 제외된 문서를 Git object가 아니라 working-tree
+파일로 읽는다. 새 문서나 run receipt를 추가한 Work clone에서 catalog를 갱신할
+때는 다음 중 하나를 사용한다.
 
-Pilot은 새 checkout이므로 실패 시 사용을 중단하고 기존 checkout을 그대로 둔다. pilot directory 삭제도 별도 destructive task이며 이 계획에 포함되지 않는다.
+1. 일시적으로 `git sparse-checkout add docs phases` 후 inventory를 생성·검증한다.
+2. normal integration checkout에서 inventory를 생성·검증한다.
 
-다음 조건에서만 별도 ResearchControl repo를 재검토한다: 서로 다른 access control, 독립 release cadence, archival owner, publication boundary가 실제 요구사항으로 확정된 경우.
+이를 생략하면 `RUN_CATALOG.csv`, `DOCUMENT_CATALOG.csv`,
+`DOCUMENT_LINEAGE.csv`가 새 handoff와 어긋날 수 있다.
 
-다음 조건에서만 history cleanup을 재검토한다: partial/sparse clean-clone 측정 후에도 transfer/storage가 허용 불가하거나 향후 50/100 MiB gate 위반 blob이 commit된 경우. 현재 감사 수치만으로는 history cleanup이 필요하지 않다.
+## Artifact hydration 금지선
 
-2026-07-30에 comparison baseline인 single-branch normal fresh clone은 실행·검증했다. Partial clone과 sparse-checkout pilot 자체는 아직 실행하지 않았다.
+Sparse checkout은 artifact manager가 아니다. C-class payload는 tracked manifest를
+먼저 읽고 approved external volume으로만 hydration한다. repo 안에 `data/`,
+`results/`, `reports/`, phase payload compatibility tree를 재생성하지 않는다.
+
+## 측정 상태
+
+2026-07-30에 standalone operator partial clone은 `blob:none`, single branch
+`main`으로 생성됐다. Git-only/local-artifact readiness, Fusion 157 tests,
+repository 41 tests를 통과했다. 최종 Work sparse pilot은 two-host contract
+commit을 GitHub에서 새로 clone한 뒤 이 문서에 size와 acceptance 결과를 기록한다.
+
+## 재평가 조건
+
+Partial/sparse 측정 후에도 transfer/storage가 허용 불가하거나 새로운 50/100MiB
+tracked blob이 생길 때만 history cleanup을 재검토한다. 별도 ResearchControl repo는
+access control, release cadence, publication boundary가 실제로 분리될 때만 검토한다.

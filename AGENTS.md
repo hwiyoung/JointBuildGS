@@ -70,6 +70,9 @@ payloads without an explicit, exact-target retention review and receipt.
    tool versions, commit, parameters, inputs, and outputs recorded for each run.
 3. **One task, one commit** — use a task identifier in the commit message when a
    commit is authorized. Do not stage, commit, or overwrite unrelated user work.
+   Each immutable two-host handoff event is one operational task/commit; a stable
+   research `task_id` may span its ordered offered/accepted/verified/closed event
+   commits, whose messages also name the event state.
 4. **Failure visibility** — record and report failures and exceptions in the owning
    phase/workstream issue log; do not hide them.
 5. **CRS** — P0 and geospatial outputs use EPSG:25832 and explicitly record CRS.
@@ -91,6 +94,11 @@ payloads without an explicit, exact-target retention review and receipt.
 10. **P0 data handling** — P0 `data/raw` is immutable. Create derived data only under
     external P0 `data/work`. Roofer input LAZ classification is ground=2 and
     building=6.
+11. **Two-host handoff** — Work Host and Experiment Host must transfer write ownership
+    with an immutable manifest that passes
+    `scripts/repository/validate_two_host_handoff.py`. Never treat Git-only review as
+    artifact verification. A technical handoff always keeps `scientific_verdict` null;
+    any human verdict belongs in a separate approval document.
 
 ## Instruction maintenance
 

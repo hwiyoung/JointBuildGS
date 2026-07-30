@@ -27,6 +27,11 @@ pushed and dereferenced against their original commits before deleting the branc
 | `fc/current-baseline-cleanup` | `archive/fc-current-baseline-cleanup-20260611` | `8b1796c85e9a81f34b6acd826ca89ba952d55aa9` |
 | `wip/textureless-signal` | `archive/wip-textureless-signal-20260622` | `21054f48d4c0d36afc0f74fe4b2dc43f1106b633` |
 
+After the first closeout, a clean detached worktree was found at unique commit
+`647794a5a84e1b599e9c5e9170b62148500cc206`. Before operator-clone cutover it was
+preserved as `archive/fusion-w1-aprime-report-v2-20260727` and the dereferenced remote
+tag was verified against that exact commit. No remote branch was reintroduced.
+
 ## Remote branches removed
 
 The following remote heads were removed only after the current cleanup head was
@@ -64,6 +69,35 @@ tips were already reachable from `main`:
 
 The final durable local refs are `main` and the upstream-free recovery branch
 `exp/fusion-w1`. The final live remote head is `main` only.
+
+The later standalone `JointBuildGS-operator` partial clone tracks only `origin/main`.
+The two refs above describe the old recovery clone's private Git store; they are not
+imported into the operator clone.
+
+## Recovery checkout cutover
+
+The old recovery checkout was not deleted or rewritten. Before Docker was repointed
+to the clean operator clone, its recovery material was copied to an independent NVMe
+under `/home/innopam/JointBuildGS-recovery/20260730-experiment-host-cutover`:
+
+- full 1.94 GB `.git` archive, including its saved index and unreachable objects;
+- staged and unstaged patches plus exact NUL-delimited path inventories;
+- a working-file archive containing the untracked and modified bytes;
+- the ignored local `polyfit_cli` binary and the source-lock v4 snapshot;
+- SHA-256 checksum files for the backup set.
+
+An isolated restore rehearsal extracted the Git archive, ran `git fsck --full`,
+resolved `c90ef861`, `e954b7b`, and `647794a`, materialized the saved index into a
+new empty worktree, and overlaid the working-file archive. The restored path sets
+matched the snapshot byte-for-byte: **19 staged, 20 unstaged, and 16 untracked**.
+`git fsck` reported preserved dangling objects but no missing or corrupt object.
+The rehearsal directory remains separate from both live checkouts.
+
+The old checkout remains a recovery-only source while existing editor and linked-
+worktree processes still refer to it. It is not mounted into the active Docker
+container and must not be used as a handoff source. Its eventual deletion is a
+separate operator action after those processes are closed; no `git gc`, history
+rewrite, or cleanup is required for normal work.
 
 ## Verification evidence
 

@@ -39,6 +39,8 @@ WORK_REQUIRED_MARKERS = (
     "source-lock v4",
     "integrity_verified_external_unpromoted",
     "without the external artifact backend",
+    "CHATGPT_WORK_CODEX_HANDOFF.md",
+    "serialized ownership",
 )
 
 

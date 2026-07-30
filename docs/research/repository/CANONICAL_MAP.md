@@ -33,6 +33,7 @@
 | fusion_w1_gate_a_v2_lock | `docs/research/preregistration/fusion_w1/사전등록_관문A_v2·SE3채택재판정_20260725.md` | The reviewed Fusion W1 preregistration index identifies this file as its canonical owner copy. |
 | quality_axis_main_preregistration_lock | `docs/research/preregistration/quality_axis/사전등록서_품질축본선_승인잠금v4_20260721.md` | Root AGENTS.md explicitly defines this v4 file as the approval lock. |
 | quality_axis_implementation_appendix_lock | `docs/research/preregistration/quality_axis/품질축본선_1파_구현부록잠금v1_20260722.md` | The reviewed quality-axis index identifies this file as the implementation appendix lock. |
+| chatgpt_work_codex_two_host_handoff | `docs/research/reproducibility/CHATGPT_WORK_CODEX_HANDOFF.md` | Reviewed cross-host write ownership, commit, scope, artifact-claim, and scientific-verdict separation contract. |
 | fusion_w1_technical_reproducibility_handoff | `docs/research/reproducibility/FUSION_W1_WIP_DISPOSITION_20260730.md` | Reviewed disposition of the local WIP, exact receipt-era sources, exclusions, and technical gates; explicitly not a scientific verdict. |
 
 ## Reviewed family maps
@@ -94,6 +95,7 @@ This table shows multi-file families and explicit/candidate canonical families. 
 | w_report_evidence | 3 | - | 0 | docs/figs/w_report_evidence/ |
 | aux_v4a | 2 | v3 | 0 | docs/figs/aux_v4a/ |
 | footprint_conditioned_readout | 2 | - | 0 | docs/figs/footprint_conditioned_readout/ |
+| chatgpt_work_codex_handoff | 1 | - | 1 | docs/experiments/chatgpt_work_codex_handoff/ |
 | experiment_plan | 1 | - | 1 | docs/research/ |
 | research_context | 1 | - | 1 | docs/research/ |
 | work_start_here | 1 | - | 1 | docs/experiments/work_start_here/ |
