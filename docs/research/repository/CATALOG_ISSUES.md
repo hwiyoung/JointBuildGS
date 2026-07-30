@@ -30,8 +30,7 @@
 
 | Git state | Runs |
 |---|---|
-| indexed_record_present | 3 |
-| tracked_record_present | 82 |
+| tracked_record_present | 85 |
 
 ## Issue 1: docs-root sprawl
 
@@ -117,10 +116,10 @@ These are gaps against the target run contract, not claims that a historical run
 | P2 | 20260706_regression_v1 | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
 | P2 | 20260706_regression_v1_1 | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
 | P2 | 20260708_d4_config_audit | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
-| P2 | 20260724_fusion_w1 | indexed_record_present | missing_tracked_versions |
-| P2 | 20260726_fusion_w1_aprime | indexed_record_present | missing_tracked_versions |
+| P2 | 20260724_fusion_w1 | tracked_record_present | missing_tracked_versions |
+| P2 | 20260726_fusion_w1_aprime | tracked_record_present | missing_tracked_versions |
 | P2 | 20260727_fusion_w1_aprime_smoke_recovery | tracked_record_present | missing_tracked_manifest;missing_tracked_versions |
-| P2 | 20260728_fusion_w1_dense_baseline_qualitative_v1 | indexed_record_present | missing_tracked_manifest;missing_tracked_versions;missing_tracked_report_or_index |
+| P2 | 20260728_fusion_w1_dense_baseline_qualitative_v1 | tracked_record_present | missing_tracked_manifest;missing_tracked_versions;missing_tracked_report_or_index |
 | P2 | 20260702_A0_projection_fix | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
 | P2 | 20260702_A1_zeta_ls | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
 | P2 | 20260702_A2_projection_gate_v2 | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
