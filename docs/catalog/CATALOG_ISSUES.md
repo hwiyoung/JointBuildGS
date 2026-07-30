@@ -6,7 +6,7 @@
 
 | Measure | Count |
 |---|---|
-| Cataloged indexed files | 1830 |
+| Cataloged indexed files | 1853 |
 | Files directly under docs/ | 2 |
 | Distinct inferred families | 231 |
 | Local Markdown links/embeds that do not resolve | 215 |
@@ -22,7 +22,7 @@
 | orphan_candidate | 432 |
 | superseded | 50 |
 | superseded_candidate | 12 |
-| supporting | 1300 |
+| supporting | 1323 |
 | temporary | 1 |
 
 ### Run Git states
@@ -30,8 +30,8 @@
 | Git state | Runs |
 |---|---|
 | ignored_no_tracked_record | 86 |
-| indexed_record_present | 8 |
-| tracked_record_present | 77 |
+| indexed_record_present | 2 |
+| tracked_record_present | 83 |
 | untracked_no_tracked_record | 6 |
 
 ## Issue 1: docs-root sprawl
@@ -440,12 +440,12 @@ These are gaps against the target run contract, not claims that a historical run
 | P2 | e5p_prep_20260706_235306 | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
 | P2 | e5p_sparse_config_20260706_000204 | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
 | P2 | e5p_train_20260707_C001 | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
-| P2 | legacy-results-FC_S5_loss_ledger_instrumentation | indexed_record_present | missing_tracked_versions |
-| P2 | legacy-results-FC_S6C_lmutual_completion | indexed_record_present | missing_tracked_manifest;missing_tracked_versions;missing_tracked_report_or_index |
-| P2 | legacy-results-FC_S6D_directional_screening | indexed_record_present | missing_tracked_versions;missing_tracked_report_or_index |
-| P2 | legacy-results-FC_S6E_joint | indexed_record_present | missing_tracked_versions;missing_tracked_report_or_index |
-| P2 | legacy-results-FC_S6_componentwise_revised_lmutual_design_validation | indexed_record_present | missing_tracked_versions;missing_tracked_report_or_index |
-| P2 | legacy-results-footprint_conditioned_readout | indexed_record_present | missing_tracked_manifest;missing_tracked_versions;missing_tracked_report_or_index |
+| P2 | legacy-results-FC_S5_loss_ledger_instrumentation | tracked_record_present | missing_tracked_versions |
+| P2 | legacy-results-FC_S6C_lmutual_completion | tracked_record_present | missing_tracked_manifest;missing_tracked_versions;missing_tracked_report_or_index |
+| P2 | legacy-results-FC_S6D_directional_screening | tracked_record_present | missing_tracked_versions;missing_tracked_report_or_index |
+| P2 | legacy-results-FC_S6E_joint | tracked_record_present | missing_tracked_versions;missing_tracked_report_or_index |
+| P2 | legacy-results-FC_S6_componentwise_revised_lmutual_design_validation | tracked_record_present | missing_tracked_versions;missing_tracked_report_or_index |
+| P2 | legacy-results-footprint_conditioned_readout | tracked_record_present | missing_tracked_manifest;missing_tracked_versions;missing_tracked_report_or_index |
 
 ## Issue 4: orphan candidates
 
