@@ -1,7 +1,7 @@
 """CPU unit tests for the S3-A semantic-addressed geometry losses.
 
 Run in the repository container:
-    python -m unittest phases/p2-gsjso/scripts/test_s3_semantic_guided_loss.py
+    python -m unittest tests/stage2/test_s3_semantic_guided_loss.py
 """
 from __future__ import annotations
 

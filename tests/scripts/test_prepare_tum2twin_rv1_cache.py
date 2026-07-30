@@ -9,7 +9,7 @@ from pathlib import Path
 import numpy as np
 
 
-REPO = Path(__file__).resolve().parents[3]
+REPO = Path(__file__).resolve().parents[2]
 MODULE_PATH = REPO / "scripts/prepare_tum2twin_rv1_cache.py"
 SPEC = importlib.util.spec_from_file_location("prepare_rv1", MODULE_PATH)
 assert SPEC and SPEC.loader
