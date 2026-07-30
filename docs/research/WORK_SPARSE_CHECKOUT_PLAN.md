@@ -147,6 +147,11 @@ checkout에서 다음을 추가 검증한다.
 이를 생략하면 `RUN_CATALOG.csv`, `DOCUMENT_CATALOG.csv`,
 `DOCUMENT_LINEAGE.csv`가 새 handoff와 어긋날 수 있다.
 
+`validate_work_readiness.py`는 이 차이를 명시적으로 처리한다. Normal integration
+checkout에서는 전체 inventory를 다시 스캔한다. Sparse Work clone에서는 전체
+tree를 가장하지 않고, integration gate가 커밋한 `CATALOG_ISSUES.md`의 zero-
+unclassified marker와 reviewed reference-resolution ledger를 검증한다.
+
 ## Artifact hydration 금지선
 
 Sparse checkout은 artifact manager가 아니다. C-class payload는 tracked manifest를
@@ -156,9 +161,27 @@ Sparse checkout은 artifact manager가 아니다. C-class payload는 tracked man
 ## 측정 상태
 
 2026-07-30에 standalone operator partial clone은 `blob:none`, single branch
-`main`으로 생성됐다. Git-only/local-artifact readiness, Fusion 157 tests,
-repository 41 tests를 통과했다. 최종 Work sparse pilot은 two-host contract
-commit을 GitHub에서 새로 clone한 뒤 이 문서에 size와 acceptance 결과를 기록한다.
+`main`으로 생성됐고 Git-only/local-artifact readiness, Fusion exact 157 tests,
+repository tests를 통과했다.
+
+같은 날 GitHub `main`의 `109f3e43f61768bd0bd2b040dd750700d9da7760`에서
+새 independent Work acceptance clone을 위 23-path profile 그대로 생성했다.
+
+| 측정 | 결과 |
+|---|---:|
+| `.git` disk usage | 67,067,012 bytes (65 MiB 표시) |
+| sparse working tree | 148,266,675 bytes (147 MiB 표시) |
+| working-tree regular files | 2,141 |
+| promisor에서 아직 받지 않은 object lines | 6,823 |
+| local/remote heads | `main` / `origin/main`만 존재 |
+| fetched tags | 0 |
+
+`HEAD == origin/main`, non-shallow, promisor `true`, filter `blob:none`, tagOpt
+`--no-tags`, sparse/cone `true`, clean status를 확인했다. Artifact를 mount하지 않은
+read-only/network-none container에서 agent contract, Git-only readiness, repository
+68 tests가 통과했다. 존재하지 않는 artifact root를 지정한 readiness와 Fusion
+payload rehash는 각각 nonzero로 실패하여 Work Host가 artifact 검증을 가장하지
+않는 fail-closed 동작도 확인했다.
 
 ## 재평가 조건
 

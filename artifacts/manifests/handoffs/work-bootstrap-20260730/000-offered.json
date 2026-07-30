@@ -1,0 +1,78 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "work-bootstrap-20260730",
+  "task_id": "WORK-BOOTSTRAP-20260730",
+  "created_at": "2026-07-30T16:12:17Z",
+  "direction": "experiment_to_work",
+  "sender_role": "experiment_host",
+  "receiver_role": "work_host",
+  "state": "offered",
+  "previous_receipt": null,
+  "transport": {
+    "mode": "serialized_main",
+    "branch": "main",
+    "target_branch": "main",
+    "exclusive_writer_ack": true
+  },
+  "commits": {
+    "base_main": "109f3e43f61768bd0bd2b040dd750700d9da7760",
+    "offered_head": "SELF",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/work-bootstrap-20260730",
+      "docs/research/WORK_SPARSE_CHECKOUT_PLAN.md",
+      "docs/research/repository",
+      "phases/RUN_CATALOG.csv"
+    ],
+    "protected_paths": [
+      "configs",
+      "docs/evidence",
+      "phases/p2-gsjso/runs",
+      "src",
+      "tests"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "git_only",
+    "verifier_role": "experiment_host",
+    "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "commands": [
+      "python scripts/repository/repo_inventory.py --check",
+      "python scripts/repository/validate_agent_instructions.py",
+      "python scripts/repository/validate_work_readiness.py",
+      "python -m unittest discover -s tests/repository -p 'test_*.py' -q",
+      "python -m unittest -q tests.fusion_w1.test_active_qualitative_projection_policy tests.fusion_w1.test_image_projection tests.fusion_w1.test_roof_boundary_overlay tests.fusion_w1.test_fusion_w1_dense_baseline_qualitative_v2_20260728 tests.fusion_w1.test_fusion_w1_dense_baseline_qualitative_v3_20260728 tests.fusion_w1.test_fusion_w1_dense_baseline_qualitative_v4_20260728 tests.fusion_w1.test_fusion_w1_dense_baseline_qualitative_v5_20260728 tests.fusion_w1.test_fusion_w1_aprime_job_panel_v6_roof_boundary_20260728 tests.fusion_w1.test_fusion_w1_aprime_job_panel_v7_reference_roof_boundary_20260728 tests.fusion_w1.test_fusion_w1_readout_v1_20260726"
+    ],
+    "tests": [
+      {
+        "name": "repository contract suite",
+        "passed": 68,
+        "failed": 0
+      },
+      {
+        "name": "Fusion W1 exact technical suite",
+        "passed": 157,
+        "failed": 0
+      }
+    ]
+  },
+  "artifacts": {
+    "required_for_task": false,
+    "availability": {
+      "work_host": "none",
+      "experiment_host": "verified_local"
+    },
+    "records": []
+  },
+  "scientific": {
+    "technical_state": "pending",
+    "scientific_verdict": null,
+    "promotion_status": "not_requested"
+  },
+  "receiver_ack": null
+}
