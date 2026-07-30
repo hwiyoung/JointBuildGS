@@ -215,7 +215,7 @@ def append_issue(part: str, severity: str, message: str, path: Path | str | None
         }
     )
     write_csv(CSV_ISSUES, rows)
-    issue_md = REPO / "docs/issues.md"
+    issue_md = REPO / "phases/p2-gsjso/docs/issues.md"
     line = f"- 2026-07-10 S2 {part}: {severity} - {message}"
     if path:
         line += f" ({rel(path)})"
@@ -1781,7 +1781,7 @@ def versions(_args: argparse.Namespace) -> None:
         f"readout_fingerprints: {rel(P2_RUN_DIR / 'readout_fingerprints.csv')}",
         f"arm_cells_csv: {rel(CSV_ARM_CELLS)}",
         f"issues_csv: {rel(CSV_ISSUES)}",
-        f"issues_md: docs/issues.md",
+        f"issues_md: phases/p2-gsjso/docs/issues.md",
     ]
     (P2_RUN_DIR / "versions.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(json.dumps({"versions": rel(P2_RUN_DIR / "versions.txt")}, ensure_ascii=False))

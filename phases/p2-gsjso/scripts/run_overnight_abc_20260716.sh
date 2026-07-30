@@ -12,7 +12,7 @@ RUN_REL="phases/p2-gsjso/runs/20260716_overnight_abc"
 RUN="$REPO/$RUN_REL"
 LOG_DIR="$RUN/logs"
 STATUS="$RUN/status.json"
-ISSUES="$REPO/docs/issues.md"
+ISSUES="$REPO/phases/p2-gsjso/docs/issues.md"
 BRANCH="exp/3b-surface-restore-corrected"
 TOOLS_IMAGE="jointbuildgs-p0-tools:t0"
 DEV_IMAGE="jointbuildgs:dev"
@@ -215,7 +215,7 @@ PY
   issue "OVN-A measurement complete: manifest_sha256=$(sha phases/p2-gsjso/runs/20260716_qs_rescore/manifest.json); inventory_sha256=$(sha docs/experiments/qs_rescore/tables/qs_rescore_inventory.csv); pairs_sha256=$(sha docs/experiments/qs_rescore/tables/qs_rescore_pairs.csv); learning_runs_started=0"
   if ! commit_paths \
     "OVN-A: rescore C001 quality inventory" \
-    docs/issues.md \
+    phases/p2-gsjso/docs/issues.md \
     docs/experiments/qs_rescore/tables/qs_rescore_inventory.csv \
     docs/experiments/qs_rescore/tables/qs_rescore_scores.csv \
     docs/experiments/qs_rescore/tables/qs_rescore_pairs.csv \
@@ -310,7 +310,7 @@ PY
   issue "OVN-B measurement complete: manifest_sha256=$(sha phases/p2-gsjso/runs/20260716_genclose_flat_density/manifest.json); flat_score_sha256=$(sha docs/genclose_flat_seed_scores.csv); assembly_sha256=$(sha docs/genclose_density_assembly.csv); learning_runs_started=0"
   if ! commit_paths \
     "OVN-B: measure flat-seed density assembly" \
-    docs/issues.md \
+    phases/p2-gsjso/docs/issues.md \
     docs/genclose_flat_seed_scores.csv \
     docs/genclose_density_assembly.csv \
     docs/genclose_direct_plane.csv \
@@ -394,7 +394,7 @@ PY
   issue "OVN-C measurement complete: manifest_sha256=$(sha docs/experiments/boundary_map/manifests/boundary_map_manifest.json); metrics_sha256=$(sha docs/archive/boundary_map/v1/tables/boundary_map_metrics.csv); ladder_sha256=$(sha docs/archive/boundary_map/v1/tables/boundary_map_ladder.csv); learning_runs_started=0; new_inference=MASt3R_correspondence_only"
   if ! commit_paths \
     "OVN-C: measure 178-building boundary map" \
-    docs/issues.md \
+    phases/p2-gsjso/docs/issues.md \
     docs/archive/boundary_map/v1/tables/boundary_map_metrics.csv \
     docs/archive/boundary_map/v1/tables/boundary_map_ladder.csv \
     docs/archive/boundary_map/v1/tables/boundary_map_confusion.csv \
@@ -417,7 +417,7 @@ finalize_ledger() {
   write_status "ABC" "complete" "A=${A_COMMIT:-none} B=${B_COMMIT:-none} C=${C_COMMIT:-none}; D=skipped_optional"
   commit_paths \
     "OVN-ABC: record overnight commit ledger" \
-    docs/issues.md \
+    phases/p2-gsjso/docs/issues.md \
     "$RUN_REL/status.json"
 }
 

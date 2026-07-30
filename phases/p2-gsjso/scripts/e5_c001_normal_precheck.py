@@ -85,7 +85,7 @@ def short_id(bid: str) -> str:
 
 def append_issue(rows: list[dict[str, Any]], building_id: str, message: str, path: Path | None = None) -> None:
     rows.append({"building_id": building_id, "message": message, "path": rel(path)})
-    issues_md = REPO / "docs/issues.md"
+    issues_md = REPO / "phases/p2-gsjso/docs/issues.md"
     if issues_md.exists():
         line = f"- 2026-07-09 A-5 normal precheck: {message}"
         if building_id:

@@ -767,7 +767,7 @@ def copy_outputs(run_dir: Path, paths: list[Path]) -> None:
 
 
 def record_issue(repo: Path, run_id: str, message: str) -> None:
-    issues = repo / "docs/issues.md"
+    issues = repo / "phases/p0-audit/docs/issues.md"
     with issues.open("a", encoding="utf-8") as fh:
         fh.write(f"\n## {TASK_ID} Validity Error Breakdown\n\n")
         fh.write(f"- {run_id}: {message}. See runs/{run_id}/logs/.\n")

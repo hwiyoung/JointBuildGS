@@ -133,7 +133,7 @@ def main() -> int:
         f"- Branch: `{git(['branch', '--show-current'])}`",
         f"- HEAD before A2 commit: `{git(['rev-parse', 'HEAD'])}`",
         f"- Phase run: `phases/p2-gsjso/runs/{args.run_id}/versions.txt`",
-        "- Scope: new execution-path files from `docs/recipe_registry.md` §5. Historical run outputs are not scanned.",
+        "- Scope: new execution-path files from `docs/research/methodology/recipe_registry.md` §5. Historical run outputs are not scanned.",
         "",
         "## Transition Diff Table",
         "",

@@ -22,7 +22,7 @@ STATUS="$DRIVER/status.json"
 STATE="$DRIVER/driver_state.json"
 LOCK_FILE="$DRIVER/driver.lock"
 PID_FILE="$DRIVER/launcher.pid"
-ISSUES="$REPO/docs/issues.md"
+ISSUES="$REPO/phases/p2-gsjso/docs/issues.md"
 
 RUN_PAIRS="$RUN_REL/anchor_census_supplement_pairs.csv"
 RUN_MEASUREMENTS="$RUN_REL/anchor_census_supplement_measurements.csv"
@@ -119,7 +119,7 @@ commit_stage() {
 
 partial_commit() {
   git add -- \
-    docs/issues.md \
+    phases/p2-gsjso/docs/issues.md \
     "$RUN_REL" \
     "$DOC_PAIRS" \
     "$DOC_MEASUREMENTS" \
@@ -205,7 +205,7 @@ measure_stage() {
   issue "ACS-S2 same-block re-pooling recorded: targets=9; target_pairs=90; reproduction_rows=1; reliability_pairs=24; measurements_sha256=$(sha "$DOC_MEASUREMENTS"); pairs_sha256=$(sha "$DOC_PAIRS"); reliability_sha256=$(sha "$DOC_RELIABILITY"); measure_manifest_sha256=$(sha "$RUN_MANIFEST"); target_cache_reuse_runs=90; reproduction_cache_reuse_runs=10; new_mast3r_inference_runs=0; gpu_used=false; learning_runs_started=0; allowlist=$ALLOWLIST."
   commit_stage \
     "ACS-S2: repool nine same-block anchor targets" \
-    docs/issues.md \
+    phases/p2-gsjso/docs/issues.md \
     "$RUN_REL" \
     "$DOC_PAIRS" \
     "$DOC_MEASUREMENTS" \
@@ -230,7 +230,7 @@ finalize_stage() {
   issue "ACS-S4 boundary_map_v4_1 recorded: cells_1_2_3_4=$counts; ladder_sha256=$(sha "$LADDER"); summary_sha256=$(sha "$SUMMARY"); public_manifest_sha256=$(sha "$PUBLIC_MANIFEST"); non_target_old_fields_identical=169; map_regenerated=false; new_mast3r_inference_runs=0; learning_runs_started=0."
   commit_stage \
     "ACS-S4: publish boundary-map-v4.1 supplement" \
-    docs/issues.md \
+    phases/p2-gsjso/docs/issues.md \
     "$LADDER" \
     "$PUBLIC_MANIFEST" \
     "$SUMMARY" || return 1
@@ -243,7 +243,7 @@ ledger_stage() {
   issue "ACS-20260720 commit ledger: prep_commit=$(git log --format=%H --grep='ACS-PREP:' -1); measurement_commit=$MEASUREMENT_COMMIT; public_commit=$PUBLIC_COMMIT; issues.md included in each synchronized artifact commit; new_mast3r_inference_runs=0; learning_runs_started=0; allowlist=$ALLOWLIST."
   commit_stage \
     "ACS-LEDGER: record supplement commits" \
-    docs/issues.md || return 1
+    phases/p2-gsjso/docs/issues.md || return 1
   write_state_files "complete" "complete" "head=$(git rev-parse HEAD)"
   log "anchor census supplement complete head=$(git rev-parse HEAD)"
 }

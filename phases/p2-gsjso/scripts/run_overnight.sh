@@ -7,7 +7,7 @@
 cd "$(dirname "$0")/../../.." || exit 1
 OUT=results/tum_transfer/mob; WS=/workspace/JointBuildGS; U="$(id -u):$(id -g)"
 GEOJSON=results/tum_transfer/analysis/footprints_aoi.geojson
-ISSUES=docs/issues.md; SUMMARY=docs/archive/overnight_coordination/temporary/reports/overnight_summary.md
+ISSUES=phases/p2-gsjso/docs/issues.md; SUMMARY=docs/archive/overnight_coordination/temporary/reports/overnight_summary.md
 TOOLS="docker run --rm --user $U -v $PWD:/workspace/JointBuildGS -w /workspace/JointBuildGS jointbuildgs-p0-tools:t0"
 mkdir -p "$OUT/overnight_logs"
 log(){ echo "[$(date '+%F %T')] $*"; }

@@ -1266,7 +1266,7 @@ def capture(cmd: list[str], cwd: Path | None = None) -> str:
 
 
 def record_issue(repo: Path, run_id: str, message: str) -> None:
-    issues = repo / "docs/issues.md"
+    issues = repo / "phases/p0-audit/docs/issues.md"
     with issues.open("a", encoding="utf-8") as fh:
         fh.write(f"\n## {TASK_ID} Failure Surface Cause\n\n")
         fh.write(f"- {run_id}: {message}. See runs/{run_id}/logs/.\n")

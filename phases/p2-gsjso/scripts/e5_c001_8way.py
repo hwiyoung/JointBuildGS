@@ -854,8 +854,8 @@ def build_lenses() -> dict[str, dict[str, str]]:
                 }
             )
     manual: dict[str, dict[str, str]] = {}
-    if Path("docs/manual_review_judgments.csv").exists():
-        manual = {row["building_id"]: row for row in read_csv(Path("docs/manual_review_judgments.csv")) if row.get("building_id") in lenses}
+    if Path("docs/research/methodology/tables/manual_review_judgments.csv").exists():
+        manual = {row["building_id"]: row for row in read_csv(Path("docs/research/methodology/tables/manual_review_judgments.csv")) if row.get("building_id") in lenses}
     for bid, lens in lenses.items():
         row = manual.get(bid)
         label = lens.get("label_lens") or (row.get("label") if row else "none") or "none"
@@ -1335,7 +1335,7 @@ def write_report(
         "## 층화 렌즈",
         "",
         "- 복잡도·크기·관측 렌즈는 `docs/regression_input_snapshot.csv`의 C001 행을 재사용했다.",
-        "- 텍스처·라벨 렌즈는 `docs/manual_review_judgments.csv`가 있는 동만 세부 라벨을 쓰고, 나머지는 `not_reviewed` 또는 `none`으로 남겼다.",
+        "- 텍스처·라벨 렌즈는 `docs/research/methodology/tables/manual_review_judgments.csv`가 있는 동만 세부 라벨을 쓰고, 나머지는 `not_reviewed` 또는 `none`으로 남겼다.",
         f"- 전체 층화 요약표: `{STRATA_SUMMARY_CSV}`.",
         "",
         "## 그림",

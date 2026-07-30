@@ -204,7 +204,7 @@ def append_issue(part: str, severity: str, message: str, path: Path | str | None
         }
     )
     write_csv(CSV_ISSUES, rows, ["part", "severity", "message", "path", "timestamp_utc"])
-    issue_md = REPO / "docs/issues.md"
+    issue_md = REPO / "phases/p2-gsjso/docs/issues.md"
     if issue_md.exists():
         line = f"- 2026-07-09 corrected-S1 recheck {part}: {severity} - {message}"
         if path:
@@ -1328,7 +1328,7 @@ def versions(_args: argparse.Namespace) -> None:
         "training: zero principle; exception is final_prune_opa=0 fallback only",
         "verdict: none",
         f"report: {rel(REPORT_PATH)}",
-        f"docs_issues_exists: {(REPO / 'docs/issues.md').exists()}",
+        f"docs_issues_exists: {(REPO / 'phases/p2-gsjso/docs/issues.md').exists()}",
         f"train_fingerprints: {rel(P2_RUN_DIR / 'train_fingerprints.csv')}",
         f"readout_fingerprints: {rel(P2_RUN_DIR / 'readout_fingerprints.csv')}",
     ]

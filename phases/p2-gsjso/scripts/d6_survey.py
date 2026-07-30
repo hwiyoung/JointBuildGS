@@ -8,7 +8,7 @@ Reference roof-TYPE classification uses the authoritative CityGML <bldg:roofType
 map published below). ⚠ The attribute (and the planar LoD2 geometry) do NOT match the observational
 labels: 4906969("curved")=1000 flat·3 horiz facets, 4906972("flat")=3100 gable·sloped, 42364659
 ("composite")=1000 flat. And there are ZERO reference-curved(3700/Bogen) buildings in the 93 — see
-docs/issues.md. So the over-seg question is answered from the per-building distribution, not the
+phases/p2-gsjso/docs/issues.md. So the over-seg question is answered from the per-building distribution, not the
 (empty) reference-curved group.
 
 Inputs (all reused, read-only):

@@ -181,7 +181,7 @@ def capture(cmd: list[str], cwd: Path | None = None, env: dict[str, str] | None 
 
 
 def record_issue(repo: Path, run_id: str, message: str) -> None:
-    path = repo / "docs/issues.md"
+    path = repo / "phases/p0-audit/docs/issues.md"
     text = path.read_text(encoding="utf-8") if path.exists() else "# P0 Issues\n"
     section = "\n## W2-2 City3D Default\n\n"
     if "## W2-2 City3D Default" not in text:

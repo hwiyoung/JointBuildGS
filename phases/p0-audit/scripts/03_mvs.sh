@@ -53,7 +53,7 @@ on_error() {
     echo "## T3 DIM Point Cloud"
     echo
     echo "- ${RUN_ID}: failed at line ${line_no} with exit code ${exit_code}. See ${RUN_DIR}/logs/."
-  } >> docs/issues.md
+  } >> phases/p0-audit/docs/issues.md
   exit "$exit_code"
 }
 trap 'on_error $LINENO' ERR

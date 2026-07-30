@@ -562,7 +562,7 @@ def build_video_layer(metric_rows: list[dict[str, Any]]) -> list[dict[str, Any]]
         for r in read_csv(Path("docs/regression_input_snapshot.csv"))
         if r.get("building_id") in C001_IDS and r.get("arm") == "raw_dense"
     }
-    manual = {r["building_id"]: r for r in read_csv(Path("docs/manual_review_judgments.csv")) if r.get("building_id") in C001_IDS}
+    manual = {r["building_id"]: r for r in read_csv(Path("docs/research/methodology/tables/manual_review_judgments.csv")) if r.get("building_id") in C001_IDS}
     by = {(r["source_run"], r["building_id"]): r for r in metric_rows}
     rows: list[dict[str, Any]] = []
     for bid in C001_IDS:

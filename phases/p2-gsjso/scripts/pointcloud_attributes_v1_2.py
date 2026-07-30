@@ -583,7 +583,7 @@ def source_fingerprints(repo: Path, args) -> dict[str, tuple[str, str]]:
         "w3_run2_als_status": repo / W3_RUN / "status/run_2/als_default.csv",
         "w3_run2_dim_status": repo / W3_RUN / "status/run_2/dim_default.csv",
         "population_aux_v4": repo / args.population,
-        "manual_review_judgments": repo / "docs/manual_review_judgments.csv",
+        "manual_review_judgments": repo / "docs/research/methodology/tables/manual_review_judgments.csv",
         "gen_8way_results_path": repo / "results/tum_transfer/mob/overseg_lever/gen_8way.csv",
         "flight_meta_summary": repo / "docs/experiments/pointcloud_attributes/reports/flight_meta_summary.md",
         "data_inventory": repo / "phases/p0-audit/docs/data_inventory.md",

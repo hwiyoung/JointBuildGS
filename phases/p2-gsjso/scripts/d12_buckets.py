@@ -13,7 +13,7 @@ REPO = Path("/workspace/JointBuildGS")
 MOB = REPO / "results/tum_transfer/mob"
 P0V = REPO / "results/tum_transfer/mob_analysis/p0c_step2/eval/p0c_verdict.csv"
 W4C = REPO / "phases/p0-audit/docs/W4c_no_points_breakdown.csv"
-ISSUES = REPO / "docs/issues.md"
+ISSUES = REPO / "phases/p2-gsjso/docs/issues.md"
 
 def main():
     if not P0V.exists():

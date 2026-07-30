@@ -12,7 +12,7 @@ RUN_REL="phases/p2-gsjso/runs/20260718_repair_waves"
 RUN="$REPO/$RUN_REL"
 LOG_DIR="$RUN/logs"
 STATUS="$RUN/status.json"
-ISSUES="$REPO/docs/issues.md"
+ISSUES="$REPO/phases/p2-gsjso/docs/issues.md"
 BRANCH="exp/3b-surface-restore-corrected"
 
 TOOLS_IMAGE="jointbuildgs-p0-tools:t0"
@@ -374,7 +374,7 @@ PY
   issue "RW-R1 measurement complete: metrics_sha256=$(sha docs/archive/boundary_map/v2/tables/boundary_map_v2_metrics.csv); ladder_sha256=$(sha docs/archive/boundary_map/v2/tables/boundary_map_v2_ladder.csv); manifest_sha256=$(sha docs/experiments/boundary_map/manifests/boundary_map_v2_manifest.json); figure_sha256=$(sha docs/archive/boundary_map/v2/figs/boundary_map_v2_ladder.png); learning_runs_started=0; new_inference=R1-2_crop_pair_and_R1-4_FM_only"
   if ! commit_paths \
     "RW-R1: rebuild canonical boundary map v2" \
-    docs/issues.md \
+    phases/p2-gsjso/docs/issues.md \
     docs/archive/boundary_map/v2/tables/boundary_map_v2_metrics.csv \
     docs/archive/boundary_map/v2/tables/boundary_map_v2_ladder.csv \
     docs/archive/boundary_map/v2/tables/boundary_map_v2_confusion.csv \
@@ -448,7 +448,7 @@ PY
   issue "RW-R2 measurement complete: scores_sha256=$(sha docs/experiments/qs_rescore/tables/qs_rescore_scores.csv); panel_sha256=$(sha docs/experiments/qs_rescore/tables/qs_rescore_topview_panel.csv); spot_sha256=$(sha docs/experiments/qs_rescore/tables/qs_rescore_hausdorff_spotcheck.csv); manifest_sha256=$(sha phases/p2-gsjso/runs/20260718_qs_rescore_completeness_panel/manifest.json); figure_sha256=$(sha docs/figs/qs_rescore/qs_rescore_topview_10x4.png); learning_runs_started=0; new_inference_runs=0"
   if ! commit_paths \
     "RW-R2: add roof completeness and 10x4 panel" \
-    docs/issues.md \
+    phases/p2-gsjso/docs/issues.md \
     docs/experiments/qs_rescore/tables/qs_rescore_scores.csv \
     docs/experiments/qs_rescore/tables/qs_rescore_topview_panel.csv \
     docs/experiments/qs_rescore/tables/qs_rescore_hausdorff_spotcheck.csv \
@@ -514,7 +514,7 @@ PY
   issue "RW-R3 measurement complete: scores_sha256=$(sha docs/experiments/qs_baseline178/tables/qs_baseline178_scores.csv); summary_sha256=$(sha docs/experiments/qs_baseline178/tables/qs_baseline178_summary.csv); manifest_sha256=$(sha docs/experiments/qs_baseline178/manifests/qs_baseline178_manifest.json); figure_sha256=$(sha docs/figs/qs_baseline178/dense_vs_als_rms_distribution.png); learning_runs_started=0; new_inference_runs=0"
   if ! commit_paths \
     "RW-R3: rescore canonical 178 dense and ALS baselines" \
-    docs/issues.md \
+    phases/p2-gsjso/docs/issues.md \
     docs/experiments/qs_baseline178/tables/qs_baseline178_scores.csv \
     docs/experiments/qs_baseline178/tables/qs_baseline178_summary.csv \
     docs/experiments/qs_baseline178/manifests/qs_baseline178_manifest.json \
@@ -576,7 +576,7 @@ PY
   issue "RW-R4 measurement complete: scores_sha256=$(sha docs/experiments/qs_cheap_refine_sweep/tables/qs_cheap_refine_sweep.csv); summary_sha256=$(sha docs/experiments/qs_cheap_refine_sweep/tables/qs_cheap_refine_sweep_summary.csv); manifest_sha256=$(sha docs/experiments/qs_cheap_refine_sweep/manifests/qs_cheap_refine_sweep_manifest.json); figure_sha256=$(sha docs/figs/qs_cheap_refine_sweep/parameter_grid.png); learning_runs_started=0; new_inference_runs=0"
   if ! commit_paths \
     "RW-R4: sweep C001 cheap-refinement parameters" \
-    docs/issues.md \
+    phases/p2-gsjso/docs/issues.md \
     docs/experiments/qs_cheap_refine_sweep/tables/qs_cheap_refine_sweep.csv \
     docs/experiments/qs_cheap_refine_sweep/tables/qs_cheap_refine_sweep_summary.csv \
     docs/experiments/qs_cheap_refine_sweep/manifests/qs_cheap_refine_sweep_manifest.json \
@@ -592,7 +592,7 @@ PY
 commit_partial_r1() {
   commit_paths \
     "RW-R1-PARTIAL: preserve boundary map measurements" \
-    docs/issues.md \
+    phases/p2-gsjso/docs/issues.md \
     docs/archive/boundary_map/v2/tables/boundary_map_v2_metrics.csv \
     docs/archive/boundary_map/v2/tables/boundary_map_v2_ladder.csv \
     docs/archive/boundary_map/v2/tables/boundary_map_v2_confusion.csv \
@@ -607,7 +607,7 @@ commit_partial_r1() {
 commit_partial_r2() {
   commit_paths \
     "RW-R2-PARTIAL: preserve completeness panel measurements" \
-    docs/issues.md \
+    phases/p2-gsjso/docs/issues.md \
     docs/experiments/qs_rescore/tables/qs_rescore_scores.csv \
     docs/experiments/qs_rescore/tables/qs_rescore_topview_panel.csv \
     docs/experiments/qs_rescore/tables/qs_rescore_hausdorff_spotcheck.csv \
@@ -619,7 +619,7 @@ commit_partial_r2() {
 commit_partial_r3() {
   commit_paths \
     "RW-R3-PARTIAL: preserve baseline 178 measurements" \
-    docs/issues.md \
+    phases/p2-gsjso/docs/issues.md \
     docs/experiments/qs_baseline178/tables/qs_baseline178_scores.csv \
     docs/experiments/qs_baseline178/tables/qs_baseline178_summary.csv \
     docs/experiments/qs_baseline178/manifests/qs_baseline178_manifest.json \
@@ -630,7 +630,7 @@ commit_partial_r3() {
 commit_partial_r4() {
   commit_paths \
     "RW-R4-PARTIAL: preserve cheap-refinement sweep measurements" \
-    docs/issues.md \
+    phases/p2-gsjso/docs/issues.md \
     docs/experiments/qs_cheap_refine_sweep/tables/qs_cheap_refine_sweep.csv \
     docs/experiments/qs_cheap_refine_sweep/tables/qs_cheap_refine_sweep_summary.csv \
     docs/experiments/qs_cheap_refine_sweep/manifests/qs_cheap_refine_sweep_manifest.json \
@@ -648,7 +648,7 @@ finalize_ledger() {
   fi
   commit_paths \
     "RW-LEDGER: record repair-wave commits and hashes" \
-    docs/issues.md
+    phases/p2-gsjso/docs/issues.md
 }
 
 main() {

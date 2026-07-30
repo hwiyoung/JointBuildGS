@@ -567,7 +567,7 @@ def build_report(delta: pd.DataFrame, breakdown: pd.DataFrame, target: pd.DataFr
         "",
         "- 채택: `distort_normalization=scene_scale_sq`, `distort_norm_denominator=1453.980473`, `w_distort=100`.",
         "- S1 실행본의 `scene_extent_sq` 대비 분모가 93252.6 -> 1453.98로 줄어 distortion 항이 실제 손실에 들어왔다.",
-        f"- tail(20k 이후) distortion share 중앙값: {', '.join(f'{r.arm} {r.loss_distort_share_median:.3%}' for r in tail.itertuples())}. 사전 목표 5~15%에는 못 미쳐 `docs/issues.md`에 관찰 이슈로 남겼다.",
+        f"- tail(20k 이후) distortion share 중앙값: {', '.join(f'{r.arm} {r.loss_distort_share_median:.3%}' for r in tail.itertuples())}. 사전 목표 5~15%에는 못 미쳐 `phases/p2-gsjso/docs/issues.md`에 관찰 이슈로 남겼다.",
         f"- 짝 그림: `{rel(FIG_DIR / 'corrected_s1_distort_share.png')}`, `{rel(FIG_DIR / 'corrected_s1_depth_share.png')}`.",
         "",
         "## Step 1 · prune/seed-protect 수리",

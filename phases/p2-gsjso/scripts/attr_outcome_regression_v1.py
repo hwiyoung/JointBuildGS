@@ -1421,7 +1421,7 @@ def build_argparser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser()
     ap.add_argument("--attr-csv", default="docs/archive/pointcloud_attributes/v1_2/tables/pointcloud_attributes_v1_2.csv")
     ap.add_argument("--population", default="docs/experiments/population_aux/tables/population_aux_v4.csv")
-    ap.add_argument("--manual-judgments", default="docs/manual_review_judgments.csv")
+    ap.add_argument("--manual-judgments", default="docs/research/methodology/tables/manual_review_judgments.csv")
     ap.add_argument("--w2-status", default="phases/p0-audit/runs/w2_1_roofer_default_20260612_152729/building_reconstruction_status.csv")
     ap.add_argument("--gen-8way", default="results/tum_transfer/mob/overseg_lever/gen_8way.csv")
     ap.add_argument("--out-report", default="docs/experiments/attr_outcome_regression/reports/W_attr_outcome_regression.md")

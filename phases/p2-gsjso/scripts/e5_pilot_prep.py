@@ -451,7 +451,7 @@ def main() -> int:
 
     footprint_path = REPO / "results/tum_transfer/analysis/footprints_aoi.geojson"
     aux_path = REPO / "docs/experiments/population_aux/tables/population_aux_v4.csv"
-    manual_path = REPO / "docs/manual_review_judgments.csv"
+    manual_path = REPO / "docs/research/methodology/tables/manual_review_judgments.csv"
     d12_path = REPO / "results/tum_transfer/mob/overseg_lever/d12_buckets.csv"
     d4_eval = REPO / "results/tum_transfer/mob/eval_d4_gssem.csv"
     d12_eval = REPO / "results/tum_transfer/mob/eval_d12_gssem.csv"

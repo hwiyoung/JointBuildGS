@@ -564,9 +564,9 @@ def header_line(row: dict[str, str], cross: dict[str, str], low: dict[str, str],
 
 def source_batch(manual_rows: dict[str, dict[str, str]], bid: str) -> tuple[str, str]:
     if not manual_rows:
-        return "", "docs/manual_review_judgments.csv missing"
+        return "", "docs/research/methodology/tables/manual_review_judgments.csv missing"
     row = manual_rows.get(full_bid(bid)) or manual_rows.get(bid) or {}
-    return row.get("batch", row.get("batch_id", row.get("배치", ""))), "docs/manual_review_judgments.csv"
+    return row.get("batch", row.get("batch_id", row.get("배치", ""))), "docs/research/methodology/tables/manual_review_judgments.csv"
 
 
 def render_manual_card(
@@ -819,7 +819,7 @@ def write_report(
         "- 3D/씨드 경로 `-556`은 건드리지 않았다.",
         "- 지오 산출물 CRS: EPSG:25832. OPF/COLMAP frame: EPSG:32632.",
         f"- 수동판정 대상: `docs/experiments/bucket_crosswalk/tables/bucket_crosswalk_v2.csv`의 `new_class=수동판정` {len(manual_bids)}동.",
-        f"- `docs/manual_review_judgments.csv`: {'없음 - 배치 열은 비움' if manual_missing else '읽음'}.",
+        f"- `docs/research/methodology/tables/manual_review_judgments.csv`: {'없음 - 배치 열은 비움' if manual_missing else '읽음'}.",
         "",
         "## 1. 산출",
         "",
@@ -863,7 +863,7 @@ def write_report(
             "",
             "## 6. 판정 필요 지점",
             "",
-            "1. `docs/manual_review_judgments.csv` 부재 상태에서 `bucket_crosswalk_v2.csv`의 44동 목록을 수동판정 kit 기준으로 사용할지 여부.",
+            "1. `docs/research/methodology/tables/manual_review_judgments.csv` 부재 상태에서 `bucket_crosswalk_v2.csv`의 44동 목록을 수동판정 kit 기준으로 사용할지 여부.",
             "2. `small_flag`와 `elong_flag`를 manual_review_judgments.csv에 병합할지 여부.",
             "3. ALS<500점 마커 3배 확대 카드들을 동일 판독 우선순위로 둘지 여부.",
             "4. 4959320의 낮은 관측점수와 조밀 ALS 상한 관찰을 시간차/대조군 논의에 포함할지 여부.",

@@ -14,7 +14,7 @@ DRIVER="$REPO/$DRIVER_REL"
 LOG_DIR="$DRIVER/logs"
 STATUS="$DRIVER/status.json"
 LOCK="$DRIVER/driver.lock"
-ISSUES="$REPO/docs/issues.md"
+ISSUES="$REPO/phases/p2-gsjso/docs/issues.md"
 TOOLS_IMAGE="jointbuildgs-p0-tools:t0"
 ROOFER_IMAGE="3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2"
 UID_GID="$(id -u):$(id -g)"
@@ -124,7 +124,7 @@ on_error() {
   trap - ERR
   write_status "$CURRENT_WAVE" "failed" "driver exit=$code line=${BASH_LINENO[0]}"
   issue "DC-V3 failure: wave=$CURRENT_WAVE line=${BASH_LINENO[0]} exit_code=$code; learning_runs_started=0; new_inference_runs=0; log=$DRIVER_REL/driver.log"
-  git add -A -- docs/issues.md || true
+  git add -A -- phases/p2-gsjso/docs/issues.md || true
   if ! git diff --cached --quiet; then
     git commit -m "DC-FAIL: record degradation-curve failure" || true
     push_retry || true
@@ -373,7 +373,7 @@ finalize_noise() {
   issue "DC-NOISE partial complete: stages=6/12; rows=1068/2136; measurements_sha256=$(sha docs/experiments/degradation_curve/tables/degradation_curve_measurements.csv); summary_sha256=$(sha docs/experiments/degradation_curve/tables/degradation_curve_summary.csv); manifest_sha256=$(sha docs/experiments/degradation_curve/manifests/degradation_curve_manifest.json); noise_figure_sha256=$(sha docs/figs/degradation_curve/degradation_curve_noise.png); learning_runs_started=0; new_inference_runs=0"
   commit_paths \
     "DC-NOISE: measure canonical noise axis" \
-    docs/issues.md \
+    phases/p2-gsjso/docs/issues.md \
     docs/experiments/degradation_curve/tables/degradation_curve_measurements.csv \
     docs/experiments/degradation_curve/tables/degradation_curve_summary.csv \
     docs/experiments/degradation_curve/manifests/degradation_curve_manifest.json \
@@ -394,7 +394,7 @@ finalize_full() {
   issue "DC-FULL measurement complete: stages=12/12; rows=2136; measurements_sha256=$(sha docs/experiments/degradation_curve/tables/degradation_curve_measurements.csv); summary_sha256=$(sha docs/experiments/degradation_curve/tables/degradation_curve_summary.csv); manifest_sha256=$(sha docs/experiments/degradation_curve/manifests/degradation_curve_manifest.json); noise_figure_sha256=$(sha docs/figs/degradation_curve/degradation_curve_noise.png); density_figure_sha256=$(sha docs/figs/degradation_curve/degradation_curve_density.png); one_page_sha256=$(sha docs/experiments/degradation_curve/reports/W_degradation_curve_summary_20260721.md); learning_runs_started=0; new_inference_runs=0"
   commit_paths \
     "DC-FULL: measure 178-building degradation curve" \
-    docs/issues.md \
+    phases/p2-gsjso/docs/issues.md \
     docs/experiments/degradation_curve/tables/degradation_curve_measurements.csv \
     docs/experiments/degradation_curve/tables/degradation_curve_summary.csv \
     docs/experiments/degradation_curve/manifests/degradation_curve_manifest.json \
@@ -408,10 +408,10 @@ finalize_full() {
 
 finalize_ledger() {
   CURRENT_WAVE="ledger"
-  issue "DC-LEDGER commits: prep=$PREP_COMMIT; noise=$NOISE_COMMIT; full=$FINAL_COMMIT; manifest_sha256=$(sha docs/experiments/degradation_curve/manifests/degradation_curve_manifest.json); issues_sha256_before_ledger_commit=$(sha docs/issues.md)"
+  issue "DC-LEDGER commits: prep=$PREP_COMMIT; noise=$NOISE_COMMIT; full=$FINAL_COMMIT; manifest_sha256=$(sha docs/experiments/degradation_curve/manifests/degradation_curve_manifest.json); issues_sha256_before_ledger_commit=$(sha phases/p2-gsjso/docs/issues.md)"
   commit_paths \
     "DC-LEDGER: record degradation-curve commits" \
-    docs/issues.md
+    phases/p2-gsjso/docs/issues.md
   local ledger_commit
   ledger_commit="$(git rev-parse HEAD)"
   write_status "$CURRENT_WAVE" "complete" "ledger_commit=$ledger_commit"

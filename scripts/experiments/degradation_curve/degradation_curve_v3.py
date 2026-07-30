@@ -3087,7 +3087,7 @@ def finalize(scope: str) -> None:
         },
         "source_sha256": preflight["source_sha256"],
         "output_sha256": output_hashes,
-        "manifest_self_sha256_recorded_in": "docs/issues.md",
+        "manifest_self_sha256_recorded_in": "phases/p2-gsjso/docs/issues.md",
     }
     atomic_text(
         MANIFEST_JSON,

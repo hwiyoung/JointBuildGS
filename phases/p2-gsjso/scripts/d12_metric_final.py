@@ -24,7 +24,7 @@ from overseg_faithfulness import face_support, MIN_ALS
 REPO = Path("/workspace/JointBuildGS")
 LEV = REPO / "results/tum_transfer/mob/overseg_lever"
 DZ = np.round(np.arange(-10.0, 8.01, 0.25), 2)
-ISSUES = REPO / "docs/issues.md"
+ISSUES = REPO / "phases/p2-gsjso/docs/issues.md"
 MOB_FAIL = {"42364609","42364659","42364663","4907182","4907510","4908050","4908166","4908176"}
 
 

@@ -180,7 +180,7 @@ def append_issue(part: str, severity: str, message: str, path: Path | str | None
         }
     )
     write_csv(CSV_ISSUES, rows)
-    issue_md = REPO / "docs/issues.md"
+    issue_md = REPO / "phases/p2-gsjso/docs/issues.md"
     if issue_md.exists():
         line = f"- 2026-07-09 S1 full factor {part}: {severity} - {message}"
         if path:

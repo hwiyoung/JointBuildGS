@@ -134,7 +134,7 @@ def capture(cmd: list[str]) -> str:
 
 
 def record_issue(repo: Path, run_id: str, message: str) -> None:
-    issues = repo / "docs/issues.md"
+    issues = repo / "phases/p0-audit/docs/issues.md"
     with issues.open("a", encoding="utf-8") as fh:
         fh.write(f"\n## {TASK_ID} LoD2 Footprint Extraction\n\n")
         fh.write(f"- {run_id}: {message}. See runs/{run_id}/logs/.\n")

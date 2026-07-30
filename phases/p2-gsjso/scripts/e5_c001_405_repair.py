@@ -353,7 +353,7 @@ def append_issue(rows: list[dict[str, Any]], source_run: str, cityjson: Path, me
             "timestamp_utc": datetime.now(timezone.utc).isoformat(),
         }
     )
-    issues_md = REPO / "docs/issues.md"
+    issues_md = REPO / "phases/p2-gsjso/docs/issues.md"
     if issues_md.exists():
         line = f"- 2026-07-09 A-4 405 repair: {message} ({rel(cityjson)})"
         text = issues_md.read_text(encoding="utf-8")

@@ -2052,7 +2052,7 @@ def versions(_args: argparse.Namespace) -> None:
         f"readout_fingerprints: {rel(RUN_DIR / 'readout_fingerprints.csv')}",
         f"arm_cells_csv: {rel(CSV_ARM_CELLS)}",
         f"issues_csv: {rel(CSV_ISSUES)}",
-        "issues_md: docs/issues.md",
+        "issues_md: phases/p2-gsjso/docs/issues.md",
     ]
     (RUN_DIR / "versions.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(json.dumps({"versions": rel(RUN_DIR / "versions.txt")}, ensure_ascii=False))
@@ -2381,7 +2381,7 @@ def report(_args: argparse.Namespace) -> None:
         "",
         "- CSV: `docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_arm_cells.csv`, `docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_timeline_roofcrop.csv`, `docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_densify_log.csv`, `docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_monodepth_precheck_v2.csv`, `docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_sheet_opacity_dist.csv`, `docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_twin_rend_dist.csv`, `docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_gable_mode.csv`, `docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_rend_dist.csv`, `docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_global_z_hist.csv`, `docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_405_rescore_building.csv`, `docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_inventory.csv`, `docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_issues.csv`.",
         "- 런 지문: `phases/p2-gsjso/runs/20260710_e5_c001_s2p_interaction/train_fingerprints.csv`, `versions.txt`.",
-        "- 실패·예외 장부: `docs/issues.md`와 태스크 CSV를 함께 사용.",
+        "- 실패·예외 장부: `phases/p2-gsjso/docs/issues.md`와 태스크 CSV를 함께 사용.",
         "",
     ]
     REPORT_PATH.write_text("\n".join(lines), encoding="utf-8")

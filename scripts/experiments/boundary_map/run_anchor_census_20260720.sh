@@ -21,7 +21,7 @@ STATE="$DRIVER/driver_state.json"
 LOCK_FILE="$DRIVER/driver.lock"
 PID_FILE="$DRIVER/launcher.pid"
 CID_FILE="$DRIVER/fm_container.cid"
-ISSUES="$REPO/docs/issues.md"
+ISSUES="$REPO/phases/p2-gsjso/docs/issues.md"
 
 SCRIPT="scripts/experiments/boundary_map/anchor_census.py"
 DENSE_SCRIPT="scripts/experiments/boundary_map/anchor_census_dense.py"
@@ -382,7 +382,7 @@ run_measurement() {
     issue "AC-C2 hard failure: dense worker rc=$rc; inference CSV or manifest missing; learning_runs_started=0."
     commit_stage \
       "AC-C2-PARTIAL: record dense census hard failure" \
-      docs/issues.md "$RUN_REL" || true
+      phases/p2-gsjso/docs/issues.md "$RUN_REL" || true
     write_status "C-2" "failed" "worker rc=$rc and terminal outputs missing"
     write_state "C-2" "failed" "terminal outputs missing"
     return 1
@@ -391,7 +391,7 @@ run_measurement() {
     issue "AC-C2 QA failure: dense outputs retained; log=$DRIVER_REL/logs/measurement_qa.log; learning_runs_started=0."
     commit_stage \
       "AC-C2-PARTIAL: retain dense census QA failure" \
-      docs/issues.md "$RUN_REL" || true
+      phases/p2-gsjso/docs/issues.md "$RUN_REL" || true
     write_status "C-2" "failed" "measurement QA failed"
     write_state "C-2" "failed" "measurement QA failed"
     return 1
@@ -408,7 +408,7 @@ PY
   issue "AC-C2 measurement recorded: census_rows=58; pairs=580; pending_buildings=$pending; measurements_sha256=$(sha "$INFERENCE_CSV"); pairs_sha256=$(sha "$INFERENCE_PAIRS"); progress_sha256=$(sha "$INFERENCE_PROGRESS"); inference_manifest_sha256=$(sha "$INFERENCE_MANIFEST"); learning_runs_started=0; new_inference_allowlist=$ALLOWLIST."
   if ! commit_stage \
     "AC-C2: measure fixed dense-dial anchor census" \
-    docs/issues.md "$RUN_REL"; then
+    phases/p2-gsjso/docs/issues.md "$RUN_REL"; then
     write_status "C-2" "failed" "measurement commit or push failed"
     write_state "C-2" "failed" "measurement commit or push failed"
     return 1
@@ -426,7 +426,7 @@ run_finalize() {
     issue "AC-C3 finalize failure: log=$DRIVER_REL/logs/finalize.log; learning_runs_started=0."
     commit_stage \
       "AC-C3-PARTIAL: retain anchor census finalize failure" \
-      docs/issues.md "$RUN_REL" docs/experiments/boundary_map/tables/anchor_census_measurements.csv \
+      phases/p2-gsjso/docs/issues.md "$RUN_REL" docs/experiments/boundary_map/tables/anchor_census_measurements.csv \
       docs/archive/boundary_map/v4/tables/boundary_map_v4_ladder.csv docs/archive/boundary_map/v4/tables/boundary_map_v4_targets.csv \
       docs/experiments/boundary_map/tables/anchor_census_ambiguous_1_99.csv \
       docs/experiments/boundary_map/tables/anchor_census_high_count_high_mad.csv \
@@ -442,7 +442,7 @@ run_finalize() {
     issue "AC-C3 public QA failure: generated outputs retained; log=$DRIVER_REL/logs/public_qa.log; learning_runs_started=0."
     commit_stage \
       "AC-C3-PARTIAL: retain boundary-map-v4 QA failure" \
-      docs/issues.md "$RUN_REL" docs/experiments/boundary_map/tables/anchor_census_measurements.csv \
+      phases/p2-gsjso/docs/issues.md "$RUN_REL" docs/experiments/boundary_map/tables/anchor_census_measurements.csv \
       docs/archive/boundary_map/v4/tables/boundary_map_v4_ladder.csv docs/archive/boundary_map/v4/tables/boundary_map_v4_targets.csv \
       docs/experiments/boundary_map/tables/anchor_census_ambiguous_1_99.csv \
       docs/experiments/boundary_map/tables/anchor_census_high_count_high_mad.csv \
@@ -456,7 +456,7 @@ run_finalize() {
   issue "AC-C3 boundary_map_v4 recorded: measurements_sha256=$(sha docs/experiments/boundary_map/tables/anchor_census_measurements.csv); run_manifest_sha256=$(sha "$RUN_MANIFEST"); ladder_sha256=$(sha docs/archive/boundary_map/v4/tables/boundary_map_v4_ladder.csv); targets_sha256=$(sha docs/archive/boundary_map/v4/tables/boundary_map_v4_targets.csv); lowcount_sha256=$(sha docs/experiments/boundary_map/tables/anchor_census_ambiguous_1_99.csv); highmad_sha256=$(sha docs/experiments/boundary_map/tables/anchor_census_high_count_high_mad.csv); public_manifest_sha256=$(sha docs/experiments/boundary_map/manifests/boundary_map_v4_manifest.json); figure_sha256=$(sha docs/figs/boundary_map/boundary_map_v4_map.png); summary_sha256=$(sha docs/experiments/boundary_map/reports/W_anchor_census_boundary_map_v4_summary_20260720.md); learning_runs_started=0."
   if ! commit_stage \
     "AC-C3: aggregate neutral boundary-map-v4 cells" \
-    docs/issues.md "$RUN_REL" docs/experiments/boundary_map/tables/anchor_census_measurements.csv \
+    phases/p2-gsjso/docs/issues.md "$RUN_REL" docs/experiments/boundary_map/tables/anchor_census_measurements.csv \
     docs/archive/boundary_map/v4/tables/boundary_map_v4_ladder.csv docs/archive/boundary_map/v4/tables/boundary_map_v4_targets.csv \
     docs/experiments/boundary_map/tables/anchor_census_ambiguous_1_99.csv \
     docs/experiments/boundary_map/tables/anchor_census_high_count_high_mad.csv \
@@ -475,7 +475,7 @@ run_finalize() {
 finish_ledger() {
   issue "AC-20260720 commit ledger: prep_commit=$(git log --format=%H --grep='AC-PREP:' -1); measurement_commit=$MEASUREMENT_COMMIT; public_commit=$PUBLIC_COMMIT; learning_runs_started=0; allowed_new_inference=$ALLOWLIST."
   if ! commit_stage \
-    "AC-LEDGER: record anchor census commits" docs/issues.md; then
+    "AC-LEDGER: record anchor census commits" phases/p2-gsjso/docs/issues.md; then
     write_status "ledger" "failed" "ledger commit or push failed"
     write_state "ledger" "failed" "ledger commit or push failed"
     return 1

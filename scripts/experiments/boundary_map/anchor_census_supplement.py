@@ -2053,7 +2053,7 @@ def finalize() -> None:
             "existing_v4_figure_sha256": old_figure_actual,
         },
         "issues_sync_contract": {
-            "path": "docs/issues.md",
+            "path": "phases/p2-gsjso/docs/issues.md",
             "same_output_commit_required": True,
             "note": (
                 "the detached driver stages the new issues.md version with "

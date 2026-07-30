@@ -20,7 +20,7 @@ STATE="$RUN/driver_state.json"
 LOCK_FILE="$RUN/driver.lock"
 PID_FILE="$RUN/launcher.pid"
 CID_FILE="$RUN/fm_container.cid"
-ISSUES="$REPO/docs/issues.md"
+ISSUES="$REPO/phases/p2-gsjso/docs/issues.md"
 BRANCH="exp/3b-surface-restore-corrected"
 
 DEV_IMAGE="jointbuildgs:dev"
@@ -587,7 +587,7 @@ commit_partial() {
   issue "$stage partial measurement: status=$terminal_status; reason=$reason;${hashes} partial_manifest_sha256=$(sha "$partial"); learning_runs_started=0"
   commit_stage "$stage" "$terminal_status" \
     "$stage-PARTIAL: preserve boundary-map-v3 measurements" \
-    docs/issues.md \
+    phases/p2-gsjso/docs/issues.md \
     "$partial" \
     "$@"
 }
@@ -1248,7 +1248,7 @@ PY
   issue "R1P-12 measurement complete: label_inventory_sha256=$(sha "$MEASURE/label_inventory.json"); rule_sha256=$(sha "$MEASURE/decision_rule.json"); primary_sha256=$(sha "$MEASURE/primary_predictions.csv"); jobs_sha256=$(sha "$MEASURE/fm_dense_jobs.json"); learning_runs_started=0; new_inference_runs=0"
   if ! commit_stage "R1P12" "complete" \
     "R1P-12: expand labels and fit sign-constrained rule" \
-    docs/issues.md \
+    phases/p2-gsjso/docs/issues.md \
     "$MEASURE/label_inventory.json" \
     "$MEASURE/decision_rule.json" \
     "$MEASURE/primary_predictions.csv" \
@@ -1658,7 +1658,7 @@ PY
     issue "R1P-3 measurement complete: dense_sha256=$(sha "$MEASURE/fm_dense_measurements.csv"); pairs_sha256=$(sha "$MEASURE/fm_dense_pairs.csv"); progress_sha256=$(sha "$MEASURE/fm_dense_progress.json"); manifest_sha256=$(sha "$MEASURE/fm_dense_manifest.json"); learning_runs_started=0; new_inference=R1prime-3_FM_dense_dial_2px_only"
     if ! commit_stage "R1P3" "complete" \
       "R1P-3: measure FM dense dial candidates" \
-      docs/issues.md \
+      phases/p2-gsjso/docs/issues.md \
       "$MEASURE_REL"; then
       return 1
     fi
@@ -1887,7 +1887,7 @@ if (
     raise SystemExit("v3 dense-threshold support drift")
 expected_sources = {
     "docs/regression_input_snapshot.csv",
-    "docs/manual_review_judgments.csv",
+    "docs/research/methodology/tables/manual_review_judgments.csv",
     "docs/archive/boundary_map/v2/tables/boundary_map_v2_metrics.csv",
     "docs/archive/boundary_map/v2/tables/boundary_map_v2_ladder.csv",
     "docs/experiments/boundary_map/manifests/boundary_map_v2_manifest.json",
@@ -1975,7 +1975,7 @@ PY
   issue "R1P-4 measurement complete: metrics_sha256=$(sha docs/experiments/boundary_map/tables/boundary_map_v3_metrics.csv); ladder_sha256=$(sha docs/archive/boundary_map/v3/tables/boundary_map_v3_ladder.csv); confusion_sha256=$(sha docs/experiments/boundary_map/tables/boundary_map_v3_confusion.csv); targets_sha256=$(sha docs/experiments/boundary_map/tables/boundary_map_v3_conditional_targets.csv); manifest_sha256=$(sha docs/experiments/boundary_map/manifests/boundary_map_v3_manifest.json); figure_sha256=$(sha docs/archive/boundary_map/v3/figs/boundary_map_v3_map.png); summary_sha256=$(sha docs/archive/boundary_map/v3/reports/W_boundary_map_v3_summary_20260719.md); learning_runs_started=0; new_inference=R1prime-3_FM_dense_dial_2px_only"
   if ! commit_stage "R1P4" "complete" \
     "R1P-4: publish boundary map v3 measurements" \
-    docs/issues.md \
+    phases/p2-gsjso/docs/issues.md \
     docs/experiments/boundary_map/tables/boundary_map_v3_metrics.csv \
     docs/archive/boundary_map/v3/tables/boundary_map_v3_ladder.csv \
     docs/experiments/boundary_map/tables/boundary_map_v3_confusion.csv \
@@ -2001,7 +2001,7 @@ record_ledger() {
   issue "R1P-20260719 commit ledger: R1P12_commit=$R1P12_COMMIT; R1P3_commit=$R1P3_COMMIT; R1P4_commit=$R1P4_COMMIT; learning_runs_started=0; allowed_new_inference=R1prime-3_FM_dense_dial_2px_only"
   if ! commit_stage "LEDGER" "complete" \
     "R1P-LEDGER: record boundary-map-v3 commits and hashes" \
-    docs/issues.md; then
+    phases/p2-gsjso/docs/issues.md; then
     return 1
   fi
   write_status "R1prime-1-4" "complete" \
