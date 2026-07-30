@@ -16,7 +16,7 @@ import numpy as np
 from pyproj import Transformer
 
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 
 
 def append_log(path: Path, message: str) -> None:
@@ -100,7 +100,7 @@ def rotmat_to_qvec(r: np.ndarray) -> np.ndarray:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", default="fair-pilot/config/vaihingen_area3.json")
+    parser.add_argument("--config", default="configs/experiments/fair_pilot/vaihingen_area3.json")
     args = parser.parse_args()
     cfg = json.loads((ROOT / args.config).read_text(encoding="utf-8"))
     run_dir = ROOT / "fair-pilot" / "runs" / cfg["run_id"]
