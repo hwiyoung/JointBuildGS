@@ -72,11 +72,11 @@ This table shows multi-file families and explicit/candidate canonical families. 
 | readme | 6 | - | 0 | docs/experiments/readme/ |
 | w_assembly | 6 | - | 0 | docs/figs/w_assembly/ |
 | w_faithful | 6 | - | 0 | docs/figs/w_faithful/ |
-| fusion_w1 | 5 | v2 | 0 | docs/experiments/fusion_w1/ |
 | qs_rescore | 5 | - | 0 | docs/figs/qs_rescore/ |
 | w_d_qual | 5 | - | 0 | docs/figs/w_d_qual/ |
 | w_phaseb | 5 | - | 0 | docs/figs/w_phaseb/ |
 | attr_outcome_regression_v1 | 4 | v1 | 0 | docs/figs/attr_outcome_regression_v1/ |
+| fusion_w1 | 4 | v2 | 0 | docs/experiments/fusion_w1/ |
 | tum2twin_surface_proxy_rv1 | 4 | - | 0 | docs/experiments/tum2twin_surface_proxy_rv1/ |
 | w_d4_qual | 4 | - | 0 | docs/figs/w_d4_qual/ |
 | w_d6_textureless | 4 | - | 0 | docs/figs/w_d6_textureless/ |

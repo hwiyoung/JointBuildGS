@@ -6,7 +6,7 @@
 
 | Measure | Count |
 |---|---|
-| Cataloged indexed files | 1886 |
+| Cataloged indexed files | 1885 |
 | Files directly under docs/ | 0 |
 | Distinct inferred families | 94 |
 | Local Markdown links/embeds that do not resolve | 227 |
@@ -19,17 +19,16 @@
 |---|---|
 | canonical | 27 |
 | canonical_candidate | 5 |
-| orphan_candidate | 368 |
+| orphan_candidate | 372 |
 | superseded | 53 |
 | superseded_candidate | 8 |
-| supporting | 1425 |
+| supporting | 1420 |
 
 ### Run Git states
 
 | Git state | Runs |
 |---|---|
-| indexed_record_present | 3 |
-| tracked_record_present | 82 |
+| tracked_record_present | 85 |
 
 ## Issue 1: docs-root sprawl
 
@@ -281,6 +280,7 @@ These are gaps against the target run contract, not claims that a historical run
 | P0 | e5p_baseline_sparse_20260706_002300 | tracked_record_present | missing_tracked_manifest |
 | P0 | e5p_gate_20260707_C001 | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
 | P0 | e5p_readout_ablation_20260708_C001 | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
+| P2 | readout_v1 | tracked_record_present | missing_tracked_manifest;missing_tracked_versions;missing_tracked_report_or_index |
 | P2 | 20260716_boundary_map | tracked_record_present | missing_tracked_versions;missing_tracked_report_or_index |
 | P2 | 20260718_boundary_map_v2 | tracked_record_present | missing_tracked_versions;missing_tracked_report_or_index |
 | P2 | 20260719_boundary_map_v3 | tracked_record_present | missing_tracked_versions;missing_tracked_report_or_index |
@@ -334,10 +334,9 @@ These are gaps against the target run contract, not claims that a historical run
 | P2 | 20260706_regression_v1 | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
 | P2 | 20260706_regression_v1_1 | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
 | P2 | 20260708_d4_config_audit | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
-| P2 | 20260724_fusion_w1 | indexed_record_present | missing_tracked_versions |
-| P2 | 20260726_fusion_w1_aprime | indexed_record_present | missing_tracked_versions |
+| P2 | 20260724_fusion_w1 | tracked_record_present | missing_tracked_versions |
+| P2 | 20260726_fusion_w1_aprime | tracked_record_present | missing_tracked_versions |
 | P2 | 20260727_fusion_w1_aprime_smoke_recovery | tracked_record_present | missing_tracked_manifest;missing_tracked_versions |
-| P2 | 20260728_fusion_w1_dense_baseline_qualitative_v1 | indexed_record_present | missing_tracked_manifest;missing_tracked_versions;missing_tracked_report_or_index |
 | P2 | 20260702_A0_projection_fix | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
 | P2 | 20260702_A1_zeta_ls | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
 | P2 | 20260702_A2_projection_gate_v2 | tracked_record_present | missing_tracked_manifest;missing_tracked_report_or_index |
@@ -390,9 +389,12 @@ A file is an orphan candidate only when it has no parsed inbound path reference 
 | `docs/evidence/p0-audit/w3-quality-integration/reports/W3_2c_canonical_closeout.md` | p0_audit | document |
 | `docs/evidence/p0-audit/w3-quality-integration/reports/W3_failure_diagnosis.md` | p0_audit | document |
 | `docs/evidence/p0-audit/w3-quality-integration/reports/W3_failure_surface_cause.md` | p0_audit | document |
+| `docs/evidence/p0-audit/w3-quality-integration/reports/W3_summary.md` | p0_audit | report |
 | `docs/evidence/p0-audit/w3-quality-integration/reports/W3_survivor_texture_gap.md` | p0_audit | document |
+| `docs/evidence/p0-audit/w3-quality-integration/reports/W3_survivor_texture_refine.md` | p0_audit | document |
 | `docs/evidence/p0-audit/w3-quality-integration/tables/W3_2c_canonical_internal_boundary_metrics.csv` | p0_audit | evidence_table |
 | `docs/evidence/p0-audit/w3-quality-integration/tables/W3_figure_failure_story_metadata.json` | p0_audit | structured_record |
+| `docs/evidence/p0-audit/w4-gate-population/reports/W4b_population_profile.md` | p0_audit | document |
 | `docs/evidence/p0-audit/w4-gate-population/tables/W4c_no_points_breakdown_meta.json` | p0_audit | structured_record |
 | `docs/evidence/p0_g1_20260613/W3_failure_diagnosis.md` | p0_g1_20260613 | document |
 | `docs/evidence/p0_g1_20260613/W3_failure_surface_cause.md` | p0_g1_20260613 | document |
@@ -615,11 +617,8 @@ A file is an orphan candidate only when it has no parsed inbound path reference 
 | `docs/experiments/joint-optimization/FC_S5_loss_ledger_instrumentation/reports/phase1_instrumentation/default_off_equivalence.md` | joint_optimization | document |
 | `docs/experiments/joint-optimization/FC_S5_loss_ledger_instrumentation/reports/phase2_diagnostics/LOSS_DIAGNOSTIC_REPORT.md` | joint_optimization | report |
 | `docs/experiments/joint-optimization/FC_S5_loss_ledger_instrumentation/tables/phase1_instrumentation/log_tag_check.csv` | joint_optimization | evidence_table |
-| `docs/experiments/joint-optimization/FC_S5_loss_ledger_instrumentation/tables/phase2_diagnostics/B104_terrain_drift_summary.csv` | joint_optimization | report |
-| `docs/experiments/joint-optimization/FC_S5_loss_ledger_instrumentation/tables/phase2_diagnostics/M10_metrics_by_bid.csv` | joint_optimization | evidence_table |
-| `docs/experiments/joint-optimization/FC_S5_loss_ledger_instrumentation/tables/phase2_diagnostics/M3_metrics_by_bid.csv` | joint_optimization | evidence_table |
 
-Only the first 250 of 368 orphan candidates are shown.
+Only the first 250 of 372 orphan candidates are shown.
 
 ## Required human decisions before migration
 
