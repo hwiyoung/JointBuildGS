@@ -6,9 +6,9 @@
 
 | Measure | Count |
 |---|---|
-| Cataloged indexed files | 1889 |
+| Cataloged indexed files | 1890 |
 | Files directly under docs/ | 0 |
-| Distinct inferred families | 97 |
+| Distinct inferred families | 98 |
 | Local Markdown links/embeds that do not resolve | 0 |
 | Reviewed external artifact references | 63 |
 | Reviewed missing evidence references | 87 |
@@ -21,7 +21,7 @@
 |---|---|
 | canonical | 35 |
 | canonical_candidate | 5 |
-| orphan_candidate | 367 |
+| orphan_candidate | 368 |
 | superseded | 53 |
 | superseded_candidate | 8 |
 | supporting | 1421 |
@@ -401,7 +401,7 @@ A file is an orphan candidate only when it has no parsed inbound path reference 
 | `docs/experiments/joint-optimization/FC_S5_loss_ledger_instrumentation/tables/phase2_diagnostics/M10_metrics_by_bid.csv` | joint_optimization | evidence_table |
 | `docs/experiments/joint-optimization/FC_S5_loss_ledger_instrumentation/tables/phase2_diagnostics/M3_metrics_by_bid.csv` | joint_optimization | evidence_table |
 
-Only the first 250 of 367 orphan candidates are shown.
+Only the first 250 of 368 orphan candidates are shown.
 
 ## Required human decisions before migration
 
