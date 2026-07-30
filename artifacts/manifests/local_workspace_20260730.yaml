@@ -65,3 +65,10 @@ compatibility:
 retention:
   policy: preserve-until-separate-reviewed-storage-migration
   destructive_cleanup_authorized: false
+reviewed_cleanup:
+  state: applied
+  applied_at: 2026-07-30T18:49:06+09:00
+  scope: exact-plan-only
+  plan: artifacts/manifests/local_artifact_retention_plan_20260730.json
+  receipt: artifacts/manifests/local_artifact_retention_receipt_20260730.json
+  note: The original false value records the relocation-time authorization state; later explicit review authorized only the receipt's exact targets.

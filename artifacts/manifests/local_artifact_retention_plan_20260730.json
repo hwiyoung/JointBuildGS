@@ -1,0 +1,1562 @@
+{
+  "artifact_root": "/artifacts/JointBuildGS",
+  "created_utc": "2026-07-30T09:46:02.786907+00:00",
+  "git_branch": "exp/fusion-w1",
+  "git_head": "77b954164a827011f49a7fd458b24c18b368f67c",
+  "planned_delete_bytes": 78521909700,
+  "planned_delete_files": 307,
+  "policy": {
+    "active_fusion_payload_deleted": false,
+    "final_experiment_results_deleted": false,
+    "gitignore_modified": false,
+    "history_rewritten": false,
+    "matrixcity_archives_recoverable_from": "https://huggingface.co/datasets/BoDai/MatrixCity/tree/22237509a7a16d5c0136b58b39597629a63b338d",
+    "raw_unique_data_deleted": false
+  },
+  "pre": {
+    "bytes": 490742897412,
+    "dirs": 12032,
+    "files": 93350,
+    "symlinks": 11740
+  },
+  "retained": {
+    "canonical_exact_duplicates": [
+      {
+        "bytes": 1217027,
+        "path": "docs/evidence/p0_g1_20260613/figs/fig_01_t2_camera_lod2_overlay.png",
+        "sha256": "d521abef87876b4b33fc52b62a81b3d57121747b1e36bed0eed77efdb498f4be"
+      },
+      {
+        "bytes": 88690,
+        "path": "docs/evidence/p0_g1_20260613/figs/fig_05_boundary_error_boxplots.png",
+        "sha256": "aab0bdd30ee6ce8bc08c21e8a86868d8ebebf9d53e2790654ee8cc8d99aab2fd"
+      },
+      {
+        "bytes": 103765,
+        "path": "docs/evidence/p0_g1_20260613/figs/fig_06_height_error_boxplots.png",
+        "sha256": "801414b8cfaa7162a4b68b7486ba6f2be2fc68a1655c1dc41ea469dec971fdda"
+      },
+      {
+        "bytes": 95733,
+        "path": "docs/evidence/p0_g1_20260613/figs/fig_04_plane_f1_boxplot.png",
+        "sha256": "3d83f62257205168cb0a752584dc2b4057f205917943fc317ebbfb2eeaf50f6e"
+      },
+      {
+        "bytes": 200091,
+        "path": "docs/evidence/p0_g1_20260613/figs/fig_07_matching_overlay_high_4959793.png",
+        "sha256": "ff9fa346160683a37edfd97ce69af5b21f41723400250ab8b7ea46b1551ee172"
+      },
+      {
+        "bytes": 179450,
+        "path": "docs/evidence/p0_g1_20260613/figs/fig_08_matching_overlay_low_4906987.png",
+        "sha256": "10adfa5231a349cacf351658a467178c912ccd587bb00253dccab79bffa3a16c"
+      },
+      {
+        "bytes": 251717,
+        "path": "docs/evidence/p0_g1_20260613/figs/fig_03_figure_1_1b_ridge_4907518.png",
+        "sha256": "fe06ec5b0b32101609c0dbb7af3f0000fe23308d9c9b158eb463e7e68c60cc0a"
+      },
+      {
+        "bytes": 43765,
+        "path": "docs/evidence/p0_g1_20260613/figs/fig_11_t7_failure_classification_counts.png",
+        "sha256": "2e3066cb74ecc5ff0f178d4f8d03d51717ca05d47dc21729da0b068733c9d9e7"
+      },
+      {
+        "bytes": 560114,
+        "path": "docs/evidence/p0_g1_20260613/figs/fig_10_t7_failure_point_clips.png",
+        "sha256": "597bd1f67fb13339396bc0aaec552ae5a9bda1b7bf13f9e6eb2a39d4757c5c46"
+      },
+      {
+        "bytes": 814983,
+        "path": "docs/evidence/p0_g1_20260613/figs/fig_13_t9_failure_texture_crops.png",
+        "sha256": "5cf525dbda7827110b1e179a29d55c6bdfcf741473f4da8a273fd7335f1fda29"
+      },
+      {
+        "bytes": 137929,
+        "path": "docs/evidence/p0_g1_20260613/figs/fig_14_t10_survivor_texture_gap_scatter.png",
+        "sha256": "4a7a6af72bfa2744d65570c60167edcc859e672a635d3ccfd257cd78cfcdd252"
+      },
+      {
+        "bytes": 127814,
+        "path": "docs/evidence/p0_g1_20260613/figs/fig_15_t11_survivor_texture_refine_scatter.png",
+        "sha256": "365df6b30099fa03e211c273f4a0b086e819f1340a0b19fb6e10e348334cbcfa"
+      },
+      {
+        "bytes": 123143,
+        "path": "docs/evidence/p0_g1_20260613/figs/w3_t11_figure_1_1_roof_texture.png",
+        "sha256": "a6398d461293c51916295f554ab095edd3e5e1887aaec635cdfe9919ba6f350f"
+      },
+      {
+        "bytes": 3800746,
+        "path": "docs/evidence/p0_g1_20260613/figs/fig_02_figure_1_1a_dim_unrecovered_4907182.png",
+        "sha256": "d4648ca33c41e6701c5bf32e16e1ff24fa2cae524a4897e81d4b938888a51865"
+      },
+      {
+        "bytes": 89920,
+        "path": "docs/evidence/p0_g1_20260613/figs/fig_16_t13_validity_error_breakdown.png",
+        "sha256": "a8b55e24104e15f5bdcc28934857f5bacb452d84e47a97d514b0bd06e647edac"
+      },
+      {
+        "bytes": 975446,
+        "path": "docs/evidence/p0_g1_20260613/figs/fig_17_t14_texture_to_points.png",
+        "sha256": "c88dd3c3af3cce10eb4ca7b10724e2fbdf8b60357597201aff0fe1e89373b140"
+      },
+      {
+        "bytes": 1411848,
+        "path": "docs/evidence/p0_g1_20260613/figs/fig_18_t14_input_to_output.png",
+        "sha256": "5891e84cea252ebd9f93f6bc6fa0a5ccc3ca5983b99090bbeec2ebae7f95b404"
+      },
+      {
+        "bytes": 174235,
+        "path": "docs/evidence/p0_g1_20260613/figs/fig_12_w4b_population_size_complexity.png",
+        "sha256": "30547f95c0edb02a1e0aeafa3d0b5cad5d3f7f74e37968593996c90d8d311f53"
+      }
+    ],
+    "latest_checkpoints": [
+      {
+        "bytes": 14769328,
+        "path": "results/archive_seongsu_v0/phase1_vanilla/run/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      {
+        "bytes": 247252144,
+        "path": "results/phase2_ablation_citygml/baseline/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      {
+        "bytes": 249123184,
+        "path": "results/phase2_ablation_citygml/both/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      {
+        "bytes": 248703664,
+        "path": "results/phase2_ablation_citygml/mutual/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      {
+        "bytes": 248715952,
+        "path": "results/phase2_ablation_citygml/structure/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      {
+        "bytes": 781263984,
+        "path": "results/tum_transfer/e5_3b_s1/C001/runs/gs_e5_C001_s1_acmp_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 254718576,
+        "path": "results/tum_transfer/e5_3b_s1/C001/runs/gs_e5_C001_s1_dense_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 860534128,
+        "path": "results/tum_transfer/e5_3b_s1/C001/runs/gs_e5_C001_s1_sparse_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 160712496,
+        "path": "results/tum_transfer/e5_corrected_s1/C001/runs/gs_e5_C001_corrected_s1_acmp_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 133646512,
+        "path": "results/tum_transfer/e5_corrected_s1/C001/runs/gs_e5_C001_corrected_s1_dense_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 169897584,
+        "path": "results/tum_transfer/e5_corrected_s1/C001/runs/gs_e5_C001_corrected_s1_sparse_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 127025136,
+        "path": "results/tum_transfer/e5_corrected_s1_recheck/C001/runs/gs_e5_C001_corrected_s1_preprune_acmp_r1/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      {
+        "bytes": 132758640,
+        "path": "results/tum_transfer/e5_corrected_s1_recheck/C001/runs/gs_e5_C001_corrected_s1_preprune_dense_r1/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      {
+        "bytes": 126765872,
+        "path": "results/tum_transfer/e5_corrected_s1_recheck/C001/runs/gs_e5_C001_corrected_s1_preprune_sparse_r1/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      {
+        "bytes": 158072048,
+        "path": "results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_acmp_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 161979760,
+        "path": "results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_acmp_r2/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 144982960,
+        "path": "results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_dense_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 128078000,
+        "path": "results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_dense_r2/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 103208304,
+        "path": "results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_sparse_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 101390512,
+        "path": "results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_sparse_r2/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 82304688,
+        "path": "results/tum_transfer/e5_s1_full_factor/C001/runs/gs_e5_C001_s1fac_w100_p005_dense_r1/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      {
+        "bytes": 69133488,
+        "path": "results/tum_transfer/e5_s1_full_factor/C001/runs/gs_e5_C001_s1fac_w240_p005_dense_r1/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      {
+        "bytes": 108847152,
+        "path": "results/tum_transfer/e5_s1_full_factor/C001/runs/gs_e5_C001_s1fac_w240_p050_dense_r1/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      {
+        "bytes": 168198384,
+        "path": "results/tum_transfer/e5_s2_direction_position/C001/runs/gs_e5_C001_s2_arm0_dense_r1/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      {
+        "bytes": 138881200,
+        "path": "results/tum_transfer/e5_s2_direction_position/C001/runs/gs_e5_C001_s2_arm0_dense_r2/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      {
+        "bytes": 76732080,
+        "path": "results/tum_transfer/e5_s2_direction_position/C001/runs/gs_e5_C001_s2_arm1_dense_r1/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      {
+        "bytes": 76548016,
+        "path": "results/tum_transfer/e5_s2_direction_position/C001/runs/gs_e5_C001_s2_arm1_dense_r2/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      {
+        "bytes": 94221296,
+        "path": "results/tum_transfer/e5_s2_direction_position/C001/runs/gs_e5_C001_s2_arm2_dense_r1/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      {
+        "bytes": 88840880,
+        "path": "results/tum_transfer/e5_s2_direction_position/C001/runs/gs_e5_C001_s2_arm2_dense_r2/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      {
+        "bytes": 140593648,
+        "path": "results/tum_transfer/e5_s2p_interaction/C001/runs/gs_e5_C001_s2p_arm1p_dense_r1/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      {
+        "bytes": 148569328,
+        "path": "results/tum_transfer/e5_s2p_interaction/C001/runs/gs_e5_C001_s2p_arm1p_dense_r2/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      {
+        "bytes": 136638448,
+        "path": "results/tum_transfer/e5_s3_semantic_guided/C001/runs/gs_e5_C001_s3a_semantic_guided_r1/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      {
+        "bytes": 136352368,
+        "path": "results/tum_transfer/e5_s3_semantic_guided/C001/runs/gs_e5_C001_s3a_semantic_guided_r2/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      {
+        "bytes": 6971760,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b4907199_a0_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 6880816,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b4907199_a0_r2/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 7305328,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b4907199_a1_dz_m0p5_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 8939440,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b4907199_a1_dz_m1_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 8606128,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b4907199_a1_dz_m2_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 7161712,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b4907199_a1_dz_m4_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 8452464,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b4907199_a1_dz_p0p5_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 7850160,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b4907199_a1_dz_p1_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 8059312,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b4907199_a1_dz_p2_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 7722224,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b4907199_a1_dz_p4_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 8171376,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b4907199_a1_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 8052272,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b4907199_a1_r2/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 7620656,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b4907199_a2_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 7305904,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b4907199_a2_r2/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 13653488,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b8568391_a0_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 15391088,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b8568391_a0_r2/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 10799408,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b8568391_a1_dz_m0p5_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 10690032,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b8568391_a1_dz_m1_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 8088176,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b8568391_a1_dz_m2_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 8264496,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b8568391_a1_dz_m4_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 10052976,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b8568391_a1_dz_p0p5_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 11120112,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b8568391_a1_dz_p1_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 11020464,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b8568391_a1_dz_p2_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 9203824,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b8568391_a1_dz_p4_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 10565552,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b8568391_a1_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 10769456,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b8568391_a1_r2/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 7430384,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b8568391_a2_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 6817392,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b8568391_a2_r2/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 9769328,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b8568392_a0_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 9601392,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b8568392_a0_r2/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 8297072,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b8568392_a1_dz_m0p5_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 8093424,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b8568392_a1_dz_m1_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 7100784,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b8568392_a1_dz_m2_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 6198064,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b8568392_a1_dz_m4_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 6407216,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b8568392_a1_dz_p0p5_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 8009072,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b8568392_a1_dz_p1_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 6459248,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b8568392_a1_dz_p2_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 6571696,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b8568392_a1_dz_p4_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 7864624,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b8568392_a1_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 7067568,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b8568392_a1_r2/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 5854512,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b8568392_a2_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 5559024,
+        "path": "results/tum_transfer/e5_s3ap_phase2/runs/gs_e5_C001_s3ap_b8568392_a2_r2/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      {
+        "bytes": 220000048,
+        "path": "results/tum_transfer/run_proper/ckpt/step_020000.pt",
+        "step": 20000
+      }
+    ],
+    "matrixcity_extracted": [
+      {
+        "bytes": 8560195966,
+        "dirs": 1,
+        "files": 1440,
+        "path": "data/matrixcity/block_10_normal",
+        "symlinks": 0
+      },
+      {
+        "bytes": 6379507580,
+        "dirs": 1,
+        "files": 1056,
+        "path": "data/matrixcity/block_1_normal",
+        "symlinks": 0
+      },
+      {
+        "bytes": 2864440769,
+        "dirs": 1,
+        "files": 480,
+        "path": "data/matrixcity/block_2_normal",
+        "symlinks": 0
+      },
+      {
+        "bytes": 1603325581,
+        "dirs": 1,
+        "files": 256,
+        "path": "data/matrixcity/block_3_normal",
+        "symlinks": 0
+      },
+      {
+        "bytes": 4130450839,
+        "dirs": 1,
+        "files": 616,
+        "path": "data/matrixcity/block_4_normal",
+        "symlinks": 0
+      },
+      {
+        "bytes": 2264303098,
+        "dirs": 1,
+        "files": 352,
+        "path": "data/matrixcity/block_5_normal",
+        "symlinks": 0
+      },
+      {
+        "bytes": 2862163420,
+        "dirs": 1,
+        "files": 448,
+        "path": "data/matrixcity/block_6_normal",
+        "symlinks": 0
+      },
+      {
+        "bytes": 2428828581,
+        "dirs": 1,
+        "files": 392,
+        "path": "data/matrixcity/block_7_normal",
+        "symlinks": 0
+      },
+      {
+        "bytes": 3239200739,
+        "dirs": 1,
+        "files": 520,
+        "path": "data/matrixcity/block_8_normal",
+        "symlinks": 0
+      },
+      {
+        "bytes": 12996272998,
+        "dirs": 1,
+        "files": 2112,
+        "path": "data/matrixcity/block_9_normal",
+        "symlinks": 0
+      },
+      {
+        "bytes": 3223853090,
+        "dirs": 1,
+        "files": 1440,
+        "path": "data/matrixcity/block_10_depth",
+        "symlinks": 0
+      },
+      {
+        "bytes": 3706259024,
+        "dirs": 1,
+        "files": 1056,
+        "path": "data/matrixcity/block_1_depth",
+        "symlinks": 0
+      },
+      {
+        "bytes": 1230959616,
+        "dirs": 1,
+        "files": 480,
+        "path": "data/matrixcity/block_2_depth",
+        "symlinks": 0
+      },
+      {
+        "bytes": 762392802,
+        "dirs": 1,
+        "files": 256,
+        "path": "data/matrixcity/block_3_depth",
+        "symlinks": 0
+      },
+      {
+        "bytes": 2929601247,
+        "dirs": 1,
+        "files": 616,
+        "path": "data/matrixcity/block_4_depth",
+        "symlinks": 0
+      },
+      {
+        "bytes": 1048477273,
+        "dirs": 1,
+        "files": 352,
+        "path": "data/matrixcity/block_5_depth",
+        "symlinks": 0
+      },
+      {
+        "bytes": 1629815223,
+        "dirs": 1,
+        "files": 448,
+        "path": "data/matrixcity/block_6_depth",
+        "symlinks": 0
+      },
+      {
+        "bytes": 822609036,
+        "dirs": 1,
+        "files": 392,
+        "path": "data/matrixcity/block_7_depth",
+        "symlinks": 0
+      },
+      {
+        "bytes": 2053479393,
+        "dirs": 1,
+        "files": 520,
+        "path": "data/matrixcity/block_8_depth",
+        "symlinks": 0
+      },
+      {
+        "bytes": 7083399986,
+        "dirs": 1,
+        "files": 2112,
+        "path": "data/matrixcity/block_9_depth",
+        "symlinks": 0
+      },
+      {
+        "bytes": 419605643,
+        "dirs": 0,
+        "files": 1,
+        "path": "data/matrixcity/small_city_pointcloud/point_cloud_ds20/aerial/Block_all.ply",
+        "symlinks": 0
+      }
+    ]
+  },
+  "schema": "jointbuildgs.local_artifact_retention_plan.v1",
+  "targets": [
+    {
+      "bytes": 8561305600,
+      "category": "official_source_archive_with_extracted_copy",
+      "dirs": 0,
+      "files": 1,
+      "path": "data/matrixcity/small_city_normal/aerial/train/block_10_normal.tar",
+      "remote_lfs_verified": true,
+      "remote_url": "https://huggingface.co/datasets/BoDai/MatrixCity/resolve/22237509a7a16d5c0136b58b39597629a63b338d/small_city_normal/aerial/train/block_10_normal.tar?download=true",
+      "retained_extracted": {
+        "bytes": 8560195966,
+        "dirs": 1,
+        "files": 1440,
+        "path": "data/matrixcity/block_10_normal",
+        "symlinks": 0
+      },
+      "sha256": "0525f4d4ae88015c9ebea2d712b9fdc09775195c42521cd489694d823c24ef4b",
+      "symlinks": 0
+    },
+    {
+      "bytes": 6380318720,
+      "category": "official_source_archive_with_extracted_copy",
+      "dirs": 0,
+      "files": 1,
+      "path": "data/matrixcity/small_city_normal/aerial/train/block_1_normal.tar",
+      "remote_lfs_verified": true,
+      "remote_url": "https://huggingface.co/datasets/BoDai/MatrixCity/resolve/22237509a7a16d5c0136b58b39597629a63b338d/small_city_normal/aerial/train/block_1_normal.tar?download=true",
+      "retained_extracted": {
+        "bytes": 6379507580,
+        "dirs": 1,
+        "files": 1056,
+        "path": "data/matrixcity/block_1_normal",
+        "symlinks": 0
+      },
+      "sha256": "b81da6bd4ee00cef72499308c0658ef475c33af1fcaa4d8d59b3f548045038a7",
+      "symlinks": 0
+    },
+    {
+      "bytes": 2864814080,
+      "category": "official_source_archive_with_extracted_copy",
+      "dirs": 0,
+      "files": 1,
+      "path": "data/matrixcity/small_city_normal/aerial/train/block_2_normal.tar",
+      "remote_lfs_verified": true,
+      "remote_url": "https://huggingface.co/datasets/BoDai/MatrixCity/resolve/22237509a7a16d5c0136b58b39597629a63b338d/small_city_normal/aerial/train/block_2_normal.tar?download=true",
+      "retained_extracted": {
+        "bytes": 2864440769,
+        "dirs": 1,
+        "files": 480,
+        "path": "data/matrixcity/block_2_normal",
+        "symlinks": 0
+      },
+      "sha256": "123437dda0bb493d7e268edcbc3eb4a167eda1c8c031d92a22479875d5379d92",
+      "symlinks": 0
+    },
+    {
+      "bytes": 1603522560,
+      "category": "official_source_archive_with_extracted_copy",
+      "dirs": 0,
+      "files": 1,
+      "path": "data/matrixcity/small_city_normal/aerial/train/block_3_normal.tar",
+      "remote_lfs_verified": true,
+      "remote_url": "https://huggingface.co/datasets/BoDai/MatrixCity/resolve/22237509a7a16d5c0136b58b39597629a63b338d/small_city_normal/aerial/train/block_3_normal.tar?download=true",
+      "retained_extracted": {
+        "bytes": 1603325581,
+        "dirs": 1,
+        "files": 256,
+        "path": "data/matrixcity/block_3_normal",
+        "symlinks": 0
+      },
+      "sha256": "acb01e0a17d4a3a19b1ba342f6d32fcd087ce462424c0346eb24c21220c20313",
+      "symlinks": 0
+    },
+    {
+      "bytes": 4130928640,
+      "category": "official_source_archive_with_extracted_copy",
+      "dirs": 0,
+      "files": 1,
+      "path": "data/matrixcity/small_city_normal/aerial/train/block_4_normal.tar",
+      "remote_lfs_verified": true,
+      "remote_url": "https://huggingface.co/datasets/BoDai/MatrixCity/resolve/22237509a7a16d5c0136b58b39597629a63b338d/small_city_normal/aerial/train/block_4_normal.tar?download=true",
+      "retained_extracted": {
+        "bytes": 4130450839,
+        "dirs": 1,
+        "files": 616,
+        "path": "data/matrixcity/block_4_normal",
+        "symlinks": 0
+      },
+      "sha256": "62f775d6b4727fb1e621fc43b061adb7d0f44ccc8679c8a33ae2d9758859607b",
+      "symlinks": 0
+    },
+    {
+      "bytes": 2264576000,
+      "category": "official_source_archive_with_extracted_copy",
+      "dirs": 0,
+      "files": 1,
+      "path": "data/matrixcity/small_city_normal/aerial/train/block_5_normal.tar",
+      "remote_lfs_verified": true,
+      "remote_url": "https://huggingface.co/datasets/BoDai/MatrixCity/resolve/22237509a7a16d5c0136b58b39597629a63b338d/small_city_normal/aerial/train/block_5_normal.tar?download=true",
+      "retained_extracted": {
+        "bytes": 2264303098,
+        "dirs": 1,
+        "files": 352,
+        "path": "data/matrixcity/block_5_normal",
+        "symlinks": 0
+      },
+      "sha256": "a287a4a6108ad075f372a2b22279378b15488600dc1c3500822ed06c6abea02a",
+      "symlinks": 0
+    },
+    {
+      "bytes": 2862510080,
+      "category": "official_source_archive_with_extracted_copy",
+      "dirs": 0,
+      "files": 1,
+      "path": "data/matrixcity/small_city_normal/aerial/train/block_6_normal.tar",
+      "remote_lfs_verified": true,
+      "remote_url": "https://huggingface.co/datasets/BoDai/MatrixCity/resolve/22237509a7a16d5c0136b58b39597629a63b338d/small_city_normal/aerial/train/block_6_normal.tar?download=true",
+      "retained_extracted": {
+        "bytes": 2862163420,
+        "dirs": 1,
+        "files": 448,
+        "path": "data/matrixcity/block_6_normal",
+        "symlinks": 0
+      },
+      "sha256": "2d5b52de4458a9caafd95af4b3c8abdf8c8b98b61bab9c0699916d5cba475b4a",
+      "symlinks": 0
+    },
+    {
+      "bytes": 2429132800,
+      "category": "official_source_archive_with_extracted_copy",
+      "dirs": 0,
+      "files": 1,
+      "path": "data/matrixcity/small_city_normal/aerial/train/block_7_normal.tar",
+      "remote_lfs_verified": true,
+      "remote_url": "https://huggingface.co/datasets/BoDai/MatrixCity/resolve/22237509a7a16d5c0136b58b39597629a63b338d/small_city_normal/aerial/train/block_7_normal.tar?download=true",
+      "retained_extracted": {
+        "bytes": 2428828581,
+        "dirs": 1,
+        "files": 392,
+        "path": "data/matrixcity/block_7_normal",
+        "symlinks": 0
+      },
+      "sha256": "f9005362c0d7de28d581a7f3141b42b7cb0766a3a948246de551e6184e4a5964",
+      "symlinks": 0
+    },
+    {
+      "bytes": 3239598080,
+      "category": "official_source_archive_with_extracted_copy",
+      "dirs": 0,
+      "files": 1,
+      "path": "data/matrixcity/small_city_normal/aerial/train/block_8_normal.tar",
+      "remote_lfs_verified": true,
+      "remote_url": "https://huggingface.co/datasets/BoDai/MatrixCity/resolve/22237509a7a16d5c0136b58b39597629a63b338d/small_city_normal/aerial/train/block_8_normal.tar?download=true",
+      "retained_extracted": {
+        "bytes": 3239200739,
+        "dirs": 1,
+        "files": 520,
+        "path": "data/matrixcity/block_8_normal",
+        "symlinks": 0
+      },
+      "sha256": "942b4e8086d3bf68c9c09f22fe6d3be1d2369a9b2700a9c95d4ee2df72a78b62",
+      "symlinks": 0
+    },
+    {
+      "bytes": 12997898240,
+      "category": "official_source_archive_with_extracted_copy",
+      "dirs": 0,
+      "files": 1,
+      "path": "data/matrixcity/small_city_normal/aerial/train/block_9_normal.tar",
+      "remote_lfs_verified": true,
+      "remote_url": "https://huggingface.co/datasets/BoDai/MatrixCity/resolve/22237509a7a16d5c0136b58b39597629a63b338d/small_city_normal/aerial/train/block_9_normal.tar?download=true",
+      "retained_extracted": {
+        "bytes": 12996272998,
+        "dirs": 1,
+        "files": 2112,
+        "path": "data/matrixcity/block_9_normal",
+        "symlinks": 0
+      },
+      "sha256": "f9163fcfb170694a9773df28c52e3f9e7cc3237826ac272055fc67f9c4a1dab8",
+      "symlinks": 0
+    },
+    {
+      "bytes": 3224975360,
+      "category": "official_source_archive_with_extracted_copy",
+      "dirs": 0,
+      "files": 1,
+      "path": "data/matrixcity/small_city_depth_float32/aerial/train/block_10_depth.tar",
+      "remote_lfs_verified": true,
+      "remote_url": "https://huggingface.co/datasets/BoDai/MatrixCity/resolve/22237509a7a16d5c0136b58b39597629a63b338d/small_city_depth_float32/aerial/train/block_10_depth.tar?download=true",
+      "retained_extracted": {
+        "bytes": 3223853090,
+        "dirs": 1,
+        "files": 1440,
+        "path": "data/matrixcity/block_10_depth",
+        "symlinks": 0
+      },
+      "sha256": "377a1af8a3f173470ae42866d834eee8c214d69dccd3afe79443c82d0e9db58b",
+      "symlinks": 0
+    },
+    {
+      "bytes": 3707074560,
+      "category": "official_source_archive_with_extracted_copy",
+      "dirs": 0,
+      "files": 1,
+      "path": "data/matrixcity/small_city_depth_float32/aerial/train/block_1_depth.tar",
+      "remote_lfs_verified": true,
+      "remote_url": "https://huggingface.co/datasets/BoDai/MatrixCity/resolve/22237509a7a16d5c0136b58b39597629a63b338d/small_city_depth_float32/aerial/train/block_1_depth.tar?download=true",
+      "retained_extracted": {
+        "bytes": 3706259024,
+        "dirs": 1,
+        "files": 1056,
+        "path": "data/matrixcity/block_1_depth",
+        "symlinks": 0
+      },
+      "sha256": "e4f522ef1495691bd5babcd98f7e005979845690e3c0a344970f54a93a60052a",
+      "symlinks": 0
+    },
+    {
+      "bytes": 1231329280,
+      "category": "official_source_archive_with_extracted_copy",
+      "dirs": 0,
+      "files": 1,
+      "path": "data/matrixcity/small_city_depth_float32/aerial/train/block_2_depth.tar",
+      "remote_lfs_verified": true,
+      "remote_url": "https://huggingface.co/datasets/BoDai/MatrixCity/resolve/22237509a7a16d5c0136b58b39597629a63b338d/small_city_depth_float32/aerial/train/block_2_depth.tar?download=true",
+      "retained_extracted": {
+        "bytes": 1230959616,
+        "dirs": 1,
+        "files": 480,
+        "path": "data/matrixcity/block_2_depth",
+        "symlinks": 0
+      },
+      "sha256": "6b3a50c38d8397660eac433cb6d361e032334b6705f5545bab7e93575230d820",
+      "symlinks": 0
+    },
+    {
+      "bytes": 762603520,
+      "category": "official_source_archive_with_extracted_copy",
+      "dirs": 0,
+      "files": 1,
+      "path": "data/matrixcity/small_city_depth_float32/aerial/train/block_3_depth.tar",
+      "remote_lfs_verified": true,
+      "remote_url": "https://huggingface.co/datasets/BoDai/MatrixCity/resolve/22237509a7a16d5c0136b58b39597629a63b338d/small_city_depth_float32/aerial/train/block_3_depth.tar?download=true",
+      "retained_extracted": {
+        "bytes": 762392802,
+        "dirs": 1,
+        "files": 256,
+        "path": "data/matrixcity/block_3_depth",
+        "symlinks": 0
+      },
+      "sha256": "2d27221efb7c5d5cda60b573aa66d06a4102caf5c53bcce6bac571ae27fbeadb",
+      "symlinks": 0
+    },
+    {
+      "bytes": 2930083840,
+      "category": "official_source_archive_with_extracted_copy",
+      "dirs": 0,
+      "files": 1,
+      "path": "data/matrixcity/small_city_depth_float32/aerial/train/block_4_depth.tar",
+      "remote_lfs_verified": true,
+      "remote_url": "https://huggingface.co/datasets/BoDai/MatrixCity/resolve/22237509a7a16d5c0136b58b39597629a63b338d/small_city_depth_float32/aerial/train/block_4_depth.tar?download=true",
+      "retained_extracted": {
+        "bytes": 2929601247,
+        "dirs": 1,
+        "files": 616,
+        "path": "data/matrixcity/block_4_depth",
+        "symlinks": 0
+      },
+      "sha256": "6346f5ebb12b6ec9dbfd0a74f97e0c7434e8b71e7471e95109fa2f488faa79c7",
+      "symlinks": 0
+    },
+    {
+      "bytes": 1048760320,
+      "category": "official_source_archive_with_extracted_copy",
+      "dirs": 0,
+      "files": 1,
+      "path": "data/matrixcity/small_city_depth_float32/aerial/train/block_5_depth.tar",
+      "remote_lfs_verified": true,
+      "remote_url": "https://huggingface.co/datasets/BoDai/MatrixCity/resolve/22237509a7a16d5c0136b58b39597629a63b338d/small_city_depth_float32/aerial/train/block_5_depth.tar?download=true",
+      "retained_extracted": {
+        "bytes": 1048477273,
+        "dirs": 1,
+        "files": 352,
+        "path": "data/matrixcity/block_5_depth",
+        "symlinks": 0
+      },
+      "sha256": "8bff82a925d2c86a28639869aa83bfb6fcc629f7a9eeced1b8091fa24864fb0c",
+      "symlinks": 0
+    },
+    {
+      "bytes": 1630167040,
+      "category": "official_source_archive_with_extracted_copy",
+      "dirs": 0,
+      "files": 1,
+      "path": "data/matrixcity/small_city_depth_float32/aerial/train/block_6_depth.tar",
+      "remote_lfs_verified": true,
+      "remote_url": "https://huggingface.co/datasets/BoDai/MatrixCity/resolve/22237509a7a16d5c0136b58b39597629a63b338d/small_city_depth_float32/aerial/train/block_6_depth.tar?download=true",
+      "retained_extracted": {
+        "bytes": 1629815223,
+        "dirs": 1,
+        "files": 448,
+        "path": "data/matrixcity/block_6_depth",
+        "symlinks": 0
+      },
+      "sha256": "f2e32ada44748f91b0e57dbf034a0fd3e9bbc284b35f459d7eccf49b1fb8d099",
+      "symlinks": 0
+    },
+    {
+      "bytes": 822917120,
+      "category": "official_source_archive_with_extracted_copy",
+      "dirs": 0,
+      "files": 1,
+      "path": "data/matrixcity/small_city_depth_float32/aerial/train/block_7_depth.tar",
+      "remote_lfs_verified": true,
+      "remote_url": "https://huggingface.co/datasets/BoDai/MatrixCity/resolve/22237509a7a16d5c0136b58b39597629a63b338d/small_city_depth_float32/aerial/train/block_7_depth.tar?download=true",
+      "retained_extracted": {
+        "bytes": 822609036,
+        "dirs": 1,
+        "files": 392,
+        "path": "data/matrixcity/block_7_depth",
+        "symlinks": 0
+      },
+      "sha256": "c91138460753390e66442f4048754462c4f45be0d940c3d6f30b1424b868acea",
+      "symlinks": 0
+    },
+    {
+      "bytes": 2053888000,
+      "category": "official_source_archive_with_extracted_copy",
+      "dirs": 0,
+      "files": 1,
+      "path": "data/matrixcity/small_city_depth_float32/aerial/train/block_8_depth.tar",
+      "remote_lfs_verified": true,
+      "remote_url": "https://huggingface.co/datasets/BoDai/MatrixCity/resolve/22237509a7a16d5c0136b58b39597629a63b338d/small_city_depth_float32/aerial/train/block_8_depth.tar?download=true",
+      "retained_extracted": {
+        "bytes": 2053479393,
+        "dirs": 1,
+        "files": 520,
+        "path": "data/matrixcity/block_8_depth",
+        "symlinks": 0
+      },
+      "sha256": "bcfbbefd93c143dd9d16edec608e5af6e5dabb4bab7b43abd9426f8f772a8187",
+      "symlinks": 0
+    },
+    {
+      "bytes": 7085025280,
+      "category": "official_source_archive_with_extracted_copy",
+      "dirs": 0,
+      "files": 1,
+      "path": "data/matrixcity/small_city_depth_float32/aerial/train/block_9_depth.tar",
+      "remote_lfs_verified": true,
+      "remote_url": "https://huggingface.co/datasets/BoDai/MatrixCity/resolve/22237509a7a16d5c0136b58b39597629a63b338d/small_city_depth_float32/aerial/train/block_9_depth.tar?download=true",
+      "retained_extracted": {
+        "bytes": 7083399986,
+        "dirs": 1,
+        "files": 2112,
+        "path": "data/matrixcity/block_9_depth",
+        "symlinks": 0
+      },
+      "sha256": "e6810e3bd0b6a40b62ca44cf0e6d48e0499a256d2cfeb2c4ca43d3244d65242f",
+      "symlinks": 0
+    },
+    {
+      "bytes": 1640078843,
+      "category": "official_source_archive_with_extracted_copy",
+      "dirs": 0,
+      "files": 1,
+      "path": "data/matrixcity/small_city_pointcloud/matrixcity_point_cloud_ds20.zip",
+      "remote_lfs_verified": true,
+      "remote_url": "https://huggingface.co/datasets/BoDai/MatrixCity/resolve/22237509a7a16d5c0136b58b39597629a63b338d/small_city_pointcloud/matrixcity_point_cloud_ds20.zip?download=true",
+      "retained_extracted": {
+        "bytes": 419605643,
+        "dirs": 0,
+        "files": 1,
+        "path": "data/matrixcity/small_city_pointcloud/point_cloud_ds20/aerial/Block_all.ply",
+        "symlinks": 0
+      },
+      "sha256": "c229bda6f42ce10ce1260e93d0842f4041aafa1c75bdac77bb9c0ccee30068d0",
+      "symlinks": 0
+    },
+    {
+      "bytes": 22811056,
+      "category": "unreferenced_intermediate_checkpoint",
+      "dirs": 0,
+      "files": 1,
+      "path": "results/archive_seongsu_v0/phase1_vanilla/run/ckpt/step_005000.pt",
+      "retained_latest": {
+        "bytes": 14769328,
+        "path": "results/archive_seongsu_v0/phase1_vanilla/run/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      "step": 5000,
+      "symlinks": 0
+    },
+    {
+      "bytes": 16335216,
+      "category": "unreferenced_intermediate_checkpoint",
+      "dirs": 0,
+      "files": 1,
+      "path": "results/archive_seongsu_v0/phase1_vanilla/run/ckpt/step_010000.pt",
+      "retained_latest": {
+        "bytes": 14769328,
+        "path": "results/archive_seongsu_v0/phase1_vanilla/run/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      "step": 10000,
+      "symlinks": 0
+    },
+    {
+      "bytes": 14769328,
+      "category": "unreferenced_intermediate_checkpoint",
+      "dirs": 0,
+      "files": 1,
+      "path": "results/archive_seongsu_v0/phase1_vanilla/run/ckpt/step_015000.pt",
+      "retained_latest": {
+        "bytes": 14769328,
+        "path": "results/archive_seongsu_v0/phase1_vanilla/run/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      "step": 15000,
+      "symlinks": 0
+    },
+    {
+      "bytes": 14769328,
+      "category": "unreferenced_intermediate_checkpoint",
+      "dirs": 0,
+      "files": 1,
+      "path": "results/archive_seongsu_v0/phase1_vanilla/run/ckpt/step_020000.pt",
+      "retained_latest": {
+        "bytes": 14769328,
+        "path": "results/archive_seongsu_v0/phase1_vanilla/run/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      "step": 20000,
+      "symlinks": 0
+    },
+    {
+      "bytes": 229274032,
+      "category": "unreferenced_intermediate_checkpoint",
+      "dirs": 0,
+      "files": 1,
+      "path": "results/phase2_ablation_citygml/baseline/ckpt/step_005000.pt",
+      "retained_latest": {
+        "bytes": 247252144,
+        "path": "results/phase2_ablation_citygml/baseline/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      "step": 5000,
+      "symlinks": 0
+    },
+    {
+      "bytes": 247252144,
+      "category": "unreferenced_intermediate_checkpoint",
+      "dirs": 0,
+      "files": 1,
+      "path": "results/phase2_ablation_citygml/baseline/ckpt/step_010000.pt",
+      "retained_latest": {
+        "bytes": 247252144,
+        "path": "results/phase2_ablation_citygml/baseline/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      "step": 10000,
+      "symlinks": 0
+    },
+    {
+      "bytes": 247252144,
+      "category": "unreferenced_intermediate_checkpoint",
+      "dirs": 0,
+      "files": 1,
+      "path": "results/phase2_ablation_citygml/baseline/ckpt/step_015000.pt",
+      "retained_latest": {
+        "bytes": 247252144,
+        "path": "results/phase2_ablation_citygml/baseline/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      "step": 15000,
+      "symlinks": 0
+    },
+    {
+      "bytes": 247252144,
+      "category": "unreferenced_intermediate_checkpoint",
+      "dirs": 0,
+      "files": 1,
+      "path": "results/phase2_ablation_citygml/baseline/ckpt/step_020000.pt",
+      "retained_latest": {
+        "bytes": 247252144,
+        "path": "results/phase2_ablation_citygml/baseline/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      "step": 20000,
+      "symlinks": 0
+    },
+    {
+      "bytes": 229718448,
+      "category": "unreferenced_intermediate_checkpoint",
+      "dirs": 0,
+      "files": 1,
+      "path": "results/phase2_ablation_citygml/both/ckpt/step_005000.pt",
+      "retained_latest": {
+        "bytes": 249123184,
+        "path": "results/phase2_ablation_citygml/both/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      "step": 5000,
+      "symlinks": 0
+    },
+    {
+      "bytes": 249123184,
+      "category": "unreferenced_intermediate_checkpoint",
+      "dirs": 0,
+      "files": 1,
+      "path": "results/phase2_ablation_citygml/both/ckpt/step_010000.pt",
+      "retained_latest": {
+        "bytes": 249123184,
+        "path": "results/phase2_ablation_citygml/both/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      "step": 10000,
+      "symlinks": 0
+    },
+    {
+      "bytes": 249123184,
+      "category": "unreferenced_intermediate_checkpoint",
+      "dirs": 0,
+      "files": 1,
+      "path": "results/phase2_ablation_citygml/both/ckpt/step_015000.pt",
+      "retained_latest": {
+        "bytes": 249123184,
+        "path": "results/phase2_ablation_citygml/both/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      "step": 15000,
+      "symlinks": 0
+    },
+    {
+      "bytes": 249123184,
+      "category": "unreferenced_intermediate_checkpoint",
+      "dirs": 0,
+      "files": 1,
+      "path": "results/phase2_ablation_citygml/both/ckpt/step_020000.pt",
+      "retained_latest": {
+        "bytes": 249123184,
+        "path": "results/phase2_ablation_citygml/both/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      "step": 20000,
+      "symlinks": 0
+    },
+    {
+      "bytes": 229776624,
+      "category": "unreferenced_intermediate_checkpoint",
+      "dirs": 0,
+      "files": 1,
+      "path": "results/phase2_ablation_citygml/mutual/ckpt/step_005000.pt",
+      "retained_latest": {
+        "bytes": 248703664,
+        "path": "results/phase2_ablation_citygml/mutual/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      "step": 5000,
+      "symlinks": 0
+    },
+    {
+      "bytes": 248703664,
+      "category": "unreferenced_intermediate_checkpoint",
+      "dirs": 0,
+      "files": 1,
+      "path": "results/phase2_ablation_citygml/mutual/ckpt/step_010000.pt",
+      "retained_latest": {
+        "bytes": 248703664,
+        "path": "results/phase2_ablation_citygml/mutual/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      "step": 10000,
+      "symlinks": 0
+    },
+    {
+      "bytes": 248703664,
+      "category": "unreferenced_intermediate_checkpoint",
+      "dirs": 0,
+      "files": 1,
+      "path": "results/phase2_ablation_citygml/mutual/ckpt/step_015000.pt",
+      "retained_latest": {
+        "bytes": 248703664,
+        "path": "results/phase2_ablation_citygml/mutual/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      "step": 15000,
+      "symlinks": 0
+    },
+    {
+      "bytes": 248703664,
+      "category": "unreferenced_intermediate_checkpoint",
+      "dirs": 0,
+      "files": 1,
+      "path": "results/phase2_ablation_citygml/mutual/ckpt/step_020000.pt",
+      "retained_latest": {
+        "bytes": 248703664,
+        "path": "results/phase2_ablation_citygml/mutual/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      "step": 20000,
+      "symlinks": 0
+    },
+    {
+      "bytes": 229654640,
+      "category": "unreferenced_intermediate_checkpoint",
+      "dirs": 0,
+      "files": 1,
+      "path": "results/phase2_ablation_citygml/structure/ckpt/step_005000.pt",
+      "retained_latest": {
+        "bytes": 248715952,
+        "path": "results/phase2_ablation_citygml/structure/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      "step": 5000,
+      "symlinks": 0
+    },
+    {
+      "bytes": 248715952,
+      "category": "unreferenced_intermediate_checkpoint",
+      "dirs": 0,
+      "files": 1,
+      "path": "results/phase2_ablation_citygml/structure/ckpt/step_010000.pt",
+      "retained_latest": {
+        "bytes": 248715952,
+        "path": "results/phase2_ablation_citygml/structure/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      "step": 10000,
+      "symlinks": 0
+    },
+    {
+      "bytes": 248715952,
+      "category": "unreferenced_intermediate_checkpoint",
+      "dirs": 0,
+      "files": 1,
+      "path": "results/phase2_ablation_citygml/structure/ckpt/step_015000.pt",
+      "retained_latest": {
+        "bytes": 248715952,
+        "path": "results/phase2_ablation_citygml/structure/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      "step": 15000,
+      "symlinks": 0
+    },
+    {
+      "bytes": 248715952,
+      "category": "unreferenced_intermediate_checkpoint",
+      "dirs": 0,
+      "files": 1,
+      "path": "results/phase2_ablation_citygml/structure/ckpt/step_020000.pt",
+      "retained_latest": {
+        "bytes": 248715952,
+        "path": "results/phase2_ablation_citygml/structure/ckpt/step_025000.pt",
+        "step": 25000
+      },
+      "step": 20000,
+      "symlinks": 0
+    },
+    {
+      "bytes": 329220336,
+      "category": "unreferenced_intermediate_checkpoint",
+      "dirs": 0,
+      "files": 1,
+      "path": "results/tum_transfer/e5_3b_s1/C001/runs/gs_e5_C001_s1_acmp_r1/ckpt/step_010000.pt",
+      "retained_latest": {
+        "bytes": 781263984,
+        "path": "results/tum_transfer/e5_3b_s1/C001/runs/gs_e5_C001_s1_acmp_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      "step": 10000,
+      "symlinks": 0
+    },
+    {
+      "bytes": 279559536,
+      "category": "unreferenced_intermediate_checkpoint",
+      "dirs": 0,
+      "files": 1,
+      "path": "results/tum_transfer/e5_3b_s1/C001/runs/gs_e5_C001_s1_sparse_r1/ckpt/step_010000.pt",
+      "retained_latest": {
+        "bytes": 860534128,
+        "path": "results/tum_transfer/e5_3b_s1/C001/runs/gs_e5_C001_s1_sparse_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      "step": 10000,
+      "symlinks": 0
+    },
+    {
+      "bytes": 77351408,
+      "category": "unreferenced_intermediate_checkpoint",
+      "dirs": 0,
+      "files": 1,
+      "path": "results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_acmp_r1/ckpt/step_010000.pt",
+      "retained_latest": {
+        "bytes": 158072048,
+        "path": "results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_acmp_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      "step": 10000,
+      "symlinks": 0
+    },
+    {
+      "bytes": 78754032,
+      "category": "unreferenced_intermediate_checkpoint",
+      "dirs": 0,
+      "files": 1,
+      "path": "results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_acmp_r2/ckpt/step_010000.pt",
+      "retained_latest": {
+        "bytes": 161979760,
+        "path": "results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_acmp_r2/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      "step": 10000,
+      "symlinks": 0
+    },
+    {
+      "bytes": 65491248,
+      "category": "unreferenced_intermediate_checkpoint",
+      "dirs": 0,
+      "files": 1,
+      "path": "results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_dense_r1/ckpt/step_010000.pt",
+      "retained_latest": {
+        "bytes": 144982960,
+        "path": "results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_dense_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      "step": 10000,
+      "symlinks": 0
+    },
+    {
+      "bytes": 66411888,
+      "category": "unreferenced_intermediate_checkpoint",
+      "dirs": 0,
+      "files": 1,
+      "path": "results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_dense_r2/ckpt/step_010000.pt",
+      "retained_latest": {
+        "bytes": 128078000,
+        "path": "results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_dense_r2/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      "step": 10000,
+      "symlinks": 0
+    },
+    {
+      "bytes": 26121520,
+      "category": "unreferenced_intermediate_checkpoint",
+      "dirs": 0,
+      "files": 1,
+      "path": "results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_sparse_r1/ckpt/step_010000.pt",
+      "retained_latest": {
+        "bytes": 103208304,
+        "path": "results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_sparse_r1/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      "step": 10000,
+      "symlinks": 0
+    },
+    {
+      "bytes": 25661488,
+      "category": "unreferenced_intermediate_checkpoint",
+      "dirs": 0,
+      "files": 1,
+      "path": "results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_sparse_r2/ckpt/step_010000.pt",
+      "retained_latest": {
+        "bytes": 101390512,
+        "path": "results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_sparse_r2/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      "step": 10000,
+      "symlinks": 0
+    },
+    {
+      "bytes": 111455536,
+      "category": "unreferenced_intermediate_checkpoint",
+      "dirs": 0,
+      "files": 1,
+      "path": "results/tum_transfer/run_proper/ckpt/step_010000.pt",
+      "retained_latest": {
+        "bytes": 220000048,
+        "path": "results/tum_transfer/run_proper/ckpt/step_020000.pt",
+        "step": 20000
+      },
+      "step": 10000,
+      "symlinks": 0
+    },
+    {
+      "bytes": 10396416,
+      "category": "sha_verified_exact_duplicate",
+      "dirs": 6,
+      "files": 18,
+      "path": "quarantine/20260730-semantic-restructure/exact-duplicates",
+      "symlinks": 0
+    },
+    {
+      "bytes": 2721,
+      "category": "download_cache",
+      "dirs": 14,
+      "files": 45,
+      "path": "data/matrixcity/.cache",
+      "symlinks": 0
+    },
+    {
+      "bytes": 11360182,
+      "category": "python_bytecode_cache",
+      "dirs": 29,
+      "files": 185,
+      "path": "quarantine/20260730-semantic-restructure/generated-caches",
+      "symlinks": 0
+    },
+    {
+      "bytes": 0,
+      "category": "empty_layout_record",
+      "dirs": 31,
+      "files": 0,
+      "path": "quarantine/20260730-semantic-restructure/empty-layouts",
+      "symlinks": 0
+    },
+    {
+      "bytes": 121922,
+      "category": "reviewed_empty_generated_layout_quarantine",
+      "dirs": 1674,
+      "files": 9,
+      "path": "quarantine/20260730-final-layout",
+      "symlinks": 0
+    },
+    {
+      "bytes": 0,
+      "category": "completed_migration_empty_layout",
+      "dirs": 138,
+      "files": 0,
+      "path": "migration-work/empty-evidence-layout-20260730",
+      "symlinks": 0
+    },
+    {
+      "bytes": 0,
+      "category": "completed_migration_empty_layout",
+      "dirs": 12,
+      "files": 0,
+      "path": "migration-work/empty-artifact-manifest-layout-20260730",
+      "symlinks": 0
+    },
+    {
+      "bytes": 0,
+      "category": "completed_migration_empty_layout",
+      "dirs": 8,
+      "files": 0,
+      "path": "migration-work/empty-role-layouts-20260730",
+      "symlinks": 0
+    },
+    {
+      "bytes": 0,
+      "category": "completed_migration_empty_layout",
+      "dirs": 6,
+      "files": 0,
+      "path": "migration-work/empty-notes-layout-20260730-phase1_ablation",
+      "symlinks": 0
+    },
+    {
+      "bytes": 0,
+      "category": "completed_migration_empty_layout",
+      "dirs": 3,
+      "files": 0,
+      "path": "migration-work/empty-notes-layout-20260730-phase2_ablation_citygml",
+      "symlinks": 0
+    },
+    {
+      "bytes": 0,
+      "category": "completed_migration_empty_layout",
+      "dirs": 2,
+      "files": 0,
+      "path": "migration-work/empty-notes-layout-20260730-phase1_vanilla",
+      "symlinks": 0
+    },
+    {
+      "bytes": 0,
+      "category": "completed_migration_empty_layout",
+      "dirs": 2,
+      "files": 0,
+      "path": "migration-work/empty-notes-layout-20260730-phase1_structure",
+      "symlinks": 0
+    },
+    {
+      "bytes": 0,
+      "category": "completed_migration_empty_layout",
+      "dirs": 2,
+      "files": 0,
+      "path": "migration-work/empty-notes-layout-20260730-phase1_mutual",
+      "symlinks": 0
+    },
+    {
+      "bytes": 0,
+      "category": "completed_migration_empty_layout",
+      "dirs": 3,
+      "files": 0,
+      "path": "migration-work/empty-layout-tools_experiments_footprint_conditioned_readout-20260730",
+      "symlinks": 0
+    },
+    {
+      "bytes": 0,
+      "category": "completed_migration_empty_layout",
+      "dirs": 21,
+      "files": 0,
+      "path": "migration-work/empty-layout-phases_p2-gsjso_legacy-result-receipts-20260730",
+      "symlinks": 0
+    },
+    {
+      "bytes": 0,
+      "category": "retired_empty_placeholder_tree",
+      "dirs": 167,
+      "files": 0,
+      "path": "repository-placeholders",
+      "symlinks": 0
+    }
+  ]
+}

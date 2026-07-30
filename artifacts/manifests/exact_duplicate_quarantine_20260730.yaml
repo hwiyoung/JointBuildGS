@@ -25,6 +25,11 @@ reference_policy:
 retention:
   policy: preserve-until-reviewed
   restore_rule: move each backend-relative quarantine_path back to source_path after confirming the source path is absent and the recorded SHA-256 still matches
+reviewed_cleanup:
+  state: deleted
+  applied_at: 2026-07-30T18:49:06+09:00
+  canonical_sha256_pairs_verified: 18
+  receipt: artifacts/manifests/local_artifact_retention_receipt_20260730.json
 files:
   - source_path: phases/p0-audit/docs/figs/t2_opf_pose_overlay.png
     canonical_path: docs/evidence/p0_g1_20260613/figs/fig_01_t2_camera_lod2_overlay.png

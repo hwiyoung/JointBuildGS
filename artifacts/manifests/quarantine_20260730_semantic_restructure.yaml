@@ -50,3 +50,14 @@ generated_caches:
 retention:
   policy: preserve-until-reviewed
   restore_rule: move the recorded quarantine path back to its original repository-relative path
+reviewed_cleanup:
+  state: partially_deleted
+  applied_at: 2026-07-30T18:49:06+09:00
+  deleted_groups:
+    - generated_caches
+    - empty_layouts
+    - exact_duplicates_after_canonical_sha256_verification
+  preserved_groups:
+    - legacy
+    - external
+  receipt: artifacts/manifests/local_artifact_retention_receipt_20260730.json

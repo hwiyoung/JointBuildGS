@@ -30,3 +30,8 @@ retention:
   policy: preserve-until-structure-review-closes
   restore_rule: recreate the recorded repository-relative path from the matching quarantine tree
   note: Empty generated run leaves contain no scientific bytes; non-empty payloads are governed by separate manifests.
+reviewed_cleanup:
+  state: deleted
+  applied_at: 2026-07-30T18:49:06+09:00
+  reason: structure review closed; the tree contained only empty layouts, generated test caches, and retired placeholders
+  receipt: artifacts/manifests/local_artifact_retention_receipt_20260730.json
