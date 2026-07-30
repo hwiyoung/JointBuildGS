@@ -4,17 +4,16 @@
 
 **최종 권고: 2. existing repo + partial clone/sparse checkout.**
 
-재배치와 보존 검토가 끝난 pushed control tree는 **4,453 files / 728.674 MiB**이고, 대용량 payload는 sibling `../JointBuildGS-artifacts`의 **383,694,408,263 bytes**(383.694 GB / 357.343 GiB)로 분리되어 있다. 새 normal clone은 working tree 733.447 MiB와 `.git` 1.242 GiB를 사용했다. 단일 giant blob 문제는 없지만, 940개의 tracked image가 547.948 MiB를 차지하므로 기본 운영은 blobless partial clone과 역할별 sparse checkout이 적합하다.
+재배치와 Fusion 기술 handoff가 끝난 pushed control tree는 **4,499 files / 729.363 MiB**이고, 대용량 payload는 sibling `../JointBuildGS-artifacts`로 분리되어 있다. 20:20 KST의 normal-clone storage baseline은 working tree 733.447 MiB와 `.git` 1.242 GiB였고, 22:58 KST의 최종 blobless partial clone은 working tree 734.144 MiB와 `.git` 556.986 MiB였다. 단일 giant blob 문제는 없지만, tracked image 집합이 clone 비용의 중심이므로 기본 운영은 blobless partial clone과 역할별 sparse checkout이 적합하다.
 
 History cleanup은 현재 필수가 아니다. commit-bearing history의 최대 blob은 32.341 MiB이고 50 MiB 이상 blob은 0개다. 별도 ResearchControl repo도 지금은 코드·preregistration·compact evidence·manifest의 강한 상호 참조를 끊는 비용이 더 크다.
 
 ## 측정 스냅샷과 범위
 
-- 측정 시각: **2026-07-30 20:20 KST**.
-- clean audit checkout: `/tmp/jbgs-final-clone-u8MoEH/repo`, branch `main`.
-- audited clean `HEAD`: `79cdb8a093b74ed9ca81648aa908f8685fff7ff8` (`INVENTORY-CLOSEOUT-20260730`).
-- live `origin/main` and `origin/exp/fusion-w1`: both `79cdb8a093b74ed9ca81648aa908f8685fff7ff8`; remote default is `main`.
-- active research checkout remains on `exp/fusion-w1`; its protected Fusion state is recorded separately as 19 staged entries, 20 unstaged entries, and 16 untracked files.
+- storage baseline 측정 시각: **2026-07-30 20:20 KST**.
+- final remote/partial-clone verification: **2026-07-30 22:58 KST**, `/tmp/jbgs-remote-final-x8g2KnIY/repo`.
+- final verified technical closeout commit: `9dd020e1b7fa95aa6ac2f3fd7e68440d8012cf96`; 이 audit receipt 자체는 그 descendant로 추가될 수 있다. Remote default와 유일한 live head는 `main`이다.
+- 원 research checkout은 복구용 local `exp/fusion-w1` @ `c90ef861a50338ef8c57916ef62f74b211912a68`로 보존했고 upstream을 제거했다. staged 19, unstaged 20, untracked 16의 payload bytes는 snapshot과 일치한다.
 - The clean clone and active checkout were measured separately so uncommitted Fusion work is not presented as pushed state.
 - `.gitignore`, research source data, and experiment result payloads were not modified. `git filter-repo`, `git clean`, `git gc`, repack, and prune were not run.
 - 용량은 apparent bytes 기준이며 allocated bytes를 별도로 표기했다. MiB/GiB는 binary 단위다.
@@ -29,6 +28,9 @@ History cleanup은 현재 필수가 아니다. commit-bearing history의 최대 
 | Fresh normal-clone `.git/objects`, apparent | 1,332,224,884 bytes | 1.241 GiB |
 | Fresh normal clone checkout + `.git`, apparent | 2,102,666,955 bytes | 1.958 GiB |
 | Active long-lived checkout `.git`, apparent | 1,934,700,164 bytes | 1.802 GiB |
+| Final blobless partial-clone working tree, `.git` 제외, apparent | 769,806,263 bytes | 734.144 MiB |
+| Final blobless partial-clone `.git`, apparent | 584,042,166 bytes | 556.986 MiB |
+| Final blobless partial-clone `.git/objects`, apparent | 583,224,248 bytes | 556.206 MiB |
 
 재배치 전의 동결 측정값은 `.git` 제외 491,442,349,247 bytes(457.691 GiB)였다. clean checkout과의 차이는 490,673,274,294 bytes(456.975 GiB)다. 이 차이의 대부분은 sibling artifact workspace로 옮긴 payload이며, 별도 retention review 두 번으로 107.06 GB의 재생성 가능·중복 항목을 추가 제거했다. 현재 sibling의 regular payload는 383,694,408,263 bytes이고 깨진 symlink는 0개다. 이 local filesystem은 off-machine backup으로 간주할 수 없다.
 
@@ -50,12 +52,12 @@ Retained commit-bearing refs(`refs/heads/*`, `refs/remotes/*`, `refs/tags/*`)에
 
 | 범위 | 파일/blob 수 | bytes | 크기 |
 |---|---:|---:|---:|
-| Pushed `main` / `exp/fusion-w1` tree | 4,453 files | 764,069,641 | 728.674 MiB |
+| Pushed `main` tree | 4,499 files | 764,792,759 | 729.363 MiB |
 | Active checkout index after protected Fusion staging | 4,469 files | 764,304,021 | 728.897 MiB |
 | Active working copies of tracked paths | 4,469 existing / 0 missing | 764,306,560 | 728.899 MiB |
 | Commit-bearing history unique blobs | 8,753 blobs | 1,610,553,665 | 1.500 GiB |
 
-Active index가 pushed tree보다 16 files / 234,380 bytes 큰 것은 보호된 Fusion staged additions 때문이다. working copy에서 누락된 tracked path는 0개다.
+Active checkout 수치는 `c90ef86` 기반 원 WIP의 복구 snapshot이며 현재 pushed tree와 같은 기준선이 아니다. 분류·수정된 기술 handoff는 `main`에 포함됐고, 원 checkout의 working copy에서 누락된 tracked path는 0개다.
 
 - 현재 pushed tree의 큰 파일 100개: [`TRACKED_LARGE_FILES.csv`](TRACKED_LARGE_FILES.csv).
 - commit-bearing history의 큰 unique blob 100개: [`HISTORY_LARGE_BLOBS.csv`](HISTORY_LARGE_BLOBS.csv).
@@ -121,15 +123,15 @@ Externalization evidence는 `artifacts/manifests/local_workspace_20260730.yaml`,
 
 ## 10. 현재 branch와 실제 pushed 범위
 
-`git ls-remote --symref`로 live origin을 확인했다. Remote default는 `main`이고, live head는 `main`과 `exp/fusion-w1` 두 개뿐이며 같은 commit을 가리킨다.
+`git ls-remote --symref`로 live origin을 확인했다. Remote default와 유일한 live head는 `main`이다.
 
 | 항목 | 값 |
 |---|---|
-| Audited clean branch / `HEAD` | `main` / `79cdb8a093b74ed9ca81648aa908f8685fff7ff8` |
-| Live retained remotes | `origin/main`, `origin/exp/fusion-w1` / same `79cdb8a093b74ed9ca81648aa908f8685fff7ff8` |
+| Audited clean branch / technical snapshot `HEAD` | `main` / `9dd020e1b7fa95aa6ac2f3fd7e68440d8012cf96` |
+| Live retained remotes | `origin/main` only |
 | Ahead / behind at snapshot | **0 / 0** |
-| Pushed remote tree | 4,453 files / 764,069,641 bytes |
-| Active research branch | `exp/fusion-w1`; committed tree equals `main` at snapshot |
+| Pushed remote tree | 4,499 files / 764,792,759 bytes |
+| Local recovery branch | `exp/fusion-w1` @ `c90ef86`; no upstream, original dirty state preserved |
 | Protected Fusion state beyond `HEAD` | 19 staged entries, 20 unstaged entries, 16 untracked files |
 | Archive tags | 2 unique retired tips preserved; see `BRANCH_RETIREMENT_20260730.md` |
 
@@ -137,16 +139,16 @@ Externalization evidence는 `artifacts/manifests/local_workspace_20260730.yaml`,
 
 | Live remote top-level owner | Files | Bytes |
 |---|---:|---:|
-| `docs/` | 1,930 | 590,319,746 |
-| `phases/` | 1,829 | 151,910,728 |
-| `src/` | 68 | 10,759,820 |
-| `scripts/` | 382 | 7,520,970 |
-| `tests/` | 94 | 1,633,611 |
-| `artifacts/` | 20 | 1,615,981 |
-| `configs/` | 122 | 273,303 |
-| Root files | 8 | 35,482 |
+| `docs/` | 1,934 | 590,365,875 |
+| `phases/` | 1,850 | 152,415,904 |
+| `src/` | 70 | 10,778,507 |
+| `scripts/` | 386 | 7,563,613 |
+| `tests/` | 105 | 1,725,119 |
+| `artifacts/` | 24 | 1,632,656 |
+| `configs/` | 122 | 275,332 |
+| Root files | 8 | 35,753 |
 
-Branch retirement는 unique tip 두 개를 annotated archive tag로 먼저 push한 뒤 수행했다. Remote head 11개와 local head 14개에서 각각 retained head 2개로 줄였으며, 삭제·보존 근거와 exact refs는 [`BRANCH_RETIREMENT_20260730.md`](repository/BRANCH_RETIREMENT_20260730.md)에 기록했다.
+Branch retirement는 unique tip 두 개를 annotated archive tag로 먼저 보존한 뒤 수행했다. Fusion WIP snapshot·source-lock·technical gate와 새 `main`의 ancestry를 확인한 뒤 마지막 remote `exp/fusion-w1`도 제거해 live remote head를 `main` 하나로 줄였다. 삭제·보존 근거와 exact refs는 [`BRANCH_RETIREMENT_20260730.md`](repository/BRANCH_RETIREMENT_20260730.md)에 기록했다.
 
 ## A–D 잠정 분류
 
@@ -166,7 +168,7 @@ Branch retirement는 unique tip 두 개를 annotated archive tag로 먼저 push�
 - Option 3 separate ResearchControl repo는 현재 강한 cross-reference를 분할하고 이중 manifest/version coordination을 만든다.
 - Option 4 history cleanup required later는 현재 수치로는 요구되지 않는다. 최대 history blob 32.341 MiB, 50 MiB 이상 0개다. partial/sparse clean-clone 실측 후에도 비용이 허용 불가일 때만 별도 승인 과제로 재검토한다.
 
-실행 계획은 [`WORK_SPARSE_CHECKOUT_PLAN.md`](WORK_SPARSE_CHECKOUT_PLAN.md), 저장 정책은 [`PROPOSED_STORAGE_POLICY.md`](PROPOSED_STORAGE_POLICY.md)를 따른다. 이 closeout에서 normal fresh clone, reviewed artifact cleanup, resolver repair, push, and branch retirement were executed and verified. Partial/sparse clone, Git LFS introduction, `.gitignore` changes, history rewrite, and Git object cleanup were not executed.
+실행 계획은 [`WORK_SPARSE_CHECKOUT_PLAN.md`](WORK_SPARSE_CHECKOUT_PLAN.md), 저장 정책은 [`PROPOSED_STORAGE_POLICY.md`](PROPOSED_STORAGE_POLICY.md)를 따른다. 이 closeout에서 normal clone baseline, blobless partial clone, reviewed artifact verification, resolver repair, push, and branch retirement were executed and verified. Sparse checkout activation, Git LFS introduction, `.gitignore` changes, history rewrite, and Git object cleanup were not executed.
 
 ## 재현 명령
 
