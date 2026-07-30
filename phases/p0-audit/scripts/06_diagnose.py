@@ -19,6 +19,8 @@ from pathlib import Path
 
 import numpy as np
 
+from p0_paths import P0_EVIDENCE
+
 
 TASK_ID = "T6"
 BUILDING_CLASS = 6
@@ -144,7 +146,7 @@ def capture(cmd: list[str]) -> str:
 
 
 def record_issue(repo: Path, run_id: str, message: str) -> None:
-    issues = repo / "phases/p0-audit/docs/issues.md"
+    issues = repo / "phases/p0-audit/issues.md"
     with issues.open("a", encoding="utf-8") as fh:
         fh.write(f"\n## {TASK_ID} W1 Input Diagnosis\n\n")
         fh.write(f"- {run_id}: {message}. See runs/{run_id}/logs/.\n")
@@ -699,11 +701,11 @@ def write_config(run_dir: Path, values: dict[str, str | int | float]) -> None:
 def main() -> None:
     root = Path("/workspace")
     data = root / "data"
-    docs = root / "docs"
+    docs = P0_EVIDENCE
     run_id = os.environ["RUN_ID"]
     run_dir = root / "runs" / run_id
     work_dir = data / "work/diagnose"
-    figs_dir = docs / "figs"
+    figs_dir = docs.figs("W1")
 
     scene_aoi_geojson = data / "work/footprints/scene_aoi.geojson"
     footprints_geojson = data / "work/footprints/lod2_ground_plan.geojson"

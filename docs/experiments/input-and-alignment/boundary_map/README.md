@@ -40,7 +40,7 @@ run_ids:
 - `manifests/`: v1-v3의 재현 provenance와 v4/v4.1 정본 provenance
 - [`../../figs/boundary_map/boundary_map_v4_map.png`](../../figs/boundary_map/boundary_map_v4_map.png): 최신 존재 그림이지만 v4.1에서 변경된 5동은 반영하지 않은 보조 그림
 
-대체된 v1-v4 자료는 [`../../archive/boundary_map/`](../../archive/boundary_map/)에 버전별로 보존한다. Archive 파일은 현재 입력으로 사용하지 않는다.
+대체된 v1-v4 자료는 [`../../../evidence/archive/boundary_map/`](../../../evidence/archive/boundary_map/)에 버전별로 보존한다. Archive 파일은 현재 입력으로 사용하지 않는다.
 
 ## 실행 이력
 
@@ -58,12 +58,12 @@ Run 디렉터리는 이동하지 않는다. 실행 당시 코드·config·입출
 
 - 현재 boundary-map 전용 Python·shell driver: [`../../../scripts/boundary_and_robustness/boundary_map/`](../../../scripts/boundary_and_robustness/boundary_map/)
 - P2 공용 helper·환경 script: `phases/p2-gsjso/scripts/`
-- exact script relocation map: [`../../catalog/migrations/BOUNDARY_MAP_SCRIPT_PATHS.csv`](../../catalog/migrations/BOUNDARY_MAP_SCRIPT_PATHS.csv)
+- exact script relocation map: [`../../../research/repository/migrations/BOUNDARY_MAP_SCRIPT_PATHS.csv`](../../../research/repository/migrations/BOUNDARY_MAP_SCRIPT_PATHS.csv)
 
 전용 driver만 family owner로 이동했다. 여러 P2 실험이 함께 쓰는 helper는 복제하지 않고 기존 phase 위치에서 import한다.
 
 ## 경로 이동과 과거 참조
 
-정확한 문서 이전 경로와 현재 경로, lifecycle 상태, 원본 SHA-256은 [`../../catalog/migrations/BOUNDARY_MAP_PATHS.csv`](../../catalog/migrations/BOUNDARY_MAP_PATHS.csv)에 있다. Script 이동과 필수 경로 수정은 별도 script relocation map에 기록한다. 과거 manifest와 run receipt 안의 이전 경로 문자열은 당시 사실이므로 rewrite하지 않는다. 인벤토리는 문서 migration manifest를 통해 그 문자열을 현재 경로로 해석한다.
+정확한 문서 이전 경로와 현재 경로, lifecycle 상태, 원본 SHA-256은 [`../../../research/repository/migrations/BOUNDARY_MAP_PATHS.csv`](../../../research/repository/migrations/BOUNDARY_MAP_PATHS.csv)에 있다. Script 이동과 필수 경로 수정은 별도 script relocation map에 기록한다. 과거 manifest와 run receipt 안의 이전 경로 문자열은 당시 사실이므로 rewrite하지 않는다. 인벤토리는 문서 migration manifest를 통해 그 문자열을 현재 경로로 해석한다.
 
-활성 staged workflow가 아직 고정한 v2 ladder의 이전 경로 `docs/boundary_map_v2_ladder.csv`만 잠정 유지한다. v4.1의 이전 root copy는 `docs/archive/compatibility/root-mirrors/tables/`에 보존했으며, 새 코드와 문서는 이 디렉터리의 정본 경로를 사용한다.
+활성 staged workflow가 아직 고정한 v2 ladder의 이전 경로 `docs/boundary_map_v2_ladder.csv`만 잠정 유지한다. v4.1의 이전 root copy는 `docs/evidence/archive/compatibility/root-mirrors/tables/`에 보존했으며, 새 코드와 문서는 이 디렉터리의 정본 경로를 사용한다.

@@ -22,6 +22,8 @@ from typing import Any
 import numpy as np
 from PIL import Image
 
+from p0_paths import P0_EVIDENCE, P0_EVIDENCE_ROOT, P0_G1_PACKAGE
+
 
 TASK_ID = "T12"
 CANONICAL_RUN = "w3_2b_roofer_repeatability_20260612_220747/run_2"
@@ -97,10 +99,10 @@ def host_entrypoint() -> None:
 
 def compute_entrypoint() -> None:
     root = Path("/workspace")
-    docs = root / "docs"
+    docs = P0_EVIDENCE
     data = root / "data"
-    figs = docs / "figs"
-    package = docs / "G1_package"
+    figs = docs.figs("W3")
+    package = P0_G1_PACKAGE
     package_figs = package / "figs"
     run_id = os.environ["RUN_ID"]
     run_dir = root / "runs" / run_id
@@ -496,7 +498,7 @@ def capture(cmd: list[str], cwd: Path | None = None) -> str:
 
 
 def record_issue(repo: Path, run_id: str, message: str) -> None:
-    issues = repo / "phases/p0-audit/docs/issues.md"
+    issues = repo / "phases/p0-audit/issues.md"
     with issues.open("a", encoding="utf-8") as fh:
         fh.write(f"\n## {TASK_ID} Figure Failure Story\n\n")
         fh.write(f"- {run_id}: {message}. See runs/{run_id}/logs/.\n")
@@ -576,8 +578,8 @@ def copy_outputs(run_dir: Path, paths: list[Path]) -> None:
     for path in paths:
         if not path.exists():
             continue
-        if path.is_relative_to(Path("/workspace/docs")):
-            dst = snapshot / "docs" / path.relative_to(Path("/workspace/docs"))
+        if path.is_relative_to(P0_EVIDENCE_ROOT):
+            dst = snapshot / "evidence" / path.relative_to(P0_EVIDENCE_ROOT)
         elif path.is_relative_to(Path("/workspace/data")):
             dst = snapshot / "data" / path.relative_to(Path("/workspace/data"))
         else:

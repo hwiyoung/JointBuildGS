@@ -66,7 +66,7 @@ from src.stage2.loss.semantic_guided import (  # noqa: E402
 
 RUN_ID = "20260713_e5_c001_s3_semantic_guided"
 RUN_DIR = REPO / "phases/p2-gsjso/runs" / RUN_ID
-CONFIG_DIR = REPO / "configs/tum_mob/e5_s3_semantic_guided"
+CONFIG_DIR = REPO / "configs/e5_c001/e5_s3_semantic_guided"
 RESULTS_ROOT = REPO / "results/tum_transfer/e5_s3_semantic_guided/C001"
 CKPT_ROOT = RESULTS_ROOT / "runs"
 FULL_RUNS = [

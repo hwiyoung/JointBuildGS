@@ -31,7 +31,7 @@ from typing import Any, Callable, Mapping, Sequence, TextIO
 import yaml
 
 
-REPO = Path(__file__).resolve().parents[3]
+REPO = Path(__file__).resolve().parents[2]
 RUN_ID = "20260721_pilot_1wave"
 RESOLVED_SCHEMA = "jointbuildgs.pilot_1wave.resolved_configs.v1"
 DRIVER_SCHEMA = "jointbuildgs.pilot_1wave.driver_manifest.v1"

@@ -21,6 +21,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from p0_paths import P0_EVIDENCE
+
 
 TASK_ID = "W2-1"
 DIM_MEDIAN_RESIDUAL_M = 0.174
@@ -268,7 +270,7 @@ def write_host_versions(
 def tools_prepare() -> None:
     root = Path("/workspace")
     data = root / "data"
-    docs = root / "docs"
+    docs = P0_EVIDENCE
     work_dir = data / "work/w2"
     work_dir.mkdir(parents=True, exist_ok=True)
 
@@ -343,7 +345,7 @@ def tools_postprocess() -> None:
     root = Path("/workspace")
     run_id = os.environ["RUN_ID"]
     run_dir = root / "runs" / run_id
-    docs = root / "docs"
+    docs = P0_EVIDENCE
     cityjson_dir = run_dir / "cityjson"
     val_dir = run_dir / "val3dity"
     cityjson_dir.mkdir(parents=True, exist_ok=True)

@@ -428,7 +428,7 @@ def run(args: argparse.Namespace) -> None:
         sources["train_manifest"],
         outputs["mask_iou_csv"],
         common.REPO / "scripts/e5_c001/s3b0/run_e5_c001_s3b0_gate.sh",
-        common.REPO / "tests/experiments/e5_c001_s3b0/test_e5_c001_s3b0_gate.py",
+        common.REPO / "tests/e5_c001/s3b0/test_e5_c001_s3b0_gate.py",
     }
 
     for context in contexts:

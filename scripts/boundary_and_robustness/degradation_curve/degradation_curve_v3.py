@@ -85,9 +85,9 @@ CANONICAL_ALS_CITYJSON = CANONICAL_RUN / "cityjson/als_roofer.city.json"
 CANONICAL_ALS_JSONL_DIR = CANONICAL_RUN / "roofer_als"
 CANONICAL_STATUS = CANONICAL_RUN / "building_reconstruction_status.csv"
 
-SCORER_SCRIPT = REPO / "scripts/e5_c001/p2_gsjso/e5_c001_8way.py"
+SCORER_SCRIPT = REPO / "scripts/e5_c001/e5_c001_8way.py"
 BASELINE_SCORER_SCRIPT = (
-    REPO / "scripts/quality_score/p2_gsjso/qs_baseline178_rescore.py"
+    REPO / "scripts/evaluation/quality_score/qs_baseline178_rescore.py"
 )
 W2_SCRIPT = REPO / "phases/p0-audit/scripts/08_roofer_w2.py"
 QA_SCRIPT = REPO / "scripts/boundary_and_robustness/degradation_curve/degradation_curve_v3_qa.py"
@@ -720,7 +720,7 @@ def prepare() -> None:
         "git_head": git_output("rev-parse", "HEAD"),
         "branch": git_output("branch", "--show-current"),
         "population_definition": (
-            "docs/regression_input_snapshot.csv arm=raw_lidar assembled=true"
+            "docs/experiments/evaluation/attr_outcome_regression/tables/regression_input_snapshot.csv arm=raw_lidar assembled=true"
         ),
         "population_count": len(population),
         "population_sha256": hashlib.sha256(
@@ -2380,7 +2380,7 @@ def marker_stats(
     return {
         "raw_dense": {
             "source": (
-                "docs/regression_input_snapshot.csv arm=raw_dense; read-only"
+                "docs/experiments/evaluation/attr_outcome_regression/tables/regression_input_snapshot.csv arm=raw_dense; read-only"
             ),
             "local_plane_rms_m": quantile_payload(
                 as_float(row.get("local_plane_rms_m"))
@@ -2392,7 +2392,7 @@ def marker_stats(
         },
         "raw_lidar_snapshot": {
             "source": (
-                "docs/regression_input_snapshot.csv arm=raw_lidar; read-only"
+                "docs/experiments/evaluation/attr_outcome_regression/tables/regression_input_snapshot.csv arm=raw_lidar; read-only"
             ),
             "local_plane_rms_m": quantile_payload(
                 as_float(row.get("local_plane_rms_m"))

@@ -22,6 +22,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from p0_paths import P0_EVIDENCE
+
 
 TASK_ID = "W2-3a"
 BASE_W2_RUN_ID = "w2_1_roofer_default_20260612_152729"
@@ -293,7 +295,7 @@ def write_host_versions(
 
 def prepare_entrypoint() -> None:
     root = Path("/workspace")
-    docs = root / "docs"
+    docs = P0_EVIDENCE
     run_id = os.environ["RUN_ID"]
     run_dir = root / "runs" / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
@@ -352,7 +354,7 @@ def plan_row(
 
 def postprocess_entrypoint() -> None:
     root = Path("/workspace")
-    docs = root / "docs"
+    docs = P0_EVIDENCE
     run_id = os.environ["RUN_ID"]
     run_dir = root / "runs" / run_id
     cityjson_dir = run_dir / "cityjson"

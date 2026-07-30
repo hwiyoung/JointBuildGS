@@ -13,7 +13,7 @@ import zipfile
 from pathlib import Path
 
 
-ROOT = Path(__file__).resolve().parents[3]
+ROOT = Path(__file__).resolve().parents[2]
 
 
 def append_log(path: Path, message: str) -> None:

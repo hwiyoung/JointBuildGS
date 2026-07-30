@@ -28,13 +28,14 @@ evidence-to-CityGML read-out으로 변환해 CityGML LOD2 semantic shell을 생�
   (W1 입력준비·진단 → W2 audit → W3 지표·통합 → W4 G1 보고). 핵심: DIM 재구성 실패 8건 vs
   ALS 0건(McNemar p=0.0078), 점군 중간표현의 약점이 GS-JSO의 동기. G1 판정 대기.
 - **P2 진행 → `phases/p2-gsjso/`** — gsplat+2DGS 위 `L_mutual`·`L_structure` 공동 최적화 spike.
-- **GS-JSO 코어 구현 코드는 레포 루트에 그대로 둔다** (이동 금지, phase 문서는 참조만):
-  `src/`, `configs/`, `scripts/`, `tools/`, `tests/`, `docs/`, `phases/`, `artifacts/`,
-  `external/`, `legacy/`,
-  `Dockerfile`, `docker-compose.yml`, `requirements.txt`.
-- 대용량 runtime payload는 sibling `../JointBuildGS-artifacts`에 있고, Docker가 과거
-  `data/`·`results/` 경로를 compatibility mount한다. Git 정본 결과는 `docs/experiments/`,
-  resolver는 `artifacts/manifests/`가 소유한다.
+- **영구 정보 소유자는 7개뿐이다**: `src/`, `configs/`, `scripts/`, `tests/`, `docs/`,
+  `phases/`, `artifacts/`. 루트의 Docker·Compose·requirements 파일은 전역 실행 환경만 소유한다.
+- 재사용 구현은 `src/`, 재사용 실행기는 `scripts/`, phase 전용 잠금 절차와 compact receipt는
+  `phases/`가 소유한다. 유지보수 실행기는 `scripts/repository/` 또는 `scripts/inspection/`,
+  브라우저 앱은 `src/apps/`에 둔다.
+- 대용량 runtime payload는 sibling `../JointBuildGS-artifacts`에 있고 Docker에서는
+  `JBGS_ARTIFACT_ROOT=/artifacts/JointBuildGS`로 해석한다. Git 정본 결과는
+  `docs/experiments/`, resolver는 `artifacts/manifests/`가 소유한다.
 
 ## §4 불변 규칙 (repo-wide)
 

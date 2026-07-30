@@ -12,55 +12,30 @@ Phase 3: Real UAV(GauU-Scene) + 순차 파이프라인 비교 + 실데이터 시
 
 Phase 1은 "파이프라인이 레퍼런스 수준으로 작동하는가"의 검증, Phase 2가 방법론의 핵심 검증, Phase 3가 일반화/비교/실환경 시연.
 
-## 리포지터리 구조 (gsplat 의존)
+## 현재 리포지터리 구조 (gsplat 의존)
 
 ```
 JointBuildGS/
-├── CLAUDE.md
-├── docs/
-│   ├── EXPERIMENT_PLAN.md
-│   └── RESEARCH_CONTEXT.md
-├── requirements.txt
-├── src/
-│   ├── stage1/
-│   ├── stage2/
-│   │   ├── model.py
-│   │   ├── renderer.py
-│   │   ├── loss/
-│   │   │   ├── data_fitting.py
-│   │   │   ├── semantic.py
-│   │   │   ├── mutual.py
-│   │   │   └── structure.py
-│   │   ├── grouping.py
-│   │   ├── densification.py
-│   │   ├── dataloader.py
-│   │   └── train.py
-│   └── stage3/
-│       ├── clustering.py
-│       ├── plane_intersection.py
-│       ├── building_instance.py
-│       ├── ground_surface.py
-│       └── citygml_export.py
-├── scripts/
-│   ├── synthetic_a/        # 기존 결과 마이그레이션
-│   ├── synthetic_b/
-│   └── comparison/
-├── configs/
-├── data/
-│   ├── matrixcity/         # Small City Aerial
-│   ├── gauu_scene/
-│   ├── 3dbag/
-│   └── seongsu/
-├── results/
-└── legacy/                 # PlanarSplatting 예비 실험
+├── src/                    # 재사용 알고리즘·파이프라인·앱
+├── configs/                # 재사용 가능한 설정
+├── scripts/                # 기능별 재현 실행기와 저장소 점검
+├── tests/                  # 재사용 코드·workstream 검증
+├── docs/                   # research / experiments / evidence / figs
+├── phases/                 # 진행 단계의 잠금·전용 절차·compact receipt
+└── artifacts/manifests/    # 외부 payload와 quarantine resolver
 ```
+
+대용량 raw/generated payload는 `JBGS_ARTIFACT_ROOT`가 가리키는 sibling artifact storage가
+소유한다. 과거 `data/`, `results/`, `legacy/` 경로를 전제로 쓴 아래 단계별 프롬프트는 당시
+실행 기록이며, 현재 실행 시에는 각각 external payload, `docs/experiments/`, quarantine manifest로
+해석한다. 이 이동은 `artifacts/manifests/`와 `docs/research/repository/`에 기록되어 있다.
 
 ## 현재 상태
 
 | 항목 | 상태 |
 |------|------|
 | Stage 1 (성수동 COLMAP + Grounded SAM) | 완료 |
-| PlanarSplatting 예비 실험 | 완료, legacy/ |
+| PlanarSplatting 예비 실험 | 완료, external quarantine + manifest |
 | Synthetic A (Stage 3 단독) | 완료 |
 | gsplat 기반 파이프라인 구축 시작 | 진행 중 (MatrixCity smoke test) |
 

@@ -22,6 +22,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from p0_paths import P0_EVIDENCE
+
 
 TASK_ID = "W3-2c"
 CANONICAL_RUN_ID = "w3_2b_roofer_repeatability_20260612_220747"
@@ -80,8 +82,8 @@ def host_entrypoint() -> None:
 
 def compute_entrypoint() -> None:
     root = Path("/workspace")
-    docs = root / "docs"
-    figs = docs / "figs"
+    docs = P0_EVIDENCE
+    figs = docs.figs("W3")
     run_id = os.environ["RUN_ID"]
     run_dir = root / "runs" / run_id
     figs.mkdir(parents=True, exist_ok=True)
@@ -180,7 +182,7 @@ def compute_entrypoint() -> None:
 
 
 def build_canonical_paired_rows(root: Path) -> list[dict[str, str]]:
-    docs = root / "docs"
+    docs = P0_EVIDENCE
     base_rows = read_csv(docs / "W2_1c_paired_status.csv")
     als_run2 = read_status(root / "runs" / CANONICAL_RUN_ID / "status" / CANONICAL_STAGE / "als_default.csv")
     dim_run2 = read_status(root / "runs" / CANONICAL_RUN_ID / "status" / CANONICAL_STAGE / "dim_default.csv")
@@ -363,8 +365,8 @@ def build_quality_comparison(
     canonical_summary: list[dict[str, str]],
     canonical_internal_summary: list[dict[str, str]],
 ) -> tuple[list[dict[str, str]], str]:
-    old_external = {row["metric"]: row for row in read_csv(Path("/workspace/docs/W3_1_roofer_quality_summary.csv"))}
-    old_internal = {row["metric"]: row for row in read_csv(Path("/workspace/docs/W3_1b_internal_boundary_summary.csv"))}
+    old_external = {row["metric"]: row for row in read_csv(P0_EVIDENCE / "W3_1_roofer_quality_summary.csv")}
+    old_internal = {row["metric"]: row for row in read_csv(P0_EVIDENCE / "W3_1b_internal_boundary_summary.csv")}
     canonical = {row["metric"]: row for row in canonical_summary}
     canonical.update({row["metric"]: row for row in canonical_internal_summary})
     rows = []

@@ -42,10 +42,9 @@ except ModuleNotFoundError:  # pragma: no cover - exercised in the pinned tools 
     yaml = None
 
 
-REPO = Path(__file__).resolve().parents[3]
+REPO = Path(__file__).resolve().parents[2]
 SCRIPT_DIR = Path(__file__).resolve().parent
-P2_SHARED_SCRIPT_DIR = REPO / "phases/p2-gsjso/scripts"
-for import_path in (P2_SHARED_SCRIPT_DIR, SCRIPT_DIR):
+for import_path in (REPO, SCRIPT_DIR):
     if str(import_path) not in sys.path:
         sys.path.insert(0, str(import_path))
 
@@ -65,11 +64,11 @@ PILOT_MANIFEST = RUN_DIR / "pilot_1wave_pilot_set_manifest.json"
 FOOTPRINT_SOURCE = REPO / "results/tum_transfer/analysis/footprints_aoi.geojson"
 BASELINE_SCORES = REPO / "docs/experiments/evaluation/qs_baseline178/tables/qs_baseline178_scores.csv"
 CHEAP_REFINE_SCORES = REPO / "docs/experiments/evaluation/qs_cheap_refine_sweep/tables/qs_cheap_refine_sweep.csv"
-OBSERVATION_STRATA_SOURCE = REPO / "docs/regression_input_snapshot.csv"
+OBSERVATION_STRATA_SOURCE = REPO / "docs/experiments/evaluation/attr_outcome_regression/tables/regression_input_snapshot.csv"
 LOD2_DIR = REPO / "phases/p0-audit/data/raw/lod2"
 W2_SCRIPT = REPO / "phases/p0-audit/scripts/08_roofer_w2.py"
-METRIC_SCRIPT = P2_SHARED_SCRIPT_DIR / "e5_c001_8way.py"
-BASELINE_SCRIPT = P2_SHARED_SCRIPT_DIR / "qs_baseline178_rescore.py"
+METRIC_SCRIPT = REPO / "scripts/e5_c001/e5_c001_8way.py"
+BASELINE_SCRIPT = REPO / "scripts/evaluation/quality_score/qs_baseline178_rescore.py"
 
 PILOT_SET_SHA256 = "db5ecb6c838499dd3a5f96a4b1abae85414c3d38318d976b7ee598982b566ffc"
 PILOT_MANIFEST_SHA256 = "803d18862db926fff353c641e08a03c5938cedf3fb49cc4859751189e83855e2"

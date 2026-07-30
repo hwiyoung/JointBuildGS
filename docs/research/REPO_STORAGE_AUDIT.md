@@ -1,225 +1,206 @@
 # JointBuildGS repository storage and Git history audit
 
-## Executive decision
+## 결론
 
-**Recommendation: 2. existing repo + partial clone/sparse checkout.**
+**최종 권고: 2. existing repo + partial clone/sparse checkout.**
 
-> Post-audit update (2026-07-30): `STORAGE-IA-01` moved 428,296,653,718 bytes of local datasets, historical results/reports, the fair pilot, and P0 bulk workspaces into `../JointBuildGS-artifacts` by same-filesystem atomic rename. The main checkout is now approximately 59 GiB excluding `.git`, dominated by active P2 work. The baseline measurements below remain the reproducible pre-migration snapshot; no push or history rewrite occurred.
+현재 main checkout은 재배치 전 457.691 GiB에서 **734.054 MiB**(`.git` 제외)로 줄었고, 대용량 payload는 sibling `../JointBuildGS-artifacts`로 분리되어 있다. 그러나 실제 원격 branch tree는 아직 **6,016 files / 732.360 MiB**이고 로컬 Git object database도 **1.797 GiB**다. 단일 giant blob 문제는 없지만, 940개의 tracked image가 547.948 MiB를 차지하므로 normal clone보다 blobless partial clone과 역할별 sparse checkout이 적합하다.
 
-The repository does not currently require history cleanup. The largest committed-history blob is only 32.341 MiB and there are no current tracked or committed-history blobs at or above 50 MiB. The practical cost comes from accumulation: the current index contains 945 PNG files totaling 553.596 MiB, the current branch tree is 732.360 MiB, and the local Git object database is 1.794 GiB. A blob-filtered sparse clone gives a useful control-plane checkout without changing history or splitting research governance into another repository.
+History cleanup은 현재 필수가 아니다. commit-bearing history의 최대 blob은 32.341 MiB이고 50 MiB 이상 blob은 0개다. 별도 ResearchControl repo도 지금은 코드·preregistration·compact evidence·manifest의 강한 상호 참조를 끊는 비용이 더 크다.
 
-The pre-migration 457.691 GiB working tree was a different problem: 456.544 GiB was ignored local data and generated artifacts. Those bytes now use the sibling local artifact workspace and a tracked manifest. This is organized local storage, not yet a durable backup.
+## 측정 스냅샷과 범위
 
-## Post-reorganization refresh — 2026-07-30
+- 측정 시각: **2026-07-30 16:57:05 KST**.
+- checkout: `/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS`.
+- branch: `exp/fusion-w1`.
+- local `HEAD`: `8b20d17550885c1a6365f0abd0d126f34d826a95` (`POLICY-IA2-01 restore pre-audit gitignore bytes`).
+- live `origin/exp/fusion-w1`: `97f6b3ef3159360b88ba0b25cca4b280c14fdcb8`.
+- 측정 전후 porcelain-v2 상태 hash가 동일하여 아래 수치는 한 상태에서 얻은 stable snapshot이다.
+- current index는 진행 중인 구조 재배치와 사용자의 Fusion 작업을 포함한다. `HEAD`, index, working copy, live remote를 혼합하지 않고 별도로 표기한다.
+- 이 감사 갱신은 이 문서와 두 CSV 및 두 계획서만 편집했다. `.gitignore`, 연구 원본, 실험 결과, history, object store는 변경하지 않았다. `git filter-repo`, `git clean`, `git gc`, repack, prune를 실행하지 않았다.
+- 용량은 apparent bytes 기준이며 allocated bytes를 별도로 표기했다. MiB/GiB는 binary 단위다.
 
-The measurements below refresh the control-plane and push boundary after the verified information-architecture migrations. They do not replace the immutable 2026-07-29 audit snapshot in the remaining sections.
+## 1–3. Working tree, `.git`, Git objects
 
-| Measure | Refreshed value |
+| 항목 | 정확한 값 | 사람이 읽기 쉬운 값 |
+|---|---:|---:|
+| Working tree, `.git` 제외, apparent | 769,712,016 bytes | 734.054 MiB |
+| Working tree, `.git` 제외, allocated | 779,767,808 bytes | 743.645 MiB |
+| `.git`, apparent | 1,931,369,988 bytes | 1.799 GiB |
+| `.git`, allocated | 1,948,221,440 bytes | 1.814 GiB |
+| `.git/objects`, apparent | 1,929,310,992 bytes | 1.797 GiB |
+| Checkout + `.git`, apparent | 2,701,082,004 bytes | 2.516 GiB |
+
+재배치 전의 동결 측정값은 `.git` 제외 491,442,349,247 bytes(457.691 GiB)였다. 현재 값과의 차이는 490,672,637,231 bytes(456.975 GiB)다. 이는 삭제량이 아니라 sibling artifact workspace로 옮겨진 bulk payload와 격리 항목을 checkout 집계에서 제외한 결과다. 현재 `../JointBuildGS-artifacts` 자체는 490,795,136,169 apparent bytes(457.089 GiB)이며, off-machine backup으로 간주할 수는 없다.
+
+`git count-objects -v` 결과:
+
+| 통계 | 값 |
 |---|---:|
-| Live `origin/exp/fusion-w1` | `97f6b3ef3159360b88ba0b25cca4b280c14fdcb8` |
-| Live pushed tree | 6,016 files / 767,935,421 bytes / 732.360 MiB |
-| Local pre-final-doc `HEAD` | `388819155cc65983dc6de1c6f49fab99a529f3a1` |
-| Local tree at that checkpoint | 6,158 files / 774,673,431 bytes / 738.786 MiB |
-| Ahead/behind at that checkpoint | 17 / 0 |
-| Local `.git` apparent bytes | 1,920,692,651 bytes / 1.789 GiB |
-| Loose objects | 3,560 / 247.21 MiB |
-| Packed objects | 14,819 in 10 packs / 1.55 GiB |
-
-The live remote was verified with read-only `git ls-remote`; no fetch or push was performed. The remote still contains the old tracked `env/`, `reports/`, and root `runs/` ranges because the structure commits are local. Locally those tracked owners are empty, verified documents/evidence are organized under `docs/`, reusable drivers/tests are under root `scripts/` and `tests/`, and compact receipts are under `phases/`.
-
-The complete 457.691 GiB measurement below remains the pre-migration storage baseline. A post-migration top-level scan measured the main checkout at approximately 59 GiB excluding `.git`; exact moved-byte and inode evidence is in [`../../artifacts/manifests/local_workspace_20260730.yaml`](../../artifacts/manifests/local_workspace_20260730.yaml). See [`../catalog/REPOSITORY_STRUCTURE_FINAL.md`](../catalog/REPOSITORY_STRUCTURE_FINAL.md) for the current folder-level result.
-
-## Scope and safety
-
-- Measurement window: 2026-07-29 19:53–19:59 KST.
-- Main snapshot for file-state counts: 2026-07-29 19:55:51 KST.
-- Current checkout: `/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS`.
-- Branch at snapshot: `exp/fusion-w1`.
-- No file was deleted, moved, renamed, or modified during measurement.
-- `.gitignore` was not modified.
-- No history rewrite, `git filter-repo`, `git clean`, `git gc`, repack, prune, or artifact cleanup was run.
-- Original data and experiment results were not changed.
-- The only repository writes made by this task are the five requested audit deliverables under `docs/research/`.
-
-Measurements used apparent bytes unless explicitly labeled allocated bytes. Tracked size means the sum of current index blob sizes. Ignored and untracked sizes mean the sum of `lstat(2)` sizes for file paths returned by `git ls-files`; directory metadata and symlink targets are excluded. The overall `du` measurement and the status-derived sums therefore answer slightly different questions.
-
-## 1–3. Checkout, `.git`, and object database
-
-| Measure | Exact bytes / count | Human value | Interpretation |
-|---|---:|---:|---|
-| Current working tree, excluding `.git`, apparent | 491,442,349,247 | 457.691 GiB | Checkout files only |
-| Current working tree, excluding `.git`, allocated | 491,674,292,224 | 457.907 GiB | Filesystem blocks |
-| `.git`, apparent | 1,928,849,670 | 1.796 GiB | Shared Git directory |
-| `.git`, allocated | 1,952,739,328 | 1.819 GiB | Filesystem blocks |
-| `.git/objects`, apparent | 1,926,469,462 | 1.794 GiB | Almost all `.git` storage |
-
-This repository has a second linked worktree, `JointBuildGS-aprime-report-v2`, at detached commit `647794a5a84e1b599e9c5e9170b62148500cc206`. Its separate checkout is 762,250,343 apparent bytes (726.939 MiB) and is excluded from the 457.691 GiB main-working-tree figure. It shares the `.git` object database; `.git/worktrees/JointBuildGS-aprime-report-v2/index` is about 0.90 MiB.
-
-`git count-objects` reported:
-
-| Git object statistic | Value |
-|---|---:|
-| Loose objects | 8,006 |
-| Loose-object disk size | 625,632 KiB / 610.97 MiB |
-| Packed objects | 9,514 |
-| Pack count | 9 |
-| Pack disk size | 1,277,705 KiB / 1.21 GiB |
+| Loose objects | 5,655 |
+| Loose-object disk size | 269,956 KiB / 263.629 MiB |
+| Packed objects | 14,819 |
+| Pack count | 10 |
+| Pack disk size | 1,629,295 KiB / 1.554 GiB |
 | Prune-packable | 0 |
 | Garbage objects / bytes | 0 / 0 |
 
-The commit-history scope `refs/heads/* + refs/remotes/* + refs/tags/*` contains 10,997 reachable objects, including 6,913 unique blobs totaling 1,498,722,205 uncompressed bytes (1.396 GiB). This is not the same as packed disk size because Git delta-compresses objects and the local object store also contains non-commit refs and loose index/worktree objects.
+Commit-bearing refs(`refs/heads/*`, `refs/remotes/*`, `refs/tags/*`)에는 13,781 reachable objects와 8,380 unique blobs가 있으며 blob uncompressed 합은 1,587,745,983 bytes(1.479 GiB)다. 별도로 Codex가 만든 6개의 `refs/codex/turn-diffs/*` tree ref까지 literal `--all`로 포함하면 17,044 objects, 10,839 blobs, 2,767,647,935 bytes(2.577 GiB)가 된다. 이 tree refs는 commit history나 pushed origin 범위가 아니므로 history CSV에서는 제외했다. 어느 범위에서도 최대 blob은 동일한 33,911,867 bytes다.
 
-There are five local `refs/codex/turn-diffs/*` tree refs. If those non-commit snapshot refs are included through a literal `git rev-list --objects --all`, the scope rises to 14,253 reachable objects, 9,372 unique blobs, and 2.495 GiB of uncompressed blob content. Some such blobs represent uncommitted runtime/cache files. They are neither commit history nor pushed origin content, so the history CSV deliberately uses commit-bearing branch/remote/tag refs. No ref was removed or altered.
+## 4–6. 현재 tracked files와 전체 commit history의 큰 blob
 
-## 4–6. Current tracked files and history blobs
-
-| Scope | File/blob count | Uncompressed bytes | Human value |
+| 범위 | 파일/blob 수 | bytes | 크기 |
 |---|---:|---:|---:|
-| Current index | 6,032 files | 768,169,741 | 732.584 MiB |
-| Current working copies of index paths | 6,032 files | 768,171,430 | 732.585 MiB |
-| Current `HEAD` tree | 6,016 files | 767,935,421 | 732.360 MiB |
+| Current index | 4,449 files | 762,646,194 | 727.316 MiB |
+| Current working copies of tracked paths | 4,444 existing / 5 missing | 762,632,574 | 727.303 MiB |
+| Local `HEAD` tree | 4,433 files | 762,411,814 | 727.093 MiB |
 | Live `origin/exp/fusion-w1` tree | 6,016 files | 767,935,421 | 732.360 MiB |
-| All commit-history unique blobs | 6,913 blobs | 1,498,722,205 | 1.396 GiB |
+| Commit-bearing history unique blobs | 8,380 blobs | 1,587,745,983 | 1.479 GiB |
 
-The 234,320-byte (228.828 KiB) index-versus-`HEAD` increase is the current staged work, not pushed history. The small working-copy-versus-index difference comes from two unstaged tracked files.
+5개의 missing tracked path는 격리된 placeholder에 대한 아직 unstaged deletion이다. 데이터 유실로 계산하지 않았으며 index blob 크기에는 포함했다.
 
-- Current tracked top 100: [`TRACKED_LARGE_FILES.csv`](TRACKED_LARGE_FILES.csv). The largest is `GS4Buildings_arXiv_2508.07355v1.pdf`, 10,471,726 bytes (9.987 MiB). The top-100 range ends at 1.776 MiB.
-- Commit-history top 100: [`HISTORY_LARGE_BLOBS.csv`](HISTORY_LARGE_BLOBS.csv). The largest is a historical `comparison_4views.png`, 33,911,867 bytes (32.341 MiB).
-- `path_hint` in the history CSV is the path emitted for that blob by `git rev-list --objects`; a blob may occur at another path. `same_blob_at_path_in_HEAD` distinguishes exact current-path presence from object reachability elsewhere.
-- No Git LFS pointer was found in the current index or commit history. There is no current or historical `.gitattributes`, and `git lfs` is not installed in the development container. All CSV-listed blobs are ordinary Git blobs.
+- 현재 index의 큰 파일 100개: [`TRACKED_LARGE_FILES.csv`](TRACKED_LARGE_FILES.csv).
+- commit-bearing history의 큰 unique blob 100개: [`HISTORY_LARGE_BLOBS.csv`](HISTORY_LARGE_BLOBS.csv).
+- 현재 최대 tracked file은 `phases/p2-gsjso/runs/fusion_w1/20260726_fusion_w1_aprime/sources/GS4Buildings_arXiv_2508.07355v1.pdf`, 10,471,726 bytes(9.987 MiB)다.
+- history 최대 blob은 historical `results/phase1_depth_normal/figures/comparison_4views.png`, 33,911,867 bytes(32.341 MiB)다.
+- current index와 commit history에서 Git LFS pointer는 0개다. 현재 `.gitattributes`도 없다. CSV의 B 분류는 **제안**이지 현재 LFS 사용을 뜻하지 않는다.
 
-## 7. Tracked, ignored, and untracked storage by major directory
+## 7. Tracked / ignored / untracked 주요 디렉터리
 
-Status-derived apparent file sizes at the snapshot:
+Current index blob 기준:
 
-| Status | Files | Apparent bytes | Human value |
+| 소유자 | Files | Bytes | 크기 |
 |---|---:|---:|---:|
-| Tracked/index paths | 6,032 | 768,171,430 | 732.585 MiB |
-| Ignored | 100,235 | 490,210,628,828 | 456.544 GiB |
-| Untracked, not ignored | 2,250 | 328,688,384 | 313.462 MiB |
+| `docs/` | 1,923 | 590,301,993 | 562.956 MiB |
+| `phases/` | 1,840 | 152,153,639 | 145.105 MiB |
+| `src/` | 69 | 10,774,170 | 10.275 MiB |
+| `scripts/` | 377 | 7,422,472 | 7.079 MiB |
+| `tests/` | 99 | 1,666,436 | 1.589 MiB |
+| `configs/` | 122 | 272,169 | 265.790 KiB |
+| `artifacts/` | 11 | 21,939 | 21.425 KiB |
+| Root build/index files | 8 | 33,376 | 32.594 KiB |
 
-Major top-level owners:
+특히 `docs/figs/`만 604 files / 379,066,196 bytes(361.506 MiB)다. 경로가 정리되었어도 clone 비용의 중심은 선별되지 않은 binary evidence 집합이라는 뜻이다.
 
-| Directory | Tracked | Ignored | Untracked |
-|---|---:|---:|---:|
-| `docs/` | 1,197 files / 498.474 MiB | 0 | 0 |
-| `phases/` | 4,125 / 200.735 MiB | 41,202 / 185.169 GiB | 1,136 / 150.556 MiB |
-| `data/` | 1 / 0 B (`.gitkeep`) | 37,916 / 161.670 GiB | 0 |
-| `results/` | 323 / 16.359 MiB | 21,024 / 107.581 GiB | 0 |
-| `fair-pilot/` | 32 / 453.071 KiB | 81 / 2.123 GiB | 0 |
-| `reports/` | 9 / 821.121 KiB | 0 | 1,114 / 162.905 MiB |
-| `tools/` | 30 / 9.461 MiB | local assets covered by ignore rules | 0 |
-| `scripts/` | 131 / 4.904 MiB | 2 / 101.896 KiB | 0 |
-| `src/` | 38 / 844.351 KiB | 8 / 1.930 MiB | 0 |
+최종 P0 evidence 이동으로 `docs/evidence/`는 482 tracked files / 162,603,068 bytes(155.070 MiB)가 되었고, `phases/p0-audit/`에는 실행 control과 receipt 229 files / 4,820,390 bytes(4.597 MiB)만 남았다. `phases/p0-audit/docs/`의 tracked file은 0개다.
 
-The largest second-level ignored owners are:
+Ignored와 untracked는 working-copy file 크기 기준이다.
 
-| Path | Files | Size |
-|---|---:|---:|
-| `data/matrixcity/` | 37,912 | 161.670 GiB |
-| `phases/p0-audit/` | 35,780 | 127.151 GiB |
-| `results/tum_transfer/` | 15,599 | 85.648 GiB |
-| `phases/p2-gsjso/` | 5,422 | 58.019 GiB |
-| `results/phase2_ablation_citygml/` | 407 | 5.906 GiB |
-| `results/phase2_synthesis/` | 2,806 | 3.349 GiB |
-| `results/stage3_rendered_evidence/` | 990 | 2.710 GiB |
-| `fair-pilot/runs/` | 80 | 2.123 GiB |
+| 상태/소유자 | Files | Bytes | 설명 |
+|---|---:|---:|---|
+| Ignored total | 5 | 1,502,468 | cache 3개, local setting 1개, compiled helper 1개 |
+| `src/` ignored | 1 | 1,472,816 | `src/stage3/polyfit_cli` compiled binary |
+| `scripts/` ignored | 3 | 27,753 | `__pycache__` |
+| `.claude/` ignored | 1 | 1,899 | local setting |
+| Untracked total | 25 | 341,919 | active Fusion/control work, 새 manifest와 새 semantic README |
+| `phases/` untracked | 12 | 300,934 | Fusion configs/scripts/wrappers |
+| `tests/` untracked | 4 | 35,559 | Fusion tests |
+| `artifacts/` untracked | 2 | 2,838 | relocation manifests |
+| `docs/` untracked | 6 | 1,901 | P0 evidence semantic README |
+| `scripts/` untracked | 1 | 687 | semantic script index |
 
-The largest tracked aggregate is `docs/figs/`: 587 files and 351.948 MiB. This is why normal clones are heavy even though no single current file is large.
+따라서 main checkout 내부의 ignored bulk dataset/run tree는 더 이상 주 저장 위치가 아니다. 실제 대용량은 `../JointBuildGS-artifacts`에 있고 `artifacts/manifests/`가 이동·검증 정보를 소유한다. 실행 중인 오래된 `jointbuildgs-dev` 컨테이너는 이전 compatibility mount를 repo 내부처럼 보이게 하므로 용량 측정에서 제외했다. 최신 Compose 정의로 생성한 일회성 컨테이너는 repo root, `/data`, `/artifacts/JointBuildGS` 세 mount만 사용하며 위 수치는 그 clean view에서 측정했다.
 
-## 8. Current tracked threshold audit
-
-Thresholds are binary MiB/GiB thresholds (`50 * 1024^2`, `100 * 1024^2`, `1024^3`).
+## 8. 50 MiB / 100 MiB / 1 GiB threshold
 
 | Threshold | Current tracked files | Commit-history blobs |
 |---|---:|---:|
-| At least 50 MiB | 0 | 0 |
-| At least 100 MiB | 0 | 0 |
-| At least 1 GiB | 0 | 0 |
+| `>= 50 MiB` | 0 | 0 |
+| `>= 100 MiB` | 0 | 0 |
+| `>= 1 GiB` | 0 | 0 |
 
-Therefore there is no list of qualifying tracked paths to enumerate. This does not mean the checkout is storage-light: ignored files include individual 14.917 GiB ZIP, 12.105 GiB TAR, 4.026 GiB PLY, and 3.972 GiB LAZ payloads.
+나열할 qualifying path는 없다. 다만 aggregate binary budget은 별도 문제다. tracked image 940개가 574,565,333 bytes(547.948 MiB)를 차지한다.
 
-## 9. How research artifacts are managed now
+## 9. Reports, checkpoints, datasets, geometry, images, logs, caches
 
-The current arrangement is path-specific and mixed. `.gitignore` has extensive rules for downloadable data, checkpoints, raw runs, caches, logs, and many experiment-specific intermediates. It also intentionally keeps compact reports, manifests, aggregate tables, and selected figures. There is no repository-wide DVC, git-annex, MLflow artifact store, object-store URI contract, or Git LFS layer. Provenance is strong but decentralized: 157 tracked filenames contain `manifest`, 49 contain `inventory`, and 41 contain `receipt`.
-
-| Artifact family | Current evidence | Current management assessment |
+| 종류 | 현재 관찰 | 잠정 관리 등급 |
 |---|---|---|
-| Reports | 9 tracked `reports/.../post_analysis` summaries/figures (821 KiB); 1,114 untracked nightly files (162.905 MiB) | Canonical post-analysis is regular Git; raw nightly report tree is untracked. Root `reports/.../cache` is **not ignored**, creating accidental-add risk. |
-| Checkpoints | 0 tracked `.pt/.pth/.ckpt`; ignored: 530 `.pt` / 79.387 GiB and 6 `.pth` / 2.519 GiB | Payloads are local ignored data. Small checkpoint metrics/manifests are tracked. There is no external durable location declared repo-wide. |
-| Datasets | `data/.gitkeep` only is tracked; `data/matrixcity` alone is 161.670 GiB ignored; P0 raw datasets live under ignored phase paths | Downloadable/local data are excluded from Git. Source and checksum evidence exists in per-run documents, but no uniform external artifact resolver exists. |
-| Point clouds | Tracked: 25 LAZ / 35.555 MiB plus 2 LAS / 0.305 MiB; ignored: LAS 57.749 GiB, LAZ 10.110 GiB, PLY 10.605 GiB | Most raw/dense geometry is ignored; a small set of experiment evidence/fixtures is ordinary Git. Global `*.ply` is ignored, but LAS/LAZ policy is path-specific. |
-| Meshes | 1 tracked OBJ / 0.249 MiB; 404 ignored OBJ / 3.612 MiB | Mostly ignored/generated, with one small regular-Git artifact. |
-| Images | 945 tracked PNG / 553.596 MiB; ignored PNG+JPG 33.847 GiB; 47 untracked PNG / 129.572 MiB | Curated evidence figures are regular Git and dominate the current branch tree. Raw/render images are usually ignored; current untracked panels still require curation. |
-| Logs | Tracked: 335 `.log` / 6.758 MiB and 33 `.jsonl` / 0.865 MiB; ignored: `.log` 302.744 MiB and `.jsonl` 147.607 MiB | Canonical measurement/failure logs are sometimes committed; mutable driver/TensorBoard/runtime logs are mostly ignored via experiment-specific rules. |
-| Caches | Path classifier: 0 tracked; 405 ignored / 8.050 MiB; 890 untracked / 160.081 MiB | Python/runtime caches are ignored, but the current nightly `reports/.../cache` tree is untracked rather than ignored. |
+| Reports | `docs/**/reports/` 등 222 tracked files / 1,633,948 bytes. compact scientific report는 Git에 남고 bulk run payload는 sibling workspace에 분리됨 | A; payload는 C/D |
+| Checkpoints | tracked `.pt/.pth/.ckpt` 0개. checkpoint 이름을 가진 tracked manifest/metric/receipt는 33개 / 1,159,146 bytes | binary는 C, compact metadata는 A |
+| Datasets | tracked dataset root 0개. raw/downloaded data는 `../JointBuildGS-artifacts`와 manifest로 관리 | C |
+| Point clouds | tracked LAS/LAZ/PLY 27개 / 37,601,381 bytes. 대부분 작은 historical evidence지만 ordinary Git 상태 | 원칙 C; 명시적 tiny fixture만 A/B 예외 |
+| Meshes | tracked OBJ/STL/OFF/GLB/GLTF 1개 / 261,177 bytes | 작은 정본 evidence는 A/B, bulk는 C |
+| Images | tracked PNG/JPG/TIFF/WebP/SVG 940개 / 574,565,333 bytes. `docs/figs`와 evidence package가 중심 | 현재 regular Git, 향후 selected B |
+| Logs | tracked `.log/.jsonl` 206개 / 7,709,092 bytes. compact failure/receipt와 historical raw log가 섞임 | compact immutable record A, mutable/raw D |
+| Caches | main checkout ignored cache 3개 / 27,753 bytes. 별도 compiled helper 1개 / 1,472,816 bytes도 ignored | D |
 
-Important nuance: ignore rules do not affect already tracked files. Some tracked logs, LAZ files, figures, or generated-looking outputs remain ordinary Git because they were intentionally or historically added. Classification must be based on artifact role and provenance, not extension alone.
+Externalization evidence는 `artifacts/manifests/local_workspace_20260730.yaml`, `fusion_w1_run_payloads_20260730.yaml`, `p2_run_payloads_semantic_relocation_20260730.yaml`, `p2_compact_payloads_20260730.yaml`, `p2_driver_payloads_20260730.yaml`에 있다. 이 manifest들은 local filesystem 이동과 byte/inode 검증을 증명하지만 durable URI·off-machine replication을 아직 증명하지 않는다.
 
-## 10. Current branch and actually pushed scope
+## 10. 현재 branch와 실제 pushed 범위
 
-At 2026-07-29 19:58:43 KST, host-side `git ls-remote --heads origin` returned:
+Read-only `git ls-remote --heads --tags origin`으로 live origin을 확인했다. local tracking ref 11개는 live head 11개와 모두 일치했다.
 
-- Local `HEAD`: `97f6b3ef3159360b88ba0b25cca4b280c14fdcb8`
-- Live `origin/exp/fusion-w1`: `97f6b3ef3159360b88ba0b25cca4b280c14fdcb8`
-- Ahead/behind: `0 / 0`
-- Exact pushed tree: 6,016 entries, 767,935,421 blob bytes (732.360 MiB)
-
-Thus every file in the current `HEAD` tree is pushed to the live current-branch ref, and the local commit range versus that ref is empty. All 100 paths in `TRACKED_LARGE_FILES.csv` are already present at the same path and blob ID on that remote tree.
-
-The working/index delta is not pushed:
-
-| Local-only state at snapshot | Count / size implication |
+| 항목 | 값 |
 |---|---|
-| Staged tracked paths | 17: 16 additions and 1 modification, 234,320 bytes (228.828 KiB) net index growth |
-| Unstaged tracked paths | 2 |
-| Untracked, not ignored | 2,250 files / 313.462 MiB |
-| Ignored | 100,235 files / 456.544 GiB |
-| Requested audit deliverables | Created after the measurement snapshot; not part of remote-tree figures |
+| Local branch / `HEAD` | `exp/fusion-w1` / `8b20d17550885c1a6365f0abd0d126f34d826a95` |
+| Live current-branch remote | `origin/exp/fusion-w1` / `97f6b3ef3159360b88ba0b25cca4b280c14fdcb8` |
+| Ahead / behind | **42 / 0** |
+| Pushed remote tree | 6,016 files / 767,935,421 bytes |
+| Local `HEAD` tree | 4,433 files / 762,411,814 bytes |
+| Same path + same blob in both trees | 947 files |
+| Local `HEAD` only or path/blob changed | 3,486 files |
+| Remote only or path/blob changed | 5,069 files |
+| Working state beyond `HEAD` at snapshot | 524 staged entries, 305 unstaged entries, 25 untracked files |
 
-Across all branches there are 14 local heads and 11 live origin heads. Four matching local branches contain unpushed commits (`exp/3b-surface-restore` +2, `feat/p2-fidelity` +3, `feat/p2-structure-learn` +3, `feature/p2-semantic-seed` +9), and three local branches have no same-named origin head (`fc/current-baseline-cleanup`, `feature/p0-input-audit`, `feature/p2-seed-protect`). This does not change the current branch result above. All 11 local `refs/remotes/origin/*` values matched the live `ls-remote` values.
+즉 **현재 새 구조는 아직 remote에 push되지 않았다.** 실제 pushed tree는 다음 legacy top-level 범위를 포함한다.
 
-The development container could not resolve the host-only SSH alias `github-hwiyoung`; remote verification was therefore performed read-only from the host, where that alias is configured. Local storage and object measurements ran through the repository development container with a per-command `safe.directory` override. An initial output-formatting wrapper failed before producing a measurement and was rerun; it changed no state.
+| Live remote top-level owner | Files | Bytes |
+|---|---:|---:|
+| `docs/` | 1,197 | 522,688,201 |
+| `phases/` | 4,110 | 210,264,621 |
+| `results/` | 323 | 17,153,398 |
+| `tools/` | 30 | 9,920,754 |
+| `scripts/` | 131 | 5,142,619 |
+| `src/` | 37 | 850,255 |
+| `reports/` | 9 | 840,828 |
+| `fair-pilot/` | 32 | 463,945 |
+| `legacy/` | 7 | 207,903 |
+| `configs/` | 112 | 237,416 |
+| `runs/` | 14 | 24,122 |
+| `env/` | 1 | 1,712 |
+| `data/` | 1 | 0 |
+| `tests/` | 1 | 4,087 |
+| Root files | 11 | 135,560 |
 
-## Provisional A–D classification
+14개 local head 중 live same-name branch가 없는 것은 `fc/current-baseline-cleanup`, `feature/p0-input-audit`, `feature/p2-seed-protect` 3개다. same-name remote보다 앞선 다른 branch는 `exp/3b-surface-restore` +2, `feat/p2-fidelity` +3, `feat/p2-structure-learn` +3, `feature/p2-semantic-seed` +9다. 이들은 current branch의 pushed 범위와 별개다.
 
-| Class | Intended content | Current state |
+## A–D 잠정 분류
+
+| 등급 | 소유 내용 | 현재 상태 |
 |---|---|---|
-| **A. regular Git** | Source, configs, scripts, tests, small Markdown/CSV/JSON/YAML, compact manifests/receipts, small deterministic fixtures | This is the existing mechanism for all tracked content. Textual control-plane content fits well. |
-| **B. selected Git LFS** | A curated allowlist of canonical binary evidence that must travel with a checkout: final figures/panels, approved PDFs, or small fixed binary fixtures | No LFS is configured today. Candidate classification in the CSVs is prospective and does not claim current LFS storage. |
-| **C. external artifact storage + manifest** | Raw datasets, checkpoints, dense point clouds/meshes, full-resolution imagery, large arrays, irreplaceable run bundles; default for any file at least 100 MiB | The sibling `../JointBuildGS-artifacts` workspace is wired locally through Docker compatibility mounts and a tracked manifest. It is not yet an off-machine durable backup. |
-| **D. raw/generated/ignored data** | Reproducible renders, preprocess intermediates, TensorBoard, runtime environments, caches, locks, PIDs, mutable logs, temporary panels | This is already the dominant local policy, but several rules are experiment-specific and the current root nightly cache is an unignored gap. |
+| **A. regular Git** | `src/`, `configs/`, `scripts/`, `tests/`, root build files, compact Markdown/CSV/JSON/YAML, manifest, receipt | 이미 주 관리 방식이며 계속 유지 |
+| **B. selected Git LFS** | checkout과 함께 있어야 하는 승인된 final figure/panel/PDF 및 고정 binary fixture의 작은 allowlist | 아직 LFS 미구성. CSV는 후보만 표시 |
+| **C. external artifact storage + manifest** | raw dataset, checkpoint, dense point cloud/mesh, full-resolution imagery, large arrays, irreplaceable run bundle | sibling workspace와 tracked manifest로 local 분리 완료; durable backend는 미완료 |
+| **D. raw/generated/ignored data** | cache, mutable log, TensorBoard, PID/lock, reproducible render/intermediate, compiled local helper | main checkout에는 소수만 남음; 재생성 또는 임시 보존 대상 |
 
-Per-file provisional classes in the CSVs are path/role heuristics for review. They are not migration instructions. In particular, history-only generated result figures are marked D, while current curated binary evidence is generally marked B; geometry/array payloads are generally C unless explicitly justified as tiny test fixtures.
+## 최종 판단
 
-## Recommendation and rationale
+**2. existing repo + partial clone/sparse checkout**을 추천한다.
 
-Choose **2. existing repo + partial clone/sparse checkout**.
+- Option 1 normal clone은 가능하지만 pushed tree 732.360 MiB와 누적 object cost를 모든 사용자에게 부담시킨다.
+- Option 2는 commit ID, 연구 lineage, branch/tag를 보존하면서 코드·설정·필요한 문서만 먼저 checkout할 수 있다.
+- Option 3 separate ResearchControl repo는 현재 강한 cross-reference를 분할하고 이중 manifest/version coordination을 만든다.
+- Option 4 history cleanup required later는 현재 수치로는 요구되지 않는다. 최대 history blob 32.341 MiB, 50 MiB 이상 0개다. partial/sparse clean-clone 실측 후에도 비용이 허용 불가일 때만 별도 승인 과제로 재검토한다.
 
-1. **Existing repo + normal clone** works, but every fresh clone pays for roughly 1.4 GiB of uncompressed committed blobs and checks out a 732 MiB tree even when a contributor needs only code/config/docs.
-2. **Partial clone + sparse checkout** directly targets the observed cost without changing commit IDs, branches, tags, research lineage, or the data checkout.
-3. **Separate ResearchControl repo** is premature. The code, preregistration, manifests, and evidence are tightly cross-referenced, and the current history has no giant blobs forcing a split. Reassess only if access control, publication boundaries, or independent release cadence becomes a real requirement.
-4. **History cleanup later** is not currently required. There are no 50 MiB committed blobs, no GitHub-size-limit emergency, and no garbage objects. Reconsider only after a measured clean-clone test shows unacceptable transfer/storage and after an immutable backup plus coordinated migration plan is approved.
+실행 계획은 [`WORK_SPARSE_CHECKOUT_PLAN.md`](WORK_SPARSE_CHECKOUT_PLAN.md), 저장 정책은 [`PROPOSED_STORAGE_POLICY.md`](PROPOSED_STORAGE_POLICY.md)를 따른다. 이 감사에서는 clone, LFS 도입, ignore 정책 변경, cleanup, push를 실행하지 않았다.
 
-See [`PROPOSED_STORAGE_POLICY.md`](PROPOSED_STORAGE_POLICY.md) and [`WORK_SPARSE_CHECKOUT_PLAN.md`](WORK_SPARSE_CHECKOUT_PLAN.md). No recommendation in those documents was executed by this audit.
+## 재현 명령
 
-## Reproduction notes
-
-Core read-only commands used were equivalent to:
+최신 Compose 정의의 새 일회성 컨테이너에서 다음 read-only 명령을 사용했다.
 
 ```bash
 du -sb --exclude=.git .
 du -sB1 --exclude=.git .
 du -sb .git
+du -sb .git/objects
 git count-objects -v
-git count-objects -vH
 git ls-files -s -z
 git ls-files --others --ignored --exclude-standard -z
 git ls-files --others --exclude-standard -z
 git rev-list --objects --branches --remotes --tags
 git cat-file --batch-check='%(objectname) %(objecttype) %(objectsize)'
-git ls-tree -r HEAD
+git ls-tree -r -z HEAD
 git ls-remote --heads --tags origin
 ```
 
-The CSV sizes are raw Git blob sizes and use binary MiB/GiB conversions.
+CSV size는 raw Git blob size이며 history CSV의 `path_hint`는 해당 blob에 대해 `git rev-list --objects`가 반환한 한 경로다. 동일 blob이 다른 경로에도 존재할 수 있다.

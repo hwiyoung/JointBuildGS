@@ -55,7 +55,7 @@ HOST_LAUNCHER = "phases/p2-gsjso/scripts/e5_c001/run_e5_c001_s3ap_phase2.sh"
 ARCHIVE_LAUNCHER = (
     "phases/p2-gsjso/scripts/e5_c001/run_e5_c001_s3ap_phase2_archive_base42.sh"
 )
-PREWARM_SCRIPT = "scripts/e5_c001/p2_gsjso/e5_c001_s3ap_gsplat_prewarm.py"
+PREWARM_SCRIPT = "scripts/e5_c001/e5_c001_s3ap_gsplat_prewarm.py"
 PREWARM_MANIFEST = (
     "results/tum_transfer/e5_s3ap_phase2/runtime/gsplat_prewarm.json"
 )

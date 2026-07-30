@@ -40,12 +40,11 @@ from matplotlib.patches import Patch  # noqa: E402
 
 REPO = Path(__file__).resolve().parents[3]
 SCRIPT_DIR = Path(__file__).resolve().parent
-P2_SHARED_SCRIPT_DIR = REPO / "phases/p2-gsjso/scripts"
-if str(P2_SHARED_SCRIPT_DIR) not in sys.path:
-    sys.path.insert(0, str(P2_SHARED_SCRIPT_DIR))
+if str(REPO) not in sys.path:
+    sys.path.insert(0, str(REPO))
 
-import population_aux_v3 as aux  # noqa: E402
-from e5_pilot_gate_tools import C001_IDS  # noqa: E402
+from scripts.evidence_and_attributes.population_analysis import population_aux_v3 as aux  # noqa: E402
+from scripts.e5_c001.e5_pilot_gate_tools import C001_IDS  # noqa: E402
 
 
 RUN_ID = "20260716_boundary_map"

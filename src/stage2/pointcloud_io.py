@@ -2,7 +2,7 @@
 
 INIT/DATA PATH ONLY — no engine logic. The heavy work (AOI crop, per-cloud geoid
 Z shift to the GS-LOCAL ellipsoidal frame, voxel downsample, outlier clip) is done
-*offline* by ``scripts/input_and_alignment/p2_gsjso/tum_mob_seed_prep.sh`` (PDAL, p0-tools
+*offline* by ``scripts/input_and_alignment/tum_transfer/tum_mob_seed_prep.sh`` (PDAL, p0-tools
 container). This reader just loads the resulting GS-LOCAL cloud so the training
 image needs no LAZ/PDAL dependency.
 

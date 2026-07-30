@@ -23,7 +23,7 @@ from types import SimpleNamespace
 from typing import Any, Callable, Mapping, Sequence
 
 
-REPO = Path(__file__).resolve().parents[3]
+REPO = Path(__file__).resolve().parents[2]
 RUN_ID = "20260721_pilot_1wave"
 RUN_DIR = REPO / "phases/p2-gsjso/runs" / RUN_ID
 DEFAULT_TRAINING_ROOT = RUN_DIR / "training/runs"

@@ -41,7 +41,7 @@ PROGRESS_JSON = RUN_DIR / "mast3r_progress.json"
 MANIFEST = RUN_DIR / "mast3r_manifest.json"
 LOG = RUN_DIR / "mast3r.log"
 SUPPORT_CSV = RUN_DIR / "boundary_map_support_metrics.csv"
-METRICS_CSV = REPO / "docs/archive/boundary_map/v1/tables/boundary_map_metrics.csv"
+METRICS_CSV = REPO / "docs/evidence/archive/boundary_map/v1/tables/boundary_map_metrics.csv"
 
 MODEL_REVISION = "06e7259f34c3060f322df5cb0c7b9094f57e41fc"
 MODEL_SHA256 = "0a615eb05fa9db654050aa655945ee5696e7c6c1b7f93f1ee8c37249010f6feb"

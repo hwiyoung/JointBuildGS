@@ -56,7 +56,7 @@ class TestCacheAndPlaneOverlap(unittest.TestCase):
             self.assertFalse((target / "dense.npz.tmp").exists())
 
     def test_selected_source_file_is_not_modified_by_read(self) -> None:
-        source = REPO / "docs/regression_input_snapshot.csv"
+        source = REPO / "docs/experiments/evaluation/attr_outcome_regression/tables/regression_input_snapshot.csv"
         before = PREP.source_snapshot([source])
         _ = source.read_bytes()[:256]
         after = PREP.source_snapshot([source])

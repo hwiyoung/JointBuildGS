@@ -46,10 +46,10 @@
 > **§0 무결성**: v6 과분할 진단(`W3_overseg_diagnosis.md`)은 **SMRF** 분류 지붕점을 읽음(코드증거 8건: `--classifier`는 0e43d37 신설·v6는 `_mob_prep_las.py`=filters.smrf·v6 `gs_seed_*` 미-requal·mtime 06-23<gssem코드 06-25). → 옛 v6 결론 **‘보류’**(단 gssem 청정 재진단이 "GS 안 거침" 정성 방향 재현). matched_rms와 동형 오염.
 > **곡면 4906969 격차(GS 10~14 vs LiDAR 5) 분해(gssem 정본·smrf 병기, 대조 42364659·4906972)**: (a) 입력거칠기 GS localRMS 0.30≈LiDAR 0.28(밀도정합 0.26)=**고주파 거칠기 아님**; (b) 밀도 GS **~33×**(638 vs 19/m²), 밀도 솎으면 면수 **14→1 붕괴**(밀도 결합, 단 voxel 과평탄→LiDAR 5 재현 아님=한정증거); (c) Roofer eps 0.2~1.2·min-pts 15~60 전구간 **GS 9에서 바닥(>LiDAR 5)**·격차비율 보존=**분할 임계로 미해소**. 정합 sanity: eps0.3 → GS_dense 14·LiDAR 5(=D5 §5 재현).
 > **레버 지시(판정=김휘영)**: 격차 주성분=**입력측(GS 곡률/밀도)**; **Roofer 분할 임계 노브 단독은 비지시**(전역 둔화·정확도 손실·초과분 미제거; 단 GS밀도×Roofer 평면검출 민감성 상호작용 가능성은 미배제). D5 §5 두 후보 중 곡률-G2 쪽 지시. **다음(step1+)**: 곡률 기반 G2/밀도·곡률 인지 read-out 설계, 또는 면-기하 공간중첩(step0 caveat=카운트기반).
-> 재현: `bash scripts/evidence_and_attributes/p2_gsjso/run_d6_step0.sh`. 검증=적대 워크플로 3검(무결성·수치·방법론) ok·must-fix 0. CSV `analysis_pack_d6/`(gitignore).
+> 재현: `bash scripts/evidence_and_attributes/geometry_fidelity/run_d6_step0.sh`. 검증=적대 워크플로 3검(무결성·수치·방법론) ok·must-fix 0. CSV `analysis_pack_d6/`(gitignore).
 
 > ⚡⚡ **D5 (cp ablation) 완료 (2026-06-27, feature/p2-prior-full)** — 본런 6 arm + gssem 재평가 + §5 cp 판정표 끝. 커밋 "D5".
-> 사양·사전등록(LOCKED §5) = `P2_D5_cp_ablation_사양_사전등록_20260626.md`. 본보고 = `docs/experiments/joint-optimization/w_d5/reports/W_D5.md`(§0 사전점검 + §2~ cp 판정표 gssem|smrf + §5 기준 대입).
+> 사양·사전등록(LOCKED §5) = `docs/research/preregistration/joint_optimization/P2_D5_cp_ablation_사양_사전등록_20260626.md`. 본보고 = `docs/experiments/joint-optimization/w_d5/reports/W_D5.md`(§0 사전점검 + §2~ cp 판정표 gssem|smrf + §5 기준 대입).
 > **판정 (김휘영): (다) 부분 레버** — cp 끄면(D5a) D4 대비 생성·valid-solid 하락(cp 기여 확인=de-noise 단독 기각); 단 세게/일찍의 복합 과분할 감소는 혼재, 곡면 4906969은 cp 강도 무관 9~16면(LiDAR 5 미달)=cp 밖 문제. 함의: cp 유지 + 다음 레버=곡률기반 G2/Roofer 분할 임계.
 > **read-out 정합(중요)**: eval이 arm당 gssem→smrf 순차라 per-building las/cityjson/val3dity가 smrf로 덮임 → D·D4·D5 모두 **gssem 재평가**로 정정함(`run_gssem_requal.sh`·`run_d5_gssem_requal.sh`; 디스크 최종=gssem, smrf=`gssem_requal_backup/` 백업, 생성수치 불변 검증). 보고 `W_gssem_requal.md`. matched-n 분석 `W_matched_rms.md`, 결과통합 `W_results_consolidation.md`.
 > ⚠ **교훈(다음 적용)**: ① 장시간 학습은 harness `run_in_background` 금지(세션 teardown 시 죽고 docker stdout 파이프 끊겨 train.py 멈춤=로그 동결되나 ckpt는 진행) → **`setsid nohup` detached + ckpt mtime/util로 진척 확인**(로그만 믿지 말 것; 1차 D5b ~20k서 함정). ② **train.py resume 없음** → kill/정전 시 0부터(GPU 양도로 D5b acmp ~24k 손실) → D5 후 full-state ckpt+auto-resume 도입 예정([[project-train-resume-todo]]). ③ requal 백업 tar엔 `.las` 미포함(용량) — smrf 점은 deterministic SMRF로 temp 재생성.
@@ -59,7 +59,7 @@
 
 ## 0″) ⭐ D4 — 정규화 재학습 (corrected, "cp만 정규화") — 완료 (2026-06-26, `feature/p2-prior-full`, **커밋 "D4"**, 미푸시).
 > 질문: "손실 균형을 바로잡으면(노이즈 depth/normal 제거 + cp 탈-지배) GS 지붕이 펴지고 과분할↓되, 생성 7/8·무열화는 유지되나 — 품질을 GS 방법으로."
-> **본보고**: `docs/experiments/joint-optimization/w_d4/reports/W_D4.md`(2축 8-way + §6 판정 패키지). **사양·사전등록(LOCKED)**: `P2_D4_사양서_사전등록_20260625.md`(§6 판정기준·§7 cp 사다리). 그림 `docs/figs/W_D4_qual/`.
+> **본보고**: `docs/experiments/joint-optimization/w_d4/reports/W_D4.md`(2축 8-way + §6 판정 패키지). **사양·사전등록(LOCKED)**: `docs/research/preregistration/joint_optimization/P2_D4_사양서_사전등록_20260625.md`(§6 판정기준·§7 cp 사다리). 그림 `docs/figs/W_D4_qual/`.
 
 - **config = corrected cp-only normalization** (엔진 무변경, 가중만): cp eff **0.08→0.01**(탈-지배, cp share 68%→31%≈photo)·depth **0.1→0.03**(de-noise CV 1.74)·normal **0.15→0**(노이즈 제거); **photo 1.0·nc 0.05·sem 0.1·na 0.08 = D 유지**(건강항). `configs/tum_mob/gs_d4_{dense,acmp}.yaml`. ⚠ 초기 D4는 전-항 정규화(photo 5.6·nc 2.1) 과적용→photo 열세→김휘영 정정(config 오류 정정, 골대이동 아님).
 - **학습**: `run_d4.sh`(2-GPU 병렬, idempotent skip-train→extract→eval), 30k 완료, **PSNR 20.08/20.15**(D 19.87/19.99 무회귀). commit 5dd26cc 시점.

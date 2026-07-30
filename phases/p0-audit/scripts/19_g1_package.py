@@ -17,11 +17,14 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
 from shapely.geometry import shape
 
+from p0_paths import P0_EVIDENCE, P0_G1_PACKAGE
+
 
 ROOT = Path(__file__).resolve().parents[1]
-DOCS = ROOT / "docs"
-FIGS = DOCS / "figs"
-PACKAGE = DOCS / "G1_package"
+DOCS = P0_EVIDENCE
+FIGS_W1 = DOCS.figs("W1")
+FIGS_W3 = DOCS.figs("W3")
+PACKAGE = P0_G1_PACKAGE
 PACKAGE_FIGS = PACKAGE / "figs"
 CANONICAL_RUN = "w3_2b_roofer_repeatability_20260612_220747/run_2"
 
@@ -29,42 +32,42 @@ CANONICAL_RUN = "w3_2b_roofer_repeatability_20260612_220747/run_2"
 FIGURE_SPECS = [
     (
         "fig_01_t2_camera_lod2_overlay.png",
-        FIGS / "t2_opf_pose_overlay.png",
+        FIGS_W1 / "t2_opf_pose_overlay.png",
         "T2 OPF camera positions over the LoD2 footprint context; coordinates are EPSG:25832.",
     ),
     (
         "fig_02_figure_1_1a_dim_unrecovered_4907182.png",
-        FIGS / "w3_2c_dim_unrecovered_missing_lod22_DEBY_LOD2_4907182.png",
+        FIGS_W3 / "w3_2c_dim_unrecovered_missing_lod22_DEBY_LOD2_4907182.png",
         "Figure 1.1a replacement: canonical DIM case DEBY_LOD2_4907182 with missing LoD2.2 geometry after wall removal and thinning variants.",
     ),
     (
         "fig_03_figure_1_1b_ridge_4907518.png",
-        FIGS / "w3_1b_matching_overlay_mid_DEBY_LOD2_4907518.png",
+        FIGS_W3 / "w3_1b_matching_overlay_mid_DEBY_LOD2_4907518.png",
         "Figure 1.1b: DEBY_LOD2_4907518 roof-plane matching overlay and ridge/shared-boundary comparison.",
     ),
     (
         "fig_04_plane_f1_boxplot.png",
-        FIGS / "w3_1_plane_f1_boxplot.png",
+        FIGS_W3 / "w3_1_plane_f1_boxplot.png",
         "Plane-instance F1 boxplot from the W3 quality run; canonical medians are tabulated in this package.",
     ),
     (
         "fig_05_boundary_error_boxplots.png",
-        FIGS / "w3_1_boundary_error_boxplots.png",
+        FIGS_W3 / "w3_1_boundary_error_boxplots.png",
         "Exterior boundary Chamfer and Hausdorff boxplots from the W3 quality run; canonical medians are tabulated in this package.",
     ),
     (
         "fig_06_height_error_boxplots.png",
-        FIGS / "w3_1_height_error_boxplots.png",
+        FIGS_W3 / "w3_1_height_error_boxplots.png",
         "Height bias and NMAD boxplots from the W3 quality run; canonical medians are tabulated in this package.",
     ),
     (
         "fig_07_matching_overlay_high_4959793.png",
-        FIGS / "w3_1b_matching_overlay_high_DEBY_LOD2_4959793.png",
+        FIGS_W3 / "w3_1b_matching_overlay_high_DEBY_LOD2_4959793.png",
         "High-F1 spot-check overlay for DEBY_LOD2_4959793.",
     ),
     (
         "fig_08_matching_overlay_low_4906987.png",
-        FIGS / "w3_1b_matching_overlay_low_DEBY_LOD2_4906987.png",
+        FIGS_W3 / "w3_1b_matching_overlay_low_DEBY_LOD2_4906987.png",
         "Low-F1 spot-check overlay for DEBY_LOD2_4906987.",
     ),
 ]

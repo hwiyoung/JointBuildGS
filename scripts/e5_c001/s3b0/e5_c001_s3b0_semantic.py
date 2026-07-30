@@ -194,14 +194,14 @@ def write_lineage(path: Path, source_hash: dict[str, str]) -> None:
     rows = [
         (
             "현행 semantic class",
-            "scripts/evidence_and_attributes/p2_gsjso/make_clean_labels.py",
+            "scripts/evidence_and_attributes/review_packages/make_clean_labels.py",
             "CityGML LoD2 Roof/Wall/GroundSurface와 COLMAP pose",
             "LoD2 mesh raycast class PNG",
             "semantic class 전체 픽셀",
         ),
         (
             "현행 semantic_region ID",
-            "scripts/e5_c001/p2_gsjso/e5_c001_s3_semantic_regions.py",
+            "scripts/e5_c001/e5_c001_s3_semantic_regions.py",
             "동일 LoD2 raycast의 building ID와 고정 class-1 PNG",
             "region_ids, cutline_mask, region-to-building mapping",
             "target/neighbor 영역 주소",
@@ -530,8 +530,8 @@ def main() -> None:
         generated.append(figure_path)
 
     lineage_sources = [
-        common.REPO / "scripts/evidence_and_attributes/p2_gsjso/make_clean_labels.py",
-        common.REPO / "scripts/e5_c001/p2_gsjso/e5_c001_s3_semantic_regions.py",
+        common.REPO / "scripts/evidence_and_attributes/review_packages/make_clean_labels.py",
+        common.REPO / "scripts/e5_c001/e5_c001_s3_semantic_regions.py",
         common.REPO / "phases/p2-gsjso/scripts/e5_c001/e5_c001_s3ap_phase2_prepare.py",
         common.REPO / "src/stage2/train.py",
         common.REPO / "src/stage2/loss/semantic_guided.py",

@@ -15,8 +15,8 @@ SPARSE_IN="data/work/colmap/sparse/0"
 RAW_IMAGES="data/raw/uav/Images.zip"
 RAW_OPF="data/raw/uav/opf.zip"
 DIM_LAZ="${WORK_ROOT}/dim/dim_v1.laz"
-SECTION_PNG="docs/figs/dim_v1_als_section.png"
-STATS_MD="docs/dim_v1_stats.md"
+SECTION_PNG="../../docs/evidence/p0-audit/w1-input-diagnostics/figs/dim_v1_als_section.png"
+STATS_MD="../../docs/evidence/p0-audit/w1-input-diagnostics/reports/dim_v1_stats.md"
 
 COLMAP_MAX_IMAGE_SIZE="${COLMAP_MAX_IMAGE_SIZE:-2200}"
 COLMAP_MAX_NUM_FEATURES="${COLMAP_MAX_NUM_FEATURES:-4096}"
@@ -36,7 +36,7 @@ SKIP_BUILD="${SKIP_BUILD:-0}"
 
 COMPOSE=(docker compose -f env/docker-compose.p0.yml)
 
-mkdir -p "$LOG_DIR" docs/figs "${WORK_ROOT}/colmap" "${WORK_ROOT}/triangulated" \
+mkdir -p "$LOG_DIR" "$(dirname "$SECTION_PNG")" "$(dirname "$STATS_MD")" "${WORK_ROOT}/colmap" "${WORK_ROOT}/triangulated" \
   "${WORK_ROOT}/colmap_dense" "${WORK_ROOT}/openmvs" "${WORK_ROOT}/dim"
 
 if [[ "$FORCE" == "1" ]]; then
@@ -53,7 +53,7 @@ on_error() {
     echo "## T3 DIM Point Cloud"
     echo
     echo "- ${RUN_ID}: failed at line ${line_no} with exit code ${exit_code}. See ${RUN_DIR}/logs/."
-  } >> phases/p0-audit/docs/issues.md
+  } >> phases/p0-audit/issues.md
   exit "$exit_code"
 }
 trap 'on_error $LINENO' ERR
@@ -485,8 +485,8 @@ import numpy as np
 root = Path('/workspace')
 dim_path = root / 'data/work/mvs/dim/dim_v1.laz'
 als_paths = sorted((root / 'data/raw/als').glob('*.laz'))
-stats_path = root / 'docs/dim_v1_stats.md'
-section_png = root / 'docs/figs/dim_v1_als_section.png'
+stats_path = root / 'evidence/p0-audit/w1-input-diagnostics/reports/dim_v1_stats.md'
+section_png = root / 'evidence/p0-audit/w1-input-diagnostics/figs/dim_v1_als_section.png'
 run_versions = Path('/workspace/runs') / '${RUN_ID}' / 'versions.txt'
 run_config = Path('/workspace/runs') / '${RUN_ID}' / 'config.yaml'
 band_width = float(os.environ['SECTION_BAND_WIDTH'])

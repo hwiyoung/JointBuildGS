@@ -6,7 +6,7 @@ This directory is the reader entry point for the `e5_c001_corrected_s1` evidence
 
 | Role | File | Status | Canonical purpose |
 |---|---|---|---|
-| report | [`W_E5_C001_corrected_S1_readout_tmp.md`](../../archive/e5_c001_corrected_s1/temporary/reports/W_E5_C001_corrected_S1_readout_tmp.md) | temporary | `-` |
+| report | [`W_E5_C001_corrected_S1_readout_tmp.md`](../../../evidence/archive/e5_c001_corrected_s1/temporary/reports/W_E5_C001_corrected_S1_readout_tmp.md) | temporary | `-` |
 | report | [`W_E5_C001_corrected-S1_검수·라우팅_20260709.md`](reports/W_E5_C001_corrected-S1_검수·라우팅_20260709.md) | canonical | `e5_c001_corrected_s1_review` |
 | report | [`W_E5_C001_corrected_S1.md`](reports/W_E5_C001_corrected_S1.md) | supporting | `-` |
 | table | [`e5_c001_corrected_s1_building_8way.csv`](tables/e5_c001_corrected_s1_building_8way.csv) | supporting | `-` |
@@ -25,4 +25,4 @@ This directory is the reader entry point for the `e5_c001_corrected_s1` evidence
 
 ## Path and provenance
 
-Exact former/current paths, SHA-256 values, lifecycle states, and compatibility flags are recorded in [`E5_C001_PATHS.csv`](../../catalog/migrations/E5_C001_PATHS.csv). Frozen manifests and run receipts retain historical path strings. New consumers use the paths listed here.
+Exact former/current paths, SHA-256 values, lifecycle states, and compatibility flags are recorded in [`E5_C001_PATHS.csv`](../../../research/repository/migrations/E5_C001_PATHS.csv). Frozen manifests and run receipts retain historical path strings. New consumers use the paths listed here.

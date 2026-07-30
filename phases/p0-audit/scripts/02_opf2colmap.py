@@ -20,6 +20,8 @@ from xml.etree import ElementTree as ET
 
 import numpy as np
 
+from p0_paths import P0_EVIDENCE
+
 
 def host_entrypoint() -> None:
     repo = Path(__file__).resolve().parents[1]
@@ -446,12 +448,12 @@ def write_versions(run_dir: Path) -> None:
 def main() -> None:
     root = Path("/workspace")
     data = root / "data"
-    docs = root / "docs"
+    docs = P0_EVIDENCE
     raw_zip = data / "raw/uav/opf.zip"
     work_opf = data / "work/opf"
     colmap_dir = data / "work/colmap/sparse/0"
     lod2_paths = sorted((data / "raw/lod2").glob("*.gml"))
-    overlay_png = docs / "figs/t2_opf_pose_overlay.png"
+    overlay_png = docs.figs("W1") / "t2_opf_pose_overlay.png"
     summary_md = docs / "opf2colmap_summary.md"
     run_id = datetime.now(timezone.utc).astimezone().strftime("t2_opf2colmap_%Y%m%d_%H%M%S")
     run_dir = root / "runs" / run_id

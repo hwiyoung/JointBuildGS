@@ -38,7 +38,7 @@ COMMON=(
 case "${MODE}" in
   prewarm)
     exec docker run "${COMMON[@]}" --gpus all "${IMAGE}" \
-      python scripts/e5_c001/p2_gsjso/e5_c001_s3ap_gsplat_prewarm.py "$@"
+      python scripts/e5_c001/e5_c001_s3ap_gsplat_prewarm.py "$@"
     ;;
   prepare)
     exec docker run "${COMMON[@]}" "${IMAGE}" \
@@ -53,7 +53,7 @@ case "${MODE}" in
     done
     if [[ "${PREWARM}" == "true" ]]; then
       docker run "${COMMON[@]}" --gpus all "${IMAGE}" \
-        python scripts/e5_c001/p2_gsjso/e5_c001_s3ap_gsplat_prewarm.py
+        python scripts/e5_c001/e5_c001_s3ap_gsplat_prewarm.py
     fi
     exec docker run "${COMMON[@]}" --gpus all "${IMAGE}" \
       python phases/p2-gsjso/scripts/e5_c001/e5_c001_s3ap_phase2_runner.py "$@"

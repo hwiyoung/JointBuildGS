@@ -9,7 +9,7 @@ import unittest
 from pathlib import Path
 
 
-REPO = Path(__file__).resolve().parents[3]
+REPO = Path(__file__).resolve().parents[2]
 LOCK = REPO / "phases/p2-gsjso/configs/pilot_1wave/pilot_1wave_calibration_lock.json"
 LOCK_SHA256 = "7eb4db2df284388c076b4e6876b169be389edb8d3da601931d3ca7997cdf54b4"
 CALIBRATION_SEED_REASON = (

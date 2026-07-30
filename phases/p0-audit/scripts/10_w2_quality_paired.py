@@ -21,6 +21,8 @@ from typing import Any
 
 import numpy as np
 
+from p0_paths import P0_EVIDENCE
+
 
 TASK_ID = "W2-1c"
 BASE_NODATA_MAX = 0.30
@@ -156,8 +158,8 @@ def write_versions(run_dir: Path, w2_run_id: str) -> None:
 
 def inside_entrypoint(args: argparse.Namespace) -> None:
     root = Path("/workspace")
-    docs = root / "docs"
-    figs = docs / "figs"
+    docs = P0_EVIDENCE
+    figs = docs.figs("W2")
     data = root / "data"
     run_id = os.environ["RUN_ID"]
     run_dir = root / "runs" / run_id

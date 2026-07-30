@@ -23,6 +23,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from p0_paths import P0_EVIDENCE
+
 
 TASK_ID = "W2-2"
 W2_1_RUN_ID = "w2_1_roofer_default_20260612_152729"
@@ -181,7 +183,7 @@ def capture(cmd: list[str], cwd: Path | None = None, env: dict[str, str] | None 
 
 
 def record_issue(repo: Path, run_id: str, message: str) -> None:
-    path = repo / "phases/p0-audit/docs/issues.md"
+    path = repo / "phases/p0-audit/issues.md"
     text = path.read_text(encoding="utf-8") if path.exists() else "# P0 Issues\n"
     section = "\n## W2-2 City3D Default\n\n"
     if "## W2-2 City3D Default" not in text:
@@ -317,7 +319,7 @@ def prepare_entrypoint() -> None:
 
     root = Path("/workspace")
     data = root / "data"
-    docs = root / "docs"
+    docs = P0_EVIDENCE
     run_id = os.environ["RUN_ID"]
     run_dir = root / "runs" / run_id
     inputs_dir = run_dir / "city3d_inputs"
@@ -670,7 +672,7 @@ def city3d_result_row(
 
 def postprocess_entrypoint() -> None:
     root = Path("/workspace")
-    docs = root / "docs"
+    docs = P0_EVIDENCE
     run_id = os.environ["RUN_ID"]
     run_dir = root / "runs" / run_id
     val_dir = run_dir / "val3dity"

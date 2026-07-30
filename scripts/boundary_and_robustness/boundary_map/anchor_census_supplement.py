@@ -49,7 +49,7 @@ R1P_PAIRS = R1P_RUN / "fm_dense_pairs.csv"
 R1P_MEASUREMENTS = R1P_RUN / "fm_dense_measurements.csv"
 R1P_MANIFEST = R1P_RUN / "fm_dense_manifest.json"
 
-OLD_LADDER = REPO / "docs/archive/boundary_map/v4/tables/boundary_map_v4_ladder.csv"
+OLD_LADDER = REPO / "docs/evidence/archive/boundary_map/v4/tables/boundary_map_v4_ladder.csv"
 OLD_PUBLIC_MANIFEST = REPO / "docs/experiments/input-and-alignment/boundary_map/manifests/boundary_map_v4_manifest.json"
 OLD_FIGURE = REPO / "docs/figs/boundary_map/boundary_map_v4_map.png"
 ENV_MANIFEST = REPO / "docs/experiments/input-and-alignment/e5_c001_s3ap/manifests/e5_c001_s3ap_fm_env_manifest.json"

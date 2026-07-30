@@ -37,7 +37,7 @@ phases/p0-audit/
 4. CRS는 **EPSG:25832** 통일. 모든 점군/벡터 산출물에 CRS 명시.
 5. LAZ 분류 코드: ground=2, building=6 (Roofer 입력 요건).
 6. 한 태스크 = 한 git 커밋. 커밋 메시지에 태스크 ID.
-7. 실패·예외는 숨기지 말고 `phases/p0-audit/docs/issues.md`에 기록 후 보고.
+7. 실패·예외는 숨기지 말고 `phases/p0-audit/issues.md`에 기록 후 보고.
 8. **모든 도구 실행은 도커 기반** — 호스트 직접 설치 금지. `scripts/`의 스크립트는 `docker compose -f env/docker-compose.p0.yml run --rm <service> ...` 호출로 작성한다. 컨테이너는 `--gpus all`(필요 시)과 호스트 사용자 매핑(`--user $(id -u):$(id -g)`)으로 실행해 root 소유 산출물을 만들지 않는다. 이미지 태그와 digest를 `env/versions.md`에 기록한다. 기존 레포 루트의 Dockerfile/docker-compose.yml(GS-JSO용)과 섞지 말 것.
 9. 권장 이미지 구성: `colmap/colmap`(GPU, SfM/triangulator), OpenMVS는 공식 레포 Dockerfile로 `env/Dockerfile.openmvs` 빌드, `3dgi/roofer`(재구성), `tools`는 `env/Dockerfile.tools`로 빌드(PDAL, GDAL, laspy, val3dity 바이너리, citygml-tools+JRE).
 

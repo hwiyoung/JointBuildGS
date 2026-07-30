@@ -39,7 +39,7 @@ import tempfile
 from typing import Any, Callable, Iterable, Mapping, Sequence, TextIO
 
 
-REPO = Path(__file__).resolve().parents[3]
+REPO = Path(__file__).resolve().parents[2]
 SOURCE_RUN_ID = "20260721_pilot_1wave"
 READOUT_RUN_ID = "20260722_pilot_1wave_readout"
 SOURCE_RUN = REPO / "phases/p2-gsjso/runs" / SOURCE_RUN_ID
@@ -157,7 +157,7 @@ EXTRACT_POLICY_SCHEMA = "jointbuildgs.pilot_1wave.extract_policy_lock.v1"
 EXTRACT_CONTAINER_MEMORY = "24g"
 EXTRACT_CONTAINER_MEMORY_BYTES = 24 * 1024**3
 
-EXTRACTOR = REPO / "scripts/e5_c001/p2_gsjso/e5_c001_readout_extract_ablation.py"
+EXTRACTOR = REPO / "scripts/e5_c001/e5_c001_readout_extract_ablation.py"
 CLASSIFIER = REPO / "scripts/pilot_1wave/pilot_1wave_scene_classify.py"
 SCORING = REPO / "scripts/pilot_1wave/pilot_1wave_scoring.py"
 LOSS_AGGREGATE = REPO / "scripts/pilot_1wave/pilot_1wave_loss_cursor_aggregate.py"
@@ -171,7 +171,7 @@ GSPLAT_EXTENSION_SHA256 = (
 REQUIRED_COMMITTED_PATHS = (
     Path("phases/p2-gsjso/configs/pilot_1wave/pilot_1wave_postprocess_extract_policy_lock.json"),
     Path("scripts/pilot_1wave/pilot_1wave_postprocess_driver.py"),
-    Path("scripts/e5_c001/p2_gsjso/e5_c001_readout_extract_ablation.py"),
+    Path("scripts/e5_c001/e5_c001_readout_extract_ablation.py"),
     Path("scripts/pilot_1wave/pilot_1wave_readout_lineage.py"),
     Path("scripts/pilot_1wave/pilot_1wave_scene_classify.py"),
     Path("scripts/pilot_1wave/pilot_1wave_scoring.py"),

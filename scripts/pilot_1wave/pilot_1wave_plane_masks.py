@@ -22,7 +22,7 @@ from PIL import Image as PILImage
 import yaml
 
 
-REPO = Path(__file__).resolve().parents[3]
+REPO = Path(__file__).resolve().parents[2]
 import sys
 
 if str(REPO) not in sys.path:

@@ -17,75 +17,80 @@
     },
     {
       "phase": "P2",
-      "path": "phases/p2-gsjso/runs"
+      "path": "phases/p2-gsjso/runs",
+      "grouped": true,
+      "container_names": [
+        "historical_receipts"
+      ]
     }
   ],
   "generated_paths": [
-    "docs/catalog/DOCUMENT_CATALOG.csv",
-    "docs/catalog/DOCUMENT_LINEAGE.csv",
-    "docs/catalog/CANONICAL_MAP.md",
-    "docs/catalog/CATALOG_ISSUES.md",
+    "docs/research/repository/DOCUMENT_CATALOG.csv",
+    "docs/research/repository/DOCUMENT_LINEAGE.csv",
+    "docs/research/repository/CANONICAL_MAP.md",
+    "docs/research/repository/CATALOG_ISSUES.md",
     "phases/RUN_CATALOG.csv"
   ],
   "path_migration_manifests": [
-    "docs/catalog/migrations/BOUNDARY_MAP_PATHS.csv",
-    "docs/catalog/migrations/DOCUMENT_FAMILIES_WAVE1_PATHS.csv",
-    "docs/catalog/migrations/E5_C001_PATHS.csv",
-    "docs/catalog/migrations/ROOT_ENV_RUN_RECEIPTS_PATHS.csv",
-    "docs/catalog/migrations/EVIDENCE_PACKAGE_PATHS.csv",
-    "docs/catalog/migrations/COMPACT_RESULTS_PROMOTION_PATHS.csv",
-    "docs/catalog/migrations/P0_G1_EVIDENCE_PATHS.csv",
-    "docs/catalog/migrations/DOCS_ROOT_FAMILIES_WAVE2_PATHS.csv",
-    "docs/catalog/migrations/DOCS_ROOT_UNICODE_PATHS.csv",
-    "docs/catalog/migrations/RESULT_EVIDENCE_ROLE_PATHS.csv"
+    "docs/research/repository/migrations/BOUNDARY_MAP_PATHS.csv",
+    "docs/research/repository/migrations/DOCUMENT_FAMILIES_WAVE1_PATHS.csv",
+    "docs/research/repository/migrations/E5_C001_PATHS.csv",
+    "docs/research/repository/migrations/ROOT_ENV_RUN_RECEIPTS_PATHS.csv",
+    "docs/research/repository/migrations/EVIDENCE_PACKAGE_PATHS.csv",
+    "docs/research/repository/migrations/COMPACT_RESULTS_PROMOTION_PATHS.csv",
+    "docs/research/repository/migrations/P0_G1_EVIDENCE_PATHS.csv",
+    "docs/research/repository/migrations/DOCS_ROOT_FAMILIES_WAVE2_PATHS.csv",
+    "docs/research/repository/migrations/DOCS_ROOT_UNICODE_PATHS.csv",
+    "docs/research/repository/migrations/RESULT_EVIDENCE_ROLE_PATHS.csv",
+    "docs/research/repository/migrations/DOCS_ROOT_FINAL_PATHS.csv"
   ],
   "inventory_control_paths": [
     "docs/README.md",
-    "docs/catalog/families/BOUNDARY_MAP.md",
-    "docs/catalog/migrations/BOUNDARY_MAP_PATHS.csv",
-    "docs/catalog/migrations/BOUNDARY_MAP_SCRIPT_PATHS.csv",
-    "docs/catalog/migrations/P2_SCRIPT_PATHS_WAVE1.csv",
-    "docs/catalog/migrations/DOCUMENT_FAMILIES_WAVE1_PATHS.csv",
-    "docs/catalog/migrations/E5_C001_PATHS.csv",
-    "docs/catalog/migrations/ROOT_ENV_RUN_RECEIPTS_PATHS.csv",
-    "docs/catalog/migrations/EVIDENCE_PACKAGE_PATHS.csv",
-    "docs/catalog/migrations/COMPACT_RESULTS_PROMOTION_PATHS.csv",
-    "docs/catalog/migrations/P0_G1_EVIDENCE_PATHS.csv",
-    "docs/catalog/migrations/DOCS_ROOT_FAMILIES_WAVE2_PATHS.csv",
-    "docs/catalog/migrations/DOCS_ROOT_UNICODE_PATHS.csv",
-    "docs/catalog/migrations/RESULT_EVIDENCE_ROLE_PATHS.csv",
-    "docs/catalog/migrations/RESULTS_FINAL_PATHS.csv",
-    "docs/catalog/migrations/FAIR_PILOT_PATHS.csv",
-    "docs/catalog/migrations/DOCS_ROOT_CLEANUP_PATHS.csv",
-    "docs/archive/compatibility/root-mirrors/protocol-locks/사전등록_관문A_v2·SE3채택재판정_20260725.md",
-    "docs/archive/compatibility/root-mirrors/protocol-locks/사전등록서_품질축본선_승인잠금v4_20260721.md",
-    "docs/archive/compatibility/root-mirrors/reports/W_D4_손실config_감사.md",
-    "docs/archive/compatibility/root-mirrors/reports/W_E5_C001_S3Ap_Phase3_20260715.md",
-    "docs/archive/compatibility/root-mirrors/reports/W_E5_pilot_gate_검수·판정회부_20260707.md",
-    "docs/archive/compatibility/root-mirrors/reports/W_③b_레시피설계_레퍼런스기반_20260707.md",
-    "docs/archive/compatibility/root-mirrors/reports/W_관문A진단_20260725.md",
-    "docs/archive/compatibility/root-mirrors/tables/boundary_map_v4_1_ladder.csv",
-    "docs/archive/compatibility/root-mirrors/tables/e5_c001_s2_mono_runtime.csv",
-    "docs/archive/compatibility/root-mirrors/tables/e5_c001_s2_monodepth_precheck.csv",
-    "docs/archive/compatibility/root-mirrors/tables/e5_c001_s3ap_boundary_propagation.csv",
-    "docs/archive/compatibility/root-mirrors/tables/e5_c001_s3ap_fm_retri_rescore.csv",
-    "docs/archive/compatibility/root-mirrors/tables/e5_c001_s3ap_perturbation.csv",
-    "docs/archive/compatibility/root-mirrors/tables/e5_c001_s3ap_perturbation_cells.csv",
-    "docs/archive/compatibility/root-mirrors/tables/e5_c001_s3ap_phase3_scores.csv",
-    "docs/archive/compatibility/root-mirrors/tables/e5_c001_s3ap_seed_manifest.csv",
-    "docs/archive/compatibility/root-mirrors/tables/pointcloud_attributes_v1_3.csv",
-    "docs/archive/compatibility/root-mirrors/tables/qs_baseline178_scores.csv",
-    "docs/archive/compatibility/root-mirrors/tables/qs_rescore_pairs.csv",
-    "docs/catalog/families/DOCUMENT_FAMILIES_WAVE1.md",
-    "docs/catalog/families/E5_C001.md",
-    "docs/catalog/families/TRANSITIONAL_ROOTS.md",
-    "docs/catalog/families/EVIDENCE_PACKAGES.md",
-    "docs/catalog/families/COMPACT_RESULTS_PROMOTION.md",
-    "docs/catalog/families/P0_G1_EVIDENCE.md",
-    "docs/catalog/families/P2_REUSABLE_CODE_WAVE1.md",
-    "docs/catalog/families/DOCS_ROOT_FINAL_WAVES.md",
-    "docs/catalog/TOP_LEVEL_DIRECTORY_CONTRACT.md",
-    "docs/catalog/TARGET_INFORMATION_ARCHITECTURE.md",
+    "docs/research/repository/families/BOUNDARY_MAP.md",
+    "docs/research/repository/migrations/BOUNDARY_MAP_PATHS.csv",
+    "docs/research/repository/migrations/BOUNDARY_MAP_SCRIPT_PATHS.csv",
+    "docs/research/repository/migrations/P2_SCRIPT_PATHS_WAVE1.csv",
+    "docs/research/repository/migrations/DOCUMENT_FAMILIES_WAVE1_PATHS.csv",
+    "docs/research/repository/migrations/E5_C001_PATHS.csv",
+    "docs/research/repository/migrations/ROOT_ENV_RUN_RECEIPTS_PATHS.csv",
+    "docs/research/repository/migrations/EVIDENCE_PACKAGE_PATHS.csv",
+    "docs/research/repository/migrations/COMPACT_RESULTS_PROMOTION_PATHS.csv",
+    "docs/research/repository/migrations/P0_G1_EVIDENCE_PATHS.csv",
+    "docs/research/repository/migrations/DOCS_ROOT_FAMILIES_WAVE2_PATHS.csv",
+    "docs/research/repository/migrations/DOCS_ROOT_UNICODE_PATHS.csv",
+    "docs/research/repository/migrations/RESULT_EVIDENCE_ROLE_PATHS.csv",
+    "docs/research/repository/migrations/RESULTS_FINAL_PATHS.csv",
+    "docs/research/repository/migrations/FAIR_PILOT_PATHS.csv",
+    "docs/research/repository/migrations/DOCS_ROOT_CLEANUP_PATHS.csv",
+    "docs/evidence/archive/compatibility/root-mirrors/protocol-locks/사전등록_관문A_v2·SE3채택재판정_20260725.md",
+    "docs/evidence/archive/compatibility/root-mirrors/protocol-locks/사전등록서_품질축본선_승인잠금v4_20260721.md",
+    "docs/evidence/archive/compatibility/root-mirrors/reports/W_D4_손실config_감사.md",
+    "docs/evidence/archive/compatibility/root-mirrors/reports/W_E5_C001_S3Ap_Phase3_20260715.md",
+    "docs/evidence/archive/compatibility/root-mirrors/reports/W_E5_pilot_gate_검수·판정회부_20260707.md",
+    "docs/evidence/archive/compatibility/root-mirrors/reports/W_③b_레시피설계_레퍼런스기반_20260707.md",
+    "docs/evidence/archive/compatibility/root-mirrors/reports/W_관문A진단_20260725.md",
+    "docs/evidence/archive/compatibility/root-mirrors/tables/boundary_map_v4_1_ladder.csv",
+    "docs/evidence/archive/compatibility/root-mirrors/tables/e5_c001_s2_mono_runtime.csv",
+    "docs/evidence/archive/compatibility/root-mirrors/tables/e5_c001_s2_monodepth_precheck.csv",
+    "docs/evidence/archive/compatibility/root-mirrors/tables/e5_c001_s3ap_boundary_propagation.csv",
+    "docs/evidence/archive/compatibility/root-mirrors/tables/e5_c001_s3ap_fm_retri_rescore.csv",
+    "docs/evidence/archive/compatibility/root-mirrors/tables/e5_c001_s3ap_perturbation.csv",
+    "docs/evidence/archive/compatibility/root-mirrors/tables/e5_c001_s3ap_perturbation_cells.csv",
+    "docs/evidence/archive/compatibility/root-mirrors/tables/e5_c001_s3ap_phase3_scores.csv",
+    "docs/evidence/archive/compatibility/root-mirrors/tables/e5_c001_s3ap_seed_manifest.csv",
+    "docs/evidence/archive/compatibility/root-mirrors/tables/pointcloud_attributes_v1_3.csv",
+    "docs/evidence/archive/compatibility/root-mirrors/tables/qs_baseline178_scores.csv",
+    "docs/evidence/archive/compatibility/root-mirrors/tables/qs_rescore_pairs.csv",
+    "docs/research/repository/families/DOCUMENT_FAMILIES_WAVE1.md",
+    "docs/research/repository/families/E5_C001.md",
+    "docs/research/repository/families/TRANSITIONAL_ROOTS.md",
+    "docs/research/repository/families/EVIDENCE_PACKAGES.md",
+    "docs/research/repository/families/COMPACT_RESULTS_PROMOTION.md",
+    "docs/research/repository/families/P0_G1_EVIDENCE.md",
+    "docs/research/repository/families/P2_REUSABLE_CODE_WAVE1.md",
+    "docs/research/repository/families/DOCS_ROOT_FINAL_WAVES.md",
+    "docs/research/repository/TOP_LEVEL_DIRECTORY_CONTRACT.md",
+    "docs/research/repository/TARGET_INFORMATION_ARCHITECTURE.md",
     "phases/README.md"
   ],
   "canonical_documents": [
@@ -198,7 +203,7 @@
   "reviewed_family_maps": [
     {
       "family_id": "boundary_map",
-      "decision_record": "docs/catalog/families/BOUNDARY_MAP.md",
+      "decision_record": "docs/research/repository/families/BOUNDARY_MAP.md",
       "reviewed_on": "2026-07-29",
       "scope_note": "Reviewed and path-migrated without changing measurement bytes or scientific judgments.",
       "documents": [
@@ -209,9 +214,9 @@
           "reason": "Human entry point for the migrated boundary-map family."
         },
         {
-          "path": "docs/boundary_map_v2_ladder.csv",
-          "status": "temporary",
-          "reason": "Compatibility mirror retained byte-identical because a pre-existing staged workflow binds this old path; new consumers must use the archive path."
+          "path": "docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v2_ladder.csv",
+          "status": "supporting",
+          "reason": "Versioned v2 assignment ladder retained at its semantic table owner and referenced by the active Fusion source panel."
         },
         {
           "path": "docs/experiments/input-and-alignment/boundary_map/manifests/boundary_map_manifest.json",
@@ -219,39 +224,39 @@
           "reason": "Immutable v1 provenance record; retained for reproduction, not current assignment use."
         },
         {
-          "path": "docs/archive/boundary_map/v1/tables/boundary_map_metrics.csv",
+          "path": "docs/evidence/archive/boundary_map/v1/tables/boundary_map_metrics.csv",
           "status": "superseded",
-          "superseded_by": "docs/archive/boundary_map/v2/tables/boundary_map_v2_metrics.csv",
+          "superseded_by": "docs/evidence/archive/boundary_map/v2/tables/boundary_map_v2_metrics.csv",
           "reason": "v1 metric snapshot was replaced by the canonical-population v2 measurement."
         },
         {
-          "path": "docs/archive/boundary_map/v1/tables/boundary_map_ladder.csv",
+          "path": "docs/evidence/archive/boundary_map/v1/tables/boundary_map_ladder.csv",
           "status": "superseded",
-          "superseded_by": "docs/archive/boundary_map/v2/tables/boundary_map_v2_ladder.csv",
+          "superseded_by": "docs/evidence/archive/boundary_map/v2/tables/boundary_map_v2_ladder.csv",
           "reason": "v1 assignment ladder was replaced by v2."
         },
         {
-          "path": "docs/archive/boundary_map/v1/tables/boundary_map_confusion.csv",
+          "path": "docs/evidence/archive/boundary_map/v1/tables/boundary_map_confusion.csv",
           "status": "superseded",
-          "superseded_by": "docs/archive/boundary_map/v2/tables/boundary_map_v2_confusion.csv",
+          "superseded_by": "docs/evidence/archive/boundary_map/v2/tables/boundary_map_v2_confusion.csv",
           "reason": "v1 validation snapshot was replaced by v2."
         },
         {
-          "path": "docs/archive/boundary_map/v1/tables/boundary_map_boundary_cases.csv",
+          "path": "docs/evidence/archive/boundary_map/v1/tables/boundary_map_boundary_cases.csv",
           "status": "superseded",
           "superseded_by": "docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v2_boundary_cases.csv",
           "reason": "v1 boundary-case table was replaced by v2."
         },
         {
-          "path": "docs/archive/boundary_map/v1/figs/boundary_map_ladder.png",
+          "path": "docs/evidence/archive/boundary_map/v1/figs/boundary_map_ladder.png",
           "status": "superseded",
-          "superseded_by": "docs/archive/boundary_map/v2/figs/boundary_map_v2_ladder.png",
+          "superseded_by": "docs/evidence/archive/boundary_map/v2/figs/boundary_map_v2_ladder.png",
           "reason": "v1 visualization is historical."
         },
         {
-          "path": "docs/archive/boundary_map/v2/reports/W_boundary_map_v2_summary_20260718.md",
+          "path": "docs/evidence/archive/boundary_map/v2/reports/W_boundary_map_v2_summary_20260718.md",
           "status": "superseded",
-          "superseded_by": "docs/archive/boundary_map/v3/reports/W_boundary_map_v3_summary_20260719.md",
+          "superseded_by": "docs/evidence/archive/boundary_map/v3/reports/W_boundary_map_v3_summary_20260719.md",
           "reason": "v2 narrative describes an older rule and assignment snapshot."
         },
         {
@@ -260,19 +265,19 @@
           "reason": "Immutable v2 provenance record; retained because v3 explicitly derives from v2 inputs."
         },
         {
-          "path": "docs/archive/boundary_map/v2/tables/boundary_map_v2_metrics.csv",
+          "path": "docs/evidence/archive/boundary_map/v2/tables/boundary_map_v2_metrics.csv",
           "status": "superseded",
           "superseded_by": "docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v3_metrics.csv",
           "reason": "v2 metric snapshot was remeasured in v3."
         },
         {
-          "path": "docs/archive/boundary_map/v2/tables/boundary_map_v2_ladder.csv",
+          "path": "docs/evidence/archive/boundary_map/v2/tables/boundary_map_v2_ladder.csv",
           "status": "superseded",
-          "superseded_by": "docs/archive/boundary_map/v3/tables/boundary_map_v3_ladder.csv",
+          "superseded_by": "docs/evidence/archive/boundary_map/v3/tables/boundary_map_v3_ladder.csv",
           "reason": "v2 assignment ladder was replaced by v3."
         },
         {
-          "path": "docs/archive/boundary_map/v2/tables/boundary_map_v2_confusion.csv",
+          "path": "docs/evidence/archive/boundary_map/v2/tables/boundary_map_v2_confusion.csv",
           "status": "superseded",
           "superseded_by": "docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v3_confusion.csv",
           "reason": "v2 validation snapshot was replaced by v3."
@@ -283,19 +288,19 @@
           "reason": "Historical v2 boundary-case evidence has no direct later-format replacement."
         },
         {
-          "path": "docs/archive/boundary_map/v2/tables/boundary_map_v2_conditional_targets.csv",
+          "path": "docs/evidence/archive/boundary_map/v2/tables/boundary_map_v2_conditional_targets.csv",
           "status": "superseded",
           "superseded_by": "docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v3_conditional_targets.csv",
           "reason": "v2 conditional target snapshot was replaced by v3."
         },
         {
-          "path": "docs/archive/boundary_map/v2/figs/boundary_map_v2_ladder.png",
+          "path": "docs/evidence/archive/boundary_map/v2/figs/boundary_map_v2_ladder.png",
           "status": "superseded",
-          "superseded_by": "docs/archive/boundary_map/v3/figs/boundary_map_v3_map.png",
+          "superseded_by": "docs/evidence/archive/boundary_map/v3/figs/boundary_map_v3_map.png",
           "reason": "v2 visualization is historical."
         },
         {
-          "path": "docs/archive/boundary_map/v3/reports/W_boundary_map_v3_summary_20260719.md",
+          "path": "docs/evidence/archive/boundary_map/v3/reports/W_boundary_map_v3_summary_20260719.md",
           "status": "superseded",
           "superseded_by": "docs/experiments/input-and-alignment/boundary_map/reports/W_anchor_census_boundary_map_v4_summary_20260720.md",
           "reason": "v3 narrative uses the earlier tier assignment; v4 introduced the neutral cell census."
@@ -311,9 +316,9 @@
           "reason": "Final v3 rule-measurement evidence retained as input provenance for v4, not current cell assignments."
         },
         {
-          "path": "docs/archive/boundary_map/v3/tables/boundary_map_v3_ladder.csv",
+          "path": "docs/evidence/archive/boundary_map/v3/tables/boundary_map_v3_ladder.csv",
           "status": "superseded",
-          "superseded_by": "docs/archive/boundary_map/v4/tables/boundary_map_v4_ladder.csv",
+          "superseded_by": "docs/evidence/archive/boundary_map/v4/tables/boundary_map_v4_ladder.csv",
           "reason": "v3 tier ladder was replaced by the v4 neutral cell ladder."
         },
         {
@@ -327,7 +332,7 @@
           "reason": "Historical v3 conditional-generation list; it is not the current v4.1 assignment source."
         },
         {
-          "path": "docs/archive/boundary_map/v3/figs/boundary_map_v3_map.png",
+          "path": "docs/evidence/archive/boundary_map/v3/figs/boundary_map_v3_map.png",
           "status": "superseded",
           "superseded_by": "docs/figs/boundary_map/boundary_map_v4_map.png",
           "reason": "v3 visualization predates the neutral v4 cell census."
@@ -345,13 +350,13 @@
           "reason": "Authoritative base-census manifest and direct source of the v4.1 supplement."
         },
         {
-          "path": "docs/archive/boundary_map/v4/tables/boundary_map_v4_ladder.csv",
+          "path": "docs/evidence/archive/boundary_map/v4/tables/boundary_map_v4_ladder.csv",
           "status": "superseded",
           "superseded_by": "docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v4_1_ladder.csv",
           "reason": "v4.1 mechanically updates the fixed nine formerly unmeasurable rows."
         },
         {
-          "path": "docs/archive/boundary_map/v4/tables/boundary_map_v4_targets.csv",
+          "path": "docs/evidence/archive/boundary_map/v4/tables/boundary_map_v4_targets.csv",
           "status": "superseded",
           "superseded_by": "docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v4_1_ladder.csv",
           "reason": "This 64-row v4 snapshot predates the nine-row supplement; filter the current v4.1 ladder instead."
@@ -391,7 +396,7 @@
           "canonical_for": "boundary_map_v4_1_supplement_provenance",
           "derived_from": [
             "docs/experiments/input-and-alignment/boundary_map/manifests/boundary_map_v4_manifest.json",
-            "docs/archive/boundary_map/v4/tables/boundary_map_v4_ladder.csv"
+            "docs/evidence/archive/boundary_map/v4/tables/boundary_map_v4_ladder.csv"
           ],
           "reason": "Authoritative v4.1 provenance, scope, invariance, and low-independence contract."
         },
@@ -400,7 +405,7 @@
           "status": "canonical",
           "canonical_for": "boundary_map_current_178_assignment_ladder",
           "derived_from": [
-            "docs/archive/boundary_map/v4/tables/boundary_map_v4_ladder.csv",
+            "docs/evidence/archive/boundary_map/v4/tables/boundary_map_v4_ladder.csv",
             "docs/experiments/input-and-alignment/boundary_map/tables/anchor_census_supplement_measurements.csv"
           ],
           "reason": "Current 178-row assignment source; new consumers use this path while hash-locked historical configs retain their recorded old path."

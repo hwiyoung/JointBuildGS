@@ -38,6 +38,8 @@ from typing import Any
 
 import numpy as np
 
+from p0_paths import P0_EVIDENCE, P0_EVIDENCE_ROOT, P0_G1_PACKAGE
+
 
 TASK_ID = "T14"
 CANONICAL_RUN = "w3_2b_roofer_repeatability_20260612_220747"
@@ -51,7 +53,7 @@ IMAGE_DIR = "data/work/images/Images"
 COLMAP_CAMERAS = "data/work/colmap/sparse/0/cameras.txt"
 COLMAP_IMAGES = "data/work/colmap/sparse/0/images.txt"
 SCENE_REF = "data/work/opf/opf/scene_reference_frame.json"
-T12_METADATA = "docs/W3_figure_failure_story_metadata.json"
+T12_METADATA = str(P0_EVIDENCE / "W3_figure_failure_story_metadata.json")
 
 FIGA_PRIMARY = "DEBY_LOD2_4907182"
 FIGA_CONTRAST = "DEBY_LOD2_4908023"
@@ -64,9 +66,9 @@ FIGB_BUILDINGS = [
      "df1": "ALS F1 1.00, DIM F1 1.00 (dF1 0.00)"},
 ]
 
-OUT_FIG_A = "docs/figs/w3_t14_figA_texture_to_points.png"
-OUT_FIG_B = "docs/figs/w3_t14_figB_input_to_output.png"
-REPORT_MD = "docs/W3_qualitative_compare.md"
+OUT_FIG_A = str(P0_EVIDENCE.figs("W3") / "w3_t14_figA_texture_to_points.png")
+OUT_FIG_B = str(P0_EVIDENCE.figs("W3") / "w3_t14_figB_input_to_output.png")
+REPORT_MD = str(P0_EVIDENCE / "W3_qualitative_compare.md")
 PKG_FIG_A = "fig_17_t14_texture_to_points.png"
 PKG_FIG_B = "fig_18_t14_input_to_output.png"
 
@@ -482,7 +484,7 @@ def render_figureB(out_path: Path, blocks: list[dict[str, Any]]) -> None:
 # ---------------------------------------------------------------------------
 def compute_entrypoint() -> None:
     root = Path("/workspace")
-    figs = root / "docs/figs"
+    figs = P0_EVIDENCE.figs("W3")
     figs.mkdir(parents=True, exist_ok=True)
     run_id = os.environ["RUN_ID"]
     run_dir = root / "runs" / run_id
@@ -713,7 +715,7 @@ def md_table(headers: list[str], rows: list[list[Any]]) -> str:
 
 
 def add_to_g1_package(root: Path) -> None:
-    package = root / "docs/G1_package"
+    package = P0_G1_PACKAGE
     package_figs = package / "figs"
     package.mkdir(parents=True, exist_ok=True)
     package_figs.mkdir(parents=True, exist_ok=True)
@@ -837,8 +839,8 @@ def copy_outputs(run_dir: Path, paths: list[Path]) -> None:
     for path in paths:
         if not path.exists():
             continue
-        if path.is_relative_to(Path("/workspace/docs")):
-            dst = snapshot / "docs" / path.relative_to(Path("/workspace/docs"))
+        if path.is_relative_to(P0_EVIDENCE_ROOT):
+            dst = snapshot / "evidence" / path.relative_to(P0_EVIDENCE_ROOT)
         else:
             dst = snapshot / path.name
         dst.parent.mkdir(parents=True, exist_ok=True)
@@ -846,7 +848,7 @@ def copy_outputs(run_dir: Path, paths: list[Path]) -> None:
 
 
 def record_issue(repo: Path, run_id: str, message: str) -> None:
-    issues = repo / "phases/p0-audit/docs/issues.md"
+    issues = repo / "phases/p0-audit/issues.md"
     with issues.open("a", encoding="utf-8") as fh:
         fh.write(f"\n## {TASK_ID} Qualitative Figures\n\n- {run_id}: {message}. See runs/{run_id}/logs/.\n")
 

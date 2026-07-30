@@ -21,6 +21,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from p0_paths import P0_EVIDENCE
+
 
 TASK_ID = "W3-2b"
 EXISTING_RUN_ID = "w2_3a_roofer_tuning_20260612_202013"
@@ -126,7 +128,7 @@ def prepare_entrypoint() -> None:
     root = Path("/workspace")
     run_id = os.environ["RUN_ID"]
     run_dir = root / "runs" / run_id
-    docs = root / "docs"
+    docs = P0_EVIDENCE
     run_dir.mkdir(parents=True, exist_ok=True)
 
     coverage_rows = [row for row in read_csv(docs / "W2_1c_paired_status.csv") if row["coverage_control_population"] == "yes"]
@@ -159,7 +161,7 @@ def plan_row(run_id: str, stage: str, input_label: str, building_ids: list[str],
 
 def postprocess_entrypoint() -> None:
     root = Path("/workspace")
-    docs = root / "docs"
+    docs = P0_EVIDENCE
     run_id = os.environ["RUN_ID"]
     run_dir = root / "runs" / run_id
     w2a = load_module("roofer_w2a", root / "scripts/13_roofer_tune_w2a.py")

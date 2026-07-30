@@ -7,9 +7,9 @@ export P0_UID="${P0_UID:-$(id -u)}"
 export P0_GID="${P0_GID:-$(id -g)}"
 
 RAW_DIR="data/raw"
-DOCS_DIR="docs"
+DOCS_DIR="../../docs/evidence/p0-audit/w1-input-diagnostics/reports"
 INVENTORY="${DOCS_DIR}/data_inventory.md"
-ISSUES="${DOCS_DIR}/issues.md"
+ISSUES="issues.md"
 INCLUDE_VAIHINGEN="${INCLUDE_VAIHINGEN:-1}"
 ISPRS_VAIHINGEN_PASSWORD="${ISPRS_VAIHINGEN_PASSWORD:-CjwcipT4-P8g}"
 

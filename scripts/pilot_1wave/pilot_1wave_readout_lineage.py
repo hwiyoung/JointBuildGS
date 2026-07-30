@@ -16,7 +16,7 @@ from typing import Any
 import numpy as np
 
 
-REPO = Path(__file__).resolve().parents[3]
+REPO = Path(__file__).resolve().parents[2]
 CONTAINER_REPO = Path("/workspace/JointBuildGS")
 LINEAGE_SCHEMA = "jointbuildgs.pilot_1wave.readout_lineage.v1"
 CLASSIFICATION_SCHEMA = "jointbuildgs.pilot_1wave.scene_classification.v1"

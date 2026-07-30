@@ -427,7 +427,7 @@ run_finalize() {
     commit_stage \
       "AC-C3-PARTIAL: retain anchor census finalize failure" \
       phases/p2-gsjso/docs/issues.md "$RUN_REL" docs/experiments/input-and-alignment/boundary_map/tables/anchor_census_measurements.csv \
-      docs/archive/boundary_map/v4/tables/boundary_map_v4_ladder.csv docs/archive/boundary_map/v4/tables/boundary_map_v4_targets.csv \
+      docs/evidence/archive/boundary_map/v4/tables/boundary_map_v4_ladder.csv docs/evidence/archive/boundary_map/v4/tables/boundary_map_v4_targets.csv \
       docs/experiments/input-and-alignment/boundary_map/tables/anchor_census_ambiguous_1_99.csv \
       docs/experiments/input-and-alignment/boundary_map/tables/anchor_census_high_count_high_mad.csv \
       docs/experiments/input-and-alignment/boundary_map/manifests/boundary_map_v4_manifest.json \
@@ -443,7 +443,7 @@ run_finalize() {
     commit_stage \
       "AC-C3-PARTIAL: retain boundary-map-v4 QA failure" \
       phases/p2-gsjso/docs/issues.md "$RUN_REL" docs/experiments/input-and-alignment/boundary_map/tables/anchor_census_measurements.csv \
-      docs/archive/boundary_map/v4/tables/boundary_map_v4_ladder.csv docs/archive/boundary_map/v4/tables/boundary_map_v4_targets.csv \
+      docs/evidence/archive/boundary_map/v4/tables/boundary_map_v4_ladder.csv docs/evidence/archive/boundary_map/v4/tables/boundary_map_v4_targets.csv \
       docs/experiments/input-and-alignment/boundary_map/tables/anchor_census_ambiguous_1_99.csv \
       docs/experiments/input-and-alignment/boundary_map/tables/anchor_census_high_count_high_mad.csv \
       docs/experiments/input-and-alignment/boundary_map/manifests/boundary_map_v4_manifest.json \
@@ -453,11 +453,11 @@ run_finalize() {
     write_state "C-3" "failed" "public QA failed"
     return 1
   fi
-  issue "AC-C3 boundary_map_v4 recorded: measurements_sha256=$(sha docs/experiments/input-and-alignment/boundary_map/tables/anchor_census_measurements.csv); run_manifest_sha256=$(sha "$RUN_MANIFEST"); ladder_sha256=$(sha docs/archive/boundary_map/v4/tables/boundary_map_v4_ladder.csv); targets_sha256=$(sha docs/archive/boundary_map/v4/tables/boundary_map_v4_targets.csv); lowcount_sha256=$(sha docs/experiments/input-and-alignment/boundary_map/tables/anchor_census_ambiguous_1_99.csv); highmad_sha256=$(sha docs/experiments/input-and-alignment/boundary_map/tables/anchor_census_high_count_high_mad.csv); public_manifest_sha256=$(sha docs/experiments/input-and-alignment/boundary_map/manifests/boundary_map_v4_manifest.json); figure_sha256=$(sha docs/figs/boundary_map/boundary_map_v4_map.png); summary_sha256=$(sha docs/experiments/input-and-alignment/boundary_map/reports/W_anchor_census_boundary_map_v4_summary_20260720.md); learning_runs_started=0."
+  issue "AC-C3 boundary_map_v4 recorded: measurements_sha256=$(sha docs/experiments/input-and-alignment/boundary_map/tables/anchor_census_measurements.csv); run_manifest_sha256=$(sha "$RUN_MANIFEST"); ladder_sha256=$(sha docs/evidence/archive/boundary_map/v4/tables/boundary_map_v4_ladder.csv); targets_sha256=$(sha docs/evidence/archive/boundary_map/v4/tables/boundary_map_v4_targets.csv); lowcount_sha256=$(sha docs/experiments/input-and-alignment/boundary_map/tables/anchor_census_ambiguous_1_99.csv); highmad_sha256=$(sha docs/experiments/input-and-alignment/boundary_map/tables/anchor_census_high_count_high_mad.csv); public_manifest_sha256=$(sha docs/experiments/input-and-alignment/boundary_map/manifests/boundary_map_v4_manifest.json); figure_sha256=$(sha docs/figs/boundary_map/boundary_map_v4_map.png); summary_sha256=$(sha docs/experiments/input-and-alignment/boundary_map/reports/W_anchor_census_boundary_map_v4_summary_20260720.md); learning_runs_started=0."
   if ! commit_stage \
     "AC-C3: aggregate neutral boundary-map-v4 cells" \
     phases/p2-gsjso/docs/issues.md "$RUN_REL" docs/experiments/input-and-alignment/boundary_map/tables/anchor_census_measurements.csv \
-    docs/archive/boundary_map/v4/tables/boundary_map_v4_ladder.csv docs/archive/boundary_map/v4/tables/boundary_map_v4_targets.csv \
+    docs/evidence/archive/boundary_map/v4/tables/boundary_map_v4_ladder.csv docs/evidence/archive/boundary_map/v4/tables/boundary_map_v4_targets.csv \
     docs/experiments/input-and-alignment/boundary_map/tables/anchor_census_ambiguous_1_99.csv \
     docs/experiments/input-and-alignment/boundary_map/tables/anchor_census_high_count_high_mad.csv \
     docs/experiments/input-and-alignment/boundary_map/manifests/boundary_map_v4_manifest.json \

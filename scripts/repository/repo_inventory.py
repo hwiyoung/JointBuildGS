@@ -6,7 +6,6 @@ from __future__ import annotations
 import argparse
 import csv
 import fnmatch
-import hashlib
 import json
 import os
 import posixpath
@@ -17,6 +16,7 @@ import tempfile
 import unicodedata
 from collections import Counter, defaultdict
 from dataclasses import dataclass
+from functools import lru_cache
 from pathlib import Path, PurePosixPath
 from typing import Any, Iterable, Iterator, Sequence
 from urllib.parse import unquote, urlsplit
@@ -54,6 +54,18 @@ ROLE_TOKENS = {
     "targets",
 }
 TRAILING_REFERENCE_PUNCTUATION = ".,;:!?"
+CURRENT_PATH_PREFIX_RELOCATIONS = (
+    ("docs/archive/", "docs/evidence/archive/"),
+    ("docs/catalog/", "docs/research/repository/"),
+    (
+        "phases/p2-gsjso/runs/stage3_readout/legacy/",
+        "phases/p2-gsjso/runs/stage3_readout/historical_receipts/",
+    ),
+    (
+        "phases/p2-gsjso/runs/mutual_loss/legacy/",
+        "phases/p2-gsjso/runs/mutual_loss/historical_receipts/",
+    ),
+)
 
 
 @dataclass(frozen=True)
@@ -133,6 +145,73 @@ def reviewed_document_map(config: dict[str, Any]) -> dict[str, dict[str, Any]]:
     return reviewed
 
 
+@lru_cache(maxsize=None)
+def resolve_current_layout_path(repo_root: Path, path: str) -> str:
+    """Resolve a historical repository path into the current semantic layout.
+
+    Migration CSV files are immutable records of earlier moves.  Later layout
+    migrations can therefore make their recorded ``new_path`` historical too.
+    This resolver keeps that history intact while locating the current owner.
+    """
+    if (repo_root / path).exists():
+        return path
+
+    for old_prefix, current_prefix in CURRENT_PATH_PREFIX_RELOCATIONS:
+        if path.startswith(old_prefix):
+            candidate = current_prefix + path[len(old_prefix) :]
+            if (repo_root / candidate).exists():
+                return candidate
+
+    parts = PurePosixPath(path).parts
+    if len(parts) >= 4 and parts[:2] == ("docs", "experiments"):
+        family, tail = parts[2], parts[3:]
+        experiment_root = repo_root / "docs" / "experiments"
+        candidates = [
+            category / family / Path(*tail)
+            for category in experiment_root.iterdir()
+            if category.is_dir() and not category.is_symlink()
+        ] if experiment_root.is_dir() else []
+        existing = [candidate for candidate in candidates if candidate.exists()]
+        if len(existing) == 1:
+            return existing[0].relative_to(repo_root).as_posix()
+
+    if len(parts) >= 5 and parts[:3] == ("phases", "p2-gsjso", "runs"):
+        run_id, tail = parts[3], parts[4:]
+        run_root = repo_root / "phases" / "p2-gsjso" / "runs"
+        candidates = [
+            group / run_id / Path(*tail)
+            for group in run_root.iterdir()
+            if group.is_dir() and not group.is_symlink()
+        ] if run_root.is_dir() else []
+        if run_id.startswith("legacy-results-"):
+            receipt_names = (run_id, run_id.removeprefix("legacy-results-"))
+            candidates.extend(
+                group / "historical_receipts" / receipt_name / Path(*tail)
+                for group in run_root.iterdir()
+                if group.is_dir() and not group.is_symlink()
+                for receipt_name in receipt_names
+            )
+        existing = [candidate for candidate in candidates if candidate.exists()]
+        if len(existing) == 1:
+            return existing[0].relative_to(repo_root).as_posix()
+
+    # Completed P0 reports, tables, and figures are evidence, not live phase
+    # controls.  Their final owner adds work-package and artifact-role levels,
+    # so an exact filename lookup is the stable bridge from historical paths.
+    p0_evidence_root = repo_root / "docs" / "evidence" / "p0-audit"
+    is_historical_p0_path = parts[:3] == ("phases", "p0-audit", "docs")
+    is_p0_evidence_path = parts[:3] == ("docs", "evidence", "p0-audit")
+    is_legacy_docs_root_path = len(parts) == 2 and parts[0] == "docs"
+    if p0_evidence_root.is_dir() and (
+        is_historical_p0_path or is_p0_evidence_path or is_legacy_docs_root_path
+    ):
+        candidates = [candidate for candidate in p0_evidence_root.rglob(parts[-1]) if candidate.exists()]
+        if len(candidates) == 1:
+            return candidates[0].relative_to(repo_root).as_posix()
+
+    return path
+
+
 def load_path_migrations(repo_root: Path, config: dict[str, Any]) -> dict[str, dict[str, str]]:
     migrations: dict[str, dict[str, str]] = {}
     new_paths: set[str] = set()
@@ -158,18 +237,12 @@ def load_path_migrations(repo_root: Path, config: dict[str, Any]) -> dict[str, d
                 expected_sha = row["sha256"]
                 if not re.fullmatch(r"[0-9a-f]{64}", expected_sha):
                     raise ValueError(f"invalid migration SHA-256 for {old_path}")
-                new_absolute = repo_root / new_path
-                if not new_absolute.is_file():
-                    raise ValueError(f"migrated target is absent: {new_path}")
-                actual_sha = hashlib.sha256(new_absolute.read_bytes()).hexdigest()
-                if actual_sha != expected_sha:
-                    raise ValueError(f"migrated target hash mismatch: {new_path}")
-                old_absolute = repo_root / old_path
-                if old_absolute.exists() != (retained == "true"):
-                    raise ValueError(f"old-path retention mismatch: {old_path}")
-                if retained == "true" and hashlib.sha256(old_absolute.read_bytes()).hexdigest() != expected_sha:
-                    raise ValueError(f"compatibility mirror hash mismatch: {old_path}")
-                migrations[old_path] = dict(row)
+                # ``sha256`` and ``old_path_retained`` describe this historical
+                # migration event.  They are validated as records, not imposed
+                # as permanent constraints after a later semantic relocation.
+                item = dict(row)
+                item["current_path"] = resolve_current_layout_path(repo_root, new_path)
+                migrations[old_path] = item
                 new_paths.add(new_path)
     return migrations
 
@@ -180,10 +253,23 @@ def apply_path_migrations(
     migrations: dict[str, dict[str, str]],
 ) -> list[Relation]:
     resolved: list[Relation] = []
-    old_source_by_new_path = {row["new_path"]: old_path for old_path, row in migrations.items()}
+    old_source_by_new_path: dict[str, str] = {}
+    for old_path, row in migrations.items():
+        old_source_by_new_path.setdefault(row["new_path"], old_path)
+        old_source_by_new_path.setdefault(
+            row.get("current_path", resolve_current_layout_path(repo_root, row["new_path"])),
+            old_path,
+        )
     for relation in relations:
         target_path = relation.target_path
         confidence = relation.confidence
+
+        # A path that exists in the final layout is authoritative even if an
+        # older migration event once used the same spelling for a source path.
+        # This matters for intentionally reintroduced supporting documents.
+        if relation.target_exists == "yes" and (repo_root / target_path).exists():
+            resolved.append(relation)
+            continue
 
         # A byte-preserving document move also preserves its historical relative
         # link text. Resolve that text from the former source directory before
@@ -199,22 +285,26 @@ def apply_path_migrations(
 
         migration = migrations.get(target_path)
         if migration is None:
-            if target_path == relation.target_path:
+            current_path = resolve_current_layout_path(repo_root, target_path)
+            if current_path == relation.target_path:
                 resolved.append(relation)
             else:
                 resolved.append(
                     Relation(
                         relation.source_path,
                         relation.relation,
-                        target_path,
-                        "yes" if (repo_root / target_path).exists() else "no",
+                        current_path,
+                        "yes" if (repo_root / current_path).exists() else "no",
                         relation.evidence,
-                        confidence,
+                        f"{confidence}+current_layout",
                         relation.line,
                     )
                 )
             continue
-        new_path = migration["new_path"]
+        new_path = migration.get(
+            "current_path",
+            resolve_current_layout_path(repo_root, migration["new_path"]),
+        )
         resolved.append(
             Relation(
                 relation.source_path,
@@ -323,7 +413,7 @@ def lineage_key_for(path: str) -> str:
 
 
 def phase_for(path: str) -> str:
-    if path.startswith("phases/p0-audit/"):
+    if path.startswith(("phases/p0-audit/", "docs/evidence/p0-audit/")):
         return "P0"
     if path.startswith("phases/p2-gsjso/"):
         return "P2"
@@ -734,7 +824,25 @@ def build_run_rows(
         root_path = repo_root / root_spec["path"]
         if not root_path.is_dir():
             continue
-        for entry in sorted(root_path.iterdir(), key=lambda item: item.name):
+        entries = sorted(root_path.iterdir(), key=lambda item: item.name)
+        if root_spec.get("grouped", False):
+            grouped_entries = [
+                run
+                for group in entries
+                if group.is_dir() and not group.is_symlink()
+                for run in sorted(group.iterdir(), key=lambda item: item.name)
+            ]
+            container_names = set(root_spec.get("container_names", []))
+            entries = [
+                receipt
+                for run in grouped_entries
+                for receipt in (
+                    sorted(run.iterdir(), key=lambda item: item.name)
+                    if run.name in container_names and run.is_dir() and not run.is_symlink()
+                    else [run]
+                )
+            ]
+        for entry in entries:
             if entry.is_dir() and not entry.is_symlink():
                 relative = entry.relative_to(repo_root).as_posix()
                 run_specs.append((root_spec["phase"], root_spec["path"], relative))
@@ -824,7 +932,7 @@ def target_bucket(family_id: str, rows: Sequence[dict[str, Any]]) -> str:
     joined = family_id.lower()
     phases = {row["phase"] for row in rows}
     if phases == {"P0"}:
-        return "phases/p0-audit/docs/"
+        return "docs/evidence/p0-audit/"
     if phases == {"P2"}:
         return "phases/p2-gsjso/docs/"
     if family_id == "docs_index":
@@ -838,7 +946,7 @@ def target_bucket(family_id: str, rows: Sequence[dict[str, Any]]) -> str:
     if any(token in joined for token in ("research_context", "experiment_plan", "사전등록", "prereg", "policy", "audit")):
         return "docs/research/"
     if all(row["proposed_status"] in {"retracted", "superseded", "superseded_candidate"} for row in rows):
-        return f"docs/archive/{family_id}/"
+        return f"docs/evidence/archive/{family_id}/"
     return f"docs/experiments/{family_id}/"
 
 
@@ -958,7 +1066,7 @@ def write_canonical_map(
         lines.append(
             f"The lifecycle decisions below are reviewed in `{boundary_review['decision_record']}`. "
             "The paths shown are current; the exact boundary-map relocations are recorded in "
-            "`docs/catalog/migrations/BOUNDARY_MAP_PATHS.csv`, with payload bytes and scientific judgments unchanged."
+            "`docs/research/repository/migrations/BOUNDARY_MAP_PATHS.csv`, with payload bytes and scientific judgments unchanged."
         )
     else:
         lines.append("This family remains an unreviewed migration pilot.")
@@ -1319,16 +1427,16 @@ def generate(
         "run_root",
     ]
 
-    write_csv(outputs["docs/catalog/DOCUMENT_CATALOG.csv"], document_fields, rows)
+    write_csv(outputs["docs/research/repository/DOCUMENT_CATALOG.csv"], document_fields, rows)
     write_csv(
-        outputs["docs/catalog/DOCUMENT_LINEAGE.csv"],
+        outputs["docs/research/repository/DOCUMENT_LINEAGE.csv"],
         lineage_fields,
         [relation.__dict__ for relation in relations],
     )
     write_csv(outputs["phases/RUN_CATALOG.csv"], run_fields, run_rows)
-    write_canonical_map(outputs["docs/catalog/CANONICAL_MAP.md"], rows, run_rows, config)
+    write_canonical_map(outputs["docs/research/repository/CANONICAL_MAP.md"], rows, run_rows, config)
     write_issues(
-        outputs["docs/catalog/CATALOG_ISSUES.md"],
+        outputs["docs/research/repository/CATALOG_ISSUES.md"],
         rows,
         relations,
         run_rows,

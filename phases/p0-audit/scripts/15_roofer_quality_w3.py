@@ -31,10 +31,12 @@ from shapely import contains_xy, make_valid
 from shapely.geometry import GeometryCollection, LineString, MultiLineString, MultiPolygon, Point, Polygon
 from shapely.ops import unary_union
 
+from p0_paths import P0_EVIDENCE
+
 
 TASK_ID = "W3-1"
 BASE_W2_RUN_ID = "w2_1_roofer_default_20260612_152729"
-PAIRED_STATUS = "/workspace/docs/W2_1c_paired_status.csv"
+PAIRED_STATUS = str(P0_EVIDENCE / "W2_1c_paired_status.csv")
 ALS_CITYJSON = f"/workspace/runs/{BASE_W2_RUN_ID}/cityjson/als_roofer.city.json"
 DIM_CITYJSON = f"/workspace/runs/{BASE_W2_RUN_ID}/cityjson/dim_roofer.city.json"
 LOD2_DIR = "/workspace/data/raw/lod2"
@@ -103,8 +105,8 @@ def host_entrypoint() -> None:
 
 def compute_entrypoint() -> None:
     root = Path("/workspace")
-    docs = root / "docs"
-    figs = docs / "figs"
+    docs = P0_EVIDENCE
+    figs = docs.figs("W3")
     figs.mkdir(parents=True, exist_ok=True)
     run_id = os.environ["RUN_ID"]
     run_dir = root / "runs" / run_id

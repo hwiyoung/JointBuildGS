@@ -5,6 +5,7 @@ Reusable, container-executed workflows are grouped by scientific role:
 | Owner | Purpose |
 |---|---|
 | [`input_and_alignment/`](input_and_alignment/README.md) | input preparation, reconstruction, camera, CRS, and datum alignment |
+| [`evidence_and_attributes/`](evidence_and_attributes/README.md) | population analysis, evidence packages, and geometry-fidelity diagnostics |
 | [`e5_c001/`](e5_c001/) | reusable E5/C001 experiment orchestration |
 | [`mutual_loss/`](mutual_loss/README.md) | loss diagnostics, ablation, and joint-optimization workflows |
 | [`boundary_and_robustness/`](boundary_and_robustness/) | boundary, anchor, and degradation workflows |
@@ -17,4 +18,3 @@ Reusable, container-executed workflows are grouped by scientific role:
 
 An exact, lock-bound historical recipe may remain under
 `phases/<phase>/scripts/<workstream>/`. Mutable run payload never belongs here.
-

@@ -21,9 +21,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from p0_paths import P0_EVIDENCE
+
 
 TASK_ID = "W2-3b"
-BASELINE_SOURCE = "docs/W2_1c_paired_status.csv"
+BASELINE_SOURCE = str(P0_EVIDENCE / "W2_1c_paired_status.csv")
 BASE_W2_RUN_ID = "w2_1_roofer_default_20260612_152729"
 BASE_DIM = "/workspace/data/work/w2/dim_v1_classified_z_minus0p174.laz"
 FOOTPRINTS = "/workspace/data/work/w2/footprints_scene_aoi.gpkg"
@@ -139,7 +141,7 @@ def run_roofer_plan_row(
 
 def prepare_entrypoint() -> None:
     root = Path("/workspace")
-    docs = root / "docs"
+    docs = P0_EVIDENCE
     run_id = os.environ["RUN_ID"]
     run_dir = root / "runs" / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
@@ -277,7 +279,7 @@ def plan_row(run_id: str, variant: dict[str, str], building_ids: list[str]) -> d
 
 def postprocess_entrypoint() -> None:
     root = Path("/workspace")
-    docs = root / "docs"
+    docs = P0_EVIDENCE
     run_id = os.environ["RUN_ID"]
     run_dir = root / "runs" / run_id
     baseline_rows = coverage_rows(docs / "W2_1c_paired_status.csv")

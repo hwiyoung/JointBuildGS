@@ -38,7 +38,6 @@ REPO = Path(__file__).resolve().parents[3]
 DOCS = REPO / "docs"
 RUN_DIR = REPO / "phases/p2-gsjso/runs/boundary_and_robustness/20260718_boundary_map_v2"
 OLD_RUN_DIR = REPO / "phases/p2-gsjso/runs/boundary_and_robustness/20260716_boundary_map"
-P2_SHARED_SCRIPT_DIR = REPO / "phases/p2-gsjso/scripts"
 
 METRICS = DOCS / "archive/boundary_map/v2/tables/boundary_map_v2_metrics.csv"
 LADDER = DOCS / "archive/boundary_map/v2/tables/boundary_map_v2_ladder.csv"
@@ -67,14 +66,14 @@ FM_LOG = RUN_DIR / "fm.log"
 LOG = RUN_DIR / "run.log"
 MAST3R_HELPER = Path(__file__).with_name("boundary_map_v2_mast3r.py")
 OLD_BOUNDARY_SCRIPT = Path(__file__).with_name("overnight_boundary_map.py")
-POPULATION_AUX_SCRIPT = P2_SHARED_SCRIPT_DIR / "population_aux_v3.py"
-PROJECTION_DATUM_SCRIPT = P2_SHARED_SCRIPT_DIR / "projection_datum.py"
+POPULATION_AUX_SCRIPT = REPO / "scripts/evidence_and_attributes/population_analysis/population_aux_v3.py"
+PROJECTION_DATUM_SCRIPT = REPO / "src/geospatial/projection_datum.py"
 
 SNAPSHOT = DOCS / "regression_input_snapshot.csv"
 POINTS = DOCS / "pointcloud_attributes_v1_3.csv"
 AUX_V4 = DOCS / "population_aux_v4.csv"
 LOWTEX = DOCS / "lowtex_v5.csv"
-LOWTEX_SCRIPT = P2_SHARED_SCRIPT_DIR / "aux_v4b.py"
+LOWTEX_SCRIPT = REPO / "scripts/evidence_and_attributes/population_analysis/aux_v4b.py"
 MANUAL = DOCS / "manual_review_judgments.csv"
 FOOTPRINTS = REPO / "results/tum_transfer/analysis/footprints_aoi.geojson"
 PROJECTION_DATUM = REPO / "configs/input_and_alignment/projection_datum.json"
@@ -750,7 +749,7 @@ def prepare() -> None:
         "git_head_at_measurement": git_value("rev-parse", "HEAD"),
         "branch": git_value("branch", "--show-current"),
         "canonical_population_rule": (
-            "docs/regression_input_snapshot.csv arm=raw_lidar and assembled=true"
+            "docs/experiments/evaluation/attr_outcome_regression/tables/regression_input_snapshot.csv arm=raw_lidar and assembled=true"
         ),
         "population_checks": checks,
         "old_c_population": len(old_population),

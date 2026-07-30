@@ -30,7 +30,7 @@ import pandas as pd
 from scipy.stats import pearsonr, rankdata, spearmanr
 
 
-REPO = Path(__file__).resolve().parents[1]
+REPO = Path(__file__).resolve().parents[3]
 DEFAULT_RUN_ROOT = REPO / "reports/nightly_rv1_20260728_2327"
 SCIENCE_STATUS = (
     "R_v1 is a relative, provisional stratification for experiment selection. "

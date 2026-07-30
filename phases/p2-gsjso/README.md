@@ -23,10 +23,14 @@ phases/p2-gsjso/
   runs/                 # compact receipts 및 기존 실행 기록
 ```
 
-재사용 가능한 실험 드라이버는 `scripts/experiments/<family>/`, 대응 테스트는
-`tests/experiments/<family>/`가 정본이다. P2 reusable-code wave 1에서 degradation curve,
-E5 C001 S3B0, pilot one-wave를 이 구조로 승격했다. 정확한 매핑은
-`docs/catalog/migrations/P2_SCRIPT_PATHS_WAVE1.csv`에 있다.
+재사용 가능한 실행기는 기능별 `scripts/<scientific-role>/`, 대응 검증은
+`tests/<workstream>/`가 정본이다. P2 reusable-code wave 1에서 degradation curve,
+E5 C001 S3B0, pilot one-wave를 이 구조로 승격했다. 정확한 역사적 매핑은
+`docs/research/repository/migrations/P2_SCRIPT_PATHS_WAVE1.csv`에 있다.
+
+`phases/`는 범용 코드의 중복 보관소가 아니다. 아직 종료되지 않은 단계의 잠금 config,
+단계에만 종속된 절차, compact run receipt를 보존한다. 단계가 종료되면 재사용 코드는
+`src/`·`scripts/`·`configs/`로 승격하고, 검토 패키지는 `docs/evidence/`로 동결한다.
 
 ## GS-JSO 코어 코드 (레포 루트)
 
@@ -34,11 +38,11 @@ P2 구현은 레포 루트의 기존 GS-JSO 코드를 사용/확장한다. **이
 
 - `src/` — 모델·손실·grouping·train
 - `configs/` — 실험 config
-- `scripts/`, `tools/` — 재사용 드라이버와 레포 도구
+- `scripts/` — 재사용 드라이버와 저장소 점검 도구
 - `docs/experiments/<family>/{reports,tables,metrics,manifests,models}/` — 역할별로 승격된 compact result evidence
 - `artifacts/manifests/` — 외부 dataset/checkpoint/render/run payload resolver
 - 연구 맥락: `docs/research/RESEARCH_CONTEXT.md`(손실·파라미터), `docs/research/EXPERIMENT_PLAN.md`(실험 순서)
 
-> 2026-07-30에 P0 및 legacy result payload는 sibling artifact backend로 물리 이전했다.
-> 활성 Fusion-W1 작업이 있는 `runs/`는 staged/unstaged 작업을 보존하기 위해 phase-local로
-> 유지하며, run closeout 뒤 동일 manifest 절차로 분리한다.
+> 2026-07-30에 P0 및 과거 result payload는 sibling artifact backend로 물리 이전했다.
+> 활성 Fusion-W1의 non-index payload도 manifest로 외부화했으며, phase에는 사용자가 편집 중인
+> control/receipt 경계만 남겼다. run closeout 뒤 동일 manifest 절차로 동결한다.

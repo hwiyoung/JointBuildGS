@@ -1,0 +1,32 @@
+schema_version: 1
+artifact_id: jointbuildgs-final-empty-layout-quarantine-20260730
+role: reversible-empty-layout-and-placeholder-quarantine
+created_at: 2026-07-30T00:00:00+09:00
+backend:
+  kind: local-filesystem
+  repository_relative_root: file:../JointBuildGS-artifacts/quarantine/20260730-final-layout
+integrity:
+  method: same-device-rename-for-leaves-and-path-preserving-empty-parent-collapse
+  content_bytes_modified: false
+  destructive_file_cleanup_authorized: false
+  repository_empty_directories_after_migration: 0
+totals:
+  preserved_empty_directory_paths: 1617
+  retired_placeholder_files: 5
+  retired_placeholder_bytes: 1464
+retired_placeholders:
+  - phases/p2-gsjso/scripts/.gitkeep
+  - scripts/experiments/README.md
+  - tests/experiments/README.md
+  - artifacts/compatibility/data.gitkeep
+  - artifacts/compatibility/fair-pilot.gitignore
+retired_root_mount_points:
+  - data
+  - results
+  - reports
+  - fair-pilot
+  - tools
+retention:
+  policy: preserve-until-structure-review-closes
+  restore_rule: recreate the recorded repository-relative path from the matching quarantine tree
+  note: Empty generated run leaves contain no scientific bytes; non-empty payloads are governed by separate manifests.

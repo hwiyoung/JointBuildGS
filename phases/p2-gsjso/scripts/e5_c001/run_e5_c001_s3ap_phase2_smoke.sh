@@ -46,13 +46,13 @@ case "${MODE}" in
     ;;
   run)
     docker run "${COMMON[@]}" --gpus all "${IMAGE}" \
-      python scripts/e5_c001/p2_gsjso/e5_c001_s3ap_gsplat_prewarm.py
+      python scripts/e5_c001/e5_c001_s3ap_gsplat_prewarm.py
     exec docker run "${COMMON[@]}" --gpus all "${IMAGE}" \
       python phases/p2-gsjso/scripts/e5_c001/e5_c001_s3ap_phase2_smoke.py "$@"
     ;;
   test)
     exec docker run "${COMMON[@]}" "${IMAGE}" \
-      python tests/e5_c001/p2_gsjso/test_e5_c001_s3ap_phase2_smoke.py "$@"
+      python tests/e5_c001/test_e5_c001_s3ap_phase2_smoke.py "$@"
     ;;
   *)
     echo "usage: $0 {plan|run|test} [arguments...]" >&2

@@ -19,6 +19,8 @@ from xml.etree import ElementTree as ET
 
 import numpy as np
 
+from p0_paths import P0_EVIDENCE
+
 
 TASK_ID = "T4"
 GROUND = 2
@@ -95,7 +97,7 @@ def run(
 
 
 def record_issue(repo: Path, run_id: str, message: str) -> None:
-    issues = repo / "phases/p0-audit/docs/issues.md"
+    issues = repo / "phases/p0-audit/issues.md"
     with issues.open("a", encoding="utf-8") as fh:
         fh.write(f"\n## {TASK_ID} Point Classification\n\n")
         fh.write(f"- {run_id}: {message}. See runs/{run_id}/logs/.\n")
@@ -431,8 +433,8 @@ def main() -> None:
     run_dir = root / "runs" / run_id
     log_dir = run_dir / "logs"
     work_dir = root / "data/work/classify"
-    docs_dir = root / "docs"
-    figs_dir = docs_dir / "figs"
+    docs_dir = P0_EVIDENCE
+    figs_dir = docs_dir.figs("W1")
 
     dim_laz = root / "data/work/mvs/dim/dim_v1.laz"
     classified_laz = work_dir / "dim_v1_classified.laz"

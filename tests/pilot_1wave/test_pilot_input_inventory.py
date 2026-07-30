@@ -16,7 +16,7 @@ from src.stage2.pilot_input_inventory import (
 )
 
 
-REPO = Path(__file__).resolve().parents[3]
+REPO = Path(__file__).resolve().parents[2]
 
 
 def _write_colmap_images(path: Path, names: list[str]) -> None:

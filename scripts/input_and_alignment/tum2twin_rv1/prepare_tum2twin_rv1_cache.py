@@ -25,10 +25,11 @@ from shapely import contains_xy
 from shapely.geometry import Polygon, shape
 
 
-REPO = Path(__file__).resolve().parents[1]
-E5_DIR = REPO / "phases/p2-gsjso/scripts"
-if str(E5_DIR) not in sys.path:
-    sys.path.insert(0, str(E5_DIR))
+REPO = Path(__file__).resolve().parents[3]
+E5_DIR = REPO / "scripts/e5_c001"
+for import_path in (REPO, E5_DIR):
+    if str(import_path) not in sys.path:
+        sys.path.insert(0, str(import_path))
 
 import e5_c001_8way as e5  # noqa: E402
 

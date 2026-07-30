@@ -21,7 +21,7 @@ from shapely.geometry import Point, shape
 from shapely.ops import unary_union
 
 
-ROOT = Path(__file__).resolve().parents[3]
+ROOT = Path(__file__).resolve().parents[2]
 
 
 def append_log(path: Path, message: str) -> None:

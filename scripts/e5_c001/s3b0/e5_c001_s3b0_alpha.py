@@ -1037,7 +1037,7 @@ def aggregate(args: argparse.Namespace) -> None:
         common.REPO / "scripts/e5_c001/s3b0/e5_c001_s3b0_common.py",
         common.REPO / "phases/p2-gsjso/scripts/e5_c001/e5_c001_s3ap_phase3.py",
         common.REPO / "scripts/e5_c001/s3b0/run_e5_c001_s3b0_alpha.sh",
-        common.REPO / "tests/experiments/e5_c001_s3b0/test_e5_c001_s3b0_alpha.py",
+        common.REPO / "tests/e5_c001/s3b0/test_e5_c001_s3b0_alpha.py",
     ]
     lod2_sources = sorted(
         {

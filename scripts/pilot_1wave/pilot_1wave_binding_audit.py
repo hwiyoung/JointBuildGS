@@ -41,7 +41,7 @@ from shapely.ops import unary_union
 from shapely.validation import make_valid
 
 
-REPO = Path(__file__).resolve().parents[3]
+REPO = Path(__file__).resolve().parents[2]
 CONTAINER_REPO = Path("/workspace/JointBuildGS")
 TASK_ID = "P1W-BINDING-AUDIT"
 SCHEMA_VERSION = "jointbuildgs.pilot_1wave.binding_audit.v1"

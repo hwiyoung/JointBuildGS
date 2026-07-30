@@ -355,7 +355,11 @@ Real UAV.
 
 ---
 
-## 10. 예비 실험 (PlanarSplatting, legacy/)
+## 10. 예비 실험 (PlanarSplatting, 외부 동결 자료)
+
+이 절의 원본은 현재 repository root가 아니라
+`artifacts/manifests/transitional_quarantine_legacy_external_20260730.yaml`이 해석하는
+sibling artifact quarantine에 보존되어 있다. 아래 수치와 연구 해석은 이동 전 기록을 그대로 유지한다.
 
 ### L_mutual 효과 (Synthetic B)
 Clean wall normal 8.9°→3.8°, Noisy 9.0°→4.3°. 밀착 실패(coverage 6-26%) → gsplat 변경 근거.

@@ -22,9 +22,11 @@ from pathlib import Path
 
 import numpy as np
 
+from p0_paths import P0_EVIDENCE
+
 ROOT = Path("/workspace")
 DATA = ROOT / "data"
-DOCS = ROOT / "docs"
+DOCS = P0_EVIDENCE
 STATUS_CSV = ROOT / "runs/w2_1_roofer_default_20260612_152729/building_reconstruction_status.csv"
 N_CONTROL = 40
 

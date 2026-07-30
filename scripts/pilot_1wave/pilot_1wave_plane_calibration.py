@@ -28,7 +28,7 @@ from pathlib import Path
 from typing import Any, Mapping, Protocol, Sequence
 
 
-REPO = Path(__file__).resolve().parents[3]
+REPO = Path(__file__).resolve().parents[2]
 LOCK_PATH = REPO / "phases/p2-gsjso/configs/pilot_1wave/pilot_1wave_calibration_lock.json"
 DEFAULT_OUTPUT = (
     REPO

@@ -25,13 +25,15 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from p0_paths import P0_EVIDENCE, P0_EVIDENCE_ROOT, P0_G1_PACKAGE
+
 
 TASK_ID = "T13"
 CANONICAL_RUN = "w3_2b_roofer_repeatability_20260612_220747/run_2"
 VAL3DITY_DIR = f"runs/{CANONICAL_RUN.split('/')[0]}/val3dity/run_2"
 ALS_REPORT = f"{VAL3DITY_DIR}/als_default.json"
 DIM_REPORT = f"{VAL3DITY_DIR}/dim_default.json"
-PAIRED_STATUS = "docs/W3_2c_canonical_paired_status.csv"
+PAIRED_STATUS = str(P0_EVIDENCE / "W3_2c_canonical_paired_status.csv")
 
 # Expected control population and per-input invalid counts (from W3-2c closeout:
 # coverage-control 93, ALS 88/93 valid, DIM 83/93 valid). Used as sanity asserts.
@@ -39,11 +41,11 @@ EXPECTED_CONTROL_N = 93
 EXPECTED_ALS_INVALID = 5
 EXPECTED_DIM_INVALID = 10
 
-REPORT_MD = "docs/W3_validity_error_breakdown.md"
-BUILDING_CSV = "docs/W3_validity_error_breakdown_building_errors.csv"
-TYPE_CSV = "docs/W3_validity_error_breakdown_type_by_input.csv"
-ATTRIB_CSV = "docs/W3_validity_error_breakdown_quality_attribution.csv"
-FIGURE = "docs/figs/w3_t13_validity_error_breakdown.png"
+REPORT_MD = str(P0_EVIDENCE / "W3_validity_error_breakdown.md")
+BUILDING_CSV = str(P0_EVIDENCE / "W3_validity_error_breakdown_building_errors.csv")
+TYPE_CSV = str(P0_EVIDENCE / "W3_validity_error_breakdown_type_by_input.csv")
+ATTRIB_CSV = str(P0_EVIDENCE / "W3_validity_error_breakdown_quality_attribution.csv")
+FIGURE = str(P0_EVIDENCE.figs("W3") / "w3_t13_validity_error_breakdown.png")
 
 PACKAGE_FIGURE = "fig_16_t13_validity_error_breakdown.png"
 INPUTS = ("ALS", "DIM")
@@ -570,7 +572,7 @@ def _solid_str(meta: dict[str, Any]) -> str:
 # G1 package
 # ---------------------------------------------------------------------------
 def add_to_g1_package(root: Path) -> None:
-    package = root / "docs/G1_package"
+    package = P0_G1_PACKAGE
     package_figs = package / "figs"
     package.mkdir(parents=True, exist_ok=True)
     package_figs.mkdir(parents=True, exist_ok=True)
@@ -632,7 +634,7 @@ def compute_entrypoint() -> None:
     run_id = os.environ["RUN_ID"]
     run_dir = root / "runs" / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
-    (root / "docs/figs").mkdir(parents=True, exist_ok=True)
+    P0_EVIDENCE.figs("W3").mkdir(parents=True, exist_ok=True)
 
     als = parse_report(root / ALS_REPORT)
     dim = parse_report(root / DIM_REPORT)
@@ -758,8 +760,8 @@ def copy_outputs(run_dir: Path, paths: list[Path]) -> None:
     for path in paths:
         if not path.exists():
             continue
-        if path.is_relative_to(Path("/workspace/docs")):
-            dst = snapshot / "docs" / path.relative_to(Path("/workspace/docs"))
+        if path.is_relative_to(P0_EVIDENCE_ROOT):
+            dst = snapshot / "evidence" / path.relative_to(P0_EVIDENCE_ROOT)
         else:
             dst = snapshot / path.name
         dst.parent.mkdir(parents=True, exist_ok=True)
@@ -767,7 +769,7 @@ def copy_outputs(run_dir: Path, paths: list[Path]) -> None:
 
 
 def record_issue(repo: Path, run_id: str, message: str) -> None:
-    issues = repo / "phases/p0-audit/docs/issues.md"
+    issues = repo / "phases/p0-audit/issues.md"
     with issues.open("a", encoding="utf-8") as fh:
         fh.write(f"\n## {TASK_ID} Validity Error Breakdown\n\n")
         fh.write(f"- {run_id}: {message}. See runs/{run_id}/logs/.\n")

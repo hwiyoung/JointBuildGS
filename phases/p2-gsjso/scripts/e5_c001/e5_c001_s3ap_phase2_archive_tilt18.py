@@ -49,7 +49,7 @@ DEFAULT_PHASE3_ARCHIVE_WRAPPER = Path(
     "phases/p2-gsjso/scripts/e5_c001/run_e5_c001_s3ap_phase3_archive.sh"
 )
 DEFAULT_PHASE3_ARCHIVE_TEST = Path(
-    "tests/e5_c001/p2_gsjso/test_e5_c001_s3ap_phase3_archive.py"
+    "tests/e5_c001/test_e5_c001_s3ap_phase3_archive.py"
 )
 DEFAULT_PHASE3_BASE42_ARCHIVE = Path(
     "phases/p2-gsjso/runs/e5_c001/20260715_e5_c001_s3ap_phase3_archives/base42"

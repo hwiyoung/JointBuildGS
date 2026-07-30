@@ -1,0 +1,34 @@
+schema: jointbuildgs.artifact-quarantine.v1
+created_at: 2026-07-30
+reason: >-
+  Docker validation generated root-owned pilot calibration scratch directories and
+  Python bytecode caches. They are not scientific runs or source files. They were
+  preserved outside the repository instead of being deleted.
+artifact_root: ../JointBuildGS-artifacts
+quarantine_root: quarantine/20260730-final-layout/generated-test-temporaries
+summary:
+  files: 3
+  directories_including_containers: 43
+  apparent_bytes: 203881
+  file_content_sha256_set_digest: 0bf46c7ab65eb5f542bb97fe019896aad0ba95cfae567b8e31cb94414715c0a7
+payloads:
+  - former_root: phases/p2-gsjso/runs
+    selector: .p1w_calibration_test_*
+    quarantine_subdir: pilot-calibration
+    directory_count: 18
+    file_count: 0
+    classification: generated-test-scratch
+  - former_root: scripts/inspection
+    selector: __pycache__
+    quarantine_subdir: python-caches/inspection/__pycache__
+    file_count: 1
+    classification: generated-cache
+  - former_root: scripts/inspection/experiment_dashboard
+    selector: __pycache__
+    quarantine_subdir: python-caches/experiment-dashboard/__pycache__
+    file_count: 2
+    classification: generated-cache
+preservation:
+  deleted: false
+  scientific_payload: false
+  history_rewritten: false

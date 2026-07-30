@@ -9,7 +9,7 @@ from pathlib import Path
 
 import numpy as np
 
-from src import rv1_pipeline as rv1
+from src.pipelines import rv1
 
 
 class TestSurfaceMetrics(unittest.TestCase):

@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 
 
-MODULE_PATH = Path(__file__).resolve().parents[1] / "scripts" / "repo_inventory.py"
+MODULE_PATH = Path(__file__).resolve().parents[2] / "scripts" / "repository" / "repo_inventory.py"
 SPEC = importlib.util.spec_from_file_location("repo_inventory", MODULE_PATH)
 assert SPEC and SPEC.loader
 repo_inventory = importlib.util.module_from_spec(SPEC)
@@ -109,14 +109,14 @@ class RepoInventoryUnitTests(unittest.TestCase):
 
     def test_inventory_control_paths_do_not_inventory_themselves(self):
         config = {
-            "generated_paths": ["docs/catalog/DOCUMENT_CATALOG.csv"],
+            "generated_paths": ["docs/research/repository/DOCUMENT_CATALOG.csv"],
             "inventory_control_paths": ["docs/README.md"],
             "document_roots": ["docs"],
             "phase_document_globs": [],
         }
         self.assertFalse(repo_inventory.is_document_scope("docs/README.md", config))
         self.assertFalse(
-            repo_inventory.is_document_scope("docs/catalog/DOCUMENT_CATALOG.csv", config)
+            repo_inventory.is_document_scope("docs/research/repository/DOCUMENT_CATALOG.csv", config)
         )
         self.assertTrue(repo_inventory.is_document_scope("docs/research/RESEARCH_CONTEXT.md", config))
 
@@ -151,7 +151,7 @@ class RepoInventoryUnitTests(unittest.TestCase):
             "reviewed_family_maps": [
                 {
                     "family_id": "boundary_map",
-                    "decision_record": "docs/catalog/families/BOUNDARY_MAP.md",
+                    "decision_record": "docs/research/repository/families/BOUNDARY_MAP.md",
                     "reviewed_on": "2026-07-29",
                     "documents": [
                         {
@@ -167,7 +167,7 @@ class RepoInventoryUnitTests(unittest.TestCase):
         reviewed = repo_inventory.reviewed_document_map(config)
         item = reviewed["docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v4_1_ladder.csv"]
         self.assertEqual(item["reviewed_family_id"], "boundary_map")
-        self.assertEqual(item["decision_record"], "docs/catalog/families/BOUNDARY_MAP.md")
+        self.assertEqual(item["decision_record"], "docs/research/repository/families/BOUNDARY_MAP.md")
 
     def test_reviewed_status_is_not_replaced_by_filename_candidate(self):
         rows = [
@@ -198,14 +198,14 @@ class RepoInventoryUnitTests(unittest.TestCase):
         self.assertEqual(rows[0]["proposed_status"], "supporting")
         self.assertEqual(rows[1]["proposed_status"], "canonical")
 
-    def test_path_migration_resolves_old_reference_and_checks_hash(self):
+    def test_path_migration_resolves_old_reference_and_preserves_historical_hash(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            new_path = root / "docs" / "experiments" / "boundary_map" / "tables" / "ladder.csv"
+            new_path = root / "docs" / "experiments" / "input-and-alignment" / "boundary_map" / "tables" / "ladder.csv"
             new_path.parent.mkdir(parents=True)
             new_path.write_bytes(b"building_id,cell\nA,1\n")
             digest = hashlib.sha256(new_path.read_bytes()).hexdigest()
-            manifest = root / "docs" / "catalog" / "migrations" / "paths.csv"
+            manifest = root / "docs" / "research" / "repository" / "migrations" / "paths.csv"
             manifest.parent.mkdir(parents=True)
             manifest.write_text(
                 "migration_id,old_path,new_path,lifecycle_status,old_path_retained,sha256\n"
@@ -214,8 +214,9 @@ class RepoInventoryUnitTests(unittest.TestCase):
             )
             migrations = repo_inventory.load_path_migrations(
                 root,
-                {"path_migration_manifests": ["docs/catalog/migrations/paths.csv"]},
+                {"path_migration_manifests": ["docs/research/repository/migrations/paths.csv"]},
             )
+            self.assertEqual(migrations["docs/old.csv"]["sha256"], digest)
             relation = repo_inventory.Relation(
                 "docs/report.md",
                 "mentions_path",
@@ -232,6 +233,88 @@ class RepoInventoryUnitTests(unittest.TestCase):
             )
             self.assertEqual(resolved[0].target_exists, "yes")
             self.assertEqual(resolved[0].confidence, "text+path_migration")
+
+    def test_current_layout_resolves_semantic_experiment_owner(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            current = (
+                root
+                / "docs"
+                / "experiments"
+                / "evaluation"
+                / "demo"
+                / "reports"
+                / "report.md"
+            )
+            current.parent.mkdir(parents=True)
+            current.write_text("report", encoding="utf-8")
+            self.assertEqual(
+                repo_inventory.resolve_current_layout_path(
+                    root, "docs/experiments/demo/reports/report.md"
+                ),
+                "docs/experiments/evaluation/demo/reports/report.md",
+            )
+
+    def test_existing_final_path_is_not_hijacked_by_historical_migration(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            current = root / "docs" / "experiments" / "family" / "table.csv"
+            current.parent.mkdir(parents=True)
+            current.write_text("current", encoding="utf-8")
+            migrations = {
+                "docs/experiments/family/table.csv": {
+                    "old_path": "docs/experiments/family/table.csv",
+                    "new_path": "docs/evidence/archive/family/table.csv",
+                    "sha256": "0" * 64,
+                }
+            }
+            relation = repo_inventory.Relation(
+                "docs/report.md",
+                "mentions_path",
+                "docs/experiments/family/table.csv",
+                "yes",
+                "docs/experiments/family/table.csv",
+                "text",
+                1,
+            )
+            self.assertEqual(
+                repo_inventory.apply_path_migrations(root, [relation], migrations),
+                [relation],
+            )
+
+    def test_completed_p0_document_resolves_to_evidence_owner(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            current = (
+                root
+                / "docs"
+                / "evidence"
+                / "p0-audit"
+                / "w2-roofer"
+                / "reports"
+                / "W2_report.md"
+            )
+            current.parent.mkdir(parents=True)
+            current.write_text("report", encoding="utf-8")
+            self.assertEqual(
+                repo_inventory.resolve_current_layout_path(
+                    root, "phases/p0-audit/docs/W2_report.md"
+                ),
+                "docs/evidence/p0-audit/w2-roofer/reports/W2_report.md",
+            )
+            self.assertEqual(
+                repo_inventory.phase_for(
+                    "docs/evidence/p0-audit/w2-roofer/reports/W2_report.md"
+                ),
+                "P0",
+            )
+            self.assertEqual(
+                repo_inventory.target_bucket(
+                    "w2_report",
+                    [{"phase": "P0", "path": current.as_posix()}],
+                ),
+                "docs/evidence/p0-audit/",
+            )
 
     def test_path_migration_resolves_relative_link_from_historical_source_directory(self):
         with tempfile.TemporaryDirectory() as tmp:

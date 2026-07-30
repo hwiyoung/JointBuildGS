@@ -683,7 +683,7 @@ def run(args: argparse.Namespace) -> None:
         Path(__file__).resolve(),
         Path(common.__file__).resolve(),
         common.REPO / "scripts/e5_c001/s3b0/run_e5_c001_s3b0_hsweep.sh",
-        common.REPO / "tests/experiments/e5_c001_s3b0/test_e5_c001_s3b0_hsweep.py",
+        common.REPO / "tests/e5_c001/s3b0/test_e5_c001_s3b0_hsweep.py",
         sources["footprints"],
         sources["train_manifest"],
         sources["fm_rescore_csv"],

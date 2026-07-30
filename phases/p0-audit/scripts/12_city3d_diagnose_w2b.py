@@ -22,6 +22,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from p0_paths import P0_EVIDENCE
+
 
 BASE_RUN_ID = "w2_2_city3d_default_20260612_175449"
 TASK_ID = "W2-2b"
@@ -200,8 +202,8 @@ def diagnose_entrypoint() -> None:
     run_id = os.environ["RUN_ID"]
     run_dir = root / "runs" / run_id
     base_run = root / "runs" / BASE_RUN_ID
-    docs = root / "docs"
-    figs = docs / "figs"
+    docs = P0_EVIDENCE
+    figs = docs.figs("W2")
     figs.mkdir(parents=True, exist_ok=True)
 
     status_rows = read_csv(base_run / "building_reconstruction_status.csv")
@@ -391,7 +393,7 @@ def summarize_rechecks(rows: list[dict[str, str]]) -> list[dict[str, str]]:
 
 
 def select_als_sample(root: Path, base_run: Path) -> list[dict[str, str]]:
-    paired = read_csv(root / "docs/W2_2_city3d_paired_status.csv")
+    paired = read_csv(P0_EVIDENCE / "W2_2_city3d_paired_status.csv")
     manifest = {(row["input"], row["building_id"]): row for row in read_csv(base_run / "city3d_input_manifest.csv")}
     controlled_failures = [
         row
@@ -515,7 +517,7 @@ def postprocess_entrypoint() -> None:
     root = Path("/workspace")
     run_id = os.environ["RUN_ID"]
     run_dir = root / "runs" / run_id
-    docs = root / "docs"
+    docs = P0_EVIDENCE
 
     sample_results = read_csv(run_dir / "sample_als_1200_results.csv")
     sample_validation = validate_sample_outputs(run_dir, sample_results)

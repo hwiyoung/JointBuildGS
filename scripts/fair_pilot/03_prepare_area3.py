@@ -16,7 +16,7 @@ import numpy as np
 from pyproj import Transformer
 
 
-ROOT = Path(__file__).resolve().parents[3]
+ROOT = Path(__file__).resolve().parents[2]
 
 
 def append_log(path: Path, message: str) -> None:

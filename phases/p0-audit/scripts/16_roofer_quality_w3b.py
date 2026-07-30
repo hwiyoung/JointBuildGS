@@ -22,6 +22,8 @@ from itertools import combinations
 from pathlib import Path
 from typing import Any
 
+from p0_paths import P0_EVIDENCE
+
 
 TASK_ID = "W3-1b"
 BASE_W3_RUN_ID = "w3_1_roofer_quality_20260612_210850"
@@ -75,8 +77,8 @@ def host_entrypoint() -> None:
 def compute_entrypoint() -> None:
     w3 = load_w3_module(Path("/workspace/scripts/15_roofer_quality_w3.py"))
     root = Path("/workspace")
-    docs = root / "docs"
-    figs = docs / "figs"
+    docs = P0_EVIDENCE
+    figs = docs.figs("W3")
     figs.mkdir(parents=True, exist_ok=True)
     run_id = os.environ["RUN_ID"]
     run_dir = root / "runs" / run_id
@@ -416,7 +418,7 @@ def build_outlier_rows(
     metrics_rows: list[dict[str, str]],
 ) -> list[dict[str, str]]:
     metric_row = next(row for row in metrics_rows if row["building_id"] == building_id)
-    scene_lookup = {row["building_id"]: row for row in read_csv(Path("/workspace/docs/scene_aoi_buildings.csv"))}
+    scene_lookup = {row["building_id"]: row for row in read_csv(P0_EVIDENCE / "scene_aoi_buildings.csv")}
     scene_row = scene_lookup.get(building_id, {})
     rows = []
     for label, pred_lookup in (("als", als_pred), ("dim", dim_pred)):

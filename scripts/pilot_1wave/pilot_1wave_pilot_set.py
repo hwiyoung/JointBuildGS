@@ -28,7 +28,7 @@ from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
 
 
-REPO = Path(__file__).resolve().parents[3]
+REPO = Path(__file__).resolve().parents[2]
 RUN_ID = "20260721_pilot_1wave"
 TASK_ID = "P1W-SET"
 CRS = "EPSG:25832"
@@ -37,7 +37,7 @@ CSV_NAME = "pilot_1wave_pilot_set.csv"
 MANIFEST_NAME = "pilot_1wave_pilot_set_manifest.json"
 
 PROTOCOL = REPO / "docs/research/preregistration/quality_axis/사전등록서_품질축본선_승인잠금v4_20260721.md"
-POPULATION = REPO / "docs/regression_input_snapshot.csv"
+POPULATION = REPO / "docs/experiments/evaluation/attr_outcome_regression/tables/regression_input_snapshot.csv"
 STATUS = (
     REPO
     / "phases/p0-audit/runs/w2_1_roofer_default_20260612_152729"
@@ -83,7 +83,7 @@ CORE10 = (
 EXPECTED_SHA256 = {
     "docs/research/preregistration/quality_axis/사전등록서_품질축본선_승인잠금v4_20260721.md":
         "39b7b641a324dda7b5ea9d01906407223b75443d62b6d71580c3d598566464ec",
-    "docs/regression_input_snapshot.csv":
+    "docs/experiments/evaluation/attr_outcome_regression/tables/regression_input_snapshot.csv":
         "3cabed76b37625fdf8f9a72ed5c5b1f7c90ba23a839d6f1a61fc3727870cee82",
     "phases/p0-audit/runs/w2_1_roofer_default_20260612_152729/building_reconstruction_status.csv":
         "4412ee47f8665e1a12663629dd66f9c9612f2e9adca54be38c188f2bc521a9b6",
@@ -870,7 +870,7 @@ def build_artifacts() -> tuple[bytes, bytes, dict[str, Any]]:
         "new_inference_runs": 0,
         "selection": {
             "population_definition": (
-                "docs/regression_input_snapshot.csv rows with arm=raw_lidar and assembled=true"
+                "docs/experiments/evaluation/attr_outcome_regression/tables/regression_input_snapshot.csv rows with arm=raw_lidar and assembled=true"
             ),
             "canonical_population_count": len(canonical_ids),
             "dense_success_definition": (

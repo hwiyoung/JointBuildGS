@@ -57,9 +57,9 @@ f_i(N,4) 의미론(BG/Roof/Wall/Terrain) · color_i(SH).
 - **계측**: 렌더 normal–depth normal consistency, 벽 법선 수평오차, roof/terrain 높이 순서,
   semantic mIoU, PSNR(품질 회귀 확인), 그리고 **MVS 대비 correction gain**(P0가 약점 보인
   무텍스처·노이즈 영역에서 GS-JSO surface evidence가 MVS를 회복/상회하는지).
-- **산출**: phase-local 번호 순 스크립트는 `phases/p2-gsjso/`, family-scoped 재사용 driver는
-  `scripts/experiments/<family_id>/`, `results/`에 REPORT.md + 시각 산출(필수),
-  5-way 비교표 + per-condition 시각화.
+- **산출**: phase에만 종속된 잠금 절차는 `phases/p2-gsjso/scripts/<workstream>/`, 재사용 driver는
+  `scripts/<scientific-role>/`, compact receipt는 `phases/p2-gsjso/runs/<workstream>/<run-id>/`,
+  보고서·표·선별 그림은 `docs/experiments/<purpose>/<family>/`에 둔다.
 
 ## 4. 5-way 비교 (DRAFT — 1 MVS 기준선 + 4 Ablation)
 
@@ -95,4 +95,5 @@ go/no-go 게이트 후보 (P0 판정 스타일: 에이전트는 수치, 판정�
 - **Docker 기반**(호스트 직접 설치 금지) · **gsplat 라이브러리**(2DGS 공식 fork 아님) ·
   "**미분 가능 렌더링**" 용어 · **Gravity는 사전 추정**(hardcoded 금지).
 - **한 태스크 = 한 커밋**(태스크 ID) · run마다 버전·커밋·파라미터 기록 · 실패는 숨기지 말고 기록.
-- **GT 사용 분리**(루트 §4-9) · 각 실험 완료 시 `results/`에 REPORT.md + 시각 산출 필수.
+- **GT 사용 분리**(루트 §4-9) · 각 실험 완료 시 compact receipt는 `phases/`, Git 정본 보고서와
+  표는 `docs/experiments/`, 대용량 payload는 `JBGS_ARTIFACT_ROOT` 아래에 manifest와 함께 둔다.

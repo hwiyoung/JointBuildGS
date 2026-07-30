@@ -4,7 +4,7 @@
 
 - Python producer/worker: `overnight_boundary_map.py`, `boundary_map_v2.py`, `boundary_map_v3.py`, `anchor_census.py`와 대응 dense/supplement 파일
 - Shell orchestration: `run_boundary_map_v3_20260719.sh`, `run_anchor_census_20260720.sh`, `run_anchor_census_supplement_20260720.sh`
-- 공용 의존성: `phases/p2-gsjso/scripts/`의 population, projection datum, E5 retriangulation/rescore helper
+- 공용 의존성: `scripts/evidence_and_attributes/`, `src/geospatial/`, `scripts/e5_c001/`의 재사용 구현
 - 실행 영수증: `phases/p2-gsjso/runs/<run_id>/`
 - 공개 문서: `docs/experiments/input-and-alignment/boundary_map/`
 

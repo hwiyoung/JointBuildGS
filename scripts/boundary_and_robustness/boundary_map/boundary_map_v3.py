@@ -552,7 +552,7 @@ def reconstruct_label_inventory() -> dict[str, Any]:
             "schema": "jointbuildgs.boundary_map_v3.label_inventory.v1",
             "created_utc": now(),
             "population_formula": (
-                "docs/regression_input_snapshot.csv arm=raw_lidar "
+                "docs/experiments/evaluation/attr_outcome_regression/tables/regression_input_snapshot.csv arm=raw_lidar "
                 "and assembled=true"
             ),
             "canonical_count": 178,
@@ -1362,7 +1362,7 @@ def prepare_fit() -> None:
         ),
         "rule_features": list(RULE_FEATURES),
         "feature_sources": {
-            feature: f"docs/archive/boundary_map/v2/tables/boundary_map_v2_metrics.csv::{feature}"
+            feature: f"docs/evidence/archive/boundary_map/v2/tables/boundary_map_v2_metrics.csv::{feature}"
             for feature in FEATURES_WITH_SMALL
         },
         "footprint_area_role": (

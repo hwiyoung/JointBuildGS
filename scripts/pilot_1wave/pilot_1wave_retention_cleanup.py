@@ -20,7 +20,7 @@ from pathlib import Path
 from typing import Any, Iterable
 
 
-REPO = Path(__file__).resolve().parents[3]
+REPO = Path(__file__).resolve().parents[2]
 SOURCE_RUN = REPO / "phases/p2-gsjso/runs/pilot_1wave/20260721_pilot_1wave"
 READOUT = REPO / "phases/p2-gsjso/runs/pilot_1wave/20260722_pilot_1wave_readout"
 PACK = READOUT / "prediction_pack"

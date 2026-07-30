@@ -12,4 +12,4 @@ This directory owns durable repository-wide research context, plans, preregistra
 - [`WORK_SPARSE_CHECKOUT_PLAN.md`](WORK_SPARSE_CHECKOUT_PLAN.md) — clone and sparse-checkout operating plan
 - [`reproducibility/`](reproducibility/README.md) — repository-wide environment and image receipts
 
-Experiment-specific reports and evidence belong under [`../experiments/`](../experiments/README.md); historical predecessors belong under [`../archive/`](../archive/README.md).
+Experiment-specific reports and evidence belong under [`../experiments/`](../experiments/README.md); historical predecessors belong under [`../evidence/archive/`](../evidence/archive/README.md).
