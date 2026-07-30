@@ -75,14 +75,14 @@ EXPERIMENTS = {
 
 
 def _export_ksplat(ckpt: Path, out: Path, mode: str, max_count: int = 400_000) -> bool:
-    """Export a ckpt to .ksplat via scripts/stage2/export_2dgs_ksplat.py.
+    """Export a ckpt to .ksplat via scripts/input_and_alignment/export_2dgs_ksplat.py.
 
     max_count=400k gives ~17MB per file (vs 52MB at 1.2M) — 3x faster download
     with minimal visual quality loss for aerial GS viewing.
     """
     out.parent.mkdir(parents=True, exist_ok=True)
     cmd = [
-        "python", str(ROOT / "scripts/stage2/export_2dgs_ksplat.py"),
+        "python", str(ROOT / "scripts/input_and_alignment/export_2dgs_ksplat.py"),
         "--ckpt", str(ckpt),
         "--out", str(out),
         "--color-mode", mode,

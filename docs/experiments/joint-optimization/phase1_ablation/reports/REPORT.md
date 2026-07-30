@@ -100,7 +100,7 @@ Wall-class `|n·g|` 확률밀도 (0 = 수직 벽면 = 이상적):
 
 ### 6.3 드라마틱 시각 증거 — max-diff 뷰
 
-Baseline vs Both semantic 차이 가장 큰 3개 뷰 (`scripts/stage2/find_max_diff_views.py`):
+Baseline vs Both semantic 차이 가장 큰 3개 뷰 (`scripts/input_and_alignment/find_max_diff_views.py`):
 
 | View | Wall_Baseline | Wall_Both | Wall→Roof shift |
 |------|---------------|-----------|-----------------|

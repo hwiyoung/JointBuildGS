@@ -105,7 +105,7 @@ EXPERIMENT_PLAN.md 구조대로 디렉토리 생성.
 
 === Part B: 기존 자산 마이그레이션 ===
 기존 리포지터리 경로: [사용자 제공]
-1. Synthetic A 코드 → scripts/synthetic_a/, 결과 → results/synthetic_a/
+1. Synthetic A 코드 → scripts/stage3_readout/synthetic_a/, 결과 → results/synthetic_a/
 2. Stage 3 코드를 src/stage3/로 분리
 3. PlanarSplatting 예비 실험을 legacy/
 4. Stage 1 출력물을 data/seongsu/에 배치

@@ -3,7 +3,7 @@
 > 레포 인덱스·§4 불변 규칙: 루트 `CLAUDE.md` / `AGENTS.md`. 사람 검토자: 김휘영.
 > 이 문서의 모든 상대 경로는 레포 루트 기준(GS-JSO 코어 코드는 루트 `src/`·`configs/`).
 > P2 단계별 환경·공용 helper·run receipt는 `phases/p2-gsjso/` 기준. 재사용 가능한
-> boundary-map 실험 driver는 `scripts/experiments/boundary_map/`이 소유한다.
+> boundary-map 실험 driver는 `scripts/boundary_and_robustness/boundary_map/`이 소유한다.
 
 > ⚠️ **DRAFT 골격 (확인 요망):** 아래 **P2-spike 태스크**·**5-way 비교**·**성공기준**은
 > 착수 메시지에 명시되지 않아 프로젝트 맥락(루트 GS-JSO 문서의 손실/메커니즘/Ablation 4조건,

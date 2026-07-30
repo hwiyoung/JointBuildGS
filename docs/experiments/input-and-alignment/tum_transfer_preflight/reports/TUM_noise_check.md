@@ -56,10 +56,10 @@ densification/pruning·라벨 불요 기하 정규화)만으로 reference 수준
 ## 재현 (EPSG:25832 · 도커 · 엔진 무변경)
 ```
 docker compose run --rm -T dev python -m src.stage2.train --config configs/input_and_alignment/tum_vanilla_proper.yaml
-docker compose run --rm -T dev python scripts/stage2/tum_tsdf_extract.py \
+docker compose run --rm -T dev python scripts/input_and_alignment/tum_tsdf_extract.py \
   --ckpt results/tum_transfer/run_proper/ckpt/final.pt --downscale 1.0 --voxel 0.05 --min-obs 3 \
   --out results/tum_transfer/analysis/tsdf_proper.npz
-docker run … jointbuildgs-p0-tools:t0 python3 scripts/stage2/_tsdf_to_classified.py \
+docker run … jointbuildgs-p0-tools:t0 python3 scripts/input_and_alignment/_tsdf_to_classified.py \
   --bid DEBY_LOD2_4906972 --tsdf …/tsdf_proper.npz --outdir phases/p0-audit/runs/tum_e2e_proper
 # + compose roofer + val3dity on the proper classified LAS
 ```

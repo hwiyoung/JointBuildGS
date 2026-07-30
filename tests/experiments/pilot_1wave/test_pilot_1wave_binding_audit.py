@@ -17,7 +17,7 @@ from shapely.geometry import MultiPolygon, Polygon, mapping
 
 REPO = Path(__file__).resolve().parents[3]
 TEST_DIR = Path(__file__).resolve().parent
-SCRIPT_DIR = REPO / "scripts/experiments/pilot_1wave"
+SCRIPT_DIR = REPO / "scripts/pilot_1wave"
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 

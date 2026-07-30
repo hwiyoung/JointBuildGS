@@ -15,7 +15,7 @@ import torch
 
 
 REPO = Path(__file__).resolve().parents[3]
-PILOT_SCRIPT_DIR = REPO / "scripts/experiments/pilot_1wave"
+PILOT_SCRIPT_DIR = REPO / "scripts/pilot_1wave"
 if str(PILOT_SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(PILOT_SCRIPT_DIR))
 SCRIPT = REPO / "phases/p2-gsjso/scripts/e5_c001_readout_extract_ablation.py"

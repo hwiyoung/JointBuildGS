@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """P2 make-or-break — per-config 2DGS surface point extraction over the 11 make-or-break buildings.
 
-Generalises scripts/stage2/tum_tsdf_extract.py: same median-depth render -> backproject ->
+Generalises scripts/input_and_alignment/tum_tsdf_extract.py: same median-depth render -> backproject ->
 voxel fusion (multi-view consensus min-obs) -> SOR, but clips to the union of the 11
 make-or-break footprint boxes (from footprints_aoi.geojson) instead of 3 hardcoded boxes.
 

@@ -109,7 +109,7 @@ run_mast3r_queue() {
       -v "$MODEL_REPO_HOST:$MODEL_REPO_CONTAINER:ro" \
       -w /workspace/JointBuildGS \
       "$MAST3R_IMAGE" \
-      python3 scripts/experiments/boundary_map/boundary_map_v2_mast3r.py "$mode" \
+      python3 scripts/boundary_and_robustness/boundary_map/boundary_map_v2_mast3r.py "$mode" \
         --model-dir "$MODEL_CONTAINER" \
         --device cuda \
         --max-seconds "$seconds"
@@ -217,12 +217,12 @@ run_r1() {
   write_status "R1" "running" "canonical 178, depth-2 rule, crop-pair 14, and FM queue"
   local r1_started
   r1_started="$(date +%s)"
-  if ! run_dev python3 scripts/experiments/boundary_map/boundary_map_v2.py prepare \
+  if ! run_dev python3 scripts/boundary_and_robustness/boundary_map/boundary_map_v2.py prepare \
     > "$LOG_DIR/R1_prepare.log" 2>&1; then
     issue "RW-R1 prepare command exited nonzero; log=$RUN_REL/logs/R1_prepare.log"
     return 1
   fi
-  if ! run_dev python3 scripts/experiments/boundary_map/boundary_map_v2.py fit-primary \
+  if ! run_dev python3 scripts/boundary_and_robustness/boundary_map/boundary_map_v2.py fit-primary \
     > "$LOG_DIR/R1_fit_primary.log" 2>&1; then
     issue "RW-R1 primary-rule command exited nonzero; log=$RUN_REL/logs/R1_fit_primary.log"
     return 1
@@ -258,7 +258,7 @@ run_r1() {
     return 1
   fi
 
-  if ! run_dev python3 scripts/experiments/boundary_map/boundary_map_v2.py finalize \
+  if ! run_dev python3 scripts/boundary_and_robustness/boundary_map/boundary_map_v2.py finalize \
     > "$LOG_DIR/R1_finalize.log" 2>&1; then
     issue "RW-R1 finalize command exited nonzero; log=$RUN_REL/logs/R1_finalize.log"
     return 1

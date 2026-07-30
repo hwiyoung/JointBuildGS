@@ -14,7 +14,7 @@ import numpy as np
 
 
 REPO = Path(__file__).resolve().parents[3]
-SCRIPT = REPO / "scripts/experiments/pilot_1wave/pilot_1wave_scene_classify.py"
+SCRIPT = REPO / "scripts/pilot_1wave/pilot_1wave_scene_classify.py"
 SPEC = importlib.util.spec_from_file_location("pilot_1wave_scene_classify", SCRIPT)
 assert SPEC is not None and SPEC.loader is not None
 MODULE = importlib.util.module_from_spec(SPEC)

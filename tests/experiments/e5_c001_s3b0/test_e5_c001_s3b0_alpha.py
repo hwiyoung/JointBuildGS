@@ -10,7 +10,7 @@ import numpy as np
 
 
 REPO = Path(__file__).resolve().parents[3]
-SCRIPT_DIR = REPO / "scripts/experiments/e5_c001_s3b0"
+SCRIPT_DIR = REPO / "scripts/e5_c001/s3b0"
 sys.path.insert(0, str(SCRIPT_DIR))
 SCRIPT = SCRIPT_DIR / "e5_c001_s3b0_alpha.py"
 SPEC = importlib.util.spec_from_file_location("e5_c001_s3b0_alpha", SCRIPT)

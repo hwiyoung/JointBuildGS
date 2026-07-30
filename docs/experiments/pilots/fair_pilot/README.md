@@ -7,11 +7,11 @@ bounded Area 3 subset. GS training is out of scope and was not run.
 Reproduce in order from the repository root:
 
 ```bash
-scripts/experiments/fair_pilot/run_01_inventory.sh
-scripts/experiments/fair_pilot/run_02_stage_area3.sh
-scripts/experiments/fair_pilot/run_03_prepare_area3.sh
-scripts/experiments/fair_pilot/run_04_colmap_mvs.sh
-scripts/experiments/fair_pilot/run_05_stats_candidates.sh
+scripts/fair_pilot/run_01_inventory.sh
+scripts/fair_pilot/run_02_stage_area3.sh
+scripts/fair_pilot/run_03_prepare_area3.sh
+scripts/fair_pilot/run_04_colmap_mvs.sh
+scripts/fair_pilot/run_05_stats_candidates.sh
 ```
 
 Every wrapper uses Docker with host UID/GID mapping and the image IDs locked in

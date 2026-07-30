@@ -328,7 +328,7 @@ PY
 run_c() {
   write_status "C" "running" "178-building boundary metrics and MASt3R queue"
   log "C start"
-  if ! run_dev python3 scripts/experiments/boundary_map/overnight_boundary_map.py prepare \
+  if ! run_dev python3 scripts/boundary_and_robustness/boundary_map/overnight_boundary_map.py prepare \
     > "$LOG_DIR/C_prepare.log" 2>&1; then
     issue "OVN-C prepare failed; see $RUN_REL/logs/C_prepare.log"
     write_status "C" "failed" "prepare command failed"
@@ -345,14 +345,14 @@ run_c() {
       -v "$MODEL_REPO_HOST:$MODEL_REPO_CONTAINER:ro" \
       -w /workspace/JointBuildGS \
       "$MAST3R_IMAGE" \
-      python3 scripts/experiments/boundary_map/overnight_boundary_mast3r.py \
+      python3 scripts/boundary_and_robustness/boundary_map/overnight_boundary_mast3r.py \
         --model-dir "$MODEL_CONTAINER" --device cuda --max-seconds 43100 \
       > "$LOG_DIR/C_mast3r.log" 2>&1 || gpu_rc=$?
   if [[ "$gpu_rc" -ne 0 ]]; then
     issue "OVN-C MASt3R queue exited rc=$gpu_rc; partial rows retained and 2-wave list reserved; see $RUN_REL/logs/C_mast3r.log"
   fi
 
-  if ! run_dev python3 scripts/experiments/boundary_map/overnight_boundary_map.py finalize \
+  if ! run_dev python3 scripts/boundary_and_robustness/boundary_map/overnight_boundary_map.py finalize \
     > "$LOG_DIR/C_finalize.log" 2>&1; then
     issue "OVN-C finalize failed; see $RUN_REL/logs/C_finalize.log"
     write_status "C" "failed" "finalize command failed"

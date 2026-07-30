@@ -11,7 +11,7 @@ from shapely.geometry import Polygon
 
 
 REPO = Path(__file__).resolve().parents[3]
-SCRIPT = REPO / "scripts/experiments/e5_c001_s3b0/e5_c001_s3b0_common.py"
+SCRIPT = REPO / "scripts/e5_c001/s3b0/e5_c001_s3b0_common.py"
 SPEC = importlib.util.spec_from_file_location("e5_c001_s3b0_common", SCRIPT)
 assert SPEC is not None and SPEC.loader is not None
 common = importlib.util.module_from_spec(SPEC)

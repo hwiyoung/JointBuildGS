@@ -44,9 +44,9 @@ generated_caches:
   - src/stage2/__pycache__
   - scripts/phase2_synthesis/__pycache__
   - scripts/__pycache__
-  - scripts/experiments/degradation_curve/__pycache__
-  - scripts/experiments/fair_pilot/__pycache__
-  - scripts/experiments/boundary_map/__pycache__
+  - scripts/boundary_and_robustness/degradation_curve/__pycache__
+  - scripts/fair_pilot/__pycache__
+  - scripts/boundary_and_robustness/boundary_map/__pycache__
 retention:
   policy: preserve-until-reviewed
   restore_rule: move the recorded quarantine path back to its original repository-relative path

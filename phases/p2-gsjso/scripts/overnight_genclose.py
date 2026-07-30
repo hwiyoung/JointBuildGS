@@ -911,8 +911,8 @@ def write_manifest(rows: Sequence[dict[str, Any]], direct_rows: Sequence[dict[st
         FOOTPRINTS,
         W2_SCRIPT,
         REPO / "phases/p2-gsjso/scripts/e5_c001_s3ap_phase0_baselines.py",
-        REPO / "scripts/experiments/e5_c001_s3b0/e5_c001_s3b0_common.py",
-        REPO / "scripts/experiments/e5_c001_s3b0/e5_c001_s3b0_seed.py",
+        REPO / "scripts/e5_c001/s3b0/e5_c001_s3b0_common.py",
+        REPO / "scripts/e5_c001/s3b0/e5_c001_s3b0_seed.py",
         *sorted(LOD2_DIR.glob("*.gml")),
     }
     outputs = {

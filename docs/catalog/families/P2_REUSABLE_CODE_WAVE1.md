@@ -6,9 +6,9 @@ Promote only the P2 implementation families that are reusable outside one immuta
 
 | Family | Drivers | Tests | New owner |
 |---|---:|---:|---|
-| Degradation curve | 4 | 0 | `scripts/experiments/degradation_curve/` |
-| E5 C001 S3B0 | 14 | 5 | `scripts/experiments/e5_c001_s3b0/`, `tests/experiments/e5_c001_s3b0/` |
-| Pilot one-wave | 17 | 24 | `scripts/experiments/pilot_1wave/`, `tests/experiments/pilot_1wave/` |
+| Degradation curve | 4 | 0 | `scripts/boundary_and_robustness/degradation_curve/` |
+| E5 C001 S3B0 | 14 | 5 | `scripts/e5_c001/s3b0/`, `tests/experiments/e5_c001_s3b0/` |
+| Pilot one-wave | 17 | 24 | `scripts/pilot_1wave/`, `tests/experiments/pilot_1wave/` |
 | **Total** | **35** | **29** | **64 tracked paths** |
 
 The exact old/new paths and before/after hashes are recorded in `docs/catalog/migrations/P2_SCRIPT_PATHS_WAVE1.csv`.

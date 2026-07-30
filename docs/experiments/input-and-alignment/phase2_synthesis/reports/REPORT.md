@@ -13,14 +13,14 @@
 
 | 실패 | 원인 | 대응 |
 |---|---|---|
-| eval PSNR 15, primitives 가 건물 모양 안 잡힘 | [render_scene.py](../../scripts/phase2_synthesis/render_scene.py) 의 `camera_pose_dict` 이 **Blender world frame** 으로 w2c 저장, scene.obj / points3D 는 **OBJ/COLMAP frame** → frame 불일치 | OBJ→Blender world 축변환을 카메라 export 에 반영 |
+| eval PSNR 15, primitives 가 건물 모양 안 잡힘 | [render_scene.py](../../scripts/stage3_readout/render_scene.py) 의 `camera_pose_dict` 이 **Blender world frame** 으로 w2c 저장, scene.obj / points3D 는 **OBJ/COLMAP frame** → frame 불일치 | OBJ→Blender world 축변환을 카메라 export 에 반영 |
 | 특정 방위 held-out 전혀 학습 안 됨 | train/test split 이 `last 10%` 로, alphabetically 정렬된 frame 에서 **orbit_a04~a11 몰림** → 완전 OOD | [src/stage2/train.py](../../src/stage2/train.py) 에서 **interleave split (`i % 10 == 9`)** 로 변경 |
 | 73 view 부족 | "smoke 기준" 으로 임의 결정, overlap / GSD 계산 기반 아님 | **Pix4D 표준 overlap** 기반 재계산 → 112 waypoints × 5 captures = **560 views** |
 | 인위적 grid scene | 건물 20 개를 18m spacing 으로 배치 → 실제 Amsterdam 도시 topology 아님 | **실제 Amsterdam Jordaan 200×200m 블록** 선정 (131 건물 자연 분포) |
 
 ## 3. 데이터 설계
 
-### 3.1 Scene 선정 ([select_block.py](../../scripts/phase2_synthesis/select_block.py))
+### 3.1 Scene 선정 ([select_block.py](../../scripts/stage3_readout/select_block.py))
 
 - 3D BAG Amsterdam Jordaan 4 타일 (2,888 건물 중 footprint 폴리곤 재구성 가능 2,956 개) 에서 **200×200m sliding window** 로 후보 탐색
 - 조건: 80 ≤ 건물 수 ≤ 150, roof type ≥ 4 종
@@ -33,7 +33,7 @@
 > **Panel (2)**: 선정 블록 확대 — 각 건물을 **실제 ground polygon** 으로 (bbox 아님) 표시. roof type 별 색상. 왼쪽 메인 블록 + 중앙 빈 공간 (실제 운하/도로) + 오른쪽 이웃 블록 구조가 보임.
 > **Panel (3)**: 3D bird's-eye (elev 55°). 지붕을 type 별 색상, 벽 회색. gable / hip / flat 의 실제 shape 구분 가능. 최고 높이 26m.
 
-### 3.2 Scene 구성 ([compose_scene.py](../../scripts/phase2_synthesis/compose_scene.py))
+### 3.2 Scene 구성 ([compose_scene.py](../../scripts/stage3_readout/compose_scene.py))
 
 - 선정 131 건물의 **world 위치 (EPSG:7415 meters) 보존** — grid 재배치 없음, 건물 간 실제 인접성 + 공유 벽 유지
 - World → OBJ/COLMAP frame 변환: `(x, y, z)_world → (x − cx, −(z − z_ground), y − cy)` (EPSG Z → OBJ -Y, EPSG Y → OBJ Z)
@@ -41,7 +41,7 @@
 - Ground plane (Terrain 재질) 을 scene 둘레에 +15m padding 으로 배치
 - 결과: scene bbox X[-115, +115], Y[-26.2, 0] (최고 건물 26m), Z[-115, +115] = **230×230×26m**, 4,634 verts / 2,943 faces + 1 ground quad
 
-### 3.3 카메라 설계 ([render_scene.py](../../scripts/phase2_synthesis/render_scene.py))
+### 3.3 카메라 설계 ([render_scene.py](../../scripts/stage3_readout/render_scene.py))
 
 8×14 = **112 nadir waypoints** (80% forward spacing 18.1m × 70% side spacing 36.2m). 각 waypoint 에서 **1 nadir + 4 cardinal oblique (45° tilt)** = **5 captures** → **총 560 views**.
 
@@ -100,7 +100,7 @@ UAV oblique 촬영은 업계에서 다음 3 방식이 혼용된다:
 
 ### 3.4 Procedural texture (RGB ≠ semantic)
 
-합성 씬의 **flat-color 한계** 해소용. [render_scene.py](../../scripts/phase2_synthesis/render_scene.py) `add_procedural_texture_to_materials()` 에서 Blender Cycles shader 노드로 각 material 에 3D Perlin noise 기반 brightness variation 추가.
+합성 씬의 **flat-color 한계** 해소용. [render_scene.py](../../scripts/stage3_readout/render_scene.py) `add_procedural_texture_to_materials()` 에서 Blender Cycles shader 노드로 각 material 에 3D Perlin noise 기반 brightness variation 추가.
 
 **문제**: scene.mtl 이 Roof/Wall/Ground/Terrain 각각 단일 Kd 색만 정의 → 렌더 RGB ≈ semantic class. 이로 인해:
 - L_photo 와 L_sem 이 파라미터 경로는 다르지만 제공 신호가 중복 (둘 다 동일 class 로 수렴)
@@ -147,10 +147,10 @@ Interleave 로 **test 집합 에 모든 카메라 type (nadir / 4 oblique 방위
 
 ```
 scene.obj + scene.mtl
-   │ scripts/phase2_synthesis/render_scene.py (bpy 4.3 + Cycles)
+   │ scripts/stage3_readout/render_scene.py (bpy 4.3 + Cycles)
    ▼                  112 waypoints × 5 captures = 560 views, 2048×1536, 32 samples/px
 renders_raw/                             (Blender EXR + PNG; RGB+Z+Normal+IndexMA)
-   │ scripts/phase2_synthesis/postprocess_exr.py
+   │ scripts/stage3_readout/postprocess_exr.py
    ▼                  EXR RGBA 재명명 + COLMAP frame 축변환 + (n+1)/2 normal encoding
 dataset/                                (Stage 2 dataloader 호환)
    ├── images/*.png            (RGB uint8)
@@ -158,7 +158,7 @@ dataset/                                (Stage 2 dataloader 호환)
    ├── normal/*.exr            (BGRA float32, (n+1)/2 half-range, COLMAP world-frame)
    ├── semantic/*.png          (uint8 class 0..3)
    └── semantic_color/*.png    (false-color for 확인)
-   │ scripts/phase2_synthesis/export_colmap.py
+   │ scripts/stage3_readout/export_colmap.py
    ▼                  trimesh surface sampling 100k points + PINHOLE cameras
 dataset/sparse/0/{cameras,images,points3D}.bin   (560 cams, 100k init pts)
 ```
@@ -198,7 +198,7 @@ Baseline 전용 이유: L_mutual warmup=10000, L_structure warmup=20000 → 5k i
 
 ### 5.3 FC-2 — Throughput 벤치마크 ✓ (통과)
 
-[benchmark_iter_speed.py](../../scripts/phase2_synthesis/benchmark_iter_speed.py) — 500 iter baseline 학습 후 실측:
+[benchmark_iter_speed.py](../../scripts/mutual_loss/benchmark_iter_speed.py) — 500 iter baseline 학습 후 실측:
 
 | 항목 | 값 |
 |---|---|
@@ -212,7 +212,7 @@ Baseline 전용 이유: L_mutual warmup=10000, L_structure warmup=20000 → 5k i
 
 **Config**: [configs/mutual_loss/core_ablation/phase2_smoke.yaml](../../configs/mutual_loss/core_ablation/phase2_smoke.yaml). L_mutual = L_structure = 0. eval_every = 1000.
 
-**판정 기준 (7 지표, [fc3_diagnose.py](../../scripts/phase2_synthesis/fc3_diagnose.py) 자동 체크)**:
+**판정 기준 (7 지표, [fc3_diagnose.py](../../scripts/mutual_loss/fc3_diagnose.py) 자동 체크)**:
 
 | 지표 | 건강한 값 @ 5k | 통과 의미 |
 |---|---|---|
@@ -307,19 +307,19 @@ results/phase2_synthesis/
 
 ```bash
 docker exec jointbuildgs-dev bash -c "cd /workspace/JointBuildGS && \
-  python scripts/phase2_synthesis/select_block.py && \
-  python scripts/phase2_synthesis/compose_scene.py && \
-  python scripts/phase2_synthesis/render_scene.py && \
-  python scripts/phase2_synthesis/postprocess_exr.py && \
-  python scripts/phase2_synthesis/export_colmap.py"
+  python scripts/stage3_readout/select_block.py && \
+  python scripts/stage3_readout/compose_scene.py && \
+  python scripts/stage3_readout/render_scene.py && \
+  python scripts/stage3_readout/postprocess_exr.py && \
+  python scripts/stage3_readout/export_colmap.py"
 
 # Feasibility checks
-docker exec jointbuildgs-dev python scripts/phase2_synthesis/benchmark_iter_speed.py  # FC-2
+docker exec jointbuildgs-dev python scripts/mutual_loss/benchmark_iter_speed.py  # FC-2
 docker exec jointbuildgs-dev python -m src.stage2.train --config configs/mutual_loss/core_ablation/phase2_smoke.yaml  # FC-3
 
 # Visualizations
 docker exec jointbuildgs-dev bash -c "cd /workspace/JointBuildGS && \
-  python scripts/phase2_synthesis/viz_block_3d.py && \
-  python scripts/phase2_synthesis/viz_flight_plan.py && \
-  python scripts/phase2_synthesis/viz_render_samples.py"
+  python scripts/inspection/viz_block_3d.py && \
+  python scripts/inspection/viz_flight_plan.py && \
+  python scripts/inspection/viz_render_samples.py"
 ```

@@ -23,7 +23,7 @@ from src.stage2.pilot_mask_schema import (
 
 
 REPO = Path(__file__).resolve().parents[3]
-SCRIPT = REPO / "scripts/experiments/pilot_1wave/pilot_1wave_resolved_configs.py"
+SCRIPT = REPO / "scripts/pilot_1wave/pilot_1wave_resolved_configs.py"
 SPEC = importlib.util.spec_from_file_location("pilot_1wave_resolved_configs", SCRIPT)
 resolver = importlib.util.module_from_spec(SPEC)
 assert SPEC.loader is not None

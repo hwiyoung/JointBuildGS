@@ -56,7 +56,7 @@ Run 디렉터리는 이동하지 않는다. 실행 당시 코드·config·입출
 
 ## 실행 코드
 
-- 현재 boundary-map 전용 Python·shell driver: [`../../../scripts/experiments/boundary_map/`](../../../scripts/experiments/boundary_map/)
+- 현재 boundary-map 전용 Python·shell driver: [`../../../scripts/boundary_and_robustness/boundary_map/`](../../../scripts/boundary_and_robustness/boundary_map/)
 - P2 공용 helper·환경 script: `phases/p2-gsjso/scripts/`
 - exact script relocation map: [`../../catalog/migrations/BOUNDARY_MAP_SCRIPT_PATHS.csv`](../../catalog/migrations/BOUNDARY_MAP_SCRIPT_PATHS.csv)
 

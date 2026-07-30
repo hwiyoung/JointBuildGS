@@ -2,7 +2,7 @@
 # Mirrors configs/input_and_alignment/matrixcity_vanilla.yaml (photo + nc only; sem/mutual/structure OFF).
 # Goal: does the GS engine converge and form recognizable building surfaces on TUM?
 #   (textured buildings -> success expected; this is NOT the textureless-recovery test.)
-# Data staged by scripts/stage2/prep_tum_smoke.sh (937 undistorted PINHOLE views).
+# Data staged by scripts/input_and_alignment/prep_tum_smoke.sh (937 undistorted PINHOLE views).
 seed: 0
 device: cuda
 

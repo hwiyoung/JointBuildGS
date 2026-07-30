@@ -24,7 +24,7 @@
 | 실험 기록 | `docs/experiments/evaluation/w_generation_8way/reports/W_generation_8way.md`, `docs/W_opacity_diag.md`, `docs/experiments/joint-optimization/w_d_prior_full/reports/W_D_prior_full.md`, `docs/experiments/joint-optimization/w_d4/reports/W_D4.md`, `docs/experiments/joint-optimization/w_d5/reports/W_D5.md`, `docs/W_D6_prior_provenance.md`, `docs/experiments/evaluation/w_d6_overseg_diag/reports/W_D6_overseg_diag.md`, `docs/experiments/evaluation/w_observability/reports/W_observability_inventory.md`, `docs/W_observability_test.md`, `docs/experiments/evaluation/w_d12_metric/reports/W_D12_metric_final.md`, `docs/experiments/research-operations/w_results_consolidation/reports/W_results_consolidation.md`, `docs/experiments/research-operations/w_report_evidence/reports/W_report_evidence.md`, `docs/SESSION_HANDOFF.md` |
 | config | `configs/tum_mob/*.yaml`, `configs/input_and_alignment/projection_datum.json` |
 | versions | `results/tum_transfer/mob/*/versions.txt`, `phases/p2-gsjso/runs/20260702_*/*`, `phases/p2-gsjso/runs/20260703_*/*` |
-| 코드 위치 | `src/stage2/*`, `phases/p2-gsjso/scripts/*`, `scripts/stage2/*` |
+| 코드 위치 | `src/stage2/*`, `phases/p2-gsjso/scripts/*`, `scripts/input_and_alignment/*` |
 
 ## 1. 레시피 대장
 
@@ -169,7 +169,7 @@
 | `results/tum_transfer/mob/depth_release_{range,oracle}/versions.txt` | labels `shift_z=556`, `ground_local=H_ortho+geoid(48)-604=H_ortho-556` | seed band | P2 impl 2 versions. |
 | `seed_depth_bands.py` | `--geoid default=45.7`, `--shift-z` 사용 | seed band generation | E5 신규 canonical band 경로. |
 | `seed_material_audit.py` | `--geoid-val default=45.7`; ref height local 변환 | seed audit | E5 신규 canonical seed material 감사 경로. |
-| `scripts/stage2/tum_tsdf_extract.py`, `tum_qc_*` | `SHIFT=[690953,5336071,604]` | 3D extract/QC | image-projection config 미사용. |
+| `scripts/input_and_alignment/tum_tsdf_extract.py`, `tum_qc_*` | `SHIFT=[690953,5336071,604]` | 3D extract/QC | image-projection config 미사용. |
 | `overseg_faithfulness.py` | `GEOID=48.165` comment | analysis readability | ellip-ortho readability용으로 보이며 projection config와 별도. |
 
 ### 5.3 run별 geoid flag

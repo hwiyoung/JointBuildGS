@@ -18,7 +18,7 @@ import yaml
 
 
 REPO = Path(__file__).resolve().parents[3]
-SCRIPT = REPO / "scripts/experiments/pilot_1wave/pilot_1wave_driver.py"
+SCRIPT = REPO / "scripts/pilot_1wave/pilot_1wave_driver.py"
 SPEC = importlib.util.spec_from_file_location("pilot_1wave_driver", SCRIPT)
 driver = importlib.util.module_from_spec(SPEC)
 assert SPEC.loader is not None
@@ -660,7 +660,7 @@ class DriverContractTest(unittest.TestCase):
         self.assertNotIn("docs", driver.EXECUTION_TREE_PATHS)
         self.assertNotIn("phases/p2-gsjso/runs", driver.EXECUTION_TREE_PATHS)
         self.assertIn(
-            "scripts/experiments/pilot_1wave", driver.EXECUTION_TREE_PATHS
+            "scripts/pilot_1wave", driver.EXECUTION_TREE_PATHS
         )
 
     def test_config_cannot_rebind_materialized_inventory(self) -> None:

@@ -17,7 +17,7 @@ import unittest
 
 REPO = Path(__file__).resolve().parents[3]
 TEST_DIR = Path(__file__).resolve().parent
-SCRIPT_DIR = REPO / "scripts/experiments/pilot_1wave"
+SCRIPT_DIR = REPO / "scripts/pilot_1wave"
 SCRIPT = SCRIPT_DIR / "pilot_1wave_loss_cursor_aggregate.py"
 SPEC = importlib.util.spec_from_file_location(
     "pilot_1wave_loss_cursor_aggregate", SCRIPT

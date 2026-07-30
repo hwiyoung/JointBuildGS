@@ -12,7 +12,7 @@ import unittest
 
 
 REPO = Path(__file__).resolve().parents[3]
-SCRIPT = REPO / "scripts/experiments/pilot_1wave/pilot_1wave_checkpoint_verify.py"
+SCRIPT = REPO / "scripts/pilot_1wave/pilot_1wave_checkpoint_verify.py"
 SPEC = importlib.util.spec_from_file_location("pilot_1wave_checkpoint_verify", SCRIPT)
 verify = importlib.util.module_from_spec(SPEC)
 assert SPEC.loader is not None

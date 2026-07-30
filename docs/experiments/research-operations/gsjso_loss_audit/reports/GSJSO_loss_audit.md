@@ -179,7 +179,7 @@ grouped primitive만(`mask=group_ids>=0`, `structure.py:37`). 대표평면 `(n_k
 ### ① 학습 진입점
 
 - **단일 조건:** `python -m src.stage2.train --config configs/mutual_loss/core_ablation/phase2_baseline.yaml` (argparse는 `--config` 단 하나, required; `train.py:233-236`). CLI 손실 토글 없음 — 전부 YAML.
-- **4조건 순차:** `bash scripts/phase2_synthesis/run_ablation.sh` (`for cond in baseline mutual structure both`, `run_ablation.sh:21,26-28`, 단일 GPU 직렬, cwd `/workspace/JointBuildGS`).
+- **4조건 순차:** `bash scripts/mutual_loss/run_ablation.sh` (`for cond in baseline mutual structure both`, `run_ablation.sh:21,26-28`, 단일 GPU 직렬, cwd `/workspace/JointBuildGS`).
 - backward `train.py:568`, step `train.py:575-576`. config 경로: `configs/phase2_{baseline,mutual,structure,both}.yaml`, vanilla `configs/input_and_alignment/matrixcity_vanilla.yaml`, fc_s6 `configs/mutual_loss/fc_screening/fc_s6/{A0_baseline_w0,A1_original_mutual}.yaml`.
 
 ### ② P0 데이터 적재 (그대로 먹나 / 어댑터 필요)

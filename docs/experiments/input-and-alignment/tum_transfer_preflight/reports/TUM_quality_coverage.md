@@ -5,8 +5,8 @@
 > **일자:** 2026-06-18 · **branch:** `feature/p2-gsjso` · **판정은 사람 — 본 문서는 측정·관찰까지(판정 금지).**
 > **목적:** 단계 1(엔진 전이, 장면 전체 PASS) 이후, 빌드 A(GS→분류LAZ→Roofer)가 의존하는 **건물 단위 표면
 > 품질**과 **스파이크 대상 커버리지**를 기존 `final.pt`·P0 자산만으로(새 학습 없이) 측정한다.
-> **읽기 전용 분석 스크립트만**(엔진 `src/stage2/*` 무변경): `scripts/stage2/tum_qc_dump.py`(GS 컨테이너,
-> torch) → `scripts/stage2/tum_qc_analyze.py`(P0 tools 이미지: laspy/ogr2ogr/matplotlib).
+> **읽기 전용 분석 스크립트만**(엔진 `src/stage2/*` 무변경): `scripts/input_and_alignment/tum_qc_dump.py`(GS 컨테이너,
+> torch) → `scripts/input_and_alignment/tum_qc_analyze.py`(P0 tools 이미지: laspy/ogr2ogr/matplotlib).
 
 ## ③ GS ↔ P0 좌표 정합 (선결)
 
@@ -81,10 +81,10 @@ footprint 중심(ALS 지붕 z 사용)을 937 .bin 포즈로 재투영 → 프레
 
 ```
 # 1) GS centers 덤프 (GS dev 컨테이너, torch)
-docker compose run --rm -T dev python scripts/stage2/tum_qc_dump.py
+docker compose run --rm -T dev python scripts/input_and_alignment/tum_qc_dump.py
 # 2) 품질·커버리지 분석 (P0 tools 이미지, 전체 레포 마운트)
 docker run --rm -v "$PWD":/workspace/JointBuildGS -w /workspace/JointBuildGS \
-  jointbuildgs-p0-tools:t0 python3 scripts/stage2/tum_qc_analyze.py
+  jointbuildgs-p0-tools:t0 python3 scripts/input_and_alignment/tum_qc_analyze.py
 ```
 산출(스크래치, gitignore): `results/tum_transfer/analysis/`(gs_centers.npz·geojson·figs). 커밋 산출: 본 문서 +
 `docs/figs/tum_transfer/qc_*.png`. 엔진 `src/stage2/*` 무변경, 기존 `final.pt`만 소비.

@@ -11,7 +11,7 @@
 
 - **점추출 = 2DGS 정식 surface**: `rasterization_2dgs`로 각 뷰 **median depth**(`render_median`) 렌더 + **accumulated
   opacity>0.5** 마스크 → 백프로젝션 → 0.05 m voxel 융합 → Open3D statistical outlier 제거. (`renderer.py:67,92` median/alpha;
-  추출 `scripts/stage2/tum_tsdf_extract.py`.) 500 m 장면이라 균일 TSDF volume 대신 "fused depth 점"(설계 허용 대안), 텍스처
+  추출 `scripts/input_and_alignment/tum_tsdf_extract.py`.) 500 m 장면이라 균일 TSDF volume 대신 "fused depth 점"(설계 허용 대안), 텍스처
   3동 box(+15 m)로 클립. 937뷰, downscale 2(depth는 학습해상도 무관).
 - **분류 = P0 T4 그대로**: PDAL `filters.smrf`(ground=2) + `filters.overlay` footprint(building=6) — `04_classify.py:193-224`.
 - **Roofer = P0 그대로**: `docker compose -f phases/p0-audit/env/docker-compose.p0.yml run roofer --id-attribute building_id
@@ -90,10 +90,10 @@ Roofer → CityJSON → val3dity.
 
 ## 재현 (EPSG:25832 · 도커 · 엔진 무변경)
 ```
-docker compose run --rm -T dev python scripts/stage2/tum_tsdf_extract.py --downscale 2.0 --voxel 0.05   # 점추출
+docker compose run --rm -T dev python scripts/input_and_alignment/tum_tsdf_extract.py --downscale 2.0 --voxel 0.05   # 점추출
 docker run --rm -v "$PWD":/workspace/JointBuildGS -w /workspace/JointBuildGS jointbuildgs-p0-tools:t0 \
-  python3 scripts/stage2/tum_qc_tsdf.py                                                                  # ② 품질
-python3 scripts/stage2/tum_roofer_floor.py                                                              # ① 바닥
-docker run … jointbuildgs-p0-tools:t0 python3 scripts/stage2/_tsdf_to_classified.py --bid DEBY_LOD2_4906972
+  python3 scripts/input_and_alignment/tum_qc_tsdf.py                                                                  # ② 품질
+python3 scripts/input_and_alignment/tum_roofer_floor.py                                                              # ① 바닥
+docker run … jointbuildgs-p0-tools:t0 python3 scripts/input_and_alignment/_tsdf_to_classified.py --bid DEBY_LOD2_4906972
 # + compose roofer + val3dity on the classified LAS                                                     # ③ end-to-end
 ```

@@ -13,7 +13,7 @@ import unittest
 
 
 REPO = Path(__file__).resolve().parents[3]
-SCRIPT = REPO / "scripts/experiments/pilot_1wave/pilot_1wave_reference_assets.py"
+SCRIPT = REPO / "scripts/pilot_1wave/pilot_1wave_reference_assets.py"
 LOCK = REPO / "phases/p2-gsjso/configs/pilot_1wave_reference_lock.json"
 SPEC = importlib.util.spec_from_file_location("pilot_1wave_reference_assets", SCRIPT)
 assert SPEC is not None and SPEC.loader is not None

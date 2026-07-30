@@ -19,7 +19,7 @@ import yaml
 
 
 REPO = Path(__file__).resolve().parents[3]
-SCRIPT_DIR = REPO / "scripts/experiments/pilot_1wave"
+SCRIPT_DIR = REPO / "scripts/pilot_1wave"
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 

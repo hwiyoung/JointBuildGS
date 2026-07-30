@@ -64,7 +64,7 @@ Git에서도 각 공개 bundle은 순서대로 `52c84f7`, `5c1331b`, `17ab65d`/`
 
 ## 실행 코드 소유권
 
-- Boundary-map 전용 driver 12개는 `scripts/experiments/boundary_map/`이 소유한다.
+- Boundary-map 전용 driver 12개는 `scripts/boundary_and_robustness/boundary_map/`이 소유한다.
 - `population_aux_v3.py`, `projection_datum.py`, E5 retriangulation/rescore 계열처럼 다른 P2 실험도 쓰는 helper는 `phases/p2-gsjso/scripts/`에 남긴다.
 - 외부 multi-wave driver는 원래 phase 위치를 유지하고 새 family script 경로를 호출한다.
 - 정확한 old/new 경로와 이동 전후 SHA-256은 [`BOUNDARY_MAP_SCRIPT_PATHS.csv`](../migrations/BOUNDARY_MAP_SCRIPT_PATHS.csv)에 기록한다.
