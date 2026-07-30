@@ -46,7 +46,7 @@ P0 T7/T9/T10/T11 산출이 **건물별 CSV로 잔존**. 전부 `phases/p0-audit/
 | D10 B1 의미 TSDF | `results/tum_transfer/mob/tsdf_gs_b1_{dense,acmp}.npz` | ✓ |
 | **D10 건물별 GS 지붕면(Roofer Solid)** | `phases/p0-audit/runs/mob_eval/gs_b1_dense/roofer_DEBY_LOD2_*_orig/*.city.jsonl` | ✓ **11동** |
 | **D10 건물별 GS 점군** | `phases/p0-audit/runs/mob_eval/gs_b1_dense/DEBY_LOD2_*_orig_classified.las` | ✓ **11동** |
-| **D9 면-받침 판정 도구** | `phases/p2-gsjso/scripts/overseg_faithfulness.py` `face_support()`(k=실층/m=가짜, dz정합) | ✓ 실행됨(D11 `complexity_metric.py`서 재사용) |
+| **D9 면-받침 판정 도구** | `scripts/evidence_and_attributes/p2_gsjso/overseg_faithfulness.py` `face_support()`(k=실층/m=가짜, dz정합) | ✓ 실행됨(D11 `complexity_metric.py`서 재사용) |
 
 → **재학습 없이** 건물별 GS 면 높이 vs ALS 점 높이(k/m·면별 resid)로 "B1이 진짜 구조 잡나 vs 평균 뭉개기" 점검 가능. ⚠ 단 디스크 cityjsonl은 **gssem read-out**이어야(run_b1 gssem→smrf 순차로 smrf가 덮을 수 있음 — D11서 gssem requal로 복원 완료, 현 디스크=gssem). raw ALS = `mob_eval/raw_lidar/`(11동).
 

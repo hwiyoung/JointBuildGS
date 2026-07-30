@@ -86,6 +86,6 @@
 - 대조 보정: 충실 기준선조차 GS −1.7 m·표면 일부 노이지(4908023 2.4×) → GS의 도달 가능 충실 상한 = "박공/평 형상·면수 일치 + ~1.7 m 낮음 + 표면 ≤2× 노이즈"(4906972가 최선).
 
 ## §6 재현 / 출처 / 검증
-- `docker run … jointbuildgs-p0-tools:t0 python3 phases/p2-gsjso/scripts/assembly_fidelity.py` (read-only 재사용). 점군 GS/ALS/DIM=`mob_eval/{gs_d4_dense,raw_lidar,raw_dense}`. 닫힘=Roofer `*.city.jsonl` target Solid outer-ring 2-다양체. roof-env RMS=`tum_mob_ref_rms`와 동형(roof-envelope 한정). full RMS/면수/valid/DIM점=`ref_rms_*.csv`·`gen_status.csv`(D6). 참조 z·면=GML.
+- `docker run … jointbuildgs-p0-tools:t0 python3 scripts/evidence_and_attributes/p2_gsjso/assembly_fidelity.py` (read-only 재사용). 점군 GS/ALS/DIM=`mob_eval/{gs_d4_dense,raw_lidar,raw_dense}`. 닫힘=Roofer `*.city.jsonl` target Solid outer-ring 2-다양체. roof-env RMS=`tum_mob_ref_rms`와 동형(roof-envelope 한정). full RMS/면수/valid/DIM점=`ref_rms_*.csv`·`gen_status.csv`(D6). 참조 z·면=GML.
 - **검증**: 적대 워크플로 3렌즈(`datum-integrity`·`numerical-repro`·`methodology`)가 raw LAS/jsonl/GML에서 독립 재유도 — geoid 48.165·전 높이(중앙값/ortho)·facade-제거 RMS(0.26/0.27·1.36/1.27 등)·닫힘·면수 전부 일치, neighbour-leak 무(42364659 GS xy ⊂ 9.35×13.33 m footprint). must-fix 2(중앙값-인공산물·RMS-facade)·should-fix 4 전부 반영(본 정정본). 잔여 nit = closedness outer-ring-only(구멍無 shell 타당)·표기.
 - EPSG:25832 · Docker · 재구성/학습/data 무변경 · 관찰만. G1_package 사본 포함.

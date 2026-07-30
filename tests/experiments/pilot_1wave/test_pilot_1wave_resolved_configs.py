@@ -47,7 +47,7 @@ def binding(repo: Path, path: Path) -> dict[str, str]:
 class SyntheticContract:
     def __init__(self, repo: Path) -> None:
         self.repo = repo
-        self.run = repo / "phases/p2-gsjso/runs/20260721_pilot_1wave"
+        self.run = repo / "phases/p2-gsjso/runs/pilot_1wave/20260721_pilot_1wave"
         self.prep = self.run / "prep_artifacts"
         (self.prep / "data").mkdir(parents=True)
         (self.prep / "mono").mkdir()

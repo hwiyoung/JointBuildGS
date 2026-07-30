@@ -16,8 +16,8 @@
 
 `roof_completeness = area(union(model roof XY) ∩ union(reference roof XY)) / area(union(reference roof XY))`
 
-- 계산 코드 경로: `phases/p2-gsjso/scripts/qs_rescore_completeness_panel.py`의 `roof_completeness_xy()`.
-- 지붕면은 `phases/p2-gsjso/scripts/e5_c001_8way.py`의 `parse_lod2_roofs()`·`parse_cityjson_roofs()`가 생성한 XY polygon을 사용.
+- 계산 코드 경로: `scripts/quality_score/p2_gsjso/qs_rescore_completeness_panel.py`의 `roof_completeness_xy()`.
+- 지붕면은 `scripts/e5_c001/p2_gsjso/e5_c001_8way.py`의 `parse_lod2_roofs()`·`parse_cityjson_roofs()`가 생성한 XY polygon을 사용.
 - 모델 지붕면이 없으면 0.0, 참조 자기 대조는 1.0.
 - 기존 면 개수 기반 `completeness` 필드는 변경하지 않음.
 - ISPRS completeness 계열 출처: https://www.isprs.org/resources/datasets/benchmarks/IndoorModeling/results.aspx
@@ -25,7 +25,7 @@
 
 ## roof_hausdorff_m 코드 정의
 
-- 코드 경로: `phases/p2-gsjso/scripts/e5_c001_8way.py`의 `reference_distance()`·`sample_polygon_points()`.
+- 코드 경로: `scripts/e5_c001/p2_gsjso/e5_c001_8way.py`의 `reference_distance()`·`sample_polygon_points()`.
 - 모델 지붕면 XY 내부를 0.50 m 격자로 표본화; 면당 최대 1,200표본.
 - 각 모델 표본에서 참조 지붕면까지의 수직 z 차이를 계산.
 - 같은 XY를 덮는 참조면이 여러 개면 모델 z와 절대차가 가장 작은 참조 z를 사용.

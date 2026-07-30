@@ -24,7 +24,7 @@ from shapely.ops import unary_union
 
 
 REPO = Path(__file__).resolve().parents[3]
-DEFAULT_LOCK = REPO / "phases/p2-gsjso/configs/e5_c001_s3b0_lock.json"
+DEFAULT_LOCK = REPO / "phases/p2-gsjso/configs/e5_c001/e5_c001_s3b0_lock.json"
 
 
 def now() -> str:

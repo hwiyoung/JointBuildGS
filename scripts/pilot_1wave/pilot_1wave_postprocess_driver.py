@@ -148,7 +148,7 @@ PREP_MANIFEST = SOURCE_RUN / "prep_artifacts/prep_manifest.json"
 RESOLVED_MANIFEST = TRAINING_ROOT / "resolved_configs/resolved_configs_manifest.json"
 TRAINING_DRIVER_MANIFEST = TRAINING_ROOT / "pilot_1wave_driver_manifest.json"
 EXTRACT_POLICY_LOCK = (
-    REPO / "phases/p2-gsjso/configs/pilot_1wave_postprocess_extract_policy_lock.json"
+    REPO / "phases/p2-gsjso/configs/pilot_1wave/pilot_1wave_postprocess_extract_policy_lock.json"
 )
 EXTRACT_POLICY_LOCK_SHA256 = (
     "ac7d5210b59ac04d5aeb7e853ed93514f1178308a771923f02ccaa33554155c7"
@@ -157,7 +157,7 @@ EXTRACT_POLICY_SCHEMA = "jointbuildgs.pilot_1wave.extract_policy_lock.v1"
 EXTRACT_CONTAINER_MEMORY = "24g"
 EXTRACT_CONTAINER_MEMORY_BYTES = 24 * 1024**3
 
-EXTRACTOR = REPO / "phases/p2-gsjso/scripts/e5_c001_readout_extract_ablation.py"
+EXTRACTOR = REPO / "scripts/e5_c001/p2_gsjso/e5_c001_readout_extract_ablation.py"
 CLASSIFIER = REPO / "scripts/pilot_1wave/pilot_1wave_scene_classify.py"
 SCORING = REPO / "scripts/pilot_1wave/pilot_1wave_scoring.py"
 LOSS_AGGREGATE = REPO / "scripts/pilot_1wave/pilot_1wave_loss_cursor_aggregate.py"
@@ -169,9 +169,9 @@ GSPLAT_EXTENSION_SHA256 = (
     "b291971546d350951760d34863ff96068c8ef018dcdeaaf0d61ec21471baadd5"
 )
 REQUIRED_COMMITTED_PATHS = (
-    Path("phases/p2-gsjso/configs/pilot_1wave_postprocess_extract_policy_lock.json"),
+    Path("phases/p2-gsjso/configs/pilot_1wave/pilot_1wave_postprocess_extract_policy_lock.json"),
     Path("scripts/pilot_1wave/pilot_1wave_postprocess_driver.py"),
-    Path("phases/p2-gsjso/scripts/e5_c001_readout_extract_ablation.py"),
+    Path("scripts/e5_c001/p2_gsjso/e5_c001_readout_extract_ablation.py"),
     Path("scripts/pilot_1wave/pilot_1wave_readout_lineage.py"),
     Path("scripts/pilot_1wave/pilot_1wave_scene_classify.py"),
     Path("scripts/pilot_1wave/pilot_1wave_scoring.py"),

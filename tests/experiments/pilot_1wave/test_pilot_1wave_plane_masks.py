@@ -51,7 +51,7 @@ from src.stage2.pilot_plane_mask_producer import (
 
 
 REPO = Path(__file__).resolve().parents[3]
-LOCK = REPO / "phases/p2-gsjso/configs/pilot_1wave_mask_producer_lock.json"
+LOCK = REPO / "phases/p2-gsjso/configs/pilot_1wave/pilot_1wave_mask_producer_lock.json"
 ZERO_SHA = "0" * 64
 CLI_SCRIPT = REPO / "scripts/pilot_1wave/pilot_1wave_plane_masks.py"
 CLI_SPEC = importlib.util.spec_from_file_location("pilot_1wave_plane_masks_tested", CLI_SCRIPT)

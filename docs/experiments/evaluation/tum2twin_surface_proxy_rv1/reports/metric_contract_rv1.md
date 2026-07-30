@@ -21,7 +21,7 @@ R_v1 ranks the canonical 178-building population for later experiment selection.
 
 ## LoD2 roof-plane correspondence
 
-The adapter reuses the existing `phases/p2-gsjso/scripts/e5_c001_8way.py` CityGML/CityJSON roof parser, plane fitting, and RMSZ sampling implementation. It extends that evaluator with a strict 50% XY-overlap correspondence graph:
+The adapter reuses the existing `scripts/e5_c001/p2_gsjso/e5_c001_8way.py` CityGML/CityJSON roof parser, plane fitting, and RMSZ sampling implementation. It extends that evaluator with a strict 50% XY-overlap correspondence graph:
 
 - a reference/reconstruction pair is eligible when the intersection covers at least 50% of each polygon;
 - eligible pairs are greedily made one-to-one by descending IoU for plane completeness/correctness/F1;

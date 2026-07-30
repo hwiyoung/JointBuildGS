@@ -2,7 +2,7 @@
 
 > **박사연구 GS-JSO · 모집단 잠금 보조 v4 [3].** 브랜치 `feat/p2-structure-learn`. EPSG:25832(지오)/32632(OPF 프레임).
 > Docker(`--user`). **읽기 + 소규모 신규계산**(포즈 통계·지도), 재구성/재학습 없음. 관찰만, 판정=김휘영.
-> 재현 `phases/p2-gsjso/scripts/flight_meta.py`(tools:t0). 그림 `docs/figs/texture_anchor_check/flight_nadir0_map.png`.
+> 재현 `scripts/evidence_and_attributes/p2_gsjso/flight_meta.py`(tools:t0). 그림 `docs/figs/texture_anchor_check/flight_nadir0_map.png`.
 
 ## 1. 촬영 설계 사실 (OPF `input_cameras`/`calibrated_cameras`/`calibration_settings` + COLMAP 포즈)
 
@@ -36,4 +36,4 @@ v3에서 **지붕 표본에 대해 near-nadir(뷰↔수직 ≤20°) 뷰가 하�
 66 m 측면거리면 지붕→카메라 광선이 수직서 ~58° → near-nadir 표본뷰 0). 이 69동은 텍스처를 **최소-입사각 오블리크 뷰**에서 읽으므로
 [1] 텍스처 척도의 뷰 의존성과 직접 연결된다([[texture_anchor_check]]).
 
-> 재현: `docker run … jointbuildgs-p0-tools:t0 python3 phases/p2-gsjso/scripts/flight_meta.py`. 읽기·소규모 계산·재구성 없음.
+> 재현: `docker run … jointbuildgs-p0-tools:t0 python3 scripts/evidence_and_attributes/p2_gsjso/flight_meta.py`. 읽기·소규모 계산·재구성 없음.

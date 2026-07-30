@@ -43,7 +43,7 @@
 | 파일럿10 | 완전율 중앙 | 0.9999 | 0.999923703 | true |
 | 178동×전 지표 | 불일치 셀 | 0 | 0 | true |
 
-0단은 수락된 정본 CityJSON과 확정 채점행을 재사용했다. 같은 잠금 명령의 별도 진단 재실행 수치는 `phases/p2-gsjso/runs/20260721_degradation_curve/zero_rerun_diagnostic.json`에 기록했다.
+0단은 수락된 정본 CityJSON과 확정 채점행을 재사용했다. 같은 잠금 명령의 별도 진단 재실행 수치는 `phases/p2-gsjso/runs/boundary_and_robustness/20260721_degradation_curve/zero_rerun_diagnostic.json`에 기록했다.
 
 ## dense 대조 마커
 

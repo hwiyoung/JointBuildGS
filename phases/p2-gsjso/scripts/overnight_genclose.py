@@ -73,7 +73,7 @@ FIGURE = FIG_DIR / "genclose_density_assembly_topview.png"
 TARGETS = ("4907199", "8568391", "8568392")
 DENSITIES = (0.5, 0.25, 0.125)
 DENSITY_LABEL = {0.5: "g0500", 0.25: "g0250", 0.125: "g0125"}
-P0_FILL = REPO / "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase0_baselines/p0_fill_points.npz"
+P0_FILL = REPO / "phases/p2-gsjso/runs/e5_c001/20260715_e5_c001_s3ap_phase0_baselines/p0_fill_points.npz"
 P0_SCORE = DOCS / "s3b0_p0prime_scores.csv"
 PLANEFIT = DOCS / "planefit_baseline.csv"
 GROUND_SOURCE = DOCS / "e5_c001_s3ap_fm_retri_rescore.csv"
@@ -309,7 +309,7 @@ def load_p0_baseline() -> dict[tuple[str, str, float | None, float | None], dict
 def seed_rgb(short: str) -> np.ndarray:
     path = (
         REPO
-        / "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase1_seedprep/seeds"
+        / "phases/p2-gsjso/runs/e5_c001/20260715_e5_c001_s3ap_phase1_seedprep/seeds"
         / f"{full_id(short)}_p0_surface_seed.npz"
     )
     with np.load(path, allow_pickle=False) as archive:
@@ -910,7 +910,7 @@ def write_manifest(rows: Sequence[dict[str, Any]], direct_rows: Sequence[dict[st
         TRAIN_MANIFEST,
         FOOTPRINTS,
         W2_SCRIPT,
-        REPO / "phases/p2-gsjso/scripts/e5_c001_s3ap_phase0_baselines.py",
+        REPO / "phases/p2-gsjso/scripts/e5_c001/e5_c001_s3ap_phase0_baselines.py",
         REPO / "scripts/e5_c001/s3b0/e5_c001_s3b0_common.py",
         REPO / "scripts/e5_c001/s3b0/e5_c001_s3b0_seed.py",
         *sorted(LOD2_DIR.glob("*.gml")),

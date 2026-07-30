@@ -7,7 +7,7 @@
 - 브랜치·HEAD: `feat/p2-structure-learn` · `361712bf89205f689cc3a5cb7bfb35326d2e230d`.
 - 입력 보고서·표: `docs/experiments/pilots/e5_pilot/reports/W_E5_pilot_gate.md`, `docs/experiments/pilots/e5_pilot/tables/e5_pilot_seed_pair_status.csv`.
 - 조립 출력: `phases/p0-audit/runs/e5p_gate_20260707_C001/`.
-- 점군화·지문: `phases/p2-gsjso/runs/e5p_train_20260707_C001/`.
+- 점군화·지문: `phases/p2-gsjso/runs/e5_c001/e5p_train_20260707_C001/`.
 - 참조 지붕 구조: LoD2 참조 CityGML의 RoofSurface 수·형상. W_D6 형상 교정본을 준용했고, 4906969는 단차 평지붕이며 D6 작업동의 곡면 지붕은 0동으로 기록한다.
 
 ## 잣대
@@ -67,7 +67,7 @@
 - 요약표: `docs/e5_pilot_substantiveness_summary.csv`.
 - 클린 재집계: `docs/e5_pilot_substantiveness_pair_clean.csv`.
 - 패널 선정표: `docs/e5_pilot_substantiveness_panel_selection.csv`.
-- 실행 지문: `phases/p2-gsjso/runs/20260707_e5_pilot_subst/versions.txt`.
+- 실행 지문: `phases/p2-gsjso/runs/e5_c001/20260707_e5_pilot_subst/versions.txt`.
 
 ## 관찰
 

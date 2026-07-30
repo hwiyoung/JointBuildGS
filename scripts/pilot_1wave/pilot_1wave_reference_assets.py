@@ -376,7 +376,7 @@ def verify_receipt(
 def _parser() -> argparse.ArgumentParser:
     default_lock = (
         _repo_root()
-        / "phases/p2-gsjso/configs/pilot_1wave_reference_lock.json"
+        / "phases/p2-gsjso/configs/pilot_1wave/pilot_1wave_reference_lock.json"
     )
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--lock", type=Path, default=default_lock)

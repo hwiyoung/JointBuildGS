@@ -29,10 +29,10 @@ from typing import Any, Mapping, Protocol, Sequence
 
 
 REPO = Path(__file__).resolve().parents[3]
-LOCK_PATH = REPO / "phases/p2-gsjso/configs/pilot_1wave_calibration_lock.json"
+LOCK_PATH = REPO / "phases/p2-gsjso/configs/pilot_1wave/pilot_1wave_calibration_lock.json"
 DEFAULT_OUTPUT = (
     REPO
-    / "phases/p2-gsjso/runs/20260721_pilot_1wave/calibration"
+    / "phases/p2-gsjso/runs/pilot_1wave/20260721_pilot_1wave/calibration"
     / "plane_calibration_receipt.json"
 )
 LOCK_SHA256 = "7eb4db2df284388c076b4e6876b169be389edb8d3da601931d3ca7997cdf54b4"

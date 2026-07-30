@@ -28,12 +28,12 @@ DENSITY_FIGURE = DOCS / "figs/degradation_curve/degradation_curve_density.png"
 RECOVERY_SCRIPT = REPO / "scripts/boundary_and_robustness/degradation_curve/degradation_curve_v3_recovery.py"
 RECOVERY_INCIDENT = (
     REPO
-    / "phases/p2-gsjso/runs/20260721_degradation_curve"
+    / "phases/p2-gsjso/runs/boundary_and_robustness/20260721_degradation_curve"
     / "degradation_curve_recovery_incident.json"
 )
 RECOVERY_ROOT = (
     REPO
-    / "phases/p2-gsjso/runs/20260721_degradation_curve/runtime/recovery"
+    / "phases/p2-gsjso/runs/boundary_and_robustness/20260721_degradation_curve/runtime/recovery"
 )
 EXPECTED_POPULATION = 178
 SEED_NAMESPACE = "jointbuildgs.degradation_curve.v3"

@@ -3,7 +3,7 @@
 - CRS: EPSG:25832
 - Branch: `feat/p2-structure-learn`
 - HEAD before A3 commit: `2ebd8afbdce075317fc7ae2cfe23be8661589931`
-- Phase run: `phases/p2-gsjso/runs/e5p_sparse_config_20260706_000204/versions.txt`
+- Phase run: `phases/p2-gsjso/runs/e5_c001/e5p_sparse_config_20260706_000204/versions.txt`
 - Recipe string: `GS(D4; seed-protect; pho1·sem0.1·nc0.05·dep0.03·nrm-off·str1[g2;na0.08;cp0.01;warm15k]; gssem)`
 - Sparse seed: `results/tum_transfer/mob_analysis/seed/seed_sparse.ply` (369225 points)
 - Sparse seed source: `phases/p0-audit/data/work/mvs/openmvs/colmap_txt/sparse/points3D.txt`

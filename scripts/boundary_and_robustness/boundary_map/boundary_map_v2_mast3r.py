@@ -53,7 +53,7 @@ import population_aux_v3 as aux  # noqa: E402
 import projection_datum as datum  # noqa: E402
 
 
-RUN_DIR = REPO / "phases/p2-gsjso/runs/20260718_boundary_map_v2"
+RUN_DIR = REPO / "phases/p2-gsjso/runs/boundary_and_robustness/20260718_boundary_map_v2"
 CROP_JOBS = RUN_DIR / "crop_pair_jobs.json"
 FM_JOBS = RUN_DIR / "fm_jobs.json"
 CROP_RESULTS = RUN_DIR / "crop_pair_results.csv"

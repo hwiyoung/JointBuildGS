@@ -5,7 +5,7 @@ repo="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 image="jointbuildgs:dev"
 uid_value="$(id -u)"
 gid_value="$(id -g)"
-run_dir="${repo}/phases/p2-gsjso/runs/20260716_e5_c001_s3b0_measurements/0a_alpha"
+run_dir="${repo}/phases/p2-gsjso/runs/e5_c001/20260716_e5_c001_s3b0_measurements/0a_alpha"
 mkdir -p "${run_dir}"
 
 docker run --rm -i \

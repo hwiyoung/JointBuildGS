@@ -89,6 +89,6 @@
 **곡면 과분할은 4906969만의 고립 문제가 아니다 — 참조 대비 과분할은 유형 무관으로 광범위(LiDAR 포함)하고, 그 위에 영상(DIM)이 LiDAR보다 모집단 전반에서 더 과분할한다. 단 "곡면 지붕 유형 전반"인지는 통제 93동에 참조-곡면 0동이라 검증 불가.** ① 통제 93동에 참조-곡면(Bogendach)은 0동이고 4906969 자신도 참조상 평지붕(1000)이라 "곡면 유형" 모집단 검증 불가(없음 아님 — 표본 0); ② DIM 과분할은 85동 중 57동(4906969는 20/85위)으로 광범위·유형무관; ③ ALS(LiDAR)도 54/92동 과분할 → coarse LoD2 참조 대비 면수 초과는 **영상·LiDAR 공통 성분**; ④ **그 위에 영상(DIM)은 LiDAR보다 모집단 전반에서 더 과분할**(불일치 52동 DIM>ALS 37 vs 15, 평균 +2.79; 4906969 제외 36 vs 15) — 4906969(DIM 11·GS 13 ≫ ALS/LiDAR 4~5)는 이 **영상-고유 추세의 꼬리**(=D6 step0가 분해한 입력측 GS 밀도×표면 성분)이지 고립 사례 아님. (레버·판정 = 김휘영.)
 
 ## §5 재현 / 출처
-- 실행: `docker run … jointbuildgs-p0-tools:t0 python3 phases/p2-gsjso/scripts/d6_survey.py` (read-only 재사용; 재구성·data/raw 무변경).
+- 실행: `docker run … jointbuildgs-p0-tools:t0 python3 scripts/evidence_and_attributes/p2_gsjso/d6_survey.py` (read-only 재사용; 재구성·data/raw 무변경).
 - 면수 target-only = `d5_target_facets` 로직. 참조 면수 = GML RoofSurface 수(11 mob에서 `baselines.json`과 일치 검증). 정확도 = W3_2c height NMAD·chamfer 재사용.
 - GS(4906969) = `d5_target_facets.csv`(mob 하네스, 별도 표기). G1_package 추가용. EPSG:25832 · Docker · 관찰만.

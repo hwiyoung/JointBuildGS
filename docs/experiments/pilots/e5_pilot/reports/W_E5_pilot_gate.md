@@ -35,7 +35,7 @@
 
 - r1 vs r2 조립 성공 동 집합 flip: 15건.
 - 조립 3회 내부 flip: 0건.
-- 전체 flip 목록: `docs/experiments/pilots/e5_pilot/tables/e5_pilot_seed_pair_status.csv`, `phases/p2-gsjso/runs/e5p_train_20260707_C001/repeat_flip_table.csv`.
+- 전체 flip 목록: `docs/experiments/pilots/e5_pilot/tables/e5_pilot_seed_pair_status.csv`, `phases/p2-gsjso/runs/e5_c001/e5p_train_20260707_C001/repeat_flip_table.csv`.
 
 ## 그림 쌍
 
@@ -44,8 +44,8 @@
 
 ## 런 지문
 
-- 학습 지문: `phases/p2-gsjso/runs/e5p_train_20260707_C001/train_fingerprints.csv`.
-- 점군화 지문: `phases/p2-gsjso/runs/e5p_train_20260707_C001/readout_fingerprints.csv`.
+- 학습 지문: `phases/p2-gsjso/runs/e5_c001/e5p_train_20260707_C001/train_fingerprints.csv`.
+- 점군화 지문: `phases/p2-gsjso/runs/e5_c001/e5p_train_20260707_C001/readout_fingerprints.csv`.
 - 조립 지문: `phases/p0-audit/runs/e5p_gate_20260707_C001/versions.txt`.
 - 속성 검산: `docs/e5_pilot_pointcloud_attributes_v1_3_check.json`.
 

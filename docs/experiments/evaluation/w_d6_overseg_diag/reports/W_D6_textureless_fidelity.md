@@ -34,5 +34,5 @@
 **"조립됨 ≠ 충실".** GS-JSO 무텍스처 4동은 **footprint 위 평평한 슬랩을 ~2.5 m 낮은(저-편향) 높이에 채운 것**이다: 형상은 **평지붕 3동에서만 우연히 일치(3/4 형상 충실, RMS→ref 0.03~0.13)**하나 **높이는 4동 모두 ~2.3~3.1 m 낮고(0/4 높이 충실)**, **비-평 지붕(4907182 외쪽 ~21° pitch)은 경사를 버리고 평슬랩으로 뭉갰다(1/4 추정-채움, GS 0°·면 1 vs 참조/ALS ~21°·면 2)**. 즉 생성(7/8) 주장은 **조립·footprint·평탄성으로만 약하게 받쳐지고, 높이·비-평 구조 충실로는 받쳐지지 않는다** — D6-provenance(희박 MVS + L_sem visual-hull 견인)·shape-audit와 정합. (충실 판정 = 김휘영.)
 
 ## §5 재현 / 출처
-- `docker run … jointbuildgs-p0-tools:t0 python3 phases/p2-gsjso/scripts/d6_textureless_fidelity.py` (read-only 재사용). 점군 GS/ALS/DIM=`mob_eval/{gs_d4_dense,raw_lidar,raw_dense}`. RMS→ref=`ref_rms_{d4_gssem,raw}.csv`(기존). 면수/valid/DIM점=`gen_status.csv`(D6 shape-audit). 참조 z=GML. roof top-envelope·국소경사=`d6_shape_audit` 함수 재사용.
+- `docker run … jointbuildgs-p0-tools:t0 python3 scripts/evidence_and_attributes/p2_gsjso/d6_textureless_fidelity.py` (read-only 재사용). 점군 GS/ALS/DIM=`mob_eval/{gs_d4_dense,raw_lidar,raw_dense}`. RMS→ref=`ref_rms_{d4_gssem,raw}.csv`(기존). 면수/valid/DIM점=`gen_status.csv`(D6 shape-audit). 참조 z=GML. roof top-envelope·국소경사=`d6_shape_audit` 함수 재사용.
 - EPSG:25832 · Docker · 재구성/학습/data 무변경 · 관찰만. G1_package 사본 포함.

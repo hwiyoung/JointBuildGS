@@ -2,13 +2,13 @@
 # Detached A -> B -> C learning-zero measurement driver for the 2026-07-16 order.
 # Launch:
 #   setsid nohup bash phases/p2-gsjso/scripts/run_overnight_abc_20260716.sh \
-#     > phases/p2-gsjso/runs/20260716_overnight_abc/detached.log 2>&1 < /dev/null &
+#     > phases/p2-gsjso/runs/quality_score/20260716_overnight_abc/detached.log 2>&1 < /dev/null &
 set -uo pipefail
 
 REPO="$(cd "$(dirname "$0")/../../.." && pwd)"
 cd "$REPO" || exit 1
 
-RUN_REL="phases/p2-gsjso/runs/20260716_overnight_abc"
+RUN_REL="phases/p2-gsjso/runs/quality_score/20260716_overnight_abc"
 RUN="$REPO/$RUN_REL"
 LOG_DIR="$RUN/logs"
 STATUS="$RUN/status.json"
@@ -170,7 +170,7 @@ preflight() {
 run_a() {
   write_status "A" "running" "C001 exhaustive assembled-CityJSON rescore"
   log "A start"
-  if ! run_tools python3 phases/p2-gsjso/scripts/overnight_qs_rescore.py \
+  if ! run_tools python3 scripts/quality_score/p2_gsjso/overnight_qs_rescore.py \
     > "$LOG_DIR/A_qs_rescore.log" 2>&1; then
     issue "OVN-A execution failed; see $RUN_REL/logs/A_qs_rescore.log"
     write_status "A" "failed" "rescore command failed"
@@ -189,7 +189,7 @@ paths = [
     Path("docs/figs/qs_rescore/qs_rescore_face_count_scatter.png"),
     Path("docs/figs/qs_rescore/qs_rescore_rms_pairs.png"),
     Path("docs/figs/qs_rescore/qs_rescore_topview_examples.png"),
-    Path("phases/p2-gsjso/runs/20260716_qs_rescore/manifest.json"),
+    Path("phases/p2-gsjso/runs/quality_score/20260716_qs_rescore/manifest.json"),
 ]
 missing = [str(path) for path in paths if not path.is_file()]
 if missing:
@@ -212,7 +212,7 @@ PY
     write_status "A" "failed" "output QA failed"
     return 1
   fi
-  issue "OVN-A measurement complete: manifest_sha256=$(sha phases/p2-gsjso/runs/20260716_qs_rescore/manifest.json); inventory_sha256=$(sha docs/experiments/evaluation/qs_rescore/tables/qs_rescore_inventory.csv); pairs_sha256=$(sha docs/experiments/evaluation/qs_rescore/tables/qs_rescore_pairs.csv); learning_runs_started=0"
+  issue "OVN-A measurement complete: manifest_sha256=$(sha phases/p2-gsjso/runs/quality_score/20260716_qs_rescore/manifest.json); inventory_sha256=$(sha docs/experiments/evaluation/qs_rescore/tables/qs_rescore_inventory.csv); pairs_sha256=$(sha docs/experiments/evaluation/qs_rescore/tables/qs_rescore_pairs.csv); learning_runs_started=0"
   if ! commit_paths \
     "OVN-A: rescore C001 quality inventory" \
     phases/p2-gsjso/docs/issues.md \
@@ -221,21 +221,21 @@ PY
     docs/experiments/evaluation/qs_rescore/tables/qs_rescore_pairs.csv \
     docs/experiments/evaluation/qs_rescore/tables/qs_rescore_summary.csv \
     docs/figs/qs_rescore \
-    phases/p2-gsjso/runs/20260716_qs_rescore; then
+    phases/p2-gsjso/runs/quality_score/20260716_qs_rescore; then
     write_status "A" "partial" "outputs complete; commit or push failed"
     return 1
   fi
   A_COMMIT="$(git rev-parse HEAD)"
-  issue "OVN-A commit ledger: commit=$A_COMMIT; manifest_sha256=$(sha phases/p2-gsjso/runs/20260716_qs_rescore/manifest.json)"
+  issue "OVN-A commit ledger: commit=$A_COMMIT; manifest_sha256=$(sha phases/p2-gsjso/runs/quality_score/20260716_qs_rescore/manifest.json)"
   write_status "A" "complete" "commit=$A_COMMIT"
   log "A complete commit=$A_COMMIT"
 }
 
 run_roofer_density() {
   local label="$1"
-  local input="phases/p2-gsjso/runs/20260716_genclose_flat_density/roofer_inputs/flat_density_${label}.laz"
-  local roofprint="phases/p2-gsjso/runs/20260716_genclose_flat_density/roofer_inputs/flat_density_${label}.geojson"
-  local output="phases/p2-gsjso/runs/20260716_genclose_flat_density/roofer/${label}"
+  local input="phases/p2-gsjso/runs/quality_score/20260716_genclose_flat_density/roofer_inputs/flat_density_${label}.laz"
+  local roofprint="phases/p2-gsjso/runs/quality_score/20260716_genclose_flat_density/roofer_inputs/flat_density_${label}.geojson"
+  local output="phases/p2-gsjso/runs/quality_score/20260716_genclose_flat_density/roofer/${label}"
   mkdir -p "$output"
   if compgen -G "$output/*.city.jsonl" > /dev/null; then
     log "B Roofer $label resume: existing CityJSONSeq retained"
@@ -294,7 +294,7 @@ if len(assembly) != 9:
 for rows, name in [(score, "score"), (assembly, "assembly"), (direct, "direct")]:
     if not rows or any(row.get("learning_runs_started") != "0" for row in rows):
         raise SystemExit(f"{name} learning/cardinality QA failed")
-manifest = json.loads(Path("phases/p2-gsjso/runs/20260716_genclose_flat_density/manifest.json").read_text())
+manifest = json.loads(Path("phases/p2-gsjso/runs/quality_score/20260716_genclose_flat_density/manifest.json").read_text())
 if manifest["assembly_rows"] != 9 or manifest["learning_runs_started"] != 0:
     raise SystemExit("manifest QA failed")
 figure = Path("docs/figs/genclose/genclose_density_assembly_topview.png")
@@ -307,7 +307,7 @@ PY
     write_status "B" "failed" "output QA failed"
     return 1
   fi
-  issue "OVN-B measurement complete: manifest_sha256=$(sha phases/p2-gsjso/runs/20260716_genclose_flat_density/manifest.json); flat_score_sha256=$(sha docs/experiments/evaluation/primary4_assembly_validation/tables/genclose_flat_seed_scores.csv); assembly_sha256=$(sha docs/experiments/evaluation/primary4_assembly_validation/tables/genclose_density_assembly.csv); learning_runs_started=0"
+  issue "OVN-B measurement complete: manifest_sha256=$(sha phases/p2-gsjso/runs/quality_score/20260716_genclose_flat_density/manifest.json); flat_score_sha256=$(sha docs/experiments/evaluation/primary4_assembly_validation/tables/genclose_flat_seed_scores.csv); assembly_sha256=$(sha docs/experiments/evaluation/primary4_assembly_validation/tables/genclose_density_assembly.csv); learning_runs_started=0"
   if ! commit_paths \
     "OVN-B: measure flat-seed density assembly" \
     phases/p2-gsjso/docs/issues.md \
@@ -315,12 +315,12 @@ PY
     docs/experiments/evaluation/primary4_assembly_validation/tables/genclose_density_assembly.csv \
     docs/experiments/evaluation/primary4_assembly_validation/tables/genclose_direct_plane.csv \
     docs/figs/genclose \
-    phases/p2-gsjso/runs/20260716_genclose_flat_density; then
+    phases/p2-gsjso/runs/quality_score/20260716_genclose_flat_density; then
     write_status "B" "partial" "outputs complete; commit or push failed"
     return 1
   fi
   B_COMMIT="$(git rev-parse HEAD)"
-  issue "OVN-B commit ledger: commit=$B_COMMIT; manifest_sha256=$(sha phases/p2-gsjso/runs/20260716_genclose_flat_density/manifest.json)"
+  issue "OVN-B commit ledger: commit=$B_COMMIT; manifest_sha256=$(sha phases/p2-gsjso/runs/quality_score/20260716_genclose_flat_density/manifest.json)"
   write_status "B" "complete" "commit=$B_COMMIT"
   log "B complete commit=$B_COMMIT"
 }
@@ -401,7 +401,7 @@ PY
     docs/archive/boundary_map/v1/tables/boundary_map_boundary_cases.csv \
     docs/experiments/input-and-alignment/boundary_map/manifests/boundary_map_manifest.json \
     docs/figs/boundary_map \
-    phases/p2-gsjso/runs/20260716_boundary_map; then
+    phases/p2-gsjso/runs/boundary_and_robustness/20260716_boundary_map; then
     write_status "C" "partial" "outputs complete; commit or push failed"
     return 1
   fi

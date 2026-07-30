@@ -78,8 +78,8 @@
 | dense | 1 | 61.3 | 2001 | 20b5dd92e4ddafb4 |
 | acmp | 1 | 64.7 | 2001 | 23e349a7d8222169 |
 
-- train fingerprints: `phases/p2-gsjso/runs/20260709_e5_c001_corrected_s1/train_fingerprints.csv`.
-- readout fingerprints: `phases/p2-gsjso/runs/20260709_e5_c001_corrected_s1/readout_fingerprints.csv`.
-- versions: `phases/p2-gsjso/runs/20260709_e5_c001_corrected_s1/versions.txt`.
-- snapshots: `phases/p2-gsjso/runs/20260709_e5_c001_corrected_s1/snapshots`.
+- train fingerprints: `phases/p2-gsjso/runs/e5_c001/20260709_e5_c001_corrected_s1/train_fingerprints.csv`.
+- readout fingerprints: `phases/p2-gsjso/runs/e5_c001/20260709_e5_c001_corrected_s1/readout_fingerprints.csv`.
+- versions: `phases/p2-gsjso/runs/e5_c001/20260709_e5_c001_corrected_s1/versions.txt`.
+- snapshots: `phases/p2-gsjso/runs/e5_c001/20260709_e5_c001_corrected_s1/snapshots`.
 - 재확인: corrected-S1 재학습 3런, 정본 미변경, 판정 0.

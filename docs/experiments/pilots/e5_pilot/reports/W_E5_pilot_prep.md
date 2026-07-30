@@ -44,7 +44,7 @@ Files:
 
 - Candidate table: `docs/e5_pilot_block_candidates.csv`
 - Map: `docs/figs/e5_pilot_block_candidates.png`
-- Run fingerprint: `phases/p2-gsjso/runs/e5p_prep_20260706_235306/versions.txt`
+- Run fingerprint: `phases/p2-gsjso/runs/e5_c001/e5p_prep_20260706_235306/versions.txt`
 
 Cost material for the human A-stage decision: 6 learning runs = three seed sources x two random seeds; estimated GPU time 6 x 4-8 h; read-out + assembly <1 h per learned run.
 
@@ -62,7 +62,7 @@ Gate material:
 - Scoped old-constant grep hit count: 0.
 - ACMP local z p50 moved from `-36.240` to `-38.540`, delta `-2.300 m`.
 - Full table: `docs/experiments/pilots/e5_pilot/reports/e5_seed_constant_gate.md`
-- Run fingerprint: `phases/p2-gsjso/runs/e5p_const_20260706_235710/versions.txt`
+- Run fingerprint: `phases/p2-gsjso/runs/e5_c001/e5p_const_20260706_235710/versions.txt`
 - Commit: `2ebd8af`
 
 ## A3 GS-Sparse Config
@@ -79,7 +79,7 @@ Gate material:
 Files:
 
 - Diff proof: `docs/experiments/pilots/e5_pilot/reports/e5_gs_sparse_config_diff.md`
-- Run fingerprint: `phases/p2-gsjso/runs/e5p_sparse_config_20260706_000204/versions.txt`
+- Run fingerprint: `phases/p2-gsjso/runs/e5_c001/e5p_sparse_config_20260706_000204/versions.txt`
 - Commit: `7b25e71`
 
 ## A4 Preflight
@@ -138,7 +138,7 @@ Files:
 
 - Attribute table: `docs/pointcloud_attributes_v1_3.csv`
 - Invariance check: `docs/e5_pointcloud_attributes_v1_3_check.json`
-- Run fingerprint: `phases/p2-gsjso/runs/20260706_attr_v1_3/versions.txt`
+- Run fingerprint: `phases/p2-gsjso/runs/evidence_and_attributes/20260706_attr_v1_3/versions.txt`
 
 ## Commit Ledger
 

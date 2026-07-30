@@ -1794,7 +1794,7 @@ def parser() -> argparse.ArgumentParser:
         "--calibration-lock",
         type=Path,
         default=REPO
-        / "phases/p2-gsjso/configs/pilot_1wave_calibration_lock.json",
+        / "phases/p2-gsjso/configs/pilot_1wave/pilot_1wave_calibration_lock.json",
     )
     prepare.add_argument("--mask-04a", type=Path, required=True)
     prepare.add_argument("--mask-04b", type=Path, required=True)
@@ -1815,7 +1815,7 @@ def parser() -> argparse.ArgumentParser:
         "--calibration-lock",
         type=Path,
         default=REPO
-        / "phases/p2-gsjso/configs/pilot_1wave_calibration_lock.json",
+        / "phases/p2-gsjso/configs/pilot_1wave/pilot_1wave_calibration_lock.json",
     )
     resolve.add_argument(
         "--calibration-receipt",

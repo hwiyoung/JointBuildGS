@@ -72,7 +72,7 @@ RAW_DIR = RUN_DIR / "fm_dense_raw"
 
 ENV_MANIFEST = REPO / "docs/experiments/input-and-alignment/e5_c001_s3ap/manifests/e5_c001_s3ap_fm_env_manifest.json"
 S3AP_DIAL_CONFIG = (
-    REPO / "phases/p2-gsjso/configs/e5_c001_s3ap_fm_dense_dial.json"
+    REPO / "phases/p2-gsjso/configs/e5_c001/e5_c001_s3ap_fm_dense_dial.json"
 )
 V2_METRICS = REPO / "docs/archive/boundary_map/v2/tables/boundary_map_v2_metrics.csv"
 V2_MAST3R_SCRIPT = SCRIPT_DIR / "boundary_map_v2_mast3r.py"

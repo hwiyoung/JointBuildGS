@@ -63,7 +63,7 @@ DRIVER_SCRIPT = SCRIPT_DIR / "run_anchor_census_20260720.sh"
 PREREG = DOCS / "사전등록서_품질축본선_잠금후보v1.5_20260720.md"
 ENV_MANIFEST = DOCS / "e5_c001_s3ap_fm_env_manifest.json"
 DENSE_CONFIG = (
-    REPO / "phases/p2-gsjso/configs/e5_c001_s3ap_fm_dense_dial.json"
+    REPO / "phases/p2-gsjso/configs/e5_c001/e5_c001_s3ap_fm_dense_dial.json"
 )
 ALS_STATUS = (
     REPO
@@ -72,12 +72,12 @@ ALS_STATUS = (
 )
 R1P_MEASUREMENTS = (
     REPO
-    / "phases/p2-gsjso/runs/20260719_boundary_map_v3"
+    / "phases/p2-gsjso/runs/boundary_and_robustness/20260719_boundary_map_v3"
     / "fm_dense_measurements.csv"
 )
 R1P_MANIFEST = (
     REPO
-    / "phases/p2-gsjso/runs/20260719_boundary_map_v3"
+    / "phases/p2-gsjso/runs/boundary_and_robustness/20260719_boundary_map_v3"
     / "fm_dense_manifest.json"
 )
 S3AP_DIAL = DOCS / "e5_c001_s3ap_fm_dense_dial.csv"

@@ -90,7 +90,7 @@
 4906972·4906969·4908023 의 gssem 조립모델(면별색) [D-gssem | D4-gssem | LiDAR | ref]. smrf 모델은 `perbuilding_smrf.tar` 에 보존.
 
 ## §5 재현/출처
-- 재-eval: `phases/p2-gsjso/scripts/run_gssem_requal.sh` (백업→gssem eval→ref_rms→numbers→verify; CPU/도커, NO GPU, gs_d5* 미접촉).
+- 재-eval: `scripts/evidence_and_attributes/p2_gsjso/run_gssem_requal.sh` (백업→gssem eval→ref_rms→numbers→verify; CPU/도커, NO GPU, gs_d5* 미접촉).
 - 숫자: `gssem_requal_numbers.py {smrf,gssem}` → `numbers_{smrf,gssem}.json`. 본 표: `gssem_requal_doc.py`.
 - 그림: `gssem_requal_figs.py`. smrf 백업: `gssem_requal_backup/perbuilding_smrf.tar` + `ref_rms_{D,d4}_smrf.csv` + `eval_*_smrf.json`.
 - 디스크 최종 read-out = **gssem**(이후 smrf 재실행 금지). 생성 assembled/valid-solid 불변(§0).

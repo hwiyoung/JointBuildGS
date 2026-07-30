@@ -6,7 +6,7 @@
 
 - 브랜치·HEAD: `feat/p2-structure-learn` · `4c3c71e8ed6fd289076461e6e7bfd5479a73cafb`.
 - 기존 게이트 보고: `docs/experiments/pilots/e5_pilot/reports/W_E5_pilot_gate.md`, `docs/W_E5_pilot_gate_검수·판정회부_20260707.md`.
-- GS 점군화·지문: `phases/p2-gsjso/runs/e5p_train_20260707_C001/`.
+- GS 점군화·지문: `phases/p2-gsjso/runs/e5_c001/e5p_train_20260707_C001/`.
 - GS 조립 출력: `phases/p0-audit/runs/e5p_gate_20260707_C001/`.
 - 새 학습·새 파라미터·새 Roofer 조립은 하지 않았다.
 - 기준문서 파일 머리표기는 v1.25(2026-07-06)다. 발주문은 v1.27을 언급하지만, repo의 잠금본 사전등록서와 현재 기준문서 부록 A/D를 우선 인용했다.
@@ -104,7 +104,7 @@
 - correction gain 세부: `docs/e5_c001_8way_correction_gain.csv`.
 - correction gain 요약: `docs/e5_c001_8way_correction_gain_summary.csv`.
 - 재고표: `docs/e5_c001_8way_inventory.csv`.
-- 실행 지문: `phases/p2-gsjso/runs/20260707_e5_c001_8way/versions.txt`.
+- 실행 지문: `phases/p2-gsjso/runs/e5_c001/20260707_e5_c001_8way/versions.txt`.
 
 ## 관찰
 

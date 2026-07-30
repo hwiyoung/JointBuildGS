@@ -83,5 +83,5 @@ survey(`W_D6_survey`)는 **P0 모집단 하네스 w3_2b**(전-장면 점군 1회
 **11 작업동 중 ‘곡면’ 지붕은 없다 — 형상 라벨은 측정 미확인 가정이었고 재구성 5동 중 4동이 오라벨이다.** 4906969(‘곡면’)은 **반원 footprint 위 단차 평지붕**(y-slice 계단 RMS 0.54 ≪ 호 1.21·참조 3 수평레벨), 4906972(‘평’)은 박공, 42364659·42364663(‘복합’)은 평지붕이며 ‘복합’은 재구성 과분할 거동이다. 생성에서는 raw 0/8 → **GS-JSO 7/8**(무텍스처 4동 포함, prior로 회복) → ALS 7/8. (형상·레버·판정 = 김휘영.)
 
 ## §7 재현 / 출처
-- `docker run … jointbuildgs-p0-tools:t0 python3 phases/p2-gsjso/scripts/d6_shape_audit.py` (패널·측정·y-slice) + `d6_genstatus.py` (생성표). read-only 재사용; data/raw·재구성 무변경.
+- `docker run … jointbuildgs-p0-tools:t0 python3 scripts/evidence_and_attributes/p2_gsjso/d6_shape_audit.py` (패널·측정·y-slice) + `d6_genstatus.py` (생성표). read-only 재사용; data/raw·재구성 무변경.
 - 면수 target-only = `d5_target_facets` 로직 현 디스크 재계산(stale CSV 대신). 참조 형상 = GML RoofSurface z-레벨·경사. 생성 valid = eval val3dity(클립). RMS→ref = `ref_rms_*.csv`. EPSG:25832 · Docker · 관찰만. G1_package 사본 포함.

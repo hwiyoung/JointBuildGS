@@ -165,7 +165,7 @@
 - `docs/figs/e5_c001_gsdiag/shape_similarity_scatter.png`
 - `docs/figs/e5_c001_gsdiag/flattening_location_cases.png`
 - `docs/figs/e5_c001_gsdiag/density_coverage_summary.png`
-- 버전: `phases/p2-gsjso/runs/20260707_e5_c001_gsdiag/versions.txt`.
+- 버전: `phases/p2-gsjso/runs/e5_c001/20260707_e5_c001_gsdiag/versions.txt`.
 
 ## 관찰
 

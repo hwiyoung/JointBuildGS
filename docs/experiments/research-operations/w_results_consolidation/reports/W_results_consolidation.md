@@ -1,6 +1,6 @@
 # W_results_consolidation — 레포 전용 수치 통합 (READ-ONLY 추출, 관찰만·판정 없음)
 
-> 생성 = `phases/p2-gsjso/scripts/results_consolidation.py` (on-disk eval_*.json / ref_rms_*.csv / TB / Roofer cityjson 에서 **직접 산출**, 전사 없음).
+> 생성 = `scripts/evidence_and_attributes/p2_gsjso/results_consolidation.py` (on-disk eval_*.json / ref_rms_*.csv / TB / Roofer cityjson 에서 **직접 산출**, 전사 없음).
 > EPSG:25832. 관찰만·판정 금지·해석/프레이밍 없음. 셀별 출처 명시. 비교 LiDAR·img(raw)·ref 는 기존값 재사용.
 > arm = {v6_protect, D=prior_full, D4} (full eval JSON) + D2(귀속 §5)·D3(무효 §6)는 D run 진단(별도 학습 arm 아님).
 

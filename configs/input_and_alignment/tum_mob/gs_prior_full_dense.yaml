@@ -3,7 +3,7 @@
 # w_sem 0.1, w_nc 0.05, max_iter 30000, densification (v6 dense), init_pointcloud + seed_protect.
 # CHANGED (the only deltas vs v6) — three levers turned ON:
 #   L1 depth/normal supervision: w_depth/w_normal>0 over a warm-up→ramp schedule, fed by per-view
-#      MVS maps staged at data_root/stereo (phases/p2-gsjso/scripts/prior_full_stereo.sh).
+#      MVS maps staged at data_root/stereo (scripts/input_and_alignment/p2_gsjso/prior_full_stereo.sh).
 #   L2 structure: structure_grouping=g2 (surface-level) + w_structure raised 0.1->0.3.
 #   L3 GS-semantic classification: NOT a train-side change — done downstream in extract+adapter
 #      (tum_mob_tsdf_extract sem pass + _mob_prep_las_gssem.py; eval --classifier gssem).

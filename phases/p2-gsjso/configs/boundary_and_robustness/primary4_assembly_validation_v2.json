@@ -1,0 +1,118 @@
+{
+  "schema": "jointbuildgs.primary4_assembly_validation.lock.v2",
+  "task_id": "E-PRIMARY4-20260721",
+  "task_date": "2026-07-21",
+  "crs": "EPSG:25832",
+  "learning_runs_allowed": 0,
+  "new_inference_runs_allowed": 0,
+  "image_inputs_allowed": 0,
+  "grid_m": 0.5,
+  "nominal_density_pt_m2": 4.0,
+  "roof_class": 6,
+  "ground_class": 2,
+  "targets_in_output_order": [
+    "4907199",
+    "4908049",
+    "104586480",
+    "4908048"
+  ],
+  "reproduction_target": "4907199",
+  "new_targets": [
+    "4908049",
+    "104586480",
+    "4908048"
+  ],
+  "anchor_lock": {
+    "4907199": {
+      "anchor_inside_z_median_m": "-34.347425",
+      "anchor_footprint_inside_point_count": "373",
+      "anchor_inside_z_mad_m": "0.022915",
+      "ref_roof_type": "horizontal",
+      "row_role": "reproduction"
+    },
+    "4908049": {
+      "anchor_inside_z_median_m": "-41.264825",
+      "anchor_footprint_inside_point_count": "966",
+      "anchor_inside_z_mad_m": "0.035898",
+      "ref_roof_type": "horizontal",
+      "row_role": "new_target"
+    },
+    "104586480": {
+      "anchor_inside_z_median_m": "-43.161802",
+      "anchor_footprint_inside_point_count": "3364",
+      "anchor_inside_z_mad_m": "0.071273",
+      "ref_roof_type": "horizontal",
+      "row_role": "new_target"
+    },
+    "4908048": {
+      "anchor_inside_z_median_m": "-41.248347",
+      "anchor_footprint_inside_point_count": "1379",
+      "anchor_inside_z_mad_m": "0.039240",
+      "ref_roof_type": "multiple horizontal",
+      "row_role": "new_target",
+      "input_note": "reference classification is multiple horizontal; measured anchor MAD 0.039240 m is recorded without changing the single constant-height input"
+    }
+  },
+  "flat_input": {
+    "xy_rule": "B-1 p0.fill_footprint: one representative point per EPSG:25832 0.5 m cell intersecting the supplied footprint",
+    "z_rule": "constant locked anchor_inside_z_median_m; plane_ax=0; plane_by=0",
+    "roofprint_rule": "B-1 p0.occupied_cell_union over generated flat points",
+    "ground_rule": "B-1 clean exterior 1 m-cell q10 lower-mode median; full-scene parent sparse+dense seed PLYs named by the C001 crop manifest",
+    "ground_source_scope_note": "B-1 used C001 clips of these exact parent PLYs; E uses the full-scene parents because three targets are outside the C001 clip while retaining the same estimator and parameters",
+    "ground_parameters": {
+      "target_outer_distance_min_m": 2.0,
+      "target_outer_distance_max_m": 15.0,
+      "all_footprint_exclusion_buffer_m": 1.0,
+      "grid_m": 1.0,
+      "min_points_per_cell": 2,
+      "cell_z_quantile": 0.1,
+      "mode_bin_m": 0.5,
+      "mode_half_window_m": 0.75,
+      "fallback": "median of finite cell q10 values after Tukey 1.5-IQR clipping"
+    }
+  },
+  "roofer": {
+    "image": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+    "parameters": "--id-attribute building_id --jobs 3 --srs EPSG:25832 --bld-class 6 --grnd-class 2 --lod22"
+  },
+  "reproduction_hard_stop": {
+    "building_id": "4907199",
+    "expected_flat_point_count": 448,
+    "expected_b1_seed_signed_delta_z_median_m": "-0.014425402307",
+    "expected_b1_assembly_signed_delta_z_median_m": "-0.014000000000",
+    "expected_b1_roof_rms_m": "0.014000000000",
+    "expected_b1_roof_hausdorff_m": "0.014000000000",
+    "expected_b1_rf_extrusion_mode": "lod11_fallback",
+    "expected_b1_has_lod22": false,
+    "expected_b1_lod1_fallback": true,
+    "expected_b1_val3dity_valid": true,
+    "numeric_tolerance_m": 0.0000005
+  },
+  "success_gauge": {
+    "selected": "b",
+    "formula": "has_lod22 == true AND abs(signed_delta_z_median_m) <= 1.0",
+    "max_abs_signed_delta_z_median_m": 1.0,
+    "alternative_a": "has_lod22 == true",
+    "alternative_c": "has_lod22 == true AND abs(signed_delta_z_median_m) <= 0.3",
+    "remote_output_role": "record boolean only; no K2 sentence verdict"
+  },
+  "source_paths": {
+    "anchor_ladder": "docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v4_1_ladder.csv",
+    "b1_flat_scores": "docs/experiments/evaluation/primary4_assembly_validation/tables/genclose_flat_seed_scores.csv",
+    "b1_assembly_scores": "docs/experiments/evaluation/primary4_assembly_validation/tables/genclose_density_assembly.csv",
+    "b1_manifest": "phases/p2-gsjso/runs/quality_score/20260716_genclose_flat_density/manifest.json",
+    "b1_script": "phases/p2-gsjso/scripts/overnight_genclose.py",
+    "p0_fill_script": "phases/p2-gsjso/scripts/e5_c001/e5_c001_s3ap_phase0_baselines.py",
+    "standard_status_script": "phases/p0-audit/scripts/08_roofer_w2.py",
+    "standard_metric_script": "scripts/e5_c001/p2_gsjso/e5_c001_8way.py",
+    "standard_completeness_script": "scripts/quality_score/p2_gsjso/qs_baseline178_rescore.py",
+    "ground_estimator_lineage_script": "scripts/e5_c001/p2_gsjso/e5_c001_s3ap_fm_retri_rescore.py",
+    "ground_estimator_config": "phases/p2-gsjso/configs/e5_c001/e5_c001_s3ap_fm_retri_rescore.json",
+    "full_sparse_seed": "results/tum_transfer/mob_analysis/seed/seed_sparse.ply",
+    "full_dense_seed": "results/tum_transfer/mob_analysis/seed/seed_dense.ply",
+    "c001_crop_manifest": "results/tum_transfer/e5_pilot/C001/C001_train_prep_manifest.json",
+    "footprints": "results/tum_transfer/analysis/footprints_aoi.geojson",
+    "projection_datum": "configs/input_and_alignment/projection_datum.json",
+    "lod2_dir": "phases/p0-audit/data/raw/lod2"
+  }
+}

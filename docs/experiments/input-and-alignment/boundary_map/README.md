@@ -46,11 +46,11 @@ run_ids:
 
 | 버전 | run receipt |
 |---|---|
-| v1 | `phases/p2-gsjso/runs/20260716_boundary_map/` |
-| v2 | `phases/p2-gsjso/runs/20260718_boundary_map_v2/` |
-| v3 | `phases/p2-gsjso/runs/20260719_boundary_map_v3/` |
-| v4 | `phases/p2-gsjso/runs/20260720_anchor_census/` |
-| v4.1 | `phases/p2-gsjso/runs/20260720_anchor_census_supplement/` |
+| v1 | `phases/p2-gsjso/runs/boundary_and_robustness/20260716_boundary_map/` |
+| v2 | `phases/p2-gsjso/runs/boundary_and_robustness/20260718_boundary_map_v2/` |
+| v3 | `phases/p2-gsjso/runs/boundary_and_robustness/20260719_boundary_map_v3/` |
+| v4 | `phases/p2-gsjso/runs/boundary_and_robustness/20260720_anchor_census/` |
+| v4.1 | `phases/p2-gsjso/runs/boundary_and_robustness/20260720_anchor_census_supplement/` |
 
 Run 디렉터리는 이동하지 않는다. 실행 당시 코드·config·입출력 경로와 hash를 보존하는 provenance ledger다.
 

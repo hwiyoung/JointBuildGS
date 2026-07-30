@@ -70,4 +70,4 @@
 ③ **결함↔복잡도**: **약-무상관**(span 0.23·레벨 0.05; 평지붕 0.34만 약신호) — 결함은 복잡도보다 per-building 품질 좌우. "복합=고resid·단순=충실" 깔끔 패턴 **미성립**.
 ④ **다음 B1 권고(판정=김휘영)**: (가) **메트릭은 이 dz-강건본 채택**(per-arm dz 폐기). (나) **w_mvc 스윕(0.5→1~3)**을 **고-결함 GS-보유 동(42364659·4907510·4906969)** + **단차 검증용 단차평**에 — 단 §3가 복잡도≠결함을 보였으니 **표적을 d4_resid(실측 결함)로도 선별**, 다층 라벨만으로 X. (다) **추가 GS 필요 여부**: 단차평 표본 넓히려면 GS-needed 단차평 2~3동(예 4906982·4906975·4959336) GS-JSO 실행 권고(현 11동 중 단차평 3동은 표본 부족). (라) B1 비용(depth_mae +3~5%·dense plane_rms +27%, [[W_phaseB_structure]] §3)은 그대로 — 스윕 시 가드.
 
-> 재현: `docker run … jointbuildgs-p0-tools:t0 python3 phases/p2-gsjso/scripts/complexity_metric.py` · `… complexity_survey.py`. 데이터 재사용(재학습·재구성·data/raw 무변경). 본 메트릭이 `overseg_b1_faithfulness`(per-arm dz)를 대체(신뢰본).
+> 재현: `docker run … jointbuildgs-p0-tools:t0 python3 scripts/evidence_and_attributes/p2_gsjso/complexity_metric.py` · `… complexity_survey.py`. 데이터 재사용(재학습·재구성·data/raw 무변경). 본 메트릭이 `overseg_b1_faithfulness`(per-arm dz)를 대체(신뢰본).

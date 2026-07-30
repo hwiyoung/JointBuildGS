@@ -105,8 +105,8 @@
 - **메트릭 주의**: eval 합산 over-seg 메트릭은 **클립-이웃 건물 오염**(예 4906972 eval=8/12 vs target-only=3). 본 보고 면수는 **target-only**(이웃 제외)로 재계산 — D 보고(W_D_prior_full)의 합산 수치와 직접 비교 시 이 차이 유의.
 
 ## §8 재현성
-- 학습: `phases/p2-gsjso/scripts/run_d4.sh`(config `gs_d4_{dense,acmp}.yaml`; 사전점검 `gs_d4_dense_precheck.yaml`). 엔진 무변경(가중은 config만).
+- 학습: `scripts/evidence_and_attributes/p2_gsjso/run_d4.sh`(config `gs_d4_{dense,acmp}.yaml`; 사전점검 `gs_d4_dense_precheck.yaml`). 엔진 무변경(가중은 config만).
 - 평가: `tum_mob_eval.py --classifier {gssem,smrf}`(→`eval_d4_{gssem,smrf}.json`) + `tum_mob_ref_rms.py --arms gs_d4_{dense,acmp}`(→`ref_rms_d4.csv`).
-- 표·면수: `phases/p2-gsjso/scripts/d4_table.py`(→`REPORT_D4.md`); target-only 면수·정성 그림: `d4_qual_figs.py`(→`docs/figs/W_D4_qual/`).
+- 표·면수: `scripts/evidence_and_attributes/p2_gsjso/d4_table.py`(→`REPORT_D4.md`); target-only 면수·정성 그림: `d4_qual_figs.py`(→`docs/figs/W_D4_qual/`).
 - 비교 baseline 재사용: `eval_prior_full_gssem.json`(D)·`eval_v6_protect.json`(v6)·`eval_v6_raw.json`(raw/LiDAR)·`baselines.json`(ref)·`ref_rms_{D,v6,raw}.csv`.
 - `runs`/버전: `results/tum_transfer/mob/gs_d4_{dense,acmp}/versions.txt`(commit 5dd26cc). 한 커밋 "D4".

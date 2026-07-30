@@ -2,7 +2,7 @@
 
 > 관찰만, 판정=사람(김휘영). 브랜치 `feature/p2-prior-full`. EPSG:25832. Docker(jointbuildgs:dev 학습 / p0-tools·3dgi/roofer 평가).
 > 질문(점 6의 두 절반 첫 시험): "깊이·법선 감독 + 구조 강화 + GS-의미 분류를 켠 GS가 (가)조립안됨을 살리고 (나)과분할을 줄이고 정확도를 올리나."
-> 데이터(`results/`)는 gitignore. 정량 표 = `results/tum_transfer/mob/REPORT_D.md`(재생성: `phases/p2-gsjso/scripts/d_prior_full_table.py`).
+> 데이터(`results/`)는 gitignore. 정량 표 = `results/tum_transfer/mob/REPORT_D.md`(재생성: `scripts/evidence_and_attributes/p2_gsjso/d_prior_full_table.py`).
 
 ## 0) 한 줄 관찰 (판정 없음)
 
@@ -63,7 +63,7 @@ v6 `gs_seed_{dense,acmp}_protect` 대비 변경분만(나머지 MUST-EQ 동일: 
 
 ## 6) 재현성
 
-- 학습: `phases/p2-gsjso/scripts/run_prior_full.sh` (config `gs_prior_full_{dense,acmp}.yaml`). 맵 생성: `prior_full_stereo.sh`(GPU=1 MAXSZ=1024 ITERS=3).
+- 학습: `scripts/input_and_alignment/p2_gsjso/run_prior_full.sh` (config `gs_prior_full_{dense,acmp}.yaml`). 맵 생성: `prior_full_stereo.sh`(GPU=1 MAXSZ=1024 ITERS=3).
 - 평가: `tum_mob_eval.py --classifier {gssem,smrf}` + `tum_mob_ref_rms.py --arms gs_prior_full_{dense,acmp}`.
 - 표: `d_prior_full_table.py` → `REPORT_D.md`. 사전점검 손실 감사: `docs/experiments/joint-optimization/w_d_loss_audit/reports/W_D_loss_audit.md`.
 - `runs`/버전: 각 arm `results/tum_transfer/mob/<arm>/versions.txt`. 한 커밋 "전체 prior 수트".

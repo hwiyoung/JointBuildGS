@@ -51,7 +51,7 @@ from matplotlib.patches import Patch  # noqa: E402
 
 REPO = Path(__file__).resolve().parents[3]
 DOCS = REPO / "docs"
-RUN_DIR = REPO / "phases/p2-gsjso/runs/20260719_boundary_map_v3"
+RUN_DIR = REPO / "phases/p2-gsjso/runs/boundary_and_robustness/20260719_boundary_map_v3"
 
 SNAPSHOT = DOCS / "regression_input_snapshot.csv"
 MANUAL = DOCS / "manual_review_judgments.csv"
@@ -60,7 +60,7 @@ V2_LADDER = DOCS / "archive/boundary_map/v2/tables/boundary_map_v2_ladder.csv"
 V2_MANIFEST = DOCS / "experiments/boundary_map/manifests/boundary_map_v2_manifest.json"
 V2_ALL_PROJECTION_JOBS = (
     REPO
-    / "phases/p2-gsjso/runs/20260718_boundary_map_v2/all_projection_jobs.json"
+    / "phases/p2-gsjso/runs/boundary_and_robustness/20260718_boundary_map_v2/all_projection_jobs.json"
 )
 V2_SCRIPT = Path(__file__).with_name("boundary_map_v2.py")
 DENSE_SCRIPT = Path(__file__).with_name("boundary_map_v3_dense.py")
@@ -69,7 +69,7 @@ DRIVER_SCRIPT = Path(__file__).with_name(
 )
 ENV_MANIFEST = DOCS / "e5_c001_s3ap_fm_env_manifest.json"
 S3AP_DIAL_CONFIG = (
-    REPO / "phases/p2-gsjso/configs/e5_c001_s3ap_fm_dense_dial.json"
+    REPO / "phases/p2-gsjso/configs/e5_c001/e5_c001_s3ap_fm_dense_dial.json"
 )
 S3AP_DIAL_CSV = DOCS / "e5_c001_s3ap_fm_dense_dial.csv"
 S3AP_PJPL = (

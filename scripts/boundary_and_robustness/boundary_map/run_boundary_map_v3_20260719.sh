@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 # Detached learning-zero boundary-map-v3 driver.
 # Launch from the repository root:
-#   mkdir -p phases/p2-gsjso/runs/20260719_boundary_map_v3_driver
+#   mkdir -p phases/p2-gsjso/runs/boundary_and_robustness/20260719_boundary_map_v3_driver
 #   setsid nohup bash scripts/boundary_and_robustness/boundary_map/run_boundary_map_v3_20260719.sh \
-#     > phases/p2-gsjso/runs/20260719_boundary_map_v3_driver/detached.log \
+#     > phases/p2-gsjso/runs/boundary_and_robustness/20260719_boundary_map_v3_driver/detached.log \
 #     2>&1 < /dev/null &
 set -uo pipefail
 
 REPO="$(cd "$(dirname "$0")/../../.." && pwd)"
 cd "$REPO" || exit 1
 
-RUN_REL="phases/p2-gsjso/runs/20260719_boundary_map_v3_driver"
+RUN_REL="phases/p2-gsjso/runs/boundary_and_robustness/20260719_boundary_map_v3_driver"
 RUN="$REPO/$RUN_REL"
-MEASURE_REL="phases/p2-gsjso/runs/20260719_boundary_map_v3"
+MEASURE_REL="phases/p2-gsjso/runs/boundary_and_robustness/20260719_boundary_map_v3"
 MEASURE="$REPO/$MEASURE_REL"
 LOG_DIR="$RUN/logs"
 STATUS="$RUN/status.json"
@@ -38,11 +38,11 @@ MODEL_REPO_CONTAINER="/models/mast3r_metric"
 MODEL_CONTAINER="$MODEL_REPO_CONTAINER/snapshots/$MODEL_REVISION"
 ENV_MANIFEST="docs/experiments/input-and-alignment/e5_c001_s3ap/manifests/e5_c001_s3ap_fm_env_manifest.json"
 ENV_MANIFEST_SHA256="7246a77569a7af1b931ad60eda7012e6e3e8f4ff81b5e10f2e3c1a2efea80d68"
-DENSE_DIAL_CONFIG="phases/p2-gsjso/configs/e5_c001_s3ap_fm_dense_dial.json"
+DENSE_DIAL_CONFIG="phases/p2-gsjso/configs/e5_c001/e5_c001_s3ap_fm_dense_dial.json"
 DENSE_DIAL_CONFIG_SHA256="72d0bef6578b9e5cbe96fb32cbf81802d3a87a92a8da5a6b5b497baba18491c9"
 DENSE_DIAL_CSV="docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_fm_dense_dial.csv"
 DENSE_DIAL_CSV_SHA256="5a743961cd58dc099dce3200a2465d0838dc9b4dce4f59fb787769064d4a9a26"
-PIP_FREEZE="phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_env/pip_freeze.txt"
+PIP_FREEZE="phases/p2-gsjso/runs/e5_c001/20260714_e5_c001_s3ap_fm_env/pip_freeze.txt"
 PIP_FREEZE_SHA256="1c556c3be3304703a2971d82b4fd320fc96d2dd682787388123130db0a586b77"
 MAST3R_DOCKERFILE="phases/p2-gsjso/docker/s3ap-mast3r/Dockerfile"
 MAST3R_DOCKERFILE_SHA256="2ada6809de7e5d8e66a9c62875edaf47fe9ee584c4a1aec228732b7e3e0fc3fc"
@@ -528,7 +528,7 @@ for path in paths:
     if path.is_file():
         hashes[str(path)] = hashlib.sha256(path.read_bytes()).hexdigest()
 progress_path = Path(
-    "phases/p2-gsjso/runs/20260719_boundary_map_v3/"
+    "phases/p2-gsjso/runs/boundary_and_robustness/20260719_boundary_map_v3/"
     "fm_dense_progress.json"
 )
 progress = (
@@ -536,7 +536,7 @@ progress = (
     if progress_path.is_file() else {}
 )
 measurements_path = Path(
-    "phases/p2-gsjso/runs/20260719_boundary_map_v3/"
+    "phases/p2-gsjso/runs/boundary_and_robustness/20260719_boundary_map_v3/"
     "fm_dense_measurements.csv"
 )
 measurements = []
@@ -639,7 +639,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 reason, deadline = sys.argv[1:3]
-run = Path("phases/p2-gsjso/runs/20260719_boundary_map_v3")
+run = Path("phases/p2-gsjso/runs/boundary_and_robustness/20260719_boundary_map_v3")
 jobs_path = run / "fm_dense_jobs.json"
 building_path = run / "fm_dense_measurements.csv"
 pair_path = run / "fm_dense_pairs.csv"
@@ -647,7 +647,7 @@ progress_path = run / "fm_dense_progress.json"
 manifest_path = run / "fm_dense_manifest.json"
 env_path = Path("docs/experiments/input-and-alignment/e5_c001_s3ap/manifests/e5_c001_s3ap_fm_env_manifest.json")
 config_path = Path(
-    "phases/p2-gsjso/configs/e5_c001_s3ap_fm_dense_dial.json"
+    "phases/p2-gsjso/configs/e5_c001/e5_c001_s3ap_fm_dense_dial.json"
 )
 dense_script = Path(
     "scripts/boundary_and_robustness/boundary_map/boundary_map_v3_dense.py"
@@ -1101,7 +1101,7 @@ import csv
 import json
 from pathlib import Path
 
-run = Path("phases/p2-gsjso/runs/20260719_boundary_map_v3")
+run = Path("phases/p2-gsjso/runs/boundary_and_robustness/20260719_boundary_map_v3")
 inventory = json.loads((run / "label_inventory.json").read_text())
 rule = json.loads((run / "decision_rule.json").read_text())
 primary = list(csv.DictReader((run / "primary_predictions.csv").open()))
@@ -1328,7 +1328,7 @@ import sys
 from pathlib import Path
 
 mode = sys.argv[1]
-run = Path("phases/p2-gsjso/runs/20260719_boundary_map_v3")
+run = Path("phases/p2-gsjso/runs/boundary_and_robustness/20260719_boundary_map_v3")
 jobs = json.loads((run / "fm_dense_jobs.json").read_text())["jobs"]
 rows = (
     list(csv.DictReader((run / "fm_dense_measurements.csv").open()))
@@ -1628,9 +1628,9 @@ for label in ("source_sha256", "output_sha256"):
             raise SystemExit(f"dense {label} drift: {relative}")
 required_sources = {
     "scripts/boundary_and_robustness/boundary_map/boundary_map_v3_dense.py",
-    "phases/p2-gsjso/runs/20260719_boundary_map_v3/fm_dense_jobs.json",
+    "phases/p2-gsjso/runs/boundary_and_robustness/20260719_boundary_map_v3/fm_dense_jobs.json",
     "docs/experiments/input-and-alignment/e5_c001_s3ap/manifests/e5_c001_s3ap_fm_env_manifest.json",
-    "phases/p2-gsjso/configs/e5_c001_s3ap_fm_dense_dial.json",
+    "phases/p2-gsjso/configs/e5_c001/e5_c001_s3ap_fm_dense_dial.json",
 }
 if not required_sources <= set(manifest["source_sha256"]):
     raise SystemExit("dense manifest required source hashes missing")
@@ -1700,7 +1700,7 @@ import json
 from pathlib import Path
 
 docs = Path("docs")
-run = Path("phases/p2-gsjso/runs/20260719_boundary_map_v3")
+run = Path("phases/p2-gsjso/runs/boundary_and_robustness/20260719_boundary_map_v3")
 def rows(path):
     with path.open(newline="", encoding="utf-8") as handle:
         return list(csv.DictReader(handle))
@@ -1891,12 +1891,12 @@ expected_sources = {
     "docs/archive/boundary_map/v2/tables/boundary_map_v2_metrics.csv",
     "docs/archive/boundary_map/v2/tables/boundary_map_v2_ladder.csv",
     "docs/experiments/input-and-alignment/boundary_map/manifests/boundary_map_v2_manifest.json",
-    "phases/p2-gsjso/runs/20260718_boundary_map_v2/all_projection_jobs.json",
+    "phases/p2-gsjso/runs/boundary_and_robustness/20260718_boundary_map_v2/all_projection_jobs.json",
     "scripts/boundary_and_robustness/boundary_map/boundary_map_v2.py",
     "scripts/boundary_and_robustness/boundary_map/boundary_map_v3_dense.py",
     "scripts/boundary_and_robustness/boundary_map/run_boundary_map_v3_20260719.sh",
     "docs/experiments/input-and-alignment/e5_c001_s3ap/manifests/e5_c001_s3ap_fm_env_manifest.json",
-    "phases/p2-gsjso/configs/e5_c001_s3ap_fm_dense_dial.json",
+    "phases/p2-gsjso/configs/e5_c001/e5_c001_s3ap_fm_dense_dial.json",
     "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_fm_dense_dial.csv",
     (
         "results/tum_transfer/e5_s3_semantic_guided/C001/runs/"

@@ -247,7 +247,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "crs": CRS,
         "historical_recipe_source": (
             "phases/p0-audit/scripts/04_classify.py and "
-            "phases/p2-gsjso/scripts/_mob_prep_las.py"
+            "scripts/input_and_alignment/p2_gsjso/_mob_prep_las.py"
         ),
         "source_scene_npz": {
             "path": str(scene_npz),

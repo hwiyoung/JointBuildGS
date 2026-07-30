@@ -1,7 +1,7 @@
 """Reusable scene-crop and footprint-projection utilities for pilot P1W.
 
 This module generalizes the mechanics in
-``phases/p2-gsjso/scripts/e5_pilot_train_prep.py`` without changing that
+``scripts/e5_c001/p2_gsjso/e5_pilot_train_prep.py`` without changing that
 historical script.  Its inputs are the existing COLMAP SfM/MVS scene, a dense
 MVS-derived seed cloud, an EPSG:25832 XY footprint set, and an already locked
 training bbox.  It never reads LoD2 Z, roof faces, roof type, or semantics.

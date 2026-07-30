@@ -2,4 +2,4 @@ item,status,value,source
 elongation_filter_config,checked,enabled=True; axis_ratio_threshold=0.01; active in densification strategy before grow/prune,configs/e5_c001/e5_s1_full_factor/gs_e5_C001_s1fac_w100_p005_dense_r1.yaml
 mono_normal_loss_path,checked,src.stage2.renderer.render normal_render -> src.stage2.loss.data_fitting.l_normal absdot; S2 overrides normal_dir with Omnidata world npy maps,src/stage2/train.py; src/stage2/dataloader.py
 depth_floor_path,checked,"w_depth_eff=max(scheduled_weight, depth_weight_floor) when depth_weight_floor is set; Arm2/Arm3 use 0.15",src/stage2/train.py
-pointcloud_stage_units,checked,pre/minobs/sor are occupied 0.5m footprint-grid cells from stage_coverage.csv; fp pts is final classified roof/wall point count inside footprint from Roofer prep metrics,phases/p2-gsjso/scripts/e5_c001_readout_extract_ablation.py; e5_c001_pipeline_strips.py
+pointcloud_stage_units,checked,pre/minobs/sor are occupied 0.5m footprint-grid cells from stage_coverage.csv; fp pts is final classified roof/wall point count inside footprint from Roofer prep metrics,scripts/e5_c001/p2_gsjso/e5_c001_readout_extract_ablation.py; e5_c001_pipeline_strips.py

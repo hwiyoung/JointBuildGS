@@ -77,8 +77,8 @@
 ## v1.1 입력·높이 기준
 
 - 기준문서 확인: 루트 기준문서 v1.14 (2026-07-05). §1.6의 확정값은 ζ=45.7 m, QA 유효값은 45.760 m이다.
-- v1의 +48.0은 `phases/p2-gsjso/scripts/tum_mob_raw_to_npz.py`와 `docs/W_pointcloud_attributes.md`의 ACMP/LiDAR raw-arm 관행값이다. v1.1에서는 orthometric ACMP/ALS에 +45.760 m를 썼다.
-- v1의 +48.165는 `phases/p2-gsjso/scripts/pointcloud_attributes_v1.py`의 `GEOID_MED_M`으로, 참조 LoD2 지붕 Z를 raw-arm 높이와 비교할 때만 더했던 값이다.
+- v1의 +48.0은 `scripts/input_and_alignment/p2_gsjso/tum_mob_raw_to_npz.py`와 `docs/W_pointcloud_attributes.md`의 ACMP/LiDAR raw-arm 관행값이다. v1.1에서는 orthometric ACMP/ALS에 +45.760 m를 썼다.
+- v1의 +48.165는 `scripts/evidence_and_attributes/p2_gsjso/pointcloud_attributes_v1.py`의 `GEOID_MED_M`으로, 참조 LoD2 지붕 Z를 raw-arm 높이와 비교할 때만 더했던 값이다.
 - 기존 mob_eval raw_acmp/raw_lidar 클립은 ellip-unified 이력의 기존 클립이며, 생성 이력은 orthometric +48.000 m이다. v1.1 metric 계산에서는 이 행들을 -2.240 m 평행이동해 +45.760 m 기준에 맞췄다.
 - raw_dense는 기존 DIM ellipsoid/local+604 이력을 as-is로 두고, 참조 LoD2와의 비교 상수만 +45.760 m로 맞췄다.
 

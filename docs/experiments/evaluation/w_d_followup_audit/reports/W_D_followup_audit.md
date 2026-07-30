@@ -16,11 +16,11 @@
 
 - **공통 관찰**: 네 동 모두 **점군은 충분·정확**(RMS 0.11–1.84 m, 밀도 10–640/m²)인데 오류는 전부 **shell 위상**(비폐합 302 / 면·solid 방향 306·405 / 비-다양체 303)이다. **자기교차(305)·점 부족(101)·비평면(203)은 없음**.
 - **가름(점군 vs Roofer 위상)**: 점 부족·노이즈성 오류(1xx/2xx/305) 부재 + 위상성 오류(폐합·방향·다양체)만 → **Roofer 위상(구조화) 단계** 문제로 가리킴, 점군 밀도 문제 아님. 특히 4906969는 19면 과분할이 비-다양체를 유발(과분할↔위상 연동), 4907182는 정확한 점(0.11 m)에도 shell 비폐합(단일면+ground 합성 폐합 실패 가능).
-- 출처: 재생성 리포트 `phases/p0-audit/runs/mob_eval_gssem_diag/gs_prior_full_dense/DEBY_LOD2_*_orig_val3dity.json`(키 `all_errors`/`validity`); 오케스트레이터 val3dity 호출 [tum_mob_eval.py:148](phases/p2-gsjso/scripts/tum_mob_eval.py#L148).
+- 출처: 재생성 리포트 `phases/p0-audit/runs/mob_eval_gssem_diag/gs_prior_full_dense/DEBY_LOD2_*_orig_val3dity.json`(키 `all_errors`/`validity`); 오케스트레이터 val3dity 호출 [tum_mob_eval.py:148](scripts/input_and_alignment/p2_gsjso/tum_mob_eval.py#L148).
 
 ## 2) 정밀 분리("v6 ckpt에 gssem read-out만") 실현성
 
-- **재학습 불필요, 단 재추출 필요**: v6 TSDF npz(`tsdf_gs_seed_{dense,acmp}_protect.npz`)는 키가 `P_utm/P_utm_clean`뿐 — **P_class 없음**(구 추출기 산출). gssem 어댑터([_mob_prep_las_gssem.py:69-71](phases/p2-gsjso/scripts/_mob_prep_las_gssem.py#L69))는 `P_class_clean`를 요구하므로 **어댑터만 재실행 불가**.
+- **재학습 불필요, 단 재추출 필요**: v6 TSDF npz(`tsdf_gs_seed_{dense,acmp}_protect.npz`)는 키가 `P_utm/P_utm_clean`뿐 — **P_class 없음**(구 추출기 산출). gssem 어댑터([_mob_prep_las_gssem.py:69-71](scripts/input_and_alignment/p2_gsjso/_mob_prep_las_gssem.py#L69))는 `P_class_clean`를 요구하므로 **어댑터만 재실행 불가**.
 - **빠진 것 = 의미-운반 추출**: v6 ckpt(`gs_seed_*_protect/ckpt/final.pt`)에는 `sem_logits` 보존됨([model.py:112-120](src/stage2/model.py#L112); export_ply_semantic로 확인). 따라서 **새 의미 추출기**([tum_mob_tsdf_extract.py:62-71,118-141](phases/p2-gsjso/scripts/tum_mob_tsdf_extract.py#L62))를 v6 ckpt에 재실행 → P_class npz → gssem 어댑터 → Roofer.
 - **예상 소요**: 추출 = **GPU 필요**(rasterization 2-pass), D 추출 실측 2.7–3.1분/arm → v6 2arm ~6분 GPU. 이후 eval(gssem 분류+Roofer+val3dity) = GPU 불필요, ~3분/arm. **총 ~12분**. 이는 동일 v6 기하에 read-out만 바꾸는 **가장 깨끗한 read-out 분리**(D는 학습-prior+read-out 동시 변경이라 본보고는 D-smrf로 간접 분리; 이건 직접 분리).
 

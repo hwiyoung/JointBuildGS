@@ -21,7 +21,7 @@ from typing import Any, Iterable, Sequence
 import numpy as np
 
 REPO = Path(__file__).resolve().parents[3]
-DEFAULT_LOCK = REPO / "phases/p2-gsjso/configs/pilot_1wave_omnidata_normal_lock.json"
+DEFAULT_LOCK = REPO / "phases/p2-gsjso/configs/pilot_1wave/pilot_1wave_omnidata_normal_lock.json"
 
 
 def utc_now() -> str:

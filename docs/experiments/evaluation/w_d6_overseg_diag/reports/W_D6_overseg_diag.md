@@ -12,7 +12,7 @@
 
 | # | 증거 | 파일:라인 |
 |---|---|---|
-| 1 | `v6_overseg_diag.py`는 `mob_eval/<arm>/<bid>_orig_classified.las`(class 6)를 읽음 | `phases/p2-gsjso/scripts/v6_overseg_diag.py:97-104` |
+| 1 | `v6_overseg_diag.py`는 `mob_eval/<arm>/<bid>_orig_classified.las`(class 6)를 읽음 | `scripts/evidence_and_attributes/p2_gsjso/v6_overseg_diag.py:97-104` |
 | 2 | `--classifier {smrf,gssem}` 플래그는 **D 수트(커밋 0e43d37)에서 신설**, default=smrf("the v6 default") | `tum_mob_eval.py:84-91` |
 | 3 | v6-시점(커밋 3af7bab) `tum_mob_eval.py`엔 `--classifier` 없음 → 단일 `_mob_prep_las.py`만 호출 | `git show 3af7bab:.../tum_mob_eval.py` |
 | 4 | `_mob_prep_las.py` = PDAL `filters.smrf`(ground=2) + `filters.overlay`(footprint→building=6) | `_mob_prep_las.py:96-102` |
@@ -122,7 +122,7 @@
 **따라서 D6 레버는 입력측(GS)이 관찰상 지시됨** — 곡률/밀도 인지 제어(예: 곡률 기반 G2 구조 정렬·공면화, 또는 밀도/곡률 인지 read-out). **Roofer 분할 임계 노브(epsilon/min-points) 단독은 비지시**(전역 둔화·정확도 손실, 초과분 미제거). 단 격차는 **GS 밀도 × Roofer 평면검출 민감성의 상호작용**일 수 있고(Roofer 밀도민감성 자체는 본 step0로 배제 안 됨), 이 경우에도 임계 노브로는 못 닫고 단순 솎기는 과교정(→1)이므로 **작동 레버는 입력측(GS 곡률/밀도)으로 수렴**한다. (D5 §5의 두 후보 ‘곡률 기반 G2 / Roofer 분할 임계’ 중 **입력측·곡률 쪽**을 지시. 판정 줄 = 김휘영.)
 
 ## §7 재현 / 출처
-- 실행: `bash phases/p2-gsjso/scripts/run_d6_step0.sh`(idempotent: smrf 재분류→a,b→c). provenance `analysis_pack_d6/versions_d6.txt`.
+- 실행: `bash scripts/evidence_and_attributes/p2_gsjso/run_d6_step0.sh`(idempotent: smrf 재분류→a,b→c). provenance `analysis_pack_d6/versions_d6.txt`.
 - (a,b): `d6_overseg_diag.py`(p0-tools, numpy/laspy/matplotlib·scipy 미사용). smrf 병기 = `_mob_prep_las.py`로 GS를 SMRF 재분류(temp `_d6_smrf_tmp`; gssem 캐노니컬 디스크 무변경, deterministic).
 - (c): `d6_roofer_sweep.py`(host→P0 compose roofer). target-only 면수 = `d5_target_facets` 로직(cid==full or startswith(full+'-')). 보조 b×c: `d6_density_match.py`(voxel→LiDAR밀도, v6 bisection 재사용)+`d6_densmatch_roofer.py`.
 - baseline 재사용: D5 §5 면수·LiDAR(`d5_target_facets.csv`·`baselines.json`). EPSG:25832 · Docker · 학습/D5 무중단 · gssem 캐노니컬 디스크 무변경 · 관찰만.

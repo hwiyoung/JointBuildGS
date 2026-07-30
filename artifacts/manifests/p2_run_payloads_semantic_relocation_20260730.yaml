@@ -1,0 +1,40 @@
+schema_version: 1
+artifact_id: jointbuildgs-p2-run-payloads-semantic-relocation-20260730
+role: phase-run-payload-externalization
+created_at: 2026-07-30T00:00:00+09:00
+backend:
+  kind: local-filesystem
+  repository_relative_root: file:../JointBuildGS-artifacts/phase-payloads/p2-gsjso/runs
+  docker_root: file:/artifacts/JointBuildGS/phase-payloads/p2-gsjso/runs
+integrity:
+  primary_method: same-device-atomic-rename
+  filesystem_device: 2065
+  same_device_renames: 571
+  recovered_cross_mount_move: 1
+  recovered_path: e5_c001/20260715_e5_c001_s3ap_phase2_prepare/runner/logs/gs_e5_C001_s3ap_b4907199_a0_r1.log
+  recovered_path_bytes: 669212
+  content_bytes_modified: false
+  destructive_cleanup_authorized: false
+totals:
+  files: 572
+  bytes: 27647848545
+objects:
+  - object_id: boundary-and-robustness-run-payloads
+    former_repository_root: phases/p2-gsjso/runs/boundary_and_robustness
+    uri: file:../JointBuildGS-artifacts/phase-payloads/p2-gsjso/runs/boundary_and_robustness
+    files: 2
+    bytes: 140101
+  - object_id: e5-c001-run-payloads
+    former_repository_root: phases/p2-gsjso/runs/e5_c001
+    uri: file:../JointBuildGS-artifacts/phase-payloads/p2-gsjso/runs/e5_c001
+    files: 43
+    bytes: 46460020
+  - object_id: pilot-1wave-run-payloads
+    former_repository_root: phases/p2-gsjso/runs/pilot_1wave
+    uri: file:../JointBuildGS-artifacts/phase-payloads/p2-gsjso/runs/pilot_1wave
+    files: 527
+    bytes: 27601248424
+retention:
+  policy: preserve-exact-bytes
+  hydration: restore an object below former_repository_root or resolve it through JBGS_ARTIFACT_ROOT
+  note: Git keeps compact receipts and evidence; raw and generated payloads remain external.

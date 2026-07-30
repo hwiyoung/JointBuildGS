@@ -31,7 +31,7 @@ REC 순서: 42364609·42364659·42364663·4907182·4907510·4908050·4908166·49
 ## D3 — 품질이 'GS 점' 탓이냐 'Roofer' 탓이냐
 
 ### (가) Roofer 파라미터 — 전부 default, 위상수리 옵션 없음
-Roofer = **3dgi/roofer 1.0.0**(digest `dd2c415a…`, [docker-compose.p0.yml:29](phases/p0-audit/env/docker-compose.p0.yml#L29)). exp-D 호출은 **plumbing 플래그만**(`--id-attribute building_id --box`), 재구성 알고리즘 파라미터는 **전부 기본값** ([tum_mob_eval.py:138-140](phases/p2-gsjso/scripts/tum_mob_eval.py#L138)).
+Roofer = **3dgi/roofer 1.0.0**(digest `dd2c415a…`, [docker-compose.p0.yml:29](phases/p0-audit/env/docker-compose.p0.yml#L29)). exp-D 호출은 **plumbing 플래그만**(`--id-attribute building_id --box`), 재구성 알고리즘 파라미터는 **전부 기본값** ([tum_mob_eval.py:138-140](scripts/input_and_alignment/p2_gsjso/tum_mob_eval.py#L138)).
 
 | 파라미터 | 제어 | exp-D 값 | 관련 오류 |
 |---|---|---|---|

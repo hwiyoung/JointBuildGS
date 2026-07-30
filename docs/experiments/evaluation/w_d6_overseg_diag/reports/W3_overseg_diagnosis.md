@@ -2,7 +2,7 @@
 
 > 작성 2026-06-23. 관찰만, **판정 금지(사람=김휘영)**. EPSG:25832 · Docker(p0-tools) · CPU·읽기전용(재학습 없음).
 > 입력 = v6 GS/raw 출력의 *orig* classified LAS(building class-6 in footprint = Roofer가 본 바로 그 점).
-> 스크립트 `phases/p2-gsjso/scripts/v6_overseg_diag.py`(정의는 p0c_assembly_diag.plane_rms 재사용) ·
+> 스크립트 `scripts/evidence_and_attributes/p2_gsjso/v6_overseg_diag.py`(정의는 p0c_assembly_diag.plane_rms 재사용) ·
 > 그림 `v6_overseg_fig.py`. 표 `results/tum_transfer/mob/analysis_pack_v6/overseg_diag.csv`.
 
 ## 발단

@@ -10,7 +10,7 @@ be recovered, regardless of the joint-optimisation losses.
 This module generates Gaussian SEEDS for those buildings from SEMANTIC LABELS
 ALONE (no reference geometry, no MVS depth), using the same multi-view semantic
 visual-hull *carve* as the E-R3 recoverability diagnostic
-(``phases/p2-gsjso/scripts/er3_recoverability_diag.py``). The occupancy voxels
+(``scripts/evidence_and_attributes/p2_gsjso/er3_recoverability_diag.py``). The occupancy voxels
 that carve produces ARE the seeds: each occupied voxel becomes one Gaussian seed
 whose centre is the voxel centre, class is the dominant (roof/wall) label, and
 colour is the scene mean. The seeds are concatenated onto the SfM init points

@@ -1,7 +1,7 @@
 # E5 Pilot Block Candidates (A1)
 
 - CRS: EPSG:25832
-- Run fingerprint: `phases/p2-gsjso/runs/e5p_prep_20260706_235306/versions.txt`
+- Run fingerprint: `phases/p2-gsjso/runs/e5_c001/e5p_prep_20260706_235306/versions.txt`
 - Existing GS stage exclusion: 79 buildings (D4 make-or-break + D12 71-stage union)
 - Buildings outside stage: 120
 - Rule-satisfying candidate blocks: 412

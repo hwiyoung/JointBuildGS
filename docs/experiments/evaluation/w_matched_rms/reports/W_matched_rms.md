@@ -203,7 +203,7 @@
 - [4906969_roofpts.png](../../../figs/W_matched_rms/4906969_roofpts.png) — 4906969 D4-dense 지붕분류점 **gssem(red) vs smrf(blue)**, top(xy)+side(xz).
 
 ## 재현 / 출처
-- PART A: `phases/p2-gsjso/scripts/matched_rms.py` (read-only, ref_rms_*.csv → `_matched_rms_partA.md`).
-- PART B: `phases/p2-gsjso/scripts/matched_rms_partB.py` (p0-tools; gssem .las=canonical disk, smrf .las=재생성).
+- PART A: `scripts/input_and_alignment/p2_gsjso/matched_rms.py` (read-only, ref_rms_*.csv → `_matched_rms_partA.md`).
+- PART B: `scripts/input_and_alignment/p2_gsjso/matched_rms_partB.py` (p0-tools; gssem .las=canonical disk, smrf .las=재생성).
 - ⚠ **smrf .las 주의**: requal 백업 tar엔 cityjson+val3dity만 있고 **classified.las는 미포함**(용량 제외). PART B의 smrf 점은 `tum_mob_eval --classifier smrf --evalroot phases/p0-audit/runs/_matched_smrf_tmp --targets 4906969 4906972 4908023`로 **temp 재생성**(SMRF=deterministic → 덮이기 전 원본과 동일). canonical mob_eval(gssem)·D5 무변경.
 - EPSG:25832 · Docker(p0-tools) · 학습/D5 무중단 · 디스크 기하(현 gssem) 무변경 · 관찰만(판정/해석 없음).

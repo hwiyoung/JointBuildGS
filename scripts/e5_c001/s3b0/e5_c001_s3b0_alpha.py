@@ -182,7 +182,7 @@ def worker(args: argparse.Namespace) -> None:
     validate_sources(jobs, status_by_id, phase3_lock, lock)
     phase3 = load_module(
         "s3b0_phase3_reuse",
-        common.REPO / "phases/p2-gsjso/scripts/e5_c001_s3ap_phase3.py",
+        common.REPO / "phases/p2-gsjso/scripts/e5_c001/e5_c001_s3ap_phase3.py",
     )
     sys.path.insert(0, str(common.REPO))
     from gsplat import rasterization_2dgs
@@ -1035,7 +1035,7 @@ def aggregate(args: argparse.Namespace) -> None:
     code_sources = [
         Path(__file__).resolve(),
         common.REPO / "scripts/e5_c001/s3b0/e5_c001_s3b0_common.py",
-        common.REPO / "phases/p2-gsjso/scripts/e5_c001_s3ap_phase3.py",
+        common.REPO / "phases/p2-gsjso/scripts/e5_c001/e5_c001_s3ap_phase3.py",
         common.REPO / "scripts/e5_c001/s3b0/run_e5_c001_s3b0_alpha.sh",
         common.REPO / "tests/experiments/e5_c001_s3b0/test_e5_c001_s3b0_alpha.py",
     ]

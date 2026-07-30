@@ -2,7 +2,7 @@
 
 > 범위: 읽기 전용 감사. 신규 학습 0, 신규 점군화/readout 실행 0, 신규 Roofer 재조립 0, 판정 0.
 > 현재 브랜치/HEAD = `feat/p2-structure-learn` / `2dda6361b9a05125766fd96f0df32e338fd4f62c`.
-> 감사 대상 학습 런 = `phases/p2-gsjso/runs/e5p_train_20260707_C001/`.
+> 감사 대상 학습 런 = `phases/p2-gsjso/runs/e5_c001/e5p_train_20260707_C001/`.
 
 ## 0. 시작 전 확인
 
@@ -10,9 +10,9 @@
 |---|---|
 | 현재 브랜치 | `feat/p2-structure-learn` |
 | 현재 HEAD | `2dda6361b9a05125766fd96f0df32e338fd4f62c` (`e5-c001-gsdiag: diagnose GS input and tidy figures`) |
-| C001 학습 지문 | `phases/p2-gsjso/runs/e5p_train_20260707_C001/train_fingerprints.csv` |
+| C001 학습 지문 | `phases/p2-gsjso/runs/e5_c001/e5p_train_20260707_C001/train_fingerprints.csv` |
 | C001 학습 준비 commit | `526d09b301e238ec43c155b01267c323f91f4c83` (`e5p-prep-report: collect A-stage materials`) |
-| C001 versions | `phases/p2-gsjso/runs/e5p_train_20260707_C001/versions.txt` |
+| C001 versions | `phases/p2-gsjso/runs/e5_c001/e5p_train_20260707_C001/versions.txt` |
 | 공식 2DGS upstream | `hbb1/2d-gaussian-splatting`, 조회 HEAD `335ad612f2e783a4e57b9cbc4d1e167bd599fc98` |
 | 요청 문헌검증 문서 | `docs/W_문헌검증_GS기하_foundation·가중·평가_20260707.md`는 현 checkout에서 미발견 |
 
@@ -142,7 +142,7 @@ D4/C001 readout은 `readout_fingerprints.csv` 기준으로 6런 모두 동일하
 ## 8. 근거
 
 - 사전등록서 §3.1: `사전등록서_본비교실험E5·기준레시피_v1_20260706.md`.
-- C001 학습 지문: `phases/p2-gsjso/runs/e5p_train_20260707_C001/train_fingerprints.csv`, `readout_fingerprints.csv`, `versions.txt`.
+- C001 학습 지문: `phases/p2-gsjso/runs/e5_c001/e5p_train_20260707_C001/train_fingerprints.csv`, `readout_fingerprints.csv`, `versions.txt`.
 - D4 config: `configs/tum_mob/gs_d4_{sparse,dense,acmp}.yaml`; C001 config: `configs/tum_mob/e5_pilot/gs_e5_C001_*.yaml`.
 - 손실 코드: `src/stage2/train.py`, `src/stage2/loss/data_fitting.py`, `src/stage2/loss/structure.py`, `src/stage2/renderer.py`.
 - D4 이전 감사: `docs/experiments/joint-optimization/w_d_loss_audit/reports/W_D_loss_audit.md`, `docs/experiments/joint-optimization/w_d4/reports/W_D4_precheck.md`, `docs/experiments/joint-optimization/w_d4/reports/W_D4.md`, `docs/recipe_registry.md`.

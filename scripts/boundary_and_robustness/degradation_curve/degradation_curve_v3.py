@@ -40,7 +40,7 @@ from shapely.ops import unary_union
 
 REPO = Path(__file__).resolve().parents[3]
 DOCS = REPO / "docs"
-RUN_DIR = REPO / "phases/p2-gsjso/runs/20260721_degradation_curve"
+RUN_DIR = REPO / "phases/p2-gsjso/runs/boundary_and_robustness/20260721_degradation_curve"
 RUNTIME = RUN_DIR / "runtime"
 INPUT_DIR = RUNTIME / "input"
 ROOFER_DIR = RUNTIME / "roofer"
@@ -85,9 +85,9 @@ CANONICAL_ALS_CITYJSON = CANONICAL_RUN / "cityjson/als_roofer.city.json"
 CANONICAL_ALS_JSONL_DIR = CANONICAL_RUN / "roofer_als"
 CANONICAL_STATUS = CANONICAL_RUN / "building_reconstruction_status.csv"
 
-SCORER_SCRIPT = REPO / "phases/p2-gsjso/scripts/e5_c001_8way.py"
+SCORER_SCRIPT = REPO / "scripts/e5_c001/p2_gsjso/e5_c001_8way.py"
 BASELINE_SCORER_SCRIPT = (
-    REPO / "phases/p2-gsjso/scripts/qs_baseline178_rescore.py"
+    REPO / "scripts/quality_score/p2_gsjso/qs_baseline178_rescore.py"
 )
 W2_SCRIPT = REPO / "phases/p0-audit/scripts/08_roofer_w2.py"
 QA_SCRIPT = REPO / "scripts/boundary_and_robustness/degradation_curve/degradation_curve_v3_qa.py"
@@ -2762,7 +2762,7 @@ def summary_markdown(
             f"| 파일럿10 | 완전율 중앙 | 0.9999 | {zero['pilot10']['roof_completeness_median']:.9f} | true |",
             f"| 178동×전 지표 | 불일치 셀 | 0 | {zero['all_metric_mismatch_count']} | true |",
             "",
-            "0단은 수락된 정본 CityJSON과 확정 채점행을 재사용했다. 같은 잠금 명령의 별도 진단 재실행 수치는 `phases/p2-gsjso/runs/20260721_degradation_curve/zero_rerun_diagnostic.json`에 기록했다.",
+            "0단은 수락된 정본 CityJSON과 확정 채점행을 재사용했다. 같은 잠금 명령의 별도 진단 재실행 수치는 `phases/p2-gsjso/runs/boundary_and_robustness/20260721_degradation_curve/zero_rerun_diagnostic.json`에 기록했다.",
             "",
             "## dense 대조 마커",
             "",

@@ -34,7 +34,7 @@ from mast3r.model import AsymmetricMASt3R  # noqa: E402
 
 
 REPO = Path(__file__).resolve().parents[3]
-RUN_DIR = REPO / "phases/p2-gsjso/runs/20260716_boundary_map"
+RUN_DIR = REPO / "phases/p2-gsjso/runs/boundary_and_robustness/20260716_boundary_map"
 JOBS_JSON = RUN_DIR / "mast3r_jobs.json"
 RESULT_CSV = RUN_DIR / "mast3r_correspondence.csv"
 PROGRESS_JSON = RUN_DIR / "mast3r_progress.json"

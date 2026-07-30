@@ -25,7 +25,7 @@
 
 ## 2. 파이프라인이 이미 규명·사용 중 (권위 출처)
 
-- `phases/p2-gsjso/scripts/seed_depth_bands.py`: `--geoid default=48.0 ("Munich ~48")`; datum 판정(ground≈514 ortho vs +48 ellip);
+- `scripts/input_and_alignment/p2_gsjso/seed_depth_bands.py`: `--geoid default=48.0 ("Munich ~48")`; datum 판정(ground≈514 ortho vs +48 ellip);
   **orthometric → `H_ortho + geoid(48) − 604 = H_ortho − 556`**.
 - `seed_bands_meta.json`: `{"datum":"ortho","geoid":48.0,"shift_z":604.0}`.
 - 다수 GS run `versions.txt`: `datum: …−604; acmp seed **−556 (geoid)**`; `labels: clean_labels_geoidfix (geoid-corrected, shift_z=556)`.
@@ -52,4 +52,4 @@
 3. **재검증 필요**: fix 적용 후 projection-gate(전각도 ~0 확인)·evidence-cards-v2·lowtex_v4·population_aux_v3 재실행.
 4. **여기서 실험 중지**(김휘영 지시). 다음 = fix 적용·재실행 범위 = 김휘영 결정.
 
-> 재현: `docker run … jointbuildgs-p0-tools:t0 python3 phases/p2-gsjso/scripts/zmultiview.py 4906972` 등. 진단만·재구성 없음.
+> 재현: `docker run … jointbuildgs-p0-tools:t0 python3 scripts/input_and_alignment/p2_gsjso/zmultiview.py 4906972` 등. 진단만·재구성 없음.

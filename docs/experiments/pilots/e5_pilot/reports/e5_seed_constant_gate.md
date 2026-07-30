@@ -3,7 +3,7 @@
 - CRS: EPSG:25832
 - Branch: `feat/p2-structure-learn`
 - HEAD before A2 commit: `8237380b479279a79098dd1d7b1c41b2f76d6f4c`
-- Phase run: `phases/p2-gsjso/runs/e5p_const_20260706_235710/versions.txt`
+- Phase run: `phases/p2-gsjso/runs/e5_c001/e5p_const_20260706_235710/versions.txt`
 - Scope: new execution-path files from `docs/recipe_registry.md` §5. Historical run outputs are not scanned.
 
 ## Transition Diff Table

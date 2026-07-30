@@ -66,5 +66,5 @@
 - UAV near-nadir: [4906969](figs/W_faithful/4906969_uav.png)(반원 데크+중앙 HVAC 단=실 다층) · [42364659](figs/W_faithful/42364659_uav.png). ALS 3-step 재사용 [4906969 y-slice](figs/W_D6_shape/4906969_yslice.png).
 
 ## §6 재현 / 출처
-- `docker … jointbuildgs-p0-tools:t0 python3 phases/p2-gsjso/scripts/overseg_faithfulness.py`(면받침+레벨+그림) · `overseg_uav_crop.py`(OPF near-nadir crop, OPF-local=UTM−[690953,5336071,604]). D5 z-span = `gs_d5{a,b,c}_dense` roofer 재사용. cp 코드 = `src/stage2/loss/structure.py`·`grouping.py`(g2 voxel2m·merge_d_tol0.5·merge_n_cos0.92)·configs `gs_d4/d5*`. 면받침 dz = supported 최대화(GS<ALS). CSV `overseg_lever/faithfulness{,_faces_*}.csv`(gitignore).
+- `docker … jointbuildgs-p0-tools:t0 python3 scripts/evidence_and_attributes/p2_gsjso/overseg_faithfulness.py`(면받침+레벨+그림) · `overseg_uav_crop.py`(OPF near-nadir crop, OPF-local=UTM−[690953,5336071,604]). D5 z-span = `gs_d5{a,b,c}_dense` roofer 재사용. cp 코드 = `src/stage2/loss/structure.py`·`grouping.py`(g2 voxel2m·merge_d_tol0.5·merge_n_cos0.92)·configs `gs_d4/d5*`. 면받침 dz = supported 최대화(GS<ALS). CSV `overseg_lever/faithfulness{,_faces_*}.csv`(gitignore).
 - EPSG:25832 · Docker · **재학습/재구성 없음** · 정량+정성 · 관찰만. G1_package 사본 포함.

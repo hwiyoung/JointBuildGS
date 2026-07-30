@@ -67,8 +67,8 @@ from src.stage2.pilot_scene_prep import (  # noqa: E402
 
 
 RUN_ID = "20260721_pilot_1wave"
-LOCK = REPO / "phases/p2-gsjso/configs/pilot_1wave_mask_producer_lock.json"
-REFERENCE_LOCK = REPO / "phases/p2-gsjso/configs/pilot_1wave_reference_lock.json"
+LOCK = REPO / "phases/p2-gsjso/configs/pilot_1wave/pilot_1wave_mask_producer_lock.json"
+REFERENCE_LOCK = REPO / "phases/p2-gsjso/configs/pilot_1wave/pilot_1wave_reference_lock.json"
 DEFAULT_PREP = REPO / "phases/p2-gsjso/runs" / RUN_ID / "prep_artifacts"
 DEFAULT_DATA = DEFAULT_PREP / "data"
 DEFAULT_PHOTO_MASK = DEFAULT_PREP / "photo_support_masks/mask_manifest.json"

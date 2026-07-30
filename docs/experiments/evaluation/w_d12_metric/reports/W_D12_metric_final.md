@@ -31,4 +31,4 @@
 
 정식화 메트릭(공통 dz·게이트 slope·매칭률 수평)으로도 **D12 핵심 불변**: ① 무텍스처가 **상대 결함 더 적고**(0.55<1.48), 절대로는 동급(둘 다 전역 오프셋) → **결함≠관측가능성**(반증 유지); ② B1 약함(d_height −0.01·d_support +0.046)=**죽임 재확인**; ③ 결함이 **전역 오프셋(슬랩)** vs **상대 구조**로 분리됨 = 다음 감독을 가르는 단서(전역 오프셋→깊이 스케일·절대정합, 상대 구조→법선·면). 수평축은 매칭률 0.49로 부분 측정. 커밋 `d12-metric-final`.
 
-> 재현: `python3 phases/p2-gsjso/scripts/d12_metric_final.py --targets-file results/tum_transfer/mob/d12_targets_79.txt`(p0-tools). 데이터 재사용·재학습 없음.
+> 재현: `python3 scripts/evidence_and_attributes/p2_gsjso/d12_metric_final.py --targets-file results/tum_transfer/mob/d12_targets_79.txt`(p0-tools). 데이터 재사용·재학습 없음.

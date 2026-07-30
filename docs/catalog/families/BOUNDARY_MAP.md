@@ -54,11 +54,11 @@ Git에서도 각 공개 bundle은 순서대로 `52c84f7`, `5c1331b`, `17ab65d`/`
 
 | 버전 | 공개 결과 | 주요 실행 영수증 |
 |---|---|---|
-| v1 | `docs/archive/boundary_map/v1/` + v1 manifest | `phases/p2-gsjso/runs/20260716_boundary_map/` |
-| v2 | `docs/archive/boundary_map/v2/` + supporting v2 files | `phases/p2-gsjso/runs/20260718_boundary_map_v2/` |
-| v3 | `docs/archive/boundary_map/v3/` + supporting v3 files | `phases/p2-gsjso/runs/20260719_boundary_map_v3/` |
-| v4 | current report/manifest/tables + `docs/archive/boundary_map/v4/` | `phases/p2-gsjso/runs/20260720_anchor_census/` |
-| v4.1 | current ladder + supplement bundle | `phases/p2-gsjso/runs/20260720_anchor_census_supplement/` |
+| v1 | `docs/archive/boundary_map/v1/` + v1 manifest | `phases/p2-gsjso/runs/boundary_and_robustness/20260716_boundary_map/` |
+| v2 | `docs/archive/boundary_map/v2/` + supporting v2 files | `phases/p2-gsjso/runs/boundary_and_robustness/20260718_boundary_map_v2/` |
+| v3 | `docs/archive/boundary_map/v3/` + supporting v3 files | `phases/p2-gsjso/runs/boundary_and_robustness/20260719_boundary_map_v3/` |
+| v4 | current report/manifest/tables + `docs/archive/boundary_map/v4/` | `phases/p2-gsjso/runs/boundary_and_robustness/20260720_anchor_census/` |
+| v4.1 | current ladder + supplement bundle | `phases/p2-gsjso/runs/boundary_and_robustness/20260720_anchor_census_supplement/` |
 
 실행 디렉터리는 provenance 영수증과 세부 측정의 소유자다. 연구 문서의 정본 여부는 실행 디렉터리의 위치가 아니라 위 역할 지도와 manifest 연결로 판단한다.
 

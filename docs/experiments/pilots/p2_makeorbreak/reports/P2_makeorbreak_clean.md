@@ -31,7 +31,7 @@ L_sem/L_mutual/L_structure 과거 실험 전수조사: **[docs/experiments/p2_mo
 
 reference LoD2/3 의미면(`690_5334.gml`·`690_5336.gml`, 945동, 48,622 삼각형)을 **Open3D RaycastingScene**으로
 937 영상 포즈(COLMAP w2c)에 raycast → `semantic/<stem>.png`(uint8 0..3, Roof=1/Wall=2/Ground=3). **의미 클래스만**(기하 미반입).
-생성: [phases/p2-gsjso/scripts/make_clean_labels.py](../../../../phases/p2-gsjso/scripts/make_clean_labels.py).
+생성: [scripts/evidence_and_attributes/p2_gsjso/make_clean_labels.py](../../../../scripts/evidence_and_attributes/p2_gsjso/make_clean_labels.py).
 
 | QA 지표 | 값 |
 |---|---|
@@ -55,7 +55,7 @@ base = `tum_vanilla_proper.yaml`(downscale1·30k·densify/prune·`w_nc=0.05`) �
 - **`structure_voxel_size=2.0`(metric):** G1 grouping 기본 0.05는 unit-scale → 500 m 장면에서 grouping 무력화되므로 metric 값으로.
 - **무회귀:** 5구성 30k 학습 안정, PSNR **19.9~20.6** (vanilla 20.34 = 검증된 run_proper 재현, N 1.02~1.19M).
 
-학습 실행: [phases/p2-gsjso/scripts/run_mob_all.sh](../../../../phases/p2-gsjso/scripts/run_mob_all.sh) (train→extract→eval 분리 파이프라인).
+학습 실행: [scripts/input_and_alignment/p2_gsjso/run_mob_all.sh](../../../../scripts/input_and_alignment/p2_gsjso/run_mob_all.sh) (train→extract→eval 분리 파이프라인).
 
 ---
 
@@ -162,15 +162,15 @@ footprint xy 내 SfM 초기점 / TSDF 표면점 (z-불변): [seeding_diag](../..
 
 ```
 # 라벨(관문)
-docker compose run --rm -T --user $(id -u):$(id -g) dev python phases/p2-gsjso/scripts/make_clean_labels.py \
+docker compose run --rm -T --user $(id -u):$(id -g) dev python scripts/evidence_and_attributes/p2_gsjso/make_clean_labels.py \
   --gml phases/p0-audit/data/raw/lod2/690_5334.gml phases/p0-audit/data/raw/lod2/690_5336.gml \
   --data-root results/tum_transfer/data --out results/tum_transfer/data/semantic --qa results/tum_transfer/clean_labels_qa
 # 학습→추출→평가 (분리 파이프라인)
-bash phases/p2-gsjso/scripts/run_mob_all.sh
+bash scripts/input_and_alignment/p2_gsjso/run_mob_all.sh
 # 분석
-docker compose run --rm -T dev python phases/p2-gsjso/scripts/tum_mob_seeding_diag.py
-docker run … jointbuildgs-p0-tools:t0 python3 phases/p2-gsjso/scripts/tum_mob_ref_rms.py
-docker run … jointbuildgs-p0-tools:t0 python3 phases/p2-gsjso/scripts/tum_mob_baselines.py …
+docker compose run --rm -T dev python scripts/input_and_alignment/p2_gsjso/tum_mob_seeding_diag.py
+docker run … jointbuildgs-p0-tools:t0 python3 scripts/input_and_alignment/p2_gsjso/tum_mob_ref_rms.py
+docker run … jointbuildgs-p0-tools:t0 python3 scripts/input_and_alignment/p2_gsjso/tum_mob_baselines.py …
 ```
 산출(gitignore 스크래치): `results/tum_transfer/mob/{train_*,tsdf_*,eval_results.*}`, `results/tum_transfer/mob_analysis/*`,
 `phases/p0-audit/runs/mob_eval/*`. 커밋: 본 문서 + `configs/tum_mob/*`·`configs/input_and_alignment/tum_gravity.json` + `phases/p2-gsjso/scripts/{make_clean_labels,run_mob_all,tum_mob_*,_mob_*}.py`

@@ -2709,7 +2709,7 @@ def main():
     if w_depth > 0 and not any(f.depth_path is not None for f in ds.frames):
         raise RuntimeError(
             "w_depth>0 but NO depth maps resolved under data_root/stereo|depth — L_depth would be "
-            "a silent no-op. Generate+stage maps (phases/p2-gsjso/scripts/prior_full_stereo.sh) or set w_depth=0.")
+            "a silent no-op. Generate+stage maps (scripts/input_and_alignment/p2_gsjso/prior_full_stereo.sh) or set w_depth=0.")
     if w_normal > 0 and not any(f.normal_path is not None for f in ds.frames):
         raise RuntimeError(
             "w_normal>0 but NO normal maps resolved under data_root/stereo|normal — L_normal would be "

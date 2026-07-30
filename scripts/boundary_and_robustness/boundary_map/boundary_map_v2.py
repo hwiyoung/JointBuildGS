@@ -36,8 +36,8 @@ from matplotlib.patches import Patch  # noqa: E402
 
 REPO = Path(__file__).resolve().parents[3]
 DOCS = REPO / "docs"
-RUN_DIR = REPO / "phases/p2-gsjso/runs/20260718_boundary_map_v2"
-OLD_RUN_DIR = REPO / "phases/p2-gsjso/runs/20260716_boundary_map"
+RUN_DIR = REPO / "phases/p2-gsjso/runs/boundary_and_robustness/20260718_boundary_map_v2"
+OLD_RUN_DIR = REPO / "phases/p2-gsjso/runs/boundary_and_robustness/20260716_boundary_map"
 P2_SHARED_SCRIPT_DIR = REPO / "phases/p2-gsjso/scripts"
 
 METRICS = DOCS / "archive/boundary_map/v2/tables/boundary_map_v2_metrics.csv"

@@ -1,0 +1,70 @@
+{
+  "schema": "jointbuildgs.s3ap.phase0.baselines.lock.v1",
+  "task_date": "2026-07-15",
+  "crs": "EPSG:25832",
+  "learning_runs_allowed": 0,
+  "new_mast3r_inference_allowed": false,
+  "targets": ["4907199", "8568391", "8568392"],
+  "fm_input": {
+    "threshold_label": "2px_cached_dlt",
+    "mode": "cached_dlt_pairs",
+    "selected_points_manifest": null,
+    "pair_dir": "phases/p2-gsjso/runs/e5_c001/20260714_e5_c001_s3ap_fm_retriangulation/pairs",
+    "pair_glob": "{short}_rank*.npz",
+    "points_key": "world_local_xyz",
+    "metadata_key": "metadata_json",
+    "summary_pair_rule": "cross-acquisition-minute-block AND known COLMAP baseline >0.06m",
+    "selected_manifest_contract": {
+      "schema": "jointbuildgs.s3ap.fm_selected_points.v1",
+      "building_entry": "buildings.<short>.points_path, optional points_key(default world_local_xyz), coordinates(gs_local or epsg25832)",
+      "note": "Use --selected-points-manifest to replace the 2px cache without changing fitting, fill, or scoring code. Footprint containment is always recomputed."
+    }
+  },
+  "plane_fit": {
+    "method": "deterministic numpy RANSAC z=ax+by+c for ax/by, then absolute-height recenter c=median(z_all_inside)-median(ax*x_all+by*y_all)",
+    "random_seed": 20260715,
+    "residual_threshold_m": 0.3,
+    "max_trials": 1000,
+    "min_samples": 3
+  },
+  "fill": {
+    "grid_m": 0.5,
+    "cell_rule": "every globally aligned 0.5m cell intersecting the supplied footprint receives one representative interior point on the fitted plane",
+    "footprint_role": "explicit P0 plane extension and score/coverage spatial mask only"
+  },
+  "roofer_readout": {
+    "status": "point_evidence_derived_roofprint_pending",
+    "original_adapter_status": "blocked_input_contract",
+    "original_adapter_reason": "validated repository adapters pass the supplied external footprint/roofprint directly to Roofer; final Stage-3 forbids that reconstruction input",
+    "forbidden_adapter": "scripts/input_and_alignment/p2_gsjso/p0c_run_roofer.sh",
+    "design_reference": "docs/RESEARCH_CONTEXT.md",
+    "adapter": {
+      "name": "point_evidence_derived_roofprint",
+      "grid_m": 0.5,
+      "polygon_rule": "union of globally aligned 0.5m occupied cells reconstructed from P0 fill points; no clip/intersection with supplied footprint after point generation",
+      "indirect_dependency": "P0 fill points were generated inside the supplied footprint; the supplied footprint itself is never passed to Roofer",
+      "ground_source_csv": "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_fm_retri_rescore.csv",
+      "ground_source_rule": "building_summary ground_z_local_m from clean exterior SfM+dense-init observations; no LoD2 or ALS elevation",
+      "roof_class": 6,
+      "ground_class": 2
+    },
+    "substantive_filter": {
+      "definition": "roofer_status=success AND raw LoD2.2 geometry exists AND val3dity_valid AND rf_extrusion_mode not forbidden AND rf_roof_planes>0 AND citygml_roof_rms_m<=3.0 AND citygml_completeness>=0.5",
+      "roofer_status_success": true,
+      "forbid_extrusion_modes": ["lod11_fallback"],
+      "require_roof_planes": true,
+      "has_lod22": true,
+      "val3dity_valid": true,
+      "citygml_roof_rms_max_m": 3.0,
+      "citygml_completeness_min": 0.5
+    }
+  },
+  "mvs": {
+    "source_template": "phases/p0-audit/runs/mob_eval/raw_dense/DEBY_LOD2_{short}_orig_classified.las",
+    "building_class": 6,
+    "coverage_grid_m": 0.5,
+    "canonical_status": "phases/p0-audit/runs/w2_1_roofer_default_20260612_152729/building_reconstruction_status.csv",
+    "canonical_input_label": "DIM",
+    "no_points_rule": "report separately: direct class-6 count==0 and canonical Roofer reason==pointcloud_unusable_no_points"
+  }
+}

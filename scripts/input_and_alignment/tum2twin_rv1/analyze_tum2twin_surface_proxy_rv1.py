@@ -928,7 +928,7 @@ def main(argv: list[str] | None = None) -> int:
     sources = [
         run_root / "run_state.json", run_root / "run_metadata.json",
         run_root / "building_metrics.csv", run_root / "classification_summary.md",
-        REPO / "configs/input_and_alignment/tum2twin_rv1_20260728_2327.yaml", REPO / "src/rv1_pipeline.py",
+        REPO / "configs/input_and_alignment/tum2twin_rv1_20260728_2327.yaml", REPO / "src/pipelines/rv1.py",
         manual_qa,
     ]
     outputs = [

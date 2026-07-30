@@ -48,7 +48,7 @@ DEFAULT_04A = DEFAULT_PREP / "plane_masks_04a/mask_manifest.json"
 DEFAULT_04B = DEFAULT_PREP / "plane_masks_04b/mask_manifest.json"
 DEFAULT_REFERENCE = DEFAULT_PREP / "photo_support_masks/mask_manifest.json"
 DEFAULT_OUTPUT = DEFAULT_PREP / "plane_masks_04a_vs_04b_qa"
-PRODUCER_LOCK = REPO / "phases/p2-gsjso/configs/pilot_1wave_mask_producer_lock.json"
+PRODUCER_LOCK = REPO / "phases/p2-gsjso/configs/pilot_1wave/pilot_1wave_mask_producer_lock.json"
 EXPECTED_04A_PRODUCER_SCHEMA = (
     "jointbuildgs.pilot_1wave.04a_mask_producer_manifest.v1"
 )

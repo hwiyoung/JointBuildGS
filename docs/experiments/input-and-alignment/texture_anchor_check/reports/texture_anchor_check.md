@@ -2,7 +2,7 @@
 
 > **박사연구 GS-JSO · 모집단 잠금 보조 v4 [1].** 브랜치 `feat/p2-structure-learn`. EPSG:25832(지오)/32632(OPF).
 > Docker(`--user`, dev=cv2). **신규 계산 있음·재구성 없음.** 관찰만, **τ 결정·라벨=김휘영**. 커밋 `population-lock-aux-v4`.
-> 재현 `phases/p2-gsjso/scripts/texture_anchor_check.py`(앵커)·`add_lowtex_v4.py`(199 컬럼). 그림 `docs/figs/texture_anchor_check/`.
+> 재현 `scripts/evidence_and_attributes/p2_gsjso/texture_anchor_check.py`(앵커)·`add_lowtex_v4.py`(199 컬럼). 그림 `docs/figs/texture_anchor_check/`.
 > CSV `overseg_lever/texture_anchor_check.csv` · `docs/population_aux_v3.csv`(+`roof_lowtex_v4`).
 
 ## 0. 왜 — 정답 아는 건물로 자(척도)부터 검증

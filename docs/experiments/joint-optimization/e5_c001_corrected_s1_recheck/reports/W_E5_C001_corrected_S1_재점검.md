@@ -124,8 +124,8 @@
 | acmp | 1 | 66.8 | 2001 | 0.0 | 2db00671dace8c842b48fe884baaef82273e62ff7836166806a3f50936a65201 |
 
 - config diff: `docs/e5_c001_corrected_s1_recheck_config_diff.csv`.
-- train fingerprints: `phases/p2-gsjso/runs/20260709_e5_c001_corrected_s1_recheck/train_fingerprints.csv`.
-- readout fingerprints: `phases/p2-gsjso/runs/20260709_e5_c001_corrected_s1_recheck/readout_fingerprints.csv`.
-- versions: `phases/p2-gsjso/runs/20260709_e5_c001_corrected_s1_recheck/versions.txt`.
-- snapshots: `phases/p2-gsjso/runs/20260709_e5_c001_corrected_s1_recheck/snapshots`.
+- train fingerprints: `phases/p2-gsjso/runs/e5_c001/20260709_e5_c001_corrected_s1_recheck/train_fingerprints.csv`.
+- readout fingerprints: `phases/p2-gsjso/runs/e5_c001/20260709_e5_c001_corrected_s1_recheck/readout_fingerprints.csv`.
+- versions: `phases/p2-gsjso/runs/e5_c001/20260709_e5_c001_corrected_s1_recheck/versions.txt`.
+- snapshots: `phases/p2-gsjso/runs/e5_c001/20260709_e5_c001_corrected_s1_recheck/snapshots`.
 - 재확인: 학습 0 원칙(예외=Step 0 폴백뿐), 정본 미변경, 판정 0.

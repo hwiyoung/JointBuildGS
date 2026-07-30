@@ -32,11 +32,11 @@
 
 | 레시피 | 성분 문자열 | 손실 항·가중·설정 | 코드 위치 | 도입 근거 | 사용 런·versions 증거 | 상태 |
 |---|---|---|---|---|---|---|
-| raw DIM/ACMP/LiDAR | `RAW(dim/acmp/lidar; no-GS; smrf; ellip-unified)` | GS 학습 없음. raw arm은 ELLIPSOIDAL UTM로 통일. 과거 acmp/lidar는 `+48 geoid` 이력, E5 신규 실행은 `+45.7`. | `phases/p2-gsjso/scripts/tum_mob_raw_to_npz.py`, `tum_mob_eval.py`, `tum_mob_ref_rms.py` | v6 8-way 및 LiDAR/ref 대조 | `results/tum_transfer/mob/raw/versions.txt`, `analysis_pack_v6/versions.txt` | 활성 대조 |
+| raw DIM/ACMP/LiDAR | `RAW(dim/acmp/lidar; no-GS; smrf; ellip-unified)` | GS 학습 없음. raw arm은 ELLIPSOIDAL UTM로 통일. 과거 acmp/lidar는 `+48 geoid` 이력, E5 신규 실행은 `+45.7`. | `scripts/input_and_alignment/p2_gsjso/tum_mob_raw_to_npz.py`, `tum_mob_eval.py`, `tum_mob_ref_rms.py` | v6 8-way 및 LiDAR/ref 대조 | `results/tum_transfer/mob/raw/versions.txt`, `analysis_pack_v6/versions.txt` | 활성 대조 |
 | v6 seed sparse | `GS(v6-seed-sparse; pho1·sem0.1·nc0.05·str0.1[g1-default;na1;cp1]; dep/nrm-off; smrf)` | `w_depth=0`, `w_normal=0`, `w_nc=0.05`, `w_sem=0.1`, `sem_detach_geometry=false`, `w_structure=0.1`, config에 `structure_grouping` 없음 - code default `g1`. | `configs/input_and_alignment/tum_mob/gs_seed_sparse.yaml`; `src/stage2/train.py:main`; `src/stage2/loss/structure.py:l_structure` | P2 make-or-break v6, sparse arm | `results/tum_transfer/mob/gs_seed_sparse/versions.txt` | 활성 기록 대조 |
 | v6 seed dense/acmp | `GS(v6-seed-{dense,acmp}; seed=dim/acmp; pho1·sem0.1·nc0.05·str0.1[g1-default;na1;cp1]; dep/nrm-off; smrf)` | sparse와 같고 `init_pointcloud=seed_dense.ply` 또는 `seed_acmp.ply`. dense seed는 `-604`, acmp seed는 `-556` 이력. | `configs/input_and_alignment/tum_mob/gs_seed_dense.yaml`, `gs_seed_acmp.yaml`; `tum_mob_seed_prep.sh`; `seed_prep_dense.json`, `seed_prep_acmp.json` | v6 8-way의 GS seed arm | `results/tum_transfer/mob/gs_seed_{dense,acmp}/versions.txt`, `docs/experiments/evaluation/w_generation_8way/reports/W_generation_8way.md` | 활성 기록 대조 |
 | C seed-protect | `GS(C-protect; v6-seed-{dense,acmp}+seed_protect; pho1·sem0.1·nc0.05·str0.1[g1-default;na1;cp1]; dep/nrm-off; smrf)` | v6 dense/acmp와 byte-동일 계열에 `seed_protect=true`만 추가. densification은 v6 dense 유지. | `configs/tum_mob/gs_seed_{dense,acmp}_protect.yaml`; seed 보호 엔진은 `src/stage2/train.py:main`의 `seed_protect` 경로 | v6 prune confound 제거 | `results/tum_transfer/mob/gs_seed_{dense,acmp}_protect/versions.txt`, `docs/W_opacity_diag.md` | 활성 기록 대조 |
-| C2 opacity 진단 | `C2(C-protect ckpt; alpha-gate bypass; no-train)` | 새 학습 레시피가 아니라 C ckpt의 Gaussian 위치를 opacity 무시로 추출. | `phases/p2-gsjso/scripts/c2_dump_means.py`; `tum_mob_eval.py`; `tum_mob_ref_rms.py` | in-scope 0점 원인이 opacity인지 확인 | `docs/W_opacity_diag.md` | 진단 전용, 레시피 라벨 폐기 권장 |
+| C2 opacity 진단 | `C2(C-protect ckpt; alpha-gate bypass; no-train)` | 새 학습 레시피가 아니라 C ckpt의 Gaussian 위치를 opacity 무시로 추출. | `scripts/evidence_and_attributes/p2_gsjso/c2_dump_means.py`; `tum_mob_eval.py`; `tum_mob_ref_rms.py` | in-scope 0점 원인이 opacity인지 확인 | `docs/W_opacity_diag.md` | 진단 전용, 레시피 라벨 폐기 권장 |
 | depth_release_range | `GS(depth-release-range; seed_sem_band=ground-1..ground+30; pho1·sem0.1·nc0.05; sem_detach=false; dep/nrm-off; str-off)` | `seed_semantic=true`, `w_structure=0`, `w_mutual=0`, `w_depth=0`, `w_normal=0`, `seed_cfg.bands_file=seed_bands_range.json`. | `configs/input_and_alignment/tum_mob/depth_release_range.yaml`; `src/stage2/semantic_seed.py:build_semantic_seeds`; `src/stage2/renderer.py:render_semantic` | P2 impl 2 "깊이 연결" honest-range | `results/tum_transfer/mob/depth_release_range/versions.txt` | 과거 실험 arm |
 | depth_release_oracle | `GS(depth-release-oracle; seed_sem_band=roof-1..roof+1; pho1·sem0.1·nc0.05; sem_detach=false; dep/nrm-off; str-off)` | range와 같고 band만 oracle ceiling. | `configs/input_and_alignment/tum_mob/depth_release_oracle.yaml`; `src/stage2/semantic_seed.py:build_semantic_seeds` | P2 impl 2의 ceiling 대조 | `results/tum_transfer/mob/depth_release_oracle/versions.txt` | 과거 실험 arm |
 | D prior_full | `GS(D; seed-protect; pho1·sem0.1·nc0.05·dep0.1·nrm0.15·str0.08[g2;na1;cp1]; gssem)` | `w_depth=0.1`, `w_normal=0.15`, depth/normal warmup+ramp, `structure_grouping=g2`, `w_structure=0.08`, read-out는 `gssem`. | `configs/tum_mob/gs_prior_full_{dense,acmp}.yaml`; `src/stage2/train.py:main`; `src/stage2/loss/data_fitting.py:l_depth/l_normal/l_sem/l_nc`; `src/stage2/loss/structure.py:l_structure` | 3 레버 ON: depth/normal + G2 + GS-의미 read-out | `results/tum_transfer/mob/gs_prior_full_{dense,acmp}/versions.txt`, `docs/experiments/joint-optimization/w_d_prior_full/reports/W_D_prior_full.md` | 비교기준, D4 이전 |
@@ -95,7 +95,7 @@
 | D12/B1 판정 문구 | `SESSION_HANDOFF.md`와 `W_observability_test.md`에 B1에 대한 강한 판정 표현 존재 | 본 작업 지시는 판정 금지 | 이 대장은 B1의 성분, ckpt, 사용 숫자 출처만 기록한다. |
 | 숫자 출처 혼재 | `W_report_evidence.md`가 generation 8-way, accuracy, overseg/formal metric의 GS 설정이 서로 다르다고 경고 | 디스크상 v6 seed, D4 dense, raw arms, D12 eval이 각각 다른 versions/config를 가짐 | "어느 숫자냐" 질문에는 반드시 레시피와 read-out을 같이 답해야 한다. |
 | geoid 값 전환 | A0/A1/A2는 48.0 또는 LS 48.125535를 사용한 흔적 | A3a/A3b와 현재 `configs/input_and_alignment/projection_datum.json` 기본은 45.700 | projection 숫자와 population aux 숫자는 run 날짜별 geoid flag가 필요하다. |
-| datum_tie_overlay config context | `phases/p2-gsjso/runs/20260703_datum_tie_overlay/versions.txt`는 config context 48.125535를 남김 | overlay script는 좌/우 명시값 `45.7`/`48.126`을 렌더 | context와 패널별 explicit zeta를 구분해야 한다. |
+| datum_tie_overlay config context | `phases/p2-gsjso/runs/input_and_alignment/20260703_datum_tie_overlay/versions.txt`는 config context 48.125535를 남김 | overlay script는 좌/우 명시값 `45.7`/`48.126`을 렌더 | context와 패널별 explicit zeta를 구분해야 한다. |
 | numeric grep false positive | `45.7`, `48.0`, `604`가 CSV/OBJ/좌표값에도 다수 출현 | datum 선언은 config, versions, script constant, comments를 기준으로 분류해야 함 | `docs/population_aux_v4.csv` 같은 표의 숫자값은 geoid 사용처로 세지 않는다. |
 
 ## 4. "사실상 정본 = D4" 가설 검증
@@ -144,7 +144,7 @@
 | 파일/런 | 값·상수 | 경로 구분 | 메모 |
 |---|---|---|---|
 | `configs/input_and_alignment/projection_datum.json` | `orthometric_geoid_m=45.7`; `zeta_hat_m=48.125535` 기록 | image-projection config | 현재 기본은 공식 45.700. 3D seed/training 경로는 이 파일 밖이라고 note가 명시. |
-| `phases/p2-gsjso/scripts/projection_datum.py` | orthometric 입력이면 `+orthometric_geoid_m`, ellipsoidal 입력이면 기존 경로 유지 | image-projection shared util | `apply_vertical_datum`, `base_to_canonical_points`, `as_ellipsoidal_points`. |
+| `src/geospatial/projection_datum.py` | orthometric 입력이면 `+orthometric_geoid_m`, ellipsoidal 입력이면 기존 경로 유지 | image-projection shared util | `apply_vertical_datum`, `base_to_canonical_points`, `as_ellipsoidal_points`. |
 | `projection_datum_unitcheck.py` | 45.7/48.0/A1 zeta 교체 가능값 목록 | image-projection unit check | A0 영향 목록과 unit check 기록. |
 | `evidence_cards.py`, `evidence_cards_v2.py` | `base_to_canonical_points(... input_datum, geoid_m)` | image-projection overlay/cards | orthometric roof/ALS/footprint 투영 호출부. |
 | `population_aux_v3.py`, `aux_v4a.py`, `aux_v4b.py` | v3는 projection util, v4a/v4b는 `45.700` 명시 | image-projection observation geometry | v4a/v4b run versions도 `45.700000`. |
@@ -176,13 +176,13 @@
 
 | run/config | image-projection flag | 3D seed/train flag | 메모 |
 |---|---|---|---|
-| `phases/p2-gsjso/runs/20260702_A0_projection_fix` | `orthometric_geoid_m=48.000000` | 해당 없음 | A0 projection fix 당시 기본값. |
-| `phases/p2-gsjso/runs/20260702_A1_zeta_ls` | command `zeta0=48.0`; fit/config `48.125535` | 해당 없음 | LS 참고값. |
-| `phases/p2-gsjso/runs/20260702_A2_projection_gate_v2` | `orthometric_geoid_m=48.125535` | 해당 없음 | A2 측정 불능/게이트 v2 이력. |
-| `phases/p2-gsjso/runs/20260703_datum_tie_v3` | GCG 45.7, effective 45.76, old 48.0 snippet | raw dense versions `GS-LOCAL+[...604]` | datum tie measurement. |
-| `phases/p2-gsjso/runs/20260703_datum_tie_overlay` | left 45.7, right 48.126; config context 48.125535 | 해당 없음 | 순수 렌더 시각 대조. |
-| `phases/p2-gsjso/runs/20260703_aux_v4a` | `orthometric_geoid_m=45.700000`, `geoid_m=45.700000` | 3D/씨드 `-556` 건드리지 않음 | population aux v4a. |
-| `phases/p2-gsjso/runs/20260703_aux_v4b` | `orthometric_geoid_m=45.700000`, `geoid_m=45.700000` | 3D/씨드 `-556` 건드리지 않음 | lowtex/cards v4b. |
+| `phases/p2-gsjso/runs/input_and_alignment/20260702_A0_projection_fix` | `orthometric_geoid_m=48.000000` | 해당 없음 | A0 projection fix 당시 기본값. |
+| `phases/p2-gsjso/runs/input_and_alignment/20260702_A1_zeta_ls` | command `zeta0=48.0`; fit/config `48.125535` | 해당 없음 | LS 참고값. |
+| `phases/p2-gsjso/runs/input_and_alignment/20260702_A2_projection_gate_v2` | `orthometric_geoid_m=48.125535` | 해당 없음 | A2 측정 불능/게이트 v2 이력. |
+| `phases/p2-gsjso/runs/input_and_alignment/20260703_datum_tie_v3` | GCG 45.7, effective 45.76, old 48.0 snippet | raw dense versions `GS-LOCAL+[...604]` | datum tie measurement. |
+| `phases/p2-gsjso/runs/input_and_alignment/20260703_datum_tie_overlay` | left 45.7, right 48.126; config context 48.125535 | 해당 없음 | 순수 렌더 시각 대조. |
+| `phases/p2-gsjso/runs/evidence_and_attributes/20260703_aux_v4a` | `orthometric_geoid_m=45.700000`, `geoid_m=45.700000` | 3D/씨드 `-556` 건드리지 않음 | population aux v4a. |
+| `phases/p2-gsjso/runs/evidence_and_attributes/20260703_aux_v4b` | `orthometric_geoid_m=45.700000`, `geoid_m=45.700000` | 3D/씨드 `-556` 건드리지 않음 | lowtex/cards v4b. |
 | `gs_seed_*`, `gs_seed_*_protect` | 해당 없음 | `GS-LOCAL -604`, dim `-604`, acmp `-556` | v6/C 계열. |
 | `gs_prior_full_*`, `gs_d4_*`, `gs_d5*`, `gs_b1_*` | 해당 없음 | `GS-LOCAL -604`, acmp `-556`; `data_geoidfix` | D/D4/D5/B1 계열. |
 | `depth_release_*` | 해당 없음 | labels `shift_z=556`, geoid 48 band logic | P2 impl 2. |

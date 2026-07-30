@@ -13,7 +13,7 @@
 
 - 브랜치·HEAD: `feat/p2-structure-learn` · `3786ac5db4912d0949742933928fab8f5ec33985`.
 - 체크포인트: `results/tum_transfer/e5_pilot/C001/runs/gs_e5_C001_*_*/ckpt/final.pt` 6개.
-- 기존 학습 지문: `phases/p2-gsjso/runs/e5p_train_20260707_C001/train_fingerprints.csv`.
+- 기존 학습 지문: `phases/p2-gsjso/runs/e5_c001/e5p_train_20260707_C001/train_fingerprints.csv`.
 - 정본 조립 입력/기준선: `phases/p0-audit/runs/e5p_gate_20260707_C001`와 `docs/e5_c001_8way_metrics.csv`.
 - ② readout 귀속 근거: `docs/W_E5_C001_렌더플로터점검.md`, `docs/e5_c001_render_readout_coverage.csv`.
 - 변경한 것은 extractor의 `min_obs`, `voxel`, `SOR`뿐이다. Roofer 설정과 GS-semantic LAS prep은 기존 경로를 그대로 썼다.
@@ -105,7 +105,7 @@
 - metrics: `docs/e5_c001_readout_ablation_metrics.csv`.
 - summary/tradeoff: `docs/e5_c001_readout_ablation_summary.csv`, `docs/e5_c001_readout_ablation_tradeoff.csv`.
 - inventory/issues: `docs/e5_c001_readout_ablation_inventory.csv`, `docs/e5_c001_readout_ablation_issues.csv`.
-- versions: `phases/p2-gsjso/runs/20260708_e5_c001_readout_ablation/versions.txt`, `phases/p0-audit/runs/e5p_readout_ablation_20260708_C001/versions.txt`.
+- versions: `phases/p2-gsjso/runs/e5_c001/20260708_e5_c001_readout_ablation/versions.txt`, `phases/p0-audit/runs/e5p_readout_ablation_20260708_C001/versions.txt`.
 - figures: `docs/figs/e5_c001_readout_ablation/`.
 
 - `docs/figs/e5_c001_readout_ablation/coverage_recovery_summary.png`

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # Detached learning-zero anchor-census driver.
 # Launch from the repository root:
-#   mkdir -p phases/p2-gsjso/runs/20260720_anchor_census_driver
+#   mkdir -p phases/p2-gsjso/runs/boundary_and_robustness/20260720_anchor_census_driver
 #   setsid nohup bash scripts/boundary_and_robustness/boundary_map/run_anchor_census_20260720.sh \
-#     > phases/p2-gsjso/runs/20260720_anchor_census_driver/detached.log \
+#     > phases/p2-gsjso/runs/boundary_and_robustness/20260720_anchor_census_driver/detached.log \
 #     2>&1 < /dev/null &
 set -uo pipefail
 
@@ -11,9 +11,9 @@ REPO="$(cd "$(dirname "$0")/../../.." && pwd)"
 cd "$REPO" || exit 1
 
 BRANCH="exp/3b-surface-restore-corrected"
-RUN_REL="phases/p2-gsjso/runs/20260720_anchor_census"
+RUN_REL="phases/p2-gsjso/runs/boundary_and_robustness/20260720_anchor_census"
 RUN="$REPO/$RUN_REL"
-DRIVER_REL="phases/p2-gsjso/runs/20260720_anchor_census_driver"
+DRIVER_REL="phases/p2-gsjso/runs/boundary_and_robustness/20260720_anchor_census_driver"
 DRIVER="$REPO/$DRIVER_REL"
 LOG_DIR="$DRIVER/logs"
 STATUS="$DRIVER/status.json"

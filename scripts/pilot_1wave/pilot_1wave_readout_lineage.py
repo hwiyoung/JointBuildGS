@@ -87,14 +87,14 @@ PILOT_CROP_CONTRACT = {
     },
     "pilot_set_csv": {
         "path": (
-            "phases/p2-gsjso/runs/20260721_pilot_1wave/"
+            "phases/p2-gsjso/runs/pilot_1wave/20260721_pilot_1wave/"
             "pilot_1wave_pilot_set.csv"
         ),
         "sha256": "db5ecb6c838499dd3a5f96a4b1abae85414c3d38318d976b7ee598982b566ffc",
     },
     "pilot_set_manifest": {
         "path": (
-            "phases/p2-gsjso/runs/20260721_pilot_1wave/"
+            "phases/p2-gsjso/runs/pilot_1wave/20260721_pilot_1wave/"
             "pilot_1wave_pilot_set_manifest.json"
         ),
         "sha256": "803d18862db926fff353c641e08a03c5938cedf3fb49cc4859751189e83855e2",
@@ -106,7 +106,7 @@ PILOT_CROP_CONTRACT = {
     },
     "materialized_input_inventory": {
         "path": (
-            "phases/p2-gsjso/runs/20260721_pilot_1wave/calibration/scaffolds/"
+            "phases/p2-gsjso/runs/pilot_1wave/20260721_pilot_1wave/calibration/scaffolds/"
             "materialized_input_inventory.json"
         ),
         "sha256": "30a3387275ee9ed29ad75bbdf7cb1979f2b8b2cd52640225e9dbe00895666450",
@@ -118,7 +118,7 @@ PILOT_CROP_CONTRACT = {
             "25d691a8bda73f26e2b3513316918af625536bc867c164b41a18114c868365c9"
         ),
         "data_root": (
-            "phases/p2-gsjso/runs/20260721_pilot_1wave/prep_artifacts/data"
+            "phases/p2-gsjso/runs/pilot_1wave/20260721_pilot_1wave/prep_artifacts/data"
         ),
     },
 }

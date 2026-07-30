@@ -5,7 +5,7 @@
 ## 점검 1 — 법선 타깃이 쓸 만한가
 
 ### (가) 법선 지도 출처·생성·해상도
-- **출처 = MVS PatchMatch(비-구조)**. `data_geoidfix/stereo` → (상대심링크) `phases/p0-audit/data/work/mvs/colmap_dense/stereo`; `normal_maps/*.geometric.bin`는 **COLMAP `patch_match_stereo`** 산출([prior_full_stereo.sh:48-55](phases/p2-gsjso/scripts/prior_full_stereo.sh#L48), `--PatchMatchStereo.geom_consistency true --max_image_size 1024`). **구조(G2 평면) 유래 아님** — 구조 법선은 L_structure로만 흐름([[W_D_loss_audit]] §1).
+- **출처 = MVS PatchMatch(비-구조)**. `data_geoidfix/stereo` → (상대심링크) `phases/p0-audit/data/work/mvs/colmap_dense/stereo`; `normal_maps/*.geometric.bin`는 **COLMAP `patch_match_stereo`** 산출([prior_full_stereo.sh:48-55](scripts/input_and_alignment/p2_gsjso/prior_full_stereo.sh#L48), `--PatchMatchStereo.geom_consistency true --max_image_size 1024`). **구조(G2 평면) 유래 아님** — 구조 법선은 L_structure로만 흐름([[W_D_loss_audit]] §1).
 - **해상도 = 1024px**(stereo max_image_size). dataloader가 이미지 dim으로 업샘플([dataloader.py:205](src/stage2/dataloader.py#L205)).
 - 로드·프레임: `_find_normal`([dataloader.py:148-157](src/stage2/dataloader.py#L148)) → `_load_normal` 카메라→월드 `n_world = n_cam @ R_c2w.T`, mask=‖n‖>1e-3([dataloader.py:203-212](src/stage2/dataloader.py#L203)). 렌더 법선도 월드프레임([renderer.py:9,77](src/stage2/renderer.py#L9)) → 비교 동일 프레임.
 

@@ -1,0 +1,161 @@
+{
+  "schema": "jointbuildgs.pilot_1wave.calibration_lock.v1",
+  "run_id": "20260721_pilot_1wave",
+  "task_id": "P1W-CAL-LOCK",
+  "created_before_optimizer_results": true,
+  "selection_sha256": "e98daa670a0753198e8a54502b260a07bcefe2bca42976931c0a08b766c5b3cd",
+  "input_bindings": {
+    "prep_manifest": {
+      "path": "phases/p2-gsjso/runs/pilot_1wave/20260721_pilot_1wave/prep_artifacts/prep_manifest.json",
+      "sha256": "97922b5138f335aef5478a52b4c1b25ca8f05ddb65a48ecb809c8012d3f228a4"
+    },
+    "pilot_set_manifest": {
+      "path": "phases/p2-gsjso/runs/pilot_1wave/20260721_pilot_1wave/pilot_1wave_pilot_set_manifest.json",
+      "sha256": "803d18862db926fff353c641e08a03c5938cedf3fb49cc4859751189e83855e2"
+    },
+    "dense_seed": {
+      "path": "phases/p2-gsjso/runs/pilot_1wave/20260721_pilot_1wave/prep_artifacts/seeds/seed_dense_expanded_pilot.ply",
+      "sha256": "ab3cae4f3fd767296ca212a837a2704bb7eee572923e470ffdb1ec514d72380f"
+    },
+    "projected_footprint_mask_manifest": {
+      "path": "phases/p2-gsjso/runs/pilot_1wave/20260721_pilot_1wave/prep_artifacts/photo_support_masks/mask_manifest.json",
+      "sha256": "de531c820482c38755833d1e5c38f5fdd725105ee6b87a9578f42996553406f8"
+    },
+    "omnidata_manifest": {
+      "path": "phases/p2-gsjso/runs/pilot_1wave/20260721_pilot_1wave/prep_artifacts/mono_normal_manifest.json",
+      "sha256": "f8911b28d0eea881e7e37027eb1a73000e126d7f99178d1075969c2b23406071"
+    }
+  },
+  "base_recipe": {
+    "w_photo": 1.0,
+    "photo_lam": 0.2,
+    "w_depth": 0.1,
+    "w_normal_mvs": 0.15,
+    "w_mono_normal_aux": 0.05,
+    "w_nc": 0.05,
+    "w_structure": 0.08,
+    "w_structure_na": 1.0,
+    "w_structure_cp": 1.0,
+    "depth_normal_warmup_updates": 5000,
+    "depth_normal_ramp_updates": 5000,
+    "structure_warmup_updates": 15000,
+    "structure_regroup_every_updates": 1000,
+    "structure_grouping": "g2_geometry",
+    "structure_voxel_size_m": 2.0,
+    "structure_merge_normal_cos": 0.92,
+    "structure_merge_distance_m": 0.5,
+    "structure_min_group": 30,
+    "forbidden_weights_zero": [
+      "w_sem",
+      "w_mutual",
+      "w_mvc",
+      "w_distort",
+      "w_mono_depth",
+      "w_semdepth_smooth",
+      "w_semdepth_plane",
+      "w_boundary_normal"
+    ]
+  },
+  "plane_primitive": {
+    "window_size_px": 7,
+    "stride_px": 4,
+    "minimum_points": 16,
+    "alpha_threshold": 0.5,
+    "maximum_depth_range_m": 1.0,
+    "minimum_second_eigenvalue": 1e-10,
+    "fit": "detached camera-space local plane",
+    "residual": "differentiable point-to-plane L1",
+    "flattening": "2DGS fixed-thickness audit only"
+  },
+  "plane_guided_initialization": {
+    "conditions": ["04a", "04b"],
+    "source": "condition plane mask AND MVS depth-valid AND MVS world-normal-valid over fixed training views",
+    "application": "fresh run only; initialize dense MVS seed quaternion local +Z toward matched +Z-hemisphere normal before optimizer creation",
+    "unmatched_normal_world": [0.0, 0.0, 1.0],
+    "pilot_plane_init_stride_px": 8,
+    "pilot_plane_init_grid_offset_px": 4,
+    "pilot_plane_init_knn": 4,
+    "pilot_plane_init_tolerance_m": 0.5,
+    "pilot_plane_init_min_coverage": 0.05,
+    "pilot_plane_init_query_chunk_size": 100000,
+    "neighbor_engine": "scipy.spatial.cKDTree workers=1",
+    "resume": "recompute and verify input binding only; checkpoint quaternion is authoritative and initializer is not reapplied",
+    "failure_policy": "zero evidence, zero matches, coverage below 0.05, or binding mismatch stops before optimizer creation"
+  },
+  "view_selection": {
+    "inventory": "481 image names sorted lexicographically from the projected-footprint mask manifest",
+    "training_role": "index modulo 10 is not 9",
+    "calibration_count": 16,
+    "ranking": "ascending sha256(selection_sha256 + '|' + view_id)",
+    "calibration_view_ids_sha256_newline_joined": "a1b88b85b63bab7572f5e9ea492e3e73cb0ebd5c2d6e01860f1af1b2f125acfe",
+    "calibration_view_ids": [
+      "DJI_20241217103523_0051_D.JPG",
+      "DJI_20241217084831_0179_D.JPG",
+      "DJI_20241217095441_0023_D.JPG",
+      "DJI_20241217102613_0039_D.JPG",
+      "DJI_20241217084731_0149_D.JPG",
+      "DJI_20241217090853_0029_D.JPG",
+      "DJI_20241217102925_0008_D.JPG",
+      "DJI_20241217102721_0016_D.JPG",
+      "DJI_20241217095053_0053_D.JPG",
+      "DJI_20241217095613_0069_D.JPG",
+      "DJI_20241217084657_0132_D.JPG",
+      "DJI_20241217101548_0011_D.JPG",
+      "DJI_20241217095635_0080_D.JPG",
+      "DJI_20241217084355_0041_D.JPG",
+      "DJI_20241217090901_0033_D.JPG",
+      "DJI_20241217084627_0117_D.JPG"
+    ]
+  },
+  "forward_runtime": {
+    "container_required": true,
+    "image_tag": "jointbuildgs:dev",
+    "image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
+    "host_attestation_environment": {
+      "image_tag": "P1W_HOST_IMAGE_TAG",
+      "image_id": "P1W_HOST_IMAGE_ID"
+    },
+    "python": "3.11.15",
+    "torch": "2.4.1+cu121",
+    "cuda": "12.1",
+    "gsplat": "1.4.0",
+    "numpy": "1.26.4",
+    "scipy": "1.13.1",
+    "pillow": "10.4.0"
+  },
+  "forward_only_resolution": {
+    "optimizer_updates": 0,
+    "random_view_sampling": false,
+    "calibration_seed": 1001,
+    "calibration_seed_reason": "lowest registered training seed; locked result-blind before forward-only calibration",
+    "minimum_eligible_views": 8,
+    "aggregation": "equal-view sum(weighted roof photo) divided by equal-view sum(raw roof plane)",
+    "soft_03": {
+      "target_plane_to_photo_ratio": 0.25,
+      "plane_scope": "segmentation-free local plane rule intersected with common projected-footprint audit mask for calibration only",
+      "weight_reused_for_seeds": [1001, 1002],
+      "reason": "numerically enforce soft below the medium 0.5x lower gate"
+    },
+    "medium_04a": {
+      "target_plane_to_photo_ratio": 1.0,
+      "plane_scope": "04a GroundedSAM vision region intersected with common projected-footprint audit mask",
+      "weight_reused_for_conditions": ["04a", "04b"],
+      "weight_reused_for_seeds": [1001, 1002]
+    },
+    "medium_verification": {
+      "conditions": ["04a", "04b"],
+      "inclusive_ratio_range": [0.5, 2.0],
+      "failure_policy": "stop before optimizer update; do not retune either arm"
+    },
+    "no_post_update_recalibration": true
+  },
+  "training_budget": {
+    "seeds": [1001, 1002],
+    "max_optimizer_updates": 20000,
+    "full_state_checkpoint_updates": [5000, 10000, 15000, 20000],
+    "gpu_count": 2,
+    "wall_guard_hours": 9.0,
+    "stop_starting_new_runs_hours": 8.5,
+    "partial_is_winner_eligible": false
+  }
+}

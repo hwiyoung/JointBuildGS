@@ -21,8 +21,8 @@ from typing import Any, Iterable
 
 
 REPO = Path(__file__).resolve().parents[3]
-SOURCE_RUN = REPO / "phases/p2-gsjso/runs/20260721_pilot_1wave"
-READOUT = REPO / "phases/p2-gsjso/runs/20260722_pilot_1wave_readout"
+SOURCE_RUN = REPO / "phases/p2-gsjso/runs/pilot_1wave/20260721_pilot_1wave"
+READOUT = REPO / "phases/p2-gsjso/runs/pilot_1wave/20260722_pilot_1wave_readout"
 PACK = READOUT / "prediction_pack"
 RETENTION_DIR = READOUT / "retention"
 PLAN_PATH = RETENTION_DIR / "retention_plan.json"

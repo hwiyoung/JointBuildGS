@@ -98,7 +98,7 @@ canonical_for: boundary_map_summary
 supersedes:
   - docs/archive/boundary_map/boundary-map-summary-v3.md
 derived_from:
-  - phases/p2-gsjso/runs/20260719_boundary_map_v3/manifest.json
+  - phases/p2-gsjso/runs/boundary_and_robustness/20260719_boundary_map_v3/manifest.json
 run_ids:
   - 20260719_boundary_map_v3
 artifact_ids: []

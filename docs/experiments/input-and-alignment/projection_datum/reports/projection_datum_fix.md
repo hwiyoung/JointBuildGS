@@ -22,20 +22,20 @@ Interpretation note: near-nadir can have small pixel movement, while oblique mov
 
 | path | impact |
 |---|---|
-| `phases/p2-gsjso/scripts/projection_datum.py` | new shared datum utility; config-driven zeta for orthometric image projection |
+| `src/geospatial/projection_datum.py` | new shared datum utility; config-driven zeta for orthometric image projection |
 | `configs/input_and_alignment/projection_datum.json` | config parameter for zeta; 45.7/48.0/A1-zeta are replaceable values |
-| `phases/p2-gsjso/scripts/evidence_cards_v2.py` | card v2 LoD2/ALS/footprint projection, roof masks, view angle selection |
-| `phases/p2-gsjso/scripts/evidence_cards.py` | legacy evidence card projection path |
-| `phases/p2-gsjso/scripts/projection_gate.py` | historical retracted gate imports evidence_cards_v2 projection functions |
-| `phases/p2-gsjso/scripts/projection_gate2.py` | wide-search projection gate imports evidence_cards_v2 projection functions |
-| `phases/p2-gsjso/scripts/gate_diag.py` | clean visual diagnostic imports evidence_cards_v2 projection functions |
-| `phases/p2-gsjso/scripts/population_aux_v3.py` | observation geometry projection plus camera-point vectors now use ellipsoidal point Z |
-| `phases/p2-gsjso/scripts/texture_anchor_check.py` | texture anchor crops use population_aux_v3.project |
-| `phases/p2-gsjso/scripts/add_lowtex_v4.py` | lowtex v4 uses texture_anchor_check/build_crop and population camera parsing |
-| `phases/p2-gsjso/scripts/ztest.py` | diagnostic keeps explicit geoid_m=0 pre-fix simulation for old-vs-fix figures |
-| `phases/p2-gsjso/scripts/zmultiview.py` | diagnostic keeps explicit geoid_m=0 pre-fix simulation for old-vs-fix figures |
-| `phases/p2-gsjso/scripts/zfix_visual.py` | inherits ztest.proj_dz pre-fix simulation |
-| `phases/p2-gsjso/scripts/zresolve.py` | inherits ztest.proj_dz pre-fix simulation |
+| `scripts/evidence_and_attributes/p2_gsjso/evidence_cards_v2.py` | card v2 LoD2/ALS/footprint projection, roof masks, view angle selection |
+| `scripts/evidence_and_attributes/p2_gsjso/evidence_cards.py` | legacy evidence card projection path |
+| `scripts/input_and_alignment/p2_gsjso/projection_gate.py` | historical retracted gate imports evidence_cards_v2 projection functions |
+| `scripts/input_and_alignment/p2_gsjso/projection_gate2.py` | wide-search projection gate imports evidence_cards_v2 projection functions |
+| `scripts/quality_score/p2_gsjso/gate_diag.py` | clean visual diagnostic imports evidence_cards_v2 projection functions |
+| `scripts/evidence_and_attributes/p2_gsjso/population_aux_v3.py` | observation geometry projection plus camera-point vectors now use ellipsoidal point Z |
+| `scripts/evidence_and_attributes/p2_gsjso/texture_anchor_check.py` | texture anchor crops use population_aux_v3.project |
+| `scripts/evidence_and_attributes/p2_gsjso/add_lowtex_v4.py` | lowtex v4 uses texture_anchor_check/build_crop and population camera parsing |
+| `scripts/input_and_alignment/p2_gsjso/ztest.py` | diagnostic keeps explicit geoid_m=0 pre-fix simulation for old-vs-fix figures |
+| `scripts/input_and_alignment/p2_gsjso/zmultiview.py` | diagnostic keeps explicit geoid_m=0 pre-fix simulation for old-vs-fix figures |
+| `scripts/input_and_alignment/p2_gsjso/zfix_visual.py` | inherits ztest.proj_dz pre-fix simulation |
+| `scripts/input_and_alignment/p2_gsjso/zresolve.py` | inherits ztest.proj_dz pre-fix simulation |
 
 ## Missing External Spec
 

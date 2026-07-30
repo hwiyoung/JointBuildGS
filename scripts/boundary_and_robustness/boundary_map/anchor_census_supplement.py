@@ -37,8 +37,8 @@ REPO = Path(__file__).resolve().parents[3]
 RUN_ID = "20260720_anchor_census_supplement"
 RUN_DIR = REPO / "phases/p2-gsjso/runs" / RUN_ID
 
-CENSUS_RUN = REPO / "phases/p2-gsjso/runs/20260720_anchor_census"
-R1P_RUN = REPO / "phases/p2-gsjso/runs/20260719_boundary_map_v3"
+CENSUS_RUN = REPO / "phases/p2-gsjso/runs/boundary_and_robustness/20260720_anchor_census"
+R1P_RUN = REPO / "phases/p2-gsjso/runs/boundary_and_robustness/20260719_boundary_map_v3"
 CENSUS_PAIRS = CENSUS_RUN / "anchor_census_pairs.csv"
 CENSUS_MEASUREMENTS = CENSUS_RUN / "anchor_census_measurements.csv"
 CENSUS_MANIFEST = CENSUS_RUN / "anchor_census_manifest.json"

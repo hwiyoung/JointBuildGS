@@ -59,4 +59,4 @@
 - **(A) 업로드 114/64/21 = canonical w2_1 재현 확인**; 단 **W3_2c closeout는 113/65**(42364663 DIM을 12m-RMS→실패 재분류) — 경계 1동은 "has_lod22 유무 vs 품질 미달" 정의 문제(판정=김휘영).
 - **(B) population_aux.csv(199) = has_lod22·footprint 전동 + 관측가능성/텍스처/arm은 audit 부분집합(~68~125)** 재사용 추출; **median_intersection_deg는 신규 재투영 필요**(미실시). 서브클래스 규칙은 김휘영이 이 원재료로 고정.
 
-> 재현: `docker run … jointbuildgs-p0-tools:t0 python3 phases/p2-gsjso/scripts/population_aux.py`. 데이터 재사용·재구성 없음. CSV=`overseg_lever/population_aux.csv`(사본 `docs/population_aux.csv`).
+> 재현: `docker run … jointbuildgs-p0-tools:t0 python3 scripts/evidence_and_attributes/p2_gsjso/population_aux.py`. 데이터 재사용·재구성 없음. CSV=`overseg_lever/population_aux.csv`(사본 `docs/population_aux.csv`).

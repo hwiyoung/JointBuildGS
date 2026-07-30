@@ -1,0 +1,149 @@
+{
+  "schema": "jointbuildgs.s3b0.measurement.lock.v1",
+  "task_date": "2026-07-16",
+  "crs": "EPSG:25832",
+  "learning_runs_allowed": 0,
+  "new_inference": {
+    "semantic_model_count": 1,
+    "semantic_model_only": true,
+    "mono_normal_large_scale_allowed_only_if_0d_started": true
+  },
+  "targets": ["4907199", "8568391", "8568392"],
+  "primary_seed_targets": ["4907199", "8568391"],
+  "reference_only_seed_target": "8568392",
+  "sources": {
+    "prepared_root": "results/tum_transfer/e5_s3ap_phase2/prepared",
+    "source_images": "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/images",
+    "footprints": "results/tum_transfer/analysis/footprints_aoi.geojson",
+    "train_manifest": "results/tum_transfer/e5_pilot/C001/C001_train_prep_manifest.json",
+    "sparse_points": "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/sparse/0/points3D.bin",
+    "dense_init": "results/tum_transfer/e5_pilot/C001/seeds/seed_dense_C001_buf20.ply",
+    "c00118_config": "configs/e5_c001/e5_s2p_interaction/gs_e5_C001_s2p_arm1p_dense_r1.yaml",
+    "fm_rescore_csv": "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_fm_retri_rescore.csv",
+    "mono_diag_csv": "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/mononormal_diag.csv",
+    "p0_fill_npz": "phases/p2-gsjso/runs/e5_c001/20260715_e5_c001_s3ap_phase0_baselines/p0_fill_points.npz",
+    "phase1_seed_root": "phases/p2-gsjso/runs/e5_c001/20260715_e5_c001_s3ap_phase1_seedprep/seeds",
+    "phase2_jobs_csv": "phases/p2-gsjso/runs/e5_c001/20260715_e5_c001_s3ap_phase2_prepare/jobs.csv",
+    "phase2_status_csv": "phases/p2-gsjso/runs/e5_c001/20260715_e5_c001_s3ap_phase2_prepare/runner/status_base42.csv",
+    "phase3_lock": "phases/p2-gsjso/configs/e5_c001/e5_c001_s3ap_phase3_lock.json",
+    "phase3_root": "results/tum_transfer/e5_s3ap_phase3",
+    "lod2_dir": "phases/p0-audit/data/raw/lod2",
+    "projection_datum": "configs/input_and_alignment/projection_datum.json"
+  },
+  "semantic_0e": {
+    "model": {
+      "name": "Segment Anything ViT-B",
+      "model_type": "vit_b",
+      "repository": "https://github.com/facebookresearch/segment-anything.git",
+      "revision": "dca509fe793f601edb92606367a655c15ac00fdf",
+      "runtime_repo": "results/tum_transfer/e5_s3b0/runtime/sam_vit_b/segment-anything",
+      "weights_url": "https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth",
+      "weights": "results/tum_transfer/e5_s3b0/runtime/sam_vit_b/sam_vit_b_01ec64.pth",
+      "weights_sha256": "ec2df62732614e57411cdcf32a23ffdf28910380d03139ee0f4fcbe91eb8c912",
+      "weights_bytes": 375042383
+    },
+    "prompt_rule": {
+      "target_height": "GT-free FM fitted plane from cached image correspondences",
+      "neighbor_height": "median of zero-iteration sparse plus dense input points inside each supplied footprint",
+      "positive_points": "up to five farthest-inside pixels of the projected footprint support",
+      "box_padding_px": 6,
+      "candidate_selection": "max(0.70*SAM predicted IoU + 0.30*IoU(mask, projected footprint))",
+      "neighbor_min_projected_pixels": 12,
+      "target_wins_overlap": true
+    },
+    "comparison_rule": {
+      "reference": "current LoD2-raycast semantic_region cache, score-only",
+      "target": "region IDs whose metadata building_id equals the target; cutline excluded",
+      "neighbor": "all other positive region IDs; cutline excluded",
+      "scopes": ["target_roof", "neighbor_roof", "target_or_neighbor"]
+    }
+  },
+  "alpha_0a": {
+    "alpha_values": [0.1, 0.3, 0.5],
+    "anchor_half_band_m": 0.3,
+    "reference_half_band_199_m": 0.5,
+    "histogram_bin_m": 0.5,
+    "histogram_top_above_ground_m": 15.0,
+    "roof_candidate_min_above_ground_m": 1.5,
+    "coverage_grid_m": 0.5,
+    "xy_map_grid_m": 0.5,
+    "upper_edge_band_m": 1.0,
+    "upper_edge_concentration_fraction": 0.5,
+    "upper_neighbor_direction_fraction": 0.65,
+    "canonical_depth": "median",
+    "representative_heightmap_job": "base A1 r1"
+  },
+  "hsweep_0b": {
+    "ground_plus_min_m": 2.0,
+    "ground_plus_max_m": 40.0,
+    "coarse_step_m": 0.5,
+    "fine_half_width_m": 1.0,
+    "fine_step_m": 0.05,
+    "boundary_sample_step_m": 0.2,
+    "background_exclusion_half_width_m": 1.0,
+    "edge_definition": "T11 np.gradient magnitude on full source-image grayscale [0,1]",
+    "score_definition": "sum edge magnitude at unique projected outline pixels after available non-GT neighbor-mask exclusion",
+    "semantic_mask_scope": "0-e crop mask placed back at native crop_box; outside crop is recorded unknown and excluded from edge score",
+    "peak_tie_rule": "maximum score, then closest to parent coarse peak, then lower height"
+  },
+  "gate_0c": {
+    "texture_definition": "T11 np.gradient magnitude on grayscale [0,1]",
+    "low_gradient_threshold": 0.02137,
+    "point_support_rule": "supplied footprint inside and z >= observed exterior ground + 1.5m",
+    "projection_sampling": "nearest integer crop pixel",
+    "fm_pair_rule": "eligible_summary_pair=true cached fixed-COLMAP DLT rows",
+    "existing_mono_fm_view_angle_deg": 22.5,
+    "new_composite_threshold_defined": false
+  },
+  "seed_0f": {
+    "grid_m": 0.5,
+    "edge_band_m": 1.0,
+    "far_field_distance_bins_m": [0.0, 1.0, 2.0, 4.0, 6.0],
+    "height_anchor_location": "supplied footprint centroid",
+    "mono_pool_rule": "component median per eligible view, orient z positive, then component median across views and normalize",
+    "v2_fit_rule": "equal-weight least squares z=ax+by+c on V1 centroid FM anchor plus four GT-free h-sweep segment-midpoint anchors",
+    "semantic_class": 1,
+    "planned_init_opacity": 0.25,
+    "coordinate_frame": "GS-local",
+    "required_npz_keys": ["xyz", "rgb", "sem", "metadata_json"]
+  },
+  "mono_0d": {
+    "mode": "conditional_skip",
+    "requested_scope": "C001 18-building crops with reference roof normals",
+    "reason": "mandatory 0-a, 0-b, 0-c, 0-e, and 0-f measurements occupied this wave; conditional 0-d was not started",
+    "reference_opened": false,
+    "mono_normal_inference_started": 0
+  },
+  "containers": {
+    "main_image": "jointbuildgs:dev",
+    "main_image_id": "sha256:926b2fd5e31d9f22d44db347b703ed1acfe0a98d19c189c80324daec63fd6396",
+    "tools_image": "jointbuildgs-p0-tools:t0",
+    "tools_image_id": "sha256:87bea02e5598a3d53a119b754191673497d52641bd8ea4106ffee653407579b0"
+  },
+  "outputs": {
+    "run_root": "phases/p2-gsjso/runs/e5_c001/20260716_e5_c001_s3b0_measurements",
+    "semantic_run": "phases/p2-gsjso/runs/e5_c001/20260716_e5_c001_s3b0_measurements/0e_semantic",
+    "semantic_masks": "phases/p2-gsjso/runs/e5_c001/20260716_e5_c001_s3b0_measurements/0e_semantic/masks",
+    "alpha_run": "phases/p2-gsjso/runs/e5_c001/20260716_e5_c001_s3b0_measurements/0a_alpha",
+    "alpha_runtime_root": "results/tum_transfer/e5_s3b0/alpha",
+    "gate_run": "phases/p2-gsjso/runs/e5_c001/20260716_e5_c001_s3b0_measurements/0c_gate",
+    "seed_run": "phases/p2-gsjso/runs/e5_c001/20260716_e5_c001_s3b0_measurements/0f_seed",
+    "hsweep_run": "phases/p2-gsjso/runs/e5_c001/20260716_e5_c001_s3b0_measurements/0b_hsweep",
+    "mono_run": "phases/p2-gsjso/runs/e5_c001/20260716_e5_c001_s3b0_measurements/0d_mono",
+    "semantic_lineage_md": "docs/experiments/input-and-alignment/e5_c001_s3b0/reports/s3b0_semantic_lineage.md",
+    "mask_iou_csv": "docs/experiments/input-and-alignment/e5_c001_s3b0/tables/s3b0_mask_iou.csv",
+    "semantic_figure_dir": "docs/figs/e5_c001_s3b0/semantic",
+    "alpha_csv": "docs/experiments/input-and-alignment/e5_c001_s3b0/tables/s3b0_alpha_sweep.csv",
+    "timeline_csv": "docs/experiments/input-and-alignment/e5_c001_s3b0/tables/s3b0_seed_survival_timeline.csv",
+    "alpha_figure_dir": "docs/figs/e5_c001_s3b0/alpha",
+    "outline_csv": "docs/experiments/input-and-alignment/e5_c001_s3b0/tables/s3b0_outline_observability.csv",
+    "hsweep_csv": "docs/experiments/input-and-alignment/e5_c001_s3b0/tables/s3b0_hsweep.csv",
+    "hsweep_anchor_csv": "phases/p2-gsjso/runs/e5_c001/20260716_e5_c001_s3b0_measurements/0b_hsweep/segment_anchors_gtfree.csv",
+    "hsweep_figure_dir": "docs/figs/e5_c001_s3b0/hsweep",
+    "gate_csv": "docs/experiments/input-and-alignment/e5_c001_s3b0/tables/s3b0_gate_scores.csv",
+    "gate_figure_dir": "docs/figs/e5_c001_s3b0/gate",
+    "seed_score_csv": "docs/experiments/input-and-alignment/e5_c001_s3b0/tables/s3b0_p0prime_scores.csv",
+    "seed_figure_dir": "docs/figs/e5_c001_s3b0/seeds",
+    "mono_reliability_csv": "docs/experiments/input-and-alignment/e5_c001_s3b0/tables/s3b0_mono_reliability.csv"
+  }
+}

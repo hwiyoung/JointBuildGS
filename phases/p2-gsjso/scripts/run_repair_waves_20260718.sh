@@ -275,7 +275,7 @@ confusion = list(csv.DictReader((docs / "archive/boundary_map/v2/tables/boundary
 cases = list(csv.DictReader((docs / "experiments/boundary_map/tables/boundary_map_v2_boundary_cases.csv").open()))
 targets = list(csv.DictReader((docs / "archive/boundary_map/v2/tables/boundary_map_v2_conditional_targets.csv").open()))
 crop = list(csv.DictReader(Path(
-    "phases/p2-gsjso/runs/20260718_boundary_map_v2/crop_pair_results.csv"
+    "phases/p2-gsjso/runs/boundary_and_robustness/20260718_boundary_map_v2/crop_pair_results.csv"
 ).open()))
 manifest = json.loads((docs / "experiments/boundary_map/manifests/boundary_map_v2_manifest.json").read_text())
 if len(metrics) != 178 or len(ladder) != 178:
@@ -383,7 +383,7 @@ PY
     docs/experiments/input-and-alignment/boundary_map/manifests/boundary_map_v2_manifest.json \
     docs/archive/boundary_map/v2/reports/W_boundary_map_v2_summary_20260718.md \
     docs/archive/boundary_map/v2/figs \
-    phases/p2-gsjso/runs/20260718_boundary_map_v2; then
+    phases/p2-gsjso/runs/boundary_and_robustness/20260718_boundary_map_v2; then
     return 1
   fi
   R1_COMMIT="$(git rev-parse HEAD)"
@@ -393,7 +393,7 @@ PY
 
 run_r2() {
   write_status "R2" "running" "2813-row completeness backfill and 10x4 panel"
-  if ! run_tools python3 phases/p2-gsjso/scripts/qs_rescore_completeness_panel.py \
+  if ! run_tools python3 scripts/quality_score/p2_gsjso/qs_rescore_completeness_panel.py \
     > "$LOG_DIR/R2_run.log" 2>&1; then
     issue "RW-R2 execution command exited nonzero; log=$RUN_REL/logs/R2_run.log"
     return 1
@@ -408,7 +408,7 @@ scores = list(csv.DictReader(Path("docs/experiments/evaluation/qs_rescore/tables
 panel = list(csv.DictReader(Path("docs/experiments/evaluation/qs_rescore/tables/qs_rescore_topview_panel.csv").open()))
 spot = list(csv.DictReader(Path("docs/experiments/evaluation/qs_rescore/tables/qs_rescore_hausdorff_spotcheck.csv").open()))
 manifest = json.loads(Path(
-    "phases/p2-gsjso/runs/20260718_qs_rescore_completeness_panel/manifest.json"
+    "phases/p2-gsjso/runs/quality_score/20260718_qs_rescore_completeness_panel/manifest.json"
 ).read_text())
 if len(scores) != 2813 or len(panel) != 40 or len(spot) != 12:
     raise SystemExit(
@@ -445,7 +445,7 @@ PY
     issue "RW-R2 QA command exited nonzero; log=$RUN_REL/logs/R2_qa.log"
     return 1
   fi
-  issue "RW-R2 measurement complete: scores_sha256=$(sha docs/experiments/evaluation/qs_rescore/tables/qs_rescore_scores.csv); panel_sha256=$(sha docs/experiments/evaluation/qs_rescore/tables/qs_rescore_topview_panel.csv); spot_sha256=$(sha docs/experiments/evaluation/qs_rescore/tables/qs_rescore_hausdorff_spotcheck.csv); manifest_sha256=$(sha phases/p2-gsjso/runs/20260718_qs_rescore_completeness_panel/manifest.json); figure_sha256=$(sha docs/figs/qs_rescore/qs_rescore_topview_10x4.png); learning_runs_started=0; new_inference_runs=0"
+  issue "RW-R2 measurement complete: scores_sha256=$(sha docs/experiments/evaluation/qs_rescore/tables/qs_rescore_scores.csv); panel_sha256=$(sha docs/experiments/evaluation/qs_rescore/tables/qs_rescore_topview_panel.csv); spot_sha256=$(sha docs/experiments/evaluation/qs_rescore/tables/qs_rescore_hausdorff_spotcheck.csv); manifest_sha256=$(sha phases/p2-gsjso/runs/quality_score/20260718_qs_rescore_completeness_panel/manifest.json); figure_sha256=$(sha docs/figs/qs_rescore/qs_rescore_topview_10x4.png); learning_runs_started=0; new_inference_runs=0"
   if ! commit_paths \
     "RW-R2: add roof completeness and 10x4 panel" \
     phases/p2-gsjso/docs/issues.md \
@@ -454,7 +454,7 @@ PY
     docs/experiments/evaluation/qs_rescore/tables/qs_rescore_hausdorff_spotcheck.csv \
     docs/experiments/evaluation/qs_rescore/reports/W_qs_rescore_completeness_panel_20260718.md \
     docs/figs/qs_rescore/qs_rescore_topview_10x4.png \
-    phases/p2-gsjso/runs/20260718_qs_rescore_completeness_panel; then
+    phases/p2-gsjso/runs/quality_score/20260718_qs_rescore_completeness_panel; then
     return 1
   fi
   R2_COMMIT="$(git rev-parse HEAD)"
@@ -464,7 +464,7 @@ PY
 
 run_r3() {
   write_status "R3" "running" "canonical 178 dense, ALS, and reference rescore"
-  if ! run_tools python3 phases/p2-gsjso/scripts/qs_baseline178_rescore.py \
+  if ! run_tools python3 scripts/quality_score/p2_gsjso/qs_baseline178_rescore.py \
     > "$LOG_DIR/R3_run.log" 2>&1; then
     issue "RW-R3 execution command exited nonzero; log=$RUN_REL/logs/R3_run.log"
     return 1
@@ -519,7 +519,7 @@ PY
     docs/experiments/evaluation/qs_baseline178/tables/qs_baseline178_summary.csv \
     docs/experiments/evaluation/qs_baseline178/manifests/qs_baseline178_manifest.json \
     docs/figs/qs_baseline178 \
-    phases/p2-gsjso/runs/20260718_qs_baseline178_rescore; then
+    phases/p2-gsjso/runs/quality_score/20260718_qs_baseline178_rescore; then
     return 1
   fi
   R3_COMMIT="$(git rev-parse HEAD)"
@@ -529,7 +529,7 @@ PY
 
 run_r4() {
   write_status "R4" "running" "C001 18-building, 18-condition cheap-refinement grid"
-  if ! python3 phases/p2-gsjso/scripts/qs_cheap_refine_sweep.py run \
+  if ! python3 scripts/quality_score/p2_gsjso/qs_cheap_refine_sweep.py run \
     > "$LOG_DIR/R4_run.log" 2>&1; then
     issue "RW-R4 execution command exited nonzero; log=$RUN_REL/logs/R4_run.log"
     return 1
@@ -581,7 +581,7 @@ PY
     docs/experiments/evaluation/qs_cheap_refine_sweep/tables/qs_cheap_refine_sweep_summary.csv \
     docs/experiments/evaluation/qs_cheap_refine_sweep/manifests/qs_cheap_refine_sweep_manifest.json \
     docs/figs/qs_cheap_refine_sweep \
-    phases/p2-gsjso/runs/20260718_qs_cheap_refine_sweep; then
+    phases/p2-gsjso/runs/quality_score/20260718_qs_cheap_refine_sweep; then
     return 1
   fi
   R4_COMMIT="$(git rev-parse HEAD)"
@@ -601,7 +601,7 @@ commit_partial_r1() {
     docs/experiments/input-and-alignment/boundary_map/manifests/boundary_map_v2_manifest.json \
     docs/archive/boundary_map/v2/reports/W_boundary_map_v2_summary_20260718.md \
     docs/archive/boundary_map/v2/figs \
-    phases/p2-gsjso/runs/20260718_boundary_map_v2
+    phases/p2-gsjso/runs/boundary_and_robustness/20260718_boundary_map_v2
 }
 
 commit_partial_r2() {
@@ -613,7 +613,7 @@ commit_partial_r2() {
     docs/experiments/evaluation/qs_rescore/tables/qs_rescore_hausdorff_spotcheck.csv \
     docs/experiments/evaluation/qs_rescore/reports/W_qs_rescore_completeness_panel_20260718.md \
     docs/figs/qs_rescore/qs_rescore_topview_10x4.png \
-    phases/p2-gsjso/runs/20260718_qs_rescore_completeness_panel
+    phases/p2-gsjso/runs/quality_score/20260718_qs_rescore_completeness_panel
 }
 
 commit_partial_r3() {
@@ -624,7 +624,7 @@ commit_partial_r3() {
     docs/experiments/evaluation/qs_baseline178/tables/qs_baseline178_summary.csv \
     docs/experiments/evaluation/qs_baseline178/manifests/qs_baseline178_manifest.json \
     docs/figs/qs_baseline178 \
-    phases/p2-gsjso/runs/20260718_qs_baseline178_rescore
+    phases/p2-gsjso/runs/quality_score/20260718_qs_baseline178_rescore
 }
 
 commit_partial_r4() {
@@ -635,12 +635,12 @@ commit_partial_r4() {
     docs/experiments/evaluation/qs_cheap_refine_sweep/tables/qs_cheap_refine_sweep_summary.csv \
     docs/experiments/evaluation/qs_cheap_refine_sweep/manifests/qs_cheap_refine_sweep_manifest.json \
     docs/figs/qs_cheap_refine_sweep \
-    phases/p2-gsjso/runs/20260718_qs_cheap_refine_sweep
+    phases/p2-gsjso/runs/quality_score/20260718_qs_cheap_refine_sweep
 }
 
 finalize_ledger() {
   issue "RW-20260718 commit ledger: prep_commit=$PREP_COMMIT; R1_commit=${R1_COMMIT:-none}; R2_commit=${R2_COMMIT:-none}; R3_commit=${R3_COMMIT:-none}; R4_commit=${R4_COMMIT:-none}; R1_rc=$R1_RC; R2_rc=$R2_RC; R3_rc=$R3_RC; R4_rc=$R4_RC; learning_runs_started=0."
-  issue "RW-20260718 artifact ledger: R1_manifest_sha256=$(sha docs/experiments/input-and-alignment/boundary_map/manifests/boundary_map_v2_manifest.json); R2_manifest_sha256=$(sha phases/p2-gsjso/runs/20260718_qs_rescore_completeness_panel/manifest.json); R3_manifest_sha256=$(sha docs/experiments/evaluation/qs_baseline178/manifests/qs_baseline178_manifest.json); R4_manifest_sha256=$(sha docs/experiments/evaluation/qs_cheap_refine_sweep/manifests/qs_cheap_refine_sweep_manifest.json)."
+  issue "RW-20260718 artifact ledger: R1_manifest_sha256=$(sha docs/experiments/input-and-alignment/boundary_map/manifests/boundary_map_v2_manifest.json); R2_manifest_sha256=$(sha phases/p2-gsjso/runs/quality_score/20260718_qs_rescore_completeness_panel/manifest.json); R3_manifest_sha256=$(sha docs/experiments/evaluation/qs_baseline178/manifests/qs_baseline178_manifest.json); R4_manifest_sha256=$(sha docs/experiments/evaluation/qs_cheap_refine_sweep/manifests/qs_cheap_refine_sweep_manifest.json)."
   if [[ "$R1_RC" -eq 0 && "$R2_RC" -eq 0 && "$R3_RC" -eq 0 && "$R4_RC" -eq 0 ]]; then
     write_status "R1-R4" "complete" "all four waves committed"
   else
