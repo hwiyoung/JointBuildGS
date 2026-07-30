@@ -164,12 +164,12 @@ venv/
 
 # ===== Viewer heavy assets (regenerable via scripts) =====
 tools/**/assets/
-# 560 JPEGs regenerable via scripts/inspection/experiment_dashboard/extract_phase2_cams.py
-src/apps/experiment_dashboard/_shared/phase2_cams/thumbs/
+# 560 JPEGs regenerable via tools/experiments/_shared/extract_phase2_cams.py
+tools/experiments/_shared/phase2_cams/thumbs/
 # gaussian-splats-3d demo folder + sourcemaps
-src/apps/experiment_dashboard/_shared/build/demo/
-src/apps/experiment_dashboard/_shared/build/*.js.map
-src/apps/experiment_dashboard/_shared/build/*.cjs.map
+tools/experiments/_shared/build/demo/
+tools/experiments/_shared/build/*.js.map
+tools/experiments/_shared/build/*.cjs.map
 
 # Repo tidy 2026-06-22: untrack regenerable phase1/2/3 result figures (~390 MB; history kept)
 results/phase1_*/**/*.png
