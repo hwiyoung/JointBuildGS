@@ -1,0 +1,54 @@
+schema_version: 1
+artifact_id: jointbuildgs-transitional-roots-quarantine-20260730
+role: semantic-root-quarantine
+created_at: 2026-07-30T15:49:34+09:00
+backend:
+  kind: local-filesystem
+  repository_relative_uri: file:../JointBuildGS-artifacts/quarantine/20260730-semantic-restructure
+  docker_uri: file:/artifacts/JointBuildGS/quarantine/20260730-semantic-restructure
+  durable_backup_claim: false
+integrity:
+  method: same-device-atomic-rename
+  filesystem_device: 2065
+  content_bytes_modified: false
+  destructive_cleanup_authorized: false
+totals:
+  bytes: 207903
+  files: 7
+objects:
+  - source_path: legacy
+    uri: file:../JointBuildGS-artifacts/quarantine/20260730-semantic-restructure/legacy
+    docker_uri: file:/artifacts/JointBuildGS/quarantine/20260730-semantic-restructure/legacy
+    bytes: 207903
+    files: 7
+    inode_before_after: 75040098
+    class: archival-reference-source
+    sha256:
+      README.md: 6149d3d43a10ffdacebc492706997f879460a22569d80bee7126f0c5547cdfa0
+      planarsplat_ref/build_2_5d.py: 8d623dfeccf59deba1d0327188c8f47bdc4aafe13884a08b6b37372ed910c4bf
+      planarsplat_ref/building_to_citygml_v4.py: 475784e4cc815540fbd447fd532e60b2557f94c180fc6bb73a20a9640489206c
+      planarsplat_ref/generate_segmentation.py: f21a760e944d7ed6a0115ae95b0bd8a52b932edc6b207f42cca51df4539e2b44
+      planarsplat_ref/loss_util.py: 4219ee4e66601bfb3f51b46279426424eca220e9ede911213f1a6cc60829481b
+      planarsplat_ref/net_planarSplatting.py: 552272342719f3baa5de65797337d76388a014f23c0b2ac634eb6c112f671b11
+      planarsplat_ref/trainer.py: 8b08a6ccba99c64990b3262c79bf60157ac12b8a475d1d3aab11f0f8cc167dc3
+  - source_path: external
+    uri: file:../JointBuildGS-artifacts/quarantine/20260730-semantic-restructure/external
+    docker_uri: file:/artifacts/JointBuildGS/quarantine/20260730-semantic-restructure/external
+    bytes: 0
+    files: 0
+    inode_before_after: 75962591
+    class: preserved-empty-layout
+compatibility:
+  legacy_reference:
+    default_relative_path: quarantine/20260730-semantic-restructure/legacy/planarsplat_ref/building_to_citygml_v4.py
+    artifact_root_env: JBGS_ARTIFACT_ROOT
+    direct_override_env: JBGS_LEGACY_REFERENCE_PATH
+  val3dity:
+    resolution_order:
+      - VAL3DITY_BIN
+      - PATH
+    repository_clone_or_build_enabled: false
+retention:
+  policy: preserve-until-separate-reviewed-storage-migration
+  restore_rule: move each recorded quarantine directory back to its source_path
+  destructive_cleanup_authorized: false

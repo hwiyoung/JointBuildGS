@@ -9,6 +9,7 @@ from __future__ import annotations
 import csv
 import json
 import math
+import os
 import shutil
 import subprocess
 import sys
@@ -74,20 +75,23 @@ def fmt(v: object, nd: int = 4) -> str:
 
 
 def val3dity_binary() -> Tuple[Optional[Path], Dict]:
-    candidates = []
+    candidates: List[Tuple[str, Path]] = []
+    env_bin = os.environ.get("VAL3DITY_BIN")
+    if env_bin:
+        candidates.append(("VAL3DITY_BIN", Path(env_bin).expanduser()))
     which = shutil.which("val3dity")
     if which:
-        candidates.append(Path(which))
-    for rel in [
-        "bin/val3dity",
-        "external/val3dity/build/val3dity",
-        "external/val3dity/build/app/val3dity",
-        "external/val3dity/build/src/val3dity",
-    ]:
-        candidates.append(ROOT / rel)
+        candidates.append(("PATH", Path(which)))
+
     checks = []
-    for p in candidates:
+    seen = set()
+    for source, p in candidates:
+        key = str(p.resolve()) if p.exists() else str(p)
+        if key in seen:
+            continue
+        seen.add(key)
         item = {
+            "source": source,
             "path": str(p),
             "exists": p.exists(),
             "is_file": p.is_file(),
@@ -706,8 +710,8 @@ def write_report(rows: List[Dict], archetypes: List[Dict], dec: Dict, val_search
         "## 8. Self-verification",
         "",
         f"- PASS: processed {len(rows)}/131 GT buildings.",
-        f"- PASS: successful CityJSON outputs: {sum(1 for r in rows if (OUT_ROOT / f'B{r['bid']}' / 'relation_readout.city.json').exists())}.",
-        f"- PASS: every run has `metrics.json` with success metrics or failure_reason: {all((OUT_ROOT / f'B{r['bid']}' / 'metrics.json').exists() for r in rows)}.",
+        f"- PASS: successful CityJSON outputs: {sum(1 for r in rows if (OUT_ROOT / ('B' + str(r['bid'])) / 'relation_readout.city.json').exists())}.",
+        f"- PASS: every run has `metrics.json` with success metrics or failure_reason: {all((OUT_ROOT / ('B' + str(r['bid'])) / 'metrics.json').exists() for r in rows)}.",
         f"- {'BLOCKED' if val_blocked else 'PASS'}: val3dity results recorded; status is `{rows[0].get('val3dity_status')}` for generated outputs." if rows else "- FAIL: no rows.",
         "- PASS: input assertions recorded; roof type, GT final footprint, and GT final roof model are not read-out inputs.",
         "",

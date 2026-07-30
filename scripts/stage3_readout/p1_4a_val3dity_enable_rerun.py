@@ -1,8 +1,9 @@
 """P1-4a validator enablement and validation-only rerun.
 
 This script does not regenerate CityJSON and does not change the relation
-read-out algorithm. It only searches/builds val3dity, validates existing
-relation_readout.city.json files, and updates validation-side reports.
+read-out algorithm. It resolves val3dity from ``VAL3DITY_BIN`` or ``PATH``,
+validates existing relation_readout.city.json files, and updates
+validation-side reports. It never clones or builds a repository-local copy.
 """
 from __future__ import annotations
 
@@ -27,22 +28,14 @@ CITYJSON_NAME = "relation_readout.city.json"
 REPORT = OUT_ROOT / "VAL3DITY_RERUN_REPORT.md"
 SEARCH_JSON = ENABLE_DIR / "val3dity_search.json"
 BUILD_REPORT = ENABLE_DIR / "build_report.md"
-CONFIGURE_LOG = ENABLE_DIR / "build_configure.log"
-COMPILE_LOG = ENABLE_DIR / "build_compile.log"
 SCHEMA_SUMMARY = ENABLE_DIR / "schema_validation_summary.json"
 SUMMARY_CSV = ENABLE_DIR / "summary_val3dity_rerun.csv"
 SUMMARY_JSON = ENABLE_DIR / "summary_val3dity_rerun.json"
 PHASE0_STATUS = ENABLE_DIR / "phase0_existing_status.md"
 PATH_RECOVERY_JSON = ENABLE_DIR / "path_recovery_search.json"
 
-VAL3DITY_REPO = "https://github.com/tudelft3d/val3dity.git"
 VAL3DITY_DOCS = "https://val3dity.readthedocs.io/main/install.html"
 VAL3DITY_USAGE = "https://val3dity.readthedocs.io/main/usage.html"
-APT_INSTALL_NOTE = (
-    "sudo apt-get update\n"
-    "sudo apt-get install -y cmake g++ git libcgal-dev libeigen3-dev "
-    "libgeos++-dev libboost-filesystem-dev libboost-system-dev"
-)
 
 
 def ensure_dirs() -> None:
@@ -106,12 +99,6 @@ def run_capture(
             "stderr": exc.stderr or "",
             "timeout": True,
         }
-
-
-def run_text(cmd: List[str], timeout: int = 30) -> str:
-    out = run_capture(cmd, timeout=timeout)
-    text = (out.get("stdout") or "") + (out.get("stderr") or "")
-    return text.strip()
 
 
 def md_table(headers: Iterable[str], rows: Iterable[Iterable[object]]) -> List[str]:
@@ -180,39 +167,14 @@ def phase0_status() -> List[Dict]:
     return rows
 
 
-def previous_checked_paths() -> List[Path]:
-    out: List[Path] = []
-    p = OUT_ROOT / "preflight_precision_metrics.json"
-    if not p.exists():
-        return out
-    try:
-        data = read_json(p)
-    except Exception:
-        return out
-    for value in (data.get("val3dity_search") or {}).get("checked_paths", []) or []:
-        out.append(Path(value))
-    return out
-
-
 def candidate_paths() -> List[Tuple[str, Path]]:
     items: List[Tuple[str, Path]] = []
     env_bin = os.environ.get("VAL3DITY_BIN")
     if env_bin:
-        items.append(("VAL3DITY_BIN", Path(env_bin)))
+        items.append(("VAL3DITY_BIN", Path(env_bin).expanduser()))
     which = shutil.which("val3dity")
     if which:
         items.append(("PATH", Path(which)))
-    for rel in [
-        "bin/val3dity",
-        "tools/val3dity",
-        "external/val3dity/build/val3dity",
-        "external/val3dity/build/app/val3dity",
-        "external/val3dity/build/src/val3dity",
-        "external/val3dity/val3dity",
-    ]:
-        items.append(("repo-local", ROOT / rel))
-    for p in previous_checked_paths():
-        items.append(("previous-preflight", p))
     deduped: List[Tuple[str, Path]] = []
     seen = set()
     for source, path in items:
@@ -225,32 +187,15 @@ def candidate_paths() -> List[Tuple[str, Path]]:
 
 
 def path_recovery_search() -> Dict:
-    commands = {
-        "which_val3dity": ["bash", "-lc", "which val3dity || true"],
-        "command_v_val3dity": ["bash", "-lc", "command -v val3dity || true"],
-        "find_media_code_executable": [
-            "bash", "-lc",
-            "find /media/innopam/InnoPAM-8TB/hwiyoung/code -type f -name val3dity -perm -111 2>/dev/null | sed -n '1,200p'",
-        ],
-        "find_home_executable": [
-            "bash", "-lc",
-            "find /home/innopam -type f -name val3dity -perm -111 2>/dev/null | sed -n '1,200p'",
-        ],
-        "grep_val3dity_commands": [
-            "bash", "-lc",
-            "grep -R \"val3dity\" -n scripts src results 2>/dev/null | head -200",
-        ],
-    }
-    results = {name: run_capture(cmd, timeout=300) for name, cmd in commands.items()}
-    found = []
-    for name in ["which_val3dity", "command_v_val3dity", "find_media_code_executable", "find_home_executable"]:
-        for line in (results[name].get("stdout") or "").splitlines():
-            path = line.strip()
-            if path:
-                found.append(path)
+    env_bin = os.environ.get("VAL3DITY_BIN")
+    path_bin = shutil.which("val3dity")
     payload = {
-        "commands": results,
-        "found_executable_paths": sorted(set(found)),
+        "resolution_policy": ["VAL3DITY_BIN", "PATH"],
+        "VAL3DITY_BIN": env_bin,
+        "PATH_val3dity": path_bin,
+        "found_executable_paths": [p for p in [env_bin, path_bin] if p],
+        "repository_search_attempted": False,
+        "repository_clone_or_build_attempted": False,
     }
     write_json(PATH_RECOVERY_JSON, payload)
     return payload
@@ -299,248 +244,40 @@ def search_val3dity() -> Dict:
     return payload
 
 
-def dependency_check() -> Dict:
-    commands = {
-        "cmake": ["cmake", "--version"],
-        "g++": ["g++", "--version"],
-        "clang++": ["clang++", "--version"],
-        "git": ["git", "--version"],
-        "pkg-config": ["pkg-config", "--version"],
-        "python3": ["python3", "--version"],
-    }
-    basic = {name: run_capture(cmd, timeout=30) for name, cmd in commands.items()}
-    pkg_config = {}
-    for pkg in ["geos", "geos++", "eigen3", "cgal"]:
-        pkg_config[pkg] = run_capture(["pkg-config", "--modversion", pkg], timeout=30)
-    system = {
-        "ldconfig": run_capture(["bash", "-lc", "ldconfig -p 2>/dev/null | grep -Ei 'geos|cgal|boost_filesystem|boost_system' | sed -n '1,120p'"], timeout=30),
-        "dpkg": run_capture(["bash", "-lc", "if command -v dpkg >/dev/null 2>&1; then dpkg -l | grep -Ei 'cgal|eigen3|geos|boost-filesystem|boost-system' | sed -n '1,160p'; fi"], timeout=30),
-        "conda": run_capture(["bash", "-lc", "if command -v conda >/dev/null 2>&1; then conda list | grep -Ei 'cgal|eigen|geos|boost' | sed -n '1,160p'; fi"], timeout=60),
-    }
-    return {"basic": basic, "pkg_config": pkg_config, "system": system}
-
-
-def source_state() -> Dict:
-    src = ROOT / "external/val3dity"
-    if not src.exists():
-        return {"exists": False, "path": str(src)}
-    return {
-        "exists": True,
-        "path": str(src),
-        "git_status_short": run_text(["git", "-C", str(src), "status", "--short"], timeout=30),
-        "git_rev_parse_HEAD": run_text(["git", "-C", str(src), "rev-parse", "HEAD"], timeout=30),
-        "git_describe": run_text(["git", "-C", str(src), "describe", "--tags", "--always"], timeout=30),
-    }
-
-
-def clone_source_if_needed(build_info: Dict) -> Tuple[bool, str]:
-    src = ROOT / "external/val3dity"
-    if src.exists():
-        build_info["source_state"] = source_state()
-        return True, "source_exists"
-    src.parent.mkdir(parents=True, exist_ok=True)
-    clone = run_capture(["git", "clone", VAL3DITY_REPO, str(src)], timeout=300)
-    build_info["git_clone"] = clone
-    if clone.get("returncode") != 0:
-        return False, "NETWORK_BLOCKED"
-    build_info["source_state"] = source_state()
-    return True, "cloned"
-
-
-def find_built_val3dity(build_dir: Path) -> Optional[Path]:
-    candidates = [
-        build_dir / "val3dity",
-        build_dir / "app/val3dity",
-        build_dir / "src/val3dity",
-    ]
-    for candidate in candidates:
-        if candidate.exists() and os.access(candidate, os.X_OK):
-            return candidate
-    found = []
-    for path in build_dir.rglob("val3dity"):
-        if path.is_file() and os.access(path, os.X_OK):
-            found.append(path)
-    return found[0] if found else None
-
-
-def classify_build_failure(configure_text: str, compile_text: str, clone_status: str) -> str:
-    text = f"{configure_text}\n{compile_text}".lower()
-    if clone_status == "NETWORK_BLOCKED":
-        return "NETWORK_BLOCKED"
-    deps = ["cgal", "eigen", "geos", "boost", "could not find", "not found", "missing"]
-    if any(token in text for token in deps):
-        return "BLOCKED_DEPENDENCY"
-    return "BUILD_FAILURE"
-
-
-def build_val3dity() -> Dict:
-    build_info: Dict = {
-        "attempted": True,
-        "dependency_check": dependency_check(),
-        "network_check": run_capture(["git", "ls-remote", VAL3DITY_REPO, "HEAD"], timeout=60),
-        "source_state_before": source_state(),
-    }
-    source_ok, clone_status = clone_source_if_needed(build_info)
-    build_info["source_prepare_status"] = clone_status
-    if not source_ok:
-        build_info["status"] = clone_status
-        write_build_report(build_info)
-        return build_info
-
-    src = ROOT / "external/val3dity"
-    build_dir = src / "build"
-    build_dir.mkdir(parents=True, exist_ok=True)
-    COMPILE_LOG.write_text("")
-    configure = run_capture(["cmake", "..", "-DCMAKE_BUILD_TYPE=Release"], cwd=build_dir, timeout=300)
-    CONFIGURE_LOG.write_text((configure.get("stdout") or "") + (configure.get("stderr") or ""))
-    build_info["configure"] = {
-        "command": configure["command"],
-        "cwd": configure["cwd"],
-        "returncode": configure["returncode"],
-        "timeout": configure["timeout"],
-    }
-    if configure.get("returncode") != 0:
-        build_info["status"] = classify_build_failure(CONFIGURE_LOG.read_text(), "", clone_status)
-        write_build_report(build_info)
-        return build_info
-
-    jobs = str(max(1, os.cpu_count() or 1))
-    compile_run = run_capture(["cmake", "--build", ".", f"-j{jobs}"], cwd=build_dir, timeout=1200)
-    COMPILE_LOG.write_text((compile_run.get("stdout") or "") + (compile_run.get("stderr") or ""))
-    build_info["compile"] = {
-        "command": compile_run["command"],
-        "cwd": compile_run["cwd"],
-        "returncode": compile_run["returncode"],
-        "timeout": compile_run["timeout"],
-    }
-    if compile_run.get("returncode") != 0:
-        build_info["status"] = classify_build_failure(CONFIGURE_LOG.read_text(), COMPILE_LOG.read_text(), clone_status)
-        write_build_report(build_info)
-        return build_info
-
-    built = find_built_val3dity(build_dir)
-    if built is None:
-        build_info["status"] = "BUILD_FAILURE"
-        build_info["error"] = "build finished but no executable named val3dity was found"
-        write_build_report(build_info)
-        return build_info
-
-    bin_dir = ROOT / "bin"
-    bin_dir.mkdir(exist_ok=True)
-    link_path = bin_dir / "val3dity"
-    try:
-        if link_path.exists() or link_path.is_symlink():
-            link_path.unlink()
-        link_path.symlink_to(built.resolve())
-        link_mode = "symlink"
-    except OSError:
-        shutil.copy2(built, link_path)
-        link_mode = "copy"
-    verify = verify_val3dity(link_path)
-    build_info.update({
-        "status": "BUILT",
-        "built_val3dity_path": str(built),
-        "repo_bin_path": str(link_path),
-        "link_mode": link_mode,
-        "build_verification": verify,
-    })
-    write_build_report(build_info)
-    return build_info
-
-
-def build_dependency_notes(dep: Dict) -> List[str]:
-    lines = []
-    for name, result in dep.get("basic", {}).items():
-        status = "OK" if result.get("returncode") == 0 else "MISSING"
-        first = ((result.get("stdout") or "") + (result.get("stderr") or "")).splitlines()
-        lines.append(f"- `{name}`: {status}" + (f" - `{first[0]}`" if first else ""))
-    lines.append("")
-    lines.append("Library probes:")
-    for name, result in dep.get("pkg_config", {}).items():
-        status = "OK" if result.get("returncode") == 0 else "NOT_FOUND_BY_PKG_CONFIG"
-        text = ((result.get("stdout") or "") + (result.get("stderr") or "")).splitlines()
-        lines.append(f"- `{name}`: {status}" + (f" - `{text[0]}`" if text else ""))
-    return lines
-
-
 def write_build_report(build_info: Dict) -> None:
     status = build_info.get("status", "UNKNOWN")
     lines = [
-        "# val3dity Build Report",
+        "# val3dity Resolution Report",
         "",
-        f"- Source repo: `{VAL3DITY_REPO}`",
-        f"- Source path: `{ROOT / 'external/val3dity'}`",
-        f"- Build status: `{status}`",
+        "- Resolution policy: `VAL3DITY_BIN`, then `PATH`",
+        f"- Resolution status: `{status}`",
+        f"- Resolved path: `{build_info.get('resolved_path') or 'NONE'}`",
+        "- Repository search attempted: `false`",
+        "- Repository clone/build attempted: `false`",
         "",
-        "## Dependency Check",
+        "The repository does not vendor, clone, compile, copy, or symlink val3dity.",
+        "Provide an executable through `VAL3DITY_BIN` or install it in the container image so it is available on `PATH`.",
         "",
+        f"Official install docs: {VAL3DITY_DOCS}",
+        f"Official usage docs: {VAL3DITY_USAGE}",
     ]
-    lines.extend(build_dependency_notes(build_info.get("dependency_check", {})))
-    lines.extend([
-        "",
-        "## Network Check",
-        "",
-        f"- `git ls-remote` returncode: `{(build_info.get('network_check') or {}).get('returncode')}`",
-        "",
-        "## Source State",
-        "",
-        "Before:",
-        "```json",
-        json.dumps(build_info.get("source_state_before", {}), indent=2),
-        "```",
-        "",
-        "After/source prepare:",
-        "```json",
-        json.dumps(build_info.get("source_state", build_info.get("git_clone", {})), indent=2),
-        "```",
-        "",
-        "## Configure And Build",
-        "",
-        f"- Configure log: `{CONFIGURE_LOG.relative_to(ROOT)}`",
-        f"- Compile log: `{COMPILE_LOG.relative_to(ROOT)}`",
-    ])
-    if status != "BUILT":
-        configure_excerpt = CONFIGURE_LOG.read_text(errors="replace")[-2000:] if CONFIGURE_LOG.exists() else ""
-        compile_excerpt = COMPILE_LOG.read_text(errors="replace")[-2000:] if COMPILE_LOG.exists() else ""
-        lines.extend([
-            "",
-            "## Failure Excerpt",
-            "",
-            "```text",
-            (configure_excerpt or compile_excerpt or "No configure/build log content was captured.").strip(),
-            "```",
-            "",
-            "## Recommended Install Commands",
-            "",
-            "Do not run these automatically here; they require user/admin approval if system packages are needed.",
-            "",
-            "```bash",
-            APT_INSTALL_NOTE,
-            "```",
-            "",
-            f"Official install docs: {VAL3DITY_DOCS}",
-        ])
-    else:
-        lines.extend([
-            "",
-            "## Binary",
-            "",
-            f"- Built path: `{build_info.get('built_val3dity_path')}`",
-            f"- Repo-local path: `{build_info.get('repo_bin_path')}`",
-            f"- Link mode: `{build_info.get('link_mode')}`",
-        ])
     BUILD_REPORT.write_text("\n".join(lines) + "\n")
 
 
 def maybe_enable_val3dity() -> Tuple[Optional[str], Dict, Dict]:
     search = search_val3dity()
+    resolved_path = search.get("path") if search.get("found") else None
+    resolution = {
+        "attempted": False,
+        "status": "FOUND" if resolved_path else "MISSING_VAL3DITY_BIN_OR_PATH",
+        "resolution_policy": ["VAL3DITY_BIN", "PATH"],
+        "resolved_path": resolved_path,
+        "repository_clone_or_build_attempted": False,
+    }
+    write_build_report(resolution)
     if search.get("found"):
-        return search["path"], search, {"attempted": False, "status": "NOT_NEEDED"}
-    build_info = build_val3dity()
-    search_after = search_val3dity()
-    if search_after.get("found"):
-        return search_after["path"], search_after, build_info
-    return None, search_after, build_info
+        return search["path"], search, resolution
+    return None, search, resolution
 
 
 def run_schema_validation() -> Dict:
@@ -776,7 +513,7 @@ def update_metrics(
                 "report_path": None,
                 "stdout_path": None,
                 "stderr_path": None,
-                "failure_reason": "val3dity executable was not available; source build did not complete.",
+                "failure_reason": "VAL3DITY_BIN was unset or invalid and val3dity was not available on PATH.",
             }
             write_json(bdir / "val3dity_parsed.json", blocked_record)
             metric.update({
@@ -932,15 +669,16 @@ def write_final_report(
         "",
         "## 1. Purpose",
         "",
-        "Previous status was `BLOCKED_VAL3DITY_MISSING`. This rerun searches for or builds `val3dity`, then validates the existing `relation_readout.city.json` artifacts only. No CityJSON regeneration or relation read-out code change was performed.",
+        "Previous status was `BLOCKED_VAL3DITY_MISSING`. This rerun resolves `val3dity` from `VAL3DITY_BIN` or `PATH`, then validates the existing `relation_readout.city.json` artifacts only. No CityJSON regeneration or relation read-out code change was performed.",
         "",
         "## 2. val3dity Installation/Search Result",
         "",
         f"- Found path: `{val3dity_bin or 'NONE'}`",
         f"- Path recovery search: `{PATH_RECOVERY_JSON.relative_to(ROOT)}`",
         f"- Search JSON: `{SEARCH_JSON.relative_to(ROOT)}`",
-        f"- Build report: `{BUILD_REPORT.relative_to(ROOT)}`",
-        f"- Build status: `{build.get('status')}`",
+        f"- Resolution report: `{BUILD_REPORT.relative_to(ROOT)}`",
+        f"- Resolution status: `{build.get('status')}`",
+        "- Repository clone/build attempted: `false`",
     ]
     if search.get("help_output"):
         lines.extend([
@@ -949,27 +687,14 @@ def write_final_report(
             str(search.get("help_output", ""))[:1200],
             "```",
         ])
-    if build.get("status") not in {"BUILT", "NOT_NEEDED"}:
-        lines.extend([
-            "",
-            "Build did not produce a runnable validator. Configure/build logs are preserved:",
-            f"- `{CONFIGURE_LOG.relative_to(ROOT)}`",
-            f"- `{COMPILE_LOG.relative_to(ROOT)}`",
-            "",
-            "Recommended dependency install note, not executed automatically:",
-            "```bash",
-            APT_INSTALL_NOTE,
-            "```",
-        ])
     if PATH_RECOVERY_JSON.exists():
         recovery = read_json(PATH_RECOVERY_JSON)
         found_paths = recovery.get("found_executable_paths") or []
-        grep_lines = ((recovery.get("commands", {}).get("grep_val3dity_commands", {}) or {}).get("stdout") or "").splitlines()
         lines.extend([
             "",
-            "Path recovery result:",
-            f"- Executable paths found by requested broad search: {', '.join(found_paths) if found_paths else 'none'}",
-            f"- `grep -R \"val3dity\" -n scripts src results | head -200` matched {len(grep_lines)} lines; scripts call `val3dity` by command name, but no local executable path was recovered.",
+            "Approved resolver result:",
+            f"- Executable paths supplied by `VAL3DITY_BIN`/`PATH`: {', '.join(found_paths) if found_paths else 'none'}",
+            "- Repository-local executable search was not attempted.",
         ])
     lines.extend([
         "",
@@ -1052,12 +777,12 @@ def write_final_report(
     elif final_decision == "E0_FORMAL_NG":
         lines.append("- val3dity ran but simple/medium rule failed; fix CityJSON construction before E1.")
     else:
-        lines.append("- Resolve validator build/install blocker first, then rerun this validation-only script.")
+        lines.append("- Supply `VAL3DITY_BIN` or add val3dity to the container `PATH`, then rerun this validation-only script.")
     lines.extend([
         "",
         "## Self-verification",
         "",
-        f"- {'PASS' if val3dity_bin or build.get('status') not in {'BUILT', 'NOT_NEEDED'} else 'FAIL'}: val3dity executable found or build failure reason written.",
+        f"- {'PASS' if val3dity_bin or build.get('status') == 'MISSING_VAL3DITY_BIN_OR_PATH' else 'FAIL'}: val3dity executable found or explicit resolver failure written.",
         f"- {'PASS' if val3dity_bin and all(r.get('val3dity_status') not in {'BLOCKED_DEPENDENCY', 'NETWORK_BLOCKED', 'BUILD_FAILURE'} for r in rows) else 'BLOCKED'}: 6 bid x relation_readout.city.json validation attempted.",
         f"- {'PASS' if all((OUT_ROOT / r['bid'] / 'val3dity_report.json').exists() or r.get('val3dity_status') in {'BLOCKED_DEPENDENCY', 'NETWORK_BLOCKED', 'BUILD_FAILURE', 'REPORT_MISSING', 'TIMEOUT', 'PARSE_FAIL'} for r in rows) else 'FAIL'}: each bid has val3dity_report.json or explicit failure reason.",
         f"- {'PASS' if all((OUT_ROOT / r['bid'] / 'metrics_val3dity_rerun.json').exists() for r in rows) else 'FAIL'}: metrics_val3dity_rerun.json exists for each bid.",
@@ -1084,16 +809,15 @@ def main() -> int:
     blocked_status: Optional[str] = None
 
     if val3dity_bin is None:
-        status = build.get("status") or "BLOCKED_DEPENDENCY"
         blocker = "DEPENDENCY"
-        blocked_status = status if status in {"NETWORK_BLOCKED", "BUILD_FAILURE"} else "BLOCKED_DEPENDENCY"
+        blocked_status = "BLOCKED_DEPENDENCY"
         schema = {
             "cjio_path": shutil.which("cjio"),
             "items": [
                 {
                     "bid": bid,
                     "schema_status": "SKIPPED_VAL3DITY_ENABLE_BLOCKED",
-                    "notes": "schema validation skipped because val3dity enablement stopped at source build/dependency phase",
+                    "notes": "schema validation skipped because VAL3DITY_BIN/PATH did not resolve a runnable validator",
                     "stdout_path": None,
                     "stderr_path": None,
                 }

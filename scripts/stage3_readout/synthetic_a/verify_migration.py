@@ -4,8 +4,9 @@ Part D verification: confirm that the new modular src/stage3/ preserves the
 behavior of the original monolithic `building_to_citygml_v4.py`.
 
 Strategy:
-  1. Import functions from both the legacy/planarsplat_ref/building_to_citygml_v4.py
-     (reference) and the new src/stage3/ modules.
+  1. Import functions from both the quarantined legacy reference and the new
+     src/stage3/ modules. The reference defaults to the sibling artifact
+     workspace and can be overridden with JBGS_LEGACY_REFERENCE_PATH.
   2. Regenerate primitives for several 3D BAG buildings using the shared
      scripts/stage3_readout/synthetic_a/primitives.py (unchanged from original).
   3. Run both pipelines on identical inputs and compare outputs.
@@ -15,12 +16,40 @@ import importlib.util
 import os
 import sys
 import tempfile
+from pathlib import Path
 
 import numpy as np
 
-ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+REPO_ROOT = Path(__file__).resolve().parents[3]
+ROOT = str(REPO_ROOT)
 sys.path.insert(0, ROOT)
-sys.path.insert(0, os.path.join(ROOT, 'scripts', 'synthetic_a'))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+
+def resolve_legacy_reference() -> Path:
+    override = os.environ.get('JBGS_LEGACY_REFERENCE_PATH')
+    if override:
+        reference = Path(override).expanduser()
+    else:
+        artifact_root = Path(
+            os.environ.get(
+                'JBGS_ARTIFACT_ROOT',
+                str(REPO_ROOT.parent / 'JointBuildGS-artifacts'),
+            )
+        ).expanduser()
+        reference = (
+            artifact_root
+            / 'quarantine/20260730-semantic-restructure/legacy/'
+            / 'planarsplat_ref/building_to_citygml_v4.py'
+        )
+    reference = reference.resolve()
+    if not reference.is_file():
+        raise FileNotFoundError(
+            'Legacy migration reference is unavailable at '
+            f'{reference}. Set JBGS_LEGACY_REFERENCE_PATH to the preserved '
+            'building_to_citygml_v4.py file.'
+        )
+    return reference
 
 # New modular pipeline
 from src.stage3.clustering import cluster_primitives as new_cluster
@@ -34,9 +63,11 @@ from src.stage3.plane_intersection import (
 )
 from src.stage3.citygml_export import build_cityjson as new_cityjson
 
-# Legacy monolithic reference
-_legacy_path = os.path.join(ROOT, 'legacy/planarsplat_ref/building_to_citygml_v4.py')
-_spec = importlib.util.spec_from_file_location('legacy_v4', _legacy_path)
+# Quarantined monolithic reference
+_legacy_path = resolve_legacy_reference()
+_spec = importlib.util.spec_from_file_location('legacy_v4', str(_legacy_path))
+if _spec is None or _spec.loader is None:
+    raise ImportError(f'Cannot load legacy reference module from {_legacy_path}')
 legacy = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(legacy)
 
