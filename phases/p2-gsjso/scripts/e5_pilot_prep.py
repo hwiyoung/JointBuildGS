@@ -444,13 +444,13 @@ def write_versions(path: Path, run_id: str, source_files: list[Path], candidate_
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--run-id", default=datetime.now().strftime("e5p_prep_%Y%m%d_%H%M%S"))
-    ap.add_argument("--candidate-csv", default="docs/experiments/e5_pilot_block/tables/e5_pilot_block_candidates.csv")
+    ap.add_argument("--candidate-csv", default="docs/experiments/pilots/e5_pilot_block/tables/e5_pilot_block_candidates.csv")
     ap.add_argument("--map-png", default="docs/figs/e5_pilot_block_candidates.png")
-    ap.add_argument("--summary-md", default="docs/experiments/e5_pilot_block/reports/e5_pilot_block_candidates_summary.md")
+    ap.add_argument("--summary-md", default="docs/experiments/pilots/e5_pilot_block/reports/e5_pilot_block_candidates_summary.md")
     args = ap.parse_args()
 
     footprint_path = REPO / "results/tum_transfer/analysis/footprints_aoi.geojson"
-    aux_path = REPO / "docs/experiments/population_aux/tables/population_aux_v4.csv"
+    aux_path = REPO / "docs/experiments/input-and-alignment/population_aux/tables/population_aux_v4.csv"
     manual_path = REPO / "docs/research/methodology/tables/manual_review_judgments.csv"
     d12_path = REPO / "results/tum_transfer/mob/overseg_lever/d12_buckets.csv"
     d4_eval = REPO / "results/tum_transfer/mob/eval_d4_gssem.csv"

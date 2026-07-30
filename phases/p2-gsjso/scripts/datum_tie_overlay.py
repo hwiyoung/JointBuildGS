@@ -44,7 +44,7 @@ from projection_datum import as_ellipsoidal_points, describe_projection_config  
 RUN_ID = "20260703_datum_tie_overlay"
 RUN_DIR = REPO / "phases" / "p2-gsjso" / "runs" / RUN_ID
 FIG_DIR = REPO / "docs/figs/datum_tie_overlay"
-OUT_MD = REPO / "docs/experiments/datum_tie_overlay/reports/datum_tie_overlay.md"
+OUT_MD = REPO / "docs/experiments/input-and-alignment/datum_tie_overlay/reports/datum_tie_overlay.md"
 SUCCESS_CSV = REPO / "phases/p0-audit/runs/w2_1d_bucket_relabel_20260612_final/docs/W2_1c_paired_status.csv"
 ZETA_LEFT = 45.7
 ZETA_RIGHT = 48.126

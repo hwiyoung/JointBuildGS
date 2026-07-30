@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """P2 gssem re-qual — build the gssem|smrf comparison doc for D/D4 (READ-ONLY; observe only, no interpretation).
-Reads numbers_{smrf,gssem}.json (gssem_requal_numbers.py output) and writes docs/experiments/w_gssem_requal/reports/W_gssem_requal.md:
+Reads numbers_{smrf,gssem}.json (gssem_requal_numbers.py output) and writes docs/experiments/evaluation/w_gssem_requal/reports/W_gssem_requal.md:
 RMS->ref (mean + 4906972/4906969/4908023), target-only facets (11 bldg), val3dity error codes, all gssem|smrf.
 """
 import json
@@ -104,5 +104,5 @@ w("- 숫자: `gssem_requal_numbers.py {smrf,gssem}` → `numbers_{smrf,gssem}.js
 w("- 그림: `gssem_requal_figs.py`. smrf 백업: `gssem_requal_backup/perbuilding_smrf.tar` + `ref_rms_{D,d4}_smrf.csv` + `eval_*_smrf.json`.")
 w("- 디스크 최종 read-out = **gssem**(이후 smrf 재실행 금지). 생성 assembled/valid-solid 불변(§0).")
 
-(REPO / "docs/experiments/w_gssem_requal/reports/W_gssem_requal.md").write_text("\n".join(L) + "\n")
-print(f"[done] -> {REPO/'docs/experiments/w_gssem_requal/reports/W_gssem_requal.md'}")
+(REPO / "docs/experiments/evaluation/w_gssem_requal/reports/W_gssem_requal.md").write_text("\n".join(L) + "\n")
+print(f"[done] -> {REPO/'docs/experiments/evaluation/w_gssem_requal/reports/W_gssem_requal.md'}")

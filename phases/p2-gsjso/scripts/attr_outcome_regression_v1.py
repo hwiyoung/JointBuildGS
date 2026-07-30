@@ -1283,7 +1283,7 @@ def write_report(
         )
     lines += [
         "",
-        "감도 계수 전수는 `docs/experiments/attr_outcome_regression/tables/attr_outcome_regression_sensitivity_v1.csv`에 기록했다.",
+        "감도 계수 전수는 `docs/experiments/evaluation/attr_outcome_regression/tables/attr_outcome_regression_sensitivity_v1.csv`에 기록했다.",
         "",
         "일반 추정(OLS)과 로버스트 추정(Huber) 부호 불일치:",
         "",
@@ -1314,7 +1314,7 @@ def write_report(
         )
     lines += [
         "",
-        "영향점 제외 재추정 계수는 `docs/experiments/attr_outcome_regression/tables/attr_outcome_regression_coefficients_v1.csv`의 `*_cook_excluded` variant에 기록했다. 영향점 목록 전수는 `docs/experiments/attr_outcome_regression/tables/attr_outcome_regression_diagnostics_v1.csv`에 기록했다.",
+        "영향점 제외 재추정 계수는 `docs/experiments/evaluation/attr_outcome_regression/tables/attr_outcome_regression_coefficients_v1.csv`의 `*_cook_excluded` variant에 기록했다. 영향점 목록 전수는 `docs/experiments/evaluation/attr_outcome_regression/tables/attr_outcome_regression_diagnostics_v1.csv`에 기록했다.",
         "",
         "## 층화 병기",
         "",
@@ -1348,9 +1348,9 @@ def write_report(
         "## 산출 파일",
         "",
         f"- 회귀 입력 스냅샷: `{out_paths['snapshot']}`",
-        "- 계수 전수: `docs/experiments/attr_outcome_regression/tables/attr_outcome_regression_coefficients_v1.csv`",
-        "- 영향점 전수: `docs/experiments/attr_outcome_regression/tables/attr_outcome_regression_diagnostics_v1.csv`",
-        "- 감도 전수: `docs/experiments/attr_outcome_regression/tables/attr_outcome_regression_sensitivity_v1.csv`",
+        "- 계수 전수: `docs/experiments/evaluation/attr_outcome_regression/tables/attr_outcome_regression_coefficients_v1.csv`",
+        "- 영향점 전수: `docs/experiments/evaluation/attr_outcome_regression/tables/attr_outcome_regression_diagnostics_v1.csv`",
+        "- 감도 전수: `docs/experiments/evaluation/attr_outcome_regression/tables/attr_outcome_regression_sensitivity_v1.csv`",
         f"- versions: `{out_paths['versions']}`",
     ]
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -1420,15 +1420,15 @@ def source_fingerprints(repo: Path, args) -> dict[str, tuple[str, str]]:
 def build_argparser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser()
     ap.add_argument("--attr-csv", default="docs/archive/pointcloud_attributes/v1_2/tables/pointcloud_attributes_v1_2.csv")
-    ap.add_argument("--population", default="docs/experiments/population_aux/tables/population_aux_v4.csv")
+    ap.add_argument("--population", default="docs/experiments/input-and-alignment/population_aux/tables/population_aux_v4.csv")
     ap.add_argument("--manual-judgments", default="docs/research/methodology/tables/manual_review_judgments.csv")
     ap.add_argument("--w2-status", default="phases/p0-audit/runs/w2_1_roofer_default_20260612_152729/building_reconstruction_status.csv")
     ap.add_argument("--gen-8way", default="results/tum_transfer/mob/overseg_lever/gen_8way.csv")
-    ap.add_argument("--out-report", default="docs/experiments/attr_outcome_regression/reports/W_attr_outcome_regression.md")
+    ap.add_argument("--out-report", default="docs/experiments/evaluation/attr_outcome_regression/reports/W_attr_outcome_regression.md")
     ap.add_argument("--out-snapshot", default="docs/regression_input_snapshot.csv")
-    ap.add_argument("--out-coefs", default="docs/experiments/attr_outcome_regression/tables/attr_outcome_regression_coefficients_v1.csv")
-    ap.add_argument("--out-diag", default="docs/experiments/attr_outcome_regression/tables/attr_outcome_regression_diagnostics_v1.csv")
-    ap.add_argument("--out-sens", default="docs/experiments/attr_outcome_regression/tables/attr_outcome_regression_sensitivity_v1.csv")
+    ap.add_argument("--out-coefs", default="docs/experiments/evaluation/attr_outcome_regression/tables/attr_outcome_regression_coefficients_v1.csv")
+    ap.add_argument("--out-diag", default="docs/experiments/evaluation/attr_outcome_regression/tables/attr_outcome_regression_diagnostics_v1.csv")
+    ap.add_argument("--out-sens", default="docs/experiments/evaluation/attr_outcome_regression/tables/attr_outcome_regression_sensitivity_v1.csv")
     ap.add_argument("--fig-dir", default="docs/figs/attr_outcome_regression_v1")
     ap.add_argument("--versions", default=f"phases/p2-gsjso/runs/{RUN_ID}/versions.txt")
     return ap

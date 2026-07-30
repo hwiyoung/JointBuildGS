@@ -50,9 +50,9 @@ R1P_MEASUREMENTS = R1P_RUN / "fm_dense_measurements.csv"
 R1P_MANIFEST = R1P_RUN / "fm_dense_manifest.json"
 
 OLD_LADDER = REPO / "docs/archive/boundary_map/v4/tables/boundary_map_v4_ladder.csv"
-OLD_PUBLIC_MANIFEST = REPO / "docs/experiments/boundary_map/manifests/boundary_map_v4_manifest.json"
+OLD_PUBLIC_MANIFEST = REPO / "docs/experiments/input-and-alignment/boundary_map/manifests/boundary_map_v4_manifest.json"
 OLD_FIGURE = REPO / "docs/figs/boundary_map/boundary_map_v4_map.png"
-ENV_MANIFEST = REPO / "docs/experiments/e5_c001_s3ap/manifests/e5_c001_s3ap_fm_env_manifest.json"
+ENV_MANIFEST = REPO / "docs/experiments/input-and-alignment/e5_c001_s3ap/manifests/e5_c001_s3ap_fm_env_manifest.json"
 FOOTPRINTS = REPO / "results/tum_transfer/analysis/footprints_aoi.geojson"
 TRAIN_MANIFEST = (
     REPO
@@ -68,18 +68,18 @@ RUN_MEASURE_MANIFEST = (
     RUN_DIR / "anchor_census_supplement_measure_manifest.json"
 )
 
-DOC_PAIRS = REPO / "docs/experiments/boundary_map/tables/anchor_census_supplement_pairs.csv"
+DOC_PAIRS = REPO / "docs/experiments/input-and-alignment/boundary_map/tables/anchor_census_supplement_pairs.csv"
 DOC_MEASUREMENTS = (
-    REPO / "docs/experiments/boundary_map/tables/anchor_census_supplement_measurements.csv"
+    REPO / "docs/experiments/input-and-alignment/boundary_map/tables/anchor_census_supplement_measurements.csv"
 )
 DOC_RELIABILITY = (
-    REPO / "docs/experiments/boundary_map/tables/anchor_census_supplement_same_block_reliability_pairs.csv"
+    REPO / "docs/experiments/input-and-alignment/boundary_map/tables/anchor_census_supplement_same_block_reliability_pairs.csv"
 )
-NEW_LADDER = REPO / "docs/experiments/boundary_map/tables/boundary_map_v4_1_ladder.csv"
-PUBLIC_MANIFEST = REPO / "docs/experiments/boundary_map/manifests/anchor_census_supplement_manifest.json"
+NEW_LADDER = REPO / "docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v4_1_ladder.csv"
+PUBLIC_MANIFEST = REPO / "docs/experiments/input-and-alignment/boundary_map/manifests/anchor_census_supplement_manifest.json"
 SUMMARY = (
     REPO
-    / "docs/experiments/boundary_map/reports/W_anchor_census_supplement_boundary_map_v4_1_summary_20260720.md"
+    / "docs/experiments/input-and-alignment/boundary_map/reports/W_anchor_census_supplement_boundary_map_v4_1_summary_20260720.md"
 )
 
 TARGET_IDS = (

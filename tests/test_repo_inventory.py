@@ -46,7 +46,7 @@ class RepoInventoryUnitTests(unittest.TestCase):
             "v1",
         )
         self.assertEqual(
-            repo_inventory.version_label_for("docs/experiments/boundary_map/tables/boundary_map_v4_1_ladder.csv", "boundary_map", self.config),
+            repo_inventory.version_label_for("docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v4_1_ladder.csv", "boundary_map", self.config),
             "v4_1",
         )
         self.assertEqual(repo_inventory.version_tuple("v4_1"), (4, 1))
@@ -155,7 +155,7 @@ class RepoInventoryUnitTests(unittest.TestCase):
                     "reviewed_on": "2026-07-29",
                     "documents": [
                         {
-                            "path": "docs/experiments/boundary_map/tables/boundary_map_v4_1_ladder.csv",
+                            "path": "docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v4_1_ladder.csv",
                             "status": "canonical",
                             "canonical_for": "current_ladder",
                             "reason": "reviewed",
@@ -165,7 +165,7 @@ class RepoInventoryUnitTests(unittest.TestCase):
             ]
         }
         reviewed = repo_inventory.reviewed_document_map(config)
-        item = reviewed["docs/experiments/boundary_map/tables/boundary_map_v4_1_ladder.csv"]
+        item = reviewed["docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v4_1_ladder.csv"]
         self.assertEqual(item["reviewed_family_id"], "boundary_map")
         self.assertEqual(item["decision_record"], "docs/catalog/families/BOUNDARY_MAP.md")
 
@@ -209,7 +209,7 @@ class RepoInventoryUnitTests(unittest.TestCase):
             manifest.parent.mkdir(parents=True)
             manifest.write_text(
                 "migration_id,old_path,new_path,lifecycle_status,old_path_retained,sha256\n"
-                f"T,docs/old.csv,docs/experiments/boundary_map/tables/ladder.csv,canonical,false,{digest}\n",
+                f"T,docs/old.csv,docs/experiments/input-and-alignment/boundary_map/tables/ladder.csv,canonical,false,{digest}\n",
                 encoding="utf-8",
             )
             migrations = repo_inventory.load_path_migrations(
@@ -228,7 +228,7 @@ class RepoInventoryUnitTests(unittest.TestCase):
             resolved = repo_inventory.apply_path_migrations(root, [relation], migrations)
             self.assertEqual(
                 resolved[0].target_path,
-                "docs/experiments/boundary_map/tables/ladder.csv",
+                "docs/experiments/input-and-alignment/boundary_map/tables/ladder.csv",
             )
             self.assertEqual(resolved[0].target_exists, "yes")
             self.assertEqual(resolved[0].confidence, "text+path_migration")

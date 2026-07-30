@@ -34,9 +34,9 @@ DATA_ROOT = REPO / "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20"
 PYDEPS = REPO / "results/tum_transfer/e5_s1_full_factor/C001/python_deps/timm_0_4_12"
 TORCH_HOME = REPO / "results/tum_transfer/e5_s1_full_factor/C001/torch_hub"
 FIG_DIR = REPO / "docs/figs/e5_c001_s1_full_factor/normal_precheck"
-CSV_NORMAL = REPO / "docs/experiments/e5_c001_s1_full/tables/e5_c001_s1_full_normal_precheck.csv"
-CSV_INSTALL = REPO / "docs/experiments/e5_c001_s1_full/tables/e5_c001_s1_full_normal_precheck_runtime.csv"
-CSV_ISSUES = REPO / "docs/experiments/e5_c001_s1_full/tables/e5_c001_s1_full_normal_precheck_issues.csv"
+CSV_NORMAL = REPO / "docs/experiments/joint-optimization/e5_c001_s1_full/tables/e5_c001_s1_full_normal_precheck.csv"
+CSV_INSTALL = REPO / "docs/experiments/joint-optimization/e5_c001_s1_full/tables/e5_c001_s1_full_normal_precheck_runtime.csv"
+CSV_ISSUES = REPO / "docs/experiments/joint-optimization/e5_c001_s1_full/tables/e5_c001_s1_full_normal_precheck_issues.csv"
 TARGETS = {
     "textureless": ["4907199", "8568391", "8568392"],
     "defect": ["60098", "4907186", "4907188", "4907194", "4907195"],

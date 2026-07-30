@@ -3,7 +3,7 @@
 READ-ONLY: reads ref_rms_*.csv only (no disk geometry change, no recompute). Observation only (no verdict).
 Classifiers per GS arm: gssem (method) vs smrf (control) vs raw (image MVS baseline) vs LiDAR (upper bound).
 Views: (1) on smrf-success set, (2) gssem-extra (smrf-fail) buildings, (3) headline gssem∩raw set.
-Writes the PART-A section of docs/experiments/w_matched_rms/reports/W_matched_rms.md (PART B appended by matched_rms_partB).
+Writes the PART-A section of docs/experiments/evaluation/w_matched_rms/reports/W_matched_rms.md (PART B appended by matched_rms_partB).
 """
 import csv, statistics as st
 from pathlib import Path

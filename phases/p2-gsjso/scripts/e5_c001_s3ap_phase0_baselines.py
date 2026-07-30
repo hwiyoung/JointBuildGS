@@ -43,8 +43,8 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection  # noqa: E402
 REPO = Path(__file__).resolve().parents[3]
 CONFIG = REPO / "phases/p2-gsjso/configs/e5_c001_s3ap_phase0_baselines.json"
 RUN_DIR = REPO / "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase0_baselines"
-OUT_P0 = REPO / "docs/experiments/e5_c001_s3ap/tables/planefit_baseline.csv"
-OUT_MVS = REPO / "docs/experiments/e5_c001_s3ap/tables/mvs_hole_check.csv"
+OUT_P0 = REPO / "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/planefit_baseline.csv"
+OUT_MVS = REPO / "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/mvs_hole_check.csv"
 FIG_DIR = REPO / "docs/figs/e5_c001_s3ap_phase0"
 P0_FIG = FIG_DIR / "p0_planefit_baseline.png"
 MVS_FIG = FIG_DIR / "mvs_hole_check.png"
@@ -67,7 +67,7 @@ FOOTPRINTS = REPO / "results/tum_transfer/analysis/footprints_aoi.geojson"
 LOD2_DIR = REPO / "phases/p0-audit/data/raw/lod2"
 TRAIN_MANIFEST = REPO / "results/tum_transfer/e5_pilot/C001/C001_train_prep_manifest.json"
 PROJECTION_DATUM = REPO / "configs/projection_datum.json"
-GROUND_SOURCE = REPO / "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_fm_retri_rescore.csv"
+GROUND_SOURCE = REPO / "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_fm_retri_rescore.csv"
 
 
 def now() -> str:

@@ -2,7 +2,7 @@
 # P2-D5 PART 2 — gssem RE-QUAL for the 6 D5 arms + §5 cp judgment table.
 # WAITS for the D5 1-GPU resume to finish (D5_1GPU_DONE), at which point disk per-building = smrf (resume's
 # last eval). Then mirrors PART 1 (run_gssem_requal.sh): snapshot smrf -> regenerate gssem -> gssem RMS ->
-# snapshot gssem -> build §5 cp table (D5a/b/c vs D4, gssem; smrf alongside) into docs/experiments/w_d5/reports/W_D5.md.
+# snapshot gssem -> build §5 cp table (D5a/b/c vs D4, gssem; smrf alongside) into docs/experiments/joint-optimization/w_d5/reports/W_D5.md.
 # CPU/docker only (no GPU, no training, D5 already done). NO outlier-trim / refinement. EPSG:25832. Observe only.
 # Launch: setsid nohup bash phases/p2-gsjso/scripts/run_d5_gssem_requal.sh > results/tum_transfer/mob/d5_requal.log 2>&1 < /dev/null &
 set -u
@@ -59,6 +59,6 @@ a=gen(os.path.join(BK,"eval_d5_gssem.pre.json")); b=gen(os.path.join(OUT,"eval_d
 print(f"[verify] D5 gssem generation pre==post: {a==b}")
 PY
 
-# 5) §5 cp judgment table -> docs/experiments/w_d5/reports/W_D5.md
+# 5) §5 cp judgment table -> docs/experiments/joint-optimization/w_d5/reports/W_D5.md
 python3 phases/p2-gsjso/scripts/d5_cp_table.py > "$BK/d5_cp_table.log" 2>&1
 echo "[d5-requal] DONE $(date '+%F %T')" | tee "$BK/PART2_DONE"

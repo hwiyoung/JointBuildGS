@@ -117,8 +117,8 @@ class Fixture:
             ),
         })
         lock["tilt_score_source"] = {
-            "scores_csv": "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_phase3_scores.csv",
-            "perturbation_csv": "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_perturbation.csv",
+            "scores_csv": "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_phase3_scores.csv",
+            "perturbation_csv": "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_perturbation.csv",
             "expected_nonzero_height_rows": 24,
             "require_evaluation_complete": True,
         }
@@ -168,19 +168,19 @@ class Fixture:
             },
             "outputs": {
                 "manifest": "results/tum_transfer/e5_s3ap_phase3/manifest.json",
-                "scores_csv": "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_phase3_scores.csv",
-                "perturbation_csv": "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_perturbation.csv",
+                "scores_csv": "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_phase3_scores.csv",
+                "perturbation_csv": "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_perturbation.csv",
                 "perturbation_cells_csv": (
-                    "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_perturbation_cells.csv"
+                    "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_perturbation_cells.csv"
                 ),
                 "tilt_trigger": str(archive.DEFAULT_TRIGGER),
             },
         })
 
     def _build_phase3_sources(self) -> dict:
-        score_path = self.repo / "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_phase3_scores.csv"
-        perturb_path = self.repo / "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_perturbation.csv"
-        cells_path = self.repo / "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_perturbation_cells.csv"
+        score_path = self.repo / "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_phase3_scores.csv"
+        perturb_path = self.repo / "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_perturbation.csv"
+        cells_path = self.repo / "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_perturbation_cells.csv"
         score_path.parent.mkdir(parents=True, exist_ok=True)
         score_jobs, perturb_jobs = archive.phase3_job_contract(self.base.jobs)
         first_nonzero = next(
@@ -914,7 +914,7 @@ class Tilt18ArchiveTest(unittest.TestCase):
                 self.assert_no_tilt_outputs(fixture)
         with tempfile.TemporaryDirectory() as tmp:
             fixture = Fixture(Path(tmp))
-            score = fixture.repo / "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_phase3_scores.csv"
+            score = fixture.repo / "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_phase3_scores.csv"
             score.write_bytes(score.read_bytes() + b"tamper\n")
             with self.assertRaisesRegex(archive.ArchiveError, "hash mismatch"):
                 fixture.archive()
@@ -931,7 +931,7 @@ class Tilt18ArchiveTest(unittest.TestCase):
         for name in cases:
             with self.subTest(name=name), tempfile.TemporaryDirectory() as tmp:
                 fixture = Fixture(Path(tmp))
-                path = fixture.repo / "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_perturbation.csv"
+                path = fixture.repo / "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_perturbation.csv"
                 fields, rows = read_csv(path)
                 nonzero = next(
                     index for index, row in enumerate(rows)
@@ -1046,7 +1046,7 @@ class Tilt18ArchiveTest(unittest.TestCase):
         for name in cases:
             with self.subTest(name=name), tempfile.TemporaryDirectory() as tmp:
                 fixture = Fixture(Path(tmp))
-                path = fixture.repo / "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_phase3_scores.csv"
+                path = fixture.repo / "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_phase3_scores.csv"
                 fields, rows = read_csv(path)
                 height = next(
                     index for index, row in enumerate(rows)
@@ -1079,7 +1079,7 @@ class Tilt18ArchiveTest(unittest.TestCase):
     def test_self_consistent_unlinked_score_forgery_hits_external_root(self):
         with tempfile.TemporaryDirectory() as tmp:
             fixture = Fixture(Path(tmp))
-            path = fixture.repo / "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_phase3_scores.csv"
+            path = fixture.repo / "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_phase3_scores.csv"
             fields, rows = read_csv(path)
             row = next(
                 item for item in rows
@@ -1104,7 +1104,7 @@ class Tilt18ArchiveTest(unittest.TestCase):
         for name in cases:
             with self.subTest(name=name), tempfile.TemporaryDirectory() as tmp:
                 fixture = Fixture(Path(tmp))
-                path = fixture.repo / "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_perturbation_cells.csv"
+                path = fixture.repo / "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_perturbation_cells.csv"
                 fields, rows = read_csv(path)
                 nonzero = next(
                     index for index, row in enumerate(rows)
@@ -1149,7 +1149,7 @@ class Tilt18ArchiveTest(unittest.TestCase):
             with self.subTest(name=name), tempfile.TemporaryDirectory() as tmp:
                 fixture = Fixture(Path(tmp))
                 perturb_path = (
-                    fixture.repo / "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_perturbation.csv"
+                    fixture.repo / "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_perturbation.csv"
                 )
                 _, perturb_rows = read_csv(perturb_path)
                 perturb_by_id = {
@@ -1162,7 +1162,7 @@ class Tilt18ArchiveTest(unittest.TestCase):
                     for row in perturb_rows
                 }
                 path = (
-                    fixture.repo / "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_perturbation_cells.csv"
+                    fixture.repo / "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_perturbation_cells.csv"
                 )
                 fields, rows = read_csv(path)
                 index = next(
@@ -1219,7 +1219,7 @@ class Tilt18ArchiveTest(unittest.TestCase):
             with self.subTest(name=name), tempfile.TemporaryDirectory() as tmp:
                 fixture = Fixture(Path(tmp))
                 path = (
-                    fixture.repo / "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_perturbation_cells.csv"
+                    fixture.repo / "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_perturbation_cells.csv"
                 )
                 fields, rows = read_csv(path)
                 row = next(
@@ -1266,7 +1266,7 @@ class Tilt18ArchiveTest(unittest.TestCase):
             phase3["perturbation"]["trigger_rule"] = forged_rule
             write_json(phase3_path, phase3)
             perturb_path = (
-                fixture.repo / "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_perturbation.csv"
+                fixture.repo / "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_perturbation.csv"
             )
             fields, rows = read_csv(perturb_path)
             for row in rows:
@@ -1294,7 +1294,7 @@ class Tilt18ArchiveTest(unittest.TestCase):
                     path.write_bytes(path.read_bytes() + b" ")
                 else:
                     archived = root / "snapshot" / (
-                        "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_phase3_scores.csv"
+                        "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_phase3_scores.csv"
                     )
                     archived.write_bytes(archived.read_bytes() + b"tamper")
                 with self.assertRaises(archive.ArchiveError):
@@ -1355,7 +1355,7 @@ class Tilt18ArchiveTest(unittest.TestCase):
     def test_final_revalidation_closes_collection_manifest_toctou(self):
         with tempfile.TemporaryDirectory() as tmp:
             fixture = Fixture(Path(tmp))
-            score = fixture.repo / "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_phase3_scores.csv"
+            score = fixture.repo / "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_phase3_scores.csv"
 
             def mutate_after_collection() -> None:
                 score.write_bytes(score.read_bytes() + b"toctou")

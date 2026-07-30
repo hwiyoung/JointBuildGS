@@ -44,8 +44,8 @@ STATUS = (
     / "building_reconstruction_status.csv"
 )
 FOOTPRINTS = REPO / "results/tum_transfer/analysis/footprints_aoi.geojson"
-BASELINE_SCORES = REPO / "docs/experiments/qs_baseline178/tables/qs_baseline178_scores.csv"
-BASELINE_MANIFEST = REPO / "docs/experiments/qs_baseline178/manifests/qs_baseline178_manifest.json"
+BASELINE_SCORES = REPO / "docs/experiments/evaluation/qs_baseline178/tables/qs_baseline178_scores.csv"
+BASELINE_MANIFEST = REPO / "docs/experiments/evaluation/qs_baseline178/manifests/qs_baseline178_manifest.json"
 PRIOR_C001_MANIFEST = (
     REPO / "results/tum_transfer/e5_pilot/C001/C001_train_prep_manifest.json"
 )
@@ -89,9 +89,9 @@ EXPECTED_SHA256 = {
         "4412ee47f8665e1a12663629dd66f9c9612f2e9adca54be38c188f2bc521a9b6",
     "results/tum_transfer/analysis/footprints_aoi.geojson":
         "ca7f5b13a52368e1d2ac47b77cc78f12887bad4d598d122ad57b882eb4920a82",
-    "docs/experiments/qs_baseline178/tables/qs_baseline178_scores.csv":
+    "docs/experiments/evaluation/qs_baseline178/tables/qs_baseline178_scores.csv":
         "a3b89f1907e6e61aead702efe6b742b5c012615df77d90bdb2a859b5418d85ab",
-    "docs/experiments/qs_baseline178/manifests/qs_baseline178_manifest.json":
+    "docs/experiments/evaluation/qs_baseline178/manifests/qs_baseline178_manifest.json":
         "039623166b1be724b67a565d463de148d551db0c2e52c2ee5d88e3e5e8a0ad38",
     "results/tum_transfer/e5_pilot/C001/C001_train_prep_manifest.json":
         "eca68a7890116c52557ab467361b58c4c784047807f9bee857a2517ac0b40b58",

@@ -77,26 +77,26 @@ ELLIP_TO_REF_SHIFT_M = float(eight.ELLIP_TO_REF_SHIFT_M)
 FOOTPRINTS_GEOJSON = REPO / "phases/p0-audit/data/work/footprints/lod2_ground_plan.geojson"
 
 FIG_DIR = REPO / "docs/figs/e5_c001_s2"
-REPORT_PATH = REPO / "docs/experiments/e5_c001_s2/reports/W_E5_C001_S2_방향자리.md"
+REPORT_PATH = REPO / "docs/experiments/joint-optimization/e5_c001_s2/reports/W_E5_C001_S2_방향자리.md"
 CHECKPOINT_REPORT = REPO / "docs/archive/e5_c001_s2/temporary/reports/W_E5_C001_S2_checkpoint_20260710.md"
 
-CSV_MONODEPTH = REPO / "docs/experiments/e5_c001_s2/tables/e5_c001_s2_monodepth_precheck.csv"
-CSV_MONODEPTH_BUILDING = REPO / "docs/experiments/e5_c001_s2/tables/e5_c001_s2_monodepth_precheck_building.csv"
-CSV_MONODEPTH_RESOLUTION = REPO / "docs/experiments/e5_c001_s2/tables/e5_c001_s2_monodepth_resolution.csv"
-CSV_SHEET = REPO / "docs/experiments/e5_c001_s2/tables/e5_c001_s2_sheet_identity_alt.csv"
-CSV_IMPL = REPO / "docs/experiments/e5_c001_s2/tables/e5_c001_s2_implementation_check.csv"
-CSV_NORMAL_RECHECK = REPO / "docs/experiments/e5_c001_s2/tables/e5_c001_s2_normal_recheck.csv"
-CSV_A5_PREP = REPO / "docs/experiments/e5_c001_s2/tables/e5_c001_s2_a5_metric_prep.csv"
-CSV_GRAD_SHARE = REPO / "docs/experiments/e5_c001_s2/tables/e5_c001_s2_grad_share.csv"
-CSV_TIMELINE = REPO / "docs/experiments/e5_c001_s2/tables/e5_c001_s2_timeline_roofcrop.csv"
-CSV_ARM_CELLS = REPO / "docs/experiments/e5_c001_s2/tables/e5_c001_s2_arm_cells.csv"
-CSV_405_REPAIR = REPO / "docs/experiments/e5_c001_s2/tables/e5_c001_s2_405_rescore.csv"
-CSV_405_BUILDING = REPO / "docs/experiments/e5_c001_s2/tables/e5_c001_s2_405_rescore_building.csv"
-CSV_GLOBAL_Z = REPO / "docs/experiments/e5_c001_s2/tables/e5_c001_s2_global_z_hist.csv"
-CSV_REND_DIST = REPO / "docs/experiments/e5_c001_s2/tables/e5_c001_s2_rend_dist.csv"
-CSV_PIPELINE_STRIPS = REPO / "docs/experiments/e5_c001_s2/tables/e5_c001_s2_pipeline_strips.csv"
-CSV_INVENTORY = REPO / "docs/experiments/e5_c001_s2/tables/e5_c001_s2_inventory.csv"
-CSV_ISSUES = REPO / "docs/experiments/e5_c001_s2/tables/e5_c001_s2_issues.csv"
+CSV_MONODEPTH = REPO / "docs/experiments/joint-optimization/e5_c001_s2/tables/e5_c001_s2_monodepth_precheck.csv"
+CSV_MONODEPTH_BUILDING = REPO / "docs/experiments/joint-optimization/e5_c001_s2/tables/e5_c001_s2_monodepth_precheck_building.csv"
+CSV_MONODEPTH_RESOLUTION = REPO / "docs/experiments/joint-optimization/e5_c001_s2/tables/e5_c001_s2_monodepth_resolution.csv"
+CSV_SHEET = REPO / "docs/experiments/joint-optimization/e5_c001_s2/tables/e5_c001_s2_sheet_identity_alt.csv"
+CSV_IMPL = REPO / "docs/experiments/joint-optimization/e5_c001_s2/tables/e5_c001_s2_implementation_check.csv"
+CSV_NORMAL_RECHECK = REPO / "docs/experiments/joint-optimization/e5_c001_s2/tables/e5_c001_s2_normal_recheck.csv"
+CSV_A5_PREP = REPO / "docs/experiments/joint-optimization/e5_c001_s2/tables/e5_c001_s2_a5_metric_prep.csv"
+CSV_GRAD_SHARE = REPO / "docs/experiments/joint-optimization/e5_c001_s2/tables/e5_c001_s2_grad_share.csv"
+CSV_TIMELINE = REPO / "docs/experiments/joint-optimization/e5_c001_s2/tables/e5_c001_s2_timeline_roofcrop.csv"
+CSV_ARM_CELLS = REPO / "docs/experiments/joint-optimization/e5_c001_s2/tables/e5_c001_s2_arm_cells.csv"
+CSV_405_REPAIR = REPO / "docs/experiments/joint-optimization/e5_c001_s2/tables/e5_c001_s2_405_rescore.csv"
+CSV_405_BUILDING = REPO / "docs/experiments/joint-optimization/e5_c001_s2/tables/e5_c001_s2_405_rescore_building.csv"
+CSV_GLOBAL_Z = REPO / "docs/experiments/joint-optimization/e5_c001_s2/tables/e5_c001_s2_global_z_hist.csv"
+CSV_REND_DIST = REPO / "docs/experiments/joint-optimization/e5_c001_s2/tables/e5_c001_s2_rend_dist.csv"
+CSV_PIPELINE_STRIPS = REPO / "docs/experiments/joint-optimization/e5_c001_s2/tables/e5_c001_s2_pipeline_strips.csv"
+CSV_INVENTORY = REPO / "docs/experiments/joint-optimization/e5_c001_s2/tables/e5_c001_s2_inventory.csv"
+CSV_ISSUES = REPO / "docs/experiments/joint-optimization/e5_c001_s2/tables/e5_c001_s2_issues.csv"
 
 GOOD6 = ["4907184", "4907185", "4907198", "4907202", "4908168", "4908178"]
 GS_FAIL5 = ["60098", "4907186", "4907188", "4907194", "4907195"]
@@ -504,7 +504,7 @@ def _infer_priors_container(args: argparse.Namespace) -> None:
             print(json.dumps({"stage": "A-1-priors", "done": idx + 1, "total": len(ds)}, ensure_ascii=False), flush=True)
 
     write_csv(CSV_MONODEPTH, rows)
-    write_csv(REPO / "docs/experiments/e5_c001_s2/tables/e5_c001_s2_mono_runtime.csv", runtime_rows)
+    write_csv(REPO / "docs/experiments/joint-optimization/e5_c001_s2/tables/e5_c001_s2_mono_runtime.csv", runtime_rows)
     if residual_gallery:
         fig, axes = plt.subplots(2, 4, figsize=(12, 6))
         for ax, (stem, vis) in zip(axes.ravel(), residual_gallery):
@@ -861,10 +861,10 @@ def implementation_check(_args: argparse.Namespace) -> None:
 def normal_recheck(args: argparse.Namespace) -> None:
     from src.stage2.dataloader import ColmapDataset
 
-    before_rows = read_csv(REPO / "docs/experiments/e5_c001_s1_full/tables/e5_c001_s1_full_normal_precheck.csv")
+    before_rows = read_csv(REPO / "docs/experiments/joint-optimization/e5_c001_s1_full/tables/e5_c001_s1_full_normal_precheck.csv")
     before_by = {short_id(r.get("building_id", "")): r for r in before_rows}
     if not before_rows:
-        append_issue("A-4", "warn", "S1 normal precheck CSV missing; before/after table limited", REPO / "docs/experiments/e5_c001_s1_full/tables/e5_c001_s1_full_normal_precheck.csv")
+        append_issue("A-4", "warn", "S1 normal precheck CSV missing; before/after table limited", REPO / "docs/experiments/joint-optimization/e5_c001_s1_full/tables/e5_c001_s1_full_normal_precheck.csv")
     refs_by_id = eight.parse_lod2_roofs(eight.LOD2_DIR, {full_id(x) for x in NORMAL_RECHECK_IDS})
     footprints = strips.load_footprints(NORMAL_RECHECK_IDS)
     ds = ColmapDataset(root=str(DATA_ROOT), downscale=1.0, load_depth=False, load_normal=False, load_semantic=False)
@@ -1227,14 +1227,14 @@ def configure_ablation_module(include_arm3: bool | None = None) -> list[Arm]:
     ab.TORCH_EXTENSIONS = TORCH_EXTENSIONS
     ab.FIG_DIR = FIG_DIR / "readout"
     ab.REPORT_PATH = P2_RUN_DIR / "readout_tmp.md"
-    ab.COVERAGE_CSV = REPO / "docs/experiments/e5_c001_s2/tables/e5_c001_s2_coverage.csv"
-    ab.FILTER_CSV = REPO / "docs/experiments/e5_c001_s2/tables/e5_c001_s2_filter_contrib.csv"
-    ab.METRICS_CSV = REPO / "docs/experiments/e5_c001_s2/tables/e5_c001_s2_405_rescore_building.csv"
-    ab.SUMMARY_CSV = REPO / "docs/experiments/e5_c001_s2/tables/e5_c001_s2_summary.csv"
-    ab.TRADEOFF_CSV = REPO / "docs/experiments/e5_c001_s2/tables/e5_c001_s2_tradeoff.csv"
-    ab.CASE_CSV = REPO / "docs/experiments/e5_c001_s2/tables/e5_c001_s2_representative_buildings.csv"
-    ab.INVENTORY_CSV = REPO / "docs/experiments/e5_c001_s2/tables/e5_c001_s2_readout_inventory.csv"
-    ab.ISSUES_CSV = REPO / "docs/experiments/e5_c001_s2/tables/e5_c001_s2_readout_issues.csv"
+    ab.COVERAGE_CSV = REPO / "docs/experiments/joint-optimization/e5_c001_s2/tables/e5_c001_s2_coverage.csv"
+    ab.FILTER_CSV = REPO / "docs/experiments/joint-optimization/e5_c001_s2/tables/e5_c001_s2_filter_contrib.csv"
+    ab.METRICS_CSV = REPO / "docs/experiments/joint-optimization/e5_c001_s2/tables/e5_c001_s2_405_rescore_building.csv"
+    ab.SUMMARY_CSV = REPO / "docs/experiments/joint-optimization/e5_c001_s2/tables/e5_c001_s2_summary.csv"
+    ab.TRADEOFF_CSV = REPO / "docs/experiments/joint-optimization/e5_c001_s2/tables/e5_c001_s2_tradeoff.csv"
+    ab.CASE_CSV = REPO / "docs/experiments/joint-optimization/e5_c001_s2/tables/e5_c001_s2_representative_buildings.csv"
+    ab.INVENTORY_CSV = REPO / "docs/experiments/joint-optimization/e5_c001_s2/tables/e5_c001_s2_readout_inventory.csv"
+    ab.ISSUES_CSV = REPO / "docs/experiments/joint-optimization/e5_c001_s2/tables/e5_c001_s2_readout_issues.csv"
     ab.RENDER_COVERAGE = REPO / "docs/e5_c001_s2_render_readout_coverage.csv"
     ab.SETTINGS = [ab.Setting("base", "S2 canonical readout", min_obs=3, voxel=0.05, sor="on", sor_std=2.0)]
 
@@ -1496,8 +1496,8 @@ def repair_405(args: argparse.Namespace) -> None:
     repair.RUN_ID = REPAIR_RUN_ID
     repair.REPAIR_ROOT = P0_RUNS / REPAIR_RUN_ID
     repair.CSV_SUMMARY = CSV_405_REPAIR
-    repair.CSV_BUILDING = REPO / "docs/experiments/e5_c001_s2/tables/e5_c001_s2_405_repair_status_building.csv"
-    repair.CSV_ISSUES = REPO / "docs/experiments/e5_c001_s2/tables/e5_c001_s2_405_repair_issues.csv"
+    repair.CSV_BUILDING = REPO / "docs/experiments/joint-optimization/e5_c001_s2/tables/e5_c001_s2_405_repair_status_building.csv"
+    repair.CSV_ISSUES = REPO / "docs/experiments/joint-optimization/e5_c001_s2/tables/e5_c001_s2_405_repair_issues.csv"
     repair_args = argparse.Namespace(
         source_run_id=[P0_RUN_ID],
         settings=["base"],
@@ -1589,7 +1589,7 @@ def pipeline_strips(args: argparse.Namespace) -> None:
             print(json.dumps({"strip": rel(out), "condition": condition.key, "building_id": bid}, ensure_ascii=False), flush=True)
     write_csv(CSV_PIPELINE_STRIPS, rows)
     write_csv(
-        REPO / "docs/experiments/e5_c001_s2/tables/e5_c001_s2_pipeline_strips_issues.csv",
+        REPO / "docs/experiments/joint-optimization/e5_c001_s2/tables/e5_c001_s2_pipeline_strips_issues.csv",
         issues,
         ["condition", "building_id", "message", "path"],
     )
@@ -1665,8 +1665,8 @@ def coverage_mean(run_name_value: str) -> float | None:
 def build_arm_cells(args: argparse.Namespace) -> None:
     arms = configure_ablation_module(args.include_arm3)
     metrics = read_csv(ab.METRICS_CSV)
-    raw = read_csv(REPO / "docs/experiments/e5_c001_8way/tables/e5_c001_8way_metrics.csv")
-    s1 = read_csv(REPO / "docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_metrics.csv")
+    raw = read_csv(REPO / "docs/experiments/evaluation/e5_c001_8way/tables/e5_c001_8way_metrics.csv")
+    s1 = read_csv(REPO / "docs/experiments/joint-optimization/e5_c001_3b_s1/tables/e5_c001_3b_s1_metrics.csv")
     train_fp = read_csv(P2_RUN_DIR / "train_fingerprints.csv")
     rend = read_csv(CSV_REND_DIST)
     raw_by = {(r.get("source_run", ""), r.get("building_id", "")): r for r in raw}

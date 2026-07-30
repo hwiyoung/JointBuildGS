@@ -263,7 +263,7 @@ w("  (알려진 pre-fix geoid 이슈 = 초기 make-or-break 5-way ablation `eval
 # ---------- §8 verbatim quotes ----------
 w("\n## §8 인용문 (원문 그대로 — read-out·학습 귀속 정정)")
 w("")
-w("### (a) 원 주장 — `docs/experiments/w_d_prior_full/reports/W_D_prior_full.md` §2 (조립 회복 = read-out 단독)")
+w("### (a) 원 주장 — `docs/experiments/joint-optimization/w_d_prior_full/reports/W_D_prior_full.md` §2 (조립 회복 = read-out 단독)")
 w("> **핵심 귀속(read-out vs 학습-prior 분리)**: 동일 D 학습에 read-out만 바꾼 D-smrf(2–3/8) ≈ v6(2/8) ≪ "
   "D-gssem(7/8). → **조립 회복 = 레버 3(GS-의미가 SMRF 대체)**. depth/normal/structure 학습-prior 단독으론 "
   "조립 미회복. 이는 P0c \"SMRF가 ACMP 지붕을 ground로 먹음\" 진단을 직접 확증·연장한다.")
@@ -271,7 +271,7 @@ w(">")
 w("> (동 문서 §0) 단 이 회복은 GS-의미 read-out(레버 3, SMRF 제거) 효과이고 depth/normal/structure 학습-prior은 "
   "**무효**(같은 학습에 SMRF read-out인 D-smrf는 2–3/8 ≈ v6 2/8).")
 w("")
-w("### (b) 정정/철회 — `docs/experiments/w_d2_d3/reports/W_D2_D3.md` (분류+학습 초가산적 시너지)")
+w("### (b) 정정/철회 — `docs/experiments/evaluation/w_d2_d3/reports/W_D2_D3.md` (분류+학습 초가산적 시너지)")
 w("> **정정**: [[W_D_prior_full]] §2의 \"회복=read-out 단독, 학습-prior 무효\"는 **과단순화**였다. D-smrf≈v6는 "
   "\"SMRF 하 학습 무효\"만 말하고, v6+gssem(3–5/8)이 분류 단독 한계를 드러낸다. 정확히는 **분류+학습 둘 다 필요(시너지)**. "
   "단 valid-solid는 D 3–4/8로 LiDAR 7/8 여전히 미달(위상 과제는 불변).")
@@ -280,9 +280,9 @@ w("> **둘 다(D_gssem) = 7/8**: 가산 예측(2 + 학습기여 ~1 + 분류기�
   "**초가산적(super-additive) 시너지**. 분류는 학습이 키운 조밀·정합 점군 위에서만 7/8로 작동하고, 학습은 분류가 "
   "SMRF처럼 지붕을 먹지 않을 때만 조립으로 이어진다.")
 w("")
-w("출처: (a) `docs/experiments/w_d_prior_full/reports/W_D_prior_full.md` §0·§2 · (b) `docs/experiments/w_d2_d3/reports/W_D2_D3.md` D2 \"관찰 — 초가산적 시너지\". 원문 그대로 인용.")
+w("출처: (a) `docs/experiments/joint-optimization/w_d_prior_full/reports/W_D_prior_full.md` §0·§2 · (b) `docs/experiments/evaluation/w_d2_d3/reports/W_D2_D3.md` D2 \"관찰 — 초가산적 시너지\". 원문 그대로 인용.")
 
 # write the consolidated doc
-DOC = REPO / "docs/experiments/w_results_consolidation/reports/W_results_consolidation.md"
+DOC = REPO / "docs/experiments/research-operations/w_results_consolidation/reports/W_results_consolidation.md"
 DOC.write_text("\n".join(OUT) + "\n")
 print(f"\n[done] consolidation computed -> {DOC}")

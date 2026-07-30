@@ -92,7 +92,7 @@ import csv
 import json
 from pathlib import Path
 
-rows = list(csv.DictReader(Path("docs/experiments/qs_cheap_refine_pilot/tables/qs_cheap_refine_pilot.csv").open()))
+rows = list(csv.DictReader(Path("docs/experiments/pilots/qs_cheap_refine_pilot/tables/qs_cheap_refine_pilot.csv").open()))
 manifest = json.loads(Path("phases/p2-gsjso/runs/20260717_qs_cheap_refine_pilot/manifest.json").read_text())
 if len(rows) != 18 or manifest["population_count"] != 18:
     raise SystemExit(f"D cardinality drift rows={len(rows)} manifest={manifest['population_count']}")

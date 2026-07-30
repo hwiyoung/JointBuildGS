@@ -20,7 +20,7 @@ import numpy as np
 
 FC6 = Path("results/FC_S6_componentwise_revised_lmutual_design_validation")
 OUT = Path("results/FC_S6C_lmutual_completion")
-DESIGN_DOC = Path("docs/experiments/footprint_conditioned/reports/FC_S6C_LMU5_8_DESIGN_FREEZE.md")
+DESIGN_DOC = Path("docs/experiments/joint-optimization/footprint_conditioned/reports/FC_S6C_LMU5_8_DESIGN_FREEZE.md")
 DESIGN_OUT = OUT / "phase0_design_freeze" / "FC_S6C_LMU5_8_DESIGN_FREEZE.md"
 PROXY_OUT = OUT / "phase1_proxy_audit"
 RUN_LOG = OUT / "phase1_proxy_audit" / "fc_s6c_proxy_audit_run.json"

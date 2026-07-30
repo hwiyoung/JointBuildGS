@@ -564,7 +564,7 @@ def date_material(repo: Path, args) -> dict[str, str]:
         "als_date_material": "LAZ header creation date 2022-06-16; adjusted GPS time 2022-02-27",
         "als_source": "phases/p0-audit/docs/data_inventory.md",
         "uav_capture_date": "2024-12-17",
-        "uav_source": "docs/experiments/pointcloud_attributes/reports/flight_meta_summary.md",
+        "uav_source": "docs/experiments/input-and-alignment/pointcloud_attributes/reports/flight_meta_summary.md",
     }
 
 
@@ -585,7 +585,7 @@ def source_fingerprints(repo: Path, args) -> dict[str, tuple[str, str]]:
         "population_aux_v4": repo / args.population,
         "manual_review_judgments": repo / "docs/research/methodology/tables/manual_review_judgments.csv",
         "gen_8way_results_path": repo / "results/tum_transfer/mob/overseg_lever/gen_8way.csv",
-        "flight_meta_summary": repo / "docs/experiments/pointcloud_attributes/reports/flight_meta_summary.md",
+        "flight_meta_summary": repo / "docs/experiments/input-and-alignment/pointcloud_attributes/reports/flight_meta_summary.md",
         "data_inventory": repo / "phases/p0-audit/docs/data_inventory.md",
     }
     out: dict[str, tuple[str, str]] = {}
@@ -758,7 +758,7 @@ def build_report_section(
         )
     lines += [
         "",
-        "- 겹치는 동별 델타 CSV: `docs/experiments/pointcloud_attributes/tables/W_canonical_run_delta.csv`.",
+        "- 겹치는 동별 델타 CSV: `docs/experiments/input-and-alignment/pointcloud_attributes/tables/W_canonical_run_delta.csv`.",
     ]
     for flip_col, label in [("has_lod22_flip", "조립 성공"), ("val3dity_flip", "유효성")]:
         flips = [r for r in delta_rows if bool_or_none(r[flip_col]) is True]
@@ -879,8 +879,8 @@ def write_versions(path: Path, args, rows: list[dict[str, object]], gate: dict[s
         "",
         "outputs:",
         "  docs/archive/pointcloud_attributes/v1_2/tables/pointcloud_attributes_v1_2.csv",
-        "  docs/experiments/pointcloud_attributes/reports/W_pointcloud_attributes.md",
-        "  docs/experiments/pointcloud_attributes/tables/W_canonical_run_delta.csv",
+        "  docs/experiments/input-and-alignment/pointcloud_attributes/reports/W_pointcloud_attributes.md",
+        "  docs/experiments/input-and-alignment/pointcloud_attributes/tables/W_canonical_run_delta.csv",
         "  docs/figs/pointcloud_attributes_v1_2/arm_distribution.png",
         "  docs/figs/pointcloud_attributes_v1_2/als_scatter.png",
         "  docs/figs/pointcloud_attributes_v1_2/ref_invalid_104586480_topview.png",
@@ -890,13 +890,13 @@ def write_versions(path: Path, args, rows: list[dict[str, object]], gate: dict[s
 
 def build_argparser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--population", default="docs/experiments/population_aux/tables/population_aux_v4.csv")
+    ap.add_argument("--population", default="docs/experiments/input-and-alignment/population_aux/tables/population_aux_v4.csv")
     ap.add_argument("--footprints", default="phases/p0-audit/data/work/w2/footprints_scene_aoi.gpkg")
     ap.add_argument("--lod2-gml-dir", default="phases/p0-audit/data/raw/lod2")
     ap.add_argument("--v1-1-csv", default="docs/archive/pointcloud_attributes/v1_1/tables/pointcloud_attributes_v1_1.csv")
     ap.add_argument("--out-csv", default="docs/archive/pointcloud_attributes/v1_2/tables/pointcloud_attributes_v1_2.csv")
-    ap.add_argument("--out-report", default="docs/experiments/pointcloud_attributes/reports/W_pointcloud_attributes.md")
-    ap.add_argument("--out-delta-csv", default="docs/experiments/pointcloud_attributes/tables/W_canonical_run_delta.csv")
+    ap.add_argument("--out-report", default="docs/experiments/input-and-alignment/pointcloud_attributes/reports/W_pointcloud_attributes.md")
+    ap.add_argument("--out-delta-csv", default="docs/experiments/input-and-alignment/pointcloud_attributes/tables/W_canonical_run_delta.csv")
     ap.add_argument("--fig-dir", default="docs/figs/pointcloud_attributes_v1_2")
     ap.add_argument("--versions", default=f"phases/p2-gsjso/runs/{RUN_ID}/versions.txt")
     ap.add_argument("--grid-cell-m", type=float, default=0.5)

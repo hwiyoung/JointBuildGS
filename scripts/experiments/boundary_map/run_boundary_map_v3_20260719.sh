@@ -36,11 +36,11 @@ MODEL_REPO_HOST="/home/innopam/.cache/huggingface/hub/models--naver--MASt3R_ViTL
 MODEL_HOST="$MODEL_REPO_HOST/snapshots/$MODEL_REVISION"
 MODEL_REPO_CONTAINER="/models/mast3r_metric"
 MODEL_CONTAINER="$MODEL_REPO_CONTAINER/snapshots/$MODEL_REVISION"
-ENV_MANIFEST="docs/experiments/e5_c001_s3ap/manifests/e5_c001_s3ap_fm_env_manifest.json"
+ENV_MANIFEST="docs/experiments/input-and-alignment/e5_c001_s3ap/manifests/e5_c001_s3ap_fm_env_manifest.json"
 ENV_MANIFEST_SHA256="7246a77569a7af1b931ad60eda7012e6e3e8f4ff81b5e10f2e3c1a2efea80d68"
 DENSE_DIAL_CONFIG="phases/p2-gsjso/configs/e5_c001_s3ap_fm_dense_dial.json"
 DENSE_DIAL_CONFIG_SHA256="72d0bef6578b9e5cbe96fb32cbf81802d3a87a92a8da5a6b5b497baba18491c9"
-DENSE_DIAL_CSV="docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_fm_dense_dial.csv"
+DENSE_DIAL_CSV="docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_fm_dense_dial.csv"
 DENSE_DIAL_CSV_SHA256="5a743961cd58dc099dce3200a2465d0838dc9b4dce4f59fb787769064d4a9a26"
 PIP_FREEZE="phases/p2-gsjso/runs/20260714_e5_c001_s3ap_fm_env/pip_freeze.txt"
 PIP_FREEZE_SHA256="1c556c3be3304703a2971d82b4fd320fc96d2dd682787388123130db0a586b77"
@@ -645,7 +645,7 @@ building_path = run / "fm_dense_measurements.csv"
 pair_path = run / "fm_dense_pairs.csv"
 progress_path = run / "fm_dense_progress.json"
 manifest_path = run / "fm_dense_manifest.json"
-env_path = Path("docs/experiments/e5_c001_s3ap/manifests/e5_c001_s3ap_fm_env_manifest.json")
+env_path = Path("docs/experiments/input-and-alignment/e5_c001_s3ap/manifests/e5_c001_s3ap_fm_env_manifest.json")
 config_path = Path(
     "phases/p2-gsjso/configs/e5_c001_s3ap_fm_dense_dial.json"
 )
@@ -1629,7 +1629,7 @@ for label in ("source_sha256", "output_sha256"):
 required_sources = {
     "scripts/experiments/boundary_map/boundary_map_v3_dense.py",
     "phases/p2-gsjso/runs/20260719_boundary_map_v3/fm_dense_jobs.json",
-    "docs/experiments/e5_c001_s3ap/manifests/e5_c001_s3ap_fm_env_manifest.json",
+    "docs/experiments/input-and-alignment/e5_c001_s3ap/manifests/e5_c001_s3ap_fm_env_manifest.json",
     "phases/p2-gsjso/configs/e5_c001_s3ap_fm_dense_dial.json",
 }
 if not required_sources <= set(manifest["source_sha256"]):
@@ -1683,11 +1683,11 @@ run_r1p4() {
     > "$LOG_DIR/R1P4_finalize.log" 2>&1; then
     commit_partial "R1P4" "hard_error" \
       "finalize command exited nonzero; log=$RUN_REL/logs/R1P4_finalize.log" \
-      docs/experiments/boundary_map/tables/boundary_map_v3_metrics.csv \
+      docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v3_metrics.csv \
       docs/archive/boundary_map/v3/tables/boundary_map_v3_ladder.csv \
-      docs/experiments/boundary_map/tables/boundary_map_v3_confusion.csv \
-      docs/experiments/boundary_map/tables/boundary_map_v3_conditional_targets.csv \
-      docs/experiments/boundary_map/manifests/boundary_map_v3_manifest.json \
+      docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v3_confusion.csv \
+      docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v3_conditional_targets.csv \
+      docs/experiments/input-and-alignment/boundary_map/manifests/boundary_map_v3_manifest.json \
       docs/archive/boundary_map/v3/reports/W_boundary_map_v3_summary_20260719.md \
       docs/archive/boundary_map/v3/figs \
       "$MEASURE_REL" || true
@@ -1890,14 +1890,14 @@ expected_sources = {
     "docs/research/methodology/tables/manual_review_judgments.csv",
     "docs/archive/boundary_map/v2/tables/boundary_map_v2_metrics.csv",
     "docs/archive/boundary_map/v2/tables/boundary_map_v2_ladder.csv",
-    "docs/experiments/boundary_map/manifests/boundary_map_v2_manifest.json",
+    "docs/experiments/input-and-alignment/boundary_map/manifests/boundary_map_v2_manifest.json",
     "phases/p2-gsjso/runs/20260718_boundary_map_v2/all_projection_jobs.json",
     "scripts/experiments/boundary_map/boundary_map_v2.py",
     "scripts/experiments/boundary_map/boundary_map_v3_dense.py",
     "scripts/experiments/boundary_map/run_boundary_map_v3_20260719.sh",
-    "docs/experiments/e5_c001_s3ap/manifests/e5_c001_s3ap_fm_env_manifest.json",
+    "docs/experiments/input-and-alignment/e5_c001_s3ap/manifests/e5_c001_s3ap_fm_env_manifest.json",
     "phases/p2-gsjso/configs/e5_c001_s3ap_fm_dense_dial.json",
-    "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_fm_dense_dial.csv",
+    "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_fm_dense_dial.csv",
     (
         "results/tum_transfer/e5_s3_semantic_guided/C001/runs/"
         "gs_e5_C001_s3a_semantic_guided_gate/audit/"
@@ -1914,10 +1914,10 @@ expected_sources = {
     str(run / "fm_dense_manifest.json"),
 }
 expected_outputs = {
-    "docs/experiments/boundary_map/tables/boundary_map_v3_metrics.csv",
+    "docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v3_metrics.csv",
     "docs/archive/boundary_map/v3/tables/boundary_map_v3_ladder.csv",
-    "docs/experiments/boundary_map/tables/boundary_map_v3_confusion.csv",
-    "docs/experiments/boundary_map/tables/boundary_map_v3_conditional_targets.csv",
+    "docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v3_confusion.csv",
+    "docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v3_conditional_targets.csv",
     "docs/archive/boundary_map/v3/figs/boundary_map_v3_map.png",
     "docs/archive/boundary_map/v3/reports/W_boundary_map_v3_summary_20260719.md",
     str(run / "primary_predictions.csv"),
@@ -1962,25 +1962,25 @@ PY
   then
     commit_partial "R1P4" "hard_error" \
       "QA command exited nonzero; log=$RUN_REL/logs/R1P4_qa.log" \
-      docs/experiments/boundary_map/tables/boundary_map_v3_metrics.csv \
+      docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v3_metrics.csv \
       docs/archive/boundary_map/v3/tables/boundary_map_v3_ladder.csv \
-      docs/experiments/boundary_map/tables/boundary_map_v3_confusion.csv \
-      docs/experiments/boundary_map/tables/boundary_map_v3_conditional_targets.csv \
-      docs/experiments/boundary_map/manifests/boundary_map_v3_manifest.json \
+      docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v3_confusion.csv \
+      docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v3_conditional_targets.csv \
+      docs/experiments/input-and-alignment/boundary_map/manifests/boundary_map_v3_manifest.json \
       docs/archive/boundary_map/v3/reports/W_boundary_map_v3_summary_20260719.md \
       docs/archive/boundary_map/v3/figs \
       "$MEASURE_REL" || true
     return 1
   fi
-  issue "R1P-4 measurement complete: metrics_sha256=$(sha docs/experiments/boundary_map/tables/boundary_map_v3_metrics.csv); ladder_sha256=$(sha docs/archive/boundary_map/v3/tables/boundary_map_v3_ladder.csv); confusion_sha256=$(sha docs/experiments/boundary_map/tables/boundary_map_v3_confusion.csv); targets_sha256=$(sha docs/experiments/boundary_map/tables/boundary_map_v3_conditional_targets.csv); manifest_sha256=$(sha docs/experiments/boundary_map/manifests/boundary_map_v3_manifest.json); figure_sha256=$(sha docs/archive/boundary_map/v3/figs/boundary_map_v3_map.png); summary_sha256=$(sha docs/archive/boundary_map/v3/reports/W_boundary_map_v3_summary_20260719.md); learning_runs_started=0; new_inference=R1prime-3_FM_dense_dial_2px_only"
+  issue "R1P-4 measurement complete: metrics_sha256=$(sha docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v3_metrics.csv); ladder_sha256=$(sha docs/archive/boundary_map/v3/tables/boundary_map_v3_ladder.csv); confusion_sha256=$(sha docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v3_confusion.csv); targets_sha256=$(sha docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v3_conditional_targets.csv); manifest_sha256=$(sha docs/experiments/input-and-alignment/boundary_map/manifests/boundary_map_v3_manifest.json); figure_sha256=$(sha docs/archive/boundary_map/v3/figs/boundary_map_v3_map.png); summary_sha256=$(sha docs/archive/boundary_map/v3/reports/W_boundary_map_v3_summary_20260719.md); learning_runs_started=0; new_inference=R1prime-3_FM_dense_dial_2px_only"
   if ! commit_stage "R1P4" "complete" \
     "R1P-4: publish boundary map v3 measurements" \
     phases/p2-gsjso/docs/issues.md \
-    docs/experiments/boundary_map/tables/boundary_map_v3_metrics.csv \
+    docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v3_metrics.csv \
     docs/archive/boundary_map/v3/tables/boundary_map_v3_ladder.csv \
-    docs/experiments/boundary_map/tables/boundary_map_v3_confusion.csv \
-    docs/experiments/boundary_map/tables/boundary_map_v3_conditional_targets.csv \
-    docs/experiments/boundary_map/manifests/boundary_map_v3_manifest.json \
+    docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v3_confusion.csv \
+    docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v3_conditional_targets.csv \
+    docs/experiments/input-and-alignment/boundary_map/manifests/boundary_map_v3_manifest.json \
     docs/archive/boundary_map/v3/reports/W_boundary_map_v3_summary_20260719.md \
     docs/archive/boundary_map/v3/figs \
     "$MEASURE_REL"; then

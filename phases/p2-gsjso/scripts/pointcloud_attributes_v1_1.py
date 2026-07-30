@@ -503,7 +503,7 @@ def write_versions(path: Path, args, provenance: dict[str, str], rows: list[dict
         "",
         "outputs:",
         "  docs/archive/pointcloud_attributes/v1_1/tables/pointcloud_attributes_v1_1.csv",
-        "  docs/experiments/pointcloud_attributes/reports/W_pointcloud_attributes.md",
+        "  docs/experiments/input-and-alignment/pointcloud_attributes/reports/W_pointcloud_attributes.md",
         "  docs/figs/pointcloud_attributes_v1_1/arm_distribution.png",
         "  docs/figs/pointcloud_attributes_v1_1/als_scatter.png",
         "  docs/figs/pointcloud_attributes_v1_1/ref_invalid_104586480_topview.png",
@@ -558,7 +558,7 @@ def build_v11_section(
         "## v1.1 입력·높이 기준",
         "",
         f"- 기준문서 확인: 루트 기준문서 v1.14 (2026-07-05). §1.6의 확정값은 ζ=45.7 m, QA 유효값은 {HEIGHT_CONSTANT_M:.3f} m이다.",
-        f"- v1의 +48.0은 `phases/p2-gsjso/scripts/tum_mob_raw_to_npz.py`와 `docs/experiments/pointcloud_attributes/reports/W_pointcloud_attributes.md`의 ACMP/LiDAR raw-arm 관행값이다. v1.1에서는 orthometric ACMP/ALS에 +{HEIGHT_CONSTANT_M:.3f} m를 썼다.",
+        f"- v1의 +48.0은 `phases/p2-gsjso/scripts/tum_mob_raw_to_npz.py`와 `docs/experiments/input-and-alignment/pointcloud_attributes/reports/W_pointcloud_attributes.md`의 ACMP/LiDAR raw-arm 관행값이다. v1.1에서는 orthometric ACMP/ALS에 +{HEIGHT_CONSTANT_M:.3f} m를 썼다.",
         f"- v1의 +48.165는 `phases/p2-gsjso/scripts/pointcloud_attributes_v1.py`의 `GEOID_MED_M`으로, 참조 LoD2 지붕 Z를 raw-arm 높이와 비교할 때만 더했던 값이다.",
         "- 기존 mob_eval raw_acmp/raw_lidar 클립은 ellip-unified 이력의 기존 클립이며, 생성 이력은 orthometric +48.000 m이다. v1.1 metric 계산에서는 이 행들을 -2.240 m 평행이동해 +45.760 m 기준에 맞췄다.",
         "- raw_dense는 기존 DIM ellipsoid/local+604 이력을 as-is로 두고, 참조 LoD2와의 비교 상수만 +45.760 m로 맞췄다.",
@@ -720,13 +720,13 @@ def density_qa(rows: list[dict[str, object]]) -> dict[str, object]:
 
 def build_argparser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--population", default="docs/experiments/population_aux/tables/population_aux_v4.csv")
+    ap.add_argument("--population", default="docs/experiments/input-and-alignment/population_aux/tables/population_aux_v4.csv")
     ap.add_argument("--status", default="docs/building_reconstruction_status.csv")
     ap.add_argument("--footprints", default="phases/p0-audit/data/work/w2/footprints_scene_aoi.gpkg")
     ap.add_argument("--lod2-gml-dir", default="phases/p0-audit/data/raw/lod2")
     ap.add_argument("--v1-csv", default="docs/archive/pointcloud_attributes/v1/tables/pointcloud_attributes_v1.csv")
     ap.add_argument("--out-csv", default="docs/archive/pointcloud_attributes/v1_1/tables/pointcloud_attributes_v1_1.csv")
-    ap.add_argument("--out-report", default="docs/experiments/pointcloud_attributes/reports/W_pointcloud_attributes.md")
+    ap.add_argument("--out-report", default="docs/experiments/input-and-alignment/pointcloud_attributes/reports/W_pointcloud_attributes.md")
     ap.add_argument("--fig-dir", default="docs/figs/pointcloud_attributes_v1_1")
     ap.add_argument("--versions", default=f"phases/p2-gsjso/runs/{RUN_ID}/versions.txt")
     ap.add_argument("--grid-cell-m", type=float, default=0.5)

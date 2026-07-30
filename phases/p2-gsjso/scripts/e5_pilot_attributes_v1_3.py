@@ -232,9 +232,9 @@ def write_versions(path: Path, args: argparse.Namespace, check: dict[str, object
 
 def build_argparser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--input-csv", default="docs/experiments/pointcloud_attributes/tables/pointcloud_attributes_v1_3.csv")
-    parser.add_argument("--out-csv", default="docs/experiments/pointcloud_attributes/tables/pointcloud_attributes_v1_3.csv")
-    parser.add_argument("--check-json", default="docs/experiments/pointcloud_attributes/tables/e5_pilot_pointcloud_attributes_v1_3_check.json")
+    parser.add_argument("--input-csv", default="docs/experiments/input-and-alignment/pointcloud_attributes/tables/pointcloud_attributes_v1_3.csv")
+    parser.add_argument("--out-csv", default="docs/experiments/input-and-alignment/pointcloud_attributes/tables/pointcloud_attributes_v1_3.csv")
+    parser.add_argument("--check-json", default="docs/experiments/input-and-alignment/pointcloud_attributes/tables/e5_pilot_pointcloud_attributes_v1_3_check.json")
     parser.add_argument("--gate-run-id", default="e5p_gate_20260707_C001")
     parser.add_argument("--footprints", default="phases/p0-audit/data/work/w2/footprints_scene_aoi.gpkg")
     parser.add_argument("--lod2-gml-dir", default="phases/p0-audit/data/raw/lod2")

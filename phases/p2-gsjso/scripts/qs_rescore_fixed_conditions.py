@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Re-aggregate the A-wave score inventory by one fixed GS condition at a time.
 
-This is a learning-zero correction layer over ``docs/experiments/qs_rescore/tables/qs_rescore_scores.csv``.
+This is a learning-zero correction layer over ``docs/experiments/evaluation/qs_rescore/tables/qs_rescore_scores.csv``.
 It never switches GS conditions between buildings.  The prior per-building
 minimum-RMS selection is retained only as an explicitly labelled oracle audit.
 No CityJSON, point cloud, checkpoint, or reference geometry is opened here.

@@ -39,9 +39,9 @@ DEFAULT_SOURCE_RUNS = [
 ]
 FACTOR_SOURCE_RUN = "e5p_s1_full_factor_20260709_C001"
 
-CSV_SUMMARY = REPO / "docs/experiments/e5_c001_s1_full/tables/e5_c001_s1_full_405_rescore.csv"
-CSV_BUILDING = REPO / "docs/experiments/e5_c001_s1_full/tables/e5_c001_s1_full_405_rescore_building.csv"
-CSV_ISSUES = REPO / "docs/experiments/e5_c001_s1_full/tables/e5_c001_s1_full_405_rescore_issues.csv"
+CSV_SUMMARY = REPO / "docs/experiments/joint-optimization/e5_c001_s1_full/tables/e5_c001_s1_full_405_rescore.csv"
+CSV_BUILDING = REPO / "docs/experiments/joint-optimization/e5_c001_s1_full/tables/e5_c001_s1_full_405_rescore_building.csv"
+CSV_ISSUES = REPO / "docs/experiments/joint-optimization/e5_c001_s1_full/tables/e5_c001_s1_full_405_rescore_issues.csv"
 
 
 def rel(path: Path | str | None) -> str:

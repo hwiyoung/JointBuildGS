@@ -4,23 +4,23 @@
 범위: `boundary_map` v1-v4.1 문서, 표, manifest, 그림, 실행 코드, 실행 영수증
 성격: 문서 관리 결정이며 측정값·실험 결과·과학적 판정을 변경하지 않는다.
 
-사람이 탐색할 때는 [`docs/experiments/boundary_map/README.md`](../../experiments/boundary_map/README.md)를 진입점으로 사용한다.
+사람이 탐색할 때는 [`docs/experiments/input-and-alignment/boundary_map/README.md`](../../experiments/boundary_map/README.md)를 진입점으로 사용한다.
 
 ## 지금 무엇을 봐야 하는가
 
 | 질문 | 정본 |
 |---|---|
-| 현재 178동의 셀 배정과 행별 근거 | `docs/experiments/boundary_map/tables/boundary_map_v4_1_ladder.csv` |
-| v4 전체 census의 범위와 결과 설명 | `docs/experiments/boundary_map/reports/W_anchor_census_boundary_map_v4_summary_20260720.md` |
-| v4.1에서 바뀐 9동과 보강 한계 설명 | `docs/experiments/boundary_map/reports/W_anchor_census_supplement_boundary_map_v4_1_summary_20260720.md` |
-| v4 본 측정의 재현·hash 계보 | `docs/experiments/boundary_map/manifests/boundary_map_v4_manifest.json` |
-| v4.1 보강의 재현·불변성·low-independence 계보 | `docs/experiments/boundary_map/manifests/anchor_census_supplement_manifest.json` |
+| 현재 178동의 셀 배정과 행별 근거 | `docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v4_1_ladder.csv` |
+| v4 전체 census의 범위와 결과 설명 | `docs/experiments/input-and-alignment/boundary_map/reports/W_anchor_census_boundary_map_v4_summary_20260720.md` |
+| v4.1에서 바뀐 9동과 보강 한계 설명 | `docs/experiments/input-and-alignment/boundary_map/reports/W_anchor_census_supplement_boundary_map_v4_1_summary_20260720.md` |
+| v4 본 측정의 재현·hash 계보 | `docs/experiments/input-and-alignment/boundary_map/manifests/boundary_map_v4_manifest.json` |
+| v4.1 보강의 재현·불변성·low-independence 계보 | `docs/experiments/input-and-alignment/boundary_map/manifests/anchor_census_supplement_manifest.json` |
 
 읽는 순서는 **v4 본 요약 → v4.1 보강 요약 → v4.1 ladder**다. Manifest는 수치와 출처를 검증할 때 함께 본다. v4.1은 v4 설명 전체를 다시 쓴 문서가 아니라, v4에서 측정불능이던 고정 9동을 보강한 후속이다.
 
 ## 핵심 결정
 
-- 현재 배정표는 `docs/experiments/boundary_map/tables/boundary_map_v4_1_ladder.csv` 하나다. 새 consumer는 이 경로를 사용한다.
+- 현재 배정표는 `docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v4_1_ladder.csv` 하나다. 새 consumer는 이 경로를 사용한다.
 - `docs/archive/boundary_map/v4/tables/boundary_map_v4_ladder.csv`는 v4.1의 직접 입력이자 이전 스냅샷이다. 현재 배정에는 사용하지 않는다.
 - `docs/archive/boundary_map/v4/tables/boundary_map_v4_targets.csv`는 v4 당시 64동 스냅샷이다. v4.1이 9행을 보강했으므로 현재 target/셀 값은 v4.1 ladder를 필터링해 읽는다.
 - `docs/figs/boundary_map/boundary_map_v4_map.png`는 최신 존재 그림이지만 현재 그림은 아니다. v4.1 manifest가 그림을 재생성하지 않았다고 명시하며, 이 그림에는 5동의 셀 변경이 반영되지 않는다.

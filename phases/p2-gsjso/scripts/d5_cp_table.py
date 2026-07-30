@@ -6,7 +6,7 @@ Reads gssem+smrf number snapshots (gssem_requal_numbers.py output):
 Measurements (사전등록 §5): 복합 42364663·42364659 과분할 면수 · 곡면 4906969(목표 LiDAR 5) 면수+RMS(과-평탄 watch)
   · RMS→ref(mean) · valid-solid/8 · 생성 assembled/8.  Cells = gssem (smrf 괄호).
 LiDAR/ref reference from baselines.json + ref_rms_raw.csv + raw_lidar roofer cityjson.
-Writes the §5 result section into docs/experiments/w_d5/reports/W_D5.md (replaces the '§2~ 대기' placeholder; keeps §0/§1).
+Writes the §5 result section into docs/experiments/joint-optimization/w_d5/reports/W_D5.md (replaces the '§2~ 대기' placeholder; keeps §0/§1).
 """
 import csv, glob, json
 from pathlib import Path
@@ -135,8 +135,8 @@ def main():
     w("(생성 assembled/8 ≥7 유지 여부 = §5 'B 생성', valid-solid = 위상, RMS·과-평탄 = 품질. 판정=김휘영.)")
 
     # merge into W_D5.md (keep everything before '## §2~', append results)
-    doc = M.parent.parent / "docs/experiments/w_d5/reports/W_D5.md"   # results/tum_transfer/.. -> repo? fix below
-    doc = REPO / "docs/experiments/w_d5/reports/W_D5.md"
+    doc = M.parent.parent / "docs/experiments/joint-optimization/w_d5/reports/W_D5.md"   # results/tum_transfer/.. -> repo? fix below
+    doc = REPO / "docs/experiments/joint-optimization/w_d5/reports/W_D5.md"
     body = "\n".join(L) + "\n"
     if doc.exists():
         txt = doc.read_text()

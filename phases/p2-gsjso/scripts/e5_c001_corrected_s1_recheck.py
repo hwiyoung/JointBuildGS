@@ -53,7 +53,7 @@ DATA_ROOT = "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20"
 TORCH_EXTENSIONS = "results/tum_transfer/e5_corrected_s1_recheck/C001/torch_extensions_eval"
 FIG_DIR = REPO / "docs/figs/e5_c001_corrected_s1_recheck"
 READOUT_FIG_DIR = FIG_DIR / "readout"
-REPORT_PATH = REPO / "docs/experiments/e5_c001_corrected_s1_recheck/reports/W_E5_C001_corrected_S1_재점검.md"
+REPORT_PATH = REPO / "docs/experiments/joint-optimization/e5_c001_corrected_s1_recheck/reports/W_E5_C001_corrected_S1_재점검.md"
 TEMP_READOUT_REPORT = REPO / "docs/W_E5_C001_corrected_S1_recheck_readout_tmp.md"
 
 CONFIG_DIR = REPO / "configs/tum_mob/e5_corrected_s1_recheck"
@@ -97,16 +97,16 @@ CORRECTED_SOURCE_BY_ARM = {
     "acmp": "base__gs_e5_C001_corrected_s1_acmp_r1",
 }
 
-CSV_SNAPSHOT_INVENTORY = REPO / "docs/experiments/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_snapshot_inventory.csv"
-CSV_CKPT_THRESHOLDS = REPO / "docs/experiments/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_ckpt_thresholds.csv"
-CSV_PRUNE_SWEEP = REPO / "docs/experiments/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_prune_sweep.csv"
-CSV_PREPRUNE_COVERAGE = REPO / "docs/experiments/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_preprune_coverage.csv"
-CSV_GAUSSIAN_ROOFCROP = REPO / "docs/experiments/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_gaussian_roofcrop.csv"
-CSV_VAL3DITY_TYPES = REPO / "docs/experiments/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_val3dity_types.csv"
-CSV_FLOATER_RENDER = REPO / "docs/experiments/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_floater_render.csv"
-CSV_MONO_NORMAL = REPO / "docs/experiments/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_mono_normal_stats.csv"
-CSV_ISSUES = REPO / "docs/experiments/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_issues.csv"
-CSV_CONFIG_DIFF = REPO / "docs/experiments/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_config_diff.csv"
+CSV_SNAPSHOT_INVENTORY = REPO / "docs/experiments/joint-optimization/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_snapshot_inventory.csv"
+CSV_CKPT_THRESHOLDS = REPO / "docs/experiments/joint-optimization/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_ckpt_thresholds.csv"
+CSV_PRUNE_SWEEP = REPO / "docs/experiments/joint-optimization/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_prune_sweep.csv"
+CSV_PREPRUNE_COVERAGE = REPO / "docs/experiments/joint-optimization/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_preprune_coverage.csv"
+CSV_GAUSSIAN_ROOFCROP = REPO / "docs/experiments/joint-optimization/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_gaussian_roofcrop.csv"
+CSV_VAL3DITY_TYPES = REPO / "docs/experiments/joint-optimization/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_val3dity_types.csv"
+CSV_FLOATER_RENDER = REPO / "docs/experiments/joint-optimization/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_floater_render.csv"
+CSV_MONO_NORMAL = REPO / "docs/experiments/joint-optimization/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_mono_normal_stats.csv"
+CSV_ISSUES = REPO / "docs/experiments/joint-optimization/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_issues.csv"
+CSV_CONFIG_DIFF = REPO / "docs/experiments/joint-optimization/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_config_diff.csv"
 
 
 def rel(path: Path | str | None) -> str:
@@ -252,13 +252,13 @@ def configure() -> None:
         s1.ab.Setting("voxel02", "best-threshold voxel0.02 ceiling test", min_obs=3, voxel=0.02, sor="on", sor_std=2.0),
     ]
     s1.ab.COVERAGE_CSV = CSV_PREPRUNE_COVERAGE
-    s1.ab.FILTER_CSV = REPO / "docs/experiments/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_filter_contrib.csv"
-    s1.ab.METRICS_CSV = REPO / "docs/experiments/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_building_8way.csv"
-    s1.ab.SUMMARY_CSV = REPO / "docs/experiments/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_summary.csv"
-    s1.ab.TRADEOFF_CSV = REPO / "docs/experiments/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_tradeoff.csv"
-    s1.ab.CASE_CSV = REPO / "docs/experiments/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_representative_buildings.csv"
-    s1.ab.INVENTORY_CSV = REPO / "docs/experiments/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_inventory.csv"
-    s1.ab.ISSUES_CSV = REPO / "docs/experiments/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_readout_issues.csv"
+    s1.ab.FILTER_CSV = REPO / "docs/experiments/joint-optimization/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_filter_contrib.csv"
+    s1.ab.METRICS_CSV = REPO / "docs/experiments/joint-optimization/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_building_8way.csv"
+    s1.ab.SUMMARY_CSV = REPO / "docs/experiments/joint-optimization/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_summary.csv"
+    s1.ab.TRADEOFF_CSV = REPO / "docs/experiments/joint-optimization/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_tradeoff.csv"
+    s1.ab.CASE_CSV = REPO / "docs/experiments/joint-optimization/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_representative_buildings.csv"
+    s1.ab.INVENTORY_CSV = REPO / "docs/experiments/joint-optimization/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_inventory.csv"
+    s1.ab.ISSUES_CSV = REPO / "docs/experiments/joint-optimization/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_readout_issues.csv"
     s1.ab.RENDER_COVERAGE = REPO / "docs/e5_c001_corrected_s1_recheck_render_readout_coverage.csv"
     s1.ab.selected_run_names = selected_run_names
     s1.ab.write_report = write_readout_temp_report
@@ -550,10 +550,10 @@ def arm_threshold_from_source(source_run: str, run_name: str | None = None) -> t
 def build_metric_indices() -> dict[str, dict[tuple[str, str, str], dict[str, str]]]:
     out: dict[str, dict[tuple[str, str, str], dict[str, str]]] = {}
     paths = {
-        "raw_s0": REPO / "docs/experiments/e5_c001_8way/tables/e5_c001_8way_metrics.csv",
-        "s1": REPO / "docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_metrics.csv",
-        "corrected": REPO / "docs/experiments/e5_c001_corrected_s1/tables/e5_c001_corrected_s1_building_8way.csv",
-        "recheck": REPO / "docs/experiments/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_building_8way.csv",
+        "raw_s0": REPO / "docs/experiments/evaluation/e5_c001_8way/tables/e5_c001_8way_metrics.csv",
+        "s1": REPO / "docs/experiments/joint-optimization/e5_c001_3b_s1/tables/e5_c001_3b_s1_metrics.csv",
+        "corrected": REPO / "docs/experiments/joint-optimization/e5_c001_corrected_s1/tables/e5_c001_corrected_s1_building_8way.csv",
+        "recheck": REPO / "docs/experiments/joint-optimization/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_building_8way.csv",
     }
     for label, path in paths.items():
         rows = {}
@@ -592,12 +592,12 @@ def coverage_summary(coverage_rows: list[dict[str, str]], setting: str, run_name
 
 
 def build_prune_sweep(_args: argparse.Namespace) -> None:
-    metrics = read_csv(REPO / "docs/experiments/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_building_8way.csv")
+    metrics = read_csv(REPO / "docs/experiments/joint-optimization/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_building_8way.csv")
     coverage = read_csv(CSV_PREPRUNE_COVERAGE)
     thresholds = read_csv(CSV_CKPT_THRESHOLDS)
     threshold_by = {(r["arm"], r["threshold"]): r for r in thresholds}
-    s1 = read_csv(REPO / "docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_metrics.csv")
-    raw = read_csv(REPO / "docs/experiments/e5_c001_8way/tables/e5_c001_8way_metrics.csv")
+    s1 = read_csv(REPO / "docs/experiments/joint-optimization/e5_c001_3b_s1/tables/e5_c001_3b_s1_metrics.csv")
+    raw = read_csv(REPO / "docs/experiments/evaluation/e5_c001_8way/tables/e5_c001_8way_metrics.csv")
     s1_by = {(r["source_run"], r["building_id"]): r for r in s1}
     raw_by = {(r["source_run"], r["building_id"]): r for r in raw}
     rows: list[dict[str, Any]] = []
@@ -1160,9 +1160,9 @@ def copy_snapshots() -> None:
         CSV_MONO_NORMAL,
         CSV_ISSUES,
         CSV_CONFIG_DIFF,
-        REPO / "docs/experiments/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_building_8way.csv",
-        REPO / "docs/experiments/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_summary.csv",
-        REPO / "docs/experiments/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_filter_contrib.csv",
+        REPO / "docs/experiments/joint-optimization/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_building_8way.csv",
+        REPO / "docs/experiments/joint-optimization/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_summary.csv",
+        REPO / "docs/experiments/joint-optimization/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_filter_contrib.csv",
         P2_RUN_DIR / "train_fingerprints.csv",
         P2_RUN_DIR / "readout_fingerprints.csv",
         P2_RUN_DIR / "versions.txt",
@@ -1189,7 +1189,7 @@ def build_report(_args: argparse.Namespace) -> None:
     floater = read_csv(CSV_FLOATER_RENDER)
     mono = read_csv(CSV_MONO_NORMAL)
     issues = read_csv(CSV_ISSUES)
-    metrics = read_csv(REPO / "docs/experiments/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_building_8way.csv")
+    metrics = read_csv(REPO / "docs/experiments/joint-optimization/e5_c001_corrected_s1_recheck/tables/e5_c001_corrected_s1_recheck_building_8way.csv")
     coverage = read_csv(CSV_PREPRUNE_COVERAGE)
     best = best_threshold_for_voxel02() if CSV_PRUNE_SWEEP.exists() else ""
     aclean = [r for r in prune if tf(r.get("a_clean_candidate_dense_primary"))]

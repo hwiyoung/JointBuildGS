@@ -49,8 +49,8 @@ from projection_datum import describe_projection_config, load_projection_config,
 RUN_ID = "20260702_A1_zeta_ls"
 RUN_DIR = REPO / "phases" / "p2-gsjso" / "runs" / RUN_ID
 FIG_DIR = REPO / "docs/figs/projection_zeta_ls"
-OUT_CSV = REPO / "docs/experiments/projection_zeta_ls/tables/projection_zeta_ls.csv"
-OUT_MD = REPO / "docs/experiments/projection_zeta_ls/reports/projection_zeta_ls.md"
+OUT_CSV = REPO / "docs/experiments/input-and-alignment/projection_zeta_ls/tables/projection_zeta_ls.csv"
+OUT_MD = REPO / "docs/experiments/input-and-alignment/projection_zeta_ls/reports/projection_zeta_ls.md"
 RESULT_JSON = REPO / "results/tum_transfer/mob/overseg_lever/projection_zeta_ls.json"
 CONFIG = REPO / "configs/projection_datum.json"
 

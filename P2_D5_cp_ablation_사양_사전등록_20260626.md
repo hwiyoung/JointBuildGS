@@ -2,8 +2,8 @@
 
 > **2026-06-26 · branch `feature/p2-prior-full` · 판정=사람(김휘영) · 골대이동 금지.**
 > 이 문서는 **본런 전에 잠그는 사전등록**이다. §5 판정기준은 결과를 보기 전에 확정한다(LOCKED).
-> 작성=에이전트(관찰·산출까지). §5 **확정·판정=김휘영**. 결과는 본 문서가 아니라 `docs/experiments/w_d5/reports/W_D5.md`에 쓰고 §5에 대입한다.
-> 학습 ~4h/arm · 학습 **승인=김휘영**. 관찰만, 판정 금지. 기반: [[W_D4]](docs/experiments/w_d4/reports/W_D4.md) · [[W_D4_precheck]](docs/experiments/w_d4/reports/W_D4_precheck.md).
+> 작성=에이전트(관찰·산출까지). §5 **확정·판정=김휘영**. 결과는 본 문서가 아니라 `docs/experiments/joint-optimization/w_d5/reports/W_D5.md`에 쓰고 §5에 대입한다.
+> 학습 ~4h/arm · 학습 **승인=김휘영**. 관찰만, 판정 금지. 기반: [[W_D4]](docs/experiments/joint-optimization/w_d4/reports/W_D4.md) · [[W_D4_precheck]](docs/experiments/joint-optimization/w_d4/reports/W_D4_precheck.md).
 
 ## §0 한 줄
 D4(정확도 win: 평지붕 RMS→LiDAR 수렴·곡면 19→13면)는 **cp(평면화)만 바꾼 게 아니라 de-noise(depth↓·normal=0)도 동시에** 바꿨다.
@@ -97,4 +97,4 @@ idempotent(완료 산출 skip → resume 안전). **모니터**: cp 압력이 �
 - **D5c 게이트·depth 램프 동시(5000)**: cp 조기발화가 depth 램프 시작과 겹침 — "cp 일찍"의 의도된 조건. ② precheck로 안정 확인.
 - **세게(D5b) cp 원시 깊이**: 게이트 15k → short precheck 직접관찰 불가(D4와 동일 게이트). 본런 모니터로 이관.
 - **메트릭 주의**: eval 합산 over-seg = 클립-이웃 오염 → **target-only** 사용([[W_D4]] §7). D 보고 합산 수치와 직접 비교 시 유의.
-- **산출물**: `docs/experiments/w_d5/reports/W_D5.md`(과분할/RMS/solid/생성 표 + 정성 그림 + 본 §5 대입). 한 커밋 "D5". results/ data는 gitignore(재생성).
+- **산출물**: `docs/experiments/joint-optimization/w_d5/reports/W_D5.md`(과분할/RMS/solid/생성 표 + 정성 그림 + 본 §5 대입). 한 커밋 "D5". results/ data는 gitignore(재생성).

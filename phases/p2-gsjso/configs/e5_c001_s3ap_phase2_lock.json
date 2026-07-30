@@ -52,8 +52,8 @@
     "mono_depth_root": "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/depth_metric_npy",
     "mono_prior_generator": "phases/p2-gsjso/scripts/e5_c001_s2_direction_position.py",
     "mono_prior_generation_log": "phases/p2-gsjso/runs/20260710_e5_c001_s2_direction_position/infer_priors_container.log",
-    "mono_runtime_csv": "docs/experiments/e5_c001_s2/tables/e5_c001_s2_mono_runtime.csv",
-    "mono_depth_alignment_csv": "docs/experiments/e5_c001_s2/tables/e5_c001_s2_monodepth_precheck.csv",
+    "mono_runtime_csv": "docs/experiments/joint-optimization/e5_c001_s2/tables/e5_c001_s2_mono_runtime.csv",
+    "mono_depth_alignment_csv": "docs/experiments/joint-optimization/e5_c001_s2/tables/e5_c001_s2_monodepth_precheck.csv",
     "mono_depth_weights": "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/depth_anything_v2_vits.pth",
     "mono_normal_pin_manifest": "phases/p2-gsjso/runs/20260715_e5_c001_s3ap_phase0_mononormal/manifest.json",
     "semantic_png_root": "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20/semantic",
@@ -127,8 +127,8 @@
     "initial_opacity": 0.1
   },
   "tilt_score_source": {
-    "scores_csv": "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_phase3_scores.csv",
-    "perturbation_csv": "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_perturbation.csv",
+    "scores_csv": "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_phase3_scores.csv",
+    "perturbation_csv": "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_perturbation.csv",
     "expected_nonzero_height_rows": 24,
     "require_evaluation_complete": true
   },

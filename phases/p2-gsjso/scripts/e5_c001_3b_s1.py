@@ -41,7 +41,7 @@ DATA_ROOT = "results/tum_transfer/e5_pilot/C001/data_geoidfix_C001_buf20"
 TORCH_EXTENSIONS = "results/tum_transfer/e5_3b_s1/C001/torch_extensions_eval"
 FIG_DIR = REPO / "docs/figs/e5_c001_3b_s1"
 READOUT_FIG_DIR = FIG_DIR / "readout"
-REPORT_PATH = REPO / "docs/experiments/e5_c001_3b_s1/reports/W_E5_C001_③b_S1_표면복원.md"
+REPORT_PATH = REPO / "docs/experiments/joint-optimization/e5_c001_3b_s1/reports/W_E5_C001_③b_S1_표면복원.md"
 TEMP_READOUT_REPORT = REPO / "docs/archive/e5_c001_3b_s1/temporary/reports/W_E5_C001_3b_S1_readout_tmp.md"
 
 S1_RUN_NAMES = [
@@ -71,7 +71,7 @@ CITYGSV2_SOURCE = {
     "elongation_axis_ratio_threshold": "scale_min/scale_max > 0.01",
     "prune_opacity_threshold": "cull_opacity_threshold=0.05 in vanilla_2dgs/appearance 2DGS configs",
 }
-DESIGN_MEMO_PATH = REPO / "docs/experiments/e5_c001_3b_s1/reports/W_③b_레시피설계_레퍼런스기반_20260707.md"
+DESIGN_MEMO_PATH = REPO / "docs/experiments/joint-optimization/e5_c001_3b_s1/reports/W_③b_레시피설계_레퍼런스기반_20260707.md"
 
 
 def configure_ablation_module() -> None:
@@ -87,15 +87,15 @@ def configure_ablation_module() -> None:
     ab.TORCH_EXTENSIONS = TORCH_EXTENSIONS
     ab.FIG_DIR = READOUT_FIG_DIR
     ab.REPORT_PATH = TEMP_READOUT_REPORT
-    ab.COVERAGE_CSV = REPO / "docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_coverage.csv"
-    ab.FILTER_CSV = REPO / "docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_filter_contrib.csv"
-    ab.METRICS_CSV = REPO / "docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_metrics.csv"
-    ab.SUMMARY_CSV = REPO / "docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_summary.csv"
-    ab.TRADEOFF_CSV = REPO / "docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_tradeoff.csv"
-    ab.CASE_CSV = REPO / "docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_representative_buildings.csv"
-    ab.INVENTORY_CSV = REPO / "docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_inventory.csv"
-    ab.ISSUES_CSV = REPO / "docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_issues.csv"
-    ab.RENDER_COVERAGE = REPO / "docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_render_readout_coverage.csv"
+    ab.COVERAGE_CSV = REPO / "docs/experiments/joint-optimization/e5_c001_3b_s1/tables/e5_c001_3b_s1_coverage.csv"
+    ab.FILTER_CSV = REPO / "docs/experiments/joint-optimization/e5_c001_3b_s1/tables/e5_c001_3b_s1_filter_contrib.csv"
+    ab.METRICS_CSV = REPO / "docs/experiments/joint-optimization/e5_c001_3b_s1/tables/e5_c001_3b_s1_metrics.csv"
+    ab.SUMMARY_CSV = REPO / "docs/experiments/joint-optimization/e5_c001_3b_s1/tables/e5_c001_3b_s1_summary.csv"
+    ab.TRADEOFF_CSV = REPO / "docs/experiments/joint-optimization/e5_c001_3b_s1/tables/e5_c001_3b_s1_tradeoff.csv"
+    ab.CASE_CSV = REPO / "docs/experiments/joint-optimization/e5_c001_3b_s1/tables/e5_c001_3b_s1_representative_buildings.csv"
+    ab.INVENTORY_CSV = REPO / "docs/experiments/joint-optimization/e5_c001_3b_s1/tables/e5_c001_3b_s1_inventory.csv"
+    ab.ISSUES_CSV = REPO / "docs/experiments/joint-optimization/e5_c001_3b_s1/tables/e5_c001_3b_s1_issues.csv"
+    ab.RENDER_COVERAGE = REPO / "docs/experiments/joint-optimization/e5_c001_3b_s1/tables/e5_c001_3b_s1_render_readout_coverage.csv"
     ab.SETTINGS = [
         ab.Setting("base", "S1 정본 readout 재현", min_obs=3, voxel=0.05, sor="on", sor_std=2.0),
         ab.Setting("voxel02", "S1 voxel0.02 천장 시험", min_obs=3, voxel=0.02, sor="on", sor_std=2.0),
@@ -342,9 +342,9 @@ def coverage_mean(rows: list[dict[str, str]], *, run_name: str | None = None, so
 
 
 def build_delta_rows() -> list[dict[str, Any]]:
-    s0_metrics = read_csv(REPO / "docs/experiments/e5_c001_8way/tables/e5_c001_8way_metrics.csv")
+    s0_metrics = read_csv(REPO / "docs/experiments/evaluation/e5_c001_8way/tables/e5_c001_8way_metrics.csv")
     s1_metrics = read_csv(ab.METRICS_CSV)
-    s0_cov = read_csv(REPO / "docs/experiments/e5_c001_render/tables/e5_c001_render_readout_coverage.csv")
+    s0_cov = read_csv(REPO / "docs/experiments/evaluation/e5_c001_render/tables/e5_c001_render_readout_coverage.csv")
     s1_cov = read_csv(ab.COVERAGE_CSV)
     rows: list[dict[str, Any]] = []
     for arm, s1_run in [(arm_from_s1_run(r), r) for r in S1_RUN_NAMES]:
@@ -376,12 +376,12 @@ def build_delta_rows() -> list[dict[str, Any]]:
             "s1_val3dity_valid": s1["val3dity_valid"],
         }
         rows.append(row)
-    write_csv(REPO / "docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_delta.csv", rows)
+    write_csv(REPO / "docs/experiments/joint-optimization/e5_c001_3b_s1/tables/e5_c001_3b_s1_delta.csv", rows)
     return rows
 
 
 def build_texture_rows() -> list[dict[str, Any]]:
-    s0_metrics = read_csv(REPO / "docs/experiments/e5_c001_8way/tables/e5_c001_8way_metrics.csv")
+    s0_metrics = read_csv(REPO / "docs/experiments/evaluation/e5_c001_8way/tables/e5_c001_8way_metrics.csv")
     s1_metrics = read_csv(ab.METRICS_CSV)
     s1_cov = read_csv(ab.COVERAGE_CSV)
     rows: list[dict[str, Any]] = []
@@ -414,7 +414,7 @@ def build_texture_rows() -> list[dict[str, Any]]:
                     "s1_shell_bucket": s1.get("shell_bucket", ""),
                 }
             )
-    write_csv(REPO / "docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_texture_strata.csv", rows)
+    write_csv(REPO / "docs/experiments/joint-optimization/e5_c001_3b_s1/tables/e5_c001_3b_s1_texture_strata.csv", rows)
     return rows
 
 
@@ -441,7 +441,7 @@ def build_voxel_rows() -> list[dict[str, Any]]:
                     "voxel02_has_lod22": vox.get("has_lod22", ""),
                 }
             )
-    write_csv(REPO / "docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_voxel02.csv", rows)
+    write_csv(REPO / "docs/experiments/joint-optimization/e5_c001_3b_s1/tables/e5_c001_3b_s1_voxel02.csv", rows)
     return rows
 
 
@@ -498,9 +498,9 @@ def plot_texture(rows: list[dict[str, Any]]) -> Path:
 
 
 def plot_floater() -> Path | None:
-    s0_path = REPO / "docs/experiments/e5_c001_render/tables/e5_c001_render_floater_metrics.csv"
-    s1_path = REPO / "docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_render_floater_metrics.csv"
-    s1_render_path = REPO / "docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_render_eval_metrics.csv"
+    s0_path = REPO / "docs/experiments/evaluation/e5_c001_render/tables/e5_c001_render_floater_metrics.csv"
+    s1_path = REPO / "docs/experiments/joint-optimization/e5_c001_3b_s1/tables/e5_c001_3b_s1_render_floater_metrics.csv"
+    s1_render_path = REPO / "docs/experiments/joint-optimization/e5_c001_3b_s1/tables/e5_c001_3b_s1_render_eval_metrics.csv"
     if not (s0_path.exists() and s1_path.exists() and s1_render_path.exists()):
         return None
     s0 = [r for r in read_csv(s0_path) if r.get("replicate") == "r1"]
@@ -554,8 +554,8 @@ def plot_voxel(rows: list[dict[str, Any]]) -> Path:
 
 
 def plot_render_tsdf() -> Path | None:
-    s0_path = REPO / "docs/experiments/e5_c001_render/tables/e5_c001_render_readout_coverage.csv"
-    s1_path = REPO / "docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_render_readout_coverage.csv"
+    s0_path = REPO / "docs/experiments/evaluation/e5_c001_render/tables/e5_c001_render_readout_coverage.csv"
+    s1_path = REPO / "docs/experiments/joint-optimization/e5_c001_3b_s1/tables/e5_c001_3b_s1_render_readout_coverage.csv"
     if not (s0_path.exists() and s1_path.exists()):
         return None
     s0 = read_csv(s0_path)
@@ -683,7 +683,7 @@ def make_case_panels() -> list[Path]:
         else:
             parsed = e.parse_cityjson_roofs(src.cityjson_path, set(TEXTURE_CASES))
             pred[src.source_run] = {bid: e.shift_surface_z(surfaces, src.z_shift_to_reference_m) for bid, surfaces in parsed.items()}
-    metric_rows = read_csv(REPO / "docs/experiments/e5_c001_8way/tables/e5_c001_8way_metrics.csv") + read_csv(ab.METRICS_CSV)
+    metric_rows = read_csv(REPO / "docs/experiments/evaluation/e5_c001_8way/tables/e5_c001_8way_metrics.csv") + read_csv(ab.METRICS_CSV)
     metric_by = {(r["source_run"], r["building_id"]): r for r in metric_rows}
     footprints = e.base.load_footprints(e.FOOTPRINTS_GPKG, set(TEXTURE_CASES))
     cache = e.PointCloudCache(footprints)
@@ -738,9 +738,9 @@ def write_versions(figures: list[Path]) -> None:
         "",
         "outputs:",
         f"- {rel(REPORT_PATH)}",
-        "- docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_delta.csv",
-        "- docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_texture_strata.csv",
-        "- docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_voxel02.csv",
+        "- docs/experiments/joint-optimization/e5_c001_3b_s1/tables/e5_c001_3b_s1_delta.csv",
+        "- docs/experiments/joint-optimization/e5_c001_3b_s1/tables/e5_c001_3b_s1_texture_strata.csv",
+        "- docs/experiments/joint-optimization/e5_c001_3b_s1/tables/e5_c001_3b_s1_voxel02.csv",
         f"- {rel(ab.METRICS_CSV)}",
         f"- {rel(ab.COVERAGE_CSV)}",
         f"- {rel(P2_RUN_DIR / 'train_fingerprints.csv')}",
@@ -766,7 +766,7 @@ def write_readout_temp_report(
     lines = [
         "# E5 C001 ③b-S1 readout/evaluation temporary report",
         "",
-        "S1 wrapper executed base and voxel02 only. Final interpretation material is written to `docs/experiments/e5_c001_3b_s1/reports/W_E5_C001_③b_S1_표면복원.md`.",
+        "S1 wrapper executed base and voxel02 only. Final interpretation material is written to `docs/experiments/joint-optimization/e5_c001_3b_s1/reports/W_E5_C001_③b_S1_표면복원.md`.",
         "",
         "## Summary",
         "",
@@ -807,9 +807,9 @@ def build_report() -> None:
     readout_summary = read_csv(ab.SUMMARY_CSV) if ab.SUMMARY_CSV.exists() else []
     floater_note = "S1 render/floater CSV가 있으면 `docs/e5_c001_3b_s1_render_*`로 병기했다."
     floater_gate_note = "플로터 지표는 render audit CSV 미생성으로 별도 gate 관찰을 비워 둔다."
-    if (REPO / "docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_render_floater_metrics.csv").exists():
-        s1f = read_csv(REPO / "docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_render_floater_metrics.csv")
-        s0f = [r for r in read_csv(REPO / "docs/experiments/e5_c001_render/tables/e5_c001_render_floater_metrics.csv") if r.get("replicate") == "r1"]
+    if (REPO / "docs/experiments/joint-optimization/e5_c001_3b_s1/tables/e5_c001_3b_s1_render_floater_metrics.csv").exists():
+        s1f = read_csv(REPO / "docs/experiments/joint-optimization/e5_c001_3b_s1/tables/e5_c001_3b_s1_render_floater_metrics.csv")
+        s0f = [r for r in read_csv(REPO / "docs/experiments/evaluation/e5_c001_render/tables/e5_c001_render_floater_metrics.csv") if r.get("replicate") == "r1"]
         s0_op = mean([v for v in (num(r.get("opacity_below_prune005_frac")) for r in s0f) if v is not None])
         s1_op = mean([v for v in (num(r.get("opacity_below_prune005_frac")) for r in s1f) if v is not None])
         s0_el = mean([v for v in (num(r.get("elongated_ratio_gt10_frac")) for r in s0f) if v is not None])
@@ -884,7 +884,7 @@ def build_report() -> None:
         "",
         md_table(readout_summary, ["setting", "mean_coverage_post_sor", "mean_correctness", "median_ref_rms_m", "has_lod22", "val3dity_valid"], max_rows=4),
         "",
-        f"- S1 base↔voxel02 건물별 표: `docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_voxel02.csv`.",
+        f"- S1 base↔voxel02 건물별 표: `docs/experiments/joint-optimization/e5_c001_3b_s1/tables/e5_c001_3b_s1_voxel02.csv`.",
         f"- 짝 그림: `{rel(FIG_DIR / 'voxel02_ref_rms_scatter.png')}`.",
         "",
         "## GS 학습 vs TSDF 분리",
@@ -899,7 +899,7 @@ def build_report() -> None:
         "",
         "## 산출물",
         "",
-        f"- 수치표: `{rel(ab.METRICS_CSV)}`, `{rel(ab.COVERAGE_CSV)}`, `docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_delta.csv`, `docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_texture_strata.csv`, `docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_voxel02.csv`.",
+        f"- 수치표: `{rel(ab.METRICS_CSV)}`, `{rel(ab.COVERAGE_CSV)}`, `docs/experiments/joint-optimization/e5_c001_3b_s1/tables/e5_c001_3b_s1_delta.csv`, `docs/experiments/joint-optimization/e5_c001_3b_s1/tables/e5_c001_3b_s1_texture_strata.csv`, `docs/experiments/joint-optimization/e5_c001_3b_s1/tables/e5_c001_3b_s1_voxel02.csv`.",
         f"- 그림 디렉터리: `{rel(FIG_DIR)}/`.",
         f"- versions: `{rel(P2_RUN_DIR / 'versions.txt')}`.",
     ]

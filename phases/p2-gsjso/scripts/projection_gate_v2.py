@@ -47,8 +47,8 @@ from projection_zeta_ls import (  # noqa: E402
 RUN_ID = "20260702_A2_projection_gate_v2"
 RUN_DIR = REPO / "phases" / "p2-gsjso" / "runs" / RUN_ID
 FIG_DIR = REPO / "docs/figs/projection_gate_v2"
-OUT_CSV = REPO / "docs/experiments/projection_gate/tables/projection_gate_v2.csv"
-OUT_MD = REPO / "docs/experiments/projection_gate/reports/projection_gate_v2.md"
+OUT_CSV = REPO / "docs/experiments/input-and-alignment/projection_gate/tables/projection_gate_v2.csv"
+OUT_MD = REPO / "docs/experiments/input-and-alignment/projection_gate/reports/projection_gate_v2.md"
 RESULT_JSON = REPO / "results/tum_transfer/mob/overseg_lever/projection_gate_v2.json"
 
 
@@ -330,7 +330,7 @@ def write_report(rows: list[dict[str, object]], criteria: dict[str, object]) -> 
             "",
             "## Files",
             "",
-            "- CSV: `docs/experiments/projection_gate/tables/projection_gate_v2.csv`",
+            "- CSV: `docs/experiments/input-and-alignment/projection_gate/tables/projection_gate_v2.csv`",
             "- figures: `docs/figs/projection_gate_v2/*.png`",
             "- residual curve: `docs/figs/projection_gate_v2/als_offset_vs_tan.png`",
             "",

@@ -43,7 +43,7 @@
       "grid_m": 0.5,
       "polygon_rule": "union of globally aligned 0.5m occupied cells reconstructed from P0 fill points; no clip/intersection with supplied footprint after point generation",
       "indirect_dependency": "P0 fill points were generated inside the supplied footprint; the supplied footprint itself is never passed to Roofer",
-      "ground_source_csv": "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_fm_retri_rescore.csv",
+      "ground_source_csv": "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_fm_retri_rescore.csv",
       "ground_source_rule": "building_summary ground_z_local_m from clean exterior SfM+dense-init observations; no LoD2 or ALS elevation",
       "roof_class": 6,
       "ground_class": 2

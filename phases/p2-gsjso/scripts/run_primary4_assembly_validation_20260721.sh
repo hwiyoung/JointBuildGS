@@ -189,11 +189,11 @@ finalize_bundle() {
   local counts
   counts="$(python3 - <<'PY'
 import csv
-rows=list(csv.DictReader(open('docs/experiments/primary4_assembly_validation/tables/primary4_assembly_validation_measurements.csv', newline='', encoding='utf-8')))
+rows=list(csv.DictReader(open('docs/experiments/evaluation/primary4_assembly_validation/tables/primary4_assembly_validation_measurements.csv', newline='', encoding='utf-8')))
 print(f"has_lod22={sum(r['has_lod22']=='true' for r in rows)}/4;lod1_fallback={sum(r['lod1_fallback']=='true' for r in rows)}/4;gauge_b={sum(r['success_gauge_true']=='true' for r in rows)}/4;val3dity={sum(r['val3dity_valid']=='true' for r in rows)}/4")
 PY
 )"
-  issue "$TASK measurement bundle complete: rows=4; $counts; measurements_sha256=$(sha docs/experiments/primary4_assembly_validation/tables/primary4_assembly_validation_measurements.csv); summary_sha256=$(sha docs/experiments/primary4_assembly_validation/reports/W_primary4_assembly_validation_summary_20260721.md); manifest_sha256=$(sha docs/experiments/primary4_assembly_validation/manifests/primary4_assembly_validation_manifest.json); independent_QA=passed; learning_runs_started=0; new_inference_runs=0; image_inputs_used=0; gpu_used=false"
+  issue "$TASK measurement bundle complete: rows=4; $counts; measurements_sha256=$(sha docs/experiments/evaluation/primary4_assembly_validation/tables/primary4_assembly_validation_measurements.csv); summary_sha256=$(sha docs/experiments/evaluation/primary4_assembly_validation/reports/W_primary4_assembly_validation_summary_20260721.md); manifest_sha256=$(sha docs/experiments/evaluation/primary4_assembly_validation/manifests/primary4_assembly_validation_manifest.json); independent_QA=passed; learning_runs_started=0; new_inference_runs=0; image_inputs_used=0; gpu_used=false"
   write_status "$CURRENT_WAVE" "complete" "$counts; independent QA passed"
   log "finalize complete $counts"
 }

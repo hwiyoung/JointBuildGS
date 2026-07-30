@@ -58,7 +58,7 @@ SOURCE_SEEDS = {
 SOURCE_DATA = Path("results/tum_transfer/data_geoidfix")
 SOURCE_SPARSE = SOURCE_DATA / "sparse/0"
 FOOTPRINTS = Path("results/tum_transfer/analysis/footprints_aoi.geojson")
-CANDIDATES = Path("docs/experiments/e5_pilot_block/tables/e5_pilot_block_candidates.csv")
+CANDIDATES = Path("docs/experiments/pilots/e5_pilot_block/tables/e5_pilot_block_candidates.csv")
 
 
 def cmd_out(cmd: list[str]) -> str:
@@ -470,7 +470,7 @@ def main() -> None:
     parser.add_argument("--out-root", default="results/tum_transfer/e5_pilot/C001")
     parser.add_argument("--config-dir", default="configs/tum_mob/e5_pilot")
     parser.add_argument("--versions", default=f"phases/p2-gsjso/runs/{RUN_ID}/versions.txt")
-    parser.add_argument("--report", default="docs/experiments/e5_pilot/reports/e5_pilot_train_prep.md")
+    parser.add_argument("--report", default="docs/experiments/pilots/e5_pilot/reports/e5_pilot_train_prep.md")
     args = parser.parse_args()
 
     out_root = Path(args.out_root)
@@ -488,7 +488,7 @@ def main() -> None:
     data_stats = prepare_data_root(data_root, union_utm, z_range, args.buffer_m)
     configs = write_configs(config_dir, seed_stats, data_root, building_ids)
 
-    aux_rows = {r["building_id"]: r for r in csv.DictReader(open("docs/experiments/population_aux/tables/population_aux_v4.csv", newline="", encoding="utf-8"))}
+    aux_rows = {r["building_id"]: r for r in csv.DictReader(open("docs/experiments/input-and-alignment/population_aux/tables/population_aux_v4.csv", newline="", encoding="utf-8"))}
     geom_vals = [float(aux_rows[b]["frac_views_incidence_le60"]) for b in building_ids]
     payload = {
         "run_id": RUN_ID,

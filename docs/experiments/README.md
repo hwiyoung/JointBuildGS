@@ -1,6 +1,19 @@
-# Experiment families
+# Experiment evidence
 
-Each directory below owns one experiment family. Promoted compact material is split by information role; execution receipts and bulk payloads are deliberately outside this tree.
+This tree contains compact, reviewable experiment evidence. It is organized by
+**scientific purpose first** and **experiment family second**. A family keeps its
+existing identifier so reports, tables, metrics, and manifests remain traceable.
+
+## Purpose groups
+
+| Group | Owns | Families |
+|---|---|---:|
+| [`input-and-alignment/`](input-and-alignment/README.md) | inputs, CRS/datum alignment, projection, and evidence preparation | 17 |
+| [`joint-optimization/`](joint-optimization/README.md) | Stage 2 losses, training arms, ablations, and optimization mechanisms | 27 |
+| [`citygml-readout/`](citygml-readout/README.md) | Stage 3 evidence-to-CityGML read-out | 7 |
+| [`evaluation/`](evaluation/README.md) | scoring, validation, diagnostics, fidelity, and regression | 22 |
+| [`pilots/`](pilots/README.md) | bounded pilot studies and active experimental waves | 7 |
+| [`research-operations/`](research-operations/README.md) | audits, briefings, evidence assembly, and consolidation | 4 |
 
 ## Family layout
 
@@ -10,93 +23,7 @@ Each directory below owns one experiment family. Promoted compact material is sp
 - `manifests/` — experiment provenance and compact model metadata
 - `models/` — exceptional small curated geometry/model evidence only
 
-Runtime status, job manifests, and self-verification receipts belong under `phases/`. External payload resolution belongs under `artifacts/manifests/`; full checkpoints, renders, images, point clouds, and generated geometry stay in the external artifact workspace.
+Runtime status and self-verification receipts belong under `phases/`. Full
+checkpoints, renders, images, point clouds, generated meshes, and caches live in
+external artifact storage; `artifacts/manifests/` records how to resolve them.
 
-## Families
-
-- [`FC_S5_loss_ledger_instrumentation/`](FC_S5_loss_ledger_instrumentation/README.md)
-- [`FC_S6C_lmutual_completion/`](FC_S6C_lmutual_completion/README.md)
-- [`FC_S6C_lmutual_design_to_formula_audit/`](FC_S6C_lmutual_design_to_formula_audit/README.md)
-- [`FC_S6D_directional_screening/`](FC_S6D_directional_screening/README.md)
-- [`FC_S6D_lmutual_directionality/`](FC_S6D_lmutual_directionality/README.md)
-- [`FC_S6E_joint/`](FC_S6E_joint/README.md)
-- [`FC_S6_componentwise_revised_lmutual_design_validation/`](FC_S6_componentwise_revised_lmutual_design_validation/README.md)
-- [`attr_outcome_regression/`](attr_outcome_regression/README.md)
-- [`aux_v4a/`](aux_v4a/README.md)
-- [`aux_v4b/`](aux_v4b/README.md)
-- [`boundary_map/`](boundary_map/README.md)
-- [`bucket_crosswalk/`](bucket_crosswalk/README.md)
-- [`claude_web_brief/`](claude_web_brief/README.md)
-- [`datum_tie/`](datum_tie/README.md)
-- [`datum_tie_overlay/`](datum_tie_overlay/README.md)
-- [`degradation_curve/`](degradation_curve/README.md)
-- [`e5_c001_3b_s1/`](e5_c001_3b_s1/README.md)
-- [`e5_c001_8way/`](e5_c001_8way/README.md)
-- [`e5_c001_corrected_s1/`](e5_c001_corrected_s1/README.md)
-- [`e5_c001_corrected_s1_recheck/`](e5_c001_corrected_s1_recheck/README.md)
-- [`e5_c001_gsdiag/`](e5_c001_gsdiag/README.md)
-- [`e5_c001_readout_ablation/`](e5_c001_readout_ablation/README.md)
-- [`e5_c001_render/`](e5_c001_render/README.md)
-- [`e5_c001_s1_audit/`](e5_c001_s1_audit/README.md)
-- [`e5_c001_s1_full/`](e5_c001_s1_full/README.md)
-- [`e5_c001_s2/`](e5_c001_s2/README.md)
-- [`e5_c001_s2p/`](e5_c001_s2p/README.md)
-- [`e5_c001_s3/`](e5_c001_s3/README.md)
-- [`e5_c001_s3ap/`](e5_c001_s3ap/README.md)
-- [`e5_c001_s3b0/`](e5_c001_s3b0/README.md)
-- [`e5_pilot/`](e5_pilot/README.md)
-- [`e5_pilot_block/`](e5_pilot_block/README.md)
-- [`e5_pilot_substantiveness/`](e5_pilot_substantiveness/README.md)
-- [`fair_pilot/`](fair_pilot/README.md)
-- [`footprint_conditioned/`](footprint_conditioned/README.md)
-- [`footprint_conditioned_readout/`](footprint_conditioned_readout/README.md)
-- [`fusion_w1/`](fusion_w1/README.md)
-- [`gsjso_loss_audit/`](gsjso_loss_audit/README.md)
-- [`lowtex_v5/`](lowtex_v5/README.md)
-- [`p0_completeness/`](p0_completeness/README.md)
-- [`p2_makeorbreak/`](p2_makeorbreak/README.md)
-- [`phase1_ablation/`](phase1_ablation/README.md)
-- [`phase1_analysis/`](phase1_analysis/README.md)
-- [`phase1_depth_normal/`](phase1_depth_normal/README.md)
-- [`phase1_mutual/`](phase1_mutual/README.md)
-- [`phase1_semantic/`](phase1_semantic/README.md)
-- [`phase1_structure/`](phase1_structure/README.md)
-- [`phase1_vanilla/`](phase1_vanilla/README.md)
-- [`phase2_ablation_citygml/`](phase2_ablation_citygml/README.md)
-- [`phase2_synthesis/`](phase2_synthesis/README.md)
-- [`pointcloud_attributes/`](pointcloud_attributes/README.md)
-- [`population_aux/`](population_aux/README.md)
-- [`primary4_assembly_validation/`](primary4_assembly_validation/README.md)
-- [`projection_datum/`](projection_datum/README.md)
-- [`projection_gate/`](projection_gate/README.md)
-- [`projection_zeta_ls/`](projection_zeta_ls/README.md)
-- [`qs_baseline178/`](qs_baseline178/README.md)
-- [`qs_cheap_refine_pilot/`](qs_cheap_refine_pilot/README.md)
-- [`qs_cheap_refine_sweep/`](qs_cheap_refine_sweep/README.md)
-- [`qs_rescore/`](qs_rescore/README.md)
-- [`stage3_polyfit_phase2/`](stage3_polyfit_phase2/README.md)
-- [`stage3_rendered_evidence/`](stage3_rendered_evidence/README.md)
-- [`stage3_typed_readout/`](stage3_typed_readout/README.md)
-- [`stage3_v4_validation/`](stage3_v4_validation/README.md)
-- [`synthetic_a/`](synthetic_a/README.md)
-- [`texture_anchor_check/`](texture_anchor_check/README.md)
-- [`tum2twin_surface_proxy_rv1/`](tum2twin_surface_proxy_rv1/README.md)
-- [`tum_transfer_preflight/`](tum_transfer_preflight/README.md)
-- [`w_complexity_survey/`](w_complexity_survey/README.md)
-- [`w_d12_metric/`](w_d12_metric/README.md)
-- [`w_d2_d3/`](w_d2_d3/README.md)
-- [`w_d4/`](w_d4/README.md)
-- [`w_d5/`](w_d5/README.md)
-- [`w_d6_overseg_diag/`](w_d6_overseg_diag/README.md)
-- [`w_d_followup_audit/`](w_d_followup_audit/README.md)
-- [`w_d_loss_audit/`](w_d_loss_audit/README.md)
-- [`w_d_prior_full/`](w_d_prior_full/README.md)
-- [`w_generation_8way/`](w_generation_8way/README.md)
-- [`w_gssem_requal/`](w_gssem_requal/README.md)
-- [`w_matched_rms/`](w_matched_rms/README.md)
-- [`w_observability/`](w_observability/README.md)
-- [`w_phase_b_structure/`](w_phase_b_structure/README.md)
-- [`w_report_evidence/`](w_report_evidence/README.md)
-- [`w_results_consolidation/`](w_results_consolidation/README.md)
-
-Every listed family has a `README.md` entry point. Folder assignment records ownership only; canonical scientific status still requires an explicit reviewed family map.

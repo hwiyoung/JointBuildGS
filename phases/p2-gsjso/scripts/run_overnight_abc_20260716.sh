@@ -182,10 +182,10 @@ import json
 from pathlib import Path
 
 paths = [
-    Path("docs/experiments/qs_rescore/tables/qs_rescore_inventory.csv"),
-    Path("docs/experiments/qs_rescore/tables/qs_rescore_scores.csv"),
-    Path("docs/experiments/qs_rescore/tables/qs_rescore_pairs.csv"),
-    Path("docs/experiments/qs_rescore/tables/qs_rescore_summary.csv"),
+    Path("docs/experiments/evaluation/qs_rescore/tables/qs_rescore_inventory.csv"),
+    Path("docs/experiments/evaluation/qs_rescore/tables/qs_rescore_scores.csv"),
+    Path("docs/experiments/evaluation/qs_rescore/tables/qs_rescore_pairs.csv"),
+    Path("docs/experiments/evaluation/qs_rescore/tables/qs_rescore_summary.csv"),
     Path("docs/figs/qs_rescore/qs_rescore_face_count_scatter.png"),
     Path("docs/figs/qs_rescore/qs_rescore_rms_pairs.png"),
     Path("docs/figs/qs_rescore/qs_rescore_topview_examples.png"),
@@ -212,14 +212,14 @@ PY
     write_status "A" "failed" "output QA failed"
     return 1
   fi
-  issue "OVN-A measurement complete: manifest_sha256=$(sha phases/p2-gsjso/runs/20260716_qs_rescore/manifest.json); inventory_sha256=$(sha docs/experiments/qs_rescore/tables/qs_rescore_inventory.csv); pairs_sha256=$(sha docs/experiments/qs_rescore/tables/qs_rescore_pairs.csv); learning_runs_started=0"
+  issue "OVN-A measurement complete: manifest_sha256=$(sha phases/p2-gsjso/runs/20260716_qs_rescore/manifest.json); inventory_sha256=$(sha docs/experiments/evaluation/qs_rescore/tables/qs_rescore_inventory.csv); pairs_sha256=$(sha docs/experiments/evaluation/qs_rescore/tables/qs_rescore_pairs.csv); learning_runs_started=0"
   if ! commit_paths \
     "OVN-A: rescore C001 quality inventory" \
     phases/p2-gsjso/docs/issues.md \
-    docs/experiments/qs_rescore/tables/qs_rescore_inventory.csv \
-    docs/experiments/qs_rescore/tables/qs_rescore_scores.csv \
-    docs/experiments/qs_rescore/tables/qs_rescore_pairs.csv \
-    docs/experiments/qs_rescore/tables/qs_rescore_summary.csv \
+    docs/experiments/evaluation/qs_rescore/tables/qs_rescore_inventory.csv \
+    docs/experiments/evaluation/qs_rescore/tables/qs_rescore_scores.csv \
+    docs/experiments/evaluation/qs_rescore/tables/qs_rescore_pairs.csv \
+    docs/experiments/evaluation/qs_rescore/tables/qs_rescore_summary.csv \
     docs/figs/qs_rescore \
     phases/p2-gsjso/runs/20260716_qs_rescore; then
     write_status "A" "partial" "outputs complete; commit or push failed"
@@ -286,9 +286,9 @@ import csv
 import json
 from pathlib import Path
 
-score = list(csv.DictReader(Path("docs/experiments/primary4_assembly_validation/tables/genclose_flat_seed_scores.csv").open()))
-assembly = list(csv.DictReader(Path("docs/experiments/primary4_assembly_validation/tables/genclose_density_assembly.csv").open()))
-direct = list(csv.DictReader(Path("docs/experiments/primary4_assembly_validation/tables/genclose_direct_plane.csv").open()))
+score = list(csv.DictReader(Path("docs/experiments/evaluation/primary4_assembly_validation/tables/genclose_flat_seed_scores.csv").open()))
+assembly = list(csv.DictReader(Path("docs/experiments/evaluation/primary4_assembly_validation/tables/genclose_density_assembly.csv").open()))
+direct = list(csv.DictReader(Path("docs/experiments/evaluation/primary4_assembly_validation/tables/genclose_direct_plane.csv").open()))
 if len(assembly) != 9:
     raise SystemExit(f"assembly rows={len(assembly)} != 9")
 for rows, name in [(score, "score"), (assembly, "assembly"), (direct, "direct")]:
@@ -307,13 +307,13 @@ PY
     write_status "B" "failed" "output QA failed"
     return 1
   fi
-  issue "OVN-B measurement complete: manifest_sha256=$(sha phases/p2-gsjso/runs/20260716_genclose_flat_density/manifest.json); flat_score_sha256=$(sha docs/experiments/primary4_assembly_validation/tables/genclose_flat_seed_scores.csv); assembly_sha256=$(sha docs/experiments/primary4_assembly_validation/tables/genclose_density_assembly.csv); learning_runs_started=0"
+  issue "OVN-B measurement complete: manifest_sha256=$(sha phases/p2-gsjso/runs/20260716_genclose_flat_density/manifest.json); flat_score_sha256=$(sha docs/experiments/evaluation/primary4_assembly_validation/tables/genclose_flat_seed_scores.csv); assembly_sha256=$(sha docs/experiments/evaluation/primary4_assembly_validation/tables/genclose_density_assembly.csv); learning_runs_started=0"
   if ! commit_paths \
     "OVN-B: measure flat-seed density assembly" \
     phases/p2-gsjso/docs/issues.md \
-    docs/experiments/primary4_assembly_validation/tables/genclose_flat_seed_scores.csv \
-    docs/experiments/primary4_assembly_validation/tables/genclose_density_assembly.csv \
-    docs/experiments/primary4_assembly_validation/tables/genclose_direct_plane.csv \
+    docs/experiments/evaluation/primary4_assembly_validation/tables/genclose_flat_seed_scores.csv \
+    docs/experiments/evaluation/primary4_assembly_validation/tables/genclose_density_assembly.csv \
+    docs/experiments/evaluation/primary4_assembly_validation/tables/genclose_direct_plane.csv \
     docs/figs/genclose \
     phases/p2-gsjso/runs/20260716_genclose_flat_density; then
     write_status "B" "partial" "outputs complete; commit or push failed"
@@ -374,7 +374,7 @@ if not confusion or not (10 <= len(cases) <= 20):
 for rows, name in [(metrics, "metrics"), (ladder, "ladder"), (confusion, "confusion"), (cases, "cases")]:
     if any(row.get("learning_runs_started") != "0" for row in rows):
         raise SystemExit(f"{name} learning flag drift")
-manifest = json.loads(Path("docs/experiments/boundary_map/manifests/boundary_map_manifest.json").read_text())
+manifest = json.loads(Path("docs/experiments/input-and-alignment/boundary_map/manifests/boundary_map_manifest.json").read_text())
 if manifest["evaluation_population"] != 178 or manifest["learning_runs_started"] != 0:
     raise SystemExit("manifest QA failed")
 if not Path("docs/archive/boundary_map/v1/figs/boundary_map_ladder.png").is_file():
@@ -391,7 +391,7 @@ PY
     write_status "C" "failed" "output QA failed"
     return 1
   fi
-  issue "OVN-C measurement complete: manifest_sha256=$(sha docs/experiments/boundary_map/manifests/boundary_map_manifest.json); metrics_sha256=$(sha docs/archive/boundary_map/v1/tables/boundary_map_metrics.csv); ladder_sha256=$(sha docs/archive/boundary_map/v1/tables/boundary_map_ladder.csv); learning_runs_started=0; new_inference=MASt3R_correspondence_only"
+  issue "OVN-C measurement complete: manifest_sha256=$(sha docs/experiments/input-and-alignment/boundary_map/manifests/boundary_map_manifest.json); metrics_sha256=$(sha docs/archive/boundary_map/v1/tables/boundary_map_metrics.csv); ladder_sha256=$(sha docs/archive/boundary_map/v1/tables/boundary_map_ladder.csv); learning_runs_started=0; new_inference=MASt3R_correspondence_only"
   if ! commit_paths \
     "OVN-C: measure 178-building boundary map" \
     phases/p2-gsjso/docs/issues.md \
@@ -399,14 +399,14 @@ PY
     docs/archive/boundary_map/v1/tables/boundary_map_ladder.csv \
     docs/archive/boundary_map/v1/tables/boundary_map_confusion.csv \
     docs/archive/boundary_map/v1/tables/boundary_map_boundary_cases.csv \
-    docs/experiments/boundary_map/manifests/boundary_map_manifest.json \
+    docs/experiments/input-and-alignment/boundary_map/manifests/boundary_map_manifest.json \
     docs/figs/boundary_map \
     phases/p2-gsjso/runs/20260716_boundary_map; then
     write_status "C" "partial" "outputs complete; commit or push failed"
     return 1
   fi
   C_COMMIT="$(git rev-parse HEAD)"
-  issue "OVN-C commit ledger: commit=$C_COMMIT; manifest_sha256=$(sha docs/experiments/boundary_map/manifests/boundary_map_manifest.json)"
+  issue "OVN-C commit ledger: commit=$C_COMMIT; manifest_sha256=$(sha docs/experiments/input-and-alignment/boundary_map/manifests/boundary_map_manifest.json)"
   write_status "C" "complete" "commit=$C_COMMIT"
   log "C complete commit=$C_COMMIT"
 }

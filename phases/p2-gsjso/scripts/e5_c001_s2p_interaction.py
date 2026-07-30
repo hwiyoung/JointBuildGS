@@ -58,40 +58,40 @@ MONO_V2_DEPTH_DIR = MONO_V2_ROOT / "depth_aligned_npy"
 DA_REPO = REPO / "results/tum_transfer/e5_s2_direction_position/C001/mono_priors/Depth-Anything-V2"
 
 FIG_DIR = REPO / "docs/figs/e5_c001_s2p"
-REPORT_PATH = REPO / "docs/experiments/e5_c001_s2p/reports/W_E5_C001_S2p_상호작용.md"
-CSV_INVENTORY = REPO / "docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_inventory.csv"
-CSV_TIMELINE = REPO / "docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_timeline_roofcrop.csv"
-CSV_DENSIFY = REPO / "docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_densify_log.csv"
-CSV_ISSUES = REPO / "docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_issues.csv"
-CSV_MONO_V2 = REPO / "docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_monodepth_precheck_v2.csv"
-CSV_MONO_V2_IMAGE = REPO / "docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_monodepth_precheck_v2_image.csv"
-CSV_MONO_V2_VIEW = REPO / "docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_monodepth_precheck_v2_view.csv"
-CSV_MONO_V2_RUNTIME = REPO / "docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_monodepth_runtime_v2.csv"
-CSV_SHEET_OPACITY = REPO / "docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_sheet_opacity_dist.csv"
-CSV_TWIN_REND = REPO / "docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_twin_rend_dist.csv"
-CSV_COVERAGE = REPO / "docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_coverage.csv"
-CSV_FILTER = REPO / "docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_filter_contrib.csv"
-CSV_405_BUILDING = REPO / "docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_405_rescore_building.csv"
-CSV_405_REPAIR = REPO / "docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_405_rescore.csv"
-CSV_READOUT_SUMMARY = REPO / "docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_summary.csv"
-CSV_READOUT_TRADEOFF = REPO / "docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_tradeoff.csv"
-CSV_READOUT_CASES = REPO / "docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_representative_buildings.csv"
-CSV_READOUT_INVENTORY = REPO / "docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_readout_inventory.csv"
-CSV_READOUT_ISSUES = REPO / "docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_readout_issues.csv"
-CSV_GABLE_MODE = REPO / "docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_gable_mode.csv"
-CSV_PANEL_INVENTORY = REPO / "docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_8way_panel_inventory.csv"
-CSV_PIPELINE_STRIPS = REPO / "docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_pipeline_strips.csv"
-CSV_PIPELINE_STRIP_ISSUES = REPO / "docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_pipeline_strips_issues.csv"
-CSV_ARM_CELLS = REPO / "docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_arm_cells.csv"
-CSV_REND_DIST = REPO / "docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_rend_dist.csv"
-CSV_GLOBAL_Z = REPO / "docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_global_z_hist.csv"
+REPORT_PATH = REPO / "docs/experiments/joint-optimization/e5_c001_s2p/reports/W_E5_C001_S2p_상호작용.md"
+CSV_INVENTORY = REPO / "docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_inventory.csv"
+CSV_TIMELINE = REPO / "docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_timeline_roofcrop.csv"
+CSV_DENSIFY = REPO / "docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_densify_log.csv"
+CSV_ISSUES = REPO / "docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_issues.csv"
+CSV_MONO_V2 = REPO / "docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_monodepth_precheck_v2.csv"
+CSV_MONO_V2_IMAGE = REPO / "docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_monodepth_precheck_v2_image.csv"
+CSV_MONO_V2_VIEW = REPO / "docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_monodepth_precheck_v2_view.csv"
+CSV_MONO_V2_RUNTIME = REPO / "docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_monodepth_runtime_v2.csv"
+CSV_SHEET_OPACITY = REPO / "docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_sheet_opacity_dist.csv"
+CSV_TWIN_REND = REPO / "docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_twin_rend_dist.csv"
+CSV_COVERAGE = REPO / "docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_coverage.csv"
+CSV_FILTER = REPO / "docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_filter_contrib.csv"
+CSV_405_BUILDING = REPO / "docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_405_rescore_building.csv"
+CSV_405_REPAIR = REPO / "docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_405_rescore.csv"
+CSV_READOUT_SUMMARY = REPO / "docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_summary.csv"
+CSV_READOUT_TRADEOFF = REPO / "docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_tradeoff.csv"
+CSV_READOUT_CASES = REPO / "docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_representative_buildings.csv"
+CSV_READOUT_INVENTORY = REPO / "docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_readout_inventory.csv"
+CSV_READOUT_ISSUES = REPO / "docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_readout_issues.csv"
+CSV_GABLE_MODE = REPO / "docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_gable_mode.csv"
+CSV_PANEL_INVENTORY = REPO / "docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_8way_panel_inventory.csv"
+CSV_PIPELINE_STRIPS = REPO / "docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_pipeline_strips.csv"
+CSV_PIPELINE_STRIP_ISSUES = REPO / "docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_pipeline_strips_issues.csv"
+CSV_ARM_CELLS = REPO / "docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_arm_cells.csv"
+CSV_REND_DIST = REPO / "docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_rend_dist.csv"
+CSV_GLOBAL_Z = REPO / "docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_global_z_hist.csv"
 
 TIMELINE_IDS = ["4907202", "4908168", "4908178", "4907184"]
 TIMELINE_FULL_IDS = [f"DEBY_LOD2_{sid}" for sid in TIMELINE_IDS]
 SOURCE_DOCS = [
-    REPO / "docs/experiments/e5_c001_s2/reports/W_E5_C001_S2_중간검수·Arm3회부_20260710.md",
+    REPO / "docs/experiments/joint-optimization/e5_c001_s2/reports/W_E5_C001_S2_중간검수·Arm3회부_20260710.md",
     REPO / "docs/원격프롬프트_S2_방향자리_사슬4arm·선행묶음_20260710.md",
-    REPO / "docs/experiments/e5_c001_s2/reports/W_S2설계_손실비교·실험계획_20260710.md",
+    REPO / "docs/experiments/joint-optimization/e5_c001_s2/reports/W_S2설계_손실비교·실험계획_20260710.md",
 ]
 
 
@@ -373,8 +373,8 @@ def repair_405(args: argparse.Namespace) -> None:
     repair.RUN_ID = REPAIR_RUN_ID
     repair.REPAIR_ROOT = s2.P0_RUNS / REPAIR_RUN_ID
     repair.CSV_SUMMARY = CSV_405_REPAIR
-    repair.CSV_BUILDING = REPO / "docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_405_repair_status_building.csv"
-    repair.CSV_ISSUES = REPO / "docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_405_repair_issues.csv"
+    repair.CSV_BUILDING = REPO / "docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_405_repair_status_building.csv"
+    repair.CSV_ISSUES = REPO / "docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_405_repair_issues.csv"
     repair.process(
         argparse.Namespace(
             source_run_id=[P0_RUN_ID],
@@ -1889,8 +1889,8 @@ def _s0_dense_count() -> int:
 
 def build_arm_cells(_args: argparse.Namespace) -> None:
     metrics = read_csv(CSV_405_BUILDING)
-    raw_metrics = read_csv(REPO / "docs/experiments/e5_c001_8way/tables/e5_c001_8way_metrics.csv")
-    s1_metrics = read_csv(REPO / "docs/experiments/e5_c001_3b_s1/tables/e5_c001_3b_s1_metrics.csv")
+    raw_metrics = read_csv(REPO / "docs/experiments/evaluation/e5_c001_8way/tables/e5_c001_8way_metrics.csv")
+    s1_metrics = read_csv(REPO / "docs/experiments/joint-optimization/e5_c001_3b_s1/tables/e5_c001_3b_s1_metrics.csv")
     fingerprints = read_csv(RUN_DIR / "train_fingerprints.csv")
     rend_dist = read_csv(CSV_REND_DIST)
     raw_by = {
@@ -2088,7 +2088,7 @@ def report(_args: argparse.Namespace) -> None:
     twin = read_csv(CSV_TWIN_REND)
     gable = read_csv(CSV_GABLE_MODE)
     old_cells = [
-        row for row in read_csv(REPO / "docs/experiments/e5_c001_s2/tables/e5_c001_s2_arm_cells.csv")
+        row for row in read_csv(REPO / "docs/experiments/joint-optimization/e5_c001_s2/tables/e5_c001_s2_arm_cells.csv")
         if row.get("arm") == "arm1"
     ]
     issues = read_csv(CSV_ISSUES)
@@ -2379,7 +2379,7 @@ def report(_args: argparse.Namespace) -> None:
         "",
         "## 산출",
         "",
-        "- CSV: `docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_arm_cells.csv`, `docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_timeline_roofcrop.csv`, `docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_densify_log.csv`, `docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_monodepth_precheck_v2.csv`, `docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_sheet_opacity_dist.csv`, `docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_twin_rend_dist.csv`, `docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_gable_mode.csv`, `docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_rend_dist.csv`, `docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_global_z_hist.csv`, `docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_405_rescore_building.csv`, `docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_inventory.csv`, `docs/experiments/e5_c001_s2p/tables/e5_c001_s2p_issues.csv`.",
+        "- CSV: `docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_arm_cells.csv`, `docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_timeline_roofcrop.csv`, `docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_densify_log.csv`, `docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_monodepth_precheck_v2.csv`, `docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_sheet_opacity_dist.csv`, `docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_twin_rend_dist.csv`, `docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_gable_mode.csv`, `docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_rend_dist.csv`, `docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_global_z_hist.csv`, `docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_405_rescore_building.csv`, `docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_inventory.csv`, `docs/experiments/joint-optimization/e5_c001_s2p/tables/e5_c001_s2p_issues.csv`.",
         "- 런 지문: `phases/p2-gsjso/runs/20260710_e5_c001_s2p_interaction/train_fingerprints.csv`, `versions.txt`.",
         "- 실패·예외 장부: `phases/p2-gsjso/docs/issues.md`와 태스크 CSV를 함께 사용.",
         "",

@@ -106,7 +106,7 @@ def write_versions(path: Path, run_id: str, gate_doc: Path, hit_count: int) -> N
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--run-id", default=datetime.now().strftime("e5p_const_%Y%m%d_%H%M%S"))
-    ap.add_argument("--out", default="docs/experiments/e5_pilot/reports/e5_seed_constant_gate.md")
+    ap.add_argument("--out", default="docs/experiments/pilots/e5_pilot/reports/e5_seed_constant_gate.md")
     args = ap.parse_args()
 
     hits = grep_old_constants()

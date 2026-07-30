@@ -82,10 +82,10 @@ def main():
         "관측: 방법-관련 버킷(①②)서 GS 공동최적화의 생성 회복을 baseline 대비 카운트. ③ 커버리지는 취득 한계(방법 무관), ④ 불가. **생성됨 ≠ 충실**(무텍스처=저편향 슬랩[D6], 조립=위상 회복이나 표면 미달[assembly-fidelity]). 버킷별 대표 정성은 `docs/figs/`(가용 시). 커밋 `gen-8way-fail`.",
         "",
         "> 재현: `run_overnight.sh` Task B(버킷 라벨→arm별 chunked extract+eval→집계). 데이터 재사용·재학습 없음."]
-    (REPO / "docs/experiments/w_generation_8way/reports/W_generation_8way.md").write_text("\n".join(lines))
+    (REPO / "docs/experiments/evaluation/w_generation_8way/reports/W_generation_8way.md").write_text("\n".join(lines))
     print("[gen-8way] arms with data:", [a for a in ARMS if a in gen])
     print("[gen-8way] totals model-y:", {a: total(a) for a in ARMS})
-    print(f"[done] -> docs/experiments/w_generation_8way/reports/W_generation_8way.md + {LEV}/gen_8way.csv")
+    print(f"[done] -> docs/experiments/evaluation/w_generation_8way/reports/W_generation_8way.md + {LEV}/gen_8way.csv")
 
 
 if __name__ == "__main__":

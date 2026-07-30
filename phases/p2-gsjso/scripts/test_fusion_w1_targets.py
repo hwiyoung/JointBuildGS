@@ -47,7 +47,7 @@ class FusionW1TargetTests(unittest.TestCase):
         population = {
             row["building_id"]
             for row in MODULE._read_csv(
-                self.repo_root / "docs/experiments/boundary_map/tables/boundary_map_v4_1_ladder.csv"
+                self.repo_root / "docs/experiments/input-and-alignment/boundary_map/tables/boundary_map_v4_1_ladder.csv"
             )
         }
         self.assertEqual(set(ids), population)
@@ -84,7 +84,7 @@ class FusionW1TargetTests(unittest.TestCase):
         )
 
     def test_dense_success_filter_matches_night_a_c001_table(self) -> None:
-        source = MODULE._read_csv(self.repo_root / "docs/experiments/qs_rescore/tables/qs_rescore_pairs.csv")
+        source = MODULE._read_csv(self.repo_root / "docs/experiments/evaluation/qs_rescore/tables/qs_rescore_pairs.csv")
         expected = [
             row["building_id"]
             for row in source

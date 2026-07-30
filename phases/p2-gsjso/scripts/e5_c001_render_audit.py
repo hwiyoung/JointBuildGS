@@ -93,11 +93,11 @@ def parse_args() -> argparse.Namespace:
     ap.add_argument("--train-fingerprints", default="phases/p2-gsjso/runs/e5p_train_20260707_C001/train_fingerprints.csv")
     ap.add_argument("--readout-fingerprints", default="phases/p2-gsjso/runs/e5p_train_20260707_C001/readout_fingerprints.csv")
     ap.add_argument("--gsdiag-snapshot-dir", default="phases/p2-gsjso/runs/20260707_e5_c001_gsdiag/snapshots")
-    ap.add_argument("--lowtex-v5", default="docs/experiments/lowtex_v5/tables/lowtex_v5.csv")
-    ap.add_argument("--projection-zeta", default="docs/experiments/projection_zeta_ls/tables/projection_zeta_ls.csv")
+    ap.add_argument("--lowtex-v5", default="docs/experiments/input-and-alignment/lowtex_v5/tables/lowtex_v5.csv")
+    ap.add_argument("--projection-zeta", default="docs/experiments/input-and-alignment/projection_zeta_ls/tables/projection_zeta_ls.csv")
     ap.add_argument("--out-run", default="phases/p2-gsjso/runs/20260708_e5_c001_render_audit")
     ap.add_argument("--fig-dir", default="docs/figs/e5_c001_render")
-    ap.add_argument("--doc-path", default="docs/experiments/e5_c001_render/reports/W_E5_C001_렌더플로터점검.md")
+    ap.add_argument("--doc-path", default="docs/experiments/evaluation/e5_c001_render/reports/W_E5_C001_렌더플로터점검.md")
     ap.add_argument("--docs-prefix", default="docs/e5_c001_render", help="Prefix for CSV outputs before _eval_metrics.csv, etc.")
     ap.add_argument("--max-render-views", type=int, default=4)
     ap.add_argument("--max-depth-coverage-views", type=int, default=0, help="0 means all frames.")
@@ -636,7 +636,7 @@ def build_report(
 
 ## 산출 파일
 
-- 표: {p('docs/experiments/e5_c001_render/tables/e5_c001_render_eval_metrics.csv')}, {p('docs/experiments/e5_c001_render/tables/e5_c001_render_floater_metrics.csv')}, {p('docs/experiments/e5_c001_render/tables/e5_c001_render_depth_supervision.csv')}, {p('docs/experiments/e5_c001_render/tables/e5_c001_render_readout_coverage.csv')}, {p('docs/experiments/e5_c001_render/tables/e5_c001_render_condition_strata.csv')}, {p('docs/experiments/e5_c001_render/tables/e5_c001_render_cause_attribution.csv')}.
+- 표: {p('docs/experiments/evaluation/e5_c001_render/tables/e5_c001_render_eval_metrics.csv')}, {p('docs/experiments/evaluation/e5_c001_render/tables/e5_c001_render_floater_metrics.csv')}, {p('docs/experiments/evaluation/e5_c001_render/tables/e5_c001_render_depth_supervision.csv')}, {p('docs/experiments/evaluation/e5_c001_render/tables/e5_c001_render_readout_coverage.csv')}, {p('docs/experiments/evaluation/e5_c001_render/tables/e5_c001_render_condition_strata.csv')}, {p('docs/experiments/evaluation/e5_c001_render/tables/e5_c001_render_cause_attribution.csv')}.
 - 그림: {p(rel(repo, fig_dir))}/.
 - run 기록: {p(rel(repo, out_run / 'versions.txt'))}.
 
@@ -694,7 +694,7 @@ semantic roof pixel 중 COLMAP MVS depth mask가 유효한 비율이다.
 
 ## 인용·근거
 
-- `docs/experiments/w_d4/reports/W_D4_손실config_감사.md`, `docs/W_D4config감사_분석·②연결_20260707.md`, `docs/W_문헌검증_GS기하_foundation·가중·평가_20260707.md`.
+- `docs/experiments/joint-optimization/w_d4/reports/W_D4_손실config_감사.md`, `docs/W_D4config감사_분석·②연결_20260707.md`, `docs/W_문헌검증_GS기하_foundation·가중·평가_20260707.md`.
 - 2DGS: arXiv 2403.17888 (<https://arxiv.org/abs/2403.17888>), depth distortion/normal consistency가 geometry regularization으로 제시됨.
 - CityGaussianV2: arXiv 2411.00771 (<https://arxiv.org/abs/2411.00771>), large-scale reconstruction에서 depth regression과 geometry accuracy 이슈를 다룸.
 - AlignGS: arXiv 2510.07839 (<https://arxiv.org/abs/2510.07839>), semantic priors를 geometry regularizer로 쓰는 sparse-view reconstruction 방향.

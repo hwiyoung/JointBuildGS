@@ -299,8 +299,8 @@ def validate_lock_contract(
             )
     source = lock.get("tilt_score_source")
     expected_source = {
-        "scores_csv": "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_phase3_scores.csv",
-        "perturbation_csv": "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_perturbation.csv",
+        "scores_csv": "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_phase3_scores.csv",
+        "perturbation_csv": "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_perturbation.csv",
         "expected_nonzero_height_rows": EXPECTED_NONZERO_HEIGHT_ROWS,
         "require_evaluation_complete": True,
     }
@@ -815,9 +815,9 @@ def validate_phase3_base42_archive(
         "trigger": str(outputs.get("tilt_trigger", "")),
     }
     exact_core_paths = {
-        "scores": "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_phase3_scores.csv",
-        "perturbation": "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_perturbation.csv",
-        "cells": "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_perturbation_cells.csv",
+        "scores": "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_phase3_scores.csv",
+        "perturbation": "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_perturbation.csv",
+        "cells": "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_perturbation_cells.csv",
         "trigger": str(DEFAULT_TRIGGER),
     }
     if expected_outputs != exact_core_paths:
@@ -1081,7 +1081,7 @@ def validate_trigger_contract(
         "complete_nonzero_height_rows": EXPECTED_NONZERO_HEIGHT_ROWS,
         "scores_csv": source["scores_csv"],
         "perturbation_csv": source["perturbation_csv"],
-        "perturbation_cells_csv": "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_perturbation_cells.csv",
+        "perturbation_cells_csv": "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_perturbation_cells.csv",
         "tilt_deltas_deg": EXPECTED_TILT_DELTAS,
         "equality_counts_as_return": False,
         "numeric_tolerance": None,
@@ -1963,7 +1963,7 @@ def archive_tilt18(
             "source_perturbation_sha256"
         ],
         "source_perturbation_cells_csv": (
-            "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_perturbation_cells.csv"
+            "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_perturbation_cells.csv"
         ),
         "source_perturbation_cells_sha256": trigger_hashes[
             "source_perturbation_cells_sha256"

@@ -48,10 +48,10 @@ PROGRESS = RUN_DIR / "progress.json"
 RUN_LOG = RUN_DIR / "run.log"
 VERSIONS = RUN_DIR / "versions.txt"
 MANIFEST = RUN_DIR / "manifest.json"
-OUT_CSV = REPO / "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_fm_retriangulation.csv"
-REPORT = REPO / "docs/experiments/e5_c001_s3ap/reports/W_E5_C001_S3Ap_FM재삼각측량_20260714.md"
+OUT_CSV = REPO / "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_fm_retriangulation.csv"
+REPORT = REPO / "docs/experiments/input-and-alignment/e5_c001_s3ap/reports/W_E5_C001_S3Ap_FM재삼각측량_20260714.md"
 FIG_DIR = REPO / "docs/figs/e5_c001_s3ap_fm_retri"
-OLD_CSV = REPO / "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_fm_rescore.csv"
+OLD_CSV = REPO / "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_fm_rescore.csv"
 
 REPROJECTION_THRESHOLD_PX = 2.0
 DEGENERATE_BASELINE_MAX_M = 0.06

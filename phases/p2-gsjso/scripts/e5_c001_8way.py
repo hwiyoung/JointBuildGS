@@ -47,13 +47,13 @@ W2_RUN = Path("phases/p0-audit/runs/w2_1_roofer_default_20260612_152729")
 SPARSE_RUN = Path("phases/p0-audit/runs/e5p_baseline_sparse_20260706_002300")
 ACMP_RUN = Path("phases/p0-audit/runs/e5p_baseline_acmp_20260706_001813")
 
-REPORT_PATH = Path("docs/experiments/e5_c001_8way/reports/W_E5_C001_8way.md")
-METRICS_CSV = Path("docs/experiments/e5_c001_8way/tables/e5_c001_8way_metrics.csv")
-SOURCE_SUMMARY_CSV = Path("docs/experiments/e5_c001_8way/tables/e5_c001_8way_source_summary.csv")
-CORRECTION_GAIN_CSV = Path("docs/experiments/e5_c001_8way/tables/e5_c001_8way_correction_gain.csv")
-CORRECTION_GAIN_SUMMARY_CSV = Path("docs/experiments/e5_c001_8way/tables/e5_c001_8way_correction_gain_summary.csv")
-STRATA_SUMMARY_CSV = Path("docs/experiments/e5_c001_8way/tables/e5_c001_8way_strata_summary.csv")
-INVENTORY_CSV = Path("docs/experiments/e5_c001_8way/tables/e5_c001_8way_inventory.csv")
+REPORT_PATH = Path("docs/experiments/evaluation/e5_c001_8way/reports/W_E5_C001_8way.md")
+METRICS_CSV = Path("docs/experiments/evaluation/e5_c001_8way/tables/e5_c001_8way_metrics.csv")
+SOURCE_SUMMARY_CSV = Path("docs/experiments/evaluation/e5_c001_8way/tables/e5_c001_8way_source_summary.csv")
+CORRECTION_GAIN_CSV = Path("docs/experiments/evaluation/e5_c001_8way/tables/e5_c001_8way_correction_gain.csv")
+CORRECTION_GAIN_SUMMARY_CSV = Path("docs/experiments/evaluation/e5_c001_8way/tables/e5_c001_8way_correction_gain_summary.csv")
+STRATA_SUMMARY_CSV = Path("docs/experiments/evaluation/e5_c001_8way/tables/e5_c001_8way_strata_summary.csv")
+INVENTORY_CSV = Path("docs/experiments/evaluation/e5_c001_8way/tables/e5_c001_8way_inventory.csv")
 FIG_DIR = Path("docs/figs/e5_c001_8way")
 
 MATCH_IOU_MIN = 0.02
@@ -1277,7 +1277,7 @@ def write_report(
         "## 시작 전 확인",
         "",
         f"- 브랜치·HEAD: `{branch}` · `{head}`.",
-        f"- 기존 게이트 보고: `docs/experiments/e5_pilot/reports/W_E5_pilot_gate.md`, `docs/experiments/e5_pilot/reports/W_E5_pilot_gate_검수·판정회부_20260707.md`.",
+        f"- 기존 게이트 보고: `docs/experiments/pilots/e5_pilot/reports/W_E5_pilot_gate.md`, `docs/experiments/pilots/e5_pilot/reports/W_E5_pilot_gate_검수·판정회부_20260707.md`.",
         f"- GS 점군화·지문: `{TRAIN_RUN_DIR}/`.",
         f"- GS 조립 출력: `{GATE_RUN_DIR}/`.",
         "- 새 학습·새 파라미터·새 Roofer 조립은 하지 않았다.",

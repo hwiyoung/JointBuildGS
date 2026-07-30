@@ -7,7 +7,7 @@ Two tracked control-plane/evidence groups were separated from payload-bearing ro
 | Migration | Files | Bytes | New owner |
 |---|---:|---:|---|
 | `DOC-IA-ARCHIVE-01` | 12 | 53,412 | `docs/archive/pre_tum_results/` |
-| `DOC-IA-REPORT-01` | 9 | 840,828 | `docs/experiments/tum2twin_surface_proxy_rv1/` and `docs/figs/tum2twin_surface_proxy_rv1/` |
+| `DOC-IA-REPORT-01` | 9 | 840,828 | `docs/experiments/evaluation/tum2twin_surface_proxy_rv1/` and `docs/figs/tum2twin_surface_proxy_rv1/` |
 
 All 21 source files were clean tracked files, all targets were collision-free, and payload bytes were preserved. This record describes the initial promotion wave. `STORAGE-IA-01` later externalized the remaining runtime payload, and `RESULT-IA-02` split promoted compact result files into family role directories.
 

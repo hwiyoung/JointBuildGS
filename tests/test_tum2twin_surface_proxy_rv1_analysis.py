@@ -15,7 +15,7 @@ sys.path.insert(0, str(REPO))
 from scripts.analyze_tum2twin_surface_proxy_rv1 import classify_surface_proxy, percentile_rank
 
 
-OUTPUT = REPO / "docs/experiments/tum2twin_surface_proxy_rv1"
+OUTPUT = REPO / "docs/experiments/evaluation/tum2twin_surface_proxy_rv1"
 
 
 def test_percentile_rank_uses_average_ties_and_inverse_order() -> None:

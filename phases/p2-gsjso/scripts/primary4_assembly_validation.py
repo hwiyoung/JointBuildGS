@@ -712,7 +712,7 @@ def prepare() -> None:
     )
     b1_ground_rows = [
         row
-        for row in read_csv(REPO / "docs/experiments/e5_c001_s3ap/tables/e5_c001_s3ap_fm_retri_rescore.csv")
+        for row in read_csv(REPO / "docs/experiments/input-and-alignment/e5_c001_s3ap/tables/e5_c001_s3ap_fm_retri_rescore.csv")
         if row["row_type"] == "building_summary" and row["building_id"] == full_id("4907199")
     ]
     require(len(b1_ground_rows) == 1, "199 B-1 ground row cardinality drift")
