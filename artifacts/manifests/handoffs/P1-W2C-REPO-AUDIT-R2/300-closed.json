@@ -1,0 +1,107 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P1-W2C-REPO-AUDIT-R2",
+  "task_id": "P1-W2C-REPO-AUDIT-v2",
+  "created_at": "2026-07-31T19:29:49+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "closed",
+  "previous_receipt": {
+    "path": "artifacts/manifests/handoffs/P1-W2C-REPO-AUDIT-R2/200-verified.json",
+    "sha256": "1d136ca76492daee83dc1c64e2ac78727cd78cd88d21fa0eb2197aa16a8b6215"
+  },
+  "transport": {
+    "mode": "serialized_main",
+    "branch": "main",
+    "target_branch": "main",
+    "exclusive_writer_ack": true
+  },
+  "commits": {
+    "base_main": "ac299052a1a6c8c9ebb10bdf328c5d773f28b5e3",
+    "offered_head": "9e724b8740756cf128252d8c081d4882b43e5d67",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P1-W2C-REPO-AUDIT-R2",
+      "docs/audit",
+      "docs/handoffs/returns/P1_C2W_REPO_AUDIT_RETURN_v2.md"
+    ],
+    "protected_paths": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      "artifacts/manifests/handoffs/P1-W2C-REPO-AUDIT",
+      "artifacts/manifests/local_workspace_20260730.yaml",
+      "artifacts/manifests/schemas",
+      "artifacts/manifests/templates",
+      "configs",
+      "docs/evidence",
+      "docs/experiments/pilots/fusion_w1",
+      "docs/handoffs/HANDOFF_INDEX.md",
+      "docs/handoffs/P1_W2C_REPO_AUDIT_v1.md",
+      "docs/handoffs/P1_W2C_REPO_AUDIT_v2.md",
+      "docs/handoffs/templates",
+      "docs/research",
+      "phases",
+      "scripts",
+      "src",
+      "tests"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "git_only",
+    "verifier_role": "experiment_host",
+    "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "commands": [
+      "docker exec jointbuildgs-dev python scripts/repository/validate_agent_instructions.py",
+      "docker exec jointbuildgs-dev python -m unittest tests.repository.test_agent_instruction_sync tests.repository.test_two_host_handoff",
+      "docker exec jointbuildgs-dev python scripts/repository/validate_two_host_handoff.py artifacts/manifests/handoffs/P1-W2C-REPO-AUDIT-R2/200-verified.json --repo . --origin-ref origin/main --head-ref HEAD",
+      "docker exec jointbuildgs-dev python -c 'import hashlib,json; from datetime import datetime; from pathlib import Path; from jsonschema import Draft202012Validator,FormatChecker; r=Path(\".\"); sp=r/\"artifacts/manifests/schemas/two_host_handoff.schema.json\"; vp=r/\"artifacts/manifests/handoffs/P1-W2C-REPO-AUDIT-R2/200-verified.json\"; cp=r/\"artifacts/manifests/handoffs/P1-W2C-REPO-AUDIT-R2/300-closed.json\"; s=json.loads(sp.read_text()); v=json.loads(vp.read_text()); c=json.loads(cp.read_text()); assert not list(Draft202012Validator(s,format_checker=FormatChecker()).iter_errors(c)); assert hashlib.sha256(vp.read_bytes()).hexdigest()==c[\"previous_receipt\"][\"sha256\"]; ks=(\"handoff_id\",\"task_id\",\"direction\",\"sender_role\",\"receiver_role\",\"transport\",\"scope\",\"artifacts\"); assert all(c[k]==v[k] for k in ks); assert c[\"commits\"][\"base_main\"]==v[\"commits\"][\"base_main\"] and c[\"commits\"][\"offered_head\"]==v[\"commits\"][\"offered_head\"] and c[\"commits\"][\"receipt_head\"]==\"SELF\"; parse=lambda x:datetime.fromisoformat(x.replace(\"Z\",\"+00:00\")); assert parse(c[\"created_at\"])>parse(v[\"created_at\"]); assert c[\"state\"]==\"closed\" and c[\"receiver_ack\"][\"role\"]==\"experiment_host\" and c[\"receiver_ack\"][\"status\"]==\"closed\" and \"returned to Work Host\" in c[\"receiver_ack\"][\"issue\"]; assert c[\"scientific\"][\"technical_state\"]==\"complete\" and c[\"scientific\"][\"scientific_verdict\"] is None; print(\"closed_static_contract=PASS\")'"
+    ],
+    "tests": [
+      {
+        "name": "agent instruction contract",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "agent instruction and handoff lifecycle unit suites",
+        "passed": 37,
+        "failed": 0
+      },
+      {
+        "name": "verified predecessor post-push Docker validator",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "closed writer-return schema and chain contract",
+        "passed": 1,
+        "failed": 0
+      }
+    ]
+  },
+  "artifacts": {
+    "required_for_task": false,
+    "availability": {
+      "work_host": "manifest_only",
+      "experiment_host": "manifest_only"
+    },
+    "records": []
+  },
+  "scientific": {
+    "technical_state": "complete",
+    "scientific_verdict": null,
+    "promotion_status": "human_review_required"
+  },
+  "receiver_ack": {
+    "role": "experiment_host",
+    "accepted_at": "2026-07-31T19:29:49+09:00",
+    "status": "closed",
+    "issue": "Technical handoff closed; serialized_main write ownership returned to Work Host. Audit status remains READY_FOR_REVIEW; operational closure is not a scientific or phase verdict, and scientific_verdict remains null."
+  }
+}
