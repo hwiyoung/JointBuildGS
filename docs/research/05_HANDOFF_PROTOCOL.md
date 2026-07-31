@@ -306,6 +306,10 @@ Technical handoff의 artifact prerequisite와 scientific readiness audit의 조�
   우선 사용하고, 다수 파일은 deterministic per-file inventory와 inventory hash를
   사용할 수 있다. live bytes를 재해시하지 않았다면 `artifact_verified`를 주장하지
   않는다.
+- successor validation에서 predecessor validator를 `--artifact-root`와 함께 별도로
+  다시 호출하지 않는다. 실제 processing이 source bytes를 순차 읽어야 하면 같은
+  stream에서 필요한 digest를 함께 계산하고 별도 전·후 full-file hash pass를 만들지
+  않는다.
 
 Large artifact entry는 다음을 포함한다.
 
