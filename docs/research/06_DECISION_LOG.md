@@ -294,6 +294,40 @@
 - Gate S0는 exact AOI, inputs, `U_target`, `E_paired`, eligibility, split과 cost를
   outcome 없이 동결할 자료를 만든다. 과학적 verdict는 계속 사용자에게 남는다.
 
+## DEC-P1-009 — Gate S0 evidence 종료와 remediation 우선순위
+
+- **Decision ID:** `DEC-P1-009`
+- **Date:** 2026-07-31
+- **Status:** `TECHNICAL EVIDENCE INTEGRATION / scientific_verdict null`
+- **Evidence:** output commit `380cc8916e739702206a65cdd9318b2014c81030`,
+  verified `deaedff800bd62b6a6b893ff885898c99571f199`, closed
+  `1cf0db33ecfe4305477735806912992eea3325d8`, Work Host cross-review
+  `P2-GATE-S0-WORK-REVIEW-v1`.
+- **Decision:** Gate S0 preparation v1은 기술적으로 종료됐지만 제안 상태는
+  `BLOCKED_FOR_GATE_S0_REVIEW`다. 기존 packet은 재실행하지 않고 새 remediation
+  packet에서 누락 증거를 다룬다. C1–C5 performance execution은 계속 금지한다.
+- **Added blockers:** 원 evidence의 `S0-I01`–`S0-I11`에 더해 C3–C5 SfM sparse
+  initialization의 exact identity/hash/frame/role과 evaluation reference
+  ID/version/production lineage/C1 self-reference class를 remediation 필수 항목으로 둔다.
+- **Priority:** independent LoD1 viability → coordinate/datum/reference foundation →
+  condition별 input provenance → `U_target/E_paired` → Stage 3/writer → bounded
+  non-held-out cost calibration 순서다.
+- **User approval:** 사용자의 “사람의 개입 없이 멈추지 말고 서브 에이전트 간 검증으로
+  진행” 지시는 이 technical integration과 다음 DRAFT/approval packet 준비 authority로
+  적용한다. Gate S0와 scientific verdict는 여전히 사용자/human reviewer에게 남는다.
+- **Superseded decisions:** 없음. `DEC-P1-008`의 연구 정본과 금지 범위를 유지한다.
+
+### Consequence
+
+- 962/937 차이는 937 included + 25 explicit exclusions ledger로 해소됐다. 다만 C2
+  MVS exact derivation binding은 `PARTIAL`이다.
+- C5 `MISSING`은 승인된 bounded search scope에 한정한다. 더 넓은 독립 provider/
+  cadastral 조사 없이 전역 부재로 과장하지 않는다.
+- Work Host CRLF portability fix는 evidence bytes를 변경하지 않고 Git LF blob을
+  검증하도록 구현한다.
+- 새 remediation handoff가 closed되기 전에는 Gate freeze packet이나 performance
+  packet을 만들지 않는다.
+
 ## Pending decisions not yet logged as adopted
 
 다음은 선택지가 정리되었으나 사용자 결정 전이므로 adopted decision이 아니다.

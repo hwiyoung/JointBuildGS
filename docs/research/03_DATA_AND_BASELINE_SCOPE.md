@@ -3,8 +3,9 @@
 - Document status: `USER_APPROVED_CANONICAL_DATA_CONTRACT`
 - 문서 버전: `C1C5_CANON_v1`
 - 작성일: 2026-07-31
-- 상태: `PROVISIONAL INPUT FACTS / GATE S0 FREEZE PENDING`
-- P1 audit snapshot: `PARTIAL/MISSING/UNKNOWN`; Gate S0 target-byte verification 필요
+- 상태: `GATE S0 EVIDENCE TECHNICAL CLOSED / PROPOSED BLOCKED / HUMAN DECISION PENDING`
+- Gate S0 snapshot: exact target bytes verified; scientific readiness remains
+  `PARTIAL/MISSING/UNKNOWN`
 
 ## 1. 목적과 원칙
 
@@ -25,8 +26,8 @@ backend에 정확한 파일이 검증되어 있다는 사실을 구분한다.
 
 | Asset ID | 공식 후보 | 연구 역할 | 공식 source에서 확인 | 로컬 가용성 | 취득 시점 | Accuracy | Density / coverage | Format / CRS |
 |---|---|---|---|---|---|---|---|---|
-| `IMG_CURRENT` | UAS photographs | C2–C5 current imagery | RTK-georeferenced UAS images, UAS laser campaign 중 취득 ([official](https://tum2t.win/datasets/im-uas)) | `PARTIAL`: 962 candidates; ledger 미동결 | `TO VERIFY` | `TO VERIFY` | overlap `TO VERIFY` | images + metadata/OPF 후보; CRS `TO VERIFY` |
-| `CAM_CURRENT` | OPF/camera/trajectory | MVS/GS poses | official tutorial은 `images.zip`, `opf.zip`, OPF camera parameters/geolocation/sparse reconstruction을 기술 ([official](https://tum2t.win/tutorials/im-gaussiannerf)) | `PARTIAL`: 937 poses; 25-image gap | image와 동일 여부 `TO VERIFY` | pose uncertainty `TO VERIFY` | coverage `TO VERIFY` | OPF→COLMAP version `TO VERIFY` |
+| `IMG_CURRENT` | UAS photographs | C2–C5 current imagery | RTK-georeferenced UAS images, UAS laser campaign 중 취득 ([official](https://tum2t.win/datasets/im-uas)) | `PARTIAL`: exact 962 images; 937 included + 25 excluded ledger | `TO VERIFY` | `TO VERIFY` | building view support `TO VERIFY` | image archive/member hashes verified; CRS `TO VERIFY` |
+| `CAM_CURRENT` | OPF/camera/trajectory | MVS/GS poses | official tutorial은 `images.zip`, `opf.zip`, OPF camera parameters/geolocation/sparse reconstruction을 기술 ([official](https://tum2t.win/tutorials/im-gaussiannerf)) | `PARTIAL`: exact OPF; 937 calibrated poses; 25 explicit no-pose exclusions | image archive와 exact files verified | pose uncertainty `TO VERIFY` | building coverage `TO VERIFY` | SfM sparse initialization identity/hash/frame/role `TO VERIFY` |
 | `LIDAR_UAS_CURRENT` | UAS laser scanning | `L_upper`, geometry reference 후보 | DJI M350 RTK + Zenmuse L2, nadir/oblique scans ([official](https://tum2t.win/datasets/pc-uas)) | `PARTIAL`: manual/nadir candidates | `TO VERIFY` | `TO VERIFY` | point density/coverage `TO VERIFY` | selection, class, CRS/datum 미동결 |
 | `MVS_CURRENT` | UAS image-based scan | C2 baseline only; C3–C5 dense initialization/supervision에는 금지 | Pix4Dmatic 1.58.1 point cloud와 orthophoto ([official](https://tum2t.win/datasets/pc-uasp)) | `PARTIAL`: candidate identified | UAS campaign과 동일성 `TO VERIFY` | `TO VERIFY` | density/coverage `TO VERIFY` | exact image/pose base 미동결 |
 | `ALS_EXISTING` | Bavarian real ALS tiles | `P_LiDAR` 후보 | official portal에 real ALS tiles와 download source가 제시됨 ([official](https://tum2t.win/datasets/pc-als)) | `PARTIAL`: four candidate tiles | UAS 대비 시점차 `TO VERIFY` | `TO VERIFY` | density/coverage `TO VERIFY` | C1 independence, CRS/datum/interface 미동결 |
@@ -39,16 +40,23 @@ backend에 정확한 파일이 검증되어 있다는 사실을 구분한다.
 `SOURCE-SUPPORTED` 사실이다. 현재 checkout 또는 sibling artifact root에 정확한
 payload가 있다는 뜻은 아니다.
 
-P1 감사가 확인한 현재 준비도는 다음처럼 축약한다.
+Gate S0 evidence와 Work Host 교차검토가 확인한 현재 준비도는 다음처럼 축약한다.
 
-- images 962개와 poses 937개가 불일치하며, 25건의 결정론적 ledger가 필요하다.
+- images 962개와 calibrated poses 937개의 차이는 25건의 결정론적 exclusion ledger로
+  해소됐다. 다만 C2 MVS가 exact 937 base에서 파생됐다는 hash-linked receipt는 없다.
 - C1 UAS LiDAR는 manual/nadir 선택·병합, class 2/6, vertical datum과 registration이 미동결이다.
 - C4 Existing ALS는 C1과의 독립성 및 future prior interface가 미동결이다.
 - 독립 LoD1은 발견되지 않아 C5가 `MISSING`이다.
+- C3–C5 표준 initialization에 사용할 SfM sparse artifact의 identity/hash/frame/role이
+  미동결이다. Dense MVS 금지 계약의 `READY`와 execution readiness를 혼동하지 않는다.
+- geometry/structure reference ID/version/production lineage와 C1 input-reference
+  self-reference evaluation class가 미동결이다.
 - `U_target`과 `E_paired`는 `UNKNOWN`이다.
 
-이 상태는 입력 부재를 다른 asset으로 대체할 권한이 아니라 Gate S0 evidence task의
-조사 대상이다.
+이 상태는 입력 부재를 다른 asset으로 대체할 권한이 아니라 새 Gate S0 remediation
+task의 조사 대상이다. 원 evidence와 Work Host 보완 검토는 각각
+`preregistration/gate_s0/GATE_S0_EVIDENCE_REPORT_v1.md`와
+`preregistration/gate_s0/WORK_HOST_CROSS_REVIEW_v1.md`에 있다.
 
 ### 2.1 두 LiDAR asset의 독립 역할
 
@@ -360,7 +368,8 @@ P4 primary 잠금 뒤 `E_paired` census를 별도 실행한다. 이 census가 �
 - `MAJOR`: 공식 source에서 직접 LoD1을 확인하지 못함.
 - `RESOLVED BY DEC-P1-008`: TUM2TWIN 중심 C1–C5가 현재 data-role 정본이며
   `EXPERIMENT_PLAN.md`의 dataset-role은 역사 기록이다.
-- `TO VERIFY`: 공식 portal의 asset 존재와 현재 artifact backend의 exact payload가
-  아직 연결되지 않음.
+- `PARTIAL`: Gate S0 표적 11개 payload는 Experiment Host에서 exact bytes로 검증됐다.
+  다만 독립 LoD1, C3–C5 sparse initialization, condition별 변환·registration·coverage
+  lineage는 아직 exact payload/derivative 계약과 연결되지 않았다.
 - `TO VERIFY`: source/target CRS와 vertical datum. 연구 output은 `EPSG:25832`를
   유지하지만 source 변환을 추정하지 않는다.

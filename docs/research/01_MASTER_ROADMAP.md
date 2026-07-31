@@ -2,8 +2,8 @@
 
 - 문서 버전: `C1C5_CANON_v1`
 - 작성일: 2026-07-31
-- 현재 workstream: `P2 PRE-RESULT GATE S0 PREPARATION`
-- 저장소 유효 상태: `C1–C5 PROGRAM / GATE S0 PREPARATION`
+- 현재 workstream: `P2 PRE-RESULT GATE S0 REMEDIATION PREPARATION`
+- 저장소 유효 상태: `C1–C5 PROGRAM / GATE S0 EVIDENCE REVIEW PENDING / PERFORMANCE BLOCKED`
 - 승인 상태: `USER APPROVED AS CURRENT RESEARCH CANON — 2026-07-31`
 - 역할: C1–C5 프로그램의 phase, split, gate와 실행 순서를 통제하는 roadmap
 
@@ -14,16 +14,16 @@
 
 ```text
 [✓] P1 연구 기반 확정·감사       — COMPLETE / READY_FOR_REVIEW evidence received
-[●] S0 입력·AOI·split 사전동결 준비 — ACTIVE / NO PERFORMANCE RUN
+[●] S0 입력·AOI·split 사전동결 준비 — PROPOSED BLOCKED / HUMAN DECISION PENDING / REMEDIATION ACTIVE
 [ ] P2 기준선·평가 기준 확정     — BLOCKED UNTIL GATE S0
 [ ] P3 Prior 방법 개발·동결       — NOT_STARTED
 [ ] P4 최종 실험·저널 작성        — NOT_STARTED
 ```
 
-Current task: `P2-W2C-GATE-S0-PREP-v1 canonicalization and handoff`
+Current task: `P2-GATE-S0-WORK-REVIEW-v1 and remediation packet preparation`
 
-Next: C1–C5 canonical source snapshot → Gate S0 packet approval → offered receipt →
-Experiment Host Gate S0 evidence preparation
+Next: closed Gate S0 evidence integration → missing-input/provenance remediation packet →
+new offered receipt → Experiment Host bounded remediation. This is not a performance run.
 
 Gate S0는 P2의 **entry substate**다. 따라서 P2 coordination은 Gate S0 preparation으로
 진행 중이지만 C1–C3 performance execution은 Gate S0 freeze 전까지 차단된 상태다.
@@ -38,7 +38,7 @@ Gate S0는 P2의 **entry substate**다. 따라서 P2 coordination은 Gate S0 pre
 
 ```mermaid
 flowchart LR
-    P1["P1 연구 기반 확정·감사<br/>COMPLETE"] --> S0["P2 pre-result Gate S0<br/>PREPARATION ACTIVE"]
+    P1["P1 연구 기반 확정·감사<br/>COMPLETE"] --> S0["P2 pre-result Gate S0<br/>PROPOSED BLOCKED / HUMAN DECISION PENDING"]
     S0 -->|Gate S0 freeze| P2["P2 기준선·평가 기준 확정<br/>BLOCKED"]
     P2 -->|PASS criterion 동결<br/>사용자 Gate 2| P3["P3 Prior 방법 개발·동결<br/>NOT_STARTED"]
     P3 -->|방법·loss 동결<br/>사용자 Gate 3| P4["P4 held-out test 전 건물 × C1–C5<br/>최종 실험·저널<br/>NOT_STARTED"]
@@ -121,7 +121,7 @@ flowchart LR
 | Phase | 목적 | Entry criteria | Work 산출물 | Codex 산출물 | Exit gate | 상태 |
 |---|---|---|---|---|---|---|
 | P1 | 무엇을 연구하고 현재 repo/data가 지원하는지 확정 | bootstrap 요청, 현행 정본 확인 | charter, roadmap, novelty, data/result/handoff contracts, audit packet | read-only audit 9종, Return Packet | C1–C5 정본 전환과 audit integration | `COMPLETE` |
-| P2 | Gate S0 뒤 LiDAR/MVS/Image-only GS 기준선과 acceptance 동결 | P1 audit `READY_FOR_REVIEW`; Gate S0에서 데이터 계보·공통 set·split 동결 | Gate S0 packet, baseline protocol, threshold 결정안 | Gate S0 evidence; 승인 뒤 pilot+validation의 C1–C3 baseline, adapter 비교 | held-out building 결과 전 criterion 동결 | `GATE S0 PREPARATION` |
+| P2 | Gate S0 뒤 LiDAR/MVS/Image-only GS 기준선과 acceptance 동결 | Gate S0 evidence proposes `BLOCKED_FOR_GATE_S0_REVIEW`; human decision pending; remediation 후 데이터 계보·공통 set·split 동결 | remediation packet, Gate freeze packet, baseline protocol, threshold 결정안 | remediation evidence; Gate 승인 뒤 pilot+validation의 C1–C3 baseline, adapter 비교 | held-out building 결과 전 criterion 동결 | `PERFORMANCE BLOCKED / REMEDIATION` |
 | P3 | 관찰된 실패에 맞춘 두 prior 방법 개발·동결 | P2 criterion 동결 | loss/method 설계와 ablation 계약 | pilot+validation의 frozen C3 control 및 C4/C5 구현·ablation, Return Packet | held-out building 접근 전 사용자 최종 방법·schedule 동결 | `NOT_STARTED` |
 | P4 | held-out test 전 건물 × C1–C5 최종 실험과 원고 | P3 method freeze, data/reference/split freeze | 결과 해석, manuscript | held-out 전 건물 runs, metrics, case sheets, receipts | 사용자 결론·원고 승인 | `NOT_STARTED` |
 
@@ -175,11 +175,12 @@ primary 잠금 뒤 별도 census로 수행한다. 이 census를 완료하지 않
 
 | 항목 | Owner | 상태 | 산출물/근거 | Blocker 또는 next |
 |---|---|---|---|---|
-| C1–C5 research canon | Work | `USER_APPROVED / CANONICALIZING` | `00_*.md`–`06_*.md` | source snapshot commit |
+| C1–C5 research canon | Work | `USER_APPROVED / CURRENT` | `00_*.md`–`06_*.md`, `0716c925` | 유지 |
 | P1 repository audit v1 | Codex | `TECHNICAL_BLOCKED / SUPERSEDED` | `200-blocked.json` | 재개 금지 |
 | P1 repository audit v2 | Codex | `READY_FOR_REVIEW / TECHNICAL CLOSED` | `c1c66396`, closed `8a6b5e61` | Gate S0 input evidence |
-| P1 audit integration | Work | `IN_PROGRESS` | current canon update | audit limitations → Gate S0 packet |
-| Gate S0 evidence preparation | Work→Codex | `APPROVED / OFFER PENDING` | `P2_W2C_GATE_S0_PREPARATION_v1.md` | offered receipt + Experiment acceptance |
+| P1 audit integration | Work | `COMPLETE` | `0716c925` | Gate S0 evidence에 반영 |
+| Gate S0 evidence preparation | Work→Codex | `BLOCKED_FOR_GATE_S0_REVIEW / TECHNICAL CLOSED` | output `380cc891`, closed `1cf0db33` | remediation evidence 필요 |
+| Gate S0 Work cross-review | Work + independent agents | `PASS WITH MATERIAL FOLLOW-UPS` | `WORK_HOST_CROSS_REVIEW_v1.md` | C3 sparse-init와 reference/self-reference 누락 보완 |
 
 ## Decision Status Register
 
@@ -249,22 +250,27 @@ primary 잠금 뒤 별도 census로 수행한다. 이 census를 완료하지 않
 |---|---|---:|---|---|
 | `P1-W2C-REPO-AUDIT` | Work→Codex | v1 | `SUPERSEDED / TECHNICAL_BLOCKED` | 아니오 |
 | `P1-W2C-REPO-AUDIT-R2` | Work→Codex | v2 | `READY_FOR_REVIEW / TECHNICAL CLOSED@8a6b5e61` | 완료 작업; 재실행 아님 |
-| `P2-W2C-GATE-S0-PREP-v1` | Work→Codex | v1 | `APPROVED_FOR_EXECUTION / OFFER_PENDING` | offered/accepted 후 |
+| `P2-W2C-GATE-S0-PREP-v1` | Work→Codex | v1 | `BLOCKED_FOR_GATE_S0_REVIEW / TECHNICAL CLOSED@1cf0db33` | 완료 작업; 재실행 아님 |
 
-Gate S0 evidence preparation 전 필요한 순서:
+다음 Gate S0 remediation handoff에 필요한 순서:
 
-1. C1–C5 정본 source snapshot commit
-2. Gate S0 packet `source_commit`, `status`, `user_approval` approval commit
-3. 새 handoff ID의 immutable offered receipt commit과 validator
-4. `origin/main` push 후 원격 validator
-5. Experiment Host accepted receipt와 activation/preflight
+1. closed receipt와 output hash index의 Work Host 교차검토
+2. C3 sparse initialization과 evaluation reference/self-reference를 blocker에 추가
+3. remediation packet의 source snapshot, 범위, 금지 작업과 승인 상태 고정
+4. 새 handoff ID의 immutable offered receipt commit과 validator
+5. Experiment Host accepted receipt 뒤에만 bounded remediation 수행
 
 ## Blockers
 
 1. 독립 LoD1이 발견되지 않아 C5 readiness가 `MISSING`이다.
 2. C1 LiDAR source·class 2/6·vertical datum·registration이 미동결이다.
-3. current images 962개와 poses 937개의 25건 불일치가 미해소다.
-4. `U_target`과 `E_paired`가 아직 `UNKNOWN`이다.
+3. 962/937 차이는 937 included와 25 explicit exclusions ledger로 해소됐지만,
+   C2 MVS가 그 exact base에 hash-bound되지 않아 condition readiness는 `PARTIAL`이다.
+4. C3–C5 표준 GS initialization용 SfM sparse artifact의 exact identity/hash/frame/role이
+   아직 동결되지 않았다.
+5. geometry/structure reference의 ID/version/production lineage와 C1 self-reference
+   evaluation class가 동결되지 않았다.
+6. `U_target`과 `E_paired`가 아직 `UNKNOWN`이다.
 
 기존 4조건과 새 C1–C5의 정본 충돌은 `DEC-P1-008`로 해소했다. Numerical acceptance
 threshold와 final surface adapter는 설계대로 P2로 연기되며 Gate S0 evidence preparation
@@ -272,8 +278,8 @@ threshold와 final surface adapter는 설계대로 P2로 연기되며 Gate S0 ev
 
 ## Future scientific gate decisions
 
-Gate S0 evidence가 제출된 뒤 사용자는 최소한 다음을 결정한다. 이 결정은 현재 evidence
-preparation을 시작하기 위한 추가 질문이 아니다.
+Gate S0 evidence는 제출됐지만 현재 packet은 freezeable하지 않다. 아래 결정은 remediation
+evidence가 충족된 뒤에만 사용자 scientific gate 대상으로 올린다.
 
 - exact AOI와 `U_target`/`E_paired`
 - `EXHAUSTIVE_PARTITION` 또는 근거 있는 `STRATIFIED_SAMPLE`
@@ -292,6 +298,9 @@ preparation을 시작하기 위한 추가 질문이 아니다.
 | `docs/handoffs/P1_W2C_REPO_AUDIT_v1.md` | `SUPERSEDED / TECHNICAL_BLOCKED` |
 | `docs/handoffs/P1_W2C_REPO_AUDIT_v2.md` | `HISTORICAL EXECUTED PACKET` |
 | `docs/handoffs/P2_W2C_GATE_S0_PREPARATION_v1.md` | `APPROVED_FOR_EXECUTION / SOURCE 0716c925` |
+| `docs/handoffs/returns/P2_C2W_GATE_S0_PREPARATION_RETURN_v1.md` | `BLOCKED_FOR_GATE_S0_REVIEW @ 380cc891` |
+| `artifacts/manifests/handoffs/P2-W2C-GATE-S0-PREP-v1/300-closed.json` | `TECHNICAL CLOSED @ 1cf0db33` |
+| `docs/research/preregistration/gate_s0/WORK_HOST_CROSS_REVIEW_v1.md` | `WORK REVIEW / scientific_verdict null` |
 
 P1 감사는 문서 준비도를 완료했지만 data READY, Gate S0 승인 또는 과학적 판정은 아니다.
 
@@ -306,7 +315,7 @@ P1 감사는 문서 준비도를 완료했지만 data READY, Gate S0 승인 또�
 | threshold/loss가 동결되었는가? | 아니오, `DEFERRED` |
 | 현재 실행 정본은 무엇인가? | 00–06 C1–C5 contract set; legacy plan은 역사 기록 |
 | 지금 성능실험이 가능한가? | 아니오; Gate S0 전 C1–C5 performance run 금지 |
-| Gate S0 준비 packet이 실행 가능한가? | approval + offered/accepted activation 후 가능 |
+| 기존 Gate S0 준비 packet을 다시 실행 가능한가? | 아니오; technical closed이며 새 remediation packet이 필요 |
 
 ## Change history
 

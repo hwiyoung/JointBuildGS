@@ -55,12 +55,14 @@ Reusable code must be promoted out of `phases/` into `src/`, `scripts/`, or `con
   `phases/p0-audit/README.md`; promoted evidence is in `docs/evidence/p0-audit/` and
   `docs/evidence/p0_g1_20260613/`. Completed P0 task prompts are historical records,
   not current agent instructions.
-- **Five-condition program: Gate S0 preparation active.** The P1 repository/data
-  readiness audit is complete at
-  `docs/handoffs/returns/P1_C2W_REPO_AUDIT_RETURN_v2.md`. Before the first new
+- **Five-condition program: Gate S0 evidence review pending; remediation preparation active.** The
+  technical evidence package is closed at
+  `docs/handoffs/returns/P2_C2W_GATE_S0_PREPARATION_RETURN_v1.md` with proposed status
+  `BLOCKED_FOR_GATE_S0_REVIEW`, `scientific_verdict: null`, and no human Gate decision.
+  Before the first new
   baseline result, Gate S0 must freeze the exact AOI, `U_target`, `E_paired`, input
   identities, eligibility rule, split mode/IDs, and bounded cost from outcome-free
-  evidence. No C1–C5 performance run is authorized by audit completion alone.
+  evidence. No C1–C5 performance run is authorized while the recorded blockers remain.
 - **Legacy P2 GS-JSO / Fusion W1: protected historical capability evidence.** Its
   phase-locked controls and compact receipts remain under `phases/p2-gsjso/`; promoted
   reports remain under `docs/experiments/pilots/fusion_w1/`. Do not execute, modify,

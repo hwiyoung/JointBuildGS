@@ -2,8 +2,8 @@
 
 - Document status: `USER_APPROVED_RESEARCH_CANON`
 - 문서 버전: `C1C5_CANON_v1`
-- 프로그램 workstream: `P2 — pre-result Gate S0 preparation`
-- 저장소 유효 단계: `C1–C5 PROGRAM / GATE S0 PREPARATION`
+- 프로그램 workstream: `P2 — pre-result Gate S0 remediation preparation`
+- 저장소 유효 단계: `C1–C5 PROGRAM / GATE S0 EVIDENCE REVIEW PENDING / PERFORMANCE BLOCKED`
 - 작성일: 2026-07-31
 - 승인 상태: `USER APPROVED AS CURRENT RESEARCH CANON — 2026-07-31`
 - 효력: **현재 C1–C5 연구·실행 정본**. `RESEARCH_CONTEXT.md`와
@@ -34,13 +34,14 @@
 
 이 문서는 사용자가 채택한 C1–C5 연구 프로그램의 현재 계약이다. 연구 목적, 다섯
 reconstruction conditions, 주요 endpoint와 P1–P4 관계를 실행 기준으로 동결한다.
-완료된 P1 감사는 이 프로그램의 입력 증거이며, 다음 작업은 첫 baseline 결과 전
-Gate S0 evidence preparation이다. 기존 P2/Fusion W1은 삭제·재해석하지 않고 보호된
-역사적 capability evidence로 유지한다.
+완료된 P1 감사와 Gate S0 preparation v1은 이 프로그램의 입력 증거다. Gate S0
+evidence의 제안 상태는 `BLOCKED_FOR_GATE_S0_REVIEW`, scientific verdict는 null이며
+human Gate decision은 pending이다. 다음 작업은 첫 baseline 결과 전 bounded remediation이다.
+기존 P2/Fusion W1은 삭제·재해석하지 않고 보호된 역사적 capability evidence로 유지한다.
 
 | 항목 | 현재 유효 근거 | 이 초안 | 상태 |
 |---|---|---|---|
-| 현재 프로그램 | C1–C5 정본 채택, P1 감사 완료 | P2 pre-result Gate S0 preparation | `FROZEN` |
+| 현재 프로그램 | C1–C5 정본 채택, Gate S0 evidence technical closed | P2 pre-result Gate S0 remediation | `FROZEN; PERFORMANCE BLOCKED` |
 | 기존 Fusion W1 | 기존 lock·artifact·결과 보존 | 새 프로그램 authority 아님; 실행·수정 금지 | `PROTECTED HISTORICAL` |
 | Stage 3 roofprint | `AGENTS.md`와 이 charter: 외부 roofprint 없는 read-out | `R_derived`만 primary; `R_ext`는 비실행 후속안 | `FROZEN` |
 | 핵심 비교 | 기존 4조건 손실 ablation 및 Stage 3 E0–E4는 역사 증거 | 다섯 evidence configurations | `FROZEN` |
