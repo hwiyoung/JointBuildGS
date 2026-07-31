@@ -286,9 +286,19 @@ Technical handoff의 artifact prerequisite와 scientific readiness audit의 조�
 - `required_for_task: true`이면 handoff가 지정한 exact artifact records가 task
   시작 전 필수다. URI, bytes, SHA-256과 live verification 없이는 accepted/
   verified 상태로 진행하지 않는다.
+  최초 `artifact_verified` receipt(통상 Experiment Host의 `100-accepted`)가 live
+  bytes를 한 번 전부 검증해 immutable attestation을 만든다. 후속 `200`/`300`
+  receipt는 그 attestation을 byte-for-byte 상속하고 Git receipt SHA와 ancestry를
+  검증한다. 같은 immutable input을 상태 전이마다 다시 해시하지 않는다.
+  `required_for_task: true`인 `100-accepted`는 `git_only`일 수 없다.
+  이 상속은 canonical artifact URI의 raw bytes가 immutable이라는 저장소 invariant를
+  전제로 한다. Bytes가 바뀌면 기존 attestation을 재사용하지 않고 새 URI/hash와 새
+  handoff로 다룬다.
 - `required_for_task: false`이면 external payload를 cross-host 전달해야 task를
   시작할 수 있다는 뜻이 아니다. Task가 artifact mount를 읽기 전용으로 조사할
   수는 있지만, 미발견·미검증 payload는 `MISSING` 또는 `UNKNOWN` finding으로 남긴다.
+  조사 결과를 처음 `artifact_verified`로 승격하는 `200` receipt가 있다면 그때 한
+  번만 live rehash한다. `300-closed`에서 처음 승격할 수는 없다.
 - readiness audit의 완료와 data/P2 readiness는 다르다. 특정 asset을 `READY`로
   주장하거나 Gate S0/P2 입력으로 동결할 때는 실제 사용 대상 파일·타일의 URI,
   bytes, SHA-256, CRS/datum, 계보, coverage를 표적 검증한다.

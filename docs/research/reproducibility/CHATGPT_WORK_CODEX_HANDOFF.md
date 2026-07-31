@@ -103,8 +103,17 @@ Work Host는 로컬 SSH alias, credential, `.env`, raw data를 repo에 복사하
    다시 읽어 일치시켰을 때만 사용한다. Work Host의 검토는 이 주장을 새로
    생성하지 않는다.
    과거 chain에 `artifact_verified`가 하나라도 있으면 후속 receipt가 이를
-   `git_only`로 낮추거나 record를 바꿀 수 없으며, validator는 과거 payload도
-   `--artifact-root`에서 다시 해시한다.
+   `git_only`로 낮추거나 artifact attestation의 records, availability, verifier 또는
+   Docker image digest를 바꿀 수 없다. Validator는 chain에서 처음
+   `artifact_verified`를 주장하는 receipt에서만 live bytes를 다시 해시한다. 이후
+   receipt는 그 add-once receipt의 Git bytes/SHA, strict ancestry와 byte-identical
+   attestation을 검증하며 같은 대용량 payload를 다시 읽지 않는다. `300-closed`는
+   직전 `200-verified` 또는 `200-blocked`의 직접 다음 commit이어야 하고, 그 commit은
+   `300-closed.json` 하나만 바꿔야 한다.
+   따라서 successor 검증에는 `--artifact-root`를 다시 주거나 predecessor validator를
+   별도로 반복 호출하지 않는다. Successor validator 하나가 전체 immutable chain을
+   확인한다. 단, `required_for_task: false` chain이 `200`에서 처음
+   `artifact_verified`로 승격될 때는 그 `200` 검증에만 `--artifact-root`를 준다.
 7. 기술 gate와 과학적 승격을 분리한다. 사람 승인 전
    `scientific_verdict`는 항상 `null`이다.
 

@@ -11,6 +11,7 @@ import tarfile
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -201,7 +202,7 @@ class TwoHostHandoffTests(unittest.TestCase):
             "tests": [{"name": "technical gate", "passed": 1, "failed": 0}],
         }
         payload["artifacts"] = {
-            "required_for_task": True,
+            "required_for_task": False,
             "availability": {"work_host": "manifest_only", "experiment_host": "verified_local"},
             "records": [
                 {
@@ -225,6 +226,216 @@ class TwoHostHandoffTests(unittest.TestCase):
         run(self.repo, "commit", "-m", "verified")
         run(self.repo, "update-ref", "refs/remotes/origin/main", "HEAD")
         return payload, verified, artifact
+
+    def required_accepted_payload(
+        self,
+        *,
+        artifact_verified: bool = True,
+    ) -> tuple[dict, Path, Path]:
+        handoff_id = "task-required-handoff"
+        handoff_rel = f"artifacts/manifests/handoffs/{handoff_id}"
+        handoff_dir = self.repo / handoff_rel
+        artifact = self.artifact_root / "runs/required.bin"
+        artifact.parent.mkdir(parents=True, exist_ok=True)
+        artifact.write_bytes(b"required artifact\n")
+
+        offered_payload = copy.deepcopy(self.payload)
+        offered_payload.update(
+            handoff_id=handoff_id,
+            task_id="TASK-REQUIRED",
+            created_at="2026-07-30T01:00:00Z",
+        )
+        offered_payload["commits"] = {
+            "base_main": self.offer_head,
+            "offered_head": "SELF",
+            "receipt_head": "SELF",
+        }
+        offered_payload["scope"]["allowed_paths"] = [handoff_rel, "required-output.txt"]
+        offered_payload["artifacts"]["required_for_task"] = True
+        offered = handoff_dir / "000-offered.json"
+        offered.parent.mkdir(parents=True)
+        self.write_manifest(offered, offered_payload)
+        run(self.repo, "add", f"{handoff_rel}/000-offered.json")
+        run(self.repo, "commit", "-m", "required offer")
+        offered_head = run(self.repo, "rev-parse", "HEAD")
+
+        accepted_payload = copy.deepcopy(offered_payload)
+        accepted_payload.update(
+            state="accepted",
+            created_at="2026-07-30T01:05:00Z",
+            previous_receipt={
+                "path": f"{handoff_rel}/000-offered.json",
+                "sha256": digest(offered),
+            },
+            receiver_ack={
+                "role": "experiment_host",
+                "accepted_at": "2026-07-30T01:05:00Z",
+                "status": "accepted",
+                "issue": None,
+            },
+        )
+        accepted_payload["commits"] = {
+            "base_main": self.offer_head,
+            "offered_head": offered_head,
+            "receipt_head": "SELF",
+        }
+        if artifact_verified:
+            accepted_payload["verification"] = {
+                "level": "artifact_verified",
+                "verifier_role": "experiment_host",
+                "docker_image_digest": "sha256:" + "3" * 64,
+                "commands": ["sha256sum required input"],
+                "tests": [{"name": "required input", "passed": 1, "failed": 0}],
+            }
+            accepted_payload["artifacts"] = {
+                "required_for_task": True,
+                "availability": {
+                    "work_host": "manifest_only",
+                    "experiment_host": "verified_local",
+                },
+                "records": [
+                    {
+                        "uri": "artifact://JointBuildGS/runs/required.bin",
+                        "bytes": artifact.stat().st_size,
+                        "sha256": digest(artifact),
+                        "verification_method": "sha256_rehash",
+                        "verified_by": "experiment_host",
+                        "verified_at": "2026-07-30T01:04:00Z",
+                    }
+                ],
+            }
+        accepted = handoff_dir / "100-accepted.json"
+        self.write_manifest(accepted, accepted_payload)
+        run(self.repo, "add", f"{handoff_rel}/100-accepted.json")
+        run(self.repo, "commit", "-m", "required accepted")
+        run(self.repo, "update-ref", "refs/remotes/origin/main", "HEAD")
+        return accepted_payload, accepted, artifact
+
+    def verified_from_required_accepted(
+        self,
+        accepted_payload: dict,
+        accepted: Path,
+    ) -> tuple[dict, Path]:
+        (self.repo / "required-output.txt").write_text("output\n", encoding="utf-8")
+        run(self.repo, "add", "required-output.txt")
+        run(self.repo, "commit", "-m", "required output")
+
+        payload = copy.deepcopy(accepted_payload)
+        payload.update(
+            state="verified",
+            created_at="2026-07-30T01:10:00Z",
+            previous_receipt={
+                "path": accepted.absolute().relative_to(self.repo).as_posix(),
+                "sha256": digest(accepted),
+            },
+            receiver_ack={
+                "role": "experiment_host",
+                "accepted_at": "2026-07-30T01:10:00Z",
+                "status": "verified",
+                "issue": None,
+            },
+        )
+        payload["verification"]["commands"] = ["python -m unittest"]
+        payload["verification"]["tests"] = [
+            {"name": "technical gate", "passed": 1, "failed": 0}
+        ]
+        payload["scientific"] = {
+            "technical_state": "complete",
+            "scientific_verdict": None,
+            "promotion_status": "human_review_required",
+        }
+        verified = accepted.parent / "200-verified.json"
+        self.write_manifest(verified, payload)
+        run(self.repo, "add", verified.absolute().relative_to(self.repo).as_posix())
+        run(self.repo, "commit", "-m", "required verified")
+        run(self.repo, "update-ref", "refs/remotes/origin/main", "HEAD")
+        return payload, verified
+
+    def git_only_verified_payload(self) -> tuple[dict, Path]:
+        accepted_payload = copy.deepcopy(self.payload)
+        accepted_payload.update(
+            state="accepted",
+            created_at="2026-07-30T00:05:00Z",
+            previous_receipt={
+                "path": f"{self.handoff_rel}/000-offered.json",
+                "sha256": digest(self.manifest),
+            },
+            receiver_ack={
+                "role": "experiment_host",
+                "accepted_at": "2026-07-30T00:05:00Z",
+                "status": "accepted",
+                "issue": None,
+            },
+        )
+        accepted_payload["commits"] = {
+            "base_main": self.base,
+            "offered_head": self.offer_head,
+            "receipt_head": "SELF",
+        }
+        accepted = self.handoff_dir / "100-accepted.json"
+        self.write_manifest(accepted, accepted_payload)
+        run(self.repo, "add", f"{self.handoff_rel}/100-accepted.json")
+        run(self.repo, "commit", "-m", "git-only accepted")
+
+        payload = copy.deepcopy(accepted_payload)
+        payload.update(
+            state="verified",
+            created_at="2026-07-30T00:10:00Z",
+            previous_receipt={
+                "path": f"{self.handoff_rel}/100-accepted.json",
+                "sha256": digest(accepted),
+            },
+            receiver_ack={
+                "role": "experiment_host",
+                "accepted_at": "2026-07-30T00:10:00Z",
+                "status": "verified",
+                "issue": None,
+            },
+        )
+        payload["verification"] = {
+            "level": "git_only",
+            "verifier_role": "experiment_host",
+            "docker_image_digest": "sha256:" + "4" * 64,
+            "commands": ["python -m unittest"],
+            "tests": [{"name": "technical gate", "passed": 1, "failed": 0}],
+        }
+        payload["scientific"] = {
+            "technical_state": "complete",
+            "scientific_verdict": None,
+            "promotion_status": "human_review_required",
+        }
+        verified = self.handoff_dir / "200-verified.json"
+        self.write_manifest(verified, payload)
+        run(self.repo, "add", f"{self.handoff_rel}/200-verified.json")
+        run(self.repo, "commit", "-m", "git-only verified")
+        run(self.repo, "update-ref", "refs/remotes/origin/main", "HEAD")
+        return payload, verified
+
+    def closed_payload(self, verified_payload: dict, verified: Path) -> dict:
+        payload = copy.deepcopy(verified_payload)
+        payload.update(
+            state="closed",
+            created_at="2026-07-30T00:15:00Z",
+            previous_receipt={
+                "path": f"{self.handoff_rel}/200-verified.json",
+                "sha256": digest(verified),
+            },
+            receiver_ack={
+                "role": "experiment_host",
+                "accepted_at": "2026-07-30T00:15:00Z",
+                "status": "closed",
+                "issue": None,
+            },
+        )
+        return payload
+
+    def commit_closed(self, payload: dict) -> Path:
+        closed = self.handoff_dir / "300-closed.json"
+        self.write_manifest(closed, payload)
+        run(self.repo, "add", f"{self.handoff_rel}/300-closed.json")
+        run(self.repo, "commit", "-m", "closed")
+        run(self.repo, "update-ref", "refs/remotes/origin/main", "HEAD")
+        return closed
 
     def test_valid_serialized_main_offer(self) -> None:
         errors, receipt = MODULE.validate(
@@ -525,9 +736,83 @@ class TwoHostHandoffTests(unittest.TestCase):
             any("snapshot replay does not reproduce" in item for item in replay_errors)
         )
 
-    def test_valid_live_artifact_verified_event(self) -> None:
+    def test_required_artifacts_are_rehashed_once_at_accepted(self) -> None:
+        payload, manifest, artifact = self.required_accepted_payload()
+        with mock.patch.object(
+            MODULE,
+            "sha256_file",
+            wraps=MODULE.sha256_file,
+        ) as sha256:
+            self.assertEqual(
+                [],
+                self.errors(
+                    payload,
+                    manifest=manifest,
+                    artifact_root=self.artifact_root,
+                ),
+            )
+
+        artifact_calls = [
+            call
+            for call in sha256.call_args_list
+            if Path(call.args[0]).resolve() == artifact.resolve()
+        ]
+        self.assertEqual(1, len(artifact_calls))
+
+    def test_required_accepted_rejects_git_only_without_rehash(self) -> None:
+        payload, manifest, _ = self.required_accepted_payload(artifact_verified=False)
+        with mock.patch.object(
+            MODULE,
+            "validate_artifacts",
+            wraps=MODULE.validate_artifacts,
+        ) as live_validation:
+            errors = self.errors(payload, manifest=manifest)
+
+        self.assertTrue(
+            any("artifact-required accepted event must be artifact_verified" in item for item in errors)
+        )
+        self.assertEqual(0, live_validation.call_count)
+
+    def test_verified_inherits_accepted_attestation_without_live_rehash(self) -> None:
+        accepted_payload, accepted, _ = self.required_accepted_payload()
+        payload, verified = self.verified_from_required_accepted(
+            accepted_payload,
+            accepted,
+        )
+        with mock.patch.object(
+            MODULE,
+            "validate_artifacts",
+            wraps=MODULE.validate_artifacts,
+        ) as live_validation:
+            errors = self.errors(payload, manifest=verified)
+
+        self.assertEqual([], errors)
+        self.assertEqual(0, live_validation.call_count)
+
+    def test_valid_first_live_artifact_verification_at_200(self) -> None:
         payload, manifest, _ = self.verified_payload()
-        self.assertEqual([], self.errors(payload, manifest=manifest, artifact_root=self.artifact_root))
+        with mock.patch.object(
+            MODULE,
+            "validate_artifacts",
+            wraps=MODULE.validate_artifacts,
+        ) as live_validation:
+            self.assertEqual(
+                [],
+                self.errors(
+                    payload,
+                    manifest=manifest,
+                    artifact_root=self.artifact_root,
+                ),
+            )
+        self.assertEqual(1, live_validation.call_count)
+
+    def test_artifact_requirement_cannot_change_after_offer(self) -> None:
+        payload, manifest, _ = self.verified_payload()
+        payload["artifacts"]["required_for_task"] = True
+        errors = self.errors(payload, manifest=manifest, artifact_root=self.artifact_root)
+        self.assertTrue(
+            any("artifact requirement cannot change" in item for item in errors)
+        )
 
     def test_live_artifact_hash_mismatch_fails(self) -> None:
         payload, manifest, artifact = self.verified_payload()
@@ -560,6 +845,7 @@ class TwoHostHandoffTests(unittest.TestCase):
 
     def test_artifact_required_verified_event_cannot_be_git_only(self) -> None:
         payload, manifest, _ = self.verified_payload()
+        payload["artifacts"]["required_for_task"] = True
         payload["verification"]["level"] = "git_only"
         for record in payload["artifacts"]["records"]:
             record["verification_method"] = "not_verified"
@@ -570,21 +856,7 @@ class TwoHostHandoffTests(unittest.TestCase):
 
     def test_closed_event_cannot_downgrade_prior_artifact_verification(self) -> None:
         verified_payload, verified, _ = self.verified_payload()
-        closed_payload = copy.deepcopy(verified_payload)
-        closed_payload.update(
-            state="closed",
-            created_at="2026-07-30T00:15:00Z",
-            previous_receipt={
-                "path": f"{self.handoff_rel}/200-verified.json",
-                "sha256": digest(verified),
-            },
-            receiver_ack={
-                "role": "experiment_host",
-                "accepted_at": "2026-07-30T00:15:00Z",
-                "status": "closed",
-                "issue": None,
-            },
-        )
+        closed_payload = self.closed_payload(verified_payload, verified)
         closed_payload["verification"]["level"] = "git_only"
         closed_payload["verification"]["verifier_role"] = "work_host"
         closed_payload["artifacts"] = {
@@ -603,8 +875,105 @@ class TwoHostHandoffTests(unittest.TestCase):
             manifest=closed,
             artifact_root=self.artifact_root,
         )
-        self.assertTrue(any("artifact requirement cannot be downgraded" in item for item in errors))
         self.assertTrue(any("verification level cannot be downgraded" in item for item in errors))
+
+    def test_closed_inherits_artifact_attestation_without_live_rehash(self) -> None:
+        verified_payload, verified, artifact = self.verified_payload()
+        closed_payload = self.closed_payload(verified_payload, verified)
+        closed = self.commit_closed(closed_payload)
+        artifact.write_bytes(b"changed after immutable verified attestation\n")
+
+        with mock.patch.object(
+            MODULE,
+            "validate_artifacts",
+            wraps=MODULE.validate_artifacts,
+        ) as live_validation:
+            errors = self.errors(closed_payload, manifest=closed)
+
+        self.assertEqual([], errors)
+        self.assertEqual(0, live_validation.call_count)
+
+    def test_closed_cannot_introduce_artifact_verification(self) -> None:
+        verified_payload, verified = self.git_only_verified_payload()
+        artifact = self.artifact_root / "runs/late.bin"
+        artifact.parent.mkdir(parents=True, exist_ok=True)
+        artifact.write_bytes(b"late artifact\n")
+        closed_payload = self.closed_payload(verified_payload, verified)
+        closed_payload["verification"]["level"] = "artifact_verified"
+        closed_payload["artifacts"] = {
+            "required_for_task": False,
+            "availability": {
+                "work_host": "manifest_only",
+                "experiment_host": "verified_local",
+            },
+            "records": [
+                {
+                    "uri": "artifact://JointBuildGS/runs/late.bin",
+                    "bytes": artifact.stat().st_size,
+                    "sha256": digest(artifact),
+                    "verification_method": "sha256_rehash",
+                    "verified_by": "experiment_host",
+                    "verified_at": "2026-07-30T00:14:00Z",
+                }
+            ],
+        }
+        closed = self.commit_closed(closed_payload)
+
+        with mock.patch.object(
+            MODULE,
+            "validate_artifacts",
+            wraps=MODULE.validate_artifacts,
+        ) as live_validation:
+            errors = self.errors(closed_payload, manifest=closed)
+
+        self.assertTrue(
+            any("closed receipt cannot introduce artifact verification" in item for item in errors)
+        )
+        self.assertEqual(0, live_validation.call_count)
+
+    def test_closed_rejects_changed_artifact_attestation(self) -> None:
+        verified_payload, verified, _ = self.verified_payload()
+        closed_payload = self.closed_payload(verified_payload, verified)
+        closed_payload["artifacts"]["availability"]["work_host"] = "verified_local"
+        closed = self.commit_closed(closed_payload)
+
+        errors = self.errors(closed_payload, manifest=closed)
+        self.assertTrue(
+            any("artifact-verified attestation cannot change" in item for item in errors)
+        )
+
+    def test_closed_must_directly_follow_previous_receipt_commit(self) -> None:
+        verified_payload, verified, _ = self.verified_payload()
+        (self.repo / "offer.txt").write_text("intermediate\n", encoding="utf-8")
+        run(self.repo, "add", "offer.txt")
+        run(self.repo, "commit", "-m", "intermediate allowed change")
+        closed_payload = self.closed_payload(verified_payload, verified)
+        closed = self.commit_closed(closed_payload)
+
+        errors = self.errors(closed_payload, manifest=closed)
+        self.assertTrue(
+            any("closed receipt must directly follow" in item for item in errors)
+        )
+
+    def test_closed_commit_rejects_an_extra_allowed_path(self) -> None:
+        verified_payload, verified, _ = self.verified_payload()
+        closed_payload = self.closed_payload(verified_payload, verified)
+        closed = self.handoff_dir / "300-closed.json"
+        self.write_manifest(closed, closed_payload)
+        (self.repo / "offer.txt").write_text("changed during close\n", encoding="utf-8")
+        run(
+            self.repo,
+            "add",
+            f"{self.handoff_rel}/300-closed.json",
+            "offer.txt",
+        )
+        run(self.repo, "commit", "-m", "closed with extra allowed path")
+        run(self.repo, "update-ref", "refs/remotes/origin/main", "HEAD")
+
+        errors = self.errors(closed_payload, manifest=closed)
+        self.assertTrue(
+            any("closed receipt commit must change exactly" in item for item in errors)
+        )
 
     def test_previous_chain_invariants_are_enforced(self) -> None:
         payload, manifest, _ = self.verified_payload()

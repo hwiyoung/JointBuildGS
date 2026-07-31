@@ -369,8 +369,18 @@ def validate_event_semantics(
 
     verification = payload["verification"]
     records = payload["artifacts"]["records"]
+    required_for_task = payload["artifacts"]["required_for_task"]
     level = verification["level"]
     availability = payload["artifacts"]["availability"]
+    if state == "offered" and level != "git_only":
+        add("offered event must remain git_only")
+    if state == "accepted" and required_for_task:
+        if level != "artifact_verified":
+            add("artifact-required accepted event must be artifact_verified")
+        if verification["docker_image_digest"] is None:
+            add("artifact-required accepted event requires Docker image digest")
+        if not verification["commands"] or not verification["tests"]:
+            add("artifact-required accepted event requires command and test evidence")
     if level == "git_only":
         for record in records:
             if record["verification_method"] != "not_verified":
@@ -722,8 +732,7 @@ def validate_previous_chain(
     errors: list[str],
     *,
     current_receipt: str | None,
-    artifact_root: Path | None,
-) -> str | None:
+) -> tuple[str | None, bool]:
     state = payload["state"]
     previous = payload["previous_receipt"]
     if state == "offered":
@@ -731,10 +740,10 @@ def validate_previous_chain(
             errors.append("offered event must not have a previous_receipt")
         if payload["commits"]["offered_head"] != "SELF":
             errors.append("offered event must use offered_head=SELF")
-        return None
+        return None, False
     if not isinstance(previous, dict):
         errors.append("non-offered event requires previous_receipt")
-        return None
+        return None, False
     if payload["commits"]["offered_head"] == "SELF":
         errors.append("non-offered event must name the immutable offered_head commit")
 
@@ -754,6 +763,7 @@ def validate_previous_chain(
     prior_events: list[tuple[dict[str, Any], str, str]] = []
     visited: set[str] = set()
     current_commit = current_receipt
+    immediate_predecessor_has_artifact_attestation = False
     while current["state"] != "offered":
         link = current.get("previous_receipt")
         if not isinstance(link, dict):
@@ -792,18 +802,17 @@ def validate_previous_chain(
         errors.extend(f"previous_receipt {item}" for item in prior_schema_errors)
         if prior_schema_errors:
             break
+        is_immediate_predecessor = not prior_events
+        if is_immediate_predecessor:
+            immediate_predecessor_has_artifact_attestation = (
+                prior["verification"]["level"] == "artifact_verified"
+            )
         validate_event_semantics(prior, errors, prefix="previous_receipt ")
         validate_snapshot_claim(
             repo,
             prior,
             errors,
             snapshot_schema=snapshot_schema,
-            prefix="previous_receipt ",
-        )
-        validate_artifacts(
-            prior,
-            artifact_root,
-            errors,
             prefix="previous_receipt ",
         )
         for field in invariant_fields:
@@ -824,21 +833,36 @@ def validate_previous_chain(
             errors.append("previous_receipt timestamp is not earlier than its successor")
         if (
             prior["artifacts"]["required_for_task"]
-            and not current["artifacts"]["required_for_task"]
+            != current["artifacts"]["required_for_task"]
         ):
-            errors.append("artifact requirement cannot be downgraded")
+            errors.append("artifact requirement cannot change in a successor receipt")
+        if (
+            is_immediate_predecessor
+            and current["state"] == "closed"
+            and current["verification"]["level"] == "artifact_verified"
+            and prior["verification"]["level"] != "artifact_verified"
+        ):
+            errors.append("closed receipt cannot introduce artifact verification")
         if prior["verification"]["level"] == "artifact_verified":
             if current["verification"]["level"] != "artifact_verified":
                 errors.append("artifact verification level cannot be downgraded")
-            if prior["artifacts"]["records"] != current["artifacts"]["records"]:
-                errors.append("artifact-verified records cannot change in a successor receipt")
+            if prior["artifacts"] != current["artifacts"]:
+                errors.append(
+                    "artifact-verified attestation cannot change in a successor receipt"
+                )
+            for field in ("verifier_role", "docker_image_digest"):
+                if prior["verification"][field] != current["verification"][field]:
+                    errors.append(
+                        "artifact-verified attestation cannot change in a successor "
+                        f"receipt: verification.{field}"
+                    )
         prior_events.append((prior, commit, str(relative)))
         current = prior
         current_commit = commit
 
     if not prior_events or prior_events[-1][0]["state"] != "offered":
         errors.append("receipt chain does not terminate at an offered event")
-        return first_previous_commit
+        return first_previous_commit, immediate_predecessor_has_artifact_attestation
 
     offered_payload, offered_commit, _ = prior_events[-1]
     if offered_payload["previous_receipt"] is not None:
@@ -866,7 +890,26 @@ def validate_previous_chain(
         else:
             errors.append(f"previous_receipt base commit is unavailable: {previous_commit}")
         previous_commit = commit
-    return first_previous_commit
+    if state == "closed" and current_receipt and first_previous_commit:
+        try:
+            parent_line = git(repo, "rev-list", "--parents", "-n", "1", current_receipt)
+            assert isinstance(parent_line, str)
+            parents = parent_line.split()[1:]
+        except subprocess.CalledProcessError:
+            errors.append("cannot inspect closed receipt commit parent")
+        else:
+            if parents != [first_previous_commit]:
+                errors.append(
+                    "closed receipt must directly follow its verified or blocked receipt"
+                )
+        expected_closed_path = (
+            f"artifacts/manifests/handoffs/{payload['handoff_id']}/300-closed.json"
+        )
+        if changed_paths(repo, first_previous_commit, current_receipt) != {
+            expected_closed_path
+        }:
+            errors.append("closed receipt commit must change exactly 300-closed.json")
+    return first_previous_commit, immediate_predecessor_has_artifact_attestation
 
 
 def artifact_path(root: Path, uri: str) -> Path | None:
@@ -968,14 +1011,13 @@ def validate(
     validate_receipt_location(repo, manifest_path, payload, errors)
     receipt = resolve_receipt_commit(repo, manifest_path, head_ref, errors)
     validate_single_event_commit(repo, receipt, manifest_path, payload, errors)
-    previous_commit = validate_previous_chain(
+    previous_commit, inherited_artifact_attestation = validate_previous_chain(
         repo,
         payload,
         schema,
         snapshot_schema,
         errors,
         current_receipt=receipt,
-        artifact_root=artifact_root,
     )
     base = payload["commits"]["base_main"]
     offered_raw = payload["commits"]["offered_head"]
@@ -1038,7 +1080,12 @@ def validate(
         if dirty:
             errors.append(f"dirty_wip=false but working tree has {len(dirty)} changed paths")
 
-    validate_artifacts(payload, artifact_root, errors)
+    if (
+        payload["verification"]["level"] == "artifact_verified"
+        and not inherited_artifact_attestation
+        and not errors
+    ):
+        validate_artifacts(payload, artifact_root, errors)
     return errors, receipt
 
 
