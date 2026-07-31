@@ -51,6 +51,33 @@ class AgentInstructionContractTests(unittest.TestCase):
                 validator.validate(root),
             )
 
+    def test_accepts_identical_crlf_root_mirrors(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            write_valid_fixture(root)
+            relatives = (
+                "AGENTS.md",
+                "CLAUDE.md",
+                *validator.PHASE_READMES,
+                *validator.SUPPORT_FILE_CONTRACTS,
+            )
+            for relative in relatives:
+                path = root / relative
+                crlf_bytes = path.read_text(encoding="utf-8").replace("\n", "\r\n").encode("utf-8")
+                path.write_bytes(crlf_bytes)
+            self.assertEqual(validator.validate(root), [])
+
+    def test_rejects_mixed_eol_root_mirrors(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            write_valid_fixture(root)
+            instruction = (root / "AGENTS.md").read_text(encoding="utf-8")
+            (root / "AGENTS.md").write_bytes(instruction.replace("\n", "\r\n").encode("utf-8"))
+            self.assertIn(
+                "root CLAUDE.md is not byte-identical to root AGENTS.md",
+                validator.validate(root),
+            )
+
     def test_detects_missing_root_contract_files(self):
         for relative in (
             "AGENTS.md",

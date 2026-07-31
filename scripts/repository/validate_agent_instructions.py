@@ -103,6 +103,12 @@ SUPPORT_FILE_CONTRACTS = {
 }
 
 
+def normalize_newlines(text: str) -> str:
+    """Normalize text layout while preserving byte-exact mirror validation."""
+
+    return text.replace("\r\n", "\n").replace("\r", "\n")
+
+
 def nested_instruction_files(root: Path) -> list[Path]:
     found: list[Path] = []
     for name in (CANONICAL_NAME, MIRROR_NAME):
@@ -129,7 +135,7 @@ def validate(root: Path) -> list[str]:
         mirror_bytes = mirror.read_bytes()
         if canonical_bytes != mirror_bytes:
             errors.append("root CLAUDE.md is not byte-identical to root AGENTS.md")
-        text = canonical_bytes.decode("utf-8")
+        text = normalize_newlines(canonical_bytes.decode("utf-8"))
         comparable_text = text.casefold()
         for marker in REQUIRED_MARKERS:
             if marker.casefold() not in comparable_text:
@@ -146,7 +152,7 @@ def validate(root: Path) -> list[str]:
         if not path.is_file():
             errors.append(f"missing phase status README: {relative}")
             continue
-        text = path.read_text(encoding="utf-8")
+        text = normalize_newlines(path.read_text(encoding="utf-8"))
         if "root `AGENTS.md`" not in text:
             errors.append(f"phase README does not defer to root AGENTS.md: {relative}")
         comparable_text = text.casefold()
@@ -162,7 +168,7 @@ def validate(root: Path) -> list[str]:
         if not path.is_file():
             errors.append(f"missing instruction support file: {relative}")
             continue
-        comparable_text = path.read_text(encoding="utf-8").casefold()
+        comparable_text = normalize_newlines(path.read_text(encoding="utf-8")).casefold()
         for marker in contract["required"]:
             if marker.casefold() not in comparable_text:
                 errors.append(f"instruction support file missing marker ({relative}): {marker}")
