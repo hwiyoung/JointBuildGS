@@ -6,9 +6,9 @@
 - task_id: `P2-GATE-S0-EVIDENCE-R2A-v1`
 - phase: `P2 / pre-result Gate S0 evidence completion`
 - direction: `Work→Codex`
-- status: `DRAFT`
+- status: `APPROVED_FOR_EXECUTION`
 - packet_version: `v1`
-- source_commit: `TO_BE_FILLED_BY_USER_BEFORE_APPROVAL`
+- source_commit: `7277de4f48c4a5eededb00957c529e9f192e48b0`
 - target_branch: `main`
 - research_charter_version: `C1C5_CANON_v2`
 - master_roadmap_version: `C1C5_CANON_v2`
@@ -18,13 +18,16 @@
 - supersedes: null
 - follows: `P2-W2C-GATE-S0-REMEDIATION-R1-v1`
 - created_at: `2026-08-01`
-- user_approval: `NOT_GRANTED`
+- approved_at: `2026-08-01T01:05:33+09:00`
+- user_approval: `GRANTED — bounded R2A evidence task with subagent verification`
+- approval_basis: `user instruction to proceed autonomously under the six-step Gate S0 plan; scientific verdict remains reserved`
 - repository_effective_phase: `C1–C5 PROGRAM / GATE S0 FREEZE DRAFT / PERFORMANCE BLOCKED`
 - scientific_verdict: null
 
-This DRAFT is not execution authority. It becomes executable only through the exact
-source/approval/offered/accepted sequence in `docs/research/05_HANDOFF_PROTOCOL.md`.
-Approval of this bounded evidence task is not a Gate S0 or performance approval.
+This packet approves only the bounded evidence task below. Execution remains blocked
+until the exact source/approval/offered/accepted sequence in
+`docs/research/05_HANDOFF_PROTOCOL.md` passes. Approval of this task is not a Gate S0,
+performance or scientific approval.
 
 ## Goal
 
