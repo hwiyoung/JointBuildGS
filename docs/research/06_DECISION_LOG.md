@@ -1,11 +1,13 @@
 # Research Decision Log
 
 - Document status: `USER_APPROVED_RESEARCH_DECISIONS`
-- 문서 버전: `C1C5_CANON_v1`
+- 문서 버전: `C1C5_CANON_v2`
 - 작성일: 2026-07-31
 - 승인 상태: `USER APPROVED CURRENT C1–C5 CANON — 2026-07-31`
 
-`DEC-P1-008` 이후 이 log와 00–06 contract set이 현재 C1–C5 프로그램을 통제한다.
+`DEC-P1-010` 이후 이 log와 00–06 contract set이 현재 C1–C5 프로그램을 통제한다.
+앞선 decision entry의 당시 용어는 역사 기록으로 보존하며, 충돌 시 더 최신 decision의
+`New decision`과 `Superseded decisions`를 적용한다.
 `docs/evidence/archive/pre_c1c5_research/`의 context/plan은 기존 4조건 프로그램의 역사 기록이다.
 기존 Fusion W1 lock과 artifact는 보호하지만 현재 프로그램의 실행 authority는 아니다.
 
@@ -327,6 +329,56 @@
   검증하도록 구현한다.
 - 새 remediation handoff가 closed되기 전에는 Gate freeze packet이나 performance
   packet을 만들지 않는다.
+
+## DEC-P1-010 — C3–C5 no-external-prior common base와 C2 contrast
+
+- **Decision ID:** `DEC-P1-010`
+- **Date:** 2026-07-31
+- **Status:** `USER-APPROVED RESEARCH CANON AMENDMENT`
+- **Previous state:** `C3_GS_image`를 “Image-only GS”로 부르고 current RGB/pose와
+  SfM sparse initialization만 허용했으며, dense MVS point cloud/depth/normal은
+  C3–C5 입력과 supervision에서 금지했다. 이 정의는 외부 기구축 prior의 효과를
+  분리하려는 비교와 image-derived geometry를 공통 활용하려는 설계를 혼동했다.
+- **New decision:** `C3_GS_image` ID는 계보 호환성을 위해 유지하되 canonical
+  condition name을 **no-external-prior GS**로 정의한다. Gate S0에서 exact current
+  image members와 camera/pose IDs를 `B_current`로 동결하고, 그 동일 base에서만 파생한
+  SfM sparse, dense MVS, depth, normal, confidence를 C3–C5 공통 initialization,
+  supervision 또는 weighting support로 허용한다. C4는 exact C3 base에 Existing ALS
+  prior만, C5는 exact C3 base에 independent LoD1 prior만 추가한다. C2는 같은 base의
+  MVS geometry를 GS 없이 Roofer로 직접 전달하고, C3는 image-derived geometry를
+  GS에서 재최적화한 뒤 extraction/Roofer로 전달한다.
+- **Evidence:** 사용자의 2026-07-31 명시적 조건 교정, Gate S0 remediation evidence의
+  962 images/937 poses ledger와 1,104-image vendor MVS mismatch, 독립 정본 교차검토.
+- **Reason:** `image-only`를 RGB-only 또는 sparse-only로 오해하지 않게 하고, C4/C5가
+  C3와 동일한 image-derived evidence를 공유한 상태에서 external prior 하나의 순효과만
+  비교하게 한다. C2-vs-C3는 입력 캠페인 차이가 아니라 direct MVS와 GS
+  reoptimization의 차이로 해석할 수 있어야 한다.
+- **Affected phases:** P2 Gate S0, P2–P4
+- **Affected documents:** `00_RESEARCH_CHARTER.md`, `01_MASTER_ROADMAP.md`,
+  `02_NOVELTY_MAP.md`, `03_DATA_AND_BASELINE_SCOPE.md`,
+  `04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md`, `05_HANDOFF_PROTOCOL.md`,
+  `06_DECISION_LOG.md`, 다음 `preregistration/gate_s0/GATE_S0_FREEZE_PACKET_v1.md`
+- **User approval:** `GRANTED — exact common image/pose base는 Gate S0에서 동결`
+- **Superseded decisions:** `DEC-P1-008`의 다섯 조건·primary contrasts는 유지한다.
+  `C3`의 “Image-only/sparse-only” 해석과 C3–C5 dense MVS/depth/normal blanket ban만
+  이 결정이 supersede한다. 과거 packet, return, receipt와 evidence의 당시 기록은
+  수정하지 않는다.
+
+### Consequence
+
+- `B_current`는 exact image/pose member IDs, inclusion/exclusion rule, producer/version,
+  component별 code/config, coordinate frame, role, bytes와 hash가 모두 동결되기 전에는
+  `READY`가 아니다.
+- image-derived confidence와 external-prior confidence를 구분해 기록한다.
+- Existing ALS, independent LoD1, Current UAS LiDAR, evaluation reference, scored LoD2,
+  external roofprint는 `B_current`에 포함되지 않는다.
+- 기존 1,104-image vendor MVS는 exact common image/pose mapping이 입증되기 전에는
+  primary common base나 primary C2로 자동 채택하지 않는다. 필요하면 별도
+  sensor-processing-bundle context baseline으로만 유지한다.
+- 962/937 ledger도 근거 후보일 뿐 이 결정 자체로 자동 freeze되지 않는다. Gate S0
+  human packet이 exact members와 hashes를 승인해야 한다.
+- 이 정본 변경은 Gate S0 승인, data READY, C5 readiness 또는 performance 실행
+  권한을 뜻하지 않는다.
 
 ## Pending decisions not yet logged as adopted
 

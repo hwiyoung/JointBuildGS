@@ -1,9 +1,9 @@
 # JointBuildGS 연구 헌장
 
 - Document status: `USER_APPROVED_RESEARCH_CANON`
-- 문서 버전: `C1C5_CANON_v1`
-- 프로그램 workstream: `P2 — pre-result Gate S0 remediation preparation`
-- 저장소 유효 단계: `C1–C5 PROGRAM / GATE S0 EVIDENCE REVIEW PENDING / PERFORMANCE BLOCKED`
+- 문서 버전: `C1C5_CANON_v2`
+- 프로그램 workstream: `P2 — pre-result Gate S0 freeze drafting`
+- 저장소 유효 단계: `C1–C5 PROGRAM / GATE S0 FREEZE DRAFT / PERFORMANCE BLOCKED`
 - 작성일: 2026-07-31
 - 승인 상태: `USER APPROVED AS CURRENT RESEARCH CANON — 2026-07-31`
 - 효력: **현재 C1–C5 연구·실행 정본**. `docs/evidence/archive/pre_c1c5_research/`의
@@ -23,7 +23,7 @@
 > 범위를 확대한다.
 
 이 문서에서 “확대”는 평균 렌더링 품질의 향상이 아니라, 동일한 평가계약 아래
-`Image-only GS` 대비 `PASS_usable`로 전환되는 건물의 순증가로 판정한다.
+`C3` no-external-prior GS 대비 `PASS_usable`로 전환되는 건물의 순증가로 판정한다.
 
 각 prior arm `m ∈ {C4, C5}`의 primary estimand는 같은 eligible paired set에서
 `ΔN_pass(m) = N_pass(m) − N_pass(C3) = N_fail→pass(m) − N_pass→fail(m)`이다.
@@ -36,12 +36,13 @@
 reconstruction conditions, 주요 endpoint와 P1–P4 관계를 실행 기준으로 동결한다.
 완료된 P1 감사와 Gate S0 preparation v1은 이 프로그램의 입력 증거다. Gate S0
 evidence의 제안 상태는 `BLOCKED_FOR_GATE_S0_REVIEW`, scientific verdict는 null이며
-human Gate decision은 pending이다. 다음 작업은 첫 baseline 결과 전 bounded remediation이다.
+human Gate decision은 pending이다. Remediation R1은 technical closed됐고 다음 작업은
+첫 baseline 결과 전 Gate S0 freeze evidence를 완결하는 것이다.
 기존 P2/Fusion W1은 삭제·재해석하지 않고 보호된 역사적 capability evidence로 유지한다.
 
 | 항목 | 현재 유효 근거 | 이 초안 | 상태 |
 |---|---|---|---|
-| 현재 프로그램 | C1–C5 정본 채택, Gate S0 evidence technical closed | P2 pre-result Gate S0 remediation | `FROZEN; PERFORMANCE BLOCKED` |
+| 현재 프로그램 | C1–C5 v2 정본 채택, Gate S0 remediation R1 technical closed | P2 pre-result Gate S0 freeze draft | `FROZEN; PERFORMANCE BLOCKED` |
 | 기존 Fusion W1 | 기존 lock·artifact·결과 보존 | 새 프로그램 authority 아님; 실행·수정 금지 | `PROTECTED HISTORICAL` |
 | Stage 3 roofprint | `AGENTS.md`와 이 charter: 외부 roofprint 없는 read-out | `R_derived`만 primary; `R_ext`는 비실행 후속안 | `FROZEN` |
 | 핵심 비교 | 기존 4조건 손실 ablation 및 Stage 3 E0–E4는 역사 증거 | 다섯 evidence configurations | `FROZEN` |
@@ -79,7 +80,7 @@ script/config 및 정확한 payload는 Gate S0 evidence에서 확인하며, 그 
 
 본 연구의 목적은 다음 세 질문을 하나의 paired building-level 실험으로 연결하는 것이다.
 
-1. current-image MVS와 Image-only GS가 어디에서 구조 evidence를 잃는가?
+1. current-image MVS와 no-external-prior GS가 어디에서 구조 evidence를 잃는가?
 2. Existing ALS와 existing LoD1이라는 서로 다른 coarse prior가 그 실패를 각각
    회복할 수 있는가?
 3. 회복이 `G_native → S_extracted → P_Roofer → H_LoD2`를 따라 전파되어 실제로
@@ -89,7 +90,8 @@ script/config 및 정확한 payload는 Gate S0 evidence에서 확인하며, 그 
 
 ```mermaid
 flowchart LR
-    I["Current images"] --> G["GS optimization"]
+    I["Gate S0 exact current images + poses"] --> B["B_current: SfM sparse / dense MVS / depth / normal / confidence"]
+    B --> G["GS optimization"]
     PL["Existing LiDAR prior"] -. "condition 4 only" .-> G
     P1["Existing LoD1 prior"] -. "condition 5 only" .-> G
     G --> GN["G_native"]
@@ -98,7 +100,7 @@ flowchart LR
     PR --> HL["H_LoD2"]
     HL --> A["G0–G4 / PASS_usable"]
     LU["Current high-quality LiDAR"] --> RU["Roofer upper-baseline branch"]
-    MVS["Current-image MVS"] --> RM["Roofer baseline branch"]
+    B --> RM["C2: MVS direct Roofer branch"]
     RU --> A
     RM --> A
 ```
@@ -115,9 +117,9 @@ Current-image MVS의 LoD2 생성 실패는 point density/coverage 부족만으�
 아니면 plane, normal, boundary, height, topology의 structural inconsistency가
 추가 설명력을 갖는가?
 
-### RQ2 — Image-only GS의 gap 축소
+### RQ2 — No-external-prior GS의 gap 축소
 
-Image-only GS는 MVS와 current high-quality LiDAR 사이의 building-level
+No-external-prior GS는 MVS와 current high-quality LiDAR 사이의 building-level
 `PASS_usable` gap을 얼마나 줄이며, 어느 실패 gate를 해결하지 못하는가?
 
 ### RQ3 — 두 prior의 상보성
@@ -137,7 +139,7 @@ accuracy로 전파되는가?
 
 ### RQ5 — 생성 가능 영역의 순변화
 
-각 prior condition은 Image-only GS 대비 fail-to-pass 건물을 몇 개 만들고,
+각 prior condition은 no-external-prior GS 대비 fail-to-pass 건물을 몇 개 만들고,
 pass-to-fail 악화를 몇 개 만들며, usable PASS 건물 집합을 순증가시키는가?
 
 ### RQ6 — image–prior conflict
@@ -152,7 +154,7 @@ pass-to-fail 악화를 몇 개 만들며, usable PASS 건물 집합을 순증가
 
 - **H1:** density와 coverage를 통제해도 structural evidence 지표는 Roofer 실패와
   `PASS_usable`을 추가로 설명한다.
-- **H2:** Image-only GS는 MVS보다 usable PASS를 늘리지만 `L_upper`와의 gap을
+- **H2:** No-external-prior GS는 MVS보다 usable PASS를 늘리지만 `L_upper`와의 gap을
   완전히 닫지 못한다.
 - **H3a:** Existing LiDAR prior는 절대 높이, 국소 위치, normal/plane 안정성과
   관련된 실패에 상대적으로 강하다.
@@ -161,7 +163,7 @@ pass-to-fail 악화를 몇 개 만들며, usable PASS 건물 집합을 순증가
   제공하지 않는다.
 - **H4:** prior의 효과가 유효하다면 G-native 지표뿐 아니라 downstream gate와
   fail-to-pass 전이에도 같은 방향으로 나타난다.
-- **H5:** 각 prior arm은 Image-only GS 대비 양의 net transition
+- **H5:** 각 prior arm은 no-external-prior GS 대비 양의 net transition
   (`fail-to-pass − pass-to-fail`)을 보인다. 값의 크기와 허용 가능한 회귀율은
   `DEFERRED`이다.
 - **H6:** 실제 변화 사례가 확인되면 conflict-aware prior weighting은 바뀐 영역에서
@@ -173,15 +175,17 @@ pass-to-fail 악화를 몇 개 만들며, usable PASS 건물 집합을 순증가
 | ID | Reconstruction condition | 학습 여부 | 핵심 역할 |
 |---|---|---:|---|
 | `C1_L_upper` | Current high-quality LiDAR → Roofer | 아니오 | 동일 Roofer 조건에서 고품질 sensor evidence의 실험적 상한 |
-| `C2_MVS` | Current-image MVS → Roofer | 아니오 | 전통적 사진측량 기반 핵심 baseline |
-| `C3_GS_image` | Current-image Image-only GS → surface extraction → Roofer | 예 | prior 없는 GS 기준선 |
-| `C4_GS_lidar_prior` | Current images + Existing ALS-prior GS → extraction → Roofer | 예 | 불완전 ALS 자산 활용 |
-| `C5_GS_lod1_prior` | Current images + existing LoD1-prior GS → extraction → Roofer | 예 | coarse building envelope 활용 |
+| `C2_MVS` | Gate S0 common current-image/pose base에서 파생한 MVS → Roofer | 아니오 | image-derived geometry를 GS 없이 직접 사용하는 사진측량 baseline |
+| `C3_GS_image` | 같은 image-derived common base → no-external-prior GS → surface extraction → Roofer | 예 | 외부 기구축 prior 없는 GS 기준선 |
+| `C4_GS_lidar_prior` | C3 common base + Existing ALS prior → GS → extraction → Roofer | 예 | 불완전 ALS 자산 활용 |
+| `C5_GS_lod1_prior` | C3 common base + independent existing LoD1 prior → GS → extraction → Roofer | 예 | coarse building envelope 활용 |
 
 이를 “five learning experiments”라고 부르지 않는다. `C1`과 `C2`는 baseline branches이며,
 전체는 “five reconstruction conditions” 또는 “five evidence configurations”이다.
-`C5`는 Image + **LoD1-prior** GS이며 Image + LoD2-prior GS가 아니다. DSM과 두 prior
-동시 결합은 본 비교에서 제외한다.
+`C3_GS_image` ID는 기존 계보와 결과 schema의 연속성을 위해 유지하지만, canonical
+condition name은 **no-external-prior GS**이다. 이는 RGB-only나 SfM-sparse-only를
+뜻하지 않는다. `C5`는 common base + **LoD1-prior** GS이며 LoD2-prior GS가 아니다.
+DSM과 두 external prior의 동시 결합은 본 비교에서 제외한다.
 
 ### 7.1 왜 LiDAR가 두 개인가
 
@@ -213,14 +217,26 @@ regime인지 Gate S0 evidence에서 입증해야 한다. 구분이 입증되지 
 - TUM2TWIN에는 UAS 영상과 Pix4Dmatic photogrammetric point cloud가 공식적으로
   기술되어 있으나, 본 저장소의 입력과 재생성 가능성은 `TO VERIFY`.
 
-### 8.3 Image-only GS
+### 8.3 No-external-prior GS와 common image-derived base
 
-- prior 없이 GS representation/optimization만 사용한다.
-- current RGB와 camera calibration/poses를 사용하고, 표준 GS initialization에 필요한
-  SfM sparse support만 허용한다. Dense MVS point cloud/depth/normal은 입력·loss
-  supervision으로 사용하지 않는다.
-- C4/C5는 이와 같은 image base에 각각 하나의 existing prior만 추가한다.
-- prior-guided arm을 보기 전에 학습·추출·평가 안정성을 확정한다.
+- Gate S0에서 exact current image member와 camera/pose ID를 `B_current`로 동결한다.
+- `B_current`만으로 파생한 SfM sparse, dense MVS, depth, normal, confidence는
+  C3–C5가 공유하는 image-derived geometry/support로 허용한다. 각 component의
+  producer/version, code/config, source-member IDs, coordinate frame, role, bytes와
+  hash를 동결하고 세 GS arm에 동일하게 적용한다.
+- 이 공통 support는 current images에서 파생한 것이므로 external prior가 아니다.
+  Current UAS LiDAR, Existing ALS, LoD1, evaluation reference, scored LoD2와 외부
+  roofprint는 `B_current`에 포함하지 않는다.
+- C3는 `B_current`의 image-derived geometry를 GS representation 안에서 재최적화한 뒤
+  surface extraction과 Roofer를 거친다. C4와 C5는 동일한 C3 base에 각각 Existing
+  ALS 하나 또는 독립 LoD1 하나만 추가한다.
+- C2는 Gate S0에서 동결한 같은 image/pose base의 MVS geometry를 GS 재최적화 없이
+  Roofer branch로 직접 전달한다. 따라서 C2–C3 contrast는 direct MVS와 GS-reoptimized
+  image-derived geometry의 차이다.
+- 기존 1,104-image vendor MVS는 exact image/pose member·hash·derivation이
+  `B_current`와 일치한다고 입증되기 전에는 공통 base나 primary C2로 자동 채택하지
+  않는다. 필요하면 별도 sensor-processing-bundle context baseline으로만 보존한다.
+- prior-guided arm을 보기 전에 공통 base의 생성·GS·추출·평가 안정성을 확정한다.
 
 ### 8.4 `P_LiDAR`
 
@@ -301,7 +317,7 @@ method evidence에서 생성하고 method별 polygon/hash를 보존한다. 이�
 아래는 `PROPOSED CONTRIBUTION`이며 선행연구 검토와 실험 전에는 신규성 주장으로
 사용하지 않는다.
 
-1. Image-only GS, Existing ALS-prior GS, LoD1-prior GS를 같은 building-level
+1. No-external-prior GS, Existing ALS-prior GS, LoD1-prior GS를 같은 building-level
    Roofer/LoD2 계약에서 비교한다.
 2. GS-native부터 LoD2까지 failure location을 단계별로 분리한다.
 3. 평균 geometry/rendering metric뿐 아니라 usable PASS의 fail-to-pass와
@@ -326,7 +342,7 @@ method evidence에서 생성하고 method별 polygon/hash를 보존한다. 이�
 
 - 동일 eligible building set과 사전 동결한 adapter/roofprint protocol
 - 사전 동결한 criterion version
-- Image-only GS 대비 usable PASS 순증가
+- no-external-prior GS 대비 usable PASS 순증가
 - fail-to-pass와 pass-to-fail 동시 보고
 - geometry와 structure reference의 명시
 - method별 결측과 fallback의 공개
@@ -337,11 +353,16 @@ robustness로 표현을 제한한다.
 
 ## 12. 동결 항목
 
-다음은 `DEC-P1-008`의 사용자 채택으로 `FROZEN`이다.
+다음은 `DEC-P1-008`과 `DEC-P1-010`의 사용자 채택으로 연구 규칙이 `FROZEN`이다.
+여기서 common-base **규칙**이 frozen이라는 말은 exact `B_current` member와 payload가
+이미 정해졌다는 뜻이 아니다. 그 IDs/hashes는 Gate S0 human freeze 전까지 `BLOCKED`다.
 
 - 연구 앵커와 목적
 - TUM2TWIN 사용
 - 다섯 reconstruction conditions와 각 데이터 역할
+- exact common image/pose base를 Gate S0에서 동결해야 한다는 규칙과 C3–C5에 허용된
+  공통 image-derived component family
+- C2 direct MVS와 C3 GS-reoptimized image-derived geometry의 구분
 - Current UAS/Drone LiDAR `L_upper`와 Existing ALS `P_LiDAR`의 분리 및 비교 감사
 - LiDAR prior와 LoD1 prior의 분리
 - `C5`가 LoD1 prior이며 LoD2 roof prior가 아니라는 점

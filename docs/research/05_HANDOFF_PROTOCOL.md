@@ -1,6 +1,6 @@
 # Work–Codex Handoff Protocol
 
-- 문서 버전: `C1C5_CANON_v1`
+- 문서 버전: `C1C5_CANON_v2`
 - 작성일: 2026-07-31
 - 상태: `USER APPROVED C1–C5 PROGRAM HANDOFF`
 - 적용: 연구문서 snapshot, task authorization, return evidence

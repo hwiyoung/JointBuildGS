@@ -1,7 +1,7 @@
 # Result and Acceptance Contract v0
 
 - Document status: `USER_APPROVED_CANONICAL_RESULT_CONTRACT`
-- Criterion version: `C1C5_CANON_v1`
+- Criterion version: `C1C5_CANON_v2`
 - 작성일: 2026-07-31
 - 상태: `PROVISIONAL UNTIL P2 CRITERION FREEZE`
 - Final verdict policy: `PENDING` until P2 criterion freeze
@@ -14,7 +14,8 @@ metric 또는 보기 좋은 mesh 하나로 최종 성공을 판정하지 않는�
 native representation, extracted surface, exact Roofer input, LoD2 outcome을
 연결해 저장한다.
 
-`C1`/`C2`는 context baselines이고 primary prior contrasts는 `C4-vs-C3`와
+`C1`/`C2`는 context baselines이고 `C3_GS_image`의 canonical condition name은
+no-external-prior GS다. Primary prior contrasts는 `C4-vs-C3`와
 `C5-vs-C3`이다. “자동 LoD2 생성 가능 범위 확대”는 같은 사전 동결 building set에서
 평균 RMSE 개선이 아니라 `PASS_usable`의 `fail→pass − pass→fail` 순증가로 판정한다.
 자동성은 per-building 수동 method 선택·geometry 수리·GT 입력을 금지하고, retry와
@@ -24,7 +25,7 @@ fallback을 결과 전 동결된 규칙으로만 허용한다는 뜻이다.
 
 | Stage | Canonical name | 내용 | 최소 provenance | 질문 |
 |---|---|---|---|---|
-| 1 | `G_native` | trained Gaussian/surfel representation | run/config/commit, primitive schema, coordinate frame | GS 자체가 구조적으로 안정적인가? |
+| 1 | `G_native` | trained Gaussian/surfel representation | run/config/commit, common image/pose base와 derivative manifest hash, external-prior type, primitive schema, coordinate frame | GS 자체가 구조적으로 안정적인가? |
 | 2 | `S_extracted` | rendered-depth fusion point set, TSDF mesh 또는 sampled surface | adapter/version/parameters/views | extraction에서 ridge/plane/hole/boundary가 손상되는가? |
 | 3 | `P_Roofer` | filtering/sampling/classification/crop 완료된 exact Roofer input | LAS/LAZ hash, class 2/6, roofprint/terrain hash, CRS | adapter가 정보를 잃는가? |
 | 4 | `H_LoD2` | Roofer-generated LoD2.2 semantic building model | Roofer version/config/log/output hash | evidence가 valid/accurate LoD2로 변환되는가? |
@@ -48,6 +49,20 @@ flowchart LR
 
 원인 귀속은 자동 단정이 아니라 해당 stage evidence를 바탕으로 한 진단 label이다.
 
+### 2.1 Condition-flow provenance
+
+Gate S0가 동결한 `B_current`는 exact current image/pose members와 그 members에서만
+파생한 SfM sparse, dense MVS, depth, normal, confidence의 manifest다. C3–C5는
+동일한 `B_current` ID와 component hashes를 가져야 한다. C4는 Existing ALS만,
+C5는 independent LoD1만 추가하며 C3는 external prior가 없어야 한다.
+
+C2와 C3가 같은 MVS-derived component를 사용해도 artifact chain은 다르다. C2는
+MVS geometry를 GS 없이 `P_Roofer`로 직접 변환하고, C3는 image-derived geometry와
+support를 `G_native`에서 재최적화한 뒤 `S_extracted → P_Roofer`를 거친다. 결과표는
+이 `condition_flow`를 필수 provenance로 기록한다. 기존 1,104-image vendor MVS는
+Gate S0 common-base manifest와 exact하게 결합되기 전에는 primary C2/C3 비교에
+포함하지 않는다.
+
 ## 3. Native diagnostic contract
 
 GS arm에서 가능한 primitive fields:
@@ -59,7 +74,7 @@ GS arm에서 가능한 primitive fields:
 - opacity
 - semantic attribute
 - view support
-- prior confidence
+- image-derived confidence와 external-prior confidence의 분리 기록
 - image–prior conflict
 
 필수 fixed-view 후보:
@@ -128,9 +143,9 @@ Roofer 공식 CLI 문서는 pointcloud source의 `ground_class=2`,
 
 1. Current UAS/Drone LiDAR (`L_upper`)
 2. MVS
-3. Image-only GS
-4. Image + Existing ALS-prior GS (`P_LiDAR`)
-5. Image + LoD1-prior GS
+3. No-external-prior GS: common image-derived base를 GS로 재최적화
+4. 같은 common base + Existing ALS-prior GS (`P_LiDAR`)
+5. 같은 common base + independent LoD1-prior GS
 
 결과 행:
 
@@ -140,6 +155,8 @@ Roofer 공식 CLI 문서는 pointcloud source의 `ground_class=2`,
 - normal/height diagnostic
 
 LiDAR/MVS는 native point cloud, GS는 native Gaussian/surfel representation을 보인다.
+C2 panel은 common-base MVS를 Roofer로 직접 전달한 branch이고, C3 panel은 같은
+image-derived geometry/support를 GS에서 재최적화한 branch임을 표시한다.
 
 ### Sheet B — Extraction and exact Roofer input
 
@@ -168,16 +185,16 @@ Criterion 동결 전:
 
 ```text
 Final verdict: PENDING
-Criterion version: C1C5_CANON_v1
+Criterion version: C1C5_CANON_v2
 ```
 
 ### Sheet D — GS mechanism analysis
 
 대표 subset에서 다음 세 GS arm을 비교한다.
 
-- Image-only GS
-- Image + LiDAR-prior GS
-- Image + LoD1-prior GS
+- No-external-prior GS
+- 같은 common base + LiDAR-prior GS
+- 같은 common base + LoD1-prior GS
 
 표시 후보:
 
@@ -254,7 +271,11 @@ summary를 승격한다. 최종 resolver/path는 Gate S0/P2에서 `TO VERIFY`이
 | `data_version` | immutable data manifest ID |
 | `reference_version` | geometry + structure refs |
 | `surface_adapter` | name + version |
-| `criterion_version` | `C1C5_CANON_v1`, frozen version later |
+| `criterion_version` | `C1C5_CANON_v2`, frozen version later |
+| `common_image_pose_base_id` | Gate S0 frozen member/pose manifest ID + hash |
+| `image_derived_base_manifest` | SfM sparse/dense MVS/depth/normal/confidence의 producer·config·frame·role·payload hashes |
+| `external_prior_type` | `none`, `existing_als`, `independent_lod1`; C3는 반드시 `none` |
+| `condition_flow` | `mvs_direct_roofer` 또는 `gs_reoptimized_then_roofer` |
 
 ### Input and surface evidence
 
@@ -340,7 +361,8 @@ Logical names:
 - threshold sensitivity results
 - `run_registry.jsonl`
 
-Primary comparison은 `C3_GS_image` 대비 C4/C5 각각이다. 각 prior arm `m`의
+Primary comparison은 no-external-prior condition `C3_GS_image` 대비 C4/C5
+각각이다. 각 prior arm `m`의
 primary estimand는 동일 eligible paired set에서 다음과 같다.
 
 ```text
@@ -441,7 +463,7 @@ P2에서 다음 순서로 numerical threshold를 정한다.
 1. geometry/structure reference uncertainty 정량화
 2. Current UAS/Drone LiDAR baseline 분포
 3. MVS baseline 분포
-4. Image-only GS 분포
+4. No-external-prior GS 분포
 5. validation buildings의 명백한 success/failure blind review
 6. application requirement
 7. matching/threshold sensitivity
@@ -458,7 +480,8 @@ building acceptance threshold로 자동 이식하지 않는다.
 |---|---|
 | `DRAFT_v0` | historical bootstrap draft; verdict는 `PENDING` |
 | `P1_AUDIT_v1` | historical audit contract; verdict는 `PENDING` |
-| `C1C5_CANON_v1` | current C1–C5 result contract; verdict는 `PENDING` |
+| `C1C5_CANON_v1` | pre-result sparse-only/dense-ban interpretation; `DEC-P1-010`으로 superseded |
+| `C1C5_CANON_v2` | current no-external-prior/common-base result contract; verdict는 `PENDING` |
 | `VALIDATION_CANDIDATE_vN` | validation set에서 calibration, held-out-building 접근 금지 |
 | `FROZEN_vN` | 코드/hash/reference/split 포함, P3/P4 primary |
 | `SUPERSEDED_vN` | 이유/Decision ID와 successor 기록, 과거 결과 보존 |

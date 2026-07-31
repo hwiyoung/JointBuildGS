@@ -1,9 +1,9 @@
 # Data and Baseline Scope
 
 - Document status: `USER_APPROVED_CANONICAL_DATA_CONTRACT`
-- 문서 버전: `C1C5_CANON_v1`
+- 문서 버전: `C1C5_CANON_v2`
 - 작성일: 2026-07-31
-- 상태: `GATE S0 EVIDENCE TECHNICAL CLOSED / PROPOSED BLOCKED / HUMAN DECISION PENDING`
+- 상태: `GATE S0 REMEDIATION R1 TECHNICAL CLOSED / FREEZE DRAFT / HUMAN DECISION PENDING`
 - Gate S0 snapshot: exact target bytes verified; scientific readiness remains
   `PARTIAL/MISSING/UNKNOWN`
 
@@ -27,9 +27,9 @@ backend에 정확한 파일이 검증되어 있다는 사실을 구분한다.
 | Asset ID | 공식 후보 | 연구 역할 | 공식 source에서 확인 | 로컬 가용성 | 취득 시점 | Accuracy | Density / coverage | Format / CRS |
 |---|---|---|---|---|---|---|---|---|
 | `IMG_CURRENT` | UAS photographs | C2–C5 current imagery | RTK-georeferenced UAS images, UAS laser campaign 중 취득 ([official](https://tum2t.win/datasets/im-uas)) | `PARTIAL`: exact 962 images; 937 included + 25 excluded ledger | `TO VERIFY` | `TO VERIFY` | building view support `TO VERIFY` | image archive/member hashes verified; CRS `TO VERIFY` |
-| `CAM_CURRENT` | OPF/camera/trajectory | MVS/GS poses | official tutorial은 `images.zip`, `opf.zip`, OPF camera parameters/geolocation/sparse reconstruction을 기술 ([official](https://tum2t.win/tutorials/im-gaussiannerf)) | `PARTIAL`: exact OPF; 937 calibrated poses; 25 explicit no-pose exclusions | image archive와 exact files verified | pose uncertainty `TO VERIFY` | building coverage `TO VERIFY` | SfM sparse initialization identity/hash/frame/role `TO VERIFY` |
+| `CAM_CURRENT` | OPF/camera/trajectory | C2–C5 common image/pose base 후보 | official tutorial은 `images.zip`, `opf.zip`, OPF camera parameters/geolocation/sparse reconstruction을 기술 ([official](https://tum2t.win/tutorials/im-gaussiannerf)) | `PARTIAL`: exact OPF; 937 calibrated poses; 25 explicit no-pose exclusions | image archive와 exact files verified | pose uncertainty `TO VERIFY` | building coverage `TO VERIFY` | exact Gate S0 member set과 derived-component lineage 미동결 |
 | `LIDAR_UAS_CURRENT` | UAS laser scanning | `L_upper`, geometry reference 후보 | DJI M350 RTK + Zenmuse L2, nadir/oblique scans ([official](https://tum2t.win/datasets/pc-uas)) | `PARTIAL`: manual/nadir candidates | `TO VERIFY` | `TO VERIFY` | point density/coverage `TO VERIFY` | selection, class, CRS/datum 미동결 |
-| `MVS_CURRENT` | UAS image-based scan | C2 baseline only; C3–C5 dense initialization/supervision에는 금지 | Pix4Dmatic 1.58.1 point cloud와 orthophoto ([official](https://tum2t.win/datasets/pc-uasp)) | `PARTIAL`: candidate identified | UAS campaign과 동일성 `TO VERIFY` | `TO VERIFY` | density/coverage `TO VERIFY` | exact image/pose base 미동결 |
+| `MVS_CURRENT` | UAS image-based scan | C2 direct baseline 및 C3–C5 common image-derived base 후보 | Pix4Dmatic 1.58.1 point cloud와 orthophoto ([official](https://tum2t.win/datasets/pc-uasp)) | `PARTIAL`: 1,104-image vendor candidate identified; common base로 미채택 | UAS campaign과 동일성 `TO VERIFY` | `TO VERIFY` | density/coverage `TO VERIFY` | exact common image/pose member와 derivation binding 미동결 |
 | `ALS_EXISTING` | Bavarian real ALS tiles | `P_LiDAR` 후보 | official portal에 real ALS tiles와 download source가 제시됨 ([official](https://tum2t.win/datasets/pc-als)) | `PARTIAL`: four candidate tiles | UAS 대비 시점차 `TO VERIFY` | `TO VERIFY` | density/coverage `TO VERIFY` | C1 independence, CRS/datum/interface 미동결 |
 | `LOD1_EXISTING` | TUM2TWIN LoD1 | `P_LoD1` 후보 | 이번 공식 web 조사에서 직접 확인하지 못함 | `MISSING` | `UNKNOWN` | `UNKNOWN` | building coverage `UNKNOWN` | 독립 lineage 미발견 |
 | `LOD2_REFERENCE` | Bavarian LoD2 / textured LoD2 | structure reference 또는 roofprint lineage audit | official page는 CityGML LoD2와 stable object IDs를 기술 ([official](https://tum2t.win/datasets/cm-buildings)) | `PARTIAL`: two candidate tiles | acquisition/model vintage `TO VERIFY` | portal 표기의 accuracy 해석 `TO VERIFY` | 대상 building coverage `TO VERIFY` | scoring-only guard와 CRS/datum 미동결 |
@@ -43,12 +43,13 @@ payload가 있다는 뜻은 아니다.
 Gate S0 evidence와 Work Host 교차검토가 확인한 현재 준비도는 다음처럼 축약한다.
 
 - images 962개와 calibrated poses 937개의 차이는 25건의 결정론적 exclusion ledger로
-  해소됐다. 다만 C2 MVS가 exact 937 base에서 파생됐다는 hash-linked receipt는 없다.
+  설명됐다. 이 ledger는 Gate S0 common base 후보이지 자동 freeze가 아니다. exact
+  image/pose members와 C2–C5 derivation을 묶는 hash-linked receipt는 없다.
 - C1 UAS LiDAR는 manual/nadir 선택·병합, class 2/6, vertical datum과 registration이 미동결이다.
 - C4 Existing ALS는 C1과의 독립성 및 future prior interface가 미동결이다.
 - 독립 LoD1은 발견되지 않아 C5가 `MISSING`이다.
-- C3–C5 표준 initialization에 사용할 SfM sparse artifact의 identity/hash/frame/role이
-  미동결이다. Dense MVS 금지 계약의 `READY`와 execution readiness를 혼동하지 않는다.
+- C3–C5가 공유할 SfM sparse, dense MVS, depth, normal, confidence의 exact
+  identity/hash/frame/role과 동일 image/pose derivation이 미동결이다.
 - geometry/structure reference ID/version/production lineage와 C1 input-reference
   self-reference evaluation class가 미동결이다.
 - `U_target`과 `E_paired`는 `UNKNOWN`이다.
@@ -110,24 +111,35 @@ Raw input과 canonical result는 explicit retention review 없이 수정하지 �
 | Condition | Current images | Current MVS | Current UAS LiDAR | Existing ALS prior | Existing LoD1 prior | Roofprint protocol | Evaluation reference |
 |---|---:|---:|---:|---:|---:|---:|---:|
 | `C1_L_upper` | 아니오 | 아니오 | reconstruction input | 아니오 | 아니오 | `R_derived` protocol | score only |
-| `C2_MVS` | MVS 생성 source | reconstruction input | 아니오 | 아니오 | 아니오 | `R_derived` protocol | score only |
-| `C3_GS_image` | training input | dense MVS geometry/depth/normal 입력 금지 | 아니오 | 아니오 | 아니오 | `R_derived` protocol | score only |
-| `C4_GS_lidar_prior` | training input | C3와 같은 image base; dense MVS 입력 금지 | 아니오 | prior only | 아니오 | `R_derived` protocol | score only |
-| `C5_GS_lod1_prior` | training input | C3와 같은 image base; dense MVS 입력 금지 | 아니오 | 아니오 | prior only | `R_derived` protocol | score only |
+| `C2_MVS` | common MVS 생성 source | direct Roofer reconstruction input | 아니오 | 아니오 | 아니오 | `R_derived` protocol | score only |
+| `C3_GS_image` | common GS training input | `B_current` 공통 geometry/depth/normal/confidence | 아니오 | 아니오 | 아니오 | `R_derived` protocol | score only |
+| `C4_GS_lidar_prior` | C3와 동일 | C3와 동일한 `B_current` | 아니오 | prior only | 아니오 | `R_derived` protocol | score only |
+| `C5_GS_lod1_prior` | C3와 동일 | C3와 동일한 `B_current` | 아니오 | 아니오 | prior only | `R_derived` protocol | score only |
 
 `C4`와 `C5`를 한 arm으로 합치지 않는다. Evaluation reference는 학습 loss,
 initialization, crop, early stopping, hyperparameter selection에 사용하지 않는다.
 
-`C3`–`C5`의 공통 GS base는 current RGB images와 camera calibration/poses를 사용한다.
-표준 GS가 요구하는 SfM sparse points는 initialization support로 허용하되 source와
-역할을 기록한다. Dense MVS point cloud, rendered/estimated dense MVS depth 또는
-normal을 loss/initialization prior로 넣지 않는다. 이를 넣어야 한다면 `Image-only GS`
-명칭과 C2/C3 contrast를 변경하는 별도 사용자 결정이 먼저 필요하다.
+`C3`–`C5`의 공통 GS base `B_current`는 Gate S0에서 동결한 exact current RGB image
+members와 camera/pose IDs에서만 파생한다. SfM sparse, dense MVS, depth, normal,
+confidence를 initialization, supervision 또는 weighting support로 허용하되 각
+component의 producer/version, code/config, source-member IDs, coordinate frame, role,
+bytes와 hash를 동결한다. 세 GS arm은 이 base를 동일하게 사용한다. 이 image-derived
+support는 external existing-asset prior가 아니다.
+
+`C3_GS_image`의 canonical label은 **no-external-prior GS**다. ID는 과거 evidence와
+schema 연속성을 위해 유지한다. C3에는 Current UAS LiDAR, Existing ALS, LoD1,
+evaluation reference, scored LoD2 또는 외부 roofprint를 넣지 않는다. C4는 exact C3
+base에 Existing ALS prior만 추가하고, C5는 exact C3 base에 independent LoD1 prior만
+추가한다.
 
 `C2_MVS`도 원칙적으로 C3–C5와 같은 Gate S0 동결 image/camera ledger에서 생성한다.
-기존 vendor MVS가 다른 image subset, pose solution 또는 preprocessing을 사용했다면
-그 차이를 숨기지 않고 sensor-processing bundle baseline으로 표시하며 C2-vs-C3의
-직접적인 method-only 해석을 제한한다.
+같은 base의 MVS geometry를 GS 재최적화 없이 Roofer로 직접 전달하는 것이 C2이고,
+같은 image-derived geometry/support를 GS에서 재최적화한 뒤 extraction/Roofer로
+전달하는 것이 C3다. 기존 1,104-image vendor MVS는 exact member/pose/hash/producer
+mapping이 `B_current`와 일치한다고 입증되기 전에는 common base나 primary C2로 자동
+채택하지 않는다. 다른 image subset, pose solution 또는 preprocessing을 사용했다면
+sensor-processing-bundle context baseline으로 표시하며 C2-vs-C3의 method-only
+해석을 금지한다.
 
 ## 5. `L_upper`와 `P_LiDAR` 구분
 
@@ -307,7 +319,7 @@ P4 primary 잠금 뒤 `E_paired` census를 별도 실행한다. 이 census가 �
 | prior–reference shared model | LoD2를 단순화해 LoD1 prior 생성 후 같은 LoD2로 score | roof extent/Z/topology 누출 | C5 honest arm에서 금지; 별도 leakage diagnostic도 명시적 승인 필요 | `PROHIBITED_PRIMARY` |
 | roofprint–reference shared XY | LoD2 GroundSurface에서 roofprint 파생 | planimetric score와 topology 조건화 | 독립 footprint 우선, shared XY 공개 | `TO VERIFY` |
 | `L_upper`–geometry reference identity | 같은 UAS LiDAR로 reconstruct/score | optimistic upper baseline | upper는 self-reference임을 표시하거나 독립 TLS/LoD3 검토 | `TO VERIFY` |
-| MVS derivative reuse | official Pix4D MVS로 pose/GS init/score 모두 사용 | 비교 독립성 저하 | role별 허용을 동결 | `TO VERIFY` |
+| image-derived base provenance | exact common ledger가 아닌 vendor MVS를 C2/C3–C5에 혼용하거나 MVS를 reference score에도 사용 | condition 차이와 reference leakage 혼재 | Gate S0 member/pose/derivative hashes와 role을 동결; evaluation reference 사용 금지 | `TO VERIFY` |
 | split leakage | 같은 building parts가 validation/test에 분산 | threshold overfit | group/spatial split | `PROVISIONAL` |
 | held-out peeking | P4 held-out building 결과를 P2/P3 method·threshold 결정에 사용 | 선택 편향 | P4 전 접근 금지, criterion/method/selection rule 사전 동결 | `FROZEN` 원칙 |
 
@@ -315,7 +327,8 @@ P4 primary 잠금 뒤 `E_paired` census를 별도 실행한다. 이 census가 �
 
 - `C1_L_upper` 성능은 theoretical maximum이 아니다.
 - `C2_MVS` 실패는 MVS 일반의 보편적 한계가 아니라 지정 pipeline/data의 결과이다.
-- `C3_GS_image`는 prior effect의 기준선이며, renderer/backbone이 다르면 비교가
+- `C3_GS_image`는 no-external-prior comparator이며, C4/C5와 `B_current`, renderer,
+  backbone, image-derived support의 code/config/hash가 다르면 prior-only 비교가
   무효화될 수 있다.
 - C4/C5 개선은 prior 자체, initialization, regularization, extraction 변화 중
   어디에서 생겼는지 G-native chain으로 분리한다.
@@ -328,6 +341,9 @@ P4 primary 잠금 뒤 `E_paired` census를 별도 실행한다. 이 census가 �
 
 - [ ] exact file paths/checksums와 manifest resolver
 - [ ] image/OPF/camera/trajectory version
+- [ ] Gate S0 exact common image/pose member IDs, inclusion/exclusion rule와 manifest hash
+- [ ] shared SfM sparse/dense MVS/depth/normal/confidence code·config·frame·role·payload hashes
+- [ ] 1,104-image vendor MVS와 common ledger의 exact mapping 또는 별도 bundle 분류
 - [ ] UAS image와 LiDAR co-acquisition date
 - [ ] UAS/Drone LiDAR와 ALS의 exact file/version 및 derivative independence
 - [ ] platform/sensor, density, accuracy, classification, coverage, registration 비교표
@@ -369,7 +385,7 @@ P4 primary 잠금 뒤 `E_paired` census를 별도 실행한다. 이 census가 �
 - `RESOLVED BY DEC-P1-008`: TUM2TWIN 중심 C1–C5가 현재 data-role 정본이며
   `docs/evidence/archive/pre_c1c5_research/EXPERIMENT_PLAN.md`의 dataset-role은 역사 기록이다.
 - `PARTIAL`: Gate S0 표적 11개 payload는 Experiment Host에서 exact bytes로 검증됐다.
-  다만 독립 LoD1, C3–C5 sparse initialization, condition별 변환·registration·coverage
-  lineage는 아직 exact payload/derivative 계약과 연결되지 않았다.
+  다만 독립 LoD1, exact common image/pose base, C3–C5 shared image-derived components,
+  condition별 변환·registration·coverage lineage는 아직 freezeable 계약과 연결되지 않았다.
 - `TO VERIFY`: source/target CRS와 vertical datum. 연구 output은 `EPSG:25832`를
   유지하지만 source 변환을 추정하지 않는다.

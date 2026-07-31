@@ -11,16 +11,22 @@ JointBuildGS studies whether the structural stability of incomplete but reusable
 existing 3D assets can complement the currentness and fine observations of current
 aerial imagery, expanding the set of buildings for which automatic LoD2 generation
 is usable. The program compares five reconstruction conditions: current UAS LiDAR,
-current-image MVS, image-only GS, image + existing-LiDAR-prior GS, and image +
-independent-LoD1-prior GS. For the three GS conditions, the reusable pipeline is:
+current-image MVS, no-external-prior GS, the same GS base + existing-ALS prior, and
+the same GS base + independent-LoD1 prior. For the three GS conditions, the reusable
+pipeline is:
 
-1. Stage 1: SfM/MVS + 2D segmentation + gravity estimation.
-2. Stage 2: image-only or single-prior optimization on planar 2D Gaussian primitives
-   with **gsplat**.
+1. Stage 1: an exact Gate-S0-frozen current image/pose base and its image-derived
+   SfM sparse, dense MVS, depth, normal, confidence, segmentation, and gravity evidence.
+2. Stage 2: no-external-prior or single-external-prior optimization on planar 2D
+   Gaussian primitives with **gsplat**. C3–C5 use the identical image-derived base;
+   only C4 adds existing ALS and only C5 adds independent LoD1.
 3. Stage 3: Roofer-style evidence-to-CityGML read-out without an external roofprint.
 
 The direct LiDAR and MVS baselines enter the same controlled Stage 3 read-out without
-becoming GS training runs.
+becoming GS training runs. C2 sends common-base MVS geometry directly to Roofer;
+C3 reoptimizes the same image-derived geometry/support through GS first. The existing
+1,104-image vendor MVS is not the common base or primary C2 unless Gate S0 binds its
+exact image/pose lineage; otherwise it remains context-only sensor-processing evidence.
 
 The durable five-condition research definitions are the ordered contract set
 `docs/research/00_RESEARCH_CHARTER.md` through
@@ -55,14 +61,16 @@ Reusable code must be promoted out of `phases/` into `src/`, `scripts/`, or `con
   `phases/p0-audit/README.md`; promoted evidence is in `docs/evidence/p0-audit/` and
   `docs/evidence/p0_g1_20260613/`. Completed P0 task prompts are historical records,
   not current agent instructions.
-- **Five-condition program: Gate S0 evidence review pending; remediation preparation active.** The
-  technical evidence package is closed at
-  `docs/handoffs/returns/P2_C2W_GATE_S0_PREPARATION_RETURN_v1.md` with proposed status
-  `BLOCKED_FOR_GATE_S0_REVIEW`, `scientific_verdict: null`, and no human Gate decision.
-  Before the first new
-  baseline result, Gate S0 must freeze the exact AOI, `U_target`, `E_paired`, input
-  identities, eligibility rule, split mode/IDs, and bounded cost from outcome-free
-  evidence. No C1–C5 performance run is authorized while the recorded blockers remain.
+- **Five-condition program: Gate S0 freeze draft active; performance blocked.** Preparation
+  and remediation R1 are technically closed; the latest Return is
+  `docs/handoffs/returns/P2_C2W_GATE_S0_REMEDIATION_R1_RETURN_v1.md` with proposed status
+  `BLOCKED_FOR_GATE_S0_REMEDIATION_REVIEW`, `scientific_verdict: null`, and no human Gate
+  decision. The current human-review draft is
+  `docs/research/preregistration/gate_s0/GATE_S0_FREEZE_PACKET_v1.md`; it is not execution
+  authority. Before the first new baseline result, Gate S0 must freeze the exact common
+  image/pose-derived base, AOI, `U_target`, `E_paired`, all condition inputs, eligibility,
+  split mode/IDs, references/toolchain, and bounded cost from outcome-free evidence.
+  No C1–C5 performance run is authorized while the recorded blockers remain.
 - **Legacy P2 GS-JSO / Fusion W1: protected historical capability evidence.** Its
   phase-locked controls and compact receipts remain under `phases/p2-gsjso/`; promoted
   reports remain under `docs/experiments/pilots/fusion_w1/`. Do not execute, modify,

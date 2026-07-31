@@ -1,9 +1,9 @@
 # JointBuildGS Master Roadmap
 
-- 문서 버전: `C1C5_CANON_v1`
+- 문서 버전: `C1C5_CANON_v2`
 - 작성일: 2026-07-31
-- 현재 workstream: `P2 PRE-RESULT GATE S0 REMEDIATION PREPARATION`
-- 저장소 유효 상태: `C1–C5 PROGRAM / GATE S0 EVIDENCE REVIEW PENDING / PERFORMANCE BLOCKED`
+- 현재 workstream: `P2 PRE-RESULT GATE S0 FREEZE DRAFTING`
+- 저장소 유효 상태: `C1–C5 PROGRAM / GATE S0 FREEZE DRAFT / PERFORMANCE BLOCKED`
 - 승인 상태: `USER APPROVED AS CURRENT RESEARCH CANON — 2026-07-31`
 - 역할: C1–C5 프로그램의 phase, split, gate와 실행 순서를 통제하는 roadmap
 
@@ -121,7 +121,7 @@ flowchart LR
 | Phase | 목적 | Entry criteria | Work 산출물 | Codex 산출물 | Exit gate | 상태 |
 |---|---|---|---|---|---|---|
 | P1 | 무엇을 연구하고 현재 repo/data가 지원하는지 확정 | bootstrap 요청, 현행 정본 확인 | charter, roadmap, novelty, data/result/handoff contracts, audit packet | read-only audit 9종, Return Packet | C1–C5 정본 전환과 audit integration | `COMPLETE` |
-| P2 | Gate S0 뒤 LiDAR/MVS/Image-only GS 기준선과 acceptance 동결 | Gate S0 evidence proposes `BLOCKED_FOR_GATE_S0_REVIEW`; human decision pending; remediation 후 데이터 계보·공통 set·split 동결 | remediation packet, Gate freeze packet, baseline protocol, threshold 결정안 | remediation evidence; Gate 승인 뒤 pilot+validation의 C1–C3 baseline, adapter 비교 | held-out building 결과 전 criterion 동결 | `PERFORMANCE BLOCKED / REMEDIATION` |
+| P2 | Gate S0 뒤 LiDAR/MVS/no-external-prior GS 기준선과 acceptance 동결 | Gate S0 evidence proposes blocked; exact common image/pose-derived base와 나머지 data contract의 human freeze pending | Gate freeze packet, baseline protocol, threshold 결정안 | Gate 승인 뒤 pilot+validation의 C1–C3 baseline, adapter 비교 | held-out building 결과 전 criterion 동결 | `PERFORMANCE BLOCKED / GATE FREEZE DRAFT` |
 | P3 | 관찰된 실패에 맞춘 두 prior 방법 개발·동결 | P2 criterion 동결 | loss/method 설계와 ablation 계약 | pilot+validation의 frozen C3 control 및 C4/C5 구현·ablation, Return Packet | held-out building 접근 전 사용자 최종 방법·schedule 동결 | `NOT_STARTED` |
 | P4 | held-out test 전 건물 × C1–C5 최종 실험과 원고 | P3 method freeze, data/reference/split freeze | 결과 해석, manuscript | held-out 전 건물 runs, metrics, case sheets, receipts | 사용자 결론·원고 승인 | `NOT_STARTED` |
 
@@ -175,13 +175,14 @@ primary 잠금 뒤 별도 census로 수행한다. 이 census를 완료하지 않
 
 | 항목 | Owner | 상태 | 산출물/근거 | Blocker 또는 next |
 |---|---|---|---|---|
-| C1–C5 research canon | Work | `USER_APPROVED / CURRENT` | `00_*.md`–`06_*.md`, `0716c925` | 유지 |
+| C1–C5 research canon | Work | `USER_APPROVED / CURRENT` | `00_*.md`–`06_*.md`, `DEC-P1-010` | v2 common-base contract 유지 |
 | P1 repository audit v1 | Codex | `TECHNICAL_BLOCKED / SUPERSEDED` | `200-blocked.json` | 재개 금지 |
 | P1 repository audit v2 | Codex | `READY_FOR_REVIEW / TECHNICAL CLOSED` | `c1c66396`, closed `8a6b5e61` | Gate S0 input evidence |
 | P1 audit integration | Work | `COMPLETE` | `0716c925` | Gate S0 evidence에 반영 |
-| Gate S0 evidence preparation | Work→Codex | `BLOCKED_FOR_GATE_S0_REVIEW / TECHNICAL CLOSED` | output `380cc891`, closed `1cf0db33` | remediation evidence 필요 |
+| Gate S0 evidence preparation | Work→Codex | `BLOCKED_FOR_GATE_S0_REVIEW / TECHNICAL CLOSED` | output `380cc891`, closed `1cf0db33` | R1 remediation evidence로 후속 |
 | Gate S0 Work cross-review | Work + independent agents | `PASS WITH MATERIAL FOLLOW-UPS` | `WORK_HOST_CROSS_REVIEW_v1.md` | C3 sparse-init와 reference/self-reference 누락 보완 |
-| Gate S0 remediation R1 | Work→Codex | `APPROVED_FOR_EXECUTION / OFFER PENDING` | source `09282015`, `P2_W2C_GATE_S0_REMEDIATION_R1_v1.md` | 새 offered receipt |
+| Gate S0 remediation R1 | Work→Codex | `BLOCKED_FOR_GATE_S0_REMEDIATION_REVIEW / TECHNICAL CLOSED` | output `032f7bc1`, closed `052f7d5c` | evidence로 보존; 재실행 금지 |
+| Gate S0 freeze packet v1 | Work / human review | `DRAFT / NOT APPROVED` | `GATE_S0_FREEZE_PACKET_v1.md` | exact common base와 나머지 blockers 검토 |
 
 ## Decision Status Register
 
@@ -200,6 +201,7 @@ primary 잠금 뒤 별도 census로 수행한다. 이 census를 완료하지 않
 | F-09 | usable PASS, fail-to-pass, pass-to-fail endpoint | 사용자 |
 | F-10 | P1–P4 순서와 사용자 phase gate | 사용자 |
 | F-11 | Current UAS/Drone LiDAR `L_upper`와 Existing ALS `P_LiDAR`는 별도 asset·역할이며 비교 감사 필수 | 사용자 |
+| F-12 | C3는 no-external-prior GS; C3–C5는 Gate S0 exact common image/pose-derived base를 공유하고 C4/C5만 ALS/LoD1을 각각 추가 | 사용자 |
 
 ### PROVISIONAL
 
@@ -252,14 +254,18 @@ primary 잠금 뒤 별도 census로 수행한다. 이 census를 완료하지 않
 | `P1-W2C-REPO-AUDIT` | Work→Codex | v1 | `SUPERSEDED / TECHNICAL_BLOCKED` | 아니오 |
 | `P1-W2C-REPO-AUDIT-R2` | Work→Codex | v2 | `READY_FOR_REVIEW / TECHNICAL CLOSED@8a6b5e61` | 완료 작업; 재실행 아님 |
 | `P2-W2C-GATE-S0-PREP-v1` | Work→Codex | v1 | `BLOCKED_FOR_GATE_S0_REVIEW / TECHNICAL CLOSED@1cf0db33` | 완료 작업; 재실행 아님 |
+| `P2-W2C-GATE-S0-REMEDIATION-R1-v1` | Work→Codex | v1 | `BLOCKED_FOR_GATE_S0_REMEDIATION_REVIEW / TECHNICAL CLOSED@052f7d5c` | 완료 작업; 재실행 아님 |
 
-다음 Gate S0 remediation handoff에 필요한 순서:
+다음 Gate S0 진행 순서:
 
-1. closed receipt와 output hash index의 Work Host 교차검토
-2. C3 sparse initialization과 evaluation reference/self-reference를 blocker에 추가
-3. remediation packet의 source snapshot, 범위, 금지 작업과 승인 상태 고정
-4. 새 handoff ID의 immutable offered receipt commit과 validator
-5. Experiment Host accepted receipt 뒤에만 bounded remediation 수행
+1. `DEC-P1-010`의 common-base 정의를 반영한 human-review Gate freeze packet을 DRAFT로 작성
+2. exact image/pose members와 shared SfM sparse/dense MVS/depth/normal/confidence
+   lineage를 outcome 없이 채우고 나머지 blocker와 함께 검토
+3. evidence가 부족하면 사용자가 bounded evidence-completion 범위만 승인하고 별도
+   Experiment Host task packet과 immutable offered receipt를 작성
+4. evidence가 채워지면 사용자가 Gate S0를 명시적으로 승인하거나
+   `BLOCKED/DEFERRED`로 판정
+5. Gate 승인 뒤 별도 accepted receipt를 거친 경우에만 baseline을 수행
 
 ## Blockers
 
@@ -267,8 +273,9 @@ primary 잠금 뒤 별도 census로 수행한다. 이 census를 완료하지 않
 2. C1 LiDAR source·class 2/6·vertical datum·registration이 미동결이다.
 3. 962/937 차이는 937 included와 25 explicit exclusions ledger로 해소됐지만,
    C2 MVS가 그 exact base에 hash-bound되지 않아 condition readiness는 `PARTIAL`이다.
-4. C3–C5 표준 GS initialization용 SfM sparse artifact의 exact identity/hash/frame/role이
-   아직 동결되지 않았다.
+4. C3–C5 공통 SfM sparse/dense MVS/depth/normal/confidence의 exact
+   image/pose member, producer/config, identity/hash/frame/role이 아직 동결되지 않았다.
+   기존 1,104-image vendor MVS는 common base로 채택되지 않았다.
 5. geometry/structure reference의 ID/version/production lineage와 C1 self-reference
    evaluation class가 동결되지 않았다.
 6. `U_target`과 `E_paired`가 아직 `UNKNOWN`이다.
@@ -285,12 +292,15 @@ evidence가 충족된 뒤에만 사용자 scientific gate 대상으로 올린다
 - exact AOI와 `U_target`/`E_paired`
 - `EXHAUSTIVE_PARTITION` 또는 근거 있는 `STRATIFIED_SAMPLE`
 - split IDs/groups/seed/algorithm과 input freeze
+- exact common image/pose members와 SfM sparse/dense MVS/depth/normal/confidence
+  derivative manifest
 
 ## Completed artifacts
 
 | Artifact | Status |
 |---|---|
-| `docs/research/00_*.md`–`06_*.md` | `C1C5_CANON_v1 / USER APPROVED` |
+| `docs/research/00_*.md`–`06_*.md` | `C1C5_CANON_v2 / USER APPROVED` |
+| `docs/research/preregistration/gate_s0/GATE_S0_FREEZE_PACKET_v1.md` | `DRAFT / NOT GATE APPROVAL` |
 | `docs/evidence/archive/pre_c1c5_research/RESEARCH_CONTEXT.md` | `ARCHIVED HISTORICAL / NOT EXECUTION AUTHORITY` |
 | `docs/evidence/archive/pre_c1c5_research/EXPERIMENT_PLAN.md` | `ARCHIVED HISTORICAL / NOT EXECUTION AUTHORITY` |
 | P1 audit bundle `docs/audit/*.md` | `READY_FOR_REVIEW evidence` |
@@ -327,3 +337,4 @@ P1 감사는 문서 준비도를 완료했지만 data READY, Gate S0 승인 또�
 | 2026-07-31 | `P1_AUDIT_v1` | 사용자 요구, P1 audit authority, no-external-roofprint 범위와 handoff gate 동결 | 사용자 승인 |
 | 2026-07-31 | `P1_AUDIT_v2` | v1 blocked 원인을 교정하고 P1 감사 시작과 데이터 READY 검증 gate를 분리 | 기존 과학 범위 유지; R2 운영 교정 |
 | 2026-07-31 | `C1C5_CANON_v1` | 00–06을 현행 정본으로 채택하고 legacy 4조건 계획과 Fusion W1을 역사·보호 범위로 분리 | 사용자 승인; `DEC-P1-008` |
+| 2026-07-31 | `C1C5_CANON_v2` | C3를 no-external-prior GS로 교정하고 C3–C5 common image-derived base와 C2 direct-vs-GS contrast를 동결 | 사용자 승인; `DEC-P1-010` |

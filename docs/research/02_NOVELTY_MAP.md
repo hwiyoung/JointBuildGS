@@ -1,7 +1,7 @@
 # Novelty Map
 
 - Document status: `USER_APPROVED_CANONICAL_REFERENCE`
-- 문서 버전: `C1C5_CANON_v1`
+- 문서 버전: `C1C5_CANON_v2`
 - 문헌 snapshot: 2026-07-31
 - 상태: `PROVISIONAL EVIDENCE / CURRENT C1–C5 PROGRAM REFERENCE`
 - 원칙: 문헌 사실, 본 연구의 해석, 제안 기여, 미확인 사항을 분리한다.
@@ -110,7 +110,7 @@ GS4Buildings는 low-level **LoD2 semantic 3D building models**에서 Gaussian을
 | Claim | Label | 승격 조건 |
 |---|---|---|
 | MVS는 density가 높아도 구조적으로 실패할 수 있다 | `SOURCE-SUPPORTED`; 대상 데이터는 `TO VERIFY` | P2 paired diagnostic |
-| Image-only GS가 MVS의 usable gap을 줄인다 | `PROPOSED HYPOTHESIS` | P2 frozen criterion 결과 |
+| No-external-prior GS가 direct MVS의 usable gap을 줄인다 | `PROPOSED HYPOTHESIS` | Gate S0 common-base freeze 뒤 P2 frozen criterion 결과 |
 | Existing LiDAR와 LoD1 prior가 서로 다른 실패를 회복한다 | `PROPOSED HYPOTHESIS` | P3 C4/C5 rescue-set overlap·discordance와 failure-mode 분석 |
 | 본 연구가 GS4Buildings와 신규하게 다르다 | `TO VERIFY` | full-text/code review + lineage audit |
 | prior-guided GS가 LoD2 가능 영역을 확대한다 | `PROPOSED CONTRIBUTION` | P4 held-out net transitions |
