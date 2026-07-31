@@ -1,0 +1,108 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P1-W2C-REPO-AUDIT-R2",
+  "task_id": "P1-W2C-REPO-AUDIT-v2",
+  "created_at": "2026-07-31T19:24:55+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "verified",
+  "previous_receipt": {
+    "path": "artifacts/manifests/handoffs/P1-W2C-REPO-AUDIT-R2/100-accepted.json",
+    "sha256": "abef0f8bf7d50d23448d50b263b38754d48125782ff41c58f1368aac2a00ed28"
+  },
+  "transport": {
+    "mode": "serialized_main",
+    "branch": "main",
+    "target_branch": "main",
+    "exclusive_writer_ack": true
+  },
+  "commits": {
+    "base_main": "ac299052a1a6c8c9ebb10bdf328c5d773f28b5e3",
+    "offered_head": "9e724b8740756cf128252d8c081d4882b43e5d67",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P1-W2C-REPO-AUDIT-R2",
+      "docs/audit",
+      "docs/handoffs/returns/P1_C2W_REPO_AUDIT_RETURN_v2.md"
+    ],
+    "protected_paths": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      "artifacts/manifests/handoffs/P1-W2C-REPO-AUDIT",
+      "artifacts/manifests/local_workspace_20260730.yaml",
+      "artifacts/manifests/schemas",
+      "artifacts/manifests/templates",
+      "configs",
+      "docs/evidence",
+      "docs/experiments/pilots/fusion_w1",
+      "docs/handoffs/HANDOFF_INDEX.md",
+      "docs/handoffs/P1_W2C_REPO_AUDIT_v1.md",
+      "docs/handoffs/P1_W2C_REPO_AUDIT_v2.md",
+      "docs/handoffs/templates",
+      "docs/research",
+      "phases",
+      "scripts",
+      "src",
+      "tests"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "git_only",
+    "verifier_role": "experiment_host",
+    "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "commands": [
+      "docker exec jointbuildgs-dev python scripts/repository/validate_agent_instructions.py",
+      "docker exec jointbuildgs-dev python -m unittest tests.repository.test_agent_instruction_sync tests.repository.test_two_host_handoff tests.stage2.test_rv1_pipeline tests.fusion_w1.test_fusion_w1_dense_baseline_qualitative_v5_20260728",
+      "docker exec jointbuildgs-dev python scripts/repository/validate_two_host_handoff.py artifacts/manifests/handoffs/P1-W2C-REPO-AUDIT-R2/100-accepted.json --repo . --origin-ref 130ff958ddaf33b663065dfb2dfa593645776fa2 --head-ref HEAD",
+      "docker exec jointbuildgs-dev sh -lc 'set -e; cd /workspace/JointBuildGS; test 9 = $(find docs/audit -maxdepth 1 -type f -name \\*.md | wc -l); test 10 = $(grep -l ^-\\ scientific_verdict:\\ null$ docs/audit/*.md docs/handoffs/returns/P1_C2W_REPO_AUDIT_RETURN_v2.md | wc -l); git -c safe.directory=/workspace/JointBuildGS diff --exit-code c1c6639611bd26e29699337a03f447972676af75 -- docs/audit docs/handoffs/returns/P1_C2W_REPO_AUDIT_RETURN_v2.md; test c1c6639611bd26e29699337a03f447972676af75 = $(git -c safe.directory=/workspace/JointBuildGS log -1 --format=%H -- docs/handoffs/returns/P1_C2W_REPO_AUDIT_RETURN_v2.md); sha256sum docs/audit/*.md docs/handoffs/returns/P1_C2W_REPO_AUDIT_RETURN_v2.md'",
+      "docker exec jointbuildgs-dev git -c safe.directory=/workspace/JointBuildGS -C /workspace/JointBuildGS diff-tree --no-commit-id --name-only -r c1c6639611bd26e29699337a03f447972676af75"
+    ],
+    "tests": [
+      {
+        "name": "agent instruction contract",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "repository and P1 audit regression suite",
+        "passed": 55,
+        "failed": 0
+      },
+      {
+        "name": "accepted receipt chain validator",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "P1 audit output hash, scope, null-verdict, and SELF contract",
+        "passed": 1,
+        "failed": 0
+      }
+    ]
+  },
+  "artifacts": {
+    "required_for_task": false,
+    "availability": {
+      "work_host": "manifest_only",
+      "experiment_host": "manifest_only"
+    },
+    "records": []
+  },
+  "scientific": {
+    "technical_state": "complete",
+    "scientific_verdict": null,
+    "promotion_status": "human_review_required"
+  },
+  "receiver_ack": {
+    "role": "experiment_host",
+    "accepted_at": "2026-07-31T19:24:55+09:00",
+    "status": "verified",
+    "issue": "Initial audit-integrity shell attempts exposed missing rg and Git safe.directory requirements in the main container; the checks were corrected to grep and per-command safe.directory and then passed."
+  }
+}
