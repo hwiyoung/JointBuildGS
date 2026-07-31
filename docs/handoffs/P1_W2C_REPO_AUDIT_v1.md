@@ -7,7 +7,7 @@
 - workstream: `READ_ONLY_DESIGN_READINESS_AUDIT`
 - repository_effective_phase: `P2 / Fusion W1 ACTIVE`
 - direction: `Work→Codex`
-- status: `APPROVED_FOR_EXECUTION`
+- status: `SUPERSEDED`
 - packet_version: `v1`
 - source_commit: `0e2270b238c6d14a61b781998e0cdc3319d9e64f`
 - target_branch: `main`
@@ -17,6 +17,7 @@
 - data_scope_version: `P1_AUDIT_v1`
 - decision_log_through: `DEC-P1-006`
 - supersedes: `none`
+- superseded_by: `P1-W2C-REPO-AUDIT-R2 / docs/handoffs/P1_W2C_REPO_AUDIT_v2.md`
 - created_at: `2026-07-31 Asia/Seoul`
 - user_approval: `APPROVED_FOR_EXECUTION`
 - approved_by: `김휘영`
@@ -26,6 +27,11 @@
 > **Authorization record:** exact source snapshot과 P1 audit scope는 사용자
 > 승인을 받았다. 그러나 offered receipt가 commit/push/validate되고 complete
 > activation tuple이 전달되기 전에는 Experiment Host가 실행하지 않는다.
+
+> **Supersession record:** technical handoff는
+> `b08ee9167bca30f9b795e549c2b4d5247c94381b`에서 `BLOCKED`로 종료됐다.
+> 이 packet과 기존 activation tuple은 재사용하지 않는다. 동일한 과학 범위를
+> 운영상 교정한 v2/R2 handoff만 후속 실행에 사용한다.
 
 ## Goal
 

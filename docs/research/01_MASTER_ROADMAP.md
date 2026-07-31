@@ -1,8 +1,8 @@
 # JointBuildGS Master Roadmap
 
-- 문서 버전: `P1_AUDIT_v1`
+- 문서 버전: `P1_AUDIT_v2`
 - 작성일: 2026-07-31
-- P1 audit workstream: `USER APPROVED / HANDOFF PREPARATION`
+- P1 audit workstream: `USER APPROVED / R2 HANDOFF RECOVERY`
 - 저장소 유효 상태: `P2 / Fusion W1 ACTIVE`
 - 승인 상태: `USER APPROVED FOR P1 AUDIT — 2026-07-31`
 - 역할: 현재 P2/Fusion W1을 변경하지 않는 P1 설계·준비도 audit roadmap
@@ -13,22 +13,23 @@
 ## 상태 패널
 
 ```text
-[●] P1 연구 기반 확정·감사       — HANDOFF PREPARATION (audit workstream)
+[●] P1 연구 기반 확정·감사       — R2 HANDOFF RECOVERY (audit workstream)
 [ ] P2 기준선·평가 기준 확정     — NOT_STARTED
 [ ] P3 Prior 방법 개발·동결       — NOT_STARTED
 [ ] P4 최종 실험·저널 작성        — NOT_STARTED
 ```
 
-Current task: `P1_AUDIT_v1 source snapshot and handoff`
+Current task: `P1_AUDIT_v2 corrected source snapshot and R2 handoff`
 
-Next: source snapshot → packet approval commit → offered receipt → P1 Codex
-read-only 감사
+Next: corrected source snapshot → v2 packet approval commit → R2 offered receipt →
+P1 Codex read-only 감사
 
 > **중요:** 위 패널은 P1 audit이 검토할 향후 P1–P4 연구 흐름이다.
 > `AGENTS.md`와 `phases/p2-gsjso/README.md`가 선언한 repository 유효 상태는 계속
 > P2/Fusion W1이다. P1 audit은 이를 rollback/supersede하지 않고 active
-> files/results/locks를 read-only protected scope로 유지한다. Audit packet은
-> source snapshot과 offered receipt가 완성될 때까지 `DRAFT`로 잠겨 있다.
+> files/results/locks를 read-only protected scope로 유지한다. v1 handoff는
+> artifact gate 계약 오류로 technical `BLOCKED`가 되었으며 재개하지 않는다.
+> 동일한 과학 범위를 유지하는 v2 packet과 새 R2 handoff만 후속 실행에 사용한다.
 
 ## P1–P4 전체 흐름
 
@@ -170,13 +171,14 @@ primary 잠금 뒤 별도 census로 수행한다. 이 census를 완료하지 않
 
 | 항목 | Owner | 상태 | 산출물/근거 | Blocker 또는 next |
 |---|---|---|---|---|
-| 연구 헌장 v1 | Work | `USER_APPROVED / SOURCE_SNAPSHOT_PENDING` | `00_RESEARCH_CHARTER.md` | source snapshot commit |
-| Master Roadmap v1 | Work | `USER_APPROVED / SOURCE_SNAPSHOT_PENDING` | 이 문서 | source snapshot commit |
-| Novelty map v1 | Work | `USER_APPROVED / SOURCE_SNAPSHOT_PENDING` | `02_NOVELTY_MAP.md` | full-text 확대 검토는 계속 |
-| Data/baseline scope v1 | Work | `USER_APPROVED / SOURCE_SNAPSHOT_PENDING` | `03_DATA_AND_BASELINE_SCOPE.md` | 실제 파일·시점·계보 감사 |
-| Result/acceptance contract v1 | Work | `USER_APPROVED / SOURCE_SNAPSHOT_PENDING` | `04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md` | numerical threshold P2 |
-| Handoff protocol/templates | Work | `USER_APPROVED / SOURCE_SNAPSHOT_PENDING` | `05_*`, templates, index | source snapshot commit |
-| P1 repository audit | Codex | `HANDOFF_PREPARATION` | DRAFT Task Packet | source + approval + offered commits |
+| 연구 헌장 v1 | Work | `USER_APPROVED / UNCHANGED` | `00_RESEARCH_CHARTER.md` | 과학 범위 유지 |
+| Master Roadmap v2 | Work | `R2_SOURCE_SNAPSHOT_PENDING` | 이 문서 | corrected source snapshot |
+| Novelty map v1 | Work | `USER_APPROVED / UNCHANGED` | `02_NOVELTY_MAP.md` | full-text 확대 검토는 계속 |
+| Data/baseline scope v1 | Work | `USER_APPROVED / UNCHANGED` | `03_DATA_AND_BASELINE_SCOPE.md` | 실제 파일·시점·계보 감사 |
+| Result/acceptance contract v1 | Work | `USER_APPROVED / UNCHANGED` | `04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md` | numerical threshold P2 |
+| Handoff protocol v2 | Work | `R2_SOURCE_SNAPSHOT_PENDING` | `05_HANDOFF_PROTOCOL.md`, index | stale 상태와 artifact gate 교정 |
+| P1 repository audit v1 | Codex | `TECHNICAL_BLOCKED / SUPERSEDED` | `200-blocked.json` | 재개 금지 |
+| P1 repository audit v2 | Codex | `HANDOFF_RECOVERY` | v2 Task Packet | source + approval + R2 offered commits |
 | P1 audit integration | Work | `NOT_STARTED` | future roadmap/decision update | audit Return Packet 필요 |
 
 ## Decision Status Register
@@ -245,14 +247,15 @@ primary 잠금 뒤 별도 census로 수행한다. 이 census를 완료하지 않
 
 | Handoff ID | 방향 | 버전 | 상태 | 실행 가능 |
 |---|---|---:|---|---|
-| `P1-W2C-REPO-AUDIT` | Work→Codex | v1 | `DRAFT` | 아니오 |
+| `P1-W2C-REPO-AUDIT` | Work→Codex | v1 | `SUPERSEDED / TECHNICAL_BLOCKED` | 아니오 |
+| `P1-W2C-REPO-AUDIT-R2` | Work→Codex | v2 | `HANDOFF_PREPARATION` | R2 offer 승인 후 |
 
-실행 전 필요한 순서:
+R2 실행 전 필요한 순서:
 
-1. 문서 source snapshot commit
-2. Task Packet `source_commit` 입력
+1. corrected 문서 source snapshot commit
+2. v2 Task Packet `source_commit` 입력
 3. `status: APPROVED_FOR_EXECUTION`, `user_approval` 기록과 approval commit
-4. immutable offered receipt commit과 validator
+4. 새 handoff ID의 immutable offered receipt commit과 validator
 5. `origin/main` push 후 원격 validator
 6. Experiment Host activation/preflight
 
@@ -278,16 +281,17 @@ P1 audit 뒤 후속 연구 동결 전 사용자는 최소한 다음을 결정해
 
 | Artifact | Status |
 |---|---|
-| `docs/research/00_RESEARCH_CHARTER.md` | `P1_AUDIT_v1 / SOURCE_SNAPSHOT_PENDING` |
-| `docs/research/01_MASTER_ROADMAP.md` | `P1_AUDIT_v1 / SOURCE_SNAPSHOT_PENDING` |
-| `docs/research/02_NOVELTY_MAP.md` | `P1_AUDIT_v1 / SOURCE_SNAPSHOT_PENDING` |
-| `docs/research/03_DATA_AND_BASELINE_SCOPE.md` | `P1_AUDIT_v1 / SOURCE_SNAPSHOT_PENDING` |
-| `docs/research/04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md` | `P1_AUDIT_v1 / SOURCE_SNAPSHOT_PENDING` |
-| `docs/research/05_HANDOFF_PROTOCOL.md` | `P1_AUDIT_v1 / SOURCE_SNAPSHOT_PENDING` |
-| `docs/research/06_DECISION_LOG.md` | `P1_AUDIT_v1 / SOURCE_SNAPSHOT_PENDING` |
-| `docs/handoffs/HANDOFF_INDEX.md` | `P1_AUDIT_v1 / SOURCE_SNAPSHOT_PENDING` |
+| `docs/research/00_RESEARCH_CHARTER.md` | `P1_AUDIT_v1 / USER_APPROVED / UNCHANGED` |
+| `docs/research/01_MASTER_ROADMAP.md` | `P1_AUDIT_v2 / R2_SOURCE_SNAPSHOT_PENDING` |
+| `docs/research/02_NOVELTY_MAP.md` | `P1_AUDIT_v1 / USER_APPROVED / UNCHANGED` |
+| `docs/research/03_DATA_AND_BASELINE_SCOPE.md` | `P1_AUDIT_v1 / USER_APPROVED / UNCHANGED` |
+| `docs/research/04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md` | `P1_AUDIT_v1 / USER_APPROVED / UNCHANGED` |
+| `docs/research/05_HANDOFF_PROTOCOL.md` | `P1_AUDIT_v2 / R2_SOURCE_SNAPSHOT_PENDING` |
+| `docs/research/06_DECISION_LOG.md` | `P1_AUDIT_v2 / R2_SOURCE_SNAPSHOT_PENDING` |
+| `docs/handoffs/HANDOFF_INDEX.md` | `P1_AUDIT_v2 / R2_SOURCE_SNAPSHOT_PENDING` |
 | Work→Codex/Codex→Work templates | `APPROVED TEMPLATE / INSTANCES DEFAULT TO DRAFT` |
-| `docs/handoffs/P1_W2C_REPO_AUDIT_v1.md` | `DRAFT / EXECUTION_LOCKED` |
+| `docs/handoffs/P1_W2C_REPO_AUDIT_v1.md` | `SUPERSEDED / TECHNICAL_BLOCKED` |
+| `docs/handoffs/P1_W2C_REPO_AUDIT_v2.md` | `DRAFT / EXECUTION_LOCKED` |
 
 P1 Codex audit 결과와 Return Packet은 아직 없다.
 
@@ -300,7 +304,7 @@ P1 Codex audit 결과와 Return Packet은 아직 없다.
 | `L_upper ≠ P_LiDAR`인가? | 예 |
 | `P_LoD1`이 roof topology를 주는가? | 아니오 |
 | threshold/loss가 동결되었는가? | 아니오, `DEFERRED` |
-| P1 packet이 실행 가능한가? | 아니오, `DRAFT` |
+| P1 packet이 실행 가능한가? | v1은 아니오; v2는 새 R2 offer와 activation 후 가능 |
 | P1 실행 authority 충돌이 해결되었는가? | 예; `DEC-P1-006`으로 active P2 보호와 `R_derived` primary를 고정 |
 
 ## Change history
@@ -309,3 +313,4 @@ P1 Codex audit 결과와 Return Packet은 아직 없다.
 |---|---|---|---|
 | 2026-07-31 | `DRAFT_v0` | bootstrap 요구를 구조화하고 현행 정본 충돌을 병기 | 미승인 |
 | 2026-07-31 | `P1_AUDIT_v1` | 사용자 요구, P1 audit authority, no-external-roofprint 범위와 handoff gate 동결 | 사용자 승인 |
+| 2026-07-31 | `P1_AUDIT_v2` | v1 blocked 원인을 교정하고 P1 감사 시작과 데이터 READY 검증 gate를 분리 | 기존 과학 범위 유지; R2 운영 교정 |

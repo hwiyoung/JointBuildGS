@@ -1,7 +1,7 @@
 # Research Decision Log
 
 - Document status: `USER_APPROVED_AUDIT_DECISIONS`
-- 문서 버전: `P1_AUDIT_v1`
+- 문서 버전: `P1_AUDIT_v2`
 - 작성일: 2026-07-31
 - 승인 상태: `USER APPROVED FOR P1 AUDIT — 2026-07-31`
 
@@ -214,6 +214,49 @@ P2/Fusion W1을 보호하는 read-only audit workstream이다.
 - P1은 source/config/data/result/Fusion W1을 수정하거나 GPU experiment를 실행하지 않는다.
 - `R_ext`를 감사 결과의 실행 대안으로 승인하거나 입력에 사용하는 것은 금지한다.
 - P1 Return Packet은 `R_derived` 구현 가능성·계보만 판정한다.
+
+## DEC-P1-007 — P1 감사 시작 gate와 data READY gate 분리
+
+- **Decision ID:** `DEC-P1-007`
+- **Date:** 2026-07-31
+- **Status:** `R2 OPERATIONAL CORRECTION WITH USER STANDING AUTHORIZATION`
+- **Previous state:** v1 scientific packet은 TUM2TWIN과 Pilot을 `TO VERIFY`로
+  두고 `READY/PARTIAL/MISSING/UNKNOWN` 감사를 요구했지만, technical offered
+  receipt는 `required_for_task: true`, `availability: manifest_only`,
+  `records: []`를 선언했다. Experiment Host는 이 모순과 protocol의 stale
+  `DRAFT` 표기를 근거로 `b08ee9167bca30f9b795e549c2b4d5247c94381b`에서
+  handoff를 blocked 처리했다.
+- **New decision:** P1은 외부 payload를 생성·전달하거나 data readiness를
+  선결조건으로 요구하는 작업이 아니라, 부재와 검증 불능도 결과로 기록하는
+  docs-only readiness audit이다. 새 R2 technical handoff는
+  `required_for_task: false`, `availability: manifest_only`, `records: []`로
+  시작할 수 있다. Audit 중 mount와 resolver를 읽기 전용으로 조사하고,
+  확인 수준에 따라 `READY/PARTIAL/MISSING/UNKNOWN`을 기록한다.
+- **Evidence:** v1 `200-blocked.json`, packet Inputs/Done when, two-host validator의
+  artifact-required 규칙, independent scientific/handoff/reader reviews.
+- **Reason:** P1이 확인해야 할 미지의 asset을 P1 시작 전 완전 검증하도록 요구하는
+  순환 gate를 제거하되, 검증되지 않은 data를 READY로 승격하는 것은 막는다.
+- **Affected phases:** P1 activation; P2 Gate S0와 이후 data readiness
+- **Affected documents:** `01_MASTER_ROADMAP.md`, `05_HANDOFF_PROTOCOL.md`,
+  `06_DECISION_LOG.md`, `HANDOFF_INDEX.md`, P1 v1/v2 packet
+- **User approval:** 기존 P1 과학 범위를 변경하지 않는 운영 교정. 사용자의
+  2026-07-31 “판단을 반복해서 묻지 말고 에이전트 간 검증으로 진행” 지시를
+  R2 준비 authority로 적용한다. Scientific verdict와 후속 Gate S0 승인은
+  여전히 사용자에게 남는다.
+- **Superseded decisions:** 없음; v1 technical handoff만 새 R2가 대체
+
+### Consequence
+
+- 전체 `JointBuildGS-artifacts` 428GB directory hash는 P1 activation 조건이 아니다.
+- 기존 checksum/receipt를 우선 사용하고, 특정 asset을 `READY` 또는 P2 입력으로
+  주장할 때만 실제 사용 파일·타일을 URI, bytes, SHA-256, CRS/datum, lineage,
+  coverage 기준으로 표적 검증한다.
+- manifest/receipt만 확인되면 `PARTIAL`, 기대 범위에서 찾지 못하면 `MISSING`,
+  resolver/권한/계보 때문에 판정할 수 없으면 `UNKNOWN`이다.
+- UAS/Drone LiDAR와 ALS의 derivative independence가 입증되지 않으면 P1은 그
+  사실을 보고할 수 있지만 C1/C4 contrast와 P2 진입은 `BLOCKED`다.
+- P1 `READY_FOR_REVIEW`는 감사 문서가 완결됐다는 뜻이며 data/P2 READY와 동일하지
+  않다.
 
 ## Pending decisions not yet logged as adopted
 

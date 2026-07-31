@@ -1,6 +1,6 @@
 # Work–Codex Handoff Protocol
 
-- 문서 버전: `P1_AUDIT_v1`
+- 문서 버전: `P1_AUDIT_v2`
 - 작성일: 2026-07-31
 - 상태: `USER APPROVED FOR P1 AUDIT HANDOFF`
 - 적용: 연구문서 snapshot, task authorization, return evidence
@@ -114,7 +114,8 @@ Return Packet은 완료 주장보다 evidence index다. 최소 metadata:
 
 - Executive summary, Completed tasks, Artifacts
 - Verification evidence
-- Findings (`VERIFIED`, `PARTIAL`, `UNKNOWN`, `BLOCKED`)
+- Findings (task-defined; P1 readiness audit:
+  `READY`, `PARTIAL`, `MISSING`, `UNKNOWN`; downstream gate의 `BLOCKED`는 별도 기록)
 - Changes made, Deviations, Frozen-decision compliance
 - Unresolved issues, Proposed phase status
 - Recommended next action, Launcher prompt for Work
@@ -149,7 +150,9 @@ Codex는 어떤 source/code/config/data/experiment action 전에도 확인한다
 13. repository effective phase와 packet의 `repository_effective_phase`가 일치하고,
     task phase/workstream 관계가 최신 승인 Decision과 일치
 14. packet scope가 root `AGENTS.md`와 active lock을 위반하지 않음
-15. required external artifacts가 manifest로 resolve되고 claim level이 적절
+15. technical receipt가 `required_for_task: true`로 선언한 external artifacts만
+    exact record로 resolve되고 claim level이 적절함. Readiness audit의
+    `TO VERIFY` 대상은 그 자체로 activation prerequisite가 아님
 16. dirty WIP가 있으면 immutable snapshot/allowed scope가 검증됨
 
 Activation tuple이 하나라도 없거나 packet이 DRAFT/unapproved이면 Experiment Host는
@@ -263,6 +266,23 @@ Git 대상:
 
 ## 10. Artifact 전달
 
+Technical handoff의 artifact prerequisite와 scientific readiness audit의 조사
+대상을 구분한다.
+
+- `required_for_task: true`이면 handoff가 지정한 exact artifact records가 task
+  시작 전 필수다. URI, bytes, SHA-256과 live verification 없이는 accepted/
+  verified 상태로 진행하지 않는다.
+- `required_for_task: false`이면 external payload를 cross-host 전달해야 task를
+  시작할 수 있다는 뜻이 아니다. Task가 artifact mount를 읽기 전용으로 조사할
+  수는 있지만, 미발견·미검증 payload는 `MISSING` 또는 `UNKNOWN` finding으로 남긴다.
+- readiness audit의 완료와 data/P2 readiness는 다르다. 특정 asset을 `READY`로
+  주장하거나 Gate S0/P2 입력으로 동결할 때는 실제 사용 대상 파일·타일의 URI,
+  bytes, SHA-256, CRS/datum, 계보, coverage를 표적 검증한다.
+- 전체 workspace directory hash는 기본 요구가 아니다. 기존 checksum/receipt를
+  우선 사용하고, 다수 파일은 deterministic per-file inventory와 inventory hash를
+  사용할 수 있다. live bytes를 재해시하지 않았다면 `artifact_verified`를 주장하지
+  않는다.
+
 Large artifact entry는 다음을 포함한다.
 
 | Field | Required |
@@ -351,13 +371,18 @@ STALE_TASK_PACKET과 필요한 Work 조치를 반환하라.
 과학적 verdict나 phase approval을 임의로 내리지 마라.
 ```
 
-## 14. Current P1 handoff
+## 14. P1 handoff status authority
 
-- Packet: `docs/handoffs/P1_W2C_REPO_AUDIT_v1.md`
-- Status: `DRAFT`
-- Source commit: `TO_BE_FILLED_BY_USER_BEFORE_APPROVAL`
-- Execution: 금지
-- Return path: `docs/handoffs/returns/P1_C2W_REPO_AUDIT_RETURN_v1.md`
+실시간 packet 상태와 source commit을 이 protocol 본문에 중복 기록하지 않는다.
+권위 있는 값은 다음 두 위치의 exact approval tree다.
+
+1. `docs/handoffs/HANDOFF_INDEX.md`
+2. index가 가리키는 exact packet instance
+
+Technical lifecycle은 각 handoff ID 아래 add-once receipt가 권위다. v1의
+`offered → blocked` 계보는 보존하며 재개하지 않는다. 후속 실행은 새 packet
+version과 새 handoff ID를 사용한다. Generic template의 `DRAFT`/placeholder는
+새 instance의 안전한 기본값이지 현재 packet 상태가 아니다.
 
 ## 15. Consistency review
 
@@ -369,3 +394,6 @@ STALE_TASK_PACKET과 필요한 Work 조치를 반환하라.
   `DEC-P1-006`에서 범위가 고정되었으므로 phase rollback 충돌은 없다.
 - External `R_ext`는 비실행 범위 밖이고 `R_derived`만 primary이므로 root
   no-external-roofprint invariant를 유지한다.
+- P1 readiness audit에서 asset 부재나 검증 불능은 정직한 `MISSING/UNKNOWN`
+  결과다. 이는 P1 문서 감사를 자동 차단하지 않지만 해당 data READY/P2 gate는
+  차단한다.
