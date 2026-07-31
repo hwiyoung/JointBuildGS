@@ -1,0 +1,194 @@
+{
+  "common_image_pose_base_id": "B_CURRENT_CANDIDATE_c205892c390997b5",
+  "component_registry": {
+    "confidence": {
+      "gate_enablement": null,
+      "status": "MISSING_EXACT_COMMON_BASE_DERIVATIVE"
+    },
+    "dense_mvs": {
+      "existing_1104_image_vendor_mvs": "SENSOR_PROCESSING_BUNDLE_CONTEXT_ONLY",
+      "gate_enablement": null,
+      "status": "MISSING_EXACT_COMMON_BASE_DERIVATIVE"
+    },
+    "depth": {
+      "gate_enablement": null,
+      "status": "MISSING_EXACT_COMMON_BASE_DERIVATIVE"
+    },
+    "normal": {
+      "gate_enablement": null,
+      "status": "MISSING_EXACT_COMMON_BASE_DERIVATIVE"
+    },
+    "sfm_sparse": {
+      "allowed_role_under_dec_p1_010": "C3-C5 shared image-derived initialization/support; exact enabled role remains a human Gate S0 decision.",
+      "camera_uid_count": 937,
+      "camera_uids_equal_calibrated_camera_ids": true,
+      "gate_enablement": "PROVISIONAL",
+      "integration_status": "PARTIAL",
+      "member_count": 16,
+      "member_manifest_sha256": "8d0a5f10d578a15fca084d8678dd40f917e5642e2e879fe6ce79ae2cce089515",
+      "point_count": 4131648,
+      "producer": "Pix4D PCL IO 2.1.2",
+      "remaining_gap": "pyopf/opf2colmap replay is not callable in the current main image; no converted canonical derivative was created by this task",
+      "source_identity": "READY_FROM_PRIOR_VERIFIED_EVIDENCE"
+    }
+  },
+  "condition_binding": {
+    "C2_MVS": "same B_current dense MVS -> direct Roofer",
+    "C3_GS_image": "B_current -> no-external-prior GS reoptimization",
+    "C4_GS_lidar_prior": "exact C3 base + existing ALS only",
+    "C5_GS_lod1_prior": "exact C3 base + independent LoD1 only"
+  },
+  "coordinate_frame": {
+    "axis_unit": "E,N; metre",
+    "base_to_canonical": {
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "shift": [
+        -690953.0,
+        -5336071.0,
+        -604.0
+      ],
+      "swap_xy": false
+    },
+    "gate_state": "PARTIAL_VERTICAL_DATUM_UNRESOLVED",
+    "source_crs": "EPSG:32632 / WGS 84 UTM zone 32N",
+    "vertical_datum": "UNKNOWN"
+  },
+  "decision_log_through": "DEC-P1-011",
+  "gate_state": {
+    "combined_b_current": "BLOCKED_MISSING_DERIVATIVE_PROVENANCE_AND_HUMAN_FREEZE",
+    "gate_s0": "NOT_APPROVED",
+    "p2_performance": "PROHIBITED",
+    "source_member_candidate": "COMPLETE_FROM_PRIOR_VERIFIED_EVIDENCE"
+  },
+  "membership": {
+    "exact_members_are_bound_by": [
+      "artifacts/manifests/gate_s0/gate_s0_image_member_inventory_v1.csv",
+      "docs/research/preregistration/gate_s0/gate_s0_image_camera_ledger_v1.csv"
+    ],
+    "excluded_basename_set_sha256": "a55a811ffe580790c199b65dc57d518890b04d6110ff7c7a2e4cfeb30e6fcb02",
+    "excluded_count": 25,
+    "exclusion_rule": "NO_CALIBRATED_CAMERA_POSE_IN_OPF",
+    "image_count": 962,
+    "included_basename_set_sha256": "dd9b446e11c978ef8223858f08571bfea832e0d33517b24c1e573060244f4e2c",
+    "included_camera_id_set_sha256": "43b70a448dc3d4bad6a06b5352eee0f1ba2cd6e5bc0d57bf7e53f4c11cd79ca7",
+    "included_count": 937,
+    "included_image_camera_pair_sha256": "7d1f90ecb79ee19acfbfedb0b7cf78083349c7669678a1f883c5034a41a89ccc",
+    "join_rule": "Exact case-sensitive basename after normalizing only the archive directory component."
+  },
+  "performance_authority": "NONE",
+  "pose_member_binding": {
+    "opf/calibrated_cameras.json": {
+      "bytes": 310331,
+      "sha256": "71823cecb137e62679736107158e72d03ec54196efa9d5456c2e3b3993a1c6f1"
+    },
+    "opf/camera_list.json": {
+      "bytes": 98563,
+      "sha256": "917d639a3483569ef3d12f1f3b8b5781e7db263ad7c982767fbd1229fe13d890"
+    },
+    "opf/input_cameras.json": {
+      "bytes": 1105551,
+      "sha256": "5334d43248195cf7428a97d65f7b7cbcbc7a8adf811be89672cd2f5fded88f11"
+    },
+    "opf/project.opf": {
+      "bytes": 5361,
+      "sha256": "67b300b36d7e2adcf806553576e7bc9ea9f996338ae03b1fc5913a224e824d91"
+    },
+    "opf/projected_input_cameras.json": {
+      "bytes": 564028,
+      "sha256": "c8ba858904c5a1d5690448c755eca5e6153ac20b475372595e201a089f3fd657"
+    },
+    "opf/scene_reference_frame.json": {
+      "bytes": 1232,
+      "sha256": "fb408e9c97bdad6af7ad4a6e94be823be294030907ce92e395bd63490f77daf6"
+    }
+  },
+  "research_canon": "C1C5_CANON_v2",
+  "reuse_contract": {
+    "operation_identity_fields": [
+      "source_candidate_manifest_sha256",
+      "component",
+      "producer_and_version",
+      "code_commit",
+      "config_sha256",
+      "coordinate_frame",
+      "scientific_role"
+    ],
+    "policy": [
+      "Resolve an exact prior operation identity before scheduling work.",
+      "If an exact completed artifact exists, mark REUSED and do not rerun.",
+      "Create each shared image-derived component once under B_current, not per arm.",
+      "Hash a newly promoted candidate once; successor receipts inherit the attestation.",
+      "Never rehash the unchanged 15.7 GB R1 source bundle at every handoff state.",
+      "Never repeat the closed R1 LoD1 search without a new provider or scope delta."
+    ]
+  },
+  "schema": "jointbuildgs.gate_s0_b_current_source_candidate.v1",
+  "scientific_verdict": null,
+  "source_archives": {
+    "camera_pose_opf": {
+      "asset_id": "CAM_CURRENT_OPF",
+      "bytes": 1936493976,
+      "prior_verification_method": "sha256_rehash",
+      "prior_verified_at": "2026-07-31T20:04:52+09:00",
+      "prior_verified_by": "experiment_host",
+      "sha256": "ae83a054cf2f338874ff7bac7b3e17895b8e4405d429674790da3801a0352daa",
+      "source_crs": "EPSG:32632 scene frame; raw input geolocation EPSG:4326",
+      "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/raw/uav/opf.zip",
+      "vertical_datum": "UNKNOWN in OPF scene reference"
+    },
+    "images": {
+      "asset_id": "IMG_CURRENT_ARCHIVE",
+      "bytes": 5906891973,
+      "prior_verification_method": "sha256_rehash",
+      "prior_verified_at": "2026-07-31T20:04:52+09:00",
+      "prior_verified_by": "experiment_host",
+      "sha256": "078056d16c8ed7e75d5f22206fdb635327a1ed80e5a4e5890930ba17a43fb34d",
+      "source_crs": "image pixels plus per-camera OPF geolocation",
+      "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/raw/uav/Images.zip",
+      "vertical_datum": "UNKNOWN"
+    }
+  },
+  "source_candidate_hash_scope": "canonical JSON of this document excluding common_image_pose_base_id, source_candidate_manifest_sha256, and source_candidate_hash_scope",
+  "source_candidate_manifest_sha256": "c205892c390997b57b13ee211bbc264c45800770bb84f0b2698c45d3c656fd74",
+  "source_evidence": {
+    "gate_s0_input_manifest": {
+      "bytes": 27146,
+      "hash_scope": "Git LF-canonical bytes",
+      "path": "docs/research/preregistration/gate_s0/gate_s0_input_manifest_v1.json",
+      "sha256": "53b4e918816522aa8a43580fb53a84ab7b0c4c6e3efa13dbb7203471ba1333fe"
+    },
+    "image_camera_ledger": {
+      "bytes": 73420,
+      "hash_scope": "Git LF-canonical bytes",
+      "path": "docs/research/preregistration/gate_s0/gate_s0_image_camera_ledger_v1.csv",
+      "sha256": "8c1e89040869e800c34ebd8a06c2b5185524330fc5d56e594b41686173c465b0"
+    },
+    "image_member_inventory": {
+      "bytes": 151113,
+      "hash_scope": "Git LF-canonical bytes",
+      "path": "artifacts/manifests/gate_s0/gate_s0_image_member_inventory_v1.csv",
+      "sha256": "de9acff049fca4fa14582620a69617157f99b4b5c333938c01b648740ece2b4a"
+    },
+    "prior_artifact_attestation": {
+      "bytes": 10566,
+      "hash_scope": "Git LF-canonical bytes",
+      "path": "artifacts/manifests/handoffs/P2-W2C-GATE-S0-REMEDIATION-R1-v1/100-accepted.json",
+      "record_count": 11,
+      "reuse_rule": "Cite the immutable prior attestation; do not rehash the same source archives for this Work Host consolidation.",
+      "sha256": "a7fd9d9d7ac5a98bcdd62213f643cb8af3c3b188da614db5a5b2ad161fd831d5",
+      "state": "accepted",
+      "verification_level": "artifact_verified"
+    },
+    "sparse_evidence": {
+      "bytes": 6744,
+      "hash_scope": "Git LF-canonical bytes",
+      "path": "docs/research/preregistration/gate_s0/remediation_r1/sfm_sparse_initialization_v1.json",
+      "sha256": "5dad8f3bffa66eb4d160c5c8e0d01d8430d6b47903566b7c558a48c2c3b979fb"
+    }
+  },
+  "status": "CANDIDATE_NOT_FROZEN"
+}
