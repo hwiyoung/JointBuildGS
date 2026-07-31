@@ -1,0 +1,310 @@
+{
+  "adapter": null,
+  "arm_specific_duplicate_generation": "INVALID",
+  "component_enablement": null,
+  "consumers": {
+    "C2_MVS": [
+      "source_membership",
+      "sfm_sparse",
+      "dense_mvs"
+    ],
+    "C3_GS_image": [
+      "source_membership",
+      "sfm_sparse",
+      "dense_mvs",
+      "depth",
+      "normal",
+      "confidence"
+    ],
+    "C4_GS_lidar_prior": "exact C3 base plus Existing ALS only",
+    "C5_GS_lod1_prior": "exact C3 base plus independent LoD1 only"
+  },
+  "gs_loss": null,
+  "handoff_id": "P2-W2C-GATE-S0-EVIDENCE-R2A-v1",
+  "mvs_algorithm": null,
+  "namespace": "B_CURRENT_CANDIDATE_c205892c390997b5",
+  "nodes": [
+    {
+      "bounded_cost": {
+        "cpu_wall_seconds": null,
+        "gpu_wall_seconds": null,
+        "input_read_bytes": null,
+        "output_write_bytes": null,
+        "peak_memory_bytes": null
+      },
+      "config_placeholder_requirements": [
+        "producer/version",
+        "exact CLI or API parameters",
+        "source-member manifest hash",
+        "coordinate transform and vertical datum",
+        "output URI/bytes/SHA-256",
+        "resource ceiling and resume checkpoint"
+      ],
+      "coordinate_frame": {
+        "source": "EPSG:32632 scene frame",
+        "target": "EPSG:25832",
+        "vertical_datum": null
+      },
+      "depends_on": [],
+      "execution_identity_final": true,
+      "node_id": "source_membership",
+      "operation_identity": {
+        "code_commit": "cc316024238b1db4a3f15ff6a30b31d5ebae6612",
+        "component": "source_membership",
+        "config_sha256": "870397bbc459828ba0df0658d950323fb1a5575d765dd89d6a98069e67ad31b0",
+        "coordinate_frame": {
+          "source": "EPSG:32632 scene frame",
+          "target": "EPSG:25832",
+          "vertical_datum": null
+        },
+        "operation_id": "20ddba9359f16cd1e179fce7bd234292d9429471881616696f4d958a813c94a3",
+        "producer_and_version": "B_current compact candidate generator",
+        "scientific_role": "SHARED_C2_C5_CURRENT_IMAGE_POSE_SOURCE",
+        "source_candidate_manifest_sha256": "c205892c390997b57b13ee211bbc264c45800770bb84f0b2698c45d3c656fd74"
+      },
+      "output_requirement": "Exact 937 included image/pose pairs plus 25 exclusions.",
+      "producer_version": "B_current compact candidate generator",
+      "resume_rule": "Resolve the operation_id in manifests first. REUSED_EXACT is a no-op; a conflicting record is BLOCKED_NAMESPACE_CONFLICT; otherwise write once under the shared B_current namespace and atomically publish its manifest.",
+      "scientific_role": "SHARED_C2_C5_CURRENT_IMAGE_POSE_SOURCE",
+      "status": "REUSED_EXACT"
+    },
+    {
+      "bounded_cost": {
+        "cpu_wall_seconds": null,
+        "gpu_wall_seconds": null,
+        "input_read_bytes": null,
+        "output_write_bytes": null,
+        "peak_memory_bytes": null
+      },
+      "config_placeholder_requirements": [
+        "producer/version",
+        "exact CLI or API parameters",
+        "source-member manifest hash",
+        "coordinate transform and vertical datum",
+        "output URI/bytes/SHA-256",
+        "resource ceiling and resume checkpoint"
+      ],
+      "coordinate_frame": {
+        "source": "EPSG:32632 scene frame",
+        "target": "EPSG:25832",
+        "vertical_datum": null
+      },
+      "depends_on": [
+        "source_membership"
+      ],
+      "execution_identity_final": true,
+      "node_id": "sfm_sparse",
+      "operation_identity": {
+        "code_commit": "cc316024238b1db4a3f15ff6a30b31d5ebae6612",
+        "component": "sfm_sparse",
+        "config_sha256": "870397bbc459828ba0df0658d950323fb1a5575d765dd89d6a98069e67ad31b0",
+        "coordinate_frame": {
+          "source": "EPSG:32632 scene frame",
+          "target": "EPSG:25832",
+          "vertical_datum": null
+        },
+        "operation_id": "62de9e3588f31e9a91a1d00bc5889730c5cd84ff75004069c3a10db080d6c425",
+        "producer_and_version": "Pix4D PCL IO 2.1.2 / R1 member evidence",
+        "scientific_role": "SHARED_IMAGE_DERIVED_INITIALIZATION_SUPPORT_CANDIDATE",
+        "source_candidate_manifest_sha256": "c205892c390997b57b13ee211bbc264c45800770bb84f0b2698c45d3c656fd74"
+      },
+      "output_requirement": "One canonical sparse derivative or an explicit decision to consume bound OPF members.",
+      "producer_version": "Pix4D PCL IO 2.1.2 / R1 member evidence",
+      "resume_rule": "Resolve the operation_id in manifests first. REUSED_EXACT is a no-op; a conflicting record is BLOCKED_NAMESPACE_CONFLICT; otherwise write once under the shared B_current namespace and atomically publish its manifest.",
+      "scientific_role": "SHARED_IMAGE_DERIVED_INITIALIZATION_SUPPORT_CANDIDATE",
+      "status": "REUSED_EXACT_SOURCE_MEMBERS_CANONICAL_CONVERSION_MISSING"
+    },
+    {
+      "bounded_cost": {
+        "cpu_wall_seconds": null,
+        "gpu_wall_seconds": null,
+        "input_read_bytes": null,
+        "output_write_bytes": null,
+        "peak_memory_bytes": null
+      },
+      "config_placeholder_requirements": [
+        "producer/version",
+        "exact CLI or API parameters",
+        "source-member manifest hash",
+        "coordinate transform and vertical datum",
+        "output URI/bytes/SHA-256",
+        "resource ceiling and resume checkpoint"
+      ],
+      "coordinate_frame": {
+        "source": "EPSG:32632 scene frame",
+        "target": "EPSG:25832",
+        "vertical_datum": null
+      },
+      "depends_on": [
+        "source_membership",
+        "sfm_sparse"
+      ],
+      "execution_identity_final": false,
+      "node_id": "dense_mvs",
+      "operation_identity": {
+        "code_commit": "cc316024238b1db4a3f15ff6a30b31d5ebae6612",
+        "component": "dense_mvs",
+        "config_sha256": "870397bbc459828ba0df0658d950323fb1a5575d765dd89d6a98069e67ad31b0",
+        "coordinate_frame": {
+          "source": "EPSG:32632 scene frame",
+          "target": "EPSG:25832",
+          "vertical_datum": null
+        },
+        "operation_id": "4754d673446850f07e76679facce37dfa60a6a1162489e162417ab5195aa7749",
+        "producer_and_version": "UNSELECTED_REQUIRES_HUMAN_GATE_REVIEW",
+        "scientific_role": "SHARED_IMAGE_DERIVED_GEOMETRY_CANDIDATE",
+        "source_candidate_manifest_sha256": "c205892c390997b57b13ee211bbc264c45800770bb84f0b2698c45d3c656fd74"
+      },
+      "output_requirement": "One exact-937-base dense MVS derivative shared by C2-C5.",
+      "producer_version": null,
+      "resume_rule": "Resolve the operation_id in manifests first. REUSED_EXACT is a no-op; a conflicting record is BLOCKED_NAMESPACE_CONFLICT; otherwise write once under the shared B_current namespace and atomically publish its manifest.",
+      "scientific_role": "SHARED_IMAGE_DERIVED_GEOMETRY_CANDIDATE",
+      "status": "MISSING"
+    },
+    {
+      "bounded_cost": {
+        "cpu_wall_seconds": null,
+        "gpu_wall_seconds": null,
+        "input_read_bytes": null,
+        "output_write_bytes": null,
+        "peak_memory_bytes": null
+      },
+      "config_placeholder_requirements": [
+        "producer/version",
+        "exact CLI or API parameters",
+        "source-member manifest hash",
+        "coordinate transform and vertical datum",
+        "output URI/bytes/SHA-256",
+        "resource ceiling and resume checkpoint"
+      ],
+      "coordinate_frame": {
+        "source": "EPSG:32632 scene frame",
+        "target": "EPSG:25832",
+        "vertical_datum": null
+      },
+      "depends_on": [
+        "dense_mvs"
+      ],
+      "execution_identity_final": false,
+      "node_id": "depth",
+      "operation_identity": {
+        "code_commit": "cc316024238b1db4a3f15ff6a30b31d5ebae6612",
+        "component": "depth",
+        "config_sha256": "870397bbc459828ba0df0658d950323fb1a5575d765dd89d6a98069e67ad31b0",
+        "coordinate_frame": {
+          "source": "EPSG:32632 scene frame",
+          "target": "EPSG:25832",
+          "vertical_datum": null
+        },
+        "operation_id": "2651b17dd53a409474579460b948b5a4c588cbdf8fe5a7d7991787fc3ad39da5",
+        "producer_and_version": "UNSELECTED_REQUIRES_HUMAN_GATE_REVIEW",
+        "scientific_role": "SHARED_IMAGE_DERIVED_DEPTH_CANDIDATE",
+        "source_candidate_manifest_sha256": "c205892c390997b57b13ee211bbc264c45800770bb84f0b2698c45d3c656fd74"
+      },
+      "output_requirement": "Per-view or fused depth with exact camera/member relation.",
+      "producer_version": null,
+      "resume_rule": "Resolve the operation_id in manifests first. REUSED_EXACT is a no-op; a conflicting record is BLOCKED_NAMESPACE_CONFLICT; otherwise write once under the shared B_current namespace and atomically publish its manifest.",
+      "scientific_role": "SHARED_IMAGE_DERIVED_DEPTH_CANDIDATE",
+      "status": "MISSING"
+    },
+    {
+      "bounded_cost": {
+        "cpu_wall_seconds": null,
+        "gpu_wall_seconds": null,
+        "input_read_bytes": null,
+        "output_write_bytes": null,
+        "peak_memory_bytes": null
+      },
+      "config_placeholder_requirements": [
+        "producer/version",
+        "exact CLI or API parameters",
+        "source-member manifest hash",
+        "coordinate transform and vertical datum",
+        "output URI/bytes/SHA-256",
+        "resource ceiling and resume checkpoint"
+      ],
+      "coordinate_frame": {
+        "source": "EPSG:32632 scene frame",
+        "target": "EPSG:25832",
+        "vertical_datum": null
+      },
+      "depends_on": [
+        "dense_mvs",
+        "depth"
+      ],
+      "execution_identity_final": false,
+      "node_id": "normal",
+      "operation_identity": {
+        "code_commit": "cc316024238b1db4a3f15ff6a30b31d5ebae6612",
+        "component": "normal",
+        "config_sha256": "870397bbc459828ba0df0658d950323fb1a5575d765dd89d6a98069e67ad31b0",
+        "coordinate_frame": {
+          "source": "EPSG:32632 scene frame",
+          "target": "EPSG:25832",
+          "vertical_datum": null
+        },
+        "operation_id": "ea05c835e29727980a8541874a606e84d7bfebaf4cdd9a5a995264e4d5e6c6b9",
+        "producer_and_version": "UNSELECTED_REQUIRES_HUMAN_GATE_REVIEW",
+        "scientific_role": "SHARED_IMAGE_DERIVED_NORMAL_CANDIDATE",
+        "source_candidate_manifest_sha256": "c205892c390997b57b13ee211bbc264c45800770bb84f0b2698c45d3c656fd74"
+      },
+      "output_requirement": "Normal evidence with orientation convention and frame.",
+      "producer_version": null,
+      "resume_rule": "Resolve the operation_id in manifests first. REUSED_EXACT is a no-op; a conflicting record is BLOCKED_NAMESPACE_CONFLICT; otherwise write once under the shared B_current namespace and atomically publish its manifest.",
+      "scientific_role": "SHARED_IMAGE_DERIVED_NORMAL_CANDIDATE",
+      "status": "MISSING"
+    },
+    {
+      "bounded_cost": {
+        "cpu_wall_seconds": null,
+        "gpu_wall_seconds": null,
+        "input_read_bytes": null,
+        "output_write_bytes": null,
+        "peak_memory_bytes": null
+      },
+      "config_placeholder_requirements": [
+        "producer/version",
+        "exact CLI or API parameters",
+        "source-member manifest hash",
+        "coordinate transform and vertical datum",
+        "output URI/bytes/SHA-256",
+        "resource ceiling and resume checkpoint"
+      ],
+      "coordinate_frame": {
+        "source": "EPSG:32632 scene frame",
+        "target": "EPSG:25832",
+        "vertical_datum": null
+      },
+      "depends_on": [
+        "depth",
+        "normal"
+      ],
+      "execution_identity_final": false,
+      "node_id": "confidence",
+      "operation_identity": {
+        "code_commit": "cc316024238b1db4a3f15ff6a30b31d5ebae6612",
+        "component": "confidence",
+        "config_sha256": "870397bbc459828ba0df0658d950323fb1a5575d765dd89d6a98069e67ad31b0",
+        "coordinate_frame": {
+          "source": "EPSG:32632 scene frame",
+          "target": "EPSG:25832",
+          "vertical_datum": null
+        },
+        "operation_id": "d118ba09a155db7150e79ba753b0c24a4644133d60f7bac19a9d59dd89816f02",
+        "producer_and_version": "UNSELECTED_REQUIRES_HUMAN_GATE_REVIEW",
+        "scientific_role": "SHARED_IMAGE_DERIVED_CONFIDENCE_CANDIDATE",
+        "source_candidate_manifest_sha256": "c205892c390997b57b13ee211bbc264c45800770bb84f0b2698c45d3c656fd74"
+      },
+      "output_requirement": "Image-derived confidence separated from any external-prior confidence.",
+      "producer_version": null,
+      "resume_rule": "Resolve the operation_id in manifests first. REUSED_EXACT is a no-op; a conflicting record is BLOCKED_NAMESPACE_CONFLICT; otherwise write once under the shared B_current namespace and atomically publish its manifest.",
+      "scientific_role": "SHARED_IMAGE_DERIVED_CONFIDENCE_CANDIDATE",
+      "status": "MISSING"
+    }
+  ],
+  "performance_authority": "NONE",
+  "schema": "jointbuildgs.gate_s0_r2a_preprocessing_dag.v1",
+  "scientific_verdict": null,
+  "task_id": "P2-GATE-S0-EVIDENCE-R2A-v1",
+  "threshold": null
+}

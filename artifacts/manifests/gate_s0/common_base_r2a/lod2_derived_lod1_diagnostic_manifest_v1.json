@@ -1,0 +1,123 @@
+{
+  "combined_building_count": 12049,
+  "combined_stable_id_unique_count": 12049,
+  "e_paired_promoted": false,
+  "evaluation_class": "REFERENCE_DERIVED_SELF_CONDITIONED",
+  "handoff_id": "P2-W2C-GATE-S0-EVIDENCE-R2A-v1",
+  "height_rule": {
+    "footprint": "all GroundSurface exterior/interior XY rings, preserving stable building ID and ring order",
+    "geometry": "vertical prism or MultiSolid of prisms with one scalar ground/top envelope per building",
+    "ground_height": "minimum Z across source GroundSurface rings",
+    "top_height": "maximum Z across all source building geometry positions"
+  },
+  "output_namespace": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/common_base_r2a/P2-GATE-S0-EVIDENCE-R2A-v1",
+  "output_records": [
+    {
+      "bytes": 5970206,
+      "digest_method": "computed_from_serialized_bytes_before_add_once_write",
+      "evaluation_class": "REFERENCE_DERIVED_SELF_CONDITIONED",
+      "primary_c5_eligible": false,
+      "prior_role": "REFERENCE_DERIVED_DIAGNOSTIC_ONLY",
+      "receipt_post_push_full_rehashes": 0,
+      "receipt_pre_push_full_rehashes": 0,
+      "sha256": "17478671077d58545e5cc1affe2c91153abe62d4616df27b782423e386fefe19",
+      "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/common_base_r2a/P2-GATE-S0-EVIDENCE-R2A-v1/690_5334.lod1-prisms.jsonl",
+      "verification_status": "STREAM_DIGEST_BOUND_PENDING_FIRST_ARTIFACT_RECEIPT"
+    },
+    {
+      "bytes": 8121585,
+      "digest_method": "computed_from_serialized_bytes_before_add_once_write",
+      "evaluation_class": "REFERENCE_DERIVED_SELF_CONDITIONED",
+      "primary_c5_eligible": false,
+      "prior_role": "REFERENCE_DERIVED_DIAGNOSTIC_ONLY",
+      "receipt_post_push_full_rehashes": 0,
+      "receipt_pre_push_full_rehashes": 0,
+      "sha256": "e369726c2bae54fb28807c9ecb31bb7dbcc790aa1dbeb232ece94a55d86a6980",
+      "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/common_base_r2a/P2-GATE-S0-EVIDENCE-R2A-v1/690_5334.lod1.city.jsonl",
+      "verification_status": "STREAM_DIGEST_BOUND_PENDING_FIRST_ARTIFACT_RECEIPT"
+    },
+    {
+      "bytes": 6912597,
+      "digest_method": "computed_from_serialized_bytes_before_add_once_write",
+      "evaluation_class": "REFERENCE_DERIVED_SELF_CONDITIONED",
+      "primary_c5_eligible": false,
+      "prior_role": "REFERENCE_DERIVED_DIAGNOSTIC_ONLY",
+      "receipt_post_push_full_rehashes": 0,
+      "receipt_pre_push_full_rehashes": 0,
+      "sha256": "19f64387f676a95f84e39e5faba94cd1008b57d394a383b526c9a7ca65c2ab49",
+      "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/common_base_r2a/P2-GATE-S0-EVIDENCE-R2A-v1/690_5336.lod1-prisms.jsonl",
+      "verification_status": "STREAM_DIGEST_BOUND_PENDING_FIRST_ARTIFACT_RECEIPT"
+    },
+    {
+      "bytes": 7468585,
+      "digest_method": "computed_from_serialized_bytes_before_add_once_write",
+      "evaluation_class": "REFERENCE_DERIVED_SELF_CONDITIONED",
+      "primary_c5_eligible": false,
+      "prior_role": "REFERENCE_DERIVED_DIAGNOSTIC_ONLY",
+      "receipt_post_push_full_rehashes": 0,
+      "receipt_pre_push_full_rehashes": 0,
+      "sha256": "190616b81ed125bd48990cefe56d321b9026ffe7bd00a18a4571e4b05470f372",
+      "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/common_base_r2a/P2-GATE-S0-EVIDENCE-R2A-v1/690_5336.lod1.city.jsonl",
+      "verification_status": "STREAM_DIGEST_BOUND_PENDING_FIRST_ARTIFACT_RECEIPT"
+    }
+  ],
+  "performance_scored": false,
+  "primary_c5_eligible": false,
+  "prior_role": "REFERENCE_DERIVED_DIAGNOSTIC_ONLY",
+  "roof_slope_or_topology_transferred": false,
+  "roof_type_transferred": false,
+  "schema": "jointbuildgs.gate_s0_r2a_lod2_derived_lod1_manifest.v1",
+  "scientific_verdict": null,
+  "semantic_evaluation_label_transferred": false,
+  "source_digest_rule": "computed in the sole XML processing stream",
+  "source_records": [
+    {
+      "bytes": 156656509,
+      "digest_method": "same_stream_as_xml_iterparse",
+      "full_byte_passes": 1,
+      "sha256": "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314",
+      "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/raw/lod2/690_5334.gml"
+    },
+    {
+      "bytes": 147865939,
+      "digest_method": "same_stream_as_xml_iterparse",
+      "full_byte_passes": 1,
+      "sha256": "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674",
+      "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/raw/lod2/690_5336.gml"
+    }
+  ],
+  "status": "EXECUTED_ADD_ONCE",
+  "task_id": "P2-GATE-S0-EVIDENCE-R2A-v1",
+  "tile_summaries": [
+    {
+      "building_count": 5479,
+      "cityjsonseq_roundtrip": {
+        "building_count": 5479,
+        "library": "cjio==0.10.1",
+        "parsed": true,
+        "serialized": true,
+        "stable_id_set_equal": true
+      },
+      "coverage": "all parsed source Building records",
+      "footprint_polygon_count": 5479,
+      "interior_ring_count": 49,
+      "stable_id_unique_count": 5479,
+      "tile_id": "690_5334"
+    },
+    {
+      "building_count": 6570,
+      "cityjsonseq_roundtrip": {
+        "building_count": 6570,
+        "library": "cjio==0.10.1",
+        "parsed": true,
+        "serialized": true,
+        "stable_id_set_equal": true
+      },
+      "coverage": "all parsed source Building records",
+      "footprint_polygon_count": 6570,
+      "interior_ring_count": 5,
+      "stable_id_unique_count": 6570,
+      "tile_id": "690_5336"
+    }
+  ]
+}

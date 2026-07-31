@@ -1,0 +1,190 @@
+{
+  "byte_budget": {
+    "closed_r1_15_7gb_source_bundle_repeated_full_passes": 0,
+    "images_zip_full_rehash_passes": 0,
+    "lod2_source_processing_passes_each": 1,
+    "new_output_receipt_safety_passes_each": 2,
+    "opf_zip_full_rehash_passes": 0,
+    "successor_300_output_rehash_passes": 0
+  },
+  "completed": true,
+  "config_sha256": "870397bbc459828ba0df0658d950323fb1a5575d765dd89d6a98069e67ad31b0",
+  "duplicate_work_guard_events": [
+    {
+      "code": "DUPLICATE_WORK_GUARD",
+      "event": "R1 source bundle, Images.zip, OPF.zip and R1 sparse member hash pass were not repeated.",
+      "triggered_stop": false
+    },
+    {
+      "code": "DUPLICATE_WORK_GUARD",
+      "event": "Missing dense/depth/normal/confidence derivatives were recorded but not generated.",
+      "triggered_stop": false
+    }
+  ],
+  "handoff_id": "P2-W2C-GATE-S0-EVIDENCE-R2A-v1",
+  "identity_fields": [
+    "source_candidate_manifest_sha256",
+    "component",
+    "producer_and_version",
+    "code_commit",
+    "config_sha256",
+    "coordinate_frame",
+    "scientific_role"
+  ],
+  "implementation_script_sha256": "af945ddd0b0fb7530af6f6361ff43987609f70309ea5ac92f55d2c507c5dc984",
+  "initialized_at": "2026-08-01T02:11:00+09:00",
+  "initialized_before_external_payload_access": true,
+  "operations": [
+    {
+      "hashed_bytes": 0,
+      "identity": {
+        "code_commit": "cc316024238b1db4a3f15ff6a30b31d5ebae6612",
+        "component": "R1_15_7GB_INPUT_BUNDLE",
+        "config_sha256": "870397bbc459828ba0df0658d950323fb1a5575d765dd89d6a98069e67ad31b0",
+        "coordinate_frame": "MULTIPLE_RECORDED_FRAMES",
+        "operation_id": "0eacb0d43d6097fca186796b46c24cf25c9594076f3e644a9925324cd45a4c7e",
+        "producer_and_version": "immutable R1 100-accepted receipt",
+        "scientific_role": "PRIOR_ARTIFACT_ATTESTATION_ONLY",
+        "source_candidate_manifest_sha256": "c205892c390997b57b13ee211bbc264c45800770bb84f0b2698c45d3c656fd74"
+      },
+      "name": "closed_r1_input_bundle_attestation",
+      "planned_full_bytes": 0,
+      "read_bytes": 0,
+      "reason": "Closed R1 artifact attestation is inherited without live rehash.",
+      "status": "REUSED"
+    },
+    {
+      "hashed_bytes": 289822,
+      "identity": {
+        "code_commit": "cc316024238b1db4a3f15ff6a30b31d5ebae6612",
+        "component": "B_CURRENT_SOURCE_CANDIDATE_REPLAY",
+        "config_sha256": "870397bbc459828ba0df0658d950323fb1a5575d765dd89d6a98069e67ad31b0",
+        "coordinate_frame": {
+          "horizontal": "EPSG:32632 scene frame",
+          "vertical": "UNKNOWN"
+        },
+        "operation_id": "8885dc08a5ecfee5ef281afd9b0da5375b6aaf205c56ade674a180ca96b7d74b",
+        "producer_and_version": "scripts/input_and_alignment/gate_s0/build_b_current_source_candidate.py@Git-compact-check",
+        "scientific_role": "OUTCOME_FREE_SOURCE_MEMBERSHIP_REPLAY",
+        "source_candidate_manifest_sha256": "c205892c390997b57b13ee211bbc264c45800770bb84f0b2698c45d3c656fd74"
+      },
+      "name": "source_candidate_replay",
+      "planned_full_bytes": 0,
+      "read_bytes": 289822,
+      "reason": "Git compact evidence only; Images.zip and OPF.zip remain unopened.",
+      "result": "REPLAY_EXACT_FROM_GIT_COMPACT_EVIDENCE",
+      "status": "EXECUTED_GIT_COMPACT_ONLY"
+    },
+    {
+      "hashed_bytes": 0,
+      "identity": {
+        "code_commit": "cc316024238b1db4a3f15ff6a30b31d5ebae6612",
+        "component": "sfm_sparse",
+        "config_sha256": "870397bbc459828ba0df0658d950323fb1a5575d765dd89d6a98069e67ad31b0",
+        "coordinate_frame": {
+          "horizontal": "EPSG:32632 scene frame",
+          "vertical": "UNKNOWN"
+        },
+        "operation_id": "a2ddda92174c6ed393fd75808727dee3623b1dee1e09f40152271136f79e3837",
+        "producer_and_version": "Pix4D PCL IO 2.1.2 / R1 member evidence",
+        "scientific_role": "SHARED_IMAGE_DERIVED_INITIALIZATION_SUPPORT_CANDIDATE",
+        "source_candidate_manifest_sha256": "c205892c390997b57b13ee211bbc264c45800770bb84f0b2698c45d3c656fd74"
+      },
+      "name": "sfm_sparse_binding",
+      "planned_full_bytes": 0,
+      "read_bytes": 0,
+      "reason": "Reuse exact R1 member hashes; canonical conversion remains missing.",
+      "status": "REUSED_EXACT"
+    },
+    {
+      "bounded_unbound_candidate_count": 1,
+      "hashed_bytes": 0,
+      "identity": {
+        "code_commit": "cc316024238b1db4a3f15ff6a30b31d5ebae6612",
+        "component": "sfm_dense_depth_normal_confidence_resolution",
+        "config_sha256": "870397bbc459828ba0df0658d950323fb1a5575d765dd89d6a98069e67ad31b0",
+        "coordinate_frame": {
+          "horizontal": "EPSG:32632 scene frame",
+          "vertical": "UNKNOWN"
+        },
+        "operation_id": "912c7361b93bd710b646e394a84c67114dcbe99a1d3d1758491250350f7bd4ae",
+        "producer_and_version": "R2A metadata resolver/af945ddd0b0fb753",
+        "scientific_role": "EXISTENCE_AND_PROVENANCE_BINDING_ONLY",
+        "source_candidate_manifest_sha256": "c205892c390997b57b13ee211bbc264c45800770bb84f0b2698c45d3c656fd74"
+      },
+      "manifest_named_candidate_count": 1,
+      "name": "derivative_resolution",
+      "planned_full_bytes": 0,
+      "read_bytes": 0,
+      "reason": "Manifest-first resolution followed by bounded filename metadata discovery.",
+      "status": "EXECUTED_METADATA_ONLY"
+    },
+    {
+      "hashed_bytes": 156656509,
+      "identity": {
+        "code_commit": "cc316024238b1db4a3f15ff6a30b31d5ebae6612",
+        "component": "lod2_derived_lod1_690_5334",
+        "config_sha256": "870397bbc459828ba0df0658d950323fb1a5575d765dd89d6a98069e67ad31b0",
+        "coordinate_frame": {
+          "horizontal": "EPSG:25832",
+          "vertical": "DHHN2016"
+        },
+        "operation_id": "ece75ed64cdb237eb3d504513be542ee885937ed09106837a61041a8437f65e3",
+        "producer_and_version": "R2A deterministic prism converter/af945ddd0b0fb753",
+        "scientific_role": "REFERENCE_DERIVED_DIAGNOSTIC_ONLY",
+        "source_candidate_manifest_sha256": "c205892c390997b57b13ee211bbc264c45800770bb84f0b2698c45d3c656fd74"
+      },
+      "name": "lod2_to_lod1_diagnostic_690_5334",
+      "planned_full_bytes": 156656509,
+      "read_bytes": 156656509,
+      "reason": "One parser stream including source SHA-256; no separate source hash pass.",
+      "separate_source_hash_passes": 0,
+      "source_digest_passes": 1,
+      "source_sha256": "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314",
+      "status": "EXECUTED_ADD_ONCE"
+    },
+    {
+      "hashed_bytes": 147865939,
+      "identity": {
+        "code_commit": "cc316024238b1db4a3f15ff6a30b31d5ebae6612",
+        "component": "lod2_derived_lod1_690_5336",
+        "config_sha256": "870397bbc459828ba0df0658d950323fb1a5575d765dd89d6a98069e67ad31b0",
+        "coordinate_frame": {
+          "horizontal": "EPSG:25832",
+          "vertical": "DHHN2016"
+        },
+        "operation_id": "1308ba46b0fc22f301325dc874cdde900ae39a81b3404363eae2344c49b609a8",
+        "producer_and_version": "R2A deterministic prism converter/af945ddd0b0fb753",
+        "scientific_role": "REFERENCE_DERIVED_DIAGNOSTIC_ONLY",
+        "source_candidate_manifest_sha256": "c205892c390997b57b13ee211bbc264c45800770bb84f0b2698c45d3c656fd74"
+      },
+      "name": "lod2_to_lod1_diagnostic_690_5336",
+      "planned_full_bytes": 147865939,
+      "read_bytes": 147865939,
+      "reason": "One parser stream including source SHA-256; no separate source hash pass.",
+      "separate_source_hash_passes": 0,
+      "source_digest_passes": 1,
+      "source_sha256": "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674",
+      "status": "EXECUTED_ADD_ONCE"
+    }
+  ],
+  "payload_operations_started": true,
+  "performance_authority": "NONE",
+  "schema": "jointbuildgs.gate_s0_r2a_reuse_ledger.v1",
+  "scientific_verdict": null,
+  "source_candidate_id": "B_CURRENT_CANDIDATE_c205892c390997b5",
+  "task_id": "P2-GATE-S0-EVIDENCE-R2A-v1",
+  "totals": {
+    "closed_r1_bundle_repeated_read_bytes": 0,
+    "images_zip_read_bytes": 0,
+    "lod2_source_hashed_bytes": 304522448,
+    "lod2_source_read_bytes": 304522448,
+    "new_external_output_bytes": 28472973,
+    "new_external_output_count": 4,
+    "opf_zip_read_bytes": 0,
+    "output_full_rehash_passes_before_first_artifact_receipt": 0,
+    "output_receipt_post_push_passes_pending": 1,
+    "output_receipt_pre_push_passes_pending": 1,
+    "successor_300_output_rehash_passes": 0
+  }
+}

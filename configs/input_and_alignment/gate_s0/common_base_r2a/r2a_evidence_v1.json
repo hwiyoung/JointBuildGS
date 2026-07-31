@@ -1,0 +1,119 @@
+{
+  "schema": "jointbuildgs.gate_s0_common_base_r2a_config.v1",
+  "handoff_id": "P2-W2C-GATE-S0-EVIDENCE-R2A-v1",
+  "task_id": "P2-GATE-S0-EVIDENCE-R2A-v1",
+  "input_commit": "cc316024238b1db4a3f15ff6a30b31d5ebae6612",
+  "research_canon": "C1C5_CANON_v2",
+  "decision_log_through": "DEC-P1-011",
+  "source_candidate": {
+    "id": "B_CURRENT_CANDIDATE_c205892c390997b5",
+    "path": "artifacts/manifests/gate_s0/b_current_source_candidate_v1.json",
+    "manifest_sha256": "c205892c390997b57b13ee211bbc264c45800770bb84f0b2698c45d3c656fd74"
+  },
+  "prior_evidence": {
+    "r1_accepted_receipt_path": "artifacts/manifests/handoffs/P2-W2C-GATE-S0-REMEDIATION-R1-v1/100-accepted.json",
+    "r1_accepted_receipt_commit": "7a16085c221ccf87d16f712332ac3c97eda193b1",
+    "r1_accepted_receipt_lf_sha256": "a7fd9d9d7ac5a98bcdd62213f643cb8af3c3b188da614db5a5b2ad161fd831d5",
+    "sfm_sparse_evidence_path": "docs/research/preregistration/gate_s0/remediation_r1/sfm_sparse_initialization_v1.json",
+    "sfm_sparse_evidence_lf_sha256": "5dad8f3bffa66eb4d160c5c8e0d01d8430d6b47903566b7c558a48c2c3b979fb"
+  },
+  "source_replay": {
+    "expected_image_count": 962,
+    "expected_included_count": 937,
+    "expected_excluded_count": 25,
+    "expected_exclusion_rule": "NO_CALIBRATED_CAMERA_POSE_IN_OPF",
+    "external_archive_full_hash_passes": 0
+  },
+  "derivative_discovery": {
+    "manifest_named_candidates": [
+      {
+        "component": "dense_mvs",
+        "relative_path": "phase-payloads/p0-audit/data/raw/tum2twin/TUM_Downtown_Photogrammetry_20241217.laz",
+        "bytes": 4264934724,
+        "sha256": "fa6826d717d9501972e86b662cb980953a14360524cb21b2f40c3a4518f93f91",
+        "classification": "INELIGIBLE_SENSOR_PROCESSING_BUNDLE_CONTEXT_ONLY",
+        "reason": "Published 1,104-image vendor MVS is not hash-bound to the exact 937-image/pose base."
+      }
+    ],
+    "bounded_roots": [
+      {
+        "relative_path": "phase-payloads/p0-audit/data/work",
+        "max_depth": 8
+      }
+    ],
+    "filename_tokens": [
+      "sfm",
+      "sparse",
+      "mvs",
+      "depth",
+      "normal",
+      "confidence"
+    ],
+    "forbidden_path_tokens": [
+      "fusion",
+      "held-out",
+      "held_out",
+      "p2-gsjso",
+      "r_ext",
+      "results",
+      "runs"
+    ],
+    "content_reads_allowed": false,
+    "hashing_allowed": false
+  },
+  "diagnostic": {
+    "source_crs": "EPSG:25832",
+    "vertical_datum": "DHHN2016",
+    "height_rule": {
+      "ground_height": "minimum Z across source GroundSurface rings",
+      "top_height": "maximum Z across all source building geometry positions",
+      "footprint": "all GroundSurface exterior/interior XY rings, preserving stable building ID and ring order",
+      "geometry": "vertical prism or MultiSolid of prisms with one scalar ground/top envelope per building"
+    },
+    "prior_role": "REFERENCE_DERIVED_DIAGNOSTIC_ONLY",
+    "evaluation_class": "REFERENCE_DERIVED_SELF_CONDITIONED",
+    "primary_c5_eligible": false,
+    "removed_information": [
+      "roof_slope",
+      "ridge",
+      "face_adjacency",
+      "roof_type",
+      "semantic_evaluation_label",
+      "RoofSurface topology"
+    ],
+    "pinned_cityjson_library": "cjio==0.10.1",
+    "sources": [
+      {
+        "tile_id": "690_5334",
+        "asset_id": "LOD2_REFERENCE_690_5334",
+        "relative_path": "phase-payloads/p0-audit/data/raw/lod2/690_5334.gml",
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/raw/lod2/690_5334.gml",
+        "bytes": 156656509,
+        "sha256": "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314"
+      },
+      {
+        "tile_id": "690_5336",
+        "asset_id": "LOD2_REFERENCE_690_5336",
+        "relative_path": "phase-payloads/p0-audit/data/raw/lod2/690_5336.gml",
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/raw/lod2/690_5336.gml",
+        "bytes": 147865939,
+        "sha256": "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674"
+      }
+    ],
+    "output_namespace_relative_path": "phase-payloads/p0-audit/data/work/gate_s0/common_base_r2a/P2-GATE-S0-EVIDENCE-R2A-v1",
+    "neutral_output_suffix": ".lod1-prisms.jsonl",
+    "cityjsonseq_output_suffix": ".lod1.city.jsonl",
+    "source_full_byte_passes": 1,
+    "output_receipt_safety_passes": 2
+  },
+  "guards": {
+    "performance_authority": "NONE",
+    "scientific_verdict": null,
+    "held_out_access": false,
+    "fusion_w1_access": false,
+    "r_ext_access": false,
+    "generate_missing_common_derivatives": false,
+    "overwrite_existing_external_paths": false,
+    "delete_existing_external_paths": false
+  }
+}

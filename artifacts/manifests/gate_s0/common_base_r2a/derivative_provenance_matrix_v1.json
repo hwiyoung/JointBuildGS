@@ -1,0 +1,148 @@
+{
+  "component_enablement_selected": false,
+  "components": [
+    {
+      "bytes": 469464410,
+      "code": "R1 compact member evidence; no R2A source replay",
+      "component": "sfm_sparse",
+      "config": "OPF project/scene binding from immutable R1 evidence",
+      "coordinate_frame": {
+        "axis_unit": "E,N; metre",
+        "base_to_canonical": {
+          "scale": [
+            1.000000,
+            1.000000,
+            1.000000
+          ],
+          "shift": [
+            -690953.000000,
+            -5336071.000000,
+            -604.000000
+          ],
+          "swap_xy": false
+        },
+        "scene_definition_member": "opf/scene_reference_frame.json",
+        "source_crs": "EPSG:32632 / WGS 84 UTM zone 32N",
+        "vertical_datum": "UNKNOWN"
+      },
+      "gate_enablement": null,
+      "hash": "8d0a5f10d578a15fca084d8678dd40f917e5642e2e879fe6ce79ae2cce089515",
+      "hash_scope": "canonical manifest of exact member records",
+      "next_requirement": "Bind or generate one canonical sparse derivative without repeating R1 member hashing.",
+      "producer_version": "Pix4D PCL IO 2.1.2",
+      "scientific_role": "SHARED_IMAGE_DERIVED_INITIALIZATION_SUPPORT_CANDIDATE",
+      "source_member_relation": "16 exact OPF member records; 937 camera UIDs equal calibrated camera IDs",
+      "status": "REUSED_EXACT",
+      "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/raw/uav/opf.zip"
+    },
+    {
+      "bounded_unbound_candidates": [
+        {
+          "bytes": 23267921,
+          "classification": "AMBIGUOUS_UNBOUND_FILENAME_CANDIDATE",
+          "content_read": false,
+          "hash_recomputed": false,
+          "relative_path": "phase-payloads/p0-audit/data/work/mvs/openmvs/scene.mvs"
+        }
+      ],
+      "bytes": null,
+      "code": null,
+      "component": "dense_mvs",
+      "config": null,
+      "coordinate_frame": null,
+      "gate_enablement": null,
+      "hash": null,
+      "hash_scope": null,
+      "ineligible_context_candidate": {
+        "bytes": 4264934724,
+        "bytes_match_manifest": true,
+        "classification": "INELIGIBLE_SENSOR_PROCESSING_BUNDLE_CONTEXT_ONLY",
+        "component": "dense_mvs",
+        "content_read": false,
+        "exists": true,
+        "hash_recomputed": false,
+        "observed_bytes": 4264934724,
+        "reason": "Published 1,104-image vendor MVS is not hash-bound to the exact 937-image/pose base.",
+        "relative_path": "phase-payloads/p0-audit/data/raw/tum2twin/TUM_Downtown_Photogrammetry_20241217.laz",
+        "sha256": "fa6826d717d9501972e86b662cb980953a14360524cb21b2f40c3a4518f93f91"
+      },
+      "next_requirement": "Generate or bind one exact-937-base shared dense MVS derivative. The 1,104-image vendor MVS remains context-only and cannot satisfy this requirement.",
+      "producer_version": null,
+      "scientific_role": "SHARED_IMAGE_DERIVED_DENSE_MVS_CANDIDATE",
+      "source_member_relation": null,
+      "status": "AMBIGUOUS",
+      "uri": null
+    },
+    {
+      "bounded_unbound_candidates": [],
+      "bytes": null,
+      "code": null,
+      "component": "depth",
+      "config": null,
+      "coordinate_frame": null,
+      "gate_enablement": null,
+      "hash": null,
+      "hash_scope": null,
+      "next_requirement": "Execute the matching shared DAG node once after human selection of producer/config/frame/role; do not create an arm-specific derivative.",
+      "producer_version": null,
+      "scientific_role": "SHARED_IMAGE_DERIVED_DEPTH_CANDIDATE",
+      "source_member_relation": null,
+      "status": "MISSING",
+      "uri": null
+    },
+    {
+      "bounded_unbound_candidates": [],
+      "bytes": null,
+      "code": null,
+      "component": "normal",
+      "config": null,
+      "coordinate_frame": null,
+      "gate_enablement": null,
+      "hash": null,
+      "hash_scope": null,
+      "next_requirement": "Execute the matching shared DAG node once after human selection of producer/config/frame/role; do not create an arm-specific derivative.",
+      "producer_version": null,
+      "scientific_role": "SHARED_IMAGE_DERIVED_NORMAL_CANDIDATE",
+      "source_member_relation": null,
+      "status": "MISSING",
+      "uri": null
+    },
+    {
+      "bounded_unbound_candidates": [],
+      "bytes": null,
+      "code": null,
+      "component": "confidence",
+      "config": null,
+      "coordinate_frame": null,
+      "gate_enablement": null,
+      "hash": null,
+      "hash_scope": null,
+      "next_requirement": "Execute the matching shared DAG node once after human selection of producer/config/frame/role; do not create an arm-specific derivative.",
+      "producer_version": null,
+      "scientific_role": "SHARED_IMAGE_DERIVED_CONFIDENCE_CANDIDATE",
+      "source_member_relation": null,
+      "status": "MISSING",
+      "uri": null
+    }
+  ],
+  "handoff_id": "P2-W2C-GATE-S0-EVIDENCE-R2A-v1",
+  "missing_derivatives_generated": false,
+  "performance_authority": "NONE",
+  "resolution_order": [
+    "Git manifest-named candidates",
+    "exact manifest paths by metadata only",
+    "bounded work-tree filename discovery without content read or hash"
+  ],
+  "bounded_discovery_summary": {
+    "content_read_bytes": 0,
+    "hashed_bytes": 0,
+    "unbound_candidate_count": 1,
+    "unbound_candidate_paths": [
+      "phase-payloads/p0-audit/data/work/mvs/openmvs/scene.mvs"
+    ]
+  },
+  "schema": "jointbuildgs.gate_s0_r2a_derivative_provenance_matrix.v1",
+  "scientific_verdict": null,
+  "source_candidate_id": "B_CURRENT_CANDIDATE_c205892c390997b5",
+  "task_id": "P2-GATE-S0-EVIDENCE-R2A-v1"
+}
