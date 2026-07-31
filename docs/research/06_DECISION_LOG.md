@@ -380,6 +380,39 @@
 - 이 정본 변경은 Gate S0 승인, data READY, C5 readiness 또는 performance 실행
   권한을 뜻하지 않는다.
 
+## DEC-P1-011 — LoD2-derived LoD1 diagnostic 허용과 primary 분리
+
+- **Decision ID:** `DEC-P1-011`
+- **Date:** 2026-08-01
+- **Status:** `USER-APPROVED BOUNDED DIAGNOSTIC PREPARATION`
+- **Previous state:** 독립 LoD1이 없으면 C5 준비 전체가 멈추는 것처럼 해석됐고,
+  evaluation LoD2를 단순화한 LoD1은 primary honest arm 금지만 기록돼 있었다.
+- **New decision:** LoD2 `GroundSurface`와 단일 height envelope를 사용한 deterministic
+  LoD1 단순화 산출물은 생성·hash-bind할 수 있다. 같은 LoD2 또는 같은 생산 계보로
+  평가할 때는 `REFERENCE_DERIVED_DIAGNOSTIC_ONLY`와
+  `REFERENCE_DERIVED_SELF_CONDITIONED`로 표시하고 primary C5, `E_paired`,
+  `Delta_N_pass(C5)`에 사용하지 않는다. 독립 평가 reference가 확보되면 primary C5
+  후보 승격을 별도 Gate decision으로 검토한다.
+- **Evidence:** 사용자의 2026-08-01 “LoD1은 LoD2 기반으로 만들면 된다”는 명시적
+  지시와 현재 local LoD2 reference 두 파일의 verified provenance.
+- **Reason:** 실행 가능한 LoD1 diagnostic을 만들면서도 동일 정답의 footprint/height가
+  입력과 평가에 동시에 들어가 독립 prior 효과로 과장되는 것을 막는다.
+- **Affected phases:** Gate S0 evidence completion, P2/P3 diagnostic
+- **Affected documents:** `00_RESEARCH_CHARTER.md`, `01_MASTER_ROADMAP.md`,
+  `03_DATA_AND_BASELINE_SCOPE.md`, `GATE_S0_FREEZE_PACKET_v1.md`, 다음 Task Packet
+- **User approval:** `GRANTED FOR AUTONOMOUS BOUNDED PREPARATION`; scientific Gate와
+  primary 승격은 별도 human decision
+- **Superseded decisions:** independent LoD1 primary 원칙은 유지한다. LoD2-derived
+  LoD1의 생성 자체를 전면 중단시키는 해석만 supersede한다.
+
+### Consequence
+
+- 다음 evidence task는 LoD2→LoD1 rule/config/output hash를 만들 수 있다.
+- scored RoofSurface topology와 semantic label은 LoD1 diagnostic에 전달하지 않는다.
+- source LoD2와 평가 reference가 같으면 결과는 self-conditioned diagnostic이다.
+- 이 diagnostic은 independent LoD1 탐색의 반복을 요구하지 않으며, primary C5 부재를
+  숨기지 않는다.
+
 ## Pending decisions not yet logged as adopted
 
 다음은 선택지가 정리되었으나 사용자 결정 전이므로 adopted decision이 아니다.

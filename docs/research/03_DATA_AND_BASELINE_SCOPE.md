@@ -180,6 +180,12 @@ LoD1 asset은 확인되지 않았다. 다음 세 경우를 구분한다.
    height envelope도 금지 정보다. Root policy가 별도 승인 절차로 명시적으로 바뀌지
    않는 한 leakage diagnostic 이외의 후보가 될 수 없다.
 
+`DEC-P1-011`은 3번의 deterministic 생성 자체를 bounded preprocessing으로 허용한다.
+단, source LoD2가 scoring reference와 같거나 같은 생산 계보이면 산출물의 역할은
+`REFERENCE_DERIVED_DIAGNOSTIC_ONLY`다. 이 산출물은 independent LoD1 부재를 숨기거나
+primary C5/`E_paired`를 READY로 바꾸지 않는다. Primary 승격에는 입력과 독립적인
+geometry/structure reference가 별도로 필요하다.
+
 ## 7. Reference 계약
 
 ### Geometry reference 후보

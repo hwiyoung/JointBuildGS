@@ -6,7 +6,7 @@
 - status: `DRAFT_NOT_APPROVED`
 - packet_version: `v1`
 - research_canon: `C1C5_CANON_v2`
-- decision_log_through: `DEC-P1-010`
+- decision_log_through: `DEC-P1-011`
 - created_at: `2026-07-31`
 - prior_evidence_state: `GATE_S0_REMEDIATION_R1 TECHNICAL CLOSED / PROPOSED BLOCKED`
 - gate_decision: null
@@ -126,6 +126,7 @@ public image/pose evidence는 962 images와 937 calibrated poses를 가리킨다
 | C2 direct MVS | common-base derivation 또는 context-only 분류, Roofer adapter | `BLOCKED` |
 | C4 ALS prior | independent asset lineage, registration, overlap, interface/confidence | `BLOCKED` |
 | C5 LoD1 prior | independent LoD1 bytes, provider lineage, CRS/datum, coverage, leakage guard | `BLOCKED` |
+| LoD2→LoD1 diagnostic | deterministic simplification, source/hash/rule, self-reference class | `AUTHORIZED TO PREPARE`; primary C5 대체 아님 |
 | references | geometry/structure ID/version/uncertainty와 self-reference class | `BLOCKED` |
 | `U_target`/`E_paired` | stable IDs, condition attemptability, exclusions, coverage | `BLOCKED` |
 | split/AOI | outcome-free exact polygon, IDs, group, seed/algorithm, mode | `BLOCKED` |
@@ -147,6 +148,8 @@ Gate 승인안에는 최소 다음 값을 placeholder 없이 기록한다.
 - C3 `external_prior=none`
 - C4 ALS prior ID/hash/interface 및 `external_prior=existing_als`
 - C5 LoD1 prior ID/hash/interface 및 `external_prior=independent_lod1`
+- LoD2-derived LoD1을 만들면 별도 diagnostic ID/hash/rule과
+  `evaluation_class=REFERENCE_DERIVED_SELF_CONDITIONED`를 기록하고 primary C5와 분리
 - 1,104-image vendor MVS disposition과 근거
 - C1/class/coordinate/reference/roofprint/toolchain readiness와 adapter-candidate IDs
 - final surface adapter/parameters는 Gate S0에서 임의 선택하지 않고 P2 criterion freeze로 이관

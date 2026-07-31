@@ -256,6 +256,11 @@ regime인지 Gate S0 evidence에서 입증해야 한다. 구분이 입증되지 
   실제 LoD1 파일과 생성 계보는 `TO VERIFY`. Evaluation LoD2를 단순화해 만든
   LoD1/height envelope는 LoD2 Z를 사용하므로 현행 GT-separation 정책상 primary
   honest arm에 사용할 수 없다.
+- `DEC-P1-011`에 따라 LoD2를 footprint와 단일 높이 envelope로 단순화한 LoD1은
+  **reference-derived diagnostic**으로 생성·검사할 수 있다. 같은 LoD2로 평가하면
+  `C5` primary estimand나 `E_paired` eligibility에 사용하지 않고 자기참조 진단으로
+  별도 보고한다. 독립 reference로 평가할 수 있을 때만 primary C5 후보 승격을 다시
+  검토한다.
 
 ### 8.6 Evaluation reference
 

@@ -269,7 +269,9 @@ primary 잠금 뒤 별도 census로 수행한다. 이 census를 완료하지 않
 
 ## Blockers
 
-1. 독립 LoD1이 발견되지 않아 C5 readiness가 `MISSING`이다.
+1. 독립 LoD1이 발견되지 않아 primary C5 readiness는 `MISSING`이다. `DEC-P1-011`로
+   LoD2→LoD1 diagnostic 생성은 허용됐지만 같은 LoD2 평가에서는 primary C5나
+   `E_paired`를 READY로 바꾸지 않는다.
 2. C1 LiDAR source·class 2/6·vertical datum·registration이 미동결이다.
 3. 962/937 차이는 937 included와 25 explicit exclusions ledger로 해소됐지만,
    C2 MVS가 그 exact base에 hash-bound되지 않아 condition readiness는 `PARTIAL`이다.
