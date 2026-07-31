@@ -1,0 +1,225 @@
+# Research Decision Log
+
+- Document status: `USER_APPROVED_AUDIT_DECISIONS`
+- 문서 버전: `P1_AUDIT_v1`
+- 작성일: 2026-07-31
+- 승인 상태: `USER APPROVED FOR P1 AUDIT — 2026-07-31`
+
+이 log의 P1 audit 결정은 현재 `AGENTS.md`, `RESEARCH_CONTEXT.md`,
+`EXPERIMENT_PLAN.md` 또는 active lock을 supersede하지 않는다. P1은 현행
+P2/Fusion W1을 보호하는 read-only audit workstream이다.
+
+## Decision schema
+
+- Decision ID
+- Date
+- Status
+- Previous state
+- New decision
+- Evidence
+- Reason
+- Affected phases
+- Affected documents
+- User approval
+- Superseded decisions
+
+## DEC-P1-001 — Prior loss 상세설계 연기
+
+- **Decision ID:** `DEC-P1-001`
+- **Date:** 2026-07-31
+- **Status:** `USER-APPROVED AUDIT DECISION`
+- **Previous state:** 새 5-condition 프로그램에서 LiDAR-prior와 LoD1-prior의
+  상세 loss equation, confidence rule, weights, schedule이 정의되지 않았으며,
+  기존 JointBuildGS loss와의 관계도 미결정.
+- **New decision:** Detailed prior loss design is deferred until Current UAS/Drone
+  LiDAR, MVS and Image-only GS baselines, surface extraction analysis, and LoD2
+  acceptance protocol are sufficiently established.
+- **Evidence:** prior 효과를 판정하려면 안정적인 Image-only GS baseline과
+  extraction/Roofer/acceptance chain이 먼저 필요하다는 P1 연구계약;
+  `00_RESEARCH_CHARTER.md`, `04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md`.
+- **Reason:** 관찰되지 않은 실패를 가정해 loss를 설계하거나 prior held-out-building 결과에
+  맞춰 criterion을 바꾸는 순환을 방지한다.
+- **Affected phases:** P1, P2, P3
+- **Affected documents:** `00_RESEARCH_CHARTER.md`,
+  `01_MASTER_ROADMAP.md`, `04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md`,
+  향후 P3 method contract
+- **User approval:** `GRANTED`; 상세 loss 자체는 P3까지 의도적으로 미정
+- **Superseded decisions:** 없음
+
+### Consequence
+
+- G3/G4 numerical threshold와 final surface adapter: `DEFERRED TO P2`
+- LiDAR-prior/LoD1-prior loss equation, weights, training schedule:
+  `DEFERRED TO P3`
+- P1 read-only audit는 loss 구현·수정·성능 verdict를 수행하지 않는다.
+
+## DEC-P1-002 — Current UAS/Drone LiDAR와 Existing ALS 역할 분리
+
+- **Decision ID:** `DEC-P1-002`
+- **Date:** 2026-07-31
+- **Status:** `USER-APPROVED AUDIT DECISION`
+- **Previous state:** 초안은 `L_upper ≠ P_LiDAR`를 선언했으나 여러 표와 packet에서
+  둘을 단순히 “LiDAR” 또는 “current/existing LiDAR”로 축약하여 독자가 두 자산의
+  필요성과 차이를 오해할 수 있었다.
+- **New decision:** Current UAS/Drone LiDAR (`LIDAR_UAS_CURRENT`)는 C1의
+  `L_upper` 직접 Roofer baseline이며, Existing ALS (`ALS_EXISTING`)는 C4의
+  `P_LiDAR` prior 후보이다. P1 감사는 두 자산을 한 비교표에서 분석한다.
+- **Evidence:** 사용자의 2026-07-31 지시와 `03_DATA_AND_BASELINE_SCOPE.md`의
+  공식 asset 후보 및 역할 계약.
+- **Reason:** sensor modality 이름만 같을 뿐 acquisition regime과 인과적 역할이
+  다르다. 이 차이가 입증되지 않으면 C1/C4 contrast가 성립하지 않는다.
+- **Affected phases:** P1–P4
+- **Affected documents:** `00_RESEARCH_CHARTER.md`, `01_MASTER_ROADMAP.md`,
+  `03_DATA_AND_BASELINE_SCOPE.md`, `04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md`,
+  `P1_W2C_REPO_AUDIT_v1.md`
+- **User approval:** `GRANTED FOR P1 AUDIT`; program-level method canon 전환은 별도
+- **Superseded decisions:** 없음
+
+### Consequence
+
+- canonical label은 `Current UAS/Drone LiDAR`와 `Existing ALS`를 사용한다.
+- exact file/version, 취득일, platform/sensor, density, accuracy, classification,
+  coverage, CRS/datum, registration, temporal change, overlap, lineage를 비교한다.
+- 같은 file/survey derivative이거나 차별성이 입증되지 않으면 C4 ALS prior 채택을
+  `BLOCKED`로 판정한다.
+
+## DEC-P1-003 — Held-out building과 held-out view 구분
+
+- **Decision ID:** `DEC-P1-003`
+- **Date:** 2026-07-31
+- **Status:** `USER-APPROVED AUDIT DECISION`
+- **Previous state:** “P4 held-out 전체 실험”과 “held-out RGB rendering”이 서로 다른
+  분할 단위를 같은 용어로 표현했고, P3까지 전체 건물을 실험하는지 불명확했다.
+- **New decision:** held-out building은 P2/P3에서 접근하지 않는 최종 test building
+  group이고, held-out view는 같은 development/validation building에서 학습에
+  제외한 camera view이다. P4 primary의 “전체”는 held-out test에 배정된 모든
+  building × C1–C5를 뜻하며 전체 eligible corpus를 뜻하지 않는다.
+- **Evidence:** 사용자의 2026-07-31 확인 요청과 split leakage 방지 목적.
+- **Reason:** method/criterion tuning과 최종 일반화 평가를 분리하면서 rendering
+  diagnostics의 view split을 계속 사용할 수 있게 한다.
+- **Affected phases:** P1–P4
+- **Affected documents:** `00_RESEARCH_CHARTER.md`, `01_MASTER_ROADMAP.md`,
+  `03_DATA_AND_BASELINE_SCOPE.md`, `04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md`,
+  `05_HANDOFF_PROTOCOL.md`, `P1_W2C_REPO_AUDIT_v1.md`
+- **User approval:** `GRANTED FOR DISTINCTION`; split 수량·경계는 P2 Gate S0에서 결정
+- **Superseded decisions:** 없음
+
+### Consequence
+
+- P1은 split feasibility만 감사하고 실험 결과에 접근하지 않는다.
+- P2는 pilot/development+validation에서 C1–C3와 criterion을 동결한다.
+- P3는 같은 허용 split에서 C3를 frozen control로 재실행/재사용하고 C4/C5를
+  개발·동결한다. C3는 P3에서 재튜닝하지 않는다.
+- P4에서 held-out building test를 처음 열어 전 건물 × C1–C5를 실행한다.
+- primary 잠금 뒤 all-eligible rerun은 supplementary descriptive analysis로만 허용한다.
+
+## DEC-P1-004 — P4 확장과 전수 우선 split
+
+- **Decision ID:** `DEC-P1-004`
+- **Date:** 2026-07-31
+- **Status:** `USER-APPROVED AUDIT DECISION`
+- **Previous state:** P4가 held-out test 전 건물을 실행한다는 점은 명확했지만, 전체
+  eligible building을 언제 포함하는지, held-out 규모와 확장 기준을 언제 정하는지
+  정의되지 않았다.
+- **New decision:** P1 audit에서 `U_target`/`E_paired`와 C1–C5 비용을 산출하고,
+  P2 첫 baseline 결과 전 Gate S0에서 `EXHAUSTIVE_PARTITION`을 기본안으로 검토한다.
+  전수가 불가능한 경우에만 `STRATIFIED_SAMPLE`을 사용자 승인으로 사용한다.
+- **Evidence:** 사용자의 2026-07-31 확인 요청, paired building-level endpoint,
+  held-out peeking 방지 계약.
+- **Reason:** P4의 building 추가가 결과 기반 선택이 되지 않게 하고, 최종 coverage와
+  외적 타당성 범위를 사전에 명확히 한다.
+- **Affected phases:** P1–P4
+- **Affected documents:** `00_RESEARCH_CHARTER.md`, `01_MASTER_ROADMAP.md`,
+  `03_DATA_AND_BASELINE_SCOPE.md`, `04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md`,
+  `P1_W2C_REPO_AUDIT_v1.md`
+- **User approval:** `GRANTED FOR DESIGN`; exact counts와 mode는 P1 audit 후 P2 Gate S0
+- **Superseded decisions:** 없음
+
+### Consequence
+
+- P2/P3는 동일한 development+validation building pool을 사용한다.
+- `EXHAUSTIVE_PARTITION`이면 P2/P3가 앞의 두 split, P4가 held-out remainder를
+  담당하고, 최종 합집합은 `E_paired` 전체 × C1–C5다.
+- P2 Gate S0는 data-footprint/stable-ID/연속성/면적/비용만으로 exact AOI
+  polygon/hash를 동결한다.
+- P3 method freeze 뒤 frozen C4/C5를 development+validation 전 건물에 적용하여
+  P2의 exact-compatible C1–C3와 함께 해당 pool의 final matrix를 완성한다.
+- `STRATIFIED_SAMPLE`이면 outcome-free spatial/input-metadata group sampling,
+  paired endpoint 정밀도/검정력, attrition, compute budget을 동결한다.
+- sampled fallback에서 `E_paired` 전체 확장을 주장하려면 P4 primary 잠금 뒤
+  all-eligible census coverage run을 완료해야 한다.
+- split ID·seed·algorithm·strata·source hash·제외 사유를 immutable manifest로
+  기록하고 P3/P4에서 변경하지 않는다.
+
+## DEC-P1-005 — Work Host push 후 Experiment Host exact pull
+
+- **Decision ID:** `DEC-P1-005`
+- **Date:** 2026-07-31
+- **Status:** `USER-APPROVED HANDOFF DECISION`
+- **Previous state:** DRAFT roadmap과 launcher가 two-host 시작을 “Remote pull /
+  immutable handoff 확인”으로 축약하여 fetch, exact SHA, fast-forward-only update,
+  accepted receipt의 순서가 불명확했다.
+- **New decision:** Work Host가 approval 및 immutable offered-receipt commits를
+  `origin/main`에 push한 뒤 write를 멈춘다. Experiment Host의 첫 task action은
+  activation 확인, clean check, fetch, offered SHA 및 remote approval tree 확인,
+  `git pull --ff-only`, offered validation, accepted-receipt commit/push와
+  write-ownership 인수이다.
+- **Evidence:** 사용자의 2026-07-31 지시와 현행
+  `docs/research/reproducibility/CHATGPT_WORK_CODEX_HANDOFF.md`의
+  `serialized_main` contract.
+- **Reason:** stale/local-divergent checkout에서 audit 또는 experiment가 시작되는
+  것을 막고 exact commit과 single-writer ownership을 보장한다.
+- **Affected phases:** 모든 two-host handoff
+- **Affected documents:** `01_MASTER_ROADMAP.md`, `05_HANDOFF_PROTOCOL.md`,
+  `W2C_TASK_PACKET_TEMPLATE.md`, `P1_W2C_REPO_AUDIT_v1.md`
+- **User approval:** `GRANTED`; 사용자가 2026-07-31 상호검수와 다음 단계의
+  중단 없는 진행을 승인
+- **Superseded decisions:** 없음
+
+### Consequence
+
+- blind `git pull`이나 merge commit은 허용하지 않는다.
+- pull 전 local dirty/divergent state 또는 remote SHA mismatch면 `blocked`다.
+- technical accepted receipt와 scientific `APPROVED_FOR_EXECUTION`을 모두 통과한
+  뒤에만 Experiment Host가 작업을 시작한다.
+
+## DEC-P1-006 — P1 audit authority와 no-external-roofprint 범위
+
+- **Decision ID:** `DEC-P1-006`
+- **Date:** 2026-07-31
+- **Status:** `USER-APPROVED`
+- **Previous state:** 제안 P1이 repository의 현재 P2/Fusion W1 phase와 충돌하고,
+  `R_ext`/`R_derived` 선택이 root no-external-roofprint invariant와 충돌하는
+  blocking open question이었다.
+- **New decision:** P1은 repository phase를 rollback/supersede하지 않는 read-only
+  설계·준비도 audit workstream이다. 저장소 유효 단계는 계속 P2/Fusion W1이고
+  active files/results/locks는 protected scope다. Stage 3 primary는 point evidence에서
+  생성하는 `R_derived`이며 external `R_ext`는 별도 root-policy 승인 전까지
+  P1과 후속 P2–P4의 비실행 범위 밖이다.
+- **Evidence:** root `AGENTS.md` phase status와 Stage 3 invariant, 사용자의
+  2026-07-31 문서 승인 및 “다음 단계 멈추지 말고 서브에이전트 상호검수를 통해
+  진행” 지시, 독립 scientific/handoff 검수.
+- **Reason:** 승인 packet이 상위 정본과 자기모순으로 중단되는 것을 막고 기존
+  Fusion W1 자산을 보호한다.
+- **Affected phases:** P1 audit; 향후 P2–P4의 roofprint authority
+- **Affected documents:** `00_RESEARCH_CHARTER.md`, `01_MASTER_ROADMAP.md`,
+  `03_DATA_AND_BASELINE_SCOPE.md`, `04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md`,
+  `05_HANDOFF_PROTOCOL.md`, `P1_W2C_REPO_AUDIT_v1.md`
+- **User approval:** `GRANTED`
+- **Superseded decisions:** P1 phase/roofprint에 관한 미채택 pending options
+
+### Consequence
+
+- P1 audit의 `phase: P1`은 task/workstream label이며 repository phase 변경이 아니다.
+- P1은 source/config/data/result/Fusion W1을 수정하거나 GPU experiment를 실행하지 않는다.
+- `R_ext`를 감사 결과의 실행 대안으로 승인하거나 입력에 사용하는 것은 금지한다.
+- P1 Return Packet은 `R_derived` 구현 가능성·계보만 판정한다.
+
+## Pending decisions not yet logged as adopted
+
+다음은 선택지가 정리되었으나 사용자 결정 전이므로 adopted decision이 아니다.
+
+- 기존 4조건 기하–의미론 연구와 새 5조건 prior 연구의 관계
+- TUM2TWIN LoD1 후보가 독립 prior로 적합한지
+- `U_target`/`E_paired` exact IDs, 전수 가능성, pilot/validation/held-out 수량과
+  공간 group 경계
