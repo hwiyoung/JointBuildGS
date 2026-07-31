@@ -1,0 +1,99 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P1-W2C-REPO-AUDIT-R2",
+  "task_id": "P1-W2C-REPO-AUDIT-v2",
+  "created_at": "2026-07-31T16:29:46+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "offered",
+  "previous_receipt": null,
+  "transport": {
+    "mode": "serialized_main",
+    "branch": "main",
+    "target_branch": "main",
+    "exclusive_writer_ack": true
+  },
+  "commits": {
+    "base_main": "ac299052a1a6c8c9ebb10bdf328c5d773f28b5e3",
+    "offered_head": "SELF",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P1-W2C-REPO-AUDIT-R2",
+      "docs/audit",
+      "docs/handoffs/returns/P1_C2W_REPO_AUDIT_RETURN_v2.md"
+    ],
+    "protected_paths": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      "artifacts/manifests/handoffs/P1-W2C-REPO-AUDIT",
+      "artifacts/manifests/local_workspace_20260730.yaml",
+      "artifacts/manifests/schemas",
+      "artifacts/manifests/templates",
+      "configs",
+      "docs/evidence",
+      "docs/experiments/pilots/fusion_w1",
+      "docs/handoffs/HANDOFF_INDEX.md",
+      "docs/handoffs/P1_W2C_REPO_AUDIT_v1.md",
+      "docs/handoffs/P1_W2C_REPO_AUDIT_v2.md",
+      "docs/handoffs/templates",
+      "docs/research",
+      "phases",
+      "scripts",
+      "src",
+      "tests"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "git_only",
+    "verifier_role": "work_host",
+    "docker_image_digest": "sha256:e50ba5c7fd493ed524212c34e5e84f48bd94e66a70e0ecb6d00269f75309f986",
+    "commands": [
+      "python scripts/repository/validate_agent_instructions.py",
+      "python -m unittest tests.repository.test_agent_instruction_sync",
+      "python -m unittest tests.repository.test_two_host_handoff",
+      "python scripts/repository/validate_two_host_handoff.py artifacts/manifests/handoffs/P1-W2C-REPO-AUDIT-R2/000-offered.json --repo . --origin-ref HEAD --head-ref HEAD"
+    ],
+    "tests": [
+      {
+        "name": "agent instruction contract",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "agent instruction sync unit suite",
+        "passed": 11,
+        "failed": 0
+      },
+      {
+        "name": "two-host handoff unit suite",
+        "passed": 26,
+        "failed": 0
+      },
+      {
+        "name": "R2 offered receipt validator",
+        "passed": 1,
+        "failed": 0
+      }
+    ]
+  },
+  "artifacts": {
+    "required_for_task": false,
+    "availability": {
+      "work_host": "manifest_only",
+      "experiment_host": "manifest_only"
+    },
+    "records": []
+  },
+  "scientific": {
+    "technical_state": "pending",
+    "scientific_verdict": null,
+    "promotion_status": "not_requested"
+  },
+  "receiver_ack": null
+}
