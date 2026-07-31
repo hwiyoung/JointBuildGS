@@ -1,0 +1,6 @@
+condition,known_input_bytes,runtime_bound,peak_memory_bound,output_bytes_bound,status,assumptions_and_limitation,retention_policy,held_out_accessed
+C1_L_upper,1277996022,UNKNOWN,UNKNOWN,UNKNOWN,PARTIAL,Exact selected input bytes only; no class/Roofer calibration receipt.,raw inputs immutable; outputs require new run namespace; failed outputs retained by frozen policy,false
+C2_MVS,4264934724,UNKNOWN,UNKNOWN,UNKNOWN,PARTIAL,Exact MVS input bytes only; no common-ledger adapter/Roofer calibration receipt.,raw inputs immutable; outputs require new run namespace; failed outputs retained by frozen policy,false
+C3_GS_image,7843385949,UNKNOWN,UNKNOWN,UNKNOWN,UNKNOWN,Image+OPF input bytes are exact; no comparable non-held-out training/extraction calibration.,raw inputs immutable; outputs require new run namespace; failed outputs retained by frozen policy,false
+C4_GS_lidar_prior,8314154698,UNKNOWN,UNKNOWN,UNKNOWN,UNKNOWN,Image+OPF+ALS input bytes are exact; prior method and calibration deferred.,raw inputs immutable; outputs require new run namespace; failed outputs retained by frozen policy,false
+C5_GS_lod1_prior,7843385949,UNKNOWN,UNKNOWN,UNKNOWN,MISSING,Independent LoD1 input is missing; total input and execution cost cannot be bounded.,raw inputs immutable; outputs require new run namespace; failed outputs retained by frozen policy,false

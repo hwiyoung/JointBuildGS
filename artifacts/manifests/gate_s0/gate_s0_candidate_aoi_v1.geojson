@@ -1,0 +1,47 @@
+{
+  "crs": {
+    "properties": {
+      "name": "EPSG:25832"
+    },
+    "type": "name"
+  },
+  "features": [
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              690791.74,
+              5335864.05
+            ],
+            [
+              691154.65,
+              5335864.05
+            ],
+            [
+              691154.65,
+              5336353.85
+            ],
+            [
+              690791.74,
+              5336353.85
+            ],
+            [
+              690791.74,
+              5335864.05
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "area_m2": 177753.318,
+        "selection_basis": "Outcome-free intersection of previously audited current-image, UAS-LiDAR and MVS scene coverage; no method outcome, roof type or semantic evaluation label used.",
+        "status": "PROPOSED_NOT_FROZEN"
+      },
+      "type": "Feature"
+    }
+  ],
+  "name": "gate_s0_candidate_aoi_v1",
+  "type": "FeatureCollection"
+}

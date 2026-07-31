@@ -1,0 +1,43 @@
+{
+  "E_paired_ids": [],
+  "U_target_ids": [],
+  "algorithm": "After U_target/E_paired freeze, sort immutable spatial group IDs by SHA256(seed|group_id), then allocate whole groups to development, validation and held-out according to a separately approved ratio while preserving strata balance.",
+  "candidate_aoi": {
+    "path": "artifacts/manifests/gate_s0/gate_s0_candidate_aoi_v1.geojson",
+    "sha256": "93728956ecfbbb24521b4fa4aec745fec176d4c6c94e10cef272934dcf9d9061",
+    "status": "PROPOSED_NOT_FROZEN"
+  },
+  "development_ids": [],
+  "fallback": "STRATIFIED_SAMPLE requires evidence that exhaustive execution exceeds the frozen cost ceiling and separate user approval.",
+  "forbidden_strata": [
+    "roof_type",
+    "LoD2_RoofSurface",
+    "semantic_evaluation_label",
+    "method_result"
+  ],
+  "freeze_blockers": [
+    "U_target stable-ID ledger is UNKNOWN",
+    "E_paired is UNKNOWN",
+    "C5 independent LoD1 is MISSING",
+    "per-condition runtime/memory/output/retention ceiling is UNKNOWN"
+  ],
+  "grouping": "spatially contiguous building groups with multipart/source-model groups kept together",
+  "held_out_accessed": false,
+  "held_out_ids": [],
+  "phase_contract": {
+    "P2_P3_pool": "same development plus validation building pool",
+    "P4": "first access to all frozen held-out buildings for C1-C5"
+  },
+  "preferred_mode": "EXHAUSTIVE_PARTITION",
+  "schema": "jointbuildgs.gate_s0_split_proposal.v1",
+  "scientific_verdict": null,
+  "seed": 20260731,
+  "status": "PROPOSAL_NOT_FREEZEABLE",
+  "strata": [
+    "spatial_block",
+    "current_image_view_support",
+    "ALS_coverage_density_temporal_gap",
+    "non_GT_size_height_proxy"
+  ],
+  "validation_ids": []
+}

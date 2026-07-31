@@ -1,0 +1,24 @@
+condition,field,status,evidence,required_next_evidence
+C1_L_upper,selected_source,PARTIAL,LIDAR_UAS_CURRENT_NADIR exact bytes; unregistered UTM32 numeric bbox screening supports nadir-only provisional proposal,"verified EPSG:32632-to-EPSG:25832 transform/residual, per-building coverage and Gate review"
+C1_L_upper,class_2_6,MISSING,bounded raw sample is class 0 only,provenance-bound ground=2/building=6 derivative
+C1_L_upper,crs_vertical_registration,UNKNOWN,horizontal EPSG:32632 evidence; vertical datum and residual unresolved,frozen EPSG:25832/DHHN2016 pipeline and residual
+C1_L_upper,coverage,UNKNOWN,numeric bbox screening only; source and target UTM32 frames are not yet registered,verified transform/residual and per-building class-specific coverage
+C2_MVS,identity,PARTIAL,Pix4D exact live bytes and header verified,hash-linked producer/replay receipt
+C2_MVS,same_image_camera_base,PARTIAL,937-image OPF ledger is available but MVS-to-ledger derivation is not hash-bound,producer receipt or replay from frozen 937 ledger
+C2_MVS,class_2_6,MISSING,bounded MVS sample is class 0 only,frozen Roofer classification derivative
+C2_MVS,crs_vertical_registration,PARTIAL,EPSG:32632 plus EGM96 evidence,frozen transform to EPSG:25832/DHHN2016 and residual
+C3_GS_image,image_camera_base,PARTIAL,937 exact OPF calibrated IDs proposed,building view coverage and freeze receipt
+C3_GS_image,dense_mvs_separation,READY,contract prohibits dense MVS geometry/depth/normal input,enforce in later config validator
+C4_GS_lidar_prior,als_identity,PARTIAL,four exact 2022 ALS tiles rehashed,provider/header CRS binding and derivative receipt
+C4_GS_lidar_prior,c1_independence,PARTIAL,"different files, survey years, platform regimes and classes",formal derivative independence and registration receipt
+C4_GS_lidar_prior,prior_interface,PARTIAL,future data fields proposed without a loss equation,implementation and confidence semantics deferred to later authorized work
+C4_GS_lidar_prior,coverage_registration,UNKNOWN,tile bbox exists; common-building overlap/residual absent,building-level overlap and cross-modal residual
+C5_GS_lod1_prior,independent_lod1,MISSING,no LoD1 in the fixed approved raw-input search scope,obtain independent provider asset; no LoD2 substitute
+C5_GS_lod1_prior,leakage_guard,READY,scored LoD2 simplification/extrusion explicitly prohibited,retain guard in future manifest
+ALL,R_derived_common_protocol,PARTIAL,contract defined; no campaign-wide non-GT code/config/hash,common derivation implementation and method-specific polygon hashes
+ALL,gravity,UNKNOWN,must be estimated once from terrain MVS normals,"source normals, estimator, vector and hash"
+ALL,U_target,UNKNOWN,199 reference intersections are not U_target,stable-ID and current-image coverage join
+ALL,E_paired,UNKNOWN,C5 MISSING and C1-C4 prerequisites incomplete,all-condition eligibility manifest
+ALL,cost_ceiling,UNKNOWN,no comparable non-held-out per-condition calibration receipt,bounded calibration without performance results
+ALL,CityJSON_writer,PARTIAL,repository writer compiles and cjio 0.10.1 exists,integrated C1-C5 writer tests and schema validator
+ALL,CityGML_cjval_val3dity,MISSING,"main image lacks trusted converter, cjval and val3dity executables",pinned callable toolchain and tests

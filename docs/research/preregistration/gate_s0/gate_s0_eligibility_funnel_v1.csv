@@ -1,0 +1,9 @@
+stage,unit_id,count,status,included,exclusion_reason,held_out_accessed
+CANDIDATE_AOI_REFERENCE_INTERSECTIONS,AGGREGATE_ONLY,199,PARTIAL,UNKNOWN,Reference-intersection count is not an outcome-free stable-ID U_target ledger.,false
+U_target,NOT_ASSIGNED,,UNKNOWN,UNKNOWN,No safe building-level stable-ID plus current-image coverage join; no IDs fabricated.,false
+C1_ELIGIBLE,NOT_ASSIGNED,,UNKNOWN,UNKNOWN,"C1 class-2/6, vertical datum and registration unresolved.",false
+C2_ELIGIBLE,NOT_ASSIGNED,,UNKNOWN,UNKNOWN,C2 class/transform and exact common-ledger derivation unresolved.,false
+C3_ELIGIBLE,NOT_ASSIGNED,,UNKNOWN,UNKNOWN,Building-level image view support and common R_derived protocol unresolved.,false
+C4_ELIGIBLE,NOT_ASSIGNED,,UNKNOWN,UNKNOWN,"ALS independence, registration and building overlap unresolved.",false
+C5_ELIGIBLE,NOT_ASSIGNED,0,MISSING,false,Independent LoD1 not found in fixed scope; scored LoD2 substitute prohibited.,false
+E_paired,NOT_ASSIGNED,,UNKNOWN,UNKNOWN,Cannot compute until U_target and all C1-C5 attemptability are evidenced.,false

@@ -1,0 +1,31 @@
+{
+  "algorithm": "sorted regular non-symlink file inventory; case-insensitive filename contains lod1 OR suffix in .gml/.cityjson/.jsonl; no model geometry read",
+  "artifact_root": "file:/artifacts/JointBuildGS",
+  "candidate_matches": [
+    {
+      "bytes": 156656509,
+      "classification": "NON_LOD1_MODEL_FILE",
+      "model_suffix_match": true,
+      "name_contains_lod1": false,
+      "relative_path": "phase-payloads/p0-audit/data/raw/lod2/690_5334.gml"
+    },
+    {
+      "bytes": 147865939,
+      "classification": "NON_LOD1_MODEL_FILE",
+      "model_suffix_match": true,
+      "name_contains_lod1": false,
+      "relative_path": "phase-payloads/p0-audit/data/raw/lod2/690_5336.gml"
+    }
+  ],
+  "handoff_id": "P2-W2C-GATE-S0-PREP-v1",
+  "inventory_bytes": 880,
+  "inventory_entry_count": 13,
+  "inventory_sha256": "fdf6e30400394cbb8b35e78609b407dc8a07ad1f95d71d8cbfc00d617c78d6f5",
+  "lod1_matches": [],
+  "max_depth": 4,
+  "observed_at": "2026-07-31T20:04:52+09:00",
+  "prohibited_substitute": "Do not simplify or extrude the scored LoD2 reference, including LoD2 Z or RoofSurface geometry.",
+  "relative_scope": "phase-payloads/p0-audit/data/raw",
+  "schema": "jointbuildgs.gate_s0_lod1_search.v1",
+  "status": "MISSING"
+}
