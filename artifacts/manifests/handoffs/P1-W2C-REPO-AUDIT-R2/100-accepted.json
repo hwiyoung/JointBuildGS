@@ -1,0 +1,95 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P1-W2C-REPO-AUDIT-R2",
+  "task_id": "P1-W2C-REPO-AUDIT-v2",
+  "created_at": "2026-07-31T16:40:38+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "accepted",
+  "previous_receipt": {
+    "path": "artifacts/manifests/handoffs/P1-W2C-REPO-AUDIT-R2/000-offered.json",
+    "sha256": "ca71bfdcb3f4a98b50ab46a64d067ea0509118ad5ef6ef5523e725797dd29efe"
+  },
+  "transport": {
+    "mode": "serialized_main",
+    "branch": "main",
+    "target_branch": "main",
+    "exclusive_writer_ack": true
+  },
+  "commits": {
+    "base_main": "ac299052a1a6c8c9ebb10bdf328c5d773f28b5e3",
+    "offered_head": "9e724b8740756cf128252d8c081d4882b43e5d67",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P1-W2C-REPO-AUDIT-R2",
+      "docs/audit",
+      "docs/handoffs/returns/P1_C2W_REPO_AUDIT_RETURN_v2.md"
+    ],
+    "protected_paths": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      "artifacts/manifests/handoffs/P1-W2C-REPO-AUDIT",
+      "artifacts/manifests/local_workspace_20260730.yaml",
+      "artifacts/manifests/schemas",
+      "artifacts/manifests/templates",
+      "configs",
+      "docs/evidence",
+      "docs/experiments/pilots/fusion_w1",
+      "docs/handoffs/HANDOFF_INDEX.md",
+      "docs/handoffs/P1_W2C_REPO_AUDIT_v1.md",
+      "docs/handoffs/P1_W2C_REPO_AUDIT_v2.md",
+      "docs/handoffs/templates",
+      "docs/research",
+      "phases",
+      "scripts",
+      "src",
+      "tests"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "git_only",
+    "verifier_role": "experiment_host",
+    "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "commands": [
+      "docker exec jointbuildgs-dev python scripts/repository/validate_two_host_handoff.py artifacts/manifests/handoffs/P1-W2C-REPO-AUDIT-R2/000-offered.json --repo . --origin-ref origin/main --head-ref HEAD",
+      "docker exec jointbuildgs-dev python -c 'import json; p=json.load(open(\"artifacts/manifests/handoffs/P1-W2C-REPO-AUDIT-R2/000-offered.json\")); print(p[\"verification\"][\"level\"], p[\"artifacts\"][\"required_for_task\"], p[\"artifacts\"][\"availability\"], p[\"artifacts\"][\"records\"])'"
+    ],
+    "tests": [
+      {
+        "name": "R2 offered receipt Docker validator",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "R2 non-blocking artifact activation contract",
+        "passed": 1,
+        "failed": 0
+      }
+    ]
+  },
+  "artifacts": {
+    "required_for_task": false,
+    "availability": {
+      "work_host": "manifest_only",
+      "experiment_host": "manifest_only"
+    },
+    "records": []
+  },
+  "scientific": {
+    "technical_state": "pending",
+    "scientific_verdict": null,
+    "promotion_status": "not_requested"
+  },
+  "receiver_ack": {
+    "role": "experiment_host",
+    "accepted_at": "2026-07-31T16:40:38+09:00",
+    "status": "accepted",
+    "issue": null
+  }
+}
