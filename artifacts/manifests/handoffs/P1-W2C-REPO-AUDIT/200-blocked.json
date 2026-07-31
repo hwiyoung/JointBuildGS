@@ -1,0 +1,99 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P1-W2C-REPO-AUDIT",
+  "task_id": "P1-W2C-REPO-AUDIT-v1",
+  "created_at": "2026-07-31T14:56:02+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "blocked",
+  "previous_receipt": {
+    "path": "artifacts/manifests/handoffs/P1-W2C-REPO-AUDIT/000-offered.json",
+    "sha256": "2cdebfb309e49b226881b772a0f940d7c12eb9383dcfae32907a2f33948a99df"
+  },
+  "transport": {
+    "mode": "serialized_main",
+    "branch": "main",
+    "target_branch": "main",
+    "exclusive_writer_ack": true
+  },
+  "commits": {
+    "base_main": "776a02502b43edad7110a8dfce05213fe1542530",
+    "offered_head": "d95475af40e91b7c4061810be0d02a7f0092b82d",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P1-W2C-REPO-AUDIT",
+      "docs/audit",
+      "docs/handoffs/returns/P1_C2W_REPO_AUDIT_RETURN_v1.md"
+    ],
+    "protected_paths": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      "artifacts/manifests/local_workspace_20260730.yaml",
+      "artifacts/manifests/schemas",
+      "artifacts/manifests/templates",
+      "configs",
+      "docs/evidence",
+      "docs/experiments/pilots/fusion_w1",
+      "docs/handoffs/HANDOFF_INDEX.md",
+      "docs/handoffs/P1_W2C_REPO_AUDIT_v1.md",
+      "docs/handoffs/templates",
+      "docs/research",
+      "phases",
+      "scripts",
+      "src",
+      "tests"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "git_only",
+    "verifier_role": "experiment_host",
+    "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "commands": [
+      "docker exec jointbuildgs-dev python scripts/repository/validate_two_host_handoff.py artifacts/manifests/handoffs/P1-W2C-REPO-AUDIT/000-offered.json --repo . --origin-ref origin/main --head-ref HEAD",
+      "docker exec jointbuildgs-dev sh -lc 'test \"$JBGS_ARTIFACT_ROOT\" = /artifacts/JointBuildGS && test -d \"$JBGS_ARTIFACT_ROOT\" && find \"$JBGS_ARTIFACT_ROOT\" -mindepth 1 -maxdepth 1 -printf \"%f\\t%y\\n\" | sort'",
+      "rg -n 'TO VERIFY|required_for_task|TUM2TWIN|Pilot PDF|dense_baseline_qualitative_v5' docs/handoffs/P1_W2C_REPO_AUDIT_v1.md artifacts/manifests/handoffs/P1-W2C-REPO-AUDIT/000-offered.json"
+    ],
+    "tests": [
+      {
+        "name": "offered receipt Docker validator",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "canonical Experiment Host artifact mount accessibility",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "complete required-artifact URI bytes SHA-256 inventory and live rehash coverage",
+        "passed": 0,
+        "failed": 1
+      }
+    ]
+  },
+  "artifacts": {
+    "required_for_task": true,
+    "availability": {
+      "work_host": "manifest_only",
+      "experiment_host": "manifest_only"
+    },
+    "records": []
+  },
+  "scientific": {
+    "technical_state": "blocked",
+    "scientific_verdict": null,
+    "promotion_status": "not_requested"
+  },
+  "receiver_ack": {
+    "role": "experiment_host",
+    "accepted_at": "2026-07-31T14:56:02+09:00",
+    "status": "blocked",
+    "issue": "REQUIRED_ARTIFACT_SET_UNDEFINED_AND_NOT_INTEGRITY_VERIFIED: required_for_task=true, Experiment Host availability is manifest_only, records is empty, the canonical workspace directory SHA-256 was not recomputed, and packet-required TUM2TWIN and Pilot artifact inventory is not exhaustively pinned by URI, bytes, and SHA-256."
+  }
+}
