@@ -1,0 +1,208 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P2-W2C-GATE-S0-EVIDENCE-R2A-v1",
+  "task_id": "P2-GATE-S0-EVIDENCE-R2A-v1",
+  "created_at": "2026-08-01T02:18:35+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "verified",
+  "previous_receipt": {
+    "path": "artifacts/manifests/handoffs/P2-W2C-GATE-S0-EVIDENCE-R2A-v1/100-accepted.json",
+    "sha256": "2745862c904344ad59430314d3912241b2e58d68692fc2316458fc9ac56ca386"
+  },
+  "transport": {
+    "mode": "serialized_main",
+    "branch": "main",
+    "target_branch": "main",
+    "exclusive_writer_ack": true
+  },
+  "commits": {
+    "base_main": "276e05fd21d63b36703491e1e998cb172c5dead0",
+    "offered_head": "dad59bef72f259796677f4993412a116e21dc5a4",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-EVIDENCE-R2A-v1",
+      "artifacts/manifests/gate_s0/common_base_r2a",
+      "configs/input_and_alignment/gate_s0/common_base_r2a",
+      "docs/handoffs/returns/P2_C2W_GATE_S0_EVIDENCE_R2A_RETURN_v1.md",
+      "docs/research/preregistration/gate_s0/common_base_r2a",
+      "scripts/input_and_alignment/gate_s0/common_base_r2a",
+      "tests/input_and_alignment/gate_s0/common_base_r2a"
+    ],
+    "protected_paths": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      "artifacts/manifests/handoffs/P1-W2C-REPO-AUDIT-R2",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-PREP-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-REMEDIATION-R1-v1",
+      "artifacts/manifests/local_workspace_20260730.yaml",
+      "artifacts/manifests/gate_s0/b_current_source_candidate_v1.json",
+      "artifacts/manifests/gate_s0/gate_s0_candidate_aoi_v1.geojson",
+      "artifacts/manifests/gate_s0/gate_s0_image_member_inventory_v1.csv",
+      "artifacts/manifests/gate_s0/gate_s0_live_artifact_records_v1.json",
+      "artifacts/manifests/gate_s0/gate_s0_lod1_search_v1.json",
+      "artifacts/manifests/gate_s0/gate_s0_output_manifest_v1.json",
+      "artifacts/manifests/gate_s0/remediation_r1",
+      "configs/input_and_alignment/gate_s0/gate_s0_evidence_v1.json",
+      "configs/input_and_alignment/gate_s0/remediation_r1",
+      "configs/repository",
+      "docs/evidence",
+      "docs/experiments/pilots/fusion_w1",
+      "docs/handoffs/HANDOFF_INDEX.md",
+      "docs/handoffs/P2_W2C_GATE_S0_PREPARATION_v1.md",
+      "docs/handoffs/P2_W2C_GATE_S0_REMEDIATION_R1_v1.md",
+      "docs/handoffs/P2_W2C_GATE_S0_EVIDENCE_R2A_v1.md",
+      "docs/handoffs/returns/P2_C2W_GATE_S0_PREPARATION_RETURN_v1.md",
+      "docs/handoffs/returns/P2_C2W_GATE_S0_REMEDIATION_R1_RETURN_v1.md",
+      "docs/research/00_RESEARCH_CHARTER.md",
+      "docs/research/01_MASTER_ROADMAP.md",
+      "docs/research/02_NOVELTY_MAP.md",
+      "docs/research/03_DATA_AND_BASELINE_SCOPE.md",
+      "docs/research/04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md",
+      "docs/research/05_HANDOFF_PROTOCOL.md",
+      "docs/research/06_DECISION_LOG.md",
+      "docs/research/EXPERIMENT_PLAN.md",
+      "docs/research/RESEARCH_CONTEXT.md",
+      "docs/research/WORK_START_HERE.md",
+      "docs/research/preregistration/fusion_w1",
+      "docs/research/preregistration/quality_axis",
+      "docs/research/preregistration/gate_s0/B_CURRENT_SOURCE_CANDIDATE_v1.md",
+      "docs/research/preregistration/gate_s0/GATE_S0_FREEZE_PACKET_v1.md",
+      "docs/research/preregistration/gate_s0/GATE_S0_EVIDENCE_REPORT_v1.md",
+      "docs/research/preregistration/gate_s0/WORK_HOST_CROSS_REVIEW_v1.md",
+      "docs/research/preregistration/gate_s0/gate_s0_condition_readiness_v1.csv",
+      "docs/research/preregistration/gate_s0/gate_s0_cost_bounds_v1.csv",
+      "docs/research/preregistration/gate_s0/gate_s0_eligibility_funnel_v1.csv",
+      "docs/research/preregistration/gate_s0/gate_s0_image_camera_ledger_v1.csv",
+      "docs/research/preregistration/gate_s0/gate_s0_input_manifest_v1.json",
+      "docs/research/preregistration/gate_s0/gate_s0_split_proposal_v1.json",
+      "docs/research/preregistration/gate_s0/issues.md",
+      "docs/research/preregistration/gate_s0/remediation_r1",
+      "phases/p2-gsjso",
+      "scripts/input_and_alignment/gate_s0/build_b_current_source_candidate.py",
+      "scripts/input_and_alignment/gate_s0/prepare_gate_s0_evidence.py",
+      "scripts/input_and_alignment/gate_s0/remediation_r1",
+      "scripts/input_and_alignment/gate_s0/validate_gate_s0_evidence.py",
+      "scripts/repository",
+      "tests/fusion_w1",
+      "tests/input_and_alignment/gate_s0/test_b_current_source_candidate.py",
+      "tests/input_and_alignment/gate_s0/test_gate_s0_evidence.py",
+      "tests/input_and_alignment/gate_s0/remediation_r1",
+      "tests/repository"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "artifact_verified",
+    "verifier_role": "experiment_host",
+    "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "commands": [
+      "docker exec -u 1000:1000 jointbuildgs-dev python scripts/repository/validate_agent_instructions.py",
+      "docker exec -u 1000:1000 jointbuildgs-dev python scripts/input_and_alignment/gate_s0/build_b_current_source_candidate.py --check",
+      "docker exec -u 1000:1000 jointbuildgs-dev python scripts/input_and_alignment/gate_s0/common_base_r2a/validate_r2a_evidence.py",
+      "docker exec -u 1000:1000 jointbuildgs-dev python -m unittest tests.repository.test_agent_instruction_sync tests.repository.test_repo_inventory tests.repository.test_two_host_handoff tests.repository.test_work_readiness tests.repository.test_research_canon_common_base tests.input_and_alignment.gate_s0.test_b_current_source_candidate tests.input_and_alignment.gate_s0.common_base_r2a.test_r2a_evidence",
+      "docker exec -u 1000:1000 jointbuildgs-dev python scripts/repository/validate_two_host_handoff.py artifacts/manifests/handoffs/P2-W2C-GATE-S0-REMEDIATION-R1-v1/300-closed.json --repo . --origin-ref 052f7d5c2be711d746f439fed7ddfe5024a985f7 --head-ref 052f7d5c2be711d746f439fed7ddfe5024a985f7",
+      "docker exec -u 1000:1000 jointbuildgs-dev python scripts/repository/validate_two_host_handoff.py artifacts/manifests/handoffs/P2-W2C-GATE-S0-EVIDENCE-R2A-v1/100-accepted.json --repo . --origin-ref cc316024238b1db4a3f15ff6a30b31d5ebae6612 --head-ref cc316024238b1db4a3f15ff6a30b31d5ebae6612",
+      "docker exec -u 1000:1000 jointbuildgs-dev python scripts/repository/validate_two_host_handoff.py artifacts/manifests/handoffs/P2-W2C-GATE-S0-EVIDENCE-R2A-v1/200-verified.json --repo . --origin-ref HEAD --head-ref HEAD --artifact-root /artifacts/JointBuildGS"
+    ],
+    "tests": [
+      {
+        "name": "agent instruction contract",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "B_current source candidate reproducibility check",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "R2A compact evidence validator",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "repository and targeted R2A regression suites",
+        "passed": 91,
+        "failed": 0
+      },
+      {
+        "name": "R1 closed and R2A accepted Git-chain validators without inherited artifact rehash",
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "name": "LoD2 source processing-stream SHA-256 matches",
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "name": "pinned cjio CityJSONSeq serialize/parse stable-ID round-trips",
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "name": "new diagnostic output pre-push SHA-256 rehash",
+        "passed": 4,
+        "failed": 0
+      }
+    ]
+  },
+  "artifacts": {
+    "required_for_task": false,
+    "availability": {
+      "work_host": "manifest_only",
+      "experiment_host": "verified_local"
+    },
+    "records": [
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/common_base_r2a/P2-GATE-S0-EVIDENCE-R2A-v1/690_5334.lod1-prisms.jsonl",
+        "bytes": 5970206,
+        "sha256": "17478671077d58545e5cc1affe2c91153abe62d4616df27b782423e386fefe19",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-01T02:18:35+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/common_base_r2a/P2-GATE-S0-EVIDENCE-R2A-v1/690_5334.lod1.city.jsonl",
+        "bytes": 8121585,
+        "sha256": "e369726c2bae54fb28807c9ecb31bb7dbcc790aa1dbeb232ece94a55d86a6980",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-01T02:18:35+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/common_base_r2a/P2-GATE-S0-EVIDENCE-R2A-v1/690_5336.lod1-prisms.jsonl",
+        "bytes": 6912597,
+        "sha256": "19f64387f676a95f84e39e5faba94cd1008b57d394a383b526c9a7ca65c2ab49",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-01T02:18:35+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/common_base_r2a/P2-GATE-S0-EVIDENCE-R2A-v1/690_5336.lod1.city.jsonl",
+        "bytes": 7468585,
+        "sha256": "190616b81ed125bd48990cefe56d321b9026ffe7bd00a18a4571e4b05470f372",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-01T02:18:35+09:00"
+      }
+    ]
+  },
+  "scientific": {
+    "technical_state": "complete",
+    "scientific_verdict": null,
+    "promotion_status": "human_review_required"
+  },
+  "receiver_ack": {
+    "role": "experiment_host",
+    "accepted_at": "2026-08-01T02:18:35+09:00",
+    "status": "verified",
+    "issue": "The bounded R2A task is technically complete and the four new diagnostic outputs are artifact-verified. The proposed state remains BLOCKED_FOR_GATE_S0_EVIDENCE_REVIEW because the exact common-base derivative chain and independent primary-C5 LoD1 remain incomplete; this is not a scientific verdict."
+  }
+}
