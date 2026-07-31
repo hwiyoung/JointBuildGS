@@ -1,0 +1,106 @@
+{
+  "schema": "jointbuildgs.gate_s0_remediation_config.v1",
+  "handoff_id": "P2-W2C-GATE-S0-REMEDIATION-R1-v1",
+  "task_id": "P2-GATE-S0-REMEDIATION-R1-v1",
+  "input_commit": "7a16085c221ccf87d16f712332ac3c97eda193b1",
+  "observed_at": "2026-07-31T22:10:00+09:00",
+  "artifact_root_uri": "file:/artifacts/JointBuildGS",
+  "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+  "opf": {
+    "relative_path": "phase-payloads/p0-audit/data/raw/uav/opf.zip",
+    "bytes": 1936493976,
+    "sha256": "ae83a054cf2f338874ff7bac7b3e17895b8e4405d429674790da3801a0352daa",
+    "project_member": "opf/project.opf",
+    "scene_member": "opf/scene_reference_frame.json",
+    "camera_member": "opf/calibrated_cameras.json",
+    "sparse_descriptor_member": "opf/sparse/pcl.gltf",
+    "role": "C3-C5 common sparse SfM initialization only; dense MVS is prohibited"
+  },
+  "candidate_aoi": {
+    "crs": "EPSG:25832",
+    "bbox": [690791.74, 5335864.05, 691154.65, 5336353.85],
+    "status": "PROPOSED_NOT_FROZEN"
+  },
+  "numeric_header_bboxes": {
+    "C1_NADIR_EPSG32632_UNREGISTERED": [690783.6963, 5335829.5007, 691260.3581, 5336389.0657],
+    "C2_MVS_EPSG32632_UNREGISTERED": [690739.9362, 5335816.1003, 691189.0598, 5336389.7838],
+    "C4_ALS_EPSG25832_PROVIDER_TILE_UNION": [690000.0, 5335000.0, 691999.999, 5336999.999]
+  },
+  "reference_tiles": [
+    {
+      "asset_id": "LOD2_REFERENCE_690_5334",
+      "relative_path": "phase-payloads/p0-audit/data/raw/lod2/690_5334.gml",
+      "bytes": 156656509,
+      "sha256": "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314"
+    },
+    {
+      "asset_id": "LOD2_REFERENCE_690_5336",
+      "relative_path": "phase-payloads/p0-audit/data/raw/lod2/690_5336.gml",
+      "bytes": 147865939,
+      "sha256": "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674"
+    }
+  ],
+  "lod1_search": {
+    "relative_scope": "phase-payloads/p0-audit/data/raw",
+    "max_depth": 4,
+    "git_manifest_query": "regular files in Git-owned artifacts/manifests tree with case-insensitive lod1 token",
+    "official_candidates": [
+      {
+        "candidate_id": "LDBV_LOD1_BY_ON_ORDER",
+        "provider": "Bavarian State Mapping Agency (LDBV/BVV)",
+        "source_url": "https://www.ldbv.bayern.de/file/pdf/4211/Faltblatt_LoD1.pdf",
+        "production_date": "CURRENT_ON_ORDER; exact release date UNKNOWN",
+        "license": "Acquisition/use terms not accepted or verified by this task",
+        "coverage": "Bavaria; exact requested AOI bytes absent",
+        "crs_datum": "Official product metadata requires acquisition-time confirmation",
+        "level_of_detail": "LoD1 block model",
+        "lineage": "Generated on order from the updated LoD2 stock; flat roof at highest ridge, ALKIS footprint and DGM base height",
+        "independent_from_scored_lod2": false,
+        "bytes_in_artifact_root": false,
+        "admissibility": "INADMISSIBLE_AS_INDEPENDENT_C5"
+      },
+      {
+        "candidate_id": "CADASTRAL_FOOTPRINT_PLUS_INDEPENDENT_HEIGHT",
+        "provider": "UNSELECTED",
+        "source_url": null,
+        "production_date": "UNKNOWN",
+        "license": "UNKNOWN",
+        "coverage": "UNKNOWN",
+        "crs_datum": "UNKNOWN",
+        "level_of_detail": "Candidate construction only; not created",
+        "lineage": "Requires a later scientific decision and independent height source",
+        "independent_from_scored_lod2": "UNKNOWN",
+        "bytes_in_artifact_root": false,
+        "admissibility": "SCIENTIFIC_DECISION_REQUIRED"
+      }
+    ]
+  },
+  "official_sources": {
+    "tum2twin_buildings": "https://tum2t.win/datasets/cm-buildings",
+    "tum2twin_opf_tutorial": "https://tum2t.win/tutorials/im-gaussiannerf",
+    "tum2twin_uas_images": "https://tum2t.win/datasets/im-uas",
+    "tum2twin_uas_lidar": "https://tum2t.win/datasets/pc-uas",
+    "tum2twin_uas_mvs": "https://tum2t.win/datasets/pc-uasp",
+    "tum2twin_als": "https://tum2t.win/datasets/pc-als",
+    "ldbv_lod2": "https://www.ldbv.bayern.de/produkte/liegenschaftsinformationen/gebaeudemodell.html",
+    "ldbv_lod1": "https://www.ldbv.bayern.de/file/pdf/4211/Faltblatt_LoD1.pdf"
+  },
+  "c2_lineage": {
+    "published_mvs_input_image_count": 1104,
+    "privacy_filtered_public_image_count": 962,
+    "calibrated_public_image_count": 937,
+    "source": "TUM2TWIN Zenodo v1.2 metadata and exact local Images.zip/OPF ledger",
+    "classification": "SENSOR_PROCESSING_BUNDLE_BASELINE",
+    "same_937_image_base": false
+  },
+  "toolchain": {
+    "main_image": "jointbuildgs:dev",
+    "main_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "p0_roofer_image": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+    "p0_tools_image": "jointbuildgs-p0-tools:t0",
+    "p0_versions_evidence": "phases/p0-audit/env/versions.md",
+    "cityjson_writer": "src/stage3/citygml_export.py",
+    "gravity_candidate": "scripts/input_and_alignment/preparation/estimate_gravity.py",
+    "hardcoded_gravity_config": "configs/input_and_alignment/tum_gravity.json"
+  }
+}

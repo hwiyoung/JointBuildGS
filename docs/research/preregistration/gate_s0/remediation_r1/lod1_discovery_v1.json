@@ -1,0 +1,67 @@
+{
+  "admissibility_definition": "C5 requires bytes for a LoD1 prior independent of the scored LoD2 reference",
+  "bounded_conclusion": "No admissible independent LoD1 bytes were found in the fixed local/Git scope. The official Bavarian LoD1 candidate is derived from the updated LoD2 stock and therefore fails C5 independence; this is not a provider-wide absence claim.",
+  "git_manifest_search": {
+    "admissible_live_byte_records": [],
+    "matches": [
+      "artifacts/manifests/gate_s0/gate_s0_lod1_search_v1.json"
+    ],
+    "matching_path_count": 1,
+    "query": "regular files in Git-owned artifacts/manifests tree with case-insensitive lod1 token"
+  },
+  "handoff_id": "P2-W2C-GATE-S0-REMEDIATION-R1-v1",
+  "local_artifact_search": {
+    "algorithm": "sorted regular non-symlink file inventory; filename token lod1",
+    "inventory_bytes": 880,
+    "inventory_entry_count": 13,
+    "inventory_sha256": "fdf6e30400394cbb8b35e78609b407dc8a07ad1f95d71d8cbfc00d617c78d6f5",
+    "matches": [],
+    "max_depth": 4,
+    "relative_scope": "phase-payloads/p0-audit/data/raw",
+    "root": "file:/artifacts/JointBuildGS"
+  },
+  "observed_at": "2026-07-31T22:10:00+09:00",
+  "official_scope": {
+    "catalog_listed_levels": [
+      "LoD3",
+      "textured LoD2",
+      "LoD2"
+    ],
+    "provider_candidates": [
+      {
+        "admissibility": "INADMISSIBLE_AS_INDEPENDENT_C5",
+        "bytes_in_artifact_root": false,
+        "candidate_id": "LDBV_LOD1_BY_ON_ORDER",
+        "coverage": "Bavaria; exact requested AOI bytes absent",
+        "crs_datum": "Official product metadata requires acquisition-time confirmation",
+        "independent_from_scored_lod2": false,
+        "level_of_detail": "LoD1 block model",
+        "license": "Acquisition/use terms not accepted or verified by this task",
+        "lineage": "Generated on order from the updated LoD2 stock; flat roof at highest ridge, ALKIS footprint and DGM base height",
+        "production_date": "CURRENT_ON_ORDER; exact release date UNKNOWN",
+        "provider": "Bavarian State Mapping Agency (LDBV/BVV)",
+        "source_url": "https://www.ldbv.bayern.de/file/pdf/4211/Faltblatt_LoD1.pdf"
+      },
+      {
+        "admissibility": "SCIENTIFIC_DECISION_REQUIRED",
+        "bytes_in_artifact_root": false,
+        "candidate_id": "CADASTRAL_FOOTPRINT_PLUS_INDEPENDENT_HEIGHT",
+        "coverage": "UNKNOWN",
+        "crs_datum": "UNKNOWN",
+        "independent_from_scored_lod2": "UNKNOWN",
+        "level_of_detail": "Candidate construction only; not created",
+        "license": "UNKNOWN",
+        "lineage": "Requires a later scientific decision and independent height source",
+        "production_date": "UNKNOWN",
+        "provider": "UNSELECTED",
+        "source_url": null
+      }
+    ],
+    "tum2twin_building_catalog": "https://tum2t.win/datasets/cm-buildings"
+  },
+  "prohibited_substitute": "Do not simplify, extrude or otherwise derive LoD1 from scored LoD2 geometry, Z, RoofSurface, roof type, semantics or final models.",
+  "schema": "jointbuildgs.gate_s0_lod1_discovery.v1",
+  "scientific_verdict": null,
+  "status": "MISSING",
+  "task_id": "P2-GATE-S0-REMEDIATION-R1-v1"
+}

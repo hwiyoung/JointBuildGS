@@ -1,0 +1,183 @@
+{
+  "allowed_role": "C3-C5 common sparse SfM initialization only; dense MVS is prohibited",
+  "archive": {
+    "bytes": 1936493976,
+    "sha256": "ae83a054cf2f338874ff7bac7b3e17895b8e4405d429674790da3801a0352daa",
+    "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/raw/uav/opf.zip",
+    "verification": "accepted receipt plus live SHA-256 rehash"
+  },
+  "coordinate_frame": {
+    "axis_unit": "E,N; metre",
+    "base_to_canonical": {
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "shift": [
+        -690953.0,
+        -5336071.0,
+        -604.0
+      ],
+      "swap_xy": false
+    },
+    "scene_definition_member": "opf/scene_reference_frame.json",
+    "source_crs": "EPSG:32632 / WGS 84 UTM zone 32N",
+    "vertical_datum": "UNKNOWN"
+  },
+  "forbidden_roles": [
+    "dense MVS initialization or supervision for C3-C5",
+    "evaluation reference",
+    "held-out selection"
+  ],
+  "handoff_id": "P2-W2C-GATE-S0-REMEDIATION-R1-v1",
+  "integration_replay_status": "PARTIAL",
+  "member_records": [
+    {
+      "archive_member": "opf/calibrated_cameras.json",
+      "decompressed_bytes": 310331,
+      "decompressed_sha256": "71823cecb137e62679736107158e72d03ec54196efa9d5456c2e3b3993a1c6f1",
+      "hash_scope": "decompressed archive-member bytes"
+    },
+    {
+      "archive_member": "opf/project.opf",
+      "decompressed_bytes": 5361,
+      "decompressed_sha256": "67b300b36d7e2adcf806553576e7bc9ea9f996338ae03b1fc5913a224e824d91",
+      "hash_scope": "decompressed archive-member bytes"
+    },
+    {
+      "archive_member": "opf/scene_reference_frame.json",
+      "decompressed_bytes": 1232,
+      "decompressed_sha256": "fb408e9c97bdad6af7ad4a6e94be823be294030907ce92e395bd63490f77daf6",
+      "hash_scope": "decompressed archive-member bytes"
+    },
+    {
+      "archive_member": "opf/sparse/0c0e099f-18d1-4e9f-806d-c6dba58640c8.glbin",
+      "decompressed_bytes": 49579776,
+      "decompressed_sha256": "2a8525578cdb5a68cfec943673e4b1e8519e8be68453e68b522e237a909937a6",
+      "hash_scope": "decompressed archive-member bytes"
+    },
+    {
+      "archive_member": "opf/sparse/22482b5f-dace-4e62-8a7c-2d31fee223db.glbin",
+      "decompressed_bytes": 16526592,
+      "decompressed_sha256": "b5b8476bd97809f9b036c1d676ed62c3f1a54cfc1c92359e8fb0c6ac7191dd65",
+      "hash_scope": "decompressed archive-member bytes"
+    },
+    {
+      "archive_member": "opf/sparse/253b3bd1-5963-4d7a-b347-ac69e91c2df6.glbin",
+      "decompressed_bytes": 33053184,
+      "decompressed_sha256": "0fbd4c3f68ac131732a3c8b265dd5ff428434709f57a4a27bb71b146473f3796",
+      "hash_scope": "decompressed archive-member bytes"
+    },
+    {
+      "archive_member": "opf/sparse/90c339c1-d0b9-45d9-9e67-d14f3d4f2856.glbin",
+      "decompressed_bytes": 4131648,
+      "decompressed_sha256": "b9c712e3dc193351246e47bc19eafae1210f2711f308bae1ae96791f1fd1d4a9",
+      "hash_scope": "decompressed archive-member bytes"
+    },
+    {
+      "archive_member": "opf/sparse/913ef87b-e32c-4f0b-a6a3-50e5fa937dba.glbin",
+      "decompressed_bytes": 16526592,
+      "decompressed_sha256": "9ca23ca110f0d3a650bfcfa94c2f701a77f3828e887d5cf3fc6aecf152208eaa",
+      "hash_scope": "decompressed archive-member bytes"
+    },
+    {
+      "archive_member": "opf/sparse/9907434f-26a8-4919-9852-1cf9d3e405c5.glbin",
+      "decompressed_bytes": 33473408,
+      "decompressed_sha256": "7a0ee0c44aba545cc305877f6daaea41a3fd7f9dd0de46f72c882aa0e229978e",
+      "hash_scope": "decompressed archive-member bytes"
+    },
+    {
+      "archive_member": "opf/sparse/a16b21d5-8557-4553-8f54-d27605815516.glbin",
+      "decompressed_bytes": 102517000,
+      "decompressed_sha256": "59f05ad5336c913d354a5c86bedab1fc75438c8d8cd2914c5afac1634f92739c",
+      "hash_scope": "decompressed archive-member bytes"
+    },
+    {
+      "archive_member": "opf/sparse/bf2cb9e2-8629-4db8-9833-b36797298c75.glbin",
+      "decompressed_bytes": 4131648,
+      "decompressed_sha256": "b9c712e3dc193351246e47bc19eafae1210f2711f308bae1ae96791f1fd1d4a9",
+      "hash_scope": "decompressed archive-member bytes"
+    },
+    {
+      "archive_member": "opf/sparse/c057171a-fe7a-4049-a7b9-65cf75938413.glbin",
+      "decompressed_bytes": 51258500,
+      "decompressed_sha256": "885b1af1edc0745d324c15bfdaa1f4a2a0c2cfbe8885cc47bb994aad05ae773b",
+      "hash_scope": "decompressed archive-member bytes"
+    },
+    {
+      "archive_member": "opf/sparse/e890d330-3464-4f0c-a345-9bab4ae0e846.glbin",
+      "decompressed_bytes": 102517000,
+      "decompressed_sha256": "276b76a8dfca49570cde4b253397f933f1f532a7daf64a3c570fb8b34cf73dc9",
+      "hash_scope": "decompressed archive-member bytes"
+    },
+    {
+      "archive_member": "opf/sparse/f429f73a-ff7d-4670-8da0-0589c66c72c3.glbin",
+      "decompressed_bytes": 4131648,
+      "decompressed_sha256": "b9c712e3dc193351246e47bc19eafae1210f2711f308bae1ae96791f1fd1d4a9",
+      "hash_scope": "decompressed archive-member bytes"
+    },
+    {
+      "archive_member": "opf/sparse/f4674db9-d321-49f3-9e16-5bbedd86cc26.glbin",
+      "decompressed_bytes": 51258500,
+      "decompressed_sha256": "c52b5787d82388c9432798e3540fc455b1106231cdf657c7c4d4966993f7ab17",
+      "hash_scope": "decompressed archive-member bytes"
+    },
+    {
+      "archive_member": "opf/sparse/pcl.gltf",
+      "decompressed_bytes": 41990,
+      "decompressed_sha256": "f794d31c4a6fe0ad2999c27e8fc92ae9b0cc45830608a8f225c71d62b955ee96",
+      "hash_scope": "decompressed archive-member bytes"
+    }
+  ],
+  "observed_at": "2026-07-31T22:10:00+09:00",
+  "project": {
+    "calibration_resource_binding": true,
+    "name": "TUMCityCampus",
+    "version": "1.1-draft1"
+  },
+  "remaining_integration_gap": "pyopf/opf2colmap replay is not callable in the current main image; no converted canonical derivative was created by this task",
+  "schema": "jointbuildgs.gate_s0_sfm_sparse_initialization.v1",
+  "scientific_verdict": null,
+  "source_record": "https://tum2t.win/tutorials/im-gaussiannerf",
+  "sparse": {
+    "camera_uid_count": 937,
+    "camera_uid_unique_count": 937,
+    "camera_uids_equal_calibrated_camera_ids": true,
+    "descriptor_member": "opf/sparse/pcl.gltf",
+    "gltf_version": "2.0",
+    "local_bounds_max": [
+      1008.24755859375,
+      1666.261962890625,
+      75.41242218017578
+    ],
+    "local_bounds_min": [
+      -1838.013916015625,
+      -1464.857666015625,
+      -1274.5384521484375
+    ],
+    "node_matrix": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      -1.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "opf_asset_version": "1.0",
+    "point_count": 4131648,
+    "producer": "Pix4D PCL IO 2.1.2"
+  },
+  "status": "READY",
+  "task_id": "P2-GATE-S0-REMEDIATION-R1-v1"
+}

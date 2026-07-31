@@ -1,0 +1,122 @@
+{
+  "geometry_reference_candidate": {
+    "condition_overlap_class": [
+      {
+        "class": "SELF_REFERENCE",
+        "condition": "C1_L_upper"
+      },
+      {
+        "class": "PARTIALLY_SHARED_SAME_CAMPAIGN_PLATFORM",
+        "condition": "C2_MVS"
+      },
+      {
+        "class": "PARTIALLY_SHARED_SAME_CAMPAIGN_PLATFORM",
+        "condition": "C3_GS_image"
+      },
+      {
+        "class": "PARTIALLY_SHARED_CURRENT_IMAGES",
+        "condition": "C4_GS_lidar_prior"
+      },
+      {
+        "class": "UNKNOWN_INPUT_MISSING",
+        "condition": "C5_GS_lod1_prior"
+      }
+    ],
+    "identity": "current 2024-12-17 UAS LiDAR nadir source",
+    "role": "positional geometry reference candidate only",
+    "status": "PARTIAL",
+    "uncertainty": "vertical datum, registration residual and independent uncertainty are not frozen"
+  },
+  "handoff_id": "P2-W2C-GATE-S0-REMEDIATION-R1-v1",
+  "observed_at": "2026-07-31T22:10:00+09:00",
+  "schema": "jointbuildgs.gate_s0_evaluation_reference_lineage.v1",
+  "scientific_verdict": null,
+  "source_records": [
+    "https://tum2t.win/datasets/cm-buildings",
+    "https://www.ldbv.bayern.de/produkte/liegenschaftsinformationen/gebaeudemodell.html",
+    "https://www.ldbv.bayern.de/file/pdf/4211/Faltblatt_LoD1.pdf"
+  ],
+  "structure_reference": {
+    "allowed_selection_fields": [
+      "gml:id",
+      "GroundSurface XY coverage"
+    ],
+    "candidate_diagnostic": {
+      "c1_nadir_numeric_bbox_full_unregistered_count": 187,
+      "c2_mvs_numeric_bbox_full_unregistered_count": 197,
+      "c4_provider_tile_full_unregistered_count": 199,
+      "candidate_count": 199,
+      "reference_building_count": 12049,
+      "reference_unique_external_id_count": 12049,
+      "reference_unique_stable_id_count": 12049,
+      "selection_attributes_excluded": [
+        "RoofSurface",
+        "roof type",
+        "semantic evaluation labels",
+        "method outcomes"
+      ],
+      "selection_geometry": "score-only GroundSurface XY bounding-box intersection",
+      "source_counts": {
+        "LOD2_REFERENCE_690_5334": 35,
+        "LOD2_REFERENCE_690_5336": 164
+      },
+      "stable_id_external_id_pair_sha256": "330598a07840972e1371aa77b21ee42f19065c8c401fa8f1b78b3bb82f6f44da",
+      "stable_id_set_sha256": "047717a5d678aeed540602a2d4fc9a57a076e2ac9205b22a4de75315c1622fe5"
+    },
+    "crs_datum": "ETRS89/UTM32 + DHHN2016 NH",
+    "exact_records": [
+      {
+        "asset_id": "LOD2_REFERENCE_690_5334",
+        "bytes": 156656509,
+        "relative_path": "phase-payloads/p0-audit/data/raw/lod2/690_5334.gml",
+        "sha256": "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314"
+      },
+      {
+        "asset_id": "LOD2_REFERENCE_690_5336",
+        "bytes": 147865939,
+        "relative_path": "phase-payloads/p0-audit/data/raw/lod2/690_5336.gml",
+        "sha256": "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674"
+      }
+    ],
+    "forbidden_input_fields": [
+      "LoD2 Z",
+      "RoofSurface",
+      "roof type",
+      "semantic class",
+      "final roof model"
+    ],
+    "format": "CityGML 1.0 LoD2",
+    "identity": "Bavarian LoD2 CityGML tiles 690_5334 and 690_5336",
+    "production_lineage": "Provider-described ALKIS building footprints with roofs derived from then-current ALS, ALKIS 3D survey or image DSM; exact local tile/version/epoch and per-building source/date are unbound and were not promoted to inputs",
+    "provider": "Bavarian State Mapping Agency via TUM2TWIN",
+    "uncertainty": "official current page states horizontal accuracy follows ALKIS and typical height accuracy about 1 m; complex roofs may be worse"
+  },
+  "structure_reference_overlap_class": [
+    {
+      "basis": "current UAS LiDAR is a separate 2024 asset, but reference production may include unbound ALS/image DSM lineage",
+      "class": "UNKNOWN_OR_PARTIALLY_SHARED",
+      "condition": "C1_L_upper"
+    },
+    {
+      "basis": "current MVS is a separate Pix4D bundle; no exact per-building LoD2 production source/date overlap is bound",
+      "class": "UNKNOWN",
+      "condition": "C2_MVS"
+    },
+    {
+      "basis": "current images are separate and no exact per-building LoD2 production source/date overlap is bound",
+      "class": "UNKNOWN",
+      "condition": "C3_GS_image"
+    },
+    {
+      "basis": "existing ALS and LoD2 are Bavarian products and LoD2 may use ALS/ALKIS sources, but exact local tile/version/epoch contribution is unbound",
+      "class": "UNKNOWN_OR_PARTIALLY_SHARED",
+      "condition": "C4_GS_lidar_prior"
+    },
+    {
+      "basis": "official Bavarian LoD1 is generated from updated LoD2 stock; no independent C5 asset exists",
+      "class": "PROHIBITED_DERIVATIVE_CANDIDATE",
+      "condition": "C5_GS_lod1_prior"
+    }
+  ],
+  "task_id": "P2-GATE-S0-REMEDIATION-R1-v1"
+}

@@ -1,0 +1,21 @@
+condition,field,status,evidence,required_next_evidence
+C1_L_upper,asset_identity,PARTIAL,nadir is version-stable and proposed primary; local manual is legacy Zenodo v1.0 bytes and differs from latest v1.2,retain NADIR_ONLY proposal and bind exact source versions
+C1_L_upper,sensor_role,READY,DJI Matrice 350 RTK + Zenmuse L2 current UAS LiDAR; not ALS,retain C1-only role
+C1_L_upper,class_2_6_derivative,MISSING,source sample is class 0 and no derivative receipt exists,approved non-GT classifier and immutable derivative
+C1_L_upper,datum_registration_coverage,UNKNOWN,horizontal EPSG:32632 is bound; vertical datum and building coverage are not,"datum binding, residuals and per-ID coverage"
+C2_MVS,asset_identity,READY,exact Pix4Dmatic 1.58.1 dense MVS bytes are hash-bound,retain C2-only dense role
+C2_MVS,same_937_image_base,MISSING,published MVS uses 1104 acquired images while public archive has 962 and OPF calibrates 937,do not label C2-vs-C3 as method-only
+C2_MVS,interpretation,READY,honest label frozen as sensor-processing-bundle baseline,carry limitation into Gate and results
+C2_MVS,datum_registration_class,PARTIAL,EPSG:32632 and EGM96 are known; transform/residual and class 2/6 derivative absent,replayable transform and classifier derivative
+C3_GS_image,image_camera_base,READY,"962 images, 937 calibrated poses and 25 deterministic exclusions remain frozen",building-level view support join
+C3_GS_image,sparse_initialization,READY,"OPF sparse artifact has 4,131,648 points and exact 937-camera UID equality",callable conversion/integration replay
+C3_GS_image,dense_mvs_separation,READY,dense MVS is prohibited from initialization/supervision,enforce later config guard
+C4_GS_lidar_prior,asset_identity,READY,four exact 2022 regional ALS tiles are distinct from current UAS LiDAR,bind derivative receipt
+C4_GS_lidar_prior,temporal_sensor_independence_from_c1,READY,regional ALS 2022 versus UAS LiDAR 2024 with distinct platform/provider roles,retain separate namespaces
+C4_GS_lidar_prior,reference_independence,PARTIAL,LoD2 production can use ALS and shares ALKIS footprint lineage,per-building production/source overlap classification
+C4_GS_lidar_prior,coverage_registration_confidence,UNKNOWN,tile extents exist but building overlap/residual/confidence semantics do not,"per-ID overlap, residual and metadata semantics"
+C5_GS_lod1_prior,independent_lod1,MISSING,no admissible independent bytes; official LoD1 derives from updated LoD2 stock,acquire/license/hash-bind independent candidate
+C5_GS_lod1_prior,leakage_guard,READY,LoD2-derived LoD1 and scored attributes remain prohibited,retain automated manifest guard
+ALL,U_target,UNKNOWN,199 stable IDs are a reference-intersection diagnostic only,building-level current-image and condition coverage joins
+ALL,E_paired,UNKNOWN,C5 is MISSING and C1/C2/C4 eligibility joins are unresolved,complete all-condition attemptability ledger
+ALL,cost_bounds,UNKNOWN,no comparable bounded non-held-out calibration receipt,separately approved non-held-out calibration after data readiness

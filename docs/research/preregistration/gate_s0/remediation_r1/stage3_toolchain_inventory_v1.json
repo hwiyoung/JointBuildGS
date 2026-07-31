@@ -1,0 +1,117 @@
+{
+  "command_inventory": [
+    {
+      "command": "roofer",
+      "path": null,
+      "status": "MISSING",
+      "version": null
+    },
+    {
+      "command": "roofer-cli",
+      "path": null,
+      "status": "MISSING",
+      "version": null
+    },
+    {
+      "command": "cjio",
+      "path": "/opt/conda/bin/cjio",
+      "status": "FOUND",
+      "version": "cjio v0.10.1; supports CityJSON v2.0",
+      "version_exit_code": 0
+    },
+    {
+      "command": "cjval",
+      "path": null,
+      "status": "MISSING",
+      "version": null
+    },
+    {
+      "command": "val3dity",
+      "path": null,
+      "status": "MISSING",
+      "version": null
+    },
+    {
+      "command": "ogr2ogr",
+      "path": null,
+      "status": "MISSING",
+      "version": null
+    },
+    {
+      "command": "pdal",
+      "path": null,
+      "status": "MISSING",
+      "version": null
+    }
+  ],
+  "components": [
+    {
+      "classification": "MISSING_IN_CURRENT_IMAGE",
+      "component": "Roofer evidence-to-CityGML",
+      "missing_dependency": "pinned Roofer image is not locally available; no pull/build authorized",
+      "replay_path": "phases/p0-audit/env/versions.md",
+      "version": "P0 replay evidence pins Roofer 1.0.0"
+    },
+    {
+      "classification": "PARTIAL_PRODUCTION_CODE",
+      "component": "CityJSON writer",
+      "missing_dependency": "not integrated as a common C1-C5 writer; filename does not imply CityGML serialization",
+      "replay_path": "src/stage3/citygml_export.py",
+      "version": "Python repository code; cjio 0.10.1 present"
+    },
+    {
+      "classification": "MISSING_IN_CURRENT_IMAGE",
+      "component": "CityGML writer/converter",
+      "missing_dependency": "citygml-tools/ogr2ogr absent and no canonical common serializer exists",
+      "replay_path": "phases/p0-audit/env/versions.md",
+      "version": "P0 replay evidence pins citygml-tools 2.5.0"
+    },
+    {
+      "classification": "MISSING_IN_CURRENT_IMAGE",
+      "component": "cjval/val3dity validation",
+      "missing_dependency": "cjval and val3dity executables absent",
+      "replay_path": "phases/p0-audit/env/versions.md",
+      "version": "P0 replay evidence pins val3dity 2.6.0; cjio 0.10.1 is present"
+    },
+    {
+      "classification": "MISSING_CANONICAL_IMPLEMENTATION",
+      "component": "gravity from terrain MVS normals",
+      "missing_dependency": "candidate estimator is MatrixCity GT-normal based; TUM config is hardcoded Z-up and is inadmissible",
+      "replay_path": "scripts/input_and_alignment/preparation/estimate_gravity.py",
+      "version": null
+    },
+    {
+      "classification": "MISSING_CANONICAL_IMPLEMENTATION",
+      "component": "non-GT R_derived common protocol",
+      "missing_dependency": "no production implementation/config/hash found outside historical/test material",
+      "replay_path": null,
+      "version": null
+    },
+    {
+      "classification": "MISSING_CANONICAL_IMPLEMENTATION",
+      "component": "G0-G4 common reporting",
+      "missing_dependency": "no common C1-C5 field writer or replay path found",
+      "replay_path": null,
+      "version": null
+    }
+  ],
+  "current_image": "jointbuildgs:dev",
+  "current_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+  "handoff_id": "P2-W2C-GATE-S0-REMEDIATION-R1-v1",
+  "observed_at": "2026-07-31T22:10:00+09:00",
+  "overall_status": "BLOCKED",
+  "p0_replay_images": [
+    {
+      "image": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+      "local_availability": "ABSENT"
+    },
+    {
+      "image": "jointbuildgs-p0-tools:t0",
+      "local_availability": "ABSENT"
+    }
+  ],
+  "schema": "jointbuildgs.gate_s0_stage3_toolchain_inventory.v1",
+  "scientific_verdict": null,
+  "task_id": "P2-GATE-S0-REMEDIATION-R1-v1",
+  "thresholds_or_adapter_selected": false
+}
