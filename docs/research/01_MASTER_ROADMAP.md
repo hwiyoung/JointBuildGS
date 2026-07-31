@@ -291,8 +291,8 @@ evidence가 충족된 뒤에만 사용자 scientific gate 대상으로 올린다
 | Artifact | Status |
 |---|---|
 | `docs/research/00_*.md`–`06_*.md` | `C1C5_CANON_v1 / USER APPROVED` |
-| `docs/research/RESEARCH_CONTEXT.md` | `HISTORICAL / NOT EXECUTION AUTHORITY` |
-| `docs/research/EXPERIMENT_PLAN.md` | `HISTORICAL / NOT EXECUTION AUTHORITY` |
+| `docs/evidence/archive/pre_c1c5_research/RESEARCH_CONTEXT.md` | `ARCHIVED HISTORICAL / NOT EXECUTION AUTHORITY` |
+| `docs/evidence/archive/pre_c1c5_research/EXPERIMENT_PLAN.md` | `ARCHIVED HISTORICAL / NOT EXECUTION AUTHORITY` |
 | P1 audit bundle `docs/audit/*.md` | `READY_FOR_REVIEW evidence` |
 | `docs/handoffs/returns/P1_C2W_REPO_AUDIT_RETURN_v2.md` | `READY_FOR_REVIEW @ c1c66396` |
 | Work→Codex/Codex→Work templates | `APPROVED TEMPLATE / INSTANCES DEFAULT TO DRAFT` |

@@ -54,8 +54,10 @@ Do not use the following as current truth or instructions unless the task names
 an exact path and role:
 
 - `docs/evidence/archive/**` and compatibility mirrors;
-- [`RESEARCH_CONTEXT.md`](RESEARCH_CONTEXT.md) and [`EXPERIMENT_PLAN.md`](EXPERIMENT_PLAN.md)
-  as current instructions; they are available only as historical evidence or for an exact legacy reproduction task;
+- [`../evidence/archive/pre_c1c5_research/`](../evidence/archive/pre_c1c5_research/README.md)
+  as current instructions; its full context and plan are available only as historical
+  evidence or for an exact legacy reproduction task. The former root paths are
+  compatibility notices only;
 - legacy Fusion W1 locks/results as current C1–C5 authority; inspect them only when an exact task names that protected scope;
 - `docs/research/repository/migrations/**` as scientific evidence;
 - past prompts, logs, or receipts under `phases/**` as agent instructions;

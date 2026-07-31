@@ -367,7 +367,7 @@ P4 primary 잠금 뒤 `E_paired` census를 별도 실행한다. 이 census가 �
   `R_ext`는 별도 정책 승인 전까지 비실행 범위 밖이다.
 - `MAJOR`: 공식 source에서 직접 LoD1을 확인하지 못함.
 - `RESOLVED BY DEC-P1-008`: TUM2TWIN 중심 C1–C5가 현재 data-role 정본이며
-  `EXPERIMENT_PLAN.md`의 dataset-role은 역사 기록이다.
+  `docs/evidence/archive/pre_c1c5_research/EXPERIMENT_PLAN.md`의 dataset-role은 역사 기록이다.
 - `PARTIAL`: Gate S0 표적 11개 payload는 Experiment Host에서 exact bytes로 검증됐다.
   다만 독립 LoD1, C3–C5 sparse initialization, condition별 변환·registration·coverage
   lineage는 아직 exact payload/derivative 계약과 연결되지 않았다.

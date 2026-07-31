@@ -514,5 +514,5 @@ building acceptance threshold로 자동 이식하지 않는다.
 - `MAJOR`: bootstrap logical `results/` 경로가 top-level repository contract와 충돌해
   외부 artifact path로 매핑해야 한다.
 - `RESOLVED BY DEC-P1-008`: G0–G4가 현재 C1–C5 contract이고
-  `EXPERIMENT_PLAN.md`의 기존 gate/metric은 역사 기록이다.
+  `docs/evidence/archive/pre_c1c5_research/EXPERIMENT_PLAN.md`의 기존 gate/metric은 역사 기록이다.
 - `DEFERRED`: numerical PASS threshold와 prior loss는 이 문서에서 결정하지 않았다.

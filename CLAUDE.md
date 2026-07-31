@@ -24,12 +24,12 @@ becoming GS training runs.
 
 The durable five-condition research definitions are the ordered contract set
 `docs/research/00_RESEARCH_CHARTER.md` through
-`docs/research/06_DECISION_LOG.md`. `docs/research/RESEARCH_CONTEXT.md` and
-`docs/research/EXPERIMENT_PLAN.md` are retained historical records of the legacy
-four-condition geometry-semantics program and are not execution authority for new
-work unless an exact historical-reproduction task names them. Agents produce
-measurements, artifacts, gates, and issues; the human reviewer makes scientific
-verdicts.
+`docs/research/06_DECISION_LOG.md`. The full legacy four-condition records are archived
+under `docs/evidence/archive/pre_c1c5_research/`; the former paths under
+`docs/research/` are compatibility notices only. Archived context and plans are not
+execution authority for new work unless an exact historical-reproduction task names
+them. Agents produce measurements, artifacts, gates, and issues; the human reviewer
+makes scientific verdicts.
 
 ## Repository ownership
 

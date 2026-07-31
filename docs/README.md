@@ -13,8 +13,11 @@
 ## 시작점
 
 - ChatGPT Work 정본 진입점: [`research/WORK_START_HERE.md`](research/WORK_START_HERE.md)
-- 연구 맥락: [`research/RESEARCH_CONTEXT.md`](research/RESEARCH_CONTEXT.md)
-- 실험 계획: [`research/EXPERIMENT_PLAN.md`](research/EXPERIMENT_PLAN.md)
+- 현재 연구 정본: [`research/00_RESEARCH_CHARTER.md`](research/00_RESEARCH_CHARTER.md)–
+  [`research/06_DECISION_LOG.md`](research/06_DECISION_LOG.md)
+- 현재 단계·실험 순서: [`research/01_MASTER_ROADMAP.md`](research/01_MASTER_ROADMAP.md)
+- legacy 4조건 문서:
+  [`evidence/archive/pre_c1c5_research/`](evidence/archive/pre_c1c5_research/README.md)
 - 저장소 계약: [`research/repository/TOP_LEVEL_DIRECTORY_CONTRACT.md`](research/repository/TOP_LEVEL_DIRECTORY_CONTRACT.md)
 - 현재 구조: [`research/repository/REPOSITORY_STRUCTURE_FINAL.md`](research/repository/REPOSITORY_STRUCTURE_FINAL.md)
 - 문서 정본 지도: [`research/repository/CANONICAL_MAP.md`](research/repository/CANONICAL_MAP.md)

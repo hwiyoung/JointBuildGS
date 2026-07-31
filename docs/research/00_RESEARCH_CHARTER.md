@@ -6,8 +6,8 @@
 - 저장소 유효 단계: `C1–C5 PROGRAM / GATE S0 EVIDENCE REVIEW PENDING / PERFORMANCE BLOCKED`
 - 작성일: 2026-07-31
 - 승인 상태: `USER APPROVED AS CURRENT RESEARCH CANON — 2026-07-31`
-- 효력: **현재 C1–C5 연구·실행 정본**. `RESEARCH_CONTEXT.md`와
-  `EXPERIMENT_PLAN.md`의 기존 4조건 프로그램은 역사 기록이며 새 작업의 실행
+- 효력: **현재 C1–C5 연구·실행 정본**. `docs/evidence/archive/pre_c1c5_research/`의
+  기존 4조건 context/plan은 역사 기록이며 새 작업의 실행
   authority가 아니다. 기존 Fusion W1 artifact와 lock은 보호·보존하지만 현재
   C1–C5 프로그램을 지시하지 않는다.
 
@@ -374,8 +374,8 @@ robustness로 표현을 제한한다.
 
 ## 15. Consistency review
 
-- **Resolved by DEC-P1-008:** 00–06이 현재 C1–C5 정본이며 기존
-  `RESEARCH_CONTEXT.md`/`EXPERIMENT_PLAN.md`는 역사 기록이다.
+- **Resolved by DEC-P1-008:** 00–06이 현재 C1–C5 정본이며
+  `docs/evidence/archive/pre_c1c5_research/`의 기존 context/plan은 역사 기록이다.
 - **Resolved by DEC-P1-008:** 기존 P2/Fusion W1은 보호된 capability evidence이며
   현재 실행 authority가 아니다.
 - **Resolved for P1:** 외부 roofprint는 범위 밖이며 `R_derived`만 primary다.

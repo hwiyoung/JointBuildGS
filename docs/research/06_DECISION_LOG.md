@@ -6,7 +6,7 @@
 - 승인 상태: `USER APPROVED CURRENT C1–C5 CANON — 2026-07-31`
 
 `DEC-P1-008` 이후 이 log와 00–06 contract set이 현재 C1–C5 프로그램을 통제한다.
-`RESEARCH_CONTEXT.md`와 `EXPERIMENT_PLAN.md`는 기존 4조건 프로그램의 역사 기록이다.
+`docs/evidence/archive/pre_c1c5_research/`의 context/plan은 기존 4조건 프로그램의 역사 기록이다.
 기존 Fusion W1 lock과 artifact는 보호하지만 현재 프로그램의 실행 authority는 아니다.
 
 ## Decision schema
@@ -263,8 +263,8 @@
 - **Decision ID:** `DEC-P1-008`
 - **Date:** 2026-07-31
 - **Status:** `USER-APPROVED RESEARCH CANON DECISION`
-- **Previous state:** 00–06은 P1 audit 기준으로만 승인됐고 `RESEARCH_CONTEXT.md`,
-  `EXPERIMENT_PLAN.md`와 Fusion W1이 계속 우선했다. 기존 4조건과 새 5조건의 관계는
+- **Previous state:** 00–06은 P1 audit 기준으로만 승인됐고 현재 archive로 이동한
+  legacy context/plan과 Fusion W1이 계속 우선했다. 기존 4조건과 새 5조건의 관계는
   pending decision이었다.
 - **New decision:** 연구 앵커를 “불완전하지만 재사용 가능한 기구축 3D 자산의 구조적
   안정성과 최신 항공영상의 현재성·세부 관측을 상보적으로 결합하여 자동 LoD2 생성이
@@ -278,7 +278,7 @@
   다른 연구목적·조건·phase를 제시했기 때문이다.
 - **Affected phases:** P2 Gate S0, P2–P4
 - **Affected documents:** root `AGENTS.md`/`CLAUDE.md`, `docs/research/00_*.md`–`06_*.md`,
-  `RESEARCH_CONTEXT.md`, `EXPERIMENT_PLAN.md`, research entrypoints, Gate S0 packet
+  archived legacy context/plan, research entrypoints, Gate S0 packet
 - **User approval:** `GRANTED FOR CURRENT RESEARCH CANON AND AUTONOMOUS PREPARATION`
 - **Superseded decisions:** audit-only/legacy-authority 제한과 아래 pending relation을
   supersede한다. `DEC-P1-006`의 Fusion 보호, `R_derived` primary, `R_ext` 비실행은 유지한다.

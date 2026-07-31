@@ -137,7 +137,12 @@ class RepoInventoryUnitTests(unittest.TestCase):
         self.assertFalse(
             repo_inventory.is_document_scope("docs/research/repository/DOCUMENT_CATALOG.csv", config)
         )
-        self.assertTrue(repo_inventory.is_document_scope("docs/research/RESEARCH_CONTEXT.md", config))
+        self.assertTrue(
+            repo_inventory.is_document_scope(
+                "docs/evidence/archive/pre_c1c5_research/RESEARCH_CONTEXT.md",
+                config,
+            )
+        )
 
     def test_filename_candidate_lineage_is_not_an_approval(self):
         rows = []

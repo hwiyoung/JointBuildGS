@@ -38,7 +38,7 @@ writer 순번이 Work Host로 돌아온다.
 8. bootstrap prompt
 
 `DEC-P1-008`에 따라 00–06은 현재 C1–C5 실행 정본이다. 기존
-`RESEARCH_CONTEXT.md`와 `EXPERIMENT_PLAN.md`는 역사 기록이며 새 task를 지시하지
+`docs/evidence/archive/pre_c1c5_research/`의 context/plan은 역사 기록이며 새 task를 지시하지
 않는다. 기존 Fusion W1 preregistration/lock은 그 legacy artifact를 재현할 때만
 유효하고 현재 C1–C5 program을 override하지 않는다. 데이터 사실·threshold·method
 중 일부는 Gate S0와 후속 phase까지 `PROVISIONAL` 또는 `DEFERRED`다.
