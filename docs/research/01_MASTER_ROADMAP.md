@@ -179,7 +179,7 @@ primary 잠금 뒤 별도 census로 수행한다. 이 census를 완료하지 않
 | P1 repository audit v1 | Codex | `TECHNICAL_BLOCKED / SUPERSEDED` | `200-blocked.json` | 재개 금지 |
 | P1 repository audit v2 | Codex | `READY_FOR_REVIEW / TECHNICAL CLOSED` | `c1c66396`, closed `8a6b5e61` | Gate S0 input evidence |
 | P1 audit integration | Work | `IN_PROGRESS` | current canon update | audit limitations → Gate S0 packet |
-| Gate S0 evidence preparation | Work→Codex | `DRAFT` | `P2_W2C_GATE_S0_PREPARATION_v1.md` | canon, approval, offered receipt |
+| Gate S0 evidence preparation | Work→Codex | `APPROVED / OFFER PENDING` | `P2_W2C_GATE_S0_PREPARATION_v1.md` | offered receipt + Experiment acceptance |
 
 ## Decision Status Register
 
@@ -249,7 +249,7 @@ primary 잠금 뒤 별도 census로 수행한다. 이 census를 완료하지 않
 |---|---|---:|---|---|
 | `P1-W2C-REPO-AUDIT` | Work→Codex | v1 | `SUPERSEDED / TECHNICAL_BLOCKED` | 아니오 |
 | `P1-W2C-REPO-AUDIT-R2` | Work→Codex | v2 | `READY_FOR_REVIEW / TECHNICAL CLOSED@8a6b5e61` | 완료 작업; 재실행 아님 |
-| `P2-W2C-GATE-S0-PREP-v1` | Work→Codex | v1 | `DRAFT / CANONICALIZING` | approval + offered/accepted 후 |
+| `P2-W2C-GATE-S0-PREP-v1` | Work→Codex | v1 | `APPROVED_FOR_EXECUTION / OFFER_PENDING` | offered/accepted 후 |
 
 Gate S0 evidence preparation 전 필요한 순서:
 
@@ -291,7 +291,7 @@ preparation을 시작하기 위한 추가 질문이 아니다.
 | Work→Codex/Codex→Work templates | `APPROVED TEMPLATE / INSTANCES DEFAULT TO DRAFT` |
 | `docs/handoffs/P1_W2C_REPO_AUDIT_v1.md` | `SUPERSEDED / TECHNICAL_BLOCKED` |
 | `docs/handoffs/P1_W2C_REPO_AUDIT_v2.md` | `HISTORICAL EXECUTED PACKET` |
-| `docs/handoffs/P2_W2C_GATE_S0_PREPARATION_v1.md` | `DRAFT / CANON SOURCE PENDING` |
+| `docs/handoffs/P2_W2C_GATE_S0_PREPARATION_v1.md` | `APPROVED_FOR_EXECUTION / SOURCE 0716c925` |
 
 P1 감사는 문서 준비도를 완료했지만 data READY, Gate S0 승인 또는 과학적 판정은 아니다.
 

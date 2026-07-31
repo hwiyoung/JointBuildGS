@@ -5,9 +5,9 @@
 - handoff_id: `P2-W2C-GATE-S0-PREP-v1`
 - phase: `P2 / pre-result Gate S0 preparation`
 - direction: `Work→Codex`
-- status: `DRAFT`
+- status: `APPROVED_FOR_EXECUTION`
 - packet_version: `v1`
-- source_commit: `TO_BE_FILLED_BY_USER_BEFORE_APPROVAL`
+- source_commit: `0716c925b43aa401ced47f2311ca28663b290a44`
 - audit_commit: `c1c6639611bd26e29699337a03f447972676af75`
 - target_branch: `main`
 - research_charter_version: `C1C5_CANON_v1`
@@ -17,11 +17,16 @@
 - decision_log_through: `DEC-P1-008`
 - supersedes: null
 - created_at: `2026-07-31T19:08:41+09:00`
-- user_approval: `NOT_GRANTED`
+- approved_at: `2026-07-31T19:39:06+09:00`
+- user_approval: `GRANTED — current C1–C5 canon and autonomous Gate S0 preparation`
+- approval_basis: `user instruction in Work Host task on 2026-07-31; DEC-P1-008`
+- repository_effective_phase: `C1–C5 PROGRAM / P2 ENTRY GATE S0 PREPARATION`
 - scientific_verdict: null
 
-This packet is a proposal only. It cannot be executed until the source snapshot,
-scientific canon update, explicit user approval, and technical handoff are complete.
+This packet authorizes Gate S0 evidence preparation only. The scientific canon,
+source snapshot and explicit user approval are fixed above. Execution remains blocked
+until the immutable technical handoff, complete activation tuple and Experiment Host
+acceptance pass.
 
 In this packet, **write ownership is an operational serialization state**, not a
 grant or revocation of either host's filesystem permissions. The Work Host may
@@ -180,9 +185,9 @@ status of `EXPERIMENT_PLAN.md` unambiguous before this packet is approved.
 ## Preflight
 
 - [ ] User supplied the complete activation tuple.
-- [ ] Packet status and user approval are `APPROVED_FOR_EXECUTION`.
-- [ ] `source_commit` is a non-placeholder approved snapshot.
-- [ ] The C1–C5 contract is authoritative and `EXPERIMENT_PLAN.md` is historical only.
+- [x] Packet status and user approval are `APPROVED_FOR_EXECUTION`.
+- [x] `source_commit` is a non-placeholder approved snapshot.
+- [x] The C1–C5 contract is authoritative and `EXPERIMENT_PLAN.md` is historical only.
 - [ ] Experiment Host checkout is clean and `origin/main` matches the offered commit.
 - [ ] Offered and accepted receipts pass the two-host validator.
 - [ ] Legacy P2/Fusion W1, held-out, and `R_ext` protections are confirmed.
