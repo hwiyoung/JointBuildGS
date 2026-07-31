@@ -1,0 +1,140 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P2-W2C-GATE-S0-EVIDENCE-R2A-v1",
+  "task_id": "P2-GATE-S0-EVIDENCE-R2A-v1",
+  "created_at": "2026-08-01T01:59:59+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "accepted",
+  "previous_receipt": {
+    "path": "artifacts/manifests/handoffs/P2-W2C-GATE-S0-EVIDENCE-R2A-v1/000-offered.json",
+    "sha256": "7d9c3ab856845dd4474f8a3c4841b88f9911e3110f22644fdab0eace4f3555a5"
+  },
+  "transport": {
+    "mode": "serialized_main",
+    "branch": "main",
+    "target_branch": "main",
+    "exclusive_writer_ack": true
+  },
+  "commits": {
+    "base_main": "276e05fd21d63b36703491e1e998cb172c5dead0",
+    "offered_head": "dad59bef72f259796677f4993412a116e21dc5a4",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-EVIDENCE-R2A-v1",
+      "artifacts/manifests/gate_s0/common_base_r2a",
+      "configs/input_and_alignment/gate_s0/common_base_r2a",
+      "docs/handoffs/returns/P2_C2W_GATE_S0_EVIDENCE_R2A_RETURN_v1.md",
+      "docs/research/preregistration/gate_s0/common_base_r2a",
+      "scripts/input_and_alignment/gate_s0/common_base_r2a",
+      "tests/input_and_alignment/gate_s0/common_base_r2a"
+    ],
+    "protected_paths": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      "artifacts/manifests/handoffs/P1-W2C-REPO-AUDIT-R2",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-PREP-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-REMEDIATION-R1-v1",
+      "artifacts/manifests/local_workspace_20260730.yaml",
+      "artifacts/manifests/gate_s0/b_current_source_candidate_v1.json",
+      "artifacts/manifests/gate_s0/gate_s0_candidate_aoi_v1.geojson",
+      "artifacts/manifests/gate_s0/gate_s0_image_member_inventory_v1.csv",
+      "artifacts/manifests/gate_s0/gate_s0_live_artifact_records_v1.json",
+      "artifacts/manifests/gate_s0/gate_s0_lod1_search_v1.json",
+      "artifacts/manifests/gate_s0/gate_s0_output_manifest_v1.json",
+      "artifacts/manifests/gate_s0/remediation_r1",
+      "configs/input_and_alignment/gate_s0/gate_s0_evidence_v1.json",
+      "configs/input_and_alignment/gate_s0/remediation_r1",
+      "configs/repository",
+      "docs/evidence",
+      "docs/experiments/pilots/fusion_w1",
+      "docs/handoffs/HANDOFF_INDEX.md",
+      "docs/handoffs/P2_W2C_GATE_S0_PREPARATION_v1.md",
+      "docs/handoffs/P2_W2C_GATE_S0_REMEDIATION_R1_v1.md",
+      "docs/handoffs/P2_W2C_GATE_S0_EVIDENCE_R2A_v1.md",
+      "docs/handoffs/returns/P2_C2W_GATE_S0_PREPARATION_RETURN_v1.md",
+      "docs/handoffs/returns/P2_C2W_GATE_S0_REMEDIATION_R1_RETURN_v1.md",
+      "docs/research/00_RESEARCH_CHARTER.md",
+      "docs/research/01_MASTER_ROADMAP.md",
+      "docs/research/02_NOVELTY_MAP.md",
+      "docs/research/03_DATA_AND_BASELINE_SCOPE.md",
+      "docs/research/04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md",
+      "docs/research/05_HANDOFF_PROTOCOL.md",
+      "docs/research/06_DECISION_LOG.md",
+      "docs/research/EXPERIMENT_PLAN.md",
+      "docs/research/RESEARCH_CONTEXT.md",
+      "docs/research/WORK_START_HERE.md",
+      "docs/research/preregistration/fusion_w1",
+      "docs/research/preregistration/quality_axis",
+      "docs/research/preregistration/gate_s0/B_CURRENT_SOURCE_CANDIDATE_v1.md",
+      "docs/research/preregistration/gate_s0/GATE_S0_FREEZE_PACKET_v1.md",
+      "docs/research/preregistration/gate_s0/GATE_S0_EVIDENCE_REPORT_v1.md",
+      "docs/research/preregistration/gate_s0/WORK_HOST_CROSS_REVIEW_v1.md",
+      "docs/research/preregistration/gate_s0/gate_s0_condition_readiness_v1.csv",
+      "docs/research/preregistration/gate_s0/gate_s0_cost_bounds_v1.csv",
+      "docs/research/preregistration/gate_s0/gate_s0_eligibility_funnel_v1.csv",
+      "docs/research/preregistration/gate_s0/gate_s0_image_camera_ledger_v1.csv",
+      "docs/research/preregistration/gate_s0/gate_s0_input_manifest_v1.json",
+      "docs/research/preregistration/gate_s0/gate_s0_split_proposal_v1.json",
+      "docs/research/preregistration/gate_s0/issues.md",
+      "docs/research/preregistration/gate_s0/remediation_r1",
+      "phases/p2-gsjso",
+      "scripts/input_and_alignment/gate_s0/build_b_current_source_candidate.py",
+      "scripts/input_and_alignment/gate_s0/prepare_gate_s0_evidence.py",
+      "scripts/input_and_alignment/gate_s0/remediation_r1",
+      "scripts/input_and_alignment/gate_s0/validate_gate_s0_evidence.py",
+      "scripts/repository",
+      "tests/fusion_w1",
+      "tests/input_and_alignment/gate_s0/test_b_current_source_candidate.py",
+      "tests/input_and_alignment/gate_s0/test_gate_s0_evidence.py",
+      "tests/input_and_alignment/gate_s0/remediation_r1",
+      "tests/repository"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "git_only",
+    "verifier_role": "experiment_host",
+    "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "commands": [
+      "docker exec jointbuildgs-dev python scripts/repository/validate_two_host_handoff.py artifacts/manifests/handoffs/P2-W2C-GATE-S0-EVIDENCE-R2A-v1/000-offered.json --repo . --origin-ref origin/main --head-ref HEAD",
+      "docker exec jointbuildgs-dev python -c 'import json; p=json.load(open(\"artifacts/manifests/handoffs/P2-W2C-GATE-S0-EVIDENCE-R2A-v1/000-offered.json\")); assert p[\"artifacts\"][\"required_for_task\"] is False; assert p[\"artifacts\"][\"records\"] == []'"
+    ],
+    "tests": [
+      {
+        "name": "R2A offered receipt Docker validator",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "R2A non-blocking artifact activation contract",
+        "passed": 1,
+        "failed": 0
+      }
+    ]
+  },
+  "artifacts": {
+    "required_for_task": false,
+    "availability": {
+      "work_host": "manifest_only",
+      "experiment_host": "manifest_only"
+    },
+    "records": []
+  },
+  "scientific": {
+    "technical_state": "pending",
+    "scientific_verdict": null,
+    "promotion_status": "not_requested"
+  },
+  "receiver_ack": {
+    "role": "experiment_host",
+    "accepted_at": "2026-08-01T01:59:59+09:00",
+    "status": "accepted",
+    "issue": null
+  }
+}
