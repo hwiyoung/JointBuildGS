@@ -7,9 +7,9 @@
 - workstream: `READ_ONLY_DESIGN_READINESS_AUDIT`
 - repository_effective_phase: `P2 / Fusion W1 ACTIVE`
 - direction: `Work→Codex`
-- status: `DRAFT`
+- status: `APPROVED_FOR_EXECUTION`
 - packet_version: `v1`
-- source_commit: `TO_BE_FILLED_BY_USER_BEFORE_APPROVAL`
+- source_commit: `0e2270b238c6d14a61b781998e0cdc3319d9e64f`
 - target_branch: `main`
 - research_charter_version: `P1_AUDIT_v1`
 - master_roadmap_version: `P1_AUDIT_v1`
@@ -18,11 +18,14 @@
 - decision_log_through: `DEC-P1-006`
 - supersedes: `none`
 - created_at: `2026-07-31 Asia/Seoul`
-- user_approval: `NOT_GRANTED`
+- user_approval: `APPROVED_FOR_EXECUTION`
+- approved_by: `김휘영`
+- approved_at: `2026-07-31T14:18:19+09:00`
+- approval_scope: `DOCS_ONLY_P1_AUDIT; ACTIVE_P2_FUSION_W1_PROTECTED; NO_SOURCE_CONFIG_DATA_RESULT_GPU_MUTATION; R_DERIVED_ONLY; R_EXT_OUT_OF_SCOPE`
 
-> **Execution lock:** 사용자는 P1 audit scope를 승인했지만 이 packet은 아직
-> DRAFT다. source commit, approval commit, offered receipt와 activation tuple이
-> 없으므로 현재 실행하지 않는다.
+> **Authorization record:** exact source snapshot과 P1 audit scope는 사용자
+> 승인을 받았다. 그러나 offered receipt가 commit/push/validate되고 complete
+> activation tuple이 전달되기 전에는 Experiment Host가 실행하지 않는다.
 
 ## Goal
 
@@ -353,7 +356,7 @@ Activation tuple이 불완전하거나 packet이 DRAFT/unapproved이면 command�
 ```text
 EXECUTION AUTHORIZATION GATE
 
-이 launcher는 현재 DRAFT template이다. 다음 activation tuple이 사용자의 명시적
+이 launcher는 승인된 packet용이다. 다음 activation tuple이 사용자의 명시적
 실행 지시와 함께 제공되기 전에는 git fetch/pull/commit/push, receipt 작성,
 파일 수정 또는 audit를 수행하지 마라.
 
