@@ -1,0 +1,127 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P2-W2C-GATE-S0-COMMON-BASE-LINEAGE-R2B-v1",
+  "task_id": "P2-GATE-S0-COMMON-BASE-LINEAGE-R2B-v1",
+  "created_at": "2026-08-01T02:57:36+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "offered",
+  "previous_receipt": null,
+  "transport": {
+    "mode": "serialized_main",
+    "branch": "main",
+    "target_branch": "main",
+    "exclusive_writer_ack": true
+  },
+  "commits": {
+    "base_main": "c9f8accb3ab893f81f637a4ae5a498fd01856d51",
+    "offered_head": "SELF",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-COMMON-BASE-LINEAGE-R2B-v1",
+      "artifacts/manifests/gate_s0/common_base_r2b",
+      "configs/input_and_alignment/gate_s0/common_base_r2b",
+      "docs/handoffs/returns/P2_C2W_GATE_S0_COMMON_BASE_LINEAGE_R2B_RETURN_v1.md",
+      "docs/research/preregistration/gate_s0/common_base_r2b",
+      "scripts/input_and_alignment/gate_s0/common_base_r2b",
+      "tests/input_and_alignment/gate_s0/common_base_r2b"
+    ],
+    "protected_paths": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      "artifacts/manifests/handoffs/P1-W2C-REPO-AUDIT-R2",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-PREP-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-REMEDIATION-R1-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-EVIDENCE-R2A-v1",
+      "artifacts/manifests/local_workspace_20260730.yaml",
+      "artifacts/manifests/local_artifact_retention_pass2_plan_20260730.json",
+      "artifacts/manifests/local_artifact_retention_pass2_receipt_20260730.json",
+      "artifacts/manifests/gate_s0/b_current_source_candidate_v1.json",
+      "artifacts/manifests/gate_s0/common_base_r2a",
+      "artifacts/manifests/gate_s0/remediation_r1",
+      "configs/input_and_alignment/gate_s0/common_base_r2a",
+      "configs/input_and_alignment/gate_s0/remediation_r1",
+      "configs/repository",
+      "docs/evidence",
+      "docs/experiments",
+      "docs/handoffs/HANDOFF_INDEX.md",
+      "docs/handoffs/P2_W2C_GATE_S0_COMMON_BASE_LINEAGE_R2B_v1.md",
+      "docs/handoffs/P2_W2C_GATE_S0_EVIDENCE_R2A_v1.md",
+      "docs/handoffs/P2_W2C_GATE_S0_REMEDIATION_R1_v1.md",
+      "docs/handoffs/returns/P2_C2W_GATE_S0_EVIDENCE_R2A_RETURN_v1.md",
+      "docs/handoffs/returns/P2_C2W_GATE_S0_REMEDIATION_R1_RETURN_v1.md",
+      "docs/research/00_RESEARCH_CHARTER.md",
+      "docs/research/01_MASTER_ROADMAP.md",
+      "docs/research/02_NOVELTY_MAP.md",
+      "docs/research/03_DATA_AND_BASELINE_SCOPE.md",
+      "docs/research/04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md",
+      "docs/research/05_HANDOFF_PROTOCOL.md",
+      "docs/research/06_DECISION_LOG.md",
+      "docs/research/preregistration/gate_s0/GATE_S0_FREEZE_PACKET_v1.md",
+      "docs/research/preregistration/gate_s0/common_base_r2a",
+      "docs/research/preregistration/gate_s0/remediation_r1",
+      "docs/research/preregistration/fusion_w1",
+      "docs/research/preregistration/quality_axis",
+      "phases/p0-audit",
+      "phases/p2-gsjso",
+      "scripts/input_and_alignment/gate_s0/common_base_r2a",
+      "scripts/input_and_alignment/gate_s0/remediation_r1",
+      "scripts/repository",
+      "tests/input_and_alignment/gate_s0/common_base_r2a",
+      "tests/input_and_alignment/gate_s0/remediation_r1",
+      "tests/repository"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "git_only",
+    "verifier_role": "work_host",
+    "docker_image_digest": "sha256:e50ba5c7fd493ed524212c34e5e84f48bd94e66a70e0ecb6d00269f75309f986",
+    "commands": [
+      "python scripts/repository/validate_agent_instructions.py",
+      "python -m unittest tests.repository.test_agent_instruction_sync tests.repository.test_repo_inventory tests.repository.test_two_host_handoff tests.repository.test_work_readiness tests.repository.test_research_canon_common_base tests.input_and_alignment.gate_s0.test_b_current_source_candidate",
+      "python scripts/repository/validate_two_host_handoff.py artifacts/manifests/handoffs/P2-W2C-GATE-S0-COMMON-BASE-LINEAGE-R2B-v1/000-offered.json --repo . --origin-ref HEAD --head-ref HEAD"
+    ],
+    "tests": [
+      {
+        "name": "agent instruction contract",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "repository, handoff and common-base regression suites",
+        "passed": 82,
+        "failed": 0
+      },
+      {
+        "name": "R2B source/approval snapshot consistency",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "R2B offered receipt validator",
+        "passed": 1,
+        "failed": 0
+      }
+    ]
+  },
+  "artifacts": {
+    "required_for_task": false,
+    "availability": {
+      "work_host": "manifest_only",
+      "experiment_host": "manifest_only"
+    },
+    "records": []
+  },
+  "scientific": {
+    "technical_state": "pending",
+    "scientific_verdict": null,
+    "promotion_status": "not_requested"
+  },
+  "receiver_ack": null
+}
