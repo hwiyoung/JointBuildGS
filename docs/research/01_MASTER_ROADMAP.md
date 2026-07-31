@@ -20,7 +20,7 @@
 [ ] P4 최종 실험·저널 작성        — NOT_STARTED
 ```
 
-Current task: `P2-GATE-S0-COMMON-BASE-LINEAGE-R2B-v1 USER APPROVED / approval commit preparation`
+Current task: `P2-GATE-S0-COMMON-BASE-LINEAGE-R2B-v1 APPROVED / offered receipt preparation`
 
 Next: exact offered/accepted handoff → retained exact-937 P0 derivative lineage
 resolution and no-repeat hardening → Work Host Gate S0 integration. This is not a
@@ -186,7 +186,7 @@ primary 잠금 뒤 별도 census로 수행한다. 이 census를 완료하지 않
 | Gate S0 freeze packet v1 | Work / human review | `DRAFT / NOT APPROVED` | `GATE_S0_FREEZE_PACKET_v1.md` | exact common base와 나머지 blockers 검토 |
 | `B_current` source membership v1 | Work + independent agents | `USER-FROZEN 962/937/25 / DERIVATIVES PARTIAL` | `B_CURRENT_CANDIDATE_c205892c390997b5`, `DEC-P1-012` | retained exact-937 derivative lineage 필요 |
 | Gate S0 evidence R2A | Work→Codex | `BLOCKED_FOR_GATE_S0_EVIDENCE_REVIEW / TECHNICAL CLOSED@00181afc` | `P2_C2W_GATE_S0_EVIDENCE_R2A_RETURN_v1.md` | evidence로 보존; 재실행 금지 |
-| Gate S0 common-base lineage R2B | Work→Codex | `DRAFT SOURCE SNAPSHOT / USER APPROVED` | `P2_W2C_GATE_S0_COMMON_BASE_LINEAGE_R2B_v1.md` | exact approval/offered/accepted 뒤에만 실행 |
+| Gate S0 common-base lineage R2B | Work→Codex | `APPROVED_FOR_EXECUTION / OFFER PENDING` | `P2_W2C_GATE_S0_COMMON_BASE_LINEAGE_R2B_v1.md` | offered/accepted 뒤에만 실행 |
 
 ## Decision Status Register
 
@@ -260,7 +260,7 @@ primary 잠금 뒤 별도 census로 수행한다. 이 census를 완료하지 않
 | `P2-W2C-GATE-S0-PREP-v1` | Work→Codex | v1 | `BLOCKED_FOR_GATE_S0_REVIEW / TECHNICAL CLOSED@1cf0db33` | 완료 작업; 재실행 아님 |
 | `P2-W2C-GATE-S0-REMEDIATION-R1-v1` | Work→Codex | v1 | `BLOCKED_FOR_GATE_S0_REMEDIATION_REVIEW / TECHNICAL CLOSED@052f7d5c` | 완료 작업; 재실행 아님 |
 | `P2-W2C-GATE-S0-EVIDENCE-R2A-v1` | Work→Codex | v1 | `BLOCKED_FOR_GATE_S0_EVIDENCE_REVIEW / TECHNICAL CLOSED@00181afc` | 완료 작업; 재실행 아님 |
-| `P2-W2C-GATE-S0-COMMON-BASE-LINEAGE-R2B-v1` | Work→Codex | v1 | `DRAFT SOURCE SNAPSHOT / USER APPROVED` | 아니오; approval/offered/accepted 필요 |
+| `P2-W2C-GATE-S0-COMMON-BASE-LINEAGE-R2B-v1` | Work→Codex | v1 | `APPROVED_FOR_EXECUTION / OFFER PENDING` | 아니오; offered/accepted 필요 |
 
 다음 Gate S0 진행 순서:
 

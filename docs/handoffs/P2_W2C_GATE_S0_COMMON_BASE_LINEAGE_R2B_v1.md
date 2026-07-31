@@ -6,21 +6,22 @@
 - task_id: `P2-GATE-S0-COMMON-BASE-LINEAGE-R2B-v1`
 - phase: `P2 / pre-result Gate S0 evidence completion`
 - direction: `Work→Codex`
-- status: `DRAFT`
+- status: `APPROVED_FOR_EXECUTION`
 - packet_version: `v1`
-- source_commit: `TO_BE_FILLED_BY_USER_BEFORE_APPROVAL`
+- source_commit: `150796bc7e928fc108082b2048878e86d5820981`
 - target_branch: `main`
 - research_charter_version: `C1C5_CANON_v2`
 - decision_log_through: `DEC-P1-012`
 - follows: `P2-W2C-GATE-S0-EVIDENCE-R2A-v1`
 - created_at: `2026-08-01`
-- user_approval: `GRANTED IN CHAT — approval commit pending exact source snapshot`
+- approved_at: `2026-08-01T02:56:50+09:00`
+- user_approval: `GRANTED — commit, push and Experiment Host handoff; freeze exact 962/937/25 source set; use LoD2-derived LoD1 with an independent evaluation reference`
 - repository_effective_phase: `C1–C5 PROGRAM / GATE S0 FREEZE DRAFT / PERFORMANCE BLOCKED`
 - scientific_verdict: null
 
-This source snapshot is not executable until its exact SHA is written into a later
-`APPROVED_FOR_EXECUTION` approval commit and the offered/accepted receipt sequence
-passes. It is not Gate S0 approval as a whole and grants no performance authority.
+This packet authorizes only the bounded R2B lineage/no-repeat task after its exact
+offered/accepted receipt sequence passes. It is not Gate S0 approval as a whole and
+grants no performance authority.
 
 ## Goal
 
