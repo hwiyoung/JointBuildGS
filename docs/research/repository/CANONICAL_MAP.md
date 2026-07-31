@@ -6,6 +6,8 @@
 
 | Canonical purpose | Path | Evidence |
 |---|---|---|
+| legacy_experiment_plan | `docs/evidence/archive/pre_c1c5_research/EXPERIMENT_PLAN.md` | DEC-P1-008 retains this as historical four-condition evidence, not current execution authority. |
+| legacy_research_context | `docs/evidence/archive/pre_c1c5_research/RESEARCH_CONTEXT.md` | DEC-P1-008 retains this as historical four-condition evidence, not current execution authority. |
 | p0_audit_evidence_index | `docs/evidence/p0-audit/README.md` | Navigation index for the completed P0 evidence owner; individual scientific disposition remains in its reports and manifests. |
 | p0_g1_evidence_package_index | `docs/evidence/p0_g1_20260613/README.md` | Navigation index for the promoted frozen P0 G1 review package. |
 | e5_c001_readout_ablation_report | `docs/experiments/citygml-readout/e5_c001_readout_ablation/reports/W_E5_C001_③a_readout재실행.md` | Reviewed E5 C001 migration decision for the readout ablation report. |
@@ -27,15 +29,13 @@
 | e5_c001_s2p_final_review | `docs/experiments/joint-optimization/e5_c001_s2p/reports/W_E5_C001_S2p_검수·회부_20260711.md` | Reviewed E5 C001 migration decision for the S2p review. |
 | e5_c001_s3_report | `docs/experiments/joint-optimization/e5_c001_s3/reports/W_E5_C001_S3_의미유도.md` | Reviewed E5 C001 migration decision for the S3 semantic-guided report. |
 | fusion_w1_gate_a_diagnostic_owner | `docs/experiments/pilots/fusion_w1/reports/W_관문A진단_20260725.md` | Current owner of the Gate A diagnostic observations; this designation is not a success or approval verdict. |
-| c1c5_research_charter | `docs/research/00_RESEARCH_CHARTER.md` | Root AGENTS.md and DEC-P1-008 name the 00–06 set as current research canon. |
-| c1c5_master_roadmap | `docs/research/01_MASTER_ROADMAP.md` | Current C1–C5 phase, split, and gate sequence. |
-| c1c5_novelty_map | `docs/research/02_NOVELTY_MAP.md` | Current C1–C5 novelty and claim reference. |
-| c1c5_data_scope | `docs/research/03_DATA_AND_BASELINE_SCOPE.md` | Current C1–C5 data and leakage contract. |
-| c1c5_result_contract | `docs/research/04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md` | Current C1–C5 result and acceptance contract. |
-| c1c5_handoff_protocol | `docs/research/05_HANDOFF_PROTOCOL.md` | Current C1–C5 Work–Experiment handoff contract. |
+| c1c5_research_charter | `docs/research/00_RESEARCH_CHARTER.md` | Root AGENTS.md and DEC-P1-008 name the 00-06 set as current research canon. |
+| c1c5_master_roadmap | `docs/research/01_MASTER_ROADMAP.md` | Current C1-C5 phase, split, and gate sequence. |
+| c1c5_novelty_map | `docs/research/02_NOVELTY_MAP.md` | Current C1-C5 novelty and claim reference. |
+| c1c5_data_scope | `docs/research/03_DATA_AND_BASELINE_SCOPE.md` | Current C1-C5 data and leakage contract. |
+| c1c5_result_contract | `docs/research/04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md` | Current C1-C5 result and acceptance contract. |
+| c1c5_handoff_protocol | `docs/research/05_HANDOFF_PROTOCOL.md` | Current C1-C5 Work-Experiment handoff contract. |
 | c1c5_decision_log | `docs/research/06_DECISION_LOG.md` | Current adopted decision and supersession record. |
-| legacy_experiment_plan | `docs/research/EXPERIMENT_PLAN.md` | DEC-P1-008 retains this as historical four-condition evidence, not current execution authority. |
-| legacy_research_context | `docs/research/RESEARCH_CONTEXT.md` | DEC-P1-008 retains this as historical four-condition evidence, not current execution authority. |
 | chatgpt_work_entrypoint | `docs/research/WORK_START_HERE.md` | Exact allowlist and exclusion contract for remote ChatGPT Work tasks. |
 | fusion_w1_gate_a_v2_lock | `docs/research/preregistration/fusion_w1/사전등록_관문A_v2·SE3채택재판정_20260725.md` | The reviewed Fusion W1 preregistration index identifies this file as its canonical owner copy. |
 | quality_axis_main_preregistration_lock | `docs/research/preregistration/quality_axis/사전등록서_품질축본선_승인잠금v4_20260721.md` | Root AGENTS.md explicitly defines this v4 file as the approval lock. |
@@ -70,7 +70,7 @@ This table shows multi-file families and explicit/candidate canonical families. 
 | judgment_kit | 50 | v4 | 0 | docs/evidence/judgment_kit/ |
 | input_and_alignment | 43 | v2, v4, v5 | 0 | docs/experiments/input_and_alignment/ |
 | e5_c001_s3b | 41 | v1 | 0 | docs/experiments/e5_c001_s3b/ |
-| archive | 34 | v1, v1_2_20260718, v1_5_20260720, v3, v4 | 1 | docs/experiments/archive/ |
+| archive | 37 | v1, v1_2_20260718, v1_5_20260720, v3, v4 | 3 | docs/experiments/archive/ |
 | pilots | 31 | - | 0 | docs/experiments/pilots/ |
 | pointcloud_attributes | 18 | v1, v1_1, v1_2, v1_3 | 1 | docs/experiments/pointcloud_attributes/ |
 | tum_transfer | 18 | v0, v2, v6 | 0 | docs/figs/tum_transfer/ |
@@ -102,9 +102,15 @@ This table shows multi-file families and explicit/candidate canonical families. 
 | w_report_evidence | 3 | - | 0 | docs/figs/w_report_evidence/ |
 | aux_v4a | 2 | v3 | 0 | docs/figs/aux_v4a/ |
 | footprint_conditioned_readout | 2 | - | 0 | docs/figs/footprint_conditioned_readout/ |
+| p1_w2c_repo_audit | 2 | v1, v2 | 1 | docs/research/ |
+| 00_research_charter | 1 | - | 1 | docs/experiments/00_research_charter/ |
+| 01_master_roadmap | 1 | - | 1 | docs/experiments/01_master_roadmap/ |
+| 02_novelty_map | 1 | - | 1 | docs/experiments/02_novelty_map/ |
+| 03_data_and_baseline_scope | 1 | - | 1 | docs/experiments/03_data_and_baseline_scope/ |
+| 04_result_and_acceptance_contract | 1 | v0 | 1 | docs/experiments/04_result_and_acceptance_contract/ |
+| 05_handoff_protocol | 1 | - | 1 | docs/experiments/05_handoff_protocol/ |
+| 06_decision_log | 1 | - | 1 | docs/experiments/06_decision_log/ |
 | chatgpt_work_codex_handoff | 1 | - | 1 | docs/experiments/chatgpt_work_codex_handoff/ |
-| experiment_plan | 1 | - | 1 | docs/research/ |
-| research_context | 1 | - | 1 | docs/research/ |
 | work_start_here | 1 | - | 1 | docs/experiments/work_start_here/ |
 | 사전등록서_품질축본선_승인잠금 | 1 | v4_20260721 | 1 | docs/research/ |
 | 품질축본선_1파_구현부록잠금 | 1 | v1_20260722 | 1 | docs/experiments/품질축본선_1파_구현부록잠금/ |
