@@ -7,6 +7,8 @@ import argparse
 import csv
 import hashlib
 import json
+import os
+import subprocess
 from collections import Counter
 from pathlib import Path
 from typing import Any
@@ -28,12 +30,33 @@ REQUIRED_OUTPUTS = [
 ]
 
 
-def sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as stream:
-        for block in iter(lambda: stream.read(1024 * 1024), b""):
-            digest.update(block)
-    return digest.hexdigest()
+def lf_canonical_worktree_text_bytes(path: Path) -> bytes:
+    """Normalize checkout EOLs to the LF bytes emitted by the generator."""
+    return path.read_bytes().replace(b"\r\n", b"\n")
+
+
+def sha256_lf_canonical_worktree_text(path: Path) -> str:
+    return hashlib.sha256(lf_canonical_worktree_text_bytes(path)).hexdigest()
+
+
+def git_introducing_commit(path: Path) -> str | None:
+    result = subprocess.run(
+        ["git", "log", "-1", "--format=%H", "--", str(path)],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    commit = result.stdout.strip()
+    return commit if result.returncode == 0 and len(commit) == 40 else None
+
+
+def git_blob_bytes(commit: str, path: Path) -> bytes | None:
+    result = subprocess.run(
+        ["git", "show", f"{commit}:{path.as_posix()}"],
+        check=False,
+        capture_output=True,
+    )
+    return result.stdout if result.returncode == 0 else None
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -59,8 +82,8 @@ def build_output_manifest() -> dict[str, Any]:
         "files": [
             {
                 "path": str(path),
-                "bytes": path.stat().st_size,
-                "sha256": sha256_file(path),
+                "bytes": len(lf_canonical_worktree_text_bytes(path)),
+                "sha256": sha256_lf_canonical_worktree_text(path),
             }
             for path in REQUIRED_OUTPUTS
         ],
@@ -112,7 +135,7 @@ def recompute_lod1_inventory(root: Path, max_depth: int) -> tuple[int, int, str,
     )
 
 
-def validate(artifact_root: Path) -> list[str]:
+def validate(artifact_root: Path, *, verify_self: bool = True) -> list[str]:
     errors: list[str] = []
     for path in [*REQUIRED_OUTPUTS, OUTPUT_MANIFEST]:
         require(path.is_file() and path.stat().st_size > 0, f"missing/empty: {path}", errors)
@@ -126,12 +149,43 @@ def validate(artifact_root: Path) -> list[str]:
         "output status mismatch",
         errors,
     )
+    require(output_manifest["output_commit"] == "SELF", "output SELF marker missing", errors)
+    self_paths = [*REQUIRED_OUTPUTS, OUTPUT_MANIFEST]
+    if verify_self:
+        introducing_commits: set[str] = set()
+        for path in self_paths:
+            commit = git_introducing_commit(path)
+            require(commit is not None, f"cannot resolve output introducing commit: {path}", errors)
+            if commit is None:
+                continue
+            introducing_commits.add(commit)
+            blob = git_blob_bytes(commit, path)
+            require(blob is not None, f"cannot read output introducing blob: {path}", errors)
+            if blob is not None:
+                require(
+                    lf_canonical_worktree_text_bytes(path) == blob,
+                    f"output differs from introducing Git blob: {path}",
+                    errors,
+                )
+        require(
+            len(introducing_commits) == 1,
+            "SELF outputs were not introduced by one commit",
+            errors,
+        )
     indexed = {item["path"]: item for item in output_manifest["files"]}
     require(set(indexed) == {str(path) for path in REQUIRED_OUTPUTS}, "output index paths mismatch", errors)
     for path in REQUIRED_OUTPUTS:
         item = indexed.get(str(path), {})
-        require(item.get("bytes") == path.stat().st_size, f"output bytes mismatch: {path}", errors)
-        require(item.get("sha256") == sha256_file(path), f"output SHA mismatch: {path}", errors)
+        require(
+            item.get("bytes") == len(lf_canonical_worktree_text_bytes(path)),
+            f"output bytes mismatch: {path}",
+            errors,
+        )
+        require(
+            item.get("sha256") == sha256_lf_canonical_worktree_text(path),
+            f"output SHA mismatch: {path}",
+            errors,
+        )
 
     ledger_path = DOC_ROOT / "gate_s0_image_camera_ledger_v1.csv"
     ledger = read_csv(ledger_path)
@@ -155,7 +209,8 @@ def validate(artifact_root: Path) -> list[str]:
         errors,
     )
     require(
-        sha256_file(ledger_path) == "8c1e89040869e800c34ebd8a06c2b5185524330fc5d56e594b41686173c465b0",
+        sha256_lf_canonical_worktree_text(ledger_path)
+        == "8c1e89040869e800c34ebd8a06c2b5185524330fc5d56e594b41686173c465b0",
         "ledger canonical SHA mismatch",
         errors,
     )
@@ -176,6 +231,20 @@ def validate(artifact_root: Path) -> list[str]:
         "input live verification fields mismatch",
         errors,
     )
+    image_inventory_path = Path(inputs["image_camera_ledger"]["image_member_inventory_path"])
+    require(
+        inputs["image_camera_ledger"]["image_member_inventory_sha256"]
+        == sha256_lf_canonical_worktree_text(image_inventory_path),
+        "image member inventory SHA mismatch",
+        errors,
+    )
+    aoi_path = Path(inputs["candidate_aoi"]["geojson_path"])
+    require(
+        inputs["candidate_aoi"]["geojson_sha256"]
+        == sha256_lf_canonical_worktree_text(aoi_path),
+        "candidate AOI SHA mismatch",
+        errors,
+    )
     require(inputs["c1_source_proposal"]["selection"] == "NADIR_ONLY", "C1 proposal mismatch", errors)
     require(inputs["c1_source_proposal"]["status"] == "PARTIAL", "C1 must remain partial", errors)
     require(inputs["lod1_search"]["status"] == "MISSING", "LoD1 must remain missing", errors)
@@ -183,7 +252,12 @@ def validate(artifact_root: Path) -> list[str]:
     require("Do not simplify" in inputs["lod1_search"]["prohibited_substitute"], "LoD2 guard missing", errors)
     search_path = Path(inputs["lod1_search"]["search_evidence_path"])
     require(search_path.is_file(), "LoD1 search evidence missing", errors)
-    require(inputs["lod1_search"]["search_evidence_sha256"] == sha256_file(search_path), "LoD1 search evidence SHA mismatch", errors)
+    require(
+        inputs["lod1_search"]["search_evidence_sha256"]
+        == sha256_lf_canonical_worktree_text(search_path),
+        "LoD1 search evidence SHA mismatch",
+        errors,
+    )
     search = read_json(search_path)
     require(search["status"] == "MISSING" and search["lod1_matches"] == [], "LoD1 search result mismatch", errors)
     require(all(not item["name_contains_lod1"] for item in search["candidate_matches"]), "LoD1 candidate unexpectedly present", errors)
@@ -244,11 +318,17 @@ def validate(artifact_root: Path) -> list[str]:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--write-output-manifest", action="store_true")
-    parser.add_argument("--artifact-root", default="/artifacts/JointBuildGS")
+    parser.add_argument(
+        "--artifact-root",
+        default=os.environ.get("JBGS_ARTIFACT_ROOT", "/artifacts/JointBuildGS"),
+    )
     args = parser.parse_args()
     if args.write_output_manifest:
         write_output_manifest()
-    errors = validate(Path(args.artifact_root).resolve())
+    errors = validate(
+        Path(args.artifact_root).resolve(),
+        verify_self=not args.write_output_manifest,
+    )
     if errors:
         print("Gate S0 evidence: FAIL")
         for error in errors:

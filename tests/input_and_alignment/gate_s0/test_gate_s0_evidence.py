@@ -3,8 +3,15 @@ from __future__ import annotations
 import csv
 import hashlib
 import json
+import tempfile
 import unittest
 from pathlib import Path
+
+from scripts.input_and_alignment.gate_s0.validate_gate_s0_evidence import (
+    git_blob_bytes,
+    git_introducing_commit,
+    lf_canonical_worktree_text_bytes,
+)
 
 
 DOC_ROOT = Path("docs/research/preregistration/gate_s0")
@@ -21,6 +28,14 @@ def read_csv(path: Path):
 
 
 class GateS0EvidenceTests(unittest.TestCase):
+    def test_canonical_git_text_hash_ignores_checkout_eol(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "evidence.txt"
+            path.write_bytes(b"alpha\nbeta\n")
+            expected = lf_canonical_worktree_text_bytes(path)
+            path.write_bytes(b"alpha\r\nbeta\r\n")
+            self.assertEqual(lf_canonical_worktree_text_bytes(path), expected)
+
     def test_image_camera_ledger_is_exact(self) -> None:
         path = DOC_ROOT / "gate_s0_image_camera_ledger_v1.csv"
         rows = read_csv(path)
@@ -28,7 +43,7 @@ class GateS0EvidenceTests(unittest.TestCase):
         self.assertEqual(sum(row["status"] == "INCLUDED" for row in rows), 937)
         self.assertEqual(sum(row["status"] == "EXCLUDED" for row in rows), 25)
         self.assertEqual(
-            hashlib.sha256(path.read_bytes()).hexdigest(),
+            hashlib.sha256(lf_canonical_worktree_text_bytes(path)).hexdigest(),
             "8c1e89040869e800c34ebd8a06c2b5185524330fc5d56e594b41686173c465b0",
         )
 
@@ -41,6 +56,20 @@ class GateS0EvidenceTests(unittest.TestCase):
         self.assertEqual(len(records["records"]), 11)
         self.assertTrue(
             all(record["verification_method"] == "sha256_rehash" for record in records["records"])
+        )
+        image_inventory_path = Path(
+            inputs["image_camera_ledger"]["image_member_inventory_path"]
+        )
+        self.assertEqual(
+            inputs["image_camera_ledger"]["image_member_inventory_sha256"],
+            hashlib.sha256(
+                lf_canonical_worktree_text_bytes(image_inventory_path)
+            ).hexdigest(),
+        )
+        aoi_path = Path(inputs["candidate_aoi"]["geojson_path"])
+        self.assertEqual(
+            inputs["candidate_aoi"]["geojson_sha256"],
+            hashlib.sha256(lf_canonical_worktree_text_bytes(aoi_path)).hexdigest(),
         )
 
     def test_c1_c2_c4_are_not_overclaimed(self) -> None:
@@ -57,7 +86,10 @@ class GateS0EvidenceTests(unittest.TestCase):
         search = read_json(search_path)
         self.assertEqual(inputs["lod1_search"]["status"], "MISSING")
         self.assertEqual(inputs["lod1_search"]["matches"], [])
-        self.assertEqual(inputs["lod1_search"]["search_evidence_sha256"], hashlib.sha256(search_path.read_bytes()).hexdigest())
+        self.assertEqual(
+            inputs["lod1_search"]["search_evidence_sha256"],
+            hashlib.sha256(lf_canonical_worktree_text_bytes(search_path)).hexdigest(),
+        )
         self.assertEqual(search["status"], "MISSING")
         self.assertEqual(search["lod1_matches"], [])
         self.assertTrue(all(not item["name_contains_lod1"] for item in search["candidate_matches"]))
@@ -98,10 +130,23 @@ class GateS0EvidenceTests(unittest.TestCase):
         self.assertIsNone(payload["scientific_verdict"])
         self.assertEqual(payload["proposed_status"], "BLOCKED_FOR_GATE_S0_REVIEW")
         self.assertEqual(len(payload["files"]), 9)
+        introducing_commits = set()
         for item in payload["files"]:
             path = Path(item["path"])
-            self.assertEqual(path.stat().st_size, item["bytes"])
-            self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), item["sha256"])
+            canonical_bytes = lf_canonical_worktree_text_bytes(path)
+            self.assertEqual(len(canonical_bytes), item["bytes"])
+            self.assertEqual(hashlib.sha256(canonical_bytes).hexdigest(), item["sha256"])
+            commit = git_introducing_commit(path)
+            introducing_commits.add(commit)
+            self.assertEqual(git_blob_bytes(commit, path), canonical_bytes)
+        output_manifest_path = MANIFEST_ROOT / "gate_s0_output_manifest_v1.json"
+        output_manifest_commit = git_introducing_commit(output_manifest_path)
+        introducing_commits.add(output_manifest_commit)
+        self.assertEqual(
+            git_blob_bytes(output_manifest_commit, output_manifest_path),
+            lf_canonical_worktree_text_bytes(output_manifest_path),
+        )
+        self.assertEqual(introducing_commits, {"380cc8916e739702206a65cdd9318b2014c81030"})
 
 
 if __name__ == "__main__":
