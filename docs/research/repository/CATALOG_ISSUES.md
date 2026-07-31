@@ -6,9 +6,9 @@
 
 | Measure | Count |
 |---|---|
-| Cataloged indexed files | 1938 |
+| Cataloged indexed files | 1940 |
 | Files directly under docs/ | 0 |
-| Distinct inferred families | 142 |
+| Distinct inferred families | 144 |
 | Local Markdown links/embeds that do not resolve | 0 |
 | Reviewed external artifact references | 63 |
 | Reviewed missing evidence references | 87 |
@@ -24,7 +24,7 @@
 | orphan_candidate | 368 |
 | superseded | 54 |
 | superseded_candidate | 9 |
-| supporting | 1459 |
+| supporting | 1461 |
 
 ### Run Git states
 
