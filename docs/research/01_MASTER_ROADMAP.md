@@ -20,10 +20,11 @@
 [ ] P4 최종 실험·저널 작성        — NOT_STARTED
 ```
 
-Current task: `P2-GATE-S0-EVIDENCE-R2A-v1 APPROVED / offered receipt preparation`
+Current task: `P2-GATE-S0-COMMON-BASE-LINEAGE-R2B-v1 USER APPROVED / approval commit preparation`
 
-Next: closed Gate S0 evidence integration → missing-input/provenance remediation packet →
-new offered receipt → Experiment Host bounded remediation. This is not a performance run.
+Next: exact offered/accepted handoff → retained exact-937 P0 derivative lineage
+resolution and no-repeat hardening → Work Host Gate S0 integration. This is not a
+performance run.
 
 Gate S0는 P2의 **entry substate**다. 따라서 P2 coordination은 Gate S0 preparation으로
 진행 중이지만 C1–C3 performance execution은 Gate S0 freeze 전까지 차단된 상태다.
@@ -183,8 +184,9 @@ primary 잠금 뒤 별도 census로 수행한다. 이 census를 완료하지 않
 | Gate S0 Work cross-review | Work + independent agents | `PASS WITH MATERIAL FOLLOW-UPS` | `WORK_HOST_CROSS_REVIEW_v1.md` | C3 sparse-init와 reference/self-reference 누락 보완 |
 | Gate S0 remediation R1 | Work→Codex | `BLOCKED_FOR_GATE_S0_REMEDIATION_REVIEW / TECHNICAL CLOSED` | output `032f7bc1`, closed `052f7d5c` | evidence로 보존; 재실행 금지 |
 | Gate S0 freeze packet v1 | Work / human review | `DRAFT / NOT APPROVED` | `GATE_S0_FREEZE_PACKET_v1.md` | exact common base와 나머지 blockers 검토 |
-| `B_current` source candidate v1 | Work + independent agents | `CANDIDATE / NOT FROZEN` | `B_CURRENT_CANDIDATE_c205892c390997b5` | derivative provenance와 human freeze 필요 |
-| Gate S0 evidence R2A | Work→Codex | `APPROVED_FOR_EXECUTION / OFFER PENDING` | `P2_W2C_GATE_S0_EVIDENCE_R2A_v1.md` | offered/accepted 뒤에만 실행 |
+| `B_current` source membership v1 | Work + independent agents | `USER-FROZEN 962/937/25 / DERIVATIVES PARTIAL` | `B_CURRENT_CANDIDATE_c205892c390997b5`, `DEC-P1-012` | retained exact-937 derivative lineage 필요 |
+| Gate S0 evidence R2A | Work→Codex | `BLOCKED_FOR_GATE_S0_EVIDENCE_REVIEW / TECHNICAL CLOSED@00181afc` | `P2_C2W_GATE_S0_EVIDENCE_R2A_RETURN_v1.md` | evidence로 보존; 재실행 금지 |
+| Gate S0 common-base lineage R2B | Work→Codex | `DRAFT SOURCE SNAPSHOT / USER APPROVED` | `P2_W2C_GATE_S0_COMMON_BASE_LINEAGE_R2B_v1.md` | exact approval/offered/accepted 뒤에만 실행 |
 
 ## Decision Status Register
 
@@ -257,7 +259,8 @@ primary 잠금 뒤 별도 census로 수행한다. 이 census를 완료하지 않
 | `P1-W2C-REPO-AUDIT-R2` | Work→Codex | v2 | `READY_FOR_REVIEW / TECHNICAL CLOSED@8a6b5e61` | 완료 작업; 재실행 아님 |
 | `P2-W2C-GATE-S0-PREP-v1` | Work→Codex | v1 | `BLOCKED_FOR_GATE_S0_REVIEW / TECHNICAL CLOSED@1cf0db33` | 완료 작업; 재실행 아님 |
 | `P2-W2C-GATE-S0-REMEDIATION-R1-v1` | Work→Codex | v1 | `BLOCKED_FOR_GATE_S0_REMEDIATION_REVIEW / TECHNICAL CLOSED@052f7d5c` | 완료 작업; 재실행 아님 |
-| `P2-W2C-GATE-S0-EVIDENCE-R2A-v1` | Work→Codex | v1 | `APPROVED_FOR_EXECUTION / OFFER PENDING` | 아니오; offered/accepted 필요 |
+| `P2-W2C-GATE-S0-EVIDENCE-R2A-v1` | Work→Codex | v1 | `BLOCKED_FOR_GATE_S0_EVIDENCE_REVIEW / TECHNICAL CLOSED@00181afc` | 완료 작업; 재실행 아님 |
+| `P2-W2C-GATE-S0-COMMON-BASE-LINEAGE-R2B-v1` | Work→Codex | v1 | `DRAFT SOURCE SNAPSHOT / USER APPROVED` | 아니오; approval/offered/accepted 필요 |
 
 다음 Gate S0 진행 순서:
 
@@ -272,15 +275,17 @@ primary 잠금 뒤 별도 census로 수행한다. 이 census를 완료하지 않
 
 ## Blockers
 
-1. 독립 LoD1이 발견되지 않아 primary C5 readiness는 `MISSING`이다. `DEC-P1-011`로
-   LoD2→LoD1 diagnostic 생성은 허용됐지만 같은 LoD2 평가에서는 primary C5나
-   `E_paired`를 READY로 바꾸지 않는다.
+1. `DEC-P1-012`로 LoD2-derived LoD1을 C5 입력 후보로 선택했지만 exact independent
+   evaluation reference ID/version/production lineage가 아직 bind되지 않았다. 그 전에는
+   기존 diagnostic label을 유지하고 primary C5나 `E_paired`를 READY로 바꾸지 않는다.
 2. C1 LiDAR source·class 2/6·vertical datum·registration이 미동결이다.
-3. 962/937 차이는 937 included와 25 explicit exclusions ledger로 해소됐지만,
-   C2 MVS가 그 exact base에 hash-bound되지 않아 condition readiness는 `PARTIAL`이다.
-4. C3–C5 공통 SfM sparse/dense MVS/depth/normal/confidence의 exact
-   image/pose member, producer/config, identity/hash/frame/role이 아직 동결되지 않았다.
-   기존 1,104-image vendor MVS는 common base로 채택되지 않았다.
+3. 962/937 차이는 `DEC-P1-012`로 exact membership이 동결됐다. 다만 C2 MVS가 그
+   exact base에 아직 hash-bound되지 않아 condition readiness는 `PARTIAL`이다.
+4. 기존 P0에는 exact-937 계보일 가능성이 있는 retained COLMAP/OpenMVS/DIM derivative
+   chain이 있으나 R2A discovery가 이를 완전히 resolve하지 못했다. SfM consumption,
+   dense/depth/normal의 producer/config/hash/frame/role과 confidence/segmentation/gravity
+   enablement·evidence가 아직 동결되지 않았다. 기존 1,104-image vendor MVS는 common
+   base로 채택되지 않았다.
 5. geometry/structure reference의 ID/version/production lineage와 C1 self-reference
    evaluation class가 동결되지 않았다.
 6. `U_target`과 `E_paired`가 아직 `UNKNOWN`이다.
@@ -297,8 +302,8 @@ evidence가 충족된 뒤에만 사용자 scientific gate 대상으로 올린다
 - exact AOI와 `U_target`/`E_paired`
 - `EXHAUSTIVE_PARTITION` 또는 근거 있는 `STRATIFIED_SAMPLE`
 - split IDs/groups/seed/algorithm과 input freeze
-- exact common image/pose members와 SfM sparse/dense MVS/depth/normal/confidence
-  derivative manifest
+- frozen 962/937/25 membership에 대한 SfM sparse/dense MVS/depth/normal/confidence/
+  segmentation/gravity derivative 및 enablement manifest
 
 ## Completed artifacts
 

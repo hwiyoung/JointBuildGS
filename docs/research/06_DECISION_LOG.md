@@ -413,10 +413,55 @@
 - 이 diagnostic은 independent LoD1 탐색의 반복을 요구하지 않으며, primary C5 부재를
   숨기지 않는다.
 
+## DEC-P1-012 — exact 962/937/25 source set과 C5 독립 평가 원칙
+
+- **Decision ID:** `DEC-P1-012`
+- **Date:** 2026-08-01
+- **Status:** `USER-APPROVED GATE S0 INPUT DECISION`
+- **Previous state:** `B_CURRENT_CANDIDATE_c205892c390997b5`는 962 image members,
+  937 calibrated image/pose pairs와 25 no-pose exclusions를 정확히 재현했지만
+  candidate로 남아 있었다. R2A LoD2-derived LoD1은 같은 reference 계보 평가에서
+  diagnostic-only였고, primary C5 입력 후보 승격에는 별도 human decision이 필요했다.
+- **New decision:** exact 962 image members, 937 calibrated image/pose pairs와 25
+  `NO_CALIBRATED_CAMERA_POSE_IN_OPF` exclusions를 Gate S0 common source membership으로
+  확정한다. C5는 R2A의 LoD2-derived LoD1 bytes를 입력 후보로 사용하되, primary
+  evaluation은 입력 LoD2와 독립된 exact reference 계보를 사용해야 한다. 독립
+  reference가 bind되기 전에는 기존 R2A artifact의
+  `REFERENCE_DERIVED_DIAGNOSTIC_ONLY`,
+  `REFERENCE_DERIVED_SELF_CONDITIONED`, `primary_c5_eligible=false` 표시를 유지하고
+  과거 manifest/receipt를 수정하지 않는다.
+- **Evidence:** R2A source replay 962/937/25 contradiction 없음, output commit
+  `4d02792861d4b57cb29f22b0fbce923997a54cef`, closed commit
+  `00181afc4dc1a5e5c520f4b7783fdb4dbf2ae9c8`, 사용자의 2026-08-01 명시적 승인.
+- **Reason:** 이미 검증된 exact source membership을 반복 조사하지 않고 derivative
+  lineage에 집중하며, LoD2-derived LoD1 사용 의도를 보존하면서 동일 정답 계보의
+  자기참조를 primary C5 효과로 해석하는 것을 막는다.
+- **Affected phases:** Gate S0, P2–P4
+- **Affected documents:** `01_MASTER_ROADMAP.md`, `06_DECISION_LOG.md`,
+  `P2_W2C_GATE_S0_COMMON_BASE_LINEAGE_R2B_v1.md`, 다음 Gate S0 freeze revision
+- **User approval:** `GRANTED — R2B commit/push/Experiment Host handoff; exact
+  962/937/25 freeze; C5 LoD2-derived LoD1 with independent evaluation reference`
+- **Superseded decisions:** `DEC-P1-011`의 same-reference diagnostic 격리는 유지한다.
+  독립 reference가 bind된 뒤 primary candidate를 다시 검토할 수 있다는 조건부
+  조항의 human input 선택만 이 결정이 충족한다. Gate S0 전체 승인과 performance
+  실행 권한은 부여하지 않는다.
+
+### Consequence
+
+- exact source membership을 다시 계산·검색·재해시하지 않는다.
+- R2B는 기존 exact-937 P0 derivative 계보를 먼저 resolve하고 새 dense 계산을
+  자동 승인하지 않는다.
+- C5 primary 실행 전 geometry/structure evaluation reference의 exact ID, version,
+  production lineage와 독립성 class를 별도 Gate evidence로 bind한다.
+- 독립 reference가 확보되지 않으면 LoD2-derived LoD1 결과는 self-conditioned
+  diagnostic으로만 보고한다.
+- `scientific_verdict`는 null이며 P2 performance는 Gate S0 전체 freeze 전까지
+  계속 금지한다.
+
 ## Pending decisions not yet logged as adopted
 
 다음은 선택지가 정리되었으나 사용자 결정 전이므로 adopted decision이 아니다.
 
-- TUM2TWIN LoD1 후보가 독립 prior로 적합한지
 - `U_target`/`E_paired` exact IDs, 전수 가능성, pilot/validation/held-out 수량과
   공간 group 경계
+- C5 independent evaluation reference의 exact asset ID/version/production lineage

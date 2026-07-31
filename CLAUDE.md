@@ -61,11 +61,13 @@ Reusable code must be promoted out of `phases/` into `src/`, `scripts/`, or `con
   `phases/p0-audit/README.md`; promoted evidence is in `docs/evidence/p0-audit/` and
   `docs/evidence/p0_g1_20260613/`. Completed P0 task prompts are historical records,
   not current agent instructions.
-- **Five-condition program: Gate S0 freeze draft active; performance blocked.** Preparation
-  and remediation R1 are technically closed; the latest Return is
-  `docs/handoffs/returns/P2_C2W_GATE_S0_REMEDIATION_R1_RETURN_v1.md` with proposed status
-  `BLOCKED_FOR_GATE_S0_REMEDIATION_REVIEW`, `scientific_verdict: null`, and no human Gate
-  decision. The current human-review draft is
+- **Five-condition program: Gate S0 freeze draft active; performance blocked.** Preparation,
+  remediation R1 and evidence R2A are technically closed; the latest Return is
+  `docs/handoffs/returns/P2_C2W_GATE_S0_EVIDENCE_R2A_RETURN_v1.md` with proposed status
+  `BLOCKED_FOR_GATE_S0_EVIDENCE_REVIEW`, `scientific_verdict: null`, and no full human
+  Gate decision. `DEC-P1-012` freezes the exact 962/937/25 source membership and selects
+  LoD2-derived LoD1 as the C5 input candidate conditional on an independent evaluation
+  reference; it does not approve performance. The current human-review draft is
   `docs/research/preregistration/gate_s0/GATE_S0_FREEZE_PACKET_v1.md`; it is not execution
   authority. Before the first new baseline result, Gate S0 must freeze the exact common
   image/pose-derived base, AOI, `U_target`, `E_paired`, all condition inputs, eligibility,

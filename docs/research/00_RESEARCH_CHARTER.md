@@ -219,7 +219,8 @@ regime인지 Gate S0 evidence에서 입증해야 한다. 구분이 입증되지 
 
 ### 8.3 No-external-prior GS와 common image-derived base
 
-- Gate S0에서 exact current image member와 camera/pose ID를 `B_current`로 동결한다.
+- `DEC-P1-012`가 exact 962 image members, 937 calibrated image/pose pairs와 25
+  no-pose exclusions를 `B_current` source membership으로 동결했다.
 - `B_current`만으로 파생한 SfM sparse, dense MVS, depth, normal, confidence는
   C3–C5가 공유하는 image-derived geometry/support로 허용한다. 각 component의
   producer/version, code/config, source-member IDs, coordinate frame, role, bytes와
@@ -254,12 +255,13 @@ regime인지 Gate S0 evidence에서 입증해야 한다. 구분이 입증되지 
 - top plane을 실제 roof surface 정답으로 취급하지 않는다.
 - TUM2TWIN 공식 페이지에서 직접 배포되는 LoD1을 이번 조사로 확인하지 못했다.
   실제 LoD1 파일과 생성 계보는 `TO VERIFY`. Evaluation LoD2를 단순화해 만든
-  LoD1/height envelope는 LoD2 Z를 사용하므로 현행 GT-separation 정책상 primary
-  honest arm에 사용할 수 없다.
+  LoD1/height envelope를 같은 LoD2 계보로 평가하면 현행 GT-separation 정책상
+  primary honest arm에 사용할 수 없다.
 - `DEC-P1-011`에 따라 LoD2를 footprint와 단일 높이 envelope로 단순화한 LoD1은
   **reference-derived diagnostic**으로 생성·검사할 수 있다. 같은 LoD2로 평가하면
   `C5` primary estimand나 `E_paired` eligibility에 사용하지 않고 자기참조 진단으로
-  별도 보고한다. 독립 reference로 평가할 수 있을 때만 primary C5 후보 승격을 다시
+  별도 보고한다. `DEC-P1-012`는 이 bytes를 C5 입력 후보로 선택했지만, exact 독립
+  geometry/structure evaluation reference가 bind된 뒤에만 primary eligibility를
   검토한다.
 
 ### 8.6 Evaluation reference
@@ -358,9 +360,10 @@ robustness로 표현을 제한한다.
 
 ## 12. 동결 항목
 
-다음은 `DEC-P1-008`과 `DEC-P1-010`의 사용자 채택으로 연구 규칙이 `FROZEN`이다.
-여기서 common-base **규칙**이 frozen이라는 말은 exact `B_current` member와 payload가
-이미 정해졌다는 뜻이 아니다. 그 IDs/hashes는 Gate S0 human freeze 전까지 `BLOCKED`다.
+다음은 `DEC-P1-008`, `DEC-P1-010`과 `DEC-P1-012`의 사용자 채택으로 연구 규칙이
+`FROZEN`이다. `DEC-P1-012`는 exact 962/937/25 source membership을 동결했지만,
+공통 derivative payload와 component enablement까지 정했다는 뜻은 아니다. 그
+producer/config/frame/role/bytes/hashes는 Gate S0 전체 freeze 전까지 `BLOCKED`다.
 
 - 연구 앵커와 목적
 - TUM2TWIN 사용

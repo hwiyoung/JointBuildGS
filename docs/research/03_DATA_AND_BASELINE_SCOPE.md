@@ -26,8 +26,8 @@ backend에 정확한 파일이 검증되어 있다는 사실을 구분한다.
 
 | Asset ID | 공식 후보 | 연구 역할 | 공식 source에서 확인 | 로컬 가용성 | 취득 시점 | Accuracy | Density / coverage | Format / CRS |
 |---|---|---|---|---|---|---|---|---|
-| `IMG_CURRENT` | UAS photographs | C2–C5 current imagery | RTK-georeferenced UAS images, UAS laser campaign 중 취득 ([official](https://tum2t.win/datasets/im-uas)) | `PARTIAL`: exact 962 images; 937 included + 25 excluded ledger | `TO VERIFY` | `TO VERIFY` | building view support `TO VERIFY` | image archive/member hashes verified; CRS `TO VERIFY` |
-| `CAM_CURRENT` | OPF/camera/trajectory | C2–C5 common image/pose base 후보 | official tutorial은 `images.zip`, `opf.zip`, OPF camera parameters/geolocation/sparse reconstruction을 기술 ([official](https://tum2t.win/tutorials/im-gaussiannerf)) | `PARTIAL`: exact OPF; 937 calibrated poses; 25 explicit no-pose exclusions | image archive와 exact files verified | pose uncertainty `TO VERIFY` | building coverage `TO VERIFY` | exact Gate S0 member set과 derived-component lineage 미동결 |
+| `IMG_CURRENT` | UAS photographs | C2–C5 current imagery | RTK-georeferenced UAS images, UAS laser campaign 중 취득 ([official](https://tum2t.win/datasets/im-uas)) | `READY MEMBERSHIP`: exact 962 images; 937 included + 25 excluded frozen by `DEC-P1-012` | `TO VERIFY` | `TO VERIFY` | building view support `TO VERIFY` | image archive/member hashes verified; CRS `TO VERIFY` |
+| `CAM_CURRENT` | OPF/camera/trajectory | C2–C5 common image/pose base 후보 | official tutorial은 `images.zip`, `opf.zip`, OPF camera parameters/geolocation/sparse reconstruction을 기술 ([official](https://tum2t.win/tutorials/im-gaussiannerf)) | `READY MEMBERSHIP / PARTIAL DERIVATIVES`: exact OPF; 937 calibrated poses; 25 explicit no-pose exclusions | image archive와 exact files verified | pose uncertainty `TO VERIFY` | building coverage `TO VERIFY` | exact member set frozen; derived-component lineage 미동결 |
 | `LIDAR_UAS_CURRENT` | UAS laser scanning | `L_upper`, geometry reference 후보 | DJI M350 RTK + Zenmuse L2, nadir/oblique scans ([official](https://tum2t.win/datasets/pc-uas)) | `PARTIAL`: manual/nadir candidates | `TO VERIFY` | `TO VERIFY` | point density/coverage `TO VERIFY` | selection, class, CRS/datum 미동결 |
 | `MVS_CURRENT` | UAS image-based scan | C2 direct baseline 및 C3–C5 common image-derived base 후보 | Pix4Dmatic 1.58.1 point cloud와 orthophoto ([official](https://tum2t.win/datasets/pc-uasp)) | `PARTIAL`: 1,104-image vendor candidate identified; common base로 미채택 | UAS campaign과 동일성 `TO VERIFY` | `TO VERIFY` | density/coverage `TO VERIFY` | exact common image/pose member와 derivation binding 미동결 |
 | `ALS_EXISTING` | Bavarian real ALS tiles | `P_LiDAR` 후보 | official portal에 real ALS tiles와 download source가 제시됨 ([official](https://tum2t.win/datasets/pc-als)) | `PARTIAL`: four candidate tiles | UAS 대비 시점차 `TO VERIFY` | `TO VERIFY` | density/coverage `TO VERIFY` | C1 independence, CRS/datum/interface 미동결 |
@@ -43,8 +43,8 @@ payload가 있다는 뜻은 아니다.
 Gate S0 evidence와 Work Host 교차검토가 확인한 현재 준비도는 다음처럼 축약한다.
 
 - images 962개와 calibrated poses 937개의 차이는 25건의 결정론적 exclusion ledger로
-  설명됐다. 이 ledger는 Gate S0 common base 후보이지 자동 freeze가 아니다. exact
-  image/pose members와 C2–C5 derivation을 묶는 hash-linked receipt는 없다.
+  설명됐고 `DEC-P1-012`가 exact membership으로 동결했다. C2–C5 derivative
+  producer/config/frame/role/payload hashes는 아직 그 set에 완전히 bind되지 않았다.
 - C1 UAS LiDAR는 manual/nadir 선택·병합, class 2/6, vertical datum과 registration이 미동결이다.
 - C4 Existing ALS는 C1과의 독립성 및 future prior interface가 미동결이다.
 - 독립 LoD1은 발견되지 않아 C5가 `MISSING`이다.
@@ -183,8 +183,9 @@ LoD1 asset은 확인되지 않았다. 다음 세 경우를 구분한다.
 `DEC-P1-011`은 3번의 deterministic 생성 자체를 bounded preprocessing으로 허용한다.
 단, source LoD2가 scoring reference와 같거나 같은 생산 계보이면 산출물의 역할은
 `REFERENCE_DERIVED_DIAGNOSTIC_ONLY`다. 이 산출물은 independent LoD1 부재를 숨기거나
-primary C5/`E_paired`를 READY로 바꾸지 않는다. Primary 승격에는 입력과 독립적인
-geometry/structure reference가 별도로 필요하다.
+primary C5/`E_paired`를 READY로 바꾸지 않는다. `DEC-P1-012`는 R2A-derived bytes를
+C5 입력 후보로 선택했으며, primary eligibility에는 입력과 독립적인 exact
+geometry/structure reference ID/version/production lineage가 별도로 필요하다.
 
 ## 7. Reference 계약
 
@@ -347,7 +348,7 @@ P4 primary 잠금 뒤 `E_paired` census를 별도 실행한다. 이 census가 �
 
 - [ ] exact file paths/checksums와 manifest resolver
 - [ ] image/OPF/camera/trajectory version
-- [ ] Gate S0 exact common image/pose member IDs, inclusion/exclusion rule와 manifest hash
+- [x] Gate S0 exact common image/pose member IDs, inclusion/exclusion rule와 manifest hash (`DEC-P1-012`)
 - [ ] shared SfM sparse/dense MVS/depth/normal/confidence code·config·frame·role·payload hashes
 - [ ] 1,104-image vendor MVS와 common ledger의 exact mapping 또는 별도 bundle 분류
 - [ ] UAS image와 LiDAR co-acquisition date

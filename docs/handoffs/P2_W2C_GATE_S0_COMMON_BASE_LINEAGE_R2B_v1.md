@@ -11,15 +11,16 @@
 - source_commit: `TO_BE_FILLED_BY_USER_BEFORE_APPROVAL`
 - target_branch: `main`
 - research_charter_version: `C1C5_CANON_v2`
-- decision_log_through: `DEC-P1-011`
+- decision_log_through: `DEC-P1-012`
 - follows: `P2-W2C-GATE-S0-EVIDENCE-R2A-v1`
 - created_at: `2026-08-01`
-- user_approval: `NOT_YET_GRANTED`
+- user_approval: `GRANTED IN CHAT — approval commit pending exact source snapshot`
 - repository_effective_phase: `C1–C5 PROGRAM / GATE S0 FREEZE DRAFT / PERFORMANCE BLOCKED`
 - scientific_verdict: null
 
-This file is a review draft only. It creates no offered receipt, transfers no writer
-ownership and authorizes no repository, artifact or performance action.
+This source snapshot is not executable until its exact SHA is written into a later
+`APPROVED_FOR_EXECUTION` approval commit and the offered/accepted receipt sequence
+passes. It is not Gate S0 approval as a whole and grants no performance authority.
 
 ## Goal
 
@@ -62,11 +63,11 @@ authority for a new shared preprocessing run:
 
 Past R2A files are immutable evidence and must not be edited to repair these issues.
 
-## Human-review intent carried into this draft
+## User-approved decisions carried into this packet
 
 - The exact 962 image members, 937 calibrated image/pose pairs and 25
   `NO_CALIBRATED_CAMERA_POSE_IN_OPF` exclusions are the user-selected common-source
-  proposal. This task verifies lineage against that set; it does not substitute a
+  set. This task verifies lineage against that set; it does not substitute a
   different set.
 - Existing OPF sparse members should be consumed directly if an exact consumption
   contract is sufficient; do not generate a duplicate sparse derivative merely to
@@ -77,10 +78,11 @@ Past R2A files are immutable evidence and must not be edited to repair these iss
   their current enablement is unresolved. Their `ON/OFF` state remains a human Gate
   decision. Gravity remains governed by the root requirement to estimate it once
   from terrain MVS normals.
-- The R2A LoD2-derived LoD1 remains
+- The R2A LoD2-derived LoD1 is the selected C5 input candidate, conditional on an
+  exact independent evaluation reference. Until that reference is bound it remains
   `REFERENCE_DERIVED_DIAGNOSTIC_ONLY` /
   `REFERENCE_DERIVED_SELF_CONDITIONED`, with `primary_c5_eligible=false`, unless an
-  independent evaluation reference and a separate human Gate decision are recorded.
+  independent evaluation reference is recorded. Past R2A labels remain immutable.
 
 ## Authoritative documents
 
