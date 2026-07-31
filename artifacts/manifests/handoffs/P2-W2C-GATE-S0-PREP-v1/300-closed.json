@@ -1,0 +1,213 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P2-W2C-GATE-S0-PREP-v1",
+  "task_id": "P2-GATE-S0-EVIDENCE-PREP-v1",
+  "created_at": "2026-07-31T20:40:07+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "closed",
+  "previous_receipt": {
+    "path": "artifacts/manifests/handoffs/P2-W2C-GATE-S0-PREP-v1/200-verified.json",
+    "sha256": "a6cd8da5476753f2c7a03c6e6b5e1327aee094291eed2dd36cc73f75f7d97225"
+  },
+  "transport": {
+    "mode": "serialized_main",
+    "branch": "main",
+    "target_branch": "main",
+    "exclusive_writer_ack": true
+  },
+  "commits": {
+    "base_main": "916630cac1225e612405167fcf53686288237d9a",
+    "offered_head": "04081d046cf544057c48a8387a6fceb09aadf462",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/gate_s0",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-PREP-v1",
+      "configs/input_and_alignment/gate_s0",
+      "docs/handoffs/returns/P2_C2W_GATE_S0_PREPARATION_RETURN_v1.md",
+      "docs/research/preregistration/gate_s0",
+      "scripts/input_and_alignment/gate_s0",
+      "tests/input_and_alignment/gate_s0"
+    ],
+    "protected_paths": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      "artifacts/manifests/handoffs/P1-W2C-REPO-AUDIT-R2",
+      "artifacts/manifests/local_workspace_20260730.yaml",
+      "configs/repository",
+      "docs/evidence",
+      "docs/experiments/pilots/fusion_w1",
+      "docs/handoffs/HANDOFF_INDEX.md",
+      "docs/handoffs/P2_W2C_GATE_S0_PREPARATION_v1.md",
+      "docs/research/00_RESEARCH_CHARTER.md",
+      "docs/research/01_MASTER_ROADMAP.md",
+      "docs/research/02_NOVELTY_MAP.md",
+      "docs/research/03_DATA_AND_BASELINE_SCOPE.md",
+      "docs/research/04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md",
+      "docs/research/05_HANDOFF_PROTOCOL.md",
+      "docs/research/06_DECISION_LOG.md",
+      "docs/research/EXPERIMENT_PLAN.md",
+      "docs/research/RESEARCH_CONTEXT.md",
+      "docs/research/WORK_START_HERE.md",
+      "docs/research/preregistration/fusion_w1",
+      "docs/research/preregistration/quality_axis",
+      "phases/p2-gsjso",
+      "scripts/repository",
+      "tests/fusion_w1",
+      "tests/repository"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "artifact_verified",
+    "verifier_role": "experiment_host",
+    "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "commands": [
+      "docker exec jointbuildgs-dev python scripts/repository/validate_agent_instructions.py",
+      "docker exec jointbuildgs-dev python -m unittest tests.repository.test_agent_instruction_sync tests.repository.test_artifact_paths tests.repository.test_repo_inventory tests.repository.test_two_host_handoff tests.repository.test_work_readiness tests.input_and_alignment.gate_s0.test_gate_s0_evidence",
+      "docker exec jointbuildgs-dev python scripts/input_and_alignment/gate_s0/validate_gate_s0_evidence.py --artifact-root /artifacts/JointBuildGS",
+      "docker exec jointbuildgs-dev python scripts/repository/validate_two_host_handoff.py artifacts/manifests/handoffs/P2-W2C-GATE-S0-PREP-v1/200-verified.json --repo . --origin-ref deaedff800bd62b6a6b893ff885898c99571f199 --head-ref deaedff800bd62b6a6b893ff885898c99571f199 --artifact-root /artifacts/JointBuildGS",
+      "docker exec jointbuildgs-dev python scripts/repository/validate_two_host_handoff.py artifacts/manifests/handoffs/P2-W2C-GATE-S0-PREP-v1/300-closed.json --repo . --origin-ref HEAD --head-ref HEAD --artifact-root /artifacts/JointBuildGS"
+    ],
+    "tests": [
+      {
+        "name": "agent instruction contract",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "repository and Gate S0 regression suite",
+        "passed": 78,
+        "failed": 0
+      },
+      {
+        "name": "Gate S0 evidence and output hash validator",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "remote verified receipt and artifact chain validator",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "target artifact SHA-256 rehash",
+        "passed": 11,
+        "failed": 0
+      }
+    ]
+  },
+  "artifacts": {
+    "required_for_task": false,
+    "availability": {
+      "work_host": "manifest_only",
+      "experiment_host": "verified_local"
+    },
+    "records": [
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/raw/uav/Images.zip",
+        "bytes": 5906891973,
+        "sha256": "078056d16c8ed7e75d5f22206fdb635327a1ed80e5a4e5890930ba17a43fb34d",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-07-31T20:04:52+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/raw/uav/opf.zip",
+        "bytes": 1936493976,
+        "sha256": "ae83a054cf2f338874ff7bac7b3e17895b8e4405d429674790da3801a0352daa",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-07-31T20:04:52+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/raw/tum2twin/TUM_Downtown_ULS_20241217_manual.laz",
+        "bytes": 1582058159,
+        "sha256": "e38aecd5c6a103c037a573513beabefe7a5c8d984e0ecf407a1a43fa8e778f01",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-07-31T20:04:52+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/raw/tum2twin/TUM_Downtown_ULS_20241217_nadir.laz",
+        "bytes": 1277996022,
+        "sha256": "50783bfb205ea5532ac2a300d7e41b6b6426e45009d6c961d603e079cc5ae7b4",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-07-31T20:04:52+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/raw/tum2twin/TUM_Downtown_Photogrammetry_20241217.laz",
+        "bytes": 4264934724,
+        "sha256": "fa6826d717d9501972e86b662cb980953a14360524cb21b2f40c3a4518f93f91",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-07-31T20:04:52+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/raw/als/690_5335.laz",
+        "bytes": 110979201,
+        "sha256": "01602b7385aaf7324f89da6183df3dbdeffa237f85bf57dc27208b554b4fc0b3",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-07-31T20:04:52+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/raw/als/690_5336.laz",
+        "bytes": 119749181,
+        "sha256": "98ab7ad7f4c5108ebf41bc62186b336c6cd8a70b82fceec57136a56c0188b566",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-07-31T20:04:52+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/raw/als/691_5335.laz",
+        "bytes": 107359041,
+        "sha256": "9e14119bb0af7d5a300aa3a2a19074219b4d6d290923b4b90277c317e8b33720",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-07-31T20:04:52+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/raw/als/691_5336.laz",
+        "bytes": 132681326,
+        "sha256": "63c64002fc55d8b99a49749b5a2e36d802186186a950c89779463274e3cb950d",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-07-31T20:04:52+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/raw/lod2/690_5334.gml",
+        "bytes": 156656509,
+        "sha256": "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-07-31T20:04:52+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/raw/lod2/690_5336.gml",
+        "bytes": 147865939,
+        "sha256": "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-07-31T20:04:52+09:00"
+      }
+    ]
+  },
+  "scientific": {
+    "technical_state": "complete",
+    "scientific_verdict": null,
+    "promotion_status": "human_review_required"
+  },
+  "receiver_ack": {
+    "role": "experiment_host",
+    "accepted_at": "2026-07-31T20:40:07+09:00",
+    "status": "closed",
+    "issue": "Technical handoff closed after remote artifact-verified PASS. Serialized-main write ownership is returned to the Work Host. The proposed Gate status remains BLOCKED_FOR_GATE_S0_REVIEW and scientific_verdict remains null."
+  }
+}
