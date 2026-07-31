@@ -6,9 +6,9 @@
 - task_id: `P2-GATE-S0-REMEDIATION-R1-v1`
 - phase: `P2 / pre-result Gate S0 remediation`
 - direction: `Work→Codex`
-- status: `DRAFT`
+- status: `APPROVED_FOR_EXECUTION`
 - packet_version: `v1`
-- source_commit: `TO_BE_FILLED_BY_USER_BEFORE_APPROVAL`
+- source_commit: `0928201553ba414109ae1f547a8e18a0be38b3d4`
 - evidence_output_commit: `380cc8916e739702206a65cdd9318b2014c81030`
 - prior_closed_commit: `1cf0db33ecfe4305477735806912992eea3325d8`
 - cross_review_commit: `51e3ebfb06f894123ce6fdc77a70d56bdfbfe646`
@@ -21,16 +21,17 @@
 - supersedes: null
 - follows: `P2-W2C-GATE-S0-PREP-v1`
 - created_at: `2026-07-31T21:20:58+09:00`
-- approved_at: null
-- user_approval: `PENDING`
+- approved_at: `2026-07-31T21:27:42+09:00`
+- user_approval: `GRANTED — bounded technical remediation with subagent verification`
+- approval_basis: `user instruction on 2026-07-31 to proceed without human interruption; scientific verdict remains reserved`
 - repository_effective_phase: `C1–C5 PROGRAM / GATE S0 REMEDIATION PREPARATION`
 - scientific_verdict: null
 
-This packet is a DRAFT and cannot be executed until its exact source commit and the
-user's approval are recorded in a separate approval commit, followed by an immutable
-offered receipt and Experiment Host acceptance. Write ownership is only the serialized
-Git writer turn defined by `docs/research/05_HANDOFF_PROTOCOL.md`; it does not change
-either host's filesystem permissions.
+This packet is approved for the bounded technical remediation defined below. Execution
+remains blocked until an immutable offered receipt and Experiment Host acceptance pass.
+Write ownership is only the serialized Git writer turn defined by
+`docs/research/05_HANDOFF_PROTOCOL.md`; it does not change either host's filesystem
+permissions. This approval is not a Gate S0 or scientific verdict.
 
 ## Goal
 

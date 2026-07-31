@@ -181,7 +181,7 @@ primary 잠금 뒤 별도 census로 수행한다. 이 census를 완료하지 않
 | P1 audit integration | Work | `COMPLETE` | `0716c925` | Gate S0 evidence에 반영 |
 | Gate S0 evidence preparation | Work→Codex | `BLOCKED_FOR_GATE_S0_REVIEW / TECHNICAL CLOSED` | output `380cc891`, closed `1cf0db33` | remediation evidence 필요 |
 | Gate S0 Work cross-review | Work + independent agents | `PASS WITH MATERIAL FOLLOW-UPS` | `WORK_HOST_CROSS_REVIEW_v1.md` | C3 sparse-init와 reference/self-reference 누락 보완 |
-| Gate S0 remediation R1 | Work→Codex | `DRAFT / EXECUTION FORBIDDEN` | `P2_W2C_GATE_S0_REMEDIATION_R1_v1.md` | source snapshot과 approval 고정 뒤 새 offered receipt |
+| Gate S0 remediation R1 | Work→Codex | `APPROVED_FOR_EXECUTION / OFFER PENDING` | source `09282015`, `P2_W2C_GATE_S0_REMEDIATION_R1_v1.md` | 새 offered receipt |
 
 ## Decision Status Register
 
@@ -299,7 +299,7 @@ evidence가 충족된 뒤에만 사용자 scientific gate 대상으로 올린다
 | `docs/handoffs/P1_W2C_REPO_AUDIT_v1.md` | `SUPERSEDED / TECHNICAL_BLOCKED` |
 | `docs/handoffs/P1_W2C_REPO_AUDIT_v2.md` | `HISTORICAL EXECUTED PACKET` |
 | `docs/handoffs/P2_W2C_GATE_S0_PREPARATION_v1.md` | `APPROVED_FOR_EXECUTION / SOURCE 0716c925` |
-| `docs/handoffs/P2_W2C_GATE_S0_REMEDIATION_R1_v1.md` | `DRAFT / SOURCE PENDING` |
+| `docs/handoffs/P2_W2C_GATE_S0_REMEDIATION_R1_v1.md` | `APPROVED_FOR_EXECUTION / SOURCE 09282015` |
 | `docs/handoffs/returns/P2_C2W_GATE_S0_PREPARATION_RETURN_v1.md` | `BLOCKED_FOR_GATE_S0_REVIEW @ 380cc891` |
 | `artifacts/manifests/handoffs/P2-W2C-GATE-S0-PREP-v1/300-closed.json` | `TECHNICAL CLOSED @ 1cf0db33` |
 | `docs/research/preregistration/gate_s0/WORK_HOST_CROSS_REVIEW_v1.md` | `WORK REVIEW / scientific_verdict null` |
