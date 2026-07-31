@@ -1,14 +1,15 @@
 # JointBuildGS 연구 헌장
 
-- Document status: `USER_APPROVED_AUDIT_CONTRACT`
-- 문서 버전: `P1_AUDIT_v1`
-- 프로그램 workstream: `P1 — 연구 기반 확정 및 감사`
-- 저장소 유효 단계: `P2 / Fusion W1 ACTIVE`
+- Document status: `USER_APPROVED_RESEARCH_CANON`
+- 문서 버전: `C1C5_CANON_v1`
+- 프로그램 workstream: `P2 — pre-result Gate S0 preparation`
+- 저장소 유효 단계: `C1–C5 PROGRAM / GATE S0 PREPARATION`
 - 작성일: 2026-07-31
-- 승인 상태: `USER APPROVED FOR P1 AUDIT — 2026-07-31`
-- 효력: **P1 read-only 설계·준비도 감사 계약**. 현재 P2/Fusion W1을 rollback,
-  supersede 또는 수정하지 않으며 `AGENTS.md`, `RESEARCH_CONTEXT.md`,
-  `EXPERIMENT_PLAN.md`와 활성 Fusion W1 잠금이 계속 우선한다.
+- 승인 상태: `USER APPROVED AS CURRENT RESEARCH CANON — 2026-07-31`
+- 효력: **현재 C1–C5 연구·실행 정본**. `RESEARCH_CONTEXT.md`와
+  `EXPERIMENT_PLAN.md`의 기존 4조건 프로그램은 역사 기록이며 새 작업의 실행
+  authority가 아니다. 기존 Fusion W1 artifact와 lock은 보호·보존하지만 현재
+  C1–C5 프로그램을 지시하지 않는다.
 
 관련 계약: [Master Roadmap](01_MASTER_ROADMAP.md) ·
 [Data and Baseline Scope](03_DATA_AND_BASELINE_SCOPE.md) ·
@@ -31,20 +32,23 @@
 
 ## 1. 상태와 적용 경계
 
-이 문서는 bootstrap 요청에서 제안된 연구 프로그램을 대상으로 하는 P1 설계·준비도
-감사 계약이다. 연구 목적, 다섯 reconstruction conditions, 주요 endpoint, P1–P4
-관계는 감사 기준으로 동결한다. P1은 repository phase rollback이 아니라 현재
-P2/Fusion W1을 보호한 별도 read-only workstream이다.
+이 문서는 사용자가 채택한 C1–C5 연구 프로그램의 현재 계약이다. 연구 목적, 다섯
+reconstruction conditions, 주요 endpoint와 P1–P4 관계를 실행 기준으로 동결한다.
+완료된 P1 감사는 이 프로그램의 입력 증거이며, 다음 작업은 첫 baseline 결과 전
+Gate S0 evidence preparation이다. 기존 P2/Fusion W1은 삭제·재해석하지 않고 보호된
+역사적 capability evidence로 유지한다.
 
 | 항목 | 현재 유효 근거 | 이 초안 | 상태 |
 |---|---|---|---|
-| 활성 단계 | `AGENTS.md`, `phases/p2-gsjso/README.md`: P2/Fusion W1 활성 | P1 read-only audit workstream; phase 변경 없음 | `RESOLVED FOR P1` |
-| Stage 3 roofprint | `AGENTS.md`, `RESEARCH_CONTEXT.md`: 외부 roofprint 없는 read-out | `R_derived`만 primary; `R_ext`는 비실행 후속안 | `RESOLVED FOR P1` |
-| 핵심 비교 | 기존 4조건 손실 ablation 및 Stage 3 E0–E4 | 다섯 evidence configurations | `OPEN QUESTION` |
-| 주 데이터 | 기존 MatrixCity, 3D BAG, GauU-Scene, 성수동 및 TUM2TWIN 일부 | TUM2TWIN 중심 | `OPEN QUESTION` |
+| 현재 프로그램 | C1–C5 정본 채택, P1 감사 완료 | P2 pre-result Gate S0 preparation | `FROZEN` |
+| 기존 Fusion W1 | 기존 lock·artifact·결과 보존 | 새 프로그램 authority 아님; 실행·수정 금지 | `PROTECTED HISTORICAL` |
+| Stage 3 roofprint | `AGENTS.md`와 이 charter: 외부 roofprint 없는 read-out | `R_derived`만 primary; `R_ext`는 비실행 후속안 | `FROZEN` |
+| 핵심 비교 | 기존 4조건 손실 ablation 및 Stage 3 E0–E4는 역사 증거 | 다섯 evidence configurations | `FROZEN` |
+| 주 데이터 | 기존 데이터·결과는 capability/lineage 증거 | TUM2TWIN 중심 C1–C5 | `FROZEN; INPUTS TO VERIFY` |
 
-이 파일의 `FROZEN`은 P1 audit이 임의 변경하지 못하는 감사 기준을 뜻한다. 현재
-P2/Fusion W1의 과학적 정본이나 완료 artifact를 변경했다는 뜻은 아니다.
+이 파일의 `FROZEN`은 새 C1–C5 작업이 임의 변경하지 못하는 연구 기준을 뜻한다.
+기존 P2/Fusion W1의 완료 artifact를 변경하거나 그 결과를 새 실험 결과로 재라벨했다는
+뜻은 아니다.
 
 ## 2. 연구 배경과 문제 정의
 
@@ -67,7 +71,7 @@ P2/Fusion W1의 과학적 정본이나 완료 artifact를 변경했다는 뜻은
 
 `dense_baseline_qualitative_v5.pdf`는 문제 제기용 pilot evidence 후보이다. 2026-07-31
 tracked-file 빠른 검색에서는 PDF 자체를 찾지 못했다. 외부 artifact manifest, 생성
-script/config 및 정확한 payload는 P1 감사에서 확인하며, 그 전에는 내용을 통계적
+script/config 및 정확한 payload는 Gate S0 evidence에서 확인하며, 그 전에는 내용을 통계적
 결론이나 재현된 사실로 사용하지 않는다. 상태는 `TO VERIFY`이다.
 
 ## 3. 연구 목적
@@ -119,6 +123,10 @@ Image-only GS는 MVS와 current high-quality LiDAR 사이의 building-level
 
 Existing LiDAR prior와 LoD1 prior는 영상 기반 GS의 서로 다른 구조적 실패를
 회복하는가?
+
+여기서 “상보성”은 LiDAR와 LoD1을 한 arm에 동시에 넣는 joint-fusion synergy가
+아니다. C4와 C5의 rescue-set overlap/discordance와 failure-mode별 회복 차이를 뜻한다.
+두 prior의 interaction을 주장하려면 현재 다섯 조건 밖의 별도 결합 arm과 승인이 필요하다.
 
 ### RQ4 — downstream 전파
 
@@ -185,7 +193,7 @@ pass-to-fail 악화를 몇 개 만들며, usable PASS 건물 집합을 순증가
 | **Existing ALS** (`ALS_EXISTING`) | 이미 보유한 regional airborne laser-scanning 자산; 과거·저밀도·불완전 가능 | `P_LiDAR`로서 `C4_GS_lidar_prior`의 initialization/regularization 후보 | `L_upper` 또는 독립 ground truth가 아님 |
 
 `Current UAS/Drone LiDAR`와 `Existing ALS`가 실제로 다른 취득 시점·밀도·coverage·품질
-regime인지 P1 감사에서 입증해야 한다. 구분이 입증되지 않으면 C1/C4의 과학적 contrast는
+regime인지 Gate S0 evidence에서 입증해야 한다. 구분이 입증되지 않으면 C1/C4의 과학적 contrast는
 성립하지 않으며 `TO VERIFY` 또는 설계 변경 대상으로 남긴다.
 
 ## 8. 데이터 역할 계약
@@ -326,9 +334,9 @@ Temporal currentness는 실제 acquisition date와 change cases가 확인될 때
 그렇지 않으면 coarse-prior 보완, structural incompleteness, registration/conflict
 robustness로 표현을 제한한다.
 
-## 12. 제안 동결 항목
+## 12. 동결 항목
 
-다음은 사용자 채택 시 `FROZEN`이다.
+다음은 `DEC-P1-008`의 사용자 채택으로 `FROZEN`이다.
 
 - 연구 앵커와 목적
 - TUM2TWIN 사용
@@ -365,15 +373,14 @@ robustness로 표현을 제한한다.
 
 ## 15. Consistency review
 
-- **Resolved for P1:** 현재 P2/Fusion W1을 유지하고 P1을 read-only audit
-  workstream으로 제한한다.
+- **Resolved by DEC-P1-008:** 00–06이 현재 C1–C5 정본이며 기존
+  `RESEARCH_CONTEXT.md`/`EXPERIMENT_PLAN.md`는 역사 기록이다.
+- **Resolved by DEC-P1-008:** 기존 P2/Fusion W1은 보호된 capability evidence이며
+  현재 실행 authority가 아니다.
 - **Resolved for P1:** 외부 roofprint는 범위 밖이며 `R_derived`만 primary다.
-- **Major:** `RESEARCH_CONTEXT.md`의 기하–의미론 공동최적화/4조건 ablation과 이
-  초안의 prior 중심 5조건은 연구질문과 기여 구조가 다르다.
-- **Major:** `EXPERIMENT_PLAN.md`의 데이터셋·Phase 명칭과 새 P1–P4가 다르다.
 - **Major:** bootstrap의 논리적 `results/metrics/...` 경로는 현재 top-level directory
   contract와 맞지 않는다. 외부 artifact root 및 `docs/` promoted summary로 매핑해야 한다.
 - **TO VERIFY:** pilot PDF는 tracked 파일로 확인되지 않았다.
 
-남은 `MAJOR`/`TO VERIFY` 항목은 P1 audit이 evidence로 판정하며 기존 P2 artifact나
-lock을 변경하지 않는다.
+남은 `MAJOR`/`TO VERIFY` 항목은 Gate S0 evidence와 후속 phase가 판정하며 기존 Fusion
+artifact나 lock을 변경하지 않는다.

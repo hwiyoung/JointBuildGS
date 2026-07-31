@@ -10,11 +10,11 @@
 - source_commit: `TO_BE_FILLED_BY_USER_BEFORE_APPROVAL`
 - audit_commit: `c1c6639611bd26e29699337a03f447972676af75`
 - target_branch: `main`
-- research_charter_version: `P1_AUDIT_v1`
-- master_roadmap_version: `P1_AUDIT_v2`
-- result_contract_version: `P1_AUDIT_v1`
-- data_scope_version: `P1_AUDIT_v1`
-- decision_log_through: `DEC-P1-007`
+- research_charter_version: `C1C5_CANON_v1`
+- master_roadmap_version: `C1C5_CANON_v1`
+- result_contract_version: `C1C5_CANON_v1`
+- data_scope_version: `C1C5_CANON_v1`
+- decision_log_through: `DEC-P1-008`
 - supersedes: null
 - created_at: `2026-07-31T19:08:41+09:00`
 - user_approval: `NOT_GRANTED`
@@ -66,8 +66,8 @@ or acceptance contract.
 9. P1 audit bundle `docs/audit/*.md` and
    `docs/handoffs/returns/P1_C2W_REPO_AUDIT_RETURN_v2.md`
 
-Before approval, Work must update the authoritative documents so the C1–C5
-program and the historical status of `EXPERIMENT_PLAN.md` are unambiguous.
+`DEC-P1-008` and the source snapshot must make the C1–C5 program and the historical
+status of `EXPERIMENT_PLAN.md` unambiguous before this packet is approved.
 
 ## Frozen decisions
 
@@ -81,7 +81,7 @@ program and the historical status of `EXPERIMENT_PLAN.md` are unambiguous.
 - `EXHAUSTIVE_PARTITION` is preferred; `STRATIFIED_SAMPLE` requires evidence and user approval.
 - G3/G4 thresholds and the final surface adapter are deferred to P2.
 - Prior equations, weights, confidence rules, and schedules are deferred to P3.
-- Active P2/Fusion W1 files, locks, and results remain protected capability evidence.
+- Legacy P2/Fusion W1 files, locks, and results remain protected capability evidence.
 
 ## Inputs
 
@@ -101,9 +101,13 @@ program and the historical status of `EXPERIMENT_PLAN.md` are unambiguous.
 - Resolve the 962-image versus 937-pose discrepancy with a deterministic ledger.
 - Select and freeze the proposed C1 source: manual, nadir, or a documented merge.
 - Specify a reproducible C1 class-2/6, ground, vertical-datum, registration, and coverage recipe.
-- Specify the C2 source, transform, classification, and coverage recipe.
+- Specify the C2 source, transform, classification, and coverage recipe, and prove
+  whether it uses the same frozen image/camera ledger as C3–C5. If not, label it a
+  sensor-processing bundle baseline and limit method-only interpretation.
 - Establish Existing ALS identity, C1 independence, temporal gap, registration, coverage,
   and the data interface required for a future C4 prior. Do not design the prior loss.
+- Treat C4/C5 complementarity as rescue-set/failure-mode comparison, not an unmeasured
+  joint-prior interaction; no combined-prior arm is authorized.
 - Locate and verify an independent LoD1 candidate. If none is found, preserve C5 as
   `MISSING` and Gate S0 as blocked; do not derive LoD1 from LoD2.
 - Produce outcome-free AOI candidates using input coverage, stable IDs, continuity,
@@ -125,7 +129,7 @@ program and the historical status of `EXPERIMENT_PLAN.md` are unambiguous.
 - final extraction-adapter selection
 - G3/G4 numerical threshold selection or `PASS_usable` verdicts
 - held-out building access or result inspection
-- active P2/Fusion W1 execution, modification, or relabeling
+- legacy P2/Fusion W1 execution, modification, or relabeling
 - `R_ext` access or execution
 - LoD2-derived LoD1, LoD2 roof geometry, roof type, semantic evaluation labels,
   or final roof model as honest-arm input
@@ -181,12 +185,14 @@ program and the historical status of `EXPERIMENT_PLAN.md` are unambiguous.
 - [ ] The C1–C5 contract is authoritative and `EXPERIMENT_PLAN.md` is historical only.
 - [ ] Experiment Host checkout is clean and `origin/main` matches the offered commit.
 - [ ] Offered and accepted receipts pass the two-host validator.
-- [ ] Active P2/Fusion W1, held-out, and `R_ext` protections are confirmed.
+- [ ] Legacy P2/Fusion W1, held-out, and `R_ext` protections are confirmed.
 - [ ] Required external roots resolve at the declared verification level.
 
-If any authorization or scope item fails, return `STALE_TASK_PACKET` without
-executing. Missing scientific inputs discovered during the authorized audit are
-findings, not permission to substitute another asset.
+If the activation tuple is missing or this packet is DRAFT/unapproved, return
+`DRAFT_OR_UNAUTHORIZED_HANDOFF` without any command. If a complete authorized tuple
+is present but authority, source, branch, version, or scope has drifted, return
+`STALE_TASK_PACKET` without executing. Missing scientific inputs discovered during
+the authorized audit are findings, not permission to substitute another asset.
 
 ## Stop conditions
 
@@ -207,7 +213,7 @@ findings, not permission to substitute another asset.
 - the Return Packet proposes only `READY_FOR_GATE_S0_REVIEW` or
   `BLOCKED_FOR_GATE_S0_REVIEW`;
 - `scientific_verdict` remains null;
-- no scientific run, held-out access, active Fusion W1 mutation, or `R_ext` access occurred.
+- no scientific run, held-out access, legacy Fusion W1 mutation, or `R_ext` access occurred.
 
 ## Launcher prompt
 
@@ -216,12 +222,14 @@ Use only the approved C1–C5 research contract in docs/research/00_*.md through
 06_*.md and this packet. Do not use docs/research/EXPERIMENT_PLAN.md as an
 execution authority.
 
-Verify the complete activation tuple, clean checkout, exact origin/main SHA,
-approved source snapshot, offered receipt, and accepted operational write ownership before
-task action. If any preflight item fails, return STALE_TASK_PACKET.
+Before any command, verify that the complete activation tuple exists and this packet
+is approved; otherwise return DRAFT_OR_UNAUTHORIZED_HANDOFF. Then verify the clean
+checkout, exact origin/main SHA, approved source snapshot, offered receipt, and
+accepted operational write ownership. If this authorized state has drifted, return
+STALE_TASK_PACKET without task action.
 
 Prepare Gate S0 evidence only. Do not run C1–C5 scientific baselines, train GS,
-open held-out results, modify or run active P2/Fusion W1, access R_ext, design
+open held-out results, modify or run legacy P2/Fusion W1, access R_ext, design
 prior losses, or set final G3/G4 thresholds. Verify proposed READY inputs against
 live bytes. Preserve missing LoD1 or other absent inputs as explicit blockers;
 never synthesize LoD1 from scored LoD2.

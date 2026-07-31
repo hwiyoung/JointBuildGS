@@ -1,6 +1,6 @@
 # JointBuildGS
 
-도시 규모 건물의 구조적 3D 복원을 위한 기하-의미론 공동 최적화 연구 저장소다. 연구 개요와 불변 규칙은 [`AGENTS.md`](AGENTS.md), 상세 연구 맥락은 [`docs/README.md`](docs/README.md)에서 시작한다.
+불완전하지만 재사용 가능한 기구축 3D 자산의 구조적 안정성과 최신 항공영상의 현재성·세부 관측을 결합해 자동 LoD2 생성 가능 건물 범위를 확대하는 연구 저장소다. 연구 개요와 불변 규칙은 [`AGENTS.md`](AGENTS.md), 현재 C1–C5 연구 정본은 [`docs/research/00_RESEARCH_CHARTER.md`](docs/research/00_RESEARCH_CHARTER.md)에서 시작한다.
 
 ## 폴더 지도
 

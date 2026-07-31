@@ -1,10 +1,10 @@
 # Data and Baseline Scope
 
-- Document status: `USER_APPROVED_AUDIT_SCOPE`
-- 문서 버전: `P1_AUDIT_v1`
+- Document status: `USER_APPROVED_CANONICAL_DATA_CONTRACT`
+- 문서 버전: `C1C5_CANON_v1`
 - 작성일: 2026-07-31
-- 상태: `PROVISIONAL INPUT FACTS / APPROVED AUDIT BOUNDARY`
-- 로컬 payload 판정: P1 read-only audit 전에는 `TO VERIFY`
+- 상태: `PROVISIONAL INPUT FACTS / GATE S0 FREEZE PENDING`
+- P1 audit snapshot: `PARTIAL/MISSING/UNKNOWN`; Gate S0 target-byte verification 필요
 
 ## 1. 목적과 원칙
 
@@ -25,19 +25,30 @@ backend에 정확한 파일이 검증되어 있다는 사실을 구분한다.
 
 | Asset ID | 공식 후보 | 연구 역할 | 공식 source에서 확인 | 로컬 가용성 | 취득 시점 | Accuracy | Density / coverage | Format / CRS |
 |---|---|---|---|---|---|---|---|---|
-| `IMG_CURRENT` | UAS photographs | C2–C5 current imagery | RTK-georeferenced UAS images, UAS laser campaign 중 취득 ([official](https://tum2t.win/datasets/im-uas)) | `TO VERIFY` | `TO VERIFY` | `TO VERIFY` | image count/overlap `TO VERIFY` | images + metadata/OPF 후보; CRS `TO VERIFY` |
-| `CAM_CURRENT` | OPF/camera/trajectory | MVS/GS poses | official tutorial은 `images.zip`, `opf.zip`, OPF camera parameters/geolocation/sparse reconstruction을 기술 ([official](https://tum2t.win/tutorials/im-gaussiannerf)) | `TO VERIFY` | image와 동일 여부 `TO VERIFY` | pose uncertainty `TO VERIFY` | coverage `TO VERIFY` | OPF→COLMAP 가능성; 실제 version `TO VERIFY` |
-| `LIDAR_UAS_CURRENT` | UAS laser scanning | `L_upper`, geometry reference 후보 | DJI M350 RTK + Zenmuse L2, nadir/oblique scans ([official](https://tum2t.win/datasets/pc-uas)) | `TO VERIFY` | `TO VERIFY` | `TO VERIFY` | point density/coverage `TO VERIFY` | point cloud; format/CRS/vertical datum `TO VERIFY` |
-| `MVS_CURRENT` | UAS image-based scan | C2 baseline only; C3–C5 dense initialization/supervision에는 금지 | Pix4Dmatic 1.58.1 point cloud와 orthophoto ([official](https://tum2t.win/datasets/pc-uasp)) | `TO VERIFY` | UAS campaign과 동일성 `TO VERIFY` | `TO VERIFY` | density/coverage `TO VERIFY` | point cloud/orthophoto; format/CRS `TO VERIFY` |
-| `ALS_EXISTING` | Bavarian real ALS tiles | `P_LiDAR` 후보 | official portal에 real ALS tiles와 download source가 제시됨 ([official](https://tum2t.win/datasets/pc-als)) | `TO VERIFY` | UAS 대비 시점차 `TO VERIFY` | `TO VERIFY` | density/coverage `TO VERIFY` | LAZ 후보; source CRS/vertical datum `TO VERIFY` |
-| `LOD1_EXISTING` | TUM2TWIN LoD1 | `P_LoD1` 후보 | 이번 공식 web 조사에서 직접 확인하지 못함 | `TO VERIFY` | `TO VERIFY` | `TO VERIFY` | building coverage `TO VERIFY` | format/CRS/lineage `TO VERIFY` |
-| `LOD2_REFERENCE` | Bavarian LoD2 / textured LoD2 | structure reference 또는 roofprint lineage audit | official page는 CityGML LoD2와 stable object IDs를 기술 ([official](https://tum2t.win/datasets/cm-buildings)) | `TO VERIFY` | acquisition/model vintage `TO VERIFY` | portal 표기의 accuracy 해석 `TO VERIFY` | 대상 building coverage `TO VERIFY` | CityGML 2.0 후보; CRS `TO VERIFY` |
-| `LOD3_REFERENCE` | manually modeled LoD3 | structure reference 후보 | official page는 LoD2+MLS 기반 수동 LoD3와 per-building download를 기술 | `TO VERIFY` | `TO VERIFY` | review protocol `TO VERIFY` | 대상 수/coverage `TO VERIFY` | CityGML 2.0/CAD 후보 |
-| `ROOFPRINT_COMMON` | independent polygon source | 모든 condition의 통제 input 후보 | 후보 출처 미정 | `TO VERIFY` | `TO VERIFY` | XY uncertainty `TO VERIFY` | eligible set coverage `TO VERIFY` | GPKG/GeoJSON 등 `TO VERIFY` |
+| `IMG_CURRENT` | UAS photographs | C2–C5 current imagery | RTK-georeferenced UAS images, UAS laser campaign 중 취득 ([official](https://tum2t.win/datasets/im-uas)) | `PARTIAL`: 962 candidates; ledger 미동결 | `TO VERIFY` | `TO VERIFY` | overlap `TO VERIFY` | images + metadata/OPF 후보; CRS `TO VERIFY` |
+| `CAM_CURRENT` | OPF/camera/trajectory | MVS/GS poses | official tutorial은 `images.zip`, `opf.zip`, OPF camera parameters/geolocation/sparse reconstruction을 기술 ([official](https://tum2t.win/tutorials/im-gaussiannerf)) | `PARTIAL`: 937 poses; 25-image gap | image와 동일 여부 `TO VERIFY` | pose uncertainty `TO VERIFY` | coverage `TO VERIFY` | OPF→COLMAP version `TO VERIFY` |
+| `LIDAR_UAS_CURRENT` | UAS laser scanning | `L_upper`, geometry reference 후보 | DJI M350 RTK + Zenmuse L2, nadir/oblique scans ([official](https://tum2t.win/datasets/pc-uas)) | `PARTIAL`: manual/nadir candidates | `TO VERIFY` | `TO VERIFY` | point density/coverage `TO VERIFY` | selection, class, CRS/datum 미동결 |
+| `MVS_CURRENT` | UAS image-based scan | C2 baseline only; C3–C5 dense initialization/supervision에는 금지 | Pix4Dmatic 1.58.1 point cloud와 orthophoto ([official](https://tum2t.win/datasets/pc-uasp)) | `PARTIAL`: candidate identified | UAS campaign과 동일성 `TO VERIFY` | `TO VERIFY` | density/coverage `TO VERIFY` | exact image/pose base 미동결 |
+| `ALS_EXISTING` | Bavarian real ALS tiles | `P_LiDAR` 후보 | official portal에 real ALS tiles와 download source가 제시됨 ([official](https://tum2t.win/datasets/pc-als)) | `PARTIAL`: four candidate tiles | UAS 대비 시점차 `TO VERIFY` | `TO VERIFY` | density/coverage `TO VERIFY` | C1 independence, CRS/datum/interface 미동결 |
+| `LOD1_EXISTING` | TUM2TWIN LoD1 | `P_LoD1` 후보 | 이번 공식 web 조사에서 직접 확인하지 못함 | `MISSING` | `UNKNOWN` | `UNKNOWN` | building coverage `UNKNOWN` | 독립 lineage 미발견 |
+| `LOD2_REFERENCE` | Bavarian LoD2 / textured LoD2 | structure reference 또는 roofprint lineage audit | official page는 CityGML LoD2와 stable object IDs를 기술 ([official](https://tum2t.win/datasets/cm-buildings)) | `PARTIAL`: two candidate tiles | acquisition/model vintage `TO VERIFY` | portal 표기의 accuracy 해석 `TO VERIFY` | 대상 building coverage `TO VERIFY` | scoring-only guard와 CRS/datum 미동결 |
+| `LOD3_REFERENCE` | manually modeled LoD3 | structure reference 후보 | official page는 LoD2+MLS 기반 수동 LoD3와 per-building download를 기술 | `UNKNOWN` | `UNKNOWN` | review protocol `UNKNOWN` | 대상 수/coverage `UNKNOWN` | CityGML 2.0/CAD 후보 |
+| `R_DERIVED_PROTOCOL` | condition evidence에서 동일 code/config로 생성 | 모든 condition의 통제된 Stage 3 derivative | 외부 polygon input이 아님 | P1 후보 `PARTIAL` | method output과 동일 | XY uncertainty `TO VERIFY` | method별 coverage 보고 | polygon/hash와 derivation lineage 필요 |
 
 공식 portal의 “openly available” 표시는 데이터셋 배포 상태에 관한
 `SOURCE-SUPPORTED` 사실이다. 현재 checkout 또는 sibling artifact root에 정확한
 payload가 있다는 뜻은 아니다.
+
+P1 감사가 확인한 현재 준비도는 다음처럼 축약한다.
+
+- images 962개와 poses 937개가 불일치하며, 25건의 결정론적 ledger가 필요하다.
+- C1 UAS LiDAR는 manual/nadir 선택·병합, class 2/6, vertical datum과 registration이 미동결이다.
+- C4 Existing ALS는 C1과의 독립성 및 future prior interface가 미동결이다.
+- 독립 LoD1은 발견되지 않아 C5가 `MISSING`이다.
+- `U_target`과 `E_paired`는 `UNKNOWN`이다.
+
+이 상태는 입력 부재를 다른 asset으로 대체할 권한이 아니라 Gate S0 evidence task의
+조사 대상이다.
 
 ### 2.1 두 LiDAR asset의 독립 역할
 
@@ -105,6 +116,11 @@ initialization, crop, early stopping, hyperparameter selection에 사용하지 �
 normal을 loss/initialization prior로 넣지 않는다. 이를 넣어야 한다면 `Image-only GS`
 명칭과 C2/C3 contrast를 변경하는 별도 사용자 결정이 먼저 필요하다.
 
+`C2_MVS`도 원칙적으로 C3–C5와 같은 Gate S0 동결 image/camera ledger에서 생성한다.
+기존 vendor MVS가 다른 image subset, pose solution 또는 preprocessing을 사용했다면
+그 차이를 숨기지 않고 sensor-processing bundle baseline으로 표시하며 C2-vs-C3의
+직접적인 method-only 해석을 제한한다.
+
 ## 5. `L_upper`와 `P_LiDAR` 구분
 
 | 차원 | Current UAS/Drone LiDAR (`L_upper`) | Existing ALS (`P_LiDAR`) |
@@ -171,7 +187,7 @@ surface evidence의 Roofer manufacturability를 비교한다. Roofer 공식 문�
 point cloud와 2D roofprint polygon을 입력으로 요구한다
 ([official docs](https://innovation.3dbag.nl/roofer/)).
 
-현행 `AGENTS.md`와 `RESEARCH_CONTEXT.md`에 따라 Stage 3는 외부 roofprint를
+현행 `AGENTS.md`와 `00_RESEARCH_CHARTER.md`에 따라 Stage 3는 외부 roofprint를
 사용하지 않는다.
 
 | Protocol | P1/P2–P4 지위 | 설명 |
@@ -244,7 +260,8 @@ atlas로 만들 수 있다. 이는 threshold, 방법 선택 또는 primary claim
 
 ### 10.1 전수 우선, 표본 fallback
 
-1. P1 audit는 `U_target`/`E_paired` 후보 수, coverage, 공간 group, missingness와
+1. P1 감사는 `U_target`/`E_paired`를 동결하지 못했다. Gate S0 preparation은 후보 수,
+   coverage, 공간 group, missingness와
    building×C1–C5 예상 compute/storage 비용을 AOI 후보별로 산출한다. candidate
    AOI는 imagery/UAS LiDAR/ALS/LoD1/reference footprint의 교집합, stable-ID
    coverage, 연속성, 면적과 비용으로만 기술하며 performance run은 하지 않는다.
@@ -338,11 +355,11 @@ P4 primary 잠금 뒤 `E_paired` census를 별도 실행한다. 이 census가 �
 
 ## 14. Consistency review
 
-- `RESOLVED FOR P1`: no-external-roofprint 정본을 유지하며 `R_derived`만 primary.
+- `RESOLVED`: no-external-roofprint 정본을 유지하며 `R_derived`만 primary.
   `R_ext`는 별도 정책 승인 전까지 비실행 범위 밖이다.
 - `MAJOR`: 공식 source에서 직접 LoD1을 확인하지 못함.
-- `MAJOR`: bootstrap가 요청한 TUM2TWIN 중심 역할과 기존
-  `EXPERIMENT_PLAN.md`의 dataset-role 분리가 다름.
+- `RESOLVED BY DEC-P1-008`: TUM2TWIN 중심 C1–C5가 현재 data-role 정본이며
+  `EXPERIMENT_PLAN.md`의 dataset-role은 역사 기록이다.
 - `TO VERIFY`: 공식 portal의 asset 존재와 현재 artifact backend의 exact payload가
   아직 연결되지 않음.
 - `TO VERIFY`: source/target CRS와 vertical datum. 연구 output은 `EPSG:25832`를

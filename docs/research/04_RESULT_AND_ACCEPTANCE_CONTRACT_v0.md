@@ -1,7 +1,7 @@
 # Result and Acceptance Contract v0
 
-- Document status: `USER_APPROVED_AUDIT_CONTRACT`
-- Criterion version: `P1_AUDIT_v1`
+- Document status: `USER_APPROVED_CANONICAL_RESULT_CONTRACT`
+- Criterion version: `C1C5_CANON_v1`
 - 작성일: 2026-07-31
 - 상태: `PROVISIONAL UNTIL P2 CRITERION FREEZE`
 - Final verdict policy: `PENDING` until P2 criterion freeze
@@ -13,6 +13,12 @@
 metric 또는 보기 좋은 mesh 하나로 최종 성공을 판정하지 않는다. 모든 GS arm은
 native representation, extracted surface, exact Roofer input, LoD2 outcome을
 연결해 저장한다.
+
+`C1`/`C2`는 context baselines이고 primary prior contrasts는 `C4-vs-C3`와
+`C5-vs-C3`이다. “자동 LoD2 생성 가능 범위 확대”는 같은 사전 동결 building set에서
+평균 RMSE 개선이 아니라 `PASS_usable`의 `fail→pass − pass→fail` 순증가로 판정한다.
+자동성은 per-building 수동 method 선택·geometry 수리·GT 입력을 금지하고, retry와
+fallback을 결과 전 동결된 규칙으로만 허용한다는 뜻이다.
 
 ## 2. Artifact chain
 
@@ -162,7 +168,7 @@ Criterion 동결 전:
 
 ```text
 Final verdict: PENDING
-Criterion version: P1_AUDIT_v1
+Criterion version: C1C5_CANON_v1
 ```
 
 ### Sheet D — GS mechanism analysis
@@ -233,7 +239,7 @@ Bootstrap가 요청한 logical artifact:
 
 현재 저장소는 top-level `results/`를 허용하지 않으므로 실제 large payload는
 `JBGS_ARTIFACT_ROOT` 아래 run namespace에 저장하고, Git에는 manifest와 compact
-summary를 승격한다. 최종 resolver/path는 P1 audit에서 `TO VERIFY`이다.
+summary를 승격한다. 최종 resolver/path는 Gate S0/P2에서 `TO VERIFY`이다.
 
 ### Identity and provenance
 
@@ -248,7 +254,7 @@ summary를 승격한다. 최종 resolver/path는 P1 audit에서 `TO VERIFY`이�
 | `data_version` | immutable data manifest ID |
 | `reference_version` | geometry + structure refs |
 | `surface_adapter` | name + version |
-| `criterion_version` | `P1_AUDIT_v1`, frozen version later |
+| `criterion_version` | `C1C5_CANON_v1`, frozen version later |
 
 ### Input and surface evidence
 
@@ -429,7 +435,7 @@ Threshold는 application requirement와 reference uncertainty 없이 임의 설�
 
 ## 13. Threshold 결정 절차
 
-P1에서 동결하는 것은 gate 구조, metric families, building-level endpoint뿐이다.
+현재 정본에서 동결하는 것은 gate 구조, metric families, building-level endpoint뿐이다.
 P2에서 다음 순서로 numerical threshold를 정한다.
 
 1. geometry/structure reference uncertainty 정량화
@@ -451,7 +457,8 @@ building acceptance threshold로 자동 이식하지 않는다.
 | Version state | 허용 |
 |---|---|
 | `DRAFT_v0` | historical bootstrap draft; verdict는 `PENDING` |
-| `P1_AUDIT_v1` | current audit contract; schema/layout/gate 가능성 판정, verdict는 `PENDING` |
+| `P1_AUDIT_v1` | historical audit contract; verdict는 `PENDING` |
+| `C1C5_CANON_v1` | current C1–C5 result contract; verdict는 `PENDING` |
 | `VALIDATION_CANDIDATE_vN` | validation set에서 calibration, held-out-building 접근 금지 |
 | `FROZEN_vN` | 코드/hash/reference/split 포함, P3/P4 primary |
 | `SUPERSEDED_vN` | 이유/Decision ID와 successor 기록, 과거 결과 보존 |
@@ -502,10 +509,10 @@ building acceptance threshold로 자동 이식하지 않는다.
 
 ## 17. Consistency review
 
-- `RESOLVED FOR P1`: 현행 footprint-free Stage 3를 유지해 `R_derived`만 primary로
+- `RESOLVED`: 현행 footprint-free Stage 3를 유지해 `R_derived`만 primary로
   사용하고 external `R_ext`는 별도 정책 승인 전까지 실행하지 않는다.
 - `MAJOR`: bootstrap logical `results/` 경로가 top-level repository contract와 충돌해
   외부 artifact path로 매핑해야 한다.
-- `MAJOR`: 현행 `EXPERIMENT_PLAN.md`의 기존 gate/metric과 새 G0–G4의 관계가
-  supersession되지 않았다.
+- `RESOLVED BY DEC-P1-008`: G0–G4가 현재 C1–C5 contract이고
+  `EXPERIMENT_PLAN.md`의 기존 gate/metric은 역사 기록이다.
 - `DEFERRED`: numerical PASS threshold와 prior loss는 이 문서에서 결정하지 않았다.

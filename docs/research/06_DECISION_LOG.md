@@ -1,13 +1,13 @@
 # Research Decision Log
 
-- Document status: `USER_APPROVED_AUDIT_DECISIONS`
-- 문서 버전: `P1_AUDIT_v2`
+- Document status: `USER_APPROVED_RESEARCH_DECISIONS`
+- 문서 버전: `C1C5_CANON_v1`
 - 작성일: 2026-07-31
-- 승인 상태: `USER APPROVED FOR P1 AUDIT — 2026-07-31`
+- 승인 상태: `USER APPROVED CURRENT C1–C5 CANON — 2026-07-31`
 
-이 log의 P1 audit 결정은 현재 `AGENTS.md`, `RESEARCH_CONTEXT.md`,
-`EXPERIMENT_PLAN.md` 또는 active lock을 supersede하지 않는다. P1은 현행
-P2/Fusion W1을 보호하는 read-only audit workstream이다.
+`DEC-P1-008` 이후 이 log와 00–06 contract set이 현재 C1–C5 프로그램을 통제한다.
+`RESEARCH_CONTEXT.md`와 `EXPERIMENT_PLAN.md`는 기존 4조건 프로그램의 역사 기록이다.
+기존 Fusion W1 lock과 artifact는 보호하지만 현재 프로그램의 실행 authority는 아니다.
 
 ## Decision schema
 
@@ -258,11 +258,46 @@ P2/Fusion W1을 보호하는 read-only audit workstream이다.
 - P1 `READY_FOR_REVIEW`는 감사 문서가 완결됐다는 뜻이며 data/P2 READY와 동일하지
   않다.
 
+## DEC-P1-008 — C1–C5 연구 정본 채택과 legacy 계획 격리
+
+- **Decision ID:** `DEC-P1-008`
+- **Date:** 2026-07-31
+- **Status:** `USER-APPROVED RESEARCH CANON DECISION`
+- **Previous state:** 00–06은 P1 audit 기준으로만 승인됐고 `RESEARCH_CONTEXT.md`,
+  `EXPERIMENT_PLAN.md`와 Fusion W1이 계속 우선했다. 기존 4조건과 새 5조건의 관계는
+  pending decision이었다.
+- **New decision:** 연구 앵커를 “불완전하지만 재사용 가능한 기구축 3D 자산의 구조적
+  안정성과 최신 항공영상의 현재성·세부 관측을 상보적으로 결합하여 자동 LoD2 생성이
+  가능한 건물 범위를 확대”로 채택한다. 현재 비교는 `C1_L_upper`, `C2_MVS`,
+  `C3_GS_image`, `C4_GS_lidar_prior`, `C5_GS_lod1_prior`의 다섯 reconstruction
+  conditions이다. 00–06이 현재 정본이고 기존 context/plan은 역사 기록이다.
+- **Evidence:** 사용자의 2026-07-31 명시적 연구목적·다섯 조건 재확인과 “이에 맞게
+  수정하고 Experiment Host로 진행”, 이어 “사람의 개입 없이 멈추지 말고 서브
+  에이전트 간 검증으로 진행” 지시.
+- **Reason:** audit-only 문구와 legacy 권위가 새 실행 packet을 차단하고 독자에게 서로
+  다른 연구목적·조건·phase를 제시했기 때문이다.
+- **Affected phases:** P2 Gate S0, P2–P4
+- **Affected documents:** root `AGENTS.md`/`CLAUDE.md`, `docs/research/00_*.md`–`06_*.md`,
+  `RESEARCH_CONTEXT.md`, `EXPERIMENT_PLAN.md`, research entrypoints, Gate S0 packet
+- **User approval:** `GRANTED FOR CURRENT RESEARCH CANON AND AUTONOMOUS PREPARATION`
+- **Superseded decisions:** audit-only/legacy-authority 제한과 아래 pending relation을
+  supersede한다. `DEC-P1-006`의 Fusion 보호, `R_derived` primary, `R_ext` 비실행은 유지한다.
+
+### Consequence
+
+- C1/C2는 context baselines이고 C4-vs-C3, C5-vs-C3가 primary prior contrasts다.
+- “상보성”은 C4/C5 rescue-set과 failure-mode 차이를 뜻하며 joint prior synergy를
+  뜻하지 않는다.
+- 기존 4조건/Fusion 결과는 삭제·재라벨하지 않고 capability evidence로만 사용한다.
+- 다음 실행은 P1 재실행이나 C1–C5 performance run이 아니라 Gate S0 evidence
+  preparation이다.
+- Gate S0는 exact AOI, inputs, `U_target`, `E_paired`, eligibility, split과 cost를
+  outcome 없이 동결할 자료를 만든다. 과학적 verdict는 계속 사용자에게 남는다.
+
 ## Pending decisions not yet logged as adopted
 
 다음은 선택지가 정리되었으나 사용자 결정 전이므로 adopted decision이 아니다.
 
-- 기존 4조건 기하–의미론 연구와 새 5조건 prior 연구의 관계
 - TUM2TWIN LoD1 후보가 독립 prior로 적합한지
 - `U_target`/`E_paired` exact IDs, 전수 가능성, pilot/validation/held-out 수량과
   공간 group 경계

@@ -77,9 +77,10 @@ receipt로 만든다. `current_handoff.json` 같은 가변 전역 파일은 만�
 
 1. Work Host는 최신 `origin/main`에서 시작하고 `base_main`을 기록한다.
 2. 허용 경로와 보호 경로를 manifest에 고정한다.
-3. code/config/preregistration 변경과 handoff receipt를 한 task commit으로 만든다.
-   같은 commit을 뜻할 때 `offered_head`는 `SELF`를 사용한다.
-4. Docker로 Git-only tests를 실행하고 commit을 만든다. Commit 후·push 전에는
+3. code/config/preregistration 변경을 먼저 task commit으로 고정하고, handoff
+   receipt는 그 뒤 별도 immutable event commit으로 만든다. Offered event 자체의
+   `offered_head`와 `receipt_head`는 `SELF`를 사용한다.
+4. Docker로 Git-only tests를 실행한다. Offered event commit 후·push 전에는
    `--origin-ref HEAD`, push 후에는 기본 `origin/main`으로 handoff validator를
    각각 실행한다. Validator는 manifest bytes가 실제 receipt commit과 같은지,
    `base_main..receipt_head`의 변경 경로가 scope 안인지 검사한다.

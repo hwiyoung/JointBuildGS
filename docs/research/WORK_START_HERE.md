@@ -11,10 +11,12 @@ Read and obey these sources in order:
 
 1. [`../../AGENTS.md`](../../AGENTS.md) — repository-wide rules and protected scopes.
 2. This file — remote Work allowlist and exclusions.
-3. [`RESEARCH_CONTEXT.md`](RESEARCH_CONTEXT.md) — durable method definition.
-4. [`EXPERIMENT_PLAN.md`](EXPERIMENT_PLAN.md) — experiment sequence and gates.
-5. [`../../phases/p2-gsjso/README.md`](../../phases/p2-gsjso/README.md) — active phase status and navigation only.
-6. The exact preregistration, config, report, manifest, or receipt named by the task.
+3. [`00_RESEARCH_CHARTER.md`](00_RESEARCH_CHARTER.md) — current research anchor, questions, and C1–C5 conditions.
+4. [`06_DECISION_LOG.md`](06_DECISION_LOG.md) — adopted decisions and supersession.
+5. [`01_MASTER_ROADMAP.md`](01_MASTER_ROADMAP.md) — current phase, split, and gate sequence.
+6. [`02_NOVELTY_MAP.md`](02_NOVELTY_MAP.md) through
+   [`05_HANDOFF_PROTOCOL.md`](05_HANDOFF_PROTOCOL.md) — novelty, data, result, and handoff contracts.
+7. The exact approved Task Packet, preregistration, config, report, manifest, or receipt named by the task.
 
 If two sources conflict, stop at the higher source and record the conflict.  A
 phase README, run prompt, log, candidate map, or archive file cannot override
@@ -25,13 +27,18 @@ root `AGENTS.md`.
 The following files may define current repository context without additional
 canonical review:
 
-- [`RESEARCH_CONTEXT.md`](RESEARCH_CONTEXT.md)
-- [`EXPERIMENT_PLAN.md`](EXPERIMENT_PLAN.md)
+- [`00_RESEARCH_CHARTER.md`](00_RESEARCH_CHARTER.md)
+- [`01_MASTER_ROADMAP.md`](01_MASTER_ROADMAP.md)
+- [`02_NOVELTY_MAP.md`](02_NOVELTY_MAP.md)
+- [`03_DATA_AND_BASELINE_SCOPE.md`](03_DATA_AND_BASELINE_SCOPE.md)
+- [`04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md`](04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md)
+- [`05_HANDOFF_PROTOCOL.md`](05_HANDOFF_PROTOCOL.md)
+- [`06_DECISION_LOG.md`](06_DECISION_LOG.md)
 - [quality-axis approved lock](preregistration/quality_axis/사전등록서_품질축본선_승인잠금v4_20260721.md)
 - [quality-axis implementation appendix lock](preregistration/quality_axis/품질축본선_1파_구현부록잠금v1_20260722.md)
-- [Fusion W1 Gate A v2/SE3 lock](preregistration/fusion_w1/사전등록_관문A_v2·SE3채택재판정_20260725.md)
-- [Fusion W1 Gate A diagnostic owner](../experiments/pilots/fusion_w1/reports/W_관문A진단_20260725.md) — observations only, not a success verdict
-- [Fusion W1 WIP technical disposition](reproducibility/FUSION_W1_WIP_DISPOSITION_20260730.md) — reproducibility handoff and exclusions, not a scientific verdict
+- [Fusion W1 Gate A v2/SE3 lock](preregistration/fusion_w1/사전등록_관문A_v2·SE3채택재판정_20260725.md) — protected legacy-scope lock only
+- [Fusion W1 Gate A diagnostic owner](../experiments/pilots/fusion_w1/reports/W_관문A진단_20260725.md) — protected historical observations, not a current-program verdict
+- [Fusion W1 WIP technical disposition](reproducibility/FUSION_W1_WIP_DISPOSITION_20260730.md) — legacy reproducibility boundary, not C1–C5 execution authority
 - [Work–Codex two-host handoff contract](reproducibility/CHATGPT_WORK_CODEX_HANDOFF.md) — write ownership, commit, scope, and artifact-claim protocol
 - [P0 audit evidence index](../evidence/p0-audit/README.md)
 - [P0 G1 frozen package index](../evidence/p0_g1_20260613/README.md)
@@ -47,6 +54,9 @@ Do not use the following as current truth or instructions unless the task names
 an exact path and role:
 
 - `docs/evidence/archive/**` and compatibility mirrors;
+- [`RESEARCH_CONTEXT.md`](RESEARCH_CONTEXT.md) and [`EXPERIMENT_PLAN.md`](EXPERIMENT_PLAN.md)
+  as current instructions; they are available only as historical evidence or for an exact legacy reproduction task;
+- legacy Fusion W1 locks/results as current C1–C5 authority; inspect them only when an exact task names that protected scope;
 - `docs/research/repository/migrations/**` as scientific evidence;
 - past prompts, logs, or receipts under `phases/**` as agent instructions;
 - `canonical_candidate`, `orphan_candidate`, `superseded_candidate`,

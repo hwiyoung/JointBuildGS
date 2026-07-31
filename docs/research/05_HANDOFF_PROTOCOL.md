@@ -1,8 +1,8 @@
 # Work–Codex Handoff Protocol
 
-- 문서 버전: `P1_AUDIT_v2`
+- 문서 버전: `C1C5_CANON_v1`
 - 작성일: 2026-07-31
-- 상태: `USER APPROVED FOR P1 AUDIT HANDOFF`
+- 상태: `USER APPROVED C1–C5 PROGRAM HANDOFF`
 - 적용: 연구문서 snapshot, task authorization, return evidence
 
 ## 1. 두 종류의 handoff
@@ -18,6 +18,12 @@
 Scientific packet은 technical manifest를 대체하지 않는다. 기술 검증의
 `scientific_verdict`는 null이며, 과학적 판정은 사용자/Work 검토에서 별도로 남긴다.
 
+여기서 **write ownership**은 OS 파일 권한, SSH 접근권한 또는 저장장치 소유권이
+아니다. 두 물리 호스트가 같은 `serialized_main` task 결과를 동시에 기록하지 않도록
+정한 논리적 writer 순번이다. Work Host는 정본과 DRAFT를 작성할 수 있고, accepted
+receipt 뒤에는 Experiment Host만 해당 task 결과를 기록하며, closed receipt 뒤에
+writer 순번이 Work Host로 돌아온다.
+
 ## 2. Authority hierarchy
 
 실행 시 우선순위:
@@ -31,10 +37,11 @@ Scientific packet은 technical manifest를 대체하지 않는다. 기술 검증
 7. packet의 Launcher Prompt
 8. bootstrap prompt
 
-현재 00–06 문서는 P1 audit 용도로 사용자 승인됐지만 기존
-`RESEARCH_CONTEXT.md`, `EXPERIMENT_PLAN.md`, 활성 preregistration/lock을
-supersede하지 않는다. 데이터 사실·threshold·method 등 일부 과학 항목은
-감사/후속 gate까지 `PROVISIONAL` 또는 `DEFERRED`다.
+`DEC-P1-008`에 따라 00–06은 현재 C1–C5 실행 정본이다. 기존
+`RESEARCH_CONTEXT.md`와 `EXPERIMENT_PLAN.md`는 역사 기록이며 새 task를 지시하지
+않는다. 기존 Fusion W1 preregistration/lock은 그 legacy artifact를 재현할 때만
+유효하고 현재 C1–C5 program을 override하지 않는다. 데이터 사실·threshold·method
+중 일부는 Gate S0와 후속 phase까지 `PROVISIONAL` 또는 `DEFERRED`다.
 
 ## 3. 역할
 
@@ -203,7 +210,9 @@ flowchart LR
     A --> RP["Task Packet preflight"]
     RP --> EX["Execute / verify"]
     EX --> CR["Audit/Return commit + push"]
-    CR --> LP["Local pull"]
+    CR --> V["200-verified 또는 200-blocked"]
+    V --> C["300-closed + writer 순번 반환"]
+    C --> LP["Work ff-only pull"]
     LP --> RV["Work cross-review"]
     RV --> UG["User phase decision"]
 ```
@@ -249,6 +258,11 @@ flowchart LR
    push 전 `--origin-ref HEAD`, push 후 기본 `origin/main` 검증을 수행한다.
 9. accepted receipt가 push되고 write ownership을 인수한 뒤에만 scientific Task
    Packet preflight와 승인 범위 작업을 시작한다.
+10. 결과와 Return Packet을 새 commit으로 push한 뒤 성공이면 `200-verified.json`,
+    기술 실패면 `200-blocked.json`을 각각 add-once event commit으로 작성·검증·push한다.
+11. 직전 200 receipt를 잇는 `300-closed.json`을 별도 event commit으로 작성·검증·
+    push한다. 이 closed event 뒤에만 Work Host가 writer 순번을 되받는다.
+12. Work Host는 exact closed commit을 fast-forward-only로 받은 뒤 교차검토한다.
 
 단순 `git pull`로 remote 변경을 무조건 병합하거나, Work Host가 push하기 전에
 Experiment Host가 작업을 시작하는 것은 허용하지 않는다. 이 sync/accept 절차는
@@ -390,8 +404,8 @@ version과 새 handoff ID를 사용한다. Generic template의 `DRAFT`/placehold
   invariant가 이미 유효하다. 이 P1 audit protocol이 이를 대체하지 않는다.
 - bootstrap의 authority order에는 root `AGENTS.md`가 빠져 있었으나 실제 실행에서는
   항상 root instruction이 최우선이다.
-- P1은 현행 P2/Fusion W1을 변경하지 않는 read-only audit workstream으로
-  `DEC-P1-006`에서 범위가 고정되었으므로 phase rollback 충돌은 없다.
+- `DEC-P1-008`이 00–06을 현재 C1–C5 정본으로 채택했다. 기존 P2/Fusion W1은
+  변경하지 않는 보호된 역사적 capability evidence다.
 - External `R_ext`는 비실행 범위 밖이고 `R_derived`만 primary이므로 root
   no-external-roofprint invariant를 유지한다.
 - P1 readiness audit에서 asset 부재나 검증 불능은 정직한 `MISSING/UNKNOWN`

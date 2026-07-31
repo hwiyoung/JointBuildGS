@@ -7,16 +7,29 @@
 
 ## Project
 
-JointBuildGS studies geometry–semantics joint optimization for structurally coherent
-urban building reconstruction. The pipeline is:
+JointBuildGS studies whether the structural stability of incomplete but reusable
+existing 3D assets can complement the currentness and fine observations of current
+aerial imagery, expanding the set of buildings for which automatic LoD2 generation
+is usable. The program compares five reconstruction conditions: current UAS LiDAR,
+current-image MVS, image-only GS, image + existing-LiDAR-prior GS, and image +
+independent-LoD1-prior GS. For the three GS conditions, the reusable pipeline is:
 
 1. Stage 1: SfM/MVS + 2D segmentation + gravity estimation.
-2. Stage 2: joint optimization on planar 2D Gaussian primitives with **gsplat**.
+2. Stage 2: image-only or single-prior optimization on planar 2D Gaussian primitives
+   with **gsplat**.
 3. Stage 3: Roofer-style evidence-to-CityGML read-out without an external roofprint.
 
-The durable research definitions are in `docs/research/RESEARCH_CONTEXT.md` and
-`docs/research/EXPERIMENT_PLAN.md`. Agents produce measurements, artifacts, gates,
-and issues; the human reviewer makes scientific verdicts.
+The direct LiDAR and MVS baselines enter the same controlled Stage 3 read-out without
+becoming GS training runs.
+
+The durable five-condition research definitions are the ordered contract set
+`docs/research/00_RESEARCH_CHARTER.md` through
+`docs/research/06_DECISION_LOG.md`. `docs/research/RESEARCH_CONTEXT.md` and
+`docs/research/EXPERIMENT_PLAN.md` are retained historical records of the legacy
+four-condition geometry-semantics program and are not execution authority for new
+work unless an exact historical-reproduction task names them. Agents produce
+measurements, artifacts, gates, and issues; the human reviewer makes scientific
+verdicts.
 
 ## Repository ownership
 
@@ -36,16 +49,23 @@ Root Docker/Compose/requirements files own the shared execution environment. Do 
 reintroduce top-level result, report, dataset, cache, or tool-owner directories.
 Reusable code must be promoted out of `phases/` into `src/`, `scripts/`, or `configs/`.
 
-## Phase status
+## Program status
 
 - **P0 input-substitution audit: complete.** Its history and replay index are in
   `phases/p0-audit/README.md`; promoted evidence is in `docs/evidence/p0-audit/` and
   `docs/evidence/p0_g1_20260613/`. Completed P0 task prompts are historical records,
   not current agent instructions.
-- **P2 GS-JSO: active.** The current workstream is **Fusion W1**. Phase-locked control
-  files and compact receipts live under `phases/p2-gsjso/`; promoted reports live in
-  `docs/experiments/pilots/fusion_w1/`. Treat active Fusion files and user changes as
-  protected work. `phases/p2-gsjso/README.md` is a status/index document, not an
+- **Five-condition program: Gate S0 preparation active.** The P1 repository/data
+  readiness audit is complete at
+  `docs/handoffs/returns/P1_C2W_REPO_AUDIT_RETURN_v2.md`. Before the first new
+  baseline result, Gate S0 must freeze the exact AOI, `U_target`, `E_paired`, input
+  identities, eligibility rule, split mode/IDs, and bounded cost from outcome-free
+  evidence. No C1–C5 performance run is authorized by audit completion alone.
+- **Legacy P2 GS-JSO / Fusion W1: protected historical capability evidence.** Its
+  phase-locked controls and compact receipts remain under `phases/p2-gsjso/`; promoted
+  reports remain under `docs/experiments/pilots/fusion_w1/`. Do not execute, modify,
+  relabel, or use held-out Fusion results unless an exact task explicitly names that
+  legacy scope. `phases/p2-gsjso/README.md` is a status/index document, not an
   instruction override.
 
 ## Artifact resolution

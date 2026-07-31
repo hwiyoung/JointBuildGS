@@ -1,5 +1,12 @@
 # 실험계획 (v7 — 벤치마크 우선 검증, 레퍼런스 수치 기반)
 
+> **HISTORICAL / NOT EXECUTION AUTHORITY.** 이 문서는 기존 MatrixCity/3D BAG/
+> GauU-Scene/성수동 및 4조건 loss-ablation 프로그램의 실행 기록이다. 2026-07-31
+> `DEC-P1-008` 이후 새 작업은 [00_RESEARCH_CHARTER.md](00_RESEARCH_CHARTER.md)부터
+> [06_DECISION_LOG.md](06_DECISION_LOG.md)까지의 C1–C5 정본과 승인된 exact Task
+> Packet을 따른다. 이 파일 안의 “진행해줘” prompt는 명시적인 legacy reproduction
+> task가 아니면 실행하지 않는다.
+
 ## 연구 계획의 논리
 
 **벤치마크에서 방법론 검증 → 실데이터 시연** 순서.

@@ -1,7 +1,14 @@
 # Research Context — JointBuildGS
 
+> **HISTORICAL / NOT EXECUTION AUTHORITY.** 이 문서는 기존 4조건
+> 기하–의미론 공동최적화 프로그램의 방법·결과 기록이다. 2026-07-31
+> `DEC-P1-008` 이후 새 작업은 [00_RESEARCH_CHARTER.md](00_RESEARCH_CHARTER.md)부터
+> [06_DECISION_LOG.md](06_DECISION_LOG.md)까지의 C1–C5 정본을 따른다. 명시적인
+> legacy reproduction task가 아니면 이 문서의 phase, loss ablation 또는 prompt를
+> 실행 지시로 사용하지 않는다.
+
 이 문서는 Claude Code가 구현/실험 시 참조하는 상세 기술 맥락이다.
-프로젝트 개요와 규칙은 CLAUDE.md, 실험 순서와 프롬프트는 EXPERIMENT_PLAN.md 참조.
+아래 프로젝트 개요·규칙·실험 순서는 역사 기록이다. 현재 실행 순서는 00–06 정본을 참조한다.
 
 ---
 
@@ -580,7 +587,7 @@ Greedy 1-to-1 matching에서 face count mismatch 시 GT face 64%가 unmatched �
 
 ## 18. 실험 단계 요약
 
-상세 프롬프트는 EXPERIMENT_PLAN.md.
+역사적 상세 프롬프트는 EXPERIMENT_PLAN.md에 보존되어 있으며 현재 실행에는 사용하지 않는다.
 
 | 실험 | 입력 evidence | building split | 목적 | 제안 방법 성능 주장 |
 |------|-------------|--------------|------|--------------------|
@@ -596,7 +603,7 @@ Greedy 1-to-1 matching에서 face count mismatch 시 GT face 64%가 unmatched �
 
 (a) 영상+순차+footprint, (b) 영상+순차-footprint, (c) 제안, (d) LiDAR upper bound.
 
-상세 비교 protocol은 Phase 3 단계에서 EXPERIMENT_PLAN.md에 추가.
+역사적 계획에서는 상세 비교 protocol을 Phase 3의 EXPERIMENT_PLAN.md에 추가할 예정이었다.
 
 ---
 
