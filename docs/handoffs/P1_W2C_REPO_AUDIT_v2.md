@@ -7,9 +7,9 @@
 - workstream: `READ_ONLY_DESIGN_READINESS_AUDIT`
 - repository_effective_phase: `P2 / Fusion W1 ACTIVE`
 - direction: `Work→Codex`
-- status: `DRAFT`
+- status: `APPROVED_FOR_EXECUTION`
 - packet_version: `v2`
-- source_commit: `TO_BE_FILLED_BY_USER_BEFORE_APPROVAL`
+- source_commit: `939f0b97825eafb7e508239b9c5510938e30fa9f`
 - target_branch: `main`
 - research_charter_version: `P1_AUDIT_v1`
 - master_roadmap_version: `P1_AUDIT_v2`
@@ -19,9 +19,10 @@
 - decision_log_through: `DEC-P1-007`
 - supersedes: `P1-W2C-REPO-AUDIT / technical BLOCKED at b08ee9167bca30f9b795e549c2b4d5247c94381b`
 - created_at: `2026-07-31 Asia/Seoul`
-- user_approval: `NOT_GRANTED`
-- approved_by: `null`
-- approved_at: `null`
+- user_approval: `APPROVED_FOR_EXECUTION`
+- approved_by: `김휘영`
+- approved_at: `2026-07-31T16:28:30+09:00`
+- approval_basis: `2026-07-31 user standing instruction — proceed without repeated judgment requests using inter-agent validation`
 - approval_scope: `DOCS_ONLY_P1_AUDIT; ACTIVE_P2_FUSION_W1_PROTECTED; NO_SOURCE_CONFIG_DATA_RESULT_GPU_MUTATION; R_DERIVED_ONLY; R_EXT_OUT_OF_SCOPE`
 
 이 packet은 v1의 과학 목적과 범위를 바꾸지 않는다. v1 technical receipt의
@@ -236,7 +237,7 @@ Experiment Host launcher는 packet 본문을 복제하지 않고 다음 activati
 handoff_id: P1-W2C-REPO-AUDIT-R2
 offered_receipt_commit_sha: TO_BE_FILLED_AFTER_R2_OFFER
 packet_path: docs/handoffs/P1_W2C_REPO_AUDIT_v2.md
-expected_source_commit: TO_BE_FILLED_BY_USER_BEFORE_APPROVAL
+expected_source_commit: 939f0b97825eafb7e508239b9c5510938e30fa9f
 explicit_user_authorization: APPROVED_FOR_EXECUTION
 ```
 
