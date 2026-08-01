@@ -3,7 +3,6 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import os
 import re
 import subprocess
 import sys
@@ -59,27 +58,17 @@ def regular_bytes(path: Path) -> bytes:
 
 
 def add_once(path: Path, data: bytes) -> dict[str, Any]:
-    if path.exists():
-        observed = regular_bytes(path)
-        if observed != data:
-            raise RuntimeError(f"add-once collision: {path}")
-    else:
-        path.parent.mkdir(parents=True, exist_ok=True)
-        pending = path.with_name(path.name + f".pending.{os.getpid()}")
-        if pending.exists():
-            pending.unlink()
-        with pending.open("xb") as stream:
-            stream.write(data)
-            stream.flush()
-            os.fsync(stream.fileno())
-        os.link(pending, path)
-        pending.unlink()
-        directory = os.open(path.parent, os.O_RDONLY)
-        try:
-            os.fsync(directory)
-        finally:
-            os.close(directory)
-    return {"path": path.as_posix(), "bytes": len(data), "sha256": sha256_bytes(data)}
+    return historical.add_once_bytes(path, data)
+
+
+def recover_invocation_pending(recovery_root: Path) -> dict[str, list[dict[str, str]]]:
+    return {
+        "recovery_namespace": historical.recover_pending(recovery_root),
+        "promotion_paths": historical.recover_selected_pending(
+            historical.PROMOTION_PATHS,
+            recovery_root / "control/promotion_abandoned_pending",
+        ),
+    }
 
 
 def blob_at(commit: str, path: Path) -> str:
@@ -139,6 +128,7 @@ def acceptance_metadata(source_commit: str, artifact_root: Path, project_image_i
     if not re.fullmatch(r"sha256:[0-9a-f]{64}", project_image_id):
         raise RuntimeError("invalid project image ID")
     old_root, recovery_root = artifact_paths(cfg, artifact_root)
+    recovered = historical.recover_pending(recovery_root)
     ledger_spec = cfg["historical"]["execution_ledger"]
     ledger = old_root / ledger_spec["path"]
     observed = ledger.lstat()
@@ -153,6 +143,7 @@ def acceptance_metadata(source_commit: str, artifact_root: Path, project_image_i
         "project_image_id": project_image_id,
         "historical_ledger": {"path": ledger.as_posix(), "bytes": observed.st_size, "content_opened_or_hashed": False},
         "scientific_payload_bytes_read_or_hashed": 0,
+        "recovered_pending": recovered,
         "git": contract,
         "scientific_verdict": None,
     }
@@ -167,6 +158,10 @@ def validate_acceptance(accepted_commit: str, artifact_root: Path, cfg: dict[str
     offered = git("rev-parse", f"{accepted_commit}^")
     if receipt.get("state") != "accepted" or receipt.get("task_id") != TASK or receipt.get("handoff_id") != HANDOFF:
         raise RuntimeError("100-accepted identity/state mismatch")
+    if receipt.get("verification", {}).get("level") != "artifact_verified" or not receipt.get("transport", {}).get("exclusive_writer_ack"):
+        raise RuntimeError("100-accepted is not artifact-verified/exclusive")
+    if not receipt.get("artifacts", {}).get("required_for_task"):
+        raise RuntimeError("100-accepted artifact is not required for task")
     if receipt.get("commits", {}).get("offered_head") != offered or receipt.get("commits", {}).get("receipt_head") != "SELF":
         raise RuntimeError("100-accepted commit chain mismatch")
     if receipt.get("scientific", {}).get("scientific_verdict") is not None:
@@ -182,7 +177,15 @@ def validate_acceptance(accepted_commit: str, artifact_root: Path, cfg: dict[str
     acceptance_path = recovery_root / "acceptance/artifact_root_preflight_v1.json"
     data = regular_bytes(acceptance_path)
     body = json.loads(data)
-    if body.get("source_commit") != offered or body.get("scientific_payload_bytes_read_or_hashed") != 0:
+    if (
+        body.get("schema") != "jointbuildgs.gate_s0_uas_reference_coverage_r1_recovery_acceptance.v1"
+        or body.get("task_id") != TASK
+        or body.get("handoff_id") != HANDOFF
+        or body.get("status") != "PASS_METADATA_ONLY"
+        or body.get("source_commit") != offered
+        or body.get("scientific_payload_bytes_read_or_hashed") != 0
+        or body.get("scientific_verdict") is not None
+    ):
         raise RuntimeError("acceptance source/read accounting mismatch")
     if body.get("project_image_id") != receipt.get("verification", {}).get("docker_image_digest"):
         raise RuntimeError("acceptance/receipt image mismatch")
@@ -266,22 +269,47 @@ checkpoint record write/reload envelope. The recovery did not open, hash, or
 recalculate the UAS grid, predecessor eligibility/checkpoint inputs, raw UAS,
 LoD1/LoD2, common-base geometry, held-out outcomes, or C1–C5 performance.
 
-The 72 buildings share only nine independent reference/spatial groups; one group
-contains 47 buildings and held-out contains ten buildings in two groups. Therefore
-the result remains pilot-only and does not authorize confirmatory P2 performance.
+The 72 buildings form only nine independent reference/spatial groups, and held-out
+contains ten buildings in two groups. Therefore the result remains pilot-only and
+does not authorize any P2 performance before a separate Gate decision.
 """.encode()
 
 
-def completed_fast_path(recovery_root: Path) -> dict[str, Any] | None:
+def completed_fast_path(
+    recovery_root: Path,
+    cfg: dict[str, Any],
+    source_commit: str,
+    project_image_id: str,
+) -> dict[str, Any] | None:
     path = recovery_root / "control/recovery_ledger_v1.json"
     if not path.exists():
         return None
     body = json.loads(regular_bytes(path))
     if body.get("schema") != "jointbuildgs.gate_s0_uas_reference_coverage_r1_recovery_ledger.v1" or body.get("task_id") != TASK or body.get("status") != "COMPLETED" or body.get("scientific_verdict") is not None:
         raise RuntimeError("completed recovery ledger mismatch")
+    old = cfg["historical"]
+    ledger_spec = old["execution_ledger"]
+    if (
+        body.get("handoff_id") != HANDOFF
+        or body.get("source_commit") != source_commit
+        or body.get("project_image_id") != project_image_id
+        or body.get("historical_execution_ledger") != {"bytes": int(ledger_spec["bytes"]), "sha256": ledger_spec["sha256"]}
+        or body.get("historical_operation_id") != old["operation_id"]
+        or body.get("frozen_result") != old["expected"]
+    ):
+        raise RuntimeError("completed recovery operation binding mismatch")
     if body.get("scientific_source_reads_or_hashes") != 0 or body.get("scientific_recalculations") != 0:
         raise RuntimeError("completed recovery source/recalculation accounting mismatch")
-    for record in body.get("promoted_git_records", {}).values():
+    destinations = destination_map()
+    destinations["manifest"] = historical.MANIFEST_PATH
+    destinations["report"] = historical.DOC_ROOT / "UAS_REFERENCE_COVERAGE_R1_REPORT_v1.md"
+    records = body.get("promoted_git_records", {})
+    if set(records) != set(destinations):
+        raise RuntimeError("completed promotion record key set mismatch")
+    for name, record in records.items():
+        expected_relative = destinations[name].relative_to(REPO).as_posix()
+        if record.get("path") != expected_relative:
+            raise RuntimeError("completed promotion record path mismatch")
         path = (REPO / record["path"]).resolve()
         try:
             path.relative_to(REPO.resolve())
@@ -303,10 +331,11 @@ def verify_promote(source_commit: str, artifact_root: Path, project_image_id: st
         raise RuntimeError("execution image does not match acceptance")
     old_root, recovery_root = artifact_paths(cfg, artifact_root)
     allowed_dirty = {path.relative_to(REPO).as_posix() for path in historical.PROMOTION_PATHS}
+    recovered_pending = recover_invocation_pending(recovery_root)
     dirty = {line[3:].replace("\\", "/") for line in git("status", "--porcelain=v1", "--untracked-files=all").splitlines() if line}
     if not dirty.issubset(allowed_dirty):
-        raise RuntimeError(f"unrelated dirty paths: {sorted(dirty)}")
-    fast = completed_fast_path(recovery_root)
+        raise RuntimeError(f"unrelated dirty paths after pending recovery: {sorted(dirty)}")
+    fast = completed_fast_path(recovery_root, cfg, source_commit, project_image_id)
     if fast is not None:
         return fast
 
@@ -380,6 +409,7 @@ def verify_promote(source_commit: str, artifact_root: Path, project_image_id: st
         "historical_attempt_counts": validation["source_attempts"]["attempt_counts"],
         "frozen_result": old["expected"],
         "promoted_git_records": promoted_records,
+        "recovered_pending": recovered_pending,
         "scientific_source_reads_or_hashes": 0,
         "scientific_recalculations": 0,
         "scientific_verdict": None,

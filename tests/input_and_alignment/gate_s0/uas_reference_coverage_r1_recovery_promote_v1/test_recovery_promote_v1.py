@@ -87,6 +87,24 @@ class RecoveryContractTests(unittest.TestCase):
     def test_acceptance_requires_exactly_one_bound_artifact(self):
         source = inspect.getsource(recovery.validate_acceptance)
         self.assertIn("if len(matching) != 1", source)
+        self.assertIn('get("level") != "artifact_verified"', source)
+        self.assertIn('get("required_for_task")', source)
+
+    def test_actual_verify_entry_fast_path_never_calls_source_accessors(self):
+        image = "sha256:" + "a" * 64
+        sentinel = {"status": "COMPLETED"}
+        with tempfile.TemporaryDirectory() as directory, mock.patch.object(recovery, "config", return_value=self.cfg), mock.patch.object(
+            recovery, "assert_historical_binding"
+        ), mock.patch.object(recovery, "assert_current_source", return_value={}), mock.patch.object(
+            recovery, "validate_acceptance", return_value={"project_image_id": image}
+        ), mock.patch.object(recovery, "artifact_paths", return_value=(Path(directory) / "old", Path(directory) / "new")), mock.patch.object(
+            recovery, "recover_invocation_pending", return_value={"recovery_namespace": [], "promotion_paths": []}
+        ), mock.patch.object(recovery, "git", return_value=""), mock.patch.object(
+            recovery, "completed_fast_path", return_value=sentinel
+        ), mock.patch.object(historical, "capture_exact", side_effect=AssertionError("forbidden")), mock.patch.object(
+            historical.SourceAttempts, "start", side_effect=AssertionError("forbidden")
+        ):
+            self.assertIs(recovery.verify_promote("accepted", Path(directory), image), sentinel)
 
     def test_config_contains_no_scientific_input_path_list(self):
         self.assertNotIn("inputs", self.cfg["historical"])
@@ -134,10 +152,20 @@ class RecoveryContractTests(unittest.TestCase):
     def test_fast_path_rejects_nonzero_source_reads(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
+            old = self.cfg["historical"]
             ledger = {
                 "schema": "jointbuildgs.gate_s0_uas_reference_coverage_r1_recovery_ledger.v1",
                 "task_id": recovery.TASK,
+                "handoff_id": recovery.HANDOFF,
                 "status": "COMPLETED",
+                "source_commit": "accepted",
+                "project_image_id": "sha256:" + "a" * 64,
+                "historical_execution_ledger": {
+                    "bytes": old["execution_ledger"]["bytes"],
+                    "sha256": old["execution_ledger"]["sha256"],
+                },
+                "historical_operation_id": old["operation_id"],
+                "frozen_result": old["expected"],
                 "scientific_source_reads_or_hashes": 1,
                 "scientific_recalculations": 0,
                 "scientific_verdict": None,
@@ -145,7 +173,43 @@ class RecoveryContractTests(unittest.TestCase):
             }
             recovery.add_once(root / "control/recovery_ledger_v1.json", recovery.canonical_bytes(ledger))
             with self.assertRaisesRegex(RuntimeError, "source/recalculation accounting"):
-                recovery.completed_fast_path(root)
+                recovery.completed_fast_path(root, self.cfg, "accepted", "sha256:" + "a" * 64)
+
+    def test_fast_path_rejects_empty_promotion_record_set(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            old = self.cfg["historical"]
+            ledger = {
+                "schema": "jointbuildgs.gate_s0_uas_reference_coverage_r1_recovery_ledger.v1",
+                "task_id": recovery.TASK,
+                "handoff_id": recovery.HANDOFF,
+                "status": "COMPLETED",
+                "source_commit": "accepted",
+                "project_image_id": "sha256:" + "a" * 64,
+                "historical_execution_ledger": {
+                    "bytes": old["execution_ledger"]["bytes"],
+                    "sha256": old["execution_ledger"]["sha256"],
+                },
+                "historical_operation_id": old["operation_id"],
+                "frozen_result": old["expected"],
+                "scientific_source_reads_or_hashes": 0,
+                "scientific_recalculations": 0,
+                "scientific_verdict": None,
+                "promoted_git_records": {},
+            }
+            recovery.add_once(root / "control/recovery_ledger_v1.json", recovery.canonical_bytes(ledger))
+            with self.assertRaisesRegex(RuntimeError, "record key set mismatch"):
+                recovery.completed_fast_path(root, self.cfg, "accepted", "sha256:" + "a" * 64)
+
+    def test_stale_pending_is_quarantined_and_reported(self):
+        with tempfile.TemporaryDirectory() as directory, mock.patch.object(historical, "PROMOTION_PATHS", ()):
+            root = Path(directory)
+            pending = root / "control/.recovery_ledger_v1.json.pending"
+            pending.parent.mkdir(parents=True)
+            pending.write_bytes(b"incomplete")
+            recovered = recovery.recover_invocation_pending(root)
+            self.assertFalse(pending.exists())
+            self.assertEqual(recovered["recovery_namespace"][0]["action"], "QUARANTINED_INCOMPLETE")
 
     def test_forbidden_accessors_can_be_guarded_without_affecting_assertion(self):
         expected = self.cfg["historical"]["expected"]
@@ -186,6 +250,7 @@ class RecoveryContractTests(unittest.TestCase):
         report = recovery.report_bytes(summary).decode()
         self.assertIn("Gate S0 decision: `null`", report)
         self.assertIn("scientific_verdict: `null`", report)
+        self.assertIn("does not authorize any P2 performance", report)
 
 
 if __name__ == "__main__":
