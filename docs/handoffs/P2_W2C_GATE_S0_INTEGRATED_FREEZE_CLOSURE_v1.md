@@ -6,14 +6,15 @@
 - task_id: `P2-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1`
 - phase: `P2 / pre-result Gate S0 integrated technical closure`
 - direction: `Work→Codex`
-- status: `DRAFT`
+- status: `APPROVED_FOR_EXECUTION`
 - packet_version: `v1`
-- source_commit: `TO_BE_BOUND_AFTER_DRAFT_COMMIT`
+- source_commit: `f3e0be62a67605727f0470c6373e0d78ea590ebb`
 - target_branch: `main`
 - research_charter_version: `C1C5_CANON_v2`
 - decision_log_through: `DEC-P1-012`
 - follows: `P2-W2C-GATE-S0-COMMON-BASE-LINEAGE-R2B-v1`
 - created_at: `2026-08-01`
+- approved_at: `2026-08-01T16:50:09+09:00`
 - user_standing_authorization: `GRANTED — proceed without serial process-for-process tasks; preserve research intent; use independent sub-agent verification; report stage outcomes`
 - repository_effective_phase: `C1–C5 PROGRAM / GATE S0 FREEZE DRAFT / PERFORMANCE BLOCKED`
 - scientific_verdict: null
