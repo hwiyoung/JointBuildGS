@@ -1,0 +1,178 @@
+{
+  "schema": "jointbuildgs.gate_s0_freeze_recovery_technical_manifest.v1",
+  "task_id": "P2-GATE-S0-FREEZE-RECOVERY-v1",
+  "handoff_id": "P2-W2C-GATE-S0-FREEZE-RECOVERY-v1",
+  "operation_id": "48d4ad4393b42ce49e2cca1aed70b2de18558be14c1e475dfcf17559f23d4e1a",
+  "source_commit": "853f52c8d843fa8c9bc8d79f62e3e24e1eef10c7",
+  "status": "BLOCKED_ROOFER_SYNTHETIC_RUNTIME_PERMISSION",
+  "technical_execution_before_roofer": "COMPLETE",
+  "acceptance": {
+    "physical_host_id": "innopam-AI@192.168.10.203",
+    "project_docker_image": "jointbuildgs:dev",
+    "project_docker_image_id": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "artifact_uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/acceptance/artifact_root_preflight_v1.json",
+    "artifact_bytes": 2017,
+    "artifact_sha256": "4715405eabc43a66a0346770526ade885376d36edacc681692b47e0bfb439648",
+    "input_stat_records": 11,
+    "scientific_payload_bytes_read_or_hashed": 0
+  },
+  "common_source": {
+    "id": "B_CURRENT_CANDIDATE_c205892c390997b5",
+    "image_members": 962,
+    "included_pairs": 937,
+    "excluded_no_pose": 25,
+    "included_basename_set_sha256": "dd9b446e11c978ef8223858f08571bfea832e0d33517b24c1e573060244f4e2c"
+  },
+  "b_current": {
+    "camera_pose_model": "ON_READY",
+    "sparse_points": "ON_READY",
+    "sparse_point_count": 371808,
+    "dense_mvs": "ON_READY",
+    "gravity": "ON_READY",
+    "depth": "OFF_READY_OFF",
+    "normal_map_supervision": "OFF_READY_OFF",
+    "confidence": "OFF_READY_OFF",
+    "segmentation": "OFF_READY_OFF",
+    "consumer_files": 4,
+    "consumer_bytes": 807030928
+  },
+  "gravity": {
+    "gravity": [
+      0.0022003022295437485,
+      -0.0038866451918428023,
+      -0.9999900262798882
+    ],
+    "up": [
+      -0.0022003022295437485,
+      0.0038866451918428023,
+      0.9999900262798882
+    ],
+    "hardcoded_gravity": false,
+    "terrain_cell_count": 8013,
+    "inlier_normal_count": 8013,
+    "angular_median_deg": 0.33476087033589746,
+    "angular_p95_deg": 13.599275413721086,
+    "method": "filtered dense-MVS multiscale lower-envelope normals; observed delta<=0.35m; slope<=0.35; 20-degree consensus"
+  },
+  "universe": {
+    "canonical_candidate_count": 199,
+    "u_target_count": 199,
+    "u_target_id_set_sha256": "047717a5d678aeed540602a2d4fc9a57a076e2ac9205b22a4de75315c1622fe5",
+    "e_paired_count": 10,
+    "e_paired_id_set_sha256": "91b1b5c76726a3c20efba8f7b268d9598103e7faba7a5b95f7cb3d3f5bf1a777",
+    "split_counts": {
+      "development": 4,
+      "validation": 3,
+      "held_out": 3
+    },
+    "held_out_accessed": false
+  },
+  "independent_uas_reference": {
+    "component_count": 4,
+    "cell_count": 1184,
+    "canonical_buildings_with_reference": 11,
+    "digest_before_c5": "42b712e637b87befceed0b90d509f035acdea477a29168da4fa45a087f6df5d3",
+    "digest_after_c5": "42b712e637b87befceed0b90d509f035acdea477a29168da4fa45a087f6df5d3",
+    "reference_cells_changed": 0,
+    "construction_inputs": [
+      "UAS_LIDAR_XYZ",
+      "FROZEN_CONFIG"
+    ],
+    "prohibited_construction_inputs_used": [],
+    "c1_evaluation_class": "SELF_REFERENCE_UPPER_BASELINE",
+    "c1_independent_g3_g4_accuracy_claim_allowed": false,
+    "c2_to_c5_primary_reference": "INDEPENDENT_UAS",
+    "c3_to_c5_uas_roof_used_for_registration": false,
+    "absolute_z_metrics_enabled": false
+  },
+  "c4_input_alignment": {
+    "status": "READY_MVS_TERRAIN_ONLY_SCALAR",
+    "overlap_cells": 68772,
+    "c4_terrain_minus_mvs_terrain_median_m": -45.162254791259784,
+    "c4_terrain_minus_mvs_terrain_mad_m": 0.34572778320307407,
+    "translation_applied_to_c4_input_z_m": 45.162254791259784,
+    "uas_roof_used_for_registration": false,
+    "source_classes_consumed": [2, 6],
+    "other_provider_classes_promoted": false
+  },
+  "c5": {
+    "candidate_prior_count": 199,
+    "candidate_id_set_sha256": "047717a5d678aeed540602a2d4fc9a57a076e2ac9205b22a4de75315c1622fe5",
+    "inventory_bytes": 26663,
+    "inventory_sha256": "f88506474ef251550451feefbfe1434dcb5c2aa2fef385fd6f9fdacddf0300d2",
+    "exact_canonical_199_id_set": true,
+    "all_inputs_available_within_fixed_buffer": true,
+    "fixed_buffer_m": 10,
+    "prior_role": "LOD2_DERIVED_COARSE_LOD1_PRIOR_INDEPENDENTLY_EVALUATED",
+    "source_same_lineage_scoring": false,
+    "source_lod2_reads": 0,
+    "input_alignment": {
+      "status": "READY_MVS_TERRAIN_ONLY_SCALAR",
+      "sampled_prior_count": 197,
+      "prior_ground_minus_mvs_terrain_median_m": -45.36964263916013,
+      "prior_ground_minus_mvs_terrain_mad_m": 0.4927685546874727,
+      "translation_applied_to_c5_input_z_m": 45.36964263916013,
+      "used_for_reference_construction_or_target_membership": false
+    }
+  },
+  "read_accounting": {
+    "common_base_completed_consumer_read_and_hash_bytes": 807030928,
+    "common_base_consumer_files": 4,
+    "common_base_source_open_attempts": 4,
+    "common_base_context_only_bytes_read_or_hashed": 0,
+    "c1_completed_decode_passes": 1,
+    "c1_source_open_attempts": 1,
+    "c1_hash_passes": 0,
+    "c4_completed_decode_passes": 4,
+    "c4_source_open_attempts": 4,
+    "c4_hash_passes": 0,
+    "c5_completed_jsonl_processing_and_digest_passes": 2,
+    "c5_source_open_attempts": 2,
+    "r1_images_opf_rehashes": 0,
+    "source_lod2_reads": 0,
+    "failed_namespace_reads": 0,
+    "stereo_entries_enumerated": 0,
+    "checkpoints_reused_at_invocation_start": 0,
+    "maximum_attempts_per_stage": 2,
+    "observed_attempts_per_source_stage": 1
+  },
+  "stage3": {
+    "scope": "SYNTHETIC_NON_PERFORMANCE_SMOKE_ONLY",
+    "condition_label_count": 5,
+    "external_or_gt_roofprint_used": false,
+    "quality_or_performance": false,
+    "pinned_image": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+    "pinned_image_id": "sha256:9c980b97fba4c3fd30f5bb4afb8f2621be211d4e72e4333ea2053e8cd69b2dba",
+    "status": "FAIL",
+    "exit_code": 139,
+    "json_output_count": 0,
+    "runtime_log_bytes": 145,
+    "runtime_log_sha256": "a34591d1630d611619a7b9832e2aa3a1ae33df4afeece09fbfbd6e2bef000c41",
+    "failure": "Failed opening file roofer.log.json for writing: Permission denied",
+    "scientific_source_bytes_read_or_hashed": 0,
+    "retry_authorized": false,
+    "checkpoint_110_present": false,
+    "completed_ledger_present": false
+  },
+  "promotion_mode": "MANUAL_BLOCKED_PROMOTION_FROM_COMPACT_TASK_RECORDS",
+  "external_compact_records": {
+    "technical_summary": {
+      "bytes": 5730,
+      "sha256": "80aa9e10114b77f4f00162ff79f5502c7edd293c91781329ca41fd5ae5c26d37"
+    },
+    "execution_ledger": {
+      "bytes": 18476,
+      "sha256": "fed79ff2f78f39fa764b59b5d23050de067f2b7a4472511c70ad1e01ac2abe9c"
+    },
+    "eligibility_ledger": {
+      "bytes": 56719,
+      "sha256": "7fdbcb057a0dba9ba1d9462fde86d6af30add5bdbd1e20d39e24cc96fb51554a"
+    },
+    "roofer_runtime_smoke_receipt": {
+      "bytes": 5058,
+      "sha256": "756374d45d026127d3e4d740e0f98c615dac3aa1edf3dcd2a998b58539c7aa68"
+    }
+  },
+  "gate_decision": null,
+  "scientific_verdict": null
+}
