@@ -61,20 +61,20 @@ Reusable code must be promoted out of `phases/` into `src/`, `scripts/`, or `con
   `phases/p0-audit/README.md`; promoted evidence is in `docs/evidence/p0-audit/` and
   `docs/evidence/p0_g1_20260613/`. Completed P0 task prompts are historical records,
   not current agent instructions.
-- **Five-condition program: Gate S0 freeze draft active; performance blocked.** Preparation,
-  remediation R1, evidence R2A and lineage R2B are technically closed; the latest Return is
-  `docs/handoffs/returns/P2_C2W_GATE_S0_COMMON_BASE_LINEAGE_R2B_RETURN_v1.md` with proposed
-  status `BLOCKED_FOR_GATE_S0_TECHNICAL_AND_HUMAN_FREEZE`, `scientific_verdict: null`, and
-  no full human Gate decision. `DEC-P1-012` freezes the exact 962/937/25 source membership
-  and selects LoD2-derived LoD1 as the C5 input candidate conditional on an independent
-  evaluation reference; it does not approve performance. The active bounded technical
-  packet is `docs/handoffs/P2_W2C_GATE_S0_INTEGRATED_FREEZE_CLOSURE_v1.md`. The current
-  human-review draft is
-  `docs/research/preregistration/gate_s0/GATE_S0_FREEZE_PACKET_v1.md`; it is not execution
-  authority. Before the first new baseline result, Gate S0 must freeze the exact common
-  image/pose-derived base, AOI, `U_target`, `E_paired`, all condition inputs, eligibility,
-  split mode/IDs, references/toolchain, and bounded cost from outcome-free evidence.
-  No C1–C5 performance run is authorized while the recorded blockers remain.
+- **Five-condition program: bounded C1/C2 development pilot subgate approved;
+  confirmatory performance blocked.** Gate S0 preparation, remediation, exact common-base
+  recovery and UAS-reference coverage promotion are technically closed. `DEC-P1-012`
+  freezes the exact 962/937/25 source membership. Promoted outcome-free evidence records
+  `U_target=199`, 72 evaluation candidates in nine independent groups, and exact
+  development/validation/held-out splits of 51/11/10 buildings and 5/2/2 groups.
+  `DEC-P1-013` and
+  `docs/research/preregistration/gate_s0/GATE_S0_C1_C2_DEVELOPMENT_PILOT_APPROVAL_v1.md`
+  authorize only `C1_L_upper` and `C2_MVS` on the 51-building development split after a
+  reviewed implementation, activated task packet and immutable two-host ownership
+  transfer. Validation, held-out outcomes, C3–C5 execution, G3/G4/`PASS_usable`, and any
+  confirmatory or population/generalization claim remain prohibited. The C1/C2 result
+  may inform a new C3 strategy DRAFT, but does not authorize C3. Technical Returns and
+  receipts keep `scientific_verdict: null`.
 - **Legacy P2 GS-JSO / Fusion W1: protected historical capability evidence.** Its
   phase-locked controls and compact receipts remain under `phases/p2-gsjso/`; promoted
   reports remain under `docs/experiments/pilots/fusion_w1/`. Do not execute, modify,

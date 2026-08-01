@@ -2,8 +2,8 @@
 
 - 문서 버전: `C1C5_CANON_v2`
 - 작성일: 2026-07-31
-- 현재 workstream: `P2 PRE-RESULT GATE S0 FREEZE DRAFTING`
-- 저장소 유효 상태: `C1–C5 PROGRAM / GATE S0 FREEZE DRAFT / PERFORMANCE BLOCKED`
+- 현재 workstream: `P2 C1/C2 DEVELOPMENT FEASIBILITY PILOT PREPARATION`
+- 저장소 유효 상태: `C1/C2 DEVELOPMENT PILOT SUBGATE APPROVED / CONFIRMATORY PERFORMANCE BLOCKED`
 - 승인 상태: `USER APPROVED AS CURRENT RESEARCH CANON — 2026-07-31`
 - 역할: C1–C5 프로그램의 phase, split, gate와 실행 순서를 통제하는 roadmap
 
@@ -14,20 +14,21 @@
 
 ```text
 [✓] P1 연구 기반 확정·감사       — COMPLETE / READY_FOR_REVIEW evidence received
-[●] S0 입력·AOI·split 사전동결 준비 — PROPOSED BLOCKED / HUMAN DECISION PENDING / REMEDIATION ACTIVE
-[ ] P2 기준선·평가 기준 확정     — BLOCKED UNTIL GATE S0
+[✓] S0 입력·AOI·split 기술동결 증거 — PILOT-ONLY SCOPE / CONFIRMATORY BLOCKED
+[●] P2 C1/C2 development pilot   — HUMAN SUBGATE APPROVED / IMPLEMENTATION+HANDOFF PREPARATION
 [ ] P3 Prior 방법 개발·동결       — NOT_STARTED
 [ ] P4 최종 실험·저널 작성        — NOT_STARTED
 ```
 
-Current task: `P2-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1 APPROVED / offered receipt preparation`
+Current task: `P2-C1-C2-FEASIBILITY-PILOT-v1 DRAFT@791b8b03 / PRE-OFFER IMPLEMENTATION`
 
-Next: exact offered/accepted handoff → retained exact-937 P0 derivative lineage
-resolution and no-repeat hardening → Work Host Gate S0 integration. This is not a
-performance run.
+Next: exact C1/C2 runner/config/schema/tests → independent review → activation and
+offered/accepted handoff → development 51-building C1/C2 execution → C3 strategy
+DRAFT. Validation 11 and held-out 10 remain unopened.
 
-Gate S0는 P2의 **entry substate**다. 따라서 P2 coordination은 Gate S0 preparation으로
-진행 중이지만 C1–C3 performance execution은 Gate S0 freeze 전까지 차단된 상태다.
+Gate S0는 P2의 **entry substate**다. `DEC-P1-013`은 전체 Gate 또는 confirmatory
+performance를 승인한 것이 아니라 exact development split의 C1/C2 feasibility만
+승인했다. C3--C5, validation, held-out과 final acceptance verdict는 계속 차단된다.
 
 > **중요:** 위 패널이 현재 C1–C5 프로그램의 유효 흐름이다. 기존
 > `phases/p2-gsjso`/Fusion W1은 보호된 역사적 capability evidence이며 새 프로그램의
@@ -39,8 +40,8 @@ Gate S0는 P2의 **entry substate**다. 따라서 P2 coordination은 Gate S0 pre
 
 ```mermaid
 flowchart LR
-    P1["P1 연구 기반 확정·감사<br/>COMPLETE"] --> S0["P2 pre-result Gate S0<br/>PROPOSED BLOCKED / HUMAN DECISION PENDING"]
-    S0 -->|Gate S0 freeze| P2["P2 기준선·평가 기준 확정<br/>BLOCKED"]
+    P1["P1 연구 기반 확정·감사<br/>COMPLETE"] --> S0["P2 pre-result Gate S0<br/>PILOT-ONLY SUBGATE APPROVED"]
+    S0 -->|DEC-P1-013| P2["P2 C1/C2 development baseline<br/>PREPARATION ACTIVE"]
     P2 -->|PASS criterion 동결<br/>사용자 Gate 2| P3["P3 Prior 방법 개발·동결<br/>NOT_STARTED"]
     P3 -->|방법·loss 동결<br/>사용자 Gate 3| P4["P4 held-out test 전 건물 × C1–C5<br/>최종 실험·저널<br/>NOT_STARTED"]
     P4 -->|원고·결론 승인| END["Research package"]
@@ -122,7 +123,7 @@ flowchart LR
 | Phase | 목적 | Entry criteria | Work 산출물 | Codex 산출물 | Exit gate | 상태 |
 |---|---|---|---|---|---|---|
 | P1 | 무엇을 연구하고 현재 repo/data가 지원하는지 확정 | bootstrap 요청, 현행 정본 확인 | charter, roadmap, novelty, data/result/handoff contracts, audit packet | read-only audit 9종, Return Packet | C1–C5 정본 전환과 audit integration | `COMPLETE` |
-| P2 | Gate S0 뒤 LiDAR/MVS/no-external-prior GS 기준선과 acceptance 동결 | Gate S0 evidence proposes blocked; exact common image/pose-derived base와 나머지 data contract의 human freeze pending | Gate freeze packet, baseline protocol, threshold 결정안 | Gate 승인 뒤 pilot+validation의 C1–C3 baseline, adapter 비교 | held-out building 결과 전 criterion 동결 | `PERFORMANCE BLOCKED / GATE FREEZE DRAFT` |
+| P2 | Gate S0 뒤 LiDAR/MVS/no-external-prior GS 기준선과 acceptance 동결 | `DEC-P1-013`이 exact development 51동의 C1/C2 feasibility만 승인; confirmatory Gate blocked | bounded C1/C2 protocol, 후속 C3 strategy와 threshold 결정안 | 먼저 development C1/C2, 다음 별도 승인된 C3, 이후 validation의 protocol-matched C1–C3 | held-out building 결과 전 criterion 동결 | `C1/C2 DEVELOPMENT PILOT PREPARATION / OTHER PERFORMANCE BLOCKED` |
 | P3 | 관찰된 실패에 맞춘 두 prior 방법 개발·동결 | P2 criterion 동결 | loss/method 설계와 ablation 계약 | pilot+validation의 frozen C3 control 및 C4/C5 구현·ablation, Return Packet | held-out building 접근 전 사용자 최종 방법·schedule 동결 | `NOT_STARTED` |
 | P4 | held-out test 전 건물 × C1–C5 최종 실험과 원고 | P3 method freeze, data/reference/split freeze | 결과 해석, manuscript | held-out 전 건물 runs, metrics, case sheets, receipts | 사용자 결론·원고 승인 | `NOT_STARTED` |
 
@@ -176,17 +177,20 @@ primary 잠금 뒤 별도 census로 수행한다. 이 census를 완료하지 않
 
 | 항목 | Owner | 상태 | 산출물/근거 | Blocker 또는 next |
 |---|---|---|---|---|
-| C1–C5 research canon | Work | `USER_APPROVED / CURRENT` | `00_*.md`–`06_*.md`, `DEC-P1-010` | v2 common-base contract 유지 |
+| C1–C5 research canon | Work | `USER_APPROVED / CURRENT` | `00_*.md`–`06_*.md`, through `DEC-P1-013` | bounded C1/C2 development approval 유지 |
 | P1 repository audit v1 | Codex | `TECHNICAL_BLOCKED / SUPERSEDED` | `200-blocked.json` | 재개 금지 |
 | P1 repository audit v2 | Codex | `READY_FOR_REVIEW / TECHNICAL CLOSED` | `c1c66396`, closed `8a6b5e61` | Gate S0 input evidence |
 | P1 audit integration | Work | `COMPLETE` | `0716c925` | Gate S0 evidence에 반영 |
 | Gate S0 evidence preparation | Work→Codex | `BLOCKED_FOR_GATE_S0_REVIEW / TECHNICAL CLOSED` | output `380cc891`, closed `1cf0db33` | R1 remediation evidence로 후속 |
 | Gate S0 Work cross-review | Work + independent agents | `PASS WITH MATERIAL FOLLOW-UPS` | `WORK_HOST_CROSS_REVIEW_v1.md` | C3 sparse-init와 reference/self-reference 누락 보완 |
 | Gate S0 remediation R1 | Work→Codex | `BLOCKED_FOR_GATE_S0_REMEDIATION_REVIEW / TECHNICAL CLOSED` | output `032f7bc1`, closed `052f7d5c` | evidence로 보존; 재실행 금지 |
-| Gate S0 freeze packet v1 | Work / human review | `DRAFT / NOT APPROVED` | `GATE_S0_FREEZE_PACKET_v1.md` | exact common base와 나머지 blockers 검토 |
-| `B_current` source membership v1 | Work + independent agents | `USER-FROZEN 962/937/25 / DERIVATIVES PARTIAL` | `B_CURRENT_CANDIDATE_c205892c390997b5`, `DEC-P1-012` | retained exact-937 derivative lineage 필요 |
+| Gate S0 freeze packet v1/v2 | Work / human review | `HISTORICAL DRAFTS / SUPERSEDED BY LATER EVIDENCE` | freeze recovery + R1 promoted evidence | confirmatory Gate remains blocked |
+| `B_current` source membership | Work + independent agents | `USER-FROZEN 962/937/25 / FIRST-WAVE COMPONENTS BOUND` | `DEC-P1-012`, freeze recovery manifest | reuse exact derivatives; no regeneration |
 | Gate S0 evidence R2A | Work→Codex | `BLOCKED_FOR_GATE_S0_EVIDENCE_REVIEW / TECHNICAL CLOSED@00181afc` | `P2_C2W_GATE_S0_EVIDENCE_R2A_RETURN_v1.md` | evidence로 보존; 재실행 금지 |
-| Gate S0 common-base lineage R2B | Work→Codex | `APPROVED_FOR_EXECUTION / OFFER PENDING` | `P2_W2C_GATE_S0_COMMON_BASE_LINEAGE_R2B_v1.md` | offered/accepted 뒤에만 실행 |
+| Gate S0 common-base lineage R2B | Work→Codex | `TECHNICAL CLOSED@b5532e6d` | R2B Return/receipts | evidence로 보존; 재실행 금지 |
+| Gate S0 freeze recovery | Work→Codex | `BLOCKED ROOFER SMOKE / TECHNICAL CLOSED` | freeze recovery Return/manifest | C1/C2 task의 새 writable wrapper에서만 결함 수정 |
+| UAS reference coverage R1 recovery/promote | Work→Codex | `TECHNICAL COMPLETE@4ac2b809` | 72 candidates, 9 groups, 51/11/10 split | pilot-only claim evidence |
+| C1/C2 development feasibility pilot | Work→Codex | `HUMAN SUBGATE APPROVED / PRE-OFFER IMPLEMENTATION` | `DEC-P1-013`, DRAFT `791b8b03` | exact code/config/schema/tests와 activation 필요 |
 
 ## Decision Status Register
 
@@ -261,35 +265,34 @@ primary 잠금 뒤 별도 census로 수행한다. 이 census를 완료하지 않
 | `P2-W2C-GATE-S0-REMEDIATION-R1-v1` | Work→Codex | v1 | `BLOCKED_FOR_GATE_S0_REMEDIATION_REVIEW / TECHNICAL CLOSED@052f7d5c` | 완료 작업; 재실행 아님 |
 | `P2-W2C-GATE-S0-EVIDENCE-R2A-v1` | Work→Codex | v1 | `BLOCKED_FOR_GATE_S0_EVIDENCE_REVIEW / TECHNICAL CLOSED@00181afc` | 완료 작업; 재실행 아님 |
 | `P2-W2C-GATE-S0-COMMON-BASE-LINEAGE-R2B-v1` | Work→Codex | v1 | `BLOCKED_FOR_GATE_S0_TECHNICAL_AND_HUMAN_FREEZE / TECHNICAL CLOSED@b5532e6d` | 완료 작업; 성능 아님 |
-| `P2-W2C-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1` | Work→Codex | v1 | `APPROVED_FOR_EXECUTION / OFFER PENDING` | 아니오; offered/accepted 필요 |
+| `P2-W2C-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1` | Work→Codex | v1 | `TECHNICAL CLOSED / SUPERSEDED BY FREEZE RECOVERY` | 완료 작업; 재실행 아님 |
+| `P2-W2C-C1-C2-FEASIBILITY-PILOT-v1` | Work→Codex | v1 | `DRAFT / PRE-OFFER IMPLEMENTATION` | human scope approved; activation 전 실행 금지 |
 
-다음 Gate S0 진행 순서:
+다음 P2 진행 순서:
 
-1. `DEC-P1-010`의 common-base 정의를 반영한 human-review Gate freeze packet을 DRAFT로 작성
-2. exact image/pose members와 shared SfM sparse/dense MVS/depth/normal/confidence
-   lineage를 outcome 없이 채우고 나머지 blocker와 함께 검토
-3. evidence가 부족하면 사용자가 bounded evidence-completion 범위만 승인하고 별도
-   Experiment Host task packet과 immutable offered receipt를 작성
-4. evidence가 채워지면 사용자가 Gate S0를 명시적으로 승인하거나
-   `BLOCKED/DEFERRED`로 판정
-5. Gate 승인 뒤 별도 accepted receipt를 거친 경우에만 baseline을 수행
+1. C1/C2 development runner/config/schema/tests를 frozen derivatives와 exact 51-ID
+   roster에 결속하고 독립 검토한다.
+2. activation commit과 direct-child 000-offered를 push한 뒤 Experiment Host가
+   artifact-verified 100-accepted로 writer를 인수한다.
+3. synthetic Roofer/writer/validator chain이 먼저 통과한 경우에만 development
+   51동의 C1/C2를 실행한다.
+4. Return/200/300 뒤 Work Host가 quantitative/qualitative evidence를 교차검토하고 C3
+   strategy DRAFT를 작성한다.
+5. 별도 승인 전에는 validation, held-out 또는 C3--C5를 실행하지 않는다.
 
-## Blockers
+## Current constraints
 
-1. `DEC-P1-012`로 LoD2-derived LoD1을 C5 입력 후보로 선택했지만 exact independent
-   evaluation reference ID/version/production lineage가 아직 bind되지 않았다. 그 전에는
-   기존 diagnostic label을 유지하고 primary C5나 `E_paired`를 READY로 바꾸지 않는다.
-2. C1 LiDAR source·class 2/6·vertical datum·registration이 미동결이다.
-3. 962/937 차이는 `DEC-P1-012`로 exact membership이 동결됐다. 다만 C2 MVS가 그
-   exact base에 아직 hash-bound되지 않아 condition readiness는 `PARTIAL`이다.
-4. 기존 P0에는 exact-937 계보일 가능성이 있는 retained COLMAP/OpenMVS/DIM derivative
-   chain이 있으나 R2A discovery가 이를 완전히 resolve하지 못했다. SfM consumption,
-   dense/depth/normal의 producer/config/hash/frame/role과 confidence/segmentation/gravity
-   enablement·evidence가 아직 동결되지 않았다. 기존 1,104-image vendor MVS는 common
-   base로 채택되지 않았다.
-5. geometry/structure reference의 ID/version/production lineage와 C1 self-reference
-   evaluation class가 동결되지 않았다.
-6. `U_target`과 `E_paired`가 아직 `UNKNOWN`이다.
+1. C1/C2 development execution needs an exact pre-offer runner/config/result schema and
+   a full synthetic Roofer/writer/validator pass; the historical permission failure is
+   not itself a scientific blocker.
+2. Development has 51 buildings but only five independent groups with sizes
+   47/1/1/1/1. Results are descriptive and group-balanced, not confirmatory.
+3. Validation 11 and held-out 10 remain inaccessible until later separately approved
+   stages.
+4. LoD2-derived LoD1 remains diagnostic/self-conditioned and cannot make primary C5
+   READY. C3--C5 execution is not authorized by `DEC-P1-013`.
+5. G3/G4 numerical thresholds, final Stage-3 adapter and `PASS_usable` remain deferred
+   to later P2 criterion freeze.
 
 기존 4조건과 새 C1–C5의 정본 충돌은 `DEC-P1-008`로 해소했다. Numerical acceptance
 threshold와 final surface adapter는 설계대로 P2로 연기되며 Gate S0 evidence preparation
@@ -337,7 +340,7 @@ P1 감사는 문서 준비도를 완료했지만 data READY, Gate S0 승인 또�
 | `P_LoD1`이 roof topology를 주는가? | 아니오 |
 | threshold/loss가 동결되었는가? | 아니오, `DEFERRED` |
 | 현재 실행 정본은 무엇인가? | 00–06 C1–C5 contract set; legacy plan은 역사 기록 |
-| 지금 성능실험이 가능한가? | 아니오; Gate S0 전 C1–C5 performance run 금지 |
+| 지금 성능실험이 가능한가? | exact activated handoff 뒤 development 51동의 C1/C2 feasibility만 가능; 그 외는 금지 |
 | 기존 Gate S0 준비 packet을 다시 실행 가능한가? | 아니오; technical closed이며 새 remediation packet이 필요 |
 
 ## Change history

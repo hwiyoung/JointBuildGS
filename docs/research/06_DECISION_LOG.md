@@ -458,10 +458,63 @@
 - `scientific_verdict`는 null이며 P2 performance는 Gate S0 전체 freeze 전까지
   계속 금지한다.
 
+## DEC-P1-013 — C1/C2 development feasibility pilot와 C3 순서
+
+- **Decision ID:** `DEC-P1-013`
+- **Date:** 2026-08-02
+- **Status:** `USER-APPROVED BOUNDED GATE DECISION`
+- **Previous state:** promoted Gate S0 evidence fixed `U_target=199`, a technical
+  `E_paired` candidate set of 72 buildings and a 51/11/10 split, but only nine
+  independent groups overall and two held-out groups. The evidence therefore allowed
+  only `PILOT_ONLY_REFERENCE_SCOPE` and prohibited every performance run until a
+  separate human Gate decision.
+- **New decision:** authorize `C1_L_upper` and `C2_MVS` on the exact 51-building,
+  five-group development split only, after reviewed implementation and a validated
+  two-host handoff. Validation 11 and held-out 10 remain inaccessible. C3--C5
+  execution remains prohibited. The development result is used to draft the first C3
+  training strategy, which requires a separate DRAFT, review and activation.
+- **Evidence:** R1 promoted result `U_target=199`, `E_paired=72`, groups `9`, split
+  buildings `51/11/10`, split groups `5/2/2`; human instructions on 2026-08-02 to run
+  the quick LiDAR/MVS baselines first and then design C3.
+- **Reason:** C1 and C2 are direct Stage-3 baselines without GS training. They expose
+  common read-out failures and the MVS-to-upper-baseline gap before the no-external-
+  prior GS representation/loss/schedule is chosen. Preserving validation and held-out
+  keeps later selection and final evaluation separable.
+- **Exact human approval:**
+  `docs/research/preregistration/gate_s0/GATE_S0_C1_C2_DEVELOPMENT_PILOT_APPROVAL_v1.md`
+- **Affected phases:** P2 development baseline; C3 strategy preparation
+- **User approval:** `APPROVE_DEVELOPMENT_FEASIBILITY_PILOT_ONLY`
+- **Scientific verdict:** `null`
+- **Superseded decisions:** the blanket prohibition on every P2 pilot after the R1
+  blocker evidence is narrowed only for this exact C1/C2 development task. The
+  confirmatory blocker, validation/held-out protection, `DEC-P1-011` diagnostic C5
+  isolation and all protected-history rules remain.
+
+### Consequence
+
+- C1 is reported only as `SELF_REFERENCE_UPPER_BASELINE`; it is not pooled or ranked
+  as if it shared C2's independent accuracy reference.
+- C2 uses the exact common-base MVS derivative and independent UAS reference only for
+  scoring; UAS/LoD2/reference geometry cannot enter reconstruction, registration,
+  cropping or `R_derived` generation.
+- Development group sizes are 47, 1, 1, 1 and 1. Reports include group-balanced
+  summaries and do not treat 51 buildings as 51 independent repetitions.
+- G0--G2 are provisional technical outcomes under a precommitted schema. G3, G4,
+  `PASS_usable`, confirmatory inference and population/generalization claims remain
+  unavailable. LoD1.1 fallback is not counted as LoD2.2 success.
+- Exact method/config/schema/tests must be committed and independently reviewed
+  before activation. Experiment Host may execute and promote outputs only after an
+  immutable `100-accepted` ownership transfer.
+- Synthetic smoke failure closes as a technical blocker without scientific payload
+  access. Success or failure returns writer ownership through verified/blocked 200
+  followed by direct-child 300.
+
 ## Pending decisions not yet logged as adopted
 
 다음은 선택지가 정리되었으나 사용자 결정 전이므로 adopted decision이 아니다.
 
-- `U_target`/`E_paired` exact IDs, 전수 가능성, pilot/validation/held-out 수량과
-  공간 group 경계
-- C5 independent evaluation reference의 exact asset ID/version/production lineage
+- C3 first-wave training representation, loss, schedule and bounded development
+  strategy after the C1/C2 development evidence is returned
+- final P2 Stage-3 adapter, G3/G4 numerical thresholds and `PASS_usable` criterion
+- materially broader independent reference coverage for a confirmatory claim and an
+  independently sourced LoD1 prior for primary C5 interpretation
