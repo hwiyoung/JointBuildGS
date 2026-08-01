@@ -1,0 +1,195 @@
+{
+  "schema": "jointbuildgs.gate_s0_freeze_recovery_config.v1",
+  "task_id": "P2-GATE-S0-FREEZE-RECOVERY-v1",
+  "handoff_id": "P2-W2C-GATE-S0-FREEZE-RECOVERY-v1",
+  "draft_commit": "4ce6de11a2677e3e068df9b9ad2039e0e6cbe50d",
+  "predecessor_closed_commit": "073bda57571acf945c58e566f0c5a5e9c395983f",
+  "physical_host_id": "innopam-AI@192.168.10.203",
+  "artifact_root": "/artifacts/JointBuildGS",
+  "output_namespace": "phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1",
+  "common_source": {
+    "id": "B_CURRENT_CANDIDATE_c205892c390997b5",
+    "image_members": 962,
+    "included_pairs": 937,
+    "excluded_no_pose": 25,
+    "included_basename_set_sha256": "dd9b446e11c978ef8223858f08571bfea832e0d33517b24c1e573060244f4e2c"
+  },
+  "aoi": {
+    "crs": "EPSG:25832",
+    "bbox": [690791.74, 5335864.05, 691154.65, 5336353.85],
+    "area_m2": 177753.318,
+    "geojson_sha256": "93728956ecfbbb24521b4fa4aec745fec176d4c6c94e10cef272934dcf9d9061",
+    "selection_rule": "CLASSIFIED_CURRENT_MVS_CLASS_2_6_POINT_XY_PERCENTILE_1_TO_99_PLUS_FIXED_25M_MARGIN",
+    "selection_source": "P0_CURRENT_MVS_XYZ_WITH_SMRF_GROUND_CLASS2_AND_LOD2_GROUNDSURFACE_OVERLAY_CLASS6",
+    "selection_implementation": "phases/p0-audit/scripts/05_footprints.py",
+    "lod2_groundsurface_overlay_used_before_aoi_selection": true,
+    "lod2_roofsurface_roof_type_or_performance_used": false,
+    "outcome_or_roof_label_used": false,
+    "candidate_population_rule": "AFTER_AOI_SELECTION_INTERSECT_CANONICAL_LOD2_GROUNDSURFACE_STABLE_IDS_WITH_FIXED_AOI",
+    "candidate_population_count": 199
+  },
+  "consumed_common_base": {
+    "payload_root": "phase-payloads/p0-audit",
+    "camera_model": {
+      "path": "data/work/mvs/colmap_dense/sparse/cameras.bin",
+      "expected_bytes": 64,
+      "purpose": "camera intrinsics for exact-937 view-support calculation"
+    },
+    "image_poses": {
+      "path": "data/work/mvs/colmap_dense/sparse/images.bin",
+      "expected_bytes": 114415526,
+      "purpose": "exact-937 calibrated image poses and names"
+    },
+    "sparse_points": {
+      "path": "data/work/mvs/colmap_dense/sparse/points3D.bin",
+      "expected_bytes": 33476840,
+      "purpose": "frozen SfM sparse initialization evidence for C3-C5"
+    },
+    "dense_ply": {
+      "path": "data/work/mvs/openmvs/dim_dense.ply",
+      "expected_bytes": 659138498,
+      "purpose": "common dense geometry, C2 derivative and terrain-MVS gravity"
+    },
+    "not_consumed": [
+      {
+        "path": "data/work/mvs/colmap_dense/sparse/rigs.bin",
+        "expected_bytes": 24,
+        "reason": "rig metadata is not consumed by the frozen first-wave adapter"
+      },
+      {
+        "path": "data/work/mvs/colmap_dense/sparse/frames.bin",
+        "expected_bytes": 78716,
+        "reason": "frame metadata is not consumed by the frozen first-wave adapter"
+      },
+      {
+        "path": "data/work/mvs/openmvs/scene.mvs",
+        "expected_bytes": 23267921,
+        "reason": "intermediate archive not consumed by the frozen first-wave interface"
+      },
+      {
+        "path": "data/work/mvs/dim/dim_v1.laz",
+        "expected_bytes": 156106520,
+        "reason": "superseded as consumer input by a controlled class-2/6 derivative from dense_ply"
+      }
+    ]
+  },
+  "grid": {
+    "cell_m": 1.0,
+    "minimum_points_per_cell": 3,
+    "minimum_height_above_terrain_m": 2.5,
+    "local_window_cells": 5,
+    "minimum_valid_neighbors": 6,
+    "local_plane_rmse_limit_m": 0.3,
+    "vegetation_roughness_limit_m": 0.15,
+    "within_cell_z_std_limit_m": 0.6,
+    "vegetation_z_std_trigger_m": 0.25,
+    "minimum_up_dot": 0.5,
+    "minimum_component_cells": 20,
+    "minimum_planar_fraction": 0.7,
+    "terrain_filter_windows_cells": [3, 7, 15, 31, 51]
+  },
+  "association": {
+    "minimum_intersection_area_m2": 1.0,
+    "minimum_reference_overlap_fraction": 0.5,
+    "maximum_input_availability_distance_m": 10.0,
+    "overlap_threshold_role": "DIAGNOSTIC_ONLY_NOT_ELIGIBILITY",
+    "ambiguity_policy": "KEEP_ALL_WITHIN_FIXED_BUFFER_AND_SHARE_SPLIT_GROUP",
+    "c5_vertical_fields_used_for_association": false
+  },
+  "eligibility": {
+    "candidate_ledger": "docs/research/preregistration/gate_s0/remediation_r1/eligibility_funnel_v2.csv",
+    "candidate_count": 199,
+    "stable_id_set_sha256": "047717a5d678aeed540602a2d4fc9a57a076e2ac9205b22a4de75315c1622fe5",
+    "reference_id_crosswalk_buffer_m": 3.0,
+    "stable_id_namespace": "UASREF",
+    "minimum_image_views": 2,
+    "minimum_condition_cells": 4,
+    "view_support_relative_z_envelope_m": [0.0, 80.0],
+    "spatial_group_cell_m": 50.0,
+    "processing_buffer_m": 10.0,
+    "processing_buffer_role": "EXECUTION_CONTEXT_ONLY_NOT_SPLIT_CONNECTIVITY",
+    "tile_anchor": [690791.74, 5335864.05],
+    "tile_assignment_geometry": "AOI_CLIPPED_TARGET_BBOX_CENTROID",
+    "split_mode": "EXHAUSTIVE_PARTITION",
+    "split_seed": "20260731",
+    "split_ratios": {
+      "development": 0.6,
+      "validation": 0.2,
+      "held_out": 0.2
+    }
+  },
+  "c1": {
+    "asset_id": "LIDAR_UAS_CURRENT_NADIR",
+    "path": "phase-payloads/p0-audit/data/raw/tum2twin/TUM_Downtown_ULS_20241217_nadir.laz",
+    "bytes": 1277996022,
+    "attested_sha256": "50783bfb205ea5532ac2a300d7e41b6b6426e45009d6c961d603e079cc5ae7b4",
+    "source_crs": "EPSG:32632",
+    "target_crs": "EPSG:25832",
+    "vertical_datum": "UNKNOWN",
+    "evaluation_class": "SELF_REFERENCE_UPPER_BASELINE"
+  },
+  "c4": {
+    "asset_id": "ALS_EXISTING_2022_FOUR_TILE_SET",
+    "source_crs": "EPSG:25832",
+    "vertical_alignment": "ONE_AOI_TERRAIN_ONLY_MEDIAN_Z_TO_MVS",
+    "classification_contract": {"ground": 2, "building": 6, "other_classes_promoted": false},
+    "tiles": [
+      {"tile_id": "690_5335", "path": "phase-payloads/p0-audit/data/raw/als/690_5335.laz", "bytes": 110979201, "attested_sha256": "01602b7385aaf7324f89da6183df3dbdeffa237f85bf57dc27208b554b4fc0b3"},
+      {"tile_id": "690_5336", "path": "phase-payloads/p0-audit/data/raw/als/690_5336.laz", "bytes": 119749181, "attested_sha256": "98ab7ad7f4c5108ebf41bc62186b336c6cd8a70b82fceec57136a56c0188b566"},
+      {"tile_id": "691_5335", "path": "phase-payloads/p0-audit/data/raw/als/691_5335.laz", "bytes": 107359041, "attested_sha256": "9e14119bb0af7d5a300aa3a2a19074219b4d6d290923b4b90277c317e8b33720"},
+      {"tile_id": "691_5336", "path": "phase-payloads/p0-audit/data/raw/als/691_5336.laz", "bytes": 132681326, "attested_sha256": "63c64002fc55d8b99a49749b5a2e36d802186186a950c89779463274e3cb950d"}
+    ]
+  },
+  "c5": {
+    "role": "LOD2_DERIVED_COARSE_LOD1_PRIOR_INDEPENDENTLY_EVALUATED",
+    "association_role": "POST_REFERENCE_FREEZE_IDENTITY_AND_INPUT_COVERAGE_ONLY",
+    "vertical_alignment": "ONE_AOI_PRIOR_GROUND_TO_MVS_TERRAIN_MEDIAN_Z",
+    "selected_prisms": [
+      {"path": "phase-payloads/p0-audit/data/work/gate_s0/common_base_r2a/P2-GATE-S0-EVIDENCE-R2A-v1/690_5334.lod1-prisms.jsonl", "bytes": 5970206, "attested_sha256": "17478671077d58545e5cc1affe2c91153abe62d4616df27b782423e386fefe19"},
+      {"path": "phase-payloads/p0-audit/data/work/gate_s0/common_base_r2a/P2-GATE-S0-EVIDENCE-R2A-v1/690_5336.lod1-prisms.jsonl", "bytes": 6912597, "attested_sha256": "19f64387f676a95f84e39e5faba94cd1008b57d394a383b526c9a7ca65c2ab49"}
+    ],
+    "source_lod2_geometry_access": false
+  },
+  "evaluation": {
+    "reference_source": "LIDAR_UAS_CURRENT_NADIR",
+    "reference_source_sha256": "50783bfb205ea5532ac2a300d7e41b6b6426e45009d6c961d603e079cc5ae7b4",
+    "reference_independence_from_c5_prior": "INDEPENDENT_SENSOR_AND_PRODUCTION_LINEAGE",
+    "reference_geometry_construction": "CURRENT_UAS_XYZ_ONLY_BEFORE_LOD2_ID_CROSSWALK_OR_C5_ACCESS",
+    "reference_uncertainty_status": "TO_QUANTIFY_IN_P2_CRITERION_CALIBRATION",
+    "reference_freeze_before_c5_access": true,
+    "primary_vertical_scope": "TERRAIN_NORMALIZED_RELATIVE_ONLY",
+    "absolute_z_metrics_enabled": false,
+    "uas_used_for_c3_c5_input_registration": false
+  },
+  "stage3": {
+    "roofer_image": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+    "roofer_image_id": "sha256:9c980b97fba4c3fd30f5bb4afb8f2621be211d4e72e4333ea2053e8cd69b2dba",
+    "roofer_version": "1.0.0",
+    "command_args": ["--id-attribute", "building_id", "--jobs", "1", "--srs", "EPSG:25832", "--bld-class", "6", "--grnd-class", "2", "--lod22"],
+    "roofprint_protocol": "R_DERIVED_NON_GT_CONVEX_HULL_V1",
+    "external_roofprint_allowed": false,
+    "smoke_only": true
+  },
+  "cost_caps": {
+    "gpu_per_condition_run": 1,
+    "gpu_class": "RTX_3090_CLASS",
+    "vram_gb_max": 24,
+    "wall_clock_hours_max": 12,
+    "new_output_gb_max_per_run": 100,
+    "retry_max": 1,
+    "total_new_retained_storage_gb_max": 500
+  },
+  "guards": {
+    "performance": false,
+    "quality_scoring": false,
+    "held_out_access": false,
+    "fusion_w1_access": false,
+    "r_ext_access": false,
+    "source_lod2_geometry_access": false,
+    "stereo_access": false,
+    "images_zip_access": false,
+    "opf_zip_access": false,
+    "failed_namespace_content_access": false
+  },
+  "scientific_verdict": null
+}
