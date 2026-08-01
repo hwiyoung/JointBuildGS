@@ -1,0 +1,541 @@
+{
+  "algorithm": {
+    "comparison_epsilon": 1e-12,
+    "connectivity": 8,
+    "edge_cross_plane_m": 0.6,
+    "edge_height_step_m": 0.6,
+    "edge_normal_deg": 20.0,
+    "edge_revisit": false,
+    "final_min_cells": 20,
+    "method": "DETERMINISTIC_LOCAL_PLANE_PATCH_KRUSKAL_v1",
+    "patch_max_abs_residual_m": 0.6,
+    "patch_max_local_normal_deg": 20.0,
+    "patch_plane_rmse_m": 0.3,
+    "sort_decimals": 12
+  },
+  "all_e_paired_primary_effective_size": {
+    "design_effect": 2.566666666666667,
+    "groups": 9,
+    "largest_group": 47,
+    "n": 72,
+    "n_eff": 28.05194805194805,
+    "sum_sq": 2328
+  },
+  "baseline_counts": {
+    "baseline_final": 10,
+    "baseline_planar_fraction": 12,
+    "diagnostic_final": 72,
+    "height": 124,
+    "minimum_points": 129,
+    "neighbors": 124,
+    "normal": 96,
+    "plane_rmse": 96,
+    "preliminary_component_size": 89,
+    "raw_observed": 129,
+    "roughness": 94,
+    "z_std": 124
+  },
+  "claim_scope_status": "PILOT_ONLY_REFERENCE_SCOPE",
+  "confirmatory_minimum_held_out_groups_pass": false,
+  "e_paired_candidate_count": 72,
+  "e_paired_candidate_id_set_sha256": "20fc6a998fd4c4cf393c11b51c72654a529830254a09be495010005c6c9c42c7",
+  "external_artifact_records": {
+    "baseline_attrition": {
+      "bytes": 245,
+      "digest_method": "same_stream_as_add_once_serialization",
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/reference/baseline_attrition_v1.csv",
+      "rows": 12,
+      "sha256": "529cc0a649a1a37bf519fe6030163726075bae3f3ea056b5b871524b751cb526"
+    },
+    "candidate_cells": {
+      "bytes": 3785261,
+      "digest_method": "same_stream_as_add_once_serialization",
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/reference/reference_candidate_cells_v1.csv",
+      "rows": 20520,
+      "sha256": "bf87736227ea3c28bc8f966f36e2498f786d2de420a732fa0bfebbb73664275a"
+    },
+    "candidate_ledger": {
+      "bytes": 83814,
+      "digest_method": "same_stream_as_add_once_serialization",
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/freeze/candidate_ledger_v1.csv",
+      "rows": 199,
+      "sha256": "7f5759739a473952b4d3826b09c83ec3c2c4e0b68148a51405eb22609cec9b41"
+    },
+    "claim_scope": {
+      "bytes": 9937,
+      "digest_method": "same_stream_as_add_once_serialization",
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/analysis/claim_scope_v1.json",
+      "sha256": "cceac670f9ab27b87cf09ac198fd236d44e8b215f85e13f3f2d11e63f03bb8eb"
+    },
+    "eligibility": {
+      "bytes": 75448,
+      "digest_method": "same_stream_as_add_once_serialization",
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/freeze/eligibility_candidate_v1.csv",
+      "rows": 199,
+      "sha256": "527f0616eb9e5807d210ead1d165e9db844f4f0541097949e03c96229f72224f"
+    },
+    "group_graph": {
+      "bytes": 22566,
+      "digest_method": "same_stream_as_add_once_serialization",
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/freeze/group_graph_v1.csv",
+      "rows": 199,
+      "sha256": "ef666207d04bedeefef90eca88bdf471b6752bf5693f7c1022ebac8405358904"
+    },
+    "pair_requirements": {
+      "bytes": 2830,
+      "digest_method": "same_stream_as_add_once_serialization",
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/analysis/pair_requirements_v1.csv",
+      "rows": 42,
+      "sha256": "2b075f137cd82ad4df42d17765c00c7397989674442f1b0908ca1e0c13b80ccf"
+    },
+    "patch_association_qa": {
+      "bytes": 7078,
+      "digest_method": "same_stream_as_add_once_serialization",
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/reference/patch_association_qa_v1.csv",
+      "rows": 177,
+      "sha256": "1dc618a400d795c139b504041321f0ea1676a75f3a3814ae8efeb868351ea93c"
+    },
+    "patch_summary": {
+      "bytes": 96539,
+      "digest_method": "same_stream_as_add_once_serialization",
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/reference/patch_summary_v1.csv",
+      "rows": 177,
+      "sha256": "8a4379bdc7c58f7470fa37163f5471160601eb0475a86178054e47c5714ea3d0"
+    },
+    "power_sensitivity": {
+      "bytes": 373,
+      "digest_method": "same_stream_as_add_once_serialization",
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/analysis/power_sensitivity_v1.csv",
+      "rows": 6,
+      "sha256": "1a7778d5c074058695e1188616218025aa3a136abe95908bdfc3eb6db0c9d26f"
+    },
+    "split_candidate": {
+      "bytes": 3803,
+      "digest_method": "same_stream_as_add_once_serialization",
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/freeze/split_candidate_v1.csv",
+      "rows": 72,
+      "sha256": "8dc33b86a126667b847ddf33f4ad4a56012f2bfc784c0742e573a421120f7309"
+    }
+  },
+  "gate_decision": null,
+  "guards": {
+    "als_access": false,
+    "c5_jsonl_access": false,
+    "candidate_count_targeting": false,
+    "common_base_access": false,
+    "fusion_w1_access": false,
+    "held_out_outcome_access": false,
+    "images_zip_access": false,
+    "opf_zip_access": false,
+    "performance": false,
+    "quality_scoring": false,
+    "r_ext_access": false,
+    "raw_uas_access": false,
+    "roofer_execution": false,
+    "source_lod2_access": false,
+    "threshold_sweep": false
+  },
+  "handoff_id": "P2-W2C-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1",
+  "held_out_group_criteria_pass": false,
+  "held_out_primary_effective_size": {
+    "design_effect": 1.2,
+    "groups": 2,
+    "largest_group": 5,
+    "n": 10,
+    "n_eff": 8.333333333333334,
+    "sum_sq": 50
+  },
+  "historical_completed_state_validation": {
+    "checkpoints": {
+      "verified_output_count": 16,
+      "verified_outputs": [
+        {
+          "bytes": 4285,
+          "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/control/started_v1.json",
+          "sha256": "7426a94aed9e19be9ec39b73bdfed5d7f6a63e00a8ed6d9d88d0670e8c88d1ce"
+        },
+        {
+          "bytes": 1028,
+          "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/attempts/reference_grid/attempt_01.json",
+          "sha256": "78014420731536f2728c9c359b0765da5ece9535d8cf673c304967785e65337d"
+        },
+        {
+          "bytes": 3785261,
+          "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/reference/reference_candidate_cells_v1.csv",
+          "sha256": "bf87736227ea3c28bc8f966f36e2498f786d2de420a732fa0bfebbb73664275a"
+        },
+        {
+          "bytes": 96539,
+          "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/reference/patch_summary_v1.csv",
+          "sha256": "8a4379bdc7c58f7470fa37163f5471160601eb0475a86178054e47c5714ea3d0"
+        },
+        {
+          "bytes": 266808,
+          "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/reference/stage_masks_v1.bin",
+          "sha256": "80effc72af441052c536cf114241b172c93a4801546bd663f26738f9ab64ee0c"
+        },
+        {
+          "bytes": 749,
+          "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/attempts/eligibility_metadata/attempt_01.json",
+          "sha256": "de2d5ba4635a25ba68340dc45e2af7976e9f7cfacf320599d66e92c5e6079438"
+        },
+        {
+          "bytes": 245,
+          "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/reference/baseline_attrition_v1.csv",
+          "sha256": "529cc0a649a1a37bf519fe6030163726075bae3f3ea056b5b871524b751cb526"
+        },
+        {
+          "bytes": 75448,
+          "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/freeze/eligibility_candidate_v1.csv",
+          "sha256": "527f0616eb9e5807d210ead1d165e9db844f4f0541097949e03c96229f72224f"
+        },
+        {
+          "bytes": 7078,
+          "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/reference/patch_association_qa_v1.csv",
+          "sha256": "1dc618a400d795c139b504041321f0ea1676a75f3a3814ae8efeb868351ea93c"
+        },
+        {
+          "bytes": 83814,
+          "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/freeze/candidate_ledger_v1.csv",
+          "sha256": "7f5759739a473952b4d3826b09c83ec3c2c4e0b68148a51405eb22609cec9b41"
+        },
+        {
+          "bytes": 22566,
+          "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/freeze/group_graph_v1.csv",
+          "sha256": "ef666207d04bedeefef90eca88bdf471b6752bf5693f7c1022ebac8405358904"
+        },
+        {
+          "bytes": 3803,
+          "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/freeze/split_candidate_v1.csv",
+          "sha256": "8dc33b86a126667b847ddf33f4ad4a56012f2bfc784c0742e573a421120f7309"
+        },
+        {
+          "bytes": 9937,
+          "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/analysis/claim_scope_v1.json",
+          "sha256": "cceac670f9ab27b87cf09ac198fd236d44e8b215f85e13f3f2d11e63f03bb8eb"
+        },
+        {
+          "bytes": 2830,
+          "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/analysis/pair_requirements_v1.csv",
+          "sha256": "2b075f137cd82ad4df42d17765c00c7397989674442f1b0908ca1e0c13b80ccf"
+        },
+        {
+          "bytes": 373,
+          "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/analysis/power_sensitivity_v1.csv",
+          "sha256": "1a7778d5c074058695e1188616218025aa3a136abe95908bdfc3eb6db0c9d26f"
+        },
+        {
+          "bytes": 5434,
+          "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/freeze/technical_summary_v1.json",
+          "sha256": "2ac13fe6edd8227bdfae3f49ae17723fdc057ce58b2ce647dce62c4c445607c7"
+        }
+      ]
+    },
+    "source_attempts": {
+      "attempt_counts": {
+        "eligibility_metadata": 1,
+        "reference_grid": 1
+      },
+      "maximum_attempts_per_stage": 2,
+      "per_source_read_digest_accounting": [
+        {
+          "accepted_bytes": 56719,
+          "accepted_sha256": "7fdbcb057a0dba9ba1d9462fde86d6af30add5bdbd1e20d39e24cc96fb51554a",
+          "bytes_read_and_digested_max": 56719,
+          "bytes_read_and_digested_min": 56719,
+          "full_read_digest_passes_max": 1,
+          "full_read_digest_passes_min": 1,
+          "known_successful_full_read_digest_passes": 1,
+          "path": "phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/freeze/eligibility_ledger_v1.csv",
+          "prior_unknown_attempts": 0,
+          "stage": "eligibility_metadata"
+        },
+        {
+          "accepted_bytes": 3023643,
+          "accepted_sha256": "4f72178551e25ef27a952a09faa8331c1464416fcd6c5f66a57a9424e7f0b77b",
+          "bytes_read_and_digested_max": 3023643,
+          "bytes_read_and_digested_min": 3023643,
+          "full_read_digest_passes_max": 1,
+          "full_read_digest_passes_min": 1,
+          "known_successful_full_read_digest_passes": 1,
+          "path": "phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/reference/c1_grid_v1.npz",
+          "prior_unknown_attempts": 0,
+          "stage": "reference_grid"
+        },
+        {
+          "accepted_bytes": 3140,
+          "accepted_sha256": "530a2a001189c7c0a4dfa486349b77d80ee5031e2a8b4024793405837dc1611e",
+          "bytes_read_and_digested_max": 3140,
+          "bytes_read_and_digested_min": 3140,
+          "full_read_digest_passes_max": 1,
+          "full_read_digest_passes_min": 1,
+          "known_successful_full_read_digest_passes": 1,
+          "path": "phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/checkpoints/050-c1_reference_frozen_pre_c5.json",
+          "prior_unknown_attempts": 0,
+          "stage": "reference_grid"
+        }
+      ],
+      "records": [
+        {
+          "attempt_number": 1,
+          "bytes": 749,
+          "full_passes": 1,
+          "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/attempts/eligibility_metadata/attempt_01.json",
+          "sha256": "de2d5ba4635a25ba68340dc45e2af7976e9f7cfacf320599d66e92c5e6079438",
+          "stage": "eligibility_metadata"
+        },
+        {
+          "attempt_number": 1,
+          "bytes": 1028,
+          "full_passes": 1,
+          "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/attempts/reference_grid/attempt_01.json",
+          "sha256": "78014420731536f2728c9c359b0765da5ece9535d8cf673c304967785e65337d",
+          "stage": "reference_grid"
+        }
+      ],
+      "unknown_crash_boundary_accounting": {
+        "eligibility_metadata": {
+          "unknown_prior_attempts": 0,
+          "unknown_prior_boundary_bytes_max": 0
+        },
+        "reference_grid": {
+          "unknown_prior_attempts": 0,
+          "unknown_prior_boundary_bytes_max": 0
+        }
+      }
+    }
+  },
+  "historical_execution_ledger": {
+    "bytes": 11268,
+    "path": "control/execution_ledger_v1.json",
+    "sha256": "cdf41594f1c218aa1c60206b9a6c070e5222f00da8149796151b15385f1f6bec"
+  },
+  "historical_operation_identity": {
+    "algorithm": {
+      "comparison_epsilon": 1e-12,
+      "connectivity": 8,
+      "edge_cross_plane_m": 0.6,
+      "edge_height_step_m": 0.6,
+      "edge_normal_deg": 20.0,
+      "edge_revisit": false,
+      "final_min_cells": 20,
+      "method": "DETERMINISTIC_LOCAL_PLANE_PATCH_KRUSKAL_v1",
+      "patch_max_abs_residual_m": 0.6,
+      "patch_max_local_normal_deg": 20.0,
+      "patch_plane_rmse_m": 0.3,
+      "sort_decimals": 12
+    },
+    "config_blob": "64c7beaf5cd7780a4935b23fe96f7b2cd152db96",
+    "handoff_id": "P2-W2C-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1",
+    "inputs": [
+      {
+        "bytes": 3023643,
+        "path": "phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/reference/c1_grid_v1.npz",
+        "sha256": "4f72178551e25ef27a952a09faa8331c1464416fcd6c5f66a57a9424e7f0b77b"
+      },
+      {
+        "bytes": 3140,
+        "path": "phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/checkpoints/050-c1_reference_frozen_pre_c5.json",
+        "sha256": "530a2a001189c7c0a4dfa486349b77d80ee5031e2a8b4024793405837dc1611e"
+      },
+      {
+        "bytes": 56719,
+        "path": "phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/freeze/eligibility_ledger_v1.csv",
+        "sha256": "7fdbcb057a0dba9ba1d9462fde86d6af30add5bdbd1e20d39e24cc96fb51554a"
+      }
+    ],
+    "operation_id": "9d5fdefb5af6fe12965f59fa4b3824ccbe5ac0aedf9996a3316207746617b32b",
+    "power": {
+      "asymptotic_large_effect_n_eff": 69,
+      "asymptotic_main_claim_n_eff": 125,
+      "contrasts": 2,
+      "desired_power": 0.8,
+      "discordance_rates": [
+        0.2,
+        0.3,
+        0.4
+      ],
+      "familywise_alpha": 0.05,
+      "finite_cluster_critical_value": "STUDENT_T_HELD_OUT_GROUPS_MINUS_1",
+      "held_out_group_sensitivity": [
+        6,
+        12,
+        20,
+        30,
+        50,
+        100
+      ],
+      "minimum_held_out_groups_for_confirmatory_inference": 20,
+      "net_effects": [
+        0.15,
+        0.2
+      ],
+      "per_contrast_two_sided_alpha": 0.025,
+      "primary_discordance_rate": 0.3,
+      "primary_rho": 0.05,
+      "rho_values": [
+        0.0,
+        0.05,
+        0.1
+      ],
+      "z_alpha": 2.241402727604947,
+      "z_power": 0.8416212335729143
+    },
+    "project_image_id": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "source_commit": "da24ba68123ced5b4b95efd558688e92b9c9e086",
+    "task_id": "P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1"
+  },
+  "historical_task_id": "P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1",
+  "independent_group_count": 9,
+  "inference_population": "ACHIEVED_FROZEN_REFERENCE_COVERED_E_PAIRED_NOT_ALL_U_TARGET",
+  "input_grid_bytes": 3023643,
+  "input_grid_full_read_digest_passes_max": 1,
+  "input_grid_full_read_digest_passes_min": 1,
+  "input_grid_known_successful_full_read_digest_passes": 1,
+  "input_grid_prior_unknown_attempts": 0,
+  "invocation_events_at_summary": 2,
+  "operation_id": "9d5fdefb5af6fe12965f59fa4b3824ccbe5ac0aedf9996a3316207746617b32b",
+  "overall_group_criteria_pass": false,
+  "patch_cell_count": 20520,
+  "patch_count": 177,
+  "performance_or_held_out_outcomes_accessed": false,
+  "primary_rho": 0.05,
+  "project_image_id": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+  "promoted_copy_digests": {
+    "baseline_attrition": {
+      "bytes": 245,
+      "sha256": "529cc0a649a1a37bf519fe6030163726075bae3f3ea056b5b871524b751cb526"
+    },
+    "candidate_ledger": {
+      "bytes": 83814,
+      "sha256": "7f5759739a473952b4d3826b09c83ec3c2c4e0b68148a51405eb22609cec9b41"
+    },
+    "claim_scope": {
+      "bytes": 9937,
+      "sha256": "cceac670f9ab27b87cf09ac198fd236d44e8b215f85e13f3f2d11e63f03bb8eb"
+    },
+    "eligibility": {
+      "bytes": 75448,
+      "sha256": "527f0616eb9e5807d210ead1d165e9db844f4f0541097949e03c96229f72224f"
+    },
+    "group_graph": {
+      "bytes": 22566,
+      "sha256": "ef666207d04bedeefef90eca88bdf471b6752bf5693f7c1022ebac8405358904"
+    },
+    "pair_requirements": {
+      "bytes": 2830,
+      "sha256": "2b075f137cd82ad4df42d17765c00c7397989674442f1b0908ca1e0c13b80ccf"
+    },
+    "patch_association_qa": {
+      "bytes": 7078,
+      "sha256": "1dc618a400d795c139b504041321f0ea1676a75f3a3814ae8efeb868351ea93c"
+    },
+    "patch_summary": {
+      "bytes": 96539,
+      "sha256": "8a4379bdc7c58f7470fa37163f5471160601eb0475a86178054e47c5714ea3d0"
+    },
+    "power_sensitivity": {
+      "bytes": 373,
+      "sha256": "1a7778d5c074058695e1188616218025aa3a136abe95908bdfc3eb6db0c9d26f"
+    },
+    "split_candidate": {
+      "bytes": 3803,
+      "sha256": "8dc33b86a126667b847ddf33f4ad4a56012f2bfc784c0742e573a421120f7309"
+    }
+  },
+  "raw_uas_reads": 0,
+  "recommended_gate_action": "BLOCKED_REFERENCE_COVERAGE_OR_INDEPENDENCE",
+  "recovered_pending_events_at_summary": 0,
+  "recovery_acceptance": {
+    "acceptance_sha256": "78bec2a7c0880626b6f2ff57442388492bd144c58ee5afe90a5e8142d2a0a72e",
+    "canonical_validator": "PASS",
+    "clean_state_attestation": "7dbb3bc912e191d0b7d93c023832919889dbd4b4c17ab9d9374aca2602edc532",
+    "offered_commit": "b0e13d35d1db6fe514b3830372b62f7a749e79ab",
+    "project_image_id": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "receipt_sha256": "4c29c2348b781bfa89319cfb9873a5b4f756535ee3aabe9def412d4881a69868"
+  },
+  "recovery_git_contract": {
+    "blobs": {
+      "configs/input_and_alignment/gate_s0/uas_reference_coverage_r1_recovery_promote_v1/recovery_promote_v1.json": "e2a55ec4b24cb8917fdb87fa9d71ef31e7b7f072",
+      "docs/handoffs/P2_W2C_GATE_S0_UAS_REFERENCE_COVERAGE_R1_RECOVERY_PROMOTE_v1.md": "8a452a5bf7c872dad3008cccbf91f81b546e0f9c",
+      "scripts/input_and_alignment/gate_s0/uas_reference_coverage_r1_recovery_promote_v1/run_recovery_promote_v1.py": "c15c1a9dc6a697f2af6c2b4d3bb1a29516c29f6a",
+      "scripts/input_and_alignment/gate_s0/uas_reference_coverage_r1_v1/run_uas_reference_coverage_r1.py": "fbb5c3e535b3652f421e5979a42b34afb058d9a8",
+      "tests/input_and_alignment/gate_s0/uas_reference_coverage_r1_recovery_promote_v1/test_recovery_promote_v1.py": "213925c6fd08f5955e8bbd6f0f37704884f3bfdf"
+    },
+    "head": "5eb8028930b49ae311406620b7f5150f92fc33fc",
+    "origin_main": "5eb8028930b49ae311406620b7f5150f92fc33fc",
+    "source_commit": "5eb8028930b49ae311406620b7f5150f92fc33fc"
+  },
+  "recovery_no_repeat_contract": {
+    "capture_exact_calls": 0,
+    "historical_attempt_counts_preserved": {
+      "eligibility_metadata": 1,
+      "reference_grid": 1
+    },
+    "scientific_recalculations": 0,
+    "scientific_source_reads_or_hashes": 0,
+    "source_attempt_start_calls": 0
+  },
+  "recovery_source_commit": "5eb8028930b49ae311406620b7f5150f92fc33fc",
+  "recovery_task_id": "P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-RECOVERY-PROMOTE-v1",
+  "reference_planarity_attrition_is_selection_limitation": true,
+  "schema": "jointbuildgs.gate_s0_uas_reference_coverage_technical_candidate_manifest.v1",
+  "scientific_verdict": null,
+  "source_commit": "da24ba68123ced5b4b95efd558688e92b9c9e086",
+  "source_read_digest_accounting": [
+    {
+      "accepted_bytes": 56719,
+      "accepted_sha256": "7fdbcb057a0dba9ba1d9462fde86d6af30add5bdbd1e20d39e24cc96fb51554a",
+      "bytes_read_and_digested_max": 56719,
+      "bytes_read_and_digested_min": 56719,
+      "full_read_digest_passes_max": 1,
+      "full_read_digest_passes_min": 1,
+      "known_successful_full_read_digest_passes": 1,
+      "path": "phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/freeze/eligibility_ledger_v1.csv",
+      "prior_unknown_attempts": 0,
+      "stage": "eligibility_metadata"
+    },
+    {
+      "accepted_bytes": 3023643,
+      "accepted_sha256": "4f72178551e25ef27a952a09faa8331c1464416fcd6c5f66a57a9424e7f0b77b",
+      "bytes_read_and_digested_max": 3023643,
+      "bytes_read_and_digested_min": 3023643,
+      "full_read_digest_passes_max": 1,
+      "full_read_digest_passes_min": 1,
+      "known_successful_full_read_digest_passes": 1,
+      "path": "phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/reference/c1_grid_v1.npz",
+      "prior_unknown_attempts": 0,
+      "stage": "reference_grid"
+    },
+    {
+      "accepted_bytes": 3140,
+      "accepted_sha256": "530a2a001189c7c0a4dfa486349b77d80ee5031e2a8b4024793405837dc1611e",
+      "bytes_read_and_digested_max": 3140,
+      "bytes_read_and_digested_min": 3140,
+      "full_read_digest_passes_max": 1,
+      "full_read_digest_passes_min": 1,
+      "known_successful_full_read_digest_passes": 1,
+      "path": "phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/checkpoints/050-c1_reference_frozen_pre_c5.json",
+      "prior_unknown_attempts": 0,
+      "stage": "reference_grid"
+    }
+  ],
+  "split_building_counts": {
+    "development": 51,
+    "held_out": 10,
+    "validation": 11
+  },
+  "split_group_counts": {
+    "development": 5,
+    "held_out": 2,
+    "validation": 2
+  },
+  "split_id_set_sha256": {
+    "development": "712cf0e7e635f049857302f4e5ffea825165d9fb38dd3091d0ab192d5974a68b",
+    "held_out": "48442644d3a06a43f0ae37db8df5db6c986423fc347fec0af30bb2facab8ed1f",
+    "validation": "d0e7417a94eb63d0f215f58af8bc270b795d970f1d3a13f8eea6fa2d9edb1fd1"
+  },
+  "status": "TECHNICAL_EXECUTION_COMPLETE",
+  "task_id": "P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1",
+  "u_target_count": 199
+}
