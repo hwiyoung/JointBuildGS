@@ -1,10 +1,11 @@
-# P2 Gate S0 freeze recovery v1 — DRAFT
+# P2 Gate S0 freeze recovery v1 — bounded technical execution authority
 
 - task_id: `P2-GATE-S0-FREEZE-RECOVERY-v1`
 - handoff_id: `P2-W2C-GATE-S0-FREEZE-RECOVERY-v1`
-- status: `DRAFT_NOT_EXECUTION_AUTHORITY`
+- status: `AUTHORIZED_BOUNDED_TECHNICAL_EXECUTION`
 - predecessor_closed_commit: `073bda57571acf945c58e566f0c5a5e9c395983f`
 - draft_commit: `4ce6de11a2677e3e068df9b9ad2039e0e6cbe50d`
+- implementation_commit: `1687432a586a5a924e17e556860171bc83e64cad`
 - gate_decision: `null`
 - scientific_verdict: `null`
 
@@ -28,19 +29,22 @@ the four files consumed by the first-wave adapter. Every completed stage is add-
 fsync-persisted before the next scientific source is opened. The failed namespace and
 all predecessor records remain immutable.
 
-## Activation prerequisites
+## Activation evidence and transfer prerequisite
 
-Before this DRAFT can become execution authority:
+This packet is technical execution authority because:
 
-1. Runner, config and tests are committed on Work Host. Experiment Host may execute
-   only blobs bound by the offered commit and must not patch-and-run WIP source.
-2. A zero-scientific-payload Docker preflight verifies imports, synthetic LAS/LAZ,
+1. Runner, config, host orchestrator and tests are committed at
+   `1687432a586a5a924e17e556860171bc83e64cad`. Experiment Host may execute only blobs
+   bound by the offered commit and must not patch-and-run WIP source.
+2. A zero-scientific-payload Docker preflight passed for that implementation and verifies imports, synthetic LAS/LAZ,
    missing-`pyproj` fallback, EPSG transform, checkpoint crash semantics, clean Git
    state, exact source blobs and a new namespace.
-3. Independent reviews approve scientific isolation, read/checkpoint accounting and
-   the universe/split/Stage-3 contract.
-4. An immutable 000-offered receipt offers writer ownership; it does not transfer
-   ownership by itself.
+3. Three independent reviews approved scientific isolation, read/checkpoint
+   accounting and the universe/split/Stage-3 contract after all reported blockers
+   were corrected. The validated suite contains 39 tests.
+
+Execution still requires an immutable `000-offered` receipt that offers writer
+ownership; it does not transfer ownership by itself.
 
 Experiment Host must add one metadata-only acceptance artifact bound by the immutable
 `100-accepted` receipt. Only its committed and pushed acceptance activates the writer
