@@ -58,6 +58,15 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
+def sha256_bytes(value: bytes) -> str:
+    return hashlib.sha256(value).hexdigest()
+
+
+def normalize_crlf(value: bytes) -> bytes:
+    """Normalize only Git checkout CRLF; preserve every other byte."""
+    return value.replace(b"\r\n", b"\n")
+
+
 def valid_timestamp(value: Any) -> bool:
     if not isinstance(value, str):
         return False
@@ -141,6 +150,7 @@ def immutable_repo_file(
     *,
     label: str,
     expected_sha256: str | None = None,
+    text_eol_portable: bool = False,
 ) -> tuple[Path | None, str | None]:
     """Resolve an add-once, byte-identical repository receipt or snapshot."""
     if not safe_relative_path(relative):
@@ -162,9 +172,6 @@ def immutable_repo_file(
     if not path.is_file():
         errors.append(f"{label} is missing, non-regular, or a symlink")
         return None, None
-    if expected_sha256 is not None and sha256_file(path) != expected_sha256:
-        errors.append(f"{label} SHA-256 mismatch")
-
     try:
         history_raw = git(repo, "log", "--format=%H", "--", relative)
         assert isinstance(history_raw, str)
@@ -195,7 +202,13 @@ def immutable_repo_file(
         return path, commit
     if statuses != [f"A\t{relative}"]:
         errors.append(f"{label} must be introduced once with Git status A")
-    if committed != path.read_bytes():
+    if expected_sha256 is not None and sha256_bytes(committed) != expected_sha256:
+        errors.append(f"{label} SHA-256 mismatch")
+    working = path.read_bytes()
+    if text_eol_portable:
+        committed = normalize_crlf(committed)
+        working = normalize_crlf(working)
+    if committed != working:
         errors.append(f"{label} bytes differ from immutable committed file")
     return path, commit
 
@@ -221,7 +234,13 @@ def resolve_receipt_commit(
     except ValueError:
         errors.append("manifest must be inside the repository")
         return None
-    _, commit = immutable_repo_file(repo, relative, errors, label="manifest")
+    _, commit = immutable_repo_file(
+        repo,
+        relative,
+        errors,
+        label="manifest",
+        text_eol_portable=True,
+    )
     return commit
 
 
@@ -447,6 +466,7 @@ def validate_snapshot_claim(
             errors,
             label=f"{prefix}snapshot_manifest".strip(),
             expected_sha256=snapshot.get("sha256"),
+            text_eol_portable=True,
         )
         if snapshot.get("restore_rehearsal") != "passed":
             errors.append(f"{prefix}snapshot_manifest restore rehearsal must be passed")
@@ -780,6 +800,7 @@ def validate_previous_chain(
             errors,
             label="previous_receipt",
             expected_sha256=link.get("sha256"),
+            text_eol_portable=True,
         )
         if path is None or commit is None:
             break

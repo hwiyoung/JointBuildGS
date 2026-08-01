@@ -996,6 +996,23 @@ class TwoHostHandoffTests(unittest.TestCase):
             any("previous_receipt schema" in item or "immutable add-once" in item for item in errors)
         )
 
+    def test_receipt_chain_allows_crlf_checkout_of_lf_git_blobs(self) -> None:
+        payload, manifest, _ = self.verified_payload()
+        accepted = self.handoff_dir / "100-accepted.json"
+        for path in (accepted, manifest):
+            path.write_bytes(path.read_bytes().replace(b"\n", b"\r\n"))
+
+        errors = self.errors(payload, manifest=manifest, artifact_root=self.artifact_root)
+
+        self.assertFalse(
+            any(
+                "bytes differ from immutable committed file" in item
+                or "previous_receipt SHA-256 mismatch" in item
+                for item in errors
+            ),
+            errors,
+        )
+
     def test_previous_chain_rechecks_dirty_snapshot_claim(self) -> None:
         offered = copy.deepcopy(self.payload)
         offered["scope"]["dirty_wip"] = True
