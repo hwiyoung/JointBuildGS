@@ -96,7 +96,7 @@ class RecoveryContractTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory, mock.patch.object(recovery, "config", return_value=self.cfg), mock.patch.object(
             recovery, "assert_historical_binding"
         ), mock.patch.object(recovery, "assert_current_source", return_value={}), mock.patch.object(
-            recovery, "validate_acceptance", return_value={"project_image_id": image}
+            recovery, "validate_acceptance_for_invocation", return_value={"project_image_id": image}
         ), mock.patch.object(recovery, "artifact_paths", return_value=(Path(directory) / "old", Path(directory) / "new")), mock.patch.object(
             recovery, "recover_invocation_pending", return_value={"recovery_namespace": [], "promotion_paths": []}
         ), mock.patch.object(recovery, "git", return_value=""), mock.patch.object(
@@ -105,6 +105,39 @@ class RecoveryContractTests(unittest.TestCase):
             historical.SourceAttempts, "start", side_effect=AssertionError("forbidden")
         ):
             self.assertIs(recovery.verify_promote("accepted", Path(directory), image), sentinel)
+
+    def test_pending_recovery_precedes_acceptance_validation(self):
+        image = "sha256:" + "a" * 64
+        events = []
+        with tempfile.TemporaryDirectory() as directory, mock.patch.object(recovery, "config", return_value=self.cfg), mock.patch.object(
+            recovery, "assert_historical_binding"
+        ), mock.patch.object(recovery, "assert_current_source", return_value={}), mock.patch.object(
+            recovery, "artifact_paths", return_value=(Path(directory) / "old", Path(directory) / "new")
+        ), mock.patch.object(
+            recovery, "recover_invocation_pending", side_effect=lambda root: events.append("recover") or {"recovery_namespace": [], "promotion_paths": []}
+        ), mock.patch.object(recovery, "git", return_value=""), mock.patch.object(
+            recovery, "validate_acceptance_for_invocation", side_effect=lambda *args, **kwargs: events.append("acceptance") or {"project_image_id": image}
+        ), mock.patch.object(recovery, "completed_fast_path", return_value={"status": "COMPLETED"}):
+            recovery.verify_promote("accepted", Path(directory), image)
+        self.assertEqual(events, ["recover", "acceptance"])
+
+    def test_clean_acceptance_attestation_supports_dirty_retry(self):
+        image = "sha256:" + "a" * 64
+        observed = {
+            "receipt_sha256": "b" * 64,
+            "acceptance_sha256": "c" * 64,
+            "offered_commit": "offered",
+            "project_image_id": image,
+        }
+        with tempfile.TemporaryDirectory() as directory, mock.patch.object(
+            recovery, "validate_acceptance", return_value=observed
+        ) as validator:
+            root = Path(directory)
+            clean = recovery.validate_acceptance_for_invocation("accepted", root, root, self.cfg, clean_worktree=True)
+            retry = recovery.validate_acceptance_for_invocation("accepted", root, root, self.cfg, clean_worktree=False)
+        self.assertEqual(clean, retry)
+        self.assertTrue(validator.call_args_list[0].kwargs["run_canonical"])
+        self.assertFalse(validator.call_args_list[1].kwargs["run_canonical"])
 
     def test_config_contains_no_scientific_input_path_list(self):
         self.assertNotIn("inputs", self.cfg["historical"])

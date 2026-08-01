@@ -152,7 +152,13 @@ def acceptance_metadata(source_commit: str, artifact_root: Path, project_image_i
     return body
 
 
-def validate_acceptance(accepted_commit: str, artifact_root: Path, cfg: dict[str, Any]) -> dict[str, Any]:
+def validate_acceptance(
+    accepted_commit: str,
+    artifact_root: Path,
+    cfg: dict[str, Any],
+    *,
+    run_canonical: bool,
+) -> dict[str, Any]:
     receipt_bytes = regular_bytes(RECEIPT_PATH)
     receipt = json.loads(receipt_bytes)
     offered = git("rev-parse", f"{accepted_commit}^")
@@ -166,13 +172,14 @@ def validate_acceptance(accepted_commit: str, artifact_root: Path, cfg: dict[str
         raise RuntimeError("100-accepted commit chain mismatch")
     if receipt.get("scientific", {}).get("scientific_verdict") is not None:
         raise RuntimeError("100-accepted scientific_verdict must be null")
-    canonical = subprocess.run(
-        [sys.executable, str(HANDOFF_VALIDATOR), str(RECEIPT_PATH.relative_to(REPO)), "--repo", str(REPO),
-         "--origin-ref", "origin/main", "--head-ref", "HEAD", "--artifact-root", str(artifact_root)],
-        cwd=REPO, text=True, capture_output=True,
-    )
-    if canonical.returncode:
-        raise RuntimeError(f"canonical 100 validation failed: {canonical.stdout}{canonical.stderr}")
+    if run_canonical:
+        canonical = subprocess.run(
+            [sys.executable, str(HANDOFF_VALIDATOR), str(RECEIPT_PATH.relative_to(REPO)), "--repo", str(REPO),
+             "--origin-ref", "origin/main", "--head-ref", "HEAD", "--artifact-root", str(artifact_root)],
+            cwd=REPO, text=True, capture_output=True,
+        )
+        if canonical.returncode:
+            raise RuntimeError(f"canonical 100 validation failed: {canonical.stdout}{canonical.stderr}")
     _, recovery_root = artifact_paths(cfg, artifact_root)
     acceptance_path = recovery_root / "acceptance/artifact_root_preflight_v1.json"
     data = regular_bytes(acceptance_path)
@@ -194,6 +201,39 @@ def validate_acceptance(accepted_commit: str, artifact_root: Path, cfg: dict[str
     if len(matching) != 1 or matching[0].get("sha256") != sha256_bytes(data) or int(matching[0].get("bytes", -1)) != len(data):
         raise RuntimeError("100-accepted artifact binding mismatch")
     return {"receipt_sha256": sha256_bytes(receipt_bytes), "acceptance_sha256": sha256_bytes(data), "offered_commit": offered, "project_image_id": body["project_image_id"]}
+
+
+def validate_acceptance_for_invocation(
+    accepted_commit: str,
+    artifact_root: Path,
+    recovery_root: Path,
+    cfg: dict[str, Any],
+    *,
+    clean_worktree: bool,
+) -> dict[str, Any]:
+    observed = validate_acceptance(
+        accepted_commit,
+        artifact_root,
+        cfg,
+        run_canonical=clean_worktree,
+    )
+    attestation = {
+        "schema": "jointbuildgs.gate_s0_uas_reference_coverage_r1_recovery_100_validation.v1",
+        "task_id": TASK,
+        "handoff_id": HANDOFF,
+        "accepted_commit": accepted_commit,
+        "canonical_validator": "PASS",
+        "acceptance": observed,
+        "scientific_source_reads_or_hashes": 0,
+        "scientific_verdict": None,
+    }
+    path = recovery_root / "control/100-accepted-validation_v1.json"
+    expected = canonical_bytes(attestation)
+    if clean_worktree:
+        add_once(path, expected)
+    elif regular_bytes(path) != expected:
+        raise RuntimeError("dirty-worktree retry lacks exact clean-state 100 validation attestation")
+    return {**observed, "canonical_validator": "PASS", "clean_state_attestation": sha256_bytes(expected)}
 
 
 def assert_expected(summary: dict[str, Any], validation: dict[str, Any], cfg: dict[str, Any]) -> None:
@@ -326,15 +366,21 @@ def verify_promote(source_commit: str, artifact_root: Path, project_image_id: st
     cfg = config()
     assert_historical_binding(cfg)
     contract = assert_current_source(source_commit, require_clean=False)
-    acceptance = validate_acceptance(source_commit, artifact_root.resolve(), cfg)
-    if acceptance["project_image_id"] != project_image_id:
-        raise RuntimeError("execution image does not match acceptance")
     old_root, recovery_root = artifact_paths(cfg, artifact_root)
     allowed_dirty = {path.relative_to(REPO).as_posix() for path in historical.PROMOTION_PATHS}
     recovered_pending = recover_invocation_pending(recovery_root)
     dirty = {line[3:].replace("\\", "/") for line in git("status", "--porcelain=v1", "--untracked-files=all").splitlines() if line}
     if not dirty.issubset(allowed_dirty):
         raise RuntimeError(f"unrelated dirty paths after pending recovery: {sorted(dirty)}")
+    acceptance = validate_acceptance_for_invocation(
+        source_commit,
+        artifact_root.resolve(),
+        recovery_root,
+        cfg,
+        clean_worktree=not bool(dirty),
+    )
+    if acceptance["project_image_id"] != project_image_id:
+        raise RuntimeError("execution image does not match acceptance")
     fast = completed_fast_path(recovery_root, cfg, source_commit, project_image_id)
     if fast is not None:
         return fast
