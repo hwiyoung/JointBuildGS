@@ -1,0 +1,143 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P2-W2C-GATE-S0-UAS-REFERENCE-COVERAGE-R1-RECOVERY-PROMOTE-v1",
+  "task_id": "P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-RECOVERY-PROMOTE-v1",
+  "created_at": "2026-08-02T00:50:13+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "verified",
+  "previous_receipt": {
+    "path": "artifacts/manifests/handoffs/P2-W2C-GATE-S0-UAS-REFERENCE-COVERAGE-R1-RECOVERY-PROMOTE-v1/100-accepted.json",
+    "sha256": "4c29c2348b781bfa89319cfb9873a5b4f756535ee3aabe9def412d4881a69868"
+  },
+  "transport": {
+    "mode": "serialized_main",
+    "branch": "main",
+    "target_branch": "main",
+    "exclusive_writer_ack": true
+  },
+  "commits": {
+    "base_main": "62b584a02c18c02f4e30f81b94b6c040b0db9c35",
+    "offered_head": "b0e13d35d1db6fe514b3830372b62f7a749e79ab",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-UAS-REFERENCE-COVERAGE-R1-RECOVERY-PROMOTE-v1",
+      "artifacts/manifests/gate_s0/uas_reference_coverage_r1_v1",
+      "docs/handoffs/returns/P2_C2W_GATE_S0_UAS_REFERENCE_COVERAGE_R1_RECOVERY_PROMOTE_RETURN_v1.md",
+      "docs/research/preregistration/gate_s0/uas_reference_coverage_r1_v1"
+    ],
+    "protected_paths": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      "artifacts/manifests/handoffs/P1-W2C-REPO-AUDIT-R2",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-PREP-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-REMEDIATION-R1-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-EVIDENCE-R2A-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-COMMON-BASE-LINEAGE-R2B-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-FREEZE-RECOVERY-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1",
+      "artifacts/manifests/gate_s0/common_base_r2a",
+      "artifacts/manifests/gate_s0/common_base_r2b",
+      "artifacts/manifests/gate_s0/integrated_freeze_closure_v1",
+      "artifacts/manifests/gate_s0/remediation_r1",
+      "artifacts/manifests/gate_s0/freeze_recovery_v1",
+      "configs/input_and_alignment/gate_s0",
+      "docs/evidence",
+      "docs/experiments",
+      "docs/handoffs/HANDOFF_INDEX.md",
+      "docs/handoffs/P2_W2C_GATE_S0_FREEZE_RECOVERY_v1.md",
+      "docs/handoffs/P2_W2C_GATE_S0_UAS_REFERENCE_COVERAGE_R1_v1.md",
+      "docs/handoffs/P2_W2C_GATE_S0_UAS_REFERENCE_COVERAGE_R1_RECOVERY_PROMOTE_v1.md",
+      "docs/handoffs/returns/P2_C2W_GATE_S0_FREEZE_RECOVERY_RETURN_v1.md",
+      "docs/handoffs/returns/P2_C2W_GATE_S0_UAS_REFERENCE_COVERAGE_R1_RETURN_v1.md",
+      "docs/research/00_RESEARCH_CHARTER.md",
+      "docs/research/01_MASTER_ROADMAP.md",
+      "docs/research/02_NOVELTY_MAP.md",
+      "docs/research/03_DATA_AND_BASELINE_SCOPE.md",
+      "docs/research/04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md",
+      "docs/research/05_HANDOFF_PROTOCOL.md",
+      "docs/research/06_DECISION_LOG.md",
+      "docs/research/preregistration/fusion_w1",
+      "docs/research/preregistration/quality_axis",
+      "docs/research/preregistration/gate_s0/freeze_recovery_v1",
+      "phases/p0-audit",
+      "phases/p2-gsjso",
+      "scripts/input_and_alignment/gate_s0",
+      "scripts/repository",
+      "tests/input_and_alignment/gate_s0",
+      "tests/repository"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "artifact_verified",
+    "verifier_role": "experiment_host",
+    "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "commands": [
+      "first immutable-image verify/promote: validate historical ledger, six checkpoints and sixteen derived outputs; publish twelve add-once Git records",
+      "second independent process: exact COMPLETED_FAST_PATH with zero scientific-source reads/hashes and zero scientific recalculations",
+      "three independent read-only reviews of output commit 14d523d2bdfb88ced1a51b19add38006fcc61a5c covering scientific isolation, reproducibility/digests and handoff scope"
+    ],
+    "tests": [
+      {
+        "name": "historical checkpoint and derived-output digest validation",
+        "passed": 22,
+        "failed": 0
+      },
+      {
+        "name": "completed recovery fast path",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "scientific-source reads or hashes during recovery",
+        "passed": 0,
+        "failed": 0
+      },
+      {
+        "name": "scientific recalculations during recovery",
+        "passed": 0,
+        "failed": 0
+      },
+      {
+        "name": "independent promoted-output scientific, reproducibility and scope reviews",
+        "passed": 3,
+        "failed": 0
+      }
+    ]
+  },
+  "artifacts": {
+    "required_for_task": true,
+    "availability": {
+      "work_host": "manifest_only",
+      "experiment_host": "verified_local"
+    },
+    "records": [
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_recovery_promote_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-RECOVERY-PROMOTE-v1/acceptance/artifact_root_preflight_v1.json",
+        "bytes": 1815,
+        "sha256": "78bec2a7c0880626b6f2ff57442388492bd144c58ee5afe90a5e8142d2a0a72e",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T00:43:21+09:00"
+      }
+    ]
+  },
+  "scientific": {
+    "technical_state": "complete",
+    "scientific_verdict": null,
+    "promotion_status": "human_review_required"
+  },
+  "receiver_ack": {
+    "role": "experiment_host",
+    "accepted_at": "2026-08-02T00:50:13+09:00",
+    "status": "verified",
+    "issue": "The bounded recovery/promote completed and the second-process fast path reproduced with zero scientific-source reads/hashes and zero recalculations. R1 blocker evidence is promoted at 14d523d2bdfb88ced1a51b19add38006fcc61a5c. Gate S0 and all P2 performance remain blocked by nine independent groups and two held-out groups; scientific_verdict remains null."
+  }
+}
