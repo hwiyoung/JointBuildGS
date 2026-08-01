@@ -414,7 +414,10 @@ def verify_promote(source_commit: str, artifact_root: Path, project_image_id: st
         "historical_completed_state_validation": validation,
         "external_artifact_records": {"candidate_cells": checkpoints.payload(10, "reference_candidate_frozen")["candidate_cells"], **records},
         "promoted_copy_digests": {name: {"bytes": len(data), "sha256": sha256_bytes(data)} for name, data in promoted.items()},
-        "recovery_git_contract": contract,
+        "recovery_git_contract": {
+            key: contract[key]
+            for key in ("source_commit", "head", "origin_main", "blobs")
+        },
         "recovery_acceptance": acceptance,
         "recovery_no_repeat_contract": {
             "scientific_source_reads_or_hashes": 0,
