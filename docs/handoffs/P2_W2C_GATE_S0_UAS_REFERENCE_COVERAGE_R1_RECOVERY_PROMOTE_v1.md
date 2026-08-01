@@ -1,8 +1,10 @@
-# P2 Gate S0 UAS reference coverage R1 recovery/promote — DRAFT
+# P2 Gate S0 UAS reference coverage R1 recovery/promote — ACTIVE
 
 - task_id: `P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-RECOVERY-PROMOTE-v1`
 - handoff_id: `P2-W2C-GATE-S0-UAS-REFERENCE-COVERAGE-R1-RECOVERY-PROMOTE-v1`
-- status: `DRAFT_NOT_EXECUTION_AUTHORITY`
+- status: `APPROVED_FOR_EXECUTION`
+- implementation commit: `a24f653a50096afe85e8851585391aaac054a945`
+- activation commit: `SELF`
 - predecessor closed commit: `c8a13e22f235d3717a3b69275cdc814da768ef28`
 - historical accepted/source commit: `da24ba68123ced5b4b95efd558688e92b9c9e086`
 - Gate S0 decision: `null`
@@ -131,3 +133,19 @@ scientific count is a `200-blocked.json` event. It must not trigger a retry of t
 calculation. Even technical success does not authorize P2: the scientific Gate remains
 blocked by nine independent groups until a separate Gate decision limits the study to
 a pilot or obtains materially more independent evaluation reference.
+
+## Committed-tree review
+
+The exact implementation through
+`a24f653a50096afe85e8851585391aaac054a945` passed 45 focused Docker tests covering
+the 24 historical R1 tests and 21 recovery/restart tests. Three independent reviews
+approved activation after verifying scientific-source isolation, exact acceptance
+artifact binding, pending-file quarantine/recovery, clean-state 100 attestation,
+partial-promotion retry, exact completed-fast-path identity/destination binding, and
+the absence of any scientific recalculation path. The implementation deliberately
+excludes volatile worktree-clean state from promoted manifest bytes so a clean first
+invocation and dirty partial retry converge on identical add-once outputs.
+
+This activation authorizes only the bounded recovery/promote operation described
+above. It does not approve a pilot or any other P2 performance run. Gate S0 decision
+and `scientific_verdict` remain `null`.
