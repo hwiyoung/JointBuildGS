@@ -1,0 +1,132 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P2-W2C-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1",
+  "task_id": "P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1",
+  "created_at": "2026-08-02T00:19:37+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "closed",
+  "previous_receipt": {
+    "path": "artifacts/manifests/handoffs/P2-W2C-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/200-blocked.json",
+    "sha256": "c50d315dfd458ea119d617c092c19fe9a238931b365408647cbd30bf643b13e8"
+  },
+  "transport": {
+    "mode": "serialized_main",
+    "branch": "main",
+    "target_branch": "main",
+    "exclusive_writer_ack": true
+  },
+  "commits": {
+    "base_main": "f0f599957c68607831d84d0056512f38ff7d4f0c",
+    "offered_head": "ac828f0017ee6bebc9c282d17adcc61bfffb3ce3",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1",
+      "artifacts/manifests/gate_s0/uas_reference_coverage_r1_v1",
+      "docs/handoffs/returns/P2_C2W_GATE_S0_UAS_REFERENCE_COVERAGE_R1_RETURN_v1.md",
+      "docs/research/preregistration/gate_s0/uas_reference_coverage_r1_v1"
+    ],
+    "protected_paths": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      "artifacts/manifests/handoffs/P1-W2C-REPO-AUDIT-R2",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-PREP-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-REMEDIATION-R1-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-EVIDENCE-R2A-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-COMMON-BASE-LINEAGE-R2B-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-FREEZE-RECOVERY-v1",
+      "artifacts/manifests/gate_s0/common_base_r2a",
+      "artifacts/manifests/gate_s0/common_base_r2b",
+      "artifacts/manifests/gate_s0/integrated_freeze_closure_v1",
+      "artifacts/manifests/gate_s0/remediation_r1",
+      "artifacts/manifests/gate_s0/freeze_recovery_v1",
+      "configs/input_and_alignment/gate_s0/freeze_recovery_v1",
+      "configs/input_and_alignment/gate_s0/uas_reference_coverage_r1_v1",
+      "docs/evidence",
+      "docs/experiments",
+      "docs/handoffs/HANDOFF_INDEX.md",
+      "docs/handoffs/P2_W2C_GATE_S0_FREEZE_RECOVERY_v1.md",
+      "docs/handoffs/P2_W2C_GATE_S0_UAS_REFERENCE_COVERAGE_R1_v1.md",
+      "docs/handoffs/returns/P2_C2W_GATE_S0_FREEZE_RECOVERY_RETURN_v1.md",
+      "docs/research/00_RESEARCH_CHARTER.md",
+      "docs/research/01_MASTER_ROADMAP.md",
+      "docs/research/02_NOVELTY_MAP.md",
+      "docs/research/03_DATA_AND_BASELINE_SCOPE.md",
+      "docs/research/04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md",
+      "docs/research/05_HANDOFF_PROTOCOL.md",
+      "docs/research/06_DECISION_LOG.md",
+      "docs/research/preregistration/fusion_w1",
+      "docs/research/preregistration/quality_axis",
+      "docs/research/preregistration/gate_s0/freeze_recovery_v1",
+      "phases/p0-audit",
+      "phases/p2-gsjso",
+      "scripts/input_and_alignment/gate_s0/freeze_recovery_v1",
+      "scripts/input_and_alignment/gate_s0/uas_reference_coverage_r1_v1",
+      "scripts/repository",
+      "tests/input_and_alignment/gate_s0/freeze_recovery_v1",
+      "tests/input_and_alignment/gate_s0/uas_reference_coverage_r1_v1",
+      "tests/repository"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "artifact_verified",
+    "verifier_role": "experiment_host",
+    "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "commands": [
+      "docker exec -u 1000:1000 jointbuildgs-dev python scripts/repository/validate_two_host_handoff.py artifacts/manifests/handoffs/P2-W2C-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/200-blocked.json --repo . --origin-ref origin/main --head-ref HEAD --artifact-root /artifacts/JointBuildGS",
+      "docker exec -u 1000:1000 jointbuildgs-dev python scripts/repository/validate_two_host_handoff.py artifacts/manifests/handoffs/P2-W2C-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/300-closed.json --repo . --origin-ref HEAD --head-ref HEAD"
+    ],
+    "tests": [
+      {
+        "name": "exact-origin 200-blocked Git and inherited artifact attestation validator",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "direct-child 300-closed writer-return validator",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "scientific source reads or hashes during closure",
+        "passed": 0,
+        "failed": 0
+      }
+    ]
+  },
+  "artifacts": {
+    "required_for_task": true,
+    "availability": {
+      "work_host": "manifest_only",
+      "experiment_host": "verified_local"
+    },
+    "records": [
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/acceptance/artifact_root_preflight_v1.json",
+        "bytes": 2547,
+        "sha256": "7b664a87489e4423b912c03e0a8657a90716ef4f87d2133d553260002506a042",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T00:07:06+09:00"
+      }
+    ]
+  },
+  "scientific": {
+    "technical_state": "complete",
+    "scientific_verdict": null,
+    "promotion_status": "human_review_required"
+  },
+  "receiver_ack": {
+    "role": "experiment_host",
+    "accepted_at": "2026-08-02T00:19:37+09:00",
+    "status": "closed",
+    "issue": "The bounded Experiment Host run and blocked-result return are technically closed, and writer turn returns to Work Host. The scientific-result promotion remains blocked because completed-ledger reuse validation failed on the checkpoint digest_method envelope mismatch; no scientific source reopened, P2 remains prohibited, and scientific_verdict remains null."
+  }
+}
