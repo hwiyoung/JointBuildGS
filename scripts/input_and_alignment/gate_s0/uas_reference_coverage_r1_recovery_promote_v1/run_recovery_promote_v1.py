@@ -188,7 +188,7 @@ def validate_acceptance(accepted_commit: str, artifact_root: Path, cfg: dict[str
         raise RuntimeError("acceptance/receipt image mismatch")
     records = receipt.get("artifacts", {}).get("records", [])
     matching = [item for item in records if str(item.get("uri", "")).endswith("/acceptance/artifact_root_preflight_v1.json")]
-    if matching and (len(matching) != 1 or matching[0].get("sha256") != sha256_bytes(data) or int(matching[0].get("bytes", -1)) != len(data)):
+    if len(matching) != 1 or matching[0].get("sha256") != sha256_bytes(data) or int(matching[0].get("bytes", -1)) != len(data):
         raise RuntimeError("100-accepted artifact binding mismatch")
     return {"receipt_sha256": sha256_bytes(receipt_bytes), "acceptance_sha256": sha256_bytes(data), "offered_commit": offered, "project_image_id": body["project_image_id"]}
 

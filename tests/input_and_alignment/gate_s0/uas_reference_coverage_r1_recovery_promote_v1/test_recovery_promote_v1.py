@@ -84,6 +84,10 @@ class RecoveryContractTests(unittest.TestCase):
         self.assertNotIn("capture_exact(", source)
         self.assertNotIn(".start(", source)
 
+    def test_acceptance_requires_exactly_one_bound_artifact(self):
+        source = inspect.getsource(recovery.validate_acceptance)
+        self.assertIn("if len(matching) != 1", source)
+
     def test_config_contains_no_scientific_input_path_list(self):
         self.assertNotIn("inputs", self.cfg["historical"])
 
