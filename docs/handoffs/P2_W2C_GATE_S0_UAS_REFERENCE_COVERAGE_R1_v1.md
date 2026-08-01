@@ -1,8 +1,10 @@
-# P2 Gate S0 independent-UAS reference coverage R1 — DRAFT
+# P2 Gate S0 independent-UAS reference coverage R1 — ACTIVE
 
 - task_id: `P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1`
 - handoff_id: `P2-W2C-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1`
-- status: `DRAFT_NOT_EXECUTION_AUTHORITY`
+- status: `APPROVED_FOR_EXECUTION`
+- implementation commit: `4c568fc23d91d6571651756c8a4d6c3088981c56`
+- activation commit: `SELF`
 - predecessor closed commit: `5715a4a55986fc79e6e157ccbf69405102fd2198`
 - predecessor accepted/source commit: `853f52c8d843fa8c9bc8d79f62e3e24e1eef10c7`
 - Gate S0 decision: `null`
@@ -22,7 +24,7 @@ The dominant loss is not C5 availability. Exact input-side coverage is image vie
 buildings with at least four candidate cells from 89 to 12 at its preliminary-
 component planar-fraction gate and then to 10 at final component/score support.
 
-This DRAFT authorizes no source read or execution. Its proposed next task is one
+This active packet authorizes one
 outcome-free reference-coverage calibration using only the already checkpointed
 compact UAS grid. It must decide whether a scientifically defensible reference and
 split candidate exists; it must not maximize building count or silently promote the
@@ -307,14 +309,18 @@ classification defect in its 000/100 events and use:
   schema, missing-output or reproducibility failure;
 - a direct-child `300-closed.json` in either case to return writer ownership.
 
-## Required implementation and review before activation
+## Implementation and committed-tree review
 
-This file is a DRAFT only. Before any 000-offered event or Experiment Host access, a
-Work Host implementation commit must add a new config, deterministic compact-grid
-runner, tests, output-path contract and crash/no-repeat ledger in new task-owned
-paths. Three independent reviews must approve the committed implementation and this
-packet must be activated in a separate commit. Past packets and receipts remain
-protected.
+Implementation commit `4c568fc23d91d6571651756c8a4d6c3088981c56` adds the new
+config, deterministic compact-grid runner, 24 focused tests, output-path contract
+and crash/no-repeat ledger in new task-owned paths. Three independent committed-tree
+reviews approved scientific isolation, two-host/reproducibility behavior and the
+Gate-direct minimal path. The Docker validation set including predecessor, R1 and
+repository handoff/instruction tests passed 98 tests before commit; the exact
+committed R1 tree passed all 24 focused tests in the immutable project image with
+network disabled and the repository mounted read-only. `scientific_verdict` remains
+`null`. This separate activation revision is execution authority only for the one
+bounded task in this packet. Past packets and receipts remain protected.
 
 The proposed implementation paths are:
 
