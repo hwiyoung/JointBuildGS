@@ -1,0 +1,27 @@
+{
+  "schema": "jointbuildgs.gate_s0_stage3_common_interface.v1",
+  "task_id": "P2-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1",
+  "conditions": ["C1_L_upper", "C2_MVS", "C3_GS_image", "C4_GS_lidar_prior", "C5_GS_lod1_prior"],
+  "interface": "R_DERIVED_NON_GT_CONVEX_HULL_V1",
+  "interface_path": "src/stage3/gate_s0_integrated_v1/interface.py",
+  "external_roofprint_allowed": false,
+  "input_classes": {"ground": 2, "building": 6},
+  "crs": "EPSG:25832",
+  "roofer": {
+    "version": "1.0.0",
+    "image": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+    "local_availability": "MISSING"
+  },
+  "p0_tools": {"image": "jointbuildgs-p0-tools:t0", "local_availability": "MISSING"},
+  "synthetic_smoke": {
+    "mode": "IN_MEMORY_DOCKER_TEST_NO_EXTERNAL_OUTPUT_WRITE",
+    "bytes": 3443,
+    "sha256": "ca3697c657730581338006ed50570d91d3a7639f7ac7f60e3c0b410893d04935",
+    "records": 6,
+    "feature_records": 5,
+    "quality_comparison": false
+  },
+  "quality_or_performance_execution": false,
+  "readiness": "PARTIAL_PINNED_RUNTIMES_MISSING_AND_GRAVITY_VALUE_MISSING",
+  "scientific_verdict": null
+}

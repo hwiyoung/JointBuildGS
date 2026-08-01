@@ -1,0 +1,154 @@
+{
+  "schema": "jointbuildgs.gate_s0_integrated_freeze_config.v1",
+  "task_id": "P2-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1",
+  "handoff_id": "P2-W2C-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1",
+  "accepted_commit": "9044993edb020732baae0a8b8e81591fa32d083c",
+  "offered_commit": "4d47fe3bf3f23aa631b9f9073ace4f2bf7572615",
+  "approval_commit": "58a3c2578cbb9aa91f982934bd75aa1ce1737bc2",
+  "effective_source_commit": "f3e0be625f7b8d7ed778d74e9b9ed9ac78d58cd0",
+  "declared_clerical_source_sha": "f3e0be62a67605727f0470c6373e0d78ea590ebb",
+  "artifact_root": "/artifacts/JointBuildGS",
+  "output_namespace": "phase-payloads/p0-audit/data/work/gate_s0/integrated_freeze_closure_v1/P2-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1",
+  "common_source": {
+    "id": "B_CURRENT_CANDIDATE_c205892c390997b5",
+    "manifest_sha256": "c205892c390997b57b13ee211bbc264c45800770bb84f0b2698c45d3c656fd74",
+    "image_members": 962,
+    "included_pairs": 937,
+    "excluded_no_pose": 25
+  },
+  "retained_chain": {
+    "payload_root": "phase-payloads/p0-audit",
+    "byte_ceiling": 986484109,
+    "paths": [
+      {
+        "id": "sfm_sparse",
+        "path": "data/work/mvs/colmap_dense/sparse",
+        "kind": "directory",
+        "expected_files": 5,
+        "expected_bytes": 147971170
+      },
+      {
+        "id": "dense_mvs_scene",
+        "path": "data/work/mvs/openmvs/scene.mvs",
+        "kind": "file",
+        "expected_files": 1,
+        "expected_bytes": 23267921
+      },
+      {
+        "id": "dense_mvs_ply",
+        "path": "data/work/mvs/openmvs/dim_dense.ply",
+        "kind": "file",
+        "expected_files": 1,
+        "expected_bytes": 659138498
+      },
+      {
+        "id": "dense_mvs_laz",
+        "path": "data/work/mvs/dim/dim_v1.laz",
+        "kind": "file",
+        "expected_files": 1,
+        "expected_bytes": 156106520
+      }
+    ]
+  },
+  "component_enablement": {
+    "source_membership": "ON_FROZEN_962_937_25",
+    "sfm_sparse": "ON",
+    "dense_mvs": "ON",
+    "depth": "OFF",
+    "normal_map_supervision": "OFF",
+    "confidence": "OFF",
+    "segmentation": "OFF",
+    "gravity": "ON_FROM_TERRAIN_MVS_NORMALS_ONCE"
+  },
+  "aoi": {
+    "crs": "EPSG:25832",
+    "bbox": [690791.74, 5335864.05, 691154.65, 5336353.85],
+    "area_m2": 177753.318,
+    "geojson_path": "artifacts/manifests/gate_s0/gate_s0_candidate_aoi_v1.geojson",
+    "geojson_sha256": "93728956ecfbbb24521b4fa4aec745fec176d4c6c94e10cef272934dcf9d9061"
+  },
+  "grid": {
+    "cell_m": 1.0,
+    "minimum_building_height_m": 2.5,
+    "minimum_points_per_building_cell": 3,
+    "minimum_reference_component_cells": 4,
+    "view_support_minimum": 2,
+    "view_projection_margin_pixels": 32.0
+  },
+  "c1": {
+    "asset_id": "LIDAR_UAS_CURRENT_NADIR",
+    "path": "phase-payloads/p0-audit/data/raw/tum2twin/TUM_Downtown_ULS_20241217_nadir.laz",
+    "bytes": 1277996022,
+    "sha256_attested": "50783bfb205ea5532ac2a300d7e41b6b6426e45009d6c961d603e079cc5ae7b4",
+    "source_crs": "EPSG:32632",
+    "target_crs": "EPSG:25832",
+    "vertical_datum": "UNKNOWN",
+    "classification_rule": "one-metre XY cells; minimum Z is class 2; maximum Z is class 6 only when non-GT height range and point-count rules pass",
+    "evaluation_class": "SELF_REFERENCE_UPPER_BASELINE"
+  },
+  "c4": {
+    "asset_id": "ALS_EXISTING_2022_FOUR_TILE_SET",
+    "source_crs": "EPSG:25832",
+    "vertical_datum": "PROVIDER_DHHN2016_RECORDED_BUT_NOT_EQUATED_TO_C1_UNKNOWN",
+    "tiles": [
+      {"tile_id": "690_5335", "path": "phase-payloads/p0-audit/data/raw/als/690_5335.laz", "bytes": 110979201, "sha256_attested": "01602b7385aaf7324f89da6183df3dbdeffa237f85bf57dc27208b554b4fc0b3"},
+      {"tile_id": "690_5336", "path": "phase-payloads/p0-audit/data/raw/als/690_5336.laz", "bytes": 119749181, "sha256_attested": "98ab7ad7f4c5108ebf41bc62186b336c6cd8a70b82fceec57136a56c0188b566"},
+      {"tile_id": "691_5335", "path": "phase-payloads/p0-audit/data/raw/als/691_5335.laz", "bytes": 107359041, "sha256_attested": "9e14119bb0af7d5a300aa3a2a19074219b4d6d290923b4b90277c317e8b33720"},
+      {"tile_id": "691_5336", "path": "phase-payloads/p0-audit/data/raw/als/691_5336.laz", "bytes": 132681326, "sha256_attested": "63c64002fc55d8b99a49749b5a2e36d802186186a950c89779463274e3cb950d"}
+    ],
+    "classification_rule": "provider class 2 and 6 counts are recorded; common non-GT one-metre min/max geometry rule emits the bounded derivative"
+  },
+  "c5": {
+    "role": "LOD2_DERIVED_COARSE_LOD1_PRIOR_INDEPENDENTLY_EVALUATED",
+    "source_manifest": "artifacts/manifests/gate_s0/common_base_r2a/lod2_derived_lod1_diagnostic_manifest_v1.json",
+    "source_manifest_sha256": "ca2a0431111bdb759382053405676e5e48522ed5f25b8b3227bb4a64db7d0a33",
+    "selected_paths": [
+      "phase-payloads/p0-audit/data/work/gate_s0/common_base_r2a/P2-GATE-S0-EVIDENCE-R2A-v1/690_5334.lod1-prisms.jsonl",
+      "phase-payloads/p0-audit/data/work/gate_s0/common_base_r2a/P2-GATE-S0-EVIDENCE-R2A-v1/690_5336.lod1-prisms.jsonl"
+    ],
+    "input_lod2_geometry_allowed_in_evaluation_reference": false
+  },
+  "eligibility": {
+    "candidate_ledger": "docs/research/preregistration/gate_s0/remediation_r1/eligibility_funnel_v2.csv",
+    "candidate_rows": 199,
+    "stable_id_set_sha256": "047717a5d678aeed540602a2d4fc9a57a076e2ac9205b22a4de75315c1622fe5",
+    "split_mode": "EXHAUSTIVE_PARTITION",
+    "split_seed": "20260731",
+    "split_ratios": {"development": 0.6, "validation": 0.2, "held_out": 0.2},
+    "group_cell_m": 50.0,
+    "held_out_accessed": false
+  },
+  "stage3": {
+    "roofer_image": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+    "roofer_version": "1.0.0",
+    "p0_tools_image": "jointbuildgs-p0-tools:t0",
+    "cityjson_writer": "src/stage3/gate_s0_integrated_v1/interface.py",
+    "roofprint_protocol": "R_DERIVED_NON_GT_CONVEX_HULL_V1",
+    "external_roofprint_allowed": false,
+    "smoke_only": true
+  },
+  "cost_caps": {
+    "gpu_per_condition_run": 1,
+    "gpu_class": "RTX_3090_CLASS",
+    "vram_gb_max": 24,
+    "wall_clock_hours_max": 12,
+    "new_output_gb_max_per_run": 100,
+    "retry_max": 1,
+    "total_new_retained_storage_gb_max": 500
+  },
+  "guards": {
+    "performance": false,
+    "quality_scoring": false,
+    "held_out_access": false,
+    "fusion_w1_access": false,
+    "r_ext_access": false,
+    "input_lod2_geometry_access": false,
+    "stereo_tree_access": false,
+    "images_zip_access": false,
+    "opf_zip_access": false,
+    "overwrite": false,
+    "move": false,
+    "delete": false,
+    "scientific_verdict": null
+  }
+}

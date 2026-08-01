@@ -1,0 +1,85 @@
+{
+  "schema": "jointbuildgs.gate_s0_integrated_interrupted_operation.v1",
+  "task_id": "P2-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1",
+  "handoff_id": "P2-W2C-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1",
+  "status": "INTERRUPTED_NON_REPEATABLE",
+  "observed_at": "2026-08-01T17:30:34+09:00",
+  "operation_id": "58f1f62d461d5a45c0d740094ff5042701c6cae27a0278e3235ccc60a9f709d9",
+  "accepted_commit": "9044993edb020732baae0a8b8e81591fa32d083c",
+  "effective_source_commit": "f3e0be625f7b8d7ed778d74e9b9ed9ac78d58cd0",
+  "declared_clerical_source_sha": "f3e0be62a67605727f0470c6373e0d78ea590ebb",
+  "execution": {
+    "host": "innopam-AI",
+    "container_artifact_root": "/artifacts/JointBuildGS",
+    "host_artifact_root": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts",
+    "docker_image_id": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "command": "docker exec -u 1000:1000 jointbuildgs-dev bash -lc 'cd /workspace/JointBuildGS && python scripts/input_and_alignment/gate_s0/integrated_freeze_closure_v1/run_integrated_freeze.py --artifact-root /artifacts/JointBuildGS'",
+    "executed_script_git_blob": "97ebc6d891d1a6151d266460925bce128a716742",
+    "config_git_blob": "9b12b633f2bbe4b6baa8264573dcd719cce94a4b"
+  },
+  "stage_trace": [
+    "STARTED_MARKER_WRITTEN",
+    "HASH_SPARSE_ONCE",
+    "HASH_SCENE_MVS_ONCE",
+    "HASH_AND_PROCESS_DENSE_PLY_ONCE",
+    "HASH_DENSE_LAZ_ONCE",
+    "PROCESS_C1_ONCE",
+    "FAILED_BEFORE_C1_POINT_CHUNK_DECODE"
+  ],
+  "retained_selected_accounting": {
+    "logical_paths": 4,
+    "regular_files": 8,
+    "bytes_read_once": 986484109,
+    "bytes_hashed_once": 986484109,
+    "byte_ceiling": 986484109,
+    "basis": "the runner printed the next stage only after each prior hash, exact byte assertion and PLY processing returned successfully",
+    "digest_values": "MISSING_PROCESS_EXITED_BEFORE_MANIFEST_PERSISTENCE",
+    "rerun_permitted": false
+  },
+  "failure": {
+    "type": "ModuleNotFoundError",
+    "message": "No module named 'pyproj'",
+    "call": "laspy.header.parse_crs()",
+    "timing": "C1 LAS header parsing before the first point chunk decode",
+    "c1_actual_header_io_bytes": "UNKNOWN_NOT_INSTRUMENTED_BY_LASPY",
+    "c1_point_chunks_decoded": 0,
+    "c4_tiles_accessed": 0
+  },
+  "partial_external_outputs": {
+    "metadata_probe_count_after_failure": 6,
+    "content_bytes_read_or_hashed_after_failure": 0,
+    "directory_enumerations_after_failure": 0,
+    "records": [
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/integrated_freeze_closure_v1/P2-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1/control/started_v1.json",
+        "bytes": 530,
+        "sha256": null,
+        "verification": "EXACT_PATH_STAT_ONLY"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/integrated_freeze_closure_v1/P2-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1/derived/mvs_common_class26_v1.ply",
+        "bytes": 5464707,
+        "sha256": null,
+        "verification": "EXACT_PATH_STAT_ONLY_NO_RECOVERY_READ"
+      }
+    ]
+  },
+  "no_repeat_guard": {
+    "started_marker_present": true,
+    "completed_ledger_present": false,
+    "next_invocation_blocks_before_external_access": true,
+    "selected_or_partial_outputs_reread_after_failure": false
+  },
+  "prohibited_access": {
+    "stereo_tree": false,
+    "images_zip": false,
+    "opf_zip": false,
+    "r1_15_7gb_inputs": false,
+    "input_lod2_geometry_assets": false,
+    "held_out": false,
+    "fusion_w1": false,
+    "r_ext": false,
+    "performance": false
+  },
+  "scientific_verdict": null
+}

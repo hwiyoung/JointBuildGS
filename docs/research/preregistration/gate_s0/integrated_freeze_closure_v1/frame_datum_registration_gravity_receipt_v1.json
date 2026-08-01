@@ -1,0 +1,35 @@
+{
+  "schema": "jointbuildgs.gate_s0_frame_datum_gravity_receipt.v1",
+  "task_id": "P2-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1",
+  "horizontal_transform_contract": {
+    "source": "EPSG:32632",
+    "target": "EPSG:25832",
+    "pipeline": "+proj=pipeline +step +inv +proj=utm +zone=32 +ellps=WGS84 +step +proj=utm +zone=32 +ellps=GRS80",
+    "implementation": "pure Python vectorized UTM inverse/forward",
+    "host_proj_9_3_1_cross_check_points": 3,
+    "maximum_observed_cross_check_residual_m": 0.000231,
+    "unit_test_tolerance_m": 0.0003,
+    "C1_points_transformed": 0,
+    "status": "READY_CONTRACT_ONLY_PROCESSING_NOT_COMPLETED"
+  },
+  "vertical_datum_contract": {
+    "C1": "UNKNOWN; no vertical correction or DHHN2016 equivalence permitted",
+    "C2_MVS": "producer evidence describes EGM96; exact DHHN2016 transform remains unbound",
+    "C4": "provider DHHN2016 declaration recorded but not equated to C1",
+    "status": "PARTIAL"
+  },
+  "gravity": {
+    "method": "selected dense-MVS terrain lower-envelope normals, once",
+    "computation_pass_completed_in_process": true,
+    "value": null,
+    "status": "MISSING_VALUE_NOT_PERSISTED_BEFORE_PROCESS_EXIT",
+    "hard_coded_z_up_used": false,
+    "gt_or_lod2_normals_used": false
+  },
+  "registration_residuals": {
+    "status": "MISSING_C1_C4_PROCESSING_DID_NOT_COMPLETE",
+    "transform_fitted": false,
+    "reference_used_for_fitting": false
+  },
+  "scientific_verdict": null
+}

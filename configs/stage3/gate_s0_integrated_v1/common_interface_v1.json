@@ -1,0 +1,26 @@
+{
+  "schema": "jointbuildgs.gate_s0_stage3_common_interface_config.v1",
+  "task_id": "P2-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1",
+  "conditions": [
+    "C1_L_upper",
+    "C2_MVS",
+    "C3_GS_image",
+    "C4_GS_lidar_prior",
+    "C5_GS_lod1_prior"
+  ],
+  "interface": "R_DERIVED_NON_GT_CONVEX_HULL_V1",
+  "input_crs": "EPSG:25832",
+  "ground_class": 2,
+  "building_class": 6,
+  "external_roofprint_allowed": false,
+  "roofer": {
+    "version": "1.0.0",
+    "image": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2"
+  },
+  "p0_tools": {
+    "image": "jointbuildgs-p0-tools:t0"
+  },
+  "execution_authority": "SYNTHETIC_INTERFACE_SMOKE_ONLY",
+  "performance_authority": "NONE",
+  "scientific_verdict": null
+}

@@ -1,0 +1,13 @@
+{
+  "schema": "jointbuildgs.gate_s0_exhaustive_spatial_split.v1",
+  "task_id": "P2-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1",
+  "mode": "EXHAUSTIVE_PARTITION",
+  "seed": "20260731",
+  "ratios": {"development": 0.6, "validation": 0.2, "held_out": 0.2},
+  "algorithm": "whole spatial groups ordered by SHA256(seed|group_id)",
+  "status": "MISSING_E_PAIRED_AND_INDEPENDENT_SPATIAL_GROUPS",
+  "eligible_count": null,
+  "group_assignments": {},
+  "held_out_accessed": false,
+  "scientific_verdict": null
+}

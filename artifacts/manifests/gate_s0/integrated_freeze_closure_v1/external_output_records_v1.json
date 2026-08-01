@@ -1,0 +1,23 @@
+{
+  "schema": "jointbuildgs.gate_s0_integrated_external_outputs.v1",
+  "task_id": "P2-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1",
+  "status": "PARTIAL_EXACT_PATH_METADATA_ONLY_AFTER_INTERRUPTION",
+  "artifact_root": "/artifacts/JointBuildGS",
+  "recovery_content_reads_or_hashes": 0,
+  "records": [
+    {
+      "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/integrated_freeze_closure_v1/P2-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1/control/started_v1.json",
+      "bytes": 530,
+      "sha256": null,
+      "verification": "EXACT_PATH_STAT_ONLY"
+    },
+    {
+      "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/integrated_freeze_closure_v1/P2-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1/derived/mvs_common_class26_v1.ply",
+      "bytes": 5464707,
+      "sha256": null,
+      "verification": "EXACT_PATH_STAT_ONLY_NO_RECOVERY_READ"
+    }
+  ],
+  "receipt_protocol_note": "100-accepted is artifact_verified, so successor receipts must retain its artifacts object byte-for-byte; these task outputs are therefore referenced by this Git manifest and verification commands rather than added to 200.artifacts.",
+  "scientific_verdict": null
+}

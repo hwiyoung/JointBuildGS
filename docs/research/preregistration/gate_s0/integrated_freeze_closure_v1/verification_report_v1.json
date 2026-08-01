@@ -1,0 +1,87 @@
+{
+  "schema": "jointbuildgs.gate_s0_integrated_verification_report.v1",
+  "task_id": "P2-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1",
+  "runtime": {
+    "docker_image_id": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "python": "3.11.15",
+    "numpy": "1.26.4",
+    "scipy": "1.13.1",
+    "laspy": "2.6.1",
+    "laz_backends": ["LazrsParallel", "Lazrs"],
+    "host_proj_cross_check_version": "9.3.1"
+  },
+  "commands": [
+    {
+      "command": "docker exec -u 1000:1000 jointbuildgs-dev bash -lc 'cd /workspace/JointBuildGS && python scripts/input_and_alignment/gate_s0/integrated_freeze_closure_v1/validate_integrated_freeze.py --artifact-root /artifacts/JointBuildGS && python tests/input_and_alignment/gate_s0/integrated_freeze_closure_v1/test_integrated_freeze.py && python tests/stage3/gate_s0_integrated_v1/test_common_interface.py'",
+      "status": "PASS",
+      "passed": 15,
+      "failed": 0,
+      "detail": "custom validator plus 10 integrated and 3 Stage-3 tests; 2 exact-path metadata checks"
+    },
+    {
+      "command": "docker exec -u 1000:1000 jointbuildgs-dev bash -lc 'cd /workspace/JointBuildGS && python scripts/repository/validate_agent_instructions.py && python -m unittest tests.repository.test_agent_instruction_sync tests.repository.test_two_host_handoff -v'",
+      "status": "PASS",
+      "passed": 50,
+      "failed": 0
+    },
+    {
+      "command": "docker exec -u 1000:1000 jointbuildgs-dev python scripts/input_and_alignment/gate_s0/validate_gate_s0_evidence.py",
+      "status": "PASS",
+      "passed": 1,
+      "failed": 0
+    },
+    {
+      "command": "docker exec -u 1000:1000 jointbuildgs-dev python scripts/input_and_alignment/gate_s0/remediation_r1/validate_remediation_evidence.py",
+      "status": "EXPECTED_STALE_SCOPE_FAILURE",
+      "passed": 0,
+      "failed": 1,
+      "detail": "validator compares the old R1 exact write scope with the current later-task HEAD and reports later R2A/R2B/integrated paths outside R1 scope; no R1 evidence mutation was found"
+    },
+    {
+      "command": "docker exec -u 1000:1000 jointbuildgs-dev python scripts/input_and_alignment/gate_s0/common_base_r2a/validate_r2a_evidence.py",
+      "status": "EXPECTED_STALE_SCOPE_FAILURE",
+      "passed": 0,
+      "failed": 1,
+      "detail": "validator compares exact R2A task scope with current later-task HEAD"
+    },
+    {
+      "command": "docker exec -u 1000:1000 jointbuildgs-dev python scripts/input_and_alignment/gate_s0/common_base_r2b/validate_r2b_lineage.py",
+      "status": "EXPECTED_STALE_SCOPE_FAILURE",
+      "passed": 0,
+      "failed": 1,
+      "detail": "validator compares exact R2B task scope with current integrated-task HEAD"
+    },
+    {
+      "command": "docker exec -u 1000:1000 jointbuildgs-dev python -m unittest tests.input_and_alignment.gate_s0.test_b_current_source_candidate tests.input_and_alignment.gate_s0.test_gate_s0_evidence tests.input_and_alignment.gate_s0.remediation_r1.test_remediation_evidence tests.input_and_alignment.gate_s0.common_base_r2a.test_r2a_evidence tests.input_and_alignment.gate_s0.common_base_r2b.test_r2b_lineage -v",
+      "status": "PASS",
+      "passed": 45,
+      "failed": 0
+    },
+    {
+      "command": "docker exec -i jointbuildgs-dev bash -lc 'cd /workspace/JointBuildGS && python -c \"import hashlib,json; from src.stage3.gate_s0_integrated_v1.interface import synthetic_smoke_payload; p=synthetic_smoke_payload(); r=[json.loads(x) for x in p.decode().splitlines()]; print(json.dumps({\\\"bytes\\\":len(p),\\\"sha256\\\":hashlib.sha256(p).hexdigest(),\\\"records\\\":len(r)}))\"'",
+      "status": "PASS",
+      "passed": 1,
+      "failed": 0,
+      "detail": "3443 bytes; ca3697c657730581338006ed50570d91d3a7639f7ac7f60e3c0b410893d04935; 6 records"
+    },
+    {
+      "command": "git diff --check",
+      "status": "PASS",
+      "passed": 1,
+      "failed": 0
+    }
+  ],
+  "independent_reviews": [
+    {"area": "scientific leakage and reference independence", "status": "PASS_FOR_BOUNDED_ACCESS_THEN_BLOCKED_AFTER_FAILURE"},
+    {"area": "artifact reproducibility and hash accounting", "status": "BLOCKED_DIGESTS_NOT_PERSISTED_NO_RERUN"},
+    {"area": "eligibility splits and Stage-3 contract", "status": "SAFE_CONSERVATIVE_MISSING_STATES"}
+  ],
+  "external_recovery_accounting": {
+    "exact_path_metadata_probes": 6,
+    "directory_enumerations": 0,
+    "content_bytes_read": 0,
+    "content_bytes_hashed": 0
+  },
+  "technical_gate_state": "BLOCKED",
+  "scientific_verdict": null
+}

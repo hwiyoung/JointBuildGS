@@ -1,0 +1,21 @@
+{
+  "schema": "jointbuildgs.gate_s0_c1_c4_derivatives.v1",
+  "task_id": "P2-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1",
+  "C1": {
+    "asset_id": "LIDAR_UAS_CURRENT_NADIR",
+    "evaluation_class": "SELF_REFERENCE_UPPER_BASELINE",
+    "status": "MISSING",
+    "reason": "pyproj import failure during LAS header CRS parsing before point chunk decode",
+    "point_chunks_decoded": 0,
+    "derivative_written": false
+  },
+  "C4": {
+    "asset_id": "ALS_EXISTING_2022_FOUR_TILE_SET",
+    "tiles": ["690_5335", "690_5336", "691_5335", "691_5336"],
+    "status": "MISSING_NOT_ACCESSED_AFTER_C1_FAILURE",
+    "tiles_accessed": 0,
+    "derivative_written": false
+  },
+  "raw_input_digest_rehashes": 0,
+  "scientific_verdict": null
+}

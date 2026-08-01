@@ -1,0 +1,23 @@
+{
+  "schema": "jointbuildgs.gate_s0_four_path_fingerprint.v1",
+  "task_id": "P2-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1",
+  "status": "MISSING_PERSISTED_DIGESTS_AFTER_NON_REPEATABLE_INTERRUPTION",
+  "operation_id": "58f1f62d461d5a45c0d740094ff5042701c6cae27a0278e3235ccc60a9f709d9",
+  "selected_logical_path_count": 4,
+  "selected_regular_file_count": 8,
+  "total_bytes_read_once": 986484109,
+  "total_bytes_hashed_once": 986484109,
+  "byte_ceiling": 986484109,
+  "paths": [
+    {"id": "sfm_sparse", "expected_bytes": 147971170, "expected_files": 5, "full_pass_completed": true, "sha256_or_merkle": null},
+    {"id": "dense_mvs_scene", "expected_bytes": 23267921, "expected_files": 1, "full_pass_completed": true, "sha256": null},
+    {"id": "dense_mvs_ply", "expected_bytes": 659138498, "expected_files": 1, "full_pass_completed": true, "sha256": null},
+    {"id": "dense_mvs_laz", "expected_bytes": 156106520, "expected_files": 1, "full_pass_completed": true, "sha256": null}
+  ],
+  "member_ledger": "MISSING_PROCESS_EXITED_BEFORE_PERSISTENCE",
+  "digest_values": "MISSING_PROCESS_EXITED_BEFORE_PERSISTENCE",
+  "rerun_prohibited_by_no_repeat_contract": true,
+  "stereo_tree_entries_enumerated": 0,
+  "stereo_tree_bytes_read_or_hashed": 0,
+  "scientific_verdict": null
+}

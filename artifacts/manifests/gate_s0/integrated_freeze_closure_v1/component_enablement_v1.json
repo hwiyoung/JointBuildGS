@@ -1,0 +1,17 @@
+{
+  "schema": "jointbuildgs.gate_s0_component_enablement.v1",
+  "task_id": "P2-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1",
+  "common_source": "B_CURRENT_CANDIDATE_c205892c390997b5 / exact 962-937-25",
+  "components": [
+    {"component": "source_membership", "enablement": "ON", "readiness": "READY"},
+    {"component": "sfm_sparse", "enablement": "ON", "readiness": "MISSING_PERSISTED_FINGERPRINT"},
+    {"component": "dense_mvs", "enablement": "ON", "readiness": "MISSING_PERSISTED_FINGERPRINT"},
+    {"component": "depth", "enablement": "OFF", "readiness": "READY_OFF"},
+    {"component": "normal_map_supervision", "enablement": "OFF", "readiness": "READY_OFF"},
+    {"component": "confidence", "enablement": "OFF", "readiness": "READY_OFF"},
+    {"component": "segmentation", "enablement": "OFF", "readiness": "READY_OFF"},
+    {"component": "gravity", "enablement": "ON_FROM_TERRAIN_MVS_NORMALS_ONCE", "readiness": "MISSING_VALUE_NOT_PERSISTED"}
+  ],
+  "producer_route": "STRONGLY_CORROBORATED_PRODUCER_ROUTE / PARTIAL",
+  "scientific_verdict": null
+}

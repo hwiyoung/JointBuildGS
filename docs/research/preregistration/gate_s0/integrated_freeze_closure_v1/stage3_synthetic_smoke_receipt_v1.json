@@ -1,0 +1,22 @@
+{
+  "schema": "jointbuildgs.gate_s0_stage3_smoke_receipt.v1",
+  "task_id": "P2-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1",
+  "command": "docker exec jointbuildgs-dev bash -lc 'cd /workspace/JointBuildGS && python tests/stage3/gate_s0_integrated_v1/test_common_interface.py'",
+  "measurement_command": "docker exec -i jointbuildgs-dev bash -lc 'cd /workspace/JointBuildGS && python -c \"import hashlib,json; from src.stage3.gate_s0_integrated_v1.interface import synthetic_smoke_payload; p=synthetic_smoke_payload(); r=[json.loads(x) for x in p.decode().splitlines()]; print(json.dumps({\\\"bytes\\\":len(p),\\\"sha256\\\":hashlib.sha256(p).hexdigest(),\\\"records\\\":len(r)}))\"'",
+  "runtime": {
+    "docker_image_id": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "python": "3.11.15",
+    "numpy": "1.26.4",
+    "scipy": "1.13.1",
+    "laspy": "2.6.1"
+  },
+  "mode": "IN_MEMORY_NO_EXTERNAL_ARTIFACT_WRITE",
+  "output_bytes": 3443,
+  "output_sha256": "ca3697c657730581338006ed50570d91d3a7639f7ac7f60e3c0b410893d04935",
+  "records": 6,
+  "conditions_exercised": 5,
+  "external_roofprint_rejected_by_unit_test": true,
+  "quality_comparison": false,
+  "performance_result": false,
+  "scientific_verdict": null
+}
