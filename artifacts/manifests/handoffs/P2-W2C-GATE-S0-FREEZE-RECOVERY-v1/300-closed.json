@@ -1,0 +1,132 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P2-W2C-GATE-S0-FREEZE-RECOVERY-v1",
+  "task_id": "P2-GATE-S0-FREEZE-RECOVERY-v1",
+  "created_at": "2026-08-01T22:57:16+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "closed",
+  "previous_receipt": {
+    "path": "artifacts/manifests/handoffs/P2-W2C-GATE-S0-FREEZE-RECOVERY-v1/200-verified.json",
+    "sha256": "b0cd29746ad3b37f12e02c3c1b381ff51472a8b0e2cd0e64384dabcbac2947f3"
+  },
+  "transport": {
+    "mode": "serialized_main",
+    "branch": "main",
+    "target_branch": "main",
+    "exclusive_writer_ack": true
+  },
+  "commits": {
+    "base_main": "f15aafb61cf898eba13ee2fa1012a43fb49f7abb",
+    "offered_head": "0965310ded0da9a3352d04426ea0e1162ad436e0",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-FREEZE-RECOVERY-v1",
+      "artifacts/manifests/gate_s0/freeze_recovery_v1",
+      "docs/handoffs/returns/P2_C2W_GATE_S0_FREEZE_RECOVERY_RETURN_v1.md",
+      "docs/research/preregistration/gate_s0/freeze_recovery_v1"
+    ],
+    "protected_paths": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      "artifacts/manifests/handoffs/P1-W2C-REPO-AUDIT-R2",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-PREP-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-REMEDIATION-R1-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-EVIDENCE-R2A-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-COMMON-BASE-LINEAGE-R2B-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1",
+      "artifacts/manifests/gate_s0/common_base_r2a",
+      "artifacts/manifests/gate_s0/common_base_r2b",
+      "artifacts/manifests/gate_s0/integrated_freeze_closure_v1",
+      "artifacts/manifests/gate_s0/remediation_r1",
+      "configs/input_and_alignment/gate_s0/freeze_recovery_v1",
+      "docs/evidence",
+      "docs/experiments",
+      "docs/handoffs/HANDOFF_INDEX.md",
+      "docs/handoffs/P2_W2C_GATE_S0_FREEZE_RECOVERY_v1.md",
+      "docs/research/00_RESEARCH_CHARTER.md",
+      "docs/research/01_MASTER_ROADMAP.md",
+      "docs/research/02_NOVELTY_MAP.md",
+      "docs/research/03_DATA_AND_BASELINE_SCOPE.md",
+      "docs/research/04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md",
+      "docs/research/05_HANDOFF_PROTOCOL.md",
+      "docs/research/06_DECISION_LOG.md",
+      "docs/research/preregistration/fusion_w1",
+      "docs/research/preregistration/quality_axis",
+      "phases/p0-audit",
+      "phases/p2-gsjso",
+      "scripts/input_and_alignment/gate_s0/freeze_recovery_v1",
+      "scripts/repository",
+      "tests/input_and_alignment/gate_s0/freeze_recovery_v1",
+      "tests/repository"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "artifact_verified",
+    "verifier_role": "experiment_host",
+    "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "commands": [
+      "Exact-origin 200 verification: canonical two-host validator PASS for 8bad40fc76c72542456a946178073a459ed13c20 without artifact-root reread",
+      "PRE-PUSH 300 closure: canonical two-host validator with --origin-ref HEAD and no artifact-root reread",
+      "git push origin main; git fetch origin main; prove HEAD == origin/main",
+      "POST-PUSH 300 closure: rerun canonical two-host validator with --origin-ref origin/main and no artifact-root reread",
+      "No external artifact root, task output, scientific source, held-out, Fusion W1 or R_ext read/hash during 300 creation or verification"
+    ],
+    "tests": [
+      {
+        "name": "exact-origin 200 verified receipt validator",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "direct-child 300 closed validator before and after push",
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "name": "external artifact or task-output rereads and rehashes after 200",
+        "passed": 0,
+        "failed": 0
+      },
+      {
+        "name": "exclusive writer ownership returned to Work Host",
+        "passed": 1,
+        "failed": 0
+      }
+    ]
+  },
+  "artifacts": {
+    "required_for_task": true,
+    "availability": {
+      "work_host": "manifest_only",
+      "experiment_host": "verified_local"
+    },
+    "records": [
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/acceptance/artifact_root_preflight_v1.json",
+        "bytes": 2017,
+        "sha256": "4715405eabc43a66a0346770526ade885376d36edacc681692b47e0bfb439648",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-01T22:41:19+09:00"
+      }
+    ]
+  },
+  "scientific": {
+    "technical_state": "complete",
+    "scientific_verdict": null,
+    "promotion_status": "human_review_required"
+  },
+  "receiver_ack": {
+    "role": "experiment_host",
+    "accepted_at": "2026-08-01T22:57:16+09:00",
+    "status": "closed",
+    "issue": "The Experiment Host handoff lifecycle is closed and exclusive writer ownership returns to Work Host. The immutable Return remains technically BLOCKED_ROOFER_SYNTHETIC_RUNTIME_PERMISSION: the single sealed synthetic attempt exited 139 with zero JSON outputs because roofer.log.json could not be opened for writing, and no rerun is authorized. No external artifact or task output was reread during closure; gate_decision and scientific_verdict remain null."
+  }
+}
