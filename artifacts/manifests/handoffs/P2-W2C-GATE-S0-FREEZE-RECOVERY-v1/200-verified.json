@@ -1,0 +1,144 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P2-W2C-GATE-S0-FREEZE-RECOVERY-v1",
+  "task_id": "P2-GATE-S0-FREEZE-RECOVERY-v1",
+  "created_at": "2026-08-01T22:56:16+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "verified",
+  "previous_receipt": {
+    "path": "artifacts/manifests/handoffs/P2-W2C-GATE-S0-FREEZE-RECOVERY-v1/100-accepted.json",
+    "sha256": "45cd7dc2e94331dfdaae138ccf56eb99bffa93bf16da142679caf36a991e97c8"
+  },
+  "transport": {
+    "mode": "serialized_main",
+    "branch": "main",
+    "target_branch": "main",
+    "exclusive_writer_ack": true
+  },
+  "commits": {
+    "base_main": "f15aafb61cf898eba13ee2fa1012a43fb49f7abb",
+    "offered_head": "0965310ded0da9a3352d04426ea0e1162ad436e0",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-FREEZE-RECOVERY-v1",
+      "artifacts/manifests/gate_s0/freeze_recovery_v1",
+      "docs/handoffs/returns/P2_C2W_GATE_S0_FREEZE_RECOVERY_RETURN_v1.md",
+      "docs/research/preregistration/gate_s0/freeze_recovery_v1"
+    ],
+    "protected_paths": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      "artifacts/manifests/handoffs/P1-W2C-REPO-AUDIT-R2",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-PREP-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-REMEDIATION-R1-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-EVIDENCE-R2A-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-COMMON-BASE-LINEAGE-R2B-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1",
+      "artifacts/manifests/gate_s0/common_base_r2a",
+      "artifacts/manifests/gate_s0/common_base_r2b",
+      "artifacts/manifests/gate_s0/integrated_freeze_closure_v1",
+      "artifacts/manifests/gate_s0/remediation_r1",
+      "configs/input_and_alignment/gate_s0/freeze_recovery_v1",
+      "docs/evidence",
+      "docs/experiments",
+      "docs/handoffs/HANDOFF_INDEX.md",
+      "docs/handoffs/P2_W2C_GATE_S0_FREEZE_RECOVERY_v1.md",
+      "docs/research/00_RESEARCH_CHARTER.md",
+      "docs/research/01_MASTER_ROADMAP.md",
+      "docs/research/02_NOVELTY_MAP.md",
+      "docs/research/03_DATA_AND_BASELINE_SCOPE.md",
+      "docs/research/04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md",
+      "docs/research/05_HANDOFF_PROTOCOL.md",
+      "docs/research/06_DECISION_LOG.md",
+      "docs/research/preregistration/fusion_w1",
+      "docs/research/preregistration/quality_axis",
+      "phases/p0-audit",
+      "phases/p2-gsjso",
+      "scripts/input_and_alignment/gate_s0/freeze_recovery_v1",
+      "scripts/repository",
+      "tests/input_and_alignment/gate_s0/freeze_recovery_v1",
+      "tests/repository"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "artifact_verified",
+    "verifier_role": "experiment_host",
+    "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "commands": [
+      "Run committed recovery executor in accepted project image at source commit 853f52c8d843fa8c9bc8d79f62e3e24e1eef10c7; all bounded source stages completed through checkpoint 100",
+      "Run only committed host Roofer synthetic orchestrator; verify immutable FAIL receipt exit 139, zero JSON outputs and permission-denied runtime log without rerun",
+      "Promote only the four authorized compact blocked-evidence/Return paths; commit f7ee10e4984e000b91ab8dbc80c4ad1d10c29dee; push/fetch and prove HEAD == origin/main",
+      "POST-PUSH exact output commit: accepted project image runs 26 freeze-recovery tests, agent-instruction validator and 84 repository tests",
+      "Three independent read-only reviews: scientific leakage/reference isolation, reproducibility/no-repeat, and ownership/receipt chain",
+      "PRE-PUSH receipt commit: canonical two-host validator with --origin-ref HEAD and no artifact-root reread",
+      "POST-PUSH receipt commit: fetch origin/main and rerun canonical two-host validator with --origin-ref origin/main and no artifact-root reread"
+    ],
+    "tests": [
+      {
+        "name": "output commit exact remote equality",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "sealed Roofer failure receipt and compact blocked evidence consistency",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "freeze recovery targeted Docker tests",
+        "passed": 26,
+        "failed": 0
+      },
+      {
+        "name": "repository agent and receipt contract tests",
+        "passed": 85,
+        "failed": 0
+      },
+      {
+        "name": "independent scientific, reproducibility and ownership reviews",
+        "passed": 3,
+        "failed": 0
+      },
+      {
+        "name": "prohibited performance, quality, held-out, Fusion W1 or R_ext run",
+        "passed": 0,
+        "failed": 0
+      }
+    ]
+  },
+  "artifacts": {
+    "required_for_task": true,
+    "availability": {
+      "work_host": "manifest_only",
+      "experiment_host": "verified_local"
+    },
+    "records": [
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/acceptance/artifact_root_preflight_v1.json",
+        "bytes": 2017,
+        "sha256": "4715405eabc43a66a0346770526ade885376d36edacc681692b47e0bfb439648",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-01T22:41:19+09:00"
+      }
+    ]
+  },
+  "scientific": {
+    "technical_state": "complete",
+    "scientific_verdict": null,
+    "promotion_status": "human_review_required"
+  },
+  "receiver_ack": {
+    "role": "experiment_host",
+    "accepted_at": "2026-08-01T22:56:16+09:00",
+    "status": "verified",
+    "issue": "Verified the immutable BLOCKED_ROOFER_SYNTHETIC_RUNTIME_PERMISSION Return and compact evidence, not a Roofer pass or successful Gate S0 freeze. The single sealed synthetic attempt remains exit 139 with zero JSON outputs because roofer.log.json could not be opened for writing; rerun is not authorized. No performance or human Gate decision is claimed, gate_decision remains null and scientific_verdict remains null."
+  }
+}
