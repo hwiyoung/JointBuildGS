@@ -1,0 +1,150 @@
+{
+  "schema": "jointbuildgs.gate_s0_common_base_r2b_config.v1",
+  "handoff_id": "P2-W2C-GATE-S0-COMMON-BASE-LINEAGE-R2B-v1",
+  "task_id": "P2-GATE-S0-COMMON-BASE-LINEAGE-R2B-v1",
+  "accepted_commit": "1a4fb69d03dc156e54bb789baa1c4fa56ef2ea58",
+  "research_canon": "C1C5_CANON_v2",
+  "decision_log_through": "DEC-P1-012",
+  "source_candidate": {
+    "id": "B_CURRENT_CANDIDATE_c205892c390997b5",
+    "manifest_sha256": "c205892c390997b57b13ee211bbc264c45800770bb84f0b2698c45d3c656fd74",
+    "image_members": 962,
+    "included_pairs": 937,
+    "excluded_no_pose": 25,
+    "included_basename_set_sha256": "dd9b446e11c978ef8223858f08571bfea832e0d33517b24c1e573060244f4e2c",
+    "included_camera_id_set_sha256": "43b70a448dc3d4bad6a06b5352eee0f1ba2cd6e5bc0d57bf7e53f4c11cd79ca7",
+    "included_image_camera_pair_sha256": "7d1f90ecb79ee19acfbfedb0b7cf78083349c7669678a1f883c5034a41a89ccc",
+    "excluded_basename_set_sha256": "a55a811ffe580790c199b65dc57d518890b04d6110ff7c7a2e4cfeb30e6fcb02",
+    "join_rule": "exact case-sensitive basename; archive directory component only is normalized"
+  },
+  "git_evidence": {
+    "source_candidate": "artifacts/manifests/gate_s0/b_current_source_candidate_v1.json",
+    "source_ledger": "docs/research/preregistration/gate_s0/gate_s0_image_camera_ledger_v1.csv",
+    "source_inventory": "artifacts/manifests/gate_s0/gate_s0_image_member_inventory_v1.csv",
+    "r1_sparse": "docs/research/preregistration/gate_s0/remediation_r1/sfm_sparse_initialization_v1.json",
+    "r2a_replay": "artifacts/manifests/gate_s0/common_base_r2a/source_candidate_replay_v1.json",
+    "r2a_matrix": "artifacts/manifests/gate_s0/common_base_r2a/derivative_provenance_matrix_v1.json",
+    "retention_plan": "artifacts/manifests/local_artifact_retention_pass2_plan_20260730.json",
+    "retention_receipt": "artifacts/manifests/local_artifact_retention_pass2_receipt_20260730.json"
+  },
+  "artifact_root": "/artifacts/JointBuildGS",
+  "payload_root": "phase-payloads/p0-audit",
+  "retained_candidates": [
+    {
+      "component": "images",
+      "kind": "directory",
+      "path": "data/work/mvs/colmap_dense/images",
+      "expected_files": 937,
+      "expected_bytes": 910980034
+    },
+    {
+      "component": "sfm_sparse",
+      "kind": "directory",
+      "path": "data/work/mvs/colmap_dense/sparse",
+      "expected_files": 5,
+      "expected_bytes": 147971170
+    },
+    {
+      "component": "stereo",
+      "kind": "directory",
+      "path": "data/work/mvs/colmap_dense/stereo",
+      "expected_files": 3750,
+      "expected_bytes": 22751489085
+    },
+    {
+      "component": "dense_mvs_scene",
+      "kind": "file",
+      "path": "data/work/mvs/openmvs/scene.mvs",
+      "expected_files": 1,
+      "expected_bytes": 23267921
+    },
+    {
+      "component": "dense_mvs_ply",
+      "kind": "file",
+      "path": "data/work/mvs/openmvs/dim_dense.ply",
+      "expected_files": 1,
+      "expected_bytes": 659138498
+    },
+    {
+      "component": "dense_mvs_laz",
+      "kind": "file",
+      "path": "data/work/mvs/dim/dim_v1.laz",
+      "expected_files": 1,
+      "expected_bytes": 156106520
+    }
+  ],
+  "bounded_metadata": [
+    {"path": "runs/t3_mvs_20260611_233721/config.yaml", "bytes": 671, "sha256": "93d7b9ed12c19096a629faa94c8877fbb0c734a0e3e3933c6b692d5e444fc4ee"},
+    {"path": "runs/t3_mvs_20260611_233721/versions.txt", "bytes": 2512, "sha256": "777c7e34f5c9c329552ceafb8e1f5f9a99ccee58d853a663a778298a3750173c"},
+    {"path": "runs/t3_mvs_20260611_233721/logs/prepare_inputs.log", "bytes": 2354, "sha256": "bfce1926ba28f47383b9486f7821ff789c6d19fc8bae284d64be253686273eeb"},
+    {"path": "data/work/mvs/prepare_summary.txt", "bytes": 252, "sha256": "bd7e8ce4e763a25056e19e9c2991ea9407afc53dc3a645697524599c1ec83564"},
+    {"path": "data/work/mvs/image_list.txt", "bytes": 28110, "sha256": "dd9b446e11c978ef8223858f08571bfea832e0d33517b24c1e573060244f4e2c"},
+    {"path": "data/work/mvs/colmap_input_db_ids/images.txt", "bytes": 162348, "sha256": "1e7b5c0d5d481472c72710a111ae5c88446ad0ae6ace10b7b5b2f0fd2814a5bb"},
+    {"path": "data/work/mvs/openmvs/InterfaceCOLMAP-2606111411018B4571.log", "bytes": 996, "sha256": "db30bfc7f6c004abd704a69dd49ff40e65761d25d83f0981555a3e9c01a1a192"},
+    {"path": "data/work/mvs/openmvs/DensifyPointCloud-2606111411078B4571.log", "bytes": 296794, "sha256": "c571f9ad8c356fef9410a6ebebdeaaf108c65875b5e377d51dfe79ad2368d5db"},
+    {"path": "data/work/mvs/dim/ply_to_laz.json", "bytes": 468, "sha256": "7aacc54a1c322fb05afc1a2262ec467aa70ce2356095e47e07e811aad99b3eb5"},
+    {"path": "data/work/mvs/colmap_dense/stereo/patch-match.cfg", "bytes": 40291, "sha256": "1bcb36c2054112a3d91b45c47e0082b0fa8e2ace312e305891bedfa70b999067"},
+    {"path": "data/work/mvs/colmap_dense/stereo/fusion.cfg", "bytes": 28110, "sha256": "a01732c4eb6d4958eb21813170e187bb086175cf348c7afbe1c8904d63ef05cf"},
+    {"path": "data/work/mvs/colmap_dense/run-colmap-geometric.sh", "bytes": 669, "sha256": "1dd71abd1ce334398b342a6405aea1572da119f126dd10421c1ee381fb7836d5"},
+    {"path": "data/work/mvs/colmap_dense/run-colmap-photometric.sh", "bytes": 672, "sha256": "ce7b529a7e063f527fe7fcbb8f8ae64f8e9ddc9ee4a2f8ac2a5bfe7f3d437b06"}
+  ],
+  "producer": {
+    "recorded_run_commit": "6d924793c367f93a3abe0447fbd9057f407fe036",
+    "actual_script_containing_commit": "252ea1dce31acec53481876137941192fea9a9bc",
+    "actual_script_parent": "6d924793c367f93a3abe0447fbd9057f407fe036",
+    "script_path_at_commit": "p0-audit/scripts/03_mvs.sh",
+    "script_git_blob": "bf5cd4dac48b3ee622e0e82a1e00063eaa00c097",
+    "script_sha256": "060f240b448a3f70958cabfda4b60c2f06682e32474d640a15eb5483dacc67b1",
+    "colmap_version": "4.0.4",
+    "openmvs_build": "2019-12-10",
+    "pdal_version": "2.10.1",
+    "parameters": {
+      "colmap_max_image_size": 2200,
+      "colmap_max_num_features": 4096,
+      "colmap_overlap": 12,
+      "undistort_max_image_size": 1400,
+      "openmvs_resolution_level": 4,
+      "openmvs_max_resolution": 1400,
+      "openmvs_min_resolution": 640,
+      "openmvs_number_views": 3,
+      "openmvs_fuse_min_views": 2,
+      "threads": 24
+    }
+  },
+  "coordinate_frame": {
+    "source_crs": "EPSG:32632",
+    "canonical_crs": "EPSG:25832",
+    "source_to_local_shift": [-690953.0, -5336071.0, -604.0],
+    "local_to_canonical_translation": [690953.0, 5336071.0, 604.0],
+    "vertical_datum": "UNKNOWN"
+  },
+  "future_single_pass_hash": {
+    "required_only_if_candidate_is_selected_for_freeze": true,
+    "exact_byte_ceiling": 986484109,
+    "paths": [
+      "data/work/mvs/colmap_dense/sparse",
+      "data/work/mvs/openmvs/scene.mvs",
+      "data/work/mvs/openmvs/dim_dense.ply",
+      "data/work/mvs/dim/dim_v1.laz"
+    ]
+  },
+  "guards": {
+    "performance_authority": "NONE",
+    "generate_dense_mvs": false,
+    "generate_depth": false,
+    "generate_normal": false,
+    "generate_confidence": false,
+    "generate_segmentation": false,
+    "generate_gravity": false,
+    "rehash_large_payloads": false,
+    "held_out_access": false,
+    "fusion_w1_access": false,
+    "r_ext_access": false,
+    "overwrite_existing_payloads": false,
+    "move_existing_payloads": false,
+    "delete_existing_payloads": false,
+    "primary_c5_promotion": false,
+    "gate_s0_approval": false
+  },
+  "scientific_verdict": null
+}

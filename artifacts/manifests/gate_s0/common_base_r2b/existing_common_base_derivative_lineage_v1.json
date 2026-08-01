@@ -1,0 +1,282 @@
+{
+  "components": [
+    {
+      "component": "source_membership",
+      "enablement_decision": "FIXED_BY_DEC_P1_012",
+      "exact_lineage": "EXACT_962_937_25_FROZEN_BY_DEC_P1_012",
+      "existence": "EXISTS",
+      "gate_readiness": "READY",
+      "lineage_classification": "REUSED_EXACT",
+      "new_preprocessing": "UNNECESSARY"
+    },
+    {
+      "component": "sfm_sparse",
+      "enablement_decision": "HUMAN_GATE_DECISION_REQUIRED",
+      "exact_lineage": "EXACT_937_MEMBER_AND_PRODUCER_ROUTE",
+      "existence": "EXISTS",
+      "gate_readiness": "PARTIAL",
+      "lineage_classification": "REUSED_EXACT",
+      "new_preprocessing": "UNNECESSARY_IF_EXISTING_CHAIN_ACCEPTED"
+    },
+    {
+      "component": "dense_mvs",
+      "enablement_decision": "REQUIRED_FOR_C2; HUMAN_CANDIDATE_ACCEPTANCE_REQUIRED",
+      "exact_lineage": "EXACT_937_PRODUCER_CHAIN_PAYLOAD_DIGEST_PENDING",
+      "existence": "EXISTS",
+      "gate_readiness": "PARTIAL",
+      "lineage_classification": "PARTIAL",
+      "new_preprocessing": "UNNECESSARY_IF_EXISTING_CHAIN_ACCEPTED"
+    },
+    {
+      "component": "depth",
+      "enablement_decision": "HUMAN_ON_OFF_REQUIRED",
+      "exact_lineage": "MEMBERSHIP_EXACT_PRODUCER_RUN_UNBOUND",
+      "existence": "EXISTS_EXACT_937_GEOMETRIC_AND_PHOTOMETRIC",
+      "gate_readiness": "PARTIAL",
+      "lineage_classification": "PARTIAL",
+      "new_preprocessing": "NOT_YET_DECIDABLE"
+    },
+    {
+      "component": "normal",
+      "enablement_decision": "HUMAN_ON_OFF_REQUIRED",
+      "exact_lineage": "MEMBERSHIP_EXACT_PRODUCER_RUN_UNBOUND",
+      "existence": "EXISTS_EXACT_937_GEOMETRIC_AND_PHOTOMETRIC",
+      "gate_readiness": "PARTIAL",
+      "lineage_classification": "PARTIAL",
+      "new_preprocessing": "NOT_YET_DECIDABLE"
+    },
+    {
+      "component": "confidence",
+      "enablement_decision": "HUMAN_ON_OFF_REQUIRED",
+      "exact_lineage": "NONE",
+      "existence": "MISSING",
+      "gate_readiness": "MISSING",
+      "lineage_classification": "MISSING",
+      "new_preprocessing": "CONDITIONAL_ON_ENABLEMENT"
+    },
+    {
+      "component": "segmentation",
+      "enablement_decision": "HUMAN_ON_OFF_REQUIRED",
+      "exact_lineage": "NONE",
+      "existence": "MISSING",
+      "gate_readiness": "MISSING",
+      "lineage_classification": "MISSING",
+      "new_preprocessing": "CONDITIONAL_ON_ENABLEMENT"
+    },
+    {
+      "component": "gravity",
+      "enablement_decision": "REQUIRED_BY_ROOT_INVARIANT; SOURCE_BINDING_PENDING",
+      "exact_lineage": "NONE",
+      "existence": "MISSING",
+      "gate_readiness": "MISSING",
+      "lineage_classification": "MISSING",
+      "new_preprocessing": "REQUIRED_LATER_FROM_TERRAIN_MVS_NORMALS"
+    }
+  ],
+  "coordinate_frame": {
+    "canonical_crs": "EPSG:25832",
+    "local_to_canonical_translation": [
+      690953.0,
+      5336071.0,
+      604.0
+    ],
+    "source_crs": "EPSG:32632",
+    "source_to_local_shift": [
+      -690953.0,
+      -5336071.0,
+      -604.0
+    ],
+    "vertical_datum": "UNKNOWN"
+  },
+  "depth_normal_producer_gap": "exact-937 files exist and match generated COLMAP configs, but their 2026-06-24 producer invocation/log is not durably bound",
+  "existing_payload_digests": "MISSING_NOT_HASHED_IN_R2B",
+  "future_single_pass_hash": {
+    "exact_byte_ceiling": 986484109,
+    "paths": [
+      "data/work/mvs/colmap_dense/sparse",
+      "data/work/mvs/openmvs/scene.mvs",
+      "data/work/mvs/openmvs/dim_dense.ply",
+      "data/work/mvs/dim/dim_v1.laz"
+    ],
+    "required_only_if_candidate_is_selected_for_freeze": true
+  },
+  "generated_derivatives": [],
+  "large_payload_full_hashed_bytes": 0,
+  "large_payload_full_read_bytes": 0,
+  "member_set_checks": {
+    "colmap_sparse_model_names": {
+      "count": 937,
+      "equals_exact_source": true,
+      "set_sha256": "dd9b446e11c978ef8223858f08571bfea832e0d33517b24c1e573060244f4e2c"
+    },
+    "densify_log_names": {
+      "count": 937,
+      "equals_exact_source": true,
+      "set_sha256": "dd9b446e11c978ef8223858f08571bfea832e0d33517b24c1e573060244f4e2c"
+    },
+    "fusion_config_names": {
+      "count": 937,
+      "equals_exact_source": true,
+      "set_sha256": "dd9b446e11c978ef8223858f08571bfea832e0d33517b24c1e573060244f4e2c"
+    },
+    "geometric_depth_names": {
+      "count": 937,
+      "equals_exact_source": true,
+      "set_sha256": "dd9b446e11c978ef8223858f08571bfea832e0d33517b24c1e573060244f4e2c"
+    },
+    "geometric_normal_names": {
+      "count": 937,
+      "equals_exact_source": true,
+      "set_sha256": "dd9b446e11c978ef8223858f08571bfea832e0d33517b24c1e573060244f4e2c"
+    },
+    "git_source": {
+      "count": 937,
+      "equals_exact_source": true,
+      "set_sha256": "dd9b446e11c978ef8223858f08571bfea832e0d33517b24c1e573060244f4e2c"
+    },
+    "patch_match_config_names": {
+      "count": 937,
+      "equals_exact_source": true,
+      "set_sha256": "dd9b446e11c978ef8223858f08571bfea832e0d33517b24c1e573060244f4e2c"
+    },
+    "photometric_depth_names": {
+      "count": 937,
+      "equals_exact_source": true,
+      "set_sha256": "dd9b446e11c978ef8223858f08571bfea832e0d33517b24c1e573060244f4e2c"
+    },
+    "photometric_normal_names": {
+      "count": 937,
+      "equals_exact_source": true,
+      "set_sha256": "dd9b446e11c978ef8223858f08571bfea832e0d33517b24c1e573060244f4e2c"
+    },
+    "retained_images": {
+      "count": 937,
+      "equals_exact_source": true,
+      "set_sha256": "dd9b446e11c978ef8223858f08571bfea832e0d33517b24c1e573060244f4e2c"
+    },
+    "t3_image_list": {
+      "count": 937,
+      "equals_exact_source": true,
+      "set_sha256": "dd9b446e11c978ef8223858f08571bfea832e0d33517b24c1e573060244f4e2c"
+    }
+  },
+  "performance_authority": "NONE",
+  "producer_lineage": {
+    "actual_script_containing_commit": "252ea1dce31acec53481876137941192fea9a9bc",
+    "actual_script_parent": "6d924793c367f93a3abe0447fbd9057f407fe036",
+    "colmap_version": "4.0.4",
+    "dense_point_count": 43942554,
+    "openmvs_build": "2019-12-10",
+    "openmvs_fused_depth_maps": 924,
+    "openmvs_loaded_poses": 937,
+    "parameters": {
+      "colmap_max_image_size": 2200,
+      "colmap_max_num_features": 4096,
+      "colmap_overlap": 12,
+      "openmvs_fuse_min_views": 2,
+      "openmvs_max_resolution": 1400,
+      "openmvs_min_resolution": 640,
+      "openmvs_number_views": 3,
+      "openmvs_resolution_level": 4,
+      "threads": 24,
+      "undistort_max_image_size": 1400
+    },
+    "pdal_version": "2.10.1",
+    "recorded_run_commit": "6d924793c367f93a3abe0447fbd9057f407fe036",
+    "recorded_run_commit_interpretation": "run logger captured the parent before 03_mvs.sh existed; the exact producer executable first appears in actual_script_containing_commit",
+    "route": [
+      "exact-937 OPF/COLMAP sparse",
+      "colmap_dense/images + colmap_dense/sparse",
+      "InterfaceCOLMAP -> scene.mvs",
+      "DensifyPointCloud -> dim_dense.ply",
+      "PDAL translation -> dim_v1.laz EPSG:25832"
+    ],
+    "script_git_blob": "bf5cd4dac48b3ee622e0e82a1e00063eaa00c097",
+    "script_path_at_commit": "p0-audit/scripts/03_mvs.sh",
+    "script_sha256": "060f240b448a3f70958cabfda4b60c2f06682e32474d640a15eb5483dacc67b1"
+  },
+  "retained_candidates": {
+    "dense_mvs_laz": {
+      "bytes": 156106520,
+      "component": "dense_mvs_laz",
+      "exists": true,
+      "expected_bytes": 156106520,
+      "expected_files": 1,
+      "files": 1,
+      "kind": "file",
+      "matches_retention_manifest": true,
+      "path": "data/work/mvs/dim/dim_v1.laz"
+    },
+    "dense_mvs_ply": {
+      "bytes": 659138498,
+      "component": "dense_mvs_ply",
+      "exists": true,
+      "expected_bytes": 659138498,
+      "expected_files": 1,
+      "files": 1,
+      "kind": "file",
+      "matches_retention_manifest": true,
+      "path": "data/work/mvs/openmvs/dim_dense.ply"
+    },
+    "dense_mvs_scene": {
+      "bytes": 23267921,
+      "component": "dense_mvs_scene",
+      "exists": true,
+      "expected_bytes": 23267921,
+      "expected_files": 1,
+      "files": 1,
+      "kind": "file",
+      "matches_retention_manifest": true,
+      "path": "data/work/mvs/openmvs/scene.mvs"
+    },
+    "images": {
+      "bytes": 910980034,
+      "component": "images",
+      "exists": true,
+      "expected_bytes": 910980034,
+      "expected_files": 937,
+      "files": 937,
+      "kind": "directory",
+      "matches_retention_manifest": true,
+      "path": "data/work/mvs/colmap_dense/images"
+    },
+    "sfm_sparse": {
+      "bytes": 147971170,
+      "component": "sfm_sparse",
+      "exists": true,
+      "expected_bytes": 147971170,
+      "expected_files": 5,
+      "files": 5,
+      "kind": "directory",
+      "matches_retention_manifest": true,
+      "path": "data/work/mvs/colmap_dense/sparse"
+    },
+    "stereo": {
+      "bytes": 22751489085,
+      "component": "stereo",
+      "exists": true,
+      "expected_bytes": 22751489085,
+      "expected_files": 3750,
+      "files": 3750,
+      "kind": "directory",
+      "matches_retention_manifest": true,
+      "path": "data/work/mvs/colmap_dense/stereo"
+    }
+  },
+  "schema": "jointbuildgs.gate_s0_existing_common_base_derivative_lineage.v1",
+  "scientific_verdict": null,
+  "source_candidate_id": "B_CURRENT_CANDIDATE_c205892c390997b5",
+  "source_membership": {
+    "excluded_basename_set_sha256": "a55a811ffe580790c199b65dc57d518890b04d6110ff7c7a2e4cfeb30e6fcb02",
+    "excluded_no_pose": 25,
+    "id": "B_CURRENT_CANDIDATE_c205892c390997b5",
+    "image_members": 962,
+    "included_basename_set_sha256": "dd9b446e11c978ef8223858f08571bfea832e0d33517b24c1e573060244f4e2c",
+    "included_camera_id_set_sha256": "43b70a448dc3d4bad6a06b5352eee0f1ba2cd6e5bc0d57bf7e53f4c11cd79ca7",
+    "included_image_camera_pair_sha256": "7d1f90ecb79ee19acfbfedb0b7cf78083349c7669678a1f883c5034a41a89ccc",
+    "included_pairs": 937,
+    "join_rule": "exact case-sensitive basename; archive directory component only is normalized",
+    "manifest_sha256": "c205892c390997b57b13ee211bbc264c45800770bb84f0b2698c45d3c656fd74"
+  },
+  "task_id": "P2-GATE-S0-COMMON-BASE-LINEAGE-R2B-v1"
+}

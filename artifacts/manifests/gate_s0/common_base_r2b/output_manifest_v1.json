@@ -1,0 +1,81 @@
+{
+  "artifact_verification_level": "git_only",
+  "external_payload_hashed_bytes": 0,
+  "external_payload_read_bytes": 0,
+  "files": [
+    {
+      "bytes": 7271,
+      "hash_scope": "Git LF-canonical bytes",
+      "path": "configs/input_and_alignment/gate_s0/common_base_r2b/r2b_lineage_v1.json",
+      "sha256": "53a98ccabd9c1651f49ebb1fc14405884bdd378684b6ee2d55c5d449820a7b46"
+    },
+    {
+      "bytes": 23007,
+      "hash_scope": "Git LF-canonical bytes",
+      "path": "scripts/input_and_alignment/gate_s0/common_base_r2b/resolve_existing_common_base.py",
+      "sha256": "ad6b2895b6f49b1a22df75344e1b475fbf518a8fa0b81d07c53b63f8678ddcb8"
+    },
+    {
+      "bytes": 12692,
+      "hash_scope": "Git LF-canonical bytes",
+      "path": "scripts/input_and_alignment/gate_s0/common_base_r2b/validate_r2b_lineage.py",
+      "sha256": "0ebaa67d9d6bbce58bd7c381b5e6ea2e2dda699cbb1afb043660c67c83ce39c2"
+    },
+    {
+      "bytes": 8167,
+      "hash_scope": "Git LF-canonical bytes",
+      "path": "tests/input_and_alignment/gate_s0/common_base_r2b/test_r2b_lineage.py",
+      "sha256": "a46da7725d57f717c0725170d393cb0a93a2af3f20a5d0be813c8c017b5630fa"
+    },
+    {
+      "bytes": 10011,
+      "hash_scope": "Git LF-canonical bytes",
+      "path": "artifacts/manifests/gate_s0/common_base_r2b/existing_common_base_derivative_lineage_v1.json",
+      "sha256": "b2458e97af5f8e6fc9c500b0590be53092c7577b216bf49cc7ee0b57d628bdb4"
+    },
+    {
+      "bytes": 378466,
+      "hash_scope": "Git LF-canonical bytes",
+      "path": "artifacts/manifests/gate_s0/common_base_r2b/exact_937_member_crosswalk_v1.json",
+      "sha256": "b4af779ecfae859de9772ce50cb24326b20c3f86614f6a8957453779d1cd4c17"
+    },
+    {
+      "bytes": 1133,
+      "hash_scope": "Git LF-canonical bytes",
+      "path": "artifacts/manifests/gate_s0/common_base_r2b/component_readiness_v1.csv",
+      "sha256": "5ee47173d97dbf7e7e7280fc4e1253c1598be07a0213282a9e9a99d7ed9ef855"
+    },
+    {
+      "bytes": 4689,
+      "hash_scope": "Git LF-canonical bytes",
+      "path": "artifacts/manifests/gate_s0/common_base_r2b/no_repeat_operation_ledger_v1.json",
+      "sha256": "efd55cff2cae48e0cd304ee1ce8ce9838b8d2bc70b7f462fe340fd42ffb1ec91"
+    },
+    {
+      "bytes": 4890,
+      "hash_scope": "Git LF-canonical bytes",
+      "path": "docs/research/preregistration/gate_s0/common_base_r2b/reuse_or_generation_decision_v1.md",
+      "sha256": "f8e1caca4153e174911ab43aae53f5c83aef4a5354c53023ca0cc41406f86a1b"
+    },
+    {
+      "bytes": 3020,
+      "hash_scope": "Git LF-canonical bytes",
+      "path": "docs/research/preregistration/gate_s0/common_base_r2b/issue_log_v1.md",
+      "sha256": "44ad9c67c75d388eb943bd6f15f35ba597bca7135041a993dacb3eeffa111e05"
+    },
+    {
+      "bytes": 6258,
+      "hash_scope": "Git LF-canonical bytes",
+      "path": "docs/handoffs/returns/P2_C2W_GATE_S0_COMMON_BASE_LINEAGE_R2B_RETURN_v1.md",
+      "sha256": "bb885f46b4769fb4d07799de463662c21911b7221d9de659d0e27c782267e9ac"
+    }
+  ],
+  "handoff_id": "P2-W2C-GATE-S0-COMMON-BASE-LINEAGE-R2B-v1",
+  "input_commit": "1a4fb69d03dc156e54bb789baa1c4fa56ef2ea58",
+  "operation_id": "006770c4fa72857351a87d70253251869d9ad665147c60ecac33792227c6c652",
+  "output_commit": "SELF",
+  "proposed_status": "BLOCKED_FOR_GATE_S0_TECHNICAL_AND_HUMAN_FREEZE",
+  "schema": "jointbuildgs.gate_s0_common_base_r2b_output_manifest.v1",
+  "scientific_verdict": null,
+  "task_id": "P2-GATE-S0-COMMON-BASE-LINEAGE-R2B-v1"
+}

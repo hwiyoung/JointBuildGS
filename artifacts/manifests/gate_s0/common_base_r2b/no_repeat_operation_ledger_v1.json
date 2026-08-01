@@ -1,0 +1,115 @@
+{
+  "bounded_metadata_records": [
+    {
+      "bytes": 671,
+      "path": "runs/t3_mvs_20260611_233721/config.yaml",
+      "sha256": "93d7b9ed12c19096a629faa94c8877fbb0c734a0e3e3933c6b692d5e444fc4ee"
+    },
+    {
+      "bytes": 2512,
+      "path": "runs/t3_mvs_20260611_233721/versions.txt",
+      "sha256": "777c7e34f5c9c329552ceafb8e1f5f9a99ccee58d853a663a778298a3750173c"
+    },
+    {
+      "bytes": 2354,
+      "path": "runs/t3_mvs_20260611_233721/logs/prepare_inputs.log",
+      "sha256": "bfce1926ba28f47383b9486f7821ff789c6d19fc8bae284d64be253686273eeb"
+    },
+    {
+      "bytes": 252,
+      "path": "data/work/mvs/prepare_summary.txt",
+      "sha256": "bd7e8ce4e763a25056e19e9c2991ea9407afc53dc3a645697524599c1ec83564"
+    },
+    {
+      "bytes": 28110,
+      "path": "data/work/mvs/image_list.txt",
+      "sha256": "dd9b446e11c978ef8223858f08571bfea832e0d33517b24c1e573060244f4e2c"
+    },
+    {
+      "bytes": 162348,
+      "path": "data/work/mvs/colmap_input_db_ids/images.txt",
+      "sha256": "1e7b5c0d5d481472c72710a111ae5c88446ad0ae6ace10b7b5b2f0fd2814a5bb"
+    },
+    {
+      "bytes": 996,
+      "path": "data/work/mvs/openmvs/InterfaceCOLMAP-2606111411018B4571.log",
+      "sha256": "db30bfc7f6c004abd704a69dd49ff40e65761d25d83f0981555a3e9c01a1a192"
+    },
+    {
+      "bytes": 296794,
+      "path": "data/work/mvs/openmvs/DensifyPointCloud-2606111411078B4571.log",
+      "sha256": "c571f9ad8c356fef9410a6ebebdeaaf108c65875b5e377d51dfe79ad2368d5db"
+    },
+    {
+      "bytes": 468,
+      "path": "data/work/mvs/dim/ply_to_laz.json",
+      "sha256": "7aacc54a1c322fb05afc1a2262ec467aa70ce2356095e47e07e811aad99b3eb5"
+    },
+    {
+      "bytes": 40291,
+      "path": "data/work/mvs/colmap_dense/stereo/patch-match.cfg",
+      "sha256": "1bcb36c2054112a3d91b45c47e0082b0fa8e2ace312e305891bedfa70b999067"
+    },
+    {
+      "bytes": 28110,
+      "path": "data/work/mvs/colmap_dense/stereo/fusion.cfg",
+      "sha256": "a01732c4eb6d4958eb21813170e187bb086175cf348c7afbe1c8904d63ef05cf"
+    },
+    {
+      "bytes": 669,
+      "path": "data/work/mvs/colmap_dense/run-colmap-geometric.sh",
+      "sha256": "1dd71abd1ce334398b342a6405aea1572da119f126dd10421c1ee381fb7836d5"
+    },
+    {
+      "bytes": 672,
+      "path": "data/work/mvs/colmap_dense/run-colmap-photometric.sh",
+      "sha256": "ce7b529a7e063f527fe7fcbb8f8ae64f8e9ddc9ee4a2f8ac2a5bfe7f3d437b06"
+    }
+  ],
+  "candidate_matching": "exact manifest paths plus component-aware exact member sets",
+  "completed_ledger_overwrite_allowed": false,
+  "completed_lookup_precedes_external_access": true,
+  "first_invocation": {
+    "external_directory_entries_statted": 4698,
+    "external_metadata_hashed_bytes": 564247,
+    "external_metadata_read_bytes": 564247,
+    "external_payload_hashed_bytes": 0,
+    "external_payload_read_bytes": 0
+  },
+  "forbidden_full_hashes_performed": [],
+  "namespace": "B_CURRENT_CANDIDATE_c205892c390997b5/common-base-lineage-r2b-v1",
+  "operation_identity": {
+    "config": {
+      "path": "configs/input_and_alignment/gate_s0/common_base_r2b/r2b_lineage_v1.json",
+      "sha256_lf": "53a98ccabd9c1651f49ebb1fc14405884bdd378684b6ee2d55c5d449820a7b46"
+    },
+    "executable": {
+      "containing_commit": "SELF",
+      "containing_commit_rule": "SELF resolves to the immutable R2B output commit that first contains this exact path/blob; the validator proves the binding",
+      "git_blob_oid": "f1fa0be6c0354933babede972c1b298c2e57b8f6",
+      "path": "scripts/input_and_alignment/gate_s0/common_base_r2b/resolve_existing_common_base.py"
+    },
+    "operation_id": "006770c4fa72857351a87d70253251869d9ad665147c60ecac33792227c6c652",
+    "producer_script_containing_commit": "252ea1dce31acec53481876137941192fea9a9bc",
+    "producer_script_git_blob": "bf5cd4dac48b3ee622e0e82a1e00063eaa00c097",
+    "schema": "jointbuildgs.gate_s0_r2b_operation_identity.v1",
+    "scientific_role": "Gate-S0 retained common-base lineage resolution only",
+    "source_candidate_manifest_sha256": "c205892c390997b57b13ee211bbc264c45800770bb84f0b2698c45d3c656fd74",
+    "task_id": "P2-GATE-S0-COMMON-BASE-LINEAGE-R2B-v1"
+  },
+  "protected_large_payload_full_hashed_bytes": 0,
+  "protected_large_payload_full_read_bytes": 0,
+  "schema": "jointbuildgs.gate_s0_r2b_no_repeat_operation_ledger.v1",
+  "scientific_verdict": null,
+  "second_invocation_contract": {
+    "external_directory_entries_statted": 0,
+    "external_metadata_hashed_bytes": 0,
+    "external_metadata_read_bytes": 0,
+    "external_payload_hashed_bytes": 0,
+    "external_payload_read_bytes": 0,
+    "repository_output_bytes_read_or_hashed": 0,
+    "writes": 0
+  },
+  "status": "COMPLETED",
+  "task_id": "P2-GATE-S0-COMMON-BASE-LINEAGE-R2B-v1"
+}
