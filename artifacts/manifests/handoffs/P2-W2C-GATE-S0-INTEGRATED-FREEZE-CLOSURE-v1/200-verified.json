@@ -1,0 +1,141 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P2-W2C-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1",
+  "task_id": "P2-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1",
+  "created_at": "2026-08-01T17:37:16+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "verified",
+  "previous_receipt": {
+    "path": "artifacts/manifests/handoffs/P2-W2C-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1/100-accepted.json",
+    "sha256": "cb834d7c52b2f356b0249d908c2fc2d0ef453d45b449dfa4990aa2bd5f9fb80f"
+  },
+  "transport": {
+    "mode": "serialized_main",
+    "branch": "main",
+    "target_branch": "main",
+    "exclusive_writer_ack": true
+  },
+  "commits": {
+    "base_main": "58a3c2578cbb9aa91f982934bd75aa1ce1737bc2",
+    "offered_head": "4d47fe3bf3f23aa631b9f9073ace4f2bf7572615",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1",
+      "artifacts/manifests/gate_s0/integrated_freeze_closure_v1",
+      "configs/input_and_alignment/gate_s0/integrated_freeze_closure_v1",
+      "configs/stage3/gate_s0_integrated_v1",
+      "docs/handoffs/returns/P2_C2W_GATE_S0_INTEGRATED_FREEZE_CLOSURE_v1.md",
+      "docs/research/preregistration/gate_s0/integrated_freeze_closure_v1",
+      "docs/research/preregistration/gate_s0/GATE_S0_FREEZE_PACKET_v2.md",
+      "scripts/input_and_alignment/gate_s0/integrated_freeze_closure_v1",
+      "src/stage3/gate_s0_integrated_v1",
+      "tests/input_and_alignment/gate_s0/integrated_freeze_closure_v1",
+      "tests/stage3/gate_s0_integrated_v1"
+    ],
+    "protected_paths": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      "artifacts/manifests/handoffs/P1-W2C-REPO-AUDIT-R2",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-PREP-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-REMEDIATION-R1-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-EVIDENCE-R2A-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-COMMON-BASE-LINEAGE-R2B-v1",
+      "artifacts/manifests/gate_s0/common_base_r2a",
+      "artifacts/manifests/gate_s0/common_base_r2b",
+      "artifacts/manifests/gate_s0/remediation_r1",
+      "configs/input_and_alignment/gate_s0/common_base_r2a",
+      "configs/input_and_alignment/gate_s0/common_base_r2b",
+      "configs/input_and_alignment/gate_s0/remediation_r1",
+      "configs/repository",
+      "docs/evidence",
+      "docs/experiments",
+      "docs/handoffs/HANDOFF_INDEX.md",
+      "docs/handoffs/P2_W2C_GATE_S0_INTEGRATED_FREEZE_CLOSURE_v1.md",
+      "docs/handoffs/P2_W2C_GATE_S0_COMMON_BASE_LINEAGE_R2B_v1.md",
+      "docs/handoffs/P2_W2C_GATE_S0_EVIDENCE_R2A_v1.md",
+      "docs/handoffs/P2_W2C_GATE_S0_REMEDIATION_R1_v1.md",
+      "docs/handoffs/returns/P2_C2W_GATE_S0_COMMON_BASE_LINEAGE_R2B_RETURN_v1.md",
+      "docs/handoffs/returns/P2_C2W_GATE_S0_EVIDENCE_R2A_RETURN_v1.md",
+      "docs/handoffs/returns/P2_C2W_GATE_S0_REMEDIATION_R1_RETURN_v1.md",
+      "docs/research/00_RESEARCH_CHARTER.md",
+      "docs/research/01_MASTER_ROADMAP.md",
+      "docs/research/02_NOVELTY_MAP.md",
+      "docs/research/03_DATA_AND_BASELINE_SCOPE.md",
+      "docs/research/04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md",
+      "docs/research/05_HANDOFF_PROTOCOL.md",
+      "docs/research/06_DECISION_LOG.md",
+      "docs/research/preregistration/gate_s0/GATE_S0_FREEZE_PACKET_v1.md",
+      "docs/research/preregistration/gate_s0/common_base_r2a",
+      "docs/research/preregistration/gate_s0/common_base_r2b",
+      "docs/research/preregistration/gate_s0/remediation_r1",
+      "docs/research/preregistration/fusion_w1",
+      "docs/research/preregistration/quality_axis",
+      "phases/p0-audit",
+      "phases/p2-gsjso",
+      "scripts/input_and_alignment/gate_s0/common_base_r2a",
+      "scripts/input_and_alignment/gate_s0/common_base_r2b",
+      "scripts/input_and_alignment/gate_s0/remediation_r1",
+      "scripts/repository",
+      "tests/input_and_alignment/gate_s0/common_base_r2a",
+      "tests/input_and_alignment/gate_s0/common_base_r2b",
+      "tests/input_and_alignment/gate_s0/remediation_r1",
+      "tests/repository"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "artifact_verified",
+    "verifier_role": "experiment_host",
+    "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "commands": [
+      "PRE-PUSH output commit: Docker integrated validator with exact-path metadata-only checks, 10 integrated tests, 3 Stage-3 tests, agent-instruction validator, 49 repository/receipt tests, 45 prior evidence regressions and Gate evidence validator",
+      "git push origin main; git fetch origin main; prove HEAD == origin/main == a6160145e5b022d993c860c87f298e4232471593",
+      "POST-PUSH exact origin/main: docker exec -u 1000:1000 jointbuildgs-dev bash -lc 'cd /workspace/JointBuildGS && python scripts/input_and_alignment/gate_s0/integrated_freeze_closure_v1/validate_integrated_freeze.py --artifact-root /artifacts/JointBuildGS && python tests/input_and_alignment/gate_s0/integrated_freeze_closure_v1/test_integrated_freeze.py && python tests/stage3/gate_s0_integrated_v1/test_common_interface.py'",
+      "POST-PUSH exact origin/main: Docker agent-instruction validator and 49 repository/receipt tests",
+      "Resolved live root: host /media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts; container /artifacts/JointBuildGS; output manifest artifacts/manifests/gate_s0/integrated_freeze_closure_v1/external_output_records_v1.json; recovery probes=6, verification-only partial-output probes=2 per invocation across 2 invocations, cumulative exact-path metadata probes=10; content reads/hashes=0 and directory enumerations=0",
+      "Receipt schema limitation: preserve 100-accepted artifacts object byte-for-byte; 200 verifies the BLOCKED return and partial live metadata, not successful Gate S0 closure"
+    ],
+    "tests": [
+      {"name": "integrated closure validator and exact-path partial-output metadata", "passed": 3, "failed": 0},
+      {"name": "integrated runner and Stage-3 interface regressions", "passed": 13, "failed": 0},
+      {"name": "repository agent/receipt contract", "passed": 50, "failed": 0},
+      {"name": "prior Gate S0 evidence regressions", "passed": 45, "failed": 0},
+      {"name": "Gate S0 evidence validator", "passed": 1, "failed": 0},
+      {"name": "output commit exact remote equality", "passed": 1, "failed": 0}
+    ]
+  },
+  "artifacts": {
+    "required_for_task": true,
+    "availability": {
+      "work_host": "manifest_only",
+      "experiment_host": "verified_local"
+    },
+    "records": [
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/integrated_freeze_closure_v1/P2-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1/acceptance/artifact_root_preflight_v1.json",
+        "bytes": 5712,
+        "sha256": "bf51e805871d73b4a51cba6984135324beae2c1830bdb4438c78d85f9e60c6d2",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-01T17:02:12+09:00"
+      }
+    ]
+  },
+  "scientific": {
+    "technical_state": "complete",
+    "scientific_verdict": null,
+    "promotion_status": "human_review_required"
+  },
+  "receiver_ack": {
+    "role": "experiment_host",
+    "accepted_at": "2026-08-01T17:37:16+09:00",
+    "status": "verified",
+    "issue": "Verified the immutable BLOCKED/interrupted return, not successful technical Gate S0 closure. The sole 986,484,109-byte retained pass was consumed but digest values were not persisted; C1/C4/reference/U_target/E_paired/splits are MISSING; partial task outputs were exact-stat-only and not reread. Gate S0 closure/P2 entry is unsupported, gate decision remains human, and scientific_verdict remains null. The actual DRAFT source is f3e0be625f7b8d7ed778d74e9b9ed9ac78d58cd0; prior packet/receipt bytes remain unchanged."
+  }
+}
