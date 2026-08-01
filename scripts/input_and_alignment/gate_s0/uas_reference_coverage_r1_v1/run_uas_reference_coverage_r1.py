@@ -292,7 +292,7 @@ class Checkpoints:
             if ordinal in self.bodies or body.get("predecessor_checkpoint_sha256") != previous:
                 raise RuntimeError(f"checkpoint chain mismatch: {path}")
             digest = sha256_bytes(data)
-            record = {"ordinal": ordinal, "stage": body["stage"], "path": path.as_posix(), "bytes": len(data), "sha256": digest}
+            record = self._record(ordinal, body["stage"], path, len(data), digest)
             self.records.append(record)
             self.bodies[ordinal] = body
             previous = digest
@@ -304,6 +304,17 @@ class Checkpoints:
         if not self.completed(ordinal, stage):
             raise RuntimeError(f"checkpoint not complete: {ordinal}-{stage}")
         return self.bodies[ordinal]["payload"]
+
+    @staticmethod
+    def _record(ordinal: int, stage: str, path: Path, size: int, digest: str) -> dict[str, Any]:
+        return {
+            "ordinal": ordinal,
+            "stage": stage,
+            "path": path.as_posix(),
+            "bytes": size,
+            "sha256": digest,
+            "digest_method": "same_stream_as_add_once_serialization",
+        }
 
     def write(self, ordinal: int, stage: str, payload: dict[str, Any]) -> dict[str, Any]:
         if ordinal in self.bodies:
@@ -325,7 +336,7 @@ class Checkpoints:
             "scientific_verdict": None,
         }
         record = add_once_json(self.root / "checkpoints" / f"{ordinal:03d}-{stage}.json", body)
-        compact = {"ordinal": ordinal, "stage": stage, **record}
+        compact = self._record(ordinal, stage, Path(record["path"]), int(record["bytes"]), record["sha256"])
         self.records.append(compact)
         self.bodies[ordinal] = body
         print(json.dumps({"checkpoint": ordinal, "stage": stage, "sha256": record["sha256"]}, sort_keys=True), flush=True)

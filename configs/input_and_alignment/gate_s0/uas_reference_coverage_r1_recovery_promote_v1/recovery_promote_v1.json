@@ -1,0 +1,39 @@
+{
+  "schema": "jointbuildgs.gate_s0_uas_reference_coverage_r1_recovery_promote_config.v1",
+  "task_id": "P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-RECOVERY-PROMOTE-v1",
+  "handoff_id": "P2-W2C-GATE-S0-UAS-REFERENCE-COVERAGE-R1-RECOVERY-PROMOTE-v1",
+  "artifact_root": "/artifacts/JointBuildGS",
+  "historical": {
+    "task_id": "P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1",
+    "handoff_id": "P2-W2C-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1",
+    "accepted_source_commit": "da24ba68123ced5b4b95efd558688e92b9c9e086",
+    "operation_id": "9d5fdefb5af6fe12965f59fa4b3824ccbe5ac0aedf9996a3316207746617b32b",
+    "runner_blob": "da9cfd1a1865b3a7f841e8145d772f274c29dd6d",
+    "config_blob": "64c7beaf5cd7780a4935b23fe96f7b2cd152db96",
+    "output_namespace": "phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1",
+    "execution_ledger": {
+      "path": "control/execution_ledger_v1.json",
+      "bytes": 11268,
+      "sha256": "cdf41594f1c218aa1c60206b9a6c070e5222f00da8149796151b15385f1f6bec"
+    },
+    "expected": {
+      "u_target_count": 199,
+      "e_paired_candidate_count": 72,
+      "independent_group_count": 9,
+      "held_out_building_count": 10,
+      "held_out_group_count": 2,
+      "claim_scope_status": "PILOT_ONLY_REFERENCE_SCOPE",
+      "recommended_gate_action": "BLOCKED_REFERENCE_COVERAGE_OR_INDEPENDENCE",
+      "attempt_counts": {
+        "eligibility_metadata": 1,
+        "reference_grid": 1
+      }
+    }
+  },
+  "recovery_output_namespace": "phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_recovery_promote_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-RECOVERY-PROMOTE-v1",
+  "promotion": {
+    "manifest": "artifacts/manifests/gate_s0/uas_reference_coverage_r1_v1/technical_candidate_manifest_v1.json",
+    "report": "docs/research/preregistration/gate_s0/uas_reference_coverage_r1_v1/UAS_REFERENCE_COVERAGE_R1_REPORT_v1.md"
+  },
+  "scientific_verdict": null
+}
