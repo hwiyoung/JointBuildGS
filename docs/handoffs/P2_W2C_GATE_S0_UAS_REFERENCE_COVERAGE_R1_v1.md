@@ -73,11 +73,14 @@ The exact compact inputs proposed for this task are:
 The `100-accepted` preflight is metadata-only: it reuses the predecessor's compact
 attestation and checks regular-file type and exact size without opening or hashing
 scientific payload bytes. Before the executor's first grid open, it must fsync an
-immutable source-open intent. It then reads the 3,023,643 grid bytes exactly once,
-computes the declared digest from that same byte stream and parses from memory; it
-must not perform a separate grid hash pass. The checkpoint and eligibility compact
-records are each read/verified once. The Git config is bound by the accepted commit
-and blob before use.
+immutable source-open intent. It then performs one known-successful read of the
+3,023,643 grid bytes, computes the declared digest from that same byte
+stream and parses from memory; it must not perform a separate grid hash pass. The
+checkpoint and eligibility compact records have the same one-known-successful-pass
+rule. If a pre-checkpoint crash causes attempt 02, the ledger/summary/report must
+record per source the known-successful pass, prior-unknown attempt count, and
+full-read/digest pass and byte minima/maxima; it must not claim total exactly-once.
+The Git config is bound by the accepted commit and blob before use.
 
 Each completed stage publishes an add-once output and fsync checkpoint before the
 next stage. The configured maximum is two attempts (one retry) per incomplete stage.
@@ -85,6 +88,15 @@ A crash before a stage checkpoint may reread only that stage's exact compact inp
 after recording attempt 02; a valid completed checkpoint must be reused without
 reopening its input. Actual attempts, reads, digest passes, recovered pending files
 and unknown crash-boundary bytes must be reported.
+
+Every acceptance, execution and promotion invocation appends a task-owned event.
+Before creating an add-once file, the invocation must either unlink a published
+pending hardlink or quarantine an incomplete pending file and record that recovery.
+A completed fast path is valid only after exact stage-set, checkpoint envelope,
+payload regular-file/non-symlink digest, source-attempt, invocation-event and ledger
+schema/status/null-verdict validation. It must return with zero scientific-source
+reopens. Partial promotion may reuse only byte-identical declared outputs and must
+reject every unrelated dirty path.
 
 The task must not reopen or hash the 1.28 GB raw UAS LAZ, the four common-base
 consumers, ALS tiles, C5 JSONL sources, R1 15.7 GB inputs, `Images.zip`, `OPF.zip`,
@@ -94,6 +106,16 @@ blocker; it does not expand authority to raw-source replay.
 
 All new outputs are add-once in a new external task namespace. No predecessor
 artifact, packet, Return or receipt may be edited, deleted, renamed or overwritten.
+
+Project execution must use the accepted immutable `jointbuildgs:dev` image ID by
+direct CPU invocation with network disabled, a read-only repository mount, read-only
+artifact-root/source visibility, and only the exact new task namespace mounted
+read-write. Root Compose is not used because it forces an unnecessary GPU runtime and
+broad read-write mounts. `100-accepted.verification.docker_image_digest`, the
+metadata-only acceptance image ID and the executor `--project-image-id` must match,
+and the canonical two-host validator must pass before scientific bytes are opened.
+Promotion is a separate no-scientific-read invocation with repository write access;
+only the declared promoted paths may become dirty.
 
 ## Baseline attrition to reproduce from compact bytes
 
@@ -149,6 +171,27 @@ An activated revision of this packet may implement only the following sequence:
    locally bounded planar-patch segmentation proposal. Its graph/segmentation rules,
    thresholds and tie handling must be specified before the candidate count is
    computed. No threshold sweep or count-target optimization is allowed.
+   The sole proposal is `DETERMINISTIC_LOCAL_PLANE_PATCH_KRUSKAL_v1`:
+   - use the unchanged 5-by-5 local OLS planes and the exact 22,805 cells passing
+     the frozen per-cell roughness mask;
+   - create undirected 8-neighbour edges only when local-normal angle is at most
+     20 degrees, slope-compensated observed height step is at most 0.60 m, and the
+     maximum symmetric cross-plane residual is at most 0.60 m, all inclusive with
+     comparison epsilon `1e-12`;
+   - score an accepted edge by the maximum of its three threshold-normalized
+     quantities and sort by the 12-decimal score, angle, cross-plane residual,
+     height step, then the two flattened cell IDs;
+   - process that order once with deterministic Kruskal merging. Two cells may
+     merge after the local edge checks. A component of three or more cells must
+     additionally have a rank-3 global OLS plane, RMSE at most 0.30 m, maximum
+     absolute residual at most 0.60 m, and every constituent local normal within
+     20 degrees of the global normal. A rejected edge is never revisited;
+   - retain components of at least 20 cells. The component root is its minimum
+     flattened cell ID, and its patch ID is the SHA-256-derived identity of the
+     exact algorithm/config namespace plus the sorted flattened cell IDs.
+   There is no diameter cap, building-bbox input, semantic label, removal pass or
+   second segmentation proposal. Geometry/height/residual/edge/source-purity QA is
+   emitted for every retained patch before building association.
 3. Preserve all existing per-cell height, density, Z-spread, neighbourhood,
    least-squares plane, up-normal and roughness guards. Any changed guard is a
    blocker requiring a new DRAFT.
@@ -185,22 +228,34 @@ An activated revision of this packet may implement only the following sequence:
    six validation and six held-out groups. No largest group may exceed 10% of all
    `E_paired` or 20% of held-out membership. These are claim-support checks, not
    patch-selection objectives.
+   The values 125 and 69 are asymptotic, unclustered planning references only.
+   Confirmatory status additionally requires at least 20 held-out groups and replaces
+   the asymptotic alpha critical value with Student `t_(1-alpha/2,G_held-1)` in the
+   same prospective pair-count equation; the power quantile remains standard normal.
+   Use the achieved held-out group count for the status threshold and report
+   sensitivity at 6, 12, 20, 30, 50 and 100 held-out groups. This is the prospective
+   small-sample cluster guard for later group-clustered inference; `n_eff` alone can
+   never promote a six-group held-out set.
 9. Assign exactly one outcome-free scope status:
-   - `CONFIRMATORY_MAIN_CLAIM_CANDIDATE` only when held-out `n_eff>=125` at
-     `rho=0.05` and every full/held-out group criterion passes;
-   - `CONFIRMATORY_LARGE_EFFECT_ONLY_CANDIDATE` when held-out `69<=n_eff<125` and
-     every full/held-out group criterion passes, limiting powered confirmatory
-     interpretation to effects of about 20 percentage points or larger under the
-     declared assumptions;
-   - `DESCRIPTIVE_CENSUS_ONLY` when held-out is below 69 but all-eligible
-     `n_eff>=69` and the overall group criteria pass; this status permits no
+   - `CONFIRMATORY_MAIN_CLAIM_CANDIDATE` only when at least 20 held-out groups,
+     every full/held-out group criterion, and held-out `n_eff` at `rho=0.05` meet
+     the achieved-`G` Student-t requirement for `delta=0.15`, `q=0.30`;
+   - `CONFIRMATORY_LARGE_EFFECT_ONLY_CANDIDATE` only when the same group criteria
+     hold and held-out `n_eff` meets the achieved-`G` Student-t requirement for
+     `delta=0.20`, `q=0.30`, limiting powered confirmatory interpretation to effects
+     of about 20 percentage points or larger under the declared assumptions;
+   - `DESCRIPTIVE_CENSUS_ONLY` when confirmatory conditions fail but all-eligible
+     `n_eff>=69` under the asymptotic planning reference and the overall group
+     criteria pass; this status permits no
      confirmatory population/generalization claim;
    - `PILOT_ONLY_REFERENCE_SCOPE` otherwise.
    Always report the full `q`/`rho` sensitivity table. No observed method effect may
    enter the calculation or alter these thresholds.
 10. Return either one exact reference/split candidate for human Gate review or
    `BLOCKED_REFERENCE_COVERAGE_OR_INDEPENDENCE`. Do not make a scientific verdict or
-   authorize performance.
+   authorize performance. Only either confirmatory-candidate status may recommend
+   `REFERENCE_SPLIT_CANDIDATE_FOR_HUMAN_GATE_REVIEW`; descriptive or pilot-only
+   status must recommend `BLOCKED_REFERENCE_COVERAGE_OR_INDEPENDENCE`.
 
 ## Acceptance checks
 
@@ -218,6 +273,9 @@ Technical candidate status requires all of the following:
   UAS-patch grouping graph;
 - exact compliance or noncompliance with the precommitted full-set and held-out
   group-count, largest-group, cluster-effective-size and claim-scope rules above;
+- one promoted 199-row Gate ledger that renames predecessor `e_paired`/group/split
+  fields explicitly and joins candidate eligibility, group and split without opening
+  outcomes, plus promoted group/split/claim/power/patch-QA tables bound by manifest;
 - prospective precision/power sensitivity showing exactly which claim scope the
   achieved set can and cannot support;
 - three independent reviews covering scientific isolation, component/group QA and
@@ -257,3 +315,16 @@ runner, tests, output-path contract and crash/no-repeat ledger in new task-owned
 paths. Three independent reviews must approve the committed implementation and this
 packet must be activated in a separate commit. Past packets and receipts remain
 protected.
+
+The proposed implementation paths are:
+
+- `configs/input_and_alignment/gate_s0/uas_reference_coverage_r1_v1/coverage_r1_v1.json`;
+- `scripts/input_and_alignment/gate_s0/uas_reference_coverage_r1_v1/run_uas_reference_coverage_r1.py`;
+- `tests/input_and_alignment/gate_s0/uas_reference_coverage_r1_v1/test_uas_reference_coverage_r1.py`;
+- external add-once namespace
+  `artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/`;
+- promoted candidate manifest/report and Gate tables under
+  `artifacts/manifests/gate_s0/uas_reference_coverage_r1_v1/` and
+  `docs/research/preregistration/gate_s0/uas_reference_coverage_r1_v1/`. The execution
+  ledger remains add-once in the external task namespace and is byte/digest-bound by
+  the promoted manifest; no second mutable Git copy is created.

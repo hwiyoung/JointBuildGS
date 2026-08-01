@@ -1,0 +1,133 @@
+{
+  "schema": "jointbuildgs.gate_s0_uas_reference_coverage_config.v1",
+  "task_id": "P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1",
+  "handoff_id": "P2-W2C-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1",
+  "artifact_root": "/artifacts/JointBuildGS",
+  "output_namespace": "phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1",
+  "predecessor_closed_commit": "5715a4a55986fc79e6e157ccbf69405102fd2198",
+  "predecessor_accepted_source_commit": "853f52c8d843fa8c9bc8d79f62e3e24e1eef10c7",
+  "draft_commit": "21bc7fefd329713172d70df93ecc6e0bfc32902a",
+  "inputs": {
+    "grid": {
+      "path": "phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/reference/c1_grid_v1.npz",
+      "bytes": 3023643,
+      "sha256": "4f72178551e25ef27a952a09faa8331c1464416fcd6c5f66a57a9424e7f0b77b"
+    },
+    "source_checkpoint": {
+      "path": "phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/checkpoints/050-c1_reference_frozen_pre_c5.json",
+      "bytes": 3140,
+      "sha256": "530a2a001189c7c0a4dfa486349b77d80ee5031e2a8b4024793405837dc1611e"
+    },
+    "eligibility": {
+      "path": "phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/freeze/eligibility_ledger_v1.csv",
+      "bytes": 56719,
+      "sha256": "7fdbcb057a0dba9ba1d9462fde86d6af30add5bdbd1e20d39e24cc96fb51554a"
+    },
+    "frozen_config_git_path": "configs/input_and_alignment/gate_s0/freeze_recovery_v1/recovery_v1.json",
+    "frozen_config_git_blob": "4a74d9479236e72b9147294bcd753bb9f096eec4"
+  },
+  "aoi": {
+    "crs": "EPSG:25832",
+    "bbox": [690791.74, 5335864.05, 691154.65, 5336353.85],
+    "cell_m": 1.0,
+    "candidate_count": 199,
+    "candidate_id_set_sha256": "047717a5d678aeed540602a2d4fc9a57a076e2ac9205b22a4de75315c1622fe5"
+  },
+  "per_cell": {
+    "terrain_filter_windows_cells": [3, 7, 15, 31, 51],
+    "minimum_points_per_cell": 3,
+    "minimum_height_above_terrain_m": 2.5,
+    "within_cell_z_std_limit_m": 0.6,
+    "local_window_cells": 5,
+    "minimum_valid_neighbors": 6,
+    "local_plane_rmse_limit_m": 0.3,
+    "minimum_up_dot": 0.5,
+    "vegetation_roughness_limit_m": 0.15,
+    "vegetation_z_std_trigger_m": 0.25,
+    "minimum_component_cells": 20,
+    "baseline_minimum_planar_fraction": 0.7,
+    "expected_planar_cells": 22805,
+    "expected_baseline_components": 4,
+    "expected_baseline_cells": 1184,
+    "expected_diagnostic_components": 143,
+    "expected_diagnostic_cells": 21079
+  },
+  "segmentation": {
+    "method": "DETERMINISTIC_LOCAL_PLANE_PATCH_KRUSKAL_v1",
+    "connectivity": 8,
+    "edge_normal_deg": 20.0,
+    "edge_height_step_m": 0.6,
+    "edge_cross_plane_m": 0.6,
+    "patch_plane_rmse_m": 0.3,
+    "patch_max_abs_residual_m": 0.6,
+    "patch_max_local_normal_deg": 20.0,
+    "final_min_cells": 20,
+    "comparison_epsilon": 1e-12,
+    "sort_decimals": 12,
+    "edge_revisit": false
+  },
+  "eligibility": {
+    "minimum_image_views": 2,
+    "minimum_condition_cells": 4,
+    "split_seed": "20260731",
+    "split_ratios": {
+      "development": 0.6,
+      "validation": 0.2,
+      "held_out": 0.2
+    },
+    "minimum_groups": {
+      "all": 30,
+      "development": 18,
+      "validation": 6,
+      "held_out": 6
+    },
+    "largest_group_fraction_max": {
+      "all": 0.1,
+      "held_out": 0.2
+    }
+  },
+  "power": {
+    "familywise_alpha": 0.05,
+    "contrasts": 2,
+    "per_contrast_two_sided_alpha": 0.025,
+    "desired_power": 0.8,
+    "z_alpha": 2.241402727604947,
+    "z_power": 0.8416212335729143,
+    "discordance_rates": [0.2, 0.3, 0.4],
+    "primary_discordance_rate": 0.3,
+    "net_effects": [0.15, 0.2],
+    "rho_values": [0.0, 0.05, 0.1],
+    "primary_rho": 0.05,
+    "asymptotic_main_claim_n_eff": 125,
+    "asymptotic_large_effect_n_eff": 69,
+    "finite_cluster_critical_value": "STUDENT_T_HELD_OUT_GROUPS_MINUS_1",
+    "minimum_held_out_groups_for_confirmatory_inference": 20,
+    "held_out_group_sensitivity": [6, 12, 20, 30, 50, 100]
+  },
+  "cost_caps": {
+    "retry_max": 1,
+    "scientific_source_files": 1,
+    "scientific_source_bytes": 3023643,
+    "raw_source_reads": 0,
+    "gpu_required": false
+  },
+  "guards": {
+    "raw_uas_access": false,
+    "common_base_access": false,
+    "als_access": false,
+    "c5_jsonl_access": false,
+    "source_lod2_access": false,
+    "images_zip_access": false,
+    "opf_zip_access": false,
+    "performance": false,
+    "quality_scoring": false,
+    "held_out_outcome_access": false,
+    "fusion_w1_access": false,
+    "r_ext_access": false,
+    "threshold_sweep": false,
+    "candidate_count_targeting": false,
+    "roofer_execution": false
+  },
+  "gate_decision": null,
+  "scientific_verdict": null
+}
