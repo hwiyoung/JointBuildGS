@@ -115,7 +115,16 @@
       "C4",
       "C5"
     ],
-    "input": "EXACT_937_RGB_ONLY",
+    "input": "EXACT_937_COLMAP_UNDISTORTED_TRAINING_RGB",
+    "membership_manifest": "CROSSWALK_ONLY_NO_RGB_PRE_READ",
+    "rgb_identity": "BYTES_AND_SHA256_FROM_SAME_NATURAL_INFERENCE_READ",
+    "dimension_checks_before_inference": [
+      "COLMAP_CAMERA_WIDTH_HEIGHT",
+      "CORRESPONDING_GEOMETRIC_DEPTH_WIDTH_HEIGHT_CHANNEL_1"
+    ],
+    "resizing_allowed": false,
+    "resume_namespace": "EXACT_937_COLMAP_UNDISTORTED_R2",
+    "legacy_raw_completion_reuse_allowed": false,
     "prompt_order_by_class": {
       "1": ["roof"],
       "2": ["facade", "wall"],
@@ -291,10 +300,13 @@
       "FROZEN_AOI"
     ],
     "semantic_producer": [
-      "EXACT_937_RGB"
+      "EXACT_937_COLMAP_UNDISTORTED_RGB",
+      "CAMERAS_BIN",
+      "IMAGES_BIN_MEMBERSHIP_CAMERA_BINDING_ONLY",
+      "EXACT_937_GEOMETRIC_DEPTH_HEADERS"
     ],
     "training": [
-      "EXACT_937_RGB",
+      "EXACT_937_COLMAP_UNDISTORTED_RGB",
       "CAMERAS_BIN",
       "IMAGES_BIN",
       "POINTS3D_BIN",

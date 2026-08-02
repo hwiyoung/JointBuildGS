@@ -3,6 +3,9 @@
 - 상태: `DRAFT_NOT_EXECUTION_AUTHORITY`
 - 대상 조건: `C3_GS_image` — 외부 3D prior 없이 현재 영상에서 얻은 공통 기반만 쓰는 GS
 - `scientific_verdict: null`
+- Semantic R2는 원본 R1 RGB가 아니라 exact-937 COLMAP-undistorted training RGB만 사용한다.
+- 입력 manifest는 crosswalk의 membership만 기록하며 RGB를 미리 읽지 않는다. 각 RGB의 bytes/SHA-256은 실제 inference read 한 번에서 계산하고, inference 전에 COLMAP camera 및 대응 geometric depth와 width/height가 일치해야 한다.
+- 기존 raw-R1 completion은 재사용하거나 resize하지 않는다. `EXACT_937_COLMAP_UNDISTORTED_R2` 전용 namespace의 add-once 완료 건만 resume한다.
 - 이 문서는 producer 구현, Experiment Host handoff, 학습 실행을 승인하지 않는다.
 
 ## 한 문장 결정

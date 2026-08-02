@@ -15,10 +15,27 @@ from src.text_identity import canonical_lf_bytes
 
 REPO = Path(__file__).resolve().parents[2]
 CONFIG = REPO / "configs/c3_first_wave_v2/c3_gs_image_seed0.yaml"
+SEMANTIC_CONFIG = REPO / "configs/c3_first_wave_v2/c3_image_semantic_producer_v1.json"
 CROSSWALK = REPO / "artifacts/manifests/gate_s0/common_base_r2b/exact_937_member_crosswalk_v1.json"
 
 
 class C3TrainingContractV2Tests(unittest.TestCase):
+    def test_semantic_r2_paths_bind_colmap_undistorted_namespace(self):
+        contract = json.loads(SEMANTIC_CONFIG.read_text(encoding="utf-8"))
+        self.assertEqual(contract["schema"], "jointbuildgs.c3_image_semantic_producer.v2")
+        self.assertEqual(
+            contract["input"]["role"],
+            "EXACT_937_COLMAP_UNDISTORTED_TRAINING_RGB",
+        )
+        paths = contract["input"]["runtime_paths"]
+        self.assertTrue(paths["colmap_undistorted_rgb_root"].endswith("/colmap_dense/images"))
+        self.assertTrue(paths["cameras_bin"].endswith("/colmap_dense/sparse/cameras.bin"))
+        self.assertTrue(paths["images_bin"].endswith("/colmap_dense/sparse/images.bin"))
+        self.assertTrue(paths["geometric_depth_root"].endswith("/stereo/depth_maps"))
+        for key in ("membership_manifest", "work_dir", "output_dir"):
+            self.assertIn("semantic_937_colmap_undistorted_r2", paths[key])
+        self.assertFalse(contract["resume"]["legacy_raw_completion_reuse_allowed"])
+
     def test_single_recipe_enables_image_derived_support(self):
         cfg = yaml.safe_load(CONFIG.read_text(encoding="utf-8"))
         self.assertEqual(cfg["seed"], 0)
@@ -27,6 +44,7 @@ class C3TrainingContractV2Tests(unittest.TestCase):
         self.assertTrue(cfg["load_depth"])
         self.assertEqual(cfg["w_depth"], 0.03)
         self.assertTrue(cfg["load_semantic"])
+        self.assertIn("semantic_937_colmap_undistorted_r2", cfg["semantic_dir"])
         self.assertEqual(cfg["w_sem"], 0.1)
         self.assertFalse(cfg["load_normal"])
         self.assertEqual(cfg["w_normal"], 0.0)

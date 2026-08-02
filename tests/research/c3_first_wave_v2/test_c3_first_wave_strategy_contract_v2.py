@@ -92,7 +92,21 @@ class TestC3FirstWaveStrategyContractV2(unittest.TestCase):
         sem = self.contract["semantic_producer"]
         self.assertEqual(sem["producer"], "GROUNDED_SAM_IMAGE_ONLY")
         self.assertEqual(sem["common_for_conditions"], ["C3", "C4", "C5"])
-        self.assertEqual(sem["input"], "EXACT_937_RGB_ONLY")
+        self.assertEqual(sem["input"], "EXACT_937_COLMAP_UNDISTORTED_TRAINING_RGB")
+        self.assertEqual(sem["membership_manifest"], "CROSSWALK_ONLY_NO_RGB_PRE_READ")
+        self.assertEqual(
+            sem["rgb_identity"],
+            "BYTES_AND_SHA256_FROM_SAME_NATURAL_INFERENCE_READ",
+        )
+        self.assertFalse(sem["resizing_allowed"])
+        self.assertFalse(sem["legacy_raw_completion_reuse_allowed"])
+        self.assertEqual(
+            sem["dimension_checks_before_inference"],
+            [
+                "COLMAP_CAMERA_WIDTH_HEIGHT",
+                "CORRESPONDING_GEOMETRIC_DEPTH_WIDTH_HEIGHT_CHANNEL_1",
+            ],
+        )
         self.assertEqual(
             sem["classes"],
             {
@@ -110,6 +124,10 @@ class TestC3FirstWaveStrategyContractV2(unittest.TestCase):
         self.assertEqual(sem["groundingdino_revision"], "856dde20aee659246248e20734ef9ba5214f5e44")
         self.assertEqual(sem["segment_anything_revision"], "dca509fe793f601edb92606367a655c15ac00fdf")
         self.assertTrue(sem["must_verify_pinned_runtime_and_assets_before_inference"])
+        self.assertIn(
+            "EXACT_937_COLMAP_UNDISTORTED_RGB",
+            self.contract["stage_mount_allowlists"]["training"],
+        )
         for forbidden in ("FOOTPRINT", "BUILDING_ID", "UAS", "ALS", "LOD1", "LOD2"):
             self.assertIn(forbidden, sem["prohibited_guidance"])
 

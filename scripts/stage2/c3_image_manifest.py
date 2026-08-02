@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the exact-937 semantic input manifest from the compact Git ledger."""
+"""Build exact-937 COLMAP-undistorted semantic membership without RGB pre-reads."""
 
 from __future__ import annotations
 

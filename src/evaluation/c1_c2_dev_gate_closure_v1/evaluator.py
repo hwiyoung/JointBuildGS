@@ -550,10 +550,21 @@ def load_g2_receipts(path: Path, config: Mapping[str, Any], source_records: Mapp
     if (
         data.get("schema") != "jointbuildgs.c1_c2_dev_g2_receipts.v1"
         or data.get("status") != "COMPLETED_PINNED_VALIDATION"
+        or data.get("task_id") != config["task_id"]
         or data.get("scientific_verdict") is not None
+        or data.get("validator") != g2["validator"]
+        or data.get("validator_version") != g2["version"]
+        or data.get("container_image_ref") != g2["container_image_ref"]
         or data.get("container_image_id") != g2["container_image_id"]
+        or data.get("input_mode") != g2["input_mode"]
         or data.get("command") != g2["command"]
+        or data.get("unit_count") != g2["expected_unique_c2_units"]
+        or data.get("sealed_cityjson_read_and_hash_count") != g2["expected_unique_c2_units"]
         or data.get("validator_invocation_count") != g2["expected_unique_c2_units"]
+        or data.get("reconstruction_invocation_count") != 0
+        or data.get("roofer_invocation_count") != 0
+        or data.get("validation_access_count") != 0
+        or data.get("held_out_access_count") != 0
     ):
         raise ClosureError("G2 receipt authority differs")
     units = data.get("units")
@@ -574,22 +585,49 @@ def load_g2_receipts(path: Path, config: Mapping[str, Any], source_records: Mapp
             or unit_id in output
             or not isinstance(source, Mapping)
             or not isinstance(result, Mapping)
-            or unit.get("process_exit_code") != 0
         ):
             raise ClosureError("G2 unit receipt is malformed or duplicated")
         record = source_records.get(str(source.get("path")))
         if record is None or any(source.get(key) != record.get(key) for key in ("path", "bytes", "sha256")):
             raise ClosureError("G2 unit source identity differs from the sealed manifest")
-        features = result.get("features")
-        if not isinstance(features, list) or not features:
-            raise ClosureError("G2 unit receipt has no feature verdicts")
-        for row in features:
-            errors = row.get("error_codes") if isinstance(row, Mapping) else None
-            if not isinstance(errors, list) or row.get("valid") is not (not errors):
-                raise ClosureError("G2 feature verdict is internally inconsistent")
-        observed_valid = all(row["valid"] for row in features)
-        if result.get("unit_valid") is not observed_valid:
-            raise ClosureError("G2 unit aggregate differs from feature verdicts")
+        expected_ids = unit.get("cityjsonseq_feature_ids")
+        stdout = unit.get("stdout")
+        if (
+            not isinstance(expected_ids, list)
+            or not expected_ids
+            or any(not isinstance(value, str) or not value for value in expected_ids)
+            or len(expected_ids) != len(set(expected_ids))
+            or not isinstance(stdout, Mapping)
+            or set(stdout) != {"bytes", "sha256", "text"}
+            or not isinstance(stdout.get("text"), str)
+        ):
+            raise ClosureError("G2 unit stdout or feature identity contract is malformed")
+        stdout_bytes = stdout["text"].encode("utf-8")
+        if stdout.get("bytes") != len(stdout_bytes) or stdout.get("sha256") != sha256_bytes(stdout_bytes):
+            raise ClosureError("G2 unit stdout byte identity differs")
+        parsed = parse_val3dity_cjseq_stdout(stdout_bytes, expected_ids)
+        if result != parsed:
+            raise ClosureError("G2 unit parsed result differs from its stdout")
+        exit_code = unit.get("process_exit_code")
+        if isinstance(exit_code, bool) or not isinstance(exit_code, int):
+            raise ClosureError("G2 unit process exit code is malformed")
+        if exit_code == 0:
+            expected_anomaly = False
+            expected_class = (
+                "VALIDATION_COMPLETED_EXIT_0_VALID"
+                if parsed["unit_valid"]
+                else "VALIDATION_COMPLETED_EXIT_0_INVALID_GEOMETRY"
+            )
+        elif exit_code == 1 and parsed["unit_valid"] is False:
+            expected_anomaly = True
+            expected_class = "VALIDATION_COMPLETED_EXIT_1_INVALID_GEOMETRY"
+        else:
+            raise ClosureError("G2 unit process exit is not an accepted validation completion")
+        if (
+            unit.get("runtime_exit_anomaly") is not expected_anomaly
+            or unit.get("completion_class") != expected_class
+        ):
+            raise ClosureError("G2 unit runtime completion classification differs")
         output[unit_id] = unit
     if set(output) != expected_units:
         raise ClosureError("G2 receipt units differ from the exact six sealed C2 units")

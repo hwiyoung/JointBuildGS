@@ -1,12 +1,27 @@
 {
-  "schema": "jointbuildgs.c3_image_semantic_producer.v1",
+  "schema": "jointbuildgs.c3_image_semantic_producer.v2",
   "status": "IMPLEMENTED_NOT_EXECUTED",
   "input": {
-    "role": "EXACT_937_RGB_ONLY",
+    "role": "EXACT_937_COLMAP_UNDISTORTED_TRAINING_RGB",
     "crosswalk_path": "artifacts/manifests/gate_s0/common_base_r2b/exact_937_member_crosswalk_v1.json",
     "crosswalk_sha256": "b4af779ecfae859de9772ce50cb24326b20c3f86614f6a8957453779d1cd4c17",
-    "image_inventory_path": "artifacts/manifests/gate_s0/gate_s0_image_member_inventory_v1.csv",
-    "image_inventory_sha256": "de9acff049fca4fa14582620a69617157f99b4b5c333938c01b648740ece2b4a"
+    "membership_manifest_schema": "jointbuildgs.c3_image_semantic_membership_manifest.v2",
+    "membership_manifest_policy": "CROSSWALK_ONLY_NO_RGB_PRE_READ",
+    "image_root_role": "COLMAP_DENSE_IMAGES_UNDISTORTED",
+    "camera_binding": "COLMAP_CAMERAS_BIN_PLUS_IMAGES_BIN_WITHOUT_POSE_VALUE_DECODE",
+    "geometric_depth_shape_binding": "MATCH_WIDTH_HEIGHT_CHANNEL_1_BEFORE_INFERENCE",
+    "rgb_identity_policy": "BYTES_AND_SHA256_FROM_THE_SAME_NATURAL_INFERENCE_READ",
+    "standalone_rgb_rehashes": 0,
+    "resizing_allowed": false,
+    "runtime_paths": {
+      "colmap_undistorted_rgb_root": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images",
+      "cameras_bin": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/sparse/cameras.bin",
+      "images_bin": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/sparse/images.bin",
+      "geometric_depth_root": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/stereo/depth_maps",
+      "membership_manifest": "/artifacts/JointBuildGS/phase-payloads/p2/c3_first_wave_v2/prep/semantic_937_colmap_undistorted_r2/membership.json",
+      "work_dir": "/artifacts/JointBuildGS/phase-payloads/p2/c3_first_wave_v2/prep/semantic_937_colmap_undistorted_r2/work",
+      "output_dir": "/artifacts/JointBuildGS/phase-payloads/p2/c3_first_wave_v2/prep/semantic_937_colmap_undistorted_r2/output"
+    }
   },
   "models": {
     "grounded_segment_anything_reference_revision": "126abe633ffe333e16e4a0a4e946bc1003caf757",
@@ -51,6 +66,12 @@
     "ALS"
   ],
   "common_reuse": ["C3", "C4", "C5"],
+  "resume": {
+    "work_namespace": "EXACT_937_COLMAP_UNDISTORTED_R2",
+    "completed_image_policy": "ADD_ONCE_EXACT_RECEIPT_ONLY",
+    "legacy_raw_completion_reuse_allowed": false,
+    "legacy_raw_completion_resize_allowed": false
+  },
   "downloads_during_inference": 0,
   "scientific_verdict": null
 }

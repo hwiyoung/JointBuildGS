@@ -10,7 +10,6 @@ from __future__ import annotations
 from dataclasses import dataclass
 from io import BytesIO
 import ctypes
-import csv
 import errno
 import hashlib
 import json
@@ -19,6 +18,7 @@ import os
 from pathlib import Path, PurePosixPath
 import re
 import shutil
+import struct
 import tempfile
 from typing import Any, Callable, Mapping, Sequence
 
@@ -40,6 +40,7 @@ from .c3_image_semantic_assets import (
     load_c3_contract,
     verify_c3_asset_receipt,
 )
+from .colmap_io import CAMERA_MODEL_IDS
 
 
 REPO = Path(__file__).resolve().parents[2]
@@ -48,17 +49,15 @@ CANONICAL_CROSSWALK = (
 )
 CROSSWALK_BYTES = 378466
 CROSSWALK_SHA256 = "b4af779ecfae859de9772ce50cb24326b20c3f86614f6a8957453779d1cd4c17"
-CANONICAL_IMAGE_INVENTORY = (
-    REPO / "artifacts/manifests/gate_s0/gate_s0_image_member_inventory_v1.csv"
-)
-IMAGE_INVENTORY_BYTES = 151113
-IMAGE_INVENTORY_SHA256 = "de9acff049fca4fa14582620a69617157f99b4b5c333938c01b648740ece2b4a"
 SEMANTIC_CONTRACT = REPO / "configs/c3_first_wave_v2/c3_image_semantic_producer_v1.json"
-SEMANTIC_CONTRACT_BYTES = 1936
-SEMANTIC_CONTRACT_SHA256 = "53a0a8536a036840930da33a1acddfa372780600fa5fa74b520af76185525978"
-INPUT_SCHEMA = "jointbuildgs.c3_image_semantic_input_manifest.v1"
-FINAL_SCHEMA = "jointbuildgs.c3_image_semantic_output_manifest.v1"
-COMPLETION_SCHEMA = "jointbuildgs.c3_image_semantic_completion.v1"
+SEMANTIC_CONTRACT_BYTES = 3451
+SEMANTIC_CONTRACT_SHA256 = "61eb4cecab6b2e998576aca21bef676394c922a40eaee522421f0c3e827bcf3d"
+INPUT_SCHEMA = "jointbuildgs.c3_image_semantic_membership_manifest.v2"
+FINAL_SCHEMA = "jointbuildgs.c3_image_semantic_output_manifest.v2"
+COMPLETION_SCHEMA = "jointbuildgs.c3_image_semantic_completion.v2"
+WORK_NAMESPACE_SCHEMA = "jointbuildgs.c3_image_semantic_work_namespace.v2"
+WORK_NAMESPACE_ID = "EXACT_937_COLMAP_UNDISTORTED_R2"
+SOURCE_ROLE = "EXACT_937_COLMAP_UNDISTORTED_TRAINING_RGB"
 PROMPTS: dict[int, tuple[str, ...]] = {
     1: ("roof",),
     2: ("facade", "wall"),
@@ -205,7 +204,11 @@ class GroundedSamImageSemanticInference(GroundedSamRoofInference):
         return SemanticResult(resolve_semantic_pixels((height, width), candidates), candidates)
 
 
-def canonical_image_names(crosswalk_path: Path = CANONICAL_CROSSWALK) -> list[str]:
+def canonical_membership_rows(
+    crosswalk_path: Path = CANONICAL_CROSSWALK,
+) -> list[dict[str, Any]]:
+    """Return membership only; do not open RGB, COLMAP binaries, or depth payloads."""
+
     data = _canonical_bound_text(crosswalk_path, "exact-937 crosswalk")
     if len(data) != CROSSWALK_BYTES or sha256_bytes(data) != CROSSWALK_SHA256:
         raise C3SemanticError("exact-937 crosswalk identity differs")
@@ -218,7 +221,33 @@ def canonical_image_names(crosswalk_path: Path = CANONICAL_CROSSWALK) -> list[st
     names = [row.get("basename") for row in rows]
     if len(names) != 937 or len(set(names)) != 937 or any(not isinstance(name, str) for name in names):
         raise C3SemanticError("exact-937 crosswalk membership differs")
-    return names
+    result: list[dict[str, Any]] = []
+    for row in rows:
+        if (
+            type(row.get("colmap_image_id")) is not int
+            or row["colmap_image_id"] <= 0
+            or type(row.get("colmap_camera_model_id")) is not int
+            or row["colmap_camera_model_id"] not in CAMERA_MODEL_IDS
+            or row.get("geometric_depth") is not True
+        ):
+            raise C3SemanticError("exact-937 crosswalk COLMAP/depth membership differs")
+        name = row["basename"]
+        result.append(
+            {
+                "name": name,
+                "relative_path": name,
+                "colmap_image_id": row["colmap_image_id"],
+                "colmap_camera_model_id": row["colmap_camera_model_id"],
+                "geometric_depth_relative_path": f"{name}.geometric.bin",
+            }
+        )
+    if len({row["colmap_image_id"] for row in result}) != 937:
+        raise C3SemanticError("exact-937 crosswalk COLMAP image IDs are duplicated")
+    return result
+
+
+def canonical_image_names(crosswalk_path: Path = CANONICAL_CROSSWALK) -> list[str]:
+    return [row["name"] for row in canonical_membership_rows(crosswalk_path)]
 
 
 def _safe_relative(value: Any) -> PurePosixPath:
@@ -233,69 +262,74 @@ def _safe_relative(value: Any) -> PurePosixPath:
 def load_input_manifest(path: Path, expected_names: Sequence[str] | None = None) -> tuple[list[dict[str, Any]], str]:
     data = path.read_bytes()
     value = json.loads(data)
-    if not isinstance(value, dict) or set(value) != {"schema", "images", "scientific_verdict"}:
+    if not isinstance(value, dict) or set(value) != {
+        "schema",
+        "source_role",
+        "images",
+        "scientific_verdict",
+    }:
         raise C3SemanticError("input manifest exposes fields outside the image-only contract")
-    if value["schema"] != INPUT_SCHEMA or value["scientific_verdict"] is not None:
+    if (
+        value["schema"] != INPUT_SCHEMA
+        or value["source_role"] != SOURCE_ROLE
+        or value["scientific_verdict"] is not None
+    ):
         raise C3SemanticError("input manifest schema or scientific_verdict differs")
     rows = value["images"]
     if not isinstance(rows, list):
         raise C3SemanticError("input manifest images must be an array")
-    expected = list(canonical_image_names() if expected_names is None else expected_names)
+    canonical_rows = canonical_membership_rows() if expected_names is None else None
+    expected = list(
+        [row["name"] for row in canonical_rows]
+        if canonical_rows is not None
+        else expected_names or ()
+    )
     if len(expected) != len(set(expected)):
         raise C3SemanticError("expected image names are duplicated")
     observed: list[str] = []
     for row in rows:
-        if not isinstance(row, dict) or set(row) != {"name", "relative_path", "bytes", "sha256"}:
-            raise C3SemanticError("input image row has non-image fields")
+        if not isinstance(row, dict) or set(row) != {
+            "name",
+            "relative_path",
+            "colmap_image_id",
+            "colmap_camera_model_id",
+            "geometric_depth_relative_path",
+        }:
+            raise C3SemanticError("input image row is not membership-only")
         relative = _safe_relative(row["relative_path"])
+        depth_relative = _safe_relative(row["geometric_depth_relative_path"])
         if (
             not isinstance(row["name"], str)
             or relative.name != row["name"]
-            or type(row["bytes"]) is not int
-            or row["bytes"] <= 0
+            or depth_relative.name != f"{row['name']}.geometric.bin"
+            or type(row["colmap_image_id"]) is not int
+            or row["colmap_image_id"] <= 0
+            or type(row["colmap_camera_model_id"]) is not int
+            or row["colmap_camera_model_id"] not in CAMERA_MODEL_IDS
         ):
-            raise C3SemanticError("input image name/path/byte contract differs")
-        if not isinstance(row["sha256"], str) or re.fullmatch(r"[0-9a-f]{64}", row["sha256"]) is None:
-            raise C3SemanticError("input image SHA-256 is invalid")
+            raise C3SemanticError("input membership name/path/COLMAP contract differs")
         observed.append(row["name"])
     if observed != expected:
         raise C3SemanticError("input manifest does not equal the exact ordered RGB-name set")
+    if canonical_rows is not None and rows != canonical_rows:
+        raise C3SemanticError("input manifest does not equal the canonical COLMAP membership")
+    if len({row["colmap_image_id"] for row in rows}) != len(rows):
+        raise C3SemanticError("input manifest COLMAP image IDs are duplicated")
     return rows, sha256_bytes(data)
 
 
-def build_input_manifest(
-    output_path: Path,
-    inventory_path: Path = CANONICAL_IMAGE_INVENTORY,
-) -> dict[str, Any]:
-    """Bind the exact 937 extracted RGB files from the existing R1 ledger.
-
-    This reads only the compact Git CSV.  It does not reopen or rehash Images.zip
-    or any extracted image; the producer verifies each image in its inference
-    stream against the already attested per-member digest.
-    """
+def build_input_manifest(output_path: Path) -> dict[str, Any]:
+    """Build exact-937 membership without opening any RGB or derivative payload."""
 
     if output_path.exists():
         raise C3SemanticError("semantic input manifest is add-once and already exists")
-    data = _canonical_bound_text(inventory_path, "canonical image inventory")
-    if len(data) != IMAGE_INVENTORY_BYTES or sha256_bytes(data) != IMAGE_INVENTORY_SHA256:
-        raise C3SemanticError("canonical image inventory identity differs")
-    ledger = {
-        row["basename"]: row
-        for row in csv.DictReader(data.decode("utf-8").splitlines())
+    rows = canonical_membership_rows()
+    value = {
+        "schema": INPUT_SCHEMA,
+        "source_role": SOURCE_ROLE,
+        "images": rows,
+        "scientific_verdict": None,
     }
-    names = canonical_image_names()
-    if len(ledger) != 962 or any(name not in ledger for name in names):
-        raise C3SemanticError("canonical image inventory membership differs")
-    rows = [
-        {
-            "name": name,
-            "relative_path": name,
-            "bytes": int(ledger[name]["uncompressed_bytes"]),
-            "sha256": ledger[name]["sha256"],
-        }
-        for name in names
-    ]
-    value = {"schema": INPUT_SCHEMA, "images": rows, "scientific_verdict": None}
     payload = canonical_json_bytes(value)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.NamedTemporaryFile(
@@ -311,19 +345,229 @@ def build_input_manifest(
         "bytes": len(payload),
         "sha256": sha256_bytes(payload),
         "image_count": len(rows),
-        "raw_image_reads": 0,
+        "rgb_pre_reads": 0,
+        "colmap_binary_pre_reads": 0,
+        "depth_pre_reads": 0,
         "images_zip_reads_or_hashes": 0,
         "scientific_verdict": None,
     }
 
 
-def _runtime_pins(lock_path: Path, receipt_path: Path, lock: Mapping[str, Any]) -> dict[str, Any]:
-    contract_data = SEMANTIC_CONTRACT.read_bytes()
+def _require_regular_file(path: Path, role: str) -> None:
+    if path.is_symlink() or not path.is_file():
+        raise C3SemanticError(f"{role} must be a regular non-symlink file")
+
+
+def _read_exact(handle: Any, size: int, role: str) -> bytes:
+    value = handle.read(size)
+    if len(value) != size:
+        raise C3SemanticError(f"{role} is truncated")
+    return value
+
+
+def _load_colmap_semantic_bindings(
+    cameras_bin: Path,
+    images_bin: Path,
+) -> tuple[dict[int, dict[str, Any]], dict[int, dict[str, Any]]]:
+    """Read camera/name bindings while skipping pose bytes without decoding them."""
+
+    _require_regular_file(cameras_bin, "COLMAP cameras.bin")
+    _require_regular_file(images_bin, "COLMAP images.bin")
+    cameras: dict[int, dict[str, Any]] = {}
+    with cameras_bin.open("rb") as handle:
+        count = struct.unpack("<Q", _read_exact(handle, 8, "COLMAP cameras.bin"))[0]
+        for _ in range(count):
+            camera_id, model_id, width, height = struct.unpack(
+                "<iiQQ", _read_exact(handle, 24, "COLMAP cameras.bin")
+            )
+            if model_id not in CAMERA_MODEL_IDS or camera_id in cameras:
+                raise C3SemanticError("COLMAP camera model or ID differs")
+            model, parameter_count = CAMERA_MODEL_IDS[model_id]
+            _read_exact(handle, 8 * parameter_count, "COLMAP cameras.bin")
+            if width <= 0 or height <= 0:
+                raise C3SemanticError("COLMAP camera dimensions are invalid")
+            cameras[camera_id] = {
+                "camera_id": camera_id,
+                "camera_model_id": model_id,
+                "camera_model": model,
+                "width": width,
+                "height": height,
+                "pose_values_decoded": 0,
+                "pose_values_exposed_to_inference": 0,
+            }
+        if handle.read(1):
+            raise C3SemanticError("COLMAP cameras.bin has unexpected trailing bytes")
+    images: dict[int, dict[str, Any]] = {}
+    names: set[str] = set()
+    with images_bin.open("rb") as handle:
+        file_size = os.fstat(handle.fileno()).st_size
+        count = struct.unpack("<Q", _read_exact(handle, 8, "COLMAP images.bin"))[0]
+        for _ in range(count):
+            image_id = struct.unpack("<I", _read_exact(handle, 4, "COLMAP images.bin"))[0]
+            if 56 > file_size - handle.tell():
+                raise C3SemanticError("COLMAP images.bin pose region is truncated")
+            handle.seek(56, os.SEEK_CUR)
+            camera_id = struct.unpack("<I", _read_exact(handle, 4, "COLMAP images.bin"))[0]
+            encoded_name = bytearray()
+            while True:
+                character = _read_exact(handle, 1, "COLMAP images.bin image name")
+                if character == b"\x00":
+                    break
+                encoded_name.extend(character)
+                if len(encoded_name) > 4096:
+                    raise C3SemanticError("COLMAP image name is unreasonably long")
+            try:
+                name = encoded_name.decode("utf-8")
+            except UnicodeDecodeError as error:
+                raise C3SemanticError("COLMAP image name is not UTF-8") from error
+            point_count = struct.unpack(
+                "<Q", _read_exact(handle, 8, "COLMAP images.bin")
+            )[0]
+            skip_bytes = 24 * point_count
+            if skip_bytes > file_size - handle.tell():
+                raise C3SemanticError("COLMAP images.bin POINTS2D payload is truncated")
+            handle.seek(skip_bytes, os.SEEK_CUR)
+            if image_id in images or name in names or camera_id not in cameras:
+                raise C3SemanticError("COLMAP image ID/name/camera binding differs")
+            images[image_id] = {"image_id": image_id, "camera_id": camera_id, "name": name}
+            names.add(name)
+        if handle.tell() != file_size:
+            raise C3SemanticError("COLMAP images.bin has unexpected trailing bytes")
+    return cameras, images
+
+
+def _expected_colmap_binding(
+    row: Mapping[str, Any],
+    cameras: Mapping[int, Mapping[str, Any]],
+    images: Mapping[int, Mapping[str, Any]],
+) -> dict[str, Any]:
+    image = images.get(row["colmap_image_id"])
+    if not isinstance(image, Mapping) or image.get("name") != row["name"]:
+        raise C3SemanticError("membership row does not match COLMAP images.bin")
+    camera = cameras.get(image["camera_id"])
+    if (
+        not isinstance(camera, Mapping)
+        or camera.get("camera_model_id") != row["colmap_camera_model_id"]
+    ):
+        raise C3SemanticError("membership row does not match COLMAP cameras.bin")
+    return {"image_id": row["colmap_image_id"], **dict(camera)}
+
+
+def _read_colmap_depth_shape(path: Path, relative_path: str) -> dict[str, Any]:
+    """Read only the COLMAP array header and bind its exact payload length."""
+
+    _require_regular_file(path, "COLMAP geometric depth")
+    with path.open("rb") as handle:
+        header = bytearray()
+        while header.count(b"&") < 3:
+            header.extend(_read_exact(handle, 1, "COLMAP geometric depth header"))
+            if len(header) > 128:
+                raise C3SemanticError("COLMAP geometric depth header is invalid")
+        try:
+            fields = header.decode("ascii").rstrip("&").split("&")
+            width, height, channels = (int(value) for value in fields)
+        except (UnicodeDecodeError, ValueError) as error:
+            raise C3SemanticError("COLMAP geometric depth header is invalid") from error
+        size = os.fstat(handle.fileno()).st_size
+        expected_size = len(header) + width * height * channels * 4
+    if width <= 0 or height <= 0 or channels != 1 or size != expected_size:
+        raise C3SemanticError("COLMAP geometric depth shape or byte length differs")
+    return {
+        "relative_path": relative_path,
+        "bytes": size,
+        "width": width,
+        "height": height,
+        "channels": channels,
+        "shape_matches_rgb": True,
+    }
+
+
+def _read_undistorted_rgb_once(path: Path, relative_path: str) -> tuple[np.ndarray, dict[str, Any]]:
+    """Natural inference read: digest and decode the same byte stream exactly once."""
+
+    _require_regular_file(path, "COLMAP undistorted RGB")
+    source = path.read_bytes()
+    try:
+        with PILImage.open(BytesIO(source)) as image:
+            rgb = np.asarray(image.convert("RGB"), dtype=np.uint8)
+    except (OSError, ValueError) as error:
+        raise C3SemanticError("COLMAP undistorted RGB cannot be decoded") from error
+    if rgb.ndim != 3 or rgb.shape[2] != 3:
+        raise C3SemanticError("COLMAP undistorted RGB decode differs")
+    return rgb, {
+        "role": SOURCE_ROLE,
+        "relative_path": relative_path,
+        "bytes": len(source),
+        "sha256": sha256_bytes(source),
+        "width": int(rgb.shape[1]),
+        "height": int(rgb.shape[0]),
+        "decoded_mode": "RGB",
+        "natural_read_count": 1,
+        "standalone_rehash_count": 0,
+        "resize_count": 0,
+    }
+
+
+def _load_semantic_producer_contract() -> dict[str, Any]:
+    contract_data = _canonical_bound_text(SEMANTIC_CONTRACT, "C3 semantic producer contract")
     if (
         len(contract_data) != SEMANTIC_CONTRACT_BYTES
         or sha256_bytes(contract_data) != SEMANTIC_CONTRACT_SHA256
     ):
         raise C3SemanticError("C3 semantic producer contract identity differs")
+    value = json.loads(contract_data)
+    if (
+        not isinstance(value, dict)
+        or value.get("schema") != "jointbuildgs.c3_image_semantic_producer.v2"
+        or value.get("scientific_verdict") is not None
+        or not isinstance(value.get("input"), dict)
+        or not isinstance(value["input"].get("runtime_paths"), dict)
+    ):
+        raise C3SemanticError("C3 semantic producer contract schema differs")
+    return value
+
+
+def _bind_semantic_runtime_paths(
+    contract: Mapping[str, Any],
+    *,
+    image_root: Path,
+    cameras_bin: Path,
+    images_bin: Path,
+    geometric_depth_root: Path,
+    input_manifest: Path,
+    work_dir: Path,
+    output_dir: Path,
+    test_only_allow_unbound_paths: bool,
+    expected_names: Sequence[str] | None,
+) -> None:
+    if test_only_allow_unbound_paths:
+        if expected_names is None:
+            raise C3SemanticError("test-only unbound paths require an explicit synthetic roster")
+        return
+    configured = contract["input"]["runtime_paths"]
+    actual = {
+        "colmap_undistorted_rgb_root": image_root,
+        "cameras_bin": cameras_bin,
+        "images_bin": images_bin,
+        "geometric_depth_root": geometric_depth_root,
+        "membership_manifest": input_manifest,
+        "work_dir": work_dir,
+        "output_dir": output_dir,
+    }
+    if set(configured) != set(actual) or any(
+        not isinstance(configured[key], str)
+        or Path(configured[key]).resolve(strict=False) != path.resolve(strict=False)
+        for key, path in actual.items()
+    ):
+        raise C3SemanticError("runtime paths differ from the exact semantic producer contract")
+
+
+def _runtime_pins(
+    lock_path: Path,
+    receipt_path: Path,
+    lock: Mapping[str, Any],
+    producer_contract: Mapping[str, Any],
+) -> dict[str, Any]:
     receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
     artifacts = receipt.get("artifacts", {})
     if (
@@ -375,6 +619,11 @@ def _runtime_pins(lock_path: Path, receipt_path: Path, lock: Mapping[str, Any]) 
             "overlap_rule": "HIGHEST_DINO_SCORE_EXACT_TIE_LOWER_CLASS_ID",
             "sam_masks": "PER_INSTANCE_MULTIMASK_FALSE",
         },
+        "input_contract": {
+            "role": producer_contract["input"]["role"],
+            "runtime_paths": producer_contract["input"]["runtime_paths"],
+            "work_namespace": producer_contract["resume"]["work_namespace"],
+        },
     }
 
 
@@ -402,6 +651,7 @@ def _validate_completion(
     directory: Path,
     index: int,
     row: Mapping[str, Any],
+    expected_colmap: Mapping[str, Any],
     pins_sha256: str,
 ) -> dict[str, Any]:
     receipt_path, mask_path = directory / "receipt.json", directory / "mask.png"
@@ -422,7 +672,10 @@ def _validate_completion(
         != {
             "schema",
             "index",
-            "input",
+            "membership",
+            "source_rgb",
+            "colmap_camera",
+            "geometric_depth",
             "output",
             "candidate_count",
             "runtime_pins_sha256",
@@ -430,13 +683,65 @@ def _validate_completion(
         }
         or receipt.get("schema") != COMPLETION_SCHEMA
         or receipt.get("index") != index
-        or receipt.get("input") != dict(row)
+        or receipt.get("membership") != dict(row)
+        or receipt.get("colmap_camera") != dict(expected_colmap)
         or receipt.get("runtime_pins_sha256") != pins_sha256
         or type(receipt.get("candidate_count")) is not int
         or receipt["candidate_count"] < 0
         or receipt.get("scientific_verdict") is not None
     ):
         raise C3SemanticError("completed image receipt differs from the exact run contract")
+    source_rgb = receipt.get("source_rgb")
+    if (
+        not isinstance(source_rgb, dict)
+        or set(source_rgb)
+        != {
+            "role",
+            "relative_path",
+            "bytes",
+            "sha256",
+            "width",
+            "height",
+            "decoded_mode",
+            "natural_read_count",
+            "standalone_rehash_count",
+            "resize_count",
+        }
+        or source_rgb.get("role") != SOURCE_ROLE
+        or source_rgb.get("relative_path") != row["relative_path"]
+        or type(source_rgb.get("bytes")) is not int
+        or source_rgb["bytes"] <= 0
+        or not isinstance(source_rgb.get("sha256"), str)
+        or re.fullmatch(r"[0-9a-f]{64}", source_rgb["sha256"]) is None
+        or source_rgb.get("width") != expected_colmap["width"]
+        or source_rgb.get("height") != expected_colmap["height"]
+        or source_rgb.get("decoded_mode") != "RGB"
+        or source_rgb.get("natural_read_count") != 1
+        or source_rgb.get("standalone_rehash_count") != 0
+        or source_rgb.get("resize_count") != 0
+    ):
+        raise C3SemanticError("completed undistorted RGB ledger differs")
+    depth = receipt.get("geometric_depth")
+    if (
+        not isinstance(depth, dict)
+        or set(depth)
+        != {
+            "relative_path",
+            "bytes",
+            "width",
+            "height",
+            "channels",
+            "shape_matches_rgb",
+        }
+        or depth.get("relative_path") != row["geometric_depth_relative_path"]
+        or type(depth.get("bytes")) is not int
+        or depth["bytes"] <= 0
+        or depth.get("width") != expected_colmap["width"]
+        or depth.get("height") != expected_colmap["height"]
+        or depth.get("channels") != 1
+        or depth.get("shape_matches_rgb") is not True
+    ):
+        raise C3SemanticError("completed geometric-depth shape binding differs")
     mask = mask_path.read_bytes()
     output = receipt.get("output")
     if (
@@ -458,6 +763,8 @@ def _validate_completion(
         or output["width"] <= 0
         or type(output.get("height")) is not int
         or output["height"] <= 0
+        or output["width"] != source_rgb["width"]
+        or output["height"] != source_rgb["height"]
         or output.get("dtype") != "uint8"
         or not isinstance(output.get("class_pixel_counts"), dict)
         or set(output["class_pixel_counts"]) != {"0", "1", "2", "3"}
@@ -498,6 +805,39 @@ def _publish_file_noreplace(staging: Path, target: Path) -> None:
             staging.unlink()
 
 
+def _bind_work_namespace(work_dir: Path) -> None:
+    """Reject legacy/raw completion trees before creating the R2 namespace."""
+
+    if work_dir.is_symlink() or (work_dir.exists() and not work_dir.is_dir()):
+        raise C3SemanticError("semantic work directory must be a real directory")
+    work_dir.mkdir(parents=True, exist_ok=True)
+    marker = work_dir / "namespace.json"
+    expected = {
+        "schema": WORK_NAMESPACE_SCHEMA,
+        "namespace_id": WORK_NAMESPACE_ID,
+        "source_role": SOURCE_ROLE,
+        "legacy_raw_completion_reuse_allowed": False,
+        "resize_legacy_completion_allowed": False,
+        "scientific_verdict": None,
+    }
+    if marker.exists():
+        _require_regular_file(marker, "semantic work namespace marker")
+        if json.loads(marker.read_text(encoding="utf-8")) != expected:
+            raise C3SemanticError("semantic work namespace marker differs")
+        return
+    if any(work_dir.iterdir()):
+        raise C3SemanticError("legacy or unbound semantic work directory cannot be reused")
+    payload = canonical_json_bytes(expected)
+    with tempfile.NamedTemporaryFile(
+        dir=work_dir, prefix=".namespace.json.", delete=False
+    ) as handle:
+        staging = Path(handle.name)
+        handle.write(payload)
+        handle.flush()
+        os.fsync(handle.fileno())
+    _publish_file_noreplace(staging, marker)
+
+
 def _publish_directory_noreplace(staging: Path, target: Path) -> None:
     """Linux atomic directory publication using renameat2(RENAME_NOREPLACE)."""
 
@@ -534,6 +874,9 @@ RuntimeVerifier = Callable[[Mapping[str, Any]], Mapping[str, Any]]
 def produce(
     *,
     image_root: Path,
+    cameras_bin: Path,
+    images_bin: Path,
+    geometric_depth_root: Path,
     input_manifest: Path,
     lock_path: Path,
     asset_root: Path,
@@ -542,6 +885,7 @@ def produce(
     output_dir: Path,
     device: str = "cuda",
     expected_names: Sequence[str] | None = None,
+    test_only_allow_unbound_paths: bool = False,
     asset_verifier: AssetVerifier = verify_c3_asset_receipt,
     runtime_verifier: RuntimeVerifier = audit_c3_runtime,
     inference_factory: InferenceFactory | None = None,
@@ -552,19 +896,49 @@ def produce(
         raise C3SemanticError("final semantic output directory is add-once and already exists")
     if image_root.is_symlink() or not image_root.is_dir():
         raise C3SemanticError("image root must be a real directory")
+    if geometric_depth_root.is_symlink() or not geometric_depth_root.is_dir():
+        raise C3SemanticError("geometric depth root must be a real directory")
+    _require_regular_file(cameras_bin, "COLMAP cameras.bin")
+    _require_regular_file(images_bin, "COLMAP images.bin")
     if asset_root.is_symlink() or not asset_root.is_dir():
         raise C3SemanticError("asset root must be a real directory")
     if any(
         _is_within(target, protected)
         for target in (work_dir, output_dir)
-        for protected in (image_root, asset_root)
+        for protected in (
+            image_root,
+            geometric_depth_root,
+            cameras_bin.parent,
+            images_bin.parent,
+            asset_root,
+        )
     ):
-        raise C3SemanticError("work/output path must be outside image and model input roots")
+        raise C3SemanticError("work/output path must be outside all immutable input roots")
     if _is_within(output_dir, work_dir) or _is_within(work_dir, output_dir):
         raise C3SemanticError("work and final output namespaces must be disjoint")
+    producer_contract = _load_semantic_producer_contract()
+    _bind_semantic_runtime_paths(
+        producer_contract,
+        image_root=image_root,
+        cameras_bin=cameras_bin,
+        images_bin=images_bin,
+        geometric_depth_root=geometric_depth_root,
+        input_manifest=input_manifest,
+        work_dir=work_dir,
+        output_dir=output_dir,
+        test_only_allow_unbound_paths=test_only_allow_unbound_paths,
+        expected_names=expected_names,
+    )
     rows, input_manifest_sha = load_input_manifest(input_manifest, expected_names)
+    cameras, images = _load_colmap_semantic_bindings(cameras_bin, images_bin)
+    expected_ids = {row["colmap_image_id"] for row in rows}
+    if set(images) != expected_ids:
+        raise C3SemanticError("COLMAP images.bin does not equal exact membership")
+    colmap_bindings = [
+        _expected_colmap_binding(row, cameras, images) for row in rows
+    ]
     lock = load_c3_contract(lock_path)
-    pins = _runtime_pins(lock_path, asset_receipt, lock)
+    pins = _runtime_pins(lock_path, asset_receipt, lock, producer_contract)
     pins_sha = sha256_bytes(canonical_json_bytes(pins))
     factory = inference_factory or (
         lambda locked, resolved, target: GroundedSamImageSemanticInference(
@@ -572,22 +946,38 @@ def produce(
         )
     )
     inference: Any | None = None
-    if work_dir.is_symlink():
-        raise C3SemanticError("semantic work directory must not be a symlink")
+    _bind_work_namespace(work_dir)
     completed_root = work_dir / "completed"
-    completed_root.mkdir(parents=True, exist_ok=True)
+    if os.path.lexists(completed_root):
+        if completed_root.is_symlink() or not completed_root.is_dir():
+            raise C3SemanticError("semantic completed root must be a real directory")
+    else:
+        try:
+            completed_root.mkdir()
+        except FileExistsError as error:
+            raise C3SemanticError("semantic completed root appeared during creation") from error
+        if completed_root.is_symlink() or not completed_root.is_dir():
+            raise C3SemanticError("semantic completed root must be a real directory")
     expected_completion_names = {_completion_name(index, row["name"]) for index, row in enumerate(rows)}
     unexpected = {path.name for path in completed_root.iterdir()} - expected_completion_names
     if unexpected:
         raise C3SemanticError("semantic progress contains entries outside the exact image set")
+    prevalidated: dict[int, dict[str, Any]] = {}
+    for index, (row, colmap_binding) in enumerate(zip(rows, colmap_bindings)):
+        completion = completed_root / _completion_name(index, row["name"])
+        if os.path.lexists(completion):
+            prevalidated[index] = _validate_completion(
+                completion, index, row, colmap_binding, pins_sha
+            )
     completions: list[dict[str, Any]] = []
     resumed = 0
     started = 0
     root = image_root.resolve()
-    for index, row in enumerate(rows):
+    depth_root = geometric_depth_root.resolve()
+    for index, (row, colmap_binding) in enumerate(zip(rows, colmap_bindings)):
         completion = completed_root / _completion_name(index, row["name"])
-        if completion.exists():
-            completions.append(_validate_completion(completion, index, row, pins_sha))
+        if index in prevalidated:
+            completions.append(prevalidated[index])
             resumed += 1
             continue
         relative = _safe_relative(row["relative_path"])
@@ -598,24 +988,44 @@ def produce(
             raise C3SemanticError("input image is missing or escapes image root") from error
         if image_path.is_symlink() or not image_path.is_file():
             raise C3SemanticError("input image must be a regular non-symlink file")
+        rgb, source_rgb = _read_undistorted_rgb_once(image_path, row["relative_path"])
+        if (
+            source_rgb["width"] != colmap_binding["width"]
+            or source_rgb["height"] != colmap_binding["height"]
+        ):
+            raise C3SemanticError("undistorted RGB dimensions differ from COLMAP camera")
+        depth_relative = _safe_relative(row["geometric_depth_relative_path"])
+        depth_path = depth_root.joinpath(*depth_relative.parts)
+        try:
+            depth_path.resolve(strict=True).relative_to(depth_root)
+        except (FileNotFoundError, ValueError) as error:
+            raise C3SemanticError("geometric depth is missing or escapes depth root") from error
+        depth_binding = _read_colmap_depth_shape(
+            depth_path, row["geometric_depth_relative_path"]
+        )
+        if (
+            depth_binding["width"] != source_rgb["width"]
+            or depth_binding["height"] != source_rgb["height"]
+        ):
+            raise C3SemanticError("geometric depth shape differs from undistorted RGB")
         if inference is None:
             runtime_verifier(lock)
             assets = asset_verifier(lock, lock_path, asset_root, asset_receipt)
             inference = factory(lock, assets, device)
-        source = image_path.read_bytes()
-        if len(source) != row["bytes"] or sha256_bytes(source) != row["sha256"]:
-            raise C3SemanticError("input image identity differs from its exact manifest")
-        with PILImage.open(BytesIO(source)) as image:
-            rgb = np.asarray(image.convert("RGB"), dtype=np.uint8)
         result = inference(rgb)
         if not isinstance(result, SemanticResult):
             raise C3SemanticError("semantic inference returned an unexpected result type")
+        if result.labels.shape != (source_rgb["height"], source_rgb["width"]):
+            raise C3SemanticError("semantic inference resized or reshaped the undistorted RGB")
         png = _png_bytes(result.labels)
         counts = {str(class_id): int(np.count_nonzero(result.labels == class_id)) for class_id in range(4)}
         receipt = {
             "schema": COMPLETION_SCHEMA,
             "index": index,
-            "input": dict(row),
+            "membership": dict(row),
+            "source_rgb": source_rgb,
+            "colmap_camera": colmap_binding,
+            "geometric_depth": depth_binding,
             "output": {
                 "bytes": len(png),
                 "sha256": sha256_bytes(png),
@@ -658,14 +1068,18 @@ def produce(
             records.append(
                 {
                     "name": row["name"],
-                    "input_sha256": row["sha256"],
+                    "membership": dict(row),
+                    "undistorted_rgb": receipt["source_rgb"],
+                    "colmap_camera": receipt["colmap_camera"],
+                    "geometric_depth": receipt["geometric_depth"],
                     "output_path": f"masks/{output_name}",
                     **receipt["output"],
                 }
             )
         final_manifest = {
             "schema": FINAL_SCHEMA,
-            "status": "COMPLETED_IMAGE_ONLY_DIAGNOSTIC_INPUT",
+            "status": "COMPLETED_EXACT_COLMAP_UNDISTORTED_RGB_LEDGER_AND_IMAGE_ONLY_SEMANTICS",
+            "source_role": SOURCE_ROLE,
             "image_count": len(records),
             "expected_image_count": len(rows),
             "input_manifest": {"path": str(input_manifest), "sha256": input_manifest_sha},
@@ -676,6 +1090,12 @@ def produce(
             },
             "runtime_pins": pins,
             "resumption": {"reused_exact_completed_images": resumed, "new_inference_images": started},
+            "work_namespace": {
+                "schema": WORK_NAMESPACE_SCHEMA,
+                "namespace_id": WORK_NAMESPACE_ID,
+                "legacy_raw_completion_reuse_allowed": False,
+                "resize_legacy_completion_allowed": False,
+            },
             "records": records,
             "prohibited_input_counts": {
                 "pose": 0,
@@ -687,6 +1107,8 @@ def produce(
                 "als": 0,
                 "gt": 0,
             },
+            "colmap_pose_values_decoded": 0,
+            "colmap_pose_values_exposed_to_inference": 0,
             "downloads": 0,
             "learning_runs_started": 0,
             "scientific_verdict": None,
