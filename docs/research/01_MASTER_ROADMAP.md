@@ -2,7 +2,7 @@
 
 - 문서 버전: `C1C5_CANON_v2`
 - 작성일: 2026-07-31
-- 현재 workstream: `P2 C1/C2 DEVELOPMENT FEASIBILITY PILOT PREPARATION`
+- 현재 workstream: `P2 C1/C2 DEVELOPMENT FEASIBILITY PILOT ACTIVATION`
 - 저장소 유효 상태: `C1/C2 DEVELOPMENT PILOT SUBGATE APPROVED / CONFIRMATORY PERFORMANCE BLOCKED`
 - 승인 상태: `USER APPROVED AS CURRENT RESEARCH CANON — 2026-07-31`
 - 역할: C1–C5 프로그램의 phase, split, gate와 실행 순서를 통제하는 roadmap
@@ -15,15 +15,14 @@
 ```text
 [✓] P1 연구 기반 확정·감사       — COMPLETE / READY_FOR_REVIEW evidence received
 [✓] S0 입력·AOI·split 기술동결 증거 — PILOT-ONLY SCOPE / CONFIRMATORY BLOCKED
-[●] P2 C1/C2 development pilot   — HUMAN SUBGATE APPROVED / IMPLEMENTATION+HANDOFF PREPARATION
+[●] P2 C1/C2 development pilot   — EXACT IMPLEMENTATION APPROVED / OFFER PENDING
 [ ] P3 Prior 방법 개발·동결       — NOT_STARTED
 [ ] P4 최종 실험·저널 작성        — NOT_STARTED
 ```
 
-Current task: `P2-C1-C2-FEASIBILITY-PILOT-v1 DRAFT@791b8b03 / PRE-OFFER IMPLEMENTATION`
+Current task: `P2-C1-C2-FEASIBILITY-PILOT-v1 APPROVED_FOR_EXECUTION / SOURCE@d5265d9a / OFFER PENDING`
 
-Next: exact C1/C2 runner/config/schema/tests → independent review → activation and
-offered/accepted handoff → development 51-building C1/C2 execution → C3 strategy
+Next: direct-child offered/accepted handoff → development 51-building C1/C2 execution → C3 strategy
 DRAFT. Validation 11 and held-out 10 remain unopened.
 
 Gate S0는 P2의 **entry substate**다. `DEC-P1-013`은 전체 Gate 또는 confirmatory
@@ -190,7 +189,7 @@ primary 잠금 뒤 별도 census로 수행한다. 이 census를 완료하지 않
 | Gate S0 common-base lineage R2B | Work→Codex | `TECHNICAL CLOSED@b5532e6d` | R2B Return/receipts | evidence로 보존; 재실행 금지 |
 | Gate S0 freeze recovery | Work→Codex | `BLOCKED ROOFER SMOKE / TECHNICAL CLOSED` | freeze recovery Return/manifest | C1/C2 task의 새 writable wrapper에서만 결함 수정 |
 | UAS reference coverage R1 recovery/promote | Work→Codex | `TECHNICAL COMPLETE@4ac2b809` | 72 candidates, 9 groups, 51/11/10 split | pilot-only claim evidence |
-| C1/C2 development feasibility pilot | Work→Codex | `HUMAN SUBGATE APPROVED / PRE-OFFER IMPLEMENTATION` | `DEC-P1-013`, DRAFT `791b8b03` | exact code/config/schema/tests와 activation 필요 |
+| C1/C2 development feasibility pilot | Work→Codex | `APPROVED_FOR_EXECUTION / OFFER PENDING` | `DEC-P1-013`, source `d5265d9a` | exact implementation independently approved; 000/100 required |
 
 ## Decision Status Register
 
@@ -266,7 +265,7 @@ primary 잠금 뒤 별도 census로 수행한다. 이 census를 완료하지 않
 | `P2-W2C-GATE-S0-EVIDENCE-R2A-v1` | Work→Codex | v1 | `BLOCKED_FOR_GATE_S0_EVIDENCE_REVIEW / TECHNICAL CLOSED@00181afc` | 완료 작업; 재실행 아님 |
 | `P2-W2C-GATE-S0-COMMON-BASE-LINEAGE-R2B-v1` | Work→Codex | v1 | `BLOCKED_FOR_GATE_S0_TECHNICAL_AND_HUMAN_FREEZE / TECHNICAL CLOSED@b5532e6d` | 완료 작업; 성능 아님 |
 | `P2-W2C-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1` | Work→Codex | v1 | `TECHNICAL CLOSED / SUPERSEDED BY FREEZE RECOVERY` | 완료 작업; 재실행 아님 |
-| `P2-W2C-C1-C2-FEASIBILITY-PILOT-v1` | Work→Codex | v1 | `DRAFT / PRE-OFFER IMPLEMENTATION` | human scope approved; activation 전 실행 금지 |
+| `P2-W2C-C1-C2-FEASIBILITY-PILOT-v1` | Work→Codex | v1 | `APPROVED_FOR_EXECUTION / OFFER PENDING` | source `d5265d9a`; 100-accepted 전 scientific 실행 금지 |
 
 다음 P2 진행 순서:
 

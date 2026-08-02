@@ -6,9 +6,9 @@
 - task_id: `P2-C1-C2-FEASIBILITY-PILOT-v1`
 - phase: `P2 / development baseline feasibility before C3 strategy freeze`
 - direction: `Work→Codex`
-- status: `DRAFT`
+- status: `APPROVED_FOR_EXECUTION`
 - packet_version: `v1`
-- source_commit: `TO_BE_FILLED_BY_USER_BEFORE_APPROVAL`
+- source_commit: `d5265d9afbe9afcd49e2bedd5900c3026f7a3b2f`
 - target_branch: `main`
 - research_charter_version: `C1C5_CANON_v2`
 - master_roadmap_version: `C1C5_CANON_v2`
@@ -16,12 +16,12 @@
 - data_scope_version: `C1C5_CANON_v2`
 - decision_log_through: `DEC-P1-013`
 - created_at: `2026-08-02`
-- user_approval: `GRANTED_FOR_DEVELOPMENT_C1_C2_ONLY_BY_DEC-P1-013_AT_c7491dd9883baaa284ba9a7f0051f0bb90949cc9`
+- user_approval: `APPROVED_FOR_EXECUTION`
 - scientific_verdict: `null`
 
-This DRAFT must be reviewed and committed before a separate activation revision. It
-does not itself authorize performance, transfer writer ownership, or permit Experiment
-Host execution.
+This packet is activated only for the exact source commit above and the bounded C1/C2
+development pilot authorized by `DEC-P1-013`. Experiment Host execution still requires
+a valid immutable `000-offered`/`100-accepted` ownership transfer.
 
 ## Answer first
 
