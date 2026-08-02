@@ -61,8 +61,11 @@ conditions, split, metrics, references, Stage-3 settings or retry policy.
 4. Add Work-Host tests that decode the generated LAS and prove exact point counts,
    classifications, finite coordinates, roof-interior placement, ground-context
    placement, repeatable bytes and unchanged zero-scientific access.
-5. Keep the pinned Roofer image, command, LoD2.2/G0/G1 screen, validator and fail-
-   closed no-rerun behavior unchanged. Do not weaken the screen to make smoke pass.
+5. Keep the pinned Roofer image, command, LoD2.2/G0/G1 requirements and fail-closed
+   no-rerun behavior unchanged. Correct only the internal CityJSON boundary exposed
+   by the native Roofer output: a non-LoD2.2 parent footprint may omit the optional
+   `semantics` member, while LoD2.2 must still provide valid semantics; malformed
+   present semantics still fail, and only LoD2.2 surfaces may satisfy G0.
 6. Update only R3 task/handoff/run/result/Return/namespace identities required to
    prevent collision with every closed predecessor.
 
@@ -98,6 +101,27 @@ packet/config/implementation/tests after offer.
 Activation also requires network-disabled Docker unit/repository tests, shell syntax
 and executable-mode checks, the actual packet authority parser, and a zero-scientific
 preflight reporting `scientific_payload_bytes_read_or_hashed=0`.
+
+## Pre-activation zero-scientific integration evidence
+
+The exact pinned Roofer image
+`3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2`
+was run in a disposable Work-Host probe with no scientific mount. The first probe
+proved all five fixtures were reconstructed as LoD2.2 but exposed the validator's
+false rejection of the Roofer-native parent LoD0 footprint without semantics. After
+the bounded validator correction, a fresh disposable probe passed exactly once:
+
+- synthetic input: 1,620 points, 55,307 bytes,
+  SHA-256 `318feaba986dc21282d7ec9a81b89a39b336364d70a333ef8efcff26100a1a20`;
+- unchanged five-footprint GeoJSON: 872 bytes,
+  SHA-256 `db7fffae05394cee8d17f022b24b2e4041706ac48f84236f38e3aeb268eda88b`;
+- Roofer exit `0`, 10 CityObjects, 5 LoD2.2 geometries, 5 RoofSurface,
+  20 WallSurface and 5 GroundSurface uses;
+- `G0_generated=true`, `G1_schema_semantic=true`, no G1 failure reason;
+- `scientific_payload_bytes_read_or_hashed=0`, `scientific_verdict=null`.
+
+The disposable probe is implementation verification, not an R3 operational attempt;
+the add-once R3 external namespace remains unopened until accepted execution.
 
 ## Eventual execution lifecycle
 

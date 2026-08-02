@@ -38,7 +38,7 @@ from jsonschema import Draft202012Validator
 
 REPO = Path(__file__).resolve().parents[3]
 CONFIG_PATH = REPO / "configs/p2_baselines/c1_c2_feasibility_pilot_v1/pilot_v1.json"
-TASK_ID = "P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R2-v1"
+TASK_ID = "P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1"
 REPRESENTATIVE_SELECTION_TASK_ID = "P2-C1-C2-FEASIBILITY-PILOT-v1"
 ACCEPTED_ATTESTATION_REUSE = {
     "source_handoff_id": "P2-W2C-C1-C2-FEASIBILITY-PILOT-v1",
@@ -49,6 +49,15 @@ ACCEPTED_ATTESTATION_REUSE = {
     "record_identity_sha256": "f63d5d4405157615d807d6babd4a9bf74a16ab13818193945ed9bbfc02532db3",
 }
 CONDITIONS = ("C1_L_upper", "C2_MVS")
+SYNTHETIC_LABELS = (
+    "C1_L_upper", "C2_MVS", "C3_GS_image", "C4_GS_lidar_prior", "C5_GS_lod1_prior",
+)
+SYNTHETIC_BUILDING_SPACING_M = 20.0
+SYNTHETIC_ROOFPRINT_MIN_M = 1
+SYNTHETIC_ROOFPRINT_MAX_M = 9
+SYNTHETIC_CELL_M = 0.5
+SYNTHETIC_ROOF_Z_M = 5.0
+SYNTHETIC_GROUND_Z_M = 0.0
 GRID_NAMES = (
     "min_z", "max_z", "count", "sum_z", "sum_z2",
     "class2_min_z", "class2_count", "class6_max_z", "class6_count",
@@ -762,27 +771,127 @@ def compact_file_record(store: AddOnceStore, path: Path) -> dict[str, Any]:
     return {"path": relative, "bytes": total, "sha256": digest.hexdigest(), "full_hash_passes": 1}
 
 
+def _synthetic_polygon(index: int) -> list[list[float]]:
+    x0 = float(index) * SYNTHETIC_BUILDING_SPACING_M
+    return [
+        [x0 + SYNTHETIC_ROOFPRINT_MIN_M, SYNTHETIC_ROOFPRINT_MIN_M],
+        [x0 + SYNTHETIC_ROOFPRINT_MAX_M, SYNTHETIC_ROOFPRINT_MIN_M],
+        [x0 + SYNTHETIC_ROOFPRINT_MAX_M, SYNTHETIC_ROOFPRINT_MAX_M],
+        [x0 + SYNTHETIC_ROOFPRINT_MIN_M, SYNTHETIC_ROOFPRINT_MAX_M],
+        [x0 + SYNTHETIC_ROOFPRINT_MIN_M, SYNTHETIC_ROOFPRINT_MIN_M],
+    ]
+
+
+def _synthetic_building_points(index: int) -> list[Point]:
+    """Return one flat roof grid and its exterior ground ring.
+
+    Roof samples occupy the centres of all 0.5 m Roofer analysis cells in the
+    unchanged 8 m square roofprint.  The ground samples occupy the immediately
+    surrounding one-cell ring, so they are outside the roofprint but inside the
+    terrain-search buffer.
+    """
+
+    x0 = float(index) * SYNTHETIC_BUILDING_SPACING_M
+    points: list[Point] = []
+    for iy in range(16):
+        y = 1.25 + SYNTHETIC_CELL_M * iy
+        for ix in range(16):
+            x = x0 + 1.25 + SYNTHETIC_CELL_M * ix
+            points.append(Point(x, y, SYNTHETIC_ROOF_Z_M, 6, int(round(x * 4)), int(round(y * 4))))
+    for iy in range(18):
+        y = 0.75 + SYNTHETIC_CELL_M * iy
+        for ix in range(18):
+            if ix not in (0, 17) and iy not in (0, 17):
+                continue
+            x = x0 + 0.75 + SYNTHETIC_CELL_M * ix
+            points.append(Point(x, y, SYNTHETIC_GROUND_Z_M, 2, int(round(x * 4)), int(round(y * 4))))
+    return points
+
+
+def validate_synthetic_fixture(points: Sequence[Point], features: Sequence[Mapping[str, Any]]) -> None:
+    """Reject sparse, boundary-only, or otherwise drifted smoke fixtures."""
+
+    expected_ids = [f"synthetic-{label}" for label in SYNTHETIC_LABELS]
+    observed_ids = [str(feature.get("properties", {}).get("component_id")) for feature in features]
+    if observed_ids != expected_ids:
+        raise RuntimeError("synthetic fixture feature ID/order drift")
+    for index, feature in enumerate(features):
+        expected_geometry = {"type": "Polygon", "coordinates": [_synthetic_polygon(index)]}
+        if feature.get("type") != "Feature" or feature.get("geometry") != expected_geometry:
+            raise RuntimeError("synthetic fixture roofprint geometry drift")
+
+    expected_roof_count = len(SYNTHETIC_LABELS) * 16 * 16
+    expected_ground_count = len(SYNTHETIC_LABELS) * (18 * 18 - 16 * 16)
+    counts = Counter(point.classification for point in points)
+    if len(points) != expected_roof_count + expected_ground_count or counts != Counter({6: expected_roof_count, 2: expected_ground_count}):
+        raise RuntimeError("synthetic fixture point/class count drift")
+    point_keys = [(point.x, point.y, point.z, point.classification) for point in points]
+    if len(set(point_keys)) != len(point_keys):
+        raise RuntimeError("synthetic fixture contains duplicate points")
+
+    assigned = 0
+    for index in range(len(SYNTHETIC_LABELS)):
+        x0 = float(index) * SYNTHETIC_BUILDING_SPACING_M
+        left = x0 + SYNTHETIC_ROOFPRINT_MIN_M
+        right = x0 + SYNTHETIC_ROOFPRINT_MAX_M
+        lower = SYNTHETIC_ROOFPRINT_MIN_M
+        upper = SYNTHETIC_ROOFPRINT_MAX_M
+        building_points = [point for point in points if x0 + 0.75 <= point.x <= x0 + 9.25]
+        assigned += len(building_points)
+        roof = [point for point in building_points if point.classification == 6]
+        ground = [point for point in building_points if point.classification == 2]
+        if len(roof) != 256 or any(not (left < point.x < right and lower < point.y < upper) for point in roof):
+            raise RuntimeError("synthetic roof points must be strictly interior with 256-cell support")
+        if any(point.z != SYNTHETIC_ROOF_Z_M for point in roof):
+            raise RuntimeError("synthetic roof height drift")
+        expected_roof_xy = {
+            (x0 + 1.25 + SYNTHETIC_CELL_M * ix, 1.25 + SYNTHETIC_CELL_M * iy)
+            for iy in range(16) for ix in range(16)
+        }
+        if {(point.x, point.y) for point in roof} != expected_roof_xy:
+            raise RuntimeError("synthetic roof 0.5 m cell-centre lattice drift")
+        if len(ground) != 68 or any(
+            left <= point.x <= right and lower <= point.y <= upper for point in ground
+        ):
+            raise RuntimeError("synthetic ground must form a 68-point exterior ring")
+        if any(point.z != SYNTHETIC_GROUND_Z_M for point in ground):
+            raise RuntimeError("synthetic ground height drift")
+        expected_ground_xy = {
+            (x0 + 0.75 + SYNTHETIC_CELL_M * ix, 0.75 + SYNTHETIC_CELL_M * iy)
+            for iy in range(18) for ix in range(18)
+            if ix in (0, 17) or iy in (0, 17)
+        }
+        if {(point.x, point.y) for point in ground} != expected_ground_xy:
+            raise RuntimeError("synthetic ground 0.5 m exterior-ring lattice drift")
+    if assigned != len(points):
+        raise RuntimeError("synthetic fixture contains points outside the five building envelopes")
+
+
+def synthetic_fixture() -> tuple[list[Point], list[dict[str, Any]]]:
+    points: list[Point] = []
+    features: list[dict[str, Any]] = []
+    for index, label in enumerate(SYNTHETIC_LABELS):
+        points.extend(_synthetic_building_points(index))
+        features.append({
+            "type": "Feature",
+            "properties": {"component_id": f"synthetic-{label}"},
+            "geometry": {"type": "Polygon", "coordinates": [_synthetic_polygon(index)]},
+        })
+    validate_synthetic_fixture(points, features)
+    return points, features
+
+
 def prepare_synthetic(store: AddOnceStore) -> dict[str, Any]:
     completed = store.path("control/synthetic_inputs_v1.json")
     if completed.is_file():
         return json.loads(completed.read_bytes())
-    points: list[Point] = []
-    features = []
-    labels = ("C1_L_upper", "C2_MVS", "C3_GS_image", "C4_GS_lidar_prior", "C5_GS_lod1_prior")
-    for index, label in enumerate(labels):
-        x0 = float(index * 20)
-        polygon = [[x0 + 1, 1], [x0 + 9, 1], [x0 + 9, 9], [x0 + 1, 9], [x0 + 1, 1]]
-        for x, y in polygon[:-1]:
-            points.append(Point(x, y, 5.0, 6, int(x), int(y)))
-        for x, y in ((x0, 0), (x0 + 10, 0), (x0 + 10, 10), (x0, 10)):
-            points.append(Point(x, y, 0.0, 2, int(x), int(y)))
-        features.append({"type": "Feature", "properties": {"component_id": f"synthetic-{label}"}, "geometry": {"type": "Polygon", "coordinates": [polygon]}})
+    points, features = synthetic_fixture()
     input_record = store.add("smoke/work/input.las", las_bytes(points, load_config()))
     roofprint_record = store.add_json("smoke/work/r_derived.geojson", {"type": "FeatureCollection", "features": features})
     body = {
         "schema": "jointbuildgs.p2_c1_c2_synthetic_inputs.v1",
         "status": "READY_ZERO_SCIENTIFIC_PAYLOAD",
-        "condition_labels": list(labels),
+        "condition_labels": list(SYNTHETIC_LABELS),
         "input": input_record,
         "r_derived": roofprint_record,
         "scientific_payload_bytes_read_or_hashed": 0,
@@ -880,9 +989,11 @@ def provisional_output_check(output_dir: Path, *, expected_features_min: int = 1
                     if not isinstance(inverse_refs, list) or object_id not in inverse_refs:
                         g1_failures.add("ASYMMETRIC_PARENT_CHILD_RELATION")
             for geometry in city_object.get("geometry", []):
-                if str(geometry.get("lod")) == "2.2":
+                lod = str(geometry.get("lod"))
+                is_lod22 = lod == "2.2"
+                if is_lod22:
                     lod22 += 1
-                elif str(geometry.get("lod")) == "1.1":
+                elif lod == "1.1":
                     raise RuntimeError("LoD1.1 fallback is prohibited")
                 geometry_type = geometry.get("type")
                 depth_by_type = {"MultiSurface": 3, "CompositeSurface": 3, "Solid": 4, "MultiSolid": 5, "CompositeSolid": 5}
@@ -897,7 +1008,11 @@ def provisional_output_check(output_dir: Path, *, expected_features_min: int = 1
                     g1_failures.add("BOUNDARY_INDEX_OR_SHAPE_INVALID")
                 else:
                     all_rings.extend(rings)
-                semantics = geometry.get("semantics") or {}
+                semantics = geometry.get("semantics")
+                if semantics is None:
+                    if is_lod22:
+                        g1_failures.add("LOD22_SEMANTICS_MISSING")
+                    continue
                 definitions = semantics.get("surfaces", []) if isinstance(semantics, Mapping) else []
                 if not isinstance(definitions, list) or any(not isinstance(item, Mapping) or not isinstance(item.get("type"), str) for item in definitions):
                     g1_failures.add("SEMANTIC_DEFINITIONS_INVALID")
@@ -906,8 +1021,9 @@ def provisional_output_check(output_dir: Path, *, expected_features_min: int = 1
                 if not semantic_ok:
                     g1_failures.add("SEMANTIC_VALUES_SHAPE_OR_INDEX_INVALID")
                     continue
-                for index in used_indices:
-                    surfaces[str(definitions[index]["type"])] += 1
+                if is_lod22:
+                    for index in used_indices:
+                        surfaces[str(definitions[index]["type"])] += 1
     required = {"RoofSurface", "WallSurface", "GroundSurface"}
     g0 = object_count >= expected_features_min and lod22 >= expected_features_min and required.issubset(surfaces)
     g1 = bool(records) and finite_vertices and object_count >= expected_features_min and not g1_failures
@@ -1919,7 +2035,7 @@ def promote(store: AddOnceStore, repo_root: Path, promotion_parent_commit: str) 
 
     repo_root = repo_root.resolve()
     git_store = AddOnceStore(repo_root)
-    manifest_relative = "artifacts/manifests/p2_baselines/c1_c2_feasibility_pilot_recovery_r2_v1/technical_result_manifest_v1.json"
+    manifest_relative = "artifacts/manifests/p2_baselines/c1_c2_feasibility_pilot_recovery_r3_v1/technical_result_manifest_v1.json"
     existing = git_store.path(manifest_relative)
     if existing.is_file():
         manifest = json.loads(existing.read_bytes())
@@ -1984,7 +2100,7 @@ def promote(store: AddOnceStore, repo_root: Path, promotion_parent_commit: str) 
     } for row in technical_groups]
     case_fields = ["building_id", "group_id", "method_id", "reference_provenance", "G0_generated", "G1_schema_semantic", "RMSZ_m", "RMSXY_m", "surface_distance_rmse_m", "reference_vertical_coverage", "operation_unit_id"]
     flat_cases = [{**{name: row.get(name) for name in case_fields}, **{name: row["metrics"].get(name) for name in case_fields if name in row["metrics"]}} for row in cases]
-    prefix = "docs/experiments/p2/c1_c2_feasibility_pilot_recovery_r2_v1"
+    prefix = "docs/experiments/p2/c1_c2_feasibility_pilot_recovery_r3_v1"
     promoted = [
         git_store.add(f"{prefix}/C1_C2_DEVELOPMENT_REPORT_v1.md", external_report),
         git_store.add(f"{prefix}/building_method_metrics_v1.csv", _csv_bytes(metrics_fields, flat_rows)),
@@ -1999,7 +2115,7 @@ def promote(store: AddOnceStore, repo_root: Path, promotion_parent_commit: str) 
         "promotion_parent_commit": promotion_parent_commit,
         "run_id": finalized["run_id"],
         "operation_id": finalized["operation_id"],
-        "external_namespace": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r2_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R2-v1/",
+        "external_namespace": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/",
         "external_records": {
             "metrics": finalized["metrics"], "group_balanced_descriptive": finalized["group_balanced_descriptive"],
             "condition_group_technical_summary": finalized["condition_group_technical_summary"],

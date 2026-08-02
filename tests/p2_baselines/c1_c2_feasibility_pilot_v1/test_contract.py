@@ -273,6 +273,113 @@ class ContractTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "partial or failed"):
                 contract.next_synthetic_action(partial)
 
+    def test_synthetic_fixture_has_exact_dense_roof_and_ground_support(self) -> None:
+        points, features = contract.synthetic_fixture()
+        self.assertEqual(1620, len(points))
+        self.assertEqual({2: 340, 6: 1280}, dict(sorted(
+            (classification, sum(point.classification == classification for point in points))
+            for classification in {point.classification for point in points}
+        )))
+        self.assertEqual(1620, len({(point.x, point.y, point.z, point.classification) for point in points}))
+        self.assertEqual(
+            [f"synthetic-{label}" for label in contract.SYNTHETIC_LABELS],
+            [feature["properties"]["component_id"] for feature in features],
+        )
+        roofprint_bytes = contract.canonical_json_bytes({"type": "FeatureCollection", "features": features})
+        self.assertEqual(872, len(roofprint_bytes))
+        self.assertEqual("db7fffae05394cee8d17f022b24b2e4041706ac48f84236f38e3aeb268eda88b", contract.sha256_bytes(roofprint_bytes))
+
+        for index, feature in enumerate(features):
+            x0 = float(index * 20)
+            polygon = feature["geometry"]["coordinates"][0]
+            self.assertEqual(
+                [[x0 + 1, 1], [x0 + 9, 1], [x0 + 9, 9], [x0 + 1, 9], [x0 + 1, 1]],
+                polygon,
+            )
+            self.assertEqual(polygon[0], polygon[-1])
+            building_points = [point for point in points if x0 + 0.75 <= point.x <= x0 + 9.25]
+            roof = [point for point in building_points if point.classification == 6]
+            ground = [point for point in building_points if point.classification == 2]
+            self.assertEqual(256, len(roof))
+            self.assertEqual(68, len(ground))
+            self.assertEqual({5.0}, {point.z for point in roof})
+            self.assertEqual({0.0}, {point.z for point in ground})
+            self.assertTrue(all(x0 + 1 < point.x < x0 + 9 and 1 < point.y < 9 for point in roof))
+            self.assertEqual(4.0, len(roof) / 64.0)
+            self.assertGreaterEqual(len(roof), 15)
+            self.assertEqual(
+                {(x0 + 1.25 + 0.5 * ix, 1.25 + 0.5 * iy) for iy in range(16) for ix in range(16)},
+                {(point.x, point.y) for point in roof},
+            )
+            self.assertTrue(all(not (x0 + 1 <= point.x <= x0 + 9 and 1 <= point.y <= 9) for point in ground))
+            self.assertEqual(
+                {
+                    (x0 + 0.75 + 0.5 * ix, 0.75 + 0.5 * iy)
+                    for iy in range(18) for ix in range(18)
+                    if ix in (0, 17) or iy in (0, 17)
+                },
+                {(point.x, point.y) for point in ground},
+            )
+
+        las = contract.las_bytes(points, contract.load_config())
+        self.assertEqual(55307, len(las))
+        with laspy.open(io.BytesIO(las), closefd=False) as reader:
+            cloud = reader.read()
+        self.assertEqual("1.2", str(cloud.header.version))
+        self.assertEqual(3, cloud.header.point_format.id)
+        self.assertEqual({2: 340, 6: 1280}, {
+            classification: int(np.count_nonzero(np.asarray(cloud.classification) == classification))
+            for classification in (2, 6)
+        })
+        self.assertEqual({0.0, 5.0}, set(float(value) for value in cloud.z))
+
+    def test_synthetic_fixture_is_byte_deterministic_and_add_once(self) -> None:
+        points_a, features_a = contract.synthetic_fixture()
+        points_b, features_b = contract.synthetic_fixture()
+        self.assertEqual(points_a, points_b)
+        self.assertEqual(features_a, features_b)
+        self.assertEqual(
+            contract.las_bytes(points_a, contract.load_config()),
+            contract.las_bytes(points_b, contract.load_config()),
+        )
+        with tempfile.TemporaryDirectory() as first_root, tempfile.TemporaryDirectory() as second_root:
+            first_store = contract.AddOnceStore(Path(first_root))
+            second_store = contract.AddOnceStore(Path(second_root))
+            first = contract.prepare_synthetic(first_store)
+            second = contract.prepare_synthetic(second_store)
+            self.assertEqual(first["input"], second["input"])
+            self.assertEqual(first["r_derived"], second["r_derived"])
+            before = sorted(path.relative_to(first_store.root).as_posix() for path in first_store.root.rglob("*") if path.is_file())
+            reused = contract.prepare_synthetic(first_store)
+            after = sorted(path.relative_to(first_store.root).as_posix() for path in first_store.root.rglob("*") if path.is_file())
+            self.assertEqual(first, reused)
+            self.assertEqual(before, after)
+
+    def test_synthetic_fixture_validator_rejects_old_sparse_or_drifted_layout(self) -> None:
+        _, features = contract.synthetic_fixture()
+        old_sparse: list[contract.Point] = []
+        for index in range(5):
+            x0 = float(index * 20)
+            for x, y in ((x0 + 1, 1), (x0 + 9, 1), (x0 + 9, 9), (x0 + 1, 9)):
+                old_sparse.append(contract.Point(x, y, 5.0, 6, int(x), int(y)))
+            for x, y in ((x0, 0), (x0 + 10, 0), (x0 + 10, 10), (x0, 10)):
+                old_sparse.append(contract.Point(x, y, 0.0, 2, int(x), int(y)))
+        with self.assertRaisesRegex(RuntimeError, "point/class count drift"):
+            contract.validate_synthetic_fixture(old_sparse, features)
+
+        points, _ = contract.synthetic_fixture()
+        boundary_drift = list(points)
+        original = boundary_drift[0]
+        boundary_drift[0] = contract.Point(1.0, original.y, original.z, original.classification, original.ix, original.iy)
+        with self.assertRaisesRegex(RuntimeError, "strictly interior"):
+            contract.validate_synthetic_fixture(boundary_drift, features)
+
+        ground_drift = list(points)
+        original = ground_drift[256]
+        ground_drift[256] = contract.Point(1.25, 1.25, original.z, original.classification, original.ix, original.iy)
+        with self.assertRaisesRegex(RuntimeError, "exterior ring"):
+            contract.validate_synthetic_fixture(ground_drift, features)
+
     def test_strict_lod22_and_provisional_g2_separation(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             output = Path(temporary)
@@ -308,6 +415,78 @@ class ContractTests(unittest.TestCase):
             (output / "out.json").write_text(json.dumps(cityjson), encoding="utf-8")
             with self.assertRaisesRegex(RuntimeError, "LoD1.1"):
                 contract.provisional_output_check(output)
+
+    def test_native_roofer_parent_lod0_may_omit_optional_semantics(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            output = Path(temporary)
+            cityjson = {
+                "type": "CityJSONFeature",
+                "version": "2.0",
+                "vertices": [
+                    [0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0],
+                    [0, 0, 1], [1, 0, 1], [1, 1, 1], [0, 1, 1],
+                ],
+                "CityObjects": {
+                    "building": {
+                        "type": "Building",
+                        "children": ["building-0"],
+                        "geometry": [{"type": "MultiSurface", "lod": "0", "boundaries": [[[0, 1, 2, 3]]]}],
+                    },
+                    "building-0": {
+                        "type": "BuildingPart",
+                        "parents": ["building"],
+                        "geometry": [{
+                            "type": "Solid",
+                            "lod": "2.2",
+                            "boundaries": [[
+                                [[0, 1, 2, 3]], [[4, 5, 6, 7]],
+                                [[0, 1, 5, 4]], [[1, 2, 6, 5]],
+                                [[2, 3, 7, 6]], [[3, 0, 4, 7]],
+                            ]],
+                            "semantics": {
+                                "surfaces": [
+                                    {"type": "GroundSurface"},
+                                    {"type": "RoofSurface"},
+                                    {"type": "WallSurface"},
+                                ],
+                                "values": [[0, 1, 2, 2, 2, 2]],
+                            },
+                        }],
+                    },
+                },
+            }
+            path = output / "out.json"
+            path.write_text(json.dumps(cityjson), encoding="utf-8")
+            check = contract.provisional_output_check(output)
+            self.assertTrue(check["G0_generated"])
+            self.assertTrue(check["G1_schema_semantic"])
+            self.assertEqual([], check["G1_failure_reasons"])
+
+            del cityjson["CityObjects"]["building-0"]["geometry"][0]["semantics"]
+            path.write_text(json.dumps(cityjson), encoding="utf-8")
+            missing_lod22_semantics = contract.provisional_output_check(output)
+            self.assertFalse(missing_lod22_semantics["G0_generated"])
+            self.assertFalse(missing_lod22_semantics["G1_schema_semantic"])
+            self.assertIn("LOD22_SEMANTICS_MISSING", missing_lod22_semantics["G1_failure_reasons"])
+
+            cityjson["CityObjects"]["building"]["geometry"][0]["semantics"] = {
+                "surfaces": [
+                    {"type": "GroundSurface"},
+                    {"type": "RoofSurface"},
+                    {"type": "WallSurface"},
+                ],
+                "values": [0],
+            }
+            path.write_text(json.dumps(cityjson), encoding="utf-8")
+            lod0_semantics_do_not_satisfy_g0 = contract.provisional_output_check(output)
+            self.assertFalse(lod0_semantics_do_not_satisfy_g0["G0_generated"])
+            self.assertEqual({}, lod0_semantics_do_not_satisfy_g0["semantic_surface_counts"])
+
+            cityjson["CityObjects"]["building"]["geometry"][0]["semantics"]["values"] = [99]
+            path.write_text(json.dumps(cityjson), encoding="utf-8")
+            malformed_optional_semantics = contract.provisional_output_check(output)
+            self.assertFalse(malformed_optional_semantics["G1_schema_semantic"])
+            self.assertIn("SEMANTIC_VALUES_SHAPE_OR_INDEX_INVALID", malformed_optional_semantics["G1_failure_reasons"])
 
     def test_schema_keeps_canonical_g2_g3_g4_and_pass_null(self) -> None:
         config = contract.load_config()
@@ -390,7 +569,7 @@ class ContractTests(unittest.TestCase):
         self.assertIn('p["artifacts"]["attestation_reuse"]==c["accepted_attestation_reuse"]', script)
         self.assertIn("ambiguous synthetic machine decision channel", script)
         self.assertIn("ambiguous scientific machine decision channel", script)
-        self.assertIn("c1_c2_feasibility_pilot_recovery_r2_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R2-v1", script)
+        self.assertIn("c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1", script)
         self.assertNotIn('TASK_REL="phase-payloads/p2-baselines/c1_c2_feasibility_pilot_v1/P2-C1-C2-FEASIBILITY-PILOT-v1"', script)
         self.assertIn("050-c1_reference_frozen_pre_c5.json", script)
         self.assertNotIn("PATCH_SUMMARY", script)
@@ -472,7 +651,7 @@ class ContractTests(unittest.TestCase):
             self.assertNotEqual(0, parse(invalid).returncode)
         self.assertEqual("P2-C1-C2-FEASIBILITY-PILOT-v1", contract.REPRESENTATIVE_SELECTION_TASK_ID)
         self.assertEqual(
-            "P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R2-v1",
+            "P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1",
             contract.load_config()["task_id"],
         )
 
@@ -579,11 +758,11 @@ class ContractTests(unittest.TestCase):
             second = contract.promote(store, Path(repository), promotion_parent)
             self.assertEqual(102, first["result_rows"])
             self.assertTrue(second["fast_path"])
-            csv_path = Path(repository) / "docs/experiments/p2/c1_c2_feasibility_pilot_recovery_r2_v1/building_method_metrics_v1.csv"
+            csv_path = Path(repository) / "docs/experiments/p2/c1_c2_feasibility_pilot_recovery_r3_v1/building_method_metrics_v1.csv"
             self.assertEqual(103, len(csv_path.read_text(encoding="utf-8").splitlines()))
-            input_definition_path = Path(repository) / "docs/experiments/p2/c1_c2_feasibility_pilot_recovery_r2_v1/development_input_definition_v1.csv"
+            input_definition_path = Path(repository) / "docs/experiments/p2/c1_c2_feasibility_pilot_recovery_r3_v1/development_input_definition_v1.csv"
             self.assertEqual(52, len(input_definition_path.read_text(encoding="utf-8").splitlines()))
-            report = (Path(repository) / "docs/experiments/p2/c1_c2_feasibility_pilot_recovery_r2_v1/C1_C2_DEVELOPMENT_REPORT_v1.md").read_text(encoding="utf-8")
+            report = (Path(repository) / "docs/experiments/p2/c1_c2_feasibility_pilot_recovery_r3_v1/C1_C2_DEVELOPMENT_REPORT_v1.md").read_text(encoding="utf-8")
             self.assertIn("canonical G2", report)
             self.assertIn("scientific_verdict", report)
 

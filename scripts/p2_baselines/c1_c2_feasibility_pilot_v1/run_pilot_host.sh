@@ -11,7 +11,7 @@ PROJECT_IMAGE_ID="${2:?missing accepted project image ID}"
 SOURCE_COMMIT="${3:?missing accepted source commit}"
 RUN_ID="${4:?missing immutable run ID}"
 ROOFER_IMAGE="3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2"
-TASK_REL="phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r2_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R2-v1"
+TASK_REL="phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1"
 TASK_ROOT="${ARTIFACT_ROOT}/${TASK_REL}"
 FREEZE_REL="phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1"
 R1_REL="phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1"
@@ -20,8 +20,8 @@ C1_CHECKPOINT="${ARTIFACT_ROOT}/${FREEZE_REL}/checkpoints/050-c1_reference_froze
 C2_PLY="${ARTIFACT_ROOT}/${FREEZE_REL}/common/mvs_class26_v1.ply"
 C2_CHECKPOINT="${ARTIFACT_ROOT}/${FREEZE_REL}/checkpoints/030-dense_mvs_and_gravity.json"
 REFERENCE_CELLS="${ARTIFACT_ROOT}/${R1_REL}/reference/reference_candidate_cells_v1.csv"
-ACCEPTED_RECEIPT_REL="artifacts/manifests/handoffs/P2-W2C-C1-C2-FEASIBILITY-PILOT-RECOVERY-R2-v1/100-accepted.json"
-PACKET_REL="docs/handoffs/P2_W2C_C1_C2_FEASIBILITY_PILOT_RECOVERY_R2_v1.md"
+ACCEPTED_RECEIPT_REL="artifacts/manifests/handoffs/P2-W2C-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/100-accepted.json"
+PACKET_REL="docs/handoffs/P2_W2C_C1_C2_FEASIBILITY_PILOT_RECOVERY_R3_v1.md"
 MACHINE_PARSER="${REPO}/scripts/p2_baselines/c1_c2_feasibility_pilot_v1/parse_machine_decision.awk"
 PACKET_AUTHORITY_PARSER="${REPO}/scripts/p2_baselines/c1_c2_feasibility_pilot_v1/parse_execution_authority.awk"
 START_SECONDS="${SECONDS}"
@@ -68,7 +68,7 @@ docker run --rm --network none --entrypoint /opt/conda/bin/python \
 docker run --rm --network none --entrypoint /opt/conda/bin/python \
   -e EXPECTED_PROJECT_IMAGE_ID="${PROJECT_IMAGE_ID}" \
   -v "${REPO}:/workspace/JointBuildGS:ro" -w /workspace/JointBuildGS "${PROJECT_IMAGE_ID}" \
-  -c 'import json,os; p=json.load(open("artifacts/manifests/handoffs/P2-W2C-C1-C2-FEASIBILITY-PILOT-RECOVERY-R2-v1/100-accepted.json")); c=json.load(open("configs/p2_baselines/c1_c2_feasibility_pilot_v1/pilot_v1.json")); assert p["handoff_id"]=="P2-W2C-C1-C2-FEASIBILITY-PILOT-RECOVERY-R2-v1" and p["task_id"]=="P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R2-v1"; assert p["state"]=="accepted" and p["direction"]=="work_to_experiment"; assert p["sender_role"]=="work_host" and p["receiver_role"]=="experiment_host"; assert p["receiver_ack"]["role"]=="experiment_host" and p["receiver_ack"]["status"]=="accepted"; assert p["transport"]["exclusive_writer_ack"] is True; assert p["verification"]["docker_image_digest"]==os.environ["EXPECTED_PROJECT_IMAGE_ID"]; assert p["artifacts"]["attestation_reuse"]==c["accepted_attestation_reuse"]'
+  -c 'import json,os; p=json.load(open("artifacts/manifests/handoffs/P2-W2C-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/100-accepted.json")); c=json.load(open("configs/p2_baselines/c1_c2_feasibility_pilot_v1/pilot_v1.json")); assert p["handoff_id"]=="P2-W2C-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1" and p["task_id"]=="P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1"; assert p["state"]=="accepted" and p["direction"]=="work_to_experiment"; assert p["sender_role"]=="work_host" and p["receiver_role"]=="experiment_host"; assert p["receiver_ack"]["role"]=="experiment_host" and p["receiver_ack"]["status"]=="accepted"; assert p["transport"]["exclusive_writer_ack"] is True; assert p["verification"]["docker_image_digest"]==os.environ["EXPECTED_PROJECT_IMAGE_ID"]; assert p["artifacts"]["attestation_reuse"]==c["accepted_attestation_reuse"]'
 for exact_input in "${C1_GRID}" "${C1_CHECKPOINT}" "${C2_PLY}" "${C2_CHECKPOINT}" "${REFERENCE_CELLS}"; do
   if [[ ! -f "${exact_input}" || -L "${exact_input}" ]]; then
     echo "exact frozen input missing or symlinked: ${exact_input}" >&2
@@ -120,7 +120,7 @@ project_science_prepare() {
       --c2-checkpoint /pilot_inputs/attestation/030-dense_mvs_and_gravity.json \
       --reference-cells /pilot_inputs/reference/reference_candidate_cells_v1.csv \
       --source-commit "${SOURCE_COMMIT}" --run-id "${RUN_ID}" \
-      --handoff-id P2-W2C-C1-C2-FEASIBILITY-PILOT-RECOVERY-R2-v1 \
+      --handoff-id P2-W2C-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1 \
       --accepted-receipt "/workspace/JointBuildGS/${ACCEPTED_RECEIPT_REL}" \
       --accepted-commit "${HEAD_SHA}" --project-image-id "${PROJECT_IMAGE_ID}" \
       --artifact-root-token artifact://JointBuildGS
