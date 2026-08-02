@@ -115,7 +115,21 @@ class GateClosureCandidateTests(unittest.TestCase):
             self.config["gates"]["G2"]["status"],
             "READY_PINNED_IMAGE_AND_STDIN_CONTRACT",
         )
-        self.assertEqual(self.config["gates"]["G2"]["command"][-1], "stdin")
+        self.assertEqual(
+            self.config["gates"]["G2"]["command"],
+            [
+                "val3dity",
+                "--overlap_tol",
+                "-1.0",
+                "--planarity_d2p_tol",
+                "0.01",
+                "--planarity_n_tol",
+                "20.0",
+                "--snap_tol",
+                "0.001",
+                "stdin",
+            ],
+        )
         self.assertEqual(
             self.config["provisional_threshold_calibration"]["status"],
             "DRAFT_NOT_EXECUTED_DEVELOPMENT_ONLY",

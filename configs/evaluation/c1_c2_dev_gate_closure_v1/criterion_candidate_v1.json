@@ -64,10 +64,14 @@
       "input_mode": "CITYJSONSEQ_STDIN_PIPE",
       "command": [
         "val3dity",
-        "--overlap_tol=-1.0",
-        "--planarity_d2p_tol=0.01",
-        "--planarity_n_tol=20.0",
-        "--snap_tol=0.001",
+        "--overlap_tol",
+        "-1.0",
+        "--planarity_d2p_tol",
+        "0.01",
+        "--planarity_n_tol",
+        "20.0",
+        "--snap_tol",
+        "0.001",
         "stdin"
       ],
       "parameters": {
