@@ -6,20 +6,26 @@
 - task_id: `P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-v1`
 - phase: `P2 / development baseline feasibility before C3 strategy freeze`
 - direction: `Work→Codex`
-- status: `DRAFT_NOT_EXECUTION_AUTHORITY`
+- status: `APPROVED_FOR_EXECUTION`
 - packet_version: `v1`
-- source_commit: `PENDING_EXACT_REVIEWED_COMMIT`
+- source_commit: `8443d49df9e019cd21aad328f834479d56ab49cd`
 - target_branch: `main`
 - research_charter_version: `C1C5_CANON_v2`
 - decision_log_through: `DEC-P1-013`
 - created_at: `2026-08-02`
+- activated_at: `2026-08-02T10:42:25+09:00`
 - user_direction: `CONTINUE_AUTONOMOUSLY_WITHOUT_SCIENTIFIC_SCOPE_CHANGE`
 - scientific_verdict: `null`
 
-This DRAFT is not execution authority. It may be activated only after the exact
-recovery implementation passes Docker tests and independent scientific,
-reproducibility and two-host reviews. Experiment Host execution additionally
-requires a new immutable `000-offered` and artifact-verified `100-accepted` chain.
+This packet is execution authority only for exact source commit
+`8443d49df9e019cd21aad328f834479d56ab49cd` and the bounded recovery scope below.
+Experiment Host execution additionally requires a new immutable `000-offered` and
+artifact-verified `100-accepted` chain.
+
+Activation evidence: network-disabled Docker tests `73 passed / 0 failed`, shell
+syntax PASS, zero-scientific preflight PASS with `scientific_payload_bytes_read_or_hashed=0`,
+and three independent exact-commit reviews PASS for science/leakage,
+reproducibility/no-repeat and two-host ownership/path isolation.
 
 ## Answer first
 
