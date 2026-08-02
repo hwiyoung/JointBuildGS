@@ -1,0 +1,193 @@
+{
+  "schema": "jointbuildgs.p2_c1_c2_feasibility_pilot_config.v1",
+  "task_id": "P2-C1-C2-FEASIBILITY-PILOT-v1",
+  "handoff_id": "P2-W2C-C1-C2-FEASIBILITY-PILOT-v1",
+  "execution_authority": "REQUIRES_APPROVED_ACTIVATION_PACKET_AND_VALID_100_ACCEPTED_RECEIPT",
+  "scope": {
+    "split": "development",
+    "building_count": 51,
+    "group_count": 5,
+    "condition_ids": ["C1_L_upper", "C2_MVS"],
+    "expected_result_rows": 102,
+    "development_id_set_sha256": "712cf0e7e635f049857302f4e5ffea825165d9fb38dd3091d0ab192d5974a68b",
+    "group_sizes": {
+      "GROUP_37b5107f054e56e8": 47,
+      "GROUP_6e1c6ddc7a70ba88": 1,
+      "GROUP_a47a79580ecbedd1": 1,
+      "GROUP_32a743e7f900e7ae": 1,
+      "GROUP_660281d563f14018": 1
+    },
+    "roster_path": "configs/p2_baselines/c1_c2_feasibility_pilot_v1/development_roster_v1.csv",
+    "roster_bytes": 2731,
+    "roster_sha256": "c9f6412c4878a2cec3be09e465bb7a2be60f4f8329a473bf4acd44679c6afecc",
+    "reference_association_path": "configs/p2_baselines/c1_c2_feasibility_pilot_v1/development_reference_association_v1.csv",
+    "reference_association_bytes": 8241,
+    "reference_association_sha256": "3a3c80b510cbba5f9a714cf8bb55c5e0ad2a80fe8250a313ce5a9a6f4a823628",
+    "validation_payload_mount_allowed": false,
+    "held_out_payload_mount_allowed": false,
+    "c3_c5_allowed": false
+  },
+  "frame": {
+    "crs": "EPSG:25832",
+    "aoi_bbox": [690791.74, 5335864.05, 691154.65, 5336353.85],
+    "grid_cell_m": 1.0,
+    "gravity": [0.0022003022295437485, -0.0038866451918428023, -0.9999900262798882],
+    "gravity_source": "FROZEN_TERRAIN_MVS_NORMALS",
+    "hardcoded_gravity": false
+  },
+  "inputs": {
+    "freeze_recovery_namespace": "phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1",
+    "c1_grid": {
+      "mount_path": "/pilot_inputs/c1/c1_grid_v1.npz",
+      "artifact_relative_path": "phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/reference/c1_grid_v1.npz",
+      "bytes": 3023643,
+      "sha256": "4f72178551e25ef27a952a09faa8331c1464416fcd6c5f66a57a9424e7f0b77b",
+      "read_contract": "ONE_PROCESS_AND_DIGEST_STREAM"
+    },
+    "c1_reference_cells": {
+      "mount_path": "/pilot_inputs/reference/reference_candidate_cells_v1.csv",
+      "artifact_relative_path": "phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/reference/reference_candidate_cells_v1.csv",
+      "bytes": 3785261,
+      "sha256": "bf87736227ea3c28bc8f966f36e2498f786d2de420a732fa0bfebbb73664275a",
+      "expected_rows": 20520,
+      "read_contract": "ONE_PROCESS_AND_DIGEST_STREAM",
+      "role_c1": "SCORE_ONLY_AFTER_CONDITION_COMPONENTS_AND_R_DERIVED_ARE_FROZEN",
+      "role_c2": "SCORE_ONLY_AFTER_OUTPUT"
+    },
+    "c1_patch_summary": {
+      "mount_path": "/pilot_inputs/reference/patch_summary_v1.csv",
+      "artifact_relative_path": "phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/reference/patch_summary_v1.csv",
+      "bytes": 96539,
+      "sha256": "8a4379bdc7c58f7470fa37163f5471160601eb0475a86178054e47c5714ea3d0",
+      "expected_rows": 177,
+      "read_contract": "ONE_VALIDATE_AND_DIGEST_STREAM"
+    },
+    "c2_mvs_class26": {
+      "mount_path": "/pilot_inputs/c2/mvs_class26_v1.ply",
+      "artifact_relative_path": "phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/common/mvs_class26_v1.ply",
+      "attestation_checkpoint_relative_path": "phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/checkpoints/030-dense_mvs_and_gravity.json",
+      "attestation_checkpoint_bytes": 2951,
+      "attestation_checkpoint_sha256": "b301d3dc7dec2423ff5760c47db4dfef4f62e919b5aac5808a30c82a9330a8f8",
+      "attestation_record_key": "payload.derivative",
+      "read_contract": "ONE_PROCESS_AND_DIGEST_STREAM_USING_FROZEN_CHECKPOINT_RECORD",
+      "raw_dim_dense_allowed": false
+    },
+    "c2_mvs_grid": {
+      "mount_path": "/pilot_inputs/c2/mvs_grid_v1.npz",
+      "artifact_relative_path": "phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/common/mvs_grid_v1.npz",
+      "attestation_checkpoint_relative_path": "phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/checkpoints/030-dense_mvs_and_gravity.json",
+      "attestation_record_key": "payload.grid",
+      "read_contract": "OPTIONAL_SAME_FROZEN_GRID_SUPPORT_NO_RAW_REGENERATION"
+    },
+    "prohibited_mount_tokens": [
+      "validation",
+      "held_out",
+      "Images.zip",
+      "OPF.zip",
+      "dim_dense.ply",
+      "scene.mvs",
+      "reference/c1_class26_v1.ply",
+      "lod1-prisms",
+      "Fusion",
+      "R_ext"
+    ]
+  },
+  "c1_materialization": {
+    "name": "ALL_FROZEN_C1_GRID_CLASS2_CLASS6_CELLS_V1",
+    "building_class": 6,
+    "ground_class": 2,
+    "building_z_field": "class6_max_z",
+    "building_presence_field": "class6_count_gte_3_and_class6_max_z_minus_terrain_gte_2_5m",
+    "minimum_class6_points_per_cell": 3,
+    "minimum_height_above_terrain_m": 2.5,
+    "ground_z_field": "class2_min_z",
+    "ground_presence_field": "class2_count_gt_0",
+    "building_height_reference": "multiscale_lower_envelope_of_class2_min_z",
+    "terrain_filter_windows_cells": [3, 7, 15, 31, 51],
+    "all_frozen_grid_class2_class6_cells_required": true,
+    "r1_reference_cells_used": false,
+    "stable_id_used": false,
+    "bbox_used": false,
+    "reference_geometry_crop_used": false,
+    "evaluation_class": "SELF_REFERENCE_UPPER_BASELINE"
+  },
+  "condition_geometry": {
+    "method": "CONDITION_CLASS6_XY_CONNECTED_COMPONENTS_V1",
+    "connectivity": 8,
+    "cell_m": 1.0,
+    "minimum_component_points": 4,
+    "z_used_for_connectivity": false,
+    "fixed_tile_anchor": [690791.74, 5335864.05],
+    "fixed_tile_size_m": 50.0,
+    "ground_context": "SAME_CONDITION_FIXED_TILE_CLASS2_ONLY",
+    "stable_id_used": false,
+    "target_bbox_used": false,
+    "uas_used_for_c2_geometry_or_registration": false
+  },
+  "roofer_pointcloud": {
+    "format": "LAS_1_2_POINT_FORMAT_3_UNCOMPRESSED",
+    "coordinate_scale_m": [0.001, 0.001, 0.001],
+    "offset_rule": "FLOOR_AXIS_MIN_TO_1000M",
+    "classification_allowlist": [2, 6],
+    "creation_date": "2026-08-02",
+    "system_identifier": "JOINTBUILDGS",
+    "generating_software": "P2-C1-C2-PILOT-v1"
+  },
+  "association": {
+    "method": "FROZEN_REFERENCE_PATCH_CELL_TO_CONDITION_COMPONENT_SCORE_ASSOCIATION_V1",
+    "timing": "AFTER_CONDITION_COMPONENTS_AND_ALL_R_DERIVED_JOB_INPUTS_ARE_ADD_ONCE_FROZEN",
+    "purpose": "SCORE_IDENTITY_ONLY",
+    "selection_rule": "MAX_REFERENCE_CELL_XY_OVERLAP_THEN_MIN_COMPONENT_ID",
+    "zero_overlap": "UNASSOCIATED_G0_FALSE",
+    "geometry_modification_allowed": false,
+    "crop_allowed": false,
+    "registration_allowed": false,
+    "c2_reference_cells_are_reconstruction_input": false
+  },
+  "stage3": {
+    "interface": "R_DERIVED_NON_GT_CONVEX_HULL_V1",
+    "r_derived_source": "EXACT_CONDITION_COMPONENT_CLASS6_XY_CONVEX_HULL",
+    "external_roofprint_allowed": false,
+    "roofer_image": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+    "roofer_image_id": "sha256:9c980b97fba4c3fd30f5bb4afb8f2621be211d4e72e4333ea2053e8cd69b2dba",
+    "roofer_version": "1.0.0",
+    "command_args": ["--id-attribute", "component_id", "--jobs", "1", "--srs", "EPSG:25832", "--bld-class", "6", "--grnd-class", "2", "--lod22"],
+    "required_lod": "2.2",
+    "lod11_fallback_allowed": false,
+    "working_directory": "/work",
+    "working_directory_must_be_rw_mount": true,
+    "execution": {
+      "serial_jobs": 1,
+      "cpus_per_attempt": 2,
+      "memory_bytes_per_attempt": 8000000000,
+      "gpus_per_attempt": 0,
+      "timeout_seconds_per_attempt": 600
+    }
+  },
+  "result": {
+    "schema_path": "configs/p2_baselines/c1_c2_feasibility_pilot_v1/result_schema_v1.json",
+    "criterion_version": "C1C5_CANON_v2_PROVISIONAL_P2_FEASIBILITY",
+    "g3_g4_pass_state": null,
+    "g3_g4_pass_null_reason": "THRESHOLD_NOT_FROZEN",
+    "c1_reference_provenance": "SELF_REFERENCE_UPPER_BASELINE",
+    "c2_reference_provenance": "INDEPENDENT_UAS_SCORE_ONLY",
+    "summary_mode": "BUILDING_DESCRIPTIVE_PLUS_UNWEIGHTED_GROUP_MEAN",
+    "inferential_statistics_allowed": false
+  },
+  "retries": {
+    "max_attempts_per_execution_unit": 2,
+    "max_retry_attempts_per_execution_unit": 1,
+    "max_total_retry_attempts": 5,
+    "retryable_exit_codes": [125, 137, 143],
+    "quality_driven_retry_allowed": false,
+    "parameter_change_on_retry_allowed": false
+  },
+  "caps": {
+    "wall_clock_seconds_hard": 43200,
+    "new_output_bytes_hard": 100000000000,
+    "gpu_count_max": 0,
+    "vram_gb_max": 24
+  },
+  "representative_case_rule": "MIN_SHA256(task_id|group_id|stable_id)_BEFORE_OUTCOME_ACCESS",
+  "scientific_verdict": null
+}

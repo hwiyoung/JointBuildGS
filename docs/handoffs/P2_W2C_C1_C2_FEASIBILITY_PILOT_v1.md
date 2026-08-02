@@ -14,9 +14,9 @@
 - master_roadmap_version: `C1C5_CANON_v2`
 - result_contract_version: `C1C5_CANON_v2 / PROVISIONAL UNTIL P2 CRITERION FREEZE`
 - data_scope_version: `C1C5_CANON_v2`
-- decision_log_through: `DEC-P1-012`; a separate human pilot approval must be committed before activation
+- decision_log_through: `DEC-P1-013`
 - created_at: `2026-08-02`
-- user_approval: `NOT_GRANTED_IN_THIS_DRAFT`
+- user_approval: `GRANTED_FOR_DEVELOPMENT_C1_C2_ONLY_BY_DEC-P1-013_AT_c7491dd9883baaa284ba9a7f0051f0bb90949cc9`
 - scientific_verdict: `null`
 
 This DRAFT must be reviewed and committed before a separate activation revision. It
@@ -31,8 +31,10 @@ The scientifically ordered next step is a bounded **development-only** C1/C2 run
    namespace and pass a synthetic non-performance smoke;
 2. run `C1_L_upper` and `C2_MVS` on the 51 preassigned development buildings with one
    fixed common Stage-3 protocol;
-3. report continuous metrics, G0--G2 technical outcomes and outcome-free qualitative
-   cases without setting G3/G4 or `PASS_usable` thresholds;
+3. report continuous metrics, G0/G1 technical outcomes, a separately named internal
+   topology screen and outcome-free qualitative cases without setting G3/G4 or
+   `PASS_usable` thresholds; canonical G2 remains null because the frozen val3dity
+   route is not callable on the Experiment Host;
 4. return evidence for the Work Host to design the first C3 training strategy.
 
 The 11 validation and 10 held-out buildings remain unopened. C3--C5, Fusion W1 and
@@ -65,7 +67,8 @@ validation split or held-out protocol.
 5. `docs/research/preregistration/gate_s0/uas_reference_coverage_r1_v1/` promoted R1
    coverage, eligibility, group and split evidence;
 6. the separate human C1/C2 feasibility-pilot approval document required before
-   activation;
+   activation, `docs/research/preregistration/gate_s0/GATE_S0_C1_C2_DEVELOPMENT_PILOT_APPROVAL_v1.md`
+   at commit `c7491dd9883baaa284ba9a7f0051f0bb90949cc9` (`DEC-P1-013`);
 7. this packet only after it is revised to `APPROVED_FOR_EXECUTION` at an exact
    non-placeholder source commit and offered through a validated two-host receipt.
 
@@ -77,9 +80,12 @@ archived four-condition records are not execution authority.
 - Common source: `B_CURRENT_CANDIDATE_c205892c390997b5`, exact 962/937/25.
 - `B_current`: camera/pose, sparse, dense MVS and gravity ON; depth, normal-map
   supervision, confidence and segmentation OFF.
-- C1: current nadir UAS LiDAR direct Roofer branch; evaluation class
-  `SELF_REFERENCE_UPPER_BASELINE`. It is a sensor upper/context baseline, not an
-  independently scored accuracy claim.
+- C1: current nadir UAS LiDAR direct Roofer branch, materialized condition-only from
+  all frozen class-2/class-6 cells in `c1_grid_v1.npz`; evaluation class
+  `SELF_REFERENCE_UPPER_BASELINE`. The old 1,184-building-point/4-component
+  `c1_class26_v1.ply` is prohibited because it was filtered by a prior reference
+  selection. C1 is a sensor upper/context baseline, not an independently scored
+  accuracy claim.
 - C2: exact common-base dense MVS direct Roofer branch; no GS optimization.
 - C1 and C2 use the same non-GT `R_derived` derivation, Stage-3 adapter, Roofer image,
   parameters, writer and validators. No external roofprint is permitted.
@@ -91,7 +97,9 @@ archived four-condition records are not execution authority.
   performance remain inaccessible in this task.
 - The LoD2-derived LoD1 stays diagnostic/self-conditioned under `DEC-P1-011`; it is
   not read or used by this C1/C2 task.
-- Numerical G3/G4 and `PASS_usable` thresholds remain unset. No threshold is selected
+- Canonical G2 is null with `CANONICAL_VALIDATOR_UNAVAILABLE`; a deterministic
+  internal topology screen is diagnostic only and may not be relabeled as G2.
+  Numerical G3/G4 and `PASS_usable` thresholds remain unset. No threshold is selected
   from this run.
 - `scientific_verdict` remains `null`.
 
@@ -100,8 +108,8 @@ archived four-condition records are not execution authority.
 | Input | Exact binding | Role | Access rule |
 |---|---|---|---|
 | technical freeze | `technical_freeze_manifest_v1.json`; common 962/937/25, four consumers 807,030,928 bytes | source/component contract | reuse manifest and existing derivatives; no large-input rehash |
-| C1 derivative | freeze-recovery C1 current-nadir UAS class-2/6 derivative and external compact record | direct C1 input | one task read stream; no source LAZ full hash |
-| C2 dense MVS | retained exact-937 `dim_dense.ply` bound by freeze manifest | direct C2 input | reuse existing digest/attestation; no regeneration |
+| C1 compact grid | `reference/c1_grid_v1.npz`; 3,023,643 bytes; SHA-256 `4f72178551e25ef27a952a09faa8331c1464416fcd6c5f66a57a9424e7f0b77b` | derive global condition-only class-2/6 C1 input | one process+digest stream; no raw 1.278 GB UAS LAZ read; no R1 cells or stable ID during materialization |
+| C2 compact derivative | `common/mvs_class26_v1.ply`; 7,327,590 bytes; SHA-256 `c7d63387d720dc4028c2b00e9cc6abb83d41161d6f033199ee619765fdfaf8dd`; checkpoint `030-dense_mvs_and_gravity.json` is 2,951 bytes/SHA-256 `b301d3dc7dec2423ff5760c47db4dfef4f62e919b5aac5808a30c82a9330a8f8`; frozen from exact-937 `dim_dense.ply` by the fixed 1 m adapter | direct C2 input | one process+digest stream for the compact derivative and its compact checkpoint; do not reopen the 659,138,498-byte raw dense PLY or regenerate the derivative |
 | evaluation candidates | promoted `eligibility_candidate_v1.csv` | exact 72 candidate IDs and attemptability | select only exact development rows |
 | group/split | promoted `group_graph_v1.csv` and `split_candidate_v1.csv` | exact 51 development buildings in five groups | validation and held-out IDs may be checked as membership metadata only; no outputs/outcomes |
 | independent reference | promoted R1 patch/cell evidence, 177 patches and 20,520 score cells | C2 score-only reference | read only cells associated with development IDs; never an input to reconstruction/registration |
@@ -110,6 +118,20 @@ archived four-condition records are not execution authority.
 
 Before activation, the approval revision must bind the exact Git blob/SHA-256 of all
 Git-owned input manifests and the exact external artifact URIs needed by the runner.
+
+| Git-owned authority input | Git blob | Canonical bytes | SHA-256 |
+|---|---|---:|---|
+| `artifacts/manifests/gate_s0/freeze_recovery_v1/technical_freeze_manifest_v1.json` | `0360e61ced35b243803d225b78ec825c4bf39dae` | 7,093 | `4d7d963c02d0a384e11ace32837429a83e785f4070774ff1524f3f37c16e4a2b` |
+| `docs/research/preregistration/gate_s0/uas_reference_coverage_r1_v1/eligibility_candidate_v1.csv` | `1dca79dcc411c4904eb491a5b8aaa03890984e52` | 75,448 | `527f0616eb9e5807d210ead1d165e9db844f4f0541097949e03c96229f72224f` |
+| `docs/research/preregistration/gate_s0/uas_reference_coverage_r1_v1/group_graph_v1.csv` | `25a3aac40f26b19713a1cc21bfecb7b333010b81` | 22,566 | `ef666207d04bedeefef90eca88bdf471b6752bf5693f7c1022ebac8405358904` |
+| `docs/research/preregistration/gate_s0/uas_reference_coverage_r1_v1/split_candidate_v1.csv` | `f6db7b8accdbd7b57b4a221c441acfc5589fb592` | 3,803 | `8dc33b86a126667b847ddf33f4ad4a56012f2bfc784c0742e573a421120f7309` |
+
+The C1 materializer emits one class-2 point at finite `class2_min_z` and one class-6
+point at `class6_max_z` only where `class6_count >= 3` and its height above the
+deterministic C1 class-2 terrain envelope is at least `2.5 m`. The terrain envelope
+uses the already-frozen `[3, 7, 15, 31, 51]` cell windows. These are the frozen 1 m
+adapter thresholds; R1 score cells, stable IDs and LoD2 geometry do not participate
+in this operation.
 
 ## In scope
 
@@ -124,12 +146,16 @@ Git-owned input manifests and the exact external artifact URIs needed by the run
 4. Run C1 and C2 through one fixed common Stage-3 configuration for all 51 development
    buildings. A method/process failure remains a row-level G0 failure; do not remove
    the building or alter membership.
-5. Permit at most one retry per building only for a recorded infrastructure failure
-   that occurs before a valid condition output is produced. Parameter changes,
-   condition-specific retries and quality-driven reruns are prohibited.
+5. Execute each unique `(condition_id, condition_component_id)` once and let all
+   associated building score rows reference that sealed operation. Permit at most one
+   retry per unique operation, only for a recorded infrastructure failure before a
+   valid output, with at most five retry attempts task-wide. Parameter changes and
+   quality-driven reruns are prohibited.
 6. Produce complete run, input, output, runtime, resource, failure and digest ledgers.
-7. Compute descriptive continuous metrics and G0--G2 technical fields using the
-   provisional result schema. Keep G3, G4 and `PASS_usable` nullable with reason
+7. Compute descriptive continuous metrics and G0/G1 technical fields using the
+   provisional result schema. Keep canonical G2 null with
+   `CANONICAL_VALIDATOR_UNAVAILABLE`; report any internal topology screen under a
+   separate diagnostic field. Keep G3, G4 and `PASS_usable` null with reason
    `THRESHOLD_NOT_FROZEN`.
 8. Report C1 self-reference/upper-baseline results separately from C2 independent
    reference metrics. Do not rank C1 and C2 as if both were independently evaluated.
@@ -144,6 +170,8 @@ Git-owned input manifests and the exact external artifact URIs needed by the run
 
 - validation or held-out building output access, scoring or qualitative inspection;
 - C3, C4 or C5 training, inference, loss tuning, ablation or performance;
+- installing/recovering a new canonical val3dity toolchain or treating an internal
+  topology screen as canonical G2;
 - final adapter selection, G3/G4 thresholds, `PASS_usable`, multiplicity or a
   confirmatory scientific claim;
 - using C1 UAS roof geometry to register, crop or reconstruct C2;
@@ -178,8 +206,8 @@ broaden them into C3--C5, validation or held-out scope.
 
 The report must show at minimum:
 
-- attempted/completed/G0/G1/G2 counts and denominators by condition and development
-  group;
+- attempted/completed/G0/G1 counts and denominators by condition and development
+  group; canonical G2 null counts and the separate diagnostic topology-screen counts;
 - failure reason counts without post-hoc exclusions;
 - runtime, peak memory, output bytes and retry counts;
 - available continuous roof/geometry residuals with units, denominator and null
@@ -194,8 +222,9 @@ The report must show at minimum:
 
 - Docker-only project execution in the accepted immutable image; Roofer uses the exact
   pinned image digest.
-- One RTX-3090-class GPU maximum if any GPU helper is needed, 24 GB VRAM, 12 h total
-  wall-clock target, 100 GB new output ceiling and at most one infrastructure retry.
+- CPU-only serial Roofer execution, 12 h hard total wall clock, 600 s per Roofer
+  attempt, 100,000,000,000-byte new-output ceiling, at most one infrastructure retry
+  per unique operation and at most five retry attempts task-wide. No GPU is mounted.
 - Every operation identity binds task/handoff, accepted commit, config blob/hash,
   container image, artifact root and exact development roster digest.
 - Checkpoint before every scientific open. A completed checkpoint takes a zero-write
@@ -203,6 +232,11 @@ The report must show at minimum:
 - Reuse prior attestations. Do not repeat large hashes or source preprocessing.
 - The first duplicate calculation or repeated hash must stop that operation, record
   cause and add a regression/no-repeat guard before continuing.
+- Work-Host implementation review found one such pre-execution defect: the draft
+  finalizer verified a shared operation LAS once per score row. Its cause was mixing
+  the 102-row score unit with the smaller unique operation unit. Activation requires
+  the corrected unique-operation cache and a regression test proving one LAS
+  read/verification per operation regardless of how many buildings reference it.
 
 ## Verification
 
@@ -214,7 +248,8 @@ The report must show at minimum:
 - condition matrix assertions: exactly one final row for every 51×2 combination;
 - all output and metric rows trace to exact input/output hashes and run IDs;
 - C1 self-reference fields and C2 independent-reference fields cannot be conflated;
-- G3/G4/`PASS_usable` are null with `THRESHOLD_NOT_FROZEN`;
+- canonical G2 is null with `CANONICAL_VALIDATOR_UNAVAILABLE`; G3/G4/`PASS_usable`
+  are null with `THRESHOLD_NOT_FROZEN`;
 - second invocation proves completed fast path with zero scientific reread and zero
   write;
 - three independent reviews cover scientific scope/leakage, two-host ownership and
