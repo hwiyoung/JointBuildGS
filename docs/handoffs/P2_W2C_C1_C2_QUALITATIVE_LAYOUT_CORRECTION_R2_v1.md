@@ -2,9 +2,9 @@
 
 - handoff_id: `P2-W2C-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R2-v1`
 - task_id: `P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R2-v1`
-- status: `DRAFT`
+- status: `ACTIVATED_FOR_EXECUTION`
 - explicit_user_authorization: `APPROVED_FOR_EXECUTION`
-- source_commit: `PENDING_EXACT_SOURCE_COMMIT`
+- source_commit: `9ac8e85ffa116d5807e881a95086e3dce3e571e2`
 - run_id: `P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R2-RUN-v1`
 - execution_mode: `ELIGIBILITY_LAYOUT_ONLY_CLOSED_ATTESTATION_REUSE`
 - project_image_id: `sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774`
