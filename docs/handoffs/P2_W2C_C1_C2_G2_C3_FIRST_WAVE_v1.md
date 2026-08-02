@@ -2,9 +2,9 @@
 
 - handoff_id: `P2-W2C-C1-C2-G2-C3-FIRST-WAVE-v1`
 - task_id: `P2-C1-C2-G2-C3-FIRST-WAVE-v1`
-- status: `DRAFT_NOT_EXECUTION_AUTHORITY`
-- user_approval: `PENDING_PACKET_ACTIVATION`
-- source_commit: `PENDING_SOURCE_COMMIT`
+- status: `APPROVED_FOR_EXECUTION`
+- user_approval: `GRANTED_IN_WORK_HOST_SESSION_2026-08-02`
+- source_commit: `9a65f54331af31e14da51116a220c0e8fad1c291`
 - run_id: `P2-C1-C2-G2-C3-FIRST-WAVE-RUN-v1`
 - scientific_verdict: `null`
 
