@@ -1,0 +1,38 @@
+{
+  "schema": "jointbuildgs.c1_c2_qualitative_evaluator_backfill_artifact_allowlist.v1",
+  "task_id": "P2-C1-C2-QUALITATIVE-EVALUATOR-BACKFILL-v1",
+  "record_count": 25,
+  "total_bytes": 30432763,
+  "record_identity_sha256": "284d81867b5baf9f561fcbff4d7c5377065c1921d7f0fdd6916a3a432bbf9338",
+  "records": [
+    {"source": "R3", "path": "freeze/development_score_association_with_pre_roofer_status_v1.jsonl", "bytes": 40739, "sha256": "6d899874aad543f382b053e32149a183b4885fe5e869d738fa4762e0ab781cd9", "role": "SEALED_ASSOCIATION_CONTROL"},
+    {"source": "R3", "path": "freeze/development_score_cells_v1.jsonl", "bytes": 10868613, "sha256": "de7c02e2a286fa05c34301aae9de625637cf6fb8c07b5f2969141fd20b0d5a59", "role": "SEALED_DEVELOPMENT_REFERENCE_CONTROL"},
+    {"source": "R3", "path": "freeze/execution_units_v1.jsonl", "bytes": 5236, "sha256": "52f3b44b981d60ab7fec3afdc818e7b4b39e32f35cf9efebb45475e92b58c9d5", "role": "SEALED_EXECUTION_UNIT_CONTROL"},
+
+    {"source": "R3", "path": "operations/C1_L_upper/C1_L_upper_COMP_84a837b5d7c79565f0e8/work/input.las", "bytes": 7606503, "sha256": "eabfc085caa158ae74916a4f66be5072108374a57b1be1668bd7e3a1c9375602", "role": "DERIVED_OPERATION_LAS"},
+    {"source": "R3", "path": "operations/C1_L_upper/C1_L_upper_COMP_84a837b5d7c79565f0e8/work/r_derived.geojson", "bytes": 916, "sha256": "027f9fb399e284233d56025f5a36e31f692be3a779f8eb6ee4ae1887ef297496", "role": "DERIVED_R_DERIVED"},
+    {"source": "R3", "path": "operations/C2_MVS/C2_MVS_COMP_15d5693161e719555349/work/input.las", "bytes": 133031, "sha256": "81451358b3dde0f358246c6a447a8a76f5fcdf7b85c7693308859be4fd0920ea", "role": "DERIVED_OPERATION_LAS"},
+    {"source": "R3", "path": "operations/C2_MVS/C2_MVS_COMP_15d5693161e719555349/work/r_derived.geojson", "bytes": 655, "sha256": "1868975119f823727768184bac0e3293151ae0564e3719c323c64135bbf819b5", "role": "DERIVED_R_DERIVED"},
+    {"source": "R3", "path": "operations/C2_MVS/C2_MVS_COMP_3b9ac290b64ed07a8b9b/work/input.las", "bytes": 6508847, "sha256": "ad35caf59e8a7dea512c1161cacded43475d181be4c2e906c198427a8b546a31", "role": "DERIVED_OPERATION_LAS"},
+    {"source": "R3", "path": "operations/C2_MVS/C2_MVS_COMP_3b9ac290b64ed07a8b9b/work/r_derived.geojson", "bytes": 885, "sha256": "d14135a06a3080ff73d053a00741f4ff6a6e1523489226f12baded81c74daec6", "role": "DERIVED_R_DERIVED"},
+    {"source": "R3", "path": "operations/C2_MVS/C2_MVS_COMP_727fcc5b8565a3fd387a/work/input.las", "bytes": 265733, "sha256": "d07284d3d95730e261fe4e40490e51f7a9b85e230bb34f2ef0cf843010ba20f6", "role": "DERIVED_OPERATION_LAS"},
+    {"source": "R3", "path": "operations/C2_MVS/C2_MVS_COMP_727fcc5b8565a3fd387a/work/r_derived.geojson", "bytes": 701, "sha256": "c6ede736f1bb61f8df0cad06f87c098cf07a26fb76d8e0e37366cb1eb3974aac", "role": "DERIVED_R_DERIVED"},
+    {"source": "R3", "path": "operations/C2_MVS/C2_MVS_COMP_987366f441a0ea7f704d/work/input.las", "bytes": 862229, "sha256": "653059d51c758d0872b547dde5e0558d003721a1f035e8157805572b160bf562", "role": "DERIVED_OPERATION_LAS"},
+    {"source": "R3", "path": "operations/C2_MVS/C2_MVS_COMP_987366f441a0ea7f704d/work/r_derived.geojson", "bytes": 793, "sha256": "ad739c4619c969a765d53093d6483895bbf764e9f29af81aa1f896ef301d4192", "role": "DERIVED_R_DERIVED"},
+    {"source": "R3", "path": "operations/C2_MVS/C2_MVS_COMP_a2e596f19e5dec9c1ef3/work/input.las", "bytes": 245537, "sha256": "6d0c0256ef233009cec8dbdabbcf1465ebb16e9ea1658a3c81b4122213cc244d", "role": "DERIVED_OPERATION_LAS"},
+    {"source": "R3", "path": "operations/C2_MVS/C2_MVS_COMP_a2e596f19e5dec9c1ef3/work/r_derived.geojson", "bytes": 678, "sha256": "65e1e2f21e484bc14bea23fb8d884512e68e63baf650a2ebaee76ca32d4596c4", "role": "DERIVED_R_DERIVED"},
+    {"source": "R3", "path": "operations/C2_MVS/C2_MVS_COMP_f1d8cfc93f4be10ae807/work/input.las", "bytes": 84173, "sha256": "cda597052f8fe68c17a93073b009897d0b8ff8b7c148641b583677933976e76d", "role": "DERIVED_OPERATION_LAS"},
+    {"source": "R3", "path": "operations/C2_MVS/C2_MVS_COMP_f1d8cfc93f4be10ae807/work/r_derived.geojson", "bytes": 655, "sha256": "fb8ad6bb3fc77d7f6883247d5db92ab7cee5b865ad558b5adad3d164eccc9f57", "role": "DERIVED_R_DERIVED"},
+
+    {"source": "R3", "path": "operations/C1_L_upper/C1_L_upper_COMP_84a837b5d7c79565f0e8/work/out/690792_5335864.city.jsonl", "bytes": 3627, "sha256": "fb9c21208dc319a97ca9bddca26806ed15d60733408410211319f42ded1721a9", "role": "DERIVED_CITYJSONSEQ"},
+    {"source": "R3", "path": "operations/C2_MVS/C2_MVS_COMP_15d5693161e719555349/work/out/690847_5336152.city.jsonl", "bytes": 2759, "sha256": "376c8328d173b6e71fee485bdc1046938e5d1a75499ce9bb91d2b19b21ca1dbf", "role": "DERIVED_CITYJSONSEQ"},
+    {"source": "R3", "path": "operations/C2_MVS/C2_MVS_COMP_3b9ac290b64ed07a8b9b/work/out/690792_5335904.city.jsonl", "bytes": 3514, "sha256": "508903780d18dab40ea4f34753c766c1352f3886d87832c6d5097aedd8362fc8", "role": "DERIVED_CITYJSONSEQ"},
+    {"source": "R3", "path": "operations/C2_MVS/C2_MVS_COMP_727fcc5b8565a3fd387a/work/out/691038_5336093.city.jsonl", "bytes": 2894, "sha256": "68a4739d0e366a2a740c1f594dd41330854812361bac3395e08e7f60610062b9", "role": "DERIVED_CITYJSONSEQ"},
+    {"source": "R3", "path": "operations/C2_MVS/C2_MVS_COMP_987366f441a0ea7f704d/work/out/690815_5335864.city.jsonl", "bytes": 3215, "sha256": "b2871a48607a82397b0da0b35ff520287095c97e4999f99d0a252682578c9115", "role": "DERIVED_CITYJSONSEQ"},
+    {"source": "R3", "path": "operations/C2_MVS/C2_MVS_COMP_a2e596f19e5dec9c1ef3/work/out/691121_5336157.city.jsonl", "bytes": 2826, "sha256": "9509e2d6d71c905223fb755f55e8fdfe23f98ad850476620f76291ca8d589faf", "role": "DERIVED_CITYJSONSEQ"},
+    {"source": "R3", "path": "operations/C2_MVS/C2_MVS_COMP_f1d8cfc93f4be10ae807/work/out/690831_5336120.city.jsonl", "bytes": 2743, "sha256": "5b089bfa3a457b53e6b07c1d9590f57162157957a4eb901c9cf5437bafc21903", "role": "DERIVED_CITYJSONSEQ"},
+
+    {"source": "COMPACT_REFERENCE", "path": "phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/reference/reference_candidate_cells_v1.csv", "bytes": 3785261, "sha256": "bf87736227ea3c28bc8f966f36e2498f786d2de420a732fa0bfebbb73664275a", "role": "BOUND_COMPACT_REFERENCE_CELLS"}
+  ],
+  "scientific_verdict": null
+}

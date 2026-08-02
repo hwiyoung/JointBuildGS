@@ -109,7 +109,20 @@ G2/G3/G4와 `PASS_usable`은 최종 criterion/reference가 동결되고 해당 e
 
 ## 지금 사람이 승인하는 것과 승인하지 않는 것
 
-이 summary에 대한 승인은 다음만 뜻한다.
+이 summary에 대한 전략 승인은 아래 네 가지 핵심을 그대로 고정한다는 뜻이다.
+
+1. Gate S0의 exact 937-view full scene을 한 번 학습하고, 동결된 development ID
+   **정확히 51개**에서만 결과를 읽는다. 건물을 추가·제외·교체하지 않는다.
+2. 초기화는 SfM 371,808점과 0.40 m dense-MVS seed의 deterministic concat이며,
+   random seed는 **정확히 `0` 하나**다.
+3. loss는 위에 적은 photometric
+   `1.0 * (0.8 L1 + 0.2 (1-SSIM))`와 self-normal consistency `0.05`만 켜고,
+   distortion 및 모든 external/per-view prior loss는 `0`으로 둔다.
+4. 학습은 early stopping 없이 **정확히 30,000 update**를 수행하는 고정 schedule이며,
+   primary checkpoint는 30k다.
+
+즉, 승인은 “51개 exact development 대상, seed 0, 위 loss, 고정 30k schedule”을
+구현 목표로 채택하는 결정이다. 그 결정 아래에서만 다음 준비 작업을 승인한다.
 
 - 위 C3 전략을 구현 목표로 채택한다.
 - 재사용 가능한 implementation/config/tests를 만들고 검토한다.
