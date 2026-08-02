@@ -37,7 +37,7 @@ fi
 # Authority is proven before any scientific file stat and before TASK_ROOT is
 # created. The artifact-root mount here is exclusive to the canonical receipt
 # validator; scientific project runs below receive only exact file mounts.
-git -C "${REPO}" fetch origin main
+timeout 300 git -C "${REPO}" fetch origin main
 HEAD_SHA="$(git -C "${REPO}" rev-parse HEAD)"
 ORIGIN_SHA="$(git -C "${REPO}" rev-parse origin/main)"
 PACKET_SOURCE_COMMIT="$(sed -n 's/^- source_commit: `\([0-9a-f]\{40\}\)`.*$/\1/p' "${REPO}/${PACKET_REL}")"

@@ -249,6 +249,13 @@ class ContractTests(unittest.TestCase):
             partial = contract.AddOnceStore(Path(temporary))
             contract.prepare_synthetic(partial)
             contract.next_synthetic_action(partial)
+            partial.path("smoke/work/out").mkdir()
+            partial.path("smoke/work/runtime.log").write_text("infra failure", encoding="utf-8")
+            with self.assertRaisesRegex(RuntimeError, "exited 125"):
+                contract.verify_synthetic(partial, partial.path("smoke/work/out"), 125)
+            failed = json.loads(partial.path("smoke/attempt_01.result.json").read_bytes())
+            self.assertEqual("FAILED", failed["status"])
+            self.assertIsNotNone(failed["runtime_log"])
             with self.assertRaisesRegex(RuntimeError, "partial or failed"):
                 contract.next_synthetic_action(partial)
 

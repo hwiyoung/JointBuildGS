@@ -927,10 +927,25 @@ def verify_synthetic(store: AddOnceStore, output_dir: Path, exit_code: int) -> d
     if not started.is_file():
         raise RuntimeError("synthetic Roofer was not durably started")
     result_relative = "smoke/attempt_01.result.json"
+    output_records = [
+        compact_file_record(store, path)
+        for path in sorted(output_dir.rglob("*"))
+        if path.is_file() and not path.is_symlink()
+    ] if output_dir.is_dir() and not output_dir.is_symlink() else []
+    runtime_path = store.path("smoke/work/runtime.log")
+    runtime_log = (
+        compact_file_record(store, runtime_path)
+        if runtime_path.is_file() and not runtime_path.is_symlink()
+        else None
+    )
+    internal_path = store.path("smoke/work/roofer.log.json")
+    internal_log = compact_file_record(store, internal_path) if internal_path.is_file() and not internal_path.is_symlink() else None
     if exit_code != 0:
         store.add_json(result_relative, {
             "status": "FAILED", "exit_code": exit_code,
             "failure_reason": f"SYNTHETIC_ROOFER_EXIT_{exit_code}",
+            "runtime_log": runtime_log, "roofer_internal_log": internal_log,
+            "output_records": output_records,
             "scientific_payload_bytes_read_or_hashed": 0,
             "scientific_verdict": None,
         })
@@ -941,6 +956,8 @@ def verify_synthetic(store: AddOnceStore, output_dir: Path, exit_code: int) -> d
         store.add_json(result_relative, {
             "status": "FAILED", "exit_code": exit_code,
             "failure_reason": f"SYNTHETIC_VALIDATION_ERROR:{error}",
+            "runtime_log": runtime_log, "roofer_internal_log": internal_log,
+            "output_records": output_records,
             "scientific_payload_bytes_read_or_hashed": 0,
             "scientific_verdict": None,
         })
@@ -950,17 +967,13 @@ def verify_synthetic(store: AddOnceStore, output_dir: Path, exit_code: int) -> d
             "status": "FAILED", "exit_code": exit_code,
             "failure_reason": "SYNTHETIC_G0_G1_REQUIREMENTS_NOT_MET",
             "check": check, "scientific_payload_bytes_read_or_hashed": 0,
+            "runtime_log": runtime_log, "roofer_internal_log": internal_log,
+            "output_records": output_records,
             "scientific_verdict": None,
         })
         raise RuntimeError("synthetic Roofer output failed strict LoD2.2/schema screen")
-    output_records = [
-        compact_file_record(store, path)
-        for path in sorted(output_dir.rglob("*"))
-        if path.is_file() and not path.is_symlink()
-    ]
-    runtime_log = compact_file_record(store, store.path("smoke/work/runtime.log"))
-    internal_path = store.path("smoke/work/roofer.log.json")
-    internal_log = compact_file_record(store, internal_path) if internal_path.is_file() and not internal_path.is_symlink() else None
+    if runtime_log is None:
+        raise RuntimeError("synthetic runtime log is missing")
     attempt_result = store.add_json(result_relative, {
         "status": "PASS", "exit_code": exit_code, "check": check,
         "runtime_log": runtime_log, "roofer_internal_log": internal_log,
