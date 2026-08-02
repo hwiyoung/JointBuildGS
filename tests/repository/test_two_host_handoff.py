@@ -351,6 +351,172 @@ class TwoHostHandoffTests(unittest.TestCase):
         run(self.repo, "update-ref", "refs/remotes/origin/main", "HEAD")
         return payload, verified
 
+    def reused_required_accepted_payload(self) -> tuple[dict, Path, str]:
+        source_payload, source_accepted, _ = self.required_accepted_payload()
+        source_rel = source_accepted.parent.relative_to(self.repo).as_posix()
+
+        blocked_payload = copy.deepcopy(source_payload)
+        blocked_payload.update(
+            state="blocked",
+            created_at="2026-07-30T01:10:00Z",
+            previous_receipt={
+                "path": f"{source_rel}/100-accepted.json",
+                "sha256": digest(source_accepted),
+            },
+            receiver_ack={
+                "role": "experiment_host",
+                "accepted_at": "2026-07-30T01:10:00Z",
+                "status": "blocked",
+                "issue": "synthetic pre-scientific blocker",
+            },
+        )
+        blocked_payload["scientific"] = {
+            "technical_state": "blocked",
+            "scientific_verdict": None,
+            "promotion_status": "human_review_required",
+        }
+        blocked_payload["verification"]["commands"] = ["record exact blocker"]
+        blocked_payload["verification"]["tests"] = [
+            {"name": "synthetic smoke", "passed": 0, "failed": 1}
+        ]
+        source_blocked = source_accepted.parent / "200-blocked.json"
+        self.write_manifest(source_blocked, blocked_payload)
+        run(self.repo, "add", source_blocked.relative_to(self.repo).as_posix())
+        run(self.repo, "commit", "-m", "source blocked")
+
+        closed_payload = copy.deepcopy(blocked_payload)
+        closed_payload.update(
+            state="closed",
+            created_at="2026-07-30T01:15:00Z",
+            previous_receipt={
+                "path": f"{source_rel}/200-blocked.json",
+                "sha256": digest(source_blocked),
+            },
+            receiver_ack={
+                "role": "experiment_host",
+                "accepted_at": "2026-07-30T01:15:00Z",
+                "status": "closed",
+                "issue": "writer returned",
+            },
+        )
+        closed_payload["scientific"] = {
+            "technical_state": "complete",
+            "scientific_verdict": None,
+            "promotion_status": "human_review_required",
+        }
+        closed_payload["verification"]["commands"] = ["close without payload reread"]
+        closed_payload["verification"]["tests"] = [
+            {"name": "direct closure", "passed": 1, "failed": 0}
+        ]
+        source_closed = source_accepted.parent / "300-closed.json"
+        self.write_manifest(source_closed, closed_payload)
+        run(self.repo, "add", source_closed.relative_to(self.repo).as_posix())
+        run(self.repo, "commit", "-m", "source closed")
+        source_commit = run(self.repo, "rev-parse", "HEAD")
+
+        handoff_id = "task-required-recovery-handoff"
+        handoff_rel = f"artifacts/manifests/handoffs/{handoff_id}"
+        handoff_dir = self.repo / handoff_rel
+        offered_payload = copy.deepcopy(self.payload)
+        offered_payload.update(
+            handoff_id=handoff_id,
+            task_id="TASK-REQUIRED-RECOVERY",
+            created_at="2026-07-30T01:20:00Z",
+        )
+        offered_payload["commits"] = {
+            "base_main": source_commit,
+            "offered_head": "SELF",
+            "receipt_head": "SELF",
+        }
+        offered_payload["scope"]["allowed_paths"] = [handoff_rel]
+        offered_payload["artifacts"] = {
+            "required_for_task": True,
+            "availability": {
+                "work_host": "manifest_only",
+                "experiment_host": "manifest_only",
+            },
+            "records": [
+                {
+                    **{key: record[key] for key in ("uri", "bytes", "sha256")},
+                    "verification_method": "not_verified",
+                    "verified_by": None,
+                    "verified_at": None,
+                }
+                for record in source_payload["artifacts"]["records"]
+            ],
+        }
+        offered = handoff_dir / "000-offered.json"
+        offered.parent.mkdir(parents=True)
+        self.write_manifest(offered, offered_payload)
+        run(self.repo, "add", offered.relative_to(self.repo).as_posix())
+        run(self.repo, "commit", "-m", "recovery offer")
+        offered_commit = run(self.repo, "rev-parse", "HEAD")
+
+        identities = sorted(
+            [
+                {key: record[key] for key in ("uri", "bytes", "sha256")}
+                for record in source_payload["artifacts"]["records"]
+            ],
+            key=lambda item: item["uri"],
+        )
+        identity_digest = hashlib.sha256(
+            (json.dumps(identities, sort_keys=True, separators=(",", ":")) + "\n").encode()
+        ).hexdigest()
+        accepted_payload = copy.deepcopy(offered_payload)
+        accepted_payload.update(
+            state="accepted",
+            created_at="2026-07-30T01:25:00Z",
+            previous_receipt={
+                "path": f"{handoff_rel}/000-offered.json",
+                "sha256": digest(offered),
+            },
+            receiver_ack={
+                "role": "experiment_host",
+                "accepted_at": "2026-07-30T01:25:00Z",
+                "status": "accepted",
+                "issue": None,
+            },
+        )
+        accepted_payload["commits"] = {
+            "base_main": source_commit,
+            "offered_head": offered_commit,
+            "receipt_head": "SELF",
+        }
+        accepted_payload["verification"] = {
+            "level": "artifact_verified",
+            "verifier_role": "experiment_host",
+            "docker_image_digest": source_payload["verification"]["docker_image_digest"],
+            "commands": ["reuse exact prior closed attestation without payload read"],
+            "tests": [{"name": "closed attestation reuse", "passed": 1, "failed": 0}],
+        }
+        accepted_payload["artifacts"] = {
+            "required_for_task": True,
+            "availability": source_payload["artifacts"]["availability"],
+            "records": [
+                {
+                    **{key: record[key] for key in ("uri", "bytes", "sha256")},
+                    "verification_method": "closed_attestation_reuse",
+                    "verified_by": record["verified_by"],
+                    "verified_at": record["verified_at"],
+                }
+                for record in source_payload["artifacts"]["records"]
+            ],
+            "attestation_reuse": {
+                "source_handoff_id": source_payload["handoff_id"],
+                "source_task_id": source_payload["task_id"],
+                "source_receipt_path": source_closed.relative_to(self.repo).as_posix(),
+                "source_receipt_commit": source_commit,
+                "source_receipt_sha256": digest(source_closed),
+                "record_identity_sha256": identity_digest,
+            },
+        }
+        accepted = handoff_dir / "100-accepted.json"
+        self.write_manifest(accepted, accepted_payload)
+        run(self.repo, "add", accepted.relative_to(self.repo).as_posix())
+        run(self.repo, "commit", "-m", "recovery accepted with reuse")
+        run(self.repo, "update-ref", "refs/remotes/origin/main", "HEAD")
+        return accepted_payload, accepted, run(self.repo, "rev-parse", "HEAD")
+
     def git_only_verified_payload(self) -> tuple[dict, Path]:
         accepted_payload = copy.deepcopy(self.payload)
         accepted_payload.update(
@@ -758,6 +924,53 @@ class TwoHostHandoffTests(unittest.TestCase):
             if Path(call.args[0]).resolve() == artifact.resolve()
         ]
         self.assertEqual(1, len(artifact_calls))
+
+    def test_required_accepted_can_reuse_exact_prior_closed_attestation_without_hash(self) -> None:
+        payload, manifest, _ = self.reused_required_accepted_payload()
+        with mock.patch.object(MODULE, "sha256_file", side_effect=AssertionError("payload hash")) as sha256, \
+             mock.patch.object(MODULE, "validate_artifacts", wraps=MODULE.validate_artifacts) as live:
+            errors = self.errors(payload, manifest=manifest)
+        self.assertEqual([], errors)
+        self.assertEqual(0, sha256.call_count)
+        self.assertEqual(0, live.call_count)
+
+    def test_reused_attestation_rejects_drift_and_artifact_root(self) -> None:
+        payload, manifest, receipt = self.reused_required_accepted_payload()
+        self.assertTrue(any(
+            "prohibits --artifact-root" in item
+            for item in self.errors(payload, manifest=manifest, artifact_root=self.artifact_root)
+        ))
+        offered_with_reuse = copy.deepcopy(payload)
+        offered_with_reuse["state"] = "offered"
+        semantic_errors: list[str] = []
+        MODULE.validate_event_semantics(offered_with_reuse, semantic_errors)
+        self.assertIn(
+            "offered event must not predeclare cross-handoff artifact attestation reuse",
+            semantic_errors,
+        )
+        mutations = (
+            ("source commit", lambda value: value["artifacts"]["attestation_reuse"].update(
+                source_receipt_commit="0" * 40
+            )),
+            ("source hash", lambda value: value["artifacts"]["attestation_reuse"].update(
+                source_receipt_sha256="0" * 64
+            )),
+            ("record digest", lambda value: value["artifacts"]["attestation_reuse"].update(
+                record_identity_sha256="0" * 64
+            )),
+            ("record bytes", lambda value: value["artifacts"]["records"][0].update(
+                bytes=value["artifacts"]["records"][0]["bytes"] + 1
+            )),
+        )
+        for label, mutate in mutations:
+            with self.subTest(label=label):
+                changed = copy.deepcopy(payload)
+                mutate(changed)
+                errors: list[str] = []
+                MODULE.validate_reused_artifact_attestation(
+                    self.repo, changed, receipt, SCHEMA, SNAPSHOT_SCHEMA, errors
+                )
+                self.assertTrue(errors)
 
     def test_required_accepted_rejects_git_only_without_rehash(self) -> None:
         payload, manifest, _ = self.required_accepted_payload(artifact_verified=False)

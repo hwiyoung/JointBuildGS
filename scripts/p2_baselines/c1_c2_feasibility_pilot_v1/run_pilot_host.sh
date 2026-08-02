@@ -11,7 +11,7 @@ PROJECT_IMAGE_ID="${2:?missing accepted project image ID}"
 SOURCE_COMMIT="${3:?missing accepted source commit}"
 RUN_ID="${4:?missing immutable run ID}"
 ROOFER_IMAGE="3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2"
-TASK_REL="phase-payloads/p2-baselines/c1_c2_feasibility_pilot_v1/P2-C1-C2-FEASIBILITY-PILOT-v1"
+TASK_REL="phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-v1"
 TASK_ROOT="${ARTIFACT_ROOT}/${TASK_REL}"
 FREEZE_REL="phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1"
 R1_REL="phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1"
@@ -20,8 +20,9 @@ C1_CHECKPOINT="${ARTIFACT_ROOT}/${FREEZE_REL}/checkpoints/050-c1_reference_froze
 C2_PLY="${ARTIFACT_ROOT}/${FREEZE_REL}/common/mvs_class26_v1.ply"
 C2_CHECKPOINT="${ARTIFACT_ROOT}/${FREEZE_REL}/checkpoints/030-dense_mvs_and_gravity.json"
 REFERENCE_CELLS="${ARTIFACT_ROOT}/${R1_REL}/reference/reference_candidate_cells_v1.csv"
-ACCEPTED_RECEIPT_REL="artifacts/manifests/handoffs/P2-W2C-C1-C2-FEASIBILITY-PILOT-v1/100-accepted.json"
-PACKET_REL="docs/handoffs/P2_W2C_C1_C2_FEASIBILITY_PILOT_v1.md"
+ACCEPTED_RECEIPT_REL="artifacts/manifests/handoffs/P2-W2C-C1-C2-FEASIBILITY-PILOT-RECOVERY-v1/100-accepted.json"
+PACKET_REL="docs/handoffs/P2_W2C_C1_C2_FEASIBILITY_PILOT_RECOVERY_v1.md"
+MACHINE_PARSER="${REPO}/scripts/p2_baselines/c1_c2_feasibility_pilot_v1/parse_machine_decision.awk"
 START_SECONDS="${SECONDS}"
 HARD_CAP_SECONDS=43200
 
@@ -35,8 +36,8 @@ if [[ ! "${PROJECT_IMAGE_ID}" =~ ^sha256:[0-9a-f]{64}$ || ! "${SOURCE_COMMIT}" =
 fi
 
 # Authority is proven before any scientific file stat and before TASK_ROOT is
-# created. The artifact-root mount here is exclusive to the canonical receipt
-# validator; scientific project runs below receive only exact file mounts.
+# created. The accepted receipt already carries the immutable artifact attestation;
+# this successor check validates Git ancestry only and must not rehash those inputs.
 timeout 300 git -C "${REPO}" fetch origin main
 HEAD_SHA="$(git -C "${REPO}" rev-parse HEAD)"
 ORIGIN_SHA="$(git -C "${REPO}" rev-parse origin/main)"
@@ -58,15 +59,15 @@ if ! grep -Fxq -- '- status: `APPROVED_FOR_EXECUTION`' "${REPO}/${PACKET_REL}" |
   echo "packet is not explicitly activated for execution" >&2
   exit 2
 fi
-docker run --rm --network none \
+docker run --rm --network none --entrypoint /opt/conda/bin/python \
   -v "${REPO}:/workspace/JointBuildGS:ro" \
-  -v "${ARTIFACT_ROOT}:/artifacts/JointBuildGS:ro" \
   -w /workspace/JointBuildGS "${PROJECT_IMAGE_ID}" \
-  python scripts/repository/validate_two_host_handoff.py "${ACCEPTED_RECEIPT_REL}" \
-    --repo . --origin-ref origin/main --head-ref HEAD --artifact-root /artifacts/JointBuildGS
-docker run --rm --network none -e EXPECTED_PROJECT_IMAGE_ID="${PROJECT_IMAGE_ID}" \
+  scripts/repository/validate_two_host_handoff.py "${ACCEPTED_RECEIPT_REL}" \
+    --repo . --origin-ref origin/main --head-ref HEAD
+docker run --rm --network none --entrypoint /opt/conda/bin/python \
+  -e EXPECTED_PROJECT_IMAGE_ID="${PROJECT_IMAGE_ID}" \
   -v "${REPO}:/workspace/JointBuildGS:ro" -w /workspace/JointBuildGS "${PROJECT_IMAGE_ID}" \
-  python -c 'import json,os; p=json.load(open("artifacts/manifests/handoffs/P2-W2C-C1-C2-FEASIBILITY-PILOT-v1/100-accepted.json")); assert p["handoff_id"]=="P2-W2C-C1-C2-FEASIBILITY-PILOT-v1" and p["task_id"]=="P2-C1-C2-FEASIBILITY-PILOT-v1"; assert p["state"]=="accepted" and p["direction"]=="work_to_experiment"; assert p["sender_role"]=="work_host" and p["receiver_role"]=="experiment_host"; assert p["receiver_ack"]["role"]=="experiment_host" and p["receiver_ack"]["status"]=="accepted"; assert p["transport"]["exclusive_writer_ack"] is True; assert p["verification"]["docker_image_digest"]==os.environ["EXPECTED_PROJECT_IMAGE_ID"]'
+  -c 'import json,os; p=json.load(open("artifacts/manifests/handoffs/P2-W2C-C1-C2-FEASIBILITY-PILOT-RECOVERY-v1/100-accepted.json")); c=json.load(open("configs/p2_baselines/c1_c2_feasibility_pilot_v1/pilot_v1.json")); assert p["handoff_id"]=="P2-W2C-C1-C2-FEASIBILITY-PILOT-RECOVERY-v1" and p["task_id"]=="P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-v1"; assert p["state"]=="accepted" and p["direction"]=="work_to_experiment"; assert p["sender_role"]=="work_host" and p["receiver_role"]=="experiment_host"; assert p["receiver_ack"]["role"]=="experiment_host" and p["receiver_ack"]["status"]=="accepted"; assert p["transport"]["exclusive_writer_ack"] is True; assert p["verification"]["docker_image_digest"]==os.environ["EXPECTED_PROJECT_IMAGE_ID"]; assert p["artifacts"]["attestation_reuse"]==c["accepted_attestation_reuse"]'
 for exact_input in "${C1_GRID}" "${C1_CHECKPOINT}" "${C2_PLY}" "${C2_CHECKPOINT}" "${REFERENCE_CELLS}"; do
   if [[ ! -f "${exact_input}" || -L "${exact_input}" ]]; then
     echo "exact frozen input missing or symlinked: ${exact_input}" >&2
@@ -86,16 +87,18 @@ remaining_cap_seconds() {
 
 project_run() {
   timeout "$(remaining_cap_seconds)" docker run --rm --network none --cpus 2 --memory 8g --pids-limit 512 \
+    --entrypoint /opt/conda/bin/python \
     --user "$(id -u):$(id -g)" \
     -v "${REPO}:/workspace/JointBuildGS:ro" \
     -v "${TASK_ROOT}:/pilot_output:rw" \
     -w /workspace/JointBuildGS \
     "${PROJECT_IMAGE_ID}" \
-    python scripts/p2_baselines/c1_c2_feasibility_pilot_v1/run_pilot.py "$@"
+    scripts/p2_baselines/c1_c2_feasibility_pilot_v1/run_pilot.py "$@"
 }
 
 project_science_prepare() {
   timeout "$(remaining_cap_seconds)" docker run --rm --network none --cpus 2 --memory 8g --pids-limit 512 \
+    --entrypoint /opt/conda/bin/python \
     --user "$(id -u):$(id -g)" \
     -v "${REPO}:/workspace/JointBuildGS:ro" \
     -v "${TASK_ROOT}:/pilot_output:rw" \
@@ -106,7 +109,7 @@ project_science_prepare() {
     -v "${REFERENCE_CELLS}:/pilot_inputs/reference/reference_candidate_cells_v1.csv:ro" \
     -w /workspace/JointBuildGS \
     "${PROJECT_IMAGE_ID}" \
-    python scripts/p2_baselines/c1_c2_feasibility_pilot_v1/run_pilot.py prepare-scientific \
+    scripts/p2_baselines/c1_c2_feasibility_pilot_v1/run_pilot.py prepare-scientific \
       --output-root /pilot_output \
       --c1-grid /pilot_inputs/c1/c1_grid_v1.npz \
       --c1-checkpoint /pilot_inputs/attestation/050-c1_reference_frozen_pre_c5.json \
@@ -114,7 +117,7 @@ project_science_prepare() {
       --c2-checkpoint /pilot_inputs/attestation/030-dense_mvs_and_gravity.json \
       --reference-cells /pilot_inputs/reference/reference_candidate_cells_v1.csv \
       --source-commit "${SOURCE_COMMIT}" --run-id "${RUN_ID}" \
-      --handoff-id P2-W2C-C1-C2-FEASIBILITY-PILOT-v1 \
+      --handoff-id P2-W2C-C1-C2-FEASIBILITY-PILOT-RECOVERY-v1 \
       --accepted-receipt "/workspace/JointBuildGS/${ACCEPTED_RECEIPT_REL}" \
       --accepted-commit "${HEAD_SHA}" --project-image-id "${PROJECT_IMAGE_ID}" \
       --artifact-root-token artifact://JointBuildGS
@@ -123,7 +126,12 @@ project_science_prepare() {
 # The first gate reads zero scientific bytes.
 project_run preflight
 project_run prepare-synthetic --output-root /pilot_output
-mapfile -t smoke_decision < <(project_run next-synthetic --output-root /pilot_output --machine-lines)
+smoke_machine_output="$(project_run next-synthetic --output-root /pilot_output --machine-lines)"
+if ! smoke_parsed="$(printf '%s\n' "${smoke_machine_output}" | awk -f "${MACHINE_PARSER}")"; then
+  echo "ambiguous synthetic machine decision channel" >&2
+  exit 2
+fi
+mapfile -t smoke_decision <<<"${smoke_parsed}"
 if [[ "${smoke_decision[0]:-}" == "RUN" && "${smoke_decision[1]:-}" == "1" ]]; then
   mkdir -p "${TASK_ROOT}/smoke/work/out"
   smoke_timeout="$(remaining_cap_seconds)"
@@ -151,7 +159,12 @@ while IFS=$'\t' read -r unit_id work_relative; do
     continue
   fi
   for _attempt_loop in 1 2; do
-    mapfile -t decision < <(project_run next-attempt --output-root /pilot_output --unit-id "${unit_id}" --machine-lines)
+    machine_output="$(project_run next-attempt --output-root /pilot_output --unit-id "${unit_id}" --machine-lines)"
+    if ! parsed="$(printf '%s\n' "${machine_output}" | awk -f "${MACHINE_PARSER}")"; then
+      echo "ambiguous scientific machine decision channel for ${unit_id}" >&2
+      exit 2
+    fi
+    mapfile -t decision <<<"${parsed}"
     if [[ "${decision[0]}" == "SKIP_COMPLETED" ]]; then
       break
     fi

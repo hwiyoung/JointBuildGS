@@ -110,8 +110,10 @@ def main() -> None:
                 args.peak_memory_bytes, args.peak_memory_unavailable_reason,
             )
     if args.mode in {"next-attempt", "next-synthetic"} and args.machine_lines:
-        print(result["action"])
-        print(result.get("attempt_number", 0))
+        print(
+            "JBGS_MACHINE_DECISION_V1\t"
+            f"{result['action']}\t{result.get('attempt_number', 0)}"
+        )
     else:
         print(json.dumps(result, ensure_ascii=False, sort_keys=True))
     if args.mode == "record-attempt" and result.get("status") == "RETRY_AUTHORIZED_INFRASTRUCTURE_ONLY":

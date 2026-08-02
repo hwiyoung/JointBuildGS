@@ -38,7 +38,16 @@ from jsonschema import Draft202012Validator
 
 REPO = Path(__file__).resolve().parents[3]
 CONFIG_PATH = REPO / "configs/p2_baselines/c1_c2_feasibility_pilot_v1/pilot_v1.json"
-TASK_ID = "P2-C1-C2-FEASIBILITY-PILOT-v1"
+TASK_ID = "P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-v1"
+REPRESENTATIVE_SELECTION_TASK_ID = "P2-C1-C2-FEASIBILITY-PILOT-v1"
+ACCEPTED_ATTESTATION_REUSE = {
+    "source_handoff_id": "P2-W2C-C1-C2-FEASIBILITY-PILOT-v1",
+    "source_task_id": "P2-C1-C2-FEASIBILITY-PILOT-v1",
+    "source_receipt_path": "artifacts/manifests/handoffs/P2-W2C-C1-C2-FEASIBILITY-PILOT-v1/300-closed.json",
+    "source_receipt_commit": "896fe284bc4d496e6e9c79720f4e75396a41d0b2",
+    "source_receipt_sha256": "705348ecde9d139254bdd24e59ed02312d5321c20f802649f1ce4ca19f5b9bda",
+    "record_identity_sha256": "f63d5d4405157615d807d6babd4a9bf74a16ab13818193945ed9bbfc02532db3",
+}
 CONDITIONS = ("C1_L_upper", "C2_MVS")
 GRID_NAMES = (
     "min_z", "max_z", "count", "sum_z", "sum_z2",
@@ -106,7 +115,12 @@ def validate_contract(config: Mapping[str, Any] | None = None) -> dict[str, Any]
     """Validate Git-owned scope without opening any scientific payload."""
 
     config = dict(config or load_config())
-    if config.get("task_id") != TASK_ID or tuple(config["scope"]["condition_ids"]) != CONDITIONS:
+    if (
+        config.get("task_id") != TASK_ID
+        or config.get("representative_selection_task_id") != REPRESENTATIVE_SELECTION_TASK_ID
+        or config.get("accepted_attestation_reuse") != ACCEPTED_ATTESTATION_REUSE
+        or tuple(config["scope"]["condition_ids"]) != CONDITIONS
+    ):
         raise RuntimeError("task or condition contract mismatch")
     scope = config["scope"]
     if scope["validation_payload_mount_allowed"] or scope["held_out_payload_mount_allowed"]:
@@ -223,7 +237,12 @@ def representative_cases(roster: Sequence[Mapping[str, str]]) -> dict[str, str]:
     for row in roster:
         grouped[row["group_id"]].append(row["stable_id"])
     return {
-        group: min(ids, key=lambda stable_id: hashlib.sha256(f"{TASK_ID}|{group}|{stable_id}".encode()).hexdigest())
+        group: min(
+            ids,
+            key=lambda stable_id: hashlib.sha256(
+                f"{REPRESENTATIVE_SELECTION_TASK_ID}|{group}|{stable_id}".encode()
+            ).hexdigest(),
+        )
         for group, ids in sorted(grouped.items())
     }
 
@@ -1900,7 +1919,7 @@ def promote(store: AddOnceStore, repo_root: Path, promotion_parent_commit: str) 
 
     repo_root = repo_root.resolve()
     git_store = AddOnceStore(repo_root)
-    manifest_relative = "artifacts/manifests/p2_baselines/c1_c2_feasibility_pilot_v1/technical_result_manifest_v1.json"
+    manifest_relative = "artifacts/manifests/p2_baselines/c1_c2_feasibility_pilot_recovery_v1/technical_result_manifest_v1.json"
     existing = git_store.path(manifest_relative)
     if existing.is_file():
         manifest = json.loads(existing.read_bytes())
@@ -1965,7 +1984,7 @@ def promote(store: AddOnceStore, repo_root: Path, promotion_parent_commit: str) 
     } for row in technical_groups]
     case_fields = ["building_id", "group_id", "method_id", "reference_provenance", "G0_generated", "G1_schema_semantic", "RMSZ_m", "RMSXY_m", "surface_distance_rmse_m", "reference_vertical_coverage", "operation_unit_id"]
     flat_cases = [{**{name: row.get(name) for name in case_fields}, **{name: row["metrics"].get(name) for name in case_fields if name in row["metrics"]}} for row in cases]
-    prefix = "docs/experiments/p2/c1_c2_feasibility_pilot_v1"
+    prefix = "docs/experiments/p2/c1_c2_feasibility_pilot_recovery_v1"
     promoted = [
         git_store.add(f"{prefix}/C1_C2_DEVELOPMENT_REPORT_v1.md", external_report),
         git_store.add(f"{prefix}/building_method_metrics_v1.csv", _csv_bytes(metrics_fields, flat_rows)),
@@ -1980,7 +1999,7 @@ def promote(store: AddOnceStore, repo_root: Path, promotion_parent_commit: str) 
         "promotion_parent_commit": promotion_parent_commit,
         "run_id": finalized["run_id"],
         "operation_id": finalized["operation_id"],
-        "external_namespace": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_v1/P2-C1-C2-FEASIBILITY-PILOT-v1/",
+        "external_namespace": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-v1/",
         "external_records": {
             "metrics": finalized["metrics"], "group_balanced_descriptive": finalized["group_balanced_descriptive"],
             "condition_group_technical_summary": finalized["condition_group_technical_summary"],

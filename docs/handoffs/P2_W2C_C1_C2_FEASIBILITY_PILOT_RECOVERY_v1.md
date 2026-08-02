@@ -3,7 +3,7 @@
 ## Handoff metadata
 
 - handoff_id: `P2-W2C-C1-C2-FEASIBILITY-PILOT-RECOVERY-v1`
-- task_id: `P2-C1-C2-FEASIBILITY-PILOT-v1`
+- task_id: `P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-v1`
 - phase: `P2 / development baseline feasibility before C3 strategy freeze`
 - direction: `Work→Codex`
 - status: `DRAFT_NOT_EXECUTION_AUTHORITY`
@@ -45,6 +45,8 @@ condition, parameter, roster, split, reference, metric contract or cost cap chan
 - Validation 11 and held-out 10 outcomes remain unopened.
 - Conditions remain only `C1_L_upper` and `C2_MVS`; expected result surface remains
   exactly 51×2 = 102 rows.
+- The outcome-free representative-case seed remains the original approved
+  `P2-C1-C2-FEASIBILITY-PILOT-v1` seed so recovery does not change selected cases.
 - C1 remains a self-reference upper/context baseline and must be reported separately.
 - C2 remains the common-base dense-MVS direct Roofer baseline evaluated only after
   reconstruction against the independent UAS reference.
@@ -80,13 +82,36 @@ forward into a new operational event.
 The closed v1 packet, Return, receipts, blocked manifest, promoted blocked report and
 external namespace are immutable and protected.
 
+The offered receipt must freeze these exact Git write paths and no others:
+
+```text
+artifacts/manifests/handoffs/P2-W2C-C1-C2-FEASIBILITY-PILOT-RECOVERY-v1
+artifacts/manifests/p2_baselines/c1_c2_feasibility_pilot_recovery_v1
+docs/experiments/p2/c1_c2_feasibility_pilot_recovery_v1
+docs/handoffs/returns/P2_C2W_C1_C2_FEASIBILITY_PILOT_RECOVERY_RETURN_v1.md
+```
+
+It must protect the old v1 packet/Return/receipt/result paths and external namespace,
+this recovery packet, the recovery config/runner/schema/validator/tests, `AGENTS.md`,
+`CLAUDE.md`, `docs/research/00_RESEARCH_CHARTER.md` through
+`docs/research/06_DECISION_LOG.md`, all Gate-S0/frozen evidence, Fusion W1 and phase
+history. The validator's allowed-path check remains authoritative for every other
+Git-owned path.
+
+The immutable commit sequence is exact: activation `A`; offered `O`, whose only new
+path is `000-offered.json`; accepted `X`, whose only new path is `100-accepted.json`;
+results plus Return `R`; verified `V`, whose only new path is `200-verified.json`; and
+direct-child closed `C`, whose only new path is `300-closed.json`. `A < O < X < R < V`
+must be strict ancestry, and `C` must be the direct child of `V`. No event commit may
+modify an earlier receipt, packet, config, runner, validator, schema, test or result.
+
 ## Required recovery implementation and verification
 
 1. The post-acceptance wrapper validates only Git receipt ancestry and the inherited
    attestation fields; it must not supply `--artifact-root` or mount the artifact root.
 2. The wrapper may stat the five exact paths for existence but may not perform an
-   additional integrity hash before scientific processing. Scientific processing
-   computes each required digest in its existing single processing stream.
+   integrity hash during acceptance or before scientific processing. Scientific
+   processing computes each required digest in its existing single processing stream.
 3. Machine decisions use explicitly prefixed records and exact cardinality checks;
    unrelated container stdout cannot become an action or attempt number.
 4. A regression test injects CUDA/NGC-like banner lines and proves the exact machine
@@ -103,12 +128,22 @@ external namespace are immutable and protected.
 1. Fetch and inspect remote packet, exact source, user authorization and new
    `000-offered` before pull.
 2. Require a clean checkout and fast-forward-only pull.
-3. Verify the five compact inputs exactly once before and once after pushing the new
-   artifact-verified `100-accepted`; later lifecycle steps inherit that attestation.
-4. Run the committed wrapper. Synthetic smoke must pass before scientific mounts.
-5. Run each unique C1/C2 Roofer operation once, produce the exact 102-row descriptive
+3. Before `100-accepted`, verify that the exact project image
+   `sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774`
+   exists locally and that its `/opt/conda/bin/python` entrypoint runs the committed
+   zero-scientific preflight without startup text being treated as a machine decision.
+4. Create the new artifact-verified `100-accepted` by validating and reusing the
+   exact five-record attestation in the prior closed receipt at commit
+   `896fe284bc4d496e6e9c79720f4e75396a41d0b2`; do not rehash those inputs. Bind the
+   immutable Git receipt-blob SHA-256
+   `705348ecde9d139254bdd24e59ed02312d5321c20f802649f1ce4ca19f5b9bda`
+   and canonical five-record identity digest
+   `f63d5d4405157615d807d6babd4a9bf74a16ab13818193945ed9bbfc02532db3`.
+   Later lifecycle steps inherit this reuse record byte-for-byte.
+5. Run the committed wrapper. Synthetic smoke must pass before scientific mounts.
+6. Run each unique C1/C2 Roofer operation once, produce the exact 102-row descriptive
    result surface and promote only compact outputs in the new paths.
-6. Use independent reviewers, create Return and artifact-inheriting `200-verified`,
+7. Use independent reviewers, create Return and artifact-inheriting `200-verified`,
    then a direct-child `300-closed` without payload rereads.
 
 ## Stop conditions
@@ -116,7 +151,8 @@ external namespace are immutable and protected.
 - any scientific-contract, exact-input, roster, split, image or receipt mismatch;
 - any access to validation/held-out outcomes, C3–C5, Fusion, `R_ext`, LoD1 or LoD2;
 - any attempt to reuse or modify the failed v1 namespace or historical evidence;
-- any repeated compact-input hash outside the required accepted pre/post-push pair;
+- any new acceptance-time full-input hash or separate hash pass outside the scientific
+  processing-and-digest stream;
 - ambiguous machine decision, partial output, duplicate computation or non-infrastructure
   retry need;
 - output or wall-clock cap breach.
@@ -132,4 +168,3 @@ close the receipt chain, return writer ownership and keep `scientific_verdict: n
 - Return and independent reviews state the empirical evidence relevant to the first
   C3 strategy without executing C3;
 - artifact-inheriting `200` and direct-child `300` return writer ownership to Work Host.
-

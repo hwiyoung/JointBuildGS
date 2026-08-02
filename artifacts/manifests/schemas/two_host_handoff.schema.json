@@ -169,7 +169,7 @@
               "bytes": {"type": "integer", "minimum": 0},
               "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
               "verification_method": {
-                "enum": ["not_verified", "sha256_rehash"]
+                "enum": ["not_verified", "sha256_rehash", "closed_attestation_reuse"]
               },
               "verified_by": {
                 "type": ["string", "null"],
@@ -183,6 +183,49 @@
               }
             }
           }
+        },
+        "attestation_reuse": {
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "source_handoff_id",
+                "source_task_id",
+                "source_receipt_path",
+                "source_receipt_commit",
+                "source_receipt_sha256",
+                "record_identity_sha256"
+              ],
+              "properties": {
+                "source_handoff_id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+                },
+                "source_task_id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+                },
+                "source_receipt_path": {
+                  "type": "string",
+                  "pattern": "^artifacts/manifests/handoffs/[A-Za-z0-9._-]+/300-closed\\.json$"
+                },
+                "source_receipt_commit": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{40}$"
+                },
+                "source_receipt_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "record_identity_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              }
+            }
+          ]
         }
       }
     },

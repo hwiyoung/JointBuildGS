@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import io
 import json
 import subprocess
@@ -21,7 +22,16 @@ class ContractTests(unittest.TestCase):
         self.assertEqual(51, result["building_count"])
         self.assertEqual("712cf0e7e635f049857302f4e5ffea825165d9fb38dd3091d0ab192d5974a68b", result["development_id_set_sha256"])
         self.assertEqual([1, 1, 1, 1, 47], sorted(result["group_sizes"].values()))
-        self.assertEqual(5, len(result["representatives"]))
+        self.assertEqual(
+            {
+                "GROUP_32a743e7f900e7ae": "DEBY_LOD2_4959327",
+                "GROUP_37b5107f054e56e8": "DEBY_LOD2_4906981",
+                "GROUP_660281d563f14018": "DEBY_LOD2_4959461",
+                "GROUP_6e1c6ddc7a70ba88": "DEBY_LOD2_4906982",
+                "GROUP_a47a79580ecbedd1": "DEBY_LOD2_4959314",
+            },
+            result["representatives"],
+        )
         self.assertEqual(21714, result["development_score_cell_rows"])
         self.assertEqual("1dca79dcc411c4904eb491a5b8aaa03890984e52", result["frozen_eligibility_blob"])
         self.assertEqual("f6db7b8accdbd7b57b4a221c441acfc5589fb592", result["frozen_split_blob"])
@@ -31,6 +41,10 @@ class ContractTests(unittest.TestCase):
         self.assertEqual("c9f6412c4878a2cec3be09e465bb7a2be60f4f8329a473bf4acd44679c6afecc", config["roster_sha256"])
         self.assertEqual(21714, config["development_score_cell_rows"])
         self.assertEqual(12014, config["development_score_scope_canonical_lf_bytes"])
+        self.assertEqual(
+            "MIN_SHA256(representative_selection_task_id|group_id|stable_id)_BEFORE_OUTCOME_ACCESS",
+            contract.load_config()["representative_case_rule"],
+        )
 
     def test_config_prohibits_old_or_raw_inputs_and_all_outcome_splits(self) -> None:
         config = contract.load_config()
@@ -366,7 +380,16 @@ class ContractTests(unittest.TestCase):
         self.assertIn('merge-base --is-ancestor "${SOURCE_COMMIT}" "${HEAD_SHA}"', script)
         self.assertIn('"${PACKET_SOURCE_COMMIT}" != "${SOURCE_COMMIT}"', script)
         self.assertNotIn('"${HEAD_SHA}" != "${SOURCE_COMMIT}"', script)
-        self.assertEqual(1, script.count("${ARTIFACT_ROOT}:/artifacts/JointBuildGS:ro"))
+        self.assertEqual(0, script.count("${ARTIFACT_ROOT}:/artifacts/JointBuildGS:ro"))
+        self.assertNotIn("--artifact-root /artifacts/JointBuildGS", script)
+        self.assertNotIn("sha256sum", script)
+        self.assertIn("--entrypoint /opt/conda/bin/python", script)
+        self.assertIn("parse_machine_decision.awk", script)
+        self.assertIn('p["artifacts"]["attestation_reuse"]==c["accepted_attestation_reuse"]', script)
+        self.assertIn("ambiguous synthetic machine decision channel", script)
+        self.assertIn("ambiguous scientific machine decision channel", script)
+        self.assertIn("c1_c2_feasibility_pilot_recovery_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-v1", script)
+        self.assertNotIn('TASK_REL="phase-payloads/p2-baselines/c1_c2_feasibility_pilot_v1/P2-C1-C2-FEASIBILITY-PILOT-v1"', script)
         self.assertIn("050-c1_reference_frozen_pre_c5.json", script)
         self.assertNotIn("PATCH_SUMMARY", script)
         self.assertIn("ROOFER_IMAGE_GNU_TIME_UNAVAILABLE_VERIFIED_IMMUTABLE_IMAGE", script)
@@ -378,6 +401,78 @@ class ContractTests(unittest.TestCase):
         task_mkdir = script.index('mkdir -p "${TASK_ROOT}"')
         self.assertLess(receipt, first_scientific_stat)
         self.assertLess(receipt, task_mkdir)
+
+    def test_machine_channel_ignores_container_banner_and_is_exact(self) -> None:
+        parser = contract.REPO / "scripts/p2_baselines/c1_c2_feasibility_pilot_v1/parse_machine_decision.awk"
+
+        def parse(observed: str) -> subprocess.CompletedProcess[str]:
+            return subprocess.run(
+                ["awk", "-f", str(parser)], input=observed,
+                capture_output=True, text=True, check=False,
+            )
+
+        banner = "==========\n== CUDA ==\nimmutable startup text\n"
+        passed = parse(banner + "JBGS_MACHINE_DECISION_V1\tRUN\t1\n")
+        self.assertEqual(0, passed.returncode)
+        self.assertEqual("RUN\n1\n", passed.stdout)
+        for invalid in (
+            banner,
+            banner + "JBGS_MACHINE_DECISION_V1\tRUN\t1\nJBGS_MACHINE_DECISION_V1\tRUN\t1\n",
+            banner + "JBGS_MACHINE_DECISION_V1\tRUN\n",
+            banner + "JBGS_MACHINE_DECISION_V1\tTUNE\t1\n",
+            banner + "JBGS_MACHINE_DECISION_V1\tRUN\t3\n",
+            banner + "JBGS_MACHINE_DECISION_V1\tSKIP_COMPLETED\t1\n",
+        ):
+            self.assertNotEqual(0, parse(invalid).returncode)
+        self.assertEqual("P2-C1-C2-FEASIBILITY-PILOT-v1", contract.REPRESENTATIVE_SELECTION_TASK_ID)
+        self.assertEqual(
+            "P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-v1",
+            contract.load_config()["task_id"],
+        )
+
+    def test_recovery_packet_binds_immutable_git_receipt_blob_not_checkout_eol(self) -> None:
+        source_commit = "896fe284bc4d496e6e9c79720f4e75396a41d0b2"
+        source_path = (
+            "artifacts/manifests/handoffs/"
+            "P2-W2C-C1-C2-FEASIBILITY-PILOT-v1/300-closed.json"
+        )
+        source = subprocess.check_output(
+            [
+                "git", "-c", f"safe.directory={contract.REPO}",
+                "-C", str(contract.REPO), "show", f"{source_commit}:{source_path}",
+            ]
+        )
+        expected = "705348ecde9d139254bdd24e59ed02312d5321c20f802649f1ce4ca19f5b9bda"
+        self.assertEqual(expected, hashlib.sha256(source).hexdigest())
+        source_payload = json.loads(source)
+        identities = sorted(
+            (
+                {key: record[key] for key in ("uri", "bytes", "sha256")}
+                for record in source_payload["artifacts"]["records"]
+            ),
+            key=lambda item: item["uri"],
+        )
+        identity_sha = hashlib.sha256(
+            (json.dumps(identities, sort_keys=True, separators=(",", ":")) + "\n").encode()
+        ).hexdigest()
+        expected_identity = "f63d5d4405157615d807d6babd4a9bf74a16ab13818193945ed9bbfc02532db3"
+        self.assertEqual(expected_identity, identity_sha)
+        self.assertEqual(
+            {
+                "source_handoff_id": "P2-W2C-C1-C2-FEASIBILITY-PILOT-v1",
+                "source_task_id": "P2-C1-C2-FEASIBILITY-PILOT-v1",
+                "source_receipt_path": source_path,
+                "source_receipt_commit": source_commit,
+                "source_receipt_sha256": expected,
+                "record_identity_sha256": expected_identity,
+            },
+            contract.load_config()["accepted_attestation_reuse"],
+        )
+        packet = (
+            contract.REPO / "docs/handoffs/P2_W2C_C1_C2_FEASIBILITY_PILOT_RECOVERY_v1.md"
+        ).read_text(encoding="utf-8")
+        self.assertIn(expected, packet)
+        self.assertIn(expected_identity, packet)
 
     def test_promote_writes_exact_review_surface_and_is_add_once(self) -> None:
         config = contract.load_config()
@@ -438,11 +533,11 @@ class ContractTests(unittest.TestCase):
             second = contract.promote(store, Path(repository), promotion_parent)
             self.assertEqual(102, first["result_rows"])
             self.assertTrue(second["fast_path"])
-            csv_path = Path(repository) / "docs/experiments/p2/c1_c2_feasibility_pilot_v1/building_method_metrics_v1.csv"
+            csv_path = Path(repository) / "docs/experiments/p2/c1_c2_feasibility_pilot_recovery_v1/building_method_metrics_v1.csv"
             self.assertEqual(103, len(csv_path.read_text(encoding="utf-8").splitlines()))
-            input_definition_path = Path(repository) / "docs/experiments/p2/c1_c2_feasibility_pilot_v1/development_input_definition_v1.csv"
+            input_definition_path = Path(repository) / "docs/experiments/p2/c1_c2_feasibility_pilot_recovery_v1/development_input_definition_v1.csv"
             self.assertEqual(52, len(input_definition_path.read_text(encoding="utf-8").splitlines()))
-            report = (Path(repository) / "docs/experiments/p2/c1_c2_feasibility_pilot_v1/C1_C2_DEVELOPMENT_REPORT_v1.md").read_text(encoding="utf-8")
+            report = (Path(repository) / "docs/experiments/p2/c1_c2_feasibility_pilot_recovery_v1/C1_C2_DEVELOPMENT_REPORT_v1.md").read_text(encoding="utf-8")
             self.assertIn("canonical G2", report)
             self.assertIn("scientific_verdict", report)
 

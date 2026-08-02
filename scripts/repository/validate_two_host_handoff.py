@@ -387,12 +387,16 @@ def validate_event_semantics(
             add("blocked event requires a non-empty issue")
 
     verification = payload["verification"]
-    records = payload["artifacts"]["records"]
-    required_for_task = payload["artifacts"]["required_for_task"]
+    artifacts = payload["artifacts"]
+    records = artifacts["records"]
+    reuse = artifacts.get("attestation_reuse")
+    required_for_task = artifacts["required_for_task"]
     level = verification["level"]
     availability = payload["artifacts"]["availability"]
     if state == "offered" and level != "git_only":
         add("offered event must remain git_only")
+    if state == "offered" and reuse is not None:
+        add("offered event must not predeclare cross-handoff artifact attestation reuse")
     if state == "accepted" and required_for_task:
         if level != "artifact_verified":
             add("artifact-required accepted event must be artifact_verified")
@@ -413,11 +417,12 @@ def validate_event_semantics(
             add("artifact_verified requires Experiment Host verified_local access")
         if not records:
             add("artifact_verified requires at least one artifact record")
+        expected_method = "closed_attestation_reuse" if reuse is not None else "sha256_rehash"
         for record in records:
-            if record["verification_method"] != "sha256_rehash":
-                add("artifact_verified records require sha256_rehash")
+            if record["verification_method"] != expected_method:
+                add(f"artifact_verified records require {expected_method}")
             if record["verified_by"] != "experiment_host" or not record["verified_at"]:
-                add("live artifact verification requires Experiment Host timestamp")
+                add("artifact verification requires Experiment Host timestamp")
     for record in records:
         if record["verified_at"] is not None and not valid_timestamp(record["verified_at"]):
             add("artifact verified_at must be a timezone-aware ISO-8601 timestamp")
@@ -955,6 +960,116 @@ def artifact_path(root: Path, uri: str) -> Path | None:
     return candidate
 
 
+def validate_reused_artifact_attestation(
+    repo: Path,
+    payload: dict[str, Any],
+    current_receipt: str | None,
+    schema: dict[str, Any],
+    snapshot_schema: dict[str, Any],
+    errors: list[str],
+) -> bool:
+    """Validate an exact prior closed attestation without reopening payload bytes."""
+
+    reuse = payload.get("artifacts", {}).get("attestation_reuse")
+    if reuse is None:
+        return False
+    if payload.get("state") != "accepted":
+        errors.append("cross-handoff artifact attestation may be introduced only at accepted")
+        return False
+    if current_receipt is None:
+        errors.append("cannot bind reused artifact attestation without current receipt commit")
+        return False
+    source_handoff = reuse["source_handoff_id"]
+    source_task = reuse["source_task_id"]
+    source_path = reuse["source_receipt_path"]
+    source_commit = reuse["source_receipt_commit"]
+    expected_path = (
+        f"artifacts/manifests/handoffs/{source_handoff}/300-closed.json"
+    )
+    if source_handoff == payload.get("handoff_id") or source_path != expected_path:
+        errors.append("reused artifact attestation must name a different exact closed handoff")
+        return False
+    source_file = repo / source_path
+    before = len(errors)
+    _, immutable_commit = immutable_repo_file(
+        repo,
+        source_path,
+        errors,
+        label="reused artifact source receipt",
+        expected_sha256=reuse["source_receipt_sha256"],
+        text_eol_portable=True,
+    )
+    if immutable_commit != source_commit:
+        errors.append("reused artifact source receipt commit mismatch")
+    if len(errors) != before:
+        return False
+    try:
+        source_raw = git(repo, "show", f"{source_commit}:{source_path}", binary=True)
+        assert isinstance(source_raw, bytes)
+        source_payload = json.loads(source_raw)
+        git(repo, "merge-base", "--is-ancestor", source_commit, current_receipt)
+    except (subprocess.CalledProcessError, json.JSONDecodeError):
+        errors.append("reused artifact source receipt is unreadable or not an ancestor")
+        return False
+    source_schema_errors = schema_errors(source_payload, schema)
+    errors.extend(f"reused artifact source schema {item}" for item in source_schema_errors)
+    if source_schema_errors:
+        return False
+    validate_event_semantics(source_payload, errors, prefix="reused artifact source ")
+    validate_receipt_location(repo, source_file, source_payload, errors)
+    validate_single_event_commit(
+        repo, source_commit, source_file, source_payload, errors
+    )
+    validate_previous_chain(
+        repo,
+        source_payload,
+        schema,
+        snapshot_schema,
+        errors,
+        current_receipt=source_commit,
+    )
+    source_artifacts = source_payload["artifacts"]
+    current_artifacts = payload["artifacts"]
+    if source_payload.get("state") != "closed":
+        errors.append("reused artifact source receipt must be closed")
+    if source_payload.get("handoff_id") != source_handoff:
+        errors.append("reused artifact source handoff ID mismatch")
+    if source_payload.get("task_id") != source_task:
+        errors.append("reused artifact source task ID mismatch")
+    if source_payload.get("receiver_ack", {}).get("status") != "closed":
+        errors.append("reused artifact source receipt must return writer ownership")
+    if source_payload.get("verification", {}).get("level") != "artifact_verified":
+        errors.append("reused artifact source must carry artifact verification")
+    if source_artifacts.get("attestation_reuse") is not None:
+        errors.append("nested cross-handoff artifact attestation reuse is prohibited")
+    for field in ("required_for_task", "availability"):
+        if source_artifacts.get(field) != current_artifacts.get(field):
+            errors.append(f"reused artifact attestation mismatch: artifacts.{field}")
+    source_identities = sorted(
+        ({key: record[key] for key in ("uri", "bytes", "sha256")}
+         for record in source_artifacts["records"]),
+        key=lambda item: item["uri"],
+    )
+    current_identities = sorted(
+        ({key: record[key] for key in ("uri", "bytes", "sha256")}
+         for record in current_artifacts["records"]),
+        key=lambda item: item["uri"],
+    )
+    identity_bytes = (
+        json.dumps(source_identities, sort_keys=True, separators=(",", ":")) + "\n"
+    ).encode("utf-8")
+    if len({item["uri"] for item in source_identities}) != len(source_identities):
+        errors.append("reused artifact source contains duplicate artifact URIs")
+    if source_identities != current_identities:
+        errors.append("reused artifact attestation record identities differ")
+    if sha256_bytes(identity_bytes) != reuse["record_identity_sha256"]:
+        errors.append("reused artifact record identity digest mismatch")
+    for field in ("verifier_role", "docker_image_digest"):
+        if source_payload["verification"].get(field) != payload["verification"].get(field):
+            errors.append(f"reused artifact attestation mismatch: verification.{field}")
+    return not errors
+
+
 def validate_artifacts(
     payload: dict[str, Any],
     artifact_root: Path | None,
@@ -1101,12 +1216,24 @@ def validate(
         if dirty:
             errors.append(f"dirty_wip=false but working tree has {len(dirty)} changed paths")
 
+    reused_artifact_attestation = False
     if (
         payload["verification"]["level"] == "artifact_verified"
         and not inherited_artifact_attestation
         and not errors
     ):
-        validate_artifacts(payload, artifact_root, errors)
+        if payload["artifacts"].get("attestation_reuse") is not None and artifact_root is not None:
+            errors.append("reused artifact attestation prohibits --artifact-root")
+        reused_artifact_attestation = validate_reused_artifact_attestation(
+            repo,
+            payload,
+            receipt,
+            schema,
+            snapshot_schema,
+            errors,
+        )
+        if not reused_artifact_attestation and not errors:
+            validate_artifacts(payload, artifact_root, errors)
     return errors, receipt
 
 

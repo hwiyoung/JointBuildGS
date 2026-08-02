@@ -1,8 +1,17 @@
 {
   "schema": "jointbuildgs.p2_c1_c2_feasibility_pilot_config.v1",
-  "task_id": "P2-C1-C2-FEASIBILITY-PILOT-v1",
-  "handoff_id": "P2-W2C-C1-C2-FEASIBILITY-PILOT-v1",
+  "task_id": "P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-v1",
+  "handoff_id": "P2-W2C-C1-C2-FEASIBILITY-PILOT-RECOVERY-v1",
+  "representative_selection_task_id": "P2-C1-C2-FEASIBILITY-PILOT-v1",
   "execution_authority": "REQUIRES_APPROVED_ACTIVATION_PACKET_AND_VALID_100_ACCEPTED_RECEIPT",
+  "accepted_attestation_reuse": {
+    "source_handoff_id": "P2-W2C-C1-C2-FEASIBILITY-PILOT-v1",
+    "source_task_id": "P2-C1-C2-FEASIBILITY-PILOT-v1",
+    "source_receipt_path": "artifacts/manifests/handoffs/P2-W2C-C1-C2-FEASIBILITY-PILOT-v1/300-closed.json",
+    "source_receipt_commit": "896fe284bc4d496e6e9c79720f4e75396a41d0b2",
+    "source_receipt_sha256": "705348ecde9d139254bdd24e59ed02312d5321c20f802649f1ce4ca19f5b9bda",
+    "record_identity_sha256": "f63d5d4405157615d807d6babd4a9bf74a16ab13818193945ed9bbfc02532db3"
+  },
   "scope": {
     "split": "development",
     "building_count": 51,
@@ -214,6 +223,6 @@
     "gpu_count_max": 0,
     "vram_gb_max": 24
   },
-  "representative_case_rule": "MIN_SHA256(task_id|group_id|stable_id)_BEFORE_OUTCOME_ACCESS",
+  "representative_case_rule": "MIN_SHA256(representative_selection_task_id|group_id|stable_id)_BEFORE_OUTCOME_ACCESS",
   "scientific_verdict": null
 }

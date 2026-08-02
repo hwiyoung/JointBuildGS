@@ -295,6 +295,15 @@ Technical handoff의 artifact prerequisite와 scientific readiness audit의 조�
   이 상속은 canonical artifact URI의 raw bytes가 immutable이라는 저장소 invariant를
   전제로 한다. Bytes가 바뀌면 기존 attestation을 재사용하지 않고 새 URI/hash와 새
   handoff로 다룬다.
+- 서로 다른 후속 handoff가 직전에 `300-closed`로 닫힌 동일 artifact set을 그대로
+  요구하면, 새 `100-accepted`는 live bytes를 다시 읽는 대신
+  `closed_attestation_reuse`를 사용할 수 있다. 이 경우 validator는 source 300 receipt의
+  immutable Git commit·receipt SHA-256·artifact record identity를 확인하고, source가
+  `artifact_verified`이며 writer를 반환했고 새 receipt의 URI/bytes/SHA-256 records와
+  verifier 환경이 byte-for-byte 같은지 검증한다. source receipt 자체가 reuse이면
+  연쇄 reuse하지 않는다. 하나라도 다르거나 source가 닫히지 않았으면 reuse를 거부하고
+  별도의 새 artifact verification handoff가 필요하다. reuse 검증에는
+  `--artifact-root`를 전달하지 않으며 full-file hash pass는 0회여야 한다.
 - `required_for_task: false`이면 external payload를 cross-host 전달해야 task를
   시작할 수 있다는 뜻이 아니다. Task가 artifact mount를 읽기 전용으로 조사할
   수는 있지만, 미발견·미검증 payload는 `MISSING` 또는 `UNKNOWN` finding으로 남긴다.
