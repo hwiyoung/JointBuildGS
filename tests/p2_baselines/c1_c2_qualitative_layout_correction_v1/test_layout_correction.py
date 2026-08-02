@@ -69,6 +69,16 @@ class LayoutCorrectionTest(unittest.TestCase):
         self.assertEqual(len(embedded), 1)
         compile(embedded[0], "run_correction_host.sh embedded authority Python", "exec")
 
+    def test_promoter_does_not_reopen_predecessor_or_scientific_inputs(self) -> None:
+        promoter = (
+            self.repository
+            / "scripts/p2_baselines/c1_c2_qualitative_layout_correction_v1/promote_results.py"
+        ).read_text(encoding="utf-8")
+        self.assertNotIn('config["inputs"]["examples_git_path"]', promoter)
+        self.assertNotIn('config["inputs"]["bbox_ledger_git_path"]', promoter)
+        self.assertNotIn('_safe(repo_root, config["predecessor"]["closed_receipt_path"])', promoter)
+        self.assertNotIn("Image.open", promoter)
+
     def test_longest_reason_is_contained_and_render_is_deterministic(self) -> None:
         examples, ledgers, cells = self._inputs()
         with tempfile.TemporaryDirectory() as temp:
@@ -92,7 +102,7 @@ class LayoutCorrectionTest(unittest.TestCase):
             )
             self.assertFalse(any("constrained_layout" in str(value.message) for value in caught))
             self.assertEqual([row["reason"] for row in first_records], [row["reason"] for row in second_records])
-            self.assertEqual(first_records[-1]["reason"], self.config["expected_examples"]["F4"][-1])
+            self.assertEqual(first_records[-1]["reason"], self.config["expected_examples"]["F4"][6])
             self.assertEqual(hashlib.sha256(first.read_bytes()).hexdigest(), hashlib.sha256(second.read_bytes()).hexdigest())
             with Image.open(first) as image:
                 self.assertEqual(image.size, (2520, 1400))

@@ -39,7 +39,8 @@ the 51 building sheets, recompute C1/C2, or open C3.
    use adaptive per-example layout, `constrained_layout`, `tight_layout`, or
    `bbox_inches=tight`.
 6. Digest the new PNG once after write. Promotion may read only the new JSON manifest,
-   not reopen the PNG or predecessor/scientific inputs.
+   committed task config and accepted receipt; it must not reopen the PNG, predecessor
+   receipt, eligibility CSV/bbox ledger, compact CSV, or another scientific input.
 7. Preserve all prior packet/Return/receipt/report/table/manifest files and the prior
    blocked external namespace byte-for-byte.
 

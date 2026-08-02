@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import argparse
-import csv
 import hashlib
 import json
 import os
@@ -54,9 +53,6 @@ def promote(*, external_manifest: Path, repo_root: Path, source_commit: str, acc
     manifest = json.loads(external_manifest.read_text(encoding="utf-8"))
     accepted_path = _safe(repo_root, ACCEPTED_REL)
     accepted = json.loads(accepted_path.read_text(encoding="utf-8"))
-    predecessor_path = _safe(repo_root, config["predecessor"]["closed_receipt_path"])
-    predecessor_bytes = predecessor_path.read_bytes()
-    predecessor = json.loads(predecessor_bytes)
     if _git(repo_root, "rev-parse", "HEAD") != accepted_commit or _git(repo_root, "rev-parse", "origin/main") != accepted_commit:
         raise RuntimeError("promotion HEAD/origin does not equal exact accepted commit")
     if _git(repo_root, "log", "-1", "--format=%H", "--", ACCEPTED_REL) != accepted_commit:
@@ -70,20 +66,16 @@ def promote(*, external_manifest: Path, repo_root: Path, source_commit: str, acc
         or len(accepted.get("artifacts", {}).get("records", [])) != 25
     ):
         raise RuntimeError("accepted receipt identity/ownership/artifact reuse mismatch")
-    if (
-        hashlib.sha256(predecessor_bytes).hexdigest() != config["predecessor"]["closed_receipt_sha256"]
-        or predecessor.get("state") != "closed"
-        or predecessor.get("commits", {}).get("receipt_head") != "SELF"
-    ):
-        raise RuntimeError("predecessor closed receipt identity/state mismatch")
     accepted_rows = accepted["artifacts"]["records"]
-    predecessor_rows = predecessor["artifacts"]["records"]
-    accepted_identity = [(row["uri"], int(row["bytes"]), row["sha256"]) for row in accepted_rows]
-    predecessor_identity = [(row["uri"], int(row["bytes"]), row["sha256"]) for row in predecessor_rows]
+    accepted_identity = sorted(
+        ({key: row[key] for key in ("uri", "bytes", "sha256")} for row in accepted_rows),
+        key=lambda row: row["uri"],
+    )
+    identity_bytes = (json.dumps(accepted_identity, sort_keys=True, separators=(",", ":")) + "\n").encode("utf-8")
     reuse = accepted["artifacts"].get("attestation_reuse", {})
     if (
-        accepted_identity != predecessor_identity
-        or sum(row[1] for row in accepted_identity) != config["predecessor"]["accepted_artifact_total_bytes"]
+        hashlib.sha256(identity_bytes).hexdigest() != config["predecessor"]["accepted_record_identity_sha256"]
+        or sum(int(row["bytes"]) for row in accepted_identity) != config["predecessor"]["accepted_artifact_total_bytes"]
         or any(row.get("verification_method") != "closed_attestation_reuse" for row in accepted_rows)
         or reuse.get("source_receipt_path") != config["predecessor"]["closed_receipt_path"]
         or reuse.get("source_receipt_commit") != config["predecessor"]["closed_commit"]
@@ -115,26 +107,12 @@ def promote(*, external_manifest: Path, repo_root: Path, source_commit: str, acc
         or len(manifest.get("examples", [])) != 7
     ):
         raise RuntimeError("external layout-correction manifest mismatch")
-    with _safe(repo_root, config["inputs"]["examples_git_path"]).open("r", encoding="utf-8", newline="") as stream:
-        git_examples = {row["label"]: row for row in csv.DictReader(stream)}
-    with _safe(repo_root, config["inputs"]["bbox_ledger_git_path"]).open("r", encoding="utf-8", newline="") as stream:
-        git_ledgers = {row["stable_id"]: row for row in csv.DictReader(stream)}
     labels = list(config["example_labels"])
     if [row.get("label") for row in manifest["examples"]] != labels:
         raise RuntimeError("external eligibility example order mismatch")
     for observed in manifest["examples"]:
         label = observed["label"]
         expected = config["expected_examples"][label]
-        source = git_examples.get(label)
-        ledger = git_ledgers.get(expected[0])
-        if source is None or ledger is None:
-            raise RuntimeError(f"Git-bound eligibility source row absent: {label}")
-        expected_bbox = [
-            float(ledger["bbox_min_x"]),
-            float(ledger["bbox_min_y"]),
-            float(ledger["bbox_max_x"]),
-            float(ledger["bbox_max_y"]),
-        ]
         observed_tuple = [
             observed.get("stable_id"),
             observed.get("candidate"),
@@ -144,20 +122,10 @@ def promote(*, external_manifest: Path, repo_root: Path, source_commit: str, acc
             observed.get("c4_support_cells"),
             observed.get("reason"),
         ]
-        source_tuple = [
-            source["stable_id"],
-            source["candidate"].strip().lower() == "true",
-            int(source["reference_cells"]),
-            int(source["image_views"]),
-            int(source["mvs_cells"]),
-            int(source["c4_cells"]),
-            source["exclusion_reason"],
-        ]
         if (
-            observed_tuple != expected
-            or source_tuple != expected
+            observed_tuple != expected[:7]
             or observed.get("actual_compact_rows") != expected[2]
-            or observed.get("bbox") != expected_bbox
+            or observed.get("bbox") != expected[7]
         ):
             raise RuntimeError(f"external exact eligibility record mismatch: {label}")
     if manifest["compact_source_read"] != {

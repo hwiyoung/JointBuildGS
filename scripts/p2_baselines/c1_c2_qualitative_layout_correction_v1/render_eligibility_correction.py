@@ -75,7 +75,7 @@ def render(*, config_path: Path, repository_root: Path, compact_cells: Path, out
         raise RuntimeError("exact eligibility roster labels mismatch")
     selected = [by_label[label] for label in labels]
     for row in selected:
-        if _example_tuple(row) != config["expected_examples"][row["label"]]:
+        if _example_tuple(row) != config["expected_examples"][row["label"]][:7]:
             raise RuntimeError(f"eligibility example contract drift: {row['label']}")
 
     ledgers = _read_csv(_safe(repository_root, config["inputs"]["bbox_ledger_git_path"]))
@@ -86,8 +86,11 @@ def render(*, config_path: Path, repository_root: Path, compact_cells: Path, out
         ledger = ledger_map.get(stable_id)
         if ledger is None:
             raise RuntimeError(f"eligibility bbox ledger row is absent: {stable_id}")
+        bbox = _bbox_from_row(ledger)
+        if [bbox.min_x, bbox.min_y, bbox.max_x, bbox.max_y] != config["expected_examples"][example["label"]][7]:
+            raise RuntimeError(f"eligibility bbox contract drift: {example['label']}")
         patches = {value for value in ledger["reference_candidate_patch_ids"].split(";") if value}
-        specs[stable_id] = (_bbox_from_row(ledger), patches)
+        specs[stable_id] = (bbox, patches)
 
     compact = config["inputs"]["compact_reference_cells"]
     cells, compact_read = stream_eligibility_cells(

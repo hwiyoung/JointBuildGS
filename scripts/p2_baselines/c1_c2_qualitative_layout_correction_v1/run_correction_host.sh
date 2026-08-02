@@ -121,7 +121,7 @@ assert len(zero) == 1 and zero[0]["passed"] == 0 and zero[0]["failed"] == 0
 commands = [str(value).upper() for value in p["verification"]["commands"]]
 assert any("WITHOUT --ARTIFACT-ROOT" in value and "ZERO" in value and "READ" in value and "HASH" in value for value in commands)
 assert subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip() == os.environ["EXPECTED_ACCEPTED_COMMIT"]
-' 
+'
 
 if [[ ! -f "${COMPACT_CELLS}" || -L "${COMPACT_CELLS}" || -e "${OUTPUT_ROOT}" ]]; then
   echo "exact compact input absent/symlinked or fresh output namespace already exists" >&2
