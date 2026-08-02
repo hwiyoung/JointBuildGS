@@ -4,6 +4,7 @@ import csv
 import hashlib
 import json
 import re
+import subprocess
 import tempfile
 import unittest
 import warnings
@@ -43,6 +44,8 @@ class LayoutCorrectionTest(unittest.TestCase):
         return examples, ledgers, cells
 
     def test_config_is_exact_layout_only_successor(self) -> None:
+        self.assertEqual(self.config["task_id"], "P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R2-v1")
+        self.assertEqual(self.config["handoff_id"], "P2-W2C-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R2-v1")
         self.assertEqual(self.config["predecessor"]["closed_commit"], "57205adf16def5382322ee57136b1cd66e9d07bc")
         self.assertEqual(self.config["predecessor"]["accepted_artifact_record_count"], 25)
         self.assertEqual(self.config["predecessor"]["accepted_artifact_total_bytes"], 30432763)
@@ -51,6 +54,89 @@ class LayoutCorrectionTest(unittest.TestCase):
         self.assertTrue(all(value == 0 for key, value in self.config["scope"].items() if key != "runtime_compact_processing_reads_and_digests"))
         self.assertEqual(self.config["scope"]["runtime_compact_processing_reads_and_digests"], 1)
         self.assertIsNone(self.config["scientific_verdict"])
+
+    def test_predecessor_receipt_digest_uses_git_blob_bytes(self) -> None:
+        predecessor = self.config["predecessor"]
+        blob = subprocess.run(
+            [
+                "git",
+                "-C",
+                str(self.repository),
+                "show",
+                f'{predecessor["closed_commit"]}:{predecessor["closed_receipt_path"]}',
+            ],
+            check=True,
+            capture_output=True,
+        ).stdout
+        self.assertEqual(hashlib.sha256(blob).hexdigest(), predecessor["closed_receipt_sha256"])
+        self.assertEqual(
+            predecessor["closed_receipt_sha256"],
+            "7fc0770501eb3447733b481fe7ccf195064cdb3cb35934744a8db2fca6d0ec64",
+        )
+
+    def test_r2_identity_and_path_matrix_is_exact(self) -> None:
+        task = "P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R2-v1"
+        handoff = "P2-W2C-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R2-v1"
+        run = "P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R2-RUN-v1"
+        packet_rel = "docs/handoffs/P2_W2C_C1_C2_QUALITATIVE_LAYOUT_CORRECTION_R2_v1.md"
+        namespace = f"phase-payloads/p2-baselines/c1_c2_qualitative_layout_correction_r2_v1/{task}"
+        report_rel = "docs/experiments/p2/c1_c2_qualitative_layout_correction_r2_v1/C1_C2_QUALITATIVE_LAYOUT_CORRECTION_R2_v1.md"
+        technical_rel = "artifacts/manifests/p2_baselines/c1_c2_qualitative_layout_correction_r2_v1/technical_result_manifest_v1.json"
+        return_rel = "docs/handoffs/returns/P2_C2W_C1_C2_QUALITATIVE_LAYOUT_CORRECTION_R2_RETURN_v1.md"
+        receipt_rel = f"artifacts/manifests/handoffs/{handoff}/"
+
+        self.assertEqual(self.config["task_id"], task)
+        self.assertEqual(self.config["handoff_id"], handoff)
+        self.assertEqual(self.config["run_id"], run)
+        self.assertEqual(self.config["result"]["external_relative_namespace"], namespace)
+        self.assertEqual(self.config["result"]["external_uri"], f"artifact://JointBuildGS/{namespace}/")
+
+        launcher = (
+            self.repository
+            / "scripts/p2_baselines/c1_c2_qualitative_layout_correction_v1/run_correction_host.sh"
+        ).read_text(encoding="utf-8")
+        promoter = (
+            self.repository
+            / "scripts/p2_baselines/c1_c2_qualitative_layout_correction_v1/promote_results.py"
+        ).read_text(encoding="utf-8")
+        packet = (self.repository / packet_rel).read_text(encoding="utf-8")
+        for exact in (
+            f'HANDOFF_ID="{handoff}"',
+            f'TASK_ID="{task}"',
+            f'PACKET_REL="{packet_rel}"',
+            f'OUTPUT_REL="{namespace}"',
+            f'"${{RUN_ID}}" != "{run}"',
+        ):
+            self.assertIn(exact, launcher)
+        for exact in (
+            f'TASK_ID = "{task}"',
+            f'HANDOFF_ID = "{handoff}"',
+            f'REPORT_REL = "{report_rel}"',
+            f'TECHNICAL_REL = "{technical_rel}"',
+        ):
+            self.assertIn(exact, promoter)
+        for exact in (
+            f"- handoff_id: `{handoff}`",
+            f"- task_id: `{task}`",
+            f"- run_id: `{run}`",
+            f"`artifact://JointBuildGS/{namespace}/`",
+            f"`{report_rel}`",
+            f"`{technical_rel}`",
+            f"`{return_rel}`",
+            f"`{receipt_rel}`",
+        ):
+            self.assertIn(exact, packet)
+
+        stale = (
+            "P2-W2C-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-v1",
+            "P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-RUN-v1",
+            "P2_W2C_C1_C2_QUALITATIVE_LAYOUT_CORRECTION_v1.md",
+            "phase-payloads/p2-baselines/c1_c2_qualitative_layout_correction_v1/P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-v1",
+        )
+        for value in stale:
+            self.assertNotIn(value, launcher)
+            self.assertNotIn(value, promoter)
+            self.assertNotIn(value, packet)
 
     def test_launcher_binds_canonical_receipt_and_whole_task_budget(self) -> None:
         launcher = (
