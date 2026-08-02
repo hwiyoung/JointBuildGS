@@ -9,10 +9,18 @@
     "membership_manifest_policy": "CROSSWALK_ONLY_NO_RGB_PRE_READ",
     "image_root_role": "COLMAP_DENSE_IMAGES_UNDISTORTED",
     "camera_binding": "COLMAP_CAMERAS_BIN_PLUS_IMAGES_BIN_WITHOUT_POSE_VALUE_DECODE",
-    "geometric_depth_shape_binding": "MATCH_WIDTH_HEIGHT_CHANNEL_1_BEFORE_INFERENCE",
+    "geometric_depth_shape_binding": "NATIVE_HEADER_AND_EXACT_BYTE_LENGTH_WITH_DETERMINISTIC_TRAINING_RESIZE",
+    "raster_alignment": {
+      "rgb_resize": false,
+      "semantic_mask_resize": false,
+      "native_geometric_depth_spatial_resize": true,
+      "depth_resize_consumer": "src.stage2.dataloader._resize_float",
+      "depth_resize_interpolation": "cv2.INTER_LINEAR",
+      "depth_value_scale": 1.0
+    },
     "rgb_identity_policy": "BYTES_AND_SHA256_FROM_THE_SAME_NATURAL_INFERENCE_READ",
     "standalone_rgb_rehashes": 0,
-    "resizing_allowed": false,
+    "producer_rgb_or_semantic_resizing_allowed": false,
     "runtime_paths": {
       "colmap_undistorted_rgb_root": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images",
       "cameras_bin": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/sparse/cameras.bin",

@@ -32,6 +32,11 @@ class C3TrainingContractV2Tests(unittest.TestCase):
         self.assertTrue(paths["cameras_bin"].endswith("/colmap_dense/sparse/cameras.bin"))
         self.assertTrue(paths["images_bin"].endswith("/colmap_dense/sparse/images.bin"))
         self.assertTrue(paths["geometric_depth_root"].endswith("/stereo/depth_maps"))
+        alignment = contract["input"]["raster_alignment"]
+        self.assertFalse(alignment["rgb_resize"])
+        self.assertFalse(alignment["semantic_mask_resize"])
+        self.assertTrue(alignment["native_geometric_depth_spatial_resize"])
+        self.assertEqual(alignment["depth_resize_interpolation"], "cv2.INTER_LINEAR")
         for key in ("membership_manifest", "work_dir", "output_dir"):
             self.assertIn("semantic_937_colmap_undistorted_r2", paths[key])
         self.assertFalse(contract["resume"]["legacy_raw_completion_reuse_allowed"])

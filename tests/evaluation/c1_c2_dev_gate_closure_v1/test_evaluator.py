@@ -9,6 +9,8 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
+import numpy as np
+
 import src.evaluation.c1_c2_dev_gate_closure_v1.evaluator as evaluator
 
 from src.evaluation.c1_c2_dev_gate_closure_v1.evaluator import (
@@ -29,8 +31,16 @@ def _candidate_config() -> dict:
 
 
 def _flat_square_surfaces():
+    header = {
+        "type": "CityJSON",
+        "version": "2.0",
+        "transform": {"scale": [1, 1, 1], "translate": [0, 0, 0]},
+        "vertices": [],
+        "CityObjects": {},
+    }
     record = {
         "type": "CityJSONFeature",
+        "id": "feature-1",
         "vertices": [[0, 0, 10], [2, 0, 10], [2, 2, 10], [0, 2, 10]],
         "CityObjects": {
             "building": {
@@ -49,7 +59,9 @@ def _flat_square_surfaces():
             }
         },
     }
-    return parse_cityjsonseq_roof_surfaces((json.dumps(record) + "\n").encode("utf-8"))
+    return parse_cityjsonseq_roof_surfaces(
+        (json.dumps(header) + "\n" + json.dumps(record) + "\n").encode("utf-8")
+    )
 
 
 def _reference_rows(normal=(0.0, 0.0, 1.0)):
@@ -203,6 +215,65 @@ class GateClosureCandidateTests(unittest.TestCase):
         self.assertEqual(score["roof_plane_quality"], 1.0)
         self.assertTrue(score["G3_roof_structure_acceptable"])
         self.assertTrue(score["candidate_only"])
+
+    def test_cityjsonseq_header_transform_is_inherited_and_not_parsed_as_feature(self):
+        header = {
+            "type": "CityJSON",
+            "version": "2.0",
+            "transform": {"scale": [2, 3, 1], "translate": [10, 20, 0]},
+            "vertices": [],
+            "CityObjects": {},
+        }
+        feature = {
+            "type": "CityJSONFeature",
+            "id": "feature-1",
+            "vertices": [[0, 0, 10], [1, 0, 10], [1, 1, 10]],
+            "CityObjects": {
+                "building": {
+                    "type": "Building",
+                    "geometry": [{
+                        "type": "MultiSurface",
+                        "lod": "2.2",
+                        "boundaries": [[[0, 1, 2]]],
+                        "semantics": {
+                            "surfaces": [{"type": "RoofSurface"}],
+                            "values": [0],
+                        },
+                    }],
+                }
+            },
+        }
+        data = (json.dumps(header) + "\n" + json.dumps(feature) + "\n").encode("utf-8")
+        surfaces = parse_cityjsonseq_roof_surfaces(data)
+        self.assertEqual(len(surfaces), 1)
+        np.testing.assert_allclose(surfaces[0].triangles[0][0], [10, 20, 10])
+
+    def test_cityjsonseq_rejects_missing_duplicate_or_malformed_header_and_feature(self):
+        valid_header = {
+            "type": "CityJSON",
+            "transform": {"scale": [1, 1, 1], "translate": [0, 0, 0]},
+            "vertices": [],
+            "CityObjects": {},
+        }
+        valid_feature = {
+            "type": "CityJSONFeature",
+            "id": "feature-1",
+            "vertices": [[0, 0, 0], [1, 0, 0], [0, 1, 0]],
+            "CityObjects": {"building": {"type": "Building", "geometry": []}},
+        }
+        cases = {
+            "feature_before_header": [valid_feature],
+            "duplicate_header": [valid_header, valid_header, valid_feature],
+            "nonempty_header": [{**valid_header, "vertices": [[0, 0, 0]]}, valid_feature],
+            "bad_transform": [{**valid_header, "transform": {"scale": [1, 1], "translate": [0, 0, 0]}}, valid_feature],
+            "feature_transform": [valid_header, {**valid_feature, "transform": valid_header["transform"]}],
+            "empty_feature_vertices": [valid_header, {**valid_feature, "vertices": []}],
+        }
+        for name, records in cases.items():
+            with self.subTest(name=name), self.assertRaises(evaluator.ClosureError):
+                parse_cityjsonseq_roof_surfaces(
+                    ("\n".join(json.dumps(record) for record in records) + "\n").encode("utf-8")
+                )
 
     def test_g3_rejects_normal_mismatch(self):
         score = evaluate_g3(

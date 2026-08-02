@@ -50,8 +50,8 @@ CANONICAL_CROSSWALK = (
 CROSSWALK_BYTES = 378466
 CROSSWALK_SHA256 = "b4af779ecfae859de9772ce50cb24326b20c3f86614f6a8957453779d1cd4c17"
 SEMANTIC_CONTRACT = REPO / "configs/c3_first_wave_v2/c3_image_semantic_producer_v1.json"
-SEMANTIC_CONTRACT_BYTES = 3451
-SEMANTIC_CONTRACT_SHA256 = "61eb4cecab6b2e998576aca21bef676394c922a40eaee522421f0c3e827bcf3d"
+SEMANTIC_CONTRACT_BYTES = 3808
+SEMANTIC_CONTRACT_SHA256 = "1f2555adf2e912d0124d08e5e6fb2156673ae2a722fae3e0b7aee30b1b1bdebb"
 INPUT_SCHEMA = "jointbuildgs.c3_image_semantic_membership_manifest.v2"
 FINAL_SCHEMA = "jointbuildgs.c3_image_semantic_output_manifest.v2"
 COMPLETION_SCHEMA = "jointbuildgs.c3_image_semantic_completion.v2"
@@ -478,7 +478,29 @@ def _read_colmap_depth_shape(path: Path, relative_path: str) -> dict[str, Any]:
         "width": width,
         "height": height,
         "channels": channels,
-        "shape_matches_rgb": True,
+    }
+
+
+def _bind_depth_training_alignment(
+    native_depth: Mapping[str, Any], target_width: int, target_height: int
+) -> dict[str, Any]:
+    """Record the existing dataloader's native-depth to RGB-raster alignment."""
+
+    width = int(native_depth["width"])
+    height = int(native_depth["height"])
+    return {
+        **dict(native_depth),
+        "training_alignment": {
+            "target_width": target_width,
+            "target_height": target_height,
+            "scale_x": {"numerator": target_width, "denominator": width},
+            "scale_y": {"numerator": target_height, "denominator": height},
+            "resize_required": (width, height) != (target_width, target_height),
+            "interpolation": "cv2.INTER_LINEAR",
+            "consumer": "src.stage2.dataloader._resize_float",
+            "producer_resize_count": 0,
+            "depth_value_scale": 1.0,
+        },
     }
 
 
@@ -731,17 +753,27 @@ def _validate_completion(
             "width",
             "height",
             "channels",
-            "shape_matches_rgb",
+            "training_alignment",
         }
         or depth.get("relative_path") != row["geometric_depth_relative_path"]
         or type(depth.get("bytes")) is not int
         or depth["bytes"] <= 0
-        or depth.get("width") != expected_colmap["width"]
-        or depth.get("height") != expected_colmap["height"]
+        or type(depth.get("width")) is not int
+        or depth["width"] <= 0
+        or type(depth.get("height")) is not int
+        or depth["height"] <= 0
         or depth.get("channels") != 1
-        or depth.get("shape_matches_rgb") is not True
+        or depth.get("training_alignment")
+        != _bind_depth_training_alignment(
+            {
+                key: depth[key]
+                for key in ("relative_path", "bytes", "width", "height", "channels")
+            },
+            expected_colmap["width"],
+            expected_colmap["height"],
+        )["training_alignment"]
     ):
-        raise C3SemanticError("completed geometric-depth shape binding differs")
+        raise C3SemanticError("completed geometric-depth training alignment differs")
     mask = mask_path.read_bytes()
     output = receipt.get("output")
     if (
@@ -1000,14 +1032,11 @@ def produce(
             depth_path.resolve(strict=True).relative_to(depth_root)
         except (FileNotFoundError, ValueError) as error:
             raise C3SemanticError("geometric depth is missing or escapes depth root") from error
-        depth_binding = _read_colmap_depth_shape(
-            depth_path, row["geometric_depth_relative_path"]
+        depth_binding = _bind_depth_training_alignment(
+            _read_colmap_depth_shape(depth_path, row["geometric_depth_relative_path"]),
+            source_rgb["width"],
+            source_rgb["height"],
         )
-        if (
-            depth_binding["width"] != source_rgb["width"]
-            or depth_binding["height"] != source_rgb["height"]
-        ):
-            raise C3SemanticError("geometric depth shape differs from undistorted RGB")
         if inference is None:
             runtime_verifier(lock)
             assets = asset_verifier(lock, lock_path, asset_root, asset_receipt)

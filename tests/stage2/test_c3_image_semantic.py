@@ -322,7 +322,10 @@ class C3ImageSemanticTests(unittest.TestCase):
                 self.assertEqual(source["bytes"], len(image_bytes))
                 self.assertEqual((source["width"], source["height"]), (4, 3))
                 self.assertEqual(source["resize_count"], 0)
-                self.assertEqual(record["geometric_depth"]["shape_matches_rgb"], True)
+                alignment = record["geometric_depth"]["training_alignment"]
+                self.assertFalse(alignment["resize_required"])
+                self.assertEqual(alignment["producer_resize_count"], 0)
+                self.assertEqual(alignment["interpolation"], "cv2.INTER_LINEAR")
             with (
                 patch("src.stage2.c3_image_semantic.load_c3_contract", return_value=fake_lock),
                 patch(
@@ -362,14 +365,56 @@ class C3ImageSemanticTests(unittest.TestCase):
                     produce(output_dir=root / "final", **common)
             self.assertEqual(infer.calls, 0)
 
-    def test_depth_shape_mismatch_fails_before_inference(self):
+    def test_native_depth_shape_mismatch_is_recorded_without_resizing_rgb_or_semantic(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             common, infer, fake_lock = self._common_run(
                 root, ["a.png"], depth_width=5
             )
             with patch("src.stage2.c3_image_semantic.load_c3_contract", return_value=fake_lock):
-                with self.assertRaisesRegex(C3SemanticError, "depth shape differs"):
+                result = produce(output_dir=root / "final", **common)
+            self.assertEqual(infer.calls, 1)
+            record = result["records"][0]
+            self.assertEqual((record["width"], record["height"]), (4, 3))
+            self.assertEqual(
+                (record["geometric_depth"]["width"], record["geometric_depth"]["height"]),
+                (5, 3),
+            )
+            alignment = record["geometric_depth"]["training_alignment"]
+            self.assertTrue(alignment["resize_required"])
+            self.assertEqual(alignment["scale_x"], {"numerator": 4, "denominator": 5})
+            self.assertEqual(alignment["scale_y"], {"numerator": 3, "denominator": 3})
+            self.assertEqual(alignment["producer_resize_count"], 0)
+
+    def test_tampered_native_depth_alignment_is_rejected_on_resume(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            common, _infer, fake_lock = self._common_run(root, ["a.png"], depth_width=5)
+            with patch("src.stage2.c3_image_semantic.load_c3_contract", return_value=fake_lock):
+                produce(output_dir=root / "final1", **common)
+            receipt_path = (
+                Path(common["work_dir"])
+                / "completed"
+                / _completion_name(0, "a.png")
+                / "receipt.json"
+            )
+            receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+            receipt["geometric_depth"]["training_alignment"]["interpolation"] = "nearest"
+            receipt_path.write_text(json.dumps(receipt), encoding="utf-8")
+            with patch("src.stage2.c3_image_semantic.load_c3_contract", return_value=fake_lock):
+                with self.assertRaisesRegex(C3SemanticError, "training alignment differs"):
+                    produce(output_dir=root / "final2", **common)
+
+    def test_invalid_native_depth_channel_count_is_rejected_before_inference(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            common, infer, fake_lock = self._common_run(root, ["a.png"])
+            depth_path = Path(common["geometric_depth_root"]) / "a.png.geometric.bin"
+            depth_path.write_bytes(
+                b"4&3&2&" + np.zeros((3, 4, 2), dtype=np.float32).tobytes()
+            )
+            with patch("src.stage2.c3_image_semantic.load_c3_contract", return_value=fake_lock):
+                with self.assertRaisesRegex(C3SemanticError, "shape or byte length differs"):
                     produce(output_dir=root / "final", **common)
             self.assertEqual(infer.calls, 0)
 

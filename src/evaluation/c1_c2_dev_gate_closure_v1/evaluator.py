@@ -113,16 +113,36 @@ class RoofSurface:
         return max(finite) if finite else None
 
 
-def _transformed_vertices(record: Mapping[str, Any], inherited: Mapping[str, Any] | None) -> np.ndarray:
-    transform = record.get("transform") or inherited or {"scale": [1, 1, 1], "translate": [0, 0, 0]}
-    vertices = np.asarray(record.get("vertices", []), dtype=np.float64)
-    scale = np.asarray(transform.get("scale", [1, 1, 1]), dtype=np.float64)
-    translate = np.asarray(transform.get("translate", [0, 0, 0]), dtype=np.float64)
-    if vertices.ndim != 2 or (vertices.size and vertices.shape[1] < 3):
-        raise ClosureError("CityJSON vertex array is invalid")
-    if scale.shape != (3,) or translate.shape != (3,):
-        raise ClosureError("CityJSON transform is invalid")
-    return vertices[:, :3] * scale + translate if vertices.size else np.empty((0, 3), dtype=np.float64)
+def _validated_transform(value: Any) -> tuple[np.ndarray, np.ndarray]:
+    if not isinstance(value, Mapping):
+        raise ClosureError("CityJSONSeq transform is missing or invalid")
+    try:
+        scale = np.asarray(value.get("scale"), dtype=np.float64)
+        translate = np.asarray(value.get("translate"), dtype=np.float64)
+    except (TypeError, ValueError) as error:
+        raise ClosureError("CityJSONSeq transform is invalid") from error
+    if (
+        scale.shape != (3,)
+        or translate.shape != (3,)
+        or not np.all(np.isfinite(scale))
+        or not np.all(np.isfinite(translate))
+    ):
+        raise ClosureError("CityJSONSeq transform is invalid")
+    return scale, translate
+
+
+def _transformed_vertices(record: Mapping[str, Any], inherited: Mapping[str, Any]) -> np.ndarray:
+    raw_vertices = record.get("vertices")
+    if not isinstance(raw_vertices, list) or not raw_vertices:
+        raise ClosureError("CityJSONFeature vertices are missing or empty")
+    try:
+        vertices = np.asarray(raw_vertices, dtype=np.float64)
+    except (TypeError, ValueError) as error:
+        raise ClosureError("CityJSONFeature vertex array is invalid") from error
+    scale, translate = _validated_transform(inherited)
+    if vertices.ndim != 2 or vertices.shape[1] != 3 or not np.all(np.isfinite(vertices)):
+        raise ClosureError("CityJSONFeature vertex array is invalid")
+    return vertices * scale + translate
 
 
 def _roof_ring_records(geometry: Mapping[str, Any]) -> Iterator[tuple[int, list[int]]]:
@@ -165,15 +185,43 @@ def _roof_ring_records(geometry: Mapping[str, Any]) -> Iterator[tuple[int, list[
 def parse_cityjsonseq_roof_surfaces(data: bytes, source_name: str = "sealed.city.jsonl") -> list[RoofSurface]:
     inherited: Mapping[str, Any] | None = None
     output: list[RoofSurface] = []
+    header_count = 0
+    feature_count = 0
     for line_number, raw_line in enumerate(data.decode("utf-8").splitlines(), start=1):
         if not raw_line.strip():
             continue
         record = json.loads(raw_line)
-        if record.get("type") == "CityJSON" and record.get("transform"):
+        if not isinstance(record, Mapping):
+            raise ClosureError("CityJSONSeq record is not an object")
+        record_type = record.get("type")
+        if record_type == "CityJSON":
+            header_count += 1
+            if (
+                header_count != 1
+                or feature_count
+                or record.get("vertices") != []
+                or record.get("CityObjects") != {}
+            ):
+                raise ClosureError("CityJSONSeq header must be one leading empty record")
+            _validated_transform(record.get("transform"))
             inherited = record["transform"]
+            continue
+        if record_type != "CityJSONFeature" or inherited is None or "transform" in record:
+            raise ClosureError("CityJSONSeq feature is missing its leading transform header")
+        feature_count += 1
         vertices = _transformed_vertices(record, inherited)
-        for object_id, city_object in sorted((record.get("CityObjects") or {}).items()):
-            for geometry_index, geometry in enumerate(city_object.get("geometry", [])):
+        city_objects = record.get("CityObjects")
+        if not isinstance(city_objects, Mapping) or not city_objects:
+            raise ClosureError("CityJSONFeature CityObjects are missing or empty")
+        for object_id, city_object in sorted(city_objects.items()):
+            if not isinstance(city_object, Mapping):
+                raise ClosureError("CityJSONFeature contains an invalid CityObject")
+            geometries = city_object.get("geometry", [])
+            if not isinstance(geometries, list):
+                raise ClosureError("CityObject geometry is not an array")
+            for geometry_index, geometry in enumerate(geometries):
+                if not isinstance(geometry, Mapping):
+                    raise ClosureError("CityObject geometry is invalid")
                 if str(geometry.get("lod")) != "2.2":
                     continue
                 for surface_index, ring in _roof_ring_records(geometry):
@@ -201,6 +249,8 @@ def parse_cityjsonseq_roof_surfaces(data: bytes, source_name: str = "sealed.city
                             normal=area_vector / norm,
                         )
                     )
+    if header_count != 1 or feature_count < 1:
+        raise ClosureError("CityJSONSeq lacks one header or feature records")
     return output
 
 
