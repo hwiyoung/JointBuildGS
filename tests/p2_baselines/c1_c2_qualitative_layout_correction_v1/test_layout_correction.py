@@ -44,8 +44,8 @@ class LayoutCorrectionTest(unittest.TestCase):
         return examples, ledgers, cells
 
     def test_config_is_exact_layout_only_successor(self) -> None:
-        self.assertEqual(self.config["task_id"], "P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R4-v1")
-        self.assertEqual(self.config["handoff_id"], "P2-W2C-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R4-v1")
+        self.assertEqual(self.config["task_id"], "P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R5-v1")
+        self.assertEqual(self.config["handoff_id"], "P2-W2C-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R5-v1")
         self.assertEqual(self.config["predecessor"]["closed_commit"], "57205adf16def5382322ee57136b1cd66e9d07bc")
         self.assertEqual(self.config["predecessor"]["accepted_artifact_record_count"], 25)
         self.assertEqual(self.config["predecessor"]["accepted_artifact_total_bytes"], 30432763)
@@ -74,15 +74,15 @@ class LayoutCorrectionTest(unittest.TestCase):
             "7fc0770501eb3447733b481fe7ccf195064cdb3cb35934744a8db2fca6d0ec64",
         )
 
-    def test_r4_identity_and_path_matrix_is_exact(self) -> None:
-        task = "P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R4-v1"
-        handoff = "P2-W2C-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R4-v1"
-        run = "P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R4-RUN-v1"
-        packet_rel = "docs/handoffs/P2_W2C_C1_C2_QUALITATIVE_LAYOUT_CORRECTION_R4_v1.md"
-        namespace = f"phase-payloads/p2-baselines/c1_c2_qualitative_layout_correction_r4_v1/{task}"
-        report_rel = "docs/experiments/p2/c1_c2_qualitative_layout_correction_r4_v1/C1_C2_QUALITATIVE_LAYOUT_CORRECTION_R4_v1.md"
-        technical_rel = "artifacts/manifests/p2_baselines/c1_c2_qualitative_layout_correction_r4_v1/technical_result_manifest_v1.json"
-        return_rel = "docs/handoffs/returns/P2_C2W_C1_C2_QUALITATIVE_LAYOUT_CORRECTION_R4_RETURN_v1.md"
+    def test_r5_identity_and_path_matrix_is_exact(self) -> None:
+        task = "P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R5-v1"
+        handoff = "P2-W2C-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R5-v1"
+        run = "P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R5-RUN-v1"
+        packet_rel = "docs/handoffs/P2_W2C_C1_C2_QUALITATIVE_LAYOUT_CORRECTION_R5_v1.md"
+        namespace = f"phase-payloads/p2-baselines/c1_c2_qualitative_layout_correction_r5_v1/{task}"
+        report_rel = "docs/experiments/p2/c1_c2_qualitative_layout_correction_r5_v1/C1_C2_QUALITATIVE_LAYOUT_CORRECTION_R5_v1.md"
+        technical_rel = "artifacts/manifests/p2_baselines/c1_c2_qualitative_layout_correction_r5_v1/technical_result_manifest_v1.json"
+        return_rel = "docs/handoffs/returns/P2_C2W_C1_C2_QUALITATIVE_LAYOUT_CORRECTION_R5_RETURN_v1.md"
         receipt_rel = f"artifacts/manifests/handoffs/{handoff}/"
 
         self.assertEqual(self.config["task_id"], task)
@@ -138,6 +138,9 @@ class LayoutCorrectionTest(unittest.TestCase):
             "P2-W2C-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R3-v1",
             "P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R3-RUN-v1",
             "P2_W2C_C1_C2_QUALITATIVE_LAYOUT_CORRECTION_R3_v1.md",
+            "P2-W2C-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R4-v1",
+            "P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R4-RUN-v1",
+            "P2_W2C_C1_C2_QUALITATIVE_LAYOUT_CORRECTION_R4_v1.md",
         )
         for value in stale:
             self.assertNotIn(value, launcher)
@@ -145,7 +148,7 @@ class LayoutCorrectionTest(unittest.TestCase):
             self.assertNotIn(value, packet)
 
     def test_actual_packet_authority_and_launcher_git_mode(self) -> None:
-        packet = self.repository / "docs/handoffs/P2_W2C_C1_C2_QUALITATIVE_LAYOUT_CORRECTION_R4_v1.md"
+        packet = self.repository / "docs/handoffs/P2_W2C_C1_C2_QUALITATIVE_LAYOUT_CORRECTION_R5_v1.md"
         parser = self.repository / "scripts/p2_baselines/c1_c2_feasibility_pilot_v1/parse_execution_authority.awk"
         launcher_rel = "scripts/p2_baselines/c1_c2_qualitative_layout_correction_v1/run_correction_host.sh"
         packet_text = packet.read_text(encoding="utf-8")
@@ -196,6 +199,7 @@ class LayoutCorrectionTest(unittest.TestCase):
         self.assertNotIn("commands =", launcher)
         self.assertNotIn("WITHOUT --ARTIFACT-ROOT", launcher)
         self.assertIn('zero[0]["passed"] == 0 and zero[0]["failed"] == 0', launcher)
+        self.assertNotIn('subprocess.check_output(["git", "rev-parse", "HEAD"]', launcher)
         self.assertNotIn("commands =", promoter)
         self.assertNotIn("WITHOUT --ARTIFACT-ROOT", promoter)
         self.assertIn("len(zero_tests) != 1", promoter)

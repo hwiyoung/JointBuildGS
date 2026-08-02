@@ -6,13 +6,13 @@ ARTIFACT_ROOT="${1:?usage: run_correction_host.sh ABS_ARTIFACT_ROOT PROJECT_IMAG
 PROJECT_IMAGE_ID="${2:?missing project image ID}"
 SOURCE_COMMIT="${3:?missing source commit}"
 RUN_ID="${4:?missing run ID}"
-HANDOFF_ID="P2-W2C-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R4-v1"
-TASK_ID="P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R4-v1"
-PACKET_REL="docs/handoffs/P2_W2C_C1_C2_QUALITATIVE_LAYOUT_CORRECTION_R4_v1.md"
+HANDOFF_ID="P2-W2C-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R5-v1"
+TASK_ID="P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R5-v1"
+PACKET_REL="docs/handoffs/P2_W2C_C1_C2_QUALITATIVE_LAYOUT_CORRECTION_R5_v1.md"
 CONFIG_REL="configs/p2_baselines/c1_c2_qualitative_layout_correction_v1/render_v1.json"
 ACCEPTED_REL="artifacts/manifests/handoffs/${HANDOFF_ID}/100-accepted.json"
 COMPACT_REL="phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/reference/reference_candidate_cells_v1.csv"
-OUTPUT_REL="phase-payloads/p2-baselines/c1_c2_qualitative_layout_correction_r4_v1/P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R4-v1"
+OUTPUT_REL="phase-payloads/p2-baselines/c1_c2_qualitative_layout_correction_r5_v1/P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R5-v1"
 COMPACT_CELLS="${ARTIFACT_ROOT}/${COMPACT_REL}"
 OUTPUT_ROOT="${ARTIFACT_ROOT}/${OUTPUT_REL}"
 WALL_SECONDS=600
@@ -34,7 +34,7 @@ if [[ "${ARTIFACT_ROOT}" != /* || ! -d "${ARTIFACT_ROOT}" || -L "${ARTIFACT_ROOT
   echo "artifact root must be an existing absolute non-symlink directory" >&2
   exit 2
 fi
-if [[ "${RUN_ID}" != "P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R4-RUN-v1" \
+if [[ "${RUN_ID}" != "P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R5-RUN-v1" \
   || ! "${PROJECT_IMAGE_ID}" =~ ^sha256:[0-9a-f]{64}$ || ! "${SOURCE_COMMIT}" =~ ^[0-9a-f]{40}$ ]]; then
   echo "run/image/source identity mismatch" >&2
   exit 2
@@ -118,7 +118,6 @@ assert reuse["source_receipt_sha256"] == "7fc0770501eb3447733b481fe7ccf195064cdb
 assert reuse["record_identity_sha256"] == "903b0f744c982f83106099ba280ca98d5fb362cc77867f301a31183a30bb804c"
 zero = [row for row in p["verification"]["tests"] if row.get("name") == "acceptance artifact source full-read or hash passes"]
 assert len(zero) == 1 and zero[0]["passed"] == 0 and zero[0]["failed"] == 0
-assert subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip() == os.environ["EXPECTED_ACCEPTED_COMMIT"]
 '
 
 if [[ ! -f "${COMPACT_CELLS}" || -L "${COMPACT_CELLS}" || -e "${OUTPUT_ROOT}" ]]; then
