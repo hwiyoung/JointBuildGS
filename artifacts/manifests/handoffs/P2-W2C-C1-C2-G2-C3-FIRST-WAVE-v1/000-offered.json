@@ -1,0 +1,89 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P2-W2C-C1-C2-G2-C3-FIRST-WAVE-v1",
+  "task_id": "P2-C1-C2-G2-C3-FIRST-WAVE-v1",
+  "created_at": "2026-08-02T22:02:46.7865217+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "offered",
+  "previous_receipt": null,
+  "transport": {
+    "mode": "serialized_main",
+    "branch": "main",
+    "target_branch": "main",
+    "exclusive_writer_ack": true
+  },
+  "commits": {
+    "base_main": "70bde7b173b64b9bf9b638c51595b00458b00aa4",
+    "offered_head": "SELF",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P2-W2C-C1-C2-G2-C3-FIRST-WAVE-v1",
+      "artifacts/manifests/p2/c1_c2_g2_c3_first_wave_v1",
+      "docs/experiments/p2/c1_c2_g2_c3_first_wave_v1",
+      "docs/handoffs/returns/P2_C2W_C1_C2_G2_C3_FIRST_WAVE_RETURN_v1.md"
+    ],
+    "protected_paths": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      "Dockerfile.c3-semantic",
+      "requirements-c3-semantic.txt",
+      "configs",
+      "scripts",
+      "src",
+      "tests",
+      "docs/research",
+      "docs/evidence",
+      "docs/handoffs/P2_W2C_C1_C2_G2_C3_FIRST_WAVE_v1.md",
+      "artifacts/manifests/gate_s0",
+      "phases"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "git_only",
+    "verifier_role": "work_host",
+    "docker_image_digest": "sha256:e50ba5c7fd493ed524212c34e5e84f48bd94e66a70e0ecb6d00269f75309f986",
+    "commands": [
+      "Docker focused C3 dense, semantic, training-contract and Stage-2 engine tests",
+      "Docker focused C1/C2 G2 evaluator and 199-to-72 explanation tests",
+      "agent-instruction validation and independent dense/semantic contract reviews"
+    ],
+    "tests": [
+      {
+        "name": "C3 focused implementation tests",
+        "passed": 36,
+        "failed": 0
+      },
+      {
+        "name": "C1/C2 evaluator, eligibility, preregistration and repository tests",
+        "passed": 37,
+        "failed": 0
+      },
+      {
+        "name": "independent dense and semantic reviews",
+        "passed": 2,
+        "failed": 0
+      }
+    ]
+  },
+  "artifacts": {
+    "required_for_task": true,
+    "availability": {
+      "work_host": "manifest_only",
+      "experiment_host": "manifest_only"
+    },
+    "records": []
+  },
+  "scientific": {
+    "technical_state": "pending",
+    "scientific_verdict": null,
+    "promotion_status": "not_requested"
+  },
+  "receiver_ack": null
+}
