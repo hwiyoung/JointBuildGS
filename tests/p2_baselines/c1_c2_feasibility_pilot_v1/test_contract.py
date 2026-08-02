@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 import io
 import json
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -212,8 +213,44 @@ class ContractTests(unittest.TestCase):
             first = contract.prepare_synthetic(store)
             second = contract.prepare_synthetic(store)
             self.assertEqual(first, second)
+            action = contract.next_synthetic_action(store)
+            self.assertEqual("RUN", action["action"])
+            output = store.path("smoke/work/out")
+            output.mkdir()
+            geometry = {
+                "type": "MultiSurface", "lod": "2.2",
+                "boundaries": [[[0, 1, 2]], [[0, 1, 2]], [[0, 1, 2]]],
+                "semantics": {
+                    "surfaces": [{"type": "RoofSurface"}, {"type": "WallSurface"}, {"type": "GroundSurface"}],
+                    "values": [0, 1, 2],
+                },
+            }
+            cityjson = {
+                "type": "CityJSON", "version": "2.0",
+                "vertices": [[0, 0, 0], [1, 0, 0], [0, 1, 0]],
+                "CityObjects": {
+                    f"synthetic-{index}": {"type": "Building", "geometry": [copy.deepcopy(geometry)]}
+                    for index in range(5)
+                },
+            }
+            (output / "result.json").write_text(json.dumps(cityjson), encoding="utf-8")
+            store.path("smoke/work/runtime.log").write_text("ok", encoding="utf-8")
+            passed = contract.verify_synthetic(store, output, 0)
+            self.assertEqual("PASS", passed["status"])
+            before = sorted(path.relative_to(store.root).as_posix() for path in store.root.rglob("*") if path.is_file())
+            skipped = contract.next_synthetic_action(store)
+            after = sorted(path.relative_to(store.root).as_posix() for path in store.root.rglob("*") if path.is_file())
+            self.assertEqual("SKIP_COMPLETED", skipped["action"])
+            self.assertEqual(before, after)
             with self.assertRaisesRegex(RuntimeError, "add-once"):
                 store.add("smoke/work/input.las", b"replacement")
+
+        with tempfile.TemporaryDirectory() as temporary:
+            partial = contract.AddOnceStore(Path(temporary))
+            contract.prepare_synthetic(partial)
+            contract.next_synthetic_action(partial)
+            with self.assertRaisesRegex(RuntimeError, "partial or failed"):
+                contract.next_synthetic_action(partial)
 
     def test_strict_lod22_and_provisional_g2_separation(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -315,7 +352,10 @@ class ContractTests(unittest.TestCase):
         script = (contract.REPO / "scripts/p2_baselines/c1_c2_feasibility_pilot_v1/run_pilot_host.sh").read_text(encoding="utf-8")
         self.assertIn("--network none --cpus 2 --memory 8g", script)
         self.assertIn("--jobs 1", script)
-        self.assertIn("timeout 600", script)
+        self.assertIn("next-synthetic", script)
+        self.assertIn("remaining_cap_seconds", script)
+        self.assertIn('timeout "${attempt_timeout}" docker run', script)
+        self.assertIn("HARD_CAP_SECONDS=43200", script)
         self.assertIn('merge-base --is-ancestor "${SOURCE_COMMIT}" "${HEAD_SHA}"', script)
         self.assertIn('"${PACKET_SOURCE_COMMIT}" != "${SOURCE_COMMIT}"', script)
         self.assertNotIn('"${HEAD_SHA}" != "${SOURCE_COMMIT}"', script)
@@ -356,6 +396,13 @@ class ContractTests(unittest.TestCase):
         technical = contract.condition_group_technical_summary(rows, config["scope"]["group_sizes"])
         cases = [row for row in rows if representatives[row["group_id"]] == row["building_id"]]
         with tempfile.TemporaryDirectory() as external, tempfile.TemporaryDirectory() as repository:
+            subprocess.run(["git", "init"], cwd=repository, check=True, capture_output=True)
+            subprocess.run(["git", "config", "user.email", "test@example.invalid"], cwd=repository, check=True)
+            subprocess.run(["git", "config", "user.name", "JointBuildGS Test"], cwd=repository, check=True)
+            subprocess.run(["git", "commit", "--allow-empty", "-m", "accepted"], cwd=repository, check=True, capture_output=True)
+            promotion_parent = subprocess.run(
+                ["git", "rev-parse", "HEAD"], cwd=repository, check=True, capture_output=True, text=True,
+            ).stdout.strip()
             store = contract.AddOnceStore(Path(external))
             metric_record = store.add("results/building_method_metrics_v1.jsonl", contract.jsonl_bytes(rows))
             summary_record = store.add("results/group_balanced_descriptive_v1.jsonl", contract.jsonl_bytes(summaries))
@@ -374,12 +421,14 @@ class ContractTests(unittest.TestCase):
                 "preselected_cases": case_record, "report": report_record,
                 "unique_execution_units": 0, "duplicate_roofer_calculations_prevented": 0,
                 "method_summary": {method: {"G0_generated": 0, "G1_provisional_true": 0} for method in contract.CONDITIONS},
-                "execution_authority": {"handoff_id": "test"}, "tool_records": {}, "input_records": {}, "output_records": {},
+                "execution_authority": {"handoff_id": "test", "accepted_commit": promotion_parent}, "tool_records": {}, "input_records": {}, "output_records": {},
                 "result_schema_validation": {"validated_rows": 102},
                 "qualitative_fixed_view": {"status": "NOT_RENDERED", "reason": "TEST"},
             })
-            first = contract.promote(store, Path(repository), "a" * 40)
-            second = contract.promote(store, Path(repository), "a" * 40)
+            with self.assertRaisesRegex(RuntimeError, "exact clean accepted"):
+                contract.promote(store, Path(repository), "a" * 40)
+            first = contract.promote(store, Path(repository), promotion_parent)
+            second = contract.promote(store, Path(repository), promotion_parent)
             self.assertEqual(102, first["result_rows"])
             self.assertTrue(second["fast_path"])
             csv_path = Path(repository) / "docs/experiments/p2/c1_c2_feasibility_pilot_v1/building_method_metrics_v1.csv"
@@ -609,6 +658,7 @@ class ContractTests(unittest.TestCase):
             cells_record = store.add("freeze/development_score_cells_v1.jsonl", contract.jsonl_bytes(cells))
             components_record = store.add("freeze/condition_components_v1.jsonl", b"")
             units_record = store.add("freeze/execution_units_v1.jsonl", b"")
+            store.add_json("control/synthetic_smoke_pass_v1.json", {"status": "PASS"})
             store.add_json("control/preselected_cases_v1.json", {"cases": contract.representative_cases(roster)})
             store.add_json("control/scientific_prepared_v1.json", {
                 "status": "PREPARED", "run_id": "run", "operation_id": "a" * 64,

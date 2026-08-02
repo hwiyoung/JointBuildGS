@@ -915,15 +915,93 @@ def provisional_output_check(output_dir: Path, *, expected_features_min: int = 1
 def verify_synthetic(store: AddOnceStore, output_dir: Path, exit_code: int) -> dict[str, Any]:
     receipt_path = store.path("control/synthetic_smoke_pass_v1.json")
     if receipt_path.is_file():
-        return json.loads(receipt_path.read_bytes())
+        body = json.loads(receipt_path.read_bytes())
+        for record in body.get("output_records", []):
+            store.read_verified(record)
+        for name in ("attempt_started", "attempt_result", "runtime_log", "roofer_internal_log"):
+            record = body.get(name)
+            if record:
+                store.read_verified(record)
+        return {**body, "fast_path": True, "synthetic_reexecution": 0, "new_writes": 0}
+    started = store.path("smoke/attempt_01.started.json")
+    if not started.is_file():
+        raise RuntimeError("synthetic Roofer was not durably started")
+    result_relative = "smoke/attempt_01.result.json"
     if exit_code != 0:
+        store.add_json(result_relative, {
+            "status": "FAILED", "exit_code": exit_code,
+            "failure_reason": f"SYNTHETIC_ROOFER_EXIT_{exit_code}",
+            "scientific_payload_bytes_read_or_hashed": 0,
+            "scientific_verdict": None,
+        })
         raise RuntimeError(f"synthetic Roofer exited {exit_code}")
-    check = provisional_output_check(output_dir, expected_features_min=5)
+    try:
+        check = provisional_output_check(output_dir, expected_features_min=5)
+    except (RuntimeError, ValueError, json.JSONDecodeError) as error:
+        store.add_json(result_relative, {
+            "status": "FAILED", "exit_code": exit_code,
+            "failure_reason": f"SYNTHETIC_VALIDATION_ERROR:{error}",
+            "scientific_payload_bytes_read_or_hashed": 0,
+            "scientific_verdict": None,
+        })
+        raise
     if not (check["G0_generated"] and check["G1_schema_semantic"]):
+        store.add_json(result_relative, {
+            "status": "FAILED", "exit_code": exit_code,
+            "failure_reason": "SYNTHETIC_G0_G1_REQUIREMENTS_NOT_MET",
+            "check": check, "scientific_payload_bytes_read_or_hashed": 0,
+            "scientific_verdict": None,
+        })
         raise RuntimeError("synthetic Roofer output failed strict LoD2.2/schema screen")
-    body = {"schema": "jointbuildgs.p2_c1_c2_synthetic_smoke.v1", "status": "PASS", **check, "scientific_payload_bytes_read_or_hashed": 0, "scientific_verdict": None}
+    output_records = [
+        compact_file_record(store, path)
+        for path in sorted(output_dir.rglob("*"))
+        if path.is_file() and not path.is_symlink()
+    ]
+    runtime_log = compact_file_record(store, store.path("smoke/work/runtime.log"))
+    internal_path = store.path("smoke/work/roofer.log.json")
+    internal_log = compact_file_record(store, internal_path) if internal_path.is_file() and not internal_path.is_symlink() else None
+    attempt_result = store.add_json(result_relative, {
+        "status": "PASS", "exit_code": exit_code, "check": check,
+        "runtime_log": runtime_log, "roofer_internal_log": internal_log,
+        "output_records": output_records,
+        "scientific_payload_bytes_read_or_hashed": 0,
+        "scientific_verdict": None,
+    })
+    body = {
+        "schema": "jointbuildgs.p2_c1_c2_synthetic_smoke.v1", "status": "PASS", **check,
+        "attempt_started": compact_file_record(store, started),
+        "attempt_result": attempt_result,
+        "runtime_log": runtime_log,
+        "roofer_internal_log": internal_log,
+        "output_records": output_records,
+        "scientific_payload_bytes_read_or_hashed": 0,
+        "scientific_verdict": None,
+    }
     store.add_json("control/synthetic_smoke_pass_v1.json", body)
     return body
+
+
+def next_synthetic_action(store: AddOnceStore) -> dict[str, Any]:
+    """Start the sole smoke attempt, or prove the completed no-reexecution path."""
+
+    pass_path = store.path("control/synthetic_smoke_pass_v1.json")
+    if pass_path.is_file():
+        body = verify_synthetic(store, store.path("smoke/work/out"), 0)
+        return {"action": "SKIP_COMPLETED", "receipt": body, "new_writes": 0}
+    started = store.path("smoke/attempt_01.started.json")
+    result = store.path("smoke/attempt_01.result.json")
+    output = store.path("smoke/work/out")
+    if started.exists() or result.exists() or output.exists():
+        raise RuntimeError("synthetic smoke is partial or failed; duplicate execution is prohibited")
+    marker = {
+        "status": "STARTED", "attempt_number": 1,
+        "started_unix": time.time(), "retry_allowed": False,
+        "scientific_payload_bytes_read_or_hashed": 0,
+        "scientific_verdict": None,
+    }
+    store.add_json("smoke/attempt_01.started.json", marker)
+    return {"action": "RUN", "attempt_number": 1}
 
 
 def prepare_scientific(
@@ -1206,7 +1284,6 @@ def next_attempt(store: AddOnceStore, unit_id: str) -> dict[str, Any]:
             raise RuntimeError("attempt-1 output quarantine already exists")
         if output_dir.is_symlink() or not output_dir.is_dir():
             raise RuntimeError("attempt-1 output directory is missing/non-regular before retry")
-        files = [path for path in output_dir.rglob("*") if path.is_file() and not path.is_symlink()]
         roofer_log = output_dir.parent / "roofer.log.json"
         roofer_log_quarantine = output_dir.parent / "roofer.log.attempt_01.quarantine.json"
         if roofer_log_quarantine.exists():
@@ -1217,14 +1294,26 @@ def next_attempt(store: AddOnceStore, unit_id: str) -> dict[str, Any]:
                 raise RuntimeError("attempt-1 Roofer internal log is non-regular")
             roofer_log.rename(roofer_log_quarantine)
             log_moved = True
+        output_dir.rename(quarantine)
+        quarantined_files = [
+            path for path in sorted(quarantine.rglob("*"))
+            if path.is_file() and not path.is_symlink()
+        ]
+        quarantined_output_records = [compact_file_record(store, path) for path in quarantined_files]
+        quarantined_internal_log = (
+            compact_file_record(store, roofer_log_quarantine) if log_moved else None
+        )
         quarantine_state = {
-            "path": quarantine.relative_to(store.root).as_posix(), "files": len(files),
-            "bytes": sum(path.stat().st_size for path in files), "content_hashes": 0,
+            "path": quarantine.relative_to(store.root).as_posix(),
+            "files": len(quarantined_files),
+            "bytes": sum(record["bytes"] for record in quarantined_output_records),
+            "content_hashes": len(quarantined_output_records),
+            "output_records": quarantined_output_records,
             "roofer_internal_log_moved": log_moved,
+            "roofer_internal_log": quarantined_internal_log,
             "attempt_1_result": compact_file_record(store, attempt_one_result_path),
             "retry_authorization_status": attempt_one_result["status"],
         }
-        output_dir.rename(quarantine)
         output_dir.mkdir()
         directory_fd = os.open(output_dir.parent, os.O_RDONLY)
         try:
@@ -1288,6 +1377,12 @@ def record_attempt(
     store.add_json(f"operation_records/{slug}/attempt_{attempt_number:02d}.result.json", attempt_body)
     if retry_authorized:
         return attempt_body
+    internal_log_path = store.path(unit["work_directory"]) / "roofer.log.json"
+    internal_log_record = (
+        compact_file_record(store, internal_log_path)
+        if internal_log_path.is_file() and not internal_log_path.is_symlink()
+        else None
+    )
     succeeded = exit_code == 0 and validation_error is None and check is not None and bool(check["G0_generated"])
     output_bytes = output_tree_bytes(output_dir) if output_dir.exists() else 0
     output_records = [
@@ -1316,6 +1411,7 @@ def record_attempt(
         "peak_memory_unavailable_reason": peak_memory_unavailable_reason,
         "output_bytes": output_bytes,
         "output_records": output_records,
+        "roofer_internal_log": internal_log_record,
         "G0_generated": succeeded,
         "G1_schema_semantic": check["G1_schema_semantic"] if check else None,
         "G1_check_class": "INTERNAL_CITYJSON_BOUNDARY_SEMANTICS_PARENT_CHILD_VALIDATION",
@@ -1591,6 +1687,9 @@ def finalize(store: AddOnceStore) -> dict[str, Any]:
         return {**json.loads(completed.read_bytes()), "fast_path": True, "operation_output_reopens": 0, "new_writes": 0}
     config = load_config()
     prepared = json.loads(store.path("control/scientific_prepared_v1.json").read_bytes())
+    synthetic_smoke = json.loads(store.path("control/synthetic_smoke_pass_v1.json").read_bytes())
+    if synthetic_smoke.get("status") != "PASS":
+        raise RuntimeError("synthetic smoke PASS ledger is missing before finalize")
     units = {row["operation_unit_id"]: row for row in execution_units(store)}
     operation_results: dict[str, dict[str, Any]] = {}
     triangles: dict[str, list[np.ndarray]] = {}
@@ -1726,6 +1825,12 @@ def finalize(store: AddOnceStore) -> dict[str, Any]:
 - The five outcome-free representatives remain in the compact case table; no post-outcome visual selection occurred.
 """
     report_record = store.add("results/C1_C2_DEVELOPMENT_REPORT_v1.md", report.encode("utf-8"))
+    compact_ledger_records = [
+        compact_file_record(store, path)
+        for relative_root in ("control", "checkpoints", "attempts", "operation_records")
+        for path in sorted(store.path(relative_root).rglob("*"))
+        if path.is_file() and not path.is_symlink()
+    ]
     body = {
         "schema": "jointbuildgs.p2_c1_c2_finalized.v1", "status": "TECHNICAL_RESULTS_COMPLETE_FOR_WORK_HOST_REVIEW",
         "run_id": prepared["run_id"], "operation_id": prepared["operation_id"], "result_rows": 102,
@@ -1741,10 +1846,12 @@ def finalize(store: AddOnceStore) -> dict[str, Any]:
         "input_records": prepared["input_records"],
         "output_records": {
             **prepared["output_records"],
+            "synthetic_smoke": synthetic_smoke,
             "metrics": metrics_record, "group_balanced_descriptive": summary_record,
             "condition_group_technical_summary": technical_group_record,
             "development_input_definition": input_definition_record,
             "preselected_cases": case_record, "report": report_record,
+            "compact_control_checkpoint_attempt_ledgers": compact_ledger_records,
             "roofer_operations": [
                 {"operation_unit_id": unit_id, "final": operation_results[unit_id], "outputs": operation_results[unit_id].get("output_records", [])}
                 for unit_id in sorted(operation_results)
@@ -1792,6 +1899,19 @@ def promote(store: AddOnceStore, repo_root: Path, promotion_parent_commit: str) 
     finalized = json.loads(store.path("control/finalized_v1.json").read_bytes())
     if finalized.get("status") != "TECHNICAL_RESULTS_COMPLETE_FOR_WORK_HOST_REVIEW" or finalized.get("scientific_verdict") is not None:
         raise RuntimeError("external finalized ledger is not promotable")
+    actual_head = subprocess.run(
+        ["git", "-C", str(repo_root), "rev-parse", "HEAD"],
+        check=True, capture_output=True, text=True,
+    ).stdout.strip()
+    dirty = subprocess.run(
+        ["git", "-C", str(repo_root), "status", "--porcelain=v1", "--untracked-files=all"],
+        check=True, capture_output=True, text=True,
+    ).stdout
+    accepted_commit = (finalized.get("execution_authority") or {}).get("accepted_commit")
+    if actual_head != promotion_parent_commit or accepted_commit != promotion_parent_commit:
+        raise RuntimeError("promotion parent is not the exact clean accepted repository HEAD")
+    if dirty:
+        raise RuntimeError("repository must be clean before add-once result promotion")
     rows = parse_jsonl(store.read_verified(finalized["metrics"]))
     summaries = parse_jsonl(store.read_verified(finalized["group_balanced_descriptive"]))
     technical_groups = parse_jsonl(store.read_verified(finalized["condition_group_technical_summary"]))

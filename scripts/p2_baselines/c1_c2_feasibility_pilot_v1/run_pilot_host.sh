@@ -23,6 +23,7 @@ REFERENCE_CELLS="${ARTIFACT_ROOT}/${R1_REL}/reference/reference_candidate_cells_
 ACCEPTED_RECEIPT_REL="artifacts/manifests/handoffs/P2-W2C-C1-C2-FEASIBILITY-PILOT-v1/100-accepted.json"
 PACKET_REL="docs/handoffs/P2_W2C_C1_C2_FEASIBILITY_PILOT_v1.md"
 START_SECONDS="${SECONDS}"
+HARD_CAP_SECONDS=43200
 
 if [[ "${ARTIFACT_ROOT}" != /* || ! -d "${ARTIFACT_ROOT}" ]]; then
   echo "artifact root must be an existing absolute directory" >&2
@@ -74,8 +75,17 @@ for exact_input in "${C1_GRID}" "${C1_CHECKPOINT}" "${C2_PLY}" "${C2_CHECKPOINT}
 done
 mkdir -p "${TASK_ROOT}"
 
+remaining_cap_seconds() {
+  local remaining=$((HARD_CAP_SECONDS - (SECONDS - START_SECONDS)))
+  if (( remaining <= 0 )); then
+    echo "hard 12-hour task cap exhausted" >&2
+    return 1
+  fi
+  printf '%s\n' "${remaining}"
+}
+
 project_run() {
-  docker run --rm --network none --cpus 2 --memory 8g --pids-limit 512 \
+  timeout "$(remaining_cap_seconds)" docker run --rm --network none --cpus 2 --memory 8g --pids-limit 512 \
     --user "$(id -u):$(id -g)" \
     -v "${REPO}:/workspace/JointBuildGS:ro" \
     -v "${TASK_ROOT}:/pilot_output:rw" \
@@ -85,7 +95,7 @@ project_run() {
 }
 
 project_science_prepare() {
-  docker run --rm --network none --cpus 2 --memory 8g --pids-limit 512 \
+  timeout "$(remaining_cap_seconds)" docker run --rm --network none --cpus 2 --memory 8g --pids-limit 512 \
     --user "$(id -u):$(id -g)" \
     -v "${REPO}:/workspace/JointBuildGS:ro" \
     -v "${TASK_ROOT}:/pilot_output:rw" \
@@ -113,17 +123,25 @@ project_science_prepare() {
 # The first gate reads zero scientific bytes.
 project_run preflight
 project_run prepare-synthetic --output-root /pilot_output
-mkdir -p "${TASK_ROOT}/smoke/work/out"
-set +e
-timeout 600 docker run --rm --network none --cpus 2 --memory 8g --pids-limit 512 \
-  --user "$(id -u):$(id -g)" \
-  -v "${TASK_ROOT}/smoke/work:/work:rw" -w /work \
-  "${ROOFER_IMAGE}" \
-  --id-attribute component_id --jobs 1 --srs EPSG:25832 --bld-class 6 --grnd-class 2 --lod22 \
-  input.las r_derived.geojson out >"${TASK_ROOT}/smoke/work/runtime.log" 2>&1
-SMOKE_EXIT=$?
-set -e
-project_run verify-synthetic --output-root /pilot_output --roofer-output /pilot_output/smoke/work/out --exit-code "${SMOKE_EXIT}"
+mapfile -t smoke_decision < <(project_run next-synthetic --output-root /pilot_output --machine-lines)
+if [[ "${smoke_decision[0]:-}" == "RUN" && "${smoke_decision[1]:-}" == "1" ]]; then
+  mkdir -p "${TASK_ROOT}/smoke/work/out"
+  smoke_timeout="$(remaining_cap_seconds)"
+  if (( smoke_timeout > 600 )); then smoke_timeout=600; fi
+  set +e
+  timeout "${smoke_timeout}" docker run --rm --network none --cpus 2 --memory 8g --pids-limit 512 \
+    --user "$(id -u):$(id -g)" \
+    -v "${TASK_ROOT}/smoke/work:/work:rw" -w /work \
+    "${ROOFER_IMAGE}" \
+    --id-attribute component_id --jobs 1 --srs EPSG:25832 --bld-class 6 --grnd-class 2 --lod22 \
+    input.las r_derived.geojson out >"${TASK_ROOT}/smoke/work/runtime.log" 2>&1
+  SMOKE_EXIT=$?
+  set -e
+  project_run verify-synthetic --output-root /pilot_output --roofer-output /pilot_output/smoke/work/out --exit-code "${SMOKE_EXIT}"
+elif [[ "${smoke_decision[0]:-}" != "SKIP_COMPLETED" ]]; then
+  echo "invalid or partial synthetic-smoke state" >&2
+  exit 2
+fi
 
 # Only a passed smoke permits the exact scientific mounts above to be opened.
 project_science_prepare
@@ -145,8 +163,10 @@ while IFS=$'\t' read -r unit_id work_relative; do
     work_host="${TASK_ROOT}/${work_relative}"
     mkdir -p "${work_host}/out"
     attempt_start="${SECONDS}"
+    attempt_timeout="$(remaining_cap_seconds)"
+    if (( attempt_timeout > 600 )); then attempt_timeout=600; fi
     set +e
-    timeout 600 docker run --rm --network none --cpus 2 --memory 8g --pids-limit 512 \
+    timeout "${attempt_timeout}" docker run --rm --network none --cpus 2 --memory 8g --pids-limit 512 \
       --user "$(id -u):$(id -g)" \
       -v "${work_host}:/work:rw" -w /work \
       "${ROOFER_IMAGE}" \
@@ -169,7 +189,7 @@ while IFS=$'\t' read -r unit_id work_relative; do
     fi
     break
   done
-  if (( SECONDS - START_SECONDS > 43200 )); then
+  if (( SECONDS - START_SECONDS >= HARD_CAP_SECONDS )); then
     echo "hard 12-hour task cap exceeded" >&2
     exit 2
   fi

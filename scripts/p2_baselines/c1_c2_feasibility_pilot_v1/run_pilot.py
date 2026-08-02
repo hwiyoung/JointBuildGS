@@ -11,6 +11,7 @@ from scripts.p2_baselines.c1_c2_feasibility_pilot_v1.contract import (
     AddOnceStore,
     execution_units,
     finalize,
+    next_synthetic_action,
     next_attempt,
     prepare_scientific,
     prepare_synthetic,
@@ -27,6 +28,9 @@ def main() -> None:
     sub.add_parser("preflight")
     smoke = sub.add_parser("prepare-synthetic")
     smoke.add_argument("--output-root", type=Path, required=True)
+    smoke_action = sub.add_parser("next-synthetic")
+    smoke_action.add_argument("--output-root", type=Path, required=True)
+    smoke_action.add_argument("--machine-lines", action="store_true")
     verify = sub.add_parser("verify-synthetic")
     verify.add_argument("--output-root", type=Path, required=True)
     verify.add_argument("--roofer-output", type=Path, required=True)
@@ -72,6 +76,8 @@ def main() -> None:
         store = AddOnceStore(args.output_root)
         if args.mode == "prepare-synthetic":
             result = prepare_synthetic(store)
+        elif args.mode == "next-synthetic":
+            result = next_synthetic_action(store)
         elif args.mode == "verify-synthetic":
             result = verify_synthetic(store, args.roofer_output, args.exit_code)
         elif args.mode == "prepare-scientific":
@@ -103,7 +109,7 @@ def main() -> None:
                 store, args.unit_id, args.attempt_number, args.exit_code, args.runtime_seconds,
                 args.peak_memory_bytes, args.peak_memory_unavailable_reason,
             )
-    if args.mode == "next-attempt" and args.machine_lines:
+    if args.mode in {"next-attempt", "next-synthetic"} and args.machine_lines:
         print(result["action"])
         print(result.get("attempt_number", 0))
     else:
