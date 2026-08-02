@@ -1,0 +1,301 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P2-W2C-C1-C2-FEASIBILITY-PILOT-FINALIZE-RECOVERY-R4-v1",
+  "task_id": "P2-C1-C2-FEASIBILITY-PILOT-FINALIZE-RECOVERY-R4-v1",
+  "created_at": "2026-08-02T13:21:02+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "verified",
+  "previous_receipt": {
+    "path": "artifacts/manifests/handoffs/P2-W2C-C1-C2-FEASIBILITY-PILOT-FINALIZE-RECOVERY-R4-v1/100-accepted.json",
+    "sha256": "fb6a17a1bf26486f02d12fc49451e1b0123eadca73b36f7436e4d950a311a62b"
+  },
+  "transport": {
+    "mode": "serialized_main",
+    "branch": "main",
+    "target_branch": "main",
+    "exclusive_writer_ack": true
+  },
+  "commits": {
+    "base_main": "b6514a3396698835aaeb885bbe696fc8827c37bb",
+    "offered_head": "c8cf119930929915248551c5e8a700ee7e0747fd",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P2-W2C-C1-C2-FEASIBILITY-PILOT-FINALIZE-RECOVERY-R4-v1",
+      "artifacts/manifests/p2_baselines/c1_c2_feasibility_pilot_finalize_recovery_r4_v1",
+      "docs/experiments/p2/c1_c2_feasibility_pilot_finalize_recovery_r4_v1",
+      "docs/handoffs/returns/P2_C2W_C1_C2_FEASIBILITY_PILOT_FINALIZE_RECOVERY_R4_RETURN_v1.md"
+    ],
+    "protected_paths": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      "artifacts/manifests/gate_s0",
+      "artifacts/manifests/handoffs/P2-W2C-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1",
+      "artifacts/manifests/p2_baselines/c1_c2_feasibility_pilot_recovery_r3_v1",
+      "configs/p2_baselines/c1_c2_feasibility_pilot_v1",
+      "configs/p2_baselines/c1_c2_feasibility_pilot_finalize_recovery_r4_v1",
+      "docs/evidence",
+      "docs/experiments/p2/c1_c2_feasibility_pilot_recovery_r3_v1",
+      "docs/handoffs/P2_W2C_C1_C2_FEASIBILITY_PILOT_FINALIZE_RECOVERY_R4_v1.md",
+      "docs/handoffs/P2_W2C_C1_C2_FEASIBILITY_PILOT_RECOVERY_R3_v1.md",
+      "docs/handoffs/returns/P2_C2W_C1_C2_FEASIBILITY_PILOT_RECOVERY_R3_RETURN_v1.md",
+      "docs/research/00_RESEARCH_CHARTER.md",
+      "docs/research/01_MASTER_ROADMAP.md",
+      "docs/research/02_NOVELTY_MAP.md",
+      "docs/research/03_DATA_AND_BASELINE_SCOPE.md",
+      "docs/research/04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md",
+      "docs/research/05_HANDOFF_PROTOCOL.md",
+      "docs/research/06_DECISION_LOG.md",
+      "docs/research/preregistration/fusion_w1",
+      "docs/research/preregistration/gate_s0",
+      "docs/research/preregistration/quality_axis",
+      "phases/p0-audit",
+      "phases/p2-gsjso",
+      "scripts/p2_baselines/c1_c2_feasibility_pilot_v1",
+      "scripts/p2_baselines/c1_c2_feasibility_pilot_finalize_recovery_r4_v1",
+      "scripts/repository",
+      "tests/p2_baselines/c1_c2_feasibility_pilot_v1",
+      "tests/p2_baselines/c1_c2_feasibility_pilot_finalize_recovery_r4_v1",
+      "tests/repository"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "artifact_verified",
+    "verifier_role": "experiment_host",
+    "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "commands": [
+      "validate exact accepted authority and execute the finalize-only wrapper once",
+      "verify only new compact R4 external and promoted result records against their manifests",
+      "complete three independent scientific ownership and reproducibility reviews without reopening R3 payload bytes"
+    ],
+    "tests": [
+      {
+        "name": "exact accepted authority and one finalize-only wrapper invocation",
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "name": "102-row schema and unique building-method result validation",
+        "passed": 102,
+        "failed": 0
+      },
+      {
+        "name": "new R4 external and promoted compact record verification",
+        "passed": 13,
+        "failed": 0
+      },
+      {
+        "name": "independent post-run reviews",
+        "passed": 3,
+        "failed": 0
+      },
+      {
+        "name": "closure-time R3 or original scientific payload rereads/rehashes",
+        "passed": 0,
+        "failed": 0
+      }
+    ]
+  },
+  "artifacts": {
+    "required_for_task": true,
+    "availability": {
+      "work_host": "manifest_only",
+      "experiment_host": "verified_local"
+    },
+    "records": [
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/checkpoints/120-condition_components_and_r_derived_frozen.json",
+        "bytes": 2454,
+        "sha256": "c2bf6574a11cb833dd874e3830bc16c43a7bd960e1b331ff0239e2add14e606b",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T13:14:03+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/control/preselected_cases_v1.json",
+        "bytes": 467,
+        "sha256": "d7d5d931bef6c3e79b8b36db76546375be8fb8153d6900e7c099b47cb7d174ce",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T13:14:03+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/control/scientific_prepared_v1.json",
+        "bytes": 8412,
+        "sha256": "773b6c21cf93de5786c63031693270ad8400cbf7ec22383837d97e7cd6d78537",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T13:14:03+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/control/synthetic_smoke_pass_v1.json",
+        "bytes": 1452,
+        "sha256": "8e00699b6c2c87f917fa6e12e2cbc496fff27e5b3741b9b5db0fb7f9c4693e6d",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T13:14:03+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/freeze/condition_components_v1.jsonl",
+        "bytes": 1961083,
+        "sha256": "421bc81800bdf2290decf708bbb169c6fbfb3b5616ae54dd11756aa09e62238a",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T13:14:03+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/freeze/development_score_association_with_pre_roofer_status_v1.jsonl",
+        "bytes": 40739,
+        "sha256": "6d899874aad543f382b053e32149a183b4885fe5e869d738fa4762e0ab781cd9",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T13:14:03+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/freeze/development_score_cells_v1.jsonl",
+        "bytes": 10868613,
+        "sha256": "de7c02e2a286fa05c34301aae9de625637cf6fb8c07b5f2969141fd20b0d5a59",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T13:14:03+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/freeze/execution_units_v1.jsonl",
+        "bytes": 5236,
+        "sha256": "52f3b44b981d60ab7fec3afdc818e7b4b39e32f35cf9efebb45475e92b58c9d5",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T13:14:03+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operation_records/2128be3f18f4d8d69efe2cd2/final_v1.json",
+        "bytes": 1464,
+        "sha256": "27fd2d56b469f018b74651c478db2a04fe9e868b325b07e116c1f94f560f70bc",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T13:14:03+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operation_records/2a5ec3257fe508b765587362/final_v1.json",
+        "bytes": 1464,
+        "sha256": "75a4f04eddb5a2091ba3ca1af3980566994373534417babecb2f2b282f7a74b3",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T13:14:03+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operation_records/5999aba0ede4dc8d6f9bbc2e/final_v1.json",
+        "bytes": 1464,
+        "sha256": "8a58c04c52ebf7d418b320fffcd1470ea376bffabdbd9e6e307f042a0b24a19f",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T13:14:03+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operation_records/66dab58f37ffa2166ec108fd/final_v1.json",
+        "bytes": 1464,
+        "sha256": "a6195301b8802d6bd57f270d6fb58989fa0eebeba55b0e47fec615aedf64e33c",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T13:14:03+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operation_records/aacbe4def92a31a34f147ca1/final_v1.json",
+        "bytes": 1464,
+        "sha256": "a94f2b3e75bfd9842b8b06c1b7a9d242a02792da5cbc1c234b4a1d707a38c6de",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T13:14:03+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operation_records/ddfe077729105036c891f5ab/final_v1.json",
+        "bytes": 1504,
+        "sha256": "483c38f558ddfc5214e9d6205c4b740aee3400b5be9eef34bf621577c8bb6819",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T13:14:03+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operation_records/e092a0033cf9c7e4b2f69c70/final_v1.json",
+        "bytes": 1464,
+        "sha256": "72b6a0e925a2beacb8e39b72c9bf89e01fcc3de00425872bbc7400efa621ada9",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T13:14:03+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operations/C1_L_upper/C1_L_upper_COMP_84a837b5d7c79565f0e8/work/out/690792_5335864.city.jsonl",
+        "bytes": 3627,
+        "sha256": "fb9c21208dc319a97ca9bddca26806ed15d60733408410211319f42ded1721a9",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T13:14:03+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operations/C2_MVS/C2_MVS_COMP_15d5693161e719555349/work/out/690847_5336152.city.jsonl",
+        "bytes": 2759,
+        "sha256": "376c8328d173b6e71fee485bdc1046938e5d1a75499ce9bb91d2b19b21ca1dbf",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T13:14:03+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operations/C2_MVS/C2_MVS_COMP_3b9ac290b64ed07a8b9b/work/out/690792_5335904.city.jsonl",
+        "bytes": 3514,
+        "sha256": "508903780d18dab40ea4f34753c766c1352f3886d87832c6d5097aedd8362fc8",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T13:14:03+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operations/C2_MVS/C2_MVS_COMP_727fcc5b8565a3fd387a/work/out/691038_5336093.city.jsonl",
+        "bytes": 2894,
+        "sha256": "68a4739d0e366a2a740c1f594dd41330854812361bac3395e08e7f60610062b9",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T13:14:03+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operations/C2_MVS/C2_MVS_COMP_987366f441a0ea7f704d/work/out/690815_5335864.city.jsonl",
+        "bytes": 3215,
+        "sha256": "b2871a48607a82397b0da0b35ff520287095c97e4999f99d0a252682578c9115",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T13:14:03+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operations/C2_MVS/C2_MVS_COMP_a2e596f19e5dec9c1ef3/work/out/691121_5336157.city.jsonl",
+        "bytes": 2826,
+        "sha256": "9509e2d6d71c905223fb755f55e8fdfe23f98ad850476620f76291ca8d589faf",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T13:14:03+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operations/C2_MVS/C2_MVS_COMP_f1d8cfc93f4be10ae807/work/out/690831_5336120.city.jsonl",
+        "bytes": 2743,
+        "sha256": "5b089bfa3a457b53e6b07c1d9590f57162157957a4eb901c9cf5437bafc21903",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T13:14:03+09:00"
+      }
+    ]
+  },
+  "scientific": {
+    "technical_state": "complete",
+    "scientific_verdict": null,
+    "promotion_status": "human_review_required"
+  },
+  "receiver_ack": {
+    "role": "experiment_host",
+    "accepted_at": "2026-08-02T13:21:02+09:00",
+    "status": "verified",
+    "issue": null
+  }
+}
