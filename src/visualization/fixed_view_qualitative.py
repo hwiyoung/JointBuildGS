@@ -25,6 +25,45 @@ SUPPLEMENT_STATUS = "POST_HOC_FIXED_RULE_VISUALIZATION_SUPPLEMENT"
 METHODS = ("C1_L_upper", "C2_MVS")
 
 
+def _assert_text_inside(container: Any, texts: Sequence[Any], *, label: str, tolerance_px: float = 1.0) -> None:
+    """Fail closed when a required display annotation escapes its allotted box."""
+    figure = container.figure if hasattr(container, "figure") else container
+    figure.canvas.draw()
+    renderer = figure.canvas.get_renderer()
+    bounds = container.get_window_extent(renderer) if hasattr(container, "get_window_extent") else figure.bbox
+    for index, value in enumerate(texts):
+        extent = value.get_window_extent(renderer)
+        if (
+            extent.x0 < bounds.x0 - tolerance_px
+            or extent.y0 < bounds.y0 - tolerance_px
+            or extent.x1 > bounds.x1 + tolerance_px
+            or extent.y1 > bounds.y1 + tolerance_px
+        ):
+            raise RuntimeError(
+                f"required {label} text escaped its allocated bounds at index {index}: "
+                f"text={value.get_text()!r}, axes={getattr(getattr(value, 'axes', None), 'name', None)!r}, "
+                f"position={value.get_position()!r}"
+            )
+
+
+def _assert_axes_inside_figure(figure: Any, *, label: str, tolerance_px: float = 1.0) -> None:
+    """Fail closed when any visible axes decoration is clipped by the figure."""
+    figure.canvas.draw()
+    renderer = figure.canvas.get_renderer()
+    bounds = figure.bbox
+    for index, axis in enumerate(figure.axes):
+        if not axis.get_visible():
+            continue
+        extent = axis.get_tightbbox(renderer)
+        if (
+            extent.x0 < bounds.x0 - tolerance_px
+            or extent.y0 < bounds.y0 - tolerance_px
+            or extent.x1 > bounds.x1 + tolerance_px
+            or extent.y1 > bounds.y1 + tolerance_px
+        ):
+            raise RuntimeError(f"required {label} axes escaped figure bounds at index {index}")
+
+
 @dataclass(frozen=True)
 class BBox:
     min_x: float
@@ -516,11 +555,25 @@ def _render_eligibility(
                 f"eligibility compact-cell count mismatch for {example['label']}/{example['stable_id']}: "
                 f"expected {expected}, observed {observed}"
             )
-    fig, axes = plt.subplots(2, 4, figsize=tuple(style["eligibility_figure_inches"]), dpi=int(style["dpi"]), constrained_layout=True)
-    axes_flat = list(axes.ravel())
+    fig = plt.figure(figsize=tuple(style["eligibility_figure_inches"]), dpi=int(style["dpi"]), constrained_layout=False)
+    eligibility_layout = style.get("eligibility_layout", {})
+    outer = fig.add_gridspec(
+        2,
+        4,
+        left=float(eligibility_layout.get("left", 0.045)),
+        right=float(eligibility_layout.get("right", 0.985)),
+        bottom=float(eligibility_layout.get("bottom", 0.055)),
+        top=float(eligibility_layout.get("top", 0.90)),
+        wspace=float(eligibility_layout.get("wspace", 0.24)),
+        hspace=float(eligibility_layout.get("hspace", 0.28)),
+    )
     records: list[dict[str, Any]] = []
+    required_info_texts: list[tuple[Any, Any]] = []
     for index, example in enumerate(examples):
-        ax = axes_flat[index]
+        cell = outer[index // 4, index % 4].subgridspec(2, 1, height_ratios=(2.55, 1.45), hspace=0.04)
+        ax = fig.add_subplot(cell[0])
+        info_ax = fig.add_subplot(cell[1])
+        info_ax.axis("off")
         stable_id = example["stable_id"]
         ledger = ledgers[stable_id]
         bbox = _bbox_from_row(ledger)
@@ -533,18 +586,27 @@ def _render_eligibility(
         ax.plot(rectangle_x, rectangle_y, color="#111111", linewidth=float(style["line_width"]))
         candidate = str(example["candidate"]).lower() == "true"
         recorded = int(example["reference_cells"])
-        ax.set(xlim=(viewport.min_x, viewport.max_x), ylim=(viewport.min_y, viewport.max_y), aspect="equal", title=f"{example['label']} — {stable_id}\n{'ELIGIBLE' if candidate else 'EXCLUDED'}", xlabel="Easting (m)", ylabel="Northing (m)")
-        ax.text(
-            0.01,
-            0.01,
-            f"actual compact rows={len(point_set.xyz)}; recorded reference cells={recorded}\n"
-            f"views/MVS/C4={example['image_views']}/{example['mvs_cells']}/{example['c4_cells']}\n"
-            f"reason={example['exclusion_reason']}",
-            transform=ax.transAxes,
+        ax.set(xlim=(viewport.min_x, viewport.max_x), ylim=(viewport.min_y, viewport.max_y), aspect="equal", xlabel="Easting (m)", ylabel="Northing (m)")
+        ax.set_title(f"{example['label']} — {stable_id}\n{'ELIGIBLE' if candidate else 'EXCLUDED'}", fontsize=8, pad=5)
+        ax.ticklabel_format(axis="both", style="plain", useOffset=False)
+        ax.tick_params(axis="both", labelsize=5.5)
+        ax.xaxis.label.set_size(7)
+        ax.yaxis.label.set_size(7)
+        exact_reason = str(example["exclusion_reason"])
+        displayed_reason = ";\n".join(exact_reason.split(";"))
+        info_text = info_ax.text(
+            0.0,
+            0.98,
+            f"compact rows / recorded reference cells: {len(point_set.xyz)} / {recorded}\n"
+            f"image views / MVS / C4 cells: {example['image_views']} / {example['mvs_cells']} / {example['c4_cells']}\n"
+            f"reason={displayed_reason}",
+            transform=info_ax.transAxes,
             fontsize=7,
-            va="bottom",
-            bbox={"facecolor": "white", "alpha": 0.85, "edgecolor": "none"},
+            va="top",
+            ha="left",
+            linespacing=1.15,
         )
+        required_info_texts.append((info_ax, info_text))
         records.append({
             "label": example["label"],
             "stable_id": stable_id,
@@ -557,9 +619,15 @@ def _render_eligibility(
             "bbox": [bbox.min_x, bbox.min_y, bbox.max_x, bbox.max_y],
             "reason": example["exclusion_reason"],
         })
-    for ax in axes_flat[len(examples):]:
-        ax.axis("off")
+    if len(examples) < 8:
+        empty_ax = fig.add_subplot(outer[1, 3])
+        empty_ax.axis("off")
     fig.suptitle("199→72 eligibility — bounded descriptive supplement (no eligibility derivation)", fontsize=12)
+    if bool(style.get("assert_text_containment", False)):
+        for container, value in required_info_texts:
+            _assert_text_inside(container, [value], label="eligibility exact-reason annotation")
+        _assert_axes_inside_figure(fig, label="eligibility")
+        _assert_text_inside(fig, [fig._suptitle], label="eligibility figure title")
     fig.savefig(output_path, metadata={"Software": "JointBuildGS fixed-view renderer"})
     plt.close(fig)
     return records

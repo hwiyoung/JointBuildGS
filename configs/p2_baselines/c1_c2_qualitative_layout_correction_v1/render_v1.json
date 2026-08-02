@@ -1,0 +1,82 @@
+{
+  "schema": "jointbuildgs.c1_c2_qualitative_layout_correction_config.v1",
+  "task_id": "P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-v1",
+  "handoff_id": "P2-W2C-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-v1",
+  "run_id": "P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-RUN-v1",
+  "project_image_id": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+  "predecessor": {
+    "closed_commit": "57205adf16def5382322ee57136b1cd66e9d07bc",
+    "closed_receipt_path": "artifacts/manifests/handoffs/P2-W2C-C1-C2-QUALITATIVE-EVALUATOR-BACKFILL-v1/300-closed.json",
+    "closed_receipt_sha256": "44d098fa950aef9cfaeafc2470df57dad63d7e815c0e6bed8ab5797a3ad9745d",
+    "accepted_artifact_record_count": 25,
+    "accepted_artifact_total_bytes": 30432763,
+    "accepted_record_identity_sha256": "903b0f744c982f83106099ba280ca98d5fb362cc77867f301a31183a30bb804c"
+  },
+  "execution": {
+    "network": "none",
+    "cpus": 1,
+    "memory_bytes": 2000000000,
+    "pids_limit": 256,
+    "wall_clock_seconds_hard": 600,
+    "new_output_bytes_hard": 100000000
+  },
+  "result": {
+    "external_relative_namespace": "phase-payloads/p2-baselines/c1_c2_qualitative_layout_correction_v1/P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-v1",
+    "external_uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_qualitative_layout_correction_v1/P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-v1/",
+    "figure_filename": "eligibility_199_to_72_fixed_cells_layout_corrected_v1.png"
+  },
+  "inputs": {
+    "examples_git_path": "docs/research/preregistration/gate_s0/uas_eligibility_explainer_v1/uas_eligibility_examples_v1.csv",
+    "bbox_ledger_git_path": "docs/research/preregistration/gate_s0/uas_reference_coverage_r1_v1/eligibility_candidate_v1.csv",
+    "compact_reference_cells": {
+      "artifact_relative_path": "phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/reference/reference_candidate_cells_v1.csv",
+      "bytes": 3785261,
+      "sha256": "bf87736227ea3c28bc8f966f36e2498f786d2de420a732fa0bfebbb73664275a",
+      "expected_rows": 20520,
+      "read_contract": "ONE_PROCESS_AND_DIGEST_STREAM_NO_HASH_ONLY_PASS"
+    }
+  },
+  "example_labels": ["P1", "P2", "P3", "F1", "F2", "F3", "F4"],
+  "expected_examples": {
+    "P1": ["DEBY_LOD2_4959324", true, 5, 228, 97, 87, "PASS_ALL_INPUT_SUPPORT_RULES"],
+    "P2": ["DEBY_LOD2_4959793", true, 97, 241, 282, 193, "PASS_ALL_INPUT_SUPPORT_RULES"],
+    "P3": ["DEBY_LOD2_4959460", true, 3543, 399, 8842, 6740, "PASS_ALL_INPUT_SUPPORT_RULES"],
+    "F1": ["DEBY_LOD2_4907184", false, 3, 186, 521, 451, "INSUFFICIENT_INDEPENDENT_UAS_REFERENCE_SUPPORT"],
+    "F2": ["DEBY_LOD2_4907034", false, 0, 61, 0, 574, "INSUFFICIENT_INDEPENDENT_UAS_REFERENCE_SUPPORT;INSUFFICIENT_MVS_SUPPORT"],
+    "F3": ["DEBY_LOD2_4908166", false, 0, 85, 40, 3, "INSUFFICIENT_INDEPENDENT_UAS_REFERENCE_SUPPORT;INSUFFICIENT_C4_SUPPORT"],
+    "F4": ["DEBY_LOD2_4908164", false, 0, 63, 0, 0, "INSUFFICIENT_INDEPENDENT_UAS_REFERENCE_SUPPORT;INSUFFICIENT_MVS_SUPPORT;INSUFFICIENT_C4_SUPPORT"]
+  },
+  "style": {
+    "dpi": 140,
+    "eligibility_figure_inches": [18.0, 10.0],
+    "viewport_margin_ratio": 0.08,
+    "viewport_minimum_margin_m": 2.0,
+    "eligibility_point_size": 5.0,
+    "line_width": 0.8,
+    "colormap": "viridis",
+    "assert_text_containment": true,
+    "eligibility_layout": {
+      "left": 0.045,
+      "right": 0.985,
+      "bottom": 0.055,
+      "top": 0.90,
+      "wspace": 0.24,
+      "hspace": 0.28
+    }
+  },
+  "scope": {
+    "eligibility_recomputation_count": 0,
+    "new_metric_calculation_count": 0,
+    "scientific_computation_count": 0,
+    "roofer_reconstruction_gs_invocations": 0,
+    "validation_payload_accesses": 0,
+    "held_out_payload_accesses": 0,
+    "r1_raw_images_zip_opf_zip_reads_or_hashes": 0,
+    "whole_r3_namespace_reads_or_hashes": 0,
+    "accepted_source_full_reads": 0,
+    "accepted_source_full_file_hash_passes": 0,
+    "runtime_compact_processing_reads_and_digests": 1,
+    "successor_200_300_source_rehashes": 0
+  },
+  "scientific_verdict": null
+}
