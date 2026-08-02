@@ -1,0 +1,168 @@
+{
+  "schema": "jointbuildgs.c1_c2_g2_c3_first_wave_recovery_r4_manifest.v1",
+  "task_id": "P2-C1-C2-G2-C3-FIRST-WAVE-RECOVERY-R4-v1",
+  "handoff_id": "P2-W2C-C1-C2-G2-C3-FIRST-WAVE-RECOVERY-R4-v1",
+  "created_at": "2026-08-03T02:36:36+09:00",
+  "technical_state": "BLOCKED_PROTECTED_SOURCE_AFTER_TRAINING_COMPLETED",
+  "scientific_verdict": null,
+  "commits": {
+    "offered": "07f59e023aaea603788d4f5204777d3429dbcb17",
+    "source": "b519633b4cce76088fa4ea7530ecd85470c01ba4",
+    "accepted": "1eefefa3a199ae86411b8c4074ca6c93df37f871"
+  },
+  "external_namespace": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_g2_c3_first_wave_recovery_r4_v1/P2-C1-C2-G2-C3-FIRST-WAVE-RECOVERY-R4-v1/",
+  "external_records": [
+    {
+      "path": "control/source_regression_preflights_v1.json",
+      "bytes": 1379,
+      "sha256": "44c53b622644de022f6bd98bbd6eac49b517f2e86fd01b5b609b9b44208307fc",
+      "role": "ZERO_SCIENTIFIC_SOURCE_PREFLIGHT"
+    },
+    {
+      "path": "c1_c2/development_diagnostics_v1.jsonl",
+      "bytes": 172023,
+      "sha256": "88ba95b5138d2f6d58ca380bf8551480df9f034fc90140f5d720ba9704b5c42e",
+      "role": "C1_C2_EXACT_DEVELOPMENT_RESULT"
+    },
+    {
+      "path": "c1_c2/evaluation_execution_receipt_v1.json",
+      "bytes": 2365,
+      "sha256": "c47792e5a29f3599960d8fad775dce4d0fab1d607b31b3a06d6662787ef9bd9f",
+      "role": "C1_C2_EXECUTION_RECEIPT"
+    },
+    {
+      "path": "c3/prep/runtime_assets/bundle/asset_receipt.json",
+      "bytes": 3778,
+      "sha256": "6f3b30edff30659635d48650864272812a94119515bb0a3b29068a43939f961f",
+      "role": "OFFLINE_SEMANTIC_RUNTIME_ASSET_RECEIPT"
+    },
+    {
+      "path": "c3/prep/semantic_937_colmap_undistorted_r2/output/manifest.json",
+      "bytes": 1391664,
+      "sha256": "3e8b8deb373c5cfb4da4818df860c8dffe24f990485b6143863ad42dadbda7ca",
+      "role": "SEMANTIC_937_OUTPUT_MANIFEST"
+    },
+    {
+      "path": "control/semantic_execution_receipt_v1.json",
+      "bytes": 3597,
+      "sha256": "241361c4b44d46d9fdfa9cb0f530713ae7b6698c2c3956795ea150a0f5553ea1",
+      "role": "SEMANTIC_EXECUTION_RECEIPT"
+    },
+    {
+      "path": "c3/train/seed0/audit/seed_initialization.json",
+      "bytes": 426,
+      "sha256": "7566bcd42ba3c28d08e1726f2c0bcc920594d2e478ecfd59282e7b75c9e9fed2",
+      "role": "C3_INITIALIZATION_AUDIT"
+    },
+    {
+      "path": "c3/train/seed0/effective_config.json",
+      "bytes": 117139,
+      "sha256": "d314532118631bad61ec6239e6e98cfaf06000b031631aaec1ee33c231a88120",
+      "role": "C3_EFFECTIVE_CONFIG"
+    },
+    {
+      "path": "c3/train/seed0/view_roles.json",
+      "bytes": 107956,
+      "sha256": "7406f655bfd8354bd636c526337112af2462718f8b61af59b8b5be4d810f3452",
+      "role": "C3_EXACT_VIEW_ROLE_AUDIT"
+    },
+    {
+      "path": "c3/train/seed0/ckpt/step_005000.pt",
+      "bytes": 80661360,
+      "sha256": "507084b5af9a5e9b651369b1f8dde90d8ccade280f341bfe5eaab72bce5495a9",
+      "role": "C3_REQUIRED_5K_SNAPSHOT"
+    },
+    {
+      "path": "c3/train/seed0/ckpt/step_010000.pt",
+      "bytes": 70238448,
+      "sha256": "327b360d4fc962a7186e147baa8c37bdaced940874d38db81815e9eff89e0cfc",
+      "role": "C3_REQUIRED_10K_SNAPSHOT"
+    },
+    {
+      "path": "c3/train/seed0/ckpt/step_020000.pt",
+      "bytes": 102399792,
+      "sha256": "dfbc209141c1498babbfbe2fe7a47be64e39ac611cc41d0918aeb9ef2384991d",
+      "role": "C3_REQUIRED_20K_SNAPSHOT"
+    },
+    {
+      "path": "c3/train/seed0/ckpt/final.pt",
+      "bytes": 105664220,
+      "sha256": "bec692b0040b3b2f9226389cfd6d380f0da148b5db6f4912fe68e9d72dbb43f9",
+      "role": "C3_EXACT_30K_FINAL_CHECKPOINT"
+    },
+    {
+      "path": "c3/train/seed0/technical_receipt_v1.json",
+      "bytes": 4928,
+      "sha256": "6658cec5555fa09e118bdc5ae11075419f877b9b2b9a6bb886c2f409187afe09",
+      "role": "C3_TRAINING_TECHNICAL_RECEIPT"
+    },
+    {
+      "path": "control/c3_development_evaluation_source_gate_v1.json",
+      "bytes": 4075,
+      "sha256": "6edf3c31acf9a7ea9fb140d2c4d0c8008abc9cfdd1072c15ba829df3f9c082ba",
+      "role": "C3_DEVELOPMENT_EVALUATION_PROTECTED_SOURCE_GATE"
+    }
+  ],
+  "r3_read_only_reuse": [
+    {
+      "path": "c1_c2/g2_receipts_v1.json",
+      "bytes": null,
+      "sha256": "35cf75466e9e52d713b6888cdc538b9817a81cf1af69284d8a695272a21006fe",
+      "role": "SIX_UNIT_G2_RECEIPT"
+    },
+    {
+      "path": "c3/prep/selected_dense_seed.ply",
+      "bytes": 2664712,
+      "sha256": "fe754af74c9795b2ea5232a20cf46e373f70666f3e5094899489e78d1f762547",
+      "point_count": 222044,
+      "role": "CURRENT_MVS_SEED"
+    },
+    {
+      "path": "c3/prep/semantic_937_colmap_undistorted_r2/membership.json",
+      "bytes": null,
+      "sha256": "98054b7c3185bc65cf87b59443bad63a9606fb080cddfc4a25e90dc38c5e9adc",
+      "member_count": 937,
+      "role": "EXACT_SEMANTIC_MEMBERSHIP"
+    }
+  ],
+  "counts": {
+    "target_roster": 199,
+    "independent_quantitative": 72,
+    "development": 51,
+    "validation_protected": 11,
+    "heldout_protected": 10,
+    "outside_independent_unscored": 127,
+    "c1_c2_rows": 102,
+    "semantic_inferences": 937,
+    "initial_gaussians": 593852,
+    "completed_updates": 30000,
+    "final_primitives": 406337,
+    "stage2_groups": 812,
+    "grouped_primitives": 319698,
+    "c3_development_stage3_rows": 0
+  },
+  "invocations": {
+    "real_c1_c2_evaluator": 1,
+    "semantic_inference_per_member": 1,
+    "c3_training": 1,
+    "c3_stage3_evaluation": 0,
+    "val3dity": 0,
+    "reconstruction": 0,
+    "roofer": 0,
+    "mvs_adapter": 0
+  },
+  "protected_reads": {
+    "validation11": 0,
+    "heldout10": 0,
+    "c4": 0,
+    "c5": 0,
+    "fusion_w1": 0,
+    "r_ext": 0,
+    "external_priors": 0
+  },
+  "c3_evaluation_blocker": {
+    "status": "BLOCKED_PROTECTED_SOURCE",
+    "source_gate_path": "control/c3_development_evaluation_source_gate_v1.json",
+    "reason": "no adopted real C3 Stage-3 adapter, development-building association, Roofer configuration, G3/G4 thresholds, PASS_usable criterion, or qualitative protocol exists; the available common interface is synthetic-smoke-only with no performance authority"
+  }
+}

@@ -1,0 +1,24 @@
+condition,stage,denominator,completed,true_count,false_count,null_count,status,reason
+C1_L_upper,development_rows,51,51,,,0,COMPLETED,exact development cohort
+C1_L_upper,G0_INPUT_SUFFICIENT,51,51,51,0,0,COMPLETED,technical development result
+C1_L_upper,G1_ROOFER_COMPLETED_EXIT_0,51,51,51,0,0,COMPLETED,reused closed R3 outputs
+C1_L_upper,G2_GEOMETRY_TOPOLOGY_VALID,51,0,0,0,51,UNAVAILABLE_SELF_REFERENCE,C1 is the self-reference upper baseline
+C1_L_upper,G3_ROOF_STRUCTURE_ACCEPTABLE,51,0,0,0,51,UNAVAILABLE_CRITERION_NOT_FROZEN,no adopted threshold
+C1_L_upper,G4_GEOMETRIC_ACCURACY_ACCEPTABLE,51,0,0,0,51,UNAVAILABLE_CRITERION_NOT_FROZEN,no adopted threshold
+C1_L_upper,PASS_usable,51,0,0,0,51,UNAVAILABLE_CRITERION_NOT_FROZEN,G3 and G4 unavailable
+C2_MVS,development_rows,51,51,,,0,COMPLETED,exact development cohort
+C2_MVS,G0_INPUT_SUFFICIENT,51,51,50,1,0,COMPLETED,one unavailable C2 building
+C2_MVS,G1_ROOFER_COMPLETED_EXIT_0,51,51,50,1,0,COMPLETED,reused closed R3 outputs
+C2_MVS,G2_GEOMETRY_TOPOLOGY_VALID,51,51,50,0,1,COMPLETED,one unavailable C2 building
+C2_MVS,G3_ROOF_STRUCTURE_ACCEPTABLE,51,0,0,0,51,UNAVAILABLE_CRITERION_NOT_FROZEN,no adopted threshold
+C2_MVS,G4_GEOMETRIC_ACCURACY_ACCEPTABLE,51,0,0,0,51,UNAVAILABLE_CRITERION_NOT_FROZEN,no adopted threshold
+C2_MVS,PASS_usable,51,0,0,0,51,UNAVAILABLE_CRITERION_NOT_FROZEN,G3 and G4 unavailable
+C3_GS_image,semantic_inference,937,937,937,0,0,COMPLETED,offline GPU native-resolution masks
+C3_GS_image,initialization_points,593852,593852,,,0,COMPLETED,371808 SfM plus 222044 MVS seed
+C3_GS_image,optimizer_updates,30000,30000,,,0,COMPLETED,seed0 frozen config
+C3_GS_image,final_primitives,406337,406337,,,0,COMPLETED,final.pt it=30000
+C3_GS_image,stage2_groups,812,812,,,0,COMPLETED,319698 grouped primitives
+C3_GS_image,S_extracted,51,0,0,0,51,BLOCKED_PROTECTED_SOURCE,final adapter not frozen
+C3_GS_image,P_Roofer,51,0,0,0,51,BLOCKED_PROTECTED_SOURCE,real C3 Roofer path not authorized
+C3_GS_image,H_LoD2,51,0,0,0,51,BLOCKED_PROTECTED_SOURCE,upstream Stage3 source absent
+C3_GS_image,G0_G4_PASS_usable,51,0,0,0,51,BLOCKED_PROTECTED_SOURCE,association and criteria not frozen
