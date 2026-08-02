@@ -1,0 +1,135 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P2-W2C-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R2-v1",
+  "task_id": "P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R2-v1",
+  "created_at": "2026-08-02T19:00:54+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "closed",
+  "previous_receipt": {
+    "path": "artifacts/manifests/handoffs/P2-W2C-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R2-v1/200-blocked.json",
+    "sha256": "8ebf53813281d4b79ff25758210c4e770d959eb31f5b43eac6b4e1ac91c510ef"
+  },
+  "transport": {
+    "mode": "serialized_main",
+    "branch": "main",
+    "target_branch": "main",
+    "exclusive_writer_ack": true
+  },
+  "commits": {
+    "base_main": "f5a50a73e678ea6bf5d89a2ab4dcee2fa2f95315",
+    "offered_head": "80b171ee67e18c891d114e5ff72e5ce5834ea325",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P2-W2C-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R2-v1",
+      "artifacts/manifests/p2_baselines/c1_c2_qualitative_layout_correction_r2_v1",
+      "docs/experiments/p2/c1_c2_qualitative_layout_correction_r2_v1",
+      "docs/handoffs/returns/P2_C2W_C1_C2_QUALITATIVE_LAYOUT_CORRECTION_R2_RETURN_v1.md"
+    ],
+    "protected_paths": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      "configs/p2_baselines/c1_c2_qualitative_layout_correction_v1",
+      "scripts/p2_baselines/c1_c2_qualitative_layout_correction_v1",
+      "src/visualization/fixed_view_qualitative.py",
+      "tests/p2_baselines/c1_c2_qualitative_layout_correction_v1",
+      "docs/handoffs/P2_W2C_C1_C2_QUALITATIVE_LAYOUT_CORRECTION_R2_v1.md",
+      "docs/handoffs/P2_W2C_C1_C2_QUALITATIVE_LAYOUT_CORRECTION_v1.md",
+      "artifacts/manifests/handoffs/P2-W2C-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-v1",
+      "artifacts/manifests/handoffs/P2-W2C-C1-C2-QUALITATIVE-EVALUATOR-BACKFILL-v1",
+      "artifacts/manifests/p2_baselines/c1_c2_qualitative_evaluator_backfill_v1",
+      "docs/experiments/p2/c1_c2_qualitative_evaluator_backfill_v1",
+      "docs/handoffs/P2_W2C_C1_C2_QUALITATIVE_EVALUATOR_BACKFILL_v1.md",
+      "docs/handoffs/returns/P2_C2W_C1_C2_QUALITATIVE_EVALUATOR_BACKFILL_RETURN_v1.md",
+      "docs/research",
+      "docs/evidence",
+      "phases/p0-audit",
+      "phases/p2-gsjso"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "artifact_verified",
+    "verifier_role": "experiment_host",
+    "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "commands": [
+      "validate the exact-origin 200-blocked Git chain and byte-for-byte inherited accepted attestation without --artifact-root",
+      "validate direct-child 300-closed as the only changed path without --artifact-root and return writer ownership to Work Host"
+    ],
+    "tests": [
+      {
+        "name": "exact-origin 200-blocked Git and inherited artifact attestation validator",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "direct-child 300-closed writer-return validator",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "source or artifact full-read and hash passes during 300 closure",
+        "passed": 0,
+        "failed": 0
+      }
+    ]
+  },
+  "artifacts": {
+    "required_for_task": true,
+    "availability": {
+      "work_host": "manifest_only",
+      "experiment_host": "verified_local"
+    },
+    "records": [
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/freeze/development_score_association_with_pre_roofer_status_v1.jsonl", "bytes": 40739, "sha256": "6d899874aad543f382b053e32149a183b4885fe5e869d738fa4762e0ab781cd9", "verification_method": "closed_attestation_reuse", "verified_by": "experiment_host", "verified_at": "2026-08-02T18:53:29+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/freeze/development_score_cells_v1.jsonl", "bytes": 10868613, "sha256": "de7c02e2a286fa05c34301aae9de625637cf6fb8c07b5f2969141fd20b0d5a59", "verification_method": "closed_attestation_reuse", "verified_by": "experiment_host", "verified_at": "2026-08-02T18:53:29+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/freeze/execution_units_v1.jsonl", "bytes": 5236, "sha256": "52f3b44b981d60ab7fec3afdc818e7b4b39e32f35cf9efebb45475e92b58c9d5", "verification_method": "closed_attestation_reuse", "verified_by": "experiment_host", "verified_at": "2026-08-02T18:53:29+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operations/C1_L_upper/C1_L_upper_COMP_84a837b5d7c79565f0e8/work/input.las", "bytes": 7606503, "sha256": "eabfc085caa158ae74916a4f66be5072108374a57b1be1668bd7e3a1c9375602", "verification_method": "closed_attestation_reuse", "verified_by": "experiment_host", "verified_at": "2026-08-02T18:53:29+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operations/C1_L_upper/C1_L_upper_COMP_84a837b5d7c79565f0e8/work/r_derived.geojson", "bytes": 916, "sha256": "027f9fb399e284233d56025f5a36e31f692be3a779f8eb6ee4ae1887ef297496", "verification_method": "closed_attestation_reuse", "verified_by": "experiment_host", "verified_at": "2026-08-02T18:53:29+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operations/C2_MVS/C2_MVS_COMP_15d5693161e719555349/work/input.las", "bytes": 133031, "sha256": "81451358b3dde0f358246c6a447a8a76f5fcdf7b85c7693308859be4fd0920ea", "verification_method": "closed_attestation_reuse", "verified_by": "experiment_host", "verified_at": "2026-08-02T18:53:29+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operations/C2_MVS/C2_MVS_COMP_15d5693161e719555349/work/r_derived.geojson", "bytes": 655, "sha256": "1868975119f823727768184bac0e3293151ae0564e3719c323c64135bbf819b5", "verification_method": "closed_attestation_reuse", "verified_by": "experiment_host", "verified_at": "2026-08-02T18:53:29+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operations/C2_MVS/C2_MVS_COMP_3b9ac290b64ed07a8b9b/work/input.las", "bytes": 6508847, "sha256": "ad35caf59e8a7dea512c1161cacded43475d181be4c2e906c198427a8b546a31", "verification_method": "closed_attestation_reuse", "verified_by": "experiment_host", "verified_at": "2026-08-02T18:53:29+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operations/C2_MVS/C2_MVS_COMP_3b9ac290b64ed07a8b9b/work/r_derived.geojson", "bytes": 885, "sha256": "d14135a06a3080ff73d053a00741f4ff6a6e1523489226f12baded81c74daec6", "verification_method": "closed_attestation_reuse", "verified_by": "experiment_host", "verified_at": "2026-08-02T18:53:29+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operations/C2_MVS/C2_MVS_COMP_727fcc5b8565a3fd387a/work/input.las", "bytes": 265733, "sha256": "d07284d3d95730e261fe4e40490e51f7a9b85e230bb34f2ef0cf843010ba20f6", "verification_method": "closed_attestation_reuse", "verified_by": "experiment_host", "verified_at": "2026-08-02T18:53:29+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operations/C2_MVS/C2_MVS_COMP_727fcc5b8565a3fd387a/work/r_derived.geojson", "bytes": 701, "sha256": "c6ede736f1bb61f8df0cad06f87c098cf07a26fb76d8e0e37366cb1eb3974aac", "verification_method": "closed_attestation_reuse", "verified_by": "experiment_host", "verified_at": "2026-08-02T18:53:29+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operations/C2_MVS/C2_MVS_COMP_987366f441a0ea7f704d/work/input.las", "bytes": 862229, "sha256": "653059d51c758d0872b547dde5e0558d003721a1f035e8157805572b160bf562", "verification_method": "closed_attestation_reuse", "verified_by": "experiment_host", "verified_at": "2026-08-02T18:53:29+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operations/C2_MVS/C2_MVS_COMP_987366f441a0ea7f704d/work/r_derived.geojson", "bytes": 793, "sha256": "ad739c4619c969a765d53093d6483895bbf764e9f29af81aa1f896ef301d4192", "verification_method": "closed_attestation_reuse", "verified_by": "experiment_host", "verified_at": "2026-08-02T18:53:29+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operations/C2_MVS/C2_MVS_COMP_a2e596f19e5dec9c1ef3/work/input.las", "bytes": 245537, "sha256": "6d0c0256ef233009cec8dbdabbcf1465ebb16e9ea1658a3c81b4122213cc244d", "verification_method": "closed_attestation_reuse", "verified_by": "experiment_host", "verified_at": "2026-08-02T18:53:29+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operations/C2_MVS/C2_MVS_COMP_a2e596f19e5dec9c1ef3/work/r_derived.geojson", "bytes": 678, "sha256": "65e1e2f21e484bc14bea23fb8d884512e68e63baf650a2ebaee76ca32d4596c4", "verification_method": "closed_attestation_reuse", "verified_by": "experiment_host", "verified_at": "2026-08-02T18:53:29+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operations/C2_MVS/C2_MVS_COMP_f1d8cfc93f4be10ae807/work/input.las", "bytes": 84173, "sha256": "cda597052f8fe68c17a93073b009897d0b8ff8b7c148641b583677933976e76d", "verification_method": "closed_attestation_reuse", "verified_by": "experiment_host", "verified_at": "2026-08-02T18:53:29+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operations/C2_MVS/C2_MVS_COMP_f1d8cfc93f4be10ae807/work/r_derived.geojson", "bytes": 655, "sha256": "fb8ad6bb3fc77d7f6883247d5db92ab7cee5b865ad558b5adad3d164eccc9f57", "verification_method": "closed_attestation_reuse", "verified_by": "experiment_host", "verified_at": "2026-08-02T18:53:29+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operations/C1_L_upper/C1_L_upper_COMP_84a837b5d7c79565f0e8/work/out/690792_5335864.city.jsonl", "bytes": 3627, "sha256": "fb9c21208dc319a97ca9bddca26806ed15d60733408410211319f42ded1721a9", "verification_method": "closed_attestation_reuse", "verified_by": "experiment_host", "verified_at": "2026-08-02T18:53:29+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operations/C2_MVS/C2_MVS_COMP_15d5693161e719555349/work/out/690847_5336152.city.jsonl", "bytes": 2759, "sha256": "376c8328d173b6e71fee485bdc1046938e5d1a75499ce9bb91d2b19b21ca1dbf", "verification_method": "closed_attestation_reuse", "verified_by": "experiment_host", "verified_at": "2026-08-02T18:53:29+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operations/C2_MVS/C2_MVS_COMP_3b9ac290b64ed07a8b9b/work/out/690792_5335904.city.jsonl", "bytes": 3514, "sha256": "508903780d18dab40ea4f34753c766c1352f3886d87832c6d5097aedd8362fc8", "verification_method": "closed_attestation_reuse", "verified_by": "experiment_host", "verified_at": "2026-08-02T18:53:29+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operations/C2_MVS/C2_MVS_COMP_727fcc5b8565a3fd387a/work/out/691038_5336093.city.jsonl", "bytes": 2894, "sha256": "68a4739d0e366a2a740c1f594dd41330854812361bac3395e08e7f60610062b9", "verification_method": "closed_attestation_reuse", "verified_by": "experiment_host", "verified_at": "2026-08-02T18:53:29+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operations/C2_MVS/C2_MVS_COMP_987366f441a0ea7f704d/work/out/690815_5335864.city.jsonl", "bytes": 3215, "sha256": "b2871a48607a82397b0da0b35ff520287095c97e4999f99d0a252682578c9115", "verification_method": "closed_attestation_reuse", "verified_by": "experiment_host", "verified_at": "2026-08-02T18:53:29+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operations/C2_MVS/C2_MVS_COMP_a2e596f19e5dec9c1ef3/work/out/691121_5336157.city.jsonl", "bytes": 2826, "sha256": "9509e2d6d71c905223fb755f55e8fdfe23f98ad850476620f76291ca8d589faf", "verification_method": "closed_attestation_reuse", "verified_by": "experiment_host", "verified_at": "2026-08-02T18:53:29+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operations/C2_MVS/C2_MVS_COMP_f1d8cfc93f4be10ae807/work/out/690831_5336120.city.jsonl", "bytes": 2743, "sha256": "5b089bfa3a457b53e6b07c1d9590f57162157957a4eb901c9cf5437bafc21903", "verification_method": "closed_attestation_reuse", "verified_by": "experiment_host", "verified_at": "2026-08-02T18:53:29+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/reference/reference_candidate_cells_v1.csv", "bytes": 3785261, "sha256": "bf87736227ea3c28bc8f966f36e2498f786d2de420a732fa0bfebbb73664275a", "verification_method": "closed_attestation_reuse", "verified_by": "experiment_host", "verified_at": "2026-08-02T18:53:29+09:00"}
+    ],
+    "attestation_reuse": {
+      "source_handoff_id": "P2-W2C-C1-C2-QUALITATIVE-EVALUATOR-BACKFILL-v1",
+      "source_task_id": "P2-C1-C2-QUALITATIVE-EVALUATOR-BACKFILL-v1",
+      "source_receipt_path": "artifacts/manifests/handoffs/P2-W2C-C1-C2-QUALITATIVE-EVALUATOR-BACKFILL-v1/300-closed.json",
+      "source_receipt_commit": "57205adf16def5382322ee57136b1cd66e9d07bc",
+      "source_receipt_sha256": "7fc0770501eb3447733b481fe7ccf195064cdb3cb35934744a8db2fca6d0ec64",
+      "record_identity_sha256": "903b0f744c982f83106099ba280ca98d5fb362cc77867f301a31183a30bb804c"
+    }
+  },
+  "scientific": {
+    "technical_state": "complete",
+    "scientific_verdict": null,
+    "promotion_status": "human_review_required"
+  },
+  "receiver_ack": {
+    "role": "experiment_host",
+    "accepted_at": "2026-08-02T19:00:54+09:00",
+    "status": "closed",
+    "issue": "R2 is technically closed after the sole Bash launcher-body execution stopped at the protected authority-parser and activated-packet field mismatch. No artifact payload, compact CSV, output namespace, render, promotion, PNG, validation split, held-out split, or C3-C5 execution was accessed or produced. The exact accepted attestation is inherited without rehash, writer ownership returns to Work Host, and scientific_verdict remains null."
+  }
+}
