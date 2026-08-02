@@ -10,6 +10,9 @@
 - user_approval: `NOT_YET_ACTIVATED`
 - packet_version: `v1`
 - source_commit: `PENDING_REVIEWED_IMPLEMENTATION_COMMIT`
+- project_image_id: `sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774`
+- run_id: `P2-C1-C2-FEASIBILITY-PILOT-FINALIZE-RECOVERY-R4-RUN-v1`
+- execution_mode: `FINALIZE_ONLY_REUSE`
 - target_branch: `main`
 - research_charter_version: `C1C5_CANON_v2`
 - decision_log_through: `DEC-P1-013`
@@ -38,6 +41,8 @@ committed metrics/promotion contract after the header reader is corrected.
 ## Exact sealed source binding
 
 - R3 reviewed source: `8346a1f40763a17b02f40e47dbe74c8102f0a76e`
+- R3 activation: `59c6b7f42b9444bf1bf92fe5e8c88d60c56d7513`
+- R3 000-offered: `f787a4220c9c77529eca519784e585f1e51b8b6f`
 - R3 accepted commit: `7b96d0211777da26d2ff4bc79d1a1be407958433`
 - R3 Return commit: `c0fdea30d5509ce1b36b7567cc37f8c2d315049d`
 - R3 200-blocked: `bcbc51a6d6f9652b145fcf597326de43b34f1c4d`
@@ -45,7 +50,7 @@ committed metrics/promotion contract after the header reader is corrected.
 - R3 Return Git blob: `38d01b017c220f9ef5e23fd580f12ec06b2d1009`
 - R3 300 Git blob: `b9f30ce49c452298193e34f7f89aa4fe290788ed`
 - R3 300 SHA-256:
-  `bd8f82b31ff996c702f1a99946048197635dbd33ab8ad6cc00fee169a03ce73a`
+  `3ee8a87f0f3de322d5607121dfc39968f2a4c6496c73551e1c2b4ae720f5c9d0`
 - R3 operation_id:
   `5c34f533655997f54e0321c7d3e72aa42054cbf6bf0a02abce1e7ef5669feea3`
 - R3 external source namespace:
@@ -63,6 +68,16 @@ derived files. The R4 offer/acceptance must instead carry an exact allowlist of 
 required R3 derived files, and Experiment Host must independently verify each listed
 file with `sha256_rehash` before and after the R4 event push. Files outside that
 allowlist remain unopened and unhashed.
+
+The reviewed exact derived-file manifest contains 22 files and 12,920,322 bytes,
+with full manifest-record identity
+`a5193175b466585417d49fb20e2ab8e3880feb19f6689c31ea9195c2fd0dcf34`.
+The corresponding canonical accepted artifact identity over only sorted
+`{uri,bytes,sha256}` fields is
+`46e2da58e177d0aaaba453e316cc8a5d64a24d67b2edc1504299fe22d9ea261f`.
+It contains the four compact control/checkpoint records, four freeze ledgers, seven
+terminal operation ledgers and seven native CityJSONSeq outputs. It contains no LAS
+and no original scientific source.
 
 ## Frozen scientific contract
 
@@ -99,12 +114,13 @@ allowlist remain unopened and unhashed.
    read-only R3 mount; write metrics/finalized ledgers only to a new R4 output mount.
    Unit and integration tests must prove zero writes under the source root.
 5. Resolve the exact 102 associations, seven execution units, seven terminal operation
-   ledgers, seven operation LAS inputs, seven native CityJSONSeq outputs and only the
-   required frozen score/component ledgers from R3. Process and digest each required
-   derived record in one stream where applicable; do not comprehensively hash the
-   521-file namespace.
-6. Do not mount or open the five original R3 scientific sources. Do not mount or hash
-   R1, `Images.zip`, `OPF.zip`, raw UAS LAZ or raw `dim_dense`.
+   ledgers, seven native CityJSONSeq outputs and only the required frozen
+   score/component/control ledgers from R3. Process and digest each of the exact 22
+   derived records in one stream; do not comprehensively hash the 521-file namespace.
+   Derive each Roofer input point count from its already-bound LAS 1.2 point-format-3
+   byte record `(bytes - 227) / 34`; do not reopen or hash an operation LAS.
+6. Do not mount or open the five original R3 scientific sources or any operation LAS.
+   Do not mount or hash R1, `Images.zip`, `OPF.zip`, raw UAS LAZ or raw `dim_dense`.
 7. Do not invoke Roofer, condition-source preparation, synthetic preparation/smoke,
    scientific preparation, `next-attempt`, `record-attempt`, or the R3 wrapper. R4
    Roofer attempts and source-reconstruction operations must both be exactly zero.
@@ -157,7 +173,9 @@ scientific sources.
 2. Three independent exact-source reviews must pass before a separate activation
    commit and 000-offered event.
 3. Experiment Host inspects remote source/packet/000 and local sealed R3 namespace
-   before a fast-forward-only pull and reuse-bound 100-accepted.
+   before a fast-forward-only pull and a `sha256_rehash`-bound exact-manifest
+   100-accepted. The exact 22 records are checked once before and once after the
+   acceptance push; the execution wrapper does not repeat that acceptance hash.
 4. The finalize-only wrapper runs exactly once with R3 mounted read-only and R4 mounted
    read-write. No Roofer image or original scientific source is mounted.
 5. On complete 102-row finalization, independently review and promote compact R4

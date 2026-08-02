@@ -1,0 +1,86 @@
+{
+  "schema": "jointbuildgs.p2_c1_c2_finalize_recovery_config.v1",
+  "task_id": "P2-C1-C2-FEASIBILITY-PILOT-FINALIZE-RECOVERY-R4-v1",
+  "handoff_id": "P2-W2C-C1-C2-FEASIBILITY-PILOT-FINALIZE-RECOVERY-R4-v1",
+  "run_id": "P2-C1-C2-FEASIBILITY-PILOT-FINALIZE-RECOVERY-R4-RUN-v1",
+  "execution_mode": "FINALIZE_ONLY_REUSE",
+  "project_image_id": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+  "execution_authority": "REQUIRES_APPROVED_ACTIVATION_PACKET_AND_VALID_100_ACCEPTED_RECEIPT",
+  "source_r3": {
+    "task_id": "P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1",
+    "handoff_id": "P2-W2C-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1",
+    "source_commit": "8346a1f40763a17b02f40e47dbe74c8102f0a76e",
+    "activation_commit": "59c6b7f42b9444bf1bf92fe5e8c88d60c56d7513",
+    "offered_commit": "f787a4220c9c77529eca519784e585f1e51b8b6f",
+    "accepted_commit": "7b96d0211777da26d2ff4bc79d1a1be407958433",
+    "return_commit": "c0fdea30d5509ce1b36b7567cc37f8c2d315049d",
+    "blocked_commit": "bcbc51a6d6f9652b145fcf597326de43b34f1c4d",
+    "closed_commit": "551e633fb9b3f29418a5ba1620c10451b55ddcd6",
+    "run_id": "P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-RUN-v1",
+    "operation_id": "5c34f533655997f54e0321c7d3e72aa42054cbf6bf0a02abce1e7ef5669feea3",
+    "config_git_blob": "ca64a001e154ce520c1d547bc74f0316161a4be5",
+    "return_git_blob": "38d01b017c220f9ef5e23fd580f12ec06b2d1009",
+    "closed_receipt_git_blob": "b9f30ce49c452298193e34f7f89aa4fe290788ed",
+    "closed_receipt_sha256": "3ee8a87f0f3de322d5607121dfc39968f2a4c6496c73551e1c2b4ae720f5c9d0",
+    "closed_receipt_path": "artifacts/manifests/handoffs/P2-W2C-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/300-closed.json",
+    "external_namespace": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/",
+    "relative_namespace": "phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1",
+    "prepared_path": "control/scientific_prepared_v1.json",
+    "synthetic_smoke_path": "control/synthetic_smoke_pass_v1.json",
+    "preselected_cases_path": "control/preselected_cases_v1.json",
+    "finalized_path": "control/finalized_v1.json",
+    "expected_result_rows": 102,
+    "expected_buildings": 51,
+    "expected_groups": 5,
+    "expected_unique_execution_units": 7,
+    "expected_duplicate_operations_prevented": 94,
+    "expected_mapped_rows": 101,
+    "expected_unassociated": [
+      {"building_id": "DEBY_LOD2_4907183", "method_id": "C2_MVS", "reference_cell_count": 14}
+    ]
+  },
+  "source_manifest_contract": {
+    "git_path": "configs/p2_baselines/c1_c2_feasibility_pilot_finalize_recovery_r4_v1/r3_finalize_source_manifest_v1.json",
+    "record_count": 22,
+    "total_bytes": 12920322,
+    "manifest_records_sha256": "a5193175b466585417d49fb20e2ab8e3880feb19f6689c31ea9195c2fd0dcf34",
+    "accepted_record_identity_sha256": "46e2da58e177d0aaaba453e316cc8a5d64a24d67b2edc1504299fe22d9ea261f",
+    "verification_method": "EXPERIMENT_HOST_SHA256_REHASH_PRE_AND_POST_100_PUSH"
+  },
+  "source_manifest_allowlist": {
+    "exact_paths": [
+      "control/scientific_prepared_v1.json",
+      "control/synthetic_smoke_pass_v1.json",
+      "control/preselected_cases_v1.json",
+      "checkpoints/120-condition_components_and_r_derived_frozen.json",
+      "freeze/condition_components_v1.jsonl",
+      "freeze/development_score_association_with_pre_roofer_status_v1.jsonl",
+      "freeze/development_score_cells_v1.jsonl",
+      "freeze/execution_units_v1.jsonl"
+    ],
+    "path_patterns": [
+      "^operation_records/[0-9a-f]{24}/final_v1\\.json$",
+      "^operations/(C1_L_upper|C2_MVS)/[A-Za-z0-9_]+/work/out/[A-Za-z0-9_./-]+\\.jsonl$"
+    ],
+    "expected_files_read": 22,
+    "maximum_files_read": 22,
+    "maximum_bytes_read": 13000000
+  },
+  "result": {
+    "conditions": ["C1_L_upper", "C2_MVS"],
+    "result_schema_path": "configs/p2_baselines/c1_c2_feasibility_pilot_v1/result_schema_v1.json",
+    "development_score_scope_path": "configs/p2_baselines/c1_c2_feasibility_pilot_v1/development_score_scope_v1.csv",
+    "development_roster_path": "configs/p2_baselines/c1_c2_feasibility_pilot_v1/development_roster_v1.csv",
+    "criterion_version": "C1C5_CANON_v2_PROVISIONAL_P2_FEASIBILITY",
+    "promotion_prefix": "docs/experiments/p2/c1_c2_feasibility_pilot_finalize_recovery_r4_v1",
+    "manifest_path": "artifacts/manifests/p2_baselines/c1_c2_feasibility_pilot_finalize_recovery_r4_v1/technical_result_manifest_v1.json",
+    "external_namespace": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_finalize_recovery_r4_v1/P2-C1-C2-FEASIBILITY-PILOT-FINALIZE-RECOVERY-R4-v1/"
+  },
+  "prohibited_interfaces": [
+    "prepare-scientific", "prepare-synthetic", "next-synthetic", "verify-synthetic",
+    "next-attempt", "record-attempt", "3dgi/roofer", "/pilot_inputs",
+    "Images.zip", "OPF.zip", "dim_dense.ply", "scene.mvs", "lod1-prisms",
+    "validation", "held_out", "Fusion", "R_ext"
+  ],
+  "scientific_verdict": null
+}
