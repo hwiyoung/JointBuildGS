@@ -94,6 +94,17 @@ authoritative for every other Git path.
    and zero-scientific preflight before `100-accepted`.
 3. Create/push/validate the exact reuse-based `100-accepted` without artifact root or
    payload hash, then run the executable committed wrapper once.
+
+   ```bash
+   bash scripts/p2_baselines/c1_c2_feasibility_pilot_v1/run_pilot_host.sh \
+     /media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts \
+     sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774 \
+     PENDING_EXACT_REVIEWED_COMMIT \
+     P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R2-RUN-v1
+   ```
+
+   Activation must replace the pending source token above with the exact reviewed
+   `source_commit`; the wrapper command is invalid while this packet remains DRAFT.
 4. Synthetic smoke must pass before scientific mounts. Process and digest each exact
    input only in its existing single stream.
 5. Produce exactly 51×2 rows, finalize and promote only compact R2 outputs.

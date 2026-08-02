@@ -385,10 +385,12 @@ class ContractTests(unittest.TestCase):
         self.assertNotIn("sha256sum", script)
         self.assertIn("--entrypoint /opt/conda/bin/python", script)
         self.assertIn("parse_machine_decision.awk", script)
+        self.assertIn("parse_execution_authority.awk", script)
+        self.assertGreaterEqual(script.count("GIT_CONFIG_KEY_0=safe.directory"), 3)
         self.assertIn('p["artifacts"]["attestation_reuse"]==c["accepted_attestation_reuse"]', script)
         self.assertIn("ambiguous synthetic machine decision channel", script)
         self.assertIn("ambiguous scientific machine decision channel", script)
-        self.assertIn("c1_c2_feasibility_pilot_recovery_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-v1", script)
+        self.assertIn("c1_c2_feasibility_pilot_recovery_r2_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R2-v1", script)
         self.assertNotIn('TASK_REL="phase-payloads/p2-baselines/c1_c2_feasibility_pilot_v1/P2-C1-C2-FEASIBILITY-PILOT-v1"', script)
         self.assertIn("050-c1_reference_frozen_pre_c5.json", script)
         self.assertNotIn("PATCH_SUMMARY", script)
@@ -401,6 +403,41 @@ class ContractTests(unittest.TestCase):
         task_mkdir = script.index('mkdir -p "${TASK_ROOT}"')
         self.assertLess(receipt, first_scientific_stat)
         self.assertLess(receipt, task_mkdir)
+        mode = subprocess.check_output(
+            [
+                "git", "-c", f"safe.directory={contract.REPO}", "-C", str(contract.REPO),
+                "ls-files", "-s", "--",
+                "scripts/p2_baselines/c1_c2_feasibility_pilot_v1/run_pilot_host.sh",
+            ],
+            text=True,
+        )
+        self.assertTrue(mode.startswith("100755 "), mode)
+
+    def test_packet_authority_parser_requires_both_exact_unique_lines(self) -> None:
+        parser = contract.REPO / "scripts/p2_baselines/c1_c2_feasibility_pilot_v1/parse_execution_authority.awk"
+        packet = (
+            contract.REPO / "docs/handoffs/P2_W2C_C1_C2_FEASIBILITY_PILOT_RECOVERY_R2_v1.md"
+        ).read_text(encoding="utf-8")
+
+        def parse(observed: str) -> subprocess.CompletedProcess[str]:
+            return subprocess.run(
+                ["awk", "-f", str(parser)], input=observed,
+                capture_output=True, text=True, check=False,
+            )
+
+        self.assertNotEqual(0, parse(packet).returncode)
+        activated = packet.replace(
+            "- status: `DRAFT_NOT_EXECUTION_AUTHORITY`",
+            "- status: `APPROVED_FOR_EXECUTION`",
+        ).replace(
+            "- user_approval: `PENDING_ACTIVATION`",
+            "- user_approval: `APPROVED_FOR_EXECUTION`",
+        )
+        self.assertEqual(0, parse(activated).returncode)
+        self.assertNotEqual(
+            0,
+            parse(activated + "\n- user_approval: `APPROVED_FOR_EXECUTION`\n").returncode,
+        )
 
     def test_machine_channel_ignores_container_banner_and_is_exact(self) -> None:
         parser = contract.REPO / "scripts/p2_baselines/c1_c2_feasibility_pilot_v1/parse_machine_decision.awk"
@@ -426,7 +463,7 @@ class ContractTests(unittest.TestCase):
             self.assertNotEqual(0, parse(invalid).returncode)
         self.assertEqual("P2-C1-C2-FEASIBILITY-PILOT-v1", contract.REPRESENTATIVE_SELECTION_TASK_ID)
         self.assertEqual(
-            "P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-v1",
+            "P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R2-v1",
             contract.load_config()["task_id"],
         )
 
@@ -469,7 +506,7 @@ class ContractTests(unittest.TestCase):
             contract.load_config()["accepted_attestation_reuse"],
         )
         packet = (
-            contract.REPO / "docs/handoffs/P2_W2C_C1_C2_FEASIBILITY_PILOT_RECOVERY_v1.md"
+            contract.REPO / "docs/handoffs/P2_W2C_C1_C2_FEASIBILITY_PILOT_RECOVERY_R2_v1.md"
         ).read_text(encoding="utf-8")
         self.assertIn(expected, packet)
         self.assertIn(expected_identity, packet)
@@ -533,11 +570,11 @@ class ContractTests(unittest.TestCase):
             second = contract.promote(store, Path(repository), promotion_parent)
             self.assertEqual(102, first["result_rows"])
             self.assertTrue(second["fast_path"])
-            csv_path = Path(repository) / "docs/experiments/p2/c1_c2_feasibility_pilot_recovery_v1/building_method_metrics_v1.csv"
+            csv_path = Path(repository) / "docs/experiments/p2/c1_c2_feasibility_pilot_recovery_r2_v1/building_method_metrics_v1.csv"
             self.assertEqual(103, len(csv_path.read_text(encoding="utf-8").splitlines()))
-            input_definition_path = Path(repository) / "docs/experiments/p2/c1_c2_feasibility_pilot_recovery_v1/development_input_definition_v1.csv"
+            input_definition_path = Path(repository) / "docs/experiments/p2/c1_c2_feasibility_pilot_recovery_r2_v1/development_input_definition_v1.csv"
             self.assertEqual(52, len(input_definition_path.read_text(encoding="utf-8").splitlines()))
-            report = (Path(repository) / "docs/experiments/p2/c1_c2_feasibility_pilot_recovery_v1/C1_C2_DEVELOPMENT_REPORT_v1.md").read_text(encoding="utf-8")
+            report = (Path(repository) / "docs/experiments/p2/c1_c2_feasibility_pilot_recovery_r2_v1/C1_C2_DEVELOPMENT_REPORT_v1.md").read_text(encoding="utf-8")
             self.assertIn("canonical G2", report)
             self.assertIn("scientific_verdict", report)
 

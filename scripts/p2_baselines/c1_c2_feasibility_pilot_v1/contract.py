@@ -38,7 +38,7 @@ from jsonschema import Draft202012Validator
 
 REPO = Path(__file__).resolve().parents[3]
 CONFIG_PATH = REPO / "configs/p2_baselines/c1_c2_feasibility_pilot_v1/pilot_v1.json"
-TASK_ID = "P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-v1"
+TASK_ID = "P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R2-v1"
 REPRESENTATIVE_SELECTION_TASK_ID = "P2-C1-C2-FEASIBILITY-PILOT-v1"
 ACCEPTED_ATTESTATION_REUSE = {
     "source_handoff_id": "P2-W2C-C1-C2-FEASIBILITY-PILOT-v1",
@@ -1919,7 +1919,7 @@ def promote(store: AddOnceStore, repo_root: Path, promotion_parent_commit: str) 
 
     repo_root = repo_root.resolve()
     git_store = AddOnceStore(repo_root)
-    manifest_relative = "artifacts/manifests/p2_baselines/c1_c2_feasibility_pilot_recovery_v1/technical_result_manifest_v1.json"
+    manifest_relative = "artifacts/manifests/p2_baselines/c1_c2_feasibility_pilot_recovery_r2_v1/technical_result_manifest_v1.json"
     existing = git_store.path(manifest_relative)
     if existing.is_file():
         manifest = json.loads(existing.read_bytes())
@@ -1984,7 +1984,7 @@ def promote(store: AddOnceStore, repo_root: Path, promotion_parent_commit: str) 
     } for row in technical_groups]
     case_fields = ["building_id", "group_id", "method_id", "reference_provenance", "G0_generated", "G1_schema_semantic", "RMSZ_m", "RMSXY_m", "surface_distance_rmse_m", "reference_vertical_coverage", "operation_unit_id"]
     flat_cases = [{**{name: row.get(name) for name in case_fields}, **{name: row["metrics"].get(name) for name in case_fields if name in row["metrics"]}} for row in cases]
-    prefix = "docs/experiments/p2/c1_c2_feasibility_pilot_recovery_v1"
+    prefix = "docs/experiments/p2/c1_c2_feasibility_pilot_recovery_r2_v1"
     promoted = [
         git_store.add(f"{prefix}/C1_C2_DEVELOPMENT_REPORT_v1.md", external_report),
         git_store.add(f"{prefix}/building_method_metrics_v1.csv", _csv_bytes(metrics_fields, flat_rows)),
@@ -1999,7 +1999,7 @@ def promote(store: AddOnceStore, repo_root: Path, promotion_parent_commit: str) 
         "promotion_parent_commit": promotion_parent_commit,
         "run_id": finalized["run_id"],
         "operation_id": finalized["operation_id"],
-        "external_namespace": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-v1/",
+        "external_namespace": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r2_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R2-v1/",
         "external_records": {
             "metrics": finalized["metrics"], "group_balanced_descriptive": finalized["group_balanced_descriptive"],
             "condition_group_technical_summary": finalized["condition_group_technical_summary"],
