@@ -13,7 +13,10 @@ import torch
 from gsplat.strategy import DefaultStrategy
 
 from src.stage2.dataloader import resolve_view_roles
-from src.stage2.densification import build_seed_protect_strategy
+from src.stage2.densification import (
+    build_elongation_filter_strategy,
+    build_seed_protect_strategy,
+)
 from src.stage2.loss.data_fitting import l_mono_depth_ssi
 from src.stage2.model import GaussianModel2D
 from src.stage2.semantic_seed import (
@@ -215,6 +218,26 @@ class StrategyAndViewRoleTest(unittest.TestCase):
         self.assertEqual(len(params["means"]), 1)
         self.assertTrue(torch.equal(state["surface_seed_lineage"], torch.tensor([False])))
         self.assertEqual(state["seed_protected_count"], 0)
+
+    def test_dense_scene_growth_cap_skips_whole_overflow_event(self):
+        params, opts, state = self._params_and_state(0.9)
+        state.update(
+            {
+                "count": torch.ones(2),
+                "grad2d": torch.ones(2),
+                "radii": torch.zeros(2),
+            }
+        )
+        strategy = build_elongation_filter_strategy(
+            max_gaussians=3,
+            grow_grad2d=0.1,
+            grow_scale3d=1.0,
+        )
+        duplicated, split_count = strategy._grow_gs(params, opts, state, 500)
+        self.assertEqual((duplicated, split_count), (0, 0))
+        self.assertEqual(len(params["means"]), 2)
+        self.assertTrue(state["growth_cap_blocked"])
+        self.assertEqual(state["max_gaussians"], 3)
 
     def test_explicit_roles_and_legacy_split(self):
         frames = [SimpleNamespace(name=f"view_{i:02d}.jpg") for i in range(12)]

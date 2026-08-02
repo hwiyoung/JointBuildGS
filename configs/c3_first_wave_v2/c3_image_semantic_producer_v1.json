@@ -1,0 +1,56 @@
+{
+  "schema": "jointbuildgs.c3_image_semantic_producer.v1",
+  "status": "IMPLEMENTED_NOT_EXECUTED",
+  "input": {
+    "role": "EXACT_937_RGB_ONLY",
+    "crosswalk_path": "artifacts/manifests/gate_s0/common_base_r2b/exact_937_member_crosswalk_v1.json",
+    "crosswalk_sha256": "5944ecf5294732fb3e0f355492de15f59e520b7bf7e3f59933630c9cb1964081",
+    "image_inventory_path": "artifacts/manifests/gate_s0/gate_s0_image_member_inventory_v1.csv",
+    "image_inventory_sha256": "70e18629c79dffce540d38dedb74ee813b3e1500cdca95f7c139e38a216ff73d"
+  },
+  "models": {
+    "grounded_segment_anything_reference_revision": "126abe633ffe333e16e4a0a4e946bc1003caf757",
+    "groundingdino_revision": "856dde20aee659246248e20734ef9ba5214f5e44",
+    "segment_anything_revision": "dca509fe793f601edb92606367a655c15ac00fdf",
+    "bert_snapshot_revision": "86b5e0934494bd15c9632b12f734a8a67f723594",
+    "groundingdino_swint_ogc": {
+      "bytes": 693997677,
+      "sha256": "3b3ca2563c77c69f651d7bd133e97139c186df06231157a64c507099c52bc799"
+    },
+    "sam_vit_h_4b8939": {
+      "bytes": 2564550879,
+      "sha256": "a7bf3b02f3ebf1267aba913ff637d9a2d5c33d3173bb679e46d9f338c26f262e"
+    }
+  },
+  "inference": {
+    "prompt_order_by_class": {
+      "1": ["roof"],
+      "2": ["facade", "wall"],
+      "3": ["ground", "road", "pavement"]
+    },
+    "box_threshold_strict_gt": 0.3,
+    "text_threshold_strict_gt": 0.25,
+    "nms_iou": 0.8,
+    "nms_scope": "PER_CLASS_AFTER_ALL_CLASS_SYNONYM_PROMPTS",
+    "sam_multimask": false,
+    "overlap_rule": "HIGHEST_DINO_SCORE_EXACT_TIE_LOWER_CLASS_ID",
+    "classes": {
+      "0": "UNKNOWN_IGNORE",
+      "1": "ROOF",
+      "2": "FACADE_WALL",
+      "3": "GROUND_ROAD_PAVEMENT"
+    }
+  },
+  "prohibited_inputs": [
+    "POSE",
+    "FOOTPRINT",
+    "BUILDING_ID",
+    "LOD1",
+    "LOD2",
+    "UAS",
+    "ALS"
+  ],
+  "common_reuse": ["C3", "C4", "C5"],
+  "downloads_during_inference": 0,
+  "scientific_verdict": null
+}

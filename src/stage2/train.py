@@ -734,6 +734,71 @@ def psnr(a: torch.Tensor, b: torch.Tensor) -> float:
     return 20 * math.log10(1.0) - 10 * math.log10(max(mse, 1e-10))
 
 
+def _load_exact_view_manifest(cfg: Dict[str, Any]) -> Optional[list[str]]:
+    """Load an explicitly hash-bound whole-scene view list, when configured."""
+
+    view_manifest_path = cfg.get("exact_view_manifest")
+    if not view_manifest_path:
+        return None
+    path = Path(view_manifest_path)
+    data = path.read_bytes()
+    expected_sha = cfg.get("exact_view_manifest_sha256")
+    if expected_sha and hashlib.sha256(data).hexdigest() != str(expected_sha):
+        raise RuntimeError("exact_view_manifest SHA-256 differs")
+    value = json.loads(data)
+    rows = value.get("rows")
+    names = [str(row["basename"]) for row in rows or []]
+    if (
+        int(value.get("member_count", -1)) != len(names)
+        or len(set(names)) != len(names)
+        or len(names) != int(cfg.get("exact_view_count", -1))
+    ):
+        raise RuntimeError("exact_view_manifest membership/count differs")
+    return names
+
+
+def _validate_exact_auxiliary_inventory(
+    frames: Sequence[Any],
+    *,
+    expected_count: int,
+    require_depth: bool,
+    require_semantic: bool,
+    semantic_dir: Optional[Path],
+) -> dict[str, int]:
+    """Fail closed when an exact-view run would silently omit a supervised view."""
+
+    if len(frames) != expected_count:
+        raise RuntimeError(
+            f"exact-view dataset count differs: {len(frames)} != {expected_count}"
+        )
+    missing_depth = [frame.name for frame in frames if frame.depth_path is None]
+    if require_depth and missing_depth:
+        raise RuntimeError(
+            "exact-view depth inventory is incomplete: "
+            f"missing={len(missing_depth)}/{expected_count} first={missing_depth[0]}"
+        )
+    missing_semantic: list[str] = []
+    if require_semantic:
+        if semantic_dir is None or not semantic_dir.is_dir():
+            raise RuntimeError("exact-view semantic directory is missing")
+        missing_semantic = [
+            frame.name
+            for frame in frames
+            if not (semantic_dir / f"{Path(frame.name).stem}.png").is_file()
+        ]
+        if missing_semantic:
+            raise RuntimeError(
+                "exact-view semantic inventory is incomplete: "
+                f"missing={len(missing_semantic)}/{expected_count} "
+                f"first={missing_semantic[0]}"
+            )
+    return {
+        "views": len(frames),
+        "depth_maps": len(frames) - len(missing_depth),
+        "semantic_masks": len(frames) - len(missing_semantic) if require_semantic else 0,
+    }
+
+
 def _ramp_weight_scale(it: int, warmup: int, schedule: str, ramp_steps: int) -> float:
     """Generic warm-up→ramp scale in [0, 1].
 
@@ -1813,12 +1878,15 @@ def main():
         else cfg.get("normal_dir") or cfg.get("mono_normal_dir")
     )
     auxiliary_normal_dir = cfg.get("mono_normal_dir") if pilot_arm is not None else None
+    manifest_view_names = _load_exact_view_manifest(cfg)
+
     ds = ColmapDataset(
         root=cfg["data_root"],
         downscale=cfg.get("downscale", 0.5),
         load_depth=cfg.get("load_depth", True),
         load_normal=cfg.get("load_normal", True),
         load_semantic=cfg.get("load_semantic", False),
+        semantic_dir=cfg.get("semantic_dir"),
         normal_dir=primary_normal_dir,
         mono_normal_dir=auxiliary_normal_dir,
         mono_depth_dir=cfg.get("mono_depth_dir"),
@@ -1826,7 +1894,11 @@ def main():
         mono_depth_scale=cfg.get("mono_depth_scale", 1.0),
         mono_depth_far_sentinel=cfg.get("mono_depth_far_sentinel", 28000.0),
         normal_encoding=cfg.get("normal_encoding", "half_range"),
-        visible_views=cfg.get("visible_views"),
+        visible_views=(
+            manifest_view_names
+            if manifest_view_names is not None
+            else cfg.get("visible_views")
+        ),
         photo_mask_manifest=cfg.get("photo_mask_manifest"),
         photo_mask_dir=cfg.get("photo_mask_dir"),
         roof_audit_mask_manifest=cfg.get("roof_audit_mask_manifest"),
@@ -1841,14 +1913,33 @@ def main():
     # test → test was out-of-distribution → severe overfitting.
     train_idx, test_idx, view_role_audit = resolve_view_roles(
         ds.frames,
-        train_views=cfg.get("train_views"),
-        eval_views=cfg.get("eval_views"),
+        train_views=(
+            manifest_view_names
+            if manifest_view_names is not None
+            else cfg.get("train_views")
+        ),
+        eval_views=([] if manifest_view_names is not None else cfg.get("eval_views")),
     )
     view_role_audit["visible_filter"] = ds.visible_view_audit
     print(
         f"[views] mode={view_role_audit['mode']} train={len(train_idx)} "
         f"eval={len(test_idx)} visible={len(ds.frames)}"
     )
+    if manifest_view_names is not None:
+        exact_auxiliary_audit = _validate_exact_auxiliary_inventory(
+            ds.frames,
+            expected_count=len(manifest_view_names),
+            require_depth=(
+                bool(cfg.get("load_depth", True))
+                and float(cfg.get("w_depth", 0.0) or 0.0) > 0.0
+            ),
+            require_semantic=(
+                bool(cfg.get("load_semantic", False))
+                and float(cfg.get("w_sem", 0.0) or 0.0) > 0.0
+            ),
+            semantic_dir=ds.semantic_dir,
+        )
+        print(f"[exact-aux] {exact_auxiliary_audit}")
 
     # ---------- semantic seeding (P2 ①): optional carve seeds for textureless bldgs ----------
     points_xyz, points_rgb = ds.points_xyz, ds.points_rgb
@@ -1997,6 +2088,17 @@ def main():
             f"[mvs-seed] init opacity={float(mvs_seed_init_opacity):.3f} "
             f"for {int(mvs_seed_mask.sum())} lineage roots"
         )
+
+    max_gaussians = cfg.get("max_gaussians")
+    if max_gaussians is not None:
+        max_gaussians = int(max_gaussians)
+        if max_gaussians <= 0:
+            raise ValueError("max_gaussians must be positive")
+        if len(points_xyz) > max_gaussians:
+            raise RuntimeError(
+                "initial Gaussian count exceeds max_gaussians: "
+                f"{len(points_xyz)} > {max_gaussians}"
+            )
 
     # ---------- model ----------
     model = GaussianModel2D(
@@ -2166,11 +2268,14 @@ def main():
         seed_protect_mask |= surface_seed_mask
     elongation_filter = bool(cfg.get("elongation_filter", False))
     elongation_axis_ratio_threshold = float(cfg.get("elongation_axis_ratio_threshold", 0.01))
+    if max_gaussians is not None and not elongation_filter:
+        raise ValueError("max_gaussians currently requires elongation_filter=true")
     if seed_protect and elongation_filter:
         from .densification import build_seed_protect_elongation_filter_strategy
         strategy = build_seed_protect_elongation_filter_strategy(
             axis_ratio_threshold=elongation_axis_ratio_threshold,
             seed_protect_until_iter=seed_protect_until_iter,
+            max_gaussians=max_gaussians,
             **seed_prune_schedule,
             **_strat_kwargs,
         )
@@ -2185,6 +2290,7 @@ def main():
         from .densification import build_elongation_filter_strategy
         strategy = build_elongation_filter_strategy(
             axis_ratio_threshold=elongation_axis_ratio_threshold,
+            max_gaussians=max_gaussians,
             **_strat_kwargs,
         )
     elif seed_lineage_audit:
@@ -2880,6 +2986,12 @@ def main():
         "elongation_filter": elongation_filter,
         "elongation_axis_ratio_threshold": elongation_axis_ratio_threshold,
         "elongation_axis_ratio_formula": "min(exp(scale0), exp(scale1)) / max(exp(scale0), exp(scale1))",
+        "max_gaussians": max_gaussians,
+        "growth_cap_policy": (
+            "skip_whole_growth_event_if_it_would_exceed_cap;pruning_continues"
+            if max_gaussians is not None
+            else "disabled"
+        ),
         "loss_grad_audit_every": loss_grad_audit_every,
         "loss_grad_audit_params": loss_grad_audit_params,
         "structure_grouping": structure_grouping,
@@ -4453,6 +4565,16 @@ def main():
             writer.add_scalar("stats/grow_duplicated", grow_duplicated, it)
             writer.add_scalar("stats/grow_split", grow_split, it)
             writer.add_scalar("stats/grow_total", grow_duplicated + grow_split, it)
+            writer.add_scalar(
+                "stats/growth_cap_blocked",
+                int(bool(strategy_state.get("growth_cap_blocked", False))),
+                it,
+            )
+            writer.add_scalar(
+                "stats/gaussian_count",
+                int(model.means.shape[0]),
+                it,
+            )
             writer.add_scalar("stats/cum_grow_duplicated", int(strategy_state.get("cum_grow_duplicated", 0)), it)
             writer.add_scalar("stats/cum_grow_split", int(strategy_state.get("cum_grow_split", 0)), it)
             writer.add_scalar("stats/prune_candidates", prune_candidates, it)

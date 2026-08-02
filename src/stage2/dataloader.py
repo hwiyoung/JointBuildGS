@@ -389,6 +389,7 @@ class ColmapDataset(Dataset):
         load_depth: bool = True,
         load_normal: bool = True,
         load_semantic: bool = False,
+        semantic_dir: Optional[str | Path] = None,
         normal_dir: Optional[str | Path] = None,
         mono_normal_dir: Optional[str | Path] = None,
         mono_depth_dir: Optional[str | Path] = None,
@@ -409,7 +410,11 @@ class ColmapDataset(Dataset):
         self.load_depth = load_depth
         self.load_normal = load_normal
         self.load_semantic = load_semantic
-        self.semantic_dir = self.root / "semantic"
+        self.semantic_dir = (
+            self.root / "semantic"
+            if semantic_dir is None
+            else Path(semantic_dir).resolve()
+        )
         self.override_normal_dir = self._resolve_aux_dir(normal_dir)
         self.mono_normal_dir = self._resolve_aux_dir(mono_normal_dir)
         self.mono_depth_dir = self._resolve_aux_dir(mono_depth_dir)

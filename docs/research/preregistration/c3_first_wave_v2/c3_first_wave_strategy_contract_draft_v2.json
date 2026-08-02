@@ -1,0 +1,320 @@
+{
+  "schema": "jointbuildgs.c3_first_wave_strategy_contract_draft.v2",
+  "status": "DRAFT_NOT_EXECUTION_AUTHORITY",
+  "condition_id": "C3_GS_image",
+  "canonical_condition": "NO_EXTERNAL_PRIOR_GS",
+  "execution_authority": false,
+  "authorized_run_ids": [],
+  "handoff_authorized": false,
+  "producer_implementation_in_scope": false,
+  "scientific_verdict": null,
+  "decision_basis": [
+    "DEC-P1-010",
+    "DEC-P1-011",
+    "DEC-P1-012"
+  ],
+  "common_base": {
+    "id": "B_CURRENT_CANDIDATE_c205892c390997b5",
+    "available_images": 962,
+    "exact_whole_scene_image_pose_pairs": 937,
+    "excluded_images": 25,
+    "source_manifest_sha256": "c205892c390997b57b13ee211bbc264c45800770bb84f0b2698c45d3c656fd74",
+    "included_basename_set_sha256": "dd9b446e11c978ef8223858f08571bfea832e0d33517b24c1e573060244f4e2c",
+    "included_camera_id_set_sha256": "43b70a448dc3d4bad6a06b5352eee0f1ba2cd6e5bc0d57bf7e53f4c11cd79ca7",
+    "included_image_camera_pair_sha256": "7d1f90ecb79ee19acfbfedb0b7cf78083349c7669678a1f883c5034a41a89ccc",
+    "excluded_basename_set_sha256": "a55a811ffe580790c199b65dc57d518890b04d6110ff7c7a2e4cfeb30e6fcb02",
+    "aoi": {
+      "crs": "EPSG:25832",
+      "bbox": [
+        690791.74,
+        5335864.05,
+        691154.65,
+        5336353.85
+      ],
+      "geojson_sha256": "93728956ecfbbb24521b4fa4aec745fec176d4c6c94e10cef272934dcf9d9061"
+    },
+    "sfm_sparse_points": 371808,
+    "dense_mvs_source": {
+      "path_role": "DIM_DENSE_PLY",
+      "points": 43942554,
+      "bytes": 659138498,
+      "direct_full_initialization_allowed": false
+    },
+    "gravity": [
+      0.0022003022295437485,
+      -0.0038866451918428023,
+      -0.9999900262798882
+    ]
+  },
+  "scope": {
+    "training_scene_count": 1,
+    "training_view_count": 937,
+    "whole_scene_training": true,
+    "frozen_roster": {
+      "total": 72,
+      "development": 51,
+      "validation": 11,
+      "held_out": 10,
+      "split_source_path": "docs/research/preregistration/gate_s0/uas_reference_coverage_r1_v1/split_candidate_v1.csv",
+      "split_source_sha256": "8dc33b86a126667b847ddf33f4ad4a56012f2bfc784c0742e573a421120f7309",
+      "development_id_set_sha256": "712cf0e7e635f049857302f4e5ffea825165d9fb38dd3091d0ab192d5974a68b"
+    },
+    "scoring_split": "DEVELOPMENT_ONLY",
+    "scored_buildings": 51,
+    "validation_access": false,
+    "held_out_access": false,
+    "confirmatory_claims_allowed": false,
+    "automatic_winner_allowed": false
+  },
+  "initialization": {
+    "mode": "CONCAT_ALL_SFM_SPARSE_WITH_SELECTED_DENSE_MVS_AOI_VOXEL_SEED",
+    "all_sfm_sparse_included": true,
+    "sparse_only_allowed": false,
+    "full_dense_direct_allowed": false,
+    "random_subsampling_allowed": false,
+    "dense_preflight": {
+      "status_before_producer": "CONTRACT_ONLY_NOT_RUN",
+      "source_natural_read_count": 1,
+      "single_stream_operations": [
+        "FILTER_NONFINITE",
+        "CROP_FROZEN_AOI",
+        "BUILD_DETERMINISTIC_0P10M_VOXEL_MAP_AND_COUNT",
+        "BUILD_DETERMINISTIC_0P20M_VOXEL_MAP_AND_COUNT",
+        "BUILD_DETERMINISTIC_0P40M_VOXEL_MAP_AND_COUNT"
+      ],
+      "candidate_voxel_m_ascending": [
+        0.1,
+        0.2,
+        0.4
+      ],
+      "selection_rule": "FINEST_ASCENDING_CANDIDATE_WITH_DENSE_POINTS_LE_3000000_AND_24GB_VRAM_PREFLIGHT_PASS",
+      "selected_voxel_m": null,
+      "selected_dense_point_count": null,
+      "representative": "NEAREST_TO_VOXEL_CENTER_THEN_WORLD_XYZ_LEXICOGRAPHIC_THEN_SOURCE_ROW",
+      "voxel_origin_xyz": [0.0, 0.0, 0.0],
+      "voxel_index_rule": "FLOOR_EACH_AXIS_OF_EPSG25832_XYZ_MINUS_FIXED_ORIGIN_DIV_VOXEL_M",
+      "write_policy": "WRITE_SELECTED_DERIVATIVE_ONLY",
+      "if_none_pass": "FAIL_CLOSED_NO_PARAMETER_CHANGE",
+      "uses_scientific_outcomes": false,
+      "opens_evaluation_reference": false,
+      "voxel_0p40_role": "COARSEST_ENGINEERING_FALLBACK_LOCK_NOT_PAST_QUALITY_OPTIMUM"
+    },
+    "max_dense_seed_points": 3000000,
+    "seed_protect_until_iteration": 5000,
+    "max_total_primitives": 4000000,
+    "at_primitive_cap": {
+      "growth": "STOP",
+      "pruning": "CONTINUE"
+    }
+  },
+  "semantic_producer": {
+    "status_before_producer": "IMPLEMENTED_TESTED_NOT_EXECUTED",
+    "producer": "GROUNDED_SAM_IMAGE_ONLY",
+    "common_for_conditions": [
+      "C3",
+      "C4",
+      "C5"
+    ],
+    "input": "EXACT_937_RGB_ONLY",
+    "prompt_order_by_class": {
+      "1": ["roof"],
+      "2": ["facade", "wall"],
+      "3": ["ground", "road", "pavement"]
+    },
+    "grounding_dino_box_threshold": 0.3,
+    "grounding_dino_text_threshold": 0.25,
+    "sam_multimask": false,
+    "classes": {
+      "0": "UNKNOWN_IGNORE",
+      "1": "ROOF",
+      "2": "FACADE_WALL",
+      "3": "GROUND_ROAD_PAVEMENT"
+    },
+    "same_class_overlap": "UNION",
+    "cross_class_overlap": "HIGHEST_GROUNDING_DINO_SCORE_THEN_LOWER_CLASS_ID",
+    "unknown_ignored_by_loss": true,
+    "groundingdino_revision": "856dde20aee659246248e20734ef9ba5214f5e44",
+    "segment_anything_revision": "dca509fe793f601edb92606367a655c15ac00fdf",
+    "bert_snapshot_revision": "86b5e0934494bd15c9632b12f734a8a67f723594",
+    "groundingdino_checkpoint_sha256": "3b3ca2563c77c69f651d7bd133e97139c186df06231157a64c507099c52bc799",
+    "sam_checkpoint_sha256": "a7bf3b02f3ebf1267aba913ff637d9a2d5c33d3173bb679e46d9f338c26f262e",
+    "producer_contract_path": "configs/c3_first_wave_v2/c3_image_semantic_producer_v1.json",
+    "must_verify_pinned_runtime_and_assets_before_inference": true,
+    "prohibited_guidance": [
+      "FOOTPRINT",
+      "BUILDING_ID",
+      "POSE_DERIVED_BUILDING_CROP",
+      "UAS",
+      "ALS",
+      "LOD1",
+      "LOD2"
+    ]
+  },
+  "depth_supervision": {
+    "source": "EXACT_937_IMAGE_DERIVED_GEOMETRIC_DEPTH",
+    "status_before_producer": "CONTRACT_ONLY_PRODUCER_AND_BINDING_REQUIRED",
+    "finite_positive_mask_only": true,
+    "scale": 1.0,
+    "weight": 0.03,
+    "warmup_iterations": 5000,
+    "ramp_iterations": 5000
+  },
+  "external_normal_map_supervision": {
+    "mounted": false,
+    "load_normal": false,
+    "weight": 0.0,
+    "reason": "NOISY_REDUNDANT_NONCANONICAL_FOR_THIS_FIRST_WAVE",
+    "does_not_disable_frozen_gravity_or_intrinsic_normal_consistency": true
+  },
+  "training": {
+    "representation": "GSPLAT_PLANAR_2D_GAUSSIANS",
+    "seed": 0,
+    "max_iterations": 30000,
+    "native_image_scale": true,
+    "sh_degree": 3,
+    "sh_up_every": 1000,
+    "checkpoint_iterations": [
+      5000,
+      10000,
+      20000,
+      30000
+    ],
+    "full_state_checkpoints": true,
+    "loss": {
+      "photo": {
+        "weight": 1.0,
+        "l1_fraction": 0.8,
+        "one_minus_ssim_fraction": 0.2
+      },
+      "depth": {
+        "weight": 0.03,
+        "warmup_iterations": 5000,
+        "linear_ramp_iterations": 5000
+      },
+      "external_normal_map": 0.0,
+      "intrinsic_normal_consistency": {
+        "weight": 0.05,
+        "start_iteration": 7000,
+        "schedule_after_start": "CONSTANT"
+      },
+      "distortion": {
+        "weight": 100.0,
+        "normalization": "MEAN_REND_DIST_DIV_SCENE_SCALE_SQUARED",
+        "scene_scale_source": "ALL_SFM_SPARSE_POINTS_ONLY",
+        "start_iteration": 3000,
+        "schedule_after_start": "CONSTANT",
+        "large_scene_depth_mode": "EXPECTED_MEAN"
+      },
+      "semantic": {
+        "weight": 0.1,
+        "detach_geometry": false
+      },
+      "structure": {
+        "carrier_weight": 1.0,
+        "normal_alignment_weight": 0.08,
+        "coplanarity_weight": 0.01,
+        "grouping": "g2",
+        "g2_geometry_allowed": false,
+        "voxel_m": 2.0,
+        "merge_normal_cosine": 0.92,
+        "merge_distance_tolerance_m": 0.5,
+        "minimum_group": 30,
+        "warmup_iterations": 15000,
+        "regroup_every": 1000
+      },
+      "mutual": 0.0,
+      "confidence": 0.0,
+      "monocular": 0.0,
+      "mvc": 0.0,
+      "separate_semantic_depth": 0.0
+    },
+    "learning_rates": {
+      "means": 0.00016,
+      "scales": 0.005,
+      "quaternions": 0.001,
+      "opacities": 0.05,
+      "sh0": 0.0025,
+      "shN": 0.000125,
+      "semantic": 0.0025
+    },
+    "densification": {
+      "grow_gradient_2d": 0.001,
+      "refine_start_iteration": 500,
+      "refine_stop_iteration": 20000,
+      "refine_every": 200,
+      "prune_opacity": 0.005,
+      "opacity_reset_every": 3000
+    },
+    "quality_early_stopping_allowed": false,
+    "outcome_driven_retry_allowed": false,
+    "outcome_driven_weight_or_voxel_change_allowed": false
+  },
+  "caps": {
+    "strategy_variants": 1,
+    "training_seeds": 1,
+    "training_jobs": 1,
+    "gpu_count": 1,
+    "gpu_class": "RTX_3090_CLASS",
+    "vram_gb": 24,
+    "max_dense_seed_points": 3000000,
+    "max_total_primitives": 4000000,
+    "wall_clock_seconds": 43200,
+    "aggregate_gpu_hours": 12,
+    "new_output_bytes": 100000000000,
+    "automatic_scientific_retries": 0
+  },
+  "evaluation_boundary": {
+    "output_sealed_before_reference_open": true,
+    "reference": "INDEPENDENT_UAS_DEVELOPMENT_SCORE_ONLY",
+    "association_role": "SCORE_IDENTITY_ONLY",
+    "geometry_modification_allowed": false,
+    "crop_allowed": false,
+    "registration_allowed": false,
+    "validation_or_held_out_namespace_allowed": false
+  },
+  "prohibited_inputs_or_outcomes": [
+    "VALIDATION_REFERENCE_OR_OUTCOME",
+    "HELD_OUT_REFERENCE_OR_OUTCOME",
+    "FUSION_W1_RESULT",
+    "LOD1",
+    "LOD2",
+    "CURRENT_UAS_LIDAR_BEFORE_SEALED_DEVELOPMENT_SCORING",
+    "EXISTING_ALS",
+    "R_EXT",
+    "EXTERNAL_ROOFPRINT",
+    "VENDOR_1104_IMAGE_MVS",
+    "C1_C2_OUTPUT_GEOMETRY"
+  ],
+  "stage_mount_allowlists": {
+    "dense_preflight": [
+      "DIM_DENSE_PLY",
+      "FROZEN_AOI"
+    ],
+    "semantic_producer": [
+      "EXACT_937_RGB"
+    ],
+    "training": [
+      "EXACT_937_RGB",
+      "CAMERAS_BIN",
+      "IMAGES_BIN",
+      "POINTS3D_BIN",
+      "SELECTED_DENSE_DERIVATIVE",
+      "EXACT_937_DEPTH",
+      "EXACT_937_IMAGE_ONLY_SEMANTIC",
+      "FROZEN_GRAVITY"
+    ],
+    "scoring": [
+      "SEALED_C3_OUTPUTS",
+      "DEVELOPMENT_UAS_REFERENCE_ONLY"
+    ],
+    "whole_artifact_root_mount_allowed": false,
+    "any_prohibited_open_attempt": "FAIL_CLOSED"
+  },
+  "activation_blockers": [
+    "BIND_EXACT_937_GEOMETRIC_DEPTH_PRODUCER_OUTPUTS",
+    "RUN_DENSE_AND_SEMANTIC_PRODUCERS_ON_EXACT_PAYLOAD",
+    "VERIFY_EXECUTION_MOUNTS_EXCLUDE_PROHIBITED_SOURCES",
+    "OBTAIN_SEPARATE_HUMAN_ACTIVATION"
+  ],
+  "failure_policy": "FAIL_CLOSED_NO_OUTCOME_DRIVEN_RETRY_OR_PARAMETER_CHANGE"
+}

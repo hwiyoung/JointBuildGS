@@ -1,0 +1,11 @@
+section,key,label,count,total_denominator,percent_of_total,section_denominator,percent_of_section,source_field,source_binding
+reconciliation,U_TARGET,all AOI target buildings,199,199,100.00,199,100.00,u_target,git-blob:6e5d6ab0698c0fdf3e67e74cbdd060bf785ea06b
+reconciliation,QUANTITATIVE_ELIGIBLE,quantitative-eligible buildings,72,199,36.18,199,36.18,e_paired_candidate,git-blob:6e5d6ab0698c0fdf3e67e74cbdd060bf785ea06b
+reconciliation,EXCLUDED,excluded buildings,127,199,63.82,199,63.82,e_paired_candidate,git-blob:6e5d6ab0698c0fdf3e67e74cbdd060bf785ea06b
+eligible_split,DEVELOPMENT,development,51,199,25.63,72,70.83,candidate_split,git-blob:6e5d6ab0698c0fdf3e67e74cbdd060bf785ea06b
+eligible_split,VALIDATION,validation,11,199,5.53,72,15.28,candidate_split,git-blob:6e5d6ab0698c0fdf3e67e74cbdd060bf785ea06b
+eligible_split,HELD_OUT,held-out,10,199,5.03,72,13.89,candidate_split,git-blob:6e5d6ab0698c0fdf3e67e74cbdd060bf785ea06b
+primary_exclusion_reason,UAS_REFERENCE_ONLY,independent UAS reference support insufficient,78,199,39.20,127,61.42,candidate_exclusion_reason,git-blob:6e5d6ab0698c0fdf3e67e74cbdd060bf785ea06b
+primary_exclusion_reason,UAS_REFERENCE_AND_MVS,independent UAS reference and MVS support insufficient,38,199,19.10,127,29.92,candidate_exclusion_reason,git-blob:6e5d6ab0698c0fdf3e67e74cbdd060bf785ea06b
+primary_exclusion_reason,UAS_REFERENCE_MVS_C4,independent UAS reference and MVS and C4 support insufficient,9,199,4.52,127,7.09,candidate_exclusion_reason,git-blob:6e5d6ab0698c0fdf3e67e74cbdd060bf785ea06b
+primary_exclusion_reason,UAS_REFERENCE_AND_C4,independent UAS reference and C4 support insufficient,2,199,1.01,127,1.57,candidate_exclusion_reason,git-blob:6e5d6ab0698c0fdf3e67e74cbdd060bf785ea06b

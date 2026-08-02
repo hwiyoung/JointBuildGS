@@ -195,6 +195,7 @@ class ElongationFilterStrategy(DefaultStrategy):
     """
 
     axis_ratio_threshold: float = 0.01
+    max_gaussians: int | None = None
 
     def _densify_candidate_mask(self, params, state):
         import torch as _torch
@@ -227,6 +228,24 @@ class ElongationFilterStrategy(DefaultStrategy):
         if step < self.refine_scale2d_stop_iter:
             is_split |= (state["radii"] > self.grow_scale2d) & ratio_ok
         n_split = int(is_split.sum().item())
+
+        # Large-scene C3 starts from a dense MVS seed.  A refinement event can
+        # otherwise add enough primitives in one step to jump past the VRAM
+        # budget.  Fail-closed at the event boundary instead of selecting a
+        # spatially biased subset of candidates.  Pruning remains active.
+        current_count = int(params["means"].shape[0])
+        cap = self.max_gaussians
+        cap_blocked = bool(
+            cap is not None and current_count + n_dupli + n_split > int(cap)
+        )
+        if cap_blocked:
+            is_dupli = torch.zeros_like(is_dupli)
+            is_split = torch.zeros_like(is_split)
+            n_dupli = 0
+            n_split = 0
+        state["max_gaussians"] = -1 if cap is None else int(cap)
+        state["growth_cap_blocked"] = cap_blocked
+        state["growth_cap_current_count"] = current_count
 
         audit_boxes = getattr(self, "densify_audit_boxes", None)
         if audit_boxes:
@@ -291,10 +310,17 @@ def _clone_strategy(
     seed_prune_opa_initial: float | None = None,
     seed_prune_opa_final: float | None = None,
     seed_prune_switch_iter: int | None = None,
+    max_gaussians: int | None = None,
 ):
     strategy = cls(**{f.name: getattr(base, f.name) for f in __import__("dataclasses").fields(base)})
     if axis_ratio_threshold is not None:
         strategy.axis_ratio_threshold = float(axis_ratio_threshold)
+    if hasattr(strategy, "max_gaussians"):
+        if max_gaussians is not None and int(max_gaussians) <= 0:
+            raise ValueError("max_gaussians must be positive when supplied")
+        strategy.max_gaussians = (
+            None if max_gaussians is None else int(max_gaussians)
+        )
     if hasattr(strategy, "seed_protect_until_iter"):
         strategy.seed_protect_until_iter = None if seed_protect_until_iter is None else int(seed_protect_until_iter)
         schedule = (
@@ -320,9 +346,18 @@ def _clone_strategy(
     return strategy
 
 
-def build_elongation_filter_strategy(axis_ratio_threshold: float = 0.01, **kwargs) -> ElongationFilterStrategy:
+def build_elongation_filter_strategy(
+    axis_ratio_threshold: float = 0.01,
+    max_gaussians: int | None = None,
+    **kwargs,
+) -> ElongationFilterStrategy:
     base = build_strategy(**kwargs)
-    return _clone_strategy(base, ElongationFilterStrategy, axis_ratio_threshold=axis_ratio_threshold)
+    return _clone_strategy(
+        base,
+        ElongationFilterStrategy,
+        axis_ratio_threshold=axis_ratio_threshold,
+        max_gaussians=max_gaussians,
+    )
 
 
 def build_seed_protect_elongation_filter_strategy(
@@ -331,6 +366,7 @@ def build_seed_protect_elongation_filter_strategy(
     seed_prune_opa_initial: float | None = None,
     seed_prune_opa_final: float | None = None,
     seed_prune_switch_iter: int | None = None,
+    max_gaussians: int | None = None,
     **kwargs,
 ) -> SeedProtectElongationFilterStrategy:
     base = build_strategy(**kwargs)
@@ -342,4 +378,5 @@ def build_seed_protect_elongation_filter_strategy(
         seed_prune_opa_initial=seed_prune_opa_initial,
         seed_prune_opa_final=seed_prune_opa_final,
         seed_prune_switch_iter=seed_prune_switch_iter,
+        max_gaussians=max_gaussians,
     )

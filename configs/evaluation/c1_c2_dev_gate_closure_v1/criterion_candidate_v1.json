@@ -1,0 +1,173 @@
+{
+  "schema": "jointbuildgs.c1_c2_dev_gate_closure_candidate.v1",
+  "status": "USER_DIRECTED_PROVISIONAL_DEVELOPMENT_DIAGNOSTIC_CLOSURE",
+  "task_id": "P2-C1-C2-DEV-GATE-CLOSURE-v1",
+  "criterion": {
+    "parent": "C1C5_CANON_v2",
+    "version": "C1C5_CANON_v2_DEV_DIAGNOSTIC_CLOSURE_v1",
+    "status": "DIAGNOSTIC_ONLY_G3_G4_NOT_FROZEN",
+    "final_positive_pass_authority": false
+  },
+  "scope": {
+    "split": "development",
+    "building_count": 51,
+    "condition_ids": ["C1_L_upper", "C2_MVS"],
+    "expected_rows": 102,
+    "validation_access": false,
+    "held_out_access": false
+  },
+  "inputs": {
+    "canonical_result_contract": {
+      "path": "docs/research/04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md",
+      "bytes": 19963,
+      "sha256": "2d19d527a4b7468a529af2002442b546aea9b38b8c281d12dfae7fb4ed6e1a08"
+    },
+    "source_manifest": {
+      "path": "configs/p2_baselines/c1_c2_feasibility_pilot_finalize_recovery_r4_v1/r3_finalize_source_manifest_v1.json",
+      "bytes": 6045,
+      "sha256": "5fe75ea0e8680e25bab22231f054c1345797bb5d761c209f6b32cfbcfeb262dc"
+    },
+    "promoted_metrics": {
+      "path": "docs/experiments/p2/c1_c2_feasibility_pilot_finalize_recovery_r4_v1/building_method_metrics_v1.csv",
+      "bytes": 77859,
+      "sha256": "cf03a0615a954bf7c829e66a7097aae42477a1093bb5de1bb960b29deae43021"
+    },
+    "development_roster": {
+      "path": "configs/p2_baselines/c1_c2_feasibility_pilot_v1/development_roster_v1.csv",
+      "bytes": 2731,
+      "sha256": "c9f6412c4878a2cec3be09e465bb7a2be60f4f8329a473bf4acd44679c6afecc"
+    },
+    "development_score_scope": {
+      "path": "configs/p2_baselines/c1_c2_feasibility_pilot_v1/development_score_scope_v1.csv",
+      "bytes": 12014,
+      "sha256": "ba5cbefced147fa383efe3d1c24e10a0c01673a296c431a304a7386189f9ce77"
+    },
+    "val3dity_dockerfile": {
+      "path": "phases/p0-audit/env/Dockerfile.tools",
+      "bytes": 1946,
+      "sha256": "037f26be8be1f961e748774a0e67fa389bc448ee32e2a277ab6108e4f70207d5"
+    },
+    "gate_s0_freeze_recovery_config": {
+      "path": "configs/input_and_alignment/gate_s0/freeze_recovery_v1/recovery_v1.json",
+      "bytes": 9076,
+      "sha256": "c2b9dd6b7fd3e291482fb160a7e06925e544cf824d4550805396da2c7cb6c02b"
+    }
+  },
+  "gates": {
+    "G2": {
+      "status": "READY_PINNED_IMAGE_AND_STDIN_CONTRACT",
+      "validator": "val3dity",
+      "version": "2.6.0",
+      "source_commit": "d1a7750f17aeed337e941c4e2937fc4773862440",
+      "container_image_ref": "jointbuildgs-p0-tools:t0",
+      "container_image_id": "sha256:02b4b7bb2e35e9b88bcc8457678ed8f178cca8f76f22b1b62f02721359e46be8",
+      "input_mode": "CITYJSONSEQ_STDIN_PIPE",
+      "command": [
+        "val3dity",
+        "--overlap_tol=-1.0",
+        "--planarity_d2p_tol=0.01",
+        "--planarity_n_tol=20.0",
+        "--snap_tol=0.001",
+        "stdin"
+      ],
+      "parameters": {
+        "overlap_tol": -1.0,
+        "planarity_d2p_tol": 0.01,
+        "planarity_n_tol_degrees": 20.0,
+        "snap_tol": 0.001
+      },
+      "expected_unique_c2_units": 6,
+      "building_inheritance": "CONSERVATIVE_UNIT_ALL_FEATURES_VALID",
+      "null_reason_without_receipt": "EXACT_SIX_UNIT_G2_RECEIPT_NOT_SUPPLIED"
+    },
+    "G3": {
+      "matching_version": "UAS_PATCH_TO_ROOFER_ROOFSURFACE_GRID_BILATERAL_v1",
+      "reference": "SEALED_DEVELOPMENT_UAS_PATCH_CELLS",
+      "grid_cell_m": 1.0,
+      "grid_origin_xy": [690791.74, 5335864.05],
+      "matching_normal_angle_degrees_max": 15.0,
+      "bilateral_support_overlap_min": 0.5,
+      "candidate_thresholds": {
+        "roof_plane_completeness_min": 0.8,
+        "roof_plane_correctness_min": 0.8,
+        "roof_plane_quality_min": 0.6666666666666666,
+        "oversegmentation_max": 0.25,
+        "undersegmentation_max": 0.25
+      },
+      "threshold_status": "DIAGNOSTIC_ONLY_BLOCKED_MATCHER_VALIDATION",
+      "gate_blocker": "CONCAVE_FAN_SMALL_PLANE_OVERLAP_AND_MANY_TO_MANY_MATCHING_NOT_VALIDATED"
+    },
+    "G4": {
+      "metric_version": "SEALED_R4_CONTINUOUS_METRICS_REUSE_v1",
+      "required_metrics": [
+        "reference_vertical_coverage",
+        "height_error_mae_m",
+        "RMSZ_m",
+        "RMSXY_m",
+        "surface_distance_rmse_m",
+        "surface_distance_p95_m"
+      ],
+      "threshold_metric_map": {
+        "reference_vertical_coverage_min": "reference_vertical_coverage",
+        "height_error_mae_m_max": "height_error_mae_m",
+        "RMSZ_m_max": "RMSZ_m",
+        "RMSXY_m_max": "RMSXY_m",
+        "surface_distance_rmse_m_max": "surface_distance_rmse_m",
+        "surface_distance_p95_m_max": "surface_distance_p95_m"
+      },
+      "candidate_thresholds": {
+        "reference_vertical_coverage_min": 0.8,
+        "height_error_mae_m_max": 1.0,
+        "RMSZ_m_max": 1.0,
+        "RMSXY_m_max": 1.0,
+        "surface_distance_rmse_m_max": 1.0,
+        "surface_distance_p95_m_max": 2.0
+      },
+      "normal_metrics_role": "REPORT_ONLY_NOT_GATE",
+      "threshold_status": "DIAGNOSTIC_ONLY_ABSOLUTE_Z_METRICS_DISABLED",
+      "gate_blocker": "FROZEN_CONTRACT_ABSOLUTE_Z_METRICS_ENABLED_IS_FALSE"
+    }
+  },
+  "c1_independence_rule": "SELF_REFERENCE_UPPER_BASELINE_G3_G4_AND_PASS_REMAIN_NULL",
+  "provisional_threshold_calibration": {
+    "status": "DRAFT_NOT_EXECUTED_DEVELOPMENT_ONLY",
+    "input": {
+      "split": "development",
+      "expected_rows": 51,
+      "condition_id": "C2_MVS",
+      "fields": ["G3_metrics", "G4_metrics_reused_exact"],
+      "validation_access": false,
+      "held_out_access": false
+    },
+    "output": {
+      "schema": "jointbuildgs.c1_c2_dev_threshold_calibration_candidate.v1",
+      "authority": "HUMAN_REVIEW_INPUT_ONLY_NOT_A_FROZEN_CRITERION",
+      "required_fields": [
+        "candidate_thresholds",
+        "development_distribution_summary",
+        "sensitivity_summary",
+        "criterion_status",
+        "scientific_verdict"
+      ]
+    },
+    "remaining_blocker": "G3_MATCHER_AND_NON_ABSOLUTE_G4_ACCEPTANCE_RULE_NOT_FROZEN; PASS_REMAINS_NULL"
+  },
+  "execution_contract": {
+    "sealed_cityjson_read_once_per_unique_operation": true,
+    "sealed_metric_recomputation_count": 0,
+    "reconstruction_invocation_count": 0,
+    "roofer_invocation_count": 0,
+    "validator_invocation_count": 6,
+    "output_add_once": true
+  },
+  "prohibited": [
+    "VALIDATION_ACCESS",
+    "HELD_OUT_ACCESS",
+    "RECONSTRUCTION_EXECUTION",
+    "ROOFER_EXECUTION",
+    "METRIC_THRESHOLD_TUNING_FROM_C1_C2_OUTCOMES",
+    "POSITIVE_PASS",
+    "SCIENTIFIC_VERDICT"
+  ],
+  "scientific_verdict": null
+}
