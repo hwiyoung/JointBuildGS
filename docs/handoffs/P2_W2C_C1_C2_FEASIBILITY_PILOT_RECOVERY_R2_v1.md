@@ -6,19 +6,25 @@
 - task_id: `P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R2-v1`
 - phase: `P2 / development baseline feasibility before C3 strategy freeze`
 - direction: `Work→Codex`
-- status: `DRAFT_NOT_EXECUTION_AUTHORITY`
-- user_approval: `PENDING_ACTIVATION`
+- status: `APPROVED_FOR_EXECUTION`
+- user_approval: `APPROVED_FOR_EXECUTION`
 - packet_version: `v1`
-- source_commit: `PENDING_EXACT_REVIEWED_COMMIT`
+- source_commit: `846bc2638ac84854e588fb7ac1aa7a6f38ce06b6`
 - target_branch: `main`
 - research_charter_version: `C1C5_CANON_v2`
 - decision_log_through: `DEC-P1-013`
 - created_at: `2026-08-02`
+- activated_at: `2026-08-02T11:14:12+09:00`
 - scientific_verdict: `null`
 
-This DRAFT is not execution authority. Activation requires an exact reviewed source,
-`status=APPROVED_FOR_EXECUTION`, `user_approval=APPROVED_FOR_EXECUTION`, and a new
-immutable offered/accepted chain.
+This packet is execution authority only for exact source commit
+`846bc2638ac84854e588fb7ac1aa7a6f38ce06b6` and the bounded R2 scope below. Experiment
+execution additionally requires a new immutable offered/accepted chain.
+
+Activation evidence: network-disabled Docker tests `74 passed / 0 failed`, shell
+syntax PASS, zero-scientific preflight PASS with
+`scientific_payload_bytes_read_or_hashed=0`, actual packet authority parser PASS, and
+three independent exact-commit reviews PASS.
 
 ## Answer first
 
@@ -99,12 +105,11 @@ authoritative for every other Git path.
    bash scripts/p2_baselines/c1_c2_feasibility_pilot_v1/run_pilot_host.sh \
      /media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts \
      sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774 \
-     PENDING_EXACT_REVIEWED_COMMIT \
+     846bc2638ac84854e588fb7ac1aa7a6f38ce06b6 \
      P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R2-RUN-v1
    ```
 
-   Activation must replace the pending source token above with the exact reviewed
-   `source_commit`; the wrapper command is invalid while this packet remains DRAFT.
+   The source argument above must equal the exact `source_commit` metadata.
 4. Synthetic smoke must pass before scientific mounts. Process and digest each exact
    input only in its existing single stream.
 5. Produce exactly 51×2 rows, finalize and promote only compact R2 outputs.
