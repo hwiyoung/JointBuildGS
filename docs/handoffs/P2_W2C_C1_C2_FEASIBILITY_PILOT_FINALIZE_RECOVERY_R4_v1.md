@@ -6,10 +6,10 @@
 - task_id: `P2-C1-C2-FEASIBILITY-PILOT-FINALIZE-RECOVERY-R4-v1`
 - phase: `P2 / development baseline finalize-only recovery before C3 strategy freeze`
 - direction: `Work→Codex`
-- status: `DRAFT_NOT_EXECUTION_AUTHORITY`
-- user_approval: `NOT_YET_ACTIVATED`
+- status: `APPROVED_FOR_EXECUTION`
+- user_approval: `APPROVED_FOR_EXECUTION`
 - packet_version: `v1`
-- source_commit: `PENDING_REVIEWED_IMPLEMENTATION_COMMIT`
+- source_commit: `9a03711b3c4d4a61717ce7745741152dbc2152d4`
 - project_image_id: `sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774`
 - run_id: `P2-C1-C2-FEASIBILITY-PILOT-FINALIZE-RECOVERY-R4-RUN-v1`
 - execution_mode: `FINALIZE_ONLY_REUSE`
@@ -17,11 +17,11 @@
 - research_charter_version: `C1C5_CANON_v2`
 - decision_log_through: `DEC-P1-013`
 - created_at: `2026-08-02`
+- activated_at: `2026-08-02T13:08:58+09:00`
 - scientific_verdict: `null`
 
-This is a DRAFT only. It does not authorize an Experiment Host pull, writer transfer,
-artifact read, finalization or promotion. Activation requires an exact reviewed source
-and separate machine-readable approval commit.
+This packet is activated only for the exact reviewed source and invocation bound
+below. Experiment Host execution still requires the offered/accepted receipt chain.
 
 ## Answer first
 
@@ -168,6 +168,16 @@ rehash only that allowlist and must not mount or rehash the five original R3
 scientific sources.
 
 ## Eventual lifecycle
+
+Exact activated invocation binding:
+
+```bash
+bash scripts/p2_baselines/c1_c2_feasibility_pilot_finalize_recovery_r4_v1/run_finalize_recovery_host.sh \
+  /media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts \
+  sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774 \
+  9a03711b3c4d4a61717ce7745741152dbc2152d4 \
+  P2-C1-C2-FEASIBILITY-PILOT-FINALIZE-RECOVERY-R4-RUN-v1
+```
 
 1. Work Host commits this DRAFT only, then implements and tests the bounded recovery.
 2. Three independent exact-source reviews must pass before a separate activation
