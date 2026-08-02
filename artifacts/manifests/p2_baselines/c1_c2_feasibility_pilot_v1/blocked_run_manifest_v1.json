@@ -1,0 +1,125 @@
+{
+  "schema": "jointbuildgs.p2_c1_c2_feasibility_blocked_run_manifest.v1",
+  "task_id": "P2-C1-C2-FEASIBILITY-PILOT-v1",
+  "handoff_id": "P2-W2C-C1-C2-FEASIBILITY-PILOT-v1",
+  "run_id": "P2-C1-C2-FEASIBILITY-PILOT-v1-20260802T1009KST",
+  "run_id_binding_status": "HOST_INVOCATION_ARGUMENT_ONLY_NOT_WRITTEN_TO_ZERO_SCIENTIFIC_CONTROL",
+  "completed_at": "2026-08-02T10:13:52+09:00",
+  "status": "BLOCKED_PRE_SCIENTIFIC_EXACT_CONTRACT",
+  "source_commit": "d5265d9afbe9afcd49e2bedd5900c3026f7a3b2f",
+  "offered_commit": "9b8d7e3a50f32467f86801c8efae2b204b5ecb23",
+  "accepted_commit": "42b6f7b82b4c30948c2339db1eb52765a61fc503",
+  "project_image_id": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+  "roofer_image": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+  "config_identity": {
+    "path": "configs/p2_baselines/c1_c2_feasibility_pilot_v1/pilot_v1.json",
+    "git_blob": "27cfb95f44b2065f98b50d0be6ffe3be9b8bf926",
+    "bytes": 10772,
+    "sha256": "22e8fc7e572637cab50a63ec9db6d97108dd1e872f24dcb6700c8a9eff5fec4a",
+    "roster_path": "configs/p2_baselines/c1_c2_feasibility_pilot_v1/development_roster_v1.csv",
+    "roster_bytes": 2731,
+    "roster_sha256": "c9f6412c4878a2cec3be09e465bb7a2be60f4f8329a473bf4acd44679c6afecc"
+  },
+  "external_namespace": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_v1/P2-C1-C2-FEASIBILITY-PILOT-v1/",
+  "failure": {
+    "code": "SYNTHETIC_MACHINE_CHANNEL_CONTAMINATED_BY_CONTAINER_BANNER",
+    "stage": "next-synthetic host decision parsing",
+    "host_wrapper_exit_code": 2,
+    "exact_message": "invalid or partial synthetic-smoke state",
+    "cause": "The immutable project image emitted its CUDA/NGC startup banner before the committed next-synthetic RUN and attempt-number machine lines, so the host wrapper did not observe RUN as array element zero.",
+    "observation_class": "LIVE_OBSERVED_HOST_INVOCATION_OUTPUT_CORROBORATED_BY_IMAGE_ENTRYPOINT_AND_WRAPPER_ORDER",
+    "durable_host_stdout_stderr_artifact": null,
+    "observation_limitation": "The host wrapper's process substitution did not persist the project-container banner or machine lines as an external log; the diagnosis is bound by live command output, immutable image entrypoint /opt/nvidia/nvidia_entrypoint.sh, the durable attempt marker, and absence of every downstream Roofer/scientific artifact.",
+    "roofer_smoke_launched": false,
+    "retry_or_rerun_performed": false
+  },
+  "additional_contract_failure": {
+    "code": "ACCEPTED_INPUT_ATTESTATION_REHASHED_AFTER_IMMUTABLE_ACCEPTANCE",
+    "stage": "host-wrapper authority revalidation before zero-scientific preflight",
+    "cause": "The committed host wrapper invoked the 100-accepted validator with --artifact-root after the required pre-push and post-push acceptance validations had already attested the same five immutable inputs.",
+    "duplicate_records": 5,
+    "duplicate_bytes_read": 14142585,
+    "scientific_interpretation_performed": false,
+    "regression_guard_added_in_active_task": false,
+    "reason_no_guard_was_added": "The activated runner and wrapper are protected exact-source files; the current handoff is closed rather than repaired or rerun."
+  },
+  "synthetic_artifacts": [
+    {
+      "uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_v1/P2-C1-C2-FEASIBILITY-PILOT-v1/control/synthetic_inputs_v1.json",
+      "bytes": 531,
+      "sha256": "216d217010548e86bf378db1471e594b1aa5a1a5d16b8491408ec95bc823348c"
+    },
+    {
+      "uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_v1/P2-C1-C2-FEASIBILITY-PILOT-v1/smoke/attempt_01.started.json",
+      "bytes": 166,
+      "sha256": "b2a91de89501b106e1c3cfda66df4bbf521e3eea566fed599bee5590133b3757"
+    },
+    {
+      "uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_v1/P2-C1-C2-FEASIBILITY-PILOT-v1/smoke/work/input.las",
+      "bytes": 1587,
+      "sha256": "fe34e85a85b76c9b79e8ac80888270d5f9226ad728cc40bf9b51ccb36c61f423"
+    },
+    {
+      "uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_v1/P2-C1-C2-FEASIBILITY-PILOT-v1/smoke/work/r_derived.geojson",
+      "bytes": 872,
+      "sha256": "db7fffae05394cee8d17f022b24b2e4041706ac48f84236f38e3aeb268eda88b"
+    }
+  ],
+  "scope_counters": {
+    "synthetic_attempt_markers": 1,
+    "synthetic_roofer_attempts": 0,
+    "scientific_prepare_calls": 0,
+    "scientific_operation_attempts": 0,
+    "development_buildings_opened": 0,
+    "development_result_rows": 0,
+    "validation_outcome_accesses": 0,
+    "held_out_outcome_accesses": 0,
+    "c3_c4_c5_executions": 0,
+    "fusion_accesses": 0,
+    "r_ext_accesses": 0,
+    "scientific_freeze_namespace_exists": false
+  },
+  "accounting": {
+    "activation_integrity_records_verified": 5,
+    "activation_integrity_required_full_read_passes": 2,
+    "activation_integrity_note": "The exact five compact inputs were SHA-256 verified at the required pre-push and post-push 100-accepted lifecycle checks.",
+    "unexpected_post_acceptance_pre_scientific_rehash_passes": 1,
+    "unexpected_post_acceptance_pre_scientific_rehash_bytes": 14142585,
+    "scientific_runner_payload_bytes_opened_or_hashed": 0,
+    "external_namespace_file_count": 4,
+    "external_namespace_bytes": 3156,
+    "external_namespace_inventory_bound_records": 4,
+    "new_output_ceiling_bytes": 100000000000,
+    "wall_clock_ceiling_seconds": 43200
+  },
+  "result_contract": {
+    "conditions_executed": [],
+    "g0_g1_rows": 0,
+    "canonical_g2": null,
+    "g3": null,
+    "g4": null,
+    "pass_usable": null,
+    "c3_strategy_evidence": "NOT_AVAILABLE_PRE_SCIENTIFIC_BLOCK"
+  },
+  "independent_reviews": [
+    {
+      "review_id": "leakage_review",
+      "focus": "scientific scope and leakage",
+      "result": "PASS",
+      "material_correction_required": false
+    },
+    {
+      "review_id": "repro_review",
+      "focus": "reproducibility and no-repeat",
+      "result": "PASS_AFTER_DRAFT_CORRECTIONS",
+      "material_correction_required": false
+    },
+    {
+      "review_id": "handoff_review",
+      "focus": "two-host ownership and blocked closure",
+      "result": "PASS",
+      "material_correction_required": false
+    }
+  ],
+  "scientific_verdict": null
+}
