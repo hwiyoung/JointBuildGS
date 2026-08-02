@@ -1,0 +1,149 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P2-W2C-C1-C2-G2-C3-FIRST-WAVE-RECOVERY-R3-v1",
+  "task_id": "P2-C1-C2-G2-C3-FIRST-WAVE-RECOVERY-R3-v1",
+  "created_at": "2026-08-03T00:15:57+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "closed",
+  "previous_receipt": {
+    "path": "artifacts/manifests/handoffs/P2-W2C-C1-C2-G2-C3-FIRST-WAVE-RECOVERY-R3-v1/200-blocked.json",
+    "sha256": "b3ba000f7d8ec9aee9037dbd7d22e1105c1c783e67ecd7b79a4e7405a06b8282"
+  },
+  "transport": {
+    "mode": "serialized_main",
+    "branch": "main",
+    "target_branch": "main",
+    "exclusive_writer_ack": true
+  },
+  "commits": {
+    "base_main": "e75dba6e30a0dc77a2a002dcc9546625c38adefb",
+    "offered_head": "026c31c9c525db729ca4d362aa9728d1f2d9eba1",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P2-W2C-C1-C2-G2-C3-FIRST-WAVE-RECOVERY-R3-v1",
+      "artifacts/manifests/p2/c1_c2_g2_c3_first_wave_recovery_r3_v1",
+      "docs/experiments/p2/c1_c2_g2_c3_first_wave_recovery_r3_v1",
+      "docs/handoffs/returns/P2_C2W_C1_C2_G2_C3_FIRST_WAVE_RECOVERY_R3_RETURN_v1.md"
+    ],
+    "protected_paths": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      ".gitattributes",
+      "Dockerfile.c3-semantic",
+      "requirements-c3-semantic.txt",
+      "configs",
+      "scripts",
+      "src",
+      "tests",
+      "docs/research",
+      "docs/evidence",
+      "docs/handoffs/P2_W2C_C1_C2_G2_C3_FIRST_WAVE_RECOVERY_R3_v1.md",
+      "docs/handoffs/P2_W2C_C1_C2_G2_C3_FIRST_WAVE_RECOVERY_R2_v1.md",
+      "docs/handoffs/returns/P2_C2W_C1_C2_G2_C3_FIRST_WAVE_RECOVERY_R2_RETURN_v1.md",
+      "artifacts/manifests/gate_s0",
+      "artifacts/manifests/handoffs/P2-W2C-C1-C2-G2-C3-FIRST-WAVE-RECOVERY-R2-v1",
+      "phases"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "artifact_verified",
+    "verifier_role": "experiment_host",
+    "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "commands": [
+      "validate exact R3 200-blocked chain",
+      "return exclusive writer ownership to Work Host without scientific payload access"
+    ],
+    "tests": [
+      {
+        "name": "R3 200-blocked chain validator",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "direct-child writer-return closure",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "scientific payload reads during closure",
+        "passed": 0,
+        "failed": 0
+      }
+    ]
+  },
+  "artifacts": {
+    "required_for_task": true,
+    "availability": {
+      "work_host": "manifest_only",
+      "experiment_host": "verified_local"
+    },
+    "records": [
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/reference/c1_grid_v1.npz",
+        "bytes": 3023643,
+        "sha256": "4f72178551e25ef27a952a09faa8331c1464416fcd6c5f66a57a9424e7f0b77b",
+        "verification_method": "closed_attestation_reuse",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T13:12:43.798433+00:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/checkpoints/050-c1_reference_frozen_pre_c5.json",
+        "bytes": 3140,
+        "sha256": "530a2a001189c7c0a4dfa486349b77d80ee5031e2a8b4024793405837dc1611e",
+        "verification_method": "closed_attestation_reuse",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T13:12:43.798433+00:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/common/mvs_class26_v1.ply",
+        "bytes": 7327590,
+        "sha256": "c7d63387d720dc4028c2b00e9cc6abb83d41161d6f033199ee619765fdfaf8dd",
+        "verification_method": "closed_attestation_reuse",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T13:12:43.798433+00:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/checkpoints/030-dense_mvs_and_gravity.json",
+        "bytes": 2951,
+        "sha256": "b301d3dc7dec2423ff5760c47db4dfef4f62e919b5aac5808a30c82a9330a8f8",
+        "verification_method": "closed_attestation_reuse",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T13:12:43.798433+00:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/reference/reference_candidate_cells_v1.csv",
+        "bytes": 3785261,
+        "sha256": "bf87736227ea3c28bc8f966f36e2498f786d2de420a732fa0bfebbb73664275a",
+        "verification_method": "closed_attestation_reuse",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T13:12:43.798433+00:00"
+      }
+    ],
+    "attestation_reuse": {
+      "source_handoff_id": "P2-W2C-C1-C2-FEASIBILITY-PILOT-v1",
+      "source_task_id": "P2-C1-C2-FEASIBILITY-PILOT-v1",
+      "source_receipt_path": "artifacts/manifests/handoffs/P2-W2C-C1-C2-FEASIBILITY-PILOT-v1/300-closed.json",
+      "source_receipt_commit": "896fe284bc4d496e6e9c79720f4e75396a41d0b2",
+      "source_receipt_sha256": "705348ecde9d139254bdd24e59ed02312d5321c20f802649f1ce4ca19f5b9bda",
+      "record_identity_sha256": "f63d5d4405157615d807d6babd4a9bf74a16ab13818193945ed9bbfc02532db3"
+    }
+  },
+  "scientific": {
+    "technical_state": "complete",
+    "scientific_verdict": null,
+    "promotion_status": "not_requested"
+  },
+  "receiver_ack": {
+    "role": "experiment_host",
+    "accepted_at": "2026-08-03T00:15:57+09:00",
+    "status": "closed",
+    "issue": "R3 closes BLOCKED after completed G2 and MVS adaptation; evaluator metadata-header handling and native COLMAP depth-dimension support require the next bounded Work Host source correction. Exclusive writer ownership returns to Work Host."
+  }
+}
