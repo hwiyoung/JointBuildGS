@@ -6,21 +6,25 @@
 - task_id: `P2-C1-C2-QUALITATIVE-EVALUATOR-BACKFILL-v1`
 - phase: `P2_GATE_S0_POST_HOC_DEVELOPMENT_EVIDENCE`
 - direction: `Work Host -> Experiment Host`
-- status: `DRAFT`
+- status: `APPROVED_FOR_EXECUTION`
 - packet_version: `v1`
-- source_commit: `6c4d2491154cb88659809aef245d87c5d6d651ed`
-- offered_receipt_commit: `TO_BE_CREATED_ONLY_AFTER_REVIEW_AND_EXPLICIT_ACTIVATION`
+- source_commit: `0f9b2e120f81f733e7312e0b9bfd000de726b192`
+- project_image_id: `sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774`
+- run_id: `P2-C1-C2-QUALITATIVE-EVALUATOR-BACKFILL-RUN-v1`
+- execution_mode: `QUALITATIVE_EVALUATOR_BACKFILL_REUSE_ONLY`
 - target_branch: `main`
 - research_charter_version: `C1C5_CANON_v2`
 - result_contract_version: `docs/research/04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md`
 - decision_log_through: `DEC-P1-013`
 - supersedes: `none`
-- user_approval: `NOT_GRANTED_FOR_EXECUTION`
+- activated_at: `2026-08-02T17:26:23+09:00`
+- user_approval: `APPROVED_FOR_EXECUTION`
+- approval_basis: `2026-08-02 user instruction: "진행하자" for the qualitative, stage, and final-status backfill`
 - scientific_verdict: `null`
 
-This DRAFT records the next bounded task. It is not an execution request. Activation
-requires an exact reviewed implementation/config commit, an immutable offered receipt,
-and a separate explicit human authorization tuple.
+This packet is activated only for the exact reviewed implementation/config commit,
+project image, run ID, execution mode, and bounded scope above. Experiment Host task
+action still requires the separate immutable offered/accepted receipt chain.
 
 ## Goal
 
@@ -446,10 +450,14 @@ and `scientific_verdict` remains `null`.
 ## Launcher prompt
 
 ```text
-This packet is DRAFT. Do nothing unless the user supplies the exact activation tuple:
-handoff_id P2-W2C-C1-C2-QUALITATIVE-EVALUATOR-BACKFILL-v1, the exact offered-receipt
-commit SHA, this packet path, a non-placeholder source commit, and
-explicit_user_authorization: APPROVED_FOR_EXECUTION.
+This packet is activated only for handoff_id
+P2-W2C-C1-C2-QUALITATIVE-EVALUATOR-BACKFILL-v1, source commit
+0f9b2e120f81f733e7312e0b9bfd000de726b192, project image
+sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774,
+run ID P2-C1-C2-QUALITATIVE-EVALUATOR-BACKFILL-RUN-v1, execution mode
+QUALITATIVE_EVALUATOR_BACKFILL_REUSE_ONLY, and explicit_user_authorization:
+APPROVED_FOR_EXECUTION. Do nothing unless the launcher also supplies the exact
+immutable offered-receipt commit SHA and this packet path.
 
 When and only when the tuple is complete, verify the Experiment Host is clean and fetch
 origin/main. Before pull, inspect the remote packet and offered receipt read-only. Pull
