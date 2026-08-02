@@ -6,19 +6,19 @@
 - task_id: `P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1`
 - phase: `P2 / development baseline feasibility before C3 strategy freeze`
 - direction: `Work→Codex`
-- status: `DRAFT_NOT_EXECUTION_AUTHORITY`
-- user_approval: `NOT_YET_ACTIVATED`
+- status: `APPROVED_FOR_EXECUTION`
+- user_approval: `APPROVED_FOR_EXECUTION`
 - packet_version: `v1`
-- source_commit: `PENDING_REVIEWED_IMPLEMENTATION_COMMIT`
+- source_commit: `8346a1f40763a17b02f40e47dbe74c8102f0a76e`
 - target_branch: `main`
 - research_charter_version: `C1C5_CANON_v2`
 - decision_log_through: `DEC-P1-013`
 - created_at: `2026-08-02`
+- activated_at: `2026-08-02T12:02:05+09:00`
 - scientific_verdict: `null`
 
-This file is a DRAFT only. It cannot authorize Experiment Host execution or writer
-transfer until a later activation commit records the exact reviewed source and both
-machine-readable approval lines required by the protected wrapper.
+This packet is activated only for the exact reviewed source and invocation bound
+below. Experiment Host execution still requires the offered/accepted receipt chain.
 
 ## Answer first
 
@@ -124,6 +124,20 @@ The disposable probe is implementation verification, not an R3 operational attem
 the add-once R3 external namespace remains unopened until accepted execution.
 
 ## Eventual execution lifecycle
+
+Exact activated invocation binding:
+
+```bash
+bash scripts/p2_baselines/c1_c2_feasibility_pilot_v1/run_pilot_host.sh \
+  /media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts \
+  sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774 \
+  8346a1f40763a17b02f40e47dbe74c8102f0a76e \
+  P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-RUN-v1
+```
+
+The project-image argument must match the direct original attestation reuse, the
+source argument must equal the exact `source_commit` metadata, and the run ID is a
+fresh add-once R3 identity.
 
 1. Work Host commits and independently reviews the exact implementation, then makes a
    separate activation commit. A later 000-offered event transfers writer ownership.
