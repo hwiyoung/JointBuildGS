@@ -1008,12 +1008,15 @@ def provisional_output_check(output_dir: Path, *, expected_features_min: int = 1
                     g1_failures.add("BOUNDARY_INDEX_OR_SHAPE_INVALID")
                 else:
                     all_rings.extend(rings)
-                semantics = geometry.get("semantics")
-                if semantics is None:
+                if "semantics" not in geometry:
                     if is_lod22:
                         g1_failures.add("LOD22_SEMANTICS_MISSING")
                     continue
-                definitions = semantics.get("surfaces", []) if isinstance(semantics, Mapping) else []
+                semantics = geometry.get("semantics")
+                if not isinstance(semantics, Mapping):
+                    g1_failures.add("SEMANTIC_DEFINITIONS_INVALID")
+                    continue
+                definitions = semantics.get("surfaces", [])
                 if not isinstance(definitions, list) or any(not isinstance(item, Mapping) or not isinstance(item.get("type"), str) for item in definitions):
                     g1_failures.add("SEMANTIC_DEFINITIONS_INVALID")
                     continue

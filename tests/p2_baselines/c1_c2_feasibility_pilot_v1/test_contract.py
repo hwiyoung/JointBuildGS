@@ -488,6 +488,12 @@ class ContractTests(unittest.TestCase):
             self.assertFalse(malformed_optional_semantics["G1_schema_semantic"])
             self.assertIn("SEMANTIC_VALUES_SHAPE_OR_INDEX_INVALID", malformed_optional_semantics["G1_failure_reasons"])
 
+            cityjson["CityObjects"]["building"]["geometry"][0]["semantics"] = None
+            path.write_text(json.dumps(cityjson), encoding="utf-8")
+            explicit_null_semantics = contract.provisional_output_check(output)
+            self.assertFalse(explicit_null_semantics["G1_schema_semantic"])
+            self.assertIn("SEMANTIC_DEFINITIONS_INVALID", explicit_null_semantics["G1_failure_reasons"])
+
     def test_schema_keeps_canonical_g2_g3_g4_and_pass_null(self) -> None:
         config = contract.load_config()
         schema = json.loads((contract.REPO / "configs/p2_baselines/c1_c2_feasibility_pilot_v1/result_schema_v1.json").read_text(encoding="utf-8"))
