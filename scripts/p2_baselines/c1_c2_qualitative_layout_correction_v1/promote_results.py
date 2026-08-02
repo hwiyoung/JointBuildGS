@@ -13,12 +13,12 @@ from pathlib import Path
 from typing import Any
 
 
-TASK_ID = "P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R2-v1"
-HANDOFF_ID = "P2-W2C-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R2-v1"
+TASK_ID = "P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R3-v1"
+HANDOFF_ID = "P2-W2C-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R3-v1"
 CONFIG_REL = "configs/p2_baselines/c1_c2_qualitative_layout_correction_v1/render_v1.json"
 ACCEPTED_REL = f"artifacts/manifests/handoffs/{HANDOFF_ID}/100-accepted.json"
-REPORT_REL = "docs/experiments/p2/c1_c2_qualitative_layout_correction_r2_v1/C1_C2_QUALITATIVE_LAYOUT_CORRECTION_R2_v1.md"
-TECHNICAL_REL = "artifacts/manifests/p2_baselines/c1_c2_qualitative_layout_correction_r2_v1/technical_result_manifest_v1.json"
+REPORT_REL = "docs/experiments/p2/c1_c2_qualitative_layout_correction_r3_v1/C1_C2_QUALITATIVE_LAYOUT_CORRECTION_R3_v1.md"
+TECHNICAL_REL = "artifacts/manifests/p2_baselines/c1_c2_qualitative_layout_correction_r3_v1/technical_result_manifest_v1.json"
 
 
 def _git(root: Path, *args: str) -> str:
@@ -177,7 +177,7 @@ def promote(*, external_manifest: Path, repo_root: Path, source_commit: str, acc
         "scientific_verdict": None,
     }
     technical_bytes = (json.dumps(technical, ensure_ascii=False, sort_keys=True, separators=(",", ":")) + "\n").encode("utf-8")
-    report = f"""# C1/C2 qualitative layout correction R2 v1
+    report = f"""# C1/C2 qualitative layout correction R3 v1
 
 ## Answer first
 
@@ -204,7 +204,7 @@ payloads were not mounted. Eligibility, metrics, reconstruction, Roofer, GS, C3,
 and C5 computations were all zero. New-output hashing was limited to one post-write
 digest of the corrected PNG.
 
-The superseded pre-acceptance R1 offer, prior blocked namespace, and every prior packet,
+The superseded R1 offer, blocked R2 handoff, prior blocked namespace, and every prior packet,
 Return, receipt, report, table, and manifest remain immutable. Final technical closure belongs to the separately
 committed Return and 200/300 receipts after original-pixel inspection.
 """.encode("utf-8")

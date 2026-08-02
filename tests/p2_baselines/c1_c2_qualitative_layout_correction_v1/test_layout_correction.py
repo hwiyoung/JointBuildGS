@@ -44,8 +44,8 @@ class LayoutCorrectionTest(unittest.TestCase):
         return examples, ledgers, cells
 
     def test_config_is_exact_layout_only_successor(self) -> None:
-        self.assertEqual(self.config["task_id"], "P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R2-v1")
-        self.assertEqual(self.config["handoff_id"], "P2-W2C-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R2-v1")
+        self.assertEqual(self.config["task_id"], "P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R3-v1")
+        self.assertEqual(self.config["handoff_id"], "P2-W2C-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R3-v1")
         self.assertEqual(self.config["predecessor"]["closed_commit"], "57205adf16def5382322ee57136b1cd66e9d07bc")
         self.assertEqual(self.config["predecessor"]["accepted_artifact_record_count"], 25)
         self.assertEqual(self.config["predecessor"]["accepted_artifact_total_bytes"], 30432763)
@@ -74,15 +74,15 @@ class LayoutCorrectionTest(unittest.TestCase):
             "7fc0770501eb3447733b481fe7ccf195064cdb3cb35934744a8db2fca6d0ec64",
         )
 
-    def test_r2_identity_and_path_matrix_is_exact(self) -> None:
-        task = "P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R2-v1"
-        handoff = "P2-W2C-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R2-v1"
-        run = "P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R2-RUN-v1"
-        packet_rel = "docs/handoffs/P2_W2C_C1_C2_QUALITATIVE_LAYOUT_CORRECTION_R2_v1.md"
-        namespace = f"phase-payloads/p2-baselines/c1_c2_qualitative_layout_correction_r2_v1/{task}"
-        report_rel = "docs/experiments/p2/c1_c2_qualitative_layout_correction_r2_v1/C1_C2_QUALITATIVE_LAYOUT_CORRECTION_R2_v1.md"
-        technical_rel = "artifacts/manifests/p2_baselines/c1_c2_qualitative_layout_correction_r2_v1/technical_result_manifest_v1.json"
-        return_rel = "docs/handoffs/returns/P2_C2W_C1_C2_QUALITATIVE_LAYOUT_CORRECTION_R2_RETURN_v1.md"
+    def test_r3_identity_and_path_matrix_is_exact(self) -> None:
+        task = "P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R3-v1"
+        handoff = "P2-W2C-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R3-v1"
+        run = "P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R3-RUN-v1"
+        packet_rel = "docs/handoffs/P2_W2C_C1_C2_QUALITATIVE_LAYOUT_CORRECTION_R3_v1.md"
+        namespace = f"phase-payloads/p2-baselines/c1_c2_qualitative_layout_correction_r3_v1/{task}"
+        report_rel = "docs/experiments/p2/c1_c2_qualitative_layout_correction_r3_v1/C1_C2_QUALITATIVE_LAYOUT_CORRECTION_R3_v1.md"
+        technical_rel = "artifacts/manifests/p2_baselines/c1_c2_qualitative_layout_correction_r3_v1/technical_result_manifest_v1.json"
+        return_rel = "docs/handoffs/returns/P2_C2W_C1_C2_QUALITATIVE_LAYOUT_CORRECTION_R3_RETURN_v1.md"
         receipt_rel = f"artifacts/manifests/handoffs/{handoff}/"
 
         self.assertEqual(self.config["task_id"], task)
@@ -132,11 +132,51 @@ class LayoutCorrectionTest(unittest.TestCase):
             "P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-RUN-v1",
             "P2_W2C_C1_C2_QUALITATIVE_LAYOUT_CORRECTION_v1.md",
             "phase-payloads/p2-baselines/c1_c2_qualitative_layout_correction_v1/P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-v1",
+            "P2-W2C-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R2-v1",
+            "P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-R2-RUN-v1",
+            "P2_W2C_C1_C2_QUALITATIVE_LAYOUT_CORRECTION_R2_v1.md",
         )
         for value in stale:
             self.assertNotIn(value, launcher)
             self.assertNotIn(value, promoter)
             self.assertNotIn(value, packet)
+
+    def test_actual_packet_authority_and_launcher_git_mode(self) -> None:
+        packet = self.repository / "docs/handoffs/P2_W2C_C1_C2_QUALITATIVE_LAYOUT_CORRECTION_R3_v1.md"
+        parser = self.repository / "scripts/p2_baselines/c1_c2_feasibility_pilot_v1/parse_execution_authority.awk"
+        launcher_rel = "scripts/p2_baselines/c1_c2_qualitative_layout_correction_v1/run_correction_host.sh"
+        packet_text = packet.read_text(encoding="utf-8")
+        activated = re.sub(
+            r"^- status: `[^`]+`$",
+            "- status: `APPROVED_FOR_EXECUTION`",
+            packet_text,
+            count=1,
+            flags=re.MULTILINE,
+        )
+        activated = re.sub(
+            r"^- user_approval: `[^`]+`$",
+            "- user_approval: `APPROVED_FOR_EXECUTION`",
+            activated,
+            count=1,
+            flags=re.MULTILINE,
+        )
+        synthetic = subprocess.run(
+            ["awk", "-f", str(parser)], input=activated, text=True, capture_output=True
+        )
+        self.assertEqual(synthetic.returncode, 0)
+        actual = subprocess.run(["awk", "-f", str(parser), str(packet)], capture_output=True)
+        if "- status: `APPROVED_FOR_EXECUTION`" in packet_text:
+            self.assertEqual(actual.returncode, 0)
+        else:
+            self.assertIn("- status: `DRAFT`", packet_text)
+            self.assertNotEqual(actual.returncode, 0)
+        mode = subprocess.run(
+            ["git", "-C", str(self.repository), "ls-files", "--stage", "--", launcher_rel],
+            check=True,
+            capture_output=True,
+            text=True,
+        ).stdout.split()[0]
+        self.assertEqual(mode, "100755")
 
     def test_launcher_binds_canonical_receipt_and_whole_task_budget(self) -> None:
         launcher = (
