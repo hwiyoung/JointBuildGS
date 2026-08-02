@@ -1,0 +1,426 @@
+{
+  "schema": "jointbuildgs.c3_first_wave_strategy_contract_draft.v1",
+  "status": "DRAFT_NOT_EXECUTION_AUTHORITY",
+  "independent_review": "PASS_AS_STRATEGY_DRAFT_ACTIVATION_BLOCKED",
+  "decision_context": ["DEC-P1-010", "DEC-P1-011", "DEC-P1-012", "DEC-P1-013"],
+  "condition_id": "C3_GS_image",
+  "canonical_condition": "NO_EXTERNAL_PRIOR_GS",
+  "execution_authority": false,
+  "C3_execution": "PROHIBITED_UNTIL_SEPARATE_HUMAN_APPROVAL_AND_ACTIVATION",
+  "validation_access": "PROHIBITED",
+  "held_out_access": "PROHIBITED",
+  "C4_C5_execution": "PROHIBITED",
+  "authorized_run_ids": [],
+  "current_writer": "WORK_HOST",
+  "scientific_verdict": null,
+  "common_base": {
+    "id": "B_CURRENT_CANDIDATE_c205892c390997b5",
+    "images": 962,
+    "included_image_pose_pairs": 937,
+    "excluded_images": 25,
+    "included_basename_set_sha256": "dd9b446e11c978ef8223858f08571bfea832e0d33517b24c1e573060244f4e2c",
+    "source_manifest_sha256": "c205892c390997b57b13ee211bbc264c45800770bb84f0b2698c45d3c656fd74",
+    "included_camera_id_set_sha256": "43b70a448dc3d4bad6a06b5352eee0f1ba2cd6e5bc0d57bf7e53f4c11cd79ca7",
+    "included_image_camera_pair_sha256": "7d1f90ecb79ee19acfbfedb0b7cf78083349c7669678a1f883c5034a41a89ccc",
+    "excluded_basename_set_sha256": "a55a811ffe580790c199b65dc57d518890b04d6110ff7c7a2e4cfeb30e6fcb02",
+    "aoi": {
+      "crs": "EPSG:25832",
+      "bbox": [690791.74, 5335864.05, 691154.65, 5336353.85],
+      "geojson_sha256": "93728956ecfbbb24521b4fa4aec745fec176d4c6c94e10cef272934dcf9d9061",
+      "roofsurface_roof_type_or_performance_used": false,
+      "per_building_footprint_crop_allowed": false
+    },
+    "consumer_bindings_required_before_activation": [
+      {
+        "path": "data/work/mvs/colmap_dense/sparse/cameras.bin",
+        "bytes": 64,
+        "role": "CAMERA_INTRINSICS"
+      },
+      {
+        "path": "data/work/mvs/colmap_dense/sparse/images.bin",
+        "bytes": 114415526,
+        "role": "EXACT_937_IMAGE_POSES_AND_NAMES"
+      },
+      {
+        "path": "data/work/mvs/colmap_dense/sparse/points3D.bin",
+        "bytes": 33476840,
+        "role": "ALL_371808_SFM_SPARSE_INITIALIZATION_POINTS"
+      },
+      {
+        "path": "data/work/mvs/openmvs/dim_dense.ply",
+        "bytes": 659138498,
+        "role": "DENSE_MVS_INITIALIZATION_SOURCE"
+      }
+    ],
+    "closed_checkpoint_reuse": {
+      "path": "phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/checkpoints/030-dense_mvs_and_gravity.json",
+      "bytes": 2951,
+      "sha256": "b301d3dc7dec2423ff5760c47db4dfef4f62e919b5aac5808a30c82a9330a8f8",
+      "separate_hash_only_raw_pass_allowed": false
+    },
+    "image_byte_bindings": {
+      "inventory": {
+        "path": "artifacts/manifests/gate_s0/gate_s0_image_member_inventory_v1.csv",
+        "git_blob": "d05ee144d5728247189e843e30ad86ae161832ba",
+        "canonical_sha256": "de9acff049fca4fa14582620a69617157f99b4b5c333938c01b648740ece2b4a"
+      },
+      "camera_ledger": {
+        "path": "docs/research/preregistration/gate_s0/gate_s0_image_camera_ledger_v1.csv",
+        "git_blob": "2869ede94b6447dfb3f043cb346f14c0e4e29ca7",
+        "canonical_sha256": "8c1e89040869e800c34ebd8a06c2b5185524330fc5d56e594b41686173c465b0"
+      },
+      "read_policy": "VERIFY_MANIFEST_SHA_IN_FIRST_NATURAL_READ_BYTE_BUFFER_THEN_DECODE_NO_SEPARATE_HASH_ONLY_PASS"
+    },
+    "components": {
+      "camera_pose": "ON_READY",
+      "sfm_sparse": "ON_READY_371808_POINTS",
+      "dense_mvs": "ON_READY_INITIALIZATION",
+      "gravity": "ON_READY_REUSE_ONLY",
+      "depth": "OFF_READY_OFF",
+      "normal_map_supervision": "OFF_READY_OFF",
+      "confidence": "OFF_READY_OFF",
+      "segmentation": "OFF_READY_OFF"
+    },
+    "gravity": [0.0022003022295437485, -0.0038866451918428023, -0.9999900262798882]
+  },
+  "scope": {
+    "training_scene_count": 1,
+    "training_view_count": 937,
+    "development_buildings_scored": 51,
+    "development_id_set_sha256": "712cf0e7e635f049857302f4e5ffea825165d9fb38dd3091d0ab192d5974a68b",
+    "split_source": {
+      "path": "docs/research/preregistration/gate_s0/uas_reference_coverage_r1_v1/split_candidate_v1.csv",
+      "git_blob": "f6db7b8accdbd7b57b4a221c441acfc5589fb592",
+      "canonical_sha256": "8dc33b86a126667b847ddf33f4ad4a56012f2bfc784c0742e573a421120f7309"
+    },
+    "development_groups": 5,
+    "development_group_sizes": [47, 1, 1, 1, 1],
+    "validation_buildings_prohibited": 11,
+    "held_out_buildings_prohibited": 10,
+    "confirmatory_claims_allowed": false,
+    "full_scene_checkpoint_allowed": true,
+    "protected_output_quarantine": {
+      "identify_components_as_validation_or_held_out": false,
+      "review_or_promote_unassociated_components": false,
+      "create_validation_or_held_out_result_namespace": false
+    }
+  },
+  "initialization": {
+    "sfm_sparse_role": "INCLUDE_ALL",
+    "dense_mvs_role": "DETERMINISTIC_AOI_VOXEL_SEED_CONCAT",
+    "voxel_m": 0.4,
+    "voxel_representative": "LEXICOGRAPHIC_FIRST_POINT",
+    "max_dense_seed_points": 3000000,
+    "random_subsampling_allowed": false,
+    "seed_protect_until_iteration": 5000,
+    "reuse_for_c4_c5_common_base_candidate": true,
+    "reuse_is_not_c4_c5_execution_or_input_promotion_authority": true
+  },
+  "dense_derivative_activation_contract": {
+    "status": "MUST_BE_FILLED_AND_TESTED_BEFORE_ACTIVATION",
+    "required_fields": [
+      "SOURCE_LOCAL_CANONICAL_FRAME_AND_TRANSLATION",
+      "BBOX_BOUNDARY_CONVENTION",
+      "VOXEL_ORIGIN_AND_FLOOR_XYZ_MINUS_ORIGIN_DIV_0P4",
+      "REPRESENTATIVE_AND_SOURCE_ROW_TIE_BREAK",
+      "NONFINITE_RGB_DTYPE_RANGE_AND_SPARSE_DENSE_DUPLICATE_RULE",
+      "OUTPUT_SCHEMA_DTYPE_PATH_POINT_COUNT_BYTES_DIGEST",
+      "OPERATION_ID_FROM_SOURCE_ATTESTATION_AOI_CONFIG_GENERATOR_BLOB_CONTAINER_ID",
+      "PEAK_VRAM_PREFLIGHT"
+    ],
+    "component_lineage_required_fields": [
+      "OUTCOME_FREE_MIXED_SPARSE_DENSE_INITIAL_COMPONENT_RULE",
+      "DENSIFY_SPLIT_MERGE_PRUNE_COMPONENT_ID_INHERITANCE_RULE"
+    ],
+    "reuse_rule": "COMPLETE_IDENTICAL_MANIFEST_REUSED_EXACT_PARTIAL_TERMINAL_ID_CONFLICT_FAIL_CLOSED",
+    "automatic_voxel_or_point_cap_change_allowed": false
+  },
+  "training": {
+    "representation": "GSPLAT_PLANAR_2D_GAUSSIANS",
+    "seed": 0,
+    "downscale": 1.0,
+    "sh_degree": 3,
+    "sh_up_every": 1000,
+    "max_iterations": 30000,
+    "primary_checkpoint_iteration": 30000,
+    "checkpoint_iterations": [5000, 10000, 20000, 30000],
+    "quality_early_stopping_allowed": false,
+    "loss": {
+      "w_photo": 1.0,
+      "photo_l1_fraction": 0.8,
+      "photo_ssim_fraction": 0.2,
+      "w_self_normal_consistency": 0.05,
+      "w_distortion": 0.0,
+      "w_depth": 0.0,
+      "w_normal_map": 0.0,
+      "w_mono": 0.0,
+      "w_semantic": 0.0,
+      "w_mutual": 0.0,
+      "w_structure": 0.0,
+      "w_mvc": 0.0
+    },
+    "learning_rates": {
+      "means": 0.00016,
+      "scales": 0.005,
+      "quaternions": 0.001,
+      "opacities": 0.05,
+      "sh0": 0.0025,
+      "shN": 0.000125
+    },
+    "densification": {
+      "prune_opacity": 0.005,
+      "grow_grad2d": 0.0005,
+      "grow_scale3d": 0.01,
+      "prune_scale3d": 0.1,
+      "refine_start_iteration": 500,
+      "refine_stop_iteration": 25000,
+      "refine_every": 100,
+      "opacity_reset_every": 3000
+    },
+    "actual_engine_config_keys": {
+      "seed": 0,
+      "max_iter": 30000,
+      "downscale": 1.0,
+      "sh_degree": 3,
+      "sh_up_every": 1000,
+      "load_depth": false,
+      "load_normal": false,
+      "load_semantic": false,
+      "normal_dir": null,
+      "mono_normal_dir": null,
+      "mono_depth_dir": null,
+      "w_photo": 1.0,
+      "photo_lam": 0.2,
+      "w_depth": 0.0,
+      "w_normal": 0.0,
+      "w_nc": 0.05,
+      "w_distort": 0.0,
+      "w_mono_depth": 0.0,
+      "w_sem": 0.0,
+      "w_mvc": 0.0,
+      "w_mutual": 0.0,
+      "w_structure": 0.0,
+      "lr_means": 0.00016,
+      "lr_scales": 0.005,
+      "lr_quats": 0.001,
+      "lr_opacities": 0.05,
+      "lr_sh0": 0.0025,
+      "lr_shN": 0.000125,
+      "prune_opa": 0.005,
+      "grow_grad2d": 0.0005,
+      "grow_scale3d": 0.01,
+      "prune_scale3d": 0.1,
+      "refine_start_iter": 500,
+      "refine_stop_iter": 25000,
+      "refine_every": 100,
+      "reset_every": 3000,
+      "init_pointcloud_mode": "concat",
+      "seed_protect": true,
+      "seed_protect_until_iter": 5000,
+      "full_state_checkpoint": true,
+      "full_state_checkpoint_steps": [5000, 10000, 20000, 30000],
+      "full_state_resume": "off"
+    },
+    "seed_variance_status": "SEED_VARIANCE_NOT_ESTIMATED_FIRST_DEVELOPMENT_SCREENING_ONLY",
+    "numeric_recipe_provenance": {
+      "dense_voxel_config": {
+        "path": "configs/input_and_alignment/tum_mob/seed_prep_dense.json",
+        "git_blob": "fea920195cd74804196f3cb2dc61400a1dbd8a25",
+        "role": "NON_PROTECTED_CAPABILITY_STARTING_POINT_NOT_EXECUTION_AUTHORITY"
+      },
+      "control_schedule_config": {
+        "path": "configs/input_and_alignment/tum_vanilla_proper.yaml",
+        "git_blob": "5d951717e570523facb1108a30325792a2c1fc0b",
+        "role": "NON_PROTECTED_CAPABILITY_STARTING_POINT_NOT_EXECUTION_AUTHORITY"
+      },
+      "training_engine": {
+        "path": "src/stage2/train.py",
+        "git_blob": "1e1cd1fa081af12170c61bdb64f9bdbd324f34db",
+        "role": "REUSABLE_ENGINE_TO_BIND_AND_REVIEW_BEFORE_ACTIVATION"
+      },
+      "fusion_w1_or_held_out_result_used": false
+    }
+  },
+  "failure_localization_audit": {
+    "stages": ["INIT", "STEP_5000", "STEP_10000", "STEP_20000", "STEP_30000", "A_DIRECT_DEPTH_FUSION", "A_TSDF_MC", "ROOFER"],
+    "fields": [
+      "component_id",
+      "parent_merge_split_lineage",
+      "initial_seed_count",
+      "surviving_seed_count",
+      "seed_survival_fraction",
+      "occupied_support_recall",
+      "component_balanced_signed_delta_z_along_frozen_up",
+      "component_balanced_absolute_delta_z_along_frozen_up",
+      "xy_centroid_drift",
+      "merge_count",
+      "split_count",
+      "unassociated_count",
+      "finite_state",
+      "primitive_count",
+      "bytes",
+      "operation_id"
+    ],
+    "completed_before_evaluation_reference_open": true,
+    "future_regularizer_trigger": {
+      "native_z_drift_or_support_loss": "NEW_DRAFT_MAY_PROPOSE_MVS_DRIFT_ANCHOR_X_SUPPORT_RETENTION_2X2",
+      "native_stable_adapter_divergence": "SURFACE_EXTRACTION_PROBLEM",
+      "native_and_adapter_stable_roofer_failure": "STAGE3_PROBLEM",
+      "regularizer_addition_before_trigger_evidence": "PROHIBITED"
+    }
+  },
+  "surface_adapters": {
+    "candidate_count": 2,
+    "candidates": ["A_DIRECT_DEPTH_FUSION", "A_TSDF_MC"],
+    "result_unique_key": ["building_id", "method_id=C3_GS_image", "adapter_id"],
+    "adapter_variants_are_separate_reconstruction_conditions": false,
+    "shared_checkpoint": 30000,
+    "shared_exact_view_count": 937,
+    "shared_view_list_hash_required_before_activation": true,
+    "shared_rendered_depth_add_once_cache": true,
+    "same_frame_and_frozen_up": true,
+    "tsdf_z_recentering_allowed": false,
+    "numeric_adapter_config_status": "MUST_BE_FILLED_AND_HASH_BOUND_BEFORE_ACTIVATION",
+    "required_numeric_bindings": [
+      "DEPTH_NEAR_FAR_INVALID_RULE_UNIT",
+      "FUSION_VOXEL_TRUNCATION_VIEW_WEIGHTING",
+      "TSDF_VOXEL_TRUNCATION_ISO_VALUE",
+      "MARCHING_CUBES_SAMPLING_DENSITY",
+      "NORMAL_RULE",
+      "CLASS2_CLASS6_RULE",
+      "LAS_SCALE_OFFSET_TERRAIN_RULE",
+      "PROJECT_IMAGE_CUDA_PYTORCH_GSPLAT_RENDERER_IDENTITY"
+    ],
+    "final_adapter_status": "NOT_SELECTED"
+  },
+  "stage3": {
+    "interface": "R_DERIVED_NON_GT_CONVEX_HULL_V1",
+    "external_roofprint_allowed": false,
+    "r_ext_allowed": false,
+    "ground_class": 2,
+    "building_class": 6,
+    "grid_cell_m": 1.0,
+    "minimum_height_above_terrain_m": 2.5,
+    "component_connectivity": 8,
+    "minimum_component_points": 4,
+    "roofer_image": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2"
+  },
+  "comparative_reporting": {
+    "split": "DEVELOPMENT_ONLY",
+    "automatic_winner_allowed": false,
+    "provisional_nomination_rule": "G0_G1_NO_WORSE_AND_POOLED_AND_GROUP_BALANCED_COVERAGE_SURFACE_RMSE_DIRECTIONS_AGREE_ELSE_NO_SELECTION",
+    "normal_selection_role": "ALWAYS_FALSE_FIRST_WAVE",
+    "normal_reporting_role": "SENSITIVITY_PASS_REPORT_GUARDRAIL_ELSE_REPORT_ONLY_EVALUATOR_NOT_DISCRIMINATIVE",
+    "normal_map_supervision_remains_off": true,
+    "validation_authority_created": false,
+    "g3_g4_pass_thresholds": null,
+    "inferential_statistics_allowed": false
+  },
+  "evaluation_reference_access_gate": {
+    "reference": "INDEPENDENT_UAS_DEVELOPMENT_SCORE_ONLY",
+    "opens_after_native_extracted_roofer_inputs_and_outputs_add_once_sealed": true,
+    "association": "FROZEN_DEVELOPMENT_EXACT_SCORE_CELL_TO_CONDITION_COMPONENT_ASSOCIATION_V1",
+    "association_role": "SCORE_IDENTITY_ONLY",
+    "geometry_modification_allowed": false,
+    "crop_allowed": false,
+    "registration_allowed": false,
+    "zero_overlap": "G0_TECHNICAL_FAILURE"
+  },
+  "caps": {
+    "strategy_variants": 1,
+    "training_seeds": 1,
+    "training_jobs": 1,
+    "surface_adapters": 2,
+    "gpu_count": 1,
+    "gpu_class": "RTX_3090_CLASS",
+    "vram_gb": 24,
+    "wall_clock_seconds": 43200,
+    "aggregate_gpu_hours": 12,
+    "new_output_bytes": 100000000000,
+    "full_state_checkpoints_retained": 4,
+    "final_exports_retained": 1,
+    "total_checkpoint_files_retained": 5,
+    "automatic_scientific_retries": 0,
+    "rendered_depth_generation_count": 1,
+    "adapter_execution_count": 2,
+    "lightweight_case_sheets": 51,
+    "mechanism_panels": 30,
+    "subcaps_bytes": {
+      "training_and_checkpoints": 50000000000,
+      "rendered_depth_cache": 20000000000,
+      "adapter_a_direct": 10000000000,
+      "adapter_a_tsdf": 10000000000,
+      "stage3_and_reports": 10000000000
+    },
+    "roofer": {
+      "cpus_per_attempt": 2,
+      "memory_bytes_per_attempt": 8000000000,
+      "timeout_seconds_per_attempt": 600,
+      "quality_retries": 0,
+      "unique_operation_max_status": "MUST_BE_FIXED_BY_OUTCOME_BLIND_IMPLEMENTATION_PREFLIGHT_BEFORE_ACTIVATION"
+    },
+    "whole_pipeline_wall_clock_status": "MUST_BE_FIXED_BEFORE_ACTIVATION"
+  },
+  "prohibited_inputs": [
+    "CURRENT_UAS_LIDAR_BEFORE_SCORING",
+    "EXISTING_ALS",
+    "LOD1",
+    "LOD2_LOD3_GEOMETRY_OR_LABELS",
+    "C1_C2_OUTPUT_GEOMETRY",
+    "EXTERNAL_ROOFPRINT",
+    "R_EXT",
+    "VENDOR_1104_IMAGE_MVS",
+    "SCENE_MVS",
+    "DIM_V1_LAZ",
+    "VALIDATION_REFERENCE_OR_OUTCOME",
+    "HELD_OUT_REFERENCE_OR_OUTCOME"
+  ],
+  "prohibited_input_enforcement": "NOT_MOUNTED_AND_ANY_OPEN_ATTEMPT_FAILS_CLOSED",
+  "stage_mount_allowlists": {
+    "dense_derivative": ["DIM_DENSE_PLY", "FROZEN_AOI_AND_CONFIG"],
+    "training": ["EXACT_937_IMAGES", "CAMERAS_BIN", "IMAGES_BIN", "POINTS3D_BIN", "COMPLETED_DENSE_DERIVATIVE"],
+    "scoring": ["SEALED_C3_OUTPUTS", "DEVELOPMENT_UAS_REFERENCE_ONLY"],
+    "whole_artifact_root_mount_allowed": false
+  },
+  "task_identity_draft": {
+    "task_id": "P2-C3-FIRST-WAVE-v1",
+    "handoff_id": "P2-W2C-C3-FIRST-WAVE-v1",
+    "artifact_namespace": "artifact://JointBuildGS/phase-payloads/p2-baselines/c3_first_wave_v1/P2-C3-FIRST-WAVE-v1/",
+    "namespace_must_be_empty": true,
+    "pre_reference_control_record": "control/150-pre-reference-sealed_v1.json",
+    "pre_reference_control_record_is_handoff_receipt": false,
+    "canonical_handoff_receipt_chain": ["000-offered", "100-accepted", "200-verified-or-blocked", "300-closed"],
+    "pre_reference_control_record_required_contents": [
+      "STEP_30000_CHECKPOINT_IDENTITY",
+      "NATIVE_GS_AUDIT",
+      "TWO_EXTRACTED_SURFACES",
+      "TWO_ROOFER_INPUTS_AND_OUTPUTS",
+      "ADAPTER_CONFIGS",
+      "RENDERER_AND_ORDERED_VIEW_LIST",
+      "ALL_COMPLETION_AND_OUTPUT_DIGESTS"
+    ],
+    "output_digest_policy": "COMPUTE_IN_SERIALIZATION_SAVE_STREAM_NO_POST_SEAL_FULL_REHASH"
+  },
+  "ownership": {
+    "source_to_activation_to_000_to_100": "DIRECT_CHILD_ALLOWED_PATHS_ONLY",
+    "experiment_writer_interval": "100_ACCEPTED_THROUGH_RETURN_200_300",
+    "work_writer_resumes_after": "DIRECT_CHILD_300_CLOSED_AND_FF_ONLY_PULL"
+  },
+  "pre_activation_validation": [
+    "ZERO_SCIENTIFIC_PAYLOAD_CHECKPOINT_WRITER_SMOKE",
+    "TWO_ADAPTER_SYNTHETIC_GEOMETRY_SMOKE",
+    "ROOFER_WRITABLE_WORKING_DIRECTORY_SMOKE",
+    "DETERMINISTIC_DENSE_SEED_MAX_3M_PREFLIGHT",
+    "PROHIBITED_ROOTS_NOT_MOUNTED_CHECK",
+    "STEP_30000_SEAL_TO_SCORE_ONLY_BOUNDARY_RECEIPT",
+    "PARTIAL_NAMESPACE_COLLISION_AND_RERUN_FAIL_CLOSED_TEST",
+    "SYNTHETIC_KNOWN_TILT_NORMAL_SENSITIVITY_TEST"
+  ],
+  "source_evidence": {
+    "c1_c2_closed_commit": "c760437bfb50674e11ba1806ef7e7a02e3ca2aa4",
+    "c1_c2_result_commit": "e8f5fa882bc578b743ae7e809bc4f85eb323038f",
+    "c1_c2_report": "docs/experiments/p2/c1_c2_feasibility_pilot_finalize_recovery_r4_v1/C1_C2_DEVELOPMENT_REPORT_v1.md",
+    "freeze_report": "docs/research/preregistration/gate_s0/freeze_recovery_v1/GATE_S0_FREEZE_RECOVERY_REPORT_v1.md",
+    "uas_explainer": "docs/research/preregistration/gate_s0/uas_eligibility_explainer_v1/UAS_199_TO_72_EXPLAINER_v1.md"
+  }
+}
