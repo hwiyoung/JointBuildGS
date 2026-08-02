@@ -1,0 +1,172 @@
+{
+  "attrition": {
+    "baseline_final": 10,
+    "baseline_planar_fraction": 12,
+    "diagnostic_final": 72,
+    "height": 124,
+    "minimum_points": 129,
+    "neighbors": 124,
+    "normal": 96,
+    "plane_rmse": 96,
+    "preliminary_component_size": 89,
+    "raw_observed": 129,
+    "roughness": 94,
+    "z_std": 124
+  },
+  "claim_scope": {
+    "all_72_effective_n_rho_0p05": 28.05194805194805,
+    "c5_lod1_scope": "LOD2_DERIVED_DIAGNOSTIC_ONLY_NOT_PRIMARY_C5_READY",
+    "confirmatory_minimum_held_out_groups_pass": false,
+    "held_out_effective_n_rho_0p05": 8.333333333333334,
+    "status": "PILOT_ONLY_REFERENCE_SCOPE"
+  },
+  "counts": {
+    "excluded": 127,
+    "independent_groups": 9,
+    "largest_group": 47,
+    "raw_uas_observed_buildings_min_4_cells": 129,
+    "reference_candidate": 72,
+    "splits": {
+      "development": 51,
+      "held_out": 10,
+      "validation": 11
+    },
+    "strict_planar_branch": 10,
+    "u_target": 199
+  },
+  "decision_context": "DEC-P1-013",
+  "examples": [
+    {
+      "bbox_height_m": 7.76,
+      "bbox_width_m": 11.96,
+      "c4_cells": 87,
+      "candidate": true,
+      "description": "통과·UAS 경계에 가장 가까움",
+      "exclusion_reason": "PASS_ALL_INPUT_SUPPORT_RULES",
+      "image_views": 228,
+      "label": "P1",
+      "mvs_cells": 97,
+      "reference_cells": 5,
+      "stable_id": "DEBY_LOD2_4959324"
+    },
+    {
+      "bbox_height_m": 19.9,
+      "bbox_width_m": 16.84,
+      "c4_cells": 193,
+      "candidate": true,
+      "description": "통과·UAS 지원량 중앙 사례",
+      "exclusion_reason": "PASS_ALL_INPUT_SUPPORT_RULES",
+      "image_views": 241,
+      "label": "P2",
+      "mvs_cells": 282,
+      "reference_cells": 97,
+      "stable_id": "DEBY_LOD2_4959793"
+    },
+    {
+      "bbox_height_m": 107.96,
+      "bbox_width_m": 111.51,
+      "c4_cells": 6740,
+      "candidate": true,
+      "description": "통과·UAS 지원량 최대 사례",
+      "exclusion_reason": "PASS_ALL_INPUT_SUPPORT_RULES",
+      "image_views": 399,
+      "label": "P3",
+      "mvs_cells": 8842,
+      "reference_cells": 3543,
+      "stable_id": "DEBY_LOD2_4959460"
+    },
+    {
+      "bbox_height_m": 28.73,
+      "bbox_width_m": 23.074,
+      "c4_cells": 451,
+      "candidate": false,
+      "description": "불통과·UAS reference만 부족",
+      "exclusion_reason": "INSUFFICIENT_INDEPENDENT_UAS_REFERENCE_SUPPORT",
+      "image_views": 186,
+      "label": "F1",
+      "mvs_cells": 521,
+      "reference_cells": 3,
+      "stable_id": "DEBY_LOD2_4907184"
+    },
+    {
+      "bbox_height_m": 28.55,
+      "bbox_width_m": 52.27,
+      "c4_cells": 574,
+      "candidate": false,
+      "description": "불통과·UAS와 MVS 부족",
+      "exclusion_reason": "INSUFFICIENT_INDEPENDENT_UAS_REFERENCE_SUPPORT;INSUFFICIENT_MVS_SUPPORT",
+      "image_views": 61,
+      "label": "F2",
+      "mvs_cells": 0,
+      "reference_cells": 0,
+      "stable_id": "DEBY_LOD2_4907034"
+    },
+    {
+      "bbox_height_m": 7.031,
+      "bbox_width_m": 7.082,
+      "c4_cells": 3,
+      "candidate": false,
+      "description": "불통과·UAS와 C4 ALS 부족",
+      "exclusion_reason": "INSUFFICIENT_INDEPENDENT_UAS_REFERENCE_SUPPORT;INSUFFICIENT_C4_SUPPORT",
+      "image_views": 85,
+      "label": "F3",
+      "mvs_cells": 40,
+      "reference_cells": 0,
+      "stable_id": "DEBY_LOD2_4908166"
+    },
+    {
+      "bbox_height_m": 6.887,
+      "bbox_width_m": 8.691,
+      "c4_cells": 0,
+      "candidate": false,
+      "description": "불통과·UAS/MVS/C4 모두 부족",
+      "exclusion_reason": "INSUFFICIENT_INDEPENDENT_UAS_REFERENCE_SUPPORT;INSUFFICIENT_MVS_SUPPORT;INSUFFICIENT_C4_SUPPORT",
+      "image_views": 63,
+      "label": "F4",
+      "mvs_cells": 0,
+      "reference_cells": 0,
+      "stable_id": "DEBY_LOD2_4908164"
+    }
+  ],
+  "exclusion_reason_combinations": {
+    "INSUFFICIENT_INDEPENDENT_UAS_REFERENCE_SUPPORT": 78,
+    "INSUFFICIENT_INDEPENDENT_UAS_REFERENCE_SUPPORT;INSUFFICIENT_C4_SUPPORT": 2,
+    "INSUFFICIENT_INDEPENDENT_UAS_REFERENCE_SUPPORT;INSUFFICIENT_MVS_SUPPORT": 38,
+    "INSUFFICIENT_INDEPENDENT_UAS_REFERENCE_SUPPORT;INSUFFICIENT_MVS_SUPPORT;INSUFFICIENT_C4_SUPPORT": 9
+  },
+  "schema": "jointbuildgs.gate_s0_uas_eligibility_explainer.v1",
+  "scientific_verdict": null,
+  "sources": {
+    "attrition": {
+      "git_blob": "63344a227c72eefcd8c550e08e123d1b7de050a3",
+      "path": "docs/research/preregistration/gate_s0/uas_reference_coverage_r1_v1/baseline_attrition_v1.csv"
+    },
+    "candidate_ledger": {
+      "git_blob": "6e5d6ab0698c0fdf3e67e74cbdd060bf785ea06b",
+      "path": "docs/research/preregistration/gate_s0/uas_reference_coverage_r1_v1/candidate_ledger_v1.csv"
+    },
+    "claim_scope": {
+      "git_blob": "de7ca06632afe03b01b10c8e6894dab4b7773237",
+      "path": "docs/research/preregistration/gate_s0/uas_reference_coverage_r1_v1/claim_scope_v1.json"
+    },
+    "coverage_config": {
+      "git_blob": "64c7beaf5cd7780a4935b23fe96f7b2cd152db96",
+      "path": "configs/input_and_alignment/gate_s0/uas_reference_coverage_r1_v1/coverage_r1_v1.json"
+    },
+    "split": {
+      "git_blob": "f6db7b8accdbd7b57b4a221c441acfc5589fb592",
+      "path": "docs/research/preregistration/gate_s0/uas_reference_coverage_r1_v1/split_candidate_v1.csv"
+    }
+  },
+  "status": "DESCRIPTIVE_REPRESENTATION_OF_FROZEN_R1_EVIDENCE",
+  "thresholds": {
+    "actual_minima_among_72": {
+      "c4_support_cells": 57,
+      "current_image_view_support": 54,
+      "mvs_support_cells": 47,
+      "reference_candidate_score_cells": 5
+    },
+    "minimum_building_support_cells": 4,
+    "minimum_image_views": 2
+  }
+}
