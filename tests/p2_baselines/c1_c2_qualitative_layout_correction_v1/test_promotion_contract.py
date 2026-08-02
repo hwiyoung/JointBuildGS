@@ -23,7 +23,13 @@ class PromotionContractTest(unittest.TestCase):
     def _run(root: Path, *args: str) -> str:
         return subprocess.run(["git", "-C", str(root), *args], check=True, capture_output=True, text=True).stdout.strip()
 
-    def _fixture(self, root: Path, *, substitute_receipt_sha: bool = False) -> tuple[Path, Path, str]:
+    def _fixture(
+        self,
+        root: Path,
+        *,
+        substitute_receipt_sha: bool = False,
+        zero_test_mode: str = "valid",
+    ) -> tuple[Path, Path, str]:
         repo = root / "repo"
         repo.mkdir()
         for relative in (
@@ -42,14 +48,25 @@ class PromotionContractTest(unittest.TestCase):
             row["verification_method"] = "closed_attestation_reuse"
         if substitute_receipt_sha:
             accepted_rows[0]["sha256"] = "0" * 64
+        zero_tests = [
+            {"name": "acceptance artifact source full-read or hash passes", "passed": 0, "failed": 0}
+        ]
+        if zero_test_mode == "missing":
+            zero_tests = []
+        elif zero_test_mode == "duplicate":
+            zero_tests = zero_tests * 2
+        elif zero_test_mode == "nonzero":
+            zero_tests[0]["passed"] = 1
+        elif zero_test_mode != "valid":
+            raise ValueError(zero_test_mode)
         accepted = {
             "handoff_id": self.config["handoff_id"],
             "task_id": self.config["task_id"],
             "state": "accepted",
             "transport": {"exclusive_writer_ack": True},
             "verification": {
-                "commands": ["validate without --artifact-root with zero artifact read and hash passes"],
-                "tests": [{"name": "acceptance artifact source full-read or hash passes", "passed": 0, "failed": 0}],
+                "commands": ["arbitrary human-readable acceptance note"],
+                "tests": zero_tests,
             },
             "artifacts": {
                 "records": accepted_rows,
@@ -143,6 +160,18 @@ class PromotionContractTest(unittest.TestCase):
             repo, external, accepted = self._fixture(Path(temp), substitute_receipt_sha=True)
             with self.assertRaisesRegex(RuntimeError, "exactly inherit predecessor"):
                 promote(external_manifest=external, repo_root=repo, source_commit="1" * 40, accepted_commit=accepted)
+
+    def test_numeric_zero_read_contract_fails_closed_without_prose_dependency(self) -> None:
+        for mode in ("missing", "duplicate", "nonzero"):
+            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as temp:
+                repo, external, accepted = self._fixture(Path(temp), zero_test_mode=mode)
+                with self.assertRaisesRegex(RuntimeError, "exact zero-read/zero-hash evidence"):
+                    promote(
+                        external_manifest=external,
+                        repo_root=repo,
+                        source_commit="1" * 40,
+                        accepted_commit=accepted,
+                    )
 
 
 if __name__ == "__main__":
