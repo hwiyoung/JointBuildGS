@@ -1,0 +1,172 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P2-W2C-C1-C2-FEASIBILITY-PILOT-v1",
+  "task_id": "P2-C1-C2-FEASIBILITY-PILOT-v1",
+  "created_at": "2026-08-02T10:17:08+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "blocked",
+  "previous_receipt": {
+    "path": "artifacts/manifests/handoffs/P2-W2C-C1-C2-FEASIBILITY-PILOT-v1/100-accepted.json",
+    "sha256": "1361098d832d9873a64bceb6e8822cbda82ab4f1dd90be531cb1dbc8496dbede"
+  },
+  "transport": {
+    "mode": "serialized_main",
+    "branch": "main",
+    "target_branch": "main",
+    "exclusive_writer_ack": true
+  },
+  "commits": {
+    "base_main": "6ee864af6c1a9ce98217b5f6cb82a7b009c56656",
+    "offered_head": "9b8d7e3a50f32467f86801c8efae2b204b5ecb23",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P2-W2C-C1-C2-FEASIBILITY-PILOT-v1",
+      "artifacts/manifests/p2_baselines/c1_c2_feasibility_pilot_v1",
+      "docs/experiments/p2/c1_c2_feasibility_pilot_v1",
+      "docs/handoffs/returns/P2_C2W_C1_C2_FEASIBILITY_PILOT_RETURN_v1.md"
+    ],
+    "protected_paths": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      "artifacts/manifests/gate_s0",
+      "artifacts/manifests/handoffs/P1-W2C-REPO-AUDIT-R2",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-PREP-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-REMEDIATION-R1-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-EVIDENCE-R2A-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-COMMON-BASE-LINEAGE-R2B-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-FREEZE-RECOVERY-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-UAS-REFERENCE-COVERAGE-R1-RECOVERY-PROMOTE-v1",
+      "configs/p2_baselines/c1_c2_feasibility_pilot_v1",
+      "docs/evidence",
+      "docs/handoffs/HANDOFF_INDEX.md",
+      "docs/handoffs/P2_W2C_C1_C2_FEASIBILITY_PILOT_v1.md",
+      "docs/research/00_RESEARCH_CHARTER.md",
+      "docs/research/01_MASTER_ROADMAP.md",
+      "docs/research/02_NOVELTY_MAP.md",
+      "docs/research/03_DATA_AND_BASELINE_SCOPE.md",
+      "docs/research/04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md",
+      "docs/research/05_HANDOFF_PROTOCOL.md",
+      "docs/research/06_DECISION_LOG.md",
+      "docs/research/preregistration/fusion_w1",
+      "docs/research/preregistration/quality_axis",
+      "docs/research/preregistration/gate_s0",
+      "phases/p0-audit",
+      "phases/p2-gsjso",
+      "scripts/p2_baselines/c1_c2_feasibility_pilot_v1",
+      "scripts/repository",
+      "tests/p2_baselines/c1_c2_feasibility_pilot_v1",
+      "tests/repository"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "artifact_verified",
+    "verifier_role": "experiment_host",
+    "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "commands": [
+      "validate blocked output commit e596438e12041118a93fbf71e0fc29ad73b0fa81 and exact Return/manifest scope in Docker",
+      "three independent read-only reviews of scientific leakage, reproducibility/no-repeat and two-host closure",
+      "validate 200-blocked Git chain before and after push without --artifact-root; inherit the exact 100-accepted artifact attestation without rehash"
+    ],
+    "tests": [
+      {
+        "name": "focused C1/C2 contract and repository instruction tests",
+        "passed": 33,
+        "failed": 0
+      },
+      {
+        "name": "zero-scientific committed preflight",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "independent leakage, reproducibility and handoff reviews",
+        "passed": 3,
+        "failed": 0
+      },
+      {
+        "name": "scientific prepare calls and development/validation/held-out outcome accesses",
+        "passed": 0,
+        "failed": 0
+      },
+      {
+        "name": "prohibited post-acceptance compact-input rehash passes observed before block",
+        "passed": 0,
+        "failed": 1
+      },
+      {
+        "name": "synthetic Roofer launch",
+        "passed": 0,
+        "failed": 1
+      }
+    ]
+  },
+  "artifacts": {
+    "required_for_task": true,
+    "availability": {
+      "work_host": "manifest_only",
+      "experiment_host": "verified_local"
+    },
+    "records": [
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/reference/c1_grid_v1.npz",
+        "bytes": 3023643,
+        "sha256": "4f72178551e25ef27a952a09faa8331c1464416fcd6c5f66a57a9424e7f0b77b",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T10:06:12+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/checkpoints/050-c1_reference_frozen_pre_c5.json",
+        "bytes": 3140,
+        "sha256": "530a2a001189c7c0a4dfa486349b77d80ee5031e2a8b4024793405837dc1611e",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T10:06:12+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/common/mvs_class26_v1.ply",
+        "bytes": 7327590,
+        "sha256": "c7d63387d720dc4028c2b00e9cc6abb83d41161d6f033199ee619765fdfaf8dd",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T10:06:12+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/checkpoints/030-dense_mvs_and_gravity.json",
+        "bytes": 2951,
+        "sha256": "b301d3dc7dec2423ff5760c47db4dfef4f62e919b5aac5808a30c82a9330a8f8",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T10:06:12+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/reference/reference_candidate_cells_v1.csv",
+        "bytes": 3785261,
+        "sha256": "bf87736227ea3c28bc8f966f36e2498f786d2de420a732fa0bfebbb73664275a",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T10:06:12+09:00"
+      }
+    ]
+  },
+  "scientific": {
+    "technical_state": "blocked",
+    "scientific_verdict": null,
+    "promotion_status": "human_review_required"
+  },
+  "receiver_ack": {
+    "role": "experiment_host",
+    "accepted_at": "2026-08-02T10:17:08+09:00",
+    "status": "blocked",
+    "issue": "Blocked before Roofer synthetic execution and before scientific prepare. The exact wrapper performed one prohibited third hash pass over the five compact accepted inputs and then failed to parse RUN/1 because the immutable image startup banner contaminated the machine channel. No development, validation or held-out outcome was opened; no C1/C2 result or C3 strategy evidence exists; scientific_verdict remains null."
+  }
+}
