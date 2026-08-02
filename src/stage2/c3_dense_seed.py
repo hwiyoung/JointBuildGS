@@ -44,6 +44,7 @@ REPRESENTATIVE_RULE = "VOXEL_CENTER_NEAREST_WORLD_XYZ_LEXICOGRAPHIC_THEN_SOURCE_
 VOXEL_INDEX_RULE = "FLOOR_EACH_AXIS_OF_EPSG25832_XYZ_MINUS_FIXED_ORIGIN_DIV_VOXEL_M"
 OUTPUT_ORDER = "LEXICOGRAPHIC_VOXEL_IX_IY_IZ"
 RECEIPT_SCHEMA = "jointbuildgs.c3_dense_seed_receipt.v1"
+REPO = Path(__file__).resolve().parents[2]
 
 _PLY_SCALAR_TYPES = {
     "char": "i1",
@@ -611,19 +612,26 @@ def _publish_pair_add_once(
         receipt_temp.unlink(missing_ok=True)
 
 
-def _actual_clean_repository_head() -> str:
-    repo = Path(__file__).resolve().parents[2]
+def _actual_clean_repository_head_for_repo(repository: Path) -> str:
+    repo = repository.resolve(strict=True)
+    git = [
+        "git",
+        "-c",
+        "safe.directory=",
+        "-c",
+        f"safe.directory={repo}",
+        "-C",
+        str(repo),
+    ]
     try:
         head_process = subprocess.run(
-            ["git", "rev-parse", "--verify", "HEAD"],
-            cwd=repo,
+            [*git, "rev-parse", "--verify", "HEAD"],
             check=True,
             capture_output=True,
             text=True,
         )
         status_process = subprocess.run(
-            ["git", "status", "--porcelain=v1", "--untracked-files=all"],
-            cwd=repo,
+            [*git, "status", "--porcelain=v1", "--untracked-files=all"],
             check=True,
             capture_output=True,
             text=True,
@@ -636,6 +644,10 @@ def _actual_clean_repository_head() -> str:
     if status_process.stdout:
         raise C3DenseSeedError("production C3 producer requires a clean repository worktree")
     return head
+
+
+def _actual_clean_repository_head() -> str:
+    return _actual_clean_repository_head_for_repo(REPO)
 
 
 def _produce_dense_seed(

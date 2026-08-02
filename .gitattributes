@@ -1,0 +1,6 @@
+# Byte-pinned C3 runtime/build contracts must remain LF in every worktree.
+Dockerfile.c3-semantic text eol=lf
+requirements-c3-semantic.txt text eol=lf
+configs/c3_first_wave_v2/c3_image_semantic_producer_v1.json text eol=lf
+configs/stage2/c3_image_semantic_runtime_v1.json text eol=lf
+scripts/stage2/build_c3_groundedsam_runtime.sh text eol=lf

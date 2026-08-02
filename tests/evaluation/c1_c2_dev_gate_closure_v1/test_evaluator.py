@@ -1,8 +1,15 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
+from pathlib import Path
+import subprocess
+import tempfile
 import unittest
+from unittest.mock import patch
+
+import src.evaluation.c1_c2_dev_gate_closure_v1.evaluator as evaluator
 
 from src.evaluation.c1_c2_dev_gate_closure_v1.evaluator import (
     evaluate_g3,
@@ -113,6 +120,49 @@ class GateClosureCandidateTests(unittest.TestCase):
             self.config["provisional_threshold_calibration"]["status"],
             "DRAFT_NOT_EXECUTED_DEVELOPMENT_ONLY",
         )
+
+    def test_bound_text_specs_equal_committed_lf_git_blobs(self):
+        repo = Path(evaluator.REPO).resolve()
+        for spec in self.config["inputs"].values():
+            process = subprocess.run(
+                [
+                    "git",
+                    "-c",
+                    "safe.directory=",
+                    "-c",
+                    f"safe.directory={repo}",
+                    "-C",
+                    str(repo),
+                    "cat-file",
+                    "blob",
+                    f"HEAD:{spec['path']}",
+                ],
+                check=True,
+                capture_output=True,
+            )
+            blob = process.stdout
+            self.assertNotIn(b"\r", blob)
+            self.assertEqual(len(blob), spec["bytes"])
+            self.assertEqual(hashlib.sha256(blob).hexdigest(), spec["sha256"])
+
+    def test_bound_text_accepts_only_crlf_portability_not_lone_cr_or_drift(self):
+        lf = b"alpha\nbeta\n"
+        spec = {
+            "path": "synthetic.txt",
+            "bytes": len(lf),
+            "sha256": hashlib.sha256(lf).hexdigest(),
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "synthetic.txt"
+            with patch.object(evaluator, "repo_path", return_value=path):
+                path.write_bytes(lf.replace(b"\n", b"\r\n"))
+                self.assertEqual(evaluator._read_bound_file(spec), lf)
+                path.write_bytes(b"alpha\rbeta\n")
+                with self.assertRaisesRegex(evaluator.ClosureError, "line endings"):
+                    evaluator._read_bound_file(spec)
+                path.write_bytes(b"alpha\nBETa\n")
+                with self.assertRaisesRegex(evaluator.ClosureError, "identity"):
+                    evaluator._read_bound_file(spec)
 
     def test_val3dity_stdin_output_parser(self):
         result = parse_val3dity_cjseq_stdout(

@@ -4,6 +4,7 @@ from io import BytesIO
 import json
 from pathlib import Path
 import tempfile
+import subprocess
 import unittest
 from unittest.mock import patch
 
@@ -12,8 +13,12 @@ from PIL import Image as PILImage
 
 from src.stage2.c3_image_semantic import (
     BOX_THRESHOLD,
+    CROSSWALK_BYTES,
+    CROSSWALK_SHA256,
     C3SemanticError,
     NMS_IOU,
+    IMAGE_INVENTORY_BYTES,
+    IMAGE_INVENTORY_SHA256,
     PROMPTS,
     SemanticCandidate,
     SemanticResult,
@@ -49,6 +54,39 @@ class _FakeInference:
 
 
 class C3ImageSemanticTests(unittest.TestCase):
+    def test_crosswalk_and_inventory_constants_equal_committed_lf_blobs(self):
+        from src.stage2 import c3_image_semantic as semantic
+
+        repo = semantic.REPO.resolve()
+        expected = (
+            (semantic.CANONICAL_CROSSWALK, CROSSWALK_BYTES, CROSSWALK_SHA256),
+            (
+                semantic.CANONICAL_IMAGE_INVENTORY,
+                IMAGE_INVENTORY_BYTES,
+                IMAGE_INVENTORY_SHA256,
+            ),
+        )
+        for path, size, digest in expected:
+            relative = path.relative_to(repo).as_posix()
+            blob = subprocess.run(
+                [
+                    "git",
+                    "-c",
+                    "safe.directory=",
+                    "-c",
+                    f"safe.directory={repo}",
+                    "-C",
+                    str(repo),
+                    "cat-file",
+                    "blob",
+                    f"HEAD:{relative}",
+                ],
+                check=True,
+                capture_output=True,
+            ).stdout
+            self.assertNotIn(b"\r", blob)
+            self.assertEqual((len(blob), sha256_bytes(blob)), (size, digest))
+
     def test_compact_git_inventory_builds_exact_manifest_without_raw_reads(self):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / "input.json"

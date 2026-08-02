@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 from pathlib import Path
 import struct
 import subprocess
@@ -92,6 +93,21 @@ class C3DenseSeedTests(unittest.TestCase):
         with patch.object(dense_seed.subprocess, "run", side_effect=completed) as run:
             self.assertEqual(dense_seed._actual_clean_repository_head(), head)
         self.assertEqual(run.call_count, 2)
+        exact_repo = str(dense_seed.REPO.resolve())
+        for call in run.call_args_list:
+            command = call.args[0]
+            self.assertEqual(
+                command[:7],
+                [
+                    "git",
+                    "-c",
+                    "safe.directory=",
+                    "-c",
+                    f"safe.directory={exact_repo}",
+                    "-C",
+                    exact_repo,
+                ],
+            )
         dirty = [
             subprocess.CompletedProcess([], 0, stdout=head + "\n", stderr=""),
             subprocess.CompletedProcess([], 0, stdout=" M src/stage2/c3_dense_seed.py\n", stderr=""),
@@ -99,6 +115,56 @@ class C3DenseSeedTests(unittest.TestCase):
         with patch.object(dense_seed.subprocess, "run", side_effect=dirty):
             with self.assertRaisesRegex(C3DenseSeedError, "clean repository"):
                 dense_seed._actual_clean_repository_head()
+
+    @unittest.skipUnless(os.name == "posix" and os.geteuid() == 0, "requires root in Docker")
+    def test_dubious_ownership_repo_is_trusted_only_by_exact_safe_directory(self):
+        with tempfile.TemporaryDirectory() as directory:
+            repo = Path(directory) / "dubious"
+            subprocess.run(["git", "init", "-q", str(repo)], check=True)
+            (repo / "tracked.txt").write_text("exact\n", encoding="utf-8")
+            subprocess.run(["git", "-C", str(repo), "add", "tracked.txt"], check=True)
+            subprocess.run(
+                [
+                    "git",
+                    "-C",
+                    str(repo),
+                    "-c",
+                    "user.name=JointBuildGS test",
+                    "-c",
+                    "user.email=test@example.invalid",
+                    "commit",
+                    "-q",
+                    "-m",
+                    "fixture",
+                ],
+                check=True,
+            )
+            head = subprocess.run(
+                ["git", "-C", str(repo), "rev-parse", "HEAD"],
+                check=True,
+                capture_output=True,
+                text=True,
+            ).stdout.strip()
+            os.chown(repo, 65534, 65534)
+            untrusted = subprocess.run(
+                [
+                    "git",
+                    "-c",
+                    "safe.directory=",
+                    "-C",
+                    str(repo),
+                    "rev-parse",
+                    "HEAD",
+                ],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+            self.assertNotEqual(untrusted.returncode, 0)
+            self.assertIn("dubious ownership", untrusted.stderr)
+            self.assertEqual(
+                dense_seed._actual_clean_repository_head_for_repo(repo), head
+            )
 
     def test_one_read_counts_selects_fine_candidate_and_records_same_pass_digests(self):
         points = [

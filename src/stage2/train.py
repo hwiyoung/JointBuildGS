@@ -741,7 +741,12 @@ def _load_exact_view_manifest(cfg: Dict[str, Any]) -> Optional[list[str]]:
     if not view_manifest_path:
         return None
     path = Path(view_manifest_path)
-    data = path.read_bytes()
+    from src.text_identity import CanonicalTextError, canonical_lf_bytes
+
+    try:
+        data = canonical_lf_bytes(path.read_bytes())
+    except CanonicalTextError as error:
+        raise RuntimeError("exact_view_manifest contains a lone carriage return") from error
     expected_sha = cfg.get("exact_view_manifest_sha256")
     if expected_sha and hashlib.sha256(data).hexdigest() != str(expected_sha):
         raise RuntimeError("exact_view_manifest SHA-256 differs")

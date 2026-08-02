@@ -10,6 +10,7 @@ from types import SimpleNamespace
 import yaml
 
 from src.stage2.train import _load_exact_view_manifest
+from src.text_identity import canonical_lf_bytes
 
 
 REPO = Path(__file__).resolve().parents[2]
@@ -76,7 +77,7 @@ class C3TrainingContractV2Tests(unittest.TestCase):
             self.assertEqual(audit, {"views": 2, "depth_maps": 2, "semantic_masks": 2})
 
     def test_exact_manifest_forces_all_937_into_training_role(self):
-        digest = hashlib.sha256(CROSSWALK.read_bytes()).hexdigest()
+        digest = hashlib.sha256(canonical_lf_bytes(CROSSWALK.read_bytes())).hexdigest()
         names = _load_exact_view_manifest(
             {
                 "exact_view_manifest": str(CROSSWALK),
@@ -86,6 +87,32 @@ class C3TrainingContractV2Tests(unittest.TestCase):
         )
         self.assertEqual(len(names or []), 937)
         self.assertEqual(len(set(names or [])), 937)
+
+    def test_exact_manifest_uses_git_lf_identity_for_crlf_checkout(self):
+        cfg = yaml.safe_load(CONFIG.read_text(encoding="utf-8"))
+        lf = canonical_lf_bytes(CROSSWALK.read_bytes())
+        digest = hashlib.sha256(lf).hexdigest()
+        self.assertEqual(cfg["exact_view_manifest_sha256"], digest)
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "views.json"
+            path.write_bytes(lf.replace(b"\n", b"\r\n"))
+            names = _load_exact_view_manifest(
+                {
+                    "exact_view_manifest": str(path),
+                    "exact_view_manifest_sha256": digest,
+                    "exact_view_count": 937,
+                }
+            )
+            self.assertEqual(len(names or []), 937)
+            path.write_bytes(lf.replace(b"\n", b"\r", 1))
+            with self.assertRaisesRegex(RuntimeError, "lone carriage return"):
+                _load_exact_view_manifest(
+                    {
+                        "exact_view_manifest": str(path),
+                        "exact_view_manifest_sha256": digest,
+                        "exact_view_count": 937,
+                    }
+                )
 
     def test_manifest_hash_or_count_drift_fails_closed(self):
         with self.assertRaisesRegex(RuntimeError, "SHA-256"):

@@ -23,6 +23,8 @@ from typing import Any, Iterable, Iterator, Mapping, Sequence
 
 import numpy as np
 
+from src.text_identity import CanonicalTextError, canonical_lf_bytes
+
 
 REPO = Path(__file__).resolve().parents[3]
 DEFAULT_CONFIG = REPO / "configs/evaluation/c1_c2_dev_gate_closure_v1/criterion_candidate_v1.json"
@@ -55,7 +57,11 @@ def _read_bound_file(spec: Mapping[str, Any]) -> bytes:
     path = repo_path(str(spec["path"]))
     if path.is_symlink() or not path.is_file():
         raise ClosureError(f"bound Git input is missing or non-regular: {path}")
-    data = path.read_bytes()
+    raw = path.read_bytes()
+    try:
+        data = canonical_lf_bytes(raw)
+    except CanonicalTextError as error:
+        raise ClosureError(f"bound Git input has non-portable line endings: {spec['path']}") from error
     if len(data) != int(spec["bytes"]) or sha256_bytes(data) != spec["sha256"]:
         raise ClosureError(f"bound Git input identity differs: {spec['path']}")
     return data

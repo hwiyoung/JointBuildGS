@@ -60,6 +60,35 @@ def _source(root: Path, filename: str) -> str:
 
 
 class C3ImageSemanticAssetTests(unittest.TestCase):
+    def test_byte_pinned_c3_files_are_forced_lf_in_every_worktree(self):
+        paths = (
+            "Dockerfile.c3-semantic",
+            "requirements-c3-semantic.txt",
+            "configs/c3_first_wave_v2/c3_image_semantic_producer_v1.json",
+            "configs/stage2/c3_image_semantic_runtime_v1.json",
+            "scripts/stage2/build_c3_groundedsam_runtime.sh",
+        )
+        for relative in paths:
+            result = subprocess.run(
+                [
+                    "git",
+                    "-c",
+                    "safe.directory=",
+                    "-c",
+                    f"safe.directory={REPO.resolve()}",
+                    "-C",
+                    str(REPO.resolve()),
+                    "check-attr",
+                    "eol",
+                    "--",
+                    relative,
+                ],
+                check=True,
+                capture_output=True,
+                text=True,
+            ).stdout.strip()
+            self.assertEqual(result, f"{relative}: eol: lf")
+
     def test_canonical_contract_pins_new_remote_runtime_and_weight_identities(self):
         contract = load_c3_contract(CONTRACT)
         runtime = contract["runtime_environment"]

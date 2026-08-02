@@ -25,6 +25,8 @@ from typing import Any, Callable, Mapping, Sequence
 import numpy as np
 from PIL import Image as PILImage
 
+from src.text_identity import CanonicalTextError, canonical_lf_bytes
+
 from .pilot_plane_mask_producer import (
     GroundedSamRoofInference,
     MaskProducerError,
@@ -44,16 +46,16 @@ REPO = Path(__file__).resolve().parents[2]
 CANONICAL_CROSSWALK = (
     REPO / "artifacts/manifests/gate_s0/common_base_r2b/exact_937_member_crosswalk_v1.json"
 )
-CROSSWALK_BYTES = 390716
-CROSSWALK_SHA256 = "5944ecf5294732fb3e0f355492de15f59e520b7bf7e3f59933630c9cb1964081"
+CROSSWALK_BYTES = 378466
+CROSSWALK_SHA256 = "b4af779ecfae859de9772ce50cb24326b20c3f86614f6a8957453779d1cd4c17"
 CANONICAL_IMAGE_INVENTORY = (
     REPO / "artifacts/manifests/gate_s0/gate_s0_image_member_inventory_v1.csv"
 )
-IMAGE_INVENTORY_BYTES = 152076
-IMAGE_INVENTORY_SHA256 = "70e18629c79dffce540d38dedb74ee813b3e1500cdca95f7c139e38a216ff73d"
+IMAGE_INVENTORY_BYTES = 151113
+IMAGE_INVENTORY_SHA256 = "de9acff049fca4fa14582620a69617157f99b4b5c333938c01b648740ece2b4a"
 SEMANTIC_CONTRACT = REPO / "configs/c3_first_wave_v2/c3_image_semantic_producer_v1.json"
 SEMANTIC_CONTRACT_BYTES = 1936
-SEMANTIC_CONTRACT_SHA256 = "bf550af4b277c81e8d0cd17d134ec64a2faab6388bda6dd6e4889502ab4f3063"
+SEMANTIC_CONTRACT_SHA256 = "53a0a8536a036840930da33a1acddfa372780600fa5fa74b520af76185525978"
 INPUT_SCHEMA = "jointbuildgs.c3_image_semantic_input_manifest.v1"
 FINAL_SCHEMA = "jointbuildgs.c3_image_semantic_output_manifest.v1"
 COMPLETION_SCHEMA = "jointbuildgs.c3_image_semantic_completion.v1"
@@ -90,6 +92,13 @@ class SemanticResult:
 
 def sha256_bytes(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
+
+
+def _canonical_bound_text(path: Path, role: str) -> bytes:
+    try:
+        return canonical_lf_bytes(path.read_bytes())
+    except CanonicalTextError as error:
+        raise C3SemanticError(f"{role} contains a lone carriage return") from error
 
 
 def resolve_semantic_pixels(
@@ -197,7 +206,7 @@ class GroundedSamImageSemanticInference(GroundedSamRoofInference):
 
 
 def canonical_image_names(crosswalk_path: Path = CANONICAL_CROSSWALK) -> list[str]:
-    data = crosswalk_path.read_bytes()
+    data = _canonical_bound_text(crosswalk_path, "exact-937 crosswalk")
     if len(data) != CROSSWALK_BYTES or sha256_bytes(data) != CROSSWALK_SHA256:
         raise C3SemanticError("exact-937 crosswalk identity differs")
     value = json.loads(data)
@@ -267,7 +276,7 @@ def build_input_manifest(
 
     if output_path.exists():
         raise C3SemanticError("semantic input manifest is add-once and already exists")
-    data = inventory_path.read_bytes()
+    data = _canonical_bound_text(inventory_path, "canonical image inventory")
     if len(data) != IMAGE_INVENTORY_BYTES or sha256_bytes(data) != IMAGE_INVENTORY_SHA256:
         raise C3SemanticError("canonical image inventory identity differs")
     ledger = {
