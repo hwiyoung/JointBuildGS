@@ -4,7 +4,7 @@
 - task_id: `P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-v1`
 - status: `ACTIVATED_FOR_EXECUTION`
 - explicit_user_authorization: `APPROVED_FOR_EXECUTION`
-- source_commit: `93cbbbdc067eb2a78b32c802162d233949c86bd3`
+- source_commit: `93cbbbdc46b1bece86b8b6e50a451dca145649a0`
 - run_id: `P2-C1-C2-QUALITATIVE-LAYOUT-CORRECTION-RUN-v1`
 - execution_mode: `ELIGIBILITY_LAYOUT_ONLY_CLOSED_ATTESTATION_REUSE`
 - project_image_id: `sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774`
