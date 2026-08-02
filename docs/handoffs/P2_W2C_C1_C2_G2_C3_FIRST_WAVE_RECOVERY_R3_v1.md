@@ -2,9 +2,10 @@
 
 - handoff_id: `P2-W2C-C1-C2-G2-C3-FIRST-WAVE-RECOVERY-R3-v1`
 - task_id: `P2-C1-C2-G2-C3-FIRST-WAVE-RECOVERY-R3-v1`
-- status: `DRAFT_NOT_AUTHORIZED`
+- status: `APPROVED_FOR_EXECUTION`
+- user_approval: `GRANTED_IN_WORK_HOST_SESSION_2026-08-02`
 - parent_handoff_id: `P2-W2C-C1-C2-G2-C3-FIRST-WAVE-RECOVERY-R2-v1`
-- source_commit: `SELF`
+- source_commit: `acfd23a4977e524e6acb420c96cdc0773d8beb7f`
 - scientific_verdict: `null`
 
 ## Purpose
