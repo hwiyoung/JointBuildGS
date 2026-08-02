@@ -1,0 +1,185 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P2-W2C-C1-C2-FEASIBILITY-PILOT-RECOVERY-R2-v1",
+  "task_id": "P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R2-v1",
+  "created_at": "2026-08-02T11:31:20+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "blocked",
+  "previous_receipt": {
+    "path": "artifacts/manifests/handoffs/P2-W2C-C1-C2-FEASIBILITY-PILOT-RECOVERY-R2-v1/100-accepted.json",
+    "sha256": "37189b11c0758411248c9cd056381d2172939a61aadca64214427598967ab506"
+  },
+  "transport": {
+    "mode": "serialized_main",
+    "branch": "main",
+    "target_branch": "main",
+    "exclusive_writer_ack": true
+  },
+  "commits": {
+    "base_main": "c5c2c872d51354d6c5916da47f4fc3c1170c3e0a",
+    "offered_head": "f57ca0dc93abcddf7db10d370a549a1eef7ecff7",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P2-W2C-C1-C2-FEASIBILITY-PILOT-RECOVERY-R2-v1",
+      "artifacts/manifests/p2_baselines/c1_c2_feasibility_pilot_recovery_r2_v1",
+      "docs/experiments/p2/c1_c2_feasibility_pilot_recovery_r2_v1",
+      "docs/handoffs/returns/P2_C2W_C1_C2_FEASIBILITY_PILOT_RECOVERY_R2_RETURN_v1.md"
+    ],
+    "protected_paths": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      "artifacts/manifests/gate_s0",
+      "artifacts/manifests/handoffs/P1-W2C-REPO-AUDIT-R2",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-PREP-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-REMEDIATION-R1-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-EVIDENCE-R2A-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-COMMON-BASE-LINEAGE-R2B-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-INTEGRATED-FREEZE-CLOSURE-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-FREEZE-RECOVERY-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1",
+      "artifacts/manifests/handoffs/P2-W2C-GATE-S0-UAS-REFERENCE-COVERAGE-R1-RECOVERY-PROMOTE-v1",
+      "artifacts/manifests/handoffs/P2-W2C-C1-C2-FEASIBILITY-PILOT-v1",
+      "artifacts/manifests/handoffs/P2-W2C-C1-C2-FEASIBILITY-PILOT-RECOVERY-v1",
+      "artifacts/manifests/p2_baselines/c1_c2_feasibility_pilot_v1",
+      "artifacts/manifests/p2_baselines/c1_c2_feasibility_pilot_recovery_v1",
+      "configs/p2_baselines/c1_c2_feasibility_pilot_v1",
+      "docs/evidence",
+      "docs/experiments/p2/c1_c2_feasibility_pilot_v1",
+      "docs/experiments/p2/c1_c2_feasibility_pilot_recovery_v1",
+      "docs/handoffs/HANDOFF_INDEX.md",
+      "docs/handoffs/P2_W2C_C1_C2_FEASIBILITY_PILOT_v1.md",
+      "docs/handoffs/P2_W2C_C1_C2_FEASIBILITY_PILOT_RECOVERY_v1.md",
+      "docs/handoffs/P2_W2C_C1_C2_FEASIBILITY_PILOT_RECOVERY_R2_v1.md",
+      "docs/handoffs/returns/P2_C2W_C1_C2_FEASIBILITY_PILOT_RETURN_v1.md",
+      "docs/handoffs/returns/P2_C2W_C1_C2_FEASIBILITY_PILOT_RECOVERY_RETURN_v1.md",
+      "docs/research/00_RESEARCH_CHARTER.md",
+      "docs/research/01_MASTER_ROADMAP.md",
+      "docs/research/02_NOVELTY_MAP.md",
+      "docs/research/03_DATA_AND_BASELINE_SCOPE.md",
+      "docs/research/04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md",
+      "docs/research/05_HANDOFF_PROTOCOL.md",
+      "docs/research/06_DECISION_LOG.md",
+      "docs/research/preregistration/fusion_w1",
+      "docs/research/preregistration/quality_axis",
+      "docs/research/preregistration/gate_s0",
+      "phases/p0-audit",
+      "phases/p2-gsjso",
+      "scripts/p2_baselines/c1_c2_feasibility_pilot_v1",
+      "scripts/repository",
+      "tests/p2_baselines/c1_c2_feasibility_pilot_v1",
+      "tests/repository"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "artifact_verified",
+    "verifier_role": "experiment_host",
+    "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "commands": [
+      "invoke the exact activated wrapper once and preserve its strict synthetic-smoke G0/G1 failure without rerun or salvage",
+      "inspect all synthetic-only outputs and complete three independent scope ownership and no-repeat reviews",
+      "validate the committed blocked Git chain and byte-for-byte inherited accepted attestation before and after push without --artifact-root"
+    ],
+    "tests": [
+      {
+        "name": "zero-scientific committed preflight",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "strict synthetic Roofer LoD2.2 and schema screen",
+        "passed": 0,
+        "failed": 1
+      },
+      {
+        "name": "scientific processing streams or C1/C2 result rows",
+        "passed": 0,
+        "failed": 0
+      },
+      {
+        "name": "independent science ownership and reproducibility reviews",
+        "passed": 3,
+        "failed": 0
+      },
+      {
+        "name": "artifact or scientific payload rereads during blocked closure",
+        "passed": 0,
+        "failed": 0
+      }
+    ]
+  },
+  "artifacts": {
+    "required_for_task": true,
+    "availability": {
+      "work_host": "manifest_only",
+      "experiment_host": "verified_local"
+    },
+    "records": [
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/reference/c1_grid_v1.npz",
+        "bytes": 3023643,
+        "sha256": "4f72178551e25ef27a952a09faa8331c1464416fcd6c5f66a57a9424e7f0b77b",
+        "verification_method": "closed_attestation_reuse",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T10:06:12+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/checkpoints/050-c1_reference_frozen_pre_c5.json",
+        "bytes": 3140,
+        "sha256": "530a2a001189c7c0a4dfa486349b77d80ee5031e2a8b4024793405837dc1611e",
+        "verification_method": "closed_attestation_reuse",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T10:06:12+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/common/mvs_class26_v1.ply",
+        "bytes": 7327590,
+        "sha256": "c7d63387d720dc4028c2b00e9cc6abb83d41161d6f033199ee619765fdfaf8dd",
+        "verification_method": "closed_attestation_reuse",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T10:06:12+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/checkpoints/030-dense_mvs_and_gravity.json",
+        "bytes": 2951,
+        "sha256": "b301d3dc7dec2423ff5760c47db4dfef4f62e919b5aac5808a30c82a9330a8f8",
+        "verification_method": "closed_attestation_reuse",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T10:06:12+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/reference/reference_candidate_cells_v1.csv",
+        "bytes": 3785261,
+        "sha256": "bf87736227ea3c28bc8f966f36e2498f786d2de420a732fa0bfebbb73664275a",
+        "verification_method": "closed_attestation_reuse",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-02T10:06:12+09:00"
+      }
+    ],
+    "attestation_reuse": {
+      "source_handoff_id": "P2-W2C-C1-C2-FEASIBILITY-PILOT-v1",
+      "source_task_id": "P2-C1-C2-FEASIBILITY-PILOT-v1",
+      "source_receipt_path": "artifacts/manifests/handoffs/P2-W2C-C1-C2-FEASIBILITY-PILOT-v1/300-closed.json",
+      "source_receipt_commit": "896fe284bc4d496e6e9c79720f4e75396a41d0b2",
+      "source_receipt_sha256": "705348ecde9d139254bdd24e59ed02312d5321c20f802649f1ce4ca19f5b9bda",
+      "record_identity_sha256": "f63d5d4405157615d807d6babd4a9bf74a16ab13818193945ed9bbfc02532db3"
+    }
+  },
+  "scientific": {
+    "technical_state": "blocked",
+    "scientific_verdict": null,
+    "promotion_status": "human_review_required"
+  },
+  "receiver_ack": {
+    "role": "experiment_host",
+    "accepted_at": "2026-08-02T11:31:20+09:00",
+    "status": "blocked",
+    "issue": "The sole exact wrapper invocation stopped before scientific mounts and rows because the zero-payload synthetic Roofer output failed the strict LoD2.2 and schema G0/G1 screen despite process exit 0. No C1/C2 result exists, the failed namespace must not be rerun, and scientific_verdict remains null."
+  }
+}
