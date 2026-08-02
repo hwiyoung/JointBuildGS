@@ -425,7 +425,6 @@ class ContractTests(unittest.TestCase):
                 capture_output=True, text=True, check=False,
             )
 
-        self.assertNotEqual(0, parse(packet).returncode)
         activated = packet.replace(
             "- status: `DRAFT_NOT_EXECUTION_AUTHORITY`",
             "- status: `APPROVED_FOR_EXECUTION`",
@@ -434,6 +433,16 @@ class ContractTests(unittest.TestCase):
             "- user_approval: `APPROVED_FOR_EXECUTION`",
         )
         self.assertEqual(0, parse(activated).returncode)
+        draft = activated.replace(
+            "- status: `APPROVED_FOR_EXECUTION`",
+            "- status: `DRAFT_NOT_EXECUTION_AUTHORITY`",
+            1,
+        ).replace(
+            "- user_approval: `APPROVED_FOR_EXECUTION`",
+            "- user_approval: `PENDING_ACTIVATION`",
+            1,
+        )
+        self.assertNotEqual(0, parse(draft).returncode)
         self.assertNotEqual(
             0,
             parse(activated + "\n- user_approval: `APPROVED_FOR_EXECUTION`\n").returncode,
