@@ -21,12 +21,15 @@ class ContractTests(unittest.TestCase):
         self.assertEqual("712cf0e7e635f049857302f4e5ffea825165d9fb38dd3091d0ab192d5974a68b", result["development_id_set_sha256"])
         self.assertEqual([1, 1, 1, 1, 47], sorted(result["group_sizes"].values()))
         self.assertEqual(5, len(result["representatives"]))
+        self.assertEqual(21714, result["development_score_cell_rows"])
+        self.assertEqual("1dca79dcc411c4904eb491a5b8aaa03890984e52", result["frozen_eligibility_blob"])
+        self.assertEqual("f6db7b8accdbd7b57b4a221c441acfc5589fb592", result["frozen_split_blob"])
         self.assertEqual(0, result["scientific_payload_bytes_read_or_hashed"])
         config = contract.load_config()["scope"]
         self.assertEqual(2731, config["roster_bytes"])
         self.assertEqual("c9f6412c4878a2cec3be09e465bb7a2be60f4f8329a473bf4acd44679c6afecc", config["roster_sha256"])
-        self.assertEqual(8241, config["reference_association_bytes"])
-        self.assertEqual("3a3c80b510cbba5f9a714cf8bb55c5e0ad2a80fe8250a313ce5a9a6f4a823628", config["reference_association_sha256"])
+        self.assertEqual(21714, config["development_score_cell_rows"])
+        self.assertEqual(12014, config["development_score_scope_canonical_lf_bytes"])
 
     def test_config_prohibits_old_or_raw_inputs_and_all_outcome_splits(self) -> None:
         config = contract.load_config()
@@ -38,11 +41,15 @@ class ContractTests(unittest.TestCase):
         self.assertFalse(config["scope"]["validation_payload_mount_allowed"])
         self.assertFalse(config["scope"]["held_out_payload_mount_allowed"])
         self.assertFalse(config["c1_materialization"]["r1_reference_cells_used"])
+        self.assertFalse(config["c1_materialization"]["source_classification_fields_usable"])
         self.assertFalse(config["association"]["crop_allowed"])
         self.assertFalse(config["association"]["registration_allowed"])
         c2 = config["inputs"]["c2_mvs_class26"]
         self.assertEqual(2951, c2["attestation_checkpoint_bytes"])
         self.assertEqual("b301d3dc7dec2423ff5760c47db4dfef4f62e919b5aac5808a30c82a9330a8f8", c2["attestation_checkpoint_sha256"])
+        c1 = config["inputs"]["c1_grid"]
+        self.assertEqual(3140, c1["attestation_checkpoint_bytes"])
+        self.assertEqual({"0": 177981904}, c1["raw_class_counts"])
 
     def test_c2_attestation_checkpoint_is_exactly_bound(self) -> None:
         body = {
@@ -76,6 +83,30 @@ class ContractTests(unittest.TestCase):
                     expected_checkpoint_sha256="b" * 64,
                 )
 
+    def test_c1_checkpoint_binds_generic_grid_and_raw_zero_classes(self) -> None:
+        spec = copy.deepcopy(contract.load_config()["inputs"]["c1_grid"])
+        body = {
+            "stage": "c1_reference_frozen_pre_c5", "status": "COMPLETED_FSYNC",
+            "payload": {
+                "grid": {"path": "/artifacts/JointBuildGS/" + spec["artifact_relative_path"], "bytes": spec["bytes"], "sha256": spec["sha256"]},
+                "input": {"point_count": 177981904, "raw_class_counts": {"0": 177981904}},
+            },
+        }
+        data = contract.canonical_json_bytes(body)
+        spec.update(attestation_checkpoint_bytes=len(data), attestation_checkpoint_sha256=contract.sha256_bytes(data))
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "050.json"
+            path.write_bytes(data)
+            record, observed = contract.resolve_c1_grid_checkpoint(path, spec)
+            self.assertEqual(spec["sha256"], record["sha256"])
+            self.assertEqual(1, observed["full_read_and_digest_passes"])
+            body["payload"]["input"]["raw_class_counts"] = {"2": 1}
+            bad = contract.canonical_json_bytes(body)
+            path.write_bytes(bad)
+            spec.update(attestation_checkpoint_bytes=len(bad), attestation_checkpoint_sha256=contract.sha256_bytes(bad))
+            with self.assertRaisesRegex(RuntimeError, "class-count"):
+                contract.resolve_c1_grid_checkpoint(path, spec)
+
     def test_c1_materialization_uses_exact_grid_fields_and_thresholds(self) -> None:
         config = copy.deepcopy(contract.load_config())
         config["frame"]["aoi_bbox"] = [0.0, 0.0, 5.0, 5.0]
@@ -92,9 +123,11 @@ class ContractTests(unittest.TestCase):
             "class6_max_z": np.full(size, -np.inf, dtype=np.float64),
             "class6_count": np.zeros(size, dtype=np.uint64),
         }
-        arrays["class6_max_z"][[6, 7, 8]] = [3.0, 4.0, 2.0]
-        arrays["class6_count"][[6, 7, 8]] = [3, 2, 3]
-        arrays["class2_min_z"][0] = 0.75
+        arrays["max_z"][[6, 7, 8]] = [3.0, 4.0, 2.0]
+        arrays["count"][[6, 7, 8]] = [3, 2, 3]
+        arrays["min_z"][0] = 0.75
+        arrays["class6_max_z"][10] = 99.0
+        arrays["class6_count"][10] = 99
         buffer = io.BytesIO()
         np.savez_compressed(buffer, **arrays)
         points, stats = contract.load_c1_grid(buffer.getvalue(), config)
@@ -102,6 +135,7 @@ class ContractTests(unittest.TestCase):
         self.assertEqual(1, stats["building_points"])
         self.assertEqual([(1, 1, 3.0)], [(p.ix, p.iy, p.z) for p in points if p.classification == 6])
         self.assertEqual(0.75, next(p.z for p in points if p.classification == 2 and p.ix == 0 and p.iy == 0))
+        self.assertFalse(stats["class_specific_fields_used"])
         self.assertFalse(stats["r1_reference_cells_used"])
 
     def test_condition_components_and_r_derived_are_id_and_bbox_blind(self) -> None:
@@ -133,21 +167,44 @@ class ContractTests(unittest.TestCase):
     def test_score_association_makes_102_rows_and_can_share_unique_operation(self) -> None:
         config = contract.load_config()
         roster = contract.read_csv(contract.REPO / config["scope"]["roster_path"])
-        associations = contract.read_csv(contract.REPO / config["scope"]["reference_association_path"])
-        patches = sorted({patch for row in associations for patch in row["reference_patch_ids"].split(";")})
-        reference = [
-            {"patch_id": patch, "cell_ix": "1", "cell_iy": "1", "top_z": "5", "normal_x": "0", "normal_y": "0", "normal_z": "1"}
-            for patch in patches
-        ]
+        score_scope = contract.read_csv(contract.REPO / config["scope"]["development_score_scope_path"])
+        patch_by_id = {row["stable_id"]: row["reference_patch_ids"].split(";")[0] for row in score_scope}
+        reference = [{
+            "stable_id": row["stable_id"], "group_id": row["group_id"], "patch_id": patch_by_id[row["stable_id"]],
+            "flat_index": str(index), "cell_ix": "1", "cell_iy": "1", "top_z": "5",
+            "normal_x": "0", "normal_y": "0", "normal_z": "1",
+        } for index, row in enumerate(roster)]
         component_maps = {
             "C1_L_upper": {(1, 1): "C1_L_upper_COMP_aaaaaaaaaaaaaaaaaaaa"},
             "C2_MVS": {(1, 1): "C2_MVS_COMP_bbbbbbbbbbbbbbbbbbbb"},
         }
-        rows, score_cells = contract.associate_development(roster, associations, reference, component_maps)
+        rows, score_cells = contract.associate_development(roster, reference, component_maps)
         self.assertEqual(102, len(rows))
         self.assertEqual(2, len({row["operation_unit_id"] for row in rows}))
-        self.assertGreater(len(score_cells), 51)
+        self.assertEqual(51, len(score_cells))
         self.assertTrue(all(row["association_role"].startswith("SCORE_IDENTITY_ONLY") for row in rows))
+
+    def test_score_projection_is_one_pass_exact_and_inclusive(self) -> None:
+        content = (
+            "patch_id,flat_index,cell_ix,cell_iy,cell_x,cell_y,top_z,normal_x,normal_y,normal_z\n"
+            "UASPATCH_00000000000000000001,10,1,2,5.0,6.0,7.0,0,0,1\n"
+            "UASPATCH_ffffffffffffffffffff,11,9,9,99.0,99.0,7.0,0,0,1\n"
+        ).encode()
+        scope = [{
+            "stable_id": "DEBY_LOD2_1", "group_id": "GROUP_0000000000000001",
+            "bbox_min_x": "5.0", "bbox_min_y": "6.0", "bbox_max_x": "5.0", "bbox_max_y": "6.0",
+            "reference_patch_ids": "UASPATCH_00000000000000000001", "expected_score_cells": "1",
+        }]
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "reference.csv"
+            path.write_bytes(content)
+            rows, record = contract.project_development_score_cells(path, {
+                "bytes": len(content), "sha256": contract.sha256_bytes(content), "expected_rows": 2,
+            }, scope)
+        self.assertEqual(1, len(rows))
+        self.assertEqual("10", rows[0]["flat_index"])
+        self.assertEqual(1, record["full_read_and_digest_passes"])
+        self.assertEqual(0, record["non_development_rows_retained_scored_or_promoted"])
 
     def test_add_once_and_completed_synthetic_fast_path(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -178,30 +235,70 @@ class ContractTests(unittest.TestCase):
             (output / "out.json").write_text(json.dumps(cityjson), encoding="utf-8")
             check = contract.provisional_output_check(output)
             self.assertTrue(check["G0_generated"])
+            self.assertTrue(check["G1_schema_semantic"])
+            self.assertTrue(check["geometry_ring_diagnostic"])
             self.assertIsNone(check["G2_geometry_topology_valid"])
             self.assertEqual("CANONICAL_VALIDATOR_UNAVAILABLE", check["G2_null_reason"])
+            cityjson["CityObjects"]["x"]["geometry"][0]["boundaries"][0][0][0] = 99
+            (output / "out.json").write_text(json.dumps(cityjson), encoding="utf-8")
+            invalid = contract.provisional_output_check(output)
+            self.assertFalse(invalid["G1_schema_semantic"])
+            self.assertFalse(invalid["geometry_ring_diagnostic"])
+            self.assertIn("BOUNDARY_INDEX_OR_SHAPE_INVALID", invalid["G1_failure_reasons"])
+            cityjson["CityObjects"]["x"]["geometry"][0]["boundaries"][0][0][0] = 0
             cityjson["CityObjects"]["x"]["geometry"][0]["lod"] = "1.1"
             (output / "out.json").write_text(json.dumps(cityjson), encoding="utf-8")
             with self.assertRaisesRegex(RuntimeError, "LoD1.1"):
                 contract.provisional_output_check(output)
 
     def test_schema_keeps_canonical_g2_g3_g4_and_pass_null(self) -> None:
+        config = contract.load_config()
         schema = json.loads((contract.REPO / "configs/p2_baselines/c1_c2_feasibility_pilot_v1/result_schema_v1.json").read_text(encoding="utf-8"))
         props = schema["properties"]
+        self.assertNotIn("G2_internal_screen", props)
+        self.assertIn("geometry_ring_diagnostic", props)
         self.assertEqual("null", props["G2_geometry_topology_valid"]["type"])
         self.assertEqual("CANONICAL_VALIDATOR_UNAVAILABLE", props["G2_null_reason"]["const"])
         for field in ("G3_roof_structure_acceptable", "G4_geometric_accuracy_acceptable", "PASS_usable"):
             self.assertEqual("null", props[field]["type"])
+        row = {
+            "building_id": "DEBY_LOD2_1", "group_id": "GROUP_0000000000000001", "split": "development",
+            "method_id": "C2_MVS", "run_id": "run", "operation_id": "a" * 64,
+            "criterion_version": config["result"]["criterion_version"], "reference_provenance": "INDEPENDENT_UAS_SCORE_ONLY",
+            "component_id": None, "operation_unit_id": None, "G0_generated": False,
+            "G1_schema_semantic": None, "G1_check_class": "INTERNAL_CITYJSON_BOUNDARY_SEMANTICS_PARENT_CHILD_VALIDATION",
+            "G1_failure_reasons": ["NO_EXECUTED_CITYJSON_OUTPUT"], "geometry_ring_diagnostic": None,
+            "geometry_ring_diagnostic_class": "DIAGNOSTIC_RING_INDEX_SANITY_NOT_G2_NOT_VAL3DITY",
+            "G2_geometry_topology_valid": None, "G2_null_reason": "CANONICAL_VALIDATOR_UNAVAILABLE",
+            "G3_roof_structure_acceptable": None, "G4_geometric_accuracy_acceptable": None, "PASS_usable": None,
+            "threshold_null_reason": "THRESHOLD_NOT_FROZEN", "attempt_count": 0, "retry_count": 0,
+            "runtime_seconds": None, "peak_memory_bytes": None, "peak_memory_unavailable_reason": "NO_ROOFER_EXECUTION",
+            "input_point_count": None, "roofer_input_point_count": None, "output_bytes": 0,
+            "failure_reasons": ["UNASSOCIATED_CONDITION_COMPONENT"], "metrics": contract.score_continuous([], []),
+            "scientific_verdict": None,
+        }
+        result = contract.validate_result_rows([row], config)
+        self.assertEqual(1, result["validated_rows"])
 
     def test_group_balanced_summary_is_descriptive_only(self) -> None:
         rows = [
             {"group_id": "g_big", "metrics": {"RMSZ_m": 1.0}},
             {"group_id": "g_big", "metrics": {"RMSZ_m": 3.0}},
-            {"group_id": "g_small", "metrics": {"RMSZ_m": 10.0}},
+            {"group_id": "g2", "metrics": {"RMSZ_m": 4.0}},
+            {"group_id": "g3", "metrics": {"RMSZ_m": 6.0}},
+            {"group_id": "g4", "metrics": {"RMSZ_m": 8.0}},
+            {"group_id": "g5", "metrics": {"RMSZ_m": 10.0}},
         ]
-        summary = contract.group_balanced_summary(rows, "RMSZ_m")
+        sizes = {"g_big": 2, "g2": 1, "g3": 1, "g4": 1, "g5": 1}
+        summary = contract.group_balanced_summary(rows, "RMSZ_m", sizes)
         self.assertEqual(6.0, summary["unweighted_group_mean"])
+        self.assertEqual(5, len(summary["groups"]))
+        self.assertTrue(summary["all_five_groups_have_value"])
         self.assertIsNone(summary["inferential_statistics"])
+        rows[-1]["metrics"]["RMSZ_m"] = None
+        missing = contract.group_balanced_summary(rows, "RMSZ_m", sizes)
+        self.assertIsNone(missing["unweighted_group_mean"])
+        self.assertEqual(4, missing["groups_with_value"])
 
     def test_continuous_metric_formulas_and_roof_triangle_extraction(self) -> None:
         triangle = np.asarray([[0.0, 0.0, 5.0], [2.0, 0.0, 5.0], [0.0, 2.0, 5.0]])
@@ -223,6 +320,10 @@ class ContractTests(unittest.TestCase):
         self.assertIn('"${PACKET_SOURCE_COMMIT}" != "${SOURCE_COMMIT}"', script)
         self.assertNotIn('"${HEAD_SHA}" != "${SOURCE_COMMIT}"', script)
         self.assertEqual(1, script.count("${ARTIFACT_ROOT}:/artifacts/JointBuildGS:ro"))
+        self.assertIn("050-c1_reference_frozen_pre_c5.json", script)
+        self.assertNotIn("PATCH_SUMMARY", script)
+        self.assertIn("ROOFER_IMAGE_GNU_TIME_UNAVAILABLE_VERIFIED_IMMUTABLE_IMAGE", script)
+        self.assertIn("--accepted-commit \"${HEAD_SHA}\"", script)
         self.assertNotIn("validation:", script)
         self.assertNotIn("held_out:", script)
         receipt = script.index("validate_two_host_handoff.py")
@@ -243,26 +344,39 @@ class ContractTests(unittest.TestCase):
                     "building_id": item["stable_id"], "group_id": item["group_id"], "split": "development",
                     "method_id": method, "reference_provenance": "SELF_REFERENCE_UPPER_BASELINE" if method == "C1_L_upper" else "INDEPENDENT_UAS_SCORE_ONLY",
                     "component_id": None, "operation_unit_id": None, "G0_generated": False, "G1_schema_semantic": None,
-                    "G2_internal_screen": None, "G2_geometry_topology_valid": None, "G2_null_reason": "CANONICAL_VALIDATOR_UNAVAILABLE",
+                    "G1_failure_reasons": ["NO_EXECUTED_CITYJSON_OUTPUT"], "geometry_ring_diagnostic": None,
+                    "G2_geometry_topology_valid": None, "G2_null_reason": "CANONICAL_VALIDATOR_UNAVAILABLE",
                     "G3_roof_structure_acceptable": None, "G4_geometric_accuracy_acceptable": None, "PASS_usable": None,
                     "threshold_null_reason": "THRESHOLD_NOT_FROZEN", "attempt_count": 0, "retry_count": 0,
-                    "runtime_seconds": None, "peak_memory_bytes": None, "input_point_count": None, "roofer_input_point_count": None,
+                    "runtime_seconds": None, "peak_memory_bytes": None, "peak_memory_unavailable_reason": "NO_ROOFER_EXECUTION",
+                    "input_point_count": None, "roofer_input_point_count": None,
                     "output_bytes": 0, "failure_reasons": ["UNASSOCIATED"], "metrics": metrics,
                 })
         summaries = [{"method_id": method, **contract.group_balanced_summary(rows, "RMSZ_m")} for method in contract.CONDITIONS]
+        technical = contract.condition_group_technical_summary(rows, config["scope"]["group_sizes"])
         cases = [row for row in rows if representatives[row["group_id"]] == row["building_id"]]
         with tempfile.TemporaryDirectory() as external, tempfile.TemporaryDirectory() as repository:
             store = contract.AddOnceStore(Path(external))
             metric_record = store.add("results/building_method_metrics_v1.jsonl", contract.jsonl_bytes(rows))
             summary_record = store.add("results/group_balanced_descriptive_v1.jsonl", contract.jsonl_bytes(summaries))
+            technical_record = store.add("results/condition_group_technical_summary_v1.jsonl", contract.jsonl_bytes(technical))
+            input_definition_record = store.add(
+                "results/development_input_definition_v1.csv",
+                contract.canonical_lf_bytes(contract.REPO / config["scope"]["development_score_scope_path"]),
+            )
             case_record = store.add("results/preselected_case_index_v1.jsonl", contract.jsonl_bytes(cases))
-            report_record = store.add("results/C1_C2_DEVELOPMENT_REPORT_v1.md", b"compact\n")
+            report_record = store.add("results/C1_C2_DEVELOPMENT_REPORT_v1.md", b"canonical G2\nscientific_verdict\n")
             store.add_json("control/finalized_v1.json", {
                 "status": "TECHNICAL_RESULTS_COMPLETE_FOR_WORK_HOST_REVIEW", "scientific_verdict": None,
                 "run_id": "run", "operation_id": "b" * 64, "metrics": metric_record,
-                "group_balanced_descriptive": summary_record, "preselected_cases": case_record, "report": report_record,
+                "group_balanced_descriptive": summary_record, "condition_group_technical_summary": technical_record,
+                "development_input_definition": input_definition_record,
+                "preselected_cases": case_record, "report": report_record,
                 "unique_execution_units": 0, "duplicate_roofer_calculations_prevented": 0,
                 "method_summary": {method: {"G0_generated": 0, "G1_provisional_true": 0} for method in contract.CONDITIONS},
+                "execution_authority": {"handoff_id": "test"}, "tool_records": {}, "input_records": {}, "output_records": {},
+                "result_schema_validation": {"validated_rows": 102},
+                "qualitative_fixed_view": {"status": "NOT_RENDERED", "reason": "TEST"},
             })
             first = contract.promote(store, Path(repository), "a" * 40)
             second = contract.promote(store, Path(repository), "a" * 40)
@@ -270,6 +384,8 @@ class ContractTests(unittest.TestCase):
             self.assertTrue(second["fast_path"])
             csv_path = Path(repository) / "docs/experiments/p2/c1_c2_feasibility_pilot_v1/building_method_metrics_v1.csv"
             self.assertEqual(103, len(csv_path.read_text(encoding="utf-8").splitlines()))
+            input_definition_path = Path(repository) / "docs/experiments/p2/c1_c2_feasibility_pilot_v1/development_input_definition_v1.csv"
+            self.assertEqual(52, len(input_definition_path.read_text(encoding="utf-8").splitlines()))
             report = (Path(repository) / "docs/experiments/p2/c1_c2_feasibility_pilot_v1/C1_C2_DEVELOPMENT_REPORT_v1.md").read_text(encoding="utf-8")
             self.assertIn("canonical G2", report)
             self.assertIn("scientific_verdict", report)
@@ -294,7 +410,7 @@ class ContractTests(unittest.TestCase):
             work = store.path(unit["work_directory"])
             (work / "roofer.log.json").write_text("{}", encoding="utf-8")
             (work / "runtime.attempt_1.log").write_text("infra fail", encoding="utf-8")
-            retry = contract.record_attempt(store, unit_id, 1, 125, 1.0, None)
+            retry = contract.record_attempt(store, unit_id, 1, 125, 1.0, None, "ROOFER_IMAGE_GNU_TIME_UNAVAILABLE")
             self.assertEqual("RETRY_AUTHORIZED_INFRASTRUCTURE_ONLY", retry["status"])
             second = contract.next_attempt(store, unit_id)
             self.assertEqual(2, second["attempt_number"])
@@ -311,13 +427,37 @@ class ContractTests(unittest.TestCase):
             }
             (output / "result.json").write_text(json.dumps(cityjson), encoding="utf-8")
             (work / "runtime.attempt_2.log").write_text("ok", encoding="utf-8")
-            final = contract.record_attempt(store, unit_id, 2, 0, 2.0, 123)
+            final = contract.record_attempt(store, unit_id, 2, 0, 2.0, 123, None)
             self.assertEqual("COMPLETE", final["status"])
             self.assertEqual(2, len(final["runtime_logs"]))
+            self.assertEqual([1.0, 2.0], final["attempt_runtime_seconds"])
+            self.assertEqual(3.0, final["runtime_seconds"])
             self.assertEqual(1, final["quarantine_state"]["files"])
             self.assertTrue(final["quarantine_state"]["roofer_internal_log_moved"])
             with self.assertRaisesRegex(RuntimeError, "already has final"):
-                contract.record_attempt(store, unit_id, 2, 0, 2.0, 123)
+                contract.record_attempt(store, unit_id, 2, 0, 2.0, 123, None)
+
+    def test_attempt_two_blocks_before_quarantine_without_retry_authorization(self) -> None:
+        unit_id = "C1_L_upper|C1_L_upper_COMP_aaaaaaaaaaaaaaaaaaaa"
+        unit = {
+            "operation_unit_id": unit_id, "condition_id": "C1_L_upper",
+            "component_id": "C1_L_upper_COMP_aaaaaaaaaaaaaaaaaaaa",
+            "work_directory": "operations/C1/work", "output_directory": "operations/C1/work/out",
+        }
+        with tempfile.TemporaryDirectory() as temporary:
+            store = contract.AddOnceStore(Path(temporary))
+            units_record = store.add("freeze/execution_units_v1.jsonl", contract.jsonl_bytes([unit]))
+            store.add_json("control/scientific_prepared_v1.json", {"status": "PREPARED", "execution_units": units_record})
+            contract.next_attempt(store, unit_id)
+            output = store.path(unit["output_directory"])
+            output.mkdir(parents=True)
+            (output / "must-remain.txt").write_text("preserve", encoding="utf-8")
+            store.add_json(f"operation_records/{contract._unit_slug(unit_id)}/attempt_01.result.json", {
+                "status": "TERMINAL_ATTEMPT_RESULT", "attempt_number": 1, "exit_code": 125,
+            })
+            with self.assertRaisesRegex(RuntimeError, "not explicitly retry-authorized"):
+                contract.next_attempt(store, unit_id)
+            self.assertTrue((output / "must-remain.txt").is_file())
 
     def test_toy_prepare_freezes_geometry_before_score_and_reuses_shared_units(self) -> None:
         config = copy.deepcopy(contract.load_config())
@@ -334,57 +474,86 @@ class ContractTests(unittest.TestCase):
         }
         for iy, ix in ((1, 1), (1, 2), (2, 1), (2, 2)):
             flat = iy * 10 + ix
-            arrays["class6_max_z"][flat] = 5.0
-            arrays["class6_count"][flat] = 3
+            arrays["max_z"][flat] = 5.0
+            arrays["count"][flat] = 3
         grid_buffer = io.BytesIO()
         np.savez_compressed(grid_buffer, **arrays)
         c1_bytes = grid_buffer.getvalue()
         c2_points = [contract.Point(ix + 0.5, iy + 0.5, 5.0, 6, ix, iy) for iy, ix in ((1, 1), (1, 2), (2, 1), (2, 2))]
         c2_points += [contract.Point(ix + 0.5, iy + 0.5, 0.0, 2, ix, iy) for iy, ix in ((0, 0), (0, 3), (3, 0), (3, 3))]
         c2_bytes = contract.ply_bytes(c2_points)
-        associations = contract.read_csv(contract.REPO / config["scope"]["reference_association_path"])
-        patches = sorted({patch for row in associations for patch in row["reference_patch_ids"].split(";")})
+        roster = contract.read_csv(contract.REPO / config["scope"]["roster_path"])
+        score_scope = [{
+            "stable_id": row["stable_id"], "group_id": row["group_id"],
+            "bbox_min_x": "0.0", "bbox_min_y": "0.0", "bbox_max_x": "10.0", "bbox_max_y": "10.0",
+            "reference_patch_ids": f"UASPATCH_{index:020x}", "expected_score_cells": "1",
+        } for index, row in enumerate(roster, start=1)]
         reference_buffer = io.StringIO(newline="")
-        reference_writer = __import__("csv").DictWriter(reference_buffer, fieldnames=["patch_id", "cell_ix", "cell_iy", "cell_x", "cell_y", "top_z", "normal_x", "normal_y", "normal_z"], lineterminator="\n")
+        reference_writer = __import__("csv").DictWriter(reference_buffer, fieldnames=["patch_id", "flat_index", "cell_ix", "cell_iy", "cell_x", "cell_y", "top_z", "normal_x", "normal_y", "normal_z"], lineterminator="\n")
         reference_writer.writeheader()
         cells = ((1, 1), (1, 2), (2, 1), (2, 2))
-        for index, patch in enumerate(patches):
+        for index, scope in enumerate(score_scope):
             ix, iy = cells[index % 4]
-            reference_writer.writerow({"patch_id": patch, "cell_ix": ix, "cell_iy": iy, "cell_x": ix + 0.5, "cell_y": iy + 0.5, "top_z": 5, "normal_x": 0, "normal_y": 0, "normal_z": 1})
+            reference_writer.writerow({"patch_id": scope["reference_patch_ids"], "flat_index": index, "cell_ix": ix, "cell_iy": iy, "cell_x": ix + 0.5, "cell_y": iy + 0.5, "top_z": 5, "normal_x": 0, "normal_y": 0, "normal_z": 1})
         reference_bytes = reference_buffer.getvalue().encode()
-        patch_bytes = ("patch_id\n" + "".join(f"{patch}\n" for patch in patches)).encode()
-        config["inputs"]["c1_grid"].update(bytes=len(c1_bytes), sha256=contract.sha256_bytes(c1_bytes))
-        config["inputs"]["c1_reference_cells"].update(bytes=len(reference_bytes), sha256=contract.sha256_bytes(reference_bytes), expected_rows=len(patches))
-        config["inputs"]["c1_patch_summary"].update(bytes=len(patch_bytes), sha256=contract.sha256_bytes(patch_bytes), expected_rows=len(patches))
+        config["inputs"]["c1_grid"].update(bytes=len(c1_bytes), sha256=contract.sha256_bytes(c1_bytes), raw_point_count=100, raw_class_counts={"0": 100})
+        config["inputs"]["reference_candidate_cells"].update(bytes=len(reference_bytes), sha256=contract.sha256_bytes(reference_bytes), expected_rows=51)
+        config["scope"]["development_score_cell_rows"] = 51
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             inputs = root / "inputs"
             inputs.mkdir()
             c1_path, c2_path = inputs / "c1.npz", inputs / "c2.ply"
-            ref_path, patch_path, checkpoint_path = inputs / "reference.csv", inputs / "patch.csv", inputs / "checkpoint.json"
+            ref_path, c1_checkpoint_path, c2_checkpoint_path = inputs / "reference.csv", inputs / "c1-checkpoint.json", inputs / "c2-checkpoint.json"
             c1_path.write_bytes(c1_bytes); c2_path.write_bytes(c2_bytes)
-            ref_path.write_bytes(reference_bytes); patch_path.write_bytes(patch_bytes)
-            checkpoint_bytes = json.dumps({"payload": {"derivative": {
+            ref_path.write_bytes(reference_bytes)
+            c1_checkpoint_bytes = contract.canonical_json_bytes({
+                "stage": "c1_reference_frozen_pre_c5", "status": "COMPLETED_FSYNC",
+                "payload": {
+                    "grid": {"path": "/artifacts/JointBuildGS/" + config["inputs"]["c1_grid"]["artifact_relative_path"], "bytes": len(c1_bytes), "sha256": contract.sha256_bytes(c1_bytes)},
+                    "input": {"point_count": 100, "raw_class_counts": {"0": 100}},
+                },
+            })
+            c1_checkpoint_path.write_bytes(c1_checkpoint_bytes)
+            config["inputs"]["c1_grid"].update(attestation_checkpoint_bytes=len(c1_checkpoint_bytes), attestation_checkpoint_sha256=contract.sha256_bytes(c1_checkpoint_bytes))
+            c2_checkpoint_bytes = json.dumps({"payload": {"derivative": {
                 "path": "/artifacts/JointBuildGS/" + config["inputs"]["c2_mvs_class26"]["artifact_relative_path"],
                 "bytes": len(c2_bytes), "sha256": contract.sha256_bytes(c2_bytes),
             }}}).encode("utf-8")
-            checkpoint_path.write_bytes(checkpoint_bytes)
+            c2_checkpoint_path.write_bytes(c2_checkpoint_bytes)
             config["inputs"]["c2_mvs_class26"].update(
-                attestation_checkpoint_bytes=len(checkpoint_bytes),
-                attestation_checkpoint_sha256=contract.sha256_bytes(checkpoint_bytes),
+                bytes=len(c2_bytes), sha256=contract.sha256_bytes(c2_bytes),
+                attestation_checkpoint_bytes=len(c2_checkpoint_bytes),
+                attestation_checkpoint_sha256=contract.sha256_bytes(c2_checkpoint_bytes),
             )
+            receipt_path = inputs / "100-accepted.json"
+            image_id = "sha256:" + "c" * 64
+            receipt_path.write_text(json.dumps({
+                "handoff_id": config["handoff_id"], "state": "accepted", "direction": "work_to_experiment",
+                "verification": {"docker_image_digest": image_id},
+            }), encoding="utf-8")
             store = contract.AddOnceStore(root / "output")
             store.add_json("control/synthetic_smoke_pass_v1.json", {"status": "PASS"})
-            with mock.patch.object(contract, "load_config", return_value=config):
+            validation = {
+                "development_id_set_sha256": config["scope"]["development_id_set_sha256"],
+                "representatives": contract.representative_cases(roster),
+            }
+            with mock.patch.object(contract, "load_config", return_value=config), \
+                 mock.patch.object(contract, "validate_contract", return_value=validation), \
+                 mock.patch.object(contract, "read_csv", side_effect=[roster, score_scope]):
                 prepared = contract.prepare_scientific(
-                    store, c1_grid_path=c1_path, c2_ply_path=c2_path, c2_checkpoint_path=checkpoint_path,
-                    reference_cells_path=ref_path, patch_summary_path=patch_path,
-                    source_commit="a" * 40, run_id="toy-run",
+                    store, c1_grid_path=c1_path, c1_checkpoint_path=c1_checkpoint_path,
+                    c2_ply_path=c2_path, c2_checkpoint_path=c2_checkpoint_path, reference_cells_path=ref_path,
+                    source_commit="a" * 40, run_id="toy-run", handoff_id=config["handoff_id"],
+                    accepted_receipt_path=receipt_path, accepted_commit="b" * 40,
+                    project_image_id=image_id, artifact_root_token="artifact://JointBuildGS",
                 )
                 reused = contract.prepare_scientific(
-                    store, c1_grid_path=Path("missing"), c2_ply_path=Path("missing"), c2_checkpoint_path=Path("missing"),
-                    reference_cells_path=Path("missing"), patch_summary_path=Path("missing"),
-                    source_commit="a" * 40, run_id="toy-run",
+                    store, c1_grid_path=Path("missing"), c1_checkpoint_path=Path("missing"),
+                    c2_ply_path=Path("missing"), c2_checkpoint_path=Path("missing"), reference_cells_path=Path("missing"),
+                    source_commit="a" * 40, run_id="toy-run", handoff_id=config["handoff_id"],
+                    accepted_receipt_path=receipt_path, accepted_commit="b" * 40,
+                    project_image_id=image_id, artifact_root_token="artifact://JointBuildGS",
                 )
             self.assertEqual(102, prepared["result_rows"])
             self.assertEqual(2, prepared["unique_execution_units"])
@@ -414,6 +583,47 @@ class ContractTests(unittest.TestCase):
             simulated_102_rows = [counts["shared"] for _ in range(102)]
             self.assertEqual([4] * 102, simulated_102_rows)
             self.assertEqual(1, store.reads)
+
+    def test_finalize_emits_unassociated_rows_as_g0_instead_of_aborting(self) -> None:
+        config = contract.load_config()
+        roster = contract.read_csv(contract.REPO / config["scope"]["roster_path"])
+        mappings = []
+        cells = []
+        for index, item in enumerate(roster):
+            cells.append({
+                "stable_id": item["stable_id"], "group_id": item["group_id"], "patch_id": f"UASPATCH_{index:020x}",
+                "flat_index": str(index), "cell_ix": "1", "cell_iy": "1", "cell_x": "1.5", "cell_y": "1.5",
+                "top_z": "5", "normal_x": "0", "normal_y": "0", "normal_z": "1",
+            })
+            for method in contract.CONDITIONS:
+                mappings.append({
+                    "building_id": item["stable_id"], "group_id": item["group_id"], "split": "development",
+                    "method_id": method, "component_id": None, "operation_unit_id": None,
+                    "reference_cell_count": 1, "component_overlap_reference_cells": 0,
+                    "association_role": "SCORE_IDENTITY_ONLY_AFTER_FROZEN_CONDITION_GEOMETRY",
+                    "pre_roofer_failure": None,
+                })
+        with tempfile.TemporaryDirectory() as temporary:
+            store = contract.AddOnceStore(Path(temporary))
+            mapping_record = store.add("freeze/development_score_association_v1.jsonl", contract.jsonl_bytes(mappings))
+            cells_record = store.add("freeze/development_score_cells_v1.jsonl", contract.jsonl_bytes(cells))
+            components_record = store.add("freeze/condition_components_v1.jsonl", b"")
+            units_record = store.add("freeze/execution_units_v1.jsonl", b"")
+            store.add_json("control/preselected_cases_v1.json", {"cases": contract.representative_cases(roster)})
+            store.add_json("control/scientific_prepared_v1.json", {
+                "status": "PREPARED", "run_id": "run", "operation_id": "a" * 64,
+                "condition_components": components_record, "development_score_association": mapping_record,
+                "development_score_cells": cells_record, "execution_units": units_record,
+                "unique_execution_units": 0, "duplicate_roofer_calculations_prevented": 0,
+                "execution_authority": {"handoff_id": config["handoff_id"]}, "tool_records": {}, "input_records": {}, "output_records": {},
+            })
+            finalized = contract.finalize(store)
+            rows = contract.parse_jsonl(store.read_verified(finalized["metrics"]))
+            technical = contract.parse_jsonl(store.read_verified(finalized["condition_group_technical_summary"]))
+        self.assertEqual(102, len(rows))
+        self.assertTrue(all(row["G0_generated"] is False for row in rows))
+        self.assertTrue(all(row["failure_reasons"] == ["UNASSOCIATED_CONDITION_COMPONENT"] for row in rows))
+        self.assertEqual(10, len(technical))
 
 
 if __name__ == "__main__":

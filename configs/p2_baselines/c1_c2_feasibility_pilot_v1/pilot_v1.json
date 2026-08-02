@@ -20,9 +20,10 @@
     "roster_path": "configs/p2_baselines/c1_c2_feasibility_pilot_v1/development_roster_v1.csv",
     "roster_bytes": 2731,
     "roster_sha256": "c9f6412c4878a2cec3be09e465bb7a2be60f4f8329a473bf4acd44679c6afecc",
-    "reference_association_path": "configs/p2_baselines/c1_c2_feasibility_pilot_v1/development_reference_association_v1.csv",
-    "reference_association_bytes": 8241,
-    "reference_association_sha256": "3a3c80b510cbba5f9a714cf8bb55c5e0ad2a80fe8250a313ce5a9a6f4a823628",
+    "development_score_scope_path": "configs/p2_baselines/c1_c2_feasibility_pilot_v1/development_score_scope_v1.csv",
+    "development_score_scope_canonical_lf_bytes": 12014,
+    "development_score_scope_canonical_lf_sha256": "ba5cbefced147fa383efe3d1c24e10a0c01673a296c431a304a7386189f9ce77",
+    "development_score_cell_rows": 21714,
     "validation_payload_mount_allowed": false,
     "held_out_payload_mount_allowed": false,
     "c3_c5_allowed": false
@@ -42,25 +43,25 @@
       "artifact_relative_path": "phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/reference/c1_grid_v1.npz",
       "bytes": 3023643,
       "sha256": "4f72178551e25ef27a952a09faa8331c1464416fcd6c5f66a57a9424e7f0b77b",
-      "read_contract": "ONE_PROCESS_AND_DIGEST_STREAM"
+      "attestation_checkpoint_relative_path": "phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/checkpoints/050-c1_reference_frozen_pre_c5.json",
+      "attestation_checkpoint_bytes": 3140,
+      "attestation_checkpoint_sha256": "530a2a001189c7c0a4dfa486349b77d80ee5031e2a8b4024793405837dc1611e",
+      "attestation_record_key": "payload.grid",
+      "raw_point_count": 177981904,
+      "raw_class_counts": {"0": 177981904},
+      "read_contract": "ONE_PROCESS_AND_DIGEST_STREAM_BOUND_TO_EXACT_050_CHECKPOINT"
     },
-    "c1_reference_cells": {
+    "reference_candidate_cells": {
       "mount_path": "/pilot_inputs/reference/reference_candidate_cells_v1.csv",
       "artifact_relative_path": "phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/reference/reference_candidate_cells_v1.csv",
       "bytes": 3785261,
       "sha256": "bf87736227ea3c28bc8f966f36e2498f786d2de420a732fa0bfebbb73664275a",
       "expected_rows": 20520,
       "read_contract": "ONE_PROCESS_AND_DIGEST_STREAM",
-      "role_c1": "SCORE_ONLY_AFTER_CONDITION_COMPONENTS_AND_R_DERIVED_ARE_FROZEN",
-      "role_c2": "SCORE_ONLY_AFTER_OUTPUT"
-    },
-    "c1_patch_summary": {
-      "mount_path": "/pilot_inputs/reference/patch_summary_v1.csv",
-      "artifact_relative_path": "phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/reference/patch_summary_v1.csv",
-      "bytes": 96539,
-      "sha256": "8a4379bdc7c58f7470fa37163f5471160601eb0475a86178054e47c5714ea3d0",
-      "expected_rows": 177,
-      "read_contract": "ONE_VALIDATE_AND_DIGEST_STREAM"
+      "role_c1": "SELF_REFERENCE_SCORE_ONLY_AFTER_CONDITION_COMPONENTS_AND_R_DERIVED_ARE_FROZEN",
+      "role_c2": "INDEPENDENT_UAS_SCORE_ONLY_AFTER_CONDITION_COMPONENTS_AND_R_DERIVED_ARE_FROZEN",
+      "projection_contract": "ONE_GLOBAL_STREAM_RETAIN_ONLY_DEVELOPMENT_PATCH_CANDIDATES_THEN_INCLUSIVE_BUILDING_BBOX_EXACT_21714_ROWS",
+      "non_development_rows_retained_scored_or_promoted": 0
     },
     "c2_mvs_class26": {
       "mount_path": "/pilot_inputs/c2/mvs_class26_v1.ply",
@@ -69,6 +70,8 @@
       "attestation_checkpoint_bytes": 2951,
       "attestation_checkpoint_sha256": "b301d3dc7dec2423ff5760c47db4dfef4f62e919b5aac5808a30c82a9330a8f8",
       "attestation_record_key": "payload.derivative",
+      "bytes": 7327590,
+      "sha256": "c7d63387d720dc4028c2b00e9cc6abb83d41161d6f033199ee619765fdfaf8dd",
       "read_contract": "ONE_PROCESS_AND_DIGEST_STREAM_USING_FROZEN_CHECKPOINT_RECORD",
       "raw_dim_dense_allowed": false
     },
@@ -93,18 +96,20 @@
     ]
   },
   "c1_materialization": {
-    "name": "ALL_FROZEN_C1_GRID_CLASS2_CLASS6_CELLS_V1",
-    "building_class": 6,
-    "ground_class": 2,
-    "building_z_field": "class6_max_z",
-    "building_presence_field": "class6_count_gte_3_and_class6_max_z_minus_terrain_gte_2_5m",
-    "minimum_class6_points_per_cell": 3,
+    "name": "ALL_FROZEN_C1_GRID_GENERIC_MIN_MAX_COUNT_TO_ROOFER_CLASS26_V1",
+    "source_raw_class_counts": {"0": 177981904},
+    "source_classification_fields_usable": false,
+    "emitted_building_class": 6,
+    "emitted_ground_class": 2,
+    "building_z_field": "max_z",
+    "building_presence_field": "count_gte_3_and_max_z_minus_generic_min_z_terrain_envelope_gte_2_5m",
+    "minimum_points_per_cell": 3,
     "minimum_height_above_terrain_m": 2.5,
-    "ground_z_field": "class2_min_z",
-    "ground_presence_field": "class2_count_gt_0",
-    "building_height_reference": "multiscale_lower_envelope_of_class2_min_z",
+    "ground_z_field": "min_z",
+    "ground_presence_field": "count_gt_0_and_min_z_finite",
+    "building_height_reference": "multiscale_lower_envelope_of_generic_min_z",
     "terrain_filter_windows_cells": [3, 7, 15, 31, 51],
-    "all_frozen_grid_class2_class6_cells_required": true,
+    "all_frozen_grid_generic_observed_cells_required": true,
     "r1_reference_cells_used": false,
     "stable_id_used": false,
     "bbox_used": false,
@@ -134,15 +139,29 @@
     "generating_software": "P2-C1-C2-PILOT-v1"
   },
   "association": {
-    "method": "FROZEN_REFERENCE_PATCH_CELL_TO_CONDITION_COMPONENT_SCORE_ASSOCIATION_V1",
+    "method": "FROZEN_DEVELOPMENT_EXACT_SCORE_CELL_TO_CONDITION_COMPONENT_ASSOCIATION_V1",
     "timing": "AFTER_CONDITION_COMPONENTS_AND_ALL_R_DERIVED_JOB_INPUTS_ARE_ADD_ONCE_FROZEN",
     "purpose": "SCORE_IDENTITY_ONLY",
-    "selection_rule": "MAX_REFERENCE_CELL_XY_OVERLAP_THEN_MIN_COMPONENT_ID",
+    "selection_rule": "EXACT_SCOPE_PATCH_MEMBERSHIP_AND_INCLUSIVE_BBOX_THEN_MAX_CELL_XY_OVERLAP_THEN_MIN_COMPONENT_ID",
     "zero_overlap": "UNASSOCIATED_G0_FALSE",
     "geometry_modification_allowed": false,
     "crop_allowed": false,
     "registration_allowed": false,
     "c2_reference_cells_are_reconstruction_input": false
+  },
+  "frozen_lineage": {
+    "eligibility": {
+      "git_path": "docs/research/preregistration/gate_s0/uas_reference_coverage_r1_v1/eligibility_candidate_v1.csv",
+      "git_blob": "1dca79dcc411c4904eb491a5b8aaa03890984e52",
+      "canonical_bytes": 75448,
+      "canonical_sha256": "527f0616eb9e5807d210ead1d165e9db844f4f0541097949e03c96229f72224f"
+    },
+    "split": {
+      "git_path": "docs/research/preregistration/gate_s0/uas_reference_coverage_r1_v1/split_candidate_v1.csv",
+      "git_blob": "f6db7b8accdbd7b57b4a221c441acfc5589fb592",
+      "canonical_bytes": 3803,
+      "canonical_sha256": "8dc33b86a126667b847ddf33f4ad4a56012f2bfc784c0742e573a421120f7309"
+    }
   },
   "stage3": {
     "interface": "R_DERIVED_NON_GT_CONVEX_HULL_V1",
@@ -161,7 +180,12 @@
       "cpus_per_attempt": 2,
       "memory_bytes_per_attempt": 8000000000,
       "gpus_per_attempt": 0,
-      "timeout_seconds_per_attempt": 600
+      "timeout_seconds_per_attempt": 600,
+      "peak_memory_capture": {
+        "status": "UNAVAILABLE",
+        "reason": "ROOFER_IMAGE_GNU_TIME_UNAVAILABLE_VERIFIED_IMMUTABLE_IMAGE",
+        "observation": "immutable Roofer image entrypoint=roofer; /usr/bin/time absent; no proxy host-RSS value is mislabeled as Roofer peak memory"
+      }
     }
   },
   "result": {
@@ -171,7 +195,9 @@
     "g3_g4_pass_null_reason": "THRESHOLD_NOT_FROZEN",
     "c1_reference_provenance": "SELF_REFERENCE_UPPER_BASELINE",
     "c2_reference_provenance": "INDEPENDENT_UAS_SCORE_ONLY",
-    "summary_mode": "BUILDING_DESCRIPTIVE_PLUS_UNWEIGHTED_GROUP_MEAN",
+    "summary_mode": "BUILDING_DESCRIPTIVE_PLUS_ALL_FIVE_GROUP_DENOMINATORS_AND_COMPLETE_CASE_UNWEIGHTED_GROUP_MEAN",
+    "qualitative_fixed_view_status": "NOT_RENDERED",
+    "qualitative_fixed_view_null_reason": "NOT_RENDERED_NO_FROZEN_CAMERA_OR_RENDERER_IN_BOUNDED_PILOT",
     "inferential_statistics_allowed": false
   },
   "retries": {

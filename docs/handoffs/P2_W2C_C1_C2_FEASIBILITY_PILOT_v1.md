@@ -32,7 +32,7 @@ The scientifically ordered next step is a bounded **development-only** C1/C2 run
 2. run `C1_L_upper` and `C2_MVS` on the 51 preassigned development buildings with one
    fixed common Stage-3 protocol;
 3. report continuous metrics, G0/G1 technical outcomes, a separately named internal
-   topology screen and outcome-free qualitative cases without setting G3/G4 or
+   ring diagnostic and outcome-free qualitative case identities without setting G3/G4 or
    `PASS_usable` thresholds; canonical G2 remains null because the frozen val3dity
    route is not callable on the Experiment Host;
 4. return evidence for the Work Host to design the first C3 training strategy.
@@ -81,7 +81,9 @@ archived four-condition records are not execution authority.
 - `B_current`: camera/pose, sparse, dense MVS and gravity ON; depth, normal-map
   supervision, confidence and segmentation OFF.
 - C1: current nadir UAS LiDAR direct Roofer branch, materialized condition-only from
-  all frozen class-2/class-6 cells in `c1_grid_v1.npz`; evaluation class
+  the frozen generic `min_z/max_z/count` fields in `c1_grid_v1.npz`; the exact source
+  attestation records all 177,981,904 raw points as class 0, so class-specific grid
+  fields are prohibited. Evaluation class
   `SELF_REFERENCE_UPPER_BASELINE`. The old 1,184-building-point/4-component
   `c1_class26_v1.ply` is prohibited because it was filtered by a prior reference
   selection. C1 is a sensor upper/context baseline, not an independently scored
@@ -98,7 +100,7 @@ archived four-condition records are not execution authority.
 - The LoD2-derived LoD1 stays diagnostic/self-conditioned under `DEC-P1-011`; it is
   not read or used by this C1/C2 task.
 - Canonical G2 is null with `CANONICAL_VALIDATOR_UNAVAILABLE`; a deterministic
-  internal topology screen is diagnostic only and may not be relabeled as G2.
+  ring-index diagnostic is diagnostic only and may not be relabeled as G2.
   Numerical G3/G4 and `PASS_usable` thresholds remain unset. No threshold is selected
   from this run.
 - `scientific_verdict` remains `null`.
@@ -108,11 +110,11 @@ archived four-condition records are not execution authority.
 | Input | Exact binding | Role | Access rule |
 |---|---|---|---|
 | technical freeze | `technical_freeze_manifest_v1.json`; common 962/937/25, four consumers 807,030,928 bytes | source/component contract | reuse manifest and existing derivatives; no large-input rehash |
-| C1 compact grid | `reference/c1_grid_v1.npz`; 3,023,643 bytes; SHA-256 `4f72178551e25ef27a952a09faa8331c1464416fcd6c5f66a57a9424e7f0b77b` | derive global condition-only class-2/6 C1 input | one process+digest stream; no raw 1.278 GB UAS LAZ read; no R1 cells or stable ID during materialization |
+| C1 compact grid | `reference/c1_grid_v1.npz`; 3,023,643 bytes; SHA-256 `4f72178551e25ef27a952a09faa8331c1464416fcd6c5f66a57a9424e7f0b77b`; checkpoint `050-c1_reference_frozen_pre_c5.json` is 3,140 bytes/SHA-256 `530a2a001189c7c0a4dfa486349b77d80ee5031e2a8b4024793405837dc1611e` | derive global condition-only emitted class-2/6 C1 input from generic `min_z/max_z/count` | one process+digest stream for grid and compact checkpoint; no raw 1.278 GB UAS LAZ read; no class-specific grid field, R1 cell, stable ID or bbox during materialization |
 | C2 compact derivative | `common/mvs_class26_v1.ply`; 7,327,590 bytes; SHA-256 `c7d63387d720dc4028c2b00e9cc6abb83d41161d6f033199ee619765fdfaf8dd`; checkpoint `030-dense_mvs_and_gravity.json` is 2,951 bytes/SHA-256 `b301d3dc7dec2423ff5760c47db4dfef4f62e919b5aac5808a30c82a9330a8f8`; frozen from exact-937 `dim_dense.ply` by the fixed 1 m adapter | direct C2 input | one process+digest stream for the compact derivative and its compact checkpoint; do not reopen the 659,138,498-byte raw dense PLY or regenerate the derivative |
 | evaluation candidates | promoted `eligibility_candidate_v1.csv` | exact 72 candidate IDs and attemptability | select only exact development rows |
 | group/split | promoted `group_graph_v1.csv` and `split_candidate_v1.csv` | exact 51 development buildings in five groups | validation and held-out IDs may be checked as membership metadata only; no outputs/outcomes |
-| independent reference | promoted R1 patch/cell evidence, 177 patches and 20,520 score cells | C2 score-only reference | read only cells associated with development IDs; never an input to reconstruction/registration |
+| independent reference | `reference_candidate_cells_v1.csv`; 3,785,261 bytes; SHA-256 `bf87736227ea3c28bc8f966f36e2498f786d2de420a732fa0bfebbb73664275a`; 20,520 global outcome-free rows | score-only reference after condition geometry and every `R_derived` input are frozen | one global process+digest stream; retain only development patch candidates and inclusive building-bbox matches, assert exact 21,714 building-cell rows; non-development retained/scored/promoted rows are zero; never an input to reconstruction/registration |
 | gravity/alignment | frozen gravity and terrain-only alignment receipt | shared Stage-3 frame | no hard-coded gravity; no UAS roof registration for C2 |
 | Roofer | `3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2` | common Stage 3 | exact digest only; new writable work directory, no algorithm change during pilot |
 
@@ -126,9 +128,9 @@ Git-owned input manifests and the exact external artifact URIs needed by the run
 | `docs/research/preregistration/gate_s0/uas_reference_coverage_r1_v1/group_graph_v1.csv` | `25a3aac40f26b19713a1cc21bfecb7b333010b81` | 22,566 | `ef666207d04bedeefef90eca88bdf471b6752bf5693f7c1022ebac8405358904` |
 | `docs/research/preregistration/gate_s0/uas_reference_coverage_r1_v1/split_candidate_v1.csv` | `f6db7b8accdbd7b57b4a221c441acfc5589fb592` | 3,803 | `8dc33b86a126667b847ddf33f4ad4a56012f2bfc784c0742e573a421120f7309` |
 
-The C1 materializer emits one class-2 point at finite `class2_min_z` and one class-6
-point at `class6_max_z` only where `class6_count >= 3` and its height above the
-deterministic C1 class-2 terrain envelope is at least `2.5 m`. The terrain envelope
+The C1 materializer emits one class-2 point at finite generic `min_z` and one class-6
+point at generic `max_z` only where `count >= 3` and its height above the
+deterministic generic-`min_z` terrain envelope is at least `2.5 m`. The terrain envelope
 uses the already-frozen `[3, 7, 15, 31, 51]` cell windows. These are the frozen 1 m
 adapter thresholds; R1 score cells, stable IDs and LoD2 geometry do not participate
 in this operation.
@@ -159,9 +161,11 @@ in this operation.
    `THRESHOLD_NOT_FROZEN`.
 8. Report C1 self-reference/upper-baseline results separately from C2 independent
    reference metrics. Do not rank C1 and C2 as if both were independently evaluated.
-9. Produce outcome-free qualitative case sheets for all 51 lightweight rows plus one
-   preselected representative per development group, chosen by the lowest
-   `SHA256(task_id|group_id|stable_id)` before condition results are opened.
+9. Produce the exact 51-building input-definition table plus one preselected
+   representative per development group and condition, chosen by the lowest
+   `SHA256(task_id|group_id|stable_id)` before condition results are opened. If no
+   camera/rendering contract is frozen in this bounded pilot, record the views as
+   `NOT_RENDERED` with an exact reason instead of inventing a qualitative image.
 10. Produce a compact C1/C2 development report answering what failed, where the MVS
     gap appears, whether Stage 3 is stable, and what evidence a C3 strategy must
     address. Do not prescribe or execute the final C3 loss/schedule in this task.
@@ -197,7 +201,7 @@ packet.
 | metrics | same report directory | 51×2 building-method table, gate table, runtime/failure table, group summaries |
 | cases | same report directory | deterministic case index and compact source-linked case summaries |
 | Return | `docs/handoffs/returns/P2_C2W_C1_C2_FEASIBILITY_PILOT_RETURN_v1.md` | exact status/commit, artifacts, verification, blockers, C3-relevant evidence, `scientific_verdict: null` |
-| external payload | `artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_v1/P2-C1-C2-FEASIBILITY-PILOT-v1/` | immutable full outputs, logs, CityJSON/CityGML, images and compact checkpoints |
+| external payload | `artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_v1/P2-C1-C2-FEASIBILITY-PILOT-v1/` | immutable full outputs, logs, CityJSON/CityGML and compact checkpoints |
 
 The activated packet may narrow these paths after implementation review; it may not
 broaden them into C3--C5, validation or held-out scope.
@@ -213,8 +217,10 @@ The report must show at minimum:
 - available continuous roof/geometry residuals with units, denominator and null
   reasons; C1 self-reference and C2 independent-reference panels must be separate;
 - common Stage-3 input/output point counts and information-loss diagnostics;
-- one page/table summarizing the exact 51-building input definition;
-- deterministic qualitative cases with top/oblique/section views when renderable;
+- one table summarizing the exact 51-building input definition, including group,
+  bbox, patch IDs and expected score-cell count;
+- deterministic qualitative case identities with top/oblique/section views only when
+  a frozen renderer/camera contract exists; otherwise exact `NOT_RENDERED` reason;
 - explicit limitations: development-only, five groups, no numerical G3/G4 threshold,
   no held-out, no C3--C5 conclusion and no population/generalization claim.
 
@@ -248,7 +254,8 @@ The report must show at minimum:
 - condition matrix assertions: exactly one final row for every 51×2 combination;
 - all output and metric rows trace to exact input/output hashes and run IDs;
 - C1 self-reference fields and C2 independent-reference fields cannot be conflated;
-- canonical G2 is null with `CANONICAL_VALIDATOR_UNAVAILABLE`; G3/G4/`PASS_usable`
+- canonical G2 is null with `CANONICAL_VALIDATOR_UNAVAILABLE`; the internal
+  ring-index diagnostic is not G2; G3/G4/`PASS_usable`
   are null with `THRESHOLD_NOT_FROZEN`;
 - second invocation proves completed fast path with zero scientific reread and zero
   write;

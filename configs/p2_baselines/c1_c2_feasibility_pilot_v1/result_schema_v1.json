@@ -7,10 +7,11 @@
   "required": [
     "building_id", "group_id", "split", "method_id", "run_id", "operation_id",
     "criterion_version", "reference_provenance", "component_id", "operation_unit_id", "G0_generated",
-    "G1_schema_semantic", "G1_check_class", "G2_internal_screen", "G2_check_class",
+    "G1_schema_semantic", "G1_check_class", "G1_failure_reasons",
+    "geometry_ring_diagnostic", "geometry_ring_diagnostic_class",
     "G2_geometry_topology_valid", "G2_null_reason", "G3_roof_structure_acceptable",
     "G4_geometric_accuracy_acceptable", "PASS_usable", "threshold_null_reason",
-    "attempt_count", "retry_count", "runtime_seconds", "peak_memory_bytes",
+    "attempt_count", "retry_count", "runtime_seconds", "peak_memory_bytes", "peak_memory_unavailable_reason",
     "input_point_count", "roofer_input_point_count", "output_bytes", "failure_reasons",
     "metrics", "scientific_verdict"
   ],
@@ -27,9 +28,10 @@
     "operation_unit_id": {"type": ["string", "null"]},
     "G0_generated": {"type": "boolean"},
     "G1_schema_semantic": {"type": ["boolean", "null"]},
-    "G1_check_class": {"const": "PROVISIONAL_TECHNICAL_INTERNAL_SCHEMA_SEMANTIC"},
-    "G2_internal_screen": {"type": ["boolean", "null"]},
-    "G2_check_class": {"const": "DIAGNOSTIC_INTERNAL_NOT_CANONICAL_VAL3DITY"},
+    "G1_check_class": {"const": "INTERNAL_CITYJSON_BOUNDARY_SEMANTICS_PARENT_CHILD_VALIDATION"},
+    "G1_failure_reasons": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "geometry_ring_diagnostic": {"type": ["boolean", "null"]},
+    "geometry_ring_diagnostic_class": {"const": "DIAGNOSTIC_RING_INDEX_SANITY_NOT_G2_NOT_VAL3DITY"},
     "G2_geometry_topology_valid": {"type": "null"},
     "G2_null_reason": {"const": "CANONICAL_VALIDATOR_UNAVAILABLE"},
     "G3_roof_structure_acceptable": {"type": "null"},
@@ -40,6 +42,7 @@
     "retry_count": {"type": "integer", "minimum": 0, "maximum": 1},
     "runtime_seconds": {"type": ["number", "null"], "minimum": 0},
     "peak_memory_bytes": {"type": ["integer", "null"], "minimum": 0},
+    "peak_memory_unavailable_reason": {"type": ["string", "null"]},
     "input_point_count": {"type": ["integer", "null"], "minimum": 0},
     "roofer_input_point_count": {"type": ["integer", "null"], "minimum": 0},
     "output_bytes": {"type": "integer", "minimum": 0},
@@ -78,6 +81,13 @@
     },
     "scientific_verdict": {"type": "null"}
   },
+  "allOf": [
+    {
+      "if": {"properties": {"peak_memory_bytes": {"type": "null"}}},
+      "then": {"properties": {"peak_memory_unavailable_reason": {"type": "string", "minLength": 1}}},
+      "else": {"properties": {"peak_memory_unavailable_reason": {"type": "null"}}}
+    }
+  ],
   "metric_formulas": {
     "roof_surface_discretization": "Roofer LoD2.2 RoofSurface exterior rings are deterministically fan-triangulated in stored vertex order; inner rings are rejected rather than silently ignored",
     "reference_vertical_coverage": "n(reference cells with an XY vertical intersection on predicted RoofSurface) / n(reference score cells)",

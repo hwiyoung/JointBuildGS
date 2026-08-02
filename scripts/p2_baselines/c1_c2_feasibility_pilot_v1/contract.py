@@ -21,6 +21,8 @@ import json
 import math
 import os
 import re
+import subprocess
+import sys
 import time
 from datetime import date
 from collections import Counter, defaultdict, deque
@@ -31,6 +33,7 @@ from typing import Any, Iterable, Iterator, Mapping, Sequence
 import numpy as np
 import laspy
 from scipy import ndimage
+from jsonschema import Draft202012Validator
 
 
 REPO = Path(__file__).resolve().parents[3]
@@ -73,6 +76,32 @@ def read_csv(path: Path) -> list[dict[str, str]]:
         return list(csv.DictReader(handle))
 
 
+def canonical_lf_bytes(path: Path) -> bytes:
+    """Return the Git-canonical text identity on Windows or Linux."""
+
+    data = path.read_bytes()
+    return data.replace(b"\r\n", b"\n")
+
+
+def read_bound_git_blob(spec: Mapping[str, Any]) -> bytes:
+    """Read exact committed bytes and bind both Git blob and content digest."""
+
+    path = str(spec["git_path"])
+    blob = subprocess.run(
+        ["git", "-C", str(REPO), "rev-parse", f"HEAD:{path}"],
+        check=True, capture_output=True, text=True,
+    ).stdout.strip()
+    if blob != spec["git_blob"]:
+        raise RuntimeError(f"frozen Git blob mismatch: {path}")
+    data = subprocess.run(
+        ["git", "-C", str(REPO), "show", f"HEAD:{path}"],
+        check=True, capture_output=True,
+    ).stdout
+    if len(data) != int(spec["canonical_bytes"]) or sha256_bytes(data) != spec["canonical_sha256"]:
+        raise RuntimeError(f"frozen Git content identity mismatch: {path}")
+    return data
+
+
 def validate_contract(config: Mapping[str, Any] | None = None) -> dict[str, Any]:
     """Validate Git-owned scope without opening any scientific payload."""
 
@@ -99,40 +128,77 @@ def validate_contract(config: Mapping[str, Any] | None = None) -> dict[str, Any]
     groups = Counter(row["group_id"] for row in roster)
     if dict(groups) != scope["group_sizes"]:
         raise RuntimeError(f"development group sizes mismatch: {dict(groups)}")
-    association_path = _safe_repo_path(scope["reference_association_path"])
-    association_bytes = association_path.read_bytes()
-    if len(association_bytes) != int(scope["reference_association_bytes"]) or sha256_bytes(association_bytes) != scope["reference_association_sha256"]:
-        raise RuntimeError("development reference-association file identity mismatch")
-    association = list(csv.DictReader(io.StringIO(association_bytes.decode("utf-8"), newline="")))
-    if list(association[0]) != ["stable_id", "reference_patch_ids"]:
-        raise RuntimeError("association file must not contain bbox/geometry fields")
-    association_ids = [row["stable_id"] for row in association]
-    if len(association_ids) != 51 or set(association_ids) != set(ids):
-        raise RuntimeError("score association IDs differ from exact development roster")
+    scope_path = _safe_repo_path(scope["development_score_scope_path"])
+    scope_bytes = canonical_lf_bytes(scope_path)
+    if len(scope_bytes) != int(scope["development_score_scope_canonical_lf_bytes"]) or sha256_bytes(scope_bytes) != scope["development_score_scope_canonical_lf_sha256"]:
+        raise RuntimeError("development score-scope file identity mismatch")
+    score_scope = list(csv.DictReader(io.StringIO(scope_bytes.decode("utf-8"), newline="")))
+    required_scope = ["stable_id", "group_id", "bbox_min_x", "bbox_min_y", "bbox_max_x", "bbox_max_y", "reference_patch_ids", "expected_score_cells"]
+    if not score_scope or list(score_scope[0]) != required_scope:
+        raise RuntimeError("development score scope schema mismatch")
+    scope_ids = [row["stable_id"] for row in score_scope]
+    if len(scope_ids) != 51 or set(scope_ids) != set(ids):
+        raise RuntimeError("score-scope IDs differ from exact development roster")
     patch_pattern = re.compile(r"^UASPATCH_[0-9a-f]{20}$")
-    for row in association:
+    expected_total = 0
+    group_by_id = {row["stable_id"]: row["group_id"] for row in roster}
+    for row in score_scope:
+        if row["group_id"] != group_by_id[row["stable_id"]]:
+            raise RuntimeError(f"score-scope group mismatch: {row['stable_id']}")
         patches = row["reference_patch_ids"].split(";")
         if not patches or any(not patch_pattern.fullmatch(value) for value in patches):
             raise RuntimeError(f"invalid frozen patch association: {row['stable_id']}")
+        bounds = [float(row[name]) for name in ("bbox_min_x", "bbox_min_y", "bbox_max_x", "bbox_max_y")]
+        if not all(math.isfinite(value) for value in bounds) or bounds[0] > bounds[2] or bounds[1] > bounds[3]:
+            raise RuntimeError(f"invalid frozen score bbox: {row['stable_id']}")
+        expected = int(row["expected_score_cells"])
+        if expected <= 0:
+            raise RuntimeError(f"invalid expected score-cell count: {row['stable_id']}")
+        expected_total += expected
+    if expected_total != int(scope["development_score_cell_rows"]):
+        raise RuntimeError("development score-cell denominator is not exact 21,714")
+
+    eligibility_bytes = read_bound_git_blob(config["frozen_lineage"]["eligibility"])
+    split_bytes = read_bound_git_blob(config["frozen_lineage"]["split"])
+    eligibility = {row["stable_id"]: row for row in csv.DictReader(io.StringIO(eligibility_bytes.decode("utf-8"), newline=""))}
+    development = [row for row in csv.DictReader(io.StringIO(split_bytes.decode("utf-8"), newline="")) if row["split"] == "development"]
+    if len(development) != 51 or sha256_ids(row["stable_id"] for row in development) != scope["development_id_set_sha256"]:
+        raise RuntimeError("original frozen development split binding mismatch")
+    development_by_id = {row["stable_id"]: row for row in development}
+    for row in score_scope:
+        source = eligibility.get(row["stable_id"])
+        split = development_by_id.get(row["stable_id"])
+        if source is None or split is None or split["group_id"] != row["group_id"]:
+            raise RuntimeError(f"score scope is not derived from frozen split: {row['stable_id']}")
+        exact = {
+            "bbox_min_x": source["bbox_min_x"], "bbox_min_y": source["bbox_min_y"],
+            "bbox_max_x": source["bbox_max_x"], "bbox_max_y": source["bbox_max_y"],
+            "reference_patch_ids": source["reference_candidate_patch_ids"],
+            "expected_score_cells": source["reference_candidate_score_cells"],
+        }
+        if any(row[key] != value for key, value in exact.items()):
+            raise RuntimeError(f"score scope differs from frozen eligibility: {row['stable_id']}")
     if config["association"]["timing"] != "AFTER_CONDITION_COMPONENTS_AND_ALL_R_DERIVED_JOB_INPUTS_ARE_ADD_ONCE_FROZEN":
         raise RuntimeError("stable-ID association timing is not leakage-safe")
     if config["association"]["geometry_modification_allowed"] or config["association"]["crop_allowed"] or config["association"]["registration_allowed"]:
         raise RuntimeError("score association may not modify/crop/register condition geometry")
     if config["c1_materialization"].get("r1_reference_cells_used") is not False:
-        raise RuntimeError("C1 condition geometry must use all grid class2/class6 cells, never R1 score cells")
+        raise RuntimeError("C1 condition geometry must use generic grid cells, never R1 score cells")
+    if config["c1_materialization"].get("source_classification_fields_usable") is not False:
+        raise RuntimeError("raw source classifications are all zero; class-specific grid fields are prohibited")
     if config["condition_geometry"].get("stable_id_used") or config["condition_geometry"].get("target_bbox_used"):
         raise RuntimeError("condition components must be stable-ID/bbox blind")
     if config["stage3"]["required_lod"] != "2.2" or config["stage3"]["lod11_fallback_allowed"]:
         raise RuntimeError("strict LoD2.2/no-fallback contract mismatch")
     execution = config["stage3"]["execution"]
-    if execution != {
-        "serial_jobs": 1,
-        "cpus_per_attempt": 2,
-        "memory_bytes_per_attempt": 8000000000,
-        "gpus_per_attempt": 0,
-        "timeout_seconds_per_attempt": 600,
-    }:
+    if any(execution.get(key) != value for key, value in {
+        "serial_jobs": 1, "cpus_per_attempt": 2, "memory_bytes_per_attempt": 8000000000,
+        "gpus_per_attempt": 0, "timeout_seconds_per_attempt": 600,
+    }.items()):
         raise RuntimeError("per-attempt resource contract mismatch")
+    peak = execution.get("peak_memory_capture") or {}
+    if peak.get("status") != "UNAVAILABLE" or peak.get("reason") != "ROOFER_IMAGE_GNU_TIME_UNAVAILABLE_VERIFIED_IMMUTABLE_IMAGE":
+        raise RuntimeError("peak-memory accounting contract mismatch")
     if config["retries"]["max_retry_attempts_per_execution_unit"] != 1 or config["retries"]["max_total_retry_attempts"] != 5:
         raise RuntimeError("retry caps differ from the bounded pilot contract")
     if config["caps"]["wall_clock_seconds_hard"] != 43200 or config["caps"]["new_output_bytes_hard"] != 100_000_000_000:
@@ -144,6 +210,9 @@ def validate_contract(config: Mapping[str, Any] | None = None) -> dict[str, Any]
         "group_sizes": dict(sorted(groups.items())),
         "development_id_set_sha256": sha256_ids(ids),
         "representatives": representatives,
+        "development_score_cell_rows": expected_total,
+        "frozen_eligibility_blob": config["frozen_lineage"]["eligibility"]["git_blob"],
+        "frozen_split_blob": config["frozen_lineage"]["split"]["git_blob"],
         "scientific_payload_bytes_read_or_hashed": 0,
         "scientific_verdict": None,
     }
@@ -259,6 +328,32 @@ def resolve_checkpoint_record(
     return {"bytes": int(value["bytes"]), "sha256": str(value["sha256"]), "path": observed_path}, checkpoint_input
 
 
+def resolve_c1_grid_checkpoint(checkpoint_path: Path, spec: Mapping[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
+    """Bind the generic grid and prove the raw source did not carry classes 2/6."""
+
+    checkpoint_bytes, checkpoint_input = capture_exact_once(
+        checkpoint_path,
+        expected_bytes=int(spec["attestation_checkpoint_bytes"]),
+        expected_sha256=str(spec["attestation_checkpoint_sha256"]),
+    )
+    body = json.loads(checkpoint_bytes)
+    if body.get("stage") != "c1_reference_frozen_pre_c5" or body.get("status") != "COMPLETED_FSYNC":
+        raise RuntimeError("C1 checkpoint stage/status mismatch")
+    payload = body.get("payload") or {}
+    grid = payload.get("grid") or {}
+    observed_path = str(grid.get("path", "")).replace("\\", "/")
+    if not observed_path.endswith(str(spec["artifact_relative_path"])):
+        raise RuntimeError("C1 checkpoint points to a different grid")
+    record = {"path": observed_path, "bytes": int(grid.get("bytes", -1)), "sha256": str(grid.get("sha256", ""))}
+    if record["bytes"] != int(spec["bytes"]) or record["sha256"] != spec["sha256"]:
+        raise RuntimeError("C1 grid identity differs from exact 050 checkpoint")
+    source = payload.get("input") or {}
+    normalized_counts = {str(key): int(value) for key, value in (source.get("raw_class_counts") or {}).items()}
+    if int(source.get("point_count", -1)) != int(spec["raw_point_count"]) or normalized_counts != dict(spec["raw_class_counts"]):
+        raise RuntimeError("C1 raw point/class-count attestation mismatch")
+    return record, checkpoint_input
+
+
 @dataclass(frozen=True)
 class Point:
     x: float
@@ -288,33 +383,37 @@ def load_c1_grid(data: bytes, config: Mapping[str, Any]) -> tuple[list[Point], d
             value = np.asarray(source[name])
             if value.dtype.hasobject or value.shape != (nx * ny,):
                 raise RuntimeError(f"C1 grid member shape/type mismatch: {name}")
-            arrays[name] = value
+            if name in {"min_z", "max_z", "count"}:
+                arrays[name] = value
     points: list[Point] = []
-    class2 = arrays["class2_min_z"].reshape(ny, nx)
-    class2_valid = (arrays["class2_count"].reshape(ny, nx) > 0) & np.isfinite(class2)
-    if not np.any(class2_valid):
-        raise RuntimeError("C1 grid has no class-2 terrain cells")
-    nearest = ndimage.distance_transform_edt(~class2_valid, return_distances=False, return_indices=True)
-    filled = class2[tuple(nearest)]
+    lower = arrays["min_z"].reshape(ny, nx)
+    observed = (arrays["count"].reshape(ny, nx) > 0) & np.isfinite(lower)
+    if not np.any(observed):
+        raise RuntimeError("C1 grid has no generic observed terrain cells")
+    nearest = ndimage.distance_transform_edt(~observed, return_distances=False, return_indices=True)
+    filled = lower[tuple(nearest)]
     windows = config["c1_materialization"]["terrain_filter_windows_cells"]
     terrain = np.minimum.reduce([ndimage.grey_opening(filled, size=(int(size), int(size)), mode="nearest") for size in windows])
-    ground = class2_valid.ravel()
+    ground = observed.ravel()
     building = (
-        (arrays["class6_count"] >= int(config["c1_materialization"]["minimum_class6_points_per_cell"]))
-        & np.isfinite(arrays["class6_max_z"])
-        & ((arrays["class6_max_z"] - terrain.ravel()) >= float(config["c1_materialization"]["minimum_height_above_terrain_m"]))
+        (arrays["count"] >= int(config["c1_materialization"]["minimum_points_per_cell"]))
+        & np.isfinite(arrays["max_z"])
+        & ((arrays["max_z"] - terrain.ravel()) >= float(config["c1_materialization"]["minimum_height_above_terrain_m"]))
     )
-    for classification, mask, heights in ((2, ground, arrays["class2_min_z"]), (6, building, arrays["class6_max_z"])):
+    for classification, mask, heights in ((2, ground, arrays["min_z"]), (6, building, arrays["max_z"])):
         for flat in np.flatnonzero(mask):
             iy, ix = divmod(int(flat), nx)
             points.append(Point(bbox[0] + (ix + 0.5) * cell, bbox[1] + (iy + 0.5) * cell, float(heights[flat]), classification, ix, iy))
     return points, {
-        "method": "ALL_FROZEN_C1_GRID_CLASS2_CLASS6_CELLS_V1",
+        "method": "ALL_FROZEN_C1_GRID_GENERIC_MIN_MAX_COUNT_TO_ROOFER_CLASS26_V1",
         "ground_points": int(np.count_nonzero(ground)),
         "building_points": int(np.count_nonzero(building)),
-        "minimum_class6_points_per_cell": int(config["c1_materialization"]["minimum_class6_points_per_cell"]),
+        "minimum_points_per_cell": int(config["c1_materialization"]["minimum_points_per_cell"]),
         "minimum_height_above_terrain_m": float(config["c1_materialization"]["minimum_height_above_terrain_m"]),
         "terrain_filter_windows_cells": list(windows),
+        "source_fields": ["min_z", "max_z", "count"],
+        "class_specific_fields_used": False,
+        "source_raw_class_counts": dict(config["c1_materialization"]["source_raw_class_counts"]),
         "r1_reference_cells_used": False,
     }
 
@@ -494,35 +593,100 @@ def component_job(condition: str, component: Mapping[str, Any], points: Sequence
     return las_bytes(selected, config), canonical_json_bytes(geojson)
 
 
-def _reference_rows(data: bytes, expected_rows: int) -> list[dict[str, str]]:
-    rows = list(csv.DictReader(io.StringIO(data.decode("utf-8"), newline="")))
-    required = {"patch_id", "cell_ix", "cell_iy", "top_z", "normal_x", "normal_y", "normal_z"}
-    if len(rows) != expected_rows or not rows or not required.issubset(rows[0]):
-        raise RuntimeError("frozen reference cell table schema/count mismatch")
-    return rows
+def project_development_score_cells(
+    path: Path,
+    spec: Mapping[str, Any],
+    score_scope: Sequence[Mapping[str, str]],
+) -> tuple[list[dict[str, str]], dict[str, Any]]:
+    """One-pass exact projection of global R1 cells to the 51 development units.
+
+    Patch membership reduces transient retention; the inclusive frozen building
+    bbox creates the exact building-cell identities used by the original R1
+    eligibility mapping. Geometry has already been frozen before this function
+    is called, so these bboxes can only affect score association.
+    """
+
+    if path.is_symlink() or not path.is_file():
+        raise RuntimeError(f"scientific input is not a regular file: {path}")
+    scopes_by_patch: defaultdict[str, list[Mapping[str, str]]] = defaultdict(list)
+    for item in score_scope:
+        for patch_id in item["reference_patch_ids"].split(";"):
+            scopes_by_patch[patch_id].append(item)
+    digest = hashlib.sha256()
+    total_bytes = 0
+    total_rows = 0
+    retained_source_cells: set[tuple[str, str]] = set()
+    projected: list[dict[str, str]] = []
+    header: list[str] | None = None
+    with path.open("rb") as handle:
+        for raw_line in handle:
+            digest.update(raw_line)
+            total_bytes += len(raw_line)
+            parsed = next(csv.reader([raw_line.decode("utf-8")]))
+            if header is None:
+                header = parsed
+                required = {"patch_id", "flat_index", "cell_ix", "cell_iy", "cell_x", "cell_y", "top_z", "normal_x", "normal_y", "normal_z"}
+                if not required.issubset(header):
+                    raise RuntimeError("frozen reference cell table schema mismatch")
+                continue
+            if len(parsed) != len(header):
+                raise RuntimeError("frozen reference cell row width mismatch")
+            total_rows += 1
+            row = dict(zip(header, parsed))
+            candidate_scopes = scopes_by_patch.get(row["patch_id"], ())
+            if not candidate_scopes:
+                continue
+            x, y = float(row["cell_x"]), float(row["cell_y"])
+            source_identity = (row["patch_id"], row["flat_index"])
+            retained_here = False
+            for scope in candidate_scopes:
+                if (
+                    float(scope["bbox_min_x"]) <= x <= float(scope["bbox_max_x"])
+                    and float(scope["bbox_min_y"]) <= y <= float(scope["bbox_max_y"])
+                ):
+                    projected.append({"stable_id": scope["stable_id"], "group_id": scope["group_id"], **row})
+                    retained_here = True
+            if retained_here:
+                retained_source_cells.add(source_identity)
+    observed_sha = digest.hexdigest()
+    if total_bytes != int(spec["bytes"]) or observed_sha != spec["sha256"] or total_rows != int(spec["expected_rows"]):
+        raise RuntimeError("global reference-cell identity/count mismatch")
+    expected = {item["stable_id"]: int(item["expected_score_cells"]) for item in score_scope}
+    actual = Counter(item["stable_id"] for item in projected)
+    if dict(actual) != expected or len(projected) != sum(expected.values()):
+        raise RuntimeError(f"development score-cell projection mismatch: expected={expected}, actual={dict(actual)}")
+    identities = [(item["stable_id"], item["patch_id"], item["flat_index"]) for item in projected]
+    if len(identities) != len(set(identities)):
+        raise RuntimeError("development score-cell identity duplicated")
+    return projected, {
+        "path": path.as_posix(), "bytes": total_bytes, "sha256": observed_sha,
+        "global_rows_streamed": total_rows, "full_read_and_digest_passes": 1,
+        "development_building_cell_rows_retained": len(projected),
+        "development_unique_source_cells_retained": len(retained_source_cells),
+        "non_development_rows_retained_scored_or_promoted": 0,
+    }
 
 
 def associate_development(
     roster: Sequence[Mapping[str, str]],
-    association_rows: Sequence[Mapping[str, str]],
     reference_rows: Sequence[Mapping[str, str]],
     component_maps: Mapping[str, Mapping[tuple[int, int], str]],
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
-    patch_cells: defaultdict[str, list[Mapping[str, str]]] = defaultdict(list)
+    by_stable_id: defaultdict[str, list[Mapping[str, str]]] = defaultdict(list)
     for row in reference_rows:
-        patch_cells[row["patch_id"]].append(row)
-    patches_by_id = {row["stable_id"]: row["reference_patch_ids"].split(";") for row in association_rows}
+        by_stable_id[row["stable_id"]].append(row)
     group_by_id = {row["stable_id"]: row["group_id"] for row in roster}
     mappings: list[dict[str, Any]] = []
     score_cells: list[dict[str, Any]] = []
     for stable_id in sorted(group_by_id):
-        selected_reference: list[Mapping[str, str]] = []
-        for patch_id in patches_by_id[stable_id]:
-            selected_reference.extend(patch_cells.get(patch_id, []))
+        selected_reference = sorted(
+            by_stable_id.get(stable_id, []),
+            key=lambda row: (row["patch_id"], int(row["flat_index"])),
+        )
         if not selected_reference:
             raise RuntimeError(f"development stable ID has no frozen reference score cells: {stable_id}")
         for row in selected_reference:
-            score_cells.append({"stable_id": stable_id, **dict(row)})
+            score_cells.append(dict(row))
         for condition in CONDITIONS:
             counts: Counter[str] = Counter()
             component_map = component_maps[condition]
@@ -620,42 +784,118 @@ def _cityjson_records(output_dir: Path) -> list[dict[str, Any]]:
     return records
 
 
+def _validate_semantic_shape(values: Any, boundaries: Any, levels: int, definitions: Sequence[Any]) -> tuple[bool, list[int]]:
+    if not isinstance(values, list) or not isinstance(boundaries, list) or len(values) != len(boundaries):
+        return False, []
+    if levels == 1:
+        indices: list[int] = []
+        for value in values:
+            if value is None:
+                continue
+            if not isinstance(value, int) or value < 0 or value >= len(definitions):
+                return False, []
+            indices.append(value)
+        return True, indices
+    indices: list[int] = []
+    for child_values, child_boundaries in zip(values, boundaries):
+        ok, child_indices = _validate_semantic_shape(child_values, child_boundaries, levels - 1, definitions)
+        if not ok:
+            return False, []
+        indices.extend(child_indices)
+    return True, indices
+
+
+def _validate_boundary_indices(boundaries: Any, depth: int, vertex_count: int) -> tuple[bool, list[list[int]]]:
+    if depth == 1:
+        if not isinstance(boundaries, list) or len(boundaries) < 3 or any(not isinstance(value, int) or value < 0 or value >= vertex_count for value in boundaries):
+            return False, []
+        return True, [boundaries]
+    if not isinstance(boundaries, list) or not boundaries:
+        return False, []
+    rings: list[list[int]] = []
+    for child in boundaries:
+        ok, child_rings = _validate_boundary_indices(child, depth - 1, vertex_count)
+        if not ok:
+            return False, []
+        rings.extend(child_rings)
+    return True, rings
+
+
 def provisional_output_check(output_dir: Path, *, expected_features_min: int = 1) -> dict[str, Any]:
-    """Internal deterministic screen; it is not canonical val3dity G2."""
+    """Internal CityJSON structure screen plus a non-G2 ring diagnostic."""
 
     records = _cityjson_records(output_dir)
     object_count = 0
     lod22 = 0
     surfaces: Counter[str] = Counter()
     finite_vertices = True
+    g1_failures: set[str] = set()
+    all_rings: list[list[int]] = []
     for record in records:
         vertices = record.get("vertices", [])
-        finite_vertices &= isinstance(vertices, list) and all(
+        record_vertices_ok = isinstance(vertices, list) and all(
             isinstance(vertex, list) and len(vertex) >= 3 and all(isinstance(v, (int, float)) and math.isfinite(v) for v in vertex[:3])
             for vertex in vertices
         )
-        for city_object in (record.get("CityObjects") or {}).values():
+        finite_vertices &= record_vertices_ok
+        if not record_vertices_ok:
+            g1_failures.add("INVALID_VERTEX_SHAPE_OR_VALUE")
+        city_objects = record.get("CityObjects") or {}
+        if not isinstance(city_objects, Mapping):
+            g1_failures.add("CITYOBJECTS_NOT_MAPPING")
+            city_objects = {}
+        for object_id, city_object in city_objects.items():
+            if not isinstance(object_id, str) or not isinstance(city_object, Mapping):
+                g1_failures.add("INVALID_CITYOBJECT_ENTRY")
+                continue
             object_count += 1
+            for relation, inverse in (("children", "parents"), ("parents", "children")):
+                refs = city_object.get(relation, [])
+                if refs is None:
+                    refs = []
+                if not isinstance(refs, list) or len(refs) != len(set(refs)) or any(not isinstance(ref, str) or ref not in city_objects for ref in refs):
+                    g1_failures.add(f"INVALID_{relation.upper()}_REFERENCES")
+                    continue
+                for ref in refs:
+                    inverse_refs = city_objects[ref].get(inverse, []) if isinstance(city_objects[ref], Mapping) else []
+                    if not isinstance(inverse_refs, list) or object_id not in inverse_refs:
+                        g1_failures.add("ASYMMETRIC_PARENT_CHILD_RELATION")
             for geometry in city_object.get("geometry", []):
                 if str(geometry.get("lod")) == "2.2":
                     lod22 += 1
                 elif str(geometry.get("lod")) == "1.1":
                     raise RuntimeError("LoD1.1 fallback is prohibited")
+                geometry_type = geometry.get("type")
+                depth_by_type = {"MultiSurface": 3, "CompositeSurface": 3, "Solid": 4, "MultiSolid": 5, "CompositeSolid": 5}
+                semantic_levels = {"MultiSurface": 1, "CompositeSurface": 1, "Solid": 2, "MultiSolid": 3, "CompositeSolid": 3}
+                depth = depth_by_type.get(geometry_type)
+                boundaries = geometry.get("boundaries")
+                if depth is None:
+                    g1_failures.add("UNSUPPORTED_GEOMETRY_TYPE")
+                    continue
+                ok, rings = _validate_boundary_indices(boundaries, depth, len(vertices) if isinstance(vertices, list) else 0)
+                if not ok:
+                    g1_failures.add("BOUNDARY_INDEX_OR_SHAPE_INVALID")
+                else:
+                    all_rings.extend(rings)
                 semantics = geometry.get("semantics") or {}
-                definitions = semantics.get("surfaces", [])
-                def used_indices(value: Any) -> Iterator[int]:
-                    if isinstance(value, int):
-                        yield value
-                    elif isinstance(value, list):
-                        for child in value:
-                            yield from used_indices(child)
-                for index in used_indices(semantics.get("values", [])):
-                    if 0 <= index < len(definitions) and isinstance(definitions[index], Mapping) and isinstance(definitions[index].get("type"), str):
-                        surfaces[definitions[index]["type"]] += 1
+                definitions = semantics.get("surfaces", []) if isinstance(semantics, Mapping) else []
+                if not isinstance(definitions, list) or any(not isinstance(item, Mapping) or not isinstance(item.get("type"), str) for item in definitions):
+                    g1_failures.add("SEMANTIC_DEFINITIONS_INVALID")
+                    continue
+                semantic_ok, used_indices = _validate_semantic_shape(semantics.get("values"), boundaries, semantic_levels[geometry_type], definitions)
+                if not semantic_ok:
+                    g1_failures.add("SEMANTIC_VALUES_SHAPE_OR_INDEX_INVALID")
+                    continue
+                for index in used_indices:
+                    surfaces[str(definitions[index]["type"])] += 1
     required = {"RoofSurface", "WallSurface", "GroundSurface"}
     g0 = object_count >= expected_features_min and lod22 >= expected_features_min and required.issubset(surfaces)
-    g1 = bool(records) and finite_vertices and object_count >= expected_features_min
-    internal = g1 and g0
+    g1 = bool(records) and finite_vertices and object_count >= expected_features_min and not g1_failures
+    ring_diagnostic = (
+        bool(all_rings) and "BOUNDARY_INDEX_OR_SHAPE_INVALID" not in g1_failures
+        and all(len(set(ring)) >= 3 and all(left != right for left, right in zip(ring, ring[1:])) for ring in all_rings)
+    )
     return {
         "records": len(records),
         "city_object_count": object_count,
@@ -663,9 +903,10 @@ def provisional_output_check(output_dir: Path, *, expected_features_min: int = 1
         "semantic_surface_counts": dict(surfaces),
         "G0_generated": g0,
         "G1_schema_semantic": g1,
-        "G1_check_class": "PROVISIONAL_TECHNICAL_INTERNAL_SCHEMA_SEMANTIC",
-        "G2_internal_screen": internal,
-        "G2_check_class": "DIAGNOSTIC_INTERNAL_NOT_CANONICAL_VAL3DITY",
+        "G1_check_class": "INTERNAL_CITYJSON_BOUNDARY_SEMANTICS_PARENT_CHILD_VALIDATION",
+        "G1_failure_reasons": sorted(g1_failures),
+        "geometry_ring_diagnostic": ring_diagnostic,
+        "geometry_ring_diagnostic_class": "DIAGNOSTIC_RING_INDEX_SANITY_NOT_G2_NOT_VAL3DITY",
         "G2_geometry_topology_valid": None,
         "G2_null_reason": "CANONICAL_VALIDATOR_UNAVAILABLE",
     }
@@ -689,44 +930,92 @@ def prepare_scientific(
     store: AddOnceStore,
     *,
     c1_grid_path: Path,
+    c1_checkpoint_path: Path,
     c2_ply_path: Path,
     c2_checkpoint_path: Path,
     reference_cells_path: Path,
-    patch_summary_path: Path,
     source_commit: str,
     run_id: str,
+    handoff_id: str,
+    accepted_receipt_path: Path,
+    accepted_commit: str,
+    project_image_id: str,
+    artifact_root_token: str,
 ) -> dict[str, Any]:
     """Freeze condition jobs, then and only then open score-only reference."""
 
     completed_path = store.path("control/scientific_prepared_v1.json")
     if completed_path.is_file():
         body = json.loads(completed_path.read_bytes())
-        if body.get("status") != "PREPARED" or body.get("source_commit") != source_commit or body.get("run_id") != run_id:
+        authority = body.get("execution_authority") or {}
+        receipt_bytes = accepted_receipt_path.read_bytes()
+        if (
+            body.get("status") != "PREPARED" or body.get("source_commit") != source_commit or body.get("run_id") != run_id
+            or authority.get("handoff_id") != handoff_id or authority.get("accepted_commit") != accepted_commit
+            or authority.get("project_image_id") != project_image_id or authority.get("artifact_root_token") != artifact_root_token
+            or authority.get("accepted_receipt", {}).get("sha256") != sha256_bytes(receipt_bytes)
+        ):
             raise RuntimeError("completed prepare identity mismatch")
         return {**body, "fast_path": True, "scientific_source_reopens": 0, "new_writes": 0}
     smoke = store.path("control/synthetic_smoke_pass_v1.json")
     if not smoke.is_file() or json.loads(smoke.read_bytes()).get("status") != "PASS":
         raise RuntimeError("synthetic zero-payload smoke must pass before scientific input opens")
     config = load_config()
-    contract = validate_contract(config)
-    roster = read_csv(_safe_repo_path(config["scope"]["roster_path"]))
-    association_rows = read_csv(_safe_repo_path(config["scope"]["reference_association_path"]))
     started_at = time.time()
+    receipt_bytes = accepted_receipt_path.read_bytes()
+    receipt = json.loads(receipt_bytes)
+    if (
+        handoff_id != config["handoff_id"] or receipt.get("handoff_id") != handoff_id
+        or receipt.get("state") != "accepted" or receipt.get("direction") != "work_to_experiment"
+        or receipt.get("verification", {}).get("docker_image_digest") != project_image_id
+        or not re.fullmatch(r"[0-9a-f]{40}", accepted_commit)
+        or artifact_root_token != "artifact://JointBuildGS"
+    ):
+        raise RuntimeError("accepted execution authority identity mismatch")
+    planned_inputs = {
+        "c1_grid": {key: config["inputs"]["c1_grid"][key] for key in ("artifact_relative_path", "bytes", "sha256")},
+        "c1_checkpoint": {
+            "path": config["inputs"]["c1_grid"]["attestation_checkpoint_relative_path"],
+            "bytes": config["inputs"]["c1_grid"]["attestation_checkpoint_bytes"],
+            "sha256": config["inputs"]["c1_grid"]["attestation_checkpoint_sha256"],
+        },
+        "c2_derivative": {key: config["inputs"]["c2_mvs_class26"][key] for key in ("artifact_relative_path", "bytes", "sha256")},
+        "c2_checkpoint": {
+            "path": config["inputs"]["c2_mvs_class26"]["attestation_checkpoint_relative_path"],
+            "bytes": config["inputs"]["c2_mvs_class26"]["attestation_checkpoint_bytes"],
+            "sha256": config["inputs"]["c2_mvs_class26"]["attestation_checkpoint_sha256"],
+        },
+        "reference_candidate_cells": {key: config["inputs"]["reference_candidate_cells"][key] for key in ("artifact_relative_path", "bytes", "sha256")},
+        "development_score_scope": {
+            "path": config["scope"]["development_score_scope_path"],
+            "canonical_lf_bytes": config["scope"]["development_score_scope_canonical_lf_bytes"],
+            "canonical_lf_sha256": config["scope"]["development_score_scope_canonical_lf_sha256"],
+        },
+        "eligibility_git_blob": config["frozen_lineage"]["eligibility"],
+        "split_git_blob": config["frozen_lineage"]["split"],
+    }
     identity = {
         "task_id": TASK_ID,
+        "handoff_id": handoff_id,
         "source_commit": source_commit,
+        "accepted_commit": accepted_commit,
+        "accepted_receipt": {"path": accepted_receipt_path.as_posix(), "bytes": len(receipt_bytes), "sha256": sha256_bytes(receipt_bytes)},
+        "project_image_id": project_image_id,
+        "roofer_image": config["stage3"]["roofer_image"],
+        "artifact_root_token": artifact_root_token,
         "run_id": run_id,
-        "config_sha256": sha256_bytes(CONFIG_PATH.read_bytes()),
-        "development_id_set_sha256": contract["development_id_set_sha256"],
+        "config_canonical_lf_sha256": sha256_bytes(canonical_lf_bytes(CONFIG_PATH)),
+        "development_id_set_sha256": config["scope"]["development_id_set_sha256"],
+        "exact_inputs": planned_inputs,
     }
     operation_id = sha256_bytes(canonical_json_bytes(identity))
     store.add_json("control/scientific_started_v1.json", {**identity, "operation_id": operation_id, "started_unix": started_at, "scientific_verdict": None})
-    store.add_json("control/preselected_cases_v1.json", {"rule": config["representative_case_rule"], "cases": contract["representatives"], "chosen_before_outcomes": True})
 
-    # C1 is derived only from all frozen grid class-2/class-6 cells.
+    # C1 is derived only from generic min/max/count because raw classes are all 0.
     c1_spec = config["inputs"]["c1_grid"]
     store.add_json("attempts/c1_condition_source/attempt_01.json", {"operation_id": operation_id, "opened_after_smoke": True, "reference_score_cells_opened": False})
-    c1_bytes, c1_input = capture_exact_once(c1_grid_path, expected_bytes=int(c1_spec["bytes"]), expected_sha256=c1_spec["sha256"])
+    c1_attestation, c1_checkpoint_input = resolve_c1_grid_checkpoint(c1_checkpoint_path, c1_spec)
+    c1_bytes, c1_input = capture_exact_once(c1_grid_path, expected_bytes=c1_attestation["bytes"], expected_sha256=c1_attestation["sha256"])
     c1_points, c1_stats = load_c1_grid(c1_bytes, config)
     c1_derivative = store.add("conditions/C1_L_upper/c1_grid_all_class26_v1.ply", ply_bytes(c1_points))
     c1_components, c1_map = derive_components("C1_L_upper", c1_points, config)
@@ -776,6 +1065,8 @@ def prepare_scientific(
         "stage": "condition_components_and_all_r_derived_frozen",
         "operation_id": operation_id,
         "c1_input": c1_input,
+        "c1_attestation_checkpoint": c1_checkpoint_input,
+        "c1_attestation": c1_attestation,
         "c1_derivative": c1_derivative,
         "c1_stats": c1_stats,
         "c2_input": c2_input,
@@ -788,29 +1079,35 @@ def prepare_scientific(
     })
 
     # Score-only UAS evidence is opened strictly after condition/R_derived freeze.
-    reference_spec = config["inputs"]["c1_reference_cells"]
-    patch_spec = config["inputs"]["c1_patch_summary"]
+    contract = validate_contract(config)
+    roster = read_csv(_safe_repo_path(config["scope"]["roster_path"]))
+    score_scope = read_csv(_safe_repo_path(config["scope"]["development_score_scope_path"]))
+    store.add_json("control/preselected_cases_v1.json", {
+        "rule": config["representative_case_rule"], "cases": contract["representatives"],
+        "chosen_before_score_outcomes": True,
+        "condition_geometry_checkpoint": components_record["sha256"],
+    })
+    reference_spec = config["inputs"]["reference_candidate_cells"]
     store.add_json("attempts/reference_score_source/attempt_01.json", {"operation_id": operation_id, "condition_geometry_checkpoint": components_record["sha256"], "role": "SCORE_ONLY"})
-    reference_bytes, reference_input = capture_exact_once(reference_cells_path, expected_bytes=int(reference_spec["bytes"]), expected_sha256=reference_spec["sha256"])
-    patch_bytes, patch_input = capture_exact_once(patch_summary_path, expected_bytes=int(patch_spec["bytes"]), expected_sha256=patch_spec["sha256"])
-    reference_rows = _reference_rows(reference_bytes, int(reference_spec["expected_rows"]))
-    patch_rows = list(csv.DictReader(io.StringIO(patch_bytes.decode("utf-8"), newline="")))
-    if len(patch_rows) != int(patch_spec["expected_rows"]) or {row["patch_id"] for row in patch_rows} != {row["patch_id"] for row in reference_rows}:
-        raise RuntimeError("reference patch summary does not match frozen score cells")
-    mappings, dev_score_cells = associate_development(roster, association_rows, reference_rows, {"C1_L_upper": c1_map, "C2_MVS": c2_map})
-    mapping_record = store.add("freeze/development_score_association_v1.jsonl", jsonl_bytes(mappings))
+    reference_rows, reference_input = project_development_score_cells(reference_cells_path, reference_spec, score_scope)
+    mappings, dev_score_cells = associate_development(roster, reference_rows, {"C1_L_upper": c1_map, "C2_MVS": c2_map})
     score_record = store.add("freeze/development_score_cells_v1.jsonl", jsonl_bytes(dev_score_cells))
     jobs_by_unit = {row["operation_unit_id"]: row for row in job_records}
     required_units = sorted({row["operation_unit_id"] for row in mappings if row["operation_unit_id"]})
-    execution_units = [jobs_by_unit[value] for value in required_units]
-    if len(execution_units) != len(required_units):
-        raise RuntimeError("associated component has no frozen Roofer job")
+    component_by_id = {row["component_id"]: row for row in component_records}
+    for mapping in mappings:
+        if mapping["operation_unit_id"] and mapping["operation_unit_id"] not in jobs_by_unit:
+            mapping["pre_roofer_failure"] = component_by_id[mapping["component_id"]]["pre_roofer_failure"]
+        else:
+            mapping["pre_roofer_failure"] = None
+    mapping_record = store.add("freeze/development_score_association_with_pre_roofer_status_v1.jsonl", jsonl_bytes(mappings))
+    execution_units = [jobs_by_unit[value] for value in required_units if value in jobs_by_unit]
     execution_record = store.add("freeze/execution_units_v1.jsonl", jsonl_bytes(execution_units))
     execution_tsv = "operation_unit_id\twork_directory\n" + "".join(
         f"{row['operation_unit_id']}\t{row['work_directory']}\n" for row in execution_units
     )
     execution_tsv_record = store.add("freeze/execution_units_v1.tsv", execution_tsv.encode("utf-8"))
-    duplicate_savings = sum(row["operation_unit_id"] is not None for row in mappings) - len(execution_units)
+    duplicate_savings = sum(row["operation_unit_id"] in jobs_by_unit for row in mappings) - len(execution_units)
     if duplicate_savings < 0:
         raise RuntimeError("unique-operation accounting underflow")
     if time.time() - started_at > int(config["caps"]["wall_clock_seconds_hard"]):
@@ -832,7 +1129,28 @@ def prepare_scientific(
         "result_rows": len(mappings),
         "unique_execution_units": len(execution_units),
         "duplicate_roofer_calculations_prevented": duplicate_savings,
-        "reference_inputs": {"cells": reference_input, "patch_summary": patch_input},
+        "execution_authority": identity,
+        "tool_records": {
+            "project_image_id": project_image_id,
+            "roofer_image": config["stage3"]["roofer_image"],
+            "roofer_version": config["stage3"]["roofer_version"],
+            "python_version": sys.version.split()[0],
+        },
+        "input_records": {
+            "c1_grid": c1_input, "c1_checkpoint": c1_checkpoint_input,
+            "c2_derivative": c2_input, "c2_checkpoint": checkpoint_input,
+            "reference_candidate_cells": reference_input,
+            "development_score_scope": planned_inputs["development_score_scope"],
+            "eligibility_git_blob": config["frozen_lineage"]["eligibility"],
+            "split_git_blob": config["frozen_lineage"]["split"],
+        },
+        "output_records": {
+            "c1_derivative": c1_derivative, "components": components_record,
+            "all_jobs": all_jobs_record, "score_association": mapping_record,
+            "score_cells": score_record, "execution_units": execution_record,
+            "execution_units_tsv": execution_tsv_record,
+        },
+        "reference_inputs": {"cells": reference_input},
         "validation_payload_accesses": 0,
         "held_out_payload_accesses": 0,
         "raw_dim_dense_accesses": 0,
@@ -872,6 +1190,16 @@ def next_attempt(store: AddOnceStore, unit_id: str) -> dict[str, Any]:
         raise RuntimeError("task-total retry cap exhausted")
     quarantine_state: dict[str, Any] | None = None
     if number == 2:
+        attempt_one_result_path = store.path(f"operation_records/{slug}/attempt_01.result.json")
+        if attempt_one_result_path.is_symlink() or not attempt_one_result_path.is_file():
+            raise RuntimeError("attempt 2 requires a durable attempt-1 result")
+        attempt_one_result = json.loads(attempt_one_result_path.read_bytes())
+        if (
+            attempt_one_result.get("status") != "RETRY_AUTHORIZED_INFRASTRUCTURE_ONLY"
+            or attempt_one_result.get("attempt_number") != 1
+            or attempt_one_result.get("exit_code") not in config["retries"]["retryable_exit_codes"]
+        ):
+            raise RuntimeError("attempt 1 is not explicitly retry-authorized")
         output_dir = store.path(units[unit_id]["output_directory"])
         quarantine = output_dir.with_name("out.attempt_01.quarantine")
         if quarantine.exists():
@@ -889,7 +1217,13 @@ def next_attempt(store: AddOnceStore, unit_id: str) -> dict[str, Any]:
                 raise RuntimeError("attempt-1 Roofer internal log is non-regular")
             roofer_log.rename(roofer_log_quarantine)
             log_moved = True
-        quarantine_state = {"path": quarantine.relative_to(store.root).as_posix(), "files": len(files), "bytes": sum(path.stat().st_size for path in files), "content_hashes": 0, "roofer_internal_log_moved": log_moved}
+        quarantine_state = {
+            "path": quarantine.relative_to(store.root).as_posix(), "files": len(files),
+            "bytes": sum(path.stat().st_size for path in files), "content_hashes": 0,
+            "roofer_internal_log_moved": log_moved,
+            "attempt_1_result": compact_file_record(store, attempt_one_result_path),
+            "retry_authorization_status": attempt_one_result["status"],
+        }
         output_dir.rename(quarantine)
         output_dir.mkdir()
         directory_fd = os.open(output_dir.parent, os.O_RDONLY)
@@ -902,7 +1236,15 @@ def next_attempt(store: AddOnceStore, unit_id: str) -> dict[str, Any]:
     return {"action": "RUN", "attempt_number": number, "unit": units[unit_id]}
 
 
-def record_attempt(store: AddOnceStore, unit_id: str, attempt_number: int, exit_code: int, runtime_seconds: float, peak_memory_bytes: int | None) -> dict[str, Any]:
+def record_attempt(
+    store: AddOnceStore,
+    unit_id: str,
+    attempt_number: int,
+    exit_code: int,
+    runtime_seconds: float,
+    peak_memory_bytes: int | None,
+    peak_memory_unavailable_reason: str | None,
+) -> dict[str, Any]:
     config = load_config()
     units = {row["operation_unit_id"]: row for row in execution_units(store)}
     unit = units.get(unit_id)
@@ -915,6 +1257,10 @@ def record_attempt(store: AddOnceStore, unit_id: str, attempt_number: int, exit_
     final_path = store.path(f"operation_records/{slug}/final_v1.json")
     if final_path.exists():
         raise RuntimeError("operation already has final add-once result")
+    if peak_memory_bytes is None and not peak_memory_unavailable_reason:
+        raise RuntimeError("peak memory requires a measured byte count or an honest unavailable reason")
+    if peak_memory_bytes is not None and peak_memory_unavailable_reason is not None:
+        raise RuntimeError("peak memory byte count and unavailable reason are mutually exclusive")
     output_dir = store.path(unit["output_directory"])
     runtime_log = compact_file_record(store, store.path(unit["work_directory"]) / f"runtime.attempt_{attempt_number}.log")
     check: dict[str, Any] | None = None
@@ -924,27 +1270,38 @@ def record_attempt(store: AddOnceStore, unit_id: str, attempt_number: int, exit_
             check = provisional_output_check(output_dir)
         except (RuntimeError, ValueError, json.JSONDecodeError) as error:
             validation_error = str(error)
+    retryable = exit_code in set(config["retries"]["retryable_exit_codes"]) and validation_error is None and attempt_number == 1
+    total_retries = sum(1 for path in store.root.glob("operation_records/*/attempt_02.started.json"))
+    retry_authorized = retryable and total_retries < int(config["retries"]["max_total_retry_attempts"])
     attempt_body = {
+        "status": "RETRY_AUTHORIZED_INFRASTRUCTURE_ONLY" if retry_authorized else "TERMINAL_ATTEMPT_RESULT",
         "operation_unit_id": unit_id,
         "attempt_number": attempt_number,
         "exit_code": exit_code,
         "runtime_seconds": runtime_seconds,
         "peak_memory_bytes": peak_memory_bytes,
+        "peak_memory_unavailable_reason": peak_memory_unavailable_reason,
         "runtime_log": runtime_log,
         "provisional_check": check,
         "validation_error": validation_error,
     }
     store.add_json(f"operation_records/{slug}/attempt_{attempt_number:02d}.result.json", attempt_body)
-    retryable = exit_code in set(config["retries"]["retryable_exit_codes"]) and validation_error is None and attempt_number == 1
-    total_retries = sum(1 for path in store.root.glob("operation_records/*/attempt_02.started.json"))
-    if retryable and total_retries < int(config["retries"]["max_total_retry_attempts"]):
-        return {"status": "RETRY_AUTHORIZED_INFRASTRUCTURE_ONLY", **attempt_body}
+    if retry_authorized:
+        return attempt_body
     succeeded = exit_code == 0 and validation_error is None and check is not None and bool(check["G0_generated"])
     output_bytes = output_tree_bytes(output_dir) if output_dir.exists() else 0
+    output_records = [
+        compact_file_record(store, path)
+        for path in sorted(output_dir.rglob("*"))
+        if path.is_file() and not path.is_symlink()
+    ] if output_dir.exists() else []
     runtime_logs = []
+    attempt_runtime_seconds: list[float] = []
     for number in range(1, attempt_number + 1):
         result_path = store.path(f"operation_records/{slug}/attempt_{number:02d}.result.json")
-        runtime_logs.append(json.loads(result_path.read_bytes())["runtime_log"])
+        attempt_result = json.loads(result_path.read_bytes())
+        runtime_logs.append(attempt_result["runtime_log"])
+        attempt_runtime_seconds.append(float(attempt_result["runtime_seconds"]))
     marker_body = json.loads(marker.read_bytes())
     final = {
         "operation_unit_id": unit_id,
@@ -953,17 +1310,27 @@ def record_attempt(store: AddOnceStore, unit_id: str, attempt_number: int, exit_
         "status": "COMPLETE" if succeeded else "FAILED_G0",
         "attempt_count": attempt_number,
         "retry_count": max(0, attempt_number - 1),
-        "runtime_seconds": runtime_seconds,
+        "runtime_seconds": sum(attempt_runtime_seconds),
+        "attempt_runtime_seconds": attempt_runtime_seconds,
         "peak_memory_bytes": peak_memory_bytes,
+        "peak_memory_unavailable_reason": peak_memory_unavailable_reason,
         "output_bytes": output_bytes,
+        "output_records": output_records,
         "G0_generated": succeeded,
         "G1_schema_semantic": check["G1_schema_semantic"] if check else None,
-        "G1_check_class": "PROVISIONAL_TECHNICAL_INTERNAL_SCHEMA_SEMANTIC",
-        "G2_internal_screen": check["G2_internal_screen"] if check else None,
-        "G2_check_class": "DIAGNOSTIC_INTERNAL_NOT_CANONICAL_VAL3DITY",
+        "G1_check_class": "INTERNAL_CITYJSON_BOUNDARY_SEMANTICS_PARENT_CHILD_VALIDATION",
+        "G1_failure_reasons": check["G1_failure_reasons"] if check else ["NO_VALIDATABLE_CITYJSON_OUTPUT"],
+        "geometry_ring_diagnostic": check["geometry_ring_diagnostic"] if check else None,
+        "geometry_ring_diagnostic_class": "DIAGNOSTIC_RING_INDEX_SANITY_NOT_G2_NOT_VAL3DITY",
         "G2_geometry_topology_valid": None,
         "G2_null_reason": "CANONICAL_VALIDATOR_UNAVAILABLE",
-        "failure_reasons": [] if succeeded else sorted({value for value in (validation_error, f"ROOFER_EXIT_{exit_code}" if exit_code else None) if value}),
+        "failure_reasons": [] if succeeded else sorted({
+            value for value in (
+                validation_error,
+                f"ROOFER_EXIT_{exit_code}" if exit_code else None,
+                "G0_OUTPUT_REQUIREMENTS_NOT_MET" if exit_code == 0 and check is not None and not check["G0_generated"] else None,
+            ) if value
+        }),
         "quarantine_state": marker_body.get("quarantined_previous_output"),
         "runtime_logs": runtime_logs,
         "scientific_verdict": None,
@@ -974,21 +1341,99 @@ def record_attempt(store: AddOnceStore, unit_id: str, attempt_number: int, exit_
     return final
 
 
-def group_balanced_summary(rows: Sequence[Mapping[str, Any]], metric: str) -> dict[str, Any]:
+def group_balanced_summary(
+    rows: Sequence[Mapping[str, Any]],
+    metric: str,
+    group_sizes: Mapping[str, int] | None = None,
+) -> dict[str, Any]:
+    group_sizes = dict(group_sizes or load_config()["scope"]["group_sizes"])
     by_group: defaultdict[str, list[float]] = defaultdict(list)
     for row in rows:
         value = row.get("metrics", {}).get(metric)
         if isinstance(value, (int, float)) and math.isfinite(float(value)):
             by_group[row["group_id"]].append(float(value))
-    group_means = {group: sum(values) / len(values) for group, values in sorted(by_group.items()) if values}
+    unexpected = set(by_group) - set(group_sizes)
+    if unexpected:
+        raise RuntimeError(f"unexpected development groups in summary: {sorted(unexpected)}")
+    group_means = {
+        group: (sum(by_group[group]) / len(by_group[group]) if by_group[group] else None)
+        for group in sorted(group_sizes)
+    }
+    complete = all(value is not None for value in group_means.values())
+    group_rows = [
+        {
+            "group_id": group,
+            "denominator": int(group_sizes[group]),
+            "values_with_metric": len(by_group[group]),
+            "mean": group_means[group],
+        }
+        for group in sorted(group_sizes)
+    ]
     return {
         "metric": metric,
         "group_means": group_means,
-        "unweighted_group_mean": sum(group_means.values()) / len(group_means) if group_means else None,
-        "groups_with_value": len(group_means),
+        "groups": group_rows,
+        "unweighted_group_mean": sum(float(value) for value in group_means.values()) / 5 if complete else None,
+        "groups_with_value": sum(value is not None for value in group_means.values()),
+        "all_five_groups_have_value": complete,
         "inferential_statistics": None,
         "interpretation": "DESCRIPTIVE_ONLY_NO_INFERENCE_N51_FIVE_GROUPS",
     }
+
+
+def validate_result_rows(rows: Sequence[Mapping[str, Any]], config: Mapping[str, Any]) -> dict[str, Any]:
+    schema_path = _safe_repo_path(config["result"]["schema_path"])
+    schema = json.loads(schema_path.read_bytes())
+    Draft202012Validator.check_schema(schema)
+    validator = Draft202012Validator(schema)
+    errors: list[str] = []
+    for index, row in enumerate(rows):
+        for error in sorted(validator.iter_errors(row), key=lambda item: list(item.absolute_path)):
+            location = ".".join(str(value) for value in error.absolute_path) or "<row>"
+            errors.append(f"row {index} {location}: {error.message}")
+            if len(errors) >= 20:
+                break
+        if len(errors) >= 20:
+            break
+    if errors:
+        raise RuntimeError("result schema validation failed: " + " | ".join(errors))
+    return {
+        "schema_path": config["result"]["schema_path"],
+        "schema_sha256": sha256_bytes(schema_path.read_bytes()),
+        "validated_rows": len(rows),
+        "validation_errors": 0,
+    }
+
+
+def condition_group_technical_summary(
+    rows: Sequence[Mapping[str, Any]],
+    group_sizes: Mapping[str, int],
+) -> list[dict[str, Any]]:
+    result: list[dict[str, Any]] = []
+    for method in CONDITIONS:
+        for group_id, denominator in sorted(group_sizes.items()):
+            selected = [row for row in rows if row["method_id"] == method and row["group_id"] == group_id]
+            if len(selected) != int(denominator):
+                raise RuntimeError(f"condition/group denominator mismatch: {method}/{group_id}")
+            failures: Counter[str] = Counter()
+            for row in selected:
+                failures.update(row["failure_reasons"])
+                if row["G1_schema_semantic"] is False:
+                    failures.update(row["G1_failure_reasons"])
+            runtimes = [float(row["runtime_seconds"]) for row in selected if isinstance(row["runtime_seconds"], (int, float))]
+            result.append({
+                "method_id": method,
+                "group_id": group_id,
+                "denominator": int(denominator),
+                "attempted": sum(int(row["attempt_count"]) > 0 for row in selected),
+                "G0_generated": sum(row["G0_generated"] is True for row in selected),
+                "G1_true": sum(row["G1_schema_semantic"] is True for row in selected),
+                "failed_G0": sum(row["G0_generated"] is not True for row in selected),
+                "runtime_seconds_sum": sum(runtimes) if runtimes else None,
+                "runtime_seconds_median": float(np.median(runtimes)) if runtimes else None,
+                "failure_reason_counts": dict(sorted(failures.items())),
+            })
+    return result
 
 
 def _transformed_vertices(record: Mapping[str, Any], inherited: Mapping[str, Any] | None) -> np.ndarray:
@@ -1183,9 +1628,10 @@ def finalize(store: AddOnceStore) -> dict[str, Any]:
             "component_id": mapping["component_id"], "operation_unit_id": unit_id,
             "G0_generated": succeeded,
             "G1_schema_semantic": operation["G1_schema_semantic"] if operation else None,
-            "G1_check_class": "PROVISIONAL_TECHNICAL_INTERNAL_SCHEMA_SEMANTIC",
-            "G2_internal_screen": operation["G2_internal_screen"] if operation else None,
-            "G2_check_class": "DIAGNOSTIC_INTERNAL_NOT_CANONICAL_VAL3DITY",
+            "G1_check_class": "INTERNAL_CITYJSON_BOUNDARY_SEMANTICS_PARENT_CHILD_VALIDATION",
+            "G1_failure_reasons": operation["G1_failure_reasons"] if operation else ["NO_EXECUTED_CITYJSON_OUTPUT"],
+            "geometry_ring_diagnostic": operation["geometry_ring_diagnostic"] if operation else None,
+            "geometry_ring_diagnostic_class": "DIAGNOSTIC_RING_INDEX_SANITY_NOT_G2_NOT_VAL3DITY",
             "G2_geometry_topology_valid": None, "G2_null_reason": "CANONICAL_VALIDATOR_UNAVAILABLE",
             "G3_roof_structure_acceptable": None, "G4_geometric_accuracy_acceptable": None, "PASS_usable": None,
             "threshold_null_reason": "THRESHOLD_NOT_FROZEN",
@@ -1193,18 +1639,26 @@ def finalize(store: AddOnceStore) -> dict[str, Any]:
             "retry_count": operation["retry_count"] if operation else 0,
             "runtime_seconds": operation["runtime_seconds"] if operation else None,
             "peak_memory_bytes": operation["peak_memory_bytes"] if operation else None,
+            "peak_memory_unavailable_reason": operation["peak_memory_unavailable_reason"] if operation else "NO_ROOFER_EXECUTION",
             "input_point_count": component["point_count"] if component else None,
             "roofer_input_point_count": roofer_points,
             "output_bytes": operation["output_bytes"] if operation else 0,
-            "failure_reasons": operation["failure_reasons"] if operation else ["UNASSOCIATED_CONDITION_COMPONENT"],
+            "failure_reasons": operation["failure_reasons"] if operation else [mapping.get("pre_roofer_failure") or "UNASSOCIATED_CONDITION_COMPONENT"],
             "metrics": metrics, "scientific_verdict": None,
         })
     if len(rows) != 102 or len({(row["building_id"], row["method_id"]) for row in rows}) != 102:
         raise RuntimeError("final result matrix is not exact 51x2")
+    schema_validation = validate_result_rows(rows, config)
     metrics_record = store.add("results/building_method_metrics_v1.jsonl", jsonl_bytes(rows))
     metric_names = ("reference_vertical_coverage", "height_error_mae_m", "RMSZ_m", "RMSXY_m", "surface_distance_rmse_m", "surface_distance_p95_m", "normal_angular_error_median_deg")
     summaries = [{"method_id": method, **group_balanced_summary([row for row in rows if row["method_id"] == method], name)} for method in CONDITIONS for name in metric_names]
     summary_record = store.add("results/group_balanced_descriptive_v1.jsonl", jsonl_bytes(summaries))
+    technical_groups = condition_group_technical_summary(rows, config["scope"]["group_sizes"])
+    technical_group_record = store.add("results/condition_group_technical_summary_v1.jsonl", jsonl_bytes(technical_groups))
+    input_definition_record = store.add(
+        "results/development_input_definition_v1.csv",
+        canonical_lf_bytes(_safe_repo_path(config["scope"]["development_score_scope_path"])),
+    )
     cases = json.loads(store.path("control/preselected_cases_v1.json").read_bytes())["cases"]
     case_record = store.add("results/preselected_case_index_v1.jsonl", jsonl_bytes([row for row in rows if cases.get(row["group_id"]) == row["building_id"]]))
     method_summary = {
@@ -1218,19 +1672,59 @@ def finalize(store: AddOnceStore) -> dict[str, Any]:
         }
         for method in CONDITIONS
     }
-    report = (
-        "# C1/C2 development feasibility pilot compact report\n\n"
-        f"- Result rows: 102 (51 buildings x 2 conditions)\n"
-        f"- Unique Roofer operations: {prepared['unique_execution_units']}\n"
-        f"- Duplicate component calculations prevented: {prepared['duplicate_roofer_calculations_prevented']}\n"
-        f"- C1 G0: {method_summary['C1_L_upper']['G0_generated']}/51 (self-reference upper baseline)\n"
-        f"- C2 G0: {method_summary['C2_MVS']['G0_generated']}/51 (independent UAS score reference)\n"
-        "- Canonical G2: null (`CANONICAL_VALIDATOR_UNAVAILABLE`)\n"
-        "- G3/G4/PASS_usable: null (`THRESHOLD_NOT_FROZEN`)\n"
-        "- Inference: prohibited; building and unweighted five-group descriptive summaries only\n"
-        "- Validation/held-out access: 0/0\n"
-        "- scientific_verdict: null\n"
-    )
+    def input_identity_lines() -> str:
+        output = []
+        for name, record in prepared["input_records"].items():
+            path = record.get("path") or record.get("artifact_relative_path") or record.get("git_path") or "GIT_OWNED_SCOPE"
+            size = record.get("bytes", record.get("canonical_bytes", record.get("canonical_lf_bytes")))
+            digest = record.get("sha256", record.get("canonical_sha256", record.get("canonical_lf_sha256", record.get("git_blob"))))
+            output.append(f"| {name} | {path} | {size} | {digest} |")
+        return "\n".join(output)
+
+    panel_lines: list[str] = []
+    for method in CONDITIONS:
+        panel_lines.extend([
+            f"## {method} technical panel",
+            "",
+            "| group | denominator | attempted | G0 | G1 | failed G0 | runtime sum (s) | failure reasons |",
+            "|---|---:|---:|---:|---:|---:|---:|---|",
+        ])
+        for item in technical_groups:
+            if item["method_id"] == method:
+                panel_lines.append(
+                    f"| {item['group_id']} | {item['denominator']} | {item['attempted']} | {item['G0_generated']} | "
+                    f"{item['G1_true']} | {item['failed_G0']} | {item['runtime_seconds_sum']} | "
+                    f"`{json.dumps(item['failure_reason_counts'], sort_keys=True, separators=(',', ':'))}` |"
+                )
+        panel_lines.append("")
+    report = f"""# C1/C2 development feasibility pilot compact report
+
+- Result rows: 102 (exact 51 development buildings x 2 conditions)
+- Exact score projection: {config['scope']['development_score_cell_rows']} building-cell rows from one global 20,520-row stream; non-development retained/scored/promoted: 0
+- Exact 51-building input definition: `development_input_definition_v1.csv` (group, bbox, patch IDs, expected score-cell count)
+- Unique Roofer operations: {prepared['unique_execution_units']}
+- Duplicate component calculations prevented: {prepared['duplicate_roofer_calculations_prevented']}
+- C1 G0: {method_summary['C1_L_upper']['G0_generated']}/51 (self-reference upper baseline)
+- C2 G0: {method_summary['C2_MVS']['G0_generated']}/51 (independent UAS score reference)
+- Canonical G2: null (`CANONICAL_VALIDATOR_UNAVAILABLE`)
+- G3/G4/PASS_usable: null (`THRESHOLD_NOT_FROZEN`)
+- Inference: prohibited; five-group mean is null unless every frozen group has a metric value
+- Validation/held-out access: 0/0
+- scientific_verdict: null
+
+## Bound inputs
+
+| input | exact path/identity | bytes | SHA-256 or Git blob |
+|---|---|---:|---|
+{input_identity_lines()}
+
+{chr(10).join(panel_lines)}
+## Qualitative fixed-view evidence
+
+- status: `NOT_RENDERED`
+- reason: `{config['result']['qualitative_fixed_view_null_reason']}`
+- The five outcome-free representatives remain in the compact case table; no post-outcome visual selection occurred.
+"""
     report_record = store.add("results/C1_C2_DEVELOPMENT_REPORT_v1.md", report.encode("utf-8"))
     body = {
         "schema": "jointbuildgs.p2_c1_c2_finalized.v1", "status": "TECHNICAL_RESULTS_COMPLETE_FOR_WORK_HOST_REVIEW",
@@ -1238,7 +1732,25 @@ def finalize(store: AddOnceStore) -> dict[str, Any]:
         "unique_execution_units": prepared["unique_execution_units"],
         "duplicate_roofer_calculations_prevented": prepared["duplicate_roofer_calculations_prevented"],
         "method_summary": method_summary, "metrics": metrics_record, "group_balanced_descriptive": summary_record,
+        "condition_group_technical_summary": technical_group_record,
+        "development_input_definition": input_definition_record,
         "preselected_cases": case_record, "report": report_record,
+        "result_schema_validation": schema_validation,
+        "execution_authority": prepared["execution_authority"],
+        "tool_records": prepared["tool_records"],
+        "input_records": prepared["input_records"],
+        "output_records": {
+            **prepared["output_records"],
+            "metrics": metrics_record, "group_balanced_descriptive": summary_record,
+            "condition_group_technical_summary": technical_group_record,
+            "development_input_definition": input_definition_record,
+            "preselected_cases": case_record, "report": report_record,
+            "roofer_operations": [
+                {"operation_unit_id": unit_id, "final": operation_results[unit_id], "outputs": operation_results[unit_id].get("output_records", [])}
+                for unit_id in sorted(operation_results)
+            ],
+        },
+        "qualitative_fixed_view": {"status": "NOT_RENDERED", "reason": config["result"]["qualitative_fixed_view_null_reason"]},
         "canonical_G2": None, "G3": None, "G4": None, "PASS_usable": None, "scientific_verdict": None,
     }
     store.add_json("control/finalized_v1.json", body)
@@ -1282,14 +1794,18 @@ def promote(store: AddOnceStore, repo_root: Path, promotion_parent_commit: str) 
         raise RuntimeError("external finalized ledger is not promotable")
     rows = parse_jsonl(store.read_verified(finalized["metrics"]))
     summaries = parse_jsonl(store.read_verified(finalized["group_balanced_descriptive"]))
+    technical_groups = parse_jsonl(store.read_verified(finalized["condition_group_technical_summary"]))
+    input_definition = store.read_verified(finalized["development_input_definition"])
     cases = parse_jsonl(store.read_verified(finalized["preselected_cases"]))
+    external_report = store.read_verified(finalized["report"])
     if len(rows) != 102 or len(cases) != 10:
         raise RuntimeError("compact promotion inputs differ from exact 102 rows/5x2 cases")
     metrics_fields = [
         "building_id", "group_id", "split", "method_id", "reference_provenance", "component_id", "operation_unit_id",
-        "G0_generated", "G1_schema_semantic", "G2_internal_screen", "G2_geometry_topology_valid", "G2_null_reason",
+        "G0_generated", "G1_schema_semantic", "G1_check_class", "G1_failure_reasons",
+        "geometry_ring_diagnostic", "geometry_ring_diagnostic_class", "G2_geometry_topology_valid", "G2_null_reason",
         "G3_roof_structure_acceptable", "G4_geometric_accuracy_acceptable", "PASS_usable", "threshold_null_reason",
-        "attempt_count", "retry_count", "runtime_seconds", "peak_memory_bytes", "input_point_count", "roofer_input_point_count", "output_bytes",
+        "attempt_count", "retry_count", "runtime_seconds", "peak_memory_bytes", "peak_memory_unavailable_reason", "input_point_count", "roofer_input_point_count", "output_bytes",
         "reference_cell_count", "vertically_scored_cell_count", "reference_vertical_coverage", "height_error_signed_mean_m",
         "height_error_signed_median_m", "height_error_mae_m", "RMSZ_m", "RMSXY_m", "surface_distance_rmse_m",
         "surface_distance_p95_m", "normal_angular_error_median_deg", "normal_angular_error_p95_deg", "failure_reasons",
@@ -1301,68 +1817,28 @@ def promote(store: AddOnceStore, repo_root: Path, promotion_parent_commit: str) 
             if name in row["metrics"]:
                 flat[name] = row["metrics"][name]
         flat["failure_reasons"] = ";".join(row["failure_reasons"])
+        flat["G1_failure_reasons"] = ";".join(row["G1_failure_reasons"])
         flat_rows.append(flat)
-    summary_fields = ["method_id", "metric", "unweighted_group_mean", "groups_with_value", "inferential_statistics", "interpretation", "group_means_json"]
-    flat_summaries = [{**{name: row.get(name) for name in summary_fields}, "group_means_json": json.dumps(row["group_means"], sort_keys=True, separators=(",", ":"))} for row in summaries]
+    summary_fields = ["method_id", "metric", "unweighted_group_mean", "groups_with_value", "all_five_groups_have_value", "inferential_statistics", "interpretation", "group_means_json", "groups_with_denominators_json"]
+    flat_summaries = [{
+        **{name: row.get(name) for name in summary_fields},
+        "group_means_json": json.dumps(row["group_means"], sort_keys=True, separators=(",", ":")),
+        "groups_with_denominators_json": json.dumps(row["groups"], sort_keys=True, separators=(",", ":")),
+    } for row in summaries]
+    technical_fields = ["method_id", "group_id", "denominator", "attempted", "G0_generated", "G1_true", "failed_G0", "runtime_seconds_sum", "runtime_seconds_median", "failure_reason_counts_json"]
+    flat_technical = [{
+        **{name: row.get(name) for name in technical_fields},
+        "failure_reason_counts_json": json.dumps(row["failure_reason_counts"], sort_keys=True, separators=(",", ":")),
+    } for row in technical_groups]
     case_fields = ["building_id", "group_id", "method_id", "reference_provenance", "G0_generated", "G1_schema_semantic", "RMSZ_m", "RMSXY_m", "surface_distance_rmse_m", "reference_vertical_coverage", "operation_unit_id"]
     flat_cases = [{**{name: row.get(name) for name in case_fields}, **{name: row["metrics"].get(name) for name in case_fields if name in row["metrics"]}} for row in cases]
-    method = finalized["method_summary"]
-    metric_table = "\n".join(
-        f"| {row['method_id']} | {row['metric']} | {row['unweighted_group_mean']} | {row['groups_with_value']} |"
-        for row in summaries
-    )
-    case_table = "\n".join(
-        f"| {row['building_id']} | {row['group_id']} | {row['method_id']} | {row['metrics'].get('RMSZ_m')} | {row['metrics'].get('surface_distance_rmse_m')} | {row['G0_generated']} |"
-        for row in cases
-    )
-    report = f"""# C1/C2 development feasibility pilot v1
-
-## Answer first
-
-The exact 51-building development roster produced 102 descriptive score rows using
-{finalized['unique_execution_units']} unique condition-component Roofer operations;
-{finalized['duplicate_roofer_calculations_prevented']} duplicate calculations were prevented.
-C1 is a self-reference upper baseline and C2 alone uses the independent UAS reference.
-No validation or held-out result was accessed. This is feasibility evidence, not an
-inferential or population claim.
-
-## Technical gates
-
-| condition | denominator | G0 | provisional internal G1 | canonical G2 | G3/G4/PASS |
-|---|---:|---:|---:|---|---|
-| C1_L_upper | 51 | {method['C1_L_upper']['G0_generated']} | {method['C1_L_upper']['G1_provisional_true']} | null (validator unavailable) | null (threshold not frozen) |
-| C2_MVS | 51 | {method['C2_MVS']['G0_generated']} | {method['C2_MVS']['G1_provisional_true']} | null (validator unavailable) | null (threshold not frozen) |
-
-## Group-balanced descriptive metrics
-
-| condition | metric | unweighted five-group mean | groups with value |
-|---|---|---:|---:|
-{metric_table}
-
-No confidence interval, p-value or other n=51 inferential statistic is reported.
-
-## Preselected qualitative cases
-
-| stable ID | group | condition | RMSZ (m) | surface RMSE (m) | G0 |
-|---|---|---|---:|---:|---|
-{case_table}
-
-The five representatives were selected by the frozen hash rule before outcomes.
-
-## Limitations
-
-- development only; five groups with one group containing 47/51 buildings;
-- C1 accuracy is self-reference and must not be compared as independent accuracy;
-- canonical G2 is unavailable because val3dity is not callable in this task;
-- G3, G4 and PASS_usable remain null (`THRESHOLD_NOT_FROZEN`);
-- no conclusion about C3-C5, validation, held-out or population generalization;
-- `scientific_verdict` remains null.
-"""
     prefix = "docs/experiments/p2/c1_c2_feasibility_pilot_v1"
     promoted = [
-        git_store.add(f"{prefix}/C1_C2_DEVELOPMENT_REPORT_v1.md", report.encode("utf-8")),
+        git_store.add(f"{prefix}/C1_C2_DEVELOPMENT_REPORT_v1.md", external_report),
         git_store.add(f"{prefix}/building_method_metrics_v1.csv", _csv_bytes(metrics_fields, flat_rows)),
         git_store.add(f"{prefix}/group_balanced_descriptive_v1.csv", _csv_bytes(summary_fields, flat_summaries)),
+        git_store.add(f"{prefix}/condition_group_technical_summary_v1.csv", _csv_bytes(technical_fields, flat_technical)),
+        git_store.add(f"{prefix}/development_input_definition_v1.csv", input_definition),
         git_store.add(f"{prefix}/preselected_case_metrics_v1.csv", _csv_bytes(case_fields, flat_cases)),
     ]
     manifest = {
@@ -1374,8 +1850,16 @@ The five representatives were selected by the frozen hash rule before outcomes.
         "external_namespace": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_v1/P2-C1-C2-FEASIBILITY-PILOT-v1/",
         "external_records": {
             "metrics": finalized["metrics"], "group_balanced_descriptive": finalized["group_balanced_descriptive"],
+            "condition_group_technical_summary": finalized["condition_group_technical_summary"],
+            "development_input_definition": finalized["development_input_definition"],
             "preselected_cases": finalized["preselected_cases"], "report": finalized["report"],
         },
+        "execution_authority": finalized["execution_authority"],
+        "tool_records": finalized["tool_records"],
+        "input_records": finalized["input_records"],
+        "output_records": finalized["output_records"],
+        "result_schema_validation": finalized["result_schema_validation"],
+        "qualitative_fixed_view": finalized["qualitative_fixed_view"],
         "result_rows": 102,
         "unique_execution_units": finalized["unique_execution_units"],
         "duplicate_roofer_calculations_prevented": finalized["duplicate_roofer_calculations_prevented"],

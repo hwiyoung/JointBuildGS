@@ -16,10 +16,10 @@ TASK_ROOT="${ARTIFACT_ROOT}/${TASK_REL}"
 FREEZE_REL="phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1"
 R1_REL="phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1"
 C1_GRID="${ARTIFACT_ROOT}/${FREEZE_REL}/reference/c1_grid_v1.npz"
+C1_CHECKPOINT="${ARTIFACT_ROOT}/${FREEZE_REL}/checkpoints/050-c1_reference_frozen_pre_c5.json"
 C2_PLY="${ARTIFACT_ROOT}/${FREEZE_REL}/common/mvs_class26_v1.ply"
 C2_CHECKPOINT="${ARTIFACT_ROOT}/${FREEZE_REL}/checkpoints/030-dense_mvs_and_gravity.json"
 REFERENCE_CELLS="${ARTIFACT_ROOT}/${R1_REL}/reference/reference_candidate_cells_v1.csv"
-PATCH_SUMMARY="${ARTIFACT_ROOT}/${R1_REL}/reference/patch_summary_v1.csv"
 ACCEPTED_RECEIPT_REL="artifacts/manifests/handoffs/P2-W2C-C1-C2-FEASIBILITY-PILOT-v1/100-accepted.json"
 PACKET_REL="docs/handoffs/P2_W2C_C1_C2_FEASIBILITY_PILOT_v1.md"
 START_SECONDS="${SECONDS}"
@@ -66,7 +66,7 @@ docker run --rm --network none \
 docker run --rm --network none -e EXPECTED_PROJECT_IMAGE_ID="${PROJECT_IMAGE_ID}" \
   -v "${REPO}:/workspace/JointBuildGS:ro" -w /workspace/JointBuildGS "${PROJECT_IMAGE_ID}" \
   python -c 'import json,os; p=json.load(open("artifacts/manifests/handoffs/P2-W2C-C1-C2-FEASIBILITY-PILOT-v1/100-accepted.json")); assert p["handoff_id"]=="P2-W2C-C1-C2-FEASIBILITY-PILOT-v1" and p["task_id"]=="P2-C1-C2-FEASIBILITY-PILOT-v1"; assert p["state"]=="accepted" and p["direction"]=="work_to_experiment"; assert p["sender_role"]=="work_host" and p["receiver_role"]=="experiment_host"; assert p["receiver_ack"]["role"]=="experiment_host" and p["receiver_ack"]["status"]=="accepted"; assert p["transport"]["exclusive_writer_ack"] is True; assert p["verification"]["docker_image_digest"]==os.environ["EXPECTED_PROJECT_IMAGE_ID"]'
-for exact_input in "${C1_GRID}" "${C2_PLY}" "${C2_CHECKPOINT}" "${REFERENCE_CELLS}" "${PATCH_SUMMARY}"; do
+for exact_input in "${C1_GRID}" "${C1_CHECKPOINT}" "${C2_PLY}" "${C2_CHECKPOINT}" "${REFERENCE_CELLS}"; do
   if [[ ! -f "${exact_input}" || -L "${exact_input}" ]]; then
     echo "exact frozen input missing or symlinked: ${exact_input}" >&2
     exit 2
@@ -90,20 +90,24 @@ project_science_prepare() {
     -v "${REPO}:/workspace/JointBuildGS:ro" \
     -v "${TASK_ROOT}:/pilot_output:rw" \
     -v "${C1_GRID}:/pilot_inputs/c1/c1_grid_v1.npz:ro" \
+    -v "${C1_CHECKPOINT}:/pilot_inputs/attestation/050-c1_reference_frozen_pre_c5.json:ro" \
     -v "${C2_PLY}:/pilot_inputs/c2/mvs_class26_v1.ply:ro" \
     -v "${C2_CHECKPOINT}:/pilot_inputs/attestation/030-dense_mvs_and_gravity.json:ro" \
     -v "${REFERENCE_CELLS}:/pilot_inputs/reference/reference_candidate_cells_v1.csv:ro" \
-    -v "${PATCH_SUMMARY}:/pilot_inputs/reference/patch_summary_v1.csv:ro" \
     -w /workspace/JointBuildGS \
     "${PROJECT_IMAGE_ID}" \
     python scripts/p2_baselines/c1_c2_feasibility_pilot_v1/run_pilot.py prepare-scientific \
       --output-root /pilot_output \
       --c1-grid /pilot_inputs/c1/c1_grid_v1.npz \
+      --c1-checkpoint /pilot_inputs/attestation/050-c1_reference_frozen_pre_c5.json \
       --c2-ply /pilot_inputs/c2/mvs_class26_v1.ply \
       --c2-checkpoint /pilot_inputs/attestation/030-dense_mvs_and_gravity.json \
       --reference-cells /pilot_inputs/reference/reference_candidate_cells_v1.csv \
-      --patch-summary /pilot_inputs/reference/patch_summary_v1.csv \
-      --source-commit "${SOURCE_COMMIT}" --run-id "${RUN_ID}"
+      --source-commit "${SOURCE_COMMIT}" --run-id "${RUN_ID}" \
+      --handoff-id P2-W2C-C1-C2-FEASIBILITY-PILOT-v1 \
+      --accepted-receipt "/workspace/JointBuildGS/${ACCEPTED_RECEIPT_REL}" \
+      --accepted-commit "${HEAD_SHA}" --project-image-id "${PROJECT_IMAGE_ID}" \
+      --artifact-root-token artifact://JointBuildGS
 }
 
 # The first gate reads zero scientific bytes.
@@ -153,7 +157,8 @@ while IFS=$'\t' read -r unit_id work_relative; do
     runtime_seconds=$((SECONDS - attempt_start))
     set +e
     project_run record-attempt --output-root /pilot_output --unit-id "${unit_id}" \
-      --attempt-number "${attempt_number}" --exit-code "${roofer_exit}" --runtime-seconds "${runtime_seconds}"
+      --attempt-number "${attempt_number}" --exit-code "${roofer_exit}" --runtime-seconds "${runtime_seconds}" \
+      --peak-memory-unavailable-reason ROOFER_IMAGE_GNU_TIME_UNAVAILABLE_VERIFIED_IMMUTABLE_IMAGE
     record_exit=$?
     set -e
     if [[ "${record_exit}" -eq 75 ]]; then

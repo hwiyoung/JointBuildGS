@@ -34,12 +34,17 @@ def main() -> None:
     prepare = sub.add_parser("prepare-scientific")
     prepare.add_argument("--output-root", type=Path, required=True)
     prepare.add_argument("--c1-grid", type=Path, required=True)
+    prepare.add_argument("--c1-checkpoint", type=Path, required=True)
     prepare.add_argument("--c2-ply", type=Path, required=True)
     prepare.add_argument("--c2-checkpoint", type=Path, required=True)
     prepare.add_argument("--reference-cells", type=Path, required=True)
-    prepare.add_argument("--patch-summary", type=Path, required=True)
     prepare.add_argument("--source-commit", required=True)
     prepare.add_argument("--run-id", required=True)
+    prepare.add_argument("--handoff-id", required=True)
+    prepare.add_argument("--accepted-receipt", type=Path, required=True)
+    prepare.add_argument("--accepted-commit", required=True)
+    prepare.add_argument("--project-image-id", required=True)
+    prepare.add_argument("--artifact-root-token", required=True)
     units = sub.add_parser("execution-units")
     units.add_argument("--output-root", type=Path, required=True)
     attempt = sub.add_parser("next-attempt")
@@ -53,6 +58,7 @@ def main() -> None:
     record.add_argument("--exit-code", type=int, required=True)
     record.add_argument("--runtime-seconds", type=float, required=True)
     record.add_argument("--peak-memory-bytes", type=int)
+    record.add_argument("--peak-memory-unavailable-reason")
     final = sub.add_parser("finalize")
     final.add_argument("--output-root", type=Path, required=True)
     promotion = sub.add_parser("promote")
@@ -72,12 +78,17 @@ def main() -> None:
             result = prepare_scientific(
                 store,
                 c1_grid_path=args.c1_grid,
+                c1_checkpoint_path=args.c1_checkpoint,
                 c2_ply_path=args.c2_ply,
                 c2_checkpoint_path=args.c2_checkpoint,
                 reference_cells_path=args.reference_cells,
-                patch_summary_path=args.patch_summary,
                 source_commit=args.source_commit,
                 run_id=args.run_id,
+                handoff_id=args.handoff_id,
+                accepted_receipt_path=args.accepted_receipt,
+                accepted_commit=args.accepted_commit,
+                project_image_id=args.project_image_id,
+                artifact_root_token=args.artifact_root_token,
             )
         elif args.mode == "execution-units":
             result = execution_units(store)
@@ -88,7 +99,10 @@ def main() -> None:
         elif args.mode == "promote":
             result = promote(store, args.repo_root, args.promotion_parent_commit)
         else:
-            result = record_attempt(store, args.unit_id, args.attempt_number, args.exit_code, args.runtime_seconds, args.peak_memory_bytes)
+            result = record_attempt(
+                store, args.unit_id, args.attempt_number, args.exit_code, args.runtime_seconds,
+                args.peak_memory_bytes, args.peak_memory_unavailable_reason,
+            )
     if args.mode == "next-attempt" and args.machine_lines:
         print(result["action"])
         print(result.get("attempt_number", 0))
