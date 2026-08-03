@@ -1,0 +1,122 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P2-W2C-UTARGET199-CONTRACT-RESULTS-v1",
+  "task_id": "P2-UTARGET199-CONTRACT-RESULTS-v1",
+  "created_at": "2026-08-03T14:55:50+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "accepted",
+  "previous_receipt": {
+    "path": "artifacts/manifests/handoffs/P2-W2C-UTARGET199-CONTRACT-RESULTS-v1/000-offered.json",
+    "sha256": "edb174c96e891a8b719c7651a813b45e301895d25bfb6a70e611c8f50842ba9b"
+  },
+  "transport": {
+    "mode": "serialized_main",
+    "branch": "main",
+    "target_branch": "main",
+    "exclusive_writer_ack": true
+  },
+  "commits": {
+    "base_main": "a606dfad96c4a2f5d85d114fee14265c936f9d74",
+    "offered_head": "f33843b1590f9115c8dedf4dc6defbb6589209d1",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P2-W2C-UTARGET199-CONTRACT-RESULTS-v1",
+      "artifacts/manifests/p2/utarget199_contract_results_v1",
+      "docs/experiments/p2/utarget199_contract_results_v1",
+      "docs/handoffs/returns/P2_C2W_UTARGET199_CONTRACT_RESULTS_RETURN_v1.md"
+    ],
+    "protected_paths": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      ".gitattributes",
+      "configs",
+      "scripts",
+      "src",
+      "tests",
+      "docs/research",
+      "docs/evidence",
+      "docs/handoffs/P2_W2C_UTARGET199_CONTRACT_RESULTS_v1.md",
+      "artifacts/manifests/gate_s0",
+      "artifacts/manifests/p2/c1_baseline_audit_v1",
+      "artifacts/manifests/p2/c3_development_evaluation_candidate_recovery_r2_v1",
+      "docs/experiments/p2/c1_baseline_audit_v1",
+      "docs/experiments/p2/c3_development_evaluation_candidate_recovery_r2_v1",
+      "phases"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "artifact_verified",
+    "verifier_role": "experiment_host",
+    "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "commands": [
+      "validate exact 000-offered after fetch and fast-forward-only pull on clean physical Experiment Host",
+      "verify exact size and SHA-256 of the four compact frozen C1/C2/C3 job ledgers once; do not hash R1, Images.zip, OPF.zip, checkpoint, or reference cells at acceptance",
+      "confirm exact 199-building, 597-row execution contract and immutable execution images"
+    ],
+    "tests": [
+      {"name": "canonical offered receipt validator", "passed": 1, "failed": 0},
+      {"name": "compact frozen ledger size and digest verification", "passed": 4, "failed": 0},
+      {"name": "raw archives or legacy 15.7GB input rehashed", "passed": 0, "failed": 0},
+      {"name": "Experiment Host identity and exact project image observation", "passed": 1, "failed": 0}
+    ]
+  },
+  "artifacts": {
+    "required_for_task": true,
+    "availability": {
+      "work_host": "manifest_only",
+      "experiment_host": "verified_local"
+    },
+    "records": [
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/freeze/all_condition_jobs_v1.jsonl",
+        "bytes": 171247,
+        "sha256": "1f3cbf8606ef9b2e8c6fbb81bd8ac616f8acfe9f208032b38ab5b3915edfa7e7",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-03T14:55:50+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/freeze/condition_components_v1.jsonl",
+        "bytes": 1961083,
+        "sha256": "421bc81800bdf2290decf708bbb169c6fbfb3b5616ae54dd11756aa09e62238a",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-03T14:55:50+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/c3_development_stage3_v1/P2-C3-DEVELOPMENT-STAGE3-v1/freeze/c3_all_jobs_v1.jsonl",
+        "bytes": 207495,
+        "sha256": "1f532af55f05eefac5dc9b1de30a0f81b7735644a2e9edcb122d745cede3d12e",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-03T14:55:50+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/c3_development_stage3_v1/P2-C3-DEVELOPMENT-STAGE3-v1/freeze/c3_condition_components_v1.jsonl",
+        "bytes": 372833,
+        "sha256": "88208b13bf909b2e8a3c5b7442ba2a11af9b75c14719b6272aeb77ecd175befe",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-03T14:55:50+09:00"
+      }
+    ]
+  },
+  "scientific": {
+    "technical_state": "pending",
+    "scientific_verdict": null,
+    "promotion_status": "not_requested"
+  },
+  "receiver_ack": {
+    "role": "experiment_host",
+    "accepted_at": "2026-08-03T14:55:50+09:00",
+    "status": "accepted",
+    "issue": "Accepted for the bounded 199-building C1/C2/C3 census. No building is excluded before execution; missing evidence remains an explicit result. Writer turn is exclusively held by the Experiment Host."
+  }
+}
