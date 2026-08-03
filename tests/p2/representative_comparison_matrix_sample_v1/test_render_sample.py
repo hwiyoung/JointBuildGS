@@ -24,6 +24,8 @@ CONFIG_C1_C2 = REPO / "configs/p2/c1_c2_comparison_matrix_sample_v1/render_v1.js
 PACKET_C1_C2 = REPO / "docs/handoffs/P2_W2C_C1_C2_COMPARISON_MATRIX_SAMPLE_v1.md"
 CONFIG_C1_C2_R2 = REPO / "configs/p2/c1_c2_comparison_matrix_sample_v2/render_v2.json"
 PACKET_C1_C2_R2 = REPO / "docs/handoffs/P2_W2C_C1_C2_COMPARISON_MATRIX_SAMPLE_v2.md"
+CONFIG_C1_C2_R4 = REPO / "configs/p2/c1_c2_comparison_matrix_sample_v4/render_v4.json"
+PACKET_C1_C2_R4 = REPO / "docs/handoffs/P2_W2C_C1_C2_COMPARISON_MATRIX_SAMPLE_v4.md"
 
 
 class RepresentativeComparisonMatrixSampleTest(unittest.TestCase):
@@ -214,6 +216,16 @@ class RepresentativeComparisonMatrixSampleTest(unittest.TestCase):
         packet = PACKET_C1_C2_R2.read_text(encoding="utf-8")
         self.assertIn("reference XY median", packet)
         self.assertIn("v1 partial을 삭제·수정·재사용하지 않는다", packet)
+
+    def test_c1_c2_v4_locks_canonical_mount_and_fresh_namespace(self) -> None:
+        config = json.loads(CONFIG_C1_C2_R4.read_text(encoding="utf-8"))
+        self.assertEqual(config["methods"], ["C1_L_upper", "C2_MVS"])
+        self.assertEqual(config["views"]["section_anchor"], "REFERENCE_XY_MEDIAN")
+        self.assertTrue(config["output_task_relative_root"].endswith("SAMPLE-v4"))
+        packet = PACKET_C1_C2_R4.read_text(encoding="utf-8")
+        self.assertIn("/workspace/JointBuildGS:ro", packet)
+        self.assertIn("v1/v2 partial", packet)
+        self.assertIn("C3–C5 method artifact", packet)
 
 
 if __name__ == "__main__":
