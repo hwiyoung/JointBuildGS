@@ -43,11 +43,14 @@ if [[ "$(stat -c %s "${prior_final}")" != "${expected_c3_1_bytes}" \
   echo "sealed C3-1 final checkpoint identity mismatch" >&2
   exit 2
 fi
-if [[ ! -f "${seed_root}/c3/common/neutral_dense_seed.ply" \
-  || ! -d "${semantic_host}" ]]; then
-  echo "sealed seed or semantic masks missing" >&2
+if [[ ! -f "${seed_root}/c3/common/neutral_dense_seed.ply" ]]; then
+  echo "sealed seed missing" >&2
   exit 2
 fi
+docker run --rm --network none \
+  -v "${semantic_host}:/inputs/semantic_masks:ro" \
+  "${image}" python -c \
+  "from pathlib import Path; p=Path('/inputs/semantic_masks'); assert p.is_dir() and len(list(p.iterdir())) == 937"
 free_mib="$(nvidia-smi --id="${gpu_index}" --query-gpu=memory.free --format=csv,noheader,nounits | tr -d ' ')"
 if (( free_mib < 22000 )); then
   echo "GPU0 does not satisfy the 22000 MiB free recovery gate: ${free_mib}" >&2
