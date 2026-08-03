@@ -92,6 +92,20 @@ v1/v2 partial과 다른 representative partial은 수정·삭제·재사용하�
 | metric recomputation | 0 |
 | C3/C4/C5 method-artifact access | 0 |
 
+## Receipt failure visibility
+
+v4 결과 commit 뒤 처음 작성한
+`artifacts/manifests/handoffs/P2-W2C-C1-C2-COMPARISON-MATRIX-SAMPLE-v4/200-verified.json`
+은 output hash와 QA 값은 맞지만 validator가 `100-accepted`의 source-artifact attestation을
+successor receipt에서 output-artifact attestation으로 바꾸는 것을 금지해 `FAIL`했다.
+해당 add-once receipt는 수정·삭제하지 않고 보존했다. artifact bytes, panel/receipt/metric
+hash 및 정량 CSV에는 영향이 없다.
+
+정상 closure는 새 verification-only handoff
+`P2-W2C-C1-C2-COMPARISON-MATRIX-SAMPLE-v4-CLOSURE-v1`에서 완성된 v4 output
+attestation을 `100-accepted`부터 고정하고 같은 attestation으로 `200-verified`와
+`300-closed`까지 이어 수행한다.
+
 ## 해석 경계
 
 `scientific_verdict: null`은 이 비교판이 기술적 관찰·검토용 산출물이며 C1/C2의 과학적

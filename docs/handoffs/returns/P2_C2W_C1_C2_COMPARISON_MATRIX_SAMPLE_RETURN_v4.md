@@ -10,6 +10,7 @@
 - accepted_commit: `ad6d04a62d8b5afad7260618d4446adf6d32f1c6`
 - scientific_verdict: `null`
 - official G3/G4/PASS_usable: `null`
+- closure_handoff: `P2-W2C-C1-C2-COMPARISON-MATRIX-SAMPLE-v4-CLOSURE-v1`
 
 ## Returned artifact
 
@@ -47,3 +48,7 @@ Git-owned artifact manifest:
 `artifacts/manifests/p2/c1_c2_comparison_matrix_sample_v4/artifact_manifest_v1.json`
 
 이 Return은 기술 산출물과 검증 결과만 반환한다. 과학적 판정은 포함하지 않는다.
+
+최초 v4 `200-verified` receipt의 source→output artifact-attestation 변경 오류는 원본
+add-once 파일로 보존했으며, 위 별도 closure handoff가 동일 output attestation으로 정상
+verification lifecycle을 닫는다.
