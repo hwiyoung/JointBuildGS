@@ -137,7 +137,7 @@ class RepresentativeComparisonMatrixSampleTest(unittest.TestCase):
         self.assertNotEqual(config_v2["output_task_relative_root"], self.config["output_task_relative_root"])
         self.assertTrue(config_v2["output_task_relative_root"].endswith("SAMPLE-v2"))
         packet = PACKET_V2.read_text(encoding="utf-8")
-        self.assertIn("status: `DRAFT`", packet)
+        self.assertIn("status: `APPROVED_FOR_EXECUTION`", packet)
         self.assertIn("v1 partial 삭제·덮어쓰기·재사용", packet)
 
 
