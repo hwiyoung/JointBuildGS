@@ -1,0 +1,92 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P2-W2C-C3-DEVELOPMENT-EVALUATION-CANDIDATE-RECOVERY-R1-v1",
+  "task_id": "P2-C3-DEVELOPMENT-EVALUATION-CANDIDATE-v1",
+  "created_at": "2026-08-03T16:20:00+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "offered",
+  "previous_receipt": null,
+  "transport": {
+    "mode": "serialized_main",
+    "branch": "main",
+    "target_branch": "main",
+    "exclusive_writer_ack": true
+  },
+  "commits": {
+    "base_main": "262dc90c7d8b08bb945d6eed873b6818f4513c0a",
+    "offered_head": "SELF",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P2-W2C-C3-DEVELOPMENT-EVALUATION-CANDIDATE-RECOVERY-R1-v1",
+      "artifacts/manifests/p2/c3_development_evaluation_candidate_recovery_r1_v1",
+      "docs/experiments/p2/c3_development_evaluation_candidate_recovery_r1_v1",
+      "docs/handoffs/returns/P2_C2W_C3_DEVELOPMENT_EVALUATION_CANDIDATE_RECOVERY_R1_RETURN_v1.md"
+    ],
+    "protected_paths": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      ".gitattributes",
+      "configs",
+      "scripts",
+      "src",
+      "tests",
+      "docs/research",
+      "docs/evidence",
+      "docs/handoffs/P2_W2C_C3_DEVELOPMENT_EVALUATION_CANDIDATE_RECOVERY_R1_v1.md",
+      "docs/handoffs/P2_W2C_C3_DEVELOPMENT_EVALUATION_CANDIDATE_RECOVERY_v1.md",
+      "artifacts/manifests/handoffs/P2-W2C-C3-DEVELOPMENT-EVALUATION-CANDIDATE-RECOVERY-v1",
+      "artifacts/manifests/handoffs/P2-W2C-C3-DEVELOPMENT-EVALUATION-CANDIDATE-v1",
+      "artifacts/manifests/p2/c3_development_evaluation_candidate_v1",
+      "docs/experiments/p2/c3_development_evaluation_candidate_v1",
+      "docs/handoffs/returns/P2_C2W_C3_DEVELOPMENT_EVALUATION_CANDIDATE_RETURN_v1.md",
+      "artifacts/manifests/gate_s0",
+      "artifacts/manifests/handoffs/P2-W2C-C3-DEVELOPMENT-STAGE3-RECOVERY-v1",
+      "artifacts/manifests/p2/c3_development_stage3_recovery_v1",
+      "docs/experiments/p2/c3_development_stage3_recovery_v1",
+      "phases"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "git_only",
+    "verifier_role": "work_host",
+    "docker_image_digest": "sha256:e50ba5c7fd493ed524212c34e5e84f48bd94e66a70e0ecb6d00269f75309f986",
+    "commands": [
+      "Docker focused recovery tests",
+      "Docker Bash syntax check",
+      "bounded reuse review against research 00-06 and result contract 04"
+    ],
+    "tests": [
+      {
+        "name": "focused recovery regressions",
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "name": "Bash syntax and bounded reuse review",
+        "passed": 2,
+        "failed": 0
+      }
+    ]
+  },
+  "artifacts": {
+    "required_for_task": true,
+    "availability": {
+      "work_host": "manifest_only",
+      "experiment_host": "verified_local"
+    },
+    "records": []
+  },
+  "scientific": {
+    "technical_state": "pending",
+    "scientific_verdict": null,
+    "promotion_status": "not_requested"
+  },
+  "receiver_ack": null
+}
