@@ -5,8 +5,8 @@
 - handoff_id: `P2-W2C-UTARGET199-CONTRACT-RESULTS-v1`
 - task_id: `P2-UTARGET199-CONTRACT-RESULTS-v1`
 - direction: `Work Host -> Experiment Host`
-- status: `DRAFT`
-- source_commit: `TO_BE_BOUND`
+- status: `APPROVED_FOR_EXECUTION`
+- source_commit: `9954b748addd5ba90ea8c5fe9ee511a86e5d3d53`
 - target_branch: `main`
 - research canon: `docs/research/00_RESEARCH_CHARTER.md` through `06_DECISION_LOG.md`
 - result contract: `docs/research/04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md`
@@ -57,6 +57,6 @@ C1/C2/C3의 동일 분모로 유지한다. 입력·reference 부족과 방법 �
 bash scripts/p2/utarget199_contract_results_v1/run_contract_host.sh \
   /media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts \
   sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774 \
-  <SOURCE_COMMIT> \
+  9954b748addd5ba90ea8c5fe9ee511a86e5d3d53 \
   P2-UTARGET199-CONTRACT-RESULTS-v1
 ```
