@@ -65,14 +65,18 @@ STAGE_ROWS = {
 VIEW_IDS = ("TOP", "OBLIQUE_1", "OBLIQUE_2", "PRINCIPAL_SECTION")
 
 
-def expected_panel_ids(building_ids: Sequence[str]) -> set[str]:
+def expected_panel_ids(
+    building_ids: Sequence[str],
+    methods: Sequence[str] = METHODS_ALL,
+) -> set[str]:
     expected: set[str] = set()
     for building_id in building_ids:
         expected.update(
             f"{building_id}__RAW__RAW_CURRENT_IMAGES_WITH_ROOF_PROJECTION__RAW_{index}"
             for index in range(1, 5)
         )
-        for method, stages in STAGE_ROWS.items():
+        for method in methods:
+            stages = STAGE_ROWS[method]
             expected.update(
                 f"{building_id}__{method}__{stage_id}__{view_id}"
                 for stage_id, _ in stages
@@ -85,9 +89,10 @@ def validate_sealed_operation_units(
     by_building: Mapping[str, Mapping[str, Mapping[str, Any]]],
     building_ids: Sequence[str],
     units: Mapping[str, Mapping[str, Any]],
+    required_methods: Sequence[str] = METHODS_SOURCE,
 ) -> None:
     for building_id in building_ids:
-        for method in METHODS_SOURCE:
+        for method in required_methods:
             unit_id = by_building[building_id][method].get("operation_unit_id")
             if not unit_id or str(unit_id) not in units:
                 raise RuntimeError(
@@ -756,7 +761,20 @@ class Recorder:
         })
 
 
-def case_html(building_id: str, selection: Mapping[str, Any], panel_map: Mapping[str, Mapping[str, Any]], metric_cards: Mapping[str, str], camera_records: Sequence[Mapping[str, Any]]) -> str:
+def case_html(
+    building_id: str,
+    selection: Mapping[str, Any],
+    panel_map: Mapping[str, Mapping[str, Any]],
+    metric_cards: Mapping[str, str],
+    camera_records: Sequence[Mapping[str, Any]],
+    methods: Sequence[str],
+) -> str:
+    diagnostic_note = (
+        "이 페이지는 요청 순서에 따른 C1/C2-only 개발 기술 진단입니다. "
+        "C3–C5는 읽거나 표시하지 않았습니다. official G3/G4/PASS와 scientific_verdict는 null입니다."
+        if tuple(methods) == ("C1_L_upper", "C2_MVS")
+        else "현재 sealed Stage 3는 C1–C3의 건물별 분리가 대부분 실패했습니다. 따라서 이 페이지는 성능 결론이 아니라 실패 위치를 확인하는 기술 진단입니다. 별표 gate는 후보값이며 official G3/G4/PASS와 scientific_verdict는 null입니다."
+    )
     lines = [
         "<!doctype html><html lang='ko'><head><meta charset='utf-8'>",
         f"<title>{html.escape(building_id)} 정성·정량 비교</title>",
@@ -768,7 +786,7 @@ def case_html(building_id: str, selection: Mapping[str, Any], panel_map: Mapping
         "img{width:100%;height:auto;display:block}.block th.stage{border-top:4px solid #576574}code{font-size:12px}</style></head><body>",
         f"<h1>{html.escape(building_id)} — {html.escape(str(selection['size_bin']))} sample</h1>",
         f"<p>group={html.escape(str(selection['candidate_group_id']))}, bbox area={selection['bbox_area_m2']} m². 녹색은 모든 panel에 투영된 roof evaluation reference입니다.</p>",
-        "<div class='note'>현재 sealed Stage 3는 C1–C3의 건물별 분리가 대부분 실패했습니다. 따라서 이 페이지는 성능 결론이 아니라 실패 위치를 확인하는 기술 진단입니다. 별표 gate는 후보값이며 official G3/G4/PASS와 scientific_verdict는 null입니다.</div>",
+        f"<div class='note'>{diagnostic_note}</div>",
         "<table><thead><tr><th class='stage'>입력/단계</th><th class='view'>TOP / RAW 1</th><th class='view'>OBLIQUE 1 / RAW 2</th><th class='view'>OBLIQUE 2 / RAW 3</th><th class='view'>SECTION / RAW 4</th><th class='view'>같은 결과의 정량값과 의미</th></tr></thead><tbody>",
     ]
     lines.append("<tr class='block'><th class='stage'>지붕이 투영된 current raw images</th>")
@@ -776,7 +794,7 @@ def case_html(building_id: str, selection: Mapping[str, Any], panel_map: Mapping
         panel = panel_map[f"{building_id}__RAW__RAW_CURRENT_IMAGES_WITH_ROOF_PROJECTION__RAW_{index}"]
         lines.append(f"<td class='panel'><img src='{html.escape(panel['panel_path'].split(building_id + '/')[1])}'><code>{html.escape(str(camera_records[index-1]['camera'].name))}</code></td>")
     lines.append(f"<td class='metrics'>camera count=4<br>selection=roof coverage + angular diversity<br>reference=STRICT_INDEPENDENT_UAS<br>method outcome 사용 안 함</td></tr>")
-    for method in METHODS_ALL:
+    for method in methods:
         stages = STAGE_ROWS[method]
         for stage_index, (stage_id, _) in enumerate(stages):
             row_class = " class='block'" if stage_index == 0 else ""
@@ -802,6 +820,14 @@ def main() -> None:
     artifact_root = args.artifact_root.resolve()
     config_path = args.config.resolve()
     config = json.loads(config_path.read_text(encoding="utf-8"))
+    display_methods = tuple(str(method) for method in config["methods"])
+    if not display_methods or len(set(display_methods)) != len(display_methods):
+        raise RuntimeError("config methods must be a non-empty unique ordered list")
+    if any(method not in METHODS_ALL for method in display_methods):
+        raise RuntimeError(f"unsupported display methods: {display_methods}")
+    source_methods = tuple(method for method in display_methods if method in METHODS_SOURCE)
+    if not source_methods:
+        raise RuntimeError("at least one sealed source method is required")
     offered_commit = str(args.offered_commit)
     repo_root = Path(__file__).resolve().parents[3]
     if re.fullmatch(r"[0-9a-f]{40}", offered_commit) is None:
@@ -862,23 +888,31 @@ def main() -> None:
     selected_ids = [str(record["building_id"]) for record in selected_records]
     if len(selected_ids) != 3 or len(set(selected_ids)) != 3:
         raise RuntimeError("sample config must contain exactly three unique buildings")
-    all_metrics = [row for row in parse_jsonl(metrics_data) if row.get("building_id") in selected_ids]
-    if len(all_metrics) != 9:
-        raise RuntimeError(f"expected exact 3x3 source metric rows, found {len(all_metrics)}")
+    all_metrics = [
+        row
+        for row in parse_jsonl(metrics_data)
+        if row.get("building_id") in selected_ids and row.get("method_id") in source_methods
+    ]
+    expected_metric_rows = len(selected_ids) * len(source_methods)
+    if len(all_metrics) != expected_metric_rows:
+        raise RuntimeError(
+            f"expected exact {len(selected_ids)}x{len(source_methods)} source metric rows, found {len(all_metrics)}"
+        )
     by_building: dict[str, dict[str, dict[str, Any]]] = {building_id: {} for building_id in selected_ids}
     for row in all_metrics:
         by_building[str(row["building_id"])][str(row["method_id"])] = row
     for selection in selected_records:
         building_id = str(selection["building_id"])
         rows = by_building[building_id]
-        if set(rows) != set(METHODS_SOURCE):
+        if set(rows) != set(source_methods):
             raise RuntimeError(f"method rows mismatch for {building_id}")
         sample = rows["C1_L_upper"]
         if not all(bool(row.get("strict_e_paired")) for row in rows.values()):
             raise RuntimeError(f"sample lost strict independent reference: {building_id}")
-        if rows["C1_L_upper"].get("reference_role") != "SELF_REFERENCE_DIAGNOSTIC_ONLY":
+        if "C1_L_upper" in rows and rows["C1_L_upper"].get("reference_role") != "SELF_REFERENCE_DIAGNOSTIC_ONLY":
             raise RuntimeError(f"C1 reference isolation drift: {building_id}")
-        if any(rows[method].get("reference_role") != "UAS_PATCH_CANDIDATE_SCORE_ONLY" for method in ("C2_MVS", "C3_GS_image")):
+        independent_methods = [method for method in ("C2_MVS", "C3_GS_image") if method in rows]
+        if any(rows[method].get("reference_role") != "UAS_PATCH_CANDIDATE_SCORE_ONLY" for method in independent_methods):
             raise RuntimeError(f"C2/C3 reference isolation drift: {building_id}")
         if any(row.get("scientific_verdict") is not None for row in rows.values()):
             raise RuntimeError(f"scientific verdict must remain null: {building_id}")
@@ -907,7 +941,7 @@ def main() -> None:
         if any(int(row.get("reference_cell_count", -1)) != expected_count for row in by_building[building_id].values()):
             raise RuntimeError(f"reference-cell count drift: {building_id}")
     units = {str(row["operation_unit_id"]): row for row in parse_jsonl(units_data)}
-    validate_sealed_operation_units(by_building, selected_ids, units)
+    validate_sealed_operation_units(by_building, selected_ids, units, source_methods)
     rgb = config["rgb_context"]
     scene_path = contained_path(artifact_root, str(rgb["scene_reference_relative_path"]), label="scene reference")
     camera_model_path = contained_path(artifact_root, str(rgb["cameras_relative_path"]), label="camera model")
@@ -981,7 +1015,7 @@ def main() -> None:
             )
             panel_map[panel_id] = panel
         geometries: dict[str, Geometry] = {}
-        for method in METHODS_SOURCE:
+        for method in source_methods:
             unit_id = rows[method].get("operation_unit_id")
             if not unit_id or str(unit_id) not in units:
                 raise RuntimeError(f"sealed operation unit missing: {building_id} {method} {unit_id}")
@@ -994,7 +1028,7 @@ def main() -> None:
                 )
             geometries[method] = geometry_cache.get(str(unit_id), empty_geometry())
         metric_cards: dict[str, str] = {}
-        for method in METHODS_ALL:
+        for method in display_methods:
             row = rows.get(method)
             geometry = geometries.get(method, empty_geometry())
             input_count = int(len(crop_points(geometry.points, bbox.padded(float(config["views"]["viewport_margin_ratio"]), float(config["views"]["viewport_minimum_margin_m"]))).xyz)) if row is not None else None
@@ -1147,16 +1181,23 @@ def main() -> None:
                 "official_PASS": row.get("PASS_usable"),
                 "meaning_ko": summarize_reason(row),
             })
-        case_page = case_html(building_id, selection, panel_map, metric_cards, camera_records)
+        case_page = case_html(building_id, selection, panel_map, metric_cards, camera_records, display_methods)
         write_new(case_root / "case.html", case_page.encode("utf-8"))
-    expected_ids = expected_panel_ids(selected_ids)
+    expected_ids = expected_panel_ids(selected_ids, display_methods)
+    expected_panel_count = len(selected_ids) * (
+        4 + len(VIEW_IDS) * sum(len(STAGE_ROWS[method]) for method in display_methods)
+    )
     observed_ids = [str(row["panel_id"]) for row in recorder.panels]
-    if len(observed_ids) != 168 or len(set(observed_ids)) != 168 or set(observed_ids) != expected_ids:
+    if (
+        len(observed_ids) != expected_panel_count
+        or len(set(observed_ids)) != expected_panel_count
+        or set(observed_ids) != expected_ids
+    ):
         missing = sorted(expected_ids - set(observed_ids))
         extra = sorted(set(observed_ids) - expected_ids)
         raise RuntimeError(f"panel-slot contract mismatch: missing={missing[:5]} extra={extra[:5]}")
     overlay_status_counts = Counter(str(row["overlay_status"]) for row in recorder.panels)
-    if overlay_status_counts != Counter({"PROJECTED": 168}):
+    if overlay_status_counts != Counter({"PROJECTED": expected_panel_count}):
         raise RuntimeError(f"roof-reference projection coverage mismatch: {dict(overlay_status_counts)}")
     reference_counts = {building_id: len(ref_by_building[building_id]) for building_id in selected_ids}
     for panel in recorder.panels:
@@ -1210,7 +1251,10 @@ def main() -> None:
     for selection in selected_records:
         building_id = str(selection["building_id"])
         index_lines.append(f"<tr><td>{html.escape(str(selection['size_bin']))}</td><td><code>{html.escape(building_id)}</code></td><td>strict independent reference, distinct spatial group, outcome-free bbox selection</td><td><a href='{html.escape(building_id)}/case.html'>정성·정량 matrix 열기</a></td></tr>")
-    index_lines.append("</tbody></table><p>정량 CSV: <a href='../metrics/sample_quantitative_summary_v1.csv'>요약</a> · <a href='../metrics/sample_building_method_metrics_v1.csv'>exact 9 rows</a></p></body></html>")
+    index_lines.append(
+        "</tbody></table><p>정량 CSV: <a href='../metrics/sample_quantitative_summary_v1.csv'>요약</a> · "
+        f"<a href='../metrics/sample_building_method_metrics_v1.csv'>exact {len(selected_metric_rows)} rows</a></p></body></html>"
+    )
     write_new(output_root / "qualitative/index.html", "\n".join(index_lines).encode("utf-8"))
     output_files = [path for path in output_root.rglob("*") if path.is_file() and not path.is_symlink()]
     output_bytes = sum(path.stat().st_size for path in output_files)
@@ -1224,6 +1268,7 @@ def main() -> None:
         "case_count": 3,
         "panel_count": len(recorder.panels),
         "metric_binding_count": len(recorder.metrics),
+        "display_methods": list(display_methods),
         "overlay_status_counts": dict(sorted(overlay_status_counts.items())),
         "source_full_read_digest_passes": {"metrics": 1, "reference_cells": 1, "execution_units": 1},
         "execution_accounting": {"roofer": 0, "g2": 0, "gs_training": 0, "large_archive_hash_passes": 0},

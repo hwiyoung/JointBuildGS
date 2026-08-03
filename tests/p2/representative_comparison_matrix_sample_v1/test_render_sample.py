@@ -20,6 +20,8 @@ CONFIG_V2 = REPO / "configs/p2/representative_comparison_matrix_sample_v2/render
 PACKET_V2 = REPO / "docs/handoffs/P2_W2C_REPRESENTATIVE_COMPARISON_MATRIX_SAMPLE_v2.md"
 CONFIG_V3 = REPO / "configs/p2/representative_comparison_matrix_sample_v3/render_v3.json"
 PACKET_V3 = REPO / "docs/handoffs/P2_W2C_REPRESENTATIVE_COMPARISON_MATRIX_SAMPLE_v3.md"
+CONFIG_C1_C2 = REPO / "configs/p2/c1_c2_comparison_matrix_sample_v1/render_v1.json"
+PACKET_C1_C2 = REPO / "docs/handoffs/P2_W2C_C1_C2_COMPARISON_MATRIX_SAMPLE_v1.md"
 
 
 class RepresentativeComparisonMatrixSampleTest(unittest.TestCase):
@@ -139,6 +141,21 @@ class RepresentativeComparisonMatrixSampleTest(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "before output creation"):
             sample.validate_sealed_operation_units(rows, ["B1"], units)
 
+    def test_c1_c2_only_preflight_does_not_require_c3(self) -> None:
+        rows = {
+            "B1": {
+                method: {"operation_unit_id": f"{method}|unit"}
+                for method in ("C1_L_upper", "C2_MVS")
+            }
+        }
+        units = {row["operation_unit_id"]: row for row in rows["B1"].values()}
+        sample.validate_sealed_operation_units(
+            rows,
+            ["B1"],
+            units,
+            ("C1_L_upper", "C2_MVS"),
+        )
+
     def test_packet_is_approved_and_forbids_reexecution(self) -> None:
         text = PACKET.read_text(encoding="utf-8")
         self.assertIn("status: `APPROVED_FOR_EXECUTION`", text)
@@ -168,6 +185,17 @@ class RepresentativeComparisonMatrixSampleTest(unittest.TestCase):
         packet = PACKET_V3.read_text(encoding="utf-8")
         self.assertIn("status: `APPROVED_FOR_EXECUTION`", packet)
         self.assertIn("output namespace 생성 전에 exact 3×3 operation unit", packet)
+
+    def test_c1_c2_only_config_has_exact_60_panel_contract(self) -> None:
+        config = json.loads(CONFIG_C1_C2.read_text(encoding="utf-8"))
+        methods = tuple(config["methods"])
+        self.assertEqual(methods, ("C1_L_upper", "C2_MVS"))
+        building_ids = [row["building_id"] for row in config["selection"]["records"]]
+        expected = sample.expected_panel_ids(building_ids, methods)
+        self.assertEqual(len(expected), 60)
+        packet = PACKET_C1_C2.read_text(encoding="utf-8")
+        self.assertIn("C3–C5 source를 읽거나 표시하지 않는다", packet)
+        self.assertIn("60 PNG", packet)
 
 
 if __name__ == "__main__":
