@@ -4,8 +4,9 @@
 
 - handoff_id: `P2-W2C-UTARGET199-CONTRACT-RESULTS-RECOVERY-R3-v1`
 - task_id: `P2-UTARGET199-CONTRACT-RESULTS-RECOVERY-R3-v1`
-- status: `DRAFT`
-- source_commit: `PENDING_IMPLEMENTATION_COMMIT`
+- status: `APPROVED_FOR_EXECUTION`
+- source_commit: `680cb04d5f4ebdec90e3a96ad957c6553d10678b`
+- explicit_user_authorization: `APPROVED_IN_SESSION_TO_CONTINUE_UTARGET199_EXECUTION`
 - predecessor: `P2-W2C-UTARGET199-CONTRACT-RESULTS-RECOVERY-R2-v1/300-closed.json`
 - scientific_verdict: `null`
 
