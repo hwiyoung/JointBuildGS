@@ -1,0 +1,82 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P2-W2C-C1-C2-COMPARISON-MATRIX-SAMPLE-v4-CLOSURE-v1",
+  "task_id": "P2-C1-C2-COMPARISON-MATRIX-SAMPLE-v4-CLOSURE-v1",
+  "created_at": "2026-08-03T20:06:44+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "verified",
+  "previous_receipt": {"path": "artifacts/manifests/handoffs/P2-W2C-C1-C2-COMPARISON-MATRIX-SAMPLE-v4-CLOSURE-v1/100-accepted.json", "sha256": "0908004b2347177b7a1fddabf7bf45c5328fa48698442bd258b921a70a84824b"},
+  "transport": {"mode": "serialized_main", "branch": "main", "target_branch": "main", "exclusive_writer_ack": true},
+  "commits": {"base_main": "f50356720b33c9763e898822c42a0c6b44c717cf", "offered_head": "6c7c7dae3c27aa0fa90f2834a45c2c7baee6330b", "receipt_head": "SELF"},
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P2-W2C-C1-C2-COMPARISON-MATRIX-SAMPLE-v4-CLOSURE-v1",
+      "artifacts/manifests/p2/c1_c2_comparison_matrix_sample_v4",
+      "docs/experiments/p2/c1_c2_comparison_matrix_sample_v4",
+      "docs/handoffs/returns/P2_C2W_C1_C2_COMPARISON_MATRIX_SAMPLE_RETURN_v4.md"
+    ],
+    "protected_paths": [
+      "AGENTS.md", "CLAUDE.md", ".gitattributes", "configs", "scripts", "src", "tests",
+      "docs/research", "docs/evidence",
+      "docs/handoffs/P2_W2C_C1_C2_COMPARISON_MATRIX_SAMPLE_v4.md",
+      "docs/handoffs/P2_W2C_C1_C2_COMPARISON_MATRIX_SAMPLE_v4_CLOSURE_v1.md",
+      "artifacts/manifests/handoffs/P2-W2C-C1-C2-COMPARISON-MATRIX-SAMPLE-v1",
+      "artifacts/manifests/handoffs/P2-W2C-C1-C2-COMPARISON-MATRIX-SAMPLE-v2",
+      "artifacts/manifests/handoffs/P2-W2C-C1-C2-COMPARISON-MATRIX-SAMPLE-v4",
+      "artifacts/manifests/handoffs/P2-W2C-REPRESENTATIVE-COMPARISON-MATRIX-SAMPLE-v1",
+      "artifacts/manifests/handoffs/P2-W2C-REPRESENTATIVE-COMPARISON-MATRIX-SAMPLE-v2",
+      "artifacts/manifests/handoffs/P2-W2C-REPRESENTATIVE-COMPARISON-MATRIX-SAMPLE-v3",
+      "artifacts/manifests/p2/representative_comparison_matrix_sample_v1",
+      "artifacts/manifests/p2/representative_comparison_matrix_sample_v2",
+      "artifacts/manifests/p2/representative_comparison_matrix_sample_v3",
+      "phases"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "artifact_verified",
+    "verifier_role": "experiment_host",
+    "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "commands": [
+      "inherit unchanged nine-record v4 output attestation from 100-accepted",
+      "verify finalized case_count=3 panel_count=60 and methods C1/C2",
+      "verify 60 panel hashes, 60 projection receipt hashes and positive visible counts",
+      "verify 66 metric bindings and exact six-row source transcription",
+      "verify three 2400x3600 visual reviews and C1 metric/overlay role separation",
+      "verify zero prohibited method recomputation or artifact access"
+    ],
+    "tests": [
+      {"name": "accepted artifact attestation unchanged", "passed": 9, "failed": 0},
+      {"name": "finalized case and panel contract", "passed": 2, "failed": 0},
+      {"name": "panel artifact hashes", "passed": 60, "failed": 0},
+      {"name": "projection receipt hashes", "passed": 60, "failed": 0},
+      {"name": "required panel visible reference", "passed": 60, "failed": 0},
+      {"name": "metric bindings", "passed": 66, "failed": 0},
+      {"name": "exact quantitative source rows", "passed": 6, "failed": 0},
+      {"name": "case-sheet original-resolution visual review", "passed": 3, "failed": 0},
+      {"name": "C1 metric and independent-overlay role separation", "passed": 3, "failed": 0},
+      {"name": "scientific verdict null", "passed": 1, "failed": 0}
+    ]
+  },
+  "artifacts": {
+    "required_for_task": true,
+    "availability": {"work_host": "manifest_only", "experiment_host": "verified_local"},
+    "records": [
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_comparison_matrix_sample_v4/P2-C1-C2-COMPARISON-MATRIX-SAMPLE-v4/control/finalized_v1.json", "bytes": 778, "sha256": "d0280fbb88f2932dd78ffee8654c1aefa426425443048805eb0d4c71490a8740", "verification_method": "sha256_rehash", "verified_by": "experiment_host", "verified_at": "2026-08-03T20:05:33+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_comparison_matrix_sample_v4/P2-C1-C2-COMPARISON-MATRIX-SAMPLE-v4/manifests/panel_manifest_v1.jsonl", "bytes": 251272, "sha256": "fc1ae8477dc21a303157c712acbee5a1a6a5f8216ec563e83687d502e30b3180", "verification_method": "sha256_rehash", "verified_by": "experiment_host", "verified_at": "2026-08-03T20:05:33+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_comparison_matrix_sample_v4/P2-C1-C2-COMPARISON-MATRIX-SAMPLE-v4/manifests/metric_manifest_v1.jsonl", "bytes": 110319, "sha256": "b20fd67bab7ba21390ffa0c6804c1480e80580c96e547943bc6c5762aef4f9bb", "verification_method": "sha256_rehash", "verified_by": "experiment_host", "verified_at": "2026-08-03T20:05:33+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_comparison_matrix_sample_v4/P2-C1-C2-COMPARISON-MATRIX-SAMPLE-v4/metrics/sample_building_method_metrics_v1.csv", "bytes": 7549, "sha256": "8274ce567ba6a7f3b65349e136d7e623be29e56d57123b1be6b4e403af52864d", "verification_method": "sha256_rehash", "verified_by": "experiment_host", "verified_at": "2026-08-03T20:05:33+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_comparison_matrix_sample_v4/P2-C1-C2-COMPARISON-MATRIX-SAMPLE-v4/metrics/sample_quantitative_summary_v1.csv", "bytes": 1968, "sha256": "ff325f8d4802bac3eb3fbfb0ba9306673ba1d58ba2f38d77e88423f9b8d808d4", "verification_method": "sha256_rehash", "verified_by": "experiment_host", "verified_at": "2026-08-03T20:05:33+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_comparison_matrix_sample_v4/P2-C1-C2-COMPARISON-MATRIX-SAMPLE-v4/qualitative/index.html", "bytes": 1572, "sha256": "d9cac8c618f7f2d72c66c5fd3b46662ac11d6e213f0b91b6401698c790166b34", "verification_method": "sha256_rehash", "verified_by": "experiment_host", "verified_at": "2026-08-03T20:05:33+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_comparison_matrix_sample_v4/P2-C1-C2-COMPARISON-MATRIX-SAMPLE-v4/qualitative/DEBY_LOD2_4907177/case.html", "bytes": 5036, "sha256": "ee2933ce450486ddf6b6dc05ea2ff0c4a6f1b493d14e924d8c1a1ac335b96fc3", "verification_method": "sha256_rehash", "verified_by": "experiment_host", "verified_at": "2026-08-03T20:05:33+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_comparison_matrix_sample_v4/P2-C1-C2-COMPARISON-MATRIX-SAMPLE-v4/qualitative/DEBY_LOD2_4906975/case.html", "bytes": 5028, "sha256": "f9a36b3c0edcc0a3229d19030d17dba9a41e1ab10df4af8f7b8e7ab130ea0c1e", "verification_method": "sha256_rehash", "verified_by": "experiment_host", "verified_at": "2026-08-03T20:05:33+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_comparison_matrix_sample_v4/P2-C1-C2-COMPARISON-MATRIX-SAMPLE-v4/qualitative/DEBY_LOD2_108580336/case.html", "bytes": 5048, "sha256": "a5bf3b25572d8599cc615fb0914af95319b5d972321cf377400effb762d49972", "verification_method": "sha256_rehash", "verified_by": "experiment_host", "verified_at": "2026-08-03T20:05:33+09:00"}
+    ]
+  },
+  "scientific": {"technical_state": "complete", "scientific_verdict": null, "promotion_status": "not_requested"},
+  "receiver_ack": {"role": "experiment_host", "accepted_at": "2026-08-03T20:06:44+09:00", "status": "verified", "issue": null}
+}
