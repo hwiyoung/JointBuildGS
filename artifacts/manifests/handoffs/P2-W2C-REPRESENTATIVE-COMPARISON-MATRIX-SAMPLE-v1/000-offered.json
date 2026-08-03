@@ -1,0 +1,75 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P2-W2C-REPRESENTATIVE-COMPARISON-MATRIX-SAMPLE-v1",
+  "task_id": "P2-REPRESENTATIVE-COMPARISON-MATRIX-SAMPLE-v1",
+  "created_at": "2026-08-03T18:00:08+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "offered",
+  "previous_receipt": null,
+  "transport": {
+    "mode": "serialized_main",
+    "branch": "main",
+    "target_branch": "main",
+    "exclusive_writer_ack": true
+  },
+  "commits": {
+    "base_main": "d3ea6945ac86d921cd2553bf02ca0d464d8d094c",
+    "offered_head": "SELF",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P2-W2C-REPRESENTATIVE-COMPARISON-MATRIX-SAMPLE-v1",
+      "artifacts/manifests/p2/representative_comparison_matrix_sample_v1",
+      "docs/experiments/p2/representative_comparison_matrix_sample_v1",
+      "docs/handoffs/returns/P2_C2W_REPRESENTATIVE_COMPARISON_MATRIX_SAMPLE_RETURN_v1.md"
+    ],
+    "protected_paths": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      ".gitattributes",
+      "configs",
+      "scripts",
+      "src",
+      "tests",
+      "docs/research",
+      "docs/evidence",
+      "docs/handoffs/P2_W2C_REPRESENTATIVE_COMPARISON_MATRIX_SAMPLE_v1.md",
+      "docs/handoffs/returns/P2_C2W_UTARGET199_CONTRACT_RESULTS_RECOVERY_R3_RETURN_v1.md",
+      "artifacts/manifests/handoffs/P2-W2C-UTARGET199-CONTRACT-RESULTS-RECOVERY-R3-v1",
+      "artifacts/manifests/gate_s0",
+      "phases"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "git_only",
+    "verifier_role": "work_host",
+    "docker_image_digest": "sha256:e50ba5c7fd493ed524212c34e5e84f48bd94e66a70e0ecb6d00269f75309f986",
+    "commands": [
+      "Docker representative sample and research-contract tests",
+      "independent scientific-scope review",
+      "independent artifact-binding and reproducibility review"
+    ],
+    "tests": [
+      {"name": "focused sample and repository contract tests", "passed": 23, "failed": 0},
+      {"name": "scientific scope and leakage review", "passed": 1, "failed": 0},
+      {"name": "artifact binding and reproducibility review", "passed": 1, "failed": 0}
+    ]
+  },
+  "artifacts": {
+    "required_for_task": true,
+    "availability": {"work_host": "manifest_only", "experiment_host": "verified_local"},
+    "records": []
+  },
+  "scientific": {
+    "technical_state": "pending",
+    "scientific_verdict": null,
+    "promotion_status": "not_requested"
+  },
+  "receiver_ack": null
+}
