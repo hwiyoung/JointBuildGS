@@ -3,6 +3,8 @@
 - task_id: `P2-C1-C2-COMPARISON-MATRIX-SAMPLE-v6`
 - handoff_id: `P2-W2C-C1-C2-COMPARISON-MATRIX-SAMPLE-v6`
 - source: exact sealed C1/C2 census and the v5 visual-correction renderer
+- exact renderer source commit: `da0e106bd2d4b087f028febdd5ae508c01f9e245`
+- activation basis: direct human instruction to continue without a separate Work Host visit
 - scientific_verdict: `null`
 
 v5 produced all expected visual files but stopped before finalization because the measured
