@@ -17,8 +17,8 @@ R3_REL="phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1
 FINAL_PT="${ARTIFACT_ROOT}/${R4_REL}/c3/train/seed0/ckpt/final.pt"
 SCORE_CELLS="${ARTIFACT_ROOT}/${R3_REL}/freeze/development_score_cells_v1.jsonl"
 ROOFER_IMAGE="3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2"
-ACCEPTED_RECEIPT_REL="artifacts/manifests/handoffs/P2-W2C-C3-DEVELOPMENT-STAGE3-v1/100-accepted.json"
-PACKET_REL="docs/handoffs/P2_W2C_C3_DEVELOPMENT_STAGE3_v1.md"
+ACCEPTED_RECEIPT_REL="artifacts/manifests/handoffs/P2-W2C-C3-DEVELOPMENT-STAGE3-RECOVERY-v1/100-accepted.json"
+PACKET_REL="docs/handoffs/P2_W2C_C3_DEVELOPMENT_STAGE3_RECOVERY_v1.md"
 PACKET_AUTHORITY_PARSER="${REPO}/scripts/p2_baselines/c1_c2_feasibility_pilot_v1/parse_execution_authority.awk"
 
 timeout 300 git -C "${REPO}" fetch origin main
@@ -43,7 +43,7 @@ docker run --rm --network none --entrypoint /opt/conda/bin/python \
 docker run --rm --network none --entrypoint /opt/conda/bin/python \
   -e EXPECTED_PROJECT_IMAGE_ID="${PROJECT_IMAGE_ID}" -e EXPECTED_SOURCE_COMMIT="${SOURCE_COMMIT}" \
   -v "${REPO}:/workspace/JointBuildGS:ro" -w /workspace/JointBuildGS "${PROJECT_IMAGE_ID}" \
-  -c 'import json,os,re; r=json.load(open("artifacts/manifests/handoffs/P2-W2C-C3-DEVELOPMENT-STAGE3-v1/100-accepted.json")); text=open("docs/handoffs/P2_W2C_C3_DEVELOPMENT_STAGE3_v1.md",encoding="utf-8").read(); assert r["handoff_id"]=="P2-W2C-C3-DEVELOPMENT-STAGE3-v1" and r["task_id"]=="P2-C3-DEVELOPMENT-STAGE3-v1"; assert r["state"]=="accepted" and r["receiver_ack"]["status"]=="accepted"; assert r["verification"]["docker_image_digest"]==os.environ["EXPECTED_PROJECT_IMAGE_ID"]; assert re.search(r"source_commit: `"+os.environ["EXPECTED_SOURCE_COMMIT"]+r"`",text)'
+  -c 'import json,os,re; r=json.load(open("artifacts/manifests/handoffs/P2-W2C-C3-DEVELOPMENT-STAGE3-RECOVERY-v1/100-accepted.json")); text=open("docs/handoffs/P2_W2C_C3_DEVELOPMENT_STAGE3_RECOVERY_v1.md",encoding="utf-8").read(); assert r["handoff_id"]=="P2-W2C-C3-DEVELOPMENT-STAGE3-RECOVERY-v1" and r["task_id"]=="P2-C3-DEVELOPMENT-STAGE3-v1"; assert r["state"]=="accepted" and r["receiver_ack"]["status"]=="accepted"; assert r["verification"]["docker_image_digest"]==os.environ["EXPECTED_PROJECT_IMAGE_ID"]; assert re.search(r"source_commit: `"+os.environ["EXPECTED_SOURCE_COMMIT"]+r"`",text)'
 for path in "${FINAL_PT}" "${SCORE_CELLS}"; do
   if [[ ! -f "${path}" || -L "${path}" ]]; then
     echo "exact input missing/non-regular: ${path}" >&2
