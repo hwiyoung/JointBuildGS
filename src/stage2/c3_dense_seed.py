@@ -7,9 +7,11 @@ sort runs are private scratch data.  Only the finest candidate satisfying the
 dense-point cap is published, once, as a local-coordinate XYZ PLY.
 
 The historical ``seed_prep_dense`` pipeline used PDAL's
-``voxelcenternearestneighbor`` filter.  This implementation preserves that
-representative rule on a fixed EPSG:25832 origin and makes previously implicit
-ties deterministic: world XYZ lexicographic order, then source row.
+``voxelcenternearestneighbor`` filter.  The frozen OpenMVS source is already in
+GS-local coordinates, so this implementation first adds the exact local-to-world
+translation, preserves the representative rule on a fixed EPSG:25832 origin,
+and makes previously implicit ties deterministic: world XYZ lexicographic order,
+then source row.
 """
 
 from __future__ import annotations
@@ -40,7 +42,7 @@ LOCAL_Z_RANGE = (-65.0, 30.0)
 VOXEL_ORIGIN_XYZ = (0.0, 0.0, 0.0)
 VOXEL_SPACINGS_M = (0.10, 0.20, 0.40)
 MAX_DENSE_SEED_POINTS = 3_000_000
-UTARGET199_NEUTRAL_VOXEL_SPACINGS_M = (0.50, 1.00, 2.00, 4.00, 8.00, 16.00)
+UTARGET199_NEUTRAL_VOXEL_SPACINGS_M = (0.50, 1.00, 2.00, 4.00)
 UTARGET199_NEUTRAL_MAX_DENSE_SEED_POINTS = 220_000
 UTARGET199_NEUTRAL_CONTRACT = "UTARGET199_NEUTRAL_UNCLASSIFIED_DENSE_V1"
 REPRESENTATIVE_RULE = "VOXEL_CENTER_NEAREST_WORLD_XYZ_LEXICOGRAPHIC_THEN_SOURCE_ROW"
@@ -358,15 +360,18 @@ def _read_source_once_to_runs(
             digest.update(raw)
             total_bytes += len(raw)
             vertices = np.frombuffer(raw, dtype=header.dtype, count=count)
-            world_xyz = np.column_stack(
+            source_local_xyz = np.column_stack(
                 (
                     vertices[header.x_name].astype(np.float64, copy=False),
                     vertices[header.y_name].astype(np.float64, copy=False),
                     vertices[header.z_name].astype(np.float64, copy=False),
                 )
             )
-            finite = np.all(np.isfinite(world_xyz), axis=1)
+            finite = np.all(np.isfinite(source_local_xyz), axis=1)
             finite_points += int(np.count_nonzero(finite))
+            world_xyz = source_local_xyz + np.asarray(
+                config.local_offset_xyz, dtype=np.float64
+            )
             keep = (
                 finite
                 & (world_xyz[:, 0] >= min_x)
@@ -752,6 +757,11 @@ def _produce_dense_seed(
                 "numpy": np.__version__,
             },
             "input": input_receipt,
+            "input_coordinate_frame": {
+                "frame": "GS_LOCAL",
+                "world_crs": "EPSG:25832",
+                "local_to_world_translation": list(config.local_offset_xyz),
+            },
             "crop_and_transform": {
                 "crs": "EPSG:25832",
                 "aoi_xy_inclusive": list(config.aoi_xy),
@@ -760,6 +770,7 @@ def _produce_dense_seed(
                 "local_z_inclusive": list(config.local_z_range),
                 "operation_order": [
                     "FILTER_NONFINITE",
+                    "TRANSFORM_SOURCE_GS_LOCAL_TO_WORLD_EPSG25832",
                     "CROP_FROZEN_AOI_XY_AND_WORLD_Z_INCLUSIVE",
                     "VOXELIZE_IN_WORLD_EPSG25832",
                     "TRANSFORM_SELECTED_REPRESENTATIVES_TO_LOCAL_XYZ",

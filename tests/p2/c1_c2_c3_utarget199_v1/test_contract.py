@@ -20,11 +20,11 @@ class UTarget199C123ContractTests(unittest.TestCase):
         self.assertIsNone(contract["evaluation"]["scientific_verdict"])
         self.assertEqual(
             contract["common_image_seed"]["candidate_voxel_m"],
-            [0.5, 1.0, 2.0, 4.0, 8.0, 16.0],
+            [0.5, 1.0, 2.0, 4.0],
         )
         self.assertEqual(
             contract["common_image_seed"]["recovery_namespace"],
-            "P2-C1-C2-C3-UTARGET199-SEED-RECOVERY-v1",
+            "P2-C1-C2-C3-UTARGET199-FRAME-RECOVERY-v1",
         )
         self.assertEqual(
             contract["paired_training"]["sequential_gpu"],

@@ -7,7 +7,7 @@ exact_view_manifest_sha256: b4af779ecfae859de9772ce50cb24326b20c3f86614f6a895745
 exact_view_count: 937
 downscale: 1.0
 
-init_pointcloud: /artifacts/JointBuildGS/phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-SEED-RECOVERY-v1/c3/common/neutral_dense_seed.ply
+init_pointcloud: /artifacts/JointBuildGS/phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-FRAME-RECOVERY-v1/c3/common/neutral_dense_seed.ply
 init_pointcloud_mode: concat
 seed_protect: true
 seed_protect_until_iter: 5000
@@ -79,5 +79,5 @@ max_gaussians: 800000
 max_iter: 30000
 eval_every: 5000
 ckpt_every: 5000
-out_dir: /artifacts/JointBuildGS/phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-SEED-RECOVERY-v1/c3/c3_1_sem/seed0
+out_dir: /artifacts/JointBuildGS/phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-FRAME-RECOVERY-v1/c3/c3_1_sem/seed0
 scientific_verdict: null

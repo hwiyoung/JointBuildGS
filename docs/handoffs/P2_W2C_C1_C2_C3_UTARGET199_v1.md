@@ -25,9 +25,10 @@ Both conditions start from byte-identical `all SfM sparse + sampled common-MVS d
 
 - retain all exact 371,808 SfM sparse points;
 - read the exact 43,942,554-point common dense MVS once;
-- crop only the frozen common AOI/Z range;
+- interpret the frozen OpenMVS PLY as GS-local, add `[690953,5336071,604]`, and crop
+  only the frozen EPSG:25832 AOI/Z range;
 - use deterministic EPSG:25832 3D voxel-center-nearest representatives;
-- test fixed nested voxel sizes `0.5/1.0/2.0/4.0/8.0/16.0 m` and publish the finest candidate
+- test fixed nested voxel sizes `0.5/1.0/2.0/4.0 m` and publish the finest candidate
   with at most 220,000 dense representatives;
 - perform no classification, footprint, building-ID, semantic, UAS, ALS, LoD1 or LoD2
   filtering;
@@ -58,12 +59,15 @@ zero. C3-2 alone activates the existing image-derived MVS depth L1 with the froz
 - produce exact 5k/10k/15k/20k/25k/final checkpoints and logs;
 - report a single-paired-seed development boundary; do not claim seed variance.
 
-The first production preflight at namespace `P2-C1-C2-C3-UTARGET199-v1` stopped
-before training because every candidate through 4.0 m remained above the 220,000-point
-cap. That namespace is preserved without reuse. The recovery extends the same nested,
-classification-free grid with deterministic 8.0 m and 16.0 m candidates and writes only
-to `P2-C1-C2-C3-UTARGET199-SEED-RECOVERY-v1`; it does not change the source, AOI,
-representative rule, cap, sparse seed, losses, or training arms.
+The first two production preflights stopped before training and remain preserved as
+`P2-C1-C2-C3-UTARGET199-v1` and `P2-C1-C2-C3-UTARGET199-SEED-RECOVERY-v1`. Direct
+schema inspection then proved that the exact OpenMVS PLY stores GS-local XYZ, while the
+producer had treated those values as world coordinates and therefore cropped zero points.
+The frame recovery adds the frozen local-to-world translation before AOI/Z filtering and
+world-origin voxelization, returns the representative XYZ to GS-local for training, restores
+the original 0.5/1.0/2.0/4.0 m candidates, and writes only to
+`P2-C1-C2-C3-UTARGET199-FRAME-RECOVERY-v1`. It does not change the source, AOI, cap,
+sparse seed, losses, or training arms.
 
 ## C1/C2 and evaluation boundary
 
