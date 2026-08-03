@@ -1,0 +1,43 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P2-W2C-C1-BASELINE-AUDIT-v1",
+  "task_id": "P2-C1-BASELINE-AUDIT-v1",
+  "created_at": "2026-08-03T18:20:00+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "closed",
+  "previous_receipt": {"path": "artifacts/manifests/handoffs/P2-W2C-C1-BASELINE-AUDIT-v1/200-verified.json", "sha256": "2f947209cd67e4f6d6cceb672d9363dd5a89056b9752967652412e4afd2237a7"},
+  "transport": {"mode": "serialized_main", "branch": "main", "target_branch": "main", "exclusive_writer_ack": true},
+  "commits": {"base_main": "185495b59f4c195468830d4671774ab5a7988ea5", "offered_head": "b4a40b8d6f2d481e8dc26e4564f67222bf79a620", "receipt_head": "SELF"},
+  "scope": {
+    "allowed_paths": ["artifacts/manifests/handoffs/P2-W2C-C1-BASELINE-AUDIT-v1", "artifacts/manifests/p2/c1_baseline_audit_v1", "docs/experiments/p2/c1_baseline_audit_v1", "docs/handoffs/returns/P2_C2W_C1_BASELINE_AUDIT_RETURN_v1.md"],
+    "protected_paths": ["AGENTS.md", "CLAUDE.md", ".gitattributes", "configs", "scripts", "src", "tests", "docs/research", "docs/evidence", "docs/handoffs/P2_W2C_C1_BASELINE_AUDIT_v1.md", "artifacts/manifests/gate_s0", "artifacts/manifests/p2/c3_development_evaluation_candidate_recovery_r2_v1", "docs/experiments/p2/c3_development_evaluation_candidate_recovery_r2_v1", "phases"],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "artifact_verified",
+    "verifier_role": "experiment_host",
+    "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "commands": ["validate exact 200 receipt without reopening result payload", "confirm direct-child closure and return writer ownership to Work Host"],
+    "tests": [
+      {"name": "C1 unique output G2", "passed": 1, "failed": 0},
+      {"name": "C1 development diagnostic rows", "passed": 51, "failed": 0},
+      {"name": "reconstruction Roofer reruns", "passed": 0, "failed": 0},
+      {"name": "validation held-out C2 C3 C4 C5 accesses", "passed": 0, "failed": 0},
+      {"name": "R1 Images OPF hash passes", "passed": 0, "failed": 0}
+    ]
+  },
+  "artifacts": {
+    "required_for_task": true,
+    "availability": {"work_host": "manifest_only", "experiment_host": "verified_local"},
+    "records": [
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/operations/C1_L_upper/C1_L_upper_COMP_84a837b5d7c79565f0e8/work/out/690792_5335864.city.jsonl", "bytes": 3627, "sha256": "fb9c21208dc319a97ca9bddca26806ed15d60733408410211319f42ded1721a9", "verification_method": "sha256_rehash", "verified_by": "experiment_host", "verified_at": "2026-08-03T18:05:00+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/freeze/development_score_cells_v1.jsonl", "bytes": 10868613, "sha256": "de7c02e2a286fa05c34301aae9de625637cf6fb8c07b5f2969141fd20b0d5a59", "verification_method": "sha256_rehash", "verified_by": "experiment_host", "verified_at": "2026-08-03T18:05:00+09:00"}
+    ]
+  },
+  "scientific": {"technical_state": "complete", "scientific_verdict": null, "promotion_status": "not_requested"},
+  "receiver_ack": {"role": "experiment_host", "accepted_at": "2026-08-03T18:20:00+09:00", "status": "closed", "issue": "Writer returned to Work Host. C1 cannot yet serve as an independent per-building upper baseline."}
+}
