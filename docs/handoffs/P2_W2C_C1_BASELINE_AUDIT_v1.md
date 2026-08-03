@@ -5,11 +5,12 @@
 - handoff_id: `P2-W2C-C1-BASELINE-AUDIT-v1`
 - task_id: `P2-C1-BASELINE-AUDIT-v1`
 - direction: `Work Host -> Experiment Host`
-- status: `DRAFT`
+- status: `APPROVED_FOR_EXECUTION`
 - source_commit: `ae8288b2206e40949050ae7967c411c7b034449d`
 - target_branch: `main`
 - research canon: `docs/research/00_RESEARCH_CHARTER.md` through `06_DECISION_LOG.md`
 - result contract: `docs/research/04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md`
+- user_approval: `APPROVED_IN_SESSION_CONTINUE_WITHOUT_STOPPING`
 - scientific_verdict: `null`
 
 ## 왜 하는가
