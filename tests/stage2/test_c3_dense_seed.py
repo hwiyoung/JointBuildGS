@@ -76,7 +76,10 @@ def _config(
 
 class C3DenseSeedTests(unittest.TestCase):
     def test_utarget199_neutral_contract_is_unclassified_and_memory_bounded(self):
-        self.assertEqual(UTARGET199_NEUTRAL_VOXEL_SPACINGS_M, (0.5, 1.0, 2.0, 4.0))
+        self.assertEqual(
+            UTARGET199_NEUTRAL_VOXEL_SPACINGS_M,
+            (0.5, 1.0, 2.0, 4.0, 8.0, 16.0),
+        )
         self.assertEqual(UTARGET199_NEUTRAL_MAX_DENSE_SEED_POINTS, 220_000)
         self.assertIn("NEUTRAL", UTARGET199_NEUTRAL_CONTRACT)
 

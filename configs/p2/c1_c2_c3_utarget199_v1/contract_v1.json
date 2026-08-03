@@ -11,13 +11,15 @@
     "dense_source_points": 43942554,
     "dense_source_bytes": 659138498,
     "dense_source_path": "phase-payloads/p0-audit/data/work/mvs/openmvs/dim_dense.ply",
-    "candidate_voxel_m": [0.5, 1.0, 2.0, 4.0],
+    "candidate_voxel_m": [0.5, 1.0, 2.0, 4.0, 8.0, 16.0],
     "dense_point_cap": 220000,
     "maximum_initial_gaussians": 591808,
     "classification_filtering": false,
     "footprint_filtering": false,
     "lod1_lod2_uas_als_access": false,
-    "reuse_for_future_c4_c5": true
+    "reuse_for_future_c4_c5": true,
+    "recovery_namespace": "P2-C1-C2-C3-UTARGET199-SEED-RECOVERY-v1",
+    "preserved_failed_namespace": "P2-C1-C2-C3-UTARGET199-v1"
   },
   "paired_training": {
     "seed": 0,
