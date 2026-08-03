@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import unittest
+from pathlib import Path
 
 from scripts.p2.utarget199_contract_results_v1.contract import (
     _g4_candidate,
@@ -10,6 +11,14 @@ from scripts.p2.utarget199_contract_results_v1.contract import (
 
 
 class ContractTest(unittest.TestCase):
+    def test_host_wrapper_validates_recovery_receipt_with_artifact_root(self) -> None:
+        repo_root = Path(__file__).resolve().parents[3]
+        wrapper = (repo_root / "scripts/p2/utarget199_contract_results_v1/run_contract_host.sh").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("P2-W2C-UTARGET199-CONTRACT-RESULTS-RECOVERY-R1-v1/100-accepted.json", wrapper)
+        self.assertIn("--artifact-root /artifacts/JointBuildGS", wrapper)
+
     def test_canonical_config_is_exact_199x3(self) -> None:
         result = validate_config()
         self.assertEqual(result["buildings"], 199)
