@@ -22,6 +22,8 @@ CONFIG_V3 = REPO / "configs/p2/representative_comparison_matrix_sample_v3/render
 PACKET_V3 = REPO / "docs/handoffs/P2_W2C_REPRESENTATIVE_COMPARISON_MATRIX_SAMPLE_v3.md"
 CONFIG_C1_C2 = REPO / "configs/p2/c1_c2_comparison_matrix_sample_v1/render_v1.json"
 PACKET_C1_C2 = REPO / "docs/handoffs/P2_W2C_C1_C2_COMPARISON_MATRIX_SAMPLE_v1.md"
+CONFIG_C1_C2_R2 = REPO / "configs/p2/c1_c2_comparison_matrix_sample_v2/render_v2.json"
+PACKET_C1_C2_R2 = REPO / "docs/handoffs/P2_W2C_C1_C2_COMPARISON_MATRIX_SAMPLE_v2.md"
 
 
 class RepresentativeComparisonMatrixSampleTest(unittest.TestCase):
@@ -128,6 +130,14 @@ class RepresentativeComparisonMatrixSampleTest(unittest.TestCase):
         finally:
             plt.close(figure)
 
+    def test_reference_centered_section_keeps_roof_reference_visible(self) -> None:
+        bbox = BBox(0.0, 0.0, 10.0, 10.0)
+        points = np.asarray([[2.0, 9.0, 5.0], [8.0, 9.2, 6.0]])
+        default_along, _, _ = sample.section_data(points, bbox, 0.75)
+        anchored_along, _, _ = sample.section_data(points, bbox, 0.75, (5.0, 9.1))
+        self.assertEqual(len(default_along), 0)
+        self.assertEqual(len(anchored_along), 2)
+
     def test_missing_method_unit_fails_before_output_creation(self) -> None:
         rows = {
             "B1": {
@@ -196,6 +206,14 @@ class RepresentativeComparisonMatrixSampleTest(unittest.TestCase):
         packet = PACKET_C1_C2.read_text(encoding="utf-8")
         self.assertIn("C3–C5 source를 읽거나 표시하지 않는다", packet)
         self.assertIn("60 PNG", packet)
+
+    def test_c1_c2_recovery_uses_new_namespace_and_reference_center(self) -> None:
+        config = json.loads(CONFIG_C1_C2_R2.read_text(encoding="utf-8"))
+        self.assertEqual(config["methods"], ["C1_L_upper", "C2_MVS"])
+        self.assertTrue(config["output_task_relative_root"].endswith("SAMPLE-v2"))
+        packet = PACKET_C1_C2_R2.read_text(encoding="utf-8")
+        self.assertIn("reference XY median", packet)
+        self.assertIn("v1 partial을 삭제·수정·재사용하지 않는다", packet)
 
 
 if __name__ == "__main__":

@@ -455,11 +455,17 @@ def screen_text(ax: Any, x: float, y: float, value: str, **kwargs: Any) -> Any:
     return ax.text(x, y, value, transform=ax.transAxes, **kwargs)
 
 
-def section_data(points: np.ndarray, bbox: BBox, half_band: float) -> tuple[np.ndarray, np.ndarray, str]:
+def section_data(
+    points: np.ndarray,
+    bbox: BBox,
+    half_band: float,
+    center_xy: Sequence[float] | None = None,
+) -> tuple[np.ndarray, np.ndarray, str]:
+    center = bbox.center if center_xy is None else center_xy
     if bbox.width >= bbox.height:
-        keep = np.abs(points[:, 1] - bbox.center[1]) <= half_band
+        keep = np.abs(points[:, 1] - float(center[1])) <= half_band
         return points[keep, 0], points[keep, 2], "Easting"
-    keep = np.abs(points[:, 0] - bbox.center[0]) <= half_band
+    keep = np.abs(points[:, 0] - float(center[0])) <= half_band
     return points[keep, 1], points[keep, 2], "Northing"
 
 
@@ -496,18 +502,19 @@ def render_spatial_panel(
     elif view == "PRINCIPAL_SECTION":
         ax = figure.add_subplot(111)
         half_band = max(min(bbox.width, bbox.height) * float(view_config["section_band_ratio"]), float(view_config["section_minimum_half_band_m"]))
+        section_center = np.median(ref.xyz[:, :2], axis=0) if len(ref.xyz) else np.asarray(bbox.center)
         axis_label = "Easting" if bbox.width >= bbox.height else "Northing"
         if len(points.xyz):
-            along, height, axis_label = section_data(points.xyz, bbox, half_band)
+            along, height, axis_label = section_data(points.xyz, bbox, half_band, section_center)
             ax.scatter(along, height, s=2, c="#1f77b4", linewidths=0)
         if len(ref.xyz):
-            along, height, _ = section_data(ref.xyz, bbox, half_band)
+            along, height, _ = section_data(ref.xyz, bbox, half_band, section_center)
             ax.scatter(along, height, s=12, facecolors="none", edgecolors="#00a65a", linewidths=0.8)
             visible = int(len(along))
         else:
             visible = 0
         for surface in surfaces:
-            along, height, _ = section_data(surface.xyz, bbox, half_band)
+            along, height, _ = section_data(surface.xyz, bbox, half_band, section_center)
             if len(along) >= 2:
                 order = np.argsort(along)
                 ax.plot(along[order], height[order], color="#d1495b", linewidth=0.8)
@@ -518,7 +525,7 @@ def render_spatial_panel(
         else:
             ax.set_xlim(viewport.min_y, viewport.max_y)
         ax.set_ylim(limits_z)
-        ax.set_title(f"fixed section ±{half_band:.2f}m", fontsize=8)
+        ax.set_title(f"reference-centered fixed section ±{half_band:.2f}m", fontsize=8)
     else:
         ax = figure.add_subplot(111)
         draw_points(ax, points, view)
