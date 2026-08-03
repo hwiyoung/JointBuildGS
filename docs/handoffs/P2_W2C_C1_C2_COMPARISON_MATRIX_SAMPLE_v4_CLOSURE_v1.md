@@ -5,12 +5,14 @@
 - handoff_id: `P2-W2C-C1-C2-COMPARISON-MATRIX-SAMPLE-v4-CLOSURE-v1`
 - task_id: `P2-C1-C2-COMPARISON-MATRIX-SAMPLE-v4-CLOSURE-v1`
 - direction: `Work Host -> Experiment Host`
-- status: `DRAFT_PENDING_TEST_AND_ACTIVATION`
-- source_commit: `PENDING`
+- status: `APPROVED_FOR_EXECUTION`
+- source_commit: `af01f8989f361708b41e0da6f038ee3b345300c3`
 - target_branch: `main`
 - closes artifact task: `P2-C1-C2-COMPARISON-MATRIX-SAMPLE-v4`
 - invalid receipt preserved: `P2-W2C-C1-C2-COMPARISON-MATRIX-SAMPLE-v4/200-verified.json`
 - user_approval: `GRANTED — finish the completed v4 result through verified and closed receipts`
+- implementation_review: `PASS — successor artifact attestation is fixed from 100-accepted through 300-closed`
+- experiment_host_preflight: `PASS — finalized v4 tree unchanged; 9 key records live-hash match; 60 panel/receipt and 66 metric bindings remain verified`
 - scientific_verdict: `null`
 
 ## Goal
