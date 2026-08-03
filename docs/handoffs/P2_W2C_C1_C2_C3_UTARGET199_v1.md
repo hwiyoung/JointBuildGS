@@ -69,6 +69,15 @@ the original 0.5/1.0/2.0/4.0 m candidates, and writes only to
 `P2-C1-C2-C3-UTARGET199-FRAME-RECOVERY-v1`. It does not change the source, AOI, cap,
 sparse seed, losses, or training arms.
 
+The frame recovery then sealed a valid 103,546-point neutral dense seed (475,354 total
+initial points with all SfM sparse) before C3-1 stopped at iteration 0: the inherited
+semantic payload's `output/` parent is mode 0700 and cannot be traversed by the host UID.
+The training recovery reuses that exact sealed seed without rereading or resampling dense
+MVS, exposes only the 937-mask child directory through a read-only direct bind at
+`/inputs/semantic_masks`, and writes training outputs to the fresh namespace
+`P2-C1-C2-C3-UTARGET199-TRAINING-RECOVERY-v1`. It does not chmod or rewrite the inherited
+semantic payload.
+
 ## C1/C2 and evaluation boundary
 
 - every one of the 199 stable IDs remains in the qualitative/index/result surface;

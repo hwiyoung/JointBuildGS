@@ -3,8 +3,11 @@ set -euo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 artifact_root="${JBGS_ARTIFACT_ROOT:-/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts}"
-task_name="P2-C1-C2-C3-UTARGET199-FRAME-RECOVERY-v1"
+task_name="P2-C1-C2-C3-UTARGET199-TRAINING-RECOVERY-v1"
 task_root="${artifact_root}/phase-payloads/p2/c1_c2_c3_utarget199_v1/${task_name}"
+seed_task_name="P2-C1-C2-C3-UTARGET199-FRAME-RECOVERY-v1"
+seed_root="${artifact_root}/phase-payloads/p2/c1_c2_c3_utarget199_v1/${seed_task_name}"
+semantic_host="${artifact_root}/phase-payloads/p2/c1_c2_g2_c3_first_wave_recovery_r4_v1/P2-C1-C2-G2-C3-FIRST-WAVE-RECOVERY-R4-v1/c3/prep/semantic_937_colmap_undistorted_r2/output/masks"
 image="jointbuildgs:dev"
 expected_image="sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774"
 gpu_index=""
@@ -42,24 +45,18 @@ nvidia-smi -q -i "$gpu_index" > "$task_root/control/gpu_before.txt"
 git -C "$repo_root" rev-parse HEAD > "$task_root/control/source_commit.txt"
 printf '%s\n' "index=$gpu_index" "uuid=$gpu_uuid" "free_mib=$free_mib" > "$task_root/control/selected_gpu.txt"
 
-common=(
-  docker run --rm --network none --shm-size 16g
-  --user "$(id -u):$(id -g)"
-  -v "$repo_root:/workspace/JointBuildGS:ro"
-  -v "$artifact_root:/artifacts/JointBuildGS"
-  -w /workspace/JointBuildGS
-  "$image"
-)
+if [[ ! -f "$seed_root/c3/common/neutral_dense_seed.ply" || ! -f "$seed_root/c3/common/neutral_dense_seed.receipt.json" ]]; then
+  echo "sealed frame-recovery dense seed is missing" >&2
+  exit 2
+fi
+docker run --rm --network none \
+  --user "$(id -u):$(id -g)" \
+  -v "$semantic_host:/inputs/semantic_masks:ro" \
+  "$image" python -c \
+  "from pathlib import Path; p=Path('/inputs/semantic_masks'); assert p.is_dir() and len(list(p.iterdir())) == 937"
+printf '%s\n' "$seed_root/c3/common/neutral_dense_seed.ply" > "$task_root/control/reused_dense_seed_path.txt"
 
-"${common[@]}" python scripts/stage2/prepare_c3_dense_seed.py \
-  --utarget199-neutral \
-  --input /artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/openmvs/dim_dense.ply \
-  --output "/artifacts/JointBuildGS/phase-payloads/p2/c1_c2_c3_utarget199_v1/${task_name}/c3/common/neutral_dense_seed.ply" \
-  --receipt "/artifacts/JointBuildGS/phase-payloads/p2/c1_c2_c3_utarget199_v1/${task_name}/c3/common/neutral_dense_seed.receipt.json" \
-  --temp-parent "/artifacts/JointBuildGS/phase-payloads/p2/c1_c2_c3_utarget199_v1/${task_name}/scratch" \
-  > "$task_root/control/neutral_dense_seed.stdout.json"
-
-python - "$task_root/c3/common/neutral_dense_seed.receipt.json" <<'PY'
+python - "$seed_root/c3/common/neutral_dense_seed.receipt.json" <<'PY'
 import json
 import sys
 receipt = json.load(open(sys.argv[1], encoding="utf-8"))
@@ -87,6 +84,7 @@ run_train() {
     -e CUDA_VISIBLE_DEVICES=0 \
     -v "$repo_root:/workspace/JointBuildGS:ro" \
     -v "$artifact_root:/artifacts/JointBuildGS" \
+    -v "$semantic_host:/inputs/semantic_masks:ro" \
     -w /workspace/JointBuildGS \
     "$image" \
     python -m src.stage2.train --config "$config" 2>&1 | tee "$log"

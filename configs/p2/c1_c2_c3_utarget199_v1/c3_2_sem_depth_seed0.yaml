@@ -29,7 +29,7 @@ mono_normal_dir: null
 mono_depth_dir: null
 
 load_semantic: true
-semantic_dir: /artifacts/JointBuildGS/phase-payloads/p2/c1_c2_g2_c3_first_wave_recovery_r4_v1/P2-C1-C2-G2-C3-FIRST-WAVE-RECOVERY-R4-v1/c3/prep/semantic_937_colmap_undistorted_r2/output/masks
+semantic_dir: /inputs/semantic_masks
 w_sem: 0.1
 sem_detach_geometry: false
 lr_sem: 0.0025
@@ -79,5 +79,5 @@ max_gaussians: 800000
 max_iter: 30000
 eval_every: 5000
 ckpt_every: 5000
-out_dir: /artifacts/JointBuildGS/phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-FRAME-RECOVERY-v1/c3/c3_2_sem_depth/seed0
+out_dir: /artifacts/JointBuildGS/phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-TRAINING-RECOVERY-v1/c3/c3_2_sem_depth/seed0
 scientific_verdict: null
