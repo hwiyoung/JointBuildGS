@@ -8,9 +8,9 @@
 - direction: `Work Host -> Experiment Host`
 - status: `DRAFT`
 - packet_version: `v1`
-- source_commit: `48d0f359c56b5fb8e958a5b84a72119649205102`
+- source_commit: `3df6baea11761e5b1f3737efe354baec5227a24b`
 - target_branch: `main`
-- research canon: `C1C5_CANON_v2` through `DEC-P1-011`
+- research canon: `C1C5_CANON_v2` through `DEC-P1-014`
 - result contract: `04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md`
 - created_at: `2026-08-03`
 - user_approval: `GRANTED_FOR_BOUNDED_C3_DEVELOPMENT_EXECUTION`
@@ -50,7 +50,25 @@ R3 score-cell 파생물만 geometry 봉인 뒤 한 번 읽고 해시한다. R1 1
 6. 연결된 고유 component에 대해서만 Roofer를 한 번씩 실행한다. 완료 marker가
    검증되면 재실행하지 않는다.
 7. 51행 `development_technical_results_v1.jsonl`과 `stage_counts_v1.csv`를 만든다.
-   G0/G1만 기술 진단으로 채우고, G2/G3/G4/`PASS_usable`은 `null/PENDING`으로 둔다.
+   고유 component의 G0/G1은 component-level로 집계한다. 한 component를 여러
+   건물이 공유하거나 한 건물이 여러 component와 겹치면 해당 건물의 G0/G1은
+   `null`로 두며 성공 수에 넣지 않는다. G2/G3/G4/`PASS_usable`도
+   `null/PENDING`으로 둔다.
+8. 각 Roofer 작업은 input, `R_derived`, runtime log, output의 bytes/hash와 exit code를
+   묶은 add-once terminal receipt로 닫는다. 검증된 terminal만 재사용하고, 실패 exit도
+   누락하지 않고 다음 작업과 최종 51행 표까지 완료한다.
+
+## 두 호스트 실행 순서
+
+1. 이 DRAFT를 독립 검토한 뒤 별도 activation commit에서만
+   `APPROVED_FOR_EXECUTION`으로 바꾼다.
+2. Work Host가 activation commit을 base로 immutable `000-offered`를 push한다.
+3. Experiment Host는 pull 전에 remote packet·000을 읽고 검증한다.
+4. clean fast-forward-only pull 뒤 `100-accepted`를 push해 writer ownership을
+   인수한다.
+5. 아래 명령은 exact activated packet과 validated 100 receipt를 wrapper가 확인한
+   뒤에만 실행된다.
+6. 결과·Return·200과 direct-child 300을 push한 뒤 writer가 Work Host로 돌아온다.
 
 ## 실행 금지
 
@@ -69,7 +87,7 @@ Experiment Host의 clean accepted checkout에서만 다음을 실행한다.
 bash scripts/p2/c3_development_stage3_v1/run_stage3_host.sh \
   /media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts \
   sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774 \
-  48d0f359c56b5fb8e958a5b84a72119649205102 \
+  3df6baea11761e5b1f3737efe354baec5227a24b \
   P2-C3-DEVELOPMENT-STAGE3-v1
 ```
 
@@ -77,9 +95,11 @@ bash scripts/p2/c3_development_stage3_v1/run_stage3_host.sh \
 
 - external namespace:
   `artifact://JointBuildGS/phase-payloads/p2/c3_development_stage3_v1/P2-C3-DEVELOPMENT-STAGE3-v1/`
-- component multiplicity와 건물별 association
+- 양방향 component multiplicity, 모든 overlap 후보/비율과 건물별 association
 - 고유 component별 exact LAS, `R_derived`, Roofer output/log
-- 개발 51행 기술 결과와 단계별 집계
+- 고유 component G0/G1과 nullable 건물별 G0/G1을 분리한 개발 51행 기술 결과와
+  단계별 집계
+- 각 Roofer 작업의 검증 가능한 terminal receipt
 - 실행 횟수, 중복 방지, 입력 read/hash 횟수
 - 한글 기술 보고서와 Return Packet
 - `scientific_verdict: null`
