@@ -1,0 +1,66 @@
+{
+  "schema": "jointbuildgs.c3_development_stage3_config.v1",
+  "task_id": "P2-C3-DEVELOPMENT-STAGE3-v1",
+  "execution_authority": "REQUIRES_SEPARATELY_ACTIVATED_TWO_HOST_HANDOFF",
+  "condition_id": "C3_GS_image",
+  "scope": {
+    "split": "development",
+    "building_count": 51,
+    "reference_cell_rows": 21714,
+    "validation_allowed": false,
+    "held_out_allowed": false,
+    "c1_c2_rerun_allowed": false
+  },
+  "inputs": {
+    "r4_manifest_git_path": "artifacts/manifests/p2/c1_c2_g2_c3_first_wave_recovery_r4_v1/technical_result_manifest_v1.json",
+    "r4_final_checkpoint": {
+      "artifact_relative_path": "phase-payloads/p2/c1_c2_g2_c3_first_wave_recovery_r4_v1/P2-C1-C2-G2-C3-FIRST-WAVE-RECOVERY-R4-v1/c3/train/seed0/ckpt/final.pt",
+      "record_path": "c3/train/seed0/ckpt/final.pt",
+      "bytes": 105664220,
+      "sha256": "bec692b0040b3b2f9226389cfd6d380f0da148b5db6f4912fe68e9d72dbb43f9",
+      "verification": "R4_CLOSED_ATTESTATION_REUSE_PLUS_SIZE_AND_SAFE_DESERIALIZATION_NO_REHASH",
+      "expected_iteration": 30000,
+      "expected_primitives": 406337,
+      "expected_stage2_groups": 812,
+      "expected_grouped_primitives": 319698
+    },
+    "r3_development_score_cells": {
+      "artifact_relative_path": "phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/freeze/development_score_cells_v1.jsonl",
+      "bytes": 10868613,
+      "sha256": "de7c02e2a286fa05c34301aae9de625637cf6fb8c07b5f2969141fd20b0d5a59",
+      "verification": "ONE_PROCESS_AND_DIGEST_STREAM_AFTER_GEOMETRY_FREEZE"
+    }
+  },
+  "reused_contract": {
+    "path": "configs/p2_baselines/c1_c2_feasibility_pilot_v1/pilot_v1.json",
+    "fields": ["frame", "condition_geometry", "roofer_pointcloud", "stage3"]
+  },
+  "materialization": {
+    "surface_eligibility": "STORED_STAGE2_GROUP_ID_GTE_ZERO",
+    "regroup_allowed": false,
+    "grid_cell_m": 1.0,
+    "semantic_to_las_class": {"0": "DROP", "1": 6, "2": 6, "3": 2},
+    "building_cell_reducer": "MAX_Z",
+    "terrain_cell_reducer": "MIN_Z",
+    "output_xy": "FROZEN_1M_CELL_CENTER",
+    "opacity_threshold": null,
+    "opacity_quantiles": "RECORDED_DIAGNOSTIC_ONLY",
+    "difference_from_c1_c2": "C3_ONLY_REUSES_STORED_STAGE2_GROUP_MEMBERS_AND_SEMANTIC_LABELS_BEFORE_THE_SAME_1M_COMPONENT_AND_ROOFER_CONTRACT",
+    "performance_interpretation": "TECHNICAL_DIAGNOSTIC_ONLY"
+  },
+  "association": {
+    "timing": "ONLY_AFTER_ALL_C3_COMPONENTS_LAS_AND_R_DERIVED_ARE_ADD_ONCE_FROZEN",
+    "selection_rule": "MAX_REFERENCE_CELL_XY_OVERLAP_THEN_MIN_COMPONENT_ID",
+    "role": "SCORE_IDENTITY_ONLY",
+    "geometry_modification_allowed": false
+  },
+  "result": {
+    "technical_gates_allowed": ["G0_GENERATED", "G1_PARSEABLE", "G2_CONTINUOUS_DIAGNOSTIC_ONLY"],
+    "G3": null,
+    "G4": null,
+    "PASS_usable": null,
+    "null_reason": "CRITERION_NOT_FROZEN",
+    "scientific_verdict": null
+  },
+  "scientific_verdict": null
+}
