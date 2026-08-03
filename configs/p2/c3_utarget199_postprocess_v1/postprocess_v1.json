@@ -1,0 +1,81 @@
+{
+  "schema": "jointbuildgs.p2.c3_utarget199_postprocess_config.v1",
+  "task_id": "P2-C3-UTARGET199-POSTPROCESS-v1",
+  "status": "DRAFT_AWAITING_EXACT_PAIRED_CHECKPOINT_BINDING",
+  "output_relative_root": "phase-payloads/p2/c3_utarget199_postprocess_v1/P2-C3-UTARGET199-POSTPROCESS-v1",
+  "source_training_task_relative_root": "phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-TORCH-CACHE-RECOVERY-v1",
+  "conditions": [
+    {
+      "condition_id": "C3_1_SEM",
+      "title": "C3-1 2DGS + semantic",
+      "checkpoint_relative_path": "c3/c3_1_sem/seed0/ckpt/final.pt",
+      "expected_bytes": null,
+      "expected_sha256": null,
+      "expected_iteration": 30000
+    },
+    {
+      "condition_id": "C3_2_SEM_DEPTH",
+      "title": "C3-2 2DGS + semantic + image-derived MVS depth",
+      "checkpoint_relative_path": "c3/c3_2_sem_depth/seed0/ckpt/final.pt",
+      "expected_bytes": null,
+      "expected_sha256": null,
+      "expected_iteration": 30000
+    }
+  ],
+  "scope": {
+    "population": "U_target",
+    "building_count": 199,
+    "expected_result_rows": 398,
+    "pre_execution_building_exclusion_allowed": false,
+    "visible_72_10_subgroup_rows": false,
+    "c4_c5_access_allowed": false
+  },
+  "frame": {
+    "crs": "EPSG:25832",
+    "local_shift_xyz": [690953.0, 5336071.0, 604.0],
+    "grid_origin_xy": [690791.74, 5335864.05],
+    "grid_cell_m": 1.0,
+    "aoi_bbox": [690791.74, 5335864.05, 691154.65, 5336353.85]
+  },
+  "inputs": {
+    "roster_git_path": "docs/research/preregistration/gate_s0/uas_reference_coverage_r1_v1/eligibility_candidate_v1.csv",
+    "reference_cells_relative_path": "phase-payloads/p2/utarget199_contract_results_v1/P2-UTARGET199-CONTRACT-RESULTS-v1/freeze/utarget199_reference_cells_v1.jsonl",
+    "reference_cells_bytes": 11934242,
+    "reference_cells_sha256": "ae62bc358dfdde604892305d44f3ff599288f00234a1622292d75596ba952f22",
+    "data_root_relative_path": "phase-payloads/p0-audit/data/work/mvs/colmap_dense",
+    "exact_view_manifest_git_path": "artifacts/manifests/gate_s0/common_base_r2b/exact_937_member_crosswalk_v1.json",
+    "exact_view_count": 937,
+    "rgb_best_view_relative_path": "results/tum_transfer/mob/overseg_lever/population_aux_v4_bestview.json",
+    "rgb_image_directory_relative_path": "phase-payloads/p0-audit/data/work/images/Images",
+    "rgb_cameras_relative_path": "phase-payloads/p0-audit/data/work/colmap/sparse/0/cameras.txt",
+    "rgb_images_relative_path": "phase-payloads/p0-audit/data/work/colmap/sparse/0/images.txt",
+    "rgb_scene_reference_relative_path": "phase-payloads/p0-audit/data/work/opf/opf/scene_reference_frame.json"
+  },
+  "intermediate_exports": {
+    "native_gaussian_point_cloud": "ALL_CHECKPOINT_PRIMITIVE_CENTERS_NO_FILTER",
+    "native_gaussian_surfel_mesh": "FOUR_CORNERS_TWO_TRIANGLES_PER_2D_GAUSSIAN_NO_FILTER",
+    "roofer_input": "STORED_STAGE2_GROUPS_TO_FROZEN_1M_CLASS2_6_COMMON_READOUT_CONTRACT",
+    "actual_gs_render_view_count": 4,
+    "actual_gs_render_downscale": 0.25
+  },
+  "association": {
+    "timing": "ONLY_AFTER_BOTH_CONDITIONS_GEOMETRY_R_DERIVED_AND_INTERMEDIATE_EXPORTS_ARE_FROZEN",
+    "rule": "MAX_COMPONENT_CELL_CENTER_COUNT_INSIDE_STABLE_BUILDING_BBOX_THEN_MIN_COMPONENT_ID",
+    "bbox_role": "IDENTITY_DISPLAY_AND_EVALUATION_ONLY_NO_GEOMETRY_OR_R_DERIVED_CHANGE"
+  },
+  "roofer": {
+    "image": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+    "command_args": ["--id-attribute", "component_id", "--jobs", "1", "--srs", "EPSG:25832", "--bld-class", "6", "--grnd-class", "2", "--lod22"],
+    "timeout_seconds_per_unit": 600,
+    "quality_driven_retry_allowed": false,
+    "external_roofprint_allowed": false
+  },
+  "caps": {
+    "gpu_peak_memory_mib": 18000,
+    "cpu_memory_bytes": 34359738368,
+    "output_bytes": 5000000000,
+    "wall_clock_seconds": 43200
+  },
+  "official_G3_G4_PASS_usable": null,
+  "scientific_verdict": null
+}
