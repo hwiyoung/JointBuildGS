@@ -1,0 +1,39 @@
+{
+  "schema": "jointbuildgs.p2.c3_development_stage3.technical_result_manifest.v1",
+  "task_id": "P2-C3-DEVELOPMENT-STAGE3-v1",
+  "handoff_id": "P2-W2C-C3-DEVELOPMENT-STAGE3-v1",
+  "created_at": "2026-08-03T12:36:00+09:00",
+  "technical_state": "BLOCKED_PRE_PAYLOAD_AUTHORITY_VALIDATION",
+  "scientific_verdict": null,
+  "source_commit": "3df6baea11761e5b1f3737efe354baec5227a24b",
+  "offered_commit": "27791bd1a8701d27e1ff6798165b947ae0219cbc",
+  "accepted_commit": "a854b3eabaa9485c41ee977c7b4853f41c0311e1",
+  "failure": {
+    "command": "scripts/p2/c3_development_stage3_v1/run_stage3_host.sh",
+    "message": "artifact_verified requires --artifact-root for live verification",
+    "phase": "accepted-receipt authority validation",
+    "before_namespace_creation": true
+  },
+  "execution_accounting": {
+    "wrapper_invocations": 1,
+    "checkpoint_deserializations": 0,
+    "development_score_cell_reads": 0,
+    "adapter_invocations": 0,
+    "roofer_invocations": 0,
+    "generated_building_rows": 0,
+    "generated_qualitative_panels": 0,
+    "large_r1_images_opf_hash_passes": 0
+  },
+  "accepted_artifacts_preserved": [
+    {
+      "uri": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_g2_c3_first_wave_recovery_r4_v1/P2-C1-C2-G2-C3-FIRST-WAVE-RECOVERY-R4-v1/c3/train/seed0/ckpt/final.pt",
+      "bytes": 105664220,
+      "sha256": "bec692b0040b3b2f9226389cfd6d380f0da148b5db6f4912fe68e9d72dbb43f9"
+    },
+    {
+      "uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/freeze/development_score_cells_v1.jsonl",
+      "bytes": 10868613,
+      "sha256": "de7c02e2a286fa05c34301aae9de625637cf6fb8c07b5f2969141fd20b0d5a59"
+    }
+  ]
+}
