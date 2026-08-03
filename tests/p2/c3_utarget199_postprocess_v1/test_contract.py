@@ -1,8 +1,11 @@
 from __future__ import annotations
 
 import json
+import hashlib
 from pathlib import Path
+import tempfile
 import unittest
+from unittest import mock
 
 import numpy as np
 import torch
@@ -11,8 +14,10 @@ from scripts.p2.c3_utarget199_postprocess_v1.contract import (
     gaussian_point_cloud_ply,
     gaussian_surfel_mesh_ply,
     load_config,
+    prepare_condition,
     validate_config,
 )
+from scripts.p2_baselines.c1_c2_feasibility_pilot_v1.contract import AddOnceStore
 
 
 REPO = Path(__file__).resolve().parents[3]
@@ -84,6 +89,61 @@ class C3Utarget199PostprocessContractTest(unittest.TestCase):
         self.assertEqual(len(faces), 4)
         self.assertTrue(np.all(faces["count"] == 3))
         self.assertEqual(faces["indices"].tolist(), [[0, 1, 2], [0, 2, 3], [4, 5, 6], [4, 6, 7]])
+
+    def test_prepare_freezes_native_exports_before_identity_inputs(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            checkpoint = root / "final.pt"
+            count = 4
+            world = np.asarray([
+                [690800.24 + (index % 2), 5335870.55 + (index // 2), 560.0 + 0.1 * index]
+                for index in range(count)
+            ])
+            local = world - np.asarray([690953.0, 5336071.0, 604.0])
+            state = {
+                "means": torch.from_numpy(local.astype(np.float32)),
+                "quats": torch.tensor([[1.0, 0.0, 0.0, 0.0]] * count),
+                "log_scales": torch.log(torch.tensor([[0.5, 0.5, 1.0e-6]] * count)),
+                "opacities_raw": torch.zeros(count),
+                "sh0": torch.zeros((count, 1, 3)),
+                "shN": torch.zeros((count, 15, 3)),
+                "sem_logits": torch.tensor([[0.0, 3.0, 0.0, 0.0]] * count),
+            }
+            torch.save({
+                "it": 30000,
+                "n_prim": count,
+                "state_dict": state,
+                "stage2_group_ids": torch.zeros(count, dtype=torch.int64),
+                "stage2_rep_normals": torch.tensor([[0.0, 0.0, 1.0]]),
+                "stage2_rep_d": torch.tensor([-560.0]),
+            }, checkpoint)
+            data = checkpoint.read_bytes()
+            config = json.loads(json.dumps(load_config()))
+            config["status"] = "APPROVED_FOR_EXECUTION"
+            spec = config["conditions"][0]
+            spec["expected_bytes"] = len(data)
+            spec["expected_sha256"] = hashlib.sha256(data).hexdigest()
+            config["conditions"][1]["expected_bytes"] = 1
+            config["conditions"][1]["expected_sha256"] = "b" * 64
+            with mock.patch(
+                "scripts.p2.c3_utarget199_postprocess_v1.contract.load_config",
+                return_value=config,
+            ):
+                result = prepare_condition(
+                    AddOnceStore(root / "output"),
+                    condition_id="C3_1_SEM",
+                    checkpoint_path=checkpoint,
+                    source_commit="a" * 40,
+                    run_id="synthetic",
+                )
+            self.assertEqual(result["status"], "FROZEN_BEFORE_BUILDING_IDENTITY_OR_REFERENCE_ACCESS")
+            self.assertEqual(result["building_bbox_accesses"], 0)
+            self.assertEqual(result["reference_cell_accesses"], 0)
+            self.assertEqual(result["external_roofprint_accesses"], 0)
+            self.assertEqual(result["component_count"], 1)
+            self.assertEqual(result["roofer_eligible_component_count"], 1)
+            self.assertTrue((root / "output/conditions/C3_1_SEM/intermediate/native_gaussian_centers_v1.ply").is_file())
+            self.assertTrue((root / "output/conditions/C3_1_SEM/intermediate/native_gaussian_surfel_mesh_v1.ply").is_file())
 
 
 if __name__ == "__main__":
