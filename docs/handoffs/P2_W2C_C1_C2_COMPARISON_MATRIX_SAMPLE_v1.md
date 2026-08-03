@@ -5,11 +5,13 @@
 - handoff_id: `P2-W2C-C1-C2-COMPARISON-MATRIX-SAMPLE-v1`
 - task_id: `P2-C1-C2-COMPARISON-MATRIX-SAMPLE-v1`
 - direction: `Work Host -> Experiment Host`
-- status: `DRAFT_PENDING_TEST_AND_ACTIVATION`
-- source_commit: `PENDING`
+- status: `APPROVED_FOR_EXECUTION`
+- source_commit: `e5c5e44d4fd074d1513b80a4a46063281539ddd3`
 - target_branch: `main`
 - research canon: `C1C5_CANON_v2` through `DEC-P1-016`
 - user_approval: `GRANTED — C1/C2 qualitative and quantitative results first`
+- implementation_review: `PASS — exact method-subset, panel-count and no-C3 regression checks`
+- experiment_host_preflight: `PASS — 6 rows, 2 unique sealed units, new namespace absent`
 - scientific_verdict: `null`
 
 ## Goal
