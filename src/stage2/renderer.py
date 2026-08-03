@@ -20,6 +20,35 @@ from gsplat import rasterization_2dgs
 from .model import GaussianModel2D
 
 
+def _backgrounds_for_render(
+    bg_color: torch.Tensor | None,
+    render_mode: str,
+) -> torch.Tensor | None:
+    """Match gsplat's background channels after it appends rendered depth.
+
+    gsplat 1.5 appends depth to the RGB feature tensor for ``RGB+D`` and
+    ``RGB+ED`` but does not append the corresponding zero-valued background
+    channel.  Supplying an ordinary RGB background would therefore reach the
+    CUDA wrapper as ``(1, 3)`` against four rendered channels.  Keep the
+    wrapper contract explicit here so RGB stays white while empty depth stays
+    zero.
+    """
+    if bg_color is None:
+        return None
+    if bg_color.ndim != 1:
+        raise ValueError(f"bg_color must be one-dimensional, got {tuple(bg_color.shape)}")
+    if render_mode in {"RGB+D", "RGB+ED"}:
+        depth_background = torch.zeros(
+            1,
+            device=bg_color.device,
+            dtype=bg_color.dtype,
+        )
+        bg_color = torch.cat((bg_color, depth_background))
+    elif render_mode in {"D", "ED"}:
+        bg_color = torch.zeros(1, device=bg_color.device, dtype=bg_color.dtype)
+    return bg_color.unsqueeze(0)
+
+
 def render(
     model: GaussianModel2D,
     viewmat: torch.Tensor,  # (4,4) world->cam
@@ -56,7 +85,7 @@ def render(
         render_mode=render_mode,
         depth_mode=depth_mode,
         sh_degree=sh_degree,
-        backgrounds=bg_color.unsqueeze(0) if bg_color is not None else None,
+        backgrounds=_backgrounds_for_render(bg_color, render_mode),
     )
 
     render_colors = out[0]       # (1, H, W, 3+1)

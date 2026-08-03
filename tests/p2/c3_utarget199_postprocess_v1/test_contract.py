@@ -17,7 +17,12 @@ from scripts.p2.c3_utarget199_postprocess_v1.contract import (
     prepare_condition,
     validate_config,
 )
+from scripts.p2.c3_utarget199_postprocess_render_recovery_v1.recover_render import (
+    complete as complete_render_recovery,
+    recover as recover_render_payload,
+)
 from scripts.p2_baselines.c1_c2_feasibility_pilot_v1.contract import AddOnceStore
+from src.stage2.renderer import _backgrounds_for_render
 
 
 REPO = Path(__file__).resolve().parents[3]
@@ -35,6 +40,52 @@ def tiny_state() -> dict[str, torch.Tensor]:
 
 
 class C3Utarget199PostprocessContractTest(unittest.TestCase):
+    def test_rgb_expected_depth_background_appends_zero_depth_channel(self) -> None:
+        background = _backgrounds_for_render(torch.ones(3), "RGB+ED")
+        self.assertEqual(tuple(background.shape), (1, 4))
+        self.assertEqual(background.tolist(), [[1.0, 1.0, 1.0, 0.0]])
+
+    def test_rgb_background_keeps_three_channels(self) -> None:
+        background = _backgrounds_for_render(torch.ones(3), "RGB")
+        self.assertEqual(tuple(background.shape), (1, 3))
+
+    def test_render_recovery_copies_exact_pre_render_payload_and_completes(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "source"
+            output = root / "output"
+            for relative in ("conditions", "freeze", "results", "control"):
+                (source / relative).mkdir(parents=True)
+            for index in range(25):
+                terminal = source / f"conditions/C3/operations/{index:02d}/roofer_terminal_v1.json"
+                terminal.parent.mkdir(parents=True, exist_ok=True)
+                terminal.write_text("{}\n", encoding="utf-8")
+            (source / "freeze/execution_units_v1.tsv").write_text("unit\n", encoding="utf-8")
+            (source / "results/method_summary_v1.csv").write_text("condition\n", encoding="utf-8")
+            for name in (
+                "C3_1_SEM_geometry_frozen_v1.json",
+                "C3_2_SEM_DEPTH_geometry_frozen_v1.json",
+                "population_associated_v1.json",
+            ):
+                (source / "control" / name).write_text("{}\n", encoding="utf-8")
+            (source / "control/finalized_v1.json").write_text(
+                '{"result_rows":398}\n', encoding="utf-8"
+            )
+            recovered = recover_render_payload(source, output)
+            self.assertEqual(recovered["roofer_terminal_count"], 25)
+            self.assertEqual(recovered["result_rows"], 398)
+            self.assertTrue((output / "results/method_summary_v1.csv").is_file())
+            (output / "control/gs_render_complete_v1.json").write_text(
+                '{"render_panel_count":8}\n', encoding="utf-8"
+            )
+            (output / "control/qualitative_complete_v1.json").write_text(
+                '{"case_sheet_count":199}\n', encoding="utf-8"
+            )
+            completed = complete_render_recovery(output)
+            self.assertEqual(completed["status"], "TECHNICAL_COMPLETE")
+            self.assertEqual(completed["case_sheet_count"], 199)
+            self.assertIsNone(completed["scientific_verdict"])
+
     def test_activated_config_has_exact_scope_and_closed_scientific_boundary(self) -> None:
         config = load_config()
         result = validate_config(config, require_activation=False)
