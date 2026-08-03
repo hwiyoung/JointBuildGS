@@ -5,12 +5,14 @@
 - handoff_id: `P2-W2C-C1-C2-COMPARISON-MATRIX-SAMPLE-v4`
 - task_id: `P2-C1-C2-COMPARISON-MATRIX-SAMPLE-v4`
 - direction: `Work Host -> Experiment Host`
-- status: `DRAFT_PENDING_TEST_AND_ACTIVATION`
-- source_commit: `PENDING`
+- status: `APPROVED_FOR_EXECUTION`
+- source_commit: `1aefb6bab79918959f8eb9c608f5c265662679f7`
 - target_branch: `main`
 - follows: `P2-W2C-C1-C2-COMPARISON-MATRIX-SAMPLE-v2`
 - research canon: `C1C5_CANON_v2` through `DEC-P1-016`
 - user_approval: `GRANTED — proceed with a new recovery namespace after preserving the v2 empty partial`
+- implementation_review: `PASS — Docker focused renderer tests 15/15; v4 C1/C2-only namespace and canonical mount regression`
+- experiment_host_preflight: `PASS — projection config resolved; 937 cameras; exact 6 C1/C2 rows; terminal COMPLETED_REUSED_EXACT; 12/12 raw camera projections visible; section visible 15/332/677; v4 final/partial absent`
 - scientific_verdict: `null`
 
 ## Exact recovery
