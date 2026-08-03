@@ -1,0 +1,43 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P2-W2C-C1-C2-COMPARISON-MATRIX-SAMPLE-v5",
+  "task_id": "P2-C1-C2-COMPARISON-MATRIX-SAMPLE-v5",
+  "created_at": "2026-08-04T01:29:37+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "accepted",
+  "previous_receipt": {"path": "artifacts/manifests/handoffs/P2-W2C-C1-C2-COMPARISON-MATRIX-SAMPLE-v5/000-offered.json", "sha256": "f7b2be2426476ef6fbe00fa65f316d2b5e6c4e5edc7a311d163f3ba9e315ee27"},
+  "transport": {"mode": "serialized_main", "branch": "main", "target_branch": "main", "exclusive_writer_ack": true},
+  "commits": {"base_main": "1a780a50a9112764b17a6a591a03beebaa0351a4", "offered_head": "863a8eea67c03f66c2e6085f3fd148558a312dc2", "receipt_head": "SELF"},
+  "scope": {
+    "allowed_paths": ["artifacts/manifests/handoffs/P2-W2C-C1-C2-COMPARISON-MATRIX-SAMPLE-v5", "artifacts/manifests/p2/c1_c2_comparison_matrix_sample_v5", "docs/experiments/p2/c1_c2_comparison_matrix_sample_v5", "docs/handoffs/returns/P2_C2W_C1_C2_COMPARISON_MATRIX_SAMPLE_RETURN_v5.md"],
+    "protected_paths": ["AGENTS.md", "CLAUDE.md", ".gitattributes", "configs", "scripts", "src", "tests", "docs/research", "docs/evidence", "docs/handoffs/P2_W2C_C1_C2_COMPARISON_MATRIX_SAMPLE_v5.md", "artifacts/manifests/p2/c1_c2_comparison_matrix_sample_v4", "docs/experiments/p2/c1_c2_comparison_matrix_sample_v4", "artifacts/manifests/handoffs/P2-W2C-C1-C2-COMPARISON-MATRIX-SAMPLE-v4", "phases"],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "artifact_verified",
+    "verifier_role": "experiment_host",
+    "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "commands": ["validate exact v5 offer", "reuse three sealed C1/C2 census records", "verify current RGB, camera model, current UAS support and evaluation-only LoD2 roofline prerequisites", "verify fresh v5 namespace"],
+    "tests": [
+      {"name": "offered receipt validator", "passed": 1, "failed": 0},
+      {"name": "sealed source records", "passed": 3, "failed": 0},
+      {"name": "renderer focused tests", "passed": 18, "failed": 0},
+      {"name": "v5 final and partial namespace absence", "passed": 2, "failed": 0}
+    ]
+  },
+  "artifacts": {
+    "required_for_task": true,
+    "availability": {"work_host": "manifest_only", "experiment_host": "verified_local"},
+    "records": [
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2/utarget199_contract_results_v1/P2-UTARGET199-CONTRACT-RESULTS-v1/results/building_method_metrics_v1.jsonl", "bytes": 1860023, "sha256": "13728f8e56ddfa502fea9d6345bb38b29931737f8e33d73d40b1b3b8171f6c8e", "verification_method": "closed_attestation_reuse", "verified_by": "experiment_host", "verified_at": "2026-08-04T01:29:37+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2/utarget199_contract_results_v1/P2-UTARGET199-CONTRACT-RESULTS-v1/freeze/utarget199_reference_cells_v1.jsonl", "bytes": 11934242, "sha256": "ae62bc358dfdde604892305d44f3ff599288f00234a1622292d75596ba952f22", "verification_method": "closed_attestation_reuse", "verified_by": "experiment_host", "verified_at": "2026-08-04T01:29:37+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2/utarget199_contract_results_v1/P2-UTARGET199-CONTRACT-RESULTS-v1/freeze/execution_units_v1.jsonl", "bytes": 30446, "sha256": "3763ca747d80d1a83a80b8c7e5add866753fbde58be3ea3dcf5ac3849427f2d7", "verification_method": "closed_attestation_reuse", "verified_by": "experiment_host", "verified_at": "2026-08-04T01:29:37+09:00"}
+    ]
+  },
+  "scientific": {"technical_state": "pending", "scientific_verdict": null, "promotion_status": "not_requested"},
+  "receiver_ack": {"role": "experiment_host", "accepted_at": "2026-08-04T01:29:37+09:00", "status": "accepted", "issue": "Accepted for one C1/C2-only v5 reuse render. Roofer, G2, GS and metrics remain unexecuted in this presentation task."}
+}
