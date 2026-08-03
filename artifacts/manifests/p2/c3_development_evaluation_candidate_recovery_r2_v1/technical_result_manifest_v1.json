@@ -1,0 +1,29 @@
+{
+  "schema": "jointbuildgs.p2.c3_development_evaluation_candidate_recovery_r2.technical_result_manifest.v1",
+  "task_id": "P2-C3-DEVELOPMENT-EVALUATION-CANDIDATE-v1",
+  "handoff_id": "P2-W2C-C3-DEVELOPMENT-EVALUATION-CANDIDATE-RECOVERY-R2-v1",
+  "created_at": "2026-08-03T16:50:00+09:00",
+  "technical_state": "DIAGNOSTICS_COMPLETE",
+  "scientific_verdict": null,
+  "source_commit": "c07e812fe0063b386f3efc14b8dd4e9a3b6007e9",
+  "offered_commit": "4a46b38bac1403882a7bf0f0e457d7989e71b965",
+  "accepted_commit": "a3684031fa466538fa6763bd8029c070ab5f3ab8",
+  "external_namespace": "artifact://JointBuildGS/phase-payloads/p2/c3_development_evaluation_candidate_v1/P2-C3-DEVELOPMENT-EVALUATION-CANDIDATE-v1/",
+  "namespace_bytes": 2121169,
+  "namespace_file_count": 67,
+  "population": {"U_target": 199, "diagnostic_uas_candidates": 72, "development_rows_per_method": 51, "validation_accesses": 0, "held_out_accesses": 0},
+  "execution_accounting": {"reconstruction_invocations": 0, "roofer_invocations": 0, "g2_invocations": 0, "reused_g2_terminal_receipts": 18, "large_r1_images_opf_hash_passes": 0, "qualitative_panels": 5},
+  "stage_counts": {
+    "C1_L_upper": {"rows": 51, "G0_true": 51, "G1_true": 51, "G2": null, "G3_candidate": null, "G4_candidate": null, "PASS_usable": null},
+    "C2_MVS": {"rows": 51, "G0_true": 50, "G1_true": 50, "G2_true": 50, "G3_candidate_true": 0, "G4_candidate_true": 6, "PASS_candidate_true": 0, "PASS_usable": null},
+    "C3_GS_image": {"rows": 51, "evaluation_G0_true": 35, "evaluation_G1_true": 37, "strict_one_to_one_buildings": 6, "strict_G0_true": 5, "strict_G1_true": 6, "G2_true": 19, "G3_candidate_true": 0, "G4_candidate_true": 1, "PASS_candidate_true": 0, "PASS_usable": null}
+  },
+  "c3_association": {"UNASSOCIATED": 14, "SHARED_COMPONENT": 13, "SHARED_AND_MULTI_COMPONENT": 12, "MULTI_COMPONENT": 6, "UNIQUE_COMPONENT_SINGLE_CANDIDATE": 6},
+  "outputs": [
+    {"path": "control/finalized_v1.json", "bytes": 880, "sha256": "d2573778a4abc38602b778a44b2b864a44bfb31d0b9b39fe5065edd2edcd3bd3"},
+    {"path": "results/c3_development_diagnostics_v1.jsonl", "bytes": 117374, "sha256": "53242a9274872705456a11cad66f5680cb613e5c3276f3f486619bc507567f01"},
+    {"path": "results/three_condition_development_diagnostics_v1.jsonl", "bytes": 295866, "sha256": "a9b0f89707e009e35929cff4683eed03e4a079533d4ea0fcf027bd1e3e73c744"},
+    {"path": "results/three_condition_summary_v1.jsonl", "bytes": 485, "sha256": "3a95ea2c438503c081e37507984e84aa6534bf638adc9868ea74c245a0751ada"},
+    {"path": "results/qualitative_manifest_v1.jsonl", "bytes": 820, "sha256": "e78ac8c0a63c141ea8629ff68472e5dd9e60a0e6e19fe5511a645d8a2c1ca4e5"}
+  ]
+}

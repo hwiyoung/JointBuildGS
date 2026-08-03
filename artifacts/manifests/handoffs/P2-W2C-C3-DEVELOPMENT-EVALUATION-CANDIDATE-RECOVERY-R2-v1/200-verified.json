@@ -1,0 +1,104 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P2-W2C-C3-DEVELOPMENT-EVALUATION-CANDIDATE-RECOVERY-R2-v1",
+  "task_id": "P2-C3-DEVELOPMENT-EVALUATION-CANDIDATE-v1",
+  "created_at": "2026-08-03T16:55:00+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "verified",
+  "previous_receipt": {
+    "path": "artifacts/manifests/handoffs/P2-W2C-C3-DEVELOPMENT-EVALUATION-CANDIDATE-RECOVERY-R2-v1/100-accepted.json",
+    "sha256": "a630df0bfc21df44a941c26b25b22d7c5293a9fc2e6dcd5ef0ee34898bd98970"
+  },
+  "transport": {"mode": "serialized_main", "branch": "main", "target_branch": "main", "exclusive_writer_ack": true},
+  "commits": {
+    "base_main": "37ff7879d33b8f9f077e298d7236769810c3da97",
+    "offered_head": "4a46b38bac1403882a7bf0f0e457d7989e71b965",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P2-W2C-C3-DEVELOPMENT-EVALUATION-CANDIDATE-RECOVERY-R2-v1",
+      "artifacts/manifests/p2/c3_development_evaluation_candidate_recovery_r2_v1",
+      "docs/experiments/p2/c3_development_evaluation_candidate_recovery_r2_v1",
+      "docs/handoffs/returns/P2_C2W_C3_DEVELOPMENT_EVALUATION_CANDIDATE_RECOVERY_R2_RETURN_v1.md"
+    ],
+    "protected_paths": [
+      "AGENTS.md", "CLAUDE.md", ".gitattributes", "configs", "scripts", "src", "tests",
+      "docs/research", "docs/evidence",
+      "docs/handoffs/P2_W2C_C3_DEVELOPMENT_EVALUATION_CANDIDATE_RECOVERY_R2_v1.md",
+      "docs/handoffs/P2_W2C_C3_DEVELOPMENT_EVALUATION_CANDIDATE_RECOVERY_R1_v1.md",
+      "docs/handoffs/P2_W2C_C3_DEVELOPMENT_EVALUATION_CANDIDATE_RECOVERY_v1.md",
+      "artifacts/manifests/handoffs/P2-W2C-C3-DEVELOPMENT-EVALUATION-CANDIDATE-RECOVERY-R1-v1",
+      "artifacts/manifests/handoffs/P2-W2C-C3-DEVELOPMENT-EVALUATION-CANDIDATE-RECOVERY-v1",
+      "artifacts/manifests/handoffs/P2-W2C-C3-DEVELOPMENT-EVALUATION-CANDIDATE-v1",
+      "artifacts/manifests/p2/c3_development_evaluation_candidate_v1",
+      "docs/experiments/p2/c3_development_evaluation_candidate_v1",
+      "docs/handoffs/returns/P2_C2W_C3_DEVELOPMENT_EVALUATION_CANDIDATE_RETURN_v1.md",
+      "artifacts/manifests/gate_s0",
+      "artifacts/manifests/handoffs/P2-W2C-C3-DEVELOPMENT-STAGE3-RECOVERY-v1",
+      "artifacts/manifests/p2/c3_development_stage3_recovery_v1",
+      "docs/experiments/p2/c3_development_stage3_recovery_v1", "phases"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "artifact_verified",
+    "verifier_role": "experiment_host",
+    "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "commands": [
+      "reuse 18 completed C3 G2 terminal receipts without rerun",
+      "aggregate C3 51 rows and combine exact C1/C2 102 rows",
+      "render five outcome-free UAS/C1/C2/C3 comparison panels",
+      "verify finalized control and compact output hashes"
+    ],
+    "tests": [
+      {"name": "C1 C2 C3 development diagnostic rows", "passed": 153, "failed": 0},
+      {"name": "qualitative panels", "passed": 5, "failed": 0},
+      {"name": "reconstruction Roofer G2 reruns", "passed": 0, "failed": 0},
+      {"name": "validation held-out C4 C5 Fusion R_ext accesses", "passed": 0, "failed": 0},
+      {"name": "R1 Images OPF hash passes", "passed": 0, "failed": 0}
+    ]
+  },
+  "artifacts": {
+    "required_for_task": true,
+    "availability": {"work_host": "manifest_only", "experiment_host": "verified_local"},
+    "records": [
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/c3_development_stage3_v1/P2-C3-DEVELOPMENT-STAGE3-v1/control/c3_development_technical_finalized_v1.json",
+        "bytes": 1036,
+        "sha256": "335f56c81a7b224f3b893fd0be5d35f1643b658da8731c8fd38797331d10d97f",
+        "verification_method": "sha256_rehash", "verified_by": "experiment_host", "verified_at": "2026-08-03T16:35:00+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/freeze/development_score_cells_v1.jsonl",
+        "bytes": 10868613,
+        "sha256": "de7c02e2a286fa05c34301aae9de625637cf6fb8c07b5f2969141fd20b0d5a59",
+        "verification_method": "sha256_rehash", "verified_by": "experiment_host", "verified_at": "2026-08-03T16:35:00+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_g2_c3_first_wave_recovery_r4_v1/P2-C1-C2-G2-C3-FIRST-WAVE-RECOVERY-R4-v1/c1_c2/development_diagnostics_v1.jsonl",
+        "bytes": 172023,
+        "sha256": "88ba95b5138d2f6d58ca380bf8551480df9f034fc90140f5d720ba9704b5c42e",
+        "verification_method": "sha256_rehash", "verified_by": "experiment_host", "verified_at": "2026-08-03T16:35:00+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/c3_development_evaluation_candidate_v1/P2-C3-DEVELOPMENT-EVALUATION-CANDIDATE-v1/control/prepared_v1.json",
+        "bytes": 205,
+        "sha256": "2f8a6be2fd7780d0dcb1f3f25b68cd959aeb234dead0534bf89a1b209c369715",
+        "verification_method": "sha256_rehash", "verified_by": "experiment_host", "verified_at": "2026-08-03T16:35:00+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/c3_development_evaluation_candidate_v1/P2-C3-DEVELOPMENT-EVALUATION-CANDIDATE-v1/freeze/evaluation_units_v1.tsv",
+        "bytes": 2984,
+        "sha256": "8051406e15aae8847aa4e1aa058b6f1022ef6d4a501c251ed02973374a3fdde8",
+        "verification_method": "sha256_rehash", "verified_by": "experiment_host", "verified_at": "2026-08-03T16:35:00+09:00"
+      }
+    ]
+  },
+  "scientific": {"technical_state": "complete", "scientific_verdict": null, "promotion_status": "not_requested"},
+  "receiver_ack": {"role": "experiment_host", "accepted_at": "2026-08-03T16:55:00+09:00", "status": "verified", "issue": "Diagnostics complete; official G3/G4/PASS remain null until candidate matcher and thresholds are frozen."}
+}
