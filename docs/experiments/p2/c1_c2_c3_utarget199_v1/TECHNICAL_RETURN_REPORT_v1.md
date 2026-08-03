@@ -97,6 +97,11 @@ checkpoint primitive를 표시하는 native PLY/mesh와 Roofer용 축약 증거�
 - 첫 postprocess의 정량/Roofer는 완료됐으나 qualitative gsplat 배경 채널 결함으로
   렌더가 중단됐다. 그 namespace를 보존하고 294개 파일을 byte-identical recovery한 뒤
   누락된 렌더/case sheet만 생성했다. recovery Roofer 및 metric 재계산은 0이다.
+- C3-2의 오래된 accepted chain을 모든 postprocess 커밋 뒤에 직접 닫으려 한
+  `200-verified` receipt는 validator가 historical allowed-path 범위를 벗어난 중간
+  커밋들을 검출해 거부했다. 이 receipt는 성공으로 사용하지 않으며 그대로 보존한다.
+  결과 artifact 검증과는 별개인 closure-lineage 문제이므로 전체 결과용 새 closure
+  chain에서 다시 검증한다.
 - GPU1의 별도 사용자 프로세스 때문에 C3-2를 GPU0에서 순차 실행했다. 외부 프로세스를
   종료하지 않았고, 이 자원 경합을 모델 실패로 분류하지 않았다.
 - C1 self-reference metric과 독립 UAS green overlay는 서로 다른 역할이다. 전자는
