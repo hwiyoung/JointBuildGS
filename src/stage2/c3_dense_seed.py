@@ -40,6 +40,9 @@ LOCAL_Z_RANGE = (-65.0, 30.0)
 VOXEL_ORIGIN_XYZ = (0.0, 0.0, 0.0)
 VOXEL_SPACINGS_M = (0.10, 0.20, 0.40)
 MAX_DENSE_SEED_POINTS = 3_000_000
+UTARGET199_NEUTRAL_VOXEL_SPACINGS_M = (0.50, 1.00, 2.00, 4.00)
+UTARGET199_NEUTRAL_MAX_DENSE_SEED_POINTS = 220_000
+UTARGET199_NEUTRAL_CONTRACT = "UTARGET199_NEUTRAL_UNCLASSIFIED_DENSE_V1"
 REPRESENTATIVE_RULE = "VOXEL_CENTER_NEAREST_WORLD_XYZ_LEXICOGRAPHIC_THEN_SOURCE_ROW"
 VOXEL_INDEX_RULE = "FLOOR_EACH_AXIS_OF_EPSG25832_XYZ_MINUS_FIXED_ORIGIN_DIV_VOXEL_M"
 OUTPUT_ORDER = "LEXICOGRAPHIC_VOXEL_IX_IY_IZ"
@@ -101,6 +104,7 @@ class DenseSeedConfig:
     max_dense_points: int = MAX_DENSE_SEED_POINTS
     chunk_points: int = 1_000_000
     temp_parent: Path | None = None
+    contract: str = "FIRST_WAVE_V2"
 
     def validate(self, *, require_exact_common: bool) -> None:
         if self.expected_input_bytes <= 0 or self.expected_input_points <= 0:
@@ -109,8 +113,20 @@ class DenseSeedConfig:
             r"[0-9a-f]{64}", self.expected_input_sha256
         ) is None:
             raise C3DenseSeedError("expected source SHA-256 must be 64 lowercase hex digits")
-        if tuple(self.voxel_spacings_m) != VOXEL_SPACINGS_M:
-            raise C3DenseSeedError("C3 voxel candidates must remain exactly 0.10/0.20/0.40 m")
+        allowed_voxel_contracts = {
+            "FIRST_WAVE_V2": (VOXEL_SPACINGS_M, MAX_DENSE_SEED_POINTS),
+            UTARGET199_NEUTRAL_CONTRACT: (
+                UTARGET199_NEUTRAL_VOXEL_SPACINGS_M,
+                UTARGET199_NEUTRAL_MAX_DENSE_SEED_POINTS,
+            ),
+        }
+        expected_contract = allowed_voxel_contracts.get(self.contract)
+        if expected_contract is None:
+            raise C3DenseSeedError("unknown C3 dense-seed contract")
+        if tuple(self.voxel_spacings_m) != tuple(expected_contract[0]):
+            raise C3DenseSeedError(
+                f"C3 voxel candidates differ from contract {self.contract}"
+            )
         if tuple(self.voxel_origin_xyz) != VOXEL_ORIGIN_XYZ:
             raise C3DenseSeedError("C3 voxel origin must remain fixed at EPSG:25832 [0,0,0]")
         if self.max_dense_points <= 0 or self.chunk_points <= 0:
@@ -141,7 +157,7 @@ class DenseSeedConfig:
             or tuple(self.aoi_xy) != FROZEN_AOI_XY
             or tuple(self.local_offset_xyz) != LOCAL_OFFSET_XYZ
             or tuple(self.local_z_range) != LOCAL_Z_RANGE
-            or self.max_dense_points != MAX_DENSE_SEED_POINTS
+            or self.max_dense_points != expected_contract[1]
         ):
             raise C3DenseSeedError(
                 "production C3 entry requires exact source size/count, AOI, local transform, Z, and 3M cap"
@@ -693,7 +709,9 @@ def _produce_dense_seed(
             )
             candidate_bodies[spacing] = body
         ordered_counts = [candidate_counts[value] for value in config.voxel_spacings_m]
-        if not ordered_counts[0] >= ordered_counts[1] >= ordered_counts[2]:
+        if not all(
+            left >= right for left, right in zip(ordered_counts, ordered_counts[1:])
+        ):
             raise C3DenseSeedError("voxel candidate counts violate nested-grid monotonicity")
         selected_spacing = next(
             (
@@ -779,6 +797,8 @@ def _produce_dense_seed(
                 "sparse_only_allowed": False,
                 "full_dense_direct_allowed": False,
                 "full_dense_source_points": config.expected_input_points,
+                "contract": config.contract,
+                "classification_or_semantic_filtering": False,
             },
             "pass_accounting": {
                 "source_natural_stream_reads": 1,
@@ -819,6 +839,26 @@ def produce_dense_seed(config: DenseSeedConfig) -> dict[str, object]:
         repository_commit=repository_commit,
         receipt_schema=RECEIPT_SCHEMA,
         receipt_status="COMPLETED_PREFLIGHT_SELECTED_DENSE_SEED",
+    )
+
+
+def produce_utarget199_neutral_dense_seed(
+    config: DenseSeedConfig,
+) -> dict[str, object]:
+    """Publish the unclassified, geometry-only dense seed shared by C3/C4/C5."""
+
+    if config.contract != UTARGET199_NEUTRAL_CONTRACT:
+        raise C3DenseSeedError(
+            "U_target=199 neutral producer requires its exact named contract"
+        )
+    config.validate(require_exact_common=True)
+    repository_commit = _actual_clean_repository_head()
+    return _produce_dense_seed(
+        config,
+        require_exact_common=True,
+        repository_commit=repository_commit,
+        receipt_schema="jointbuildgs.c3_utarget199_neutral_dense_seed_receipt.v1",
+        receipt_status="COMPLETED_NEUTRAL_UNCLASSIFIED_DENSE_SEED",
     )
 
 
