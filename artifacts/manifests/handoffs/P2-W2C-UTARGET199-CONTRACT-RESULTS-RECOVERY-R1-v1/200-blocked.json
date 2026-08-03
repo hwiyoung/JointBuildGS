@@ -1,0 +1,112 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P2-W2C-UTARGET199-CONTRACT-RESULTS-RECOVERY-R1-v1",
+  "task_id": "P2-UTARGET199-CONTRACT-RESULTS-RECOVERY-R1-v1",
+  "created_at": "2026-08-03T15:16:15+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "blocked",
+  "previous_receipt": {
+    "path": "artifacts/manifests/handoffs/P2-W2C-UTARGET199-CONTRACT-RESULTS-RECOVERY-R1-v1/100-accepted.json",
+    "sha256": "9afd992c1cb133f2b96c5781dda90e22727e965b4228c79021ee5f2174c6109f"
+  },
+  "transport": {"mode": "serialized_main", "branch": "main", "target_branch": "main", "exclusive_writer_ack": true},
+  "commits": {
+    "base_main": "cfa0e2587ea11bb12e9eca37bcdb7818ad17f6ff",
+    "offered_head": "0a3e86071da89e3af71405d642dca29c8d772e89",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P2-W2C-UTARGET199-CONTRACT-RESULTS-RECOVERY-R1-v1",
+      "artifacts/manifests/p2/utarget199_contract_results_v1",
+      "docs/experiments/p2/utarget199_contract_results_v1",
+      "docs/handoffs/returns/P2_C2W_UTARGET199_CONTRACT_RESULTS_RECOVERY_R1_RETURN_v1.md"
+    ],
+    "protected_paths": [
+      "AGENTS.md", "CLAUDE.md", ".gitattributes", "configs", "scripts", "src", "tests",
+      "docs/research", "docs/evidence",
+      "docs/handoffs/P2_W2C_UTARGET199_CONTRACT_RESULTS_v1.md",
+      "docs/handoffs/P2_W2C_UTARGET199_CONTRACT_RESULTS_RECOVERY_R1_v1.md",
+      "docs/handoffs/returns/P2_C2W_UTARGET199_CONTRACT_RESULTS_RETURN_v1.md",
+      "artifacts/manifests/handoffs/P2-W2C-UTARGET199-CONTRACT-RESULTS-v1",
+      "artifacts/manifests/gate_s0",
+      "artifacts/manifests/p2/c1_baseline_audit_v1",
+      "artifacts/manifests/p2/c3_development_evaluation_candidate_recovery_r2_v1",
+      "docs/experiments/p2/c1_baseline_audit_v1",
+      "docs/experiments/p2/c3_development_evaluation_candidate_recovery_r2_v1",
+      "phases"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "artifact_verified",
+    "verifier_role": "experiment_host",
+    "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "commands": [
+      "execute 52 new Roofer units once and reuse 22 source outputs",
+      "run pinned val3dity once across 74 immutable output units",
+      "preserve finalize-reader failure and hash only compact recovery ledgers needed for no-repeat recovery"
+    ],
+    "tests": [
+      {"name": "unique Roofer terminal records", "passed": 74, "failed": 0},
+      {"name": "source Roofer outputs reused", "passed": 22, "failed": 0},
+      {"name": "new Roofer operations executed once", "passed": 52, "failed": 0},
+      {"name": "val3dity valid unique outputs", "passed": 67, "failed": 7},
+      {"name": "597-row finalize empty-header compatibility", "passed": 0, "failed": 1},
+      {"name": "R1 Images.zip OPF.zip rehash", "passed": 0, "failed": 0}
+    ]
+  },
+  "artifacts": {
+    "required_for_task": true,
+    "availability": {"work_host": "manifest_only", "experiment_host": "verified_local"},
+    "records": [
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/freeze/all_condition_jobs_v1.jsonl",
+        "bytes": 171247,
+        "sha256": "1f3cbf8606ef9b2e8c6fbb81bd8ac616f8acfe9f208032b38ab5b3915edfa7e7",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-03T15:11:48+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/freeze/condition_components_v1.jsonl",
+        "bytes": 1961083,
+        "sha256": "421bc81800bdf2290decf708bbb169c6fbfb3b5616ae54dd11756aa09e62238a",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-03T15:11:48+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/c3_development_stage3_v1/P2-C3-DEVELOPMENT-STAGE3-v1/freeze/c3_all_jobs_v1.jsonl",
+        "bytes": 207495,
+        "sha256": "1f532af55f05eefac5dc9b1de30a0f81b7735644a2e9edcb122d745cede3d12e",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-03T15:11:48+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/c3_development_stage3_v1/P2-C3-DEVELOPMENT-STAGE3-v1/freeze/c3_condition_components_v1.jsonl",
+        "bytes": 372833,
+        "sha256": "88208b13bf909b2e8a3c5b7442ba2a11af9b75c14719b6272aeb77ecd175befe",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-03T15:11:48+09:00"
+      }
+    ]
+  },
+  "scientific": {
+    "technical_state": "blocked",
+    "scientific_verdict": null,
+    "promotion_status": "not_requested"
+  },
+  "receiver_ack": {
+    "role": "experiment_host",
+    "accepted_at": "2026-08-03T15:16:15+09:00",
+    "status": "blocked",
+    "issue": "All 74 Roofer terminals and G2 receipts are sealed. Finalize rejected a legal CityJSONSeq metadata header with empty vertices; Roofer and G2 must not be repeated, and only a reader/finalize recovery may consume these immutable ledgers."
+  }
+}
