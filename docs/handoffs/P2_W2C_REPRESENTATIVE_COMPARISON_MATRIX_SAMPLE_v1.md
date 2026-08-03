@@ -6,11 +6,12 @@
 - task_id: `P2-REPRESENTATIVE-COMPARISON-MATRIX-SAMPLE-v1`
 - phase: `P2 technical diagnostic presentation`
 - direction: `Work Host -> Experiment Host`
-- status: `DRAFT`
-- source_commit: `TO_BE_FILLED_AFTER_DRAFT_IMPLEMENTATION_REVIEW`
+- status: `APPROVED_FOR_EXECUTION`
+- source_commit: `8f70cb81dd73c0fe6b8c008f60198bbc7953313b`
 - target_branch: `main`
 - research canon: `C1C5_CANON_v2` through `DEC-P1-016`
-- user_approval: `GRANTED_IN_PRINCIPLE_FOR_THREE_BUILDING_SAMPLE; ACTIVATION_PENDING_EXACT_SOURCE_COMMIT`
+- user_approval: `GRANTED — proceed with the exact three-building qualitative/quantitative sample`
+- independent_review: `PASS — scientific scope/leakage and reproducibility/binding reviews`
 - scientific_verdict: `null`
 
 ## Goal

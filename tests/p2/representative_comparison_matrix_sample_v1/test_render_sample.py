@@ -109,9 +109,9 @@ class RepresentativeComparisonMatrixSampleTest(unittest.TestCase):
         self.assertIn("official G3/G4/PASS: <b>null</b>", card)
         self.assertIn("STRICT_INDEPENDENT_UAS_REFERENCE", card)
 
-    def test_packet_is_draft_and_forbids_reexecution(self) -> None:
+    def test_packet_is_approved_and_forbids_reexecution(self) -> None:
         text = PACKET.read_text(encoding="utf-8")
-        self.assertIn("status: `DRAFT`", text)
+        self.assertIn("status: `APPROVED_FOR_EXECUTION`", text)
         self.assertIn("Roofer, G2, metric 또는 GS training 재실행", text)
         self.assertIn("PARTIAL_NAMESPACE_PRESENT", text)
         self.assertIn("scientific_verdict: `null`", text)
