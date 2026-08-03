@@ -1,0 +1,47 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P2-W2C-REPRESENTATIVE-COMPARISON-MATRIX-SAMPLE-v3",
+  "task_id": "P2-REPRESENTATIVE-COMPARISON-MATRIX-SAMPLE-v3",
+  "created_at": "2026-08-03T18:32:00+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "offered",
+  "previous_receipt": null,
+  "transport": {"mode": "serialized_main", "branch": "main", "target_branch": "main", "exclusive_writer_ack": true},
+  "commits": {"base_main": "0fc249ecbaee2690a0f6102bbefb93522169c885", "offered_head": "SELF", "receipt_head": "SELF"},
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P2-W2C-REPRESENTATIVE-COMPARISON-MATRIX-SAMPLE-v3",
+      "artifacts/manifests/p2/representative_comparison_matrix_sample_v3",
+      "docs/experiments/p2/representative_comparison_matrix_sample_v3",
+      "docs/handoffs/returns/P2_C2W_REPRESENTATIVE_COMPARISON_MATRIX_SAMPLE_RETURN_v3.md"
+    ],
+    "protected_paths": [
+      "AGENTS.md", "CLAUDE.md", ".gitattributes", "configs", "scripts", "src", "tests",
+      "docs/research", "docs/evidence", "docs/handoffs/P2_W2C_REPRESENTATIVE_COMPARISON_MATRIX_SAMPLE_v3.md",
+      "docs/handoffs/returns/P2_C2W_REPRESENTATIVE_COMPARISON_MATRIX_SAMPLE_RETURN_v2.md",
+      "artifacts/manifests/handoffs/P2-W2C-REPRESENTATIVE-COMPARISON-MATRIX-SAMPLE-v1",
+      "artifacts/manifests/handoffs/P2-W2C-REPRESENTATIVE-COMPARISON-MATRIX-SAMPLE-v2",
+      "artifacts/manifests/p2/representative_comparison_matrix_sample_v1",
+      "artifacts/manifests/p2/representative_comparison_matrix_sample_v2", "phases"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "git_only",
+    "verifier_role": "work_host",
+    "docker_image_digest": "sha256:e50ba5c7fd493ed524212c34e5e84f48bd94e66a70e0ecb6d00269f75309f986",
+    "commands": ["Docker v3 preflight and research tests", "independent sealed-source review", "independent leakage review"],
+    "tests": [
+      {"name": "v3 focused tests", "passed": 10, "failed": 0},
+      {"name": "sealed-source preflight review", "passed": 1, "failed": 0},
+      {"name": "scientific leakage review", "passed": 1, "failed": 0}
+    ]
+  },
+  "artifacts": {"required_for_task": true, "availability": {"work_host": "manifest_only", "experiment_host": "verified_local"}, "records": []},
+  "scientific": {"technical_state": "pending", "scientific_verdict": null, "promotion_status": "not_requested"},
+  "receiver_ack": null
+}
