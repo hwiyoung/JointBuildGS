@@ -16,7 +16,7 @@ class ContractTest(unittest.TestCase):
         wrapper = (repo_root / "scripts/p2/utarget199_contract_results_v1/run_contract_host.sh").read_text(
             encoding="utf-8"
         )
-        self.assertIn("P2-W2C-UTARGET199-CONTRACT-RESULTS-RECOVERY-R1-v1/100-accepted.json", wrapper)
+        self.assertIn("P2-W2C-UTARGET199-CONTRACT-RESULTS-RECOVERY-R2-v1/100-accepted.json", wrapper)
         self.assertIn("--artifact-root /artifacts/JointBuildGS", wrapper)
 
     def test_canonical_config_is_exact_199x3(self) -> None:

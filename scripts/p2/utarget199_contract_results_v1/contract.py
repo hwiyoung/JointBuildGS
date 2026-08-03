@@ -24,9 +24,11 @@ from scripts.p2_baselines.c1_c2_feasibility_pilot_v1.contract import (
     jsonl_bytes,
     parse_jsonl,
     provisional_output_check,
-    roof_triangles,
     score_continuous,
     sha256_bytes,
+)
+from scripts.p2_baselines.c1_c2_feasibility_pilot_finalize_recovery_r4_v1.contract import (
+    roof_triangles_from_cityjsonseq,
 )
 from src.evaluation.c1_c2_dev_gate_closure_v1.evaluator import (
     cityjsonseq_feature_ids,
@@ -561,8 +563,25 @@ def finalize(
         output_dir = store.path(unit["output_directory"])
         city = _city_file(output_dir)
         check = provisional_output_check(output_dir) if city else None
-        triangles = roof_triangles(output_dir) if city and check and check["G0_generated"] else []
-        surfaces = parse_cityjsonseq_roof_surfaces(city.read_bytes(), city.name) if city else []
+        city_bytes = city.read_bytes() if city else None
+        triangles = (
+            roof_triangles_from_cityjsonseq(city.name, city_bytes)
+            if city
+            and city_bytes is not None
+            and check
+            and check["G0_generated"]
+            and check["G1_schema_semantic"]
+            else []
+        )
+        surfaces = (
+            parse_cityjsonseq_roof_surfaces(city_bytes, city.name)
+            if city
+            and city_bytes is not None
+            and check
+            and check["G0_generated"]
+            and check["G1_schema_semantic"]
+            else []
+        )
         g2 = g2_by_unit[unit_id]
         component_cache[unit_id] = {
             "terminal": terminal,
