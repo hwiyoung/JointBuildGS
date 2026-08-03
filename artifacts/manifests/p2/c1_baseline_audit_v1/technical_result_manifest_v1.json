@@ -1,0 +1,21 @@
+{
+  "schema": "jointbuildgs.p2.c1_baseline_audit.technical_result_manifest.v1",
+  "task_id": "P2-C1-BASELINE-AUDIT-v1",
+  "handoff_id": "P2-W2C-C1-BASELINE-AUDIT-v1",
+  "created_at": "2026-08-03T18:15:00+09:00",
+  "technical_state": "DIAGNOSTICS_COMPLETE_SELF_REFERENCE",
+  "scientific_verdict": null,
+  "source_commit": "ae8288b2206e40949050ae7967c411c7b034449d",
+  "offered_commit": "b4a40b8d6f2d481e8dc26e4564f67222bf79a620",
+  "accepted_commit": "0da711bd4df45ef57009a8527416ac3d91c77d3a",
+  "external_namespace": "artifact://JointBuildGS/phase-payloads/p2/c1_baseline_audit_v1/P2-C1-BASELINE-AUDIT-v1/",
+  "namespace_bytes": 82585,
+  "namespace_file_count": 6,
+  "execution_accounting": {"reconstruction_invocations": 0, "roofer_invocations": 0, "validator_invocations": 1, "large_r1_images_opf_hash_passes": 0, "validation_accesses": 0, "held_out_accesses": 0},
+  "stage_counts": {"buildings": 51, "unique_roofer_outputs": 1, "building_level_independent_outputs": 0, "G0_true": 51, "G1_true": 51, "G2_unique_unit_valid": true, "G2_inherited_true": 51, "G3_self_reference_candidate_true": 0, "G4_self_reference_candidate_true": 2, "PASS_self_reference_candidate_true": 0, "G3_official": null, "G4_official": null, "PASS_usable": null},
+  "outputs": [
+    {"path": "control/finalized_v1.json", "bytes": 922, "sha256": "c18701c056e074a348a072946fb4b4c8315c5485b34c4a9e881886f2b181b185"},
+    {"path": "results/c1_baseline_audit_v1.jsonl", "bytes": 81032, "sha256": "a4bda223f785ff7a747638959fb74de6684042472a580fba808ead7f5d4f6985"},
+    {"path": "results/c1_baseline_summary_v1.json", "bytes": 573, "sha256": "eff792c1e3a70ad1c11bc4db575673706b33bd8ef20ed7d3974580e10f6843ee"}
+  ]
+}
