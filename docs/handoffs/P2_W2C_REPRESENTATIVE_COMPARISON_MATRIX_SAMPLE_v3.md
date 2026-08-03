@@ -5,12 +5,13 @@
 - handoff_id: `P2-W2C-REPRESENTATIVE-COMPARISON-MATRIX-SAMPLE-v3`
 - task_id: `P2-REPRESENTATIVE-COMPARISON-MATRIX-SAMPLE-v3`
 - direction: `Work Host -> Experiment Host`
-- status: `DRAFT`
-- source_commit: `TO_BE_FILLED_AFTER_V3_PREFLIGHT_REVIEW`
+- status: `APPROVED_FOR_EXECUTION`
+- source_commit: `6cefb12a3b58b53e2554ea676bf40e02149911d0`
 - target_branch: `main`
 - research canon: `C1C5_CANON_v2` through `DEC-P1-016`
 - follows: `P2-W2C-REPRESENTATIVE-COMPARISON-MATRIX-SAMPLE-v2`
 - user_approval: `GRANTED — continue the representative qualitative/quantitative sample without stopping`
+- independent_review: `PASS — source-availability preflight and scientific-leakage reviews`
 - scientific_verdict: `null`
 
 ## Goal

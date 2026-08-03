@@ -166,7 +166,7 @@ class RepresentativeComparisonMatrixSampleTest(unittest.TestCase):
         self.assertIn("C1_C2_C3_SEALED_SOURCE_AVAILABLE", config_v3["selection"]["rule"])
         self.assertTrue(config_v3["output_task_relative_root"].endswith("SAMPLE-v3"))
         packet = PACKET_V3.read_text(encoding="utf-8")
-        self.assertIn("status: `DRAFT`", packet)
+        self.assertIn("status: `APPROVED_FOR_EXECUTION`", packet)
         self.assertIn("output namespace 생성 전에 exact 3×3 operation unit", packet)
 
 
