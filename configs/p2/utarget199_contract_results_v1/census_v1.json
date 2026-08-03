@@ -1,0 +1,121 @@
+{
+  "schema": "jointbuildgs.p2_utarget199_contract_results_config.v1",
+  "task_id": "P2-UTARGET199-CONTRACT-RESULTS-v1",
+  "handoff_id": "P2-W2C-UTARGET199-CONTRACT-RESULTS-v1",
+  "scope": {
+    "population": "U_target",
+    "building_count": 199,
+    "condition_ids": ["C1_L_upper", "C2_MVS", "C3_GS_image"],
+    "expected_rows": 597,
+    "pre_execution_quality_exclusion_allowed": false,
+    "missing_input_or_reference_is_retained": true,
+    "previous_split_labels_are_reported_but_not_protected": true,
+    "held_out_status_after_this_task": "OPENED_BY_EXPLICIT_HUMAN_UTARGET_CENSUS_DECISION"
+  },
+  "frame": {
+    "crs": "EPSG:25832",
+    "grid_origin_xy": [690791.74, 5335864.05],
+    "grid_cell_m": 1.0,
+    "aoi_bbox": [690791.74, 5335864.05, 691154.65, 5336353.85]
+  },
+  "inputs": {
+    "roster": {
+      "git_path": "docs/research/preregistration/gate_s0/uas_reference_coverage_r1_v1/eligibility_candidate_v1.csv",
+      "canonical_lf_bytes": 75448,
+      "canonical_lf_sha256": "527f0616eb9e5807d210ead1d165e9db844f4f0541097949e03c96229f72224f"
+    },
+    "result_contract": {
+      "git_path": "docs/research/04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md",
+      "canonical_lf_bytes": 19467,
+      "canonical_lf_sha256": "293268b435deda6d7a5b24e5fa483474632e946a8bc0d9fd629f50694bcfe1ee"
+    },
+    "c1_c2_source": {
+      "artifact_relative_root": "phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1",
+      "closed_attestation_path": "artifacts/manifests/handoffs/P2-W2C-C1-C2-FEASIBILITY-PILOT-FINALIZE-RECOVERY-R4-v1/300-closed.json",
+      "all_jobs": {"path": "freeze/all_condition_jobs_v1.jsonl", "bytes": 171247, "sha256": "1f3cbf8606ef9b2e8c6fbb81bd8ac616f8acfe9f208032b38ab5b3915edfa7e7"},
+      "components": {"path": "freeze/condition_components_v1.jsonl", "bytes": 1961083, "sha256": "421bc81800bdf2290decf708bbb169c6fbfb3b5616ae54dd11756aa09e62238a"}
+    },
+    "c3_source": {
+      "artifact_relative_root": "phase-payloads/p2/c3_development_stage3_v1/P2-C3-DEVELOPMENT-STAGE3-v1",
+      "closed_attestation_path": "artifacts/manifests/handoffs/P2-W2C-C3-DEVELOPMENT-STAGE3-RECOVERY-v1/300-closed.json",
+      "all_jobs": {"path": "freeze/c3_all_jobs_v1.jsonl", "bytes": 207495, "sha256": "1f532af55f05eefac5dc9b1de30a0f81b7735644a2e9edcb122d745cede3d12e"},
+      "components": {"path": "freeze/c3_condition_components_v1.jsonl", "bytes": 372833, "sha256": "88208b13bf909b2e8a3c5b7442ba2a11af9b75c14719b6272aeb77ecd175befe"},
+      "checkpoint": {
+        "artifact_relative_path": "phase-payloads/p2/c1_c2_g2_c3_first_wave_recovery_r4_v1/P2-C1-C2-G2-C3-FIRST-WAVE-RECOVERY-R4-v1/c3/train/seed0/ckpt/final.pt",
+        "bytes": 105664220,
+        "sha256": "bec692b0040b3b2f9226389cfd6d380f0da148b5db6f4912fe68e9d72dbb43f9",
+        "verification": "CLOSED_ATTESTATION_REUSE_SIZE_AND_SAFE_DESERIALIZATION_NO_REHASH"
+      }
+    },
+    "reference_candidate_cells": {
+      "artifact_relative_path": "phase-payloads/p0-audit/data/work/gate_s0/uas_reference_coverage_r1_v1/P2-GATE-S0-UAS-REFERENCE-COVERAGE-R1-v1/reference/reference_candidate_cells_v1.csv",
+      "bytes": 3785261,
+      "sha256": "bf87736227ea3c28bc8f966f36e2498f786d2de420a732fa0bfebbb73664275a",
+      "read_contract": "ONE_PROCESS_AND_DIGEST_STREAM_FOR_199_REFERENCE_AVAILABILITY_AND_SCORE_ROWS"
+    },
+    "rgb_context": {
+      "best_view_relative_path": "results/tum_transfer/mob/overseg_lever/population_aux_v4_bestview.json",
+      "image_directory_relative_path": "phase-payloads/p0-audit/data/work/images/Images",
+      "cameras_relative_path": "phase-payloads/p0-audit/data/work/colmap/sparse/0/cameras.txt",
+      "images_relative_path": "phase-payloads/p0-audit/data/work/colmap/sparse/0/images.txt",
+      "scene_reference_relative_path": "phase-payloads/p0-audit/data/work/opf/opf/scene_reference_frame.json",
+      "role": "QUALITATIVE_DISPLAY_ONLY_NEVER_RECONSTRUCTION_OR_SELECTION"
+    }
+  },
+  "association": {
+    "timing": "AFTER_SOURCE_COMPONENT_AND_R_DERIVED_FREEZE",
+    "rule": "MAX_METHOD_CELL_CENTER_COUNT_INSIDE_STABLE_BUILDING_BBOX_THEN_MIN_COMPONENT_ID",
+    "bbox_role": "IDENTITY_AND_DISPLAY_ONLY_NO_GEOMETRY_CROP_OR_R_DERIVED_CHANGE",
+    "shared_or_multi_component_building_g0": false,
+    "unassociated_building_g0": false
+  },
+  "roofer": {
+    "image": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+    "command_args": ["--id-attribute", "component_id", "--jobs", "1", "--srs", "EPSG:25832", "--bld-class", "6", "--grnd-class", "2", "--lod22"],
+    "reuse_completed_source_outputs": true,
+    "quality_driven_retry_allowed": false,
+    "timeout_seconds_per_unit": 600
+  },
+  "evaluation": {
+    "criterion_version": "C1C5_CANON_v2_UTARGET199_DIAGNOSTIC_v1",
+    "official_G3_G4_PASS": null,
+    "official_null_reason": "NUMERICAL_CRITERION_AND_G3_MATCHER_NOT_FROZEN",
+    "candidate_G3": {
+      "normal_angle_degrees_max": 15.0,
+      "bilateral_support_overlap_min": 0.5,
+      "roof_plane_completeness_min": 0.8,
+      "roof_plane_correctness_min": 0.8,
+      "roof_plane_quality_min": 0.6666666666666666,
+      "oversegmentation_max": 0.25,
+      "undersegmentation_max": 0.25
+    },
+    "candidate_G4": {
+      "reference_vertical_coverage_min": 0.8,
+      "height_error_mae_m_max": 1.0,
+      "RMSZ_m_max": 1.0,
+      "RMSXY_m_max": 1.0,
+      "surface_distance_rmse_m_max": 1.0,
+      "surface_distance_p95_m_max": 2.0
+    },
+    "c1_reference_role": "SELF_REFERENCE_DIAGNOSTIC_ONLY",
+    "c2_c3_reference_role": "UAS_PATCH_CANDIDATE_SCORE_ONLY",
+    "strict_independent_reference_buildings": 10,
+    "reference_candidate_buildings": 72
+  },
+  "outputs": {
+    "building_method_metrics": "results/building_method_metrics_v1.jsonl",
+    "acceptance_gates": "results/building_acceptance_gates_v1.csv",
+    "method_summary": "results/method_summary_v1.csv",
+    "gate_funnel": "results/gate_funnel_v1.csv",
+    "population_funnel": "results/population_funnel_v1.csv",
+    "case_sheets_directory": "qualitative/case_sheets",
+    "gallery": "qualitative/index.html",
+    "all_199_case_sheets_required": true
+  },
+  "caps": {
+    "wall_clock_seconds_hard": 43200,
+    "new_output_bytes_hard": 5000000000,
+    "cpu_only": true
+  },
+  "scientific_verdict": null
+}

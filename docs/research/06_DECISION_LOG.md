@@ -547,6 +547,31 @@
 - 결과는 component multiplicity, unique Roofer operation 결과, development 51행의
   nullable technical table과 한글 설명을 포함한다.
 
+## DEC-P1-015 — U_target 199동 C1/C2/C3 전수 기술 실행과 계약 결과 생성
+
+- **Decision ID:** `DEC-P1-015`
+- **Date:** 2026-08-03
+- **Status:** `USER-APPROVED U_TARGET CENSUS EXECUTION`
+- **Previous state:** `DEC-P1-013`과 `DEC-P1-014`가 기존 72동 후보 중 development
+  51동만 열고 validation 11동과 held-out 10동을 보호했다. 127동은 방법 실패가 아니라
+  reference/input eligibility 부족으로 실행 분모 밖에 있었다.
+- **New decision:** C1/C2/C3의 현재 동결 구현을 `U_target=199` 전 건물에 적용한다.
+  입력 또는 UAS reference 부족은 사전 제외하지 않고 건물×방법 결과 행의 명시적
+  missing/failure로 유지한다. 결과는
+  `04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md`의 단계별 metric/gate 표와 Sheet A/B/C를
+  199동 전수에 생성한다.
+- **Evidence:** 사용자의 2026-08-03 명시적 지시: “199동에 대해서 전체로 일단
+  수행”하고 계약 산출물을 직접 생성할 것.
+- **Consequence:** 기존 validation/held-out membership은 이 전수 기술 실행으로
+  열리므로 더 이상 미열람 confirmatory test라고 주장하지 않는다. 후속 최종 일반화
+  주장은 새 독립 test set 또는 별도 승인된 검증 설계가 필요하다.
+- **Execution boundary:** C1/C2/C3만 실행한다. C4/C5 성능, Fusion W1, R_ext는 실행하지
+  않는다. 이미 봉인된 component/Roofer 결과와 checkpoint를 우선 재사용하고 중복
+  Roofer 실행 및 R1/Images.zip/OPF.zip 재해시를 금지한다.
+- **Verdict:** numerical G3/G4 criterion freeze 전 공식 `PASS_usable`은 null이다.
+  동일 수치의 diagnostic candidate gate와 연속 metric은 함께 보고한다.
+- **Scientific verdict:** `null`
+
 ## Pending decisions not yet logged as adopted
 
 다음은 선택지가 정리되었으나 사용자 결정 전이므로 adopted decision이 아니다.
