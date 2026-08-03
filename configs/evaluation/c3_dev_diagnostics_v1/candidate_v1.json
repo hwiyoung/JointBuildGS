@@ -1,0 +1,65 @@
+{
+  "schema": "jointbuildgs.c3_dev_diagnostics_candidate.v1",
+  "status": "DEVELOPMENT_DIAGNOSTIC_ONLY",
+  "task_id": "P2-C3-DEVELOPMENT-EVALUATION-CANDIDATE-v1",
+  "scope": {
+    "split": "development",
+    "building_count": 51,
+    "condition_ids": ["C1_L_upper", "C2_MVS", "C3_GS_image"],
+    "validation_allowed": false,
+    "held_out_allowed": false
+  },
+  "inputs": {
+    "score_cells": {
+      "bytes": 10868613,
+      "sha256": "de7c02e2a286fa05c34301aae9de625637cf6fb8c07b5f2969141fd20b0d5a59"
+    },
+    "c1_c2_diagnostics": {
+      "bytes": 172023,
+      "sha256": "88ba95b5138d2f6d58ca380bf8551480df9f034fc90140f5d720ba9704b5c42e"
+    }
+  },
+  "gates": {
+    "G2": {
+      "validator": "val3dity",
+      "version": "2.6.0",
+      "container_image_ref": "jointbuildgs-p0-tools:t0",
+      "container_image_id": "sha256:02b4b7bb2e35e9b88bcc8457678ed8f178cca8f76f22b1b62f02721359e46be8",
+      "command": ["val3dity", "--overlap_tol", "-1.0", "--planarity_d2p_tol", "0.01", "--planarity_n_tol", "20.0", "--snap_tol", "0.001", "stdin"]
+    },
+    "G3": {
+      "matching_version": "UAS_PATCH_TO_ROOFER_ROOFSURFACE_GRID_BILATERAL_v1",
+      "grid_cell_m": 1.0,
+      "grid_origin_xy": [690791.74, 5335864.05],
+      "matching_normal_angle_degrees_max": 15.0,
+      "bilateral_support_overlap_min": 0.5,
+      "candidate_thresholds": {
+        "roof_plane_completeness_min": 0.8,
+        "roof_plane_correctness_min": 0.8,
+        "roof_plane_quality_min": 0.6666666666666666,
+        "oversegmentation_max": 0.25,
+        "undersegmentation_max": 0.25
+      },
+      "threshold_status": "DIAGNOSTIC_ONLY_MATCHER_NOT_FROZEN"
+    },
+    "G4": {
+      "candidate_thresholds": {
+        "reference_vertical_coverage_min": 0.8,
+        "height_error_mae_m_max": 1.0,
+        "RMSZ_m_max": 1.0,
+        "surface_distance_rmse_m_max": 1.0,
+        "surface_distance_p95_m_max": 2.0
+      },
+      "threshold_status": "DIAGNOSTIC_ONLY_ABSOLUTE_Z_NOT_FROZEN"
+    }
+  },
+  "representative_buildings": [
+    "DEBY_LOD2_4906981",
+    "DEBY_LOD2_4906982",
+    "DEBY_LOD2_4959314",
+    "DEBY_LOD2_4959327",
+    "DEBY_LOD2_4959461"
+  ],
+  "PASS_usable": null,
+  "scientific_verdict": null
+}
