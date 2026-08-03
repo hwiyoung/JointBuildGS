@@ -1,0 +1,125 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P2-W2C-C3-2-GPU0-RECOVERY-v1",
+  "task_id": "P2-C1-C2-C3-UTARGET199-C3-2-GPU0-RECOVERY-v1",
+  "created_at": "2026-08-04T03:56:43+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "closed",
+  "previous_receipt": {
+    "path": "artifacts/manifests/handoffs/P2-W2C-C3-2-GPU0-RECOVERY-v1/200-blocked.json",
+    "sha256": "64e51e1c340cf6e818e5a7870d0b28c648f02d05edfea65369401547ea2321ef"
+  },
+  "transport": {
+    "mode": "serialized_main",
+    "branch": "main",
+    "target_branch": "main",
+    "exclusive_writer_ack": true
+  },
+  "commits": {
+    "base_main": "e61c80af53ecc17df6a18c26ef11ad00167d578a",
+    "offered_head": "fe5063629fe07df917d8ec82c598a1eba034d948",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P2-W2C-C3-2-GPU0-RECOVERY-v1",
+      "artifacts/manifests/p2/c1_c2_c3_utarget199_v1",
+      "docs/experiments/p2/c1_c2_c3_utarget199_v1",
+      "docs/handoffs/returns/P2_C2W_C1_C2_C3_UTARGET199_RETURN_v1.md"
+    ],
+    "protected_paths": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      ".gitattributes",
+      "configs",
+      "scripts",
+      "src",
+      "tests",
+      "docs/research",
+      "docs/evidence",
+      "phases",
+      "docs/handoffs/P2_W2C_C3_2_GPU0_RECOVERY_v1.md"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "artifact_verified",
+    "verifier_role": "experiment_host",
+    "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "commands": [
+      "verify direct-child closure of the blocked pre-namespace launcher event",
+      "inherit unchanged accepted input attestation",
+      "return writer ownership without modifying artifacts"
+    ],
+    "tests": [
+      {
+        "name": "blocked receipt lineage",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "accepted-to-closed artifact attestation unchanged",
+        "passed": 3,
+        "failed": 0
+      },
+      {
+        "name": "artifact mutations",
+        "passed": 0,
+        "failed": 0
+      },
+      {
+        "name": "scientific verdict null",
+        "passed": 1,
+        "failed": 0
+      }
+    ]
+  },
+  "artifacts": {
+    "required_for_task": true,
+    "availability": {
+      "work_host": "manifest_only",
+      "experiment_host": "verified_local"
+    },
+    "records": [
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-TORCH-CACHE-RECOVERY-v1/c3/c3_1_sem/seed0/ckpt/final.pt",
+        "bytes": 86802780,
+        "sha256": "b4f8ce6d97da6d7cef216b4edb3239ac005cc44f4d45cb459a25644ed79b62ea",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-04T03:54:15+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-FRAME-RECOVERY-v1/c3/common/neutral_dense_seed.ply",
+        "bytes": 1242719,
+        "sha256": "ad7d1192de507a4834181d8b61a50431829b3413bf8425497507c2396feabdc4",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-04T03:54:15+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_g2_c3_first_wave_recovery_r4_v1/P2-C1-C2-G2-C3-FIRST-WAVE-RECOVERY-R4-v1/c3/prep/semantic_937_colmap_undistorted_r2/output/manifest.json",
+        "bytes": 1391664,
+        "sha256": "3e8b8deb373c5cfb4da4818df860c8dffe24f990485b6143863ad42dadbda7ca",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-04T03:54:15+09:00"
+      }
+    ]
+  },
+  "scientific": {
+    "technical_state": "blocked",
+    "scientific_verdict": null,
+    "promotion_status": "not_requested"
+  },
+  "receiver_ack": {
+    "role": "experiment_host",
+    "accepted_at": "2026-08-04T03:56:43+09:00",
+    "status": "closed",
+    "issue": "Blocked launcher event closed without an artifact namespace; follow-up uses Docker direct-bind for the inherited semantic directory."
+  }
+}
