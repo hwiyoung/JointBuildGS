@@ -22,13 +22,16 @@
 종료됐다. 이 recovery는 연구 설계나 입력을 바꾸지 않고 그 연결만 바로잡아, 이미
 학습된 C3 seed-0 30k checkpoint의 실제 Stage 3 결과를 만든다.
 
-필수 결과는 다음 다섯 가지다.
+이번 recovery의 필수 결과는 다음 다섯 가지다.
 
 1. C3 component별 surface와 Roofer CityGML
-2. 동일 development 51개 건물 전부의 G0--G4 상태와 평가 불가 사유
-3. G0--G4 단계별 잔존 수와 최종 `PASS_usable` 수
-4. 동일 건물에 대한 C1/C2/C3 정량 비교에 결합 가능한 C3 행
-5. 실제 C1/C2/C3 Roofer 모델의 성공·경계·실패 정성 비교판을 만들 수 있는 출력
+2. 동일 development 51개 건물의 component 연결 상태와 평가 불가 사유
+3. component G0/G1 및 일대일 연결 건물 G0/G1의 기술 집계
+4. G2--G4와 `PASS_usable`을 `null/PENDING`으로 유지한 51개 기술 상태표
+5. 후속 동일 건물 G2--G4 평가와 C1/C2/C3 정량·정성 비교판에 사용할 원시 출력
+
+이번 recovery는 최종 성공 수를 판정하지 않는다. 다만 기존에 없던 C3 Roofer 모델을
+생성하므로, 이 출력 없이는 수행할 수 없던 후속 G2--G4 평가의 직접 입력이 된다.
 
 ## 고정 입력과 재사용
 
