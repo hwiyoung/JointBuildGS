@@ -21,8 +21,10 @@ grep -Fq "source_commit: \`${SOURCE_COMMIT}\`" "${REPO}/${PACKET}"
 
 docker run --rm --network none --entrypoint /opt/conda/bin/python \
   -e GIT_CONFIG_COUNT=1 -e GIT_CONFIG_KEY_0=safe.directory -e GIT_CONFIG_VALUE_0=/workspace/JointBuildGS \
-  -v "${REPO}:/workspace/JointBuildGS:ro" -w /workspace/JointBuildGS "${PROJECT_IMAGE_ID}" \
-  scripts/repository/validate_two_host_handoff.py "${RECEIPT}" --repo . --origin-ref origin/main --head-ref HEAD
+  -v "${REPO}:/workspace/JointBuildGS:ro" -v "${ARTIFACT_ROOT}:/artifacts/JointBuildGS:ro" \
+  -w /workspace/JointBuildGS "${PROJECT_IMAGE_ID}" \
+  scripts/repository/validate_two_host_handoff.py "${RECEIPT}" --repo . \
+  --origin-ref origin/main --head-ref HEAD --artifact-root /artifacts/JointBuildGS
 [[ "$(docker image inspect --format '{{.Id}}' "${VAL3DITY_IMAGE}")" == "${EXPECTED_VAL3DITY_ID}" ]]
 [[ ! -e "${TASK_ROOT}" ]]
 mkdir -p "${TASK_ROOT}"
