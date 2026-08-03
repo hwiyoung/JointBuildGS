@@ -1,0 +1,143 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P2-W2C-C3-DEVELOPMENT-STAGE3-RECOVERY-v1",
+  "task_id": "P2-C3-DEVELOPMENT-STAGE3-v1",
+  "created_at": "2026-08-03T13:55:00+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "verified",
+  "previous_receipt": {
+    "path": "artifacts/manifests/handoffs/P2-W2C-C3-DEVELOPMENT-STAGE3-RECOVERY-v1/100-accepted.json",
+    "sha256": "2c742f4e4c04e860f359b7d2e01580d4f3859af5a7d9b51fefc017db4a8e95f2"
+  },
+  "transport": {
+    "mode": "serialized_main",
+    "branch": "main",
+    "target_branch": "main",
+    "exclusive_writer_ack": true
+  },
+  "commits": {
+    "base_main": "5be5f13308b11453cf9d238f453783940b365c8c",
+    "offered_head": "f4a7894e9415e51b4f3c5d80973f650743b11a2a",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P2-W2C-C3-DEVELOPMENT-STAGE3-RECOVERY-v1",
+      "artifacts/manifests/p2/c3_development_stage3_recovery_v1",
+      "docs/experiments/p2/c3_development_stage3_recovery_v1",
+      "docs/handoffs/returns/P2_C2W_C3_DEVELOPMENT_STAGE3_RECOVERY_RETURN_v1.md"
+    ],
+    "protected_paths": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      ".gitattributes",
+      "configs",
+      "scripts",
+      "src",
+      "tests",
+      "docs/research",
+      "docs/evidence",
+      "docs/handoffs/P2_W2C_C3_DEVELOPMENT_STAGE3_RECOVERY_v1.md",
+      "docs/handoffs/P2_W2C_C3_DEVELOPMENT_STAGE3_v1.md",
+      "docs/handoffs/returns/P2_C2W_C3_DEVELOPMENT_STAGE3_RETURN_v1.md",
+      "artifacts/manifests/gate_s0",
+      "artifacts/manifests/handoffs/P2-W2C-C3-DEVELOPMENT-STAGE3-v1",
+      "artifacts/manifests/p2/c3_development_stage3_v1",
+      "docs/experiments/p2/c3_development_stage3_v1",
+      "phases"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "artifact_verified",
+    "verifier_role": "experiment_host",
+    "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "commands": [
+      "validate recovery accepted authority using closed attestation without payload rehash",
+      "materialize the exact R4 checkpoint once and freeze all C3 geometry before score access",
+      "read and digest the exact R3 development score cells once for association",
+      "run each of 18 unique Roofer operation units once and verify every terminal output tree",
+      "finalize all 51 technical rows and stage counts"
+    ],
+    "tests": [
+      {
+        "name": "checkpoint safe deserialization",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "frozen C3 components",
+        "passed": 202,
+        "failed": 0
+      },
+      {
+        "name": "unique Roofer terminal receipts",
+        "passed": 18,
+        "failed": 0
+      },
+      {
+        "name": "development technical rows",
+        "passed": 51,
+        "failed": 0
+      },
+      {
+        "name": "validation held-out C4 C5 Fusion R_ext accesses",
+        "passed": 0,
+        "failed": 0
+      },
+      {
+        "name": "prohibited large R1 Images OPF hash passes",
+        "passed": 0,
+        "failed": 0
+      }
+    ]
+  },
+  "artifacts": {
+    "required_for_task": true,
+    "availability": {
+      "work_host": "manifest_only",
+      "experiment_host": "verified_local"
+    },
+    "records": [
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_g2_c3_first_wave_recovery_r4_v1/P2-C1-C2-G2-C3-FIRST-WAVE-RECOVERY-R4-v1/c3/train/seed0/ckpt/final.pt",
+        "bytes": 105664220,
+        "sha256": "bec692b0040b3b2f9226389cfd6d380f0da148b5db6f4912fe68e9d72dbb43f9",
+        "verification_method": "closed_attestation_reuse",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-03T13:03:00+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2-baselines/c1_c2_feasibility_pilot_recovery_r3_v1/P2-C1-C2-FEASIBILITY-PILOT-RECOVERY-R3-v1/freeze/development_score_cells_v1.jsonl",
+        "bytes": 10868613,
+        "sha256": "de7c02e2a286fa05c34301aae9de625637cf6fb8c07b5f2969141fd20b0d5a59",
+        "verification_method": "closed_attestation_reuse",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-03T13:03:00+09:00"
+      }
+    ],
+    "attestation_reuse": {
+      "source_handoff_id": "P2-W2C-C3-DEVELOPMENT-STAGE3-v1",
+      "source_task_id": "P2-C3-DEVELOPMENT-STAGE3-v1",
+      "source_receipt_path": "artifacts/manifests/handoffs/P2-W2C-C3-DEVELOPMENT-STAGE3-v1/300-closed.json",
+      "source_receipt_commit": "89342a92895c014bffd4495fe85ea8cdebfa2023",
+      "source_receipt_sha256": "906e5f201762b7dc292ddec9fd6d1531ff3773aba0d376d365d90b44c2a17b90",
+      "record_identity_sha256": "f8f0dcf379936b804e09cab9eb60bcd76a2cb0bd90de43845c56ebc3f64f0a0b"
+    }
+  },
+  "scientific": {
+    "technical_state": "complete",
+    "scientific_verdict": null,
+    "promotion_status": "not_requested"
+  },
+  "receiver_ack": {
+    "role": "experiment_host",
+    "accepted_at": "2026-08-03T13:55:00+09:00",
+    "status": "verified",
+    "issue": "C3 Stage-3 raw outputs and G0/G1 technical diagnostics are complete. G2-G4 and PASS_usable remain null/PENDING by scope and require the next bounded evaluation task."
+  }
+}

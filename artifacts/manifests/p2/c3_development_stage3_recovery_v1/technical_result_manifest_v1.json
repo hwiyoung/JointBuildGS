@@ -1,0 +1,87 @@
+{
+  "schema": "jointbuildgs.p2.c3_development_stage3_recovery.technical_result_manifest.v1",
+  "task_id": "P2-C3-DEVELOPMENT-STAGE3-v1",
+  "handoff_id": "P2-W2C-C3-DEVELOPMENT-STAGE3-RECOVERY-v1",
+  "created_at": "2026-08-03T13:55:00+09:00",
+  "technical_state": "COMPLETE",
+  "scientific_verdict": null,
+  "source_commit": "9f223911a38cb40028e974d706dffa2f28937201",
+  "offered_commit": "f4a7894e9415e51b4f3c5d80973f650743b11a2a",
+  "accepted_commit": "3c856b117d5e72a2dcf7f2fc80655ddcb143443c",
+  "external_namespace": "artifact://JointBuildGS/phase-payloads/p2/c3_development_stage3_v1/P2-C3-DEVELOPMENT-STAGE3-v1/",
+  "namespace_bytes": 10279638,
+  "namespace_file_count": 486,
+  "execution_accounting": {
+    "checkpoint_deserializations": 1,
+    "checkpoint_full_hash_passes": 0,
+    "development_score_cell_full_read_and_digest_passes": 1,
+    "large_r1_images_opf_hash_passes": 0,
+    "source_primitives": 406337,
+    "stored_stage2_groups": 812,
+    "stored_grouped_primitives": 319698,
+    "materialized_points": 51009,
+    "components": 202,
+    "roofer_eligible_components": 200,
+    "unique_roofer_operations": 18,
+    "duplicate_roofer_calculations_prevented": 19,
+    "roofer_terminal_receipts": 18,
+    "cityjsonsequence_outputs": 18,
+    "development_rows": 51,
+    "validation_payload_accesses": 0,
+    "held_out_payload_accesses": 0,
+    "c1_c2_reconstruction_or_roofer_invocations": 0
+  },
+  "stage_counts": {
+    "associated_buildings": 37,
+    "development_buildings": 51,
+    "one_to_one_building_component": 6,
+    "component_G0_true": 16,
+    "component_G0_denominator": 18,
+    "component_G1_true": 18,
+    "component_G1_denominator": 18,
+    "building_G0_true": 5,
+    "building_G0_evaluable": 6,
+    "building_G1_true": 6,
+    "building_G1_evaluable": 6,
+    "G2": null,
+    "G3": null,
+    "G4": null,
+    "PASS_usable": null
+  },
+  "component_G0_false_operation_units": [
+    "C3_GS_image|C3_GS_image_COMP_4e02547eef70fff90c52",
+    "C3_GS_image|C3_GS_image_COMP_a668b6bac9cea7a36110"
+  ],
+  "outputs": [
+    {
+      "path": "control/c3_geometry_frozen_v1.json",
+      "bytes": 3175,
+      "sha256": "cd5184277078456f75599b2220ec7681db13fcbbbb76ade55b7c3fcf36b30427"
+    },
+    {
+      "path": "control/c3_development_associated_v1.json",
+      "bytes": 1285,
+      "sha256": "6973b27781792da0a1f0f4159026c3048d83a3ba522f9c65a487f2e3dca7b97d"
+    },
+    {
+      "path": "control/c3_development_technical_finalized_v1.json",
+      "bytes": 1036,
+      "sha256": "335f56c81a7b224f3b893fd0be5d35f1643b658da8731c8fd38797331d10d97f"
+    },
+    {
+      "path": "results/c3_operation_technical_checks_v1.jsonl",
+      "bytes": 11852,
+      "sha256": "47375ac365790f0361dc513977d9bfc025c4b3e15799d1abc7018f60b0d98baf"
+    },
+    {
+      "path": "results/development_technical_results_v1.jsonl",
+      "bytes": 73295,
+      "sha256": "df859a35ecc52e73f6fe9127181905029f6ce4dd9b4f53fe350e42c6f1597c60"
+    },
+    {
+      "path": "results/stage_counts_v1.csv",
+      "bytes": 1148,
+      "sha256": "f12cd40f678c5d74726a197fa62d812a67c2fa290a0a941f0464965c2652ffbd"
+    }
+  ]
+}
