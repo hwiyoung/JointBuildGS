@@ -1,0 +1,73 @@
+{
+  "schema": "jointbuildgs.p2.c1_c2_c3_utarget199.technical_result_manifest.v1",
+  "task_id": "P2-C1-C2-C3-UTARGET199-v1",
+  "created_at": "2026-08-04T05:56:21+09:00",
+  "technical_state": "COMPLETE",
+  "scientific_verdict": null,
+  "official_G3_G4_PASS_usable": null,
+  "project_image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+  "implementation_commits": {
+    "c1_c2_sample": "f3c1c8c23f711232d4f37073c0867028a5d41731",
+    "c3_pair_activation": "37f13426582a2abebe37b0e87420ab565dd86422",
+    "c3_postprocess_activation": "5030d90a85942225a6fceb6281b6e07facf42a31",
+    "c3_render_recovery": "99450c4c079da59726095a0bf5ca2433fd6dc7e4"
+  },
+  "c1_c2": {
+    "artifact_root": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_comparison_matrix_sample_v6/P2-C1-C2-COMPARISON-MATRIX-SAMPLE-v6",
+    "case_count": 3,
+    "panel_count": 60,
+    "quantitative_rows": 6,
+    "display_methods": ["C1_L_upper", "C2_MVS"],
+    "scientific_verdict": null
+  },
+  "c3_training": {
+    "artifact_root": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-C3-2-GPU0-RECOVERY-v1",
+    "common_seed": {
+      "seed": 0,
+      "sfm_sparse_points": 371808,
+      "neutral_dense_representatives": 103546,
+      "initial_primitives": 475354,
+      "exact_common_base_views": 937
+    },
+    "conditions": [
+      {
+        "condition_id": "C3_1_SEM",
+        "iteration": 30000,
+        "primitive_count": 333738,
+        "runtime_minutes": 129.9,
+        "checkpoint": {
+          "uri": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-C3-2-GPU0-RECOVERY-v1/c3/c3_1_sem/seed0/ckpt/final.pt",
+          "bytes": 86802780,
+          "sha256": "b4f8ce6d97da6d7cef216b4edb3239ac005cc44f4d45cb459a25644ed79b62ea"
+        }
+      },
+      {
+        "condition_id": "C3_2_SEM_DEPTH",
+        "iteration": 30000,
+        "primitive_count": 396146,
+        "runtime_minutes": 86.6,
+        "checkpoint": {
+          "uri": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-C3-2-GPU0-RECOVERY-v1/c3/c3_2_sem_depth/seed0/ckpt/final.pt",
+          "bytes": 103049692,
+          "sha256": "9bda046e2414a841e289f5d9ed0c5eaf18511445f9c52638b543cd4d52ecea12"
+        }
+      }
+    ],
+    "pair_completion": {
+      "uri": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-C3-2-GPU0-RECOVERY-v1/control/c3_pair_completion.json",
+      "bytes": 849,
+      "sha256": "d658dcfe1b5b9726630f0a80ecbb0c7bc76f94a5a9afe21e353e66c9d9cdc5ef"
+    }
+  },
+  "execution_accounting": {
+    "c1_c2_roofer_invocations": 0,
+    "c1_c2_g2_invocations": 0,
+    "c1_c2_gs_training_invocations": 0,
+    "c1_c2_metric_recomputations": 0,
+    "c3_gs_training_invocations": 2,
+    "c3_training_restarts": 0,
+    "c3_training_oom_events": 0,
+    "g2_invocations": 0,
+    "c4_c5_accesses": 0
+  }
+}
