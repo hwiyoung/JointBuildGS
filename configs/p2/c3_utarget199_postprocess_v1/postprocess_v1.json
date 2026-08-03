@@ -1,24 +1,24 @@
 {
   "schema": "jointbuildgs.p2.c3_utarget199_postprocess_config.v1",
   "task_id": "P2-C3-UTARGET199-POSTPROCESS-v1",
-  "status": "DRAFT_AWAITING_EXACT_PAIRED_CHECKPOINT_BINDING",
+  "status": "APPROVED_FOR_EXECUTION",
   "output_relative_root": "phase-payloads/p2/c3_utarget199_postprocess_v1/P2-C3-UTARGET199-POSTPROCESS-v1",
-  "source_training_task_relative_root": "phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-TORCH-CACHE-RECOVERY-v1",
+  "source_training_task_relative_root": "phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-C3-2-GPU0-RECOVERY-v1",
   "conditions": [
     {
       "condition_id": "C3_1_SEM",
       "title": "C3-1 2DGS + semantic",
       "checkpoint_relative_path": "c3/c3_1_sem/seed0/ckpt/final.pt",
-      "expected_bytes": null,
-      "expected_sha256": null,
+      "expected_bytes": 86802780,
+      "expected_sha256": "b4f8ce6d97da6d7cef216b4edb3239ac005cc44f4d45cb459a25644ed79b62ea",
       "expected_iteration": 30000
     },
     {
       "condition_id": "C3_2_SEM_DEPTH",
       "title": "C3-2 2DGS + semantic + image-derived MVS depth",
       "checkpoint_relative_path": "c3/c3_2_sem_depth/seed0/ckpt/final.pt",
-      "expected_bytes": null,
-      "expected_sha256": null,
+      "expected_bytes": 103049692,
+      "expected_sha256": "9bda046e2414a841e289f5d9ed0c5eaf18511445f9c52638b543cd4d52ecea12",
       "expected_iteration": 30000
     }
   ],

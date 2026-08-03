@@ -35,7 +35,7 @@ def tiny_state() -> dict[str, torch.Tensor]:
 
 
 class C3Utarget199PostprocessContractTest(unittest.TestCase):
-    def test_draft_config_has_exact_scope_and_closed_scientific_boundary(self) -> None:
+    def test_activated_config_has_exact_scope_and_closed_scientific_boundary(self) -> None:
         config = load_config()
         result = validate_config(config, require_activation=False)
         self.assertEqual(result["condition_ids"], ["C3_1_SEM", "C3_2_SEM_DEPTH"])
@@ -47,8 +47,11 @@ class C3Utarget199PostprocessContractTest(unittest.TestCase):
         self.assertIsNone(config["official_G3_G4_PASS_usable"])
 
     def test_activation_requires_exact_checkpoint_bindings(self) -> None:
+        self.assertEqual(validate_config(load_config())["status"], "PASS")
+        draft = json.loads(json.dumps(load_config()))
+        draft["status"] = "DRAFT_AWAITING_EXACT_PAIRED_CHECKPOINT_BINDING"
         with self.assertRaisesRegex(RuntimeError, "not activated"):
-            validate_config(load_config())
+            validate_config(draft)
         config = json.loads(json.dumps(load_config()))
         config["status"] = "APPROVED_FOR_EXECUTION"
         for row in config["conditions"]:
