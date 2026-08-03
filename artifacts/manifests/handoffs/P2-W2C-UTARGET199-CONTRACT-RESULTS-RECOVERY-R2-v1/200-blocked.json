@@ -1,0 +1,109 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P2-W2C-UTARGET199-CONTRACT-RESULTS-RECOVERY-R2-v1",
+  "task_id": "P2-UTARGET199-CONTRACT-RESULTS-RECOVERY-R2-v1",
+  "created_at": "2026-08-03T15:29:04+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "blocked",
+  "previous_receipt": {
+    "path": "artifacts/manifests/handoffs/P2-W2C-UTARGET199-CONTRACT-RESULTS-RECOVERY-R2-v1/100-accepted.json",
+    "sha256": "eb2cf199d9500d2503b8850fb09dae02012785607963a7933aa1240d7cac915f"
+  },
+  "transport": {"mode": "serialized_main", "branch": "main", "target_branch": "main", "exclusive_writer_ack": true},
+  "commits": {
+    "base_main": "ebd189e37a39142011bf4bef08546f36e8b9eef4",
+    "offered_head": "9f218608475121286a0592972ded92dff6ac5e1e",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P2-W2C-UTARGET199-CONTRACT-RESULTS-RECOVERY-R2-v1",
+      "artifacts/manifests/p2/utarget199_contract_results_v1",
+      "docs/experiments/p2/utarget199_contract_results_v1",
+      "docs/handoffs/returns/P2_C2W_UTARGET199_CONTRACT_RESULTS_RECOVERY_R2_RETURN_v1.md"
+    ],
+    "protected_paths": [
+      "AGENTS.md", "CLAUDE.md", ".gitattributes", "configs", "scripts", "src", "tests",
+      "docs/research", "docs/evidence", "docs/handoffs/P2_W2C_UTARGET199_CONTRACT_RESULTS_RECOVERY_R2_v1.md",
+      "docs/handoffs/returns/P2_C2W_UTARGET199_CONTRACT_RESULTS_RECOVERY_R1_RETURN_v1.md",
+      "artifacts/manifests/handoffs/P2-W2C-UTARGET199-CONTRACT-RESULTS-v1",
+      "artifacts/manifests/handoffs/P2-W2C-UTARGET199-CONTRACT-RESULTS-RECOVERY-R1-v1",
+      "artifacts/manifests/gate_s0", "phases"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "artifact_verified",
+    "verifier_role": "experiment_host",
+    "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "commands": [
+      "run finalize-only recovery once with zero Roofer and zero G2 invocations",
+      "preserve add-once restart refusal without deleting or overwriting the existing reference ledger",
+      "validate blocked chain with unchanged accepted artifact evidence"
+    ],
+    "tests": [
+      {"name": "Roofer re-executions", "passed": 0, "failed": 0},
+      {"name": "G2 re-executions", "passed": 0, "failed": 0},
+      {"name": "empty-header parser regression suite", "passed": 27, "failed": 0},
+      {"name": "add-once restart reference reuse", "passed": 0, "failed": 1},
+      {"name": "deleted or overwritten sealed artifacts", "passed": 0, "failed": 0}
+    ]
+  },
+  "artifacts": {
+    "required_for_task": true,
+    "availability": {"work_host": "manifest_only", "experiment_host": "verified_local"},
+    "records": [
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/utarget199_contract_results_v1/P2-UTARGET199-CONTRACT-RESULTS-v1/control/prepared_v1.json",
+        "bytes": 1742,
+        "sha256": "c5ce7d76c1ae7d06f4381814bd46656b9a73122355aaa06428b97d5c2abcf5c8",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-03T15:16:15+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/utarget199_contract_results_v1/P2-UTARGET199-CONTRACT-RESULTS-v1/freeze/execution_units_v1.jsonl",
+        "bytes": 30446,
+        "sha256": "3763ca747d80d1a83a80b8c7e5add866753fbde58be3ea3dcf5ac3849427f2d7",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-03T15:16:15+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/utarget199_contract_results_v1/P2-UTARGET199-CONTRACT-RESULTS-v1/freeze/utarget199_association_v1.jsonl",
+        "bytes": 576254,
+        "sha256": "15e51c8436c3c8f86d2e3b0dd388ffab560b67d9e1ccb1b31f916d583ca37ff3",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-03T15:16:15+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/utarget199_contract_results_v1/P2-UTARGET199-CONTRACT-RESULTS-v1/freeze/utarget199_reference_cells_v1.jsonl",
+        "bytes": 11934242,
+        "sha256": "ae62bc358dfdde604892305d44f3ff599288f00234a1622292d75596ba952f22",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-03T15:16:15+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/utarget199_contract_results_v1/P2-UTARGET199-CONTRACT-RESULTS-v1/results/g2_unique_operation_receipts_v1.jsonl",
+        "bytes": 51508,
+        "sha256": "9d2b839ac156dbae1f688d5dcafc23084e9b624bae23efe7d268fa7aa283bedc",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-03T15:16:15+09:00"
+      }
+    ]
+  },
+  "scientific": {"technical_state": "blocked", "scientific_verdict": null, "promotion_status": "not_requested"},
+  "receiver_ack": {
+    "role": "experiment_host",
+    "accepted_at": "2026-08-03T15:29:04+09:00",
+    "status": "blocked",
+    "issue": "Finalize correctly refused to overwrite the existing reference JSONL from R1. No Roofer or G2 work repeated; the next recovery must verify and reuse that add-once file and preserve the original prepared source/run identity."
+  }
+}
