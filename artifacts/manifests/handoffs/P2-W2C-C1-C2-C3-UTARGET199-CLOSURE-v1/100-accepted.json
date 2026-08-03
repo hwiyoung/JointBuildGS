@@ -1,0 +1,97 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P2-W2C-C1-C2-C3-UTARGET199-CLOSURE-v1",
+  "task_id": "P2-C1-C2-C3-UTARGET199-CLOSURE-v1",
+  "created_at": "2026-08-04T06:04:38+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "accepted",
+  "previous_receipt": {
+    "path": "artifacts/manifests/handoffs/P2-W2C-C1-C2-C3-UTARGET199-CLOSURE-v1/000-offered.json",
+    "sha256": "d419a836884ad5100024873b64ad3249de0694097137423922e3af571dfc93f0"
+  },
+  "transport": {
+    "mode": "serialized_main",
+    "branch": "main",
+    "target_branch": "main",
+    "exclusive_writer_ack": true
+  },
+  "commits": {
+    "base_main": "8161c46058fb8acfcc3509c697a10d496863ba44",
+    "offered_head": "c89561dfee0a95aff7756230aed8a3537db85b94",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P2-W2C-C1-C2-C3-UTARGET199-CLOSURE-v1",
+      "artifacts/manifests/p2/c1_c2_comparison_matrix_sample_v6",
+      "artifacts/manifests/p2/c1_c2_c3_utarget199_v1",
+      "artifacts/manifests/p2/c3_utarget199_postprocess_render_recovery_v1",
+      "docs/experiments/p2/c1_c2_comparison_matrix_sample_v6",
+      "docs/experiments/p2/c1_c2_c3_utarget199_v1",
+      "docs/experiments/p2/c3_utarget199_postprocess_render_recovery_v1",
+      "docs/handoffs/returns/P2_C2W_C1_C2_C3_UTARGET199_RETURN_v1.md",
+      "docs/handoffs/returns/P2_C2W_C3_UTARGET199_POSTPROCESS_RENDER_RECOVERY_RETURN_v1.md"
+    ],
+    "protected_paths": [
+      "AGENTS.md", "CLAUDE.md", ".gitattributes", "configs", "scripts", "src", "tests",
+      "docs/research", "docs/evidence", "phases",
+      "docs/handoffs/P2_W2C_C1_C2_C3_UTARGET199_CLOSURE_v1.md"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "artifact_verified",
+    "verifier_role": "experiment_host",
+    "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "commands": [
+      "validate combined closure offer",
+      "rehash C1/C2 finalized, quantitative source and three case sheets",
+      "rehash C3 pair completion and two exact 30k checkpoints",
+      "rehash C3 completed control, 398 rows, summary, index and three case sheets",
+      "verify fresh verification-only closure with no computation"
+    ],
+    "tests": [
+      {"name": "offered receipt validator", "passed": 1, "failed": 0},
+      {"name": "C1/C2 exact artifact records", "passed": 5, "failed": 0},
+      {"name": "C3 training exact artifact records", "passed": 3, "failed": 0},
+      {"name": "C3 postprocess exact artifact records", "passed": 7, "failed": 0},
+      {"name": "scientific verdict null", "passed": 1, "failed": 0}
+    ]
+  },
+  "artifacts": {
+    "required_for_task": true,
+    "availability": {"work_host": "manifest_only", "experiment_host": "verified_local"},
+    "records": [
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_comparison_matrix_sample_v6/P2-C1-C2-COMPARISON-MATRIX-SAMPLE-v6/control/finalized_v1.json", "bytes": 839, "sha256": "d9dae447611f27a6872263c6463120da4d7b346c6ed66aa1267abead0d04d2c7", "verification_method": "sha256_rehash", "verified_by": "experiment_host", "verified_at": "2026-08-04T06:04:38+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_comparison_matrix_sample_v6/P2-C1-C2-COMPARISON-MATRIX-SAMPLE-v6/metrics/sample_quantitative_summary_v1.csv", "bytes": 1968, "sha256": "ff325f8d4802bac3eb3fbfb0ba9306673ba1d58ba2f38d77e88423f9b8d808d4", "verification_method": "sha256_rehash", "verified_by": "experiment_host", "verified_at": "2026-08-04T06:04:38+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_comparison_matrix_sample_v6/P2-C1-C2-COMPARISON-MATRIX-SAMPLE-v6/qualitative/DEBY_LOD2_4907177/case_sheet.png", "bytes": 2842510, "sha256": "7d6d586e73fc89fa18894975a712aeeb25ab8d34bdcf9edf2fced1553424d477", "verification_method": "sha256_rehash", "verified_by": "experiment_host", "verified_at": "2026-08-04T06:04:38+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_comparison_matrix_sample_v6/P2-C1-C2-COMPARISON-MATRIX-SAMPLE-v6/qualitative/DEBY_LOD2_4906975/case_sheet.png", "bytes": 3861570, "sha256": "df2dc4f05b9c6eaae09550aa35f5c18eed8f0cdd739d291e56589d9e4375f4b6", "verification_method": "sha256_rehash", "verified_by": "experiment_host", "verified_at": "2026-08-04T06:04:38+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_comparison_matrix_sample_v6/P2-C1-C2-COMPARISON-MATRIX-SAMPLE-v6/qualitative/DEBY_LOD2_108580336/case_sheet.png", "bytes": 4432496, "sha256": "0707fc2b65f50ed392cd4c6aefdeded50c9884528ef85702f2ffd1a9ba257499", "verification_method": "sha256_rehash", "verified_by": "experiment_host", "verified_at": "2026-08-04T06:04:38+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-C3-2-GPU0-RECOVERY-v1/control/c3_pair_completion.json", "bytes": 849, "sha256": "d658dcfe1b5b9726630f0a80ecbb0c7bc76f94a5a9afe21e353e66c9d9cdc5ef", "verification_method": "sha256_rehash", "verified_by": "experiment_host", "verified_at": "2026-08-04T06:04:38+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-C3-2-GPU0-RECOVERY-v1/c3/c3_1_sem/seed0/ckpt/final.pt", "bytes": 86802780, "sha256": "b4f8ce6d97da6d7cef216b4edb3239ac005cc44f4d45cb459a25644ed79b62ea", "verification_method": "sha256_rehash", "verified_by": "experiment_host", "verified_at": "2026-08-04T06:04:38+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-C3-2-GPU0-RECOVERY-v1/c3/c3_2_sem_depth/seed0/ckpt/final.pt", "bytes": 103049692, "sha256": "9bda046e2414a841e289f5d9ed0c5eaf18511445f9c52638b543cd4d52ecea12", "verification_method": "sha256_rehash", "verified_by": "experiment_host", "verified_at": "2026-08-04T06:04:38+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2/c3_utarget199_postprocess_render_recovery_v1/P2-C3-UTARGET199-POSTPROCESS-RENDER-RECOVERY-v1/control/completed_v1.json", "bytes": 463, "sha256": "48b8b68bc385ba7bf2abdb938025eb5889e0aae07828857f155e1f674ba4a094", "verification_method": "sha256_rehash", "verified_by": "experiment_host", "verified_at": "2026-08-04T06:04:38+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2/c3_utarget199_postprocess_render_recovery_v1/P2-C3-UTARGET199-POSTPROCESS-RENDER-RECOVERY-v1/results/building_condition_metrics_v1.jsonl", "bytes": 1020259, "sha256": "068c59d47403fd0b717b8bdadc3e5920a61d601b5a831e32eb9055dd1b79cd62", "verification_method": "sha256_rehash", "verified_by": "experiment_host", "verified_at": "2026-08-04T06:04:38+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2/c3_utarget199_postprocess_render_recovery_v1/P2-C3-UTARGET199-POSTPROCESS-RENDER-RECOVERY-v1/results/method_summary_v1.csv", "bytes": 233, "sha256": "d0abc6326fbbe75751e1e655f183aea735019190d5d491ee4d71b38aca831781", "verification_method": "sha256_rehash", "verified_by": "experiment_host", "verified_at": "2026-08-04T06:04:38+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2/c3_utarget199_postprocess_render_recovery_v1/P2-C3-UTARGET199-POSTPROCESS-RENDER-RECOVERY-v1/qualitative/index.html", "bytes": 38085, "sha256": "4c453ea6f292f52fc9d5577bc1bdd5e6a387d33f19fe04f5e8f21ca312d11c45", "verification_method": "sha256_rehash", "verified_by": "experiment_host", "verified_at": "2026-08-04T06:04:38+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2/c3_utarget199_postprocess_render_recovery_v1/P2-C3-UTARGET199-POSTPROCESS-RENDER-RECOVERY-v1/qualitative/case_sheets/DEBY_LOD2_4907177_C3_pair_v1.png", "bytes": 572132, "sha256": "96cf5cbb4a36658cf4c23a97faa3fb0ed94691cbdf814baed586108a44f8f9a8", "verification_method": "sha256_rehash", "verified_by": "experiment_host", "verified_at": "2026-08-04T06:04:38+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2/c3_utarget199_postprocess_render_recovery_v1/P2-C3-UTARGET199-POSTPROCESS-RENDER-RECOVERY-v1/qualitative/case_sheets/DEBY_LOD2_4906975_C3_pair_v1.png", "bytes": 1048068, "sha256": "67e30b55d423793b5c51de08e8a1b87e506b919c48031c02e5988480d6e62816", "verification_method": "sha256_rehash", "verified_by": "experiment_host", "verified_at": "2026-08-04T06:04:38+09:00"},
+      {"uri": "artifact://JointBuildGS/phase-payloads/p2/c3_utarget199_postprocess_render_recovery_v1/P2-C3-UTARGET199-POSTPROCESS-RENDER-RECOVERY-v1/qualitative/case_sheets/DEBY_LOD2_108580336_C3_pair_v1.png", "bytes": 1035871, "sha256": "42cddfd24833cab13576cd2bc64dd630eda6de4ea644d8d355d161a5666474c8", "verification_method": "sha256_rehash", "verified_by": "experiment_host", "verified_at": "2026-08-04T06:04:38+09:00"}
+    ]
+  },
+  "scientific": {
+    "technical_state": "pending",
+    "scientific_verdict": null,
+    "promotion_status": "not_requested"
+  },
+  "receiver_ack": {
+    "role": "experiment_host",
+    "accepted_at": "2026-08-04T06:04:38+09:00",
+    "status": "accepted",
+    "issue": "Accepted for verification-only closure of the completed C1/C2/C3 technical artifacts; no computation is authorized."
+  }
+}
