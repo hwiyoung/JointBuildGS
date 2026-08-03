@@ -24,7 +24,7 @@ class UTarget199C123ContractTests(unittest.TestCase):
         )
         self.assertEqual(
             contract["common_image_seed"]["recovery_namespace"],
-            "P2-C1-C2-C3-UTARGET199-TRAINING-RECOVERY-v1",
+            "P2-C1-C2-C3-UTARGET199-TORCH-CACHE-RECOVERY-v1",
         )
         self.assertEqual(
             contract["paired_training"]["sequential_gpu"],

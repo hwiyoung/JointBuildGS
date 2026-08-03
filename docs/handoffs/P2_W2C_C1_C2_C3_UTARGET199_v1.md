@@ -78,6 +78,14 @@ MVS, exposes only the 937-mask child directory through a read-only direct bind a
 `P2-C1-C2-C3-UTARGET199-TRAINING-RECOVERY-v1`. It does not chmod or rewrite the inherited
 semantic payload.
 
+That recovery passed all data and auxiliary inventory gates but stopped at iteration 0
+because gsplat's lazy CUDA extension attempted to create `/.cache` for the unprivileged
+container UID. The torch-cache recovery preserves that namespace, uses the same sealed
+seed and read-only semantic bind, sets `HOME=/tmp`, and binds task-owned persistent
+`TORCH_EXTENSIONS_DIR` and `XDG_CACHE_HOME` paths under the fresh namespace
+`P2-C1-C2-C3-UTARGET199-TORCH-CACHE-RECOVERY-v1`. No inherited payload permissions are
+changed.
+
 ## C1/C2 and evaluation boundary
 
 - every one of the 199 stable IDs remains in the qualitative/index/result surface;

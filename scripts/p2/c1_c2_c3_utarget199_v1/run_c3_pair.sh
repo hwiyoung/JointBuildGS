@@ -3,7 +3,7 @@ set -euo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 artifact_root="${JBGS_ARTIFACT_ROOT:-/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts}"
-task_name="P2-C1-C2-C3-UTARGET199-TRAINING-RECOVERY-v1"
+task_name="P2-C1-C2-C3-UTARGET199-TORCH-CACHE-RECOVERY-v1"
 task_root="${artifact_root}/phase-payloads/p2/c1_c2_c3_utarget199_v1/${task_name}"
 seed_task_name="P2-C1-C2-C3-UTARGET199-FRAME-RECOVERY-v1"
 seed_root="${artifact_root}/phase-payloads/p2/c1_c2_c3_utarget199_v1/${seed_task_name}"
@@ -40,7 +40,7 @@ fi
 free_mib="$(nvidia-smi --id="$gpu_index" --query-gpu=memory.free --format=csv,noheader,nounits)"
 gpu_uuid="$(nvidia-smi --id="$gpu_index" --query-gpu=uuid --format=csv,noheader)"
 
-mkdir -p "$task_root/control" "$task_root/c3/common" "$task_root/scratch"
+mkdir -p "$task_root/control/torch_extensions" "$task_root/control/cache" "$task_root/c3/common" "$task_root/scratch"
 nvidia-smi -q -i "$gpu_index" > "$task_root/control/gpu_before.txt"
 git -C "$repo_root" rev-parse HEAD > "$task_root/control/source_commit.txt"
 printf '%s\n' "index=$gpu_index" "uuid=$gpu_uuid" "free_mib=$free_mib" > "$task_root/control/selected_gpu.txt"
@@ -82,6 +82,9 @@ run_train() {
     --gpus "device=${gpu_index}" \
     --user "$(id -u):$(id -g)" \
     -e CUDA_VISIBLE_DEVICES=0 \
+    -e HOME=/tmp \
+    -e XDG_CACHE_HOME="/artifacts/JointBuildGS/phase-payloads/p2/c1_c2_c3_utarget199_v1/${task_name}/control/cache" \
+    -e TORCH_EXTENSIONS_DIR="/artifacts/JointBuildGS/phase-payloads/p2/c1_c2_c3_utarget199_v1/${task_name}/control/torch_extensions" \
     -v "$repo_root:/workspace/JointBuildGS:ro" \
     -v "$artifact_root:/artifacts/JointBuildGS" \
     -v "$semantic_host:/inputs/semantic_masks:ro" \
