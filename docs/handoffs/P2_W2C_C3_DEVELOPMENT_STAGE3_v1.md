@@ -6,14 +6,14 @@
 - task_id: `P2-C3-DEVELOPMENT-STAGE3-v1`
 - phase: `P2 development technical evaluation`
 - direction: `Work Host -> Experiment Host`
-- status: `DRAFT`
+- status: `APPROVED_FOR_EXECUTION`
 - packet_version: `v1`
 - source_commit: `3df6baea11761e5b1f3737efe354baec5227a24b`
 - target_branch: `main`
 - research canon: `C1C5_CANON_v2` through `DEC-P1-014`
 - result contract: `04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md`
 - created_at: `2026-08-03`
-- user_approval: `GRANTED_FOR_BOUNDED_C3_DEVELOPMENT_EXECUTION`
+- user_approval: `APPROVED_FOR_EXECUTION`
 - scientific_verdict: `null`
 
 ## 목적
