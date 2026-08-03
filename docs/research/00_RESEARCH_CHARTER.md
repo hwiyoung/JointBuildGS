@@ -376,7 +376,8 @@ producer/config/frame/role/bytes/hashes는 Gate S0 전체 freeze 전까지 `BLOC
 - `C5`가 LoD1 prior이며 LoD2 roof prior가 아니라는 점
 - 개별 건물 paired comparison
 - `G_native → S_extracted → P_Roofer → H_LoD2` chain
-- Sheet A–D와 building × method 결과 구조
+- 한 건물에서 C1–C5 입력·중간 형상·Roofer 결과와 동일 reference 정량값을 함께 보는
+  building comparison matrix 및 building × method 결과 구조
 - G0–G4와 `PASS_usable`
 - usable PASS, fail-to-pass, pass-to-fail primary endpoint
 - P1–P4 순서와 사용자 phase gate

@@ -93,7 +93,7 @@ OpenAI 제품 기능이 아니라 본 프로젝트가 제안한 별도 governanc
 
 ## Evidence-to-acceptance chain
 
-정식 artifact, Sheet A–D, table schema와 G0–G4 정의는
+정식 artifact, building comparison matrix, table schema와 G0–G4 정의는
 [Result and Acceptance Contract](04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md)를 따른다.
 
 ```mermaid
@@ -203,7 +203,7 @@ primary 잠금 뒤 별도 census로 수행한다. 이 census를 완료하지 않
 | F-04 | LoD1 prior는 LoD2 roof prior가 아님 | 사용자 |
 | F-05 | 개별 건물 paired comparison | 사용자 |
 | F-06 | `G_native → S_extracted → P_Roofer → H_LoD2` | 사용자 |
-| F-07 | Sheet A–D, building × method 결과 | 사용자 |
+| F-07 | 모든 panel의 지붕 reference 투영과 정량값을 1:1로 묶은 building comparison matrix, building × method 결과 | 사용자 |
 | F-08 | G0–G4와 `PASS_usable` | 사용자 |
 | F-09 | usable PASS, fail-to-pass, pass-to-fail endpoint | 사용자 |
 | F-10 | P1–P4 순서와 사용자 phase gate | 사용자 |

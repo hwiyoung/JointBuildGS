@@ -572,6 +572,42 @@
   동일 수치의 diagnostic candidate gate와 연속 metric은 함께 보고한다.
 - **Scientific verdict:** `null`
 
+## DEC-P1-016 — 지붕 투영 기반 단일 정성·정량 비교판
+
+- **Decision ID:** `DEC-P1-016`
+- **Date:** 2026-08-03
+- **Status:** `USER-APPROVED RESULT PRESENTATION CONTRACT`
+- **Previous state:** `04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md`는 입력/native,
+  extraction, LoD2, GS mechanism을 Sheet A–D로 나눴다. 실제 생성된 Sheet A/B/C는
+  동일 건물의 입력에서 최종 Roofer 결과까지를 한눈에 연결하지 못했고, 그림과
+  정량값이 같은 output/reference를 평가했는지도 확인하기 어려웠다.
+- **New decision:** Sheet A–D를 정식 결과 형식으로 사용하지 않는다. 각 건물에 대해
+  지붕이 투영된 current raw images를 맨 위에 두고 C1 LiDAR input/output, C2 MVS
+  input/output, C3 image-only GS, C4 image+existing-ALS GS, C5 image+independent-LoD1
+  GS의 rendering, extracted mesh/point cloud와 Roofer output을 하나의 세로 matrix로
+  제시한다. 모든 panel은 동일하게 지정된 geometry/structure 평가 roof reference를
+  역할별로 투영하고, 바로 인접한 정량값은
+  exact 같은 building/method/run/output/reference/evaluation support를 사용한다.
+- **Machine check:** geometry/structure reference를 분리하고, 각 metric row가 exact
+  `panel_id`, output/reference/support hash와 evaluator config를 직접 가리킨다. scored
+  support 경계를 full output 위에 표시해 평가영역 밖 prediction을 숨기지 않는다.
+  scientific source manifest와 실제 표시 panel의 hash를 분리하고, 모든 required panel은
+  roof projection status/count와 panel hash를 묶은 projection receipt를 가진다.
+- **Reference boundary:** reference overlay는 output과 대표 사례를 봉인한 뒤 수행하는
+  사후 평가·시각화다. 학습, crop, instance 분리, Roofer 입력, parameter 선택에
+  전달하지 않는다. 독립 reference가 없으면 `REFERENCE_MISSING`, 같은 계보이면
+  `SELF_REFERENCE_DIAGNOSTIC`으로 표시한다. `DEC-P1-011`의 LoD2-derived LoD1
+  diagnostic 격리를 유지한다.
+- **Missingness:** C4/C5 미실행, output failure, reference 결측도 행을 삭제하지 않고
+  `NOT_RUN`, `OUTPUT_MISSING`, `REFERENCE_MISSING`과 `null + reason`으로 표시한다.
+- **Representative review:** 먼저 outcome-free rule로 고른 독립적인 3–5동을 사람이
+  읽기 쉬운 크기로 검토하되, `DEC-P1-015`의 U_target 199동 전수 결과와 분모를
+  대체하지 않는다.
+- **Superseded decisions:** `DEC-P1-015`와 기존 정본의 Sheet A/B/C 또는 Sheet A–D
+  표시 형식만 이 decision으로 대체한다. C1–C5 정의, G0–G4, 199동 전수, execution
+  boundary와 numerical criterion 보류는 변경하지 않는다.
+- **Scientific verdict:** `null`
+
 ## Pending decisions not yet logged as adopted
 
 다음은 선택지가 정리되었으나 사용자 결정 전이므로 adopted decision이 아니다.

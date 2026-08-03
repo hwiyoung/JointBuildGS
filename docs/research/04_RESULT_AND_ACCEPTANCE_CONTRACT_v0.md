@@ -3,6 +3,7 @@
 - Document status: `USER_APPROVED_CANONICAL_RESULT_CONTRACT`
 - Criterion version: `C1C5_CANON_v2`
 - 작성일: 2026-07-31
+- 정성·정량 표시 계약 개정: 2026-08-03 (`DEC-P1-016`)
 - 상태: `PROVISIONAL UNTIL P2 CRITERION FREEZE`
 - Final verdict policy: `PENDING` until P2 criterion freeze
 - Numerical threshold: `DEFERRED`
@@ -123,130 +124,219 @@ Roofer 공식 CLI 문서는 pointcloud source의 `ground_class=2`,
 ([official docs](https://innovation.3dbag.nl/roofer/cli_application.html)).
 실제 repository version/config는 `TO VERIFY`이다.
 
-## 6. Qualitative case sheets
+## 6. Building-level qualitative–quantitative comparison matrix
 
-모든 panel은 `building_id`, `method_id`, `run_id`, `criterion_version`,
-`reference_version`, `surface_adapter`를 표시한다.
+정식 정성 결과는 Sheet A–D로 분리하지 않는다. 한 건물의 입력, 중간 형상과 최종
+LoD2를 한 장에서 위에서 아래로 따라갈 수 있는 **단일 building comparison matrix**를
+사용한다. 정성 그림과 정량값은 같은 `building × method × run × stage × output ×
+reference`를 가리켜야 한다.
 
-### Sheet A — Input and native reconstruction
+### 6.1 공통 header와 panel binding
 
-공통 context:
+한 장의 공통 header에는 다음을 표시한다.
 
-- building ID, size, height
-- reference roof-plane 수와 roof complexity
-- observation category
-- current RGB, Current UAS/Drone LiDAR, current MVS
-- Existing ALS LiDAR prior, existing LoD1 prior
-- `R_derived` roofprint protocol과 실제 method별 polygon, geometry/structure reference
+- `building_id`, split/selection role, building size와 roof complexity
+- `matrix_id`, `criterion_version`, method별 `run_id/git_commit/config_hash`
+- geometry reference와 structure reference 각각의 version, lineage와 independence class
+- `common_image_pose_base_id`, `surface_adapter`, `R_derived` protocol
 
-방법 열:
+각 panel은 다음 exact binding key를 panel sidecar manifest에 기록한다.
 
-1. Current UAS/Drone LiDAR (`L_upper`)
-2. MVS
-3. No-external-prior GS: common image-derived base를 GS로 재최적화
-4. 같은 common base + Existing ALS-prior GS (`P_LiDAR`)
-5. 같은 common base + independent LoD1-prior GS
+```text
+matrix_id, panel_id, building_id, method_id, run_id, stage_id,
+ordered_source_artifact_manifest_sha256, panel_artifact_sha256,
+renderer_implementation_hash, renderer_config_hash,
+geometry_reference_version, geometry_reference_artifact_sha256,
+geometry_reference_independence_class,
+structure_reference_version, structure_reference_artifact_sha256,
+structure_reference_independence_class,
+criterion_version, view_spec_hash, evaluation_support_hash,
+projection_receipt_sha256, overlay_status,
+geometry_projected_visible_count, geometry_projected_occluded_count,
+structure_projected_visible_count, structure_projected_occluded_count,
+projected_clipped_count
+```
 
-결과 행:
+`ordered_source_artifact_manifest_sha256`는 panel을 만든 scientific source bytes의
+순서 있는 manifest이고 `panel_artifact_sha256`는 사용자가 실제로 보는 PNG/HTML tile의
+hash다. 각 metric row는 `metric_id`, `panel_id`, `reference_role`, evaluator
+implementation/config hash, unit, validity와 위 source/panel/reference/support hash를 직접
+기록한다. 그림과 metric의 binding key가 하나라도 다르면 그 metric은 정식 결과가
+아니다. 긴 hash는 panel 안에 모두 반복하지 않고 공통 header, 짧은 artifact ID와
+sidecar manifest로 연결한다. 서로 다른 phase의 exact-compatible run을 결합할 때는
+method별 run identity와 compatibility receipt를 matrix manifest에 기록한다.
 
-- native 3D top
-- native 3D common oblique
-- native principal section
-- normal/height diagnostic
+### 6.2 열: 고정된 네 시점
 
-LiDAR/MVS는 native point cloud, GS는 native Gaussian/surfel representation을 보인다.
-C2 panel은 common-base MVS를 Roofer로 직접 전달한 branch이고, C3 panel은 같은
-image-derived geometry/support를 GS에서 재최적화한 branch임을 표시한다.
+맨 위 current-image 행은 지붕 관측과 각도 다양성이 사전 규칙을 만족하는 서로 다른
+네 camera image를 사용한다. 각 image에는 평가용 지붕 reference를 exact camera
+calibration으로 투영한다. 이 camera 선택은 C1–C5 결과를 보기 전에 고정한다.
 
-### Sheet B — Extraction and exact Roofer input
+모든 3D 행은 다음 열을 공유한다.
 
-결과 행:
+1. `TOP`: top orthographic
+2. `OBLIQUE_1`: common oblique 1
+3. `OBLIQUE_2`: common oblique 2
+4. `PRINCIPAL_SECTION`: 동일 위치·방향의 주 단면
 
-- extracted mesh/surface
-- exact Roofer input top/oblique/section
-- class 2/6 role view
-- input-quality metric strip
+단면에서는 reference roof surface와의 교차 profile을 투영한다. 이미지와 3D 행의 열은
+서로 다른 camera 정의를 사용할 수 있으나, method 사이에서는 절대로 바꾸지 않는다.
+exact camera intrinsic/extrinsic 또는 3D view/projection matrix, section plane equation,
+image clipping, surface visibility/occlusion/back-face rule, line width/opacity와 overlay
+primitive를 machine-readable view spec으로 저장하고 hash한다. 이 view spec과 camera
+선정 ledger는 method 결과를 보기 전에 봉인한다.
 
-목적은 surface extraction과 Roofer adapter의 정보 유지/손실을 분리하는 것이다.
+### 6.3 행: 입력에서 최종 LoD2까지
 
-### Sheet C — LoD2 outcome and acceptance
+행 순서는 다음과 같다.
 
-결과 행:
+| 블록 | 표시 행 | 의미 |
+|---|---|---|
+| 공통 영상 | `RAW_CURRENT_IMAGES_WITH_ROOF_PROJECTION` | 지붕이 실제 영상에서 어떻게 관측되는지 |
+| C1 Current UAS LiDAR | `LIDAR_INPUT`, `LIDAR_ROOFER_OUTPUT` | current UAS point cloud와 동일 Stage 3 결과 |
+| C2 Current-image MVS | `MVS_INPUT`, `MVS_ROOFER_OUTPUT` | common-base MVS point cloud와 동일 Stage 3 결과 |
+| C3 Image-only GS | `GS_RENDER_RGB_SEMANTIC`, `GS_SURFACE_SEMANTIC`, `GS_ROOFER_OUTPUT` | no-external-prior GS rendering, mesh/point cloud, LoD2 |
+| C4 Image + existing ALS GS | `GS_RENDER_RGB_SEMANTIC`, `GS_SURFACE_SEMANTIC`, `GS_ROOFER_OUTPUT` | 동일 GS base에 existing ALS만 추가한 결과 |
+| C5 Image + independent LoD1 GS | `GS_RENDER_RGB_SEMANTIC`, `GS_SURFACE_SEMANTIC`, `GS_ROOFER_OUTPUT` | 동일 GS base에 independent LoD1만 추가한 결과 |
 
-- LoD2.2 top + reference overlay
-- common oblique + reference overlay
-- principal section + reference
-- roof-plane TP/FP/FN 또는 matching map
-- continuous metrics
-- G0–G4 strip
-- final verdict와 criterion version
+outer block 순서는 항상 C1→C2→C3→C4→C5이며, 각 block 안의 행 순서와 수는 위 표로
+고정한다. C1/C2의 두 행과 C3–C5의 세 행을 renderer가 재배열하거나 조건별로 합치지
+않는다.
 
-Criterion 동결 전:
+`GS_SURFACE_SEMANTIC`은 실제 Roofer로 전달되는 extracted mesh 또는 sampled point
+cloud를 우선 표시한다. native primitive가 별도 원인 진단에 필요하면 보조 matrix에
+추가하되 정식 행을 대체하지 않는다. C2는 MVS를 직접 Roofer로 전달하고 C3는 같은
+image-derived geometry/support를 GS에서 재최적화한다는 branch 차이를 행 label에
+명시한다.
+
+아직 실행하지 않은 C4/C5, 생성 실패, reference 결측도 행을 삭제하지 않는다.
+각각 `NOT_RUN`, `OUTPUT_MISSING`, `REFERENCE_MISSING`과 사유를 빈 panel에 표시한다.
+
+### 6.4 모든 panel의 지붕 투영
+
+**원본 영상, input point cloud, GS rendering, extracted mesh/point cloud, Roofer
+output을 포함한 모든 panel에 해당 건물에 지정된 동일 geometry/structure 평가용 지붕
+reference를 역할별로 투영한다.**
+
+- 영상/rendering: camera calibration으로 roof boundary/surface를 image plane에 투영
+- top/oblique: reference roof surface/boundary/points를 같은 3D camera에 overlay
+- principal section: 동일 section plane에서 reference roof profile을 overlay
+- Roofer output: prediction surface와 reference roof를 동시에 표시
+
+색과 선의 의미는 전 결과에서 고정한다. geometry reference와 structure reference가
+다르면 별개의 overlay와 legend를 사용한다.
+
+- geometry 평가 reference: 녹색 점/반투명 면
+- structure 평가 reference: 연두색 실선/roof-plane 경계
+- 해당 condition의 external prior: 파란 점선/반투명 면
+- reconstructed/extracted evidence: 회색 또는 청록
+- Roofer prediction: 주황/적색 면과 경계
+- semantic class: 별도 고정 palette와 legend
+
+visible reference는 실선, occluded/back-facing reference는 점선으로 구분하고 화면 밖
+clipping 수를 기록한다. prediction과 z-fighting이 생겨도 reference가 사라지지 않는
+고정 draw order를 사용한다.
+
+각 required panel은 projection receipt를 생성한다. `overlay_status`는 reference가
+있으면 `PROJECTED`, 해당 role의 reference가 없으면 `REFERENCE_MISSING`이어야 하며,
+visible/occluded/clipped primitive count와 projection input/output hash를 기록한다.
+reference가 있는데 `overlay_status`가 `PROJECTED`가 아니거나 projection receipt와 실제
+panel hash가 맞지 않으면 matrix 생성은 실패다.
+
+reference가 없는 건물은 prior나 같은 계보의 산출물을 독립 reference처럼 대신
+투영하지 않는다. 빈 overlay와 `REFERENCE_MISSING`을 표시한다. 같은 UAS/LoD2 계보가
+입력과 평가에 함께 쓰인 경우에는 `SELF_REFERENCE_DIAGNOSTIC`을 눈에 띄게 표시하고
+독립 정확도 주장에 사용하지 않는다. LoD2-derived LoD1은 같은 계보 평가에서 계속
+`REFERENCE_DERIVED_DIAGNOSTIC_ONLY`이며 독립 reference를 대체하지 않는다.
+C1에서 UAS input과 geometry reference가 같은 경우에는 모든 C1 panel과 metric strip에
+`SELF_REFERENCE_UPPER_BASELINE` watermark를 표시하고 independent score 집계에서
+제외한다.
+
+지붕 reference 투영은 method output과 대표 사례 ID를 봉인한 뒤 수행하는 사후
+평가·시각화 단계다. 학습, crop, instance 분리, Roofer 입력, parameter 선택 또는
+재시도 판단에는 전달하지 않는다.
+
+### 6.5 정량값과 정성 panel의 1:1 대응
+
+각 method 블록 바로 옆 또는 바로 아래에 해당 블록의 metric strip을 둔다.
+
+| 대응 stage | 최소 정량 표시 |
+|---|---|
+| raw current images | 사용 camera 수, 지붕 투영 가시율/coverage, 관측 결측 사유 |
+| LiDAR/MVS input | point count/density, roof coverage, nodata, outlier, plane residual |
+| GS rendering/native | rendering 지표와 semantic support; geometry 판단을 대신하지 않음 |
+| extracted mesh/point cloud | surface accuracy/completeness, unsupported ratio, semantic support, extraction 상태 |
+| Roofer LoD2 | roof-plane correctness/completeness/quality, over/undersegmentation, RMSXY, RMSZ, surface/height error, G0–G4, verdict |
+
+metric은 그림에 투영된 exact reference와 `evaluation_support_hash`가 같은 영역에서만
+계산한다. `evaluation_support`는 CRS, polygon/cell 또는 section band, resolution,
+boundary 포함 규칙, buffer/dilation, prediction outside-support 처리 규칙을 가진
+canonical artifact다. output 봉인 뒤 평가에만 적용하며 generation/instance split로
+역류시키지 않는다. panel에는 full output/context를 숨기지 않고 scored support 경계를
+함께 그려 support 밖 false positive도 눈으로 확인할 수 있게 한다.
+
+정량값이 있으면 그 값이 평가한 prediction/reference/support를 같은 `panel_id`에서 볼
+수 있어야 한다. G3는 `structure` reference role, G4와 positional metric은 `geometry`
+reference role을 명시한다. 반대로 output 또는 해당 role의 reference가 없으면 관련
+metric을 0으로 쓰지 않고 `null + reason`으로 둔다.
+
+G3/G4 criterion이 동결되기 전에는 continuous value와 diagnostic candidate만
+표시하며 정식 gate와 `PASS_usable`은 다음처럼 유지한다.
 
 ```text
 Final verdict: PENDING
 Criterion version: C1C5_CANON_v2
 ```
 
-### Sheet D — GS mechanism analysis
+### 6.6 보조 mechanism matrix
 
-대표 subset에서 다음 세 GS arm을 비교한다.
-
-- No-external-prior GS
-- 같은 common base + LiDAR-prior GS
-- 같은 common base + LoD1-prior GS
-
-표시 후보:
-
-- held-out-view RGB rendering: 같은 building의 training image에서 제외한 camera view이며
-  P4 held-out building과는 별도
-- rendered depth/normal
-- semantic/building confidence
-- prior confidence
-- image–prior conflict
-- native surfels
-- extracted surface
-
-RGB rendering은 current-image fidelity 보존을 설명하는 보조 evidence이며 primary
-LoD2 result가 아니다.
+depth, normal, confidence, image–prior conflict, primitive scale/opacity 등 GS 내부
+기전은 대표 subset의 보조 matrix로 분리한다. 보조 panel도 §6.4의 지붕 reference
+투영과 §6.1의 binding을 따라야 한다. RGB rendering은 current-image fidelity 보존을
+설명하는 보조 evidence이며 primary LoD2 result가 아니다.
 
 ## 7. Visual fairness
 
 방법 간 다음을 고정한다.
 
 - XY crop, Z range
-- top/oblique camera
+- top/oblique 1/oblique 2 camera와 principal section
 - principal section 위치
 - Z exaggeration
 - point size
 - height/normal/error color scale
-- roofprint/reference rendering style
+- reference/prior/prediction rendering style와 legend
 - point-density protocol
 - surface adapter
 - output resolution
 
-Per-method auto zoom과 유리한 view 재선택을 금지한다. 불가피한 결측은 빈 panel과
-failure reason으로 남긴다.
+Per-method auto zoom, 유리한 view 재선택, 결과를 본 뒤 camera나 section을 바꾸는
+행위를 금지한다. 정성 overlay와 정량 계산은 동일 crop, evaluation support,
+reference version을 사용한다. 불가피한 결측은 빈 panel과 failure reason으로 남긴다.
 
 ## 8. Main manuscript와 supplementary
 
 ### Main
 
-- 사전 규칙으로 고른 대표 fail-to-pass
-- LiDAR-prior와 LoD1-prior가 서로 다른 실패를 회복한 사례
-- pass-to-fail 또는 잔여 실패
+- 결과를 보기 전에 고른 3–5동의 building comparison matrix
+- 독립 reference, one-building/one-component 연결, 공간 분리와 크기·지붕 복잡도
+  다양성을 만족하도록 고른 사례와 선정 이유
+- 동결 criterion 뒤에는 대표 fail-to-pass, pass-to-fail과 잔여 실패
 - gate funnel과 최종 PASS net change
 - residual gap to `L_upper`
 
 ### Supplementary
 
-- 해당 phase에서 접근이 허용된 split 전체/확장 building case sheets
+- 해당 phase에서 접근이 허용된 모든 building comparison matrix; `U_target=199` 전수
+  기술 실행에서는 199동을 사후 제외 없이 모두 포함
 - 추가 views와 모든 continuous metrics
 - threshold sensitivity
 - 성공·실패·악화 사례
 - adapter sensitivity와 missing/fallback details
 
-대표 사례 선택 규칙은 P2/P3에서 결과를 보기 전에 동결한다.
+대표 3–5동의 exact ID와 선정 ledger는 새 comparison matrix 결과를 보기 전에
+동결한다. 대표 사례는 전체 결과를 대신하지 않으며, 전체 building × method 정량표와
+전수 matrix가 분모를 결정한다.
 
 ## 9. Building-method metric table
 
@@ -486,7 +576,7 @@ building acceptance threshold로 자동 이식하지 않는다.
 | `FROZEN_vN` | 코드/hash/reference/split 포함, P3/P4 primary |
 | `SUPERSEDED_vN` | 이유/Decision ID와 successor 기록, 과거 결과 보존 |
 
-모든 table/sheet/report는 criterion version을 표시한다. Criterion 변경 뒤 과거 score를
+모든 table/matrix/report는 criterion version을 표시한다. Criterion 변경 뒤 과거 score를
 덮어쓰지 않고 새 namespace로 재평가한다.
 
 ### 14.1 Held-out scope
@@ -526,7 +616,7 @@ building acceptance threshold로 자동 이식하지 않는다.
 - fallback 허용 여부
 - geometry/structure reference와 matching implementation
 - metric definitions의 세부 단위/aggregation
-- representative case selection rule
+- representative 3–5동의 exact ID; 선정 원칙은 §8에서 동결
 - logical `results/` name의 external artifact resolver
 - minimum eligible building count와 statistical interval
 
