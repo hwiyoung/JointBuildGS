@@ -1,0 +1,51 @@
+{
+  "schema": "jointbuildgs.p2.c1_c2_comparison_matrix_sample.artifact_manifest.v1",
+  "task_id": "P2-C1-C2-COMPARISON-MATRIX-SAMPLE-v6",
+  "status": "FINALIZED_TECHNICAL_DIAGNOSTIC_SAMPLE_COMPLETE",
+  "artifact_uri": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_comparison_matrix_sample_v6/P2-C1-C2-COMPARISON-MATRIX-SAMPLE-v6",
+  "absolute_path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/p2/c1_c2_comparison_matrix_sample_v6/P2-C1-C2-COMPARISON-MATRIX-SAMPLE-v6",
+  "file_count": 132,
+  "bytes": 389717562,
+  "panel_png_count": 60,
+  "case_sheet_png_count": 3,
+  "case_count": 3,
+  "projection_receipt_count": 60,
+  "quantitative_source_rows": 6,
+  "metric_binding_count": 66,
+  "artifact_tree_sha256": "27f7bf0f94fde17633b26b773a2e45e8bba592ae4ca72f4bc62d4571e41bb324",
+  "artifact_tree_hash_method": "sha256 of canonical compact sorted-key JSONL {path,bytes,sha256} records sorted by artifact-relative path",
+  "key_records": [
+    {"path": "control/finalized_v1.json", "bytes": 839, "sha256": "d9dae447611f27a6872263c6463120da4d7b346c6ed66aa1267abead0d04d2c7"},
+    {"path": "manifests/panel_manifest_v1.jsonl", "bytes": 268293, "sha256": "9a7f769d7d099b27958a2e8ff06f09bd0355de9f08a2977c17bfa0c0ed9c9ee5"},
+    {"path": "manifests/metric_manifest_v1.jsonl", "bytes": 110319, "sha256": "a843a34a069b1e896d6b65593f052b31f3bb09089129457eddf0a60d14df9e9b"},
+    {"path": "metrics/sample_building_method_metrics_v1.csv", "bytes": 7549, "sha256": "8274ce567ba6a7f3b65349e136d7e623be29e56d57123b1be6b4e403af52864d"},
+    {"path": "metrics/sample_quantitative_summary_v1.csv", "bytes": 1968, "sha256": "ff325f8d4802bac3eb3fbfb0ba9306673ba1d58ba2f38d77e88423f9b8d808d4"},
+    {"path": "qualitative/index.html", "bytes": 1607, "sha256": "ff8caaa0c40ca36c04817f7e0b05da57fd28ccb69f95887a1a46850cd40b1329"},
+    {"path": "qualitative/DEBY_LOD2_4907177/case.html", "bytes": 5482, "sha256": "6499dfde156524c359bceb5948dbb79983a7f32065e260923050efe70881459e"},
+    {"path": "qualitative/DEBY_LOD2_4906975/case.html", "bytes": 5471, "sha256": "85ddadc65e7623fda6675c3ca04d5af09428f393c1c68cbb5f8016e1ce78dce2"},
+    {"path": "qualitative/DEBY_LOD2_108580336/case.html", "bytes": 5494, "sha256": "8cb1a3cabf88996a8a314c14c19477df390d6739d5f0dce0063544f95a49648d"},
+    {"path": "qualitative/DEBY_LOD2_4907177/case_sheet.png", "bytes": 2842510, "sha256": "7d6d586e73fc89fa18894975a712aeeb25ab8d34bdcf9edf2fced1553424d477"},
+    {"path": "qualitative/DEBY_LOD2_4906975/case_sheet.png", "bytes": 3861570, "sha256": "df2dc4f05b9c6eaae09550aa35f5c18eed8f0cdd739d291e56589d9e4375f4b6"},
+    {"path": "qualitative/DEBY_LOD2_108580336/case_sheet.png", "bytes": 4432496, "sha256": "0707fc2b65f50ed392cd4c6aefdeded50c9884528ef85702f2ffd1a9ba257499"}
+  ],
+  "verification": {
+    "panel_hashes": {"passed": 60, "failed": 0},
+    "projection_receipt_hashes": {"passed": 60, "failed": 0},
+    "metric_bindings": {"passed": 66, "failed": 0},
+    "required_visible_reference_panels": {"passed": 60, "failed": 0, "minimum_visible_count": 15},
+    "case_sheet_visual_review": {"passed": 3, "failed": 0, "resolution": "3180x3070"},
+    "c1_metric_vs_independent_overlay_role_separation": {"passed": 3, "failed": 0},
+    "reference_alignment_review": {"passed": 2, "review_required": 1, "review_building_id": "DEBY_LOD2_4907177"}
+  },
+  "execution_accounting": {
+    "comparison_renderer": 1,
+    "roofer": 0,
+    "g2": 0,
+    "gs_training": 0,
+    "metric_recomputation": 0,
+    "c3_c4_c5_method_artifact_access": 0,
+    "output_tree_full_hash_passes": 1
+  },
+  "official_G3_G4_PASS": null,
+  "scientific_verdict": null
+}
