@@ -1,11 +1,16 @@
 from __future__ import annotations
 
+import hashlib
+import tempfile
 import unittest
 from pathlib import Path
 
+from scripts.p2_baselines.c1_c2_feasibility_pilot_v1.contract import AddOnceStore, canonical_json_bytes
 from scripts.p2.utarget199_contract_results_v1.contract import (
     _g4_candidate,
+    _reference_rows_for_finalize,
     associate_components,
+    load_config,
     validate_config,
 )
 
@@ -16,8 +21,30 @@ class ContractTest(unittest.TestCase):
         wrapper = (repo_root / "scripts/p2/utarget199_contract_results_v1/run_contract_host.sh").read_text(
             encoding="utf-8"
         )
-        self.assertIn("P2-W2C-UTARGET199-CONTRACT-RESULTS-RECOVERY-R2-v1/100-accepted.json", wrapper)
+        self.assertIn("P2-W2C-UTARGET199-CONTRACT-RESULTS-RECOVERY-R3-v1/100-accepted.json", wrapper)
         self.assertIn("--artifact-root /artifacts/JointBuildGS", wrapper)
+        self.assertIn("PREPARED_SOURCE_COMMIT", wrapper)
+        self.assertIn("PREPARED_RUN_ID", wrapper)
+
+    def test_existing_reference_ledger_is_verified_and_reused_without_source_read(self) -> None:
+        config = load_config()
+        rows = [{"stable_id": "A", "patch_id": "P", "x": 1.0, "y": 2.0, "z": 3.0}]
+        data = canonical_json_bytes(rows[0]) + b"\n"
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            store = AddOnceStore(root)
+            restart = config["inputs"]["reference_candidate_cells"]["derived_restart"]
+            restart["bytes"] = len(data)
+            restart["sha256"] = hashlib.sha256(data).hexdigest()
+            target = root / restart["path"]
+            target.parent.mkdir(parents=True)
+            target.write_bytes(data)
+            reused, source_record, output_record = _reference_rows_for_finalize(
+                store, [], root / "must_not_be_opened.csv", config
+            )
+            self.assertEqual(rows, reused)
+            self.assertEqual(0, source_record["full_read_and_digest_passes"])
+            self.assertEqual(restart["sha256"], output_record["sha256"])
 
     def test_canonical_config_is_exact_199x3(self) -> None:
         result = validate_config()

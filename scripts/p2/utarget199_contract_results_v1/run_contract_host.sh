@@ -17,8 +17,10 @@ IMAGE_DIR_REL="phase-payloads/p0-audit/data/work/images/Images"
 CAMERAS_REL="phase-payloads/p0-audit/data/work/colmap/sparse/0/cameras.txt"
 IMAGES_REL="phase-payloads/p0-audit/data/work/colmap/sparse/0/images.txt"
 SCENE_REL="phase-payloads/p0-audit/data/work/opf/opf/scene_reference_frame.json"
-PACKET_REL="docs/handoffs/P2_W2C_UTARGET199_CONTRACT_RESULTS_RECOVERY_R2_v1.md"
-ACCEPTED_REL="artifacts/manifests/handoffs/P2-W2C-UTARGET199-CONTRACT-RESULTS-RECOVERY-R2-v1/100-accepted.json"
+PACKET_REL="docs/handoffs/P2_W2C_UTARGET199_CONTRACT_RESULTS_RECOVERY_R3_v1.md"
+ACCEPTED_REL="artifacts/manifests/handoffs/P2-W2C-UTARGET199-CONTRACT-RESULTS-RECOVERY-R3-v1/100-accepted.json"
+PREPARED_SOURCE_COMMIT="93a2d03783403826d21b33bf6c554fc8ff3e2600"
+PREPARED_RUN_ID="20260803T1513KST"
 ROOFER_IMAGE="3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2"
 G2_IMAGE="jointbuildgs-p0-tools:t0"
 EXPECTED_G2_ID="sha256:02b4b7bb2e35e9b88bcc8457678ed8f178cca8f76f22b1b62f02721359e46be8"
@@ -75,7 +77,7 @@ project_run() {
 
 project_run preflight
 project_run prepare --output-root /task --c1-c2-source-root /sources/c1c2 --c3-source-root /sources/c3 \
-  --source-commit "${SOURCE_COMMIT}" --run-id "${RUN_ID}"
+  --source-commit "${PREPARED_SOURCE_COMMIT}" --run-id "${PREPARED_RUN_ID}"
 
 while IFS=$'\t' read -r unit_id work_relative reused; do
   [[ "${unit_id}" == "operation_unit_id" ]] && continue
@@ -128,7 +130,7 @@ docker run --rm --network none --entrypoint /opt/conda/bin/python \
   scripts/p2/utarget199_contract_results_v1/run_contract.py finalize \
     --output-root /task --reference-cells /inputs/reference_candidate_cells_v1.csv \
     --g2-receipts /task/results/g2_unique_operation_receipts_v1.jsonl \
-    --source-commit "${SOURCE_COMMIT}" --run-id "${RUN_ID}"
+    --source-commit "${PREPARED_SOURCE_COMMIT}" --run-id "${PREPARED_RUN_ID}"
 
 if [[ ! -f "${TASK_ROOT}/control/qualitative_complete_v1.json" ]]; then
   docker run --rm --network none --entrypoint /opt/conda/bin/python \

@@ -515,6 +515,35 @@ def _csv_bytes(rows: Sequence[Mapping[str, Any]], fields: Sequence[str]) -> byte
     return stream.getvalue().encode("utf-8")
 
 
+def _reference_rows_for_finalize(
+    store: AddOnceStore,
+    roster: Sequence[Mapping[str, Any]],
+    reference_cells: Path,
+    config: Mapping[str, Any],
+) -> tuple[list[dict[str, Any]], dict[str, Any], dict[str, Any]]:
+    contract = config["inputs"]["reference_candidate_cells"]
+    restart = contract["derived_restart"]
+    existing = store.path(restart["path"])
+    if existing.is_file():
+        data = existing.read_bytes()
+        if len(data) != int(restart["bytes"]) or sha256_bytes(data) != restart["sha256"]:
+            raise RuntimeError("existing derived reference ledger identity differs")
+        return (
+            parse_jsonl(data),
+            {
+                "path": contract["artifact_relative_path"],
+                "bytes": int(contract["bytes"]),
+                "sha256": contract["sha256"],
+                "full_read_and_digest_passes": 0,
+                "reuse": "EXACT_DERIVED_LEDGER_FROM_SEALED_R1",
+            },
+            {"path": restart["path"], "bytes": len(data), "sha256": restart["sha256"]},
+        )
+    reference, source_record = _reference_rows(roster, reference_cells, contract)
+    output_record = store.add(restart["path"], jsonl_bytes(reference))
+    return reference, source_record, output_record
+
+
 def finalize(
     store: AddOnceStore,
     *,
@@ -536,11 +565,12 @@ def finalize(
     units = {row["operation_unit_id"]: row for row in parse_jsonl(store.read_verified(prepared["execution_units"]))}
     terminals = {unit_id: verify_terminal(store, unit_id) for unit_id in units}
     roster = _roster(config)
-    reference, reference_record = _reference_rows(roster, reference_cells, config["inputs"]["reference_candidate_cells"])
+    reference, reference_record, reference_output = _reference_rows_for_finalize(
+        store, roster, reference_cells, config
+    )
     reference_by_building: defaultdict[str, list[dict[str, Any]]] = defaultdict(list)
     for row in reference:
         reference_by_building[str(row["stable_id"])].append(row)
-    reference_output = store.add("freeze/utarget199_reference_cells_v1.jsonl", jsonl_bytes(reference))
     g2_rows = parse_jsonl(g2_receipts.read_bytes())
     g2_by_unit = {row["operation_unit_id"]: row for row in g2_rows}
     if set(g2_by_unit) != set(units):
