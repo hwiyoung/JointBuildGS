@@ -1,0 +1,87 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P2-W2C-C3-2-GPU0-LAUNCHER-RECOVERY-v2",
+  "task_id": "P2-C3-2-GPU0-LAUNCHER-RECOVERY-v2",
+  "created_at": "2026-08-04T03:58:33+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "offered",
+  "previous_receipt": null,
+  "transport": {
+    "mode": "serialized_main",
+    "branch": "main",
+    "target_branch": "main",
+    "exclusive_writer_ack": true
+  },
+  "commits": {
+    "base_main": "5955a4f13d1cb634b41d86d1569a75e525b9d0e2",
+    "offered_head": "SELF",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P2-W2C-C3-2-GPU0-LAUNCHER-RECOVERY-v2",
+      "artifacts/manifests/p2/c1_c2_c3_utarget199_v1",
+      "docs/experiments/p2/c1_c2_c3_utarget199_v1",
+      "docs/handoffs/returns/P2_C2W_C1_C2_C3_UTARGET199_RETURN_v1.md"
+    ],
+    "protected_paths": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      ".gitattributes",
+      "configs",
+      "scripts",
+      "src",
+      "tests",
+      "docs/research",
+      "docs/evidence",
+      "phases",
+      "docs/handoffs/P2_W2C_C3_2_GPU0_LAUNCHER_RECOVERY_v2.md"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "git_only",
+    "verifier_role": "work_host",
+    "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "commands": [
+      "preserve v1 pre-namespace permission-probe failure",
+      "replace host semantic directory probe with Docker direct-bind inventory gate",
+      "retain exact C3-1/C3-2/seed/GPU contracts"
+    ],
+    "tests": [
+      {
+        "name": "launcher shell syntax",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "C3-2 recovery config equivalence",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "fresh output namespace",
+        "passed": 1,
+        "failed": 0
+      }
+    ]
+  },
+  "artifacts": {
+    "required_for_task": true,
+    "availability": {
+      "work_host": "manifest_only",
+      "experiment_host": "verified_local"
+    },
+    "records": []
+  },
+  "scientific": {
+    "technical_state": "pending",
+    "scientific_verdict": null,
+    "promotion_status": "not_requested"
+  },
+  "receiver_ack": null
+}
