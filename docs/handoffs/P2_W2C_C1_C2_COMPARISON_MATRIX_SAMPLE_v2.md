@@ -5,11 +5,14 @@
 - handoff_id: `P2-W2C-C1-C2-COMPARISON-MATRIX-SAMPLE-v2`
 - task_id: `P2-C1-C2-COMPARISON-MATRIX-SAMPLE-v2`
 - direction: `Work Host -> Experiment Host`
-- status: `DRAFT_PENDING_TEST_AND_ACTIVATION`
-- source_commit: `PENDING`
+- status: `APPROVED_FOR_EXECUTION`
+- source_commit: `3fa337fd707e3b069182688c8dff481fef93b993`
 - target_branch: `main`
 - follows: `P2-W2C-C1-C2-COMPARISON-MATRIX-SAMPLE-v1`
+- research canon: `C1C5_CANON_v2` through `DEC-P1-016`
 - user_approval: `GRANTED — complete C1/C2 results without recomputing Roofer`
+- implementation_review: `PASS — Docker focused renderer tests 14/14; exact C1/C2-only 60-panel and reference-centered-section regression`
+- experiment_host_preflight: `PASS — exact source hashes; 6 C1/C2 rows; 2 unique sealed operation units; terminal COMPLETED_REUSED_EXACT; section visible 15/332/677; v2 final/partial namespaces absent`
 - scientific_verdict: `null`
 
 ## Exact recovery
