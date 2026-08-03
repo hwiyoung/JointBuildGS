@@ -5,12 +5,12 @@
 - handoff_id: `P2-W2C-C3-DEVELOPMENT-EVALUATION-CANDIDATE-v1`
 - task_id: `P2-C3-DEVELOPMENT-EVALUATION-CANDIDATE-v1`
 - direction: `Work Host -> Experiment Host`
-- status: `DRAFT_NOT_AUTHORITY`
+- status: `APPROVED_FOR_EXECUTION`
 - source_commit: `714893724575cc739e530cf97c9897a8a4792275`
 - target_branch: `main`
 - research canon: `docs/research/00_RESEARCH_CHARTER.md` through `06_DECISION_LOG.md`, `C1C5_CANON_v2`, `DEC-P1-014`
 - result contract: `docs/research/04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md`
-- user_approval: `NOT_YET_ACTIVATED`
+- user_approval: `APPROVED_FOR_EXECUTION`
 - scientific_verdict: `null`
 
 ## 목적
