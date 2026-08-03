@@ -6,7 +6,7 @@
 - task_id: `P2-C3-DEVELOPMENT-EVALUATION-CANDIDATE-v1`
 - direction: `Work Host -> Experiment Host`
 - status: `DRAFT_NOT_AUTHORITY`
-- source_commit: `b390c0a2b01d3484d1fb7e6d254774c5fb0ea430`
+- source_commit: `714893724575cc739e530cf97c9897a8a4792275`
 - target_branch: `main`
 - research canon: `docs/research/00_RESEARCH_CHARTER.md` through `06_DECISION_LOG.md`, `C1C5_CANON_v2`, `DEC-P1-014`
 - result contract: `docs/research/04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md`
@@ -51,7 +51,7 @@
 bash scripts/p2/c3_development_evaluation_candidate_v1/run_evaluation_host.sh \
   /media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts \
   sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774 \
-  b390c0a2b01d3484d1fb7e6d254774c5fb0ea430
+  714893724575cc739e530cf97c9897a8a4792275
 ```
 
 ## 필수 결과
