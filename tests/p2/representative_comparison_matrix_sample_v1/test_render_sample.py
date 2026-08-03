@@ -7,6 +7,7 @@ import unittest
 from unittest import mock
 
 import numpy as np
+import matplotlib.pyplot as plt
 
 from scripts.p2.representative_comparison_matrix_sample_v1 import render_sample as sample
 from src.visualization.fixed_view_qualitative import BBox, PointSet
@@ -15,6 +16,8 @@ from src.visualization.fixed_view_qualitative import BBox, PointSet
 REPO = Path(__file__).resolve().parents[3]
 CONFIG = REPO / "configs/p2/representative_comparison_matrix_sample_v1/render_v1.json"
 PACKET = REPO / "docs/handoffs/P2_W2C_REPRESENTATIVE_COMPARISON_MATRIX_SAMPLE_v1.md"
+CONFIG_V2 = REPO / "configs/p2/representative_comparison_matrix_sample_v2/render_v2.json"
+PACKET_V2 = REPO / "docs/handoffs/P2_W2C_REPRESENTATIVE_COMPARISON_MATRIX_SAMPLE_v2.md"
 
 
 class RepresentativeComparisonMatrixSampleTest(unittest.TestCase):
@@ -109,12 +112,33 @@ class RepresentativeComparisonMatrixSampleTest(unittest.TestCase):
         self.assertIn("official G3/G4/PASS: <b>null</b>", card)
         self.assertIn("STRICT_INDEPENDENT_UAS_REFERENCE", card)
 
+    def test_screen_text_supports_2d_and_3d_axes(self) -> None:
+        figure = plt.figure()
+        try:
+            axis_2d = figure.add_subplot(121)
+            axis_3d = figure.add_subplot(122, projection="3d")
+            text_2d = sample.screen_text(axis_2d, 0.5, 0.5, "2D")
+            text_3d = sample.screen_text(axis_3d, 0.5, 0.5, "3D")
+            self.assertEqual(text_2d.get_text(), "2D")
+            self.assertEqual(text_3d.get_text(), "3D")
+        finally:
+            plt.close(figure)
+
     def test_packet_is_approved_and_forbids_reexecution(self) -> None:
         text = PACKET.read_text(encoding="utf-8")
         self.assertIn("status: `APPROVED_FOR_EXECUTION`", text)
         self.assertIn("Roofer, G2, metric 또는 GS training 재실행", text)
         self.assertIn("PARTIAL_NAMESPACE_PRESENT", text)
         self.assertIn("scientific_verdict: `null`", text)
+
+    def test_v2_uses_new_namespace_and_exact_runtime_fix(self) -> None:
+        config_v2 = json.loads(CONFIG_V2.read_text(encoding="utf-8"))
+        self.assertEqual(config_v2["selection"], self.config["selection"])
+        self.assertNotEqual(config_v2["output_task_relative_root"], self.config["output_task_relative_root"])
+        self.assertTrue(config_v2["output_task_relative_root"].endswith("SAMPLE-v2"))
+        packet = PACKET_V2.read_text(encoding="utf-8")
+        self.assertIn("status: `DRAFT`", packet)
+        self.assertIn("v1 partial 삭제·덮어쓰기·재사용", packet)
 
 
 if __name__ == "__main__":

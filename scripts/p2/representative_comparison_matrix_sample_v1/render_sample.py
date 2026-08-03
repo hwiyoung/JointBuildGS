@@ -429,6 +429,13 @@ def draw_context_inset(ax: Any, geometry: Geometry, bbox: BBox, mode: str) -> No
     inset.set_yticks([])
 
 
+def screen_text(ax: Any, x: float, y: float, value: str, **kwargs: Any) -> Any:
+    """Draw axis-relative text on either 2D or 3D Matplotlib axes."""
+    if hasattr(ax, "text2D"):
+        return ax.text2D(x, y, value, transform=ax.transAxes, **kwargs)
+    return ax.text(x, y, value, transform=ax.transAxes, **kwargs)
+
+
 def section_data(points: np.ndarray, bbox: BBox, half_band: float) -> tuple[np.ndarray, np.ndarray, str]:
     if bbox.width >= bbox.height:
         keep = np.abs(points[:, 1] - bbox.center[1]) <= half_band
@@ -505,20 +512,20 @@ def render_spatial_panel(
         if mode in {"input", "output"}:
             draw_context_inset(ax, geometry, bbox, mode)
     if status:
-        ax.text(0.5, 0.5, status, transform=ax.transAxes, ha="center", va="center", color="#b22222", fontsize=9, bbox={"facecolor": "white", "alpha": 0.88, "edgecolor": "#b22222"})
+        screen_text(ax, 0.5, 0.5, status, ha="center", va="center", color="#b22222", fontsize=9, bbox={"facecolor": "white", "alpha": 0.88, "edgecolor": "#b22222"})
     if self_reference:
-        ax.text(
+        screen_text(
+            ax,
             0.5,
             0.98,
             "C1 METRIC = SELF-REFERENCE; GREEN OVERLAY = INDEPENDENT UAS",
-            transform=ax.transAxes,
             ha="center",
             va="top",
             color="#b22222",
             fontsize=6.2,
             bbox={"facecolor": "white", "alpha": 0.85, "edgecolor": "none"},
         )
-    ax.text(0.01, 0.01, "green = roof evaluation reference", transform=ax.transAxes, fontsize=6, color="#007c42", bbox={"facecolor": "white", "alpha": 0.78, "edgecolor": "none"})
+    screen_text(ax, 0.01, 0.01, "green = roof evaluation reference", fontsize=6, color="#007c42", bbox={"facecolor": "white", "alpha": 0.78, "edgecolor": "none"})
     figure.tight_layout()
     buffer_path = output
     buffer_path.parent.mkdir(parents=True, exist_ok=True)
