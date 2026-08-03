@@ -18,6 +18,8 @@ CONFIG = REPO / "configs/p2/representative_comparison_matrix_sample_v1/render_v1
 PACKET = REPO / "docs/handoffs/P2_W2C_REPRESENTATIVE_COMPARISON_MATRIX_SAMPLE_v1.md"
 CONFIG_V2 = REPO / "configs/p2/representative_comparison_matrix_sample_v2/render_v2.json"
 PACKET_V2 = REPO / "docs/handoffs/P2_W2C_REPRESENTATIVE_COMPARISON_MATRIX_SAMPLE_v2.md"
+CONFIG_V3 = REPO / "configs/p2/representative_comparison_matrix_sample_v3/render_v3.json"
+PACKET_V3 = REPO / "docs/handoffs/P2_W2C_REPRESENTATIVE_COMPARISON_MATRIX_SAMPLE_v3.md"
 
 
 class RepresentativeComparisonMatrixSampleTest(unittest.TestCase):
@@ -124,6 +126,19 @@ class RepresentativeComparisonMatrixSampleTest(unittest.TestCase):
         finally:
             plt.close(figure)
 
+    def test_missing_method_unit_fails_before_output_creation(self) -> None:
+        rows = {
+            "B1": {
+                method: {"operation_unit_id": f"{method}|unit"}
+                for method in sample.METHODS_SOURCE
+            }
+        }
+        units = {row["operation_unit_id"]: row for row in rows["B1"].values()}
+        sample.validate_sealed_operation_units(rows, ["B1"], units)
+        rows["B1"]["C3_GS_image"]["operation_unit_id"] = None
+        with self.assertRaisesRegex(RuntimeError, "before output creation"):
+            sample.validate_sealed_operation_units(rows, ["B1"], units)
+
     def test_packet_is_approved_and_forbids_reexecution(self) -> None:
         text = PACKET.read_text(encoding="utf-8")
         self.assertIn("status: `APPROVED_FOR_EXECUTION`", text)
@@ -139,6 +154,20 @@ class RepresentativeComparisonMatrixSampleTest(unittest.TestCase):
         packet = PACKET_V2.read_text(encoding="utf-8")
         self.assertIn("status: `APPROVED_FOR_EXECUTION`", packet)
         self.assertIn("v1 partial 삭제·덮어쓰기·재사용", packet)
+
+    def test_v3_uses_source_available_distinct_group_sample(self) -> None:
+        config_v3 = json.loads(CONFIG_V3.read_text(encoding="utf-8"))
+        records = config_v3["selection"]["records"]
+        self.assertEqual(
+            [row["building_id"] for row in records],
+            ["DEBY_LOD2_4907177", "DEBY_LOD2_4906975", "DEBY_LOD2_108580336"],
+        )
+        self.assertEqual(len({row["candidate_group_id"] for row in records}), 3)
+        self.assertIn("C1_C2_C3_SEALED_SOURCE_AVAILABLE", config_v3["selection"]["rule"])
+        self.assertTrue(config_v3["output_task_relative_root"].endswith("SAMPLE-v3"))
+        packet = PACKET_V3.read_text(encoding="utf-8")
+        self.assertIn("status: `DRAFT`", packet)
+        self.assertIn("output namespace 생성 전에 exact 3×3 operation unit", packet)
 
 
 if __name__ == "__main__":

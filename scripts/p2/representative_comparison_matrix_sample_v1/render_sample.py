@@ -81,6 +81,20 @@ def expected_panel_ids(building_ids: Sequence[str]) -> set[str]:
     return expected
 
 
+def validate_sealed_operation_units(
+    by_building: Mapping[str, Mapping[str, Mapping[str, Any]]],
+    building_ids: Sequence[str],
+    units: Mapping[str, Mapping[str, Any]],
+) -> None:
+    for building_id in building_ids:
+        for method in METHODS_SOURCE:
+            unit_id = by_building[building_id][method].get("operation_unit_id")
+            if not unit_id or str(unit_id) not in units:
+                raise RuntimeError(
+                    f"sealed operation unit missing before output creation: {building_id} {method} {unit_id}"
+                )
+
+
 def canonical_bytes(value: Any) -> bytes:
     return (json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":")) + "\n").encode("utf-8")
 
@@ -893,6 +907,7 @@ def main() -> None:
         if any(int(row.get("reference_cell_count", -1)) != expected_count for row in by_building[building_id].values()):
             raise RuntimeError(f"reference-cell count drift: {building_id}")
     units = {str(row["operation_unit_id"]): row for row in parse_jsonl(units_data)}
+    validate_sealed_operation_units(by_building, selected_ids, units)
     rgb = config["rgb_context"]
     scene_path = contained_path(artifact_root, str(rgb["scene_reference_relative_path"]), label="scene reference")
     camera_model_path = contained_path(artifact_root, str(rgb["cameras_relative_path"]), label="camera model")

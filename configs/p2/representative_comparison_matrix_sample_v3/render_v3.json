@@ -1,0 +1,66 @@
+{
+  "schema": "jointbuildgs.p2.representative_comparison_matrix_sample.v3",
+  "task_id": "P2-REPRESENTATIVE-COMPARISON-MATRIX-SAMPLE-v3",
+  "handoff_id": "P2-W2C-REPRESENTATIVE-COMPARISON-MATRIX-SAMPLE-v3",
+  "criterion_version": "C1C5_CANON_v2_UTARGET199_DIAGNOSTIC_v1",
+  "presentation_decision": "DEC-P1-016",
+  "source_task_relative_root": "phase-payloads/p2/utarget199_contract_results_v1/P2-UTARGET199-CONTRACT-RESULTS-v1",
+  "output_task_relative_root": "phase-payloads/p2/representative_comparison_matrix_sample_v3/P2-REPRESENTATIVE-COMPARISON-MATRIX-SAMPLE-v3",
+  "selection": {
+    "rule": "STRICT_E_PAIRED_AND_C1_C2_C3_SEALED_SOURCE_AVAILABLE_THEN_SMALL_MEDIUM_LARGE_DISTINCT_GROUP_NO_OUTCOME_FIELDS",
+    "count": 3,
+    "records": [
+      {"building_id": "DEBY_LOD2_4907177", "size_bin": "small", "candidate_group_id": "GROUP_681774d532569646", "bbox_area_m2": 177.062, "bbox_center_xy": [690853.053, 5336149.624]},
+      {"building_id": "DEBY_LOD2_4906975", "size_bin": "medium", "candidate_group_id": "GROUP_ccf535781f75c1c0", "bbox_area_m2": 2755.039, "bbox_center_xy": [690961.480, 5336100.385]},
+      {"building_id": "DEBY_LOD2_108580336", "size_bin": "large", "candidate_group_id": "GROUP_ca1040234a79aaa8", "bbox_area_m2": 13525.446, "bbox_center_xy": [691000.325, 5336034.110]}
+    ],
+    "minimum_inter_center_distance_m": 76.813
+  },
+  "source_records": {
+    "metrics": {"path": "results/building_method_metrics_v1.jsonl", "bytes": 1860023, "sha256": "13728f8e56ddfa502fea9d6345bb38b29931737f8e33d73d40b1b3b8171f6c8e"},
+    "reference_cells": {"path": "freeze/utarget199_reference_cells_v1.jsonl", "bytes": 11934242, "sha256": "ae62bc358dfdde604892305d44f3ff599288f00234a1622292d75596ba952f22"},
+    "execution_units": {"path": "freeze/execution_units_v1.jsonl", "bytes": 30446, "sha256": "3763ca747d80d1a83a80b8c7e5add866753fbde58be3ea3dcf5ac3849427f2d7"}
+  },
+  "rgb_context": {
+    "image_directory_relative_path": "phase-payloads/p0-audit/data/work/images/Images",
+    "cameras_relative_path": "phase-payloads/p0-audit/data/work/colmap/sparse/0/cameras.txt",
+    "images_relative_path": "phase-payloads/p0-audit/data/work/colmap/sparse/0/images.txt",
+    "scene_reference_relative_path": "phase-payloads/p0-audit/data/work/opf/opf/scene_reference_frame.json",
+    "camera_count": 4,
+    "minimum_coverage_fraction_of_best": 0.25,
+    "selection": "GREEDY_MAXIMIN_AZIMUTH_AFTER_REFERENCE_IN_FRAME_COVERAGE"
+  },
+  "views": {
+    "viewport_margin_ratio": 0.35,
+    "viewport_minimum_margin_m": 5.0,
+    "oblique_1": {"elevation_deg": 28.0, "azimuth_deg": -55.0},
+    "oblique_2": {"elevation_deg": 32.0, "azimuth_deg": 35.0},
+    "projection": "orthographic",
+    "section_band_ratio": 0.12,
+    "section_minimum_half_band_m": 0.75,
+    "raw_crop_margin_ratio": 0.35,
+    "raw_crop_minimum_margin_px": 48
+  },
+  "methods": ["C1_L_upper", "C2_MVS", "C3_GS_image", "C4_GS_lidar_prior", "C5_GS_lod1_prior"],
+  "reference_binding": {
+    "geometry_reference_version": "UTARGET199_UAS_ROOF_CELLS_v1",
+    "structure_reference_version": "UTARGET199_UAS_ROOF_CELLS_VISUAL_STRUCTURE_SUPPORT_ONLY_v1",
+    "shared_reference_artifact_reason": "The same independently observed UAS roof cells are projected for aligned geometry and visual roof-structure reading; official G3 remains null."
+  },
+  "source_evaluator": {
+    "source_git_commit": "93a2d03783403826d21b33bf6c554fc8ff3e2600",
+    "implementation_path": "scripts/p2/utarget199_contract_results_v1/contract.py",
+    "implementation_sha256": "b98b8558390be2bc78ff5e8507a414c24cb392653b58e77bf4f4ff17d9e0ec07",
+    "config_path": "configs/p2/utarget199_contract_results_v1/census_v1.json",
+    "config_sha256": "3e394d7593a5d71754434c6bfb685d7bb83522679a70bfdcde0a31ecb8742f9c"
+  },
+  "execution": {
+    "reuse_only": true,
+    "roofer_invocations": 0,
+    "g2_invocations": 0,
+    "gs_training_invocations": 0,
+    "large_archive_hash_passes": 0,
+    "output_cap_bytes": 500000000,
+    "scientific_verdict": null
+  }
+}
