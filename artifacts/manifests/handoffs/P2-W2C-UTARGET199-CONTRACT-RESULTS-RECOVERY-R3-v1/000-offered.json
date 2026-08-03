@@ -1,0 +1,47 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P2-W2C-UTARGET199-CONTRACT-RESULTS-RECOVERY-R3-v1",
+  "task_id": "P2-UTARGET199-CONTRACT-RESULTS-RECOVERY-R3-v1",
+  "created_at": "2026-08-03T15:33:00+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "offered",
+  "previous_receipt": null,
+  "transport": {"mode": "serialized_main", "branch": "main", "target_branch": "main", "exclusive_writer_ack": true},
+  "commits": {"base_main": "337368a5e508eef96ed729dcf31bcd0e1e72d1e2", "offered_head": "SELF", "receipt_head": "SELF"},
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P2-W2C-UTARGET199-CONTRACT-RESULTS-RECOVERY-R3-v1",
+      "artifacts/manifests/p2/utarget199_contract_results_v1",
+      "docs/experiments/p2/utarget199_contract_results_v1",
+      "docs/handoffs/returns/P2_C2W_UTARGET199_CONTRACT_RESULTS_RECOVERY_R3_RETURN_v1.md"
+    ],
+    "protected_paths": [
+      "AGENTS.md", "CLAUDE.md", ".gitattributes", "configs", "scripts", "src", "tests",
+      "docs/research", "docs/evidence", "docs/handoffs/P2_W2C_UTARGET199_CONTRACT_RESULTS_RECOVERY_R3_v1.md",
+      "docs/handoffs/returns/P2_C2W_UTARGET199_CONTRACT_RESULTS_RECOVERY_R2_RETURN_v1.md",
+      "artifacts/manifests/handoffs/P2-W2C-UTARGET199-CONTRACT-RESULTS-v1",
+      "artifacts/manifests/handoffs/P2-W2C-UTARGET199-CONTRACT-RESULTS-RECOVERY-R1-v1",
+      "artifacts/manifests/handoffs/P2-W2C-UTARGET199-CONTRACT-RESULTS-RECOVERY-R2-v1",
+      "artifacts/manifests/gate_s0", "phases"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "git_only",
+    "verifier_role": "work_host",
+    "docker_image_digest": "sha256:e50ba5c7fd493ed524212c34e5e84f48bd94e66a70e0ecb6d00269f75309f986",
+    "commands": ["Docker restart/parser/contract tests", "Docker Bash syntax", "sealed identity review"],
+    "tests": [
+      {"name": "focused restart parser and repository tests", "passed": 28, "failed": 0},
+      {"name": "Bash syntax", "passed": 1, "failed": 0},
+      {"name": "Roofer and G2 rerun paths", "passed": 0, "failed": 0}
+    ]
+  },
+  "artifacts": {"required_for_task": true, "availability": {"work_host": "manifest_only", "experiment_host": "verified_local"}, "records": []},
+  "scientific": {"technical_state": "pending", "scientific_verdict": null, "promotion_status": "not_requested"},
+  "receiver_ack": null
+}
