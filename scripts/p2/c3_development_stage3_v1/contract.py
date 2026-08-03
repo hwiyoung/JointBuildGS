@@ -448,6 +448,18 @@ def _terminal_relative(unit: Mapping[str, Any]) -> str:
     return f"{unit['work_directory']}/roofer_terminal_v1.json"
 
 
+def _current_output_records(store: AddOnceStore, output_dir: Path) -> list[dict[str, Any]]:
+    if output_dir.is_symlink() or not output_dir.is_dir():
+        raise RuntimeError("Roofer output directory missing/non-regular")
+    records: list[dict[str, Any]] = []
+    for path in sorted(output_dir.rglob("*")):
+        if path.is_symlink() or (not path.is_file() and not path.is_dir()):
+            raise RuntimeError("Roofer output tree contains symlink/non-regular entry")
+        if path.is_file():
+            records.append(compact_file_record(store, path))
+    return records
+
+
 def verify_roofer_terminal(store: AddOnceStore, *, unit_id: str) -> dict[str, Any]:
     """Verify one immutable terminal receipt and every file it binds."""
 
@@ -463,8 +475,14 @@ def verify_roofer_terminal(store: AddOnceStore, *, unit_id: str) -> dict[str, An
     store.read_verified(body["input"])
     store.read_verified(body["r_derived"])
     store.read_verified(body["runtime_log"])
-    for record in body.get("output_records", []):
+    output_records = body.get("output_records", [])
+    for record in output_records:
         store.read_verified(record)
+    current_records = _current_output_records(
+        store, store.path(str(unit["output_directory"]))
+    )
+    if current_records != output_records:
+        raise RuntimeError("Roofer output tree differs from terminal receipt")
     return body
 
 
@@ -488,11 +506,7 @@ def record_roofer_terminal(
     if runtime_path.is_symlink() or not runtime_path.is_file():
         raise RuntimeError("Roofer runtime log missing/non-regular")
     output_dir = store.path(str(unit["output_directory"]))
-    output_records = [
-        compact_file_record(store, path)
-        for path in sorted(output_dir.rglob("*"))
-        if path.is_file() and not path.is_symlink()
-    ] if output_dir.is_dir() and not output_dir.is_symlink() else []
+    output_records = _current_output_records(store, output_dir)
     body = {
         "schema": "jointbuildgs.c3_roofer_terminal.v1",
         "status": "COMPLETED" if exit_code == 0 else "FAILED",
@@ -531,6 +545,9 @@ def finalize_technical(
         body = json.loads(completed.read_bytes())
         if body.get("status") != "TECHNICAL_RESULTS_FINALIZED" or body.get("source_commit") != source_commit or body.get("run_id") != run_id:
             raise RuntimeError("existing C3 technical finalization identity mismatch")
+        store.read_verified(body["operation_checks"])
+        store.read_verified(body["development_technical_results"])
+        store.read_verified(body["stage_counts"])
         return {**body, "fast_path": True, "output_reopens": 0, "new_writes": 0}
     associated_path = store.path("control/c3_development_associated_v1.json")
     if not associated_path.is_file():

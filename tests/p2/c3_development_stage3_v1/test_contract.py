@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from copy import deepcopy
 import json
+import os
 from pathlib import Path
 import tempfile
 import unittest
@@ -128,12 +129,37 @@ class C3DevelopmentStage3ContractTests(unittest.TestCase):
                 work = store.root / execution_unit["work_directory"]
                 (work / "out").mkdir()
                 (work / "runtime.log").write_text("synthetic failure\n", encoding="utf-8")
+                sealed_output = work / "out" / "sealed.bin"
+                sealed_output.write_bytes(b"sealed")
                 contract.record_roofer_terminal(
                     store,
                     unit_id=execution_unit["operation_unit_id"],
                     exit_code=1,
                     runtime_seconds=2,
                 )
+                contract.verify_roofer_terminal(
+                    store, unit_id=execution_unit["operation_unit_id"]
+                )
+                sealed_output.write_bytes(b"tampered")
+                with self.assertRaisesRegex(RuntimeError, "record output digest mismatch"):
+                    contract.verify_roofer_terminal(
+                        store, unit_id=execution_unit["operation_unit_id"]
+                    )
+                sealed_output.write_bytes(b"sealed")
+                extra_output = work / "out" / "extra.bin"
+                extra_output.write_bytes(b"extra")
+                with self.assertRaisesRegex(RuntimeError, "output tree differs"):
+                    contract.verify_roofer_terminal(
+                        store, unit_id=execution_unit["operation_unit_id"]
+                    )
+                extra_output.unlink()
+                symlink_output = work / "out" / "link.bin"
+                os.symlink(sealed_output, symlink_output)
+                with self.assertRaisesRegex(RuntimeError, "symlink/non-regular"):
+                    contract.verify_roofer_terminal(
+                        store, unit_id=execution_unit["operation_unit_id"]
+                    )
+                symlink_output.unlink()
                 finalized = contract.finalize_technical(
                     store,
                     source_commit="a" * 40,
@@ -185,6 +211,15 @@ class C3DevelopmentStage3ContractTests(unittest.TestCase):
             self.assertIn("COMPONENT_G0_GENERATED,COMPLETE,0,1", stage_text)
             self.assertIn("G2_GEOMETRY_TOPOLOGY_VALID,PENDING", stage_text)
             self.assertIn("PASS_USABLE,PENDING", stage_text)
+            result_path = store.root / "results/development_technical_results_v1.jsonl"
+            original_result = result_path.read_bytes()
+            result_path.write_bytes(original_result + b"{}\n")
+            with self.assertRaisesRegex(RuntimeError, "record output digest mismatch"):
+                contract.finalize_technical(
+                    store,
+                    source_commit="a" * 40,
+                    run_id="test-run",
+                )
 
 
 if __name__ == "__main__":
