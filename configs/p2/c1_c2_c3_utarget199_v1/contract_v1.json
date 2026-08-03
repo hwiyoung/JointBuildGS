@@ -23,7 +23,7 @@
     "seed": 0,
     "views": 937,
     "updates": 30000,
-    "sequential_gpu": 0,
+    "sequential_gpu": "AUTO_EXCLUSIVE_MIN_FREE_22000_MIB",
     "single_seed_boundary": "SEED_VARIANCE_NOT_ESTIMATED",
     "shared_losses": ["photo", "semantic", "normal_consistency", "distortion"],
     "c3_1_depth": false,

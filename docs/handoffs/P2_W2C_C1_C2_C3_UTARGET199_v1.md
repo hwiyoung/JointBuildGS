@@ -47,7 +47,10 @@ zero. C3-2 alone activates the existing image-derived MVS depth L1 with the froz
 
 ## GPU and unattended execution
 
-- use physical GPU 0 only and never interrupt or share GPU 1;
+- select one physical GPU with at least 22,000 MiB free and never interrupt or share a
+  GPU that already carries another compute process;
+- prefer GPU 0 when eligible, otherwise use the first eligible GPU, and bind the exact
+  selected GPU index/UUID in the runtime record;
 - require at least 22,000 MiB free before seed0 C3-1 and again before seed0 C3-2;
 - run the pair sequentially;
 - fail closed before training if the neutral dense seed exceeds 220,000 points;

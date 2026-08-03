@@ -18,6 +18,10 @@ class UTarget199C123ContractTests(unittest.TestCase):
         self.assertTrue(contract["evaluation"]["all_199_case_sheets"])
         self.assertFalse(contract["evaluation"]["reference_cohort_labels_visible"])
         self.assertIsNone(contract["evaluation"]["scientific_verdict"])
+        self.assertEqual(
+            contract["paired_training"]["sequential_gpu"],
+            "AUTO_EXCLUSIVE_MIN_FREE_22000_MIB",
+        )
 
     def test_common_seed_is_sparse_plus_neutral_sampled_dense(self):
         contract = json.loads((ROOT / "contract_v1.json").read_text(encoding="utf-8"))

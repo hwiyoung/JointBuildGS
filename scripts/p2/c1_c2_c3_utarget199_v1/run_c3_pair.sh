@@ -6,7 +6,7 @@ artifact_root="${JBGS_ARTIFACT_ROOT:-/media/innopam/InnoPAM-8TB/hwiyoung/code/Jo
 task_root="${artifact_root}/phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-v1"
 image="jointbuildgs:dev"
 expected_image="sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774"
-gpu_index="0"
+gpu_index=""
 
 if [[ "$(git -C "$repo_root" status --porcelain=v1 --untracked-files=all)" != "" ]]; then
   echo "production C3 pair requires a clean source checkout" >&2
@@ -21,15 +21,25 @@ if [[ -e "$task_root" ]]; then
   exit 2
 fi
 
-free_mib="$(nvidia-smi --id="$gpu_index" --query-gpu=memory.free --format=csv,noheader,nounits)"
-if (( free_mib < 22000 )); then
-  echo "GPU 0 preflight requires at least 22000 MiB free; observed ${free_mib}" >&2
+while IFS=, read -r index free; do
+  index="${index// /}"
+  free="${free// /}"
+  if (( free >= 22000 )); then
+    gpu_index="$index"
+    break
+  fi
+done < <(nvidia-smi --query-gpu=index,memory.free --format=csv,noheader,nounits)
+if [[ -z "$gpu_index" ]]; then
+  echo "no exclusive GPU has the required 22000 MiB free" >&2
   exit 2
 fi
+free_mib="$(nvidia-smi --id="$gpu_index" --query-gpu=memory.free --format=csv,noheader,nounits)"
+gpu_uuid="$(nvidia-smi --id="$gpu_index" --query-gpu=uuid --format=csv,noheader)"
 
 mkdir -p "$task_root/control" "$task_root/c3/common" "$task_root/scratch"
 nvidia-smi -q -i "$gpu_index" > "$task_root/control/gpu_before.txt"
 git -C "$repo_root" rev-parse HEAD > "$task_root/control/source_commit.txt"
+printf '%s\n' "index=$gpu_index" "uuid=$gpu_uuid" "free_mib=$free_mib" > "$task_root/control/selected_gpu.txt"
 
 common=(
   docker run --rm --network none --shm-size 16g
@@ -66,7 +76,7 @@ run_train() {
   local log="$task_root/control/${name}.log"
   free_mib="$(nvidia-smi --id="$gpu_index" --query-gpu=memory.free --format=csv,noheader,nounits)"
   if (( free_mib < 22000 )); then
-    echo "GPU 0 no longer has the required 22000 MiB before ${name}: ${free_mib}" >&2
+    echo "selected GPU no longer has the required 22000 MiB before ${name}: ${free_mib}" >&2
     exit 2
   fi
   docker run --rm --network none --shm-size 16g \
@@ -113,7 +123,7 @@ if any(row["iteration"] != 30_000 for row in rows):
         "schema": "jointbuildgs.c3_utarget199_pair_completion.v1",
         "status": "COMPLETED",
         "rows": rows,
-        "gpu": 0,
+        "gpu_selection": (root / "control/selected_gpu.txt").read_text(encoding="utf-8").splitlines(),
         "sequential": True,
         "scientific_verdict": None,
     }, indent=2, sort_keys=True) + "\n",
