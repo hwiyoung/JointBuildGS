@@ -15,6 +15,7 @@ from pathlib import Path
 import re
 import subprocess
 from typing import Any, Iterable, Mapping, Sequence
+import xml.etree.ElementTree as ET
 
 import cv2
 import matplotlib
@@ -278,6 +279,57 @@ def reference_for(rows: Sequence[Mapping[str, Any]]) -> PointSet:
     return PointSet(values, None)
 
 
+def xml_local_name(tag: str) -> str:
+    return tag.rsplit("}", 1)[-1]
+
+
+def xml_element_id(element: ET.Element) -> str | None:
+    for key, value in element.attrib.items():
+        if key == "id" or key.endswith("}id"):
+            return str(value)
+    return None
+
+
+def load_reference_roof_rings(path: Path, building_ids: Sequence[str]) -> dict[str, list[np.ndarray]]:
+    """Read original evaluation-only LoD2 RoofSurface exterior XYZ rings."""
+    wanted = {str(value) for value in building_ids}
+    output: dict[str, list[np.ndarray]] = {value: [] for value in wanted}
+    for _event, building in ET.iterparse(path, events=("end",)):
+        if xml_local_name(building.tag) != "Building":
+            continue
+        building_id = xml_element_id(building)
+        if building_id in wanted:
+            for surface in building.iter():
+                if xml_local_name(surface.tag) != "RoofSurface":
+                    continue
+                for polygon in surface.iter():
+                    if xml_local_name(polygon.tag) != "Polygon":
+                        continue
+                    exterior = next((child for child in polygon.iter() if xml_local_name(child.tag) == "exterior"), None)
+                    if exterior is None:
+                        continue
+                    pos_list = next((child for child in exterior.iter() if xml_local_name(child.tag) == "posList"), None)
+                    if pos_list is None or not pos_list.text:
+                        continue
+                    values = np.fromstring(pos_list.text, sep=" ", dtype=np.float64)
+                    dimension = int(pos_list.attrib.get("srsDimension", "3"))
+                    if dimension != 3 or len(values) < 9 or len(values) % dimension:
+                        raise RuntimeError(f"invalid reference RoofSurface ring: {building_id}")
+                    ring = values.reshape((-1, dimension))
+                    if not np.allclose(ring[0], ring[-1]):
+                        ring = np.vstack((ring, ring[0]))
+                    output[str(building_id)].append(ring)
+        building.clear()
+    missing = sorted(building_id for building_id, rings in output.items() if not rings)
+    if missing:
+        raise RuntimeError(f"evaluation-only reference RoofSurface missing: {missing}")
+    return output
+
+
+def roof_ring_vertices(rings: Sequence[np.ndarray]) -> PointSet:
+    return PointSet(np.vstack([np.asarray(ring, dtype=np.float64)[:, :3] for ring in rings]), None)
+
+
 def circular_distance(left: float, right: float) -> float:
     return abs((left - right + 180.0) % 360.0 - 180.0)
 
@@ -290,11 +342,20 @@ def select_cameras(
     scene_ref: Mapping[str, Any],
     count: int,
     minimum_fraction: float,
+    input_datum: str = "orthometric",
 ) -> list[dict[str, Any]]:
     width, height, params = model
     candidates: list[dict[str, Any]] = []
     for camera in cameras:
-        uv, front = projection.project(reference.xyz, camera, width, height, params, scene_ref)
+        uv, front = projection.project(
+            reference.xyz,
+            camera,
+            width,
+            height,
+            params,
+            scene_ref,
+            input_datum=input_datum,
+        )
         inside = front & np.isfinite(uv).all(axis=1)
         inside &= (uv[:, 0] >= 0) & (uv[:, 0] < width) & (uv[:, 1] >= 0) & (uv[:, 1] < height)
         visible = int(np.count_nonzero(inside))
@@ -326,6 +387,273 @@ def select_cameras(
                 if len(selected) == count:
                     break
     return selected
+
+
+def projection_inside(
+    points: np.ndarray,
+    camera: Any,
+    model: tuple[int, int, np.ndarray],
+    scene_ref: Mapping[str, Any],
+    input_datum: str,
+) -> tuple[np.ndarray, np.ndarray]:
+    width, height, params = model
+    uv, front = projection.project(
+        points,
+        camera,
+        width,
+        height,
+        params,
+        scene_ref,
+        input_datum=input_datum,
+    )
+    inside = front & np.isfinite(uv).all(axis=1)
+    inside &= (uv[:, 0] >= 0) & (uv[:, 0] < width) & (uv[:, 1] >= 0) & (uv[:, 1] < height)
+    return uv, inside
+
+
+def select_current_uas_camera_roles(
+    reference: PointSet,
+    support: PointSet,
+    bbox: BBox,
+    cameras: Sequence[Any],
+    model: tuple[int, int, np.ndarray],
+    scene_ref: Mapping[str, Any],
+    minimum_fraction: float,
+    input_datum: str,
+    support_input_datum: str = "ellipsoidal",
+    required_reference: PointSet | None = None,
+) -> dict[str, dict[str, Any]]:
+    """Choose coverage, near-nadir and oblique views with explicit per-source datums."""
+    if support_input_datum != "ellipsoidal":
+        raise RuntimeError("current UAS support must use the same-frame ellipsoidal datum")
+    if not len(reference.xyz) or not len(support.xyz):
+        raise RuntimeError("current UAS camera selection requires reference and C1 support")
+    stride = max(1, len(support.xyz) // 5000)
+    support_sample = support.xyz[::stride]
+    target = projection.base_to_canonical(
+        np.median(reference.xyz, axis=0).reshape((1, 3)),
+        scene_ref,
+        input_datum=input_datum,
+    )[0]
+    width, height, _ = model
+    candidates: list[dict[str, Any]] = []
+    for camera in cameras:
+        ref_uv, ref_inside = projection_inside(reference.xyz, camera, model, scene_ref, input_datum)
+        visible = int(np.count_nonzero(ref_inside))
+        if not visible:
+            continue
+        support_uv, support_inside = projection_inside(
+            support_sample,
+            camera,
+            model,
+            scene_ref,
+            support_input_datum,
+        )
+        support_visible = int(np.count_nonzero(support_inside))
+        if not support_visible:
+            continue
+        required_visible = None
+        if required_reference is not None:
+            _required_uv, required_inside = projection_inside(
+                required_reference.xyz,
+                camera,
+                model,
+                scene_ref,
+                support_input_datum,
+            )
+            required_visible = int(np.count_nonzero(required_inside))
+            if not required_visible:
+                continue
+        visible_uv = support_uv[support_inside]
+        span = np.ptp(visible_uv, axis=0) if len(visible_uv) > 1 else np.zeros((2,), dtype=float)
+        center_uv = np.median(ref_uv[ref_inside], axis=0)
+        center_offset = float(np.linalg.norm((center_uv - np.asarray([width / 2, height / 2])) / np.asarray([width, height])))
+        camera_center_canonical = -np.asarray(camera.rot, dtype=float).T @ np.asarray(camera.tvec, dtype=float)
+        delta = camera_center_canonical - target
+        view_angle = math.degrees(math.atan2(float(np.linalg.norm(delta[:2])), max(abs(float(delta[2])), 1e-6)))
+        azimuth = math.degrees(math.atan2(float(delta[1]), float(delta[0])))
+        candidates.append({
+            "camera": camera,
+            "visible": visible,
+            "uv": ref_uv,
+            "inside": ref_inside,
+            "support_visible": support_visible,
+            "required_reference_visible": required_visible,
+            "support_span_px": [float(span[0]), float(span[1])],
+            "center_offset_fraction": center_offset,
+            "view_angle_from_nadir_deg": view_angle,
+            "azimuth": azimuth,
+            "input_datum": input_datum,
+        })
+    if len(candidates) < 2:
+        raise RuntimeError(f"fewer than two same-frame current-UAS cameras for bbox {bbox}")
+    best_visible = max(int(item["visible"]) for item in candidates)
+    threshold = max(1, math.ceil(best_visible * minimum_fraction))
+    pool = [item for item in candidates if int(item["visible"]) >= threshold]
+    coverage_pool = [item for item in candidates if int(item["visible"]) == best_visible]
+    coverage = min(
+        coverage_pool,
+        key=lambda item: (
+            float(item["center_offset_fraction"]),
+            float(item["view_angle_from_nadir_deg"]),
+            -int(item["support_visible"]),
+            str(item["camera"].name),
+        ),
+    )
+    near = min(
+        coverage_pool,
+        key=lambda item: (
+            float(item["view_angle_from_nadir_deg"]),
+            float(item["center_offset_fraction"]),
+            -int(item["support_visible"]),
+            str(item["camera"].name),
+        ),
+    )
+    oblique_pool = [item for item in coverage_pool if str(item["camera"].name) != str(near["camera"].name)]
+    if not oblique_pool:
+        oblique_pool = [item for item in candidates if str(item["camera"].name) != str(near["camera"].name)]
+    oblique = min(
+        oblique_pool,
+        key=lambda item: (
+            abs(float(item["view_angle_from_nadir_deg"]) - 45.0),
+            -circular_distance(float(item["azimuth"]), float(near["azimuth"])),
+            float(item["center_offset_fraction"]),
+            -int(item["support_visible"]),
+            str(item["camera"].name),
+        ),
+    )
+    return {"COVERAGE": coverage, "NADIR": near, "OBLIQUE": oblique}
+
+
+def context_crop_xyxy(
+    uv: np.ndarray,
+    image_width: int,
+    image_height: int,
+    crop_scale: float,
+    minimum_width: int,
+    minimum_height: int,
+) -> tuple[int, int, int, int]:
+    if not len(uv):
+        raise RuntimeError("cannot crop an empty projected support")
+    low = np.min(uv, axis=0)
+    high = np.max(uv, axis=0)
+    center = (low + high) / 2.0
+    desired_width = max(float(high[0] - low[0]) * crop_scale, float(minimum_width))
+    desired_height = max(float(high[1] - low[1]) * crop_scale, float(minimum_height))
+    aspect = 4.0 / 3.0
+    if desired_width / desired_height < aspect:
+        desired_width = desired_height * aspect
+    else:
+        desired_height = desired_width / aspect
+    crop_width = min(image_width, max(1, int(math.ceil(desired_width))))
+    crop_height = min(image_height, max(1, int(math.ceil(desired_height))))
+    left = int(round(float(center[0]) - crop_width / 2))
+    top = int(round(float(center[1]) - crop_height / 2))
+    left = min(max(0, left), image_width - crop_width)
+    top = min(max(0, top), image_height - crop_height)
+    return left, top, left + crop_width, top + crop_height
+
+
+def save_current_uas_projection(
+    output: Path,
+    image_path: Path,
+    camera_record: Mapping[str, Any],
+    reference: PointSet,
+    support: PointSet,
+    bbox: BBox,
+    model: tuple[int, int, np.ndarray],
+    scene_ref: Mapping[str, Any],
+    input_datum: str,
+    panel_spec: Mapping[str, Any],
+    roof_reference_rings: Sequence[np.ndarray],
+    roof_reference_input_datum: str,
+    roof_reference_vertical_shift_m: float,
+) -> dict[str, Any]:
+    image = cv2.imread(str(image_path), cv2.IMREAD_COLOR)
+    if image is None:
+        raise RuntimeError(f"raw image is unreadable: {image_path}")
+    reference_uv, reference_inside = projection_inside(reference.xyz, camera_record["camera"], model, scene_ref, input_datum)
+    support_uv, support_inside = projection_inside(support.xyz, camera_record["camera"], model, scene_ref, input_datum)
+    if not np.count_nonzero(reference_inside) or not np.count_nonzero(support_inside):
+        raise RuntimeError(f"current UAS support does not project into selected raw image: {image_path}")
+    roofline_projections = [
+        (*projection_inside(
+            np.asarray(ring)[:, :3],
+            camera_record["camera"],
+            model,
+            scene_ref,
+            roof_reference_input_datum,
+        ), len(ring))
+        for ring in roof_reference_rings
+    ]
+    roofline_crop_points = [uv[inside] for uv, inside, _count in roofline_projections if np.count_nonzero(inside)]
+    if not roofline_crop_points:
+        raise RuntimeError(f"reference RoofSurface does not project into selected raw image: {image_path}")
+    classes = support.classification
+    roof_inside = support_inside & (classes == 6) if classes is not None else support_inside
+    crop_basis = np.vstack(roofline_crop_points)
+    left, top, right, bottom = context_crop_xyxy(
+        crop_basis,
+        image.shape[1],
+        image.shape[0],
+        float(panel_spec["crop_scale"]),
+        int(panel_spec["minimum_width_px"]),
+        int(panel_spec["minimum_height_px"]),
+    )
+    crop = image[top:bottom, left:right].copy()
+    offset = np.asarray([left, top], dtype=float)
+    support_indices = np.flatnonzero(support_inside)
+    stride = max(1, len(support_indices) // 1500)
+    for index in support_indices[::stride]:
+        x, y = np.rint(support_uv[index] - offset).astype(np.int32)
+        classification = int(classes[index]) if classes is not None else -1
+        color = (255, 255, 0) if classification == 6 else (255, 0, 255) if classification == 2 else (150, 150, 150)
+        cv2.circle(crop, (int(x), int(y)), 1, color, -1, lineType=cv2.LINE_AA)
+    local_reference = np.rint(reference_uv[reference_inside] - offset).astype(np.int32)
+    reference_stride = max(1, len(local_reference) // 1200)
+    for x, y in local_reference[::reference_stride]:
+        cv2.circle(crop, (int(x), int(y)), 4, (0, 225, 0), 1, lineType=cv2.LINE_AA)
+    roofline_visible = 0
+    roofline_vertices = 0
+    for ring, (ring_uv, ring_inside, _count) in zip(roof_reference_rings, roofline_projections):
+        roofline_visible += int(np.count_nonzero(ring_inside))
+        roofline_vertices += len(ring_inside)
+        if not np.all(ring_inside):
+            continue
+        local_ring = np.rint(ring_uv - offset).astype(np.int32).reshape((-1, 1, 2))
+        cv2.polylines(crop, [local_ring], True, (20, 20, 20), 6, lineType=cv2.LINE_AA)
+        cv2.polylines(crop, [local_ring], True, (30, 205, 255), 3, lineType=cv2.LINE_AA)
+    role = str(panel_spec["role"])
+    label = (
+        f"{role} | {camera_record['camera'].name} | "
+        f"current UAS 0 m; existing LoD2 +{roof_reference_vertical_shift_m:.1f} m"
+    )
+    cv2.rectangle(crop, (0, max(0, crop.shape[0] - 36)), (crop.shape[1], crop.shape[0]), (16, 16, 16), -1)
+    cv2.putText(crop, label, (12, crop.shape[0] - 12), cv2.FONT_HERSHEY_SIMPLEX, 0.58, (245, 245, 245), 1, cv2.LINE_AA)
+    ok, encoded = cv2.imencode(".png", crop)
+    if not ok:
+        raise RuntimeError(f"PNG encode failed: {output}")
+    write_new(output, encoded.tobytes())
+    visible = int(np.count_nonzero(reference_inside))
+    return {
+        "raw_role": role,
+        "crop_xyxy": [left, top, right, bottom],
+        "crop_width_px": right - left,
+        "crop_height_px": bottom - top,
+        "projected_visible_count": visible,
+        "projected_clipped_count": int(len(reference_inside) - visible),
+        "current_uas_support_visible_count": int(np.count_nonzero(support_inside)),
+        "current_uas_class6_visible_count": int(np.count_nonzero(roof_inside)),
+        "roof_reference_visible_vertex_count": roofline_visible,
+        "roof_reference_clipped_vertex_count": roofline_vertices - roofline_visible,
+        "roof_reference_input_datum": roof_reference_input_datum,
+        "roof_reference_applied_vertical_shift_m": roof_reference_vertical_shift_m,
+        "camera_name": str(camera_record["camera"].name),
+        "camera_azimuth_deg": float(camera_record["azimuth"]),
+        "view_angle_from_nadir_deg": float(camera_record["view_angle_from_nadir_deg"]),
+        "input_datum": input_datum,
+        "applied_vertical_shift_m": 0.0,
+    }
 
 
 def save_rgb_projection(
@@ -385,33 +713,37 @@ def z_limits(points: Iterable[PointSet], surfaces: Iterable[Surface]) -> tuple[f
 def draw_reference_top(ax: Any, reference: PointSet) -> int:
     if not len(reference.xyz):
         return 0
-    ax.scatter(reference.xyz[:, 0], reference.xyz[:, 1], s=9, facecolors="none", edgecolors="#00a65a", linewidths=0.7, zorder=10)
+    stride = max(1, len(reference.xyz) // 1200)
+    xyz = reference.xyz[::stride]
+    ax.scatter(xyz[:, 0], xyz[:, 1], s=7, facecolors="none", edgecolors="#00a65a", linewidths=0.65, zorder=10)
     return int(len(reference.xyz))
 
 
 def draw_reference_3d(ax: Any, reference: PointSet) -> int:
     if not len(reference.xyz):
         return 0
-    ax.scatter(reference.xyz[:, 0], reference.xyz[:, 1], reference.xyz[:, 2], s=7, c="#00c66a", depthshade=False)
+    stride = max(1, len(reference.xyz) // 1200)
+    xyz = reference.xyz[::stride]
+    ax.scatter(xyz[:, 0], xyz[:, 1], xyz[:, 2], s=5, c="#00c66a", depthshade=False)
     return int(len(reference.xyz))
 
 
 def draw_points(ax: Any, points: PointSet, view: str) -> None:
     if not len(points.xyz):
         return
-    stride = max(1, len(points.xyz) // 12000)
+    stride = max(1, len(points.xyz) // 4000)
     xyz = points.xyz[::stride]
     classes = points.classification[::stride] if points.classification is not None else None
     if classes is None:
         colors: Any = xyz[:, 2]
         cmap = "viridis"
     else:
-        colors = np.where(classes == 6, "#1f77b4", np.where(classes == 2, "#8c6d31", "#8c8c8c"))
+        colors = np.where(classes == 6, "#00cfe8", np.where(classes == 2, "#d946ef", "#8c8c8c"))
         cmap = None
     if view == "TOP":
-        ax.scatter(xyz[:, 0], xyz[:, 1], c=colors, cmap=cmap, s=2, linewidths=0, rasterized=True)
+        ax.scatter(xyz[:, 0], xyz[:, 1], c=colors, cmap=cmap, s=1.4, linewidths=0, rasterized=True)
     else:
-        ax.scatter(xyz[:, 0], xyz[:, 1], xyz[:, 2], c=colors, cmap=cmap, s=1.5, linewidths=0, depthshade=False, rasterized=True)
+        ax.scatter(xyz[:, 0], xyz[:, 1], xyz[:, 2], c=colors, cmap=cmap, s=1.2, linewidths=0, depthshade=False, rasterized=True)
 
 
 def draw_surfaces(ax: Any, surfaces: Sequence[Surface], view: str) -> None:
@@ -420,17 +752,78 @@ def draw_surfaces(ax: Any, surfaces: Sequence[Surface], view: str) -> None:
             continue
         ring = surface.xyz
         closed = np.vstack((ring, ring[0]))
-        color = "#d1495b" if surface.semantic == "RoofSurface" else "#777777"
+        color = "#2563eb" if surface.semantic == "RoofSurface" else "#777777"
         if view == "TOP":
             if surface.semantic == "RoofSurface":
-                ax.fill(ring[:, 0], ring[:, 1], facecolor="#d1495b33", edgecolor=color, linewidth=0.9)
+                ax.fill(ring[:, 0], ring[:, 1], facecolor="#2563eb33", edgecolor=color, linewidth=0.9)
             else:
                 ax.plot(closed[:, 0], closed[:, 1], color=color, linewidth=0.55)
         else:
             ax.plot(closed[:, 0], closed[:, 1], closed[:, 2], color=color, linewidth=0.8)
 
 
-def draw_context_inset(ax: Any, geometry: Geometry, bbox: BBox, mode: str) -> None:
+def footprint_display_z(geometry: Geometry) -> float:
+    points = geometry.points
+    if len(points.xyz) and points.classification is not None and np.count_nonzero(points.classification == 2):
+        return float(np.quantile(points.xyz[points.classification == 2, 2], 0.05))
+    if len(points.xyz):
+        return float(np.min(points.xyz[:, 2]))
+    return 0.0
+
+
+def draw_footprints(ax: Any, geometry: Geometry, view: str, bbox: BBox, center_xy: Sequence[float]) -> None:
+    if not geometry.roofprint:
+        return
+    display_z = footprint_display_z(geometry)
+    for ring_value in geometry.roofprint:
+        ring = np.asarray(ring_value, dtype=np.float64)
+        if ring.ndim != 2 or len(ring) < 3:
+            continue
+        ring_xy = ring[:, :2]
+        if not np.allclose(ring_xy[0], ring_xy[-1]):
+            ring_xy = np.vstack((ring_xy, ring_xy[0]))
+        if view == "TOP":
+            ax.plot(ring_xy[:, 0], ring_xy[:, 1], color="#f59e0b", linestyle="--", linewidth=1.5, zorder=12)
+        elif view in {"OBLIQUE_1", "OBLIQUE_2"}:
+            z = np.full((len(ring_xy),), display_z)
+            ax.plot(ring_xy[:, 0], ring_xy[:, 1], z, color="#f59e0b", linestyle="--", linewidth=1.4)
+        elif view == "PRINCIPAL_SECTION":
+            if bbox.width >= bbox.height:
+                horizontal = ring_xy[:, 0]
+            else:
+                horizontal = ring_xy[:, 1]
+            ax.plot(
+                [float(np.min(horizontal)), float(np.max(horizontal))],
+                [display_z, display_z],
+                color="#f59e0b",
+                linestyle="--",
+                linewidth=1.5,
+            )
+
+
+def draw_roof_reference(ax: Any, rings: Sequence[np.ndarray], view: str, bbox: BBox) -> None:
+    for ring_value in rings:
+        ring = np.asarray(ring_value, dtype=np.float64)
+        if ring.ndim != 2 or ring.shape[1] < 3 or len(ring) < 3:
+            continue
+        if not np.allclose(ring[0], ring[-1]):
+            ring = np.vstack((ring, ring[0]))
+        if view == "TOP":
+            ax.plot(ring[:, 0], ring[:, 1], color="#f2b134", linewidth=1.4, zorder=11)
+        elif view in {"OBLIQUE_1", "OBLIQUE_2"}:
+            ax.plot(ring[:, 0], ring[:, 1], ring[:, 2], color="#f2b134", linewidth=1.2)
+        elif view == "PRINCIPAL_SECTION":
+            horizontal = ring[:, 0] if bbox.width >= bbox.height else ring[:, 1]
+            ax.plot(horizontal, ring[:, 2], color="#f2b134", linewidth=1.1)
+
+
+def draw_context_inset(
+    ax: Any,
+    geometry: Geometry,
+    bbox: BBox,
+    mode: str,
+    roof_reference_rings: Sequence[np.ndarray],
+) -> None:
     inset = ax.inset_axes([0.66, 0.67, 0.31, 0.29])
     if mode == "input" and len(geometry.points.xyz):
         stride = max(1, len(geometry.points.xyz) // 2500)
@@ -440,9 +833,19 @@ def draw_context_inset(ax: Any, geometry: Geometry, bbox: BBox, mode: str) -> No
         for surface in geometry.surfaces:
             if surface.semantic == "RoofSurface" and len(surface.xyz):
                 closed = np.vstack((surface.xyz, surface.xyz[0]))
-                inset.plot(closed[:, 0], closed[:, 1], color="#d1495b", linewidth=0.45)
-    inset.add_patch(plt.Rectangle((bbox.min_x, bbox.min_y), bbox.width, bbox.height, fill=False, edgecolor="#111111", linewidth=1.0))
-    inset.set_title("full component context", fontsize=5)
+                inset.plot(closed[:, 0], closed[:, 1], color="#2563eb", linewidth=0.45)
+    for ring_value in geometry.roofprint:
+        ring = np.asarray(ring_value, dtype=np.float64)
+        if ring.ndim == 2 and len(ring) >= 3:
+            ring_xy = ring[:, :2]
+            if not np.allclose(ring_xy[0], ring_xy[-1]):
+                ring_xy = np.vstack((ring_xy, ring_xy[0]))
+            inset.plot(ring_xy[:, 0], ring_xy[:, 1], color="#f59e0b", linestyle="--", linewidth=0.7)
+    for ring_value in roof_reference_rings:
+        ring = np.asarray(ring_value, dtype=np.float64)
+        if ring.ndim == 2 and len(ring) >= 3:
+            inset.plot(ring[:, 0], ring[:, 1], color="#f2b134", linewidth=0.8)
+    inset.set_title("full component: orange=sealed footprint, yellow=RoofSurface", fontsize=4.6)
     inset.set_aspect("equal")
     inset.set_xticks([])
     inset.set_yticks([])
@@ -480,17 +883,21 @@ def render_spatial_panel(
     status: str | None,
     self_reference: bool,
     view_config: Mapping[str, Any],
+    roof_reference_rings: Sequence[np.ndarray] = (),
 ) -> dict[str, Any]:
     viewport = bbox.padded(float(view_config["viewport_margin_ratio"]), float(view_config["viewport_minimum_margin_m"]))
     points = crop_points(geometry.points, viewport) if mode == "input" else PointSet.empty()
     ref = crop_points(reference, viewport)
     surfaces = geometry.surfaces if mode == "output" else []
     limits_z = z_limits((points, ref), surfaces)
-    figure = plt.figure(figsize=(4.8, 3.6), dpi=120)
+    figure = plt.figure(figsize=(6.4, 4.8), dpi=150)
     if view in {"OBLIQUE_1", "OBLIQUE_2"}:
         ax = figure.add_subplot(111, projection="3d", proj_type="ortho")
         draw_points(ax, points, view)
         draw_surfaces(ax, surfaces, view)
+        if mode == "input":
+            draw_footprints(ax, geometry, view, bbox, bbox.center)
+        draw_roof_reference(ax, roof_reference_rings, view, bbox)
         visible = draw_reference_3d(ax, ref)
         settings = view_config[view.lower()]
         ax.view_init(elev=float(settings["elevation_deg"]), azim=float(settings["azimuth_deg"]), roll=0)
@@ -506,7 +913,7 @@ def render_spatial_panel(
         axis_label = "Easting" if bbox.width >= bbox.height else "Northing"
         if len(points.xyz):
             along, height, axis_label = section_data(points.xyz, bbox, half_band, section_center)
-            ax.scatter(along, height, s=2, c="#1f77b4", linewidths=0)
+            ax.scatter(along, height, s=2, c="#00cfe8", linewidths=0)
         if len(ref.xyz):
             along, height, _ = section_data(ref.xyz, bbox, half_band, section_center)
             ax.scatter(along, height, s=12, facecolors="none", edgecolors="#00a65a", linewidths=0.8)
@@ -517,7 +924,10 @@ def render_spatial_panel(
             along, height, _ = section_data(surface.xyz, bbox, half_band, section_center)
             if len(along) >= 2:
                 order = np.argsort(along)
-                ax.plot(along[order], height[order], color="#d1495b", linewidth=0.8)
+                ax.plot(along[order], height[order], color="#2563eb", linewidth=0.8)
+        if mode == "input":
+            draw_footprints(ax, geometry, view, bbox, section_center)
+        draw_roof_reference(ax, roof_reference_rings, view, bbox)
         ax.set_xlabel(axis_label)
         ax.set_ylabel("Z (m)")
         if bbox.width >= bbox.height:
@@ -530,13 +940,15 @@ def render_spatial_panel(
         ax = figure.add_subplot(111)
         draw_points(ax, points, view)
         draw_surfaces(ax, surfaces, view)
+        if mode == "input":
+            draw_footprints(ax, geometry, view, bbox, bbox.center)
+        draw_roof_reference(ax, roof_reference_rings, view, bbox)
         visible = draw_reference_top(ax, ref)
-        ax.add_patch(plt.Rectangle((bbox.min_x, bbox.min_y), bbox.width, bbox.height, fill=False, edgecolor="#111111", linewidth=1.0))
         ax.set(xlim=(viewport.min_x, viewport.max_x), ylim=(viewport.min_y, viewport.max_y), aspect="equal")
         ax.set_xlabel("Easting")
         ax.set_ylabel("Northing")
         if mode in {"input", "output"}:
-            draw_context_inset(ax, geometry, bbox, mode)
+            draw_context_inset(ax, geometry, bbox, mode, roof_reference_rings)
     if status:
         screen_text(ax, 0.5, 0.5, status, ha="center", va="center", color="#b22222", fontsize=9, bbox={"facecolor": "white", "alpha": 0.88, "edgecolor": "#b22222"})
     if self_reference:
@@ -544,14 +956,22 @@ def render_spatial_panel(
             ax,
             0.5,
             0.98,
-            "C1 METRIC = SELF-REFERENCE; GREEN OVERLAY = INDEPENDENT UAS",
+            "metric: C1 self-reference | green overlay: independent UAS evaluation",
             ha="center",
             va="top",
             color="#b22222",
             fontsize=6.2,
             bbox={"facecolor": "white", "alpha": 0.85, "edgecolor": "none"},
         )
-    screen_text(ax, 0.01, 0.01, "green = roof evaluation reference", fontsize=6, color="#007c42", bbox={"facecolor": "white", "alpha": 0.78, "edgecolor": "none"})
+    screen_text(
+        ax,
+        0.01,
+        0.01,
+        "cyan=c6 | magenta=c2 | green=UAS eval | yellow=RoofSurface | orange dashed=sealed footprint",
+        fontsize=5.2,
+        color="#252a31",
+        bbox={"facecolor": "white", "alpha": 0.82, "edgecolor": "none"},
+    )
     figure.tight_layout()
     buffer_path = output
     buffer_path.parent.mkdir(parents=True, exist_ok=True)
@@ -775,6 +1195,7 @@ def case_html(
     metric_cards: Mapping[str, str],
     camera_records: Sequence[Mapping[str, Any]],
     methods: Sequence[str],
+    presentation: Mapping[str, Any] | None = None,
 ) -> str:
     diagnostic_note = (
         "이 페이지는 요청 순서에 따른 C1/C2-only 개발 기술 진단입니다. "
@@ -782,6 +1203,17 @@ def case_html(
         if tuple(methods) == ("C1_L_upper", "C2_MVS")
         else "현재 sealed Stage 3는 C1–C3의 건물별 분리가 대부분 실패했습니다. 따라서 이 페이지는 성능 결론이 아니라 실패 위치를 확인하는 기술 진단입니다. 별표 gate는 후보값이며 official G3/G4/PASS와 scientific_verdict는 null입니다."
     )
+    raw_roles = [str(item.get("raw_role", f"RAW_{index}")) for index, item in enumerate(camera_records, 1)]
+    if presentation and list(presentation.get("raw_roles") or []) == raw_roles:
+        view_headers = raw_roles
+        legend = (
+            "색상: current UAS C1 class 6=cyan, class 2=magenta, 기타=gray; "
+            "독립 UAS evaluation cell=green; 독립 LoD2 RoofSurface roofline=yellow; "
+            "sealed input footprint=orange dashed; Roofer roof=blue, wall/ground=gray."
+        )
+    else:
+        view_headers = ["TOP / RAW 1", "OBLIQUE 1 / RAW 2", "OBLIQUE 2 / RAW 3", "SECTION / RAW 4"]
+        legend = "녹색은 모든 panel에 투영된 roof evaluation reference입니다."
     lines = [
         "<!doctype html><html lang='ko'><head><meta charset='utf-8'>",
         f"<title>{html.escape(building_id)} 정성·정량 비교</title>",
@@ -792,15 +1224,23 @@ def case_html(
         "td.panel{width:19%}td.metrics{width:250px;background:#f8fafb;font-size:13px;line-height:1.45}"
         "img{width:100%;height:auto;display:block}.block th.stage{border-top:4px solid #576574}code{font-size:12px}</style></head><body>",
         f"<h1>{html.escape(building_id)} — {html.escape(str(selection['size_bin']))} sample</h1>",
-        f"<p>group={html.escape(str(selection['candidate_group_id']))}, bbox area={selection['bbox_area_m2']} m². 녹색은 모든 panel에 투영된 roof evaluation reference입니다.</p>",
+        f"<p>group={html.escape(str(selection['candidate_group_id']))}, bbox area={selection['bbox_area_m2']} m². {legend}</p>",
         f"<div class='note'>{diagnostic_note}</div>",
-        "<table><thead><tr><th class='stage'>입력/단계</th><th class='view'>TOP / RAW 1</th><th class='view'>OBLIQUE 1 / RAW 2</th><th class='view'>OBLIQUE 2 / RAW 3</th><th class='view'>SECTION / RAW 4</th><th class='view'>같은 결과의 정량값과 의미</th></tr></thead><tbody>",
+        "<table><thead><tr><th class='stage'>입력/단계</th>"
+        + "".join(f"<th class='view'>{html.escape(header)}</th>" for header in view_headers)
+        + "<th class='view'>같은 결과의 정량값과 의미</th></tr></thead><tbody>",
     ]
     lines.append("<tr class='block'><th class='stage'>지붕이 투영된 current raw images</th>")
     for index, _ in enumerate(camera_records, 1):
         panel = panel_map[f"{building_id}__RAW__RAW_CURRENT_IMAGES_WITH_ROOF_PROJECTION__RAW_{index}"]
-        lines.append(f"<td class='panel'><img src='{html.escape(panel['panel_path'].split(building_id + '/')[1])}'><code>{html.escape(str(camera_records[index-1]['camera'].name))}</code></td>")
-    lines.append(f"<td class='metrics'>camera count=4<br>selection=roof coverage + angular diversity<br>reference=STRICT_INDEPENDENT_UAS<br>method outcome 사용 안 함</td></tr>")
+        camera = camera_records[index - 1]
+        lines.append(
+            f"<td class='panel'><img src='{html.escape(panel['panel_path'].split(building_id + '/')[1])}'>"
+            f"<code>{html.escape(str(camera['camera'].name))}</code><br>"
+            f"role={html.escape(str(camera.get('raw_role', 'RAW')))}, angle={float(camera.get('view_angle_from_nadir_deg', 0.0)):.1f}°</td>"
+        )
+    actual_camera_count = len({str(record["camera"].name) for record in camera_records})
+    lines.append(f"<td class='metrics'>{actual_camera_count} actual cameras / 4 panels<br>selection=evaluation RoofSurface + current UAS support visibility<br>current UAS projection: vertical shift 0 m<br>existing LoD2 roofline: orthometric +45.7 m exactly once<br>green UAS cells=metric/evaluation support, yellow roofline=building roof shape</td></tr>")
     for method in methods:
         stages = STAGE_ROWS[method]
         for stage_index, (stage_id, _) in enumerate(stages):
@@ -954,6 +1394,18 @@ def main() -> None:
     camera_model_path = contained_path(artifact_root, str(rgb["cameras_relative_path"]), label="camera model")
     camera_poses_path = contained_path(artifact_root, str(rgb["images_relative_path"]), label="camera poses")
     image_root = contained_path(artifact_root, str(rgb["image_directory_relative_path"]), label="raw image root")
+    roof_reference_spec = rgb.get("roof_reference")
+    roof_reference_path: Path | None = None
+    roof_reference_rings_by_id: dict[str, list[np.ndarray]] = {}
+    if roof_reference_spec:
+        roof_reference_path = contained_path(
+            artifact_root,
+            str(roof_reference_spec["path"]),
+            label="evaluation-only roof reference",
+        )
+        if roof_reference_path.stat().st_size != int(roof_reference_spec["bytes"]):
+            raise RuntimeError("evaluation-only roof reference size drift")
+        roof_reference_rings_by_id = load_reference_roof_rings(roof_reference_path, selected_ids)
     scene_ref = json.loads(scene_path.read_text(encoding="utf-8"))
     model = projection.parse_cam_model(camera_model_path)
     cameras = projection.parse_cameras(camera_poses_path, scene_ref)
@@ -971,6 +1423,15 @@ def main() -> None:
     )
     common_source_paths = [scene_path, camera_model_path, camera_poses_path]
     common_sources = [recorder.digest.record(path, root=artifact_root, role="camera_projection") for path in common_source_paths]
+    roof_reference_source = None
+    if roof_reference_path is not None and roof_reference_spec is not None:
+        roof_reference_source = {
+            "path": roof_reference_path.relative_to(artifact_root).as_posix(),
+            "role": str(roof_reference_spec["role"]),
+            "bytes": int(roof_reference_spec["bytes"]),
+            "sha256": str(roof_reference_spec["sha256"]),
+            "verification": str(roof_reference_spec["verification"]),
+        }
     geometry_cache: dict[str, Geometry] = {}
     panel_map: dict[str, dict[str, Any]] = {}
     summary_rows: list[dict[str, Any]] = []
@@ -980,15 +1441,101 @@ def main() -> None:
         rows = by_building[building_id]
         bbox = bbox_from_row(rows["C1_L_upper"])
         reference = reference_for(ref_by_building[building_id])
+        roof_reference_rings = roof_reference_rings_by_id.get(building_id, [])
+        if rgb.get("selection") == "CURRENT_UAS_SUPPORT_NEAR_NADIR_PLUS_OBLIQUE" and not roof_reference_rings:
+            raise RuntimeError(f"evaluation-only RoofSurface roofline missing: {building_id}")
+        roof_reference_rings_display = []
+        for ring_value in roof_reference_rings:
+            ring_display = np.asarray(ring_value, dtype=np.float64).copy()
+            if str(roof_reference_spec["input_datum"]) == "orthometric":
+                ring_display[:, 2] += float(roof_reference_spec["applied_vertical_shift_m"])
+            roof_reference_rings_display.append(ring_display)
         reference_subset_sha = sha256_bytes(canonical_bytes(reference.xyz.tolist()))
-        support_hash = sha256_bytes(canonical_bytes({"crs": "EPSG:25832", "bbox": asdict(bbox), "reference_subset_sha256": reference_subset_sha}))
-        camera_records = select_cameras(reference, bbox, cameras, model, scene_ref, int(rgb["camera_count"]), float(rgb["minimum_coverage_fraction_of_best"]))
+        geometries: dict[str, Geometry] = {}
+        for method in source_methods:
+            unit_id = rows[method].get("operation_unit_id")
+            if not unit_id or str(unit_id) not in units:
+                raise RuntimeError(f"sealed operation unit missing: {building_id} {method} {unit_id}")
+            if str(unit_id) not in geometry_cache:
+                geometry_cache[str(unit_id)] = load_geometry(
+                    source_root,
+                    units.get(str(unit_id)),
+                    digest=recorder.digest,
+                    artifact_root=artifact_root,
+                )
+            geometries[method] = geometry_cache.get(str(unit_id), empty_geometry())
+        support_geometry = geometries.get("C1_L_upper", empty_geometry())
+        current_uas_support = crop_points(support_geometry.points, bbox)
+        if not len(current_uas_support.xyz):
+            raise RuntimeError(f"current UAS C1 display support is empty: {building_id}")
+        support_hash = sha256_bytes(canonical_bytes({
+            "crs": "EPSG:25832",
+            "bbox": asdict(bbox),
+            "reference_subset_sha256": reference_subset_sha,
+            "current_uas_support_source_sha256": [record["sha256"] for record in support_geometry.sources],
+        }))
+        raw_panel_specs = list(rgb.get("raw_panel_layout") or [])
+        if rgb.get("selection") == "CURRENT_UAS_SUPPORT_NEAR_NADIR_PLUS_OBLIQUE":
+            camera_roles = select_current_uas_camera_roles(
+                roof_ring_vertices(roof_reference_rings),
+                current_uas_support,
+                bbox,
+                cameras,
+                model,
+                scene_ref,
+                float(rgb["minimum_coverage_fraction_of_best"]),
+                str(roof_reference_spec["input_datum"]),
+                str(rgb["current_uas_input_datum"]),
+                reference,
+            )
+            if len(raw_panel_specs) != 4:
+                raise RuntimeError("current UAS raw-panel layout must define exactly four panels")
+            camera_records = []
+            for panel_spec in raw_panel_specs:
+                camera_role = str(panel_spec["camera_role"])
+                if camera_role not in camera_roles:
+                    raise RuntimeError(f"unknown current UAS camera role: {camera_role}")
+                camera_records.append({**camera_roles[camera_role], "raw_role": str(panel_spec["role"])})
+        else:
+            camera_records = select_cameras(
+                reference,
+                bbox,
+                cameras,
+                model,
+                scene_ref,
+                int(rgb["camera_count"]),
+                float(rgb["minimum_coverage_fraction_of_best"]),
+                str(rgb.get("reference_input_datum", "orthometric")),
+            )
         case_root = output_root / "qualitative" / building_id
         for index, camera_record in enumerate(camera_records, 1):
             panel_id = f"{building_id}__RAW__RAW_CURRENT_IMAGES_WITH_ROOF_PROJECTION__RAW_{index}"
             image_path = contained_path(image_root, str(camera_record["camera"].name), label="selected raw image")
             panel_path = case_root / "panels" / f"RAW_{index}.png"
-            raw_overlay = save_rgb_projection(panel_path, image_path, camera_record, float(config["views"]["raw_crop_margin_ratio"]), int(config["views"]["raw_crop_minimum_margin_px"]))
+            if rgb.get("selection") == "CURRENT_UAS_SUPPORT_NEAR_NADIR_PLUS_OBLIQUE":
+                raw_overlay = save_current_uas_projection(
+                    panel_path,
+                    image_path,
+                    camera_record,
+                    reference,
+                    current_uas_support,
+                    bbox,
+                    model,
+                    scene_ref,
+                    str(rgb["current_uas_input_datum"]),
+                    raw_panel_specs[index - 1],
+                    roof_reference_rings,
+                    str(roof_reference_spec["input_datum"]),
+                    float(roof_reference_spec["applied_vertical_shift_m"]),
+                )
+            else:
+                raw_overlay = save_rgb_projection(
+                    panel_path,
+                    image_path,
+                    camera_record,
+                    float(config["views"]["raw_crop_margin_ratio"]),
+                    int(config["views"]["raw_crop_minimum_margin_px"]),
+                )
             if int(raw_overlay["projected_visible_count"]) <= 0:
                 raise RuntimeError(f"raw roof reference is not visibly projected: {panel_id}")
             overlay = {
@@ -1008,7 +1555,13 @@ def main() -> None:
                 stage_id="RAW_CURRENT_IMAGES_WITH_ROOF_PROJECTION",
                 view_id=f"RAW_{index}",
                 path=panel_path,
-                sources=[*common_sources, image_source, reference_record],
+                sources=[
+                    *common_sources,
+                    image_source,
+                    reference_record,
+                    *([roof_reference_source] if roof_reference_source is not None else []),
+                    *support_geometry.sources,
+                ],
                 overlay=overlay,
                 view_spec=raw_overlay,
                 run_id="DISPLAY_ONLY_FROM_FROZEN_BASE",
@@ -1021,19 +1574,6 @@ def main() -> None:
                 reference_subset_sha=reference_subset_sha,
             )
             panel_map[panel_id] = panel
-        geometries: dict[str, Geometry] = {}
-        for method in source_methods:
-            unit_id = rows[method].get("operation_unit_id")
-            if not unit_id or str(unit_id) not in units:
-                raise RuntimeError(f"sealed operation unit missing: {building_id} {method} {unit_id}")
-            if str(unit_id) not in geometry_cache:
-                geometry_cache[str(unit_id)] = load_geometry(
-                    source_root,
-                    units.get(str(unit_id)),
-                    digest=recorder.digest,
-                    artifact_root=artifact_root,
-                )
-            geometries[method] = geometry_cache.get(str(unit_id), empty_geometry())
         metric_cards: dict[str, str] = {}
         for method in display_methods:
             row = rows.get(method)
@@ -1071,6 +1611,7 @@ def main() -> None:
                         status=status,
                         self_reference=method == "C1_L_upper",
                         view_config=config["views"],
+                        roof_reference_rings=roof_reference_rings_display,
                     )
                     if int(overlay_counts["projected_visible_count"]) <= 0:
                         raise RuntimeError(f"roof reference is not visibly projected: {panel_id}")
@@ -1188,7 +1729,15 @@ def main() -> None:
                 "official_PASS": row.get("PASS_usable"),
                 "meaning_ko": summarize_reason(row),
             })
-        case_page = case_html(building_id, selection, panel_map, metric_cards, camera_records, display_methods)
+        case_page = case_html(
+            building_id,
+            selection,
+            panel_map,
+            metric_cards,
+            camera_records,
+            display_methods,
+            config.get("presentation"),
+        )
         write_new(case_root / "case.html", case_page.encode("utf-8"))
     expected_ids = expected_panel_ids(selected_ids, display_methods)
     expected_panel_count = len(selected_ids) * (
@@ -1252,7 +1801,7 @@ def main() -> None:
         "<!doctype html><html lang='ko'><head><meta charset='utf-8'><title>P2 대표 3동 정성·정량 sample</title>",
         "<style>body{font-family:Arial,'Malgun Gothic',sans-serif;margin:28px;max-width:1100px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #bbb;padding:8px;text-align:left}.warn{background:#fff3cd;padding:12px}</style></head><body>",
         "<h1>P2 대표 3동 정성·정량 sample</h1>",
-        "<p class='warn'>현재 결과는 건물별 Stage 3 분리 실패를 보여주는 기술 진단입니다. 공식 G3/G4/PASS와 scientific_verdict는 null입니다.</p>",
+        "<p class='warn'>C1/C2 sealed 결과의 재사용 전용 기술 비교입니다. current UAS와 RGB에는 수직 이동 0 m를 적용했고, 공식 G3/G4/PASS와 scientific_verdict는 null입니다.</p>",
         "<table><thead><tr><th>크기</th><th>건물</th><th>선정 이유</th><th>비교판</th></tr></thead><tbody>",
     ]
     for selection in selected_records:
@@ -1278,7 +1827,14 @@ def main() -> None:
         "display_methods": list(display_methods),
         "overlay_status_counts": dict(sorted(overlay_status_counts.items())),
         "source_full_read_digest_passes": {"metrics": 1, "reference_cells": 1, "execution_units": 1},
-        "execution_accounting": {"roofer": 0, "g2": 0, "gs_training": 0, "large_archive_hash_passes": 0},
+        "execution_accounting": {
+            "roofer": 0,
+            "g2": 0,
+            "gs_training": 0,
+            "metric_recomputation": 0,
+            "c3_c4_c5_method_artifact_access": 0,
+            "large_archive_hash_passes": 0,
+        },
         "output_file_count_before_finalized": len(output_files),
         "output_bytes_before_finalized": output_bytes,
         "criterion_version": config["criterion_version"],

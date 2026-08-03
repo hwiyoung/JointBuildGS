@@ -26,6 +26,8 @@ CONFIG_C1_C2_R2 = REPO / "configs/p2/c1_c2_comparison_matrix_sample_v2/render_v2
 PACKET_C1_C2_R2 = REPO / "docs/handoffs/P2_W2C_C1_C2_COMPARISON_MATRIX_SAMPLE_v2.md"
 CONFIG_C1_C2_R4 = REPO / "configs/p2/c1_c2_comparison_matrix_sample_v4/render_v4.json"
 PACKET_C1_C2_R4 = REPO / "docs/handoffs/P2_W2C_C1_C2_COMPARISON_MATRIX_SAMPLE_v4.md"
+CONFIG_C1_C2_R5 = REPO / "configs/p2/c1_c2_comparison_matrix_sample_v5/render_v5.json"
+PACKET_C1_C2_R5 = REPO / "docs/handoffs/P2_W2C_C1_C2_COMPARISON_MATRIX_SAMPLE_v5.md"
 
 
 class RepresentativeComparisonMatrixSampleTest(unittest.TestCase):
@@ -68,7 +70,8 @@ class RepresentativeComparisonMatrixSampleTest(unittest.TestCase):
         reference = PointSet(np.asarray([[0.0, 0.0, 1.0]] * 10), None)
         counts = {f"cam{i}.jpg": 10 - i for i in range(8)}
 
-        def fake_project(points, camera, width, height, params, scene_ref):
+        def fake_project(points, camera, width, height, params, scene_ref, input_datum="orthometric"):
+            self.assertEqual(input_datum, "ellipsoidal")
             count = counts[camera.name]
             uv = np.full((len(points), 2), -1.0)
             uv[:count] = [50.0, 50.0]
@@ -85,6 +88,7 @@ class RepresentativeComparisonMatrixSampleTest(unittest.TestCase):
                 {},
                 4,
                 0.25,
+                "ellipsoidal",
             )
         self.assertEqual(len(selected), 4)
         self.assertEqual(selected[0]["camera"].name, "cam0.jpg")
@@ -226,6 +230,88 @@ class RepresentativeComparisonMatrixSampleTest(unittest.TestCase):
         self.assertIn("/workspace/JointBuildGS:ro", packet)
         self.assertIn("v1/v2 partial", packet)
         self.assertIn("C3–C5 method artifact", packet)
+
+    def test_c1_c2_v5_uses_same_frame_current_uas_datum(self) -> None:
+        config = json.loads(CONFIG_C1_C2_R5.read_text(encoding="utf-8"))
+        rgb = config["rgb_context"]
+        self.assertEqual(config["methods"], ["C1_L_upper", "C2_MVS"])
+        self.assertEqual(rgb["reference_input_datum"], "ellipsoidal")
+        self.assertEqual(rgb["current_uas_input_datum"], "ellipsoidal")
+        self.assertIn("45.7 m exactly once", rgb["existing_als_image_projection_policy"])
+        self.assertEqual(
+            [panel["role"] for panel in rgb["raw_panel_layout"]],
+            ["REFERENCE_CONTEXT", "NADIR_MEDIUM", "NADIR_TIGHT", "OBLIQUE_VALIDATION"],
+        )
+        self.assertEqual(len(sample.expected_panel_ids(
+            [row["building_id"] for row in config["selection"]["records"]],
+            config["methods"],
+        )), 60)
+        packet = PACKET_C1_C2_R5.read_text(encoding="utf-8")
+        self.assertIn("current UAS LiDAR와 동일 획득 드론 RGB", packet)
+        self.assertIn("45.7 m", packet)
+
+    def test_current_uas_camera_roles_require_zero_shift_datum(self) -> None:
+        reference = PointSet(np.asarray([[0.0, 0.0, 1.0], [0.5, 0.5, 1.0]]), None)
+        support = PointSet(np.asarray([[0.0, 0.0, 1.0], [0.5, 0.5, 1.0]]), np.asarray([6, 6]))
+        cameras = [
+            SimpleNamespace(
+                name="near.jpg",
+                center=np.asarray([0.0, 0.0, 11.0]),
+                rot=np.eye(3),
+                tvec=np.asarray([0.0, 0.0, -11.0]),
+            ),
+            SimpleNamespace(
+                name="oblique.jpg",
+                center=np.asarray([10.0, 0.0, 11.0]),
+                rot=np.eye(3),
+                tvec=np.asarray([-10.0, 0.0, -11.0]),
+            ),
+        ]
+
+        def fake_project(points, camera, width, height, params, scene_ref, input_datum="orthometric"):
+            self.assertEqual(input_datum, "ellipsoidal")
+            uv = np.tile(np.asarray([[50.0, 50.0]]), (len(points), 1))
+            return uv, np.ones((len(points),), dtype=bool)
+
+        with mock.patch.object(sample.projection, "project", side_effect=fake_project):
+            roles = sample.select_current_uas_camera_roles(
+                reference,
+                support,
+                BBox(-1.0, -1.0, 1.0, 1.0),
+                cameras,
+                (100, 100, np.zeros((12,), dtype=float)),
+                {},
+                0.5,
+                "ellipsoidal",
+            )
+        self.assertEqual(roles["NADIR"]["camera"].name, "near.jpg")
+        self.assertEqual(roles["OBLIQUE"]["camera"].name, "oblique.jpg")
+        with self.assertRaisesRegex(RuntimeError, "same-frame ellipsoidal"):
+            sample.select_current_uas_camera_roles(
+                reference,
+                support,
+                BBox(-1.0, -1.0, 1.0, 1.0),
+                cameras,
+                (100, 100, np.zeros((12,), dtype=float)),
+                {},
+                0.5,
+                "orthometric",
+                "orthometric",
+            )
+
+    def test_context_crop_is_four_by_three_and_respects_minimum(self) -> None:
+        bounds = sample.context_crop_xyxy(
+            np.asarray([[900.0, 700.0], [1100.0, 800.0]]),
+            3000,
+            2000,
+            2.0,
+            1200,
+            900,
+        )
+        left, top, right, bottom = bounds
+        self.assertEqual((right - left, bottom - top), (1200, 900))
+        self.assertGreaterEqual(left, 0)
+        self.assertGreaterEqual(top, 0)
 
 
 if __name__ == "__main__":
