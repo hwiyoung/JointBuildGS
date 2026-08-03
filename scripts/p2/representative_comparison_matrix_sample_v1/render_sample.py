@@ -1258,6 +1258,73 @@ def case_html(
     return "\n".join(lines)
 
 
+def write_case_sheet_png(
+    case_root: Path,
+    building_id: str,
+    methods: Sequence[str],
+) -> Path:
+    """Compose the five agreed four-panel rows into one legible review sheet."""
+    if tuple(methods) != ("C1_L_upper", "C2_MVS"):
+        raise RuntimeError("case-sheet PNG requires the exact C1/C2 display order")
+    rows = [
+        ("CURRENT RGB + UAS / LoD2 ROOFLINE", [f"RAW_{index}.png" for index in range(1, 5)]),
+        ("C1 CURRENT UAS LIDAR INPUT", [f"C1_L_upper__LIDAR_INPUT__{view}.png" for view in VIEW_IDS]),
+        ("C1 ROOFER OUTPUT", [f"C1_L_upper__LIDAR_ROOFER_OUTPUT__{view}.png" for view in VIEW_IDS]),
+        ("C2 CURRENT MVS INPUT", [f"C2_MVS__MVS_INPUT__{view}.png" for view in VIEW_IDS]),
+        ("C2 ROOFER OUTPUT", [f"C2_MVS__MVS_ROOFER_OUTPUT__{view}.png" for view in VIEW_IDS]),
+    ]
+    cell_width, cell_height = 720, 540
+    label_width, title_height, row_gap = 300, 120, 50
+    canvas = np.full(
+        (title_height + len(rows) * (cell_height + row_gap), label_width + 4 * cell_width, 3),
+        255,
+        dtype=np.uint8,
+    )
+    cv2.putText(canvas, building_id, (32, 55), cv2.FONT_HERSHEY_SIMPLEX, 1.25, (20, 20, 20), 3, cv2.LINE_AA)
+    cv2.putText(
+        canvas,
+        "yellow=2022 LoD2 RoofSurface | cyan/magenta=current input | orange=sealed input footprint | blue=Roofer roof",
+        (32, 95),
+        cv2.FONT_HERSHEY_SIMPLEX,
+        0.62,
+        (40, 40, 40),
+        1,
+        cv2.LINE_AA,
+    )
+    column_titles = ["RAW 1 / TOP", "RAW 2 / OBLIQUE 1", "RAW 3 / OBLIQUE 2", "RAW 4 / SECTION"]
+    for row_index, (label, names) in enumerate(rows):
+        y0 = title_height + row_index * (cell_height + row_gap)
+        cv2.putText(canvas, label, (18, y0 + 54), cv2.FONT_HERSHEY_SIMPLEX, 0.68, (20, 20, 20), 2, cv2.LINE_AA)
+        for column_index, name in enumerate(names):
+            image_path = case_root / "panels" / name
+            image = cv2.imread(str(image_path), cv2.IMREAD_COLOR)
+            if image is None:
+                raise RuntimeError(f"case-sheet source panel is unreadable: {image_path}")
+            scale = min(cell_width / image.shape[1], cell_height / image.shape[0])
+            width = max(1, int(round(image.shape[1] * scale)))
+            height = max(1, int(round(image.shape[0] * scale)))
+            resized = cv2.resize(image, (width, height), interpolation=cv2.INTER_AREA)
+            x0 = label_width + column_index * cell_width + (cell_width - width) // 2
+            image_y0 = y0 + (cell_height - height) // 2
+            canvas[image_y0:image_y0 + height, x0:x0 + width] = resized
+            cv2.putText(
+                canvas,
+                column_titles[column_index],
+                (label_width + column_index * cell_width + 12, y0 + cell_height + 34),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.58,
+                (30, 30, 30),
+                1,
+                cv2.LINE_AA,
+            )
+    success, encoded = cv2.imencode(".png", canvas, [cv2.IMWRITE_PNG_COMPRESSION, 6])
+    if not success:
+        raise RuntimeError("case-sheet PNG encoding failed")
+    output = case_root / "case_sheet.png"
+    write_new(output, encoded.tobytes())
+    return output
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--artifact-root", type=Path, required=True)
@@ -1738,6 +1805,8 @@ def main() -> None:
             display_methods,
             config.get("presentation"),
         )
+        if bool(config.get("presentation", {}).get("case_sheet_png", False)):
+            write_case_sheet_png(case_root, building_id, display_methods)
         write_new(case_root / "case.html", case_page.encode("utf-8"))
     expected_ids = expected_panel_ids(selected_ids, display_methods)
     expected_panel_count = len(selected_ids) * (
