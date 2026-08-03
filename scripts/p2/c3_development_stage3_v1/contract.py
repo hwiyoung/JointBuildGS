@@ -22,6 +22,7 @@ from scripts.p2_baselines.c1_c2_feasibility_pilot_v1.contract import (
     AddOnceStore,
     Point,
     canonical_json_bytes,
+    compact_file_record,
     component_job,
     derive_components,
     jsonl_bytes,
@@ -264,7 +265,8 @@ def _associate(
             component_id = component_map.get((int(row["cell_ix"]), int(row["cell_iy"])))
             if component_id:
                 counts[component_id] += 1
-        component_id = min(((-count, name) for name, count in counts.items()), default=(0, None))[1]
+        candidates = sorted(counts.items(), key=lambda item: (-item[1], item[0]))
+        component_id = candidates[0][0] if candidates else None
         overlap = counts.get(component_id, 0) if component_id else 0
         mappings.append({
             "building_id": stable_id,
@@ -275,6 +277,16 @@ def _associate(
             "operation_unit_id": f"{CONDITION}|{component_id}" if component_id else None,
             "reference_cell_count": len(rows),
             "component_overlap_reference_cells": overlap,
+            "selected_component_overlap_fraction": overlap / len(rows),
+            "overlapping_component_count": len(candidates),
+            "component_candidates": [
+                {
+                    "component_id": name,
+                    "overlap_reference_cells": count,
+                    "overlap_fraction": count / len(rows),
+                }
+                for name, count in candidates
+            ],
             "association_role": "SCORE_IDENTITY_ONLY_AFTER_FROZEN_C3_GEOMETRY",
         })
     return mappings
@@ -341,6 +353,30 @@ def associate_development(
             per_component[str(row["component_id"])].append(str(row["building_id"]))
         else:
             unassociated.append(str(row["building_id"]))
+    selected_usage = Counter(
+        str(row["component_id"]) for row in mappings if row["component_id"]
+    )
+    for row in mappings:
+        component_id = row["component_id"]
+        shared = bool(component_id and selected_usage[str(component_id)] > 1)
+        fragmented = int(row["overlapping_component_count"]) > 1
+        if component_id is None:
+            association_class = "UNASSOCIATED"
+        elif shared and fragmented:
+            association_class = "SHARED_AND_MULTI_COMPONENT"
+        elif shared:
+            association_class = "SHARED_COMPONENT"
+        elif fragmented:
+            association_class = "MULTI_COMPONENT"
+        else:
+            association_class = "UNIQUE_COMPONENT_SINGLE_CANDIDATE"
+        row["selected_component_building_multiplicity"] = (
+            selected_usage[str(component_id)] if component_id else 0
+        )
+        row["association_class"] = association_class
+        row["building_level_gate_eligible"] = (
+            association_class == "UNIQUE_COMPONENT_SINGLE_CANDIDATE"
+        )
     multiplicity = {
         "schema": "jointbuildgs.c3_development_component_multiplicity.v1",
         "development_building_count": len(mappings),
@@ -352,6 +388,15 @@ def associate_development(
         "building_count_per_component": {key: len(value) for key, value in sorted(per_component.items())},
         "max_buildings_sharing_one_component": max((len(value) for value in per_component.values()), default=0),
         "shared_component_building_excess": sum(max(0, len(value) - 1) for value in per_component.values()),
+        "multi_component_building_count": sum(
+            int(row["overlapping_component_count"]) > 1 for row in mappings
+        ),
+        "association_class_counts": dict(sorted(Counter(
+            str(row["association_class"]) for row in mappings
+        ).items())),
+        "building_candidate_components": {
+            str(row["building_id"]): row["component_candidates"] for row in mappings
+        },
         "interpretation": "TECHNICAL_ASSOCIATION_MULTIPLICITY_NOT_INDEPENDENT_BUILDING_SUCCESS",
         "scientific_verdict": None,
     }
@@ -384,6 +429,84 @@ def associate_development(
         "scientific_verdict": None,
     }
     store.add_json("control/c3_development_associated_v1.json", body)
+    return body
+
+
+def _load_execution_unit(store: AddOnceStore, unit_id: str) -> dict[str, Any]:
+    associated_path = store.path("control/c3_development_associated_v1.json")
+    if not associated_path.is_file():
+        raise RuntimeError("development association must complete before Roofer")
+    associated = json.loads(associated_path.read_bytes())
+    units = parse_jsonl(store.read_verified(associated["execution_units"]))
+    matches = [row for row in units if row["operation_unit_id"] == unit_id]
+    if len(matches) != 1:
+        raise RuntimeError("Roofer operation unit is missing or ambiguous")
+    return matches[0]
+
+
+def _terminal_relative(unit: Mapping[str, Any]) -> str:
+    return f"{unit['work_directory']}/roofer_terminal_v1.json"
+
+
+def verify_roofer_terminal(store: AddOnceStore, *, unit_id: str) -> dict[str, Any]:
+    """Verify one immutable terminal receipt and every file it binds."""
+
+    unit = _load_execution_unit(store, unit_id)
+    receipt_path = store.path(_terminal_relative(unit))
+    if not receipt_path.is_file() or receipt_path.is_symlink():
+        raise RuntimeError("Roofer terminal receipt missing/non-regular")
+    body = json.loads(receipt_path.read_bytes())
+    if body.get("operation_unit_id") != unit_id or body.get("status") not in {
+        "COMPLETED", "FAILED"
+    }:
+        raise RuntimeError("Roofer terminal receipt identity/status mismatch")
+    store.read_verified(body["input"])
+    store.read_verified(body["r_derived"])
+    store.read_verified(body["runtime_log"])
+    for record in body.get("output_records", []):
+        store.read_verified(record)
+    return body
+
+
+def record_roofer_terminal(
+    store: AddOnceStore,
+    *,
+    unit_id: str,
+    exit_code: int,
+    runtime_seconds: int,
+) -> dict[str, Any]:
+    """Add one terminal Roofer receipt; process failure is a technical result."""
+
+    if exit_code < 0 or runtime_seconds < 0:
+        raise RuntimeError("Roofer exit/runtime values are invalid")
+    unit = _load_execution_unit(store, unit_id)
+    terminal_path = store.path(_terminal_relative(unit))
+    if terminal_path.exists():
+        return {**verify_roofer_terminal(store, unit_id=unit_id), "fast_path": True}
+    work = store.path(str(unit["work_directory"]))
+    runtime_path = work / "runtime.log"
+    if runtime_path.is_symlink() or not runtime_path.is_file():
+        raise RuntimeError("Roofer runtime log missing/non-regular")
+    output_dir = store.path(str(unit["output_directory"]))
+    output_records = [
+        compact_file_record(store, path)
+        for path in sorted(output_dir.rglob("*"))
+        if path.is_file() and not path.is_symlink()
+    ] if output_dir.is_dir() and not output_dir.is_symlink() else []
+    body = {
+        "schema": "jointbuildgs.c3_roofer_terminal.v1",
+        "status": "COMPLETED" if exit_code == 0 else "FAILED",
+        "operation_unit_id": unit_id,
+        "exit_code": exit_code,
+        "runtime_seconds": runtime_seconds,
+        "input": unit["input"],
+        "r_derived": unit["r_derived"],
+        "runtime_log": compact_file_record(store, runtime_path),
+        "output_records": output_records,
+        "output_file_count": len(output_records),
+        "scientific_verdict": None,
+    }
+    store.add_json(_terminal_relative(unit), body)
     return body
 
 
@@ -420,10 +543,11 @@ def finalize_technical(
     unit_results: dict[str, dict[str, Any]] = {}
     for unit in units:
         unit_id = str(unit["operation_unit_id"])
+        terminal = verify_roofer_terminal(store, unit_id=unit_id)
         output_dir = store.path(str(unit["output_directory"]))
         if output_dir.is_symlink():
             raise RuntimeError(f"Roofer output directory is a symlink: {unit_id}")
-        screen = provisional_output_check(output_dir) if output_dir.is_dir() else {
+        screen = provisional_output_check(output_dir) if terminal["exit_code"] == 0 and output_dir.is_dir() else {
             "records": 0,
             "city_object_count": 0,
             "lod22_geometry_count": 0,
@@ -431,7 +555,7 @@ def finalize_technical(
             "G0_generated": False,
             "G1_schema_semantic": False,
             "G1_check_class": "INTERNAL_CITYJSON_BOUNDARY_SEMANTICS_PARENT_CHILD_VALIDATION",
-            "G1_failure_reasons": ["ROOFER_OUTPUT_DIRECTORY_MISSING"],
+            "G1_failure_reasons": [f"ROOFER_TERMINAL_EXIT_{terminal['exit_code']}"],
             "geometry_ring_diagnostic": False,
             "geometry_ring_diagnostic_class": "DIAGNOSTIC_RING_INDEX_SANITY_NOT_G2_NOT_VAL3DITY",
             "G2_geometry_topology_valid": None,
@@ -440,7 +564,7 @@ def finalize_technical(
         # The internal screen is explicitly not promoted to canonical G2.
         screen["G2_geometry_topology_valid"] = None
         screen["G2_null_reason"] = "PINNED_GENERIC_C3_VAL3DITY_RUNNER_NOT_YET_FROZEN"
-        unit_results[unit_id] = screen
+        unit_results[unit_id] = {**screen, "roofer_terminal_status": terminal["status"], "roofer_exit_code": terminal["exit_code"]}
     unit_record = store.add(
         "results/c3_operation_technical_checks_v1.jsonl",
         jsonl_bytes([
@@ -452,16 +576,22 @@ def finalize_technical(
     for mapping in mappings:
         unit_id = mapping["operation_unit_id"]
         screen = unit_results.get(str(unit_id)) if unit_id else None
-        g0 = bool(screen and screen["G0_generated"])
-        g1 = bool(screen and screen["G1_schema_semantic"])
+        component_g0 = bool(screen and screen["G0_generated"])
+        component_g1 = bool(screen and screen["G1_schema_semantic"])
+        building_eligible = bool(mapping["building_level_gate_eligible"])
         rows.append({
             **mapping,
-            "G0_generated": g0,
-            "G1_schema_semantic": g1,
+            "component_G0_generated": component_g0,
+            "component_G1_schema_semantic": component_g1,
+            "G0_generated": component_g0 if building_eligible else None,
+            "G0_null_reason": None if building_eligible else "COMPONENT_NOT_ONE_TO_ONE_WITH_BUILDING",
+            "G1_schema_semantic": component_g1 if building_eligible else None,
+            "G1_null_reason": None if building_eligible else "COMPONENT_NOT_ONE_TO_ONE_WITH_BUILDING",
             "G2_geometry_topology_valid": None,
             "G2_null_reason": (
                 "PINNED_GENERIC_C3_VAL3DITY_RUNNER_NOT_YET_FROZEN"
-                if g0 and g1 else "UPSTREAM_G0_OR_G1_NOT_TRUE"
+                if building_eligible and component_g0 and component_g1
+                else "UPSTREAM_OR_BUILDING_ASSOCIATION_NOT_ELIGIBLE"
             ),
             "geometry_ring_diagnostic": screen.get("geometry_ring_diagnostic") if screen else None,
             "G3_roof_structure_acceptable": None,
@@ -474,9 +604,12 @@ def finalize_technical(
         raise RuntimeError("technical result table must contain exact development 51")
     result_record = store.add("results/development_technical_results_v1.jsonl", jsonl_bytes(rows))
     stage_rows = [
-        {"condition_id": CONDITION, "stage": "ASSOCIATED", "status": "COMPLETE", "numerator": sum(row["component_id"] is not None for row in rows), "denominator": 51, "meaning": "score IDs linked to frozen outcome-free components"},
-        {"condition_id": CONDITION, "stage": "G0_GENERATED", "status": "COMPLETE", "numerator": sum(row["G0_generated"] for row in rows), "denominator": 51, "meaning": "associated Roofer output contains LoD2.2 and roof/wall/ground"},
-        {"condition_id": CONDITION, "stage": "G1_SCHEMA_SEMANTIC", "status": "COMPLETE", "numerator": sum(row["G1_schema_semantic"] for row in rows), "denominator": 51, "meaning": "internal CityJSON structure and semantics screen"},
+        {"condition_id": CONDITION, "stage": "ASSOCIATED", "status": "COMPLETE", "numerator": sum(row["component_id"] is not None for row in rows), "denominator": 51, "meaning": "score IDs linked to frozen outcome-free components; not a success count"},
+        {"condition_id": CONDITION, "stage": "ONE_TO_ONE_BUILDING_COMPONENT", "status": "COMPLETE", "numerator": sum(row["building_level_gate_eligible"] for row in rows), "denominator": 51, "meaning": "building has one candidate component and that component is selected by one building"},
+        {"condition_id": CONDITION, "stage": "COMPONENT_G0_GENERATED", "status": "COMPLETE", "numerator": sum(value["G0_generated"] for value in unit_results.values()), "denominator": len(units), "meaning": "unique Roofer operation units with LoD2.2 roof/wall/ground; component-level only"},
+        {"condition_id": CONDITION, "stage": "COMPONENT_G1_SCHEMA_SEMANTIC", "status": "COMPLETE", "numerator": sum(value["G1_schema_semantic"] for value in unit_results.values()), "denominator": len(units), "meaning": "unique operation units passing internal CityJSON screen; component-level only"},
+        {"condition_id": CONDITION, "stage": "BUILDING_G0_GENERATED", "status": "PARTIAL_DIAGNOSTIC", "numerator": sum(row["G0_generated"] is True for row in rows), "denominator": sum(row["building_level_gate_eligible"] for row in rows), "meaning": "only one-to-one building-component rows; shared/fragmented rows are null"},
+        {"condition_id": CONDITION, "stage": "BUILDING_G1_SCHEMA_SEMANTIC", "status": "PARTIAL_DIAGNOSTIC", "numerator": sum(row["G1_schema_semantic"] is True for row in rows), "denominator": sum(row["building_level_gate_eligible"] for row in rows), "meaning": "only one-to-one building-component rows; shared/fragmented rows are null"},
         {"condition_id": CONDITION, "stage": "G2_GEOMETRY_TOPOLOGY_VALID", "status": "PENDING", "numerator": "", "denominator": 51, "meaning": "generic pinned C3 val3dity runner not frozen"},
         {"condition_id": CONDITION, "stage": "G3_ROOF_STRUCTURE_ACCEPTABLE", "status": "PENDING", "numerator": "", "denominator": 51, "meaning": "criterion not frozen"},
         {"condition_id": CONDITION, "stage": "G4_GEOMETRIC_ACCURACY_ACCEPTABLE", "status": "PENDING", "numerator": "", "denominator": 51, "meaning": "criterion not frozen"},
@@ -496,8 +629,11 @@ def finalize_technical(
         "stage_counts": stage_record,
         "result_rows": 51,
         "unique_roofer_operations": len(units),
-        "G0_count": sum(row["G0_generated"] for row in rows),
-        "G1_count": sum(row["G1_schema_semantic"] for row in rows),
+        "building_level_gate_evaluable_count": sum(row["building_level_gate_eligible"] for row in rows),
+        "building_G0_true_count": sum(row["G0_generated"] is True for row in rows),
+        "building_G1_true_count": sum(row["G1_schema_semantic"] is True for row in rows),
+        "component_G0_true_count": sum(value["G0_generated"] for value in unit_results.values()),
+        "component_G1_true_count": sum(value["G1_schema_semantic"] for value in unit_results.values()),
         "G2": None,
         "G3": None,
         "G4": None,
@@ -515,5 +651,7 @@ __all__ = [
     "finalize_technical",
     "load_config",
     "prepare_geometry",
+    "record_roofer_terminal",
     "validate_contract",
+    "verify_roofer_terminal",
 ]

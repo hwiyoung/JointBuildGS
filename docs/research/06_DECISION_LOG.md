@@ -509,12 +509,49 @@
   access. Success or failure returns writer ownership through verified/blocked 200
   followed by direct-child 300.
 
+## DEC-P1-014 — sealed C3 checkpoint의 development Stage 3 기술 진단
+
+- **Decision ID:** `DEC-P1-014`
+- **Date:** 2026-08-03
+- **Status:** `USER-APPROVED BOUNDED TECHNICAL CONTINUATION`
+- **Previous state:** `DEC-P1-013`은 C1/C2 development feasibility만 허용하고 C3에는
+  별도 DRAFT·검토·activation을 요구했다. 이후 승인된 first-wave handoff에서 exact
+  937-view C3 seed-0 30k 학습이 기술적으로 완료됐지만, 실제 surface extraction과
+  footprint-free Roofer read-out은 보호된 source 부재로 실행되지 않았다.
+- **New decision:** 닫힌 R4 C3 30k checkpoint를 재학습하지 않고 development 51동에
+  대해서만 저장 Stage-2 group 기반의 bounded Stage 3 기술 진단을 실행할 수 있다.
+  모든 geometry와 `R_derived`를 score/reference보다 먼저 봉인하고, validation 11동과
+  held-out 10동은 열지 않는다. 큰 component가 여러 건물에 연결되거나 한 건물이 여러
+  component에 걸치면 G0/G1은 component-level 진단으로만 보고하며 건물별 gate는
+  `null`로 둔다. G2, G3, G4, `PASS_usable`과 scientific verdict도 `null/PENDING`이다.
+- **Evidence:** 승인된
+  `P2_W2C_C1_C2_G2_C3_FIRST_WAVE_v1.md`의 explicit next task, R4 closed checkpoint
+  `bec692b0...`, 그리고 2026-08-03 Work Host 세션에서 사용자가 같은 development
+  건물로 C3까지 순서대로 진행하고 단계별·최종 결과를 만들라고 반복 승인한 지시.
+- **Reason:** 완료된 학습을 실제 Stage 3 기술 결과로 연결하되, C1/C2에서 발견된
+  coarse-component 중복을 건물 성공 수로 과장하지 않고 다음 building-instance
+  adapter 결정을 실측 근거로 내리기 위함이다.
+- **Affected phases:** P2 development C3 technical diagnostic only
+- **User approval:** `GRANTED_FOR_BOUNDED_C3_DEVELOPMENT_STAGE3_EXECUTION`
+- **Scientific verdict:** `null`
+- **Superseded decisions:** `DEC-P1-013`의 C3 전면 실행 금지를 이 exact bounded
+  development Stage 3 task에 한해서만 좁힌다. C4/C5, validation, held-out,
+  confirmatory performance와 final acceptance 금지는 유지한다.
+
+### Consequence
+
+- source implementation, DRAFT review, activated packet, 000/100 writer transfer가
+  모두 일치한 뒤에만 Experiment Host가 실행한다.
+- checkpoint와 R3 score-cell reuse ledger를 우선하며 C1/C2, semantic, training,
+  15.7 GB R1 input, `Images.zip`, `OPF.zip`을 재실행·재해시하지 않는다.
+- 결과는 component multiplicity, unique Roofer operation 결과, development 51행의
+  nullable technical table과 한글 설명을 포함한다.
+
 ## Pending decisions not yet logged as adopted
 
 다음은 선택지가 정리되었으나 사용자 결정 전이므로 adopted decision이 아니다.
 
-- C3 first-wave training representation, loss, schedule and bounded development
-  strategy after the C1/C2 development evidence is returned
-- final P2 Stage-3 adapter, G3/G4 numerical thresholds and `PASS_usable` criterion
+- final P2 building-instance Stage-3 adapter, generic C3 val3dity path, G3/G4
+  numerical thresholds and `PASS_usable` criterion
 - materially broader independent reference coverage for a confirmatory claim and an
   independently sourced LoD1 prior for primary C5 interpretation

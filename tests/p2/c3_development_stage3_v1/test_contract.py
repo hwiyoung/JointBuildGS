@@ -120,6 +120,20 @@ class C3DevelopmentStage3ContractTests(unittest.TestCase):
                     source_commit="a" * 40,
                     run_id="test-run",
                 )
+                execution_unit = json.loads(
+                    (store.root / "freeze/c3_execution_units_v1.jsonl")
+                    .read_text(encoding="utf-8")
+                    .splitlines()[0]
+                )
+                work = store.root / execution_unit["work_directory"]
+                (work / "out").mkdir()
+                (work / "runtime.log").write_text("synthetic failure\n", encoding="utf-8")
+                contract.record_roofer_terminal(
+                    store,
+                    unit_id=execution_unit["operation_unit_id"],
+                    exit_code=1,
+                    runtime_seconds=2,
+                )
                 finalized = contract.finalize_technical(
                     store,
                     source_commit="a" * 40,
@@ -138,6 +152,7 @@ class C3DevelopmentStage3ContractTests(unittest.TestCase):
             )
             self.assertEqual(1, multiplicity["unique_associated_component_count"])
             self.assertEqual(51, multiplicity["max_buildings_sharing_one_component"])
+            self.assertEqual({"SHARED_COMPONENT": 51}, multiplicity["association_class_counts"])
             self.assertEqual(
                 "TECHNICAL_ASSOCIATION_MULTIPLICITY_NOT_INDEPENDENT_BUILDING_SUCCESS",
                 multiplicity["interpretation"],
@@ -152,10 +167,22 @@ class C3DevelopmentStage3ContractTests(unittest.TestCase):
             self.assertIsNone(associated["G4"])
             self.assertIsNone(associated["PASS_usable"])
             self.assertEqual(51, finalized["result_rows"])
-            self.assertEqual(0, finalized["G0_count"])
-            self.assertEqual(0, finalized["G1_count"])
+            self.assertEqual(0, finalized["building_level_gate_evaluable_count"])
+            self.assertEqual(0, finalized["building_G0_true_count"])
+            self.assertEqual(0, finalized["building_G1_true_count"])
+            result_rows = [
+                json.loads(line)
+                for line in (store.root / "results/development_technical_results_v1.jsonl")
+                .read_text(encoding="utf-8")
+                .splitlines()
+            ]
+            self.assertTrue(all(row["G0_generated"] is None for row in result_rows))
+            self.assertTrue(all(row["G1_schema_semantic"] is None for row in result_rows))
+            self.assertTrue(all(row["result_class"] == "DEVELOPMENT_TECHNICAL_DIAGNOSTIC_ONLY" for row in result_rows))
             self.assertIsNone(finalized["G2"])
             stage_text = (store.root / "results/stage_counts_v1.csv").read_text(encoding="utf-8")
+            self.assertIn("ONE_TO_ONE_BUILDING_COMPONENT,COMPLETE,0,51", stage_text)
+            self.assertIn("COMPONENT_G0_GENERATED,COMPLETE,0,1", stage_text)
             self.assertIn("G2_GEOMETRY_TOPOLOGY_VALID,PENDING", stage_text)
             self.assertIn("PASS_USABLE,PENDING", stage_text)
 

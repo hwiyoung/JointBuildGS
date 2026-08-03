@@ -12,7 +12,9 @@ from scripts.p2.c3_development_stage3_v1.contract import (
     associate_development,
     finalize_technical,
     prepare_geometry,
+    record_roofer_terminal,
     validate_contract,
+    verify_roofer_terminal,
 )
 
 
@@ -34,6 +36,14 @@ def main() -> None:
     final.add_argument("--output-root", type=Path, required=True)
     final.add_argument("--source-commit", required=True)
     final.add_argument("--run-id", required=True)
+    verify = sub.add_parser("verify-roofer-terminal")
+    verify.add_argument("--output-root", type=Path, required=True)
+    verify.add_argument("--unit-id", required=True)
+    record = sub.add_parser("record-roofer-terminal")
+    record.add_argument("--output-root", type=Path, required=True)
+    record.add_argument("--unit-id", required=True)
+    record.add_argument("--exit-code", type=int, required=True)
+    record.add_argument("--runtime-seconds", type=int, required=True)
     args = parser.parse_args()
     if args.mode == "preflight":
         result = validate_contract()
@@ -53,11 +63,20 @@ def main() -> None:
                 source_commit=args.source_commit,
                 run_id=args.run_id,
             )
-        else:
+        elif args.mode == "finalize-technical":
             result = finalize_technical(
                 store,
                 source_commit=args.source_commit,
                 run_id=args.run_id,
+            )
+        elif args.mode == "verify-roofer-terminal":
+            result = verify_roofer_terminal(store, unit_id=args.unit_id)
+        else:
+            result = record_roofer_terminal(
+                store,
+                unit_id=args.unit_id,
+                exit_code=args.exit_code,
+                runtime_seconds=args.runtime_seconds,
             )
     print(json.dumps(result, ensure_ascii=False, sort_keys=True))
 
