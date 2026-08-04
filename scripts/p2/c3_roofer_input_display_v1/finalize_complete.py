@@ -82,7 +82,7 @@ C3-1 class-6 Z 범위는 {float(a1['z_minimum_m']):.3f}–{float(a1['z_maximum_m
 def _case_html(index: Mapping[str, Any], source_relative_name: str) -> bytes:
     items = []
     for row in index["case_sheets"]:
-        path = "../" + source_relative_name + "/" + row["case_sheet"]["path"]
+        path = "../../" + source_relative_name + "/" + row["case_sheet"]["path"]
         items.append(
             f'<section><h2>{html.escape(row["stable_id"])}</h2>'
             f'<a href="{html.escape(path)}"><img src="{html.escape(path)}" alt="{html.escape(row["stable_id"])}"></a></section>'
