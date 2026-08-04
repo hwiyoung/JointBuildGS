@@ -1,9 +1,9 @@
-# P2 C1/C2 oracle 재실행 및 C3 결과 재추출 recovery v3 — LOCAL EXECUTION AUTHORITY
+# P2 C1/C2 oracle 재실행 및 C3 결과판 복구 recovery v4 — LOCAL EXECUTION AUTHORITY
 
-- task_id: `P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v3`
+- task_id: `P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v4`
 - handoff_id: `null`
-- execution_record_id: `P2-LOCAL-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v3`
-- source_commit: `5f0b944c1c841c45fa263e5a557fbed081603653`
+- execution_record_id: `P2-LOCAL-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v4`
+- recovery_base_commit: `acc532ca2e4647003478615035f6c41eb27cc9ed`
 - status: `APPROVED_FOR_LOCAL_EXPERIMENT_HOST_EXECUTION`
 - execution_authority: `DIRECT_HUMAN_INSTRUCTION_SINGLE_EXPERIMENT_HOST`
 - write_ownership_transfer_performed: `false`
@@ -66,10 +66,11 @@ Poisson surface mesh만 추출한다. 이전 4-corner/2-triangle-per-Gaussian �
 ## 실행 한계와 출력
 
 - Roofer/G2/GS training/metric/C4-C5 lineage total: `4/0/0/0/0`
-- Recovery-v3 Roofer invocation: `0` (Recovery-v2 exact completed outputs hash-verified inheritance)
+- Recovery-v4 Roofer invocation: `0` (Recovery-v3 exact completed outputs hash-verified inheritance)
+- Recovery-v4 C3 extraction invocation: `0` (Recovery-v3의 두 completed extraction hash-verified inheritance)
 - pre-Roofer reference alignment failures: `2`
 - output: fresh add-once namespace
-  `artifact://JointBuildGS/phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v3/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v3`
+  `artifact://JointBuildGS/phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v4/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v4`
 - C1/C2: 3개 6행×4열 case sheet, 72 panels
 - C3: 2 condition × 3 building case sheet, 96 panels
 - report/operation CSV/HTML/manifest
@@ -77,7 +78,7 @@ Poisson surface mesh만 추출한다. 이전 4-corner/2-triangle-per-Gaussian �
 
 ## 실행 권한과 기록
 
-1. implementation base commit은 `5f0b944c1c841c45fa263e5a557fbed081603653`이다.
+1. recovery-v4의 base commit은 `acc532ca2e4647003478615035f6c41eb27cc9ed`이며 실제 실행 commit은 final manifest에 고정한다.
 2. 현재 task의 직접 사용자 지시를 local Experiment Host 실행 권한으로 기록한다.
 3. 실행 launcher는 clean `HEAD == origin/main`, exact project image, 입력/checkpoint,
    add-once namespace 부재와 config의 local authority tuple을 확인한다.
@@ -95,5 +96,9 @@ Recovery v1은 이 gate를 통과한 뒤, 예상된 `4907177/C2 class-6=0` 통�
 Recovery v2는 빈 class-6의 높이 범위를 `null`로 기록하고 고정된 pre-Roofer failure로
 계속 진행했다. 네 Roofer operation은 모두 성공했지만 C3-1 surface render가 gsplat lazy
 CUDA extension용 `/.cache` 권한 오류로 중단됐다. Recovery v3는 네 C1/C2 output/input/
-footprint/terminal hash를 검증해 새 namespace에 계승하고 Roofer를 추가 실행하지 않는다.
-C3는 task-local writable CUDA/Torch cache로 처음부터 재추출한다.
+footprint/terminal hash를 검증해 계승했고, writable CUDA/Torch cache에서 C3 두 condition의
+full Gaussian, fused point cloud, Poisson mesh 추출을 모두 완료했다. 이후 C3 mesh의
+TOP/PRINCIPAL_SECTION panel에서 2D axes가 생성되지 않은 renderer 결함으로 최종화 전에
+중단됐다. Recovery v4는 C1/C2 16개 및 C3 16개 핵심 산출물을 크기와 SHA-256으로 검증해
+새 namespace에 계승하고, Roofer·C3 extraction·GPU·GS training을 추가 실행하지 않은 채
+결과판 렌더링과 최종화만 수행한다.

@@ -408,6 +408,7 @@ def _c3_mesh_panel(path: Path, mesh_path: Path, bbox: BBox, view: str, title: st
         zlim = (float(vertices[:, 2].min()), float(vertices[:, 2].max()))
         _setup_3d(ax, bbox, zlim, view)
     else:
+        ax = figure.add_subplot(111)
         stride = max(1, len(vertices) // 12000)
         q, c = vertices[::stride], colors[::stride]
         if view == "TOP":

@@ -176,6 +176,8 @@ surface다. TSDF라고 표기하지 않는다.
             "pre_roofer_reference_alignment_failures": 2,
             "g2_invocations": 0,
             "gs_training_invocations": 0,
+            "c3_extraction_invocations_this_recovery": 0,
+            "c3_completed_extractions_total_lineage": 2,
             "metric_recomputations": 0,
             "c4_c5_accesses": 0,
         },

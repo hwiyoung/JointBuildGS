@@ -1,5 +1,14 @@
 # C1/C2 oracle + C3 extraction issue log v1
 
+## CLOSED — C3 two-dimensional mesh panel axes
+
+Recovery v3 completed both extraction-only C3 conditions: exact full Gaussian PLY,
+display proxy, three rendered-depth fused point clouds and three Poisson meshes per
+condition. Final presentation then stopped because the TOP/PRINCIPAL_SECTION branch
+of the mesh renderer referenced `ax` without first constructing a 2D axes. Recovery
+v4 adds the missing axes, regression-tests both two-dimensional views, hash-verifies
+and inherits all 16 core C3 files, and performs no GPU extraction or GS training.
+
 ## CLOSED — C3 extraction lazy CUDA cache path
 
 Recovery v2 completed all four independent Roofer operations, then exported the full

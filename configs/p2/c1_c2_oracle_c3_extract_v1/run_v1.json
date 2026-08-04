@@ -1,8 +1,8 @@
 {
   "schema": "jointbuildgs.p2.c1_c2_oracle_c3_extract.v1",
-  "task_id": "P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v3",
+  "task_id": "P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v4",
   "handoff_id": null,
-  "execution_record_id": "P2-LOCAL-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v3",
+  "execution_record_id": "P2-LOCAL-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v4",
   "status": "APPROVED_FOR_EXECUTION",
   "execution_authority": {
     "mode": "DIRECT_HUMAN_INSTRUCTION_SINGLE_EXPERIMENT_HOST",
@@ -22,8 +22,9 @@
     "c3_mode": "EXACT_CHECKPOINT_RESULT_EXTRACTION_ONLY_NO_TRAINING",
     "c4_c5_access_allowed": false
   },
-  "output_relative_root": "phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v3/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v3",
-  "c1_c2_recovery_source_relative_root": "phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v2/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v2.partial",
+  "output_relative_root": "phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v4/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v4",
+  "c1_c2_recovery_source_relative_root": "phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v3/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v3.partial",
+  "c3_recovery_source_relative_root": "phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v3/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v3.partial",
   "frame": {
     "crs": "EPSG:25832",
     "world_shift_xyz": [690953.0, 5336071.0, 604.0],
@@ -152,6 +153,8 @@
     "expected_pre_roofer_reference_alignment_failures": 2,
     "expected_g2_invocations": 0,
     "expected_gs_training_invocations": 0,
+    "expected_c3_extraction_invocations_this_recovery": 0,
+    "expected_c3_completed_extractions_total_lineage": 2,
     "expected_metric_recomputations": 0,
     "expected_c4_c5_accesses": 0
   },

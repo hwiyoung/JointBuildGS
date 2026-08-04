@@ -8,6 +8,7 @@ from collections import defaultdict
 import hashlib
 import json
 from pathlib import Path
+import shutil
 from typing import Any, Mapping, Sequence
 
 import numpy as np
@@ -409,6 +410,88 @@ def extract_surfaces(
     return body
 
 
+def inherit_completed_c3(output_root: Path, source_root: Path) -> dict[str, Any]:
+    """Hash-verify and inherit the two completed extraction-only C3 conditions."""
+    config = load_config()
+    validate_config(config, require_activation=True)
+    if source_root.is_symlink() or not source_root.is_dir():
+        raise RuntimeError("C3 recovery source missing/non-directory")
+    if not output_root.is_dir() or output_root.is_symlink():
+        raise RuntimeError("C3 recovery output root missing/non-directory")
+    destination = output_root / "c3"
+    if destination.exists() or destination.is_symlink():
+        raise RuntimeError("C3 recovery destination already exists")
+
+    verified: list[dict[str, Any]] = []
+    condition_summaries: list[dict[str, Any]] = []
+    expected_ids = set(config["scope"]["building_ids"])
+
+    def verify_record(record: Mapping[str, Any]) -> None:
+        relative = Path(str(record.get("path", "")))
+        if relative.is_absolute() or ".." in relative.parts:
+            raise RuntimeError(f"unsafe C3 recovery record path: {relative}")
+        path = source_root / relative
+        if path.is_symlink() or not path.is_file():
+            raise RuntimeError(f"C3 recovery record missing/non-regular: {path}")
+        size, digest = sha256_file(path)
+        if size != int(record.get("bytes", -1)) or digest != record.get("sha256"):
+            raise RuntimeError(f"C3 recovery record digest drift: {path}")
+        verified.append(dict(record))
+
+    for condition in config["c3_training_provenance"]["conditions"]:
+        condition_id = condition["condition_id"]
+        control_root = source_root / "c3" / condition_id / "control"
+        export = json.loads((control_root / "gaussian_export_complete_v1.json").read_text(encoding="utf-8"))
+        surface = json.loads((control_root / "surface_extraction_complete_v1.json").read_text(encoding="utf-8"))
+        if export.get("status") != "COMPLETE_NO_TRAINING" or surface.get("status") != "COMPLETE_NO_TRAINING":
+            raise RuntimeError(f"C3 recovery condition is incomplete: {condition_id}")
+        if export.get("condition_id") != condition_id or surface.get("condition_id") != condition_id:
+            raise RuntimeError(f"C3 recovery condition identity drift: {condition_id}")
+        if int(export.get("training_invocations", -1)) != 0 or int(surface.get("training_invocations", -1)) != 0:
+            raise RuntimeError(f"C3 recovery training counter drift: {condition_id}")
+        if export.get("scientific_verdict", "missing") is not None or surface.get("scientific_verdict", "missing") is not None:
+            raise RuntimeError(f"C3 recovery scientific verdict must remain null: {condition_id}")
+        if export.get("checkpoint", {}).get("sha256") != condition["sha256"] or surface.get("checkpoint_sha256") != condition["sha256"]:
+            raise RuntimeError(f"C3 recovery checkpoint binding drift: {condition_id}")
+        if surface.get("not_tsdf") is not True:
+            raise RuntimeError(f"C3 recovery mesh-method disclosure drift: {condition_id}")
+        rows = list(surface.get("building_results") or ())
+        if {row.get("stable_id") for row in rows} != expected_ids or len(rows) != len(expected_ids):
+            raise RuntimeError(f"C3 recovery building membership drift: {condition_id}")
+        verify_record(export["exact_full_export"])
+        verify_record(export["display_proxy_export"])
+        for row in rows:
+            if row.get("scientific_verdict", "missing") is not None:
+                raise RuntimeError(f"C3 recovery building verdict must remain null: {condition_id}")
+            verify_record(row["surface_points"])
+            verify_record(row["poisson_mesh"])
+        condition_summaries.append({
+            "condition_id": condition_id,
+            "checkpoint_sha256": condition["sha256"],
+            "primitive_count_full": int(export["primitive_count_full"]),
+            "building_result_count": len(rows),
+            "status": "INHERITED_EXACT_COMPLETED_EXTRACTION",
+        })
+
+    if len(verified) != 16:
+        raise RuntimeError(f"C3 recovery verified record count drift: {len(verified)}")
+    shutil.copytree(source_root / "c3", destination)
+    body = {
+        "schema": "jointbuildgs.c3_extraction_recovery_inheritance.v1",
+        "status": "INHERITED_TWO_EXACT_COMPLETED_EXTRACTIONS",
+        "source_root": source_root.as_posix(),
+        "source_relative_root": config["c3_recovery_source_relative_root"],
+        "verified_record_count": len(verified),
+        "condition_summaries": condition_summaries,
+        "c3_extraction_invocations_this_recovery": 0,
+        "c3_completed_extractions_total_lineage": 2,
+        "gs_training_invocations": 0,
+        "scientific_verdict": None,
+    }
+    write_new(output_root / "control/c3_recovery_inheritance_v1.json", canonical_json_bytes(body))
+    return body
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     sub = parser.add_subparsers(dest="mode", required=True)
@@ -424,6 +507,9 @@ def main() -> None:
     surface.add_argument("--lod2", type=Path, required=True)
     surface.add_argument("--condition-id", required=True)
     surface.add_argument("--device", default="cuda")
+    inherit = sub.add_parser("inherit-completed")
+    inherit.add_argument("--output-root", type=Path, required=True)
+    inherit.add_argument("--source-root", type=Path, required=True)
     args = parser.parse_args()
     if args.mode == "prepare-condition":
         result = prepare_condition(
@@ -432,7 +518,7 @@ def main() -> None:
             args.condition_id,
             hash_checkpoint=args.hash_checkpoint,
         )
-    else:
+    elif args.mode == "extract-surfaces":
         result = extract_surfaces(
             args.output_root,
             args.artifact_root,
@@ -441,6 +527,8 @@ def main() -> None:
             args.condition_id,
             args.device,
         )
+    else:
+        result = inherit_completed_c3(args.output_root, args.source_root)
     print(json.dumps(result, ensure_ascii=False, sort_keys=True))
 
 
