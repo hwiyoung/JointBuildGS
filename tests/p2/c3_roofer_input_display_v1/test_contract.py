@@ -10,6 +10,10 @@ from scripts.p2.c3_roofer_input_display_v1.render_complete import (
     load_config as load_complete_config,
     validate_config as validate_complete_config,
 )
+from scripts.p2.c3_roofer_input_display_v1.render_12row import (
+    load_config as load_12row_config,
+    validate_config as validate_12row_config,
+)
 
 
 class SupportTest(unittest.TestCase):
@@ -39,6 +43,12 @@ class SupportTest(unittest.TestCase):
         quaternions = np.asarray([[1, 0, 0, 0]], dtype=np.float64)
         normals = _normal_colors(quaternions)
         np.testing.assert_allclose(normals, [[0, 0, 1]])
+
+    def test_twelve_row_layout_is_bounded_and_zero_execution(self):
+        config = load_12row_config()
+        validate_12row_config(config)
+        self.assertEqual(config["display"]["row_count_per_sheet"], 12)
+        self.assertEqual(config["display"]["visible_cell_count"], 288)
 
 
 if __name__ == "__main__":
