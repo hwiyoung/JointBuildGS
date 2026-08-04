@@ -69,10 +69,13 @@ Reusable code must be promoted out of `phases/` into `src/`, `scripts/`, or `con
   technical diagnostic; and `DEC-P1-015` opened a non-confirmatory `U_target=199`
   C1/C2/C3 technical census. That census means the former validation/held-out memberships
   are no longer untouched confirmatory sets. `DEC-P1-016` now governs the single-building
-  qualitative–quantitative presentation matrix. C4/C5 execution, numerical G3/G4/
-  `PASS_usable`, confirmatory inference and population/generalization claims remain
-  prohibited pending separate decisions and an independent test design. Technical Returns
-  and receipts keep `scientific_verdict: null`.
+  qualitative–quantitative presentation matrix. `DEC-P1-017` authorizes one bounded,
+  non-confirmatory C4 technical-development run on the exact C3-2 base with only the
+  Existing ALS depth/normal prior added, after its registration/confidence and gradient/
+  memory preflights pass. C5 execution, numerical G3/G4/`PASS_usable`, confirmatory
+  inference and population/generalization claims remain prohibited pending separate
+  decisions and an independent test design. Technical Returns and receipts keep
+  `scientific_verdict: null`.
 - **Legacy P2 GS-JSO / Fusion W1: protected historical capability evidence.** Its
   phase-locked controls and compact receipts remain under `phases/p2-gsjso/`; promoted
   reports remain under `docs/experiments/pilots/fusion_w1/`. Do not execute, modify,

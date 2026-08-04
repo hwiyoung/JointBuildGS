@@ -608,6 +608,61 @@
   boundary와 numerical criterion 보류는 변경하지 않는다.
 - **Scientific verdict:** `null`
 
+## DEC-P1-017 — Existing ALS prior C4 bounded technical development
+
+- **Decision ID:** `DEC-P1-017`
+- **Date:** 2026-08-04
+- **Status:** `USER-APPROVED BOUNDED C4 TECHNICAL DEVELOPMENT`
+- **Previous state:** `DEC-P1-015`는 C1/C2/C3 `U_target=199` 기술 전수를 열었지만
+  C4/C5를 금지했고, Gate S0의 2022 Existing ALS 4개 타일은 exact bytes만
+  확인된 `PARTIAL` prior candidate였다. C3-2는 exact 937-view image-derived
+  RGB/semantic/MVS depth base, seed 0, neutral dense initialization, 30,000 iterations로
+  봉인되었다.
+- **New decision:** C4를 exact C3-2 matched base에 2022 Existing ALS depth/normal prior만
+  추가한 단 한 번의 full-scene seed-0/30k 비확증 기술 개발 run으로 허용한다.
+  C3-2의 RGB, semantic, image-derived depth/normal, initialization, seed, optimizer,
+  iteration, grow/prune schedule을 대체하거나 완화하지 않는다. matched C3
+  control은 sealed C3-2 checkpoint/config/hash를 재사용하고 재학습하지 않는다.
+- **Exact ALS input:** `ALS_EXISTING_690_5335`, `ALS_EXISTING_690_5336`,
+  `ALS_EXISTING_691_5335`, `ALS_EXISTING_691_5336`의 Gate-S0-recorded bytes/hashes만
+  사용한다. 보호된 legacy Fusion W1 payload, Current UAS LiDAR, LoD1,
+  LoD2 RoofSurface/Z/roof type/final model, evaluation reference는 C4 prior 생성·학습에
+  사용하지 않는다.
+- **Prior loss:** ALS depth는 robust Huber loss, ALS normal은
+  `1 - abs(dot(n_render,n_ALS))` sign-invariant loss를 사용한다. ALS weight는
+  registration, local density, local planarity, image visibility, current image-derived
+  depth/normal consistency confidence의 곱으로 gating한다. current image-derived
+  evidence와 충돌하면 prior confidence/weight만 낮추고 current term은 변경하지 않는다.
+- **Hard start gate:** (1) raw ALS four-hash/bytes, CRS/datum conversion, derivative hash,
+  per-view coverage/confidence receipt, (2) registration residual and overlap inventory,
+  (3) non-zero finite depth/normal loss and geometry gradient preflight, (4) selected GPU
+  free-memory ceiling 점검을 모두 통과한 뒤만 overnight 30k를 시작한다.
+  한 gate라도 실패하면 training을 시작하지 않고 failure receipt를 보존한다.
+- **Failure and checkpoint policy:** NaN, OOM, confidence collapse, registration drift,
+  interrupted run을 숨기지 않는다. 마지막 atomic full-state checkpoint, logs,
+  exact config/input/output hashes와 failure receipt를 add-once namespace에 보존한다.
+- **Result boundary:** C4 postprocess는 `U_target=199` 모두를 유지하며 missing/not-run/
+  failure를 삭제하지 않는다. Current UAS/C1 reference와 2022 LoD2 reference
+  진단은 별도 열이다. LoD2-based row는 `UNCHANGED_CONFIDENT`,
+  `TEMPORAL_CHANGE_SUSPECTED`, `REFERENCE_ID_ALIGNMENT_UNCERTAIN`만 사용하고,
+  C4-vs-LoD2의 prior-related 열은
+  `PRIOR_RELATED_REFERENCE_DIAGNOSTIC_ONLY`로 격리한다.
+- **Execution boundary:** C5는 실행하지 않는다. C4를 primary/confirmatory
+  arm으로 승격하지 않고, 수치 G3/G4 criterion이 동결되기 전 공식
+  `PASS_usable`은 `null`로 둔다.
+- **Evidence:** 사용자의 2026-08-04 명시적 C4 설계·실행 지시, exact raw ALS
+  live rehash, sealed C3-2 30k checkpoint/config 계보.
+- **Scientific verdict:** `null`
+
+### Consequence
+
+- 이 결정은 exact C4 technical run 하나만 열며 C5, confirmatory inference,
+  population/generalization claim을 열지 않는다.
+- presentation/metric row의 output/reference/support/evaluator hashes를 직접 bind하고,
+  C1 `SELF_REFERENCE_DIAGNOSTIC`과 C4 prior-related LoD2 diagnostic을 독립 표시한다.
+- Agent는 정렬, confidence, gradient, GPU memory, checkpoint/failure 산출물만 보고하고
+  과학적 판정은 사람 검토자에게 남긴다.
+
 ## Pending decisions not yet logged as adopted
 
 다음은 선택지가 정리되었으나 사용자 결정 전이므로 adopted decision이 아니다.
