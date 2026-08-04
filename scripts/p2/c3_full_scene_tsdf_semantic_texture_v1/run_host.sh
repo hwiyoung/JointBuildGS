@@ -10,8 +10,9 @@ image="sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774"
 gpu_index="${JBGS_C3_FULL_TSDF_GPU_INDEX:-1}"
 
 [[ -z "$(git -C "${repo_root}" status --porcelain=v1 --untracked-files=all)" ]] || { echo "clean source required" >&2; exit 2; }
-upstream="$(git -C "${repo_root}" rev-parse --abbrev-ref --symbolic-full-name '@{upstream}')"
-[[ "$(git -C "${repo_root}" rev-parse HEAD)" == "$(git -C "${repo_root}" rev-parse "${upstream}")" ]] || { echo "HEAD must equal its pushed upstream" >&2; exit 2; }
+branch="$(git -C "${repo_root}" symbolic-ref --short HEAD)"
+remote_head="$(git -C "${repo_root}" ls-remote --exit-code origin "refs/heads/${branch}" | awk '{print $1}')"
+[[ "$(git -C "${repo_root}" rev-parse HEAD)" == "${remote_head}" ]] || { echo "HEAD must equal its pushed origin branch" >&2; exit 2; }
 [[ "$(docker image inspect "${image}" --format '{{.Id}}')" == "${image}" ]] || { echo "project image mismatch" >&2; exit 2; }
 [[ ! -e "${final_root}" && ! -e "${partial_root}" ]] || { echo "add-once namespace exists" >&2; exit 2; }
 source_commit="$(git -C "${repo_root}" rev-parse HEAD)"
