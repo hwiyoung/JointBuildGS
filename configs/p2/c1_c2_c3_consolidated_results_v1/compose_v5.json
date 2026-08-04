@@ -1,0 +1,55 @@
+{
+  "schema": "jointbuildgs.p2.c1_c2_c3_consolidated_results.v5",
+  "task_id": "P2-C1-C2-C3-CONSOLIDATED-RESULTS-v5",
+  "status": "APPROVED_FOR_LOCAL_PRESENTATION_CORRECTION_ONLY",
+  "building_ids": ["DEBY_LOD2_4907177", "DEBY_LOD2_4906975", "DEBY_LOD2_108580336"],
+  "condition_ids": ["C3_1_SEM", "C3_2_SEM_DEPTH"],
+  "views": ["TOP", "OBLIQUE_1", "OBLIQUE_2", "PRINCIPAL_SECTION"],
+  "display": {
+    "principal_frame": "FOOTPRINT_PCA_SINGLE_CANONICAL_SECTION",
+    "principal_z_scale": "BUILDING_LOD2_PLUS_45P7M_MIN_MAX_WITH_2M_PADDING",
+    "lod2_orthometric_to_camera_ellipsoidal_m": 45.7,
+    "legacy_blue_red_dual_section_visible": false,
+    "separate_principal_section_page_count": 0,
+    "top_locator": "THICK_SECTION_BAND_AB_WITH_LARGE_VIEW_ARROW",
+    "minimum_page_text_px": 30
+  },
+  "texture": {
+    "source": "EXACT_2024_CURRENT_RGB_937_MEMBER_COMMON_BASE",
+    "atlas_cell_px": 80,
+    "atlas_max_px": 2048,
+    "image_downscale": 0.25,
+    "maximum_views_per_building": 12,
+    "minimum_incidence_cosine": 0.15,
+    "mvs_depth_tolerance_m": 1.25,
+    "world_shift_xyz": [690953.0, 5336071.0, 604.0]
+  },
+  "sources": {
+    "sealed_v4_relative_root": "phase-payloads/p2/c1_c2_c3_consolidated_results_v1/P2-C1-C2-C3-CONSOLIDATED-RESULTS-v4",
+    "v13_relative_root": "phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v13/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v13",
+    "c1_4907177_recovery_relative_root": "phase-payloads/p2/c3_roof_texture_reference_extension_v1/P2-C3-ROOF-TEXTURE-C1-LOD2-REFERENCE-EXTENSION-v5",
+    "diagnostic_relative_root": "phase-payloads/p2/c3_tsdf_roof_diagnostic_v1/P2-C3-TSDF-ROOF-DIAGNOSTIC-RECOVERY-v1",
+    "shared_view_plan_relative_path": "phase-payloads/p2/c3_tsdf_roof_diagnostic_v1/P2-C3-TSDF-ROOF-DIAGNOSTIC-RECOVERY-v1/control/shared_view_plan_v1.json",
+    "colmap_relative_root": "phase-payloads/p0-audit/data/work/mvs/colmap_dense",
+    "lod2_relative_path": "phase-payloads/p0-audit/data/raw/lod2/690_5336.gml",
+    "exact_view_manifest_git_path": "artifacts/manifests/gate_s0/common_base_r2b/exact_937_member_crosswalk_v1.json"
+  },
+  "exact_source_hashes": {
+    "sealed_v4_closure": "16565a646d00afa86f1d629c081058cfa3889186d794b37d705304caac0cbc3f",
+    "sealed_v4_manifest": "6b4171cc304fc8c9206e5fdd5904a4cf913eaaa0d53adee2f76c0559e7bf3312",
+    "sealed_v4_pdf": "675e20b076fb79791c7a05342f5e844a7fa2703357b7cc289f059dcd2582097f"
+  },
+  "execution_counters": {
+    "gs_training_invocations": 0,
+    "checkpoint_render_extractions": 0,
+    "poisson_invocations": 0,
+    "tsdf_invocations": 0,
+    "roofer_invocations": 0,
+    "g2_invocations": 0,
+    "metric_recomputations": 0,
+    "c2_display_texture_bakes": 3,
+    "c4_c5_accesses": 0
+  },
+  "official_G3_G4_PASS_usable": null,
+  "scientific_verdict": null
+}
