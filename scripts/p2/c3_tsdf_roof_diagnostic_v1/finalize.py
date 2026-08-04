@@ -342,7 +342,7 @@ def _artifact_json(summary: Mapping[str, Any], generated_at: str) -> dict[str, A
         "snapshot": {
             "version": 1,
             "generatedAt": generated_at,
-            "status": "complete",
+            "status": "ready",
             "datasets": {
                 "headline": headline,
                 "mesh_quality": mesh,
@@ -357,17 +357,17 @@ def _artifact_json(summary: Mapping[str, Any], generated_at: str) -> dict[str, A
     }
 
 
-def prepare(output_root: Path) -> dict[str, Any]:
+def prepare(source_root: Path, output_root: Path) -> dict[str, Any]:
     config = load_config()
     validate_config(config)
-    render = _read_json(output_root / "qualitative/index_v1.json")
-    diagnostic = _read_json(output_root / "control/five_question_diagnostic_complete_v1.json")
+    render = _read_json(source_root / "qualitative/index_v1.json")
+    diagnostic = _read_json(source_root / "control/five_question_diagnostic_complete_v1.json")
     if render.get("status") != "COMPLETE" or render.get("case_sheet_count") != 3:
         raise RuntimeError("roof-first qualitative render is incomplete")
     if diagnostic.get("status") != "COMPLETE" or diagnostic.get("question_count") != 5:
         raise RuntimeError("five-question diagnostic is incomplete")
     generated_at = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
-    summary = build_summary(output_root)
+    summary = build_summary(source_root)
     write_new(output_root / "control/analysis_summary_v1.json", canonical_json_bytes(summary))
     write_new(output_root / "reports/technical_report_ko_v1.md", _technical_markdown(summary).encode("utf-8"))
     write_new(output_root / "reports/artifact.json", canonical_json_bytes(_artifact_json(summary, generated_at)))
@@ -396,12 +396,12 @@ def _material_records(output_root: Path) -> list[dict[str, Any]]:
     return records
 
 
-def seal(output_root: Path, source_commit: str) -> dict[str, Any]:
+def seal(source_root: Path, output_root: Path, source_commit: str) -> dict[str, Any]:
     summary = _read_json(output_root / "control/analysis_summary_v1.json")
     report_html = output_root / "reports/report.html"
     if not report_html.is_file() or report_html.stat().st_size < 10_000:
         raise RuntimeError("portable HTML report missing or implausibly small")
-    qualitative = _read_json(output_root / "qualitative/index_v1.json")
+    qualitative = _read_json(source_root / "qualitative/index_v1.json")
     case_sheets = [row["case_sheet"] for row in qualitative["records"]]
     technical_return = {
         "schema": "jointbuildgs.c3_tsdf_roof_diagnostic_technical_return.v1",
@@ -409,6 +409,7 @@ def seal(output_root: Path, source_commit: str) -> dict[str, Any]:
         "authority_mode": "DIRECT_HUMAN_INSTRUCTION_SINGLE_EXPERIMENT_HOST",
         "two_host_handoff_event": False,
         "source_commit": source_commit,
+        "source_artifact_relative_root": "phase-payloads/p2/c3_tsdf_roof_diagnostic_v1/P2-C3-TSDF-ROOF-DIAGNOSTIC-RENDER-RECOVERY-v1",
         "case_sheet_count": 3,
         "rendered_panel_count": qualitative["panel_count"],
         "question_count": 5,
@@ -416,8 +417,8 @@ def seal(output_root: Path, source_commit: str) -> dict[str, Any]:
         "portable_html_report": file_record(report_html, output_root),
         "technical_report_markdown": file_record(output_root / "reports/technical_report_ko_v1.md", output_root),
         "quantitative_tables": [
-            file_record(output_root / "tables/poisson_tsdf_mesh_quality_v1.csv", output_root),
-            file_record(output_root / "tables/roofer_plane_diagnostic_v1.csv", output_root),
+            file_record(source_root / "tables/poisson_tsdf_mesh_quality_v1.csv", source_root),
+            file_record(source_root / "tables/roofer_plane_diagnostic_v1.csv", source_root),
         ],
         "execution_counters": summary["execution_counters"],
         "official_G3_G4_PASS_usable": None,
@@ -425,12 +426,24 @@ def seal(output_root: Path, source_commit: str) -> dict[str, Any]:
     }
     write_new(output_root / "control/technical_return_v1.json", canonical_json_bytes(technical_return))
     records = _material_records(output_root)
+    source_material_paths = [
+        source_root / "control/extraction_pair_complete_v1.json",
+        source_root / "control/five_question_diagnostic_complete_v1.json",
+        source_root / "qualitative/index_v1.json",
+        source_root / "tables/poisson_tsdf_mesh_quality_v1.csv",
+        source_root / "tables/roofer_plane_diagnostic_v1.csv",
+        source_root / "diagnostics/4907177_current_source_presence_v1.json",
+        source_root / "diagnostics/4907177_roofline_image_presence_v1.json",
+        source_root / "diagnostics/roofer_plane_diagnostic_v1.json",
+    ] + [source_root / row["case_sheet"]["path"] for row in qualitative["records"]]
     manifest = {
         "schema": "jointbuildgs.c3_tsdf_roof_diagnostic_artifact_manifest.v1",
         "status": "COMPLETE_HASHED_MATERIAL_PAYLOAD",
         "source_commit": source_commit,
         "record_count": len(records),
         "records": records,
+        "source_material_root": technical_return["source_artifact_relative_root"],
+        "source_material_records": [file_record(path, source_root) for path in source_material_paths],
         "excluded_control_receipts": [
             "control/artifact_manifest_v1.json",
             "control/technical_return_v1.json",
@@ -479,10 +492,13 @@ def seal(output_root: Path, source_commit: str) -> dict[str, Any]:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("mode", choices=("prepare", "seal"))
+    parser.add_argument("--source-root", type=Path, required=True)
     parser.add_argument("--output-root", type=Path, required=True)
     parser.add_argument("--source-commit")
     args = parser.parse_args()
-    result = prepare(args.output_root) if args.mode == "prepare" else seal(args.output_root, args.source_commit or "")
+    result = prepare(args.source_root, args.output_root) if args.mode == "prepare" else seal(
+        args.source_root, args.output_root, args.source_commit or ""
+    )
     print(json.dumps(result, ensure_ascii=False, sort_keys=True))
 
 
