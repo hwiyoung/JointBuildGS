@@ -403,6 +403,7 @@ class ColmapDataset(Dataset):
         photo_mask_dir: Optional[str | Path] = None,
         roof_audit_mask_manifest: Optional[str | Path] = None,
         plane_region_mask_manifest: Optional[str | Path] = None,
+        external_als_prior_dir: Optional[str | Path] = None,
         pilot_arm: Optional[str] = None,
     ):
         self.root = Path(root)
@@ -418,6 +419,7 @@ class ColmapDataset(Dataset):
         self.override_normal_dir = self._resolve_aux_dir(normal_dir)
         self.mono_normal_dir = self._resolve_aux_dir(mono_normal_dir)
         self.mono_depth_dir = self._resolve_aux_dir(mono_depth_dir)
+        self.external_als_prior_dir = self._resolve_aux_dir(external_als_prior_dir)
         self.depth_far_sentinel = depth_far_sentinel
         self.mono_depth_far_sentinel = mono_depth_far_sentinel
         self.depth_scale = float(depth_scale)
@@ -492,6 +494,25 @@ class ColmapDataset(Dataset):
                 "mode": "explicit_locked_visible_views",
                 "requested": requested,
                 "resolved": [frame.name for frame in self.frames],
+            }
+
+        self.external_als_prior_audit = None
+        if self.external_als_prior_dir is not None:
+            missing_external_als = [
+                frame.name
+                for frame in self.frames
+                if not (self.external_als_prior_dir / f"{Path(frame.name).stem}.npz").is_file()
+            ]
+            if missing_external_als:
+                raise FileNotFoundError(
+                    "external_als_prior_dir misses visible views: "
+                    f"{missing_external_als[:20]}"
+                )
+            self.external_als_prior_audit = {
+                "mode": "sparse_per_view_npz_depth_normal_confidence",
+                "directory": str(self.external_als_prior_dir.resolve()),
+                "view_count": len(self.frames),
+                "inventory_match": "exact_visible_view_coverage",
             }
 
         self.photo_mask_binding = None
@@ -749,6 +770,40 @@ class ColmapDataset(Dataset):
             raise ValueError(f"photo support mask is empty: {path}")
         return mask
 
+    def _load_external_als_prior(self, fr: Frame, H: int, W: int):
+        if self.external_als_prior_dir is None:
+            return None
+        path = self.external_als_prior_dir / f"{Path(fr.name).stem}.npz"
+        with np.load(path, allow_pickle=False) as payload:
+            stored_height = int(payload["height"])
+            stored_width = int(payload["width"])
+            if (stored_height, stored_width) != (H, W):
+                raise ValueError(
+                    f"external ALS prior shape drift for {fr.name}: "
+                    f"{(stored_height, stored_width)} != {(H, W)}"
+                )
+            y = payload["pixel_y"].astype(np.int64, copy=False)
+            x = payload["pixel_x"].astype(np.int64, copy=False)
+            depth_value = payload["depth"].astype(np.float32, copy=False)
+            normal_value = payload["normal"].astype(np.float32, copy=False)
+            confidence_value = payload["confidence"].astype(np.float32, copy=False)
+        count = len(y)
+        if not (len(x) == len(depth_value) == len(normal_value) == len(confidence_value) == count):
+            raise ValueError(f"external ALS sparse arrays disagree: {path}")
+        if normal_value.shape != (count, 3):
+            raise ValueError(f"external ALS normals must be Nx3: {path}")
+        if count and (y.min() < 0 or y.max() >= H or x.min() < 0 or x.max() >= W):
+            raise ValueError(f"external ALS pixel index out of range: {path}")
+        depth = np.zeros((H, W), dtype=np.float32)
+        normal = np.zeros((H, W, 3), dtype=np.float32)
+        confidence = np.zeros((H, W), dtype=np.float32)
+        mask = np.zeros((H, W), dtype=np.bool_)
+        depth[y, x] = depth_value
+        normal[y, x] = normal_value
+        confidence[y, x] = np.clip(confidence_value, 0.0, 1.0)
+        mask[y, x] = confidence[y, x] > 0
+        return depth, normal, confidence, mask
+
     def __getitem__(self, idx: int) -> dict:
         fr = self.frames[idx]
         H = int(round(fr.height * self.downscale))
@@ -781,6 +836,7 @@ class ColmapDataset(Dataset):
                     lbl = cv2.resize(lbl, (W, H), interpolation=cv2.INTER_NEAREST)
                 semantic = lbl.astype(np.int64)
         simple_photo_mask = self._load_photo_mask_dir(fr, H, W)
+        external_als = self._load_external_als_prior(fr, H, W)
 
         w2c = np.eye(4, dtype=np.float32)
         w2c[:3, :3] = fr.R
@@ -827,6 +883,12 @@ class ColmapDataset(Dataset):
             )
         if semantic is not None:
             out["semantic"] = torch.from_numpy(semantic)
+        if external_als is not None:
+            als_depth, als_normal, als_confidence, als_mask = external_als
+            out["external_als_depth"] = torch.from_numpy(als_depth)
+            out["external_als_normal"] = torch.from_numpy(als_normal)
+            out["external_als_confidence"] = torch.from_numpy(als_confidence)
+            out["external_als_mask"] = torch.from_numpy(als_mask)
         return out
 
 

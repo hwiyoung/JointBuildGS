@@ -1,0 +1,37 @@
+{
+  "schema": "jointbuildgs.p2.c4_existing_als_preflight.git_manifest.v1",
+  "task_id": "P2-C4-EXISTING-ALS-BOUNDED-TECHDEV-v1",
+  "decision": "DEC-P1-017",
+  "artifact_uri": "artifact://JointBuildGS/phase-payloads/p2/c4_existing_als_v1/P2-C4-EXISTING-ALS-BOUNDED-TECHDEV-v1",
+  "status": "210-PASSED_NONZERO_GRADIENT_AND_22000MIB_GPU_GATE",
+  "matched_c3_config_sha256": "66358b7ccdffdc93562dcfc84cc15f0941022856d339afa96e5e53b8eb817331",
+  "exact_view_manifest_sha256": "b4af779ecfae859de9772ce50cb24326b20c3f86614f6a8957453779d1cd4c17",
+  "neutral_initialization_sha256": "ad7d1192de507a4834181d8b61a50431829b3413bf8425497507c2396feabdc4",
+  "prior_view_count": 937,
+  "nonempty_prior_view_count": 937,
+  "total_support_pixel_count": 19277173,
+  "prior_payload_bytes": 379036390,
+  "alignment": {
+    "matched_point_count": 103453,
+    "xy_distance_median_m": 0.19459967804688427,
+    "xy_distance_p95_m": 0.4051857461324752,
+    "signed_z_residual_median_m": 0.13480540635845983,
+    "registration_confidence": 0.7636766497490164,
+    "passed": true
+  },
+  "gradient": {
+    "depth_gradient_l1": 0.0024999999441206455,
+    "normal_gradient_l1": 0.0007594670169055462,
+    "gpu_free_bytes": 24872615936,
+    "gpu_total_bytes": 25296044032,
+    "passed": true
+  },
+  "records": {
+    "preserved_initial_failure_sha256": "0360607666827cc3223b0662535445f5291b51e4a4c1da9c4eb679cd48eedda9",
+    "recovered_preflight_sha256": "efee0895c6c440280a27549620a9342eb11aac0c7125ef4c005e037bf767f321",
+    "final_22000mib_gate_sha256": "68de4abd3be49a3a975bb95dc4296a2e86213adeee98f79af2fa85f753c95d5d"
+  },
+  "c5_executed": false,
+  "official_G3_G4_PASS_usable": null,
+  "scientific_verdict": null
+}

@@ -33,6 +33,7 @@ from .checkpoint import (
 )
 from .dataloader import ColmapDataset, resolve_view_roles
 from .densification import build_optimizers, build_param_dict, build_strategy
+from .external_als_prior import robust_als_depth_loss, sign_invariant_als_normal_loss
 from .geometry_partition import assign_partition_ids, load_xy_partitions
 from .grouping import (
     group_primitives,
@@ -1908,6 +1909,7 @@ def main():
         photo_mask_dir=cfg.get("photo_mask_dir"),
         roof_audit_mask_manifest=cfg.get("roof_audit_mask_manifest"),
         plane_region_mask_manifest=cfg.get("plane_region_mask_manifest"),
+        external_als_prior_dir=cfg.get("external_als_prior_dir"),
         pilot_arm=pilot_arm,
     )
     print(f"[data] frames={len(ds)}  pts_init={ds.points_xyz.shape[0]}")
@@ -2371,6 +2373,13 @@ def main():
     w_photo = cfg.get("w_photo", 1.0)
     w_depth = cfg.get("w_depth", 1.0)
     w_normal = cfg.get("w_normal", 0.05)
+    w_external_als_depth = float(cfg.get("w_external_als_depth", 0.0) or 0.0)
+    w_external_als_normal = float(cfg.get("w_external_als_normal", 0.0) or 0.0)
+    external_als_huber_delta_m = float(cfg.get("external_als_huber_delta_m", 1.0))
+    if (w_external_als_depth > 0 or w_external_als_normal > 0) and cfg.get("external_als_prior_dir") is None:
+        raise ValueError("positive external ALS weights require external_als_prior_dir")
+    if external_als_huber_delta_m <= 0:
+        raise ValueError("external_als_huber_delta_m must be positive")
     w_mono_normal_aux = float(cfg.get("w_mono_normal_aux", 0.0) or 0.0)
     w_plane = float(cfg.get("w_plane", 0.0) or 0.0)
     pilot_loss_audit_every = int(cfg.get("pilot_loss_audit_every", 0) or 0)
@@ -3706,6 +3715,32 @@ def main():
             w_normal_eff = 0.0
             mono_normal_stats = {"eligible_region_count": 0, "mode": "map_absent"}
 
+        loss_external_als_depth = depth_pred.sum() * 0.0
+        loss_external_als_normal = n_render.sum() * 0.0
+        external_als_depth_stats = {"valid_pixel_count": 0, "confidence_sum": 0.0}
+        external_als_normal_stats = {"valid_pixel_count": 0, "confidence_sum": 0.0}
+        if "external_als_mask" in batch:
+            als_mask = batch["external_als_mask"].to(device)
+            als_confidence = batch["external_als_confidence"].to(device)
+            loss_external_als_depth, external_als_depth_stats = robust_als_depth_loss(
+                depth_pred,
+                batch["external_als_depth"].to(device),
+                als_confidence,
+                als_mask,
+                huber_delta_m=external_als_huber_delta_m,
+            )
+            loss_external_als_normal, external_als_normal_stats = sign_invariant_als_normal_loss(
+                n_render,
+                batch["external_als_normal"].to(device),
+                als_confidence,
+                als_mask,
+            )
+            loss_total = (
+                loss_total
+                + w_external_als_depth * loss_external_als_depth
+                + w_external_als_normal * loss_external_als_normal
+            )
+
         loss_nc = L.l_nc(n_render, n_surf, alpha=alpha.detach())
         w_nc_eff = _scheduled_weight(
             w_nc,
@@ -4478,6 +4513,12 @@ def main():
             writer.add_scalar("loss/depth", loss_depth.item(), it)
             writer.add_scalar("loss/mono_depth", loss_mono_depth.item(), it)
             writer.add_scalar("loss/normal", loss_n.item(), it)
+            writer.add_scalar("loss/external_als_depth_huber", loss_external_als_depth.item(), it)
+            writer.add_scalar("loss/external_als_normal_sign_invariant", loss_external_als_normal.item(), it)
+            writer.add_scalar("loss_weight/external_als_depth", w_external_als_depth, it)
+            writer.add_scalar("loss_weight/external_als_normal", w_external_als_normal, it)
+            writer.add_scalar("stats/external_als_depth_valid_pixel_count", external_als_depth_stats["valid_pixel_count"], it)
+            writer.add_scalar("stats/external_als_normal_valid_pixel_count", external_als_normal_stats["valid_pixel_count"], it)
             if pilot_arm is not None:
                 writer.add_scalar("loss/normal_mvs_primary", loss_n_mvs.item(), it)
                 writer.add_scalar("loss/normal_omnidata_aux", loss_n_aux.item(), it)
