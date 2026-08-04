@@ -1,0 +1,55 @@
+{
+  "schema": "jointbuildgs.local_artifact_resolver.v1",
+  "task_id": "P2-C3-FULL-SCENE-TSDF-SEMANTIC-TEXTURE-v1",
+  "status": "300-CLOSED_LOCAL_FULL_SCENE_TSDF_SEMANTIC_TEXTURE",
+  "source_commit": "51d568051165ed69219f7670056e8366edd6e312",
+  "artifact_uri": "artifact://JointBuildGS/phase-payloads/p2/c3_full_scene_tsdf_semantic_texture_v1/P2-C3-FULL-SCENE-TSDF-SEMANTIC-TEXTURE-v1",
+  "local_absolute_path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/p2/c3_full_scene_tsdf_semantic_texture_v1/P2-C3-FULL-SCENE-TSDF-SEMANTIC-TEXTURE-v1",
+  "pipeline_order": [
+    "full_scene_gs_rendered_depth",
+    "full_scene_tsdf",
+    "post_tsdf_semantic_roof_extraction",
+    "current_rgb_texture"
+  ],
+  "manifest": {"relative_path": "control/artifact_manifest_v1.json", "bytes": 33945, "sha256": "f3083cce85903c37a1ce79b83833e8c87d2b005fc77e24cbb52ef2345bb4f217"},
+  "technical_return": {"relative_path": "control/technical_return_v1.json", "bytes": 552, "sha256": "a3cd33b54607ca4479cb2ad84b35f841cc8a1b8a22dc7594ae355b6ce78b0381"},
+  "verified_receipt": {"relative_path": "control/200-verified.local_v1.json", "bytes": 456, "sha256": "77cda809e6544bb83be227828767d7ca62ecd2259a3b0d45580ffc6098f79d07"},
+  "closed_receipt": {"relative_path": "control/300-closed.local_v1.json", "bytes": 585, "sha256": "40b34ce1d05c6762f3044dbe0df8f09ec5c06d60523eb5aa2701dd779f3e8943"},
+  "qualitative_index": {"relative_path": "qualitative/index_v1.json", "bytes": 33222, "sha256": "6033a1c21344df4517bb9a9f64921615f709daa4ac422a7b1eb4b4c12c0dd3c5"},
+  "technical_report_markdown": {"relative_path": "reports/technical_report_ko_v1.md", "bytes": 1240, "sha256": "41100e478cfafcfb58fa292b2da21d93aae96136cd7cca2e72fa09dde88d709a"},
+  "case_html": {"relative_path": "reports/case_index.html", "bytes": 832, "sha256": "08ec3c249e0718aa98bdf997e18e1fbce920f42b589b4d0e107a90bd51bc4c0c"},
+  "representative_case_sheets": [
+    {"stable_id": "DEBY_LOD2_4906975", "condition_id": "C3_2_SEM_DEPTH", "relative_path": "qualitative/DEBY_LOD2_4906975/case_sheet_full_scene_tsdf_c3_2_v1.png", "bytes": 11154938, "sha256": "f0a25a6d12eab5343238ccde9170c9c6407322ce64b94723ebd172fe26bf8ea2"},
+    {"stable_id": "DEBY_LOD2_4907177", "condition_id": "C3_2_SEM_DEPTH", "relative_path": "qualitative/DEBY_LOD2_4907177/case_sheet_full_scene_tsdf_c3_2_v1.png", "bytes": 9403908, "sha256": "af10b71a19bb2fb90a67f9f1b29ec5baeb0f73bba794a5f5d2a79bce55e547d4"},
+    {"stable_id": "DEBY_LOD2_108580336", "condition_id": "C3_2_SEM_DEPTH", "relative_path": "qualitative/DEBY_LOD2_108580336/case_sheet_full_scene_tsdf_c3_2_v1.png", "bytes": 9271959, "sha256": "bb862d682ea806083dff1f0c36bf2cf0efc236d8281139e448621359f613c46d"}
+  ],
+  "case_count": 3,
+  "condition_count": 2,
+  "case_sheet_count": 6,
+  "png_count": 142,
+  "full_scene_tsdf_mesh_count": 6,
+  "post_tsdf_semantic_roof_mesh_count": 6,
+  "texture_bake_attempt_count": 6,
+  "texture_bake_completed_count": 4,
+  "texture_bake_skipped_empty_roof_count": 2,
+  "empty_roof_cases": [
+    {"stable_id": "DEBY_LOD2_4907177", "condition_id": "C3_1_SEM", "roof_triangle_count": 0},
+    {"stable_id": "DEBY_LOD2_4907177", "condition_id": "C3_2_SEM_DEPTH", "roof_triangle_count": 0}
+  ],
+  "manifest_record_count": 189,
+  "original_resolution_visual_review_sheet_count": 6,
+  "manifest_hash_failure_count": 0,
+  "execution_counters": {
+    "gs_training_invocations": 0,
+    "checkpoint_render_extractions": 2,
+    "full_scene_tsdf_reconstructions": 6,
+    "semantic_roof_extractions": 6,
+    "texture_bakes_completed": 4,
+    "roofer_invocations": 0,
+    "g2_invocations": 0,
+    "metric_recomputations": 0,
+    "c4_c5_accesses": 0
+  },
+  "official_G3_G4_PASS_usable": null,
+  "scientific_verdict": null
+}
