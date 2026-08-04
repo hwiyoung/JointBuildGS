@@ -1,0 +1,50 @@
+{
+  "schema": "jointbuildgs.artifact_resolver.v1",
+  "task_id": "P2-C1-C2-C3-CONSOLIDATED-RESULTS-v4",
+  "status": "300-CLOSED_LOCAL_LOD2_SCALED_SECTIONS_AND_BASELINE_MESH",
+  "artifact_relative_root": "phase-payloads/p2/c1_c2_c3_consolidated_results_v1/P2-C1-C2-C3-CONSOLIDATED-RESULTS-v4",
+  "primary_pdf": "reports/C1_C2_C3_qualitative_results_v4_lod2_scaled_sections_and_baseline_mesh.pdf",
+  "primary_pdf_sha256": "675e20b076fb79791c7a05342f5e844a7fa2703357b7cc289f059dcd2582097f",
+  "primary_pdf_bytes": 44413266,
+  "page_count": 12,
+  "case_count": 3,
+  "c1_c2_page_count": 3,
+  "c3_context_page_count": 6,
+  "common_pca_section_page_count": 3,
+  "common_pca_section_panel_count": 60,
+  "principal_section_contract": {
+    "frame": "FOOTPRINT_PCA",
+    "z_scale": "PER_BUILDING_2022_LOD2_ALL_SURFACES_PLUS_45P7M_WITH_2M_PADDING",
+    "DEBY_LOD2_4907177_zlim_m": [557.97, 582.88],
+    "DEBY_LOD2_4906975_zlim_m": [557.48, 578.84],
+    "DEBY_LOD2_108580336_zlim_m": [556.414, 595.796]
+  },
+  "c1_c2_mesh_role": "DISPLAY_TRIANGULATION_OF_THE_SAME_SEALED_ROOFER_CITYJSON_OUTPUT; NOT_A_SECOND_RECONSTRUCTION",
+  "source_base_commit": "5386d5bcbe34d276373696ff05aedc22afaaa362",
+  "recipe": {
+    "config": "configs/p2/c1_c2_c3_consolidated_results_v1/compose_v4.json",
+    "config_sha256": "bedd197c8be52d0963b7b520c8075e173e35ce79fe82ccc660344d3ca9b6db0c",
+    "composer": "scripts/p2/c1_c2_c3_consolidated_results_v1/compose_v4.py",
+    "composer_sha256": "b2ac93e75aee1206e3e81b3ba05bf443974ac72a69b27602e4357f825e464141",
+    "host_runner": "scripts/p2/c1_c2_c3_consolidated_results_v1/run_v4_host.sh",
+    "host_runner_sha256": "d09f1abb417039f0cd239f67363f991f7dd7904dfd835e34195e88f61f4cf7cd"
+  },
+  "verification": {
+    "index_sha256": "dd2545d68ef1ef0a256251e5497cf191af897c12b7d9904d35574ea19fb68e62",
+    "manifest_sha256": "6b4171cc304fc8c9206e5fdd5904a4cf913eaaa0d53adee2f76c0559e7bf3312",
+    "verified_sha256": "e04d4616ee0ae96806be954c8209a8617546db0a937595e31890df858346d8e4",
+    "closed_sha256": "16565a646d00afa86f1d629c081058cfa3889186d794b37d705304caac0cbc3f"
+  },
+  "execution_counters": {
+    "gs_training_invocations": 0,
+    "checkpoint_render_extractions": 0,
+    "poisson_invocations": 0,
+    "tsdf_invocations": 0,
+    "roofer_invocations": 0,
+    "g2_invocations": 0,
+    "metric_recomputations": 0,
+    "c4_c5_accesses": 0
+  },
+  "official_G3_G4_PASS_usable": null,
+  "scientific_verdict": null
+}
