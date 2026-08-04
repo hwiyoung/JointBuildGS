@@ -2,7 +2,7 @@
 set -euo pipefail
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 artifact_root="${JBGS_ARTIFACT_ROOT:-/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts}"
-relative_root="phase-payloads/p2/c3_roof_texture_bake_v1/P2-C3-ROOF-TEXTURE-BAKE-v1"
+relative_root="phase-payloads/p2/c3_roof_texture_bake_v1/P2-C3-ROOF-TEXTURE-BAKE-RENDER-RECOVERY-v2"
 output_root="${artifact_root}/${relative_root}"
 image="jointbuildgs:dev"; expected_image="sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774"; host_uid="$(id -u)"; host_gid="$(id -g)"
 if [[ -n "$(git -C "${repo_root}" status --porcelain=v1 --untracked-files=all)" ]]; then echo "roof texture bake requires clean source" >&2; exit 2; fi

@@ -233,7 +233,9 @@ def _atlas_face_colors(mesh: o3d.geometry.TriangleMesh, bounds: tuple[float, flo
 def _panel(path: Path, *, mesh: o3d.geometry.TriangleMesh, reference: Any, view: str, ground_z: float, zlim: tuple[float, float], bounds: tuple[float, float, float, float], rgba: np.ndarray, support: np.ndarray, mode: str, title: str) -> None:
     vertices = np.asarray(mesh.vertices); triangles = np.asarray(mesh.triangles)
     colors = _atlas_face_colors(mesh, bounds, rgba, support, mode)
-    stride = max(1, len(triangles) // 42000)
+    # These roof meshes are at most a few hundred thousand faces.  Thinning
+    # them creates false white holes in TSDF previews, so render every face.
+    stride = 1
     faces = vertices[triangles[::stride]]; face_colors = colors[::stride]
     figure = plt.figure(figsize=(6.4, 4.8), dpi=150)
     ax = figure.add_subplot(111, projection="3d", proj_type="ortho") if view.startswith("OBLIQUE") else figure.add_subplot(111)
