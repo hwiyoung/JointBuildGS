@@ -1,0 +1,149 @@
+{
+  "schema": "jointbuildgs.p2.c1_c2_oracle_c3_extract.v1",
+  "task_id": "P2-C1-C2-ORACLE-C3-EXTRACT-v1",
+  "handoff_id": "P2-W2C-C1-C2-ORACLE-C3-EXTRACT-v1",
+  "status": "DRAFT_REQUIRES_TWO_HOST_ACCEPTANCE",
+  "scope": {
+    "building_ids": [
+      "DEBY_LOD2_4907177",
+      "DEBY_LOD2_4906975",
+      "DEBY_LOD2_108580336"
+    ],
+    "c1_c2_mode": "GT_GROUNDSURFACE_XY_FOOTPRINT_ORACLE_DIAGNOSTIC_NOT_OFFICIAL_HONEST_ARM",
+    "c3_mode": "EXACT_CHECKPOINT_RESULT_EXTRACTION_ONLY_NO_TRAINING",
+    "c4_c5_access_allowed": false
+  },
+  "output_relative_root": "phase-payloads/p2/c1_c2_oracle_c3_extract_v1/P2-C1-C2-ORACLE-C3-EXTRACT-v1",
+  "frame": {
+    "crs": "EPSG:25832",
+    "world_shift_xyz": [690953.0, 5336071.0, 604.0],
+    "current_uas_vertical_shift_m": 0.0,
+    "common_mvs_vertical_shift_m": 0.0,
+    "lod2_rgb_projection_vertical_shift_m": 45.7
+  },
+  "inputs": {
+    "c1_current_uas_lidar": {
+      "artifact_relative_path": "phase-payloads/p0-audit/data/raw/tum2twin/TUM_Downtown_ULS_20241217_nadir.laz",
+      "bytes": 1277996022,
+      "sha256": "50783bfb205ea5532ac2a300d7e41b6b6426e45009d6c961d603e079cc5ae7b4",
+      "point_count": 177981904,
+      "source_classes": {"0": 177981904}
+    },
+    "c2_exact_common_mvs": {
+      "artifact_relative_path": "phase-payloads/p0-audit/data/work/mvs/openmvs/dim_dense.ply",
+      "bytes": 659138498,
+      "sha256": "b4bc250a6c97de50295f08023194a55c8a9744dc2b225db8618fd594b52ae28f",
+      "point_count": 43942554,
+      "coordinate_frame": "GS_LOCAL_ADD_WORLD_SHIFT_XYZ"
+    },
+    "gt_footprint_and_display_lod2": {
+      "artifact_relative_path": "phase-payloads/p0-audit/data/raw/lod2/690_5336.gml",
+      "bytes": 147865939,
+      "sha256": "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674",
+      "roofer_input_fields": ["GroundSurface exterior and interior XY"],
+      "prohibited_roofer_input_fields": ["GroundSurface Z", "RoofSurface XYZ", "roof type", "final roof model"]
+    },
+    "current_rgb": {
+      "data_root_relative_path": "phase-payloads/p0-audit/data/work/mvs/colmap_dense",
+      "image_directory_relative_path": "phase-payloads/p0-audit/data/work/images/Images",
+      "cameras_relative_path": "phase-payloads/p0-audit/data/work/colmap/sparse/0/cameras.txt",
+      "images_relative_path": "phase-payloads/p0-audit/data/work/colmap/sparse/0/images.txt",
+      "scene_reference_relative_path": "phase-payloads/p0-audit/data/work/opf/opf/scene_reference_frame.json",
+      "exact_view_manifest_git_path": "artifacts/manifests/gate_s0/common_base_r2b/exact_937_member_crosswalk_v1.json",
+      "exact_view_count": 937
+    }
+  },
+  "c1_c2_preparation": {
+    "source_read_passes_per_condition": 1,
+    "crop_buffer_m": 8.0,
+    "ground_ring_inner_buffer_m": 1.0,
+    "minimum_building_height_above_local_ground_m": 2.5,
+    "ground_height_cell_m": 1.0,
+    "ground_keep_above_local_ground_m": 0.75,
+    "deterministic_voxel_m": 0.2,
+    "minimum_roofer_class6_points": 100,
+    "building_class": 6,
+    "ground_class": 2,
+    "roofer_footprint_property": "stable_id",
+    "stable_id_used": true,
+    "gt_footprint_used": true,
+    "roofsurface_used": false
+  },
+  "roofer": {
+    "image": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+    "image_id": "sha256:9c980b97fba4c3fd30f5bb4afb8f2621be211d4e72e4333ea2053e8cd69b2dba",
+    "command_args": ["--id-attribute", "stable_id", "--jobs", "1", "--srs", "EPSG:25832", "--bld-class", "6", "--grnd-class", "2", "--lod22"],
+    "expected_invocations": 4,
+    "expected_pre_roofer_reference_alignment_failures": 2,
+    "quality_driven_retry_allowed": false,
+    "external_footprint_policy": "ORACLE_DIAGNOSTIC_ONLY_NEVER_RELABEL_AS_OFFICIAL_STAGE3"
+  },
+  "c3_training_provenance": {
+    "completed_independent_runs": 2,
+    "seed_ids": [0],
+    "conditions": [
+      {
+        "condition_id": "C3_1_SEM",
+        "checkpoint_relative_path": "phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-C3-2-GPU0-RECOVERY-v1/c3/c3_1_sem/seed0/ckpt/final.pt",
+        "bytes": 86802780,
+        "sha256": "b4f8ce6d97da6d7cef216b4edb3239ac005cc44f4d45cb459a25644ed79b62ea",
+        "iteration": 30000,
+        "completed_runtime_minutes": 129.9
+      },
+      {
+        "condition_id": "C3_2_SEM_DEPTH",
+        "checkpoint_relative_path": "phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-C3-2-GPU0-RECOVERY-v1/c3/c3_2_sem_depth/seed0/ckpt/final.pt",
+        "bytes": 103049692,
+        "sha256": "9bda046e2414a841e289f5d9ed0c5eaf18511445f9c52638b543cd4d52ecea12",
+        "iteration": 30000,
+        "completed_runtime_minutes": 86.6
+      }
+    ],
+    "successful_runtime_minutes_sequential": 216.5,
+    "successful_runtime_hms": "03:36:30",
+    "claimed_two_repeats_per_condition": false
+  },
+  "c3_extraction": {
+    "training_invocations": 0,
+    "native_full_gaussian_export": {
+      "all_primitives": true,
+      "fields": ["xyz", "quaternion_wxyz", "scale_xyz", "opacity", "sh_dc_rgb", "semantic_logits", "semantic_class"]
+    },
+    "display_proxy_filter": {
+      "role": "VISUALIZATION_ONLY_FULL_EXPORT_REMAINS_UNFILTERED",
+      "opacity_min": 0.1,
+      "maximum_in_plane_scale_m": 2.0,
+      "clip_to_aoi": true
+    },
+    "surface_extraction": {
+      "method": "RENDERED_MEDIAN_DEPTH_MULTI_VIEW_VOXEL_FUSION_THEN_POISSON",
+      "view_selection": "TOP_PROJECTED_FOOTPRINT_AREA_PER_BUILDING_FIXED_TIE_BY_IMAGE_NAME",
+      "maximum_views_per_building": 24,
+      "render_downscale": 0.25,
+      "alpha_min": 0.5,
+      "voxel_m": 0.15,
+      "minimum_distinct_view_observations": 2,
+      "poisson_depth": 8,
+      "diagnostic_crop_buffer_m": 5.0,
+      "gt_role": "DISPLAY_AND_BOUNDED_EXTRACTION_ADDRESS_ONLY_NO_TRAINING_OR_LOSS"
+    }
+  },
+  "presentation": {
+    "spatial_views": ["TOP", "OBLIQUE_1", "OBLIQUE_2", "PRINCIPAL_SECTION"],
+    "c1_c2_rows": ["CURRENT_RGB_WITH_LOD2_ROOFLINE", "C1_POINT_CLOUD_WITH_GT_FOOTPRINT", "C1_ROOFER", "C2_POINT_CLOUD_WITH_GT_FOOTPRINT", "C2_ROOFER", "LOD2_EPOCH_CONTEXT_ONLY"],
+    "roofline_policy": "ROOFSURFACE_XYZ_ONLY_ON_CURRENT_RGB_ROW_AND_SEPARATE_LOD2_CONTEXT_ROW",
+    "input_output_policy": "GT_GROUNDSURFACE_XY_FOOTPRINT_ONLY_NO_ROOFLINE_OVERLAY",
+    "minimum_title_font_pt": 12,
+    "reference_alignment_review_buildings": ["DEBY_LOD2_4907177"]
+  },
+  "execution_counters": {
+    "expected_roofer_invocations": 4,
+    "expected_pre_roofer_reference_alignment_failures": 2,
+    "expected_g2_invocations": 0,
+    "expected_gs_training_invocations": 0,
+    "expected_metric_recomputations": 0,
+    "expected_c4_c5_accesses": 0
+  },
+  "official_G3_G4_PASS_usable": null,
+  "scientific_verdict": null
+}
