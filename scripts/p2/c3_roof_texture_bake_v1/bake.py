@@ -300,11 +300,11 @@ def _panel(path: Path, *, mesh: o3d.geometry.TriangleMesh, reference: Any, view:
     figure.savefig(path, metadata={"Software":"JointBuildGS roof texture bake renderer"}); plt.close(figure)
 
 
-def _sheet(path: Path, stable_id: str, rows: Sequence[tuple[str, Sequence[Path]]]) -> None:
+def _sheet(path: Path, stable_id: str, rows: Sequence[tuple[str, Sequence[Path]]], subtitle: str = "roof-only current RGB texture | gray=unobserved | scientific_verdict=null") -> None:
     cell_w, cell_h, label_w, header_h = 960, 720, 330, 120
     canvas = np.full((header_h + len(rows)*cell_h, label_w + 8*cell_w, 3), 255, np.uint8)
     cv2.putText(canvas, stable_id, (22,43), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (20,20,20), 2, cv2.LINE_AA)
-    cv2.putText(canvas, "roof-only current RGB texture | gray=unobserved | scientific_verdict=null", (22,87), cv2.FONT_HERSHEY_SIMPLEX, 0.55, (55,55,55), 1, cv2.LINE_AA)
+    cv2.putText(canvas, subtitle, (22,87), cv2.FONT_HERSHEY_SIMPLEX, 0.55, (55,55,55), 1, cv2.LINE_AA)
     for block,label in enumerate(("C3-1 SEMANTIC","C3-2 SEMANTIC + DEPTH")):
         cv2.putText(canvas,label,(label_w+block*4*cell_w+20,32),cv2.FONT_HERSHEY_SIMPLEX,0.67,(80,40,30),2,cv2.LINE_AA)
         for column,view in enumerate(VIEWS): cv2.putText(canvas,view,(label_w+(block*4+column)*cell_w+18,88),cv2.FONT_HERSHEY_SIMPLEX,0.65,(20,20,20),2,cv2.LINE_AA)

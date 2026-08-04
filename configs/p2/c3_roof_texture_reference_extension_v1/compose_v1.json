@@ -1,0 +1,35 @@
+{
+  "schema": "jointbuildgs.p2.c3_roof_texture_reference_extension.v1",
+  "task_id": "P2-C3-ROOF-TEXTURE-C1-LOD2-REFERENCE-EXTENSION-v4",
+  "status": "APPROVED_FOR_LOCAL_EXECUTION",
+  "scope": {
+    "building_ids": ["DEBY_LOD2_4907177", "DEBY_LOD2_4906975", "DEBY_LOD2_108580336"],
+    "condition_ids": ["C3_1_SEM", "C3_2_SEM_DEPTH"],
+    "mesh_methods": ["POISSON", "TSDF"],
+    "views": ["TOP", "OBLIQUE_1", "OBLIQUE_2", "PRINCIPAL_SECTION"]
+  },
+  "source": {
+    "texture_context_hybrid_relative_root": "phase-payloads/p2/c3_roof_texture_bake_v1/P2-C3-ROOF-TEXTURE-CONTEXT-HYBRID-v3",
+    "c1_c2_matrix_relative_root": "phase-payloads/p2/c1_c2_comparison_matrix_sample_v6/P2-C1-C2-COMPARISON-MATRIX-SAMPLE-v6",
+    "lod2_context_relative_root": "phase-payloads/p2/c3_tsdf_roof_diagnostic_v1/P2-C3-TSDF-ROOF-DIAGNOSTIC-RENDER-RECOVERY-v1"
+  },
+  "presentation": {
+    "row_count": 7,
+    "column_count": 8,
+    "repeat_shared_reference_rows_across_conditions": true,
+    "c1_4907177_status": "SEALED_PRE_LOD2_GROUNDSURFACE_Z_RERUN_RESULT",
+    "lod2_role": "2022_EVALUATION_CONTEXT_NOT_CURRENT_GEOMETRY_INPUT"
+  },
+  "output_relative_root": "phase-payloads/p2/c3_roof_texture_reference_extension_v1/P2-C3-ROOF-TEXTURE-C1-LOD2-REFERENCE-EXTENSION-v4",
+  "execution_counters": {
+    "expected_gs_training_invocations": 0,
+    "expected_texture_bakes": 0,
+    "expected_poisson_reconstructions": 0,
+    "expected_tsdf_reconstructions": 0,
+    "expected_roofer_invocations": 0,
+    "expected_metric_recomputations": 0,
+    "expected_c4_c5_accesses": 0
+  },
+  "official_G3_G4_PASS_usable": null,
+  "scientific_verdict": null
+}
