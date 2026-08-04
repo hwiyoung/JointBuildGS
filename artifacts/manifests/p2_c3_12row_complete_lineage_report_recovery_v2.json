@@ -1,0 +1,63 @@
+{
+  "schema": "jointbuildgs.local_artifact_resolver.v1",
+  "task_id": "P2-C3-COMPLETE-LINEAGE-REPORT-RECOVERY-v2",
+  "status": "300-CLOSED_LOCAL_COMPLETE_LINEAGE_DIAGNOSTIC",
+  "source_commit": "f9680e41607bb6135d3f602e516f68093eec17cf",
+  "artifact_uri": "artifact://JointBuildGS/phase-payloads/p2/c3_roofer_input_display_v1/P2-C3-COMPLETE-LINEAGE-REPORT-RECOVERY-v2",
+  "local_absolute_path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/p2/c3_roofer_input_display_v1/P2-C3-COMPLETE-LINEAGE-REPORT-RECOVERY-v2",
+  "source_artifact_uri": "artifact://JointBuildGS/phase-payloads/p2/c3_roofer_input_display_v1/P2-C3-12ROW-COMPARISON-DISPLAY-RECOVERY-v4",
+  "source_local_absolute_path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/p2/c3_roofer_input_display_v1/P2-C3-12ROW-COMPARISON-DISPLAY-RECOVERY-v4",
+  "manifest": {
+    "relative_path": "control/artifact_manifest_v1.json",
+    "bytes": 1637,
+    "sha256": "a2215c087d2382f786035fab1421b74c4f1909811bdbd7551b065db5ab7e040d"
+  },
+  "technical_return": {
+    "relative_path": "control/technical_return_v1.json",
+    "bytes": 1690,
+    "sha256": "7ee3fdffad991d15e190ecdd609beffbb6e23761cc007c6d6dbca014ea97fddf"
+  },
+  "verified_receipt": {
+    "relative_path": "control/200-verified.local_v1.json",
+    "bytes": 603,
+    "sha256": "cd23e74892d0e97b4cd185cb13001bd4f3c69ee4416c9d7d3353b0d4eb543488"
+  },
+  "closed_receipt": {
+    "relative_path": "control/300-closed.local_v1.json",
+    "bytes": 645,
+    "sha256": "c6a71711adee428470cd24d44c0c37a0af5e8f4a90d5349baba9a155291cbd2a"
+  },
+  "technical_report_markdown": {
+    "relative_path": "reports/technical_report_ko_v1.md",
+    "bytes": 3793,
+    "sha256": "5ae9748dea209aeaa94fff3bc7a460f9987ea24e94ae84988df8f2eaffbde323"
+  },
+  "case_html": {
+    "relative_path": "reports/case_index.html",
+    "bytes": 1296,
+    "sha256": "0dbce23ef0b5e5e20c2be26655ca3a5a8f646d16ab9dd80e05e9b0830e04f840",
+    "link_target_count": 3,
+    "link_target_failure_count": 0
+  },
+  "case_sheet_count": 3,
+  "rows_per_sheet": 12,
+  "columns_per_sheet": 8,
+  "visible_cell_count": 288,
+  "roofer_input_support_row_count": 6,
+  "mesh_quality_row_count": 6,
+  "roofer_plane_row_count": 6,
+  "original_resolution_visual_review_count": 3,
+  "execution_counters": {
+    "gs_training_invocations": 0,
+    "checkpoint_render_extractions": 0,
+    "mesh_invocations": 0,
+    "roofer_invocations": 0,
+    "g2_invocations": 0,
+    "metric_recomputations": 0,
+    "c4_c5_accesses": 0
+  },
+  "execution_authority": "DIRECT_HUMAN_INSTRUCTION_SINGLE_EXPERIMENT_HOST",
+  "two_host_receipts_created": false,
+  "official_G3_G4_PASS_usable": null,
+  "scientific_verdict": null
+}
