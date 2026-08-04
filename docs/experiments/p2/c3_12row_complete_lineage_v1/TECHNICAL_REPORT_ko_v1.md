@@ -66,3 +66,8 @@
 C4/C5의 동일 12행 확장, mesh RGB/normal/world-Z/support 표시와 GT-footprint textured
 hybrid의 honest/oracle 분리 원칙은
 [`C4_C5_EXTENSION_AND_TEXTURED_HYBRID_PLAN_ko_v1.md`](C4_C5_EXTENSION_AND_TEXTURED_HYBRID_PLAN_ko_v1.md)에 기록한다. 이 문서는 제작 계획이며 C4/C5 실행 권한은 아니다.
+
+## Poisson/TSDF 속성·hybrid 후속 결과
+
+Poisson/TSDF의 RGB·semantic·virtual-depth·normal 속성판과 GT-footprint oracle hybrid
+결과는 [`../c3_mesh_attribute_hybrid_v1/TECHNICAL_REPORT_ko_v1.md`](../c3_mesh_attribute_hybrid_v1/TECHNICAL_REPORT_ko_v1.md)에 기록한다. 기존 12행 v6와 원본 mesh는 변경하지 않았다.

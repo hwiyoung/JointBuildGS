@@ -1,0 +1,65 @@
+{
+  "schema": "jointbuildgs.local_artifact_resolver.v1",
+  "task_id": "P2-C3-MESH-ATTRIBUTE-HYBRID-v1",
+  "status": "300-CLOSED_LOCAL_MESH_ATTRIBUTE_HYBRID_DIAGNOSTIC",
+  "source_commit": "265781f499e10cc1db25543040f39835efa59ac6",
+  "artifact_uri": "artifact://JointBuildGS/phase-payloads/p2/c3_mesh_attribute_hybrid_v1/P2-C3-MESH-ATTRIBUTE-HYBRID-v1",
+  "local_absolute_path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/p2/c3_mesh_attribute_hybrid_v1/P2-C3-MESH-ATTRIBUTE-HYBRID-v1",
+  "source_mesh_artifact_uri": "artifact://JointBuildGS/phase-payloads/p2/c3_tsdf_roof_diagnostic_v1/P2-C3-TSDF-ROOF-DIAGNOSTIC-RECOVERY-v1",
+  "manifest": {
+    "relative_path": "control/artifact_manifest_v1.json",
+    "bytes": 78722,
+    "sha256": "5a62c39e54dbd42a0e2c3d957ccc305842897616d30b2d3a63c16a7d6a72e4ab"
+  },
+  "technical_return": {
+    "relative_path": "control/technical_return_v1.json",
+    "bytes": 654,
+    "sha256": "163f240ea446e1eb1b38515d6933fd21b6a669fd77ca1c2b3a8d3ec657439704"
+  },
+  "verified_receipt": {
+    "relative_path": "control/200-verified.local_v1.json",
+    "bytes": 476,
+    "sha256": "b14784f567c9621cbafe49c731b4155021a65c0f846b4aea1717ae5c4b4343f9"
+  },
+  "closed_receipt": {
+    "relative_path": "control/300-closed.local_v1.json",
+    "bytes": 619,
+    "sha256": "10ba91cf17e1b33344dd4db46425f608eeeeee946fc291892d5698db334e1cc6"
+  },
+  "technical_report_markdown": {
+    "relative_path": "reports/technical_report_ko_v1.md",
+    "bytes": 892,
+    "sha256": "65c1adc9bfae2707388f4469ec6b9f705b263fe4ece99d1ff222f824b634158c"
+  },
+  "case_html": {
+    "relative_path": "reports/case_index.html",
+    "bytes": 865,
+    "sha256": "f588aef9a3df9a7d75b2117bc3ab4ab51034348ec6fec0b00fa888899b1ce894"
+  },
+  "qualitative_index": {
+    "relative_path": "qualitative/index_v1.json",
+    "bytes": 74928,
+    "sha256": "b036890576f68b2244d018ff2834899d5048725afedc902b33a89025394c804c"
+  },
+  "case_count": 3,
+  "rows_per_sheet": 16,
+  "columns_per_sheet": 8,
+  "panel_count": 384,
+  "visible_cell_count": 384,
+  "hybrid_mesh_count": 12,
+  "manifest_record_count": 414,
+  "original_resolution_visual_review_count": 3,
+  "execution_counters": {
+    "gs_training_invocations": 0,
+    "checkpoint_render_extractions": 0,
+    "poisson_reconstructions": 0,
+    "tsdf_reconstructions": 0,
+    "hybrid_wall_assemblies": 12,
+    "roofer_invocations": 0,
+    "g2_invocations": 0,
+    "metric_recomputations": 0,
+    "c4_c5_accesses": 0
+  },
+  "official_G3_G4_PASS_usable": null,
+  "scientific_verdict": null
+}
