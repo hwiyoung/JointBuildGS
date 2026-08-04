@@ -202,7 +202,7 @@ def finalize(output_root: Path, *, source_commit: str, run_id: str) -> dict[str,
 - C2 입력: exact common-base dense MVS PLY 원점군 crop + 동일 footprint
 - C3: 한 건물당 한 장에서 C3-1/C3-2의 oriented Gaussian ellipse, rendered-depth fused point, roof-semantic Poisson mesh, GT-footprint oracle Roofer를 직접 비교하고 2022 LoD2를 마지막 맥락 행으로 표시
 - 이번 작업의 C3 학습: 0회
-- Roofer: C1/C2 exact 4개를 hash 검증 후 계승하고 C3 진단용 4개를 새로 실행; `4907177` 두 조건은 roof evidence 부족으로 실행 전 중단
+- Roofer: C1/C2 exact 4개와 recovery-v11에서 완료한 C3 진단용 4개를 hash 검증 후 계승; `4907177` 두 조건은 roof evidence 부족으로 실행 전 중단
 - Roofer lineage total/G2/GS training/metric/C4-C5: 8/0/0/0/0
 
 ## C3 과거 학습 횟수와 시간
@@ -267,7 +267,7 @@ class 1(roof)이고 GT GroundSurface XY의 1 m buffer 안에 있는 점만 골�
         "c3_roof_semantic_mesh_recovery": mesh_recovery,
         "c3_oracle_roofer_summary": c3_roofer_summaries,
         "execution_counters": {
-            "roofer_invocations_this_recovery": 4,
+            "roofer_invocations_this_recovery": 0,
             "roofer_invocations_total_lineage": 8,
             "pre_roofer_reference_alignment_failures": 2,
             "g2_invocations": 0,

@@ -493,12 +493,22 @@ def inherit_completed_c3(output_root: Path, source_root: Path) -> dict[str, Any]
     if len(verified) != 16:
         raise RuntimeError(f"C3 recovery verified record count drift: {len(verified)}")
     shutil.copytree(source_root / "c3", destination)
+    mesh_control_source = source_root / "control/c3_roof_semantic_mesh_recovery_v1.json"
+    mesh_control = json.loads(mesh_control_source.read_text(encoding="utf-8"))
+    if mesh_control.get("result_count") != 6 or mesh_control.get("completed_mesh_count") != 5 or mesh_control.get("insufficient_evidence_count") != 1:
+        raise RuntimeError("C3 recovery roof-semantic mesh control drifted")
+    for row in mesh_control.get("results") or ():
+        for key in ("roof_points", "roof_mesh"):
+            if row.get(key) is not None:
+                verify_record(row[key])
+    shutil.copy2(mesh_control_source, output_root / "control/c3_roof_semantic_mesh_recovery_v1.json")
     body = {
         "schema": "jointbuildgs.c3_extraction_recovery_inheritance.v1",
         "status": "INHERITED_TWO_EXACT_COMPLETED_EXTRACTIONS",
         "source_root": source_root.as_posix(),
         "source_relative_root": config["c3_recovery_source_relative_root"],
         "verified_record_count": len(verified),
+        "roof_semantic_mesh_control_inherited": True,
         "condition_summaries": condition_summaries,
         "c3_extraction_invocations_this_recovery": 0,
         "c3_completed_extractions_total_lineage": 2,

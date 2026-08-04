@@ -46,6 +46,13 @@ The v10 partial is preserved. Roofer, C3 extraction, GS training, G2 and metric 
 counts for both stopped attempts are zero. Recovery v11 removes the redundant remesh step,
 inherits the completed v9 mesh receipts unchanged, and uses a fresh namespace.
 
+Recovery v11 then completed all four new C3 Roofer operations and the C1/C2 render,
+but the C3 renderer stopped because the C3 inheritance copied the mesh files without
+copying `control/c3_roof_semantic_mesh_recovery_v1.json`. The v11 partial is preserved.
+Recovery v12 hash-verifies and inherits those four completed Roofer outputs without
+another invocation, and the C3 inheritance now also verifies and copies the six-row
+roof-semantic mesh control receipt from finalized recovery v9.
+
 ## CLOSED — C3 mesh input included non-roof semantic classes
 
 Recovery v7 Poisson reconstruction consumed every inherited fused point after only

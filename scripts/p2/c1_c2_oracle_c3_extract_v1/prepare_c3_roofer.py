@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
+import shutil
 from typing import Any
 
 import numpy as np
@@ -18,6 +19,7 @@ from scripts.p2.c1_c2_oracle_c3_extract_v1.contract import (
     footprint_geojson,
     load_building_references,
     load_config,
+    sha256_file,
     validate_config,
     write_las,
     write_new,
@@ -170,6 +172,59 @@ def record_terminal(output_root: Path, operation_unit_id: str, exit_code: int, r
     return body
 
 
+def inherit_completed(output_root: Path, source_root: Path) -> dict[str, Any]:
+    """Hash-verify and inherit four completed C3 oracle Roofer operations."""
+    config = load_config()
+    validate_config(config, require_activation=True)
+    rows_path = source_root / "freeze/c3_roofer_execution_units_v1.jsonl"
+    rows = [json.loads(line) for line in rows_path.read_text(encoding="utf-8").splitlines() if line.strip()]
+    eligible = [row for row in rows if row.get("roofer_eligible")]
+    failures = [row for row in rows if not row.get("roofer_eligible")]
+    if len(rows) != 6 or len(eligible) != 4 or len(failures) != 2:
+        raise RuntimeError("C3 Roofer recovery membership drifted")
+    verified = []
+    for row in rows:
+        for record in (row["input"], row["footprint"], row["rendered_depth_fused_source"], row["shared_terrain_source"]):
+            path = source_root / record["path"]
+            size, digest = sha256_file(path)
+            if size != int(record["bytes"]) or digest != record["sha256"]:
+                raise RuntimeError(f"C3 Roofer recovery digest drift: {path}")
+            verified.append(record)
+        terminal_path = source_root / row["work_directory"] / "roofer_terminal_v1.json"
+        if row["roofer_eligible"]:
+            terminal = json.loads(terminal_path.read_text(encoding="utf-8"))
+            if terminal.get("status") != "COMPLETED" or len(terminal.get("outputs") or ()) != 1:
+                raise RuntimeError(f"C3 Roofer recovery terminal incomplete: {row['operation_unit_id']}")
+            record = terminal["outputs"][0]
+            path = source_root / record["path"]
+            size, digest = sha256_file(path)
+            if size != int(record["bytes"]) or digest != record["sha256"]:
+                raise RuntimeError(f"C3 Roofer output digest drift: {path}")
+            verified.append(record)
+        elif terminal_path.exists():
+            raise RuntimeError(f"ineligible C3 Roofer row has terminal: {row['operation_unit_id']}")
+    for condition_id in ("C3_1_SEM", "C3_2_SEM_DEPTH"):
+        source = source_root / "operations" / f"{condition_id}_GT_FOOTPRINT_ORACLE"
+        destination = output_root / "operations" / f"{condition_id}_GT_FOOTPRINT_ORACLE"
+        shutil.copytree(source, destination)
+    for name in ("c3_roofer_execution_units_v1.jsonl", "c3_roofer_execution_units_v1.tsv"):
+        shutil.copy2(source_root / "freeze" / name, output_root / "freeze" / name)
+    shutil.copy2(source_root / "control/c3_roofer_prepared_v1.json", output_root / "control/c3_roofer_prepared_v1.json")
+    body = {
+        "schema": "jointbuildgs.c3_oracle_roofer_recovery_inheritance.v1",
+        "status": "INHERITED_FOUR_EXACT_COMPLETED_C3_ROOFER_OPERATIONS",
+        "source_relative_root": config["c3_roofer_recovery_source_relative_root"],
+        "verified_record_count": len(verified),
+        "completed_roofer_operation_count": 4,
+        "pre_roofer_failure_count": 2,
+        "roofer_invocations_this_recovery": 0,
+        "roofer_invocations_total_lineage": 8,
+        "scientific_verdict": None,
+    }
+    write_new(output_root / "control/c3_roofer_recovery_inheritance_v1.json", canonical_json_bytes(body))
+    return body
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     sub = parser.add_subparsers(dest="mode", required=True)
@@ -181,11 +236,16 @@ def main() -> None:
     terminal.add_argument("--operation-unit-id", required=True)
     terminal.add_argument("--exit-code", type=int, required=True)
     terminal.add_argument("--runtime-seconds", type=int, required=True)
+    inherit = sub.add_parser("inherit-completed")
+    inherit.add_argument("--output-root", type=Path, required=True)
+    inherit.add_argument("--source-root", type=Path, required=True)
     args = parser.parse_args()
     if args.mode == "prepare":
         result = prepare(args.output_root, args.lod2)
-    else:
+    elif args.mode == "record-terminal":
         result = record_terminal(args.output_root, args.operation_unit_id, args.exit_code, args.runtime_seconds)
+    else:
+        result = inherit_completed(args.output_root, args.source_root)
     print(json.dumps(result, ensure_ascii=False, sort_keys=True))
 
 
