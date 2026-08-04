@@ -88,6 +88,8 @@ def finalize(output_root: Path, *, source_commit: str, run_id: str) -> dict[str,
         raise RuntimeError("C3 qualitative count drifted")
     if c3_index.get("roofline_role") != "CURRENT_RGB_PROJECTION_CONTEXT_ONLY":
         raise RuntimeError("C3 roofline context row is missing")
+    if c3_index.get("footprint_role") != "GT_GROUNDSURFACE_XY_DISPLAY_ONLY_ON_ALL_3D_ROWS":
+        raise RuntimeError("C3 footprint display is missing")
     if c3_index.get("gaussian_representation") != "ORIENTED_2D_ELLIPSES_FROM_CHECKPOINT_QUATERNION_SCALE_OPACITY_NOT_CENTER_POINTS":
         raise RuntimeError("C3 Gaussian representation drifted")
     c3_exports = []

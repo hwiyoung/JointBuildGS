@@ -51,7 +51,7 @@ class ContractTests(unittest.TestCase):
             (Path(__file__).resolve().parents[3] / "configs/p2/c1_c2_oracle_c3_extract_v1/run_v1.json").read_text(encoding="utf-8")
         )
         authority = config["execution_authority"]
-        self.assertEqual(config["task_id"], "P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v6")
+        self.assertEqual(config["task_id"], "P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v7")
         self.assertIsNone(config["handoff_id"])
         self.assertEqual(authority["execution_host_role"], "experiment_host")
         self.assertFalse(authority["write_ownership_transfer_performed"])
@@ -80,7 +80,17 @@ class ContractTests(unittest.TestCase):
             for view in ("TOP", "PRINCIPAL_SECTION"):
                 output = root / f"gaussian_{view}.png"
                 _c3_gaussian_panel(
-                    output, xyz, quaternions, scales, opacity, colors, BBox(0.0, 0.0, 4.0, 4.0), view, view
+                    output,
+                    xyz,
+                    quaternions,
+                    scales,
+                    opacity,
+                    colors,
+                    BBox(0.0, 0.0, 4.0, 4.0),
+                    [np.asarray([[0.0, 0.0], [4.0, 0.0], [4.0, 4.0], [0.0, 4.0], [0.0, 0.0]])],
+                    0.0,
+                    view,
+                    view,
                 )
                 self.assertGreater(output.stat().st_size, 0)
 
@@ -94,7 +104,15 @@ class ContractTests(unittest.TestCase):
             bbox = BBox(0.0, 0.0, 4.0, 4.0)
             for view in ("TOP", "PRINCIPAL_SECTION"):
                 output = root / f"{view}.png"
-                _c3_mesh_panel(output, mesh_path, bbox, view, view)
+                _c3_mesh_panel(
+                    output,
+                    mesh_path,
+                    bbox,
+                    [np.asarray([[0.0, 0.0], [4.0, 0.0], [4.0, 4.0], [0.0, 4.0], [0.0, 0.0]])],
+                    0.0,
+                    view,
+                    view,
+                )
                 self.assertGreater(output.stat().st_size, 0)
 
     def test_empty_class6_is_a_valid_pre_roofer_statistic(self) -> None:

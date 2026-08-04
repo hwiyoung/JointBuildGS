@@ -1,9 +1,9 @@
-# P2 C1/C2 oracle 및 C3 Gaussian 결과판 복구 recovery v6 — LOCAL EXECUTION AUTHORITY
+# P2 C1/C2 oracle 및 C3 Gaussian 결과판 복구 recovery v7 — LOCAL EXECUTION AUTHORITY
 
-- task_id: `P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v6`
+- task_id: `P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v7`
 - handoff_id: `null`
-- execution_record_id: `P2-LOCAL-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v6`
-- recovery_base_commit: `86916a4e74785c340323ca17a98974fe82b423c1`
+- execution_record_id: `P2-LOCAL-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v7`
+- recovery_base_commit: `1047e9ef` (v6 code-only; no v6 artifact execution)
 - status: `APPROVED_FOR_LOCAL_EXPERIMENT_HOST_EXECUTION`
 - execution_authority: `DIRECT_HUMAN_INSTRUCTION_SINGLE_EXPERIMENT_HOST`
 - write_ownership_transfer_performed: `false`
@@ -66,20 +66,22 @@ Poisson surface mesh만 추출한다. 이전 4-corner/2-triangle-per-Gaussian �
 ## 실행 한계와 출력
 
 - Roofer/G2/GS training/metric/C4-C5 lineage total: `4/0/0/0/0`
-- Recovery-v6 Roofer invocation: `0` (Recovery-v5 exact completed outputs hash-verified inheritance)
-- Recovery-v6 C3 extraction invocation: `0` (Recovery-v5의 두 completed extraction hash-verified inheritance)
+- Recovery-v7 Roofer invocation: `0` (Recovery-v5 exact completed outputs hash-verified inheritance)
+- Recovery-v7 C3 extraction invocation: `0` (Recovery-v5의 두 completed extraction hash-verified inheritance)
 - pre-Roofer reference alignment failures: `2`
 - output: fresh add-once namespace
-  `artifact://JointBuildGS/phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v6/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v6`
+  `artifact://JointBuildGS/phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v7/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v7`
 - C1/C2: 3개 6행×4열 case sheet, 72 panels
 - C3: 2 condition × 3 building case sheet, 120 panels; 각 sheet에 current RGB+roofline 행 포함
 - C3 Gaussian 행은 center scatter가 아니라 checkpoint quaternion/scale/opacity 기반 oriented 2D ellipse 표시
+- C1/C2/C3 3D 행은 동일 GT GroundSurface XY footprint를 주황 점선으로 표시
+- RGB roofline은 검정 12 px 외곽선 + 노랑 6 px 선으로 표시
 - report/operation CSV/HTML/manifest
 - official G3/G4/PASS and scientific_verdict: `null`
 
 ## 실행 권한과 기록
 
-1. recovery-v6의 base commit은 `86916a4e74785c340323ca17a98974fe82b423c1`이며 실제 실행 commit은 final manifest에 고정한다.
+1. recovery-v7의 실제 실행 commit은 final manifest에 고정한다.
 2. 현재 task의 직접 사용자 지시를 local Experiment Host 실행 권한으로 기록한다.
 3. 실행 launcher는 clean `HEAD == origin/main`, exact project image, 입력/checkpoint,
    add-once namespace 부재와 config의 local authority tuple을 확인한다.

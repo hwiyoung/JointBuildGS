@@ -10,6 +10,11 @@ The exact full Gaussian PLY remains unchanged, and this presentation recovery in
 neither training nor extraction. Original-resolution v5 review then found that the
 long Gaussian titles overlapped adjacent columns; v6 shortens only those labels while
 preserving the same primitive display contract and zero-compute counters.
+Before v6 execution, the user also requested thicker RGB rooflines and the same
+footprint context already present in C1/C2 on every C3 3D row. The combined v7 render
+uses a 12 px dark casing with a 6 px yellow roofline and orange dashed GT
+`GroundSurface` XY in Gaussian, fused-point and Poisson-mesh views. No v6 artifact
+namespace was created.
 
 ## OPEN — C3 extracted geometry quality observations
 

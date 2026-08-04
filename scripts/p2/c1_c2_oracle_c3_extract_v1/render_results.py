@@ -214,8 +214,8 @@ def _raw_roofline_panel(
     for uv, inside in projections:
         if np.all(inside):
             ring = np.rint(uv - offset).astype(np.int32).reshape((-1, 1, 2))
-            cv2.polylines(crop, [ring], True, (20, 20, 20), 7, cv2.LINE_AA)
-            cv2.polylines(crop, [ring], True, (30, 205, 255), 3, cv2.LINE_AA)
+            cv2.polylines(crop, [ring], True, (20, 20, 20), 12, cv2.LINE_AA)
+            cv2.polylines(crop, [ring], True, (30, 205, 255), 6, cv2.LINE_AA)
     cv2.rectangle(crop, (0, 0), (crop.shape[1], 52), (20, 20, 20), -1)
     cv2.putText(crop, title, (16, 35), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (245, 245, 245), 2, cv2.LINE_AA)
     ok, encoded = cv2.imencode(".png", crop)
@@ -358,7 +358,16 @@ def _read_binary_vertex_ply(path: Path) -> np.ndarray:
     return np.memmap(path, mode="r", dtype=np.dtype(fields), offset=offset, shape=(count,))
 
 
-def _c3_point_panel(path: Path, xyz: np.ndarray, colors: np.ndarray, bbox: BBox, view: str, title: str) -> None:
+def _c3_point_panel(
+    path: Path,
+    xyz: np.ndarray,
+    colors: np.ndarray,
+    bbox: BBox,
+    footprint_rings: Sequence[np.ndarray],
+    footprint_z: float,
+    view: str,
+    title: str,
+) -> None:
     classes = np.zeros(len(xyz), dtype=np.uint8)
     points = PointSet(xyz, classes)
     figure = plt.figure(figsize=(6.4, 4.8), dpi=150)
@@ -384,6 +393,7 @@ def _c3_point_panel(path: Path, xyz: np.ndarray, colors: np.ndarray, bbox: BBox,
         ax.scatter(q[keep, 0], q[keep, 2], c=c[keep], s=3, linewidths=0)
         ax.set_xlim(bbox.min_x - 5, bbox.max_x + 5)
         ax.set_ylim(z0, z1)
+    _draw_footprint(ax, footprint_rings, view, footprint_z)
     ax.set_title(title, fontsize=12, fontweight="bold")
     figure.tight_layout()
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -408,6 +418,8 @@ def _c3_gaussian_panel(
     opacity: np.ndarray,
     colors: np.ndarray,
     bbox: BBox,
+    footprint_rings: Sequence[np.ndarray],
+    footprint_z: float,
     view: str,
     title: str,
 ) -> None:
@@ -460,6 +472,7 @@ def _c3_gaussian_panel(
             ax.add_collection(PolyCollection(polygons, facecolors=facecolors[crosses], edgecolors="none"))
             ax.set_xlim(bbox.min_x - 5, bbox.max_x + 5)
             ax.set_ylim(z0, z1)
+    _draw_footprint(ax, footprint_rings, view, footprint_z)
     ax.set_title(title, fontsize=12, fontweight="bold")
     figure.tight_layout()
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -467,7 +480,15 @@ def _c3_gaussian_panel(
     plt.close(figure)
 
 
-def _c3_mesh_panel(path: Path, mesh_path: Path, bbox: BBox, view: str, title: str) -> None:
+def _c3_mesh_panel(
+    path: Path,
+    mesh_path: Path,
+    bbox: BBox,
+    footprint_rings: Sequence[np.ndarray],
+    footprint_z: float,
+    view: str,
+    title: str,
+) -> None:
     mesh = o3d.io.read_triangle_mesh(str(mesh_path))
     vertices = np.asarray(mesh.vertices)
     triangles = np.asarray(mesh.triangles)
@@ -499,6 +520,7 @@ def _c3_mesh_panel(path: Path, mesh_path: Path, bbox: BBox, view: str, title: st
             keep = np.abs(q[:, 1] - center_y) <= band
             ax.scatter(q[keep, 0], q[keep, 2], c=c[keep], s=3, linewidths=0)
             ax.set_xlim(bbox.min_x - 5, bbox.max_x + 5)
+    _draw_footprint(ax, footprint_rings, view, footprint_z)
     ax.set_title(title, fontsize=12, fontweight="bold")
     figure.tight_layout()
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -526,6 +548,7 @@ def render_c3(output_root: Path, artifact_root: Path, lod2_path: Path) -> dict[s
         proxy_sem = SEMANTIC_COLORS[np.asarray(proxy["semantic_class"], dtype=np.uint8)].astype(float) / 255
         for stable_id, reference in references.items():
             bbox = _bbox(reference)
+            footprint_rings = _rings_xy(reference)
             keep = (
                 (proxy_xyz[:, 0] >= bbox.min_x - 5) & (proxy_xyz[:, 0] <= bbox.max_x + 5)
                 & (proxy_xyz[:, 1] >= bbox.min_y - 5) & (proxy_xyz[:, 1] <= bbox.max_y + 5)
@@ -544,6 +567,7 @@ def render_c3(output_root: Path, artifact_root: Path, lod2_path: Path) -> dict[s
             c1_points, _c1_surfaces, _footprint_rings, _c1_terminal = _load_method_geometry(
                 output_root, CONDITIONS[0], stable_id
             )
+            footprint_z = float(np.quantile(c1_points.xyz[:, 2], 0.02))
             roof_reference = roof_ring_vertices(reference.roof_rings_xyz)
             roles = select_current_uas_camera_roles(
                 roof_reference,
@@ -586,6 +610,8 @@ def render_c3(output_root: Path, artifact_root: Path, lod2_path: Path) -> dict[s
                         gaussian_opacity,
                         colors,
                         bbox,
+                        footprint_rings,
+                        footprint_z,
                         view,
                         f"{panel_title} | {view}",
                     )
@@ -594,13 +620,22 @@ def render_c3(output_root: Path, artifact_root: Path, lod2_path: Path) -> dict[s
             fused_paths = []
             for view in VIEWS:
                 path = case_root / "panels" / f"4_{view.lower()}.png"
-                _c3_point_panel(path, fused_xyz, fused_sem, bbox, view, f"Rendered-depth fused 3D surface points | {view}")
+                _c3_point_panel(
+                    path,
+                    fused_xyz,
+                    fused_sem,
+                    bbox,
+                    footprint_rings,
+                    footprint_z,
+                    view,
+                    f"Rendered-depth fused 3D surface points | {view}",
+                )
                 fused_paths.append(path)
             rows.append(("Rendered-depth fused\n3D surface points", fused_paths))
             mesh_paths = []
             for view in VIEWS:
                 path = case_root / "panels" / f"5_{view.lower()}.png"
-                _c3_mesh_panel(path, mesh_path, bbox, view, "Poisson surface mesh | " + view)
+                _c3_mesh_panel(path, mesh_path, bbox, footprint_rings, footprint_z, view, "Poisson surface mesh | " + view)
                 mesh_paths.append(path)
             rows.append(("Poisson mesh\n(not Gaussian quad mesh)", mesh_paths))
             sheet = case_root / "case_sheet_c3_3d_v1.png"
@@ -617,6 +652,7 @@ def render_c3(output_root: Path, artifact_root: Path, lod2_path: Path) -> dict[s
         "panel_count": sum(row["panel_count"] for row in records),
         "records": records,
         "roofline_role": "CURRENT_RGB_PROJECTION_CONTEXT_ONLY",
+        "footprint_role": "GT_GROUNDSURFACE_XY_DISPLAY_ONLY_ON_ALL_3D_ROWS",
         "gaussian_representation": "ORIENTED_2D_ELLIPSES_FROM_CHECKPOINT_QUATERNION_SCALE_OPACITY_NOT_CENTER_POINTS",
         "training_invocations": 0,
         "scientific_verdict": None,
