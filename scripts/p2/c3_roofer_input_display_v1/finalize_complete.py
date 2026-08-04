@@ -73,7 +73,7 @@ C3-1 class-6 Z 범위는 {float(a1['z_minimum_m']):.3f}–{float(a1['z_maximum_m
 
 ## 실행 및 실패 가시성
 
-완전판 v2 시도는 C1 표시 기준 LAS의 operation 이름을 잘못 적어 출력 생성 전에 중단됐고 해당 namespace는 보존했다. v3는 경로를 복구해 22행 source 판을 만들었다. 최종 v4는 계산 없이 같은 봉인 panel을 C3-1/C3-2 좌우 비교가 가능한 12행×8열로 재배열했다.
+완전판 v2 시도는 C1 표시 기준 LAS의 operation 이름을 잘못 적어 출력 생성 전에 중단됐고 해당 namespace는 보존했다. v3는 경로를 복구해 22행 source 판을 만들었다. v4는 계산 없이 같은 봉인 panel을 C3-1/C3-2 좌우 비교가 가능한 12행×8열로 재배열했다. 최종 v5는 Roofer input의 terrain Z 극단값을 표시 축에서 제외하고 roof점을 확대했으며 원본 LAS와 Roofer output은 변경하지 않았다.
 
 이번 완전판 생성에서 GS 학습, checkpoint render extraction, mesh 생성, Roofer, G2, metric 재계산, C4/C5 접근은 모두 0회다. `official_G3_G4_PASS_usable`와 `scientific_verdict`는 null이다.
 """
@@ -99,7 +99,7 @@ def _records(root: Path) -> list[dict[str, Any]]:
 
 
 def run(source_root: Path, input_root: Path, diagnostic_root: Path, output_root: Path, source_commit: str) -> dict[str, Any]:
-    index = _read_json(source_root / "qualitative/index_v4.json")
+    index = _read_json(source_root / "qualitative/index_v5.json")
     if index.get("status") != "COMPLETE_SEALED_RESULTS_REARRANGED_ONLY" or index.get("case_sheet_count") != 3:
         raise RuntimeError("complete-lineage source is incomplete")
     support_source = input_root / "tables/roofer_input_spatial_support_v1.csv"
@@ -136,7 +136,7 @@ def run(source_root: Path, input_root: Path, diagnostic_root: Path, output_root:
         "scientific_verdict": None,
     }
     write_new(output_root / "control/technical_return_v1.json", canonical_json_bytes(returned))
-    source_material = [source_root / "qualitative/index_v4.json"] + [source_root / row["case_sheet"]["path"] for row in index["case_sheets"]]
+    source_material = [source_root / "qualitative/index_v5.json"] + [source_root / row["case_sheet"]["path"] for row in index["case_sheets"]]
     manifest = {
         "schema": "jointbuildgs.c3_complete_lineage_artifact_manifest.v1",
         "status": "COMPLETE_HASHED_MATERIAL_PAYLOAD",

@@ -107,6 +107,8 @@ def _draw_points(
     view: str,
     *,
     roof_mask: np.ndarray | None = None,
+    roof_point_size: float = 7.5,
+    context_point_size: float = 1.1,
 ) -> int:
     if not len(xyz):
         return 0
@@ -124,7 +126,7 @@ def _draw_points(
     xyz, colors = xyz[::stride], colors[::stride]
     if roof_mask is not None:
         roof_mask = roof_mask[::stride]
-        sizes = np.where(roof_mask, 7.5, 1.1)
+        sizes = np.where(roof_mask, roof_point_size, context_point_size)
         alpha = np.where(roof_mask, 0.95, 0.18)
     else:
         sizes = np.full(len(xyz), 5.0)
@@ -205,11 +207,22 @@ def _panel(
     surfaces: Sequence[Surface] = (),
     lod2: bool = False,
     note: str | None = None,
+    roof_point_size: float = 7.5,
+    context_point_size: float = 1.1,
 ) -> None:
     figure = plt.figure(figsize=(6.4, 4.8), dpi=150)
     ax = figure.add_subplot(111, projection="3d", proj_type="ortho") if view.startswith("OBLIQUE") else figure.add_subplot(111)
     if points is not None:
-        _draw_points(ax, points[0], points[1], reference, view, roof_mask=points[2])
+        _draw_points(
+            ax,
+            points[0],
+            points[1],
+            reference,
+            view,
+            roof_mask=points[2],
+            roof_point_size=roof_point_size,
+            context_point_size=context_point_size,
+        )
     if mesh is not None:
         _draw_mesh(ax, mesh, reference, view, mesh_color)
     if surfaces:

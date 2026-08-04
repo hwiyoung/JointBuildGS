@@ -3,7 +3,7 @@ import unittest
 import numpy as np
 from shapely.geometry import Polygon
 
-from scripts.p2.c3_roofer_input_display_v1.render import _support, load_config, validate_config
+from scripts.p2.c3_roofer_input_display_v1.render import _input_zlim, _support, load_config, validate_config
 from scripts.p2.c3_roofer_input_display_v1.render_complete import (
     _height_colors,
     _normal_colors,
@@ -49,6 +49,17 @@ class SupportTest(unittest.TestCase):
         validate_12row_config(config)
         self.assertEqual(config["display"]["row_count_per_sheet"], 12)
         self.assertEqual(config["display"]["visible_cell_count"], 288)
+
+    def test_roofer_input_zlim_ignores_extreme_terrain_tail(self):
+        class SurfaceStub:
+            xyz = np.asarray([[0, 0, 560], [1, 1, 580]], dtype=np.float64)
+
+        roof = np.asarray([[0, 0, 565], [1, 1, 606]], dtype=np.float64)
+        terrain = np.concatenate((np.full(1000, 561.0), np.asarray([438.0])))[:, None]
+        terrain = np.column_stack((np.zeros((len(terrain), 2)), terrain))
+        zlim = _input_zlim(560.0, [SurfaceStub()], roof, terrain, (0.01, 0.99))
+        self.assertGreater(zlim[0], 550.0)
+        self.assertEqual(zlim[1], 608.0)
 
 
 if __name__ == "__main__":

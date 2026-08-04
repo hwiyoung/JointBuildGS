@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Any, Mapping
 
 import numpy as np
+from shapely import intersects_xy
 from shapely.geometry import MultiPoint
 
 from scripts.p2.c1_c2_oracle_c3_extract_v1.contract import load_building_references
@@ -86,8 +87,25 @@ def _csv_bytes(rows: list[Mapping[str, Any]]) -> bytes:
     return stream.getvalue().encode("utf-8")
 
 
-def run(output_root: Path, artifact_root: Path) -> dict[str, Any]:
-    config = load_config()
+def _input_zlim(
+    ground_display: float,
+    lod2_surfaces: list[Surface],
+    roof: np.ndarray,
+    terrain: np.ndarray,
+    terrain_quantiles: tuple[float, float],
+) -> tuple[float, float]:
+    values = [float(ground_display)]
+    for surface in lod2_surfaces:
+        values.extend([float(np.min(surface.xyz[:, 2])), float(np.max(surface.xyz[:, 2]))])
+    if len(roof):
+        values.extend([float(np.min(roof[:, 2])), float(np.max(roof[:, 2]))])
+    if len(terrain):
+        values.extend(map(float, np.quantile(terrain[:, 2], terrain_quantiles)))
+    return min(values) - 2.0, max(values) + 2.0
+
+
+def run(output_root: Path, artifact_root: Path, config_path: Path = CONFIG_PATH) -> dict[str, Any]:
+    config = load_config(config_path)
     validate_config(config)
     source_root = resolve_artifact(artifact_root, config["source"]["diagnostic_relative_root"], "diagnostic source")
     v13_root = resolve_artifact(artifact_root, config["source"]["v13_relative_root"], "v13 source")
@@ -98,6 +116,9 @@ def run(output_root: Path, artifact_root: Path) -> dict[str, Any]:
     references = load_building_references(lod2_path, config["scope"]["building_ids"])
     geoid = 45.7
     coverage_radius = float(config["display"]["roofer_input_coverage_radius_m"])
+    terrain_quantiles = tuple(map(float, config["display"].get("terrain_z_quantile_limits", [0.0, 1.0])))
+    roof_point_size = float(config["display"].get("roof_point_size", 7.5))
+    context_point_size = float(config["display"].get("context_point_size", 1.1))
     support_rows: list[dict[str, Any]] = []
     case_records = []
     new_panel_records = []
@@ -136,11 +157,16 @@ def run(output_root: Path, artifact_root: Path) -> dict[str, Any]:
             roof = point_set.xyz[classes == 6]
             terrain = point_set.xyz[classes == 2]
             spatial = _support(reference, roof, coverage_radius)
+            roof_inside = intersects_xy(reference.footprint, roof[:, 0], roof[:, 1]) if len(roof) else np.zeros(0, dtype=bool)
+            terrain_inside = intersects_xy(reference.footprint, terrain[:, 0], terrain[:, 1]) if len(terrain) else np.zeros(0, dtype=bool)
             support_rows.append({
                 "condition_id": condition_id,
                 "stable_id": stable_id,
                 "roofer_eligible": bool(prepared.get("roofer_eligible")),
                 "class6_point_count": spatial["class6_point_count"],
+                "class6_inside_footprint_count": int(np.count_nonzero(roof_inside)),
+                "class2_terrain_point_count": int(len(terrain)),
+                "class2_inside_footprint_count": int(np.count_nonzero(terrain_inside)),
                 "footprint_area_m2": float(reference.footprint.area),
                 "buffer_radius_m": coverage_radius,
                 "buffer_coverage_fraction": spatial["buffer_coverage_fraction"],
@@ -156,15 +182,14 @@ def run(output_root: Path, artifact_root: Path) -> dict[str, Any]:
                 np.tile(np.asarray([0.85, 0.10, 0.65]), (len(roof), 1)),
             )) if len(roof) else np.tile(np.asarray([0.55, 0.58, 0.62]), (len(terrain), 1))
             roof_mask = np.concatenate((np.zeros(len(terrain), dtype=bool), np.ones(len(roof), dtype=bool))) if len(roof) else np.zeros(len(terrain), dtype=bool)
-            if len(xyz):
-                z_values.extend([float(np.min(xyz[:, 2])), float(np.max(xyz[:, 2]))])
-            zlim = (min(z_values) - 2.0, max(z_values) + 2.0)
+            zlim = _input_zlim(ground_display, lod2_surfaces, roof, terrain, terrain_quantiles)
             input_paths = []
             for view in VIEWS:
                 path = case_root / f"panels/{condition_id}_inherited_roofer_input_{view.lower()}.png"
                 note = (
-                    f"actual v13 LAS: class6 roof={len(roof):,} magenta; class2 shared terrain={len(terrain):,} gray; "
-                    f"0.3m coverage={spatial['buffer_coverage_fraction']:.2%}; hull span={spatial['convex_hull_span_fraction']:.2%}; NOT TSDF input"
+                    f"actual v13 LAS: class6 roof={len(roof):,} ({int(np.count_nonzero(roof_inside)):,} inside) magenta; "
+                    f"class2 terrain={len(terrain):,} ({int(np.count_nonzero(terrain_inside)):,} inside) gray; "
+                    f"coverage={spatial['buffer_coverage_fraction']:.2%}; hull={spatial['convex_hull_span_fraction']:.2%}; terrain Z 1-99% display"
                 )
                 _panel(
                     path,
@@ -175,6 +200,8 @@ def run(output_root: Path, artifact_root: Path) -> dict[str, Any]:
                     title=f"{condition_id} | actual inherited Roofer input LAS | {view}",
                     points=(xyz, colors, roof_mask),
                     note=note,
+                    roof_point_size=roof_point_size,
+                    context_point_size=context_point_size,
                 )
                 input_paths.append(path)
                 new_panel_records.append(file_record(path, output_root))
@@ -211,6 +238,7 @@ def run(output_root: Path, artifact_root: Path) -> dict[str, Any]:
         "new_roofer_input_panels": new_panel_records,
         "roofer_input_source": "INHERITED_V13_INPUT_LAS_CLASS6_ROOF_PLUS_CLASS2_SHARED_C2_TERRAIN",
         "roofer_input_is_tsdf_sample": False,
+        "display_z_policy": "FULL_ROOF_Z_PLUS_TERRAIN_QUANTILE_RANGE",
         "execution_counters": config["execution_counters"],
         "official_G3_G4_PASS_usable": None,
         "scientific_verdict": None,
@@ -223,8 +251,9 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output-root", type=Path, required=True)
     parser.add_argument("--artifact-root", type=Path, required=True)
+    parser.add_argument("--config", type=Path, default=CONFIG_PATH)
     args = parser.parse_args()
-    print(json.dumps(run(args.output_root, args.artifact_root), ensure_ascii=False, sort_keys=True))
+    print(json.dumps(run(args.output_root, args.artifact_root, args.config), ensure_ascii=False, sort_keys=True))
 
 
 if __name__ == "__main__":
