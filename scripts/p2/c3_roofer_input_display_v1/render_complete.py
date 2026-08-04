@@ -112,7 +112,7 @@ def run(output_root: Path, artifact_root: Path) -> dict[str, Any]:
         reference = references[stable_id]
         bbox = _bbox_like(reference)
         footprint_rings = _rings(reference)
-        c1_las = v13_root / f"operations/C1_L_upper_GT_FOOTPRINT_ORACLE/{stable_id}/work/input.las"
+        c1_las = v13_root / f"operations/C1_LIDAR_GT_FOOTPRINT_ORACLE/{stable_id}/work/input.las"
         from src.visualization.fixed_view_qualitative import load_las_points
 
         c1_points = load_las_points(c1_las).xyz
