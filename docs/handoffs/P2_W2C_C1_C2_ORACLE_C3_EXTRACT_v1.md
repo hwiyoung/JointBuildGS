@@ -1,7 +1,8 @@
-# P2 C1/C2 oracle 재실행 및 C3 결과 재추출 v1 — LOCAL EXECUTION AUTHORITY
+# P2 C1/C2 oracle 재실행 및 C3 결과 재추출 recovery v1 — LOCAL EXECUTION AUTHORITY
 
-- task_id: `P2-C1-C2-ORACLE-C3-EXTRACT-v1`
-- handoff_id: `P2-W2C-C1-C2-ORACLE-C3-EXTRACT-v1`
+- task_id: `P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v1`
+- handoff_id: `null`
+- execution_record_id: `P2-LOCAL-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v1`
 - source_commit: `5f0b944c1c841c45fa263e5a557fbed081603653`
 - status: `APPROVED_FOR_LOCAL_EXPERIMENT_HOST_EXECUTION`
 - execution_authority: `DIRECT_HUMAN_INSTRUCTION_SINGLE_EXPERIMENT_HOST`
@@ -18,8 +19,8 @@ transfer가 아니며, 현재 Experiment Host에서 직접 실행하고 Work Hos
 
 따라서 이 task는 가짜 `000-offered`/`100-accepted`를 만들지 않는다. 저장소의 two-host
 불변식은 실제 host 간 write ownership transfer가 있을 때 그대로 적용되며, 이번에는 그런
-transfer가 발생하지 않는다. 기존 `P2_W2C_...` 파일명과 `handoff_id`는 이미 커밋된 계획의
-추적 호환 식별자로만 보존하고 실행 권한 주장으로 사용하지 않는다.
+transfer가 발생하지 않는다. 기존 `P2_W2C_...` 파일명은 이미 커밋된 계획의 추적 호환
+경로로만 보존하고 `handoff_id`는 `null`로 고정한다.
 
 ## 정확한 실행계획
 
@@ -67,7 +68,7 @@ Poisson surface mesh만 추출한다. 이전 4-corner/2-triangle-per-Gaussian �
 - Roofer/G2/GS training/metric/C4-C5: `4/0/0/0/0`
 - pre-Roofer reference alignment failures: `2`
 - output: fresh add-once namespace
-  `artifact://JointBuildGS/phase-payloads/p2/c1_c2_oracle_c3_extract_v1/P2-C1-C2-ORACLE-C3-EXTRACT-v1`
+  `artifact://JointBuildGS/phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v1/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v1`
 - C1/C2: 3개 6행×4열 case sheet, 72 panels
 - C3: 2 condition × 3 building case sheet, 96 panels
 - report/operation CSV/HTML/manifest
@@ -81,3 +82,10 @@ Poisson surface mesh만 추출한다. 이전 4-corner/2-triangle-per-Gaussian �
    add-once namespace 부재와 config의 local authority tuple을 확인한다.
 4. 실제 실행 commit은 final manifest의 `source_commit`으로 기록한다.
 5. Return과 기술 보고서는 결과 생성 후 작성하되 `scientific_verdict`는 계속 `null`이다.
+
+## 보존된 launcher partial
+
+최초 local launcher invocation은 `.partial` bind mount를 먼저 만든 뒤 producer가 경로
+존재 자체를 거부해 scientific input read와 계산 전에 중단됐다. 해당 빈 partial은 삭제하거나
+재사용하지 않는다. Recovery v1은 새로운 namespace를 사용하며, producer는 Docker가 미리
+만든 빈 bind-mount root만 허용하고 단 하나의 항목이라도 있으면 계속 fail-closed한다.

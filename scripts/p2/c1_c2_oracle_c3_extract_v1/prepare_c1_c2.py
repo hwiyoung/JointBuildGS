@@ -204,8 +204,10 @@ def prepare(
     config = load_config()
     validate_config(config, require_activation=True)
     if output_root.exists():
-        raise RuntimeError(f"add-once output namespace already exists: {output_root}")
-    output_root.mkdir(parents=True)
+        if any(output_root.iterdir()):
+            raise RuntimeError(f"add-once output namespace is not empty: {output_root}")
+    else:
+        output_root.mkdir(parents=True)
     input_specs = config["inputs"]
     source_records = {
         "c1": _validate_exact(c1_path, input_specs["c1_current_uas_lidar"], hash_content=hash_inputs),

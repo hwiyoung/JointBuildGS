@@ -48,6 +48,8 @@ class ContractTests(unittest.TestCase):
             (Path(__file__).resolve().parents[3] / "configs/p2/c1_c2_oracle_c3_extract_v1/run_v1.json").read_text(encoding="utf-8")
         )
         authority = config["execution_authority"]
+        self.assertEqual(config["task_id"], "P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v1")
+        self.assertIsNone(config["handoff_id"])
         self.assertEqual(authority["execution_host_role"], "experiment_host")
         self.assertFalse(authority["write_ownership_transfer_performed"])
         self.assertFalse(authority["two_host_receipt_required"])
@@ -56,6 +58,13 @@ class ContractTests(unittest.TestCase):
         ).read_text(encoding="utf-8")
         self.assertNotIn("100-accepted.json", launcher)
         self.assertNotIn("validate_two_host_handoff.py", launcher)
+
+    def test_prepare_accepts_only_an_empty_precreated_bind_mount(self) -> None:
+        source = (
+            Path(__file__).resolve().parents[3] / "scripts/p2/c1_c2_oracle_c3_extract_v1/prepare_c1_c2.py"
+        ).read_text(encoding="utf-8")
+        self.assertIn("if any(output_root.iterdir())", source)
+        self.assertIn("add-once output namespace is not empty", source)
 
     def test_groundsurface_xy_parser_does_not_substitute_roofsurface(self) -> None:
         gml = """<core:CityModel xmlns:core="core" xmlns:bldg="bldg" xmlns:gml="gml">

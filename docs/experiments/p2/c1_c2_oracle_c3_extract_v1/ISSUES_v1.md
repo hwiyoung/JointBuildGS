@@ -1,5 +1,14 @@
 # C1/C2 oracle + C3 extraction issue log v1
 
+## CLOSED — local launcher precreated bind-mount root
+
+The first direct Experiment Host invocation stopped before C1/C2 preparation because
+`run_host.sh` precreated the `.partial` directory for a Docker bind mount while the
+producer rejected any existing output path. The preserved partial is empty. Roofer,
+C3 extraction, G2, GS training and metric invocation counts were all zero. Recovery v1
+uses a fresh add-once namespace and permits only an existing empty bind-mount root;
+any non-empty root still fails closed.
+
 ## OPEN — DEBY_LOD2_4907177 reference/ID alignment
 
 Read-only raw-source preflight found only 25 deterministic 0.2 m C1 class-6 voxels and

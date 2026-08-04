@@ -151,6 +151,7 @@ surface다. TSDF라고 표기하지 않는다.
         "schema": "jointbuildgs.c1_c2_oracle_c3_extract_manifest.v1",
         "task_id": config["task_id"],
         "handoff_id": config["handoff_id"],
+        "execution_record_id": config["execution_record_id"],
         "execution_authority": config["execution_authority"],
         "source_commit": source_commit,
         "run_id": run_id,
