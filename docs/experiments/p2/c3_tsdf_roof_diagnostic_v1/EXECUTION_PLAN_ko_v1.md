@@ -1,6 +1,6 @@
 # P2 C3 roof-aware TSDF 및 3건물 진단 계획 v1
 
-- task_id: `P2-C3-TSDF-ROOF-DIAGNOSTIC-v1`
+- task_id: `P2-C3-TSDF-ROOF-DIAGNOSTIC-RECOVERY-v1`
 - authority: 2026-08-04 사용자 직접 지시, 단일 Experiment Host local execution
 - scientific_verdict: `null`
 
@@ -35,3 +35,12 @@
 ## 판독 경계
 
 TSDF가 더 연속적이거나 Roofer가 더 단순해 보여도 정확도 우세로 판정하지 않는다. LoD2는 2022 epoch context와 reference-alignment 진단에만 사용하며 current geometry의 절대 정확도 GT로 승격하지 않는다.
+
+## Recovery v1
+
+최초 namespace는 두 condition의 24-view Poisson/TSDF extraction을 정상 완료했으나,
+후속 영상 진단 container의 non-root uid가 봉인된 semantic mask 파일을 읽지 못해 중단됐다.
+이는 extraction이나 semantic inventory 누락이 아니라 파일 권한 gate다. Recovery v1은 최초
+namespace를 수정·재사용하지 않고 extraction control과 모든 point/mesh hash를 검증해 새
+namespace로 계승한다. 후속 read-only semantic 진단만 root container에서 수행하고 생성물은
+일반적인 0755 directory/0644 file mode로 남긴다. checkpoint render extraction 추가 호출은 0회다.
