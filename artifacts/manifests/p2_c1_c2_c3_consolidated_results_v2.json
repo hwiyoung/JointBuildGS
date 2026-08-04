@@ -1,0 +1,46 @@
+{
+  "schema": "jointbuildgs.artifact_resolver.v1",
+  "task_id": "P2-C1-C2-C3-CONSOLIDATED-RESULTS-v2",
+  "status": "300-CLOSED_LOCAL_FILLED_C1_ROOFER_DISPLAY",
+  "artifact_relative_root": "phase-payloads/p2/c1_c2_c3_consolidated_results_v1/P2-C1-C2-C3-CONSOLIDATED-RESULTS-v2",
+  "primary_pdf": "reports/C1_C2_C3_qualitative_results_v2_filled_c1_roofer.pdf",
+  "primary_pdf_sha256": "1773578512a2748e79cc6ea9188c960dab539ce60751af3ea0941a1ecafdab7f",
+  "primary_pdf_bytes": 35075536,
+  "page_count": 9,
+  "case_count": 3,
+  "c1_c2_page_count": 3,
+  "c3_page_count": 6,
+  "filled_c1_roofer_panel_count": 12,
+  "source_base_commit": "cf049732708caf4bdd75a9f7d7e7a5c9c9078883",
+  "plane_counts": {
+    "DEBY_LOD2_4907177": 2,
+    "DEBY_LOD2_4906975": 13,
+    "DEBY_LOD2_108580336": 29
+  },
+  "recipe": {
+    "config": "configs/p2/c1_c2_c3_consolidated_results_v1/compose_v2.json",
+    "config_sha256": "8e56ba34d4ef153a6bc497a572ffcbfc7be51381768a7d2861902960009021e1",
+    "composer": "scripts/p2/c1_c2_c3_consolidated_results_v1/compose_v2.py",
+    "composer_sha256": "09b12b315c9416ec4db6fb63f423025a38b0b8becd3c6f400e6e33b6661a735d",
+    "host_runner": "scripts/p2/c1_c2_c3_consolidated_results_v1/run_v2_host.sh",
+    "host_runner_sha256": "79caf70ab18bac997b2e252eab560a5a74bc5376fb7fdcd318def31366c6e022"
+  },
+  "verification": {
+    "index_sha256": "3ef24b9d4497ef42bc26fbf7da2e66ccbad4a32dc0bb7c0089149453e49c17c8",
+    "manifest_sha256": "485e54daabc7ede6b3a8313783b1f352a22cc474776f3fb58dbeb63c2db525fc",
+    "verified_sha256": "cafad8d1a31aac133642ad031ab85c5e4fc5ce755fdd2a2d5a5466c2c7c85a67",
+    "closed_sha256": "2395bf8d62d09c975e56eb388600799a4fadc32a75e1526f5156e2957ed29cef"
+  },
+  "execution_counters": {
+    "gs_training_invocations": 0,
+    "checkpoint_render_extractions": 0,
+    "poisson_invocations": 0,
+    "tsdf_invocations": 0,
+    "roofer_invocations": 0,
+    "g2_invocations": 0,
+    "metric_recomputations": 0,
+    "c4_c5_accesses": 0
+  },
+  "official_G3_G4_PASS_usable": null,
+  "scientific_verdict": null
+}

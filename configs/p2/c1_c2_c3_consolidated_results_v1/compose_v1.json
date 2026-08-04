@@ -1,0 +1,40 @@
+{
+  "schema": "jointbuildgs.p2.c1_c2_c3_consolidated_results.v1",
+  "task_id": "P2-C1-C2-C3-CONSOLIDATED-RESULTS-v1",
+  "status": "APPROVED_FOR_LOCAL_PRESENTATION_ONLY",
+  "building_ids": [
+    "DEBY_LOD2_4907177",
+    "DEBY_LOD2_4906975",
+    "DEBY_LOD2_108580336"
+  ],
+  "condition_ids": ["C3_1_SEM", "C3_2_SEM_DEPTH"],
+  "views": ["TOP", "OBLIQUE_1", "OBLIQUE_2", "PRINCIPAL_SECTION"],
+  "sources": {
+    "c1_c2_relative_root": "phase-payloads/p2/c1_c2_comparison_matrix_sample_v6/P2-C1-C2-COMPARISON-MATRIX-SAMPLE-v6",
+    "v13_relative_root": "phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v13/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v13",
+    "diagnostic_relative_root": "phase-payloads/p2/c3_tsdf_roof_diagnostic_v1/P2-C3-TSDF-ROOF-DIAGNOSTIC-RENDER-RECOVERY-v1",
+    "roofer_input_relative_root": "phase-payloads/p2/c3_roofer_input_display_v1/P2-C3-ROOFER-INPUT-DISPLAY-RECOVERY-v3",
+    "complete_lineage_relative_root": "phase-payloads/p2/c3_roofer_input_display_v1/P2-C3-COMPLETE-LINEAGE-DISPLAY-RECOVERY-v3",
+    "texture_relative_root": "phase-payloads/p2/c3_roof_texture_reference_extension_v1/P2-C3-ROOF-TEXTURE-C1-LOD2-REFERENCE-EXTENSION-v6"
+  },
+  "presentation": {
+    "pdf_page_order": "BUILDING_THEN_C1_C2_THEN_C3_1_THEN_C3_2",
+    "c1_c2_page_count": 3,
+    "c3_page_count": 6,
+    "pdf_page_count": 9,
+    "c3_rows_per_page": 12,
+    "c3_columns_per_page": 4
+  },
+  "execution_counters": {
+    "gs_training_invocations": 0,
+    "checkpoint_render_extractions": 0,
+    "poisson_invocations": 0,
+    "tsdf_invocations": 0,
+    "roofer_invocations": 0,
+    "g2_invocations": 0,
+    "metric_recomputations": 0,
+    "c4_c5_accesses": 0
+  },
+  "official_G3_G4_PASS_usable": null,
+  "scientific_verdict": null
+}
