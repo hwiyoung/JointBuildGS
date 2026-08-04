@@ -1,0 +1,33 @@
+{
+  "schema": "jointbuildgs.p2.c1_c2_c3_consolidated_results.v3",
+  "task_id": "P2-C1-C2-C3-CONSOLIDATED-RESULTS-v3",
+  "status": "APPROVED_FOR_LOCAL_PRESENTATION_CORRECTION_ONLY",
+  "building_ids": ["DEBY_LOD2_4907177", "DEBY_LOD2_4906975", "DEBY_LOD2_108580336"],
+  "condition_ids": ["C3_1_SEM", "C3_2_SEM_DEPTH"],
+  "views": ["TOP", "OBLIQUE_1", "OBLIQUE_2", "PRINCIPAL_SECTION"],
+  "sources": {
+    "v2_relative_root": "phase-payloads/p2/c1_c2_c3_consolidated_results_v1/P2-C1-C2-C3-CONSOLIDATED-RESULTS-v2",
+    "v13_relative_root": "phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v13/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v13",
+    "c1_4907177_recovery_relative_root": "phase-payloads/p2/c3_roof_texture_reference_extension_v1/P2-C3-ROOF-TEXTURE-C1-LOD2-REFERENCE-EXTENSION-v5",
+    "diagnostic_relative_root": "phase-payloads/p2/c3_tsdf_roof_diagnostic_v1/P2-C3-TSDF-ROOF-DIAGNOSTIC-RECOVERY-v1",
+    "lod2_relative_path": "phase-payloads/p0-audit/data/raw/lod2/690_5336.gml"
+  },
+  "presentation_corrections": {
+    "replace_old_c1_c2_v6_pages_with_latest_building_specific_sources": true,
+    "filled_c1_c2_roofer_surfaces": true,
+    "section_locator": "SHOW_LEGACY_E_SECTION_AND_PCA_PRINCIPAL_SECTION_WITH_LOOK_ARROWS",
+    "section_frame_mismatch_explicit": true
+  },
+  "execution_counters": {
+    "gs_training_invocations": 0,
+    "checkpoint_render_extractions": 0,
+    "poisson_invocations": 0,
+    "tsdf_invocations": 0,
+    "roofer_invocations": 0,
+    "g2_invocations": 0,
+    "metric_recomputations": 0,
+    "c4_c5_accesses": 0
+  },
+  "official_G3_G4_PASS_usable": null,
+  "scientific_verdict": null
+}
