@@ -571,9 +571,9 @@ def render_c3(output_root: Path, artifact_root: Path, lod2_path: Path) -> dict[s
                 )
                 raw_paths.append(path)
             rows = [("2024 RGB + 2022 roofline\nprojection only", raw_paths)]
-            for row_name, colors in (
-                ("Exact-checkpoint oriented 2D Gaussians\nRGB ellipse display proxy", gaussian_rgb),
-                ("Exact-checkpoint oriented 2D Gaussians\nsemantic ellipse display proxy", gaussian_sem),
+            for row_name, panel_title, colors in (
+                ("2D Gaussian ellipses\nRGB display proxy\n(quat+scale+opacity)", "Gaussian ellipses RGB", gaussian_rgb),
+                ("2D Gaussian ellipses\nsemantic display proxy\n(quat+scale+opacity)", "Gaussian ellipses semantic", gaussian_sem),
             ):
                 paths = []
                 for view in VIEWS:
@@ -587,7 +587,7 @@ def render_c3(output_root: Path, artifact_root: Path, lod2_path: Path) -> dict[s
                         colors,
                         bbox,
                         view,
-                        f"{row_name.replace(chr(10), ' ')} | {view}",
+                        f"{panel_title} | {view}",
                     )
                     paths.append(path)
                 rows.append((row_name, paths))

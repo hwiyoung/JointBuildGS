@@ -6,11 +6,11 @@ ARTIFACT_ROOT="${1:?usage: run_host.sh ARTIFACT_ROOT PROJECT_IMAGE_ID SOURCE_COM
 PROJECT_IMAGE_ID="${2:?missing project image ID}"
 SOURCE_COMMIT="${3:?missing source commit}"
 RUN_ID="${4:?missing run ID}"
-TASK_REL="phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v5/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v5"
+TASK_REL="phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v6/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v6"
 FINAL_ROOT="${ARTIFACT_ROOT}/${TASK_REL}"
 OUTPUT_ROOT="${FINAL_ROOT}.partial"
 CONFIG_REL="configs/p2/c1_c2_oracle_c3_extract_v1/run_v1.json"
-RECOVERY_SOURCE="${ARTIFACT_ROOT}/phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v4/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v4"
+RECOVERY_SOURCE="${ARTIFACT_ROOT}/phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v5/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v5"
 LOD2="${ARTIFACT_ROOT}/phase-payloads/p0-audit/data/raw/lod2/690_5336.gml"
 
 if [[ "${ARTIFACT_ROOT}" != /* || ! -d "${ARTIFACT_ROOT}" ]]; then

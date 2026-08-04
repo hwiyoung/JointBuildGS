@@ -7,7 +7,9 @@ did not repeat the current RGB + 2022 LoD2 roofline row in each C3 sheet. Recove
 adds the same projection-context row and renders deterministic display subsets as
 oriented 2D ellipse polygons from checkpoint quaternion, in-plane scale and opacity.
 The exact full Gaussian PLY remains unchanged, and this presentation recovery invokes
-neither training nor extraction.
+neither training nor extraction. Original-resolution v5 review then found that the
+long Gaussian titles overlapped adjacent columns; v6 shortens only those labels while
+preserving the same primitive display contract and zero-compute counters.
 
 ## OPEN — C3 extracted geometry quality observations
 
