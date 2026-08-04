@@ -1,0 +1,56 @@
+{
+  "schema": "jointbuildgs.p2.c3_roof_texture_reference_extension_recovery.v1",
+  "task_id": "P2-C3-ROOF-TEXTURE-C1-LOD2-REFERENCE-EXTENSION-v5",
+  "status": "APPROVED_FOR_LOCAL_EXECUTION",
+  "scope": {
+    "building_ids": [
+      "DEBY_LOD2_4907177",
+      "DEBY_LOD2_4906975",
+      "DEBY_LOD2_108580336"
+    ],
+    "condition_ids": ["C3_1_SEM", "C3_2_SEM_DEPTH"],
+    "views": ["TOP", "OBLIQUE_1", "OBLIQUE_2", "PRINCIPAL_SECTION"]
+  },
+  "source": {
+    "reference_extension_v4_relative_root": "phase-payloads/p2/c3_roof_texture_reference_extension_v1/P2-C3-ROOF-TEXTURE-C1-LOD2-REFERENCE-EXTENSION-v4",
+    "tsdf_diagnostic_relative_root": "phase-payloads/p2/c3_tsdf_roof_diagnostic_v1/P2-C3-TSDF-ROOF-DIAGNOSTIC-RENDER-RECOVERY-v1",
+    "c1_current_uas_lidar_relative_path": "phase-payloads/p0-audit/data/raw/tum2twin/TUM_Downtown_ULS_20241217_nadir.laz",
+    "lod2_relative_path": "phase-payloads/p0-audit/data/raw/lod2/690_5336.gml"
+  },
+  "c1_4907177_recovery": {
+    "stable_id": "DEBY_LOD2_4907177",
+    "lod2_groundsurface_to_current_z_shift_m": 45.7,
+    "crop_buffer_m": 8.0,
+    "ground_ring_inner_buffer_m": 1.0,
+    "minimum_building_height_above_ground_m": 2.5,
+    "ground_keep_above_ground_m": 0.75,
+    "deterministic_voxel_m": 0.2,
+    "building_class": 6,
+    "ground_class": 2,
+    "minimum_class6_points": 100,
+    "oracle_boundary": "LOD2_GROUNDSURFACE_Z_USED_ONLY_AS_EVALUATION_DIAGNOSTIC_GROUND_ANCHOR"
+  },
+  "roofer": {
+    "image": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+    "image_id": "sha256:9c980b97fba4c3fd30f5bb4afb8f2621be211d4e72e4333ea2053e8cd69b2dba",
+    "command_args": ["--id-attribute", "stable_id", "--jobs", "1", "--srs", "EPSG:25832", "--bld-class", "6", "--grnd-class", "2", "--lod22"]
+  },
+  "presentation": {
+    "primary_rows": ["C1_ROOFER", "LOD2_REFERENCE", "POISSON_TEXTURE", "TSDF_TEXTURE"],
+    "detail_rows": ["RGB_ROOFLINE", "C1_ROOFER", "LOD2_REFERENCE", "POISSON_TEXTURE", "POISSON_SUPPORT", "TSDF_TEXTURE", "TSDF_SUPPORT"],
+    "columns_per_sheet": 4,
+    "separate_condition_sheets": true,
+    "long_panel_titles_prohibited": true
+  },
+  "execution_counters": {
+    "roofer_invocations": 1,
+    "g2_invocations": 0,
+    "gs_training_invocations": 0,
+    "metric_recomputations": 0,
+    "poisson_reconstructions": 0,
+    "tsdf_reconstructions": 0,
+    "c4_c5_accesses": 0
+  },
+  "official_G3_G4_PASS_usable": null,
+  "scientific_verdict": null
+}
