@@ -31,11 +31,11 @@ def load_config(path: Path = CONFIG_PATH) -> dict[str, Any]:
 def validate_config(config: Mapping[str, Any] | None = None, *, require_activation: bool = False) -> dict[str, Any]:
     cfg = dict(config or load_config())
     authority = cfg.get("execution_authority") or {}
-    if cfg.get("task_id") != "P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v9":
+    if cfg.get("task_id") != "P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v10":
         raise RuntimeError("recovery task identity drifted")
     if cfg.get("handoff_id") is not None:
         raise RuntimeError("local execution must not claim a handoff ID")
-    if cfg.get("execution_record_id") != "P2-LOCAL-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v9":
+    if cfg.get("execution_record_id") != "P2-LOCAL-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v10":
         raise RuntimeError("local execution record identity drifted")
     if authority.get("mode") != "DIRECT_HUMAN_INSTRUCTION_SINGLE_EXPERIMENT_HOST":
         raise RuntimeError("local execution authority is missing")
@@ -63,6 +63,10 @@ def validate_config(config: Mapping[str, Any] | None = None, *, require_activati
         raise RuntimeError("C3 Gaussian visualization contract drifted")
     if presentation.get("c3_footprint_display_policy") != "GT_GROUNDSURFACE_XY_DISPLAY_ONLY_ON_ALL_3D_ROWS":
         raise RuntimeError("C3 footprint display contract drifted")
+    if presentation.get("c3_comparison_layout") != "ONE_BUILDING_PER_SHEET_C3_1_THEN_C3_2_SHARED_FOUR_VIEWS":
+        raise RuntimeError("C3 comparison layout contract drifted")
+    if len(presentation.get("c3_rows") or ()) != 12:
+        raise RuntimeError("C3 comparison must have twelve rows")
     if presentation.get("rgb_roofline_stroke_px") != {"dark_casing": 12, "yellow_line": 6}:
         raise RuntimeError("RGB roofline stroke contract drifted")
     mesh = (cfg.get("c3_extraction") or {}).get("roof_semantic_mesh_recovery") or {}
@@ -76,10 +80,22 @@ def validate_config(config: Mapping[str, Any] | None = None, *, require_activati
         "insufficient_evidence_status": "INSUFFICIENT_ROOF_SEMANTIC_EVIDENCE",
     }:
         raise RuntimeError("C3 roof-semantic mesh recovery contract drifted")
+    roofer_oracle = cfg.get("c3_roofer_oracle") or {}
+    if roofer_oracle != {
+        "mode": "GT_GROUNDSURFACE_XY_FOOTPRINT_ORACLE_DIAGNOSTIC_NOT_OFFICIAL_HONEST_STAGE3",
+        "building_source": "C3_RENDERED_DEPTH_FUSED_SEMANTIC_CLASS_1_INSIDE_GT_FOOTPRINT",
+        "shared_terrain_source": "C2_EXACT_COMMON_IMAGE_MVS_CLASS_2_SUPPORT",
+        "deterministic_voxel_m": 0.2,
+        "minimum_class6_points": 100,
+        "expected_invocations": 4,
+        "expected_pre_roofer_failures": 2,
+        "roofsurface_reference_used_as_input": False,
+    }:
+        raise RuntimeError("C3 oracle Roofer contract drifted")
     counters = cfg.get("execution_counters") or {}
     expected = {
-        "expected_roofer_invocations_this_recovery": 0,
-        "expected_roofer_invocations_total_lineage": 4,
+        "expected_roofer_invocations_this_recovery": 4,
+        "expected_roofer_invocations_total_lineage": 8,
         "expected_pre_roofer_reference_alignment_failures": 2,
         "expected_g2_invocations": 0,
         "expected_gs_training_invocations": 0,
@@ -114,6 +130,8 @@ def validate_config(config: Mapping[str, Any] | None = None, *, require_activati
         "c1_c2_expected_alignment_failure_count": 2,
         "c3_completed_training_runs": 2,
         "c3_training_invocations_this_task": 0,
+        "c3_expected_roofer_operation_count": 4,
+        "c3_expected_pre_roofer_failure_count": 2,
         "execution_authority_mode": authority["mode"],
         "write_ownership_transfer_performed": False,
         "scientific_verdict": None,

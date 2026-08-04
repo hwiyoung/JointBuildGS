@@ -170,6 +170,20 @@ def _panel(
                 ax.plot(ring[order, 0], ring[order, 2], color=color, linewidth=1.1)
     ground_z = float(np.quantile(z_all, 0.02))
     _draw_footprint(ax, footprint_rings, view, ground_z)
+    if (points is None or not len(points.xyz)) and not surfaces:
+        text_method = ax.text2D if view.startswith("OBLIQUE") else ax.text
+        text_method(
+            0.5,
+            0.5,
+            "NO ROOFER OUTPUT\nNOT RUN BEFORE ROOFER",
+            transform=ax.transAxes,
+            ha="center",
+            va="center",
+            fontsize=13,
+            fontweight="bold",
+            color="#991b1b",
+            bbox={"facecolor": "white", "edgecolor": "#991b1b", "alpha": 0.92, "pad": 8},
+        )
     if view == "TOP":
         pad = max(max(bbox.width, bbox.height) * 0.25, 4.0)
         ax.set_xlim(bbox.min_x - pad, bbox.max_x + pad)
@@ -583,7 +597,9 @@ def render_c3(output_root: Path, artifact_root: Path, lod2_path: Path) -> dict[s
         (row["condition_id"], row["stable_id"]): row
         for row in mesh_recovery["results"]
     }
-    records = []
+    condition_rows: dict[tuple[str, str], list[tuple[str, Sequence[Path]]]] = {}
+    condition_metadata: dict[tuple[str, str], dict[str, Any]] = {}
+    raw_by_building: dict[str, Sequence[Path]] = {}
     for condition in config["c3_training_provenance"]["conditions"]:
         condition_id = condition["condition_id"]
         proxy = _read_binary_vertex_ply(output_root / f"c3/{condition_id}/gaussians/display_proxy_gaussian_parameters_v1.ply")
@@ -614,7 +630,7 @@ def render_c3(output_root: Path, artifact_root: Path, lod2_path: Path) -> dict[s
                 output_root / mesh_result["roof_mesh"]["path"]
                 if mesh_result["roof_mesh"] is not None else None
             )
-            case_root = output_root / "qualitative/c3" / condition_id / stable_id
+            case_root = output_root / "qualitative/c3/support" / condition_id / stable_id
             c1_points, _c1_surfaces, _footprint_rings, _c1_terminal = _load_method_geometry(
                 output_root, CONDITIONS[0], stable_id
             )
@@ -631,21 +647,23 @@ def render_c3(output_root: Path, artifact_root: Path, lod2_path: Path) -> dict[s
                 "orthometric",
                 "ellipsoidal",
             )
-            raw_paths = []
-            for index, (role, scale) in enumerate((("COVERAGE", 3.0), ("NADIR", 2.0), ("NADIR", 1.35), ("OBLIQUE", 2.0))):
-                path = case_root / "panels" / f"1_rgb_roofline_{index + 1}.png"
-                _raw_roofline_panel(
-                    path,
-                    image_root / roles[role]["camera"].name,
-                    roles[role],
-                    reference.roof_rings_xyz,
-                    camera_model,
-                    scene_ref,
-                    crop_scale=scale,
-                    title=f"2024 RGB + 2022 LoD2 roofline | {roles[role]['camera'].name}",
-                )
-                raw_paths.append(path)
-            rows = [("2024 RGB + 2022 roofline\nprojection only", raw_paths)]
+            if stable_id not in raw_by_building:
+                raw_paths = []
+                for index, (role, scale) in enumerate((("COVERAGE", 3.0), ("NADIR", 2.0), ("NADIR", 1.35), ("OBLIQUE", 2.0))):
+                    path = output_root / "qualitative/c3/comparison" / stable_id / "panels" / f"01_rgb_roofline_{index + 1}.png"
+                    _raw_roofline_panel(
+                        path,
+                        image_root / roles[role]["camera"].name,
+                        roles[role],
+                        reference.roof_rings_xyz,
+                        camera_model,
+                        scene_ref,
+                        crop_scale=scale,
+                        title=f"2024 RGB + 2022 LoD2 roofline | {roles[role]['camera'].name}",
+                    )
+                    raw_paths.append(path)
+                raw_by_building[stable_id] = raw_paths
+            rows: list[tuple[str, Sequence[Path]]] = []
             for row_name, panel_title, colors in (
                 ("2D Gaussian ellipses\nRGB display proxy\n(quat+scale+opacity)", "Gaussian ellipses RGB", gaussian_rgb),
                 ("2D Gaussian ellipses\nsemantic display proxy\n(quat+scale+opacity)", "Gaussian ellipses semantic", gaussian_sem),
@@ -699,21 +717,80 @@ def render_c3(output_root: Path, artifact_root: Path, lod2_path: Path) -> dict[s
                     _c3_mesh_panel(path, mesh_path, bbox, footprint_rings, footprint_z, view, "Roof-semantic Poisson mesh | " + view)
                 mesh_paths.append(path)
             rows.append(("Roof-class-only Poisson mesh\n(class 1; footprint buffer 1 m)", mesh_paths))
-            sheet = case_root / "case_sheet_c3_3d_v1.png"
-            _compose_sheet(
-                sheet,
-                rows,
-                f"{stable_id} | {condition_id}",
-                "oriented scale/quaternion Gaussian ellipses; existing exact checkpoint; training invocations=0; scientific_verdict=null",
+            _roofer_points, roofer_surfaces, _roofer_footprint, roofer_terminal = _load_method_geometry(
+                output_root, f"{condition_id}_GT_FOOTPRINT_ORACLE", stable_id
             )
-            records.append({
-                "condition_id": condition_id,
-                "stable_id": stable_id,
-                "case_sheet": file_record(sheet, output_root),
-                "panel_count": 20,
+            roofer_paths = []
+            for view in VIEWS:
+                path = case_root / "panels" / f"6_roofer_{view.lower()}.png"
+                _panel(
+                    path,
+                    view=view,
+                    bbox=bbox,
+                    points=None,
+                    surfaces=roofer_surfaces,
+                    footprint_rings=footprint_rings,
+                    title=(
+                        f"GT-footprint oracle Roofer | {view}"
+                        if roofer_terminal["status"] == "COMPLETED"
+                        else f"Roofer NOT RUN — insufficient roof evidence | {view}"
+                    ),
+                )
+                roofer_paths.append(path)
+            rows.append(("GT-footprint oracle Roofer\nroof=C3; terrain=C2 MVS", roofer_paths))
+            condition_rows[(condition_id, stable_id)] = rows
+            condition_metadata[(condition_id, stable_id)] = {
                 "roof_mesh_status": mesh_result["status"],
                 "selected_roof_point_count": int(mesh_result["selected_roof_point_count"]),
-            })
+                "roofer_status": roofer_terminal["status"],
+            }
+    records = []
+    for stable_id, reference in references.items():
+        bbox = _bbox(reference)
+        footprint_rings = _rings_xy(reference)
+        c1_points, _c1_surfaces, _footprint_rings, _c1_terminal = _load_method_geometry(
+            output_root, CONDITIONS[0], stable_id
+        )
+        footprint_z = float(np.quantile(c1_points.xyz[:, 2], 0.02))
+        lod2_surfaces = [Surface(np.asarray(ring, dtype=np.float64), semantic) for semantic, ring in reference.surface_rings]
+        lod2_paths = []
+        case_root = output_root / "qualitative/c3/comparison" / stable_id
+        for view in VIEWS:
+            path = case_root / "panels" / f"12_lod2_{view.lower()}.png"
+            _panel(
+                path,
+                view=view,
+                bbox=bbox,
+                points=None,
+                surfaces=lod2_surfaces,
+                footprint_rings=footprint_rings,
+                title=f"2022 LoD2 epoch context only | {view}",
+                lod2_context=True,
+            )
+            lod2_paths.append(path)
+        rows = [("2024 RGB + 2022 roofline\nprojection only", raw_by_building[stable_id])]
+        for condition_id, short_name in (("C3_1_SEM", "C3-1"), ("C3_2_SEM_DEPTH", "C3-2")):
+            for label, paths in condition_rows[(condition_id, stable_id)]:
+                rows.append((f"{short_name} {label}", paths))
+        rows.append(("2022 LoD2\nepoch context only", lod2_paths))
+        sheet = case_root / "case_sheet_c3_1_vs_c3_2_v1.png"
+        alignment = "REFERENCE/ID ALIGNMENT REVIEW" if stable_id == "DEBY_LOD2_4907177" else "2022 LoD2 shown as epoch context"
+        _compose_sheet(
+            sheet,
+            rows,
+            stable_id,
+            f"C3-1 semantic vs C3-2 semantic+depth; GT-footprint oracle Roofer diagnostic | {alignment}; scientific_verdict=null",
+        )
+        records.append({
+            "stable_id": stable_id,
+            "case_sheet": file_record(sheet, output_root),
+            "panel_count": 48,
+            "panels": [file_record(path, output_root) for _label, paths in rows for path in paths],
+            "conditions": {
+                condition_id: condition_metadata[(condition_id, stable_id)]
+                for condition_id in ("C3_1_SEM", "C3_2_SEM_DEPTH")
+            },
+        })
     body = {
         "schema": "jointbuildgs.c3_3d_qualitative.v1",
         "case_sheet_count": len(records),
@@ -723,8 +800,13 @@ def render_c3(output_root: Path, artifact_root: Path, lod2_path: Path) -> dict[s
         "footprint_role": "GT_GROUNDSURFACE_XY_DISPLAY_ONLY_ON_ALL_3D_ROWS",
         "gaussian_representation": "ORIENTED_2D_ELLIPSES_FROM_CHECKPOINT_QUATERNION_SCALE_OPACITY_NOT_CENTER_POINTS",
         "mesh_role": "ROOF_SEMANTIC_CLASS_1_WITHIN_GT_GROUNDSURFACE_XY_1M_BUFFER_POISSON_OR_EXPLICIT_INSUFFICIENT_EVIDENCE",
+        "roofer_role": "GT_FOOTPRINT_ORACLE_DIAGNOSTIC_C3_ROOF_PLUS_C2_COMMON_MVS_TERRAIN_NOT_OFFICIAL_HONEST_STAGE3",
+        "lod2_role": "2022_EPOCH_CONTEXT_ONLY_NOT_TRAINING_OR_EVALUATION",
+        "comparison_layout": "ONE_BUILDING_PER_SHEET_C3_1_THEN_C3_2_SHARED_FOUR_VIEWS",
         "roof_mesh_completed_count": int(mesh_recovery["completed_mesh_count"]),
         "roof_mesh_insufficient_evidence_count": int(mesh_recovery["insufficient_evidence_count"]),
+        "roofer_completed_count": 4,
+        "roofer_pre_failure_count": 2,
         "training_invocations": 0,
         "scientific_verdict": None,
     }

@@ -1,8 +1,8 @@
 {
   "schema": "jointbuildgs.p2.c1_c2_oracle_c3_extract.v1",
-  "task_id": "P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v9",
+  "task_id": "P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v10",
   "handoff_id": null,
-  "execution_record_id": "P2-LOCAL-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v9",
+  "execution_record_id": "P2-LOCAL-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v10",
   "status": "APPROVED_FOR_EXECUTION",
   "execution_authority": {
     "mode": "DIRECT_HUMAN_INSTRUCTION_SINGLE_EXPERIMENT_HOST",
@@ -22,9 +22,9 @@
     "c3_mode": "EXACT_CHECKPOINT_RESULT_EXTRACTION_ONLY_NO_TRAINING",
     "c4_c5_access_allowed": false
   },
-  "output_relative_root": "phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v9/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v9",
-  "c1_c2_recovery_source_relative_root": "phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v7/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v7",
-  "c3_recovery_source_relative_root": "phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v7/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v7",
+  "output_relative_root": "phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v10/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v10",
+  "c1_c2_recovery_source_relative_root": "phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v9/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v9",
+  "c3_recovery_source_relative_root": "phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v9/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v9",
   "frame": {
     "crs": "EPSG:25832",
     "world_shift_xyz": [690953.0, 5336071.0, 604.0],
@@ -148,21 +148,32 @@
       "insufficient_evidence_status": "INSUFFICIENT_ROOF_SEMANTIC_EVIDENCE"
     }
   },
+  "c3_roofer_oracle": {
+    "mode": "GT_GROUNDSURFACE_XY_FOOTPRINT_ORACLE_DIAGNOSTIC_NOT_OFFICIAL_HONEST_STAGE3",
+    "building_source": "C3_RENDERED_DEPTH_FUSED_SEMANTIC_CLASS_1_INSIDE_GT_FOOTPRINT",
+    "shared_terrain_source": "C2_EXACT_COMMON_IMAGE_MVS_CLASS_2_SUPPORT",
+    "deterministic_voxel_m": 0.2,
+    "minimum_class6_points": 100,
+    "expected_invocations": 4,
+    "expected_pre_roofer_failures": 2,
+    "roofsurface_reference_used_as_input": false
+  },
   "presentation": {
     "spatial_views": ["TOP", "OBLIQUE_1", "OBLIQUE_2", "PRINCIPAL_SECTION"],
     "c1_c2_rows": ["CURRENT_RGB_WITH_LOD2_ROOFLINE", "C1_POINT_CLOUD_WITH_GT_FOOTPRINT", "C1_ROOFER", "C2_POINT_CLOUD_WITH_GT_FOOTPRINT", "C2_ROOFER", "LOD2_EPOCH_CONTEXT_ONLY"],
     "roofline_policy": "ROOFSURFACE_XYZ_ONLY_ON_CURRENT_RGB_ROW_AND_SEPARATE_LOD2_CONTEXT_ROW",
     "input_output_policy": "GT_GROUNDSURFACE_XY_FOOTPRINT_ONLY_NO_ROOFLINE_OVERLAY",
     "minimum_title_font_pt": 12,
-    "c3_rows": ["CURRENT_RGB_WITH_LOD2_ROOFLINE", "ORIENTED_2D_GAUSSIAN_RGB_ELLIPSES", "ORIENTED_2D_GAUSSIAN_SEMANTIC_ELLIPSES", "RENDERED_DEPTH_FUSED_SURFACE_POINTS", "ROOF_SEMANTIC_POISSON_MESH"],
+    "c3_rows": ["CURRENT_RGB_WITH_LOD2_ROOFLINE", "C3_1_ORIENTED_2D_GAUSSIAN_RGB_ELLIPSES", "C3_1_ORIENTED_2D_GAUSSIAN_SEMANTIC_ELLIPSES", "C3_1_RENDERED_DEPTH_FUSED_SURFACE_POINTS", "C3_1_ROOF_SEMANTIC_POISSON_MESH", "C3_1_GT_FOOTPRINT_ORACLE_ROOFER", "C3_2_ORIENTED_2D_GAUSSIAN_RGB_ELLIPSES", "C3_2_ORIENTED_2D_GAUSSIAN_SEMANTIC_ELLIPSES", "C3_2_RENDERED_DEPTH_FUSED_SURFACE_POINTS", "C3_2_ROOF_SEMANTIC_POISSON_MESH", "C3_2_GT_FOOTPRINT_ORACLE_ROOFER", "LOD2_EPOCH_CONTEXT_ONLY"],
+    "c3_comparison_layout": "ONE_BUILDING_PER_SHEET_C3_1_THEN_C3_2_SHARED_FOUR_VIEWS",
     "c3_gaussian_display_policy": "QUATERNION_SCALE_OPACITY_ORIENTED_ELLIPSES_NOT_CENTER_POINT_SCATTER",
     "c3_footprint_display_policy": "GT_GROUNDSURFACE_XY_DISPLAY_ONLY_ON_ALL_3D_ROWS",
     "rgb_roofline_stroke_px": {"dark_casing": 12, "yellow_line": 6},
     "reference_alignment_review_buildings": ["DEBY_LOD2_4907177"]
   },
   "execution_counters": {
-    "expected_roofer_invocations_this_recovery": 0,
-    "expected_roofer_invocations_total_lineage": 4,
+    "expected_roofer_invocations_this_recovery": 4,
+    "expected_roofer_invocations_total_lineage": 8,
     "expected_pre_roofer_reference_alignment_failures": 2,
     "expected_g2_invocations": 0,
     "expected_gs_training_invocations": 0,

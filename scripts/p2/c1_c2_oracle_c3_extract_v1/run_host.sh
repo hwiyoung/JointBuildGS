@@ -6,12 +6,13 @@ ARTIFACT_ROOT="${1:?usage: run_host.sh ARTIFACT_ROOT PROJECT_IMAGE_ID SOURCE_COM
 PROJECT_IMAGE_ID="${2:?missing project image ID}"
 SOURCE_COMMIT="${3:?missing source commit}"
 RUN_ID="${4:?missing run ID}"
-TASK_REL="phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v9/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v9"
+TASK_REL="phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v10/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v10"
 FINAL_ROOT="${ARTIFACT_ROOT}/${TASK_REL}"
 OUTPUT_ROOT="${FINAL_ROOT}.partial"
 CONFIG_REL="configs/p2/c1_c2_oracle_c3_extract_v1/run_v1.json"
-RECOVERY_SOURCE="${ARTIFACT_ROOT}/phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v7/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v7"
+RECOVERY_SOURCE="${ARTIFACT_ROOT}/phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v9/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v9"
 LOD2="${ARTIFACT_ROOT}/phase-payloads/p0-audit/data/raw/lod2/690_5336.gml"
+ROOFER_IMAGE="3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2"
 
 if [[ "${ARTIFACT_ROOT}" != /* || ! -d "${ARTIFACT_ROOT}" ]]; then
   echo "artifact root must be an existing absolute directory" >&2
@@ -80,6 +81,34 @@ docker run --rm --network none --cpus 4 --memory 32g --pids-limit 1024 \
 
 docker run --rm --network none --cpus 4 --memory 32g --pids-limit 1024 \
   --entrypoint /opt/conda/bin/python --user "$(id -u):$(id -g)" \
+  -v "${REPO}:/workspace/JointBuildGS:ro" -v "${OUTPUT_ROOT}:/output:rw" \
+  -v "${LOD2}:/inputs/lod2.gml:ro" -w /workspace/JointBuildGS "${PROJECT_IMAGE_ID}" \
+  scripts/p2/c1_c2_oracle_c3_extract_v1/prepare_c3_roofer.py prepare \
+    --output-root /output --lod2 /inputs/lod2.gml
+
+while IFS=$'\t' read -r operation_unit_id work_relative; do
+  [[ "${operation_unit_id}" == "operation_unit_id" ]] && continue
+  work="${OUTPUT_ROOT}/${work_relative}"
+  if [[ -e "${work}/runtime.log" || -d "${work}/out" || -f "${work}/roofer_terminal_v1.json" ]]; then
+    echo "existing C3 Roofer state refuses duplicate execution: ${operation_unit_id}" >&2
+    exit 2
+  fi
+  mkdir "${work}/out"
+  begin="${SECONDS}"
+  set +e
+  timeout 600 docker run --rm --network none --cpus 2 --memory 8g --pids-limit 512 \
+    --user "$(id -u):$(id -g)" -v "${work}:/work:rw" -w /work "${ROOFER_IMAGE}" \
+    --id-attribute stable_id --jobs 1 --srs EPSG:25832 --bld-class 6 --grnd-class 2 --lod22 \
+    input.las gt_footprint_oracle.geojson out >"${work}/runtime.log" 2>&1
+  exit_code=$?
+  set -e
+  project_run scripts/p2/c1_c2_oracle_c3_extract_v1/prepare_c3_roofer.py record-terminal \
+    --output-root /output --operation-unit-id "${operation_unit_id}" \
+    --exit-code "${exit_code}" --runtime-seconds "$((SECONDS - begin))" >/dev/null
+done <"${OUTPUT_ROOT}/freeze/c3_roofer_execution_units_v1.tsv"
+
+docker run --rm --network none --cpus 4 --memory 32g --pids-limit 1024 \
+  --entrypoint /opt/conda/bin/python --user "$(id -u):$(id -g)" \
   -v "${REPO}:/workspace/JointBuildGS:ro" -v "${ARTIFACT_ROOT}:/artifacts/JointBuildGS:ro" \
   -v "${OUTPUT_ROOT}:/output:rw" -v "${LOD2}:/inputs/lod2.gml:ro" \
   -w /workspace/JointBuildGS "${PROJECT_IMAGE_ID}" \
@@ -96,4 +125,4 @@ project_run scripts/p2/c1_c2_oracle_c3_extract_v1/finalize.py \
   --output-root /output --source-commit "${SOURCE_COMMIT}" --run-id "${RUN_ID}"
 
 mv -- "${OUTPUT_ROOT}" "${FINAL_ROOT}"
-echo "C1/C2 six-building-method oracle operations and C3 extraction-only results finalized: ${FINAL_ROOT}"
+echo "C1/C2 inherited oracle operations plus C3 extraction and four C3 oracle Roofer diagnostics finalized: ${FINAL_ROOT}"

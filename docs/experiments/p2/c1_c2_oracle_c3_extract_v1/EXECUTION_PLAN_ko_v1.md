@@ -15,6 +15,10 @@ C3는 학습을 다시 하지 않는다. 성공한 exact checkpoint 두 개를 �
 만든다. 선택점이 100점 미만이면 mesh를 생성하지 않고 증거 부족으로 기록한다. 기존의 Gaussian당
 4개 꼭짓점·2개 삼각형 quad 파일은 surface mesh로 재사용하지 않는다.
 
+추가 비교 read-out은 각 C3 condition의 fused roof-semantic point를 class 6, exact common-image
+C2 MVS terrain을 공유 class 2로 사용한다. 동일 GT GroundSurface XY footprint를 적용한
+oracle diagnostic이며 official honest Stage 3가 아니다. RoofSurface XYZ는 입력하지 않는다.
+
 ## 고정 실행 단위
 
 - 건물: `DEBY_LOD2_4907177`, `DEBY_LOD2_4906975`, `DEBY_LOD2_108580336`
@@ -26,6 +30,8 @@ C3는 학습을 다시 하지 않는다. 성공한 exact checkpoint 두 개를 �
   `PRE_ROOFER_REFERENCE_ID_ALIGNMENT_FAILURE`; Roofer를 실행하지 않음
 - C3 checkpoint: `C3_1_SEM seed0`, `C3_2_SEM_DEPTH seed0`
 - C3 학습: 0회
+- C3 oracle Roofer: `4906975`, `108580336` × 두 condition = 정확히 4회
+- `4907177` C3-1/C3-2: class-6 기준 미달로 2개 pre-Roofer insufficient-evidence record
 - G2/metric/C4/C5: 모두 0회/0 access
 
 ## 이전 결과와의 단절
@@ -82,6 +88,11 @@ roofline은 1행과 별도 6행에서만 보인다. C1/C2 입력·출력 행에�
 `4907177`은 2022/2024 epoch 또는 ID alignment 문제 가능성을 `REFERENCE/ID ALIGNMENT
 REVIEW`로 명시하고 C1/C2 실패로 부르지 않는다.
 
+C3는 건물별 12행×4열 한 장으로 구성한다. 첫 행은 current RGB+2022 roofline, 다음 다섯
+행은 C3-1 Gaussian RGB/semantic, fused points, roof mesh, oracle Roofer, 다음 다섯 행은
+C3-2의 동일 결과, 마지막 행은 2022 LoD2 epoch context다. 이 배치로 condition 사이와
+LoD2 맥락을 별도 파일 왕복 없이 비교한다.
+
 ## 완료 조건
 
 - C1/C2 building/method record 6개가 서로 다른 ID와 입력 hash를 가지며, 그중 유효한
@@ -95,4 +106,5 @@ REVIEW`로 명시하고 C1/C2 실패로 부르지 않는다.
 - `4907177/C3-2`는 선택 roof point 1점을 기록하고 명시적 insufficient-evidence panel을 표시함
 - C3 exact checkpoint hash와 모든 추출물 lineage가 연결됨
 - 대표 C1/C2 3장과 C3 condition/building 결과를 original resolution으로 직접 검토
+- C3 oracle Roofer invocation 4, insufficient-evidence pre-failure 2, C3 primary sheet 3장/144 panels
 - 모든 기술 문서와 receipt의 `scientific_verdict`는 `null`

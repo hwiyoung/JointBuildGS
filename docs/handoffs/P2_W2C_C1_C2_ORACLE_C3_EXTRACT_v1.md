@@ -1,9 +1,9 @@
-# P2 C1/C2 oracle 및 C3 Gaussian 결과판 복구 recovery v9 — LOCAL EXECUTION AUTHORITY
+# P2 C1/C2 oracle 및 C3 Gaussian/Roofer 비교판 복구 recovery v10 — LOCAL EXECUTION AUTHORITY
 
-- task_id: `P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v9`
+- task_id: `P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v10`
 - handoff_id: `null`
-- execution_record_id: `P2-LOCAL-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v9`
-- recovery_base_commit: `305583bb` (v7 finalized presentation source)
+- execution_record_id: `P2-LOCAL-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v10`
+- recovery_base: finalized recovery-v9 payload, exact hash-verified inheritance
 - status: `APPROVED_FOR_LOCAL_EXPERIMENT_HOST_EXECUTION`
 - execution_authority: `DIRECT_HUMAN_INSTRUCTION_SINGLE_EXPERIMENT_HOST`
 - write_ownership_transfer_performed: `false`
@@ -66,17 +66,33 @@ Poisson surface mesh까지 추출한 v7 결과를 계승한다. v8은 fused poin
 이전 4-corner/2-triangle-per-Gaussian 파일을 mesh로 재사용하지 않으며 새 mesh를 TSDF라고
 잘못 표기하지 않는다.
 
+## recovery-v10 C3 진단 read-out과 비교판
+
+사용자의 추가 지시에 따라 C3-1/C3-2에도 건물별 GT-footprint oracle Roofer read-out을
+추가한다. class 6은 각 condition의 계승된 rendered-depth fused point 중 semantic class
+`1=roof`이고 exact GroundSurface XY 내부인 점을 0.2 m deterministic voxel로 정리한 것이다.
+class 2는 두 condition 모두 동일한 C2 exact common-image MVS terrain support를 쓴다.
+LoD2 RoofSurface XYZ는 입력에 쓰지 않는다.
+
+`4906975`, `108580336` × C3-1/C3-2 네 operation만 Roofer를 각 1회 실행한다. `4907177`은
+C3-1/C3-2 모두 class-6 100점 미만이므로 두 operation을 Roofer 호출 전에
+`INSUFFICIENT_C3_ROOF_SEMANTIC_EVIDENCE`로 닫는다. 이를 Roofer 실패로 부르지 않는다.
+
+C3 결과판은 condition별 여섯 장이 아니라 건물별 세 장이다. 각 장은 네 고정 열과
+`RGB+roofline`, C3-1의 Gaussian RGB/semantic·fused·roof mesh·Roofer, C3-2의 같은 다섯 행,
+마지막 2022 LoD2 epoch-context 행의 총 12행이다. primary panel reference는 144개다.
+
 ## 실행 한계와 출력
 
-- Roofer/G2/GS training/metric/C4-C5 lineage total: `4/0/0/0/0`
-- Recovery-v9 Roofer invocation: `0` (Recovery-v7 exact completed outputs hash-verified inheritance)
-- Recovery-v9 rendered-depth C3 extraction invocation: `0` (Recovery-v7의 두 completed extraction hash-verified inheritance)
-- Recovery-v9 roof-only mesh postprocess: `6` attempts, `5` completed, `1` insufficient evidence
+- Roofer/G2/GS training/metric/C4-C5 lineage total: `8/0/0/0/0`
+- Recovery-v10 Roofer invocation: `4` (C3 oracle diagnostic only; no retry)
+- Recovery-v10 rendered-depth C3 extraction invocation: `0` (recovery-v9 completed extraction hash-verified inheritance)
+- Recovery-v10 roof-only mesh postprocess: `6` attempts, `5` completed, `1` insufficient evidence
 - pre-Roofer reference alignment failures: `2`
 - output: fresh add-once namespace
-  `artifact://JointBuildGS/phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v9/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v9`
+  `artifact://JointBuildGS/phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v10/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v10`
 - C1/C2: 3개 6행×4열 case sheet, 72 panels
-- C3: 2 condition × 3 building case sheet, 120 panels; 각 sheet에 current RGB+roofline 행 포함
+- C3: 3 building comparison case sheet, 144 primary panels; C3-1/C3-2와 LoD2를 같은 sheet에 포함
 - C3 Gaussian 행은 center scatter가 아니라 checkpoint quaternion/scale/opacity 기반 oriented 2D ellipse 표시
 - C1/C2/C3 3D 행은 동일 GT GroundSurface XY footprint를 주황 점선으로 표시
 - RGB roofline은 검정 12 px 외곽선 + 노랑 6 px 선으로 표시

@@ -57,7 +57,7 @@ class ContractTests(unittest.TestCase):
             (Path(__file__).resolve().parents[3] / "configs/p2/c1_c2_oracle_c3_extract_v1/run_v1.json").read_text(encoding="utf-8")
         )
         authority = config["execution_authority"]
-        self.assertEqual(config["task_id"], "P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v9")
+        self.assertEqual(config["task_id"], "P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v10")
         self.assertIsNone(config["handoff_id"])
         self.assertEqual(authority["execution_host_role"], "experiment_host")
         self.assertFalse(authority["write_ownership_transfer_performed"])
@@ -70,7 +70,9 @@ class ContractTests(unittest.TestCase):
         self.assertIn("inherit-completed", launcher)
         self.assertNotIn("--gpus", launcher)
         self.assertNotIn("extract-surfaces", launcher)
-        self.assertNotIn("3dgi/roofer@", launcher)
+        self.assertIn("prepare_c3_roofer.py prepare", launcher)
+        self.assertIn("3dgi/roofer@sha256:dd2c415", launcher)
+        self.assertIn("--id-attribute stable_id", launcher)
 
     def test_c3_gaussian_panel_uses_quaternion_scale_ellipses(self) -> None:
         axis_x, axis_y = _quaternion_axes(np.asarray([[1.0, 0.0, 0.0, 0.0]]))
