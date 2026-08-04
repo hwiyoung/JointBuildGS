@@ -1,5 +1,13 @@
 # C1/C2 oracle + C3 extraction issue log v1
 
+## CLOSED — zero-class6 pre-Roofer statistic
+
+Recovery v1 reached the expected `DEBY_LOD2_4907177/C2 class-6=0` condition but tried
+to compute the minimum and maximum Z of that empty array. It stopped before writing
+prepared records and before every Roofer/C3 extraction invocation. The preserved
+Recovery-v1 partial is empty. Recovery v2 records both height extrema as null and
+continues to the already-frozen `PRE_ROOFER_REFERENCE_ID_ALIGNMENT_FAILURE` path.
+
 ## CLOSED — local launcher precreated bind-mount root
 
 The first direct Experiment Host invocation stopped before C1/C2 preparation because

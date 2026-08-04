@@ -1,8 +1,8 @@
-# P2 C1/C2 oracle 재실행 및 C3 결과 재추출 recovery v1 — LOCAL EXECUTION AUTHORITY
+# P2 C1/C2 oracle 재실행 및 C3 결과 재추출 recovery v2 — LOCAL EXECUTION AUTHORITY
 
-- task_id: `P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v1`
+- task_id: `P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v2`
 - handoff_id: `null`
-- execution_record_id: `P2-LOCAL-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v1`
+- execution_record_id: `P2-LOCAL-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v2`
 - source_commit: `5f0b944c1c841c45fa263e5a557fbed081603653`
 - status: `APPROVED_FOR_LOCAL_EXPERIMENT_HOST_EXECUTION`
 - execution_authority: `DIRECT_HUMAN_INSTRUCTION_SINGLE_EXPERIMENT_HOST`
@@ -68,7 +68,7 @@ Poisson surface mesh만 추출한다. 이전 4-corner/2-triangle-per-Gaussian �
 - Roofer/G2/GS training/metric/C4-C5: `4/0/0/0/0`
 - pre-Roofer reference alignment failures: `2`
 - output: fresh add-once namespace
-  `artifact://JointBuildGS/phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v1/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v1`
+  `artifact://JointBuildGS/phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v2/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v2`
 - C1/C2: 3개 6행×4열 case sheet, 72 panels
 - C3: 2 condition × 3 building case sheet, 96 panels
 - report/operation CSV/HTML/manifest
@@ -89,3 +89,7 @@ Poisson surface mesh만 추출한다. 이전 4-corner/2-triangle-per-Gaussian �
 존재 자체를 거부해 scientific input read와 계산 전에 중단됐다. 해당 빈 partial은 삭제하거나
 재사용하지 않는다. Recovery v1은 새로운 namespace를 사용하며, producer는 Docker가 미리
 만든 빈 bind-mount root만 허용하고 단 하나의 항목이라도 있으면 계속 fail-closed한다.
+Recovery v1은 이 gate를 통과한 뒤, 예상된 `4907177/C2 class-6=0` 통계에서 빈 배열의
+최소·최대를 계산해 preparation 중단됐다. Roofer와 C3 extraction은 시작되지 않았다.
+Recovery v2는 빈 class-6의 높이 범위를 `null`로 기록하고 고정된 pre-Roofer failure로
+계속 진행한다.

@@ -48,7 +48,7 @@ class ContractTests(unittest.TestCase):
             (Path(__file__).resolve().parents[3] / "configs/p2/c1_c2_oracle_c3_extract_v1/run_v1.json").read_text(encoding="utf-8")
         )
         authority = config["execution_authority"]
-        self.assertEqual(config["task_id"], "P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v1")
+        self.assertEqual(config["task_id"], "P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v2")
         self.assertIsNone(config["handoff_id"])
         self.assertEqual(authority["execution_host_role"], "experiment_host")
         self.assertFalse(authority["write_ownership_transfer_performed"])
@@ -58,6 +58,33 @@ class ContractTests(unittest.TestCase):
         ).read_text(encoding="utf-8")
         self.assertNotIn("100-accepted.json", launcher)
         self.assertNotIn("validate_two_host_handoff.py", launcher)
+
+    def test_empty_class6_is_a_valid_pre_roofer_statistic(self) -> None:
+        from shapely.geometry import Polygon
+
+        reference = BuildingReference(
+            stable_id="B0",
+            footprint=Polygon([(0, 0), (4, 0), (4, 4), (0, 4)]),
+            ground_rings_xyz=(),
+            roof_rings_xyz=(),
+            surface_rings=(),
+        )
+        xy = np.asarray([(x, y) for x in np.linspace(-3, 7, 20) for y in np.linspace(-3, 7, 20)])
+        points = np.column_stack((xy, np.zeros(len(xy))))
+        building, terrain, stats = classify_oracle_crop(
+            points,
+            reference,
+            crop_buffer_m=3.0,
+            ground_ring_inner_buffer_m=0.5,
+            minimum_building_height_m=2.5,
+            ground_cell_m=1.0,
+            ground_keep_above_m=0.75,
+            voxel_m=0.2,
+        )
+        self.assertEqual(len(building), 0)
+        self.assertGreater(len(terrain), 0)
+        self.assertIsNone(stats["minimum_building_z"])
+        self.assertIsNone(stats["maximum_building_z"])
 
     def test_prepare_accepts_only_an_empty_precreated_bind_mount(self) -> None:
         source = (
