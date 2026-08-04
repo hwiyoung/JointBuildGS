@@ -10,8 +10,6 @@ TASK_REL="phase-payloads/p2/c1_c2_oracle_c3_extract_v1/P2-C1-C2-ORACLE-C3-EXTRAC
 FINAL_ROOT="${ARTIFACT_ROOT}/${TASK_REL}"
 OUTPUT_ROOT="${FINAL_ROOT}.partial"
 CONFIG_REL="configs/p2/c1_c2_oracle_c3_extract_v1/run_v1.json"
-PACKET_REL="docs/handoffs/P2_W2C_C1_C2_ORACLE_C3_EXTRACT_v1.md"
-ACCEPTED_REL="artifacts/manifests/handoffs/P2-W2C-C1-C2-ORACLE-C3-EXTRACT-v1/100-accepted.json"
 ROOFER_IMAGE="3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2"
 C1="${ARTIFACT_ROOT}/phase-payloads/p0-audit/data/raw/tum2twin/TUM_Downtown_ULS_20241217_nadir.laz"
 C2="${ARTIFACT_ROOT}/phase-payloads/p0-audit/data/work/mvs/openmvs/dim_dense.ply"
@@ -51,19 +49,9 @@ if ! git -C "${REPO}" merge-base --is-ancestor "${SOURCE_COMMIT}" "${HEAD_SHA}";
   echo "source commit is not an ancestor of execution HEAD" >&2
   exit 2
 fi
-if [[ ! -f "${REPO}/${ACCEPTED_REL}" ]]; then
-  echo "exact 100-accepted receipt is missing" >&2
-  exit 2
-fi
 docker run --rm --network none --entrypoint /opt/conda/bin/python \
-  -e GIT_CONFIG_COUNT=1 -e GIT_CONFIG_KEY_0=safe.directory -e GIT_CONFIG_VALUE_0=/workspace/JointBuildGS \
-  -v "${REPO}:/workspace/JointBuildGS:ro" -w /workspace/JointBuildGS "${PROJECT_IMAGE_ID}" \
-  scripts/repository/validate_two_host_handoff.py "${ACCEPTED_REL}" \
-    --repo . --origin-ref origin/main --head-ref HEAD
-docker run --rm --network none --entrypoint /opt/conda/bin/python \
-  -e EXPECTED_IMAGE="${PROJECT_IMAGE_ID}" -e EXPECTED_SOURCE="${SOURCE_COMMIT}" \
   -v "${REPO}:/workspace/JointBuildGS:ro" -w /workspace/JointBuildGS "${PROJECT_IMAGE_ID}" -c \
-  'import json,os; r=json.load(open("artifacts/manifests/handoffs/P2-W2C-C1-C2-ORACLE-C3-EXTRACT-v1/100-accepted.json")); c=json.load(open("configs/p2/c1_c2_oracle_c3_extract_v1/run_v1.json")); assert r["handoff_id"]==c["handoff_id"] and r["task_id"]==c["task_id"]; assert r["state"]=="accepted" and r["direction"]=="work_to_experiment"; assert r["sender_role"]=="work_host" and r["receiver_role"]=="experiment_host"; assert r["receiver_ack"]["status"]=="accepted" and r["transport"]["exclusive_writer_ack"] is True; assert r["verification"]["docker_image_digest"]==os.environ["EXPECTED_IMAGE"]; assert c["status"]=="APPROVED_FOR_EXECUTION"'
+  'import json; c=json.load(open("configs/p2/c1_c2_oracle_c3_extract_v1/run_v1.json")); a=c["execution_authority"]; assert c["status"]=="APPROVED_FOR_EXECUTION"; assert a["mode"]=="DIRECT_HUMAN_INSTRUCTION_SINGLE_EXPERIMENT_HOST"; assert a["execution_host_role"]=="experiment_host"; assert a["write_ownership_transfer_performed"] is False; assert a["two_host_receipt_required"] is False'
 
 mkdir -p "${OUTPUT_ROOT}"
 

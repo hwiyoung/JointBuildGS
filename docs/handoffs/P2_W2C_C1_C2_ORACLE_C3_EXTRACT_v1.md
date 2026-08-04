@@ -1,18 +1,25 @@
-# P2 C1/C2 oracle 재실행 및 C3 결과 재추출 v1 — OFFER CONTENT READY
+# P2 C1/C2 oracle 재실행 및 C3 결과 재추출 v1 — LOCAL EXECUTION AUTHORITY
 
 - task_id: `P2-C1-C2-ORACLE-C3-EXTRACT-v1`
 - handoff_id: `P2-W2C-C1-C2-ORACLE-C3-EXTRACT-v1`
 - source_commit: `5f0b944c1c841c45fa263e5a557fbed081603653`
-- status: `OFFER_CONTENT_READY_NOT_ISSUED_BY_WORK_HOST`
+- status: `APPROVED_FOR_LOCAL_EXPERIMENT_HOST_EXECUTION`
+- execution_authority: `DIRECT_HUMAN_INSTRUCTION_SINGLE_EXPERIMENT_HOST`
+- write_ownership_transfer_performed: `false`
+- two_host_receipt_required: `false`
 - scientific_verdict: `null`
 
 ## 사람이 승인한 작업 방향
 
 사용자는 현재 task에서 C1/C2를 올바른 건물별 입력으로 다시 실행하고 C3는 학습 없이
-결과만 다시 추출하도록 지시했다. Work Host의 역할은 이 exact plan/commit/source binding을
-검토하고 write ownership을 넘기는 문서 처리뿐이다. 이 문서는 실제 Work Host가 발행한
-`000-offered` receipt가 아니며 역할을 대리하거나 허위로 만들지 않는다. Experiment Host는 유효한
-`100-accepted` 전에는 artifact namespace를 만들거나 Roofer/C3 extraction을 실행하지 않는다.
+결과만 다시 추출하도록 지시했다. 이어서 이번 작업은 Work→Experiment write ownership
+transfer가 아니며, 현재 Experiment Host에서 직접 실행하고 Work Host는 필요할 때 주요
+문서를 제작하는 용도로만 사용한다고 명시했다.
+
+따라서 이 task는 가짜 `000-offered`/`100-accepted`를 만들지 않는다. 저장소의 two-host
+불변식은 실제 host 간 write ownership transfer가 있을 때 그대로 적용되며, 이번에는 그런
+transfer가 발생하지 않는다. 기존 `P2_W2C_...` 파일명과 `handoff_id`는 이미 커밋된 계획의
+추적 호환 식별자로만 보존하고 실행 권한 주장으로 사용하지 않는다.
 
 ## 정확한 실행계획
 
@@ -66,19 +73,11 @@ Poisson surface mesh만 추출한다. 이전 4-corner/2-triangle-per-Gaussian �
 - report/operation CSV/HTML/manifest
 - official G3/G4/PASS and scientific_verdict: `null`
 
-## 100-accepted에 필요한 exact action
+## 실행 권한과 기록
 
-Work Host는 다음만 수행한다.
-
-1. source commit `5f0b944c1c841c45fa263e5a557fbed081603653`과 이 packet/config를 검토한다.
-2. config `status`를 `APPROVED_FOR_EXECUTION`으로 바꾼다.
-3. 이 문서의 exact content에 동의하면 실제 Work Host 역할로 validator-compatible
-   `000-offered.json`을 작성·commit·push한다.
-4. Experiment Host가 그 commit을 fast-forward한 뒤 read-only artifact records를 실제로
-   확인한다.
-5. Experiment Host가 validator를 통과하는 immutable
-   `artifacts/manifests/handoffs/P2-W2C-C1-C2-ORACLE-C3-EXTRACT-v1/100-accepted.json`을
-   실제 receiver role로 작성·commit·push한다.
-6. 그 accepted commit부터 Experiment Host가 exclusive write ownership을 갖는다.
-
-가짜 role, 자체 acceptance, Git-only artifact verification은 금지한다.
+1. implementation base commit은 `5f0b944c1c841c45fa263e5a557fbed081603653`이다.
+2. 현재 task의 직접 사용자 지시를 local Experiment Host 실행 권한으로 기록한다.
+3. 실행 launcher는 clean `HEAD == origin/main`, exact project image, 입력/checkpoint,
+   add-once namespace 부재와 config의 local authority tuple을 확인한다.
+4. 실제 실행 commit은 final manifest의 `source_commit`으로 기록한다.
+5. Return과 기술 보고서는 결과 생성 후 작성하되 `scientific_verdict`는 계속 `null`이다.

@@ -2,7 +2,15 @@
   "schema": "jointbuildgs.p2.c1_c2_oracle_c3_extract.v1",
   "task_id": "P2-C1-C2-ORACLE-C3-EXTRACT-v1",
   "handoff_id": "P2-W2C-C1-C2-ORACLE-C3-EXTRACT-v1",
-  "status": "DRAFT_REQUIRES_TWO_HOST_ACCEPTANCE",
+  "status": "APPROVED_FOR_EXECUTION",
+  "execution_authority": {
+    "mode": "DIRECT_HUMAN_INSTRUCTION_SINGLE_EXPERIMENT_HOST",
+    "authority_record": "current Codex task direct instruction on 2026-08-04",
+    "execution_host_role": "experiment_host",
+    "write_ownership_transfer_performed": false,
+    "two_host_receipt_required": false,
+    "reason": "No Work-to-Experiment write-ownership transfer occurs for this task; Work Host remains reserved for major-document production."
+  },
   "scope": {
     "building_ids": [
       "DEBY_LOD2_4907177",

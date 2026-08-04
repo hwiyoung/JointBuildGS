@@ -30,6 +30,15 @@ def load_config(path: Path = CONFIG_PATH) -> dict[str, Any]:
 
 def validate_config(config: Mapping[str, Any] | None = None, *, require_activation: bool = False) -> dict[str, Any]:
     cfg = dict(config or load_config())
+    authority = cfg.get("execution_authority") or {}
+    if authority.get("mode") != "DIRECT_HUMAN_INSTRUCTION_SINGLE_EXPERIMENT_HOST":
+        raise RuntimeError("local execution authority is missing")
+    if authority.get("execution_host_role") != "experiment_host":
+        raise RuntimeError("execution host role drifted")
+    if authority.get("write_ownership_transfer_performed") is not False:
+        raise RuntimeError("this task must not claim a write-ownership transfer")
+    if authority.get("two_host_receipt_required") is not False:
+        raise RuntimeError("this local execution must not require or fabricate two-host receipts")
     scope = cfg.get("scope") or {}
     ids = list(scope.get("building_ids") or ())
     if ids != ["DEBY_LOD2_4907177", "DEBY_LOD2_4906975", "DEBY_LOD2_108580336"]:
@@ -78,6 +87,8 @@ def validate_config(config: Mapping[str, Any] | None = None, *, require_activati
         "c1_c2_expected_alignment_failure_count": 2,
         "c3_completed_training_runs": 2,
         "c3_training_invocations_this_task": 0,
+        "execution_authority_mode": authority["mode"],
+        "write_ownership_transfer_performed": False,
         "scientific_verdict": None,
     }
 

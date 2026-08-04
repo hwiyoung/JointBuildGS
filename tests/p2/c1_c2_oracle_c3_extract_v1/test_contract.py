@@ -39,7 +39,23 @@ class ContractTests(unittest.TestCase):
         self.assertEqual(result["c1_c2_expected_alignment_failure_count"], 2)
         self.assertEqual(result["c3_completed_training_runs"], 2)
         self.assertEqual(result["c3_training_invocations_this_task"], 0)
+        self.assertEqual(result["execution_authority_mode"], "DIRECT_HUMAN_INSTRUCTION_SINGLE_EXPERIMENT_HOST")
+        self.assertFalse(result["write_ownership_transfer_performed"])
         self.assertIsNone(result["scientific_verdict"])
+
+    def test_local_execution_authority_does_not_fabricate_handoff_receipts(self) -> None:
+        config = json.loads(
+            (Path(__file__).resolve().parents[3] / "configs/p2/c1_c2_oracle_c3_extract_v1/run_v1.json").read_text(encoding="utf-8")
+        )
+        authority = config["execution_authority"]
+        self.assertEqual(authority["execution_host_role"], "experiment_host")
+        self.assertFalse(authority["write_ownership_transfer_performed"])
+        self.assertFalse(authority["two_host_receipt_required"])
+        launcher = (
+            Path(__file__).resolve().parents[3] / "scripts/p2/c1_c2_oracle_c3_extract_v1/run_host.sh"
+        ).read_text(encoding="utf-8")
+        self.assertNotIn("100-accepted.json", launcher)
+        self.assertNotIn("validate_two_host_handoff.py", launcher)
 
     def test_groundsurface_xy_parser_does_not_substitute_roofsurface(self) -> None:
         gml = """<core:CityModel xmlns:core="core" xmlns:bldg="bldg" xmlns:gml="gml">
