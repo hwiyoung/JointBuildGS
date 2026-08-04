@@ -1,0 +1,96 @@
+{
+  "schema": "jointbuildgs.p2.c3_full_scene_tsdf_semantic_texture.v1",
+  "task_id": "P2-C3-FULL-SCENE-TSDF-SEMANTIC-TEXTURE-v1",
+  "status": "APPROVED_FOR_LOCAL_EXECUTION",
+  "scope": {
+    "building_ids": ["DEBY_LOD2_4907177", "DEBY_LOD2_4906975", "DEBY_LOD2_108580336"],
+    "condition_ids": ["C3_1_SEM", "C3_2_SEM_DEPTH"],
+    "views": ["TOP", "OBLIQUE_1", "OBLIQUE_2", "PRINCIPAL_SECTION"],
+    "c4_c5_access_allowed": false
+  },
+  "source": {
+    "v13_relative_root": "phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v13/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v13",
+    "clean_reference_board_relative_root": "phase-payloads/p2/c3_roof_texture_reference_extension_v1/P2-C3-ROOF-TEXTURE-C1-LOD2-REFERENCE-EXTENSION-v6",
+    "shared_view_plan_relative_path": "phase-payloads/p2/c3_tsdf_roof_diagnostic_v1/P2-C3-TSDF-ROOF-DIAGNOSTIC-RENDER-RECOVERY-v1/control/shared_view_plan_v1.json",
+    "colmap_relative_root": "phase-payloads/p0-audit/data/work/mvs/colmap_dense",
+    "lod2_relative_path": "phase-payloads/p0-audit/data/raw/lod2/690_5336.gml",
+    "exact_view_manifest_git_path": "artifacts/manifests/gate_s0/common_base_r2b/exact_937_member_crosswalk_v1.json",
+    "exact_view_count": 937,
+    "checkpoints": {
+      "C3_1_SEM": {
+        "relative_path": "phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-C3-2-GPU0-RECOVERY-v1/c3/c3_1_sem/seed0/ckpt/final.pt",
+        "bytes": 86802780,
+        "sha256": "b4f8ce6d97da6d7cef216b4edb3239ac005cc44f4d45cb459a25644ed79b62ea"
+      },
+      "C3_2_SEM_DEPTH": {
+        "relative_path": "phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-C3-2-GPU0-RECOVERY-v1/c3/c3_2_sem_depth/seed0/ckpt/final.pt",
+        "bytes": 103049692,
+        "sha256": "9bda046e2414a841e289f5d9ed0c5eaf18511445f9c52638b543cd4d52ecea12"
+      }
+    }
+  },
+  "frame": {
+    "crs": "EPSG:25832",
+    "world_shift_xyz": [690953.0, 5336071.0, 604.0]
+  },
+  "render": {
+    "image_downscale": 0.25,
+    "maximum_views_per_building": 24,
+    "alpha_min": 0.5,
+    "depth_min_m": 0.01,
+    "depth_max_m": 500.0,
+    "aoi_footprint_buffer_m": 3.0,
+    "aoi_below_ground_m": 2.0,
+    "aoi_above_ground_m": 45.0
+  },
+  "tsdf": {
+    "voxel_m": 0.15,
+    "truncation_m": 0.45
+  },
+  "semantic_roof_extraction": {
+    "roof_class": 1,
+    "depth_visibility_tolerance_m": 0.6,
+    "minimum_vertex_view_support": 2,
+    "minimum_roof_probability": 0.35,
+    "minimum_valid_vertices_per_triangle": 2,
+    "minimum_height_above_ground_m": 2.5,
+    "minimum_upward_normal_z": 0.2,
+    "footprint_buffer_m": 1.0,
+    "minimum_component_area_m2": 0.5,
+    "coverage_grid_m": 0.25,
+    "coverage_radius_m": 0.3
+  },
+  "texture": {
+    "atlas_resolution_px": 768,
+    "atlas_footprint_padding_m": 1.0,
+    "image_downscale": 0.25,
+    "maximum_views_per_building": 12,
+    "minimum_incidence_cosine": 0.15,
+    "self_zbuffer_tolerance_m": 0.75,
+    "mvs_depth_occlusion_tolerance_m": 1.25,
+    "allow_missing_mvs_depth_with_self_zbuffer": true,
+    "unobserved_rgba": [110, 110, 110, 0],
+    "uv_policy": "GT_FOOTPRINT_XY_PLANAR_DISPLAY_ATLAS",
+    "blend_policy": "INCIDENCE_SQUARED_MULTI_VIEW_WITH_SELF_ZBUFFER_AND_OPTIONAL_MVS_DEPTH_OCCLUSION"
+  },
+  "hybrid": {
+    "boundary_sample_spacing_m": 1.0,
+    "nearest_roof_vertex_count": 8,
+    "minimum_wall_height_m": 2.0,
+    "wall_color_rgb": [0.62, 0.65, 0.68]
+  },
+  "output_relative_root": "phase-payloads/p2/c3_full_scene_tsdf_semantic_texture_v1/P2-C3-FULL-SCENE-TSDF-SEMANTIC-TEXTURE-v1",
+  "execution_counters": {
+    "expected_gs_training_invocations": 0,
+    "expected_checkpoint_render_extractions": 2,
+    "expected_full_scene_tsdf_reconstructions": 6,
+    "expected_semantic_roof_extractions": 6,
+    "expected_texture_bakes": 6,
+    "expected_roofer_invocations": 0,
+    "expected_g2_invocations": 0,
+    "expected_metric_recomputations": 0,
+    "expected_c4_c5_accesses": 0
+  },
+  "official_G3_G4_PASS_usable": null,
+  "scientific_verdict": null
+}
