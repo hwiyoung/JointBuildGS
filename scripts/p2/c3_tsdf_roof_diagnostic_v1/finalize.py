@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import csv
 from datetime import datetime, timezone
+import io
 import json
 from pathlib import Path
 from typing import Any, Iterable, Mapping
@@ -46,6 +47,16 @@ def _condition_label(value: str) -> str:
 
 def _short_building(value: str) -> str:
     return value.removeprefix("DEBY_LOD2_")
+
+
+def _csv_bytes(rows: list[Mapping[str, Any]]) -> bytes:
+    if not rows:
+        raise ValueError("report CSV rows must not be empty")
+    stream = io.StringIO(newline="")
+    writer = csv.DictWriter(stream, fieldnames=list(rows[0].keys()), lineterminator="\n")
+    writer.writeheader()
+    writer.writerows(rows)
+    return stream.getvalue().encode("utf-8")
 
 
 def _gaussian_rows(output_root: Path) -> list[dict[str, Any]]:
@@ -275,11 +286,11 @@ def _artifact_json(summary: Mapping[str, Any], generated_at: str) -> dict[str, A
         "c3_2_108_roof_coverage": next(r["roof_coverage"] for r in mesh if r["condition_id"] == "C3_2_SEM_DEPTH" and r["stable_id"] == "DEBY_LOD2_108580336"),
     }]
     sources = [
-        {"id": "analysis_summary", "label": "Five-question analysis summary", "path": "control/analysis_summary_v1.json"},
-        {"id": "mesh_quality", "label": "Poisson-TSDF mesh quality table", "path": "tables/poisson_tsdf_mesh_quality_v1.csv"},
-        {"id": "roofer_planes", "label": "Inherited Roofer plane diagnostic", "path": "tables/roofer_plane_diagnostic_v1.csv"},
-        {"id": "presence_4907177", "label": "4907177 current-source presence diagnostic", "path": "diagnostics/4907177_current_source_presence_v1.json"},
-        {"id": "gaussian_controls", "label": "Checkpoint Gaussian scale diagnostics", "path": "conditions/*/control/extraction_complete_v1.json"},
+        {"id": "analysis_summary", "label": "Five-question headline table", "path": "reports/headline_v1.csv"},
+        {"id": "mesh_quality", "label": "Poisson-TSDF report table", "path": "reports/mesh_quality_report_v1.csv"},
+        {"id": "roofer_planes", "label": "Inherited Roofer plane report table", "path": "reports/roofer_plane_report_v1.csv"},
+        {"id": "presence_4907177", "label": "4907177 current-source report table", "path": "reports/presence_4907177_report_v1.csv"},
+        {"id": "gaussian_controls", "label": "Wall Gaussian scale report table", "path": "reports/wall_gaussian_scale_report_v1.csv"},
     ]
     return {
         "surface": "report",
@@ -353,7 +364,13 @@ def _artifact_json(summary: Mapping[str, Any], generated_at: str) -> dict[str, A
             },
             "accessIssues": [],
         },
-        "sources": sources,
+        "sources": [
+            {"id": row["id"], "query": {
+                "engine": "duckdb",
+                "sql": f"SELECT * FROM read_csv_auto('{row['path']}', header=true)",
+                "description": f"Loads the reviewed local report snapshot from {row['path']}.",
+            }} for row in sources
+        ],
     }
 
 
@@ -370,6 +387,26 @@ def prepare(source_root: Path, output_root: Path) -> dict[str, Any]:
     summary = build_summary(source_root)
     write_new(output_root / "control/analysis_summary_v1.json", canonical_json_bytes(summary))
     write_new(output_root / "reports/technical_report_ko_v1.md", _technical_markdown(summary).encode("utf-8"))
+    mesh = list(summary["mesh_rows"])
+    roofer = list(summary["roofer_rows"])
+    wall = [row for row in summary["gaussian_rows"] if row["semantic_class"] == "WALL"]
+    presence = list(summary["presence_4907177_rows"])
+    headline = [{
+        "scope_buildings": 3,
+        "condition_building_rows": 6,
+        "training_invocations": 0,
+        "official_metric_recomputations": 0,
+        "c1_points_4907177": presence[0]["footprint_points"],
+        "c3_2_108_roof_coverage": next(r["roof_coverage"] for r in mesh if r["condition_id"] == "C3_2_SEM_DEPTH" and r["stable_id"] == "DEBY_LOD2_108580336"),
+    }]
+    for name, rows in (
+        ("headline_v1.csv", headline),
+        ("mesh_quality_report_v1.csv", mesh),
+        ("roofer_plane_report_v1.csv", roofer),
+        ("presence_4907177_report_v1.csv", presence),
+        ("wall_gaussian_scale_report_v1.csv", wall),
+    ):
+        write_new(output_root / f"reports/{name}", _csv_bytes(rows))
     write_new(output_root / "reports/artifact.json", canonical_json_bytes(_artifact_json(summary, generated_at)))
     return {
         "status": "REPORT_INPUT_PREPARED",

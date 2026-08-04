@@ -6,7 +6,7 @@ import numpy as np
 
 from scripts.p2.c3_tsdf_roof_diagnostic_v1.contract import load_config, validate_config
 from scripts.p2.c1_c2_oracle_c3_extract_v1.render_results import _read_binary_vertex_ply
-from scripts.p2.c3_tsdf_roof_diagnostic_v1.finalize import _mesh_rows, _roofer_rows
+from scripts.p2.c3_tsdf_roof_diagnostic_v1.finalize import _csv_bytes, _mesh_rows, _roofer_rows
 
 
 class ContractTest(unittest.TestCase):
@@ -76,6 +76,8 @@ class ContractTest(unittest.TestCase):
         }])[0]
         self.assertEqual(roofer["class6_points"], 0)
         self.assertIsNone(roofer["roof_surfaces"])
+        csv_text = _csv_bytes([{"label": "지붕", "value": None}]).decode("utf-8")
+        self.assertEqual(csv_text, "label,value\n지붕,\n")
 
 
 if __name__ == "__main__":
