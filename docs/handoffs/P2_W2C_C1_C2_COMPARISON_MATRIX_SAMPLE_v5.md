@@ -1,8 +1,10 @@
-# P2 C1/C2 comparison matrix sample v5 visual correction — DRAFT
+# P2 C1/C2 comparison matrix sample v5 visual correction — ACTIVE
 
 - task_id: `P2-C1-C2-COMPARISON-MATRIX-SAMPLE-v5`
 - handoff_id: `P2-W2C-C1-C2-COMPARISON-MATRIX-SAMPLE-v5`
 - exact source baseline: `719be7a21fb36a716f6a0fe81a9dfe3de9f80608`
+- exact renderer source commit: `c4a05985f13430df911600effe52e74e342668cc`
+- activation basis: direct human instruction to continue in the current host on 2026-08-04
 - output: `artifact://JointBuildGS/phase-payloads/p2/c1_c2_comparison_matrix_sample_v5/P2-C1-C2-COMPARISON-MATRIX-SAMPLE-v5`
 - scientific_verdict: `null`
 

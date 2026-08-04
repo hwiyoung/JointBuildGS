@@ -1,0 +1,11 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1", "template_only": false,
+  "handoff_id": "P2-W2C-C1-C2-C3-UTARGET199-TORCH-CACHE-RECOVERY-v1", "task_id": "P2-C1-C2-C3-UTARGET199-v1",
+  "created_at": "2026-08-04T01:37:29+09:00", "direction": "work_to_experiment", "sender_role": "work_host", "receiver_role": "experiment_host", "state": "offered", "previous_receipt": null,
+  "transport": {"mode": "serialized_main", "branch": "main", "target_branch": "main", "exclusive_writer_ack": true},
+  "commits": {"base_main": "db3b607d6da31cf966f0b2bf0ed4c032981c579a", "offered_head": "SELF", "receipt_head": "SELF"},
+  "scope": {"allowed_paths": ["artifacts/manifests/handoffs/P2-W2C-C1-C2-C3-UTARGET199-TORCH-CACHE-RECOVERY-v1", "artifacts/manifests/p2/c1_c2_c3_utarget199_v1", "docs/experiments/p2/c1_c2_c3_utarget199_v1", "docs/handoffs/returns/P2_C2W_C1_C2_C3_UTARGET199_RETURN_v1.md"], "protected_paths": ["AGENTS.md", "CLAUDE.md", ".gitattributes", "configs", "scripts", "src", "tests", "docs/research", "docs/evidence", "docs/handoffs/P2_W2C_C1_C2_C3_UTARGET199_v1.md", "artifacts/manifests/gate_s0", "phases"], "dirty_wip": false, "snapshot_manifest": null},
+  "verification": {"level": "git_only", "verifier_role": "work_host", "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774", "commands": ["preserve the iteration-0 cache-permission failure namespace", "set task-owned writable torch extension and XDG cache paths", "reuse the exact sealed seed and read-only semantic bind"], "tests": [{"name": "focused C3 contract tests", "passed": 20, "failed": 0}, {"name": "training inventory gates before cache failure", "passed": 3, "failed": 0}, {"name": "completed optimization iterations in prior recovery", "passed": 0, "failed": 0}]},
+  "artifacts": {"required_for_task": true, "availability": {"work_host": "manifest_only", "experiment_host": "verified_local"}, "records": []},
+  "scientific": {"technical_state": "pending", "scientific_verdict": null, "promotion_status": "not_requested"}, "receiver_ack": null
+}

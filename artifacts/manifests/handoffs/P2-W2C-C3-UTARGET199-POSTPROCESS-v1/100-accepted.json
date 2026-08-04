@@ -1,0 +1,138 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P2-W2C-C3-UTARGET199-POSTPROCESS-v1",
+  "task_id": "P2-C3-UTARGET199-POSTPROCESS-v1",
+  "created_at": "2026-08-04T05:29:55+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "accepted",
+  "previous_receipt": {
+    "path": "artifacts/manifests/handoffs/P2-W2C-C3-UTARGET199-POSTPROCESS-v1/000-offered.json",
+    "sha256": "88ab2d4e2096b87982c96027e815c51466d0dafc8cf9955aa927d07a0d1c00d9"
+  },
+  "transport": {
+    "mode": "serialized_main",
+    "branch": "main",
+    "target_branch": "main",
+    "exclusive_writer_ack": true
+  },
+  "commits": {
+    "base_main": "7695c77158d752d6a253955814d9c49ab19130f4",
+    "offered_head": "7f5583caa26ab2bad7dccc5dc2881490c1bc16e0",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P2-W2C-C3-UTARGET199-POSTPROCESS-v1",
+      "artifacts/manifests/p2/c3_utarget199_postprocess_v1",
+      "docs/experiments/p2/c3_utarget199_postprocess_v1",
+      "docs/handoffs/returns/P2_C2W_C3_UTARGET199_POSTPROCESS_RETURN_v1.md"
+    ],
+    "protected_paths": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      ".gitattributes",
+      "configs",
+      "scripts",
+      "src",
+      "tests",
+      "docs/research",
+      "docs/evidence",
+      "phases",
+      "docs/handoffs/P2_W2C_C3_UTARGET199_POSTPROCESS_v1.md"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "artifact_verified",
+    "verifier_role": "experiment_host",
+    "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "commands": [
+      "validate exact postprocess offer",
+      "rehash pair completion, both 30k finals and independent UAS reference cells",
+      "verify 199-building roster, activated config and fresh namespace"
+    ],
+    "tests": [
+      {
+        "name": "offered receipt validator",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "exact input live hashes",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "name": "paired 30k iterations",
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "name": "U_target roster count",
+        "passed": 199,
+        "failed": 0
+      },
+      {
+        "name": "fresh output namespace",
+        "passed": 1,
+        "failed": 0
+      }
+    ]
+  },
+  "artifacts": {
+    "required_for_task": true,
+    "availability": {
+      "work_host": "manifest_only",
+      "experiment_host": "verified_local"
+    },
+    "records": [
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-C3-2-GPU0-RECOVERY-v1/control/c3_pair_completion.json",
+        "bytes": 849,
+        "sha256": "d658dcfe1b5b9726630f0a80ecbb0c7bc76f94a5a9afe21e353e66c9d9cdc5ef",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-04T05:29:55+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-C3-2-GPU0-RECOVERY-v1/c3/c3_1_sem/seed0/ckpt/final.pt",
+        "bytes": 86802780,
+        "sha256": "b4f8ce6d97da6d7cef216b4edb3239ac005cc44f4d45cb459a25644ed79b62ea",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-04T05:29:55+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-C3-2-GPU0-RECOVERY-v1/c3/c3_2_sem_depth/seed0/ckpt/final.pt",
+        "bytes": 103049692,
+        "sha256": "9bda046e2414a841e289f5d9ed0c5eaf18511445f9c52638b543cd4d52ecea12",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-04T05:29:55+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/utarget199_contract_results_v1/P2-UTARGET199-CONTRACT-RESULTS-v1/freeze/utarget199_reference_cells_v1.jsonl",
+        "bytes": 11934242,
+        "sha256": "ae62bc358dfdde604892305d44f3ff599288f00234a1622292d75596ba952f22",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-04T05:29:55+09:00"
+      }
+    ]
+  },
+  "scientific": {
+    "technical_state": "pending",
+    "scientific_verdict": null,
+    "promotion_status": "not_requested"
+  },
+  "receiver_ack": {
+    "role": "experiment_host",
+    "accepted_at": "2026-08-04T05:29:55+09:00",
+    "status": "accepted",
+    "issue": "Accepted for all-199 C3-1/C3-2 native export, common roofprint-free Stage-3, gsplat render, metrics and case sheets."
+  }
+}

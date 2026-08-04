@@ -1,0 +1,91 @@
+{
+  "schema": "jointbuildgs.p2.c3_utarget199_postprocess_render_recovery.technical_result_manifest.v1",
+  "task_id": "P2-C3-UTARGET199-POSTPROCESS-RENDER-RECOVERY-v1",
+  "handoff_id": "P2-W2C-C3-UTARGET199-POSTPROCESS-RENDER-RECOVERY-v1",
+  "created_at": "2026-08-04T05:56:21+09:00",
+  "technical_state": "COMPLETE",
+  "scientific_verdict": null,
+  "official_G3_G4_PASS_usable": null,
+  "source_commit": "99450c4c079da59726095a0bf5ca2433fd6dc7e4",
+  "accepted_commit": "89ce14a951a0296f1dc1b4e7bdd35e7b15ef4078",
+  "artifact_root": "artifact://JointBuildGS/phase-payloads/p2/c3_utarget199_postprocess_render_recovery_v1/P2-C3-UTARGET199-POSTPROCESS-RENDER-RECOVERY-v1",
+  "artifact_inventory": {
+    "file_count": 539,
+    "total_bytes": 301922446,
+    "content_tree_sha256": "e19834e4801b0ec8c34ffea2929c773f142fad1838e896de03a86ecd6bb6ca21",
+    "symlink_count": 0
+  },
+  "counts": {
+    "building_count": 199,
+    "condition_count": 2,
+    "result_rows": 398,
+    "roofer_unique_operations": 25,
+    "actual_gs_render_panels": 8,
+    "case_sheets": 199,
+    "qualitative_html_indexes": 1
+  },
+  "records": [
+    {
+      "uri": "artifact://JointBuildGS/phase-payloads/p2/c3_utarget199_postprocess_render_recovery_v1/P2-C3-UTARGET199-POSTPROCESS-RENDER-RECOVERY-v1/control/completed_v1.json",
+      "bytes": 463,
+      "sha256": "48b8b68bc385ba7bf2abdb938025eb5889e0aae07828857f155e1f674ba4a094"
+    },
+    {
+      "uri": "artifact://JointBuildGS/phase-payloads/p2/c3_utarget199_postprocess_render_recovery_v1/P2-C3-UTARGET199-POSTPROCESS-RENDER-RECOVERY-v1/control/recovered_pre_render_payload_v1.json",
+      "bytes": 604,
+      "sha256": "e7ff83ee68ec9e6e79e61dd98aa761b0911acb83b8ae708455726fa18fd83cff"
+    },
+    {
+      "uri": "artifact://JointBuildGS/phase-payloads/p2/c3_utarget199_postprocess_render_recovery_v1/P2-C3-UTARGET199-POSTPROCESS-RENDER-RECOVERY-v1/control/gs_render_complete_v1.json",
+      "bytes": 185,
+      "sha256": "8d8e9bb2aec8fe1b17c890c5c5eebac0403f07216a0f9c68eff90c2292683167"
+    },
+    {
+      "uri": "artifact://JointBuildGS/phase-payloads/p2/c3_utarget199_postprocess_render_recovery_v1/P2-C3-UTARGET199-POSTPROCESS-RENDER-RECOVERY-v1/control/qualitative_complete_v1.json",
+      "bytes": 330,
+      "sha256": "10f22f138b3851c13b9de455fb8b244dcd7b3d682739192cdf69576c4500d5ac"
+    },
+    {
+      "uri": "artifact://JointBuildGS/phase-payloads/p2/c3_utarget199_postprocess_render_recovery_v1/P2-C3-UTARGET199-POSTPROCESS-RENDER-RECOVERY-v1/results/building_condition_metrics_v1.jsonl",
+      "bytes": 1020259,
+      "sha256": "068c59d47403fd0b717b8bdadc3e5920a61d601b5a831e32eb9055dd1b79cd62"
+    },
+    {
+      "uri": "artifact://JointBuildGS/phase-payloads/p2/c3_utarget199_postprocess_render_recovery_v1/P2-C3-UTARGET199-POSTPROCESS-RENDER-RECOVERY-v1/results/method_summary_v1.csv",
+      "bytes": 233,
+      "sha256": "d0abc6326fbbe75751e1e655f183aea735019190d5d491ee4d71b38aca831781"
+    },
+    {
+      "uri": "artifact://JointBuildGS/phase-payloads/p2/c3_utarget199_postprocess_render_recovery_v1/P2-C3-UTARGET199-POSTPROCESS-RENDER-RECOVERY-v1/qualitative/index.html",
+      "bytes": 38085,
+      "sha256": "4c453ea6f292f52fc9d5577bc1bdd5e6a387d33f19fe04f5e8f21ca312d11c45"
+    }
+  ],
+  "representative_case_sheets": [
+    {
+      "building_id": "DEBY_LOD2_4907177",
+      "bytes": 572132,
+      "sha256": "96cf5cbb4a36658cf4c23a97faa3fb0ed94691cbdf814baed586108a44f8f9a8"
+    },
+    {
+      "building_id": "DEBY_LOD2_4906975",
+      "bytes": 1048068,
+      "sha256": "67e30b55d423793b5c51de08e8a1b87e506b919c48031c02e5988480d6e62816"
+    },
+    {
+      "building_id": "DEBY_LOD2_108580336",
+      "bytes": 1035871,
+      "sha256": "42cddfd24833cab13576cd2bc64dd630eda6de4ea644d8d355d161a5666474c8"
+    }
+  ],
+  "execution_accounting": {
+    "preserved_source_files_copied_exact": 294,
+    "c1_c2_reruns": 0,
+    "c3_training_invocations": 0,
+    "c3_roofer_reruns": 0,
+    "metric_recomputations": 0,
+    "g2_invocations": 0,
+    "c4_c5_accesses": 0,
+    "gsplat_render_invocations": 2
+  }
+}

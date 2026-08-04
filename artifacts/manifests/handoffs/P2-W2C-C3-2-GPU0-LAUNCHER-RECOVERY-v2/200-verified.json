@@ -1,0 +1,114 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P2-W2C-C3-2-GPU0-LAUNCHER-RECOVERY-v2",
+  "task_id": "P2-C3-2-GPU0-LAUNCHER-RECOVERY-v2",
+  "created_at": "2026-08-04T06:00:18+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "verified",
+  "previous_receipt": {
+    "path": "artifacts/manifests/handoffs/P2-W2C-C3-2-GPU0-LAUNCHER-RECOVERY-v2/100-accepted.json",
+    "sha256": "98787957930df21e542167b51681217ecc6bce4d63f0c93efddb17af321c3b93"
+  },
+  "transport": {
+    "mode": "serialized_main",
+    "branch": "main",
+    "target_branch": "main",
+    "exclusive_writer_ack": true
+  },
+  "commits": {
+    "base_main": "5955a4f13d1cb634b41d86d1569a75e525b9d0e2",
+    "offered_head": "5b0594537689d64c3902a726a443517a2cfc11b5",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P2-W2C-C3-2-GPU0-LAUNCHER-RECOVERY-v2",
+      "artifacts/manifests/p2/c1_c2_c3_utarget199_v1",
+      "docs/experiments/p2/c1_c2_c3_utarget199_v1",
+      "docs/handoffs/returns/P2_C2W_C1_C2_C3_UTARGET199_RETURN_v1.md"
+    ],
+    "protected_paths": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      ".gitattributes",
+      "configs",
+      "scripts",
+      "src",
+      "tests",
+      "docs/research",
+      "docs/evidence",
+      "phases",
+      "docs/handoffs/P2_W2C_C3_2_GPU0_LAUNCHER_RECOVERY_v2.md"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "artifact_verified",
+    "verifier_role": "experiment_host",
+    "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "commands": [
+      "inherit unchanged three-record accepted input attestation",
+      "verify exact paired completion and both 30k checkpoint hashes",
+      "verify common seed0 and 937-view contract",
+      "verify technical result manifest, report and Return",
+      "verify two GS invocations with zero restart, OOM, G2 and C4/C5 access"
+    ],
+    "tests": [
+      {"name": "accepted artifact attestation unchanged", "passed": 3, "failed": 0},
+      {"name": "paired 30000-step checkpoints", "passed": 2, "failed": 0},
+      {"name": "pair completion hash", "passed": 1, "failed": 0},
+      {"name": "common seed and view bindings", "passed": 5, "failed": 0},
+      {"name": "training restart or OOM events", "passed": 0, "failed": 0},
+      {"name": "technical report and manifest", "passed": 2, "failed": 0},
+      {"name": "scientific verdict null", "passed": 1, "failed": 0}
+    ]
+  },
+  "artifacts": {
+    "required_for_task": true,
+    "availability": {
+      "work_host": "manifest_only",
+      "experiment_host": "verified_local"
+    },
+    "records": [
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-TORCH-CACHE-RECOVERY-v1/c3/c3_1_sem/seed0/ckpt/final.pt",
+        "bytes": 86802780,
+        "sha256": "b4f8ce6d97da6d7cef216b4edb3239ac005cc44f4d45cb459a25644ed79b62ea",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-04T03:59:16+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-FRAME-RECOVERY-v1/c3/common/neutral_dense_seed.ply",
+        "bytes": 1242719,
+        "sha256": "ad7d1192de507a4834181d8b61a50431829b3413bf8425497507c2396feabdc4",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-04T03:59:16+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/c1_c2_g2_c3_first_wave_recovery_r4_v1/P2-C1-C2-G2-C3-FIRST-WAVE-RECOVERY-R4-v1/c3/prep/semantic_937_colmap_undistorted_r2/output/manifest.json",
+        "bytes": 1391664,
+        "sha256": "3e8b8deb373c5cfb4da4818df860c8dffe24f990485b6143863ad42dadbda7ca",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-04T03:59:16+09:00"
+      }
+    ]
+  },
+  "scientific": {
+    "technical_state": "complete",
+    "scientific_verdict": null,
+    "promotion_status": "not_requested"
+  },
+  "receiver_ack": {
+    "role": "experiment_host",
+    "accepted_at": "2026-08-04T06:00:18+09:00",
+    "status": "verified",
+    "issue": null
+  }
+}

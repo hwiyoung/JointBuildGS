@@ -28,6 +28,7 @@ CONFIG_C1_C2_R4 = REPO / "configs/p2/c1_c2_comparison_matrix_sample_v4/render_v4
 PACKET_C1_C2_R4 = REPO / "docs/handoffs/P2_W2C_C1_C2_COMPARISON_MATRIX_SAMPLE_v4.md"
 CONFIG_C1_C2_R5 = REPO / "configs/p2/c1_c2_comparison_matrix_sample_v5/render_v5.json"
 PACKET_C1_C2_R5 = REPO / "docs/handoffs/P2_W2C_C1_C2_COMPARISON_MATRIX_SAMPLE_v5.md"
+CONFIG_C1_C2_R6 = REPO / "configs/p2/c1_c2_comparison_matrix_sample_v6/render_v6.json"
 
 
 class RepresentativeComparisonMatrixSampleTest(unittest.TestCase):
@@ -312,6 +313,13 @@ class RepresentativeComparisonMatrixSampleTest(unittest.TestCase):
         self.assertEqual((right - left, bottom - top), (1200, 900))
         self.assertGreaterEqual(left, 0)
         self.assertGreaterEqual(top, 0)
+
+    def test_c1_c2_v6_recovery_adds_case_sheet_and_measured_cap(self) -> None:
+        config = json.loads(CONFIG_C1_C2_R6.read_text(encoding="utf-8"))
+        self.assertEqual(config["methods"], ["C1_L_upper", "C2_MVS"])
+        self.assertTrue(config["presentation"]["case_sheet_png"])
+        self.assertEqual(config["execution"]["output_cap_bytes"], 450_000_000)
+        self.assertIn("sample_v6", config["output_task_relative_root"])
 
 
 if __name__ == "__main__":

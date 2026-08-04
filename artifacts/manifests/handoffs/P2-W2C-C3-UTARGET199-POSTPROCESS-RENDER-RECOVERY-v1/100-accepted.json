@@ -1,0 +1,162 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P2-W2C-C3-UTARGET199-POSTPROCESS-RENDER-RECOVERY-v1",
+  "task_id": "P2-C3-UTARGET199-POSTPROCESS-RENDER-RECOVERY-v1",
+  "created_at": "2026-08-04T05:47:26+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "accepted",
+  "previous_receipt": {
+    "path": "artifacts/manifests/handoffs/P2-W2C-C3-UTARGET199-POSTPROCESS-RENDER-RECOVERY-v1/000-offered.json",
+    "sha256": "69d0d1378881e938702692b00d30ec10d74e4985675740ea8b3adb07923ec3e7"
+  },
+  "transport": {
+    "mode": "serialized_main",
+    "branch": "main",
+    "target_branch": "main",
+    "exclusive_writer_ack": true
+  },
+  "commits": {
+    "base_main": "4b65b94a86549f8dc6834d182fb2ebfb55c0eba4",
+    "offered_head": "e29bec86c183d881f846018ecf97301122dd393b",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P2-W2C-C3-UTARGET199-POSTPROCESS-RENDER-RECOVERY-v1",
+      "artifacts/manifests/p2/c3_utarget199_postprocess_render_recovery_v1",
+      "docs/experiments/p2/c3_utarget199_postprocess_render_recovery_v1",
+      "docs/handoffs/returns/P2_C2W_C3_UTARGET199_POSTPROCESS_RENDER_RECOVERY_RETURN_v1.md"
+    ],
+    "protected_paths": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      ".gitattributes",
+      "configs",
+      "scripts",
+      "src",
+      "tests",
+      "docs/research",
+      "docs/evidence",
+      "phases",
+      "docs/handoffs/P2_W2C_C3_UTARGET199_POSTPROCESS_RENDER_RECOVERY_v1.md"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "artifact_verified",
+    "verifier_role": "experiment_host",
+    "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "commands": [
+      "validate exact render-recovery offer",
+      "rehash preserved v1 pre-render controls and result bindings",
+      "verify 25 terminal receipts, no prior render panels, and fresh recovery namespace"
+    ],
+    "tests": [
+      {
+        "name": "offered receipt validator",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "name": "preserved artifact live hashes",
+        "passed": 7,
+        "failed": 0
+      },
+      {
+        "name": "preserved Roofer terminal receipts",
+        "passed": 25,
+        "failed": 0
+      },
+      {
+        "name": "pre-failure GS render panels",
+        "passed": 0,
+        "failed": 0
+      },
+      {
+        "name": "fresh recovery namespace",
+        "passed": 1,
+        "failed": 0
+      }
+    ]
+  },
+  "artifacts": {
+    "required_for_task": true,
+    "availability": {
+      "work_host": "manifest_only",
+      "experiment_host": "verified_local"
+    },
+    "records": [
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/c3_utarget199_postprocess_v1/P2-C3-UTARGET199-POSTPROCESS-v1/control/finalized_v1.json",
+        "bytes": 1332,
+        "sha256": "1f09216979659b502cbc8447d23a0004517b8cb624dd00d46c15bb277f63f038",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-04T05:47:26+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/c3_utarget199_postprocess_v1/P2-C3-UTARGET199-POSTPROCESS-v1/control/population_associated_v1.json",
+        "bytes": 970,
+        "sha256": "2b8ff5e6efb7e9cb2576caae1601ca4858150b7e7cfa7207835eb8900741fb2a",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-04T05:47:26+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/c3_utarget199_postprocess_v1/P2-C3-UTARGET199-POSTPROCESS-v1/control/C3_1_SEM_geometry_frozen_v1.json",
+        "bytes": 3187,
+        "sha256": "cf18306d21b9805b66832e3fc89da437ce385fb23d0b404753aa861e77864d6f",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-04T05:47:26+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/c3_utarget199_postprocess_v1/P2-C3-UTARGET199-POSTPROCESS-v1/control/C3_2_SEM_DEPTH_geometry_frozen_v1.json",
+        "bytes": 3242,
+        "sha256": "ae655567fa3810424bb8db3682194391020a777abe0f481fe7bf2436df80d146",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-04T05:47:26+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/c3_utarget199_postprocess_v1/P2-C3-UTARGET199-POSTPROCESS-v1/results/building_condition_metrics_v1.jsonl",
+        "bytes": 1020259,
+        "sha256": "068c59d47403fd0b717b8bdadc3e5920a61d601b5a831e32eb9055dd1b79cd62",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-04T05:47:26+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/c3_utarget199_postprocess_v1/P2-C3-UTARGET199-POSTPROCESS-v1/results/method_summary_v1.csv",
+        "bytes": 233,
+        "sha256": "d0abc6326fbbe75751e1e655f183aea735019190d5d491ee4d71b38aca831781",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-04T05:47:26+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/c3_utarget199_postprocess_v1/P2-C3-UTARGET199-POSTPROCESS-v1/freeze/execution_units_v1.jsonl",
+        "bytes": 21099,
+        "sha256": "984d2ca050a194b77c8df3387f7908a316f3ef0abf0182afa582492b60459c2b",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-04T05:47:26+09:00"
+      }
+    ]
+  },
+  "scientific": {
+    "technical_state": "pending",
+    "scientific_verdict": null,
+    "promotion_status": "not_requested"
+  },
+  "receiver_ack": {
+    "role": "experiment_host",
+    "accepted_at": "2026-08-04T05:47:26+09:00",
+    "status": "accepted",
+    "issue": "Accepted to preserve the failed v1 namespace, exactly recover completed pre-render outputs, and generate only the missing GS panels and 199 case sheets."
+  }
+}

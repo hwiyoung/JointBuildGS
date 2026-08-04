@@ -1,0 +1,40 @@
+{
+  "schema": "jointbuildgs.p2.c3_twelve_row_comparison_display.v4",
+  "task_id": "P2-C3-12ROW-COMPARISON-DISPLAY-RECOVERY-v4",
+  "status": "APPROVED_FOR_LOCAL_EXPERIMENT_HOST_EXECUTION",
+  "scope": {
+    "building_ids": [
+      "DEBY_LOD2_4907177",
+      "DEBY_LOD2_4906975",
+      "DEBY_LOD2_108580336"
+    ],
+    "condition_ids": ["C3_1_SEM", "C3_2_SEM_DEPTH"],
+    "c4_c5_access_allowed": false
+  },
+  "source": {
+    "diagnostic_relative_root": "phase-payloads/p2/c3_tsdf_roof_diagnostic_v1/P2-C3-TSDF-ROOF-DIAGNOSTIC-RENDER-RECOVERY-v1",
+    "roofer_input_display_relative_root": "phase-payloads/p2/c3_roofer_input_display_v1/P2-C3-ROOFER-INPUT-DISPLAY-RECOVERY-v1",
+    "complete_lineage_relative_root": "phase-payloads/p2/c3_roofer_input_display_v1/P2-C3-COMPLETE-LINEAGE-DISPLAY-RECOVERY-v3",
+    "v13_relative_root": "phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v13/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v13"
+  },
+  "display": {
+    "row_count_per_sheet": 12,
+    "condition_count": 2,
+    "view_count_per_condition": 4,
+    "visible_cell_count": 288,
+    "layout": "ROWS_ARE_STAGES_COLUMNS_ARE_C3_1_FOUR_VIEWS_THEN_C3_2_FOUR_VIEWS",
+    "roofer_branch_rows": [7, 8],
+    "parallel_mesh_diagnostic_rows": [9, 10, 11]
+  },
+  "execution_counters": {
+    "gs_training_invocations": 0,
+    "checkpoint_render_extractions": 0,
+    "mesh_invocations": 0,
+    "roofer_invocations": 0,
+    "g2_invocations": 0,
+    "metric_recomputations": 0,
+    "c4_c5_accesses": 0
+  },
+  "official_G3_G4_PASS_usable": null,
+  "scientific_verdict": null
+}

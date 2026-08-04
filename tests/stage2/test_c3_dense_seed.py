@@ -17,6 +17,9 @@ from src.stage2.c3_dense_seed import (
     C3DenseSeedError,
     DenseSeedConfig,
     REPRESENTATIVE_RULE,
+    UTARGET199_NEUTRAL_CONTRACT,
+    UTARGET199_NEUTRAL_MAX_DENSE_SEED_POINTS,
+    UTARGET199_NEUTRAL_VOXEL_SPACINGS_M,
 )
 
 
@@ -72,6 +75,14 @@ def _config(
 
 
 class C3DenseSeedTests(unittest.TestCase):
+    def test_utarget199_neutral_contract_is_unclassified_and_memory_bounded(self):
+        self.assertEqual(
+            UTARGET199_NEUTRAL_VOXEL_SPACINGS_M,
+            (0.5, 1.0, 2.0, 4.0),
+        )
+        self.assertEqual(UTARGET199_NEUTRAL_MAX_DENSE_SEED_POINTS, 220_000)
+        self.assertIn("NEUTRAL", UTARGET199_NEUTRAL_CONTRACT)
+
     def test_production_entry_rejects_nonexact_contract_before_git_or_source(self):
         points = [(0.01, 0.01, 0.01)]
         with tempfile.TemporaryDirectory() as directory:
@@ -233,7 +244,9 @@ class C3DenseSeedTests(unittest.TestCase):
             )
 
     def test_voxel_grid_is_world_origin_then_output_is_local_xyz(self):
-        points = [(0.39, 0.10, 9.50), (0.41, 0.10, 9.50)]
+        # The frozen OpenMVS source is GS-local. Adding the configured offset
+        # places these points at world x=0.39/0.41 and world z=9.50.
+        points = [(0.24, 0.10, -0.50), (0.26, 0.10, -0.50)]
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             source = root / "dim_dense.ply"
@@ -255,7 +268,7 @@ class C3DenseSeedTests(unittest.TestCase):
             )
             receipt = _produce(config)
             # At 0.40 m the fixed world-origin grid separates x=0.39 and x=0.41.
-            # Voxelizing after the 0.15 m local shift would incorrectly merge them.
+            # Voxelizing the raw local x=0.24/0.26 would incorrectly merge them.
             self.assertEqual(
                 receipt["voxel_preflight"]["candidate_dense_point_counts"]["0.40"],
                 2,

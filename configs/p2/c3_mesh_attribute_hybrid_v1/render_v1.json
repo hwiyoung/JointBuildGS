@@ -1,0 +1,53 @@
+{
+  "schema": "jointbuildgs.p2.c3_mesh_attribute_hybrid.v1",
+  "task_id": "P2-C3-MESH-ATTRIBUTE-HYBRID-v1",
+  "status": "APPROVED_FOR_LOCAL_EXPERIMENT_HOST_EXECUTION",
+  "execution_authority": {
+    "mode": "DIRECT_HUMAN_INSTRUCTION_SINGLE_EXPERIMENT_HOST",
+    "authority_record": "current Codex task direct instruction on 2026-08-04",
+    "write_ownership_transfer_performed": false,
+    "two_host_receipt_required": false
+  },
+  "scope": {
+    "building_ids": [
+      "DEBY_LOD2_4907177",
+      "DEBY_LOD2_4906975",
+      "DEBY_LOD2_108580336"
+    ],
+    "condition_ids": ["C3_1_SEM", "C3_2_SEM_DEPTH"],
+    "mesh_methods": ["POISSON", "TSDF"],
+    "display_modes": ["RGB", "SEMANTIC", "VIRTUAL_DEPTH", "ABS_NORMAL"],
+    "views": ["TOP", "OBLIQUE_1", "OBLIQUE_2", "PRINCIPAL_SECTION"],
+    "c4_c5_access_allowed": false
+  },
+  "source": {
+    "mesh_relative_root": "phase-payloads/p2/c3_tsdf_roof_diagnostic_v1/P2-C3-TSDF-ROOF-DIAGNOSTIC-RECOVERY-v1",
+    "v13_relative_root": "phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v13/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v13",
+    "lod2_relative_path": "phase-payloads/p0-audit/data/raw/lod2/690_5336.gml",
+    "presence_diagnostic_relative_path": "phase-payloads/p2/c3_tsdf_roof_diagnostic_v1/P2-C3-TSDF-ROOF-DIAGNOSTIC-RECOVERY-v1/diagnostics/4907177_current_source_presence_v1.json"
+  },
+  "hybrid": {
+    "role": "GT_FOOTPRINT_ORACLE_HYBRID_VISUALIZATION_NOT_HONEST_STAGE3",
+    "boundary_sample_spacing_m": 1.0,
+    "nearest_roof_vertex_count": 8,
+    "minimum_wall_height_m": 2.0,
+    "default_ground_policy": "C2_PREPARED_LOCAL_GROUND",
+    "ground_failure_override_4907177": "MINIMUM_CURRENT_SOURCE_BUFFER_5M_P10",
+    "wall_rgb_policy": "NEAREST_ROOF_BOUNDARY_RGB_DARKENED_TO_BOTTOM_NOT_OBSERVED_WALL_TEXTURE",
+    "add_ground_cap": true
+  },
+  "output_relative_root": "phase-payloads/p2/c3_mesh_attribute_hybrid_v1/P2-C3-MESH-ATTRIBUTE-HYBRID-v1",
+  "execution_counters": {
+    "expected_gs_training_invocations": 0,
+    "expected_checkpoint_render_extractions": 0,
+    "expected_poisson_reconstructions": 0,
+    "expected_tsdf_reconstructions": 0,
+    "expected_hybrid_wall_assemblies": 12,
+    "expected_roofer_invocations": 0,
+    "expected_g2_invocations": 0,
+    "expected_metric_recomputations": 0,
+    "expected_c4_c5_accesses": 0
+  },
+  "official_G3_G4_PASS_usable": null,
+  "scientific_verdict": null
+}

@@ -1,0 +1,71 @@
+{
+  "schema": "jointbuildgs.p2.c3_roof_texture_bake.v1",
+  "task_id": "P2-C3-ROOF-TEXTURE-CONTEXT-HYBRID-v3",
+  "status": "APPROVED_FOR_LOCAL_EXPERIMENT_HOST_EXECUTION",
+  "execution_authority": {
+    "mode": "DIRECT_HUMAN_INSTRUCTION_SINGLE_EXPERIMENT_HOST",
+    "write_ownership_transfer_performed": false,
+    "two_host_receipt_required": false
+  },
+  "scope": {
+    "building_ids": ["DEBY_LOD2_4907177", "DEBY_LOD2_4906975", "DEBY_LOD2_108580336"],
+    "condition_ids": ["C3_1_SEM", "C3_2_SEM_DEPTH"],
+    "mesh_methods": ["POISSON", "TSDF"],
+    "views": ["TOP", "OBLIQUE_1", "OBLIQUE_2", "PRINCIPAL_SECTION"],
+    "roof_only": true,
+    "c4_c5_access_allowed": false
+  },
+  "source": {
+    "mesh_relative_root": "phase-payloads/p2/c3_tsdf_roof_diagnostic_v1/P2-C3-TSDF-ROOF-DIAGNOSTIC-RECOVERY-v1",
+    "shared_view_plan_relative_path": "phase-payloads/p2/c3_tsdf_roof_diagnostic_v1/P2-C3-TSDF-ROOF-DIAGNOSTIC-RECOVERY-v1/control/shared_view_plan_v1.json",
+    "v13_relative_root": "phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v13/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v13",
+    "presence_diagnostic_relative_path": "phase-payloads/p2/c3_tsdf_roof_diagnostic_v1/P2-C3-TSDF-ROOF-DIAGNOSTIC-RECOVERY-v1/diagnostics/4907177_current_source_presence_v1.json",
+    "colmap_relative_root": "phase-payloads/p0-audit/data/work/mvs/colmap_dense",
+    "lod2_relative_path": "phase-payloads/p0-audit/data/raw/lod2/690_5336.gml",
+    "exact_view_manifest_git_path": "artifacts/manifests/gate_s0/common_base_r2b/exact_937_member_crosswalk_v1.json",
+    "exact_view_count": 937
+  },
+  "frame": {
+    "crs": "EPSG:25832",
+    "world_shift_xyz": [690953.0, 5336071.0, 604.0]
+  },
+  "texture": {
+    "atlas_resolution_px": 768,
+    "atlas_footprint_padding_m": 1.0,
+    "image_downscale": 0.25,
+    "maximum_views_per_building": 12,
+    "minimum_incidence_cosine": 0.15,
+    "self_zbuffer_tolerance_m": 0.75,
+    "mvs_depth_occlusion_tolerance_m": 1.25,
+    "allow_missing_mvs_depth_with_self_zbuffer": true,
+    "unobserved_rgba": [110, 110, 110, 0],
+    "uv_policy": "GT_FOOTPRINT_XY_PLANAR_DISPLAY_ATLAS",
+    "blend_policy": "INCIDENCE_SQUARED_MULTI_VIEW_WITH_SELF_ZBUFFER_AND_OPTIONAL_MVS_DEPTH_OCCLUSION"
+  },
+  "hybrid": {
+    "role": "GT_FOOTPRINT_DISPLAY_WALL_NOT_HONEST_STAGE3",
+    "boundary_sample_spacing_m": 1.0,
+    "nearest_roof_vertex_count": 8,
+    "minimum_wall_height_m": 2.0,
+    "wall_color_rgb": [0.62, 0.65, 0.68],
+    "wall_texture_created": false,
+    "ground_cap_created": false,
+    "honest_stage3_output": false,
+    "official_metric_input": false
+  },
+  "output_relative_root": "phase-payloads/p2/c3_roof_texture_bake_v1/P2-C3-ROOF-TEXTURE-CONTEXT-HYBRID-v3",
+  "execution_counters": {
+    "expected_gs_training_invocations": 0,
+    "expected_checkpoint_render_extractions": 0,
+    "expected_poisson_reconstructions": 0,
+    "expected_tsdf_reconstructions": 0,
+    "expected_roof_texture_bakes": 12,
+    "expected_display_only_gt_footprint_wall_assemblies": 12,
+    "expected_roofer_invocations": 0,
+    "expected_g2_invocations": 0,
+    "expected_metric_recomputations": 0,
+    "expected_c4_c5_accesses": 0
+  },
+  "official_G3_G4_PASS_usable": null,
+  "scientific_verdict": null
+}

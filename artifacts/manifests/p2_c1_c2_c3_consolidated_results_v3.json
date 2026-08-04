@@ -1,0 +1,47 @@
+{
+  "schema": "jointbuildgs.artifact_resolver.v1",
+  "task_id": "P2-C1-C2-C3-CONSOLIDATED-RESULTS-v3",
+  "status": "300-CLOSED_LOCAL_LATEST_C1_C2_AND_SECTION_LOCATORS",
+  "artifact_relative_root": "phase-payloads/p2/c1_c2_c3_consolidated_results_v1/P2-C1-C2-C3-CONSOLIDATED-RESULTS-v3",
+  "primary_pdf": "reports/C1_C2_C3_qualitative_results_v3_lineage_section_locator.pdf",
+  "primary_pdf_sha256": "07797e2aecb34a89a218c8c5ba928aa805facbfa40fb76a0847d2d1f1887a057",
+  "primary_pdf_bytes": 38297340,
+  "page_count": 9,
+  "case_count": 3,
+  "latest_building_specific_c1_c2_page_count": 3,
+  "c3_page_count": 6,
+  "section_locator_count": 9,
+  "source_base_commit": "c1718c8724b60bd5caa93a26f5062c27194364f9",
+  "c3_2_4906975_consensus_normal_diagnostic": {
+    "point_count": 44177,
+    "normal_z_median": 0.9770360589027405,
+    "wall_like_abs_normal_z_lt_0p3_fraction": 0.007537859066935283,
+    "roof_like_abs_normal_z_gt_0p7_fraction": 0.9062408040383004
+  },
+  "recipe": {
+    "config": "configs/p2/c1_c2_c3_consolidated_results_v1/compose_v3.json",
+    "config_sha256": "631d5bba7f93fac281218653c631c31d43ae3a535d8c538d5858d35749199532",
+    "composer": "scripts/p2/c1_c2_c3_consolidated_results_v1/compose_v3.py",
+    "composer_sha256": "640574807f118f8bb11f9dee858ee749fdbfeb815c5883f56a9bbb475a887169",
+    "host_runner": "scripts/p2/c1_c2_c3_consolidated_results_v1/run_v3_host.sh",
+    "host_runner_sha256": "63057d300a4148631fefab8a8ff0926c9ea8e8c19bc7d759c12f61f85fa46e5d"
+  },
+  "verification": {
+    "index_sha256": "403b8f8011669ee39d5acc28521fc85984d77ac8e49a73bacc673eeda4daf4a7",
+    "manifest_sha256": "8750cd4572df17e3e579b9f1c74b39bc4518406c17bf225969ef811b31c61215",
+    "verified_sha256": "b95e94a04a5c34f11485f266c87a62f60e5b9286056a6e2e82e6f944228c5daa",
+    "closed_sha256": "c674a2795fb74c38da8b2a5285479484b1abecee2d20bfe5eb5622e6969b4189"
+  },
+  "execution_counters": {
+    "gs_training_invocations": 0,
+    "checkpoint_render_extractions": 0,
+    "poisson_invocations": 0,
+    "tsdf_invocations": 0,
+    "roofer_invocations": 0,
+    "g2_invocations": 0,
+    "metric_recomputations": 0,
+    "c4_c5_accesses": 0
+  },
+  "official_G3_G4_PASS_usable": null,
+  "scientific_verdict": null
+}

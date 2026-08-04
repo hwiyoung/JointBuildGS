@@ -7,9 +7,11 @@ sort runs are private scratch data.  Only the finest candidate satisfying the
 dense-point cap is published, once, as a local-coordinate XYZ PLY.
 
 The historical ``seed_prep_dense`` pipeline used PDAL's
-``voxelcenternearestneighbor`` filter.  This implementation preserves that
-representative rule on a fixed EPSG:25832 origin and makes previously implicit
-ties deterministic: world XYZ lexicographic order, then source row.
+``voxelcenternearestneighbor`` filter.  The frozen OpenMVS source is already in
+GS-local coordinates, so this implementation first adds the exact local-to-world
+translation, preserves the representative rule on a fixed EPSG:25832 origin,
+and makes previously implicit ties deterministic: world XYZ lexicographic order,
+then source row.
 """
 
 from __future__ import annotations
@@ -40,6 +42,9 @@ LOCAL_Z_RANGE = (-65.0, 30.0)
 VOXEL_ORIGIN_XYZ = (0.0, 0.0, 0.0)
 VOXEL_SPACINGS_M = (0.10, 0.20, 0.40)
 MAX_DENSE_SEED_POINTS = 3_000_000
+UTARGET199_NEUTRAL_VOXEL_SPACINGS_M = (0.50, 1.00, 2.00, 4.00)
+UTARGET199_NEUTRAL_MAX_DENSE_SEED_POINTS = 220_000
+UTARGET199_NEUTRAL_CONTRACT = "UTARGET199_NEUTRAL_UNCLASSIFIED_DENSE_V1"
 REPRESENTATIVE_RULE = "VOXEL_CENTER_NEAREST_WORLD_XYZ_LEXICOGRAPHIC_THEN_SOURCE_ROW"
 VOXEL_INDEX_RULE = "FLOOR_EACH_AXIS_OF_EPSG25832_XYZ_MINUS_FIXED_ORIGIN_DIV_VOXEL_M"
 OUTPUT_ORDER = "LEXICOGRAPHIC_VOXEL_IX_IY_IZ"
@@ -101,6 +106,7 @@ class DenseSeedConfig:
     max_dense_points: int = MAX_DENSE_SEED_POINTS
     chunk_points: int = 1_000_000
     temp_parent: Path | None = None
+    contract: str = "FIRST_WAVE_V2"
 
     def validate(self, *, require_exact_common: bool) -> None:
         if self.expected_input_bytes <= 0 or self.expected_input_points <= 0:
@@ -109,8 +115,20 @@ class DenseSeedConfig:
             r"[0-9a-f]{64}", self.expected_input_sha256
         ) is None:
             raise C3DenseSeedError("expected source SHA-256 must be 64 lowercase hex digits")
-        if tuple(self.voxel_spacings_m) != VOXEL_SPACINGS_M:
-            raise C3DenseSeedError("C3 voxel candidates must remain exactly 0.10/0.20/0.40 m")
+        allowed_voxel_contracts = {
+            "FIRST_WAVE_V2": (VOXEL_SPACINGS_M, MAX_DENSE_SEED_POINTS),
+            UTARGET199_NEUTRAL_CONTRACT: (
+                UTARGET199_NEUTRAL_VOXEL_SPACINGS_M,
+                UTARGET199_NEUTRAL_MAX_DENSE_SEED_POINTS,
+            ),
+        }
+        expected_contract = allowed_voxel_contracts.get(self.contract)
+        if expected_contract is None:
+            raise C3DenseSeedError("unknown C3 dense-seed contract")
+        if tuple(self.voxel_spacings_m) != tuple(expected_contract[0]):
+            raise C3DenseSeedError(
+                f"C3 voxel candidates differ from contract {self.contract}"
+            )
         if tuple(self.voxel_origin_xyz) != VOXEL_ORIGIN_XYZ:
             raise C3DenseSeedError("C3 voxel origin must remain fixed at EPSG:25832 [0,0,0]")
         if self.max_dense_points <= 0 or self.chunk_points <= 0:
@@ -141,7 +159,7 @@ class DenseSeedConfig:
             or tuple(self.aoi_xy) != FROZEN_AOI_XY
             or tuple(self.local_offset_xyz) != LOCAL_OFFSET_XYZ
             or tuple(self.local_z_range) != LOCAL_Z_RANGE
-            or self.max_dense_points != MAX_DENSE_SEED_POINTS
+            or self.max_dense_points != expected_contract[1]
         ):
             raise C3DenseSeedError(
                 "production C3 entry requires exact source size/count, AOI, local transform, Z, and 3M cap"
@@ -342,15 +360,18 @@ def _read_source_once_to_runs(
             digest.update(raw)
             total_bytes += len(raw)
             vertices = np.frombuffer(raw, dtype=header.dtype, count=count)
-            world_xyz = np.column_stack(
+            source_local_xyz = np.column_stack(
                 (
                     vertices[header.x_name].astype(np.float64, copy=False),
                     vertices[header.y_name].astype(np.float64, copy=False),
                     vertices[header.z_name].astype(np.float64, copy=False),
                 )
             )
-            finite = np.all(np.isfinite(world_xyz), axis=1)
+            finite = np.all(np.isfinite(source_local_xyz), axis=1)
             finite_points += int(np.count_nonzero(finite))
+            world_xyz = source_local_xyz + np.asarray(
+                config.local_offset_xyz, dtype=np.float64
+            )
             keep = (
                 finite
                 & (world_xyz[:, 0] >= min_x)
@@ -693,7 +714,9 @@ def _produce_dense_seed(
             )
             candidate_bodies[spacing] = body
         ordered_counts = [candidate_counts[value] for value in config.voxel_spacings_m]
-        if not ordered_counts[0] >= ordered_counts[1] >= ordered_counts[2]:
+        if not all(
+            left >= right for left, right in zip(ordered_counts, ordered_counts[1:])
+        ):
             raise C3DenseSeedError("voxel candidate counts violate nested-grid monotonicity")
         selected_spacing = next(
             (
@@ -734,6 +757,11 @@ def _produce_dense_seed(
                 "numpy": np.__version__,
             },
             "input": input_receipt,
+            "input_coordinate_frame": {
+                "frame": "GS_LOCAL",
+                "world_crs": "EPSG:25832",
+                "local_to_world_translation": list(config.local_offset_xyz),
+            },
             "crop_and_transform": {
                 "crs": "EPSG:25832",
                 "aoi_xy_inclusive": list(config.aoi_xy),
@@ -742,6 +770,7 @@ def _produce_dense_seed(
                 "local_z_inclusive": list(config.local_z_range),
                 "operation_order": [
                     "FILTER_NONFINITE",
+                    "TRANSFORM_SOURCE_GS_LOCAL_TO_WORLD_EPSG25832",
                     "CROP_FROZEN_AOI_XY_AND_WORLD_Z_INCLUSIVE",
                     "VOXELIZE_IN_WORLD_EPSG25832",
                     "TRANSFORM_SELECTED_REPRESENTATIVES_TO_LOCAL_XYZ",
@@ -779,6 +808,8 @@ def _produce_dense_seed(
                 "sparse_only_allowed": False,
                 "full_dense_direct_allowed": False,
                 "full_dense_source_points": config.expected_input_points,
+                "contract": config.contract,
+                "classification_or_semantic_filtering": False,
             },
             "pass_accounting": {
                 "source_natural_stream_reads": 1,
@@ -819,6 +850,26 @@ def produce_dense_seed(config: DenseSeedConfig) -> dict[str, object]:
         repository_commit=repository_commit,
         receipt_schema=RECEIPT_SCHEMA,
         receipt_status="COMPLETED_PREFLIGHT_SELECTED_DENSE_SEED",
+    )
+
+
+def produce_utarget199_neutral_dense_seed(
+    config: DenseSeedConfig,
+) -> dict[str, object]:
+    """Publish the unclassified, geometry-only dense seed shared by C3/C4/C5."""
+
+    if config.contract != UTARGET199_NEUTRAL_CONTRACT:
+        raise C3DenseSeedError(
+            "U_target=199 neutral producer requires its exact named contract"
+        )
+    config.validate(require_exact_common=True)
+    repository_commit = _actual_clean_repository_head()
+    return _produce_dense_seed(
+        config,
+        require_exact_common=True,
+        repository_commit=repository_commit,
+        receipt_schema="jointbuildgs.c3_utarget199_neutral_dense_seed_receipt.v1",
+        receipt_status="COMPLETED_NEUTRAL_UNCLASSIFIED_DENSE_SEED",
     )
 
 
