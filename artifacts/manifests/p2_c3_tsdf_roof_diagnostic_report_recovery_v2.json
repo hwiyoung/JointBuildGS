@@ -1,0 +1,52 @@
+{
+  "schema": "jointbuildgs.local_artifact_resolver.v1",
+  "task_id": "P2-C3-TSDF-ROOF-DIAGNOSTIC-REPORT-RECOVERY-v2",
+  "status": "300-CLOSED_LOCAL_TECHNICAL_DIAGNOSTIC",
+  "source_commit": "4066aad7f48308a035910a7b616b9c710a6bd0d3",
+  "artifact_uri": "artifact://JointBuildGS/phase-payloads/p2/c3_tsdf_roof_diagnostic_v1/P2-C3-TSDF-ROOF-DIAGNOSTIC-REPORT-RECOVERY-v2",
+  "local_absolute_path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/p2/c3_tsdf_roof_diagnostic_v1/P2-C3-TSDF-ROOF-DIAGNOSTIC-REPORT-RECOVERY-v2",
+  "source_artifact_uri": "artifact://JointBuildGS/phase-payloads/p2/c3_tsdf_roof_diagnostic_v1/P2-C3-TSDF-ROOF-DIAGNOSTIC-RENDER-RECOVERY-v1",
+  "source_local_absolute_path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/p2/c3_tsdf_roof_diagnostic_v1/P2-C3-TSDF-ROOF-DIAGNOSTIC-RENDER-RECOVERY-v1",
+  "manifest": {
+    "relative_path": "control/artifact_manifest_v1.json",
+    "bytes": 3437,
+    "sha256": "abe344a886330d08f1d816b4b7040ea0acac6844599182832fe9b06ac26fc77a"
+  },
+  "portable_html_report": {
+    "relative_path": "reports/report.html",
+    "bytes": 464291,
+    "sha256": "f4e9ee4acb4d060864506391a40b21958fc3a88f3c0935a3541c1325a204d3ec",
+    "validation": "passed",
+    "package": "passed",
+    "verification": "structural_only",
+    "browser_qa_limitation": "No installed Chromium headless-shell was available; original-resolution case-sheet visual QA was performed separately."
+  },
+  "technical_report_markdown": {
+    "relative_path": "reports/technical_report_ko_v1.md",
+    "bytes": 5487,
+    "sha256": "5a89c8cceae1db99a8fc425f62b69f8158a4e04577a6ecd713de806a57e3d2bf"
+  },
+  "tree_file_count": 13,
+  "tree_file_bytes": 518151,
+  "manifest_record_count": 9,
+  "source_material_record_count": 11,
+  "manifest_hash_failure_count": 0,
+  "question_count": 5,
+  "case_sheet_count": 3,
+  "rendered_panel_count": 132,
+  "poisson_tsdf_row_count": 6,
+  "roofer_plane_row_count": 6,
+  "execution_counters": {
+    "gs_training_invocations": 0,
+    "roofer_invocations": 0,
+    "g2_invocations": 0,
+    "metric_recomputations": 0,
+    "c4_c5_accesses": 0,
+    "checkpoint_render_extractions_initial_lineage": 2,
+    "checkpoint_render_extractions_this_recovery": 0
+  },
+  "execution_authority": "DIRECT_HUMAN_INSTRUCTION_SINGLE_EXPERIMENT_HOST",
+  "two_host_receipts_created": false,
+  "official_G3_G4_PASS_usable": null,
+  "scientific_verdict": null
+}
