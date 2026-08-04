@@ -6,7 +6,7 @@ ARTIFACT_ROOT="${1:?usage: run_host.sh ARTIFACT_ROOT PROJECT_IMAGE_ID SOURCE_COM
 PROJECT_IMAGE_ID="${2:?missing project image ID}"
 SOURCE_COMMIT="${3:?missing source commit}"
 RUN_ID="${4:?missing run ID}"
-TASK_REL="phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v10/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v10"
+TASK_REL="phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v11/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v11"
 FINAL_ROOT="${ARTIFACT_ROOT}/${TASK_REL}"
 OUTPUT_ROOT="${FINAL_ROOT}.partial"
 CONFIG_REL="configs/p2/c1_c2_oracle_c3_extract_v1/run_v1.json"
@@ -72,13 +72,6 @@ docker run --rm --network none --cpus 4 --memory 32g --pids-limit 1024 \
   -w /workspace/JointBuildGS "${PROJECT_IMAGE_ID}" \
   scripts/p2/c1_c2_oracle_c3_extract_v1/extract_c3.py inherit-completed \
     --output-root /output --source-root /source-all
-docker run --rm --network none --cpus 4 --memory 32g --pids-limit 1024 \
-  --entrypoint /opt/conda/bin/python --user "$(id -u):$(id -g)" \
-  -v "${REPO}:/workspace/JointBuildGS:ro" -v "${OUTPUT_ROOT}:/output:rw" \
-  -w /workspace/JointBuildGS "${PROJECT_IMAGE_ID}" \
-  scripts/p2/c1_c2_oracle_c3_extract_v1/extract_c3.py remesh-roof-only \
-    --output-root /output
-
 docker run --rm --network none --cpus 4 --memory 32g --pids-limit 1024 \
   --entrypoint /opt/conda/bin/python --user "$(id -u):$(id -g)" \
   -v "${REPO}:/workspace/JointBuildGS:ro" -v "${OUTPUT_ROOT}:/output:rw" \

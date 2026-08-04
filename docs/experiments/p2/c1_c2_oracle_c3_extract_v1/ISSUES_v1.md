@@ -35,6 +35,17 @@ present and hash-valid, so these observations are not renderer or missing-artifa
 failures. They remain non-confirmatory technical diagnostics with
 `scientific_verdict: null`.
 
+## CLOSED — recovery v10 inherited mesh add-once collision
+
+The first v10 launcher attempt supplied an invalid source-commit string and stopped at
+the clean ancestry gate before creating an artifact namespace. The second attempt used
+the exact commit and hash-verified the recovery-v9 C1/C2 and C3 payloads, then incorrectly
+called `remesh-roof-only` even though recovery-v9 already contained those add-once files.
+It stopped on the first existing roof-mesh input PLY before C3 Roofer preparation.
+The v10 partial is preserved. Roofer, C3 extraction, GS training, G2 and metric invocation
+counts for both stopped attempts are zero. Recovery v11 removes the redundant remesh step,
+inherits the completed v9 mesh receipts unchanged, and uses a fresh namespace.
+
 ## CLOSED — C3 mesh input included non-roof semantic classes
 
 Recovery v7 Poisson reconstruction consumed every inherited fused point after only
