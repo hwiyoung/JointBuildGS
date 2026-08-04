@@ -3,8 +3,9 @@ from __future__ import annotations
 import unittest
 import numpy as np
 import open3d as o3d
+from shapely.geometry import Polygon
 from scripts.p2.c3_roof_texture_bake_v1.contract import load_config, validate_config
-from scripts.p2.c3_roof_texture_bake_v1.bake import _bilinear, _top_surface, _top_triangle_mesh, _uv
+from scripts.p2.c3_roof_texture_bake_v1.bake import _bilinear, _display_wall_hybrid, _top_surface, _top_triangle_mesh, _uv
 
 
 class RoofTextureBakeTest(unittest.TestCase):
@@ -27,6 +28,16 @@ class RoofTextureBakeTest(unittest.TestCase):
         roof=_top_triangle_mesh(mesh,primitive_ids)
         self.assertEqual(len(np.asarray(roof.triangles)),2)
         self.assertTrue(np.allclose(np.asarray(roof.vertices)[:,2],1.0))
+
+    def test_display_wall_is_separate_and_untextured(self) -> None:
+        vertices=np.asarray([[0,0,5],[2,0,5],[2,2,5],[0,2,5]],float); triangles=np.asarray([[0,1,2],[0,2,3]],int)
+        roof=o3d.geometry.TriangleMesh(o3d.utility.Vector3dVector(vertices),o3d.utility.Vector3iVector(triangles))
+        hybrid,roof_faces,receipt=_display_wall_hybrid(roof,Polygon([(0,0),(2,0),(2,2),(0,2)]),0.0,1.0,2,2.0)
+        self.assertEqual(roof_faces,2)
+        self.assertGreater(receipt["wall_face_count"],0)
+        self.assertFalse(receipt["wall_texture_created"])
+        self.assertFalse(receipt["ground_cap_created"])
+        self.assertFalse(receipt["honest_stage3_output"])
 
 
 if __name__ == "__main__": unittest.main()

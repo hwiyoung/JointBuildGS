@@ -33,6 +33,13 @@ def validate_config(config: Mapping[str, Any]) -> dict[str, Any]:
         raise RuntimeError("texture atlas resolution is too small")
     if texture.get("uv_policy") != "GT_FOOTPRINT_XY_PLANAR_DISPLAY_ATLAS":
         raise RuntimeError("unexpected UV policy")
+    hybrid = config.get("hybrid") or {}
+    if hybrid.get("role") != "GT_FOOTPRINT_DISPLAY_WALL_NOT_HONEST_STAGE3":
+        raise RuntimeError("unexpected display-wall role")
+    if hybrid.get("wall_texture_created") is not False or hybrid.get("ground_cap_created") is not False:
+        raise RuntimeError("display wall must remain untextured and ground-cap free")
+    if hybrid.get("honest_stage3_output") is not False or hybrid.get("official_metric_input") is not False:
+        raise RuntimeError("display wall provenance boundary drifted")
     counters = config.get("execution_counters") or {}
     zero = (
         "expected_gs_training_invocations", "expected_checkpoint_render_extractions",
@@ -44,6 +51,8 @@ def validate_config(config: Mapping[str, Any]) -> dict[str, Any]:
         raise RuntimeError("prohibited execution counter is nonzero")
     if int(counters.get("expected_roof_texture_bakes", -1)) != 12:
         raise RuntimeError("expected exactly 12 roof texture bakes")
+    if int(counters.get("expected_display_only_gt_footprint_wall_assemblies", -1)) != 12:
+        raise RuntimeError("expected exactly 12 display-only wall assemblies")
     if config.get("official_G3_G4_PASS_usable", "missing") is not None or config.get("scientific_verdict", "missing") is not None:
         raise RuntimeError("scientific/official verdict fields must remain null")
     return {"status": "PASS", "texture_bake_count": 12, "scientific_verdict": None}
