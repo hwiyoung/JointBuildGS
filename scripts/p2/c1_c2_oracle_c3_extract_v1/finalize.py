@@ -113,7 +113,8 @@ def finalize(output_root: Path, *, source_commit: str, run_id: str) -> dict[str,
 - C2 입력: exact common-base dense MVS PLY 원점군 crop + 동일 footprint
 - C3: C3-1/C3-2 exact seed0 checkpoint에서 full Gaussian, display proxy, rendered-depth fused point cloud, Poisson mesh 추출
 - 이번 작업의 C3 학습: 0회
-- Roofer/G2/GS training/metric/C4-C5: 4/0/0/0/0
+- Roofer: recovery-v2에서 완료한 exact 4개를 hash 검증 후 계승, 이번 recovery 추가 실행 0회
+- Roofer lineage total/G2/GS training/metric/C4-C5: 4/0/0/0/0
 
 ## C3 과거 학습 횟수와 시간
 
@@ -170,7 +171,8 @@ surface다. TSDF라고 표기하지 않는다.
         "c3_completed_independent_training_runs_before_this_task": 2,
         "c3_successful_training_runtime_minutes_before_this_task": 216.5,
         "execution_counters": {
-            "roofer_invocations": 4,
+            "roofer_invocations_this_recovery": 0,
+            "roofer_invocations_total_lineage": 4,
             "pre_roofer_reference_alignment_failures": 2,
             "g2_invocations": 0,
             "gs_training_invocations": 0,

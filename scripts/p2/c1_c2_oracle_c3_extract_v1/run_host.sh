@@ -6,11 +6,11 @@ ARTIFACT_ROOT="${1:?usage: run_host.sh ARTIFACT_ROOT PROJECT_IMAGE_ID SOURCE_COM
 PROJECT_IMAGE_ID="${2:?missing project image ID}"
 SOURCE_COMMIT="${3:?missing source commit}"
 RUN_ID="${4:?missing run ID}"
-TASK_REL="phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v2/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v2"
+TASK_REL="phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v3/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v3"
 FINAL_ROOT="${ARTIFACT_ROOT}/${TASK_REL}"
 OUTPUT_ROOT="${FINAL_ROOT}.partial"
 CONFIG_REL="configs/p2/c1_c2_oracle_c3_extract_v1/run_v1.json"
-ROOFER_IMAGE="3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2"
+C1C2_SOURCE="${ARTIFACT_ROOT}/phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v2/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v2.partial"
 C1="${ARTIFACT_ROOT}/phase-payloads/p0-audit/data/raw/tum2twin/TUM_Downtown_ULS_20241217_nadir.laz"
 C2="${ARTIFACT_ROOT}/phase-payloads/p0-audit/data/work/mvs/openmvs/dim_dense.ply"
 LOD2="${ARTIFACT_ROOT}/phase-payloads/p0-audit/data/raw/lod2/690_5336.gml"
@@ -37,6 +37,10 @@ for path in "${C1}" "${C2}" "${LOD2}" "${C3_1}" "${C3_2}"; do
     exit 2
   fi
 done
+if [[ ! -d "${C1C2_SOURCE}" || -L "${C1C2_SOURCE}" ]]; then
+  echo "preserved C1/C2 recovery source missing/non-directory" >&2
+  exit 2
+fi
 
 timeout 300 git -C "${REPO}" fetch origin main
 HEAD_SHA="$(git -C "${REPO}" rev-parse HEAD)"
@@ -54,6 +58,9 @@ docker run --rm --network none --entrypoint /opt/conda/bin/python \
   'import json; c=json.load(open("configs/p2/c1_c2_oracle_c3_extract_v1/run_v1.json")); a=c["execution_authority"]; assert c["status"]=="APPROVED_FOR_EXECUTION"; assert a["mode"]=="DIRECT_HUMAN_INSTRUCTION_SINGLE_EXPERIMENT_HOST"; assert a["execution_host_role"]=="experiment_host"; assert a["write_ownership_transfer_performed"] is False; assert a["two_host_receipt_required"] is False'
 
 mkdir -p "${OUTPUT_ROOT}"
+TASK_CACHE_ROOT="$(mktemp -d /tmp/jbgs-c3-extract-cache-XXXXXX)"
+trap 'rm -rf -- "${TASK_CACHE_ROOT}"' EXIT
+mkdir -p "${TASK_CACHE_ROOT}/torch_extensions" "${TASK_CACHE_ROOT}/matplotlib" "${TASK_CACHE_ROOT}/cuda"
 
 project_run() {
   docker run --rm --network none --entrypoint /opt/conda/bin/python --user "$(id -u):$(id -g)" \
@@ -61,31 +68,12 @@ project_run() {
     -w /workspace/JointBuildGS "${PROJECT_IMAGE_ID}" "$@"
 }
 
-project_run scripts/p2/c1_c2_oracle_c3_extract_v1/prepare_c1_c2.py preflight
 docker run --rm --network none --cpus 4 --memory 32g --pids-limit 1024 \
   --entrypoint /opt/conda/bin/python --user "$(id -u):$(id -g)" \
-  -v "${REPO}:/workspace/JointBuildGS:ro" -v "${OUTPUT_ROOT}:/output:rw" \
-  -v "${C1}:/inputs/c1.laz:ro" -v "${C2}:/inputs/c2.ply:ro" -v "${LOD2}:/inputs/lod2.gml:ro" \
+  -v "${REPO}:/workspace/JointBuildGS:ro" -v "${OUTPUT_ROOT}:/output:rw" -v "${C1C2_SOURCE}:/source-c1c2:ro" \
   -w /workspace/JointBuildGS "${PROJECT_IMAGE_ID}" \
-  scripts/p2/c1_c2_oracle_c3_extract_v1/prepare_c1_c2.py prepare \
-    --output-root /output --c1 /inputs/c1.laz --c2 /inputs/c2.ply --lod2 /inputs/lod2.gml
-
-while IFS=$'\t' read -r operation_unit_id work_relative; do
-  [[ "${operation_unit_id}" == "operation_unit_id" ]] && continue
-  work="${OUTPUT_ROOT}/${work_relative}"
-  mkdir "${work}/out"
-  start="${SECONDS}"
-  set +e
-  timeout 600 docker run --rm --network none --cpus 2 --memory 8g --pids-limit 512 \
-    --user "$(id -u):$(id -g)" -v "${work}:/work:rw" -w /work "${ROOFER_IMAGE}" \
-    --id-attribute stable_id --jobs 1 --srs EPSG:25832 --bld-class 6 --grnd-class 2 --lod22 \
-    input.las gt_footprint_oracle.geojson out >"${work}/runtime.log" 2>&1
-  code=$?
-  set -e
-  project_run scripts/p2/c1_c2_oracle_c3_extract_v1/prepare_c1_c2.py record-terminal \
-    --output-root /output --operation-unit-id "${operation_unit_id}" \
-    --exit-code "${code}" --runtime-seconds "$((SECONDS - start))"
-done <"${OUTPUT_ROOT}/freeze/c1_c2_execution_units_v1.tsv"
+  scripts/p2/c1_c2_oracle_c3_extract_v1/prepare_c1_c2.py inherit-completed \
+    --output-root /output --source-root /source-c1c2
 
 for item in "C3_1_SEM:${C3_1}" "C3_2_SEM_DEPTH:${C3_2}"; do
   condition="${item%%:*}"
@@ -98,7 +86,10 @@ for item in "C3_1_SEM:${C3_1}" "C3_2_SEM_DEPTH:${C3_2}"; do
       --output-root /output --checkpoint /inputs/final.pt --condition-id "${condition}" --hash-checkpoint
   docker run --rm --network none --gpus device=0 --cpus 4 --memory 48g --pids-limit 1024 \
     --entrypoint /opt/conda/bin/python --user "$(id -u):$(id -g)" \
+    -e XDG_CACHE_HOME=/task-cache -e TORCH_EXTENSIONS_DIR=/task-cache/torch_extensions \
+    -e MPLCONFIGDIR=/task-cache/matplotlib -e CUDA_CACHE_PATH=/task-cache/cuda \
     -v "${REPO}:/workspace/JointBuildGS:ro" -v "${ARTIFACT_ROOT}:/artifacts/JointBuildGS:ro" \
+    -v "${TASK_CACHE_ROOT}:/task-cache:rw" \
     -v "${OUTPUT_ROOT}:/output:rw" -v "${checkpoint}:/inputs/final.pt:ro" -v "${LOD2}:/inputs/lod2.gml:ro" \
     -w /workspace/JointBuildGS "${PROJECT_IMAGE_ID}" \
     scripts/p2/c1_c2_oracle_c3_extract_v1/extract_c3.py extract-surfaces \

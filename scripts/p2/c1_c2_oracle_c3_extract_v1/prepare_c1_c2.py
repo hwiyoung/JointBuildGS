@@ -7,6 +7,7 @@ import argparse
 from collections import defaultdict
 import json
 from pathlib import Path
+import shutil
 import struct
 from typing import Any, Mapping, Sequence
 
@@ -300,6 +301,71 @@ def record_terminal(output_root: Path, operation_unit_id: str, exit_code: int, r
     return body
 
 
+def inherit_completed_c1_c2(output_root: Path, source_root: Path) -> dict[str, Any]:
+    """Copy only hash-verified completed C1/C2 records from the preserved recovery-v2 partial."""
+    config = load_config()
+    validate_config(config, require_activation=True)
+    if not source_root.is_dir() or source_root.is_symlink():
+        raise RuntimeError(f"unexpected C1/C2 recovery source: {source_root}")
+    if output_root.exists():
+        if any(output_root.iterdir()):
+            raise RuntimeError(f"add-once output namespace is not empty: {output_root}")
+    else:
+        output_root.mkdir(parents=True)
+    units_path = source_root / "freeze/c1_c2_execution_units_v1.jsonl"
+    prepared_path = source_root / "control/c1_c2_prepared_v1.json"
+    rows = [json.loads(line) for line in units_path.read_text(encoding="utf-8").splitlines() if line.strip()]
+    prepared = json.loads(prepared_path.read_text(encoding="utf-8"))
+    if len(rows) != 6 or len({row["operation_unit_id"] for row in rows}) != 6:
+        raise RuntimeError("recovery source does not contain six unique C1/C2 records")
+    eligible = [row for row in rows if row.get("roofer_eligible")]
+    failures = [row for row in rows if not row.get("roofer_eligible")]
+    if len(eligible) != 4 or len(failures) != 2 or {row["stable_id"] for row in failures} != {"DEBY_LOD2_4907177"}:
+        raise RuntimeError("recovery C1/C2 eligibility set drifted")
+    verified = []
+    for row in rows:
+        for record in (row["input"], row["footprint"]):
+            path = source_root / record["path"]
+            size, digest = sha256_file(path)
+            if size != int(record["bytes"]) or digest != record["sha256"]:
+                raise RuntimeError(f"recovery source record digest drift: {path}")
+            verified.append(record)
+        terminal_path = source_root / row["work_directory"] / "roofer_terminal_v1.json"
+        if row.get("roofer_eligible"):
+            terminal = json.loads(terminal_path.read_text(encoding="utf-8"))
+            if terminal.get("status") != "COMPLETED" or len(terminal.get("outputs") or ()) != 1:
+                raise RuntimeError(f"recovery Roofer terminal incomplete: {row['operation_unit_id']}")
+            output_record = terminal["outputs"][0]
+            output_path = source_root / output_record["path"]
+            size, digest = sha256_file(output_path)
+            if size != int(output_record["bytes"]) or digest != output_record["sha256"]:
+                raise RuntimeError(f"recovery Roofer output digest drift: {output_path}")
+            verified.append(output_record)
+        elif terminal_path.exists():
+            raise RuntimeError(f"ineligible recovery row unexpectedly has terminal: {row['operation_unit_id']}")
+    if prepared.get("roofer_operation_count") != 4 or prepared.get("pre_roofer_reference_alignment_failure_count") != 2:
+        raise RuntimeError("recovery prepared receipt drifted")
+    for relative in (Path("operations"), Path("freeze")):
+        shutil.copytree(source_root / relative, output_root / relative)
+    (output_root / "control").mkdir()
+    shutil.copy2(prepared_path, output_root / "control/c1_c2_prepared_v1.json")
+    body = {
+        "schema": "jointbuildgs.c1_c2_oracle_recovery_inheritance.v1",
+        "status": "INHERITED_FOUR_EXACT_COMPLETED_ROOFER_OPERATIONS",
+        "source_root": source_root.as_posix(),
+        "source_relative_root": config["c1_c2_recovery_source_relative_root"],
+        "verified_record_count": len(verified),
+        "building_method_record_count": 6,
+        "completed_roofer_operation_count": 4,
+        "pre_roofer_reference_alignment_failure_count": 2,
+        "roofer_invocations_this_recovery": 0,
+        "roofer_invocations_total_lineage": 4,
+        "scientific_verdict": None,
+    }
+    write_new(output_root / "control/c1_c2_recovery_inheritance_v1.json", canonical_json_bytes(body))
+    return body
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     sub = parser.add_subparsers(dest="mode", required=True)
@@ -315,6 +381,9 @@ def main() -> None:
     record_parser.add_argument("--operation-unit-id", required=True)
     record_parser.add_argument("--exit-code", type=int, required=True)
     record_parser.add_argument("--runtime-seconds", type=int, required=True)
+    inherit_parser = sub.add_parser("inherit-completed")
+    inherit_parser.add_argument("--output-root", type=Path, required=True)
+    inherit_parser.add_argument("--source-root", type=Path, required=True)
     args = parser.parse_args()
     if args.mode == "preflight":
         result = validate_config(require_activation=False)
@@ -326,8 +395,10 @@ def main() -> None:
             lod2_path=args.lod2,
             hash_inputs=args.hash_inputs,
         )
-    else:
+    elif args.mode == "record-terminal":
         result = record_terminal(args.output_root, args.operation_unit_id, args.exit_code, args.runtime_seconds)
+    else:
+        result = inherit_completed_c1_c2(args.output_root, args.source_root)
     print(json.dumps(result, ensure_ascii=False, sort_keys=True))
 
 

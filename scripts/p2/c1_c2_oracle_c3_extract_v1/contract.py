@@ -31,11 +31,11 @@ def load_config(path: Path = CONFIG_PATH) -> dict[str, Any]:
 def validate_config(config: Mapping[str, Any] | None = None, *, require_activation: bool = False) -> dict[str, Any]:
     cfg = dict(config or load_config())
     authority = cfg.get("execution_authority") or {}
-    if cfg.get("task_id") != "P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v2":
+    if cfg.get("task_id") != "P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v3":
         raise RuntimeError("recovery task identity drifted")
     if cfg.get("handoff_id") is not None:
         raise RuntimeError("local execution must not claim a handoff ID")
-    if cfg.get("execution_record_id") != "P2-LOCAL-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v2":
+    if cfg.get("execution_record_id") != "P2-LOCAL-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v3":
         raise RuntimeError("local execution record identity drifted")
     if authority.get("mode") != "DIRECT_HUMAN_INSTRUCTION_SINGLE_EXPERIMENT_HOST":
         raise RuntimeError("local execution authority is missing")
@@ -60,7 +60,8 @@ def validate_config(config: Mapping[str, Any] | None = None, *, require_activati
         raise RuntimeError("GT input-field boundary drifted")
     counters = cfg.get("execution_counters") or {}
     expected = {
-        "expected_roofer_invocations": 4,
+        "expected_roofer_invocations_this_recovery": 0,
+        "expected_roofer_invocations_total_lineage": 4,
         "expected_pre_roofer_reference_alignment_failures": 2,
         "expected_g2_invocations": 0,
         "expected_gs_training_invocations": 0,

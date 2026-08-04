@@ -1,5 +1,14 @@
 # C1/C2 oracle + C3 extraction issue log v1
 
+## CLOSED — C3 extraction lazy CUDA cache path
+
+Recovery v2 completed all four independent Roofer operations, then exported the full
+C3-1 Gaussian PLY and stopped at the first surface render because gsplat attempted to
+build its lazy CUDA extension under unwritable `/.cache`. No C3 surface or mesh was
+produced, and GS training remained zero. Recovery v3 verifies and inherits the exact
+C1/C2 inputs, footprints, terminals and CityJSONSeq outputs without another Roofer
+invocation, then mounts a task-local writable Torch/CUDA cache for both C3 conditions.
+
 ## CLOSED — zero-class6 pre-Roofer statistic
 
 Recovery v1 reached the expected `DEBY_LOD2_4907177/C2 class-6=0` condition but tried

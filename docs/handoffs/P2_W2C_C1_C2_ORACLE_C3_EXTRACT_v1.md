@@ -1,8 +1,8 @@
-# P2 C1/C2 oracle 재실행 및 C3 결과 재추출 recovery v2 — LOCAL EXECUTION AUTHORITY
+# P2 C1/C2 oracle 재실행 및 C3 결과 재추출 recovery v3 — LOCAL EXECUTION AUTHORITY
 
-- task_id: `P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v2`
+- task_id: `P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v3`
 - handoff_id: `null`
-- execution_record_id: `P2-LOCAL-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v2`
+- execution_record_id: `P2-LOCAL-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v3`
 - source_commit: `5f0b944c1c841c45fa263e5a557fbed081603653`
 - status: `APPROVED_FOR_LOCAL_EXPERIMENT_HOST_EXECUTION`
 - execution_authority: `DIRECT_HUMAN_INSTRUCTION_SINGLE_EXPERIMENT_HOST`
@@ -65,10 +65,11 @@ Poisson surface mesh만 추출한다. 이전 4-corner/2-triangle-per-Gaussian �
 
 ## 실행 한계와 출력
 
-- Roofer/G2/GS training/metric/C4-C5: `4/0/0/0/0`
+- Roofer/G2/GS training/metric/C4-C5 lineage total: `4/0/0/0/0`
+- Recovery-v3 Roofer invocation: `0` (Recovery-v2 exact completed outputs hash-verified inheritance)
 - pre-Roofer reference alignment failures: `2`
 - output: fresh add-once namespace
-  `artifact://JointBuildGS/phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v2/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v2`
+  `artifact://JointBuildGS/phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v3/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v3`
 - C1/C2: 3개 6행×4열 case sheet, 72 panels
 - C3: 2 condition × 3 building case sheet, 96 panels
 - report/operation CSV/HTML/manifest
@@ -92,4 +93,7 @@ Poisson surface mesh만 추출한다. 이전 4-corner/2-triangle-per-Gaussian �
 Recovery v1은 이 gate를 통과한 뒤, 예상된 `4907177/C2 class-6=0` 통계에서 빈 배열의
 최소·최대를 계산해 preparation 중단됐다. Roofer와 C3 extraction은 시작되지 않았다.
 Recovery v2는 빈 class-6의 높이 범위를 `null`로 기록하고 고정된 pre-Roofer failure로
-계속 진행한다.
+계속 진행했다. 네 Roofer operation은 모두 성공했지만 C3-1 surface render가 gsplat lazy
+CUDA extension용 `/.cache` 권한 오류로 중단됐다. Recovery v3는 네 C1/C2 output/input/
+footprint/terminal hash를 검증해 새 namespace에 계승하고 Roofer를 추가 실행하지 않는다.
+C3는 task-local writable CUDA/Torch cache로 처음부터 재추출한다.

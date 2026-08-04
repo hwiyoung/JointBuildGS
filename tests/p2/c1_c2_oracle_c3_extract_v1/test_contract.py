@@ -48,7 +48,7 @@ class ContractTests(unittest.TestCase):
             (Path(__file__).resolve().parents[3] / "configs/p2/c1_c2_oracle_c3_extract_v1/run_v1.json").read_text(encoding="utf-8")
         )
         authority = config["execution_authority"]
-        self.assertEqual(config["task_id"], "P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v2")
+        self.assertEqual(config["task_id"], "P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v3")
         self.assertIsNone(config["handoff_id"])
         self.assertEqual(authority["execution_host_role"], "experiment_host")
         self.assertFalse(authority["write_ownership_transfer_performed"])
@@ -58,6 +58,9 @@ class ContractTests(unittest.TestCase):
         ).read_text(encoding="utf-8")
         self.assertNotIn("100-accepted.json", launcher)
         self.assertNotIn("validate_two_host_handoff.py", launcher)
+        self.assertIn("TORCH_EXTENSIONS_DIR=/task-cache/torch_extensions", launcher)
+        self.assertIn("inherit-completed", launcher)
+        self.assertNotIn("3dgi/roofer@", launcher)
 
     def test_empty_class6_is_a_valid_pre_roofer_statistic(self) -> None:
         from shapely.geometry import Polygon
