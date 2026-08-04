@@ -3,7 +3,7 @@ set -euo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 artifact_root="${JBGS_ARTIFACT_ROOT:-/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts}"
-relative_root="phase-payloads/p2/c3_roofer_input_display_v1/P2-C3-ROOFER-INPUT-DISPLAY-RECOVERY-v2"
+relative_root="phase-payloads/p2/c3_roofer_input_display_v1/P2-C3-ROOFER-INPUT-DISPLAY-RECOVERY-v3"
 output_root="${artifact_root}/${relative_root}"
 image="jointbuildgs:dev"
 expected_image="sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774"
@@ -28,7 +28,7 @@ docker run --rm --network none --user "${host_uid}:${host_gid}" \
   -e HOME=/tmp -e MPLCONFIGDIR=/tmp/matplotlib -e PYTHONDONTWRITEBYTECODE=1 \
   -v "${repo_root}:/workspace/JointBuildGS:ro" -v "${artifact_root}:/artifacts/JointBuildGS" \
   -w /workspace/JointBuildGS "${image}" python -B -m scripts.p2.c3_roofer_input_display_v1.render \
-  --config configs/p2/c3_roofer_input_display_v1/render_v2.json \
+  --config configs/p2/c3_roofer_input_display_v1/render_v3.json \
   --output-root "/artifacts/JointBuildGS/${relative_root}" --artifact-root /artifacts/JointBuildGS
 
 echo "C3 Roofer-input close-up complete: ${output_root}"

@@ -3,7 +3,7 @@ set -euo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 artifact_root="${JBGS_ARTIFACT_ROOT:-/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts}"
-relative_root="phase-payloads/p2/c3_roofer_input_display_v1/P2-C3-12ROW-COMPARISON-DISPLAY-RECOVERY-v5"
+relative_root="phase-payloads/p2/c3_roofer_input_display_v1/P2-C3-12ROW-COMPARISON-DISPLAY-RECOVERY-v6"
 output_root="${artifact_root}/${relative_root}"
 image="jointbuildgs:dev"
 expected_image="sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774"

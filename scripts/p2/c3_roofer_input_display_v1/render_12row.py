@@ -20,7 +20,7 @@ from scripts.p2.c3_tsdf_roof_diagnostic_v1.render import VIEWS
 
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
-CONFIG_PATH = REPO_ROOT / "configs/p2/c3_roofer_input_display_v1/render_12row_v5.json"
+CONFIG_PATH = REPO_ROOT / "configs/p2/c3_roofer_input_display_v1/render_12row_v6.json"
 CONDITIONS = ("C3_1_SEM", "C3_2_SEM_DEPTH")
 
 
@@ -29,7 +29,7 @@ def load_config(path: Path = CONFIG_PATH) -> dict[str, Any]:
 
 
 def validate_config(config: Mapping[str, Any]) -> None:
-    if config.get("schema") != "jointbuildgs.p2.c3_twelve_row_comparison_display.v5":
+    if config.get("schema") != "jointbuildgs.p2.c3_twelve_row_comparison_display.v6":
         raise RuntimeError("unexpected 12-row display schema")
     if config.get("status") != "APPROVED_FOR_LOCAL_EXPERIMENT_HOST_EXECUTION":
         raise RuntimeError("12-row display is not activated")
@@ -154,11 +154,11 @@ def run(output_root: Path, artifact_root: Path) -> dict[str, Any]:
         rows.append(("12", "2022 LoD2 context\nnot training or verdict input", _paired(lod2, lod2)))
         if len(rows) != 12:
             raise RuntimeError(f"12-row contract drifted for {stable_id}")
-        sheet = output_root / f"qualitative/12row/{stable_id}/case_sheet_c3_12row_v5.png"
+        sheet = output_root / f"qualitative/12row/{stable_id}/case_sheet_c3_12row_v6.png"
         _sheet(sheet, stable_id, rows)
         records.append({"stable_id": stable_id, "case_sheet": file_record(sheet, output_root), "row_count": 12, "column_count": 8, "visible_cell_count": 96})
     body = {
-        "schema": "jointbuildgs.c3_twelve_row_comparison_display.v5",
+        "schema": "jointbuildgs.c3_twelve_row_comparison_display.v6",
         "status": "COMPLETE_SEALED_RESULTS_REARRANGED_ONLY",
         "case_sheet_count": len(records),
         "rows_per_sheet": 12,
@@ -171,7 +171,7 @@ def run(output_root: Path, artifact_root: Path) -> dict[str, Any]:
         "official_G3_G4_PASS_usable": None,
         "scientific_verdict": None,
     }
-    write_new(output_root / "qualitative/index_v5.json", canonical_json_bytes(body))
+    write_new(output_root / "qualitative/index_v6.json", canonical_json_bytes(body))
     return body
 
 

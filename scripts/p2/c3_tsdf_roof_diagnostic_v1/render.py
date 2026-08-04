@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
+import textwrap
 from typing import Any, Mapping, Sequence
 
 import cv2
@@ -231,9 +232,18 @@ def _panel(
     _setup_axes(ax, reference, zlim, view)
     ax.set_title(title, fontsize=12, fontweight="bold")
     if note:
-        text = ax.text2D if view.startswith("OBLIQUE") else ax.text
-        text(0.02, 0.02, note, transform=ax.transAxes, fontsize=8.5, color="#222", bbox={"facecolor": "white", "edgecolor": "#999", "alpha": 0.88, "pad": 4})
-    figure.tight_layout()
+        figure.text(
+            0.02,
+            0.018,
+            textwrap.fill(note, width=115),
+            fontsize=7.6,
+            color="#222",
+            va="bottom",
+            bbox={"facecolor": "white", "edgecolor": "#999", "alpha": 0.88, "pad": 3},
+        )
+        figure.tight_layout(rect=(0.0, 0.105, 1.0, 1.0))
+    else:
+        figure.tight_layout()
     path.parent.mkdir(parents=True, exist_ok=True)
     figure.savefig(path, metadata={"Software": "JointBuildGS C3 TSDF roof diagnostic renderer"})
     plt.close(figure)
