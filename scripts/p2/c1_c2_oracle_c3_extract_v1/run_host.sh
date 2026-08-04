@@ -6,11 +6,11 @@ ARTIFACT_ROOT="${1:?usage: run_host.sh ARTIFACT_ROOT PROJECT_IMAGE_ID SOURCE_COM
 PROJECT_IMAGE_ID="${2:?missing project image ID}"
 SOURCE_COMMIT="${3:?missing source commit}"
 RUN_ID="${4:?missing run ID}"
-TASK_REL="phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v4/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v4"
+TASK_REL="phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v5/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v5"
 FINAL_ROOT="${ARTIFACT_ROOT}/${TASK_REL}"
 OUTPUT_ROOT="${FINAL_ROOT}.partial"
 CONFIG_REL="configs/p2/c1_c2_oracle_c3_extract_v1/run_v1.json"
-RECOVERY_SOURCE="${ARTIFACT_ROOT}/phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v3/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v3.partial"
+RECOVERY_SOURCE="${ARTIFACT_ROOT}/phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v4/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v4"
 LOD2="${ARTIFACT_ROOT}/phase-payloads/p0-audit/data/raw/lod2/690_5336.gml"
 
 if [[ "${ARTIFACT_ROOT}" != /* || ! -d "${ARTIFACT_ROOT}" ]]; then
@@ -81,10 +81,10 @@ docker run --rm --network none --cpus 4 --memory 32g --pids-limit 1024 \
     --output-root /output --artifact-root /artifacts/JointBuildGS --lod2 /inputs/lod2.gml
 docker run --rm --network none --cpus 4 --memory 32g --pids-limit 1024 \
   --entrypoint /opt/conda/bin/python --user "$(id -u):$(id -g)" \
-  -v "${REPO}:/workspace/JointBuildGS:ro" -v "${OUTPUT_ROOT}:/output:rw" \
+  -v "${REPO}:/workspace/JointBuildGS:ro" -v "${ARTIFACT_ROOT}:/artifacts/JointBuildGS:ro" -v "${OUTPUT_ROOT}:/output:rw" \
   -v "${LOD2}:/inputs/lod2.gml:ro" -w /workspace/JointBuildGS "${PROJECT_IMAGE_ID}" \
   scripts/p2/c1_c2_oracle_c3_extract_v1/render_results.py c3 \
-    --output-root /output --lod2 /inputs/lod2.gml
+    --output-root /output --artifact-root /artifacts/JointBuildGS --lod2 /inputs/lod2.gml
 
 project_run scripts/p2/c1_c2_oracle_c3_extract_v1/finalize.py \
   --output-root /output --source-commit "${SOURCE_COMMIT}" --run-id "${RUN_ID}"

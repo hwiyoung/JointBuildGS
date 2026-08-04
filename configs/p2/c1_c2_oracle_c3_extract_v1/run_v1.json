@@ -1,8 +1,8 @@
 {
   "schema": "jointbuildgs.p2.c1_c2_oracle_c3_extract.v1",
-  "task_id": "P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v4",
+  "task_id": "P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v5",
   "handoff_id": null,
-  "execution_record_id": "P2-LOCAL-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v4",
+  "execution_record_id": "P2-LOCAL-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v5",
   "status": "APPROVED_FOR_EXECUTION",
   "execution_authority": {
     "mode": "DIRECT_HUMAN_INSTRUCTION_SINGLE_EXPERIMENT_HOST",
@@ -22,9 +22,9 @@
     "c3_mode": "EXACT_CHECKPOINT_RESULT_EXTRACTION_ONLY_NO_TRAINING",
     "c4_c5_access_allowed": false
   },
-  "output_relative_root": "phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v4/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v4",
-  "c1_c2_recovery_source_relative_root": "phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v3/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v3.partial",
-  "c3_recovery_source_relative_root": "phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v3/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v3.partial",
+  "output_relative_root": "phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v5/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v5",
+  "c1_c2_recovery_source_relative_root": "phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v4/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v4",
+  "c3_recovery_source_relative_root": "phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v4/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v4",
   "frame": {
     "crs": "EPSG:25832",
     "world_shift_xyz": [690953.0, 5336071.0, 604.0],
@@ -145,6 +145,8 @@
     "roofline_policy": "ROOFSURFACE_XYZ_ONLY_ON_CURRENT_RGB_ROW_AND_SEPARATE_LOD2_CONTEXT_ROW",
     "input_output_policy": "GT_GROUNDSURFACE_XY_FOOTPRINT_ONLY_NO_ROOFLINE_OVERLAY",
     "minimum_title_font_pt": 12,
+    "c3_rows": ["CURRENT_RGB_WITH_LOD2_ROOFLINE", "ORIENTED_2D_GAUSSIAN_RGB_ELLIPSES", "ORIENTED_2D_GAUSSIAN_SEMANTIC_ELLIPSES", "RENDERED_DEPTH_FUSED_SURFACE_POINTS", "POISSON_SURFACE_MESH"],
+    "c3_gaussian_display_policy": "QUATERNION_SCALE_OPACITY_ORIENTED_ELLIPSES_NOT_CENTER_POINT_SCATTER",
     "reference_alignment_review_buildings": ["DEBY_LOD2_4907177"]
   },
   "execution_counters": {

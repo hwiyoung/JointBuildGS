@@ -14,6 +14,7 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+from matplotlib.collections import PolyCollection
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 import numpy as np
 import open3d as o3d
@@ -390,6 +391,82 @@ def _c3_point_panel(path: Path, xyz: np.ndarray, colors: np.ndarray, bbox: BBox,
     plt.close(figure)
 
 
+def _quaternion_axes(quaternions: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    q = np.asarray(quaternions, dtype=np.float64)
+    q = q / np.maximum(np.linalg.norm(q, axis=1, keepdims=True), 1e-12)
+    w, x, y, z = q.T
+    axis_x = np.column_stack((1 - 2 * (y * y + z * z), 2 * (x * y + w * z), 2 * (x * z - w * y)))
+    axis_y = np.column_stack((2 * (x * y - w * z), 1 - 2 * (x * x + z * z), 2 * (y * z + w * x)))
+    return axis_x, axis_y
+
+
+def _c3_gaussian_panel(
+    path: Path,
+    xyz: np.ndarray,
+    quaternions: np.ndarray,
+    scales_xy: np.ndarray,
+    opacity: np.ndarray,
+    colors: np.ndarray,
+    bbox: BBox,
+    view: str,
+    title: str,
+) -> None:
+    if not len(xyz):
+        raise RuntimeError("no Gaussian primitives in building display crop")
+    score = np.asarray(opacity) * np.sqrt(np.maximum(scales_xy[:, 0] * scales_xy[:, 1], 1e-12))
+    maximum = 2800
+    if len(xyz) > maximum:
+        high_count = maximum // 2
+        high = np.argpartition(score, -high_count)[-high_count:]
+        remaining = np.setdiff1d(np.arange(len(xyz)), high, assume_unique=False)
+        uniform = remaining[np.linspace(0, len(remaining) - 1, maximum - high_count, dtype=int)]
+        selected = np.concatenate((high, uniform))
+    else:
+        selected = np.arange(len(xyz))
+    selected = selected[np.argsort(score[selected])]
+    q_xyz = np.asarray(xyz[selected], dtype=np.float64)
+    q_quat = np.asarray(quaternions[selected], dtype=np.float64)
+    q_scale = np.asarray(scales_xy[selected], dtype=np.float64)
+    q_opacity = np.asarray(opacity[selected], dtype=np.float64)
+    q_colors = np.asarray(colors[selected], dtype=np.float64)
+    axis_x, axis_y = _quaternion_axes(q_quat)
+    theta = np.linspace(0, 2 * np.pi, 13, endpoint=False)
+    ellipse = (
+        q_xyz[:, None, :]
+        + 1.5 * q_scale[:, 0, None, None] * np.cos(theta)[None, :, None] * axis_x[:, None, :]
+        + 1.5 * q_scale[:, 1, None, None] * np.sin(theta)[None, :, None] * axis_y[:, None, :]
+    )
+    facecolors = np.column_stack((q_colors, np.clip(0.16 + 0.72 * q_opacity, 0.16, 0.88)))
+    z0, z1 = float(np.quantile(q_xyz[:, 2], 0.005)), float(np.quantile(q_xyz[:, 2], 0.995))
+    figure = plt.figure(figsize=(6.4, 4.8), dpi=150)
+    if view.startswith("OBLIQUE"):
+        ax = figure.add_subplot(111, projection="3d", proj_type="ortho")
+        collection = Poly3DCollection(ellipse, facecolors=facecolors, edgecolors="none", zsort="average")
+        ax.add_collection3d(collection)
+        _setup_3d(ax, bbox, (z0, z1), view)
+    else:
+        ax = figure.add_subplot(111)
+        if view == "TOP":
+            polygons = ellipse[:, :, :2]
+            ax.add_collection(PolyCollection(polygons, facecolors=facecolors, edgecolors="none"))
+            ax.set_aspect("equal")
+            ax.set_xlim(bbox.min_x - 5, bbox.max_x + 5)
+            ax.set_ylim(bbox.min_y - 5, bbox.max_y + 5)
+        else:
+            center_y = (bbox.min_y + bbox.max_y) / 2
+            band = max(bbox.height * 0.08, 0.8)
+            crosses = (ellipse[:, :, 1].min(axis=1) <= center_y + band) & (ellipse[:, :, 1].max(axis=1) >= center_y - band)
+            polygons = ellipse[crosses][:, :, (0, 2)]
+            ax.add_collection(PolyCollection(polygons, facecolors=facecolors[crosses], edgecolors="none"))
+            ax.set_xlim(bbox.min_x - 5, bbox.max_x + 5)
+            ax.set_ylim(z0, z1)
+    ax.set_title(title, fontsize=12, fontweight="bold")
+    figure.tight_layout()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    figure.savefig(path, metadata={"Software": "JointBuildGS oriented 2D Gaussian ellipse renderer"})
+    plt.close(figure)
+
+
 def _c3_mesh_panel(path: Path, mesh_path: Path, bbox: BBox, view: str, title: str) -> None:
     mesh = o3d.io.read_triangle_mesh(str(mesh_path))
     vertices = np.asarray(mesh.vertices)
@@ -429,14 +506,22 @@ def _c3_mesh_panel(path: Path, mesh_path: Path, bbox: BBox, view: str, title: st
     plt.close(figure)
 
 
-def render_c3(output_root: Path, lod2_path: Path) -> dict[str, Any]:
+def render_c3(output_root: Path, artifact_root: Path, lod2_path: Path) -> dict[str, Any]:
     config = load_config()
     references = load_building_references(lod2_path, config["scope"]["building_ids"])
+    rgb_cfg = config["inputs"]["current_rgb"]
+    scene_ref = json.loads((artifact_root / rgb_cfg["scene_reference_relative_path"]).read_text(encoding="utf-8"))
+    camera_model = projection.parse_cam_model(artifact_root / rgb_cfg["cameras_relative_path"])
+    cameras = projection.parse_cameras(artifact_root / rgb_cfg["images_relative_path"], scene_ref)
+    image_root = artifact_root / rgb_cfg["image_directory_relative_path"]
     records = []
     for condition in config["c3_training_provenance"]["conditions"]:
         condition_id = condition["condition_id"]
         proxy = _read_binary_vertex_ply(output_root / f"c3/{condition_id}/gaussians/display_proxy_gaussian_parameters_v1.ply")
         proxy_xyz = np.column_stack((proxy["x"], proxy["y"], proxy["z"]))
+        proxy_quaternions = np.column_stack((proxy["quat_w"], proxy["quat_x"], proxy["quat_y"], proxy["quat_z"]))
+        proxy_scales_xy = np.column_stack((proxy["scale_x"], proxy["scale_y"]))
+        proxy_opacity = np.asarray(proxy["opacity"], dtype=np.float64)
         proxy_rgb = np.column_stack((proxy["red"], proxy["green"], proxy["blue"])).astype(float) / 255
         proxy_sem = SEMANTIC_COLORS[np.asarray(proxy["semantic_class"], dtype=np.uint8)].astype(float) / 255
         for stable_id, reference in references.items():
@@ -445,39 +530,94 @@ def render_c3(output_root: Path, lod2_path: Path) -> dict[str, Any]:
                 (proxy_xyz[:, 0] >= bbox.min_x - 5) & (proxy_xyz[:, 0] <= bbox.max_x + 5)
                 & (proxy_xyz[:, 1] >= bbox.min_y - 5) & (proxy_xyz[:, 1] <= bbox.max_y + 5)
             )
-            gaussian_xyz, gaussian_rgb, gaussian_sem = proxy_xyz[keep], proxy_rgb[keep], proxy_sem[keep]
+            gaussian_xyz = proxy_xyz[keep]
+            gaussian_quaternions = proxy_quaternions[keep]
+            gaussian_scales_xy = proxy_scales_xy[keep]
+            gaussian_opacity = proxy_opacity[keep]
+            gaussian_rgb, gaussian_sem = proxy_rgb[keep], proxy_sem[keep]
             fused_path = output_root / f"c3/{condition_id}/buildings/{stable_id}/rendered_depth_fused_surface_points_v1.ply"
             fused = _read_binary_vertex_ply(fused_path)
             fused_xyz = np.column_stack((fused["x"], fused["y"], fused["z"]))
             fused_sem = SEMANTIC_COLORS[np.asarray(fused["semantic_class"], dtype=np.uint8)].astype(float) / 255
             mesh_path = output_root / f"c3/{condition_id}/buildings/{stable_id}/poisson_surface_mesh_v1.ply"
             case_root = output_root / "qualitative/c3" / condition_id / stable_id
-            rows = []
-            for row_name, xyz, colors in (
-                ("Exact-checkpoint Gaussian\nRGB display proxy", gaussian_xyz, gaussian_rgb),
-                ("Exact-checkpoint Gaussian\nsemantic display proxy", gaussian_xyz, gaussian_sem),
-                ("Rendered-depth fused\n3D surface points", fused_xyz, fused_sem),
+            c1_points, _c1_surfaces, _footprint_rings, _c1_terminal = _load_method_geometry(
+                output_root, CONDITIONS[0], stable_id
+            )
+            roof_reference = roof_ring_vertices(reference.roof_rings_xyz)
+            roles = select_current_uas_camera_roles(
+                roof_reference,
+                c1_points,
+                bbox,
+                cameras,
+                camera_model,
+                scene_ref,
+                0.5,
+                "orthometric",
+                "ellipsoidal",
+            )
+            raw_paths = []
+            for index, (role, scale) in enumerate((("COVERAGE", 3.0), ("NADIR", 2.0), ("NADIR", 1.35), ("OBLIQUE", 2.0))):
+                path = case_root / "panels" / f"1_rgb_roofline_{index + 1}.png"
+                _raw_roofline_panel(
+                    path,
+                    image_root / roles[role]["camera"].name,
+                    roles[role],
+                    reference.roof_rings_xyz,
+                    camera_model,
+                    scene_ref,
+                    crop_scale=scale,
+                    title=f"2024 RGB + 2022 LoD2 roofline | {roles[role]['camera'].name}",
+                )
+                raw_paths.append(path)
+            rows = [("2024 RGB + 2022 roofline\nprojection only", raw_paths)]
+            for row_name, colors in (
+                ("Exact-checkpoint oriented 2D Gaussians\nRGB ellipse display proxy", gaussian_rgb),
+                ("Exact-checkpoint oriented 2D Gaussians\nsemantic ellipse display proxy", gaussian_sem),
             ):
                 paths = []
                 for view in VIEWS:
                     path = case_root / "panels" / f"{len(rows) + 1}_{view.lower()}.png"
-                    _c3_point_panel(path, xyz, colors, bbox, view, f"{row_name.replace(chr(10), ' ')} | {view}")
+                    _c3_gaussian_panel(
+                        path,
+                        gaussian_xyz,
+                        gaussian_quaternions,
+                        gaussian_scales_xy,
+                        gaussian_opacity,
+                        colors,
+                        bbox,
+                        view,
+                        f"{row_name.replace(chr(10), ' ')} | {view}",
+                    )
                     paths.append(path)
                 rows.append((row_name, paths))
-            mesh_paths = []
+            fused_paths = []
             for view in VIEWS:
                 path = case_root / "panels" / f"4_{view.lower()}.png"
+                _c3_point_panel(path, fused_xyz, fused_sem, bbox, view, f"Rendered-depth fused 3D surface points | {view}")
+                fused_paths.append(path)
+            rows.append(("Rendered-depth fused\n3D surface points", fused_paths))
+            mesh_paths = []
+            for view in VIEWS:
+                path = case_root / "panels" / f"5_{view.lower()}.png"
                 _c3_mesh_panel(path, mesh_path, bbox, view, "Poisson surface mesh | " + view)
                 mesh_paths.append(path)
             rows.append(("Poisson mesh\n(not Gaussian quad mesh)", mesh_paths))
             sheet = case_root / "case_sheet_c3_3d_v1.png"
-            _compose_sheet(sheet, rows, f"{stable_id} | {condition_id}", "existing exact checkpoint; training invocations=0; scientific_verdict=null")
-            records.append({"condition_id": condition_id, "stable_id": stable_id, "case_sheet": file_record(sheet, output_root), "panel_count": 16})
+            _compose_sheet(
+                sheet,
+                rows,
+                f"{stable_id} | {condition_id}",
+                "oriented scale/quaternion Gaussian ellipses; existing exact checkpoint; training invocations=0; scientific_verdict=null",
+            )
+            records.append({"condition_id": condition_id, "stable_id": stable_id, "case_sheet": file_record(sheet, output_root), "panel_count": 20})
     body = {
         "schema": "jointbuildgs.c3_3d_qualitative.v1",
         "case_sheet_count": len(records),
         "panel_count": sum(row["panel_count"] for row in records),
         "records": records,
+        "roofline_role": "CURRENT_RGB_PROJECTION_CONTEXT_ONLY",
+        "gaussian_representation": "ORIENTED_2D_ELLIPSES_FROM_CHECKPOINT_QUATERNION_SCALE_OPACITY_NOT_CENTER_POINTS",
         "training_invocations": 0,
         "scientific_verdict": None,
     }
@@ -494,12 +634,13 @@ def main() -> None:
     c12.add_argument("--lod2", type=Path, required=True)
     c3 = sub.add_parser("c3")
     c3.add_argument("--output-root", type=Path, required=True)
+    c3.add_argument("--artifact-root", type=Path, required=True)
     c3.add_argument("--lod2", type=Path, required=True)
     args = parser.parse_args()
     if args.mode == "c1-c2":
         result = render_c1_c2(args.output_root, args.artifact_root, args.lod2)
     else:
-        result = render_c3(args.output_root, args.lod2)
+        result = render_c3(args.output_root, args.artifact_root, args.lod2)
     print(json.dumps(result, ensure_ascii=False, sort_keys=True))
 
 

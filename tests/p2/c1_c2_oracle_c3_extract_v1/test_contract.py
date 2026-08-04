@@ -18,7 +18,7 @@ from scripts.p2.c1_c2_oracle_c3_extract_v1.contract import (
     load_building_references,
     validate_config,
 )
-from scripts.p2.c1_c2_oracle_c3_extract_v1.render_results import _c3_mesh_panel
+from scripts.p2.c1_c2_oracle_c3_extract_v1.render_results import _c3_gaussian_panel, _c3_mesh_panel, _quaternion_axes
 from src.visualization.fixed_view_qualitative import BBox
 
 
@@ -51,7 +51,7 @@ class ContractTests(unittest.TestCase):
             (Path(__file__).resolve().parents[3] / "configs/p2/c1_c2_oracle_c3_extract_v1/run_v1.json").read_text(encoding="utf-8")
         )
         authority = config["execution_authority"]
-        self.assertEqual(config["task_id"], "P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v4")
+        self.assertEqual(config["task_id"], "P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v5")
         self.assertIsNone(config["handoff_id"])
         self.assertEqual(authority["execution_host_role"], "experiment_host")
         self.assertFalse(authority["write_ownership_transfer_performed"])
@@ -65,6 +65,24 @@ class ContractTests(unittest.TestCase):
         self.assertNotIn("--gpus", launcher)
         self.assertNotIn("extract-surfaces", launcher)
         self.assertNotIn("3dgi/roofer@", launcher)
+
+    def test_c3_gaussian_panel_uses_quaternion_scale_ellipses(self) -> None:
+        axis_x, axis_y = _quaternion_axes(np.asarray([[1.0, 0.0, 0.0, 0.0]]))
+        np.testing.assert_allclose(axis_x, [[1.0, 0.0, 0.0]])
+        np.testing.assert_allclose(axis_y, [[0.0, 1.0, 0.0]])
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            xyz = np.asarray([[1.0, 2.0, 5.0], [3.0, 2.0, 6.0]])
+            quaternions = np.asarray([[1.0, 0.0, 0.0, 0.0], [0.9238795, 0.0, 0.3826834, 0.0]])
+            scales = np.asarray([[0.8, 0.3], [0.5, 0.2]])
+            opacity = np.asarray([0.8, 0.6])
+            colors = np.asarray([[0.2, 0.6, 0.9], [0.9, 0.4, 0.1]])
+            for view in ("TOP", "PRINCIPAL_SECTION"):
+                output = root / f"gaussian_{view}.png"
+                _c3_gaussian_panel(
+                    output, xyz, quaternions, scales, opacity, colors, BBox(0.0, 0.0, 4.0, 4.0), view, view
+                )
+                self.assertGreater(output.stat().st_size, 0)
 
     def test_c3_mesh_top_and_principal_panels_create_2d_axes(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

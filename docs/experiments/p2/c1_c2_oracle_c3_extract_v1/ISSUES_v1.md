@@ -1,5 +1,24 @@
 # C1/C2 oracle + C3 extraction issue log v1
 
+## CLOSED — C3 context row and Gaussian primitive representation
+
+Recovery v4 displayed the exact-checkpoint Gaussian proxy as center-point scatter and
+did not repeat the current RGB + 2022 LoD2 roofline row in each C3 sheet. Recovery v5
+adds the same projection-context row and renders deterministic display subsets as
+oriented 2D ellipse polygons from checkpoint quaternion, in-plane scale and opacity.
+The exact full Gaussian PLY remains unchanged, and this presentation recovery invokes
+neither training nor extraction.
+
+## OPEN — C3 extracted geometry quality observations
+
+Original-resolution review of all six C3 case sheets found a large detached vertical
+surface in `C3_2_SEM_DEPTH/DEBY_LOD2_4906975`, sparse or vertically elongated geometry
+for `DEBY_LOD2_4907177` in both conditions, and residual context/clutter around
+`DEBY_LOD2_108580336`. The exact Gaussian, fused-point and Poisson-mesh files are
+present and hash-valid, so these observations are not renderer or missing-artifact
+failures. They remain non-confirmatory technical diagnostics with
+`scientific_verdict: null`.
+
 ## CLOSED — C3 two-dimensional mesh panel axes
 
 Recovery v3 completed both extraction-only C3 conditions: exact full Gaussian PLY,

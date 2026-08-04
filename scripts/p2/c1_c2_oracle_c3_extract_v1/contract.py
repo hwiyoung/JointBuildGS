@@ -31,11 +31,11 @@ def load_config(path: Path = CONFIG_PATH) -> dict[str, Any]:
 def validate_config(config: Mapping[str, Any] | None = None, *, require_activation: bool = False) -> dict[str, Any]:
     cfg = dict(config or load_config())
     authority = cfg.get("execution_authority") or {}
-    if cfg.get("task_id") != "P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v4":
+    if cfg.get("task_id") != "P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v5":
         raise RuntimeError("recovery task identity drifted")
     if cfg.get("handoff_id") is not None:
         raise RuntimeError("local execution must not claim a handoff ID")
-    if cfg.get("execution_record_id") != "P2-LOCAL-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v4":
+    if cfg.get("execution_record_id") != "P2-LOCAL-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v5":
         raise RuntimeError("local execution record identity drifted")
     if authority.get("mode") != "DIRECT_HUMAN_INSTRUCTION_SINGLE_EXPERIMENT_HOST":
         raise RuntimeError("local execution authority is missing")
@@ -58,6 +58,9 @@ def validate_config(config: Mapping[str, Any] | None = None, *, require_activati
     prep = cfg.get("c1_c2_preparation") or {}
     if prep.get("gt_footprint_used") is not True or prep.get("roofsurface_used") is not False:
         raise RuntimeError("GT input-field boundary drifted")
+    presentation = cfg.get("presentation") or {}
+    if presentation.get("c3_gaussian_display_policy") != "QUATERNION_SCALE_OPACITY_ORIENTED_ELLIPSES_NOT_CENTER_POINT_SCATTER":
+        raise RuntimeError("C3 Gaussian visualization contract drifted")
     counters = cfg.get("execution_counters") or {}
     expected = {
         "expected_roofer_invocations_this_recovery": 0,

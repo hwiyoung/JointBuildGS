@@ -84,8 +84,12 @@ def finalize(output_root: Path, *, source_commit: str, run_id: str) -> dict[str,
     c3_index = json.loads((output_root / "qualitative/c3/index_v1.json").read_text(encoding="utf-8"))
     if c12_index.get("case_sheet_count") != 3 or c12_index.get("panel_count") != 72:
         raise RuntimeError("C1/C2 qualitative count drifted")
-    if c3_index.get("case_sheet_count") != 6 or c3_index.get("panel_count") != 96:
+    if c3_index.get("case_sheet_count") != 6 or c3_index.get("panel_count") != 120:
         raise RuntimeError("C3 qualitative count drifted")
+    if c3_index.get("roofline_role") != "CURRENT_RGB_PROJECTION_CONTEXT_ONLY":
+        raise RuntimeError("C3 roofline context row is missing")
+    if c3_index.get("gaussian_representation") != "ORIENTED_2D_ELLIPSES_FROM_CHECKPOINT_QUATERNION_SCALE_OPACITY_NOT_CENTER_POINTS":
+        raise RuntimeError("C3 Gaussian representation drifted")
     c3_exports = []
     c3_surfaces = []
     for condition in config["c3_training_provenance"]["conditions"]:
@@ -111,7 +115,7 @@ def finalize(output_root: Path, *, source_commit: str, run_id: str) -> dict[str,
 - `4907177`: C1 25점/C2 0점으로 2개 pre-Roofer reference/ID alignment failure
 - C1 입력: current UAS LAZ 원점군 crop + GT GroundSurface XY footprint
 - C2 입력: exact common-base dense MVS PLY 원점군 crop + 동일 footprint
-- C3: C3-1/C3-2 exact seed0 checkpoint에서 full Gaussian, display proxy, rendered-depth fused point cloud, Poisson mesh 추출
+- C3: current RGB+LoD2 roofline 행, quaternion/scale/opacity 기반 oriented Gaussian ellipse 행, rendered-depth fused point cloud, Poisson mesh 표시
 - 이번 작업의 C3 학습: 0회
 - Roofer: recovery-v2에서 완료한 exact 4개를 hash 검증 후 계승, 이번 recovery 추가 실행 0회
 - Roofer lineage total/G2/GS training/metric/C4-C5: 4/0/0/0/0
@@ -130,7 +134,8 @@ C1/C2는 GT GroundSurface XY를 Roofer footprint로 사용했으므로 official 
 아니라 `REFERENCE/ID ALIGNMENT REVIEW`로 유지한다.
 
 C3 full Gaussian PLY는 모든 primitive와 quaternion/scale/opacity/SH/semantic logits를
-보존한다. display proxy만 명시적 opacity/scale/AOI 필터를 사용한다. mesh는 이전의
+보존한다. display proxy는 center point scatter가 아니라 quaternion/scale/opacity를 적용한
+oriented 2D Gaussian ellipse로 표시한다. proxy만 명시적 opacity/scale/AOI 필터를 사용한다. mesh는 이전의
 Gaussian별 quad mesh가 아니며 rendered median depth를 다중시점 융합한 뒤 만든 Poisson
 surface다. TSDF라고 표기하지 않는다.
 
@@ -167,7 +172,7 @@ surface다. TSDF라고 표기하지 않는다.
         "c1_c2_case_sheet_count": 3,
         "c1_c2_panel_count": 72,
         "c3_case_sheet_count": 6,
-        "c3_panel_count": 96,
+        "c3_panel_count": 120,
         "c3_completed_independent_training_runs_before_this_task": 2,
         "c3_successful_training_runtime_minutes_before_this_task": 216.5,
         "execution_counters": {

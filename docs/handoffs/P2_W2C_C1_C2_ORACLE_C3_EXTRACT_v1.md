@@ -1,9 +1,9 @@
-# P2 C1/C2 oracle 재실행 및 C3 결과판 복구 recovery v4 — LOCAL EXECUTION AUTHORITY
+# P2 C1/C2 oracle 및 C3 Gaussian 결과판 복구 recovery v5 — LOCAL EXECUTION AUTHORITY
 
-- task_id: `P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v4`
+- task_id: `P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v5`
 - handoff_id: `null`
-- execution_record_id: `P2-LOCAL-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v4`
-- recovery_base_commit: `acc532ca2e4647003478615035f6c41eb27cc9ed`
+- execution_record_id: `P2-LOCAL-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v5`
+- recovery_base_commit: `198a81ecf19b8a1814f87b8768584a2a6f3d3460`
 - status: `APPROVED_FOR_LOCAL_EXPERIMENT_HOST_EXECUTION`
 - execution_authority: `DIRECT_HUMAN_INSTRUCTION_SINGLE_EXPERIMENT_HOST`
 - write_ownership_transfer_performed: `false`
@@ -66,19 +66,20 @@ Poisson surface mesh만 추출한다. 이전 4-corner/2-triangle-per-Gaussian �
 ## 실행 한계와 출력
 
 - Roofer/G2/GS training/metric/C4-C5 lineage total: `4/0/0/0/0`
-- Recovery-v4 Roofer invocation: `0` (Recovery-v3 exact completed outputs hash-verified inheritance)
-- Recovery-v4 C3 extraction invocation: `0` (Recovery-v3의 두 completed extraction hash-verified inheritance)
+- Recovery-v5 Roofer invocation: `0` (Recovery-v4 exact completed outputs hash-verified inheritance)
+- Recovery-v5 C3 extraction invocation: `0` (Recovery-v4의 두 completed extraction hash-verified inheritance)
 - pre-Roofer reference alignment failures: `2`
 - output: fresh add-once namespace
-  `artifact://JointBuildGS/phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v4/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v4`
+  `artifact://JointBuildGS/phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v5/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v5`
 - C1/C2: 3개 6행×4열 case sheet, 72 panels
-- C3: 2 condition × 3 building case sheet, 96 panels
+- C3: 2 condition × 3 building case sheet, 120 panels; 각 sheet에 current RGB+roofline 행 포함
+- C3 Gaussian 행은 center scatter가 아니라 checkpoint quaternion/scale/opacity 기반 oriented 2D ellipse 표시
 - report/operation CSV/HTML/manifest
 - official G3/G4/PASS and scientific_verdict: `null`
 
 ## 실행 권한과 기록
 
-1. recovery-v4의 base commit은 `acc532ca2e4647003478615035f6c41eb27cc9ed`이며 실제 실행 commit은 final manifest에 고정한다.
+1. recovery-v5의 base commit은 `198a81ecf19b8a1814f87b8768584a2a6f3d3460`이며 실제 실행 commit은 final manifest에 고정한다.
 2. 현재 task의 직접 사용자 지시를 local Experiment Host 실행 권한으로 기록한다.
 3. 실행 launcher는 clean `HEAD == origin/main`, exact project image, 입력/checkpoint,
    add-once namespace 부재와 config의 local authority tuple을 확인한다.
@@ -101,4 +102,7 @@ full Gaussian, fused point cloud, Poisson mesh 추출을 모두 완료했다. �
 TOP/PRINCIPAL_SECTION panel에서 2D axes가 생성되지 않은 renderer 결함으로 최종화 전에
 중단됐다. Recovery v4는 C1/C2 16개 및 C3 16개 핵심 산출물을 크기와 SHA-256으로 검증해
 새 namespace에 계승하고, Roofer·C3 extraction·GPU·GS training을 추가 실행하지 않은 채
-결과판 렌더링과 최종화만 수행한다.
+결과판 렌더링과 최종화만 수행한다. Recovery v5는 사용자의 추가 지시에 따라 v4 final
+산출물을 다시 hash 검증해 승계하고, C3에도 current RGB+LoD2 roofline 행을 추가하며
+Gaussian center scatter를 quaternion/scale/opacity oriented ellipse로 교체한다. 계산 계수는
+계속 0이다.
