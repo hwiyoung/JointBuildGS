@@ -550,7 +550,8 @@ def _c3_mesh_status_panel(
             ax.set_xlim(bbox.min_x - 5, bbox.max_x + 5)
             ax.set_ylim(footprint_z, footprint_z + 10.0)
     _draw_footprint(ax, footprint_rings, view, footprint_z)
-    ax.text(
+    text_method = ax.text2D if view.startswith("OBLIQUE") else ax.text
+    text_method(
         0.5,
         0.5,
         f"INSUFFICIENT ROOF SEMANTIC EVIDENCE\nselected roof points: {roof_point_count} (<100)\nmesh not generated",

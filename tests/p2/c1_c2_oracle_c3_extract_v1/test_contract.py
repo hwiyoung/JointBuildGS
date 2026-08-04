@@ -19,7 +19,12 @@ from scripts.p2.c1_c2_oracle_c3_extract_v1.contract import (
     validate_config,
 )
 from scripts.p2.c1_c2_oracle_c3_extract_v1.extract_c3 import _roof_semantic_selection_mask
-from scripts.p2.c1_c2_oracle_c3_extract_v1.render_results import _c3_gaussian_panel, _c3_mesh_panel, _quaternion_axes
+from scripts.p2.c1_c2_oracle_c3_extract_v1.render_results import (
+    _c3_gaussian_panel,
+    _c3_mesh_panel,
+    _c3_mesh_status_panel,
+    _quaternion_axes,
+)
 from src.visualization.fixed_view_qualitative import BBox
 
 
@@ -52,7 +57,7 @@ class ContractTests(unittest.TestCase):
             (Path(__file__).resolve().parents[3] / "configs/p2/c1_c2_oracle_c3_extract_v1/run_v1.json").read_text(encoding="utf-8")
         )
         authority = config["execution_authority"]
-        self.assertEqual(config["task_id"], "P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v8")
+        self.assertEqual(config["task_id"], "P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v9")
         self.assertIsNone(config["handoff_id"])
         self.assertEqual(authority["execution_host_role"], "experiment_host")
         self.assertFalse(authority["write_ownership_transfer_performed"])
@@ -134,6 +139,16 @@ class ContractTests(unittest.TestCase):
             footprint_buffer_m=1.0,
         )
         self.assertEqual(mask.tolist(), [True, True, False, False])
+
+    def test_insufficient_roof_mesh_status_panel_supports_all_views(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            bbox = BBox(0.0, 0.0, 4.0, 4.0)
+            rings = [np.asarray([[0.0, 0.0], [4.0, 0.0], [4.0, 4.0], [0.0, 4.0], [0.0, 0.0]])]
+            for view in ("TOP", "OBLIQUE_1", "OBLIQUE_2", "PRINCIPAL_SECTION"):
+                output = root / f"insufficient_{view}.png"
+                _c3_mesh_status_panel(output, bbox, rings, 0.0, view, 1)
+                self.assertGreater(output.stat().st_size, 0)
 
     def test_empty_class6_is_a_valid_pre_roofer_statistic(self) -> None:
         from shapely.geometry import Polygon

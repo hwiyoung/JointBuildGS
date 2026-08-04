@@ -1,5 +1,14 @@
 # C1/C2 oracle + C3 extraction issue log v1
 
+## CLOSED — insufficient-evidence oblique status text
+
+Recovery v8 successfully produced five roof-only meshes and the exact one-point
+insufficient-evidence record for `C3_2_SEM_DEPTH/DEBY_LOD2_4907177`, then stopped
+during qualitative composition because the new oblique status panel called the 2D
+`Axes.text` signature on a 3D axes. This is a presentation renderer failure, not GS,
+mesh-selection, C1/C2, or Roofer failure. Recovery v9 uses `Axes3D.text2D`, regression
+tests all four fixed views, and preserves the v8 partial.
+
 ## CLOSED — C3 context row and Gaussian primitive representation
 
 Recovery v4 displayed the exact-checkpoint Gaussian proxy as center-point scatter and

@@ -1,8 +1,8 @@
-# P2 C1/C2 oracle 및 C3 Gaussian 결과판 복구 recovery v8 — LOCAL EXECUTION AUTHORITY
+# P2 C1/C2 oracle 및 C3 Gaussian 결과판 복구 recovery v9 — LOCAL EXECUTION AUTHORITY
 
-- task_id: `P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v8`
+- task_id: `P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v9`
 - handoff_id: `null`
-- execution_record_id: `P2-LOCAL-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v8`
+- execution_record_id: `P2-LOCAL-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v9`
 - recovery_base_commit: `305583bb` (v7 finalized presentation source)
 - status: `APPROVED_FOR_LOCAL_EXPERIMENT_HOST_EXECUTION`
 - execution_authority: `DIRECT_HUMAN_INSTRUCTION_SINGLE_EXPERIMENT_HOST`
@@ -69,12 +69,12 @@ Poisson surface mesh까지 추출한 v7 결과를 계승한다. v8은 fused poin
 ## 실행 한계와 출력
 
 - Roofer/G2/GS training/metric/C4-C5 lineage total: `4/0/0/0/0`
-- Recovery-v8 Roofer invocation: `0` (Recovery-v7 exact completed outputs hash-verified inheritance)
-- Recovery-v8 rendered-depth C3 extraction invocation: `0` (Recovery-v7의 두 completed extraction hash-verified inheritance)
-- Recovery-v8 roof-only mesh postprocess: `6` attempts, `5` completed, `1` insufficient evidence
+- Recovery-v9 Roofer invocation: `0` (Recovery-v7 exact completed outputs hash-verified inheritance)
+- Recovery-v9 rendered-depth C3 extraction invocation: `0` (Recovery-v7의 두 completed extraction hash-verified inheritance)
+- Recovery-v9 roof-only mesh postprocess: `6` attempts, `5` completed, `1` insufficient evidence
 - pre-Roofer reference alignment failures: `2`
 - output: fresh add-once namespace
-  `artifact://JointBuildGS/phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v8/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v8`
+  `artifact://JointBuildGS/phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v9/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v9`
 - C1/C2: 3개 6행×4열 case sheet, 72 panels
 - C3: 2 condition × 3 building case sheet, 120 panels; 각 sheet에 current RGB+roofline 행 포함
 - C3 Gaussian 행은 center scatter가 아니라 checkpoint quaternion/scale/opacity 기반 oriented 2D ellipse 표시
@@ -86,7 +86,7 @@ Poisson surface mesh까지 추출한 v7 결과를 계승한다. v8은 fused poin
 
 ## 실행 권한과 기록
 
-1. recovery-v8의 실제 실행 commit은 final manifest에 고정한다.
+1. recovery-v9의 실제 실행 commit은 final manifest에 고정한다.
 2. 현재 task의 직접 사용자 지시를 local Experiment Host 실행 권한으로 기록한다.
 3. 실행 launcher는 clean `HEAD == origin/main`, exact project image, 입력/checkpoint,
    add-once namespace 부재와 config의 local authority tuple을 확인한다.
@@ -115,3 +115,6 @@ Gaussian center scatter를 quaternion/scale/opacity oriented ellipse로 교체�
 계속 0이다. Recovery v7은 두꺼운 RGB roofline과 모든 3D 행의 footprint를 포함한 결과판을
 완료했다. Recovery v8은 v7의 exact fused points를 다시 렌더하지 않고 roof semantic
 class 1과 GroundSurface XY 1 m buffer로만 Poisson mesh를 재구성한다.
+Recovery v8은 여섯 mesh 상태를 정상 계산했지만 insufficient-evidence의 oblique 안내
+패널에서 Matplotlib 3D text API 오류로 최종화 전에 중단됐다. 해당 partial은 보존한다.
+Recovery v9은 새 namespace에서 3D 안내문에 `text2D`를 사용한다.
