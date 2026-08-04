@@ -18,6 +18,7 @@ from scripts.p2.c1_c2_oracle_c3_extract_v1.contract import (
     load_building_references,
     validate_config,
 )
+from scripts.p2.c1_c2_oracle_c3_extract_v1.extract_c3 import _roof_semantic_selection_mask
 from scripts.p2.c1_c2_oracle_c3_extract_v1.render_results import _c3_gaussian_panel, _c3_mesh_panel, _quaternion_axes
 from src.visualization.fixed_view_qualitative import BBox
 
@@ -51,7 +52,7 @@ class ContractTests(unittest.TestCase):
             (Path(__file__).resolve().parents[3] / "configs/p2/c1_c2_oracle_c3_extract_v1/run_v1.json").read_text(encoding="utf-8")
         )
         authority = config["execution_authority"]
-        self.assertEqual(config["task_id"], "P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v7")
+        self.assertEqual(config["task_id"], "P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v8")
         self.assertIsNone(config["handoff_id"])
         self.assertEqual(authority["execution_host_role"], "experiment_host")
         self.assertFalse(authority["write_ownership_transfer_performed"])
@@ -114,6 +115,25 @@ class ContractTests(unittest.TestCase):
                     view,
                 )
                 self.assertGreater(output.stat().st_size, 0)
+
+    def test_roof_mesh_selects_only_roof_class_within_footprint_buffer(self) -> None:
+        from shapely.geometry import Polygon
+
+        xyz = np.asarray([
+            [0.5, 0.5, 10.0],
+            [2.5, 0.5, 10.0],
+            [3.2, 0.5, 10.0],
+            [0.5, 0.5, 0.0],
+        ])
+        labels = np.asarray([1, 1, 1, 3], dtype=np.uint8)
+        mask = _roof_semantic_selection_mask(
+            xyz,
+            labels,
+            Polygon([(0, 0), (2, 0), (2, 2), (0, 2)]),
+            roof_class=1,
+            footprint_buffer_m=1.0,
+        )
+        self.assertEqual(mask.tolist(), [True, True, False, False])
 
     def test_empty_class6_is_a_valid_pre_roofer_statistic(self) -> None:
         from shapely.geometry import Polygon
@@ -226,6 +246,7 @@ class ContractTests(unittest.TestCase):
         self.assertNotIn("utarget199_contract_results_v1", text)
         self.assertNotIn("native_gaussian_surfel_mesh_v1", text)
         self.assertTrue(config["presentation"]["input_output_policy"].startswith("GT_GROUNDSURFACE_XY_FOOTPRINT_ONLY"))
+        self.assertEqual(config["c3_extraction"]["roof_semantic_mesh_recovery"]["semantic_class"], 1)
 
 
 if __name__ == "__main__":

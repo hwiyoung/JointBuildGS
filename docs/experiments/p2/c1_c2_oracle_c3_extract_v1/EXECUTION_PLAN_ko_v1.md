@@ -10,7 +10,9 @@ honest-arm 성능, G3/G4/PASS, 과학 판정으로 승격하지 않는다.
 
 C3는 학습을 다시 하지 않는다. 성공한 exact checkpoint 두 개를 열어 모든 Gaussian
 파라미터를 보존한 3D PLY, 별도의 명시적 display proxy, rendered median-depth 다중시점
-융합 point cloud, 그 point cloud의 Poisson surface mesh를 만든다. 기존의 Gaussian당
+융합 point cloud를 만든다. 최종 mesh는 fused point 전체가 아니라 semantic class
+`1=roof`이면서 GT GroundSurface XY 1 m buffer 안에 있는 점만 사용해 Poisson surface로
+만든다. 선택점이 100점 미만이면 mesh를 생성하지 않고 증거 부족으로 기록한다. 기존의 Gaussian당
 4개 꼭짓점·2개 삼각형 quad 파일은 surface mesh로 재사용하지 않는다.
 
 ## 고정 실행 단위
@@ -61,8 +63,9 @@ semantic logits/class를 full PLY에 기록한다. display proxy의 opacity/scal
 
 surface는 대표 건물 주소로 선택한 최대 24개 current view에서 median depth, alpha,
 rendered normal, semantic을 함께 꺼내 0.15 m voxel로 융합한다. 서로 다른 view 2개 이상이
-관측한 voxel만 유지한 뒤 Poisson reconstruction을 적용한다. footprint는 이 bounded
-extraction의 주소와 최종 crop에만 쓰며 학습, loss, Gaussian 이동에 사용하지 않는다.
+관측한 voxel만 유지한다. 그중 roof class 1만 GroundSurface XY 1 m buffer로 선택한 뒤
+Poisson reconstruction을 적용한다. footprint는 이 bounded extraction의 주소와 mesh
+공간 선택에만 쓰며 학습, loss, Gaussian 이동에 사용하지 않는다.
 
 ## 시각 판 구성
 
@@ -87,7 +90,9 @@ REVIEW`로 명시하고 C1/C2 실패로 부르지 않는다.
 - 각 입력의 class 6과 class 2가 모두 비어 있지 않음
 - Roofer invocation count 정확히 4, pre-Roofer alignment failure 2,
   GS training/G2/metric/C4/C5 count 0
-- C3 full Gaussian PLY 두 개와 condition/building별 fused point cloud 및 Poisson mesh 존재
+- C3 full Gaussian PLY 두 개와 condition/building별 fused point cloud가 존재하고, roof 선택점
+  100점 이상인 5개 조합에는 roof-only Poisson mesh가 존재함
+- `4907177/C3-2`는 선택 roof point 1점을 기록하고 명시적 insufficient-evidence panel을 표시함
 - C3 exact checkpoint hash와 모든 추출물 lineage가 연결됨
 - 대표 C1/C2 3장과 C3 condition/building 결과를 original resolution으로 직접 검토
 - 모든 기술 문서와 receipt의 `scientific_verdict`는 `null`

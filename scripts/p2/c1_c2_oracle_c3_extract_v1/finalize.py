@@ -92,6 +92,24 @@ def finalize(output_root: Path, *, source_commit: str, run_id: str) -> dict[str,
         raise RuntimeError("C3 footprint display is missing")
     if c3_index.get("gaussian_representation") != "ORIENTED_2D_ELLIPSES_FROM_CHECKPOINT_QUATERNION_SCALE_OPACITY_NOT_CENTER_POINTS":
         raise RuntimeError("C3 Gaussian representation drifted")
+    expected_mesh_role = "ROOF_SEMANTIC_CLASS_1_WITHIN_GT_GROUNDSURFACE_XY_1M_BUFFER_POISSON_OR_EXPLICIT_INSUFFICIENT_EVIDENCE"
+    if c3_index.get("mesh_role") != expected_mesh_role:
+        raise RuntimeError("C3 roof-semantic mesh role drifted")
+    mesh_recovery_path = output_root / "control/c3_roof_semantic_mesh_recovery_v1.json"
+    mesh_recovery = json.loads(mesh_recovery_path.read_text(encoding="utf-8"))
+    if mesh_recovery.get("result_count") != 6 or mesh_recovery.get("completed_mesh_count") != 5:
+        raise RuntimeError("C3 roof-semantic mesh completion count drifted")
+    if mesh_recovery.get("insufficient_evidence_count") != 1:
+        raise RuntimeError("C3 roof-semantic mesh insufficient-evidence count drifted")
+    insufficient = [row for row in mesh_recovery["results"] if row["status"] == "INSUFFICIENT_ROOF_SEMANTIC_EVIDENCE"]
+    if [(row["condition_id"], row["stable_id"], row["selected_roof_point_count"]) for row in insufficient] != [
+        ("C3_2_SEM_DEPTH", "DEBY_LOD2_4907177", 1)
+    ]:
+        raise RuntimeError("C3 roof-semantic insufficient-evidence identity drifted")
+    artifact_records.append(file_record(mesh_recovery_path, output_root))
+    for row in mesh_recovery["results"]:
+        if row["roof_points"] is not None:
+            artifact_records.extend((row["roof_points"], row["roof_mesh"]))
     c3_exports = []
     c3_surfaces = []
     for condition in config["c3_training_provenance"]["conditions"]:
@@ -117,7 +135,7 @@ def finalize(output_root: Path, *, source_commit: str, run_id: str) -> dict[str,
 - `4907177`: C1 25점/C2 0점으로 2개 pre-Roofer reference/ID alignment failure
 - C1 입력: current UAS LAZ 원점군 crop + GT GroundSurface XY footprint
 - C2 입력: exact common-base dense MVS PLY 원점군 crop + 동일 footprint
-- C3: current RGB+LoD2 roofline 행, quaternion/scale/opacity 기반 oriented Gaussian ellipse 행, rendered-depth fused point cloud, Poisson mesh 표시
+- C3: current RGB+LoD2 roofline 행, quaternion/scale/opacity 기반 oriented Gaussian ellipse 행, rendered-depth fused point cloud, roof semantic class 1 전용 Poisson mesh 표시
 - 이번 작업의 C3 학습: 0회
 - Roofer: recovery-v2에서 완료한 exact 4개를 hash 검증 후 계승, 이번 recovery 추가 실행 0회
 - Roofer lineage total/G2/GS training/metric/C4-C5: 4/0/0/0/0
@@ -137,9 +155,11 @@ C1/C2는 GT GroundSurface XY를 Roofer footprint로 사용했으므로 official 
 
 C3 full Gaussian PLY는 모든 primitive와 quaternion/scale/opacity/SH/semantic logits를
 보존한다. display proxy는 center point scatter가 아니라 quaternion/scale/opacity를 적용한
-oriented 2D Gaussian ellipse로 표시한다. proxy만 명시적 opacity/scale/AOI 필터를 사용한다. mesh는 이전의
-Gaussian별 quad mesh가 아니며 rendered median depth를 다중시점 융합한 뒤 만든 Poisson
-surface다. TSDF라고 표기하지 않는다.
+oriented 2D Gaussian ellipse로 표시한다. proxy만 명시적 opacity/scale/AOI 필터를 사용한다.
+mesh는 이전의 Gaussian별 quad mesh가 아니며, 계승한 rendered-depth fused point에서 semantic
+class 1(roof)이고 GT GroundSurface XY의 1 m buffer 안에 있는 점만 골라 만든 Poisson surface다.
+`DEBY_LOD2_4907177/C3_2_SEM_DEPTH`는 선택 지붕점이 1점뿐이어서 mesh를 만들지 않고
+`INSUFFICIENT_ROOF_SEMANTIC_EVIDENCE`로 표시한다. TSDF라고 표기하지 않는다.
 
 모든 결과의 `scientific_verdict`, official G3/G4/PASS는 null이다.
 """
@@ -177,6 +197,7 @@ surface다. TSDF라고 표기하지 않는다.
         "c3_panel_count": 120,
         "c3_completed_independent_training_runs_before_this_task": 2,
         "c3_successful_training_runtime_minutes_before_this_task": 216.5,
+        "c3_roof_semantic_mesh_recovery": mesh_recovery,
         "execution_counters": {
             "roofer_invocations_this_recovery": 0,
             "roofer_invocations_total_lineage": 4,
@@ -185,6 +206,8 @@ surface다. TSDF라고 표기하지 않는다.
             "gs_training_invocations": 0,
             "c3_extraction_invocations_this_recovery": 0,
             "c3_completed_extractions_total_lineage": 2,
+            "c3_roof_mesh_postprocess_attempts_this_recovery": 6,
+            "c3_roof_mesh_postprocess_completed_this_recovery": 5,
             "metric_recomputations": 0,
             "c4_c5_accesses": 0,
         },

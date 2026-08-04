@@ -26,6 +26,18 @@ present and hash-valid, so these observations are not renderer or missing-artifa
 failures. They remain non-confirmatory technical diagnostics with
 `scientific_verdict: null`.
 
+## CLOSED — C3 mesh input included non-roof semantic classes
+
+Recovery v7 Poisson reconstruction consumed every inherited fused point after only
+the spatial crop; semantic labels were retained for color but not used as a mesh
+filter. This mixed roof, wall, ground and background evidence and produced cluttered
+surfaces that did not answer the roof-reconstruction question. Recovery v8 reuses the
+exact v7 fused PLY without checkpoint rendering, selects only semantic class `1=roof`
+inside the GT GroundSurface XY 1 m buffer, and runs Poisson only when at least 100
+selected points exist. Five of six condition/building combinations meet the minimum.
+`C3_2_SEM_DEPTH/DEBY_LOD2_4907177` has one selected roof point and therefore shows
+`INSUFFICIENT_ROOF_SEMANTIC_EVIDENCE` instead of a fabricated mesh.
+
 ## CLOSED — C3 two-dimensional mesh panel axes
 
 Recovery v3 completed both extraction-only C3 conditions: exact full Gaussian PLY,

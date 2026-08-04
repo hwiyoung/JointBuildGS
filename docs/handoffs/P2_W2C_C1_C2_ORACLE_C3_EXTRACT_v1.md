@@ -1,9 +1,9 @@
-# P2 C1/C2 oracle 및 C3 Gaussian 결과판 복구 recovery v7 — LOCAL EXECUTION AUTHORITY
+# P2 C1/C2 oracle 및 C3 Gaussian 결과판 복구 recovery v8 — LOCAL EXECUTION AUTHORITY
 
-- task_id: `P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v7`
+- task_id: `P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v8`
 - handoff_id: `null`
-- execution_record_id: `P2-LOCAL-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v7`
-- recovery_base_commit: `1047e9ef` (v6 code-only; no v6 artifact execution)
+- execution_record_id: `P2-LOCAL-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v8`
+- recovery_base_commit: `305583bb` (v7 finalized presentation source)
 - status: `APPROVED_FOR_LOCAL_EXPERIMENT_HOST_EXECUTION`
 - execution_authority: `DIRECT_HUMAN_INSTRUCTION_SINGLE_EXPERIMENT_HOST`
 - write_ownership_transfer_performed: `false`
@@ -60,28 +60,33 @@ official no-external-roofprint honest arm으로 부르거나 승격하지 않는
 recovery directory와 실패한 iteration-0 시작은 독립 학습 반복이 아니다. 이번 task의
 GS training invocation은 0이다. 두 exact checkpoint에서 모든 Gaussian native field를
 보존한 full PLY, 명시적 display proxy, rendered median-depth 다중시점 fused point cloud,
-Poisson surface mesh만 추출한다. 이전 4-corner/2-triangle-per-Gaussian 파일을 mesh로
-재사용하지 않으며 새 mesh를 TSDF라고 잘못 표기하지 않는다.
+Poisson surface mesh까지 추출한 v7 결과를 계승한다. v8은 fused point의 semantic class
+`1=roof`와 GT GroundSurface XY 1 m buffer만 선택해 roof-only Poisson mesh를 후처리한다.
+100점 미만이면 mesh를 꾸며내지 않고 `INSUFFICIENT_ROOF_SEMANTIC_EVIDENCE`로 남긴다.
+이전 4-corner/2-triangle-per-Gaussian 파일을 mesh로 재사용하지 않으며 새 mesh를 TSDF라고
+잘못 표기하지 않는다.
 
 ## 실행 한계와 출력
 
 - Roofer/G2/GS training/metric/C4-C5 lineage total: `4/0/0/0/0`
-- Recovery-v7 Roofer invocation: `0` (Recovery-v5 exact completed outputs hash-verified inheritance)
-- Recovery-v7 C3 extraction invocation: `0` (Recovery-v5의 두 completed extraction hash-verified inheritance)
+- Recovery-v8 Roofer invocation: `0` (Recovery-v7 exact completed outputs hash-verified inheritance)
+- Recovery-v8 rendered-depth C3 extraction invocation: `0` (Recovery-v7의 두 completed extraction hash-verified inheritance)
+- Recovery-v8 roof-only mesh postprocess: `6` attempts, `5` completed, `1` insufficient evidence
 - pre-Roofer reference alignment failures: `2`
 - output: fresh add-once namespace
-  `artifact://JointBuildGS/phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v7/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v7`
+  `artifact://JointBuildGS/phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v8/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v8`
 - C1/C2: 3개 6행×4열 case sheet, 72 panels
 - C3: 2 condition × 3 building case sheet, 120 panels; 각 sheet에 current RGB+roofline 행 포함
 - C3 Gaussian 행은 center scatter가 아니라 checkpoint quaternion/scale/opacity 기반 oriented 2D ellipse 표시
 - C1/C2/C3 3D 행은 동일 GT GroundSurface XY footprint를 주황 점선으로 표시
 - RGB roofline은 검정 12 px 외곽선 + 노랑 6 px 선으로 표시
+- C3 mesh 행은 roof semantic class 1만 사용하며 `4907177/C3-2`는 선택점 1점으로 명시적 미생성
 - report/operation CSV/HTML/manifest
 - official G3/G4/PASS and scientific_verdict: `null`
 
 ## 실행 권한과 기록
 
-1. recovery-v7의 실제 실행 commit은 final manifest에 고정한다.
+1. recovery-v8의 실제 실행 commit은 final manifest에 고정한다.
 2. 현재 task의 직접 사용자 지시를 local Experiment Host 실행 권한으로 기록한다.
 3. 실행 launcher는 clean `HEAD == origin/main`, exact project image, 입력/checkpoint,
    add-once namespace 부재와 config의 local authority tuple을 확인한다.
@@ -107,4 +112,6 @@ TOP/PRINCIPAL_SECTION panel에서 2D axes가 생성되지 않은 renderer 결함
 결과판 렌더링과 최종화만 수행한다. Recovery v5는 사용자의 추가 지시에 따라 v4 final
 산출물을 다시 hash 검증해 승계하고, C3에도 current RGB+LoD2 roofline 행을 추가하며
 Gaussian center scatter를 quaternion/scale/opacity oriented ellipse로 교체한다. 계산 계수는
-계속 0이다.
+계속 0이다. Recovery v7은 두꺼운 RGB roofline과 모든 3D 행의 footprint를 포함한 결과판을
+완료했다. Recovery v8은 v7의 exact fused points를 다시 렌더하지 않고 roof semantic
+class 1과 GroundSurface XY 1 m buffer로만 Poisson mesh를 재구성한다.

@@ -528,6 +528,47 @@ def _c3_mesh_panel(
     plt.close(figure)
 
 
+def _c3_mesh_status_panel(
+    path: Path,
+    bbox: BBox,
+    footprint_rings: Sequence[np.ndarray],
+    footprint_z: float,
+    view: str,
+    roof_point_count: int,
+) -> None:
+    figure = plt.figure(figsize=(6.4, 4.8), dpi=150)
+    if view.startswith("OBLIQUE"):
+        ax = figure.add_subplot(111, projection="3d", proj_type="ortho")
+        _setup_3d(ax, bbox, (footprint_z, footprint_z + 10.0), view)
+    else:
+        ax = figure.add_subplot(111)
+        if view == "TOP":
+            ax.set_aspect("equal")
+            ax.set_xlim(bbox.min_x - 5, bbox.max_x + 5)
+            ax.set_ylim(bbox.min_y - 5, bbox.max_y + 5)
+        else:
+            ax.set_xlim(bbox.min_x - 5, bbox.max_x + 5)
+            ax.set_ylim(footprint_z, footprint_z + 10.0)
+    _draw_footprint(ax, footprint_rings, view, footprint_z)
+    ax.text(
+        0.5,
+        0.5,
+        f"INSUFFICIENT ROOF SEMANTIC EVIDENCE\nselected roof points: {roof_point_count} (<100)\nmesh not generated",
+        transform=ax.transAxes,
+        ha="center",
+        va="center",
+        fontsize=13,
+        fontweight="bold",
+        color="#991b1b",
+        bbox={"facecolor": "white", "edgecolor": "#991b1b", "alpha": 0.92, "pad": 10},
+    )
+    ax.set_title(f"Roof-semantic Poisson mesh | {view}", fontsize=12, fontweight="bold")
+    figure.tight_layout()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    figure.savefig(path)
+    plt.close(figure)
+
+
 def render_c3(output_root: Path, artifact_root: Path, lod2_path: Path) -> dict[str, Any]:
     config = load_config()
     references = load_building_references(lod2_path, config["scope"]["building_ids"])
@@ -536,6 +577,11 @@ def render_c3(output_root: Path, artifact_root: Path, lod2_path: Path) -> dict[s
     camera_model = projection.parse_cam_model(artifact_root / rgb_cfg["cameras_relative_path"])
     cameras = projection.parse_cameras(artifact_root / rgb_cfg["images_relative_path"], scene_ref)
     image_root = artifact_root / rgb_cfg["image_directory_relative_path"]
+    mesh_recovery = json.loads((output_root / "control/c3_roof_semantic_mesh_recovery_v1.json").read_text(encoding="utf-8"))
+    mesh_results = {
+        (row["condition_id"], row["stable_id"]): row
+        for row in mesh_recovery["results"]
+    }
     records = []
     for condition in config["c3_training_provenance"]["conditions"]:
         condition_id = condition["condition_id"]
@@ -562,7 +608,11 @@ def render_c3(output_root: Path, artifact_root: Path, lod2_path: Path) -> dict[s
             fused = _read_binary_vertex_ply(fused_path)
             fused_xyz = np.column_stack((fused["x"], fused["y"], fused["z"]))
             fused_sem = SEMANTIC_COLORS[np.asarray(fused["semantic_class"], dtype=np.uint8)].astype(float) / 255
-            mesh_path = output_root / f"c3/{condition_id}/buildings/{stable_id}/poisson_surface_mesh_v1.ply"
+            mesh_result = mesh_results[(condition_id, stable_id)]
+            mesh_path = (
+                output_root / mesh_result["roof_mesh"]["path"]
+                if mesh_result["roof_mesh"] is not None else None
+            )
             case_root = output_root / "qualitative/c3" / condition_id / stable_id
             c1_points, _c1_surfaces, _footprint_rings, _c1_terminal = _load_method_geometry(
                 output_root, CONDITIONS[0], stable_id
@@ -635,9 +685,19 @@ def render_c3(output_root: Path, artifact_root: Path, lod2_path: Path) -> dict[s
             mesh_paths = []
             for view in VIEWS:
                 path = case_root / "panels" / f"5_{view.lower()}.png"
-                _c3_mesh_panel(path, mesh_path, bbox, footprint_rings, footprint_z, view, "Poisson surface mesh | " + view)
+                if mesh_path is None:
+                    _c3_mesh_status_panel(
+                        path,
+                        bbox,
+                        footprint_rings,
+                        footprint_z,
+                        view,
+                        int(mesh_result["selected_roof_point_count"]),
+                    )
+                else:
+                    _c3_mesh_panel(path, mesh_path, bbox, footprint_rings, footprint_z, view, "Roof-semantic Poisson mesh | " + view)
                 mesh_paths.append(path)
-            rows.append(("Poisson mesh\n(not Gaussian quad mesh)", mesh_paths))
+            rows.append(("Roof-class-only Poisson mesh\n(class 1; footprint buffer 1 m)", mesh_paths))
             sheet = case_root / "case_sheet_c3_3d_v1.png"
             _compose_sheet(
                 sheet,
@@ -645,7 +705,14 @@ def render_c3(output_root: Path, artifact_root: Path, lod2_path: Path) -> dict[s
                 f"{stable_id} | {condition_id}",
                 "oriented scale/quaternion Gaussian ellipses; existing exact checkpoint; training invocations=0; scientific_verdict=null",
             )
-            records.append({"condition_id": condition_id, "stable_id": stable_id, "case_sheet": file_record(sheet, output_root), "panel_count": 20})
+            records.append({
+                "condition_id": condition_id,
+                "stable_id": stable_id,
+                "case_sheet": file_record(sheet, output_root),
+                "panel_count": 20,
+                "roof_mesh_status": mesh_result["status"],
+                "selected_roof_point_count": int(mesh_result["selected_roof_point_count"]),
+            })
     body = {
         "schema": "jointbuildgs.c3_3d_qualitative.v1",
         "case_sheet_count": len(records),
@@ -654,6 +721,9 @@ def render_c3(output_root: Path, artifact_root: Path, lod2_path: Path) -> dict[s
         "roofline_role": "CURRENT_RGB_PROJECTION_CONTEXT_ONLY",
         "footprint_role": "GT_GROUNDSURFACE_XY_DISPLAY_ONLY_ON_ALL_3D_ROWS",
         "gaussian_representation": "ORIENTED_2D_ELLIPSES_FROM_CHECKPOINT_QUATERNION_SCALE_OPACITY_NOT_CENTER_POINTS",
+        "mesh_role": "ROOF_SEMANTIC_CLASS_1_WITHIN_GT_GROUNDSURFACE_XY_1M_BUFFER_POISSON_OR_EXPLICIT_INSUFFICIENT_EVIDENCE",
+        "roof_mesh_completed_count": int(mesh_recovery["completed_mesh_count"]),
+        "roof_mesh_insufficient_evidence_count": int(mesh_recovery["insufficient_evidence_count"]),
         "training_invocations": 0,
         "scientific_verdict": None,
     }

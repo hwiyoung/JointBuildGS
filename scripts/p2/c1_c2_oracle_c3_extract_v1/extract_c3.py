@@ -13,6 +13,8 @@ from typing import Any, Mapping, Sequence
 
 import numpy as np
 import open3d as o3d
+from shapely import contains_xy
+from shapely.geometry import shape
 import torch
 
 from scripts.p2.c1_c2_oracle_c3_extract_v1.contract import (
@@ -77,6 +79,21 @@ def _simple_point_ply(xyz: np.ndarray, rgb: np.ndarray, normals: np.ndarray, lab
         "property uchar semantic_class\nend_header\n"
     ).encode("ascii")
     return header + rows.tobytes()
+
+
+def _roof_semantic_selection_mask(
+    xyz: np.ndarray,
+    labels: np.ndarray,
+    footprint: Any,
+    *,
+    roof_class: int,
+    footprint_buffer_m: float,
+) -> np.ndarray:
+    points = np.asarray(xyz, dtype=np.float64)
+    classes = np.asarray(labels)
+    return (classes == int(roof_class)) & contains_xy(
+        footprint.buffer(float(footprint_buffer_m)), points[:, 0], points[:, 1]
+    )
 
 
 def prepare_condition(
@@ -492,6 +509,123 @@ def inherit_completed_c3(output_root: Path, source_root: Path) -> dict[str, Any]
     return body
 
 
+def remesh_roof_only(output_root: Path) -> dict[str, Any]:
+    """Create roof-class-only Poisson meshes from inherited fused points.
+
+    This is CPU-only post-processing. It does not render the checkpoint, train GS,
+    invoke Roofer, or recompute any evaluation metric.
+    """
+    from scripts.p2.c1_c2_oracle_c3_extract_v1.render_results import _read_binary_vertex_ply
+
+    config = load_config()
+    validate_config(config, require_activation=True)
+    policy = config["c3_extraction"]["roof_semantic_mesh_recovery"]
+    roof_class = int(policy["semantic_class"])
+    buffer_m = float(policy["footprint_buffer_m"])
+    minimum = int(policy["minimum_point_count"])
+    poisson_depth = int(policy["poisson_depth"])
+    results: list[dict[str, Any]] = []
+    for condition in config["c3_training_provenance"]["conditions"]:
+        condition_id = condition["condition_id"]
+        for stable_id in config["scope"]["building_ids"]:
+            building_root = output_root / "c3" / condition_id / "buildings" / stable_id
+            source_path = building_root / "rendered_depth_fused_surface_points_v1.ply"
+            points = _read_binary_vertex_ply(source_path)
+            footprint_path = (
+                output_root / "operations" / "C1_LIDAR_GT_FOOTPRINT_ORACLE"
+                / stable_id / "work" / "gt_footprint_oracle.geojson"
+            )
+            feature = json.loads(footprint_path.read_text(encoding="utf-8"))["features"][0]
+            footprint = shape(feature["geometry"])
+            xyz = np.column_stack((points["x"], points["y"], points["z"])).astype(np.float64)
+            labels = np.asarray(points["semantic_class"], dtype=np.uint8)
+            selected = _roof_semantic_selection_mask(
+                xyz,
+                labels,
+                footprint,
+                roof_class=roof_class,
+                footprint_buffer_m=buffer_m,
+            )
+            roof_xyz = xyz[selected]
+            result: dict[str, Any] = {
+                "condition_id": condition_id,
+                "stable_id": stable_id,
+                "source_surface_points": file_record(source_path, output_root),
+                "semantic_class": roof_class,
+                "semantic_class_name": policy["semantic_class_name"],
+                "footprint_buffer_m": buffer_m,
+                "source_fused_point_count": int(len(points)),
+                "roof_semantic_point_count": int(np.count_nonzero(labels == roof_class)),
+                "selected_roof_point_count": int(len(roof_xyz)),
+                "minimum_point_count": minimum,
+                "scientific_verdict": None,
+            }
+            if len(roof_xyz) < minimum:
+                result.update({
+                    "status": policy["insufficient_evidence_status"],
+                    "roof_points": None,
+                    "roof_mesh": None,
+                    "mesh_vertex_count": 0,
+                    "mesh_triangle_count": 0,
+                })
+                results.append(result)
+                continue
+            normals = np.column_stack((points["nx"], points["ny"], points["nz"])).astype(np.float64)[selected]
+            normal_length = np.linalg.norm(normals, axis=1, keepdims=True)
+            normals = normals / np.maximum(normal_length, 1e-12)
+            rgb = np.column_stack((points["red"], points["green"], points["blue"])).astype(np.float64)[selected] / 255.0
+            roof_points_path = building_root / "roof_semantic_mesh_input_points_v1.ply"
+            write_new(
+                roof_points_path,
+                _simple_point_ply(roof_xyz, rgb, normals, np.full(len(roof_xyz), roof_class, dtype=np.uint8)),
+            )
+            point_cloud = o3d.geometry.PointCloud()
+            point_cloud.points = o3d.utility.Vector3dVector(roof_xyz)
+            point_cloud.normals = o3d.utility.Vector3dVector(normals)
+            point_cloud.colors = o3d.utility.Vector3dVector(np.clip(rgb, 0, 1))
+            mesh, _densities = o3d.geometry.TriangleMesh.create_from_point_cloud_poisson(
+                point_cloud,
+                depth=poisson_depth,
+                n_threads=2,
+            )
+            x0, y0, x1, y1 = footprint.bounds
+            z0 = float(np.quantile(roof_xyz[:, 2], 0.005) - 1.0)
+            z1 = float(np.quantile(roof_xyz[:, 2], 0.995) + 1.0)
+            mesh = mesh.crop(o3d.geometry.AxisAlignedBoundingBox(
+                min_bound=(x0 - buffer_m, y0 - buffer_m, z0),
+                max_bound=(x1 + buffer_m, y1 + buffer_m, z1),
+            ))
+            mesh.compute_vertex_normals()
+            mesh_path = building_root / "poisson_roof_semantic_mesh_v1.ply"
+            if mesh_path.exists() or not o3d.io.write_triangle_mesh(str(mesh_path), mesh, write_ascii=False):
+                raise RuntimeError(f"failed to write roof-semantic Poisson mesh: {mesh_path}")
+            result.update({
+                "status": "COMPLETED_ROOF_SEMANTIC_MESH",
+                "roof_points": file_record(roof_points_path, output_root),
+                "roof_mesh": file_record(mesh_path, output_root),
+                "mesh_vertex_count": int(len(mesh.vertices)),
+                "mesh_triangle_count": int(len(mesh.triangles)),
+            })
+            results.append(result)
+    body = {
+        "schema": "jointbuildgs.c3_roof_semantic_mesh_recovery.v1",
+        "status": "COMPLETE_WITH_EXPLICIT_INSUFFICIENT_EVIDENCE",
+        "method": "INHERITED_FUSED_POINTS_CLASS_1_WITHIN_GT_GROUNDSURFACE_XY_BUFFER_THEN_POISSON",
+        "policy": policy,
+        "result_count": len(results),
+        "completed_mesh_count": sum(row["status"] == "COMPLETED_ROOF_SEMANTIC_MESH" for row in results),
+        "insufficient_evidence_count": sum(row["status"] == policy["insufficient_evidence_status"] for row in results),
+        "results": results,
+        "rendered_depth_extraction_invocations": 0,
+        "gs_training_invocations": 0,
+        "roofer_invocations": 0,
+        "metric_recomputations": 0,
+        "scientific_verdict": None,
+    }
+    write_new(output_root / "control/c3_roof_semantic_mesh_recovery_v1.json", canonical_json_bytes(body))
+    return body
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     sub = parser.add_subparsers(dest="mode", required=True)
@@ -510,6 +644,8 @@ def main() -> None:
     inherit = sub.add_parser("inherit-completed")
     inherit.add_argument("--output-root", type=Path, required=True)
     inherit.add_argument("--source-root", type=Path, required=True)
+    remesh = sub.add_parser("remesh-roof-only")
+    remesh.add_argument("--output-root", type=Path, required=True)
     args = parser.parse_args()
     if args.mode == "prepare-condition":
         result = prepare_condition(
@@ -527,8 +663,10 @@ def main() -> None:
             args.condition_id,
             args.device,
         )
-    else:
+    elif args.mode == "inherit-completed":
         result = inherit_completed_c3(args.output_root, args.source_root)
+    else:
+        result = remesh_roof_only(args.output_root)
     print(json.dumps(result, ensure_ascii=False, sort_keys=True))
 
 
