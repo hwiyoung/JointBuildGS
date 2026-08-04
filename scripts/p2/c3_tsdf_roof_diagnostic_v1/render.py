@@ -226,12 +226,18 @@ def _panel(
     plt.close(figure)
 
 
-def _sheet(path: Path, stable_id: str, rows: Sequence[tuple[str, Sequence[Path]]]) -> None:
+def _sheet(
+    path: Path,
+    stable_id: str,
+    rows: Sequence[tuple[str, Sequence[Path]]],
+    *,
+    subtitle: str = "roof-first C3 evidence | same views: Poisson vs TSDF | scientific_verdict=null",
+) -> None:
     cell_w, cell_h = 960, 720
     label_w, header_h = 330, 110
     canvas = np.full((header_h + len(rows) * cell_h, label_w + 4 * cell_w, 3), 255, dtype=np.uint8)
     cv2.putText(canvas, stable_id, (24, 45), cv2.FONT_HERSHEY_SIMPLEX, 1.08, (20, 20, 20), 2, cv2.LINE_AA)
-    cv2.putText(canvas, "roof-first C3 evidence | same views: Poisson vs TSDF | scientific_verdict=null", (24, 88), cv2.FONT_HERSHEY_SIMPLEX, 0.61, (55, 55, 55), 1, cv2.LINE_AA)
+    cv2.putText(canvas, subtitle, (24, 88), cv2.FONT_HERSHEY_SIMPLEX, 0.61, (55, 55, 55), 1, cv2.LINE_AA)
     for col, view in enumerate(VIEWS):
         cv2.putText(canvas, view, (label_w + col * cell_w + 24, 84), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (20, 20, 20), 2, cv2.LINE_AA)
     for row_index, (label, paths) in enumerate(rows):

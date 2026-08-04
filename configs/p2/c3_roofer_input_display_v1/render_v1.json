@@ -1,0 +1,37 @@
+{
+  "schema": "jointbuildgs.p2.c3_roofer_input_display.v1",
+  "task_id": "P2-C3-ROOFER-INPUT-DISPLAY-RECOVERY-v1",
+  "status": "APPROVED_FOR_LOCAL_EXPERIMENT_HOST_EXECUTION",
+  "scope": {
+    "building_ids": [
+      "DEBY_LOD2_4907177",
+      "DEBY_LOD2_4906975",
+      "DEBY_LOD2_108580336"
+    ],
+    "condition_ids": ["C3_1_SEM", "C3_2_SEM_DEPTH"],
+    "c4_c5_access_allowed": false
+  },
+  "source": {
+    "diagnostic_relative_root": "phase-payloads/p2/c3_tsdf_roof_diagnostic_v1/P2-C3-TSDF-ROOF-DIAGNOSTIC-RENDER-RECOVERY-v1",
+    "v13_relative_root": "phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v13/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v13",
+    "lod2_relative_path": "phase-payloads/p0-audit/data/raw/lod2/690_5336.gml",
+    "prior_report_relative_root": "phase-payloads/p2/c3_tsdf_roof_diagnostic_v1/P2-C3-TSDF-ROOF-DIAGNOSTIC-REPORT-RECOVERY-v2"
+  },
+  "display": {
+    "roofer_input_coverage_radius_m": 0.3,
+    "row_count_per_sheet": 14,
+    "view_count_per_row": 4,
+    "new_roofer_input_panel_count": 24,
+    "total_non_rgb_panel_count": 156
+  },
+  "execution_counters": {
+    "gs_training_invocations": 0,
+    "checkpoint_render_extractions": 0,
+    "roofer_invocations": 0,
+    "g2_invocations": 0,
+    "metric_recomputations": 0,
+    "c4_c5_accesses": 0
+  },
+  "official_G3_G4_PASS_usable": null,
+  "scientific_verdict": null
+}
