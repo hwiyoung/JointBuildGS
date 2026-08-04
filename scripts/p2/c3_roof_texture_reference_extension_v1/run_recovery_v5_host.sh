@@ -17,7 +17,8 @@ expected_roofer_id="sha256:9c980b97fba4c3fd30f5bb4afb8f2621be211d4e72e4333ea2053
 [[ ! -e "${final_root}" && ! -e "${partial_root}" ]] || { echo "add-once v5 namespace exists" >&2; exit 2; }
 
 source_commit="$(git -C "${repo_root}" rev-parse HEAD)"
-mkdir -p "${partial_root}"
+docker run --rm --network none -v "${artifact_root}:/artifacts/JointBuildGS:rw" "${project_image}" \
+  sh -lc "install -d -o $(id -u) -g $(id -g) -m 0755 '/artifacts/JointBuildGS/${relative_root}.partial'"
 
 project_run() {
   docker run --rm --network none --cpus 4 --memory 32g --pids-limit 1024 \
