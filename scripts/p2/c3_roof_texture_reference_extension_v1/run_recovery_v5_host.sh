@@ -44,5 +44,6 @@ runtime_seconds="$((SECONDS - begin))"
 project_run record-terminal --output-root "/artifacts/JointBuildGS/${relative_root}.partial" --exit-code "${exit_code}" --runtime-seconds "${runtime_seconds}"
 project_run render-and-finalize --output-root "/artifacts/JointBuildGS/${relative_root}.partial" --artifact-root /artifacts/JointBuildGS --source-commit "${source_commit}"
 
-mv -- "${partial_root}" "${final_root}"
+docker run --rm --network none -v "${artifact_root}:/artifacts/JointBuildGS:rw" "${project_image}" \
+  sh -lc "mv -- '/artifacts/JointBuildGS/${relative_root}.partial' '/artifacts/JointBuildGS/${relative_root}'"
 echo "completed: ${final_root}"
