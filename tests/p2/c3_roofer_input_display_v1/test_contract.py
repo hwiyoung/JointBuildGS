@@ -4,6 +4,12 @@ import numpy as np
 from shapely.geometry import Polygon
 
 from scripts.p2.c3_roofer_input_display_v1.render import _support, load_config, validate_config
+from scripts.p2.c3_roofer_input_display_v1.render_complete import (
+    _height_colors,
+    _normal_colors,
+    load_config as load_complete_config,
+    validate_config as validate_complete_config,
+)
 
 
 class SupportTest(unittest.TestCase):
@@ -22,6 +28,17 @@ class SupportTest(unittest.TestCase):
         self.assertLess(result["buffer_coverage_fraction"], 0.02)
         self.assertGreater(result["convex_hull_span_fraction"], 0.6)
         self.assertEqual(result["class6_point_count"], 4)
+
+    def test_complete_lineage_config_and_attribute_colors(self):
+        config = load_complete_config()
+        validate_complete_config(config)
+        self.assertEqual(config["display"]["row_count_per_sheet"], 22)
+        xyz = np.asarray([[0, 0, 1], [0, 0, 2]], dtype=np.float64)
+        colors = _height_colors(xyz)
+        self.assertEqual(colors.shape, (2, 3))
+        quaternions = np.asarray([[1, 0, 0, 0]], dtype=np.float64)
+        normals = _normal_colors(quaternions)
+        np.testing.assert_allclose(normals, [[0, 0, 1]])
 
 
 if __name__ == "__main__":
