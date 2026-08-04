@@ -10,7 +10,7 @@
 - `official_G3_G4_PASS_usable: null`
 - `scientific_verdict: null`
 
-전체 보고서와 case HTML은 외부 artifact에 있고 Git-owned resolver는 `artifacts/manifests/p2_c3_12row_complete_lineage_report_recovery_v2.json`이다.
+전체 보고서와 case HTML은 외부 artifact에 있고 Git-owned resolver는 `artifacts/manifests/p2_c3_12row_complete_lineage_report_recovery_v4.json`이다. 최종 표시판은 `P2-C3-12ROW-COMPARISON-DISPLAY-RECOVERY-v6`이다.
 
 ## 12행 구성
 
@@ -43,7 +43,11 @@
 
 ## 108580336 해석
 
-실제 Roofer class-6 입력은 C3-1 621점, C3-2 644점이다. 0.3m point-buffer 기준 footprint coverage는 1.51%와 1.35%지만 convex-hull span은 66.53%와 54.68%다. 따라서 Roofer 외곽이 그럴듯한 것은 GT footprint만의 효과도, 촘촘한 roof recovery의 증거도 아니다. 넓은 XY에 성기게 분산된 class-6 point, GT footprint clipping, plane fitting이 결합된 결과다.
+실제 Roofer class-6 입력은 C3-1 621점, C3-2 644점이며 각각 전부 GT footprint 내부다. 함께 들어간 class-2 terrain은 조건별 97,372점이지만 footprint 내부에는 0점이고 주변부 ground support다. 즉 7행은 `class-6 roof evidence + class-2 terrain support + 별도 GT footprint`를 표시한다.
+
+0.3m point-buffer 기준 footprint coverage는 1.51%와 1.35%지만 convex-hull span은 66.53%와 54.68%다. 따라서 Roofer 외곽이 그럴듯한 것은 GT footprint만의 효과도, 촘촘한 roof recovery의 증거도 아니다. 넓은 XY에 성기게 분산된 class-6 point, GT footprint clipping, plane fitting이 결합된 결과다.
+
+초기 7행이 혼자 작아 보인 원인은 입력 부재가 아니라 표시 문제였다. class-2 terrain의 낮은 Z 극단값이 전체 축 범위를 늘렸고 긴 주석이 `tight_layout` 계산에 포함되어 패널 축을 수축시켰다. v6는 terrain 표시 범위에 1–99% robust Z를 사용하고 주석을 축 외부로 분리했다. 원본 LAS와 Roofer 출력은 변경하지 않았다.
 
 ## 실행 및 해석 경계
 

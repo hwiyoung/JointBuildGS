@@ -1,0 +1,64 @@
+{
+  "schema": "jointbuildgs.local_artifact_resolver.v1",
+  "task_id": "P2-C3-COMPLETE-LINEAGE-REPORT-RECOVERY-v4",
+  "status": "300-CLOSED_LOCAL_COMPLETE_LINEAGE_DIAGNOSTIC",
+  "source_commit": "7b6aaee915ae7970366d98043beeb6742ef9c9cf",
+  "artifact_uri": "artifact://JointBuildGS/phase-payloads/p2/c3_roofer_input_display_v1/P2-C3-COMPLETE-LINEAGE-REPORT-RECOVERY-v4",
+  "local_absolute_path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/p2/c3_roofer_input_display_v1/P2-C3-COMPLETE-LINEAGE-REPORT-RECOVERY-v4",
+  "source_artifact_uri": "artifact://JointBuildGS/phase-payloads/p2/c3_roofer_input_display_v1/P2-C3-12ROW-COMPARISON-DISPLAY-RECOVERY-v6",
+  "source_local_absolute_path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/p2/c3_roofer_input_display_v1/P2-C3-12ROW-COMPARISON-DISPLAY-RECOVERY-v6",
+  "roofer_input_display_artifact_uri": "artifact://JointBuildGS/phase-payloads/p2/c3_roofer_input_display_v1/P2-C3-ROOFER-INPUT-DISPLAY-RECOVERY-v3",
+  "manifest": {
+    "relative_path": "control/artifact_manifest_v1.json",
+    "bytes": 1637,
+    "sha256": "4e24cbdbba3a4c905b0f78d9ac6425d344ba8cd36aff647487c184fc9365db59"
+  },
+  "technical_return": {
+    "relative_path": "control/technical_return_v1.json",
+    "bytes": 1690,
+    "sha256": "bf52028c7c197f70715f19289982ca19d90afa4c82f0dfe745fe83f1454ea02a"
+  },
+  "verified_receipt": {
+    "relative_path": "control/200-verified.local_v1.json",
+    "bytes": 603,
+    "sha256": "9545bd191cb1b9bbe0470c30424f9ffcbcbbe355a1176418dfe4d8e89b231253"
+  },
+  "closed_receipt": {
+    "relative_path": "control/300-closed.local_v1.json",
+    "bytes": 645,
+    "sha256": "9b279a859c48e68a90aff6d6c0238103a29ca21d9d9722335dd4d9a3cb6d41e7"
+  },
+  "technical_report_markdown": {
+    "relative_path": "reports/technical_report_ko_v1.md",
+    "bytes": 3968,
+    "sha256": "f5f486c31d529ff4be20fdf41fdf28c38f333ef1bdd4a15285adaa2ece6de9c2"
+  },
+  "case_html": {
+    "relative_path": "reports/case_index.html",
+    "bytes": 1296,
+    "sha256": "8d96a31a57df1f8cb2a5af4461adb2a9c1b89d9914af055b83d9c4e5d861c8df",
+    "link_target_count": 3,
+    "link_target_failure_count": 0
+  },
+  "case_sheet_count": 3,
+  "rows_per_sheet": 12,
+  "columns_per_sheet": 8,
+  "visible_cell_count": 288,
+  "roofer_input_support_row_count": 6,
+  "mesh_quality_row_count": 6,
+  "roofer_plane_row_count": 6,
+  "original_resolution_visual_review_count": 3,
+  "execution_counters": {
+    "gs_training_invocations": 0,
+    "checkpoint_render_extractions": 0,
+    "mesh_invocations": 0,
+    "roofer_invocations": 0,
+    "g2_invocations": 0,
+    "metric_recomputations": 0,
+    "c4_c5_accesses": 0
+  },
+  "execution_authority": "DIRECT_HUMAN_INSTRUCTION_SINGLE_EXPERIMENT_HOST",
+  "two_host_receipts_created": false,
+  "official_G3_G4_PASS_usable": null,
+  "scientific_verdict": null
+}
