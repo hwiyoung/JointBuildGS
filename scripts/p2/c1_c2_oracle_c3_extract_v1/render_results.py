@@ -59,15 +59,18 @@ def _load_method_geometry(output_root: Path, method: str, stable_id: str) -> tup
     work = output_root / "operations" / method / stable_id / "work"
     prepared = json.loads((work / "prepared_v1.json").read_text(encoding="utf-8"))
     terminal_path = work / "roofer_terminal_v1.json"
+    pre_failure_status = (prepared.get("pre_roofer_failure") or {}).get(
+        "code", "PRE_ROOFER_REFERENCE_ID_ALIGNMENT_FAILURE"
+    )
     terminal = json.loads(terminal_path.read_text(encoding="utf-8")) if terminal_path.is_file() else {
-        "status": "PRE_ROOFER_REFERENCE_ID_ALIGNMENT_FAILURE",
+        "status": pre_failure_status,
         "outputs": [],
         "pre_roofer_failure": prepared.get("pre_roofer_failure"),
     }
     if terminal.get("status") == "COMPLETED" and len(terminal.get("outputs") or ()) == 1:
         output_path = output_root / terminal["outputs"][0]["path"]
         surfaces = load_cityjsonseq(output_path)
-    elif prepared.get("roofer_eligible") is False and terminal.get("status") == "PRE_ROOFER_REFERENCE_ID_ALIGNMENT_FAILURE":
+    elif prepared.get("roofer_eligible") is False and terminal.get("status") == pre_failure_status:
         surfaces = []
     else:
         raise RuntimeError(f"incomplete C1/C2 terminal: {method} {stable_id}")

@@ -31,11 +31,11 @@ def load_config(path: Path = CONFIG_PATH) -> dict[str, Any]:
 def validate_config(config: Mapping[str, Any] | None = None, *, require_activation: bool = False) -> dict[str, Any]:
     cfg = dict(config or load_config())
     authority = cfg.get("execution_authority") or {}
-    if cfg.get("task_id") != "P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v12":
+    if cfg.get("task_id") != "P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v13":
         raise RuntimeError("recovery task identity drifted")
     if cfg.get("handoff_id") is not None:
         raise RuntimeError("local execution must not claim a handoff ID")
-    if cfg.get("execution_record_id") != "P2-LOCAL-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v12":
+    if cfg.get("execution_record_id") != "P2-LOCAL-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v13":
         raise RuntimeError("local execution record identity drifted")
     if authority.get("mode") != "DIRECT_HUMAN_INSTRUCTION_SINGLE_EXPERIMENT_HOST":
         raise RuntimeError("local execution authority is missing")

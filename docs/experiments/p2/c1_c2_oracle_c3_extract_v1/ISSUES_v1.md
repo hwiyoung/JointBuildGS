@@ -53,6 +53,13 @@ Recovery v12 hash-verifies and inherits those four completed Roofer outputs with
 another invocation, and the C3 inheritance now also verifies and copies the six-row
 roof-semantic mesh control receipt from finalized recovery v9.
 
+Original-resolution review of the finalized v12 sheets found that the visible
+`4907177` C3 Roofer title correctly said insufficient evidence, but the qualitative
+index fallback status reused the C1/C2-specific reference/ID-alignment code. Recovery
+v13 preserves every input and output, derives the no-terminal status from each prepared
+record, and rerenders only the presentation so C3 records use
+`INSUFFICIENT_C3_ROOF_SEMANTIC_EVIDENCE`. No Roofer or scientific calculation is rerun.
+
 ## CLOSED — C3 mesh input included non-roof semantic classes
 
 Recovery v7 Poisson reconstruction consumed every inherited fused point after only
