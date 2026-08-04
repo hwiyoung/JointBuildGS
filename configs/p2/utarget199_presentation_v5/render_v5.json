@@ -1,0 +1,33 @@
+{
+  "schema": "jointbuildgs.p2.utarget199_presentation.v5",
+  "task_id": "P2-UTARGET199-PRESENTATION-v5",
+  "status": "APPROVED_FOR_LOCAL_NONCONFIRMATORY_PRESENTATION",
+  "sources": {
+    "contract_relative_root": "phase-payloads/p2/utarget199_contract_results_v1/P2-UTARGET199-CONTRACT-RESULTS-v1",
+    "c3_relative_root": "phase-payloads/p2/c3_utarget199_postprocess_render_recovery_v1/P2-C3-UTARGET199-POSTPROCESS-RENDER-RECOVERY-v1",
+    "lod2_relative_paths": [
+      "phase-payloads/p0-audit/data/raw/lod2/690_5334.gml",
+      "phase-payloads/p0-audit/data/raw/lod2/690_5336.gml"
+    ]
+  },
+  "exact_hashes": {
+    "building_method_metrics_v1.jsonl": "13728f8e56ddfa502fea9d6345bb38b29931737f8e33d73d40b1b3b8171f6c8e",
+    "building_acceptance_gates_v1.csv": "f99f931ffde7943f65cabcdd682ee03ec00fe095945af6e5e609342ace748bd3",
+    "building_condition_metrics_v1.jsonl": "068c59d47403fd0b717b8bdadc3e5920a61d601b5a831e32eb9055dd1b79cd62",
+    "utarget199_reference_cells_v1.jsonl": "ae62bc358dfdde604892305d44f3ff599288f00234a1622292d75596ba952f22"
+  },
+  "lod2_diagnostic": {
+    "orthometric_to_current_ellipsoidal_m": 45.7,
+    "minimum_uas_cells": 20,
+    "unchanged_median_abs_z_max_m": 1.0,
+    "unchanged_p95_abs_z_max_m": 2.0,
+    "known_alignment_uncertain_ids": ["DEBY_LOD2_4907177"]
+  },
+  "presentation": {
+    "full_resolution_source_copy": true,
+    "c4_missing_state": "NOT_RUN",
+    "c5_missing_state": "NOT_RUN"
+  },
+  "official_G3_G4_PASS_usable": null,
+  "scientific_verdict": null
+}
