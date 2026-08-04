@@ -60,3 +60,9 @@
 - C4/C5 access: 0
 
 이번 판은 봉인 결과의 비교 배치와 기술 진단이다. `scientific_verdict: null`은 C3-1/C3-2의 과학적 우열, 모집단 일반화, 공식 G3/G4/`PASS_usable` 판정을 하지 않았다는 뜻이다.
+
+## C4/C5 후속 제작 기록
+
+C4/C5의 동일 12행 확장, mesh RGB/normal/world-Z/support 표시와 GT-footprint textured
+hybrid의 honest/oracle 분리 원칙은
+[`C4_C5_EXTENSION_AND_TEXTURED_HYBRID_PLAN_ko_v1.md`](C4_C5_EXTENSION_AND_TEXTURED_HYBRID_PLAN_ko_v1.md)에 기록한다. 이 문서는 제작 계획이며 C4/C5 실행 권한은 아니다.
