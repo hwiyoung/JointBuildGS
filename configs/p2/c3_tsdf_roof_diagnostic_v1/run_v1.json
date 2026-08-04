@@ -1,0 +1,90 @@
+{
+  "schema": "jointbuildgs.p2.c3_tsdf_roof_diagnostic.v1",
+  "task_id": "P2-C3-TSDF-ROOF-DIAGNOSTIC-v1",
+  "status": "APPROVED_FOR_LOCAL_EXPERIMENT_HOST_EXECUTION",
+  "execution_authority": {
+    "mode": "DIRECT_HUMAN_INSTRUCTION_SINGLE_EXPERIMENT_HOST",
+    "authority_record": "current Codex task direct instruction on 2026-08-04",
+    "write_ownership_transfer_performed": false,
+    "two_host_receipt_required": false
+  },
+  "scope": {
+    "building_ids": [
+      "DEBY_LOD2_4907177",
+      "DEBY_LOD2_4906975",
+      "DEBY_LOD2_108580336"
+    ],
+    "condition_ids": ["C3_1_SEM", "C3_2_SEM_DEPTH"],
+    "c4_c5_access_allowed": false
+  },
+  "source": {
+    "v13_relative_root": "phase-payloads/p2/c1_c2_oracle_c3_extract_recovery_v13/P2-C1-C2-ORACLE-C3-EXTRACT-RECOVERY-v13",
+    "lod2_relative_path": "phase-payloads/p0-audit/data/raw/lod2/690_5336.gml",
+    "c1_relative_path": "phase-payloads/p0-audit/data/raw/tum2twin/TUM_Downtown_ULS_20241217_nadir.laz",
+    "c2_relative_path": "phase-payloads/p0-audit/data/work/mvs/openmvs/dim_dense.ply",
+    "colmap_relative_root": "phase-payloads/p0-audit/data/work/mvs/colmap_dense",
+    "semantic_relative_root": "phase-payloads/p2/c1_c2_g2_c3_first_wave_recovery_r4_v1/P2-C1-C2-G2-C3-FIRST-WAVE-RECOVERY-R4-v1/c3/prep/semantic_937_colmap_undistorted_r2/output/masks",
+    "exact_view_manifest_git_path": "artifacts/manifests/gate_s0/common_base_r2b/exact_937_member_crosswalk_v1.json",
+    "exact_view_count": 937,
+    "checkpoints": {
+      "C3_1_SEM": {
+        "relative_path": "phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-C3-2-GPU0-RECOVERY-v1/c3/c3_1_sem/seed0/ckpt/final.pt",
+        "bytes": 86802780,
+        "sha256": "b4f8ce6d97da6d7cef216b4edb3239ac005cc44f4d45cb459a25644ed79b62ea"
+      },
+      "C3_2_SEM_DEPTH": {
+        "relative_path": "phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-C3-2-GPU0-RECOVERY-v1/c3/c3_2_sem_depth/seed0/ckpt/final.pt",
+        "bytes": 103049692,
+        "sha256": "9bda046e2414a841e289f5d9ed0c5eaf18511445f9c52638b543cd4d52ecea12"
+      }
+    }
+  },
+  "frame": {
+    "crs": "EPSG:25832",
+    "world_shift_xyz": [690953.0, 5336071.0, 604.0],
+    "lod2_orthometric_to_camera_ellipsoidal_m": 45.7
+  },
+  "shared_view_plan": {
+    "maximum_views_per_building": 24,
+    "render_downscale": 0.25,
+    "footprint_crop_buffer_m": 5.0,
+    "prism_below_current_ground_m": 5.0,
+    "prism_above_current_ground_m": 45.0,
+    "selection": "SHARED_ACROSS_CONDITIONS_MAX_PROJECTED_PRISM_AREA_TIE_IMAGE_NAME"
+  },
+  "surface": {
+    "semantic_roof_class": 1,
+    "alpha_min": 0.5,
+    "depth_min_m": 0.01,
+    "depth_max_m": 500.0,
+    "footprint_buffer_m": 1.0,
+    "fusion_voxel_m": 0.15,
+    "minimum_distinct_views": 2,
+    "poisson_depth": 8,
+    "tsdf_voxel_m": 0.15,
+    "tsdf_truncation_m": 0.45,
+    "mesh_crop_vertical_margin_m": 1.0,
+    "mesh_evidence_distance_thresholds_m": [0.3, 0.6]
+  },
+  "diagnostics": {
+    "source_crop_buffer_m": 10.0,
+    "presence_buffers_m": [0.0, 1.0, 3.0, 5.0, 10.0],
+    "coverage_grid_m": 0.25,
+    "coverage_radius_m": 0.3,
+    "roofline_min_projected_area_px": 25.0,
+    "roofline_montage_view_count": 6,
+    "gaussian_crop_buffer_m": 5.0,
+    "large_in_plane_scale_m": 1.0
+  },
+  "output_relative_root": "phase-payloads/p2/c3_tsdf_roof_diagnostic_v1/P2-C3-TSDF-ROOF-DIAGNOSTIC-v1",
+  "execution_counters": {
+    "expected_gs_training_invocations": 0,
+    "expected_checkpoint_render_extractions": 2,
+    "expected_roofer_invocations": 0,
+    "expected_g2_invocations": 0,
+    "expected_metric_recomputations": 0,
+    "expected_c4_c5_accesses": 0
+  },
+  "official_G3_G4_PASS_usable": null,
+  "scientific_verdict": null
+}
