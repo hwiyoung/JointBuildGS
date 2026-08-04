@@ -3,7 +3,7 @@ set -euo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 artifact_root="${JBGS_ARTIFACT_ROOT:-/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts}"
-relative_root="phase-payloads/p2/c3_tsdf_roof_diagnostic_v1/P2-C3-TSDF-ROOF-DIAGNOSTIC-RECOVERY-v1"
+relative_root="phase-payloads/p2/c3_tsdf_roof_diagnostic_v1/P2-C3-TSDF-ROOF-DIAGNOSTIC-RENDER-RECOVERY-v1"
 output_root="${artifact_root}/${relative_root}"
 image="jointbuildgs:dev"
 expected_image="sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774"
@@ -27,7 +27,7 @@ if [[ -e "${output_root}" ]]; then
   exit 2
 fi
 docker run --rm --network none --shm-size 8g \
-  --name jbgs-c3-tsdf-roof-diagnostic-recovery-v1 \
+  --name jbgs-c3-tsdf-roof-diagnostic-render-recovery-v1 \
   --user "$(id -u):$(id -g)" \
   -e HOME=/tmp \
   -e PYTHONDONTWRITEBYTECODE=1 \

@@ -367,7 +367,12 @@ def _read_binary_vertex_ply(path: Path) -> np.ndarray:
         offset = stream.tell()
     count = int(next(line.split()[-1] for line in lines if line.startswith("element vertex ")))
     fields = []
-    type_map = {"double": "<f8", "float": "<f4", "uchar": "u1"}
+    type_map = {
+        "double": "<f8",
+        "float": "<f4",
+        "uchar": "u1",
+        "ushort": "<u2",
+    }
     for line in lines:
         tokens = line.split()
         if len(tokens) == 3 and tokens[0] == "property" and tokens[1] in type_map:

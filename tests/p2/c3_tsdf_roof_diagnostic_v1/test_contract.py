@@ -1,6 +1,11 @@
+from pathlib import Path
+import tempfile
 import unittest
 
+import numpy as np
+
 from scripts.p2.c3_tsdf_roof_diagnostic_v1.contract import load_config, validate_config
+from scripts.p2.c1_c2_oracle_c3_extract_v1.render_results import _read_binary_vertex_ply
 
 
 class ContractTest(unittest.TestCase):
@@ -34,6 +39,22 @@ class ContractTest(unittest.TestCase):
         self.assertTrue(b["load_depth"])
         self.assertEqual(a["w_depth"], 0.0)
         self.assertEqual(b["w_depth"], 0.03)
+
+    def test_shared_ply_reader_preserves_ushort_field_and_stride(self):
+        dtype = np.dtype([("x", "<f8"), ("view_count", "<u2")])
+        rows = np.asarray([(1.25, 2), (9.5, 513)], dtype=dtype)
+        header = (
+            "ply\nformat binary_little_endian 1.0\n"
+            "element vertex 2\nproperty double x\n"
+            "property ushort view_count\nend_header\n"
+        ).encode("ascii")
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "points.ply"
+            path.write_bytes(header + rows.tobytes())
+            loaded = _read_binary_vertex_ply(path)
+            self.assertEqual(loaded.dtype.names, ("x", "view_count"))
+            np.testing.assert_allclose(loaded["x"], [1.25, 9.5])
+            np.testing.assert_array_equal(loaded["view_count"], [2, 513])
 
 
 if __name__ == "__main__":
