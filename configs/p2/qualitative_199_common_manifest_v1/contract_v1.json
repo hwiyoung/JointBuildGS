@@ -1,0 +1,119 @@
+{
+  "schema": "jointbuildgs.p2.qualitative_199_common_manifest.contract.v1",
+  "task_id": "P2-QUALITATIVE-199-COMMON-MANIFEST-v1",
+  "decision_id": "DEC-P1-018",
+  "status": "USER_APPROVED_STAGE2_COMMON_MANIFEST",
+  "population": {
+    "name": "U_target",
+    "building_count": 199,
+    "retain_all_missingness": true
+  },
+  "row_order": [
+    {
+      "row": 1,
+      "row_id": "CURRENT_RAW_ROOF_BOUNDARY",
+      "source": "EXACT_937_CURRENT_IMAGES",
+      "definition": "Four fixed current raw cameras with evaluation-only roof-boundary projection"
+    },
+    {
+      "row": 2,
+      "row_id": "CURRENT_UAS_LIDAR_POINT_CLOUD",
+      "source": "CURRENT_UAS_LIDAR",
+      "definition": "Current UAS LiDAR point cloud"
+    },
+    {
+      "row": 3,
+      "row_id": "CURRENT_UAS_LIDAR_ROOFER",
+      "source": "ROW2_EXACT_DERIVATIVE",
+      "definition": "Roofer output derived from the exact row-2 LiDAR source"
+    },
+    {
+      "row": 4,
+      "row_id": "CURRENT_MVS_DENSE_POINT_CLOUD",
+      "source": "RECOVERED_DENSE_PAIR_V2_PLY",
+      "definition": "Recovered exact-937 common-base dense PLY"
+    },
+    {
+      "row": 5,
+      "row_id": "CURRENT_MVS_DENSE_ROOFER",
+      "source": "ROW4_EXACT_DERIVATIVE_REBUILD_REQUIRED",
+      "definition": "New Roofer output derived from the exact row-4 recovered dense PLY; historical C2 Roofer outputs are excluded"
+    },
+    {
+      "row": 6,
+      "row_id": "NATIVE_MVS_TEXTURED_MESH",
+      "source": "RECOVERED_DENSE_PAIR_V2_MVS",
+      "definition": "Native photogrammetric ReconstructMesh to RefineMesh to TextureMesh output from the same recovered dense points and visibility lineage"
+    }
+  ],
+  "dense_lineage": {
+    "recovery_relative_root": "phase-payloads/p2/mvs_native_textured_mesh_preflight_v1/P2-MVS-NATIVE-DENSE-SCENE-RECOVERY-v2",
+    "ply_relative_path": "work/mvs/openmvs/dim_dense.ply",
+    "ply_bytes": 658898693,
+    "ply_point_count": 43926567,
+    "ply_sha256": "fc2561ab3e41adaa64a5cbc1f7a13c5f887999d2d81f94d4dca082c2c43c02ce",
+    "mvs_relative_path": "work/mvs/openmvs/dim_dense.mvs",
+    "mvs_bytes": 1329728524,
+    "mvs_sha256": "bc533e1eb642513c080742d11ac7e58d828718b87132ba95b7e95ddcd2659c31",
+    "receipt_relative_path": "run_receipt.env",
+    "receipt_sha256": "e2fe5c1135dee23be24f0785301c14bc8dd8f4d7b10ffc978c1f11d7258a50a4",
+    "excluded_historical_ply_sha256": "b4bc250a6c97de50295f08023194a55c8a9744dc2b225db8618fd594b52ae28f",
+    "excluded_historical_c2_products": true
+  },
+  "inputs": {
+    "utarget_metrics_relative_path": "phase-payloads/p2/utarget199_contract_results_v1/P2-UTARGET199-CONTRACT-RESULTS-v1/results/building_method_metrics_v1.jsonl",
+    "utarget_metrics_sha256": "13728f8e56ddfa502fea9d6345bb38b29931737f8e33d73d40b1b3b8171f6c8e",
+    "image_directory_relative_path": "phase-payloads/p0-audit/data/work/images/Images",
+    "cameras_relative_path": "phase-payloads/p0-audit/data/work/colmap/sparse/0/cameras.txt",
+    "cameras_sha256": "d67c0fff80d2563fea5f3ec108c7e93d9a846851a0fdee1053c8b668a5f770ce",
+    "images_relative_path": "phase-payloads/p0-audit/data/work/colmap/sparse/0/images.txt",
+    "images_sha256": "b53e86754018db9eeb53d13b187cb065e55db83ffa9add6e7c8e9c8d7c29e88b",
+    "scene_reference_relative_path": "phase-payloads/p0-audit/data/work/opf/opf/scene_reference_frame.json",
+    "scene_reference_sha256": "fb408e9c97bdad6af7ad4a6e94be823be294030907ce92e395bd63490f77daf6",
+    "exact_937_crosswalk_git_path": "artifacts/manifests/gate_s0/common_base_r2b/exact_937_member_crosswalk_v1.json",
+    "exact_937_crosswalk_sha256": "b4af779ecfae859de9772ce50cb24326b20c3f86614f6a8957453779d1cd4c17",
+    "lod2_relative_paths": [
+      "phase-payloads/p0-audit/data/raw/lod2/690_5334.gml",
+      "phase-payloads/p0-audit/data/raw/lod2/690_5336.gml"
+    ],
+    "lod2_sha256": [
+      "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314",
+      "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674"
+    ]
+  },
+  "frame": {
+    "crs": "EPSG:25832",
+    "dense_local_shift_xyz": [690953.0, 5336071.0, 604.0],
+    "lod2_orthometric_to_current_ellipsoidal_m": 45.7
+  },
+  "camera_selection": {
+    "membership": "EXACT_937_ONLY",
+    "selection_geometry": "BUILDING_DISPLAY_BBOX_PLUS_CURRENT_MVS_DENSE_Z_RANGE",
+    "minimum_projection_coverage": 0.45,
+    "minimum_projected_area_px2": 2500.0,
+    "target_oblique_nadir_deg": 55.0,
+    "moderate_oblique_nadir_range_deg": [35.0, 70.0],
+    "unique_camera_per_view": true,
+    "evaluation_roof_boundary_used_for_selection": false
+  },
+  "crop": {
+    "world_viewport_margin_ratio": 0.35,
+    "world_viewport_minimum_margin_m": 5.0,
+    "dense_z_percentiles": [2.0, 98.0],
+    "dense_z_vertical_padding_m": 2.0,
+    "minimum_dense_points": 20,
+    "image_margin_scale": 0.65,
+    "image_margin_constant_px": 100.0
+  },
+  "views": {
+    "order": ["TOP", "OBLIQUE_1", "OBLIQUE_2", "PRINCIPAL_SECTION"],
+    "TOP": {"kind": "ORTHOGRAPHIC", "elevation_deg": 90.0, "azimuth_deg": -90.0},
+    "OBLIQUE_1": {"kind": "ORTHOGRAPHIC", "elevation_deg": 28.0, "azimuth_deg": -55.0},
+    "OBLIQUE_2": {"kind": "ORTHOGRAPHIC", "elevation_deg": 32.0, "azimuth_deg": 35.0},
+    "PRINCIPAL_SECTION": {"kind": "FOOTPRINT_PCA_SECTION", "band_ratio": 0.12, "minimum_half_band_m": 0.75}
+  },
+  "output_relative_root": "phase-payloads/p2/qualitative_199_common_manifest_v1/P2-QUALITATIVE-199-COMMON-MANIFEST-v1",
+  "next_stage_not_authorized": "ROW1_IMAGE_RENDERING",
+  "official_G3_G4_PASS_usable": null,
+  "scientific_verdict": null
+}

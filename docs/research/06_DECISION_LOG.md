@@ -663,6 +663,44 @@
 - Agent는 정렬, confidence, gradient, GPU memory, checkpoint/failure 산출물만 보고하고
   과학적 판정은 사람 검토자에게 남긴다.
 
+## DEC-P1-018 — 199동 6행 정성 결과의 단일 MVS dense 계보 재동결
+
+- **Decision ID:** `DEC-P1-018`
+- **Date:** 2026-08-05
+- **Status:** `USER-APPROVED SIX-ROW SINGLE-DENSE-LINEAGE RESET`
+- **Previous state:** `DEC-P1-016`은 단일 세로 비교판을 열었지만, 보존된 C2 dense
+  PLY에는 OpenMVS mesh reconstruction이 요구하는 per-point camera visibility가 없었다.
+  과거 표시 구현은 C2 Roofer CityJSON을 사진으로 후처리한 결과를 textured mesh로
+  표기하여, 사진 기반 native photogrammetric textured mesh와도 일치하지 않았다.
+- **Observed recovery:** exact 937 image/pose common base와 동결된 OpenMVS 설정으로
+  `P2-MVS-NATIVE-DENSE-SCENE-RECOVERY-v2`를 생성했다. 복원 pair는 동일 실행에서 나온
+  `dim_dense.ply`와 `dim_dense.mvs`이며, PLY는 43,926,567점이다. 보존된 과거 PLY
+  43,942,554점과는 15,987점(`-0.0363815903827529%`) 차이가 있으므로 과거 C2
+  point/Roofer 결과와 새 native mesh를 한 판에서 혼용하지 않는다.
+- **New decision:** 새 6행 정성 결과와 그에 결합되는 C2 기술 결과는 모두 복원 pair를
+  단일 dense source로 사용한다. 행 4는 복원 `dim_dense.ply`, 행 5는 그 exact PLY에서
+  새로 파생한 class-2/6 Roofer input과 Roofer output, 행 6은 같은 점과 camera visibility를
+  보유한 복원 `dim_dense.mvs`에서 `ReconstructMesh -> RefineMesh -> TextureMesh`로 만든
+  native photogrammetric textured mesh다. 과거 C2 PLY, 과거 C2 Roofer output/metric,
+  display-only textured Roofer는 새 판에 섞지 않고 역사적 산출물로 보존한다.
+- **Six rows:** (1) 네 current raw image와 사후 평가용 roof-boundary projection,
+  (2) current UAS LiDAR point cloud, (3) 그 LiDAR의 Roofer output, (4) 새 common MVS
+  dense point cloud, (5) 그 exact dense source의 새 MVS Roofer output, (6) 같은 dense
+  source의 native MVS textured mesh. 3D 행은 `TOP`, `OBLIQUE_1`, `OBLIQUE_2`,
+  `PRINCIPAL_SECTION`을 공유한다.
+- **Camera/crop boundary:** camera selection과 crop은 건물 identity/display bbox와 새
+  current-image MVS dense support만 사용한다. LoD2 roof boundary는 camera와 crop을
+  고정한 뒤 평가·표시용으로만 투영하며 reconstruction, classification, Roofer input,
+  parameter 선택에 전달하지 않는다.
+- **Execution order:** 정의 동결, 199동 공통 camera/view/crop manifest, raw-image 첫 행과
+  outcome-free 3--5동 검토, 행별 source-hash/missingness gate, 같은 manifest 기반 3D
+  inspector, 최종 PNG/PDF/HTML 조립 순으로 진행한다. 각 단계는 사람 승인 전 다음
+  단계로 넘어가지 않는다.
+- **Missingness and versioning:** 199동 분모를 유지하며 각 camera/row의 missing/failure를
+  삭제하지 않는다. 기존 산출물을 덮어쓰지 않고 새 add-once namespace와 새 metric
+  binding을 사용한다.
+- **Scientific verdict:** `null`
+
 ## Pending decisions not yet logged as adopted
 
 다음은 선택지가 정리되었으나 사용자 결정 전이므로 adopted decision이 아니다.

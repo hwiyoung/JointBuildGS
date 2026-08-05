@@ -1,0 +1,64 @@
+{
+  "schema": "jointbuildgs.p2.qualitative_199_common_manifest.technical_result_manifest.v1",
+  "task_id": "P2-QUALITATIVE-199-COMMON-MANIFEST-v1",
+  "decision_id": "DEC-P1-018",
+  "status": "COMPLETE_WITH_RETAINED_DIAGNOSTIC_MISSINGNESS",
+  "artifact_root": "artifact://JointBuildGS/phase-payloads/p2/qualitative_199_common_manifest_v1/P2-QUALITATIVE-199-COMMON-MANIFEST-v1",
+  "building_count": 199,
+  "camera_view_row_count": 796,
+  "buildings_with_four_unique_cameras": 199,
+  "dense_lineage": {
+    "ply_sha256": "fc2561ab3e41adaa64a5cbc1f7a13c5f887999d2d81f94d4dca082c2c43c02ce",
+    "mvs_sha256": "bc533e1eb642513c080742d11ac7e58d828718b87132ba95b7e95ddcd2659c31",
+    "finite_point_count": 43926567,
+    "local_dense_range_buildings": 171,
+    "global_dense_median_fallback_buildings": 28
+  },
+  "roof_boundary_projection_diagnostic": {
+    "full_rows": 790,
+    "partial_rows": 2,
+    "not_projectable_rows": 4,
+    "used_for_camera_or_crop_selection": false
+  },
+  "key_records": [
+    {
+      "path": "manifest/building_camera_view_crop_manifest_v1.jsonl",
+      "bytes": 1026148,
+      "sha256": "61e4e8a334c10d0c4405b4929c3e021ac74e5a6eb96596954b5781c0c5b4c4d9"
+    },
+    {
+      "path": "manifest/camera_view_rows_v1.jsonl",
+      "bytes": 857687,
+      "sha256": "28bc1b936b72bb7f64eacd68f260408d842a7fca5ef7e72736cc29f1f8d4393d"
+    },
+    {
+      "path": "control/source_bindings_v1.json",
+      "bytes": 2709,
+      "sha256": "82fb8f29e16faa26bf47a6dd1c1a8588cbcb81e8877a83cb7dd7ec06fa263a98"
+    },
+    {
+      "path": "control/summary_v1.json",
+      "bytes": 688,
+      "sha256": "b97069a9c1c88a340dee3164074b154406b97dbfc9d95b4be596ecc57b5ec046"
+    },
+    {
+      "path": "control/run_receipt_v1.json",
+      "bytes": 1462,
+      "sha256": "e1e3459a0878b2db6219188e81833f5930498b01ab300dcf0dc6b29c3c811e68"
+    },
+    {
+      "path": "control/artifact_manifest_v1.json",
+      "bytes": 996,
+      "sha256": "b8eabcdeabcc5042c82ac6e2f9df88a96682024861ffc5d5fad8ccdc13440558"
+    }
+  ],
+  "verification": {
+    "artifact_records_rehashed": 6,
+    "artifact_record_hash_failures": 0,
+    "population_members_retained": 199,
+    "unique_camera_role_sets_passed": 199,
+    "unique_camera_role_sets_failed": 0
+  },
+  "next_stage_authorized": false,
+  "scientific_verdict": null
+}
