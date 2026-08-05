@@ -1,0 +1,100 @@
+{
+  "schema": "jointbuildgs.p2.c4_utarget199_postprocess_config.v1",
+  "task_id": "P2-C4-UTARGET199-POSTPROCESS-v1",
+  "status": "APPROVED_BY_DEC_P1_017",
+  "output_relative_root": "phase-payloads/p2/c4_utarget199_postprocess_v1/P2-C4-UTARGET199-POSTPROCESS-v1",
+  "condition": {
+    "condition_id": "C4_EXISTING_ALS",
+    "title": "C4 exact C3-2 base + Existing ALS depth/normal prior",
+    "checkpoint_relative_path": "phase-payloads/p2/c4_existing_als_v1/P2-C4-EXISTING-ALS-BOUNDED-TECHDEV-v1/run/c4_existing_als/seed0/ckpt/final.pt",
+    "expected_bytes": 185666524,
+    "expected_sha256": "bd068aa4ecf545b968ce79ec30b8bc3b5637656cce2d98891bd2e78d338db521",
+    "expected_iteration": 30000
+  },
+  "matched_c3_2": {
+    "checkpoint_relative_path": "phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-C3-2-GPU0-RECOVERY-v1/c3/c3_2_sem_depth/seed0/ckpt/final.pt",
+    "checkpoint_bytes": 103049692,
+    "checkpoint_sha256": "9bda046e2414a841e289f5d9ed0c5eaf18511445f9c52638b543cd4d52ecea12",
+    "postprocess_relative_root": "phase-payloads/p2/c3_utarget199_postprocess_render_recovery_v1/P2-C3-UTARGET199-POSTPROCESS-RENDER-RECOVERY-v1",
+    "metric_relative_path": "results/building_condition_metrics_v1.jsonl",
+    "metric_bytes": 1020259,
+    "metric_sha256": "068c59d47403fd0b717b8bdadc3e5920a61d601b5a831e32eb9055dd1b79cd62"
+  },
+  "scope": {
+    "population": "U_target",
+    "building_count": 199,
+    "expected_result_rows": 199,
+    "pre_execution_building_exclusion_allowed": false,
+    "missing_not_run_failure_preserved": true,
+    "c5_execution_allowed": false
+  },
+  "frame": {
+    "crs": "EPSG:25832",
+    "local_shift_xyz": [690953.0, 5336071.0, 604.0],
+    "grid_origin_xy": [690791.74, 5335864.05],
+    "grid_cell_m": 1.0,
+    "aoi_bbox": [690791.74, 5335864.05, 691154.65, 5336353.85],
+    "lod2_orthometric_to_current_ellipsoidal_m": 45.7
+  },
+  "inputs": {
+    "roster_git_path": "docs/research/preregistration/gate_s0/uas_reference_coverage_r1_v1/eligibility_candidate_v1.csv",
+    "current_uas_reference_relative_path": "phase-payloads/p2/utarget199_contract_results_v1/P2-UTARGET199-CONTRACT-RESULTS-v1/freeze/utarget199_reference_cells_v1.jsonl",
+    "current_uas_reference_bytes": 11934242,
+    "current_uas_reference_sha256": "ae62bc358dfdde604892305d44f3ff599288f00234a1622292d75596ba952f22",
+    "temporal_diagnostic_relative_path": "phase-payloads/p2/utarget199_presentation_v5/P2-UTARGET199-PRESENTATION-v5/results/lod2_temporal_reference_diagnostics_v1.jsonl",
+    "temporal_diagnostic_bytes": 107924,
+    "temporal_diagnostic_sha256": "dfb53221e21846a6c96fbd975ca6358aa7eab28a1e127c174e66c1a14af6b4d3",
+    "lod2_relative_paths": [
+      "phase-payloads/p0-audit/data/raw/lod2/690_5334.gml",
+      "phase-payloads/p0-audit/data/raw/lod2/690_5336.gml"
+    ],
+    "lod2_sha256": [
+      "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314",
+      "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674"
+    ],
+    "data_root_relative_path": "phase-payloads/p0-audit/data/work/mvs/colmap_dense",
+    "exact_view_manifest_git_path": "artifacts/manifests/gate_s0/common_base_r2b/exact_937_member_crosswalk_v1.json",
+    "exact_view_count": 937,
+    "utarget_v5_relative_root": "phase-payloads/p2/utarget199_presentation_v5/P2-UTARGET199-PRESENTATION-v5"
+  },
+  "intermediate_exports": {
+    "native_gaussian_point_cloud": "ALL_CHECKPOINT_PRIMITIVE_CENTERS_NO_FILTER",
+    "native_gaussian_surfel_mesh": "FOUR_CORNERS_TWO_TRIANGLES_PER_2D_GAUSSIAN_NO_FILTER",
+    "roofer_input": "STORED_STAGE2_GROUPS_TO_FROZEN_1M_CLASS2_6_COMMON_READOUT_CONTRACT",
+    "actual_gs_render_view_count": 4,
+    "actual_gs_render_downscale": 0.25,
+    "actual_gs_render_channels": ["current_rgb", "gs_rgb", "gs_semantic", "gs_depth", "gs_normal"]
+  },
+  "association": {
+    "timing": "ONLY_AFTER_C4_GEOMETRY_R_DERIVED_AND_INTERMEDIATE_EXPORTS_ARE_FROZEN",
+    "rule": "MAX_COMPONENT_CELL_CENTER_COUNT_INSIDE_STABLE_BUILDING_BBOX_THEN_MIN_COMPONENT_ID",
+    "bbox_role": "IDENTITY_DISPLAY_AND_EVALUATION_ONLY_NO_GEOMETRY_OR_R_DERIVED_CHANGE"
+  },
+  "references": {
+    "current_uas_role": "INDEPENDENT_CURRENT_UAS_EVALUATION_ONLY",
+    "lod2_status_values": ["UNCHANGED_CONFIDENT", "TEMPORAL_CHANGE_SUSPECTED", "REFERENCE_ID_ALIGNMENT_UNCERTAIN"],
+    "c4_vs_lod2_role": "PRIOR_RELATED_REFERENCE_DIAGNOSTIC_ONLY",
+    "lod2_grid_cell_m": 1.0
+  },
+  "roofer": {
+    "image": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+    "command_args": ["--id-attribute", "component_id", "--jobs", "1", "--srs", "EPSG:25832", "--bld-class", "6", "--grnd-class", "2", "--lod22"],
+    "timeout_seconds_per_unit": 600,
+    "quality_driven_retry_allowed": false,
+    "external_roofprint_allowed": false
+  },
+  "presentation": {
+    "representative_building_ids": ["DEBY_LOD2_4907177", "DEBY_LOD2_4906975", "DEBY_LOD2_108580336"],
+    "full_resolution_page_count": 199,
+    "separate_principal_section_page_count": 0,
+    "c5_state": "NOT_RUN"
+  },
+  "caps": {
+    "gpu_peak_memory_mib": 18000,
+    "cpu_memory_bytes": 34359738368,
+    "output_bytes": 8000000000,
+    "wall_clock_seconds": 43200
+  },
+  "official_G3_G4_PASS_usable": null,
+  "scientific_verdict": null
+}
