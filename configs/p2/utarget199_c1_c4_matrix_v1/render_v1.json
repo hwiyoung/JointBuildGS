@@ -1,0 +1,64 @@
+{
+  "schema": "jointbuildgs.p2.utarget199_c1_c4_matrix.v1",
+  "task_id": "P2-UTARGET199-C1-C4-MATRIX-v1",
+  "status": "APPROVED_BY_USER_FOR_ATTACHED_STYLE_199_BUILDING_PRESENTATION",
+  "output_relative_root": "phase-payloads/p2/utarget199_c1_c4_matrix_v1/P2-UTARGET199-C1-C4-MATRIX-v1",
+  "scope": {
+    "building_count": 199,
+    "full_resolution_page_count": 199,
+    "html_gallery": true,
+    "pdf_volume_size": 25,
+    "missing_not_run_failure_preserved": true,
+    "c5_execution_allowed": false
+  },
+  "sources": {
+    "c1_c2_contract_relative_root": "phase-payloads/p2/utarget199_contract_results_v1/P2-UTARGET199-CONTRACT-RESULTS-v1",
+    "c3_postprocess_relative_root": "phase-payloads/p2/c3_utarget199_postprocess_render_recovery_v1/P2-C3-UTARGET199-POSTPROCESS-RENDER-RECOVERY-v1",
+    "c4_postprocess_relative_root": "phase-payloads/p2/c4_utarget199_postprocess_v1/P2-C4-UTARGET199-POSTPROCESS-v1",
+    "c3_checkpoint_relative_path": "phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-C3-2-GPU0-RECOVERY-v1/c3/c3_2_sem_depth/seed0/ckpt/final.pt",
+    "c4_checkpoint_relative_path": "phase-payloads/p2/c4_existing_als_v1/P2-C4-EXISTING-ALS-BOUNDED-TECHDEV-v1/run/c4_existing_als/seed0/ckpt/final.pt",
+    "lod2_relative_paths": [
+      "phase-payloads/p0-audit/data/raw/lod2/690_5334.gml",
+      "phase-payloads/p0-audit/data/raw/lod2/690_5336.gml"
+    ]
+  },
+  "exact_hashes": {
+    "c1_c2_metric_sha256": "13728f8e56ddfa502fea9d6345bb38b29931737f8e33d73d40b1b3b8171f6c8e",
+    "c3_metric_sha256": "068c59d47403fd0b717b8bdadc3e5920a61d601b5a831e32eb9055dd1b79cd62",
+    "c4_metric_sha256": "c377220973cfa884639734c7a279fa2abbd754d84f02fe14312dfff96e0c990e",
+    "current_uas_reference_sha256": "ae62bc358dfdde604892305d44f3ff599288f00234a1622292d75596ba952f22",
+    "c3_checkpoint_sha256": "9bda046e2414a841e289f5d9ed0c5eaf18511445f9c52638b543cd4d52ecea12",
+    "c4_checkpoint_sha256": "bd068aa4ecf545b968ce79ec30b8bc3b5637656cce2d98891bd2e78d338db521",
+    "lod2_sha256": [
+      "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314",
+      "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674"
+    ]
+  },
+  "frame": {
+    "crs": "EPSG:25832",
+    "local_shift_xyz": [690953.0, 5336071.0, 604.0],
+    "lod2_orthometric_to_current_ellipsoidal_m": 45.7,
+    "principal_section": "FOOTPRINT_PCA_SINGLE_CANONICAL",
+    "common_z_scale": "LOD2_PLUS_45P7M_PER_BUILDING"
+  },
+  "presentation": {
+    "page_layout": "ATTACHED_STYLE_CONDITION_ROWS_BY_TOP_OBLIQUE_SECTION_COLUMNS",
+    "row_order": [
+      "CURRENT_RGB_CONTEXT",
+      "C1_CURRENT_UAS_LIDAR_INPUT",
+      "C1_ROOFER_OUTPUT",
+      "C2_CURRENT_IMAGE_MVS_INPUT",
+      "C2_ROOFER_OUTPUT",
+      "C3_2_NATIVE_GS",
+      "C3_2_ROOFER_OUTPUT",
+      "C4_EXISTING_ALS_NATIVE_GS",
+      "C4_ROOFER_OUTPUT",
+      "REFERENCE_AND_METRIC_CONTEXT"
+    ],
+    "column_order": ["ROW_ID_AND_LINEAGE", "TOP", "OBLIQUE", "CANONICAL_PCA_SECTION"],
+    "separate_principal_section_pages": 0,
+    "c5_state": "NOT_RUN"
+  },
+  "official_G3_G4_PASS_usable": null,
+  "scientific_verdict": null
+}
