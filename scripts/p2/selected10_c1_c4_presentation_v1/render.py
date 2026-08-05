@@ -22,6 +22,7 @@ from matplotlib.collections import PolyCollection
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
+from scipy.spatial import cKDTree
 
 from scripts.evidence_and_attributes.population_analysis import population_aux_v3 as projection
 from scripts.p2.c1_c2_c3_consolidated_results_v1.compose_v4 import lod2_zlim, shifted_lod2
@@ -56,7 +57,10 @@ from src.geospatial.projection_datum import as_ellipsoidal_points
 
 REPO = Path(__file__).resolve().parents[3]
 CONFIG_PATH = REPO / "configs/p2/selected10_c1_c4_presentation_v1/render_v1.json"
-SEMANTIC_COLORS = np.asarray([[0.68, 0.70, 0.73], [0.08, 0.55, 0.82], [0.90, 0.45, 0.08]], dtype=np.float64)
+SEMANTIC_COLORS = np.asarray(
+    [[0.18, 0.18, 0.18], [0.84, 0.37, 0.0], [0.0, 0.45, 0.70], [0.0, 0.62, 0.45]],
+    dtype=np.float64,
+)
 
 
 def load_config() -> dict[str, Any]:
@@ -170,26 +174,45 @@ def point_panels(root: Path, points: PointSet, reference: Any, zlim: tuple[float
 
 def native_semantic_panels(root: Path, native: Mapping[str, np.ndarray], bbox: BBox, reference: Any, zlim: tuple[float, float], prefix: str) -> list[Path]:
     indices = _native_crop(native, bbox)
+    indices = indices[
+        (native["opacity"][indices] >= 0.1)
+        & (np.max(native["scales"][indices, :2], axis=1) <= 2.0)
+    ]
     if not len(indices):
-        return placeholders(root, prefix.upper(), "NO_NATIVE_GAUSSIANS")
-    if len(indices) > 2500:
-        indices = indices[np.linspace(0, len(indices) - 1, 2500, dtype=int)]
+        return placeholders(root, prefix.upper(), "NO_DISPLAY_PROXY_GAUSSIANS")
+    score = native["opacity"][indices] * np.sqrt(np.maximum(np.prod(native["scales"][indices, :2], axis=1), 1e-12))
+    if len(indices) > 2800:
+        indices = indices[np.argsort(score)[-2800:]]
     centers = native["means"][indices]
     rotations = native["rotations"][indices]
     scales = native["scales"][indices]
-    u = rotations[:, :, 0] * scales[:, 0:1]
-    v = rotations[:, :, 1] * scales[:, 1:2]
-    quads = np.stack((centers - u - v, centers + u - v, centers + u + v, centers - u + v), axis=1)
-    faces = []
-    colors = []
-    for quad, label in zip(quads, native["labels"][indices]):
-        faces.extend((quad[[0, 1, 2]], quad[[0, 2, 3]]))
-        color = SEMANTIC_COLORS[min(int(label), len(SEMANTIC_COLORS) - 1)]
-        colors.extend((color, color))
+    theta = np.linspace(0.0, 2.0 * np.pi, 13, endpoint=False)
+    ellipses = (
+        centers[:, None, :]
+        + 1.5 * scales[:, 0, None, None] * np.cos(theta)[None, :, None] * rotations[:, None, :, 0]
+        + 1.5 * scales[:, 1, None, None] * np.sin(theta)[None, :, None] * rotations[:, None, :, 1]
+    )
+    colors = SEMANTIC_COLORS[np.minimum(native["labels"][indices], len(SEMANTIC_COLORS) - 1)]
+    facecolors = np.column_stack((colors, np.clip(0.16 + 0.72 * native["opacity"][indices], 0.16, 0.88)))
     result = []
     for view in VIEWS:
         path = root / f"{prefix}_{view}.png"
-        triangle_panel(path, faces, colors, reference, view, zlim)
+        fig, ax = panel_axes(reference, zlim, view)
+        if view == "TOP":
+            ax.add_collection(PolyCollection(ellipses[:, :, :2], facecolors=facecolors, edgecolors="none"))
+            draw_section_locator(ax, reference)
+        elif view.startswith("OBLIQUE"):
+            ax.add_collection3d(Poly3DCollection(ellipses, facecolors=facecolors, edgecolors="none", zsort="average"))
+        else:
+            center, principal, cross = _principal_frame(reference)
+            local = ellipses[:, :, :2] - center
+            t = local @ cross
+            crosses = (np.min(t, axis=1) <= 0.0) & (np.max(t, axis=1) >= 0.0)
+            s = local @ principal
+            polygons = np.stack((s[crosses], ellipses[crosses, :, 2]), axis=2)
+            ax.add_collection(PolyCollection(polygons, facecolors=facecolors[crosses], edgecolors="none"))
+        draw_footprint(ax, reference, view, zlim[0] + 2.0)
+        save_panel(fig, path)
         result.append(path)
     return result
 
@@ -262,6 +285,12 @@ def camera_candidates(reference: Any, cameras: Mapping[str, Any], model: tuple[i
         nadir = math.degrees(math.acos(float(np.clip(vector[2], -1.0, 1.0))))
         horizontal = vector[:2]
         horizontal /= max(float(np.linalg.norm(horizontal)), 1e-12)
+        full_ring_count = 0
+        for ring in rings:
+            ring_uv, ring_front = projection.project(ring, camera, width, height, params, scene_ref)
+            ring_inside = ring_front & np.isfinite(ring_uv).all(axis=1)
+            ring_inside &= (ring_uv[:, 0] >= 0) & (ring_uv[:, 0] < width) & (ring_uv[:, 1] >= 0) & (ring_uv[:, 1] < height)
+            full_ring_count += int(np.all(ring_inside))
         candidates.append({
             "camera": camera,
             "coverage": coverage,
@@ -269,6 +298,7 @@ def camera_candidates(reference: Any, cameras: Mapping[str, Any], model: tuple[i
             "nadir_deg": nadir,
             "principal_dot": float(horizontal @ principal),
             "cross_dot": float(horizontal @ cross),
+            "full_ring_count": full_ring_count,
         })
     return candidates
 
@@ -278,21 +308,43 @@ def select_cameras(candidates: Sequence[dict[str, Any]]) -> dict[str, dict[str, 
         return {}
     remaining = list(candidates)
     selected: dict[str, dict[str, Any]] = {}
-    top = min(remaining, key=lambda row: row["nadir_deg"] - 0.000002 * row["area_px2"])
+    top = min(remaining, key=lambda row: (-row["full_ring_count"], row["nadir_deg"] - 0.000002 * row["area_px2"]))
     selected["TOP"] = top
     remaining.remove(top)
     if remaining:
-        principal = max(remaining, key=lambda row: abs(row["cross_dot"]) + 0.000001 * row["area_px2"])
+        full = [row for row in remaining if row["full_ring_count"] > 0]
+        moderate_full = [row for row in full if 35.0 <= row["nadir_deg"] <= 70.0]
+        principal = max(
+            moderate_full or full or remaining,
+            key=lambda row: (
+                row["full_ring_count"],
+                abs(row["cross_dot"]),
+                -abs(row["nadir_deg"] - 55.0),
+                row["area_px2"],
+            ),
+        )
         selected["PRINCIPAL_SECTION"] = principal
         remaining.remove(principal)
     if remaining:
         positive = [row for row in remaining if row["principal_dot"] >= 0]
-        first = max(positive or remaining, key=lambda row: row["nadir_deg"] + 0.000001 * row["area_px2"])
+        positive_full = [row for row in positive if row["full_ring_count"] > 0]
+        positive_moderate_full = [row for row in positive_full if 35.0 <= row["nadir_deg"] <= 70.0]
+        any_full = [row for row in remaining if row["full_ring_count"] > 0]
+        first = max(
+            positive_moderate_full or positive_full or any_full or positive or remaining,
+            key=lambda row: (row["full_ring_count"], -abs(row["nadir_deg"] - 55.0), row["area_px2"]),
+        )
         selected["OBLIQUE_1"] = first
         remaining.remove(first)
     if remaining:
         negative = [row for row in remaining if row["principal_dot"] < 0]
-        second = max(negative or remaining, key=lambda row: row["nadir_deg"] + 0.000001 * row["area_px2"])
+        negative_full = [row for row in negative if row["full_ring_count"] > 0]
+        negative_moderate_full = [row for row in negative_full if 35.0 <= row["nadir_deg"] <= 70.0]
+        any_full = [row for row in remaining if row["full_ring_count"] > 0]
+        second = max(
+            negative_moderate_full or negative_full or any_full or negative or remaining,
+            key=lambda row: (row["full_ring_count"], -abs(row["nadir_deg"] - 55.0), row["area_px2"]),
+        )
         selected["OBLIQUE_2"] = second
     return selected
 
@@ -307,7 +359,32 @@ def letterbox(image: np.ndarray, width: int = 960, height: int = 720) -> np.ndar
     return canvas
 
 
-def roofline_panels(root: Path, artifact_root: Path, census: Mapping[str, Any], reference: Any, cameras: Mapping[str, Any], model: tuple[int, int, np.ndarray], scene_ref: Mapping[str, Any], visible: set[str], stable_id: str) -> tuple[list[Path], list[dict[str, Any]]]:
+def _roof_support_residuals(
+    roof_uv: np.ndarray,
+    support_uv: np.ndarray,
+) -> np.ndarray:
+    """Return exact 2D roof-vertex-to-current-support distances in pixels."""
+    if not len(roof_uv) or not len(support_uv):
+        return np.asarray([], dtype=np.float64)
+    distances, _indices = cKDTree(np.asarray(support_uv, dtype=np.float64)).query(
+        np.asarray(roof_uv, dtype=np.float64), k=1, workers=1
+    )
+    return np.asarray(distances, dtype=np.float64)
+
+
+def roofline_panels(
+    root: Path,
+    artifact_root: Path,
+    census: Mapping[str, Any],
+    reference: Any,
+    cameras: Mapping[str, Any],
+    model: tuple[int, int, np.ndarray],
+    scene_ref: Mapping[str, Any],
+    visible: set[str],
+    stable_id: str,
+    support: PointSet | None = None,
+    support_alignment_threshold_px: float = 20.0,
+) -> tuple[list[Path], list[dict[str, Any]]]:
     candidates = camera_candidates(reference, cameras, model, scene_ref, visible)
     selected = select_cameras(candidates)
     width, height, params = model
@@ -329,24 +406,97 @@ def roofline_panels(root: Path, artifact_root: Path, census: Mapping[str, Any], 
             receipts.append({"stable_id": stable_id, "view": view, "status": "IMAGE_MISSING", "camera": camera.name})
             continue
         projected = []
+        fully_visible = []
+        visible_vertices = 0
+        total_vertices = 0
         for ring in rings:
             uv, front = projection.project(ring, camera, width, height, params, scene_ref)
-            valid = front & np.isfinite(uv).all(axis=1)
-            if np.count_nonzero(valid) >= 2:
-                points = np.rint(uv[valid]).astype(np.int32)
-                cv2.polylines(image, [points], True, (0, 190, 255), 10, cv2.LINE_AA)
-                projected.append(uv[valid])
+            inside = front & np.isfinite(uv).all(axis=1)
+            inside &= (uv[:, 0] >= 0) & (uv[:, 0] < width) & (uv[:, 1] >= 0) & (uv[:, 1] < height)
+            visible_vertices += int(np.count_nonzero(inside))
+            total_vertices += len(inside)
+            if np.count_nonzero(inside):
+                projected.append(uv[inside])
+            if np.all(inside):
+                fully_visible.append(uv)
+        if not projected or not fully_visible:
+            panels.append(placeholder(path, "2024 RGB + 2022 ROOFLINE", "NO_FULL_ROOF_RING_VISIBLE", view))
+            receipts.append({"stable_id": stable_id, "view": view, "status": "NO_FULL_ROOF_RING_VISIBLE", "camera": camera.name, "visible_vertex_count": visible_vertices, "total_vertex_count": total_vertices})
+            continue
         all_uv = np.concatenate(projected)
+        support_uv = np.empty((0, 2), dtype=np.float64)
+        support_visible_count = 0
+        residuals = np.asarray([], dtype=np.float64)
+        if support is not None and len(support.xyz):
+            keep = np.ones(len(support.xyz), dtype=bool)
+            if support.classification is not None:
+                keep = np.asarray(support.classification) == 6
+            support_xyz = np.asarray(support.xyz, dtype=np.float64)[keep]
+            if len(support_xyz):
+                support_projected, support_front = projection.project(
+                    support_xyz,
+                    camera,
+                    width,
+                    height,
+                    params,
+                    scene_ref,
+                    input_datum="ellipsoidal",
+                )
+                support_inside = support_front & np.isfinite(support_projected).all(axis=1)
+                support_inside &= (
+                    (support_projected[:, 0] >= 0)
+                    & (support_projected[:, 0] < width)
+                    & (support_projected[:, 1] >= 0)
+                    & (support_projected[:, 1] < height)
+                )
+                support_uv = support_projected[support_inside]
+                support_visible_count = len(support_uv)
+                residuals = _roof_support_residuals(np.concatenate(fully_visible), support_uv)
+        median_px = float(np.median(residuals)) if len(residuals) else None
+        p95_px = float(np.percentile(residuals, 95)) if len(residuals) else None
+        if median_px is None or median_px > support_alignment_threshold_px:
+            alignment_status = "REFERENCE_SUPPORT_ALIGNMENT_UNCERTAIN"
+        else:
+            alignment_status = "PROJECTION_SUPPORTED"
         x0, y0 = np.min(all_uv, axis=0)
         x1, y1 = np.max(all_uv, axis=0)
         margin = max(x1 - x0, y1 - y0) * 0.65 + 100
         xa, ya = max(0, int(x0 - margin)), max(0, int(y0 - margin))
         xb, yb = min(image.shape[1], int(x1 + margin)), min(image.shape[0], int(y1 + margin))
-        crop = image[ya:yb, xa:xb]
+        crop = image[ya:yb, xa:xb].copy()
+        offset = np.asarray([xa, ya], dtype=np.float64)
+        if len(support_uv):
+            support_crop = support_uv[
+                (support_uv[:, 0] >= xa)
+                & (support_uv[:, 0] < xb)
+                & (support_uv[:, 1] >= ya)
+                & (support_uv[:, 1] < yb)
+            ]
+            if len(support_crop) > 2500:
+                support_crop = support_crop[np.linspace(0, len(support_crop) - 1, 2500, dtype=np.int64)]
+            for point in np.rint(support_crop - offset).astype(np.int32):
+                cv2.circle(crop, tuple(point), 2, (255, 210, 0), -1, cv2.LINE_AA)
+        for uv in fully_visible:
+            points = np.rint(uv - offset).astype(np.int32).reshape((-1, 1, 2))
+            cv2.polylines(crop, [points], True, (20, 20, 20), 12, cv2.LINE_AA)
+            cv2.polylines(crop, [points], True, (30, 205, 255), 6, cv2.LINE_AA)
         canvas = letterbox(crop)
-        label = f"{view.replace('_', ' ')} | {camera.name} | coverage={row['coverage']:.0%}"
-        cv2.rectangle(canvas, (0, 0), (960, 52), (255, 255, 255), -1)
-        cv2.putText(canvas, label, (16, 36), cv2.FONT_HERSHEY_SIMPLEX, 0.72, (25, 25, 25), 2, cv2.LINE_AA)
+        view_label = "PCA CROSS-AXIS CAMERA" if view == "PRINCIPAL_SECTION" else view.replace("_", " ")
+        residual_label = "no visible current C1 support" if median_px is None else f"median={median_px:.1f}px p95={p95_px:.1f}px"
+        label = f"{view_label} | {camera.name} | coverage={row['coverage']:.0%}"
+        cv2.rectangle(canvas, (0, 0), (960, 86), (255, 255, 255), -1)
+        cv2.putText(canvas, label, (16, 32), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (25, 25, 25), 2, cv2.LINE_AA)
+        status_color = (30, 125, 30) if alignment_status == "PROJECTION_SUPPORTED" else (20, 80, 210)
+        cv2.putText(
+            canvas,
+            f"{alignment_status} | {residual_label} | cyan=current C1 class-6",
+            (16, 68),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.53,
+            status_color,
+            2,
+            cv2.LINE_AA,
+        )
         path.parent.mkdir(parents=True, exist_ok=True)
         if not cv2.imwrite(str(path), canvas, [cv2.IMWRITE_PNG_COMPRESSION, 5]):
             raise RuntimeError(f"roofline panel write failed: {path}")
@@ -361,6 +511,14 @@ def roofline_panels(root: Path, artifact_root: Path, census: Mapping[str, Any], 
             "nadir_deg": row["nadir_deg"],
             "principal_dot": row["principal_dot"],
             "cross_dot": row["cross_dot"],
+            "full_ring_count": len(fully_visible),
+            "visible_vertex_count": visible_vertices,
+            "clipped_vertex_count": total_vertices - visible_vertices,
+            "support_alignment_status": alignment_status,
+            "support_alignment_threshold_px": support_alignment_threshold_px,
+            "support_visible_count": support_visible_count,
+            "roof_to_support_median_px": median_px,
+            "roof_to_support_p95_px": p95_px,
         })
     return panels, receipts
 

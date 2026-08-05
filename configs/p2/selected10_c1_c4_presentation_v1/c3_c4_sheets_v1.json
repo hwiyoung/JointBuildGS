@@ -1,0 +1,69 @@
+{
+  "schema": "jointbuildgs.p2.selected10_c3_1_c3_2_c4_sheets.v1",
+  "task_id": "P2-SELECTED10-C3-1-C3-2-C4-SHEETS-v1",
+  "status": "APPROVED_BY_DIRECT_USER_INSTRUCTION",
+  "building_ids": [
+    "DEBY_LOD2_4907518",
+    "DEBY_LOD2_4959327",
+    "DEBY_LOD2_4907208",
+    "DEBY_LOD2_4959459",
+    "DEBY_LOD2_108580336",
+    "DEBY_LOD2_42364665",
+    "DEBY_LOD2_4906972",
+    "DEBY_LOD2_4906977",
+    "DEBY_LOD2_4907020",
+    "DEBY_LOD2_4907196"
+  ],
+  "conditions": [
+    {"condition_id": "C3_1_SEM", "title": "C3-1 semantic-only GS", "checkpoint_key": "c3_1_checkpoint"},
+    {"condition_id": "C3_2_SEM_DEPTH", "title": "C3-2 semantic + image-depth GS", "checkpoint_key": "c3_2_checkpoint"},
+    {"condition_id": "C4_EXISTING_ALS", "title": "C4 matched C3-2 + Existing ALS prior", "checkpoint_key": "c4_checkpoint"}
+  ],
+  "sources": {
+    "c3_postprocess_relative_root": "phase-payloads/p2/c3_utarget199_postprocess_render_recovery_v1/P2-C3-UTARGET199-POSTPROCESS-RENDER-RECOVERY-v1",
+    "c4_postprocess_relative_root": "phase-payloads/p2/c4_utarget199_postprocess_v1/P2-C4-UTARGET199-POSTPROCESS-v1",
+    "c3_1_checkpoint": "phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-C3-2-GPU0-RECOVERY-v1/c3/c3_1_sem/seed0/ckpt/final.pt",
+    "c3_2_checkpoint": "phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-C3-2-GPU0-RECOVERY-v1/c3/c3_2_sem_depth/seed0/ckpt/final.pt",
+    "c4_checkpoint": "phase-payloads/p2/c4_existing_als_v1/P2-C4-EXISTING-ALS-BOUNDED-TECHDEV-v1/run/c4_existing_als/seed0/ckpt/final.pt",
+    "c3_mesh_diagnostic_relative_root": "phase-payloads/p2/c3_tsdf_roof_diagnostic_v1/P2-C3-TSDF-ROOF-DIAGNOSTIC-RECOVERY-v1",
+    "lod2_relative_paths": [
+      "phase-payloads/p0-audit/data/raw/lod2/690_5334.gml",
+      "phase-payloads/p0-audit/data/raw/lod2/690_5336.gml"
+    ],
+    "exact_view_manifest_git_path": "artifacts/manifests/gate_s0/common_base_r2b/exact_937_member_crosswalk_v1.json"
+  },
+  "exact_hashes": {
+    "c3_metrics": "068c59d47403fd0b717b8bdadc3e5920a61d601b5a831e32eb9055dd1b79cd62",
+    "c4_metrics": "c377220973cfa884639734c7a279fa2abbd754d84f02fe14312dfff96e0c990e",
+    "c3_1_checkpoint": "b4f8ce6d97da6d7cef216b4edb3239ac005cc44f4d45cb459a25644ed79b62ea",
+    "c3_2_checkpoint": "9bda046e2414a841e289f5d9ed0c5eaf18511445f9c52638b543cd4d52ecea12",
+    "c4_checkpoint": "bd068aa4ecf545b968ce79ec30b8bc3b5637656cce2d98891bd2e78d338db521",
+    "lod2": [
+      "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314",
+      "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674"
+    ]
+  },
+  "frame": {
+    "local_shift_xyz": [690953.0, 5336071.0, 604.0],
+    "lod2_display_vertical_shift_m": 45.7,
+    "principal_section": "FOOTPRINT_PCA_SINGLE_CANONICAL",
+    "principal_z_scale": "LOD2_PLUS_45P7M_PER_BUILDING_ONLY"
+  },
+  "display": {
+    "gaussian_proxy_opacity_min": 0.1,
+    "gaussian_proxy_maximum_in_plane_scale_m": 2.0,
+    "rows": ["CORRECTED_ROOFLINE", "ORIENTED_GS_SEMANTIC", "HONEST_ROOFER_INPUT", "HONEST_ROOFER_OUTPUT", "SEALED_MESH_INPUT", "SEALED_TSDF_OUTPUT", "LOD2_REFERENCE"],
+    "views": ["TOP", "OBLIQUE_1", "OBLIQUE_2", "PRINCIPAL_SECTION"],
+    "separate_principal_page_count": 0,
+    "missing_not_run_preserved": true
+  },
+  "execution_counters": {
+    "gs_training_invocations": 0,
+    "roofer_invocations": 0,
+    "tsdf_invocations": 0,
+    "metric_recomputations": 0,
+    "presentation_pages": 30
+  },
+  "official_PASS_usable": null,
+  "scientific_verdict": null
+}

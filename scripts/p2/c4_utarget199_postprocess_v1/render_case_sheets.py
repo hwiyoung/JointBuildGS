@@ -51,6 +51,7 @@ def _checkpoint_arrays(path: Path, shift: np.ndarray) -> dict[str, np.ndarray]:
         "means": state["means"].numpy().astype(np.float64) + shift,
         "rotations": quat_to_rotmat(state["quats"].to(torch.float64)).numpy(),
         "scales": torch.exp(state["log_scales"].to(torch.float64)).numpy(),
+        "opacity": torch.sigmoid(state["opacities_raw"].to(torch.float64)).numpy().reshape(-1),
         "labels": torch.argmax(state["sem_logits"], dim=1).numpy().astype(np.uint8),
     }
 

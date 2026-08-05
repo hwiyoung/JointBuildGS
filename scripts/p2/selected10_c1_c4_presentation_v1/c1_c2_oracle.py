@@ -393,7 +393,18 @@ def render_finalize(output_root: Path, artifact_root: Path, source_commit: str, 
         lod2_surfaces = shifted_lod2(reference, float(config["frame"]["lod2_display_vertical_shift_m"]))
         principal_zlim = lod2_zlim(lod2_surfaces)
         panel_root = output_root / "qualitative/c1_c2" / stable_id / "panels"
-        rgb, receipts = roofline_panels(panel_root, artifact_root, census, reference, cameras, camera_model, scene_ref, visible, stable_id)
+        rgb, receipts = roofline_panels(
+            panel_root,
+            artifact_root,
+            census,
+            reference,
+            cameras,
+            camera_model,
+            scene_ref,
+            visible,
+            stable_id,
+            support=c1_points,
+        )
         camera_receipts.extend(receipts)
         c1_input = point_panels(panel_root, c1_points, reference, principal_zlim, "c1_input")
         c1_output = surface_panels_bound(panel_root, c1_surfaces, reference, principal_zlim, "c1_roofer", c1_terminal["status"])
