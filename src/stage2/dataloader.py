@@ -404,6 +404,7 @@ class ColmapDataset(Dataset):
         roof_audit_mask_manifest: Optional[str | Path] = None,
         plane_region_mask_manifest: Optional[str | Path] = None,
         external_als_prior_dir: Optional[str | Path] = None,
+        external_lod_prior_dir: Optional[str | Path] = None,
         pilot_arm: Optional[str] = None,
     ):
         self.root = Path(root)
@@ -420,6 +421,7 @@ class ColmapDataset(Dataset):
         self.mono_normal_dir = self._resolve_aux_dir(mono_normal_dir)
         self.mono_depth_dir = self._resolve_aux_dir(mono_depth_dir)
         self.external_als_prior_dir = self._resolve_aux_dir(external_als_prior_dir)
+        self.external_lod_prior_dir = self._resolve_aux_dir(external_lod_prior_dir)
         self.depth_far_sentinel = depth_far_sentinel
         self.mono_depth_far_sentinel = mono_depth_far_sentinel
         self.depth_scale = float(depth_scale)
@@ -514,6 +516,17 @@ class ColmapDataset(Dataset):
                 "view_count": len(self.frames),
                 "inventory_match": "exact_visible_view_coverage",
             }
+        if self.external_lod_prior_dir is not None:
+            missing_external_lod = [
+                frame.name
+                for frame in self.frames
+                if not (self.external_lod_prior_dir / f"{Path(frame.name).stem}.npz").is_file()
+            ]
+            if missing_external_lod:
+                raise FileNotFoundError(
+                    "external_lod_prior_dir misses visible views: "
+                    f"{missing_external_lod[:20]}"
+                )
 
         self.photo_mask_binding = None
         if photo_mask_manifest is not None:
@@ -787,8 +800,26 @@ class ColmapDataset(Dataset):
             depth_value = payload["depth"].astype(np.float32, copy=False)
             normal_value = payload["normal"].astype(np.float32, copy=False)
             confidence_value = payload["confidence"].astype(np.float32, copy=False)
+            building_weight_value = (
+                payload["building_weight"].astype(np.float32, copy=False)
+                if "building_weight" in payload
+                else np.ones_like(confidence_value, dtype=np.float32)
+            )
+            normal_valid_value = (
+                payload["normal_valid"].astype(np.bool_, copy=False)
+                if "normal_valid" in payload
+                else np.ones_like(confidence_value, dtype=np.bool_)
+            )
         count = len(y)
-        if not (len(x) == len(depth_value) == len(normal_value) == len(confidence_value) == count):
+        if not (
+            len(x)
+            == len(depth_value)
+            == len(normal_value)
+            == len(confidence_value)
+            == len(building_weight_value)
+            == len(normal_valid_value)
+            == count
+        ):
             raise ValueError(f"external ALS sparse arrays disagree: {path}")
         if normal_value.shape != (count, 3):
             raise ValueError(f"external ALS normals must be Nx3: {path}")
@@ -797,12 +828,47 @@ class ColmapDataset(Dataset):
         depth = np.zeros((H, W), dtype=np.float32)
         normal = np.zeros((H, W, 3), dtype=np.float32)
         confidence = np.zeros((H, W), dtype=np.float32)
+        building_weight = np.ones((H, W), dtype=np.float32)
         mask = np.zeros((H, W), dtype=np.bool_)
+        normal_mask = np.zeros((H, W), dtype=np.bool_)
         depth[y, x] = depth_value
         normal[y, x] = normal_value
         confidence[y, x] = np.clip(confidence_value, 0.0, 1.0)
+        building_weight[y, x] = np.clip(building_weight_value, 0.0, 1.0)
         mask[y, x] = confidence[y, x] > 0
-        return depth, normal, confidence, mask
+        normal_mask[y, x] = mask[y, x] & normal_valid_value
+        return depth, normal, confidence, building_weight, mask, normal_mask
+
+    def _load_external_lod_prior(self, fr: Frame, H: int, W: int):
+        if self.external_lod_prior_dir is None:
+            return None
+        path = self.external_lod_prior_dir / f"{Path(fr.name).stem}.npz"
+        with np.load(path, allow_pickle=False) as payload:
+            if (int(payload["height"]), int(payload["width"])) != (H, W):
+                raise ValueError(f"external LoD prior shape drift: {path}")
+            y = payload["pixel_y"].astype(np.int64, copy=False)
+            x = payload["pixel_x"].astype(np.int64, copy=False)
+            point_value = payload["plane_point_camera"].astype(np.float32, copy=False)
+            normal_value = payload["plane_normal_camera"].astype(np.float32, copy=False)
+            kind_value = payload["plane_kind"].astype(np.int64, copy=False)
+            weight_value = payload["building_weight"].astype(np.float32, copy=False)
+        count = len(y)
+        if not (
+            len(x) == len(point_value) == len(normal_value) == len(kind_value) == len(weight_value) == count
+            and point_value.shape == normal_value.shape == (count, 3)
+        ):
+            raise ValueError(f"external LoD sparse arrays disagree: {path}")
+        point = np.zeros((H, W, 3), dtype=np.float32)
+        normal = np.zeros((H, W, 3), dtype=np.float32)
+        kind = np.zeros((H, W), dtype=np.int64)
+        weight = np.ones((H, W), dtype=np.float32)
+        mask = np.zeros((H, W), dtype=np.bool_)
+        point[y, x] = point_value
+        normal[y, x] = normal_value
+        kind[y, x] = kind_value
+        weight[y, x] = np.clip(weight_value, 0.0, 1.0)
+        mask[y, x] = (kind[y, x] == 1) | (kind[y, x] == 2)
+        return point, normal, kind, weight, mask
 
     def __getitem__(self, idx: int) -> dict:
         fr = self.frames[idx]
@@ -837,6 +903,7 @@ class ColmapDataset(Dataset):
                 semantic = lbl.astype(np.int64)
         simple_photo_mask = self._load_photo_mask_dir(fr, H, W)
         external_als = self._load_external_als_prior(fr, H, W)
+        external_lod = self._load_external_lod_prior(fr, H, W)
 
         w2c = np.eye(4, dtype=np.float32)
         w2c[:3, :3] = fr.R
@@ -884,11 +951,27 @@ class ColmapDataset(Dataset):
         if semantic is not None:
             out["semantic"] = torch.from_numpy(semantic)
         if external_als is not None:
-            als_depth, als_normal, als_confidence, als_mask = external_als
+            (
+                als_depth,
+                als_normal,
+                als_confidence,
+                als_building_weight,
+                als_mask,
+                als_normal_mask,
+            ) = external_als
             out["external_als_depth"] = torch.from_numpy(als_depth)
             out["external_als_normal"] = torch.from_numpy(als_normal)
             out["external_als_confidence"] = torch.from_numpy(als_confidence)
+            out["external_als_building_weight"] = torch.from_numpy(als_building_weight)
             out["external_als_mask"] = torch.from_numpy(als_mask)
+            out["external_als_normal_mask"] = torch.from_numpy(als_normal_mask)
+        if external_lod is not None:
+            lod_point, lod_normal, lod_kind, lod_weight, lod_mask = external_lod
+            out["external_lod_plane_point_camera"] = torch.from_numpy(lod_point)
+            out["external_lod_plane_normal_camera"] = torch.from_numpy(lod_normal)
+            out["external_lod_plane_kind"] = torch.from_numpy(lod_kind)
+            out["external_lod_building_weight"] = torch.from_numpy(lod_weight)
+            out["external_lod_mask"] = torch.from_numpy(lod_mask)
         return out
 
 

@@ -1681,6 +1681,7 @@ def load_lod2_citygml_scene(
     world_offset: Sequence[float] = (690953.0, 5336071.0, 604.0),
     orthometric_geoid_m: float = 45.7,
     aoi_xy_local: Sequence[float] | None = None,
+    include_unselected: bool = True,
 ) -> LoD2TriangleScene:
     """Load semantic LoD2 geometry internally for 04b raycasting.
 
@@ -1713,6 +1714,9 @@ def load_lod2_citygml_scene(
             is_selected = building_id in selected_aliases or short in selected_aliases
             if is_selected:
                 selected_seen.add(short)
+            if not is_selected and not include_unselected:
+                building.clear()
+                continue
             for surface in building.iter():
                 class_id = SURFACE_CLASS.get(_local_name(surface.tag))
                 if class_id is None:

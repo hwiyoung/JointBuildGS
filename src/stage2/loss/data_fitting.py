@@ -161,6 +161,40 @@ def l_depth(depth_pred: torch.Tensor, depth_gt: torch.Tensor, mask: torch.Tensor
     return l1(depth_pred, depth_gt, mask=mask)
 
 
+def l_depth_huber(
+    depth_pred: torch.Tensor,
+    depth_gt: torch.Tensor,
+    mask: torch.Tensor,
+    *,
+    delta_m: float,
+) -> torch.Tensor:
+    """Masked metric Huber loss with the transition expressed in metres."""
+    if delta_m <= 0:
+        raise ValueError("depth Huber delta must be positive")
+    if not (
+        depth_pred.shape == depth_gt.shape == mask.shape
+        and depth_pred.ndim == 2
+        and mask.dtype == torch.bool
+    ):
+        raise ValueError("depth Huber expects same-shape HxW depth tensors and bool mask")
+    valid = (
+        mask
+        & torch.isfinite(depth_pred)
+        & torch.isfinite(depth_gt)
+        & (depth_gt > 0)
+    )
+    if not bool(valid.any().item()):
+        return depth_pred.sum() * 0.0
+    residual = (depth_pred[valid] - depth_gt[valid]).abs()
+    delta = float(delta_m)
+    huber = torch.where(
+        residual <= delta,
+        0.5 * residual.square() / delta,
+        residual - 0.5 * delta,
+    )
+    return huber.mean()
+
+
 def l_normal(
     n_pred_world: torch.Tensor,   # (H,W,3) world-frame rendered normal
     n_gt_world: torch.Tensor,     # (H,W,3) world-frame GT normal (dataloader canonicalizes)

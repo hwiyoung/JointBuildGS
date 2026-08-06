@@ -33,7 +33,12 @@ from .checkpoint import (
 )
 from .dataloader import ColmapDataset, resolve_view_roles
 from .densification import build_optimizers, build_param_dict, build_strategy
-from .external_als_prior import robust_als_depth_loss, sign_invariant_als_normal_loss
+from .external_als_prior import (
+    oriented_als_normal_loss,
+    robust_als_depth_loss,
+    select_external_als_weight,
+)
+from .external_lod_prior import lod_plane_loss
 from .geometry_partition import assign_partition_ids, load_xy_partitions
 from .grouping import (
     group_primitives,
@@ -761,6 +766,30 @@ def _load_exact_view_manifest(cfg: Dict[str, Any]) -> Optional[list[str]]:
     ):
         raise RuntimeError("exact_view_manifest membership/count differs")
     return names
+
+
+def _load_view_roles_manifest(
+    cfg: Dict[str, Any], visible_names: Optional[list[str]]
+) -> tuple[Optional[list[str]], Optional[list[str]]]:
+    """Load one hash-bound explicit train/eval split for the E1–E6 chain."""
+    manifest_path = cfg.get("view_roles_manifest")
+    if not manifest_path:
+        return None, None
+    path = Path(manifest_path)
+    data = path.read_bytes()
+    expected_sha = cfg.get("view_roles_manifest_sha256")
+    if expected_sha and hashlib.sha256(data).hexdigest() != str(expected_sha):
+        raise RuntimeError("view_roles_manifest SHA-256 differs")
+    value = json.loads(data)
+    train = [str(name) for name in value.get("train_views", [])]
+    evaluate = [str(name) for name in value.get("eval_views", [])]
+    if not train or not evaluate or set(train) & set(evaluate):
+        raise RuntimeError("view role manifest must have nonempty disjoint roles")
+    if visible_names is not None and set(train) | set(evaluate) != set(visible_names):
+        raise RuntimeError("view role manifest does not partition exact visible views")
+    if len(train) + len(evaluate) != len(set(train) | set(evaluate)):
+        raise RuntimeError("view role manifest contains duplicate names")
+    return train, evaluate
 
 
 def _validate_exact_auxiliary_inventory(
@@ -1885,6 +1914,9 @@ def main():
     )
     auxiliary_normal_dir = cfg.get("mono_normal_dir") if pilot_arm is not None else None
     manifest_view_names = _load_exact_view_manifest(cfg)
+    locked_train_views, locked_eval_views = _load_view_roles_manifest(
+        cfg, manifest_view_names
+    )
 
     ds = ColmapDataset(
         root=cfg["data_root"],
@@ -1910,6 +1942,7 @@ def main():
         roof_audit_mask_manifest=cfg.get("roof_audit_mask_manifest"),
         plane_region_mask_manifest=cfg.get("plane_region_mask_manifest"),
         external_als_prior_dir=cfg.get("external_als_prior_dir"),
+        external_lod_prior_dir=cfg.get("external_lod_prior_dir"),
         pilot_arm=pilot_arm,
     )
     print(f"[data] frames={len(ds)}  pts_init={ds.points_xyz.shape[0]}")
@@ -1921,11 +1954,19 @@ def main():
     train_idx, test_idx, view_role_audit = resolve_view_roles(
         ds.frames,
         train_views=(
-            manifest_view_names
+            locked_train_views
+            if locked_train_views is not None
+            else manifest_view_names
             if manifest_view_names is not None
             else cfg.get("train_views")
         ),
-        eval_views=([] if manifest_view_names is not None else cfg.get("eval_views")),
+        eval_views=(
+            locked_eval_views
+            if locked_eval_views is not None
+            else []
+            if manifest_view_names is not None
+            else cfg.get("eval_views")
+        ),
     )
     view_role_audit["visible_filter"] = ds.visible_view_audit
     print(
@@ -2048,6 +2089,25 @@ def main():
 
         mode = cfg.get("init_pointcloud_mode", "concat")
         seed_xyz, supplied_seed_rgb = read_init_pointcloud_with_rgb(init_pc)
+        init_pointcloud_max_points = cfg.get("init_pointcloud_max_points")
+        if init_pointcloud_max_points is not None:
+            maximum = int(init_pointcloud_max_points)
+            if maximum <= 0:
+                raise ValueError("init_pointcloud_max_points must be positive")
+            if len(seed_xyz) > maximum:
+                subsample_seed = int(cfg.get("init_pointcloud_subsample_seed", 0))
+                generator = np.random.default_rng(subsample_seed)
+                selected = np.sort(
+                    generator.choice(len(seed_xyz), size=maximum, replace=False)
+                )
+                source_count = len(seed_xyz)
+                seed_xyz = seed_xyz[selected]
+                if supplied_seed_rgb is not None:
+                    supplied_seed_rgb = supplied_seed_rgb[selected]
+                print(
+                    "[mvs-seed] deterministic common subsample "
+                    f"seed={subsample_seed} source={source_count} selected={len(seed_xyz)}"
+                )
         scene_rgb = ds.points_rgb.mean(axis=0)
         seed_rgb = _resolve_init_pointcloud_rgb(
             seed_xyz,
@@ -2372,10 +2432,31 @@ def main():
     # ---------- loss weights ----------
     w_photo = cfg.get("w_photo", 1.0)
     w_depth = cfg.get("w_depth", 1.0)
+    depth_loss_kind = str(cfg.get("depth_loss", "l1")).lower()
+    depth_huber_delta_m = float(cfg.get("depth_huber_delta_m", 1.0))
+    if depth_loss_kind not in {"l1", "huber"}:
+        raise ValueError("depth_loss must be l1|huber")
+    if depth_huber_delta_m <= 0:
+        raise ValueError("depth_huber_delta_m must be positive")
     w_normal = cfg.get("w_normal", 0.05)
     w_external_als_depth = float(cfg.get("w_external_als_depth", 0.0) or 0.0)
     w_external_als_normal = float(cfg.get("w_external_als_normal", 0.0) or 0.0)
     external_als_huber_delta_m = float(cfg.get("external_als_huber_delta_m", 1.0))
+    external_als_apply_building_weight = bool(
+        cfg.get("external_als_apply_building_weight", False)
+    )
+    external_als_warmup = int(cfg.get("external_als_warmup", 0))
+    external_als_schedule = str(cfg.get("external_als_schedule", "constant"))
+    external_als_ramp_steps = int(cfg.get("external_als_ramp_steps", 0))
+    w_external_lod_wall = float(cfg.get("w_external_lod_wall", 0.0) or 0.0)
+    w_external_lod_roof = float(cfg.get("w_external_lod_roof", 0.0) or 0.0)
+    external_lod_max_distance_m = float(cfg.get("external_lod_max_distance_m", 1.0))
+    external_lod_max_angle_deg = float(cfg.get("external_lod_max_angle_deg", 30.0))
+    external_lod_warmup = int(cfg.get("external_lod_warmup", 0))
+    external_lod_schedule = str(cfg.get("external_lod_schedule", "constant"))
+    external_lod_ramp_steps = int(cfg.get("external_lod_ramp_steps", 0))
+    if (w_external_lod_wall > 0 or w_external_lod_roof > 0) and cfg.get("external_lod_prior_dir") is None:
+        raise ValueError("positive external LoD weights require external_lod_prior_dir")
     if (w_external_als_depth > 0 or w_external_als_normal > 0) and cfg.get("external_als_prior_dir") is None:
         raise ValueError("positive external ALS weights require external_als_prior_dir")
     if external_als_huber_delta_m <= 0:
@@ -3522,7 +3603,15 @@ def main():
                     detach_scale=depth_alignment_detach_scale,
                 )
             else:
-                loss_depth = L.l_depth(depth_pred, d_gt, d_m)
+                if depth_loss_kind == "huber":
+                    loss_depth = L.l_depth_huber(
+                        depth_pred,
+                        d_gt,
+                        d_m,
+                        delta_m=depth_huber_delta_m,
+                    )
+                else:
+                    loss_depth = L.l_depth(depth_pred, d_gt, d_m)
                 depth_alignment_alpha = torch.tensor(1.0, device=device)
                 depth_prior_valid_pixel_count = int(d_m.sum().detach().cpu().item())
             w_depth_eff = _scheduled_weight(
@@ -3721,7 +3810,17 @@ def main():
         external_als_normal_stats = {"valid_pixel_count": 0, "confidence_sum": 0.0}
         if "external_als_mask" in batch:
             als_mask = batch["external_als_mask"].to(device)
-            als_confidence = batch["external_als_confidence"].to(device)
+            als_confidence = select_external_als_weight(
+                batch["external_als_confidence"].to(device),
+                batch["external_als_building_weight"].to(device),
+                apply_building_weight=external_als_apply_building_weight,
+            )
+            external_als_scale = _ramp_weight_scale(
+                it,
+                external_als_warmup,
+                external_als_schedule,
+                external_als_ramp_steps,
+            )
             loss_external_als_depth, external_als_depth_stats = robust_als_depth_loss(
                 depth_pred,
                 batch["external_als_depth"].to(device),
@@ -3729,17 +3828,46 @@ def main():
                 als_mask,
                 huber_delta_m=external_als_huber_delta_m,
             )
-            loss_external_als_normal, external_als_normal_stats = sign_invariant_als_normal_loss(
-                n_render,
+            n_render_camera = torch.matmul(n_render, w2c[:3, :3].T)
+            loss_external_als_normal, external_als_normal_stats = oriented_als_normal_loss(
+                n_render_camera,
                 batch["external_als_normal"].to(device),
                 als_confidence,
-                als_mask,
+                batch["external_als_normal_mask"].to(device),
             )
             loss_total = (
                 loss_total
-                + w_external_als_depth * loss_external_als_depth
-                + w_external_als_normal * loss_external_als_normal
+                + external_als_scale * w_external_als_depth * loss_external_als_depth
+                + external_als_scale * w_external_als_normal * loss_external_als_normal
             )
+
+        loss_external_lod_plane = depth_pred.sum() * 0.0
+        external_lod_stats = {
+            "valid_pixel_count": 0,
+            "wall_pixel_count": 0,
+            "roof_pixel_count": 0,
+            "weight_sum": 0.0,
+        }
+        if "external_lod_mask" in batch:
+            n_render_camera = torch.matmul(n_render, w2c[:3, :3].T)
+            loss_external_lod_plane, external_lod_stats = lod_plane_loss(
+                depth_pred,
+                n_render_camera,
+                batch["external_lod_plane_point_camera"].to(device),
+                batch["external_lod_plane_normal_camera"].to(device),
+                batch["external_lod_plane_kind"].to(device),
+                batch["external_lod_building_weight"].to(device),
+                batch["external_lod_mask"].to(device),
+                K,
+                wall_weight=w_external_lod_wall,
+                roof_weight=w_external_lod_roof,
+                max_distance_m=external_lod_max_distance_m,
+                max_angle_deg=external_lod_max_angle_deg,
+            )
+            external_lod_scale = _ramp_weight_scale(
+                it, external_lod_warmup, external_lod_schedule, external_lod_ramp_steps
+            )
+            loss_total = loss_total + external_lod_scale * loss_external_lod_plane
 
         loss_nc = L.l_nc(n_render, n_surf, alpha=alpha.detach())
         w_nc_eff = _scheduled_weight(
@@ -4519,6 +4647,10 @@ def main():
             writer.add_scalar("loss_weight/external_als_normal", w_external_als_normal, it)
             writer.add_scalar("stats/external_als_depth_valid_pixel_count", external_als_depth_stats["valid_pixel_count"], it)
             writer.add_scalar("stats/external_als_normal_valid_pixel_count", external_als_normal_stats["valid_pixel_count"], it)
+            writer.add_scalar("loss/external_lod_plane", loss_external_lod_plane.item(), it)
+            writer.add_scalar("stats/external_lod_valid_pixel_count", external_lod_stats["valid_pixel_count"], it)
+            writer.add_scalar("stats/external_lod_wall_pixel_count", external_lod_stats["wall_pixel_count"], it)
+            writer.add_scalar("stats/external_lod_roof_pixel_count", external_lod_stats["roof_pixel_count"], it)
             if pilot_arm is not None:
                 writer.add_scalar("loss/normal_mvs_primary", loss_n_mvs.item(), it)
                 writer.add_scalar("loss/normal_omnidata_aux", loss_n_aux.item(), it)

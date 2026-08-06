@@ -1,9 +1,27 @@
-"""Confidence-gated Existing-ALS losses for the bounded C4 technical run."""
+"""Existing-ALS losses for bounded C4 and E4/E5 technical runs."""
 from __future__ import annotations
 
 from typing import Any
 
 import torch
+
+
+def select_external_als_weight(
+    base_confidence: torch.Tensor,
+    building_weight: torch.Tensor,
+    *,
+    apply_building_weight: bool,
+) -> torch.Tensor:
+    """Return the E4/E5 prior weight; the boolean is their sole loss difference."""
+    if base_confidence.shape != building_weight.shape:
+        raise ValueError("ALS base confidence and building weight must have identical shapes")
+    if not torch.isfinite(base_confidence).all() or not torch.isfinite(building_weight).all():
+        raise ValueError("ALS weights must be finite")
+    if ((base_confidence < 0) | (base_confidence > 1)).any():
+        raise ValueError("ALS base confidence must be in [0,1]")
+    if ((building_weight < 0) | (building_weight > 1)).any():
+        raise ValueError("building weight must be in [0,1]")
+    return base_confidence * building_weight if apply_building_weight else base_confidence
 
 
 def current_consistency_attenuation(residual_m: torch.Tensor, conflict_scale_m: float) -> torch.Tensor:
@@ -65,6 +83,55 @@ def sign_invariant_als_normal_loss(
     weight = confidence[valid].clamp(0.0, 1.0)
     loss = (weight * (1.0 - torch.abs((predicted * prior).sum(dim=-1)))).sum() / weight.sum().clamp_min(torch.finfo(weight.dtype).eps)
     return loss, {"valid_pixel_count": count, "confidence_sum": float(weight.detach().sum().cpu().item())}
+
+
+def oriented_als_normal_loss(
+    rendered_normal_camera: torch.Tensor,
+    prior_normal_camera: torch.Tensor,
+    confidence: torch.Tensor,
+    mask: torch.Tensor,
+) -> tuple[torch.Tensor, dict[str, Any]]:
+    """Confidence-normalized signed ``1-dot`` loss for camera-facing normals."""
+    if not (
+        rendered_normal_camera.shape == prior_normal_camera.shape
+        and rendered_normal_camera.ndim == 3
+        and rendered_normal_camera.shape[-1] == 3
+    ):
+        raise ValueError("ALS normals must be same-shape HxWx3")
+    if (
+        confidence.shape != mask.shape
+        or mask.shape != rendered_normal_camera.shape[:2]
+        or mask.dtype != torch.bool
+    ):
+        raise ValueError("ALS normal confidence/mask must be HxW and mask bool")
+    rendered_norm = torch.linalg.vector_norm(rendered_normal_camera, dim=-1)
+    prior_norm = torch.linalg.vector_norm(prior_normal_camera, dim=-1)
+    valid = (
+        mask
+        & torch.isfinite(rendered_normal_camera).all(dim=-1)
+        & torch.isfinite(prior_normal_camera).all(dim=-1)
+        & torch.isfinite(confidence)
+        & (prior_norm > 1.0e-6)
+        & (confidence > 0)
+    )
+    count = int(valid.sum().detach().cpu().item())
+    if count == 0:
+        return rendered_normal_camera.sum() * 0.0, {
+            "valid_pixel_count": 0,
+            "confidence_sum": 0.0,
+        }
+    predicted = torch.nn.functional.normalize(
+        rendered_normal_camera[valid], dim=-1, eps=1.0e-6
+    )
+    prior = prior_normal_camera[valid] / prior_norm[valid][:, None]
+    weight = confidence[valid].clamp(0.0, 1.0)
+    loss = (weight * (1.0 - (predicted * prior).sum(dim=-1))).sum() / weight.sum().clamp_min(
+        torch.finfo(weight.dtype).eps
+    )
+    return loss, {
+        "valid_pixel_count": count,
+        "confidence_sum": float(weight.detach().sum().cpu().item()),
+    }
 
 
 def combine_confidence_gates(

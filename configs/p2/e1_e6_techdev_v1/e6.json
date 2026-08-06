@@ -1,0 +1,14 @@
+{
+  "condition_id": "E6_GS_LOD2_PLANES_DIAGNOSTIC",
+  "init_pointcloud": "prep/seed_dense_lod.ply",
+  "out_dir": "runs/E6_GS_LOD2_PLANES_DIAGNOSTIC",
+  "external_lod_prior_dir": "prep/lod_prior/views",
+  "w_external_lod_wall": 0.3,
+  "w_external_lod_roof": 0.1,
+  "external_lod_max_distance_m": 1.0,
+  "external_lod_max_angle_deg": 30.0,
+  "external_lod_warmup": 2000,
+  "external_lod_schedule": "ramp",
+  "external_lod_ramp_steps": 2000,
+  "reference_role": "REFERENCE_DERIVED_DIAGNOSTIC_ONLY"
+}
