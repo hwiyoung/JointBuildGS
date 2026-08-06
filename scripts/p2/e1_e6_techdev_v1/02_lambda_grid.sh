@@ -20,6 +20,8 @@ for value in 0.2 0.5 1.0; do
     >"${logs_root}/02_lambda_${key}_materialize.log" 2>&1
   docker run --rm --network none --shm-size 16g --gpus "device=${JBGS_GPU_INDEX:-0}" \
     --user "$(id -u):$(id -g)" -e CUDA_VISIBLE_DEVICES=0 -e HOME=/tmp \
+    -e XDG_CACHE_HOME="/artifacts/JointBuildGS/${task_rel}/control/cache" \
+    -e TORCH_EXTENSIONS_DIR="/artifacts/JointBuildGS/${task_rel}/control/torch_extensions" \
     -v "${repo_root}:/workspace/JointBuildGS:ro" -v "${artifact_root}:/artifacts/JointBuildGS" \
     -w /workspace/JointBuildGS "${dev_image}" python -m src.stage2.train \
     --config "/artifacts/JointBuildGS/${task_rel}/prep/runtime_configs/lambda_grid/${key}.yaml" \

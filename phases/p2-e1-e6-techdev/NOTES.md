@@ -118,3 +118,7 @@
   entire mask is empty. Nonempty invalid priors still fail closed. The exact
   failed lambda step is rerun from initialization; completed outputs are not
   reused.
+- The lambda-grid runner now mounts the same task-local XDG and Torch-extension
+  caches as the full-condition runner. This changes no scientific configuration;
+  it prevents recompiling the identical gsplat CUDA extension in each isolated
+  grid container.
