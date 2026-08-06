@@ -135,3 +135,29 @@
 - Final Gaussian counts for the grid arms were 681,761 (0.2), 622,045 (0.5),
   and 626,602 (1.0). Large finite per-view conflict losses were observed in the
   0.5 and 1.0 arms and were neither hidden nor used for manual tuning.
+
+## 2026-08-07 — Phase 3 E3–E6 full training complete
+
+- All four locked technical-development conditions completed 30,000 iterations
+  sequentially on GPU 0. Every `control/operation.json` has `exit_code: 0` and
+  `scientific_verdict: null`; final checkpoints are under the corresponding
+  `runs/*/ckpt/final.pt` directories in the canonical task payload.
+- E3 (`runs/E3_GS_IMAGE`) completed in 4,820 s, peaked at 10,407 MiB VRAM, and
+  ended with 769,883 Gaussians.
+- E4 (`runs/E4_GS_ALS_UNWEIGHTED`) completed in 4,707 s, peaked at 7,435 MiB
+  VRAM, and ended with 786,404 Gaussians. Its existing-ALS prior used the
+  selected depth weight 0.2 and normal weight 0.1 with `w=1`; large finite
+  prior-conflict losses were retained without intervention.
+- E5 (`runs/E5_GS_ALS_WB`) completed in 4,690 s, peaked at 7,059 MiB VRAM, and
+  ended with 761,814 Gaussians. The E4/E5 overlay diff contains only condition
+  identity/output paths and `external_als_apply_building_weight: false -> true`;
+  seed, initialization, training schedule, random seed, and loss weights are
+  identical.
+- E6 (`runs/E6_GS_LOD2_PLANES_DIAGNOSTIC`) completed in 4,990 s, peaked at
+  11,081 MiB VRAM, and ended with 761,359 Gaussians. It remains diagnostic-only:
+  wall/roof weights are 0.3/0.1 with the locked 1 m distance and 30 degree
+  normal-angle gates, and no scientific verdict is assigned.
+- Historical E1 is the exact current-epoch 2024 ULS Roofer baseline, not the
+  existing ALS prior shown in the reference panel. Historical E2 is the exact
+  common-base MVS Roofer baseline. This lineage distinction must remain visible
+  in the viewer and report.
