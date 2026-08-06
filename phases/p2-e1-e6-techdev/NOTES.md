@@ -122,3 +122,16 @@
   caches as the full-condition runner. This changes no scientific configuration;
   it prevents recompiling the identical gsplat CUDA extension in each isolated
   grid container.
+
+## 2026-08-07 — Phase 2 lambda grid complete
+
+- All three E5 technical grid arms completed 7,000 iterations. Final held-out
+  MVS-depth MAE was 7.719707 m for lambda 0.2, 11.652377 m for lambda 0.5, and
+  13.670931 m for lambda 1.0.
+- The locked selection rule therefore chose `lambda_L=0.2`. The result is in
+  `prep/lambda_selection.json` and `prep/lambda_grid.md`. E4 and E5 materialize
+  this exact same selected depth weight; their normal weight remains 0.1 and
+  their only scientific difference remains the E5 `w_b` multiplication.
+- Final Gaussian counts for the grid arms were 681,761 (0.2), 622,045 (0.5),
+  and 626,602 (1.0). Large finite per-view conflict losses were observed in the
+  0.5 and 1.0 arms and were neither hidden nor used for manual tuning.
