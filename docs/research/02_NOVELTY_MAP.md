@@ -1,9 +1,9 @@
 # Novelty Map
 
 - Document status: `USER_APPROVED_CANONICAL_REFERENCE`
-- 문서 버전: `C1C5_CANON_v2`
+- 문서 버전: `E1E6_CANON_v1`
 - 문헌 snapshot: 2026-07-31
-- 상태: `PROVISIONAL EVIDENCE / CURRENT C1–C5 PROGRAM REFERENCE`
+- 상태: `PROVISIONAL EVIDENCE / CURRENT E1–E6 TECHDEV REFERENCE`
 - 원칙: 문헌 사실, 본 연구의 해석, 제안 기여, 미확인 사항을 분리한다.
 
 ## 1. Evidence labels

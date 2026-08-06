@@ -1,10 +1,10 @@
 # Result and Acceptance Contract v0
 
 - Document status: `USER_APPROVED_CANONICAL_RESULT_CONTRACT`
-- Criterion version: `C1C5_CANON_v2`
+- Criterion version: `E1E6_CANON_v1`
 - 작성일: 2026-07-31
 - 정성·정량 표시 계약 개정: 2026-08-03 (`DEC-P1-016`)
-- 상태: `PROVISIONAL UNTIL P2 CRITERION FREEZE`
+- 상태: `NON_CONFIRMATORY TECHNICAL DEVELOPMENT / PROVISIONAL UNTIL P2 CRITERION FREEZE`
 - Final verdict policy: `PENDING` until P2 criterion freeze
 - Numerical threshold: `DEFERRED`
 
@@ -15,9 +15,9 @@ metric 또는 보기 좋은 mesh 하나로 최종 성공을 판정하지 않는�
 native representation, extracted surface, exact Roofer input, LoD2 outcome을
 연결해 저장한다.
 
-`C1`/`C2`는 context baselines이고 `C3_GS_image`의 canonical condition name은
-no-external-prior GS다. Primary prior contrasts는 `C4-vs-C3`와
-`C5-vs-C3`이다. “자동 LoD2 생성 가능 범위 확대”는 같은 사전 동결 building set에서
+`E1`/`E2`는 context baselines이고 `E3_GS_IMAGE`의 canonical condition name은
+no-external-prior GS다. 비확증 기술 contrast는 `E4-vs-E3`, `E5-vs-E3`,
+`E5-vs-E4`이며 E6는 diagnostic-only다. “자동 LoD2 생성 가능 범위 확대”는 같은 사전 동결 building set에서
 평균 RMSE 개선이 아니라 `PASS_usable`의 `fail→pass − pass→fail` 순증가로 판정한다.
 자동성은 per-building 수동 method 선택·geometry 수리·GT 입력을 금지하고, retry와
 fallback을 결과 전 동결된 규칙으로만 허용한다는 뜻이다.
@@ -53,9 +53,10 @@ flowchart LR
 ### 2.1 Condition-flow provenance
 
 Gate S0가 동결한 `B_current`는 exact current image/pose members와 그 members에서만
-파생한 SfM sparse, dense MVS, depth, normal, confidence의 manifest다. C3–C5는
-동일한 `B_current` ID와 component hashes를 가져야 한다. C4는 Existing ALS만,
-C5는 independent LoD1만 추가하며 C3는 external prior가 없어야 한다.
+파생한 SfM sparse, dense MVS, depth, normal, confidence의 manifest다. E3–E6는
+동일한 `B_current` ID와 component hashes를 가져야 한다. E4/E5는 같은 Existing ALS를
+추가하고 E5만 `w_b`를 곱한다. E6는 Existing LoD2 planes만 추가하며 E3는 external
+prior가 없어야 한다.
 
 C2와 C3가 같은 MVS-derived component를 사용해도 artifact chain은 다르다. C2는
 MVS geometry를 GS 없이 `P_Roofer`로 직접 변환하고, C3는 image-derived geometry와

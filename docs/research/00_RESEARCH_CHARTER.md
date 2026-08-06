@@ -1,15 +1,16 @@
 # JointBuildGS 연구 헌장
 
 - Document status: `USER_APPROVED_RESEARCH_CANON`
-- 문서 버전: `C1C5_CANON_v2`
+- 문서 버전: `E1E6_CANON_v1`
 - 프로그램 workstream: `P2 — pre-result Gate S0 freeze drafting`
-- 저장소 유효 단계: `C1–C5 PROGRAM / GATE S0 FREEZE DRAFT / PERFORMANCE BLOCKED`
+- 저장소 유효 단계: `E1–E6 NON-CONFIRMATORY TECHDEV / CONFIRMATORY PERFORMANCE BLOCKED`
 - 작성일: 2026-07-31
-- 승인 상태: `USER APPROVED AS CURRENT RESEARCH CANON — 2026-07-31`
-- 효력: **현재 C1–C5 연구·실행 정본**. `docs/evidence/archive/pre_c1c5_research/`의
+- 승인 상태: `USER APPROVED AS CURRENT E1–E6 TECHDEV CANON — 2026-08-06`
+- 효력: **현재 E1–E6 비확증 기술개발 정본**. 기존 C1–C5 ID와 산출물은 역사 계보로
+  보존하고 재라벨하지 않는다. `docs/evidence/archive/pre_c1c5_research/`의
   기존 4조건 context/plan은 역사 기록이며 새 작업의 실행
   authority가 아니다. 기존 Fusion W1 artifact와 lock은 보호·보존하지만 현재
-  C1–C5 프로그램을 지시하지 않는다.
+  E1–E6 프로그램을 지시하지 않는다. 상세 supersession은 `DEC-P1-021`을 따른다.
 
 관련 계약: [Master Roadmap](01_MASTER_ROADMAP.md) ·
 [Data and Baseline Scope](03_DATA_AND_BASELINE_SCOPE.md) ·
@@ -170,22 +171,21 @@ pass-to-fail 악화를 몇 개 만들며, usable PASS 건물 집합을 순증가
   current-image evidence를 보존한다. 변화 사례가 부족하면 이 가설은 misregistration
   또는 synthetic conflict robustness로 축소한다.
 
-## 7. 다섯 reconstruction conditions
+## 7. 여섯 reconstruction conditions
 
 | ID | Reconstruction condition | 학습 여부 | 핵심 역할 |
 |---|---|---:|---|
-| `C1_L_upper` | Current high-quality LiDAR → Roofer | 아니오 | 동일 Roofer 조건에서 고품질 sensor evidence의 실험적 상한 |
-| `C2_MVS` | Gate S0 common current-image/pose base에서 파생한 MVS → Roofer | 아니오 | image-derived geometry를 GS 없이 직접 사용하는 사진측량 baseline |
-| `C3_GS_image` | 같은 image-derived common base → no-external-prior GS → surface extraction → Roofer | 예 | 외부 기구축 prior 없는 GS 기준선 |
-| `C4_GS_lidar_prior` | C3 common base + Existing ALS prior → GS → extraction → Roofer | 예 | 불완전 ALS 자산 활용 |
-| `C5_GS_lod1_prior` | C3 common base + independent existing LoD1 prior → GS → extraction → Roofer | 예 | coarse building envelope 활용 |
+| `E1_LIDAR_ROOFER` | Current high-quality LiDAR → Roofer | 아니오 | 동일 Roofer 조건에서 고품질 sensor evidence의 실험적 상한 |
+| `E2_MVS_ROOFER` | Gate S0 common current-image/pose base에서 파생한 MVS → Roofer | 아니오 | image-derived geometry를 GS 없이 직접 사용하는 사진측량 baseline |
+| `E3_GS_IMAGE` | 같은 image-derived common base → no-external-prior GS → surface extraction → Roofer | 예 | 외부 기구축 prior 없는 GS 기준선 |
+| `E4_GS_ALS_UNWEIGHTED` | E3 common base + Existing ALS, valid prior pixel `w=1` | 예 | outdated prior 실패 양상 노출 |
+| `E5_GS_ALS_WB` | E4와 동일 + building reliability `w_b` 곱 | 예 | 제안하는 conflict-aware ALS 활용 |
+| `E6_GS_LOD2_PLANES_DIAGNOSTIC` | E3 common base + Existing LoD2 wall/roof planes | 예 | reference-derived plane-prior 기술 진단 |
 
-이를 “five learning experiments”라고 부르지 않는다. `C1`과 `C2`는 baseline branches이며,
-전체는 “five reconstruction conditions” 또는 “five evidence configurations”이다.
-`C3_GS_image` ID는 기존 계보와 결과 schema의 연속성을 위해 유지하지만, canonical
-condition name은 **no-external-prior GS**이다. 이는 RGB-only나 SfM-sparse-only를
-뜻하지 않는다. `C5`는 common base + **LoD1-prior** GS이며 LoD2-prior GS가 아니다.
-DSM과 두 external prior의 동시 결합은 본 비교에서 제외한다.
+이를 “six learning experiments”라고 부르지 않는다. `E1`과 `E2`는 baseline branches이며,
+전체는 여섯 reconstruction conditions다. E4/E5의 유일한 차이는 `w_b` activation이다.
+E6는 `REFERENCE_DERIVED_DIAGNOSTIC_ONLY`이며 current independent scan 이외의 reference로
+평가하지 않는다. 기존 C1–C5 ID와 산출물은 역사 계보로 보존한다.
 
 ### 7.1 왜 LiDAR가 두 개인가
 
@@ -194,8 +194,8 @@ DSM과 두 external prior의 동시 결합은 본 비교에서 제외한다.
 
 | Canonical name | 의미 | 연구 역할 | 사용하지 않는 역할 |
 |---|---|---|---|
-| **Current UAS/Drone LiDAR** (`LIDAR_UAS_CURRENT`) | target image campaign과 시간적으로 가까운 고품질 drone-borne laser 후보 | `C1_L_upper`의 Roofer 직접입력, geometry reference 후보 | C4의 existing prior가 아님 |
-| **Existing ALS** (`ALS_EXISTING`) | 이미 보유한 regional airborne laser-scanning 자산; 과거·저밀도·불완전 가능 | `P_LiDAR`로서 `C4_GS_lidar_prior`의 initialization/regularization 후보 | `L_upper` 또는 독립 ground truth가 아님 |
+| **Current UAS/Drone LiDAR** (`LIDAR_UAS_CURRENT`) | target image campaign과 시간적으로 가까운 고품질 drone-borne laser 후보 | `E1_LIDAR_ROOFER`의 Roofer 직접입력, geometry reference 후보 | E4/E5의 existing prior가 아님 |
+| **Existing ALS** (`ALS_EXISTING`) | 이미 보유한 regional airborne laser-scanning 자산; 과거·저밀도·불완전 가능 | E4/E5의 공통 initialization/regularization prior | `L_upper` 또는 독립 ground truth가 아님 |
 
 `Current UAS/Drone LiDAR`와 `Existing ALS`가 실제로 다른 취득 시점·밀도·coverage·품질
 regime인지 Gate S0 evidence에서 입증해야 한다. 구분이 입증되지 않으면 C1/C4의 과학적 contrast는

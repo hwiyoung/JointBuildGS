@@ -39,6 +39,9 @@ REQUIRED_MARKERS = (
     "validate_two_host_handoff.py",
     "technical handoff always keeps `scientific_verdict` null",
     "separate approval document",
+    "DEC-P1-021",
+    "E4 and E5 use byte-identical ALS seed/supervision",
+    "REFERENCE_DERIVED_DIAGNOSTIC_ONLY",
 )
 FORBIDDEN_MARKERS = (
     "Use the manifest and Compose compatibility mounts",
@@ -47,6 +50,7 @@ FORBIDDEN_MARKERS = (
 PHASE_READMES = (
     "phases/p0-audit/README.md",
     "phases/p2-gsjso/README.md",
+    "phases/p2-e1-e6-techdev/README.md",
 )
 PHASE_README_REQUIRED_MARKERS = {
     "phases/p0-audit/README.md": (

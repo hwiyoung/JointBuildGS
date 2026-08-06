@@ -1,11 +1,11 @@
 # Research Decision Log
 
 - Document status: `USER_APPROVED_RESEARCH_DECISIONS`
-- 문서 버전: `C1C5_CANON_v2`
+- 문서 버전: `E1E6_CANON_v1`
 - 작성일: 2026-07-31
-- 승인 상태: `USER APPROVED CURRENT C1–C5 CANON — 2026-07-31`
+- 승인 상태: `USER APPROVED CURRENT E1–E6 TECHDEV CANON — 2026-08-06`
 
-`DEC-P1-010` 이후 이 log와 00–06 contract set이 현재 C1–C5 프로그램을 통제한다.
+`DEC-P1-021` 이후 이 log와 00–06 contract set이 현재 E1–E6 기술개발 프로그램을 통제한다.
 앞선 decision entry의 당시 용어는 역사 기록으로 보존하며, 충돌 시 더 최신 decision의
 `New decision`과 `Superseded decisions`를 적용한다.
 `docs/evidence/archive/pre_c1c5_research/`의 context/plan은 기존 4조건 프로그램의 역사 기록이다.
@@ -789,6 +789,50 @@
 - **Authority:**
   `docs/research/preregistration/roofer_ox_review/ROOFER_OX_REVIEW_LOCK_v1.md`와
   `configs/p2/c1_c2_shared_footprint_199_v3/roofer_ox_review_v1.json`.
+- **Scientific verdict:** `null`
+
+## DEC-P1-021 — E1–E6 기구축-prior 융합 비확증 기술개발 정본
+
+- **Decision ID:** `DEC-P1-021`
+- **Date:** 2026-08-06
+- **Status:** `USER-APPROVED E1–E6 NON-CONFIRMATORY TECHNICAL DEVELOPMENT`
+- **Previous state:** `C1C5_CANON_v2`는 C1 current UAS LiDAR, C2 MVS, C3
+  no-external-prior GS, C4 confidence-gated Existing ALS, C5 independent-LoD1의
+  다섯 조건을 정의했다. C4는 단 한 번의 bounded run만 열렸고 C5 실행과
+  confirmatory inference는 금지됐다.
+- **New condition IDs:** 현재 add-once 기술개발 condition은 `E1_LIDAR_ROOFER`,
+  `E2_MVS_ROOFER`, `E3_GS_IMAGE`, `E4_GS_ALS_UNWEIGHTED`,
+  `E5_GS_ALS_WB`, `E6_GS_LOD2_PLANES_DIAGNOSTIC`이다. 기존 C ID·파일·receipt는
+  역사적 계보로 보존하고 E ID로 재라벨하지 않는다.
+- **Matched GS base:** E3–E6는 exact Gate-S0 current image/pose membership, 학습
+  view split, MVS depth/normal/confidence, photometric/regularization loss, seed,
+  optimizer, densification, iteration과 extraction parameter를 공유한다.
+- **E4/E5 controlled contrast:** E4와 E5는 byte-identical Existing ALS seed,
+  sparse depth/planar-normal cache, random seed와 모든 loss/weight를 사용한다.
+  유일한 차이는 E5에서 per-pixel Existing ALS loss에 building reliability
+  `w_b`를 곱하는 boolean activation이다. E4는 valid prior pixel에서 `w=1`이다.
+- **E6 boundary:** E6는 Existing LoD2 wall/roof plane을 쓰는
+  `REFERENCE_DERIVED_DIAGNOSTIC_ONLY` arm이다. E6 학습에 사용한 LoD2를 평가
+  reference로 재사용하지 않고 current independent scan으로만 수치화하며, primary,
+  confirmatory, population/generalization claim과 `PASS_usable` 판정에 사용하지 않는다.
+- **Synthetic outdating:** 실제 신축/철거가 5동 미만으로 확인되면 raw/canonical
+  input을 수정하지 않고 새 derived prior namespace에만 deterministic synthetic
+  removal/insertion/height changes를 적용한다. `R_shared` XY/stable ID는 모든 condition
+  공통 제어입력으로 그대로 보존하고 synthetic manifest가 변화영역 정답이다.
+- **Implementation:** 공식 2DGS fork 요구는 repository invariant에 따라 **gsplat**
+  구현으로 해석한다. reusable code/config는 `src/`, `scripts/`, `configs/`에 두고
+  phase-local NOTES/receipt는 `phases/p2-e1-e6-techdev/`, 대형 payload는 canonical
+  `JBGS_ARTIFACT_ROOT/phase-payloads/p2/e1_e6_techdev_v1/`에 둔다.
+- **Execution order:** inventory/roles → preprocessing/sanity → E5 7k lambda grid →
+  E3/E4/E5/E6 30k → shared extraction/Roofer → 8-slot viewer → semantic evaluation
+  labels → metrics/report 순서다. 단계별 checkpoint가 유효하면 재사용하고 실패한
+  단계만 재실행한다.
+- **Evaluation boundary:** lambda 선택과 기술 지표에 쓰는 held-out view는 이미
+  development에 사용된 non-confirmatory set이다. 모든 numeric result와 report는
+  `NON_CONFIRMATORY_TECHNICAL_DEVELOPMENT`로 표시하고 `scientific_verdict`는 `null`이다.
+- **Supersedes:** 새 실행 namespace의 condition naming과 C5 execution prohibition만
+  supersede한다. 과거 C1–C5 artifacts/decisions, shared-footprint rule, GT provenance,
+  failure visibility, Docker/two-host handoff와 판정 금지는 유지한다.
 - **Scientific verdict:** `null`
 
 ## Pending decisions not yet logged as adopted

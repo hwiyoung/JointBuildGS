@@ -1,8 +1,8 @@
 # Work–Codex Handoff Protocol
 
-- 문서 버전: `C1C5_CANON_v2`
+- 문서 버전: `E1E6_CANON_v1`
 - 작성일: 2026-07-31
-- 상태: `USER APPROVED C1–C5 PROGRAM HANDOFF`
+- 상태: `USER APPROVED E1–E6 TECHDEV HANDOFF`
 - 적용: 연구문서 snapshot, task authorization, return evidence
 
 ## 1. 두 종류의 handoff

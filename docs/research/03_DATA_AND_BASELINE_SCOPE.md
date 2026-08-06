@@ -1,9 +1,9 @@
 # Data and Baseline Scope
 
 - Document status: `USER_APPROVED_CANONICAL_DATA_CONTRACT`
-- 문서 버전: `C1C5_CANON_v2`
+- 문서 버전: `E1E6_CANON_v1`
 - 작성일: 2026-07-31
-- 상태: `GATE S0 REMEDIATION R1 TECHNICAL CLOSED / FREEZE DRAFT / HUMAN DECISION PENDING`
+- 상태: `E1–E6 TECHDEV INPUT CONTRACT / CONFIRMATORY READINESS PENDING`
 - Gate S0 snapshot: exact target bytes verified; scientific readiness remains
   `PARTIAL/MISSING/UNKNOWN`
 
@@ -108,30 +108,30 @@ Raw input과 canonical result는 explicit retention review 없이 수정하지 �
 
 ## 4. Reconstruction condition별 입력 계약
 
-| Condition | Current images | Current MVS | Current UAS LiDAR | Existing ALS prior | Existing LoD1 prior | Roofprint protocol | Evaluation reference |
+| Condition | Current images | Current MVS | Current UAS LiDAR | Existing ALS prior | Existing LoD2 planes | Roofprint protocol | Evaluation reference |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| `C1_L_upper` | 아니오 | 아니오 | reconstruction input | 아니오 | 아니오 | `R_derived` protocol | score only |
-| `C2_MVS` | common MVS 생성 source | direct Roofer reconstruction input | 아니오 | 아니오 | 아니오 | `R_derived` protocol | score only |
-| `C3_GS_image` | common GS training input | `B_current` 공통 geometry/depth/normal/confidence | 아니오 | 아니오 | 아니오 | `R_derived` protocol | score only |
-| `C4_GS_lidar_prior` | C3와 동일 | C3와 동일한 `B_current` | 아니오 | prior only | 아니오 | `R_derived` protocol | score only |
-| `C5_GS_lod1_prior` | C3와 동일 | C3와 동일한 `B_current` | 아니오 | 아니오 | prior only | `R_derived` protocol | score only |
+| `E1_LIDAR_ROOFER` | 아니오 | 아니오 | reconstruction input | 아니오 | 아니오 | `R_shared` | score/context |
+| `E2_MVS_ROOFER` | common MVS 생성 source | direct Roofer reconstruction input | 아니오 | 아니오 | 아니오 | `R_shared` | score only |
+| `E3_GS_IMAGE` | common GS training input | `B_current` 공통 geometry/depth/normal/confidence | 아니오 | 아니오 | 아니오 | `R_shared` | score only |
+| `E4_GS_ALS_UNWEIGHTED` | E3와 동일 | E3와 동일 | 아니오 | seed+loss, `w=1` | 아니오 | `R_shared` | score only |
+| `E5_GS_ALS_WB` | E4와 동일 | E4와 동일 | 아니오 | E4와 동일, `×w_b` | 아니오 | `R_shared` | score only |
+| `E6_GS_LOD2_PLANES_DIAGNOSTIC` | E3와 동일 | E3와 동일 | 아니오 | 아니오 | diagnostic prior only | `R_shared` | independent current scan only |
 
-`C4`와 `C5`를 한 arm으로 합치지 않는다. Evaluation reference는 학습 loss,
+E4와 E5를 한 arm으로 합치지 않는다. Evaluation reference는 학습 loss,
 initialization, crop, early stopping, hyperparameter selection에 사용하지 않는다.
 
-`C3`–`C5`의 공통 GS base `B_current`는 Gate S0에서 동결한 exact current RGB image
+`E3`–`E6`의 공통 GS base `B_current`는 Gate S0에서 동결한 exact current RGB image
 members와 camera/pose IDs에서만 파생한다. SfM sparse, dense MVS, depth, normal,
 confidence를 initialization, supervision 또는 weighting support로 허용하되 각
 component의 producer/version, code/config, source-member IDs, coordinate frame, role,
-bytes와 hash를 동결한다. 세 GS arm은 이 base를 동일하게 사용한다. 이 image-derived
+bytes와 hash를 동결한다. 네 GS arm은 이 base를 동일하게 사용한다. 이 image-derived
 support는 external existing-asset prior가 아니다.
 
-`C3_GS_image`의 canonical label은 **no-external-prior GS**다. ID는 과거 evidence와
-schema 연속성을 위해 유지한다. C3에는 Current UAS LiDAR, Existing ALS, LoD1,
+`E3_GS_IMAGE`의 canonical label은 **no-external-prior GS**다. E3에는 Current UAS LiDAR, Existing ALS, LoD2 planes,
 evaluation reference 또는 scored LoD2 roof geometry를 넣지 않는다. 모든 arm에 동일한
-`R_shared` XY footprint를 제공하는 것은 condition-specific prior가 아니다. C4는 exact C3
-base에 Existing ALS prior만 추가하고, C5는 exact C3 base에 independent LoD1 prior만
-추가한다.
+`R_shared` XY footprint를 제공하는 것은 condition-specific prior가 아니다. E4/E5는
+exact E3 base에 같은 Existing ALS prior를 추가하고 E5만 `w_b`를 활성화한다. E6는
+LoD2 plane diagnostic이며 primary eligibility가 없다.
 
 `C2_MVS`도 원칙적으로 C3–C5와 같은 Gate S0 동결 image/camera ledger에서 생성한다.
 같은 base의 MVS geometry를 GS 재최적화 없이 Roofer로 직접 전달하는 것이 C2이고,

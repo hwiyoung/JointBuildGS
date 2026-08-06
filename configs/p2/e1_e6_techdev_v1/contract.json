@@ -1,0 +1,59 @@
+{
+  "schema": "jointbuildgs.p2.e1_e6_techdev.contract.v1",
+  "task_id": "P2-E1-E6-PRIOR-FUSION-TECHDEV-v1",
+  "decision_id": "DEC-P1-021",
+  "criterion_version": "E1E6_CANON_v1",
+  "status": "NON_CONFIRMATORY_TECHNICAL_DEVELOPMENT",
+  "conditions": [
+    "E1_LIDAR_ROOFER",
+    "E2_MVS_ROOFER",
+    "E3_GS_IMAGE",
+    "E4_GS_ALS_UNWEIGHTED",
+    "E5_GS_ALS_WB",
+    "E6_GS_LOD2_PLANES_DIAGNOSTIC"
+  ],
+  "artifact_relative_root": "phase-payloads/p2/e1_e6_techdev_v1/P2-E1-E6-PRIOR-FUSION-TECHDEV-v1",
+  "phase_git_root": "phases/p2-e1-e6-techdev",
+  "common": {
+    "seed": 0,
+    "iterations": 30000,
+    "photo_l1_weight": 0.8,
+    "photo_dssim_weight": 0.2,
+    "mvs_depth_weight": 0.2,
+    "mvs_normal_weight": 0.05,
+    "prior_warmup_end": 2000,
+    "prior_ramp_end": 4000,
+    "huber_delta": "sigma0",
+    "held_out_rule": "SORTED_EVERY_8TH",
+    "tsdf_voxel": "GSD_X_4",
+    "tsdf_truncation": "VOXEL_X_4",
+    "roofer_footprint": "R_shared_GroundSurface_XY_stable_id",
+    "crs": "EPSG:25832"
+  },
+  "als": {
+    "lambda_grid_7k": [0.2, 0.5, 1.0],
+    "normal_weight": 0.1,
+    "e4_building_weight": false,
+    "e5_building_weight": true,
+    "only_allowed_e4_e5_difference": "external_als_apply_building_weight"
+  },
+  "lod2_diagnostic": {
+    "wall_weight": 0.3,
+    "roof_weight": 0.1,
+    "max_plane_distance_m": 1.0,
+    "max_normal_angle_deg": 30.0,
+    "classification": "REFERENCE_DERIVED_DIAGNOSTIC_ONLY"
+  },
+  "synthetic_outdating": {
+    "minimum_verified_real_changes": 5,
+    "seed": 20260806,
+    "remove_count": 4,
+    "insert_count": 2,
+    "height_change_count": 3,
+    "height_scale_choices": [0.7, 1.3],
+    "raw_inputs_immutable": true,
+    "shared_footprint_immutable": true
+  },
+  "official_PASS_usable": null,
+  "scientific_verdict": null
+}

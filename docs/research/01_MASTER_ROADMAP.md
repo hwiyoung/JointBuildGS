@@ -1,11 +1,11 @@
 # JointBuildGS Master Roadmap
 
-- 문서 버전: `C1C5_CANON_v2`
+- 문서 버전: `E1E6_CANON_v1`
 - 작성일: 2026-07-31
-- 현재 workstream: `P2 C1/C2 DEVELOPMENT FEASIBILITY PILOT ACTIVATION`
-- 저장소 유효 상태: `C1/C2 DEVELOPMENT PILOT SUBGATE APPROVED / CONFIRMATORY PERFORMANCE BLOCKED`
-- 승인 상태: `USER APPROVED AS CURRENT RESEARCH CANON — 2026-07-31`
-- 역할: C1–C5 프로그램의 phase, split, gate와 실행 순서를 통제하는 roadmap
+- 현재 workstream: `P2 E1–E6 NON-CONFIRMATORY TECHNICAL DEVELOPMENT`
+- 저장소 유효 상태: `E3–E6 TECHDEV AUTHORIZED / CONFIRMATORY PERFORMANCE BLOCKED`
+- 승인 상태: `USER APPROVED AS CURRENT E1–E6 TECHDEV CANON — 2026-08-06`
+- 역할: E1–E6 프로그램의 phase, split, gate와 실행 순서를 통제하는 roadmap
 
 > Research anchor: 불완전하지만 재사용 가능한 기구축 3D 자산과 최신 항공영상을
 > 상보적으로 결합하여 자동 LoD2 생성이 가능한 건물 범위를 확대한다.
