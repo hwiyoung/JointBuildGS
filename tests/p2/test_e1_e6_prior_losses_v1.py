@@ -6,6 +6,7 @@ import torch
 
 from src.stage2.external_als_prior import oriented_als_normal_loss, select_external_als_weight
 from src.stage2.loss.data_fitting import l_depth_huber
+from src.stage2.train import _optional_signed_normal_prior_loss
 from src.stage2.external_lod_prior import lod_plane_loss
 
 
@@ -52,6 +53,18 @@ class E1E6PriorLossTests(unittest.TestCase):
         )
         self.assertEqual(stats["valid_pixel_count"], 1)
         self.assertAlmostEqual(float(loss), 1.0, places=6)
+
+    def test_empty_mvs_normal_support_is_zero_for_optional_view_loss(self) -> None:
+        rendered = torch.ones((1, 1, 3), requires_grad=True)
+        loss, count = _optional_signed_normal_prior_loss(
+            rendered,
+            torch.zeros_like(rendered),
+            torch.zeros((1, 1), dtype=torch.bool),
+        )
+        self.assertEqual(count, 0)
+        self.assertEqual(float(loss.detach()), 0.0)
+        loss.backward()
+        torch.testing.assert_close(rendered.grad, torch.zeros_like(rendered))
 
     def test_lod_plane_loss_accepts_matching_roof_plane(self) -> None:
         depth = torch.full((2, 2), 5.0, requires_grad=True)

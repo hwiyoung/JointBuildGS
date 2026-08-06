@@ -1039,6 +1039,19 @@ def _signed_normal_prior_loss(
     return loss, valid_count
 
 
+def _optional_signed_normal_prior_loss(
+    normal_pred: torch.Tensor,
+    normal_prior: torch.Tensor,
+    mask: torch.Tensor,
+) -> tuple[torch.Tensor, int]:
+    """Apply the strict signed loss, treating a view with no support as zero."""
+    if mask.dtype != torch.bool:
+        raise ValueError("signed normal-prior mask must be bool")
+    if not bool(mask.any().item()):
+        return normal_pred.sum() * 0.0, 0
+    return _signed_normal_prior_loss(normal_pred, normal_prior, mask)
+
+
 def _resolve_init_pointcloud_rgb(
     seed_xyz: np.ndarray,
     seed_rgb: Optional[np.ndarray],
@@ -3701,7 +3714,7 @@ def main():
                     (
                         loss_n_mvs,
                         normal_prior_valid_pixel_count,
-                    ) = _signed_normal_prior_loss(n_render, n_gt, n_m)
+                    ) = _optional_signed_normal_prior_loss(n_render, n_gt, n_m)
                 else:
                     loss_n_mvs = L.l_normal(n_render, n_gt, w2c, n_m)
                     normal_prior_valid_pixel_count = int(
@@ -3768,7 +3781,7 @@ def main():
                     (
                         loss_n,
                         normal_prior_valid_pixel_count,
-                    ) = _signed_normal_prior_loss(n_render, n_gt, n_m)
+                    ) = _optional_signed_normal_prior_loss(n_render, n_gt, n_m)
                 else:
                     loss_n = L.l_normal(n_render, n_gt, w2c, n_m)
                     normal_prior_valid_pixel_count = int(

@@ -104,3 +104,17 @@
   contain pytest. Repository instruction validation and its 13 sync tests passed
   separately. The missing pytest dependency is recorded rather than installed on
   the host or hidden.
+
+## 2026-08-07 — first formal lambda-grid recovery
+
+- The first formal lambda=0.2 run reached iteration 26 after CUDA initialization
+  and then stopped on a training view whose valid MVS-normal mask was empty.
+  The strict signed-normal primitive correctly rejects an empty mask when called
+  directly, but the per-view training adapter had not implemented the valid
+  empty-sum case. The partial run and full traceback are retained; no checkpoint
+  was promoted.
+- Recovery keeps the strict primitive unchanged and adds an optional per-view
+  adapter that returns differentiable zero with support count zero only when the
+  entire mask is empty. Nonempty invalid priors still fail closed. The exact
+  failed lambda step is rerun from initialization; completed outputs are not
+  reused.
