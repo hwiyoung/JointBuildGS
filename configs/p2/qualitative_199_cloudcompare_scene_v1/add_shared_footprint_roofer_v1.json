@@ -1,0 +1,60 @@
+{
+  "schema": "jointbuildgs.p2.qualitative_199_cloudcompare_scene.shared_footprint_roofer_extension.v1",
+  "task_id": "P2-QUALITATIVE-199-CLOUDCOMPARE-SHARED-FOOTPRINT-ROOFER-v1",
+  "decision_id": "DEC-P1-019",
+  "status": "USER_APPROVED_FOR_EXECUTION",
+  "source": {
+    "relative_root": "phase-payloads/p2/c1_c2_shared_footprint_199_v1/P2-C1-C2-SHARED-FOOTPRINT-199-v1",
+    "finalized": {
+      "path": "control/finalized_v1.json",
+      "bytes": 1018,
+      "sha256": "6e95eefe04cb7e4235089fc7d6e4e5706386dccaafb826be3735e49b9d585c37"
+    },
+    "building_method_results": {
+      "path": "results/building_method_results_v1.jsonl",
+      "bytes": 408796,
+      "sha256": "ced3876e6f7f0f1d5362cfff993d5be86373280b6fdafde95b2527a17ae30ba8"
+    }
+  },
+  "scene": {
+    "relative_root": "phase-payloads/p2/qualitative_199_cloudcompare_scene_v1/P2-QUALITATIVE-199-CLOUDCOMPARE-SCENE-v1",
+    "parent_manifest": {
+      "path": "scene_manifest_6layers.json",
+      "bytes": 8141,
+      "sha256": "a15adf272135024231d613d20ecd351d93ca01b5183b795e9cb890995db6abda"
+    },
+    "named_footprint": {
+      "path": "layers/footprints_199_cloudcompare_named_local.obj",
+      "bytes": 114571,
+      "sha256": "259787ebb0af3335797af9b21f680d3479b1bec26092a667a250046b5dcafa3d"
+    }
+  },
+  "methods": {
+    "C1_L_upper": {
+      "expected_process_completed": 107,
+      "expected_pre_roofer_missing": 92,
+      "expected_lod22_groups": 104,
+      "expected_no_lod22": 3,
+      "output_file": "lidar_roofer_199_shared_footprint_named_local.obj",
+      "role": "CURRENT_UAS_LIDAR_SHARED_STANDARD_FOOTPRINT_ROOFER"
+    },
+    "C2_MVS": {
+      "expected_process_completed": 123,
+      "expected_pre_roofer_missing": 76,
+      "expected_lod22_groups": 119,
+      "expected_no_lod22": 4,
+      "output_file": "mvs_roofer_199_shared_footprint_named_local.obj",
+      "role": "RECOVERED_CURRENT_MVS_SHARED_STANDARD_FOOTPRINT_ROOFER"
+    }
+  },
+  "frame": {
+    "scene_local_origin_xyz": [690700.0, 5335700.0, 550.0],
+    "crs": "EPSG:25832"
+  },
+  "execution": {
+    "roofer_invocations": 0,
+    "reconstruction_invocations": 0,
+    "gs_training_invocations": 0
+  },
+  "scientific_verdict": null
+}

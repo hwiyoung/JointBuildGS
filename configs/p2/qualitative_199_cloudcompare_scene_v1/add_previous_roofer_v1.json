@@ -1,0 +1,74 @@
+{
+  "schema": "jointbuildgs.p2.qualitative_199_cloudcompare_scene.previous_roofer_extension.v1",
+  "task_id": "P2-QUALITATIVE-199-CLOUDCOMPARE-SCENE-PREVIOUS-ROOFER-EXTENSION-v1",
+  "parent_task_id": "P2-QUALITATIVE-199-CLOUDCOMPARE-SCENE-v1",
+  "decision_id": "DEC-P1-018",
+  "status": "USER_APPROVED_VISUAL_DIAGNOSTIC_REUSE",
+  "parent_scene": {
+    "relative_root": "phase-payloads/p2/qualitative_199_cloudcompare_scene_v1/P2-QUALITATIVE-199-CLOUDCOMPARE-SCENE-v1",
+    "manifest_path": "scene_manifest.json",
+    "manifest_bytes": 4485,
+    "manifest_sha256": "4d289546b49bbd8dc3367b4fafef9665513f22bffb6591998aa051f88b7036ea"
+  },
+  "source": {
+    "relative_root": "phase-payloads/p2/utarget199_contract_results_v1/P2-UTARGET199-CONTRACT-RESULTS-v1",
+    "prepared": {
+      "path": "control/prepared_v1.json",
+      "bytes": 1742,
+      "sha256": "c5ce7d76c1ae7d06f4381814bd46656b9a73122355aaa06428b97d5c2abcf5c8"
+    },
+    "finalized": {
+      "path": "control/finalized_v1.json",
+      "bytes": 2343,
+      "sha256": "88d911a3abf98e8cbe9c7695c4726b90c2528b458dbf4c22b76f75f9de9e4d28"
+    },
+    "execution_units": {
+      "path": "freeze/execution_units_v1.jsonl",
+      "bytes": 30446,
+      "sha256": "3763ca747d80d1a83a80b8c7e5add866753fbde58be3ea3dcf5ac3849427f2d7"
+    },
+    "building_method_metrics": {
+      "path": "results/building_method_metrics_v1.jsonl",
+      "bytes": 1860023,
+      "sha256": "13728f8e56ddfa502fea9d6345bb38b29931737f8e33d73d40b1b3b8171f6c8e"
+    }
+  },
+  "methods": {
+    "C1_L_upper": {
+      "output_file": "lidar_roofer_previous_local.ply",
+      "role": "PREVIOUS_CURRENT_UAS_LIDAR_ROOFER_VISUAL_DIAGNOSTIC",
+      "expected_component_count": 5,
+      "expected_associated_building_count": 126,
+      "lineage_compatibility_with_parent_cloud": "SAME_CURRENT_UAS_LIDAR_SOURCE",
+      "colors": {
+        "RoofSurface": [45, 120, 255],
+        "WallSurface": [125, 180, 255],
+        "GroundSurface": [65, 85, 145]
+      }
+    },
+    "C2_MVS": {
+      "output_file": "mvs_roofer_previous_local.ply",
+      "role": "HISTORICAL_C2_VISUAL_DIAGNOSTIC_ONLY",
+      "expected_component_count": 18,
+      "expected_associated_building_count": 153,
+      "lineage_compatibility_with_parent_cloud": "MISMATCH_PARENT_USES_RECOVERED_V2_PLY_PREVIOUS_ROOFER_USED_HISTORICAL_PLY",
+      "historical_dense_ply_sha256": "b4bc250a6c97de50295f08023194a55c8a9744dc2b225db8618fd594b52ae28f",
+      "colors": {
+        "RoofSurface": [255, 70, 180],
+        "WallSurface": [255, 155, 215],
+        "GroundSurface": [135, 65, 115]
+      }
+    }
+  },
+  "execution": {
+    "reuse_cityjsonseq_only": true,
+    "roofer_invocations": 0,
+    "reconstruction_invocations": 0,
+    "gs_training_invocations": 0,
+    "missingness_preserved": true,
+    "scientific_verdict": null
+  },
+  "formal_six_row_reuse_allowed": false,
+  "next_stage_authorized": false,
+  "scientific_verdict": null
+}

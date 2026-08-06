@@ -1,0 +1,82 @@
+{
+  "schema": "jointbuildgs.p2.qualitative_199_cloudcompare_scene.v1",
+  "task_id": "P2-QUALITATIVE-199-CLOUDCOMPARE-SCENE-v1",
+  "decision_id": "DEC-P1-018",
+  "status": "USER_APPROVED_FOR_EXECUTION",
+  "population": {
+    "name": "U_target",
+    "building_count": 199,
+    "common_manifest_relative_path": "phase-payloads/p2/qualitative_199_common_manifest_v1/P2-QUALITATIVE-199-COMMON-MANIFEST-v1/manifest/building_camera_view_crop_manifest_v1.jsonl",
+    "common_manifest_bytes": 1026148,
+    "common_manifest_sha256": "61e4e8a334c10d0c4405b4929c3e021ac74e5a6eb96596954b5781c0c5b4c4d9"
+  },
+  "inputs": {
+    "current_uas_lidar": {
+      "relative_path": "phase-payloads/p0-audit/data/raw/tum2twin/TUM_Downtown_ULS_20241217_nadir.laz",
+      "bytes": 1277996022,
+      "point_count": 177981904,
+      "sha256": "50783bfb205ea5532ac2a300d7e41b6b6426e45009d6c961d603e079cc5ae7b4",
+      "input_datum": "ellipsoidal",
+      "applied_vertical_shift_m": 0.0
+    },
+    "current_mvs_dense": {
+      "relative_path": "phase-payloads/p2/mvs_native_textured_mesh_preflight_v1/P2-MVS-NATIVE-DENSE-SCENE-RECOVERY-v2/work/mvs/openmvs/dim_dense.ply",
+      "bytes": 658898693,
+      "point_count": 43926567,
+      "sha256": "fc2561ab3e41adaa64a5cbc1f7a13c5f887999d2d81f94d4dca082c2c43c02ce",
+      "coordinate_frame": "GS_LOCAL_ADD_DENSE_WORLD_SHIFT_XYZ",
+      "input_datum": "ellipsoidal",
+      "applied_vertical_shift_m": 0.0
+    },
+    "lod2_groundsurface": [
+      {
+        "relative_path": "phase-payloads/p0-audit/data/raw/lod2/690_5334.gml",
+        "bytes": 156656509,
+        "sha256": "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314"
+      },
+      {
+        "relative_path": "phase-payloads/p0-audit/data/raw/lod2/690_5336.gml",
+        "bytes": 147865939,
+        "sha256": "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674"
+      }
+    ]
+  },
+  "frame": {
+    "source_horizontal_crs": "EPSG:25832",
+    "source_vertical_datum": "current_ellipsoidal",
+    "dense_world_shift_xyz": [690953.0, 5336071.0, 604.0],
+    "scene_local_origin_xyz": [690700.0, 5335700.0, 550.0],
+    "world_to_scene_local": "p_local = p_world - scene_local_origin_xyz",
+    "scene_local_to_world": "p_world = p_local + scene_local_origin_xyz",
+    "lod2_groundsurface_orthometric_to_current_ellipsoidal_m": 45.7
+  },
+  "extent": {
+    "xy_rule": "UNION_BBOX_OF_199_COMMON_MANIFEST_VIEWPORT_BBOX_XY",
+    "additional_margin_m": 0.0
+  },
+  "display": {
+    "footprint_role": "EVALUATION_ONLY_GROUNDSURFACE_XY_DISPLAY",
+    "footprint_curtain_role": "DISPLAY_ONLY_CONSTANT_HEIGHT_EXTRUSION_OF_GROUNDSURFACE_XY",
+    "footprint_curtain_height_m": 30.0,
+    "footprint_rgb": [255, 140, 0],
+    "roofsurface_geometry_access_allowed": false,
+    "cloudcompare_layer_order": [
+      "lidar_199_extent_local.laz",
+      "mvs_199_extent_local_rgb.ply",
+      "footprints_199_local.dxf",
+      "footprint_curtains_199_local.ply"
+    ]
+  },
+  "execution": {
+    "lidar_chunk_points": 4000000,
+    "mvs_chunk_points": 4000000,
+    "verify_all_input_hashes": true,
+    "reconstruction_invocations": 0,
+    "roofer_invocations": 0,
+    "gs_training_invocations": 0,
+    "scientific_verdict": null
+  },
+  "output_relative_root": "phase-payloads/p2/qualitative_199_cloudcompare_scene_v1/P2-QUALITATIVE-199-CLOUDCOMPARE-SCENE-v1",
+  "next_stage_not_authorized": "ROW1_199_IMAGE_RENDERING",
+  "scientific_verdict": null
+}

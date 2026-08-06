@@ -1,0 +1,28 @@
+{
+  "schema": "jointbuildgs.p2.qualitative_199_cloudcompare_scene.lidar_visual_sample.v1",
+  "task_id": "P2-QUALITATIVE-199-LIDAR-VISUAL-SAMPLE-v1",
+  "status": "USER_APPROVED_FOR_EXECUTION",
+  "scene_relative_root": "phase-payloads/p2/qualitative_199_cloudcompare_scene_v1/P2-QUALITATIVE-199-CLOUDCOMPARE-SCENE-v1",
+  "source": {
+    "path": "layers/lidar_199_extent_local.laz",
+    "bytes": 1277980050,
+    "points": 177981904,
+    "sha256": "32e2c84b5e3529853255b72474aa5fd4acbac1c296b1716479a167b3fc05a30c"
+  },
+  "parent_manifest": {
+    "path": "scene_manifest_shared_footprint_roofer_v1.json",
+    "bytes": 3932,
+    "sha256": "e9106b88545c5db2656c85a3cb8e05d375688ee77a7184ecfd877cb59af914b5"
+  },
+  "sampling": {
+    "algorithm": "EXACT_INDEX_AFFINE_PERMUTATION_THRESHOLD",
+    "target_points": 10000000,
+    "source_index_multiplier": 32452843,
+    "source_index_offset": 49979687,
+    "chunk_points": 4000000,
+    "selection_rule": "((source_index * multiplier + offset) mod source_points) < target_points"
+  },
+  "output_file": "layers/lidar_199_extent_local_sample10m.laz",
+  "scientific_use_allowed": false,
+  "scientific_verdict": null
+}
