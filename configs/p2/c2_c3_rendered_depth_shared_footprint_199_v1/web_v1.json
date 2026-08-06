@@ -1,0 +1,43 @@
+{
+  "schema": "jointbuildgs.p2.c2_c3_rendered_depth_shared_footprint_199.web.v1",
+  "task_id": "P2-C2-C3-RENDERED-DEPTH-SHARED-FOOTPRINT-199-WEB-v1",
+  "status": "SUPERSEDED_AFTER_TEMPORARY_BROWSER_VALIDATION",
+  "source_viewer": {
+    "relative_root": "phase-payloads/p2/c1_c2_shared_footprint_199_v3/P2-C1-C2-ORIGINAL-GLOBAL-v3-WEB-REVIEW199-EXACT-V6V4-ROWS-COMPACT-FIT-v11",
+    "viewer_manifest_path": "viewer_manifest.json",
+    "viewer_manifest_bytes": 247216,
+    "viewer_manifest_sha256": "eb37bc6ac40dbaa752078a73916120315c019c84252ba36c3a0f21bd856d7283",
+    "artifact_manifest_path": "manifest_web_review199_exact_rows_v1.json",
+    "artifact_manifest_bytes": 280131,
+    "artifact_manifest_sha256": "dda2e211091e2b0a5bd11a73a5efa42724c0cc44ce04cab89c2bb639c3eefbaa"
+  },
+  "c3_result_relative_root": "phase-payloads/p2/c2_c3_rendered_depth_shared_footprint_199_v1/P2-C2-C3-RENDERED-DEPTH-SHARED-FOOTPRINT-199-v1",
+  "output_relative_root": "phase-payloads/p2/c2_c3_rendered_depth_shared_footprint_199_v1/P2-C2-C3-RENDERED-DEPTH-SHARED-FOOTPRINT-199-WEB-v1",
+  "application_sources": {
+    "app": {"path": "src/apps/c1_c2_roofer_web_review/app.js", "bytes": 33262, "sha256": "693fbc90003bfe680f01c5cf3f1bdbbbe96c2b498e2783eac86f18f903507d44"},
+    "index": {"path": "src/apps/c1_c2_roofer_web_review/index.html", "bytes": 12022, "sha256": "f0e4234a8ffd59df13a13668509e735356000f0625920b5d415ead0bae0d018a"}
+  },
+  "display": {
+    "detail_crop_source": "SOURCE_VIEWER_FROZEN_BBOX_WORLD_XY",
+    "voxel_m": 0.20,
+    "maximum_points_per_building_condition": 75000,
+    "sampling_rule": "MIN_COORDINATE_HASH_PER_0P20M_VOXEL_THEN_LOWEST_COORDINATE_HASH_CAP",
+    "coordinate_quantization_m": 0.001,
+    "source_classes": [1, 2, 6],
+    "default_point_size_px": 3.5,
+    "scene_local_origin_xyz": [690700.0, 5335700.0, 550.0]
+  },
+  "features": {
+    "layout": ["LiDAR", "MVS", "C3"],
+    "c3_conditions": ["C3_1", "C3_2"],
+    "default_c3_condition": "C3_1",
+    "local_storage_key": "jointbuildgs-c1-c2-roofer-ox-v1",
+    "csv_fields": ["stable_id", "lidar_ox", "mvs_ox", "c3_1_ox", "c3_2_ox", "note"],
+    "preserve_source_photos_overview_minimap": true,
+    "preserve_lidar_mvs_assets_byte_exact": true,
+    "browser_endpoint": "TEMPORARY_PORT_ONLY_BEFORE_FINAL_APPROVAL"
+  },
+  "comparison_label": "shared-footprint technical diagnostic",
+  "official_PASS_usable": null,
+  "scientific_verdict": null
+}
