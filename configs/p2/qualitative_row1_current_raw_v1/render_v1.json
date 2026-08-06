@@ -1,0 +1,89 @@
+{
+  "schema": "jointbuildgs.p2.qualitative_row1_current_raw.contract.v1",
+  "task_id": "P2-QUALITATIVE-ROW1-CURRENT-RAW-v1",
+  "decision_id": "DEC-P1-018",
+  "status": "USER_APPROVED_ROW1_ONLY",
+  "row": {
+    "number": 1,
+    "row_id": "CURRENT_RAW_ROOF_BOUNDARY",
+    "definition": "Four manifest-frozen current raw-image crops with post-selection evaluation-only LoD2 roof-boundary projection",
+    "camera_reselection_allowed": false,
+    "crop_recomputation_allowed": false,
+    "roof_boundary_used_for_camera_or_crop_selection": false
+  },
+  "inputs": {
+    "common_manifest_relative_root": "phase-payloads/p2/qualitative_199_common_manifest_v1/P2-QUALITATIVE-199-COMMON-MANIFEST-v1",
+    "building_manifest_relative_path": "manifest/building_camera_view_crop_manifest_v1.jsonl",
+    "building_manifest_bytes": 1026148,
+    "building_manifest_sha256": "61e4e8a334c10d0c4405b4929c3e021ac74e5a6eb96596954b5781c0c5b4c4d9",
+    "camera_view_manifest_relative_path": "manifest/camera_view_rows_v1.jsonl",
+    "camera_view_manifest_bytes": 857687,
+    "camera_view_manifest_sha256": "28bc1b936b72bb7f64eacd68f260408d842a7fca5ef7e72736cc29f1f8d4393d",
+    "common_source_bindings_relative_path": "control/source_bindings_v1.json",
+    "common_source_bindings_sha256": "82fb8f29e16faa26bf47a6dd1c1a8588cbcb81e8877a83cb7dd7ec06fa263a98",
+    "image_directory_relative_path": "phase-payloads/p0-audit/data/work/images/Images",
+    "image_inventory_git_path": "artifacts/manifests/gate_s0/gate_s0_image_member_inventory_v1.csv",
+    "image_inventory_sha256": "de9acff049fca4fa14582620a69617157f99b4b5c333938c01b648740ece2b4a",
+    "exact_937_crosswalk_git_path": "artifacts/manifests/gate_s0/common_base_r2b/exact_937_member_crosswalk_v1.json",
+    "exact_937_crosswalk_sha256": "b4af779ecfae859de9772ce50cb24326b20c3f86614f6a8957453779d1cd4c17",
+    "cameras_relative_path": "phase-payloads/p0-audit/data/work/colmap/sparse/0/cameras.txt",
+    "cameras_sha256": "d67c0fff80d2563fea5f3ec108c7e93d9a846851a0fdee1053c8b668a5f770ce",
+    "images_relative_path": "phase-payloads/p0-audit/data/work/colmap/sparse/0/images.txt",
+    "images_sha256": "b53e86754018db9eeb53d13b187cb065e55db83ffa9add6e7c8e9c8d7c29e88b",
+    "scene_reference_relative_path": "phase-payloads/p0-audit/data/work/opf/opf/scene_reference_frame.json",
+    "scene_reference_sha256": "fb408e9c97bdad6af7ad4a6e94be823be294030907ce92e395bd63490f77daf6",
+    "lod2_relative_paths": [
+      "phase-payloads/p0-audit/data/raw/lod2/690_5334.gml",
+      "phase-payloads/p0-audit/data/raw/lod2/690_5336.gml"
+    ],
+    "lod2_sha256": [
+      "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314",
+      "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674"
+    ]
+  },
+  "population": {
+    "building_count": 199,
+    "view_order": ["TOP", "OBLIQUE_1", "OBLIQUE_2", "PRINCIPAL_SECTION"],
+    "view_rows": 796,
+    "retain_all_missingness": true
+  },
+  "outcome_free_review": {
+    "rule": "Five fixed equally spaced one-based positions in the manifest population order, frozen before row-1 rendering",
+    "population_indices": [1, 50, 100, 150, 199],
+    "building_ids": [
+      "DEBY_LOD2_104583447",
+      "DEBY_LOD2_4907011",
+      "DEBY_LOD2_4907187",
+      "DEBY_LOD2_4908162",
+      "DEBY_LOD2_8573849"
+    ]
+  },
+  "render": {
+    "pillow_version": "10.4.0",
+    "font_regular_path": "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+    "font_regular_sha256": "690243adfefe0ce154b547db6205794bd30ac4277275179517a90994f4980648",
+    "font_bold_path": "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+    "font_bold_sha256": "d1c3ff99f1e1ce1827a33efd4dad81f40babda06bff9e43bd7591c86662a287b",
+    "row_header_height_px": 92,
+    "cell_width_px": 960,
+    "cell_header_height_px": 108,
+    "cell_image_height_px": 720,
+    "resampling": "LANCZOS",
+    "background_rgb": [18, 24, 32],
+    "cell_background_rgb": [10, 14, 20],
+    "text_rgb": [245, 247, 250],
+    "muted_text_rgb": [190, 199, 210],
+    "roof_boundary_rgb": [255, 214, 10],
+    "roof_boundary_outline_rgb": [0, 0, 0],
+    "roof_boundary_width_px_before_resize": 6,
+    "roof_boundary_outline_width_px_before_resize": 12,
+    "png_compress_level": 9,
+    "png_optimize": false,
+    "png_mode": "RGB"
+  },
+  "output_relative_root": "phase-payloads/p2/qualitative_row1_current_raw_v1/P2-QUALITATIVE-ROW1-CURRENT-RAW-v1",
+  "add_once": true,
+  "next_row_authorized": false,
+  "official_G3_G4_PASS_usable": null,
+  "scientific_verdict": null
+}

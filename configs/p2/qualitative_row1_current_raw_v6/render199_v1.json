@@ -1,0 +1,52 @@
+{
+  "schema": "jointbuildgs.p2.qualitative_row1_current_raw.render199_contract.v1",
+  "task_id": "P2-QUALITATIVE-ROW1-CURRENT-RAW-v6-RENDER199-v1",
+  "decision_ids": ["DEC-P1-016", "DEC-P1-018"],
+  "status": "USER_APPROVED_FROZEN_V6_V4_FULL_199_EXECUTION",
+  "frozen_entrypoint": {
+    "git_path": "scripts/p2/qualitative_row1_current_raw_v6/preview10_v4.py",
+    "bytes": 7882,
+    "sha256": "dc9c589b99744904662f9ade2d9851d56ca16de728ac272b9ac518a00e6cc92d"
+  },
+  "frozen_contract": {
+    "git_path": "configs/p2/qualitative_row1_current_raw_v6/preview10_v4.json",
+    "bytes": 4106,
+    "sha256": "9db3695825b5cb0f5bbd75b1725728c24279f3b24bd13598d054dee1a8f3702c"
+  },
+  "frozen_dependencies": [
+    {"git_path": "scripts/p2/qualitative_row1_current_raw_v6/preview10.py", "bytes": 33064, "sha256": "e8cf2a26b2c23cc9e7c9f4b25e15fdb81678d61a0dde0971d065974d167d287a"},
+    {"git_path": "scripts/p2/qualitative_row1_current_raw_v6/preview10_v2.py", "bytes": 5561, "sha256": "62ff7e9e04230a8b970ae3e6b0247b21e420eba6076fbefd1312d9cbfc0f6fa2"},
+    {"git_path": "scripts/p2/qualitative_row1_current_raw_v6/preview10_v3.py", "bytes": 9979, "sha256": "45cf50e6cea9e113ddc2b37ffdd5f86a7b32a8816b4843cead604fbc9319f098"}
+  ],
+  "anchor_preview10": {
+    "relative_root": "phase-payloads/p2/qualitative_row1_current_raw_v6/P2-QUALITATIVE-ROW1-CURRENT-RAW-v6-PREVIEW10-v4",
+    "selection_path": "selection/row1_camera_selection_v6.jsonl",
+    "selection_bytes": 43756,
+    "selection_sha256": "24ca9ef57375f294771ea71f705c84633b818abc963151a079c8e8f92c42f938",
+    "preview_manifest_path": "preview/preview_manifest_v6.json",
+    "preview_manifest_bytes": 49344,
+    "preview_manifest_sha256": "1b0c7cff697ca63c026907d2c9bd36f541ee8e3cffc9184e1e5cf51dbc89896b",
+    "artifact_manifest_path": "control/artifact_manifest_v6.json",
+    "artifact_manifest_bytes": 2542,
+    "artifact_manifest_sha256": "1d15f92e536a3deecd12c0f898f599a29bd92bc41a8d5969641345c08f971601"
+  },
+  "population": {
+    "building_count": 199,
+    "indices": "INCLUSIVE_1_TO_199",
+    "roles": ["TOP", "RANDOM_1", "RANDOM_2", "RANDOM_3"]
+  },
+  "extension_boundary": {
+    "changed": "ONLY_PREVIEW_MEMBERSHIP_FROM_FIXED_10_TO_ORDERED_199",
+    "unchanged": ["CAMERA_SELECTION", "POSE_VALIDATION", "REPRESENTATIVE_COMPONENT", "CROP", "PNG_RENDER", "TERMINAL_PHOTO_ONLY_FALLBACK"],
+    "web_consumption": "COPY_EXACT_RENDERED_ROW_PNG_BYTES_NO_REDRAW"
+  },
+  "execution": {
+    "roofer_invocations": 0,
+    "reconstruction_invocations": 0,
+    "gs_training_invocations": 0,
+    "metric_recomputations": 0,
+    "add_once": true
+  },
+  "output_relative_root": "phase-payloads/p2/qualitative_row1_current_raw_v6/P2-QUALITATIVE-ROW1-CURRENT-RAW-v6-RENDER199-v1",
+  "scientific_verdict": null
+}

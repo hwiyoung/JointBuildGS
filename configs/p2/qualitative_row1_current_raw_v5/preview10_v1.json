@@ -1,0 +1,64 @@
+{
+  "schema": "jointbuildgs.p2.qualitative_row1_current_raw.preview10_contract.v5",
+  "task_id": "P2-QUALITATIVE-ROW1-CURRENT-RAW-v5-PREVIEW10-v1",
+  "decision_id": "DEC-P1-018",
+  "status": "USER_APPROVED_ORDERED_POLYGON_LOOP_PREVIEW10",
+  "base_contract": {
+    "git_path": "configs/p2/qualitative_row1_current_raw_v4/preview10_v1.json",
+    "bytes": 5869,
+    "sha256": "584c992eb533c2deee569a41f11aa7cd67f65e60ccf3db79d7bed62258cbb4ec"
+  },
+  "implementation_dependency": {
+    "git_path": "scripts/p2/qualitative_row1_current_raw_v4/preview10.py",
+    "bytes": 33374,
+    "sha256": "a8fb3334d6b5ddf5c6eae8c2cc0322e5d3de954d5de86727fe58a3147a4fb709"
+  },
+  "boundary_topology": {
+    "edge_snap_tolerance_m": 0.005,
+    "shared_roof_surface_edges_removed": true,
+    "require_even_boundary_graph_degree": true,
+    "ordering_rule": "One deterministic Eulerian closed boundary walk per connected 3D boundary component; every unmatched exterior edge appears exactly once",
+    "same_edge_ids_required_in_every_selected_camera": true,
+    "multipart_rule": "Preserve every disconnected boundary component and label its loop count; never silently keep only the largest component"
+  },
+  "camera_visibility": {
+    "require_every_boundary_vertex_in_front_and_inside_raw_image": true,
+    "minimum_projected_roof_bbox_area_px2": 1200.0,
+    "roof_geometry_used_only_after_actual_point2d_pose_validation": true,
+    "partial_or_outside_roofline_camera_is_ineligible": true
+  },
+  "crop": {
+    "source": "PROJECTED_ORDERED_ROOF_BOUNDARY_LOOPS",
+    "margin_scale": 0.45,
+    "margin_constant_px": 140.0
+  },
+  "render": {
+    "draw_after_final_image_resize": true,
+    "roof_boundary_width_px_final": 8,
+    "roof_boundary_outline_width_px_final": 14,
+    "keypoints_rendered": false,
+    "show_loop_count_for_multipart": true
+  },
+  "preview": {
+    "population_indices": [1, 23, 45, 67, 89, 111, 133, 155, 177, 199],
+    "building_ids": [
+      "DEBY_LOD2_104583447",
+      "DEBY_LOD2_4906966",
+      "DEBY_LOD2_4906991",
+      "DEBY_LOD2_4907028",
+      "DEBY_LOD2_4907176",
+      "DEBY_LOD2_4907206",
+      "DEBY_LOD2_4908028",
+      "DEBY_LOD2_4908167",
+      "DEBY_LOD2_4959457",
+      "DEBY_LOD2_8573849"
+    ],
+    "building_count": 10,
+    "panels_per_building": 4,
+    "full_199_render_authorized": false
+  },
+  "output_relative_root": "phase-payloads/p2/qualitative_row1_current_raw_v5/P2-QUALITATIVE-ROW1-CURRENT-RAW-v5-PREVIEW10-v1",
+  "add_once": true,
+  "next_row_authorized": false,
+  "scientific_verdict": null
+}

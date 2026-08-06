@@ -1,0 +1,84 @@
+{
+  "schema": "jointbuildgs.p2.qualitative_row1_current_raw.preview10_contract.v6",
+  "task_id": "P2-QUALITATIVE-ROW1-CURRENT-RAW-v6-PREVIEW10-v3",
+  "decision_id": "DEC-P1-018",
+  "status": "USER_APPROVED_REPRESENTATIVE_COMPONENT_PREVIEW10",
+  "base_contract": {
+    "git_path": "configs/p2/qualitative_row1_current_raw_v5/preview10_v1.json",
+    "bytes": 2527,
+    "sha256": "f6c2386a6f721d24affe18a67f507d2a90b2a64f964d41131160440d3544b5d1"
+  },
+  "implementation_dependency": {
+    "git_path": "scripts/p2/qualitative_row1_current_raw_v5/preview10.py",
+    "bytes": 31272,
+    "sha256": "c19cd2ec376285aa3155c5f16f39443d4ecc5da1a870cc3d8132abd28a7ae8e5"
+  },
+  "v6_delegate_dependency": {
+    "git_path": "scripts/p2/qualitative_row1_current_raw_v6/preview10.py",
+    "bytes": 33064,
+    "sha256": "e8cf2a26b2c23cc9e7c9f4b25e15fdb81678d61a0dde0971d065974d167d287a"
+  },
+  "v6_v2_selection_dependency": {
+    "git_path": "scripts/p2/qualitative_row1_current_raw_v6/preview10_v2.py",
+    "bytes": 5561,
+    "sha256": "62ff7e9e04230a8b970ae3e6b0247b21e420eba6076fbefd1312d9cbfc0f6fa2"
+  },
+  "selection_fallback": {
+    "rule": "Select pose-diverse validated cameras first, fill from the seeded validated pool second, and only when validated count is zero select deterministically from all SfM cameras where the complete representative roof boundary is projectable",
+    "pose_diversity_has_priority": true,
+    "validated_fallback_is_deterministic": true,
+    "terminal_fallback_trigger": "ZERO_VALIDATED_CAMERAS",
+    "terminal_fallback_pool": "ALL_EXACT_937_SFM_CAMERAS_WITH_COMPLETE_REPRESENTATIVE_BOUNDARY_IN_FRAME",
+    "terminal_fallback_is_deterministic": true,
+    "terminal_fallback_has_no_building_sparse_confirmation": true,
+    "terminal_fallback_image_label": "GEOMETRY-ONLY FALLBACK - NO BUILDING-SPARSE CONFIRMATION",
+    "preview_zero_validated_building_ids": ["DEBY_LOD2_4908167"]
+  },
+  "representative_component": {
+    "selection_rule": "Largest absolute XY shoelace area among deterministic closed 3D boundary loops; ties use the deterministic loop index",
+    "require_entire_representative_loop_in_front_and_inside_raw_image": true,
+    "minimum_projected_representative_bbox_area_px2": 1200.0,
+    "other_components_may_be_outside_image_or_crop": true,
+    "building_identity_source": "All boundary loops retain the same source Building ID"
+  },
+  "visible_component": {
+    "render_rule": "Render a component only when every projected vertex is finite, in front, inside the raw image, and inside the final representative-component crop",
+    "partial_component_rendering": false,
+    "panel_label": "VISIBLE LOOPS k/n",
+    "preserve_stable_component_ids_across_cameras": true
+  },
+  "crop": {
+    "source": "PROJECTED_REPRESENTATIVE_ROOF_BOUNDARY_LOOP",
+    "margin_scale": 0.45,
+    "margin_constant_px": 140.0
+  },
+  "render": {
+    "draw_after_final_image_resize": true,
+    "roof_boundary_width_px_final": 8,
+    "roof_boundary_outline_width_px_final": 14,
+    "keypoints_rendered": false,
+    "show_visible_loop_fraction": true
+  },
+  "preview": {
+    "population_indices": [1, 23, 45, 67, 89, 111, 133, 155, 177, 199],
+    "building_ids": [
+      "DEBY_LOD2_104583447",
+      "DEBY_LOD2_4906966",
+      "DEBY_LOD2_4906991",
+      "DEBY_LOD2_4907028",
+      "DEBY_LOD2_4907176",
+      "DEBY_LOD2_4907206",
+      "DEBY_LOD2_4908028",
+      "DEBY_LOD2_4908167",
+      "DEBY_LOD2_4959457",
+      "DEBY_LOD2_8573849"
+    ],
+    "building_count": 10,
+    "panels_per_building": 4,
+    "full_199_render_authorized": false
+  },
+  "output_relative_root": "phase-payloads/p2/qualitative_row1_current_raw_v6/P2-QUALITATIVE-ROW1-CURRENT-RAW-v6-PREVIEW10-v3",
+  "add_once": true,
+  "next_row_authorized": false,
+  "scientific_verdict": null
+}

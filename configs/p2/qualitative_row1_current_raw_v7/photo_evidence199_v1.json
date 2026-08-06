@@ -1,0 +1,64 @@
+{
+  "schema": "jointbuildgs.p2.qualitative_row1_current_raw.photo_evidence199.v1",
+  "task_id": "P2-QUALITATIVE-ROW1-CURRENT-RAW-v7-PHOTO-EVIDENCE199-v1",
+  "decision_id": "DEC-P1-016",
+  "status": "USER_APPROVED_FULL_199_PHOTO_EVIDENCE_EXECUTION",
+  "population": {
+    "building_count": 199,
+    "population_indices": "INCLUSIVE_1_TO_199",
+    "panels_per_building": 4,
+    "roles": ["TOP", "RANDOM_1", "RANDOM_2", "RANDOM_3"]
+  },
+  "selection_contract": {
+    "git_path": "configs/p2/qualitative_row1_current_raw_v6/preview10_v4.json",
+    "bytes": 4106,
+    "sha256": "9db3695825b5cb0f5bbd75b1725728c24279f3b24bd13598d054dee1a8f3702c",
+    "anchor_relative_root": "phase-payloads/p2/qualitative_row1_current_raw_v6/P2-QUALITATIVE-ROW1-CURRENT-RAW-v6-PREVIEW10-v4",
+    "anchor_selection_relative_path": "selection/row1_camera_selection_v6.jsonl",
+    "anchor_selection_sha256": "24ca9ef57375f294771ea71f705c84633b818abc963151a079c8e8f92c42f938",
+    "anchor_manifest_relative_path": "control/artifact_manifest_v6.json",
+    "anchor_manifest_bytes": 2542,
+    "anchor_manifest_sha256": "1d15f92e536a3deecd12c0f898f599a29bd92bc41a8d5969641345c08f971601"
+  },
+  "frozen_roofer": {
+    "manifest_git_path": "artifacts/manifests/p2/c1_c2_shared_footprint_199_original_global_v3/frozen_replay_20260806a_v1.json",
+    "manifest_sha256": "8e5d47d225e24ea824ac6c96b0beef3078f41143e3ab5b28d4d0ad171d068e23",
+    "required_freeze_id": "P2-C1-C2-ORIGINAL-GLOBAL-v3-FROZEN-REPLAY-20260806a-v1",
+    "condition_cityjson": {
+      "lidar": "work/C1_L_upper/assembled.city.json",
+      "mvs": "work/C2_MVS/assembled.city.json"
+    }
+  },
+  "overlays": {
+    "independent_reference": {"label": "Independent LoD2/LoD3", "rgb": [255, 214, 10]},
+    "lidar_roofer": {"label": "LiDAR Roofer", "rgb": [25, 220, 100]},
+    "mvs_roofer": {"label": "MVS Roofer", "rgb": [230, 45, 210]},
+    "keypoints_rendered": false,
+    "partial_loops_rendered": false,
+    "terminal_geometry_fallback": "PHOTO_ONLY_NO_OVERLAY"
+  },
+  "photo": {
+    "format": "JPEG",
+    "maximum_width_px": 1280,
+    "maximum_height_px": 960,
+    "quality": 88,
+    "subsampling": 1,
+    "optimize": false,
+    "progressive": false
+  },
+  "reference_temporal_review": {
+    "labels": ["", "CURRENT_MATCH_VERIFIED", "TEMPORAL_CHANGE_SUSPECTED", "UNDECIDABLE", "REFERENCE_MISSING"],
+    "automatic_missing_label": "REFERENCE_MISSING",
+    "official_structure_reference_requires": "CURRENT_MATCH_VERIFIED",
+    "per_building_best_condition_is_not_reference": true
+  },
+  "execution": {
+    "roofer_invocations": 0,
+    "reconstruction_invocations": 0,
+    "gs_training_invocations": 0,
+    "metric_recomputations": 0,
+    "add_once": true
+  },
+  "output_relative_root": "phase-payloads/p2/qualitative_row1_current_raw_v7/P2-QUALITATIVE-ROW1-CURRENT-RAW-v7-PHOTO-EVIDENCE199-v1",
+  "scientific_verdict": null
+}

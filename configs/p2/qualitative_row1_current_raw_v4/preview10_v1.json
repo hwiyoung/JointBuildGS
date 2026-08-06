@@ -1,0 +1,116 @@
+{
+  "schema": "jointbuildgs.p2.qualitative_row1_current_raw.preview10_contract.v4",
+  "task_id": "P2-QUALITATIVE-ROW1-CURRENT-RAW-v4-PREVIEW10-v1",
+  "decision_id": "DEC-P1-018",
+  "status": "USER_APPROVED_ROW1_SCRIPT_REVIEW_AND_TEN_BUILDING_PREVIEW",
+  "selection": {
+    "roles": ["TOP", "RANDOM_1", "RANDOM_2", "RANDOM_3"],
+    "minimum_track_point_count": 3,
+    "minimum_track_index_integrity_fraction": 1.0,
+    "minimum_actual_observation_spread_diagonal_px": 12.0,
+    "maximum_median_reprojection_error_px": 2.0,
+    "maximum_p95_reprojection_error_px": 3.0,
+    "near_nadir_max_deg": 30.0,
+    "top_rule": "Select the minimum nadir angle among internally validated cameras; label BEST_AVAILABLE_NO_NEAR_NADIR when no camera is within the near-nadir threshold",
+    "random_rule": "Use a fixed seed and greedily retain cameras separated from every previously chosen camera by view direction or camera-center baseline",
+    "minimum_view_direction_separation_deg": 8.0,
+    "minimum_camera_center_separation_m": 15.0,
+    "random_seed_namespace": "jointbuildgs-row1-v4-observed-track-preview10-20260805",
+    "insufficient_candidate_rule": "Emit OBSERVED_TRACK_SUPPORT_MISSING; never substitute an unvalidated camera",
+    "actual_point2d_observations_used_for_internal_validation": true,
+    "keypoints_rendered": false,
+    "roof_boundary_used_for_camera_selection": false
+  },
+  "roofline": {
+    "main_panel_geometry": "OUTER_ROOF_SHELL_EDGES_ONLY",
+    "shared_roof_surface_edges_removed": true,
+    "individual_roof_surface_rings_in_main_panel": false,
+    "edge_snap_tolerance_m": 0.005,
+    "keypoints_rendered": false
+  },
+  "preview": {
+    "selection_rule": "Ten population positions fixed before rendering by evenly spacing inclusive indices 1 and 199",
+    "population_indices": [1, 23, 45, 67, 89, 111, 133, 155, 177, 199],
+    "building_ids": [
+      "DEBY_LOD2_104583447",
+      "DEBY_LOD2_4906966",
+      "DEBY_LOD2_4906991",
+      "DEBY_LOD2_4907028",
+      "DEBY_LOD2_4907176",
+      "DEBY_LOD2_4907206",
+      "DEBY_LOD2_4908028",
+      "DEBY_LOD2_4908167",
+      "DEBY_LOD2_4959457",
+      "DEBY_LOD2_8573849"
+    ],
+    "building_count": 10,
+    "panels_per_building": 4,
+    "selection_frozen_before_roofline_projection": true,
+    "full_199_render_authorized": false
+  },
+  "inputs": {
+    "common_manifest_relative_root": "phase-payloads/p2/qualitative_199_common_manifest_v1/P2-QUALITATIVE-199-COMMON-MANIFEST-v1",
+    "building_manifest_relative_path": "manifest/building_camera_view_crop_manifest_v1.jsonl",
+    "building_manifest_sha256": "61e4e8a334c10d0c4405b4929c3e021ac74e5a6eb96596954b5781c0c5b4c4d9",
+    "image_directory_relative_path": "phase-payloads/p0-audit/data/work/images/Images",
+    "image_inventory_git_path": "artifacts/manifests/gate_s0/gate_s0_image_member_inventory_v1.csv",
+    "image_inventory_sha256": "de9acff049fca4fa14582620a69617157f99b4b5c333938c01b648740ece2b4a",
+    "exact_937_crosswalk_git_path": "artifacts/manifests/gate_s0/common_base_r2b/exact_937_member_crosswalk_v1.json",
+    "exact_937_crosswalk_sha256": "b4af779ecfae859de9772ce50cb24326b20c3f86614f6a8957453779d1cd4c17",
+    "cameras_relative_path": "phase-payloads/p0-audit/data/work/colmap/sparse/0/cameras.txt",
+    "cameras_sha256": "d67c0fff80d2563fea5f3ec108c7e93d9a846851a0fdee1053c8b668a5f770ce",
+    "images_relative_path": "phase-payloads/p0-audit/data/work/colmap/sparse/0/images.txt",
+    "images_sha256": "b53e86754018db9eeb53d13b187cb065e55db83ffa9add6e7c8e9c8d7c29e88b",
+    "points3d_relative_path": "phase-payloads/p0-audit/data/work/colmap/sparse/0/points3D.txt",
+    "points3d_bytes": 444962804,
+    "points3d_sha256": "78bc1fde638b9c4ca33da23e6143109526c75b124d903757c07d07d27a53cb71",
+    "points3d_count": 4131648,
+    "scene_reference_relative_path": "phase-payloads/p0-audit/data/work/opf/opf/scene_reference_frame.json",
+    "scene_reference_sha256": "fb408e9c97bdad6af7ad4a6e94be823be294030907ce92e395bd63490f77daf6",
+    "lod2_relative_paths": [
+      "phase-payloads/p0-audit/data/raw/lod2/690_5334.gml",
+      "phase-payloads/p0-audit/data/raw/lod2/690_5336.gml"
+    ],
+    "lod2_sha256": [
+      "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314",
+      "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674"
+    ],
+    "v3_helper_git_path": "scripts/p2/qualitative_row1_current_raw_v3/preview.py",
+    "v3_helper_bytes": 36272,
+    "v3_helper_sha256": "bb800a1a6282c108d491b4496865a93986c1a2d3ab0cc55f6538bf69021d9fcb"
+  },
+  "frame": {
+    "crs": "EPSG:25832",
+    "sparse_local_shift_xyz": [690953.0, 5336071.0, 604.0]
+  },
+  "crop": {
+    "actual_observation_margin_scale": 1.0,
+    "actual_observation_margin_constant_px": 160.0
+  },
+  "render": {
+    "pillow_version": "10.4.0",
+    "font_regular_path": "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+    "font_regular_sha256": "690243adfefe0ce154b547db6205794bd30ac4277275179517a90994f4980648",
+    "font_bold_path": "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+    "font_bold_sha256": "d1c3ff99f1e1ce1827a33efd4dad81f40babda06bff9e43bd7591c86662a287b",
+    "row_header_height_px": 92,
+    "cell_width_px": 960,
+    "cell_header_height_px": 116,
+    "cell_image_height_px": 720,
+    "background_rgb": [18, 24, 32],
+    "cell_background_rgb": [10, 14, 20],
+    "text_rgb": [245, 247, 250],
+    "muted_text_rgb": [190, 199, 210],
+    "roof_boundary_rgb": [255, 214, 10],
+    "roof_boundary_outline_rgb": [0, 0, 0],
+    "roof_boundary_width_px_before_resize": 6,
+    "roof_boundary_outline_width_px_before_resize": 12,
+    "png_compress_level": 9,
+    "png_optimize": false,
+    "png_mode": "RGB"
+  },
+  "output_relative_root": "phase-payloads/p2/qualitative_row1_current_raw_v4/P2-QUALITATIVE-ROW1-CURRENT-RAW-v4-PREVIEW10-v1",
+  "add_once": true,
+  "next_row_authorized": false,
+  "scientific_verdict": null
+}
