@@ -128,7 +128,8 @@ support는 external existing-asset prior가 아니다.
 
 `C3_GS_image`의 canonical label은 **no-external-prior GS**다. ID는 과거 evidence와
 schema 연속성을 위해 유지한다. C3에는 Current UAS LiDAR, Existing ALS, LoD1,
-evaluation reference, scored LoD2 또는 외부 roofprint를 넣지 않는다. C4는 exact C3
+evaluation reference 또는 scored LoD2 roof geometry를 넣지 않는다. 모든 arm에 동일한
+`R_shared` XY footprint를 제공하는 것은 condition-specific prior가 아니다. C4는 exact C3
 base에 Existing ALS prior만 추가하고, C5는 exact C3 base에 independent LoD1 prior만
 추가한다.
 
@@ -209,21 +210,24 @@ roof topology가 일치하는지 확인한다. reference 자체의 roof-plane �
 
 ## 8. Roofprint protocol
 
-모든 condition에 reference-independent한 `R_derived` roofprint protocol을 적용해
-surface evidence의 Roofer manufacturability를 비교한다. Roofer 공식 문서는
+모든 condition에 exact same `R_shared` 2D building footprint를 적용해 point/surface
+evidence의 Roofer manufacturability를 건물별로 비교한다. Roofer 공식 문서는
 point cloud와 2D roofprint polygon을 입력으로 요구한다
 ([official docs](https://innovation.3dbag.nl/roofer/)).
 
-현행 `AGENTS.md`와 `00_RESEARCH_CHARTER.md`에 따라 Stage 3는 외부 roofprint를
-사용하지 않는다.
+`R_shared`는 199동 LoD2 `GroundSurface`의 XY와 stable ID만 사용한다. 동일 polygon
+bytes/hash, scene AOI, 전역 class-2/6 adapter와 Roofer parameter를 C1–C5에 제공한다.
+condition별 point cloud와 199-feature source를 한 번에 Roofer에 전달하며, 건물별 point
+crop은 Roofer 내부에서 수행한다. LoD2 Z, `RoofSurface`, roof type, semantic class와
+final roof model은 전달하지 않는다.
 
 | Protocol | P1/P2–P4 지위 | 설명 |
 |---|---|---|
-| `R_derived`: point-evidence-derived roofprint | `AUTHORITATIVE PRIMARY` | 모든 방법에 같은 derivation algorithm/parameter를 쓰되 polygon은 방법별 evidence에서 생성; surface와 roofprint error가 결합되는 한계를 함께 보고 |
-| `R_ext`: 공통 external roofprint | `OUT_OF_SCOPE / NOT EXECUTED` | 통제 진단 후보이나 root policy에 대한 별도 명시 승인과 정본 변경 전에는 사용 금지 |
+| `R_shared`: common GroundSurface XY footprint | `AUTHORITATIVE PRIMARY` | 모든 방법에 동일한 199동 XY/stable ID 제공; 조건 간 evidence 차이만 Roofer 결과에 반영 |
+| `R_derived`: point-evidence component hull | `HISTORICAL DIAGNOSTIC` | 과거 5/18 component 결과의 계보 보존용; formal building-level 결과로 사용 금지 |
 
-Reference-derived `GroundSurface` XY 사용은 기존 승인잠금의 지정 C001/E5 예외를
-넘어 자동 허용되지 않는다.
+Reference-derived `GroundSurface` XY는 `DEC-P1-019`의 명시적 사용자 승인에 따라
+U_target 199와 C1–C5 전체에 공통 제어입력으로 허용된다.
 
 ## 9. Common eligible building set
 
@@ -386,8 +390,8 @@ P4 primary 잠금 뒤 `E_paired` census를 별도 실행한다. 이 census가 �
 
 ## 14. Consistency review
 
-- `RESOLVED`: no-external-roofprint 정본을 유지하며 `R_derived`만 primary.
-  `R_ext`는 별도 정책 승인 전까지 비실행 범위 밖이다.
+- `RESOLVED BY DEC-P1-019`: `R_shared` GroundSurface XY가 formal primary이며
+  `R_derived` component 결과는 역사적 진단으로만 보존한다.
 - `MAJOR`: 공식 source에서 직접 LoD1을 확인하지 못함.
 - `RESOLVED BY DEC-P1-008`: TUM2TWIN 중심 C1–C5가 현재 data-role 정본이며
   `docs/evidence/archive/pre_c1c5_research/EXPERIMENT_PLAN.md`의 dataset-role은 역사 기록이다.

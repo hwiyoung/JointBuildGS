@@ -22,7 +22,7 @@
 |---|---|---|---|---|---|---|---|---|
 | Photogrammetric PC building modeling — [Xiong et al. 2014](https://doi.org/10.5194/isprsannals-II-3-197-2014) | MVS photogrammetric 또는 LiDAR point cloud | LoD2 building geometry | plane/structure boundary 기반 global model | roof structure와 geometry | 예, LoD2 모델 | MVS가 조밀해도 잡음으로 한 roof plane이 다분할되고 topology graph가 불안정할 수 있음 | 최신 GS와 같은 building set에서 Roofer gate 전파는 다루지 않음 | `SOURCE-SUPPORTED` |
 | Point-cloud-driven city reconstruction — [City3D](https://arxiv.org/abs/2201.10276) | airborne LiDAR + footprint | compact watertight polygonal buildings | inferred vertical planes, hypothesis-and-selection, topology constraints | geometry RMSE, robustness, runtime | building surface model | 항공 LiDAR에서 wall이 누락될 수 있어 building-specific constraints가 유용함 | existing prior + current images의 학습 결합이나 GS-native failure chain은 아님 | `SOURCE-SUPPORTED` |
-| Roofer/3DBAG — [official docs](https://innovation.3dbag.nl/roofer/) | point cloud + 2D roofprint | LoD1.2/1.3/2.2, CLI는 CityJSONSeq | automatic roof reconstruction, tunable parameters | success, density, nodata, RMSE, roof planes, val3dity 등 | 예 | 정확한 Roofer 입력은 roofprint와 point cloud이며 output serialization을 확인해야 함 | JointBuildGS는 point evidence에서 `R_derived`를 생성하며 external `R_ext`는 비실행 | `SOURCE-SUPPORTED` |
+| Roofer/3DBAG — [official docs](https://innovation.3dbag.nl/roofer/) | point cloud + 2D roofprint | LoD1.2/1.3/2.2, CLI는 CityJSONSeq | automatic roof reconstruction, tunable parameters | success, density, nodata, RMSE, roof planes, val3dity 등 | 예 | 정확한 Roofer 입력은 roofprint와 point cloud이며 output serialization을 확인해야 함 | JointBuildGS는 C1–C5에 동일한 `R_shared` GroundSurface XY를 제공하고 evidence 차이를 비교 | `SOURCE-SUPPORTED` |
 | Image-only 2DGS surface reconstruction — [Huang et al. 2024](https://doi.org/10.1145/3641519.3657428), [official code](https://github.com/hbb1/2d-gaussian-splatting) | posed multi-view images | 2D Gaussian surfels, rendered depth, mesh | depth distortion + normal consistency; depth fusion/TSDF mesh path | rendering, Chamfer/F-score 등 | 확인되지 않음 | planar disks와 geometry regularization으로 surface reconstruction을 직접 목표화 | city-model manufacturability와 building-level PASS는 별도 검증 필요 | `SOURCE-SUPPORTED` |
 | Depth/normal-prior GS — [DN-Splatter](https://arxiv.org/abs/2403.17822) | images + depth/normal cues | Gaussians와 mesh | depth regularization, local smoothness, normal cues | indoor geometry와 rendering | 확인되지 않음 | depth/normal supervision이 ill-posed/textureless geometry를 보완할 수 있음 | urban aerial buildings, existing asset currentness, Roofer output은 범위 밖 | `SOURCE-SUPPORTED` |
 | LiDAR-guided GS — [LI-GS](https://arxiv.org/abs/2409.12899) | co-acquired LiDAR scans + RGB | Gaussian surfels와 mesh | LiDAR-derived plane-constrained GMM initialization/normalization/density control | accuracy, completeness, Chamfer, F1, rendering | 확인되지 않음 | LiDAR를 initialization·optimization·mesh extraction 전반에 사용 가능 | 본 연구의 historical/incomplete LiDAR prior와 current-image 분리 시나리오는 같지 않음 | `SOURCE-SUPPORTED` |
@@ -61,9 +61,9 @@ GS4Buildings는 low-level **LoD2 semantic 3D building models**에서 Gaussian을
    “existing/incomplete asset” 서사가 약해진다.
 3. downstream Roofer 평가가 단순 adapter tuning 결과이면 GS method contribution과
    분리해 보고해야 한다.
-4. `R_derived`는 end-to-end footprint-free novelty를 유지하지만 surface와
-   roofprint error를 결합한다. 공통 external `R_ext` 진단은 별도 정책 승인 전
-   비실행 후속안이다.
+4. `DEC-P1-019`의 공통 `R_shared`는 footprint 차이를 통제해 surface evidence가
+   Roofer 결과에 미치는 영향을 건물별로 비교한다. GT-derived XY 공유는 공개하고
+   LoD2 Z/RoofSurface/roof type은 평가 단계까지 차단한다.
 
 ## 4. Acceptance 연구 해석
 

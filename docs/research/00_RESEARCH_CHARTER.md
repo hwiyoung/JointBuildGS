@@ -44,7 +44,7 @@ human Gate decision은 pending이다. Remediation R1은 technical closed됐고 �
 |---|---|---|---|
 | 현재 프로그램 | C1–C5 v2 정본 채택, Gate S0 remediation R1 technical closed | P2 pre-result Gate S0 freeze draft | `FROZEN; PERFORMANCE BLOCKED` |
 | 기존 Fusion W1 | 기존 lock·artifact·결과 보존 | 새 프로그램 authority 아님; 실행·수정 금지 | `PROTECTED HISTORICAL` |
-| Stage 3 roofprint | `AGENTS.md`와 이 charter: 외부 roofprint 없는 read-out | `R_derived`만 primary; `R_ext`는 비실행 후속안 | `FROZEN` |
+| Stage 3 footprint | `DEC-P1-019`: 199동 LoD2 `GroundSurface` XY를 모든 condition에 동일하게 제공 | stable ID와 XY support만 공유; LoD2 Z/RoofSurface/roof type은 평가 전용 | `FROZEN` |
 | 핵심 비교 | 기존 4조건 손실 ablation 및 Stage 3 E0–E4는 역사 증거 | 다섯 evidence configurations | `FROZEN` |
 | 주 데이터 | 기존 데이터·결과는 capability/lineage 증거 | TUM2TWIN 중심 C1–C5 | `FROZEN; INPUTS TO VERIFY` |
 
@@ -271,19 +271,23 @@ regime인지 Gate S0 evidence에서 입증해야 한다. 구분이 입증되지 
   structure reference 후보이다.
 - prior, roofprint, reference 사이의 공유 정보와 시점 정합을 문서화한다.
 - LoD2 Z, RoofSurface, roof type, semantic class 또는 final roof model을 honest-arm
-  입력으로 전달하지 않는다. 기존 승인잠금의 `GroundSurface` XY 예외는 지정된
-  C001/E5 범위를 넘어 일반화하지 않는다.
+  입력으로 전달하지 않는다. `DEC-P1-019`가 허용한 동일 `GroundSurface` XY와 stable
+  ID만 모든 condition의 Roofer 제어입력과 고정 scene AOI/Roofer 내부 footprint crop에
+  사용한다.
 
 ### 8.7 Common roofprint
 
-모든 condition에는 evaluation reference와 독립적인 `R_derived` protocol을
-적용한다. 동일 derivation algorithm/parameter를 사용하되 실제 polygon은 각
-method evidence에서 생성하고 method별 polygon/hash를 보존한다. 이는
-`AGENTS.md`의 “외부 roofprint 없는 Stage 3”를 유지한다.
+모든 condition에는 199동 LoD2 `GroundSurface`에서 추출한 동일한 2D XY polygon과
+stable ID를 표준 Roofer footprint `R_shared`로 적용한다. `R_shared`는 조건 간
+point/surface evidence 품질을 비교하기 위한 공통 제어입력이며 condition-specific
+external prior가 아니다. 동일 polygon bytes/hash, scene AOI, terrain/classification
+규칙과 Roofer parameter를 사용한다. condition별 scene-wide point cloud와 199-feature
+`R_shared`를 Roofer에 한 번 전달하고 Roofer 내부 footprint crop으로 건물별 결과를
+얻는다. method evidence에서 만든 component hull과 외부 건물별 pre-crop은 formal
+building-level Roofer 입력을 대체하지 않는다.
 
-공통 external roofprint인 `R_ext`는 P1 audit과 후속 P2–P4 실행 범위 밖의
-비실행 대안이다. Root agent policy에 대한 별도 명시적 사용자 승인과 정본 변경
-없이는 입력, crop, reconstruction 또는 primary evaluation에 사용할 수 없다.
+`R_shared`에서 LoD2 Z, `RoofSurface`, roof type, semantic class와 final model geometry를
+읽거나 전달하는 것은 금지한다. 이 정보는 평가 단계에서만 별도 계보로 사용한다.
 
 ### 8.8 Core terminology
 
@@ -408,7 +412,8 @@ producer/config/frame/role/bytes/hashes는 Gate S0 전체 freeze 전까지 `BLOC
   `docs/evidence/archive/pre_c1c5_research/`의 기존 context/plan은 역사 기록이다.
 - **Resolved by DEC-P1-008:** 기존 P2/Fusion W1은 보호된 capability evidence이며
   현재 실행 authority가 아니다.
-- **Resolved for P1:** 외부 roofprint는 범위 밖이며 `R_derived`만 primary다.
+- **Resolved by DEC-P1-019:** 동일 LoD2 `GroundSurface` XY footprint가 C1–C5의
+  표준 Roofer 제어입력이다. 과거 `R_derived` component 실행은 역사적 진단이다.
 - **Major:** bootstrap의 논리적 `results/metrics/...` 경로는 현재 top-level directory
   contract와 맞지 않는다. 외부 artifact root 및 `docs/` promoted summary로 매핑해야 한다.
 - **TO VERIFY:** pilot PDF는 tracked 파일로 확인되지 않았다.

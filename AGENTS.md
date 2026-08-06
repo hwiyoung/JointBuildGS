@@ -20,7 +20,10 @@ pipeline is:
 2. Stage 2: no-external-prior or single-external-prior optimization on planar 2D
    Gaussian primitives with **gsplat**. C3–C5 use the identical image-derived base;
    only C4 adds existing ALS and only C5 adds independent LoD1.
-3. Stage 3: Roofer-style evidence-to-CityGML read-out without an external roofprint.
+3. Stage 3: Roofer-style evidence-to-CityGML read-out with one exact shared standard
+   2D building footprint for every condition. The footprint supplies XY support and
+   identity only; LoD2 Z, RoofSurface, roof type, semantic class, and final roof
+   geometry remain evaluation-only.
 
 The direct LiDAR and MVS baselines enter the same controlled Stage 3 read-out without
 becoming GS training runs. C2 sends common-base MVS geometry directly to Roofer;
@@ -72,7 +75,9 @@ Reusable code must be promoted out of `phases/` into `src/`, `scripts/`, or `con
   qualitative–quantitative presentation matrix. `DEC-P1-017` authorizes one bounded,
   non-confirmatory C4 technical-development run on the exact C3-2 base with only the
   Existing ALS depth/normal prior added, after its registration/confidence and gradient/
-  memory preflights pass. C5 execution, numerical G3/G4/`PASS_usable`, confirmatory
+  memory preflights pass. `DEC-P1-019` supersedes the footprint-free Stage-3 rule:
+  exact LoD2 `GroundSurface` XY is now the shared standard Roofer footprint for all
+  C1–C5 conditions and all 199 target buildings. C5 execution, numerical G3/G4/`PASS_usable`, confirmatory
   inference and population/generalization claims remain prohibited pending separate
   decisions and an independent test design. Technical Returns and receipts keep
   `scientific_verdict: null`.
@@ -116,15 +121,17 @@ payloads without an explicit, exact-target retention review and receipt.
    “뉴럴 렌더링” (“neural rendering”).
 7. **Gravity** — estimate gravity once from terrain MVS normals; never hardcode it.
    Wall normals are horizontal, hence perpendicular to gravity.
-8. **Stage 3** — use Roofer-style evidence-to-CityGML read-out without an external
-   roofprint.
+8. **Stage 3** — use Roofer-style evidence-to-CityGML read-out with the exact same
+   LoD2 `GroundSurface` XY footprint and stable building ID for every condition. This
+   shared control is not a condition-specific external prior. Preserve its GT-derived
+   provenance and never substitute a method-derived component hull in the formal
+   building-level comparison.
 9. **GT separation** — building IDs may support per-building E1/E3 oracle sanity
-   splits. Footprints, roof type, final roof model, and semantic evaluation labels are
-   evaluation-only inputs; E4 receives no GT. The sole first-wave exception is the
-   approved lock
-   `docs/research/preregistration/quality_axis/사전등록서_품질축본선_승인잠금v4_20260721.md`,
-   which permits LoD2 `GroundSurface` XY as the shared standard footprint for the
-   specified C001/E5 scope. Record its GT provenance; do not pass LoD2 Z,
+   splits. Under `DEC-P1-019`, LoD2 `GroundSurface` XY and stable ID are the sole
+   shared standard Roofer control inputs permitted across C1–C5; they may support a
+   fixed per-building crop/buffer but may not classify outcomes or select parameters.
+   All other reference geometry and semantic evaluation labels are evaluation-only;
+   E4 receives no other GT. Record the footprint's GT-derived provenance; do not pass LoD2 Z,
    `RoofSurface`, roof type, semantic class, or final roof model into the honest arm.
 10. **P0 data handling** — P0 `data/raw` is immutable. Create derived data only under
     external P0 `data/work`. Roofer input LAZ classification is ground=2 and

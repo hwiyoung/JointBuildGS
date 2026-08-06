@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JointBuildGS C1/C2 Roofer 3D Review</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #080b10;
+    --panel: #0d121a;
+    --panel-2: #131a24;
+    --line: #293241;
+    --text: #f1f5f9;
+    --muted: #a6b0bf;
+    --accent: #6bd5ff;
+    --good: #4ade80;
+    --warn: #fbbf24;
+    --bad: #fb7185;
+  }
+  * { box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: var(--bg); color: var(--text); font-family: Inter, system-ui, sans-serif; }
+  button, select, input, textarea { font: inherit; }
+  button, select, textarea, input[type="range"] { accent-color: var(--accent); }
+  button, select, textarea, a.button {
+    border: 1px solid var(--line); border-radius: 5px; background: var(--panel-2); color: var(--text);
+  }
+  button, a.button { min-height: 30px; padding: 4px 10px; cursor: pointer; }
+  a.button { display: inline-flex; align-items: center; text-decoration: none; }
+  button:hover, a.button:hover { border-color: var(--accent); }
+  button[aria-pressed="true"] { background: #17415a; border-color: var(--accent); }
+  button:focus-visible, select:focus-visible, textarea:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  #app { height: 100%; display: grid; grid-template-rows: auto auto auto auto minmax(0, 1fr); }
+  #topbar, #tools, #reviewbar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 8px 10px; background: rgba(8, 11, 16, 0.97); border-bottom: 1px solid var(--line); }
+  #topbar { min-height: 48px; }
+  #tools { min-height: 44px; color: var(--muted); font-size: 13px; }
+  #reviewbar { border-top: 0; border-bottom: 1px solid var(--line); align-items: flex-start; }
+  #buildingSelect { min-width: 330px; max-width: min(54vw, 720px); height: 32px; }
+  .status { color: var(--muted); font-size: 12px; }
+  .status strong { color: var(--text); font-weight: 500; }
+  .tool-group { display: flex; align-items: center; gap: 6px; padding-right: 8px; border-right: 1px solid var(--line); }
+  .tool-group:last-child { border-right: 0; }
+  label.inline { display: flex; align-items: center; gap: 5px; white-space: nowrap; }
+  input[type="range"] { width: 100px; }
+  .value { min-width: 42px; color: var(--accent); font-variant-numeric: tabular-nums; }
+  #viewports { min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2px; background: #000; }
+  .viewport-shell { position: relative; min-width: 0; min-height: 0; overflow: hidden; background: #05070a; }
+  .viewport { position: absolute; inset: 0; }
+  .viewport canvas { width: 100%; height: 100%; display: block; }
+  .panel-label { position: absolute; z-index: 3; top: 8px; left: 8px; padding: 5px 8px; border-radius: 4px; background: rgba(0,0,0,.72); pointer-events: none; font-size: 13px; }
+  .panel-stats { position: absolute; z-index: 3; top: 39px; left: 8px; max-width: calc(100% - 16px); padding: 4px 7px; border-radius: 4px; background: rgba(0,0,0,.68); color: var(--muted); pointer-events: none; font-size: 11px; }
+  #miniMapPanel { position: absolute; z-index: 5; left: 8px; bottom: 8px; width: 264px; padding: 7px; border: 1px solid rgba(107,213,255,.38); border-radius: 6px; background: rgba(3,7,12,.88); box-shadow: 0 4px 18px rgba(0,0,0,.38); }
+  #miniMapTitle { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 4px; color: var(--text); font-size: 11px; }
+  #miniMapTitle span:last-child { color: var(--accent); }
+  #miniMapCanvas { display: block; width: 248px; height: 142px; border-radius: 3px; background: #05080d; cursor: pointer; }
+  #miniMapStatus { margin-top: 4px; color: var(--muted); font-size: 10px; font-variant-numeric: tabular-nums; }
+  #miniMapLegend { display: flex; gap: 9px; margin-top: 3px; color: var(--muted); font-size: 9px; }
+  .mini-dot { display: inline-block; width: 7px; height: 7px; margin-right: 3px; border-radius: 50%; }
+  #message { margin-left: auto; color: var(--warn); font-size: 12px; }
+  #measureResult { color: var(--accent); font-variant-numeric: tabular-nums; }
+  .review-field { display: grid; gap: 3px; min-width: 180px; }
+  .review-field label { color: var(--muted); font-size: 11px; }
+  .review-field select { height: 31px; }
+  .review-buttons { display: flex; gap: 6px; }
+  .review-choice { min-width: 78px; height: 38px; font-weight: 800; font-size: 17px; }
+  .review-choice[data-value="O"] { color: var(--good); }
+  .review-choice[data-value="X"] { color: var(--bad); }
+  .review-choice[data-value="O"][aria-pressed="true"] { color: #07130b; background: var(--good); border-color: var(--good); }
+  .review-choice[data-value="X"][aria-pressed="true"] { color: #18070a; background: var(--bad); border-color: var(--bad); }
+  .review-current { min-height: 16px; color: var(--muted); font-size: 11px; }
+  #reviewNote { min-width: 280px; flex: 1 1 360px; height: 58px; resize: vertical; padding: 7px; }
+  #loading { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; background: rgba(4,7,10,.72); font-size: 15px; }
+  #loading[hidden] { display: none; }
+  #photoDrawer { min-height: 0; display: grid; grid-template-rows: auto 220px; background: rgba(4,7,11,.98); border-bottom: 1px solid var(--line); }
+  #photoHeader { display: flex; align-items: center; gap: 10px; padding: 5px 10px 3px; }
+  #photoTitle { margin: 0; font-size: 13px; }
+  #projectedRowStage { min-height: 0; padding: 3px 8px 7px; background: #030507; display: grid; place-items: center; overflow: hidden; }
+  #projectedRowImage { display: block; width: 100%; height: 210px; object-fit: contain; }
+  @media (max-width: 900px) {
+    #app { grid-template-rows: auto auto auto auto minmax(0, 1fr); }
+    #viewports { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr) minmax(0, 1fr); }
+    #buildingSelect { min-width: 220px; max-width: 70vw; }
+    #tools { max-height: 128px; overflow-y: auto; }
+    #miniMapPanel { width: 214px; }
+    #miniMapCanvas { width: 198px; height: 112px; }
+    #photoDrawer { grid-template-rows: auto 170px; }
+    #projectedRowImage { height: 160px; }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="topbar">
+    <a class="button" href="./overview.html">전체 Scene</a>
+    <button id="prevBuilding" aria-label="이전 건물">◀</button>
+    <select id="buildingSelect" aria-label="검토 건물"></select>
+    <button id="nextBuilding" aria-label="다음 건물">▶</button>
+    <span class="status" id="buildingStatus">상태 불러오는 중</span>
+    <span id="message">초기화 중</span>
+  </div>
+  <section id="photoDrawer" aria-label="현재 건물 사진 투영 근거">
+    <header id="photoHeader">
+      <h2 id="photoTitle">투영 사진</h2>
+      <span class="status">동결 preview10_v4.py가 생성한 PNG 원본</span>
+    </header>
+    <div id="projectedRowStage"><img id="projectedRowImage" alt="현재 건물 TOP 및 RANDOM 1-3 투영 사진"></div>
+  </section>
+  <div id="reviewbar">
+    <div class="review-field">
+      <label for="lidarReview">LiDAR Roofer O/X</label>
+      <div class="review-buttons" id="lidarReview" role="group" aria-label="LiDAR Roofer O/X">
+        <button class="review-choice" id="lidarReviewO" type="button" data-review-method="lidar" data-value="O" aria-pressed="false">O</button>
+        <button class="review-choice" id="lidarReviewX" type="button" data-review-method="lidar" data-value="X" aria-pressed="false">X</button>
+      </div>
+      <span class="review-current" id="lidarReviewCurrent">미평가</span>
+    </div>
+    <div class="review-field">
+      <label for="mvsReview">MVS Roofer O/X</label>
+      <div class="review-buttons" id="mvsReview" role="group" aria-label="MVS Roofer O/X">
+        <button class="review-choice" id="mvsReviewO" type="button" data-review-method="mvs" data-value="O" aria-pressed="false">O</button>
+        <button class="review-choice" id="mvsReviewX" type="button" data-review-method="mvs" data-value="X" aria-pressed="false">X</button>
+      </div>
+      <span class="review-current" id="mvsReviewCurrent">미평가</span>
+    </div>
+    <div class="review-field" style="flex:1 1 360px">
+      <label for="reviewNote">검토 메모</label>
+      <textarea id="reviewNote" placeholder="선택 메모"></textarea>
+    </div>
+    <button id="exportCsv">평가 CSV 내보내기</button>
+  </div>
+  <div id="tools">
+    <div class="tool-group">
+      <button data-view="top">Top</button>
+      <button data-view="oblique">Oblique</button>
+      <button data-view="side">Side</button>
+      <button id="fitView">Fit</button>
+      <label class="inline"><input id="syncCamera" type="checkbox" checked> 카메라 동기화</label>
+    </div>
+    <div class="tool-group">
+      <label class="inline">점군 색상
+        <select id="colorMode">
+          <option value="rgb">RGB</option>
+          <option value="condition">조건 단색</option>
+        </select>
+      </label>
+      <label class="inline"><input id="showPoints" type="checkbox" checked> 점군</label>
+      <label class="inline"><input id="showRoofer" type="checkbox" checked> Roofer</label>
+      <label class="inline"><input id="showFootprint" type="checkbox" checked> Footprint</label>
+      <label class="inline"><input id="showCurtain" type="checkbox"> Curtain</label>
+      <label class="inline"><input id="wireframe" type="checkbox"> Wireframe</label>
+    </div>
+    <div class="tool-group">
+      <label class="inline">점 크기 <input id="pointSize" type="range" min="0.5" max="6" step="0.25" value="3.5"><span class="value" id="pointSizeValue">3.5</span></label>
+      <label class="inline">메시 투명도 <input id="meshOpacity" type="range" min="0.1" max="1" step="0.05" value="0.72"><span class="value" id="meshOpacityValue">0.72</span></label>
+    </div>
+    <div class="tool-group">
+      <label class="inline"><input id="clipEnabled" type="checkbox"> Z 클리핑</label>
+      <label class="inline">높이 <input id="clipHeight" type="range" min="0" max="100" step="0.1" value="100"><span class="value" id="clipHeightValue">-</span></label>
+    </div>
+    <div class="tool-group">
+      <button id="measureMode" aria-pressed="false">두 점 거리 측정</button>
+      <button id="clearMeasure">측정 지우기</button>
+      <span id="measureResult">점 두 개를 선택하세요</span>
+    </div>
+  </div>
+  <div id="viewports">
+    <section class="viewport-shell" aria-label="LiDAR 3D 검토 화면">
+      <div class="viewport" id="lidarViewport"></div>
+      <div class="panel-label">LiDAR point cloud + Roofer</div>
+      <div class="panel-stats" id="lidarStats">불러오는 중</div>
+      <aside id="miniMapPanel" aria-label="전체 건물 위치 미니맵">
+        <div id="miniMapTitle"><span>전체 위치 Top view</span><span id="miniMapBuilding">-</span></div>
+        <canvas id="miniMapCanvas" width="496" height="284" title="클릭하면 현재 건물의 전체 Scene을 엽니다"></canvas>
+        <div id="miniMapStatus">표시점 집계 중</div>
+        <div id="miniMapLegend">
+          <span><i class="mini-dot" style="background:#6bd5ff"></i>LiDAR</span>
+          <span><i class="mini-dot" style="background:#ff9133"></i>MVS</span>
+          <span><i class="mini-dot" style="background:#fb7185"></i>둘 다 없음</span>
+          <span><i class="mini-dot" style="background:#ffe34d"></i>현재</span>
+        </div>
+      </aside>
+    </section>
+    <section class="viewport-shell" aria-label="MVS 3D 검토 화면">
+      <div class="viewport" id="mvsViewport"></div>
+      <div class="panel-label">MVS point cloud + Roofer</div>
+      <div class="panel-stats" id="mvsStats">불러오는 중</div>
+    </section>
+  </div>
+</div>
+<div id="loading">3D 자산을 불러오는 중…</div>
+<script type="importmap">{ "imports": { "three": "./three.module.min.js" } }</script>
+<script type="module" src="./app.js"></script>
+</body>
+</html>

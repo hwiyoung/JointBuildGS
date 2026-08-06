@@ -110,9 +110,9 @@ voxel size, sampling density, normal rule을 기록한다.
 
 `P_Roofer`는 다음 처리가 끝난 실제 input이다.
 
-- filtering/outlier removal
-- sampling/density normalization
-- building crop/buffer
+- fixed scene-AOI/context crop and any filtering/outlier rule
+- sampling/density normalization policy, including explicit `none`
+- Roofer-internal building crop/buffer; external per-building pre-crop is prohibited
 - ground class 2 / building class 6
 - terrain handling
 - roofprint alignment와 hash
@@ -622,8 +622,9 @@ building acceptance threshold로 자동 이식하지 않는다.
 
 ## 17. Consistency review
 
-- `RESOLVED`: 현행 footprint-free Stage 3를 유지해 `R_derived`만 primary로
-  사용하고 external `R_ext`는 별도 정책 승인 전까지 실행하지 않는다.
+- `RESOLVED BY DEC-P1-019`: exact same `R_shared` GroundSurface XY footprint와
+  stable ID를 C1–C5에 제공한다. LoD2 Z/RoofSurface/roof type은 평가 전용이며,
+  과거 `R_derived` component 결과는 formal building-level 결과가 아니다.
 - `MAJOR`: bootstrap logical `results/` 경로가 top-level repository contract와 충돌해
   외부 artifact path로 매핑해야 한다.
 - `RESOLVED BY DEC-P1-008`: G0–G4가 현재 C1–C5 contract이고

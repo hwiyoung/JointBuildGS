@@ -699,6 +699,96 @@
 - **Missingness and versioning:** 199동 분모를 유지하며 각 camera/row의 missing/failure를
   삭제하지 않는다. 기존 산출물을 덮어쓰지 않고 새 add-once namespace와 새 metric
   binding을 사용한다.
+- **첫 행 구현 결박 (2026-08-06):** 사람이 10동으로 검토·확정한 첫 행의 정본
+  renderer는 `scripts/p2/qualitative_row1_current_raw_v6/preview10_v4.py`이며, 실행 시
+  exact script/config/dependency hash를 먼저 검증한다. 199동 확장은 이 renderer의
+  camera selection, pose validation, representative component, crop, PNG rendering,
+  terminal photo-only fallback을 변경하지 않고 ordered membership만 10동에서 199동으로
+  확장한다. 기존 10동은 selection record와 최종 PNG hash가 모두 일치해야 한다.
+  웹 검토 화면은 이렇게 생성된 4-panel row PNG를 byte-for-byte 복사해 표시하며,
+  source JPEG, projection 좌표 또는 browser SVG/canvas로 roofline을 다시 계산하거나
+  그리지 않는다. 실행·검증 세부사항은
+  `docs/evidence/p2_qualitative_row1_current_raw_v6/TECHNICAL_RETURN_RENDER199_v1.md`에
+  기록한다.
+- **Scientific verdict:** `null`
+
+## DEC-P1-019 — 199동 공통 GroundSurface XY를 표준 Roofer footprint로 동결
+
+- **Decision ID:** `DEC-P1-019`
+- **Date:** 2026-08-05
+- **Status:** `USER-APPROVED SHARED-STANDARD-FOOTPRINT RESET`
+- **Previous state:** `DEC-P1-006` 이후 formal Stage 3가 point evidence에서 만든
+  `R_derived` component hull만 사용하도록 동결됐다. 1 m class-6 셀의 8-neighbor
+  component를 convex hull로 바꾸고 component당 Roofer를 실행한 결과, U_target 199에
+  대해 C1은 5개, C2는 18개 component만 남았으며 여러 건물이 하나의 component를
+  공유했다. 건물 bbox로 화면만 잘라 만든 case sheet가 독립적인 동별 Roofer 결과처럼
+  보이는 표시 혼동도 발생했다.
+- **New decision:** Roofer의 정상 입력 계약에 맞춰 LoD2 `GroundSurface`에서 읽은
+  exact 2D XY polygon과 stable building ID를 `R_shared`로 정의하고 C1–C5 모든
+  condition과 U_target 199동에 동일하게 제공한다. `R_shared`는 condition-specific
+  existing prior가 아니라 비교를 위한 공통 제어입력이다. condition마다 전역 분류
+  point cloud 하나와 199-feature footprint source 하나를 만들고 Roofer를 한 번 호출한다.
+  동일 AOI, terrain/class-2/6 규칙, Roofer image와 parameter를 사용하며 Roofer 내부
+  footprint crop이 건물별 evidence를 나눈다. 점 부족, process failure와 missing output은
+  건물별로 보존한다.
+- **GT boundary:** `R_shared`는 XY와 stable ID만 제공한다. LoD2 ground/roof Z,
+  `RoofSurface`, roof type, semantic class, final roof model과 metric outcome은 point
+  selection, classification, parameter 선택 또는 Roofer 입력에 사용할 수 없다. 공통
+  footprint의 GT-derived provenance와 exact polygon hash를 모든 operation에 기록한다.
+- **Lineage reset:** 과거 `R_derived` 5/18 component 결과와 그 building-bbox-clipped
+  그림은 역사적 진단으로만 보존하며 새 199동 6행 결과, formal building-level metric,
+  CloudCompare scene에 재사용하지 않는다. 기존 selected-10 GroundSurface-XY Roofer
+  경로는 입력 구조의 선행 진단으로만 참고하고, exact current UAS LiDAR와
+  `DEC-P1-018` recovered MVS dense를 사용하는 새 add-once 199동 namespace에서
+  재실행한다.
+- **Supersedes:** `DEC-P1-006`, `DEC-P1-008`, `DEC-P1-010`의
+  no-external-roofprint/`R_derived`-primary 부분만 supersede한다. Fusion 보호,
+  common image/pose base, C3 no-external-prior 정의와 C4/C5 prior 분리는 유지한다.
+- **Affected documents:** root `AGENTS.md`/`CLAUDE.md` and
+  `docs/research/00_RESEARCH_CHARTER.md` through `06_DECISION_LOG.md`.
+- **Execution authorization:** C1 current UAS LiDAR와 C2 exact recovered MVS dense의
+  199동 building-level Roofer 생성, deterministic receipts, missingness와 CloudCompare
+  inspection bundle 생성을 승인한다. C3–C5 재실행과 confirmatory inference는 열지 않는다.
+- **Execution correction (2026-08-05):** 최초 v1 실행은 입력 점수 진단을 Roofer
+  호출 전 차단 조건으로 사용하여 C1 107건, C2 123건만 호출했으므로 199동 전체의
+  Roofer 가능 동수 판단 자료가 아니다. 이를 진단 실행으로 강등하고, v2에서 빈 LAS를
+  포함한 C1 199건과 C2 199건, 총 398건을 모두 동일 Roofer image/parameter로 호출했다.
+  실제 LoD2.2 존재 기준 기술 집계는 C1 106동, C2 126동, 양쪽 공통 96동이다. 사전
+  입력 진단에 걸렸지만 LoD2.2가 생성된 사례가 C1 2동, C2 7동이므로 해당 진단은 이후
+  호출 차단에 사용할 수 없다. 상세 provenance와 missingness는
+  `docs/evidence/p2_c1_c2_shared_footprint_199_all_invocations_v2/TECHNICAL_RETURN.md`를 따른다.
+- **Original-global correction (2026-08-06):** 사용자 승인에 따라 v1/v2의 건물별
+  사전 crop/classification과 398회 호출은 formal comparison 경로에서 제외하고 역사적
+  진단으로 보존한다. 정본 재실행은 P0의 원래 Roofer 기준과 같이 condition별 scene-wide
+  class-2/6 point cloud 하나와 동일 199-feature `R_shared` 하나를 입력으로 하여 Roofer를
+  condition당 한 번만 호출한다. 두 condition에는 동일한 `SMRF → non-ground footprint
+  overlay` 분류 recipe를 적용하고, 고정 AOI context crop 이후 점 삭제·voxel sampling·
+  품질 기반 retry를 하지 않는다. Roofer reconstruction parameter는 기본값을 유지하며
+  `--jobs 1`은 결정론적 실행을 위한 plumbing control이다. 결과 존재 여부와 LoD2.2,
+  val3dity, Roofer 내부 진단은 기록하되 G3/G4/`PASS_usable` 수치 기준은 별도 사용자
+  승인 전까지 `null`이다.
+- **Scientific verdict:** `null`
+
+## DEC-P1-020 — Roofer 육안평가를 사람 O/X로 단순화
+
+- **Decision ID:** `DEC-P1-020`
+- **Date:** 2026-08-06
+- **Status:** `USER-APPROVED FROZEN HUMAN O/X REVIEW`
+- **Previous state:** web review 초안은 over-segmentation, missing roof, height/slope,
+  warped/collapsed 등 상세 failure category를 사람이 선택하도록 했다. 사용자는 이
+  분류가 현재 목적에 비해 복잡하다고 판단했다.
+- **New decision:** 각 `building × condition` Roofer 결과의 사람 판정은 미평가, `O`,
+  `X`만 사용한다. missing output은 화면에서 숨기지 않고 사람이 `X`로 판정한다.
+  상세 technical status, val3dity, point count와 optional note는 보조 정보이며 사람
+  O/X를 자동 대체하지 않는다. condition은 먼저 독립 판정한다.
+- **GS transition:** C3가 같은 계약으로 준비되면 `C2 X → C3 O`를 rescue,
+  `C2 O → C3 X`를 regression으로 집계하며 양방향과 unchanged cell을 모두 보존한다.
+  C1은 upper baseline이지 GT label이 아니다.
+- **Boundary:** 이 screen은 G0–G4 구조를 폐기하지 않으며 numerical G3/G4와 공식
+  `PASS_usable`은 계속 `null`이다. confirmatory inference를 열지 않는다.
+- **Authority:**
+  `docs/research/preregistration/roofer_ox_review/ROOFER_OX_REVIEW_LOCK_v1.md`와
+  `configs/p2/c1_c2_shared_footprint_199_v3/roofer_ox_review_v1.json`.
 - **Scientific verdict:** `null`
 
 ## Pending decisions not yet logged as adopted

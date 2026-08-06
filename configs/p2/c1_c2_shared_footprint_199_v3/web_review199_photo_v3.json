@@ -1,0 +1,55 @@
+{
+  "schema": "jointbuildgs.p2.c1_c2_original_global_v3.web_review199_photo.v1",
+  "task_id": "P2-C1-C2-ORIGINAL-GLOBAL-v3-WEB-REVIEW199-PHOTO-STRIP-v5",
+  "status": "USER_APPROVED_FOR_EXECUTION",
+  "source_web_review": {
+    "relative_root": "phase-payloads/p2/c1_c2_shared_footprint_199_v3/P2-C1-C2-ORIGINAL-GLOBAL-v3-WEB-REVIEW199-OX-MINIMAP-v2",
+    "manifest_path": "manifest_web_review199_v1.json",
+    "bytes": 253337,
+    "sha256": "6680e0cbd327a19dd8fff8dacbe428b02ff926b1dc206dbc324cc47837625bee",
+    "required_task_id": "P2-C1-C2-ORIGINAL-GLOBAL-v3-WEB-REVIEW199-OX-MINIMAP-v2",
+    "required_status": "COMPLETE_OFFLINE_WEB_REVIEW199"
+  },
+  "photo_evidence": {
+    "relative_root": "phase-payloads/p2/qualitative_row1_current_raw_v7/P2-QUALITATIVE-ROW1-CURRENT-RAW-v7-PHOTO-EVIDENCE199-v2",
+    "manifest_path": "control/artifact_manifest_v1.json",
+    "bytes": 107875,
+    "sha256": "62c1421fd4b5e75ded97101304df025c4a4f3e1fd1442c3053ef2f274a9379c6",
+    "required_task_id": "P2-QUALITATIVE-ROW1-CURRENT-RAW-v7-PHOTO-EVIDENCE199-v2",
+    "active_content": "FROZEN_INDEPENDENT_LOD2_ROOFLINE_PROJECTION_ONLY"
+  },
+  "application": {
+    "index": {
+      "git_path": "src/apps/c1_c2_roofer_web_review/index.html",
+      "output_path": "index.html",
+      "bytes": 12817,
+      "sha256": "ea387ef98836c0fd02652fa347e20b3a2942611b3b072650dbcb416a691e61a5"
+    },
+    "javascript": {
+      "git_path": "src/apps/c1_c2_roofer_web_review/app.js",
+      "output_path": "app.js",
+      "bytes": 34413,
+      "sha256": "72e45363b66e973d72697d4882f95e2deb741b21cacea27534f1f33405c6ddb4"
+    }
+  },
+  "features": {
+    "building_count": 199,
+    "photos_per_building": 4,
+    "photo_display": "ALWAYS_VISIBLE_SINGLE_HORIZONTAL_ROW_BELOW_BUILDING_NAVIGATION",
+    "photo_projection": "FROZEN_INDEPENDENT_LOD2_ROOFLINE_ONLY",
+    "review_bar_position": "BELOW_ALWAYS_VISIBLE_PHOTO_ROW",
+    "keypoints_rendered": false,
+    "additional_photo_projection_layers": [],
+    "additional_review_fields": [],
+    "local_storage_key": "jointbuildgs-c1-c2-roofer-ox-v1"
+  },
+  "execution": {
+    "roofer_invocations": 0,
+    "reconstruction_invocations": 0,
+    "gs_training_invocations": 0,
+    "metric_recomputations": 0,
+    "add_once": true
+  },
+  "output_relative_root": "phase-payloads/p2/c1_c2_shared_footprint_199_v3/P2-C1-C2-ORIGINAL-GLOBAL-v3-WEB-REVIEW199-PHOTO-STRIP-v5",
+  "scientific_verdict": null
+}

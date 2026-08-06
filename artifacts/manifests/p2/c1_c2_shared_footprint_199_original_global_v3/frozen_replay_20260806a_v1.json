@@ -1,0 +1,67 @@
+{
+  "schema": "jointbuildgs.p2.c1_c2_shared_footprint_199.original_global.frozen_replay.v1",
+  "task_id": "P2-C1-C2-SHARED-FOOTPRINT-199-ORIGINAL-GLOBAL-v3",
+  "freeze_id": "P2-C1-C2-ORIGINAL-GLOBAL-v3-FROZEN-REPLAY-20260806a-v1",
+  "freeze_decision_local_date": "2026-08-06",
+  "artifact_relative_root": "phase-payloads/p2/c1_c2_shared_footprint_199_v3/P2-C1-C2-SHARED-FOOTPRINT-199-ORIGINAL-GLOBAL-v3-replay-20260806a",
+  "replay_label": "20260806a",
+  "policy": {
+    "status": "FROZEN_FOR_DOWNSTREAM_QUALITATIVE_REUSE",
+    "downstream_mode": "EXACT_HASH_BOUND_REUSE_ONLY",
+    "roofer_reconstruction_after_freeze_allowed": false,
+    "quality_driven_retry_allowed": false,
+    "historical_v1_v2_obj_allowed_as_active_review_input": false,
+    "scientific_verdict": null,
+    "official_PASS_usable": null
+  },
+  "method_contract": {
+    "scene_wide_cloud_per_condition": true,
+    "single_199_feature_footprint_source": true,
+    "roofer_invocations": 2,
+    "per_building_pre_crop": false,
+    "voxel_downsampling": false
+  },
+  "condition_inputs": {
+    "C1_L_upper": {
+      "source_relative_path": "phase-payloads/p0-audit/data/raw/tum2twin/TUM_Downtown_ULS_20241217_nadir.laz",
+      "sha256": "50783bfb205ea5532ac2a300d7e41b6b6426e45009d6c961d603e079cc5ae7b4"
+    },
+    "C2_MVS": {
+      "source_kind": "NEW_NATIVE_MVS_DENSE_POINT_CLOUD",
+      "source_relative_path": "phase-payloads/p2/mvs_native_textured_mesh_preflight_v1/P2-MVS-NATIVE-DENSE-SCENE-RECOVERY-v2/work/mvs/openmvs/dim_dense.ply",
+      "sha256": "fc2561ab3e41adaa64a5cbc1f7a13c5f887999d2d81f94d4dca082c2c43c02ce",
+      "vendor_1104_image_mvs_used": false
+    }
+  },
+  "technical_counts": {
+    "population": 199,
+    "building_method_rows": 398,
+    "C1_L_upper": {
+      "lod22": 107,
+      "val3dity_valid_lod22": 99
+    },
+    "C2_MVS": {
+      "lod22": 114,
+      "val3dity_valid_lod22": 103
+    }
+  },
+  "records": [
+    {"path": "control/prepared_v3.json", "role": "SOURCE_AND_EXECUTION_BINDING", "bytes": 7041, "sha256": "899e7a9398aea88621c8d91353838a27ce7e666f548fa21132cdf2fd0a4a8266"},
+    {"path": "control/finalized_v3.json", "role": "FINAL_RECEIPT", "bytes": 1092, "sha256": "32af0a1248b3f5c7e5e74430aa8927a7f5b1507a38e2a0bbe0583e68c2d9acb3"},
+    {"path": "freeze/shared_footprints_199.geojson", "role": "SHARED_199_FOOTPRINT", "bytes": 120967, "sha256": "5f9b703b06676db4400f6568fc3db315e319913f98ba491e98922eb747e4488a"},
+    {"path": "work/C1_L_upper/classified_scene.laz", "role": "C1_CLASSIFIED_GLOBAL_SCENE", "bytes": 839950487, "sha256": "eb6f89dba1c95f2b385459790cbfcbb0d5c7dc2f1f06fb1ccf8f3d6b97fdff1d"},
+    {"path": "work/C1_L_upper/classified_scene_receipt.json", "role": "C1_CLASSIFICATION_RECEIPT", "bytes": 538, "sha256": "c228921a550d6bcaa5d69c86c472df185282e906c5db445324dd00d11dc8db5e"},
+    {"path": "work/C1_L_upper/roofer_terminal.json", "role": "C1_ROOFER_TERMINAL", "bytes": 441, "sha256": "87c9eb75956983f3127f263ddd99a35483164a4e974243d709bf8642806d8994"},
+    {"path": "work/C1_L_upper/assembled.city.json", "role": "C1_FROZEN_ROOFER_CITYJSON", "bytes": 708348, "sha256": "07877243263e78e72d1d5ec82dbcdd95334ccb94b0220601e9b9f2266f956719"},
+    {"path": "work/C1_L_upper/val3dity_report.json", "role": "C1_VAL3DITY_REPORT", "bytes": 28146, "sha256": "3f3afe42434fee8fe586e17d9294608fe6264183d7633c77f4f34ae295809a28"},
+    {"path": "work/C2_MVS/classified_scene.laz", "role": "C2_CLASSIFIED_GLOBAL_SCENE", "bytes": 158417952, "sha256": "08815a3587265d84b739ba2a84db19dfab1d216b3d8ca2d8f671cd193e970652"},
+    {"path": "work/C2_MVS/classified_scene_receipt.json", "role": "C2_CLASSIFICATION_RECEIPT", "bytes": 515, "sha256": "c3de9510dd44b986e86e195c6f3cb2875be1eb2a08e96706c477b23a4c034535"},
+    {"path": "work/C2_MVS/roofer_terminal.json", "role": "C2_ROOFER_TERMINAL", "bytes": 433, "sha256": "52739411c30cebee1d639a075e170a76fc9af6d0d789b3aaba55ec8b8f75cf5b"},
+    {"path": "work/C2_MVS/assembled.city.json", "role": "C2_FROZEN_ROOFER_CITYJSON", "bytes": 995773, "sha256": "f089d302d9e417111a172b4671302473297e5a6b721d8a8933ed72bbd892afd8"},
+    {"path": "work/C2_MVS/val3dity_report.json", "role": "C2_VAL3DITY_REPORT", "bytes": 27833, "sha256": "74f36f83e2ef50528e97fc0b9c25778865a7287b61bbb2c2d4946535d6618797"},
+    {"path": "results/building_method_status_v3.csv", "role": "BUILDING_METHOD_STATUS", "bytes": 55031, "sha256": "122473f8e832963dd429d0b5b2977c3830dae7f4fccff60df35fefce05586f54"},
+    {"path": "results/building_method_results_v3.jsonl", "role": "BUILDING_METHOD_RESULTS", "bytes": 198161, "sha256": "6bc6c99af138ff577421a7d8c669a1a50b54b6aa3b6ab0a523e4267de5dec965"}
+  ],
+  "record_count": 15,
+  "scientific_verdict": null
+}

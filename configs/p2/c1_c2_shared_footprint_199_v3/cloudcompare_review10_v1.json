@@ -1,0 +1,64 @@
+{
+  "schema": "jointbuildgs.p2.c1_c2_original_global_v3.cloudcompare_review10.v1",
+  "task_id": "P2-C1-C2-ORIGINAL-GLOBAL-v3-CLOUDCOMPARE-REVIEW10-v1",
+  "status": "USER_APPROVED_FOR_EXECUTION",
+  "frozen_source": {
+    "manifest_git_path": "artifacts/manifests/p2/c1_c2_shared_footprint_199_original_global_v3/frozen_replay_20260806a_v1.json",
+    "manifest_sha256": "8e5d47d225e24ea824ac6c96b0beef3078f41143e3ab5b28d4d0ad171d068e23",
+    "required_freeze_id": "P2-C1-C2-ORIGINAL-GLOBAL-v3-FROZEN-REPLAY-20260806a-v1"
+  },
+  "selection": {
+    "rule": "Ten population positions fixed before visualization by evenly spacing inclusive indices 1 and 199",
+    "population_indices": [1, 23, 45, 67, 89, 111, 133, 155, 177, 199],
+    "building_ids": [
+      "DEBY_LOD2_104583447",
+      "DEBY_LOD2_4906966",
+      "DEBY_LOD2_4906991",
+      "DEBY_LOD2_4907028",
+      "DEBY_LOD2_4907176",
+      "DEBY_LOD2_4907206",
+      "DEBY_LOD2_4908028",
+      "DEBY_LOD2_4908167",
+      "DEBY_LOD2_4959457",
+      "DEBY_LOD2_8573849"
+    ],
+    "outcome_free": true
+  },
+  "frame": {
+    "crs": "EPSG:25832",
+    "scene_local_origin_xyz": [690700.0, 5335700.0, 550.0],
+    "world_to_local": "p_local = p_world - scene_local_origin_xyz"
+  },
+  "point_display": {
+    "xy_crop_buffer_m": 8.0,
+    "voxel_size_m": 0.2,
+    "included_classifications": [2, 6],
+    "ground_rgb": [145, 145, 145],
+    "C1_L_upper_rgb": [40, 150, 255],
+    "C2_MVS_rgb": [255, 145, 35],
+    "ply_format": "binary_little_endian"
+  },
+  "mesh_display": {
+    "footprint_rgb": [255, 255, 255],
+    "footprint_curtain_rgb": [210, 210, 210],
+    "C1_L_upper_rgb": [25, 220, 100],
+    "C2_MVS_rgb": [230, 45, 210],
+    "curtain_padding_below_ground_m": 1.0,
+    "curtain_padding_above_roof_m": 2.0
+  },
+  "review": {
+    "primary_tool": "CloudCompare",
+    "categories": ["GOOD", "OVER_SEGMENTED", "MISSING_ROOF_PART", "HEIGHT_OR_SLOPE_ERROR", "WARPED_OR_COLLAPSED", "UNDECIDABLE"],
+    "fixed_view_sequence": ["TOP", "OBLIQUE", "SIDE"],
+    "full_199_generation_authorized": false
+  },
+  "execution": {
+    "roofer_invocations": 0,
+    "reconstruction_invocations": 0,
+    "gs_training_invocations": 0,
+    "deterministic_visual_sampling": true,
+    "add_once": true
+  },
+  "output_relative_root": "phase-payloads/p2/c1_c2_shared_footprint_199_v3/P2-C1-C2-ORIGINAL-GLOBAL-v3-CLOUDCOMPARE-REVIEW10-v1",
+  "scientific_verdict": null
+}

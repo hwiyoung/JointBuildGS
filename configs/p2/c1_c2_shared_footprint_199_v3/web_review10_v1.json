@@ -1,0 +1,76 @@
+{
+  "schema": "jointbuildgs.p2.c1_c2_original_global_v3.web_review199.v1",
+  "task_id": "P2-C1-C2-ORIGINAL-GLOBAL-v3-WEB-REVIEW199-OX-MINIMAP-v2",
+  "status": "USER_APPROVED_FOR_EXECUTION",
+  "source": {
+    "relative_root": "phase-payloads/p2/c1_c2_shared_footprint_199_v3/P2-C1-C2-ORIGINAL-GLOBAL-v3-CLOUDCOMPARE-REVIEW10-v1",
+    "manifest_path": "manifest_cloudcompare_review10_v1.json",
+    "manifest_bytes": 18975,
+    "manifest_sha256": "82b9de1acd5c29e64e093295da3a38ecaec2e744ab7a9ab7aec853dd973b7437",
+    "required_status": "COMPLETE_FROZEN_V3_CLOUDCOMPARE_REVIEW10"
+  },
+  "frozen_replay": {
+    "manifest_git_path": "artifacts/manifests/p2/c1_c2_shared_footprint_199_original_global_v3/frozen_replay_20260806a_v1.json",
+    "manifest_sha256": "8e5d47d225e24ea824ac6c96b0beef3078f41143e3ab5b28d4d0ad171d068e23",
+    "required_freeze_id": "P2-C1-C2-ORIGINAL-GLOBAL-v3-FROZEN-REPLAY-20260806a-v1"
+  },
+  "review": {
+    "criterion_git_path": "configs/p2/c1_c2_shared_footprint_199_v3/roofer_ox_review_v1.json",
+    "criterion_sha256": "0d4921d63c10e7683115384239f1596a5b2c32885782dd87d8f482e8b4285de9"
+  },
+  "application": {
+    "index_git_path": "src/apps/c1_c2_roofer_web_review/index.html",
+    "javascript_git_path": "src/apps/c1_c2_roofer_web_review/app.js",
+    "overview_index_git_path": "src/apps/c1_c2_roofer_web_review/overview.html",
+    "overview_javascript_git_path": "src/apps/c1_c2_roofer_web_review/overview.js",
+    "three_module_git_path": "src/apps/gs3d_4way_viewer/build/three.module.min.js",
+    "three_module_sha256": "3e690ac7d180b0aadf0891bea39eec643e29e2d3e75c99b18689518665f69ba6",
+    "offline_static": true
+  },
+  "point_display": {
+    "default_point_size_px": 3.5,
+    "detail_xy_crop_buffer_m": 8.0,
+    "detail_voxel_size_m": 0.2,
+    "detail_spatial_index_tile_m": 32.0,
+    "overview_voxel_size_m": 1.0,
+    "included_classifications": [2, 6],
+    "rgb_divisor": {
+      "C1_L_upper": 256,
+      "C2_MVS": 1
+    },
+    "normalization": "FIXED_SOURCE_BIT_DEPTH_NO_PER_BUILDING_STRETCH"
+  },
+  "mesh_display": {
+    "footprint_rgb": [255, 255, 255],
+    "footprint_curtain_rgb": [210, 210, 210],
+    "C1_L_upper_rgb": [25, 220, 100],
+    "C2_MVS_rgb": [230, 45, 210],
+    "curtain_padding_below_ground_m": 1.0,
+    "curtain_padding_above_roof_m": 2.0
+  },
+  "features": {
+    "synchronized_dual_view": true,
+    "fixed_views": ["TOP", "OBLIQUE", "SIDE"],
+    "layer_toggles": ["POINTS", "ROOFER", "FOOTPRINT", "CURTAIN", "WIREFRAME"],
+    "precision_tools": ["TWO_POINT_DISTANCE", "DELTA_Z", "Z_CLIPPING", "ROOF_CENTRIC_FIT"],
+    "review_local_storage": true,
+    "review_csv_export": true,
+    "review_input_ui": "TWO_TOGGLE_BUTTONS_O_X",
+    "building_count": 199,
+    "review_labels": ["", "O", "X"],
+    "point_color_modes": ["RGB", "CONDITION_SOLID"],
+    "whole_scene_overview": true,
+    "detail_overview_minimap": "TOP_VIEW_199_BUILDINGS_WITH_POINT_AVAILABILITY",
+    "overview_building_count": 199,
+    "overview_selection_rule": "FIXED_1M_WORLD_VOXEL_FIRST_INPUT_ORDER_POINT"
+  },
+  "execution": {
+    "roofer_invocations": 0,
+    "reconstruction_invocations": 0,
+    "gs_training_invocations": 0,
+    "metric_recomputations": 0,
+    "add_once": true
+  },
+  "output_relative_root": "phase-payloads/p2/c1_c2_shared_footprint_199_v3/P2-C1-C2-ORIGINAL-GLOBAL-v3-WEB-REVIEW199-OX-MINIMAP-v2",
+  "scientific_verdict": null
+}

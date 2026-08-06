@@ -1,0 +1,90 @@
+{
+  "schema": "jointbuildgs.p2.c1_c2_shared_footprint_199.original_global.v3",
+  "task_id": "P2-C1-C2-SHARED-FOOTPRINT-199-ORIGINAL-GLOBAL-v3",
+  "decision_id": "DEC-P1-019-ORIGINAL-GLOBAL-CORRECTION-20260806",
+  "status": "USER_APPROVED_FOR_EXECUTION",
+  "population": {
+    "name": "U_target",
+    "building_count": 199,
+    "common_manifest_relative_path": "phase-payloads/p2/qualitative_199_common_manifest_v1/P2-QUALITATIVE-199-COMMON-MANIFEST-v1/manifest/building_camera_view_crop_manifest_v1.jsonl",
+    "common_manifest_bytes": 1026148,
+    "common_manifest_sha256": "61e4e8a334c10d0c4405b4929c3e021ac74e5a6eb96596954b5781c0c5b4c4d9"
+  },
+  "inputs": {
+    "C1_L_upper": {
+      "relative_path": "phase-payloads/p0-audit/data/raw/tum2twin/TUM_Downtown_ULS_20241217_nadir.laz",
+      "bytes": 1277996022,
+      "sha256": "50783bfb205ea5532ac2a300d7e41b6b6426e45009d6c961d603e079cc5ae7b4",
+      "point_count": 177981904,
+      "reader": "readers.las",
+      "coordinate_operation": "RETAG_NUMERIC_UTM32_AS_EPSG_25832_NO_XY_TRANSFORM",
+      "source_header_crs": "EPSG:32632",
+      "frozen_numeric_crs": "EPSG:25832"
+    },
+    "C2_MVS": {
+      "relative_path": "phase-payloads/p2/mvs_native_textured_mesh_preflight_v1/P2-MVS-NATIVE-DENSE-SCENE-RECOVERY-v2/work/mvs/openmvs/dim_dense.ply",
+      "bytes": 658898693,
+      "sha256": "fc2561ab3e41adaa64a5cbc1f7a13c5f887999d2d81f94d4dca082c2c43c02ce",
+      "point_count": 43926567,
+      "reader": "readers.ply",
+      "coordinate_operation": "ADD_FROZEN_GS_LOCAL_TO_WORLD_TRANSLATION",
+      "world_shift_xyz": [690953.0, 5336071.0, 604.0],
+      "frozen_numeric_crs": "EPSG:25832"
+    },
+    "shared_standard_footprints": [
+      {
+        "relative_path": "phase-payloads/p0-audit/data/raw/lod2/690_5334.gml",
+        "bytes": 156656509,
+        "sha256": "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314"
+      },
+      {
+        "relative_path": "phase-payloads/p0-audit/data/raw/lod2/690_5336.gml",
+        "bytes": 147865939,
+        "sha256": "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674"
+      }
+    ],
+    "shared_footprint_allowed_fields": ["gml:id", "GroundSurface exterior/interior XY"],
+    "shared_footprint_prohibited_fields": ["GroundSurface Z", "RoofSurface XYZ", "WallSurface XYZ", "roof type", "semantic class", "final roof model"]
+  },
+  "scene": {
+    "crs": "EPSG:25832",
+    "roofer_aoi_bbox": [690791.740, 5335864.050, 691154.650, 5336353.850],
+    "classification_context_buffer_m": 30.0
+  },
+  "classification": {
+    "method": "PDAL_SMRF_THEN_SHARED_FOOTPRINT_OVERLAY_ON_NON_GROUND",
+    "historical_recipe": "phases/p0-audit/scripts/04_classify.py",
+    "smrf": {
+      "cell": 1.0,
+      "slope": 0.15,
+      "scalar": 1.25,
+      "threshold": 0.5,
+      "window": 18.0
+    },
+    "ground_class": 2,
+    "building_class": 6,
+    "unclassified_class": 1,
+    "point_deletion_after_aoi_crop": false,
+    "voxel_downsampling": false,
+    "same_adapter_for_both_conditions": true
+  },
+  "roofer": {
+    "image": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+    "image_id": "sha256:9c980b97fba4c3fd30f5bb4afb8f2621be211d4e72e4333ea2053e8cd69b2dba",
+    "version": "1.0.0",
+    "quality_parameters": "ROOFER_DEFAULTS",
+    "plumbing_args": ["--id-attribute", "stable_id", "--jobs", "1", "--box", "690791.740", "5335864.050", "691154.650", "5336353.850"],
+    "expected_invocations": 2,
+    "timeout_seconds_per_condition": 14400,
+    "quality_driven_retry_allowed": false
+  },
+  "runtime": {
+    "p0_tools_image": "jointbuildgs-p0-tools:t0",
+    "p0_tools_image_id": "sha256:02b4b7bb2e35e9b88bcc8457678ed8f178cca8f76f22b1b62f02721359e46be8",
+    "pdal_version": "2.10.1",
+    "val3dity_version": "2.6.0"
+  },
+  "output_relative_root": "phase-payloads/p2/c1_c2_shared_footprint_199_v3/P2-C1-C2-SHARED-FOOTPRINT-199-ORIGINAL-GLOBAL-v3",
+  "official_PASS_usable": null,
+  "scientific_verdict": null
+}

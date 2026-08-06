@@ -1,0 +1,23 @@
+{
+  "schema": "jointbuildgs.p2.roofer_human_ox_review.v1",
+  "criterion_id": "P2-ROOFER-HUMAN-OX-v1",
+  "status": "USER_APPROVED_FROZEN",
+  "unit": "building_x_condition_roofer_output",
+  "allowed_labels": ["", "O", "X"],
+  "label_meaning": {
+    "": "UNREVIEWED",
+    "O": "The human reviewer accepts the displayed Roofer result for the current technical-development review.",
+    "X": "The human reviewer rejects the displayed Roofer result, including missing output."
+  },
+  "independent_condition_review": true,
+  "technical_metadata_is_advisory": true,
+  "optional_note": true,
+  "gs_transition": {
+    "rescue": "C2_MVS=X and C3_GS_image=O",
+    "regression": "C2_MVS=O and C3_GS_image=X",
+    "unchanged_pass": "C2_MVS=O and C3_GS_image=O",
+    "unchanged_fail": "C2_MVS=X and C3_GS_image=X"
+  },
+  "official_pass_usable": null,
+  "scientific_verdict": null
+}

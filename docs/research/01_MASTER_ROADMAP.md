@@ -221,7 +221,7 @@ primary 잠금 뒤 별도 census로 수행한다. 이 census를 완료하지 않
 | P-05 | 검수 LoD2/LoD3를 structure reference 후보 | roof semantics/plane 필요 | 시점·ID·leakage audit | P2 |
 | P-06 | direct depth-to-point fusion을 main diagnostic adapter 후보 | depth evidence를 직접 추적 가능 | 재현성·completeness·boundary artifact 비교 | P2 |
 | P-07 | TSDF mesh sampling을 robustness adapter 후보 | 2DGS 계열에서 널리 쓰이는 surface extraction 경로 | 공정한 parameter protocol과 sensitivity | P2 |
-| P-08 | `R_derived` reference-independent roofprint protocol; `R_ext` 비실행 | 현행 no-external-roofprint와 end-to-end 목적 유지 | 동일 derivation rule/config와 method별 polygon/hash 검증 | P1/P2 |
+| P-08 | `R_shared`: 199동 공통 LoD2 `GroundSurface` XY Roofer footprint | footprint 차이를 제거하고 condition evidence 품질을 건물별 비교 | 동일 polygon hash/stable ID/crop-buffer/Roofer parameter 검증; LoD2 Z/RoofSurface 차단 | P1/P2 |
 | P-09 | P1 audit 뒤 P2 pre-result Gate S0에서 `EXHAUSTIVE_PARTITION` 우선, 불가능할 때만 `STRATIFIED_SAMPLE` | leakage·tuning 억제와 최종 coverage 명확화 | `U_target`/`E_paired` 수, C1–C5 비용, 공간 group, 목표 정밀도/검정력 | P1/P2 |
 | P-10 | 각 phase의 접근 허용 split 전체에 경량 sheet, 대표 subset에 mechanism sheet | 투명성과 지면 효율 절충 | 자동생성 비용·가독성 검증 | P2/P3/P4 |
 
@@ -295,7 +295,8 @@ primary 잠금 뒤 별도 census로 수행한다. 이 census를 완료하지 않
 
 기존 4조건과 새 C1–C5의 정본 충돌은 `DEC-P1-008`로 해소했다. Numerical acceptance
 threshold와 final surface adapter는 설계대로 P2로 연기되며 Gate S0 evidence preparation
-자체의 blocker가 아니다. `R_derived`만 primary이고 `R_ext`는 비실행 범위다.
+자체의 blocker가 아니다. `DEC-P1-019` 이후 `R_shared`가 formal building-level
+Stage-3 primary이고 과거 `R_derived` component 결과는 역사적 진단이다.
 
 ## Future scientific gate decisions
 

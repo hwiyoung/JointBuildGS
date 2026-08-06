@@ -431,8 +431,9 @@ version과 새 handoff ID를 사용한다. Generic template의 `DRAFT`/placehold
   항상 root instruction이 최우선이다.
 - `DEC-P1-008`이 00–06을 현재 C1–C5 정본으로 채택했다. 기존 P2/Fusion W1은
   변경하지 않는 보호된 역사적 capability evidence다.
-- External `R_ext`는 비실행 범위 밖이고 `R_derived`만 primary이므로 root
-  no-external-roofprint invariant를 유지한다.
+- `DEC-P1-019`에 따라 `R_shared` GroundSurface XY가 모든 condition의 동일한
+  building-level Roofer 제어입력이다. handoff는 exact 199 polygon/stable-ID hash와
+  LoD2 Z/RoofSurface 비접근을 검증한다.
 - P1 readiness audit에서 asset 부재나 검증 불능은 정직한 `MISSING/UNKNOWN`
   결과다. 이는 P1 문서 감사를 자동 차단하지 않지만 해당 data READY/P2 gate는
   차단한다.

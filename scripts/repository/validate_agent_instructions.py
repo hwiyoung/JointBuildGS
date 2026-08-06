@@ -27,7 +27,8 @@ REQUIRED_MARKERS = (
     "미분 가능 렌더링",
     "never\n   “뉴럴 렌더링”",
     "Roofer-style evidence-to-CityGML read-out",
-    "without an external roofprint",
+    "with the exact same\n   LoD2 `GroundSurface` XY footprint",
+    "never substitute a method-derived component hull",
     "GT separation",
     "terrain MVS normals",
     "never hardcode it",
@@ -41,6 +42,7 @@ REQUIRED_MARKERS = (
 )
 FORBIDDEN_MARKERS = (
     "Use the manifest and Compose compatibility mounts",
+    "without an external roofprint",
 )
 PHASE_READMES = (
     "phases/p0-audit/README.md",

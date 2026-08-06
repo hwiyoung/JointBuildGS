@@ -1,0 +1,38 @@
+{
+  "schema": "jointbuildgs.p2.c1_c2_shared_footprint_199.all_invocations_cloudcompare.v2",
+  "task_id": "P2-C1-C2-SHARED-FOOTPRINT-199-ALL-INVOCATIONS-CLOUDCOMPARE-v2",
+  "source_task_id": "P2-C1-C2-SHARED-FOOTPRINT-199-ALL-INVOCATIONS-v2",
+  "decision_id": "DEC-P1-019",
+  "status": "USER_APPROVED_FOR_EXECUTION",
+  "source": {
+    "relative_root": "phase-payloads/p2/c1_c2_shared_footprint_199_v2/P2-C1-C2-SHARED-FOOTPRINT-199-ALL-INVOCATIONS-v2",
+    "finalized": {"path": "control/finalized_v1.json", "bytes": 1134, "sha256": "0a9f00e09412a04598fce1853fd67ac8e6548acdce74af5e05881067277b3845"},
+    "results": {"path": "results/building_method_results_v1.jsonl", "bytes": 471492, "sha256": "93a348e94cbf2fbbd5488bb2ea320833967bd9509e31abd0fcd9b6112868f5a1"}
+  },
+  "scene": {
+    "relative_root": "phase-payloads/p2/qualitative_199_cloudcompare_scene_v1/P2-QUALITATIVE-199-CLOUDCOMPARE-SCENE-v1",
+    "parent_manifest": {"path": "scene_manifest_shared_footprint_roofer_sampled_lidar_v1.json", "bytes": 2136, "sha256": "e7262b0f2578453ef6f2a2043abd5775b02d42f24574d7158b62f0e9d58fe04c"},
+    "named_footprint": {"path": "layers/footprints_199_cloudcompare_named_local.obj", "bytes": 114571, "sha256": "259787ebb0af3335797af9b21f680d3479b1bec26092a667a250046b5dcafa3d"}
+  },
+  "methods": {
+    "C1_L_upper": {
+      "expected_process_completed": 199,
+      "expected_pre_roofer_missing": 0,
+      "expected_lod22_groups": 106,
+      "expected_no_lod22": 93,
+      "output_file": "lidar_roofer_199_all_invocations_v2_named_local.obj",
+      "role": "CURRENT_UAS_LIDAR_ALL_199_INVOCATIONS_ROOFER"
+    },
+    "C2_MVS": {
+      "expected_process_completed": 199,
+      "expected_pre_roofer_missing": 0,
+      "expected_lod22_groups": 126,
+      "expected_no_lod22": 73,
+      "output_file": "mvs_roofer_199_all_invocations_v2_named_local.obj",
+      "role": "RECOVERED_CURRENT_MVS_ALL_199_INVOCATIONS_ROOFER"
+    }
+  },
+  "frame": {"scene_local_origin_xyz": [690700.0, 5335700.0, 550.0], "crs": "EPSG:25832"},
+  "expected_paired_lod22": 96,
+  "scientific_verdict": null
+}

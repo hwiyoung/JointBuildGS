@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JointBuildGS C1/C2 전체 Scene</title>
+<style>
+  :root { color-scheme: dark; --bg:#080b10; --panel:#101721; --line:#293241; --text:#f1f5f9; --muted:#a6b0bf; --accent:#6bd5ff; --warn:#fbbf24; }
+  * { box-sizing: border-box; }
+  html, body { width:100%; height:100%; margin:0; overflow:hidden; background:var(--bg); color:var(--text); font-family:Inter,system-ui,sans-serif; }
+  button, select, a.button { min-height:31px; border:1px solid var(--line); border-radius:5px; background:var(--panel); color:var(--text); font:inherit; padding:4px 10px; }
+  button, a.button { cursor:pointer; }
+  a.button { display:inline-flex; align-items:center; text-decoration:none; }
+  button:hover, a.button:hover { border-color:var(--accent); }
+  #app { height:100%; display:grid; grid-template-rows:auto auto minmax(0,1fr); }
+  #topbar, #tools { display:flex; align-items:center; gap:8px; flex-wrap:wrap; padding:8px 10px; background:rgba(8,11,16,.97); border-bottom:1px solid var(--line); }
+  #buildingSelect { min-width:360px; max-width:58vw; }
+  #message { margin-left:auto; color:var(--warn); font-size:12px; }
+  label { display:flex; align-items:center; gap:5px; white-space:nowrap; color:var(--muted); font-size:13px; }
+  input[type=range] { width:110px; accent-color:var(--accent); }
+  #viewportShell { position:relative; min-height:0; overflow:hidden; background:#030507; }
+  #overviewViewport { position:absolute; inset:0; }
+  canvas { display:block; width:100%; height:100%; }
+  #stats { position:absolute; z-index:3; top:10px; left:10px; max-width:calc(100% - 20px); padding:6px 8px; border-radius:4px; background:rgba(0,0,0,.72); color:var(--muted); font-size:12px; pointer-events:none; }
+  #loading { position:fixed; inset:0; z-index:20; display:grid; place-items:center; background:rgba(4,7,10,.76); }
+  #loading[hidden] { display:none; }
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="topbar">
+    <a class="button" href="./index.html">199동 상세 검토</a>
+    <label>Scene <select id="overviewMethod"><option value="lidar">LiDAR</option><option value="mvs">MVS</option></select></label>
+    <select id="buildingSelect" aria-label="전체 건물 선택"></select>
+    <button id="focusBuilding">선택 건물로 이동</button>
+    <a class="button" id="openDetail" href="./index.html" hidden>이 건물 상세열기</a>
+    <span id="message">초기화 중</span>
+  </div>
+  <div id="tools">
+    <button data-view="top">Top</button>
+    <button data-view="oblique">Oblique</button>
+    <button data-view="side">Side</button>
+    <button id="fitScene">전체 Fit</button>
+    <label>점군 색상 <select id="colorMode"><option value="rgb">RGB</option><option value="condition">조건 단색</option></select></label>
+    <label><input id="showPoints" type="checkbox" checked> 점군</label>
+    <label><input id="showRoofer" type="checkbox" checked> 전체 Roofer</label>
+    <label><input id="showFootprints" type="checkbox" checked> 199 Footprint</label>
+    <label><input id="showMarkers" type="checkbox" checked> 건물 선택점</label>
+    <label>점 크기 <input id="pointSize" type="range" min="0.5" max="5" step="0.25" value="3.5"><span id="pointSizeValue">3.5</span></label>
+    <label>메시 투명도 <input id="meshOpacity" type="range" min="0.1" max="1" step="0.05" value="0.65"><span id="meshOpacityValue">0.65</span></label>
+  </div>
+  <div id="viewportShell">
+    <div id="overviewViewport"></div>
+    <div id="stats">전체 scene 불러오는 중</div>
+  </div>
+</div>
+<div id="loading">결정론적 overview LOD를 불러오는 중…</div>
+<script type="importmap">{ "imports": { "three": "./three.module.min.js" } }</script>
+<script type="module" src="./overview.js"></script>
+</body>
+</html>
