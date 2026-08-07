@@ -161,3 +161,18 @@
   existing ALS prior shown in the reference panel. Historical E2 is the exact
   common-base MVS Roofer baseline. This lineage distinction must remain visible
   in the viewer and report.
+
+## 2026-08-07 — direct depth-fusion point-cloud override
+
+- The initial Phase-4 extraction implementation followed the written 5.1 step
+  literally: it extracted a TSDF mesh and poisson-disk resampled that mesh at
+  75 pt/m2 before Roofer. E3, E4, and E5 completed that path; E6 was in the
+  resampling step when the human reviewer clarified the intended lineage.
+- The latest controlling instruction is now explicit: rendered training-view
+  depth is fused into a TSDF volume, `extract_point_cloud()` is called directly
+  on that volume, and this direct depth-fusion point cloud goes immediately to
+  the common Roofer classification/read-out. The TSDF mesh remains evaluation
+  evidence only and is not allowed to generate Roofer input points.
+- The completed mesh-resampled E3/E4/E5 point-cloud directories are retained
+  under the task quarantine as rejected lineage and are not Roofer inputs. E6's
+  in-progress resampling container was stopped without promoting a receipt.

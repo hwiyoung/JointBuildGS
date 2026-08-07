@@ -56,7 +56,7 @@ def prepare(artifacts: Path, run_name: str) -> None:
     pipeline_path = roofer / "classification_pipeline.json"
     if pipeline_path.is_file():
         return
-    cloud = run / "pointcloud/fused_75ptm2.ply"
+    cloud = run / "pointcloud/depth_fusion.ply"
     footprint = artifacts / FOOTPRINT_REL
     output = roofer / "classified_scene.laz"
     roofer.mkdir(parents=True, exist_ok=True)

@@ -37,7 +37,7 @@ def main() -> int:
     args = parser.parse_args()
     output = args.output_root.resolve()
     mesh_path = output / "mesh/tsdf_mesh.ply"
-    cloud_path = output / "pointcloud/fused_75ptm2.ply"
+    cloud_path = output / "pointcloud/depth_fusion.ply"
     receipt_path = output / "pointcloud/extraction_receipt.json"
     if mesh_path.is_file() and cloud_path.is_file() and receipt_path.is_file():
         return 0
@@ -120,12 +120,17 @@ def main() -> int:
     triangles = np.asarray(mesh.triangles)
     triangle_xyz = vertices[triangles]
     area = float((0.5 * np.linalg.norm(np.cross(triangle_xyz[:, 1] - triangle_xyz[:, 0], triangle_xyz[:, 2] - triangle_xyz[:, 0]), axis=1)).sum())
-    target_count = max(10_000, int(round(area * 75.0)))
-    cloud = mesh.sample_points_poisson_disk(target_count, init_factor=3)
+    # Roofer consumes the point cloud extracted directly from the fused TSDF
+    # volume.  The mesh is retained only for geometric evaluation; it must not
+    # be resampled into the Roofer evidence path.
+    cloud = volume.extract_point_cloud()
+    if len(cloud.points) == 0:
+        raise RuntimeError("TSDF extraction produced an empty point cloud")
+    cloud.translate(WORLD_SHIFT)
     if not o3d.io.write_point_cloud(str(cloud_path), cloud, write_ascii=False):
         raise RuntimeError(f"failed to write {cloud_path}")
     receipt = {
-        "schema": "jointbuildgs.p2.e1_e6.tsdf_extraction.v1",
+        "schema": "jointbuildgs.p2.e1_e6.tsdf_extraction.v2",
         "condition": args.condition,
         "checkpoint": {"path": str(args.checkpoint), "sha256": sha256(args.checkpoint)},
         "training_view_count": len(images),
@@ -139,7 +144,8 @@ def main() -> int:
         "integrated_pixel_count": integrated_pixels,
         "mesh_surface_area_m2": area,
         "mesh_polygon_count": int(len(triangles)),
-        "poisson_disk_density_pt_m2": 75.0,
+        "roofer_pointcloud_source": "TSDF_VOLUME_EXTRACT_POINT_CLOUD_DIRECT",
+        "mesh_used_to_create_roofer_pointcloud": False,
         "point_count": int(len(cloud.points)),
         "mesh": {"path": str(mesh_path), "sha256": sha256(mesh_path)},
         "pointcloud": {"path": str(cloud_path), "sha256": sha256(cloud_path)},
