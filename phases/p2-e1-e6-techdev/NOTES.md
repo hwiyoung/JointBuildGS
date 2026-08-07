@@ -208,3 +208,14 @@
   relation E4 > E5 is observed. E4/E5 hole areas are 1629.0/2006.5 m2. No
   scientific verdict is assigned. CloudCompare CLI was unavailable in the
   pinned images, so mesh-to-cloud receipts identify the Open3D/SciPy fallback.
+
+## 2026-08-07 — handoff closure validation issue
+
+- A `200-verified` successor receipt was added after all technical artifact
+  checks passed, but repository validation rejects the chain because the
+  immutable `100-accepted` packet allowed only its handoff-manifest directory
+  while the authorized Experiment Host execution subsequently committed changes
+  under `scripts/`, `src/`, `tests/`, and `phases/`. Successor receipts cannot
+  expand that invariant scope. The failed validator output is not hidden and no
+  `300-closed` receipt is issued. Repair requires a separately authorized new
+  handoff chain; it must not rewrite the accepted packet or existing commits.
