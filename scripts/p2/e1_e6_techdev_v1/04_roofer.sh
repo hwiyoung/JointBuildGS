@@ -15,7 +15,15 @@ for condition in E3 E4 E5 E6; do
     E6) run_name=E6_GS_LOD2_PLANES_DIAGNOSTIC ;;
   esac
   roofer_root="${task_root}/runs/${run_name}/roofer"
-  if [[ -f "${roofer_root}/receipt.json" ]]; then printf 'SKIP Roofer %s\n' "${condition}"; continue; fi
+  if [[ -f "${roofer_root}/receipt.json" ]]; then
+    grep -q 'c1_c2_shared_footprint_199_v3/run.py::_common_stages' \
+      "${roofer_root}/classified_scene_receipt.json" || {
+        echo "refusing uncertified Roofer receipt: ${condition}" >&2
+        exit 2
+      }
+    printf 'SKIP Roofer %s\n' "${condition}"
+    continue
+  fi
   run_tools python scripts/p2/e1_e6_techdev_v1/prepare_roofer.py prepare \
     --artifact-root /artifacts/JointBuildGS --run-name "${run_name}" \
     >"${logs_root}/04_roofer_${condition}_prepare.log" 2>&1
