@@ -1,0 +1,164 @@
+{
+  "schema": "jointbuildgs.two_host_handoff.v1",
+  "template_only": false,
+  "handoff_id": "P2-W2C-E1-E6-PRIOR-FUSION-TECHDEV-v1",
+  "task_id": "P2-E1-E6-PRIOR-FUSION-TECHDEV-v1",
+  "created_at": "2026-08-07T10:22:00+09:00",
+  "direction": "work_to_experiment",
+  "sender_role": "work_host",
+  "receiver_role": "experiment_host",
+  "state": "verified",
+  "previous_receipt": {
+    "path": "artifacts/manifests/handoffs/P2-W2C-E1-E6-PRIOR-FUSION-TECHDEV-v1/100-accepted.json",
+    "sha256": "a311e38fe22620acbf9d142d3d30959067d19f81d47415ba266fd878b64e09a3"
+  },
+  "transport": {
+    "mode": "serialized_main",
+    "branch": "main",
+    "target_branch": "main",
+    "exclusive_writer_ack": true
+  },
+  "commits": {
+    "base_main": "e47d177f82b850cf9b33fef846a43607d393e1e8",
+    "offered_head": "14957bb13f5c80f58ba01b04b506a943634c11d7",
+    "receipt_head": "SELF"
+  },
+  "scope": {
+    "allowed_paths": [
+      "artifacts/manifests/handoffs/P2-W2C-E1-E6-PRIOR-FUSION-TECHDEV-v1"
+    ],
+    "protected_paths": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      ".gitattributes",
+      "configs",
+      "scripts",
+      "src",
+      "tests",
+      "docs",
+      "phases",
+      "artifacts/manifests/gate_s0"
+    ],
+    "dirty_wip": false,
+    "snapshot_manifest": null
+  },
+  "verification": {
+    "level": "artifact_verified",
+    "verifier_role": "experiment_host",
+    "docker_image_digest": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "commands": [
+      "inherit unchanged nine-record accepted artifact attestation",
+      "verify four 30000-step operations and direct depth-fusion receipts",
+      "verify six Roofer outputs, eight-slot viewer, 117 semantic labels and metrics report"
+    ],
+    "tests": [
+      {
+        "name": "accepted artifact attestation unchanged",
+        "passed": 9,
+        "failed": 0
+      },
+      {
+        "name": "E1-E6 focused regression and instruction tests",
+        "passed": 27,
+        "failed": 0
+      },
+      {
+        "name": "technical completion artifact gates",
+        "passed": 8,
+        "failed": 0
+      }
+    ]
+  },
+  "artifacts": {
+    "required_for_task": true,
+    "availability": {
+      "work_host": "verified_local",
+      "experiment_host": "verified_local"
+    },
+    "records": [
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/e1_e6_techdev_v1/P2-E1-E6-PRIOR-FUSION-TECHDEV-v1/prep/inventory.json",
+        "bytes": 2481,
+        "sha256": "41de0fe6badacc484e38a7878ec7f0add142acdf5a075a6db5db5b442ca6ba73",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-07T01:04:23+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/e1_e6_techdev_v1/P2-E1-E6-PRIOR-FUSION-TECHDEV-v1/prep/view_roles.json",
+        "bytes": 34897,
+        "sha256": "96d6e1c346236d5a09c357295aa79e2f2dc0bbf34e50cdf0c8b3fa9d703d19a3",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-07T01:04:23+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/e1_e6_techdev_v1/P2-E1-E6-PRIOR-FUSION-TECHDEV-v1/prep/synthetic_changes.json",
+        "bytes": 1696,
+        "sha256": "410831859c91ace7cda00622fb629be5e4af143ed523b673d6ae4c7f84aa0cfc",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-07T01:04:23+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/e1_e6_techdev_v1/P2-E1-E6-PRIOR-FUSION-TECHDEV-v1/prep/w_b.json",
+        "bytes": 31965,
+        "sha256": "7e3ebebc19b4e2adf4ffc7af545f2de0b1b4803a689e9d891422448827ad2f56",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-07T01:04:23+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/e1_e6_techdev_v1/P2-E1-E6-PRIOR-FUSION-TECHDEV-v1/prep/seed_dense.ply",
+        "bytes": 60897876,
+        "sha256": "2d98c0b53b8f800ca720e410efa0dd6f26e46b1a178c4f1bad32dc9270c6ffc7",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-07T01:04:23+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/e1_e6_techdev_v1/P2-E1-E6-PRIOR-FUSION-TECHDEV-v1/prep/seed_dense_lidar.ply",
+        "bytes": 70750362,
+        "sha256": "e56806e1d42705374952ca4f1f36db81af39059860cc7a63ef87f001c5af5ae1",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-07T01:04:23+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/e1_e6_techdev_v1/P2-E1-E6-PRIOR-FUSION-TECHDEV-v1/prep/seed_dense_lod.ply",
+        "bytes": 75337986,
+        "sha256": "6b41040e3643462d1bb3204ad23941a004e2d6c74d24ad5eb925b6d9b5b6859c",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-07T01:04:23+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/e1_e6_techdev_v1/P2-E1-E6-PRIOR-FUSION-TECHDEV-v1/prep/als_prior/receipt.json",
+        "bytes": 760,
+        "sha256": "124ed3f1b81b276cd8411dab189408589c41746509a7db7fdaf11c16013792d3",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-07T01:04:23+09:00"
+      },
+      {
+        "uri": "artifact://JointBuildGS/phase-payloads/p2/e1_e6_techdev_v1/P2-E1-E6-PRIOR-FUSION-TECHDEV-v1/prep/lod_prior/receipt.json",
+        "bytes": 2617,
+        "sha256": "6ddcea0870d2b8975c1c5bde8b24550b4972522c04ce4000ea5cfb8dfca3e46b",
+        "verification_method": "sha256_rehash",
+        "verified_by": "experiment_host",
+        "verified_at": "2026-08-07T01:04:23+09:00"
+      }
+    ]
+  },
+  "scientific": {
+    "technical_state": "complete",
+    "scientific_verdict": null,
+    "promotion_status": "not_requested"
+  },
+  "receiver_ack": {
+    "role": "experiment_host",
+    "accepted_at": "2026-08-07T10:22:00+09:00",
+    "status": "verified",
+    "issue": null
+  }
+}
