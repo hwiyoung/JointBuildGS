@@ -23,6 +23,9 @@ for condition in E3 E4 E5 E6; do
     run_tools pdal pipeline "/artifacts/JointBuildGS/${task_rel}/runs/${run_name}/roofer/classification_pipeline.json" \
       >"${logs_root}/04_roofer_${condition}_classify.log" 2>&1
   fi
+  run_tools python scripts/p2/e1_e6_techdev_v1/prepare_roofer.py verify \
+    --artifact-root /artifacts/JointBuildGS --run-name "${run_name}" \
+    >"${logs_root}/04_roofer_${condition}_verify.log" 2>&1
   mkdir -p "${roofer_root}/output"
   docker run --rm --network none --cpus 12 --memory 64g --pids-limit 4096 \
     --user "$(id -u):$(id -g)" -v "${task_root}:/task:rw" \

@@ -176,3 +176,11 @@
 - The completed mesh-resampled E3/E4/E5 point-cloud directories are retained
   under the task quarantine as rejected lineage and are not Roofer inputs. E6's
   in-progress resampling container was stopped without promoting a receipt.
+- The first E3 Roofer attempt used a newly written classification wrapper. The
+  human reviewer required reuse of the already certified original-global v3
+  script, so that attempt was stopped and quarantined. The active adapter now
+  imports and calls `c1_c2_shared_footprint_199_v3/run.py::_common_stages` and
+  `_class_counts` directly, retaining its exact SMRF, non-ground footprint
+  overlay, no-voxel-downsampling, EPSG:25832 verification, Roofer defaults, ROI,
+  image digest, and one-invocation policy. Only the readers.ply source is bound
+  to each E3-E6 direct depth-fusion point cloud.

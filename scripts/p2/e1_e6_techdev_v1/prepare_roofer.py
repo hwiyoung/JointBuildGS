@@ -4,9 +4,20 @@ import argparse
 import hashlib
 import json
 import shutil
+import sys
 from pathlib import Path
 
-from scripts.p2.c1_c2_shared_footprint_199_v3.run import combine_cityjsonseq
+REPO_ROOT = Path(__file__).resolve().parents[3]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.p2.c1_c2_shared_footprint_199_v3.run import (
+    _class_counts,
+    _common_stages,
+    combine_cityjsonseq,
+    load_config,
+    validate_config,
+)
 
 
 TASK_REL = Path("phase-payloads/p2/e1_e6_techdev_v1/P2-E1-E6-PRIOR-FUSION-TECHDEV-v1")
@@ -60,17 +71,33 @@ def prepare(artifacts: Path, run_name: str) -> None:
     footprint = artifacts / FOOTPRINT_REL
     output = roofer / "classified_scene.laz"
     roofer.mkdir(parents=True, exist_ok=True)
-    pipeline = {
-        "pipeline": [
-            {"type": "readers.ply", "filename": str(cloud)},
-            {"type": "filters.crop", "bounds": "([690761.740,691184.650],[5335834.050,5336383.850])"},
-            {"type": "filters.smrf", "cell": 1.0, "slope": 0.15, "scalar": 1.25, "threshold": 0.5, "window": 18.0, "ground_class": 2, "other_class": 1},
-            {"type": "filters.hag_nn"},
-            {"type": "filters.overlay", "dimension": "Classification", "datasource": str(footprint), "column": "class", "where": "HeightAboveGround > 2.0", "threads": 1},
-            {"type": "writers.las", "filename": str(output), "a_srs": "EPSG:25832", "minor_version": 4, "dataformat_id": 3, "compression": "lazperf"},
-        ]
-    }
+    config = load_config()
+    validate_config(config)
+    pipeline = {"pipeline": [{"type": "readers.ply", "filename": str(cloud)}, *_common_stages(config, footprint, output)]}
     pipeline_path.write_text(json.dumps(pipeline, indent=2) + "\n", encoding="utf-8")
+
+
+def verify(artifacts: Path, run_name: str) -> None:
+    root = artifacts / TASK_REL / f"runs/{run_name}/roofer"
+    classified = root / "classified_scene.laz"
+    receipt = root / "classified_scene_receipt.json"
+    if receipt.is_file():
+        return
+    total, counts, epsg = _class_counts(classified)
+    if counts.get("2", 0) <= 0 or counts.get("6", 0) <= 0:
+        raise RuntimeError(f"classified scene lacks required classes 2 and 6: {counts}")
+    if epsg != 25832:
+        raise RuntimeError(f"classified scene CRS drifted: {epsg}")
+    receipt.write_text(json.dumps({
+        "schema": "jointbuildgs.p2.e1_e6.classified_scene.v2",
+        "condition": run_name,
+        "certified_adapter": "scripts/p2/c1_c2_shared_footprint_199_v3/run.py::_common_stages",
+        "point_count": total,
+        "class_counts": counts,
+        "epsg": epsg,
+        "voxel_downsampling": False,
+        "scientific_verdict": None,
+    }, indent=2) + "\n", encoding="utf-8")
 
 
 def finalize(artifacts: Path, run_name: str) -> None:
@@ -99,7 +126,7 @@ def finalize(artifacts: Path, run_name: str) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("mode", choices=("reuse-baseline", "prepare", "finalize"))
+    parser.add_argument("mode", choices=("reuse-baseline", "prepare", "verify", "finalize"))
     parser.add_argument("--artifact-root", type=Path, required=True)
     parser.add_argument("--condition")
     parser.add_argument("--run-name")
@@ -111,6 +138,8 @@ def main() -> int:
         reuse_baseline(artifacts, args.condition)
     elif args.mode == "prepare":
         prepare(artifacts, str(args.run_name))
+    elif args.mode == "verify":
+        verify(artifacts, str(args.run_name))
     else:
         finalize(artifacts, str(args.run_name))
     return 0
