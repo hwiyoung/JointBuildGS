@@ -1,0 +1,9 @@
+{
+  "pipeline": [
+    {"type": "readers.las", "filename": "__INPUT__", "override_srs": "EPSG:25832"},
+    {"type": "filters.crop", "bounds": "([690791.740,691154.650],[5335864.050,5336353.850])"},
+    {"type": "filters.csf"},
+    {"type": "filters.voxelcenternearestneighbor", "cell": 0.10},
+    {"type": "writers.las", "filename": "__OUTPUT__", "a_srs": "EPSG:25832", "minor_version": 4, "dataformat_id": 3, "compression": "lazperf"}
+  ]
+}

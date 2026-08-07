@@ -4,9 +4,17 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>JointBuildGS E1-E6 Roofer 비교</title>
 <style>
-html,body{margin:0;height:100%;overflow:hidden;background:#080b10;color:#eef2f7;font:13px system-ui,sans-serif}#app{height:100%;display:grid;grid-template-rows:auto 1fr}header{padding:8px 12px;background:#111722;border-bottom:1px solid #303a48;display:flex;gap:18px;align-items:center}#info{color:#9fb0c4}.grid{min-height:0;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,1fr);gap:2px;background:#000}.panel{position:relative;min-width:0;min-height:0;background:#05070a}.label{position:absolute;z-index:3;top:6px;left:6px;padding:4px 7px;border-radius:4px;background:#000b}.view{position:absolute;inset:0}.view canvas{width:100%;height:100%;display:block}@media(max-width:1000px){.grid{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(4,1fr)}}
+html,body{margin:0;height:100%;overflow:hidden;background:#080b10;color:#eef2f7;font:13px system-ui,sans-serif}#app{height:100%;display:grid;grid-template-rows:auto 1fr}header{padding:8px 12px;background:#111722;border-bottom:1px solid #303a48;display:flex;gap:9px;align-items:center;white-space:nowrap}button,select{border:1px solid #526174;border-radius:4px;background:#1c2634;color:#eef2f7;padding:4px 8px;cursor:pointer}button:hover{background:#2a394d}#info{color:#9fb0c4}.legend{display:flex;gap:7px;color:#c7d2df}.legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:3px}.grid{min-height:0;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,1fr);gap:2px;background:#000}.panel{position:relative;min-width:0;min-height:0;background:#05070a}.label{position:absolute;z-index:3;top:6px;left:6px;padding:4px 7px;border-radius:4px;background:#000b}.view{position:absolute;inset:0}.view canvas{width:100%;height:100%;display:block}@media(max-width:1000px){header{overflow-x:auto}.grid{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(4,1fr)}}
 </style>
 </head>
-<body><div id="app"><header><strong>E1-E6 Roofer + prior 8-slot 동기 비교</strong><span>drag: 회전 · wheel: 확대 · click: w_b</span><span id="info">불러오는 중</span></header><main class="grid" id="grid"></main></div>
-<script type="importmap">{"imports":{"three":"./three.module.min.js"}}</script><script type="module" src="./app.js"></script></body>
+<body><div id="app"><header><strong>E1-E6 Roofer + 입력점군 + 표면mesh</strong><span>좌: 회전 · 우/Shift: 이동 · wheel: 확대 · click: 상세</span><label id="e3VariantWrap" hidden>E3 checkpoint <select id="e3Variant"></select></label><button id="focus4906982" type="button">4906982 보기</button><button id="resetView" type="button">시점 초기화</button><button id="toggleRooferMeshes" type="button">Roofer ON</button><button id="togglePointclouds" type="button">Roofer점군 ON</button><button id="toggleSurfaceMeshes" type="button">표면mesh OFF</button><button id="toggleRealChanges" type="button">시점차 후보 OFF</button><button id="toggleSyntheticChanges" type="button">합성 평가 OFF</button><span class="legend"><span><i style="background:#fb7185"></i>현재증가</span><span><i style="background:#22d3ee"></i>현재감소</span><span><i style="background:#a78bfa"></i>혼합</span></span><span id="info">불러오는 중</span></header><main class="grid" id="grid"></main></div>
+<script>
+const showLoadError = detail => {
+  const info = document.getElementById('info');
+  if (info) info.textContent = `로드 오류 · ${detail}`;
+};
+window.addEventListener('error', event => showLoadError(event.message || '스크립트 실행 실패'));
+window.addEventListener('unhandledrejection', event => showLoadError(event.reason?.message || String(event.reason)));
+</script>
+<script type="importmap">{"imports":{"three":"./three.module.min.js?v=e1e6-20260807o"}}</script><script type="module" src="./app.js?v=e1e6-20260807o"></script></body>
 </html>

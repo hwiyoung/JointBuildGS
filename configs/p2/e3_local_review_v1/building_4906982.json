@@ -1,0 +1,37 @@
+{
+  "schema": "jointbuildgs.p2.e3_local_review.v1",
+  "task_id": "P2-E3-LOCAL-4906982-INPUT-REVIEW-v3",
+  "building_id": "DEBY_LOD2_4906982",
+  "selection": {
+    "minimum_projection_coverage": 0.45,
+    "minimum_projected_area_fraction": 0.0001197,
+    "crop_margin_scale": 0.65,
+    "crop_margin_fraction_of_width": 0.019,
+    "validation_fraction": 0.125,
+    "minimum_validation_views": 8,
+    "minimum_candidate_views": 24,
+    "near_nadir_max_deg": 35.0,
+    "near_nadir_minimum_roof_vertex_coverage": 0.8,
+    "azimuth_bin_count": 8,
+    "nadir_bin_edges_deg": [35.0, 70.0]
+  },
+  "display": {
+    "maximum_projected_sparse_points": 4000,
+    "maximum_projected_mvs_points": 5000,
+    "maximum_crop_width_px": 760,
+    "contact_sheet_rows_per_page": 8
+  },
+  "inputs": {
+    "building_manifest": "phase-payloads/p2/qualitative_199_common_manifest_v1/P2-QUALITATIVE-199-COMMON-MANIFEST-v1/manifest/building_camera_view_crop_manifest_v1.jsonl",
+    "shared_footprints": "phase-payloads/p2/c1_c2_shared_footprint_199_v3/P2-C1-C2-SHARED-FOOTPRINT-199-ORIGINAL-GLOBAL-v3-replay-20260806a/freeze/shared_footprints_199.geojson",
+    "scene_reference": "phase-payloads/p0-audit/data/work/opf/opf/scene_reference_frame.json",
+    "colmap_root": "phase-payloads/p0-audit/data/work/mvs/colmap_dense",
+    "view_roles": "phase-payloads/p2/e1_e6_techdev_v1/P2-E1-E6-PRIOR-FUSION-TECHDEV-v1/prep/view_roles.json",
+    "mvs_seed": "phase-payloads/p2/e1_e6_techdev_v1/P2-E1-E6-PRIOR-FUSION-TECHDEV-v1/prep/seed_dense.ply",
+    "tensorboard_publish_root": "phase-payloads/p2/e1_e6_techdev_v1/P2-E1-E6-PRIOR-FUSION-TECHDEV-v1/runs/E3_LOCAL_4906982_REVIEW/tb"
+  },
+  "output_relative_root": "phase-payloads/p2/e3_local_review_v1/P2-E3-LOCAL-4906982-INPUT-REVIEW-v3",
+  "viewer_port": 8878,
+  "training_started": false,
+  "scientific_verdict": null
+}

@@ -6,4 +6,7 @@ docker run --rm --network none --shm-size 16g --gpus "device=${JBGS_GPU_INDEX:-0
   -w /workspace/JointBuildGS "${dev_image}" python scripts/p2/e1_e6_techdev_v1/evaluate.py \
   --artifact-root /artifacts/JointBuildGS --task-root "/artifacts/JointBuildGS/${task_rel}" \
   >"${logs_root}/07_eval.log" 2>&1
+run_dev python scripts/p2/e1_e6_techdev_v1/publish_tensorboard_images.py \
+  --task-root "/artifacts/JointBuildGS/${task_rel}" \
+  >"${logs_root}/07_tensorboard_images.log" 2>&1
 printf 'Evaluation report complete: %s/report.md\n' "${task_root}"
