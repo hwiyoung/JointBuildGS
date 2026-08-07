@@ -184,3 +184,27 @@
   overlay, no-voxel-downsampling, EPSG:25832 verification, Roofer defaults, ROI,
   image digest, and one-invocation policy. Only the readers.ply source is bound
   to each E3-E6 direct depth-fusion point cloud.
+
+## 2026-08-07 — Phases 4–6 complete
+
+- Direct TSDF-volume point-cloud extraction completed from the 820 training
+  views with zero held-out integrations: E3 3,472,605 points, E4 1,197,476,
+  E5 1,180,197, and diagnostic E6 2,909,402. Every v2 extraction receipt states
+  `TSDF_VOLUME_EXTRACT_POINT_CLOUD_DIRECT` and
+  `mesh_used_to_create_roofer_pointcloud: false`.
+- Six Roofer outputs exist for E1–E6. E3–E6 classification receipts prove use
+  of the certified original-global v3 adapter, EPSG:25832, ground/building
+  classes 2/6, no voxel downsampling, Roofer defaults, and one invocation. E1
+  remains the historical current-epoch 2024 ULS result and E2 the exact
+  common-base MVS result.
+- The eight-slot synchronized viewer is under `viewer/`: E1–E6 Roofer, raw
+  existing ALS prior, and original existing LoD2. It contains the fixed E3–E6
+  themes and per-building `w_b` lookup data.
+- Evaluation-scan-only semantic GT contains 117 held-out label PNGs, 117 valid
+  masks, and three 300-pixel QA sheets. Its CSF/PCA20 source path is separate
+  from all training caches.
+- Four condition metrics and `report.md` completed. Change-region ghost volume
+  is 225.7236 m3 for E4 and 123.3354 m3 for E5, so the preregistered technical
+  relation E4 > E5 is observed. E4/E5 hole areas are 1629.0/2006.5 m2. No
+  scientific verdict is assigned. CloudCompare CLI was unavailable in the
+  pinned images, so mesh-to-cloud receipts identify the Open3D/SciPy fallback.
