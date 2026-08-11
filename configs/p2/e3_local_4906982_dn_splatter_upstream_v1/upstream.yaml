@@ -1,0 +1,53 @@
+schema: jointbuildgs.p2.e3_local_4906982_dn_splatter_upstream_v1.config.v1
+task_id: P2-E3-LOCAL-4906982-DN-SPLATTER-UPSTREAM-v1
+building_id: DEBY_LOD2_4906982
+method:
+  repository: https://github.com/maturk/dn-splatter.git
+  commit: 97588b4290128ce7ba6fdbfaac3020b42b17de4c
+  entrypoint: ns-train dn-splatter
+  regularization_strategy: dn-splatter
+  implementation_policy: execute pinned upstream without source edits
+input:
+  crop: /artifacts/JointBuildGS/phase-payloads/p2/e3_local_4906982_v1/P2-E3-LOCAL-4906982-2DGS-v6-dist0-resetoff-30k/data/colmap_crop
+  view_roles: /artifacts/JointBuildGS/phase-payloads/p2/e3_local_4906982_v1/P2-E3-LOCAL-4906982-2DGS-v6-dist0-resetoff-30k/control/view_roles.json
+  depth_source: COLMAP geometric consistency depth
+  depth_adapter: positive finite camera-Z metres saved as float32 NPY; all other pixels become zero
+  sparse_seed: exact COLMAP sparse points converted to PLY without coordinate transformation
+  fixed_views: 55
+  train_views: 47
+  held_out_views: 8
+dataset_adapter:
+  camera_convention: COLMAP OpenCV c2w converted to Nerfstudio OpenGL camera axes
+  orientation_method: none
+  center_method: none
+  auto_scale_poses: false
+  scale_factor: 1.0
+  depth_unit_scale_factor: 1.0
+  scene_scale: 250.0
+training:
+  random_seed: 0
+  max_num_iterations: 20000
+  checkpoints: [7000, 12000, 15000, 20000]
+  steps_per_save: 1000
+  save_only_latest_checkpoint: false
+  use_depth_loss: true
+  depth_loss_type: EdgeAwareLogL1
+  depth_lambda: 0.2
+  upstream_depth_lambda_semantics: unchanged
+  use_normal_loss: true
+  use_normal_tv_loss: true
+  normal_supervision: depth
+  dn_regularization_min_scale_loss: true
+  physgaussian_scale_regularization: false
+  two_d_gaussians: true
+  warmup_length: 500
+  stop_split_at: 15000
+  camera_optimizer: off
+excluded:
+  - source modifications to DN-Splatter
+  - confidence filtering or AGS-Mesh
+  - MVC
+  - ALS prior
+  - LoD2 Z, RoofSurface, roof type, or semantic supervision
+  - changes to the existing gsplat 2DGS training implementation
+scientific_verdict: null

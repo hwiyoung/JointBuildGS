@@ -1,0 +1,14 @@
+schema: jointbuildgs.p2.e3_local_4906982_dn_splatter_upstream_v1.sources.v1
+dn_splatter:
+  repository: https://github.com/maturk/dn-splatter.git
+  commit: 97588b4290128ce7ba6fdbfaac3020b42b17de4c
+  executable_code: true
+gs4buildings:
+  repository: https://github.com/zqlin0521/GS4Buildings.git
+  checked_commit: 1d25dac38d44a72cbf60a0bab730eed7f9e3663a
+  files_at_checked_commit: [README.md, docs/GS4Buildings_Overview.png]
+  upstream_status: Code coming soon
+  executable_code: false
+  method_requires_lod2_semantic_building_model_training_prior: true
+scientific_verdict: null
+
