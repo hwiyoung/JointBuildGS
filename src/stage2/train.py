@@ -2522,10 +2522,18 @@ def main():
     w_external_als_depth = float(cfg.get("w_external_als_depth", 0.0) or 0.0)
     w_external_als_normal = float(cfg.get("w_external_als_normal", 0.0) or 0.0)
     external_als_huber_delta_m = float(cfg.get("external_als_huber_delta_m", 1.0))
+    external_als_normalization = str(cfg.get("external_als_normalization", "confidence_sum"))
+    external_als_alpha_gate = cfg.get("external_als_alpha_gate", None)
     if (w_external_als_depth > 0 or w_external_als_normal > 0) and cfg.get("external_als_prior_dir") is None:
         raise ValueError("positive external ALS weights require external_als_prior_dir")
     if external_als_huber_delta_m <= 0:
         raise ValueError("external_als_huber_delta_m must be positive")
+    if external_als_normalization not in {"confidence_sum", "valid_pixel_count"}:
+        raise ValueError("external_als_normalization must be confidence_sum|valid_pixel_count")
+    if external_als_alpha_gate is not None:
+        external_als_alpha_gate = float(external_als_alpha_gate)
+        if not 0.0 < external_als_alpha_gate < 1.0:
+            raise ValueError("external_als_alpha_gate must lie strictly inside (0, 1)")
     w_mono_normal_aux = float(cfg.get("w_mono_normal_aux", 0.0) or 0.0)
     w_plane = float(cfg.get("w_plane", 0.0) or 0.0)
     pilot_loss_audit_every = int(cfg.get("pilot_loss_audit_every", 0) or 0)
@@ -3934,18 +3942,22 @@ def main():
         if "external_als_mask" in batch:
             als_mask = batch["external_als_mask"].to(device)
             als_confidence = batch["external_als_confidence"].to(device)
+            if external_als_alpha_gate is not None:
+                als_mask = als_mask & (alpha.detach() > external_als_alpha_gate)
             loss_external_als_depth, external_als_depth_stats = robust_als_depth_loss(
                 depth_pred,
                 batch["external_als_depth"].to(device),
                 als_confidence,
                 als_mask,
                 huber_delta_m=external_als_huber_delta_m,
+                normalization=external_als_normalization,
             )
             loss_external_als_normal, external_als_normal_stats = sign_invariant_als_normal_loss(
                 n_render,
                 batch["external_als_normal"].to(device),
                 als_confidence,
                 als_mask,
+                normalization=external_als_normalization,
             )
             loss_total = (
                 loss_total

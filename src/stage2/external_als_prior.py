@@ -15,6 +15,15 @@ def current_consistency_attenuation(residual_m: torch.Tensor, conflict_scale_m: 
     return torch.exp(-torch.clamp(residual_m, min=0.0) / float(conflict_scale_m)).detach()
 
 
+def _als_denominator(weight: torch.Tensor, count: int, normalization: str) -> torch.Tensor:
+    """Legacy confidence_sum renormalizes uniform attenuation away; valid_pixel_count keeps it absolute."""
+    if normalization == "confidence_sum":
+        return weight.sum().clamp_min(torch.finfo(weight.dtype).eps)
+    if normalization == "valid_pixel_count":
+        return torch.tensor(float(count), dtype=weight.dtype, device=weight.device)
+    raise ValueError("external ALS normalization must be confidence_sum|valid_pixel_count")
+
+
 def robust_als_depth_loss(
     rendered_depth: torch.Tensor,
     prior_depth: torch.Tensor,
@@ -22,8 +31,9 @@ def robust_als_depth_loss(
     mask: torch.Tensor,
     *,
     huber_delta_m: float,
+    normalization: str = "confidence_sum",
 ) -> tuple[torch.Tensor, dict[str, Any]]:
-    """Confidence-normalized Huber loss in metric camera depth."""
+    """Confidence-weighted Huber loss in metric camera depth."""
     if huber_delta_m <= 0:
         raise ValueError("huber_delta_m must be positive")
     if not (rendered_depth.shape == prior_depth.shape == confidence.shape == mask.shape and rendered_depth.ndim == 2):
@@ -38,8 +48,7 @@ def robust_als_depth_loss(
     delta = float(huber_delta_m)
     huber = torch.where(residual <= delta, 0.5 * residual.square() / delta, residual - 0.5 * delta)
     weight = confidence[valid].clamp(0.0, 1.0)
-    denominator = weight.sum().clamp_min(torch.finfo(weight.dtype).eps)
-    loss = (weight * huber).sum() / denominator
+    loss = (weight * huber).sum() / _als_denominator(weight, count, normalization)
     return loss, {"valid_pixel_count": count, "confidence_sum": float(weight.detach().sum().cpu().item())}
 
 
@@ -48,8 +57,10 @@ def sign_invariant_als_normal_loss(
     prior_normal: torch.Tensor,
     confidence: torch.Tensor,
     mask: torch.Tensor,
+    *,
+    normalization: str = "confidence_sum",
 ) -> tuple[torch.Tensor, dict[str, Any]]:
-    """Confidence-normalized 1-|dot| loss; normal sign is intentionally ignored."""
+    """Confidence-weighted 1-|dot| loss; normal sign is intentionally ignored."""
     if not (rendered_normal.shape == prior_normal.shape and rendered_normal.ndim == 3 and rendered_normal.shape[-1] == 3):
         raise ValueError("ALS normals must be same-shape HxWx3")
     if confidence.shape != mask.shape or mask.shape != rendered_normal.shape[:2] or mask.dtype != torch.bool:
@@ -63,7 +74,7 @@ def sign_invariant_als_normal_loss(
     predicted = torch.nn.functional.normalize(rendered_normal[valid], dim=-1, eps=1.0e-6)
     prior = prior_normal[valid] / prior_norm[valid][:, None]
     weight = confidence[valid].clamp(0.0, 1.0)
-    loss = (weight * (1.0 - torch.abs((predicted * prior).sum(dim=-1)))).sum() / weight.sum().clamp_min(torch.finfo(weight.dtype).eps)
+    loss = (weight * (1.0 - torch.abs((predicted * prior).sum(dim=-1)))).sum() / _als_denominator(weight, count, normalization)
     return loss, {"valid_pixel_count": count, "confidence_sum": float(weight.detach().sum().cpu().item())}
 
 
