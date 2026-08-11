@@ -1,0 +1,25 @@
+task_id: P2-E3-LOCAL-4906982-MVS-DEPTH-VIEWER-v1
+building_id: DEBY_LOD2_4906982
+scientific_verdict: null
+
+source_config: /workspace/JointBuildGS/configs/p2/e3_local_4906982_mvc_depth_v1/depth03.yaml
+data_root: /artifacts/JointBuildGS/phase-payloads/p2/e3_local_4906982_v1/P2-E3-LOCAL-4906982-2DGS-v6-dist0-resetoff-30k/data/colmap_crop
+viewer_root: /artifacts/JointBuildGS/phase-payloads/p2/e3_local_review_v1/P2-E3-LOCAL-4906982-INPUT-REVIEW-v3/viewer
+depth_suffix: .geometric.bin
+world_shift_z_m: 604.0
+
+render:
+  width: 760
+  height: 550
+  camera_depth_percentiles: [0.02, 0.98]
+  world_z_range_m: [555.0, 670.0]
+  invalid_color_rgb: [0, 0, 0]
+  footprint_line_color_rule: RGB overlay pixels with R>=180, G>=130, B<=100
+
+representative_views:
+  - DJI_20241217090833_0019_D.JPG
+  - DJI_20241217101327_0016_D.JPG
+
+viewer_port: 8878
+source_payloads_mutated: false
+lod2_z_used: false
