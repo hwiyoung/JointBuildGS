@@ -103,8 +103,13 @@ def main() -> None:
         reference_planes = major_planes(reference_surfaces[stable_id], structure["minimum_plane_area_m2"])
         lod_triangles = reference_triangles(reference_surfaces[stable_id])
         uas_path = v22_root / building["lidar"]["points"]
-        if building["lidar"].get("point_count", 0) > 0:
-            geometry_cells = roof_reference_cells(uas_path, geometry["cell_size_m"], evaluation_polygon)
+        uas_cells = (
+            roof_reference_cells(uas_path, geometry["cell_size_m"], evaluation_polygon)
+            if building["lidar"].get("point_count", 0) > 0
+            else np.empty((0, 3), dtype=np.float64)
+        )
+        if len(uas_cells):
+            geometry_cells = uas_cells
             geometry_role = "CURRENT_UAS_CLASS6_ANY_SUPPORT"
         else:
             geometry_cells = reference_grid_from_lod2(lod_triangles, evaluation_polygon, geometry["cell_size_m"])
