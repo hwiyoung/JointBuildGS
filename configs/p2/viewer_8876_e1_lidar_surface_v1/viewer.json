@@ -1,0 +1,27 @@
+{
+  "schema": "jointbuildgs.p2.viewer_8876_e1_lidar_surface.config.v1",
+  "task_id": "P2-VIEWER-8876-E1-LIDAR-SURFACE-v1",
+  "viewer_root": "phase-payloads/p2/e1_e6_techdev_v1/P2-E1-E6-PRIOR-FUSION-TECHDEV-v1/viewer",
+  "source_laz": "phase-payloads/p2/c1_c2_shared_footprint_199_v3/P2-C1-C2-SHARED-FOOTPRINT-199-ORIGINAL-GLOBAL-v3-replay-20260806a/work/C1_L_upper/classified_scene.laz",
+  "source_laz_sha256": "eb6f89dba1c95f2b385459790cbfcbb0d5c7dc2f1f06fb1ccf8f3d6b97fdff1d",
+  "source_laz_bytes": 839950487,
+  "expected_before": {
+    "viewer_manifest.json": "6314b537c47aa755be84bcefa9c95587df3ae04cb6c36be4b4935eddab3721ea",
+    "surface_meshes.json": "46d71da3aed167a48aa90ccfaef69dfc6f9fa92cd3f86dc89ba0e0d5fa595dc4",
+    "app.js": "9d9f67f49a0f107e606409e251b1042e582e66d0e441b7496ad3f76e822148b3",
+    "index.html": "1a969ec689c0c030bdd87dc9ee214520fb449e27aac4342e152d5152eb4304bb"
+  },
+  "building_id": "DEBY_LOD2_4906982",
+  "population_index": 36,
+  "world_shift_xyz": [690953.0, 5336071.0, 604.0],
+  "crop_bbox_xy": [690909.865, 5336180.785, 690994.015, 5336262.355],
+  "grid_resolution_m": 0.25,
+  "classification_codes": [2, 6],
+  "maximum_triangle_z_span_m": 2.0,
+  "las_chunk_points": 2000000,
+  "output_asset": "assets/E1_lidar_surface_triangles_f32.bin",
+  "source_role": "CURRENT_UAS_LIDAR_ROOFER_CLASS_2_6_DISPLAY_SURFACE_PROXY",
+  "display_proxy_method": "CLASS_2_6_MAX_Z_GRID_0P25M_TARGET_VIEWPORT_NO_HOLE_FILL_MAX_TRIANGLE_Z_SPAN_2M",
+  "roofer_inputs_modified": false,
+  "scientific_verdict": null
+}
