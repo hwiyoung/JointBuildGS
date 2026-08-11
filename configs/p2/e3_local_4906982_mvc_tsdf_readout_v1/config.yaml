@@ -1,0 +1,116 @@
+task_id: P2-E3-LOCAL-4906982-MVC-TSDF-READOUT-v1
+building_id: DEBY_LOD2_4906982
+status: APPROVED_FOR_LOCAL_TECHNICAL_DIAGNOSTIC
+crs: EPSG:25832
+scientific_verdict: null
+
+source_task_root: /artifacts/JointBuildGS/phase-payloads/p2/e3_local_4906982_mvc_v2/P2-E3-LOCAL-4906982-MVC-v2
+source_runtime_config: /artifacts/JointBuildGS/phase-payloads/p2/e3_local_4906982_mvc_v2/P2-E3-LOCAL-4906982-MVC-v2/control/runtime_configs/mvc0_r1.yaml
+source_input_hashes: /artifacts/JointBuildGS/phase-payloads/p2/e3_local_4906982_mvc_v2/P2-E3-LOCAL-4906982-MVC-v2/input_hashes.json
+shared_footprint: /artifacts/JointBuildGS/phase-payloads/p2/e3_local_4906982_mvc_v2/P2-E3-LOCAL-4906982-MVC-v2/control/shared_standard_footprint_4906982.geojson
+reference_lod2_gml: /artifacts/JointBuildGS/phase-payloads/p0-audit/data/raw/lod2/690_5336.gml
+
+arms: [MVC0, MVC05]
+replicas: [R1, R2, R3]
+completed_updates: 20000
+checkpoint_sha256:
+  MVC0:
+    R1: 7091a5b8e12ceabd8d74a45d051416ae0ee27ad4902c260f3042d5837bf71ecd
+    R2: 454d879eae8324df02b25590cd0de37f5f21d4dbd45c0cdce204d7f0d1141681
+    R3: 89ba9dafd2920fd3b04a217eb1e8e384d324db3a22794954b84371d56fe849c8
+  MVC05:
+    R1: 168838ba2f04a7c7f21d27dd8d92ccfcffd12cbc5ed09830cf89fb6fccffcb88
+    R2: 91d7a7f02ed26e673846d0864329da625236063ebb07b6bba9202c2fc827f4fe
+    R3: 8b428e39bde3dd447d619b0be1c2f3d6c6df1cca0f529355c58e1b1b6c052747
+
+docker:
+  gpu_index: 1
+  eval_image: jointbuildgs:mvc-eval-v1
+  eval_image_id: sha256:5968cc43e93e915abc0d82ede44d718990d526eef054d6b47aa96120f00d39d1
+  tools_image: jointbuildgs-p0-tools:t0
+  tools_image_id: sha256:02b4b7bb2e35e9b88bcc8457678ed8f178cca8f76f22b1b62f02721359e46be8
+  roofer_image: 3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2
+  roofer_image_id: sha256:9c980b97fba4c3fd30f5bb4afb8f2621be211d4e72e4333ea2053e8cd69b2dba
+  report_builder_image: innopam-v1-nbm-frontend:latest
+  report_builder_image_id: sha256:f7188e0372d8357d7e19d22ebdb6230305596da5e1205febde9e14a3d4d5d4a5
+
+render:
+  downscale: 0.25
+  expected_view_count: 55
+  depth_mode: median
+  alpha_min: 0.5
+  depth_min_m: 0.01
+  depth_max_m: 500.0
+  footprint_buffer_m: 30.0
+  world_shift_xyz: [690953.0, 5336071.0, 604.0]
+  preserve_arrays: [depth_raw, depth_tsdf, normal_world, alpha, rgb, K, w2c]
+
+tsdf:
+  implementation: open3d_scalable_tsdf_raw_no_z_clip
+  voxel_m: 0.15
+  truncation_m: 0.45
+  support_visibility_tolerance_m: 0.45
+  minimum_distinct_view_support: 2
+  no_z_clip: true
+
+bounded_tsdf:
+  implementation: open3d_scalable_tsdf_existing_c3_aoi_z_contract
+  source_render_buffers: raw_tsdf_render_buffers
+  fixed_ground_source: /artifacts/JointBuildGS/phase-payloads/p2/e3_local_4906982_mvc_v2/P2-E3-LOCAL-4906982-MVC-v2/arms/MVC0/R1/evaluation/step_007000/fusion/roofer/roofer_terminal.json
+  fixed_ground_source_sha256: 1976a9ff00b5888686bf21420370984304b55fa3943d33ca6525361cbc6eff84
+  fixed_ground_attribute: rf_h_ground
+  fixed_ground_z_m: 558.1589965820312
+  below_ground_m: 2.0
+  above_ground_m: 45.0
+  same_voxel_truncation_support_as_raw_tsdf: true
+  reference_used: false
+
+voxel_baseline:
+  reuse_existing: true
+  implementation: per_view_voxel_aggregation
+  voxel_m: 0.15
+  alpha_min: 0.5
+  minimum_distinct_view_support: 2
+
+classification:
+  smrf: {cell: 1.0, slope: 0.15, scalar: 1.25, threshold: 0.5, window: 18.0}
+  ground_class: 2
+  building_class: 6
+  unclassified_class: 1
+  context_buffer_m: 30.0
+
+roofer:
+  quality_parameters: ROOFER_DEFAULTS
+  id_attribute: stable_id
+  jobs: 1
+  quality_driven_retry_allowed: false
+
+evaluation:
+  prediction_z_shift_to_reference_m: -45.7
+  roof_normal_abs_nz_min: 0.7
+  grid_size_m: 1.0
+  center_margin_m: 3.0
+  grid_min_points_per_cell: 3
+  coherent_cell_median_abs_dz_max_m: 0.5
+  coherent_cell_median_normal_angle_max_deg: 15.0
+  surface_sample_spacing_m: 0.5
+  distance_thresholds_m: [0.25, 0.5, 1.0]
+  diagnostic_full_roof_xy_coverage_threshold: 0.95
+
+execution_counters:
+  expected_training_runs: 0
+  expected_checkpoint_renders: 6
+  expected_tsdf_reconstructions: 12
+  expected_voxel_fusion_reruns: 0
+  expected_tsdf_classifications: 12
+  expected_tsdf_roofer_runs: 12
+
+reference_is_evaluation_only: true
+prohibited_reference_uses:
+  - render filtering
+  - TSDF integration
+  - TSDF support filtering
+  - classification
+  - Roofer parameter selection
+  - per-arm tuning
+  - per-replica tuning
