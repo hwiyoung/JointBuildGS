@@ -1,0 +1,65 @@
+{
+  "schema": "jointbuildgs.p2.viewer_8876_full_source_coverage_boundaries.config.v1",
+  "task_id": "P2-VIEWER-8876-FULL-SOURCE-COVERAGE-BOUNDARIES-v1",
+  "viewer_root": "phase-payloads/p2/e1_e6_techdev_v1/P2-E1-E6-PRIOR-FUSION-TECHDEV-v1/viewer",
+  "inputs": {
+    "e1_raw_lidar": {
+      "path": "phase-payloads/p0-audit/data/raw/tum2twin/TUM_Downtown_ULS_20241217_nadir.laz",
+      "bytes": 1277996022,
+      "sha256": "50783bfb205ea5532ac2a300d7e41b6b6426e45009d6c961d603e079cc5ae7b4",
+      "source_crs": "EPSG:32632",
+      "target_crs": "EPSG:25832"
+    },
+    "e2_dense_mvs": {
+      "path": "phase-payloads/p0-audit/data/work/mvs/openmvs/dim_dense.ply",
+      "bytes": 659138498,
+      "sha256": "b4bc250a6c97de50295f08023194a55c8a9744dc2b225db8618fd594b52ae28f",
+      "world_shift_xyz": [690953.0, 5336071.0, 604.0]
+    },
+    "colmap_cameras": {
+      "path": "phase-payloads/p0-audit/data/work/mvs/colmap_dense/sparse/cameras.bin",
+      "bytes": 64,
+      "sha256": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99"
+    },
+    "colmap_images": {
+      "path": "phase-payloads/p0-audit/data/work/mvs/colmap_dense/sparse/images.bin",
+      "bytes": 114415526,
+      "sha256": "dfc779496ee3b13f8df5dd28fae465746ce0adf4aca7922d38cbed275a2fd951"
+    },
+    "shared_footprints_199": {
+      "path": "phase-payloads/p2/c1_c2_shared_footprint_199_v3/P2-C1-C2-SHARED-FOOTPRINT-199-ORIGINAL-GLOBAL-v3-replay-20260806a/freeze/shared_footprints_199.geojson",
+      "bytes": 120967,
+      "sha256": "5f9b703b06676db4400f6568fc3db315e319913f98ba491e98922eb747e4488a"
+    }
+  },
+  "expected_before": {
+    "viewer_manifest.json": "8620ac26d4e9333e5b829ec490cf871be41dde82ffe6e6ed1749b22b18ceccea",
+    "surface_meshes.json": "82ed7e4d348e7ccfd97102e47fafa107d2b1b2b15c8c8233d45a2a6c8d2bd35b",
+    "app.js": "7b7ca00e944ba35ac1c18ab03b1497866719fcc12f5dcbcf9e5e570655450379",
+    "index.html": "8303a37e9669596c86409c80726ee7b9f54471b7fcc2dc7f92d5c7841843a11e"
+  },
+  "grid": {
+    "resolution_m": 1.0,
+    "footprint_union_padding_m": 10.0,
+    "minimum_component_cells": 25,
+    "maximum_filled_hole_cells": 4,
+    "closing_iterations": 1
+  },
+  "image_support": {
+    "projection_plane_local_z_m": -20.0,
+    "minimum_view_count": 3,
+    "minimum_oblique_view_count": 1,
+    "minimum_oblique_off_nadir_deg": 15.0
+  },
+  "layers": [
+    {"id": "E1_RAW_LIDAR", "label_ko": "E1 원본 UAS LiDAR 관측", "color": "#3b82f6"},
+    {"id": "IMAGE_MULTIVIEW", "label_ko": "영상 3시점 이상 + 경사 1시점 이상", "color": "#f59e0b"},
+    {"id": "E2_DENSE_MVS", "label_ko": "E2 dense MVS 원시 지원", "color": "#ef4444"},
+    {"id": "STRICT_DIRECT_COMMON", "label_ko": "E1/E2 직접 비교 공통 지원", "color": "#22c55e"}
+  ],
+  "output_json": "coverage_boundaries.json",
+  "display_only": true,
+  "target_membership_modified": false,
+  "roofer_inputs_modified": false,
+  "scientific_verdict": null
+}
