@@ -41,6 +41,7 @@ from .grouping import (
     group_primitives_g2_partitioned,
 )
 from .loss import data_fitting as L
+from .loss.depth_reference import dn_splatter_edge_aware_log_l1
 from .loss.mutual import l_mutual
 from .loss.multiview import l_multiview_consistency
 from .loss.planarity import (
@@ -881,6 +882,90 @@ def _scheduled_weight(
         f"Unsupported schedule={schedule!r}; expected 'constant', 'ramp', "
         "'exp_decay', or 'constant_then_exp_decay'"
     )
+
+
+def _official_2dgs_exponential_lr(
+    iteration_1based: int,
+    *,
+    lr_init: float,
+    lr_final: float,
+    delay_mult: float,
+    max_steps: int,
+) -> float:
+    """Position LR schedule used by the pinned official 2DGS implementation."""
+
+    if iteration_1based < 0 or max_steps <= 0:
+        raise ValueError("iteration_1based must be non-negative and max_steps positive")
+    if lr_init < 0.0 or lr_final < 0.0 or not 0.0 <= delay_mult <= 1.0:
+        raise ValueError("official 2DGS LR values are outside the supported range")
+    if lr_init == 0.0 and lr_final == 0.0:
+        return 0.0
+    if lr_init <= 0.0 or lr_final <= 0.0:
+        raise ValueError("official 2DGS exponential LR endpoints must both be positive")
+    # The pinned reference passes no lr_delay_steps, so delay_mult is recorded
+    # provenance but has no numerical effect.
+    del delay_mult
+    t = min(1.0, max(0.0, float(iteration_1based) / float(max_steps)))
+    return float(math.exp(math.log(lr_init) * (1.0 - t) + math.log(lr_final) * t))
+
+
+def _validate_depth_supervision_mode(value: Any) -> str:
+    """Validate the rendered-depth statistic used by raw COLMAP supervision.
+
+    This selector is intentionally narrower than the trainer's general rendered
+    depth.  It changes only the prediction passed to the raw COLMAP ``L_depth``
+    term; mono-depth, external-prior, MVC, and all diagnostic paths retain the
+    historical expected-depth tensor.
+    """
+
+    mode = str(value).lower()
+    if mode not in {"expected", "median", "surface_intersection"}:
+        raise ValueError(
+            "depth_supervision_mode must be expected|median|surface_intersection"
+        )
+    return mode
+
+
+def _validate_depth_loss_type(value: Any) -> str:
+    """Validate the raw COLMAP depth objective without changing legacy defaults."""
+
+    loss_type = str(value).lower()
+    if loss_type not in {"l1", "dn_edge_aware_log_l1"}:
+        raise ValueError("depth_loss_type must be l1|dn_edge_aware_log_l1")
+    return loss_type
+
+
+def _depth_supervision_prediction(
+    render_output: Dict[str, torch.Tensor], mode: str
+) -> torch.Tensor:
+    """Select the frozen rendered-depth statistic for raw COLMAP ``L_depth``."""
+
+    validated = _validate_depth_supervision_mode(mode)
+    key = {
+        "expected": "depth",
+        "median": "depth_median",
+        "surface_intersection": "depth_surface_intersection",
+    }[validated]
+    if key not in render_output:
+        raise KeyError(
+            f"renderer output is missing {key!r} required by "
+            f"depth_supervision_mode={validated}"
+        )
+    prediction = render_output[key]
+    if validated == "surface_intersection":
+        hit_key = "depth_surface_intersection_hit"
+        if hit_key not in render_output:
+            raise KeyError(
+                f"renderer output is missing {hit_key!r} required by "
+                "surface-intersection no-hit handling"
+            )
+        # Preserve the exact raw-positive COLMAP supervision mask.  A pixel
+        # with no finite positive ray--surfel hit falls back to the historical
+        # expected-depth tensor rather than silently deleting supervision.
+        prediction = torch.where(
+            render_output[hit_key], prediction, render_output["depth"]
+        )
+    return prediction
 
 
 def _aligned_depth_prior_l1(
@@ -1847,6 +1932,67 @@ def main():
     config_path = Path(args.config)
     with config_path.open() as f:
         cfg = yaml.safe_load(f)
+    # Fail before creating any run directory when the single-variable rendered
+    # depth selector is malformed.  Historical configs default to expected.
+    depth_supervision_mode = _validate_depth_supervision_mode(
+        cfg.get("depth_supervision_mode", "expected")
+    )
+    depth_loss_type = _validate_depth_loss_type(cfg.get("depth_loss_type", "l1"))
+    depth_valid_min = float(cfg.get("depth_valid_min", 0.0))
+    if depth_valid_min < 0.0:
+        raise ValueError("depth_valid_min must be non-negative")
+    if depth_loss_type == "dn_edge_aware_log_l1":
+        if depth_supervision_mode != "expected":
+            raise ValueError("DN-Splatter depth-only requires expected rendered depth")
+        if depth_valid_min != 0.1:
+            raise ValueError("DN-Splatter depth-only requires depth_valid_min=0.1")
+    normal_consistency_mode = str(
+        cfg.get("normal_consistency_mode", "normalized_alpha_weighted")
+    )
+    if normal_consistency_mode not in {
+        "normalized_alpha_weighted",
+        "official_2dgs",
+    }:
+        raise ValueError(
+            "normal_consistency_mode must be "
+            "normalized_alpha_weighted|official_2dgs"
+        )
+    surface_normal_depth_mode = str(
+        cfg.get("surface_normal_depth_mode", "gsplat_expected")
+    )
+    if surface_normal_depth_mode not in {
+        "gsplat_expected",
+        "surface_intersection_expected",
+    }:
+        raise ValueError(
+            "surface_normal_depth_mode must be "
+            "gsplat_expected|surface_intersection_expected"
+        )
+    if (
+        normal_consistency_mode == "official_2dgs"
+        and surface_normal_depth_mode != "surface_intersection_expected"
+    ):
+        raise ValueError(
+            "official_2dgs normal consistency requires "
+            "surface_normal_depth_mode=surface_intersection_expected"
+        )
+    lr_means_schedule = str(cfg.get("lr_means_schedule", "constant"))
+    if lr_means_schedule not in {"constant", "official_2dgs_exponential"}:
+        raise ValueError(
+            "lr_means_schedule must be constant|official_2dgs_exponential"
+        )
+    lr_means_init = float(cfg.get("lr_means", 1.6e-4))
+    lr_means_final = float(cfg.get("lr_means_final", lr_means_init))
+    lr_means_delay_mult = float(cfg.get("lr_means_delay_mult", 0.01))
+    lr_means_max_steps = int(cfg.get("lr_means_max_steps", 30000))
+    if lr_means_schedule == "official_2dgs_exponential":
+        _official_2dgs_exponential_lr(
+            0,
+            lr_init=lr_means_init,
+            lr_final=lr_means_final,
+            delay_mult=lr_means_delay_mult,
+            max_steps=lr_means_max_steps,
+        )
     full_state = full_state_options(cfg)
     pilot_arm = _validate_pilot_config_contract(cfg, full_state)
 
@@ -2884,14 +3030,27 @@ def main():
     if w_nc > 0:
         print(
             f"[normal-consistency] w_nc={w_nc:g} "
-            f"schedule={nc_schedule}@{nc_warmup}+{nc_ramp_steps}"
+            f"schedule={nc_schedule}@{nc_warmup}+{nc_ramp_steps} "
+            f"mode={normal_consistency_mode} "
+            f"surface_depth={surface_normal_depth_mode}"
         )
+    print(
+        "[means-lr] "
+        f"schedule={lr_means_schedule} init={lr_means_init:.12g} "
+        f"final={lr_means_final:.12g} max_steps={lr_means_max_steps}"
+    )
     if depth_prior_alignment != "none":
         print(
             f"[depth-alignment] mode={depth_prior_alignment} "
             f"detach_scale={depth_alignment_detach_scale} "
             "normalization=1/valid_mask_pixel_count"
         )
+    print(
+        "[depth-supervision] "
+        f"raw_colmap_prediction={depth_supervision_mode} "
+        f"loss={depth_loss_type} valid_min={depth_valid_min:g} "
+        "scope=raw_COLMAP_L_depth_only"
+    )
     if normal_prior_orientation == "signed":
         print(
             "[normal-prior] orientation=signed "
@@ -2911,11 +3070,18 @@ def main():
         "distort_final_weight": distort_final_weight,
         "distort_final_factor": distort_final_factor,
         "w_nc": w_nc,
+        "normal_consistency_mode": normal_consistency_mode,
+        "surface_normal_depth_mode": surface_normal_depth_mode,
         "nc_schedule": nc_schedule,
         "nc_warmup": nc_warmup,
         "nc_ramp_steps": nc_ramp_steps,
         "nc_final_weight": nc_final_weight,
         "nc_final_factor": nc_final_factor,
+        "lr_means_schedule": lr_means_schedule,
+        "lr_means_init": lr_means_init,
+        "lr_means_final": lr_means_final,
+        "lr_means_delay_mult": lr_means_delay_mult,
+        "lr_means_max_steps": lr_means_max_steps,
         "depth_schedule": depth_schedule,
         "depth_warmup": depth_warmup,
         "depth_ramp_steps": depth_ramp_steps,
@@ -2924,6 +3090,19 @@ def main():
         "depth_final_factor": depth_final_factor,
         "depth_weight_floor": depth_weight_floor,
         "depth_prior_alignment": depth_prior_alignment,
+        "depth_supervision_mode": depth_supervision_mode,
+        "depth_loss_type": depth_loss_type,
+        "depth_valid_min": depth_valid_min,
+        "depth_supervision_scope": "raw_COLMAP_L_depth_only",
+        "depth_supervision_prediction": {
+            "expected": "renderer.depth (expected Gaussian-center Z)",
+            "median": "renderer.depth_median (median Gaussian-center Z)",
+            "surface_intersection": (
+                "renderer.depth_surface_intersection "
+                "(alpha-weighted perspective-correct ray-surfel hit Z; "
+                "no-hit fallback=renderer.depth)"
+            ),
+        }[depth_supervision_mode],
         "depth_alignment_detach_scale": depth_alignment_detach_scale,
         "depth_prior_loss_normalization": "sum_masked_absolute_error/valid_mask_pixel_count",
         "depth_alignment_formula": (
@@ -3446,6 +3625,18 @@ def main():
         )
 
     for it in pbar:
+        if lr_means_schedule == "official_2dgs_exponential":
+            means_lr = _official_2dgs_exponential_lr(
+                it + 1,
+                lr_init=lr_means_init,
+                lr_final=lr_means_final,
+                delay_mult=lr_means_delay_mult,
+                max_steps=lr_means_max_steps,
+            )
+            for group in optimizers["means"].param_groups:
+                group["lr"] = means_lr
+        else:
+            means_lr = float(optimizers["means"].param_groups[0]["lr"])
         # pick a random training view
         idx = training_view_index(
             train_idx,
@@ -3470,9 +3661,21 @@ def main():
                 target_region_address_audit,
             ) = _target_region_mask(target_frame, mono_target_buildings)
 
-        out = render(model, w2c, K, W, H, sh_degree=model.active_sh_degree, render_mode="RGB+ED")
+        out = render(
+            model,
+            w2c,
+            K,
+            W,
+            H,
+            sh_degree=model.active_sh_degree,
+            render_mode="RGB+ED",
+            surface_normal_depth_mode=surface_normal_depth_mode,
+        )
         rgb_pred = out["rgb"]
         depth_pred = out["depth"]
+        depth_supervision_pred = _depth_supervision_prediction(
+            out, depth_supervision_mode
+        )
         n_render = out["normal_render"]
         n_surf = out["normal_surf"]
         alpha = out["alpha"]
@@ -3516,13 +3719,22 @@ def main():
                     depth_alignment_alpha,
                     depth_prior_valid_pixel_count,
                 ) = _aligned_depth_prior_l1(
-                    depth_pred,
+                    depth_supervision_pred,
                     d_gt,
                     d_m,
                     detach_scale=depth_alignment_detach_scale,
                 )
             else:
-                loss_depth = L.l_depth(depth_pred, d_gt, d_m)
+                if depth_loss_type == "dn_edge_aware_log_l1":
+                    loss_depth = dn_splatter_edge_aware_log_l1(
+                        depth_supervision_pred,
+                        d_gt,
+                        rgb_gt,
+                        d_m,
+                        depth_tolerance=depth_valid_min,
+                    )
+                else:
+                    loss_depth = L.l_depth(depth_supervision_pred, d_gt, d_m)
                 depth_alignment_alpha = torch.tensor(1.0, device=device)
                 depth_prior_valid_pixel_count = int(d_m.sum().detach().cpu().item())
             w_depth_eff = _scheduled_weight(
@@ -3741,7 +3953,10 @@ def main():
                 + w_external_als_normal * loss_external_als_normal
             )
 
-        loss_nc = L.l_nc(n_render, n_surf, alpha=alpha.detach())
+        if normal_consistency_mode == "official_2dgs":
+            loss_nc = L.l_nc_official_2dgs(n_render, n_surf, alpha)
+        else:
+            loss_nc = L.l_nc(n_render, n_surf, alpha=alpha.detach())
         w_nc_eff = _scheduled_weight(
             w_nc,
             it,
@@ -4551,6 +4766,7 @@ def main():
             writer.add_scalar("loss_weight/normal", float(w_normal_eff), it)
             writer.add_scalar("loss_weight/nc", float(w_nc_eff), it)
             writer.add_scalar("loss_weight/distort", float(w_distort_eff), it)
+            writer.add_scalar("learning_rate/means", means_lr, it)
             if normal_prior_orientation == "signed" and normal_prior_valid_pixel_count > 0:
                 writer.add_scalar(
                     "stats/normal_prior_valid_pixel_count",

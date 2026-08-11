@@ -334,3 +334,18 @@ def l_nc(n_render: torch.Tensor, n_surf: torch.Tensor, alpha: torch.Tensor | Non
     if alpha is not None:
         return (err * alpha).sum() / alpha.sum().clamp_min(1.0)
     return err.mean()
+
+
+def l_nc_official_2dgs(
+    n_render: torch.Tensor,
+    n_surf: torch.Tensor,
+    alpha: torch.Tensor,
+) -> torch.Tensor:
+    """Official 2DGS unnormalized normal-consistency reduction."""
+
+    if n_render.shape != n_surf.shape or n_render.ndim != 3 or n_render.shape[-1] != 3:
+        raise ValueError("official 2DGS normal inputs must be same-shape HxWx3")
+    if alpha.shape != n_render.shape[:2]:
+        raise ValueError("official 2DGS alpha must be HxW")
+    surf_alpha = n_surf * alpha.detach()[..., None]
+    return (1.0 - (n_render * surf_alpha).sum(dim=-1)).mean()

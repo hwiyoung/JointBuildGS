@@ -11,6 +11,7 @@ gsplat 1.4 rasterization_2dgs returns:
 """
 from __future__ import annotations
 
+import os
 from typing import Dict
 
 import torch
@@ -61,7 +62,16 @@ def render(
     far_plane: float = 1e10,
     bg_color: torch.Tensor | None = None,
     depth_mode: str = "expected",
+    surface_normal_depth_mode: str = "gsplat_expected",
 ) -> Dict[str, torch.Tensor]:
+    if surface_normal_depth_mode not in {
+        "gsplat_expected",
+        "surface_intersection_expected",
+    }:
+        raise ValueError(
+            "surface_normal_depth_mode must be "
+            "gsplat_expected|surface_intersection_expected"
+        )
     device = model.means.device
     viewmats = viewmat.unsqueeze(0).to(device)  # (1,4,4)
     Ks = K.unsqueeze(0).to(device)              # (1,3,3)
@@ -105,13 +115,39 @@ def render(
 
     n_render = render_normals[0]  # (H, W, 3) world-frame
 
+    surface_intersection_depth = None
+    surface_intersection_hit = None
+    if os.environ.get("JBGS_GSPLAT_MEDIAN_IS_SURFACE_SUM") == "1":
+        # The experiment-only gsplat overlay repurposes render_median as the
+        # unnormalised sum of alpha-compositing weights times the exact
+        # perspective-correct ray--surfel intersection Z.  Dividing by the
+        # unchanged accumulated alpha yields the expected surface-hit depth.
+        # RGB, historical expected depth, alpha, distortion, normals, and
+        # densification metadata remain byte-for-byte on the legacy path.
+        surface_sum = render_median[0, ..., 0]
+        alpha = render_alphas[0, ..., 0]
+        surface_intersection_depth = surface_sum / alpha.clamp(min=1e-10)
+        surface_intersection_hit = (
+            (alpha > 1e-6)
+            & torch.isfinite(surface_intersection_depth)
+            & (surface_intersection_depth > near_plane)
+            & (surface_intersection_depth < far_plane)
+        )
+
+    if surface_normal_depth_mode == "surface_intersection_expected":
+        if surface_intersection_depth is None or surface_intersection_hit is None:
+            raise RuntimeError(
+                "surface_intersection_expected requires the audited "
+                "JBGS_GSPLAT_MEDIAN_IS_SURFACE_SUM rasterizer overlay"
+            )
+        n_surf = _depth_to_normal(surface_intersection_depth, K, viewmat)
     # surf_normals from gsplat can be None or wrong shape; compute ourselves if needed
-    if surf_normals is None or surf_normals.ndim != 3 or surf_normals.shape[0] != height:
+    elif surf_normals is None or surf_normals.ndim != 3 or surf_normals.shape[0] != height:
         n_surf = _depth_to_normal(depth, K, viewmat)
     else:
         n_surf = surf_normals
 
-    return {
+    result = {
         "rgb": rgb,
         "depth": depth,
         "alpha": render_alphas[0, ..., 0],
@@ -121,6 +157,10 @@ def render(
         "depth_median": render_median[0, ..., 0] if render_median is not None else depth,
         "meta": meta,
     }
+    if surface_intersection_depth is not None:
+        result["depth_surface_intersection"] = surface_intersection_depth
+        result["depth_surface_intersection_hit"] = surface_intersection_hit
+    return result
 
 
 def render_semantic(
@@ -206,8 +246,11 @@ def _depth_to_normal(
     n_cam = torch.cross(dx[:-1, :, :], dy[:, :-1, :], dim=-1)  # (H-1, W-1, 3)
     n_cam = F.normalize(n_cam, dim=-1, eps=1e-6)
 
-    # pad to (H, W, 3)
-    n_cam = F.pad(n_cam, (0, 0, 0, 1, 0, 1), mode="replicate")
+    # Pad the last column/row explicitly.  ``torch.nn.functional.pad`` does
+    # not support replicate mode with a six-value pad tuple on an unbatched
+    # HxWxC tensor in the pinned PyTorch build.
+    n_cam = torch.cat((n_cam, n_cam[:, -1:, :]), dim=1)
+    n_cam = torch.cat((n_cam, n_cam[-1:, :, :]), dim=0)
 
     # camera -> world
     c2w_rot = torch.linalg.inv(w2c[:3, :3])
