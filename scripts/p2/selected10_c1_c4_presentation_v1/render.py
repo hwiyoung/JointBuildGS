@@ -12,6 +12,7 @@ import json
 import math
 from pathlib import Path
 import textwrap
+import time
 from typing import Any, Mapping, Sequence
 
 import cv2
@@ -53,6 +54,7 @@ from scripts.p2.utarget199_contract_results_v1.render_case_sheets import (
 from scripts.p2.utarget199_c1_c4_matrix_v1.render import condition_tables, postprocess_tables
 from scripts.p2.utarget199_presentation_v5.render import load_references
 from src.geospatial.projection_datum import as_ellipsoidal_points
+from src.visualization.fixed_view_qualitative import load_las_points
 
 
 REPO = Path(__file__).resolve().parents[3]
@@ -63,8 +65,8 @@ SEMANTIC_COLORS = np.asarray(
 )
 
 
-def load_config() -> dict[str, Any]:
-    return json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
+def load_config(path: Path = CONFIG_PATH) -> dict[str, Any]:
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def sha256_file(path: Path) -> tuple[int, str]:
@@ -93,9 +95,15 @@ def write_json(path: Path, body: Mapping[str, Any]) -> None:
 
 
 def validate_config(config: Mapping[str, Any]) -> None:
-    if config.get("schema") != "jointbuildgs.p2.selected10_c1_c4_presentation.v1":
+    if config.get("schema") not in {
+        "jointbuildgs.p2.selected10_c1_c4_presentation.v1",
+        "jointbuildgs.p2.canonical_c1_c4_results.v1",
+    }:
         raise RuntimeError("unexpected selected10 schema")
-    if config.get("status") != "APPROVED_BY_USER_FOR_SELECTED10_17ROW_PRESENTATION":
+    if config.get("status") not in {
+        "APPROVED_BY_USER_FOR_SELECTED10_17ROW_PRESENTATION",
+        "CANONICAL_REPRODUCIBLE_RESULTS_CONTRACT",
+    }:
         raise RuntimeError("selected10 presentation is not active")
     if len(config["building_ids"]) != 10 or len(set(config["building_ids"])) != 10:
         raise RuntimeError("selected10 membership drifted")
@@ -563,8 +571,9 @@ def run(
     source_commit: str,
     run_id: str,
     validation_building_id: str | None = None,
+    config_path: Path = CONFIG_PATH,
 ) -> dict[str, Any]:
-    config = load_config()
+    config = load_config(config_path)
     validate_config(config)
     if output_root.exists() and any(output_root.iterdir()):
         raise RuntimeError("fresh add-once selected10 namespace required")
@@ -582,6 +591,31 @@ def run(
         "c3_checkpoint": verify_exact(artifact_root / source["c3_checkpoint_relative_path"], config["exact_hashes"]["c3_checkpoint_sha256"], "C3 checkpoint"),
         "c4_checkpoint": verify_exact(artifact_root / source["c4_checkpoint_relative_path"], config["exact_hashes"]["c4_checkpoint_sha256"], "C4 checkpoint"),
     }
+    projection_support: dict[str, PointSet] = {}
+    if source.get("c1_projection_support_relative_root"):
+        support_root = artifact_root / source["c1_projection_support_relative_root"]
+        support_manifest_path = support_root / "control/artifact_manifest_v1.json"
+        support_closure_path = support_root / "control/300-closed.local_v1.json"
+        checks["c1_projection_support_manifest"] = verify_exact(
+            support_manifest_path,
+            config["exact_hashes"]["c1_projection_support_manifest_sha256"],
+            "C1 projection support manifest",
+        )
+        checks["c1_projection_support_closure"] = verify_exact(
+            support_closure_path,
+            config["exact_hashes"]["c1_projection_support_closure_sha256"],
+            "C1 projection support closure",
+        )
+        support_manifest = json.loads(support_manifest_path.read_text(encoding="utf-8"))
+        support_records = {row["path"]: row for row in support_manifest["records"]}
+        for stable_id in config["building_ids"]:
+            relative = f"operations/C1_LIDAR_GT_FOOTPRINT_ORACLE/{stable_id}/work/input.las"
+            source_record = support_records.get(relative)
+            if source_record is None:
+                raise RuntimeError(f"projection support is absent from exact manifest: {relative}")
+            support_path = support_root / relative
+            verify_exact(support_path, source_record["sha256"], f"C1 projection support {stable_id}")
+            projection_support[stable_id] = load_las_points(support_path)
     lod2_paths = [artifact_root / value for value in source["lod2_relative_paths"]]
     checks["lod2"] = [verify_exact(path, digest, "LoD2") for path, digest in zip(lod2_paths, config["exact_hashes"]["lod2_sha256"])]
     c12, c12_units = condition_tables(c12_root, "building_method_metrics", "method_id")
@@ -638,7 +672,19 @@ def run(
         c3_geometry = geometry("C3-2", c3_row, c3_units, c3_root)
         c4_geometry = geometry("C4", c4_row, c4_units, c4_root)
         panel_root = output_root / f"qualitative/{stable_id}/panels"
-        roofline, receipts = roofline_panels(panel_root, artifact_root, census, reference, cameras, camera_model, scene_ref, visible, stable_id)
+        roofline, receipts = roofline_panels(
+            panel_root,
+            artifact_root,
+            census,
+            reference,
+            cameras,
+            camera_model,
+            scene_ref,
+            visible,
+            stable_id,
+            support=projection_support.get(stable_id),
+            support_alignment_threshold_px=float(config.get("determinism", {}).get("roofline_support_alignment_threshold_px", 20.0)),
+        )
         roofline_receipts.extend(receipts)
         c1_input = point_panels(panel_root, c1_geometry["points"], reference, zlim, "c1_input")
         c1_output = building_output_panels(panel_root, c1_row, c1_geometry["surfaces"], reference, zlim, "c1_roofer")
@@ -725,7 +771,22 @@ def run(
     pdf = output_root / "reports/P2_SELECTED10_C1_C2_C3_2_C4_17row_4view_v1.pdf"
     pdf.parent.mkdir(parents=True, exist_ok=True)
     images = [Image.open(path).convert("RGB") for path in pages]
-    images[0].save(pdf, "PDF", save_all=True, append_images=images[1:], resolution=150.0, quality=88)
+    fixed_epoch = config.get("determinism", {}).get("pdf_metadata_epoch")
+    pdf_metadata_time = time.gmtime(int(fixed_epoch)) if fixed_epoch is not None else time.gmtime()
+    images[0].save(
+        pdf,
+        "PDF",
+        save_all=True,
+        append_images=images[1:],
+        resolution=150.0,
+        quality=88,
+        title="JointBuildGS canonical selected-10 C1-C4 results",
+        author="JointBuildGS",
+        creator="JointBuildGS deterministic renderer",
+        producer="Pillow",
+        creationDate=pdf_metadata_time,
+        modDate=pdf_metadata_time,
+    )
     for image in images:
         image.close()
     links = "".join(f'<article><h2>{html.escape(row["stable_id"])}</h2><a href="../{html.escape(row["output"]["path"])}"><img loading="lazy" src="../{html.escape(row["output"]["path"])}"></a></article>' for row in page_records)
@@ -791,8 +852,9 @@ def main() -> None:
     parser.add_argument("--source-commit", required=True)
     parser.add_argument("--run-id", required=True)
     parser.add_argument("--validation-building-id")
+    parser.add_argument("--config", type=Path, default=CONFIG_PATH)
     args = parser.parse_args()
-    print(json.dumps(run(args.output_root, args.artifact_root, args.source_commit, args.run_id, args.validation_building_id), sort_keys=True))
+    print(json.dumps(run(args.output_root, args.artifact_root, args.source_commit, args.run_id, args.validation_building_id, args.config), sort_keys=True))
 
 
 if __name__ == "__main__":
