@@ -1,0 +1,29 @@
+{
+  "schema": "jointbuildgs.p2.viewer_8876_target_footprints_58.config.v1",
+  "task_id": "P2-VIEWER-8876-TARGET-FOOTPRINTS-58-v1",
+  "viewer_root": "phase-payloads/p2/e1_e6_techdev_v1/P2-E1-E6-PRIOR-FUSION-TECHDEV-v1/viewer",
+  "expected_before": {
+    "viewer_manifest.json": "4655293b82685c58c9dca9900294079cf708af1422210e7066998ebfde73994b",
+    "app.js": "541f72115e245ba755fce545c3403e5b427d48be0c2174ba85c4201495c62f7b",
+    "index.html": "ed6136d8b988fd8d36c2e5bb89e57f5343cf97aa85f0e4607ce1ce59ba3d7126"
+  },
+  "candidate_csv": "phase-payloads/p2/sparse_seed_dense_support_census_199_v1/P2-SPARSE-SEED-DENSE-SUPPORT-CENSUS-199-v1/sparse_seed_dense_support_candidates_73.csv",
+  "candidate_csv_sha256": "2764f2f8c1819e355581a0bb1716972df298ee3a5eea3fbfdf4261e1ed544166",
+  "shared_footprints": "phase-payloads/p2/c1_c2_shared_footprint_199_v3/P2-C1-C2-SHARED-FOOTPRINT-199-ORIGINAL-GLOBAL-v3-replay-20260806a/freeze/shared_footprints_199.geojson",
+  "shared_footprints_sha256": "5f9b703b06676db4400f6568fc3db315e319913f98ba491e98922eb747e4488a",
+  "building_manifest": "phase-payloads/p2/qualitative_199_common_manifest_v1/P2-QUALITATIVE-199-COMMON-MANIFEST-v1/manifest/building_camera_view_crop_manifest_v1.jsonl",
+  "building_manifest_sha256": "61e4e8a334c10d0c4405b4929c3e021ac74e5a6eb96596954b5781c0c5b4c4d9",
+  "world_shift_xyz": [690953.0, 5336071.0, 604.0],
+  "target_rule": "MVS_RAW_GEOMETRY_SUPPORT_AND_SPARSE_BUILDING_PRISM_POINT_COUNT_GT_0",
+  "expected_target_count": 58,
+  "expected_strong_count": 51,
+  "expected_weak_count": 7,
+  "strong_color": "#00e5ff",
+  "weak_color": "#ffb020",
+  "outline_width_m": 0.38,
+  "display_z_offset_m": 0.4,
+  "default_visible": true,
+  "all_199_role": "NON_VISIBLE_CAMERA_FOCUS_AND_PICK_LOOKUP_ONLY",
+  "roofer_inputs_modified": false,
+  "scientific_verdict": null
+}
