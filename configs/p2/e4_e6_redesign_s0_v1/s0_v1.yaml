@@ -1,0 +1,31 @@
+schema: jointbuildgs.p2.e4_e6_redesign_s0_v1.common.v1
+task_id: P2-E4-E6-REDESIGN-S0-v1
+plan: docs/experiments/p2/e4_e6_redesign_v1/E4_E5_E6_REDESIGN_PLAN_ko_v1.md
+purpose: zero-training S0 validations (S0-a lineage share, S0-b leak + projection QA, S0-c ablation audit)
+output_root: /artifacts/JointBuildGS/phase-payloads/p2/e4_e6_redesign_s0_v1/P2-E4-E6-REDESIGN-S0-v1
+
+v22_config: configs/p2/e1_e6_roofer_ox_review_v1/reference_auto_ox_v1.json
+v22_output_relative_root: phase-payloads/p2/e1_e6_roofer_ox_review_v1/P2-E1-E6-ROOFER-AUTO-OX-v22-ROBUST-PLANE-MATCH
+legacy_e3_cityjson: phase-payloads/p2/e1_e6_techdev_v1/P2-E1-E6-PRIOR-FUSION-TECHDEV-v1/runs/E3_GS_IMAGE/roofer/assembled.city.json
+val3dity_note: val3dity 2.6.0 unavailable in current images; S0-a reports O_noG2 for legacy E3 and recomputes sealed-condition O_noG2 from the v22 per-building CSV for a like-for-like contrast.
+
+techdev_prior_views: phase-payloads/p2/e1_e6_techdev_v1/P2-E1-E6-PRIOR-FUSION-TECHDEV-v1/prep/als_prior/views
+colmap_depth_maps: phase-payloads/p0-audit/data/work/mvs/colmap_dense/stereo/depth_maps
+colmap_sparse: phase-payloads/p0-audit/data/work/mvs/colmap_dense/sparse
+als_raw_root: phase-payloads/p0-audit/data/raw/als
+projection_prototype:
+  dsm_cell_m: 0.5
+  ray_stride_px: 2
+  sample_view_count: 15
+  sample_seed: 0
+  classes: [2, 6]
+  qa_targets: {median_max_m: 1.0, gt2m_fraction_max: 0.25, gt2m_fraction_vs_point_projection_max_ratio: 0.5}
+
+arms:
+  control: phase-payloads/p2/e3_local_4906982_fused_vis_conf_v1/P2-E3-LOCAL-4906982-FUSED-VIS-CONF-v1/arms/FUSED_VIS_CONF/R1
+  depth_only: phase-payloads/p2/e4_local_4906982_55v_als_normal_ablation_v1/P2-E4-LOCAL-4906982-55V-ALS-NORMAL-ABLATION-v1/arms/ALS_DEPTH_ONLY/R1
+  e4_full: phase-payloads/p2/e4_local_4906982_55v_als_prior_v1/P2-E4-LOCAL-4906982-55V-ALS-PRIOR-v1/arms/E4_ALS_PRIOR_ONLY/R1
+three_arm_metrics: phase-payloads/p2/e4_local_4906982_55v_als_normal_ablation_v1/P2-E4-LOCAL-4906982-55V-ALS-NORMAL-ABLATION-v1/three_arm_metrics.csv
+
+official_PASS_usable: null
+scientific_verdict: null
