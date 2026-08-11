@@ -437,6 +437,7 @@ details.expl summary::marker{color:var(--o)}
       <label style="font-size:12px;font-weight:600;color:var(--ink2)"><input type="checkbox" id="tgMesh" checked> Roofer 면</label>
       <label style="font-size:12px;font-weight:600;color:var(--ink2)"><input type="checkbox" id="tgPts"> Point cloud</label>
       <label style="font-size:12px;font-weight:600;color:var(--ink2)"><input type="checkbox" id="tgCls" checked> Roofer 입력색 (시안=building·갈색=ground·회색=미사용)</label>
+      <button id="camReset" style="font:600 11.5px/1 inherit;font-family:inherit;color:var(--o);background:var(--o-soft);border:none;border-radius:999px;padding:5px 11px;cursor:pointer">시야 원복</button>
       <span id="m3dNote" style="font-size:11px;color:var(--ink3);font-weight:400"></span></h3>
     <div id="m3dRow"></div>
   </div>
@@ -663,7 +664,26 @@ function setup3D(entry,dark,idx){
               ["E1","E1 · LiDAR",V22.E1],["E2","E2 · MVS",V22.E2],
               ["E3","E3 · GS",V22.GS],["E4","E4 · +ALS",V22.GS],
               ["E5","E5 · +ALS(w)",V22.GS],["E6","E6 · +LoD2",V22.GS]];
-  const EMB={L2:entry.mp,E1:entry.m1,E2:entry.m2};
+  // 기구축 LoD2 표시 mesh는 인접 건물까지 포함 → footprint(+8% 버퍼) 안 삼각형만 표시
+  function cropToFp(mesh){
+    const ring=((FPD.fp[idx]||[])[0]||[]).map(([x,y])=>[(x-cc[0])*1.08,(y-cc[1])*1.08]);
+    if(!mesh||ring.length<3)return mesh;
+    const inside=(px,py)=>{let c2=false;
+      for(let i=0,j=ring.length-1;i<ring.length;j=i++){
+        const xi=ring[i][0],yi=ring[i][1],xj=ring[j][0],yj=ring[j][1];
+        if(((yi>py)!==(yj>py))&&(px<(xj-xi)*(py-yi)/(yj-yi)+xi))c2=!c2;}
+      return c2;};
+    const v=mesh.v,f=mesh.f,nf=[];
+    for(let i=0;i<f.length;i+=3){
+      const cx=(v[f[i]*3]+v[f[i+1]*3]+v[f[i+2]*3])/3,
+            cy=(v[f[i]*3+1]+v[f[i+1]*3+1]+v[f[i+2]*3+1])/3;
+      if(inside(cx,cy))nf.push(f[i],f[i+1],f[i+2]);
+    }
+    return nf.length?{v:v,f:nf}:mesh;   // 전부 잘리면(정합 이상) 원본 유지
+  }
+  const EMB={L2:cropToFp(entry.mp),E1:entry.m1,E2:entry.m2};
+  const rb=document.getElementById("camReset");
+  if(rb)rb.onclick=()=>{cam.yaw=-0.85;cam.pitch=0.62;cam.zoom=1;cam.pan=[0,0];renderAll();};
   const panels=[];
   DEFS.forEach(([key,name,col])=>{
     const paths=ap[key]||[null,null];
