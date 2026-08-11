@@ -693,20 +693,6 @@ function setup3D(entry,dark,idx){
     const pr=(x,y,z)=>{x-=c[0];y-=c[1];z-=c[2];
       const xr=x*cy-y*sy,yr=x*sy+y*cy;
       return [W/2+cam.pan[0]+xr*sc,H*0.55+cam.pan[1]-(-yr*sp+z*cp)*sc,yr*cp+z*sp];};
-    if(tgP.checked&&p.pts){
-      const v=p.pts.pts,col=p.pts.cols,cl=p.pts.cls||[];
-      const useCls=tgC&&tgC.checked;
-      const cB=colO,cG=dark?"#9A8468":"#8B7355",cO2=dark?"rgba(130,140,150,0.28)":"rgba(139,149,160,0.30)";
-      for(let i=0,k=0,m=0;i<v.length;i+=3,k+=3,m++){
-        const q=pr(v[i],v[i+1],v[i+2]);
-        if(q[0]<-2||q[0]>W+2||q[1]<-2||q[1]>H+2)continue;
-        if(useCls){
-          const c9=cl[m];
-          ctx.fillStyle=c9===6?cB:c9===2?cG:cO2;
-        }else ctx.fillStyle=`rgb(${col[k]},${col[k+1]},${col[k+2]})`;
-        ctx.fillRect(q[0]-0.8,q[1]-0.8,1.6,1.6);
-      }
-    }
     if(tgM.checked&&p.mesh){
       const rn=n=>{const xr=n[0]*cy-n[1]*sy,yr=n[0]*sy+n[1]*cy;
         return [xr,-yr*sp+n[2]*cp,yr*cp+n[2]*sp];};
@@ -729,6 +715,20 @@ function setup3D(entry,dark,idx){
         ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b2[0],b2[1]);ctx.lineTo(d2[0],d2[1]);ctx.closePath();
         ctx.fillStyle=shade(p.col,lum);ctx.fill();
         ctx.strokeStyle=shade(p.col,lum*0.55);ctx.lineWidth=0.7;ctx.stroke();
+      }
+    }
+    if(tgP.checked&&p.pts){
+      const v=p.pts.pts,col=p.pts.cols,cl=p.pts.cls||[];
+      const useCls=tgC&&tgC.checked;
+      const cB=colO,cG=dark?"#9A8468":"#8B7355",cO2=dark?"rgba(130,140,150,0.28)":"rgba(139,149,160,0.30)";
+      for(let i=0,k=0,m=0;i<v.length;i+=3,k+=3,m++){
+        const q=pr(v[i],v[i+1],v[i+2]);
+        if(q[0]<-2||q[0]>W+2||q[1]<-2||q[1]>H+2)continue;
+        if(useCls){
+          const c9=cl[m];
+          ctx.fillStyle=c9===6?cB:c9===2?cG:cO2;
+        }else ctx.fillStyle=`rgb(${col[k]},${col[k+1]},${col[k+2]})`;
+        ctx.fillRect(q[0]-0.8,q[1]-0.8,1.6,1.6);
       }
     }
     if(!p.mesh&&!p.pts){
