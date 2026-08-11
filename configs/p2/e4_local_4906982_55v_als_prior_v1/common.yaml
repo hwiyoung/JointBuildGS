@@ -1,0 +1,17 @@
+schema: jointbuildgs.p2.e4_local_4906982_55v_als_prior_v1.common.v1
+task_id: P2-E4-LOCAL-4906982-55V-ALS-PRIOR-v1
+building_id: DEBY_LOD2_4906982
+control_arm: FUSED_VIS_CONF
+intervention_arm: E4_ALS_PRIOR_ONLY
+source_completed_updates: 7000
+checkpoints: [7000, 12000, 15000, 20000]
+seed: 0
+gpu: 1
+als_datum_shift_m: 45.7
+als_projection_voxel_m: 0.75
+als_registration_xy_radius_m: 0.75
+als_registration_abs_signed_z_median_max_m: 0.50
+als_registration_xy_p95_max_m: 0.50
+als_confidence_min: 0.05
+als_current_consistency_scale_m: 2.0
+scientific_verdict: null

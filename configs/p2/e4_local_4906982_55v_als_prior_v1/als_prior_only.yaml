@@ -1,0 +1,27 @@
+schema: jointbuildgs.p2.e4_local_4906982_55v_als_prior_v1.arm.v1
+arm: E4_ALS_PRIOR_ONLY
+base_training_config: configs/p2/e3_local_4906982_fused_vis_conf_v1/fused_vis_conf.yaml
+overrides:
+  task_id: P2-E4-LOCAL-4906982-55V-ALS-PRIOR-v1
+  run_id: E4_ALS_PRIOR_ONLY_R1
+  out_dir: /artifacts/JointBuildGS/phase-payloads/p2/e4_local_4906982_55v_als_prior_v1/P2-E4-LOCAL-4906982-55V-ALS-PRIOR-v1/arms/E4_ALS_PRIOR_ONLY/R1
+  external_als_prior_dir: /artifacts/JointBuildGS/phase-payloads/p2/e4_local_4906982_55v_als_prior_v1/P2-E4-LOCAL-4906982-55V-ALS-PRIOR-v1/prior/views
+  w_external_als_depth: 0.01
+  w_external_als_normal: 0.005
+  external_als_huber_delta_m: 1.0
+  external_als_depth_loss: HUBER_METRIC_CAMERA_DEPTH
+  external_als_normal_loss: SIGN_INVARIANT_ONE_MINUS_ABS_DOT
+  external_als_confidence_gates: [registration, density, planarity, visibility, current_consistency]
+  external_als_conflict_policy: LOWER_ALS_CONFIDENCE_ONLY
+  max_iter: 20000
+  full_state_checkpoint: true
+  full_state_checkpoint_steps: [7000, 12000, 15000, 20000]
+  full_state_resume: auto
+  full_state_resume_strict_cuda_rng: true
+single_variable:
+  changed: existing_als_metric_depth_and_normal_prior
+  control: exact FUSED_VIS_CONF 55-view full-state checkpoint at 7000
+  intervention_start_update: 7001
+  unchanged: [images, cameras, view_roles, fused_vis_conf_depth, sparse_initialization, model_state_at_7000, optimizer_state_at_7000, rng_state_at_7000, MVC, NC, densification, seed, GPU]
+  no_lod2_training_use: true
+scientific_verdict: null

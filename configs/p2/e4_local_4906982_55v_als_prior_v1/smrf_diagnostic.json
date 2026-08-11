@@ -1,0 +1,24 @@
+{
+  "schema": "jointbuildgs.p2.e4_local_4906982_55v_als_prior_v1.smrf_diagnostic.v1",
+  "task_id": "P2-E4-LOCAL-4906982-55V-ALS-PRIOR-v1",
+  "building_id": "DEBY_LOD2_4906982",
+  "source_task": "/artifacts/JointBuildGS/phase-payloads/p2/e3_local_4906982_fused_vis_conf_v1/P2-E3-LOCAL-4906982-FUSED-VIS-CONF-v1",
+  "arm": "FUSED_VIS_CONF",
+  "replica": "R1",
+  "completed_updates": 20000,
+  "analysis_grid_m": 1.0,
+  "nearest_context_radius_m": 10.0,
+  "smrf": {
+    "cell": 1.0,
+    "slope": 0.15,
+    "scalar": 1.25,
+    "threshold": 0.5,
+    "window": 18.0,
+    "ground_class": 2,
+    "other_class": 1
+  },
+  "overlay_where": "Classification != 2",
+  "overlay_building_class": 6,
+  "lod2_z_or_roof_geometry_used": false,
+  "scientific_verdict": null
+}
