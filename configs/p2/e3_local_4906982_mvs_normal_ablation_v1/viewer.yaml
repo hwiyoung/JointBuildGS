@@ -1,0 +1,11 @@
+schema: jointbuildgs.p2.e3_local_4906982_mvs_normal_ablation_v1.viewer.v1
+task_id: P2-E3-LOCAL-4906982-MVS-NORMAL-ABLATION-v1
+building_id: DEBY_LOD2_4906982
+viewer_port: 8878
+viewer_root: /artifacts/JointBuildGS/phase-payloads/p2/e3_local_review_v1/P2-E3-LOCAL-4906982-INPUT-REVIEW-v3/viewer
+slot_dir: e3-mvs-normal-ablation-v1
+slot_label: 55-view MVS depth versus MVS depth+normal
+root_files_must_remain_unchanged: [index.html, app.js, viewer_manifest.json, mvs_depth_viewer_receipt.json]
+arms: [FUSED_VIS_CONF, FUSED_VIS_CONF_MVS_NORMAL]
+checkpoints: [7000, 12000, 15000, 20000]
+scientific_verdict: null

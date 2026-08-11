@@ -1,0 +1,16 @@
+schema: jointbuildgs.p2.e3_local_4906982_mvs_normal_ablation_v1.common.v1
+task_id: P2-E3-LOCAL-4906982-MVS-NORMAL-ABLATION-v1
+building_id: DEBY_LOD2_4906982
+control_arm: FUSED_VIS_CONF
+intervention_arm: FUSED_VIS_CONF_MVS_NORMAL
+seed: 0
+gpu: 1
+checkpoints: [7000, 12000, 15000, 20000]
+normal_frame_gate:
+  minimum_mapped_views: 55
+  # Frozen upstream FUSED_VIS_CONF support exists in exactly 46/47 train views.
+  minimum_train_views_with_support: 46
+  minimum_supported_pixels_per_train_view: 1000
+  maximum_sign_invariant_angle_median_deg: 35.0
+  maximum_sign_invariant_angle_p90_deg: 80.0
+scientific_verdict: null
