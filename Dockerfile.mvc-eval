@@ -1,0 +1,11 @@
+ARG BASE_IMAGE=jointbuildgs:dev
+FROM ${BASE_IMAGE}
+
+RUN pip install --no-cache-dir \
+        lpips==0.1.4 \
+        pytorch-msssim==1.0.0 \
+        pyproj==3.7.1
+
+# Freeze the exact VGG feature weights inside the image so evaluation does not
+# depend on network access at run time.
+RUN python -c "import lpips; lpips.LPIPS(net='vgg')"
