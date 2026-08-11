@@ -1,0 +1,30 @@
+{
+  "schema": "jointbuildgs.p2.viewer_8876_outer_only_common_envelope.config.v3",
+  "task_id": "P2-VIEWER-8876-OUTER-ONLY-COMMON-ENVELOPE-v3",
+  "viewer_root": "phase-payloads/p2/e1_e6_techdev_v1/P2-E1-E6-PRIOR-FUSION-TECHDEV-v1/viewer",
+  "source_envelopes_v2": {
+    "path": "phase-payloads/p2/e1_e6_techdev_v1/P2-E1-E6-PRIOR-FUSION-TECHDEV-v1/viewer/coverage_envelopes_v2.json",
+    "bytes": 309001,
+    "sha256": "ba197646701dd58ee790cc26d1479895b8b886b753a5dd90dfa551b7d354ded8"
+  },
+  "shared_footprints_199": {
+    "path": "phase-payloads/p2/c1_c2_shared_footprint_199_v3/P2-C1-C2-SHARED-FOOTPRINT-199-ORIGINAL-GLOBAL-v3-replay-20260806a/freeze/shared_footprints_199.geojson",
+    "bytes": 120967,
+    "sha256": "5f9b703b06676db4400f6568fc3db315e319913f98ba491e98922eb747e4488a"
+  },
+  "expected_before": {
+    "viewer_manifest.json": "d8341e16f0eafa030ee712485fbc5b9e6f9eec08e9c4ce885d2d6073c706ed93",
+    "surface_meshes.json": "82ed7e4d348e7ccfd97102e47fafa107d2b1b2b15c8c8233d45a2a6c8d2bd35b",
+    "app.js": "6838e94aab64843c9789f65a94995fde47374e459a6f8837df7338a037df50ec",
+    "index.html": "a670c8a86713f95c35f29cade40f71aaa38fd5ef40a752785bc00783a2f5f5b6"
+  },
+  "world_shift_xyz": [690953.0, 5336071.0, 604.0],
+  "candidate_footprint_buffer_m": 2.0,
+  "candidate_color": "#00e5ff",
+  "candidate_display_z_local_m": -25.5,
+  "output_json": "coverage_outer_envelopes_v3.json",
+  "display_only": true,
+  "target_membership_modified": false,
+  "roofer_inputs_modified": false,
+  "scientific_verdict": null
+}
