@@ -1,0 +1,42 @@
+{
+  "schema": "jointbuildgs.p2.reference_assessment_funnel_viewer.config.v1",
+  "task_id": "P2-REFERENCE-ASSESSMENT-FUNNEL-VIEWER-v1",
+  "inputs": {
+    "census": {
+      "path": "phase-payloads/p2/c2_mvs_improvement_census_199_v1/P2-C2-MVS-IMPROVEMENT-CENSUS-199-v1/results/c2_mvs_improvement_census_199_v1.csv",
+      "bytes": 59209,
+      "sha256": "f3d74f0d92fae8e5256e66b08739524ccc8dfd40c37040b01d416362a00d2202"
+    },
+    "temporal_diagnostics": {
+      "path": "phase-payloads/p2/utarget199_presentation_v5/P2-UTARGET199-PRESENTATION-v5/results/lod2_temporal_reference_diagnostics_v1.jsonl",
+      "bytes": 107924,
+      "sha256": "dfb53221e21846a6c96fbd975ca6358aa7eab28a1e127c174e66c1a14af6b4d3"
+    },
+    "shared_footprints": {
+      "path": "phase-payloads/p2/c1_c2_shared_footprint_199_v3/P2-C1-C2-SHARED-FOOTPRINT-199-ORIGINAL-GLOBAL-v3-replay-20260806a/freeze/shared_footprints_199.geojson",
+      "bytes": 120967,
+      "sha256": "5f9b703b06676db4400f6568fc3db315e319913f98ba491e98922eb747e4488a"
+    }
+  },
+  "output_relative_root": "phase-payloads/p2/reference_assessment_funnel_viewer_v1/P2-REFERENCE-ASSESSMENT-FUNNEL-VIEWER-v1",
+  "expected_counts": {
+    "stages": {
+      "ALL_199": 199,
+      "CURRENT_REFERENCE_PRESENT": 79,
+      "TEMPORAL_STATUS_RESOLVED": 53,
+      "UNCHANGED_CONFIDENT": 47,
+      "ASSESSABLE_UNCHANGED": 40
+    },
+    "exclusive_buckets": {
+      "REFERENCE_ABSENT": 120,
+      "REFERENCE_ALIGNMENT_UNRESOLVED": 26,
+      "CHANGED_OUTSIDE_UNCHANGED_COHORT": 6,
+      "AOI_REPLAY_REQUIRED": 7,
+      "ASSESSABLE_UNCHANGED": 40
+    }
+  },
+  "viewer_port": 8879,
+  "source_role": "FROZEN_ARTIFACT_DIAGNOSTIC_ONLY",
+  "official_PASS_usable": null,
+  "scientific_verdict": null
+}
