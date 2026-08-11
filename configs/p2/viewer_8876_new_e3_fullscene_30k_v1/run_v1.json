@@ -1,0 +1,39 @@
+{
+  "schema": "jointbuildgs.p2.viewer_8876_new_e3_fullscene_30k.v1",
+  "task_id": "P2-VIEWER-8876-NEW-E3-FULLSCENE-30K-v1",
+  "status": "USER_APPROVED_FOR_EXECUTION",
+  "viewer_relative_root": "phase-payloads/p2/e1_e6_techdev_v1/P2-E1-E6-PRIOR-FUSION-TECHDEV-v1/viewer",
+  "task_relative_root": "phase-payloads/p2/viewer_8876_new_e3_fullscene_30k_v1/P2-VIEWER-8876-NEW-E3-FULLSCENE-30K-v1",
+  "prestate": {
+    "viewer_manifest.json": {"bytes": 2558873, "sha256": "d6a16fe8af0c66eead60ebdf7fda148f2815f45e7ed868daf9175faa1ca198d5"},
+    "app.js": {"bytes": 24796, "sha256": "4e187e11efcc6792627fe78906e923cddc2798f266a13ed947f187aaffc059af"},
+    "index.html": {"bytes": 4736, "sha256": "2dd5577c77255d33e3c821d4067cc8fbe847dfbcb46c100f1c783040d356811d"}
+  },
+  "source": {
+    "classified_scene": {
+      "path": "phase-payloads/p2/e3_full_scene_roofer_shared_footprint_199_v1/P2-E3-FULL-SCENE-ROOFER-SHARED-FOOTPRINT-199-v1/work/E3_GS_image/classified_scene.laz",
+      "bytes": 277846015,
+      "sha256": "585e26554814510246a036d1a0ae788e0d9291d2bc022e5ef096b4b4ee131dea"
+    },
+    "assembled_cityjson": {
+      "path": "phase-payloads/p2/e3_full_scene_roofer_shared_footprint_199_v1/P2-E3-FULL-SCENE-ROOFER-SHARED-FOOTPRINT-199-v1/work/E3_GS_image/assembled.city.json",
+      "bytes": 1029522,
+      "sha256": "75e49b3bf3f7f282d18952eb878aeff544d2a063388b18c90d7ff2a57703e8c1"
+    }
+  },
+  "variant": {
+    "id": "FULLSCENE_30K_FUSED_NORMAL_CONFIDENCE",
+    "label": "E3 new full-scene 30k · fused depth + normal confidence",
+    "step": 30000,
+    "world_shift_epsg25832": [690953.0, 5336071.0, 604.0],
+    "maximum_display_points": 600000,
+    "surface_mesh_status": "NOT_PRODUCED_ROOFER_FALLBACK_IN_SURFACE_MODE"
+  },
+  "execution": {
+    "gs_training_invocations": 0,
+    "roofer_invocations": 0,
+    "reconstruction_invocations": 0
+  },
+  "official_PASS_usable": null,
+  "scientific_verdict": null
+}
