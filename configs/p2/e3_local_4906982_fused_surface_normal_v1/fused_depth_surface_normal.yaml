@@ -1,0 +1,38 @@
+schema: jointbuildgs.p2.e3_local_4906982_fused_surface_normal_v1.arm.v1
+arm: FUSED_VIS_CONF_FUSED_NORMAL
+base_training_config: configs/p2/e3_local_4906982_mvc_depth_v1/depth03.yaml
+overrides:
+  task_id: P2-E3-LOCAL-4906982-FUSED-SURFACE-NORMAL-v1
+  run_id: FUSED_VIS_CONF_FUSED_NORMAL_R1
+  data_root: /artifacts/JointBuildGS/phase-payloads/p2/e3_local_4906982_fused_surface_normal_v1/P2-E3-LOCAL-4906982-FUSED-SURFACE-NORMAL-v1/data/fused_vis_conf_fused_normal_colmap_crop
+  out_dir: /artifacts/JointBuildGS/phase-payloads/p2/e3_local_4906982_fused_surface_normal_v1/P2-E3-LOCAL-4906982-FUSED-SURFACE-NORMAL-v1/arms/FUSED_VIS_CONF_FUSED_NORMAL/R1
+  load_normal: true
+  normal_dir: /artifacts/JointBuildGS/phase-payloads/p2/e3_local_4906982_fused_surface_normal_v1/P2-E3-LOCAL-4906982-FUSED-SURFACE-NORMAL-v1/data/fused_surface_normal_world
+  normal_prior_orientation: unsigned
+  w_normal: 0.005
+  normal_warmup: 7000
+  normal_schedule: ramp
+  normal_ramp_steps: 5000
+  depth_supervision_mode: expected
+  depth_loss_type: l1
+  depth_prior_alignment: none
+  w_depth: 0.03
+  depth_warmup: 7000
+  depth_schedule: ramp
+  depth_ramp_steps: 5000
+  w_mvc: 0.5
+  w_nc: 0.05
+  w_distort: 0.0
+  max_iter: 20000
+  full_state_checkpoint: true
+  full_state_checkpoint_steps: [7000, 12000, 15000, 20000]
+  full_state_resume: auto
+  full_state_resume_strict_cuda_rng: true
+single_variable:
+  primary_comparison: FUSED_VIS_CONF_MVS_NORMAL versus FUSED_VIS_CONF_FUSED_NORMAL
+  changed: normal target only
+  from: raw COLMAP geometric normal on frozen fused-supported mask
+  to: first-hit OpenMVS mesh triangle normal on the exact prior raw-normal valid mask
+  orientation: sign-invariant
+  unchanged: [initialization, history_through_7k, depth_target, depth_mask, normal_mask, expected_depth_prediction, depth_L1, depth_weight, depth_schedule, normal_weight, normal_schedule, MVC, NC, densification, views, seed]
+scientific_verdict: null

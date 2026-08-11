@@ -1,0 +1,16 @@
+schema: jointbuildgs.p2.e3_local_4906982_fused_surface_normal_v1.common.v1
+task_id: P2-E3-LOCAL-4906982-FUSED-SURFACE-NORMAL-v1
+building_id: DEBY_LOD2_4906982
+control_arm: FUSED_VIS_CONF
+read_only_raw_normal_arm: FUSED_VIS_CONF_MVS_NORMAL
+intervention_arm: FUSED_VIS_CONF_FUSED_NORMAL
+seed: 0
+gpu: 1
+checkpoints: [7000, 12000, 15000, 20000]
+target_gate:
+  minimum_mapped_views: 55
+  minimum_train_views_with_support: 46
+  minimum_supported_pixels_per_train_view: 1000
+  maximum_raycast_depth_abs_p99_m: 0.0001
+  minimum_same_normal_mask_fraction: 0.9999
+scientific_verdict: null
