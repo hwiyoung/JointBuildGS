@@ -8,7 +8,6 @@ One process per GPU: `--gpu 0` runs A1,A3,A5 and `--gpu 1` runs A2,A4.
 from __future__ import annotations
 
 import argparse
-import copy
 import hashlib
 import importlib.util
 import json
@@ -71,12 +70,13 @@ def atomic_json(path: Path, body: Any) -> None:
     temporary.replace(path)
 
 
-def ensure_probe_key_coverage(cfg: dict[str, Any]) -> None:
-    """Every key the probe overrides must exist in the arm config, or the
-    restored effective digest would drift from the resumed run's."""
-    missing = [key for key in ("run_id", "out_dir", "max_iter", "eval_every", "ckpt_every", "full_state_resume", "full_state_checkpoint", "full_state_checkpoint_steps") if key not in cfg]
-    if missing:
-        raise RuntimeError(f"arm config must pin probe-overridden keys: {missing}")
+def ensure_task_owner() -> None:
+    """Rebind/training containers run as root; return ownership to the host user."""
+    import os
+    subprocess.run(
+        base.docker_base() + ["chown", "-R", f"{os.getuid()}:{os.getgid()}", base.container_path(TASK_ROOT)],
+        check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+    )
 
 
 def materialized_base(common: dict[str, Any]) -> dict[str, Any]:
@@ -127,6 +127,10 @@ def binding_probe(common: dict[str, Any], arm: str) -> Path:
         return effective
     cfg = arm_runtime_config(common, arm)
     probe_root = TASK_ROOT / "probe" / arm
+    # Mirror the E4-local probe exactly: full_state_checkpoint stays enabled so
+    # the effective config keeps its full_state block (part of the binding
+    # digest); only the resume selector is turned off for the from-scratch
+    # 1-iteration probe.
     cfg.update({
         "run_id": f"BINDING_PROBE_{arm}",
         "out_dir": base.container_path(probe_root),
@@ -134,8 +138,6 @@ def binding_probe(common: dict[str, Any], arm: str) -> Path:
         "eval_every": 1000000,
         "ckpt_every": 1000000,
         "full_state_resume": "off",
-        "full_state_checkpoint": False,
-        "full_state_checkpoint_steps": [],
     })
     probe_cfg = TASK_ROOT / "control/runtime_configs" / f"probe_{arm.lower()}.yaml"
     probe_cfg.parent.mkdir(parents=True, exist_ok=True)
@@ -148,14 +150,6 @@ def binding_probe(common: dict[str, Any], arm: str) -> Path:
         raise RuntimeError(f"binding probe failed for {arm}: {proc.stderr[-2000:] or proc.stdout[-2000:]}")
     body = json.loads((probe_root / "effective_config.json").read_text(encoding="utf-8"))
     body.pop("full_state_runtime", None)
-    # The probe intentionally diverges from the arm run in resume/checkpoint
-    # identity keys; restore the arm values so the binding digest matches.
-    arm_cfg = arm_runtime_config(common, arm)
-    for key in ("run_id", "out_dir", "max_iter", "eval_every", "ckpt_every", "full_state_resume", "full_state_checkpoint", "full_state_checkpoint_steps"):
-        if key in body and key in arm_cfg:
-            body[key] = copy.deepcopy(arm_cfg[key])
-        elif key in body and key not in arm_cfg:
-            pass
     atomic_json(effective, body)
     return effective
 
@@ -203,12 +197,13 @@ def main() -> None:
     results = {}
     for arm in arms:
         base.GPU = str(common["arms"][arm]["gpu"])
-        ensure_probe_key_coverage(arm_runtime_config(common, arm))
         write_runtime(common, arm)
         binding_probe(common, arm)
         rebind(common, arm, source_checkpoint)
+        ensure_task_owner()
         label = f"train_{arm}_R1"
         outcome = base._launch_training(label, TASK_ROOT / "arms" / arm / "R1", runtime_path(arm), stop_step=None)
+        ensure_task_owner()
         results[arm] = {
             "wall_seconds": outcome.get("wall_seconds"),
             "checkpoint_20k_valid": base.checkpoint_valid(TASK_ROOT / "arms" / arm / "R1", 20000),
