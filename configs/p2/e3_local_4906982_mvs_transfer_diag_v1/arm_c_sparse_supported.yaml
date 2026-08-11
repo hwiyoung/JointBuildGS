@@ -1,0 +1,15 @@
+schema: jointbuildgs.p2.e3_local_4906982_mvs_transfer_diag_v1.arm.v1
+task_id: P2-E3-LOCAL-4906982-MVS-TRANSFER-DIAG-v1
+run_id: SPARSE_SUPPORTED
+arm: C
+base_config: configs/p2/e3_local_4906982_mvc_depth_v1/depth03.yaml
+out_dir: /artifacts/JointBuildGS/phase-payloads/p2/e3_local_4906982_mvs_transfer_diag_v1/P2-E3-LOCAL-4906982-MVS-TRANSFER-DIAG-v1/arms/SPARSE_SUPPORTED
+init_pointcloud: null
+depth_mask_source: fusion_supported_frozen
+depth_mask_dir: /artifacts/JointBuildGS/phase-payloads/p2/e3_local_4906982_mvs_transfer_diag_v1/P2-E3-LOCAL-4906982-MVS-TRANSFER-DIAG-v1/fusion_support/masks
+depth_mask_excluded_states:
+  - contradicted
+  - unknown
+contradicted_policy: exclude_from_depth_loss
+unknown_policy: exclude_from_depth_loss
+scientific_verdict: null
