@@ -1,0 +1,28 @@
+{
+  "schema": "jointbuildgs.p2.viewer_8876_epaired_72_footprints.config.v1",
+  "task_id": "P2-VIEWER-8876-EPAIRED-72-FOOTPRINTS-v1",
+  "viewer_root": "phase-payloads/p2/e1_e6_techdev_v1/P2-E1-E6-PRIOR-FUSION-TECHDEV-v1/viewer",
+  "expected_before": {
+    "viewer_manifest.json": "dc9de2620109fcd0df8a6a1974a13fe975cf2e29c8388780e5ed604a816a0a1e",
+    "app.js": "0c893cf252aa048089038b7841a94add39a8da37afa28fcdb81ac02d7b3f77c2",
+    "index.html": "9483a7f7d98d8d00ae7ca49a6f95610ab8c46e9b75a9c4a59abca5cd2fe58c71"
+  },
+  "membership_csv": "docs/research/preregistration/gate_s0/uas_reference_coverage_r1_v1/split_candidate_v1.csv",
+  "membership_csv_sha256": "8dc33b86a126667b847ddf33f4ad4a56012f2bfc784c0742e573a421120f7309",
+  "shared_footprints": "phase-payloads/p2/c1_c2_shared_footprint_199_v3/P2-C1-C2-SHARED-FOOTPRINT-199-ORIGINAL-GLOBAL-v3-replay-20260806a/freeze/shared_footprints_199.geojson",
+  "shared_footprints_sha256": "5f9b703b06676db4400f6568fc3db315e319913f98ba491e98922eb747e4488a",
+  "building_manifest": "phase-payloads/p2/qualitative_199_common_manifest_v1/P2-QUALITATIVE-199-COMMON-MANIFEST-v1/manifest/building_camera_view_crop_manifest_v1.jsonl",
+  "building_manifest_sha256": "61e4e8a334c10d0c4405b4929c3e021ac74e5a6eb96596954b5781c0c5b4c4d9",
+  "world_shift_xyz": [690953.0, 5336071.0, 604.0],
+  "target_rule": "FROZEN_GATE_S0_E_PAIRED_CURRENT_IMAGE_MVS_AND_INDEPENDENT_UAS_LIDAR_REFERENCE_SUPPORT",
+  "expected_target_count": 72,
+  "expected_split_counts": {"development": 51, "validation": 11, "held_out": 10},
+  "target_color": "#00e5ff",
+  "outline_width_m": 0.42,
+  "display_z_offset_m": 0.4,
+  "default_visible": true,
+  "split_not_encoded_in_display_style": true,
+  "all_199_role": "NON_VISIBLE_CAMERA_FOCUS_AND_PICK_LOOKUP_ONLY",
+  "roofer_inputs_modified": false,
+  "scientific_verdict": null
+}
