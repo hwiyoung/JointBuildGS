@@ -1,0 +1,14 @@
+schema: jointbuildgs.p2.e3_local_4906982_reference_family_diag_v1.arm.v1
+common_config: configs/p2/e3_local_4906982_reference_family_diag_v1/common.yaml
+arm: PGSR_REF
+status: BLOCKED_NOT_REFERENCE_FAITHFUL
+reference_family: PGSR
+reference_commit: de24f1a38b350387e8d8fe381b2cd70c1ae946e7
+training_authorized: false
+blocking_differences:
+  - PGSR optimizes 3D Gaussians and derives a plane from the minimum scale axis; the current model is an intrinsically planar 2D Gaussian.
+  - PGSR requires its plane-depth rasterizer output and rendered plane distance; gsplat rasterization_2dgs does not expose those tensors.
+  - PGSR requires source-view reprojection, occlusion filtering, patch LNCC, abs-gradient densification, and observation-count trimming as one coupled method.
+  - Reusing the current MVC and normal-consistency losses would be a new hybrid, not a PGSR reference arm.
+next_required_work: A separately reviewed gsplat-native PGSR port and synthetic forward/backward parity suite.
+scientific_verdict: null

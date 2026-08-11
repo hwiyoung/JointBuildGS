@@ -1,0 +1,62 @@
+schema: jointbuildgs.p2.e3_local_4906982_reference_family_diag_v1.arm.v1
+common_config: configs/p2/e3_local_4906982_reference_family_diag_v1/common.yaml
+arm: GSPLAT_2DGS_REF
+status: CONDITIONAL_ON_PARITY_GATES
+reference_family: 2DGS
+reference_commit: 335ad612f2e783a4e57b9cbc4d1e167bd599fc98
+reference_rasterizer_commit: e0ed0207b3e0669960cfad70852200a4a5847f61
+out_dir: /artifacts/JointBuildGS/phase-payloads/p2/e3_local_4906982_reference_family_diag_v1/P2-E3-LOCAL-4906982-REFERENCE-FAMILY-DIAG-v1/arms/GSPLAT_2DGS_REF/R1
+overrides:
+  task_id: P2-E3-LOCAL-4906982-REFERENCE-FAMILY-DIAG-v1
+  run_id: GSPLAT_2DGS_REF_R1
+  seed: 0
+  load_depth: false
+  load_normal: false
+  load_semantic: false
+  w_photo: 1.0
+  photo_lam: 0.2
+  w_depth: 0.0
+  w_normal: 0.0
+  w_mono_depth: 0.0
+  w_mvc: 0.0
+  w_nc: 0.05
+  nc_schedule: constant
+  nc_warmup: 7000
+  nc_ramp_steps: 0
+  normal_consistency_mode: official_2dgs
+  surface_normal_depth_mode: surface_intersection_expected
+  w_distort: 0.0
+  lr_means: 0.043623805643528836
+  lr_means_final: 0.0004362380564352883
+  lr_means_delay_mult: 0.01
+  lr_means_max_steps: 30000
+  lr_means_schedule: official_2dgs_exponential
+  lr_opacities: 0.05
+  lr_quats: 0.001
+  lr_scales: 0.005
+  lr_sh0: 0.0025
+  lr_shN: 0.000125
+  prune_opa: 0.005
+  grow_grad2d: 0.0002
+  grow_scale3d: 0.01
+  prune_scale3d: 0.1
+  refine_start_iter: 500
+  refine_stop_iter: 15000
+  refine_every: 100
+  reset_every: 3000
+  elongation_filter: false
+  max_gaussians: null
+  max_iter: 20000
+  eval_every: 1000
+  ckpt_every: 1000
+  full_state_checkpoint: true
+  full_state_checkpoint_steps: [7000, 12000, 15000, 20000]
+  full_state_resume: auto
+  full_state_resume_strict_cuda_rng: true
+  official_PASS_usable: null
+  scientific_verdict: null
+adaptation_limits:
+  - gsplat DefaultStrategy is used instead of the official repository densifier.
+  - The common 20k budget truncates the official 30k schedule without rescaling it.
+  - Distortion is disabled, matching the pinned large-scene/default 2DGS setting.
+scientific_verdict: null

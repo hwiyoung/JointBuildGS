@@ -1,0 +1,20 @@
+schema: jointbuildgs.p2.e3_local_4906982_reference_family_diag_v1.common.v1
+task_id: P2-E3-LOCAL-4906982-REFERENCE-FAMILY-DIAG-v1
+building_id: DEBY_LOD2_4906982
+base_training_config: configs/p2/e3_local_4906982_mvc_depth_v1/depth03.yaml
+source_input_hashes: /artifacts/JointBuildGS/phase-payloads/p2/e3_local_4906982_mvc_depth_v1/P2-E3-LOCAL-4906982-MVC-DEPTH-v1/input_hashes.json
+source_reference_receipt: /artifacts/JointBuildGS/phase-payloads/p2/e3_local_4906982_reference_family_diag_v1/P2-E3-LOCAL-4906982-REFERENCE-FAMILY-DIAG-v1/control/reference_sources_receipt.json
+surface_overlay_manifest: /artifacts/JointBuildGS/phase-payloads/p2/e3_local_4906982_surface_intersection_diag_v1/P2-E3-LOCAL-4906982-SURFACE-INTERSECTION-DIAG-v1/control/surface_python_overlay/surface_overlay_manifest.json
+surface_overlay_audit: /artifacts/JointBuildGS/phase-payloads/p2/e3_local_4906982_surface_intersection_diag_v1/P2-E3-LOCAL-4906982-SURFACE-INTERSECTION-DIAG-v1/control/surface_overlay_audit.json
+docker_image: jointbuildgs:dev
+gpu: 1
+fixed_views: 55
+train_views: 47
+held_out_views: 8
+random_seed: 0
+max_iter: 20000
+checkpoints: [7000, 12000, 15000, 20000]
+external_depth_supervision: false
+external_normal_supervision: false
+external_als_lod_semantic_prior: false
+scientific_verdict: null
