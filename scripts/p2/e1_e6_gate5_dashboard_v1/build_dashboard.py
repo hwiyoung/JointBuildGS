@@ -684,6 +684,8 @@ function setup3D(entry,dark,idx){
     const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
     const f=x=>Math.max(0,Math.min(255,Math.round(x*lum+(dark?18:30)*(1-lum))));
     return `rgb(${f(r)},${f(g)},${f(b)})`;};
+  const fpR=(FPD.fp[idx]||[]).map(r_=>r_.map(([x,y])=>[x-cc[0],y-cc[1]]));
+  const gz=(mn[2]<1e8?mn[2]:0);
   function renderPanel(p){
     if(!p.ctx)return;
     const ctx=p.ctx,W=p.W,H=p.H;
@@ -693,6 +695,16 @@ function setup3D(entry,dark,idx){
     const pr=(x,y,z)=>{x-=c[0];y-=c[1];z-=c[2];
       const xr=x*cy-y*sy,yr=x*sy+y*cy;
       return [W/2+cam.pan[0]+xr*sc,H*0.55+cam.pan[1]-(-yr*sp+z*cp)*sc,yr*cp+z*sp];};
+    // shared footprint (지면 컨텍스트, 점선)
+    if(fpR.length){
+      ctx.setLineDash([5,4]);ctx.strokeStyle=cs.getPropertyValue("--ink3").trim();ctx.lineWidth=1.2;
+      fpR.forEach(r_=>{ctx.beginPath();
+        r_.forEach(([x,y],i)=>{const q=pr(x,y,gz);i?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]);});
+        ctx.closePath();ctx.stroke();});
+      ctx.setLineDash([]);
+    }
+    // mesh: painter 렌더 + 저해상 z-buffer (점 가림 판정용)
+    let zb=null;const ZS=3;let ZW=0,ZH=0;
     if(tgM.checked&&p.mesh){
       const rn=n=>{const xr=n[0]*cy-n[1]*sy,yr=n[0]*sy+n[1]*cy;
         return [xr,-yr*sp+n[2]*cp,yr*cp+n[2]*sp];};
@@ -710,6 +722,26 @@ function setup3D(entry,dark,idx){
         const lum=0.52+0.44*Math.abs((nv[0]*LGT[0]+nv[1]*LGT[1]+nv[2]*LGT[2])/ln);
         solids.push([(a[2]+b2[2]+d2[2])/3,a,b2,d2,lum]);
       }
+      ZW=Math.ceil(W/ZS);ZH=Math.ceil(H/ZS);
+      zb=new Float32Array(ZW*ZH).fill(-1e9);
+      for(const [,a,b2,d2] of solids){
+        const den=(b2[1]-d2[1])*(a[0]-d2[0])+(d2[0]-b2[0])*(a[1]-d2[1]);
+        if(Math.abs(den)<1e-9)continue;
+        const x0=Math.max(0,Math.floor(Math.min(a[0],b2[0],d2[0])/ZS)),
+              x1=Math.min(ZW-1,Math.ceil(Math.max(a[0],b2[0],d2[0])/ZS)),
+              y0=Math.max(0,Math.floor(Math.min(a[1],b2[1],d2[1])/ZS)),
+              y1=Math.min(ZH-1,Math.ceil(Math.max(a[1],b2[1],d2[1])/ZS));
+        for(let py=y0;py<=y1;py++)for(let px=x0;px<=x1;px++){
+          const X=px*ZS+ZS/2,Y=py*ZS+ZS/2;
+          const w1=((b2[1]-d2[1])*(X-d2[0])+(d2[0]-b2[0])*(Y-d2[1]))/den;
+          const w2=((d2[1]-a[1])*(X-d2[0])+(a[0]-d2[0])*(Y-d2[1]))/den;
+          const w3=1-w1-w2;
+          if(w1<-0.03||w2<-0.03||w3<-0.03)continue;
+          const z=w1*a[2]+w2*b2[2]+w3*d2[2];
+          const zi=py*ZW+px;
+          if(z>zb[zi])zb[zi]=z;
+        }
+      }
       solids.sort((u,w)=>u[0]-w[0]);
       for(const [,a,b2,d2,lum] of solids){
         ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b2[0],b2[1]);ctx.lineTo(d2[0],d2[1]);ctx.closePath();
@@ -717,6 +749,7 @@ function setup3D(entry,dark,idx){
         ctx.strokeStyle=shade(p.col,lum*0.55);ctx.lineWidth=0.7;ctx.stroke();
       }
     }
+    // points: mesh 뒤에 있으면 가림 (표면 위 점은 0.4 m 허용)
     if(tgP.checked&&p.pts){
       const v=p.pts.pts,col=p.pts.cols,cl=p.pts.cls||[];
       const useCls=tgC&&tgC.checked;
@@ -724,6 +757,10 @@ function setup3D(entry,dark,idx){
       for(let i=0,k=0,m=0;i<v.length;i+=3,k+=3,m++){
         const q=pr(v[i],v[i+1],v[i+2]);
         if(q[0]<-2||q[0]>W+2||q[1]<-2||q[1]>H+2)continue;
+        if(zb){
+          const zi=(q[1]/ZS|0)*ZW+(q[0]/ZS|0);
+          if(zi>=0&&zi<zb.length&&q[2]<zb[zi]-0.4)continue;
+        }
         if(useCls){
           const c9=cl[m];
           ctx.fillStyle=c9===6?cB:c9===2?cG:cO2;
