@@ -1,0 +1,16 @@
+schema: jointbuildgs.p2.e4_local_4906982_55v_als_normal_ablation_v1.arm.v1
+arm: ALS_DEPTH_ONLY
+base_training_config: configs/p2/e4_local_4906982_55v_als_prior_v1/als_prior_only.yaml
+overrides:
+  task_id: P2-E4-LOCAL-4906982-55V-ALS-NORMAL-ABLATION-v1
+  run_id: ALS_DEPTH_ONLY_R1
+  out_dir: /artifacts/JointBuildGS/phase-payloads/p2/e4_local_4906982_55v_als_normal_ablation_v1/P2-E4-LOCAL-4906982-55V-ALS-NORMAL-ABLATION-v1/arms/ALS_DEPTH_ONLY/R1
+  w_external_als_normal: 0.0
+single_variable_against_full_e4:
+  changed: w_external_als_normal
+  full_e4_value: 0.005
+  depth_only_value: 0.0
+  identity_keys_not_scientific_variables: [task_id, run_id, out_dir]
+  unchanged: [images, cameras, view_roles, fused_vis_conf_depth, external_als_prior, external_als_depth_weight, external_als_depth_loss, external_als_normal_loss_definition, sparse_initialization, model_state_at_7000, optimizer_state_at_7000, rng_state_at_7000, MVC, NC, densification, seed, GPU]
+  no_lod2_training_use: true
+scientific_verdict: null
