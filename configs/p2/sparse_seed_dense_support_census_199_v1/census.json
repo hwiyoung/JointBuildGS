@@ -1,0 +1,18 @@
+{
+  "schema": "jointbuildgs.p2.sparse_seed_dense_support_census_199.config.v1",
+  "task_id": "P2-SPARSE-SEED-DENSE-SUPPORT-CENSUS-199-v1",
+  "building_manifest": "phase-payloads/p2/qualitative_199_common_manifest_v1/P2-QUALITATIVE-199-COMMON-MANIFEST-v1/manifest/building_camera_view_crop_manifest_v1.jsonl",
+  "building_manifest_sha256": "61e4e8a334c10d0c4405b4929c3e021ac74e5a6eb96596954b5781c0c5b4c4d9",
+  "mvs_improvement_census": "phase-payloads/p2/c2_mvs_improvement_census_199_v1/P2-C2-MVS-IMPROVEMENT-CENSUS-199-v1/results/c2_mvs_improvement_census_199_v1.csv",
+  "mvs_improvement_census_sha256": "f3d74f0d92fae8e5256e66b08739524ccc8dfd40c37040b01d416362a00d2202",
+  "points3d": "phase-payloads/p0-audit/data/work/colmap/sparse/0/points3D.txt",
+  "points3d_sha256": "78bc1fde638b9c4ca33da23e6143109526c75b124d903757c07d07d27a53cb71",
+  "points3d_count": 4131648,
+  "exact_937_crosswalk": "artifacts/manifests/gate_s0/common_base_r2b/exact_937_member_crosswalk_v1.json",
+  "exact_937_crosswalk_sha256": "b4af779ecfae859de9772ce50cb24326b20c3f86614f6a8957453779d1cd4c17",
+  "sparse_local_shift_xyz": [690953.0, 5336071.0, 604.0],
+  "candidate_primary_track": "MVS_RAW_GEOMETRY_SUPPORT",
+  "weak_sparse_point_threshold": 3,
+  "minimum_cameras_with_three_tracks_for_strong_proxy": 2,
+  "scientific_verdict": null
+}
