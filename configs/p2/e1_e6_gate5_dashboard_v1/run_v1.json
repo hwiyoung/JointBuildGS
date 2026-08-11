@@ -1,0 +1,38 @@
+{
+  "schema": "jointbuildgs.p2.e1_e6_gate5_dashboard.v1",
+  "task_id": "P2-E1-E6-GATE5-DASHBOARD-v1",
+  "status": "NON_CONFIRMATORY_DEVELOPMENT_VIEWER",
+  "criterion_version": "GATE5_DASHBOARD_DEV_V1_NOT_FROZEN",
+  "derived_from": "ROOFER_G3G4_DEVELOPMENT_V0P1_NOT_FROZEN (DEC-P1-022)",
+  "inputs": {
+    "v16_viewer": "phase-payloads/p2/e1_e6_roofer_ox_review_v1/P2-E1-E6-ROOFER-OX-REVIEW-v16-G3G4-DEV0P1",
+    "shared_footprints": "phase-payloads/p2/c1_c2_shared_footprint_199_v3/P2-C1-C2-SHARED-FOOTPRINT-199-ORIGINAL-GLOBAL-v3-replay-20260806a/freeze/shared_footprints_199.geojson",
+    "citygml_lod2_tiles": ["phase-payloads/p0-audit/data/raw/lod2/690_5334.gml", "phase-payloads/p0-audit/data/raw/lod2/690_5336.gml"]
+  },
+  "g3_structure_reference": {
+    "primary": "ORIGINAL_CITYGML_LOD2_ROOFSURFACE_EPSG25832",
+    "fallback": "E1_ROOFER_TECHNICAL_VALID_LOD22_ONLY",
+    "matching": "normal_compatible_union_coverage",
+    "normal_compatibility_deg": 15.0,
+    "correspondence": "1:M allowed (granularity-robust)",
+    "minimum_plane_area_m2": 10.0
+  },
+  "g4_geometry_reference": "current-UAS class-6 viewer points, shared footprint 0.5 m inset, 0.5 m cells (unchanged from v0.1)",
+  "gates_default_cuts": {
+    "completeness_min": 0.80, "correctness_min": 0.80, "coverage_min": 0.80,
+    "rmse_z_m_max": 1.0, "normal_angle_deg_max": 10.0
+  },
+  "diagnostics_display_only": {"quality": "C*Corr composite", "p95_abs_z_m": 2.0, "abs_median_bias_z_m": 0.5},
+  "cut_presets": "multiplier sweep (x1.1/x0.8, x1.0, x0.9/x1.25, x0.8/x1.5, x0.6/x2.0) + E1 quantile anchor (P10/P90); exploration only, freezing follows contract section 13",
+  "counts_at_default_cuts": {
+    "E1": {"O": 44, "X_quality": 62, "generation_fail": 72, "not_assessed": 21},
+    "E2": {"O": 38, "X_quality": 63, "generation_fail": 65, "not_assessed": 33},
+    "E3": {"O": 34, "X_quality": 70, "generation_fail": 64, "not_assessed": 31},
+    "E4": {"O": 9, "X_quality": 85, "generation_fail": 25, "not_assessed": 80},
+    "E5": {"O": 11, "X_quality": 74, "generation_fail": 38, "not_assessed": 76},
+    "E6": {"O": 7, "X_quality": 72, "generation_fail": 74, "not_assessed": 46}
+  },
+  "caveats": ["E4-E6 legacy-base cross-lineage (DEC-P1-022)", "E6 circular: G3 reference family = its prior", "E1 G4 self-consistency", "cuts NOT frozen; no confirmatory inference"],
+  "official_PASS_usable": null,
+  "scientific_verdict": null
+}
