@@ -1,0 +1,48 @@
+{
+  "schema": "jointbuildgs.p2.e1_e6_roofer_development_g3_g4.v0",
+  "task_id": "P2-E1-E6-ROOFER-OX-REVIEW-v16-G3G4-DEV0P1",
+  "status": "USER_APPROVED_DEVELOPMENT_DIAGNOSTIC",
+  "source_viewer": {
+    "relative_root": "phase-payloads/p2/e1_e6_roofer_ox_review_v1/P2-E1-E6-ROOFER-OX-REVIEW-v14",
+    "viewer_manifest_path": "viewer_manifest.json",
+    "viewer_manifest_bytes": 1062514,
+    "viewer_manifest_sha256": "5fecfc368db62e3972a29950e57d55876c7bf134ac49a1523208363dad473df5",
+    "receipt_path": "web_receipt_v1.json",
+    "receipt_bytes": 401364,
+    "receipt_sha256": "d3571e2e47d01109adeecddc31938b5f950a96cebe4aeab44de5588235d16518"
+  },
+  "shared_footprints": {
+    "path": "phase-payloads/p2/c1_c2_shared_footprint_199_v3/P2-C1-C2-SHARED-FOOTPRINT-199-ORIGINAL-GLOBAL-v3-replay-20260806a/freeze/shared_footprints_199.geojson",
+    "bytes": 120967,
+    "sha256": "5f9b703b06676db4400f6568fc3db315e319913f98ba491e98922eb747e4488a",
+    "id_field": "stable_id"
+  },
+  "output_relative_root": "phase-payloads/p2/e1_e6_roofer_ox_review_v1/P2-E1-E6-ROOFER-OX-REVIEW-v16-G3G4-DEV0P1",
+  "roofer_target_aoi_epsg25832": [690791.740, 5335864.050, 691154.650, 5336353.850],
+  "conditions": ["E1", "E2", "E3", "E4", "E5", "E6"],
+  "structure_reference": {
+    "role": "E1_CURRENT_UAS_ROOFER_DEVELOPMENT_PROXY",
+    "independence_class": "METHOD_DERIVED_SELF_REFERENCE_PROXY_NOT_CONFIRMATORY",
+    "minimum_plane_area_m2": 10.0,
+    "plane_angle_tolerance_deg": 3.0,
+    "plane_height_tolerance_m": 0.25,
+    "matching_overlap_fraction": 0.5
+  },
+  "geometry_reference": {
+    "role": "CURRENT_UAS_VIEWER_BUILDING_POINTS_DEVELOPMENT_PROXY",
+    "independence_class": "SELF_REFERENCE_FOR_E1_CURRENT_REFERENCE_PROXY_FOR_E2_E6",
+    "cell_size_m": 0.5,
+    "evaluation_inset_m": 0.5,
+    "minimum_reference_cells": 20,
+    "minimum_prediction_coverage": 0.8
+  },
+  "thresholds": {
+    "g3_o": {"area_completeness_min": 0.8, "area_correctness_min": 0.8, "area_quality_min": 0.7},
+    "g3_x": {"area_completeness_below": 0.7, "area_correctness_below": 0.7, "area_quality_below": 0.6},
+    "g4_o": {"coverage_min": 0.8, "rmse_z_m_max": 1.0, "p95_abs_z_m_max": 2.0, "abs_median_bias_z_m_max": 0.5},
+    "g4_x": {"coverage_below": 0.7, "rmse_z_m_above": 1.5, "p95_abs_z_m_above": 3.0, "abs_median_bias_z_m_above": 1.0}
+  },
+  "criterion_version": "ROOFER_G3G4_DEVELOPMENT_V0P1_NOT_FROZEN",
+  "official_PASS_usable": null,
+  "scientific_verdict": null
+}

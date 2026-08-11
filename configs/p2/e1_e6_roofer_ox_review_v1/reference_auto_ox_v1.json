@@ -1,0 +1,139 @@
+{
+  "schema": "jointbuildgs.p2.e1_e6_roofer_reference_auto_ox.v1",
+  "task_id": "P2-E1-E6-ROOFER-AUTO-OX-v22-ROBUST-PLANE-MATCH",
+  "status": "USER_APPROVED_FOR_EXECUTION",
+  "criterion_version": "ROOFER_REFERENCE_AUTO_OX_DEVELOPMENT_v3_NOT_OFFICIAL",
+  "primary_threshold": "O50",
+  "classification_labels": ["O", "X", "NA"],
+  "review_is_outcome": false,
+  "output_relative_root": "phase-payloads/p2/e1_e6_roofer_ox_review_v1/P2-E1-E6-ROOFER-AUTO-OX-v22-ROBUST-PLANE-MATCH",
+  "supersedes_development_tasks": [
+    "P2-E1-E6-ROOFER-AUTO-OX-v19-REFERENCE",
+    "P2-E1-E6-ROOFER-AUTO-OX-v20-STABLE-ID-REFERENCE",
+    "P2-E1-E6-ROOFER-AUTO-OX-v21-ROBUST-PLANE-MATCH"
+  ],
+  "parent_viewer": {
+    "relative_root": "phase-payloads/p2/e1_e6_roofer_ox_review_v1/P2-E1-E6-ROOFER-OX-REVIEW-v16-G3G4-DEV0P1",
+    "viewer_manifest_path": "viewer_manifest.json",
+    "viewer_manifest_bytes": 1887931,
+    "viewer_manifest_sha256": "737f4dd8f747f84538495f51fd8e3a68b609cd0de3ae73f19b903a4b471da6d1",
+    "receipt_path": "web_receipt_v1.json",
+    "receipt_bytes": 1478,
+    "receipt_sha256": "2e38d0a8b2c6561d94221e36359ce2157f23bab4be6038ff83d8891d3826ee2b",
+    "index_path": "index.html",
+    "index_bytes": 21785,
+    "index_sha256": "79df4c5980f7e5bb690701739e991d50ea4c7f5c0d33ccd8172336858d9890b3",
+    "app_path": "app.js",
+    "app_bytes": 42203,
+    "app_sha256": "75b598f9ca4d627904b7a929acd4bbf17f3c09e90a24b1da967c44fdda5c62fc"
+  },
+  "cityjson_sources": {
+    "E1": {
+      "path": "phase-payloads/p2/c1_c2_shared_footprint_199_v3/P2-C1-C2-SHARED-FOOTPRINT-199-ORIGINAL-GLOBAL-v3/work/C1_L_upper/assembled.city.json",
+      "bytes": 708475,
+      "sha256": "60ea442fd6f58d68c581ee2eaaa37b80c4690fccb429b5beb17b00f73b1b5bf0"
+    },
+    "E2": {
+      "path": "phase-payloads/p2/c1_c2_shared_footprint_199_v3/P2-C1-C2-SHARED-FOOTPRINT-199-ORIGINAL-GLOBAL-v3/work/C2_MVS/assembled.city.json",
+      "bytes": 996186,
+      "sha256": "9b5324127b2989f02fa10a4b47a17caed3fbd45da4bd2ec5cb1a28bdf24a0723"
+    },
+    "E3": {
+      "path": "phase-payloads/p2/e3_full_scene_roofer_shared_footprint_199_v1/P2-E3-FULL-SCENE-ROOFER-SHARED-FOOTPRINT-199-v1/work/E3_GS_image/assembled.city.json",
+      "bytes": 1029522,
+      "sha256": "75e49b3bf3f7f282d18952eb878aeff544d2a063388b18c90d7ff2a57703e8c1"
+    },
+    "E4": {
+      "path": "phase-payloads/p2/e1_e6_techdev_v1/P2-E1-E6-PRIOR-FUSION-TECHDEV-v1/runs/E4_GS_ALS_UNWEIGHTED/roofer/assembled.city.json",
+      "bytes": 1182027,
+      "sha256": "069f5a79ae9e91ff3a93530d2ce03f0e88962f9a7668880933d4d91023b97df2"
+    },
+    "E5": {
+      "path": "phase-payloads/p2/e1_e6_techdev_v1/P2-E1-E6-PRIOR-FUSION-TECHDEV-v1/runs/E5_GS_ALS_WB/roofer/assembled.city.json",
+      "bytes": 1135756,
+      "sha256": "7f70edc39aa104739354f804c2d83924de5eaf50408d86a0ac2b14ff060546a1"
+    },
+    "E6": {
+      "path": "phase-payloads/p2/e1_e6_techdev_v1/P2-E1-E6-PRIOR-FUSION-TECHDEV-v1/runs/E6_GS_LOD2_PLANES_DIAGNOSTIC/roofer/assembled.city.json",
+      "bytes": 1935644,
+      "sha256": "507087904fb60b22dc80ab23adf9e21c04e43c4b10af5bcc2db7bfe1f65d6e3f"
+    }
+  },
+  "shared_footprints": {
+    "path": "phase-payloads/p2/c1_c2_shared_footprint_199_v3/P2-C1-C2-SHARED-FOOTPRINT-199-ORIGINAL-GLOBAL-v3-replay-20260806a/freeze/shared_footprints_199.geojson",
+    "bytes": 120967,
+    "sha256": "5f9b703b06676db4400f6568fc3db315e319913f98ba491e98922eb747e4488a",
+    "id_field": "stable_id"
+  },
+  "lod2_reference_sources": [
+    {
+      "path": "phase-payloads/p0-audit/data/raw/lod2/690_5334.gml",
+      "bytes": 156656509,
+      "sha256": "61d29e4617bfa961e811003b7af2bb2c826b3fab90f11731f5d22b8e4689e314"
+    },
+    {
+      "path": "phase-payloads/p0-audit/data/raw/lod2/690_5336.gml",
+      "bytes": 147865939,
+      "sha256": "494282ee7be660401820af8efa4e2667fcaeb4d7ac8466b23be67e3347701674"
+    }
+  ],
+  "structure_metric": {
+    "reference_role": "EXISTING_LOD2_ROOFSURFACE_EVALUATION_ONLY",
+    "minimum_plane_area_m2": 10.0,
+    "cluster_angle_deg": 5.0,
+    "cluster_height_m": 0.25,
+    "normal_tolerance_deg": 10.0,
+    "height_tolerance_m": 0.5,
+    "lod2_reference_z_shift_to_viewer_m": 45.7,
+    "matching_overlap_fractions": [0.5, 0.6, 0.7, 0.8],
+    "matching": "ROOF_UNION_SUPPORT_PLUS_GREEDY_ONE_TO_ONE_MAJOR_PLANES_WITH_BIDIRECTIONAL_OVERLAP_DIRECTION_AND_INTERSECTION_HEIGHT"
+  },
+  "geometry_metric": {
+    "primary_reference_role": "CURRENT_UAS_CLASS6_ANY_SUPPORT",
+    "fallback_reference_role": "LOD2_ROOFSURFACE_FALLBACK_ONLY_WHEN_UAS_EMPTY",
+    "cell_size_m": 0.5,
+    "evaluation_inset_m": 0.5,
+    "minimum_reference_cells": 1
+  },
+  "acceptance_thresholds": {
+    "g3": {
+      "area_completeness_min": 0.8,
+      "area_correctness_min": 0.8,
+      "area_quality_min": 0.7,
+      "plane_area_recall_min": 0.8,
+      "plane_area_precision_min": 0.8,
+      "prediction_reference_count_ratio_min": 0.75,
+      "prediction_reference_count_ratio_max": 1.5
+    },
+    "g4": {
+      "coverage_min": 0.8,
+      "rmse_z_m_max": 1.0,
+      "p95_abs_z_m_max": 2.0,
+      "abs_median_bias_z_m_max": 0.5
+    }
+  },
+  "application_sources": {
+    "css": {
+      "path": "src/apps/e1_e6_roofer_auto_ox_v1/auto_ox.css",
+      "bytes": 2593,
+      "sha256": "43b5f1665b2e1c6e73ef2ff8e531e5e69740dbf01c335eeb0e9e943f5210e5b2"
+    },
+    "js": {
+      "path": "src/apps/e1_e6_roofer_auto_ox_v1/auto_ox.js",
+      "bytes": 6471,
+      "sha256": "b1c39fae5402c4f86a364c13c7a30b6fd2912fab975687a3348121f20ae2b9d7"
+    }
+  },
+  "builder_source": {
+    "path": "scripts/p2/e1_e6_roofer_ox_review_v1/build_reference_auto_ox_v1.py",
+    "bytes": 34882,
+    "sha256": "b54174a2b5cde55b558d23268f1647f052429ec2e72d14d1d13433d672af01ae"
+  },
+  "plane_cluster_source": {
+    "path": "scripts/p2/e1_e6_roofer_ox_review_v1/add_development_g3_g4_v0.py",
+    "bytes": 31286,
+    "sha256": "05c4a411d63c3253e50b6606a64e59f282199413f01e8e59b5360ac4471adc6c"
+  },
+  "official_PASS_usable": null,
+  "scientific_verdict": null
+}

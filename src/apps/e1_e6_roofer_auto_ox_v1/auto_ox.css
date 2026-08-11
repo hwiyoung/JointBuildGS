@@ -1,0 +1,104 @@
+:root {
+  --auto-ox-o: #4ade80;
+  --auto-ox-x: #fb7185;
+  --auto-ox-na: #94a3b8;
+}
+
+#reviewbar { display: none !important; }
+
+#autoOxBar {
+  display: grid;
+  grid-template-columns: minmax(210px, auto) minmax(0, 1fr);
+  gap: 8px 12px;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(8, 11, 16, 0.98);
+}
+
+.auto-ox-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.auto-ox-controls strong { font-size: 13px; }
+.auto-ox-controls .status { flex-basis: 100%; }
+
+.auto-ox-threshold[aria-pressed="true"] {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+#autoOxConditions {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(112px, 1fr));
+  gap: 6px;
+}
+
+.auto-ox-condition {
+  min-width: 0;
+  padding: 6px 7px;
+  border: 1px solid var(--line);
+  border-top-width: 3px;
+  border-radius: 5px;
+  background: var(--panel-2);
+}
+
+.auto-ox-condition.is-o { border-top-color: var(--auto-ox-o); }
+.auto-ox-condition.is-x { border-top-color: var(--auto-ox-x); }
+.auto-ox-condition.is-na { border-top-color: var(--auto-ox-na); }
+
+.auto-ox-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 5px;
+  font-size: 12px;
+}
+
+.auto-ox-verdict {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.auto-ox-condition.is-o .auto-ox-verdict { color: var(--auto-ox-o); }
+.auto-ox-condition.is-x .auto-ox-verdict { color: var(--auto-ox-x); }
+.auto-ox-condition.is-na .auto-ox-verdict { color: var(--auto-ox-na); }
+
+.auto-ox-gates,
+.auto-ox-reason,
+.auto-ox-metrics {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 10px;
+}
+
+.auto-ox-gates { margin-top: 2px; color: var(--text); }
+.auto-ox-reason,
+.auto-ox-metrics { margin-top: 2px; color: var(--muted); }
+
+.panel-stats.auto-reference-o::before,
+.panel-stats.auto-reference-x::before,
+.panel-stats.auto-reference-na::before {
+  display: inline-block;
+  margin-right: 6px;
+  padding: 2px 5px;
+  border-radius: 3px;
+  color: #07130b;
+  font-weight: 800;
+}
+
+.panel-stats.auto-reference-o::before { content: "자동 O"; background: var(--auto-ox-o); }
+.panel-stats.auto-reference-x::before { content: "자동 X"; background: var(--auto-ox-x); color: #18070a; }
+.panel-stats.auto-reference-na::before { content: "NA"; background: var(--auto-ox-na); color: #0f172a; }
+
+@media (max-width: 1180px) {
+  #autoOxConditions { grid-template-columns: repeat(3, minmax(132px, 1fr)); }
+}
+
+@media (max-width: 760px) {
+  #autoOxBar { grid-template-columns: 1fr; }
+  #autoOxConditions { grid-template-columns: repeat(2, minmax(126px, 1fr)); }
+}

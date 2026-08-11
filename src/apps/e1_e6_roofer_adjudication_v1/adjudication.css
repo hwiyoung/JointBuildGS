@@ -1,0 +1,94 @@
+#app { grid-template-rows: auto auto auto auto auto minmax(0, 1fr) !important; }
+#buildingStatus { display: none; }
+#message { margin-left: 0 !important; }
+
+#adjudicationWorkflow {
+  display: grid;
+  grid-template-columns: auto minmax(230px, .8fr) minmax(590px, 2.4fr) auto;
+  align-items: center;
+  gap: 10px;
+  min-height: 62px;
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--line);
+  background: #0b1119;
+}
+.judge-mode { display: grid; gap: 5px; }
+.judge-mode-buttons { display: flex; gap: 4px; }
+.judge-mode label { display: flex; align-items: center; gap: 5px; color: var(--muted); font-size: 10px; }
+.judge-mode select { height: 28px; }
+.blind-mode #adjudicationWorkflow { grid-template-columns: auto 1fr auto; }
+.blind-mode .judge-queue { grid-column: 2; grid-template-columns: auto; }
+.blind-mode #judgeNext { grid-row: auto; grid-column: auto; min-height: 36px; }
+.blind-mode #judgeQueueFilter, .blind-mode .judge-queue label { display: none; }
+.blind-mode #judgeMore { display: none; }
+.judge-baseline[hidden], .judge-transitions[hidden] { display: none !important; }
+.blind-mode #reviewbar .review-field { border-top-color: #64748b !important; }
+.blind-mode #reviewbar .review-field select,
+.blind-mode #reviewbar .review-reason-note { visibility: hidden; height: 0; min-height: 0; padding: 0; border: 0; }
+.judge-baseline { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 3px 9px; }
+.judge-baseline strong { font-size: 14px; }
+.judge-baseline small, .judge-progress { color: var(--muted); font-size: 10px; }
+#judgeBaselineState { padding: 3px 7px; border-radius: 4px; text-align: center; font-weight: 900; }
+#judgeBaselineState.is-o { color: #07130b; background: var(--good); }
+#judgeBaselineState.is-x { color: #18070a; background: var(--bad); }
+#judgeBaselineState.is-empty { color: #1a1300; background: var(--warn); }
+
+.judge-transitions { display: grid; grid-template-columns: repeat(3, minmax(150px, 1fr)); gap: 6px; }
+.judge-transition { display: grid; grid-template-columns: 1fr auto; gap: 2px 8px; align-items: center; min-height: 42px; padding: 5px 8px; border: 1px solid var(--line); border-radius: 5px; background: var(--panel-2); }
+.judge-transition span { color: var(--muted); font-size: 10px; }
+.judge-transition small { grid-column: 1 / -1; color: var(--muted); font-size: 9px; }
+.judge-transition strong { font-size: 12px; }
+.judge-transition.rescue strong, .judge-transition.maintained strong { color: var(--good); }
+.judge-transition.regression strong, .judge-transition.failed strong { color: var(--bad); }
+.judge-transition.pending strong { color: var(--warn); }
+
+.judge-queue { display: grid; grid-template-columns: 165px auto; gap: 4px 6px; align-items: center; }
+.judge-queue label { color: var(--muted); font-size: 10px; }
+#judgeQueueFilter { height: 30px; }
+#judgeNext { grid-row: 1 / span 2; grid-column: 2; min-height: 46px; font-weight: 700; }
+
+.lineage-warning { max-height: 30px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+#reviewbar { display: grid !important; grid-template-columns: repeat(4, minmax(210px, 1fr)) auto; align-items: stretch !important; gap: 7px !important; padding: 7px 10px !important; }
+#reviewbar .review-field { min-width: 0 !important; padding: 6px; border: 1px solid var(--line); border-top-width: 3px; border-radius: 5px; background: #0d141e; }
+#reviewbar .review-field[data-judge-method="mvs"] { border-top-color: #f97316; }
+#reviewbar .review-field[data-judge-method="c3"] { border-top-color: #a78bfa; }
+#reviewbar .review-field[data-judge-method="e4"] { border-top-color: #38bdf8; }
+#reviewbar .review-field[data-judge-method="e5"] { border-top-color: var(--good); }
+#reviewbar .review-field.judge-secondary, #reviewbar > #exportCsv { display: none; }
+#reviewbar .review-field textarea { min-width: 0 !important; width: 100%; height: 70px !important; }
+.review-buttons { gap: 5px !important; }
+.review-choice { min-width: 54px !important; flex: 1 1 0; }
+.judge-clear { min-width: 55px; color: var(--muted); }
+.judge-shortcut { color: var(--muted); font-size: 9px; }
+#judgeMore { min-width: 118px; align-self: stretch; }
+
+#tools { min-height: 38px !important; padding: 5px 10px !important; }
+#viewports { grid-template-columns: repeat(8, minmax(0, 1fr)) !important; grid-template-rows: minmax(185px, .7fr) minmax(280px, 1.3fr) !important; overflow: hidden !important; }
+#viewports .judge-reference { display: block; grid-column: span 4; }
+#viewports .judge-method { display: block; grid-column: span 2; }
+#viewports .judge-secondary-panel { display: none; grid-column: span 4; }
+#viewports.show-secondary { grid-template-rows: minmax(170px, .65fr) minmax(260px, 1.2fr) minmax(170px, .65fr) !important; overflow-y: auto !important; }
+#viewports.show-secondary .judge-secondary-panel { display: block; }
+#viewports.focus-mode { grid-template-columns: minmax(0, 1fr) !important; grid-template-rows: minmax(0, 1fr) !important; }
+#viewports.focus-mode .viewport-shell.focus-panel { grid-column: 1 !important; }
+.panel-label { max-width: calc(100% - 16px); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#miniMapPanel { width: 205px !important; }
+#miniMapCanvas { width: 189px !important; height: 104px !important; }
+#photoDrawer { grid-template-rows: auto 180px !important; }
+#photoDrawer.collapsed { grid-template-rows: auto 0 !important; }
+#projectedRowImage { height: 170px !important; }
+
+@media (max-width: 1350px) {
+  #adjudicationWorkflow { grid-template-columns: 1fr 2fr; }
+  .judge-queue { grid-column: 1 / -1; grid-template-columns: 200px auto 1fr; }
+  #judgeNext { grid-row: auto; grid-column: auto; min-height: 30px; }
+  #reviewbar { grid-template-columns: repeat(4, minmax(190px, 1fr)); }
+}
+@media (max-width: 900px) {
+  html, body { overflow: auto !important; }
+  #app { height: auto !important; min-height: 100vh; grid-template-rows: auto !important; }
+  #adjudicationWorkflow, #reviewbar { grid-template-columns: 1fr !important; }
+  .judge-transitions { grid-template-columns: 1fr; }
+  #viewports, #viewports.show-secondary { min-height: 1900px; grid-template-columns: 1fr !important; grid-template-rows: repeat(6, minmax(280px, 1fr)) !important; overflow: visible !important; }
+  #viewports .judge-reference, #viewports .judge-method, #viewports .judge-secondary-panel { grid-column: 1; }
+}

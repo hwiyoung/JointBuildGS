@@ -1,0 +1,40 @@
+{
+  "schema": "jointbuildgs.p2.e1_e6_roofer_adjudication.e2_baseline.v1",
+  "task_id": "P2-E1-E6-ROOFER-ADJUDICATION-v17-E2BASELINE",
+  "status": "USER_APPROVED_FOR_EXECUTION",
+  "parent_viewer": {
+    "relative_root": "phase-payloads/p2/e1_e6_roofer_ox_review_v1/P2-E1-E6-ROOFER-OX-REVIEW-v16-G3G4-DEV0P1",
+    "viewer_manifest_path": "viewer_manifest.json",
+    "viewer_manifest_bytes": 1887931,
+    "viewer_manifest_sha256": "737f4dd8f747f84538495f51fd8e3a68b609cd0de3ae73f19b903a4b471da6d1",
+    "receipt_path": "web_receipt_v1.json",
+    "receipt_bytes": 1478,
+    "receipt_sha256": "2e38d0a8b2c6561d94221e36359ce2157f23bab4be6038ff83d8891d3826ee2b",
+    "index_path": "index.html",
+    "index_bytes": 21785,
+    "index_sha256": "79df4c5980f7e5bb690701739e991d50ea4c7f5c0d33ccd8172336858d9890b3",
+    "app_path": "app.js",
+    "app_bytes": 42203,
+    "app_sha256": "75b598f9ca4d627904b7a929acd4bbf17f3c09e90a24b1da967c44fdda5c62fc"
+  },
+  "application_sources": {
+    "css": {
+      "path": "src/apps/e1_e6_roofer_adjudication_v1/adjudication_transition_v1.css",
+      "bytes": 5434,
+      "sha256": "4e0cbbe384ea762798a26f4712645083c0c87a7b362593cb7f9b15e404031e7e"
+    },
+    "js": {
+      "path": "src/apps/e1_e6_roofer_adjudication_v1/adjudication_transition_v1.js",
+      "bytes": 10879,
+      "sha256": "a7121d2577d47a0722221d8f9be3ec686e3d0426e338224109696858d6fd9bb6"
+    }
+  },
+  "output_relative_root": "phase-payloads/p2/e1_e6_roofer_ox_review_v1/P2-E1-E6-ROOFER-ADJUDICATION-v17-E2BASELINE",
+  "product_baseline": "E2_MVS",
+  "mechanism_ablation": "E3_GS_image",
+  "product_arms": ["E4_GS_ALS_unweighted", "E5_GS_ALS_conflict_aware"],
+  "primary_product_contrast": "E5-vs-E2",
+  "local_storage_key": "jointbuildgs-e1-e6-roofer-ox-v4",
+  "official_PASS_usable": null,
+  "scientific_verdict": null
+}
