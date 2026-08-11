@@ -1,0 +1,31 @@
+{
+  "schema": "jointbuildgs.p2.viewer_8876_e1_lidar_fullscene_surface.config.v1",
+  "task_id": "P2-VIEWER-8876-E1-LIDAR-FULLSCENE-SURFACE-v1",
+  "viewer_root": "phase-payloads/p2/e1_e6_techdev_v1/P2-E1-E6-PRIOR-FUSION-TECHDEV-v1/viewer",
+  "source_laz": "phase-payloads/p2/c1_c2_shared_footprint_199_v3/P2-C1-C2-SHARED-FOOTPRINT-199-ORIGINAL-GLOBAL-v3-replay-20260806a/work/C1_L_upper/classified_scene.laz",
+  "source_laz_sha256": "eb6f89dba1c95f2b385459790cbfcbb0d5c7dc2f1f06fb1ccf8f3d6b97fdff1d",
+  "source_laz_bytes": 839950487,
+  "expected_before": {
+    "viewer_manifest.json": "65b72a4cf29281e65a346a0329d972d09f6fa8a52a28abbfeb9a237c66a18836",
+    "surface_meshes.json": "dbd1df5a4c6d3d20c08896bafc06309859eb7ce04fe5e0de423f98c487d8ee1e",
+    "app.js": "346b58769c438c59bb8e2499b664e9562d70ddc1e7c7643e1581a39e9e000dce",
+    "index.html": "336fbc7bf7bfaa16fba00984507109be8a115a8f69a3cf6c8443594ea690189d"
+  },
+  "expected_previous_surface_asset": {
+    "path": "assets/E1_lidar_surface_triangles_f32.bin",
+    "sha256": "b87dd345e1294d299613c7748b3a98c2b992b3a272e54b7961c2a7aa89710a5b",
+    "bytes": 6940008,
+    "building_id": "DEBY_LOD2_4906982"
+  },
+  "world_shift_xyz": [690953.0, 5336071.0, 604.0],
+  "source_bounds_xy": [690783.70, 5335834.05, 691184.59, 5336383.85],
+  "grid_resolution_m": 0.5,
+  "classification_codes": [2, 6],
+  "maximum_triangle_z_span_m": 2.0,
+  "las_chunk_points": 2000000,
+  "output_asset": "assets/E1_lidar_fullscene_surface_triangles_f32.bin",
+  "source_role": "CURRENT_UAS_LIDAR_ROOFER_CLASS_2_6_FULL_SCENE_DISPLAY_SURFACE_PROXY",
+  "display_proxy_method": "CLASS_2_6_MAX_Z_GRID_0P5M_FULL_SOURCE_XY_NO_HOLE_FILL_MAX_TRIANGLE_Z_SPAN_2M",
+  "roofer_inputs_modified": false,
+  "scientific_verdict": null
+}
