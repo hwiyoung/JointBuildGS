@@ -671,13 +671,14 @@ function setup3D(entry,dark,idx){
       meshPath:paths[0],ptsPath:paths[1],ldM:false,ldP:false,cv:null,ctx:null,W:0,H:0});
   });
   // 공유 카메라·경계 (내장 mesh + footprint 기반, 이후 고정)
-  let mn=[1e9,1e9,0],mx=[-1e9,-1e9,12];
+  let mn=[1e9,1e9,1e9],mx=[-1e9,-1e9,-1e9];
   let any=false;
   panels.forEach(p=>{if(!p.mesh)return;any=true;const v=p.mesh.v;
     for(let i=0;i<v.length;i+=3){for(let k=0;k<3;k++){mn[k]=Math.min(mn[k],v[i+k]);mx[k]=Math.max(mx[k],v[i+k]);}}});
   if(!any){const ring=(FPD.fp[idx]||[[]])[0]||[];
     ring.forEach(([x,y])=>{mn[0]=Math.min(mn[0],x-cc[0]);mn[1]=Math.min(mn[1],y-cc[1]);
-      mx[0]=Math.max(mx[0],x-cc[0]);mx[1]=Math.max(mx[1],y-cc[1]);});}
+      mx[0]=Math.max(mx[0],x-cc[0]);mx[1]=Math.max(mx[1],y-cc[1]);});
+    mn[2]=0;mx[2]=12;}
   const c=[(mn[0]+mx[0])/2,(mn[1]+mx[1])/2,(mn[2]+mx[2])/2];
   const R=Math.max(mx[0]-mn[0],mx[1]-mn[1],mx[2]-mn[2],6)/2;
   const cam={yaw:-0.85,pitch:0.62,zoom:1,pan:[0,0]};
@@ -697,11 +698,22 @@ function setup3D(entry,dark,idx){
     const pr=(x,y,z)=>{x-=c[0];y-=c[1];z-=c[2];
       const xr=x*cy-y*sy,yr=x*sy+y*cy;
       return [W/2+cam.pan[0]+xr*sc,H*0.55+cam.pan[1]-(-yr*sp+z*cp)*sc,yr*cp+z*sp];};
-    // shared footprint (지면 컨텍스트, 점선)
+    // shared footprint — 패널별 건물 바닥 높이에 부착 (mesh 최저 z → 점군 하위 2% z → 전역)
+    let pgz=gz;
+    if(p.mesh){
+      if(p._gz===undefined){let mz=1e9;const vv=p.mesh.v;
+        for(let i=2;i<vv.length;i+=3)if(vv[i]<mz)mz=vv[i];p._gz=mz;}
+      pgz=p._gz;
+    }else if(p.pts&&p.pts.pts.length){
+      if(p._gzp===undefined){const zs=[];const vv=p.pts.pts;
+        for(let i=2;i<vv.length;i+=3)zs.push(vv[i]);
+        zs.sort((x,y)=>x-y);p._gzp=zs[Math.floor(zs.length*0.02)];}
+      pgz=p._gzp;
+    }
     if(fpR.length){
       ctx.setLineDash([5,4]);ctx.strokeStyle=cs.getPropertyValue("--ink3").trim();ctx.lineWidth=1.2;
       fpR.forEach(r_=>{ctx.beginPath();
-        r_.forEach(([x,y],i)=>{const q=pr(x,y,gz);i?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]);});
+        r_.forEach(([x,y],i)=>{const q=pr(x,y,pgz);i?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]);});
         ctx.closePath();ctx.stroke();});
       ctx.setLineDash([]);
     }
