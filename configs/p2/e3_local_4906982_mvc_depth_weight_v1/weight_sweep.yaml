@@ -1,0 +1,45 @@
+task_id: P2-E3-LOCAL-4906982-MVC-DEPTH-WEIGHT-v1
+building_id: DEBY_LOD2_4906982
+scientific_verdict: null
+
+# The frozen source config supplies every training key.  Runtime configs may
+# change only task_id, run_id, out_dir, max_iter, checkpoint bookkeeping, and
+# the dose variable w_depth.
+base_config: configs/p2/e3_local_4906982_mvc_depth_v1/depth03.yaml
+base_config_sha256: 115703c92c2207d40fa5f6236dff260351a12a29c052df21d012ffb172be062c
+random_seed: 0
+docker_image: jointbuildgs:dev
+docker_image_id: sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774
+gpu_host_index: 1
+common_checkpoint_completed_updates: 7000
+common_checkpoint_sha256: 3ba28373c60815ba8cab7ff3f15452666c568d724ff5c96b5c99f1c60c0b56c1
+stop_completed_updates: 12000
+
+fixed_loss:
+  implementation: src/stage2/loss/data_fitting.py:masked_l1_loss
+  depth_mask: positive finite COLMAP geometric-consistency depth
+  scalar_confidence_weighting: false
+  robust_cost_change: false
+  confidence_or_view_gate_change: false
+  normal_supervision: false
+  multiview_densification: false
+
+reference_endpoints:
+  W000:
+    w_depth: 0.0
+    source_arm: DEPTH0/R1
+    checkpoint_sha256: a6e0926ef7723a3c88e46f0e805b1bf0b9d1effcf904b100bb17305071a5ff0e
+  W030:
+    w_depth: 0.03
+    source_arm: DEPTH03/R1
+    checkpoint_sha256: 08e25926a3f49a87c04c5bacb0c9f1800e3fa54bb072212f3837456e8dd419db
+
+new_arms:
+  W001: {w_depth: 0.001}
+  W003: {w_depth: 0.003}
+  W010: {w_depth: 0.01}
+
+runtime_pair_allowlist:
+  - run_id
+  - out_dir
+  - w_depth

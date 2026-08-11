@@ -1,0 +1,34 @@
+task_id: P2-E3-LOCAL-4906982-MVC-DEPTH-WEIGHT-v1
+building_id: DEBY_LOD2_4906982
+crs: EPSG:25832
+scientific_verdict: null
+
+# Evaluation only. No reference field enters training, fusion, checkpoint
+# selection, or parameter selection.
+reference_lod2_gml: /artifacts/JointBuildGS/phase-payloads/p0-audit/data/raw/lod2/690_5336.gml
+shared_footprint: /artifacts/JointBuildGS/phase-payloads/p2/e3_local_4906982_mvc_depth_v1/P2-E3-LOCAL-4906982-MVC-DEPTH-v1/control/shared_standard_footprint_4906982.geojson
+prediction_z_shift_to_reference_m: -45.7
+roof_normal_abs_nz_min: 0.7
+grid_size_m: 1.0
+center_margin_m: 3.0
+grid_min_points_per_cell: 3
+coherent_cell_median_abs_dz_max_m: 0.5
+coherent_cell_median_normal_angle_max_deg: 15.0
+surface_sample_spacing_m: 0.5
+distance_thresholds_m: [0.25, 0.5, 1.0]
+
+fusion:
+  implementation: per_view_voxel_aggregation
+  voxel_size_m: 0.15
+  alpha_min: 0.5
+  minimum_distinct_view_support: 2
+  tsdf_used: false
+
+evaluation_only_reference_fields:
+  - LoD2 RoofSurface XYZ
+  - LoD2 roof plane orientation
+  - LoD2 roof XY support
+prohibited_uses:
+  - training loss
+  - checkpoint selection
+  - weight selection without the complete fixed dose table
