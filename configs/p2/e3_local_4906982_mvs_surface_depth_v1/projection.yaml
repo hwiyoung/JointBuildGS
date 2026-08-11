@@ -1,0 +1,13 @@
+schema: jointbuildgs.p2.e3_local_4906982_mvs_surface_depth_v1.projection.v1
+source_mesh: /artifacts/JointBuildGS/phase-payloads/p2/e1_e6_techdev_v1/P2-E1-E6-PRIOR-FUSION-TECHDEV-v1/prep/viewer_surface_meshes/E2_openmvs_mesh.ply
+source_mesh_mvs: /artifacts/JointBuildGS/phase-payloads/p2/e1_e6_techdev_v1/P2-E1-E6-PRIOR-FUSION-TECHDEV-v1/prep/viewer_surface_meshes/E2_openmvs_mesh.mvs
+source_lineage: exact-937 OpenMVS dim_dense.mvs -> ReconstructMesh
+camera_source: frozen 55-view COLMAP sparse/0 cameras.bin and images.bin
+ray_pixel_center_offset: 0.5
+ray_parameterization: camera direction [(u-cx)/fx,(v-cy)/fy,1], so t_hit equals camera-Z metres
+visibility_rule: nearest positive finite triangle hit
+invalid_rule: no triangle hit -> depth 0 -> excluded by the unchanged loader mask
+output_format: float32 OpenEXR, one camera-Z channel
+target_and_selection_change_combined: true
+lod2_geometry_used: false
+scientific_verdict: null

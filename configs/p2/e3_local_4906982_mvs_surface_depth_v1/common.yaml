@@ -1,0 +1,13 @@
+schema: jointbuildgs.p2.e3_local_4906982_mvs_surface_depth_v1.common.v1
+task_id: P2-E3-LOCAL-4906982-MVS-SURFACE-DEPTH-v1
+building_id: DEBY_LOD2_4906982
+base_training_config: configs/p2/e3_local_4906982_mvc_depth_v1/depth03.yaml
+source_full_state_checkpoint: /artifacts/JointBuildGS/phase-payloads/p2/e3_local_4906982_mvc_depth_v1/P2-E3-LOCAL-4906982-MVC-DEPTH-v1/arms/DEPTH03/R1/ckpt/step_007000.pt
+raw_control_run: /artifacts/JointBuildGS/phase-payloads/p2/e3_local_4906982_mvc_depth_v1/P2-E3-LOCAL-4906982-MVC-DEPTH-v1/arms/DEPTH03/R1
+views:
+  exact: 55
+  train: 47
+  held_out: 8
+random_seed: 0
+selected_gpu: 1
+scientific_verdict: null
