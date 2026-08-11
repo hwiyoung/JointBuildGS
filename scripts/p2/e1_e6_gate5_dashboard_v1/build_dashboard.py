@@ -273,7 +273,7 @@ details.expl summary::marker{color:var(--o)}
 #m3dRow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
 @media (max-width:1000px){#m3dRow{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .m3p h4{font-size:11.5px;font-weight:700;margin:0 0 4px;color:var(--ink2)}
-.m3p canvas{width:100%;height:390px;display:block;touch-action:none;cursor:grab;border:1px solid var(--line2);border-radius:8px;background:var(--card)}
+.m3p canvas{width:100%;height:390px;display:block;touch-action:none;cursor:grab;border:1px solid var(--line2);border-radius:8px;background:#0B0F14}
 </style>
 
 <div class="wrap">
@@ -436,7 +436,7 @@ details.expl summary::marker{color:var(--o)}
     <h3 style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">3D 비교 — 드래그 회전 · 휠 줌 · 우클릭/Shift 이동 (카메라 동기화)
       <label style="font-size:12px;font-weight:600;color:var(--ink2)"><input type="checkbox" id="tgMesh" checked> Roofer 면</label>
       <label style="font-size:12px;font-weight:600;color:var(--ink2)"><input type="checkbox" id="tgPts"> Point cloud</label>
-      <label style="font-size:12px;font-weight:600;color:var(--ink2)"><input type="checkbox" id="tgCls" checked> Roofer 입력색 (파랑=building·갈색=ground·회색=미사용)</label>
+      <label style="font-size:12px;font-weight:600;color:var(--ink2)"><input type="checkbox" id="tgCls" checked> Roofer 입력색 (시안=building·갈색=ground·회색=미사용)</label>
       <span id="m3dNote" style="font-size:11px;color:var(--ink3);font-weight:400"></span></h3>
     <div id="m3dRow"></div>
   </div>
@@ -685,7 +685,7 @@ function setup3D(entry,dark,idx){
   const LGT=[0.28,0.45,0.85],ln=Math.hypot(...LGT);
   const shade=(hex,lum)=>{
     const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
-    const f=x=>Math.max(0,Math.min(255,Math.round(x*lum+(dark?18:30)*(1-lum))));
+    const f=x=>Math.max(0,Math.min(255,Math.round(x*lum+16*(1-lum))));
     return `rgb(${f(r)},${f(g)},${f(b)})`;};
   const fpR=(FPD.fp[idx]||[]).map(r_=>r_.map(([x,y])=>[x-cc[0],y-cc[1]]));
   const gz=(mn[2]<1e8?mn[2]:0);
@@ -711,7 +711,7 @@ function setup3D(entry,dark,idx){
       pgz=p._gzp;
     }
     if(fpR.length){
-      ctx.setLineDash([5,4]);ctx.strokeStyle=cs.getPropertyValue("--ink3").trim();ctx.lineWidth=1.2;
+      ctx.setLineDash([5,4]);ctx.strokeStyle="#9FB0C4";ctx.lineWidth=1.2;
       fpR.forEach(r_=>{ctx.beginPath();
         r_.forEach(([x,y],i)=>{const q=pr(x,y,pgz);i?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]);});
         ctx.closePath();ctx.stroke();});
@@ -767,7 +767,7 @@ function setup3D(entry,dark,idx){
     if(tgP.checked&&p.pts){
       const v=p.pts.pts,col=p.pts.cols,cl=p.pts.cls||[];
       const useCls=tgC&&tgC.checked;
-      const cB=colO,cG=dark?"#9A8468":"#8B7355",cO2=dark?"rgba(130,140,150,0.28)":"rgba(139,149,160,0.30)";
+      const cB="#22D3EE",cG="#8B7355",cO2="rgba(148,163,178,0.35)";
       for(let i=0,k=0,m=0;i<v.length;i+=3,k+=3,m++){
         const q=pr(v[i],v[i+1],v[i+2]);
         if(q[0]<-2||q[0]>W+2||q[1]<-2||q[1]>H+2)continue;
@@ -783,7 +783,7 @@ function setup3D(entry,dark,idx){
       }
     }
     if(!p.mesh&&!p.pts){
-      ctx.fillStyle=cs.getPropertyValue("--ink3");ctx.font="12px sans-serif";ctx.textAlign="center";
+      ctx.fillStyle="#9FB0C4";ctx.font="12px sans-serif";ctx.textAlign="center";
       ctx.fillText(p.note||"자산 없음",W/2,H/2);
     }
   }
