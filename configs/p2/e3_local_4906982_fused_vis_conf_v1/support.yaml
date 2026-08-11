@@ -1,0 +1,29 @@
+schema: jointbuildgs.p2.e3_local_4906982_fused_vis_conf_v1.support.v1
+native_openmvs_depth:
+  scene: /artifacts/JointBuildGS/phase-payloads/p2/mvs_native_textured_mesh_preflight_v1/P2-MVS-NATIVE-DENSE-SCENE-RECOVERY-v2/work/mvs/openmvs/dim_dense.mvs
+  dmap_dir: /artifacts/JointBuildGS/phase-payloads/p2/mvs_native_textured_mesh_preflight_v1/P2-MVS-NATIVE-DENSE-SCENE-RECOVERY-v2/work/mvs/openmvs
+  command_log: /artifacts/JointBuildGS/phase-payloads/p2/mvs_native_textured_mesh_preflight_v1/P2-MVS-NATIVE-DENSE-SCENE-RECOVERY-v2/work/mvs/openmvs/DensifyPointCloud-2608050738388B4568.log
+  resolution: [700, 506]
+  filtering: OpenMVS optimize=7
+  number_views: 3
+  number_views_fuse: 2
+alignment:
+  parent_undistorted_resolution: [1400, 1013]
+  scale: 0.5
+  interpolation: nearest
+  pixel_center_transform: "u_dmap = 0.5 * (u_parent + 0.5) - 0.5"
+  crop_offset_source: frozen camera principal-point delta
+support_rule:
+  fused_target_positive_finite: true
+  native_depth_positive_finite: true
+  native_confidence_positive_finite: true
+  relative_depth_difference: "abs(D_native-D_fused)/D_native < 0.01"
+  tolerance_source: OpenMVS fDepthDiffThreshold default used by the recovered run
+  confidence_quantile_threshold: null
+  unsupported_target_value: 0.0
+gate:
+  minimum_mapped_views: 55
+  minimum_train_views_with_support: 46
+  minimum_train_supported_fraction_of_fused: 0.50
+  forbid_lod2_geometry: true
+scientific_verdict: null

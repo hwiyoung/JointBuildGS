@@ -1,0 +1,9 @@
+task_id: P2-E3-LOCAL-4906982-FUSED-VIS-CONF-v1
+building_id: DEBY_LOD2_4906982
+base_training_config: configs/p2/e3_local_4906982_mvs_surface_depth_v1/mvs_surface_metric.yaml
+control_arm: MVS_SURFACE_METRIC
+intervention_arm: FUSED_VIS_CONF
+seed: 0
+gpu: 1
+checkpoints: [7000, 12000, 15000, 20000]
+scientific_verdict: null
