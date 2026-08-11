@@ -1,0 +1,40 @@
+{
+  "schema": "jointbuildgs.p2.viewer_8876_smooth_common_envelope.config.v2",
+  "task_id": "P2-VIEWER-8876-SMOOTH-COMMON-ENVELOPE-v2",
+  "viewer_root": "phase-payloads/p2/e1_e6_techdev_v1/P2-E1-E6-PRIOR-FUSION-TECHDEV-v1/viewer",
+  "source_coverage_boundaries": {
+    "path": "phase-payloads/p2/e1_e6_techdev_v1/P2-E1-E6-PRIOR-FUSION-TECHDEV-v1/viewer/coverage_boundaries.json",
+    "bytes": 1394256,
+    "sha256": "a4951c41712dc3cca0a46195f8eec2b01fe242afd992877ab816cbeef61efa7b"
+  },
+  "shared_footprints_199": {
+    "path": "phase-payloads/p2/c1_c2_shared_footprint_199_v3/P2-C1-C2-SHARED-FOOTPRINT-199-ORIGINAL-GLOBAL-v3-replay-20260806a/freeze/shared_footprints_199.geojson",
+    "bytes": 120967,
+    "sha256": "5f9b703b06676db4400f6568fc3db315e319913f98ba491e98922eb747e4488a"
+  },
+  "expected_before": {
+    "viewer_manifest.json": "2ee1316a5c5bb2b105e80d4c7b943695ff7aaf905d9b0b7f9abab78a0bc9f643",
+    "surface_meshes.json": "82ed7e4d348e7ccfd97102e47fafa107d2b1b2b15c8c8233d45a2a6c8d2bd35b",
+    "app.js": "669c674b8e5724b21f9f14ed08848de8c865b6a9ff2f648050842dbc6d515b7a",
+    "index.html": "16015fac5403749fc040aad19e2e83366e664e618c64ef635b4fbc287bd16615"
+  },
+  "world_shift_xyz": [690953.0, 5336071.0, 604.0],
+  "envelope": {
+    "component_rule": "LARGEST_CONNECTED_OUTER_RING",
+    "closing_radius_m": 2.0,
+    "simplify_tolerance_m": 1.0,
+    "candidate_footprint_buffer_m": 2.0
+  },
+  "layers": {
+    "E1_MAIN_ENVELOPE": {"label_ko": "E1 LiDAR 주 관측외곽", "color": "#3b82f6", "display_z_local_m": -44.0},
+    "E2_MAIN_ENVELOPE": {"label_ko": "E2 MVS 주 복원외곽", "color": "#ef4444", "display_z_local_m": -43.5},
+    "COMMON_MAIN_ENVELOPE": {"label_ko": "E1/E2 공통 유효외곽", "color": "#22c55e", "display_z_local_m": -43.0}
+  },
+  "candidate_color": "#00e5ff",
+  "candidate_display_z_local_m": -25.5,
+  "output_json": "coverage_envelopes_v2.json",
+  "display_only": true,
+  "target_membership_modified": false,
+  "roofer_inputs_modified": false,
+  "scientific_verdict": null
+}
