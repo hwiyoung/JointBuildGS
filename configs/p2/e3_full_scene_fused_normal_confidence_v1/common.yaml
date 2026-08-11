@@ -1,0 +1,51 @@
+schema: jointbuildgs.p2.e3_full_scene_fused_normal_confidence_v1.common.v1
+task_id: P2-E3-FULL-SCENE-FUSED-NORMAL-CONFIDENCE-v1
+condition_id: E3_GS_image
+status: USER_APPROVED_FOR_EXECUTION
+exact_view_manifest: /workspace/JointBuildGS/artifacts/manifests/gate_s0/common_base_r2b/exact_937_member_crosswalk_v1.json
+exact_view_manifest_sha256: b4af779ecfae859de9772ce50cb24326b20c3f86614f6a8957453779d1cd4c17
+exact_view_count: 937
+data_root: /artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense
+source_mesh: /artifacts/JointBuildGS/phase-payloads/p2/e1_e6_techdev_v1/P2-E1-E6-PRIOR-FUSION-TECHDEV-v1/prep/viewer_surface_meshes/E2_openmvs_mesh.ply
+source_mesh_bytes: 74324744
+source_mesh_sha256: 8cec760c2f156dcb5d20a2f5b10eb677697a8eb786e3e2ea39c88cf4c95b098c
+native_dmap_dir: /artifacts/JointBuildGS/phase-payloads/p2/mvs_native_textured_mesh_preflight_v1/P2-MVS-NATIVE-DENSE-SCENE-RECOVERY-v2/work/mvs/openmvs
+native_dmap_log: /artifacts/JointBuildGS/phase-payloads/p2/mvs_native_textured_mesh_preflight_v1/P2-MVS-NATIVE-DENSE-SCENE-RECOVERY-v2/work/mvs/openmvs/DensifyPointCloud-2608050738388B4568.log
+expected_native_dmap_count: 924
+expected_native_missing_count: 13
+output_data_root: /artifacts/JointBuildGS/phase-payloads/p2/e3_full_scene_fused_normal_confidence_v1/P2-E3-FULL-SCENE-FUSED-NORMAL-CONFIDENCE-v1/data/fused_normal_confidence_colmap_full
+output_normal_dir: /artifacts/JointBuildGS/phase-payloads/p2/e3_full_scene_fused_normal_confidence_v1/P2-E3-FULL-SCENE-FUSED-NORMAL-CONFIDENCE-v1/data/fused_surface_normal_confidence_world
+alignment:
+  native_resolution: [700, 506]
+  full_resolution: [1400, 1013]
+  scale: 0.5
+  interpolation: nearest
+  pixel_center_transform: "u_dmap = 0.5 * (u_full + 0.5) - 0.5"
+depth_support:
+  fused_positive_finite: true
+  native_depth_positive_finite: true
+  native_confidence_positive_finite: true
+  native_fused_relative_difference_max: 0.01
+normal_confidence_gate:
+  require_depth_support: true
+  require_native_filtered_normal: true
+  native_fused_unsigned_angle_max_deg: 15.0
+  local_fused_unsigned_angle_max_deg: 15.0
+  local_radius_px: 1
+  depth_neighbor_jump_max_m: 1.0
+  support_erosion_radius_px: 1
+  combination: all_binary_conditions
+  threshold_lock: fixed_before_target_generation_and_training
+target_gate:
+  require_exact_rgb_views: 937
+  require_native_dmap_views: 924
+  require_missing_native_views: 13
+  minimum_depth_supported_views: 843
+  minimum_normal_supported_views: 750
+  minimum_pixels_per_supported_view: 1000
+  minimum_depth_support_fraction_of_fused_hits: 0.50
+  minimum_normal_fraction_of_depth_support: 0.05
+  maximum_normal_fraction_of_depth_support: 0.80
+  forbid_lod2_geometry: true
+checkpoints: [7000, 12000, 15000, 20000, 30000]
+scientific_verdict: null

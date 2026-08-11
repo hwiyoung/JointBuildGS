@@ -1,0 +1,108 @@
+task_id: P2-E3-FULL-SCENE-FUSED-NORMAL-CONFIDENCE-v1
+run_id: E3_GS_IMAGE_FUSED_NORMAL_CONFIDENCE_R1
+condition_id: E3_GS_image
+seed: 0
+device: cuda
+data_root: /artifacts/JointBuildGS/phase-payloads/p2/e3_full_scene_fused_normal_confidence_v1/P2-E3-FULL-SCENE-FUSED-NORMAL-CONFIDENCE-v1/data/fused_normal_confidence_colmap_full
+exact_view_manifest: /workspace/JointBuildGS/artifacts/manifests/gate_s0/common_base_r2b/exact_937_member_crosswalk_v1.json
+exact_view_manifest_sha256: b4af779ecfae859de9772ce50cb24326b20c3f86614f6a8957453779d1cd4c17
+exact_view_count: 937
+downscale: 1.0
+
+init_pointcloud: /artifacts/JointBuildGS/phase-payloads/p2/c1_c2_c3_utarget199_v1/P2-C1-C2-C3-UTARGET199-FRAME-RECOVERY-v1/c3/common/neutral_dense_seed.ply
+init_pointcloud_mode: concat
+seed_protect: true
+seed_protect_until_iter: 5000
+mvs_seed_init_opacity: 0.10
+
+load_depth: true
+depth_scale: 1.0
+depth_supervision_mode: expected
+depth_loss_type: l1
+depth_prior_alignment: none
+w_depth: 0.03
+depth_warmup: 7000
+depth_schedule: ramp
+depth_ramp_steps: 5000
+
+load_normal: true
+normal_dir: /artifacts/JointBuildGS/phase-payloads/p2/e3_full_scene_fused_normal_confidence_v1/P2-E3-FULL-SCENE-FUSED-NORMAL-CONFIDENCE-v1/data/fused_surface_normal_confidence_world
+normal_prior_orientation: unsigned
+w_normal: 0.005
+normal_warmup: 7000
+normal_schedule: ramp
+normal_ramp_steps: 5000
+
+load_semantic: false
+semantic_dir: null
+w_sem: 0.0
+sem_detach_geometry: false
+lr_sem: 0.0025
+w_semdepth_smooth: 0.0
+w_semdepth_plane: 0.0
+w_boundary_normal: 0.0
+
+w_photo: 1.0
+photo_lam: 0.2
+w_nc: 0.05
+nc_warmup: 7000
+nc_schedule: constant
+nc_ramp_steps: 0
+w_distort: 0.0
+distort_normalization: scene_scale_sq
+distort_warmup: 3000
+distort_schedule: constant
+distort_ramp_steps: 0
+
+w_mvc: 0.5
+mvc_warmup: 7000
+mvc_schedule: ramp
+mvc_ramp_steps: 5000
+mvc_every: 1
+mvc_neighbor_k: 2
+mvc_max_angle_deg: 40.0
+mvc_min_baseline: 2.0
+mvc_w_normal: 0.5
+mvc_rel_thresh: 0.1
+mvc_ref_detach: true
+
+w_mono_depth: 0.0
+w_mono_normal: 0.0
+mono_depth_dir: null
+mono_normal_dir: null
+w_structure: 0.0
+w_structure_na: 0.0
+w_structure_cp: 0.0
+w_mutual: 0.0
+
+sh_degree: 3
+sh_up_every: 1000
+lr_means: 0.00016
+lr_scales: 0.005
+lr_quats: 0.001
+lr_opacities: 0.05
+lr_sh0: 0.0025
+lr_shN: 0.000125
+
+prune_opa: 0.005
+grow_grad2d: 0.001
+grow_scale3d: 0.01
+prune_scale3d: 0.1
+elongation_filter: true
+elongation_axis_ratio_threshold: 0.01
+refine_start_iter: 500
+refine_stop_iter: 20000
+refine_every: 200
+reset_every: 100000
+max_gaussians: 800000
+
+max_iter: 30000
+eval_every: 5000
+ckpt_every: 5000
+full_state_checkpoint: true
+full_state_checkpoint_steps: [7000, 12000, 15000, 20000, 30000]
+full_state_resume: auto
+full_state_resume_strict_cuda_rng: true
+out_dir: /artifacts/JointBuildGS/phase-payloads/p2/e3_full_scene_fused_normal_confidence_v1/P2-E3-FULL-SCENE-FUSED-NORMAL-CONFIDENCE-v1/arms/E3_GS_image/R1
+official_PASS_usable: null
+scientific_verdict: null
