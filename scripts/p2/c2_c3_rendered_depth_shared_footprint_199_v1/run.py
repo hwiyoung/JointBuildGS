@@ -176,6 +176,11 @@ def prepare(
         "c2_classified_source": exact_file(artifact_root / inputs["c2_classified_source"]["relative_path"], inputs["c2_classified_source"]),
         "shared_footprints_source": exact_file(artifact_root / inputs["shared_footprints"]["relative_path"], inputs["shared_footprints"]),
     }
+    if "training_completion" in inputs:
+        source_records["training_completion"] = exact_file(
+            artifact_root / inputs["training_completion"]["relative_path"],
+            inputs["training_completion"],
+        )
     for row in inputs["camera_files"]:
         source_records["camera_files"].append(exact_file(artifact_root / row["relative_path"], row))
     checkpoint_root = artifact_root / inputs["checkpoint_root_relative_path"]
@@ -583,7 +588,7 @@ def finalize(output_root: Path, config_path: Path = CONFIG_PATH) -> dict[str, An
         "status": "TECHNICAL_COMPLETE_WITH_EXPLICIT_MISSINGNESS",
         "completed_utc": datetime.now(timezone.utc).isoformat(),
         "building_count": len(ids), "building_method_rows": len(rows),
-        "roofer_invocation_count": 2, "counts_by_method": summaries,
+        "roofer_invocation_count": len(CONDITIONS), "counts_by_method": summaries,
         "result_jsonl": file_record(jsonl_path, output_root), "result_csv": file_record(csv_path, output_root),
         "comparison_label": "shared-footprint technical diagnostic",
         "official_PASS_usable": None, "scientific_verdict": None,
