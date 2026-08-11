@@ -1,0 +1,53 @@
+{
+  "schema": "jointbuildgs.p2.c2_mvs_improvement_census_199.v1",
+  "task_id": "P2-C2-MVS-IMPROVEMENT-CENSUS-199-v1",
+  "status": "USER_DIRECTED_NON_CONFIRMATORY_TECHNICAL_CENSUS",
+  "population_count": 199,
+  "sources": {
+    "clip_census_csv": {
+      "path": "phase-payloads/p2/c2_mvs_classification_clip_census_199_v1/P2-C2-MVS-CLASSIFICATION-CLIP-CENSUS-199-v1/results/building_classification_clip_census_v1.csv",
+      "bytes": 113878,
+      "sha256": "199184a8afc89165a2e7cca7224519266569e83b8c3928b2596222e75f89c05d"
+    },
+    "no_clip_cityjsonseq": {
+      "path": "phase-payloads/p2/c2_mvs_classification_clip_census_199_v1/P2-C2-MVS-CLASSIFICATION-CLIP-CENSUS-199-v1/runs/clip_false/690791_5335864.city.jsonl",
+      "bytes": 937923,
+      "sha256": "ac4202c61bebb5592379ccb898a68ecb58fe98b5bee6c905f1cd7db0c192ef31"
+    },
+    "current_uas_reference_cells": {
+      "path": "phase-payloads/p2/utarget199_contract_results_v1/P2-UTARGET199-CONTRACT-RESULTS-v1/freeze/utarget199_reference_cells_v1.jsonl",
+      "bytes": 11934242,
+      "sha256": "ae62bc358dfdde604892305d44f3ff599288f00234a1622292d75596ba952f22"
+    },
+    "temporal_reference_diagnostics": {
+      "path": "phase-payloads/p2/utarget199_presentation_v5/P2-UTARGET199-PRESENTATION-v5/results/lod2_temporal_reference_diagnostics_v1.jsonl",
+      "bytes": 107924,
+      "sha256": "dfb53221e21846a6c96fbd975ca6358aa7eab28a1e127c174e66c1a14af6b4d3"
+    }
+  },
+  "diagnostic_bands": {
+    "raw_support_low_below": 0.9,
+    "class6_support_gap_at_least": 0.1,
+    "clip_coverage_gain_at_least": 0.1,
+    "input_fit_rmse_high_m_at_least": 2.0,
+    "input_fit_rmse_severe_m_at_least": 4.0,
+    "minimum_current_reference_cells": 20,
+    "candidate_reference_accuracy": {
+      "reference_vertical_coverage_min": 0.8,
+      "height_error_mae_m_max": 1.0,
+      "RMSZ_m_max": 1.0,
+      "RMSXY_m_max": 1.0,
+      "surface_distance_rmse_m_max": 1.0,
+      "surface_distance_p95_m_max": 2.0
+    }
+  },
+  "output_relative_root": "phase-payloads/p2/c2_mvs_improvement_census_199_v1/P2-C2-MVS-IMPROVEMENT-CENSUS-199-v1",
+  "interpretation": {
+    "flags_are_nonexclusive": true,
+    "bands_are_diagnostic_not_success_gates": true,
+    "current_uas_reference_is_evaluation_only": true,
+    "formal_method_input_changed": false,
+    "official_PASS_usable": null,
+    "scientific_verdict": null
+  }
+}
