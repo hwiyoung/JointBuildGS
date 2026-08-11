@@ -237,7 +237,7 @@ details.expl summary::marker{color:var(--o)}
   align-items:flex-start;justify-content:center;overflow:auto;padding:34px 16px}
 .modal.on{display:flex}
 .mbox{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);
-  max-width:1560px;width:100%;padding:20px 24px 22px}
+  max-width:min(1860px,97vw);width:100%;padding:20px 24px 22px}
 .mhead{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:4px}
 .mhead .mid{font-size:16px;font-weight:700}
 .mhead .sp{flex:1}
@@ -273,7 +273,7 @@ details.expl summary::marker{color:var(--o)}
 #m3dRow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
 @media (max-width:1000px){#m3dRow{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .m3p h4{font-size:11.5px;font-weight:700;margin:0 0 4px;color:var(--ink2)}
-.m3p canvas{width:100%;height:290px;display:block;touch-action:none;cursor:grab;border:1px solid var(--line2);border-radius:8px;background:var(--card)}
+.m3p canvas{width:100%;height:390px;display:block;touch-action:none;cursor:grab;border:1px solid var(--line2);border-radius:8px;background:var(--card)}
 </style>
 
 <div class="wrap">
@@ -436,6 +436,7 @@ details.expl summary::marker{color:var(--o)}
     <h3 style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">3D 비교 — 드래그 회전 · 휠 줌 · 우클릭/Shift 이동 (카메라 동기화)
       <label style="font-size:12px;font-weight:600;color:var(--ink2)"><input type="checkbox" id="tgMesh" checked> Roofer 면</label>
       <label style="font-size:12px;font-weight:600;color:var(--ink2)"><input type="checkbox" id="tgPts"> Point cloud</label>
+      <label style="font-size:12px;font-weight:600;color:var(--ink2)"><input type="checkbox" id="tgCls" checked> Roofer 입력색 (파랑=building·갈색=ground·회색=미사용)</label>
       <span id="m3dNote" style="font-size:11px;color:var(--ink3);font-weight:400"></span></h3>
     <div id="m3dRow"></div>
   </div>
@@ -637,12 +638,12 @@ async function loadPLY(url,c,limit){
   const n=+((/element vertex (\d+)/.exec(head)||[])[1]||0);if(!n)return null;
   const off=he+11,stride=16,dv=new DataView(buf);
   const step=Math.max(1,Math.ceil(n/limit));
-  const pts=[],cols=[];
+  const pts=[],cols=[],cls=[];
   for(let i=0;i<n;i+=step){const b=off+i*stride;
     if(b+16>buf.byteLength)break;
     pts.push(dv.getFloat32(b,true)-c[0],dv.getFloat32(b+4,true)-c[1],dv.getFloat32(b+8,true)-c[2]);
-    cols.push(u8[b+12],u8[b+13],u8[b+14]);}
-  return {pts,cols};
+    cols.push(u8[b+12],u8[b+13],u8[b+14]);cls.push(u8[b+15]);}
+  return {pts,cols,cls};
 }
 function setup3D(entry,dark,idx){
   const row=document.getElementById("m3dRow"); if(!row)return;
@@ -653,7 +654,7 @@ function setup3D(entry,dark,idx){
   const ap=AP[idx]||{};
   const cc=fpCenter(idx);
   const tgM=document.getElementById("tgMesh"),tgP=document.getElementById("tgPts"),
-        note=document.getElementById("m3dNote");
+        tgC=document.getElementById("tgCls"),note=document.getElementById("m3dNote");
   if(EMBEDDED){note.textContent="웹 게시판은 내장 mesh만 표시 — 전체 자산은 로컬 8880에서";}
   else note.textContent="Point cloud는 토글을 켜면 로드됩니다 (E1·E2 원본 점군은 수 초)";
   const DEFS=[["L2","기구축 LoD2",colAm],["ALS","기구축 ALS 점군",colAm],
@@ -693,11 +694,16 @@ function setup3D(entry,dark,idx){
       const xr=x*cy-y*sy,yr=x*sy+y*cy;
       return [W/2+cam.pan[0]+xr*sc,H*0.55+cam.pan[1]-(-yr*sp+z*cp)*sc,yr*cp+z*sp];};
     if(tgP.checked&&p.pts){
-      const v=p.pts.pts,col=p.pts.cols;
-      for(let i=0,k=0;i<v.length;i+=3,k+=3){
+      const v=p.pts.pts,col=p.pts.cols,cl=p.pts.cls||[];
+      const useCls=tgC&&tgC.checked;
+      const cB=colO,cG=dark?"#9A8468":"#8B7355",cO2=dark?"rgba(130,140,150,0.28)":"rgba(139,149,160,0.30)";
+      for(let i=0,k=0,m=0;i<v.length;i+=3,k+=3,m++){
         const q=pr(v[i],v[i+1],v[i+2]);
         if(q[0]<-2||q[0]>W+2||q[1]<-2||q[1]>H+2)continue;
-        ctx.fillStyle=`rgb(${col[k]},${col[k+1]},${col[k+2]})`;
+        if(useCls){
+          const c9=cl[m];
+          ctx.fillStyle=c9===6?cB:c9===2?cG:cO2;
+        }else ctx.fillStyle=`rgb(${col[k]},${col[k+1]},${col[k+2]})`;
         ctx.fillRect(q[0]-0.8,q[1]-0.8,1.6,1.6);
       }
     }
@@ -787,6 +793,7 @@ function setup3D(entry,dark,idx){
     });
   }
   tgM.onchange=renderAll;
+  if(tgC)tgC.onchange=renderAll;
   tgP.onchange=()=>{if(tgP.checked)ensurePts();renderAll();};
   m3dState={render:renderAll};
 }
