@@ -1,0 +1,30 @@
+schema: jointbuildgs.p2.e3_local_4906982_fused_normal_confidence_v1.common.v1
+task_id: P2-E3-LOCAL-4906982-FUSED-NORMAL-CONFIDENCE-v1
+building_id: DEBY_LOD2_4906982
+control_arm: FUSED_VIS_CONF
+read_only_fixed_mask_arm: FUSED_VIS_CONF_FUSED_NORMAL
+read_only_common_support_arm: FUSED_VIS_CONF_FUSED_NORMAL_COMMON_SUPPORT
+intervention_arm: FUSED_VIS_CONF_FUSED_NORMAL_CONFIDENCE
+seed: 0
+gpu: 1
+checkpoints: [7000, 12000, 15000, 20000]
+normal_confidence_gate:
+  require_frozen_depth_support: true
+  require_native_filtered_normal: true
+  native_fused_unsigned_angle_max_deg: 15.0
+  local_fused_unsigned_angle_max_deg: 15.0
+  local_radius_px: 1
+  depth_neighbor_jump_max_m: 1.0
+  support_erosion_radius_px: 1
+  native_confidence_rule: positive_finite
+  combination: all_binary_conditions
+  threshold_lock: fixed_before_mask_generation_and_training
+target_gate:
+  minimum_mapped_views: 55
+  minimum_train_views_with_support: 46
+  minimum_pixels_per_supported_train_view: 1000
+  minimum_fraction_of_depth_support: 0.05
+  maximum_fraction_of_depth_support: 0.80
+  require_strict_subset_of_depth_mask: true
+  forbid_lod2_geometry: true
+scientific_verdict: null

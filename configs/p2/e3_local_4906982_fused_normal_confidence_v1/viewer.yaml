@@ -1,0 +1,11 @@
+schema: jointbuildgs.p2.e3_local_4906982_fused_normal_confidence_v1.viewer.v1
+task_id: P2-E3-LOCAL-4906982-FUSED-NORMAL-CONFIDENCE-v1
+building_id: DEBY_LOD2_4906982
+viewer_port: 8878
+viewer_root: /artifacts/JointBuildGS/phase-payloads/p2/e3_local_review_v1/P2-E3-LOCAL-4906982-INPUT-REVIEW-v3/viewer
+slot_dir: e3-fused-normal-confidence-v1
+slot_label: 55-view confidence-gated fused surface normal
+root_files_must_remain_unchanged: [index.html, app.js, viewer_manifest.json, mvs_depth_viewer_receipt.json]
+arms: [FUSED_VIS_CONF, FUSED_VIS_CONF_FUSED_NORMAL, FUSED_VIS_CONF_FUSED_NORMAL_COMMON_SUPPORT, FUSED_VIS_CONF_FUSED_NORMAL_CONFIDENCE]
+checkpoints: [7000, 12000, 15000, 20000]
+scientific_verdict: null
