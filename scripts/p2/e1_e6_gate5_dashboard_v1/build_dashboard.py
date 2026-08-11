@@ -657,10 +657,12 @@ function setup3D(entry,dark,idx){
         tgC=document.getElementById("tgCls"),note=document.getElementById("m3dNote");
   if(EMBEDDED){note.textContent="웹 게시판은 내장 mesh만 표시 — 전체 자산은 로컬 8880에서";}
   else note.textContent="Point cloud는 토글을 켜면 로드됩니다 (E1·E2 원본 점군은 수 초)";
-  const DEFS=[["L2","기구축 LoD2",colAm],["ALS","기구축 ALS 점군",colAm],
-              ["E1","E1 · LiDAR",ink],["E2","E2 · MVS",colO],
-              ["E3","E3 · GS",colO],["E4","E4 · +ALS",colO],
-              ["E5","E5 · +ALS(w)",colO],["E6","E6 · +LoD2",colO]];
+  // v22 색 체계: E1 초록, E2 마젠타, GS(E3–E6) 보라, 기구축 LoD2 황색
+  const V22={L2:"#EAB308",E1:"#19DC64",E2:"#E62DD2",GS:"#8B5CF6"};
+  const DEFS=[["L2","기구축 LoD2",V22.L2],["ALS","기구축 ALS 점군",V22.L2],
+              ["E1","E1 · LiDAR",V22.E1],["E2","E2 · MVS",V22.E2],
+              ["E3","E3 · GS",V22.GS],["E4","E4 · +ALS",V22.GS],
+              ["E5","E5 · +ALS(w)",V22.GS],["E6","E6 · +LoD2",V22.GS]];
   const EMB={L2:entry.mp,E1:entry.m1,E2:entry.m2};
   const panels=[];
   DEFS.forEach(([key,name,col])=>{
