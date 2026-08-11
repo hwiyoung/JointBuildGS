@@ -1,0 +1,15 @@
+schema: jointbuildgs.p2.e3_local_4906982_dn_splatter_depth_only_v1.common.v1
+task_id: P2-E3-LOCAL-4906982-DN-SPLATTER-DEPTH-ONLY-v1
+building_id: DEBY_LOD2_4906982
+source_control_config: /artifacts/JointBuildGS/phase-payloads/p2/e3_local_4906982_reference_family_diag_v1/P2-E3-LOCAL-4906982-REFERENCE-FAMILY-DIAG-v1/control/runtime_configs/gsplat_2dgs_ref_r1.yaml
+source_control_metrics: /artifacts/JointBuildGS/phase-payloads/p2/e3_local_4906982_reference_family_diag_v1/P2-E3-LOCAL-4906982-REFERENCE-FAMILY-DIAG-v1/metrics.json
+source_input_hashes: /artifacts/JointBuildGS/phase-payloads/p2/e3_local_4906982_reference_family_diag_v1/P2-E3-LOCAL-4906982-REFERENCE-FAMILY-DIAG-v1/input_hashes.json
+docker_image: jointbuildgs:dev
+gpu: 1
+fixed_views: 55
+train_views: 47
+held_out_views: 8
+random_seed: 0
+max_iter: 20000
+checkpoints: [7000, 12000, 15000, 20000]
+scientific_verdict: null

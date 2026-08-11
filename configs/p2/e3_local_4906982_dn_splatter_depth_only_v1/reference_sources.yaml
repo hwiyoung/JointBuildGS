@@ -1,0 +1,14 @@
+schema: jointbuildgs.p2.e3_local_4906982_dn_splatter_depth_only_v1.sources.v1
+dn_splatter:
+  repository: https://github.com/maturk/dn-splatter.git
+  commit: 97588b4290128ce7ba6fdbfaac3020b42b17de4c
+  loss: EdgeAwareLogL1
+  renderer_depth: gsplat RGB+ED expected depth
+  valid_depth_rule: depth_gt > 0.1
+  documented_depth_lambda: 0.2
+ags_mesh_context_only:
+  repository: https://github.com/maturk/dn-splatter.git
+  branch: ags-mesh-2dgs
+  commit: 0b298c6fb68aab66ad16e594dea78f39ad272950
+  training_authorized: false
+scientific_verdict: null

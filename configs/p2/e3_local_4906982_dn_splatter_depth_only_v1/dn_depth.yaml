@@ -1,0 +1,35 @@
+schema: jointbuildgs.p2.e3_local_4906982_dn_splatter_depth_only_v1.arm.v1
+common_config: configs/p2/e3_local_4906982_dn_splatter_depth_only_v1/common.yaml
+arm: DN_DEPTH
+out_dir: /artifacts/JointBuildGS/phase-payloads/p2/e3_local_4906982_dn_splatter_depth_only_v1/P2-E3-LOCAL-4906982-DN-SPLATTER-DEPTH-ONLY-v1/arms/DN_DEPTH/R1
+overrides:
+  task_id: P2-E3-LOCAL-4906982-DN-SPLATTER-DEPTH-ONLY-v1
+  run_id: DN_DEPTH_R1
+  seed: 0
+  load_depth: true
+  depth_supervision_mode: expected
+  depth_loss_type: dn_edge_aware_log_l1
+  depth_valid_min: 0.1
+  w_depth: 0.2
+  depth_schedule: constant
+  depth_warmup: 0
+  depth_ramp_steps: 0
+  load_normal: false
+  w_normal: 0.0
+  w_mono_depth: 0.0
+  w_mvc: 0.0
+  w_nc: 0.05
+  w_distort: 0.0
+  max_iter: 20000
+  full_state_checkpoint: true
+  full_state_checkpoint_steps: [7000, 12000, 15000, 20000]
+  full_state_resume: auto
+  full_state_resume_strict_cuda_rng: true
+  official_PASS_usable: null
+  scientific_verdict: null
+interpretation:
+  comparator: existing GSPLAT_2DGS_REF/R1 trajectory
+  sole_optimization_delta: expected-depth EdgeAwareLogL1 with lambda 0.2
+  operational_input_delta: COLMAP geometric depth loading is enabled for the new objective
+  excluded: [normal supervision, confidence filtering, MVC, distortion, ALS, LoD, semantic supervision]
+scientific_verdict: null
