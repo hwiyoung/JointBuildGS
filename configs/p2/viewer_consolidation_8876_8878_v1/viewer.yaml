@@ -1,0 +1,21 @@
+schema: jointbuildgs.p2.viewer_consolidation_8876_8878_v1.config.v1
+task_id: P2-VIEWER-CONSOLIDATION-8876-8878-v1
+building_id: DEBY_LOD2_4906982
+world_shift_epsg25832: [690953.0, 5336071.0, 604.0]
+viewer_8876:
+  role: integrated E1-E6 comparison
+  root: phase-payloads/p2/e1_e6_techdev_v1/P2-E1-E6-PRIOR-FUSION-TECHDEV-v1/viewer
+viewer_8878:
+  role: E3-E4 detailed diagnostics
+  root: phase-payloads/p2/e3_local_review_v1/P2-E3-LOCAL-4906982-INPUT-REVIEW-v3/viewer
+e3:
+  variant_id: RING_MVS_NORMAL_CONFIDENCE_20K
+  label: E3 55-view MVS depth + confidence normal · ring-ground Roofer 20k
+  case_root: phase-payloads/p2/e3_local_4906982_ring_ground_roofer_v1/P2-E3-LOCAL-4906982-RING-GROUND-ROOFER-v1/cases/MVS_NORMAL_CONFIDENCE
+  classified_laz: phase-payloads/p2/e3_local_4906982_fused_normal_confidence_v1/P2-E3-LOCAL-4906982-FUSED-NORMAL-CONFIDENCE-v1/arms/FUSED_VIS_CONF_FUSED_NORMAL_CONFIDENCE/R1/evaluation/step_020000/fusion/classified_surface.laz
+e4:
+  variant_id: RING_ALS_DEPTH_NORMAL_20K
+  label: E4 55-view ALS depth + normal · ring-ground Roofer 20k
+  case_root: phase-payloads/p2/e3_local_4906982_ring_ground_roofer_v1/P2-E3-LOCAL-4906982-RING-GROUND-ROOFER-v1/cases/ALS_DEPTH_NORMAL
+  classified_laz: phase-payloads/p2/e4_local_4906982_55v_als_prior_v1/P2-E4-LOCAL-4906982-55V-ALS-PRIOR-v1/arms/E4_ALS_PRIOR_ONLY/R1/evaluation/step_020000/fusion/classified_surface.laz
+scientific_verdict: null
