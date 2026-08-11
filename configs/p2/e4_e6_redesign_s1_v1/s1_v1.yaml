@@ -1,0 +1,58 @@
+schema: jointbuildgs.p2.e4_e6_redesign_s1_v1.common.v1
+task_id: P2-E4-E6-REDESIGN-S1-v1
+plan: docs/experiments/p2/e4_e6_redesign_v1/E4_E5_E6_REDESIGN_PLAN_ko_v1.md
+purpose: bounded non-confirmatory local 4906982 55-view pilot deciding D2 (conflict), D7 (weights), D9 (alpha gate)
+output_root: /artifacts/JointBuildGS/phase-payloads/p2/e4_e6_redesign_s1_v1/P2-E4-E6-REDESIGN-S1-v1
+
+base_training_config: configs/p2/e3_local_4906982_mvc_depth_v1/depth03.yaml
+fused_arm_config: configs/p2/e3_local_4906982_fused_vis_conf_v1/fused_vis_conf.yaml
+source_run: phase-payloads/p2/e3_local_4906982_fused_vis_conf_v1/P2-E3-LOCAL-4906982-FUSED-VIS-CONF-v1/arms/FUSED_VIS_CONF/R1
+source_checkpoint_step: 7000
+als_raw_root: phase-payloads/p0-audit/data/raw/als
+
+projection_v2:
+  method: CLASS_2_6_DSM_TIN_RAYCAST
+  dsm_cell_m: 0.5
+  classes: [2, 6]
+  pixel_stride: 1
+  registration_gates: {abs_signed_z_median_max_m: 0.50, xy_p95_max_m: 0.50}
+  static_gates:
+    registration: EXP_NEG_ABS_MEDIAN_Z_OVER_0P5
+    density: CLIP_CELL_POINT_COUNT_MINUS1_OVER_5
+    planarity: EXP_NEG_CELL_Z_STD_OVER_0P2
+    visibility: ABS_COS_RAY_FACE_NORMAL
+  occlusion_guards:
+    tin_bbox: UNION_SPARSE_SEED_AND_CAMERA_CENTRES_XY_PLUS_20M
+    interior_void_fill: NEIGHBOR_MEAN_OCCLUSION_ONLY_ZERO_DENSITY_CONFIDENCE
+    max_prior_depth_m: 500.0
+    neighbor_jump_guard: REJECTED_ERASES_OBLIQUE_VIEWS_AT_GRAZING_ANGLES
+  confidence_min: 0.05
+  conflict_f1: EXP_NEG_ABS_FUSED_RESIDUAL_OVER_2M_NEUTRAL1_WHERE_UNSUPPORTED
+  conflict_f2: EXP_NEG_BOX39PX_MEAN_ABS_FUSED_RESIDUAL_OVER_2M
+  leak_qa_targets: {median_max_m: 1.0, gt2m_fraction_max: 0.25}
+
+prior_variants: [E4_STATIC, E5_F1, E5_F1F2]
+
+arms:
+  A1_E4_STATIC:      {prior: E4_STATIC, gpu: 0, w_depth: 0.01, w_normal: 0.005, alpha_gate: null}
+  A2_E4_ALPHA:       {prior: E4_STATIC, gpu: 1, w_depth: 0.01, w_normal: 0.005, alpha_gate: 0.5}
+  A3_E5_F1:          {prior: E5_F1,     gpu: 0, w_depth: 0.01, w_normal: 0.005, alpha_gate: null}
+  A4_E5_F1F2:        {prior: E5_F1F2,   gpu: 1, w_depth: 0.01, w_normal: 0.005, alpha_gate: null}
+  A5_E4_W2X:         {prior: E4_STATIC, gpu: 0, w_depth: 0.02, w_normal: 0.01,  alpha_gate: null}
+arm_common:
+  external_als_huber_delta_m: 1.0
+  external_als_normalization: valid_pixel_count
+  max_iter: 20000
+  checkpoints: [7000, 12000, 15000, 20000]
+  intervention_start_update: 7001
+  schedule_note: constant weight from first resumed update (E4-local precedent; no warmup keys in current train.py)
+
+single_variable:
+  changed_vs_control: existing_als_tin_raycast_prior_loss_only
+  control: exact FUSED_VIS_CONF 55-view full-state checkpoint at 7000
+  unchanged: [images, cameras, view_roles, fused_vis_conf_depth, sparse_initialization, model_state_at_7000, optimizer_state_at_7000, rng_state_at_7000, MVC, NC, densification, seed]
+  seed_injection: none
+  no_lod2_training_use: true
+
+official_PASS_usable: null
+scientific_verdict: null
