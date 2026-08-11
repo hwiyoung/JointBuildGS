@@ -1,7 +1,7 @@
 # Data and Baseline Scope
 
-- Document status: `USER_APPROVED_CANONICAL_DATA_CONTRACT`
-- 문서 버전: `C1C5_CANON_v2`
+- Document status: `E1E6_AMENDMENT_USER_REVIEW_PENDING`
+- 문서 버전: `E1E6_CANON_v3`
 - 작성일: 2026-07-31
 - 상태: `GATE S0 REMEDIATION R1 TECHNICAL CLOSED / FREEZE DRAFT / HUMAN DECISION PENDING`
 - Gate S0 snapshot: exact target bytes verified; scientific readiness remains
@@ -26,15 +26,15 @@ backend에 정확한 파일이 검증되어 있다는 사실을 구분한다.
 
 | Asset ID | 공식 후보 | 연구 역할 | 공식 source에서 확인 | 로컬 가용성 | 취득 시점 | Accuracy | Density / coverage | Format / CRS |
 |---|---|---|---|---|---|---|---|---|
-| `IMG_CURRENT` | UAS photographs | C2–C5 current imagery | RTK-georeferenced UAS images, UAS laser campaign 중 취득 ([official](https://tum2t.win/datasets/im-uas)) | `READY MEMBERSHIP`: exact 962 images; 937 included + 25 excluded frozen by `DEC-P1-012` | `TO VERIFY` | `TO VERIFY` | building view support `TO VERIFY` | image archive/member hashes verified; CRS `TO VERIFY` |
-| `CAM_CURRENT` | OPF/camera/trajectory | C2–C5 common image/pose base 후보 | official tutorial은 `images.zip`, `opf.zip`, OPF camera parameters/geolocation/sparse reconstruction을 기술 ([official](https://tum2t.win/tutorials/im-gaussiannerf)) | `READY MEMBERSHIP / PARTIAL DERIVATIVES`: exact OPF; 937 calibrated poses; 25 explicit no-pose exclusions | image archive와 exact files verified | pose uncertainty `TO VERIFY` | building coverage `TO VERIFY` | exact member set frozen; derived-component lineage 미동결 |
+| `IMG_CURRENT` | UAS photographs | E2–E6 current imagery | RTK-georeferenced UAS images, UAS laser campaign 중 취득 ([official](https://tum2t.win/datasets/im-uas)) | `READY MEMBERSHIP`: exact 962 images; 937 included + 25 excluded frozen by `DEC-P1-012` | `TO VERIFY` | `TO VERIFY` | building view support `TO VERIFY` | image archive/member hashes verified; CRS `TO VERIFY` |
+| `CAM_CURRENT` | OPF/camera/trajectory | E2–E6 common image/pose base 후보 | official tutorial은 `images.zip`, `opf.zip`, OPF camera parameters/geolocation/sparse reconstruction을 기술 ([official](https://tum2t.win/tutorials/im-gaussiannerf)) | `READY MEMBERSHIP / PARTIAL DERIVATIVES`: exact OPF; 937 calibrated poses; 25 explicit no-pose exclusions | image archive와 exact files verified | pose uncertainty `TO VERIFY` | building coverage `TO VERIFY` | exact member set frozen; derived-component lineage 미동결 |
 | `LIDAR_UAS_CURRENT` | UAS laser scanning | `L_upper`, geometry reference 후보 | DJI M350 RTK + Zenmuse L2, nadir/oblique scans ([official](https://tum2t.win/datasets/pc-uas)) | `PARTIAL`: manual/nadir candidates | `TO VERIFY` | `TO VERIFY` | point density/coverage `TO VERIFY` | selection, class, CRS/datum 미동결 |
-| `MVS_CURRENT` | UAS image-based scan | C2 direct baseline 및 C3–C5 common image-derived base 후보 | Pix4Dmatic 1.58.1 point cloud와 orthophoto ([official](https://tum2t.win/datasets/pc-uasp)) | `PARTIAL`: 1,104-image vendor candidate identified; common base로 미채택 | UAS campaign과 동일성 `TO VERIFY` | `TO VERIFY` | density/coverage `TO VERIFY` | exact common image/pose member와 derivation binding 미동결 |
-| `ALS_EXISTING` | Bavarian real ALS tiles | `P_LiDAR` 후보 | official portal에 real ALS tiles와 download source가 제시됨 ([official](https://tum2t.win/datasets/pc-als)) | `PARTIAL`: four candidate tiles | UAS 대비 시점차 `TO VERIFY` | `TO VERIFY` | density/coverage `TO VERIFY` | C1 independence, CRS/datum/interface 미동결 |
+| `MVS_CURRENT` | UAS image-based scan | E2 direct baseline 및 E3–E6 common image-derived base 후보 | Pix4Dmatic 1.58.1 point cloud와 orthophoto ([official](https://tum2t.win/datasets/pc-uasp)) | `PARTIAL`: 1,104-image vendor candidate identified; common base로 미채택 | UAS campaign과 동일성 `TO VERIFY` | `TO VERIFY` | density/coverage `TO VERIFY` | exact common image/pose member와 derivation binding 미동결 |
+| `ALS_EXISTING` | Bavarian real ALS tiles | `P_LiDAR` 후보 | official portal에 real ALS tiles와 download source가 제시됨 ([official](https://tum2t.win/datasets/pc-als)) | `PARTIAL`: four candidate tiles | UAS 대비 시점차 `TO VERIFY` | `TO VERIFY` | density/coverage `TO VERIFY` | E1 independence, CRS/datum/interface 미동결 |
 | `LOD1_EXISTING` | TUM2TWIN LoD1 | `P_LoD1` 후보 | 이번 공식 web 조사에서 직접 확인하지 못함 | `MISSING` | `UNKNOWN` | `UNKNOWN` | building coverage `UNKNOWN` | 독립 lineage 미발견 |
 | `LOD2_REFERENCE` | Bavarian LoD2 / textured LoD2 | structure reference 또는 roofprint lineage audit | official page는 CityGML LoD2와 stable object IDs를 기술 ([official](https://tum2t.win/datasets/cm-buildings)) | `PARTIAL`: two candidate tiles | acquisition/model vintage `TO VERIFY` | portal 표기의 accuracy 해석 `TO VERIFY` | 대상 building coverage `TO VERIFY` | scoring-only guard와 CRS/datum 미동결 |
 | `LOD3_REFERENCE` | manually modeled LoD3 | structure reference 후보 | official page는 LoD2+MLS 기반 수동 LoD3와 per-building download를 기술 | `UNKNOWN` | `UNKNOWN` | review protocol `UNKNOWN` | 대상 수/coverage `UNKNOWN` | CityGML 2.0/CAD 후보 |
-| `R_DERIVED_PROTOCOL` | condition evidence에서 동일 code/config로 생성 | 모든 condition의 통제된 Stage 3 derivative | 외부 polygon input이 아님 | P1 후보 `PARTIAL` | method output과 동일 | XY uncertainty `TO VERIFY` | method별 coverage 보고 | polygon/hash와 derivation lineage 필요 |
+| `R_SHARED_PROTOCOL` | LoD2 GroundSurface XY + stable ID | E1–E6 공통 Stage 3 control | condition-specific prior가 아님 | `FROZEN BY DEC-P1-019` | shared reference lineage | XY provenance 기록 | 199 building | 동일 polygon/hash와 Roofer rule 필요 |
 
 공식 portal의 “openly available” 표시는 데이터셋 배포 상태에 관한
 `SOURCE-SUPPORTED` 사실이다. 현재 checkout 또는 sibling artifact root에 정확한
@@ -43,14 +43,14 @@ payload가 있다는 뜻은 아니다.
 Gate S0 evidence와 Work Host 교차검토가 확인한 현재 준비도는 다음처럼 축약한다.
 
 - images 962개와 calibrated poses 937개의 차이는 25건의 결정론적 exclusion ledger로
-  설명됐고 `DEC-P1-012`가 exact membership으로 동결했다. C2–C5 derivative
+  설명됐고 `DEC-P1-012`가 exact membership으로 동결했다. E2–E6 derivative
   producer/config/frame/role/payload hashes는 아직 그 set에 완전히 bind되지 않았다.
-- C1 UAS LiDAR는 manual/nadir 선택·병합, class 2/6, vertical datum과 registration이 미동결이다.
-- C4 Existing ALS는 C1과의 독립성 및 future prior interface가 미동결이다.
-- 독립 LoD1은 발견되지 않아 C5가 `MISSING`이다.
-- C3–C5가 공유할 SfM sparse, dense MVS, depth, normal, confidence의 exact
+- E1 UAS LiDAR는 manual/nadir 선택·병합, class 2/6, vertical datum과 registration이 미동결이다.
+- E4/E5 Existing ALS는 E1과의 독립성 및 exact shared-prior interface가 미동결이다.
+- 독립 LoD1은 발견되지 않아 E6 primary eligibility가 `MISSING`이다.
+- E3–E6가 공유할 SfM sparse, dense MVS, depth, normal, confidence의 exact
   identity/hash/frame/role과 동일 image/pose derivation이 미동결이다.
-- geometry/structure reference ID/version/production lineage와 C1 input-reference
+- geometry/structure reference ID/version/production lineage와 E1 input-reference
   self-reference evaluation class가 미동결이다.
 - `U_target`과 `E_paired`는 `UNKNOWN`이다.
 
@@ -67,7 +67,7 @@ task의 조사 대상이다. 원 evidence와 Work Host 보완 검토는 각각
 |---|---|---|
 | Canonical asset | `LIDAR_UAS_CURRENT` | `ALS_EXISTING` |
 | 예상 취득 regime | target UAS image campaign과 가까운 drone survey | 기존 regional airborne laser-scanning survey |
-| 실험 역할 | `C1_L_upper`의 직접 Roofer baseline | `C4_GS_lidar_prior`의 coarse/incomplete prior |
+| 실험 역할 | `E1_L_upper`의 직접 Roofer baseline | `E4/E5`의 exact same coarse/incomplete prior |
 | reference 가능성 | geometry reference 후보이나 self-reference 위험 있음 | primary reference가 아님 |
 | 핵심 질문 | 고품질 current sensor evidence가 Roofer에서 도달하는 성능은? | 낡거나 성긴 기존 point evidence가 current-image GS의 실패를 회복하는가? |
 
@@ -78,7 +78,7 @@ input/reference lineage와 role eligibility를 한 표에서 비교한다. 확�
 추정하지 않고 `UNKNOWN`으로 남긴다.
 
 같은 파일 또는 실질적으로 같은 survey derivative를 두 역할에 쓰지 않는다. 감사 결과
-두 asset이 시점·품질·coverage regime에서 구분되지 않으면 `C1`–`C4` contrast는
+두 asset이 시점·품질·coverage regime에서 구분되지 않으면 `E1`–`E4/E5` contrast는
 `BLOCKED`이며, ALS를 `P_LiDAR`로 채택하지 않는다.
 
 ## 3. Source and derivative lineage
@@ -101,46 +101,84 @@ input/reference lineage와 role eligibility를 한 표에서 비교한다. 확�
 | `spatial_extent` | bbox/tiles/building IDs |
 | `density_accuracy_coverage` | 계산 정의와 단위 포함 |
 | `role` | input/prior/control/reference |
-| `allowed_conditions` | C1–C5 |
+| `allowed_conditions` | E1–E6 |
 | `leakage_notes` | shared source 또는 derivative 관계 |
 
 Raw input과 canonical result는 explicit retention review 없이 수정하지 않는다.
 
-## 4. Reconstruction condition별 입력 계약
+## 4. Experiment condition별 입력 계약
 
 | Condition | Current images | Current MVS | Current UAS LiDAR | Existing ALS prior | Existing LoD1 prior | Roofprint protocol | Evaluation reference |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| `C1_L_upper` | 아니오 | 아니오 | reconstruction input | 아니오 | 아니오 | `R_derived` protocol | score only |
-| `C2_MVS` | common MVS 생성 source | direct Roofer reconstruction input | 아니오 | 아니오 | 아니오 | `R_derived` protocol | score only |
-| `C3_GS_image` | common GS training input | `B_current` 공통 geometry/depth/normal/confidence | 아니오 | 아니오 | 아니오 | `R_derived` protocol | score only |
-| `C4_GS_lidar_prior` | C3와 동일 | C3와 동일한 `B_current` | 아니오 | prior only | 아니오 | `R_derived` protocol | score only |
-| `C5_GS_lod1_prior` | C3와 동일 | C3와 동일한 `B_current` | 아니오 | 아니오 | prior only | `R_derived` protocol | score only |
+| `E1_L_upper` | 아니오 | 아니오 | reconstruction input | 아니오 | 아니오 | `R_shared` | score only |
+| `E2_MVS` | common MVS 생성 source | direct Roofer reconstruction input | 아니오 | 아니오 | 아니오 | `R_shared` | score only |
+| `E3_GS_image` | common GS training input | `B_current` 공통 geometry/depth/normal/confidence | 아니오 | 아니오 | 아니오 | `R_shared` | score only |
+| `E4_GS_ALS_unweighted` | E3와 동일 | E3와 동일한 `B_current` | 아니오 | unweighted prior only | 아니오 | `R_shared` | score only |
+| `E5_GS_ALS_conflict_aware` | E3와 동일 | E3와 동일한 `B_current` | 아니오 | same ALS × conflict weight | 아니오 | `R_shared` | score only |
+| `E6_GS_LoD_prior_diagnostic` | E3와 동일 | E3와 동일한 `B_current` | 아니오 | 아니오 | LoD prior only | `R_shared` | score only |
 
-`C4`와 `C5`를 한 arm으로 합치지 않는다. Evaluation reference는 학습 loss,
+`E4/E5`의 ALS와 `E6`의 LoD prior를 한 arm으로 합치지 않는다. Evaluation reference는 학습 loss,
 initialization, crop, early stopping, hyperparameter selection에 사용하지 않는다.
 
-`C3`–`C5`의 공통 GS base `B_current`는 Gate S0에서 동결한 exact current RGB image
+`E3`–`E6`의 공통 GS base `B_current`는 Gate S0에서 동결한 exact current RGB image
 members와 camera/pose IDs에서만 파생한다. SfM sparse, dense MVS, depth, normal,
 confidence를 initialization, supervision 또는 weighting support로 허용하되 각
 component의 producer/version, code/config, source-member IDs, coordinate frame, role,
-bytes와 hash를 동결한다. 세 GS arm은 이 base를 동일하게 사용한다. 이 image-derived
+bytes와 hash를 동결한다. 네 GS arm은 이 base를 동일하게 사용한다. 이 image-derived
 support는 external existing-asset prior가 아니다.
 
-`C3_GS_image`의 canonical label은 **no-external-prior GS**다. ID는 과거 evidence와
-schema 연속성을 위해 유지한다. C3에는 Current UAS LiDAR, Existing ALS, LoD1,
+`E3_GS_image`의 canonical label은 **image-only/no-external-prior GS**다. E3에는 Current UAS LiDAR, Existing ALS, LoD1,
 evaluation reference 또는 scored LoD2 roof geometry를 넣지 않는다. 모든 arm에 동일한
-`R_shared` XY footprint를 제공하는 것은 condition-specific prior가 아니다. C4는 exact C3
-base에 Existing ALS prior만 추가하고, C5는 exact C3 base에 independent LoD1 prior만
-추가한다.
+`R_shared` XY footprint를 제공하는 것은 condition-specific prior가 아니다. E4와 E5는
+exact E3 base와 exact same Existing ALS를 공유하고 conflict/currentness weighting만
+달라야 한다. E6는 LoD prior만 추가한다.
 
-`C2_MVS`도 원칙적으로 C3–C5와 같은 Gate S0 동결 image/camera ledger에서 생성한다.
-같은 base의 MVS geometry를 GS 재최적화 없이 Roofer로 직접 전달하는 것이 C2이고,
+`E2_MVS`도 원칙적으로 E3–E6와 같은 Gate S0 동결 image/camera ledger에서 생성한다.
+같은 base의 MVS geometry를 GS 재최적화 없이 Roofer로 직접 전달하는 것이 E2이고,
 같은 image-derived geometry/support를 GS에서 재최적화한 뒤 extraction/Roofer로
-전달하는 것이 C3다. 기존 1,104-image vendor MVS는 exact member/pose/hash/producer
-mapping이 `B_current`와 일치한다고 입증되기 전에는 common base나 primary C2로 자동
+전달하는 것이 E3다. 기존 1,104-image vendor MVS는 exact member/pose/hash/producer
+mapping이 `B_current`와 일치한다고 입증되기 전에는 common base나 primary E2로 자동
 채택하지 않는다. 다른 image subset, pose solution 또는 preprocessing을 사용했다면
-sensor-processing-bundle context baseline으로 표시하며 C2-vs-C3의 method-only
+sensor-processing-bundle context baseline으로 표시하며 E2-vs-E3의 method-only
 해석을 금지한다.
+
+### 4.1 Output와 temporal role
+
+모든 `building × E-condition`은 다음 필드를 별도로 가진다.
+
+- `roofer_lod2_ox`
+- `semantic_textured_mesh_ox`
+- `mesh_geometry_ox`, `mesh_semantic_ox`, `mesh_texture_ox`
+- output별 `assessment_status`: `ASSESSABLE`, `UNASSESSABLE`, `NOT_RUN`
+- `temporal_status`: `UNCHANGED_CONFIRMED`, `CURRENT_SUPPORTED`,
+  `PRIOR_REPRODUCTION`, `CHANGE_UNRESOLVED`
+
+Image-only E3가 실패하고 변화가 확인된 건물에서는 E4/E5/E6의 prior 재현을 허용한다.
+이는 기존 자산의 continuity product이며, current observation이 부족하면
+`PRIOR_REPRODUCTION` 또는 `CHANGE_UNRESOLVED`로 표시한다. Product O/X와 temporal
+currentness는 별도 축이므로, prior reproduction이 Roofer 또는 mesh O이더라도 current
+reconstruction rescue로 집계하지 않는다.
+
+### 4.2 변화 없음의 독립 확인 절차
+
+첫 저널논문의 primary prior set에는 다음 절차로 `UNCHANGED_CONFIRMED`된 건물만 넣는다.
+
+1. prior epoch `T0`, current-image epoch `T1`, 각 asset acquisition date와 coordinate/
+   vertical datum을 먼저 검증한다. 날짜 또는 registration이 불명확하면 `UNKNOWN`이다.
+2. E3–E6 output과 score를 보지 않은 fixed evidence packet에서 prior footprint/height
+   envelope와 current raw images, 허용된 독립 current evidence를 비교한다. Tested
+   reconstruction output은 change label 입력으로 금지한다.
+3. 최소 두 평가자가 building existence, footprint, roof-volume/topology와 높이 변화의
+   사전 rubric을 독립 판정한다. agreement와 disagreement reason을 기록한다.
+4. `UNCHANGED_CONFIRMED`, `CHANGED_CONFIRMED`, `UNCERTAIN`, `UNASSESSABLE` 중 하나를
+   부여한다. 불일치는 봉인된 adjudication 절차로 해결하고, 해결되지 않으면
+   `UNCERTAIN`으로 남긴다.
+5. packet, rubric, reviewer assignment, adjudication과 label manifest를 E3–E6 결과
+   접근 전에 hash-lock한다.
+
+단일 시점 영상에서 변화가 눈에 띄지 않는다는 이유만으로 `UNCHANGED_CONFIRMED`를
+부여하지 않는다. Primary unchanged 분석은 확인된 집합에 한정하고 `UNCERTAIN`/
+`UNASSESSABLE`은 coverage gap으로 별도 보고한다.
 
 ## 5. `L_upper`와 `P_LiDAR` 구분
 
@@ -148,7 +186,7 @@ sensor-processing-bundle context baseline으로 표시하며 C2-vs-C3의 method-
 |---|---|---|
 | 목적 | sensor-evidence experimental upper baseline | reusable existing asset prior |
 | 기대 품질 | current/high-quality 후보 | historical, sparse, incomplete 가능 |
-| 사용 위치 | Roofer baseline branch | C4 GS initialization/regularization 후보 |
+| 사용 위치 | Roofer baseline branch | E4/E5 GS initialization/regularization |
 | reference 지위 | ground truth 아님 | reference 아님 |
 | 동일 파일 허용 | 원칙적으로 아니오 | `L_upper`와 다름을 입증 |
 | 필수 감사 | currentness, accuracy, density, coverage | date gap, incompleteness, alignment, overlap |
@@ -184,8 +222,8 @@ LoD1 asset은 확인되지 않았다. 다음 세 경우를 구분한다.
 `DEC-P1-011`은 3번의 deterministic 생성 자체를 bounded preprocessing으로 허용한다.
 단, source LoD2가 scoring reference와 같거나 같은 생산 계보이면 산출물의 역할은
 `REFERENCE_DERIVED_DIAGNOSTIC_ONLY`다. 이 산출물은 independent LoD1 부재를 숨기거나
-primary C5/`E_paired`를 READY로 바꾸지 않는다. `DEC-P1-012`는 R2A-derived bytes를
-C5 입력 후보로 선택했으며, primary eligibility에는 입력과 독립적인 exact
+primary E6/`E_paired`를 READY로 바꾸지 않는다. `DEC-P1-012`의 historical C5
+R2A-derived bytes는 E6 diagnostic lineage로 보존하며, primary eligibility에는 입력과 독립적인 exact
 geometry/structure reference ID/version/production lineage가 별도로 필요하다.
 
 ## 7. Reference 계약
@@ -216,7 +254,7 @@ point cloud와 2D roofprint polygon을 입력으로 요구한다
 ([official docs](https://innovation.3dbag.nl/roofer/)).
 
 `R_shared`는 199동 LoD2 `GroundSurface`의 XY와 stable ID만 사용한다. 동일 polygon
-bytes/hash, scene AOI, 전역 class-2/6 adapter와 Roofer parameter를 C1–C5에 제공한다.
+bytes/hash, scene AOI, 전역 class-2/6 adapter와 Roofer parameter를 E1–E6에 제공한다.
 condition별 point cloud와 199-feature source를 한 번에 Roofer에 전달하며, 건물별 point
 crop은 Roofer 내부에서 수행한다. LoD2 Z, `RoofSurface`, roof type, semantic class와
 final roof model은 전달하지 않는다.
@@ -227,7 +265,7 @@ final roof model은 전달하지 않는다.
 | `R_derived`: point-evidence component hull | `HISTORICAL DIAGNOSTIC` | 과거 5/18 component 결과의 계보 보존용; formal building-level 결과로 사용 금지 |
 
 Reference-derived `GroundSurface` XY는 `DEC-P1-019`의 명시적 사용자 승인에 따라
-U_target 199와 C1–C5 전체에 공통 제어입력으로 허용된다.
+U_target 199와 E1–E6 전체에 공통 제어입력으로 허용된다.
 
 ## 9. Common eligible building set
 
@@ -236,19 +274,23 @@ U_target 199와 C1–C5 전체에 공통 제어입력으로 허용된다.
 - `U_target`: P2 Gate S0에서 outcome 없이 동결한 AOI boundary 안에서 current
   imagery와 stable building ID가 있는 모든 candidate building. 데이터 coverage와
   외적 타당성의 분모이다.
-- `E_paired`: `U_target` 중 C1–C5를 모두 시도할 수 있고 공통 좌표계에서 reference
-  scoring이 가능한 paired experiment universe이다.
+- `E_pair_product(m)`: `U_target` 중 product baseline `E2`와 prior-guided condition
+  `m ∈ {E4,E5}`를 둘 다 시도할 수 있고 공통 좌표계에서 reference scoring이 가능한
+  product paired universe이다.
+- `E_pair_mechanism(m)`: product membership 중 no-prior GS ablation `E3`와 `m`을 모두
+  score할 수 있어 prior incremental effect를 분리하는 mechanism paired universe이다.
+- `E_all6`: E1–E6 전체 matrix가 가능한 교집합이다. 완전한 atlas에는 유용하지만
+  E4/E5 primary ALS contrast의 불필요한 complete-case filter로 사용하지 않는다.
 
-건물은 threshold와 method outcome을 보기 전에 다음 조건으로 `E_paired`
+건물은 threshold와 method outcome을 보기 전에 다음 조건으로 각 paired universe와 `E_all6`
 eligibility를 정한다.
 
 1. common stable building ID가 모든 필요한 asset에 매핑된다.
 2. current imagery에 정해진 최소 view support가 있다.
 3. `L_upper`, MVS, ALS/LoD1 prior의 coverage status를 계산할 수 있고, P2 Gate S0에서
-   outcome 없이 동결한 minimum input-availability rule을 C1–C5 모두 만족한다.
-   미충족 건물은 `U_target → E_paired` exclusion으로 사유를 보고한다.
-4. 모든 condition에 같은 `R_derived` derivation code/config를 쓰며 method별
-   polygon/hash를 보존한다.
+   outcome 없이 동결한 minimum input-availability rule을 해당 contrast condition에 대해
+   만족한다. 미충족 건물은 `U_target → paired universe/E_all6` exclusion으로 사유를 보고한다.
+4. 모든 condition에 exact same `R_shared` footprint bytes/hash와 stable ID를 쓴다.
 5. geometry/structure reference가 score 가능하고 uncertainty가 기록된다.
 6. 모든 coordinate transform과 vertical datum이 검증된다.
 7. split assignment가 building/model 결과 전에 동결된다.
@@ -256,8 +298,9 @@ eligibility를 정한다.
 9. 실제 demolition/new construction 등 change building은 RQ6용으로 미리 flag한다.
 10. method failure는 사후 exclusion하지 않고 G0 failure로 유지한다.
 
-`U_target → E_paired` 흐름은 building ID별 포함 여부, 제외 사유, asset별 coverage를
-남긴다. Prior 또는 reference 부재로 `E_paired`에서 제외된 건물을 조용히 삭제하지
+`U_target → product/mechanism paired universe/E_all6` 흐름은 building ID별 포함 여부,
+제외 사유, asset별 coverage를
+남긴다. Prior 또는 reference 부재로 paired universe에서 제외된 건물을 조용히 삭제하지
 않고, `U_target` 대비 실험 coverage와 적용 가능 범위의 한계로 보고한다.
 
 ## 10. Split과 held-out의 의미
@@ -268,11 +311,11 @@ eligibility를 정한다.
 |---|---|---|
 | spatially disjoint pilot/development | P2–P3 | pipeline 안정화, 빠른 실패 분석, method 개발 |
 | validation | P2–P3 | adapter·threshold·criterion·hyperparameter 선택과 blind review |
-| held-out building test | P4에서 최초 접근 | 동결된 C1–C5의 최종 일반화 평가 |
+| held-out building test | P4에서 최초 접근 | 동결된 E1–E6의 최종 일반화 평가 |
 
 **Held-out building**은 건물 또는 공간 group 전체를 pilot/validation에서 떼어 두어,
 P2 threshold와 P3 method/loss/schedule을 정할 때 결과를 보지 않는다는 뜻이다.
-P4 primary에서는 held-out test에 배정된 모든 건물에 C1–C5 전체 condition matrix를
+P4 primary에서는 held-out test에 배정된 모든 건물에 E1–E6 전체 condition matrix를
 실행한다. 이는 전체 eligible population을 뜻하지 않는다.
 
 **Held-out view**는 같은 pilot/validation building 안에서 GS 학습에 사용하지 않은
@@ -280,8 +323,9 @@ camera image이며 rendering diagnostic에 사용할 수 있다. held-out buildi
 동일한 표현으로 해석하지 않는다.
 
 `EXHAUSTIVE_PARTITION`에서는 P2/P3의 development+validation 결과와 P4 held-out
-결과를 합쳐 `E_paired` 전 건물 matrix를 만든다. `STRATIFIED_SAMPLE`이면 P4 primary
-결과와 해석을 잠근 뒤 필요할 경우 `E_paired` 전수 rerun을 supplementary coverage
+결과를 합쳐 각 product/mechanism paired universe 전 건물 matrix와 가능한 `E_all6`
+matrix를 만든다.
+`STRATIFIED_SAMPLE`이면 P4 primary 결과와 해석을 잠근 뒤 필요할 경우 contrast universe 전수 rerun을 supplementary coverage
 atlas로 만들 수 있다. 이는 threshold, 방법 선택 또는 primary claim을 변경하는
 근거가 아니다.
 
@@ -289,59 +333,67 @@ atlas로 만들 수 있다. 이는 threshold, 방법 선택 또는 primary claim
 공간 autocorrelation이 split을 가로지르지 않도록 group split을 검토한다. 수량과
 경계는 P1 data audit 뒤 P2에서 결과를 보기 전에 결정한다.
 
+사전 층화 변수는 method 결과와 무관한 input-side 변수만 허용한다: spatial block,
+current-image view count/angle diversity, texture proxy, occlusion proxy, building size/
+height proxy, ALS coverage/density/age와 독립 change status. `E3 O/X`는 outcome이므로
+split 또는 표본선정 변수로 금지한다. Held-out 결과가 열린 뒤에만 `E3 O/X × change`
+2×2를 effect-modifier 분석표로 만든다.
+
 ### 10.1 전수 우선, 표본 fallback
 
 1. P1 감사는 `U_target`/`E_paired`를 동결하지 못했다. Gate S0 preparation은 후보 수,
    coverage, 공간 group, missingness와
-   building×C1–C5 예상 compute/storage 비용을 AOI 후보별로 산출한다. candidate
+   building×E1–E6 예상 compute/storage 비용을 AOI 후보별로 산출한다. candidate
    AOI는 imagery/UAS LiDAR/ALS/LoD1/reference footprint의 교집합, stable-ID
    coverage, 연속성, 면적과 비용으로만 기술하며 performance run은 하지 않는다.
 2. P2의 첫 baseline 결과 전 Gate S0에서 `EXHAUSTIVE_PARTITION` 또는
    `STRATIFIED_SAMPLE`을 사용자 승인으로 선택하고 exact AOI polygon/hash를 함께
    동결한다. AOI 선택에 roof type, 평가 label 또는 method result를 쓰지 않는다.
-3. 기본 우선안 `EXHAUSTIVE_PARTITION`은 `E_paired` 전 건물을
+3. 기본 우선안 `EXHAUSTIVE_PARTITION`은 사전 등록한 contrast universe 전 건물을
    development/validation/held-out에 배정한다. P2/P3와 P4 결과를 합치면 최종적으로
-   `E_paired` 전체의 C1–C5 matrix가 된다.
+   각 product/mechanism paired universe의 matrix와 가능한 `E_all6` matrix가 된다.
 4. `STRATIFIED_SAMPLE`은 전수가 비용·시간·가용성상 불가능할 때만 허용한다.
-   spatial block, current-image observation support, ALS coverage/density/temporal
-   gap, 비-GT input-side size/height proxy를 사용한다. roof type, LoD2
+   spatial block, current-image observation support, texture/occlusion proxy, ALS
+   coverage/density/temporal gap, 비-GT input-side size/height proxy와 독립 change
+   status를 사용한다. roof type, E3 O/X, LoD2
    `RoofSurface`, semantic evaluation label, method result는 split 변수로 금지한다.
 5. 표본 수는 paired binary endpoint의 목표 신뢰구간 정밀도 또는 detectable net
    PASS change/검정력, 예상 attrition과 compute budget으로 정한다. exact 식과
    가정은 P2 protocol에서 동결한다.
-6. split manifest에는 `U_target`/`E_paired` IDs, split IDs, spatial group,
+6. split manifest에는 `U_target`/product pair/mechanism pair/`E_all6` IDs, split IDs, spatial group,
    AOI polygon/hash, seed/algorithm, strata, source hashes, inclusion/exclusion
    reason, sample-size rationale, compute/storage ceiling을 기록한다.
 
-P3는 development에서 C4/C5를 개발하고 validation에서 final method를 선택·동결한다.
-그 뒤 frozen C4/C5를 development+validation 전 건물에 적용한다. C1/C2는
-exact-compatible P2 결과, C3는 hash-compatible frozen result 또는 protocol-matched
-rerun을 사용하여 이 pool의 C1–C5 matrix를 완성한다.
+P3는 development에서 E4/E5/E6를 개발하고 validation에서 final method를 선택·동결한다.
+그 뒤 frozen E4/E5/E6를 development+validation 전 건물에 적용한다. E1/E2는
+exact-compatible P2 결과, E3는 hash-compatible frozen result 또는 protocol-matched
+rerun을 사용하여 이 pool의 E1–E6 matrix를 완성한다.
 
 P4의 “확장”은 결과를 보고 건물을 추가하는 과정이 아니라, P2에서 동결한 held-out
 membership을 처음 여는 과정이다. Sampled fallback에서 전수 coverage가 필요하면
-P4 primary 잠금 뒤 `E_paired` census를 별도 실행한다. 이 census가 없으면
-`E_paired` 전체 coverage 또는 전수 확장을 주장하지 않는다.
+P4 primary 잠금 뒤 contrast-universe census를 별도 실행한다. 이 census가 없으면
+사전 등록 contrast universe 전체 coverage 또는 전수 확장을 주장하지 않는다.
 
 ## 11. Leakage risk register
 
 | Risk | 예 | 영향 | 완화 | 상태 |
 |---|---|---|---|---|
-| prior–reference shared model | LoD2를 단순화해 LoD1 prior 생성 후 같은 LoD2로 score | roof extent/Z/topology 누출 | C5 honest arm에서 금지; 별도 leakage diagnostic도 명시적 승인 필요 | `PROHIBITED_PRIMARY` |
-| roofprint–reference shared XY | LoD2 GroundSurface에서 roofprint 파생 | planimetric score와 topology 조건화 | 독립 footprint 우선, shared XY 공개 | `TO VERIFY` |
+| prior–reference shared model | LoD2를 단순화해 LoD1 prior 생성 후 같은 LoD2로 score | roof extent/Z/topology 누출 | E6 honest arm에서 금지; 별도 leakage diagnostic도 명시적 승인 필요 | `PROHIBITED_PRIMARY` |
+| roofprint–reference shared XY | LoD2 GroundSurface에서 roofprint 파생 | planimetric support가 통제입력으로 조건화 | `DEC-P1-019` provenance 공개, 모든 E에 exact same bytes, LoD2 Z/RoofSurface 차단 | `CONTROLLED_SHARED_INPUT` |
 | `L_upper`–geometry reference identity | 같은 UAS LiDAR로 reconstruct/score | optimistic upper baseline | upper는 self-reference임을 표시하거나 독립 TLS/LoD3 검토 | `TO VERIFY` |
-| image-derived base provenance | exact common ledger가 아닌 vendor MVS를 C2/C3–C5에 혼용하거나 MVS를 reference score에도 사용 | condition 차이와 reference leakage 혼재 | Gate S0 member/pose/derivative hashes와 role을 동결; evaluation reference 사용 금지 | `TO VERIFY` |
+| image-derived base provenance | exact common ledger가 아닌 vendor MVS를 E2/E3–E6에 혼용하거나 MVS를 reference score에도 사용 | condition 차이와 reference leakage 혼재 | Gate S0 member/pose/derivative hashes와 role을 동결; evaluation reference 사용 금지 | `TO VERIFY` |
 | split leakage | 같은 building parts가 validation/test에 분산 | threshold overfit | group/spatial split | `PROVISIONAL` |
 | held-out peeking | P4 held-out building 결과를 P2/P3 method·threshold 결정에 사용 | 선택 편향 | P4 전 접근 금지, criterion/method/selection rule 사전 동결 | `FROZEN` 원칙 |
 
 ## 12. Baseline 해석 제한
 
-- `C1_L_upper` 성능은 theoretical maximum이 아니다.
-- `C2_MVS` 실패는 MVS 일반의 보편적 한계가 아니라 지정 pipeline/data의 결과이다.
-- `C3_GS_image`는 no-external-prior comparator이며, C4/C5와 `B_current`, renderer,
+- `E1_L_upper` 성능은 theoretical maximum이 아니다.
+- `E2_MVS` 실패는 MVS 일반의 보편적 한계가 아니라 지정 pipeline/data의 결과이다.
+- `E3_GS_image`는 no-external-prior comparator이며, E4/E5/E6와 `B_current`, renderer,
   backbone, image-derived support의 code/config/hash가 다르면 prior-only 비교가
   무효화될 수 있다.
-- C4/C5 개선은 prior 자체, initialization, regularization, extraction 변화 중
+- E4/E5/E6 개선은 prior 자체, initialization, regularization, conflict weighting,
+  extraction 변화 중
   어디에서 생겼는지 G-native chain으로 분리한다.
 - 모든 arm의 roofprint, terrain, class 2/6, crop/buffer, density normalization 및
   Roofer parameter를 같게 하거나 차이를 명시한다.
@@ -393,10 +445,10 @@ P4 primary 잠금 뒤 `E_paired` census를 별도 실행한다. 이 census가 �
 - `RESOLVED BY DEC-P1-019`: `R_shared` GroundSurface XY가 formal primary이며
   `R_derived` component 결과는 역사적 진단으로만 보존한다.
 - `MAJOR`: 공식 source에서 직접 LoD1을 확인하지 못함.
-- `RESOLVED BY DEC-P1-008`: TUM2TWIN 중심 C1–C5가 현재 data-role 정본이며
+- `SUPERSEDED BY DEC-P1-021`: TUM2TWIN 중심 E1–E6가 현재 data-role 정본이며
   `docs/evidence/archive/pre_c1c5_research/EXPERIMENT_PLAN.md`의 dataset-role은 역사 기록이다.
 - `PARTIAL`: Gate S0 표적 11개 payload는 Experiment Host에서 exact bytes로 검증됐다.
-  다만 독립 LoD1, exact common image/pose base, C3–C5 shared image-derived components,
+  다만 독립 LoD1, exact common image/pose base, E3–E6 shared image-derived components,
   condition별 변환·registration·coverage lineage는 아직 freezeable 계약과 연결되지 않았다.
 - `TO VERIFY`: source/target CRS와 vertical datum. 연구 output은 `EPSG:25832`를
   유지하지만 source 변환을 추정하지 않는다.

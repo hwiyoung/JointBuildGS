@@ -1,9 +1,9 @@
 # Novelty Map
 
-- Document status: `USER_APPROVED_CANONICAL_REFERENCE`
-- 문서 버전: `C1C5_CANON_v2`
+- Document status: `E1E6_AMENDMENT_USER_REVIEW_PENDING`
+- 문서 버전: `E1E6_CANON_v3`
 - 문헌 snapshot: 2026-07-31
-- 상태: `PROVISIONAL EVIDENCE / CURRENT C1–C5 PROGRAM REFERENCE`
+- 상태: `PROVISIONAL EVIDENCE / CURRENT E1–E6 DESIGN REFERENCE`
 - 원칙: 문헌 사실, 본 연구의 해석, 제안 기여, 미확인 사항을 분리한다.
 
 ## 1. Evidence labels
@@ -22,7 +22,7 @@
 |---|---|---|---|---|---|---|---|---|
 | Photogrammetric PC building modeling — [Xiong et al. 2014](https://doi.org/10.5194/isprsannals-II-3-197-2014) | MVS photogrammetric 또는 LiDAR point cloud | LoD2 building geometry | plane/structure boundary 기반 global model | roof structure와 geometry | 예, LoD2 모델 | MVS가 조밀해도 잡음으로 한 roof plane이 다분할되고 topology graph가 불안정할 수 있음 | 최신 GS와 같은 building set에서 Roofer gate 전파는 다루지 않음 | `SOURCE-SUPPORTED` |
 | Point-cloud-driven city reconstruction — [City3D](https://arxiv.org/abs/2201.10276) | airborne LiDAR + footprint | compact watertight polygonal buildings | inferred vertical planes, hypothesis-and-selection, topology constraints | geometry RMSE, robustness, runtime | building surface model | 항공 LiDAR에서 wall이 누락될 수 있어 building-specific constraints가 유용함 | existing prior + current images의 학습 결합이나 GS-native failure chain은 아님 | `SOURCE-SUPPORTED` |
-| Roofer/3DBAG — [official docs](https://innovation.3dbag.nl/roofer/) | point cloud + 2D roofprint | LoD1.2/1.3/2.2, CLI는 CityJSONSeq | automatic roof reconstruction, tunable parameters | success, density, nodata, RMSE, roof planes, val3dity 등 | 예 | 정확한 Roofer 입력은 roofprint와 point cloud이며 output serialization을 확인해야 함 | JointBuildGS는 C1–C5에 동일한 `R_shared` GroundSurface XY를 제공하고 evidence 차이를 비교 | `SOURCE-SUPPORTED` |
+| Roofer/3DBAG — [official docs](https://innovation.3dbag.nl/roofer/) | point cloud + 2D roofprint | LoD1.2/1.3/2.2, CLI는 CityJSONSeq | automatic roof reconstruction, tunable parameters | success, density, nodata, RMSE, roof planes, val3dity 등 | 예 | 정확한 Roofer 입력은 roofprint와 point cloud이며 output serialization을 확인해야 함 | JointBuildGS는 E1–E6에 동일한 `R_shared` GroundSurface XY를 제공하고 evidence 차이를 비교 | `SOURCE-SUPPORTED` |
 | Image-only 2DGS surface reconstruction — [Huang et al. 2024](https://doi.org/10.1145/3641519.3657428), [official code](https://github.com/hbb1/2d-gaussian-splatting) | posed multi-view images | 2D Gaussian surfels, rendered depth, mesh | depth distortion + normal consistency; depth fusion/TSDF mesh path | rendering, Chamfer/F-score 등 | 확인되지 않음 | planar disks와 geometry regularization으로 surface reconstruction을 직접 목표화 | city-model manufacturability와 building-level PASS는 별도 검증 필요 | `SOURCE-SUPPORTED` |
 | Depth/normal-prior GS — [DN-Splatter](https://arxiv.org/abs/2403.17822) | images + depth/normal cues | Gaussians와 mesh | depth regularization, local smoothness, normal cues | indoor geometry와 rendering | 확인되지 않음 | depth/normal supervision이 ill-posed/textureless geometry를 보완할 수 있음 | urban aerial buildings, existing asset currentness, Roofer output은 범위 밖 | `SOURCE-SUPPORTED` |
 | LiDAR-guided GS — [LI-GS](https://arxiv.org/abs/2409.12899) | co-acquired LiDAR scans + RGB | Gaussian surfels와 mesh | LiDAR-derived plane-constrained GMM initialization/normalization/density control | accuracy, completeness, Chamfer, F1, rendering | 확인되지 않음 | LiDAR를 initialization·optimization·mesh extraction 전반에 사용 가능 | 본 연구의 historical/incomplete LiDAR prior와 current-image 분리 시나리오는 같지 않음 | `SOURCE-SUPPORTED` |
@@ -52,6 +52,7 @@ GS4Buildings는 low-level **LoD2 semantic 3D building models**에서 Gaussian을
 | downstream | GS building reconstruction | exact Roofer input과 LoD2.2 gate | full GS4Buildings 평가범위 확인 후 차이 확정 |
 | endpoint | completeness/accuracy/compactness | building-level usable PASS와 transitions | `PROPOSED CONTRIBUTION` |
 | failure localization | 논문 전체 확인 필요 | G-native→extraction→Roofer→LoD2 | `PROPOSED CONTRIBUTION` |
+| output contract | semantic textured mesh의 독립 acceptance는 확인 필요 | Roofer/LoD2와 semantic textured mesh의 O/X를 독립 정의하고 네 joint cell을 보고 | `PROPOSED CONTRIBUTION` |
 
 ### 3.3 신규성 위험
 
@@ -104,6 +105,18 @@ GS4Buildings는 low-level **LoD2 semantic 3D building models**에서 Gaussian을
    failure를 분리한다.
 5. `PROPOSED CONTRIBUTION`: actual change가 확인될 경우에만 prior–image conflict
    currentness를 정량화한다.
+6. `PROPOSED CONTRIBUTION`: 같은 E1–E6 evidence를 대상으로 Roofer/LoD2와
+   semantic textured mesh의 O/X를 독립 판정하고 `R_O/M_O`, `R_O/M_X`,
+   `R_X/M_O`, `R_X/M_X`를 모두 보고한다.
+7. `PROPOSED CONTRIBUTION`: 같은 E3 image-derived base와 같은 Existing ALS를 쓰는
+   E4 unweighted prior reproduction과 E5 conflict-aware prior fusion을 직접 비교하여,
+   구조 rescue와 변화 영역의 prior 억제를 분리해 측정한다.
+
+Roofer/LoD2가 첫 저널논문의 confirmatory primary인 이유는 이 프로그램의 중심 claim이
+"자동 LoD2 생성 가능 범위의 확대"이기 때문이다. Semantic textured mesh는 중요도가
+낮아서가 아니라 geometry·semantic·texture를 함께 묻는 별도 제품 계약이므로 key
+secondary로 둔다. 두 output은 서로의 O/X를 대신하지 않으며, mesh 중심 논문에서는
+통계적 primary/secondary 순서를 별도로 재동결할 수 있다.
 
 ## 6. Claim ledger
 
@@ -111,7 +124,9 @@ GS4Buildings는 low-level **LoD2 semantic 3D building models**에서 Gaussian을
 |---|---|---|
 | MVS는 density가 높아도 구조적으로 실패할 수 있다 | `SOURCE-SUPPORTED`; 대상 데이터는 `TO VERIFY` | P2 paired diagnostic |
 | No-external-prior GS가 direct MVS의 usable gap을 줄인다 | `PROPOSED HYPOTHESIS` | Gate S0 common-base freeze 뒤 P2 frozen criterion 결과 |
-| Existing LiDAR와 LoD1 prior가 서로 다른 실패를 회복한다 | `PROPOSED HYPOTHESIS` | P3 C4/C5 rescue-set overlap·discordance와 failure-mode 분석 |
+| Existing ALS와 LoD prior가 서로 다른 실패를 회복한다 | `PROPOSED HYPOTHESIS` | P3 E4/E5/E6 rescue-set overlap·discordance와 failure-mode 분석 |
+| conflict-aware E5가 E4의 prior reproduction 능력을 유지하면서 changed building의 stale-prior copying을 줄인다 | `PROPOSED HYPOTHESIS` | 독립 change label, E4/E5 paired comparison, frozen conflict metric |
+| Roofer/LoD2 O/X와 semantic textured mesh O/X가 서로 다른 failure set을 만든다 | `PROPOSED HYPOTHESIS` | 두 독립 rubric과 네 joint-cell 결과 |
 | 본 연구가 GS4Buildings와 신규하게 다르다 | `TO VERIFY` | full-text/code review + lineage audit |
 | prior-guided GS가 LoD2 가능 영역을 확대한다 | `PROPOSED CONTRIBUTION` | P4 held-out net transitions |
 | 최신화에 성공한다 | `TO VERIFY` | 실제 T0–T1 change cases와 conflict analysis |

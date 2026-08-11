@@ -1,12 +1,13 @@
 # Result and Acceptance Contract v0
 
-- Document status: `USER_APPROVED_CANONICAL_RESULT_CONTRACT`
-- Criterion version: `C1C5_CANON_v2`
+- Document status: `E1E6_DUAL_OUTPUT_DESIGN_USER_REVIEW_PENDING`
+- Criterion version: `E1E6_CANON_v3`
 - 작성일: 2026-07-31
 - 정성·정량 표시 계약 개정: 2026-08-03 (`DEC-P1-016`)
 - 상태: `PROVISIONAL UNTIL P2 CRITERION FREEZE`
 - Final verdict policy: `PENDING` until P2 criterion freeze
-- Numerical threshold: `DEFERRED`
+- Numerical threshold: `OFFICIAL FREEZE DEFERRED`; development diagnostic
+  `ROOFER_G3G4_DEVELOPMENT_V0P1_NOT_FROZEN` active under `DEC-P1-022`
 
 ## 1. 목적
 
@@ -15,12 +16,53 @@ metric 또는 보기 좋은 mesh 하나로 최종 성공을 판정하지 않는�
 native representation, extracted surface, exact Roofer input, LoD2 outcome을
 연결해 저장한다.
 
-`C1`/`C2`는 context baselines이고 `C3_GS_image`의 canonical condition name은
-no-external-prior GS다. Primary prior contrasts는 `C4-vs-C3`와
-`C5-vs-C3`이다. “자동 LoD2 생성 가능 범위 확대”는 같은 사전 동결 building set에서
+`E1`은 current-sensor upper context, `E2`는 기존 current-image MVS→Roofer LoD2
+product baseline이다. `E3_GS_image`의 canonical condition name은
+image-only/no-external-prior GS이며 prior 효과를 분리하는 mechanism ablation이다.
+`E4`는 unweighted ALS prior reproduction, `E5`는 같은 ALS의 conflict-aware arm,
+`E6`는 LoD-prior diagnostic이다.
+“자동 LoD2 생성 가능 범위 확대”는 같은 사전 동결 building set에서
 평균 RMSE 개선이 아니라 `PASS_usable`의 `fail→pass − pass→fail` 순증가로 판정한다.
 자동성은 per-building 수동 method 선택·geometry 수리·GT 입력을 금지하고, retry와
 fallback을 결과 전 동결된 규칙으로만 허용한다는 뜻이다.
+
+### 1.1 두 개의 독립 output contract
+
+본 연구는 아래 두 output을 하나의 success field로 합치지 않는다.
+
+| Field | 평가 대상 | Human `O` | Human `X` | 통계적 역할 |
+|---|---|---|---|---|
+| `roofer_lod2_ox` | structured Roofer/LoD2 | assessable output이 Roofer hard gate와 고정 human usability rubric을 모두 통과 | assessable output이 하나 이상 실패 | 자동 LoD2 범위확대의 confirmatory primary |
+| `semantic_textured_mesh_ox` | georeferenced semantic textured surface mesh | assessable output의 geometry, semantics와 texture가 모두 mesh contract에서 수용 | assessable output의 필수요소 하나 이상 실패 | 독립 rescue/regression을 갖는 key secondary |
+
+Mesh에는 `mesh_geometry_ox`, `mesh_semantic_ox`, `mesh_texture_ox`를 함께 기록하고
+세 필수요소가 모두 O일 때만 overall mesh O가 된다. Roofer O/X는 photographic texture를
+평가하지 않고, mesh O/X는 CityJSON shell이나 Roofer plane topology를 요구하지 않는다.
+따라서 `R_O/M_O`, `R_O/M_X`, `R_X/M_O`, `R_X/M_X` 네 joint cell을 모두 보고한다.
+
+O/X를 부여하기 전에 output별 `assessment_status ∈ {ASSESSABLE, UNASSESSABLE,
+NOT_RUN}`를 결정한다. Missing output은 generation hard-gate X지만, reference/panel/
+provenance 결측으로 품질을 판정할 수 없는 경우는 `UNASSESSABLE`이며 X로 대체하지 않는다.
+사람 O/X와 automatic gate는 별도 필드다. 기존 `P2-ROOFER-HUMAN-OX-v1`의 기술개발
+O/X가 G0–G4 또는 공식 `PASS_usable`을 자동 대체하지 않는다.
+
+각 output에는 `temporal_status`를 결합한다. 변화 건물에서 prior를 재현한 결과는
+Roofer 또는 mesh O일 수 있지만, `temporal_status=PRIOR_REPRODUCTION`이면 current
+reconstruction rescue로 집계하지 않는다. current evidence가 부족한 경우 geometry
+생성보다 currentness claim에 기권한다.
+
+### 1.2 Proposed hard-gate split
+
+| Output | Hard gates before human quality O/X | Human review views | Overall O rule |
+|---|---|---|---|
+| Roofer/LoD2 | `R0` output/target ID/LoD2 exists; `R1` parse/schema/semantic bindings valid; `R2` required Roof/Wall/Ground geometry and topology valid | fixed geometry-only top/oblique/section plus independent roof reference overlay | `R0–R2` pass and fixed roof-form/major-defect usability review O; texture is ignored |
+| Semantic textured mesh | `M0` mesh/material/texture load and georeference valid; `M1` required surface support exists; `M2` semantic binding complete; `M3` texture binding and coverage exist | same fixed geometry-only views, semantic-class view and texture view | `mesh_geometry_ox = mesh_semantic_ox = mesh_texture_ox = O` |
+
+Roofer human quality는 dominant roof form, severe hole/collapse/intersection, gross
+boundary/height error와 unusable over/undersegmentation을 본다. Mesh geometry는 completeness,
+accuracy와 unsupported surface, semantics는 required-class assignment, texture는 coverage,
+held-out-view fidelity와 seam/ghosting을 본다. 정확한 tolerance와 ambiguous-zone rule은
+validation에서 동결하며, 판정자는 condition을 가린다.
 
 ## 2. Artifact chain
 
@@ -31,6 +73,11 @@ fallback을 결과 전 동결된 규칙으로만 허용한다는 뜻이다.
 | 3 | `P_Roofer` | filtering/sampling/classification/crop 완료된 exact Roofer input | LAS/LAZ hash, class 2/6, roofprint/terrain hash, CRS | adapter가 정보를 잃는가? |
 | 4 | `H_LoD2` | Roofer-generated LoD2.2 semantic building model | Roofer version/config/log/output hash | evidence가 valid/accurate LoD2로 변환되는가? |
 | 5 | `A_acceptance` | G0–G4와 `PASS_usable` | criterion/reference version | 사용할 수 있는가? |
+
+Semantic textured mesh의 평행 chain은 `G_native → S_extracted → M_semantic_textured →
+M_acceptance`다. `M_semantic_textured`는 source views, texture/material atlas,
+per-face/per-vertex semantic binding, coordinate frame와 mesh adapter hash를 기록한다.
+이 chain의 O/X는 Roofer chain의 `P_Roofer`, `H_LoD2`, G0–G4에서 추론하지 않는다.
 
 ```mermaid
 flowchart LR
@@ -53,15 +100,16 @@ flowchart LR
 ### 2.1 Condition-flow provenance
 
 Gate S0가 동결한 `B_current`는 exact current image/pose members와 그 members에서만
-파생한 SfM sparse, dense MVS, depth, normal, confidence의 manifest다. C3–C5는
-동일한 `B_current` ID와 component hashes를 가져야 한다. C4는 Existing ALS만,
-C5는 independent LoD1만 추가하며 C3는 external prior가 없어야 한다.
+파생한 SfM sparse, dense MVS, depth, normal, confidence의 manifest다. E3–E6는
+동일한 `B_current` ID와 component hashes를 가져야 한다. E4/E5는 exact same Existing
+ALS를 공유하고 conflict weighting만 다르며, E6는 LoD prior만 추가한다. E3는
+external prior가 없어야 한다.
 
-C2와 C3가 같은 MVS-derived component를 사용해도 artifact chain은 다르다. C2는
-MVS geometry를 GS 없이 `P_Roofer`로 직접 변환하고, C3는 image-derived geometry와
+E2와 E3가 같은 MVS-derived component를 사용해도 artifact chain은 다르다. E2는
+MVS geometry를 GS 없이 `P_Roofer`로 직접 변환하고, E3는 image-derived geometry와
 support를 `G_native`에서 재최적화한 뒤 `S_extracted → P_Roofer`를 거친다. 결과표는
 이 `condition_flow`를 필수 provenance로 기록한다. 기존 1,104-image vendor MVS는
-Gate S0 common-base manifest와 exact하게 결합되기 전에는 primary C2/C3 비교에
+Gate S0 common-base manifest와 exact하게 결합되기 전에는 primary E2/E3 비교에
 포함하지 않는다.
 
 ## 3. Native diagnostic contract
@@ -138,7 +186,7 @@ reference`를 가리켜야 한다.
 - `building_id`, split/selection role, building size와 roof complexity
 - `matrix_id`, `criterion_version`, method별 `run_id/git_commit/config_hash`
 - geometry reference와 structure reference 각각의 version, lineage와 independence class
-- `common_image_pose_base_id`, `surface_adapter`, `R_derived` protocol
+- `common_image_pose_base_id`, `surface_adapter`, `R_shared` protocol
 
 각 panel은 다음 exact binding key를 panel sidecar manifest에 기록한다.
 
@@ -170,7 +218,7 @@ method별 run identity와 compatibility receipt를 matrix manifest에 기록한�
 
 맨 위 current-image 행은 지붕 관측과 각도 다양성이 사전 규칙을 만족하는 서로 다른
 네 camera image를 사용한다. 각 image에는 평가용 지붕 reference를 exact camera
-calibration으로 투영한다. 이 camera 선택은 C1–C5 결과를 보기 전에 고정한다.
+calibration으로 투영한다. 이 camera 선택은 E1–E6 결과를 보기 전에 고정한다.
 
 모든 3D 행은 다음 열을 공유한다.
 
@@ -193,23 +241,24 @@ primitive를 machine-readable view spec으로 저장하고 hash한다. 이 view 
 | 블록 | 표시 행 | 의미 |
 |---|---|---|
 | 공통 영상 | `RAW_CURRENT_IMAGES_WITH_ROOF_PROJECTION` | 지붕이 실제 영상에서 어떻게 관측되는지 |
-| C1 Current UAS LiDAR | `LIDAR_INPUT`, `LIDAR_ROOFER_OUTPUT` | current UAS point cloud와 동일 Stage 3 결과 |
-| C2 Current-image MVS | `MVS_INPUT`, `MVS_ROOFER_OUTPUT` | common-base MVS point cloud와 동일 Stage 3 결과 |
-| C3 Image-only GS | `GS_RENDER_RGB_SEMANTIC`, `GS_SURFACE_SEMANTIC`, `GS_ROOFER_OUTPUT` | no-external-prior GS rendering, mesh/point cloud, LoD2 |
-| C4 Image + existing ALS GS | `GS_RENDER_RGB_SEMANTIC`, `GS_SURFACE_SEMANTIC`, `GS_ROOFER_OUTPUT` | 동일 GS base에 existing ALS만 추가한 결과 |
-| C5 Image + independent LoD1 GS | `GS_RENDER_RGB_SEMANTIC`, `GS_SURFACE_SEMANTIC`, `GS_ROOFER_OUTPUT` | 동일 GS base에 independent LoD1만 추가한 결과 |
+| E1 Current UAS LiDAR | `LIDAR_INPUT`, `LIDAR_ROOFER_OUTPUT` | current UAS point cloud와 동일 Stage 3 결과 |
+| E2 Current-image MVS | `MVS_INPUT`, `MVS_ROOFER_OUTPUT`, `MVS_SEMANTIC_TEXTURED_MESH` | common-base MVS의 Roofer와 mesh output |
+| E3 Image-only GS | `GS_RENDER_RGB_SEMANTIC`, `GS_SURFACE_SEMANTIC`, `GS_ROOFER_OUTPUT`, `GS_SEMANTIC_TEXTURED_MESH` | no-external-prior GS의 두 output |
+| E4 ALS-unweighted GS | 같은 네 행 | 동일 GS base + unweighted existing ALS |
+| E5 ALS-conflict-aware GS | 같은 네 행 | 동일 GS base + same ALS × conflict/currentness weight |
+| E6 LoD-prior GS | 같은 네 행 | LoD prior diagnostic; independence 상태 표시 |
 
-outer block 순서는 항상 C1→C2→C3→C4→C5이며, 각 block 안의 행 순서와 수는 위 표로
-고정한다. C1/C2의 두 행과 C3–C5의 세 행을 renderer가 재배열하거나 조건별로 합치지
+outer block 순서는 항상 E1→E2→E3→E4→E5→E6이며, 각 block 안의 행 순서와 수는 위 표로
+고정한다. E1/E2와 E3–E6의 행을 renderer가 재배열하거나 조건별로 합치지
 않는다.
 
 `GS_SURFACE_SEMANTIC`은 실제 Roofer로 전달되는 extracted mesh 또는 sampled point
 cloud를 우선 표시한다. native primitive가 별도 원인 진단에 필요하면 보조 matrix에
-추가하되 정식 행을 대체하지 않는다. C2는 MVS를 직접 Roofer로 전달하고 C3는 같은
+추가하되 정식 행을 대체하지 않는다. E2는 MVS를 직접 Roofer로 전달하고 E3는 같은
 image-derived geometry/support를 GS에서 재최적화한다는 branch 차이를 행 label에
 명시한다.
 
-아직 실행하지 않은 C4/C5, 생성 실패, reference 결측도 행을 삭제하지 않는다.
+아직 실행하지 않은 E4/E5/E6, 생성 실패, reference 결측도 행을 삭제하지 않는다.
 각각 `NOT_RUN`, `OUTPUT_MISSING`, `REFERENCE_MISSING`과 사유를 빈 panel에 표시한다.
 
 ### 6.4 모든 panel의 지붕 투영
@@ -248,7 +297,7 @@ reference가 없는 건물은 prior나 같은 계보의 산출물을 독립 refe
 입력과 평가에 함께 쓰인 경우에는 `SELF_REFERENCE_DIAGNOSTIC`을 눈에 띄게 표시하고
 독립 정확도 주장에 사용하지 않는다. LoD2-derived LoD1은 같은 계보 평가에서 계속
 `REFERENCE_DERIVED_DIAGNOSTIC_ONLY`이며 독립 reference를 대체하지 않는다.
-C1에서 UAS input과 geometry reference가 같은 경우에는 모든 C1 panel과 metric strip에
+E1에서 UAS input과 geometry reference가 같은 경우에는 모든 E1 panel과 metric strip에
 `SELF_REFERENCE_UPPER_BASELINE` watermark를 표시하고 independent score 집계에서
 제외한다.
 
@@ -266,6 +315,7 @@ C1에서 UAS input과 geometry reference가 같은 경우에는 모든 C1 panel�
 | LiDAR/MVS input | point count/density, roof coverage, nodata, outlier, plane residual |
 | GS rendering/native | rendering 지표와 semantic support; geometry 판단을 대신하지 않음 |
 | extracted mesh/point cloud | surface accuracy/completeness, unsupported ratio, semantic support, extraction 상태 |
+| semantic textured mesh | geometry completeness/accuracy, semantic IoU/F1, texture coverage, held-out-view fidelity, seam/ghosting, `M_geometry/M_semantic/M_texture/overall OX` |
 | Roofer LoD2 | roof-plane correctness/completeness/quality, over/undersegmentation, RMSXY, RMSZ, surface/height error, G0–G4, verdict |
 
 metric은 그림에 투영된 exact reference와 `evaluation_support_hash`가 같은 영역에서만
@@ -285,7 +335,7 @@ G3/G4 criterion이 동결되기 전에는 continuous value와 diagnostic candida
 
 ```text
 Final verdict: PENDING
-Criterion version: C1C5_CANON_v2
+Criterion version: E1E6_CANON_v3
 ```
 
 ### 6.6 보조 mechanism matrix
@@ -353,7 +403,7 @@ summary를 승격한다. 최종 resolver/path는 Gate S0/P2에서 `TO VERIFY`이
 | Field | Type / rule |
 |---|---|
 | `building_id` | stable string |
-| `method_id` | canonical C1–C5 ID |
+| `method_id` | canonical E1–E6 ID |
 | `run_id` | immutable run namespace |
 | `git_commit` | full SHA |
 | `task_packet_id` | approved packet ID |
@@ -361,11 +411,16 @@ summary를 승격한다. 최종 resolver/path는 Gate S0/P2에서 `TO VERIFY`이
 | `data_version` | immutable data manifest ID |
 | `reference_version` | geometry + structure refs |
 | `surface_adapter` | name + version |
-| `criterion_version` | `C1C5_CANON_v2`, frozen version later |
+| `criterion_version` | `E1E6_CANON_v3`, frozen version later |
 | `common_image_pose_base_id` | Gate S0 frozen member/pose manifest ID + hash |
 | `image_derived_base_manifest` | SfM sparse/dense MVS/depth/normal/confidence의 producer·config·frame·role·payload hashes |
-| `external_prior_type` | `none`, `existing_als`, `independent_lod1`; C3는 반드시 `none` |
+| `external_prior_type` | `none`, `existing_als`, `lod_prior`; E3는 반드시 `none` |
+| `prior_weighting` | `none`, `unweighted`, `conflict_aware`; E4/E5를 구분 |
 | `condition_flow` | `mvs_direct_roofer` 또는 `gs_reoptimized_then_roofer` |
+| `temporal_status` | `UNCHANGED_CONFIRMED`, `CURRENT_SUPPORTED`, `PRIOR_REPRODUCTION`, `CHANGE_UNRESOLVED` |
+| `roofer_assessment_status`, `mesh_assessment_status` | `ASSESSABLE`, `UNASSESSABLE`, `NOT_RUN`; O/X denominator 통제 |
+| `roofer_lod2_ox` | nullable `O`/`X`; mesh O/X와 독립 |
+| `semantic_textured_mesh_ox` | nullable `O`/`X`; Roofer O/X와 독립 |
 
 ### Input and surface evidence
 
@@ -394,7 +449,22 @@ summary를 승격한다. 최종 resolver/path는 Gate S0/P2에서 `TO VERIFY`이
 - `extraction_runtime`
 - `memory_usage`
 
-C1/C2의 non-applicable fields는 0이 아니라 explicit null + reason으로 둔다.
+E1/E2의 non-applicable fields는 0이 아니라 explicit null + reason으로 둔다.
+
+### Semantic textured mesh
+
+- `mesh_exists_and_loadable`
+- `mesh_geometry_ox`
+- `mesh_semantic_ox`
+- `mesh_texture_ox`
+- `semantic_textured_mesh_ox`
+- `surface_accuracy`, `surface_completeness`, `unsupported_surface_ratio`
+- `semantic_iou_or_f1`
+- `texture_coverage`, `heldout_view_texture_fidelity`
+- `texture_seam_or_ghosting_status`
+- `mesh_missing_or_failure_reason`
+
+Mesh O/X는 Roofer output 존재, val3dity 또는 `PASS_usable`에서 계산하지 않는다.
 
 ### Roofer and LoD2
 
@@ -451,19 +521,29 @@ Logical names:
 - threshold sensitivity results
 - `run_registry.jsonl`
 
-Primary comparison은 no-external-prior condition `C3_GS_image` 대비 C4/C5
-각각이다. 각 prior arm `m`의
-primary estimand는 동일 eligible paired set에서 다음과 같다.
+Roofer와 mesh에는 별도의 transition matrix를 만든다. 자동 LoD2 프로그램의 product
+primary comparison은 기존 current-image MVS→Roofer `E2_MVS` 대비 deployable
+conflict-aware ALS `E5`다. `E4-vs-E2`는 unweighted-prior product contrast다.
+`E4/E5-vs-E3`는 prior incremental mechanism, `E5-vs-E4`는 conflict weighting,
+`E6`는 independence-gated diagnostic이다. 각 prior arm `m`의 product paired estimand는
+다음과 같다.
 
 ```text
-T_plus(m)  = count(C3 fail, m pass)
-T_minus(m) = count(C3 pass, m fail)
-Delta_N_pass(m) = N_pass(m) - N_pass(C3) = T_plus(m) - T_minus(m)
+T_plus_R_product(m)  = count(E2 Roofer X, m Roofer O)
+T_minus_R_product(m) = count(E2 Roofer O, m Roofer X)
+Delta_N_R_product(m) = T_plus_R_product(m) - T_minus_R_product(m)
+
+T_plus_M_product(m)  = count(E2 mesh X, m mesh O)
+T_minus_M_product(m) = count(E2 mesh O, m mesh X)
+Delta_N_M_product(m) = T_plus_M_product(m) - T_minus_M_product(m)
+
+T_plus_R_prior(m) = count(E2 Roofer X, E3 Roofer X, m Roofer O)
+T_plus_M_prior(m) = count(E2 mesh X, E3 mesh X, m mesh O)
 ```
 
-C4-vs-C3와 C5-vs-C3는 사전 지정한 두 primary contrasts다. 두 방향 transition,
-denominator, uncertainty interval을 함께 보고하며 multiplicity 처리 방식은 P2에서
-criterion과 함께 동결한다.
+두 output의 양방향 transition, denominator와 uncertainty interval을 각각 보고한다.
+Roofer와 mesh를 합친 단일 pass count는 만들지 않는다. Multiple confirmatory contrast를
+열 경우 multiplicity 방식은 test output 접근 전에 동결한다.
 
 - usable PASS 건물 수와 비율
 - fail-to-pass
@@ -473,13 +553,43 @@ criterion과 함께 동결한다.
 
 Secondary:
 
-- C1–C3 baseline gap
+- E1–E3 baseline gap
 - failure gate별 transition
 - roof complexity/coverage/observation stratum
 - runtime/memory/storage
 
 Method failure와 missing output은 denominator에서 사후 제거하지 않는다. Eligibility와
 execution failure를 구분해 보고한다.
+
+### 11.1 Paired estimands and baseline-quality interaction
+
+각 output `Y ∈ {R, M}`와 method `m`에 대해 다음을 사전 등록한다.
+
+- **Product rescue rate:** `P(m_Y=O | E2_Y=X, assessable/attempted)`와 exact paired
+  numerator/denominator. Generation failure는 X에 남기고 assessment gap은 별도다.
+- **Prior-incremental rescue rate:** product rescue 중 `E3_Y=X`도 만족하는 건물의 비율과
+  exact count를 보고한다. `E2 X, E3 O, m O`는 GS-only rescue maintained로 분리하며
+  prior 고유 rescue로 부르지 않는다.
+- **Current rescue rate:** product rescue 중 `UNCHANGED_CONFIRMED` 또는
+  `CURRENT_SUPPORTED`인 비율. Changed + `PRIOR_REPRODUCTION/CHANGE_UNRESOLVED`는
+  product rescue에는 남지만 current rescue에는 포함하지 않는다.
+- **Non-degradation/non-inferiority:** E2 O 건물에서 `m`의 O 유지율과 regression rate를
+  보고한다. Frozen margin `δ_Y`에 대해 regression-rate upper confidence bound가
+  `δ_Y`보다 작은지를 검정한다. `δ_Y`는 application cost와 reviewer error를 근거로
+  held-out 접근 전에 정하며 Roofer와 mesh에 별도로 둔다.
+- **Quality delta:** 동일 building의 frozen continuous quality vector/score에 대해 product
+  delta `Q_Y(m)-Q_Y(E2)`와 mechanism delta `Q_Y(m)-Q_Y(E3)`의 median, robust mean과
+  paired interval을 각각 보고한다. O/O 사례만
+  골라 분석하지 않고 failure/missingness policy와 component metric을 함께 공개한다.
+- **Continuous baseline-quality interaction:** E2의 사전 정의 continuous product-baseline
+  quality `q_Y`와 method effect의 interaction을 spline 또는 사전 지정 monotone term으로
+  추정한다. `E2 O/X` 이분법만으로 rescue를 설명하지 않는다. `q_R`은 G3/G4 signed
+  margin의 weakest-link score, `q_M`은 geometry/semantic/texture signed margin의
+  weakest-link score 후보이며 exact normalization은 validation에서 lock한다.
+
+Primary model은 building paired effect와 spatial group을 반영하고, change status와
+input-side observation support를 사전 지정 effect modifier로 둔다. Binary transition,
+continuous delta, joint O/X 네 cell은 서로 대체하지 않는다.
 
 ## 12. Acceptance formula
 
@@ -554,15 +664,71 @@ P2에서 다음 순서로 numerical threshold를 정한다.
 2. Current UAS/Drone LiDAR baseline 분포
 3. MVS baseline 분포
 4. No-external-prior GS 분포
-5. validation buildings의 명백한 success/failure blind review
-6. application requirement
-7. matching/threshold sensitivity
-8. ambiguous zone과 adjudication rule
-9. criterion code/test/문서 동결
-10. prior-guided held-out-building result 접근 금지 후 freeze receipt
+5. validation buildings의 condition-blind dual review와 reviewer disagreement 추정
+6. application requirement, false-accept 비용과 output별 non-inferiority margin `δ_Y`
+7. candidate threshold의 false-accept/false-reject와 matching sensitivity
+8. assessment gap, ambiguous zone과 adjudication rule
+9. Roofer와 mesh 각각의 metric dictionary, threshold, aggregation과 missingness policy 동결
+10. criterion JSON/code/test/문서 hash 및 reviewer rubric 동결
+11. prior-guided held-out-building result 접근 금지 후 freeze receipt
 
 기존 benchmark의 example threshold는 metric 구현 검증에 사용할 수 있지만 universal
 building acceptance threshold로 자동 이식하지 않는다.
+
+### 13.1 Development G3/G4 v0.1 — 실제 사례 검토용, 비동결
+
+`DEC-P1-022`에 따라 다음 기준은 199동 E1–E6 viewer에서 threshold의 시각적 의미와
+분포를 확인하기 위한 **development candidate**로만 사용한다. 표기는 `O*`, `REVIEW*`,
+`X*`이고 공식 G3/G4 또는 `PASS_usable`이 아니다.
+
+- G3 structure proxy: current-UAS E1 Roofer의 10 m² 이상 주요 roof plane. E1 자체는
+  self-reference이고 E2–E6에서도 method-derived proxy이므로 독립 reference가 아니다.
+- plane correspondence: reference와 prediction 양쪽 overlap fraction `>=0.50`.
+- G3 `O*`: area completeness `>=0.80`, correctness `>=0.80`, quality `>=0.70`.
+- G3 `X*`: completeness `<0.70`, correctness `<0.70`, quality `<0.60` 중 하나 또는
+  major-plane count gross mismatch. 그 사이는 `REVIEW*`다.
+- G4 geometry proxy: exact shared footprint 안쪽 0.5 m support의 current-UAS class-6
+  viewer points를 0.5 m cell로 집계하고 Roofer top surface와 비교한다.
+- G4 `O*`: coverage `>=0.80`, RMSZ `<=1.0 m`, P95 absolute Z `<=2.0 m`,
+  absolute median Z bias `<=0.5 m`.
+- G4 `X*`: coverage `<0.70`, RMSZ `>1.5 m`, P95 absolute Z `>3.0 m`,
+  absolute median Z bias `>1.0 m` 중 하나. 그 사이는 `REVIEW*`다.
+- exact footprint centroid가 frozen Roofer target AOI 밖인 20동과 reference가 부족한
+  건물은 `NOT_ASSESSED`; X에 합치지 않는다.
+
+이 proxy의 구현·config·test와 v16 artifact를 함께 검토한 뒤 structure reference,
+plane aggregation, reference uncertainty, false-accept 비용을 반영해 공식 criterion을
+별도 decision/해시로 동결한다. 현재 `official_PASS_usable`과 `scientific_verdict`는 null이다.
+
+### 13.2 Reference-based binary auto O/X v3 — 전용 viewer용, 비공식
+
+`DEC-P1-024`에 따라 전용 Roofer viewer는 13.1의 method-derived proxy와 ambiguous
+`REVIEW*`를 사용하지 않고, 평가 reference에 대해 `O` 또는 `X`를 자동 산출한다.
+prediction/output 부재는 `X`이고, `NA`는 structure와 geometry 평가 reference 자체가
+모두 없을 때만 허용한다. 전체 판정은 `O = G0 AND G1 AND G2 AND G3 AND G4`이며
+어느 gate든 실패하면 `X`다.
+
+- `G0`: stable building ID의 LoD2 output 존재.
+- `G1`: CityJSON LoD와 Roof/Wall/Ground semantic contract 통과.
+- `G2`: val3dity 2.6.0 feature validity 통과.
+- `G3 support`: exact stable-ID Existing LoD2 `RoofSurface`와 prediction roof union의
+  completeness/correctness/quality `>=0.80/0.80/0.70`.
+- `G3 major planes`: 10 m² 이상 plane을 사용하되 plane이 모두 작으면 최대 plane 하나를
+  유지한다. Primary `O50`은 양방향 overlap `>=0.50`, normal angle `<=10°`, 겹침
+  위치에서 height delta `<=0.5 m`인 greedy one-to-one match를 요구한다. Matched plane
+  area recall/precision은 각각 `>=0.80`이고 prediction/reference plane-count ratio는
+  `[0.75, 1.50]`이어야 한다. `O60/O70/O80`은 overlap만 0.60/0.70/0.80으로 바꾼
+  sensitivity다.
+- `G4`: exact shared footprint의 0.5 m inset 안 current UAS class-6 support를 0.5 m
+  cell로 집계한다. UAS support가 한 점도 없을 때만 exact stable-ID LoD2 RoofSurface를
+  geometry fallback으로 쓴다. coverage `>=0.80`, RMSZ `<=1.0 m`, P95 absolute Z
+  `<=2.0 m`, absolute median Z bias `<=0.5 m`를 모두 만족해야 한다.
+
+Existing LoD2는 G3 평가에만 사용하며 Roofer 입력이나 parameter 선택에 전달하지 않는다.
+변화가 있을 수 있으므로 첫 저널의 current-geometry inference는 독립적으로
+`UNCHANGED_CONFIRMED`가 확인된 subset에서만 한다. E6는 동일 LoD2 계열 prior와의
+similarity diagnostic일 뿐 independent performance evidence가 아니다. 이 v3 결과는
+threshold 개발과 사례 검토용이며 `official_PASS_usable=null`, `scientific_verdict=null`이다.
 
 ## 14. Criterion versioning
 
@@ -571,7 +737,10 @@ building acceptance threshold로 자동 이식하지 않는다.
 | `DRAFT_v0` | historical bootstrap draft; verdict는 `PENDING` |
 | `P1_AUDIT_v1` | historical audit contract; verdict는 `PENDING` |
 | `C1C5_CANON_v1` | pre-result sparse-only/dense-ban interpretation; `DEC-P1-010`으로 superseded |
-| `C1C5_CANON_v2` | current no-external-prior/common-base result contract; verdict는 `PENDING` |
+| `C1C5_CANON_v2` | historical five-condition contract; `DEC-P1-021`로 superseded |
+| `E1E6_CANON_v3` | current six-condition and dual-output contract; verdict는 `PENDING` |
+| `ROOFER_G3G4_DEVELOPMENT_V0P1_NOT_FROZEN` | 199동 viewer용 O*/REVIEW*/X* proxy; 공식 PASS와 추론 금지 |
+| `ROOFER_REFERENCE_AUTO_OX_DEVELOPMENT_v3_NOT_OFFICIAL` | exact stable-ID LoD2와 current UAS 기반 O50/O60/O70/O80 binary viewer; 공식 PASS와 추론 금지 |
 | `VALIDATION_CANDIDATE_vN` | validation set에서 calibration, held-out-building 접근 금지 |
 | `FROZEN_vN` | 코드/hash/reference/split 포함, P3/P4 primary |
 | `SUPERSEDED_vN` | 이유/Decision ID와 successor 기록, 과거 결과 보존 |
@@ -581,23 +750,23 @@ building acceptance threshold로 자동 이식하지 않는다.
 
 ### 14.1 Held-out scope
 
-- P2는 pilot/development와 validation에서 C1–C3 baseline과 criterion을 확정한다.
-- P3는 같은 허용 split에서 C3를 튜닝하지 않는 frozen comparator로 두고, C4/C5를
-  개발·선택하여 최종 method/loss/schedule을 동결한다. C3는 protocol-matched control로
+- P2는 pilot/development와 validation에서 E1–E3 baseline과 criterion을 확정한다.
+- P3는 같은 허용 split에서 E3를 튜닝하지 않는 frozen comparator로 두고, E4/E5/E6를
+  개발·선택하여 최종 method/loss/schedule을 동결한다. E3는 protocol-matched control로
   재실행하거나 exact-compatible P2 결과를 재사용하며 그 선택과 hash를 기록한다.
-- P3 method freeze 뒤 frozen C4/C5를 development+validation 전 건물에 적용하고,
-  exact-compatible C1/C2와 frozen C3 결과를 결합해 그 pool의 final C1–C5 matrix를
+- P3 method freeze 뒤 frozen E4/E5/E6를 development+validation 전 건물에 적용하고,
+  exact-compatible E1/E2와 frozen E3 결과를 결합해 그 pool의 final E1–E6 matrix를
   만든다.
 - P4 primary에서 held-out building test를 처음 열고, 그 split의 모든 building에
-  동결된 C1–C5를 실행한다.
-- “전체 실험”은 held-out test 전 건물 × C1–C5를 뜻하며 전체 eligible corpus와
+  동결된 E1–E6를 실행한다.
+- “전체 실험”은 held-out test 전 건물 × E1–E6를 뜻하며 전체 eligible corpus와
   동의어가 아니다.
-- P2 Gate S0의 기본안은 `E_paired` 전 건물을 세 split으로 나누는
-  `EXHAUSTIVE_PARTITION`이다. 이 경우 P2/P3와 P4 결과를 합친 최종 table이
-  `E_paired` 전체를 포함한다.
+- P2 Gate S0의 기본안은 사전 등록한 product/mechanism paired universe를 세 split으로 나누는
+  `EXHAUSTIVE_PARTITION`이다. 이 경우 P2/P3와 P4 결과를 합친 final paired table이
+  각 contrast universe를 포함하고, 가능한 건물은 `E_all6` matrix에도 포함한다.
 - 전수가 불가능해 `STRATIFIED_SAMPLE`을 동결한 경우, all-eligible census는
   primary 결과 잠금 뒤 별도 coverage analysis로 수행한다. 완료하지 않으면
-  `E_paired` 전체 coverage claim을 금지한다.
+  사전 등록 contrast universe 전체 coverage claim을 금지한다.
 
 ## 15. PENDING principle
 
@@ -623,10 +792,11 @@ building acceptance threshold로 자동 이식하지 않는다.
 ## 17. Consistency review
 
 - `RESOLVED BY DEC-P1-019`: exact same `R_shared` GroundSurface XY footprint와
-  stable ID를 C1–C5에 제공한다. LoD2 Z/RoofSurface/roof type은 평가 전용이며,
+  stable ID를 E1–E6에 제공한다. LoD2 Z/RoofSurface/roof type은 평가 전용이며,
   과거 `R_derived` component 결과는 formal building-level 결과가 아니다.
 - `MAJOR`: bootstrap logical `results/` 경로가 top-level repository contract와 충돌해
   외부 artifact path로 매핑해야 한다.
-- `RESOLVED BY DEC-P1-008`: G0–G4가 현재 C1–C5 contract이고
+- `SUPERSEDED BY DEC-P1-021`: G0–G4가 현재 E1–E6 Roofer contract이고 semantic
+  textured mesh O/X는 별도 contract다. Historical `DEC-P1-008`은 당시 C1–C5를 통제했다.
   `docs/evidence/archive/pre_c1c5_research/EXPERIMENT_PLAN.md`의 기존 gate/metric은 역사 기록이다.
 - `DEFERRED`: numerical PASS threshold와 prior loss는 이 문서에서 결정하지 않았다.

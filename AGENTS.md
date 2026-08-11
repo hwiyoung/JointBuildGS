@@ -10,28 +10,31 @@
 JointBuildGS studies whether the structural stability of incomplete but reusable
 existing 3D assets can complement the currentness and fine observations of current
 aerial imagery, expanding the set of buildings for which automatic LoD2 generation
-is usable. The program compares five reconstruction conditions: current UAS LiDAR,
-current-image MVS, no-external-prior GS, the same GS base + existing-ALS prior, and
-the same GS base + independent-LoD1 prior. For the three GS conditions, the reusable
-pipeline is:
+is usable. The current program uses six experiment conditions: `E1` current UAS
+LiDAR, `E2` current-image MVS, `E3` image-only/no-external-prior GS, `E4` the same
+GS base + unweighted Existing ALS prior, `E5` the same GS base + conflict-aware
+Existing ALS prior, and `E6` the same GS base + LoD prior diagnostic. For the GS
+conditions, the reusable pipeline is:
 
 1. Stage 1: an exact Gate-S0-frozen current image/pose base and its image-derived
    SfM sparse, dense MVS, depth, normal, confidence, segmentation, and gravity evidence.
+   `E2` uses its MVS geometry directly; `E3`–`E6` share the exact same GS base.
 2. Stage 2: no-external-prior or single-external-prior optimization on planar 2D
-   Gaussian primitives with **gsplat**. C3–C5 use the identical image-derived base;
-   only C4 adds existing ALS and only C5 adds independent LoD1.
+   Gaussian primitives with **gsplat**. `E4` and `E5` use the same Existing ALS
+   bytes, with `E4` retaining the prior without conflict attenuation and `E5`
+   applying frozen conflict/currentness confidence. `E6` uses only the LoD prior.
 3. Stage 3: Roofer-style evidence-to-CityGML read-out with one exact shared standard
    2D building footprint for every condition. The footprint supplies XY support and
    identity only; LoD2 Z, RoofSurface, roof type, semantic class, and final roof
    geometry remain evaluation-only.
 
 The direct LiDAR and MVS baselines enter the same controlled Stage 3 read-out without
-becoming GS training runs. C2 sends common-base MVS geometry directly to Roofer;
-C3 reoptimizes the same image-derived geometry/support through GS first. The existing
-1,104-image vendor MVS is not the common base or primary C2 unless Gate S0 binds its
+becoming GS training runs. `E2` sends common-base MVS geometry directly to Roofer;
+`E3` reoptimizes the same image-derived geometry/support through GS first. The existing
+1,104-image vendor MVS is not the common base or primary `E2` unless Gate S0 binds its
 exact image/pose lineage; otherwise it remains context-only sensor-processing evidence.
 
-The durable five-condition research definitions are the ordered contract set
+The durable six-condition research definitions are the ordered contract set
 `docs/research/00_RESEARCH_CHARTER.md` through
 `docs/research/06_DECISION_LOG.md`. The full legacy four-condition records are archived
 under `docs/evidence/archive/pre_c1c5_research/`; the former paths under
@@ -64,7 +67,7 @@ Reusable code must be promoted out of `phases/` into `src/`, `scripts/`, or `con
   `phases/p0-audit/README.md`; promoted evidence is in `docs/evidence/p0-audit/` and
   `docs/evidence/p0_g1_20260613/`. Completed P0 task prompts are historical records,
   not current agent instructions.
-- **Five-condition program: P2 technical development entered; confirmatory performance
+- **Six-condition E1–E6 program: P2 technical development entered; confirmatory performance
   remains blocked.** Gate S0 preparation, remediation, exact common-base recovery and
   UAS-reference coverage promotion are technically closed. `DEC-P1-012` freezes the exact
   962/937/25 source membership. `DEC-P1-013` first authorized the 51-building C1/C2
@@ -77,9 +80,19 @@ Reusable code must be promoted out of `phases/` into `src/`, `scripts/`, or `con
   Existing ALS depth/normal prior added, after its registration/confidence and gradient/
   memory preflights pass. `DEC-P1-019` supersedes the footprint-free Stage-3 rule:
   exact LoD2 `GroundSurface` XY is now the shared standard Roofer footprint for all
-  C1–C5 conditions and all 199 target buildings. C5 execution, numerical G3/G4/`PASS_usable`, confirmatory
+  experiment conditions and all 199 target buildings. `DEC-P1-023` establishes `E2`
+  current-image MVS→Roofer as the first-journal product baseline and `E3` no-prior GS
+  as the mechanism ablation; product rescue/non-degradation is therefore `E2→E4/E5`,
+  while `E3→E4/E5` isolates the prior-incremental effect. Historical `C1`–`C5` artifact
+  IDs remain immutable lineage labels; new research design and future runs use
+  `E1`–`E6`. `E6` primary interpretation, official frozen G3/G4/`PASS_usable`, confirmatory
   inference and population/generalization claims remain prohibited pending separate
-  decisions and an independent test design. Technical Returns and receipts keep
+  decisions and an independent test design. `DEC-P1-024` permits only the additive,
+  non-confirmatory `ROOFER_REFERENCE_AUTO_OX_DEVELOPMENT_v3_NOT_OFFICIAL` viewer:
+  exact stable-ID LoD2 RoofSurface plus current UAS evaluate binary O/X at
+  O50/O60/O70/O80, missing prediction is X, NA is reference-absence only, and no
+  official pass claim is made. Roofer/LoD2 and semantic textured mesh
+  are separate output contracts. Technical Returns and receipts keep
   `scientific_verdict: null`.
 - **Legacy P2 GS-JSO / Fusion W1: protected historical capability evidence.** Its
   phase-locked controls and compact receipts remain under `phases/p2-gsjso/`; promoted
@@ -122,13 +135,14 @@ payloads without an explicit, exact-target retention review and receipt.
 7. **Gravity** — estimate gravity once from terrain MVS normals; never hardcode it.
    Wall normals are horizontal, hence perpendicular to gravity.
 8. **Stage 3** — use Roofer-style evidence-to-CityGML read-out with the exact same
-   LoD2 `GroundSurface` XY footprint and stable building ID for every condition. This
+   LoD2 `GroundSurface` XY footprint and stable building ID for every `E1`–`E6`
+   condition. This
    shared control is not a condition-specific external prior. Preserve its GT-derived
    provenance and never substitute a method-derived component hull in the formal
    building-level comparison.
 9. **GT separation** — building IDs may support per-building E1/E3 oracle sanity
    splits. Under `DEC-P1-019`, LoD2 `GroundSurface` XY and stable ID are the sole
-   shared standard Roofer control inputs permitted across C1–C5; they may support a
+   shared standard Roofer control inputs permitted across `E1`–`E6`; they may support a
    fixed per-building crop/buffer but may not classify outcomes or select parameters.
    All other reference geometry and semantic evaluation labels are evaluation-only;
    E4 receives no other GT. Record the footprint's GT-derived provenance; do not pass LoD2 Z,
@@ -141,6 +155,11 @@ payloads without an explicit, exact-target retention review and receipt.
     `scripts/repository/validate_two_host_handoff.py`. Never treat Git-only review as
     artifact verification. A technical handoff always keeps `scientific_verdict` null;
     any human verdict belongs in a separate approval document.
+12. **Output separation** — Roofer/LoD2 O/X and semantic textured-mesh O/X are
+    independent building-by-condition outcomes. A result may pass one and fail the
+    other; neither field may be copied or inferred from the other. In changed buildings,
+    a usable prior reproduction must record temporal status and cannot be claimed as
+    current geometry without current evidence.
 
 ## Instruction maintenance
 

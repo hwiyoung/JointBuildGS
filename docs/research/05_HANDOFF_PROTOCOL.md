@@ -1,8 +1,8 @@
 # Work–Codex Handoff Protocol
 
-- 문서 버전: `C1C5_CANON_v2`
-- 작성일: 2026-07-31
-- 상태: `USER APPROVED C1–C5 PROGRAM HANDOFF`
+- 문서 버전: `E1E6_CANON_v3`
+- 작성일: 2026-08-10
+- 상태: `USER-DIRECTED E1–E6 DESIGN HANDOFF / NEW EXECUTION BLOCKED`
 - 적용: 연구문서 snapshot, task authorization, return evidence
 
 ## 1. 두 종류의 handoff
@@ -37,10 +37,12 @@ writer 순번이 Work Host로 돌아온다.
 7. packet의 Launcher Prompt
 8. bootstrap prompt
 
-`DEC-P1-008`에 따라 00–06은 현재 C1–C5 실행 정본이다. 기존
+`DEC-P1-021`에 따라 00–06은 현재 E1–E6 연구설계 정본이다. 기존
 `docs/evidence/archive/pre_c1c5_research/`의 context/plan은 역사 기록이며 새 task를 지시하지
 않는다. 기존 Fusion W1 preregistration/lock은 그 legacy artifact를 재현할 때만
-유효하고 현재 C1–C5 program을 override하지 않는다. 데이터 사실·threshold·method
+유효하고 현재 E1–E6 design을 override하지 않는다. 기존 C condition ID가 들어간
+artifact, packet, receipt는 그 실행 계보의 immutable identifier이므로 이름을 바꾸지
+않는다. 새 research packet과 result schema만 E1–E6를 사용한다. 데이터 사실·threshold·method
 중 일부는 Gate S0와 후속 phase까지 `PROVISIONAL` 또는 `DEFERRED`다.
 
 ## 3. 역할
@@ -104,6 +106,8 @@ Task Packet은 특정 commit의 연구문서 snapshot이자 실행 허가서다.
 
 - Goal, Scientific context, Authoritative documents
 - Current frozen decisions
+- E1–E6 condition ID와 exact input/prior lineage
+- 독립 `roofer_lod2_ox`, `semantic_textured_mesh_ox` 및 temporal status contract
 - Inputs, In scope, Out of scope, Tasks
 - Required outputs, Verification, Stop conditions, Done when
 - Return packet path, Launcher prompt
@@ -161,6 +165,12 @@ Codex는 어떤 source/code/config/data/experiment action 전에도 확인한다
     exact record로 resolve되고 claim level이 적절함. Readiness audit의
     `TO VERIFY` 대상은 그 자체로 activation prerequisite가 아님
 16. dirty WIP가 있으면 immutable snapshot/allowed scope가 검증됨
+17. 새 packet이면 E1–E6 ID를 사용하고 E4/E5가 exact same ALS/base/seed/schedule을
+    공유하며 conflict/currentness weighting만 다른지 검증됨
+18. approved output contract를 포함한 task이면 Roofer/LoD2와 semantic textured mesh
+    O/X가 독립 field이고 assessment gap을 X와 구분하며,
+    `PRIOR_REPRODUCTION` 또는 `CHANGE_UNRESOLVED`가 current reconstruction rescue로
+    계수되지 않도록 temporal status가 결합됨
 
 Activation tuple이 하나라도 없거나 packet이 DRAFT/unapproved이면 Experiment Host는
 fetch, pull, receipt 생성, audit를 모두 실행하지 않고
@@ -429,11 +439,14 @@ version과 새 handoff ID를 사용한다. Generic template의 `DRAFT`/placehold
   invariant가 이미 유효하다. 이 P1 audit protocol이 이를 대체하지 않는다.
 - bootstrap의 authority order에는 root `AGENTS.md`가 빠져 있었으나 실제 실행에서는
   항상 root instruction이 최우선이다.
-- `DEC-P1-008`이 00–06을 현재 C1–C5 정본으로 채택했다. 기존 P2/Fusion W1은
-  변경하지 않는 보호된 역사적 capability evidence다.
+- `DEC-P1-021`이 00–06을 현재 E1–E6 연구설계 정본으로 전환했다. 기존 C-ID
+  P2/Fusion W1은 변경하지 않는 보호된 역사적 capability evidence다.
 - `DEC-P1-019`에 따라 `R_shared` GroundSurface XY가 모든 condition의 동일한
   building-level Roofer 제어입력이다. handoff는 exact 199 polygon/stable-ID hash와
   LoD2 Z/RoofSurface 비접근을 검증한다.
+- `DEC-P1-021`에 따라 두 output O/X는 독립이며, image-only X + changed에서 생성한
+  prior 준거 geometry는 `PRIOR_REPRODUCTION`으로 공개할 수 있지만 current
+  reconstruction rescue로 승격할 수 없다.
 - P1 readiness audit에서 asset 부재나 검증 불능은 정직한 `MISSING/UNKNOWN`
   결과다. 이는 P1 문서 감사를 자동 차단하지 않지만 해당 data READY/P2 gate는
   차단한다.
