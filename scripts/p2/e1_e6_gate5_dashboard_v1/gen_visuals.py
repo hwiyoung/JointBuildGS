@@ -3,7 +3,7 @@
 Reuses the exact evaluator functions from add_development_g3_g4_v0.py so visuals
 match the v16 numbers. Read-only over frozen v16 assets; outputs to scratchpad.
 """
-import base64, importlib.util, json, struct, sys, zlib
+import base64, importlib.util, json, os, struct, sys, zlib
 from pathlib import Path
 
 import numpy as np
