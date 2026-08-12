@@ -1,0 +1,162 @@
+{
+ "schema": "jointbuildgs.p2.c2_c3_rendered_depth_shared_footprint_199.v1",
+ "task_id": "P2-E4-E6-REDESIGN-S3B-v1",
+ "decision_id": "DEC-P1-019",
+ "status": "USER_APPROVED_FOR_EXECUTION",
+ "comparison_definition": {
+  "direct": [
+   "E3_GS_image",
+   "E4_V2_STATIC",
+   "E5_V2_F1"
+  ],
+  "upper_reference_optional": "E1_current_UAS_LiDAR",
+  "structure_context_reference": "independent_LoD2_epoch_mismatched",
+  "label": "shared-footprint technical diagnostic",
+  "end_to_end_external_roofprint_free_claim": false,
+  "semantic_logits_role": "untrained_placeholder_audit_only_not_used_for_geometry_or_classification"
+ },
+ "population": {
+  "building_count": 199,
+  "common_manifest_relative_path": "phase-payloads/p2/qualitative_199_common_manifest_v1/P2-QUALITATIVE-199-COMMON-MANIFEST-v1/manifest/building_camera_view_crop_manifest_v1.jsonl",
+  "common_manifest_bytes": 1026148,
+  "common_manifest_sha256": "61e4e8a334c10d0c4405b4929c3e021ac74e5a6eb96596954b5781c0c5b4c4d9"
+ },
+ "inputs": {
+  "exact_view_manifest_git_path": "artifacts/manifests/gate_s0/common_base_r2b/exact_937_member_crosswalk_v1.json",
+  "exact_view_manifest_bytes": 378466,
+  "exact_view_manifest_sha256": "b4af779ecfae859de9772ce50cb24326b20c3f86614f6a8957453779d1cd4c17",
+  "exact_view_count": 937,
+  "data_root_relative_path": "phase-payloads/p0-audit/data/work/mvs/colmap_dense",
+  "camera_files": [
+   {
+    "relative_path": "phase-payloads/p0-audit/data/work/mvs/colmap_dense/sparse/cameras.bin",
+    "bytes": 64,
+    "sha256": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99"
+   },
+   {
+    "relative_path": "phase-payloads/p0-audit/data/work/mvs/colmap_dense/sparse/images.bin",
+    "bytes": 114415526,
+    "sha256": "dfc779496ee3b13f8df5dd28fae465746ce0adf4aca7922d38cbed275a2fd951"
+   },
+   {
+    "relative_path": "phase-payloads/p0-audit/data/work/mvs/colmap_dense/sparse/points3D.bin",
+    "bytes": 33476840,
+    "sha256": "bf93766e9773bdc59ce393cf1a36de4b3801cadc1bf834ea705396f5e9a706c3"
+   }
+  ],
+  "checkpoint_root_relative_path": "phase-payloads/p2",
+  "conditions": [
+   {
+    "condition_id": "E3_GS_image",
+    "checkpoint_relative_path": "e3_full_scene_fused_normal_confidence_v1/P2-E3-FULL-SCENE-FUSED-NORMAL-CONFIDENCE-v1/arms/E3_GS_image/R1/ckpt/final.pt",
+    "bytes": 177952535,
+    "sha256": "d3e93769ce632e3be656d9229c0dbec41bcf1ef51354db16ce6da828bbe64a85",
+    "iteration": 30000
+   },
+   {
+    "condition_id": "E4_V2_STATIC",
+    "checkpoint_relative_path": "e4_e6_redesign_s2_v1/P2-E4-E6-REDESIGN-S2-v1/arms/E4_V2_STATIC/R1/ckpt/final.pt",
+    "bytes": 177815895,
+    "sha256": "13df9c4bf2ff0e5ab2d49607315e39c4da1242f8a96c785d5af51bb9965bf57a",
+    "iteration": 30000
+   },
+   {
+    "condition_id": "E5_V2_F1",
+    "checkpoint_relative_path": "e4_e6_redesign_s2_v1/P2-E4-E6-REDESIGN-S2-v1/arms/E5_V2_F1/R1/ckpt/final.pt",
+    "bytes": 178902935,
+    "sha256": "7bdf4db2b012076b15e35038a306089321e891c8a316b7c872584ad48ec26cc1",
+    "iteration": 30000
+   }
+  ],
+  "c2_native_source": {
+   "relative_path": "phase-payloads/p2/mvs_native_textured_mesh_preflight_v1/P2-MVS-NATIVE-DENSE-SCENE-RECOVERY-v2/work/mvs/openmvs/dim_dense.ply",
+   "bytes": 658898693,
+   "sha256": "fc2561ab3e41adaa64a5cbc1f7a13c5f887999d2d81f94d4dca082c2c43c02ce"
+  },
+  "c2_classified_source": {
+   "relative_path": "phase-payloads/p2/c1_c2_shared_footprint_199_v3/P2-C1-C2-SHARED-FOOTPRINT-199-ORIGINAL-GLOBAL-v3/work/C2_MVS/classified_scene.laz",
+   "bytes": 158417952,
+   "sha256": "0326c0982dc1512317b4e7eeb7d28fc86581372e326fd6eb5acf1fdc2a6d9912"
+  },
+  "shared_footprints": {
+   "relative_path": "phase-payloads/p2/c1_c2_shared_footprint_199_v3/P2-C1-C2-SHARED-FOOTPRINT-199-ORIGINAL-GLOBAL-v3/freeze/shared_footprints_199.geojson",
+   "bytes": 120967,
+   "sha256": "5f9b703b06676db4400f6568fc3db315e319913f98ba491e98922eb747e4488a"
+  }
+ },
+ "scene": {
+  "crs": "EPSG:25832",
+  "world_shift_xyz": [
+   690953.0,
+   5336071.0,
+   604.0
+  ],
+  "roofer_aoi_bbox": [
+   690791.74,
+   5335864.05,
+   691154.65,
+   5336353.85
+  ],
+  "classification_context_buffer_m": 30.0
+ },
+ "fusion": {
+  "source": "checkpoint_rendered_median_depth",
+  "render_downscale": 0.5,
+  "alpha_min": 0.5,
+  "valid_depth_m": [
+   0.01,
+   500.0
+  ],
+  "voxel_m": 0.15,
+  "minimum_distinct_view_support": 2,
+  "post_fusion_voxel_downsampling": false,
+  "semantic_role": "audit_and_display_only",
+  "semantic_class_count": 4,
+  "shard_count": 64,
+  "fixed_view_order": "exact_manifest_row_order"
+ },
+ "classification": {
+  "method": "PDAL_SMRF_THEN_SHARED_FOOTPRINT_OVERLAY_ON_NON_GROUND",
+  "smrf": {
+   "cell": 1.0,
+   "slope": 0.15,
+   "scalar": 1.25,
+   "threshold": 0.5,
+   "window": 18.0
+  },
+  "ground_class": 2,
+  "building_class": 6,
+  "unclassified_class": 1,
+  "same_adapter_for_c2_c3": true,
+  "semantic_used_for_classification": false
+ },
+ "roofer": {
+  "image": "3dgi/roofer@sha256:dd2c415aaee337502bde0dc1426dfa9c9f88e648f9d2f6340110c49932c251d2",
+  "image_id": "sha256:9c980b97fba4c3fd30f5bb4afb8f2621be211d4e72e4333ea2053e8cd69b2dba",
+  "quality_parameters": "ROOFER_DEFAULTS",
+  "plumbing_args": [
+   "--id-attribute",
+   "stable_id",
+   "--jobs",
+   "1",
+   "--box",
+   "690791.740",
+   "5335864.050",
+   "691154.650",
+   "5336353.850"
+  ],
+  "quality_driven_retry_allowed": false,
+  "expected_c3_invocations": 1,
+  "timeout_seconds_per_condition": 14400
+ },
+ "scopes": {
+  "full199": {
+   "building_count": 199,
+   "population_indices": "ALL_1_TO_199",
+   "fusion_xy_filter": "FIXED_ROOFER_AOI_PLUS_CLASSIFICATION_CONTEXT",
+   "output_relative_root": "phase-payloads/p2/e4_e6_redesign_s3b_v1/P2-E4-E6-REDESIGN-S3B-v1"
+  }
+ },
+ "official_PASS_usable": null,
+ "scientific_verdict": null
+}
