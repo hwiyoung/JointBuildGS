@@ -216,8 +216,10 @@ for b in manifest["buildings"]:
     # redesign arms (r0p25 readouts): absolute-path per-building roofer OBJs
     S3A = ART / "phase-payloads/p2/e4_e6_redesign_s3_v1/P2-E4-E6-REDESIGN-S3-v1/viewer_assets"
     S3C = ART / "phase-payloads/p2/e4_e6_redesign_s3c_v1/P2-E4-E6-REDESIGN-S3C-v1/viewer_assets"
+    A2J = ART / "phase-payloads/p2/journal1_phase_a_v1/P2-JOURNAL1-PHASE-A-v1/a2/assets_roofer_input"
     for cn, root, arm in (("E4v2", S3A, "E4_V2_STATIC"), ("E5v2", S3A, "E5_V2_F1"),
-                          ("E4v3", S3C, "E4_V3_TIN025"), ("E5v3", S3C, "E5_V3_F1_TIN025")):
+                          ("E4v3", S3C, "E4_V3_TIN025"), ("E5v3", S3C, "E5_V3_F1_TIN025"),
+                          ("E7", A2J, "E7"), ("E8", A2J, "E8")):
         p = root / arm / f"B{idx:03d}_{sid}.roofer.obj"
         if p.is_file() and p.stat().st_size > 30:
             conds[cn] = {"roofer": str(p)}

@@ -47,8 +47,10 @@ for r in csv.DictReader(open(V16CSV)):
     IDX_OF[r["stable_id"]] = int(r["population_index"])
 ARM_LABEL = {"E4_V2_STATIC": "E4v2", "E5_V2_F1": "E5v2",
              "E4_V3_TIN025": "E4v3", "E5_V3_F1_TIN025": "E5v3"}
+ARM_LABEL.update({"E7": "E7", "E8": "E8"})
 for eval_csv in (ARTP + "e4_e6_redesign_s3_v1/P2-E4-E6-REDESIGN-S3-v1/evaluation/s3_building_condition_v1.csv",
-                 ARTP + "e4_e6_redesign_s3c_v1/P2-E4-E6-REDESIGN-S3C-v1/evaluation/s3c_building_condition_v1.csv"):
+                 ARTP + "e4_e6_redesign_s3c_v1/P2-E4-E6-REDESIGN-S3C-v1/evaluation/s3c_building_condition_v1.csv",
+                 ARTP + "journal1_phase_a_v1/P2-JOURNAL1-PHASE-A-v1/a2/evaluation_auto_ox/a2_auto_ox_building_condition_v1.csv"):
     for r in csv.DictReader(open(eval_csv)):
         if r["criterion"] != "O50":
             continue
@@ -91,7 +93,8 @@ for b_ in MAN["buildings"]:
             (c_, (b_.get("conditions") or {}).get(c_) or {}) for c_ in ("E3", "E4", "E5", "E6")]:
         e_[cn_] = [sp_.get("roofer"), sp_.get("points")]
     for cn_, root_, arm_ in (("E4v2", "assets_redesign", "E4_V2_STATIC"), ("E5v2", "assets_redesign", "E5_V2_F1"),
-                             ("E4v3", "assets_redesign_v3", "E4_V3_TIN025"), ("E5v3", "assets_redesign_v3", "E5_V3_F1_TIN025")):
+                             ("E4v3", "assets_redesign_v3", "E4_V3_TIN025"), ("E5v3", "assets_redesign_v3", "E5_V3_F1_TIN025"),
+                             ("E7", "assets_journal1", "E7"), ("E8", "assets_journal1", "E8")):
         base_ = f"{root_}/{arm_}/B{idx_:03d}_{b_['stable_id']}"
         e_[cn_] = [base_ + ".roofer.obj", base_ + ".points.ply"]
     # every sealed condition's point display = its actual roofer-input view
@@ -118,6 +121,14 @@ for f in json.load(open(FPSRC))["features"]:
 AOI_LOCAL = [round(690791.740 - ORIGIN[0], 1), round(5335864.050 - ORIGIN[1], 1),
              round(691154.650 - ORIGIN[0], 1), round(5336353.850 - ORIGIN[1], 1)]
 FPJ = json.dumps({"fp": fpj, "aoi": AOI_LOCAL}, separators=(",", ":"))
+
+# frozen 93-building evaluation population (journal1 E1-coverage selection) + boundary
+J1 = ARTP + "journal1_phase_a_v1/P2-JOURNAL1-PHASE-A-v1/"
+sel_ids = json.load(open(J1 + "labels/selection_confirm_v1.json"))["effective_selected_ids"]
+SEL_IDX = sorted(IDX_OF[s] for s in sel_ids if s in IDX_OF)
+rings93 = json.load(open(J1 + "a2/selection_e1_coverage_v1/boundary_viewer.json"))["coverage_rings"]
+SEL_RING = [[[round(p[0], 1), round(p[1], 1)] for p in ring] for ring in rings93]
+SELJ = json.dumps({"idx": SEL_IDX, "rings": SEL_RING}, separators=(",", ":"))
 
 HTML = r"""<title>E2 LoD2 판정 대시보드 — 199동</title>
 <style>
@@ -314,6 +325,10 @@ details.expl summary::marker{color:var(--o)}
 <header>
   <h1>E2 · MVS→Roofer LoD2 건물별 판정</h1>
   <span class="tag">U_target = 199동</span>
+  <span class="presets" style="margin:0">
+    <button id="pop93" class="on" title="journal1 E1-커버리지 층화로 확정한 판정 모집단 93동 — 나머지는 지도에서 흐리게" onclick="setPop(true)">확정 93동 판정</button>
+    <button id="pop199" title="전체 199동 집계(참고용)" onclick="setPop(false)">전체 199동</button>
+  </span>
   <span class="tag warn">ROOFER_G3G4_DEVELOPMENT_V0P1 · 비동결 · 비확증</span>
   <span class="sp"></span>
   <a class="viewer-btn" href="http://localhost:8880/" target="_blank" rel="noopener">3D 뷰어 (v16) ↗</a>
@@ -322,15 +337,15 @@ details.expl summary::marker{color:var(--o)}
 <div class="cards">
   <div class="kpi o"><div class="lb">O · 성공</div><div class="v" id="kO">–</div><div class="sub" id="kOs"></div></div>
   <div class="kpi x"><div class="lb">X · 품질 미달</div><div class="v" id="kX">–</div><div class="sub">생성됐지만 컷 불통과</div></div>
-  <div class="kpi g"><div class="lb">X · 생성 실패</div><div class="v">65</div><div class="sub">57동은 E1(LiDAR)도 실패 · E2측 8동</div></div>
+  <div class="kpi g"><div class="lb">X · 생성 실패</div><div class="v" id="kG">–</div><div class="sub" id="kGs">전체 199동 기준 65 (E1도 실패 57 · E2측 8)</div></div>
   <div class="kpi n"><div class="lb">판정 불가</div><div class="v" id="kN">–</div><div class="sub" id="kNs"></div></div>
-  <div class="kpi"><div class="lb">성공률 (판정가능 161)</div><div class="v" id="kR">–</div><div class="sub" id="kRs"></div></div>
+  <div class="kpi"><div class="lb">성공률 (판정가능 분모)</div><div class="v" id="kR">–</div><div class="sub" id="kRs"></div></div>
   <div class="kpi"><div class="lb">E2 대비 전이 (X→O / O→X)</div><div class="v" style="font-size:14px;line-height:1.9" id="kT">–</div><div class="sub">공통 판정가능 건물 · legacy-base 참고용</div></div>
 </div>
 
 <div class="card">
   <h2>판정 컷 — 직접 움직여 보세요</h2>
-  <p class="note"><b>게이트 5개</b>(completeness · correctness · coverage · RMSZ · 방향) 모두 통과 = O, 하나라도 미달 = X — 전부 독립 참조 대비(참조 검증 스탠스) · quality는 C×C 합성 요약, P95·bias는 진단으로 강등(판정 미사용) · 게이트 지표 결측은 불통과 · 생성 실패 65동은 컷과 무관하게 X · 판정 불가 38동은 분모 제외 · 같은 컷이 E1–E6 전 조건에 동일 적용(조건별 판정은 표의 E1–E6 열과 건물 상세에서) · <b>주의</b>: G3·방향 참조 = 기구축 LoD2(변화X 가정) — <b>E6는 참조=prior 순환이라 G3 해석 금지</b> · E4–E6는 legacy-base 교차계보 기술 증거(DEC-P1-022) · E1의 G4는 자기참조 — 전이 수치는 개발 참고용, 확증 아님</p>
+  <p class="note"><b>게이트 5개</b>(completeness · correctness · coverage · RMSZ · 방향) 모두 통과 = O, 하나라도 미달 = X — 전부 독립 참조 대비(참조 검증 스탠스) · quality는 C×C 합성 요약, P95·bias는 진단으로 강등(판정 미사용) · 게이트 지표 결측은 불통과 · 생성 실패 65동은 컷과 무관하게 X · 판정 불가 38동은 분모 제외 · 같은 컷이 E1–E6 전 조건에 동일 적용(조건별 판정은 표의 E1–E6 열과 건물 상세에서) · <b>주의</b>: G3·방향 참조 = 기구축 LoD2(변화X 가정) — <b>E6는 참조=prior 순환이라 G3 해석 금지</b>, E7·E8(반사실)도 기구축 계보라 G3 순환 소지 — G4(현재 UAS 대비)로 해석 · E4–E6는 legacy-base 교차계보 기술 증거(DEC-P1-022) · E1의 G4는 자기참조 — 전이 수치는 개발 참고용, 확증 아님</p>
   <div class="presets" id="presets">
     <button data-p="strict">더 엄격</button><button data-p="v01" class="on">v0.1 기본</button>
     <button data-p="loose">느슨</button><button data-p="looser">더 느슨</button><button data-p="loosest">매우 느슨</button>
@@ -422,14 +437,14 @@ details.expl summary::marker{color:var(--o)}
 </div>
 
 <div class="card">
-  <h2>판정 지도 — 199동 footprint와 Roofer 대상 AOI</h2>
+  <h2>판정 지도 — footprint · Roofer 대상 AOI · 확정 93동 경계(초록 파선)</h2>
   <p class="note">건물 색 = 선택 조건의 현재 컷 판정 · <b>회색 = 판정불가(레퍼런스 부족)</b> · <b>연회색 점선 = AOI 밖(이번 census 미실행)</b> · 점선 사각형 = 동결 Roofer 대상 AOI · 건물 클릭 = 상세 열기</p>
   <div class="chips" id="mapConds"></div>
   <div style="overflow:auto"><svg id="map" role="img" aria-label="판정 지도"></svg></div>
 </div>
 
 <div class="card">
-  <h2>건물별 판정표 — 199동 전수</h2>
+  <h2>건물별 판정표 — 현재 모집단 전수 (헤더 토글: 확정 93 / 전체 199)</h2>
   <p class="note">행 클릭 = 판정 근거 시각화(ΔZ 히트맵·평면 매칭) · 열 머리글 클릭 = 정렬 · [3D] = 로컬 뷰어(<span class="mono">localhost:8880</span>)</p>
   <div class="chips" id="chips">
     <button data-f="all" class="on">전체 199</button>
@@ -482,9 +497,13 @@ details.expl summary::marker{color:var(--o)}
 </div></div>
 
 <script>
-const D = __DATA__;
+const D_ALL = __DATA__;
+const SEL = __SEL__;                       // journal1 확정 선정 93동 (idx + 경계 링)
+const POPSET = new Set(SEL.idx);
+let popOn = true;                          // 기본: 확정 93동만 판정
+let D = D_ALL.filter(r=>POPSET.has(r[0]));
 const VIS = __VIS__;
-D.forEach(r=>{const v=VIS[r[0]];r[4].push(v&&v.na!=null?v.na:null);});
+D_ALL.forEach(r=>{const v=VIS[r[0]];r[4].push(v&&v.na!=null?v.na:null);});
 // claude.ai 아티팩트에서 열리면 로컬 서버 절대주소로, 8880 통합 뷰어에서 열리면 상대경로로
 const EMBEDDED=location.hostname.includes("claude");
 const VIEWER=EMBEDDED?"http://localhost:8880/v22/?building=B":"v22/?building=B";
@@ -503,11 +522,12 @@ const MET = [
 // gate = 판정 기준(5), 나머지는 요약/진단 표시 전용
 const GATES=[0,1,3,4,7];             // comp, corr, cov, rmse, nrm
 const DIAG={2:"요약",5:"진단",6:"진단"}; // quality=C×C 합성, P95=RMSZ 로버스트 짝, bias=정합 신호
-const CONDS=["E1","E2","E3","E4","E5","E6","E4v2","E5v2","E4v3","E5v3"];
+const CONDS=["E1","E2","E3","E4","E5","E6","E4v2","E5v2","E4v3","E5v3","E7","E8"];
 const CNAME={E1:"E1 · LiDAR→Roofer",E2:"E2 · MVS→Roofer",E3:"E3 · image-only GS",
              E4:"E4 · GS+기구축 ALS(레거시)",E5:"E5 · GS+가중 ALS(레거시)",E6:"E6 · GS+기구축 LoD2(레거시)",
              E4v2:"E4 · 재설계v2(TIN 0.5m)",E5v2:"E5 · 재설계v2(TIN 0.5m)",
-             E4v3:"E4 · 재설계v3(TIN 0.25m)",E5v3:"E5 · 재설계v3(TIN 0.25m)"};
+             E4v3:"E4 · 재설계v3(TIN 0.25m)",E5v3:"E5 · 재설계v3(TIN 0.25m)",
+             E7:"E7 · 기구축 ALS 단독(반사실)",E8:"E8 · E2∪ALS 합집합(반사실)"};
 const cuts5=()=>[cuts[0],cuts[1],cuts[3],cuts[4],cuts[7]];
 const DIR5=[1,1,1,-1,-1];
 // per-condition 5-gate classify: 'O','X'(품질),'G'(생성실패),'N'(판정불가)
@@ -527,7 +547,16 @@ function classify5(a){
 const PRESET = {strict:[1.1,0.8], v01:[1,1], loose:[0.9,1.25], looser:[0.8,1.5], loosest:[0.6,2]};
 const cuts = MET.map(m=>m.d);
 // scored = 생성됐고 판정 가능한 건물 (RG였어도 LoD2 참조+UAS 기하가 있으면 승격)
-const SCORED = D.filter(r=>["S","B","FQ"].includes(r[2])||(r[2]==="RG"&&r[4][0]!=null&&r[4][4]!=null));
+const scoredOf=a=>a.filter(r=>["S","B","FQ"].includes(r[2])||(r[2]==="RG"&&r[4][0]!=null&&r[4][4]!=null));
+let SCORED = scoredOf(D);
+function setPop(on){
+  popOn=on;
+  D = popOn ? D_ALL.filter(r=>POPSET.has(r[0])) : D_ALL;
+  SCORED = scoredOf(D);
+  document.getElementById("pop93").classList.toggle("on",popOn);
+  document.getElementById("pop199").classList.toggle("on",!popOn);
+  render();
+}
 const fmt=(v,dp=2)=>v==null?"–":v.toFixed(dp);
 
 function passFails(m){ // gate 5개만 판정에 사용. returns [pass(bool), failList]
@@ -701,7 +730,8 @@ function setup3D(entry,dark,idx){
               ["E3","E3 · GS",V22.GS],["E4","E4 · +ALS",V22.GS],
               ["E5","E5 · +ALS(w)",V22.GS],["E6","E6 · +LoD2",V22.GS],
               ["E4v2","E4 · 재설계v2",V22.GS],["E5v2","E5 · 재설계v2",V22.GS],
-              ["E4v3","E4 · 재설계v3",V22.GS],["E5v3","E5 · 재설계v3",V22.GS]];
+              ["E4v3","E4 · 재설계v3",V22.GS],["E5v3","E5 · 재설계v3",V22.GS],
+              ["E7","E7 · ALS 단독(반사실)","#F59E0B"],["E8","E8 · E2∪ALS(반사실)","#F43F5E"]];
   // 기구축 LoD2 표시 mesh는 인접 건물까지 포함 → footprint(+8% 버퍼) 안 삼각형만 표시
   function cropToFp(mesh){
     const ring=((FPD.fp[idx]||[])[0]||[]).map(([x,y])=>[(x-cc[0])*1.08,(y-cc[1])*1.08]);
@@ -924,7 +954,7 @@ function metricChips(r){
   }).join("");
 }
 function openDetail(idx){
-  const r=D.find(x=>x[0]===idx); if(!r)return;
+  const r=D_ALL.find(x=>x[0]===idx); if(!r)return;
   const v=VIS[idx]||{};
   const lv=liveOf(r);
   const dark=document.documentElement.dataset.theme==="dark"||
@@ -1124,11 +1154,13 @@ function drawMap(){
   let s=`<g transform="translate(${(-mn[0]+pad).toFixed(1)},${(mx[1]+pad).toFixed(1)}) scale(1,-1)">`;
   s+=`<rect x="${ax0}" y="${ay0}" width="${(ax1-ax0).toFixed(1)}" height="${(ay1-ay0).toFixed(1)}"
        fill="none" stroke="var(--ink2)" stroke-width="1.6" stroke-dasharray="8 5"/>`;
-  D.forEach(r=>{
+  D_ALL.forEach(r=>{
     const rings=FPD.fp[r[0]]; if(!rings)return;
+    const inPop=!popOn||POPSET.has(r[0]);
     const a=r[6]&&r[6][mapCond], k=classify5(a), st=a?a[5]:"A";
     let fill,extra="";
-    if(k==="O")fill="var(--o)";
+    if(!inPop){fill="var(--gray-soft)";extra=`opacity="0.35" stroke="var(--ink3)" stroke-width="0.5"`;}
+    else if(k==="O")fill="var(--o)";
     else if(k==="X")fill="var(--x)";
     else if(k==="G")fill="var(--maroon)";
     else if(st==="A"){fill="var(--gray-soft)";extra=`stroke-dasharray="2 1.5" stroke="var(--ink3)" stroke-width="0.8"`;}
@@ -1136,8 +1168,14 @@ function drawMap(){
     const d=rings.map(ring=>"M"+ring.map(p=>p[0]+","+p[1]).join("L")+"Z").join("");
     s+=`<path class="mapb" d="${d}" fill="${fill}" fill-opacity="${k==="N"?0.75:0.9}" ${extra} data-i="${r[0]}"/>`;
   });
+  // journal1 확정 93동 선정 경계 (E1 커버리지 링) — 건물 위에 얹어 항상 보이게
+  SEL.rings.forEach(ring=>{
+    s+=`<polygon points="${ring.map(([x,y])=>`${x},${y}`).join(" ")}"
+         fill="none" stroke="var(--o)" stroke-width="2.4" stroke-dasharray="10 4"
+         opacity="0.9" pointer-events="none"/>`;
+  });
   s+=`<text transform="scale(1,-1)" x="${ax0+4}" y="${(-ay1-6).toFixed(1)}"
-      style="font-size:11px;fill:var(--ink2)">Roofer 대상 AOI (동결)</text></g>`;
+      style="font-size:11px;fill:var(--ink2)">Roofer 대상 AOI (동결) · 초록 파선 = 확정 93동 선정 경계</text></g>`;
   svg.innerHTML=s;
 }
 document.getElementById("map").addEventListener("click",e=>{
@@ -1147,9 +1185,10 @@ document.getElementById("map").addEventListener("click",e=>{
 document.getElementById("map").addEventListener("pointermove",e=>{
   const i=e.target.dataset&&e.target.dataset.i;
   if(!i){return;}
-  const r=D.find(x=>x[0]==i);
+  const r=D_ALL.find(x=>x[0]==i); if(!r)return;
   const k=classify5(r[6]&&r[6][mapCond]);
-  tip.innerHTML=`<span class="tid mono">B${String(r[0]).padStart(3,"0")}</span> · ${CNAME[mapCond]}<br>판정: <b>${{O:"O",X:"X 품질",G:"생성실패",N:"판정불가"}[k]}</b>`;
+  const ex=popOn&&!POPSET.has(r[0])?' · <span style="color:var(--ink3)">모집단 제외</span>':"";
+  tip.innerHTML=`<span class="tid mono">B${String(r[0]).padStart(3,"0")}</span> · ${CNAME[mapCond]}${ex}<br>판정: <b>${{O:"O",X:"X 품질",G:"생성실패",N:"판정불가"}[k]}</b>`;
   tip.style.display="block";
   tip.style.left=Math.min(e.clientX+14,innerWidth-tip.offsetWidth-8)+"px";
   tip.style.top=Math.min(e.clientY+14,innerHeight-tip.offsetHeight-8)+"px";
@@ -1181,18 +1220,21 @@ function render(){
   let o=0,x=0;
   SCORED.forEach(r=>{passFails(r[4])[0]?o++:x++;});
   const naCnt=D.filter(r=>liveOf(r)===null).length;
+  const genFail=D.length-naCnt-SCORED.length;
   document.getElementById("kO").textContent=o;
   document.getElementById("kX").textContent=x;
-  document.getElementById("kOs").textContent=`생성·판정가능 ${SCORED.length}동 중`;
+  document.getElementById("kOs").textContent=`${popOn?"확정 93동":"전체 199동"} 중 생성·판정가능 ${SCORED.length}동`;
+  document.getElementById("kG").textContent=genFail;
+  document.getElementById("kGs").textContent=popOn?"확정 93동 내 생성 실패":"전체 199동 기준 (E1도 실패 57 · E2측 8)";
   document.getElementById("kN").textContent=naCnt;
-  document.getElementById("kNs").textContent=`UAS 점 부족 ${naCnt-20} · AOI 밖 20`;
-  const rate=(100*o/(199-naCnt));
+  document.getElementById("kNs").textContent=popOn?`확정 93동 내 판정 불가`:`UAS 점 부족 ${naCnt-20} · AOI 밖 20`;
+  const rate=(100*o/(D.length-naCnt));
   document.getElementById("kR").textContent=rate.toFixed(0)+"%";
-  document.getElementById("kRs").textContent=`O ${o} / (${x}+65) X`;
+  document.getElementById("kRs").textContent=`O ${o} / X ${x+genFail} (생성실패 포함)`;
   document.getElementById("cO").textContent=o;
   document.getElementById("cX").textContent=x;
   // E2→m transitions on jointly assessable buildings (X includes 생성실패)
-  const tr=["E3","E4","E5","E6","E4v2","E5v2","E4v3","E5v3"].map(m=>{
+  const tr=["E3","E4","E5","E6","E4v2","E5v2","E4v3","E5v3","E7","E8"].map(m=>{
     let up=0,down=0;
     D.forEach(r=>{
       const a=classify5(r[6]&&r[6].E2),b=classify5(r[6]&&r[6][m]);
@@ -1218,7 +1260,7 @@ new MutationObserver(render).observe(document.documentElement,{attributes:true,a
 </script>
 """
 
-html = HTML.replace("__DATA__", DATA).replace("__VIS__", VISJ).replace("__FP__", FPJ).replace("__AP__", APJ)
+html = HTML.replace("__DATA__", DATA).replace("__VIS__", VISJ).replace("__FP__", FPJ).replace("__AP__", APJ).replace("__SEL__", SELJ)
 open(OUT, "w").write(html)
 
 # self-served copy needs its own charset/doctype (the Artifact wrapper adds these for the web copy)
