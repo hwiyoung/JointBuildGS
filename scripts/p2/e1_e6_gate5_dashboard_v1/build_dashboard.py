@@ -91,6 +91,10 @@ for b_ in MAN["buildings"]:
     for cn_, arm_ in (("E4v2", "E4_V2_STATIC"), ("E5v2", "E5_V2_F1")):
         base_ = f"assets_redesign/{arm_}/B{idx_:03d}_{b_['stable_id']}"
         e_[cn_] = [base_ + ".roofer.obj", base_ + ".points.ply"]
+    # every sealed condition's point display = its actual roofer-input view
+    for cn_ in ("E1", "E2", "E3", "E4", "E5", "E6"):
+        if cn_ in e_:
+            e_[cn_][1] = f"assets_roofer_input/{cn_}/B{idx_:03d}_{b_['stable_id']}.points.ply"
     ap[idx_] = e_
 APJ = json.dumps(ap, separators=(",", ":"))
 
@@ -875,7 +879,7 @@ function setup3D(entry,dark,idx){
       panels.forEach(p=>{
         if(!p.mesh&&p.meshPath&&!p.ldM){p.ldM=true;
           const st=document.getElementById("st_"+p.key);st.textContent="…";
-          loadOBJ((p.meshPath.startsWith("assets_redesign/")?"":"v16/")+p.meshPath,cc).then(m=>{p.mesh=m;st.textContent=m?"":"mesh 없음";renderPanel(p);})
+          loadOBJ((p.meshPath.startsWith("assets_")?"":"v16/")+p.meshPath,cc).then(m=>{p.mesh=m;st.textContent=m?"":"mesh 없음";renderPanel(p);})
             .catch(()=>{st.textContent="로드 실패";});}
         else if(!p.mesh&&!p.meshPath&&!p.ptsPath){p.note="자산 없음";renderPanel(p);}
         else if(!p.mesh&&!p.meshPath){p.note="mesh 없음(점군만)";renderPanel(p);}
@@ -888,8 +892,8 @@ function setup3D(entry,dark,idx){
       if(p.ldP||!p.ptsPath)return;
       p.ldP=true;
       const st=document.getElementById("st_"+p.key);st.textContent="점군 로딩…";
-      loadPLY((p.ptsPath.startsWith("assets_redesign/")?"":"v16/")+p.ptsPath,cc,
-              p.ptsPath.startsWith("assets_redesign/")?1e9:150000).then(d=>{p.pts=d;st.textContent=d?`${(d.pts.length/3)|0}pt`:"점군 없음";renderPanel(p);})
+      loadPLY((p.ptsPath.startsWith("assets_")?"":"v16/")+p.ptsPath,cc,
+              p.ptsPath.startsWith("assets_")?1e9:150000).then(d=>{p.pts=d;st.textContent=d?`${(d.pts.length/3)|0}pt (roofer 입력)`:"점군 없음";renderPanel(p);})
         .catch(()=>{st.textContent="점군 로드 실패";});
     });
   }
