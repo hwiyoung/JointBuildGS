@@ -213,6 +213,12 @@ for b in manifest["buildings"]:
     for cn in ("E3", "E4", "E5", "E6"):
         if b.get("conditions", {}).get(cn):
             conds[cn] = b["conditions"][cn]
+    # redesign arms (S3 r0p25 readout): absolute-path per-building roofer OBJs
+    S3A = ART / "phase-payloads/p2/e4_e6_redesign_s3_v1/P2-E4-E6-REDESIGN-S3-v1/viewer_assets"
+    for cn, arm in (("E4v2", "E4_V2_STATIC"), ("E5v2", "E5_V2_F1")):
+        p = S3A / arm / f"B{idx:03d}_{sid}.roofer.obj"
+        if p.is_file() and p.stat().st_size > 30:
+            conds[cn] = {"roofer": str(p)}
     l2 = {}
     if ref_planes:
         ref_area = sum(p["area_m2"] for p in ref_planes)
@@ -220,7 +226,8 @@ for b in manifest["buildings"]:
             rp = spec.get("roofer")
             if not rp:
                 continue
-            t = ev.parse_obj_triangles(V16 / rp)
+            rp_path = Path(rp)
+            t = ev.parse_obj_triangles(rp_path if rp_path.is_absolute() else V16 / rp)
             if not len(t):
                 continue
             pp = ev.major_planes(
