@@ -126,7 +126,7 @@ Roofer LoD2 판독이 응용 확인**, 그리고 둘 사이 **매개 분석**이
 | F1@τ 커브 | P/C 조화평균, τ∈{0.1, 0.25, 0.5, 1.0 m} | 양방향 | 종합(단일 임계 의존 제거) | 헤드라인 |
 | Outlier율 | d>1 m인 A 점 비율 | A→R | GS 플로터·낡은 기하 잔존 | H4 |
 | RMSD(+trimmed) | 제곱평균 거리 | A→R | 큰 오차 민감(교수님 지목) | 보조 |
-| Coverage | R 점유 0.25 m 셀 중 A 점 존재 셀 비율 | R→A(면적) | 국소 결손의 공간 분포(셀 지도) | H2·국소 |
+| Coverage | R 점유 0.25 m XY 셀 중 A 점이 존재하고 셀 중앙 z 차 ≤1 m인 셀 비율(2.5D) | R→A(면적) | 국소 결손의 공간 분포(셀 지도) | H2·국소 |
 | 노멀 일관성 | 매칭쌍(d≤τ) 노멀 각오차 중앙값 | 양방향 | 방위 붕괴(Roofer 직결; S0 절제 근거) | H3/H6 |
 | 표면 두께 | 셀 내 z p90−p10 | 참조 불요 | **이중 표면** — 합성 vs GS 판별기 | H3/H5 |
 
@@ -135,6 +135,34 @@ Roofer LoD2 판독이 응용 확인**, 그리고 둘 사이 **매개 분석**이
   보고(단일 임계 금지), 변화/비변화 층화, 0.25 m 셀 국소 지도.
 - (보조, 비변화군) E1 기반 스위트를 방향 일치 확인용 secondary로 병행
   보고한다(위 판정 규칙). 변화군은 E1이 주 GT이므로 별도 보조가 없다.
+
+#### 4.1b 지표 출처와 검증 근거 (문헌 계보)
+
+| 지표 | 문헌 계보(맥락) | 이 설계에서 잡는 것 |
+|---|---|---|
+| 정확도(median) | DTU accuracy(mean/median, 방법→구조광 참조; Jensen 2014/Aanæs 2016); robust 통계 선택은 Höhle&Höhle 2009(비정규 DEM 오차) | 계통 바이어스·노이즈의 강건 요약 |
+| Precision@τ | Tanks&Temples precision(τ)(레이저 GT; Knapitsch 2017) | 플로터·낡은 prior 잔존("없어야 할 점") |
+| Completeness@τ | Middlebury completeness(Seitz 2006), DTU(참조→방법), T&T recall, ETH3D | 구멍·미관측 지붕면 — H2 직접 지표 |
+| F1@τ 커브 | T&T F-score 논거(밀도 뻥튀기→recall만, 과삭제→precision만 게이밍 방지); 다중 τ는 ETH3D 관행 | 종합 순위 + 임계 민감도 공개 |
+| Outlier율 | gross-error 분리 관행(ASPRS blunder), 1−precision@τ_out 동형 | 꼬리 실패(플로터·오정합 잔존) |
+| RMSD(+trim95) | ASPRS RMSE 표준·ISO 19157; robust 병행 권고 Höhle&Höhle 2009 | 큰 오차 민감(교수 지목) + 왜곡 방지 |
+| Coverage(셀) | ISPRS 도시 벤치마크 per-area completeness/correctness/quality(Rottensteiner 2012/2014) — 래스터 평가 전통; 기존 G4(현재 UAS 셀) 연속 | 면적 기반 국소 결손 지도 |
+| Normal 일관성 | 표면 재구성 normal consistency 관행 + 점 법선 각오차(PCPNet, Guerrero 2018); 교수 LoD2 지표 "방향각 차이"의 점 레벨 대응 | Roofer 평면 성장 결정 변수(S0 절제 실증) |
+| z-spread | **표준 벤치마크 지표 아님(공개)** — 정합/SLAM 지도 crispness 계열(mean map entropy·mean plane variance, Razlaw 2015)과 동일 정신; 사전 등록 메커니즘 프로브 | 이중 표면 — union vs re-synthesis 판별(H3/M2·M3) |
+
+- GT 계보: 실측 스캔 참조 전통(DTU 구조광, T&T/ETH3D 레이저, Strecha 2008
+  LiDAR) → E1 역할; 모델 참조 전통(ISPRS 벤치마크 참조 지붕면, TUM2TWIN LoD2)
+  → LoD2 역할. D-F 층화는 두 전통의 결합이며 결손 마스크는 DTU observability
+  mask 관행을 따른다.
+- 프로토콜 결정 공개: ① T&T와 달리 평가 전 ICP 재정렬을 하지 않는다 — 공유
+  프레임 유지 자체(정합 충실도)가 평가 대상의 일부다. ② completeness는 참조측
+  샘플 기반이라 arm 밀도 부풀리기에 내성이 있고, E8 밀도 정규화 민감도 1회로
+  보강한다. ③ Chamfer distance는 정확도+completeness에서 유도 가능하므로 요구
+  시 파생 보고한다.
+- 지도교수 5지표 매핑: 거리 기반→정확도·RMSD·outlier / 방향각→normal 일관성 /
+  매칭 품질(F1 유사 quality; ISPRS quality=TP/(TP+FP+FN)와 동계열)→F1@τ /
+  completeness→completeness@τ / coverage→coverage. 스위트는 교수 프레임의 점군
+  레벨 사상 + 메커니즘 프로브 2종(precision·z-spread)이다.
 
 ### 4.2 LoD2 레벨 (응용 확인)
 
