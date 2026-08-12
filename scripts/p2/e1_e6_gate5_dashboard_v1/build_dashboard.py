@@ -875,7 +875,7 @@ function setup3D(entry,dark,idx){
       panels.forEach(p=>{
         if(!p.mesh&&p.meshPath&&!p.ldM){p.ldM=true;
           const st=document.getElementById("st_"+p.key);st.textContent="…";
-          loadOBJ("v16/"+p.meshPath,cc).then(m=>{p.mesh=m;st.textContent=m?"":"mesh 없음";renderPanel(p);})
+          loadOBJ((p.meshPath.startsWith("assets_redesign/")?"":"v16/")+p.meshPath,cc).then(m=>{p.mesh=m;st.textContent=m?"":"mesh 없음";renderPanel(p);})
             .catch(()=>{st.textContent="로드 실패";});}
         else if(!p.mesh&&!p.meshPath&&!p.ptsPath){p.note="자산 없음";renderPanel(p);}
         else if(!p.mesh&&!p.meshPath){p.note="mesh 없음(점군만)";renderPanel(p);}
@@ -888,7 +888,8 @@ function setup3D(entry,dark,idx){
       if(p.ldP||!p.ptsPath)return;
       p.ldP=true;
       const st=document.getElementById("st_"+p.key);st.textContent="점군 로딩…";
-      loadPLY("v16/"+p.ptsPath,cc,30000).then(d=>{p.pts=d;st.textContent=d?`${(d.pts.length/3)|0}pt`:"점군 없음";renderPanel(p);})
+      loadPLY((p.ptsPath.startsWith("assets_redesign/")?"":"v16/")+p.ptsPath,cc,
+              p.ptsPath.startsWith("assets_redesign/")?1e9:150000).then(d=>{p.pts=d;st.textContent=d?`${(d.pts.length/3)|0}pt`:"점군 없음";renderPanel(p);})
         .catch(()=>{st.textContent="점군 로드 실패";});
     });
   }
@@ -968,8 +969,14 @@ function openDetail(idx){
       const a=r[6]&&r[6][c],k=classify5(a);
       const leg=c==="E6"?' <span style="color:var(--x);font-size:10px">(legacy · 순환: G3참조=prior)</span>'
         :(c==="E4"||c==="E5")?' <span style="color:var(--ink3);font-size:10px">(legacy-base)</span>':"";
+      // per-cell X-cause marking: paint the metric cell red when it fails the CURRENT cut
+      const cc5=cuts5();
+      const bad=i=>{const v=a&&a[i];if(v==null)return true;
+        return DIR5[i]>0?v<cc5[i]:v>cc5[i];};
+      const cell=(i,dp)=>{const isBad=a&&bad(i);
+        return `<td class="mono"${isBad?' style="background:var(--x-soft);color:var(--x);font-weight:700"':""}>${fm(a[i],dp)}${isBad?" ✗":""}</td>`;};
       return `<tr><td class="l">${CNAME[c]}${leg}</td><td>${BD[k]}</td>`+
-        (a?`<td class="mono">${fm(a[0],2)}</td><td class="mono">${fm(a[1],2)}</td><td class="mono">${fm(a[2],2)}</td><td class="mono">${fm(a[3],2)}</td><td class="mono">${fm(a[4],1)}</td>`
+        (a?cell(0,2)+cell(1,2)+cell(2,2)+cell(3,2)+cell(4,1)
           :`<td colspan="5" class="mono" style="color:var(--ink3)">지표 없음</td>`)+`</tr>`;
     }).join("")+`</table>`;
   modal.classList.add("on");
