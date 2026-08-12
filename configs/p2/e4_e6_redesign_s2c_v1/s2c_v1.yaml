@@ -1,0 +1,76 @@
+schema: jointbuildgs.p2.e4_e6_redesign_s2c_v1.common.v1
+task_id: P2-E4-E6-REDESIGN-S2C-v1
+plan: docs/experiments/p2/e4_e6_redesign_v1/S2_S3_EXECUTION_PLAN_ko_v1.md
+purpose: 'prior-refinement retraining: TIN 0.25 m + area-normalized density gate (H-S2c),
+  frozen D2/D7/D9'
+output_root: /artifacts/JointBuildGS/phase-payloads/p2/e4_e6_redesign_s2c_v1/P2-E4-E6-REDESIGN-S2C-v1
+base_training_config: configs/p2/e3_full_scene_fused_normal_confidence_v1/training.yaml
+source_run: phase-payloads/p2/e3_full_scene_fused_normal_confidence_v1/P2-E3-FULL-SCENE-FUSED-NORMAL-CONFIDENCE-v1/arms/E3_GS_image/R1
+source_checkpoint_step: 7000
+exact_view_manifest: artifacts/manifests/gate_s0/common_base_r2b/exact_937_member_crosswalk_v1.json
+als_raw_root: phase-payloads/p0-audit/data/raw/als
+projection_v2:
+  method: CLASS_2_6_DSM_TIN_RAYCAST
+  dsm_cell_m: 0.25
+  classes:
+  - 2
+  - 6
+  pixel_stride: 2
+  registration_gates:
+    abs_signed_z_median_max_m: 0.5
+    xy_p95_max_m: 0.5
+  static_gates:
+    registration: EXP_NEG_ABS_MEDIAN_Z_OVER_0P5
+    density: CLIP_PER_M2_DENSITY_MINUS4_OVER_20
+    planarity: EXP_NEG_CELL_Z_STD_OVER_0P2
+    visibility: ABS_COS_RAY_FACE_NORMAL
+  occlusion_guards:
+    tin_bbox: UNION_SPARSE_SEED_AND_CAMERA_CENTRES_XY_PLUS_20M
+    interior_void_fill: NEIGHBOR_MEAN_OCCLUSION_ONLY_ZERO_DENSITY_CONFIDENCE
+    max_prior_depth_m: 500.0
+  confidence_min: 0.05
+  conflict_f1: EXP_NEG_ABS_FUSED_RESIDUAL_OVER_2M_NEUTRAL1_WHERE_UNSUPPORTED
+  leak_qa_targets:
+    median_max_m: 1.0
+    gt2m_fraction_max: 0.25
+prior_variants:
+- E4_STATIC
+- E5_F1
+arms:
+  E4_V3_TIN025:
+    prior: E4_STATIC
+    gpu: 0
+    w_depth: 0.01
+    w_normal: 0.005
+    alpha_gate: null
+  E5_V3_F1_TIN025:
+    prior: E5_F1
+    gpu: 1
+    w_depth: 0.01
+    w_normal: 0.005
+    alpha_gate: null
+arm_common:
+  external_als_huber_delta_m: 1.0
+  external_als_normalization: valid_pixel_count
+  max_iter: 30000
+  checkpoints:
+  - 7000
+  - 12000
+  - 15000
+  - 20000
+  - 30000
+  intervention_start_update: 7001
+  decisions_frozen:
+    D2: F1_PIXEL_ONLY
+    D7:
+    - 0.01
+    - 0.005
+    D9: NO_ALPHA_GATE
+single_variable:
+  changed_vs_control: existing_als_tin_raycast_prior_loss_only
+  control: sealed P2-E3-FULL-SCENE-FUSED-NORMAL-CONFIDENCE-v1 R1 (not retrained)
+  e4_vs_e5_single_variable: pixel current-consistency conflict attenuation (F1) only
+  seed_injection: none
+  no_lod2_training_use: true
+official_PASS_usable: null
+scientific_verdict: null
