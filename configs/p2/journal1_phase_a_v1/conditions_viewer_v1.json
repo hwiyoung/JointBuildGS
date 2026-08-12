@@ -1,0 +1,50 @@
+{
+  "task_id": "P2-JOURNAL1-PHASE-A-v1",
+  "stage": "A2",
+  "status": "DEVELOPMENT_NON_CONFIRMATORY",
+  "scientific_verdict": null,
+  "purpose": "All-199 multi-condition comparison viewer: E1/E2/E7/E8 point-cloud crops (+E3/E4_V2/E5_V2 secondary toggles) against the existing LoD2 RoofSurface overlay, with per-building A2 metrics for sorting. Visual inspection support only; no metric, gate, or verdict is computed here.",
+  "design_doc": "docs/experiments/p2/journal1_design_v1/JOURNAL1_EXPERIMENT_DESIGN_ko_v1.md",
+  "origin": [690700.0, 5335700.0, 550.0],
+  "lod2_z_shift_to_viewer_m": 45.7,
+  "z_shift_provenance": "sealed v22 datum bridge; viewer-local LoD2 z = gml z - 550 + 45.7",
+  "gml_tiles": [
+    "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/raw/lod2/690_5334.gml",
+    "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/raw/lod2/690_5336.gml"
+  ],
+  "footprints_geojson": "/artifacts/JointBuildGS/phase-payloads/p2/c1_c2_shared_footprint_199_v3/P2-C1-C2-SHARED-FOOTPRINT-199-ORIGINAL-GLOBAL-v3-replay-20260806a/freeze/shared_footprints_199.geojson",
+  "labels_csv": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_a_v1/P2-JOURNAL1-PHASE-A-v1/labels/change_label_candidates_v1.csv",
+  "merged_rows": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_a_v1/P2-JOURNAL1-PHASE-A-v1/a2/evaluation_merged/rows.jsonl",
+  "auto_ox": {
+    "v22_csv": "/artifacts/JointBuildGS/phase-payloads/p2/e1_e6_roofer_ox_review_v1/P2-E1-E6-ROOFER-AUTO-OX-v22-ROBUST-PLANE-MATCH/reference_auto_ox_building_condition_v1.csv",
+    "s3b_csv": "/artifacts/JointBuildGS/phase-payloads/p2/e4_e6_redesign_s3b_v1/P2-E4-E6-REDESIGN-S3B-v1/evaluation/s3b_building_condition_v1.csv",
+    "a2_csv": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_a_v1/P2-JOURNAL1-PHASE-A-v1/a2/evaluation_auto_ox/a2_auto_ox_building_condition_v1.csv",
+    "note": "O50 noG2 basis everywhere (S3b precedent); NOT_OFFICIAL development labels"
+  },
+  "arms": [
+    {"id": "E1", "primary": true, "dir": "/artifacts/JointBuildGS/phase-payloads/p2/e1_e6_roofer_ox_review_v1/P2-E1-E6-GATE5-DASHBOARD-v1/assets_roofer_input/E1", "lineage": "current UAS LiDAR crop"},
+    {"id": "E2", "primary": true, "dir": "/artifacts/JointBuildGS/phase-payloads/p2/e1_e6_roofer_ox_review_v1/P2-E1-E6-GATE5-DASHBOARD-v1/assets_roofer_input/E2", "lineage": "current-image MVS crop"},
+    {"id": "E7", "primary": true, "dir": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_a_v1/P2-JOURNAL1-PHASE-A-v1/a2/assets_roofer_input/E7", "lineage": "Existing ALS alone (A2, no training)"},
+    {"id": "E8", "primary": true, "dir": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_a_v1/P2-JOURNAL1-PHASE-A-v1/a2/assets_roofer_input/E8", "lineage": "E2 ∪ ALS simple union (A2, no training)"},
+    {"id": "E3", "primary": false, "dir": "/artifacts/JointBuildGS/phase-payloads/p2/e1_e6_roofer_ox_review_v1/P2-E1-E6-GATE5-DASHBOARD-v1/assets_roofer_input/E3", "lineage": "image-only GS crop"},
+    {"id": "E4_V2", "primary": false, "dir": "/artifacts/JointBuildGS/phase-payloads/p2/e4_e6_redesign_s3_v1/P2-E4-E6-REDESIGN-S3-v1/viewer_assets/E4_V2_STATIC", "lineage": "GS + static ALS prior (redesign S2)"},
+    {"id": "E5_V2", "primary": false, "dir": "/artifacts/JointBuildGS/phase-payloads/p2/e4_e6_redesign_s3_v1/P2-E4-E6-REDESIGN-S3-v1/viewer_assets/E5_V2_F1", "lineage": "GS + conflict-gate ALS prior (redesign S2)"}
+  ],
+  "scene": {
+    "voxel_m": 0.5,
+    "note": "full-AOI classified scenes, voxel-centroid downsample for browser display; class per voxel = max(1,2,6) so roof presence wins; viewer-local frame",
+    "sources": {
+      "E1": "/artifacts/JointBuildGS/phase-payloads/p2/c1_c2_shared_footprint_199_v3/P2-C1-C2-SHARED-FOOTPRINT-199-ORIGINAL-GLOBAL-v3/work/C1_L_upper/classified_scene.laz",
+      "E2": "/artifacts/JointBuildGS/phase-payloads/p2/c1_c2_shared_footprint_199_v3/P2-C1-C2-SHARED-FOOTPRINT-199-ORIGINAL-GLOBAL-v3/work/C2_MVS/classified_scene.laz",
+      "E7": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_a_v1/P2-JOURNAL1-PHASE-A-v1/a2/work/E7/classified_scene.laz",
+      "E8": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_a_v1/P2-JOURNAL1-PHASE-A-v1/a2/work/E8/classified_scene.laz",
+      "E3": "/artifacts/JointBuildGS/phase-payloads/p2/e3_full_scene_roofer_shared_footprint_199_v1/P2-E3-FULL-SCENE-ROOFER-SHARED-FOOTPRINT-199-v1/work/E3_GS_image/classified_scene.laz",
+      "E4_V2": "/artifacts/JointBuildGS/phase-payloads/p2/e4_e6_redesign_s3_v1/P2-E4-E6-REDESIGN-S3-v1/work/E4_V2_STATIC/classified_scene.laz",
+      "E5_V2": "/artifacts/JointBuildGS/phase-payloads/p2/e4_e6_redesign_s3_v1/P2-E4-E6-REDESIGN-S3-v1/work/E5_V2_F1/classified_scene.laz"
+    }
+  },
+  "selection_dir": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_a_v1/P2-JOURNAL1-PHASE-A-v1/a2/selection_e1_coverage_v1",
+  "three_module": "/artifacts/JointBuildGS/phase-payloads/p2/e1_e6_roofer_ox_review_v1/P2-E1-E6-ROOFER-OX-REVIEW-v16-G3G4-DEV0P1/three.module.min.js",
+  "out_dir": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_a_v1/P2-JOURNAL1-PHASE-A-v1/a2/viewer_conditions",
+  "serve_note": "python3 -m http.server 8882 --bind 0.0.0.0 (run from out_dir; 8880 gate5 dashboard, 8881 phase-B label viewer stay reserved)"
+}

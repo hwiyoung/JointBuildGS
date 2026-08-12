@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>journal1 A2 — 조건 비교 뷰어 (E1/E2/E7/E8 + LoD2, 199동)</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: #0d1117; color: #e6edf3;
+    font: 13px/1.45 system-ui, "Noto Sans KR", sans-serif; }
+  #layout { display: flex; height: 100%; }
+  #viewPane { flex: 1; position: relative; min-width: 0; }
+  #canvas { width: 100%; height: 100%; display: block; }
+  #sidebar { width: 340px; flex: none; display: flex; flex-direction: column;
+    border-left: 1px solid #21262d; background: #010409; }
+  #head { padding: 10px 12px 6px; border-bottom: 1px solid #21262d; }
+  #head h1 { font-size: 14px; margin: 0 0 2px; }
+  #head .sub { color: #7d8590; font-size: 11px; }
+  #controls { padding: 8px 12px; border-bottom: 1px solid #21262d; }
+  .armRow { display: flex; align-items: center; gap: 6px; margin: 2px 0; }
+  .armRow input { accent-color: #3fb950; }
+  .chip { width: 11px; height: 11px; border-radius: 3px; flex: none; }
+  .armRow .cnt { margin-left: auto; color: #7d8590; font-size: 11px; }
+  .armRow .ox { font-size: 11px; width: 16px; text-align: center; }
+  .ox.O { color: #3fb950; } .ox.X { color: #f85149; } .ox.NA { color: #7d8590; }
+  .rowline { display: flex; gap: 8px; align-items: center; margin-top: 6px; flex-wrap: wrap; }
+  select, button { background: #21262d; color: #e6edf3; border: 1px solid #30363d;
+    border-radius: 6px; padding: 3px 6px; font-size: 12px; }
+  input[type=range] { width: 90px; }
+  #detail { padding: 8px 12px; border-bottom: 1px solid #21262d; }
+  #detail table { border-collapse: collapse; width: 100%; font-size: 12px; }
+  #detail td, #detail th { padding: 1px 4px; text-align: right; color: #c9d1d9; }
+  #detail th { color: #7d8590; font-weight: 500; }
+  #detail td:first-child, #detail th:first-child { text-align: left; }
+  #list { flex: 1; overflow-y: auto; }
+  .bitem { padding: 5px 12px; border-bottom: 1px solid #161b22; cursor: pointer;
+    display: flex; gap: 6px; align-items: baseline; }
+  .bitem:hover { background: #161b22; }
+  .bitem.on { background: #1f2937; }
+  .bitem .idx { color: #7d8590; font-size: 11px; width: 38px; flex: none; }
+  .bitem .sid { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .bitem .d { font-size: 11px; width: 52px; text-align: right; flex: none; }
+  .d.pos { color: #3fb950; } .d.neg { color: #f85149; } .d.na { color: #484f58; }
+  .tier { font-size: 10px; padding: 0 4px; border-radius: 4px; flex: none; }
+  .tier.A { background: #67060c; } .tier.B { background: #7d4e00; }
+  .tier.C { background: #0f3d2e; } .tier.N { background: #30363d; color: #8b949e; }
+  .selDot { font-size: 11px; flex: none; width: 13px; text-align: center; }
+  .selDot.in { color: #3fb950; } .selDot.out { color: #f85149; }
+  .selRow { display: flex; gap: 6px; align-items: center; margin-bottom: 6px; font-size: 12px; }
+  .selBadge { padding: 0 6px; border-radius: 4px; font-size: 11px; }
+  .selBadge.in { background: #0f3d2e; color: #3fb950; }
+  .selBadge.out { background: #67060c; color: #ff9d9d; }
+  #loadMsg { position: absolute; left: 12px; bottom: 10px; background: #161b22cc;
+    padding: 4px 10px; border-radius: 6px; display: none; font-size: 12px; }
+  #hud { position: absolute; left: 12px; top: 10px; background: #161b22aa;
+    padding: 4px 10px; border-radius: 6px; font-size: 11px; color: #a5b1bd; }
+  kbd { background: #21262d; border-radius: 3px; padding: 0 4px; font-size: 10px; }
+</style>
+</head>
+<body>
+<div id="layout">
+  <div id="viewPane">
+    <canvas id="canvas"></canvas>
+    <div id="hud"></div>
+    <div id="loadMsg"></div>
+  </div>
+  <div id="sidebar">
+    <div id="head">
+      <h1>A2 조건 비교 — 199동</h1>
+      <div class="sub">DEVELOPMENT_NON_CONFIRMATORY · O/X는 O50 noG2 개발 라벨(NOT_OFFICIAL) ·
+        <kbd>1..7</kbd> arm <kbd>L</kbd> LoD2 <kbd>G</kbd> 비건물 <kbd>←→</kbd> 이동 <kbd>S</kbd> 모드 ·
+        전체 모드: 클릭=건물 선택 · <b>Shift+클릭</b> 또는 <kbd>X</kbd>=포함⇄제외</div>
+    </div>
+    <div id="controls">
+      <div class="rowline">
+        보기 <select id="viewMode">
+          <option value="scene">전체 장면 (0.5 m 복셀)</option>
+          <option value="building">건물별 크롭</option>
+        </select>
+        <span class="sub" id="modeHint"></span>
+      </div>
+      <div id="armToggles"></div>
+      <div class="rowline">
+        <label><input type="checkbox" id="tglLod2" checked> LoD2 지붕면</label>
+        <label><input type="checkbox" id="tglNonBldg" checked> 비건물(class≠6)</label>
+      </div>
+      <div class="rowline">
+        색 <select id="colorMode">
+          <option value="arm">arm 고정색</option>
+          <option value="rgb">RGB</option>
+          <option value="height">높이</option>
+          <option value="cls">클래스</option>
+        </select>
+        점 <input type="range" id="ptSize" min="1" max="6" step="0.5">
+        <label>불투명 <input type="range" id="lodOpacity" min="0.1" max="0.9" step="0.05"></label>
+      </div>
+      <div class="rowline">
+        정렬 <select id="sortMode">
+          <option value="index">번호순</option>
+          <option value="gs_vs_e2_e1">GS(E4_V2)−E2 · e1 f1 ↓</option>
+          <option value="e8_vs_e2_lod2">E8−E2 · lod2 f1 ↓</option>
+          <option value="e8_vs_e4v2_e1">E8−E4_V2 · e1 f1 ↓</option>
+          <option value="e7_vs_e2_e1">E7−E2 · e1 f1 ↓</option>
+        </select>
+        티어 <select id="tierFilter">
+          <option value="ALL">전체</option>
+          <option value="A">A 강한 불일치</option>
+          <option value="B">B 중간</option>
+          <option value="C">C 일치</option>
+          <option value="N">NA</option>
+        </select>
+      </div>
+      <div class="rowline" id="selControls">
+        선정 <select id="selFilter">
+          <option value="ALL">전체</option>
+          <option value="SEL">선정만</option>
+          <option value="EXC">제외만</option>
+        </select>
+        <button id="btnExportSel" title="규칙+수동 오버라이드를 JSON으로 저장">선정 내보내기</button>
+        <span class="sub"><kbd>B</kbd> 경계선</span>
+      </div>
+    </div>
+    <div id="detail"></div>
+    <div id="list"></div>
+  </div>
+</div>
+<script type="module" src="./app.js"></script>
+</body>
+</html>
