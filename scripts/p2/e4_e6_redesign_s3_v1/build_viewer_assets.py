@@ -25,7 +25,10 @@ ART = Path("/artifacts/JointBuildGS")
 S3 = ART / "phase-payloads/p2/e4_e6_redesign_s3_v1/P2-E4-E6-REDESIGN-S3-v1"
 V22 = ART / "phase-payloads/p2/e1_e6_roofer_ox_review_v1/P2-E1-E6-ROOFER-AUTO-OX-v22-ROBUST-PLANE-MATCH"
 ARMS = ("E4_V2_STATIC", "E5_V2_F1")
-BUFFER_M = 8.0
+# Roofer-input view: the effective per-building reconstruction input is the
+# class-2/6 cloud around the shared footprint, not the display bbox crop.
+BUFFER_M = 3.0
+KEEP_CLASSES = (2, 6)
 
 
 def write_ply(path: Path, xyz: np.ndarray, rgb: np.ndarray, cls: np.ndarray) -> None:
@@ -62,11 +65,14 @@ def main() -> None:
     viewer = json.loads((V22 / "viewer_manifest.json").read_text())
     origin = np.asarray(viewer["scene_local_origin_xyz"], dtype=np.float64)
     geo = json.loads((S3 / "freeze/shared_footprints.geojson").read_text())
+    polys = {}
     boxes = {}
     for f in geo["features"]:
         sid = str(f["properties"]["stable_id"])
-        minx, miny, maxx, maxy = shape(f["geometry"]).bounds
-        boxes[sid] = (minx - BUFFER_M, miny - BUFFER_M, maxx + BUFFER_M, maxy + BUFFER_M)
+        poly = shape(f["geometry"]).buffer(BUFFER_M)
+        polys[sid] = poly
+        minx, miny, maxx, maxy = poly.bounds
+        boxes[sid] = (minx, miny, maxx, maxy)
     index_of = {b["stable_id"]: int(b["population_index"]) for b in viewer["buildings"]}
 
     out_root = S3 / "viewer_assets"
@@ -78,8 +84,15 @@ def main() -> None:
         rgb = (rgb / 257.0).clip(0, 255).astype(np.uint8)
         cls = np.asarray(las.classification).astype(np.uint8)
         cityjson = json.loads((S3 / "work" / arm / "assembled.city.json").read_text())
+        from shapely import contains_xy
+        class_ok = np.isin(cls, KEEP_CLASSES)
         for sid, (x0, y0, x1, y1) in boxes.items():
-            keep = (xyz[:, 0] >= x0) & (xyz[:, 0] <= x1) & (xyz[:, 1] >= y0) & (xyz[:, 1] <= y1)
+            keep = class_ok & (xyz[:, 0] >= x0) & (xyz[:, 0] <= x1) & (xyz[:, 1] >= y0) & (xyz[:, 1] <= y1)
+            idx_in = np.flatnonzero(keep)
+            if len(idx_in):
+                inside = contains_xy(polys[sid], xyz[idx_in, 0], xyz[idx_in, 1])
+                keep = np.zeros(len(xyz), dtype=bool)
+                keep[idx_in[inside]] = True
             idx = index_of[sid]
             base = out_root / arm / f"B{idx:03d}_{sid}"
             local = xyz[keep] - origin
