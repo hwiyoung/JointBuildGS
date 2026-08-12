@@ -40,29 +40,31 @@ for r in csv.DictReader(open(V16CSV)):
     cond.setdefault(idx, {})[r["condition_id"]] = [
         l2[0] if l2 else None, l2[1] if l2 else None, n("g4_coverage"),
         n("g4_rmse_z_m"), l2[3] if l2 else None, st]
-# redesign arms (S3 r0p25 readout): l2 metrics from visuals + G4 from the S3 evaluation
-S3EVAL = ("/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/p2/"
-          "e4_e6_redesign_s3_v1/P2-E4-E6-REDESIGN-S3-v1/evaluation/s3_building_condition_v1.csv")
+# redesign arms (r0p25 readouts): l2 metrics from visuals + G4 from the S3/S3C evaluations
+ARTP = "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/p2/"
 IDX_OF = {}
 for r in csv.DictReader(open(V16CSV)):
     IDX_OF[r["stable_id"]] = int(r["population_index"])
-ARM_LABEL = {"E4_V2_STATIC": "E4v2", "E5_V2_F1": "E5v2"}
-for r in csv.DictReader(open(S3EVAL)):
-    if r["criterion"] != "O50":
-        continue
-    idx = IDX_OF.get(r["stable_id"])
-    if idx is None:
-        continue
-    cn = ARM_LABEL[r["condition_id"]]
-    def nv(k):
-        v = r.get(k)
-        return round(float(v), 3) if v not in ("", None, "None") else None
-    l2 = VISD.get(str(idx), {}).get("l2", {}).get(cn)
-    g4cov, g4rmse = nv("g4_coverage"), nv("g4_rmse_z_m")
-    st = "P" if (l2 or g4rmse is not None) else "M"
-    cond.setdefault(idx, {})[cn] = [
-        l2[0] if l2 else None, l2[1] if l2 else None, g4cov, g4rmse,
-        l2[3] if l2 else None, st]
+ARM_LABEL = {"E4_V2_STATIC": "E4v2", "E5_V2_F1": "E5v2",
+             "E4_V3_TIN025": "E4v3", "E5_V3_F1_TIN025": "E5v3"}
+for eval_csv in (ARTP + "e4_e6_redesign_s3_v1/P2-E4-E6-REDESIGN-S3-v1/evaluation/s3_building_condition_v1.csv",
+                 ARTP + "e4_e6_redesign_s3c_v1/P2-E4-E6-REDESIGN-S3C-v1/evaluation/s3c_building_condition_v1.csv"):
+    for r in csv.DictReader(open(eval_csv)):
+        if r["criterion"] != "O50":
+            continue
+        idx = IDX_OF.get(r["stable_id"])
+        if idx is None:
+            continue
+        cn = ARM_LABEL[r["condition_id"]]
+        def nv(k):
+            v = r.get(k)
+            return round(float(v), 3) if v not in ("", None, "None") else None
+        l2 = VISD.get(str(idx), {}).get("l2", {}).get(cn)
+        g4cov, g4rmse = nv("g4_coverage"), nv("g4_rmse_z_m")
+        st = "P" if (l2 or g4rmse is not None) else "M"
+        cond.setdefault(idx, {})[cn] = [
+            l2[0] if l2 else None, l2[1] if l2 else None, g4cov, g4rmse,
+            l2[3] if l2 else None, st]
 
 for row in rows:
     l2e2 = VISD.get(str(row[0]), {}).get("l2", {}).get("E2")
@@ -88,8 +90,9 @@ for b_ in MAN["buildings"]:
     for cn_, sp_ in [("E1", b_["lidar"]), ("E2", b_["mvs"])] + [
             (c_, (b_.get("conditions") or {}).get(c_) or {}) for c_ in ("E3", "E4", "E5", "E6")]:
         e_[cn_] = [sp_.get("roofer"), sp_.get("points")]
-    for cn_, arm_ in (("E4v2", "E4_V2_STATIC"), ("E5v2", "E5_V2_F1")):
-        base_ = f"assets_redesign/{arm_}/B{idx_:03d}_{b_['stable_id']}"
+    for cn_, root_, arm_ in (("E4v2", "assets_redesign", "E4_V2_STATIC"), ("E5v2", "assets_redesign", "E5_V2_F1"),
+                             ("E4v3", "assets_redesign_v3", "E4_V3_TIN025"), ("E5v3", "assets_redesign_v3", "E5_V3_F1_TIN025")):
+        base_ = f"{root_}/{arm_}/B{idx_:03d}_{b_['stable_id']}"
         e_[cn_] = [base_ + ".roofer.obj", base_ + ".points.ply"]
     # every sealed condition's point display = its actual roofer-input view
     for cn_ in ("E1", "E2", "E3", "E4", "E5", "E6"):
@@ -500,10 +503,11 @@ const MET = [
 // gate = 판정 기준(5), 나머지는 요약/진단 표시 전용
 const GATES=[0,1,3,4,7];             // comp, corr, cov, rmse, nrm
 const DIAG={2:"요약",5:"진단",6:"진단"}; // quality=C×C 합성, P95=RMSZ 로버스트 짝, bias=정합 신호
-const CONDS=["E1","E2","E3","E4","E5","E6","E4v2","E5v2"];
+const CONDS=["E1","E2","E3","E4","E5","E6","E4v2","E5v2","E4v3","E5v3"];
 const CNAME={E1:"E1 · LiDAR→Roofer",E2:"E2 · MVS→Roofer",E3:"E3 · image-only GS",
              E4:"E4 · GS+기구축 ALS(레거시)",E5:"E5 · GS+가중 ALS(레거시)",E6:"E6 · GS+기구축 LoD2(레거시)",
-             E4v2:"E4 · 재설계(무감쇠 ALS)",E5v2:"E5 · 재설계(F1 conflict)"};
+             E4v2:"E4 · 재설계v2(TIN 0.5m)",E5v2:"E5 · 재설계v2(TIN 0.5m)",
+             E4v3:"E4 · 재설계v3(TIN 0.25m)",E5v3:"E5 · 재설계v3(TIN 0.25m)"};
 const cuts5=()=>[cuts[0],cuts[1],cuts[3],cuts[4],cuts[7]];
 const DIR5=[1,1,1,-1,-1];
 // per-condition 5-gate classify: 'O','X'(품질),'G'(생성실패),'N'(판정불가)
@@ -696,7 +700,8 @@ function setup3D(entry,dark,idx){
               ["E1","E1 · LiDAR",V22.E1],["E2","E2 · MVS",V22.E2],
               ["E3","E3 · GS",V22.GS],["E4","E4 · +ALS",V22.GS],
               ["E5","E5 · +ALS(w)",V22.GS],["E6","E6 · +LoD2",V22.GS],
-              ["E4v2","E4 · 재설계",V22.GS],["E5v2","E5 · 재설계",V22.GS]];
+              ["E4v2","E4 · 재설계v2",V22.GS],["E5v2","E5 · 재설계v2",V22.GS],
+              ["E4v3","E4 · 재설계v3",V22.GS],["E5v3","E5 · 재설계v3",V22.GS]];
   // 기구축 LoD2 표시 mesh는 인접 건물까지 포함 → footprint(+8% 버퍼) 안 삼각형만 표시
   function cropToFp(mesh){
     const ring=((FPD.fp[idx]||[])[0]||[]).map(([x,y])=>[(x-cc[0])*1.08,(y-cc[1])*1.08]);
@@ -1187,7 +1192,7 @@ function render(){
   document.getElementById("cO").textContent=o;
   document.getElementById("cX").textContent=x;
   // E2→m transitions on jointly assessable buildings (X includes 생성실패)
-  const tr=["E3","E4","E5","E6","E4v2","E5v2"].map(m=>{
+  const tr=["E3","E4","E5","E6","E4v2","E5v2","E4v3","E5v3"].map(m=>{
     let up=0,down=0;
     D.forEach(r=>{
       const a=classify5(r[6]&&r[6].E2),b=classify5(r[6]&&r[6][m]);
