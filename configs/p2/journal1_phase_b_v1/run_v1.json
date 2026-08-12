@@ -1,0 +1,61 @@
+{
+  "task_id": "P2-JOURNAL1-PHASE-B-v1",
+  "status": "DEVELOPMENT_NON_CONFIRMATORY",
+  "scientific_verdict": null,
+  "purpose": "Change-label review viewer for the journal1 A+B mismatch candidates: human 3-way labeling (CHANGE / NO_CHANGE / ABSTRACTION_MISMATCH) of E1 point cloud vs existing LoD2 RoofSurface overlay. Labels feed the D-F stratified aggregation only; no metric, gate, or verdict is computed here.",
+  "design_doc": "docs/experiments/p2/journal1_design_v1/JOURNAL1_EXPERIMENT_DESIGN_ko_v1.md",
+  "candidates_csv": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_a_v1/P2-JOURNAL1-PHASE-A-v1/labels/change_label_candidates_v1.csv",
+  "tiers": ["A_STRONG_MISMATCH", "B_MODERATE_MISMATCH"],
+  "excluded_tiers_note": "C_CONSISTENT (59) is not a review target; NA_E1_INSUFFICIENT (72) is undecidable by design and stays NA.",
+  "origin": [690700.0, 5335700.0, 550.0],
+  "origin_provenance": "v22 viewer_manifest scene_local_origin_xyz (crop producer build_condition_roofer_inputs.py)",
+  "lod2_z_shift_to_viewer_m": 45.7,
+  "z_shift_provenance": "configs/p2/e1_e6_roofer_ox_review_v1/reference_auto_ox_v1.json structure_metric.lod2_reference_z_shift_to_viewer_m (sealed v22 datum bridge). Viewer-local LoD2 z = gml z - 550 + 45.7.",
+  "gml_tiles": [
+    "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/raw/lod2/690_5334.gml",
+    "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/raw/lod2/690_5336.gml"
+  ],
+  "asset_dirs": {
+    "E1": "/artifacts/JointBuildGS/phase-payloads/p2/e1_e6_roofer_ox_review_v1/P2-E1-E6-GATE5-DASHBOARD-v1/assets_roofer_input/E1",
+    "E2": "/artifacts/JointBuildGS/phase-payloads/p2/e1_e6_roofer_ox_review_v1/P2-E1-E6-GATE5-DASHBOARD-v1/assets_roofer_input/E2"
+  },
+  "asset_lineage": {
+    "E1": "current UAS LiDAR, sealed C1_L_upper classified_scene footprint+3m crop (viewer-local)",
+    "E2": "current-image MVS, sealed C2_MVS classified_scene footprint+3m crop (viewer-local); optional comparison toggle only"
+  },
+  "three_module": "/artifacts/JointBuildGS/phase-payloads/p2/e1_e6_roofer_ox_review_v1/P2-E1-E6-ROOFER-OX-REVIEW-v16-G3G4-DEV0P1/three.module.min.js",
+  "out_dir": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_b_v1/P2-JOURNAL1-PHASE-B-v1/viewer",
+  "serve_note": "python3 -m http.server 8881 --bind 0.0.0.0 (run from out_dir; port 8880 stays reserved for the gate5 dashboard)",
+  "coverage_json": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_b_v1/P2-JOURNAL1-PHASE-B-v1/labels_support/coverage_diag_v1.json",
+  "sensor_overlay": {
+    "e1_scene_laz": "/artifacts/JointBuildGS/phase-payloads/p2/c1_c2_shared_footprint_199_v3/P2-C1-C2-SHARED-FOOTPRINT-199-ORIGINAL-GLOBAL-v3-replay-20260806a/work/C1_L_upper/classified_scene.laz",
+    "e2_scene_laz": "/artifacts/JointBuildGS/phase-payloads/p2/c1_c2_shared_footprint_199_v3/P2-C1-C2-SHARED-FOOTPRINT-199-ORIGINAL-GLOBAL-v3-replay-20260806a/work/C2_MVS/classified_scene.laz",
+    "scene_lineage_note": "sealed shared-footprint-v3 classified scenes (byte-identical to the gate5 crop producer's non-replay copies); all classes kept — overlays encode acquisition extent, not classification",
+    "cell_m": 0.5,
+    "margin_m": 60,
+    "alpha_knee_pts": 30,
+    "chunk_pts": 10000000,
+    "colors": { "E1": "#2896ff", "E2": "#ff9123", "BOTH": "#e6edf3" }
+  },
+  "overview_map": {
+    "footprints_geojson": "/artifacts/JointBuildGS/phase-payloads/p2/c1_c2_shared_footprint_199_v3/P2-C1-C2-SHARED-FOOTPRINT-199-ORIGINAL-GLOBAL-v3-replay-20260806a/freeze/shared_footprints_199.geojson",
+    "coverage_all_out": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_b_v1/P2-JOURNAL1-PHASE-B-v1/labels_support/coverage_all199_v1.json",
+    "classify_thresholds": {
+      "displaced_min_pts": 20000,
+      "ground_min": 0.3,
+      "above_ridge_min": 0.25,
+      "veg_min": 0.3,
+      "dz_min": 1.0,
+      "dz_cover_min": 0.5
+    },
+    "note": "map.html + map_data.json go into out_dir so the 8881 server serves them; first-pass classes are review support only (B tier carries the reviewer's 2026-08-12 no-change declaration)."
+  },
+  "coverage_diagnostic": {
+    "cell_m": 0.5,
+    "gate_min_cover": 0.7,
+    "veg_ziqr_m": 1.5,
+    "above_ridge_m": 2.0,
+    "out": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_b_v1/P2-JOURNAL1-PHASE-B-v1/labels_support/coverage_diag_v1.json",
+    "note": "Advisory evaluability support only (user boundary proposal 2026-08-12): a building where neither E1 nor E2 covers >= gate_min_cover of the LoD2 roof polygon is an exclusion candidate, pending human confirmation. Never a training/parameter input."
+  }
+}

@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>journal1 Phase B — 전체 199동 1차 분류·커버리지 지도</title>
+<style>
+  :root {
+    --bg: #0d1117; --panel: #161b22; --panel2: #1c2129; --border: #30363d;
+    --fg: #e6edf3; --muted: #8b949e; --accent: #58a6ff;
+    --g-change: #d95926; --g-review: #3987e5; --g-nochange: #199e70;
+    --g-gap: #30363d; --g-gap-stroke: #6e7681;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { background: var(--bg); color: var(--fg); overflow: hidden;
+         font: 13px/1.45 "Pretendard", "Noto Sans KR", system-ui, sans-serif; }
+  #app { display: grid; grid-template-rows: 44px 1fr; height: 100vh; }
+  header { display: flex; align-items: center; gap: 10px; padding: 0 12px;
+           background: var(--panel); border-bottom: 1px solid var(--border); }
+  header h1 { font-size: 14px; font-weight: 700; white-space: nowrap; }
+  header .sub { color: var(--muted); font-size: 11.5px; }
+  .modes { margin-left: auto; display: flex; gap: 4px; }
+  .modes button { background: var(--panel2); color: var(--muted); border: 1px solid var(--border);
+                  border-radius: 6px; padding: 4px 10px; font-size: 12px; cursor: pointer; }
+  .modes button.on { color: var(--fg); border-color: var(--accent); background: #1f3a5f; }
+  header a { color: var(--accent); font-size: 12px; text-decoration: none; white-space: nowrap; }
+  #wrap { position: relative; min-height: 0; }
+  svg { width: 100%; height: 100%; display: block; cursor: grab; }
+  svg.panning { cursor: grabbing; }
+  path.bld { stroke: rgba(255,255,255,0.10); stroke-width: 1; vector-effect: non-scaling-stroke; }
+  path.bld:hover { stroke: #fff; stroke-width: 1.6; }
+  path.bld.link { cursor: pointer; }
+  path.bld.dim { opacity: 0.12; }
+  #legend { position: absolute; right: 10px; top: 10px; width: 236px;
+            background: rgba(22,27,34,.94); border: 1px solid var(--border); border-radius: 10px;
+            padding: 10px 12px; font-size: 12px; max-height: calc(100% - 20px); overflow-y: auto; }
+  #legend h2 { font-size: 11px; color: var(--muted); text-transform: uppercase;
+               letter-spacing: .4px; margin-bottom: 6px; }
+  .lgroup { margin: 7px 0 2px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+  .lrow { display: flex; align-items: center; gap: 6px; padding: 2px 0 2px 14px;
+          color: var(--muted); cursor: pointer; border-radius: 5px; }
+  .lrow:hover { background: var(--panel2); }
+  .lrow.on { color: var(--fg); background: #1f3a5f; }
+  .sw { width: 11px; height: 11px; border-radius: 3px; flex: none; }
+  .lrow .n { margin-left: auto; font-variant-numeric: tabular-nums; }
+  #ramp { margin-top: 6px; }
+  #rampBar { height: 10px; border-radius: 4px; border: 1px solid var(--border); }
+  #rampLabels { display: flex; justify-content: space-between; color: var(--muted);
+                font-size: 10.5px; margin-top: 2px; }
+  #tip { position: absolute; pointer-events: none; background: rgba(13,17,23,.95);
+         border: 1px solid var(--border); border-radius: 8px; padding: 7px 9px;
+         font-size: 11.5px; line-height: 1.5; display: none; max-width: 300px; z-index: 5; }
+  #tip b { font-size: 12px; }
+  #tip .mut { color: var(--muted); }
+  #hint { position: absolute; left: 10px; bottom: 10px; color: var(--muted); font-size: 11px;
+          background: rgba(13,17,23,.8); border: 1px solid var(--border); border-radius: 8px;
+          padding: 5px 9px; pointer-events: none; }
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <h1>전체 199동 1차 분류 지도</h1>
+    <span class="sub" id="metaLine">…</span>
+    <div class="modes">
+      <button data-m="cls" class="on">1차 분류</button>
+      <button data-m="E1">E1 커버리지</button>
+      <button data-m="E2">E2 커버리지</button>
+    </div>
+    <div class="modes" id="rasterModes" style="display:none">
+      <span style="color:var(--muted);font-size:11px;align-self:center">실데이터:</span>
+      <button data-r="none">끔</button>
+      <button data-r="E1">E1</button>
+      <button data-r="E2">E2</button>
+      <button data-r="BOTH" class="on">겹침</button>
+    </div>
+    <a href="./" target="_blank">라벨 뷰어 ↗</a>
+  </header>
+  <div id="wrap">
+    <svg id="svg"></svg>
+    <div id="legend"></div>
+    <div id="tip"></div>
+    <div id="hint">휠 확대 · 드래그 이동 · 건물 클릭 = 라벨 뷰어(68동 한정) · 범례 클릭 = 해당 분류만 강조</div>
+  </div>
+</div>
+<script>
+const GCOL = { CHANGE_CAND: '#d95926', REVIEW: '#3987e5', NOCHANGE: '#199e70', GAP: '#30363d' };
+const CLS_KO = {
+  A_DISPLACED: '변위·형상 (변화 후보)', A_DEMOLITION_SUSPECT: '철거 의심',
+  A_VEG_SUSPECT: '수목 의심', A_ZOFFSET: '부상/증고', A_REVIEW: '판독 대상',
+  B_NOCHANGE_1ST: 'B 비변화(1차)', C_CONSISTENT: 'C 일치',
+  A_EMPTY: 'A 공백', NA_E2_OK: 'NA·E2 커버 확보', NA_EMPTY: 'NA 공백',
+};
+const GROUPS = [
+  ['CHANGE_CAND', '변화 후보', ['A_DISPLACED', 'A_DEMOLITION_SUSPECT']],
+  ['REVIEW', '판독 필요', ['A_VEG_SUSPECT', 'A_ZOFFSET', 'A_REVIEW']],
+  ['NOCHANGE', '비변화·일치', ['B_NOCHANGE_1ST', 'C_CONSISTENT']],
+  ['GAP', '공백·판정불능', ['A_EMPTY', 'NA_E2_OK', 'NA_EMPTY']],
+];
+const GATE = 0.7;
+const $ = (id) => document.getElementById(id);
+
+const lerp = (a, b, t) => a + (b - a) * t;
+function hex2rgb(h) { return [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16)); }
+function mix(h1, h2, t) {
+  const a = hex2rgb(h1), b = hex2rgb(h2);
+  return `rgb(${a.map((v, i) => Math.round(lerp(v, b[i], t))).join(',')})`;
+}
+// diverging around the 0.7 gate: red (bad) -> neutral gray -> blue (good)
+function covColor(t) {
+  if (t == null) return '#21262d';
+  return t < GATE ? mix('#e66767', '#383835', t / GATE)
+                  : mix('#383835', '#3987e5', (t - GATE) / (1 - GATE));
+}
+
+let data, mode = 'cls', highlight = null;
+let rasterMode = 'BOTH', rasterBounds = null, rasterImg = null;
+const paths = new Map();
+
+fetch('./map_data.json').then((r) => r.json()).then((d) => { data = d; boot(); });
+
+function boot() {
+  const bs = data.buildings.filter((b) => b.fp.length);
+  let minX = 1e9, minY = 1e9, maxX = -1e9, maxY = -1e9;
+  for (const b of bs) for (const ring of b.fp) for (const [x, y] of ring) {
+    if (x < minX) minX = x; if (x > maxX) maxX = x;
+    if (y < minY) minY = y; if (y > maxY) maxY = y;
+  }
+  const pad = 30;
+  const vb = { x: minX - pad, y: -(maxY + pad), w: maxX - minX + 2 * pad, h: maxY - minY + 2 * pad };
+  const svg = $('svg');
+  svg.setAttribute('viewBox', `${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
+  // sensor occupancy raster sits under the footprints
+  fetch('./overlay_bounds.json').then((r) => (r.ok ? r.json() : null)).then((ob) => {
+    if (!ob) return;
+    rasterBounds = ob.bounds_viewer_local;
+    rasterImg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+    rasterImg.setAttribute('x', rasterBounds.minx);
+    rasterImg.setAttribute('y', -rasterBounds.maxy);
+    rasterImg.setAttribute('width', rasterBounds.maxx - rasterBounds.minx);
+    rasterImg.setAttribute('height', rasterBounds.maxy - rasterBounds.miny);
+    rasterImg.setAttribute('preserveAspectRatio', 'none');
+    rasterImg.style.imageRendering = 'pixelated';
+    rasterImg.style.pointerEvents = 'none';
+    svg.insertBefore(rasterImg, svg.firstChild);
+    $('rasterModes').style.display = '';
+    applyRaster(); paint(); legend();
+  });
+  for (const b of bs) {
+    const d = b.fp.map((ring) =>
+      'M' + ring.map(([x, y]) => `${x},${-y}`).join('L') + 'Z').join('');
+    const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    p.setAttribute('d', d);
+    p.classList.add('bld');
+    if (b.in_viewer) p.classList.add('link');
+    p.addEventListener('mousemove', (e) => tip(e, b));
+    p.addEventListener('mouseleave', () => { $('tip').style.display = 'none'; });
+    p.addEventListener('click', () => { if (b.in_viewer && b.bkey) window.open('./#' + b.bkey); });
+    svg.appendChild(p);
+    paths.set(b.stable_id, p);
+  }
+  $('metaLine').textContent =
+    `${data.meta.n_buildings}동 · ${data.meta.generated_utc} · NOT_OFFICIAL 비확증 1차`;
+  setupPanZoom(svg, vb);
+  paint(); legend();
+}
+
+function fillOf(b) {
+  if (mode === 'cls') return GCOL[b.group];
+  const a = b.cov?.[mode];
+  return covColor(a ? a.any_xy : null);
+}
+
+function applyRaster() {
+  if (!rasterImg) return;
+  if (rasterMode === 'none') rasterImg.setAttribute('href', '');
+  else rasterImg.setAttribute('href', `./overlay_${rasterMode}.png`);
+  rasterImg.style.display = rasterMode === 'none' ? 'none' : '';
+}
+
+function paint() {
+  const outline = rasterMode !== 'none' && rasterImg && mode === 'cls';
+  for (const b of data.buildings) {
+    const p = paths.get(b.stable_id);
+    if (!p) continue;
+    p.setAttribute('fill', fillOf(b));
+    p.style.stroke = '';
+    p.style.strokeDasharray = '';
+    p.style.fillOpacity = '';
+    p.style.strokeWidth = '';
+    if (outline) {
+      // raster underneath: classification moves to the outline so data shows through
+      p.style.fillOpacity = 0.12;
+      p.style.stroke = GCOL[b.group];
+      p.style.strokeWidth = 2;
+      if (!b.gate_any_070 || b.cls === 'NA_E2_OK') p.style.strokeDasharray = '4 2.5';
+    } else if (mode === 'cls') {
+      if (b.cls === 'NA_E2_OK') { p.style.stroke = '#199e70'; p.style.strokeDasharray = '3 2'; }
+      else if (!b.gate_any_070) { p.style.stroke = '#8b949e'; p.style.strokeDasharray = '3 2'; }
+      if (b.group === 'GAP') p.style.stroke = p.style.stroke || 'var(--g-gap-stroke)';
+    }
+    p.classList.toggle('dim', highlight !== null && b.cls !== highlight);
+  }
+}
+
+function legend() {
+  const el = $('legend');
+  if (mode !== 'cls') {
+    el.innerHTML = `<h2>${mode} 지붕 자리 커버리지 (any-class)</h2>
+      <div id="ramp"><div id="rampBar"></div>
+      <div id="rampLabels"><span>0%</span><span>게이트 ${GATE * 100}%</span><span>100%</span></div></div>
+      <div style="color:var(--muted);margin-top:6px;font-size:11px">
+      LoD2 지붕 폴리곤 0.5m 셀 중 해당 센서 점이 있는 비율.<br>빨강=게이트 미달, 파랑=커버 확보, 검정=자산 없음.</div>`;
+    const stops = [];
+    for (let i = 0; i <= 20; i++) stops.push(covColor(i / 20));
+    $('rampBar').style.background = `linear-gradient(90deg, ${stops.join(',')})`;
+    return;
+  }
+  const counts = data.meta.counts;
+  const rasterLegend = (rasterImg && rasterMode !== 'none') ? `
+    <h2 style="margin-top:2px">센서 실데이터 (0.5m 점유)</h2>
+    ${rasterMode !== 'E2' ? '<div class="lrow" style="cursor:default"><span class="sw" style="background:#2896ff"></span>E1 현재 UAS LiDAR</div>' : ''}
+    ${rasterMode !== 'E1' ? '<div class="lrow" style="cursor:default"><span class="sw" style="background:#ff9123"></span>E2 현재영상 MVS</div>' : ''}
+    ${rasterMode === 'BOTH' ? '<div class="lrow" style="cursor:default"><span class="sw" style="background:#e6edf3"></span>둘 다 (겹침)</div>' : ''}
+    <div class="lrow" style="cursor:default"><span class="sw" style="background:#0d1117;border:1px solid var(--border)"></span>없음 = 취득 공백</div>
+    <div style="border-top:1px solid var(--border);margin:7px 0"></div>` : '';
+  el.innerHTML = rasterLegend + '<h2>1차 분류 (자동 + B 사용자 선언)</h2>' + GROUPS.map(([g, name, subs]) => {
+    const total = subs.reduce((s, c) => s + (counts[c] ?? 0), 0);
+    return `<div class="lgroup"><span class="sw" style="background:${GCOL[g]}"></span>${name}
+        <span class="n" style="margin-left:auto">${total}</span></div>` +
+      subs.map((c) => `<div class="lrow${highlight === c ? ' on' : ''}" data-c="${c}">
+        <span class="sw" style="background:${GCOL[g]};opacity:.55"></span>${CLS_KO[c]}
+        <span class="n">${counts[c] ?? 0}</span></div>`).join('');
+  }).join('') + `<div style="color:var(--muted);margin-top:7px;font-size:11px">
+    점선 테두리 = E1·E2 모두 게이트(70%) 미달<br>초록 점선 = NA지만 E2 커버 확보</div>`;
+  el.querySelectorAll('.lrow').forEach((row) => row.addEventListener('click', () => {
+    highlight = highlight === row.dataset.c ? null : row.dataset.c;
+    paint(); legend();
+  }));
+}
+
+function fmtArm(a) {
+  if (!a) return '<span class="mut">자산/폴리곤 없음</span>';
+  const dz = a.dz_med_m != null ? ` · Δz ${a.dz_med_m > 0 ? '+' : ''}${a.dz_med_m}m` : '';
+  const veg = a.veg_cell_share != null ? ` · 수관성 ${Math.round(a.veg_cell_share * 100)}%` : '';
+  return `존재 ${Math.round(a.any_xy * 100)}% · 건물 ${Math.round(a.cls6_xy * 100)}% · ` +
+         `지면만 ${Math.round(a.groundonly_xy * 100)}%${dz}${veg}`;
+}
+
+function tip(e, b) {
+  const t = $('tip');
+  t.style.display = 'block';
+  t.innerHTML = `<b>${b.bkey ?? '—'} · ${b.stable_id}</b><br>
+    <span class="mut">${b.tier}</span> → ${CLS_KO[b.cls]}${b.gate_any_070 ? '' : ' · <span style="color:#e66767">게이트 미달</span>'}<br>
+    E1: ${fmtArm(b.cov?.E1)}<br>E2: ${fmtArm(b.cov?.E2)}<br>
+    <span class="mut">Phase A acc ${b.acc_median_m != null ? b.acc_median_m.toFixed(2) + 'm' : '—'} · E1 지붕점 ${b.n_e1_roof_pts != null ? b.n_e1_roof_pts.toLocaleString() : '—'}</span>
+    ${b.in_viewer ? '<br><span style="color:var(--accent)">클릭 → 라벨 뷰어</span>' : ''}`;
+  const r = $('wrap').getBoundingClientRect();
+  t.style.left = Math.min(e.clientX - r.left + 14, r.width - 310) + 'px';
+  t.style.top = Math.min(e.clientY - r.top + 12, r.height - 130) + 'px';
+}
+
+function setupPanZoom(svg, vb) {
+  const apply = () => svg.setAttribute('viewBox', `${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
+  svg.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    const k = Math.exp(e.deltaY * 0.0012);
+    const r = svg.getBoundingClientRect();
+    const mx = vb.x + (e.clientX - r.left) / r.width * vb.w;
+    const my = vb.y + (e.clientY - r.top) / r.height * vb.h;
+    vb.x = mx - (mx - vb.x) * k; vb.y = my - (my - vb.y) * k;
+    vb.w *= k; vb.h *= k;
+    apply();
+  }, { passive: false });
+  let drag = null;
+  svg.addEventListener('pointerdown', (e) => {
+    drag = { x: e.clientX, y: e.clientY };
+    svg.classList.add('panning');
+    svg.setPointerCapture(e.pointerId);
+  });
+  svg.addEventListener('pointermove', (e) => {
+    if (!drag) return;
+    const r = svg.getBoundingClientRect();
+    vb.x -= (e.clientX - drag.x) / r.width * vb.w;
+    vb.y -= (e.clientY - drag.y) / r.height * vb.h;
+    drag = { x: e.clientX, y: e.clientY };
+    apply();
+  });
+  const up = () => { drag = null; svg.classList.remove('panning'); };
+  svg.addEventListener('pointerup', up);
+  svg.addEventListener('pointercancel', up);
+}
+
+document.querySelectorAll('.modes button[data-m]').forEach((btn) => btn.addEventListener('click', () => {
+  mode = btn.dataset.m;
+  document.querySelectorAll('.modes button[data-m]').forEach((b) => b.classList.toggle('on', b === btn));
+  highlight = null;
+  paint(); legend();
+}));
+document.querySelectorAll('#rasterModes button[data-r]').forEach((btn) => btn.addEventListener('click', () => {
+  rasterMode = btn.dataset.r;
+  document.querySelectorAll('#rasterModes button[data-r]').forEach((b) => b.classList.toggle('on', b === btn));
+  applyRaster(); paint(); legend();
+}));
+</script>
+</body>
+</html>
