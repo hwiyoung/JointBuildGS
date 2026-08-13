@@ -1,0 +1,77 @@
+{
+ "task_id": "P2-ARRGS-EVAL-v1",
+ "stage": "A2",
+ "status": "DEVELOPMENT_NON_CONFIRMATORY",
+ "scientific_verdict": null,
+ "design_doc": "docs/experiments/p2/journal1_design_v1/JOURNAL1_EXPERIMENT_DESIGN_ko_v1.md",
+ "note": "ARRGS arm evaluation: sealed A2 evaluator parameters byte-identical; ARRGS points sampled from S5 B-rep (25/m2 roof-wall cls6, 8/m2 ground cls2). delta arms score contamination-vs-absorption against the clean arm.",
+ "origin": [
+  690700.0,
+  5335700.0,
+  550.0
+ ],
+ "origin_provenance": "v22 viewer_manifest scene_local_origin_xyz (crop producer build_condition_roofer_inputs.py)",
+ "lod2_z_shift_to_viewer_m": 45.7,
+ "z_shift_provenance": "configs/p2/e1_e6_roofer_ox_review_v1/reference_auto_ox_v1.json structure_metric.lod2_reference_z_shift_to_viewer_m (sealed v22 datum bridge)",
+ "gml_tiles": [
+  "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/raw/lod2/690_5334.gml",
+  "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/raw/lod2/690_5336.gml"
+ ],
+ "footprints_geojson": "/artifacts/JointBuildGS/phase-payloads/p2/c1_c2_shared_footprint_199_v3/P2-C1-C2-SHARED-FOOTPRINT-199-ORIGINAL-GLOBAL-v3-replay-20260806a/freeze/shared_footprints_199.geojson",
+ "e1_reference_dir": "/artifacts/JointBuildGS/phase-payloads/p2/e1_e6_roofer_ox_review_v1/P2-E1-E6-GATE5-DASHBOARD-v1/assets_roofer_input/E1",
+ "arms": {
+  "E1": {
+   "dir": "/artifacts/JointBuildGS/phase-payloads/p2/e1_e6_roofer_ox_review_v1/P2-E1-E6-GATE5-DASHBOARD-v1/assets_roofer_input/E1",
+   "reference_arm": true,
+   "lineage": "current UAS LiDAR, sealed C1_L_upper classified_scene footprint+3m crop (viewer-local)"
+  },
+  "E2": {
+   "dir": "/artifacts/JointBuildGS/phase-payloads/p2/e1_e6_roofer_ox_review_v1/P2-E1-E6-GATE5-DASHBOARD-v1/assets_roofer_input/E2",
+   "lineage": "current-image MVS, sealed C2_MVS classified_scene footprint+3m crop (viewer-local)"
+  },
+  "E7": {
+   "dir": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_a_v1/P2-JOURNAL1-PHASE-A-v1/a2/assets_roofer_input/E7",
+   "lineage": "Existing ALS alone (no training): exact C4/S2c prior 4-tile raw ALS, +45.7 m datum, frozen registration, sealed SMRF\u2192footprint-overlay chain, A2 crop"
+  },
+  "E8": {
+   "dir": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_a_v1/P2-JOURNAL1-PHASE-A-v1/a2/assets_roofer_input/E8",
+   "lineage": "Simple union E2 \u222a ALS (no training): sealed C2_MVS classified-scene geometry \u222a exact same ALS bytes, SMRF re-decides classes, A2 crop"
+  },
+  "ARRGS": {
+   "dir": "/artifacts/JointBuildGS/phase-payloads/p2/arrgs_v1/eval_arm_ARRGS",
+   "lineage": "ARRGS S5 B-rep sampled points (plane arrangement + occupancy joint optimization)"
+  },
+  "ARRGS_dx025_dz000": {
+   "dir": "/artifacts/JointBuildGS/phase-payloads/p2/arrgs_v1/eval_arm_ARRGS_dx025_dz000",
+   "lineage": "ARRGS with delta injected on ALS prior bytes (025_000)"
+  },
+  "ARRGS_dx050_dz000": {
+   "dir": "/artifacts/JointBuildGS/phase-payloads/p2/arrgs_v1/eval_arm_ARRGS_dx050_dz000",
+   "lineage": "ARRGS with delta injected on ALS prior bytes (050_000)"
+  },
+  "ARRGS_dx100_dz000": {
+   "dir": "/artifacts/JointBuildGS/phase-payloads/p2/arrgs_v1/eval_arm_ARRGS_dx100_dz000",
+   "lineage": "ARRGS with delta injected on ALS prior bytes (100_000)"
+  },
+  "ARRGS_dx000_dz025": {
+   "dir": "/artifacts/JointBuildGS/phase-payloads/p2/arrgs_v1/eval_arm_ARRGS_dx000_dz025",
+   "lineage": "ARRGS with delta injected on ALS prior bytes (000_025)"
+  }
+ },
+ "baseline_arm": "E2",
+ "taus": [
+  0.1,
+  0.25,
+  0.5,
+  1.0
+ ],
+ "tau_outlier": 1.0,
+ "cell": 0.25,
+ "lod2_sample_step": 0.25,
+ "coverage_z_tol": 1.0,
+ "knn": 16,
+ "normal_match_tau": 0.5,
+ "min_points": 30,
+ "max_points_per_arm": 500000,
+ "out_dir": "/artifacts/JointBuildGS/phase-payloads/p2/arrgs_v1/evaluation"
+}

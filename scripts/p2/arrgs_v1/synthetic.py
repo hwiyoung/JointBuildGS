@@ -28,12 +28,14 @@ def look_at(pos, target, up=(0, 0, 1.0)):
     return T
 
 
-def camera_ring(center, radius=32.0, height=26.0, count=16):
-    """Two-elevation ring: high (nadir-ish) + low (oblique — eave/wall parallax).
-    X0 lesson: a single high ring is near-blind to thin eave slivers."""
+def camera_ring(center, radius=32.0, height=26.0, count=16, rings=None):
+    """Multi-elevation rings. X0 lessons: a single high ring is near-blind to
+    thin eave slivers, but a too-low ring drags background pixels into the
+    prism-projection mask (unexplainable -> ghosts). Default = high + medium."""
     mats, Ks = [], []
     K = np.array([[FX, 0, W / 2], [0, FX, H / 2], [0, 0, 1.0]])
-    rings = [(radius, height, count), (radius + 8.0, 11.0, count // 2)]
+    if rings is None:
+        rings = [(radius, height, count), (radius + 6.0, 18.0, count // 2)]
     for r, hgt, cnt in rings:
         for i in range(cnt):
             a = 2 * np.pi * (i + 0.5 * (hgt < height)) / cnt

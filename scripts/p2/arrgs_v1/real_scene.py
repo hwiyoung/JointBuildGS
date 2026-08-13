@@ -30,6 +30,9 @@ ART = Path("/artifacts/JointBuildGS")
 
 FULLSCENE_SPARSE = ART / "phase-payloads/p0-audit/data/work/mvs/colmap_dense/sparse"
 FULLSCENE_IMAGES = ART / "phase-payloads/p0-audit/data/work/mvs/colmap_dense/images"
+FULLSCENE_DEPTH = (ART / "phase-payloads/p2/e3_full_scene_fused_normal_confidence_v1/"
+                   "P2-E3-FULL-SCENE-FUSED-NORMAL-CONFIDENCE-v1/data/"
+                   "fused_normal_confidence_colmap_full/depth")  # fused MVS z-depth EXR
 A2_CROPS = ART / "phase-payloads/p2/journal1_phase_a_v1/P2-JOURNAL1-PHASE-A-v1/a2/assets_roofer_input"
 FOOTPRINTS = (ART / "phase-payloads/p2/c1_c2_shared_footprint_199_v3/"
               "P2-C1-C2-SHARED-FOOTPRINT-199-ORIGINAL-GLOBAL-v3/freeze/"
@@ -183,9 +186,11 @@ def load_footprint(stable_id):
                 xy = xy[:-1]
             from shapely.geometry import Polygon
             poly = Polygon(xy)
-            for tol in (0.3, 0.6, 1.0, 1.5, 2.0, 3.0):
+            # 24-edge cap: 14 was too blunt for deep-concave perimeter blocks
+            # (B022: 159 verts -> 14 edges filled the U-opening with phantom roof)
+            for tol in (0.3, 0.5, 0.8, 1.2, 1.8, 2.5, 3.5):
                 simp = poly.simplify(tol)
-                if len(simp.exterior.coords) - 1 <= 14:
+                if len(simp.exterior.coords) - 1 <= 24:
                     return np.asarray(simp.exterior.coords)[:-1]
             return np.asarray(simp.exterior.coords)[:-1]
     raise KeyError(f"footprint not found for {stable_id}")
@@ -212,11 +217,24 @@ def load_real_scene(scene, device):
     roof_als = als_xyz[als_cls == 6] if als_cls is not None else als_xyz
     ground_als = als_xyz[als_cls == 2] if als_cls is not None else als_xyz
     ground_z = float(np.median(ground_als[:, 2])) if len(ground_als) else float(np.quantile(als_xyz[:, 2], 0.05))
-    top_z = float(np.quantile(roof_als[:, 2], 0.98) + 2.0) if len(roof_als) else ground_z + 15.0
+    # X1-diag fix: the footprint+3m crop can catch neighbour structure (tower
+    # tails inflated top_z to +13 m -> phantom solid headroom). Restrict the
+    # vertical-extent and plane statistics to points INSIDE the footprint.
+    from shapely.geometry import Polygon as ShPolygon
+    from shapely.prepared import prep
+    fp_poly = prep(ShPolygon(fp).buffer(0.3))
+    from shapely.geometry import Point as ShPt
+    if len(roof_als):
+        in_fp = np.fromiter((fp_poly.contains(ShPt(x, y)) for x, y in roof_als[:, :2]),
+                            dtype=bool, count=len(roof_als))
+        roof_fp = roof_als[in_fp] if in_fp.any() else roof_als
+    else:
+        roof_fp = roof_als
+    top_z = float(np.quantile(roof_fp[:, 2], 0.98) + 1.5) if len(roof_fp) else ground_z + 15.0
 
-    prior_planes = ransac_planes(roof_als, max_planes=scene.get("max_prior_planes", 8),
+    prior_planes = ransac_planes(roof_fp, max_planes=scene.get("max_prior_planes", 12),
                                  reject_vertical=0.5)  # roofs only; walls come from footprint
-    prior_planes = sorted(prior_planes, key=lambda p: -p["inliers"])[:6]
+    prior_planes = sorted(prior_planes, key=lambda p: -p["inliers"])[:10]
     planes = []
     for i, pl in enumerate(prior_planes):
         planes.append({"id": f"prior{i}", "n": pl["n"], "d": pl["d"], "source": "prior_als",
@@ -285,8 +303,12 @@ def load_real_scene(scene, device):
     Ks_np = np.tile(K, (len(sel), 1, 1))
     if scale != 1.0:
         Ks_np[:, :2, :] *= scale
+    import os
+    os.environ.setdefault("OPENCV_IO_ENABLE_OPENEXR", "1")
+    import cv2
     viewmats_np = []
     targets = np.zeros((len(sel), Hs, Ws, 3), dtype=np.float32)
+    depths = np.zeros((len(sel), Hs, Ws), dtype=np.float32)
     for i, (_, im, R, t) in enumerate(sel):
         T = np.eye(4)
         T[:3, :3] = R
@@ -296,27 +318,78 @@ def load_real_scene(scene, device):
         if scale != 1.0:
             img = img.resize((Ws, Hs), PILImage.LANCZOS)
         targets[i] = np.asarray(img, dtype=np.float32)[..., :3] / 255.0
+        dpath = FULLSCENE_DEPTH / (Path(im["name"]).stem + ".exr")
+        if dpath.is_file():
+            d = cv2.imread(str(dpath), cv2.IMREAD_UNCHANGED)
+            if d is not None:
+                if d.ndim == 3:
+                    d = d[..., 0]
+                d = np.nan_to_num(d, nan=0.0, posinf=0.0, neginf=0.0)
+                if scale != 1.0:
+                    d = cv2.resize(d, (Ws, Hs), interpolation=cv2.INTER_NEAREST)
+                depths[i] = d
     viewmats_np = np.stack(viewmats_np)
 
     from arrgs_train import project_mask
     masks = np.stack([project_mask(fp, ground_z, top_z, viewmats_np[i], Ks_np[i],
                                    Ws, Hs, buffer_scale=1.12) for i in range(len(sel))])
+    # occluder rejection (OPT-IN, scene["occluder_mask"]): keep a masked pixel
+    # only if its fused-MVS depth ray lands inside the footprint prism. B022
+    # A/B: this REGRESSED f1 0.394->0.298 (MVS facade noise drops true building
+    # pixels too) — default off, kept for follow-up diagnosis.
+    from shapely.geometry import Polygon as ShPoly2
+    from shapely.prepared import prep as prep2
+    fp_prism = prep2(ShPoly2(fp).buffer(1.5))
+    from shapely.geometry import Point as ShPt2
+    for i in range(len(sel) if scene.get("occluder_mask") else 0):
+        d = depths[i]
+        valid = d > 0.5
+        if not valid.any():
+            continue
+        Kinv = np.linalg.inv(Ks_np[i])
+        Rw = viewmats_np[i][:3, :3].T  # cam->world (viewer-local)
+        tw = -Rw @ viewmats_np[i][:3, 3]
+        ys, xs = np.nonzero(masks[i] & valid)
+        if len(ys) == 0:
+            continue
+        rays = (Kinv @ np.stack([xs + 0.5, ys + 0.5, np.ones(len(xs))])).T
+        pts = (Rw @ (rays * d[ys, xs][:, None]).T).T + tw
+        inside_z = (pts[:, 2] > ground_z - 1.0) & (pts[:, 2] < top_z + 2.0)
+        keep = np.zeros(len(pts), dtype=bool)
+        # coarse XY test on a 0.5 m grid cache to avoid per-point shapely calls
+        gx = np.round(pts[:, 0] * 2) / 2
+        gy = np.round(pts[:, 1] * 2) / 2
+        cache = {}
+        for j, (x, y) in enumerate(zip(gx, gy)):
+            key = (x, y)
+            if key not in cache:
+                cache[key] = fp_prism.contains(ShPt2(x, y))
+            keep[j] = cache[key]
+        keep &= inside_z
+        drop = ~keep
+        masks[i][ys[drop], xs[drop]] = False
 
-    # occupancy init from (possibly shifted) ALS solid proxy
+    # occupancy init from (possibly shifted) ALS solid proxy.
+    # Column surface = 90th-percentile z in a tight column (0.75 m) of the
+    # footprint-restricted roof points — the earlier max-in-1.5m rule let a
+    # single stray/tail point mark whole columns solid up to the domain top.
     from scipy.spatial import cKDTree
-    tree = cKDTree(als_xyz[:, :2]) if len(als_xyz) else None
+    col_src = roof_fp if len(roof_fp) else als_xyz
+    tree = cKDTree(col_src[:, :2]) if len(col_src) else None
 
     def o_init_fn(centroid):
         if tree is None:
             return 0.5
-        idx = tree.query_ball_point(centroid[:2], r=1.5)
+        idx = tree.query_ball_point(centroid[:2], r=0.75)
         if not idx:
-            return 0.25
-        zmax = als_xyz[idx, 2].max()
-        return 0.75 if centroid[2] < zmax else 0.25
+            return 0.2
+        zsurf = float(np.percentile(col_src[idx, 2], 90))
+        return 0.75 if centroid[2] < zsurf else 0.15
 
     return {
         "planes": planes, "footprint": fp, "ground_z": ground_z, "top_z": top_z,
+        "o_init_fn": o_init_fn,
+        "depth_targets": torch.tensor(depths, device=device) if depths.any() else None,
         "targets": torch.tensor(targets, device=device),
         "masks": masks,
         "viewmats": torch.tensor(viewmats_np, dtype=torch.float32, device=device),

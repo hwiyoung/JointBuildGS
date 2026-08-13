@@ -10,7 +10,7 @@ CACHE="$ART/phase-payloads/p2/arrgs_v1/cache/torch_extensions"
 mkdir -p "$CACHE"
 exec docker run --rm --network none --gpus "\"device=$GPU\"" \
   --shm-size 8g \
-  --user "$(id -u):$(id -g)" -e HOME=/tmp \
+  --user "$(id -u):$(id -g)" -e HOME=/tmp -e OPENCV_IO_ENABLE_OPENEXR=1 \
   -v "$REPO":/workspace/JointBuildGS \
   -v "$ART":/artifacts/JointBuildGS \
   -e JBGS_ARTIFACT_ROOT=/artifacts/JointBuildGS \

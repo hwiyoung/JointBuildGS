@@ -35,6 +35,9 @@ BASE = {
     "cam_batch": 3,
     "enable_delta": True,
     "domain_margin": 1.2,
+    # X1-diag: give photometry more room before the binarization freeze
+    "anneal_warm": 0.45,
+    "anneal_full": 0.9,
 }
 
 

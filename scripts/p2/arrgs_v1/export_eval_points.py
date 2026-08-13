@@ -36,7 +36,8 @@ def write_ply(path, xyz, cls):
         f.write(rec.tobytes())
 
 
-def sample_obj(obj_path, density_roofwall=25.0, density_ground=8.0, seed=0):
+def sample_obj(obj_path, density_roofwall=25.0, density_ground=8.0, seed=0,
+               density_wall=8.0):
     verts, tris = [], []
     cls = "roof"
     for ln in open(obj_path):
@@ -55,7 +56,8 @@ def sample_obj(obj_path, density_roofwall=25.0, density_ground=8.0, seed=0):
     for cls, tri in tris:
         a, b, c = verts[tri[0]], verts[tri[1]], verts[tri[2]]
         area = 0.5 * np.linalg.norm(np.cross(b - a, c - a))
-        dens = density_ground if cls == "ground" else density_roofwall
+        dens = (density_ground if cls == "ground"
+                else density_wall if cls == "wall" else density_roofwall)
         k = max(1, int(area * dens))
         r1 = np.sqrt(rng.random(k))
         r2 = rng.random(k)

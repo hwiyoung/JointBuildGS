@@ -31,13 +31,17 @@ from arrgs_model import ArrgsModel, seed_faces, _rotmat_to_quat  # noqa: E402
 DEFAULT_SNAPSHOTS = [0, 50, 100, 250, 500, 1000, 2000, 3500, 5000]
 
 
-def render_gaussians(means, quats, scales, alphas, colors, viewmats, Ks, W, H, bg):
+def render_gaussians(means, quats, scales, alphas, colors, viewmats, Ks, W, H, bg,
+                     with_depth=False):
     from gsplat import rasterization
-    out, _, _ = rasterization(
+    mode = "RGB+ED" if with_depth else "RGB"
+    out, ralpha, _ = rasterization(
         means, quats, scales, alphas, colors,
-        viewmats, Ks, W, H, render_mode="RGB",
+        viewmats, Ks, W, H, render_mode=mode,
         backgrounds=bg.expand(viewmats.shape[0], 3),
         near_plane=0.05, radius_clip=0.1)
+    if with_depth:
+        return out[..., :3], out[..., 3], ralpha[..., 0]
     return out  # (C,H,W,3)
 
 
@@ -169,7 +173,8 @@ def run(cfg):
         planes, fp = syn.candidate_planes(scene["kind"], perturb=scene.get("perturb", 0.0))
         gt_planes, _ = syn.candidate_planes(scene["kind"], perturb=0.0)
         ground_z, top_z = 0.0, 13.0
-        viewmats_np, Ks_np = syn.camera_ring(center=(10, 6, 4))
+        viewmats_np, Ks_np = syn.camera_ring(center=(10, 6, 4),
+                                             rings=scene.get("rings"))
         W, H = syn.W, syn.H
         means = torch.tensor(g_means, dtype=torch.float32, device=device)
         quats = normals_to_quats(torch.tensor(g_normals, dtype=torch.float32, device=device))
@@ -231,6 +236,13 @@ def run(cfg):
             c["o_init"] = 0.5
         elif real_o_init:
             c["o_init"] = float(o_init_fn(np.asarray(c["centroid"])))  # ALS solid proxy
+        elif o_init_mode == "proxy" and gt_inside is not None:
+            # synthetic analog of the real ALS-solid init: GT label + flip noise
+            rng_flip = np.random.default_rng(hash(tuple(np.round(c["centroid"], 2))) % 2**31)
+            lab = gt_inside(np.asarray(c["centroid"]))
+            if rng_flip.random() < cfg.get("proxy_flip", 0.15):
+                lab = not lab
+            c["o_init"] = 0.75 if lab else 0.25
         else:
             below = any(np.asarray(c["centroid"]) @ n - d < 0 for n, d in roofish)
             c["o_init"] = 0.7 if below else 0.25
@@ -277,6 +289,10 @@ def run(cfg):
     full = int(iters * cfg.get("anneal_full", 0.85))
 
     mask_t = torch.tensor(masks, device=device)
+    depth_t = None
+    if scene["type"] == "real" and rs.get("depth_targets") is not None:
+        depth_t = rs["depth_targets"]  # (C,H,W), 0 = invalid
+    lam_depth = lam.get("depth", 0.5) if depth_t is not None else 0.0
     C = targets.shape[0]
     holdout = max(1, C // 8) if cfg.get("holdout", True) else 0
     train_cams = list(range(C - holdout))
@@ -315,19 +331,31 @@ def run(cfg):
         cams = np.random.choice(train_cams, size=min(batch, len(train_cams)),
                                 replace=False)
         means_, quats_, scales_, alphas_, colors_ = model.gaussians()
-        out = render_gaussians(means_, quats_, scales_, alphas_, colors_,
-                               viewmats[cams], Ks[cams], W, H, bg)
         m = mask_t[cams]
+        if depth_t is not None:
+            out, dep, ralpha = render_gaussians(means_, quats_, scales_, alphas_,
+                                                colors_, viewmats[cams], Ks[cams],
+                                                W, H, bg, with_depth=True)
+            dt = depth_t[cams]
+            md = m & (dt > 0.5)
+            # occluder disambiguation: MVS depth says where the surface really
+            # is along each masked ray — phantom cells above/below it pay here
+            loss_depth = ((dep - dt).abs().clamp(max=8.0) * ralpha)[md].mean() / 4.0 \
+                if md.any() else torch.zeros((), device=device)
+        else:
+            out = render_gaussians(means_, quats_, scales_, alphas_, colors_,
+                                   viewmats[cams], Ks[cams], W, H, bg)
+            loss_depth = torch.zeros((), device=device)
         photo = (out - targets[cams]).abs()[m.unsqueeze(-1).expand_as(out)].mean()
         loss_bin = model.binarization_loss()
         loss_prior = model.prior_loss()
         loss_u = ((model.u - u_init) ** 2).mean()
-        loss = (lam_photo * photo + lam_bin(it) * loss_bin
+        loss = (lam_photo * photo + lam_depth * loss_depth + lam_bin(it) * loss_bin
                 + lam_prior * loss_prior + lam_u * loss_u)
         opt.zero_grad(set_to_none=False)
         loss.backward()
-        for k, v in (("photo", photo), ("bin", loss_bin), ("prior", loss_prior),
-                     ("u", loss_u), ("total", loss)):
+        for k, v in (("photo", photo), ("depth", loss_depth), ("bin", loss_bin),
+                     ("prior", loss_prior), ("u", loss_u), ("total", loss)):
             ema[k] = 0.95 * ema.get(k, float(v)) + 0.05 * float(v)
         if it in snap_iters:
             og = model.o_logit.grad
