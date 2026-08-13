@@ -64,6 +64,8 @@ def sample_obj(obj_path, density_roofwall=25.0, density_ground=8.0, seed=0,
         p = (1 - r1)[:, None] * a + (r1 * (1 - r2))[:, None] * b + (r1 * r2)[:, None] * c
         pts.append(p)
         cs.append(np.full(k, 2 if cls == "ground" else 6, dtype=np.uint8))
+    if not pts:
+        return np.zeros((0, 3)), np.zeros(0, dtype=np.uint8)
     return np.concatenate(pts), np.concatenate(cs)
 
 
@@ -71,7 +73,7 @@ def main():
     arm_dir = BASE / "eval_arm_ARRGS"
     arm_dir.mkdir(exist_ok=True)
     rows = []
-    for exp in ("X1", "X2", "X3"):
+    for exp in ("X1", "X2", "X3", "X4"):  # X4 last: uniform-budget crops win the clean-arm slot
         root = BASE / f"P2-ARRGS-{exp}-v1/runs"
         if not root.is_dir():
             continue
@@ -85,6 +87,9 @@ def main():
             dx = cfg["scene"].get("inject_delta_east_m", 0)
             dz = cfg["scene"].get("inject_delta_z_m", 0)
             xyz, cls = sample_obj(obj)
+            if len(xyz) == 0:
+                print(f"[export] skip empty B-rep: {exp}/{run.name}")
+                continue
             if dx == 0 and dz == 0:
                 out = arm_dir / f"{bkey}.points.ply"  # clean runs -> main arm
             else:
