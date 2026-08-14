@@ -27,8 +27,27 @@ RUN_ROOTS = [
 ]
 
 
+OVERLAY_SRC = {
+    "E7": ART / ("phase-payloads/p2/journal1_phase_a_v1/P2-JOURNAL1-PHASE-A-v1/"
+                 "a2/assets_roofer_input/E7"),
+    "E1": ART / ("phase-payloads/p2/e1_e6_roofer_ox_review_v1/"
+                 "P2-E1-E6-GATE5-DASHBOARD-v1/assets_roofer_input/E1"),
+    "E2": ART / ("phase-payloads/p2/e1_e6_roofer_ox_review_v1/"
+                 "P2-E1-E6-GATE5-DASHBOARD-v1/assets_roofer_input/E2"),
+}
+
+
 def rel(p: Path) -> str:
     return str(p.relative_to(BASE))
+
+
+def ensure_overlay_links():
+    root = BASE / "viewer_assets"
+    root.mkdir(exist_ok=True)
+    for arm, src in OVERLAY_SRC.items():
+        link = root / arm
+        if not link.exists() and src.is_dir():
+            link.symlink_to(src)
 
 
 def load_run(exp: str, run_dir: Path):
@@ -77,11 +96,23 @@ def load_run(exp: str, run_dir: Path):
         entry["s5_obj"] = rel(run_dir / "s5_brep.obj")
     if (run_dir / "s5_evidence.json").is_file():
         entry["s5_evidence"] = json.load(open(run_dir / "s5_evidence.json"))
+    # GT / comparison overlays for real-building runs
+    cfg = entry.get("run", {}).get("config", {})
+    bkey = cfg.get("scene", {}).get("bkey")
+    if bkey:
+        ov = {}
+        for arm in OVERLAY_SRC:
+            if (BASE / "viewer_assets" / arm / f"{bkey}.points.ply").is_file():
+                ov[arm] = f"viewer_assets/{arm}/{bkey}.points.ply"
+        if ov:
+            entry["overlays"] = ov
+            entry["bkey"] = bkey
     return entry
 
 
 def main():
     VIEWER.mkdir(parents=True, exist_ok=True)
+    ensure_overlay_links()
     runs = []
     for exp, root in RUN_ROOTS:
         if not root.is_dir():

@@ -50,9 +50,77 @@ window.addEventListener('resize', resize);
 (function loop() { requestAnimationFrame(loop); renderer.render(scene, camera); })();
 
 let group = new THREE.Group(); scene.add(group);
+let overlayGroup = new THREE.Group(); scene.add(overlayGroup);
 let faceMeshes = [];   // aligned to s2.faces indices
 function clear3d() {
   scene.remove(group); group = new THREE.Group(); scene.add(group); faceMeshes = [];
+}
+
+// ---------- GT / comparison point-cloud overlays ----------
+const OVERLAY_COLORS = { E7: 0x40cfe0, E1: 0x3070c0, E2: 0xffa040 };
+const OVERLAY_LABEL = { E7: 'E7 ALS(=S1 입력)', E1: 'E1 GT', E2: 'E2 MVS' };
+state.overlayOn = { E7: false, E1: false, E2: false };
+const cloudCache = {};
+function parsePly(buf) {
+  const head = new TextDecoder().decode(new Uint8Array(buf, 0, Math.min(2048, buf.byteLength)));
+  const end = head.indexOf('end_header\n');
+  if (end < 0) return null;
+  const offset = end + 'end_header\n'.length;
+  let count = 0; const props = [];
+  head.slice(0, end).split('\n').forEach(ln => {
+    const t = ln.trim().split(/\s+/);
+    if (t[0] === 'element' && t[1] === 'vertex') count = +t[2];
+    else if (t[0] === 'property') props.push([t[1], t[2]]);
+  });
+  const size = props.reduce((s, p) => s + (p[0] === 'float' ? 4 : p[0] === 'double' ? 8 : p[0] === 'uchar' ? 1 : 4), 0);
+  const dv = new DataView(buf, offset);
+  const stride = Math.max(1, Math.floor(count / 300000));
+  const out = new Float32Array(Math.ceil(count / stride) * 3);
+  let oi = 0;
+  for (let i = 0; i < count; i += stride) {
+    let po = i * size; let x = 0, y = 0, z = 0;
+    for (const [typ, name] of props) {
+      let v;
+      if (typ === 'float') { v = dv.getFloat32(po, true); po += 4; }
+      else if (typ === 'double') { v = dv.getFloat64(po, true); po += 8; }
+      else if (typ === 'uchar') { v = dv.getUint8(po); po += 1; }
+      else { v = dv.getInt32(po, true); po += 4; }
+      if (name === 'x') x = v; else if (name === 'y') y = v; else if (name === 'z') z = v;
+    }
+    out[oi++] = x; out[oi++] = y; out[oi++] = z;
+  }
+  return out.subarray(0, oi);
+}
+async function refreshOverlays() {
+  scene.remove(overlayGroup); overlayGroup = new THREE.Group(); scene.add(overlayGroup);
+  const run = state.run;
+  if (!run || !run.overlays) return;
+  for (const arm of Object.keys(state.overlayOn)) {
+    if (!state.overlayOn[arm] || !run.overlays[arm]) continue;
+    const key = run.dir + '|' + arm;
+    if (!cloudCache[key]) {
+      const buf = await fetch('../' + run.overlays[arm]).then(r => r.arrayBuffer());
+      cloudCache[key] = parsePly(buf);
+    }
+    const pos = cloudCache[key];
+    if (!pos) continue;
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+    overlayGroup.add(new THREE.Points(g, new THREE.PointsMaterial({
+      color: OVERLAY_COLORS[arm], size: 0.28, transparent: true, opacity: 0.55 })));
+  }
+}
+function overlayControlsHtml(run) {
+  if (!run || !run.overlays) return '';
+  return '<div class="legend" id="ovctl">오버레이: ' + Object.keys(OVERLAY_COLORS)
+    .filter(a => run.overlays[a])
+    .map(a => `<label style="margin-right:8px"><input type="checkbox" data-ov="${a}" ${state.overlayOn[a] ? 'checked' : ''}> <span style="color:#${OVERLAY_COLORS[a].toString(16)}">${OVERLAY_LABEL[a]}</span></label>`)
+    .join('') + '</div>';
+}
+function bindOverlayControls() {
+  document.querySelectorAll('#ovctl input').forEach(cb => {
+    cb.onchange = () => { state.overlayOn[cb.dataset.ov] = cb.checked; refreshOverlays(); };
+  });
 }
 function faceGeometry(poly) {
   const g = new THREE.BufferGeometry();
@@ -158,6 +226,9 @@ function renderTab() {
       panelS5(run);
     }
   }
+  $('#panel').insertAdjacentHTML('afterbegin', overlayControlsHtml(run));
+  bindOverlayControls();
+  refreshOverlays();
   fitView(interior.length ? interior : faces);
 }
 function loadObj(path) {
