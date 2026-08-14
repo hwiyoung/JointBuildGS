@@ -40,13 +40,24 @@ window.addEventListener('mousemove', (e) => {
   if (!drag) return;
   const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
   drag.x = e.clientX; drag.y = e.clientY;
-  if (drag.btn === 0) { orbit.th -= dx * 0.008; orbit.ph = Math.min(Math.PI - 0.05, Math.max(0.05, orbit.ph - dy * 0.008)); }
-  else { const s = orbit.r * 0.0015;
-    const right = new THREE.Vector3().subVectors(camera.position, orbit.target).cross(camera.up).normalize();
-    orbit.target.addScaledVector(right, -dx * s); orbit.target.z += dy * s; }
+  if (drag.btn === 0) {
+    orbit.th -= dx * 0.005;
+    orbit.ph = Math.min(Math.PI - 0.03, Math.max(0.03, orbit.ph - dy * 0.005));
+  } else {
+    // pan in the camera plane (screen-right / screen-up), not world axes
+    const s = orbit.r * 0.0011;
+    const fwd = new THREE.Vector3().subVectors(orbit.target, camera.position).normalize();
+    const right = new THREE.Vector3().crossVectors(fwd, camera.up).normalize();
+    const up = new THREE.Vector3().crossVectors(right, fwd).normalize();
+    orbit.target.addScaledVector(right, -dx * s);
+    orbit.target.addScaledVector(up, dy * s);
+  }
   applyOrbit();
 });
-view.addEventListener('wheel', (e) => { orbit.r *= (1 + Math.sign(e.deltaY) * 0.1); applyOrbit(); e.preventDefault(); }, { passive: false });
+view.addEventListener('wheel', (e) => {
+  orbit.r = Math.max(2, orbit.r * (1 + Math.sign(e.deltaY) * 0.07));
+  applyOrbit(); e.preventDefault();
+}, { passive: false });
 view.addEventListener('contextmenu', (e) => e.preventDefault());
 function resize() {
   const w = view.clientWidth, h = view.clientHeight;
@@ -161,6 +172,9 @@ function addCellWires(cells, colorFn) {
   });
 }
 function fitView(faces) {
+  // preserve the camera across toggles/tab switches within the same run
+  if (state.lastFit === (state.run && state.run.dir)) return;
+  state.lastFit = state.run && state.run.dir;
   const bb = new THREE.Box3();
   faces.forEach(f => f.poly3d.forEach(p => bb.expandByPoint(new THREE.Vector3(...p))));
   if (bb.isEmpty()) return;
