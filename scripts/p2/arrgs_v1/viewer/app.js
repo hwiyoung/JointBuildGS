@@ -64,13 +64,34 @@ function resize() {
   renderer.setSize(w, h); camera.aspect = w / h; camera.updateProjectionMatrix();
 }
 window.addEventListener('resize', resize);
-(function loop() { requestAnimationFrame(loop); renderer.render(scene, camera); })();
+let hiliteMats = [];
+(function loop() {
+  requestAnimationFrame(loop);
+  if (hiliteMats.length) {
+    const t = performance.now() / 1000;
+    const o = 0.5 + 0.45 * Math.sin(t * 5);
+    hiliteMats.forEach(m => m.opacity = o);
+  }
+  renderer.render(scene, camera);
+})();
 
 let group = new THREE.Group(); scene.add(group);
 let overlayGroup = new THREE.Group(); scene.add(overlayGroup);
 let faceMeshes = [];   // aligned to s2.faces indices
 function clear3d() {
   scene.remove(group); group = new THREE.Group(); scene.add(group); faceMeshes = [];
+  hiliteMats = [];
+}
+function markHilite(mesh, f, i) {
+  const hl = state.hl || {};
+  const hit = (hl.plane && f.plane_id === hl.plane) || (hl.face !== undefined && hl.face === i);
+  if (hit) {
+    mesh.material.color.setHex(0xffe066);
+    mesh.material.depthWrite = false;
+    hiliteMats.push(mesh.material);
+  } else if (hl.plane || hl.face !== undefined) {
+    mesh.material.opacity = Math.min(mesh.material.opacity, 0.07); // dim the rest
+  }
 }
 
 // ---------- GT / comparison point-cloud overlays ----------
@@ -156,6 +177,7 @@ function addFaces(faces, colorFn, opacityFn) {
       side: THREE.DoubleSide, depthWrite: false });
     const m = new THREE.Mesh(faceGeometry(f.poly3d), mat);
     m.userData.faceIdx = i;
+    markHilite(m, f, i);
     group.add(m); faceMeshes[i] = m;
   });
 }
@@ -313,13 +335,31 @@ function loadObj(path) {
 // ---------- panels ----------
 function esc(x) { return String(x).replace(/</g, '&lt;'); }
 function planeTable(planes, extra) {
-  let h = '<table><tr><th class="l">평면</th><th class="l">출처</th>' + (extra ? '<th>Δ각°</th><th>Δd m</th>' : '') + '</tr>';
+  let h = '<table><tr><th class="l">평면(클릭=강조)</th><th class="l">출처</th>' + (extra ? '<th>Δ각°</th><th>Δd m</th>' : '') + '</tr>';
   planes.forEach(p => {
-    h += `<tr><td class="l">${esc(p.id)}</td><td class="l">${esc(p.source || '')}</td>`;
+    const sel = state.hl && state.hl.plane === p.id;
+    h += `<tr data-pid="${esc(p.id)}" style="cursor:pointer${sel ? ';background:#4a3d10' : ''}">` +
+      `<td class="l">${esc(p.id)}</td><td class="l">${esc(p.source || '')}</td>`;
     if (extra) h += `<td>${(p.dn_deg || 0).toFixed(2)}</td><td>${(p.dd_m || 0).toFixed(3)}</td>`;
     h += '</tr>';
   });
   return h + '</table>';
+}
+function bindPlaneRows() {
+  document.querySelectorAll('tr[data-pid]').forEach(tr => {
+    tr.onclick = () => {
+      const pid = tr.dataset.pid;
+      state.hl = (state.hl && state.hl.plane === pid) ? {} : { plane: pid };
+      renderTab();
+    };
+  });
+  document.querySelectorAll('tr[data-face]').forEach(tr => {
+    tr.onclick = () => {
+      const fi = +tr.dataset.face;
+      state.hl = (state.hl && state.hl.face === fi) ? {} : { face: fi };
+      renderTab();
+    };
+  });
 }
 function panelS1(run) {
   const s = state.s1src || { prior_als: true, mvs: true, footprint: false };
@@ -335,6 +375,7 @@ function panelS1(run) {
   document.querySelectorAll('#s1src input').forEach(cb => {
     cb.onchange = () => { state.s1src[cb.dataset.src] = cb.checked; renderTab(); };
   });
+  bindPlaneRows();
   const lt = $('#lod2tgl');
   if (lt) lt.onchange = () => { state.showLod2 = lt.checked; renderTab(); };
 }
@@ -394,6 +435,7 @@ function panelS34(run, snap) {
     <h2>렌더 ↔ 타깃</h2><div id="snapimgs">${(snap.renders || []).map(p =>
       `<img src="../${p}">`).join('')}</div>`;
   $('#panel').innerHTML = h;
+  bindPlaneRows();
   const c = $('#losschart');
   chart(c, [
     { data: snaps.slice(0, state.snap + 1).map(s => s.losses.photo) },
@@ -420,12 +462,15 @@ function panelS5(run) {
   h += `<h2>증거 카드 (활성 면 ${live.length})</h2>
     <table><tr><th class="l">면</th><th class="l">클래스</th><th>v</th><th>지지</th><th class="l">prior</th></tr>`;
   live.sort((a, b) => b.area - a.area).slice(0, 30).forEach(e => {
-    h += `<tr><td class="l">${e.face}:${esc(e.plane_id)}</td><td class="l">${e.class}</td>
+    const sel = state.hl && state.hl.face === e.face;
+    h += `<tr data-face="${e.face}" style="cursor:pointer${sel ? ';background:#4a3d10' : ''}">` +
+      `<td class="l">${e.face}:${esc(e.plane_id)}</td><td class="l">${e.class}</td>
       <td>${e.v_final.toFixed(2)}</td><td>${e.photo_support_proxy.toFixed(2)}</td>
       <td class="l">${e.has_prior ? 'O' : '—'}</td></tr>`;
   });
   $('#panel').innerHTML = h + '</table>';
   $('#evmode').onchange = (e) => { state.evMode = e.target.value; renderTab(); };
+  bindPlaneRows();
 }
 function renderQuant() {
   const runs = state.manifest.runs;
