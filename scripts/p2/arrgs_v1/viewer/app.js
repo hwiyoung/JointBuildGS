@@ -1,7 +1,13 @@
 import * as THREE from './three.module.min.js';
 
 const $ = (s) => document.querySelector(s);
-const state = { manifest: null, run: null, tab: 's34', snap: 0, playing: null, evMode: 'class' };
+const state = { manifest: null, run: null, tab: 's5', snap: 0, playing: null, evMode: 'class' };
+const TAB_GUIDE = {
+  s1: 'S1 검수: 반투명 면 = 후보 평면(출처별 색). 청록 점(ALS 입력)이 면에 붙어 있어야 정상 — 면 밖 점 덩어리 = 후보 누락.',
+  s2: 'S2 검수: 평면들이 자른 부피 조각(셀). 파랑 와이어 = 최적화 대상 셀, 자주 = footprint 밖 고정-빈 셀.',
+  s34: 'S3+4 검수: 하단 슬라이더로 학습 재생. 면이 진해질수록 표면으로 확정(v↑). 오른쪽 표는 개발 진단용 — 점유 o와 렌더↔사진 비교만 봐도 됨.',
+  s5: 'S5 검수: 최종 모델(적갈=지붕, 회=벽, 녹=지면). 파란 점 = E1 GT — 색면이 파란 점을 따라가면 성공, 벗어나면 실패.',
+};
 
 const SRC_COLORS = { prior_als: 0x4a9eff, mvs: 0xffa040, footprint: 0x9aa4b0,
                      gt: 0x50d890, distractor: 0xff5f6e, domain: 0x556070 };
@@ -198,7 +204,6 @@ function renderTab() {
     const snaps = run.snapshots || [];
     $('#tl-slider').max = Math.max(0, snaps.length - 1);
     if (state.snap >= snaps.length) state.snap = snaps.length - 1;
-    addCellWires(run.s2.cells, (c) => c.fixed === 0 ? 0x442833 : 0x2e4f75);
     const snap = snaps[state.snap];
     if (snap) {
       const vMap = {}; snap.renderable_faces.forEach((fi, s) => vMap[fi] = snap.face_v[s]);
@@ -226,7 +231,10 @@ function renderTab() {
       panelS5(run);
     }
   }
-  $('#panel').insertAdjacentHTML('afterbegin', overlayControlsHtml(run));
+  const g = TAB_GUIDE[state.tab];
+  $('#panel').insertAdjacentHTML('afterbegin',
+    (g ? `<div class="note" style="border:1px solid #2e3542;border-radius:5px;padding:6px;margin-bottom:6px">${g}</div>` : '')
+    + overlayControlsHtml(run));
   bindOverlayControls();
   refreshOverlays();
   fitView(interior.length ? interior : faces);
@@ -406,27 +414,76 @@ function renderQuant() {
 }
 
 // ---------- boot ----------
+const GROUPS = [
+  ['X1', '실건물 — 정상 대조 1동', false],
+  ['X2', '실건물 — 변화/구멍 프로파일', false],
+  ['X4', '실건물 93동 일괄', true],
+  ['X3', '실건물 — δ 오염 주입(진단용)', true],
+  ['X0', '합성 장난감 검증(개발용 — 실건물 아님)', true],
+];
+const TAB_DEFAULT_OVERLAY = {
+  s1: { E7: true, E1: false, E2: false },   // S1 검수: 후보 평면 vs ALS 입력
+  s2: { E7: true, E1: false, E2: false },
+  s34: { E7: false, E1: false, E2: false },
+  s5: { E7: false, E1: true, E2: false },   // 결과 검수: 모델 vs GT
+};
 fetch('./manifest.json').then(r => r.json()).then(man => {
   state.manifest = man;
   const list = $('#runs');
-  man.runs.forEach((r, i) => {
-    const b = document.createElement('button');
-    b.className = 'runbtn';
-    b.innerHTML = `<span class="exp">${r.exp}</span>${esc(r.name)}`;
-    b.onclick = () => {
-      document.querySelectorAll('.runbtn').forEach(x => x.classList.remove('active'));
-      b.classList.add('active');
-      state.run = r; state.snap = (r.snapshots || []).length - 1;
-      $('#hud').textContent = `${r.exp}/${r.name} — 좌드래그 회전 · 우드래그 이동 · 휠 줌`;
-      renderTab();
+  const guide = document.createElement('div');
+  guide.className = 'note';
+  guide.style.cssText = 'border:1px solid #2e3542;border-radius:5px;padding:6px;margin-bottom:8px';
+  guide.innerHTML = '<b style="color:#8ecbff">보는 법</b><br>' +
+    '① 아래에서 건물 클릭 (B022/B173/B036 추천)<br>' +
+    '② [S5 산출] 탭: 색면=결과 모델, <span style="color:#5b9bd5">파란 점=E1 GT</span> — 겹치면 성공<br>' +
+    '③ [S1 후보] 탭: 반투명 면=후보 평면, <span style="color:#40cfe0">청록 점=ALS 입력</span> — 점이 면 밖에 많으면 S1 결함<br>' +
+    '④ [S3+4] 탭: 하단 슬라이더로 학습 과정 재생';
+  list.appendChild(guide);
+  let firstBtn = null;
+  GROUPS.forEach(([exp, label, collapsed]) => {
+    const runs = man.runs.filter(r => r.exp === exp);
+    if (!runs.length) return;
+    const h = document.createElement('div');
+    h.style.cssText = 'margin:8px 0 3px;color:#8ecbff;font-weight:600;cursor:pointer;font-size:12px';
+    h.textContent = `${collapsed ? '▸' : '▾'} ${label} (${runs.length})`;
+    list.appendChild(h);
+    const box = document.createElement('div');
+    box.style.display = collapsed ? 'none' : 'block';
+    h.onclick = () => {
+      const open = box.style.display === 'none';
+      box.style.display = open ? 'block' : 'none';
+      h.textContent = `${open ? '▾' : '▸'} ${label} (${runs.length})`;
     };
-    list.appendChild(b);
-    if (i === 0) b.click();
+    runs.forEach(r => {
+      const b = document.createElement('button');
+      b.className = 'runbtn';
+      const pretty = r.bkey ? r.bkey.split('_')[0] + ' · ' + r.bkey.split('_').pop() +
+        (r.name.includes('dx') || r.name.includes('dz') ? ' (δ' + r.name.split('_').pop() + ')' : '')
+        : r.name;
+      b.innerHTML = `<span class="exp">${r.exp}</span>${esc(pretty)}`;
+      b.onclick = () => {
+        document.querySelectorAll('.runbtn').forEach(x => x.classList.remove('active'));
+        b.classList.add('active');
+        state.run = r; state.snap = (r.snapshots || []).length - 1;
+        Object.keys(cloudCache).forEach(k => { if (!k.startsWith(r.dir)) delete cloudCache[k]; });
+        state.overlayOn = { ...(TAB_DEFAULT_OVERLAY[state.tab] || {}) };
+        $('#hud').textContent = `${pretty} — 좌드래그 회전 · 우드래그 이동 · 휠 줌`;
+        renderTab();
+      };
+      box.appendChild(b);
+      if (!firstBtn) firstBtn = b;
+    });
+    list.appendChild(box);
   });
+  if (firstBtn) firstBtn.click();
   resize();
 });
 document.querySelectorAll('#tabs button').forEach(b =>
-  b.onclick = () => { state.tab = b.dataset.tab; renderTab(); });
+  b.onclick = () => {
+    state.tab = b.dataset.tab;
+    if (TAB_DEFAULT_OVERLAY[state.tab]) state.overlayOn = { ...TAB_DEFAULT_OVERLAY[state.tab] };
+    renderTab();
+  });
 $('#tl-slider').oninput = (e) => { state.snap = +e.target.value; renderTab(); };
 $('#tl-play').onclick = () => {
   if (state.playing) { clearInterval(state.playing); state.playing = null; $('#tl-play').textContent = '▶'; return; }
