@@ -216,7 +216,8 @@ function renderTab() {
   } else if (state.tab === 's2') {
     addCellWires(run.s2.cells, (c) => c.fixed === 0 ? 0x5a3040 : 0x3f77b0);
     addFaces(interior, () => 0x4a9eff, () => 0.06);
-    if (run._seeds === undefined) {
+    if (state.showSeeds === undefined) state.showSeeds = true;
+    if (!state.showSeeds) { /* seeds off */ } else if (run._seeds === undefined) {
       run._seeds = null; // in flight
       fetch('../' + run.dir + '/s2_seeds.json').then(r => r.ok ? r.json() : null)
         .then(s => { run._seeds = s; if (state.tab === 's2') renderTab(); })
@@ -347,9 +348,12 @@ function panelS2(run) {
     <tr><td class="l">렌더 가능 면</td><td>${(run.s2.renderable_faces || []).length}</td></tr>
     <tr><td class="l">가우시안 시드</td><td>${run.metrics ? run.metrics.gaussians : '—'}</td></tr></table>
     <p class="legend">파랑 와이어=자유 셀, 자주=고정 빈 셀(footprint 밖)</p>
-    <p class="legend">시드 점 색 = 소속 평면 소스: <span style="color:#4a9eff">prior</span>
+    <p class="legend"><label><input type="checkbox" id="seedtgl" ${state.showSeeds !== false ? 'checked' : ''}> 시드 표시</label>
+    — 색 = 소속 평면 소스: <span style="color:#4a9eff">prior</span>
     <span style="color:#ffa040">MVS</span> <span style="color:#9aa4b0">footprint벽</span>
     <span style="color:#667788">domain</span> — E7 오버레이(청록)와 겹쳐 "시드가 실표면 근처인가" 확인</p>`;
+  const st = $('#seedtgl');
+  if (st) st.onchange = () => { state.showSeeds = st.checked; renderTab(); };
 }
 function chart(canvas, series, labels) {
   const ctx = canvas.getContext('2d');
