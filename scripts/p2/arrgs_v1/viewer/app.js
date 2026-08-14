@@ -191,9 +191,12 @@ function renderTab() {
   const faces = run.s2.faces;
   const interior = faces.filter(f => f.cell_b >= 0 && !f.plane_id.startsWith('domain:'));
   if (state.tab === 's1') {
-    addFaces(faces.filter(f => !f.plane_id.startsWith('domain:')),
-      (f) => { const p = (run.s1.planes || []).find(q => q.id === f.plane_id);
-               return SRC_COLORS[p ? p.source : 'domain'] || 0x888888; },
+    if (!state.s1src) state.s1src = { prior_als: true, mvs: true, footprint: false };
+    const srcOf = {};
+    (run.s1.planes || []).forEach(p => srcOf[p.id] = p.source);
+    addFaces(faces.filter(f => !f.plane_id.startsWith('domain:')
+                               && state.s1src[srcOf[f.plane_id]]),
+      (f) => SRC_COLORS[srcOf[f.plane_id]] || 0x888888,
       () => 0.38);
     panelS1(run);
   } else if (state.tab === 's2') {
@@ -230,6 +233,18 @@ function renderTab() {
       }, (f, i) => { const e = evByFace[i]; return e && e.v_final > 0.5 ? 0.92 : 0.03; });
       panelS5(run);
     }
+  }
+  // LoD2 GT rings (green loops) on S1/S5
+  if ((state.tab === 's1' || state.tab === 's5') && run.lod2_rings
+      && state.showLod2 !== false) {
+    run.lod2_rings.forEach(ring => {
+      const pts = [];
+      ring.forEach(p => pts.push(...p));
+      const geo = new THREE.BufferGeometry();
+      geo.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3));
+      group.add(new THREE.LineLoop(geo, new THREE.LineBasicMaterial({
+        color: 0x30d060, linewidth: 2 })));
+    });
   }
   const g = TAB_GUIDE[state.tab];
   $('#panel').insertAdjacentHTML('afterbegin',
@@ -274,11 +289,21 @@ function planeTable(planes, extra) {
   return h + '</table>';
 }
 function panelS1(run) {
+  const s = state.s1src || { prior_als: true, mvs: true, footprint: false };
   $('#panel').innerHTML = `<h2>S1 후보 평면 (${run.s1.planes.length})</h2>
-    <div class="legend"><span style="background:#4a9eff">prior(ALS)</span>
-    <span style="background:#ffa040">MVS</span><span style="background:#9aa4b0;color:#222">footprint</span>
-    <span style="background:#50d890;color:#222">GT</span><span style="background:#ff5f6e">교란</span></div>
-    ${planeTable(run.s1.planes)}`;
+    <div class="legend" id="s1src">평면 소스:
+      <label><input type="checkbox" data-src="prior_als" ${s.prior_als ? 'checked' : ''}> <span style="color:#4a9eff">prior(ALS)</span></label>
+      <label style="margin-left:6px"><input type="checkbox" data-src="mvs" ${s.mvs ? 'checked' : ''}> <span style="color:#ffa040">MVS</span></label>
+      <label style="margin-left:6px"><input type="checkbox" data-src="footprint" ${s.footprint ? 'checked' : ''}> <span style="color:#9aa4b0">footprint 벽</span></label>
+    </div>
+    <div class="legend"><label><input type="checkbox" id="lod2tgl" ${state.showLod2 !== false ? 'checked' : ''}> <span style="color:#30d060">LoD2 GT 지붕 링(초록 선)</span></label>
+    ${run.lod2_rings ? '' : ' — 이 런엔 없음'}</div>
+    ${planeTable(run.s1.planes.filter(p => p.source !== 'footprint' || s.footprint))}`;
+  document.querySelectorAll('#s1src input').forEach(cb => {
+    cb.onchange = () => { state.s1src[cb.dataset.src] = cb.checked; renderTab(); };
+  });
+  const lt = $('#lod2tgl');
+  if (lt) lt.onchange = () => { state.showLod2 = lt.checked; renderTab(); };
 }
 function panelS2(run) {
   const cells = run.s2.cells;

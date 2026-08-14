@@ -110,6 +110,30 @@ def load_run(exp: str, run_dir: Path):
     return entry
 
 
+def load_lod2_rings(bkeys):
+    """LoD2 RoofSurface rings (viewer-local) for S1/S5 GT overlay — evaluation-only."""
+    import sys
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "journal1_phase_a_v1"))
+    from geometry_eval import load_lod2_faces
+    cfg = json.load(open(Path(__file__).resolve().parents[3] /
+                         "configs/p2/arrgs_v1/eval_arrgs_v1.json"))
+    tiles = [t.replace("/artifacts/JointBuildGS", str(ART)) for t in cfg["gml_tiles"]]
+    sids = {"_".join(b.split("_")[1:]) for b in bkeys}
+    faces = load_lod2_faces(tiles, sids, cfg["origin"], cfg["lod2_z_shift_to_viewer_m"])
+    out = {}
+    for sid, fl in faces.items():
+        rings = []
+        for verts, n in fl:
+            import numpy as np
+            v = np.asarray(verts)
+            area = 0.5 * np.linalg.norm(sum(
+                np.cross(v[i] - v[0], v[i + 1] - v[0]) for i in range(1, len(v) - 1)))
+            if area >= 5.0:
+                rings.append(np.round(v, 3).tolist())
+        out[sid] = rings
+    return out
+
+
 def main():
     VIEWER.mkdir(parents=True, exist_ok=True)
     ensure_overlay_links()
@@ -123,6 +147,16 @@ def main():
                     runs.append(load_run(exp, run_dir))
                 except Exception as e:
                     print("skip", run_dir, e)
+    bkeys = {r["bkey"] for r in runs if r.get("bkey")}
+    if bkeys:
+        try:
+            rings = load_lod2_rings(bkeys)
+            for r in runs:
+                sid = "_".join(r["bkey"].split("_")[1:]) if r.get("bkey") else None
+                if sid and sid in rings:
+                    r["lod2_rings"] = rings[sid]
+        except Exception as e:
+            print("lod2 rings skipped:", e)
     summaries = {}
     for exp, root in RUN_ROOTS:
         sp = root.parent / f"{exp.lower()}_summary.json"
