@@ -216,7 +216,11 @@ def load_real_scene(scene, device):
 
     roof_als = als_xyz[als_cls == 6] if als_cls is not None else als_xyz
     ground_als = als_xyz[als_cls == 2] if als_cls is not None else als_xyz
-    ground_z = float(np.median(ground_als[:, 2])) if len(ground_als) else float(np.quantile(als_xyz[:, 2], 0.05))
+    # class-agnostic guard: B036's SMRF roof-as-ground pollution lifted the
+    # class-2 median to roof height — take the more conservative of the two
+    q05_all = float(np.quantile(als_xyz[:, 2], 0.05)) if len(als_xyz) else 0.0
+    cls2_med = float(np.median(ground_als[:, 2])) if len(ground_als) else q05_all
+    ground_z = min(cls2_med, q05_all + 1.0)
     # X1-diag fix: the footprint+3m crop can catch neighbour structure (tower
     # tails inflated top_z to +13 m -> phantom solid headroom). Restrict the
     # vertical-extent and plane statistics to points INSIDE the footprint.
@@ -232,19 +236,30 @@ def load_real_scene(scene, device):
         roof_fp = roof_als
     top_z = float(np.quantile(roof_fp[:, 2], 0.98) + 1.5) if len(roof_fp) else ground_z + 15.0
 
-    prior_planes = ransac_planes(roof_fp, max_planes=scene.get("max_prior_planes", 12),
-                                 reject_vertical=0.5)  # roofs only; walls come from footprint
-    prior_planes = sorted(prior_planes, key=lambda p: -p["inliers"])[:10]
+    s1_mode = scene.get("s1_mode", "roofer")
     planes = []
-    for i, pl in enumerate(prior_planes):
-        planes.append({"id": f"prior{i}", "n": pl["n"], "d": pl["d"], "source": "prior_als",
-                       "prior": {"n0": pl["n"], "d0": pl["d"], "w": min(1.0, pl["frac"] * 5)}})
-    if e2_xyz is not None:
-        roof_e2 = e2_xyz[e2_cls == 6] if e2_cls is not None else e2_xyz
-        mvs_planes = dedupe(prior_planes, ransac_planes(roof_e2, max_planes=4))
-        for i, pl in enumerate(mvs_planes[:scene.get("max_mvs_planes", 3)]):
-            planes.append({"id": f"mvs{i}", "n": pl["n"], "d": pl["d"],
-                           "source": "mvs", "prior": None})
+    if s1_mode == "roofer":
+        # S1R: sealed Roofer outputs as the plane detector (E7=prior, E8=union increment)
+        from s1r import candidates_from_roofer
+        e7_obj = A2_CROPS / "E7" / f"{bkey}.roofer.obj"
+        e8_obj = A2_CROPS / "E8" / f"{bkey}.roofer.obj"
+        planes = candidates_from_roofer(
+            e7_obj if e7_obj.is_file() else None,
+            e8_obj if e8_obj.is_file() else None,
+            delta_shift=shift if (inj_e or inj_z) else None)
+    if len(planes) < 2:  # fallback: v1 RANSAC path
+        prior_planes = ransac_planes(roof_fp, max_planes=scene.get("max_prior_planes", 12),
+                                     reject_vertical=0.5)
+        prior_planes = sorted(prior_planes, key=lambda p: -p["inliers"])[:10]
+        for i, pl in enumerate(prior_planes):
+            planes.append({"id": f"prior{i}", "n": pl["n"], "d": pl["d"], "source": "prior_als",
+                           "prior": {"n0": pl["n"], "d0": pl["d"], "w": min(1.0, pl["frac"] * 5)}})
+        if e2_xyz is not None:
+            roof_e2 = e2_xyz[e2_cls == 6] if e2_cls is not None else e2_xyz
+            mvs_planes = dedupe(prior_planes, ransac_planes(roof_e2, max_planes=4))
+            for i, pl in enumerate(mvs_planes[:scene.get("max_mvs_planes", 3)]):
+                planes.append({"id": f"mvs{i}", "n": pl["n"], "d": pl["d"],
+                               "source": "mvs", "prior": None})
     for i in range(len(fp)):
         a, b = fp[i], fp[(i + 1) % len(fp)]
         e = np.array([b[0] - a[0], b[1] - a[1], 0.0])
@@ -252,10 +267,36 @@ def load_real_scene(scene, device):
             continue
         n = np.array([e[1], -e[0], 0.0])
         n /= np.linalg.norm(n)
+        # support corridor: only facets near this edge segment carry walls/seeds
+        from shapely.geometry import LineString
+        corr = LineString([tuple(a), tuple(b)]).buffer(1.2)
         planes.append({"id": f"wall{i}", "n": n.tolist(), "d": float(n[:2] @ a),
-                       "source": "footprint", "prior": None})
+                       "source": "footprint", "prior": None,
+                       "support": [np.asarray(corr.exterior.coords)[:-1].tolist()]})
     planes.append({"id": "groundp", "n": [0, 0, 1.0], "d": ground_z + 0.05,
-                   "source": "footprint", "prior": None})
+                   "source": "footprint", "prior": None,
+                   "support": [np.asarray(fp).tolist()]})
+    # S1 input-side verdict (upper envelope of ALL crop returns — SMRF-hole immune)
+    from s1r import s1_verdict, upper_envelope, gapfill_planes
+    above = als_xyz[als_xyz[:, 2] > ground_z + 2.0]
+    env_src = upper_envelope(above)  # column-top skin: walls collapse to eaves
+    roofish = [p for p in planes if p["source"] != "footprint"]
+    verdict = s1_verdict(roofish, env_src, fp)
+    if not verdict["pass"]:
+        extra = gapfill_planes(roofish, env_src, fp, ransac_fn=ransac_planes)
+        if extra:
+            planes = planes + extra
+            roofish = roofish + extra
+            verdict = s1_verdict(roofish, env_src, fp)
+            verdict["gapfill_added"] = len(extra)
+    # grade: residue after gapfill exhaustion = plane-unfittable content
+    # (canopy/superstructure), not a structural miss
+    if verdict["pass"]:
+        verdict["grade"] = "PASS"
+    elif verdict["explained"] >= 0.95:
+        verdict["grade"] = "PASS_RESIDUE"
+    else:
+        verdict["grade"] = "FAIL"
 
     # ---------------- cameras / views ----------------
     cams = read_colmap_cameras(FULLSCENE_SPARSE / "cameras.bin")
@@ -377,6 +418,12 @@ def load_real_scene(scene, device):
     col_src = roof_fp if len(roof_fp) else als_xyz
     tree = cKDTree(col_src[:, :2]) if len(col_src) else None
 
+    # S1R fix (B036): column surface from the FULL crop upper envelope, not
+    # class-6 only — the SMRF ground-misclassified central roof stays solid.
+    if s1_mode == "roofer" and len(als_xyz):
+        col_src = als_xyz
+        tree = cKDTree(als_xyz[:, :2])
+
     def o_init_fn(centroid):
         if tree is None:
             return 0.5
@@ -399,4 +446,6 @@ def load_real_scene(scene, device):
         "view_names": [s[1]["name"] for s in sel],
         "als_points": len(als_xyz),
         "inject": [inj_e, 0.0, inj_z],
+        "s1_verdict": verdict,
+        "s1_mode": s1_mode if len(planes) > len(fp) + 1 else "ransac_fallback",
     }

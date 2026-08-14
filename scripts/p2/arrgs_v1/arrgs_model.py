@@ -58,14 +58,37 @@ def _rotmat_to_quat(R):
     return F.normalize(q, dim=-1)
 
 
-def seed_faces(arr, target_total=6000, min_spacing=0.30):
+def seed_faces(arr, target_total=6000, min_spacing=0.30, planes=None,
+               uniform=False):
     """Grid-seed gaussians on renderable faces. Returns dict of numpy arrays.
-    Skips faces whose both sides are fixed-empty (v==0 forever)."""
+
+    Skips faces whose both sides are fixed-empty (v==0 forever). When `planes`
+    carry support regions (S1R), facets outside their plane's support get no
+    seeds (pierce-facet cull), and the budget is weighted toward facets on the
+    initial solid|empty boundary (|Δo_init|). `uniform=True` disables both
+    (v1 behaviour — the seeding ablation control)."""
+    from shapely.prepared import prep as _prep
+    sup_map = {}
+    if planes and not uniform:
+        for p in planes:
+            if p.get("support"):
+                polys = [Polygon(r) for r in p["support"] if len(r) >= 3]
+                polys = [q for q in polys if q.is_valid and q.area > 0.2]
+                if polys:
+                    from shapely.ops import unary_union
+                    sup_map[p["id"]] = _prep(unary_union(polys))
     cells = arr["cells"]
     fixed = [c["fixed"] for c in cells]
+
+    def o0(ci):
+        if ci < 0 or fixed[ci] == 0.0:
+            return 0.0
+        return cells[ci].get("o_init", 0.5)
+
     seeds = []          # (x,y,z) world
     seed_face = []      # face index
     face_keep = []      # indices of renderable faces
+    face_w = {}
     total_area = 0.0
     for fi, f in enumerate(arr["faces"]):
         a, b = f["cell_a"], f["cell_b"]
@@ -73,8 +96,21 @@ def seed_faces(arr, target_total=6000, min_spacing=0.30):
         fb = fixed[b] if b >= 0 else 0.0
         if fa == 0.0 and fb == 0.0:
             continue
+        if sup_map:
+            pid = f["plane_id"]
+            if pid in sup_map:
+                cen = np.asarray(f["poly3d"]).mean(axis=0)
+                if not sup_map[pid].contains(ShPoint(cen[0], cen[1])):
+                    continue  # pierce facet outside the plane's support
+            elif not pid.startswith("domain:"):
+                pass  # plane without support info: keep (fallback planes)
+        w = 1.0
+        if not uniform:
+            gate0 = abs(o0(a) - o0(b))
+            w = 0.25 + 2.75 * min(1.0, gate0 / 0.6)  # boundary-weighted budget
         face_keep.append(fi)
-        total_area += f["area"]
+        face_w[fi] = w
+        total_area += f["area"] * w
     for fi in face_keep:
         f = arr["faces"][fi]
         poly3d = np.asarray(f["poly3d"])
@@ -86,8 +122,8 @@ def seed_faces(arr, target_total=6000, min_spacing=0.30):
         origin = n * d
         uv = np.stack([(poly3d - origin) @ e1, (poly3d - origin) @ e2], axis=1)
         poly = Polygon(uv)
-        # spacing from area budget
-        share = max(f["area"] / max(total_area, 1e-6), 1e-4)
+        # spacing from (weighted) area budget
+        share = max(f["area"] * face_w.get(fi, 1.0) / max(total_area, 1e-6), 1e-4)
         n_target = max(6, int(target_total * share))
         spacing = max(min_spacing, math.sqrt(f["area"] / n_target))
         minx, miny, maxx, maxy = poly.bounds
@@ -105,7 +141,12 @@ def seed_faces(arr, target_total=6000, min_spacing=0.30):
             world = origin + x * e1 + y * e2
             seeds.append(world)
             seed_face.append(fi)
-    return {"xyz": np.asarray(seeds), "face_idx": np.asarray(seed_face, dtype=np.int64),
+    xyz = np.asarray(seeds)
+    face_idx = np.asarray(seed_face, dtype=np.int64)
+    if len(xyz) > 2.2 * target_total:  # per-face minimums can blow the budget
+        stride = int(np.ceil(len(xyz) / (2.2 * target_total)))
+        xyz, face_idx = xyz[::stride], face_idx[::stride]
+    return {"xyz": xyz, "face_idx": face_idx,
             "renderable_faces": np.asarray(face_keep, dtype=np.int64)}
 
 

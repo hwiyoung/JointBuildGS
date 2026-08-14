@@ -220,7 +220,9 @@ def run(cfg):
     # ---------------- S1/S2 ----------------
     t0 = time.time()
     json.dump({"planes": planes, "footprint": np.asarray(fp).tolist(),
-               "ground_z": ground_z, "top_z": top_z},
+               "ground_z": ground_z, "top_z": top_z,
+               "s1_verdict": (rs.get("s1_verdict") if scene["type"] == "real" else None),
+               "s1_mode": (rs.get("s1_mode") if scene["type"] == "real" else "synthetic")},
               open(out_dir / "s1_candidates.json", "w"))
     arr = build_arrangement(planes, fp, ground_z, top_z,
                             margin=cfg.get("domain_margin", 1.5))
@@ -250,7 +252,14 @@ def run(cfg):
         gt_labels = label_cells_by_solid(arr, gt_inside)
     else:
         gt_labels = None
-    seeds = seed_faces(arr, target_total=cfg.get("gaussians", 6000))
+    seeds = seed_faces(arr, target_total=cfg.get("gaussians", 6000),
+                       planes=planes, uniform=bool(cfg.get("seed_uniform", False)))
+    srcOf = {p["id"]: p.get("source", "") for p in planes}
+    sub = max(1, len(seeds["xyz"]) // 12000)
+    json.dump({"xyz": np.round(seeds["xyz"][::sub], 2).tolist(),
+               "src": [srcOf.get(arr["faces"][fi]["plane_id"], "domain")
+                       for fi in seeds["face_idx"][::sub]]},
+              open(out_dir / "s2_seeds.json", "w"))
     json.dump({"cells": arr["cells"], "faces": [
         {k: f[k] for k in ("plane_id", "cell_a", "cell_b", "n", "d", "poly3d", "area")}
         for f in arr["faces"]],
