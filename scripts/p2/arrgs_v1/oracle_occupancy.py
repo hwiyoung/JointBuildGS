@@ -32,7 +32,7 @@ out_root = BASE / "P2-ARRGS-ORACLE-v1/runs"
 
 for sid, bkey in BUILDINGS:
     rs = load_real_scene({"type": "real", "stable_id": sid, "bkey": bkey,
-                          "e2_dir": E2, "max_views": 8, "image_scale": 0.4}, "cpu")
+                          "e2_dir": E2, "skip_images": True}, "cpu")
     arr = build_arrangement(rs["planes"], rs["footprint"], rs["ground_z"],
                             rs["top_z"], margin=1.2)
     o = []

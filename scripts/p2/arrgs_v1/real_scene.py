@@ -298,7 +298,55 @@ def load_real_scene(scene, device):
     else:
         verdict["grade"] = "FAIL"
 
+    # occupancy init from (possibly shifted) ALS solid proxy — defined before
+    # the camera section so skip_images sweeps (oracle) can use it.
+    from scipy.spatial import cKDTree
+    col_src = roof_fp if len(roof_fp) else als_xyz
+    tree = cKDTree(col_src[:, :2]) if len(col_src) else None
+    if s1_mode == "roofer" and len(als_xyz):  # B036: class-6 hole immunity
+        col_src = als_xyz
+        tree = cKDTree(als_xyz[:, :2])
+
+    # plane-aware occupancy surface: on sawtooth/parapet roofs the raw column
+    # p90 envelope fills to the TOOTH TOPS (B173 oracle collapse, comp 0.02) —
+    # prefer the local candidate-plane surface where a support region covers
+    # the column, envelope as fallback.
+    from shapely.prepared import prep as _prep2
+    from shapely.ops import unary_union as _uu
+    from shapely.geometry import Polygon
+    plane_surfs = []
+    for p in planes:
+        if p["source"] == "footprint" or not p.get("support"):
+            continue
+        polys = [Polygon(r) for r in p["support"] if len(r) >= 3]
+        polys = [q for q in polys if q.is_valid and q.area > 0.5]
+        if not polys:
+            continue
+        n = np.asarray(p["n"])
+        if abs(n[2]) < 0.1:
+            continue
+        plane_surfs.append((_prep2(_uu(polys)), n, float(p["d"])))
+
+    def o_init_fn(centroid):
+        # envelope-primary (plane-surface variant REGRESSED: overlapping
+        # buffered supports overfill to the tallest covering plane —
+        # B022 0.695->0.470, B036 0.801->0.696; kept for reference)
+        if tree is None:
+            return 0.5
+        idx = tree.query_ball_point(centroid[:2], r=0.75)
+        if not idx:
+            return 0.2
+        zsurf = float(np.percentile(col_src[idx, 2], 90))
+        return 0.75 if centroid[2] < zsurf else 0.15
+
     # ---------------- cameras / views ----------------
+    if scene.get("skip_images"):  # oracle sweeps need no photometry
+        return {
+            "planes": planes, "footprint": fp, "ground_z": ground_z,
+            "top_z": top_z, "o_init_fn": o_init_fn, "s1_verdict": verdict,
+            "s1_mode": s1_mode if len(planes) > len(fp) + 1 else "ransac_fallback",
+            "als_points": len(als_xyz), "inject": [inj_e, 0.0, inj_z],
+        }
     cams = read_colmap_cameras(FULLSCENE_SPARSE / "cameras.bin")
     imgs = read_colmap_images(FULLSCENE_SPARSE / "images.bin")
     cam0 = cams[imgs[0]["cam"]]
@@ -409,29 +457,6 @@ def load_real_scene(scene, device):
         keep &= inside_z
         drop = ~keep
         masks[i][ys[drop], xs[drop]] = False
-
-    # occupancy init from (possibly shifted) ALS solid proxy.
-    # Column surface = 90th-percentile z in a tight column (0.75 m) of the
-    # footprint-restricted roof points — the earlier max-in-1.5m rule let a
-    # single stray/tail point mark whole columns solid up to the domain top.
-    from scipy.spatial import cKDTree
-    col_src = roof_fp if len(roof_fp) else als_xyz
-    tree = cKDTree(col_src[:, :2]) if len(col_src) else None
-
-    # S1R fix (B036): column surface from the FULL crop upper envelope, not
-    # class-6 only — the SMRF ground-misclassified central roof stays solid.
-    if s1_mode == "roofer" and len(als_xyz):
-        col_src = als_xyz
-        tree = cKDTree(als_xyz[:, :2])
-
-    def o_init_fn(centroid):
-        if tree is None:
-            return 0.5
-        idx = tree.query_ball_point(centroid[:2], r=0.75)
-        if not idx:
-            return 0.2
-        zsurf = float(np.percentile(col_src[idx, 2], 90))
-        return 0.75 if centroid[2] < zsurf else 0.15
 
     return {
         "planes": planes, "footprint": fp, "ground_z": ground_z, "top_z": top_z,
