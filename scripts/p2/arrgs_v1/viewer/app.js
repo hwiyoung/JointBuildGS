@@ -84,7 +84,8 @@ function clear3d() {
 }
 function markHilite(mesh, f, i) {
   const hl = state.hl || {};
-  const hit = (hl.plane && f.plane_id === hl.plane) || (hl.face !== undefined && hl.face === i);
+  const fi = (f.fi !== undefined) ? f.fi : i;
+  const hit = (hl.plane && f.plane_id === hl.plane) || (hl.face !== undefined && hl.face === fi);
   if (hit) {
     mesh.material.color.setHex(0xffe066);
     mesh.material.depthWrite = false;
@@ -292,7 +293,7 @@ function renderTab() {
       addFaces(faces, (f) => {
         const p = (run.s1.planes || []).find(q => q.id === f.plane_id);
         return SRC_COLORS[p ? p.source : 'domain'] || 0x667788;
-      }, (f, i) => (vMap[i] !== undefined ? Math.min(0.95, vMap[i]) : 0));
+      }, (f, i) => { const fi = (f.fi !== undefined) ? f.fi : i; return vMap[fi] !== undefined ? Math.min(0.95, vMap[fi]) : 0; });
       panelS34(run, snap);
     }
   } else if (state.tab === 's5') {
@@ -302,14 +303,14 @@ function renderTab() {
       const ev = run.s5_evidence || [];
       const evByFace = {}; ev.forEach(e => evByFace[e.face] = e);
       addFaces(faces, (f, i) => {
-        const e = evByFace[i]; if (!e) return 0x333944;
+        const e = evByFace[(f.fi !== undefined) ? f.fi : i]; if (!e) return 0x333944;
         if (state.evMode === 'class') return CLS_COLORS[e.class] || 0x888888;
         if (state.evMode === 'support') {
           const t = Math.min(1, e.photo_support_proxy * 1.6);
           return new THREE.Color(1 - t, t, 0.25).getHex();
         }
         return e.has_prior ? 0x4a9eff : 0x50d890; // prior vs current
-      }, (f, i) => { const e = evByFace[i]; return e && e.v_final > 0.5 ? 0.92 : 0.03; });
+      }, (f, i) => { const e = evByFace[(f.fi !== undefined) ? f.fi : i]; return e && e.v_final > 0.5 ? 0.92 : 0.03; });
       panelS5(run);
     }
   }
@@ -590,9 +591,12 @@ fetch('./manifest.json').then(r => r.json()).then(man => {
     runs.forEach(r => {
       const b = document.createElement('button');
       b.className = 'runbtn';
-      const pretty = r.bkey ? r.bkey.split('_')[0] + ' · ' + r.bkey.split('_').pop() +
-        (r.name.includes('dx') || r.name.includes('dz') ? ' (δ' + r.name.split('_').pop() + ')' : '')
-        : r.name;
+      let pretty = r.bkey ? r.bkey.split('_')[0] + ' · ' + r.bkey.split('_').pop() : r.name;
+      if (r.bkey) {
+        const suffix = r.name.replace(/^B\d+_?/, '').replace(/^(clean|changed|hole)$/, '');
+        if (suffix && !r.name.startsWith('B0')) pretty += ` (${r.name})`;
+        else if (suffix) pretty += ` (${suffix.replace('ablation_', '절제:')})`;
+      }
       b.innerHTML = `<span class="exp">${r.exp}</span>${esc(pretty)}`;
       b.onclick = () => {
         document.querySelectorAll('.runbtn').forEach(x => x.classList.remove('active'));

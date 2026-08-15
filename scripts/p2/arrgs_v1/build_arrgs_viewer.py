@@ -100,8 +100,23 @@ def load_run(exp: str, run_dir: Path):
                 cells.append({"idx": c["idx"], "centroid": c["centroid"],
                               "fixed": c["fixed"], "o_init": c.get("o_init"),
                               "edges": edges})
-            faces = [{k: f[k] for k in ("plane_id", "cell_a", "cell_b", "n", "d",
-                                        "poly3d", "area")} for f in s2["faces"]]
+            # display set: drop faces between two fixed-empty cells on domain
+            # planes (the bulk of a big arrangement, never visible) + round
+            fixed = {c["idx"]: c["fixed"] for c in s2["cells"]}
+            def _vis(f):
+                a, b = f["cell_a"], f["cell_b"]
+                fa = fixed.get(a) if a >= 0 else 0.0
+                fb = fixed.get(b) if b >= 0 else 0.0
+                both_empty = (fa == 0.0 and fb == 0.0)
+                return (not both_empty) or (not f["plane_id"].startswith("domain:")
+                                            and f["area"] > 1.0)
+            import numpy as _np
+            faces = [{"fi": fi, "plane_id": f["plane_id"], "cell_a": f["cell_a"],
+                      "cell_b": f["cell_b"], "n": [round(x, 4) for x in f["n"]],
+                      "d": round(f["d"], 3),
+                      "poly3d": _np.round(_np.asarray(f["poly3d"]), 2).tolist(),
+                      "area": round(f["area"], 2)}
+                     for fi, f in enumerate(s2["faces"]) if _vis(f)]
             json.dump({"cells": cells, "faces": faces,
                        "renderable_faces": s2.get("renderable_faces", []),
                        "gt_labels": s2.get("gt_labels")}, open(s2v, "w"))
