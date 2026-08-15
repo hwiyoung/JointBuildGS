@@ -66,6 +66,39 @@ def ensure_overlay_links():
             link.symlink_to(src)
 
 
+def thin_overlay(bkey, arm, target=250000):
+    """Server-side thinned overlay copy — full-res crops are 20-80 MB per
+    fetch and were the dominant viewer latency. Returns rel path or None."""
+    src = BASE / "viewer_assets" / arm / f"{bkey}.points.ply"
+    if not src.is_file():
+        return None
+    dst_dir = BASE / "viewer_assets_thin" / arm
+    dst_dir.mkdir(parents=True, exist_ok=True)
+    dst = dst_dir / f"{bkey}.points.ply"
+    if dst.is_file():
+        return f"viewer_assets_thin/{arm}/{bkey}.points.ply"
+    import numpy as np
+    with open(src, "rb") as f:
+        header = b""
+        while not header.endswith(b"end_header\n"):
+            header += f.readline()
+        lines = header.decode().splitlines()
+        count = int([l for l in lines if l.startswith("element vertex")][0].split()[-1])
+        props = [l.split()[1:] for l in lines if l.startswith("property")]
+        fmt = {"float": ("f4", 4), "uchar": ("u1", 1), "double": ("f8", 8)}
+        dt = np.dtype([(nm, "<" + fmt[t][0]) for t, nm in props])
+        raw = np.frombuffer(f.read(count * dt.itemsize), dtype=dt)
+    stride = max(1, count // target)
+    thin = raw[::stride]
+    with open(dst, "wb") as f:
+        f.write(("ply\nformat binary_little_endian 1.0\n"
+                 f"element vertex {len(thin)}\n"
+                 + "".join(f"property {t} {nm}\n" for t, nm in props)
+                 + "end_header\n").encode())
+        f.write(thin.tobytes())
+    return f"viewer_assets_thin/{arm}/{bkey}.points.ply"
+
+
 def load_run(exp: str, run_dir: Path):
     entry = {"exp": exp, "name": run_dir.name, "dir": rel(run_dir)}
     for key, fn in (("s1", "s1_candidates.json"), ("metrics", "metrics.json"),
@@ -148,8 +181,9 @@ def load_run(exp: str, run_dir: Path):
     if bkey:
         ov = {}
         for arm in OVERLAY_SRC:
-            if (BASE / "viewer_assets" / arm / f"{bkey}.points.ply").is_file():
-                ov[arm] = f"viewer_assets/{arm}/{bkey}.points.ply"
+            t = thin_overlay(bkey, arm)
+            if t:
+                ov[arm] = t
         if ov:
             entry["overlays"] = ov
             entry["bkey"] = bkey
@@ -208,8 +242,9 @@ def main():
                 r["bkey"] = bkey
                 ov = {}
                 for a in OVERLAY_SRC:
-                    if (BASE / "viewer_assets" / a / f"{bkey}.points.ply").is_file():
-                        ov[a] = f"viewer_assets/{a}/{bkey}.points.ply"
+                    t = thin_overlay(bkey, a)
+                    if t:
+                        ov[a] = t
                 if ov:
                     r["overlays"] = ov
         if arm and bkey:

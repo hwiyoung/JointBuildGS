@@ -246,6 +246,8 @@ function renderTab() {
     if (run.s5_obj) {
       clear3d();
       loadObj('../' + run.s5_obj);
+      $('#panel').innerHTML = evalTable(run) +
+        '<p class="legend">오라클 런: 최적화 0 — 색면=모델, 파란 점=E1 GT</p>';
       $('#panel').insertAdjacentHTML('afterbegin', overlayControlsHtml(run));
       bindOverlayControls(); refreshOverlays();
       return;
@@ -496,10 +498,21 @@ function panelS34(run, snap) {
     { data: loaded.map(s => s.psnr_eval / 40) },
   ], ['photo', 'bin', 'prior', 'psnr/40 (로드된 스냅샷만)']);
 }
+function evalTable(run) {
+  if (!run.eval) return '';
+  let h = '<h2>봉인 평가 (f1@0.5 / comp@0.25 / acc)</h2><table><tr><th class="l">GT</th><th>f1</th><th>comp</th><th>acc(m)</th></tr>';
+  for (const gt of ['e1', 'lod2']) {
+    const e = run.eval[gt];
+    if (!e) continue;
+    h += `<tr><td class="l">${gt}</td><td>${(+e['f1@0.5']).toFixed(3)}</td>` +
+      `<td>${(+e['completeness@0.25']).toFixed(3)}</td><td>${(+e['acc_median']).toFixed(2)}</td></tr>`;
+  }
+  return h + '</table>';
+}
 function panelS5(run) {
   const ev = run.s5_evidence || [];
   const live = ev.filter(e => e.v_final > 0.5);
-  let h = `<h2>S5 산출</h2>
+  let h = evalTable(run) + `<h2>S5 산출</h2>
     <select id="evmode">
       <option value="class" ${state.evMode === 'class' ? 'selected' : ''}>의미 분류</option>
       <option value="support" ${state.evMode === 'support' ? 'selected' : ''}>이미지 지지도</option>
