@@ -21,7 +21,7 @@ const CLS_COLORS = { roof: 0xd06048, wall: 0xb8b0a0, ground: 0x5a8f5a };
 // ---------- three.js scaffold ----------
 const view = $('#view3d');
 const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 view.appendChild(renderer.domElement);
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x14161a);
@@ -177,9 +177,15 @@ function faceGeometry(poly) {
   return g;
 }
 function addFaces(faces, colorFn, opacityFn) {
+  const hl = state.hl || {};
   faces.forEach((f, i) => {
+    const op = opacityFn(f, i);
+    const fi0 = (f.fi !== undefined) ? f.fi : i;
+    const hlHit = (hl.plane && f.plane_id === hl.plane) ||
+                  (hl.face !== undefined && hl.face === fi0);
+    if (op <= 0.05 && !hlHit) return;  // dead faces: no mesh, no draw call
     const mat = new THREE.MeshLambertMaterial({
-      color: colorFn(f, i), transparent: true, opacity: opacityFn(f, i),
+      color: colorFn(f, i), transparent: true, opacity: op,
       side: THREE.DoubleSide, depthWrite: false });
     const m = new THREE.Mesh(faceGeometry(f.poly3d), mat);
     m.userData.faceIdx = i;
@@ -188,16 +194,19 @@ function addFaces(faces, colorFn, opacityFn) {
   });
 }
 function addCellWires(cells, colorFn) {
+  const buckets = {};
   cells.forEach((c) => {
     if (!c.edges || !c.edges.length) return;
-    const pts = [];
-    c.edges.forEach(([a, b]) => pts.push(...a, ...b));
+    const col = colorFn(c);
+    const arr = buckets[col] = buckets[col] || [];
+    c.edges.forEach(([a, b]) => arr.push(...a, ...b));
+  });
+  for (const [col, pts] of Object.entries(buckets)) {
     const g = new THREE.BufferGeometry();
     g.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3));
-    const line = new THREE.LineSegments(g, new THREE.LineBasicMaterial({
-      color: colorFn(c), transparent: true, opacity: 0.55 }));
-    group.add(line);
-  });
+    group.add(new THREE.LineSegments(g, new THREE.LineBasicMaterial({
+      color: +col, transparent: true, opacity: 0.45 })));
+  }
 }
 function fitView(faces) {
   // preserve the camera across toggles/tab switches within the same run
@@ -591,6 +600,7 @@ function renderQuant() {
 
 // ---------- boot ----------
 const GROUPS = [
+  ['ORACLE', '오라클(무학습 대조군) 93동 — S5+E1로 prior 재현 확인', false],
   ['X1', '실건물 — 정상 대조 1동', false],
   ['X2', '실건물 — 변화/구멍 프로파일', false],
   ['X4', '실건물 93동 일괄', true],
