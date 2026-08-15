@@ -1,4 +1,9 @@
 import * as THREE from './three.module.min.js';
+window.onerror = (msg, src, line) => {
+  const el = document.getElementById('runs');
+  if (el) el.insertAdjacentHTML('afterbegin',
+    `<div style="color:#ff7b72;font-size:11px;border:1px solid #663;padding:4px">JS 오류: ${msg} (${line})</div>`);
+};
 
 const $ = (s) => document.querySelector(s);
 const state = { manifest: null, run: null, tab: 's5', snap: 0, playing: null, evMode: 'class' };
@@ -287,7 +292,18 @@ function renderTab() {
     const snaps = run.snapshots || [];
     $('#tl-slider').max = Math.max(0, snaps.length - 1);
     if (state.snap >= snaps.length) state.snap = snaps.length - 1;
-    const snap = snaps[state.snap];
+    const meta = snaps[state.snap];
+    run._snapCache = run._snapCache || {};
+    let snap = meta && (meta.iter !== undefined && meta.ref
+      ? run._snapCache[meta.iter] : meta);
+    if (meta && meta.ref && !snap) {
+      $('#panel').innerHTML = '<p>스냅샷 로딩 중…</p>';
+      fetch('../' + meta.ref).then(r => r.json()).then(d => {
+        d.renders = meta.renders; run._snapCache[meta.iter] = d; renderTab();
+      });
+      return;
+    }
+    if (snap && meta.renders) snap.renders = meta.renders;
     if (snap) {
       const vMap = {}; snap.renderable_faces.forEach((fi, si) => vMap[fi] = snap.face_v[si]);
       addFaces(faces, (f) => {
@@ -300,6 +316,15 @@ function renderTab() {
     if (state.evMode === 'brep' && run.s5_obj) {
       loadObj('../' + run.s5_obj);
     } else {
+      if (!run.s5_evidence && run.s5_evidence_ref) {
+        if (!run._evload) {
+          run._evload = true;
+          fetch('../' + run.s5_evidence_ref).then(r => r.json())
+            .then(d => { run.s5_evidence = d; renderTab(); });
+        }
+        $('#panel').innerHTML = '<p>증거 카드 로딩 중…</p>';
+        return;
+      }
       const ev = run.s5_evidence || [];
       const evByFace = {}; ev.forEach(e => evByFace[e.face] = e);
       addFaces(faces, (f, i) => {
@@ -462,12 +487,14 @@ function panelS34(run, snap) {
   $('#panel').innerHTML = h;
   bindPlaneRows();
   const c = $('#losschart');
+  const loaded = snaps.slice(0, state.snap + 1)
+    .map(m => (m.ref ? (run._snapCache || {})[m.iter] : m)).filter(Boolean);
   chart(c, [
-    { data: snaps.slice(0, state.snap + 1).map(s => s.losses.photo) },
-    { data: snaps.slice(0, state.snap + 1).map(s => s.losses.bin) },
-    { data: snaps.slice(0, state.snap + 1).map(s => s.losses.prior || 0) },
-    { data: snaps.slice(0, state.snap + 1).map(s => s.psnr_eval / 40) },
-  ], ['photo', 'bin', 'prior', 'psnr/40']);
+    { data: loaded.map(s => s.losses.photo) },
+    { data: loaded.map(s => s.losses.bin) },
+    { data: loaded.map(s => s.losses.prior || 0) },
+    { data: loaded.map(s => s.psnr_eval / 40) },
+  ], ['photo', 'bin', 'prior', 'psnr/40 (로드된 스냅샷만)']);
 }
 function panelS5(run) {
   const ev = run.s5_evidence || [];
@@ -526,7 +553,9 @@ function renderQuant() {
   if (state.run && state.run.snapshots.length) {
     h += `<h2 style="color:#8ecbff">스냅샷 추이 — ${esc(state.run.name)}</h2>
       <table><tr><th>iter</th><th>photo</th><th>bin</th><th>prior</th><th>PSNR</th><th>게이트%</th><th>λ_bin</th></tr>`;
-    state.run.snapshots.forEach(s => {
+    state.run.snapshots.forEach(m => {
+      const s = m.ref ? (state.run._snapCache || {})[m.iter] : m;
+      if (!s) return;
       h += `<tr><td>${s.iter}</td><td>${s.losses.photo.toFixed(4)}</td><td>${s.losses.bin.toFixed(4)}</td>
         <td>${(s.losses.prior || 0).toFixed(4)}</td><td>${(s.psnr_eval || 0).toFixed(2)}</td>
         <td>${(s.gate.grad_nonzero_frac * 100).toFixed(0)}</td><td>${(s.lambda_bin || 0).toFixed(2)}</td></tr>`;

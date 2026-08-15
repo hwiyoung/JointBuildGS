@@ -127,19 +127,21 @@ def load_run(exp: str, run_dir: Path):
             "free": sum(1 for c in s2c["cells"] if c["fixed"] is None),
             "faces": len(s2c["faces"]),
             "renderable": len(s2c.get("renderable_faces", []))}
+    # snapshots/evidence stay on disk — the manifest carries references only
+    # (embedding them grew the manifest to 38 MB and stalled the browser)
     snaps = []
     snap_dir = run_dir / "snapshots"
     if snap_dir.is_dir():
         for p in sorted(snap_dir.glob("iter_*.json")):
-            s = json.load(open(p))
-            it = s["iter"]
-            s["renders"] = [rel(q) for q in sorted(snap_dir.glob(f"render_v*_{it:06d}.png"))]
-            snaps.append(s)
+            it = int(p.stem.split("_")[1])
+            snaps.append({"iter": it, "ref": rel(p),
+                          "renders": [rel(q) for q in
+                                      sorted(snap_dir.glob(f"render_v*_{it:06d}.png"))]})
     entry["snapshots"] = snaps
     if (run_dir / "s5_brep.obj").is_file():
         entry["s5_obj"] = rel(run_dir / "s5_brep.obj")
     if (run_dir / "s5_evidence.json").is_file():
-        entry["s5_evidence"] = json.load(open(run_dir / "s5_evidence.json"))
+        entry["s5_evidence_ref"] = rel(run_dir / "s5_evidence.json")
     # GT / comparison overlays for real-building runs
     cfg = entry.get("run", {}).get("config", {})
     bkey = cfg.get("scene", {}).get("bkey")
