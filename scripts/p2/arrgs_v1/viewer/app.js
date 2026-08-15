@@ -276,11 +276,8 @@ function renderTab() {
       clear3d();
       loadObj('../' + run.s5_obj);
       drawLod2Rings(run);
-      $('#panel').innerHTML = evalTable(run) +
-        '<p class="legend">오라클 런: 최적화 0 — 색면=모델, 파란 점=E1 GT, 초록 선=LoD2</p>';
-      $('#panel').insertAdjacentHTML('afterbegin',
-        overlayControlsHtml(run) + lod2ToggleHtml(run));
-      bindOverlayControls(); bindLod2Toggle(); refreshOverlays();
+      $('#panel').innerHTML = '<p>모델 로딩 중…</p>';
+      refreshOverlays();
       return;
     }
     $('#panel').innerHTML = '<p>이 런에는 3D 데이터가 없습니다.</p>';
@@ -410,8 +407,50 @@ function loadObj(path) {
       orbit.r = bb.getSize(new THREE.Vector3()).length() * 1.1 + 5;
       applyOrbit();
     }
-    panelS5(state.run);
+    if (state.run && !state.run.s2_ref && !state.run.s2) {
+      const stats = {};
+      for (const [c, list] of Object.entries(tris)) {
+        let area = 0;
+        list.forEach(tr => {
+          const a = verts[tr[0]], b = verts[tr[1]], cc = verts[tr[2]];
+          const ux = b[0]-a[0], uy = b[1]-a[1], uz = b[2]-a[2];
+          const vx = cc[0]-a[0], vy = cc[1]-a[1], vz = cc[2]-a[2];
+          area += 0.5 * Math.hypot(uy*vz-uz*vy, uz*vx-ux*vz, ux*vy-uy*vx);
+        });
+        stats[c] = { tris: list.length, area: Math.round(area) };
+      }
+      panelOracle(state.run, stats);
+    } else {
+      panelS5(state.run);
+    }
   });
+}
+function panelOracle(run, stats) {
+  let h = `<div class="note" style="border:1px solid #2e3542;border-radius:5px;padding:6px;margin-bottom:6px">${TAB_GUIDE.s5}</div>`
+    + overlayControlsHtml(run) + lod2ToggleHtml(run) + evalTable(run)
+    + '<h2>S5 산출 (오라클 — 최적화 0)</h2>'
+    + '<table><tr><th class="l">클래스</th><th>삼각형</th><th>면적 m²</th></tr>';
+  for (const c of ['roof', 'wall', 'ground']) {
+    const st = stats[c] || { tris: 0, area: 0 };
+    h += `<tr><td class="l">${c}</td><td>${st.tris}</td><td>${st.area}</td></tr>`;
+  }
+  h += '</table>';
+  const oc = run._oracle;
+  if (oc) {
+    const v = oc.s1_verdict || {};
+    h += `<h2>S1 게이트</h2><table><tr><th class="l">항목</th><th>값</th></tr>
+      <tr><td class="l">판정</td><td class="${v.grade === 'PASS' ? 'good' : v.grade === 'PASS_RESIDUE' ? 'warn' : 'bad'}">${v.grade || '—'}</td></tr>
+      <tr><td class="l">설명률</td><td>${v.explained !== undefined ? (v.explained * 100).toFixed(1) + '%' : '—'}</td></tr>
+      <tr><td class="l">최대 응집 공백</td><td>${v.largest_gap_m2 ?? '—'} m²</td></tr>
+      <tr><td class="l">배열 셀</td><td>${oc.cells ?? '—'}</td></tr></table>`;
+  } else if (run._oracle === undefined) {
+    run._oracle = null;
+    fetch('../' + run.dir + '/oracle.json').then(r => r.ok ? r.json() : null)
+      .then(d => { run._oracle = d; if (state.run === run) panelOracle(run, stats); })
+      .catch(() => {});
+  }
+  $('#panel').innerHTML = h;
+  bindOverlayControls(); bindLod2Toggle();
 }
 
 // ---------- panels ----------
