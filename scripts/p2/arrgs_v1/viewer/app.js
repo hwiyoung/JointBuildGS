@@ -222,9 +222,33 @@ function renderTab() {
   document.querySelectorAll('#tabs button').forEach(b =>
     b.classList.toggle('active', b.dataset.tab === state.tab));
   if (state.tab === 'quant') { renderQuant(); return; }
-  if (!run || !run.s2) { $('#panel').innerHTML = '<p>런을 선택하세요.</p>'; return; }
+  if (!run) { $('#panel').innerHTML = '<p>런을 선택하세요.</p>'; return; }
+  // arrangement geometry is lazy-loaded per run (manifest stays small)
+  let s2 = run.s2 || run._s2;
+  if (!s2 && run.s2_ref) {
+    if (!run._s2load) {
+      run._s2load = true;
+      $('#panel').innerHTML = '<p>배열 로딩 중…</p>';
+      fetch('../' + run.s2_ref).then(r => r.json())
+        .then(d => { run._s2 = d; renderTab(); })
+        .catch(() => { $('#panel').innerHTML = '<p>배열 로드 실패</p>'; });
+    }
+    return;
+  }
+  if (!s2) {
+    // oracle-style runs: B-rep + overlays only
+    if (run.s5_obj) {
+      clear3d();
+      loadObj('../' + run.s5_obj);
+      $('#panel').insertAdjacentHTML('afterbegin', overlayControlsHtml(run));
+      bindOverlayControls(); refreshOverlays();
+      return;
+    }
+    $('#panel').innerHTML = '<p>이 런에는 3D 데이터가 없습니다.</p>';
+    return;
+  }
   clear3d();
-  const faces = run.s2.faces;
+  const faces = s2.faces;
   const interior = faces.filter(f => f.cell_b >= 0 && !f.plane_id.startsWith('domain:'));
   if (state.tab === 's1') {
     if (!state.s1src) state.s1src = { prior_als: true, mvs: true, footprint: false };
@@ -236,7 +260,7 @@ function renderTab() {
       () => 0.38);
     panelS1(run);
   } else if (state.tab === 's2') {
-    addCellWires(run.s2.cells, (c) => c.fixed === 0 ? 0x5a3040 : 0x3f77b0);
+    addCellWires(s2.cells, (c) => c.fixed === 0 ? 0x5a3040 : 0x3f77b0);
     addFaces(interior, () => 0x4a9eff, () => 0.06);
     if (state.showSeeds === undefined) state.showSeeds = true;
     if (!state.showSeeds) { /* seeds off */ } else if (run._seeds === undefined) {
@@ -257,14 +281,14 @@ function renderTab() {
           color: SRC_COLORS[k] || 0x999999, size: 0.5 })));
       }
     }
-    panelS2(run);
+    panelS2(run, s2);
   } else if (state.tab === 's34') {
     const snaps = run.snapshots || [];
     $('#tl-slider').max = Math.max(0, snaps.length - 1);
     if (state.snap >= snaps.length) state.snap = snaps.length - 1;
     const snap = snaps[state.snap];
     if (snap) {
-      const vMap = {}; snap.renderable_faces.forEach((fi, s) => vMap[fi] = snap.face_v[s]);
+      const vMap = {}; snap.renderable_faces.forEach((fi, si) => vMap[fi] = snap.face_v[si]);
       addFaces(faces, (f) => {
         const p = (run.s1.planes || []).find(q => q.id === f.plane_id);
         return SRC_COLORS[p ? p.source : 'domain'] || 0x667788;
@@ -379,14 +403,14 @@ function panelS1(run) {
   const lt = $('#lod2tgl');
   if (lt) lt.onchange = () => { state.showLod2 = lt.checked; renderTab(); };
 }
-function panelS2(run) {
-  const cells = run.s2.cells;
+function panelS2(run, s2) {
+  const cells = (s2 && s2.cells) || [];
   const free = cells.filter(c => c.fixed !== 0);
   $('#panel').innerHTML = `<h2>S2 배열</h2>
     <table><tr><th class="l">항목</th><th>값</th></tr>
     <tr><td class="l">셀 (자유/고정빈)</td><td>${free.length} / ${cells.length - free.length}</td></tr>
-    <tr><td class="l">면</td><td>${run.s2.faces.length}</td></tr>
-    <tr><td class="l">렌더 가능 면</td><td>${(run.s2.renderable_faces || []).length}</td></tr>
+    <tr><td class="l">면</td><td>${(run.s2_counts||{}).faces ?? (s2? s2.faces.length : '—')}</td></tr>
+    <tr><td class="l">렌더 가능 면</td><td>${(run.s2_counts||{}).renderable ?? '—'}</td></tr>
     <tr><td class="l">가우시안 시드</td><td>${run.metrics ? run.metrics.gaussians : '—'}</td></tr></table>
     <p class="legend">파랑 와이어=자유 셀, 자주=고정 빈 셀(footprint 밖)</p>
     <p class="legend"><label><input type="checkbox" id="seedtgl" ${state.showSeeds !== false ? 'checked' : ''}> 시드 표시</label>

@@ -24,7 +24,23 @@ RUN_ROOTS = [
     ("X2", BASE / "P2-ARRGS-X2-v1/runs"),
     ("X3", BASE / "P2-ARRGS-X3-v1/runs"),
     ("X4", BASE / "P2-ARRGS-X4-v1/runs"),
+    ("ORACLE", BASE / "P2-ARRGS-ORACLE-v1/runs"),
 ]
+
+ARM_OF_EXP = {"X1": "ARRGS", "X2": "ARRGS", "ORACLE": "ARRGS_ORACLE"}
+
+
+def load_eval_rows():
+    import csv
+    p = BASE / "evaluation/rows.csv"
+    if not p.is_file():
+        return {}
+    out = {}
+    for r in csv.DictReader(open(p)):
+        out[(r["stable_id"], r["arm"], r["gt"])] = {
+            k: r[k] for k in ("f1@0.5", "completeness@0.25", "precision@0.5",
+                              "acc_median", "z_spread")}
+    return out
 
 
 OVERLAY_SRC = {
@@ -59,30 +75,43 @@ def load_run(exp: str, run_dir: Path):
             entry[key] = json.load(open(p))
     s2p = run_dir / "s2_arrangement.json"
     if s2p.is_file():
-        s2 = json.load(open(s2p))
-        # trim cell verts -> edges for wireframe (unique hull edges)
-        import numpy as np
-        from scipy.spatial import ConvexHull
-        cells = []
-        for c in s2["cells"]:
-            v = np.asarray(c["verts"])
-            edges = []
-            try:
-                hull = ConvexHull(v)
-                es = set()
-                for s in hull.simplices:
-                    for i in range(3):
-                        e = tuple(sorted((int(s[i]), int(s[(i + 1) % 3]))))
-                        es.add(e)
-                edges = [[v[a].tolist(), v[b].tolist()] for a, b in es]
-            except Exception:
-                pass
-            cells.append({"idx": c["idx"], "centroid": c["centroid"],
-                          "fixed": c["fixed"], "o_init": c.get("o_init"),
-                          "edges": edges})
-        entry["s2"] = {"cells": cells, "faces": s2["faces"],
+        # arrangement geometry goes to a per-run lazy file — embedding it blew
+        # the manifest to 243 MB (blank viewer) once S1R runs hit ~9k cells
+        s2v = run_dir / "s2_view.json"
+        if not s2v.is_file() or s2v.stat().st_mtime < s2p.stat().st_mtime:
+            s2 = json.load(open(s2p))
+            import numpy as np
+            from scipy.spatial import ConvexHull
+            cells = []
+            for c in s2["cells"]:
+                v = np.asarray(c["verts"])
+                edges = []
+                try:
+                    hull = ConvexHull(v)
+                    es = set()
+                    for s in hull.simplices:
+                        for i in range(3):
+                            e = tuple(sorted((int(s[i]), int(s[(i + 1) % 3]))))
+                            es.add(e)
+                    edges = [[np.round(v[a], 2).tolist(), np.round(v[b], 2).tolist()]
+                             for a, b in es]
+                except Exception:
+                    pass
+                cells.append({"idx": c["idx"], "centroid": c["centroid"],
+                              "fixed": c["fixed"], "o_init": c.get("o_init"),
+                              "edges": edges})
+            faces = [{k: f[k] for k in ("plane_id", "cell_a", "cell_b", "n", "d",
+                                        "poly3d", "area")} for f in s2["faces"]]
+            json.dump({"cells": cells, "faces": faces,
                        "renderable_faces": s2.get("renderable_faces", []),
-                       "gt_labels": s2.get("gt_labels")}
+                       "gt_labels": s2.get("gt_labels")}, open(s2v, "w"))
+        s2c = json.load(open(s2p))
+        entry["s2_ref"] = rel(s2v)
+        entry["s2_counts"] = {
+            "cells": len(s2c["cells"]),
+            "free": sum(1 for c in s2c["cells"] if c["fixed"] is None),
+            "faces": len(s2c["faces"]),
+            "renderable": len(s2c.get("renderable_faces", []))}
     snaps = []
     snap_dir = run_dir / "snapshots"
     if snap_dir.is_dir():
@@ -142,11 +171,35 @@ def main():
         if not root.is_dir():
             continue
         for run_dir in sorted(root.iterdir()):
-            if (run_dir / "metrics.json").is_file() or (run_dir / "s2_arrangement.json").is_file():
+            if ((run_dir / "metrics.json").is_file()
+                    or (run_dir / "s2_arrangement.json").is_file()
+                    or (run_dir / "s5_brep.obj").is_file()):
                 try:
                     runs.append(load_run(exp, run_dir))
                 except Exception as e:
                     print("skip", run_dir, e)
+    # sealed-evaluator f1 rows -> per-run (X1/X2 clean + oracle)
+    ev = load_eval_rows()
+    for r in runs:
+        arm = ARM_OF_EXP.get(r["exp"])
+        bkey = r.get("bkey") or (r.get("run", {}).get("config", {})
+                                 .get("scene", {}).get("bkey"))
+        if r["exp"] == "ORACLE" and not bkey:
+            hits = list((BASE / "viewer_assets/E7").glob(f"{r['name']}_*.points.ply"))
+            if hits:
+                bkey = hits[0].name.replace(".points.ply", "")
+                r["bkey"] = bkey
+                ov = {}
+                for a in OVERLAY_SRC:
+                    if (BASE / "viewer_assets" / a / f"{bkey}.points.ply").is_file():
+                        ov[a] = f"viewer_assets/{a}/{bkey}.points.ply"
+                if ov:
+                    r["overlays"] = ov
+        if arm and bkey:
+            sid = "_".join(bkey.split("_")[1:])
+            e = {gt: ev.get((sid, arm, gt)) for gt in ("e1", "lod2")}
+            if any(e.values()):
+                r["eval"] = e
     bkeys = {r["bkey"] for r in runs if r.get("bkey")}
     if bkeys:
         try:
