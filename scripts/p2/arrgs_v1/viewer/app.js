@@ -373,6 +373,7 @@ function renderTab() {
 function loadObj(path) {
   fetch(path).then(r => r.text()).then(txt => {
     const verts = []; let cls = 'roof'; const tris = { roof: [], wall: [], ground: [] };
+    const runDir = state.run && state.run.dir;
     txt.split('\n').forEach(ln => {
       const t = ln.trim().split(/\s+/);
       if (t[0] === 'v') verts.push([+t[1], +t[2], +t[3]]);
@@ -388,6 +389,15 @@ function loadObj(path) {
       g.computeVertexNormals();
       group.add(new THREE.Mesh(g, new THREE.MeshLambertMaterial({
         color: CLS_COLORS[c], side: THREE.DoubleSide })));
+    }
+    // oracle-style runs skip the arrangement fitView -> fit camera to the OBJ
+    if (state.lastFit !== runDir && verts.length) {
+      state.lastFit = runDir;
+      const bb = new THREE.Box3();
+      verts.forEach(v => bb.expandByPoint(new THREE.Vector3(v[0], v[1], v[2])));
+      bb.getCenter(orbit.target);
+      orbit.r = bb.getSize(new THREE.Vector3()).length() * 1.1 + 5;
+      applyOrbit();
     }
     panelS5(state.run);
   });
