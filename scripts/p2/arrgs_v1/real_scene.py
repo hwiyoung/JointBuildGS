@@ -298,6 +298,57 @@ def load_real_scene(scene, device):
     else:
         verdict["grade"] = "FAIL"
 
+    # -- targeted tower candidates (opt-in): the explanation-rate gate has a
+    # blind spot — a thin tall structure whose ROOF plane exists passes S1,
+    # yet without its own SIDE-WALL planes no cell delineates its volume
+    # (B022 tower: high-z cells are footprint-wide slabs, centroid labelling
+    # cannot represent it). Detect elevated clusters (> +3 m over the local
+    # envelope) and add their bounding vertical planes.
+    if scene.get("tower_candidates") and len(roof_fp):
+        gx = np.floor(roof_fp[:, :2]).astype(int)
+        cells_top = {}
+        for (ix, iy), z in zip(map(tuple, gx), roof_fp[:, 2]):
+            cells_top[(ix, iy)] = max(cells_top.get((ix, iy), -1e9), z)
+        keys = list(cells_top)
+        elevated = set()
+        for k in keys:
+            neigh = [cells_top[(k[0] + dx, k[1] + dy)]
+                     for dx in range(-3, 4) for dy in range(-3, 4)
+                     if (k[0] + dx, k[1] + dy) in cells_top]
+            if len(neigh) >= 8 and cells_top[k] > float(np.median(neigh)) + 3.0:
+                elevated.add(k)
+        # connected components (4-neighbour), min 4 m², max 400 m²
+        comps, seen = [], set()
+        for k in elevated:
+            if k in seen:
+                continue
+            stack, comp = [k], []
+            while stack:
+                c = stack.pop()
+                if c in seen or c not in elevated:
+                    continue
+                seen.add(c); comp.append(c)
+                stack += [(c[0] + 1, c[1]), (c[0] - 1, c[1]),
+                          (c[0], c[1] + 1), (c[0], c[1] - 1)]
+            if 4 <= len(comp) <= 400:
+                comps.append(comp)
+        for ci, comp in enumerate(sorted(comps, key=len, reverse=True)[:2]):
+            xs = [c[0] for c in comp]; ys = [c[1] for c in comp]
+            x0, x1 = min(xs) - 0.2, max(xs) + 1.2  # grid cell -> extent + margin
+            y0, y1 = min(ys) - 0.2, max(ys) + 1.2
+            box = [(x0, y0), (x1, y0), (x1, y1), (x0, y1)]
+            for j, (a, b) in enumerate(zip(box, box[1:] + box[:1])):
+                e = np.array([b[0] - a[0], b[1] - a[1], 0.0])
+                n = np.array([e[1], -e[0], 0.0]); n /= np.linalg.norm(n)
+                from shapely.geometry import LineString as _LS
+                corr = _LS([a, b]).buffer(1.0)
+                planes.append({
+                    "id": f"twr{ci}w{j}", "n": n.tolist(),
+                    "d": float(n[:2] @ np.asarray(a)),
+                    "source": "gapfill", "prior": None,
+                    "support": [np.asarray(corr.exterior.coords)[:-1].tolist()]})
+        verdict["tower_clusters"] = len(comps)
+
     # occupancy init from (possibly shifted) ALS solid proxy — defined before
     # the camera section so skip_images sweeps (oracle) can use it.
     from scipy.spatial import cKDTree
@@ -327,6 +378,8 @@ def load_real_scene(scene, device):
             continue
         plane_surfs.append((_prep2(_uu(polys)), n, float(p["d"])))
 
+    o_init_variant = scene.get("o_init_variant", "envelope")
+
     def o_init_fn(centroid):
         # envelope-primary (plane-surface variant REGRESSED: overlapping
         # buffered supports overfill to the tallest covering plane —
@@ -336,7 +389,19 @@ def load_real_scene(scene, device):
         idx = tree.query_ball_point(centroid[:2], r=0.75)
         if not idx:
             return 0.2
-        zsurf = float(np.percentile(col_src[idx, 2], 90))
+        zs = col_src[np.asarray(idx), 2]
+        zsurf = float(np.percentile(zs, 90))
+        if o_init_variant == "top_cluster":
+            # measured defect (B022 tower): a thin tall structure shares the
+            # disc with lower roof points, dragging p90 below its own roof and
+            # voiding its volume (12/1458 cells init-solid). Re-estimate from
+            # the top cluster ONLY under strong bimodality (>3 m), so parapet/
+            # sawtooth roofs (~1-2 m, B173 collapse history) keep the envelope.
+            zmax = float(zs.max())
+            if zmax - zsurf > 3.0:
+                top = zs[zs > zmax - 2.0]
+                if len(top) >= 3:
+                    zsurf = float(np.percentile(top, 90))
         return 0.75 if centroid[2] < zsurf else 0.15
 
     # ---------------- cameras / views ----------------

@@ -141,6 +141,65 @@ def main():
                 cfg["scene"] = scene_for(bk)
                 cfg["lambda"] = {"occ_prior": w}
                 runs.append((f"{bk}_{tag(w)}", cfg, bk))
+    if which == "oinit":
+        # batch-2 (2): o_init repair probe (top_cluster surface re-estimate),
+        # measured at full freeze (occ w=5 + plane freeze) so the run IS the
+        # hardened init. Pre-registered: B022 f1 > pfreeze 0.693 (tower joins)
+        # with tower-band init-solid >> 12; B036/B173 within +-0.02 of pfreeze
+        # (guard: parapet/sawtooth must stay envelope). Fail -> bimodality gate
+        # too loose/tight; tune the 3 m threshold before adoption.
+        for bk in ("B022", "B036", "B173"):
+            cfg = dict(REAL_BASE)
+            cfg["scene"] = scene_for(bk)
+            cfg["scene"]["o_init_variant"] = "top_cluster"
+            cfg["lambda"] = {"occ_prior": 5.0}
+            cfg["plane_mode"] = "freeze"
+            runs.append((f"{bk}_w5_pfreeze_i2", cfg, bk))
+    if which == "oinit2":
+        # batch-2 (2') approved scope change: targeted tower-wall candidates
+        # (S1 addition, opt-in flag) + multi-point cell labelling + top_cluster
+        # surface. Pre-registered: B022 tower-band init-solid >> 15 and frozen
+        # f1 > 0.693 (tower joins the hardened model); B036/B173 within +-0.02
+        # of pfreeze (no spurious clusters on parapet/sawtooth roofs).
+        for bk in ("B022", "B036", "B173"):
+            cfg = dict(REAL_BASE)
+            cfg["scene"] = scene_for(bk)
+            cfg["scene"]["o_init_variant"] = "top_cluster"
+            cfg["scene"]["tower_candidates"] = True
+            cfg["lambda"] = {"occ_prior": 5.0}
+            cfg["plane_mode"] = "freeze"
+            runs.append((f"{bk}_w5_pfreeze_i3", cfg, bk))
+    if which == "occl":
+        # batch-2 (3) v2 — first pass FAILED pre-registration (ghosts 85 vs
+        # target <=15): fs term diluted to 0.5% of photo by all-pixel mean
+        # (fixed: violating-pixel mean) AND the comparison baseline was
+        # confounded (i3 ingredients bundled into occB but absent from the old
+        # w0 row). Clean pair per building: i3base (no guard/fs) vs occB2.
+        # Pre-registered vs i3base: B022 upper-band newly-ON cells reduced by
+        # >=2/3; f1 not degraded; B173 f1 within -0.03 (discretion survives).
+        for bk in ("B022", "B036", "B173"):
+            for name_sfx, guard in (("i3base", False), ("occB2", True)):
+                cfg = dict(REAL_BASE)
+                cfg["scene"] = scene_for(bk)
+                cfg["scene"]["o_init_variant"] = "top_cluster"
+                cfg["scene"]["tower_candidates"] = True
+                cfg["lambda"] = {"occ_prior": 0.0,
+                                 "freespace": 0.5 if guard else 0.0}
+                cfg["occlusion_guard"] = guard
+                runs.append((f"{bk}_w0_{name_sfx}", cfg, bk))
+    if which == "planes":
+        # batch-2 (1): plane 3-point contrast at frozen occupancy (w_occ=5).
+        # 'free' arm = the existing B*_w5 rows. Pre-registered: freeze (and
+        # ideally anchor~=freeze) recovers oracle-level f1 on B022/B036,
+        # confirming plane drift as the hold-regime ceiling; B173 stays low
+        # (its deficit is stale prior, not planes).
+        for bk in ("B022", "B036", "B173"):
+            for mode in ("anchor", "freeze"):
+                cfg = dict(REAL_BASE)
+                cfg["scene"] = scene_for(bk)
+                cfg["lambda"] = {"occ_prior": 5.0}
+                cfg["plane_mode"] = mode
+                runs.append((f"{bk}_w5_p{mode}", cfg, bk))
 
     for name, cfg, bk in runs:
         if only and not name.startswith(only):
@@ -157,7 +216,7 @@ def main():
             row = {k: m.get(k) for k in (
                 "occupancy_accuracy", "ghost_faces", "missing_faces",
                 "psnr_eval_final", "o_undecided", "occ_final",
-                "lambda_occ_prior", "wall_s")}
+                "lambda_occ_prior", "plane_mode", "plane_drift_max", "wall_s")}
             if bk:
                 row["f1_proxy_e1"] = score_run(cfg["out_dir"], BUILDINGS[bk]["bkey"])
             summary[name] = row
@@ -198,6 +257,17 @@ def main():
                              "joint_pass": ok_unchanged and ok_changed}
         verdict["REAL"] = joint
         verdict["exists_joint_w"] = any(v["joint_pass"] for v in joint.values())
+        planes = {}
+        for bk in ("B022", "B036", "B173"):
+            row = {"free": (summary.get(f"{bk}_w5", {}).get("f1_proxy_e1") or {}).get("f1")}
+            for mode in ("anchor", "freeze"):
+                r = summary.get(f"{bk}_w5_p{mode}", {})
+                row[mode] = (r.get("f1_proxy_e1") or {}).get("f1")
+                row[f"{mode}_drift"] = r.get("plane_drift_max")
+            row["oracle"] = (orc.get(bk) or {}).get("f1")
+            planes[bk] = row
+        if any(v.get("anchor") or v.get("freeze") for v in planes.values()):
+            verdict["PLANES"] = planes
     summary["_verdict"] = verdict
     json.dump(summary, open(summary_path, "w"), indent=1, default=str)
     print("[anchor] verdict ->", json.dumps(verdict, indent=1, default=str)[:3000])

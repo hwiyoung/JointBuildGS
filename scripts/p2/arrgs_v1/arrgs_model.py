@@ -322,6 +322,24 @@ class ArrgsModel(nn.Module):
         o = self.occupancy()
         return (o * (1 - o)).mean()
 
+    def plane_init_anchor_loss(self, huber_m=0.5, huber_deg=10.0):
+        """Soft anchor of ALL plane poses to their initial (n0, d0).
+
+        The occupancy-anchor sweep exposed non-prior planes (mvs/footprint/
+        gapfill) as unanchored free variables that absorb bad-evidence
+        gradients (B036: a candidate plane rotated 49 deg with occupancy
+        frozen). S1R poses come from robust fits over thousands of points, so
+        legitimate refinement is deg/cm-scale — inside the Huber widths."""
+        n = F.normalize(self.plane_n_raw, dim=-1)
+        n0 = F.normalize(self.n_init, dim=-1)
+        cos = (n * n0).sum(-1).clamp(-1, 1)
+        ang = torch.rad2deg(torch.sqrt(2.0 * (1.0 - cos) + 1e-8))
+        r_ang = F.huber_loss(ang, torch.zeros_like(ang), delta=huber_deg,
+                             reduction="none") / huber_deg
+        r_d = F.huber_loss(self.plane_d, self.d_init, delta=huber_m,
+                           reduction="none") / huber_m
+        return (r_ang + r_d).mean()
+
     def occ_prior_loss(self):
         """Occupancy anchor: weighted BCE(o, o_init) over free cells.
 

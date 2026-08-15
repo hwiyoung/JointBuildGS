@@ -237,7 +237,15 @@ def run(cfg):
         if o_init_mode == "sym":
             c["o_init"] = 0.5
         elif real_o_init:
-            c["o_init"] = float(o_init_fn(np.asarray(c["centroid"])))  # ALS solid proxy
+            # multi-point labelling: centroid-only sampling cannot represent a
+            # small structure inside a large cell (B022 tower audit). Sample
+            # the centroid plus vertices pulled halfway inward; the mean keeps
+            # o_init soft where the cell straddles the prior surface.
+            cen = np.asarray(c["centroid"])
+            pts = [cen]
+            for v in (c.get("verts") or [])[:12]:
+                pts.append(0.5 * (np.asarray(v, dtype=float) + cen))
+            c["o_init"] = float(np.mean([o_init_fn(p) for p in pts]))
         elif o_init_mode == "proxy" and gt_inside is not None:
             # synthetic analog of the real ALS-solid init: GT label + flip noise
             rng_flip = np.random.default_rng(hash(tuple(np.round(c["centroid"], 2))) % 2**31)
@@ -295,6 +303,13 @@ def run(cfg):
     lam_u = lam.get("u_reg", 1e-3)
     # occupancy anchor weight w (0.0 = exact v1 behaviour, no anchor)
     lam_occ = lam.get("occ_prior", 0.0)
+    # plane treatment: 'free' (v1) | 'anchor' (soft init-pose spring) | 'freeze'
+    plane_mode = cfg.get("plane_mode", "free")
+    lam_planeA = lam.get("plane_anchor", 0.05) if plane_mode == "anchor" else 0.0
+    if plane_mode == "freeze":
+        param_groups[0]["lr"] = 0.0  # plane_n_raw
+        param_groups[1]["lr"] = 0.0  # plane_d
+        opt = torch.optim.Adam(param_groups)
     anneal = cfg.get("anneal", True)
     warm = int(iters * cfg.get("anneal_warm", 0.35))
     full = int(iters * cfg.get("anneal_full", 0.85))
@@ -304,6 +319,26 @@ def run(cfg):
     if scene["type"] == "real" and rs.get("depth_targets") is not None:
         depth_t = rs["depth_targets"]  # (C,H,W), 0 = invalid
     lam_depth = lam.get("depth", 0.5) if depth_t is not None else 0.0
+    # occlusion guard (batch-2 (3)): pixels whose MEASURED depth is nearer than
+    # the building prism's nearest possible surface are occluders (tree/
+    # neighbour in front) — no hypothesis can own them; statically excluded.
+    lam_fs = lam.get("freespace", 0.0) if depth_t is not None else 0.0
+    if depth_t is not None and cfg.get("occlusion_guard"):
+        fp_np = np.asarray(fp)
+        corners_np = np.concatenate([
+            np.c_[fp_np, np.full(len(fp_np), ground_z)],
+            np.c_[fp_np, np.full(len(fp_np), top_z)]])
+        Cn = targets.shape[0]
+        th = []
+        for i in range(Cn):
+            Xc = (viewmats_np[i][:3, :3] @ corners_np.T).T + viewmats_np[i][:3, 3]
+            th.append(max(0.1, float(Xc[:, 2].min()) - 2.0))
+        th_t = torch.tensor(th, device=device, dtype=torch.float32)
+        occl = (depth_t > 0.5) & (depth_t < th_t[:, None, None])
+        n_occl = int(occl.sum())
+        mask_t = mask_t & ~occl
+        print(f"[arrgs] occlusion guard: {n_occl} px excluded "
+              f"({n_occl / max(1, int(mask_t.numel())) * 100:.1f}% of frame)", flush=True)
     C = targets.shape[0]
     holdout = max(1, C // 8) if cfg.get("holdout", True) else 0
     train_cams = list(range(C - holdout))
@@ -362,21 +397,39 @@ def run(cfg):
             # is along each masked ray — phantom cells above/below it pay here
             loss_depth = ((dep - dt).abs().clamp(max=8.0) * ralpha)[md].mean() / 4.0 \
                 if md.any() else torch.zeros((), device=device)
+            # free-space violation: we render an opaque surface where the
+            # measured ray provably travels further (ghost signature). Unlike
+            # the clamped depth term this scales with the violation and hits
+            # opacity through ralpha.
+            if lam_fs and md.any():
+                viol = ((dt - dep - 1.0).clamp(min=0.0, max=20.0) * ralpha)[md]
+                # mean over VIOLATING pixels, not all pixels: violations are a
+                # small minority and an all-pixel mean dilutes the term to a
+                # whisper (measured 0.5% of photo -> ghosts kept winning)
+                nv = (viol > 1e-6).sum().clamp(min=1)
+                loss_fs = viol.sum() / nv / 20.0
+            else:
+                loss_fs = torch.zeros((), device=device)
         else:
             out = render_gaussians(means_, quats_, scales_, alphas_, colors_,
                                    viewmats[cams], Ks[cams], W, H, bg)
             loss_depth = torch.zeros((), device=device)
+            loss_fs = torch.zeros((), device=device)
         photo = (out - targets[cams]).abs()[m.unsqueeze(-1).expand_as(out)].mean()
         loss_bin = model.binarization_loss()
         loss_prior = model.prior_loss()
         loss_occ = model.occ_prior_loss()
+        loss_planeA = (model.plane_init_anchor_loss() if lam_planeA
+                       else torch.zeros((), device=device))
         loss_u = ((model.u - u_init) ** 2).mean()
         loss = (lam_photo * photo + lam_depth * loss_depth + lam_bin(it) * loss_bin
-                + lam_prior * loss_prior + lam_occ * loss_occ + lam_u * loss_u)
+                + lam_prior * loss_prior + lam_occ * loss_occ
+                + lam_planeA * loss_planeA + lam_fs * loss_fs + lam_u * loss_u)
         opt.zero_grad(set_to_none=False)
         loss.backward()
         for k, v in (("photo", photo), ("depth", loss_depth), ("bin", loss_bin),
-                     ("prior", loss_prior), ("occ", loss_occ), ("u", loss_u),
+                     ("prior", loss_prior), ("occ", loss_occ),
+                     ("planeA", loss_planeA), ("fs", loss_fs), ("u", loss_u),
                      ("total", loss)):
             ema[k] = 0.95 * ema.get(k, float(v)) + 0.05 * float(v)
         if it % diag_every == 0:
@@ -563,6 +616,11 @@ def run(cfg):
         "o_decision": float(np.median(2 * np.abs(o_free - 0.5))),
         "o_undecided": int(((o_free > 0.3) & (o_free < 0.7)).sum()),
         "lambda_occ_prior": lam_occ,
+        "plane_mode": plane_mode,
+        "plane_drift_max": {"dn_deg": float(torch.rad2deg(torch.acos(
+            (F.normalize(model.plane_n_raw, dim=-1) *
+             F.normalize(model.n_init, dim=-1)).sum(-1).clamp(-1, 1))).max()),
+            "dd_m": float((model.plane_d - model.d_init).abs().max())},
         "occ_final": {"holes": int((init_state & ~(o_free > 0.5)).sum()),
                       "ghosts": int((~init_state & (o_free > 0.5)).sum()),
                       "flipped_vs_init": int(((o_free > 0.5) != init_state).sum()),
