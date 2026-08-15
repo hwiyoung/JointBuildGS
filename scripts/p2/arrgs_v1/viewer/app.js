@@ -154,6 +154,26 @@ async function refreshOverlays() {
       color: OVERLAY_COLORS[arm], size: 0.28, transparent: true, opacity: 0.55 })));
   }
 }
+function drawLod2Rings(run) {
+  if (!run || !run.lod2_rings || state.showLod2 === false) return;
+  if (!(state.tab === 's1' || state.tab === 's5')) return;
+  run.lod2_rings.forEach(ring => {
+    const pts = [];
+    ring.forEach(p => pts.push(...p));
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3));
+    group.add(new THREE.LineLoop(geo, new THREE.LineBasicMaterial({
+      color: 0x30d060, linewidth: 2 })));
+  });
+}
+function lod2ToggleHtml(run) {
+  if (!run || !run.lod2_rings) return '';
+  return `<div class="legend"><label><input type="checkbox" id="lod2tgl2" ${state.showLod2 !== false ? 'checked' : ''}> <span style="color:#30d060">LoD2 GT 지붕 링(초록 선)</span></label></div>`;
+}
+function bindLod2Toggle() {
+  const lt = document.getElementById('lod2tgl2');
+  if (lt) lt.onchange = () => { state.showLod2 = lt.checked; renderTab(); };
+}
 function overlayControlsHtml(run) {
   if (!run || !run.overlays) return '';
   return '<div class="legend" id="ovctl">오버레이: ' + Object.keys(OVERLAY_COLORS)
@@ -255,10 +275,12 @@ function renderTab() {
     if (run.s5_obj) {
       clear3d();
       loadObj('../' + run.s5_obj);
+      drawLod2Rings(run);
       $('#panel').innerHTML = evalTable(run) +
-        '<p class="legend">오라클 런: 최적화 0 — 색면=모델, 파란 점=E1 GT</p>';
-      $('#panel').insertAdjacentHTML('afterbegin', overlayControlsHtml(run));
-      bindOverlayControls(); refreshOverlays();
+        '<p class="legend">오라클 런: 최적화 0 — 색면=모델, 파란 점=E1 GT, 초록 선=LoD2</p>';
+      $('#panel').insertAdjacentHTML('afterbegin',
+        overlayControlsHtml(run) + lod2ToggleHtml(run));
+      bindOverlayControls(); bindLod2Toggle(); refreshOverlays();
       return;
     }
     $('#panel').innerHTML = '<p>이 런에는 3D 데이터가 없습니다.</p>';
@@ -350,18 +372,7 @@ function renderTab() {
       panelS5(run);
     }
   }
-  // LoD2 GT rings (green loops) on S1/S5
-  if ((state.tab === 's1' || state.tab === 's5') && run.lod2_rings
-      && state.showLod2 !== false) {
-    run.lod2_rings.forEach(ring => {
-      const pts = [];
-      ring.forEach(p => pts.push(...p));
-      const geo = new THREE.BufferGeometry();
-      geo.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3));
-      group.add(new THREE.LineLoop(geo, new THREE.LineBasicMaterial({
-        color: 0x30d060, linewidth: 2 })));
-    });
-  }
+  drawLod2Rings(run);
   const g = TAB_GUIDE[state.tab];
   $('#panel').insertAdjacentHTML('afterbegin',
     (g ? `<div class="note" style="border:1px solid #2e3542;border-radius:5px;padding:6px;margin-bottom:6px">${g}</div>` : '')
