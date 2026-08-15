@@ -81,11 +81,35 @@ let hiliteMats = [];
 })();
 
 let group = new THREE.Group(); scene.add(group);
+let ringGroup = new THREE.Group(); scene.add(ringGroup);
 let overlayGroup = new THREE.Group(); scene.add(overlayGroup);
 let faceMeshes = [];   // aligned to s2.faces indices
 function clear3d() {
   scene.remove(group); group = new THREE.Group(); scene.add(group); faceMeshes = [];
+  scene.remove(ringGroup); ringGroup = new THREE.Group(); scene.add(ringGroup);
   hiliteMats = [];
+}
+// ---- model visibility / opacity (GT 비교용) ----
+state.showModel = state.showModel !== false;
+state.modelAlpha = state.modelAlpha ?? 1.0;
+function applyModelAlpha() {
+  group.visible = state.showModel;
+  group.traverse(o => {
+    if (o.material && o.material.userData && o.material.userData.baseOp !== undefined) {
+      o.material.transparent = true;
+      o.material.opacity = o.material.userData.baseOp * state.modelAlpha;
+    }
+  });
+}
+function modelControlsHtml() {
+  return `<div class="legend" id="mdlctl"><label><input type="checkbox" id="mdltgl" ${state.showModel ? 'checked' : ''}> 모델 표시</label>
+    &nbsp;투명도 <input type="range" id="mdlalpha" min="5" max="100" value="${Math.round(state.modelAlpha * 100)}" style="width:90px;vertical-align:middle"></div>`;
+}
+function bindModelControls() {
+  const t = document.getElementById('mdltgl');
+  if (t) t.onchange = () => { state.showModel = t.checked; applyModelAlpha(); };
+  const a = document.getElementById('mdlalpha');
+  if (a) a.oninput = () => { state.modelAlpha = a.value / 100; applyModelAlpha(); };
 }
 function markHilite(mesh, f, i) {
   const hl = state.hl || {};
@@ -162,7 +186,7 @@ function drawLod2Rings(run) {
     ring.forEach(p => pts.push(...p));
     const geo = new THREE.BufferGeometry();
     geo.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3));
-    group.add(new THREE.LineLoop(geo, new THREE.LineBasicMaterial({
+    ringGroup.add(new THREE.LineLoop(geo, new THREE.LineBasicMaterial({
       color: 0x30d060, linewidth: 2 })));
   });
 }
@@ -210,6 +234,7 @@ function addFaces(faces, colorFn, opacityFn) {
     const m = new THREE.Mesh(faceGeometry(f.poly3d), mat);
     m.userData.faceIdx = i;
     markHilite(m, f, i);
+    mat.userData.baseOp = mat.opacity;
     group.add(m); faceMeshes[i] = m;
   });
 }
@@ -224,8 +249,9 @@ function addCellWires(cells, colorFn) {
   for (const [col, pts] of Object.entries(buckets)) {
     const g = new THREE.BufferGeometry();
     g.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3));
-    group.add(new THREE.LineSegments(g, new THREE.LineBasicMaterial({
-      color: +col, transparent: true, opacity: 0.45 })));
+    const wm = new THREE.LineBasicMaterial({ color: +col, transparent: true, opacity: 0.45 });
+    wm.userData.baseOp = 0.45;
+    group.add(new THREE.LineSegments(g, wm));
   }
 }
 function fitView(faces) {
@@ -373,8 +399,9 @@ function renderTab() {
   const g = TAB_GUIDE[state.tab];
   $('#panel').insertAdjacentHTML('afterbegin',
     (g ? `<div class="note" style="border:1px solid #2e3542;border-radius:5px;padding:6px;margin-bottom:6px">${g}</div>` : '')
-    + overlayControlsHtml(run));
-  bindOverlayControls();
+    + modelControlsHtml() + overlayControlsHtml(run));
+  bindOverlayControls(); bindModelControls();
+  applyModelAlpha();
   refreshOverlays();
   fitView(interior.length ? interior : faces);
 }
@@ -395,8 +422,10 @@ function loadObj(path) {
       const g = new THREE.BufferGeometry();
       g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
       g.computeVertexNormals();
-      group.add(new THREE.Mesh(g, new THREE.MeshLambertMaterial({
-        color: CLS_COLORS[c], side: THREE.DoubleSide })));
+      const om = new THREE.MeshLambertMaterial({
+        color: CLS_COLORS[c], side: THREE.DoubleSide, transparent: true, opacity: 0.95 });
+      om.userData.baseOp = 0.95;
+      group.add(new THREE.Mesh(g, om));
     }
     // oracle-style runs skip the arrangement fitView -> fit camera to the OBJ
     if (state.lastFit !== runDir && verts.length) {
@@ -427,7 +456,7 @@ function loadObj(path) {
 }
 function panelOracle(run, stats) {
   let h = `<div class="note" style="border:1px solid #2e3542;border-radius:5px;padding:6px;margin-bottom:6px">${TAB_GUIDE.s5}</div>`
-    + overlayControlsHtml(run) + lod2ToggleHtml(run) + evalTable(run)
+    + modelControlsHtml() + overlayControlsHtml(run) + lod2ToggleHtml(run) + evalTable(run)
     + '<h2>S5 산출 (오라클 — 최적화 0)</h2>'
     + '<table><tr><th class="l">클래스</th><th>삼각형</th><th>면적 m²</th></tr>';
   for (const c of ['roof', 'wall', 'ground']) {
@@ -450,7 +479,8 @@ function panelOracle(run, stats) {
       .catch(() => {});
   }
   $('#panel').innerHTML = h;
-  bindOverlayControls(); bindLod2Toggle();
+  bindOverlayControls(); bindLod2Toggle(); bindModelControls();
+  applyModelAlpha();
 }
 
 // ---------- panels ----------
