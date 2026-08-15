@@ -293,6 +293,8 @@ def run(cfg):
     lam_prior = lam.get("prior", 0.05)
     lam_bin_max = lam.get("bin", 1.0)
     lam_u = lam.get("u_reg", 1e-3)
+    # occupancy anchor weight w (0.0 = exact v1 behaviour, no anchor)
+    lam_occ = lam.get("occ_prior", 0.0)
     anneal = cfg.get("anneal", True)
     warm = int(iters * cfg.get("anneal_warm", 0.35))
     full = int(iters * cfg.get("anneal_full", 0.85))
@@ -312,6 +314,15 @@ def run(cfg):
     batch = cfg.get("cam_batch", 4)
     ema = {}
     gate_probe = []
+    # ---- in-stage diagnostics: channel curves + occupancy trajectory + ledger
+    diag_every = int(cfg.get("diag_every", 25))
+    diag_f = open(out_dir / "diagnostics.jsonl", "w")
+    o_init_np = model.o_init_free.detach().cpu().numpy()
+    init_state = o_init_np > 0.5
+    K_free = max(1, len(model.free_cells))
+    prev_state = init_state.copy()
+    flip_ledger = []
+    LEDGER_CAP = 20000
 
     def lam_bin(i):
         if not anneal:
@@ -358,14 +369,50 @@ def run(cfg):
         photo = (out - targets[cams]).abs()[m.unsqueeze(-1).expand_as(out)].mean()
         loss_bin = model.binarization_loss()
         loss_prior = model.prior_loss()
+        loss_occ = model.occ_prior_loss()
         loss_u = ((model.u - u_init) ** 2).mean()
         loss = (lam_photo * photo + lam_depth * loss_depth + lam_bin(it) * loss_bin
-                + lam_prior * loss_prior + lam_u * loss_u)
+                + lam_prior * loss_prior + lam_occ * loss_occ + lam_u * loss_u)
         opt.zero_grad(set_to_none=False)
         loss.backward()
         for k, v in (("photo", photo), ("depth", loss_depth), ("bin", loss_bin),
-                     ("prior", loss_prior), ("u", loss_u), ("total", loss)):
+                     ("prior", loss_prior), ("occ", loss_occ), ("u", loss_u),
+                     ("total", loss)):
             ema[k] = 0.95 * ema.get(k, float(v)) + 0.05 * float(v)
+        if it % diag_every == 0:
+            with torch.no_grad():
+                o_np = model.occupancy().cpu().numpy()
+                og = model.o_logit.grad
+                og_np = og.cpu().numpy() if og is not None else np.zeros_like(o_np)
+                occ_w_np = model.occ_w.cpu().numpy()
+            state = o_np > 0.5
+            # analytic decomposition of the occupancy-logit gradient:
+            # anchor and binarization terms are closed-form; the remainder is
+            # the render-mediated (photo+depth) evidence channel.
+            g_anchor = lam_occ * occ_w_np * (o_np - o_init_np) / K_free
+            g_bin = lam_bin(it) * (1 - 2 * o_np) * o_np * (1 - o_np) / K_free
+            g_render = og_np - g_anchor - g_bin
+            flipped = state != prev_state
+            if flipped.any() and len(flip_ledger) < LEDGER_CAP:
+                for k_idx in np.nonzero(flipped)[0][:200]:
+                    flip_ledger.append({
+                        "iter": it, "cell": int(model.free_cells[k_idx]),
+                        "dir": "on" if state[k_idx] else "off",
+                        "o": round(float(o_np[k_idx]), 4),
+                        "o_init": round(float(o_init_np[k_idx]), 4),
+                        "g_render": float(g_render[k_idx]),
+                        "g_anchor": float(g_anchor[k_idx]),
+                        "g_bin": float(g_bin[k_idx])})
+            prev_state = state
+            diag_f.write(json.dumps({
+                "iter": it, "lam_bin": round(lam_bin(it), 4),
+                "loss": {k: round(v, 6) for k, v in ema.items()},
+                "occ": {"holes": int((init_state & ~state).sum()),
+                        "ghosts": int((~init_state & state).sum()),
+                        "undecided": int(((o_np > 0.3) & (o_np < 0.7)).sum()),
+                        "flipped_vs_init": int((state != init_state).sum()),
+                        "mean": round(float(o_np.mean()), 4)}}) + "\n")
+            diag_f.flush()
         if it in snap_iters:
             og = model.o_logit.grad
             gate = {"iter": it,
@@ -389,6 +436,32 @@ def run(cfg):
                   f"gate_nz={gate['grad_nonzero_frac']:.2f}", flush=True)
         opt.step()
 
+    diag_f.close()
+    json.dump(flip_ledger, open(out_dir / "flip_ledger.json", "w"))
+    try:  # channel curves + occupancy trajectory panel (matplotlib optional)
+        import matplotlib
+        matplotlib.use("Agg")
+        import matplotlib.pyplot as plt
+        rows = [json.loads(l) for l in open(out_dir / "diagnostics.jsonl")]
+        if rows:
+            its = [r["iter"] for r in rows]
+            fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(9, 7), sharex=True)
+            for ch in ("photo", "depth", "bin", "prior", "occ", "total"):
+                vals = [max(r["loss"].get(ch, 0.0), 1e-8) for r in rows]
+                ax1.plot(its, vals, label=ch, lw=1.2)
+            ax1.set_yscale("log"); ax1.legend(ncol=3, fontsize=8)
+            ax1.set_ylabel("loss (ema)"); ax1.set_title("channel curves")
+            for key, c in (("holes", "tab:red"), ("ghosts", "tab:orange"),
+                           ("undecided", "tab:gray"), ("flipped_vs_init", "tab:blue")):
+                ax2.plot(its, [r["occ"][key] for r in rows], label=key, color=c, lw=1.2)
+            ax2.legend(fontsize=8); ax2.set_xlabel("iter")
+            ax2.set_ylabel("cells"); ax2.set_title("occupancy trajectory vs o_init")
+            fig.tight_layout()
+            fig.savefig(out_dir / "diag_curves.png", dpi=110)
+            plt.close(fig)
+    except Exception as e:  # diagnostics must never kill a run
+        print(f"[arrgs] diag plot skipped: {e}", flush=True)
+
     # ---------------- S5 ----------------
     with torch.no_grad():
         o_free = model.occupancy().cpu().numpy()
@@ -411,6 +484,49 @@ def run(cfg):
     faces_solid = solid_boundary_faces(arr_fin, [1.0 if (c["fixed"] is None and o_fin[i] > 0.5) else 0.0
                                                  for i, c in enumerate(arr_fin["cells"])])
     group_counts = export_obj(faces_solid, out_dir / "s5_brep.obj", ground_z)
+
+    # semantic surface counts + per-plane summary: raw group_counts are
+    # arrangement-facet counts, which depend on how candidate planes slice each
+    # other (and change when the arrangement is rebuilt at final poses). Readers
+    # need surface-level numbers: coplanar facets merged per (plane, side).
+    from shapely.geometry import Polygon as _ShPoly
+    from shapely.ops import unary_union as _uu
+    _pg = {}
+    for f, solid_is_a in faces_solid:
+        _pg.setdefault(f["plane_id"], []).append(f)
+    sem_counts = {"roof": 0, "wall": 0, "ground": 0}
+    plane_summary = []
+    for pid, fl in _pg.items():
+        f0 = fl[0]
+        nv = np.asarray(f0["n"], dtype=float); nv /= np.linalg.norm(nv)
+        refv = np.array([1.0, 0, 0]) if abs(nv[0]) < 0.9 else np.array([0.0, 1, 0])
+        e1v = refv - (refv @ nv) * nv; e1v /= np.linalg.norm(e1v)
+        e2v = np.cross(nv, e1v); origin = nv * f0["d"]
+        polys = []
+        for f in fl:
+            p3 = np.asarray(f["poly3d"])
+            uv = np.stack([(p3 - origin) @ e1v, (p3 - origin) @ e2v], axis=1)
+            try:
+                q = _ShPoly(uv).buffer(0.02)  # weld touching facets
+                if q.is_valid and q.area > 1e-4:
+                    polys.append(q)
+            except Exception:
+                pass
+        if not polys:
+            continue
+        merged = _uu(polys)
+        geoms = list(getattr(merged, "geoms", [merged]))
+        # count only components above LoD2 feature scale; slivers reported apart
+        ncomp = sum(1 for g in geoms if g.area >= 0.25)
+        sliver = round(float(sum(g.area for g in geoms if g.area < 0.25)), 2)
+        cls = classify_face(f0, ground_z)
+        sem_counts[cls] = sem_counts.get(cls, 0) + ncomp
+        plane_summary.append({
+            "plane_id": pid, "class": cls, "surfaces": ncomp,
+            "facets": len(fl), "sliver_area": sliver,
+            "area": round(float(sum(f["area"] for f in fl)), 2)})
+    plane_summary.sort(key=lambda r: -r["area"])
+    json.dump(plane_summary, open(out_dir / "s5_plane_summary.json", "w"))
 
     # evidence card per final face
     with torch.no_grad():
@@ -442,9 +558,15 @@ def run(cfg):
         "cells": len(arr["cells"]), "free_cells": len(model.free_cells),
         "faces": len(arr["faces"]), "gaussians": int(len(seeds["xyz"])),
         "group_counts": group_counts,
+        "group_counts_semantic": sem_counts,
         "psnr_eval_final": psnr_all(eval_cams),
         "o_decision": float(np.median(2 * np.abs(o_free - 0.5))),
         "o_undecided": int(((o_free > 0.3) & (o_free < 0.7)).sum()),
+        "lambda_occ_prior": lam_occ,
+        "occ_final": {"holes": int((init_state & ~(o_free > 0.5)).sum()),
+                      "ghosts": int((~init_state & (o_free > 0.5)).sum()),
+                      "flipped_vs_init": int(((o_free > 0.5) != init_state).sum()),
+                      "flip_events": len(flip_ledger)},
         "gate_probe": gate_probe,
         "delta_hat": model.delta.detach().cpu().tolist(),
         "inject_delta": [dx, 0.0, dz],

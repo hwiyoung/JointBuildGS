@@ -254,6 +254,41 @@ function addCellWires(cells, colorFn) {
     group.add(new THREE.LineSegments(g, wm));
   }
 }
+function drawSeedsS2(run) {
+  if (state.showSeeds === undefined) state.showSeeds = true;
+  if (!state.showSeeds) return;
+  if (run._seeds === undefined) {
+    run._seeds = null; // in flight
+    fetch('../' + run.dir + '/s2_seeds.json').then(r => r.ok ? r.json() : null)
+      .then(s => { run._seeds = s; if (state.tab === 's2') renderTab(); })
+      .catch(() => { run._seeds = null; });
+  } else if (run._seeds) {
+    const bySrc = {};
+    run._seeds.xyz.forEach((p, i) => {
+      const k = run._seeds.src[i];
+      (bySrc[k] = bySrc[k] || []).push(p[0], p[1], p[2]);
+    });
+    for (const [k, arr] of Object.entries(bySrc)) {
+      const geo = new THREE.BufferGeometry();
+      geo.setAttribute('position', new THREE.Float32BufferAttribute(arr, 3));
+      group.add(new THREE.Points(geo, new THREE.PointsMaterial({
+        color: SRC_COLORS[k] || 0x999999, size: 0.5 })));
+    }
+  }
+}
+function drawFacetOutlines(faces, opacity) {
+  const pts = [];
+  faces.forEach(f => {
+    const P = f.poly3d;
+    for (let k = 0; k < P.length; k++) pts.push(...P[k], ...P[(k + 1) % P.length]);
+  });
+  if (!pts.length) return;
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3));
+  const lm = new THREE.LineBasicMaterial({ color: 0x5a7290, transparent: true, opacity });
+  lm.userData.baseOp = opacity;
+  group.add(new THREE.LineSegments(g, lm));
+}
 function fitView(faces) {
   // preserve the camera across toggles/tab switches within the same run
   if (state.lastFit === (state.run && state.run.dir)) return;
@@ -322,28 +357,42 @@ function renderTab() {
       () => 0.38);
     panelS1(run);
   } else if (state.tab === 's2') {
-    addCellWires(s2.cells, (c) => c.fixed === 0 ? 0x5a3040 : 0x3f77b0);
-    addFaces(interior, () => 0x4a9eff, () => 0.06);
-    if (state.showSeeds === undefined) state.showSeeds = true;
-    if (!state.showSeeds) { /* seeds off */ } else if (run._seeds === undefined) {
-      run._seeds = null; // in flight
-      fetch('../' + run.dir + '/s2_seeds.json').then(r => r.ok ? r.json() : null)
-        .then(s => { run._seeds = s; if (state.tab === 's2') renderTab(); })
-        .catch(() => { run._seeds = null; });
-    } else if (run._seeds) {
-      const bySrc = {};
-      run._seeds.xyz.forEach((p, i) => {
-        const k = run._seeds.src[i];
-        (bySrc[k] = bySrc[k] || []).push(p[0], p[1], p[2]);
-      });
-      for (const [k, arr] of Object.entries(bySrc)) {
-        const geo = new THREE.BufferGeometry();
-        geo.setAttribute('position', new THREE.Float32BufferAttribute(arr, 3));
-        group.add(new THREE.Points(geo, new THREE.PointsMaterial({
-          color: SRC_COLORS[k] || 0x999999, size: 0.5 })));
+    if (state.s2Mode === undefined) state.s2Mode = 'voxel';
+    if (state.s2Mode === 'voxel') {
+      // light mode: ONLY the o_init volume hypothesis, as orange boxes.
+      // Compare against E7/E1 point overlays: points-without-orange = init
+      // deficit (tower, roof gaps); orange-without-points = init excess.
+      const solid = s2.cells.filter(c => c.fixed !== 0 &&
+        (c.o_init ?? 0.5) > 0.5 && c.edges && c.edges.length);
+      if (solid.length) {
+        const geo = new THREE.BoxGeometry(1, 1, 1);
+        const mat = new THREE.MeshLambertMaterial({
+          color: 0xf08c28, transparent: true, opacity: 0.4 });
+        mat.userData.baseOp = 0.4;
+        const inst = new THREE.InstancedMesh(geo, mat, solid.length);
+        const m4 = new THREE.Matrix4();
+        solid.forEach((c, i) => {
+          const mn = [1e9, 1e9, 1e9], mx = [-1e9, -1e9, -1e9];
+          c.edges.forEach(([a, b]) => [a, b].forEach(p =>
+            p.forEach((v, k) => { mn[k] = Math.min(mn[k], v); mx[k] = Math.max(mx[k], v); })));
+          m4.makeScale(Math.max(0.25, (mx[0] - mn[0]) * 0.94),
+                       Math.max(0.25, (mx[1] - mn[1]) * 0.94),
+                       Math.max(0.25, (mx[2] - mn[2]) * 0.94));
+          m4.setPosition((mn[0] + mx[0]) / 2, (mn[1] + mx[1]) / 2, (mn[2] + mx[2]) / 2);
+          inst.setMatrixAt(i, m4);
+        });
+        group.add(inst);
       }
-    }
+      drawFacetOutlines(interior, 0.22);  // candidate facets, light
+      drawSeedsS2(run);
+      panelS2(run, s2);
+    } else {
+    addCellWires(s2.cells, (c) => c.fixed === 0 ? 0x5a3040
+      : (state.showInit !== false && (c.o_init ?? 0.5) > 0.5) ? 0xf08c28 : 0x3f77b0);
+    addFaces(interior, () => 0x4a9eff, () => 0.06);
+    drawSeedsS2(run);
     panelS2(run, s2);
+    }
   } else if (state.tab === 's34') {
     const snaps = run.snapshots || [];
     $('#tl-slider').max = Math.max(0, snaps.length - 1);
@@ -392,6 +441,25 @@ function renderTab() {
         }
         return e.has_prior ? 0x4a9eff : 0x50d890; // prior vs current
       }, (f, i) => { const e = evByFace[(f.fi !== undefined) ? f.fi : i]; return e && e.v_final > 0.5 ? 0.92 : 0.03; });
+      if (state.showFacetEdges !== false) {
+        // facet outlines on active faces: the arrangement decomposition itself
+        const pts = [];
+        faces.forEach((f, i) => {
+          const e = evByFace[(f.fi !== undefined) ? f.fi : i];
+          if (!e || e.v_final <= 0.5) return;
+          const P = f.poly3d;
+          for (let k = 0; k < P.length; k++) {
+            pts.push(...P[k], ...P[(k + 1) % P.length]);
+          }
+        });
+        if (pts.length) {
+          const g = new THREE.BufferGeometry();
+          g.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3));
+          const lm = new THREE.LineBasicMaterial({ color: 0x141619, transparent: true, opacity: 0.7 });
+          lm.userData.baseOp = 0.7;
+          group.add(new THREE.LineSegments(g, lm));
+        }
+      }
       panelS5(run);
     }
   }
@@ -534,18 +602,34 @@ function panelS2(run, s2) {
   const cells = (s2 && s2.cells) || [];
   const free = cells.filter(c => c.fixed !== 0);
   $('#panel').innerHTML = `<h2>S2 배열</h2>
+    <p class="legend">표시:
+    <label><input type="radio" name="s2mode" value="voxel" ${state.s2Mode !== 'wire' ? 'checked' : ''}> o_init 복셀(가벼움)</label>
+    <label><input type="radio" name="s2mode" value="wire" ${state.s2Mode === 'wire' ? 'checked' : ''}> 전체 와이어</label></p>
     <table><tr><th class="l">항목</th><th>값</th></tr>
     <tr><td class="l">셀 (자유/고정빈)</td><td>${free.length} / ${cells.length - free.length}</td></tr>
     <tr><td class="l">면</td><td>${(run.s2_counts||{}).faces ?? (s2? s2.faces.length : '—')}</td></tr>
     <tr><td class="l">렌더 가능 면</td><td>${(run.s2_counts||{}).renderable ?? '—'}</td></tr>
     <tr><td class="l">가우시안 시드</td><td>${run.metrics ? run.metrics.gaussians : '—'}</td></tr></table>
-    <p class="legend">파랑 와이어=자유 셀, 자주=고정 빈 셀(footprint 밖)</p>
+    ${state.s2Mode !== 'wire' ? `<p class="legend"><span style="color:#f08c28">주황 박스</span> =
+    o_init이 solid(0.5↑)인 자유 셀의 부피 — prior가 "차 있다"고 믿는 공간.
+    판독: E1/E7 점 지붕이 주황 덩어리의 <b>상면에 접해야</b> 정상. 점 아래가 비면
+    init 결손, 점 위로 주황이 솟으면 init 과잉. 옅은 파란 선 = 후보 facet 윤곽
+    (o_init 토글은 와이어 모드 전용)</p>` : `
+    <p class="legend"><label><input type="checkbox" id="inittgl" ${state.showInit !== false ? 'checked' : ''}> o_init 표시</label>
+    — <span style="color:#f08c28">주황</span>=초기 solid 셀(prior의 부피 가설),
+    파랑=초기 empty 자유 셀, 자주=고정 빈 셀. E7/E1 점을 켜고 "점은 있는데 주황이
+    없는 부피"를 찾으면 그게 init 결손(타워·지붕 갭)</p>`}
     <p class="legend"><label><input type="checkbox" id="seedtgl" ${state.showSeeds !== false ? 'checked' : ''}> 시드 표시</label>
     — 색 = 소속 평면 소스: <span style="color:#4a9eff">prior</span>
     <span style="color:#ffa040">MVS</span> <span style="color:#9aa4b0">footprint벽</span>
     <span style="color:#667788">domain</span> — E7 오버레이(청록)와 겹쳐 "시드가 실표면 근처인가" 확인</p>`;
   const st = $('#seedtgl');
   if (st) st.onchange = () => { state.showSeeds = st.checked; renderTab(); };
+  const it = $('#inittgl');
+  if (it) it.onchange = () => { state.showInit = it.checked; renderTab(); };
+  document.querySelectorAll('input[name="s2mode"]').forEach(r => {
+    r.onchange = () => { state.s2Mode = r.value; renderTab(); };
+  });
 }
 function chart(canvas, series, labels) {
   const ctx = canvas.getContext('2d');
@@ -617,23 +701,52 @@ function panelS5(run) {
       <option value="support" ${state.evMode === 'support' ? 'selected' : ''}>이미지 지지도</option>
       <option value="prior" ${state.evMode === 'prior' ? 'selected' : ''}>prior 의존</option>
       <option value="brep" ${state.evMode === 'brep' ? 'selected' : ''}>B-rep OBJ</option>
-    </select>`;
-  if (run.metrics && run.metrics.group_counts) {
-    const g = run.metrics.group_counts;
-    h += `<table><tr><th>roof</th><th>wall</th><th>ground</th></tr>
-      <tr><td>${g.roof}</td><td>${g.wall}</td><td>${g.ground}</td></tr></table>`;
+    </select>
+    <label style="margin-left:8px"><input type="checkbox" id="fedgetgl" ${state.showFacetEdges !== false ? 'checked' : ''}> facet 윤곽</label>`;
+  if (!run.s5_planes && run.s5_planes_ref) {
+    fetch('../' + run.s5_planes_ref).then(r => r.json())
+      .then(d => { run.s5_planes = d; renderTab(); }).catch(() => {});
   }
-  h += `<h2>증거 카드 (활성 면 ${live.length})</h2>
-    <table><tr><th class="l">면</th><th class="l">클래스</th><th>v</th><th>지지</th><th class="l">prior</th></tr>`;
-  live.sort((a, b) => b.area - a.area).slice(0, 30).forEach(e => {
-    const sel = state.hl && state.hl.face === e.face;
-    h += `<tr data-face="${e.face}" style="cursor:pointer${sel ? ';background:#4a3d10' : ''}">` +
-      `<td class="l">${e.face}:${esc(e.plane_id)}</td><td class="l">${e.class}</td>
-      <td>${e.v_final.toFixed(2)}</td><td>${e.photo_support_proxy.toFixed(2)}</td>
-      <td class="l">${e.has_prior ? 'O' : '—'}</td></tr>`;
-  });
-  $('#panel').innerHTML = h + '</table>';
+  const gs = run.metrics && run.metrics.group_counts_semantic;
+  const gf = run.metrics && run.metrics.group_counts;
+  const ps = run.s5_planes;
+  if (gs || ps || gf) {
+    const sem = gs || (ps && ps.reduce((a, r) => {
+      a[r.class] = (a[r.class] || 0) + r.surfaces; return a; }, {})) || {};
+    h += `<table><tr><th></th><th>roof</th><th>wall</th><th>ground</th></tr>
+      <tr><td class="l">의미면 수</td>` +
+      ['roof', 'wall', 'ground'].map(c => `<td>${sem[c] ?? '—'}</td>`).join('') +
+      `</tr>${gf ? `<tr><td class="l">(facet 조각)</td>` +
+      ['roof', 'wall', 'ground'].map(c => `<td>${gf[c] ?? 0}</td>`).join('') +
+      '</tr>' : ''}</table>`;
+  }
+  if (ps && ps.length) {
+    // per-plane judgment evidence, aggregated from s5_evidence facet rows
+    const agg = {};
+    ev.forEach(e => {
+      const a = agg[e.plane_id] = agg[e.plane_id] ||
+        {va: 0, sa: 0, area: 0, prior: false};
+      a.va += e.v_final * e.area; a.sa += e.photo_support_proxy * e.area;
+      a.area += e.area; a.prior = a.prior || e.has_prior;
+    });
+    h += `<h2>평면 단위 요약 (${ps.length}평면 — 행 클릭 = 3D 강조)</h2>
+      <table><tr><th class="l">평면</th><th class="l">클래스</th><th>면</th>
+      <th>facet</th><th>면적</th><th>v̄</th><th>지지</th><th class="l">prior</th></tr>` +
+      ps.slice(0, 20).map(r => {
+        const a = agg[r.plane_id];
+        const sel = state.hl && state.hl.plane === r.plane_id;
+        return `<tr data-pid="${esc(r.plane_id)}" style="cursor:pointer${sel ? ';background:#4a3d10' : ''}">
+         <td class="l">${esc(r.plane_id)}</td><td class="l">${r.class}</td>
+         <td>${r.surfaces}</td><td>${r.facets}</td><td>${r.area}</td>
+         <td>${a && a.area ? (a.va / a.area).toFixed(2) : '—'}</td>
+         <td>${a && a.area ? (a.sa / a.area).toFixed(2) : '—'}</td>
+         <td class="l">${a ? (a.prior ? 'O' : '—') : '—'}</td></tr>`;
+      }).join('') + '</table>';
+  }
+  $('#panel').innerHTML = h;
   $('#evmode').onchange = (e) => { state.evMode = e.target.value; renderTab(); };
+  const fe = $('#fedgetgl');
+  if (fe) fe.onchange = () => { state.showFacetEdges = fe.checked; renderTab(); };
   bindPlaneRows();
 }
 function renderQuant() {
@@ -690,6 +803,7 @@ function renderQuant() {
 
 // ---------- boot ----------
 const GROUPS = [
+  ['ANCHOR', '앵커 w-스윕 (L_occ_prior) — 합성 게이트 + 실건물 3동', false],
   ['ORACLE', '오라클(무학습 대조군) 93동 — S5+E1로 prior 재현 확인', false],
   ['X1', '실건물 — 정상 대조 1동', false],
   ['X2', '실건물 — 변화/구멍 프로파일', false],

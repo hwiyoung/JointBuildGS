@@ -25,6 +25,7 @@ RUN_ROOTS = [
     ("X3", BASE / "P2-ARRGS-X3-v1/runs"),
     ("X4", BASE / "P2-ARRGS-X4-v1/runs"),
     ("ORACLE", BASE / "P2-ARRGS-ORACLE-v1/runs"),
+    ("ANCHOR", BASE / "P2-ARRGS-ANCHOR-v1/runs"),
 ]
 
 ARM_OF_EXP = {"X1": "ARRGS", "X2": "ARRGS", "ORACLE": "ARRGS_ORACLE"}
@@ -175,6 +176,8 @@ def load_run(exp: str, run_dir: Path):
         entry["s5_obj"] = rel(run_dir / "s5_brep.obj")
     if (run_dir / "s5_evidence.json").is_file():
         entry["s5_evidence_ref"] = rel(run_dir / "s5_evidence.json")
+    if (run_dir / "s5_plane_summary.json").is_file():
+        entry["s5_planes_ref"] = rel(run_dir / "s5_plane_summary.json")
     # GT / comparison overlays for real-building runs
     cfg = entry.get("run", {}).get("config", {})
     bkey = cfg.get("scene", {}).get("bkey")

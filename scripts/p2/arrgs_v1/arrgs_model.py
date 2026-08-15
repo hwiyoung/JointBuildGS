@@ -195,6 +195,12 @@ class ArrgsModel(nn.Module):
         logits = np.log(np.clip(o_init, 1e-3, 1 - 1e-3) / np.clip(1 - o_init, 1e-3, 1))
         self.o_logit = nn.Parameter(torch.tensor(
             [logits[ci] for ci in self.free_cells], dtype=torch.float32))
+        # persistent anchor target: the same o_init the logits start from.
+        # Init alone exerts no force after step 1; the anchor keeps pulling.
+        self.register_buffer("o_init_free", torch.tensor(
+            [o_init[ci] for ci in self.free_cells], dtype=torch.float32))
+        # per-cell anchor trust (conflict attenuation hook; 1.0 = full trust)
+        self.register_buffer("occ_w", torch.ones(len(self.free_cells)))
         # per-face endpoint gather tables (renderable faces only)
         rf = seeds["renderable_faces"]
         self.rf = rf
@@ -315,6 +321,18 @@ class ArrgsModel(nn.Module):
     def binarization_loss(self):
         o = self.occupancy()
         return (o * (1 - o)).mean()
+
+    def occ_prior_loss(self):
+        """Occupancy anchor: weighted BCE(o, o_init) over free cells.
+
+        The MAP prior term the v1 loss lacked — o_init entered only as
+        initialization, so annealing could erase it (hole punching). Soft
+        targets are intentional: BCE against o_init=0.75 has its minimum at
+        0.75, i.e. the anchor encodes trust, not a hard copy."""
+        o = self.occupancy().clamp(1e-4, 1 - 1e-4)
+        t = self.o_init_free
+        bce = -(t * torch.log(o) + (1 - t) * torch.log(1 - o))
+        return (self.occ_w * bce).mean()
 
     def snapshot_state(self):
         with torch.no_grad():
