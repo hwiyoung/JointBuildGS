@@ -585,6 +585,23 @@ def run(cfg):
     with torch.no_grad():
         v_slot, oa_s, ob_s = model.face_gate()
         alpha_final = torch.sigmoid(model.alpha_logit).cpu().numpy()
+        # adjusted gaussians in their FULL form (position, normal, 2D scale,
+        # colour, opacity) so the viewer can draw real oriented discs — the
+        # init/adjusted pair for the appearance variable
+        mm_, _, ss_, aa_, cc_ = model.gaussians()
+        n_g = F.normalize(model.plane_n_raw, dim=-1)[model.g_plane.clamp(min=0)]
+        n_g = torch.where((model.g_plane < 0)[:, None],
+                          torch.tensor([[0.0, 0, 1.0]], device=device), n_g)
+        live_g = (aa_ > 0.3).cpu().numpy()
+        sub_g = max(1, int(live_g.sum()) // 15000)
+        sel = np.nonzero(live_g)[0][::sub_g]
+        json.dump({"xyz": np.round(mm_.cpu().numpy()[sel], 2).tolist(),
+                   "n": np.round(n_g.cpu().numpy()[sel], 3).tolist(),
+                   "s": np.round(ss_[:, :2].cpu().numpy()[sel], 3).tolist(),
+                   "rgb": np.round(cc_.cpu().numpy()[sel], 3).tolist(),
+                   "a": np.round(aa_.cpu().numpy()[sel], 2).tolist(),
+                   "alive": int(live_g.sum()), "total": int(len(live_g))},
+                  open(out_dir / "s4_gaussians.json", "w"))
     face_support = {}
     for gi, slot in enumerate(model.g_face_slot.cpu().numpy()):
         face_support.setdefault(int(slot), []).append(alpha_final[gi])

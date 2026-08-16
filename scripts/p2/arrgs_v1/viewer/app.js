@@ -8,10 +8,10 @@ window.onerror = (msg, src, line) => {
 const $ = (s) => document.querySelector(s);
 const state = { manifest: null, run: null, tab: 's5', snap: 0, playing: null, evMode: 'class' };
 const TAB_GUIDE = {
-  s1: 'S1 검수: 반투명 면 = 후보 평면(출처별 색). 청록 점(ALS 입력)이 면에 붙어 있어야 정상 — 면 밖 점 덩어리 = 후보 누락.',
-  s2: 'S2 검수: 평면들이 자른 부피 조각(셀). 파랑 와이어 = 최적화 대상 셀, 자주 = footprint 밖 고정-빈 셀.',
-  s34: 'S3+4 검수: 하단 슬라이더로 학습 재생. 면이 진해질수록 표면으로 확정(v↑). 오른쪽 표는 개발 진단용 — 점유 o와 렌더↔사진 비교만 봐도 됨.',
-  s5: 'S5 검수: 최종 모델(적갈=지붕, 회=벽, 녹=지면). 파란 점 = E1 GT — 색면이 파란 점을 따라가면 성공, 벗어나면 실패.',
+  s1: 'S1 평면 가설: 출력 = 후보 평면 목록(반투명 면, 출처별 색). 청록 점(ALS 입력)이 면에 붙어 있어야 정상 — 면 밖 점 덩어리 = 후보 누락.',
+  s2: 'S2 = 초기값 검수. 변수별 표현 — 점유: 주황 복셀(o_init; 라디오로 최종/Δ 전환), 가우시안: 시드 점(소스색), 평면: 파란 facet 윤곽(평면 자체는 S1 탭). 와이어 모드에서 셀 구조 확인.',
+  s34: 'S3 = 최적화 재생(하단 슬라이더). 변수별 표현 — 점유: 면 진하기(게이트 v; 부피로 보려면 S2 탭 최종/Δ), 가우시안: 렌더↔사진 패널, 평면: 우측 표 dn°/dd(이동량이 미세해 수치로).',
+  s5: 'S4 모델: 출력 = 구조화 모델(적갈=지붕, 회=벽, 녹=지면). 파란 점 = E1 GT — 색면이 파란 점을 따라가면 성공. Δ 모드 = 판정이 초기값에 가한 수정.',
 };
 
 const SRC_COLORS = { prior_als: 0x4a9eff, mvs: 0xffa040, footprint: 0x9aa4b0,
@@ -276,6 +276,68 @@ function drawSeedsS2(run) {
     }
   }
 }
+function drawFinalGaussians(run) {
+  if (!state.showFinalG) return;
+  if (run._fg === undefined) {
+    run._fg = null; // in flight
+    fetch('../' + run.dir + '/s4_gaussians.json').then(r => r.ok ? r.json() : null)
+      .then(d => { run._fg = d; if (state.tab === 's2') renderTab(); })
+      .catch(() => { run._fg = null; });
+  } else if (run._fg && run._fg.n && run._fg.s) {
+    drawGaussianDiscs(run._fg, 0.85);  // full form: oriented, scaled, coloured
+  } else if (run._fg) {  // legacy export: points only
+    const arr = [];
+    run._fg.xyz.forEach(p => arr.push(p[0], p[1], p[2]));
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.Float32BufferAttribute(arr, 3));
+    group.add(new THREE.Points(geo, new THREE.PointsMaterial({
+      color: 0x39b3a6, size: 0.55 })));
+  }
+}
+function drawCellBoxes(cells, color, opacity) {
+  if (!cells.length) return;
+  const geo = new THREE.BoxGeometry(1, 1, 1);
+  const mat = new THREE.MeshLambertMaterial({
+    color, transparent: true, opacity });
+  mat.userData.baseOp = opacity;
+  const inst = new THREE.InstancedMesh(geo, mat, cells.length);
+  const m4 = new THREE.Matrix4();
+  cells.forEach((c, i) => {
+    const mn = [1e9, 1e9, 1e9], mx = [-1e9, -1e9, -1e9];
+    c.edges.forEach(([a, b]) => [a, b].forEach(p =>
+      p.forEach((v, k) => { mn[k] = Math.min(mn[k], v); mx[k] = Math.max(mx[k], v); })));
+    m4.makeScale(Math.max(0.25, (mx[0] - mn[0]) * 0.94),
+                 Math.max(0.25, (mx[1] - mn[1]) * 0.94),
+                 Math.max(0.25, (mx[2] - mn[2]) * 0.94));
+    m4.setPosition((mn[0] + mx[0]) / 2, (mn[1] + mx[1]) / 2, (mn[2] + mx[2]) / 2);
+    inst.setMatrixAt(i, m4);
+  });
+  group.add(inst);
+}
+function drawGaussianDiscs(g, opacity) {
+  const N = g.xyz.length;
+  if (!N) return;
+  const geo = new THREE.CircleGeometry(1, 10);
+  const mat = new THREE.MeshBasicMaterial({
+    side: THREE.DoubleSide, transparent: true, opacity });
+  mat.userData.baseOp = opacity;
+  const inst = new THREE.InstancedMesh(geo, mat, N);
+  const m4 = new THREE.Matrix4(), q = new THREE.Quaternion();
+  const z = new THREE.Vector3(0, 0, 1), nv = new THREE.Vector3();
+  const pos = new THREE.Vector3(), sc = new THREE.Vector3();
+  for (let i = 0; i < N; i++) {
+    nv.set(...g.n[i]).normalize();
+    q.setFromUnitVectors(z, nv);
+    pos.set(...g.xyz[i]);
+    const fade = g.a[i] < 0.3 ? 0.3 : 1.0;  // dying discs shrink visually
+    sc.set(Math.max(0.06, g.s[i][0] * fade), Math.max(0.06, g.s[i][1] * fade), 1);
+    m4.compose(pos, q, sc);
+    inst.setMatrixAt(i, m4);
+    inst.setColorAt(i, new THREE.Color(...g.rgb[i]));
+  }
+  if (inst.instanceColor) inst.instanceColor.needsUpdate = true;
+  group.add(inst);
+}
 function drawFacetOutlines(faces, opacity) {
   const pts = [];
   faces.forEach(f => {
@@ -359,38 +421,57 @@ function renderTab() {
   } else if (state.tab === 's2') {
     if (state.s2Mode === undefined) state.s2Mode = 'voxel';
     if (state.s2Mode === 'voxel') {
-      // light mode: ONLY the o_init volume hypothesis, as orange boxes.
-      // Compare against E7/E1 point overlays: points-without-orange = init
-      // deficit (tower, roof gaps); orange-without-points = init excess.
-      const solid = s2.cells.filter(c => c.fixed !== 0 &&
-        (c.o_init ?? 0.5) > 0.5 && c.edges && c.edges.length);
-      if (solid.length) {
-        const geo = new THREE.BoxGeometry(1, 1, 1);
-        const mat = new THREE.MeshLambertMaterial({
-          color: 0xf08c28, transparent: true, opacity: 0.4 });
-        mat.userData.baseOp = 0.4;
-        const inst = new THREE.InstancedMesh(geo, mat, solid.length);
-        const m4 = new THREE.Matrix4();
-        solid.forEach((c, i) => {
-          const mn = [1e9, 1e9, 1e9], mx = [-1e9, -1e9, -1e9];
-          c.edges.forEach(([a, b]) => [a, b].forEach(p =>
-            p.forEach((v, k) => { mn[k] = Math.min(mn[k], v); mx[k] = Math.max(mx[k], v); })));
-          m4.makeScale(Math.max(0.25, (mx[0] - mn[0]) * 0.94),
-                       Math.max(0.25, (mx[1] - mn[1]) * 0.94),
-                       Math.max(0.25, (mx[2] - mn[2]) * 0.94));
-          m4.setPosition((mn[0] + mx[0]) / 2, (mn[1] + mx[1]) / 2, (mn[2] + mx[2]) / 2);
-          inst.setMatrixAt(i, m4);
-        });
-        group.add(inst);
+      // occupancy as VOLUME, in three states: init (the prior's hypothesis),
+      // final (what optimization settled on), delta (the judgment's edits).
+      if (state.occState === undefined) state.occState = 'init';
+      let oFin = run._oFin;
+      if (state.occState !== 'init' && oFin === undefined) {
+        run._oFin = null; // in flight
+        const metas = run.snapshots || [];
+        const last = metas[metas.length - 1];
+        const done = d => {
+          const m = {}; d.free_cells.forEach((ci, k) => m[ci] = d.o[k]);
+          run._oFin = m; if (state.tab === 's2') renderTab();
+        };
+        if (last) {
+          if (last.ref) fetch('../' + last.ref).then(r => r.json()).then(done).catch(() => {});
+          else done(last);
+        }
+        oFin = null;
+      }
+      const groups = {};  // color -> cells
+      s2.cells.forEach(c => {
+        if (c.fixed === 0 || !c.edges || !c.edges.length) return;
+        const oi = (c.o_init ?? 0.5) > 0.5;
+        const of_ = oFin ? (oFin[c.idx] ?? 0) > 0.5 : null;
+        let col = null;
+        if (state.occState === 'init') col = oi ? 0xf08c28 : null;
+        else if (state.occState === 'final') col = of_ ? 0x39b3a6 : null;
+        else if (of_ !== null) {  // delta: the optimizer's edits only
+          if (oi && !of_) col = 0xe5484d;       // 제거(구멍)
+          else if (!oi && of_) col = 0xf08c28;  // 신규(유령 또는 정당 추가)
+        }
+        if (col !== null) (groups[col] = groups[col] || []).push(c);
+      });
+      for (const [col, cells] of Object.entries(groups)) {
+        drawCellBoxes(cells, +col, 0.4);
       }
       drawFacetOutlines(interior, 0.22);  // candidate facets, light
+      if (state.showPlanesS2) {  // candidate planes beside the volume (S1 재료)
+        addFaces(interior, (f) => {
+          const p = (run.s1 && run.s1.planes || []).find(q => q.id === f.plane_id);
+          return SRC_COLORS[p ? p.source : 'domain'] || 0x667788;
+        }, () => 0.14);
+      }
       drawSeedsS2(run);
+      drawFinalGaussians(run);
       panelS2(run, s2);
     } else {
     addCellWires(s2.cells, (c) => c.fixed === 0 ? 0x5a3040
       : (state.showInit !== false && (c.o_init ?? 0.5) > 0.5) ? 0xf08c28 : 0x3f77b0);
     addFaces(interior, () => 0x4a9eff, () => 0.06);
     drawSeedsS2(run);
+    drawFinalGaussians(run);
     panelS2(run, s2);
     }
   } else if (state.tab === 's34') {
@@ -415,6 +496,15 @@ function renderTab() {
         const p = (run.s1.planes || []).find(q => q.id === f.plane_id);
         return SRC_COLORS[p ? p.source : 'domain'] || 0x667788;
       }, (f, i) => { const fi = (f.fi !== undefined) ? f.fi : i; return vMap[fi] !== undefined ? Math.min(0.95, vMap[fi]) : 0; });
+      // the optimization as a story: at this iteration, the volume the
+      // occupancy claims (teal boxes) + the appearance discs (new runs)
+      if (snap.o && snap.free_cells) {
+        const oMap = {}; snap.free_cells.forEach((ci, k) => oMap[ci] = snap.o[k]);
+        drawCellBoxes(s2.cells.filter(c => c.fixed !== 0 &&
+          (oMap[c.idx] ?? 0) > 0.5 && c.edges && c.edges.length), 0x39b3a6, 0.15);
+      }
+      if (snap.g) drawGaussianDiscs(snap.g, 0.8);
+      drawFacetOutlines(interior, 0.1);  // static plane-structure context
       panelS34(run, snap);
     }
   } else if (state.tab === 's5') {
@@ -432,7 +522,23 @@ function renderTab() {
       }
       const ev = run.s5_evidence || [];
       const evByFace = {}; ev.forEach(e => evByFace[e.face] = e);
+      // init-vs-adjusted comparison: face gate from o_init vs the optimized one
+      const oInitOf = (ci) => {
+        const c = ci >= 0 ? s2.cells[ci] : null;
+        if (!c || c.fixed === 0) return 0;
+        return c.o_init ?? 0.5;
+      };
+      const dState = (f, i) => {
+        const e = evByFace[(f.fi !== undefined) ? f.fi : i];
+        const v1 = e ? e.v_final : 0;
+        const v0 = Math.abs(oInitOf(f.cell_a) - oInitOf(f.cell_b));
+        return (v0 > 0.5 ? 2 : 0) + (v1 > 0.5 ? 1 : 0); // 3=유지 1=신규 2=제거
+      };
       addFaces(faces, (f, i) => {
+        if (state.evMode === 'delta') {
+          const d = dState(f, i);
+          return d === 3 ? 0x9aa4b0 : d === 1 ? 0xf08c28 : 0xe5484d;
+        }
         const e = evByFace[(f.fi !== undefined) ? f.fi : i]; if (!e) return 0x333944;
         if (state.evMode === 'class') return CLS_COLORS[e.class] || 0x888888;
         if (state.evMode === 'support') {
@@ -440,7 +546,13 @@ function renderTab() {
           return new THREE.Color(1 - t, t, 0.25).getHex();
         }
         return e.has_prior ? 0x4a9eff : 0x50d890; // prior vs current
-      }, (f, i) => { const e = evByFace[(f.fi !== undefined) ? f.fi : i]; return e && e.v_final > 0.5 ? 0.92 : 0.03; });
+      }, (f, i) => {
+        if (state.evMode === 'delta') {
+          const d = dState(f, i);
+          return d === 3 ? 0.3 : d === 1 ? 0.9 : d === 2 ? 0.55 : 0;
+        }
+        const e = evByFace[(f.fi !== undefined) ? f.fi : i]; return e && e.v_final > 0.5 ? 0.92 : 0.03;
+      });
       if (state.showFacetEdges !== false) {
         // facet outlines on active faces: the arrangement decomposition itself
         const pts = [];
@@ -601,7 +713,7 @@ function panelS1(run) {
 function panelS2(run, s2) {
   const cells = (s2 && s2.cells) || [];
   const free = cells.filter(c => c.fixed !== 0);
-  $('#panel').innerHTML = `<h2>S2 배열</h2>
+  $('#panel').innerHTML = `<h2>S2 분할·초기화 (셀·o_init·시드)</h2>
     <p class="legend">표시:
     <label><input type="radio" name="s2mode" value="voxel" ${state.s2Mode !== 'wire' ? 'checked' : ''}> o_init 복셀(가벼움)</label>
     <label><input type="radio" name="s2mode" value="wire" ${state.s2Mode === 'wire' ? 'checked' : ''}> 전체 와이어</label></p>
@@ -610,19 +722,26 @@ function panelS2(run, s2) {
     <tr><td class="l">면</td><td>${(run.s2_counts||{}).faces ?? (s2? s2.faces.length : '—')}</td></tr>
     <tr><td class="l">렌더 가능 면</td><td>${(run.s2_counts||{}).renderable ?? '—'}</td></tr>
     <tr><td class="l">가우시안 시드</td><td>${run.metrics ? run.metrics.gaussians : '—'}</td></tr></table>
-    ${state.s2Mode !== 'wire' ? `<p class="legend"><span style="color:#f08c28">주황 박스</span> =
-    o_init이 solid(0.5↑)인 자유 셀의 부피 — prior가 "차 있다"고 믿는 공간.
-    판독: E1/E7 점 지붕이 주황 덩어리의 <b>상면에 접해야</b> 정상. 점 아래가 비면
-    init 결손, 점 위로 주황이 솟으면 init 과잉. 옅은 파란 선 = 후보 facet 윤곽
-    (o_init 토글은 와이어 모드 전용)</p>` : `
+    ${state.s2Mode !== 'wire' ? `<p class="legend">점유 상태:
+    <label><input type="radio" name="occst" value="init" ${state.occState !== 'final' && state.occState !== 'delta' ? 'checked' : ''}> 초기</label>
+    <label><input type="radio" name="occst" value="final" ${state.occState === 'final' ? 'checked' : ''}> 최종</label>
+    <label><input type="radio" name="occst" value="delta" ${state.occState === 'delta' ? 'checked' : ''}> Δ(판정 수정분)</label>
+    &nbsp;<label><input type="checkbox" id="planetgl" ${state.showPlanesS2 ? 'checked' : ''}> 후보 평면 면(출처색)</label></p>
+    <p class="legend">초기: <span style="color:#f08c28">주황</span>=prior의 부피 가설 —
+    E1/E7 점 지붕이 주황 상면에 접해야 정상. 최종: <span style="color:#39b3a6">청록</span>=
+    최적화 후 solid. Δ: <span style="color:#f08c28">주황</span>=판정이 새로 채움,
+    <span style="color:#e5484d">빨강</span>=판정이 비움(구멍). 재현 런은 Δ가 비어야 정상.
+    옅은 파란 선 = 후보 facet 윤곽 (o_init 토글은 와이어 모드 전용)</p>` : `
     <p class="legend"><label><input type="checkbox" id="inittgl" ${state.showInit !== false ? 'checked' : ''}> o_init 표시</label>
     — <span style="color:#f08c28">주황</span>=초기 solid 셀(prior의 부피 가설),
     파랑=초기 empty 자유 셀, 자주=고정 빈 셀. E7/E1 점을 켜고 "점은 있는데 주황이
     없는 부피"를 찾으면 그게 init 결손(타워·지붕 갭)</p>`}
-    <p class="legend"><label><input type="checkbox" id="seedtgl" ${state.showSeeds !== false ? 'checked' : ''}> 시드 표시</label>
+    <p class="legend"><label><input type="checkbox" id="seedtgl" ${state.showSeeds !== false ? 'checked' : ''}> 시드(초기 가우시안)</label>
     — 색 = 소속 평면 소스: <span style="color:#4a9eff">prior</span>
     <span style="color:#ffa040">MVS</span> <span style="color:#9aa4b0">footprint벽</span>
-    <span style="color:#667788">domain</span> — E7 오버레이(청록)와 겹쳐 "시드가 실표면 근처인가" 확인</p>`;
+    <span style="color:#667788">domain</span>
+    &nbsp;<label><input type="checkbox" id="finalgtgl" ${state.showFinalG ? 'checked' : ''}> <span style="color:#39b3a6">최종 가우시안</span></label>
+    (신규 런만 — 살아남은 α>0.3 점) — 초기↔최종을 같은 점 형태로 비교</p>`;
   const st = $('#seedtgl');
   if (st) st.onchange = () => { state.showSeeds = st.checked; renderTab(); };
   const it = $('#inittgl');
@@ -630,6 +749,13 @@ function panelS2(run, s2) {
   document.querySelectorAll('input[name="s2mode"]').forEach(r => {
     r.onchange = () => { state.s2Mode = r.value; renderTab(); };
   });
+  document.querySelectorAll('input[name="occst"]').forEach(r => {
+    r.onchange = () => { state.occState = r.value; renderTab(); };
+  });
+  const fg = $('#finalgtgl');
+  if (fg) fg.onchange = () => { state.showFinalG = fg.checked; renderTab(); };
+  const pt = $('#planetgl');
+  if (pt) pt.onchange = () => { state.showPlanesS2 = pt.checked; renderTab(); };
 }
 function chart(canvas, series, labels) {
   const ctx = canvas.getContext('2d');
@@ -695,14 +821,19 @@ function evalTable(run) {
 function panelS5(run) {
   const ev = run.s5_evidence || [];
   const live = ev.filter(e => e.v_final > 0.5);
-  let h = evalTable(run) + `<h2>S5 산출</h2>
+  let h = evalTable(run) + `<h2>S4 모델 (구조화 산출)</h2>
     <select id="evmode">
       <option value="class" ${state.evMode === 'class' ? 'selected' : ''}>의미 분류</option>
       <option value="support" ${state.evMode === 'support' ? 'selected' : ''}>이미지 지지도</option>
       <option value="prior" ${state.evMode === 'prior' ? 'selected' : ''}>prior 의존</option>
+      <option value="delta" ${state.evMode === 'delta' ? 'selected' : ''}>Δ 초기 대비(판정 diff)</option>
       <option value="brep" ${state.evMode === 'brep' ? 'selected' : ''}>B-rep OBJ</option>
     </select>
-    <label style="margin-left:8px"><input type="checkbox" id="fedgetgl" ${state.showFacetEdges !== false ? 'checked' : ''}> facet 윤곽</label>`;
+    <label style="margin-left:8px"><input type="checkbox" id="fedgetgl" ${state.showFacetEdges !== false ? 'checked' : ''}> facet 윤곽</label>
+    ${state.evMode === 'delta' ? `<p class="legend">회색=유지(초기·최종 모두 면),
+    <span style="color:#f08c28">주황=판정이 새로 켠 면</span>,
+    <span style="color:#e5484d">빨강=판정이 끈 면</span> — 재현 모델과의 차이가
+    곧 최적화의 손길. 재현 런(pfreeze)에서는 전부 회색이어야 정상</p>` : ''}`;
   if (!run.s5_planes && run.s5_planes_ref) {
     fetch('../' + run.s5_planes_ref).then(r => r.json())
       .then(d => { run.s5_planes = d; renderTab(); }).catch(() => {});

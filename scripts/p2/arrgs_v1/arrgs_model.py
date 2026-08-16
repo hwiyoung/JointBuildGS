@@ -371,4 +371,17 @@ class ArrgsModel(nn.Module):
                 "face_v": v.cpu().tolist(),
                 "renderable_faces": [int(x) for x in self.rf],
             }
+            # subsampled gaussian state per snapshot: lets the viewer play the
+            # optimization as a story (discs scattering -> settling)
+            mm, _, ss, aa, cc = self.gaussians()
+            n_g = F.normalize(self.plane_n_raw, dim=-1)[self.g_plane.clamp(min=0)]
+            n_g = torch.where((self.g_plane < 0)[:, None], torch.tensor(
+                [[0.0, 0.0, 1.0]], device=n_g.device), n_g)
+            sub = max(1, mm.shape[0] // 4000)
+            out["g"] = {
+                "xyz": np.round(mm.cpu().numpy()[::sub], 2).tolist(),
+                "n": np.round(n_g.cpu().numpy()[::sub], 2).tolist(),
+                "s": np.round(ss[:, :2].cpu().numpy()[::sub], 2).tolist(),
+                "rgb": np.round(cc.cpu().numpy()[::sub], 2).tolist(),
+                "a": np.round(aa.cpu().numpy()[::sub], 2).tolist()}
         return out
