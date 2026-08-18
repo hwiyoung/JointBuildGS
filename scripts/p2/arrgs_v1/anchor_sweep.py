@@ -24,7 +24,7 @@ Pre-registered expectations (2026-08-15, scientific_verdict stays null):
   oracle scored by the SAME recipe -- relative readout only; the sealed
   geometry_eval chain stays the official scorer for the chosen w.
 
-Usage: anchor_sweep.py syn|real|all [only-run-name]
+Usage: anchor_sweep.py syn|real|all|planes|oinit|oinit2|occl|cellw [only-run-name]
 """
 from __future__ import annotations
 
@@ -187,6 +187,82 @@ def main():
                                  "freespace": 0.5 if guard else 0.0}
                 cfg["occlusion_guard"] = guard
                 runs.append((f"{bk}_w0_{name_sfx}", cfg, bk))
+    if which == "cellw":
+        # AX-8 (C): per-cell anchor attenuation. Base = the v3 hold champion
+        # (w_occ=5 + plane freeze + v3 inputs); the controller (arrgs_train
+        # cellwise_occ_w, registered v1 constants beta=2/s_thresh=1/ema=0.9)
+        # releases only cells whose render evidence persistently contradicts
+        # o_init. Pre-registered on the AX-7-calibrated proxy scale
+        # (2026-08-17, scientific_verdict stays null):
+        #   hold:  B022 >= 0.758, B036 >= 0.785 (v3 repro 0.778/0.805 - 0.02)
+        #   discretion: B173 >= 0.40 (repro 0.079 x5; above every global
+        #     knob: judged-best 0.348, stale-prior-via-Roofer E7 0.330).
+        #     Reference bar, recorded not gated: E8 no-judgment union 0.630
+        #     (the E9C axis target).
+        #   observation contract: B173 released cells concentrate on the
+        #     stale sloped-roof band; B022/B036 released_frac < 0.05.
+        #   kill: (a) any unchanged building drops > 0.02 below its v3 repro
+        #     -> over-release on appearance noise, controller v1 killed;
+        #     (b) B173 < 0.30 (= global w0 0.298) -> signal insufficient for
+        #     discretion recovery, redesign (fs attribution / segmentation).
+        for bk in ("B022", "B036", "B173"):
+            cfg = dict(REAL_BASE)
+            cfg["scene"] = scene_for(bk)
+            cfg["scene"]["o_init_variant"] = "top_cluster"
+            cfg["scene"]["tower_candidates"] = True
+            cfg["lambda"] = {"occ_prior": 5.0}
+            cfg["plane_mode"] = "freeze"
+            cfg["cellwise_occ_w"] = {"beta": 2.0, "s_thresh": 1.0, "ema": 0.9}
+            runs.append((f"{bk}_w5_pfreeze_cw", cfg, bk))
+    if which == "cellw2":
+        # AX-8b: depth-gated release — single-coordinate change vs AX-8a
+        # (trigger signal: full render evidence -> depth channel only, so
+        # photometry alone can no longer release a cell). Constants unchanged
+        # (beta=2, s_thresh=1, ema=0.9). Pre-registered (2026-08-18,
+        # scientific_verdict stays null):
+        #   expectation: unchanged buildings recover the hold (B022 >= 0.758,
+        #     B036 >= 0.785) with released_frac < 0.05; B173 keeps its stale-
+        #     band release (rendered-vs-measured depth conflict is the
+        #     physical signature of change) -> f1 >= 0.40.
+        #   kill: (a) unchanged still drop > 0.02 below v3 repro -> the depth
+        #     channel itself is too noisy at cell scope; (b) B173 < 0.338
+        #     (worse than AX-8a) -> depth gating killed the discretion signal
+        #     -> 3rd design = joint photo+depth trigger.
+        for bk in ("B022", "B036", "B173"):
+            cfg = dict(REAL_BASE)
+            cfg["scene"] = scene_for(bk)
+            cfg["scene"]["o_init_variant"] = "top_cluster"
+            cfg["scene"]["tower_candidates"] = True
+            cfg["lambda"] = {"occ_prior": 5.0}
+            cfg["plane_mode"] = "freeze"
+            cfg["cellwise_occ_w"] = {"beta": 2.0, "s_thresh": 1.0,
+                                     "ema": 0.9, "signal": "depth"}
+            runs.append((f"{bk}_w5_pfreeze_cw2", cfg, bk))
+    if which == "cellw3":
+        # AX-8c: joint trigger — photo is the trigger (aligned with the
+        # correcting force), depth is the safety pin (both normalized
+        # channels must persistently agree; signal = min(photo, depth)).
+        # Motivation from the measured failure pair: AX-8a photo-only
+        # over-released on appearance noise; AX-8b depth-only opened doors
+        # the photometry never pushed (B173 12% released, 8 flips).
+        # Pre-registered (2026-08-18, scientific_verdict stays null):
+        #   expectation: hold recovered on BOTH unchanged buildings
+        #     (B022 >= 0.758, B036 >= 0.785, released_frac < 0.05) AND
+        #     B173 >= 0.40 (aligned release+force should exceed AX-8a 0.338).
+        #   kill: (a) unchanged drop > 0.02 OR (b) B173 < 0.338 -> the
+        #     cell-wise trigger family (gradient-EMA ratchet) is exhausted;
+        #     freeze the knob and move to segmentation-channel / view-budget
+        #     alternatives (backlog), not another threshold tweak.
+        for bk in ("B022", "B036", "B173"):
+            cfg = dict(REAL_BASE)
+            cfg["scene"] = scene_for(bk)
+            cfg["scene"]["o_init_variant"] = "top_cluster"
+            cfg["scene"]["tower_candidates"] = True
+            cfg["lambda"] = {"occ_prior": 5.0}
+            cfg["plane_mode"] = "freeze"
+            cfg["cellwise_occ_w"] = {"beta": 2.0, "s_thresh": 1.0,
+                                     "ema": 0.9, "signal": "joint"}
+            runs.append((f"{bk}_w5_pfreeze_cw3", cfg, bk))
     if which == "planes":
         # batch-2 (1): plane 3-point contrast at frozen occupancy (w_occ=5).
         # 'free' arm = the existing B*_w5 rows. Pre-registered: freeze (and
@@ -216,7 +292,8 @@ def main():
             row = {k: m.get(k) for k in (
                 "occupancy_accuracy", "ghost_faces", "missing_faces",
                 "psnr_eval_final", "o_undecided", "occ_final",
-                "lambda_occ_prior", "plane_mode", "plane_drift_max", "wall_s")}
+                "lambda_occ_prior", "plane_mode", "plane_drift_max",
+                "cellw", "wall_s")}
             if bk:
                 row["f1_proxy_e1"] = score_run(cfg["out_dir"], BUILDINGS[bk]["bkey"])
             summary[name] = row
@@ -268,6 +345,74 @@ def main():
             planes[bk] = row
         if any(v.get("anchor") or v.get("freeze") for v in planes.values()):
             verdict["PLANES"] = planes
+        # AX-8c gates (joint trigger; see cellw3 block)
+        cw3 = {bk: (summary.get(f"{bk}_w5_pfreeze_cw3", {}).get("f1_proxy_e1")
+                    or {}).get("f1") for bk in ("B022", "B036", "B173")}
+        if any(v is not None for v in cw3.values()):
+            v3g = {"B022": 0.7782, "B036": 0.805}
+            verdict["AX8C_JOINT"] = {
+                "f1": cw3,
+                "hold_gate_v3_minus_0.02": {
+                    bk: cw3[bk] is not None and cw3[bk] >= v3g[bk] - 0.02
+                    for bk in ("B022", "B036")},
+                "discretion_gate_0.40": cw3["B173"] is not None
+                                        and cw3["B173"] >= 0.40,
+                "reference_bars": {"E8": 0.630, "imageOnly_AX9": 0.524,
+                                   "AX8a": 0.338},
+                "kill_family_exhausted": (
+                    any(cw3[bk] is not None and cw3[bk] < v3g[bk] - 0.02
+                        for bk in ("B022", "B036"))
+                    or (cw3["B173"] is not None and cw3["B173"] < 0.338)),
+                "cellw_metrics": {bk: summary.get(
+                    f"{bk}_w5_pfreeze_cw3", {}).get("cellw")
+                    for bk in ("B022", "B036", "B173")},
+            }
+        # AX-8b gates (depth-gated release; see cellw2 block)
+        cw2 = {bk: (summary.get(f"{bk}_w5_pfreeze_cw2", {}).get("f1_proxy_e1")
+                    or {}).get("f1") for bk in ("B022", "B036", "B173")}
+        if any(v is not None for v in cw2.values()):
+            v3 = {"B022": 0.7782, "B036": 0.805}
+            verdict["AX8B_DEPTH_GATED"] = {
+                "f1": cw2,
+                "hold_gate_v3_minus_0.02": {
+                    bk: cw2[bk] is not None and cw2[bk] >= v3[bk] - 0.02
+                    for bk in ("B022", "B036")},
+                "discretion_gate_0.40": cw2["B173"] is not None
+                                        and cw2["B173"] >= 0.40,
+                "reference_bar_E8_0.630": cw2["B173"] is not None
+                                          and cw2["B173"] >= 0.630,
+                "kill_a_depth_noisy": any(
+                    cw2[bk] is not None and cw2[bk] < v3[bk] - 0.02
+                    for bk in ("B022", "B036")),
+                "kill_b_worse_than_8a": cw2["B173"] is not None
+                                        and cw2["B173"] < 0.338,
+                "cellw_metrics": {bk: summary.get(
+                    f"{bk}_w5_pfreeze_cw2", {}).get("cellw")
+                    for bk in ("B022", "B036", "B173")},
+            }
+        # AX-8a gates on the AX-7-calibrated proxy scale (see cellw block)
+        cw = {bk: (summary.get(f"{bk}_w5_pfreeze_cw", {}).get("f1_proxy_e1")
+                   or {}).get("f1") for bk in ("B022", "B036", "B173")}
+        if any(v is not None for v in cw.values()):
+            v3 = {"B022": 0.7782, "B036": 0.805}
+            verdict["AX8_CELLW"] = {
+                "f1": cw,
+                "hold_gate_v3_minus_0.02": {
+                    bk: cw[bk] is not None and cw[bk] >= v3[bk] - 0.02
+                    for bk in ("B022", "B036")},
+                "discretion_gate_0.40": cw["B173"] is not None
+                                        and cw["B173"] >= 0.40,
+                "reference_bar_E8_0.630": cw["B173"] is not None
+                                          and cw["B173"] >= 0.630,
+                "kill_a_over_release": any(
+                    cw[bk] is not None and cw[bk] < v3[bk] - 0.02
+                    for bk in ("B022", "B036")),
+                "kill_b_signal_insufficient": cw["B173"] is not None
+                                              and cw["B173"] < 0.30,
+                "cellw_metrics": {bk: summary.get(
+                    f"{bk}_w5_pfreeze_cw", {}).get("cellw")
+                    for bk in ("B022", "B036", "B173")},
+            }
     summary["_verdict"] = verdict
     json.dump(summary, open(summary_path, "w"), indent=1, default=str)
     print("[anchor] verdict ->", json.dumps(verdict, indent=1, default=str)[:3000])

@@ -358,6 +358,24 @@ def run(cfg):
     prev_state = init_state.copy()
     flip_ledger = []
     LEDGER_CAP = 20000
+    # ---- AX-8 (C): per-cell anchor attenuation (occ_w controller) ----
+    # signal: normalized against-anchor render-evidence gradient, EMA'd over
+    # diag steps; release is a ratchet (occ_w only decreases) so appearance
+    # noise cannot re-tighten a released cell into oscillation. Constants are
+    # the registered v1 controller: beta=2, s_thresh=1 (conflict must exceed
+    # the mean active-cell evidence magnitude), ema=0.9 (~250-iter horizon).
+    cw_cfg = cfg.get("cellwise_occ_w") or None
+    if cw_cfg:
+        cw_beta = float(cw_cfg.get("beta", 2.0))
+        cw_thresh = float(cw_cfg.get("s_thresh", 1.0))
+        cw_decay = float(cw_cfg.get("ema", 0.9))
+        # AX-8b: trigger signal. "render" (1st pass) = full render-evidence
+        # gradient (photo+depth) — over-released on appearance noise.
+        # "depth" (2nd pass) = depth-channel gradient only: a cell can be
+        # released ONLY where measured MVS depth contradicts the rendered
+        # surface (valid-depth pixels only) — photometry alone cannot release.
+        cw_signal = str(cw_cfg.get("signal", "render"))
+        cw_ema = np.zeros(K_free)
 
     def lam_bin(i):
         if not anneal:
@@ -425,6 +443,13 @@ def run(cfg):
         loss = (lam_photo * photo + lam_depth * loss_depth + lam_bin(it) * loss_bin
                 + lam_prior * loss_prior + lam_occ * loss_occ
                 + lam_planeA * loss_planeA + lam_fs * loss_fs + lam_u * loss_u)
+        g_depth_np = None
+        if (cw_cfg and cw_signal in ("depth", "joint")
+                and it % diag_every == 0
+                and warm <= it <= full and loss_depth.requires_grad):
+            gd = torch.autograd.grad(loss_depth, model.o_logit,
+                                     retain_graph=True, allow_unused=True)[0]
+            g_depth_np = gd.detach().cpu().numpy() if gd is not None else None
         opt.zero_grad(set_to_none=False)
         loss.backward()
         for k, v in (("photo", photo), ("depth", loss_depth), ("bin", loss_bin),
@@ -445,6 +470,36 @@ def run(cfg):
             g_anchor = lam_occ * occ_w_np * (o_np - o_init_np) / K_free
             g_bin = lam_bin(it) * (1 - 2 * o_np) * o_np * (1 - o_np) / K_free
             g_render = og_np - g_anchor - g_bin
+            if cw_cfg and warm <= it <= full:
+                # against-anchor conflict: grad descent moves o along -g, so
+                # for o_init=1 conflict is sig>0 (push down), for o_init=0
+                # it is sig<0 -> s = sig * sign(o_init - 0.5). Signal choice:
+                # AX-8a "render" = full render evidence (over-released on
+                # appearance noise); AX-8b "depth" = depth channel only
+                # (release/force channels split -> doors opened, nobody
+                # pushed); AX-8c "joint" = photo is the trigger, depth the
+                # safety pin: both channels must persistently agree.
+                def _norm(sig_vec):
+                    s_ = sig_vec * np.where(o_init_np > 0.5, 1.0, -1.0)
+                    act = np.abs(sig_vec) > 0
+                    mag = float(np.abs(sig_vec)[act].mean()) + 1e-12 \
+                        if act.any() else 1e-12
+                    return s_ / mag
+                if cw_signal == "joint":
+                    s_norm = (np.minimum(_norm(g_render - lam_depth * g_depth_np),
+                                         _norm(g_depth_np))
+                              if g_depth_np is not None else None)
+                elif cw_signal == "depth":
+                    s_norm = _norm(g_depth_np) if g_depth_np is not None else None
+                else:
+                    s_norm = _norm(g_render)
+                if s_norm is not None:
+                    cw_ema = cw_decay * cw_ema + (1 - cw_decay) * s_norm
+                    rel = np.exp(-cw_beta * np.clip(cw_ema - cw_thresh,
+                                                    0.0, None))
+                    occ_w_np = np.minimum(occ_w_np, rel)  # ratchet
+                    model.occ_w.copy_(torch.tensor(
+                        occ_w_np, dtype=torch.float32, device=device))
             flipped = state != prev_state
             if flipped.any() and len(flip_ledger) < LEDGER_CAP:
                 for k_idx in np.nonzero(flipped)[0][:200]:
@@ -457,14 +512,21 @@ def run(cfg):
                         "g_anchor": float(g_anchor[k_idx]),
                         "g_bin": float(g_bin[k_idx])})
             prev_state = state
-            diag_f.write(json.dumps({
+            drow = {
                 "iter": it, "lam_bin": round(lam_bin(it), 4),
                 "loss": {k: round(v, 6) for k, v in ema.items()},
                 "occ": {"holes": int((init_state & ~state).sum()),
                         "ghosts": int((~init_state & state).sum()),
                         "undecided": int(((o_np > 0.3) & (o_np < 0.7)).sum()),
                         "flipped_vs_init": int((state != init_state).sum()),
-                        "mean": round(float(o_np.mean()), 4)}}) + "\n")
+                        "mean": round(float(o_np.mean()), 4)}}
+            if cw_cfg:
+                drow["cellw"] = {
+                    "released_50": int((occ_w_np < 0.5).sum()),
+                    "released_90": int((occ_w_np < 0.1).sum()),
+                    "min": round(float(occ_w_np.min()), 5),
+                    "mean": round(float(occ_w_np.mean()), 4)}
+            diag_f.write(json.dumps(drow) + "\n")
             diag_f.flush()
         if it in snap_iters:
             og = model.o_logit.grad
@@ -491,6 +553,17 @@ def run(cfg):
 
     diag_f.close()
     json.dump(flip_ledger, open(out_dir / "flip_ledger.json", "w"))
+    if cw_cfg:
+        with torch.no_grad():
+            occ_w_fin = model.occ_w.cpu().numpy()
+            o_fin = model.occupancy().cpu().numpy()
+        json.dump([{"cell": int(model.free_cells[k]),
+                    "occ_w": round(float(occ_w_fin[k]), 5),
+                    "conflict_ema": round(float(cw_ema[k]), 3),
+                    "o_init": round(float(o_init_np[k]), 3),
+                    "o_final": round(float(o_fin[k]), 3)}
+                   for k in np.nonzero(occ_w_fin < 0.9)[0]],
+                  open(out_dir / "cellw_ledger.json", "w"))
     try:  # channel curves + occupancy trajectory panel (matplotlib optional)
         import matplotlib
         matplotlib.use("Agg")
@@ -646,6 +719,16 @@ def run(cfg):
         "delta_hat": model.delta.detach().cpu().tolist(),
         "inject_delta": [dx, 0.0, dz],
     }
+    if cw_cfg:
+        with torch.no_grad():
+            occ_w_fin = model.occ_w.cpu().numpy()
+        metrics["cellw"] = {
+            "config": cw_cfg,
+            "released_50": int((occ_w_fin < 0.5).sum()),
+            "released_90": int((occ_w_fin < 0.1).sum()),
+            "released_frac": round(float((occ_w_fin < 0.5).mean()), 4),
+            "occ_w_min": round(float(occ_w_fin.min()), 5),
+            "occ_w_mean": round(float(occ_w_fin.mean()), 4)}
     if gt_labels is not None:
         free = [i for i, c in enumerate(arr["cells"]) if c["fixed"] is None]
         acc = float(np.mean([(o_all[i] > 0.5) == (gt_labels[i] > 0.5) for i in free]))

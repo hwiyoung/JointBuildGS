@@ -349,6 +349,14 @@ def load_real_scene(scene, device):
                     "support": [np.asarray(corr.exterior.coords)[:-1].tolist()]})
         verdict["tower_clusters"] = len(comps)
 
+    # AX-9 matrix arm: restrict hypotheses by source. footprint is the shared
+    # Stage-3 control and always kept. "mvs" here means the E8-increment
+    # planes (union-model planes absent from the prior model) — the closest
+    # available proxy for image-contributed geometry (approximation recorded).
+    if scene.get("s1_sources"):
+        keep = set(scene["s1_sources"]) | {"footprint"}
+        planes = [p for p in planes if p["source"] in keep]
+
     # occupancy init from (possibly shifted) ALS solid proxy — defined before
     # the camera section so skip_images sweeps (oracle) can use it.
     from scipy.spatial import cKDTree
@@ -357,6 +365,17 @@ def load_real_scene(scene, device):
     if s1_mode == "roofer" and len(als_xyz):  # B036: class-6 hole immunity
         col_src = als_xyz
         tree = cKDTree(als_xyz[:, :2])
+    # AX-9 matrix arm: occupancy-init source override (default: ALS only —
+    # judge/defendant separation). "union" = ALS + current-image crop cls6;
+    # "mvs" = current-image points only (claim-2 arm, repro form).
+    o_src = scene.get("o_init_source", "als")
+    if o_src != "als":
+        if e2_xyz is None:
+            raise ValueError("o_init_source != 'als' needs scene['e2_dir']")
+        roof_e2 = e2_xyz[e2_cls == 6] if e2_cls is not None else e2_xyz
+        col_src = roof_e2 if o_src == "mvs" else (
+            np.concatenate([col_src, roof_e2]) if len(col_src) else roof_e2)
+        tree = cKDTree(col_src[:, :2]) if len(col_src) else None
 
     # plane-aware occupancy surface: on sawtooth/parapet roofs the raw column
     # p90 envelope fills to the TOOTH TOPS (B173 oracle collapse, comp 0.02) —
