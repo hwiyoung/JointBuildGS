@@ -1,5 +1,10 @@
 # AX-7 모델 챔피언전 · AX-8 셀별 감쇠 판독 (P2-ARRGS-AX7-v1 / ANCHOR-v1 cellw)
 
+> **[2026-08-20 정정 고지]** §3(93동 v3)의 "손해는 미검출군에 집중"은
+> 평균에 한한 진술이며 회귀 빈도는 두 군이 동등하다 — `ARRGS_ERRATA_ko_v1.md`
+> E-3 참조. §1 AX-7의 E8 해석은 E-1과 병독할 것.
+
+
 - 상태: TECHNICAL READOUT — `scientific_verdict: null` (판정은 리뷰어 몫)
 - 기간: 2026-08-16 ~ 08-17. 용어는 `ARRGS_TERMS_AND_STAGES_ko_v1.md` 기준.
 - 지표: proxy-f1 = 모델 표면 샘플 vs E1 크롭 cls6, τ=0.5 m — **상대 비교 전용**
