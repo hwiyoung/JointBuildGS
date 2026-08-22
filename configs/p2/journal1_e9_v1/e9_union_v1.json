@@ -1,0 +1,31 @@
+{
+  "task_id": "P2-JOURNAL1-E9-v1",
+  "status": "DEVELOPMENT_NON_CONFIRMATORY",
+  "scientific_verdict": null,
+  "design_doc": "docs/experiments/p2/journal1_design_v1/JOURNAL1_EXPERIMENT_DESIGN_REVISION_ko_v2.md",
+  "purpose": "Conflict-aware selective union (lever 2): E2 current geometry plus ALS fill-only — overlap ALS is dropped even when consistent (E2 already covers it more precisely; dropping removes the double-surface channel at zero information cost). Dropped-point conflict statistics feed the verification layer.",
+  "rule": {
+    "keep_all_current": true,
+    "als_fill_only": true,
+    "fill_radius_m": 0.75,
+    "conflict_tau_m": 0.5,
+    "definition": "an ALS point is FILL (kept) iff no E2 point lies within fill_radius_m in XY; otherwise it is OVERLAP (dropped) and counted as CONSISTENT (|dz| <= conflict_tau_m to the nearest-XY E2 point) or CONFLICTED (> conflict_tau_m, stale/misregistration evidence for the verification layer)"
+  },
+  "runs": [
+    {"label": "E9_d000", "dx": 0.0, "dz": 0.0, "mode": "fill_only"},
+    {"label": "E9_dx050", "dx": 0.5, "dz": 0.0, "mode": "fill_only"},
+    {"label": "E9_dx100", "dx": 1.0, "dz": 0.0, "mode": "fill_only"},
+    {"label": "E9B_d000", "dx": 0.0, "dz": 0.0, "mode": "drop_duplicates_only"},
+    {"label": "E9B_dx050", "dx": 0.5, "dz": 0.0, "mode": "drop_duplicates_only"},
+    {"label": "E9B_dx100", "dx": 1.0, "dz": 0.0, "mode": "drop_duplicates_only"}
+  ],
+  "rule_v2_note": "v1(fill_only) fired its pre-registered falsifier at delta=0: 43% of dropped overlap was vertically-separated (E2 saw only ground at that XY; the ALS point above is genuine roof fill), erasing ~80% of the completeness gain. v2(drop_duplicates_only) drops ONLY duplicate-consistent overlap (XY within fill_radius AND |dz| <= conflict_tau); vertically-separated overlap is kept as FLAGGED fill (verification raw material). v2 predictions: completeness recovers to the E8 level, z-spread stays below E8 (duplicate channel still removed), Roofer recovery persists.",
+  "pre_registered_predictions": {
+    "E9_d000_vs_E8_d000": "completeness preserved (fill is the entire benefit), z-spread drops toward the E2 level (~0.186 vs union 0.201), precision >= union, Roofer technical-valid >= union with recovery among the 7 sealed union-regression buildings (42364659/4906967/4906968/4906975/4907514/4907517/4959460)",
+    "E9_delta_vs_E8_delta": "z-spread stays flat at the E2 level under delta (overlap contamination channel removed) while E8's rises; fill placement contamination (comp@0.25 decline) remains, similar to E8 — pre-registered limit: selection cannot fix corrupted fill, only flag it",
+    "falsifier": "if E9_d000 loses completeness vs E8 (fill radius too aggressive) or Roofer does not recover any regression building, the fill-only rule is miscalibrated"
+  },
+  "population": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_a_v1/P2-JOURNAL1-PHASE-A-v1/labels/selection_confirm_v1.json",
+  "out_root": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_e9_v1/P2-JOURNAL1-E9-v1/runs",
+  "official_PASS_usable": null
+}
