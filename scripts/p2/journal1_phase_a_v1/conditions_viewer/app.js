@@ -13,9 +13,13 @@ const ARM_RGB = {
   E7: [52 / 255, 211 / 255, 153 / 255], E8: [232 / 255, 121 / 255, 249 / 255],
   E3: [148 / 255, 163 / 255, 184 / 255], E4_V2: [244 / 255, 63 / 255, 94 / 255],
   E5_V2: [20 / 255, 184 / 255, 166 / 255],
+  E8_dx100: [162 / 255, 28 / 255, 175 / 255], E7_dx100: [21 / 255, 128 / 255, 61 / 255],
+  GS55_0: [251 / 255, 191 / 255, 36 / 255], GS55_dx050: [146 / 255, 64 / 255, 14 / 255],
 };
 const ARM_HEX = { E1: '#2896ff', E2: '#ff9123', E7: '#34d399', E8: '#e879f9',
-  E3: '#94a3b8', E4_V2: '#f43f5e', E5_V2: '#14b8a6' };
+  E3: '#94a3b8', E4_V2: '#f43f5e', E5_V2: '#14b8a6',
+  E8_dx100: '#a21caf', E7_dx100: '#15803d',
+  GS55_0: '#fbbf24', GS55_dx050: '#92400e' };
 const CLS_RGB = { 6: [0.23, 0.51, 0.96], 2: [0.55, 0.56, 0.6] };
 const CLS_OTHER_RGB = [0.49, 0.36, 0.68];
 const LOD2_COLOR = 0xeab308;
@@ -528,10 +532,20 @@ async function loadArm(arm, b, gen) {
 async function loadSceneArm(arm) {
   if (state.sceneClouds[arm]) return;
   const spec = manifest.scene?.assets?.[arm];
-  if (!spec) return;
+  let url = spec ? './' + spec.path : null;
+  let note = `${arm} 전체 로딩`;
+  if (!url) {
+    // Crop-only arm (e.g. corridor GS smoke): fall back to the building crop —
+    // it is in the same viewer-local frame, so it renders in place in the scene.
+    const rel = current()?.assets?.[arm]
+      ?? allBuildings.find((b) => b.assets[arm])?.assets[arm];
+    if (!rel) return;
+    url = './' + rel;
+    note = `${arm} (건물 크롭) 로딩`;
+  }
   state.sceneClouds[arm] = { pending: true };
   try {
-    const buf = await fetchBuf('./' + spec.path, `${arm} 전체 로딩`, null);
+    const buf = await fetchBuf(url, note, null);
     const raw = parsePly(buf);
     const points = buildPoints(arm, raw);
     state.sceneClouds[arm] = { raw, points };
@@ -854,8 +868,26 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+function selectFromHash() {
+  const key = decodeURIComponent(location.hash.slice(1));
+  if (!key) return false;
+  let i = state.view.findIndex((b) => b.bkey === key || b.stable_id === key || b.stable_id.endsWith(key));
+  if (i < 0) {
+    // Building filtered out of the current view: reset filters so the link lands.
+    prefs.tierFilter = 'ALL'; prefs.selFilter = 'ALL'; savePrefs();
+    $('tierFilter').value = 'ALL';
+    if (hasSelection) $('selFilter').value = 'ALL';
+    applyViewOrder();
+    i = state.view.findIndex((b) => b.bkey === key || b.stable_id === key || b.stable_id.endsWith(key));
+  }
+  if (i < 0) return false;
+  select(i, { keepCamera: false });
+  return true;
+}
+window.addEventListener('hashchange', selectFromHash);
+
 applyViewOrder();
 resize();
 applyMode({ fit: false });
 if (inScene()) fitScene();
-select(0, { keepCamera: inScene() });
+if (!selectFromHash()) select(0, { keepCamera: inScene() });

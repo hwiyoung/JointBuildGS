@@ -15,6 +15,10 @@
   "footprints_geojson": "/artifacts/JointBuildGS/phase-payloads/p2/c1_c2_shared_footprint_199_v3/P2-C1-C2-SHARED-FOOTPRINT-199-ORIGINAL-GLOBAL-v3-replay-20260806a/freeze/shared_footprints_199.geojson",
   "labels_csv": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_a_v1/P2-JOURNAL1-PHASE-A-v1/labels/change_label_candidates_v1.csv",
   "merged_rows": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_a_v1/P2-JOURNAL1-PHASE-A-v1/a2/evaluation_merged/rows.jsonl",
+  "extra_metric_rows": [
+    "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_d_v1/P2-JOURNAL1-PHASE-D-v1/union_curve/E8_dx100/evaluation/rows.jsonl",
+    "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_d_v1/P2-JOURNAL1-PHASE-D-v1/union_curve/E7_dx100/evaluation/rows.jsonl"
+  ],
   "auto_ox": {
     "v22_csv": "/artifacts/JointBuildGS/phase-payloads/p2/e1_e6_roofer_ox_review_v1/P2-E1-E6-ROOFER-AUTO-OX-v22-ROBUST-PLANE-MATCH/reference_auto_ox_building_condition_v1.csv",
     "s3b_csv": "/artifacts/JointBuildGS/phase-payloads/p2/e4_e6_redesign_s3b_v1/P2-E4-E6-REDESIGN-S3B-v1/evaluation/s3b_building_condition_v1.csv",
@@ -28,7 +32,11 @@
     {"id": "E8", "primary": true, "dir": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_a_v1/P2-JOURNAL1-PHASE-A-v1/a2/assets_roofer_input/E8", "lineage": "E2 ∪ ALS simple union (A2, no training)"},
     {"id": "E3", "primary": false, "dir": "/artifacts/JointBuildGS/phase-payloads/p2/e1_e6_roofer_ox_review_v1/P2-E1-E6-GATE5-DASHBOARD-v1/assets_roofer_input/E3", "lineage": "image-only GS crop"},
     {"id": "E4_V2", "primary": false, "dir": "/artifacts/JointBuildGS/phase-payloads/p2/e4_e6_redesign_s3_v1/P2-E4-E6-REDESIGN-S3-v1/viewer_assets/E4_V2_STATIC", "lineage": "GS + static ALS prior (redesign S2)"},
-    {"id": "E5_V2", "primary": false, "dir": "/artifacts/JointBuildGS/phase-payloads/p2/e4_e6_redesign_s3_v1/P2-E4-E6-REDESIGN-S3-v1/viewer_assets/E5_V2_F1", "lineage": "GS + conflict-gate ALS prior (redesign S2)"}
+    {"id": "E5_V2", "primary": false, "dir": "/artifacts/JointBuildGS/phase-payloads/p2/e4_e6_redesign_s3_v1/P2-E4-E6-REDESIGN-S3-v1/viewer_assets/E5_V2_F1", "lineage": "GS + conflict-gate ALS prior (redesign S2)"},
+    {"id": "GS55_0", "primary": false, "dir": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_d_v1/P2-JOURNAL1-PHASE-D-v1/corridor_smoke/GS55_dx050/viewer_assets/GS55_0", "lineage": "D2a corridor GS anchor (delta=0, 4906982 only): sealed E4_ALS_PRIOR_ONLY 20k, 55-view median-depth fusion crop"},
+    {"id": "GS55_dx050", "primary": false, "dir": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_d_v1/P2-JOURNAL1-PHASE-D-v1/corridor_smoke/GS55_dx050/viewer_assets/GS55_dx050", "lineage": "D2a corridor GS smoke (ALS prior shifted +0.5 m east, 4906982 only): 20k, same fusion crop (NOT a real lineage)"},
+    {"id": "E8_dx100", "primary": false, "dir": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_d_v1/P2-JOURNAL1-PHASE-D-v1/union_curve/E8_dx100/assets_roofer_input/E8", "lineage": "Phase-D synthetic delta: E8 union with ALS shifted +1.0 m east (NOT a real lineage)"},
+    {"id": "E7_dx100", "primary": false, "dir": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_d_v1/P2-JOURNAL1-PHASE-D-v1/union_curve/E7_dx100/assets_roofer_input/E7", "lineage": "Phase-D synthetic delta: ALS alone shifted +1.0 m east (NOT a real lineage)"}
   ],
   "scene": {
     "voxel_m": 0.5,
@@ -40,7 +48,9 @@
       "E8": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_a_v1/P2-JOURNAL1-PHASE-A-v1/a2/work/E8/classified_scene.laz",
       "E3": "/artifacts/JointBuildGS/phase-payloads/p2/e3_full_scene_roofer_shared_footprint_199_v1/P2-E3-FULL-SCENE-ROOFER-SHARED-FOOTPRINT-199-v1/work/E3_GS_image/classified_scene.laz",
       "E4_V2": "/artifacts/JointBuildGS/phase-payloads/p2/e4_e6_redesign_s3_v1/P2-E4-E6-REDESIGN-S3-v1/work/E4_V2_STATIC/classified_scene.laz",
-      "E5_V2": "/artifacts/JointBuildGS/phase-payloads/p2/e4_e6_redesign_s3_v1/P2-E4-E6-REDESIGN-S3-v1/work/E5_V2_F1/classified_scene.laz"
+      "E5_V2": "/artifacts/JointBuildGS/phase-payloads/p2/e4_e6_redesign_s3_v1/P2-E4-E6-REDESIGN-S3-v1/work/E5_V2_F1/classified_scene.laz",
+      "E8_dx100": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_d_v1/P2-JOURNAL1-PHASE-D-v1/union_curve/E8_dx100/work/E8/classified_scene.laz",
+      "E7_dx100": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_d_v1/P2-JOURNAL1-PHASE-D-v1/union_curve/E7_dx100/work/E7/classified_scene.laz"
     }
   },
   "selection_dir": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_a_v1/P2-JOURNAL1-PHASE-A-v1/a2/selection_e1_coverage_v1",

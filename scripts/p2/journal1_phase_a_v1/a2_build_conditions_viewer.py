@@ -89,6 +89,8 @@ def build_scene_assets(cfg: dict, out_dir: Path) -> dict:
     entries = {}
     for arm in cfg["arms"]:
         arm_id = arm["id"]
+        if arm_id not in spec["sources"]:
+            continue  # building-crop-only arm (e.g. corridor GS smoke)
         source = Path(spec["sources"][arm_id])
         destination = scene_dir / f"{arm_id}.points.ply"
         if destination.exists():
@@ -119,13 +121,16 @@ def link_asset(src: Path, dst: Path) -> None:
     dst.symlink_to(os.path.relpath(src, dst.parent))
 
 
-def load_metrics(rows_path: Path) -> dict[tuple[str, str, str], dict]:
+def load_metrics(rows_path: Path, extra_paths: list[Path] = ()) -> dict[tuple[str, str, str], dict]:
     out = {}
-    for line in open(rows_path, encoding="utf-8"):
-        if not line.strip():
+    for path in [rows_path, *extra_paths]:
+        if not Path(path).is_file():
             continue
-        row = json.loads(line)
-        out[(row["stable_id"], row["arm"], row["gt"])] = row
+        for line in open(path, encoding="utf-8"):
+            if not line.strip():
+                continue
+            row = json.loads(line)
+            out[(row["stable_id"], row["arm"], row["gt"])] = row
     return out
 
 
@@ -192,16 +197,18 @@ def main() -> None:
     )
     targets = {sid for _, sid in ordered}
     tiers = {r["stable_id"]: r["tier"] for r in csv.DictReader(open(cfg["labels_csv"]))}
-    metrics = load_metrics(Path(cfg["merged_rows"]))
+    metrics = load_metrics(Path(cfg["merged_rows"]),
+                            [Path(p) for p in cfg.get("extra_metric_rows", [])])
     ox = load_ox(cfg)
     lod2 = viewer_local_rings(cfg["gml_tiles"], targets, cfg["origin"], cfg["lod2_z_shift_to_viewer_m"])
 
     arm_maps = {}
     for arm in cfg["arms"]:
+        arm_dir = Path(arm["dir"])
         arm_maps[arm["id"]] = {
             p.name.split("_", 1)[1].removesuffix(".points.ply"): p
-            for p in sorted(Path(arm["dir"]).glob("B*_*.points.ply"))
-        }
+            for p in sorted(arm_dir.glob("B*_*.points.ply"))
+        } if arm_dir.is_dir() else {}
 
     out_dir = Path(cfg["out_dir"])
     (out_dir / "assets").mkdir(parents=True, exist_ok=True)
