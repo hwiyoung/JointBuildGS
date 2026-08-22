@@ -301,7 +301,8 @@ def _write_block(writer, header, xyz: np.ndarray, rgb: np.ndarray) -> None:
     writer.write_points(points)
 
 
-def fuse(output_root: Path, artifact_root: Path, condition: str) -> dict[str, Any]:
+def fuse(output_root: Path, artifact_root: Path, condition: str,
+         delta_xy_east_m: float = 0.0, delta_z_m: float = 0.0) -> dict[str, Any]:
     import laspy
 
     work = output_root / "work" / condition
@@ -314,7 +315,18 @@ def fuse(output_root: Path, artifact_root: Path, condition: str) -> dict[str, An
     config = load_sealed_base()
     bounds = crop_bounds(config["scene"])
     als_world, als_rows = _load_als_world(artifact_root, bounds)
-    gate = _als_registration_gate(als_world, artifact_root)
+    delta = (float(delta_xy_east_m), float(delta_z_m))
+    if any(delta):
+        # Phase-D synthetic registration-residual probe: translate the prior
+        # bytes only; every other input and chain parameter stays sealed.
+        als_world = als_world + np.asarray([delta[0], 0.0, delta[1]], dtype=np.float64)
+        try:
+            gate = _als_registration_gate(als_world, artifact_root)
+        except RuntimeError as exc:
+            gate = {"passed": False, "measurement_failure": str(exc)}
+        gate["gate_role"] = "MEASUREMENT_ONLY_UNDER_INJECTED_DELTA"
+    else:
+        gate = _als_registration_gate(als_world, artifact_root)
 
     writer, header = _open_fused_writer(fused_path)
     e2_count = 0
@@ -351,6 +363,12 @@ def fuse(output_root: Path, artifact_root: Path, condition: str) -> dict[str, An
         "training_executed": False,
         "raw_als_sources": als_rows,
         "datum_transform": {"source": "2022_ALS_ORTHOMETRIC", "target": "2024_CAMERA_ELLIPSOIDAL", "z_shift_m": 45.7},
+        "delta_injection": (
+            {"dx_east_m": delta[0], "dz_m": delta[1], "synthetic": True,
+             "purpose": "PHASE_D_DELTA_SHIFT_REGISTRATION_RESIDUAL_PROBE",
+             "not_real_als_lineage": True}
+            if any(delta) else None
+        ),
         "registration": gate,
         "e2_union_source": (
             {"path": str(artifact_root / E2_CLASSIFIED_REL), "sha256": E2_CLASSIFIED_SHA256,
@@ -439,7 +457,7 @@ def record_roofer(output_root: Path, condition: str, exit_code: int, runtime_sec
 # ---------------------------------------------------------------- finalize
 
 
-def finalize(output_root: Path) -> dict[str, Any]:
+def finalize(output_root: Path, conditions: tuple[str, ...] | None = None) -> dict[str, Any]:
     from scripts.p2.c1_c2_shared_footprint_199_v3.run import (
         _parse_features,
         _status,
@@ -447,6 +465,7 @@ def finalize(output_root: Path) -> dict[str, Any]:
         combine_cityjsonseq,
     )
 
+    conditions = tuple(conditions) if conditions else CONDITIONS
     marker = output_root / "control/finalized_a2_v1.json"
     if marker.is_file():
         return json.loads(marker.read_text(encoding="utf-8"))
@@ -457,7 +476,7 @@ def finalize(output_root: Path) -> dict[str, Any]:
     )
     rows: list[dict[str, Any]] = []
     summaries: dict[str, dict[str, int]] = {}
-    for condition in CONDITIONS:
+    for condition in conditions:
         work = output_root / "work" / condition
         raw_files = sorted((work / "roofer_output").glob("*.city.jsonl"))
         features = _parse_features(raw_files) if raw_files else {}
@@ -524,7 +543,8 @@ def finalize(output_root: Path) -> dict[str, Any]:
         "completed_utc": now_utc(),
         "building_count": len(ordered),
         "building_method_rows": len(rows),
-        "roofer_invocation_count": len(CONDITIONS),
+        "conditions": list(conditions),
+        "roofer_invocation_count": len(conditions),
         "counts_by_condition": summaries,
         "result_jsonl": file_record(jsonl_path, output_root),
         "result_csv": file_record(csv_path, output_root),
@@ -600,12 +620,18 @@ def main() -> None:
         p.add_argument("--output-root", type=Path, required=True)
         if name == "prepare":
             p.add_argument("--artifact-root", type=Path, required=True)
+        if name == "finalize":
+            p.add_argument("--conditions", default="", help="comma subset (Phase-D single-condition runs)")
     for name in ("fuse", "verify-classified", "record-roofer", "crops"):
         p = sub.add_parser(name)
         p.add_argument("--output-root", type=Path, required=True)
         p.add_argument("--condition", choices=CONDITIONS, required=True)
         if name == "fuse":
             p.add_argument("--artifact-root", type=Path, required=True)
+            p.add_argument("--delta-xy-east-m", type=float, default=0.0,
+                           help="Phase-D synthetic +X registration offset for the ALS bytes")
+            p.add_argument("--delta-z-m", type=float, default=0.0,
+                           help="Phase-D synthetic +Z registration offset for the ALS bytes")
         if name == "record-roofer":
             p.add_argument("--exit-code", type=int, required=True)
             p.add_argument("--runtime-seconds", type=int, required=True)
@@ -613,7 +639,8 @@ def main() -> None:
     if args.mode == "prepare":
         result = prepare(args.output_root, args.artifact_root)
     elif args.mode == "fuse":
-        result = fuse(args.output_root, args.artifact_root, args.condition)
+        result = fuse(args.output_root, args.artifact_root, args.condition,
+                      args.delta_xy_east_m, args.delta_z_m)
     elif args.mode == "verify-classified":
         result = verify_classified(args.output_root, args.condition)
     elif args.mode == "record-roofer":
@@ -621,7 +648,8 @@ def main() -> None:
     elif args.mode == "crops":
         result = crops(args.output_root, args.condition)
     else:
-        result = finalize(args.output_root)
+        subset = tuple(c for c in args.conditions.split(",") if c) or None
+        result = finalize(args.output_root, subset)
     print(json.dumps({k: v for k, v in result.items() if k not in ("rows", "raw_als_sources", "outputs")},
                      ensure_ascii=False, sort_keys=True, default=str))
 

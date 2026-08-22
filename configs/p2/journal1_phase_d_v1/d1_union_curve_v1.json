@@ -1,0 +1,28 @@
+{
+  "task_id": "P2-JOURNAL1-PHASE-D-v1",
+  "stage": "D1",
+  "status": "DEVELOPMENT_NON_CONFIRMATORY",
+  "scientific_verdict": null,
+  "design_doc": "docs/experiments/p2/journal1_design_v1/PHASE_D_DELTA_SHIFT_DESIGN_ko_v1.md",
+  "purpose": "Union-side delta-shift curve: rerun the sealed training-free E7/E8 chains with a synthetic +X (and one +Z) registration offset injected into the ALS bytes only; evaluate on the confirmed 93-building population. H-M2 cost/benefit channels, pre-registered.",
+  "delta_definition": "EPSG:25832 world frame, raw ALS after the frozen +45.7 m datum bridge; x -> x + dx_east (single pre-registered direction), z -> z + dz. Synthetic probe — not a real ALS lineage claim.",
+  "runs": [
+    {"label": "E8_dx025", "condition": "E8", "dx": 0.25, "dz": 0.0},
+    {"label": "E8_dx050", "condition": "E8", "dx": 0.5, "dz": 0.0},
+    {"label": "E8_dx100", "condition": "E8", "dx": 1.0, "dz": 0.0},
+    {"label": "E8_dz025", "condition": "E8", "dx": 0.0, "dz": 0.25},
+    {"label": "E7_dx025", "condition": "E7", "dx": 0.25, "dz": 0.0},
+    {"label": "E7_dx050", "condition": "E7", "dx": 0.5, "dz": 0.0},
+    {"label": "E7_dx100", "condition": "E7", "dx": 1.0, "dz": 0.0}
+  ],
+  "delta_zero_anchors": {
+    "E8": "phase-payloads/p2/journal1_phase_a_v1/P2-JOURNAL1-PHASE-A-v1/a2 (sealed A2 run)",
+    "E7": "same A2 namespace",
+    "note": "no rerun at delta=0; curves are paired against the sealed A2 rows"
+  },
+  "population": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_a_v1/P2-JOURNAL1-PHASE-A-v1/labels/selection_confirm_v1.json",
+  "eval_template": "configs/p2/journal1_phase_a_v1/run_v2_e7e8.json",
+  "out_root": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_d_v1/P2-JOURNAL1-PHASE-D-v1/union_curve",
+  "gate_role": "MEASUREMENT_ONLY_UNDER_INJECTED_DELTA",
+  "official_PASS_usable": null
+}
