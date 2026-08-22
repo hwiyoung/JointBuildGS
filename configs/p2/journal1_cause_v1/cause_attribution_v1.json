@@ -1,0 +1,22 @@
+{
+  "task_id": "P2-JOURNAL1-CAUSE-v1",
+  "purpose": "Cause attribution labeling for the E2 fill-dependent (insufficient) layer — narrative open item ⑥. Labels are made by the human reviewer; this build only prepares the target list, auto tags, and the labeling page.",
+  "selection_confirm": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_a_v1/P2-JOURNAL1-PHASE-A-v1/labels/selection_confirm_v1.json",
+  "labels_csv": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_a_v1/P2-JOURNAL1-PHASE-A-v1/labels/change_label_candidates_v1.csv",
+  "merged_rows": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_a_v1/P2-JOURNAL1-PHASE-A-v1/a2/evaluation_merged/rows.csv",
+  "holes_csv": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_e9_v1/P2-JOURNAL1-E9-v1/diagnosis/classification_holes_v1.csv",
+  "ax10_population": "/artifacts/JointBuildGS/phase-payloads/p2/arrgs_v1/P2-ARRGS-AX10-v1/population_2x2.json",
+  "ax10_roofer_census": "/artifacts/JointBuildGS/phase-payloads/p2/arrgs_v1/P2-ARRGS-AX10-v1/roofer_failure_census.json",
+  "conditions_manifest": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_a_v1/P2-JOURNAL1-PHASE-A-v1/a2/viewer_conditions/conditions_manifest.json",
+  "viewer_out_dir": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_a_v1/P2-JOURNAL1-PHASE-A-v1/a2/viewer_conditions",
+  "seed_out": "/artifacts/JointBuildGS/phase-payloads/p2/journal1_phase_a_v1/P2-JOURNAL1-PHASE-A-v1/labels/cause_attribution_v1.json",
+  "insufficient_threshold": 0.9,
+  "classification_hole_threshold": 0.1,
+  "categories": [
+    {"key": "NO_TEXTURE", "ko": "무텍스처"},
+    {"key": "REPETITIVE_PATTERN", "ko": "반복 무늬"},
+    {"key": "GLASS_METAL", "ko": "유리·금속"},
+    {"key": "OCCLUSION_BOUNDARY", "ko": "가림·경계"},
+    {"key": "CLASSIFICATION_FAILURE", "ko": "분류 실패"}
+  ]
+}

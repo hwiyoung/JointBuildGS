@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>원인 귀속 라벨링 — E2 붕괴층 (채움-의존 45동)</title>
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; font: 13px/1.5 system-ui, sans-serif; background: #0f172a; color: #e2e8f0; }
+  header { padding: 12px 18px; background: #1e293b; position: sticky; top: 0; z-index: 5;
+           display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+  h1 { font-size: 15px; margin: 0; }
+  .hint { color: #94a3b8; font-size: 12px; }
+  button { background: #334155; color: #e2e8f0; border: 1px solid #475569; border-radius: 6px;
+           padding: 5px 10px; cursor: pointer; }
+  button:hover { background: #475569; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { padding: 6px 8px; border-bottom: 1px solid #1e293b; text-align: left; vertical-align: top; }
+  th { position: sticky; top: 52px; background: #0f172a; font-size: 12px; color: #94a3b8; }
+  tr.labeled td { background: rgba(34, 197, 94, 0.07); }
+  tr.inN td:first-child { border-left: 3px solid #f43f5e; }
+  .tagAuto { color: #fbbf24; font-size: 11px; }
+  .num { font-variant-numeric: tabular-nums; }
+  select, input[type=text] { background: #1e293b; color: #e2e8f0; border: 1px solid #334155;
+                             border-radius: 5px; padding: 3px 5px; }
+  input[type=text] { width: 200px; }
+  a { color: #38bdf8; text-decoration: none; }
+  .prog { font-weight: 600; color: #34d399; }
+  .warn { color: #f87171; }
+</style>
+</head>
+<body>
+<header>
+  <h1>원인 귀속 라벨링 — E2 붕괴층(기준선 단독 E2 comp@0.25&lt;0.9)</h1>
+  <span class="prog" id="prog"></span>
+  <button id="btnExport">JSON 내보내기</button>
+  <button id="btnImport">가져오기</button>
+  <input type="file" id="fileImport" accept=".json" style="display:none">
+  <span class="hint">라벨은 브라우저 localStorage에 저장 — 반드시 내보내기로 동결.
+  빨간 왼쪽 테두리 = 변화∧불충분 N(12동). ⚠자동 태그는 후보일 뿐(리뷰어 확정 필요).
+  뷰어 링크는 8882 조건 뷰어 딥링크.</span>
+</header>
+<table id="tbl">
+  <thead><tr>
+    <th>#</th><th>건물</th><th>티어</th><th>E2 comp</th><th>raw→cls6 (hole)</th>
+    <th>Roofer 실패</th><th>f1 E2/E8</th><th>원인(주)</th><th>메모</th><th>뷰어</th>
+  </tr></thead>
+  <tbody id="rows"></tbody>
+</table>
+<script>
+const LS_KEY = 'jbgs-journal1-cause-attribution-v1';
+const CATS = [
+  ['', '— 미라벨 —'],
+  ['NO_TEXTURE', '무텍스처'],
+  ['REPETITIVE_PATTERN', '반복 무늬'],
+  ['GLASS_METAL', '유리·금속'],
+  ['OCCLUSION_BOUNDARY', '가림·경계'],
+  ['CLASSIFICATION_FAILURE', '분류 실패'],
+  ['UNDECIDABLE', '판정불능'],
+];
+let manifest, store;
+try { store = JSON.parse(localStorage.getItem(LS_KEY)) || {}; } catch { store = {}; }
+const save = () => localStorage.setItem(LS_KEY, JSON.stringify(store));
+
+function fmt(v, d = 3) { return v == null ? '·' : (+v).toFixed(d); }
+
+function render() {
+  const tb = document.getElementById('rows');
+  tb.innerHTML = '';
+  let done = 0;
+  manifest.targets.forEach((t, i) => {
+    const rec = store[t.stable_id] || {};
+    if (rec.label) done += 1;
+    const tr = document.createElement('tr');
+    tr.className = (rec.label ? 'labeled ' : '') + (t.in_change_and_insufficient_N ? 'inN' : '');
+    const roofFail = ['E7', 'E8'].filter(a => t.roofer_empty_or_degenerate[a]).join('/') || '·';
+    const hole = t.hole025 != null && t.hole025 >= 0.1
+      ? `<span class="warn">${fmt(t.comp_raw025)}→${fmt(t.comp_cls6_025)} (${fmt(t.hole025)})</span>`
+      : `${fmt(t.comp_raw025)}→${fmt(t.comp_cls6_025)} (${fmt(t.hole025)})`;
+    tr.innerHTML = `
+      <td class="num">${i + 1}</td>
+      <td>${t.bkey} <span class="hint">${t.stable_id.replace('DEBY_LOD2_', '')}</span>
+        ${t.auto_tag ? '<div class="tagAuto">⚠ 자동: 분류-구멍</div>' : ''}</td>
+      <td>${(t.tier || '').slice(0, 1)}</td>
+      <td class="num">${fmt(t.e2_comp025)}</td>
+      <td class="num">${hole}</td>
+      <td>${roofFail}</td>
+      <td class="num">${fmt(t.f1_e1.E2)} / ${fmt(t.f1_e1.E8)}</td>
+      <td></td><td></td>
+      <td><a href="./index.html#${t.bkey}" target="jbgs8882">열기 →</a></td>`;
+    const sel = document.createElement('select');
+    for (const [v, ko] of CATS) {
+      const o = new Option(ko, v, false, (rec.label || '') === v);
+      sel.add(o);
+    }
+    sel.addEventListener('change', () => {
+      store[t.stable_id] = { ...rec, label: sel.value || null, at: new Date().toISOString() };
+      save(); render();
+    });
+    tr.children[7].appendChild(sel);
+    const memo = document.createElement('input');
+    memo.type = 'text'; memo.value = rec.memo || ''; memo.placeholder = '메모';
+    memo.addEventListener('change', () => {
+      store[t.stable_id] = { ...store[t.stable_id], memo: memo.value || null };
+      save();
+    });
+    tr.children[8].appendChild(memo);
+    tb.appendChild(tr);
+  });
+  document.getElementById('prog').textContent = `${done}/${manifest.targets.length} 라벨됨`;
+}
+
+document.getElementById('btnExport').addEventListener('click', () => {
+  const out = {
+    schema: 'journal1_cause_attribution_v1',
+    exported_utc: new Date().toISOString(),
+    definition: manifest.definition,
+    n_targets: manifest.targets.length,
+    targets: manifest.targets.map(t => ({
+      stable_id: t.stable_id, bkey: t.bkey, auto_tag: t.auto_tag,
+      user_label: store[t.stable_id]?.label || null,
+      memo: store[t.stable_id]?.memo || null,
+    })),
+    labels_by: 'human_reviewer',
+    scientific_verdict: null,
+  };
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(out, null, 2)], { type: 'application/json' }));
+  a.download = 'cause_attribution_v1.json';
+  a.click();
+});
+document.getElementById('btnImport').addEventListener('click', () => document.getElementById('fileImport').click());
+document.getElementById('fileImport').addEventListener('change', async (e) => {
+  const data = JSON.parse(await e.target.files[0].text());
+  for (const t of data.targets || []) {
+    if (t.user_label || t.memo) store[t.stable_id] = { label: t.user_label, memo: t.memo };
+  }
+  save(); render();
+});
+
+fetch('./cause_labeling_manifest_v1.json').then(r => r.json()).then(m => { manifest = m; render(); });
+</script>
+</body>
+</html>
