@@ -1,0 +1,47 @@
+{
+  "task_id": "PHD-JUDGE-TRIAL-v1",
+  "act": "act1_fullres_delta_probe",
+  "purpose": "판정전 1막 v5-①: 해상도 변수 분리 — 원본 5280×3956 + 풀해상도 포즈(투영측 FULL_OPENCV 왜곡 적용)로 실루엣 검정 재실행. 유효성 게이트 = δ=4가 먼저 보여야 fine-δ 판독.",
+  "triangulated_model": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/triangulated",
+  "raw_images_zip": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/raw/uav/Images.zip",
+  "base_yaml": "configs/p2/e3_local_4906982_mvc_depth_v1/depth03.yaml",
+  "fused_yaml": "configs/p2/e3_local_4906982_fused_vis_conf_v1/fused_vis_conf.yaml",
+  "als_root": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/raw/als",
+  "footprint_geojson": "/artifacts/JointBuildGS/phase-payloads/p2/e4_local_4906982_55v_als_prior_v1/P2-E4-LOCAL-4906982-55V-ALS-PRIOR-v1/control/shared_standard_footprint_4906982.geojson",
+  "footprint_buffer_m": 2.0,
+  "roof_above_ground_m": 2.0,
+  "out_root": "/artifacts/JointBuildGS/phase-payloads/phd/PHD-JUDGE-TRIAL-v1/act1_fullres",
+  "image_cache": "/artifacts/JointBuildGS/phase-payloads/phd/PHD-JUDGE-TRIAL-v1/act1_fullres/images_cache",
+  "deltas_east_m": [
+    0.0,
+    0.25,
+    0.5,
+    1.0,
+    2.0,
+    4.0
+  ],
+  "validity_gate_delta": 4.0,
+  "min_px_per_m": 8.0,
+  "cell_m": 1.0,
+  "cell_intensity_m": 2.0,
+  "min_edge_px_per_cell_view": 3,
+  "min_intensity_px_per_cell_view": 12,
+  "min_views_per_cell": 3,
+  "canny_thresholds": [
+    100,
+    200
+  ],
+  "edge_sigma_px": 3.0,
+  "margin_offset_m": 0.5,
+  "depth_discontinuity_m": 0.75,
+  "support_closing_iterations": 2,
+  "notes": [
+    "v5-② 스플랫(2026-08-23): 풀해상도에서 점 간격 0.22 m = 13 px 공백 → 다공 마스크(실루엣 50만 px/뷰 실측) — 월드 반경 0.3 m 원반 스플래팅으로 표면화, 셀 귀속은 동일 패스의 cell-id 맵. δ=4 게이트 재판정",
+    "포즈·내부표정 = 봉인 triangulated 풀해상도 모델(FULL_OPENCV, 5280×3956) — 크롭 모델과 동일 장면-로컬 프레임 실측 검증(카메라 중심 차 = WORLD_SHIFT 정확 일치)",
+    "영상 = raw Images.zip 원본을 읽기 전용 캐시로 추출(원본 불변) — 왜곡 보정 대신 투영에 왜곡 적용(기하 동등, 신규 영상 파생 없음)",
+    "뷰 필터: 대상 픽셀 밀도 px/m ≥ 8 (원거리 사각 뷰는 δ를 물리적으로 볼 수 없어 제외 — 뷰별 px/m receipt 기록)",
+    "판정 신호는 영상 전용(3D 게이트·MVS 무사용); 3D 기준선 비교는 크롭 릭 실측(패치 0.50~0.53)과 HV-1 건물 수준(0.573/0.669/0.763) 인용",
+    "δ 산출물 전부 synthetic — 정답 주입 통제 실험"
+  ],
+  "splat_radius_m": 0.3
+}

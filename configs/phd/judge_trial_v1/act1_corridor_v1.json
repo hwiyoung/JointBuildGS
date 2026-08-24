@@ -1,0 +1,42 @@
+{
+  "task_id": "PHD-JUDGE-TRIAL-v1",
+  "act": "act1_delta_injection_corridor",
+  "purpose": "판정전 1막(오차-주입) 코리도 파일럿 — δ-주입 prior 패치의 렌더-영상 정합 신호가 3D 잔차 기준선을 이기는가 (기제 증명, 통제 실험)",
+  "base_yaml": "configs/p2/e3_local_4906982_mvc_depth_v1/depth03.yaml",
+  "fused_yaml": "configs/p2/e3_local_4906982_fused_vis_conf_v1/fused_vis_conf.yaml",
+  "als_root": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/raw/als",
+  "out_root": "/artifacts/JointBuildGS/phase-payloads/phd/PHD-JUDGE-TRIAL-v1/act1_corridor",
+  "deltas_east_m": [
+    0.0,
+    0.25,
+    0.5,
+    1.0
+  ],
+  "pool_px": 1,
+  "cell_m": 1.0,
+  "cell_intensity_m": 2.0,
+  "min_edge_px_per_cell_view": 3,
+  "min_intensity_px_per_cell_view": 12,
+  "min_views_per_cell": 3,
+  "edge_norm_percentile": 95,
+  "depth_discontinuity_m": 0.75,
+  "support_closing_iterations": 2,
+  "notes": [
+    "v4 정정(2026-08-23 3차 런 진단: δ=0 점수 0.58 포화 = 에지 밀도 한계): ① 에지 채널 실루엣을 지붕 점(지면 5% 분위 +2m 이상)만으로 생성 — 버퍼 에이프런(지면 경계) 결함 제거 ② Canny 100/200 강에지 ③ edge_margin 채널 신설: s(p)−0.5[s(p+o)+s(p−o)], o=δ 영상방향 2px — 클러터 자기정규화, '기울기 정보' 직접 측정",
+    "v2 정정(2026-08-23 2차 런): ① 채점 셀을 4906982 footprint+2m로 제한(사전 등록 판정 단위=채움 패치; 장면 전체 채점은 지면·수목 노이즈로 희석 — scene-wide 런은 음성 대조로 보존) ② 에지 점수를 Sobel 크기 샘플링→Canny+거리변환 exp(-d/1.5px)로 교체(릿지 폭이 δ=1(3.4px)을 삼키는 결함 제거)",
+    "pool_px=1 확정(2026-08-23 1차 런 정정): 봉인 크롭 영상 1400×1013 = 픽셀 ≈0.285 m — pool=4는 δ=1.0을 1픽셀 미만으로 뭉개 판정기 자체를 전맹으로 만들었음(판독 아님, 계측 결함). δ=0.25는 pool=1에서도 서브픽셀 = 이 봉인 데이터셋의 해상도 한계로 기록",
+    "판정 신호는 영상 전용: 투영 시 registration confidence를 1.0으로 고정해 3D 게이트 신호 누입 차단",
+    "3D 기준선(깊이잔차 채널)은 비교용으로만 병산 — 사전 예측: 평지붕 XY δ에 전맹(AUC≈0.5)",
+    "δ 산출물 전부 synthetic 표기 — 정답 주입 통제 실험 (실 ALS 계보 아님)",
+    "셀 ID는 무주입(δ=0) 좌표 기준 — 같은 물리 패치를 δ 간 비교"
+  ],
+  "footprint_geojson": "/artifacts/JointBuildGS/phase-payloads/p2/e4_local_4906982_55v_als_prior_v1/P2-E4-LOCAL-4906982-55V-ALS-PRIOR-v1/control/shared_standard_footprint_4906982.geojson",
+  "footprint_buffer_m": 2.0,
+  "edge_sigma_px": 1.5,
+  "canny_thresholds": [
+    100,
+    200
+  ],
+  "margin_offset_px": 2,
+  "roof_above_ground_m": 2.0
+}
