@@ -37,7 +37,7 @@ const prefs = Object.assign({
   viewMode: 'scene',
   show: { E1: true, E2: false, E7: false, E8: false, E3: false, E4_V2: false, E5_V2: false },
   showLod2: true, showNonBldg: true, colorMode: 'arm', ptSize: 2, lodOpacity: 0.35,
-  sortMode: 'index', tierFilter: 'ALL', selFilter: 'ALL', showBoundary: true,
+  sortMode: 'index', tierFilter: 'ALL', selFilter: 'ALL', stratumView: 'OFF', showBoundary: true,
 }, loadJson(LS_PREFS, {}));
 prefs.show = Object.assign({ E1: true }, prefs.show);
 const savePrefs = () => localStorage.setItem(LS_PREFS, JSON.stringify(prefs));
@@ -459,6 +459,20 @@ function mergedLod2(buildingsSubset, faceColor, edgeColor, faceOpacity) {
 
 function buildSceneLod2() {
   const group = new THREE.Group();
+  // 층(채움-의존 45 / N12) 강조가 켜져 있으면 장면 LoD2를 그 기준으로 색칠:
+  // 대상 = 주황(N12는 빨강), 나머지 = 흐림. 선정 색칠보다 우선.
+  if (strata && prefs.stratumView !== 'OFF') {
+    const inSet = (b) => prefs.stratumView === 'N12'
+      ? strata.n12.has(b.stable_id) : strata.fill.has(b.stable_id);
+    const hot = allBuildings.filter((b) => inSet(b));
+    const hotN = hot.filter((b) => strata.n12.has(b.stable_id));
+    const hotRest = hot.filter((b) => !strata.n12.has(b.stable_id));
+    const cold = allBuildings.filter((b) => !inSet(b));
+    group.add(mergedLod2(hotRest, 0xf97316, 0xfb923c, Math.max(0.35, prefs.lodOpacity)));
+    group.add(mergedLod2(hotN, 0xef4444, 0xf87171, Math.max(0.4, prefs.lodOpacity)));
+    group.add(mergedLod2(cold, 0x475569, 0x64748b, Math.min(0.10, prefs.lodOpacity)));
+    return group;
+  }
   if (hasSelection) {
     const chosen = allBuildings.filter((b) => effSel(b));
     const dropped = allBuildings.filter((b) => !effSel(b));
@@ -669,6 +683,10 @@ function applyViewOrder() {
   if (hasSelection && prefs.selFilter !== 'ALL') {
     v = v.filter((b) => prefs.selFilter === 'SEL' ? effSel(b) : !effSel(b));
   }
+  if (strata && prefs.stratumView !== 'OFF') {
+    v = v.filter((b) => prefs.stratumView === 'N12'
+      ? strata.n12.has(b.stable_id) : strata.fill.has(b.stable_id));
+  }
   if (prefs.sortMode !== 'index') {
     const key = prefs.sortMode;
     v = [...v].sort((a, b) => (b.deltas[key] ?? -9) - (a.deltas[key] ?? -9));
@@ -846,6 +864,32 @@ $('lodOpacity').addEventListener('input', (e) => {
 const reflow = () => { const sid = current()?.stable_id; applyViewOrder(); const i = state.view.findIndex((b) => b.stable_id === sid); select(i >= 0 ? i : 0, { keepCamera: inScene() }); };
 $('sortMode').addEventListener('change', (e) => { prefs.sortMode = e.target.value; savePrefs(); reflow(); });
 $('tierFilter').addEventListener('change', (e) => { prefs.tierFilter = e.target.value; savePrefs(); reflow(); });
+
+// 채움-의존 45동 / N12 층 가시화: cause_labeling_manifest가 있으면 층 선택 UI를
+// 붙이고, 장면 LoD2 색칠(주황=45, 빨강=N12, 흐림=나머지) + 목록 필터를 건다.
+let strata = null;
+fetch('./cause_labeling_manifest_v1.json')
+  .then((r) => (r.ok ? r.json() : null))
+  .then((m) => {
+    if (!m?.targets) return;
+    strata = {
+      fill: new Set(m.targets.map((t) => t.stable_id)),
+      n12: new Set(m.targets.filter((t) => t.in_change_and_insufficient_N).map((t) => t.stable_id)),
+    };
+    $('tierFilter').insertAdjacentHTML('afterend',
+      ' 층 <select id="stratumView"><option value="OFF">전체</option>'
+      + '<option value="FILL45">채움-의존 45</option>'
+      + '<option value="N12">변화∧불충분 12</option></select>');
+    const sel = $('stratumView');
+    sel.value = prefs.stratumView === 'FILL45' || prefs.stratumView === 'N12'
+      ? prefs.stratumView : 'OFF';
+    sel.addEventListener('change', (e) => {
+      prefs.stratumView = e.target.value; savePrefs();
+      rebuildSceneLod2(); reflow();
+    });
+    if (prefs.stratumView !== 'OFF') { rebuildSceneLod2(); reflow(); }
+  })
+  .catch(() => {});
 
 document.addEventListener('keydown', (e) => {
   if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
