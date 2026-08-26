@@ -203,9 +203,10 @@ def build_real(name, out_root, gravity, lod2_faces):
     bkey, sid = BUILDINGS[name]["bkey"], BUILDINGS[name]["stable_id"]
     mvs_xyz, mvs_rgb, _ = read_ply_points(Path(E2_DIR) / f"{bkey}.points.ply")
     als_xyz, als_rgb, _ = read_ply_points(A2_CROPS / "E7" / f"{bkey}.points.ply")
-    if mvs_rgb is None:
+    # degenerate rgb (all-zero crop exports) reads as black on the dark viewer
+    if mvs_rgb is None or not mvs_rgb.any():
         mvs_rgb = np.full((len(mvs_xyz), 3), 180, dtype=np.uint8)
-    if als_rgb is None:
+    if als_rgb is None or not als_rgb.any():
         als_rgb = np.full((len(als_xyz), 3), 120, dtype=np.uint8)
     xyz = np.concatenate([mvs_xyz, als_xyz])
     rgb = np.concatenate([mvs_rgb, als_rgb]).astype(np.uint8)
