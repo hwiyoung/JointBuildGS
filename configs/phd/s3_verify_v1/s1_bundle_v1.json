@@ -1,0 +1,35 @@
+{
+  "task_id": "PHD-S3-VERIFY-PAGES-v1",
+  "schema": "phd_s3_verify_s1_bundle_v1",
+  "status": "DEVELOPMENT_NON_CONFIRMATORY",
+  "out_root": "/artifacts/JointBuildGS/phase-payloads/phd/PHD-S3-VERIFY-PAGES-v1",
+  "runs": ["B022", "B173", "B036", "SYNTH_GABLE"],
+  "inlier": {
+    "tau_m": 0.15,
+    "support_buffer_m": 0.5
+  },
+  "thin_max_points": 300000,
+  "synth_seed": 0,
+  "prereg": {
+    "proposal": true,
+    "orphan_ratio_max": 0.2,
+    "gt_match": {
+      "max_angle_deg": 10.0,
+      "max_offset_m": 0.5
+    }
+  },
+  "viewer": {
+    "three_module_src": "src/apps/gs3d_4way_viewer/build/three.module.min.js",
+    "port": 8885,
+    "serve_note": "serve the bundle root (out_root) over http on the port above; viewer_p1/ pages read runs/<name>/ relative to it"
+  },
+  "provenance": {
+    "tau_m": "scripts/p2/arrgs_v1/real_scene.py ransac_planes tol=0.15 (L114) — legacy RANSAC distance threshold, reused unchanged",
+    "gt_match": "scripts/p2/arrgs_v1/s1_gt_match.py ANG_TOL=10.0 (L35) / OFF_TOL=0.5 (L36)",
+    "support_buffer_m": "proposal 0.5 m (new registration, no legacy source)",
+    "gravity": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/checkpoints/030-dense_mvs_and_gravity.json payload.gravity (terrain MVS normals, hardcoded_gravity=false); synthetic runs use the local-frame construction gravity [0,0,-1]",
+    "lod2_gt": "configs/p2/arrgs_v1/eval_arrgs_v1.json gml_tiles / origin / lod2_z_shift_to_viewer_m (evaluation-only)"
+  },
+  "scientific_verdict": null,
+  "not_official": true
+}
