@@ -16,7 +16,9 @@ const SRC_COLORS = { prior: 0x4a9eff, mvs: 0xffa040, footprint: 0x9aa4b0,
                      gapfill: 0xb07fe8, synthetic_gt: 0x50d890, synthetic_distractor: 0xff5f6e };
 const SRC_LABEL = { prior: 'prior(ALS)', mvs: 'MVS', footprint: 'footprint',
                     gapfill: 'gapfill', synthetic_gt: '합성 GT형', synthetic_distractor: '합성 교란' };
-const GT_COLOR = 0x30d060, ALS_COLOR = 0x40cfe0;
+// ALS 점은 데이터 rgb(회색 127)가 mvs(회색 180)와 육안 구분 불가 → 뷰어에서 앰버 틴트
+// (prior 출처색 계열)로 대체. mvs 점만 데이터 rgb 유지.
+const GT_COLOR = 0x30d060, ALS_COLOR = 0xd08a2e;
 const DIM = 0.16;                 // 감광 배율
 const GLOW = [1.0, 0.88, 0.40];   // inlier 발광색
 const ORPHAN_RGB = [0.94, 0.30, 0.27];
@@ -24,7 +26,7 @@ const ORPHAN_RGB = [0.94, 0.30, 0.27];
 const state = {
   runs: [], runName: null, run: null, cache: {},
   sel: null,           // 선택 평면 plane_id
-  orphanMode: false, showAls: false, showGt: false, showPlanes: true,
+  orphanMode: false, showMvs: true, showAls: false, showGt: false, showPlanes: true,
   outlineOnly: false,  // 미선택 평면 = 윤곽선만 (중첩 혼잡 완화)
   srcOn: {},           // 출처별 평면 표시 (footprint는 기본 OFF)
   picked: null,        // 점 클릭 카드
@@ -288,7 +290,8 @@ function buildScene(d) {
     d.mvsPoints = new THREE.Points(mg, new THREE.PointsMaterial({
       size: 0.12, vertexColors: true, sizeAttenuation: true }));
     d.mvsPoints.userData.kind = 'mvs';
-    // ALS 오버레이 (o_init 전용 입력 — inlier 판정 비대상, 오버레이 전용)
+    // ALS 오버레이 (o_init 전용 입력 — inlier 판정 비대상, 오버레이 전용).
+    // 색 = 뷰어 앰버 틴트(ALS_COLOR) 고정 — 데이터 rgb 회색 127은 mvs와 구분 불가.
     const ag = new THREE.BufferGeometry();
     const apos = new Float32Array(d.alsLocals.length * 3);
     d.alsLocals.forEach((full, li) => {
@@ -297,7 +300,7 @@ function buildScene(d) {
     });
     ag.setAttribute('position', new THREE.BufferAttribute(apos, 3));
     d.alsPoints = new THREE.Points(ag, new THREE.PointsMaterial({
-      color: ALS_COLOR, size: 0.18, transparent: true, opacity: 0.6 }));
+      color: ALS_COLOR, size: 0.18, transparent: true, opacity: 0.85 }));
     d.alsPoints.userData.kind = 'als';
     // 후보 평면 폴리곤 + 윤곽 + 선택 강조용 EdgesGeometry (레이캐스트 대상 = mesh)
     d.planeMeshes = {};
@@ -361,6 +364,7 @@ function applyStyles() {
   const d = state.run;
   if (!d) return;
   hiliteMats = [];
+  d.mvsPoints.visible = state.showMvs;
   d.alsPoints.visible = state.showAls;
   gtGroup.visible = state.showGt;
   const anySel = state.sel !== null;
@@ -454,9 +458,10 @@ function pickAt(e) {
   }
   // 2) 평면 히트 없음 → 기존 점 픽킹 (후보 평면 토글 OFF 시 순수 점 픽킹)
   raycaster.params.Points.threshold = Math.max(0.04, orbit.r * 0.004);
-  const objs = [d.mvsPoints];
+  const objs = [];   // 표시 중인 점 출처만 픽킹 대상
+  if (d.mvsPoints.visible) objs.push(d.mvsPoints);
   if (d.alsPoints.visible) objs.push(d.alsPoints);
-  const hits = raycaster.intersectObjects(objs, false);
+  const hits = objs.length ? raycaster.intersectObjects(objs, false) : [];
   if (!hits.length) {  // 빈 공간 클릭 = 선택·점 카드 해제
     state.picked = null;
     if (state.sel !== null) selectPlane(state.sel);
@@ -551,7 +556,7 @@ function pickedCardHtml(d) {
   if (!pk) return '';
   let body;
   if (pk.kind === 'als') {
-    body = '<span class="note">ALS prior 점 — o_init 전용 입력, inlier 판정 비대상(오버레이 전용)</span>';
+    body = '<span class="note">ALS prior 점(앰버 틴트 — 데이터 rgb 아님) — prior 진술·o_init 전용 입력, inlier 판정 비대상</span>';
   } else if (!pk.planes.length) {
     body = `<span class="bad">고아 점 — 어느 후보 평면의 inlier도 아님</span>`;
   } else {
@@ -580,12 +585,17 @@ function renderPanel() {
       <label><input type="checkbox" id="planesTgl" ${state.showPlanes ? 'checked' : ''}> 후보 평면</label>
       <label><input type="checkbox" id="outlineTgl" ${state.outlineOnly ? 'checked' : ''}>
         미선택 평면 윤곽선만</label>
-      <label><input type="checkbox" id="alsTgl" ${state.showAls ? 'checked' : ''}>
-        <span style="color:#40cfe0">ALS 점(오버레이 — 판정 비대상)</span></label>
       <label><input type="checkbox" id="gtTgl" ${state.showGt ? 'checked' : ''}>
         <span style="color:#30d060">GT 면</span> <span class="badge eval">평가 전용</span></label>
       <label><input type="checkbox" id="orphanTgl" ${state.orphanMode ? 'checked' : ''}>
         <span style="color:#ff7b72">고아 점 강조</span></label>
+    </div>
+    <div class="legend">점 출처:
+      <label><input type="checkbox" id="mvsTgl" ${state.showMvs ? 'checked' : ''}>
+        <span style="color:#b4b4b4">MVS 점</span></label>
+      <label><input type="checkbox" id="alsTgl" ${state.showAls ? 'checked' : ''}>
+        <span style="color:#d08a2e">ALS prior 점</span></label>
+      <div class="note">MVS 점(회색)=현재 관측·판정 대상 / ALS 점(앰버)=prior 진술·o_init 전용·판정 비대상</div>
     </div>
     <div class="legend">평면 출처: ${srcSet.map(s =>
       `<label><input type="checkbox" class="srcTgl" data-src="${esc(s)}" ${state.srcOn[s] !== false ? 'checked' : ''}>
@@ -652,6 +662,7 @@ function bindPanel() {
   const on = (id, ev, fn) => { const el = $(id); if (el) el[ev] = fn; };
   on('#planesTgl', 'onchange', () => { state.showPlanes = $('#planesTgl').checked; applyStyles(); });
   on('#outlineTgl', 'onchange', () => { state.outlineOnly = $('#outlineTgl').checked; applyStyles(); });
+  on('#mvsTgl', 'onchange', () => { state.showMvs = $('#mvsTgl').checked; applyStyles(); });
   on('#alsTgl', 'onchange', () => { state.showAls = $('#alsTgl').checked; applyStyles(); });
   on('#gtTgl', 'onchange', () => { state.showGt = $('#gtTgl').checked; applyStyles(); });
   on('#orphanTgl', 'onchange', () => {
@@ -731,7 +742,8 @@ function renderHeader() {
     (t.original_count ? ` · 씨닝 ${t.original_count}→${c.points_total ?? d.N}` : '') +
     ` · CRS ${d.manifest.crs || '?'} (offset −[${off.map(v => (+v).toFixed(1)).join(', ')}])`;
   $('#hud').textContent = `${state.runName} — 좌드래그 회전 · 우드래그 이동 · 휠 줌 · ` +
-    `클릭=평면 선택(평면 밖은 점→소속 평면) · 재클릭·빈 공간·ESC=해제 · 순수 점 픽킹은 후보 평면 OFF`;
+    `클릭=평면 선택(평면 밖은 점→소속 평면) · 재클릭·빈 공간·ESC=해제 · 순수 점 픽킹은 후보 평면 OFF · ` +
+    `점 출처: MVS 회색(판정 대상) / ALS 앰버(prior — 기본 OFF)`;
 }
 
 // ---------- 런 전환 ----------
