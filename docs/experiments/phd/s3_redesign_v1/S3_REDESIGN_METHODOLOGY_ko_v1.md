@@ -1,10 +1,10 @@
-# S3 재설계 — 방법론 정본 (v1r9)
+# S3 재설계 — 방법론 정본 (v1r10)
 
 > **지위: PLANNING RECORD — 실행 권한 없음.** 커밋·실행·GPU 착수는 사용자 승인 후.
 > `scientific_verdict: null`. 리뷰어: 김휘영. 작성 2026-08-24, r4 2026-08-25
 > (그림 재설계·"BA+이산" 구조·요지 문장), r5 2026-08-25 (§2.0 최적화 요소
 > 사양표 · §4 요지를 "실제 구조" 근거로 교체 · BA 용어 풀이(게이지/로버스트/
-> 파라미터 공유), **r6 2026-08-25** (정합성 감사 반영: 세 버퍼 생성 방식·증거 지위 구분(광도만 실증)·증축 방향·w 초기값과 패치-셀 매핑·IRLS 대비·유보 패치의 기하 처리·헌장 앵커 연결), **r7 2026-08-25** (채널 근거 3층·채널 절제 사전 등록·패치 검정 2단(총량+귀속)·공정성 조건·미결 7·8), **r8 2026-08-25** (전 실험(ARRGS v1) 대비표 §0.5 · 관측 방정식 3단 전개·렌더 인자 출처 3분류·가우시안 수명 3규칙(§2.1) · 앵커 이산 정합화 — BCE→−log 사전확률·판정 부등식 참여(§2.2·§2.5·§3, 개정 주석) · 이산 블록 후보 선정·가시성 원리(§3 그림) · 판결 형태·잔차 배분(§3) · 회색 초기화 근거 지위 3층(§1.4) · 비변수 3분류·S4 무문턱 각주(§2.0) · 미결 9~12), **r9 2026-08-26** (이산 블록 한 바퀴 절차·비용 논증(§3) · 솔버 선례 3부류·RJMCMC·그래프컷의 암묵 켜기/끄기(§4.2) · 앵커 지위 증보 — 측량값 출처·확률적 제약·평면 앵커 2계열·w 절차(t/w 역할 분리)·비대칭 내기·외부 계보 표(§2.2) · o_init 이중 역할 — 초기 상태=반올림·소프트값=앵커 목표(§1.2·§2.0) · 잠든 면과 평면의 생존(§2.1) · 미결의 지위 — 질문·결정 증거(§6)).
+> 파라미터 공유), **r6 2026-08-25** (정합성 감사 반영: 세 버퍼 생성 방식·증거 지위 구분(광도만 실증)·증축 방향·w 초기값과 패치-셀 매핑·IRLS 대비·유보 패치의 기하 처리·헌장 앵커 연결), **r7 2026-08-25** (채널 근거 3층·채널 절제 사전 등록·패치 검정 2단(총량+귀속)·공정성 조건·미결 7·8), **r8 2026-08-25** (전 실험(ARRGS v1) 대비표 §0.5 · 관측 방정식 3단 전개·렌더 인자 출처 3분류·가우시안 수명 3규칙(§2.1) · 앵커 이산 정합화 — BCE→−log 사전확률·판정 부등식 참여(§2.2·§2.5·§3, 개정 주석) · 이산 블록 후보 선정·가시성 원리(§3 그림) · 판결 형태·잔차 배분(§3) · 회색 초기화 근거 지위 3층(§1.4) · 비변수 3분류·S4 무문턱 각주(§2.0) · 미결 9~12), **r9 2026-08-26** (이산 블록 한 바퀴 절차·비용 논증(§3) · 솔버 선례 3부류·RJMCMC·그래프컷의 암묵 켜기/끄기(§4.2) · 앵커 지위 증보 — 측량값 출처·확률적 제약·평면 앵커 2계열·w 절차(t/w 역할 분리)·비대칭 내기·외부 계보 표(§2.2) · o_init 이중 역할 — 초기 상태=반올림·소프트값=앵커 목표(§1.2·§2.0) · 잠든 면과 평면의 생존(§2.1) · 미결의 지위 — 질문·결정 증거(§6)), **r10 2026-08-26** (용어 정비 — "포락"→"표면고(기둥별 p90)" 전면 교체 · §3 후보 선정 그림 재작성(전체 풀→3원천→이번 라운드 후보 좁힘·패널 분리·라벨 그림 밖) · §3 '후보의 뜻' 서술 · §3 "동결 = 상수 대입" 명시).
 > 표기: **[실측]** 수치로 확인된 것 / **[예정]** 실험만이 판정할 것 /
 > 나머지는 논리 서술.
 
@@ -117,8 +117,8 @@ O 전환, §5.3).
     <text class="lb" x="98" y="64">기둥</text>
   </g>
   <text class="cap" x="14" y="252">C. o_init = prior의 부피 진술</text>
-  <text class="sub" x="14" y="270">점선 = ALS 기둥 p90 포락 · 회색 띠 = 한 셀의 기둥</text>
-  <text class="sub" x="14" y="287">중심이 포락 아래면 0.75(주황 c4·c7), 위면 0.15, 무점 0.2</text>
+  <text class="sub" x="14" y="270">점선 = ALS 표면고(기둥별 p90) · 회색 띠 = 한 셀의 기둥</text>
+  <text class="sub" x="14" y="287">중심이 표면고 아래면 0.75(주황 c4·c7), 위면 0.15, 무점 0.2</text>
 </g>
 <g transform="translate(410,330)">
   <text class="cap" x="14" y="40">판정의 심판은 누구인가</text>
@@ -189,7 +189,7 @@ O 전환, §5.3).
 
 | 변수 | 붙는 자리 | 개수 | 초기값 | 진술의 성격 |
 |---|---|---|---|---|
-| 점유 o_k | 셀 | 셀당 1 | ALS 포락 판정(아래) | prior의 부피 진술 (심판 대상) |
+| 점유 o_k | 셀 | 셀당 1 | ALS 표면고 판정(아래) | prior의 부피 진술 (심판 대상) |
 | 평면 P_p=(n_p,d_p) | 평면(전역) | 평면당 1 | S1 후보 그 자체 | 용의자 명단 (판단 전) |
 | 정합 δ | prior 자산 전체 | 1개 공유 | 0 | 편차 변수 (진술 없음) |
 | 외관 A | 가우시안(면 소속) | 가우시안당 | 중립 회색 | 결측 (증언 없음) |
@@ -207,12 +207,12 @@ O 전환, §5.3).
 **o_init 절차** (그림 C):
 
 - 셀 중심 (x,y)에 반경 0.75 m 수직 기둥을 세운다.
-- 기둥 안 ALS 점 높이의 p90 = 그 자리의 "prior 표면 높이" z_surf.
+- 기둥 안 ALS 점 높이의 p90 = 그 자리의 **표면고** z_surf — ALS 점으로 읽는 강건한 표면 높이(국소 DSM에 해당).
 - 셀 중심이 z_surf 아래면 0.75, 위면 0.15, 무점이면 0.2, footprint 밖은 0 고정.
 - p90인 이유: 최고점은 수관·노이즈에, 평균은 벽·지면 점에 끌린다 — 지붕
   높이의 강건한 읽기가 그 사이다.
 - 분류를 안 쓰는 이유: 기존 자산 분류는 붕괴할 수 있다(B036, 지면 클래스
-  중앙값이 지붕 높이 [실측]). 포락은 붕괴에 면역이다.
+  중앙값이 지붕 높이 [실측]). 표면고 읽기는 붕괴에 면역이다.
 - ALS 전용인 이유: 초기값은 심판받을 진술이다. MVS를 섞으면 심판이 피고와
   섞인다.
 - o_init의 이중 역할(r9 명시) — 소프트값은 두 자리에서 다르게 쓰인다:
@@ -286,7 +286,7 @@ prior가 주장하는 표면 전체가 강체로 이동해 다시 그려진다.
 
 | 구분 | 항목 | 상세 | 담당 솔버 블록(§3) |
 |---|---|---|---|
-| 변수 | 점유 o_k | 셀당 1 · **이산**(채택/기각/유보) · 초기 상태 = ALS 포락의 반올림(소프트값은 앵커 목표 t로 존속, §1.2) | 패치 가설검정 |
+| 변수 | 점유 o_k | 셀당 1 · **이산**(채택/기각/유보) · 초기 상태 = ALS 표면고 판정의 반올림(소프트값은 앵커 목표 t로 존속, §1.2) | 패치 가설검정 |
 | 변수 | 평면 P_p | 평면당 1 · 연속 · 초기값 = S1 후보 | 경사하강(개방은 선택) |
 | 변수 | 정합 δ | 자산당 1 · 연속(굵은 성분만) · 초기값 = 0 | 경사하강 |
 | 변수 | 외관 A | 가우시안당(면 소속) · 연속 · 초기값 = 회색 | 경사하강 |
@@ -453,7 +453,7 @@ prior가 주장하는 표면 전체가 강체로 이동해 다시 그려진다.
 
 - 여기서 k·p = 셀·평면 인덱스(합은 자유 셀 전체 · 후보 평면 전체 —
   footprint 밖 고정 셀은 제외).
-- t_k = o_init,k = **prior가 이 셀에 대해 한 진술의 내용**(§1.2 포락 절차의
+- t_k = o_init,k = **prior가 이 셀에 대해 한 진술의 내용**(§1.2 표면고 판정의
   0.75/0.15/0.2).
 - C_k 읽기: 진술이 "찼을 확률 0.75"인 셀을 채움으로 두면 −log 0.75 ≈ 0.29,
   비움으로 뒤집으면 −log 0.25 ≈ 1.39 — 차액 w_k·|log(t_k/(1−t_k))| ≈
@@ -505,7 +505,7 @@ prior가 주장하는 표면 전체가 강체로 이동해 다시 그려진다.
 **앵커의 지위 — 측량값이고, 확률적 제약이며, 기각 가능해야 이득이다(r9).**
 
 - 목표값의 출처는 문자 그대로 측량 성과물이다: 2022 ALS는 항공 LiDAR
-  측량이고, o_init(포락 읽기)과 prior 평면 P⁰(수천 점 강건 적합)은 그
+  측량이고, o_init(표면고 읽기)과 prior 평면 P⁰(수천 점 강건 적합)은 그
   측량의 두 가지 읽기다. GCP와의 차이는 값의 출처가 아니라 **시제**다 —
   GCP는 현재 유효가 보증된 측량값, 우리 앵커는 과거에 유효했던 측량값.
   그래서 GCP의 가중은 측량 정확도로 고정되지만 우리 w는 판정 변수가 된다
@@ -602,6 +602,12 @@ L(o, P, δ, A) =
               → 낮은 쪽 채택/기각, 차이가 잡음 범위면 유보(상태 유지)
 ```
 
+- 동결의 뜻(r10): 어느 블록에서든 L은 항상 네 변수 전부를 넣어 계산한다 —
+  "동결"은 그 변수를 식에서 빼는 것이 아니라 **현재값을 상수로 대입**하는
+  것이다. 연속 블록은 o를 상수로 두고 ∂L/∂(δ,A,[P])만 취하고, 이산 블록은
+  δ·A·P를 상수로 두고 o만 두 상태로 바꾼 같은 L의 두 값을 비교한다.
+  f(x,y)에서 y를 고정한 채 x로 내려가는 것과 같다 — f는 여전히 두 변수
+  모두의 함수다.
 - 여기서 Π = 패치(면 세그먼트 묶음), ΔE = 채택 시 관측 잔차 개선, ΔA =
   채택 시 신규 − 소멸 면적(XOR 회계, §2.3), ΔW = 진술과 다르게 두는 증언
   비용(§2.2). 진술을 뒤집는 방향만 떼어 읽으면 판정은 ΔE > λ_a·ΔA + ΔW다.
@@ -626,121 +632,174 @@ L(o, P, δ, A) =
 
 셀은 건물당 배열 절단의 산물(수백 수준, footprint 밖은 0 고정)이라
 유한하지만, 조합 2^K는 전수 탐색이 불가능하다. 이산 블록은 아래 세 겹
-기준으로 검정 대상을 고른다 (그림):
+기준으로 검정 대상을 고른다 — 그림 최상단 행이 그 요약이다(전체 풀 →
+3원천 거름 → 이번 라운드 후보):
 
 <div>
-<svg viewBox="0 0 800 580" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:860px;background:#fff;border:1px solid #ddd;border-radius:4px">
-<style>.cap{font:13px 'Noto Sans KR',sans-serif;fill:#173753;font-weight:600}.sub{font:11.5px 'Noto Sans KR',sans-serif;fill:#666}.lb{font:11.5px 'Noto Sans KR',sans-serif;fill:#555}.cl{font:12px 'Noto Sans KR',sans-serif;font-weight:700}</style>
+<svg viewBox="0 0 840 1115" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:860px;background:#fff;border:1px solid #ddd;border-radius:4px">
+<style>.cap{font:13px 'Noto Sans KR',sans-serif;fill:#173753;font-weight:600}.sub{font:11.5px 'Noto Sans KR',sans-serif;fill:#666}.lb{font:12px 'Noto Sans KR',sans-serif;fill:#444}.cl{font:15px 'Noto Sans KR',sans-serif;font-weight:700}</style>
 <g transform="translate(15,15)">
-  <g transform="translate(60,10)">
-    <polygon points="72,50 168,50 120,85" fill="#f7f7f7"/>
-    <polygon points="30,50 72,50 120,85 72,120 30,120" fill="#f7f7f7"/>
-    <polygon points="168,50 210,50 210,120 168,120 120,85" fill="#f7f7f7"/>
-    <polygon points="72,120 120,85 168,120" fill="#dce6ee"/>
-    <polygon points="30,120 72,120 30,151" fill="#f7f7f7"/>
-    <polygon points="168,120 210,120 210,151" fill="#f7f7f7"/>
-    <polygon points="30,151 72,120 168,120 210,151 210,210 30,210" fill="#dce6ee"/>
-    <g stroke="#ccc" stroke-width="0.8"><line x1="30" y1="151" x2="168" y2="50"/><line x1="210" y1="151" x2="72" y2="50"/><line x1="30" y1="120" x2="210" y2="120"/></g>
-    <rect x="30" y="50" width="180" height="160" fill="none" stroke="#999"/>
-    <polyline points="30,151 72,120 120,85 168,120 210,151 210,210 30,210 30,151" fill="none" stroke="#173753" stroke-width="3"/>
-    <g fill="none" stroke="#e08214" stroke-width="1.8" stroke-dasharray="4 3">
-      <polygon points="30,50 72,50 120,85 72,120 30,120"/>
-      <polygon points="168,50 210,50 210,120 168,120 120,85"/>
-      <polygon points="30,120 72,120 30,151"/>
-      <polygon points="168,120 210,120 210,151"/>
-    </g>
-    <text class="cl" x="46" y="92" fill="#b36b00">+</text><text class="cl" x="188" y="92" fill="#b36b00">+</text>
-    <text class="cl" x="42" y="143" fill="#b36b00">+</text><text class="cl" x="196" y="143" fill="#b36b00">+</text>
-    <text class="cl" x="114" y="110" fill="#c0392b">−</text><text class="cl" x="114" y="175" fill="#c0392b">−</text>
-    <text class="sub" x="94" y="66">c1: 비후보</text>
-  </g>
-  <text class="cap" x="14" y="252">A. 후보 자격 — 현재 경계 인접만</text>
-  <text class="sub" x="14" y="270">채택 {c4,c7} · 주황 + = 켜기 후보 / 빨강 − = 끄기 후보</text>
-  <text class="sub" x="14" y="287">c1은 비인접 — c2·c3가 켜져야 후보로 편입</text>
+  <polygon points="72,50 168,50 120,85" fill="#e8ecf1"/>
+  <polygon points="30,50 72,50 120,85 72,120 30,120" fill="#e8ecf1"/>
+  <polygon points="168,50 210,50 210,120 168,120 120,85" fill="#e8ecf1"/>
+  <polygon points="72,120 120,85 168,120" fill="#e8ecf1"/>
+  <polygon points="30,120 72,120 30,151" fill="#e8ecf1"/>
+  <polygon points="168,120 210,120 210,151" fill="#e8ecf1"/>
+  <polygon points="30,151 72,120 168,120 210,151 210,210 30,210" fill="#e8ecf1"/>
+  <g stroke="#aab4bf" stroke-width="1"><line x1="30" y1="151" x2="168" y2="50"/><line x1="210" y1="151" x2="72" y2="50"/><line x1="30" y1="120" x2="210" y2="120"/></g>
+  <rect x="30" y="50" width="180" height="160" fill="none" stroke="#999"/>
+  <text class="cap" x="0" y="240">출발 — 검정 가능한 스위치 전부</text>
+  <text class="sub" x="0" y="258">자유 셀 수백 · 인접 묶음 = 패치(미결 2)</text>
+  <text class="sub" x="0" y="274">조합 2^K — 전수 검정 불가</text>
 </g>
-<g transform="translate(410,15)">
-  <g transform="translate(60,10)">
-    <rect x="30" y="50" width="180" height="160" fill="#fbfbfb" stroke="#999"/>
-    <g stroke="#ccc" stroke-width="0.8"><line x1="30" y1="151" x2="168" y2="50"/><line x1="210" y1="151" x2="72" y2="50"/><line x1="30" y1="120" x2="210" y2="120"/></g>
-    <polygon points="72,120 120,85 168,120" fill="none" stroke="#e08214" stroke-width="1.8" stroke-dasharray="4 3"/>
-    <text class="cl" x="100" y="112" fill="#b36b00">①</text>
-    <polyline points="30,151 72,120 120,85 168,120 210,151" fill="none" stroke="#7a6a4f" stroke-width="1.8" stroke-dasharray="3 3"/>
-    <text class="lb" x="20" y="170" fill="#7a6a4f">② o_init 경계(포락)</text>
-    <polygon points="246,30 262,38 246,46" fill="#444"/>
-    <line x1="246" y1="34" x2="132" y2="96" stroke="#c0392b" stroke-width="1.2" stroke-dasharray="4 3"/>
-    <line x1="246" y1="42" x2="150" y2="120" stroke="#c0392b" stroke-width="1.2" stroke-dasharray="4 3"/>
-    <circle cx="138" cy="103" r="6" fill="none" stroke="#c0392b" stroke-width="1.6"/>
-    <text class="lb" x="118" y="145" fill="#c0392b">③ 잔차 핫스팟 역투영</text>
-  </g>
-  <text class="cap" x="14" y="252">B. 후보의 3원천</text>
-  <text class="sub" x="14" y="270">① 경계 인접 패치  ② prior 진술 표면(o_init)</text>
-  <text class="sub" x="14" y="287">③ 설명 안 되는 잔차의 광선이 지나는 셀</text>
+<g>
+  <line x1="285" y1="120" x2="555" y2="120" stroke="#888" stroke-width="2"/>
+  <polygon points="555,113 572,120 555,127" fill="#888"/>
+  <text class="cap" x="300" y="100">3원천으로 거른다 (아래 A①~A③)</text>
+  <text class="sub" x="300" y="145">① 현재 경계 인접   ② prior 진술 표면</text>
+  <text class="sub" x="300" y="163">③ 잔차 핫스팟 역투영</text>
 </g>
-<g transform="translate(15,330)">
-  <g transform="translate(6,30) scale(0.45)">
-    <polygon points="72,120 120,85 168,120" fill="#dce6ee"/>
-    <polygon points="30,151 72,120 168,120 210,151 210,210 30,210" fill="#dce6ee"/>
-    <rect x="30" y="50" width="180" height="160" fill="none" stroke="#999" stroke-width="2"/>
-    <polyline points="30,151 72,120 120,85 168,120 210,151 210,210 30,210 30,151" fill="none" stroke="#173753" stroke-width="4"/>
-    <line x1="88" y1="92" x2="152" y2="128" stroke="#c0392b" stroke-width="5"/>
-    <line x1="152" y1="92" x2="88" y2="128" stroke="#c0392b" stroke-width="5"/>
+<g transform="translate(585,15)">
+  <polygon points="72,50 168,50 120,85" fill="#eef0f2"/>
+  <g fill="#e08214" opacity="0.15">
+    <polygon points="30,50 72,50 120,85 72,120 30,120"/>
+    <polygon points="168,50 210,50 210,120 168,120 120,85"/>
+    <polygon points="30,120 72,120 30,151"/>
+    <polygon points="168,120 210,120 210,151"/>
   </g>
-  <text class="lb" x="10" y="140">1. Π={c4} 검정 → 기각</text>
-  <text x="108" y="80" font-size="20" fill="#555">→</text>
-  <g transform="translate(136,30) scale(0.45)">
-    <polygon points="30,151 72,120 168,120 210,151 210,210 30,210" fill="#dce6ee"/>
-    <rect x="30" y="50" width="180" height="160" fill="none" stroke="#999" stroke-width="2"/>
-    <polyline points="30,151 72,120 168,120 210,151 210,210 30,210 30,151" fill="none" stroke="#173753" stroke-width="4"/>
-    <polygon points="72,120 120,85 168,120" fill="none" stroke="#e08214" stroke-width="4" stroke-dasharray="8 6"/>
+  <polygon points="72,120 120,85 168,120" fill="#dce6ee"/>
+  <polygon points="30,151 72,120 168,120 210,151 210,210 30,210" fill="#dce6ee"/>
+  <g stroke="#ccc" stroke-width="0.8"><line x1="30" y1="151" x2="168" y2="50"/><line x1="210" y1="151" x2="72" y2="50"/><line x1="30" y1="120" x2="210" y2="120"/></g>
+  <rect x="30" y="50" width="180" height="160" fill="none" stroke="#999"/>
+  <polyline points="30,151 72,120 120,85 168,120 210,151 210,210 30,210 30,151" fill="none" stroke="#173753" stroke-width="2.5"/>
+  <g fill="none" stroke="#e08214" stroke-width="1.6" stroke-dasharray="4 3">
+    <polygon points="30,50 72,50 120,85 72,120 30,120"/>
+    <polygon points="168,50 210,50 210,120 168,120 120,85"/>
+    <polygon points="30,120 72,120 30,151"/>
+    <polygon points="168,120 210,120 210,151"/>
   </g>
-  <text class="lb" x="136" y="140">2. 경계 하강 → 후보 갱신·재심</text>
-  <text x="240" y="80" font-size="20" fill="#555">→</text>
-  <g transform="translate(268,30) scale(0.45)">
-    <polygon points="30,151 72,120 168,120 210,151 210,210 30,210" fill="#dce6ee"/>
-    <rect x="30" y="50" width="180" height="160" fill="none" stroke="#999" stroke-width="2"/>
-    <polyline points="30,151 72,120 168,120 210,151 210,210 30,210 30,151" fill="none" stroke="#173753" stroke-width="4"/>
-  </g>
-  <text x="310" y="75" font-size="16" fill="#2e7d32">✓</text>
-  <text class="lb" x="268" y="140">3. 변화 없음 → 정지(고정점)</text>
-  <text class="cap" x="14" y="180">C. 라운드 진행 — 철거 예(영역 수축)</text>
-  <text class="sub" x="14" y="198">채택/기각이 경계를 옮기면 후보 목록이 갱신된다</text>
+  <text class="cl" x="115" y="112" fill="#c0392b">−</text>
+  <text class="cl" x="115" y="180" fill="#c0392b">−</text>
+  <text class="sub" x="110" y="66">c1</text>
+  <text class="cap" x="0" y="240">결과 — 이번 라운드 검정 후보</text>
+  <text class="sub" x="0" y="258">①∪②∪③ 합집합만 · 전부 순차 검정</text>
+  <text class="sub" x="0" y="274">c1 등 나머지 = 이번 라운드 제외</text>
 </g>
-<g transform="translate(410,330)">
-  <g transform="translate(6,30) scale(0.5)">
-    <polygon points="72,120 120,85 168,120" fill="#dce6ee"/>
-    <polygon points="30,151 72,120 168,120 210,151 210,210 30,210" fill="#dce6ee"/>
-    <rect x="30" y="50" width="180" height="160" fill="none" stroke="#999" stroke-width="2"/>
-    <polyline points="30,151 72,120 120,85 168,120 210,151 210,210 30,210 30,151" fill="none" stroke="#173753" stroke-width="3.5"/>
-    <line x1="72" y1="120" x2="168" y2="120" stroke="#999" stroke-width="3" stroke-dasharray="5 4"/>
-    <rect x="100" y="155" width="36" height="28" fill="#fff" stroke="#c0392b" stroke-width="2.5" stroke-dasharray="3 3"/>
+<text class="cap" x="15" y="330">거름망 — 후보의 3원천</text>
+<g transform="translate(15,350)">
+  <polygon points="72,120 120,85 168,120" fill="#dce6ee"/>
+  <polygon points="30,151 72,120 168,120 210,151 210,210 30,210" fill="#dce6ee"/>
+  <g stroke="#ccc" stroke-width="0.8"><line x1="30" y1="151" x2="168" y2="50"/><line x1="210" y1="151" x2="72" y2="50"/><line x1="30" y1="120" x2="210" y2="120"/></g>
+  <rect x="30" y="50" width="180" height="160" fill="none" stroke="#999"/>
+  <polyline points="30,151 72,120 120,85 168,120 210,151 210,210 30,210 30,151" fill="none" stroke="#173753" stroke-width="2.5"/>
+  <g fill="none" stroke="#e08214" stroke-width="1.6" stroke-dasharray="4 3">
+    <polygon points="30,50 72,50 120,85 72,120 30,120"/>
+    <polygon points="168,50 210,50 210,120 168,120 120,85"/>
+    <polygon points="30,120 72,120 30,151"/>
+    <polygon points="168,120 210,120 210,151"/>
   </g>
-  <text class="lb" x="10" y="150">내부: 젖혀도 화면 불변 → 검정 밖</text>
-  <text class="sub" x="10" y="166">기포·내부 면은 앵커+L_area 소관</text>
-  <g transform="translate(200,30) scale(0.5)">
-    <polygon points="72,120 120,85 168,120" fill="#dce6ee"/>
-    <polygon points="30,151 72,120 168,120 210,151 210,210 30,210" fill="#dce6ee"/>
-    <rect x="30" y="50" width="180" height="160" fill="none" stroke="#999" stroke-width="2"/>
-    <polyline points="30,151 72,120 120,85 168,120 210,151 210,210 30,210 30,151" fill="none" stroke="#173753" stroke-width="3.5"/>
-    <polygon points="2,64 18,72 2,80" fill="#444"/>
-    <line x1="18" y1="70" x2="120" y2="95" stroke="#444" stroke-width="2.5" stroke-dasharray="4 3"/>
-    <ellipse cx="52" cy="95" rx="15" ry="20" fill="#8fbc8f"/>
-  </g>
-  <text class="lb" x="204" y="150">가림: 증거 침묵 → 유보</text>
-  <text class="sub" x="204" y="166">o_init 유지 + 미검증(prior 재현) 표시</text>
-  <text class="cap" x="14" y="190">D. 심판 불가능 지대 — 소관 분리</text>
-  <text class="sub" x="14" y="208">안 보이면 검정 밖 / 보이나 침묵이면 유보</text>
+  <text class="cl" x="48" y="94" fill="#b36b00">+</text>
+  <text class="cl" x="184" y="94" fill="#b36b00">+</text>
+  <text class="cl" x="38" y="140" fill="#b36b00">+</text>
+  <text class="cl" x="192" y="140" fill="#b36b00">+</text>
+  <text class="cl" x="115" y="112" fill="#c0392b">−</text>
+  <text class="cl" x="115" y="180" fill="#c0392b">−</text>
+  <text class="sub" x="110" y="66">c1</text>
+  <text class="cap" x="0" y="240">A① 경계 인접 패치</text>
+  <text class="sub" x="0" y="258">+ 켜기 후보 = 경계 밖 이웃</text>
+  <text class="sub" x="0" y="274">− 끄기 후보 = 경계 안 이웃</text>
+  <text class="sub" x="0" y="290">c1 비인접 → 이번 라운드 제외</text>
 </g>
+<g transform="translate(300,350)">
+  <g stroke="#ddd" stroke-width="0.8"><line x1="30" y1="151" x2="168" y2="50"/><line x1="210" y1="151" x2="72" y2="50"/><line x1="30" y1="120" x2="210" y2="120"/></g>
+  <rect x="30" y="50" width="180" height="160" fill="none" stroke="#999"/>
+  <polyline points="30,151 72,120 120,85 168,120 210,151" fill="none" stroke="#e08214" stroke-width="8" opacity="0.3"/>
+  <polyline points="30,151 72,120 120,85 168,120 210,151" fill="none" stroke="#7a6a4f" stroke-width="1.8" stroke-dasharray="4 3"/>
+  <g fill="#7a6a4f"><circle cx="52" cy="132" r="1.8"/><circle cx="78" cy="112" r="1.8"/><circle cx="100" cy="97" r="1.8"/><circle cx="122" cy="84" r="1.8"/><circle cx="142" cy="99" r="1.8"/><circle cx="166" cy="116" r="1.8"/><circle cx="190" cy="136" r="1.8"/></g>
+  <text class="cap" x="0" y="240">A② prior 진술 표면</text>
+  <text class="sub" x="0" y="258">점선 = ALS 표면고(기둥별 p90)</text>
+  <text class="sub" x="0" y="274">주황 띠 = 그 위의 면들</text>
+  <text class="sub" x="0" y="290">첫 라운드의 기본 후보 집합</text>
+</g>
+<g transform="translate(585,350)">
+  <g stroke="#ddd" stroke-width="0.8"><line x1="60" y1="151" x2="198" y2="50"/><line x1="240" y1="151" x2="102" y2="50"/><line x1="60" y1="120" x2="240" y2="120"/></g>
+  <rect x="60" y="50" width="180" height="160" fill="none" stroke="#999"/>
+  <polygon points="102,120 150,85 198,120" fill="#e08214" opacity="0.35"/>
+  <polygon points="2,70 18,78 2,86" fill="#444"/>
+  <rect x="22" y="55" width="6" height="50" fill="#eee" stroke="#999" stroke-width="0.8"/>
+  <rect x="22" y="72" width="6" height="7" fill="#c0392b"/>
+  <rect x="22" y="86" width="6" height="6" fill="#c0392b"/>
+  <line x1="28" y1="75" x2="150" y2="95" stroke="#c0392b" stroke-width="1.4" stroke-dasharray="5 3"/>
+  <line x1="28" y1="89" x2="172" y2="122" stroke="#c0392b" stroke-width="1.4" stroke-dasharray="5 3"/>
+  <circle cx="150" cy="95" r="5" fill="none" stroke="#c0392b" stroke-width="1.6"/>
+  <text class="cap" x="0" y="240">A③ 잔차 핫스팟 역투영</text>
+  <text class="sub" x="0" y="258">빨강 = 설명 안 된 화면 잔차</text>
+  <text class="sub" x="0" y="274">광선이 지나는 셀(주황)을</text>
+  <text class="sub" x="0" y="290">다음 검정 후보로 제안</text>
+</g>
+<text class="cap" x="15" y="675">B. 라운드 진행 — 기각이 경계를 옮기는 예(철거) · 라운드마다 후보 목록 갱신</text>
+<g transform="translate(30,685) scale(0.72)">
+  <polygon points="72,120 120,85 168,120" fill="#dce6ee"/>
+  <polygon points="30,151 72,120 168,120 210,151 210,210 30,210" fill="#dce6ee"/>
+  <rect x="30" y="50" width="180" height="160" fill="none" stroke="#999" stroke-width="1.4"/>
+  <polyline points="30,151 72,120 120,85 168,120 210,151 210,210 30,210 30,151" fill="none" stroke="#173753" stroke-width="3"/>
+  <polygon points="72,120 120,85 168,120" fill="none" stroke="#c0392b" stroke-width="3.5" stroke-dasharray="6 4"/>
+</g>
+<text class="lb" x="30" y="860">1. Π={c4} 두 세계 비교 → 기각</text>
+<text x="240" y="780" font-size="22" fill="#555">→</text>
+<g transform="translate(310,685) scale(0.72)">
+  <polygon points="30,151 72,120 168,120 210,151 210,210 30,210" fill="#dce6ee"/>
+  <rect x="30" y="50" width="180" height="160" fill="none" stroke="#999" stroke-width="1.4"/>
+  <polyline points="30,151 72,120 168,120 210,151 210,210 30,210 30,151" fill="none" stroke="#173753" stroke-width="3"/>
+  <polygon points="72,120 120,85 168,120" fill="none" stroke="#e08214" stroke-width="3" stroke-dasharray="6 4"/>
+</g>
+<text class="lb" x="310" y="860">2. 경계 하강 → 후보 갱신·재심</text>
+<text x="520" y="780" font-size="22" fill="#555">→</text>
+<g transform="translate(590,685) scale(0.72)">
+  <polygon points="30,151 72,120 168,120 210,151 210,210 30,210" fill="#dce6ee"/>
+  <rect x="30" y="50" width="180" height="160" fill="none" stroke="#999" stroke-width="1.4"/>
+  <polyline points="30,151 72,120 168,120 210,151 210,210 30,210 30,151" fill="none" stroke="#173753" stroke-width="3"/>
+</g>
+<text class="lb" x="590" y="860">3. 변화 없음 → 정지(공동 고정점)</text>
+<text class="cap" x="15" y="900">C. 심판 불가능 지대 — 소관 분리</text>
+<g transform="translate(60,915) scale(0.72)">
+  <polygon points="30,151 72,120 168,120 210,151 210,210 30,210" fill="#dce6ee"/>
+  <rect x="30" y="50" width="180" height="160" fill="none" stroke="#999" stroke-width="1.4"/>
+  <polyline points="30,151 72,120 168,120 210,151 210,210 30,210 30,151" fill="none" stroke="#173753" stroke-width="3"/>
+  <rect x="100" y="162" width="42" height="30" fill="#fff" stroke="#c0392b" stroke-width="2.2" stroke-dasharray="4 3"/>
+</g>
+<text class="lb" x="60" y="1085">내부 기포 — 젖혀도 화면 불변 → 검정 밖</text>
+<text class="sub" x="60" y="1103">앵커가 o_init에 붙들고, 면적항이 메운다(기포 = 면적 적자)</text>
+<g transform="translate(470,915) scale(0.72)">
+  <polygon points="72,120 120,85 168,120" fill="#dce6ee"/>
+  <polygon points="30,151 72,120 168,120 210,151 210,210 30,210" fill="#dce6ee"/>
+  <rect x="30" y="50" width="180" height="160" fill="none" stroke="#999" stroke-width="1.4"/>
+  <polyline points="30,151 72,120 120,85 168,120 210,151 210,210 30,210 30,151" fill="none" stroke="#173753" stroke-width="3"/>
+  <polygon points="-14,80 2,88 -14,96" fill="#444"/>
+  <line x1="2" y1="88" x2="95" y2="108" stroke="#444" stroke-width="2" stroke-dasharray="4 3"/>
+  <ellipse cx="52" cy="100" rx="16" ry="24" fill="#8fbc8f"/>
+  <rect x="49" y="122" width="6" height="16" fill="#7a5c3e"/>
+</g>
+<text class="lb" x="470" y="1085">가림 — 보이나 증거 침묵 → 유보</text>
+<text class="sub" x="470" y="1103">o_init 유지 + 미검증(prior 재현) 표시</text>
 </svg>
 </div>
 
+- **후보의 뜻 — 풀과 이번 라운드 검정분(r10).** 검정 가능한 스위치의 전체
+  풀은 자유 셀의 패치 전부다(패치 = 인접 셀·면 세그먼트의 묶음, S2 산물
+  위에서 사전 정의 — 묶음 규칙은 §6 미결 2). "후보"란 그 풀에서 아래
+  3원천에 걸린, **이번 라운드에 검정할 부분집합**이다. 후보에 오른 패치는
+  라운드 안에서 전부 순차 검정하며 별도의 2차 선별은 없다. 검정은 특정 한
+  이미지가 아니라 그 패치가 보이는 여러 뷰에서 하고, 각 뷰 안에서는 패치의
+  화면 발자국 근방만 국소 평가한다(아래 한 바퀴 4단).
 - **단위 — 셀이 아니라 패치.** 셀 하나짜리 검정은 잡음 플로어 아래임이
   실측됐다(셀 AUC 0.71 < 유효성 게이트 0.75, 패치 6/6 [실측]) — 스위치는
   패치 Π 단위로만 젖혀 본다(패치 정의는 §6 미결 2).
 - **자격 — 보이는 이동만 심판 가능(가시성 원리).** 렌더-대조는 화면에
-  차이를 만드는 스위치만 판정할 수 있다. 후보의 3원천(그림 A·B):
+  차이를 만드는 스위치만 판정할 수 있다. 후보의 3원천(그림 A①~A③):
     - ① 현재 경계에 인접한 패치 — 켜진 덩어리 겉면 바로 안쪽(끄기 후보)과
       바로 바깥쪽(켜기 후보). 이걸 젖히면 경계가 국소 이동해 화면이 변한다.
-      경계에서 먼 셀(그림 A의 c1)은 이번 라운드 후보가 아니다 — 사이 셀이
+      경계에서 먼 셀(그림 A①의 c1)은 이번 라운드 후보가 아니다 — 사이 셀이
       켜져야 후보로 편입된다.
     - ② o_init이 표면이라고 진술한 자리 — prior 진술의 직접 심문(첫
       라운드의 기본 후보 집합).
@@ -748,10 +807,10 @@ L(o, P, δ, A) =
       지나는 셀들(증거-유도 제안). "설명 안 되는 증거가 있는 곳에 가설
       변경을 제안한다."
 - **반복 — 영역 성장/수축.** 채택/기각으로 경계가 옮겨지면 새로 인접해진
-  패치가 다음 라운드의 후보가 된다(그림 C — 철거 판정이 위에서 아래로
+  패치가 다음 라운드의 후보가 된다(그림 B — 철거 판정이 위에서 아래로
   번지는 식). 아무 스위치도 안 바뀌는 라운드가 오면 정지(공동 고정점) —
   PEARL·ICM의 표준 순회 문법이다.
-- **심판 불가능 지대의 소관 분리(그림 D).** 젖혀도 화면이 안 변하는 곳
+- **심판 불가능 지대의 소관 분리(그림 C).** 젖혀도 화면이 안 변하는 곳
   (완전 내부 기포·내부 면)은 검정 대상이 아니다 — 앵커(§2.2)가 o_init에
   붙들고, L_area가 기포를 메운다(기포는 면적 적자). 보이지만 증거가
   침묵하는 곳(가림·저시차·무텍스처)은 검정이 유보를 낸다 — 아래 "유보의
