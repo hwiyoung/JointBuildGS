@@ -45,6 +45,7 @@ GT_MIN_AREA = 5.0   # s1_gt_match.py MIN_AREA
 NZ_VERTICAL = 0.1   # below this |n_z| the support is a vertical wall rectangle
 TAU = float(CFG["inlier"]["tau_m"])
 BUF = float(CFG["inlier"]["support_buffer_m"])
+EXCLUDE_SOURCES = set(CFG.get("exclude_sources", []))
 INLIER_DEF = ("source==0(mvs_current) point with |signed point-plane distance| <= tau_m "
               "AND in-plane projection inside the support polygon buffered by "
               "support_buffer_m; ALS prior (source=1) is o_init-only overlay, never judged")
@@ -66,6 +67,8 @@ def expand_planes(raw_planes, fp_xy, ground_z, top_z):
     for p in raw_planes:
         n, d = unit_plane(p["n"], p["d"])
         src = SOURCE_MAP[p["source"]]
+        if src in EXCLUDE_SOURCES:
+            continue
         rings = p.get("support") or [np.asarray(fp_xy)[:, :2].tolist()]
         for ring in rings:
             if abs(n[2]) < NZ_VERTICAL:
@@ -167,6 +170,7 @@ def write_run(out_dir, *, name, s1_mode, dataset, crs, local_offset, xyz, rgb, s
         "local_offset": [float(v) for v in local_offset],
         "inlier_def": {"tau_m": TAU, "support_buffer_m": BUF,
                        "target": "mvs_current", "definition": INLIER_DEF},
+        "candidate_exclusions": sorted(EXCLUDE_SOURCES),
         "prereg": dict(CFG["prereg"], proposal=True),
         "counts": {"points_total": int(len(xyz)), "points_mvs": n_mvs,
                    "points_als": int(len(xyz) - n_mvs),

@@ -8,6 +8,7 @@
     "tau_m": 0.15,
     "support_buffer_m": 0.5
   },
+  "exclude_sources": ["gapfill"],
   "thin_max_points": 300000,
   "synth_seed": 0,
   "prereg": {
@@ -27,6 +28,7 @@
     "tau_m": "scripts/p2/arrgs_v1/real_scene.py ransac_planes tol=0.15 (L114) — legacy RANSAC distance threshold, reused unchanged",
     "gt_match": "scripts/p2/arrgs_v1/s1_gt_match.py ANG_TOL=10.0 (L35) / OFF_TOL=0.5 (L36)",
     "support_buffer_m": "proposal 0.5 m (new registration, no legacy source)",
+    "exclude_sources": "gapfill excluded until its generation/acceptance rules are defined in the methodology (user directive 2026-08-26; open issue 18)",
     "gravity": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/checkpoints/030-dense_mvs_and_gravity.json payload.gravity (terrain MVS normals, hardcoded_gravity=false); synthetic runs use the local-frame construction gravity [0,0,-1]",
     "lod2_gt": "configs/p2/arrgs_v1/eval_arrgs_v1.json gml_tiles / origin / lod2_z_shift_to_viewer_m (evaluation-only)"
   },
