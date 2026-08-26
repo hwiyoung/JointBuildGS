@@ -18,6 +18,7 @@ No densification/pruning ever (lifetime rule 1): the seed set is immutable.
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -150,6 +151,83 @@ class S3RenderState:
         return {"delta": nrm(self.delta),
                 "planes": nrm(self.plane_n_raw, self.plane_d),
                 "colors": nrm(self.colors)}
+
+
+def state_checksums(state, keys=None):
+    """sha256 over the raw bytes of every tensor EXCEPT the colors leaf —
+    stages 3b-3d assert byte-identity of their frozen groups before/after
+    training; `keys` restricts to a subset for cheap per-step checks."""
+    tensors = {"plane_n_raw": state.plane_n_raw, "plane_d": state.plane_d,
+               "delta": state.delta, "uv": state.uv,
+               "seed_face": state.seed_face, "alpha_g": state.alpha_g,
+               "scales": state.scales, "g_plane": state.g_plane,
+               "scope": state.scope, "delta_dir": state.delta_dir,
+               "ref": state.ref}
+    if keys is not None:
+        tensors = {k: tensors[k] for k in keys}
+    return {k: hashlib.sha256(t.detach().cpu().numpy().tobytes()).hexdigest()
+            for k, t in tensors.items()}
+
+
+def photo_l1_backward(state, views):
+    """Per-step training pass shared by 3b-3d: fresh assembly graph per view,
+    masked photo L1, (photo/V).backward() accumulating into ALL leaves (the
+    stage's optimizer decides which group actually moves). No CPU image
+    copies — same loss math as build_s3a_bundle.render_views(with_grad)."""
+    from arrgs_train import render_gaussians
+    viewmats, Ks = views["viewmats"], views["Ks"]
+    W, H, bg, targets = views["W"], views["H"], views["bg"], views["targets"]
+    mask_t = views.get("masks_t")
+    if mask_t is None:
+        mask_t = torch.tensor(views["masks"], device=targets.device)
+    V = viewmats.shape[0]
+    vals = []
+    for ci in range(V):
+        means, quats, scales, alphas, colors = state.gaussians()
+        rgb = render_gaussians(means, quats, scales, alphas, colors,
+                               viewmats[ci:ci + 1], Ks[ci:ci + 1],
+                               W, H, bg)[0]
+        m = mask_t[ci]
+        photo = ((rgb - targets[ci]).abs()[m].mean() if m.any()
+                 else rgb.sum() * 0)
+        (photo / V).backward()
+        vals.append(float(photo))
+    return float(np.mean(vals))
+
+
+def color_stats(colors):
+    """Color-differentiation timelapse metrics (3b+ checkpoint rows):
+    mean_saturation = mean(max(RGB)-min(RGB)) per gaussian,
+    color_var = across-gaussian variance averaged over channels."""
+    with torch.no_grad():
+        c = colors.detach()
+        sat = float((c.max(dim=1).values - c.min(dim=1).values).mean())
+        var = float(c.var(dim=0, unbiased=False).mean())
+    return {"mean_saturation": round(sat, 6), "color_var": round(var, 8)}
+
+
+def write_render_tiles(tile_dir, row, tile_max_px, residual_vmax,
+                       with_photo=False):
+    """3a tile encoding reused for step snapshots: render.png + residual.png
+    (photo.png only on demand — 3b+ steps reuse the 3a photo tiles, viewer
+    references them). Returns the full-res residual (mean |photo-render|)."""
+    from PIL import Image
+    tile_dir = Path(tile_dir)
+    tile_dir.mkdir(parents=True, exist_ok=True)
+    H, W = row["target"].shape[:2]
+    sc = min(1.0, tile_max_px / max(W, H))
+    size = (int(round(W * sc)), int(round(H * sc)))
+    res = np.abs(row["target"] - row["render"]).mean(axis=-1)
+    items = [("render", (row["render"] * 255).astype(np.uint8), "RGB"),
+             ("residual", (np.clip(res / residual_vmax, 0, 1) * 255)
+              .astype(np.uint8), "L")]
+    if with_photo:
+        items.insert(0, ("photo", (row["target"] * 255).astype(np.uint8),
+                         "RGB"))
+    for name, arr, mode in items:
+        Image.fromarray(arr, mode).resize(size, Image.LANCZOS).save(
+            tile_dir / f"{name}.png")
+    return res
 
 
 def anchor_terms(st):

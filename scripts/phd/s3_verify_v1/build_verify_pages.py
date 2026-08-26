@@ -20,10 +20,14 @@ file does not exist yet), then, inside the bundle root
 Page 2 reads the S2 additions (s2_cells/s2_faces/s2_seeds) of the same run
 directories; page 3 additionally reads the S3a additions (s3_views.json,
 s3_steps.jsonl, s3_face_residual.json + s3_tiles/<view_id>/*.png — contract
-phd_s3_verify_s3a_v1). Runs without them are listed with s2_ready/s3_ready
-=false and the pages show an empty state instead of dying. s3_tiles/ is a
-directory payload: its presence is recorded per run, but only the declared
-run files are hashed into the receipt (tiles are regenerable from the writer).
+phd_s3_verify_s3a_v1) and, when present, the S3b additions (contract
+phd_s3_verify_s3b_v1 — stage:"3b" rows appended to s3_steps.jsonl,
+s3_face_residual_final.json, checkpoint tiles s3_tiles/s<step>/<view_id>/,
+manifest stage "s1+s2+s3a+s3b" + s3b_def). Runs without them are listed with
+s2_ready/s3_ready/s3b_ready=false and the pages show an empty state instead of
+dying. s3_tiles/ is a directory payload: its presence is recorded per run, but
+only the declared run files are hashed into the receipt (tiles are regenerable
+from the writer).
 
 Usage:
   python scripts/phd/s3_verify_v1/build_verify_pages.py
@@ -71,6 +75,9 @@ S1_RUN_FILES = ["manifest.json", "s1_points.ply", "s1_planes.json",
                 "s1_orphans.json", "s1_view.json"]
 S2_RUN_FILES = ["s2_cells.json", "s2_faces.json", "s2_seeds.json"]
 S3_RUN_FILES = ["s3_views.json", "s3_steps.jsonl", "s3_face_residual.json"]
+# S3b 추가분 — 선택적(3a-only 런은 s3b 없이도 s3_ready 유지); s3_steps.jsonl의
+# stage:"3b" 행 추가와 체크포인트 타일(s3_tiles/s<step>/)은 파일 목록에 새 항목이 없다.
+S3B_RUN_FILES = ["s3_face_residual_final.json"]
 S1_SCHEMA = "phd_s3_verify_s1_bundle_v1"
 
 # 페이지 등록부 — page/manifest_schema는 각 페이지 app.js·판독 기록 스키마와 짝.
@@ -86,7 +93,7 @@ PAGES = [
     {"dir": "viewer_p3", "page": "p3_joint_opt_continuous",
      "title": "페이지 3 — 공동 최적화(연속 구간)",
      "manifest_schema": "phd_s3_verify_viewer_p3_manifest_v1",
-     "run_files": S1_RUN_FILES + S2_RUN_FILES + S3_RUN_FILES},
+     "run_files": S1_RUN_FILES + S2_RUN_FILES + S3_RUN_FILES + S3B_RUN_FILES},
 ]
 
 
@@ -150,6 +157,8 @@ def scan_runs(runs_root: Path, ordered_names: list[str],
                         and all((run_dir / fn).is_file() for fn in S2_RUN_FILES))
             s3_ready = ("s3" in str(m.get("stage") or "")
                         and all((run_dir / fn).is_file() for fn in S3_RUN_FILES))
+            s3b_ready = ("s3b" in str(m.get("stage") or "")
+                         and all((run_dir / fn).is_file() for fn in S3B_RUN_FILES))
             found[run_dir.name] = {
                 "name": run_dir.name,
                 "dir": f"runs/{run_dir.name}",
@@ -165,7 +174,9 @@ def scan_runs(runs_root: Path, ordered_names: list[str],
                 "synthetic_als": m.get("synthetic_als"),
                 "s2_ready": s2_ready,
                 "s3_ready": s3_ready,
+                "s3b_ready": s3b_ready,
                 "s3_def": m.get("s3_def"),
+                "s3b_def": m.get("s3b_def"),
                 "s3_tiles": (run_dir / "s3_tiles").is_dir(),
                 "files": files,
             }
@@ -230,6 +241,10 @@ def deploy_page(page: dict, out_root: Path, cfg: dict, cfg_path: Path | None,
             print(f"[build] 페이지 3 참고: S3a 미생성 런 {missing} — "
                   "빈 상태 안내로 표시된다 (writer 소관: s3_views/s3_steps/"
                   "s3_face_residual/s3_tiles).")
+        with_3b = [r["name"] for r in runs if r.get("s3b_ready")]
+        if with_3b:
+            print(f"[build] 페이지 3: 3b 보유 런 {with_3b} — "
+                  "타임라인 3b 구간·final 히트맵 활성.")
     manifest = {
         "schema": page["manifest_schema"],
         "page": page["page"],

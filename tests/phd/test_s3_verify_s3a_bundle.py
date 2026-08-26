@@ -48,6 +48,7 @@ from __future__ import annotations
 
 import json
 import math
+import re
 import struct
 import unittest
 from pathlib import Path
@@ -80,6 +81,12 @@ except ImportError:  # direct-file execution fallback
 
 S3A_SCHEMA = "phd_s3_verify_s3a_v1"
 STAGE_S1S2S3A = "s1+s2+s3a"
+# Stage 3b (color-only training) appends files to the same bundle and
+# advances the manifest stage without invalidating any S3a guarantee.
+S3A_ALLOWED_STAGES = (STAGE_S1S2S3A, "s1+s2+s3a+s3b")
+# S3b checkpoint snapshot directories s3_tiles/s<step>/ live alongside the
+# 3a per-view tile directories; they are owned by the S3b module.
+S3B_STEP_DIR_RE = re.compile(r"^s\d+$")
 
 S3A_FILE_NAMES = ("s3_views.json", "s3_steps.jsonl", "s3_face_residual.json")
 S3A_TILES_DIRNAME = "s3_tiles"
@@ -330,10 +337,10 @@ class S3aBundleReferenceIntegrityTest(unittest.TestCase):
 
     def _check_manifest_s3a_contract_fields(self, name: str, bundle: dict) -> None:
         manifest = bundle["manifest"]
-        self.assertEqual(
-            manifest.get("stage"), STAGE_S1S2S3A,
-            f"{name}: manifest stage must be {STAGE_S1S2S3A!r} once S3a "
-            "files exist",
+        self.assertIn(
+            manifest.get("stage"), S3A_ALLOWED_STAGES,
+            f"{name}: manifest stage must be one of {S3A_ALLOWED_STAGES} "
+            "once S3a files exist",
         )
         self.assertIsNone(
             manifest.get("scientific_verdict"),
@@ -618,7 +625,11 @@ class S3aBundleReferenceIntegrityTest(unittest.TestCase):
     def _check_tiles_triplets(self, name: str, bundle: dict) -> None:
         tiles_dir = bundle["tiles_dir"]
         id_set = set(bundle["view_ids"])
-        dir_set = {p.name for p in tiles_dir.iterdir() if p.is_dir()}
+        dir_set = {
+            p.name
+            for p in tiles_dir.iterdir()
+            if p.is_dir() and not S3B_STEP_DIR_RE.match(p.name)
+        }
         missing = sorted(v for v in id_set if v not in dir_set)
         extra = sorted(dir_set - id_set)
         self.assertFalse(

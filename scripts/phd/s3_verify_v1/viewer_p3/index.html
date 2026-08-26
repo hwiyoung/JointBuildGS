@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<title>S3 검증 페이지 3 — 공동 최적화(연속 구간) (NOT OFFICIAL)</title>
+<title>S3 검증 페이지 3 — 공동 최적화(연속 구간 3a·3b) (NOT OFFICIAL)</title>
 <style>
   :root { color-scheme: dark; }
   * { box-sizing: border-box; }
@@ -42,7 +42,10 @@
   .seg .segdesc { font-size:10px; color:#7a8494; white-space:nowrap; }
   .stepchip { display:inline-block; background:#232833; border:1px solid #2e3542; border-radius:4px;
               padding:1px 7px; margin:1px 3px 1px 0; cursor:pointer; font-size:11px; color:#cfd8e3; }
+  .stepchip.ckpt { border-color:#7a6a2a; color:#ffd866; font-weight:600; }  /* 체크포인트 강조 마커 */
   .stepchip.sel { background:#4a3d10; border-color:#7a6a2a; color:#ffe066; }
+  .seg .thinnote { font-size:9.5px; color:#7a8494; }   /* 씨닝 안내 (수백 스텝 구간) */
+  .planned { font-size:10.5px; color:#7a8494; }
   #content { flex:1; display:flex; min-height:0; }
   #view3d { flex:1; position:relative; min-width:0; }
   #view3d canvas { display:block; }

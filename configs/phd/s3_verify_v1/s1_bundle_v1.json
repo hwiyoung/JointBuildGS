@@ -52,7 +52,15 @@
     "lambda_area": 1.0,
     "lambda_area_note": "uncalibrated placeholder (S3a task directive), not a tuned weight",
     "delta_sources": ["prior", "synthetic_gt", "synthetic_distractor"],
-    "face_residual": {"visibility_depth_tol_m": 1.0, "alpha_visible_below": 0.5}
+    "face_residual": {"visibility_depth_tol_m": 1.0, "alpha_visible_below": 0.5},
+    "b": {
+      "steps": 300,
+      "lr_rgb": 0.025,
+      "optimizer": "adam",
+      "checkpoints": [0, 5, 15, 45, 130, 300],
+      "seed": 0,
+      "rerun_tolerance_jsonl": 0.001
+    }
   },
   "viewer": {
     "three_module_src": "src/apps/gs3d_4way_viewer/build/three.module.min.js",
@@ -70,7 +78,8 @@
     "seeds": "spacing_m 0.3 = seed_faces min_spacing (scripts/p2/arrgs_v1/arrgs_model.py L61); size_m 0.28 = spacing0 0.4 (arrgs_model.py L253) × init_scale_mult 0.7 (arrgs_model.py L155)",
     "synth_als": "SYNTH_GABLE only — no real ALS exists, so pseudo-ALS is sampled deterministically from the GT faces (synthetic.gt_surfaces gable, surfaces[1:]) on a 1/sqrt(density) grid with fixed-seed normal noise, written as source==1",
     "domain_margin_m": "real 1.2 = scripts/p2/arrgs_v1/xreal_run.py BASE domain_margin (L37, also oracle_occupancy.py L37); synthetic 1.5 = arrgs_train.py run() domain_margin default",
-    "s3": "stage 3a render-only (plan doc revision note 2026-08-27, commit 64664b98): 0 optimization steps, 1 backward for grad wiring evidence; n_views/image_scale 16/0.75 within legacy max_views 40/0.75 (xreal_run.py scene_for L45); real view selection = real_scene.py load_real_scene camera scoring reused unchanged; synth photos = x0 GT-gaussian renders (arrgs_train.py run() synthetic branch); size ({size_m},{size_m},1e-3) = seeds.size_m + arrgs_model.py EPS_Z; delta wired on prior-source planes (methodology 1.3 d_eff = d0 + n0*delta), held at 0; lambda_area uncalibrated"
+    "s3": "stage 3a render-only (plan doc revision note 2026-08-27, commit 64664b98): 0 optimization steps, 1 backward for grad wiring evidence; n_views/image_scale 16/0.75 within legacy max_views 40/0.75 (xreal_run.py scene_for L45); real view selection = real_scene.py load_real_scene camera scoring reused unchanged; synth photos = x0 GT-gaussian renders (arrgs_train.py run() synthetic branch); size ({size_m},{size_m},1e-3) = seeds.size_m + arrgs_model.py EPS_Z; delta wired on prior-source planes (methodology 1.3 d_eff = d0 + n0*delta), held at 0; lambda_area uncalibrated",
+    "s3_b": "stage 3b color-only warm-up (plan doc revision note 2026-08-27, commit 64664b98): trained leaf = colors only, geometry byte-frozen (sha256 before/after); lr_rgb 2.5e-2 = scripts/p2/arrgs_v1/arrgs_train.py L291 lr.get('rgb', 2.5e-2); optimizer adam = arrgs_train.py L296 torch.optim.Adam(param_groups) (default betas/eps); legacy applies the rgb lr to the pre-sigmoid rgb_raw leaf — here colors are the direct 3a leaf (3a compat), kept in [0,1] by a per-step clamp projection, Adam's per-parameter scaling absorbs the parameterization difference; steps 300 + 6 log-spaced checkpoints incl 0/final (new registration — legacy has no color-only step count, its joint default iters 5000 = arrgs_train.py L298); seed 0, cudnn deterministic, CUBLAS_WORKSPACE_CONFIG :4096:8, use_deterministic_algorithms warn_only (gsplat rasterize backward atomics) — re-run jsonl numeric tolerance 1e-3"
   },
   "scientific_verdict": null,
   "not_official": true

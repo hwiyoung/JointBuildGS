@@ -295,8 +295,9 @@ class S1BundleReferenceIntegrityTest(unittest.TestCase):
         for key in MANIFEST_REQUIRED_KEYS:
             self.assertIn(key, manifest, f"{name}: manifest missing key {key!r}")
         self.assertEqual(manifest["schema"], SCHEMA, f"{name}: wrong schema string")
-        self.assertIn(manifest["stage"], ("s1", "s1+s2", "s1+s2+s3a"),
-                      f"{name}: stage must be 's1', 's1+s2' or 's1+s2+s3a'")
+        self.assertIn(manifest["stage"], ("s1", "s1+s2", "s1+s2+s3a", "s1+s2+s3a+s3b"),
+                      f"{name}: stage must be 's1', 's1+s2', 's1+s2+s3a' or "
+                      "'s1+s2+s3a+s3b'")
         self.assertEqual(
             manifest["bundle_name"], name,
             f"{name}: manifest bundle_name must match runs/<name>/ directory",
