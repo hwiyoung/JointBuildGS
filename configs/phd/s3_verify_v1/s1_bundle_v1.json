@@ -11,6 +11,26 @@
   "exclude_sources": ["gapfill"],
   "thin_max_points": 300000,
   "synth_seed": 0,
+  "s2_schema": "phd_s3_verify_s2_bundle_v1",
+  "o_init": {
+    "radius_m": 0.75,
+    "stat": "p90",
+    "t": {"below": 0.75, "above": 0.15, "empty": 0.4, "outside": 0.0},
+    "sample": "cell-centroid",
+    "als_only": true
+  },
+  "seeds": {
+    "spacing_m": 0.3,
+    "size_m": 0.28
+  },
+  "synth_als": {
+    "density_per_m2": 1.5,
+    "seed": 1,
+    "noise_sigma_m": 0.02
+  },
+  "arrangement": {
+    "domain_margin_m": {"real": 1.2, "synthetic": 1.5}
+  },
   "prereg": {
     "proposal": true,
     "orphan_ratio_max": 0.2,
@@ -30,7 +50,11 @@
     "support_buffer_m": "proposal 0.5 m (new registration, no legacy source)",
     "exclude_sources": "gapfill excluded until its generation/acceptance rules are defined in the methodology (user directive 2026-08-26; open issue 18)",
     "gravity": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/checkpoints/030-dense_mvs_and_gravity.json payload.gravity (terrain MVS normals, hardcoded_gravity=false); synthetic runs use the local-frame construction gravity [0,0,-1]",
-    "lod2_gt": "configs/p2/arrgs_v1/eval_arrgs_v1.json gml_tiles / origin / lod2_z_shift_to_viewer_m (evaluation-only)"
+    "lod2_gt": "configs/p2/arrgs_v1/eval_arrgs_v1.json gml_tiles / origin / lod2_z_shift_to_viewer_m (evaluation-only)",
+    "o_init": "methodology r16 §1.2 — single cell-centroid pillar; radius 0.75 m / p90 / below 0.75 / above 0.15 = scripts/p2/arrgs_v1/real_scene.py o_init_fn (L402-424); empty 0.4 = r16 reselection (0.2→0.4, open issue 17 resolved); outside 0.0 = arrangement fixed-empty; multi-point averaging abolished (r16)",
+    "seeds": "spacing_m 0.3 = seed_faces min_spacing (scripts/p2/arrgs_v1/arrgs_model.py L61); size_m 0.28 = spacing0 0.4 (arrgs_model.py L253) × init_scale_mult 0.7 (arrgs_model.py L155)",
+    "synth_als": "SYNTH_GABLE only — no real ALS exists, so pseudo-ALS is sampled deterministically from the GT faces (synthetic.gt_surfaces gable, surfaces[1:]) on a 1/sqrt(density) grid with fixed-seed normal noise, written as source==1",
+    "domain_margin_m": "real 1.2 = scripts/p2/arrgs_v1/xreal_run.py BASE domain_margin (L37, also oracle_occupancy.py L37); synthetic 1.5 = arrgs_train.py run() domain_margin default"
   },
   "scientific_verdict": null,
   "not_official": true

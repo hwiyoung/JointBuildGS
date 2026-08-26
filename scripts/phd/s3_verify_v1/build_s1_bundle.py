@@ -137,7 +137,8 @@ def match_gt(planes_json, gt_faces):
 
 
 def write_run(out_dir, *, name, s1_mode, dataset, crs, local_offset, xyz, rgb, src,
-              entries, gt_faces, fp_xy, ground_z, top_z, gravity, stride, n_orig):
+              entries, gt_faces, fp_xy, ground_z, top_z, gravity, stride, n_orig,
+              extra_manifest=None):
     out_dir.mkdir(parents=True, exist_ok=True)
     up = -np.asarray(gravity, dtype=np.float64)
     up /= np.linalg.norm(up)
@@ -180,6 +181,8 @@ def write_run(out_dir, *, name, s1_mode, dataset, crs, local_offset, xyz, rgb, s
         "scientific_verdict": None,
         "not_official": True,
     }
+    if extra_manifest:
+        manifest.update(extra_manifest)
     json.dump(manifest, open(out_dir / "manifest.json", "w"), indent=1)
     print(f"[s1-bundle] {name}: pts {len(xyz)} (mvs {n_mvs} als {len(xyz)-n_mvs}) "
           f"planes {len(planes_json)} gt {len(gt_json)} "
@@ -226,6 +229,14 @@ def build_real(name, out_root, gravity, lod2_faces):
               entries=entries, gt_faces=gt_faces_from_lod2(lod2_faces.get(sid, [])),
               fp_xy=sc["footprint"], ground_z=sc["ground_z"], top_z=sc["top_z"],
               gravity=gravity, stride=stride, n_orig=len(xyz))
+    return {"name": name, "out_dir": out_root / "runs" / name,
+            "dataset_kind": "real",
+            "planes": [p for p in sc["planes"]
+                       if SOURCE_MAP[p["source"]] not in EXCLUDE_SOURCES],
+            "entries": entries, "fp_xy": np.asarray(sc["footprint"]),
+            "ground_z": sc["ground_z"], "top_z": sc["top_z"],
+            "xyz": xyz[keep], "src": src[keep],
+            "stride": stride, "n_als_orig": len(als_xyz)}
 
 
 def build_synth(out_root):
@@ -243,9 +254,25 @@ def build_synth(out_root):
                       + rng.normal(0, 0.03, size=(len(pts), 3)), 0, 1)
         pts_all.append(pts)
         rgb_all.append((col * 255).astype(np.uint8))
-    xyz = np.concatenate(pts_all)
-    rgb = np.concatenate(rgb_all)
-    src = np.zeros(len(xyz), np.uint8)
+    mvs_xyz = np.concatenate(pts_all)
+    mvs_rgb = np.concatenate(rgb_all)
+    # pseudo-ALS: no real prior exists, so sample the GT faces deterministically
+    # (config synth_als) as source==1 so the SAME pillar o_init machinery runs
+    sa = CFG.get("synth_als")
+    als_parts = []
+    if sa:
+        spacing_als = float(sa["density_per_m2"]) ** -0.5
+        rng_als = np.random.default_rng(int(sa["seed"]))
+        for poly3d, n, _base in surfaces[1:]:
+            pts, _uvs, (nn, _e1, _e2) = _sample_poly(poly3d, n, spacing=spacing_als)
+            if len(pts):
+                als_parts.append(pts + nn[None, :] * rng_als.normal(
+                    0.0, float(sa["noise_sigma_m"]), size=(len(pts), 1)))
+    als_xyz = np.concatenate(als_parts) if als_parts else np.zeros((0, 3))
+    xyz = np.concatenate([mvs_xyz, als_xyz])
+    rgb = np.concatenate([mvs_rgb, np.full((len(als_xyz), 3), 120, np.uint8)])
+    src = np.concatenate([np.zeros(len(mvs_xyz), np.uint8),
+                          np.ones(len(als_xyz), np.uint8)])
     keep, stride = thin_stride(len(xyz), CFG["thin_max_points"])
 
     ground_z, top_z = 0.0, float(max(s[0][:, 2].max() for s in surfaces[1:]))
@@ -269,23 +296,37 @@ def build_synth(out_root):
               xyz=xyz[keep], rgb=rgb[keep], src=src[keep],
               entries=entries, gt_faces=gt_faces,
               fp_xy=np.asarray(fp), ground_z=ground_z, top_z=top_z,
-              gravity=[0.0, 0.0, -1.0], stride=stride, n_orig=len(xyz))
+              gravity=[0.0, 0.0, -1.0], stride=stride, n_orig=len(xyz),
+              extra_manifest={"synthetic_als": True} if sa else None)
+    return {"name": "SYNTH_GABLE", "out_dir": out_root / "runs" / "SYNTH_GABLE",
+            "dataset_kind": "synthetic",
+            "planes": [p for p in cands
+                       if SOURCE_MAP[p["source"]] not in EXCLUDE_SOURCES],
+            "entries": entries, "fp_xy": np.asarray(fp),
+            "ground_z": ground_z, "top_z": top_z,
+            "xyz": xyz[keep], "src": src[keep],
+            "stride": stride, "n_als_orig": len(als_xyz)}
+
+
+def real_context(real_runs):
+    """(gravity, lod2_faces) shared by all real runs; (None, {}) when none."""
+    if not real_runs:
+        return None, {}
+    ck = json.load(open(GRAVITY_CKPT))["payload"]["gravity"]
+    assert not ck["hardcoded_gravity"]
+    gravity = ck["gravity"]  # frozen terrain-MVS-normals estimate (down vector)
+    from xreal_run import BUILDINGS
+    from geometry_eval import load_lod2_faces
+    sids = {BUILDINGS[r]["stable_id"] for r in real_runs}
+    lod2_faces = load_lod2_faces(EVAL_CFG["gml_tiles"], sids, EVAL_CFG["origin"],
+                                 EVAL_CFG["lod2_z_shift_to_viewer_m"])
+    return gravity, lod2_faces
 
 
 def main():
     runs = sys.argv[1:] or CFG["runs"]
     out_root = Path(CFG["out_root"])
-    real_runs = [r for r in runs if r != "SYNTH_GABLE"]
-    gravity, lod2_faces = None, {}
-    if real_runs:
-        ck = json.load(open(GRAVITY_CKPT))["payload"]["gravity"]
-        assert not ck["hardcoded_gravity"]
-        gravity = ck["gravity"]  # frozen terrain-MVS-normals estimate (down vector)
-        from xreal_run import BUILDINGS
-        from geometry_eval import load_lod2_faces
-        sids = {BUILDINGS[r]["stable_id"] for r in real_runs}
-        lod2_faces = load_lod2_faces(EVAL_CFG["gml_tiles"], sids, EVAL_CFG["origin"],
-                                     EVAL_CFG["lod2_z_shift_to_viewer_m"])
+    gravity, lod2_faces = real_context([r for r in runs if r != "SYNTH_GABLE"])
     for r in runs:
         if r == "SYNTH_GABLE":
             build_synth(out_root)

@@ -788,7 +788,17 @@ fetch('./manifest.json').then(r => {
     sel.appendChild(o);
   });
   sel.onchange = () => loadRun(sel.value);
-  if (state.runs.length) loadRun(state.runs[0].name);
+  // 페이지 2 "페이지 1에서 이 평면 보기" 수신: ?run=<name>&plane=<p###> — 런·평면 자동 선택
+  const q = new URLSearchParams(location.search);
+  const qRun = q.get('run'), qPlane = q.get('plane');
+  const first = state.runs.some(r => r.name === qRun) ? qRun
+              : (state.runs.length ? state.runs[0].name : null);
+  if (first) {
+    sel.value = first;
+    loadRun(first).then(() => {
+      if (qPlane && state.run && state.run.byId[qPlane] !== undefined) selectPlane(qPlane);
+    });
+  }
   else {
     $('#countsline').textContent = '런 0개 — writer(s1 번들) 실행 후 build_verify_pages.py 재실행';
     $('#panel').innerHTML = '<p class="note">runs/ 아래에 s1 번들이 없다.</p>';
