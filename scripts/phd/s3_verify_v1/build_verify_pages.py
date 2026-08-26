@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Build/deploy the S3 verification static viewers into the shared bundle root.
 
-Pages: viewer_p1 (평면 가설 S1) + viewer_p2 (배열·초기값 S2); later pages plug
-into PAGES. NOT OFFICIAL · scientific_verdict: null.
+Pages: viewer_p1 (평면 가설 S1) + viewer_p2 (배열·초기값 S2) + viewer_p3
+(공동 최적화 연속 구간 — 3차 내부 단계 3a 렌더-온리부터, 계획 문서 개정 주석
+2026-08-27); later pages plug into PAGES. NOT OFFICIAL · scientific_verdict: null.
 
 Reads configs/phd/s3_verify_v1/s1_bundle_v1.json (contract defaults when the
 file does not exist yet), then, inside the bundle root
@@ -17,8 +18,12 @@ file does not exist yet), then, inside the bundle root
   3. viewer_pN/web_receipt_v1.json   input sha256 + counts + serve note.
 
 Page 2 reads the S2 additions (s2_cells/s2_faces/s2_seeds) of the same run
-directories; runs without them are listed with s2_ready=false and the page
-shows an empty state instead of dying.
+directories; page 3 additionally reads the S3a additions (s3_views.json,
+s3_steps.jsonl, s3_face_residual.json + s3_tiles/<view_id>/*.png — contract
+phd_s3_verify_s3a_v1). Runs without them are listed with s2_ready/s3_ready
+=false and the pages show an empty state instead of dying. s3_tiles/ is a
+directory payload: its presence is recorded per run, but only the declared
+run files are hashed into the receipt (tiles are regenerable from the writer).
 
 Usage:
   python scripts/phd/s3_verify_v1/build_verify_pages.py
@@ -26,7 +31,7 @@ Usage:
 
 Serve (root = bundle root, the parent of viewer_p*/, so ../runs/ resolves):
   cd <bundle_root> && python3 -m http.server 8885 --bind 0.0.0.0
-  -> http://<host>:8885/viewer_p1/   http://<host>:8885/viewer_p2/
+  -> http://<host>:8885/viewer_p1/  http://<host>:8885/viewer_p2/  http://<host>:8885/viewer_p3/
 """
 from __future__ import annotations
 
@@ -65,6 +70,7 @@ CONTRACT_DEFAULTS = {
 S1_RUN_FILES = ["manifest.json", "s1_points.ply", "s1_planes.json",
                 "s1_orphans.json", "s1_view.json"]
 S2_RUN_FILES = ["s2_cells.json", "s2_faces.json", "s2_seeds.json"]
+S3_RUN_FILES = ["s3_views.json", "s3_steps.jsonl", "s3_face_residual.json"]
 S1_SCHEMA = "phd_s3_verify_s1_bundle_v1"
 
 # 페이지 등록부 — page/manifest_schema는 각 페이지 app.js·판독 기록 스키마와 짝.
@@ -77,6 +83,10 @@ PAGES = [
      "title": "페이지 2 — 배열·초기값",
      "manifest_schema": "phd_s3_verify_viewer_p2_manifest_v1",
      "run_files": S1_RUN_FILES + S2_RUN_FILES},
+    {"dir": "viewer_p3", "page": "p3_joint_opt_continuous",
+     "title": "페이지 3 — 공동 최적화(연속 구간)",
+     "manifest_schema": "phd_s3_verify_viewer_p3_manifest_v1",
+     "run_files": S1_RUN_FILES + S2_RUN_FILES + S3_RUN_FILES},
 ]
 
 
@@ -138,6 +148,8 @@ def scan_runs(runs_root: Path, ordered_names: list[str],
             files = {fn: (run_dir / fn).is_file() for fn in run_files}
             s2_ready = ("s2" in str(m.get("stage") or "")
                         and all((run_dir / fn).is_file() for fn in S2_RUN_FILES))
+            s3_ready = ("s3" in str(m.get("stage") or "")
+                        and all((run_dir / fn).is_file() for fn in S3_RUN_FILES))
             found[run_dir.name] = {
                 "name": run_dir.name,
                 "dir": f"runs/{run_dir.name}",
@@ -152,6 +164,9 @@ def scan_runs(runs_root: Path, ordered_names: list[str],
                 "o_init_def": m.get("o_init_def"),
                 "synthetic_als": m.get("synthetic_als"),
                 "s2_ready": s2_ready,
+                "s3_ready": s3_ready,
+                "s3_def": m.get("s3_def"),
+                "s3_tiles": (run_dir / "s3_tiles").is_dir(),
                 "files": files,
             }
     ordered = [found.pop(n) for n in ordered_names if n in found]
@@ -209,6 +224,12 @@ def deploy_page(page: dict, out_root: Path, cfg: dict, cfg_path: Path | None,
         if missing:
             print(f"[build] 페이지 2 참고: S2 미생성 런 {missing} — "
                   "빈 상태 안내로 표시된다 (writer 소관).")
+    if page["dir"] == "viewer_p3":
+        missing = [r["name"] for r in runs if not r.get("s3_ready")]
+        if missing:
+            print(f"[build] 페이지 3 참고: S3a 미생성 런 {missing} — "
+                  "빈 상태 안내로 표시된다 (writer 소관: s3_views/s3_steps/"
+                  "s3_face_residual/s3_tiles).")
     manifest = {
         "schema": page["manifest_schema"],
         "page": page["page"],

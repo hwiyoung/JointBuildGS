@@ -72,6 +72,9 @@ except ImportError:  # direct-file execution fallback
 S2_FILE_NAMES = ("s2_cells.json", "s2_faces.json", "s2_seeds.json")
 
 STAGE_S1S2 = "s1+s2"
+# Stage 3a (render-only wiring check) appends files to the same bundle and
+# advances the manifest stage without invalidating any S2 guarantee.
+S2_ALLOWED_STAGES = (STAGE_S1S2, "s1+s2+s3a")
 
 # r16 fixed o_init contract values (the only truth).
 O_INIT_RADIUS_M = 0.75
@@ -233,9 +236,10 @@ class S2BundleReferenceIntegrityTest(unittest.TestCase):
 
     def _check_manifest_s2_contract_fields(self, name: str, bundle: dict) -> None:
         manifest = bundle["manifest"]
-        self.assertEqual(
-            manifest.get("stage"), STAGE_S1S2,
-            f"{name}: manifest stage must be {STAGE_S1S2!r} once S2 files exist",
+        self.assertIn(
+            manifest.get("stage"), S2_ALLOWED_STAGES,
+            f"{name}: manifest stage must be one of {S2_ALLOWED_STAGES} "
+            "once S2 files exist",
         )
         self.assertIsNone(
             manifest.get("scientific_verdict"),

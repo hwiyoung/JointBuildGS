@@ -39,6 +39,21 @@
       "max_offset_m": 0.5
     }
   },
+  "s3": {
+    "stage": "3a",
+    "n_views": 16,
+    "image_scale": 0.75,
+    "synth_rings": null,
+    "tile_max_px": 640,
+    "residual_vmax": 0.5,
+    "color_gray": 0.5,
+    "bg_rgb": [0.0, 0.0, 0.0],
+    "bg_note": "real renders only — legacy real_scene bg 0.5 equals the 3a neutral-gray color, making silhouettes zero-contrast and collapsing delta/plane gradients to float noise (measured B173: plane grad 6e-7, delta 1e-9); a distinct bg restores silhouette-driven geometry gradients. SYNTH keeps the target-consistent x0 bg [0.55,0.65,0.78]",
+    "lambda_area": 1.0,
+    "lambda_area_note": "uncalibrated placeholder (S3a task directive), not a tuned weight",
+    "delta_sources": ["prior", "synthetic_gt", "synthetic_distractor"],
+    "face_residual": {"visibility_depth_tol_m": 1.0, "alpha_visible_below": 0.5}
+  },
   "viewer": {
     "three_module_src": "src/apps/gs3d_4way_viewer/build/three.module.min.js",
     "port": 8885,
@@ -54,7 +69,8 @@
     "o_init": "methodology r16 §1.2 — single cell-centroid pillar; radius 0.75 m / p90 / below 0.75 / above 0.15 = scripts/p2/arrgs_v1/real_scene.py o_init_fn (L402-424); empty 0.4 = r16 reselection (0.2→0.4, open issue 17 resolved); outside 0.0 = arrangement fixed-empty; multi-point averaging abolished (r16)",
     "seeds": "spacing_m 0.3 = seed_faces min_spacing (scripts/p2/arrgs_v1/arrgs_model.py L61); size_m 0.28 = spacing0 0.4 (arrgs_model.py L253) × init_scale_mult 0.7 (arrgs_model.py L155)",
     "synth_als": "SYNTH_GABLE only — no real ALS exists, so pseudo-ALS is sampled deterministically from the GT faces (synthetic.gt_surfaces gable, surfaces[1:]) on a 1/sqrt(density) grid with fixed-seed normal noise, written as source==1",
-    "domain_margin_m": "real 1.2 = scripts/p2/arrgs_v1/xreal_run.py BASE domain_margin (L37, also oracle_occupancy.py L37); synthetic 1.5 = arrgs_train.py run() domain_margin default"
+    "domain_margin_m": "real 1.2 = scripts/p2/arrgs_v1/xreal_run.py BASE domain_margin (L37, also oracle_occupancy.py L37); synthetic 1.5 = arrgs_train.py run() domain_margin default",
+    "s3": "stage 3a render-only (plan doc revision note 2026-08-27, commit 64664b98): 0 optimization steps, 1 backward for grad wiring evidence; n_views/image_scale 16/0.75 within legacy max_views 40/0.75 (xreal_run.py scene_for L45); real view selection = real_scene.py load_real_scene camera scoring reused unchanged; synth photos = x0 GT-gaussian renders (arrgs_train.py run() synthetic branch); size ({size_m},{size_m},1e-3) = seeds.size_m + arrgs_model.py EPS_Z; delta wired on prior-source planes (methodology 1.3 d_eff = d0 + n0*delta), held at 0; lambda_area uncalibrated"
   },
   "scientific_verdict": null,
   "not_official": true
