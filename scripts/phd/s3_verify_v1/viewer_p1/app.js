@@ -25,7 +25,8 @@ const state = {
   runs: [], runName: null, run: null, cache: {},
   sel: null,           // 선택 평면 plane_id
   orphanMode: false, showAls: false, showGt: false, showPlanes: true,
-  srcOn: {},           // 출처별 평면 표시
+  outlineOnly: false,  // 미선택 평면 = 윤곽선만 (중첩 혼잡 완화)
+  srcOn: {},           // 출처별 평면 표시 (footprint는 기본 OFF)
   picked: null,        // 점 클릭 카드
   reading: {},         // 런별 판독 기록 {verdict, memo, sign}
   lastFit: null,
@@ -88,6 +89,15 @@ view.addEventListener('wheel', (e) => {
   applyOrbit(); e.preventDefault();
 }, { passive: false });
 view.addEventListener('contextmenu', (e) => e.preventDefault());
+window.addEventListener('keydown', (e) => {  // ESC = 평면 선택/점 카드 해제
+  if (e.key !== 'Escape' || !state.run) return;
+  const t = e.target;
+  if (t && (t.tagName === 'TEXTAREA' || t.tagName === 'INPUT' || t.tagName === 'SELECT')) return;
+  const hadPick = state.picked !== null;
+  state.picked = null;
+  if (state.sel !== null) selectPlane(state.sel);   // 토글 해제 (색·패널 갱신 포함)
+  else if (hadPick) renderPanel();
+});
 function resize() {
   if (!renderer) return;
   const w = view.clientWidth, h = view.clientHeight;
@@ -289,7 +299,7 @@ function buildScene(d) {
     d.alsPoints = new THREE.Points(ag, new THREE.PointsMaterial({
       color: ALS_COLOR, size: 0.18, transparent: true, opacity: 0.6 }));
     d.alsPoints.userData.kind = 'als';
-    // 후보 평면 폴리곤 + 윤곽
+    // 후보 평면 폴리곤 + 윤곽 + 선택 강조용 EdgesGeometry (레이캐스트 대상 = mesh)
     d.planeMeshes = {};
     (d.planes.planes || []).forEach(p => {
       if (!p.support_local || p.support_local.length < 3) return;
@@ -297,9 +307,13 @@ function buildScene(d) {
       const mesh = new THREE.Mesh(polyGeometry(p.support_local),
         new THREE.MeshLambertMaterial({ color: col, transparent: true, opacity: 0.28,
                                         side: THREE.DoubleSide, depthWrite: false }));
+      mesh.userData.pid = p.plane_id;
       const line = new THREE.LineLoop(polyOutline(p.support_local),
         new THREE.LineBasicMaterial({ color: col, transparent: true, opacity: 0.8 }));
-      d.planeMeshes[p.plane_id] = { mesh, line, source: p.source };
+      const edges = new THREE.LineSegments(new THREE.EdgesGeometry(mesh.geometry),
+        new THREE.LineBasicMaterial({ color: 0xffe066, transparent: true, opacity: 1.0 }));
+      edges.visible = false;
+      d.planeMeshes[p.plane_id] = { mesh, line, edges, source: p.source, baseColor: col };
     });
     // GT 면 (평가 전용 — 별도 토글)
     d.gtMeshes = [];
@@ -328,7 +342,7 @@ function buildScene(d) {
     }
   }
   ptsGroup.add(d.mvsPoints, d.alsPoints);
-  Object.values(d.planeMeshes).forEach(({ mesh, line }) => planeGroup.add(mesh, line));
+  Object.values(d.planeMeshes).forEach(({ mesh, line, edges }) => planeGroup.add(mesh, line, edges));
   d.gtMeshes.forEach(o => gtGroup.add(o));
   d.ctx.forEach(o => ctxGroup.add(o));
   applyStyles();
@@ -342,6 +356,7 @@ function buildScene(d) {
     applyOrbit();
   }
 }
+const _WHITE = new THREE.Color(1, 1, 1);
 function applyStyles() {
   const d = state.run;
   if (!d) return;
@@ -351,18 +366,42 @@ function applyStyles() {
   const anySel = state.sel !== null;
   for (const [pid, pm] of Object.entries(d.planeMeshes)) {
     const on = state.showPlanes && (state.srcOn[pm.source] !== false);
-    pm.mesh.visible = on; pm.line.visible = on;
+    const isSel = anySel && pid === state.sel;
+    // mesh는 윤곽선만 모드에서도 visible 유지 (opacity 0) — 레이캐스트 픽킹 대상
+    pm.mesh.visible = on;
+    pm.line.visible = on && !isSel;
+    pm.edges.visible = on && isSel;
     if (!on) continue;
-    if (anySel && pid === state.sel) {
-      pm.mesh.material.opacity = 0.45;
-      pm.line.material.color.setHex(0xffe066);
-      hiliteMats.push(pm.line.material);
+    if (isSel) {
+      // 선택 = 밝은 불투명 채움 + EdgesGeometry 윤곽 강조(맥동)
+      pm.mesh.material.color.setHex(pm.baseColor).lerp(_WHITE, 0.35);
+      pm.mesh.material.opacity = 0.75;
+      hiliteMats.push(pm.edges.material);
     } else {
-      pm.mesh.material.opacity = anySel ? 0.06 : 0.28;
-      pm.line.material.opacity = anySel ? 0.15 : 0.8;
-      pm.line.material.color.setHex(SRC_COLORS[pm.source] ?? 0x888888);
+      pm.mesh.material.color.setHex(pm.baseColor);
+      pm.line.material.color.setHex(pm.baseColor);
+      if (state.outlineOnly) {          // 미선택 평면 채움 없음 — 중첩 혼잡 완화
+        pm.mesh.material.opacity = 0.0;
+        pm.line.material.opacity = anySel ? 0.15 : 0.75;
+      } else {                          // 미선택 = 반투명 고스트 (선택 시 더 감광)
+        pm.mesh.material.opacity = anySel ? 0.06 : 0.28;
+        pm.line.material.opacity = anySel ? 0.15 : 0.8;
+      }
     }
   }
+  renderSelBadge();
+}
+function renderSelBadge() {
+  const el = $('#selbadge');
+  if (!el) return;
+  const d = state.run;
+  const p = (d && state.sel !== null) ? planeAt(d, state.sel) : null;
+  if (!p) { el.style.display = 'none'; return; }
+  el.style.display = 'block';
+  el.innerHTML = `<b style="color:#ffe066">${esc(p.plane_id)}</b> ·
+    <span style="color:#${(SRC_COLORS[p.source] ?? 0x888888).toString(16).padStart(6, '0')}">${esc(SRC_LABEL[p.source] || p.source)}</span> ·
+    inlier ${p.inlier_count ?? (p.inlier_idx || []).length}
+    <span class="note">재클릭·빈 공간·ESC=해제</span>`;
 }
 
 // ---------- 선택/픽 ----------
@@ -386,6 +425,11 @@ function selectPlane(pid) {
   } else applyColors(null);
   applyStyles();
   renderPanel();
+  if (state.sel !== null) {  // 목록 동기화 — active 행을 시야로
+    const key = (window.CSS && CSS.escape) ? CSS.escape(state.sel) : state.sel;
+    const row = document.querySelector(`#panel tr[data-pid="${key}"]`);
+    if (row) row.scrollIntoView({ block: 'nearest' });
+  }
 }
 const raycaster = new THREE.Raycaster();
 function pickAt(e) {
@@ -395,11 +439,30 @@ function pickAt(e) {
   const ndc = new THREE.Vector2(((e.clientX - rect.left) / rect.width) * 2 - 1,
                                 -((e.clientY - rect.top) / rect.height) * 2 + 1);
   raycaster.setFromCamera(ndc, camera);
+  // 1) 평면 메시 우선 — 표시 중인 평면만 (윤곽선만 모드에서도 mesh.visible 유지 → 픽킹 가능)
+  if (d.planeMeshes) {
+    const meshes = [];
+    for (const pm of Object.values(d.planeMeshes)) if (pm.mesh.visible) meshes.push(pm.mesh);
+    if (meshes.length) {
+      const phits = raycaster.intersectObjects(meshes, false);
+      if (phits.length) {
+        state.picked = null;
+        selectPlane(phits[0].object.userData.pid);  // 같은 평면 재클릭 = 토글 해제
+        return;
+      }
+    }
+  }
+  // 2) 평면 히트 없음 → 기존 점 픽킹 (후보 평면 토글 OFF 시 순수 점 픽킹)
   raycaster.params.Points.threshold = Math.max(0.04, orbit.r * 0.004);
   const objs = [d.mvsPoints];
   if (d.alsPoints.visible) objs.push(d.alsPoints);
   const hits = raycaster.intersectObjects(objs, false);
-  if (!hits.length) { state.picked = null; renderPanel(); return; }
+  if (!hits.length) {  // 빈 공간 클릭 = 선택·점 카드 해제
+    state.picked = null;
+    if (state.sel !== null) selectPlane(state.sel);
+    else renderPanel();
+    return;
+  }
   const h = hits[0];
   const kind = h.object.userData.kind;
   const full = kind === 'mvs' ? d.mvsLocals[h.index] : d.alsLocals[h.index];
@@ -510,9 +573,13 @@ function renderPanel() {
   const ratio = d.orphans.orphan_ratio;
   const rd = reading();
   const srcSet = [...new Set((d.planes.planes || []).map(p => p.source))];
-  let h = `<h2>표시</h2>
+  let h = `<div class="note caption">페이지 1 = 원시 후보 가설(중첩·과잉 = 재현율 우선, §1.1).
+      프리즘 절단·정리된 면은 페이지 2(S2)에서 판독.</div>
+    <h2>표시</h2>
     <div class="legend">
       <label><input type="checkbox" id="planesTgl" ${state.showPlanes ? 'checked' : ''}> 후보 평면</label>
+      <label><input type="checkbox" id="outlineTgl" ${state.outlineOnly ? 'checked' : ''}>
+        미선택 평면 윤곽선만</label>
       <label><input type="checkbox" id="alsTgl" ${state.showAls ? 'checked' : ''}>
         <span style="color:#40cfe0">ALS 점(오버레이 — 판정 비대상)</span></label>
       <label><input type="checkbox" id="gtTgl" ${state.showGt ? 'checked' : ''}>
@@ -523,6 +590,8 @@ function renderPanel() {
     <div class="legend">평면 출처: ${srcSet.map(s =>
       `<label><input type="checkbox" class="srcTgl" data-src="${esc(s)}" ${state.srcOn[s] !== false ? 'checked' : ''}>
        <span style="color:#${(SRC_COLORS[s] ?? 0x888888).toString(16).padStart(6, '0')}">${esc(SRC_LABEL[s] || s)}</span></label>`).join('')}
+      ${srcSet.includes('footprint')
+        ? '<span class="note">footprint(벽 대형 사각형)는 기본 OFF — 체크리스트 ④ 출처 표기 판독 때 켠다.</span>' : ''}
     </div>`;
   // 고아 패널
   h += `<h2>고아 점 <span class="note">(mvs 점 중 어느 평면 inlier도 아님)</span></h2>
@@ -582,6 +651,7 @@ function renderPanel() {
 function bindPanel() {
   const on = (id, ev, fn) => { const el = $(id); if (el) el[ev] = fn; };
   on('#planesTgl', 'onchange', () => { state.showPlanes = $('#planesTgl').checked; applyStyles(); });
+  on('#outlineTgl', 'onchange', () => { state.outlineOnly = $('#outlineTgl').checked; applyStyles(); });
   on('#alsTgl', 'onchange', () => { state.showAls = $('#alsTgl').checked; applyStyles(); });
   on('#gtTgl', 'onchange', () => { state.showGt = $('#gtTgl').checked; applyStyles(); });
   on('#orphanTgl', 'onchange', () => {
@@ -660,7 +730,8 @@ function renderHeader() {
     ` · 평면 ${c.planes ?? (d.planes.planes || []).length} · 고아 ${c.orphans ?? (d.orphans.orphan_idx || []).length}` +
     (t.original_count ? ` · 씨닝 ${t.original_count}→${c.points_total ?? d.N}` : '') +
     ` · CRS ${d.manifest.crs || '?'} (offset −[${off.map(v => (+v).toFixed(1)).join(', ')}])`;
-  $('#hud').textContent = `${state.runName} — 좌드래그 회전 · 우드래그 이동 · 휠 줌 · 점 클릭=소속 평면`;
+  $('#hud').textContent = `${state.runName} — 좌드래그 회전 · 우드래그 이동 · 휠 줌 · ` +
+    `클릭=평면 선택(평면 밖은 점→소속 평면) · 재클릭·빈 공간·ESC=해제 · 순수 점 픽킹은 후보 평면 OFF`;
 }
 
 // ---------- 런 전환 ----------
@@ -680,7 +751,8 @@ async function loadRun(name) {
   d.selFlag.fill(0);
   state.run = d;
   const srcSet = new Set((d.planes.planes || []).map(p => p.source));
-  for (const s of srcSet) if (state.srcOn[s] === undefined) state.srcOn[s] = true;
+  // footprint(벽 대형 사각형)는 시야 지배 → 기본 OFF. ④ 출처 표기 판독 때 수동 ON.
+  for (const s of srcSet) if (state.srcOn[s] === undefined) state.srcOn[s] = (s !== 'footprint');
   buildScene(d);
   renderHeader();
   renderChecklist();
