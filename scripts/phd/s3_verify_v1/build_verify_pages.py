@@ -27,7 +27,10 @@ manifest stage "s1+s2+s3a+s3b" + s3b_def) and the S3c additions (contract
 phd_s3_verify_s3c_v1 — stage:"3c" rows, s3_face_residual_s3c_final.json,
 checkpoint tiles s3_tiles/s3c_s<step>/<view_id>/, manifest stage
 "s1+s2+s3a+s3b+s3c" + s3c_def; injected runs B022_DZ050/B173_DZ050 also carry
-manifest.injection{delta_applied, route, expected_delta_hat}). Runs without
+manifest.injection{delta_applied, route, expected_delta_hat}) and, when
+present, the unified per-checkpoint face residual s3_face_residual_ckpt.json
+(phd_s3_verify_face_residual_ckpt_v1 — page 3 intermediate-state heatmaps).
+Runs without
 them are listed with s2_ready/s3_ready/s3b_ready/s3c_ready=false and the pages
 show an empty state instead of dying. s3_tiles/ is a directory payload: its
 presence is recorded per run, but only the declared run files are hashed into
@@ -92,6 +95,10 @@ S3B_RUN_FILES = ["s3_face_residual_final.json"]
 # S3c 추가분 — 선택적(3b까지 런 유지); stage:"3c" 행과 3c 체크포인트 타일
 # (s3_tiles/s3c_s<step>/ — 3b 디렉터리와 충돌 금지)은 파일 목록에 새 항목이 없다.
 S3C_RUN_FILES = ["s3_face_residual_s3c_final.json"]
+# 체크포인트 통합 면 잔차 — 선택적(구세대 번들 허용, readiness 판정 불참): 3b/3c writer가
+# 모든 체크포인트의 face_residual을 한 파일에 기록(phd_s3_verify_face_residual_ckpt_v1,
+# 페이지 3 중간 상태 히트맵·스텝 추적의 원천). 존재하면 영수증에 sha 등재.
+S3_CKPT_RUN_FILES = ["s3_face_residual_ckpt.json"]
 S1_SCHEMA = "phd_s3_verify_s1_bundle_v1"
 
 # 페이지 등록부 — page/manifest_schema는 각 페이지 app.js·판독 기록 스키마와 짝.
@@ -108,7 +115,7 @@ PAGES = [
      "title": "페이지 3 — 공동 최적화(연속 구간)",
      "manifest_schema": "phd_s3_verify_viewer_p3_manifest_v1",
      "run_files": S1_RUN_FILES + S2_RUN_FILES + S3_RUN_FILES + S3B_RUN_FILES
-                  + S3C_RUN_FILES},
+                  + S3C_RUN_FILES + S3_CKPT_RUN_FILES},
 ]
 
 

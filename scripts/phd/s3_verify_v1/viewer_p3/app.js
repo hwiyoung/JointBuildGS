@@ -35,7 +35,56 @@
 // 3c: δ̂ 최종 vs 기대값(주입=정답·잔류 오차, 비변화=잔류 |δ̂|, scope 0=부동 확인)·
 // [δ̂ 궤적으로] 스크롤 / 3d: 예정 안내만). 버튼은 기존 상태 세팅(selectStep·heatMode 수동
 // 전환)을 재사용, 배지 클릭 자체는 스텝 선택과 독립(selStep 불변·재클릭=닫기), 열람은 판독
-// JSON auto.segment_summary_viewed에 기록.
+// JSON auto.segment_summary_viewed에 기록. seghead는 [산출물 요약] 미니 버튼 병기(접근성 —
+// 사용자 지시 2026-08-27) + 첫 로드 힌트 배지 1회(닫기 가능·localStorage 기억) + HUD 안내.
+// ⑤ 중간 산출물(체크포인트 면 잔차 — writer 확장 s3_face_residual_ckpt.json, 스키마
+// phd_s3_verify_face_residual_ckpt_v1): 히트맵 상태가 끝점 3종에서 전 체크포인트로 확장 —
+// 스텝 추적이 이제 s5/s15/s45/s130 중간 상태도 밟는다(선택 스텝 이하 최대 체크포인트,
+// heatStatesOf 등록부). 공유 색 스케일은 전 체크포인트 최대 기준(resStatsShared), 라디오
+// 3종은 "주요 상태" 단축으로 유지. 차이 모드는 임의 두 상태 비교로 일반화(대상/기준 드롭다운,
+// 기본 = 3b final−step0 종전 동작). 판독 JSON auto.heat_ckpt_used에 사용 기록.
+// ⑥ 체크포인트 필름스트립(사용자 요청 2026-08-27): 선택 뷰의 렌더/잔차(토글)를 현재 구간 전
+// 체크포인트에 한 줄 썸네일(스텝·PSNR 라벨·클릭=스텝 선택) — "3b에서 개선이 있었는지"가
+// 스크롤 없이 보이게. 기존 타일 파일 재사용(사진은 맨 앞 1장). auto.filmstrip 기록.
+// ⑦ 앵커 가시화 2종(사용자 요청 2026-08-27, 히트맵 모드 추가 — 스텝 무관 상수):
+// (a) 셀 앵커 비용 맵 C_k(o;t)=−[o·log t+(1−o)·log(1−t)] (§2.2, w=1) — "prior 증언이 현재
+// 상태를 붙잡는 비용", 면 = 인접 셀 최대(경계를 붙잡는 더 강한 증언 긴장).
+// (b) 뒤집기 값 ΔW 맵 |log(t/(1−t))| — "이 셀을 뒤집는 데 필요한 증거량", 면 = 인접 셀
+// 최소(이 경계를 바꾸는 가장 싼 뒤집기); t∈{0,1}=∞ → 별색(블루)·범례 표기. s2_cells.json은
+// F* 오버레이와 공유 lazy fetch(ensureCellsInfo), 면 지오메트리 경로 재사용. auto.anchor_map.
+// ⑧ 히트맵 표시 범위(사용자 실화면 오독 정정 2026-08-27): 기본 = F*(initial_real) 면만 —
+// 렌더에 실재하는 면은 F*뿐인데 잠든 gate-0 prior 단면까지 전부 칠하면 "3a가 만든 건물
+// 기하"로 오독된다(실측 B173 1,152/1,580면 칠해짐 vs 실재 459면). '전체 후보 면' 토글
+// (귀속용)을 켜면 잠든 면을 반투명 + 점선(ghost색) 윤곽으로 구분 표시. 공유 색 스케일도
+// 범위별(F* 전용 스케일 기본 — 잠든 면 최대값에 램프가 눌리지 않게). 우상단 배지에 상시
+// 라벨("잔차 귀속 지도 — F* 면만/전체 후보"), 잔차 램프는 dataviz --ordinal 검증 5단으로
+// 교체(저단 2.26:1 vs 표면 — 칠해진 면은 저잔차여도 데이터로 읽힘). 앵커 맵도 같은 범위
+// 원칙 적용; S2 오버레이(F*)는 원래 실재 면만 그린다. 판독 JSON auto.heat_scope 기록.
+// ⑨ LoD2 오버레이(사용자 지시 2026-08-27 "대략적 검증 잣대"): s1_planes.json gt_planes
+// (LoD2 지붕면 support_local 3D 링 — 페이지 1이 이미 그리는 데이터)를 토글 오버레이로 —
+// 청록/초록 와이어 + 반투명 채움(페이지 1 GT_COLOR 0x30d060 승계 — 엔티티 고정색), 배지
+// "LoD2 지붕면 (평가 전용 — 방법 입력 아님)" 필수. δ̂ 이동(shiftGroup)의 영향을 받지 않는
+// 고정 기준면(비교 잣대라 heatGroup에 부착 — shiftGroup 금지).
+// ⑩ 초기 점유 vs LoD2(구멍/과잉 셀 — 이전 분석의 화면화): 각 셀 중심을 gt_planes
+// 수평·경사면(|n_z|>0.2)의 XY 포함 검사로 대조 — 포함 면들의 평면 z 최댓값 = gt 지붕고,
+// ±0.3 m 여유. 구멍 = 끔(o=0)인데 중심이 gt 지붕 아래(적색 계열), 과잉 = 켬(o=1)인데
+// gt 지붕 위(자주/보라 계열) — 셀 채움(face_ids의 s2_faces 지오메트리 재사용, x-ray
+// depthTest 끔: 내부 구멍 셀이 실재 면에 가려지지 않게) + 카운트 배지("구멍 N · 과잉 M —
+// 3e 이산 판정의 시험대"). 계산은 첫 켬 때 1회(JS point-in-polygon 직접 — 셀 수천×면
+// ≤20). 파이썬 대조값: B022 구멍 59 · 과잉 234(같은 로직·여유 0.3 m). s2_cells.json은
+// F* 오버레이·앵커 맵과 공유 lazy fetch(ensureCellsInfo — centroid·face_ids 추가 보존).
+// 초기 점유(S2 동결) vs 고정 LoD2의 대조라 δ̂ 이동과 무관하게 고정 표시.
+// ⑪ 학습 색(텍스처) 3D 미리보기: manifest.s3b_def.colors_artifact의 s3b_colors.f16.bin
+// (시드 수×3, float16, s2_seeds.json 행 순서)을 fetch → DataView 수제 fp16→fp32 디코드
+// → F*(initial_real) 면의 시드만 THREE.Points(정점색) — 잠든 면 시드 제외(실재 표면의
+// 텍스처만). 시드 위치 mu는 s2_seeds.json 지연 로드(첫 켬 때만 — B022 120 MB 명시 경고;
+// face_grid의 shapely 재현이 불가능해 위치 재유도 대신 원본을 읽는다). 표시 상한 30만
+// 결정론 스트라이드 씨닝(기존 관행), 점 크기 = 시드 간격(grid.spacing_m 0.30 m)×√스트라이드
+// (씨닝 후 커버리지 보존). 켜면 진단 칠(히트맵 채움)은 자동 숨김 — 두 색 체계 겹침 방지
+// (라디오식 배타), 경계 와이어·램프 범례도 함께 정리. prior 계열 시드는 shiftGroup에
+// 부착해 δ̂ 이동 추종(히트맵·F* 오버레이와 동일 규약). artifact 없으면 토글 비활성+사유.
+// 캡션 "3b가 학습한 모델 색(텍스처) — 타일 렌더와 동일물의 3D 표시". sha256은
+// crypto.subtle 가용 시에만 대조(HTTP LAN 환경은 생략) + 바이트 길이 계약 검증.
 // three.js r160 vendored (CDN 금지). 궤도/팬/줌·다크 테마·판독 기록은 페이지 1·2 관행 승계.
 import * as THREE from './three.module.min.js';
 
@@ -55,13 +104,21 @@ const COL = {
   selFill: 0xffe066,    // 선택 윤곽 (맥동)
   ctx: 0x556070,
   fstar: 0xc8ccd4,      // S2 초기 상태(F*) 오버레이 — 얇은 반투명 회백
+  lod2: 0x30d060,       // LoD2 지붕면 오버레이(⑨ 평가 전용) — 페이지 1 GT_COLOR 승계
+  hole: 0xe25563,       // ⑩ 구멍 셀(끔인데 LoD2 지붕 아래) — 적색 계열
+  excess: 0xb05ce0,     // ⑩ 과잉 셀(켬인데 LoD2 지붕 위) — 자주/보라 계열
 };
-// 잔차 순차 램프 — 단일 색상(앰버) 어두움→밝음, 낮음=배경에 가깝게·높음=밝게.
-const RAMP = [[0x2a, 0x20, 0x18], [0xb0, 0x6a, 0x1e], [0xff, 0xcf, 0x70]];
+// 잔차 순차 램프 — 단일 색상(앰버) 5단, dataviz --ordinal 검증 통과(단조 L · 인접 ΔL≥0.06 ·
+// 저단 #6b4a1e 2.26:1 vs 표면 #14161a · 단일 색상 18°). 종전 3단은 저단 1.14:1로 배경에
+// 묻혀 값 구분이 약했음(오독 지적 2026-08-27) — 칠해진 면은 저잔차여도 데이터로 읽혀야 한다.
+const RAMP = [[0x6b, 0x4a, 0x1e], [0x94, 0x60, 0x1a], [0xbc, 0x7c, 0x24],
+              [0xe0, 0xa6, 0x48], [0xff, 0xd9, 0x7e]];
 function rampRgb(t) {
   t = Math.min(1, Math.max(0, t));
-  const [a, b] = t < 0.5 ? [RAMP[0], RAMP[1]] : [RAMP[1], RAMP[2]];
-  const u = t < 0.5 ? t * 2 : (t - 0.5) * 2;
+  const n = RAMP.length - 1;
+  const i = Math.min(n - 1, Math.floor(t * n));
+  const u = t * n - i;
+  const a = RAMP[i], b = RAMP[i + 1];
   return [a[0] + (b[0] - a[0]) * u, a[1] + (b[1] - a[1]) * u, a[2] + (b[2] - a[2]) * u]
     .map(v => v / 255);
 }
@@ -102,9 +159,22 @@ const state = {
   logYLoss: false,   // 손실 곡선 로그 y 옵션
   logYGrad: false,   // grad 곡선 로그 y 옵션
   cmpPrev: false,    // 체크포인트 렌더 이전/현재 나란히 비교
-  heatMode: 'init',  // 면 히트맵: 'init'(3a step0) | 'final'(3b) | 'diff'(final−init)
+  // 면 히트맵 모드: 'init'(3a step0) | 'final'(3b) | 'final3c' | 'ckpt:<구간>:<스텝>'
+  // (중간 체크포인트 — s3_face_residual_ckpt.json) | 'diff'(대상−기준, 일반화) |
+  // 'anchor_cost'·'anchor_flip'(앵커 가시화 — 스텝 무관 상수)
+  heatMode: 'init',
+  // 히트맵 표시 범위(오독 정정 2026-08-27): 'fstar'(기본 — 렌더에 실재하는 F*=initial_real
+  // 면만 칠함) | 'all'(전체 후보 면 — 귀속용, 잠든 gate-0 면은 반투명+점선 윤곽으로 구분).
+  // 잠든 prior 단면들을 전부 칠하면 "3a가 만든 건물 기하"로 오독된다(B173 1,152/1,580면).
+  heatScope: 'fstar',
+  diffTarget: 'final', diffBase: 'init',   // 차이 모드 대상/기준 상태 키(일반화)
+  filmKind: 'render',  // 체크포인트 필름스트립 — 'render' | 'residual'
   autoHeat: true,    // 스텝→3D 동기화 — 스텝 선택 시 이하 최대 체크포인트 히트맵 자동 전환
   overlayS2: false,  // S2 초기 상태(F*) 오버레이 — 기본 OFF, lazy fetch 후 visible 토글
+  // 검증 오버레이 3종(⑨~⑪ — 2026-08-27) : 전부 기본 OFF, 첫 켬 때만 지연 생성/로드
+  overlayGt: false,      // ⑨ LoD2 지붕면(평가 전용) — δ̂ 이동 무관 고정 기준면
+  overlayCellsGt: false, // ⑩ 초기 점유 vs LoD2 — 구멍/과잉 셀 채움(로드 시 1회 계산)
+  colorPreview: false,   // ⑪ 학습 색(텍스처) 미리보기 — 켜면 진단 칠 자동 숨김(배타)
   reading: {}, lastFit: null,
 };
 
@@ -197,10 +267,17 @@ function emptyGroup(g) {
   }
 }
 function clear3d() {
-  // S2 오버레이는 1회 생성 캐시(d.s2ov) — dispose 대상에서 먼저 분리(visible 토글 계약)
+  // 1회 생성 캐시 오버레이(d.s2ov·gtOv·cellOv·colorPrev) — dispose 대상에서 먼저 분리
+  // (visible 토글 계약: 지오메트리는 런 캐시에 존속, buildScene마다 재부착만)
   for (const name of Object.keys(state.cache)) {
-    const ov = (state.cache[name] || {}).s2ov;
-    if (ov) for (const m of [ov.base, ov.prior])
+    const c = state.cache[name] || {};
+    const cached = [];
+    if (c.s2ov) cached.push(c.s2ov.base, c.s2ov.prior);
+    if (c.gtOv) cached.push(c.gtOv.fill, c.gtOv.wire);
+    if (c.cellOv) cached.push(c.cellOv.holeFill, c.cellOv.holeWire,
+                              c.cellOv.excFill, c.cellOv.excWire);
+    if (c.colorPrev) cached.push(c.colorPrev.base, c.colorPrev.prior);
+    for (const m of cached)
       if (m && m.parent) m.parent.remove(m);
   }
   for (const g of [heatGroup, wireGroup, ctxGroup, selGroup, shiftGroup]) {
@@ -227,10 +304,17 @@ function parseJsonl(text) {
 
 // ---------- 런 로드 (s1_points.ply·s2_seeds.json은 절대 로드하지 않음 — 무게) ----------
 const S3_FILES = ['s3_views.json', 's3_steps.jsonl', 's3_face_residual.json'];
+// 루프 집계 — 스프레드 금지: 체크포인트 파일 도입으로 공유 스케일 표본이 면수×상태수
+// (B022 11,264×15 ≈ 17만)라 Math.min(...v)의 인자 한계를 넘는다.
 function resStatsOf(vals) {
-  const v = vals.filter(Number.isFinite);
-  return v.length ? { n: v.length, min: Math.min(...v), max: Math.max(...v),
-                      mean: v.reduce((a, b) => a + b, 0) / v.length } : null;
+  let n = 0, mn = Infinity, mx = -Infinity, sum = 0;
+  for (const x of vals) {
+    if (!Number.isFinite(x)) continue;
+    n++; sum += x;
+    if (x < mn) mn = x;
+    if (x > mx) mx = x;
+  }
+  return n ? { n, min: mn, max: mx, mean: sum / n } : null;
 }
 async function fetchRun(name) {
   const base = `../runs/${name}`;
@@ -239,15 +323,27 @@ async function fetchRun(name) {
   const mR = await fetch(`${base}/manifest.json`);
   if (!mR.ok) throw new Error(`manifest.json ${mR.status}`);
   const manifest = await mR.json();
-  const [viewJ, facesJ, planesJ, viewsJ, stepsTxt, faceResJ, faceResFinJ, faceResFin3cJ] = await Promise.all([
+  const [viewJ, facesJ, planesJ, viewsJ, stepsTxt, faceResJ, faceResFinJ, faceResFin3cJ,
+         faceResCkptJ] = await Promise.all([
     optJson('s1_view.json'), optJson('s2_faces.json'),
     optJson('s1_planes.json'),   // prior 출처 판별(3c δ̂ 이동·오버레이 분할) — source=="prior"
     optJson('s3_views.json'), optText('s3_steps.jsonl'), optJson('s3_face_residual.json'),
     optJson('s3_face_residual_final.json'),      // S3b — 없으면 null (3a-only 런 허용)
-    optJson('s3_face_residual_s3c_final.json')]); // S3c — 없으면 null (3b까지 런 허용)
+    optJson('s3_face_residual_s3c_final.json'),  // S3c — 없으면 null (3b까지 런 허용)
+    optJson('s3_face_residual_ckpt.json')]);     // 체크포인트 통합 — 없으면 null (구세대 허용)
   const faces = (facesJ && facesJ.faces) || [];
   const faceIdx = {};
   faces.forEach((f, i) => { faceIdx[f.face_id] = i; });
+  // F*(initial_real) 면 집합 — 히트맵 기본 표시 범위(렌더에 실재하는 면은 F*뿐).
+  // 도메인 외피 위의 F* 면(바닥·마진 절단면)은 페이지 관행상 히트맵 대상 밖(외피 토글로만
+  // 와이어 표시)이라 집합에서 제외 — 스케일·통계가 칠해지는 면과 일치해야 한다.
+  const realFaceSet = new Set();
+  let nRealTotal = 0;
+  faces.forEach(f => {
+    if (!f.initial_real) return;
+    nRealTotal++;
+    if (!f.domain) realFaceSet.add(f.face_id);
+  });
   // prior 계열 면 — s1_plane_ids에 source=="prior" 평면이 하나라도 있으면 prior 계열
   // (혼합 링이면 prior 우선 — δ̂ 이동 표시 대상)
   const priorPlaneSet = new Set(((planesJ && planesJ.planes) || [])
@@ -256,8 +352,14 @@ async function fetchRun(name) {
   faces.forEach((f, i) => {
     if ((f.s1_plane_ids || []).some(pid => priorPlaneSet.has(pid))) faceIsPrior[i] = 1;
   });
+  // LoD2 지붕면(⑨·⑩) — gt_planes는 평가 전용(방법 입력 아님), 링 3점 미만은 제외
+  const gtPlanes = ((planesJ && planesJ.gt_planes) || [])
+    .filter(g => (g.support_local || []).length >= 3);
   const d = { name, manifest, view: viewJ || {}, faces, faceIdx,
+              realFaceSet, nRealTotal,
               priorPlaneSet, faceIsPrior, s1PlanesMissing: planesJ === null,
+              gtPlanes,
+              gtNote: planesJ ? (planesJ.gt_evaluation_only ?? null) : null,
               s2Missing: facesJ === null, s3: null, s3Missing: [] };
   d.s3Missing = S3_FILES.filter((fn, i) => [viewsJ, stepsTxt, faceResJ][i] === null);
   if (d.s3Missing.length < S3_FILES.length) {   // 부분 존재도 있는 만큼 표시
@@ -279,11 +381,31 @@ async function fetchRun(name) {
       ckpt[st] = set;
     }
     const perFaceFinal3c = (faceResFin3cJ && faceResFin3cJ.per_face) || null;
-    // init/final(3b)/final(3c) 공유 스케일 — 전환 비교가 같은 램프에서 읽히도록
+    // 체크포인트 통합 파일(phd_s3_verify_face_residual_ckpt_v1) — 중간 상태 히트맵의 원천
+    const ckptFR = (faceResCkptJ && Array.isArray(faceResCkptJ.entries))
+      ? faceResCkptJ.entries
+          .filter(e => e && e.per_face && Number.isFinite(+e.step))
+          .map(e => ({ stage: String(e.stage), step: +e.step,
+                       perFace: e.per_face }))
+      : null;
+    // 공유 스케일 — step0/끝점 2종 + 전 체크포인트 최대 기준(전환 비교가 같은 램프에서).
+    // F* 범위 전용 스케일을 함께 집계(기본 표시 범위 — 잠든 면 최대값에 램프가 눌리지 않게).
     const initVals = Object.values(perFace);
     const bothVals = initVals
       .concat(perFaceFinal ? Object.values(perFaceFinal) : [])
       .concat(perFaceFinal3c ? Object.values(perFaceFinal3c) : []);
+    const realVals = [];
+    const pushReal = (map) => {
+      for (const fid in map) if (realFaceSet.has(fid)) realVals.push(map[fid]);
+    };
+    pushReal(perFace);
+    if (perFaceFinal) pushReal(perFaceFinal);
+    if (perFaceFinal3c) pushReal(perFaceFinal3c);
+    if (ckptFR)
+      for (const e of ckptFR) {
+        for (const fid in e.perFace) bothVals.push(e.perFace[fid]);
+        pushReal(e.perFace);
+      }
     const diffVals = [];
     if (perFaceFinal)
       for (const [fid, v0] of Object.entries(perFace)) {
@@ -305,7 +427,10 @@ async function fetchRun(name) {
       finalStep3c: faceResFin3cJ ? (faceResFin3cJ.step ?? null) : null,
       finalMethod3c: faceResFin3cJ ? (faceResFin3cJ.method ?? null) : null,
       resStatsFinal3c: perFaceFinal3c ? resStatsOf(Object.values(perFaceFinal3c)) : null,
+      ckptFR,                       // [{stage, step, perFace}] — 중간 상태 히트맵
+      ckptSchema: faceResCkptJ ? (faceResCkptJ.schema ?? null) : null,
       resStatsShared: resStatsOf(bothVals),
+      resStatsSharedReal: resStatsOf(realVals),   // F* 범위 공유 스케일(기본)
       diffStats: diffVals.length ? {
         n: diffVals.length, maxAbs: Math.max(...diffVals.map(Math.abs), 1e-12),
         mean: diffVals.reduce((a, b) => a + b, 0) / diffVals.length,
@@ -337,32 +462,80 @@ function rampDivRgb(t) {   // t ∈ [−1, 1]
   return [mid[0] + (a[0] - mid[0]) * u, mid[1] + (a[1] - mid[1]) * u,
           mid[2] + (a[2] - mid[2]) * u].map(v => v / 255);
 }
-// 현재 히트 모드의 면별 값·스케일·색 함수 — init/final(3b)/final(3c)은 공유 스케일(전환 비교 가능)
+// ---------- 히트 상태 등록부 (⑤ 중간 산출물) ----------
+// step0(3a) + ckpt 파일의 중간 체크포인트 + 끝점 2종. 구간 최종 체크포인트 엔트리는
+// 'final'/'final3c' 키로 승격(끝점 파일과 같은 계산 — writer가 최종 entry를 재사용, 테스트
+// 보증)해 라디오 "주요 상태" 단축과 겹치지 않는다. (구간, 스텝) 오름차순.
+function heatStatesOf(d) {
+  const s3 = d && d.s3;
+  if (!s3) return [];
+  const states = [{ key: 'init', label: '3a s0', ord: 0, step: 0, map: s3.perFace }];
+  const fin = { '3b': s3.perFaceFinal ? (s3.finalStep ?? null) : null,
+                '3c': s3.perFaceFinal3c ? (s3.finalStep3c ?? null) : null };
+  for (const e of (s3.ckptFR || [])) {
+    if (fin[e.stage] !== null && fin[e.stage] !== undefined && fin[e.stage] === e.step)
+      continue;   // 끝점 라디오 상태가 대표(같은 값)
+    states.push({ key: `ckpt:${e.stage}:${e.step}`, label: `${e.stage} s${e.step}`,
+                  ord: STAGE_ORD[e.stage] ?? 9, step: e.step, map: e.perFace, ckpt: true });
+  }
+  if (s3.perFaceFinal)
+    states.push({ key: 'final', label: `3b s${s3.finalStep ?? '?'} (final)`,
+                  ord: 1, step: s3.finalStep ?? Infinity, map: s3.perFaceFinal });
+  if (s3.perFaceFinal3c)
+    states.push({ key: 'final3c', label: `3c s${s3.finalStep3c ?? '?'} (final)`,
+                  ord: 2, step: s3.finalStep3c ?? Infinity, map: s3.perFaceFinal3c });
+  states.sort((a, b) => (a.ord - b.ord) || (a.step - b.step));
+  return states;
+}
+function heatStateByKey(d, key) {
+  return heatStatesOf(d).find(s => s.key === key) || null;
+}
+// 현재 히트 모드의 면별 값·스케일·색 함수 — 잔차 상태들은 공유 스케일(전 체크포인트 최대
+// 기준, 전환 비교 가능). diff = 임의 두 상태 비교(대상−기준). anchor_* = 스텝 무관 상수.
 function heatData(d) {
   const s3 = d.s3;
   if (!s3) return null;
   let mode = state.heatMode;
-  if ((mode === 'final' || mode === 'diff') && !s3.perFaceFinal) mode = 'init';
-  if (mode === 'final3c' && !s3.perFaceFinal3c) mode = s3.perFaceFinal ? 'final' : 'init';
+  if (mode === 'anchor_cost' || mode === 'anchor_flip') return anchorHeatData(d, mode);
+  const scopeAll = state.heatScope === 'all';
   if (mode === 'diff') {
-    const st = s3.diffStats;
-    return { mode, label: `Δ|잔차| (final−step0)`,
-      value: (fid) => {
-        const a = s3.perFace[fid], b = s3.perFaceFinal[fid];
-        return (Number.isFinite(a) && Number.isFinite(b)) ? b - a : undefined;
-      },
-      norm: (v) => (st && Number.isFinite(v)) ? v / st.maxAbs : null,   // [−1,1]
-      rgb: rampDivRgb, stats: st ? { min: -st.maxAbs, max: st.maxAbs, mean: st.mean, n: st.n } : null,
-      diverging: true };
+    const a = heatStateByKey(d, state.diffTarget)
+      || heatStateByKey(d, 'final') || heatStateByKey(d, 'final3c');
+    const b = heatStateByKey(d, state.diffBase) || heatStateByKey(d, 'init');
+    if (!a || !b) mode = 'init';   // 상태 2개 미만 — 아래 단일 상태 경로로
+    else {
+      let n = 0, maxAbs = 1e-12, sum = 0;
+      for (const fid in b.map) {
+        if (!scopeAll && !d.realFaceSet.has(fid)) continue;   // 기본 = F* 범위 통계
+        const v0 = b.map[fid], v1 = a.map[fid];
+        if (!Number.isFinite(v0) || !Number.isFinite(v1)) continue;
+        const dv = v1 - v0;
+        n++; sum += dv;
+        if (Math.abs(dv) > maxAbs) maxAbs = Math.abs(dv);
+      }
+      const st = n ? { n, maxAbs, mean: sum / n } : null;
+      return { mode: 'diff', label: `Δ|잔차| (${a.label} − ${b.label})`,
+        value: (fid) => {
+          const v0 = b.map[fid], v1 = a.map[fid];
+          return (Number.isFinite(v0) && Number.isFinite(v1)) ? v1 - v0 : undefined;
+        },
+        norm: (v) => (st && Number.isFinite(v)) ? v / st.maxAbs : null,   // [−1,1]
+        rgb: rampDivRgb,
+        stats: st ? { min: -st.maxAbs, max: st.maxAbs, mean: st.mean, n: st.n } : null,
+        diverging: true, pair: { target: a.key, base: b.key } };
+    }
   }
-  const map = mode === 'final3c' ? s3.perFaceFinal3c
-            : mode === 'final' ? s3.perFaceFinal : s3.perFace;
-  const st = s3.resStatsShared;   // init/final(3b)/final(3c) 공유 스케일
-  return { mode, label: mode === 'final3c'
-             ? `면별 |잔차| 평균 — 3c final (s${s3.finalStep3c ?? '?'})`
-             : mode === 'final'
-             ? `면별 |잔차| 평균 — 3b final (s${s3.finalStep ?? '?'})` : '면별 |잔차| 평균 — step0 (3a)',
-    value: (fid) => map[fid],
+  let hs = heatStateByKey(d, mode);
+  if (!hs) {   // 폴백 사슬(종전 관행): final3c→final→init, ckpt 부재→init
+    hs = (mode === 'final3c' && heatStateByKey(d, 'final'))
+      || heatStateByKey(d, 'init');
+    if (!hs) return null;
+    mode = hs.key;
+  }
+  // 전 잔차 상태 공유 스케일 — 표시 범위별(기본 F*: 잠든 면 최대값에 램프가 눌리지 않게)
+  const st = scopeAll ? s3.resStatsShared : s3.resStatsSharedReal;
+  return { mode, label: `면별 |잔차| 평균 — ${hs.label}${hs.ckpt ? ' (체크포인트)' : ''}`,
+    value: (fid) => hs.map[fid],
     norm: (v) => (st && Number.isFinite(v))
       ? (st.max > st.min ? (v - st.min) / (st.max - st.min) : 0.5) : null,
     rgb: rampRgb, stats: st, diverging: false };
@@ -384,9 +557,13 @@ function buildScene(d) {
   const hd = heatData(d);
   // prior 계열(δ̂ 평행이동 대상 — shiftGroup) / 기저를 분리 축적. 병합 지오메트리 각 1회 생성,
   // 이동은 shiftGroup.position만 갱신(지오메트리 재생성 금지 — B022 11,264면 성능 계약).
+  // 표시 범위(오독 정정): 기본은 F*(initial_real) 면만 칠한다 — 렌더에 실재하는 면은 F*뿐.
+  // '전체 후보 면' 토글 시 잠든 gate-0 면도 칠하되 반투명 + 점선(ghost색) 윤곽으로 구분.
+  const showAll = state.heatScope === 'all';
   const mk = () => ({ tri: [], col: [], triFace: [], wire: [] });
-  const heat = mk(), heatPrior = mk();
+  const heat = mk(), heatPrior = mk(), sleep = mk(), sleepPrior = mk();
   const ghost = [], ghostPrior = [], domain = [];
+  const painted = { real: 0, sleeping: 0 };
   d.faceWire = {};   // face index -> 윤곽 세그먼트 (선택 맥동용)
   d.faces.forEach((f, fi) => {
     const poly = f.poly3d || [];
@@ -398,10 +575,18 @@ function buildScene(d) {
     }
     d.faceWire[fi] = wire;
     const isPrior = !!(d.faceIsPrior && d.faceIsPrior[fi]);
+    const isReal = !!f.initial_real;
     const t = hd ? hd.norm(hd.value(f.face_id)) : null;
-    if (t !== null && !f.domain) {
-      const ht = isPrior ? heatPrior : heat;
-      const [r, g, b] = hd.rgb(t);
+    // 실재(F*) 면은 도메인(footprint 벽·지면·상판) 포함 전부 칠한다 — 렌더에
+    // 실재하는 표면이 "실제 결과"다. 표본 없는 실재 면은 사라지지 않고 중립
+    // 회색("채점 기록 없음")으로. 잠든 면은 '전체 후보' 토글에서만, 표본 있는
+    // 비도메인에 한정(도메인 잠든 면 = 프리즘 외피 — 칠하면 상자 오독 재발).
+    const paintSleep = showAll && !isReal && !f.domain && t !== null;
+    if (isReal || paintSleep) {
+      const ht = isReal ? (isPrior ? heatPrior : heat)
+                        : (isPrior ? sleepPrior : sleep);
+      painted[isReal ? 'real' : 'sleeping']++;
+      const [r, g, b] = t !== null ? hd.rgb(t) : [0.32, 0.35, 0.40];
       for (let k = 1; k + 1 < poly.length; k++) {   // 부채꼴 삼각화 (페이지 1 관행)
         ht.tri.push(...poly[0], ...poly[k], ...poly[k + 1]);
         ht.col.push(r, g, b, r, g, b, r, g, b);
@@ -411,24 +596,35 @@ function buildScene(d) {
     } else if (f.domain) domain.push(...wire);          // 도메인 면 — s1 평면 없음(비 prior)
     else (isPrior ? ghostPrior : ghost).push(...wire);
   });
+  d.paintCounts = { scope: state.heatScope, ...painted };
   d.heatMesh = null; d.heatMeshPrior = null;
-  const mkHeat = (ht, group) => {
+  d.heatMeshSleep = null; d.heatMeshSleepPrior = null;
+  const mkHeat = (ht, group, sleeping) => {
     if (!ht.tri.length) return null;
     const g = new THREE.BufferGeometry();
     g.setAttribute('position', new THREE.Float32BufferAttribute(ht.tri, 3));
     g.setAttribute('color', new THREE.Float32BufferAttribute(ht.col, 3));
     const mesh = new THREE.Mesh(g, new THREE.MeshBasicMaterial({
-      vertexColors: true, side: THREE.DoubleSide }));
+      vertexColors: true, side: THREE.DoubleSide,
+      ...(sleeping ? { transparent: true, opacity: 0.3, depthWrite: false } : {}) }));
+    if (sleeping) mesh.renderOrder = 1;   // F* 오버레이(2)보다 아래, 실재 면 위
     mesh.userData = { triFace: Uint32Array.from(ht.triFace) };
     group.add(mesh);
     const wg = new THREE.BufferGeometry();
     wg.setAttribute('position', new THREE.Float32BufferAttribute(ht.wire, 3));
-    group.add(new THREE.LineSegments(wg, new THREE.LineBasicMaterial({
-      color: COL.border, transparent: true, opacity: 0.55 })));
+    const line = new THREE.LineSegments(wg, sleeping
+      ? new THREE.LineDashedMaterial({ color: COL.ghost, dashSize: 0.45, gapSize: 0.3,
+                                       transparent: true, opacity: 0.6 })
+      : new THREE.LineBasicMaterial({ color: COL.border, transparent: true,
+                                      opacity: 0.55 }));
+    if (sleeping) line.computeLineDistances();
+    group.add(line);
     return mesh;
   };
-  d.heatMesh = mkHeat(heat, heatGroup);
-  d.heatMeshPrior = mkHeat(heatPrior, shiftGroup);
+  d.heatMesh = mkHeat(heat, heatGroup, false);
+  d.heatMeshPrior = mkHeat(heatPrior, shiftGroup, false);
+  d.heatMeshSleep = mkHeat(sleep, heatGroup, true);
+  d.heatMeshSleepPrior = mkHeat(sleepPrior, shiftGroup, true);
   d.ghostWire = null; d.ghostWirePrior = null; d.domainWire = null;
   const mkWire = (arr, hex, opacity, group) => {
     if (!arr.length) return null;
@@ -464,6 +660,23 @@ function restyle() {
     if (d.s2ov.base) d.s2ov.base.visible = state.overlayS2;
     if (d.s2ov.prior) d.s2ov.prior.visible = state.overlayS2;
   }
+  if (d.gtOv) {   // ⑨ LoD2 지붕면 — visible 토글만 (고정 기준면)
+    if (d.gtOv.fill) d.gtOv.fill.visible = state.overlayGt;
+    if (d.gtOv.wire) d.gtOv.wire.visible = state.overlayGt;
+  }
+  if (d.cellOv)   // ⑩ 구멍/과잉 셀 — visible 토글만 (로드 시 1회 계산)
+    for (const m of [d.cellOv.holeFill, d.cellOv.holeWire,
+                     d.cellOv.excFill, d.cellOv.excWire])
+      if (m) m.visible = state.overlayCellsGt;
+  if (d.colorPrev) {   // ⑪ 학습 색 미리보기 — visible 토글만
+    if (d.colorPrev.base) d.colorPrev.base.visible = state.colorPreview;
+    if (d.colorPrev.prior) d.colorPrev.prior.visible = state.colorPreview;
+  }
+  // ⑪ 배타 규약 — 색 미리보기 ON이면 진단 칠(히트맵 채움)은 자동 숨김(두 색 체계 겹침
+  // 방지). 경계 와이어는 남겨 기하 맥락 유지, 램프 범례는 renderRampLegend가 함께 숨김.
+  const paintOn = !state.colorPreview;
+  for (const m of [d.heatMesh, d.heatMeshPrior, d.heatMeshSleep, d.heatMeshSleepPrior])
+    if (m) m.visible = paintOn;
   emptyGroup(selGroup); hiliteMats = [];
   if (state.selFace !== null && d.faceWire && d.faceWire[state.selFace]) {
     const g = new THREE.BufferGeometry();
@@ -491,7 +704,9 @@ const raycaster = new THREE.Raycaster();
 function pickAt(e) {
   const d = state.run;
   if (!d || !renderer) return;
-  const meshes = [d.heatMesh, d.heatMeshPrior].filter(Boolean);   // prior 분할 메시 포함
+  const meshes = [d.heatMesh, d.heatMeshPrior,          // prior 분할 메시 포함
+                  d.heatMeshSleep, d.heatMeshSleepPrior // 잠든 면(전체 토글 시) — 귀속 픽
+                 ].filter(Boolean);
   if (!meshes.length) return;
   const rect = renderer.domElement.getBoundingClientRect();
   const ndc = new THREE.Vector2(((e.clientX - rect.left) / rect.width) * 2 - 1,
@@ -506,27 +721,29 @@ function pickAt(e) {
 }
 // ---------- 스텝 선택 + 3D 동기화 (연계 판독 ①·③) ----------
 const STAGE_ORD = { '3a': 0, '3b': 1, '3c': 2, '3d': 3 };
-// 히트맵의 체크포인트 상태(step0 / 3b final / 3c final) 중 선택 스텝 이하 최대를 고른다.
+// 히트맵 상태 등록부(heatStatesOf — ckpt 파일이 있으면 s5/s15/s45/s130 중간 상태 포함)
+// 중 선택 스텝 이하 최대를 고른다. 파일 없으면 종전 3종(step0/3b final/3c final)과 동일.
 function heatModeForStep(d, step) {
   if (!d || !d.s3 || !step) return state.heatMode;
   const so = STAGE_ORD[String(step.stage)] ?? 99, sn = step.step ?? 0;
-  const states = [{ mode: 'init', ord: 0, step: 0 }];
-  if (d.s3.perFaceFinal)
-    states.push({ mode: 'final', ord: 1, step: d.s3.finalStep ?? Infinity });
-  if (d.s3.perFaceFinal3c)
-    states.push({ mode: 'final3c', ord: 2, step: d.s3.finalStep3c ?? Infinity });
+  const states = heatStatesOf(d);
+  if (!states.length) return state.heatMode;
   let best = states[0];
-  for (const st of states)
+  for (const st of states)   // 오름차순 — 마지막 충족 상태 = 이하 최대
     if (st.ord < so || (st.ord === so && st.step <= sn)) best = st;
-  return best.mode;
+  return best.key;
 }
 function heatStateLabel(d, mode) {
   const s3 = d && d.s3;
   if (!s3) return '—';
-  if (mode === 'final3c') return `3c s${s3.finalStep3c ?? '?'}`;
-  if (mode === 'final') return `3b s${s3.finalStep ?? '?'}`;
-  if (mode === 'diff') return '차이(3b final−step0)';
-  return '3a s0';
+  if (mode === 'diff') {
+    const a = heatStateByKey(d, state.diffTarget), b = heatStateByKey(d, state.diffBase);
+    return `차이(${a ? a.label : '?'} − ${b ? b.label : '?'})`;
+  }
+  if (mode === 'anchor_cost') return '셀 앵커 비용 C_k (상수)';
+  if (mode === 'anchor_flip') return '뒤집기 값 ΔW (상수)';
+  const hs = heatStateByKey(d, mode);
+  return hs ? hs.label : '—';
 }
 // 선택 스텝이 3c 행이면 그 행의 delta_hat, 아니면 0 — prior 계열 평행이동량(m).
 function currentDeltaShift() {
@@ -551,6 +768,10 @@ function renderSyncBadge() {
   el.style.display = 'block';
   let h = `3D 표시 중: <b style="color:#8ecbff">${esc(heatStateLabel(d, hd.mode))} 히트맵</b>` +
     (state.autoHeat ? '' : ' <span style="color:#7a8494">(스텝 추적 꺼짐)</span>');
+  // 상시 라벨(오독 정정) — 이 화면은 잔차 "귀속 지도"이며 렌더에 실재하는 면은 F*뿐
+  h += `<br><span style="color:#9fb4cc">잔차 귀속 지도 — ${state.heatScope === 'all'
+    ? '<b style="color:#ffd866">전체 후보 면</b>(잠든 면=반투명·점선 — 렌더 실재는 F*뿐)'
+    : '<b style="color:#c8ccd4">F* 면만 표시 중</b> (잠든 후보 면은 토글)'}</span>`;
   const step = (d.s3 && state.selStep !== null) ? d.s3.steps[state.selStep] : null;
   if (step && String(step.stage) === '3c') {
     const sh = currentDeltaShift();
@@ -559,6 +780,18 @@ function renderSyncBadge() {
        : d.faceIsPrior && d.faceIsPrior.some(v => v) ? '' : ' <span style="color:#7a8494">(prior 면 0)</span>');
   }
   if (state.overlayS2) h += `<br><span style="color:#c8ccd4">S2 초기 상태(F*) 오버레이 ON</span>`;
+  if (state.overlayGt)   // ⑨ 필수 배지 문구 — 평가 전용, δ̂ 이동 무관 고정
+    h += `<br><span style="color:#5fe08a">LoD2 지붕면 ON (평가 전용 — 방법 입력 아님 · δ̂ 이동 무관 고정)</span>`;
+  if (state.overlayCellsGt) {   // ⑩ 카운트 — 계산 완료 전엔 로딩 표기
+    const st = d.cellOv && d.cellOv.stats;
+    h += `<br><span style="color:#ff9b93">초기 점유 vs LoD2 ON${st
+      ? ` — 구멍 ${st.holes} · 과잉 ${st.excess}` : ' (계산 중…)'}</span>`;
+  }
+  if (state.colorPreview) {     // ⑪ 배타 상태 명시
+    const st = d.colorPrev && d.colorPrev.stats;
+    h += `<br><span style="color:#d9a0ff">학습 색(텍스처) 미리보기 ON — 진단 칠 자동 숨김${st
+      ? ` · 점 ${st.shown.toLocaleString()}` : ' (로딩 중…)'}</span>`;
+  }
   el.innerHTML = h;
 }
 // 스텝 선택 단일 경로 — 타임라인 칩·체크포인트 점프·곡선 점 클릭 공용.
@@ -574,6 +807,37 @@ function selectStep(i) {
   restyle();           // prior 선택 윤곽의 δ̂ 추종 갱신
   renderTimeline(); renderPanel();
 }
+// s2_cells.json 공유 lazy fetch — F* 오버레이(o_state 재유도)·앵커 가시화(⑦ — o_state·t)·
+// 초기 점유 vs LoD2(⑩ — centroid·face_ids)가 같은 1회 로드를 나눠 쓴다.
+// 실패 시 null 기록(각자 폴백/오류 안내).
+async function ensureCellsInfo(d) {
+  if (d.cellsInfo !== undefined) return d.cellsInfo;
+  if (d.cellsInfoLoading) return d.cellsInfoLoading;
+  d.cellsInfoLoading = (async () => {
+    let info = null;
+    try {
+      const r = await fetch(`../runs/${encodeURIComponent(d.name)}/s2_cells.json`);
+      if (r.ok) {
+        const cellsJ = await r.json();
+        const byId = {};
+        let n = 0;
+        (cellsJ.cells || []).forEach(c => {
+          byId[c.cell_id] = { o: c.o_state ? 1 : 0,
+                              t: Number.isFinite(c.t) ? c.t : null,
+                              cen: (Array.isArray(c.centroid) && c.centroid.length === 3)
+                                ? c.centroid : null,      // ⑩ 셀 중심 — gt 지붕고 대조
+                              faces: c.face_ids || [] };  // ⑩ 셀 채움 지오메트리 참조
+          n++;
+        });
+        info = { byId, n };
+      }
+    } catch { /* null 기록 */ }
+    d.cellsInfo = info;
+    d.cellsInfoLoading = null;
+    return info;
+  })();
+  return d.cellsInfoLoading;
+}
 // S2 초기 상태(F*) 오버레이 — s2_cells.json lazy fetch로 o_state 재유도(페이지 2 파서 이식),
 // 실패 시 s2_faces.initial_real 폴백. 병합 지오메트리 base/prior 2개를 1회만 생성해 캐시.
 async function ensureS2Overlay(d) {
@@ -581,17 +845,13 @@ async function ensureS2Overlay(d) {
   if (d.s2ovLoading) return d.s2ovLoading;
   d.s2ovLoading = (async () => {
     let real = null;
-    try {
-      const r = await fetch(`../runs/${encodeURIComponent(d.name)}/s2_cells.json`);
-      if (r.ok) {
-        const cellsJ = await r.json();
-        const occ = {};
-        (cellsJ.cells || []).forEach(c => { occ[c.cell_id] = c.o_state ? 1 : 0; });
-        const occOf = (cid) => (cid === null || cid === undefined) ? 0 : (occ[cid] ?? 0);
-        real = d.faces.map(f => Math.abs(occOf(f.cell_a) - occOf(f.cell_b)) === 1);
-        d.s2ovSource = 's2_cells.json o_state 재유도(|Δo|=1 — 페이지 2 파서 이식)';
-      }
-    } catch { /* 아래 폴백 */ }
+    const info = await ensureCellsInfo(d);
+    if (info) {
+      const occOf = (cid) => (cid === null || cid === undefined) ? 0
+        : (info.byId[cid] ? info.byId[cid].o : 0);
+      real = d.faces.map(f => Math.abs(occOf(f.cell_a) - occOf(f.cell_b)) === 1);
+      d.s2ovSource = 's2_cells.json o_state 재유도(|Δo|=1 — 페이지 2 파서 이식)';
+    }
     if (!real) {
       real = d.faces.map(f => !!f.initial_real);
       d.s2ovSource = 's2_cells.json 없음 — s2_faces.initial_real 폴백';
@@ -623,12 +883,340 @@ async function ensureS2Overlay(d) {
   })();
   return d.s2ovLoading;
 }
+// ---------- ⑨ LoD2 지붕면 오버레이 (평가 전용 — 방법 입력 아님) ----------
+// gt_planes support_local 링 → 병합 채움(부채꼴) + 병합 와이어. δ̂ 이동(shiftGroup)의
+// 영향을 받지 않는 고정 기준면이라 heatGroup에만 부착한다(비교 잣대 계약).
+function ensureGtOverlay(d) {
+  if (d.gtOv !== undefined) return d.gtOv;
+  const tri = [], wire = [];
+  for (const g of d.gtPlanes) {
+    const poly = g.support_local;
+    for (let k = 1; k + 1 < poly.length; k++)   // 부채꼴 삼각화 (페이지 1 관행)
+      tri.push(...poly[0], ...poly[k], ...poly[k + 1]);
+    for (let k = 0; k < poly.length; k++) {
+      const a = poly[k], b = poly[(k + 1) % poly.length];
+      wire.push(a[0], a[1], a[2], b[0], b[1], b[2]);
+    }
+  }
+  if (!tri.length) { d.gtOv = null; return null; }
+  const fg = new THREE.BufferGeometry();
+  fg.setAttribute('position', new THREE.Float32BufferAttribute(tri, 3));
+  const fill = new THREE.Mesh(fg, new THREE.MeshBasicMaterial({
+    color: COL.lod2, transparent: true, opacity: 0.16, side: THREE.DoubleSide,
+    depthWrite: false, polygonOffset: true,          // 동일 지붕면 z-fighting 회피
+    polygonOffsetFactor: -3, polygonOffsetUnits: -3 }));
+  fill.renderOrder = 3;                              // F* 오버레이(2) 위
+  const wg = new THREE.BufferGeometry();
+  wg.setAttribute('position', new THREE.Float32BufferAttribute(wire, 3));
+  const wireObj = new THREE.LineSegments(wg, new THREE.LineBasicMaterial({
+    color: COL.lod2, transparent: true, opacity: 0.9 }));
+  wireObj.renderOrder = 3;
+  fill.visible = false; wireObj.visible = false;
+  d.gtOv = { fill, wire: wireObj, n: d.gtPlanes.length };
+  return d.gtOv;
+}
+// ---------- ⑩ 초기 점유 vs LoD2 — 구멍/과잉 셀 (이전 분석의 화면화) ----------
+// 파라미터는 파이썬 대조 분석과 동일 고정: 지붕면 |n_z|>0.2, 여유 ±0.3 m
+// (B022 대조값: 구멍 59 · 과잉 234). 평면 규약 n·p = d → z = (d − n_x·x − n_y·y)/n_z.
+const CELLGT = { nzMin: 0.2, marginM: 0.3 };
+function pointInRingXY(x, y, ring) {   // ray casting — 셀 수천×면 ≤20이라 가벼움
+  let inside = false;
+  const n = ring.length;
+  for (let i = 0, j = n - 1; i < n; j = i++) {
+    const xi = ring[i][0], yi = ring[i][1], xj = ring[j][0], yj = ring[j][1];
+    if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi)
+      inside = !inside;
+  }
+  return inside;
+}
+function computeCellsVsGt(d) {
+  const roof = d.gtPlanes.filter(g =>
+    Math.abs((g.n || [])[2] ?? 0) > CELLGT.nzMin);
+  const holes = [], excess = [];
+  let covered = 0, judged = 0;
+  for (const [cid, c] of Object.entries(d.cellsInfo.byId)) {
+    if (!c.cen) continue;
+    judged++;
+    const [cx, cy, cz] = c.cen;
+    let zmax = null;
+    for (const g of roof) {
+      if (!pointInRingXY(cx, cy, g.support_local)) continue;
+      const [nx, ny, nz] = g.n;
+      const z = (g.d - nx * cx - ny * cy) / nz;
+      if (zmax === null || z > zmax) zmax = z;
+    }
+    if (zmax === null) continue;   // gt 지붕 XY 밖 — 판정 근거 없음(대조 제외)
+    covered++;
+    if (c.o === 0 && cz < zmax - CELLGT.marginM) holes.push(cid);
+    if (c.o === 1 && cz > zmax + CELLGT.marginM) excess.push(cid);
+  }
+  return { holes, excess, covered, judged, roofPlanes: roof.length };
+}
+// 셀 채움 지오메트리 — 셀 face_ids의 s2_faces poly3d 재사용(중복 면은 1회, 구멍 우선).
+// x-ray(depthTest 끔): 내부 구멍 셀이 불투명 실재 면에 가려지지 않아야 한다(진단 오버레이).
+function cellFillObjs(d, cellIds, hex, exclude) {
+  const tri = [], wire = [], seen = new Set();
+  for (const cid of cellIds) {
+    const c = d.cellsInfo.byId[cid];
+    if (!c) continue;
+    for (const fid of c.faces) {
+      if (seen.has(fid) || (exclude && exclude.has(fid))) continue;
+      seen.add(fid);
+      const fi = d.faceIdx[fid];
+      const poly = fi !== undefined ? (d.faces[fi].poly3d || []) : [];
+      if (poly.length < 3) continue;
+      for (let k = 1; k + 1 < poly.length; k++)
+        tri.push(...poly[0], ...poly[k], ...poly[k + 1]);
+      for (let k = 0; k < poly.length; k++) {
+        const a = poly[k], b = poly[(k + 1) % poly.length];
+        wire.push(a[0], a[1], a[2], b[0], b[1], b[2]);
+      }
+    }
+  }
+  if (!tri.length) return { fill: null, wireObj: null, faceSet: seen };
+  const fg = new THREE.BufferGeometry();
+  fg.setAttribute('position', new THREE.Float32BufferAttribute(tri, 3));
+  const fill = new THREE.Mesh(fg, new THREE.MeshBasicMaterial({
+    color: hex, transparent: true, opacity: 0.4, side: THREE.DoubleSide,
+    depthWrite: false, depthTest: false }));
+  fill.renderOrder = 4;                         // 진단 x-ray — 항상 판독 가능
+  const wg = new THREE.BufferGeometry();
+  wg.setAttribute('position', new THREE.Float32BufferAttribute(wire, 3));
+  const wireObj = new THREE.LineSegments(wg, new THREE.LineBasicMaterial({
+    color: hex, transparent: true, opacity: 0.55, depthTest: false }));
+  wireObj.renderOrder = 4;
+  fill.visible = false; wireObj.visible = false;
+  return { fill, wireObj, faceSet: seen };
+}
+// 첫 켬 때 1회 계산·생성 후 캐시. 초기 점유(S2 동결) vs 고정 LoD2의 대조라
+// δ̂ 이동과 무관 — 전부 heatGroup 부착(고정 표시).
+async function ensureCellsVsGt(d) {
+  if (d.cellOv !== undefined) return d.cellOv;
+  if (d.cellOvLoading) return d.cellOvLoading;
+  d.cellOvLoading = (async () => {
+    let ov = null;
+    const info = await ensureCellsInfo(d);
+    if (!info) d.cellOvNote = 's2_cells.json 로드 실패 — 대조 불가';
+    else if (!d.gtPlanes.length) d.cellOvNote = 'gt_planes 없음 — 대조 불가';
+    else {
+      const r = computeCellsVsGt(d);
+      const hole = cellFillObjs(d, r.holes, COL.hole, null);
+      const exc = cellFillObjs(d, r.excess, COL.excess, hole.faceSet);  // 구멍 우선
+      ov = { holeFill: hole.fill, holeWire: hole.wireObj,
+             excFill: exc.fill, excWire: exc.wireObj,
+             stats: { holes: r.holes.length, excess: r.excess.length,
+                      covered: r.covered, cells: r.judged,
+                      roof_planes: r.roofPlanes, nz_min: CELLGT.nzMin,
+                      margin_m: CELLGT.marginM } };
+      d.cellOvNote = null;
+    }
+    d.cellOv = ov;
+    d.cellOvLoading = null;
+    return ov;
+  })();
+  return d.cellOvLoading;
+}
+// ---------- ⑪ 학습 색(텍스처) 3D 미리보기 ----------
+// DataView 수제 fp16→fp32 (numpy float16 tofile — 리틀 엔디언 IEEE 754 half)
+function fp16ToF32(h) {
+  const s = (h & 0x8000) ? -1 : 1, e = (h >> 10) & 0x1f, m = h & 0x3ff;
+  if (e === 0) return s * m * 2 ** -24;              // ±0·서브노멀
+  if (e === 31) return m ? NaN : s * Infinity;
+  return s * (1 + m / 1024) * 2 ** (e - 15);
+}
+const COLOR_PREV_MAX = 300000;   // 표시 상한 — 결정론 스트라이드 씨닝(기존 관행)
+async function ensureColorPreview(d) {
+  if (d.colorPrev !== undefined) return d.colorPrev;
+  if (d.colorPrevLoading) return d.colorPrevLoading;
+  d.colorPrevLoading = (async () => {
+    let cp = null;
+    const ca = ((d.manifest || {}).s3b_def || {}).colors_artifact || null;
+    if (!ca) d.colorPrevNote = 'manifest.s3b_def.colors_artifact 없음 (3b 미완주 런)';
+    else try {
+      const base = `../runs/${encodeURIComponent(d.name)}`;
+      const [binR, seedsR] = await Promise.all([
+        fetch(`${base}/${ca.file || 's3b_colors.f16.bin'}`),
+        fetch(`${base}/s2_seeds.json`)]);   // 첫 켬 때만 — B022 120 MB 명시 경고(패널)
+      if (!binR.ok) throw new Error(`${ca.file} ${binR.status}`);
+      if (!seedsR.ok) throw new Error(`s2_seeds.json ${seedsR.status}`);
+      const buf = await binR.arrayBuffer();
+      const seedsJ = await seedsR.json();
+      const seeds = seedsJ.seeds || [];
+      const spacing = ((seedsJ.grid || {}).spacing_m) || 0.30;
+      if (buf.byteLength !== seeds.length * 3 * 2)
+        throw new Error(`바이트 길이 ${buf.byteLength} ≠ 시드 ${seeds.length}×3×2 — ` +
+                        '번들 재생성 중이거나 계약 불일치');
+      // sha256 대조 — crypto.subtle 가용 시에만(HTTP LAN 환경은 생략, null)
+      let shaOk = null;
+      if (ca.sha256 && typeof crypto !== 'undefined' && crypto.subtle) {
+        try {
+          const dig = await crypto.subtle.digest('SHA-256', buf);
+          const hex = [...new Uint8Array(dig)]
+            .map(b => b.toString(16).padStart(2, '0')).join('');
+          shaOk = hex === ca.sha256;
+        } catch { /* null 유지 */ }
+      }
+      const dv = new DataView(buf);
+      // F*(initial_real) 면의 시드만 — 잠든 면 시드 제외(실재 표면의 텍스처만)
+      const keptIdx = [];
+      for (let i = 0; i < seeds.length; i++) {
+        const fi = d.faceIdx[seeds[i].face_id];
+        if (fi !== undefined && d.faces[fi].initial_real) keptIdx.push(i);
+      }
+      const stride = Math.max(1, Math.ceil(keptIdx.length / COLOR_PREV_MAX));
+      const pos = [], col = [], posP = [], colP = [];
+      let shown = 0;
+      for (let j = 0; j < keptIdx.length; j += stride) {
+        const i = keptIdx[j];
+        const s = seeds[i];
+        const mu = s.mu;
+        if (!mu || mu.length !== 3) continue;
+        const o = i * 6;
+        const r = Math.min(1, Math.max(0, fp16ToF32(dv.getUint16(o, true))));
+        const g = Math.min(1, Math.max(0, fp16ToF32(dv.getUint16(o + 2, true))));
+        const b = Math.min(1, Math.max(0, fp16ToF32(dv.getUint16(o + 4, true))));
+        const fi = d.faceIdx[s.face_id];
+        const isPrior = !!(d.faceIsPrior && d.faceIsPrior[fi]);
+        (isPrior ? posP : pos).push(mu[0], mu[1], mu[2]);
+        (isPrior ? colP : col).push(r, g, b);
+        shown++;
+      }
+      // 점 크기 = 시드 간격 × √스트라이드 (씨닝 후 커버리지 근사 보존 — 임의 결정)
+      const size = spacing * Math.sqrt(stride);
+      const mkPts = (p, c) => {
+        if (!p.length) return null;
+        const g = new THREE.BufferGeometry();
+        g.setAttribute('position', new THREE.Float32BufferAttribute(p, 3));
+        g.setAttribute('color', new THREE.Float32BufferAttribute(c, 3));
+        const pts = new THREE.Points(g, new THREE.PointsMaterial({
+          size, vertexColors: true, sizeAttenuation: true }));
+        pts.visible = false;
+        return pts;
+      };
+      cp = { base: mkPts(pos, col), prior: mkPts(posP, colP),
+             stats: { seeds: seeds.length, kept_fstar: keptIdx.length, shown,
+                      stride, point_size_m: +size.toFixed(3),
+                      spacing_m: spacing, sha_ok: shaOk,
+                      sha_expected: ca.sha256 ? String(ca.sha256).slice(0, 12) : null } };
+      d.colorPrevNote = null;
+    } catch (e) {
+      d.colorPrevNote = `학습 색 로드 실패: ${e.message}`;
+    }
+    d.colorPrev = cp;
+    d.colorPrevLoading = null;
+    return cp;
+  })();
+  return d.colorPrevLoading;
+}
 function attachOverlay(d) {
-  if (!d || !d.s2ov) return;
-  if (d.s2ov.base && d.s2ov.base.parent !== heatGroup) heatGroup.add(d.s2ov.base);
-  if (d.s2ov.prior && d.s2ov.prior.parent !== shiftGroup) shiftGroup.add(d.s2ov.prior);
-  if (d.s2ov.base) d.s2ov.base.visible = state.overlayS2;
-  if (d.s2ov.prior) d.s2ov.prior.visible = state.overlayS2;
+  if (!d) return;
+  const put = (m, group, vis) => {
+    if (!m) return;
+    if (m.parent !== group) group.add(m);
+    m.visible = vis;
+  };
+  if (d.s2ov) {
+    put(d.s2ov.base, heatGroup, state.overlayS2);
+    put(d.s2ov.prior, shiftGroup, state.overlayS2);
+  }
+  if (d.gtOv) {          // ⑨ LoD2 — 고정 기준면(shiftGroup 금지)
+    put(d.gtOv.fill, heatGroup, state.overlayGt);
+    put(d.gtOv.wire, heatGroup, state.overlayGt);
+  }
+  if (d.cellOv) {        // ⑩ 구멍/과잉 — 초기 상태 고정 표시
+    for (const m of [d.cellOv.holeFill, d.cellOv.holeWire,
+                     d.cellOv.excFill, d.cellOv.excWire])
+      put(m, heatGroup, state.overlayCellsGt);
+  }
+  if (d.colorPrev) {     // ⑪ 학습 색 — prior 시드는 δ̂ 추종(히트맵 규약)
+    put(d.colorPrev.base, heatGroup, state.colorPreview);
+    put(d.colorPrev.prior, shiftGroup, state.colorPreview);
+  }
+}
+// ---------- 앵커 가시화 2종 (⑦ — 셀별 상수를 면(경계) 위에 집계, 스텝 무관) ----------
+// (a) 셀 앵커 비용 C_k(o;t) = −[o·log t + (1−o)·log(1−t)] (§2.2, w=1) — 면 = 인접 셀 최대
+//     ("경계를 붙잡는 더 강한 증언 긴장"; 상태·증언 상충 극단은 ∞).
+// (b) 뒤집기 값 ΔW(t) = |log(t/(1−t))| (w=1 초기) — 면 = 인접 셀 최소("이 경계를 바꾸는
+//     가장 싼 뒤집기"); t∈{0,1} = ∞ → 별색(블루). t 없는 셀(구계약) = null(미표시).
+// 도메인 외피 면 제외(잔차 히트맵 관행), cell_b 없는 면은 cell_a만.
+const ANCHOR_INF_T = 2;   // norm 특수값 — rgb에서 별색 분기
+function buildAnchorMaps(d) {
+  if (d.anchorMaps) return d.anchorMaps;
+  if (!d.cellsInfo) return null;
+  const byId = d.cellsInfo.byId;
+  const cost = new Array(d.faces.length).fill(null);
+  const flip = new Array(d.faces.length).fill(null);
+  const cellCost = (c) => {
+    if (!c || !Number.isFinite(c.t)) return null;
+    const term = c.o ? Math.log(c.t) : Math.log(1 - c.t);
+    return term === -Infinity ? Infinity : -term;
+  };
+  const cellFlip = (c) => {
+    if (!c || !Number.isFinite(c.t)) return null;
+    if (c.t <= 0 || c.t >= 1) return Infinity;
+    return Math.abs(Math.log(c.t / (1 - c.t)));
+  };
+  d.faces.forEach((f, fi) => {
+    if (f.domain) return;
+    const cells = [byId[f.cell_a],
+                   (f.cell_b === null || f.cell_b === undefined) ? null : byId[f.cell_b]];
+    let mxCost = null, mnFlip = null;
+    for (const c of cells) {
+      const cc = cellCost(c), cf = cellFlip(c);
+      if (cc !== null && (mxCost === null || cc > mxCost)) mxCost = cc;
+      if (cf !== null && (mnFlip === null || cf < mnFlip)) mnFlip = cf;
+    }
+    cost[fi] = mxCost;
+    flip[fi] = mnFlip;
+  });
+  const statsOf = (arr, realOnly) => {
+    let n = 0, inf = 0, fn = 0, mn = Infinity, mx = -Infinity, sum = 0;
+    for (let i = 0; i < arr.length; i++) {
+      const v = arr[i];
+      if (v === null) continue;
+      if (realOnly && !d.faces[i].initial_real) continue;   // F* 범위(기본)
+      n++;
+      if (v === Infinity) { inf++; continue; }
+      fn++; sum += v;
+      if (v < mn) mn = v;
+      if (v > mx) mx = v;
+    }
+    return n ? { n, inf, min: fn ? mn : 0, max: fn ? mx : 0,
+                 mean: fn ? sum / fn : null } : null;
+  };
+  d.anchorMaps = { cost, flip,
+                   costStats: statsOf(cost, false), flipStats: statsOf(flip, false),
+                   costStatsReal: statsOf(cost, true), flipStatsReal: statsOf(flip, true) };
+  return d.anchorMaps;
+}
+function anchorHeatData(d, mode) {
+  const isCost = mode === 'anchor_cost';
+  const label = isCost
+    ? '셀 앵커 비용 C_k = −[o·log t + (1−o)·log(1−t)] — 상수(스텝 무관)'
+    : '뒤집기 값 ΔW = |log(t/(1−t))| — 상수(스텝 무관)';
+  const am = d.anchorMaps;
+  if (!am)
+    return { mode, label: label + (d.cellsInfo === null
+               ? ' · s2_cells.json 없음(값 없음)' : ' · s2_cells 로딩 중…'),
+             value: () => undefined, norm: () => null, rgb: rampRgb,
+             stats: null, diverging: false, anchorConst: true };
+  const arr = isCost ? am.cost : am.flip;
+  const scopeAll = state.heatScope === 'all';   // 표시 범위 — 잔차 히트맵과 같은 원칙
+  const st = scopeAll ? (isCost ? am.costStats : am.flipStats)
+                      : (isCost ? am.costStatsReal : am.flipStatsReal);
+  return { mode, label,
+    value: (fid) => {
+      const fi = d.faceIdx[fid];
+      if (fi === undefined) return undefined;
+      return arr[fi] === null ? undefined : arr[fi];
+    },
+    norm: (v) => v === Infinity ? ANCHOR_INF_T
+      : (st && Number.isFinite(v))
+      ? (st.max > st.min ? (v - st.min) / (st.max - st.min) : 0.5) : null,
+    rgb: (t) => t > 1.5 ? [0.42, 0.55, 1.0] : rampRgb(t),   // ∞ 별색 = 블루
+    stats: st, diverging: false, anchorConst: true,
+    aggNote: isCost ? '면 = 인접 셀 최대 (경계를 붙잡는 더 강한 증언 긴장)'
+                    : '면 = 인접 셀 최소 (이 경계를 바꾸는 가장 싼 뒤집기)' };
 }
 function renderSelBadge() {
   const el = $('#selbadge');
@@ -638,9 +1226,14 @@ function renderSelBadge() {
   const f = d.faces[state.selFace];
   const hd = heatData(d);
   const v = hd ? hd.value(f.face_id) : undefined;
+  const vTxt = v === Infinity ? '∞' : Number.isFinite(v) ? (+v).toFixed(4) : '—';
+  const vName = !hd ? '잔차'
+    : hd.mode === 'diff' ? 'Δ잔차'
+    : hd.mode === 'anchor_cost' ? 'C_k'
+    : hd.mode === 'anchor_flip' ? 'ΔW' : '잔차';
   el.style.display = 'block';
   el.innerHTML = `<b style="color:#ffe066">${esc(f.face_id)}</b> ·
-    ${hd && hd.mode === 'diff' ? 'Δ잔차' : '잔차'} ${Number.isFinite(v) ? (+v).toFixed(4) : '—'} ·
+    ${vName} ${vTxt} ·
     ${f.initial_real ? 'F* 실재' : '게이트 0'} · ${(f.area_m2 ?? 0).toFixed(2)} m²
     <span class="note">재클릭·빈 공간·ESC=해제</span>`;
 }
@@ -648,6 +1241,8 @@ function renderRampLegend() {
   const el = $('#ramplegend');
   if (!el) return;
   const d = state.run;
+  // ⑪ 색 미리보기 ON — 진단 칠이 숨겨진 상태라 램프 범례도 숨긴다(오독 방지)
+  if (state.colorPreview) { el.style.display = 'none'; return; }
   const hd = d && heatData(d);
   const st = hd && hd.stats;
   if (!st) { el.style.display = 'none'; return; }
@@ -657,12 +1252,14 @@ function renderRampLegend() {
   const cssStops = stops.map(c =>
     `rgb(${c.map(x => Math.round(x * 255)).join(',')})`).join(',');
   el.style.display = 'block';
-  el.innerHTML = `${esc(hd.label)} (근사)<br>
+  el.innerHTML = `${esc(hd.label)}${hd.anchorConst ? '' : ' (근사)'}<br>
     <span>${st.min.toFixed(3)}</span>
     <span style="display:inline-block;width:90px;height:9px;vertical-align:middle;
       border:1px solid #2e3542;background:linear-gradient(90deg,${cssStops})"></span>
     <span>${st.max.toFixed(3)}</span>` +
-    (hd.diverging ? '<br><span>청록=감소(색으로 설명) · 앰버=잔존/증가(기하 신호)</span>' : '');
+    (hd.diverging ? '<br><span>청록=감소(색으로 설명) · 앰버=잔존/증가(기하 신호)</span>' : '') +
+    (hd.anchorConst && st.inf ? `<br><span style="color:#6b8cff">■</span>
+       <span>∞ (t∈{0,1}) — ${st.inf}면 별색</span>` : '');
 }
 
 // ---------- 자동 검사 (체크리스트 ②·③·⑨~⑪의 근거) ----------
@@ -875,6 +1472,8 @@ function renderChecklist() {
     </div>${row3b}${row3c}
     <div class="chkrow meta">
       <span><span class="badge prop">참고 기준</span> 엄격 런별 합불 아님 — 판독 기록 2026-08-27 방침(발견 기록으로 갈음).</span>
+      <span>히트맵 표시 범위 기본 = <b>F*(initial_real) 면만</b> — 렌더에 실재하는 면은 F*뿐이고
+        잠든 gate-0 후보 면은 '전체 후보 면' 토글(귀속용, 반투명·점선)로만 표시(오독 정정 2026-08-27).</span>
       <span>3a 계약: 최적화 0스텝 + backward 1회(가중치 갱신 없음) · δ 렌더 인자 배선·값 ${JSON.stringify(sd.delta_value ?? [0, 0, 0])} 고정 ·
         색 ${esc(sd.color || 'neutral-gray')} · α_g=|o_a−o_b| 유도 · densification/pruning 금지(수명 규칙 ①) ·
         렌더러 ${esc(sd.renderer || 'gsplat')}(미분 가능 렌더링)${meta3b}${meta3c}</span>
@@ -923,9 +1522,12 @@ function renderTimeline() {
       const last = d.s3.steps[idxs[idxs.length - 1]];
       summary = ` <span class="note">스텝 ${idxs.length} · 최종 total ${fmtNum((last.losses || {}).total, 3)}</span>`;
     }
-    h += `<div class="seg ${on ? 'on' : 'off'} ${state.selSegment === sg.id ? 'segsel' : ''}">
+    const selSeg = state.selSegment === sg.id;
+    h += `<div class="seg ${on ? 'on' : 'off'} ${selSeg ? 'segsel' : ''}">
       <div class="seghead" data-seg="${escAttr(sg.id)}"
-        title="클릭 = 구간 산출물 요약 카드 (스텝 선택 유지 · 재클릭=닫기)">${esc(sg.label)}${summary}</div>
+        title="클릭 = 구간 산출물 요약 카드 (스텝 선택 유지 · 재클릭=닫기)">${esc(sg.label)}${summary}
+        <button class="segbtn" data-seg="${escAttr(sg.id)}"
+          title="구간 산출물 요약 카드 ${selSeg ? '닫기' : '열기'}">${selSeg ? '요약 닫기' : '산출물 요약'}</button></div>
       ${body}
       <div class="segdesc">${esc(sg.desc)}</div></div>`;
   }
@@ -936,6 +1538,29 @@ function renderTimeline() {
   el.querySelectorAll('.seghead[data-seg]').forEach(sh => {   // ④ 구간 배지 = 요약 카드 토글
     sh.onclick = () => toggleSegment(sh.dataset.seg);
   });
+  el.querySelectorAll('.segbtn[data-seg]').forEach(b => {     // 명시적 버튼 — 같은 토글 경로
+    b.onclick = (e) => { e.stopPropagation(); toggleSegment(b.dataset.seg); };
+  });
+}
+// 첫 로드 힌트 배지 1회(닫기 가능) — 구간 산출물 요약 카드 안내. localStorage에 닫음 기억
+// (접근 불가 환경은 세션 1회로 동작).
+const SEG_HINT_LS_KEY = 'p3_seghint_v1_closed';
+let segHintShown = false;
+function maybeShowSegHint() {
+  if (segHintShown) return;
+  segHintShown = true;
+  try { if (localStorage.getItem(SEG_HINT_LS_KEY) === '1') return; } catch { /* 무시 */ }
+  const el = document.createElement('div');
+  el.id = 'seghint';
+  el.innerHTML = `힌트: 타임라인의 <b>[산출물 요약]</b> 버튼(구간 배지)을 누르면 그 단계의
+    고유 산출물 요약 카드가 우측 패널에 열립니다.
+    <button class="small" id="seghintClose">닫기</button>`;
+  document.body.appendChild(el);
+  const close = el.querySelector('#seghintClose');
+  if (close) close.onclick = () => {
+    el.remove();
+    try { localStorage.setItem(SEG_HINT_LS_KEY, '1'); } catch { /* 무시 */ }
+  };
 }
 // ④ 구간 배지 클릭 — 요약 카드는 별도 섹션(#segsummary), 스텝 선택(selStep)은 건드리지 않는다.
 // 열람은 런별 d.segViews에 누적(판독 JSON auto.segment_summary_viewed).
@@ -1398,6 +2023,35 @@ function stepLossCard(d, step) {
     <div class="note">구간 ${esc(stageId)} 전체 손실 곡선 — 스텝 1개면 점. 축: X=스텝,
       Y=손실(${state.logYLoss ? '로그' : '0 기준'}). 점 클릭=스텝 전환 · 강조 점=체크포인트.</div></div>`;
 }
+// 체크포인트 필름스트립 (⑥) — 선택 뷰의 렌더/잔차를 구간 전 체크포인트에 한 줄로.
+// 기존 타일 파일 재사용(체크포인트 계약), 사진은 맨 앞 1장(3a 타일). 클릭 = 스텝 선택.
+function filmstripHtml(d, stageId, v, step) {
+  if (stageId !== '3b' && stageId !== '3c') return '';   // 3a = 단일 s0(스트립 무의미)
+  const cks = ckptRows(d, stageId);
+  if (cks.length < 2) return '';
+  const kind = state.filmKind === 'residual' ? 'residual' : 'render';
+  const cells = cks.map(r => {
+    const s = r.row.step ?? 0;
+    const psnr = (r.row.views_psnr || {})[v.view_id];
+    const src = tileDir(stageId, s, v.view_id) + `${kind}.png`;
+    const sel = r.idx === state.selStep;
+    return `<figure class="filmcell ${sel ? 'sel' : ''}" data-step="${r.idx}"
+        title="s${s} 선택${Number.isFinite(psnr) ? ` · PSNR ${fmtNum(psnr, 2)} dB` : ''}">
+      <img src="${src}" alt="${escAttr(`${kind} s${s}`)}" loading="lazy"
+        onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'err',textContent:'s${s} 타일 없음'}))">
+      <figcaption>s${s}${Number.isFinite(psnr) ? ` · ${fmtNum(psnr, 1)}dB` : ''}</figcaption></figure>`;
+  }).join('');
+  const photoSrc = tileDir('3a', 0, v.view_id) + 'photo.png';
+  return `<div style="margin-top:6px"><div class="legend">체크포인트 필름스트립 — ${esc(v.view_id)}
+      <label><input type="radio" name="filmkind" value="render" ${kind === 'render' ? 'checked' : ''}> 렌더</label>
+      <label><input type="radio" name="filmkind" value="residual" ${kind === 'residual' ? 'checked' : ''}> 잔차</label>
+      <span class="note">사진 1장 + 구간 ${esc(stageId)} 체크포인트 ${cks.length}개 · 썸네일 클릭=스텝 선택</span></div>
+    <div class="filmrow">
+      <figure class="filmcell photo"><img src="${photoSrc}" alt="photo" loading="lazy"
+        onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'err',textContent:'photo 없음'}))">
+        <figcaption>사진</figcaption></figure>
+      ${cells}</div></div>`;
+}
 function viewsCard(d, step) {
   const s3 = d.s3;
   if (!s3.views.length) return '<p class="note">s3_views.json에 뷰 없음</p>';
@@ -1439,6 +2093,7 @@ function viewsCard(d, step) {
     return `${head}<div class="note">스텝 ${step.step}은 체크포인트가 아니라 타일이 없다
       (계약: s3_tiles/${stageId === '3c' ? 's3c_s' : 's'}&lt;step&gt;/는 체크포인트만). ${nearest
         ? `가장 가까운 체크포인트: <button class="small ckjump" data-step="${nearest.idx}">s${nearest.row.step}로 이동</button>` : ''}</div>
+      ${filmstripHtml(d, stageId, v, step)}
       <div style="margin-top:5px">${psnrBarsSvg(step, prev)}</div>`;
   }
   const base = tileDir(stageId, step.step ?? 0, v.view_id);
@@ -1451,14 +2106,18 @@ function viewsCard(d, step) {
                : stageId === '3b' ? `렌더 s${step.step} (색 학습 중)` : '렌더 (gsplat · S2 상태)');
   tiles += fig(base + 'residual.png', 'residual', '|사진−렌더| 그레이 히트');
   return `${head}<div class="tiles">${tiles}</div>
+    ${filmstripHtml(d, stageId, v, step)}
     <div style="margin-top:5px">${psnrBarsSvg(step, prev)}</div>`;
 }
 function faceResidualCard(d) {
   const s3 = d.s3;
   const hasFinal = !!s3.perFaceFinal;
   const has3c = !!s3.perFaceFinal3c;
+  const states = heatStatesOf(d);
+  const nCkpt = states.filter(x => x.ckpt).length;
   const hd = heatData(d);
   const st = hd && hd.stats;
+  const isAnchor = state.heatMode === 'anchor_cost' || state.heatMode === 'anchor_flip';
   const modeRadio = (val, label, dis) => `<label ${dis ? 'style="opacity:.5"' : ''}>
       <input type="radio" name="heatmode" value="${val}" ${state.heatMode === val ? 'checked' : ''}
         ${dis ? 'disabled' : ''}> ${label}</label>`;
@@ -1468,30 +2127,73 @@ function faceResidualCard(d) {
     <div class="legend"><span class="badge eval">3D 표시 중: ${esc(heatStateLabel(d, hd ? hd.mode : state.heatMode))} 히트맵</span>
       <label><input type="checkbox" id="heatAutoTgl" ${state.autoHeat ? 'checked' : ''}>
         스텝 추적(자동)</label>
-      <span class="note">스텝 클릭 = 이하 최대 체크포인트 히트맵 자동 전환 · 수동 라디오 선택 시 추적 해제</span></div>
-    <div class="legend">히트맵
+      <span class="note">스텝 클릭 = 이하 최대 체크포인트 히트맵 자동 전환${nCkpt
+        ? ` (중간 s5/s15/s45/s130… ${nCkpt}개 포함 — s3_face_residual_ckpt.json)` : ''} ·
+        수동 라디오 선택 시 추적 해제</span></div>
+    <div class="legend">표시 범위
+      <label><input type="checkbox" id="heatScopeTgl" ${state.heatScope === 'all' ? 'checked' : ''}>
+        전체 후보 면(귀속용 — 잠든 gate-0 면은 반투명·점선)</label>
+      <span class="note">기본 = <b style="color:#c8ccd4">F*(initial_real) 면만</b> — 렌더에
+        실재하는 면은 F*뿐, 잠든 prior 단면을 전부 칠하면 모델 기하로 오독됨${
+        d.realFaceSet ? ` (F* ${d.nRealTotal}면 — 외피 절단면 ${d.nRealTotal - d.realFaceSet.size}
+        제외 → 히트맵 대상 ${d.realFaceSet.size} / 전체 ${d.faces.length}면)` : ''}</span></div>
+    <div class="legend">주요 상태
       ${modeRadio('init', 'step0 (3a)', false)}
       ${modeRadio('final', `3b final${hasFinal ? ` (s${s3.finalStep ?? '?'})` : ''}`, !hasFinal)}
       ${modeRadio('final3c', `3c final${has3c ? ` (s${s3.finalStep3c ?? '?'})` : ''}`, !has3c)}
-      ${modeRadio('diff', '차이 (3b final−step0)', !hasFinal)}
+      ${modeRadio('diff', '차이 (대상−기준)', states.length < 2)}
       ${hasFinal ? '' : '<span class="note">3b final은 s3_face_residual_final.json 생성 후</span>'}
-      ${has3c || !hasFinal ? '' : '<span class="note">· 3c final은 s3_face_residual_s3c_final.json 생성 후</span>'}</div>
-    <div class="note caption" style="margin-bottom:4px">근사 방식(숨기지 않음): ${esc(
+      ${has3c || !hasFinal ? '' : '<span class="note">· 3c final은 s3_face_residual_s3c_final.json 생성 후</span>'}
+      ${nCkpt ? '' : '<span class="note">· 중간 체크포인트는 s3_face_residual_ckpt.json 생성 후(스텝 추적)</span>'}</div>
+    <div class="legend">앵커 가시화 <span class="note">(상수 — 스텝 무관 · s2_cells 지연 로드)</span>
+      ${modeRadio('anchor_cost', '셀 앵커 비용 C_k', false)}
+      ${modeRadio('anchor_flip', '뒤집기 값 ΔW', false)}</div>`;
+  if (state.heatMode === 'diff' && states.length >= 2) {
+    const opt = (sel) => states.map(x =>
+      `<option value="${escAttr(x.key)}" ${x.key === sel ? 'selected' : ''}>${esc(x.label)}</option>`).join('');
+    h += `<div class="legend">차이 비교: 대상 <select id="diffTargetSel">${opt((hd && hd.pair) ? hd.pair.target : state.diffTarget)}</select>
+      − 기준 <select id="diffBaseSel">${opt((hd && hd.pair) ? hd.pair.base : state.diffBase)}</select>
+      <span class="note">임의 두 체크포인트 상태 비교 (기본 = 3b final − step0)</span></div>`;
+  }
+  if (isAnchor) {
+    h += `<div class="note caption" style="border-left-color:#ff9a3c;margin-bottom:4px">${
+      state.heatMode === 'anchor_cost'
+        ? `셀 앵커 비용 맵 — <b>prior 증언이 현재 상태를 붙잡는 비용(§2.2)</b>:
+           C_k(o_state; t) = −[o·log t + (1−o)·log(1−t)], w=1. 스텝과 무관한 상수(o·t는 S2 동결).`
+        : `뒤집기 값 맵 — <b>이 셀을 뒤집는 데 필요한 증거량</b>: ΔW = |log(t/(1−t))|, w=1 초기.
+           t=0.5 근방 싸고 극단 비쌈; t∈{0,1} = ∞ → 별색(블루). 스텝과 무관한 상수.`}
+      ${hd && hd.aggNote ? ` ${esc(hd.aggNote)}.` : ''}
+      ${d.cellsInfo === null ? ' <span class="bad">s2_cells.json 로드 실패 — 값 없음.</span>'
+        : d.cellsInfo === undefined ? ' <span class="note">s2_cells.json 로딩 중…</span>' : ''}</div>`;
+  } else {
+    h += `<div class="note caption" style="margin-bottom:4px">근사 방식(숨기지 않음): ${esc(
       methodTxt || '— method 명기 없음')}</div>`;
-  if (state.heatMode === 'diff' && hasFinal)
+  }
+  if (state.heatMode === 'diff' && states.length >= 2)
     h += `<div class="note caption" style="border-left-color:#2ee6c8;margin-bottom:4px">
       차이 판독: 잔차 <b style="color:#2ee6c8">감소(청록)</b> = 색으로 설명된 잔차 ·
       <b style="color:#ffcf70">잔존/증가(앰버)</b> = 기하 신호 후보(3c/3d·이산 라운드의 표적).
-      판독 힌트: B173 저층 지붕동 잔존 확인.</div>`;
-  if (!st) h += '<p class="note">per_face 잔차 값 없음</p>';
+      판독 힌트: B173 저층 지붕동 잔존 확인 — 해당 면(f00879 등)은 gate-0이라
+      <b>'전체 후보 면' 토글</b>을 켜고 조기 체크포인트 기준으로(r17 — 누락 검출은 조기
+      체크포인트·gate-0 귀속).</div>`;
+  const scopeTxt = state.heatScope === 'all'
+    ? `전체 후보 면 (실재 ${d.paintCounts ? d.paintCounts.real : '?'} + 잠든 ${
+        d.paintCounts ? d.paintCounts.sleeping : '?'})`
+    : `F* 면만 (칠해진 면 ${d.paintCounts ? d.paintCounts.real : '?'})`;
+  if (!st) h += '<p class="note">per_face 값 없음</p>';
   else h += `<table>
-      <tr><td class="k">잔차 보유 면</td><td>${st.n ?? '—'} / ${d.faces.length}</td></tr>
-      <tr><td class="k">min · mean · max</td><td>${fmtNum(st.min)} · ${fmtNum(st.mean)} · ${fmtNum(st.max)}</td></tr>
+      <tr><td class="k">표시 범위</td><td class="l">${scopeTxt}</td></tr>
+      <tr><td class="k">${isAnchor ? '값 보유 면(∞ 포함)' : '잔차 보유 면(범위 내)'}</td><td>${st.n ?? '—'} / ${d.faces.length}${
+        isAnchor && st.inf ? ` (∞ ${st.inf})` : ''}</td></tr>
+      <tr><td class="k">min · mean · max${isAnchor ? ' (유한값)' : ''}</td><td>${fmtNum(st.min)} · ${fmtNum(st.mean)} · ${fmtNum(st.max)}</td></tr>
     </table>
     <div class="note" style="margin-top:3px">${hd.diverging
       ? '3D 면 색 = 발산 램프(청록=감소·앰버=잔존/증가, 양쪽 값 있는 면만)'
-      : '3D 면 색 = 낮음(어두움)→높음(밝은 앰버) 램프 — step0/3b final/3c final 공유 스케일(전환 비교 가능)'} —
-      s2_faces 지오메트리 재사용. 면 클릭 = 카드 + 페이지 2·1 점프.</div>`;
+      : isAnchor
+      ? '3D 면 색 = 5단 앰버 램프(저→고) · ∞=블루 — 셀 상수(스텝 무관)'
+      : '3D 면 색 = 5단 앰버 램프(저→고, dataviz 검증) — 전 체크포인트 상태 공유 스케일(전환 비교 가능)'} —
+      범위 스케일 ${state.heatScope === 'all' ? '전체' : 'F*'} 기준 · s2_faces 지오메트리 재사용.
+      면 클릭 = 카드 + 페이지 2·1 점프.</div>`;
   h += '</div>';
   if (state.selFace !== null) {
     const f = d.faces[state.selFace];
@@ -1523,6 +2225,80 @@ function faceResidualCard(d) {
       </table></div>`;
   }
   return h;
+}
+// ---------- 검증 오버레이 3종 카드 (⑨~⑪ — 2026-08-27) ----------
+function verifyOverlaysCard(d) {
+  // ⑨ LoD2 — s1_planes 없음/링 0이면 비활성 + 사유
+  const gtDis = d.s1PlanesMissing ? 's1_planes.json 없음' :
+    (!d.gtPlanes.length ? 'gt_planes 0 (LoD2 링 없음)' : null);
+  let h = `<div class="card">
+    <div class="legend">
+      <label ${gtDis ? 'style="opacity:.5"' : ''}><input type="checkbox" id="gtOvTgl"
+        ${state.overlayGt ? 'checked' : ''} ${gtDis ? 'disabled' : ''}>
+        <span style="color:#5fe08a">LoD2 지붕면</span></label>
+      <span class="badge gt">LoD2 지붕면 (평가 전용 — 방법 입력 아님)</span>
+      ${gtDis ? `<span class="badge na">비활성 — ${esc(gtDis)}</span>`
+        : `<span class="note">gt_planes ${d.gtPlanes.length}면 · 청록/초록 와이어+반투명 채움 ·
+           δ̂ 이동(shiftGroup)의 영향을 받지 않는 <b>고정 기준면</b>(비교 잣대)${
+           d.gtNote ? ` · ${esc(String(d.gtNote)).slice(0, 60)}` : ''}</span>`}
+    </div>`;
+  // ⑩ 초기 점유 vs LoD2 — 구멍/과잉 셀
+  const cgDis = gtDis || (d.s2Missing ? 's2_faces.json 없음' : null)
+    || (d.cellsInfo === null ? 's2_cells.json 로드 실패' : null)
+    || (d.cellOv === null && d.cellOvNote ? d.cellOvNote : null);
+  const cgSt = d.cellOv && d.cellOv.stats;
+  h += `<div class="legend" style="margin-top:5px">
+      <label ${cgDis ? 'style="opacity:.5"' : ''}><input type="checkbox" id="cellGtTgl"
+        ${state.overlayCellsGt ? 'checked' : ''} ${cgDis ? 'disabled' : ''}>
+        초기 점유 vs LoD2</label>
+      ${cgDis ? `<span class="badge na">비활성 — ${esc(cgDis)}</span>`
+        : cgSt ? `<span class="badge hole">구멍 ${cgSt.holes}</span>
+                  <span class="badge exc">과잉 ${cgSt.excess}</span>`
+        : state.overlayCellsGt || d.cellOvLoading
+        ? '<span class="note">s2_cells 로드·대조 계산 중…</span>'
+        : '<span class="note">첫 켬 때 1회 계산 (s2_cells 공유 로드)</span>'}
+    </div>`;
+  if (cgSt)
+    h += `<div class="note caption" style="border-left-color:#e25563">
+      구멍 ${cgSt.holes} · 과잉 ${cgSt.excess} — <b>3e 이산 판정의 시험대</b>.
+      로직(이전 분석과 동일): 셀 중심을 gt_planes 수평·경사면(|n_z|&gt;${CELLGT.nzMin})의
+      XY 포함 검사로 대조, 포함 면들의 평면 z 최댓값 = gt 지붕고, ±${CELLGT.marginM} m 여유.
+      <span style="color:#ff9b93">구멍 = 끔인데 중심이 gt 지붕 아래(적색)</span> ·
+      <span style="color:#d9a0ff">과잉 = 켬인데 gt 지붕 위(자주/보라)</span> ·
+      x-ray 표시(내부 셀이 가려지지 않게) · 대상 셀 ${cgSt.covered}/${cgSt.cells}
+      (gt 지붕 XY 안) · 지붕면 ${cgSt.roof_planes} · 초기 상태 고정(δ̂ 무관).</div>`;
+  // ⑪ 학습 색(텍스처) 미리보기
+  const ca = ((d.manifest || {}).s3b_def || {}).colors_artifact || null;
+  const cpDis = (!ca ? 'manifest.s3b_def.colors_artifact 없음 (3b 미완주 런)' : null)
+    || (d.s2Missing ? 's2_faces.json 없음' : null)
+    || (d.colorPrev === null && d.colorPrevNote ? d.colorPrevNote : null);
+  const cpSt = d.colorPrev && d.colorPrev.stats;
+  h += `<div class="legend" style="margin-top:5px">
+      <label ${cpDis ? 'style="opacity:.5"' : ''}><input type="checkbox" id="colorPrevTgl"
+        ${state.colorPreview ? 'checked' : ''} ${cpDis ? 'disabled' : ''}>
+        학습 색(텍스처) 미리보기</label>
+      ${cpDis ? `<span class="badge na">비활성 — ${esc(cpDis)}</span>`
+        : cpSt ? `<span class="badge eval">점 ${cpSt.shown.toLocaleString()}</span>`
+        : state.colorPreview || d.colorPrevLoading
+        ? '<span class="note">s3b_colors + s2_seeds 로딩 중… (수십 MB — 첫 켬 때만)</span>'
+        : `<span class="note">첫 켬 때 s2_seeds.json 지연 로드 — 큰 런은 무거움(B022 120 MB) ·
+           켜면 진단 칠(히트맵) 자동 숨김(배타)</span>`}
+    </div>`;
+  if (cpSt)
+    h += `<div class="note caption" style="border-left-color:#b05ce0">
+      <b>3b가 학습한 모델 색(텍스처) — 타일 렌더와 동일물의 3D 표시</b>
+      (s3b_colors.f16.bin, DataView fp16→fp32).
+      시드 ${cpSt.seeds.toLocaleString()} → F* 면 시드 ${cpSt.kept_fstar.toLocaleString()}
+      (잠든 면 제외) → 표시 ${cpSt.shown.toLocaleString()}
+      (스트라이드 ${cpSt.stride} 결정론 씨닝, 상한 ${COLOR_PREV_MAX.toLocaleString()}) ·
+      점 크기 ${cpSt.point_size_m} m(간격 ${cpSt.spacing_m} m×√스트라이드) ·
+      sha256 ${cpSt.sha_ok === true ? '<span class="good">일치</span>'
+        : cpSt.sha_ok === false ? '<span class="bad">불일치!</span>'
+        : '미대조(crypto.subtle 불가)'} ·
+      prior 계열 시드는 δ̂ 이동 추종 · 진단 칠(히트맵)은 자동 숨김 — 라디오식 배타.</div>`;
+  return h + `<div class="note" style="margin-top:4px">3종 전부 평가 전용 오버레이 —
+    방법 입력이 아니며 판정·파라미터 선택에 불참(GT 분리 원칙). 켬/카운트는 판독 JSON
+    auto에 기록.</div></div>`;
 }
 function readingCard(d) {
   const rd = reading();
@@ -1754,7 +2530,9 @@ function renderPanel() {
         <span class="note">얇은 반투명 회백 — 출발 기하 위에 잔차가 어디 붙는지${
           state.run && state.run.s2ov && state.run.s2ov.nReal !== undefined
             ? ` (실재 면 ${state.run.s2ov.nReal}개 · ${esc(state.run.s2ovSource || '')})` : ' (첫 켬 때 s2_cells.json 지연 로드)'}</span>
-      </div>`;
+      </div>
+      <h2>검증 오버레이 3종 <span class="badge eval">평가 전용 — 방법 입력 아님</span></h2>
+      ${verifyOverlaysCard(d)}`;
   }
   h += `<h2>판독 기록 (리뷰어: 김휘영)</h2>${readingCard(d)}`;
   $('#panel').innerHTML = h;
@@ -1783,13 +2561,95 @@ function bindPanel() {
       });
     } else { restyle(); renderSyncBadge(); }
   });
+  on('#gtOvTgl', 'onchange', () => {       // ⑨ LoD2 지붕면 — 데이터는 이미 로드(동기 생성)
+    state.overlayGt = $('#gtOvTgl').checked;
+    const d = state.run;
+    if (d && state.overlayGt) {
+      if (d.gtOv === undefined) { ensureGtOverlay(d); attachOverlay(d); }
+      d.verifyOvUse = d.verifyOvUse || {};
+      d.verifyOvUse.gt = (d.verifyOvUse.gt || 0) + 1;
+    }
+    restyle(); renderSyncBadge();
+  });
+  on('#cellGtTgl', 'onchange', () => {     // ⑩ 초기 점유 vs LoD2 — 첫 켬 때 1회 계산
+    state.overlayCellsGt = $('#cellGtTgl').checked;
+    const d = state.run;
+    if (d && state.overlayCellsGt) {
+      d.verifyOvUse = d.verifyOvUse || {};
+      d.verifyOvUse.cells = (d.verifyOvUse.cells || 0) + 1;
+      if (d.cellOv === undefined) {
+        ensureCellsVsGt(d).then(() => {
+          if (state.run !== d) return;
+          attachOverlay(d); restyle(); renderSyncBadge(); renderPanel();
+        });
+      }
+    }
+    restyle(); renderSyncBadge(); renderPanel();   // 로딩/카운트 표시 갱신
+  });
+  on('#colorPrevTgl', 'onchange', () => {  // ⑪ 학습 색 — 첫 켬 때 bin+seeds 지연 로드
+    state.colorPreview = $('#colorPrevTgl').checked;
+    const d = state.run;
+    if (d && state.colorPreview) {
+      d.verifyOvUse = d.verifyOvUse || {};
+      d.verifyOvUse.color = (d.verifyOvUse.color || 0) + 1;
+      if (d.colorPrev === undefined) {
+        ensureColorPreview(d).then(() => {
+          if (state.run !== d) return;
+          attachOverlay(d); restyle(); renderSyncBadge(); renderPanel();
+        });
+      }
+    }
+    restyle(); renderSyncBadge(); renderPanel();   // 배타 숨김·램프 범례·통계 갱신
+  });
   document.querySelectorAll('input[name="heatmode"]').forEach(r => {
     r.onchange = () => {   // 히트맵 모드 — 면 색 재계산이 필요해 씬 재구축. 수동 선택 = 추적 해제
       state.autoHeat = false;
       state.heatMode = r.value;
+      const d = state.run;
+      if (d && (r.value === 'anchor_cost' || r.value === 'anchor_flip')) {
+        // 앵커 가시화(⑦) — s2_cells 첫 필요 시 지연 로드 후 맵 1회 계산·캐시 + 사용 기록
+        d.anchorViews = d.anchorViews || { cost: 0, flip: 0 };
+        d.anchorViews[r.value === 'anchor_cost' ? 'cost' : 'flip']++;
+        if (!d.anchorMaps) {
+          ensureCellsInfo(d).then(() => {
+            if (state.run !== d) return;
+            buildAnchorMaps(d);
+            if (state.heatMode === 'anchor_cost' || state.heatMode === 'anchor_flip') {
+              buildScene(d); renderPanel();
+            }
+          });
+        }
+      }
       if (state.run) buildScene(state.run);
       renderPanel();
     };
+  });
+  on('#heatScopeTgl', 'onchange', () => {   // 표시 범위 — F* 기본 / 전체 후보(귀속용)
+    state.heatScope = $('#heatScopeTgl').checked ? 'all' : 'fstar';
+    if (state.run) buildScene(state.run);
+    renderPanel();
+  });
+  // 차이 모드 일반화 — 대상/기준 상태 드롭다운(임의 두 체크포인트 비교)
+  on('#diffTargetSel', 'onchange', () => {
+    state.diffTarget = $('#diffTargetSel').value;
+    if (state.run) buildScene(state.run);
+    renderPanel();
+  });
+  on('#diffBaseSel', 'onchange', () => {
+    state.diffBase = $('#diffBaseSel').value;
+    if (state.run) buildScene(state.run);
+    renderPanel();
+  });
+  // 체크포인트 필름스트립(⑥) — 썸네일 클릭=스텝 선택, 렌더/잔차 토글
+  document.querySelectorAll('#panel .filmcell[data-step]').forEach(f => {
+    f.onclick = () => {
+      const d = state.run;
+      if (d) d.filmClicks = (d.filmClicks || 0) + 1;
+      selectStep(+f.dataset.step);
+    };
+  });
+  document.querySelectorAll('input[name="filmkind"]').forEach(r => {
+    r.onchange = () => { state.filmKind = r.value; renderPanel(); };
   });
   document.querySelectorAll('#panel .ckjump').forEach(b => {
     b.onclick = () => selectStep(+b.dataset.step);
@@ -1837,7 +2697,13 @@ function downloadReading() {
   const now = new Date().toISOString();
   const step = (d.s3 && state.selStep !== null) ? d.s3.steps[state.selStep] : null;
   const obj = {
-    schema: 'phd_s3_verify_p3_reading_v4',   // v4: segment_summary_viewed(구간 배지 요약 카드 ④)
+    schema: 'phd_s3_verify_p3_reading_v6',   // v6: 검증 오버레이 3종(⑨ lod2_overlay ·
+                                             //     ⑩ cells_vs_gt 구멍/과잉 카운트 ·
+                                             //     ⑪ color_preview — 전부 평가 전용)
+                                             // v5: heat_ckpt_used(중간 체크포인트 히트맵 ⑤) +
+                                             //     filmstrip(⑥) + anchor_map(⑦) + 일반화 diff 쌍 +
+                                             //     heat_scope(F* 기본 표시 범위 ⑧ — 오독 정정)
+                                             // v4: segment_summary_viewed(구간 배지 요약 카드 ④)
                                              // v3: 3c 항 ⑨~⑫ + auto.s3c + 3c final 히트맵 + injection
     page: 'p3_joint_opt_continuous',
     run: state.runName,
@@ -1886,8 +2752,54 @@ function downloadReading() {
       heat_mode: state.heatMode,
       heat_auto_track: state.autoHeat,   // 연계 판독 ① — 스텝→히트맵 동기화 상태
       heat_shown: heatStateLabel(d, (heatData(d) || {}).mode || state.heatMode),
+      heat_scope: {                      // 표시 범위(오독 정정) — F* 기본 / 전체 후보(귀속용)
+        scope: state.heatScope,
+        painted: d.paintCounts ?? null,  // { scope, real, sleeping }
+        real_faces_total: d.nRealTotal ?? null,
+        real_faces_paintable: d.realFaceSet ? d.realFaceSet.size : null,   // 외피 절단면 제외
+        faces_total: d.faces.length,
+        note: '기본 = F*(initial_real) 면만 — 렌더에 실재하는 면은 F*뿐, 잠든 gate-0 후보는 귀속용 토글(반투명·점선); 외피 위 F* 절단면은 페이지 관행상 히트맵 대상 밖(외피 토글)',
+      },
+      heat_ckpt_used: {                  // ⑤ 중간 체크포인트 히트맵 — ckpt 파일 사용 기록
+        file_present: !!d.s3.ckptFR,
+        schema: d.s3.ckptSchema,
+        entries: (d.s3.ckptFR || []).map(e => ({ stage: e.stage, step: e.step })),
+        diff_pair: state.heatMode === 'diff'
+          ? { target: state.diffTarget, base: state.diffBase } : null,
+      },
+      filmstrip: {                       // ⑥ 체크포인트 필름스트립 사용 기록
+        kind: state.filmKind, thumb_clicks: d.filmClicks || 0,
+      },
+      anchor_map: {                      // ⑦ 앵커 가시화 사용 기록(열람 횟수 + 통계)
+        opens: d.anchorViews || { cost: 0, flip: 0 },
+        active: (state.heatMode === 'anchor_cost' || state.heatMode === 'anchor_flip')
+          ? state.heatMode : null,
+        cost_stats: d.anchorMaps ? d.anchorMaps.costStats : null,
+        flip_stats: d.anchorMaps ? d.anchorMaps.flipStats : null,
+      },
       s2_overlay: { on: state.overlayS2, source: d.s2ovSource ?? null,   // 연계 판독 ②
                     real_faces: d.s2ov ? d.s2ov.nReal : null },
+      lod2_overlay: {                    // ⑨ LoD2 지붕면 — 평가 전용, δ̂ 무관 고정 기준면
+        on: state.overlayGt,
+        gt_planes: d.gtPlanes ? d.gtPlanes.length : null,
+        s1_planes_missing: d.s1PlanesMissing ?? null,
+        fixed_frame: true, opens: (d.verifyOvUse || {}).gt || 0,
+        note: '평가 전용 — 방법 입력 아님',
+      },
+      cells_vs_gt: {                     // ⑩ 초기 점유 vs LoD2 — 구멍/과잉 셀(1회 계산)
+        on: state.overlayCellsGt, opens: (d.verifyOvUse || {}).cells || 0,
+        computed: !!(d.cellOv && d.cellOv.stats),
+        ...(d.cellOv && d.cellOv.stats ? d.cellOv.stats : {}),
+        fail_note: d.cellOvNote ?? null,
+        logic: '셀 중심 XY∈gt 지붕면(|n_z|>0.2) → 포함 면 평면 z 최댓값=gt 지붕고, ±0.3 m — 구멍=끔&지붕아래, 과잉=켬&지붕위 (파이썬 대조: B022 구멍 59·과잉 234)',
+      },
+      color_preview: {                   // ⑪ 학습 색(텍스처) 미리보기 — F* 시드만
+        on: state.colorPreview, opens: (d.verifyOvUse || {}).color || 0,
+        loaded: !!(d.colorPrev && d.colorPrev.stats),
+        ...(d.colorPrev && d.colorPrev.stats ? d.colorPrev.stats : {}),
+        fail_note: d.colorPrevNote ?? null,
+        exclusive_hide_heat: true,       // 진단 칠 자동 숨김(라디오식 배타)
+      },
       delta_shift_applied_m: currentDeltaShift(),   // 연계 판독 ③ — prior δ̂ 평행이동량
       segment_summary_viewed: d.segViews ? {        // ④ 구간 배지 요약 카드 열람 기록
         used: true, opens: d.segViews.opens,
@@ -1932,8 +2844,11 @@ function renderHeader() {
     ` · CRS ${d.manifest.crs || '?'} (offset −[${off.map(x => (+x).toFixed(1)).join(', ')}])`;
   $('#hud').textContent = `${state.runName} — 좌드래그 회전 · 우드래그 이동 · 휠 줌 · ` +
     `면 클릭=잔차 카드(페이지 2·1 점프) · 재클릭·빈 공간·ESC=해제 · ` +
-    `면 색 = |잔차| 램프(어두움→밝은 앰버) · 타임라인 스텝 클릭=손실·grad·뷰 타일` +
-    ` + 히트맵 자동 동기화(우상단 배지) · 3c 스텝=prior δ̂ 평행이동 · F* 오버레이 토글=출발 기하`;
+    `히트맵 = F* 면 기본(잠든 후보는 '전체 후보 면' 토글 — 귀속용) · 면 색 = 5단 앰버 램프 · ` +
+    `타임라인 스텝 클릭=손실·grad·뷰 타일` +
+    ` + 히트맵 자동 동기화(우상단 배지 — 중간 체크포인트 포함) · 3c 스텝=prior δ̂ 평행이동 · ` +
+    `F* 오버레이 토글=출발 기하 · 타임라인 [산출물 요약] 버튼(구간 배지)=단계 산출물 카드 · ` +
+    `검증 오버레이 3종(LoD2 지붕면·초기 점유 vs LoD2·학습 색)=우측 카드(평가 전용)`;
 }
 
 // ---------- 런 전환 ----------
@@ -1969,10 +2884,20 @@ async function loadRun(name) {
     ensureS2Overlay(d).then(() => {
       if (state.run === d) { attachOverlay(d); restyle(); renderSyncBadge(); }
     });
+  if (state.overlayGt && d.gtOv === undefined) { ensureGtOverlay(d); attachOverlay(d); }
+  if (state.overlayCellsGt && d.cellOv === undefined)
+    ensureCellsVsGt(d).then(() => {
+      if (state.run === d) { attachOverlay(d); restyle(); renderSyncBadge(); renderPanel(); }
+    });
+  if (state.colorPreview && d.colorPrev === undefined)
+    ensureColorPreview(d).then(() => {
+      if (state.run === d) { attachOverlay(d); restyle(); renderSyncBadge(); renderPanel(); }
+    });
   renderHeader();
   renderChecklist();
   renderTimeline();
   renderPanel();
+  maybeShowSegHint();   // 첫 성공 로드 시 1회 — 구간 산출물 요약 힌트(닫기 가능)
   resize();
 }
 
@@ -2015,3 +2940,19 @@ fetch('./manifest.json').then(r => {
 });
 resize();
 applyOrbit();
+// 헤드리스 검증 훅(읽기 전용 + 기존 단일 경로 재사용) — 모듈 스코프라 CDP가 내부 상태를
+// 못 보므로 최소 창구만 노출: 상태 조회·스텝 선택(selectStep 공용 경로)·히트 데이터 표본.
+// UI 조작 자체는 실제 DOM 경로(라디오·버튼 click)로 검증한다. 판독·기록에는 불참.
+window.__p3 = {
+  state,
+  run: () => state.run,
+  selectStep,
+  heatData: () => (state.run ? heatData(state.run) : null),
+  heatStates: () => (state.run ? heatStatesOf(state.run) : []),
+  // 검증 오버레이 3종(⑨~⑪) — 헤드리스 대조용 조회/생성 창구(UI 조작은 DOM 토글 경로로)
+  ensureGtOverlay: () => (state.run ? ensureGtOverlay(state.run) : null),
+  ensureCellsVsGt: () => (state.run ? ensureCellsVsGt(state.run) : Promise.resolve(null)),
+  ensureColorPreview: () => (state.run ? ensureColorPreview(state.run) : Promise.resolve(null)),
+  cellsVsGtStats: () => (state.run && state.run.cellOv ? state.run.cellOv.stats : null),
+  colorPreviewStats: () => (state.run && state.run.colorPrev ? state.run.colorPrev.stats : null),
+};
