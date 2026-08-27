@@ -295,9 +295,11 @@ class S1BundleReferenceIntegrityTest(unittest.TestCase):
         for key in MANIFEST_REQUIRED_KEYS:
             self.assertIn(key, manifest, f"{name}: manifest missing key {key!r}")
         self.assertEqual(manifest["schema"], SCHEMA, f"{name}: wrong schema string")
-        self.assertIn(manifest["stage"], ("s1", "s1+s2", "s1+s2+s3a", "s1+s2+s3a+s3b"),
-                      f"{name}: stage must be 's1', 's1+s2', 's1+s2+s3a' or "
-                      "'s1+s2+s3a+s3b'")
+        self.assertIn(manifest["stage"],
+                      ("s1", "s1+s2", "s1+s2+s3a", "s1+s2+s3a+s3b",
+                       "s1+s2+s3a+s3b+s3c"),
+                      f"{name}: stage must be 's1' or a later cumulative stage "
+                      "up to 's1+s2+s3a+s3b+s3c'")
         self.assertEqual(
             manifest["bundle_name"], name,
             f"{name}: manifest bundle_name must match runs/<name>/ directory",
@@ -603,18 +605,23 @@ class S1BundleReferenceIntegrityTest(unittest.TestCase):
                     f"{name}/{gt_id}: matched_plane_ids references unknown "
                     f"plane_id {pid!r}",
                 )
-                self.assertNotIn(
-                    pid, backward,
-                    f"{name}: plane {pid!r} appears in matched_plane_ids of "
-                    f"both {backward.get(pid)!r} and {gt_id!r} but gt_match "
-                    "can only reference one gt plane",
-                )
-                backward[pid] = gt_id
+                # Face-side rule is "any candidate within thresholds counts":
+                # one plane may legitimately cover several nearly-coplanar GT
+                # faces (GT subdivision), so multi-face membership is allowed.
+                backward.setdefault(pid, set()).add(gt_id)
 
-        self.assertEqual(
-            forward, backward,
-            f"{name}: plane.gt_match and gt_planes.matched_plane_ids disagree",
-        )
+        for pid, gt_id in forward.items():
+            self.assertIn(
+                gt_id, backward.get(pid, set()),
+                f"{name}: plane {pid!r} gt_match -> {gt_id!r} but that face's "
+                "matched_plane_ids does not list the plane",
+            )
+        for pid in backward:
+            self.assertIn(
+                pid, forward,
+                f"{name}: plane {pid!r} listed in matched_plane_ids but "
+                "carries no gt_match",
+            )
 
     # ----------------------------------------------------------------- orphans
 

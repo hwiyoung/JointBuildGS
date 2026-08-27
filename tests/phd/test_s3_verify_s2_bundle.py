@@ -72,10 +72,12 @@ except ImportError:  # direct-file execution fallback
 S2_FILE_NAMES = ("s2_cells.json", "s2_faces.json", "s2_seeds.json")
 
 STAGE_S1S2 = "s1+s2"
-# Stages 3a (render-only wiring check) and 3b (color-only training, geometry
+# Stages 3a (render-only wiring check), 3b (color-only training, geometry
+# frozen) and 3c (delta unfreeze: global-translation + colors, planes/o
 # frozen) append files to the same bundle and advance the manifest stage
 # without invalidating any S2 guarantee.
-S2_ALLOWED_STAGES = (STAGE_S1S2, "s1+s2+s3a", "s1+s2+s3a+s3b")
+S2_ALLOWED_STAGES = (STAGE_S1S2, "s1+s2+s3a", "s1+s2+s3a+s3b",
+                     "s1+s2+s3a+s3b+s3c")
 
 # r16 fixed o_init contract values (the only truth).
 O_INIT_RADIUS_M = 0.75

@@ -60,7 +60,19 @@
       "checkpoints": [0, 5, 15, 45, 130, 300],
       "seed": 0,
       "rerun_tolerance_jsonl": 0.001
+    },
+    "c": {
+      "steps": 300,
+      "lr_delta": 0.01,
+      "optimizer": "adam",
+      "checkpoints": [0, 5, 15, 45, 130, 300],
+      "seed": 0,
+      "rerun_tolerance_jsonl": 0.001
     }
+  },
+  "injected_runs": {
+    "B022_DZ050": {"base": "B022", "dz": 0.5},
+    "B173_DZ050": {"base": "B173", "dz": 0.5}
   },
   "viewer": {
     "three_module_src": "src/apps/gs3d_4way_viewer/build/three.module.min.js",
@@ -79,6 +91,8 @@
     "synth_als": "SYNTH_GABLE only — no real ALS exists, so pseudo-ALS is sampled deterministically from the GT faces (synthetic.gt_surfaces gable, surfaces[1:]) on a 1/sqrt(density) grid with fixed-seed normal noise, written as source==1",
     "domain_margin_m": "real 1.2 = scripts/p2/arrgs_v1/xreal_run.py BASE domain_margin (L37, also oracle_occupancy.py L37); synthetic 1.5 = arrgs_train.py run() domain_margin default",
     "s3": "stage 3a render-only (plan doc revision note 2026-08-27, commit 64664b98): 0 optimization steps, 1 backward for grad wiring evidence; n_views/image_scale 16/0.75 within legacy max_views 40/0.75 (xreal_run.py scene_for L45); real view selection = real_scene.py load_real_scene camera scoring reused unchanged; synth photos = x0 GT-gaussian renders (arrgs_train.py run() synthetic branch); size ({size_m},{size_m},1e-3) = seeds.size_m + arrgs_model.py EPS_Z; delta wired on prior-source planes (methodology 1.3 d_eff = d0 + n0*delta), held at 0; lambda_area uncalibrated",
+    "s3_c": "stage 3c delta thaw / injection-recovery test (plan doc revision note 2026-08-27 '3c 착수 등록'): trained leaves = delta (one global translation vector, methodology §1.3 — no rotation) + colors (warm-started from the 3b artifact s3b_colors.f16.bin); planes P / occupancy o / seed geometry byte-frozen (sha256). OPTIMIZED OBJECTIVE = photo only; anchor(cell)/area are constant diagnostics and anchor_plane is a recorded |n0·delta| diagnostic — delta itself has no anchor (§2.2) and the plane anchor's target is P0⊕delta, so with planes frozen at P0 it would reduce to a |delta_hat|-proportional penalty that unjustly suppresses injection recovery (it operates correctly from 3d where planes follow). lr_delta 1e-2 = NEW REGISTRATION (proposal): legacy arrgs_train.py L295 lr.get('delta', 2e-3) is a 5000-iter joint-loop value; 1e-2 sizes the Adam-normalized step so a 0.5 m injection is traversable well inside the 300-step budget (~50 steps minimum), effectiveness confirmed on the injected runs; lr_rgb inherited from s3.b (no separate registration); seed/determinism/tolerance = 3b regime",
+    "injected_runs": "delta-injection runs (naming B<k>_DZ<cm>: B022_DZ050/B173_DZ050): route = scripts/p2/arrgs_v1/xreal_run.py scene_for(base, dz) -> real_scene.load_real_scene inject_delta_z_m (L202-209: ALS crop bytes +[0,0,dz]) + s1r.candidates_from_roofer delta_shift (L120-125: E7 prior planes d += n·shift, supports translated); build_s3c_bundle applies the identical +[0,0,dz] to the E7 crop bytes it serializes as source==1, so plane statements AND o_init pillars carry the injection together (honest path — no side channel knows the truth); full S1->S2->3a->3b->3c pipeline through the existing writers (render_state.INJECTED_SCENES registry); expected delta_hat = -[0,0,dz] (d_eff = d0 + n0·delta translates prior planes by +delta, so recovery counteracts the applied shift)",
     "s3_b": "stage 3b color-only warm-up (plan doc revision note 2026-08-27, commit 64664b98): trained leaf = colors only, geometry byte-frozen (sha256 before/after); lr_rgb 2.5e-2 = scripts/p2/arrgs_v1/arrgs_train.py L291 lr.get('rgb', 2.5e-2); optimizer adam = arrgs_train.py L296 torch.optim.Adam(param_groups) (default betas/eps); legacy applies the rgb lr to the pre-sigmoid rgb_raw leaf — here colors are the direct 3a leaf (3a compat), kept in [0,1] by a per-step clamp projection, Adam's per-parameter scaling absorbs the parameterization difference; steps 300 + 6 log-spaced checkpoints incl 0/final (new registration — legacy has no color-only step count, its joint default iters 5000 = arrgs_train.py L298); seed 0, cudnn deterministic, CUBLAS_WORKSPACE_CONFIG :4096:8, use_deterministic_algorithms warn_only (gsplat rasterize backward atomics) — re-run jsonl numeric tolerance 1e-3"
   },
   "scientific_verdict": null,

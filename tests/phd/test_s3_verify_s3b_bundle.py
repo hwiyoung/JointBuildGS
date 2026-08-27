@@ -47,7 +47,12 @@ Appended/updated files in ``runs/<name>/``:
   references it).
 - ``s3_face_residual_final.json``: same approximation and null convention
   as the 3a ``s3_face_residual.json`` (null = no visible samples).
-- ``manifest.json``: stage advances to ``"s1+s2+s3a+s3b"`` and gains the
+- ``s3b_colors.f16.bin``: the FINAL trained colors as float16 RGB in seed
+  order (3c warm-start amendment, plan doc "3c 착수 등록" 2026-08-27) —
+  the manifest names it in ``s3b_def.colors_artifact`` and its byte size
+  must equal ``counts.seeds * 3 * 2``.
+- ``manifest.json``: stage advances to ``"s1+s2+s3a+s3b"`` (later
+  ``"s1+s2+s3a+s3b+s3c"`` once the S3c writer runs) and gains the
   ``s3b_def`` block.
 
 Weak-monotonicity check: the median PSNR of the FINAL checkpoint row must
@@ -59,6 +64,7 @@ improve the render?).
 
 from __future__ import annotations
 
+import hashlib
 import math
 import re
 import statistics
@@ -117,12 +123,22 @@ except ImportError:  # direct-file execution fallback
 
 S3B_SCHEMA = "phd_s3_verify_s3b_v1"
 STAGE_S1S2S3AS3B = "s1+s2+s3a+s3b"
+# Stage 3c (delta unfreeze) appends files to the same bundle and advances
+# the manifest stage without invalidating any S3b guarantee.
+S3B_ALLOWED_STAGES = (STAGE_S1S2S3AS3B, "s1+s2+s3a+s3b+s3c")
 S3B_STAGE = "3b"
 
 FINAL_RESIDUAL_NAME = "s3_face_residual_final.json"
 S3B_TILES_DIRNAME = "s3_tiles"
 STEP_DIR_RE = re.compile(r"^s(\d+)$")
 STEP_TILE_FILE_NAMES = ("render.png", "residual.png")
+
+# 3c warm-start amendment (plan doc "3c 착수 등록" 2026-08-27): the writer
+# stores the FINAL trained colors as float16 RGB in seed order and names the
+# file in s3b_def.colors_artifact. Pre-amendment bundles fail here until the
+# writer deterministically regenerates 3b (3a rows preserved, idempotent).
+COLORS_ARTIFACT_NAME = "s3b_colors.f16.bin"
+COLORS_ARTIFACT_BYTES_PER_SEED = 3 * 2  # RGB x float16
 
 S3B_DEF_REQUIRED_KEYS = (
     "steps",
@@ -131,6 +147,7 @@ S3B_DEF_REQUIRED_KEYS = (
     "trained",
     "checkpoints",
     "frozen_checksum_ok",
+    "colors_artifact",
 )
 S3B_TRAINED = ["colors"]
 
@@ -190,7 +207,8 @@ def run_has_any_s3b(run_dir: Path) -> bool:
         except (OSError, ValueError):
             return False
         if isinstance(manifest, dict) and (
-            manifest.get("stage") == STAGE_S1S2S3AS3B or "s3b_def" in manifest
+            manifest.get("stage") in S3B_ALLOWED_STAGES
+            or "s3b_def" in manifest
         ):
             return True
     return False
@@ -293,10 +311,11 @@ class S3bBundleReferenceIntegrityTest(unittest.TestCase):
 
     def _check_manifest_s3b_contract_fields(self, name: str, bundle: dict) -> None:
         manifest = bundle["manifest"]
-        self.assertEqual(
-            manifest.get("stage"), STAGE_S1S2S3AS3B,
-            f"{name}: manifest stage must be {STAGE_S1S2S3AS3B!r} once S3b "
-            "files exist (not 's1+s2+s3b' — the 3a guarantees stay in force)",
+        self.assertIn(
+            manifest.get("stage"), S3B_ALLOWED_STAGES,
+            f"{name}: manifest stage must be one of {S3B_ALLOWED_STAGES} once "
+            "S3b files exist (not 's1+s2+s3b' — the 3a guarantees stay in "
+            "force; 3c merely appends)",
         )
         self.assertIsNone(
             manifest.get("scientific_verdict"),
@@ -404,6 +423,93 @@ class S3bBundleReferenceIntegrityTest(unittest.TestCase):
                 f"{name}: s3b_def.optimizer={optimizer!r} must start with "
                 f"the config s3.b.optimizer constant {config_opt!r}",
             )
+
+    # ------------------------------------------- 1b. s3b_colors.f16.bin
+    # 3c warm-start amendment: the final trained colors are persisted as
+    # float16 RGB in seed order so 3c can warm-start without re-running 3b.
+
+    def test_colors_artifact_file(self) -> None:
+        self.for_each_s3b_run(self._check_colors_artifact_file)
+
+    def _check_colors_artifact_file(self, name: str, bundle: dict) -> None:
+        manifest = bundle["manifest"]
+        s3b_def = manifest.get("s3b_def")
+        self.assertIsInstance(
+            s3b_def, dict, f"{name}: manifest missing s3b_def object"
+        )
+        artifact = s3b_def.get("colors_artifact")
+        # Accepted forms: a run-relative path string, or the writer's object
+        # {"file": ..., "dtype": "float16", "shape": [seeds, 3],
+        #  "sha256": ...} (extra descriptive keys are allowed).
+        file_ref = artifact.get("file") if isinstance(artifact, dict) else artifact
+        self.assertTrue(
+            isinstance(file_ref, str) and file_ref.strip(),
+            f"{name}: s3b_def.colors_artifact must name the final-color "
+            f"artifact ({COLORS_ARTIFACT_NAME!r}, float16 RGB in seed order; "
+            "3c warm-start amendment — regenerate 3b with the amended "
+            f"writer) as a path string or an object with 'file', "
+            f"got {artifact!r}",
+        )
+        rel = Path(file_ref)
+        self.assertFalse(
+            rel.is_absolute() or ".." in rel.parts,
+            f"{name}: s3b_def.colors_artifact file must be a run-relative "
+            f"path without '..', got {file_ref!r}",
+        )
+        self.assertEqual(
+            rel.name, COLORS_ARTIFACT_NAME,
+            f"{name}: s3b_def.colors_artifact file basename must be "
+            f"{COLORS_ARTIFACT_NAME!r}, got {file_ref!r}",
+        )
+        path = bundle["run_dir"] / COLORS_ARTIFACT_NAME
+        self.assertTrue(
+            path.is_file(),
+            f"{name}: missing colors artifact file {path} (the amended 3b "
+            "writer must store the final colors for the 3c warm-start)",
+        )
+        counts = manifest.get("counts", {})
+        seeds = counts.get("seeds") if isinstance(counts, dict) else None
+        self.assertTrue(
+            _positive_int(seeds),
+            f"{name}: manifest counts.seeds must be a positive integer to "
+            f"size the colors artifact, got {seeds!r}",
+        )
+        expected_size = seeds * COLORS_ARTIFACT_BYTES_PER_SEED
+        actual_size = path.stat().st_size
+        self.assertEqual(
+            actual_size, expected_size,
+            f"{name}: {COLORS_ARTIFACT_NAME} is {actual_size} bytes, expected "
+            f"counts.seeds({seeds}) x 3 channels x 2 bytes (float16) = "
+            f"{expected_size}",
+        )
+        if isinstance(artifact, dict):
+            if "dtype" in artifact:
+                self.assertEqual(
+                    artifact["dtype"], "float16",
+                    f"{name}: colors_artifact.dtype must be 'float16', "
+                    f"got {artifact['dtype']!r}",
+                )
+            if "shape" in artifact:
+                self.assertEqual(
+                    artifact["shape"], [seeds, 3],
+                    f"{name}: colors_artifact.shape must be [counts.seeds, 3]"
+                    f" = [{seeds}, 3], got {artifact['shape']!r}",
+                )
+            if "sha256" in artifact:
+                declared = artifact["sha256"]
+                self.assertTrue(
+                    isinstance(declared, str)
+                    and re.fullmatch(r"[0-9a-f]{64}", declared) is not None,
+                    f"{name}: colors_artifact.sha256 must be a 64-char lower "
+                    f"hex digest, got {declared!r}",
+                )
+                actual = hashlib.sha256(path.read_bytes()).hexdigest()
+                self.assertEqual(
+                    actual, declared,
+                    f"{name}: {COLORS_ARTIFACT_NAME} content hash {actual} "
+                    f"!= declared colors_artifact.sha256 {declared} (the 3c "
+                    "warm-start integrity check would fail)",
+                )
 
     # ------------------------------------------------------------ 2. s3_steps
 

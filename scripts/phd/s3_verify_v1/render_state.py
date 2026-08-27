@@ -244,13 +244,23 @@ def anchor_terms(st):
             "area_gate_m2": area_gate}
 
 
+# δ-injection bundle names -> xreal_run.scene_for kwargs (e.g. {"bk": "B022",
+# "dz": 0.5}). Orchestrators (build_s3c_bundle) register their runs here before
+# calling the stage writers; empty registry == exact previous behaviour.
+INJECTED_SCENES = {}
+
+
 def real_views(run_name, s3cfg):
     """Sealed-base cameras/photos via the legacy scene loader, unmodified.
     Selection = real_scene.load_real_scene camera scoring (footprint-prism
-    projected hull area, top max_views, depth 15-180 m, 12% center margin)."""
+    projected hull area, top max_views, depth 15-180 m, 12% center margin).
+    Injected runs (INJECTED_SCENES) resolve through scene_for(base, dz=..)
+    — cameras/photos stay the sealed base; only the ALS-derived scene fields
+    (planes/footprint-prism extent) carry the injection."""
     from real_scene import load_real_scene, FULLSCENE_IMAGES, quat_to_R  # noqa: F401
     from xreal_run import scene_for
-    scene = scene_for(run_name)
+    inj_args = INJECTED_SCENES.get(run_name)
+    scene = scene_for(**inj_args) if inj_args else scene_for(run_name)
     scene["max_views"] = int(s3cfg["n_views"])
     scene["image_scale"] = float(s3cfg["image_scale"])
     rs = load_real_scene(scene, device="cuda")

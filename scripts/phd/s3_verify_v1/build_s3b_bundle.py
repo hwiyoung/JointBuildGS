@@ -14,7 +14,10 @@ Adds to runs/<name>/ (on top of s1+s2+s3a):
   s3_tiles/s<step>/<view_id>/{render,residual}.png   checkpoints only
                                         (photo tiles stay the 3a ones)
   s3_face_residual_final.json           final-state residual, 3a approximation
+  s3b_colors.f16.bin                    final colors (float16, seed order) —
+                                        3c warm-start artifact
   manifest.json                         stage -> s1+s2+s3a+s3b, s3b_def
+                                        (incl. colors_artifact)
 
 Usage (container):
   bash scripts/p2/arrgs_v1/run_host.sh <gpu> \
@@ -22,6 +25,7 @@ Usage (container):
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import sys
@@ -190,6 +194,11 @@ def build_s3b(name, out_root):
                "per_face": per_face},
               open(out_dir / "s3_face_residual_final.json", "w"))
 
+    # final color artifact — 3c warm-start input (float16, seed order)
+    colors_f16 = state.colors.detach().cpu().numpy().astype(np.float16)
+    colors_f16.tofile(out_dir / "s3b_colors.f16.bin")
+    colors_sha = hashlib.sha256(colors_f16.tobytes()).hexdigest()
+
     manifest["stage"] = "s1+s2+s3a+s3b"
     manifest["s3b_schema"] = S3B_SCHEMA
     manifest["s3b_def"] = {
@@ -217,6 +226,14 @@ def build_s3b(name, out_root):
                             "gaussian; color_var = across-gaussian variance "
                             "averaged over channels"),
         "psnr_median": {"step0": round(med0, 3), "final": round(medf, 3)},
+        "colors_artifact": {
+            "file": "s3b_colors.f16.bin", "dtype": "float16",
+            "shape": [n_seeds, 3], "layout": "row-major, seed order "
+            "(s2_seeds.json rows; one RGB triple per seed)",
+            "semantics": ("final trained colors — the post-training state the "
+                          "final evaluation row renders (clamped [0,1]); "
+                          "3c warm-starts its colors leaf from this file"),
+            "sha256": colors_sha},
         "determinism": det,
     }
     json.dump(manifest, open(out_dir / "manifest.json", "w"), indent=1)

@@ -81,12 +81,14 @@ except ImportError:  # direct-file execution fallback
 
 S3A_SCHEMA = "phd_s3_verify_s3a_v1"
 STAGE_S1S2S3A = "s1+s2+s3a"
-# Stage 3b (color-only training) appends files to the same bundle and
-# advances the manifest stage without invalidating any S3a guarantee.
-S3A_ALLOWED_STAGES = (STAGE_S1S2S3A, "s1+s2+s3a+s3b")
-# S3b checkpoint snapshot directories s3_tiles/s<step>/ live alongside the
-# 3a per-view tile directories; they are owned by the S3b module.
-S3B_STEP_DIR_RE = re.compile(r"^s\d+$")
+# Stages 3b (color-only training) and 3c (delta unfreeze) append files to
+# the same bundle and advance the manifest stage without invalidating any
+# S3a guarantee.
+S3A_ALLOWED_STAGES = (STAGE_S1S2S3A, "s1+s2+s3a+s3b", "s1+s2+s3a+s3b+s3c")
+# Checkpoint snapshot directories s3_tiles/s<step>/ (S3b) and
+# s3_tiles/s3c_s<step>/ (S3c) live alongside the 3a per-view tile
+# directories; they are owned by the S3b/S3c modules respectively.
+STEP_SNAPSHOT_DIR_RE = re.compile(r"^(?:s|s3c_s)\d+$")
 
 S3A_FILE_NAMES = ("s3_views.json", "s3_steps.jsonl", "s3_face_residual.json")
 S3A_TILES_DIRNAME = "s3_tiles"
@@ -628,7 +630,7 @@ class S3aBundleReferenceIntegrityTest(unittest.TestCase):
         dir_set = {
             p.name
             for p in tiles_dir.iterdir()
-            if p.is_dir() and not S3B_STEP_DIR_RE.match(p.name)
+            if p.is_dir() and not STEP_SNAPSHOT_DIR_RE.match(p.name)
         }
         missing = sorted(v for v in id_set if v not in dir_set)
         extra = sorted(dir_set - id_set)
