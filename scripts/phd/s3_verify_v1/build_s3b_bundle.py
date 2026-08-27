@@ -14,10 +14,18 @@ Adds to runs/<name>/ (on top of s1+s2+s3a):
   s3_tiles/s<step>/<view_id>/{render,residual}.png   checkpoints only
                                         (photo tiles stay the 3a ones)
   s3_face_residual_final.json           final-state residual, 3a approximation
+  s3_face_residual_ckpt.json            EVERY checkpoint's face residual in ONE
+                                        unified file (schema
+                                        phd_s3_verify_face_residual_ckpt_v1,
+                                        entries [{stage,step,per_face}] — this
+                                        stage replaces only its own entries;
+                                        endpoint files stay the compat contract,
+                                        the final entry is the same computation)
   s3b_colors.f16.bin                    final colors (float16, seed order) —
                                         3c warm-start artifact
   manifest.json                         stage -> s1+s2+s3a+s3b, s3b_def
-                                        (incl. colors_artifact)
+                                        (incl. colors_artifact),
+                                        face_residual_ckpt index
 
 Usage (container):
   bash scripts/p2/arrgs_v1/run_host.sh <gpu> \
@@ -43,6 +51,7 @@ for p in (HERE, REPO / "scripts/p2/arrgs_v1"):
     if str(p) not in sys.path:
         sys.path.insert(0, str(p))
 
+import render_state  # noqa: E402
 from render_state import (S3RenderState, anchor_terms, color_stats,  # noqa: E402
                           load_bundle_state, photo_l1_backward, real_views,
                           state_checksums, synth_views, write_render_tiles)
@@ -53,6 +62,36 @@ S3 = CFG["s3"]
 S3B = S3["b"]
 S3B_SCHEMA = "phd_s3_verify_s3b_v1"
 PLANE_KEYS = ("plane_n_raw", "plane_d", "delta")  # cheap per-step subset
+
+# Unified per-checkpoint face residual file (viewer page 3 intermediate-state
+# heatmaps): 3b and 3c each replace ONLY their own stage entries (jsonl rerun
+# convention), preserving the other stage's, ordered by (stage, step).
+FR_CKPT_NAME = "s3_face_residual_ckpt.json"
+FR_CKPT_SCHEMA = "phd_s3_verify_face_residual_ckpt_v1"
+FR_STAGE_ORD = {"3a": 0, "3b": 1, "3c": 2, "3d": 3}
+
+
+def write_face_residual_ckpt(out_dir, stage, entries, method):
+    """Merge one stage's checkpoint face residuals into s3_face_residual_ckpt.json.
+
+    Contract phd_s3_verify_face_residual_ckpt_v1:
+      {schema, method, entries: [{stage, step, faces_sampled, per_face}]}
+    per_face keeps the 3a null convention (null = no visible samples). The
+    endpoint files (s3_face_residual_final*.json) remain the backward-compat
+    contract; the final entry of a stage is the SAME computation (equality is
+    a test invariant). Returns the (stage, step) index for the manifest."""
+    path = Path(out_dir) / FR_CKPT_NAME
+    kept = []
+    if path.is_file():
+        doc = json.load(open(path))
+        kept = [e for e in doc.get("entries", [])
+                if e.get("stage") != stage]
+    merged = sorted(kept + entries,
+                    key=lambda e: (FR_STAGE_ORD.get(str(e.get("stage")), 9),
+                                   int(e.get("step", 0))))
+    json.dump({"schema": FR_CKPT_SCHEMA, "method": method,
+               "entries": merged}, open(path, "w"))
+    return [{"stage": e["stage"], "step": e["step"]} for e in merged]
 
 
 def set_determinism(seed):
@@ -81,7 +120,10 @@ def build_s3b(name, out_root):
     t0 = time.time()
     out_dir = Path(out_root) / "runs" / name
     manifest = json.load(open(out_dir / "manifest.json"))
-    assert manifest["stage"] in ("s1+s2+s3a", "s1+s2+s3a+s3b"), manifest["stage"]
+    # +s3c allowed: a 3b rerun over a full bundle (regeneration order 3b->3c;
+    # the stage drops to +s3b until the 3c writer runs again).
+    assert manifest["stage"] in ("s1+s2+s3a", "s1+s2+s3a+s3b",
+                                 "s1+s2+s3a+s3b+s3c"), manifest["stage"]
 
     det = set_determinism(int(S3B["seed"]))
     st = load_bundle_state(out_dir)
@@ -111,8 +153,8 @@ def build_s3b(name, out_root):
     area_const = lam_a * terms["area_gate_m2"]
 
     leaves = (state.plane_n_raw, state.plane_d, state.delta, state.colors)
-    rows_3b, psnr_by_ckpt = [], {}
-    final_rows = final_residuals = None
+    rows_3b, psnr_by_ckpt, fr_ckpt_entries = [], {}, []
+    final_per_face = final_sampled = None
     for k in range(steps + 1):
         for t in leaves:
             t.grad = None
@@ -152,8 +194,14 @@ def build_s3b(name, out_root):
                 out_dir / "s3_tiles" / f"s{k}" / m["view_id"], r,
                 int(S3["tile_max_px"]), float(S3["residual_vmax"]))
                 for r, m in zip(vrows, views["rows"])]
+            # per-checkpoint face residual — THIS checkpoint's pre-update
+            # state (same state the tiles snapshot), 3a approximation/null rule
+            pf_k, ns_k = face_residuals(st, state, views, vrows, residuals,
+                                        S3["face_residual"])
+            fr_ckpt_entries.append({"stage": "3b", "step": k,
+                                    "faces_sampled": ns_k, "per_face": pf_k})
             if k == steps:
-                final_rows, final_residuals = vrows, residuals
+                final_per_face, final_sampled = pf_k, ns_k
         if k < steps:  # final row = post-training evaluation, no update
             before = state.colors.detach().clone()
             opt.step()
@@ -186,13 +234,18 @@ def build_s3b(name, out_root):
         for row in rows_3b:
             f.write(json.dumps(row) + "\n")
 
-    per_face, n_sampled = face_residuals(st, state, views, final_rows,
-                                         final_residuals, S3["face_residual"])
+    # endpoint file reuses the final-checkpoint computation (byte-identical:
+    # no update happens after the final evaluation row)
+    per_face, n_sampled = final_per_face, final_sampled
+    assert per_face is not None, "final checkpoint face residual missing"
     fr3a = json.load(open(out_dir / "s3_face_residual.json"))
     json.dump({"step": steps, "stage": "3b", "method": fr3a["method"],
-               "n_views": len(final_rows), "faces_sampled": n_sampled,
+               "n_views": len(views["rows"]), "faces_sampled": n_sampled,
                "per_face": per_face},
               open(out_dir / "s3_face_residual_final.json", "w"))
+    assert [e["step"] for e in fr_ckpt_entries] == ckpts, "ckpt entries != ckpts"
+    ckpt_index = write_face_residual_ckpt(out_dir, "3b", fr_ckpt_entries,
+                                          fr3a["method"])
 
     # final color artifact — 3c warm-start input (float16, seed order)
     colors_f16 = state.colors.detach().cpu().numpy().astype(np.float16)
@@ -201,6 +254,8 @@ def build_s3b(name, out_root):
 
     manifest["stage"] = "s1+s2+s3a+s3b"
     manifest["s3b_schema"] = S3B_SCHEMA
+    manifest["face_residual_ckpt"] = {
+        "file": FR_CKPT_NAME, "schema": FR_CKPT_SCHEMA, "entries": ckpt_index}
     manifest["s3b_def"] = {
         "stage": "3b", "trained": ["colors"],
         "optimizer": "adam (torch.optim.Adam, default betas 0.9/0.999 eps 1e-8)",
@@ -264,6 +319,12 @@ def build_s3b(name, out_root):
 
 
 def main():
+    # δ-injected bundles (e.g. B022_DZ050) resolve their sealed-base views
+    # through scene_for(base, dz) — same registration as build_s3c_bundle
+    # (needed for a direct 3b rerun in the 3b->3c regeneration order).
+    for nm, spec in CFG.get("injected_runs", {}).items():
+        render_state.INJECTED_SCENES[nm] = {"bk": spec["base"],
+                                            "dz": float(spec["dz"])}
     runs = sys.argv[1:] or CFG["runs"]
     out_root = Path(CFG["out_root"])
     for r in runs:

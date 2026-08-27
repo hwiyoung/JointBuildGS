@@ -29,8 +29,13 @@ Adds to runs/<name>/ (on top of s1+s2+s3a+s3b):
   s3_tiles/s3c_s<step>/<view_id>/{render,residual}.png   checkpoints only
                                         (no collision with 3b s<step>/ dirs)
   s3_face_residual_s3c_final.json       final-state residual (3a null rule)
+  s3_face_residual_ckpt.json            3c entries merged into the unified
+                                        per-checkpoint face residual file
+                                        (3b entries preserved — see
+                                        build_s3b_bundle.write_face_residual_ckpt)
   manifest.json                         stage -> s1+s2+s3a+s3b+s3c, s3c_def
-                                        (+ injection block on injected runs)
+                                        (+ injection block on injected runs),
+                                        face_residual_ckpt index
 
 Usage (container):
   bash scripts/p2/arrgs_v1/run_host.sh <gpu> \
@@ -284,8 +289,8 @@ def build_s3c(name, out_root):
     nd_scope = (state.delta_dir * state.scope[:, None]).detach()
 
     leaves = (state.plane_n_raw, state.plane_d, state.delta, state.colors)
-    rows_3c, psnr_by_ckpt = [], {}
-    final_rows = final_residuals = None
+    rows_3c, psnr_by_ckpt, fr_ckpt_entries = [], {}, []
+    final_per_face = final_sampled = None
     for k in range(steps + 1):
         for t in leaves:
             t.grad = None
@@ -328,8 +333,14 @@ def build_s3c(name, out_root):
                 out_dir / "s3_tiles" / f"s3c_s{k}" / m["view_id"], r,
                 int(S3["tile_max_px"]), float(S3["residual_vmax"]))
                 for r, m in zip(vrows, views["rows"])]
+            # per-checkpoint face residual — pre-update state of step k (the
+            # state the tiles snapshot; mu follows the current δ̂)
+            pf_k, ns_k = face_residuals(st, state, views, vrows, residuals,
+                                        S3["face_residual"])
+            fr_ckpt_entries.append({"stage": "3c", "step": k,
+                                    "faces_sampled": ns_k, "per_face": pf_k})
             if k == steps:
-                final_rows, final_residuals = vrows, residuals
+                final_per_face, final_sampled = pf_k, ns_k
         if k < steps:  # final row = post-training evaluation, no update
             before_c = state.colors.detach().clone()
             before_d = state.delta.detach().clone()
@@ -383,16 +394,24 @@ def build_s3c(name, out_root):
         for row in rows_3c:
             f.write(json.dumps(row) + "\n")
 
-    per_face, n_sampled = face_residuals(st, state, views, final_rows,
-                                         final_residuals, S3["face_residual"])
+    # endpoint file reuses the final-checkpoint computation (byte-identical:
+    # no update happens after the final evaluation row)
+    per_face, n_sampled = final_per_face, final_sampled
+    assert per_face is not None, "final checkpoint face residual missing"
     fr3a = json.load(open(out_dir / "s3_face_residual.json"))
     json.dump({"step": steps, "stage": "3c", "method": fr3a["method"],
-               "n_views": len(final_rows), "faces_sampled": n_sampled,
+               "n_views": len(views["rows"]), "faces_sampled": n_sampled,
                "per_face": per_face},
               open(out_dir / "s3_face_residual_s3c_final.json", "w"))
+    assert [e["step"] for e in fr_ckpt_entries] == ckpts, "ckpt entries != ckpts"
+    ckpt_index = s3b.write_face_residual_ckpt(out_dir, "3c", fr_ckpt_entries,
+                                              fr3a["method"])
 
     manifest["stage"] = "s1+s2+s3a+s3b+s3c"
     manifest["s3c_schema"] = S3C_SCHEMA
+    manifest["face_residual_ckpt"] = {
+        "file": s3b.FR_CKPT_NAME, "schema": s3b.FR_CKPT_SCHEMA,
+        "entries": ckpt_index}
     manifest["s3c_def"] = {
         "stage": "3c", "trained": ["delta", "colors"],
         "objective": "photo",

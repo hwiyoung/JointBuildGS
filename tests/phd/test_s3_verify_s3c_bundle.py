@@ -106,10 +106,12 @@ try:
     from tests.phd.test_s3_verify_s3b_bundle import (
         CHECKPOINT_ONLY_KEYS,
         COLOR_STATS_REQUIRED_KEYS,
+        FR_CKPT_NAME,
         LR_RTOL,
         S3B_STAGE,
         STEP_TILE_FILE_NAMES,
         _plain_int,
+        check_face_residual_ckpt_stage,
         get_s3b_def,
         load_s3b_bundle,
     )
@@ -141,10 +143,12 @@ except ImportError:  # direct-file execution fallback
     from tests.phd.test_s3_verify_s3b_bundle import (
         CHECKPOINT_ONLY_KEYS,
         COLOR_STATS_REQUIRED_KEYS,
+        FR_CKPT_NAME,
         LR_RTOL,
         S3B_STAGE,
         STEP_TILE_FILE_NAMES,
         _plain_int,
+        check_face_residual_ckpt_stage,
         get_s3b_def,
         load_s3b_bundle,
     )
@@ -974,6 +978,45 @@ class S3cBundleReferenceIntegrityTest(unittest.TestCase):
             numeric, 0,
             f"{name}: per_face must contain at least one sampled value",
         )
+
+    # ------------------------------- 6. s3_face_residual_ckpt.json (optional)
+
+    def test_face_residual_ckpt_entries(self) -> None:
+        """3c entries of the per-checkpoint face residual file.
+
+        Skips when no run carries the file (pre-checkpoint bundles allowed).
+        The shared stage checker also asserts the final 3c entry equals
+        s3_face_residual_s3c_final.json; the preserved 3b entries, when
+        present, must still match the 3b checkpoint list (merge must not
+        corrupt the other stage).
+        """
+        runs = [d for d in self.s3c_run_dirs if (d / FR_CKPT_NAME).is_file()]
+        if not runs:
+            self.skipTest(
+                f"{FR_CKPT_NAME} not generated in any S3c run (pre-checkpoint "
+                "bundles allowed — the amended 3b/3c writers create it)"
+            )
+        for run_dir in runs:
+            with self.subTest(run=run_dir.name):
+                bundle = load_s3c_bundle(run_dir)
+                doc = load_json(run_dir / FR_CKPT_NAME)
+                s3c_def = get_s3c_def(run_dir.name, bundle)
+                check_face_residual_ckpt_stage(
+                    self, run_dir.name, bundle, doc, S3C_STAGE,
+                    s3c_def["checkpoints"],
+                    bundle["face_residual_s3c_final"].get("per_face"),
+                )
+                # 3b entries preserved by the 3c merge must stay coherent.
+                entries = doc.get("entries", [])
+                steps_3b = [e.get("step") for e in entries
+                            if isinstance(e, dict) and e.get("stage") == S3B_STAGE]
+                if steps_3b:
+                    self.assertEqual(
+                        steps_3b, get_s3b_def(run_dir.name, bundle)["checkpoints"],
+                        f"{run_dir.name}: preserved 3b entries' steps must "
+                        "still be the 3b checkpoint list (the 3c merge "
+                        "replaces only its own stage)",
+                    )
 
 
 if __name__ == "__main__":

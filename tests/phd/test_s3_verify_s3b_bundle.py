@@ -133,6 +133,14 @@ S3B_TILES_DIRNAME = "s3_tiles"
 STEP_DIR_RE = re.compile(r"^s(\d+)$")
 STEP_TILE_FILE_NAMES = ("render.png", "residual.png")
 
+# Unified per-checkpoint face residual file (viewer page 3 intermediate-state
+# heatmaps). OPTIONAL for backward compatibility: pre-ckpt bundles skip these
+# checks; once the file exists, this stage's entries must be exactly its
+# checkpoints and the final entry must equal the endpoint file (the writer
+# reuses the same computation).
+FR_CKPT_NAME = "s3_face_residual_ckpt.json"
+FR_CKPT_SCHEMA = "phd_s3_verify_face_residual_ckpt_v1"
+
 # 3c warm-start amendment (plan doc "3c 착수 등록" 2026-08-27): the writer
 # stores the FINAL trained colors as float16 RGB in seed order and names the
 # file in s3b_def.colors_artifact. Pre-amendment bundles fail here until the
@@ -265,6 +273,102 @@ def get_s3b_def(name: str, bundle: dict) -> dict:
 
 def psnr_median(values: dict) -> float:
     return float(statistics.median(float(v) for v in values.values()))
+
+
+def check_face_residual_ckpt_stage(
+    tc, name: str, bundle: dict, doc: dict, stage: str,
+    checkpoints: list, endpoint_per_face,
+) -> None:
+    """Shared 3b/3c checks for one stage's entries in the unified ckpt file.
+
+    - schema/method are the file-level contract;
+    - THIS stage's entries' (stage, step) must be exactly its checkpoint
+      list, in order;
+    - per_face keeps the 3a null convention (keys within s2_faces, values
+      finite >= 0 or null, at least one number per entry);
+    - the final entry must EQUAL the endpoint file's per_face (the writer
+      reuses the same computation — no recompute drift);
+    - the manifest face_residual_ckpt index must mirror the file.
+    """
+    tc.assertEqual(
+        doc.get("schema"), FR_CKPT_SCHEMA,
+        f"{name}: {FR_CKPT_NAME} schema must be {FR_CKPT_SCHEMA!r}, "
+        f"got {doc.get('schema')!r}",
+    )
+    method = doc.get("method")
+    tc.assertTrue(
+        isinstance(method, str) and method.strip(),
+        f"{name}: {FR_CKPT_NAME} method must be a non-empty string naming "
+        f"the same approximation as the endpoint files, got {method!r}",
+    )
+    entries = doc.get("entries")
+    tc.assertIsInstance(
+        entries, list, f"{name}: {FR_CKPT_NAME} entries must be a list"
+    )
+    own = [e for e in entries
+           if isinstance(e, dict) and e.get("stage") == stage]
+    tc.assertEqual(
+        [e.get("step") for e in own], list(checkpoints),
+        f"{name}: stage-{stage!r} entries' steps must be exactly the "
+        f"checkpoint list {list(checkpoints)!r} in order, "
+        f"got {[e.get('step') for e in own]!r}",
+    )
+    face_ids = bundle["face_ids"]
+    for e in own:
+        label = f"{name}/{FR_CKPT_NAME} {stage} step {e.get('step')!r}"
+        per_face = e.get("per_face")
+        tc.assertIsInstance(
+            per_face, dict, f"{label}: per_face must be an object"
+        )
+        unknown = sorted(set(per_face) - face_ids)
+        tc.assertFalse(
+            unknown,
+            f"{label}: per_face keys must all exist in s2_faces; unknown "
+            f"face_ids {unknown[:10]}"
+            + (" (truncated)" if len(unknown) > 10 else ""),
+        )
+        bad = [(fid, v) for fid, v in per_face.items()
+               if v is not None
+               and not (is_finite_number(v) and float(v) >= 0.0)]
+        tc.assertFalse(
+            bad[:5],
+            f"{label}: per_face values must be finite non-negative numbers "
+            f"or null (3a null convention), bad {bad[:5]!r}",
+        )
+        numeric = sum(1 for v in per_face.values() if v is not None)
+        tc.assertGreater(
+            numeric, 0,
+            f"{label}: per_face must contain at least one sampled value",
+        )
+    tc.assertEqual(
+        own[-1].get("per_face"), endpoint_per_face,
+        f"{name}: the final stage-{stage!r} entry's per_face must equal the "
+        "endpoint file's per_face (the writer reuses the final-checkpoint "
+        "computation)",
+    )
+    fr_index = bundle["manifest"].get("face_residual_ckpt")
+    tc.assertIsInstance(
+        fr_index, dict,
+        f"{name}: manifest must carry the face_residual_ckpt index once "
+        f"{FR_CKPT_NAME} exists",
+    )
+    tc.assertEqual(
+        fr_index.get("file"), FR_CKPT_NAME,
+        f"{name}: manifest face_residual_ckpt.file must be {FR_CKPT_NAME!r}",
+    )
+    tc.assertEqual(
+        fr_index.get("schema"), FR_CKPT_SCHEMA,
+        f"{name}: manifest face_residual_ckpt.schema must be "
+        f"{FR_CKPT_SCHEMA!r}",
+    )
+    tc.assertEqual(
+        [(e.get("stage"), e.get("step"))
+         for e in fr_index.get("entries", []) if isinstance(e, dict)],
+        [(e.get("stage"), e.get("step"))
+         for e in entries if isinstance(e, dict)],
+        f"{name}: manifest face_residual_ckpt.entries must mirror the file's "
+        "(stage, step) list",
+    )
 
 
 class S3bBundleReferenceIntegrityTest(unittest.TestCase):
@@ -895,6 +999,31 @@ class S3bBundleReferenceIntegrityTest(unittest.TestCase):
         self.assertGreater(
             numeric, 0, f"{name}: per_face must contain at least one sampled value"
         )
+
+    # ------------------------------- 6. s3_face_residual_ckpt.json (optional)
+
+    def test_face_residual_ckpt_entries(self) -> None:
+        """Per-checkpoint face residuals (viewer intermediate-state heatmaps).
+
+        Skips when no run carries the file (pre-checkpoint bundles allowed);
+        per-run absence is also allowed for backward compatibility.
+        """
+        runs = [d for d in self.s3b_run_dirs if (d / FR_CKPT_NAME).is_file()]
+        if not runs:
+            self.skipTest(
+                f"{FR_CKPT_NAME} not generated in any S3b run (pre-checkpoint "
+                "bundles allowed — the amended 3b writer creates it)"
+            )
+        for run_dir in runs:
+            with self.subTest(run=run_dir.name):
+                bundle = load_s3b_bundle(run_dir)
+                doc = load_json(run_dir / FR_CKPT_NAME)
+                s3b_def = get_s3b_def(run_dir.name, bundle)
+                check_face_residual_ckpt_stage(
+                    self, run_dir.name, bundle, doc, S3B_STAGE,
+                    s3b_def["checkpoints"],
+                    bundle["face_residual_final"].get("per_face"),
+                )
 
 
 if __name__ == "__main__":
