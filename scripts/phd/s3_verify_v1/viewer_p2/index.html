@@ -58,8 +58,12 @@
          padding:4px 6px; margin:4px 0; }
   textarea { width:100%; background:#12141a; color:#dde3ea; border:1px solid #2e3542;
              border-radius:4px; font: 12px/1.4 system-ui, sans-serif; padding:5px; resize:vertical; }
-  tr[data-cid], tr[data-fid] { cursor:pointer; }
-  tr[data-cid].sel, tr[data-fid].sel { background:#4a3d10; }
+  tr[data-cid], tr[data-fid], tr[data-pid] { cursor:pointer; }
+  tr[data-cid].sel, tr[data-fid].sel, tr[data-pid].sel { background:#4a3d10; }
+  .pchip { display:inline-block; border:1px solid #2e3542; border-radius:4px; padding:0 6px;
+           margin:1px 3px 1px 0; font-size:11px; cursor:pointer; text-decoration:none;
+           background:#1b1f27; }
+  .pchip:hover { background:#232833; }
   .scrollbox { max-height:260px; overflow-y:auto; border:1px solid #2e3542; border-radius:4px; }
   .scrollbox table { width:100%; } .scrollbox th { position:sticky; top:0; }
 </style>

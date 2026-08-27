@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<title>S3 검증 페이지 3 — 공동 최적화(연속 구간 3a·3b) (NOT OFFICIAL)</title>
+<title>S3 검증 페이지 3 — 공동 최적화(연속 구간 3a·3b·3c) (NOT OFFICIAL)</title>
 <style>
   :root { color-scheme: dark; }
   * { box-sizing: border-box; }
@@ -57,6 +57,10 @@
   #ramplegend { position:absolute; bottom:10px; right:10px; font-size:10.5px; color:#9fb4cc;
                 background:#14161add; border:1px solid #2e3542; padding:4px 9px; border-radius:5px;
                 pointer-events:none; }
+  /* 스텝→3D 동기화 배지 — "3D 표시 중: <구간> s<step> 히트맵" + 3c δ̂ 평행이동량 */
+  #syncbadge { position:absolute; top:8px; right:10px; font-size:11px; color:#dde3ea;
+               background:#14161add; border:1px solid #3d5a80; padding:4px 9px; border-radius:5px;
+               pointer-events:none; max-width:46%; text-align:right; }
   .caption { border-left:3px solid #4a9eff; background:#1b1f27; padding:4px 8px;
              border-radius:0 4px 4px 0; margin-bottom:8px; }
   #panel { width: 440px; flex-shrink:0; background:#191c22; border-left:1px solid #2a2f38;
@@ -100,7 +104,8 @@
   <div id="timeline"><span class="tlabel">사이클 타임라인 로딩 중…</span></div>
   <div id="content">
     <div id="view3d"><div id="hud"></div><div id="selbadge" style="display:none"></div>
-      <div id="ramplegend" style="display:none"></div></div>
+      <div id="ramplegend" style="display:none"></div>
+      <div id="syncbadge" style="display:none"></div></div>
     <div id="panel"><p class="note">런을 선택하세요.</p></div>
   </div>
 <script type="module" src="./app.js"></script>

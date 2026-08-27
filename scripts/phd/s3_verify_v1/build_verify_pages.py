@@ -23,11 +23,15 @@ s3_steps.jsonl, s3_face_residual.json + s3_tiles/<view_id>/*.png — contract
 phd_s3_verify_s3a_v1) and, when present, the S3b additions (contract
 phd_s3_verify_s3b_v1 — stage:"3b" rows appended to s3_steps.jsonl,
 s3_face_residual_final.json, checkpoint tiles s3_tiles/s<step>/<view_id>/,
-manifest stage "s1+s2+s3a+s3b" + s3b_def). Runs without them are listed with
-s2_ready/s3_ready/s3b_ready=false and the pages show an empty state instead of
-dying. s3_tiles/ is a directory payload: its presence is recorded per run, but
-only the declared run files are hashed into the receipt (tiles are regenerable
-from the writer).
+manifest stage "s1+s2+s3a+s3b" + s3b_def) and the S3c additions (contract
+phd_s3_verify_s3c_v1 — stage:"3c" rows, s3_face_residual_s3c_final.json,
+checkpoint tiles s3_tiles/s3c_s<step>/<view_id>/, manifest stage
+"s1+s2+s3a+s3b+s3c" + s3c_def; injected runs B022_DZ050/B173_DZ050 also carry
+manifest.injection{delta_applied, route, expected_delta_hat}). Runs without
+them are listed with s2_ready/s3_ready/s3b_ready/s3c_ready=false and the pages
+show an empty state instead of dying. s3_tiles/ is a directory payload: its
+presence is recorded per run, but only the declared run files are hashed into
+the receipt (tiles are regenerable from the writer).
 
 Usage:
   python scripts/phd/s3_verify_v1/build_verify_pages.py
@@ -59,7 +63,10 @@ DEFAULT_CONFIG_PATH = REPO / "configs/phd/s3_verify_v1/s1_bundle_v1.json"
 # invented here; the viewers read them from each run's own manifest.json.
 CONTRACT_DEFAULTS = {
     "out_root": CONTAINER_PREFIX + "/phase-payloads/phd/PHD-S3-VERIFY-PAGES-v1",
-    "runs": ["B022", "B173", "B036", "SYNTH_GABLE"],
+    # 주입 2런(B022_DZ050·B173_DZ050 — scene_for dz=0.5 ALS 바이트 주입 전체 재파이프라인)은
+    # 3c 계약(phd_s3_verify_s3c_v1)의 신규 등재분; config의 runs가 이 목록을 대체해도
+    # runs/ 스캔이 목록 밖 런을 뒤에 자동 등재한다(scan_runs extras).
+    "runs": ["B022", "B173", "B036", "SYNTH_GABLE", "B022_DZ050", "B173_DZ050"],
     "viewer": {
         "three_module_src": (CONTAINER_PREFIX
                              + "/phase-payloads/p2/journal1_phase_b_v1/"
@@ -78,6 +85,9 @@ S3_RUN_FILES = ["s3_views.json", "s3_steps.jsonl", "s3_face_residual.json"]
 # S3b 추가분 — 선택적(3a-only 런은 s3b 없이도 s3_ready 유지); s3_steps.jsonl의
 # stage:"3b" 행 추가와 체크포인트 타일(s3_tiles/s<step>/)은 파일 목록에 새 항목이 없다.
 S3B_RUN_FILES = ["s3_face_residual_final.json"]
+# S3c 추가분 — 선택적(3b까지 런 유지); stage:"3c" 행과 3c 체크포인트 타일
+# (s3_tiles/s3c_s<step>/ — 3b 디렉터리와 충돌 금지)은 파일 목록에 새 항목이 없다.
+S3C_RUN_FILES = ["s3_face_residual_s3c_final.json"]
 S1_SCHEMA = "phd_s3_verify_s1_bundle_v1"
 
 # 페이지 등록부 — page/manifest_schema는 각 페이지 app.js·판독 기록 스키마와 짝.
@@ -93,7 +103,8 @@ PAGES = [
     {"dir": "viewer_p3", "page": "p3_joint_opt_continuous",
      "title": "페이지 3 — 공동 최적화(연속 구간)",
      "manifest_schema": "phd_s3_verify_viewer_p3_manifest_v1",
-     "run_files": S1_RUN_FILES + S2_RUN_FILES + S3_RUN_FILES + S3B_RUN_FILES},
+     "run_files": S1_RUN_FILES + S2_RUN_FILES + S3_RUN_FILES + S3B_RUN_FILES
+                  + S3C_RUN_FILES},
 ]
 
 
@@ -159,6 +170,8 @@ def scan_runs(runs_root: Path, ordered_names: list[str],
                         and all((run_dir / fn).is_file() for fn in S3_RUN_FILES))
             s3b_ready = ("s3b" in str(m.get("stage") or "")
                          and all((run_dir / fn).is_file() for fn in S3B_RUN_FILES))
+            s3c_ready = ("s3c" in str(m.get("stage") or "")
+                         and all((run_dir / fn).is_file() for fn in S3C_RUN_FILES))
             found[run_dir.name] = {
                 "name": run_dir.name,
                 "dir": f"runs/{run_dir.name}",
@@ -175,8 +188,11 @@ def scan_runs(runs_root: Path, ordered_names: list[str],
                 "s2_ready": s2_ready,
                 "s3_ready": s3_ready,
                 "s3b_ready": s3b_ready,
+                "s3c_ready": s3c_ready,
                 "s3_def": m.get("s3_def"),
                 "s3b_def": m.get("s3b_def"),
+                "s3c_def": m.get("s3c_def"),
+                "injection": m.get("injection"),   # 주입 런 배지(주입 dz=…) — writer 소관 기록
                 "s3_tiles": (run_dir / "s3_tiles").is_dir(),
                 "files": files,
             }
@@ -245,6 +261,14 @@ def deploy_page(page: dict, out_root: Path, cfg: dict, cfg_path: Path | None,
         if with_3b:
             print(f"[build] 페이지 3: 3b 보유 런 {with_3b} — "
                   "타임라인 3b 구간·final 히트맵 활성.")
+        with_3c = [r["name"] for r in runs if r.get("s3c_ready")]
+        if with_3c:
+            print(f"[build] 페이지 3: 3c 보유 런 {with_3c} — "
+                  "타임라인 3c 구간·δ̂ 궤적·3c final 히트맵 활성.")
+        injected = [r["name"] for r in runs if r.get("injection")]
+        if injected:
+            print(f"[build] 페이지 3: 주입 런 {injected} — "
+                  "드롭다운 배지(주입 dz)·δ̂ 정답선 표시.")
     manifest = {
         "schema": page["manifest_schema"],
         "page": page["page"],
