@@ -22,11 +22,18 @@ S1 candidate set and serializes the S2 stage:
 Usage (container):
   bash scripts/p2/arrgs_v1/run_host.sh <gpu> \
       scripts/phd/s3_verify_v1/build_s2_bundle.py [run ...]   # default: all
+
+Cut-sequence-only mode (adds s2_cut_sequence.json to EXISTING bundles — no S1/S2
+byte is rewritten; the manifest only gains a "cut_sequence" key):
+  bash scripts/p2/arrgs_v1/run_host.sh <gpu> \
+      scripts/phd/s3_verify_v1/build_s2_bundle.py --cut-sequence-only [run ...]
+  # default runs: CFG runs + CFG injected_runs. CPU-only, deterministic counts.
 """
 from __future__ import annotations
 
 import json
 import sys
+import time
 from pathlib import Path
 
 import numpy as np
@@ -233,6 +240,13 @@ def build_s2(ctx):
         "cells_scope": ("footprint-prism interior only; outside cells stay o=0 "
                         "virtual, prism-boundary facets become domain faces")}
     json.dump(manifest, open(out_dir / "manifest.json", "w"), indent=1)
+    # 전체 재생성은 접두 절단 통계를 무효화한다 — 파일을 남겨 두면 검사(최종 셀/면
+    # 일치)가 헛되이 붉어지므로 제거하고 --cut-sequence-only 재실행을 안내한다.
+    stale = out_dir / CUT_SEQ_FILE
+    if stale.is_file():
+        stale.unlink()
+        print(f"[s2-bundle] {ctx['name']}: 구세대 {CUT_SEQ_FILE} 제거 — "
+              "--cut-sequence-only 재실행 필요", flush=True)
     print(f"[s2-bundle] {ctx['name']}: cells {len(cells_json)} faces {len(faces_json)} "
           f"seeds {len(seeds_json)} | prism {prism:.1f} sum {sum_cells:.1f} "
           f"({abs(sum_cells - prism) / max(prism, 1e-9):.2e} rel)", flush=True)
@@ -291,9 +305,179 @@ def verify_run(ctx):
             "initial_real_faces": sum(1 for f in faces if f["initial_real"])}
 
 
+# ---------------------------------------------------------------------------
+# Cut sequence (검증 페이지 2 "S1 평면 → 셀 절단 인과" 재생 데이터).
+# Adds s2_cut_sequence.json to an EXISTING s1+s2 bundle: for every prefix
+# 1..k of the exact cut-plane order build_s2 used, build_arrangement (legacy,
+# unmodified) is re-run and the footprint-prism interior cell/face counts (the
+# same scope s2_cells/s2_faces serialize) are recorded with
+# delta_cells = consecutive-prefix difference. No S1/S2 byte is rewritten;
+# the run manifest only gains a "cut_sequence" key. Counts are deterministic
+# (pure numpy/scipy/shapely construction, no RNG); prefixes are evaluated in
+# a process pool purely for wall time (per-prefix results are independent —
+# measured B022: K=45, full arrangement 113 s, prefix sum ≈ 940 s CPU).
+CUT_SEQ_SCHEMA = "phd_s3_verify_s2_cut_sequence_v1"
+CUT_SEQ_FILE = "s2_cut_sequence.json"
+
+
+def cut_context(name):
+    """Candidate planes + footprint prism for `name`, resolved exactly like
+    build_real/build_synth but WITHOUT writing any bundle file (no point
+    sampling either — the cut sequence needs planes, not points). Injected
+    runs (CFG injected_runs) resolve through scene_for(base, dz), the same
+    route build_s3c_bundle.build_injected_s1 uses."""
+    if name == "SYNTH_GABLE":
+        from synthetic import candidate_planes, gt_surfaces
+        surfaces, _inside, fp = gt_surfaces("gable")
+        ground_z = 0.0
+        top_z = float(max(s[0][:, 2].max() for s in surfaces[1:]))
+        roofL, roofR = surfaces[1], surfaces[2]
+        cands, _fp = candidate_planes("gable")
+        sup_xy = {"roofL": roofL[0][:, :2].tolist(), "roofR": roofR[0][:, :2].tolist(),
+                  "distractor_flat": np.asarray(fp).tolist(),
+                  "distractor_offset": roofL[0][:, :2].tolist()}
+        for i, (a, b) in enumerate(zip(np.asarray(fp),
+                                       np.roll(np.asarray(fp), -1, axis=0))):
+            sup_xy[f"wall{i}"] = [a.tolist(), b.tolist()]
+        for p in cands:
+            p["support"] = [sup_xy[p["id"]]]
+        raw, fp_xy, kind = cands, np.asarray(fp), "synthetic"
+        order_src = "synthetic.candidate_planes('gable') 목록 순서 (build_synth과 동일)"
+    else:
+        from real_scene import load_real_scene
+        from xreal_run import scene_for
+        spec = CFG.get("injected_runs", {}).get(name)
+        scene = (scene_for(spec["base"], dz=float(spec["dz"])) if spec
+                 else scene_for(name))
+        scene["skip_images"] = True
+        sc = load_real_scene(scene, device=None)
+        raw, fp_xy, kind = sc["planes"], np.asarray(sc["footprint"]), "real"
+        ground_z, top_z = float(sc["ground_z"]), float(sc["top_z"])
+        order_src = ("real_scene.load_real_scene sc['planes'] 목록 순서 "
+                     "(build_real과 동일"
+                     + (f"; 주입 런 scene_for('{spec['base']}', dz={spec['dz']})"
+                        if spec else "") + ")")
+    entries = s1b.expand_planes(raw, fp_xy, ground_z, top_z)
+    planes_all = [p for p in raw
+                  if s1b.SOURCE_MAP[p["source"]] not in s1b.EXCLUDE_SOURCES]
+    return {"name": name, "raw_planes": planes_all, "entries": entries,
+            "fp_xy": fp_xy, "ground_z": ground_z, "top_z": top_z,
+            "dataset_kind": kind, "order_src": order_src}
+
+
+def _prefix_counts(args):
+    """(k, interior cells, interior-touching faces) of the prefix-k
+    arrangement — the exact scope build_s2 serializes (fixed None cells;
+    faces with >=1 interior side). Top-level for multiprocessing pickling."""
+    planes, fp_xy, ground_z, top_z, margin, k = args
+    arr = build_arrangement(planes[:k], fp_xy, ground_z, top_z, margin=margin)
+    inside = {c["idx"] for c in arr["cells"] if c["fixed"] is None}
+    n_faces = sum(1 for f in arr["faces"]
+                  if f["cell_a"] in inside or f["cell_b"] in inside)
+    return k, len(inside), n_faces
+
+
+def build_cut_sequence(name, out_root, workers=None):
+    out_dir = out_root / "runs" / name
+    manifest = json.load(open(out_dir / "manifest.json"))
+    assert "s2" in str(manifest.get("stage") or ""), (
+        f"{name}: stage={manifest.get('stage')!r} — S2 번들을 먼저 생성하라")
+    bundle_planes = json.load(open(out_dir / "s1_planes.json"))["planes"]
+    n_cells_final = len(json.load(open(out_dir / "s2_cells.json"))["cells"])
+    n_faces_final = len(json.load(open(out_dir / "s2_faces.json"))["faces"])
+
+    ctx = cut_context(name)
+    # drift guard — 재계산 후보가 기존 번들의 s1_planes와 1:1 대응해야 한다
+    # (불일치 = 번들 세대 불일치 → 전체 재생성 대상, 여기서 중단)
+    assert len(bundle_planes) == len(ctx["entries"]), (
+        f"{name}: 재계산 s1 {len(ctx['entries'])} != 번들 {len(bundle_planes)}")
+    for bp, e in zip(bundle_planes, ctx["entries"]):
+        assert (bp["source"] == e["source"]
+                and abs(float(bp["d"]) - float(e["d"])) <= 1e-3
+                and float(np.abs(np.asarray(bp["n"], dtype=np.float64)
+                                 - np.asarray(e["n"])).max()) <= 2e-6), (
+            f"{name}: {bp['plane_id']} 재계산 (n,d,source) 불일치 — 번들 세대 불일치")
+
+    p2s1 = map_s1_planes(ctx["raw_planes"], ctx["entries"])
+    planes = [p for p in ctx["raw_planes"] if p2s1[p["id"]]]  # build_s2와 동일
+    K = len(planes)
+    margin = float(MARGIN[ctx["dataset_kind"]])
+    jobs = [(planes, ctx["fp_xy"], ctx["ground_z"], ctx["top_z"], margin, k)
+            for k in range(K + 1)]
+    t0 = time.time()
+    from multiprocessing import Pool, cpu_count
+    n_proc = workers or max(1, min(cpu_count(), 32, len(jobs)))
+    if n_proc > 1:
+        with Pool(n_proc) as pool:  # 큰 접두 먼저 — 패킹; 결과는 k로 재정렬(결정론)
+            counts = pool.map(_prefix_counts, sorted(jobs, key=lambda j: -j[-1]),
+                              chunksize=1)
+        counts.sort(key=lambda t: t[0])
+    else:
+        counts = [_prefix_counts(j) for j in jobs]
+    elapsed = time.time() - t0
+
+    baseline = {"k": 0, "n_cells": counts[0][1], "n_faces": counts[0][2]}
+    assert baseline["n_cells"] in (0, 1), (
+        f"{name}: k=0 내부 셀 {baseline['n_cells']} — 0(오목 footprint에서 도메인 "
+        "박스 중심이 밖) 또는 1만 가능")
+    if baseline["n_cells"] == 0:
+        # 실측 사실: 오목 footprint에서 bbox 중심(무절단 단일 셀의 중심)이 폴리곤
+        # 밖 → 레거시 중심점 규칙상 내부 0. 모델 도메인(프리즘)은 개념상 1조각이나
+        # 수치는 측정값을 그대로 기록한다. Σdelta = 최종 − baseline.
+        baseline["note"] = ("도메인 박스 중심이 오목 footprint 밖 — 중심점 규칙상 "
+                            "내부 0 (개념상 무절단 프리즘 1조각)")
+    seq = []
+    for (k, nc, nf), (_pk, prev_nc, _pf) in zip(counts[1:], counts[:-1]):
+        seq.append({"k": k, "plane_ref": list(p2s1[planes[k - 1]["id"]]),
+                    "n_cells": nc, "n_faces": nf, "delta_cells": nc - prev_nc})
+    assert seq[-1]["n_cells"] == n_cells_final, (
+        f"{name}: 접두 K 셀 {seq[-1]['n_cells']} != s2_cells {n_cells_final}")
+    assert seq[-1]["n_faces"] == n_faces_final, (
+        f"{name}: 접두 K 면 {seq[-1]['n_faces']} != s2_faces {n_faces_final}")
+    assert (sum(e["delta_cells"] for e in seq)
+            == n_cells_final - baseline["n_cells"])  # 연속 접두 차의 망원 합
+
+    doc = {
+        "schema": CUT_SEQ_SCHEMA,
+        "run": name,
+        "prefix_mode": "full",  # 접두 전수 1..K — delta는 연속 접두 차
+        "n_cut_planes": K,
+        "order_note": (
+            f"절단 순서 = build_s2가 자른 레거시 후보 순서({ctx['order_src']}); "
+            "gapfill 등 제외 출처와 s1 대응(map_s1_planes (n,d) 1e-6) 없는 평면을 "
+            "제외한 1..K. 최종 배열은 절단 순서와 무관(반평면 분할은 교환적)이므로 "
+            "이 곡선과 delta_cells는 구축 순서에 상대적인 파편화 통계다. 각 접두 k는 "
+            "build_arrangement(scripts/p2/arrgs_v1/arrangement.py, 무수정)를 평면 "
+            "1..k로 재실행한 footprint-prism 내부 셀/면 수(= s2_cells/s2_faces 산정 "
+            "범위)이고, plane_ref는 그 절단 평면과 (n,d)가 일치하는 s1 p### 링 전부다."),
+        "baseline": baseline,
+        "sequence": seq,
+        "not_official": True,
+        "scientific_verdict": None,
+    }
+    json.dump(doc, open(out_dir / CUT_SEQ_FILE, "w"))
+    manifest = json.load(open(out_dir / "manifest.json"))
+    manifest["cut_sequence"] = {"file": CUT_SEQ_FILE, "schema": CUT_SEQ_SCHEMA,
+                                "n_cut_planes": K, "prefix_mode": "full"}
+    json.dump(manifest, open(out_dir / "manifest.json", "w"), indent=1)
+    top = sorted(seq, key=lambda e: (-e["delta_cells"], e["k"]))[:5]
+    print(f"[s2-cutseq] {name}: K={K} 최종 {n_cells_final}셀/{n_faces_final}면 "
+          f"{elapsed:.1f}s ({n_proc}proc) | Δ상위 "
+          + " ".join(f"k{e['k']}({e['plane_ref'][0]})+{e['delta_cells']}"
+                     for e in top), flush=True)
+
+
 def main():
-    runs = sys.argv[1:] or CFG["runs"]
+    argv = sys.argv[1:]
+    cut_only = "--cut-sequence-only" in argv
+    argv = [a for a in argv if a != "--cut-sequence-only"]
     out_root = Path(CFG["out_root"])
+    if cut_only:
+        runs = argv or (list(CFG["runs"]) + sorted(CFG.get("injected_runs", {})))
+        for r in runs:
+            build_cut_sequence(r, out_root)
+        return
+    runs = argv or CFG["runs"]
     gravity, lod2_faces = s1b.real_context([r for r in runs if r != "SYNTH_GABLE"])
     stats = []
     for r in runs:

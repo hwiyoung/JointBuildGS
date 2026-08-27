@@ -884,5 +884,175 @@ class S2BundleReferenceIntegrityTest(unittest.TestCase):
                 )
 
 
+class S2CutSequenceTest(unittest.TestCase):
+    """Prefix cut-sequence contract (``s2_cut_sequence.json``, schema
+    ``phd_s3_verify_s2_cut_sequence_v1`` — writer ``--cut-sequence-only``).
+
+    The file is OPTIONAL per run: old-generation bundles without it are
+    skipped, never failed. When present it must telescope exactly onto the
+    serialized S2 stage: k strictly increasing, every ``plane_ref`` a real s1
+    plane_id, the final prefix equal to the s2_cells/s2_faces counts, and
+    ``delta_cells`` the consecutive-prefix difference whose sum is
+    final − baseline. Baseline interior-cell count is 1, or 0 with a recorded
+    note for concave footprints whose domain-box centroid falls outside
+    (measured on B022 — the legacy centroid marking rule, honestly recorded).
+    """
+
+    CUT_SEQ_FILE = "s2_cut_sequence.json"
+    CUT_SEQ_SCHEMA = "phd_s3_verify_s2_cut_sequence_v1"
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.bundle_root = resolve_bundle_root()
+        cls.run_dirs = discover_run_dirs(cls.bundle_root)
+        cls.cut_run_dirs = [
+            d for d in cls.run_dirs if (d / cls.CUT_SEQ_FILE).is_file()
+        ]
+
+    def setUp(self) -> None:
+        if not self.run_dirs:
+            self.skipTest(
+                "S1 verify bundle not generated yet: no runs/<name>/ found"
+            )
+        if not self.cut_run_dirs:
+            self.skipTest(
+                f"no run carries {self.CUT_SEQ_FILE} yet (old-generation "
+                "bundles are allowed; writer flag --cut-sequence-only)"
+            )
+
+    def test_cut_sequence_contract(self) -> None:
+        for run_dir in self.cut_run_dirs:
+            with self.subTest(run=run_dir.name):
+                self._check_run(run_dir.name, run_dir)
+
+    def _check_run(self, name: str, run_dir: Path) -> None:
+        doc = load_json(run_dir / self.CUT_SEQ_FILE)
+        bundle = load_s2_bundle(run_dir)
+        s1_plane_ids = bundle["s1_plane_ids"]
+        n_cells_final = len(bundle["cells"]["cells"])
+        n_faces_final = len(bundle["faces"]["faces"])
+
+        self.assertEqual(
+            doc.get("schema"), self.CUT_SEQ_SCHEMA,
+            f"{name}: cut-sequence schema must be {self.CUT_SEQ_SCHEMA!r}",
+        )
+        self.assertTrue(
+            isinstance(doc.get("order_note"), str) and doc["order_note"].strip(),
+            f"{name}: order_note (절단 순서의 출처 설명) must be a non-empty string",
+        )
+        self.assertIsNone(
+            doc.get("scientific_verdict"),
+            f"{name}: scientific_verdict must stay null",
+        )
+
+        seq = doc.get("sequence")
+        self.assertTrue(
+            isinstance(seq, list) and seq,
+            f"{name}: sequence must be a non-empty list",
+        )
+
+        # k strictly increasing (full prefix mode: contiguous 1..K).
+        ks = [entry.get("k") for entry in seq]
+        self.assertTrue(
+            all(isinstance(k, int) and not isinstance(k, bool) for k in ks),
+            f"{name}: every k must be an integer",
+        )
+        self.assertTrue(
+            all(b > a for a, b in zip(ks, ks[1:])),
+            f"{name}: k must be strictly increasing, got {ks}",
+        )
+        if doc.get("prefix_mode") == "full":
+            self.assertEqual(
+                ks, list(range(1, len(seq) + 1)),
+                f"{name}: prefix_mode 'full' requires contiguous k = 1..K",
+            )
+            self.assertEqual(
+                doc.get("n_cut_planes"), len(seq),
+                f"{name}: n_cut_planes must equal len(sequence) in full mode",
+            )
+
+        # plane_ref: non-empty, deduplicated, every id a real s1 plane.
+        for entry in seq:
+            refs = entry.get("plane_ref")
+            self.assertTrue(
+                isinstance(refs, list) and refs,
+                f"{name}/k={entry.get('k')}: plane_ref must be a non-empty list",
+            )
+            self.assertEqual(
+                len(refs), len(set(refs)),
+                f"{name}/k={entry.get('k')}: duplicate ids inside plane_ref",
+            )
+            unknown = [p for p in refs if p not in s1_plane_ids]
+            self.assertFalse(
+                unknown,
+                f"{name}/k={entry.get('k')}: plane_ref references unknown "
+                f"s1 plane_id {unknown}",
+            )
+
+        # baseline: k=0 interior count, 1 or 0 (concave footprint, note required).
+        baseline = doc.get("baseline")
+        self.assertIsInstance(
+            baseline, dict, f"{name}: baseline (k=0 prefix) must be an object"
+        )
+        self.assertEqual(baseline.get("k"), 0, f"{name}: baseline.k must be 0")
+        base_cells = baseline.get("n_cells")
+        self.assertIn(
+            base_cells, (0, 1),
+            f"{name}: baseline.n_cells must be 1, or 0 for a concave footprint "
+            f"whose domain-box centroid falls outside; got {base_cells!r}",
+        )
+        if base_cells == 0:
+            self.assertTrue(
+                isinstance(baseline.get("note"), str) and baseline["note"].strip(),
+                f"{name}: baseline.n_cells == 0 requires an explanatory note",
+            )
+
+        # final prefix == serialized S2 stage.
+        self.assertEqual(
+            seq[-1].get("n_cells"), n_cells_final,
+            f"{name}: final prefix n_cells={seq[-1].get('n_cells')} != "
+            f"len(s2_cells)={n_cells_final}",
+        )
+        self.assertEqual(
+            seq[-1].get("n_faces"), n_faces_final,
+            f"{name}: final prefix n_faces={seq[-1].get('n_faces')} != "
+            f"len(s2_faces)={n_faces_final}",
+        )
+
+        # delta_cells: consecutive-prefix difference; telescoping sum.
+        prev = base_cells
+        prev_k = 0
+        for entry in seq:
+            delta = entry.get("delta_cells")
+            self.assertTrue(
+                isinstance(delta, int) and not isinstance(delta, bool),
+                f"{name}/k={entry['k']}: delta_cells must be an integer",
+            )
+            if entry["k"] == prev_k + 1:  # consecutive prefixes only
+                self.assertEqual(
+                    delta, entry["n_cells"] - prev,
+                    f"{name}/k={entry['k']}: delta_cells={delta} != "
+                    f"n_cells diff {entry['n_cells'] - prev}",
+                )
+            prev, prev_k = entry["n_cells"], entry["k"]
+        self.assertEqual(
+            sum(e["delta_cells"] for e in seq), n_cells_final - base_cells,
+            f"{name}: sum(delta_cells) must telescope to final - baseline "
+            f"(= {n_cells_final} - {base_cells})",
+        )
+
+        # manifest declares the addition (only key added by --cut-sequence-only).
+        manifest_cut = bundle["manifest"].get("cut_sequence")
+        self.assertIsInstance(
+            manifest_cut, dict,
+            f"{name}: manifest must gain a cut_sequence key when "
+            f"{self.CUT_SEQ_FILE} exists",
+        )
+        self.assertEqual(
+            manifest_cut.get("file"), self.CUT_SEQ_FILE,
+            f"{name}: manifest cut_sequence.file must name {self.CUT_SEQ_FILE}",
+        )
+
+
 if __name__ == "__main__":
     unittest.main()

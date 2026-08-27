@@ -81,6 +81,10 @@ CONTRACT_DEFAULTS = {
 S1_RUN_FILES = ["manifest.json", "s1_points.ply", "s1_planes.json",
                 "s1_orphans.json", "s1_view.json"]
 S2_RUN_FILES = ["s2_cells.json", "s2_faces.json", "s2_seeds.json"]
+# S2 선택 추가분 — 접두 절단 통계 s2_cut_sequence.json (writer --cut-sequence-only,
+# 페이지 2 "S1 평면 → 셀 절단 인과" 재생 데이터). s2_ready 판정에는 불참(구세대 번들
+# 허용) — 뷰어가 lazy fetch로 없으면 빈 상태를 낸다. 존재하면 영수증에 sha 등재.
+S2_OPT_RUN_FILES = ["s2_cut_sequence.json"]
 S3_RUN_FILES = ["s3_views.json", "s3_steps.jsonl", "s3_face_residual.json"]
 # S3b 추가분 — 선택적(3a-only 런은 s3b 없이도 s3_ready 유지); s3_steps.jsonl의
 # stage:"3b" 행 추가와 체크포인트 타일(s3_tiles/s<step>/)은 파일 목록에 새 항목이 없다.
@@ -99,7 +103,7 @@ PAGES = [
     {"dir": "viewer_p2", "page": "p2_arrangement_init",
      "title": "페이지 2 — 배열·초기값",
      "manifest_schema": "phd_s3_verify_viewer_p2_manifest_v1",
-     "run_files": S1_RUN_FILES + S2_RUN_FILES},
+     "run_files": S1_RUN_FILES + S2_RUN_FILES + S2_OPT_RUN_FILES},
     {"dir": "viewer_p3", "page": "p3_joint_opt_continuous",
      "title": "페이지 3 — 공동 최적화(연속 구간)",
      "manifest_schema": "phd_s3_verify_viewer_p3_manifest_v1",

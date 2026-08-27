@@ -11,6 +11,14 @@
 // ④ o_init 맵 모드 — 셀 색 라디오 켬/끔 ↔ 소프트 t 4범주(0.75 청 / 0.15 회청 / 0.4 무점 보라
 // 강조(증축 탐지 감도의 자리) / 0.0 밖 회색), 면 색 = 인접 두 셀 중 큰 t. 앵커 항 C_k의
 // 셀-단위 초기값 = t (loss의 사전 항 단위) — 범례 캡션 명기.
+// ⑤ S1 평면 → 셀 절단 인과(리뷰어 요청 2026-08-27 확장): (a) 평면별 절단 보기에 3요소
+// 오버레이 — 선택 평면의 S1 원형 support_local(증거 영역, 출처색 0.35) + 기존 면 발광
+// (무한 절단 단면) + 잘린 셀 요약 유지, 카드 범례 "증거 영역 → 무한 절단(§1.1 그림 B)
+// → 셀"; (b) 절단 누적 재생 — s2_cut_sequence.json(writer --cut-sequence-only, 접두
+// 배열 전수) lazy fetch, 슬라이더 0..K + ◀▶로 평면 1..k의 면(칼금 자국)만 표시(RGBA
+// 정점색 단일 메시 제자리 갱신 — 지오메트리 재생성 없음)·현재 평면 S1 원형 병행,
+// k vs n_cells 미니 곡선, delta_cells 파편화 랭킹 상위 10(칩 클릭=평면 선택).
+// 재생 모드는 셀/면/평면 선택과 배타 전환, ESC 해제, 판독 JSON에 사용 여부 기록.
 // three.js r160 vendored (CDN 금지). 궤도/팬/줌·PLY 파서는 페이지 1 관행 승계.
 import * as THREE from './three.module.min.js';
 
@@ -51,6 +59,7 @@ const state = {
   selCell: null,        // 선택 셀 index (s2.cells)
   selFace: null,        // 선택 면 index (s2.faces)
   selPlane: null,       // 선택 S1 평면 plane_id — 평면별 절단 보기 (조각 진단)
+  playK: null,          // 절단 누적 재생 위치 k (null=재생 모드 꺼짐 — 선택과 배타)
   cellColor: 'o',       // 셀 색 모드: 'o'(켬/끔 o_state) | 't'(o_init 맵 — 소프트 t 4범주)
   flip: false,          // 점유 뒤집기 — 화면 전용, 데이터 변경 없음
   showFstar: false, showSeeds: false, showAls: true, showDomain: true, showWire: true,
@@ -115,11 +124,17 @@ view.addEventListener('wheel', (e) => {
   applyOrbit(); e.preventDefault();
 }, { passive: false });
 view.addEventListener('contextmenu', (e) => e.preventDefault());
-window.addEventListener('keydown', (e) => {  // ESC = 선택 해제 (뒤집기 포함 원복)
-  if (e.key !== 'Escape' || !state.run) return;
+window.addEventListener('keydown', (e) => {  // ESC = 선택/재생 해제 · ←→ = 재생 k 이동
+  if (!state.run) return;
   const t = e.target;
   if (t && (t.tagName === 'TEXTAREA' || t.tagName === 'INPUT' || t.tagName === 'SELECT')) return;
-  if (state.selCell !== null || state.selFace !== null || state.selPlane !== null) clearSelection();
+  if (e.key === 'Escape') {
+    if (state.selCell !== null || state.selFace !== null || state.selPlane !== null ||
+        state.playK !== null) clearSelection();
+  } else if (state.playK !== null && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
+    setPlayK(state.playK + (e.key === 'ArrowRight' ? 1 : -1));
+    e.preventDefault();
+  }
 });
 function resize() {
   if (!renderer) return;
@@ -140,8 +155,10 @@ if (renderer) (function loop() {
 let cellGroup = new THREE.Group(),   // 채움 버킷(스타일별 병합 메시) + 픽 메시 + 와이어
     seedGroup = new THREE.Group(), ptsGroup = new THREE.Group(),
     ctxGroup = new THREE.Group(), selGroup = new THREE.Group(),
-    colGroup = new THREE.Group();    // 표면고 기둥 카드 3D
-scene.add(cellGroup, seedGroup, ptsGroup, ctxGroup, selGroup, colGroup);
+    colGroup = new THREE.Group(),    // 표면고 기둥 카드 3D
+    evGroup = new THREE.Group(),     // 증거 영역(S1 원형 support_local) 오버레이
+    cutGroup = new THREE.Group();    // 절단 누적 재생 — RGBA 정점색 단일 메시(제자리 갱신)
+scene.add(cellGroup, seedGroup, ptsGroup, ctxGroup, selGroup, colGroup, evGroup, cutGroup);
 function emptyGroup(g) {
   for (const o of [...g.children]) {
     g.remove(o);
@@ -150,12 +167,14 @@ function emptyGroup(g) {
   }
 }
 function clear3d() {
-  for (const g of [cellGroup, seedGroup, ptsGroup, ctxGroup, selGroup, colGroup]) {
+  for (const g of [cellGroup, seedGroup, ptsGroup, ctxGroup, selGroup, colGroup,
+                   evGroup, cutGroup]) {
     scene.remove(g); emptyGroup(g);
   }
   cellGroup = new THREE.Group(); seedGroup = new THREE.Group(); ptsGroup = new THREE.Group();
   ctxGroup = new THREE.Group(); selGroup = new THREE.Group(); colGroup = new THREE.Group();
-  scene.add(cellGroup, seedGroup, ptsGroup, ctxGroup, selGroup, colGroup);
+  evGroup = new THREE.Group(); cutGroup = new THREE.Group();
+  scene.add(cellGroup, seedGroup, ptsGroup, ctxGroup, selGroup, colGroup, evGroup, cutGroup);
   hiliteMats = [];
 }
 
@@ -300,7 +319,8 @@ async function fetchRun(name) {
   const alsLocals = [];
   for (let i = 0; i < pts.count; i++) if (pts.src[i] === 1) alsLocals.push(i);
   const d = { name, manifest, planes, planeById, view: viewJ,
-              N: pts.count, pos: pts.pos, src: pts.src, alsLocals, s2: null, s2Missing: [] };
+              N: pts.count, pos: pts.pos, src: pts.src, alsLocals, s2: null, s2Missing: [],
+              cutSeq: null, cutSeqError: null };  // 절단 누적 재생 — lazy fetch 캐시
   // S2 3종 — 없으면 빈 상태 (writer가 아직 생성하지 않음)
   const opt = await Promise.all(['s2_cells.json', 's2_faces.json', 's2_seeds.json'].map(fn =>
     fetch(`${base}/${fn}`).then(r => r.ok ? r.json() : null).catch(() => null)));
@@ -465,6 +485,10 @@ function restyle() {
   if (!d || !d.s2) return;
   const s2 = d.s2;
   const selC = state.selCell, selF = state.selFace, selP = state.selPlane;
+  // 절단 누적 재생 — 채움은 RGBA 정점색 단일 메시(제자리 갱신), 버킷 채움 없음
+  const cs = d.cutSeq;
+  const playing = state.playK !== null && !!cs;
+  const playK = playing ? state.playK : -1;
   let fd = null;
   if (state.flip && selC !== null) fd = flipDelta(d, selC);
   const inNew = new Set(fd ? fd.newFaces : []), inGone = new Set(fd ? fd.goneFaces : []);
@@ -487,8 +511,9 @@ function restyle() {
     return ci === undefined ? -Infinity : +s2.cells[ci].t;
   };
   // 1) 채움 버킷 결정 (평면 모드: 그 평면이 만든 면만 발광 채움, 나머지는 와이어 감광)
+  // 재생 모드: 버킷 채움 전면 억제 — 칼금 자국은 cutMesh(RGBA)가, 감광은 와이어가 맡는다.
   const buckets = {};   // styleKey -> [faceIdx...]
-  s2.faces.forEach((f, fi) => {
+  if (!playing) s2.faces.forEach((f, fi) => {
     if (f.domain && !state.showDomain) return;
     let key = null;
     if (selP !== null) {
@@ -540,6 +565,20 @@ function restyle() {
   s2.faces.forEach((f, fi) => {
     const r = s2.faceRange[fi];
     const inPlane = selP !== null && planeFaceSet.has(fi);
+    if (playing) {   // 재생 모드 — 평면 1..k의 면만 출처색, 현재 k 최대 밝기, 나머지 감광
+      const kf = cs.faceCutK[fi];   // 0=도메인, 1..K=그 면을 만든 절단 평면의 k
+      if (kf >= 1 && kf <= playK) {
+        cw.setHex(cs.faceSrcHex[fi]);
+        if (kf !== playK) cw.multiplyScalar(0.7);
+      } else { cw.setHex(COL.wireDim); cw.multiplyScalar(0.5); }
+      const attr0 = s2.part[r.part].wire.geometry.getAttribute('color');
+      for (let k = 0; k < r.wireCount; k += 3) {
+        attr0.array[r.wireStart + k] = cw.r;
+        attr0.array[r.wireStart + k + 1] = cw.g;
+        attr0.array[r.wireStart + k + 2] = cw.b;
+      }
+      return;
+    }
     let hex = COL.wireDim;
     if (inPlane) hex = planeGlowHex;                       // 평면 모드 — 멤버 면 출처색 발광
     else if (state.showFstar && f.initial_real) hex = COL.wireReal;
@@ -555,25 +594,33 @@ function restyle() {
   });
   for (const key of ['inner', 'domain'])
     s2.part[key].wire.geometry.getAttribute('color').needsUpdate = true;
-  // 3) 시드 색 — 실재 면 위 vs 잠든 면 위, 선택 면·셀 위는 발광
+  // 2b) 절단 누적 재생 메시 — 지오메트리 재생성 없이 RGBA 정점색만 제자리 갱신
+  if (playing) { ensureCutMesh(d); applyCutColors(d); }
+  if (s2.cutMesh) s2.cutMesh.visible = playing;
+  // 3) 시드 색 — 실재 면 위 vs 잠든 면 위, 선택 면·셀 위는 발광 (숨김 시 재색칠 생략)
   if (d.seedPoints) {
     seedGroup.visible = state.showSeeds;
-    const attr = d.seedPoints.geometry.getAttribute('color');
-    const cReal = new THREE.Color(COL.seedReal), cSleep = new THREE.Color(COL.seedSleep),
-          cGlow = new THREE.Color(COL.colGlow);
-    for (let si = 0; si < s2.seeds.length; si++) {
-      const fi = s2.seedFace[si];
-      let c = cSleep;
-      if (fi >= 0) {
-        if (fi === selF || cellFaceSet.has(fi) || planeFaceSet.has(fi)) c = cGlow;
-        else if (s2.faces[fi].initial_real) c = cReal;
+    if (state.showSeeds) {
+      const attr = d.seedPoints.geometry.getAttribute('color');
+      const cReal = new THREE.Color(COL.seedReal), cSleep = new THREE.Color(COL.seedSleep),
+            cGlow = new THREE.Color(COL.colGlow);
+      for (let si = 0; si < s2.seeds.length; si++) {
+        const fi = s2.seedFace[si];
+        let c = cSleep;
+        if (fi >= 0) {
+          if (fi === selF || cellFaceSet.has(fi) || planeFaceSet.has(fi)) c = cGlow;
+          else if (s2.faces[fi].initial_real) c = cReal;
+        }
+        attr.array[si * 3] = c.r; attr.array[si * 3 + 1] = c.g; attr.array[si * 3 + 2] = c.b;
       }
-      attr.array[si * 3] = c.r; attr.array[si * 3 + 1] = c.g; attr.array[si * 3 + 2] = c.b;
+      attr.needsUpdate = true;
     }
-    attr.needsUpdate = true;
   }
-  // 4) 선택 윤곽 (맥동) + 표면고 기둥
-  emptyGroup(selGroup); emptyGroup(colGroup); hiliteMats = [];
+  // 4) 선택 윤곽 (맥동) + 표면고 기둥 + 증거 영역(S1 원형) 오버레이
+  emptyGroup(selGroup); emptyGroup(colGroup); emptyGroup(evGroup); hiliteMats = [];
+  // 증거 영역 — 평면별 절단 보기: 선택 평면의 S1 원형 / 재생: 현재 k 평면의 링 전부
+  if (selP !== null) addEvidencePolys(d, [selP]);
+  else if (playing && playK >= 1) addEvidencePolys(d, cs.seq[playK - 1].plane_ref || []);
   const outlineFis = selF !== null ? [selF] : [...cellFaceSet];
   if (outlineFis.length) {
     let total = 0;
@@ -647,15 +694,276 @@ function buildColumnOverlay(d, cell) {
   }
 }
 
+// ---------- S1 평면 → 셀 절단 인과 ----------
+// 증거 영역(S1 원형 support_local) — 출처색 반투명 0.35 + 윤곽 (부채꼴 삼각화, 페이지 1 관행)
+function addEvidencePolys(d, pids) {
+  for (const pid of pids) {
+    const p = d.planeById[pid];
+    const ring = (p || {}).support_local || [];
+    if (ring.length < 3) continue;
+    const hex = SRC_COLORS[p.source] ?? 0x888888;
+    const tri = [];
+    for (let k = 1; k + 1 < ring.length; k++)
+      tri.push(...ring[0], ...ring[k], ...ring[k + 1]);
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.Float32BufferAttribute(tri, 3));
+    const mesh = new THREE.Mesh(g, new THREE.MeshBasicMaterial({
+      color: hex, transparent: true, opacity: 0.35,
+      side: THREE.DoubleSide, depthWrite: false }));
+    mesh.renderOrder = 4;
+    evGroup.add(mesh);
+    const flat = [];
+    ring.forEach(v => flat.push(v[0], v[1], v[2]));
+    const lg = new THREE.BufferGeometry();
+    lg.setAttribute('position', new THREE.Float32BufferAttribute(flat, 3));
+    evGroup.add(new THREE.LineLoop(lg, new THREE.LineBasicMaterial({
+      color: hex, transparent: true, opacity: 0.9 })));
+  }
+}
+// s2_cut_sequence.json lazy fetch + 색인 (writer --cut-sequence-only 산출물)
+async function loadCutSeq(d) {
+  if (d.cutSeq || d.cutSeqError || !d.s2) return d.cutSeq;
+  try {
+    const r = await fetch(`../runs/${d.name}/s2_cut_sequence.json`);
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    const doc = await r.json();
+    const seq = doc.sequence || [];
+    const K = seq.length;
+    const idToK = {};   // s1 p### → 그 링을 처음 자른 접두 k (같은 (n,d) 중복은 첫 절단)
+    seq.forEach(e => (e.plane_ref || []).forEach(pid => {
+      if (!(pid in idToK)) idToK[pid] = e.k;
+    }));
+    const s2 = d.s2;
+    const faceCutK = new Int32Array(s2.faces.length);   // 0=도메인/미상
+    const faceSrcHex = new Array(s2.faces.length).fill(0x888888);
+    s2.faces.forEach((f, fi) => {
+      if (f.domain) return;
+      let m = Infinity;
+      for (const pid of (f.s1_plane_ids || []))
+        if (idToK[pid] !== undefined && idToK[pid] < m) m = idToK[pid];
+      faceCutK[fi] = Number.isFinite(m) ? m : 0;
+      const p0 = d.planeById[(f.s1_plane_ids || [])[0]];
+      faceSrcHex[fi] = SRC_COLORS[(p0 || {}).source] ?? 0x888888;
+    });
+    const base = doc.baseline || {};
+    const nCellsByK = [base.n_cells ?? 1];
+    seq.forEach(e => nCellsByK.push(e.n_cells));
+    let mismatch = null;
+    if (!K) mismatch = 'sequence 비어 있음';
+    else if (seq[K - 1].n_cells !== s2.cells.length ||
+             seq[K - 1].n_faces !== s2.faces.length)
+      mismatch = `cut_sequence 최종 ${seq[K - 1].n_cells}셀/${seq[K - 1].n_faces}면 ≠ ` +
+                 `s2 ${s2.cells.length}셀/${s2.faces.length}면 — 세대 불일치`;
+    d.cutSeq = { doc, seq, K, idToK, faceCutK, faceSrcHex, nCellsByK,
+                 baseCells: base.n_cells ?? 1, baseNote: base.note || null,
+                 mismatch, used: false, lastK: null, chartDims: null };
+  } catch (e) { d.cutSeqError = e.message; }
+  return d.cutSeq;
+}
+// 칼금 자국 메시 — 위치는 기존 inner triPos 공유(1회 구축), 이후 RGBA만 제자리 갱신
+function ensureCutMesh(d) {
+  const s2 = d.s2;
+  if (!s2.cutMesh) {
+    const pos = s2.part.inner.triPos;
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    g.setAttribute('color', new THREE.BufferAttribute(
+      new Float32Array((pos.length / 3) * 4), 4));   // RGBA — 정점 알파
+    const mesh = new THREE.Mesh(g, new THREE.MeshBasicMaterial({
+      vertexColors: true, transparent: true,
+      side: THREE.DoubleSide, depthWrite: false }));
+    mesh.renderOrder = 2;
+    s2.cutMesh = mesh;
+  }
+  if (s2.cutMesh.parent !== cutGroup) cutGroup.add(s2.cutMesh);
+  return s2.cutMesh;
+}
+function applyCutColors(d) {
+  const cs = d.cutSeq, s2 = d.s2, k = state.playK;
+  if (!cs || !s2.cutMesh) return;
+  const attr = s2.cutMesh.geometry.getAttribute('color');
+  const arr = attr.array;
+  const col = new THREE.Color();
+  s2.faces.forEach((f, fi) => {
+    const r = s2.faceRange[fi];
+    if (r.part !== 'inner') return;
+    const kf = cs.faceCutK[fi];
+    const a = (kf >= 1 && kf <= k) ? (kf === k ? 0.8 : 0.4) : 0.0;
+    col.setHex(cs.faceSrcHex[fi]);
+    const nVert = r.triCount / 3;
+    let off = (r.triStart / 3) * 4;
+    for (let v = 0; v < nVert; v++) {
+      arr[off] = col.r; arr[off + 1] = col.g; arr[off + 2] = col.b; arr[off + 3] = a;
+      off += 4;
+    }
+  });
+  attr.needsUpdate = true;
+}
+// 재생 위치 이동 — 진입 시 선택 해제(배타), 스크럽은 제자리 갱신(전체 패널 재렌더 없음)
+function setPlayK(k) {
+  const d = state.run;
+  if (!d || !d.cutSeq) return;
+  const cs = d.cutSeq;
+  k = Math.max(0, Math.min(cs.K, Math.round(k)));
+  const entering = state.playK === null;
+  if (!entering && state.playK === k) return;
+  if (entering) {
+    state.selCell = null; state.selFace = null; state.selPlane = null; state.flip = false;
+  }
+  state.playK = k;
+  cs.used = true; cs.lastK = k;
+  restyle();
+  if (entering) renderPanel(); else updateCutReadout();
+}
+function planeChipSpan(d, pid) {   // data-pid 없는 표시 전용 칩 (행 클릭과 중복 방지)
+  const p = d.planeById[pid] || {};
+  const css = srcCss(p.source);
+  return `<span class="pchip" style="color:${css};border-color:${css}55">${esc(pid)}</span>`;
+}
+// 미니 곡선 k vs 누적 내부 셀 수 — 단일 계열(2px), 현재 k 마커(r4 + 표면 링), 축 회색 실선
+function cutChartSvg(d) {
+  const cs = d.cutSeq;
+  const W = 384, H = 86, padL = 40, padR = 34, padT = 12, padB = 16;
+  const ymax = Math.max(...cs.nCellsByK, 1);
+  cs.chartDims = { W, H, padL, padR, padT, padB, ymax };
+  const x = (k) => padL + (W - padL - padR) * (cs.K ? k / cs.K : 0);
+  const y = (v) => padT + (H - padT - padB) * (1 - v / ymax);
+  const pts = cs.nCellsByK.map((v, k) => `${x(k).toFixed(1)},${y(v).toFixed(1)}`).join(' ');
+  const k0 = state.playK ?? cs.K;
+  return `<svg id="cutChart" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"
+      style="display:block;margin:6px 0;max-width:100%;cursor:crosshair;touch-action:none">
+    <line x1="${padL}" y1="${y(0)}" x2="${W - padR}" y2="${y(0)}" stroke="#2e3542"/>
+    <line x1="${padL}" y1="${y(ymax)}" x2="${W - padR}" y2="${y(ymax)}" stroke="#2e3542"/>
+    <text x="${padL - 5}" y="${y(ymax) + 3.5}" fill="#9fb4cc" font-size="10" text-anchor="end">${ymax}</text>
+    <text x="${padL - 5}" y="${y(0) + 3.5}" fill="#9fb4cc" font-size="10" text-anchor="end">0</text>
+    <text x="${padL}" y="${H - 4}" fill="#7a8494" font-size="10" text-anchor="middle">k=0</text>
+    <text x="${W - padR}" y="${H - 4}" fill="#7a8494" font-size="10" text-anchor="middle">${cs.K}</text>
+    <polyline points="${pts}" fill="none" stroke="#8ecbff" stroke-width="2"
+      stroke-linejoin="round" stroke-linecap="round"/>
+    <text x="${W - padR + 5}" y="${y(cs.nCellsByK[cs.K]) + 3.5}" fill="#dde3ea"
+      font-size="10">${cs.nCellsByK[cs.K]}</text>
+    <circle id="cutMark" cx="${x(k0).toFixed(1)}" cy="${y(cs.nCellsByK[k0]).toFixed(1)}"
+      r="4" fill="#8ecbff" stroke="#1b1f27" stroke-width="2"/>
+  </svg>`;
+}
+// 파편화 랭킹 — delta_cells 내림차순 상위 10 (행 클릭 = 평면별 절단 보기 전환)
+function cutRankHtml(d) {
+  const cs = d.cutSeq;
+  const rows = [...cs.seq]
+    .sort((a, b) => (b.delta_cells - a.delta_cells) || (a.k - b.k)).slice(0, 10)
+    .map((e, i) => {
+      const pid = (e.plane_ref || [])[0];
+      const p = d.planeById[pid] || {};
+      const more = (e.plane_ref || []).length - 1;
+      return `<tr data-pid="${escAttr(pid)}" class="${state.selPlane === pid ? 'sel' : ''}">
+        <td>${i + 1}</td>
+        <td class="l">${planeChipSpan(d, pid)}${more > 0 ? `<span class="note">외 ${more}</span>` : ''}</td>
+        <td class="l" style="color:${srcCss(p.source)}">${esc(SRC_LABEL[p.source] || p.source || '?')}</td>
+        <td>${e.k}</td>
+        <td><b>${e.delta_cells >= 0 ? '+' : ''}${e.delta_cells}</b></td>
+        <td>${e.n_cells}</td></tr>`;
+    }).join('');
+  return `<div class="scrollbox"><table>
+    <tr><th>#</th><th class="l">평면 (클릭=평면별 절단 보기)</th><th class="l">출처</th>
+      <th>k</th><th>Δ셀</th><th>누적</th></tr>${rows}</table></div>`;
+}
+function cutSeqSectionHtml(d) {
+  let h = `<h2>절단 누적 재생 — S1 평면 → 셀 절단 인과
+    <span class="note">(재생 ↔ 선택 배타 · ESC=해제)</span></h2>`;
+  const cs = d.cutSeq;
+  if (d.cutSeqError) {
+    h += `<div class="card"><span class="note">s2_cut_sequence.json 없음(${esc(d.cutSeqError)})
+      — writer <b>build_s2_bundle.py --cut-sequence-only</b> 실행 후 새로고침.</span></div>`;
+  } else if (!cs) {
+    h += `<div class="card">접두 배열 통계는 필요할 때만 내려받는다(lazy).
+      <button class="small" id="cutLoad">절단 재생 데이터 로드</button></div>`;
+  } else {
+    const K = cs.K, k = state.playK;
+    h += `<div class="card">
+      <div class="note caption">증거 영역(S1 원형) → 무한 절단(§1.1 그림 B) → 셀
+        — 한 칼질이 도메인 전체를 지나며 셀을 쪼갠다</div>`;
+    if (cs.mismatch) h += `<div class="err">${esc(cs.mismatch)}</div>`;
+    if (k === null) {
+      h += `<div><button class="small" id="cutPlay" ${cs.mismatch ? 'disabled' : ''}>재생 시작 (k=0)</button>
+        <span class="note">K=${K} · 최종 ${cs.nCellsByK[K]}셀 · 곡선 클릭으로도 진입</span></div>`;
+    } else {
+      h += `<div style="display:flex;gap:6px;align-items:center">
+          <button class="small" id="cutPrev">◀</button>
+          <input type="range" id="cutK" min="0" max="${K}" step="1" value="${k}" style="flex:1">
+          <button class="small" id="cutNext">▶</button>
+          <button class="small" id="cutExit">종료</button></div>
+        <div id="cutkline" style="margin:5px 0 2px"></div>`;
+    }
+    h += cutChartSvg(d) +
+      `<div class="note">k vs 누적 내부 셀 수 — writer가 build_arrangement(레거시 무수정)를
+        평면 1..k 접두로 재실행한 실측(연속 접두 차 = delta). 절단 순서는 구축 순서이며 최종
+        배열은 순서 불변(order_note). 곡선 클릭/드래그·◀▶·←→ = k 이동.</div></div>
+      <div style="margin:6px 0 2px"><b>파편화 랭킹</b>
+        <span class="note">delta_cells 상위 10 — 한 칼질의 셀 증가(과분할 진단)</span></div>` +
+      cutRankHtml(d);
+  }
+  return h;
+}
+// 스크럽 제자리 갱신 — 패널 전체 재렌더 없이 읽기줄·슬라이더·차트 마커만
+function updateCutReadout() {
+  const d = state.run;
+  if (!d || !d.cutSeq) return;
+  const cs = d.cutSeq, k = state.playK;
+  const sl = $('#cutK');
+  if (sl && k !== null && +sl.value !== k) sl.value = k;
+  const line = $('#cutkline');
+  if (line) {
+    if (k === null) line.innerHTML = '';
+    else if (k === 0) {
+      line.innerHTML = `<b>0/${cs.K}</b> · 절단 전 — footprint 프리즘 내부 <b>${cs.baseCells}</b>셀` +
+        (cs.baseNote ? ` <span class="note">(${esc(cs.baseNote)})</span>` : '');
+    } else {
+      const e = cs.seq[k - 1];
+      const pid = (e.plane_ref || [])[0];
+      const p = d.planeById[pid] || {};
+      line.innerHTML = `<b>${k}/${cs.K}</b> · ${planeChipSpan(d, pid)}
+        <span style="color:${srcCss(p.source)}">${esc(SRC_LABEL[p.source] || p.source || '?')}</span>
+        · 이 칼질로 셀 <b class="warn">${e.delta_cells >= 0 ? '+' : ''}${e.delta_cells}</b>
+        (누적 <b>${e.n_cells}</b>셀 · 면 ${e.n_faces})`;
+    }
+  }
+  const mark = $('#cutMark');
+  if (mark && cs.chartDims) {
+    const dm = cs.chartDims, kk = k ?? cs.K;
+    mark.setAttribute('cx', (dm.padL + (dm.W - dm.padL - dm.padR)
+      * (cs.K ? kk / cs.K : 0)).toFixed(1));
+    mark.setAttribute('cy', (dm.padT + (dm.H - dm.padT - dm.padB)
+      * (1 - cs.nCellsByK[kk] / dm.ymax)).toFixed(1));
+  }
+  renderSelBadge();
+}
+
 function renderSelBadge() {
   const el = $('#selbadge');
   if (!el) return;
   const d = state.run;
   if (!d || !d.s2 ||
-      (state.selCell === null && state.selFace === null && state.selPlane === null)) {
+      (state.selCell === null && state.selFace === null && state.selPlane === null &&
+       state.playK === null)) {
     el.style.display = 'none'; return;
   }
   el.style.display = 'block';
+  if (state.playK !== null && d.cutSeq) {
+    const cs = d.cutSeq, k = state.playK;
+    if (k === 0) {
+      el.innerHTML = `<b style="color:#8ecbff">절단 재생 0/${cs.K}</b> · 절단 전
+        (내부 ${cs.baseCells}셀) <span class="note">◀▶·←→·슬라이더 = 진행 · ESC=종료</span>`;
+    } else {
+      const e = cs.seq[k - 1];
+      const pid = (e.plane_ref || [])[0], p = d.planeById[pid] || {};
+      el.innerHTML = `<b style="color:#8ecbff">절단 재생 ${k}/${cs.K}</b> ·
+        <b style="color:${srcCss(p.source)}">${esc(pid)}</b>
+        ${esc(SRC_LABEL[p.source] || p.source || '?')} ·
+        이 칼질로 셀 ${e.delta_cells >= 0 ? '+' : ''}${e.delta_cells}
+        (누적 ${e.n_cells}) <span class="note">ESC=종료</span>`;
+    }
+    return;
+  }
   if (state.selPlane !== null) {
     const pid = state.selPlane, p = d.planeById[pid] || {};
     const nf = (d.s2.facesByPlane[pid] || []).length;
@@ -679,14 +987,16 @@ function renderSelBadge() {
   }
 }
 
-// ---------- 선택 ----------
+// ---------- 선택 (절단 재생 모드와 배타 — 어느 한쪽 진입 시 다른 쪽 해제) ----------
 function clearSelection() {
   state.selCell = null; state.selFace = null; state.selPlane = null; state.flip = false;
+  state.playK = null;
   restyle(); renderPanel();
 }
 function selectCell(ci) {
   if (state.selCell === ci) { clearSelection(); return; }
   state.selCell = ci; state.selFace = null; state.selPlane = null; state.flip = false;
+  state.playK = null;
   restyle(); renderPanel();
   const key = 'c' + ci;
   const row = document.querySelector(`#panel tr[data-cid="${key}"]`);
@@ -695,12 +1005,14 @@ function selectCell(ci) {
 function selectFace(fi) {
   if (state.selFace === fi) { clearSelection(); return; }
   state.selFace = fi; state.selCell = null; state.selPlane = null; state.flip = false;
+  state.playK = null;
   restyle(); renderPanel();
 }
-// 평면별 절단 보기 — 셀/면 선택과 배타 전환(셀 카드 칩 클릭 = 이 보기로 전환), 재클릭=해제
+// 평면별 절단 보기 — 셀/면 선택·재생 모드와 배타 전환(랭킹 행/칩 클릭 = 이 보기), 재클릭=해제
 function selectPlane(pid) {
   if (state.selPlane === pid || pid === null || pid === undefined) { clearSelection(); return; }
   state.selPlane = pid; state.selCell = null; state.selFace = null; state.flip = false;
+  state.playK = null;
   restyle(); renderPanel();
   const row = document.querySelector(`#panel tr[data-pid="${CSS.escape(pid)}"]`);
   if (row) row.scrollIntoView({ block: 'nearest' });
@@ -718,7 +1030,8 @@ function pickAt(e) {
     if (d.s2.part[key].pick.visible) picks.push(d.s2.part[key].pick);
   const hits = picks.length ? raycaster.intersectObjects(picks, false) : [];
   if (!hits.length) {
-    if (state.selCell !== null || state.selFace !== null || state.selPlane !== null) clearSelection();
+    if (state.selCell !== null || state.selFace !== null || state.selPlane !== null ||
+        state.playK !== null) clearSelection();
     return;
   }
   const h = hits[0];
@@ -873,6 +1186,9 @@ function planeCardHtml(d, pid) {
   return `<div class="card"><b style="color:${css}">${esc(pid)}</b>
     <span style="color:${css}">${esc(SRC_LABEL[(p || {}).source] || (p || {}).source || '실재하지 않음')}</span>
     <button class="small" id="planeClear" style="float:right">해제</button>
+    <div class="note caption" style="margin-top:5px">증거 영역(S1 원형)
+      <span style="color:${css}">■0.35</span> → 무한 절단(§1.1 그림 B)
+      <span style="color:${css}">발광 단면</span> → 셀</div>
     <div style="margin:5px 0"><b>이 평면이 만든 면 ${fis.length}개 / 잘린 셀 ${cis.length}개</b>
       <span class="note">— 조각(과분할) 진단 축</span></div>
     ${fis.length === 0 ? `<div class="note" style="margin:3px 0">0면 = 배열 비기여 —
@@ -883,7 +1199,8 @@ function planeCardHtml(d, pid) {
       <tr><td class="l">inlier</td><td class="l">${(p || {}).inlier_count ?? '—'}</td></tr>
     </table>
     <div style="margin-top:5px"><a href="${page1Link(d, pid)}" style="color:#8ecbff">페이지 1에서 이 평면 보기 ↗</a></div>
-    <div class="note" style="margin-top:3px">3D: 이 평면이 만든 면만 출처색 발광 · 나머지 감광.
+    <div class="note" style="margin-top:3px">3D: 증거 영역(S1 원형 support_local) 출처색 반투명
+      + 이 평면이 만든 면(무한 절단 단면)만 출처색 발광 · 나머지 감광 · 잘린 셀 표시 유지.
       재클릭·빈 공간·ESC=해제.</div></div>`;
 }
 function planeListHtml(d) {
@@ -1066,6 +1383,8 @@ function renderPanel() {
     ${checksCardHtml(s2)}`;
     if (state.selCell !== null) h += `<h2>선택 셀 — 초기값 카드</h2>${cellCardHtml(d, state.selCell)}`;
     if (state.selFace !== null) h += `<h2>선택 면</h2>${faceCardHtml(d, state.selFace)}`;
+    // S1 평면 → 셀 절단 인과 — 접두 재생 + 파편화 랭킹 (s2_cut_sequence.json lazy)
+    h += cutSeqSectionHtml(d);
     // 평면별 절단 보기 — S1 평면 목록(항상) + 선택 시 절단 요약 카드
     h += `<h2>S1 평면 — 평면별 절단 보기 <span class="note">(조각 진단 · 클릭=발광/감광)</span></h2>`;
     if (state.selPlane !== null) h += planeCardHtml(d, state.selPlane);
@@ -1135,6 +1454,34 @@ function bindPanel() {
     el.onclick = (e) => { e.preventDefault(); selectPlane(el.dataset.pid); };
   });
   on('#planeClear', 'onclick', () => clearSelection());
+  // 절단 누적 재생 — lazy 로드 / 진입 / 스크럽(제자리 갱신) / 종료
+  on('#cutLoad', 'onclick', async () => {
+    const d = state.run;
+    await loadCutSeq(d);
+    renderPanel();
+  });
+  on('#cutPlay', 'onclick', () => setPlayK(0));
+  on('#cutPrev', 'onclick', () => setPlayK((state.playK ?? 0) - 1));
+  on('#cutNext', 'onclick', () => setPlayK((state.playK ?? 0) + 1));
+  on('#cutExit', 'onclick', () => clearSelection());
+  on('#cutK', 'oninput', () => setPlayK(+$('#cutK').value));
+  const svg = $('#cutChart');
+  if (svg && state.run && state.run.cutSeq) {
+    const cs = state.run.cutSeq;
+    const toK = (ev) => {
+      const r = svg.getBoundingClientRect();
+      const dm = cs.chartDims;
+      const fx = (ev.clientX - r.left) * (dm.W / r.width);   // viewBox 좌표
+      return Math.round((fx - dm.padL) / (dm.W - dm.padL - dm.padR) * cs.K);
+    };
+    svg.onpointerdown = (ev) => {
+      if (cs.mismatch) return;
+      try { svg.setPointerCapture(ev.pointerId); } catch (_e) { /* no-op */ }
+      setPlayK(toK(ev)); ev.preventDefault();
+    };
+    svg.onpointermove = (ev) => { if (ev.buttons && !cs.mismatch) setPlayK(toK(ev)); };
+  }
+  if (state.playK !== null) updateCutReadout();
   document.querySelectorAll('input[name="verdict"]').forEach(r => {
     r.onchange = () => { reading().verdict = r.value; };
   });
@@ -1185,6 +1532,18 @@ function downloadReading() {
       })(),
       selected_plane: state.selPlane,
       cell_color_mode: state.cellColor,   // 'o'(켬/끔) | 't'(o_init 맵 — 소프트 t 4범주)
+      cut_sequence: d.cutSeq ? {          // 절단 누적 재생(S1→셀 인과) 사용 기록
+        available: true,
+        n_cut_planes: d.cutSeq.K,
+        prefix_mode: (d.cutSeq.doc || {}).prefix_mode ?? null,
+        baseline_n_cells: d.cutSeq.baseCells,
+        final_n_cells: d.cutSeq.nCellsByK[d.cutSeq.K] ?? null,
+        mismatch: d.cutSeq.mismatch,
+        playback_used: d.cutSeq.used,
+        last_k: d.cutSeq.lastK,
+        playing_now_k: state.playK,
+      } : { available: false,
+            reason: d.cutSeqError || 'lazy 미요청(로드 버튼 미사용)' },
     } : { s2_missing: d.s2Missing },
     verdict: rd.verdict, memo: rd.memo,
     reviewer: '김휘영', signature: rd.sign,
@@ -1217,13 +1576,14 @@ function renderHeader() {
   $('#hud').textContent = `${state.runName} — 좌드래그 회전 · 우드래그 이동 · 휠 줌 · ` +
     `클릭=셀(면 뒤쪽)/면 선택(패널 라디오로 전환) · 재클릭·빈 공간·ESC=해제 · ` +
     `o=1 셀 반투명 채움 / o=0 셀 와이어 · F* 토글=실재 면 강조 · ALS 앰버 = o_init 입력 · ` +
-    `패널 평면 목록/절단 평면 칩 클릭 = 평면별 절단 보기(발광/감광)`;
+    `패널 평면 목록/절단 평면 칩 클릭 = 평면별 절단 보기(증거 영역+단면 발광) · ` +
+    `절단 누적 재생 = 패널 슬라이더(선택과 배타)`;
 }
 
 // ---------- 런 전환 ----------
 async function loadRun(name) {
   state.runName = name; state.selCell = null; state.selFace = null; state.selPlane = null;
-  state.flip = false;
+  state.flip = false; state.playK = null;
   $('#panel').innerHTML = `<p class="note">${esc(name)} 로딩 중…</p>`;
   try {
     if (!state.cache[name]) state.cache[name] = await fetchRun(name);
