@@ -30,6 +30,15 @@
 // 행 클릭=절단 보기) + 선택 셀 경계면 시드만 발광(전역 시드 토글과 독립, 전량 재색칠
 // 금지 — 면당 ≤ SEED_FACE_MAX, bundle_io.thin_stride 간격 규칙 재사용) + 페이지 3
 // step 0 잔차 링크. 사용 여부는 판독 JSON cell_anatomy에 기록.
+// ⑦ 후보 평면 vs 생성된 면 구분(리뷰어 요청 2026-08-27, ⑤a 채움 발광을 대체): 평면 선택
+// 상태(평면 목록/경계 평면 미니 표/파편화 랭킹/셀 해부 이어 클릭 전부 selectPlane 경유)에서
+// (a) 후보 평면(S1 원형 가설) = support_local 출처색 반투명 채움 0.35 + 굵은 테두리(모서리
+// 리본 밴드 — WebGL 선폭 1px 한계 우회) + 기존 얇은 윤곽, (b) 생성된 면 = 채움 없이 밝은
+// 윤곽선(출처색→백색 0.55 보간, addFaceOutlines)만 — 면 채움 버킷은 평면 모드에서 비움.
+// 카드 첫 줄 "후보 평면(가설) — S1 원형 증거 영역" / 둘째 줄 "이 칼질이 만든 면 N장(배열
+// 산출)" = 두 줄 범례(스타일 견본 색칩 .stylechip). 절단 누적 재생의 현재 평면도 같은 구분:
+// 현재 k 면 채움 억제(applyCutColors 0) + 밝은 윤곽선, 지나간 칼질만 자국 채움 0.4 유지,
+// 읽기줄·배지에 후보 평면/만든 면(첫 절단 귀속 facesPerK) 두 줄 병기.
 // three.js r160 vendored (CDN 금지). 궤도/팬/줌·PLY 파서는 페이지 1 관행 승계.
 import * as THREE from './three.module.min.js';
 
@@ -560,11 +569,11 @@ function buildCellSeedGlow(d, ci) {
 }
 
 // ---------- 면 스타일 재적용 (채움 = 스타일별 병합 버킷 재구축, 와이어 = 제자리 색) ----------
-const FILL_STYLE = {  // key: [hex, opacity, renderOrder] — planeGlow hex는 선택 평면 출처색으로
-  // 대체, 선택 셀 채움은 해부 동적 버킷 'anat:rrggbb'(출처색, 0.6/3)가 담당 (⑥)
+const FILL_STYLE = {  // key: [hex, opacity, renderOrder] — 평면 모드(⑦)는 채움 버킷 없음
+  // (후보 평면=증거 밴드 / 생성된 면=밝은 윤곽선 — evGroup 오버레이가 담당),
+  // 선택 셀 채움은 해부 동적 버킷 'anat:rrggbb'(출처색, 0.6/3)가 담당 (⑥)
   flipNew: [COL.flipNew, 0.55, 3], flipGone: [COL.flipGone, 0.55, 3],
   selFace: [COL.selFill, 0.55, 2],
-  planeGlow: [COL.selFill, 0.6, 3],
   real: [COL.real, 0.38, 1], sleep: [COL.sleep, 0.05, 0], occ: [COL.occ, 0.15, 1],
   // o_init 맵 (소프트 t 4범주) — 면은 인접 두 셀 중 큰 t(더 찬 진술 우선)로 칠한다.
   // 무점 0.4 = 증축 탐지 감도의 자리 → 보라 강조(소수 셀이 한눈에 떠야 함).
@@ -587,9 +596,9 @@ function restyle() {
   if (state.flip && selC !== null) fd = flipDelta(d, selC);
   const inNew = new Set(fd ? fd.newFaces : []), inGone = new Set(fd ? fd.goneFaces : []);
   const cellFaceSet = new Set(selC !== null ? s2.cellFaces[selC] : []);
-  // 평면별 절단 보기 — 선택 평면이 만든 면 집합 + 출처색 발광
+  // 평면별 절단 보기(⑦) — 선택 평면이 만든 면 집합. 와이어=출처색, 강조=밝은 윤곽선 오버레이
   const planeFaceSet = new Set(selP !== null ? (s2.facesByPlane[selP] || []) : []);
-  const planeGlowHex = selP !== null
+  const planeSrcHex = selP !== null
     ? (SRC_COLORS[(d.planeById[selP] || {}).source] ?? COL.selFill) : COL.selFill;
   // o_init 맵 — 셀 t를 4범주 키로 (manifest o_init_def.t 기준, 정확 일치 1e-9)
   const odT = (((d.manifest || {}).o_init_def || {}).t) || {};
@@ -604,7 +613,8 @@ function restyle() {
     const ci = s2.cellIdx[cid];
     return ci === undefined ? -Infinity : +s2.cells[ci].t;
   };
-  // 1) 채움 버킷 결정 (평면 모드: 그 평면이 만든 면만 발광 채움, 나머지는 와이어 감광)
+  // 1) 채움 버킷 결정 (평면 모드 ⑦: 채움 전면 억제 — 후보 평면 밴드+생성 면 밝은 윤곽선이
+  // evGroup 오버레이로 담당, 나머지는 와이어 감광)
   // 셀 해부 모드(selC): 경계면만 만든 평면 출처색(도메인 회색) 발광 채움 — 나머지 채움
   // 억제 + 와이어 감광. 재생 모드: 버킷 채움 전면 억제 — 칼금 자국은 cutMesh(RGBA)가 맡는다.
   const buckets = {};   // styleKey('anat:rrggbb' 동적 포함) -> [faceIdx...]
@@ -612,7 +622,7 @@ function restyle() {
     if (f.domain && !state.showDomain) return;
     let key = null;
     if (selP !== null) {
-      if (planeFaceSet.has(fi)) key = 'planeGlow';
+      // 생성된 면 = 채움 없음(⑦b) — addFaceOutlines가 밝은 윤곽선을 얹는다
     } else if (selC !== null) {   // 셀 해부 — 이 셀 = 경계 평면들의 교차 (⑥)
       if (inNew.has(fi)) key = 'flipNew';
       else if (inGone.has(fi)) key = 'flipGone';
@@ -632,11 +642,10 @@ function restyle() {
   }
   fillBucketMeshes = [];
   for (const [key, fis] of Object.entries(buckets)) {
-    // 'anat:rrggbb' = 셀 해부 동적 버킷(출처색·도메인 회색) — planeGlow와 같은 발광 급
+    // 'anat:rrggbb' = 셀 해부 동적 버킷(출처색·도메인 회색) — 발광 급 0.6/3
     const anat = key.startsWith('anat:');
     const [hex0, opacity, ro] = anat ? [0, 0.6, 3] : FILL_STYLE[key];
-    const hex = anat ? parseInt(key.slice(5), 16)
-                     : (key === 'planeGlow' ? planeGlowHex : hex0);
+    const hex = anat ? parseInt(key.slice(5), 16) : hex0;
     let total = 0;
     for (const fi of fis) total += s2.faceRange[fi].triCount;
     const arr = new Float32Array(total);
@@ -680,7 +689,7 @@ function restyle() {
       return;
     }
     let hex = COL.wireDim;
-    if (inPlane) hex = planeGlowHex;                       // 평면 모드 — 멤버 면 출처색 발광
+    if (inPlane) hex = planeSrcHex;                        // 평면 모드 — 멤버 면 와이어 출처색
     else if (selC !== null && cellFaceSet.has(fi)) hex = anatFaceHex(d, f);  // 셀 해부 경계면
     else if (state.showFstar && f.initial_real) hex = COL.wireReal;
     else if (s2.occOf(f.cell_a) || s2.occOf(f.cell_b)) hex = COL.wireOcc;
@@ -719,9 +728,17 @@ function restyle() {
   }
   // 4) 선택 윤곽 (맥동) + 표면고 기둥 + 증거 영역(S1 원형) 오버레이
   emptyGroup(selGroup); emptyGroup(colGroup); emptyGroup(evGroup); hiliteMats = [];
-  // 증거 영역 — 평면별 절단 보기: 선택 평면의 S1 원형 / 재생: 현재 k 평면의 링 전부
-  if (selP !== null) addEvidencePolys(d, [selP]);
-  else if (playing && playK >= 1) addEvidencePolys(d, cs.seq[playK - 1].plane_ref || []);
+  // ⑦ 두 스타일 구분 — 후보 평면(가설): 증거 영역 채움+굵은 테두리 밴드(addEvidencePolys) /
+  // 생성된 면: 채움 없이 밝은 윤곽선(addFaceOutlines). 재생 모드의 현재 k 평면도 동일.
+  if (selP !== null) {
+    addEvidencePolys(d, [selP]);
+    addFaceOutlines(d, [...planeFaceSet], () => brightHex(planeSrcHex));
+  } else if (playing && playK >= 1) {
+    addEvidencePolys(d, cs.seq[playK - 1].plane_ref || []);
+    const curFis = [];   // 현재 칼질이 만든 면(첫 절단 귀속) — 채움 대신 밝은 윤곽선
+    s2.faces.forEach((f, fi) => { if (cs.faceCutK[fi] === playK) curFis.push(fi); });
+    addFaceOutlines(d, curFis, (fi) => brightHex(cs.faceSrcHex[fi]));
+  }
   const outlineFis = selF !== null ? [selF] : [...cellFaceSet];
   if (outlineFis.length) {
     let total = 0;
@@ -799,7 +816,43 @@ function buildColumnOverlay(d, cell) {
 }
 
 // ---------- S1 평면 → 셀 절단 인과 ----------
-// 증거 영역(S1 원형 support_local) — 출처색 반투명 0.35 + 윤곽 (부채꼴 삼각화, 페이지 1 관행)
+// 밝은 윤곽선 색 — 출처색을 백색 쪽으로 0.55 보간(⑦ 생성된 면 스타일; 발광 채움과 확실히 구분)
+function brightHex(hex) {
+  const c = new THREE.Color(hex);
+  c.lerp(new THREE.Color(0xffffff), 0.55);
+  return c.getHex();
+}
+// ⑦b 생성된 면 = 채움 없이 밝은 윤곽선 — 면 윤곽 세그먼트를 정점색 단일 LineSegments로.
+// hexOf(fi) → 면별 밝은 색(평면 모드 = 단일 출처색, 재생 모드 = faceSrcHex별).
+// evGroup 수명(재스타일마다 재구축) — 채움 버킷·와이어 본체는 건드리지 않는다.
+function addFaceOutlines(d, fis, hexOf) {
+  const s2 = d.s2;
+  if (!fis.length) return;
+  let total = 0;
+  for (const fi of fis) total += s2.faceRange[fi].wireCount;
+  const pos = new Float32Array(total), col = new Float32Array(total);
+  let off = 0;
+  const c = new THREE.Color();
+  for (const fi of fis) {
+    const r = s2.faceRange[fi];
+    const wpos = s2.part[r.part].wire.geometry.getAttribute('position').array;
+    pos.set(wpos.subarray(r.wireStart, r.wireStart + r.wireCount), off);
+    c.setHex(hexOf(fi));
+    for (let k = 0; k < r.wireCount; k += 3) {
+      col[off + k] = c.r; col[off + k + 1] = c.g; col[off + k + 2] = c.b;
+    }
+    off += r.wireCount;
+  }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  g.setAttribute('color', new THREE.BufferAttribute(col, 3));
+  const line = new THREE.LineSegments(g, new THREE.LineBasicMaterial({
+    vertexColors: true, transparent: true, opacity: 1 }));
+  line.renderOrder = 5;
+  evGroup.add(line);
+}
+// 증거 영역(S1 원형 support_local) — 후보 평면(가설) 스타일(⑦a): 출처색 반투명 0.35 채움
+// + 굵은 테두리(모서리 리본 밴드 — WebGL 선폭 1px 한계 우회) + 기존 얇은 윤곽(선명도)
 function addEvidencePolys(d, pids) {
   for (const pid of pids) {
     const p = d.planeById[pid];
@@ -816,6 +869,45 @@ function addEvidencePolys(d, pids) {
       side: THREE.DoubleSide, depthWrite: false }));
     mesh.renderOrder = 4;
     evGroup.add(mesh);
+    // 굵은 테두리 밴드 — Newell 법선으로 링 평면 안 옆 방향을 잡아 모서리마다 폭 2h 리본,
+    // 끝점을 h만큼 연장해 이음새를 메운다. h = 링 대각의 0.4% (0.05~0.25 m 클램프).
+    let nx = 0, ny = 0, nz = 0;
+    const bb = [[1e18, 1e18, 1e18], [-1e18, -1e18, -1e18]];
+    for (let k = 0; k < ring.length; k++) {
+      const a = ring[k], b = ring[(k + 1) % ring.length];
+      nx += (a[1] - b[1]) * (a[2] + b[2]);
+      ny += (a[2] - b[2]) * (a[0] + b[0]);
+      nz += (a[0] - b[0]) * (a[1] + b[1]);
+      for (let ax = 0; ax < 3; ax++) {
+        if (a[ax] < bb[0][ax]) bb[0][ax] = a[ax];
+        if (a[ax] > bb[1][ax]) bb[1][ax] = a[ax];
+      }
+    }
+    const nl = Math.hypot(nx, ny, nz) || 1;
+    nx /= nl; ny /= nl; nz /= nl;
+    const diag = Math.hypot(bb[1][0] - bb[0][0], bb[1][1] - bb[0][1], bb[1][2] - bb[0][2]);
+    const h = Math.min(0.25, Math.max(0.05, diag * 0.004));
+    const band = [];
+    for (let k = 0; k < ring.length; k++) {
+      const a = ring[k], b = ring[(k + 1) % ring.length];
+      let ex = b[0] - a[0], ey = b[1] - a[1], ez = b[2] - a[2];
+      const el = Math.hypot(ex, ey, ez) || 1;
+      ex /= el; ey /= el; ez /= el;
+      let sx = ny * ez - nz * ey, sy = nz * ex - nx * ez, sz = nx * ey - ny * ex;
+      const sl = Math.hypot(sx, sy, sz) || 1;
+      sx = sx / sl * h; sy = sy / sl * h; sz = sz / sl * h;
+      const ax = a[0] - ex * h, ay = a[1] - ey * h, az = a[2] - ez * h;
+      const bx = b[0] + ex * h, by = b[1] + ey * h, bz = b[2] + ez * h;
+      band.push(ax + sx, ay + sy, az + sz, bx + sx, by + sy, bz + sz, bx - sx, by - sy, bz - sz,
+                ax + sx, ay + sy, az + sz, bx - sx, by - sy, bz - sz, ax - sx, ay - sy, az - sz);
+    }
+    const bg = new THREE.BufferGeometry();
+    bg.setAttribute('position', new THREE.Float32BufferAttribute(band, 3));
+    const bandMesh = new THREE.Mesh(bg, new THREE.MeshBasicMaterial({
+      color: hex, transparent: true, opacity: 0.95,
+      side: THREE.DoubleSide, depthWrite: false }));
+    bandMesh.renderOrder = 5;
+    evGroup.add(bandMesh);
     const flat = [];
     ring.forEach(v => flat.push(v[0], v[1], v[2]));
     const lg = new THREE.BufferGeometry();
@@ -852,13 +944,17 @@ async function loadCutSeq(d) {
     const base = doc.baseline || {};
     const nCellsByK = [base.n_cells ?? 1];
     seq.forEach(e => nCellsByK.push(e.n_cells));
+    // ⑦ "이 칼질이 만든 면"(첫 절단 귀속) — 재생 읽기줄·배지의 면 수 원천
+    const facesPerK = new Uint32Array(K + 1);
+    for (let fi = 0; fi < faceCutK.length; fi++)
+      if (faceCutK[fi] >= 1) facesPerK[faceCutK[fi]]++;
     let mismatch = null;
     if (!K) mismatch = 'sequence 비어 있음';
     else if (seq[K - 1].n_cells !== s2.cells.length ||
              seq[K - 1].n_faces !== s2.faces.length)
       mismatch = `cut_sequence 최종 ${seq[K - 1].n_cells}셀/${seq[K - 1].n_faces}면 ≠ ` +
                  `s2 ${s2.cells.length}셀/${s2.faces.length}면 — 세대 불일치`;
-    d.cutSeq = { doc, seq, K, idToK, faceCutK, faceSrcHex, nCellsByK,
+    d.cutSeq = { doc, seq, K, idToK, faceCutK, faceSrcHex, nCellsByK, facesPerK,
                  baseCells: base.n_cells ?? 1, baseNote: base.note || null,
                  mismatch, used: false, lastK: null, chartDims: null };
   } catch (e) { d.cutSeqError = e.message; }
@@ -892,7 +988,9 @@ function applyCutColors(d) {
     const r = s2.faceRange[fi];
     if (r.part !== 'inner') return;
     const kf = cs.faceCutK[fi];
-    const a = (kf >= 1 && kf <= k) ? (kf === k ? 0.8 : 0.4) : 0.0;
+    // ⑦ 현재 k 면 = 채움 없음(밝은 윤곽선 오버레이가 담당 — 생성된 면 스타일 통일),
+    // 지나간 칼질(kf < k)만 자국 채움 0.4
+    const a = (kf >= 1 && kf < k) ? 0.4 : 0.0;
     col.setHex(cs.faceSrcHex[fi]);
     const nVert = r.triCount / 3;
     let off = (r.triStart / 3) * 4;
@@ -924,6 +1022,23 @@ function planeChipSpan(d, pid) {   // data-pid 없는 표시 전용 칩 (행 클
   const p = d.planeById[pid] || {};
   const css = srcCss(p.source);
   return `<span class="pchip" style="color:${css};border-color:${css}55">${esc(pid)}</span>`;
+}
+// ⑦ 스타일 견본 색칩 — 'cand'(후보 평면: 출처색 반투명 채움+굵은 테두리) /
+// 'face'(생성된 면: 채움 없음+밝은 윤곽선). 3D 오버레이와 같은 색 산수(0.35 채움≈#..59).
+function styleChipHtml(kind, hex) {
+  const css = '#' + hex.toString(16).padStart(6, '0');
+  if (kind === 'cand')
+    return `<span class="stylechip" style="background:${css}59;border-color:${css}"></span>`;
+  const b = '#' + brightHex(hex).toString(16).padStart(6, '0');
+  return `<span class="stylechip" style="background:transparent;border-color:${b}"></span>`;
+}
+// ⑦ 두 줄 범례 — 첫 줄 후보 평면(가설), 둘째 줄 생성된 면. 평면 카드·재생 읽기줄 공용.
+function planeDistinctionHtml(hex, nFaces, opts = {}) {
+  return `<div style="margin:4px 0 2px">${styleChipHtml('cand', hex)}<b>후보 평면(가설)</b>
+      — S1 원형 증거 영역 <span class="note">(출처색 반투명 채움 + 굵은 테두리)</span></div>
+    <div style="margin:2px 0">${styleChipHtml('face', hex)}<b>이 칼질이 만든 면
+      ${nFaces}장(배열 산출)</b> <span class="note">— 채움 없는 밝은 윤곽선${
+      opts.attr ? ' · ' + opts.attr : ''}</span></div>`;
 }
 // 미니 곡선 k vs 누적 내부 셀 수 — 단일 계열(2px), 현재 k 마커(r4 + 표면 링), 축 회색 실선
 function cutChartSvg(d) {
@@ -1026,10 +1141,13 @@ function updateCutReadout() {
       const e = cs.seq[k - 1];
       const pid = (e.plane_ref || [])[0];
       const p = d.planeById[pid] || {};
+      const srcHex = SRC_COLORS[p.source] ?? 0x888888;
       line.innerHTML = `<b>${k}/${cs.K}</b> · ${planeChipSpan(d, pid)}
         <span style="color:${srcCss(p.source)}">${esc(SRC_LABEL[p.source] || p.source || '?')}</span>
         · 이 칼질로 셀 <b class="warn">${e.delta_cells >= 0 ? '+' : ''}${e.delta_cells}</b>
-        (누적 <b>${e.n_cells}</b>셀 · 면 ${e.n_faces})`;
+        (누적 <b>${e.n_cells}</b>셀 · 면 ${e.n_faces})` +
+        planeDistinctionHtml(srcHex, cs.facesPerK ? cs.facesPerK[k] : '—',
+                             { attr: '첫 절단 귀속' });   // ⑦ 현재 평면 = 카드와 같은 두 줄 구분
     }
   }
   const mark = $('#cutMark');
@@ -1061,10 +1179,12 @@ function renderSelBadge() {
     } else {
       const e = cs.seq[k - 1];
       const pid = (e.plane_ref || [])[0], p = d.planeById[pid] || {};
+      const nf = cs.facesPerK ? cs.facesPerK[k] : '—';
       el.innerHTML = `<b style="color:#8ecbff">절단 재생 ${k}/${cs.K}</b> ·
         <b style="color:${srcCss(p.source)}">${esc(pid)}</b>
-        ${esc(SRC_LABEL[p.source] || p.source || '?')} ·
-        이 칼질로 셀 ${e.delta_cells >= 0 ? '+' : ''}${e.delta_cells}
+        <b>후보 평면(가설)</b> ${esc(SRC_LABEL[p.source] || p.source || '?')} ·
+        이 칼질이 만든 면 ${nf}장(밝은 윤곽선) ·
+        셀 ${e.delta_cells >= 0 ? '+' : ''}${e.delta_cells}
         (누적 ${e.n_cells}) <span class="note">ESC=종료</span>`;
     }
     return;
@@ -1076,9 +1196,9 @@ function renderSelBadge() {
     const from = state.planeFromCell !== null && d.s2.cells[state.planeFromCell]
       ? ` · <span class="note">← ${esc(d.s2.cells[state.planeFromCell].cell_id)}
           해부에서 진입(패널 셀로 돌아가기)</span>` : '';
-    el.innerHTML = `<b style="color:${srcCss(p.source)}">${esc(pid)}</b> ·
-      ${esc(SRC_LABEL[p.source] || p.source || '?')} ·
-      <b>이 평면이 만든 면 ${nf}개 / 잘린 셀 ${nc}개</b>${from}
+    el.innerHTML = `<b style="color:${srcCss(p.source)}">${esc(pid)}</b>
+      <b>후보 평면(가설)</b> · ${esc(SRC_LABEL[p.source] || p.source || '?')} ·
+      <b>이 칼질이 만든 면 ${nf}장(밝은 윤곽선) / 잘린 셀 ${nc}개</b>${from}
       <span class="note">재클릭·빈 공간·ESC=해제</span>`;
   } else if (state.selCell !== null) {
     const c = d.s2.cells[state.selCell];
@@ -1298,13 +1418,14 @@ function tLegendCardHtml(d) {
     <div class="note" style="margin-top:3px">면 색 = 인접 두 셀 중 큰 t(더 찬 진술 우선) ·
       ${ss.tOther ? `범주 밖 t ${ss.tOther}셀(채움 없음) · ` : ''}켬/끔 라디오로 복귀</div></div>`;
 }
-// ---------- 평면별 절단 보기 (조각 진단) ----------
+// ---------- 평면별 절단 보기 (조각 진단 · ⑦ 후보 평면 vs 생성된 면 구분) ----------
 function planeCardHtml(d, pid) {
   const s2 = d.s2, p = d.planeById[pid];
   const fis = s2.facesByPlane[pid] || [];
   const cis = s2.cellsByCutPlane[pid] || [];
   let area = 0;
   for (const fi of fis) area += (s2.faces[fi].area_m2 || 0);
+  const srcHex = SRC_COLORS[(p || {}).source] ?? 0x888888;
   const css = srcCss((p || {}).source);
   const backCi = state.planeFromCell;   // 셀 해부에서 진입 — 직전 셀 해부 복원 버튼 (⑥b)
   const backBtn = backCi !== null && s2.cells[backCi]
@@ -1313,22 +1434,20 @@ function planeCardHtml(d, pid) {
   return `<div class="card"><b style="color:${css}">${esc(pid)}</b>
     <span style="color:${css}">${esc(SRC_LABEL[(p || {}).source] || (p || {}).source || '실재하지 않음')}</span>
     <button class="small" id="planeClear" style="float:right">해제</button>${backBtn}
-    <div class="note caption" style="margin-top:5px">증거 영역(S1 원형)
-      <span style="color:${css}">■0.35</span> → 무한 절단(§1.1 그림 B)
-      <span style="color:${css}">발광 단면</span> → 셀</div>
-    <div style="margin:5px 0"><b>이 평면이 만든 면 ${fis.length}개 / 잘린 셀 ${cis.length}개</b>
-      <span class="note">— 조각(과분할) 진단 축</span></div>
-    ${fis.length === 0 ? `<div class="note" style="margin:3px 0">0면 = 배열 비기여 —
+    ${planeDistinctionHtml(srcHex, fis.length)}
+    <div class="note caption" style="margin-top:4px">후보 평면(증거 영역) → 무한 절단(§1.1 그림 B)
+      → 셀 · 잘린 셀 <b>${cis.length}</b>개 — 조각(과분할) 진단 축</div>
+    ${fis.length === 0 ? `<div class="note" style="margin:3px 0">0장 = 배열 비기여 —
       같은 절단 평면으로 병합됐거나 도메인(프리즘) 안에서 면을 만들지 못한 평면(데이터 사실).</div>` : ''}
     <table>
-      <tr><td class="l">면 (s1_plane_ids ∋ 이 평면)</td><td class="l">${fis.length}개 · Σ면적 ${fmt(area)} m²</td></tr>
+      <tr><td class="l">생성된 면 (s1_plane_ids ∋ 이 평면)</td><td class="l">${fis.length}장 · Σ면적 ${fmt(area)} m²</td></tr>
       <tr><td class="l">잘린 셀 (cut_plane_ids ∋ 이 평면)</td><td class="l">${cis.length}개</td></tr>
       <tr><td class="l">inlier</td><td class="l">${(p || {}).inlier_count ?? '—'}</td></tr>
     </table>
     <div style="margin-top:5px"><a href="${page1Link(d, pid)}" style="color:#8ecbff">페이지 1에서 이 평면 보기 ↗</a></div>
-    <div class="note" style="margin-top:3px">3D: 증거 영역(S1 원형 support_local) 출처색 반투명
-      + 이 평면이 만든 면(무한 절단 단면)만 출처색 발광 · 나머지 감광 · 잘린 셀 표시 유지.
-      재클릭·빈 공간·ESC=해제.</div></div>`;
+    <div class="note" style="margin-top:3px">3D: 후보 평면(가설) = S1 원형 support_local
+      출처색 반투명 채움 + 굵은 테두리 / 생성된 면 = 채움 없이 밝은 윤곽선(출처색→백색 보간)
+      · 나머지 감광 · 잘린 셀 요약 유지. 재클릭·빈 공간·ESC=해제.</div></div>`;
 }
 function planeListHtml(d) {
   const s2 = d.s2;
@@ -1552,7 +1671,8 @@ function renderPanel() {
     // S1 평면 → 셀 절단 인과 — 접두 재생 + 파편화 랭킹 (s2_cut_sequence.json lazy)
     h += cutSeqSectionHtml(d);
     // 평면별 절단 보기 — S1 평면 목록(항상) + 선택 시 절단 요약 카드
-    h += `<h2>S1 평면 — 평면별 절단 보기 <span class="note">(조각 진단 · 클릭=발광/감광)</span></h2>`;
+    h += `<h2>S1 평면 — 평면별 절단 보기 <span class="note">(조각 진단 · 클릭=후보 평면
+      채움+굵은 테두리 / 생성된 면 밝은 윤곽선)</span></h2>`;
     if (state.selPlane !== null) h += planeCardHtml(d, state.selPlane);
     h += planeListHtml(d);
     // 셀 목록
@@ -1757,8 +1877,8 @@ function renderHeader() {
     `클릭=셀 해부(경계면=만든 평면 출처색 발광·도메인 회색·시드 발광)/면 선택(패널 라디오) · ` +
     `해부 중 경계면 이어 클릭=그 평면 절단 보기(셀로 돌아가기 버튼) · 빈 공간·ESC=해제 · ` +
     `o=1 셀 반투명 채움 / o=0 셀 와이어 · F* 토글=실재 면 강조 · ALS 앰버 = o_init 입력 · ` +
-    `패널 평면 목록/경계 평면 표 클릭 = 평면별 절단 보기(증거 영역+단면 발광) · ` +
-    `절단 누적 재생 = 패널 슬라이더(선택과 배타)`;
+    `패널 평면 목록/경계 평면 표 클릭 = 평면별 절단 보기(후보 평면=채움+굵은 테두리 / ` +
+    `생성된 면=밝은 윤곽선) · 절단 누적 재생 = 패널 슬라이더(선택과 배타)`;
 }
 
 // ---------- 런 전환 ----------

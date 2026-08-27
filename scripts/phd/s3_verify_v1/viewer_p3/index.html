@@ -37,7 +37,10 @@
   .seg { border:1px solid #2e3542; border-radius:6px; padding:4px 8px; min-width:118px; flex-shrink:0; }
   .seg.on { border-color:#3d5a80; background:#1b222c; }
   .seg.off { opacity:.55; }
-  .seg .seghead { font-size:11px; color:#8ecbff; font-weight:600; margin-bottom:3px; white-space:nowrap; }
+  .seg .seghead { font-size:11px; color:#8ecbff; font-weight:600; margin-bottom:3px; white-space:nowrap;
+                  cursor:pointer; }   /* 구간 배지 클릭 = 구간 산출물 요약 카드 (④) */
+  .seg .seghead:hover { text-decoration:underline; }
+  .seg.segsel { border-color:#7a6a2a; box-shadow:0 0 0 1px #7a6a2a inset; }
   .seg.off .seghead { color:#7a8494; }
   .seg .segdesc { font-size:10px; color:#7a8494; white-space:nowrap; }
   .stepchip { display:inline-block; background:#232833; border:1px solid #2e3542; border-radius:4px;

@@ -26,6 +26,16 @@
 // visible 토글, ③ 3c δ̂ 평행이동 — prior 평면(s1_planes.json source=="prior")이 만든 면
 // (히트맵+오버레이)을 shiftGroup.position=δ̂로 이동 표시(지오메트리 재생성 금지 · 부호 규약
 // d_eff=d0+n·δ = prior를 +δ 평행이동), 3c 행 아니면 0.
+// ④ 구간 산출물 요약 카드(사용자 지시 2026-08-27 "단계별 산출물을 보고 싶다"): 타임라인 구간
+// 배지(seghead 3a/3b/3c/3d) 클릭 = 우측 패널 별도 섹션 #segsummary에 그 구간 고유 산출물
+// 요약 — 공통 틀 3줄(해동 변수/고유 산출물/이 단계가 답한 질문, SEG_FRAME) + 구간별 수치
+// (3a: grad 3군(gradBarsHtml 재사용, scope 0 = δ 구조적 0)·step0 photo·PSNR 중앙값·
+// [s0 타일/히트맵] 버튼 / 3b: PSNR 중앙값 개선폭(manifest s3b_def.psnr_median, 폴백 jsonl
+// 체크포인트 중앙값)·색 아티팩트(colors_artifact)·색 분화 최종값·[차이 히트맵] 버튼 /
+// 3c: δ̂ 최종 vs 기대값(주입=정답·잔류 오차, 비변화=잔류 |δ̂|, scope 0=부동 확인)·
+// [δ̂ 궤적으로] 스크롤 / 3d: 예정 안내만). 버튼은 기존 상태 세팅(selectStep·heatMode 수동
+// 전환)을 재사용, 배지 클릭 자체는 스텝 선택과 독립(selStep 불변·재클릭=닫기), 열람은 판독
+// JSON auto.segment_summary_viewed에 기록.
 // three.js r160 vendored (CDN 금지). 궤도/팬/줌·다크 테마·판독 기록은 페이지 1·2 관행 승계.
 import * as THREE from './three.module.min.js';
 
@@ -85,6 +95,7 @@ const STAGES = [
 const state = {
   runs: [], runName: null, run: null, cache: {},
   selStep: null,     // index into d.s3.steps
+  selSegment: null,  // 구간 배지 선택('3a'…) — 요약 카드(④), 스텝 선택과 독립
   selView: null,     // view_id
   selFace: null,     // index into d.faces
   showGhost: true, showDomain: false,
@@ -912,8 +923,9 @@ function renderTimeline() {
       const last = d.s3.steps[idxs[idxs.length - 1]];
       summary = ` <span class="note">스텝 ${idxs.length} · 최종 total ${fmtNum((last.losses || {}).total, 3)}</span>`;
     }
-    h += `<div class="seg ${on ? 'on' : 'off'}">
-      <div class="seghead">${esc(sg.label)}${summary}</div>
+    h += `<div class="seg ${on ? 'on' : 'off'} ${state.selSegment === sg.id ? 'segsel' : ''}">
+      <div class="seghead" data-seg="${escAttr(sg.id)}"
+        title="클릭 = 구간 산출물 요약 카드 (스텝 선택 유지 · 재클릭=닫기)">${esc(sg.label)}${summary}</div>
       ${body}
       <div class="segdesc">${esc(sg.desc)}</div></div>`;
   }
@@ -921,6 +933,25 @@ function renderTimeline() {
   el.querySelectorAll('.stepchip').forEach(c => {
     c.onclick = () => selectStep(+c.dataset.step);   // 3D 동기화(히트맵·δ̂ 이동) 공용 경로
   });
+  el.querySelectorAll('.seghead[data-seg]').forEach(sh => {   // ④ 구간 배지 = 요약 카드 토글
+    sh.onclick = () => toggleSegment(sh.dataset.seg);
+  });
+}
+// ④ 구간 배지 클릭 — 요약 카드는 별도 섹션(#segsummary), 스텝 선택(selStep)은 건드리지 않는다.
+// 열람은 런별 d.segViews에 누적(판독 JSON auto.segment_summary_viewed).
+function toggleSegment(sg) {
+  state.selSegment = (state.selSegment === sg) ? null : sg;
+  const d = state.run;
+  if (d && state.selSegment) {
+    d.segViews = d.segViews || { opens: 0, segments: {} };
+    d.segViews.opens++;
+    d.segViews.segments[state.selSegment] = (d.segViews.segments[state.selSegment] || 0) + 1;
+  }
+  renderTimeline(); renderPanel();
+  if (state.selSegment !== null) {
+    const card = $('#segsummary');
+    if (card) card.scrollIntoView({ block: 'start' });
+  }
 }
 
 // ---------- SVG 차트 (직접 라벨 + <title> 툴팁 + 인접 표가 항상 동반) ----------
@@ -1508,6 +1539,137 @@ function readingCard(d) {
     </div>`;
 }
 
+// ---------- 구간 산출물 요약 카드 (④ — 구간 배지 클릭, 스텝 선택과 독립) ----------
+// 공통 틀 3줄 — 해동 변수 / 고유 산출물 / 이 단계가 답한 질문. 값은 HTML-안전 상수 문구.
+const SEG_FRAME = {
+  '3a': { unfrozen: '없음 (0 최적화 스텝 — backward 1회만)',
+          outputs: 'grad_norms 3군(배선 증거) · step0 렌더/잔차 타일 · 면별 잔차 히트맵(step0)',
+          question: '광도 잔차가 δ·평면·색 변수군까지 실제로 흘러오는가 (배선 자체 검증)' },
+  '3b': { unfrozen: '색 A_g (시드당 RGB — δ·평면·o 동결)',
+          outputs: '학습 색 저장물(colors_artifact) · 3b final 면 잔차 · PSNR 개선 · 색 분화 통계',
+          question: '색이 수렴하는 동안 기하 압력이 어떻게 변하는가 (색으로 설명되는 잔차의 분리)' },
+  '3c': { unfrozen: 'δ (전역 평행이동 1벡터) + 색 (3b 웜스타트 — 평면·o 동결)',
+          outputs: 'δ̂ 궤적(스텝별 delta_hat) · 3c final 면 잔차 · 주입 복원 잔류 오차',
+          question: '주입된 이동을 δ̂가 복원하는가 (광도 단독 식별성 검정)' },
+  '3d': { unfrozen: '평면 P (예정)',
+          outputs: '미세조정 평면 + 앵커 장력 (예정)',
+          question: '(예정 — 3d 구현과 함께 등록)' },
+};
+function medianOf(vals) {
+  const v = (vals || []).filter(Number.isFinite).sort((a, b) => a - b);
+  if (!v.length) return null;
+  const m = v.length >> 1;
+  return v.length % 2 ? v[m] : (v[m - 1] + v[m]) / 2;
+}
+function segmentSummaryCard(d, sg) {
+  const idxs = ((d.s3 && d.s3.byStage) || {})[sg] || [];
+  const fr = SEG_FRAME[sg];
+  if (!fr)   // 등록부 밖 구간 — 요약 계약 없음(타임라인 자동 등재 구간)
+    return `<div class="card"><div class="note">등록부 밖 구간 ${esc(sg)} —
+      요약 카드 계약 없음 (행 ${idxs.length}개)</div></div>`;
+  let h = `<div class="card"><table>
+      <tr><td class="k">해동 변수</td><td class="l">${fr.unfrozen}</td></tr>
+      <tr><td class="k">고유 산출물</td><td class="l">${fr.outputs}</td></tr>
+      <tr><td class="k">이 단계가 답한 질문</td><td class="l">${fr.question}</td></tr></table>`;
+  const planned = `<div class="note" style="margin-top:5px"><span class="badge na">예정</span>
+      이 구간 행 없음 — 페이지가 구현과 함께 자란다.</div>`;
+  if (sg === '3a') {
+    if (!idxs.length) h += planned;
+    else {
+      const row = d.s3.steps[idxs[0]];   // 3a = step0 단일 행 계약
+      const med = medianOf(Object.values(row.views_psnr || {}));
+      const scope0 = deltaScopeOf(d) === 0;
+      h += `<div style="margin-top:6px"><b>grad_norms 3군 — 배선 증거${
+          scope0 ? ' <span class="badge na">δ 구조적 0 (scope 0)</span>' : ''}</b></div>
+        ${gradBarsHtml(d, row)}
+        <table style="margin-top:4px">
+          <tr><td class="k">step0 photo 손실</td><td class="l">${fmtNum((row.losses || {}).photo)}</td></tr>
+          <tr><td class="k">step0 PSNR 중앙값</td><td class="l">${fmtNum(med, 3)} dB
+            <span class="note">(뷰 ${Object.keys(row.views_psnr || {}).length}개 중앙값)</span></td></tr>
+        </table>
+        <div style="margin-top:5px">
+          <button class="small" id="segS0Tiles">s0 타일 보기</button>
+          <button class="small" id="segS0Heat">s0 히트맵</button>
+          <span class="note">기존 스텝 선택·히트맵 상태 세팅 재사용</span></div>`;
+    }
+  } else if (sg === '3b') {
+    if (!idxs.length) h += planned;
+    else {
+      const sbd = (d.manifest || {}).s3b_def || {};
+      const pm = sbd.psnr_median || null;
+      let psnrHtml, psnrSrc;
+      if (pm && Number.isFinite(pm.step0) && Number.isFinite(pm.final)) {
+        const dd = pm.final - pm.step0;
+        psnrHtml = `${fmtNum(pm.step0, 3)} → ${fmtNum(pm.final, 3)} dB
+          (<b class="${dd > 0 ? 'good' : 'warn'}">${dd >= 0 ? '+' : ''}${fmtNum(dd, 3)}</b>)`;
+        psnrSrc = 'manifest.s3b_def.psnr_median';
+      } else {
+        const cks = idxs.filter(i => d.s3.steps[i].views_psnr);
+        if (cks.length >= 2) {
+          const m0 = medianOf(Object.values(d.s3.steps[cks[0]].views_psnr));
+          const m1 = medianOf(Object.values(d.s3.steps[cks[cks.length - 1]].views_psnr));
+          psnrHtml = `${fmtNum(m0, 3)} → ${fmtNum(m1, 3)} dB (${m1 - m0 >= 0 ? '+' : ''}${fmtNum(m1 - m0, 3)})`;
+          psnrSrc = 'jsonl 체크포인트 중앙값(첫↔끝) 폴백';
+        } else { psnrHtml = '—'; psnrSrc = '체크포인트 < 2'; }
+      }
+      const ca = sbd.colors_artifact || null;
+      const csIdxs = idxs.filter(i => d.s3.steps[i].color_stats);
+      const csLast = csIdxs.length ? d.s3.steps[csIdxs[csIdxs.length - 1]] : null;
+      h += `<table style="margin-top:6px">
+        <tr><td class="k">PSNR 중앙값 개선폭 (s0→final)</td><td class="l">${psnrHtml}
+          <span class="note">(${psnrSrc})</span></td></tr>
+        <tr><td class="k">색 아티팩트 (colors_artifact)</td><td class="l">${ca
+          ? `<span class="badge good">유</span> ${esc(ca.file || '?')} ·
+             shape ${esc(JSON.stringify(ca.shape ?? '—'))} ${esc(ca.dtype || '')} ·
+             sha ${esc(String(ca.sha256 || '').slice(0, 8))}…`
+          : '<span class="badge bad">무 — s3b_def.colors_artifact 없음</span>'}</td></tr>
+        <tr><td class="k">색 분화 최종값${csLast ? ` (s${csLast.step})` : ''}</td><td class="l">${csLast
+          ? `평균 채도 ${fmtNum(csLast.color_stats.mean_saturation)} ·
+             색 분산 ${fmtNum(csLast.color_stats.color_var)}`
+          : '— color_stats 행 없음'}</td></tr></table>
+        <div style="margin-top:5px">
+          <button class="small" id="segDiffHeat" ${d.s3.perFaceFinal ? '' : 'disabled'}>s0 vs 3b final 잔차 차이</button>
+          <span class="note">${d.s3.perFaceFinal
+            ? '히트맵 차이 모드로 전환(기존 상태 세팅 재사용)'
+            : 's3_face_residual_final.json 없음'}</span></div>`;
+    }
+  } else if (sg === '3c') {
+    const sc3 = idxs.length ? (autoChecks(d) || {}).s3c : null;
+    if (!sc3) h += planned;
+    else {
+      const dh = sc3.delta_hat_final || [];
+      let verdictRows;
+      if (sc3.kind === 'injected') {
+        verdictRows = `<tr><td class="k">기대값 (정답)</td><td class="l">[${
+            (sc3.expected || []).map(v => fmtNum(v, 3)).join(', ')}] m
+            <span class="note">(${esc(sc3.expected_src || '없음')})</span></td></tr>
+          <tr><td class="k">잔류 오차 |δ̂−정답|</td><td class="l"><b class="warn">${
+            fmtNum(sc3.residual_vs_expected, 4)} m</b></td></tr>`;
+      } else if (sc3.kind === 'scope0') {
+        verdictRows = `<tr><td class="k">δ scope 0</td><td class="l">${sc3.immobile
+          ? '<span class="badge good">부동 확인 — 전 스텝 δ̂=0</span>'
+          : `<span class="badge bad">이동 감지 max|δ̂| ${fmtNum(sc3.max_abs_delta_hat, 4)}</span>`}</td></tr>`;
+      } else {
+        verdictRows = `<tr><td class="k">비변화 기준 잔류 |δ̂|</td><td class="l"><b class="warn">${
+            fmtNum(sc3.residual_norm, 4)} m</b>
+            <span class="note">(기대 0 — 오이동 = 위험 신호)</span></td></tr>`;
+      }
+      h += `<table style="margin-top:6px">
+        <tr><td class="k">δ̂ 최종 [x, y, z]</td><td class="l">[${
+          dh.map(v => fmtNum(v, 4)).join(', ')}] m</td></tr>
+        ${verdictRows}</table>
+        <div style="margin-top:5px"><button class="small" id="segDeltaScroll">δ̂ 궤적으로</button>
+          <span class="note">궤적 카드로 스크롤 (정답선·점 클릭=스텝 전환)</span></div>`;
+    }
+  } else {   // 3d — 예정 안내만
+    h += `<div style="margin-top:6px"><span class="badge na">예정</span>
+      <span class="note">해동 변수: 평면 P / 산출물: 미세조정 평면 + 앵커 장력${
+      idxs.length ? ` (행 ${idxs.length}개 감지 — 요약 수치 계약은 3d 구현과 함께)` : ''}</span></div>`;
+  }
+  return h + `<div class="note" style="margin-top:5px">구간 배지 클릭으로 열림 —
+    스텝 선택과 독립(별도 섹션) · 재클릭=닫기 · 열람은 판독 JSON에 기록.</div></div>`;
+}
+
 // ---------- 패널 ----------
 function renderPanel() {
   const d = state.run;
@@ -1531,6 +1693,12 @@ function renderPanel() {
     if (d.s3.finalMissing3c)
       h += `<div class="err">3c 흔적은 있는데 s3_face_residual_s3c_final.json이 없다 —
         writer 완주 후 새로고침(면 히트맵 3c final 모드는 그때 열린다).</div>`;
+    // ④ 구간 산출물 요약 — 별도 섹션(스텝 선택·카드와 독립, 구간 배지 클릭으로 토글)
+    if (state.selSegment !== null) {
+      const sgDef = STAGES.find(s => s.id === state.selSegment);
+      h += `<h2 id="segsummary">구간 산출물 요약 — ${esc(sgDef ? sgDef.label : state.selSegment)}
+        <span class="badge eval">구간 배지</span></h2>` + segmentSummaryCard(d, state.selSegment);
+    }
     const step = state.selStep !== null ? d.s3.steps[state.selStep] : null;
     h += `<h2>S3 정의 <span class="note">(manifest.s3_def/s3b_def + s3_views)</span></h2>${s3DefCard(d)}`;
     if (!step) {
@@ -1561,7 +1729,7 @@ function renderPanel() {
             ${stageId === '3c' ? '3c: 평면·o 동결 — param_step_norms.planes=0, delta·colors 학습(δ̂ 해동).'
              : stageId === '3b' ? '3b: 기하(δ·평면) 동결 — param_step_norms.delta/planes=0, colors>0.'
                                : 'δ 동결(3a) · param_step_norm=0(3a).'}</div></div>
-        <h2>뷰 — 사진 / 렌더 / 잔차 + PSNR 분포</h2>
+        <h2 id="viewscard">뷰 — 사진 / 렌더 / 잔차 + PSNR 분포</h2>
         <div class="card">${viewsCard(d, step)}</div>`;
       if (stageId === '3b' || stageId === '3c') {
         const cs = colorStatsSvg(d, stageId);
@@ -1573,7 +1741,7 @@ function renderPanel() {
       }
     }
     if (d.s3.byStage && d.s3.byStage['3c'] && d.s3.byStage['3c'].length)
-      h += `<h2>δ̂ 궤적 <span class="badge eval">주입 복원 검정 (구간 3c)</span></h2>${deltaHatCard(d)}`;
+      h += `<h2 id="deltahatsec">δ̂ 궤적 <span class="badge eval">주입 복원 검정 (구간 3c)</span></h2>${deltaHatCard(d)}`;
     h += `<h2>면별 잔차 히트맵 <span class="note">(s3_face_residual — 근사)</span></h2>
       ${faceResidualCard(d)}
       <div class="legend">
@@ -1626,6 +1794,29 @@ function bindPanel() {
   document.querySelectorAll('#panel .ckjump').forEach(b => {
     b.onclick = () => selectStep(+b.dataset.step);
   });
+  // ④ 구간 요약 카드 버튼 — 기존 상태 세팅 재사용(selectStep / heatmode 수동 라디오 경로)
+  on('#segS0Tiles', 'onclick', () => {     // 3a step0 스텝 선택 + 뷰 타일 카드로 스크롤
+    const d = state.run;
+    const a3 = ((d && d.s3 && d.s3.byStage) || {})['3a'] || [];
+    if (!a3.length) return;
+    selectStep(a3[0]);
+    const el = $('#viewscard');
+    if (el) el.scrollIntoView({ block: 'start' });
+  });
+  on('#segS0Heat', 'onclick', () => {      // 수동 히트맵 전환 — 라디오 핸들러와 동일 경로
+    state.autoHeat = false; state.heatMode = 'init';
+    if (state.run) buildScene(state.run);
+    renderPanel();
+  });
+  on('#segDiffHeat', 'onclick', () => {    // s0 vs 3b final 잔차 차이 — 기존 diff 모드
+    state.autoHeat = false; state.heatMode = 'diff';
+    if (state.run) buildScene(state.run);
+    renderPanel();
+  });
+  on('#segDeltaScroll', 'onclick', () => { // δ̂ 궤적 카드로 스크롤
+    const el = $('#deltahatsec');
+    if (el) el.scrollIntoView({ block: 'start' });
+  });
   document.querySelectorAll('#panel svg .stepdot[data-sidx]').forEach(c => {
     c.onclick = () => selectStep(+c.dataset.sidx);
   });
@@ -1646,7 +1837,8 @@ function downloadReading() {
   const now = new Date().toISOString();
   const step = (d.s3 && state.selStep !== null) ? d.s3.steps[state.selStep] : null;
   const obj = {
-    schema: 'phd_s3_verify_p3_reading_v3',   // v3: 3c 항 ⑨~⑫ + auto.s3c + 3c final 히트맵 + injection
+    schema: 'phd_s3_verify_p3_reading_v4',   // v4: segment_summary_viewed(구간 배지 요약 카드 ④)
+                                             // v3: 3c 항 ⑨~⑫ + auto.s3c + 3c final 히트맵 + injection
     page: 'p3_joint_opt_continuous',
     run: state.runName,
     bundle: {
@@ -1697,6 +1889,11 @@ function downloadReading() {
       s2_overlay: { on: state.overlayS2, source: d.s2ovSource ?? null,   // 연계 판독 ②
                     real_faces: d.s2ov ? d.s2ov.nReal : null },
       delta_shift_applied_m: currentDeltaShift(),   // 연계 판독 ③ — prior δ̂ 평행이동량
+      segment_summary_viewed: d.segViews ? {        // ④ 구간 배지 요약 카드 열람 기록
+        used: true, opens: d.segViews.opens,
+        segments: d.segViews.segments,              // 구간 id → 열람 횟수
+        selected_now: state.selSegment,
+      } : { used: false },
       prior_faces: d.faceIsPrior ? d.faceIsPrior.reduce((a, b) => a + b, 0) : null,
       s1_planes_missing: d.s1PlanesMissing ?? null,
       jsonl_bad_lines: d.s3.badLines,
@@ -1742,6 +1939,7 @@ function renderHeader() {
 // ---------- 런 전환 ----------
 async function loadRun(name) {
   state.runName = name; state.selStep = null; state.selView = null; state.selFace = null;
+  state.selSegment = null;   // ④ 구간 요약은 런별 — 전환 시 닫기(열람 기록은 d.segViews에 존속)
   $('#panel').innerHTML = `<p class="note">${esc(name)} 로딩 중…</p>`;
   try {
     if (!state.cache[name]) state.cache[name] = await fetchRun(name);
