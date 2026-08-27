@@ -19,6 +19,17 @@
 // 정점색 단일 메시 제자리 갱신 — 지오메트리 재생성 없음)·현재 평면 S1 원형 병행,
 // k vs n_cells 미니 곡선, delta_cells 파편화 랭킹 상위 10(칩 클릭=평면 선택).
 // 재생 모드는 셀/면/평면 선택과 배타 전환, ESC 해제, 판독 JSON에 사용 여부 기록.
+// ⑥ 셀 해부(cell anatomy — 리뷰어 요청 2026-08-27): 셀 선택(기존 경로) = 해부 보기 —
+// (a) 경계면 각각을 자기를 만든 평면의 출처색으로 채움·발광(면→s1_plane_ids[0]→
+// s1_planes.source; 도메인 면 회색+"도메인" 표기), 나머지 장면 감광(채움 억제+와이어 0.45),
+// 카드 헤드라인 "이 셀 = 평면 N장(+도메인 M면)의 교차" — N=기하 절단 평면 수(동면 링
+// 1장 집계, 표 캡션에 링 수 병기); (b) 해부 중 그 셀의 경계면을
+// 3D에서 이어 클릭 → 그 면을 만든 평면의 절단 보기(① 재사용)로 전환 + "셀로 돌아가기"
+// 버튼(state.planeFromCell — 직전 셀 해부 복원); (c) 셀 카드 보강 — 경계 평면 미니 표
+// (cut_plane_ids ∪ 경계면 s1_plane_ids 합집합, 행=출처색 칩·n·d·중력각·기여 면 수,
+// 행 클릭=절단 보기) + 선택 셀 경계면 시드만 발광(전역 시드 토글과 독립, 전량 재색칠
+// 금지 — 면당 ≤ SEED_FACE_MAX, bundle_io.thin_stride 간격 규칙 재사용) + 페이지 3
+// step 0 잔차 링크. 사용 여부는 판독 JSON cell_anatomy에 기록.
 // three.js r160 vendored (CDN 금지). 궤도/팬/줌·PLY 파서는 페이지 1 관행 승계.
 import * as THREE from './three.module.min.js';
 
@@ -59,6 +70,7 @@ const state = {
   selCell: null,        // 선택 셀 index (s2.cells)
   selFace: null,        // 선택 면 index (s2.faces)
   selPlane: null,       // 선택 S1 평면 plane_id — 평면별 절단 보기 (조각 진단)
+  planeFromCell: null,  // 셀 해부→평면 절단 보기 진입 시 복귀 대상 셀 index ("셀로 돌아가기")
   playK: null,          // 절단 누적 재생 위치 k (null=재생 모드 꺼짐 — 선택과 배타)
   cellColor: 'o',       // 셀 색 모드: 'o'(켬/끔 o_state) | 't'(o_init 맵 — 소프트 t 4범주)
   flip: false,          // 점유 뒤집기 — 화면 전용, 데이터 변경 없음
@@ -320,7 +332,9 @@ async function fetchRun(name) {
   for (let i = 0; i < pts.count; i++) if (pts.src[i] === 1) alsLocals.push(i);
   const d = { name, manifest, planes, planeById, view: viewJ,
               N: pts.count, pos: pts.pos, src: pts.src, alsLocals, s2: null, s2Missing: [],
-              cutSeq: null, cutSeqError: null };  // 절단 누적 재생 — lazy fetch 캐시
+              cutSeq: null, cutSeqError: null,    // 절단 누적 재생 — lazy fetch 캐시
+              anatomy: { used: false, lastCellId: null, faceToPlane: 0,
+                         cellReturns: 0, seedGlow: null } };  // 셀 해부 사용 기록(판독 JSON)
   // S2 3종 — 없으면 빈 상태 (writer가 아직 생성하지 않음)
   const opt = await Promise.all(['s2_cells.json', 's2_faces.json', 's2_seeds.json'].map(fn =>
     fetch(`${base}/${fn}`).then(r => r.ok ? r.json() : null).catch(() => null)));
@@ -466,10 +480,90 @@ function flipW(t) {   // 뒤집기 값 w·|log(t/(1−t))| — 초기 w=1. t∈{
   return Math.abs(Math.log(t / (1 - t)));
 }
 
+// ---------- 셀 해부 (cell anatomy) — 경계면 → 만든 평면 출처색 ----------
+// 도메인 면 회색 — footprint 출처색(0x9aa4b0)과 구분되는 맥락 회색(기존 팔레트 0x556070)
+const ANAT_DOMAIN_HEX = 0x556070;
+const SEED_FACE_MAX = 2000;   // 셀 시드 발광 씨닝 상한(면당) — thin_stride 간격 규칙 재사용
+function anatFaceHex(d, f) {
+  if (f.domain) return ANAT_DOMAIN_HEX;
+  const p = d.planeById[(f.s1_plane_ids || [])[0]];   // 관행: 첫 링 = 대표 출처 (loadCutSeq와 동일)
+  return SRC_COLORS[(p || {}).source] ?? 0x888888;
+}
+// 경계 평면 목록 — cut_plane_ids ∪ (경계면 s1_plane_ids 합집합) + 셀에 기여한 면 수.
+// 데이터 사실: cut_plane_ids는 경계면 평면의 상위집합(같은 절단 평면의 동면 링 포함,
+// build_s2_bundle p2s1 확장) — 면 0 행 = 동면 링(직접 면 없음). 헤드라인의 "평면 N장"은
+// 기하 절단 평면 수(면의 직렬화 (n,d) 고유값 — 동면 링 1장으로 집계, B022 실측 교훈:
+// 링 수로 세면 면 8개 셀이 "11장"이 되어 시각과 어긋남); 링 수는 표 캡션에 병기.
+function cellBoundaryPlanes(d, ci) {
+  const s2 = d.s2, c = s2.cells[ci];
+  const cnt = {};
+  const geom = new Set();
+  let domFaces = 0;
+  for (const fi of s2.cellFaces[ci]) {
+    const f = s2.faces[fi];
+    if (f.domain) { domFaces++; continue; }
+    geom.add(`${(f.n || []).join(',')}|${f.d}`);   // 같은 절단 평면 = 같은 직렬화 (n,d)
+    for (const pid of (f.s1_plane_ids || [])) cnt[pid] = (cnt[pid] || 0) + 1;
+  }
+  const union = new Set([...(c.cut_plane_ids || []), ...Object.keys(cnt)]);
+  const rows = [...union].map(pid => ({ pid, nFaces: cnt[pid] || 0 }));
+  rows.sort((a, b) => (b.nFaces - a.nFaces) || (a.pid < b.pid ? -1 : 1));
+  return { rows, domFaces, nGeom: geom.size, nRings: Object.keys(cnt).length };
+}
+// 선택 셀 경계면 시드 인덱스 — 1.1M 전수 1회 스캔(셀별 캐시), 면당 thin_stride 씨닝.
+// 전역 시드 레이어(d.seedPoints)는 건드리지 않는다(전량 재색칠 금지 제약).
+function ensureCellSeedIdxs(d, ci) {
+  const s2 = d.s2;
+  if (s2.cellSeedCache && s2.cellSeedCache.ci === ci) return s2.cellSeedCache;
+  const want = new Map();   // fi -> {stride, k(그 면에서 지나간 시드 수)}
+  let total = 0, thinnedFaces = 0;
+  for (const fi of s2.cellFaces[ci]) {
+    const n = s2.faceSeedCount[fi];
+    total += n;
+    const stride = Math.max(1, Math.ceil(n / SEED_FACE_MAX));   // bundle_io.thin_stride 산수
+    if (stride > 1) thinnedFaces++;
+    want.set(fi, { stride, k: 0 });
+  }
+  const idxs = [];
+  const sf = s2.seedFace;
+  for (let si = 0; si < sf.length; si++) {
+    const w = want.get(sf[si]);
+    if (!w) continue;
+    if (w.k % w.stride === 0) idxs.push(si);
+    w.k++;
+  }
+  s2.cellSeedCache = { ci, idxs, total, shown: idxs.length, thinnedFaces,
+                       nFaces: s2.cellFaces[ci].length };
+  return s2.cellSeedCache;
+}
+// 시드 발광 3D — 선택 셀 경계면 시드만 별도 Points(부분 표시), selGroup 수명(재스타일마다 재구축)
+function buildCellSeedGlow(d, ci) {
+  const s2 = d.s2;
+  if (!s2.seeds.length) return;
+  const cache = ensureCellSeedIdxs(d, ci);
+  if (!cache.idxs.length) return;
+  const pos = new Float32Array(cache.idxs.length * 3);
+  cache.idxs.forEach((si, k) => {
+    const mu = s2.seeds[si].mu;
+    pos[k * 3] = mu[0]; pos[k * 3 + 1] = mu[1]; pos[k * 3 + 2] = mu[2];
+  });
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  // 크기 0.12 — 0.3 m 격자에서 점 사이로 면의 출처색 채움이 읽히도록 (B022 실측 조정)
+  const pts = new THREE.Points(g, new THREE.PointsMaterial({
+    color: COL.colGlow, size: 0.12, transparent: true, opacity: 0.9 }));
+  pts.renderOrder = 4;
+  selGroup.add(pts);
+  d.anatomy.seedGlow = { cell: s2.cells[ci].cell_id, boundary_faces: cache.nFaces,
+                         seeds_total: cache.total, seeds_shown: cache.shown,
+                         thinned_faces: cache.thinnedFaces, per_face_max: SEED_FACE_MAX };
+}
+
 // ---------- 면 스타일 재적용 (채움 = 스타일별 병합 버킷 재구축, 와이어 = 제자리 색) ----------
-const FILL_STYLE = {  // key: [hex, opacity, renderOrder] — planeGlow hex는 선택 평면 출처색으로 대체
+const FILL_STYLE = {  // key: [hex, opacity, renderOrder] — planeGlow hex는 선택 평면 출처색으로
+  // 대체, 선택 셀 채움은 해부 동적 버킷 'anat:rrggbb'(출처색, 0.6/3)가 담당 (⑥)
   flipNew: [COL.flipNew, 0.55, 3], flipGone: [COL.flipGone, 0.55, 3],
-  selFace: [COL.selFill, 0.55, 2], selCell: [COL.occ, 0.4, 2],
+  selFace: [COL.selFill, 0.55, 2],
   planeGlow: [COL.selFill, 0.6, 3],
   real: [COL.real, 0.38, 1], sleep: [COL.sleep, 0.05, 0], occ: [COL.occ, 0.15, 1],
   // o_init 맵 (소프트 t 4범주) — 면은 인접 두 셀 중 큰 t(더 찬 진술 우선)로 칠한다.
@@ -511,17 +605,20 @@ function restyle() {
     return ci === undefined ? -Infinity : +s2.cells[ci].t;
   };
   // 1) 채움 버킷 결정 (평면 모드: 그 평면이 만든 면만 발광 채움, 나머지는 와이어 감광)
-  // 재생 모드: 버킷 채움 전면 억제 — 칼금 자국은 cutMesh(RGBA)가, 감광은 와이어가 맡는다.
-  const buckets = {};   // styleKey -> [faceIdx...]
+  // 셀 해부 모드(selC): 경계면만 만든 평면 출처색(도메인 회색) 발광 채움 — 나머지 채움
+  // 억제 + 와이어 감광. 재생 모드: 버킷 채움 전면 억제 — 칼금 자국은 cutMesh(RGBA)가 맡는다.
+  const buckets = {};   // styleKey('anat:rrggbb' 동적 포함) -> [faceIdx...]
   if (!playing) s2.faces.forEach((f, fi) => {
     if (f.domain && !state.showDomain) return;
     let key = null;
     if (selP !== null) {
       if (planeFaceSet.has(fi)) key = 'planeGlow';
-    } else if (inNew.has(fi)) key = 'flipNew';
-    else if (inGone.has(fi)) key = 'flipGone';
-    else if (selF === fi) key = 'selFace';
-    else if (cellFaceSet.has(fi)) key = 'selCell';
+    } else if (selC !== null) {   // 셀 해부 — 이 셀 = 경계 평면들의 교차 (⑥)
+      if (inNew.has(fi)) key = 'flipNew';
+      else if (inGone.has(fi)) key = 'flipGone';
+      else if (cellFaceSet.has(fi))
+        key = 'anat:' + anatFaceHex(d, f).toString(16).padStart(6, '0');
+    } else if (selF === fi) key = 'selFace';
     else if (state.showFstar) key = f.initial_real ? 'real' : 'sleep';
     else if (state.cellColor === 't') {   // o_init 맵 — 인접 두 셀 중 큰 t(더 찬 진술 우선)
       const t = Math.max(cellT(f.cell_a), cellT(f.cell_b));
@@ -535,8 +632,11 @@ function restyle() {
   }
   fillBucketMeshes = [];
   for (const [key, fis] of Object.entries(buckets)) {
-    const [hex0, opacity, ro] = FILL_STYLE[key];
-    const hex = key === 'planeGlow' ? planeGlowHex : hex0;
+    // 'anat:rrggbb' = 셀 해부 동적 버킷(출처색·도메인 회색) — planeGlow와 같은 발광 급
+    const anat = key.startsWith('anat:');
+    const [hex0, opacity, ro] = anat ? [0, 0.6, 3] : FILL_STYLE[key];
+    const hex = anat ? parseInt(key.slice(5), 16)
+                     : (key === 'planeGlow' ? planeGlowHex : hex0);
     let total = 0;
     for (const fi of fis) total += s2.faceRange[fi].triCount;
     const arr = new Float32Array(total);
@@ -581,6 +681,7 @@ function restyle() {
     }
     let hex = COL.wireDim;
     if (inPlane) hex = planeGlowHex;                       // 평면 모드 — 멤버 면 출처색 발광
+    else if (selC !== null && cellFaceSet.has(fi)) hex = anatFaceHex(d, f);  // 셀 해부 경계면
     else if (state.showFstar && f.initial_real) hex = COL.wireReal;
     else if (s2.occOf(f.cell_a) || s2.occOf(f.cell_b)) hex = COL.wireOcc;
     cw.setHex(hex);
@@ -639,7 +740,10 @@ function restyle() {
     selGroup.add(new THREE.LineSegments(g, mat));
     hiliteMats.push(mat);
   }
-  if (selC !== null) buildColumnOverlay(d, s2.cells[selC]);
+  if (selC !== null) {
+    buildColumnOverlay(d, s2.cells[selC]);
+    buildCellSeedGlow(d, selC);   // 해부 ⑥ — 경계면 시드만 발광(전역 토글과 독립·부분 표시)
+  }
   renderSelBadge();
 }
 
@@ -809,6 +913,7 @@ function setPlayK(k) {
   if (!entering && state.playK === k) return;
   if (entering) {
     state.selCell = null; state.selFace = null; state.selPlane = null; state.flip = false;
+    state.planeFromCell = null;
   }
   state.playK = k;
   cs.used = true; cs.lastK = k;
@@ -968,16 +1073,21 @@ function renderSelBadge() {
     const pid = state.selPlane, p = d.planeById[pid] || {};
     const nf = (d.s2.facesByPlane[pid] || []).length;
     const nc = (d.s2.cellsByCutPlane[pid] || []).length;
+    const from = state.planeFromCell !== null && d.s2.cells[state.planeFromCell]
+      ? ` · <span class="note">← ${esc(d.s2.cells[state.planeFromCell].cell_id)}
+          해부에서 진입(패널 셀로 돌아가기)</span>` : '';
     el.innerHTML = `<b style="color:${srcCss(p.source)}">${esc(pid)}</b> ·
       ${esc(SRC_LABEL[p.source] || p.source || '?')} ·
-      <b>이 평면이 만든 면 ${nf}개 / 잘린 셀 ${nc}개</b>
+      <b>이 평면이 만든 면 ${nf}개 / 잘린 셀 ${nc}개</b>${from}
       <span class="note">재클릭·빈 공간·ESC=해제</span>`;
   } else if (state.selCell !== null) {
     const c = d.s2.cells[state.selCell];
+    const bp = cellBoundaryPlanes(d, state.selCell);   // 해부 요약 (⑥a)
     el.innerHTML = `<b style="color:#ffe066">${esc(c.cell_id)}</b> ·
-      o=${c.o_state} · t=${(+c.t).toFixed(2)} · ${esc(VERDICT_KO[(c.surf || {}).verdict] || '—')}
+      o=${c.o_state} · t=${(+c.t).toFixed(2)} · ${esc(VERDICT_KO[(c.surf || {}).verdict] || '—')} ·
+      해부 평면 ${bp.nGeom}장${bp.domFaces ? `+도메인 ${bp.domFaces}면` : ''}
       ${state.flip ? '<span class="flipnew">[뒤집기 미리보기]</span>' : ''}
-      <span class="note">재클릭·빈 공간·ESC=해제</span>`;
+      <span class="note">경계면 이어 클릭=그 평면 절단 보기 · 빈 공간·ESC=해제</span>`;
   } else {
     const f = d.s2.faces[state.selFace];
     el.innerHTML = `<b style="color:#ffe066">${esc(f.face_id)}</b> ·
@@ -990,13 +1100,19 @@ function renderSelBadge() {
 // ---------- 선택 (절단 재생 모드와 배타 — 어느 한쪽 진입 시 다른 쪽 해제) ----------
 function clearSelection() {
   state.selCell = null; state.selFace = null; state.selPlane = null; state.flip = false;
-  state.playK = null;
+  state.playK = null; state.planeFromCell = null;
   restyle(); renderPanel();
 }
+// 셀 선택 = 셀 해부 보기 (⑥) — 경계면 출처색 발광 + 카드(교차 헤드라인·경계 평면 표·시드)
 function selectCell(ci) {
   if (state.selCell === ci) { clearSelection(); return; }
   state.selCell = ci; state.selFace = null; state.selPlane = null; state.flip = false;
-  state.playK = null;
+  state.playK = null; state.planeFromCell = null;
+  const d = state.run;   // 해부 사용 기록 — 판독 JSON cell_anatomy
+  if (d && d.anatomy && d.s2) {
+    d.anatomy.used = true;
+    d.anatomy.lastCellId = d.s2.cells[ci].cell_id;
+  }
   restyle(); renderPanel();
   const key = 'c' + ci;
   const row = document.querySelector(`#panel tr[data-cid="${key}"]`);
@@ -1005,12 +1121,14 @@ function selectCell(ci) {
 function selectFace(fi) {
   if (state.selFace === fi) { clearSelection(); return; }
   state.selFace = fi; state.selCell = null; state.selPlane = null; state.flip = false;
-  state.playK = null;
+  state.playK = null; state.planeFromCell = null;
   restyle(); renderPanel();
 }
-// 평면별 절단 보기 — 셀/면 선택·재생 모드와 배타 전환(랭킹 행/칩 클릭 = 이 보기), 재클릭=해제
+// 평면별 절단 보기 — 셀/면 선택·재생 모드와 배타 전환(랭킹 행/칩 클릭 = 이 보기), 재클릭=해제.
+// 셀 해부에서 진입하면(경계면 이어 클릭·경계 평면 표·칩) 복귀 대상 셀을 기억("셀로 돌아가기").
 function selectPlane(pid) {
   if (state.selPlane === pid || pid === null || pid === undefined) { clearSelection(); return; }
+  if (state.selCell !== null) state.planeFromCell = state.selCell;   // 평면↔평면 전환 중엔 유지
   state.selPlane = pid; state.selCell = null; state.selFace = null; state.flip = false;
   state.playK = null;
   restyle(); renderPanel();
@@ -1037,6 +1155,16 @@ function pickAt(e) {
   const h = hits[0];
   const fi = h.object.userData.triFace[h.faceIndex];
   if (state.pickMode === 'face') { selectFace(fi); return; }
+  // 셀 해부 이어 클릭 (⑥b) — 해부 중 그 셀의 경계면(비도메인) 클릭 = 그 면을 만든 평면의
+  // 절단 보기로 전환(복귀 대상 기억). 도메인 면 클릭은 아래 기존 규칙(자기 셀 → 재클릭 해제).
+  if (state.selCell !== null && d.s2.cellFaces[state.selCell].includes(fi)) {
+    const bf = d.s2.faces[fi];
+    if (!bf.domain && (bf.s1_plane_ids || []).length) {
+      if (d.anatomy) d.anatomy.faceToPlane++;
+      selectPlane(bf.s1_plane_ids[0]);
+      return;
+    }
+  }
   // 셀 모드: 광선이 통과해 들어가는 쪽(면 뒤의 셀)을 선택 — 채워진 셀을 보고 클릭하는 직관
   const f = d.s2.faces[fi];
   const dir = raycaster.ray.direction;
@@ -1103,13 +1231,8 @@ function faceLabel(d, f) {
 function page1Link(d, pid) {
   return `../viewer_p1/?run=${encodeURIComponent(state.runName)}&plane=${encodeURIComponent(pid)}`;
 }
-// 절단 평면 출처색 칩 — 클릭 = 평면별 절단 보기 전환 (bindPanel [data-pid])
-function planeChip(d, pid) {
-  const p = d.planeById[pid] || {};
-  const css = srcCss(p.source);
-  return `<a href="#" class="pchip" data-pid="${escAttr(pid)}" title="${escAttr(SRC_LABEL[p.source] || p.source || '?')} · 클릭=평면별 절단 보기"
-    style="color:${css};border-color:${css}55">${esc(pid)}</a>`;
-}
+// (구 planeChip 제거 — 셀 카드 절단 평면 칩 행은 ⑥ 경계 평면 미니 표가 대체.
+//  표 행 자체가 data-pid, 칩은 planeChipSpan 표시 전용 — 중복 바인딩 방지 관행 유지)
 // ---------- 출발 상태 요약 (변수 4군 — 런 로드 시 자동) ----------
 function computeStartState(d) {
   const s2 = d.s2;
@@ -1183,9 +1306,13 @@ function planeCardHtml(d, pid) {
   let area = 0;
   for (const fi of fis) area += (s2.faces[fi].area_m2 || 0);
   const css = srcCss((p || {}).source);
+  const backCi = state.planeFromCell;   // 셀 해부에서 진입 — 직전 셀 해부 복원 버튼 (⑥b)
+  const backBtn = backCi !== null && s2.cells[backCi]
+    ? `<button class="small" id="planeBack" style="float:right;margin-right:5px">셀로 돌아가기
+        (${esc(s2.cells[backCi].cell_id)})</button>` : '';
   return `<div class="card"><b style="color:${css}">${esc(pid)}</b>
     <span style="color:${css}">${esc(SRC_LABEL[(p || {}).source] || (p || {}).source || '실재하지 않음')}</span>
-    <button class="small" id="planeClear" style="float:right">해제</button>
+    <button class="small" id="planeClear" style="float:right">해제</button>${backBtn}
     <div class="note caption" style="margin-top:5px">증거 영역(S1 원형)
       <span style="color:${css}">■0.35</span> → 무한 절단(§1.1 그림 B)
       <span style="color:${css}">발광 단면</span> → 셀</div>
@@ -1219,6 +1346,9 @@ function planeListHtml(d) {
 }
 function cellCardHtml(d, ci) {
   const s2 = d.s2, c = s2.cells[ci], surf = c.surf || {};
+  // 셀 해부 (⑥) — 경계 평면 합집합·도메인 면 수·시드 발광 통계 (3D 발광과 같은 원천)
+  const bp = cellBoundaryPlanes(d, ci);
+  const seedC = ensureCellSeedIdxs(d, ci);
   const w = flipW(c.t);
   const wTxt = Number.isFinite(w) ? w.toFixed(2) : '∞ (t 고정)';
   const fd = state.flip ? flipDelta(d, ci) : null;
@@ -1255,8 +1385,42 @@ function cellCardHtml(d, ci) {
       <td class="${f.initial_real ? 'good' : ''}">${f.initial_real ? 'F*' : '잠듦'}</td>
       <td>${s2.faceSeedCount[fi]}</td></tr>`;
   }).join('');
+  // 경계 평면 미니 표 — cut_plane_ids ∪ 경계면 s1_plane_ids, 행 클릭 = 평면별 절단 보기
+  const bpRows = bp.rows.map(r => {
+    const p = d.planeById[r.pid] || {};
+    return `<tr data-pid="${escAttr(r.pid)}">
+      <td class="l">${planeChipSpan(d, r.pid)}</td>
+      <td class="l">[${(p.n || []).map(v => fmt(v, 2)).join(', ') || '—'}]</td>
+      <td>${fmt(p.d, 2)}</td>
+      <td>${p.gravity_angle_deg === undefined ? '—' : fmt(p.gravity_angle_deg, 1) + '°'}</td>
+      <td>${r.nFaces}</td></tr>`;
+  }).join('');
+  const domRow = bp.domFaces ? `<tr>
+      <td class="l"><span class="pchip" style="color:#9fb4cc;border-color:#55607099;cursor:default">도메인</span>
+        <span class="note">회색</span></td>
+      <td class="l">—</td><td>—</td><td>—</td><td>${bp.domFaces}</td></tr>` : '';
+  const zeroRows = bp.rows.some(r => r.nFaces === 0);
+  const anatomyHtml = `
+    <div style="margin:5px 0 2px"><b>이 셀 = 평면 ${bp.nGeom}장${bp.domFaces
+      ? `(+도메인 ${bp.domFaces}면)` : ''}의 교차</b></div>
+    <div class="note">경계면 = 만든 평면 출처색 발광 · 나머지 감광 ·
+      3D에서 경계면 이어 클릭 = 그 평면 절단 보기</div>
+    <div style="margin-top:5px"><b>경계 평면 — S1 링 ${bp.rows.length}개</b>
+      <span class="note">(cut_plane_ids ∪ 경계면 s1_plane_ids${bp.nRings > bp.nGeom
+        ? ` · 동면 링 포함(기하 평면 ${bp.nGeom}장)` : ''} · 행 클릭=평면별 절단 보기)</span></div>
+    <table style="margin-top:3px">
+      <tr><th class="l">평면(출처색)</th><th class="l">n</th><th>d</th><th>중력각</th><th>면</th></tr>
+      ${bpRows}${domRow}</table>
+    ${zeroRows ? `<div class="note" style="margin-top:2px">면 0 = 같은 절단 평면의
+      동면 링(직접 면 없음 — cut_plane_ids의 p2s1 확장, 데이터 사실)</div>` : ''}
+    <div style="margin-top:5px">경계면 시드 <b>${seedC.total}</b>개(면 ${seedC.nFaces}개)
+      <span style="color:#ffe066">발광</span>${seedC.shown < seedC.total
+        ? ` · 표시 ${seedC.shown}개 <span class="note">(씨닝 — 면당 ≤ ${SEED_FACE_MAX},
+           thin_stride 간격 규칙)</span>` : ''}
+      <span class="note">— 전역 시드 토글과 독립</span></div>`;
   return `<div class="card"><b style="color:#ffe066">${esc(c.cell_id)}</b>
     ${c.fixed ? '<span class="badge na">고정(footprint 밖)</span>' : ''}
+    ${anatomyHtml}
     <table style="margin-top:4px">
       <tr><td class="l">중심 · 부피</td><td class="l">[${(c.centroid || []).map(v => fmt(v)).join(', ')}] · ${fmt(c.volume_m3, 3)} m³</td></tr>
       <tr><td class="l">표면고 z_surf (p90)</td><td class="l">${surf.z_surf === null || surf.z_surf === undefined ? '무점(null)' : fmt(surf.z_surf, 3) + ' m'}
@@ -1270,14 +1434,16 @@ function cellCardHtml(d, ci) {
       <tr><td class="l">앵커 목표 t_k (소프트 존속)</td><td class="l">${fmt(c.t, 2)}</td></tr>
       <tr><td class="l">w (초기)</td><td class="l">1</td></tr>
       <tr><td class="l">뒤집기 값 w·|log(t/(1−t))|</td><td class="l">${wTxt}${Math.abs(c.t - 0.4) < 1e-9 ? ' <span class="note">(무점 t=0.4 → ≈0.41)</span>' : ''}</td></tr>
-      <tr><td class="l">절단 평면 (칩 클릭=평면별 절단 보기)</td>
-        <td class="l">${(c.cut_plane_ids || []).map(pid => planeChip(d, pid)).join('') || '—'}</td></tr>
     </table>
     ${flipHtml}
     <div style="margin-top:6px"><b>인접 면 ${adj.length}개</b> (클릭=면 카드)</div>
     <div class="scrollbox"><table>
       <tr><th class="l">면</th><th class="l">상대 셀</th><th class="l">평면/도메인</th><th>m²</th><th>F*</th><th>시드</th></tr>
-      ${adjRows}</table></div></div>`;
+      ${adjRows}</table></div>
+    <div style="margin-top:6px"><a href="../viewer_p3/?run=${encodeURIComponent(state.runName)}"
+        style="color:#8ecbff">이 런의 초기 정합오차(step 0 잔차) 보기 ↗</a>
+      <div class="note">정합오차는 관측 대조가 필요한 S3의 첫 산출(페이지 3 s0 히트맵) ·
+        텍스처 초기값 = 결측(중립 회색, §1.4)</div></div></div>`;
 }
 function faceCardHtml(d, fi) {
   const s2 = d.s2, f = s2.faces[fi];
@@ -1454,6 +1620,12 @@ function bindPanel() {
     el.onclick = (e) => { e.preventDefault(); selectPlane(el.dataset.pid); };
   });
   on('#planeClear', 'onclick', () => clearSelection());
+  on('#planeBack', 'onclick', () => {   // 셀 해부 복원 (⑥b) — 직전 셀 재선택 = 해부 재진입
+    const ci = state.planeFromCell, dr = state.run;
+    if (ci === null || !dr || !dr.s2 || !dr.s2.cells[ci]) return;
+    if (dr.anatomy) dr.anatomy.cellReturns++;
+    selectCell(ci);
+  });
   // 절단 누적 재생 — lazy 로드 / 진입 / 스크럽(제자리 갱신) / 종료
   on('#cutLoad', 'onclick', async () => {
     const d = state.run;
@@ -1544,6 +1716,14 @@ function downloadReading() {
         playing_now_k: state.playK,
       } : { available: false,
             reason: d.cutSeqError || 'lazy 미요청(로드 버튼 미사용)' },
+      cell_anatomy: d.anatomy && d.anatomy.used ? {   // 셀 해부(⑥) 사용 기록
+        used: true,
+        last_cell: d.anatomy.lastCellId,
+        face_to_plane_transitions: d.anatomy.faceToPlane,   // 경계면 이어 클릭 → 평면 절단 보기
+        cell_returns: d.anatomy.cellReturns,               // "셀로 돌아가기" 사용 횟수
+        selected_now: state.selCell !== null ? s2.cells[state.selCell].cell_id : null,
+        seed_glow_last: d.anatomy.seedGlow,   // 마지막 셀의 경계면 시드 발광 통계(씨닝 포함)
+      } : { used: false },
     } : { s2_missing: d.s2Missing },
     verdict: rd.verdict, memo: rd.memo,
     reviewer: '김휘영', signature: rd.sign,
@@ -1574,16 +1754,17 @@ function renderHeader() {
     ` · ALS 점 ${c.points_als ?? d.alsLocals.length}` +
     ` · CRS ${d.manifest.crs || '?'} (offset −[${off.map(x => (+x).toFixed(1)).join(', ')}])`;
   $('#hud').textContent = `${state.runName} — 좌드래그 회전 · 우드래그 이동 · 휠 줌 · ` +
-    `클릭=셀(면 뒤쪽)/면 선택(패널 라디오로 전환) · 재클릭·빈 공간·ESC=해제 · ` +
+    `클릭=셀 해부(경계면=만든 평면 출처색 발광·도메인 회색·시드 발광)/면 선택(패널 라디오) · ` +
+    `해부 중 경계면 이어 클릭=그 평면 절단 보기(셀로 돌아가기 버튼) · 빈 공간·ESC=해제 · ` +
     `o=1 셀 반투명 채움 / o=0 셀 와이어 · F* 토글=실재 면 강조 · ALS 앰버 = o_init 입력 · ` +
-    `패널 평면 목록/절단 평면 칩 클릭 = 평면별 절단 보기(증거 영역+단면 발광) · ` +
+    `패널 평면 목록/경계 평면 표 클릭 = 평면별 절단 보기(증거 영역+단면 발광) · ` +
     `절단 누적 재생 = 패널 슬라이더(선택과 배타)`;
 }
 
 // ---------- 런 전환 ----------
 async function loadRun(name) {
   state.runName = name; state.selCell = null; state.selFace = null; state.selPlane = null;
-  state.flip = false; state.playK = null;
+  state.flip = false; state.playK = null; state.planeFromCell = null;
   $('#panel').innerHTML = `<p class="note">${esc(name)} 로딩 중…</p>`;
   try {
     if (!state.cache[name]) state.cache[name] = await fetchRun(name);
