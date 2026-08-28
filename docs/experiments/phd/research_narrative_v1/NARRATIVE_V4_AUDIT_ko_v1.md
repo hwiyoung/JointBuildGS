@@ -1,5 +1,10 @@
 # 서사 v4 점검·기여 도출 (v1) — 정합성·건너뜀·모순 감사 + 문헌 대비 박사 기여
 
+> **SUPERSEDED HISTORICAL AUDIT.** 2026-08-28 `DEC-P1-025`와
+> `RESEARCH_NARRATIVE_V5_FOUNDATION_ko_v1.md` v2가 이 감사 이후의 결정을 반영한다.
+> 아래의 measurement-first/weak-region-only 문구와 공동 최적화 중심 판정은 현재
+> source-authority rule이 아니다. 역사적 진단과 질문 계보로만 사용한다.
+>
 > **지위: PLANNING RECORD — 실행 권한 없음.** `scientific_verdict: null`. 리뷰어: 김휘영.
 > 작성 2026-08-28. 대상 = 2026-08-27~28 대화에서 합의된 서사 v4(구제 구도·점군 산출물).
 > 입력: `RESEARCH_NARRATIVE_ko_v1.md`(v3 정본), `../prior_injection_survey_v1/

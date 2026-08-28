@@ -1,5 +1,11 @@
 # S3 재설계 — 방법론 정본 (v1r18)
 
+> **HISTORICAL CANDIDATE METHOD — 현재 박사 방법론 정본 아님.** 2026-08-28
+> `DEC-P1-025`와 `../methodology_v1/MINIMUM_RISK_PRIOR_GUIDED_RECONSTRUCTION_ko_v1.md`
+> 가 상위 문제·source-authority·baseline·kill criterion을 통제한다. 아래 r18의
+> 평면배열·이산 공동 최적화는 보존할 후보/절제 계보이며, 그 구조가 필수이거나
+> 강한 순차법보다 우월하다는 결론은 아니다.
+>
 > **지위: PLANNING RECORD — 실행 권한 없음.** 커밋·실행·GPU 착수는 사용자 승인 후.
 > `scientific_verdict: null`. 리뷰어: 김휘영. 작성 2026-08-24, r4 2026-08-25
 > (그림 재설계·"BA+이산" 구조·요지 문장), r5 2026-08-25 (§2.0 최적화 요소

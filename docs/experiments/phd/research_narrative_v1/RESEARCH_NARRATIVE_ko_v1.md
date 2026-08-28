@@ -1,5 +1,11 @@
 # 연구 서사 — 박사 우산 정본 (v3: 확정 화살표 서사 · 수치 해설 · 공동 최적화 계보)
 
+> **SUPERSEDED HISTORICAL PLANNING RECORD.** 2026-08-28 `DEC-P1-025`와
+> `RESEARCH_NARRATIVE_V5_FOUNDATION_ko_v1.md` v2가 현재 박사학위 상위 문제정의와
+> 방법론 경계를 통제한다. 아래 본문은 당시 논리·실험 계보 보존용이며,
+> `image-first`, “약증거 영역에만 prior”, “공동 최적화가 필수”, LoD2 중심 최종응용
+> 해석은 현행 결론이 아니다. 실행 권한 없음. `scientific_verdict: null`.
+>
 > PLANNING RECORD / 보고 초안 — 실행 권한 없음, 커밋·공식 보고 전 사용자 검토
 > 대기. 수치는 `journal1_design_v1/`의 A2/D1/D2a/E9/HV-1 판독 인용, 전부 비확증적(technical)
 > 판독. 서술 규칙: [논리]=수치 없이 납득 / [실측]=수치 확인 / [예정]=실험만이

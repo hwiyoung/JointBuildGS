@@ -1,11 +1,11 @@
 # JointBuildGS 연구 헌장
 
-- Document status: `E1E6_NOMENCLATURE_ADOPTED / OUTPUT_DESIGN_USER_REVIEW_PENDING`
-- 문서 버전: `E1E6_CANON_v3`
+- Document status: `E1E6_CANON_ACTIVE / OUTPUT_DESIGN_USER_REVIEW_PENDING / PHD_METHOD_ADDENDUM_ADOPTED`
+- 문서 버전: `E1E6_CANON_v3 + PHD_METHOD_ADDENDUM_v1`
 - 프로그램 workstream: `P2 — E1–E6 read-only research-design amendment`
 - 저장소 유효 단계: `E1–E6 PROGRAM / RESEARCH DESIGN REVIEW / PERFORMANCE BLOCKED`
 - 작성일: 2026-07-31
-- 승인 상태: `USER-DIRECTED E1–E6 CONDITION AMENDMENT — 2026-08-10`
+- 승인 상태: `USER-DIRECTED E1–E6 CONDITION AMENDMENT — 2026-08-10 / PHD METHOD FRAMING — 2026-08-28`
 - 효력: **현재 E1–E6 연구설계 정본**. `docs/evidence/archive/pre_c1c5_research/`의
   기존 4조건 context/plan은 역사 기록이며 새 작업의 실행
   authority가 아니다. 기존 Fusion W1 artifact와 lock은 보호·보존하지만 현재
@@ -15,7 +15,9 @@
 관련 계약: [Master Roadmap](01_MASTER_ROADMAP.md) ·
 [Data and Baseline Scope](03_DATA_AND_BASELINE_SCOPE.md) ·
 [Result and Acceptance Contract](04_RESULT_AND_ACCEPTANCE_CONTRACT_v0.md) ·
-[Handoff Protocol](05_HANDOFF_PROTOCOL.md)
+[Handoff Protocol](05_HANDOFF_PROTOCOL.md) ·
+[PhD Narrative](../experiments/phd/research_narrative_v1/RESEARCH_NARRATIVE_V5_FOUNDATION_ko_v1.md) ·
+[Methodology v1](../experiments/phd/methodology_v1/MINIMUM_RISK_PRIOR_GUIDED_RECONSTRUCTION_ko_v1.md)
 
 ## 0. 연구 앵커
 
@@ -40,6 +42,25 @@ Roofer/LoD2와 semantic textured mesh에는 각각 독립적인 O/X와 transitio
 만든다. 자동 LoD2 생성 범위 확대 주장의 confirmatory primary는 Roofer/LoD2이고,
 semantic textured mesh는 별도 product contract의 key secondary다. 어느 한쪽의 O/X를
 다른 쪽에서 복사하거나 추론하지 않는다.
+
+### 0.1 박사학위 상위 문제정의 addendum
+
+`DEC-P1-025`는 위 LoD2 프로그램을 폐기하거나 E1–E6를 재명명하지 않고, 그 위에
+다음 상위 방법론 질문을 둔다.
+
+> 현재 항공영상과 시간적 유효성 및 공간 정합이 미확인된 기구축 3D prior의
+> 국소 불확실성을 추정하여, 예상 기하오차에 따라 두 증거를 선택·보정·융합 또는
+> 유보함으로써 현재시점 3D를 재구성할 수 있는가?
+
+이 addendum은 currentness와 geometric authority를 분리한다. 현재 영상은 prior의
+시효를 판단하는 현재시점 증거이지만 항상 더 정밀한 기하 출처는 아니다. 현재성
+조건을 통과한 증거들 중 위치·기하 자유도별 예상오차가 가장 작은 `image`, `prior`,
+`fusion`을 선택하며, 어느 쪽도 안전하지 않으면 `abstain`한다. 둘이 충분하고
+일치하며 prior가 더 정밀하면 prior-dominant 결과가 정상이다.
+
+이 원칙은 현재 E4/E5 구현 또는 loss를 소급 변경하지 않는다. prior-only,
+registered-prior-only, local oracle, 강한 순차 `align→decide→fuse`는 박사 방법론
+설계의 필수 comparator 후보지만 아직 새 E condition이나 실행 권한이 아니다.
 
 ## 1. 상태와 적용 경계
 
@@ -161,9 +182,11 @@ GS-only `E3`에서도 발생한 부분과 prior가 추가되어야만 발생한 
 
 ### RQ6 — image–prior conflict
 
-기구축 prior와 최신 영상이 충돌할 때 prior에 끌려가기보다 최신 영상 evidence를
-보존하는가? 실제 T0–T1 변화와 시점 차이가 확인될 때만 temporal currentness
-연구질문으로 유지한다.
+기구축 prior와 현재 영상이 충돌할 때 시간적 무효, 정합오차, 영상 관측 실패를
+구분하거나 식별 불가능으로 판정할 수 있는가? 현재 영상이 변화를 충분히 지지하는
+영역에서는 current evidence를 보존하고 prior를 억제한다. 영상이 현재시점이라는
+이유만으로 기하적 권위를 자동 부여하지 않으며, 둘 다 불충분하면 유보한다. 실제
+T0–T1 변화와 시점 차이가 확인될 때만 temporal currentness 성능 주장으로 유지한다.
 
 ### RQ7 — output-contract 분리
 

@@ -1,9 +1,9 @@
 # Research Decision Log
 
-- Document status: `APPROVED_HISTORY / DEC-P1-023 E2 PRODUCT BASELINE + ADJUDICATION VIEWER ACTIVE`
-- 문서 버전: `E1E6_CANON_v3`
-- 작성일: 2026-07-31
-- 승인 상태: `USER-DIRECTED CURRENT E1–E6 DESIGN CANON — 2026-08-10`
+- Document status: `APPROVED_HISTORY / DEC-P1-025 PHD METHOD FRAMING ACTIVE`
+- 문서 버전: `E1E6_CANON_v3 + PHD_METHOD_ADDENDUM_v1`
+- 작성일: 2026-07-31. 최신 decision: 2026-08-28
+- 승인 상태: `USER-DIRECTED CURRENT E1–E6 DESIGN CANON + PHD METHOD FRAMING`
 
 `DEC-P1-021` 이후 이 log와 00–06 contract set이 현재 E1–E6 프로그램을 통제한다.
 앞선 decision entry의 당시 용어는 역사 기록으로 보존하며, 충돌 시 더 최신 decision의
@@ -973,6 +973,66 @@
 - **Official verdict:** `official_PASS_usable=null`; `scientific_verdict=null`.
 - **User approval:** 2026-08-11 “연속 metric에 적용하는 threshold도 여러개 나눠보고”,
   “그냥 O/X만”, “8880에 만들거야?”, “설계안을 그리고 작업 진행하자.”
+
+## DEC-P1-025 — 불확실성 인지형 cross-temporal prior-guided reconstruction 상위 문제정의
+
+- **Decision ID:** `DEC-P1-025`
+- **Date:** 2026-08-28
+- **Status:** `USER-APPROVED PHD METHOD FRAMING / DESIGN AUTHORIZATION`
+- **Previous state:** E1–E6 정본은 LoD2 product rescue와 conflict weighting을
+  중심으로 정의되어 있었고, 박사학위 서사 초안에는 current image를 기본
+  geometry로 두고 약증거 영역에서만 prior를 여는 것으로 읽힐 수 있는 문구가
+  남아 있었다. Adaptive weighting, weak-image-region prior, global-structure/local-detail
+  결합만으로는 최신 인접 연구 대비 방법론적 차별성이 부족하다.
+- **Academic formulation:** “현재 항공영상과 시간적 유효성 및 공간 정합이
+  미확인된 기구축 3D prior의 국소 불확실성을 추정하여, 예상 기하오차에 따라 두
+  증거를 선택·보정·융합 또는 유보함으로써 현재시점 3D를 재구성하는 불확실성
+  인지형 cross-temporal prior-guided reconstruction”을 박사학위 상위 문제로 둔다.
+- **Source-authority rule:** currentness eligibility와 geometric authority를 분리한다.
+  현재 영상은 prior의 시효를 판단하는 현재시점 증거지만 자동으로 더 정확한
+  기하 출처는 아니다. 위치·기하 자유도별로 보정된 예상 위험을 비교해
+  `image/prior/fusion/abstain`을 결정한다. image와 prior가 모두 충분하고 일치하며
+  prior가 더 정밀하면 prior-dominant 해가 정상이다.
+- **Method-design order:** source별 observation/error model, latent validity·alignment·
+  source-decision 변수와 식별성을 먼저 정의하고, 그 뒤 loss/objective와 gsplat 기반
+  planar 2D Gaussian 표현·최적화를 설계한다. 이는 GS를 배제하는 것이 아니라 오차
+  원인 없이 weight부터 정하지 않는다는 뜻이다.
+- **Method hypothesis:** registration `delta`, temporal validity `z`, source decision
+  `s`의 공동/반복 추정은 가설이지 전제나 확정 기여가 아니다. 같은 증거를 쓰는
+  강한 순차 `align→decide→fuse`가 같거나 더 낫다면 공동법을 접고 순차법을 채택한다.
+- **Required comparators:** image-only, prior-only, registered-prior-only, simple union,
+  fixed/confidence-weighted prior loss, strong sequential estimator, local score-only
+  oracle을 포함한다. `prior-only`는 방법론의 필수 baseline이지만 이 decision으로
+  `E7` 또는 새 실행 condition이 되지 않는다.
+- **Validation structure:** real benign case, controlled `image strong/weak × prior
+  valid/stale × alignment good/bad`, independent real-conflict scene을 분리한다. 합성
+  차이는 기제 검증에만 사용하고 실제 필요성·일반화의 증거로 단독 승격하지 않는다.
+  local oracle gap, risk–coverage, calibration, benign-case non-degradation을 포함한다.
+- **Kill/simplify criteria:** physically plausible mixed condition에서 local oracle도
+  best fixed source를 이기지 못하면 local arbitration을 접는다. oracle gap은 있으나
+  허용 evidence로 source ownership을 예측할 수 없으면 자동 선택 대신 abstention/
+  reacquisition recommendation으로 축소한다. 강한 순차법이 공동법과 같으면 더
+  단순한 순차법을 채택한다. 이 기준은 방법 설계 착수의 선행 blocker가 아니다.
+- **Data boundary:** 기존 Journal1 93동과 199동은 development/non-confirmatory다.
+  P0 coverage-control 93과 Journal1 93은 다른 집합이며 혼용하지 않는다. Current UAS
+  LiDAR와 LoD2 RoofSurface/Z/roof type은 method input·학습·정합·선택에 누출하지 않고
+  score-only reference로 유지한다. 최종 일반화에는 별도 independent scene이 필요하다.
+- **Application boundary:** 최종 downstream application은 아직 확정하지 않는다.
+  LoD2/Roofer와 semantic textured mesh는 보존된 program-specific probe이며 박사학위
+  상위 문제의 유일한 산출물로 고정하지 않는다.
+- **Execution boundary:** 이 decision은 문서 최신화와 방법론 v1 설계만 승인한다.
+  학습·재구성 실행, threshold freeze, E1–E6 condition 변경, artifact 수정,
+  confirmatory inference 또는 scientific verdict를 승인하지 않는다.
+- **Affected documents:** `00_RESEARCH_CHARTER.md`, `02_NOVELTY_MAP.md`, 이 decision
+  log, `RESEARCH_NARRATIVE_V5_FOUNDATION_ko_v1.md`,
+  `PRIOR_INJECTION_SURVEY_ko_v1.md`, 신규 methodology v1.
+- **User approval:** 2026-08-28 “kill criterion 상관 없이 방법론 설계로 넘어가면
+  된다는거지? 현재 연구를 학술적인 용어 한 문장으로 먼저 정리하자.”에 이어
+  “현재 내용을 기반으로 문서들을 최신화 한 후에 방법론 설계로 넘어가자.”
+- **Superseded decisions/text:** E1–E6 정의와 실행·GT separation은 변경하지 않는다.
+  과거 문서 중 “current image가 항상 geometry의 기본/우선이고 prior는 약증거
+  영역에서만 사용한다”는 해석만 이 source-authority rule로 supersede한다.
+- **Official verdict:** `scientific_verdict=null`.
 
 ## Pending decisions not yet logged as adopted
 

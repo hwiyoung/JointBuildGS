@@ -1,5 +1,10 @@
 # S3 점군판(표현 교체) — 설계 초안 (v1r2)
 
+> **HISTORICAL CANDIDATE METHOD.** 2026-08-28 이후 현재 상위 설계는
+> `../methodology_v1/MINIMUM_RISK_PRIOR_GUIDED_RECONSTRUCTION_ko_v1.md`다. 아래의
+> measurement-first/weak-region-only 또는 prior-carrier 구도는 현행 source-authority
+> rule이 아니며, 표현·loss 절제를 위한 후보 계보로만 보존한다.
+>
 > **지위: PLANNING RECORD — 실행 권한 없음.** 커밋·실행·GPU 착수는 사용자 승인 후.
 > `scientific_verdict: null`. 리뷰어: 김휘영. 작성 2026-08-27.
 >
