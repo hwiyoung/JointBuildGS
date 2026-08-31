@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">MVS 기준 원인분해형 Gaussian 재구성 전체 그림</title>
+  <desc id="desc">현재 영상 MVS에서 초기화한 Gaussian과 기구축 자료별 가설을 따로 렌더링하고, 측정 품질과 현재 유효성, 예상 기하오류, 소스 책임을 거쳐 검증된 3D 시드만 조건부 생성하며 현재 Gaussian을 반복 갱신하는 흐름</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#475569"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#2563eb"/>
+    </marker>
+    <style>
+      .title { font: 700 34px 'Noto Sans KR', Pretendard, sans-serif; fill: #0f172a; }
+      .subtitle { font: 500 18px 'Noto Sans KR', Pretendard, sans-serif; fill: #475569; }
+      .head { font: 700 20px 'Noto Sans KR', Pretendard, sans-serif; fill: #0f172a; }
+      .body { font: 500 16px 'Noto Sans KR', Pretendard, sans-serif; fill: #334155; }
+      .small { font: 500 14px 'Noto Sans KR', Pretendard, sans-serif; fill: #475569; }
+      .tag { font: 700 14px 'Noto Sans KR', Pretendard, sans-serif; }
+      .arrow { fill: none; stroke: #475569; stroke-width: 3; marker-end: url(#arrow); }
+      .loop { fill: none; stroke: #2563eb; stroke-width: 4; marker-end: url(#arrowBlue); }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1000" fill="#f8fafc"/>
+  <text x="800" y="58" text-anchor="middle" class="title">MVS 기준 원인분해형 Gaussian 재구성</text>
+  <text x="800" y="90" text-anchor="middle" class="subtitle">소스별 가설은 분리해 검증하고, 판단과 현재 Gaussian 형상은 한 반복 안에서 갱신한다</text>
+
+  <rect x="60" y="150" width="270" height="130" rx="18" fill="#dbeafe" stroke="#60a5fa" stroke-width="2"/>
+  <text x="195" y="188" text-anchor="middle" class="head">현재 영상 계열</text>
+  <text x="195" y="220" text-anchor="middle" class="body">항공영상 · 카메라</text>
+  <text x="195" y="247" text-anchor="middle" class="body">SfM/MVS · 깊이 · 법선</text>
+
+  <rect x="60" y="590" width="270" height="130" rx="18" fill="#ffedd5" stroke="#fb923c" stroke-width="2"/>
+  <text x="195" y="628" text-anchor="middle" class="head">기구축 자료 Pₖ</text>
+  <text x="195" y="660" text-anchor="middle" class="body">ALS · 과거 MVS · LoD 등</text>
+  <text x="195" y="687" text-anchor="middle" class="body">시점 · 품질 · 계보 보존</text>
+
+  <rect x="390" y="135" width="260" height="155" rx="18" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+  <text x="520" y="174" text-anchor="middle" class="head">MVS Gaussian 초기화</text>
+  <text x="520" y="208" text-anchor="middle" class="body">G⁰MVS → 영상 전용 안정화</text>
+  <text x="520" y="239" text-anchor="middle" class="small">강한 MVS는 거의 유지</text>
+  <text x="520" y="263" text-anchor="middle" class="small">영상 유래 3D 시드는 별도 검증</text>
+
+  <rect x="390" y="575" width="260" height="155" rx="18" fill="#fff7ed" stroke="#f97316" stroke-width="2"/>
+  <text x="520" y="614" text-anchor="middle" class="head">자료별 정합·가설화</text>
+  <text x="520" y="648" text-anchor="middle" class="body">δₖ와 불확실성 유지</text>
+  <text x="520" y="679" text-anchor="middle" class="body">독립 prior 가설 Hₚₖ</text>
+  <text x="520" y="705" text-anchor="middle" class="small">현재 형상과 조기 병합하지 않음</text>
+
+  <path d="M330 215 L390 215" class="arrow"/>
+  <path d="M330 655 L390 655" class="arrow"/>
+
+  <rect x="710" y="125" width="820" height="630" rx="28" fill="#ffffff" stroke="#94a3b8" stroke-width="2" stroke-dasharray="10 8"/>
+  <text x="1120" y="163" text-anchor="middle" class="head">판단과 형상의 교대 공동최적화</text>
+
+  <rect x="750" y="205" width="240" height="125" rx="16" fill="#f1f5f9" stroke="#64748b" stroke-width="2"/>
+  <text x="870" y="242" text-anchor="middle" class="head">소스별 렌더링</text>
+  <text x="870" y="274" text-anchor="middle" class="body">현재 G와 각 Hₚₖ를</text>
+  <text x="870" y="301" text-anchor="middle" class="body">같은 카메라에서 비교</text>
+
+  <rect x="1040" y="205" width="210" height="125" rx="16" fill="#ecfeff" stroke="#06b6d4" stroke-width="2"/>
+  <text x="1145" y="240" text-anchor="middle" class="head">원인별 상태</text>
+  <text x="1145" y="274" text-anchor="middle" class="body">q 측정 품질</text>
+  <text x="1145" y="301" text-anchor="middle" class="body">z 현재 유효성</text>
+
+  <rect x="1300" y="205" width="190" height="125" rx="16" fill="#fefce8" stroke="#eab308" stroke-width="2"/>
+  <text x="1395" y="240" text-anchor="middle" class="head">선택별 위험 R</text>
+  <text x="1395" y="274" text-anchor="middle" class="body">IMAGE · PRIOR</text>
+  <text x="1395" y="301" text-anchor="middle" class="body">FUSION의 예상 오류</text>
+
+  <rect x="1180" y="405" width="310" height="140" rx="16" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="2"/>
+  <text x="1335" y="442" text-anchor="middle" class="head">소스 책임 π</text>
+  <text x="1335" y="476" text-anchor="middle" class="body">현재 영상 · 기구축 자료 · 결합</text>
+  <text x="1335" y="506" text-anchor="middle" class="body">또는 현재 형상 판단 유보</text>
+
+  <rect x="750" y="585" width="500" height="125" rx="16" fill="#ecfdf5" stroke="#22c55e" stroke-width="2"/>
+  <text x="1000" y="622" text-anchor="middle" class="head">원인분해형 가중 손실 + 구조 갱신</text>
+  <text x="1000" y="656" text-anchor="middle" class="body">기존 형상 유지 · 보정 · 검증된 시드만 조건부 생성</text>
+  <text x="1000" y="684" text-anchor="middle" class="small">wprior = 측정 품질 × 현재 유효성 × prior 사용 책임</text>
+
+  <rect x="750" y="405" width="310" height="140" rx="16" fill="#eff6ff" stroke="#2563eb" stroke-width="3"/>
+  <text x="905" y="442" text-anchor="middle" class="head">현재 Gaussian 형상 G</text>
+  <text x="905" y="476" text-anchor="middle" class="body">MVS에서 유지·보정된 Gaussian</text>
+  <text x="905" y="506" text-anchor="middle" class="body">검증된 image/prior 시드 생성 Gaussian</text>
+
+  <path d="M650 210 L710 210 L710 267 L750 267" class="arrow"/>
+  <path d="M650 650 L700 650 L700 310 L750 310" class="arrow"/>
+  <path d="M1060 475 L1100 475 L1100 350 L870 350 L870 330" class="loop"/>
+  <path d="M990 267 L1040 267" class="arrow"/>
+  <path d="M1250 267 L1300 267" class="arrow"/>
+  <path d="M1395 330 L1395 405" class="arrow"/>
+  <path d="M1335 545 L1335 648 L1250 648" class="arrow"/>
+  <path d="M1000 585 L1000 545" class="loop"/>
+
+  <rect x="1285" y="595" width="245" height="155" rx="18" fill="#f8fafc" stroke="#475569" stroke-width="2"/>
+  <text x="1407" y="631" text-anchor="middle" class="head">안정 시 최종 출력</text>
+  <text x="1407" y="664" text-anchor="middle" class="body">현재 Gaussian geometry</text>
+  <text x="1407" y="692" text-anchor="middle" class="small">소스 · 현재성 · 위험 · 계보</text>
+  <text x="1407" y="718" text-anchor="middle" class="small">판단 유보 / prior 재현 분리</text>
+  <path d="M1250 700 L1285 700" class="arrow"/>
+
+  <rect x="710" y="785" width="820" height="105" rx="14" fill="#f1f5f9"/>
+  <text x="1120" y="815" text-anchor="middle" class="body">성과 계약: 정확도 보정 · 누락형상 구제 · MVS 성공 보존 · 안전한 유보</text>
+  <text x="1120" y="843" text-anchor="middle" class="small">기구축 자료가 없으면 prior 경로만 제거되어 MVS 기준 영상 전용 GS가 된다.</text>
+  <text x="1120" y="870" text-anchor="middle" class="small">빈 영역에 검증할 3D 시드가 없으면 생성하지 않고 판단을 유보한다.</text>
+</svg>
