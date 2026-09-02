@@ -1,0 +1,84 @@
+{
+  "schema": "jointbuildgs.artifact_manifest.phd.mvs_als_source_relation.v1",
+  "task_id": "PHD-MVS-ALS-SOURCE-RELATION-v1",
+  "status": "COMPLETE_DEVELOPMENT_NON_CONFIRMATORY",
+  "scientific_verdict": null,
+  "artifact_backend": {
+    "environment_variable": "JBGS_ARTIFACT_ROOT",
+    "container_root": "/artifacts/JointBuildGS",
+    "relative_root": "phase-payloads/phd/mvs_als_source_relation_v1/PHD-MVS-ALS-SOURCE-RELATION-v1"
+  },
+  "reproducibility": {
+    "git_commit": "80d7be30d8a25eef9690c58cdb94165e2b08eeb7",
+    "config_path": "configs/phd/mvs_als_source_relation_v1/run_v1.json",
+    "config_sha256": "9143447590270dad89977aae352366fa9f50aee9fb30760c88e6d1627c253243",
+    "driver_path": "scripts/phd/mvs_als_source_relation_v1/run.py",
+    "driver_sha256": "c7647030357800e7242d275bfaeec022186e9ab137d32db8d68fd5d17f713e5f",
+    "container_image": "jointbuildgs:dev"
+  },
+  "inputs": {
+    "current_image_mvs": {
+      "relative_path": "phase-payloads/p2/mvs_native_textured_mesh_preflight_v1/P2-MVS-NATIVE-DENSE-SCENE-RECOVERY-v2/work/mvs/openmvs/dim_dense.ply",
+      "sha256": "fc2561ab3e41adaa64a5cbc1f7a13c5f887999d2d81f94d4dca082c2c43c02ce",
+      "epoch": "2024-12-17",
+      "point_count": 43926567
+    },
+    "registered_existing_als": {
+      "relative_root": "phase-payloads/p0-audit/data/raw/als",
+      "epoch": "2022",
+      "horizontal_crs": "EPSG:25832_PROVIDER_DECLARED_VLR_ABSENT",
+      "source_vertical_datum": "DHHN2016",
+      "z_shift_m": 45.7,
+      "files": {
+        "690_5335.laz": "01602b7385aaf7324f89da6183df3dbdeffa237f85bf57dc27208b554b4fc0b3",
+        "690_5336.laz": "98ab7ad7f4c5108ebf41bc62186b336c6cd8a70b82fceec57136a56c0188b566",
+        "691_5335.laz": "9e14119bb0af7d5a300aa3a2a19074219b4d6d290923b4b90277c317e8b33720",
+        "691_5336.laz": "63c64002fc55d8b99a49749b5a2e36d802186186a950c89779463274e3cb950d"
+      }
+    }
+  },
+  "scope_controls": {
+    "method_domain": "MVS_XY_Q0.001_Q0.999_PLUS_4M_INTERSECT_ALS",
+    "horizontal_crs": "EPSG:25832",
+    "world_shift_xyz_m": [690953.0, 5336071.0, 604.0],
+    "prohibited_inputs_accessed": [],
+    "not_interpretable_as": [
+      "TEMPORAL_CHANGE_VERDICT",
+      "SOURCE_CORRECTNESS_VERDICT"
+    ]
+  },
+  "result": {
+    "row_count": 199813,
+    "render_queue_row_count": 145981,
+    "class_counts": {
+      "COMPATIBLE_WITHIN_LOD": 19389,
+      "SIGNIFICANT_DISCREPANCY": 59908,
+      "MVS_ONLY_SUPPORT": 10865,
+      "PRIOR_ONLY_SUPPORT": 75208,
+      "NOT_COMPARABLE": 34443
+    },
+    "robust_significant_count": 5315,
+    "precision_aware_variant_valid": false
+  },
+  "receipts": {
+    "partition_receipt.json": "99acb2e00b8dae375551218d5b1754a899a94ffa39bdfea3158a8b26689f0534",
+    "technical_return.json": "44a926f201cf8e0af34aaceb42559ac584cd625226e569f677f71197f7226276",
+    "validation_receipt.json": "cd4d33c702c4b370de805ea573d347fe200ab872add1b06d2bd572a4cb29ceeb"
+  },
+  "outputs": {
+    "relation_map.npy": "d6b4cf8c32289a169aaed5d68a46e8e9ba7fa9b501e0cff66e3c61c07982c8a1",
+    "relation_map.ply": "75120597d012f68ad5c1fc60606b1c636f984bf32c1a97a43741944ee8993718",
+    "render_queue.npy": "769fb3423b85c69b41d76283ab9268c4ebd2f636f3d0d292167959f58bf51351",
+    "render_queue.ply": "76e44b2f8e1b386bae3a229926d7fffd758b260c5e49aac8c6bd2352ba9f6a06",
+    "relation_elements.csv.gz": "cfd1a518906bc43541bb89f3e2e625fa0430f153b534d5b73fda8dd6a1b91ca3",
+    "relation_map_preview.png": "a8407b366a4e2c152666534978490ab651a325df85673a6660e8afa29f493f25"
+  },
+  "required_qualitative_viewer": {
+    "status": "READY_FOR_QUALITATIVE_WEB_REVIEW",
+    "manifest_path": "artifacts/manifests/phd/mvs_als_source_relation_viewer_v1/technical_result_manifest_v1.json",
+    "runtime_relative_root": "phase-payloads/phd/mvs_als_source_relation_v1/PHD-MVS-ALS-SOURCE-RELATION-v1/viewer",
+    "viewer_manifest_sha256": "db3d731cfdeaab3c6a26cd5319582cd16966abb9a76777de45228a28c9dc7c3d",
+    "default_url": "http://127.0.0.1:8891/",
+    "scientific_verdict": null
+  }
+}

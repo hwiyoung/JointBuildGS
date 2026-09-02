@@ -1,0 +1,91 @@
+{
+  "schema": "jointbuildgs.phd.mvs_als_source_relation.run.v1",
+  "task_id": "PHD-MVS-ALS-SOURCE-RELATION-v1",
+  "status": "DEVELOPMENT_NON_CONFIRMATORY",
+  "scientific_verdict": null,
+  "purpose": "Whole-common-space MVS versus registered Existing ALS source-difference candidate map for downstream current-view rendering; not a temporal-change or source-correctness verdict.",
+  "artifact_root": "/artifacts/JointBuildGS",
+  "output_relative_root": "phase-payloads/phd/mvs_als_source_relation_v1/PHD-MVS-ALS-SOURCE-RELATION-v1",
+  "inputs": {
+    "mvs": {
+      "relative_path": "phase-payloads/p2/mvs_native_textured_mesh_preflight_v1/P2-MVS-NATIVE-DENSE-SCENE-RECOVERY-v2/work/mvs/openmvs/dim_dense.ply",
+      "sha256": "fc2561ab3e41adaa64a5cbc1f7a13c5f887999d2d81f94d4dca082c2c43c02ce",
+      "point_count": 43926567,
+      "epoch": "2024-12-17",
+      "frame": "GS_LOCAL_ADD_WORLD_SHIFT_XYZ",
+      "world_shift_xyz_m": [690953.0, 5336071.0, 604.0],
+      "bbox_local_xyz_m": {
+        "min": [-1428.478882, -871.1727295, -226.3721161],
+        "max": [1950.817871, 2346.612793, 186.4603729]
+      }
+    },
+    "existing_als": {
+      "relative_root": "phase-payloads/p0-audit/data/raw/als",
+      "epoch": "2022",
+      "source_horizontal_crs": "EPSG:25832_PROVIDER_DECLARED_VLR_ABSENT",
+      "source_vertical_datum": "DHHN2016",
+      "target_vertical_frame": "CURRENT_CAMERA_ELLIPSOIDAL_SCALAR_BRIDGE_V1",
+      "z_shift_m": 45.7,
+      "files": {
+        "690_5335.laz": "01602b7385aaf7324f89da6183df3dbdeffa237f85bf57dc27208b554b4fc0b3",
+        "690_5336.laz": "98ab7ad7f4c5108ebf41bc62186b336c6cd8a70b82fceec57136a56c0188b566",
+        "691_5335.laz": "9e14119bb0af7d5a300aa3a2a19074219b4d6d290923b4b90277c317e8b33720",
+        "691_5336.laz": "63c64002fc55d8b99a49749b5a2e36d802186186a950c89779463274e3cb950d"
+      }
+    }
+  },
+  "frame": {
+    "horizontal_crs": "EPSG:25832",
+    "working_coordinates": "SCENE_LOCAL_XYZ",
+    "world_shift_xyz_m": [690953.0, 5336071.0, 604.0]
+  },
+  "domain": {
+    "world_xy_bbox_m": [690712.1673758545, 5335851.2468733825, 691175.7141398315, 5336372.438672913],
+    "definition": "Exact recovered MVS XY q0.001-to-q0.999 support envelope plus 4 m, intersected by the four exact ALS tiles; this mirrors the existing source-only C4 robust-bbox rule and excludes sparse MVS outliers without using a building footprint or stable ID.",
+    "mvs_xy_quantile": [0.001, 0.999],
+    "buffer_m": 4.0,
+    "boundary_margin_m": 5.0
+  },
+  "tiling": {
+    "world_xy_origin_m": [690000.0, 5335000.0],
+    "tile_size_m": 250.0,
+    "tile_count_xy": [8, 8],
+    "halo_m": 5.0,
+    "partition_chunk_points": 2000000
+  },
+  "m3c2": {
+    "core_spacing_m": 2.0,
+    "normal_sampling_voxel_m": 0.75,
+    "normal_diameter_m": 4.0,
+    "projection_diameter_m": 2.0,
+    "projection_half_length_m": 3.0,
+    "minimum_normal_points": 10,
+    "minimum_projection_points": 4,
+    "confidence_level": 0.95,
+    "z_score": 1.96,
+    "primary_registration_error_m": 0.0,
+    "registration_sensitivity_upper_m": 0.5,
+    "primary_role": "HIGH_RECALL_RENDER_CANDIDATE_DETECTOR",
+    "registration_note": "0.0 m is the high-recall local-noise primary detector. 0.5 m is the frozen C4 acceptance-envelope sensitivity, not a fitted covariance or scientific registration estimate.",
+    "precision_aware_variant": {
+      "enabled": false,
+      "reason": "MVS fused-point metric covariance and ALS acquisition precision/strip lineage are not frozen."
+    }
+  },
+  "classes": {
+    "1": "COMPATIBLE_WITHIN_LOD",
+    "2": "SIGNIFICANT_DISCREPANCY",
+    "3": "MVS_ONLY_SUPPORT",
+    "4": "PRIOR_ONLY_SUPPORT",
+    "5": "NOT_COMPARABLE"
+  },
+  "render_queue_classes": [2, 3, 4],
+  "prohibited_inputs": [
+    "CURRENT_UAS_LIDAR",
+    "LOD2_GROUNDSURFACE_FOOTPRINT",
+    "LOD2_ROOFSURFACE",
+    "LOD2_Z",
+    "BUILDING_STABLE_ID",
+    "JOURNAL1_93_ROSTER"
+  ]
+}

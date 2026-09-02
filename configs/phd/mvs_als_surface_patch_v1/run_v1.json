@@ -1,0 +1,99 @@
+{
+  "schema": "jointbuildgs.phd.mvs_als_surface_patch.run.v1",
+  "task_id": "PHD-MVS-ALS-SURFACE-PATCH-v1",
+  "status": "USER_APPROVED_DEVELOPMENT_NON_CONFIRMATORY",
+  "scientific_verdict": null,
+  "purpose": "Convert the frozen one-pass M3C2/support relation cores into locally connected, source-surface-aware over-segmented patches for qualitative comparison and later current-view evidence rendering; not a source-authority or temporal-change verdict.",
+  "artifact_root": "/artifacts/JointBuildGS",
+  "input_relative_root": "phase-payloads/phd/mvs_als_source_relation_v1/PHD-MVS-ALS-SOURCE-RELATION-v1",
+  "output_relative_root": "phase-payloads/phd/mvs_als_surface_patch_v1/PHD-MVS-ALS-SURFACE-PATCH-v1",
+  "expected_inputs": {
+    "relation_map.npy": "d6b4cf8c32289a169aaed5d68a46e8e9ba7fa9b501e0cff66e3c61c07982c8a1",
+    "technical_return.json": "44a926f201cf8e0af34aaceb42559ac584cd625226e569f677f71197f7226276"
+  },
+  "classes": {
+    "1": "COMPATIBLE_WITHIN_LOD",
+    "2": "SIGNIFICANT_DISCREPANCY",
+    "3": "MVS_ONLY_SUPPORT",
+    "4": "PRIOR_ONLY_SUPPORT",
+    "5": "NOT_COMPARABLE"
+  },
+  "patch_status": {
+    "0": "UNASSIGNED_BRIDGE_INELIGIBLE",
+    "1": "STABLE_DOMINANT_RELATION",
+    "2": "SMALL_CONNECTED_ISLAND",
+    "3": "MIXED_RELATION_AMBIGUOUS",
+    "4": "DOMINANT_NOT_COMPARABLE"
+  },
+  "unassigned_reason": {
+    "0": "ASSIGNED_OR_NOT_APPLICABLE",
+    "1": "INVALID_NORMAL",
+    "2": "CLASS_5_NOT_COMPARABLE_EXCLUDED_FROM_BRIDGING",
+    "3": "HIGH_OR_NONFINITE_SURFACE_VARIATION"
+  },
+  "algorithm": {
+    "name": "DETERMINISTIC_SOURCE_SURFACE_PATCH_KRUSKAL_v1",
+    "core_spacing_m": 2.0,
+    "separate_core_source_surfaces": true,
+    "normal_orientation_invariant": true,
+    "selected_profile": "base",
+    "selection_rule": "Middle profile fixed before patch outputs and without score-only references; fine/coarse are parameter-sensitivity diagnostics only.",
+    "profiles": {
+      "fine": {
+        "neighbor_radius_m": 3.0,
+        "maximum_normal_angle_deg": 10.0,
+        "maximum_symmetric_point_to_plane_m": 0.2,
+        "maximum_bridge_surface_variation": 0.10,
+        "maximum_patch_radius_m": 6.0,
+        "maximum_patch_cores": 128,
+        "minimum_plane_fit_cores": 4,
+        "patch_plane_rmse_m": 0.20,
+        "patch_max_abs_residual_m": 0.45,
+        "patch_max_local_normal_deg": 15.0,
+        "minimum_patch_cores": 4,
+        "minimum_dominant_relation_fraction": 0.65
+      },
+      "base": {
+        "neighbor_radius_m": 3.5,
+        "maximum_normal_angle_deg": 15.0,
+        "maximum_symmetric_point_to_plane_m": 0.35,
+        "maximum_bridge_surface_variation": 0.15,
+        "maximum_patch_radius_m": 8.0,
+        "maximum_patch_cores": 256,
+        "minimum_plane_fit_cores": 4,
+        "patch_plane_rmse_m": 0.25,
+        "patch_max_abs_residual_m": 0.60,
+        "patch_max_local_normal_deg": 20.0,
+        "minimum_patch_cores": 4,
+        "minimum_dominant_relation_fraction": 0.60
+      },
+      "coarse": {
+        "neighbor_radius_m": 4.0,
+        "maximum_normal_angle_deg": 20.0,
+        "maximum_symmetric_point_to_plane_m": 0.50,
+        "maximum_bridge_surface_variation": 0.20,
+        "maximum_patch_radius_m": 12.0,
+        "maximum_patch_cores": 512,
+        "minimum_plane_fit_cores": 4,
+        "patch_plane_rmse_m": 0.35,
+        "patch_max_abs_residual_m": 0.90,
+        "patch_max_local_normal_deg": 25.0,
+        "minimum_patch_cores": 4,
+        "minimum_dominant_relation_fraction": 0.60
+      }
+    },
+    "small_or_mixed_action": "PATCH_RELATION_CLASS_5_NOT_COMPARABLE",
+    "candidate_safe_aggregation": "A raw class 2/3/4 core may aggregate to its dominant candidate class or fail closed to class 5, but may never be smoothed to class 1 compatible.",
+    "bridge_ineligible_action": "PATCH_ID_0_AND_CLASS_5_WITH_EXPLICIT_REASON; class 5 and high-variation cores are preserved but cannot connect surfaces",
+    "anti_chaining_rule": "Sort local edges by normalized continuity score and re-fit the whole candidate patch before every union; reject a union that violates global radius, plane RMSE, maximum residual, or local-to-global normal guards.",
+    "global_single_component_required": false
+  },
+  "prohibited_inputs": [
+    "CURRENT_UAS_LIDAR",
+    "LOD2_GROUNDSURFACE_FOOTPRINT",
+    "LOD2_ROOFSURFACE",
+    "LOD2_Z",
+    "BUILDING_STABLE_ID",
+    "JOURNAL1_93_ROSTER"
+  ]
+}

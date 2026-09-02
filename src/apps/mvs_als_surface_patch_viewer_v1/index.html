@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>MVS–ALS raw relation / surface-patch viewer</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <header>
+      <div>
+        <p class="eyebrow">JointBuildGS · before / after qualitative diagnostic</p>
+        <h1>MVS–Existing ALS 관계 core → 연결 표면 patch</h1>
+      </div>
+      <div class="header-meta">
+        <span class="badge">development / non-confirmatory</span>
+        <span id="status" role="status">manifest 확인 중…</span>
+      </div>
+    </header>
+
+    <main>
+      <aside id="controls">
+        <section>
+          <div class="section-title"><h2>원본 3D source</h2><span id="source-counts"></span></div>
+          <label class="source-row"><input id="show-mvs" type="checkbox" checked><i class="swatch source-mvs"></i><span>current-image MVS</span></label>
+          <label class="source-row"><input id="show-als" type="checkbox" checked><i class="swatch source-als"></i><span>registered Existing ALS</span></label>
+          <label class="range-row"><span>source opacity</span><input id="source-opacity" type="range" min="0.03" max="1" value="0.26" step="0.01"><output>0.26</output></label>
+          <label class="range-row"><span>source point</span><input id="source-size" type="range" min="0.5" max="3" value="1.0" step="0.1"><output>1.0</output></label>
+        </section>
+
+        <section>
+          <div class="section-title"><h2>before / after</h2><span id="relation-total"></span></div>
+          <div class="comparison-tabs" role="group" aria-label="색상 모드">
+            <button type="button" data-mode="raw" class="active">before · raw 5-class</button>
+            <button type="button" data-mode="patch">after · patch 5-class</button>
+          </div>
+          <label class="select-row"><span>추가 검사 모드</span>
+            <select id="color-mode">
+              <option value="raw">raw relation</option>
+              <option value="patch">patch relation</option>
+              <option value="uid">patch UID</option>
+              <option value="source">source family</option>
+              <option value="status">patch status</option>
+            </select>
+          </label>
+          <p id="mode-note" class="muted"></p>
+          <div class="preset-row">
+            <button id="preset-all" type="button">5개 전체</button>
+            <button id="preset-queue" type="button">후보 2·3·4</button>
+          </div>
+          <div class="section-title sub"><h2 id="class-basis">raw relation filter</h2><span></span></div>
+          <div id="class-controls"></div>
+          <label class="range-row"><span>core point</span><input id="relation-size" type="range" min="1" max="9" value="3.4" step="0.2"><output>3.4</output></label>
+          <label class="source-row"><input id="xray-labels" type="checkbox"><span>core X-ray overlay</span></label>
+          <label class="source-row"><input id="show-centroids" type="checkbox"><span>patch centroid 표시</span></label>
+          <div id="status-legend" class="legend"></div>
+        </section>
+
+        <section>
+          <h2>카메라·tile</h2>
+          <div class="preset-row">
+            <button id="view-oblique" type="button">사선</button>
+            <button id="view-top" type="button">수직</button>
+            <button id="view-fit" type="button">전체</button>
+          </div>
+          <label class="select-row"><span>active tile</span><select id="tile-select"><option value="">전체 공간</option></select></label>
+          <p class="muted">좌 drag: 회전 · 우 drag: 이동 · wheel: 확대 · core click: patch 전체 강조</p>
+        </section>
+
+        <section class="selection">
+          <h2>선택한 relation core / patch</h2>
+          <dl id="selection-details"><div><dt>상태</dt><dd>core를 클릭하세요.</dd></div></dl>
+        </section>
+      </aside>
+
+      <section id="viewport-panel">
+        <div id="viewport"></div>
+        <div class="viewport-overlay top-left">
+          <strong id="mode-title">before · raw five-class cores</strong>
+          <span id="view-summary">loading…</span>
+        </div>
+        <div class="viewport-overlay bottom-left">
+          <span><i class="swatch source-mvs"></i>MVS</span>
+          <span><i class="swatch source-als"></i>ALS</span>
+          <span>scene-local XYZ · patch는 source family별 연결</span>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      before는 동결된 1회 M3C2/support 관계 core, after는 기하 연결 후 patch 집계 라벨이다.
+      patch는 source authority·실제 변화·정확도 판정이 아니며 scientific_verdict는 null이다.
+    </footer>
+  </div>
+
+  <script type="importmap">{"imports":{"three":"./lib/three.module.min.js"}}</script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

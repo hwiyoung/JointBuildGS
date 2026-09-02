@@ -1,0 +1,47 @@
+{
+  "schema": "jointbuildgs.phd.mvs_als_source_relation_viewer.run.v1",
+  "task_id": "PHD-MVS-ALS-SOURCE-RELATION-VIEWER-v1",
+  "status": "DEVELOPMENT_NON_CONFIRMATORY",
+  "scientific_verdict": null,
+  "artifact_root": "/artifacts/JointBuildGS",
+  "source_relation_relative_root": "phase-payloads/phd/mvs_als_source_relation_v1/PHD-MVS-ALS-SOURCE-RELATION-v1",
+  "viewer_output_relative_root": "phase-payloads/phd/mvs_als_source_relation_v1/PHD-MVS-ALS-SOURCE-RELATION-v1/viewer",
+  "relation_config_relative_path": "configs/phd/mvs_als_source_relation_v1/run_v1.json",
+  "relation_config_sha256": "9143447590270dad89977aae352366fa9f50aee9fb30760c88e6d1627c253243",
+  "expected_inputs": {
+    "partition_receipt.json": "99acb2e00b8dae375551218d5b1754a899a94ffa39bdfea3158a8b26689f0534",
+    "relation_map.npy": "d6b4cf8c32289a169aaed5d68a46e8e9ba7fa9b501e0cff66e3c61c07982c8a1",
+    "technical_return.json": "44a926f201cf8e0af34aaceb42559ac584cd625226e569f677f71197f7226276"
+  },
+  "display_sampling": {
+    "source_voxel_m": 1.0,
+    "relation_core_spacing_m": 2.0,
+    "role": "DISPLAY_ONLY_NO_METHOD_FEEDBACK"
+  },
+  "app_source_relative_root": "src/apps/mvs_als_source_relation_viewer_v1",
+  "browser_dependencies": {
+    "three": "src/apps/gs3d_4way_viewer/build/three.module.min.js",
+    "gaussian_splats_3d": "src/apps/gs3d_4way_viewer/build/gaussian-splats-3d.module.min.js"
+  },
+  "default_port": 8891,
+  "classes": {
+    "1": {"name": "COMPATIBLE_WITHIN_LOD", "color": "#22c55e"},
+    "2": {"name": "SIGNIFICANT_DISCREPANCY", "color": "#ef4444"},
+    "3": {"name": "MVS_ONLY_SUPPORT", "color": "#3b82f6"},
+    "4": {"name": "PRIOR_ONLY_SUPPORT", "color": "#f59e0b"},
+    "5": {"name": "NOT_COMPARABLE", "color": "#9ca3af"}
+  },
+  "source_colors": {
+    "mvs": "#67e8f9",
+    "als": "#c4b5fd"
+  },
+  "render_queue_classes": [2, 3, 4],
+  "prohibited_inputs": [
+    "CURRENT_UAS_LIDAR",
+    "LOD2_GROUNDSURFACE_FOOTPRINT",
+    "LOD2_ROOFSURFACE",
+    "LOD2_Z",
+    "BUILDING_STABLE_ID",
+    "JOURNAL1_93_ROSTER"
+  ]
+}

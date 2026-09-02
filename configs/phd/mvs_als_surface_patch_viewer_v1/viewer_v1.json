@@ -1,0 +1,59 @@
+{
+  "schema": "jointbuildgs.phd.mvs_als_surface_patch_viewer.run.v1",
+  "task_id": "PHD-MVS-ALS-SURFACE-PATCH-VIEWER-v1",
+  "status": "USER_APPROVED_DEVELOPMENT_NON_CONFIRMATORY",
+  "scientific_verdict": null,
+  "purpose": "Compare the frozen one-pass five-class source-relation cores with locally connected source-surface patches. This viewer is display-only and cannot decide source authority, temporal change, or scientific performance.",
+  "artifact_root": "/artifacts/JointBuildGS",
+  "source_relation_viewer_relative_root": "phase-payloads/phd/mvs_als_source_relation_v1/PHD-MVS-ALS-SOURCE-RELATION-v1/viewer",
+  "source_relation_viewer_manifest_sha256": "db3d731cfdeaab3c6a26cd5319582cd16966abb9a76777de45228a28c9dc7c3d",
+  "surface_patch_relative_root": "phase-payloads/phd/mvs_als_surface_patch_v1/PHD-MVS-ALS-SURFACE-PATCH-v1",
+  "surface_patch_task_id": "PHD-MVS-ALS-SURFACE-PATCH-v1",
+  "surface_patch_artifact_manifest_sha256": "cba448654e6a108a00488f139f47278831aef59b10081f927d2ed647b8ee1b39",
+  "surface_patch_validation_receipt_sha256": "54f2312733ba7a60ccbff4f91ce68934c2c76015012ab57ab3a5fd429271dda4",
+  "viewer_output_relative_root": "phase-payloads/phd/mvs_als_surface_patch_v1/PHD-MVS-ALS-SURFACE-PATCH-v1/viewer",
+  "app_source_relative_root": "src/apps/mvs_als_surface_patch_viewer_v1",
+  "browser_dependencies": {
+    "three": "src/apps/gs3d_4way_viewer/build/three.module.min.js",
+    "gaussian_splats_3d": "src/apps/gs3d_4way_viewer/build/gaussian-splats-3d.module.min.js"
+  },
+  "default_port": 8892,
+  "classes": {
+    "1": {"name": "COMPATIBLE_WITHIN_LOD", "color": "#22c55e"},
+    "2": {"name": "SIGNIFICANT_DISCREPANCY", "color": "#ef4444"},
+    "3": {"name": "MVS_ONLY_SUPPORT", "color": "#3b82f6"},
+    "4": {"name": "PRIOR_ONLY_SUPPORT", "color": "#f59e0b"},
+    "5": {"name": "NOT_COMPARABLE", "color": "#9ca3af"}
+  },
+  "patch_status_colors": {
+    "0": "#64748b",
+    "1": "#10b981",
+    "2": "#eab308",
+    "3": "#f97316",
+    "4": "#a855f7"
+  },
+  "unassigned_reason_names": {
+    "0": "ASSIGNED",
+    "1": "INVALID_NORMAL",
+    "2": "CLASS_5_BRIDGE_EXCLUDED",
+    "3": "HIGH_SURFACE_VARIATION"
+  },
+  "source_colors": {
+    "mvs": "#67e8f9",
+    "als": "#c4b5fd"
+  },
+  "render_queue_classes": [2, 3, 4],
+  "display_sampling": {
+    "source_voxel_m": 1.0,
+    "relation_core_spacing_m": 2.0,
+    "role": "DISPLAY_ONLY_NO_METHOD_FEEDBACK"
+  },
+  "prohibited_inputs": [
+    "CURRENT_UAS_LIDAR",
+    "LOD2_GROUNDSURFACE_FOOTPRINT",
+    "LOD2_ROOFSURFACE",
+    "LOD2_Z",
+    "BUILDING_STABLE_ID",
+    "JOURNAL1_93_ROSTER"
+  ]
+}

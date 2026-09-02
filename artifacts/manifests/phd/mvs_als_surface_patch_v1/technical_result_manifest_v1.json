@@ -1,0 +1,61 @@
+{
+  "schema": "jointbuildgs.artifact_manifest.phd.mvs_als_surface_patch.v1",
+  "task_id": "PHD-MVS-ALS-SURFACE-PATCH-v1",
+  "status": "COMPLETE_DEVELOPMENT_NON_CONFIRMATORY",
+  "scientific_verdict": null,
+  "artifact_backend": {
+    "environment_variable": "JBGS_ARTIFACT_ROOT",
+    "container_root": "/artifacts/JointBuildGS",
+    "relative_root": "phase-payloads/phd/mvs_als_surface_patch_v1/PHD-MVS-ALS-SURFACE-PATCH-v1"
+  },
+  "reproducibility": {
+    "git_commit": "80d7be30d8a25eef9690c58cdb94165e2b08eeb7",
+    "config_path": "configs/phd/mvs_als_surface_patch_v1/run_v1.json",
+    "config_sha256": "a2997cb9ab6e004ac9da2c6d9a5e0e5e5aa6c044dbc9268e5c03539784ba9b8d",
+    "driver_path": "scripts/phd/mvs_als_surface_patch_v1/run.py",
+    "driver_sha256": "1053835454b8cae3996e74b81c34a99aa20d5cd7992bab6d2bca81b96d1fa760",
+    "host_wrapper_path": "scripts/phd/mvs_als_surface_patch_v1/run_host.sh",
+    "host_wrapper_sha256": "d63b856d844c8a068c5029134f38ea58483146ffec685340f6a6a8f09a392798",
+    "container_image": "jointbuildgs:dev"
+  },
+  "upstream": {
+    "relation_map.npy": "d6b4cf8c32289a169aaed5d68a46e8e9ba7fa9b501e0cff66e3c61c07982c8a1",
+    "relation_technical_return.json": "44a926f201cf8e0af34aaceb42559ac584cd625226e569f677f71197f7226276"
+  },
+  "result": {
+    "relation_core_count": 199813,
+    "selected_profile": "base",
+    "bridge_eligible_core_count": 134848,
+    "patch_count": 45129,
+    "stable_patch_count": 4858,
+    "stable_core_count": 72785,
+    "candidate_core_preservation_fraction": 1.0,
+    "candidate_to_compatible_core_count": 0,
+    "class_5_bridge_core_count": 0,
+    "mixed_source_family_patch_count": 0,
+    "source_authority_decided": false,
+    "temporal_change_decided": false
+  },
+  "outputs": {
+    "patch_membership.npy": "b00d2d824b03aebb3a2805f9d071e1875c1e343a4b1c792f0e65cc11f2a20f05",
+    "surface_patch_summary.npy": "2fc6579d45d20d93d2d553b3b2b4e0327d41e82616283f0018989749364e948f",
+    "surface_patch_adjacency.npy": "dcc75f69f0cb832a7f6ba2271b6d099d62e3be9650919b510059534f8e29406e",
+    "surface_patch_map.ply": "780748d15adc2e4bbbd60bebf13fd0ea7cafbf4e667c366f8ea052f14f0eefbc",
+    "surface_patch_summary.csv.gz": "0aa4f8863c1ff56f7b9976f53df47f862fe7446ba03aad82bc4aa12b43cfc7f3",
+    "surface_patch_before_after.png": "5a946e20f2063ae9410dfd27c7e6d1806845f96112b2e92d9cdac4abf4738773"
+  },
+  "receipts": {
+    "artifact_manifest.json": "cba448654e6a108a00488f139f47278831aef59b10081f927d2ed647b8ee1b39",
+    "technical_return.json": "98c4c09308c542d4638d1513c20e780240ea0ec1be2b1cf953bdc68ca7cc7da7",
+    "validation_receipt.json": "54f2312733ba7a60ccbff4f91ce68934c2c76015012ab57ab3a5fd429271dda4"
+  },
+  "scope_controls": {
+    "m3c2_recomputed": false,
+    "prohibited_inputs_accessed": [],
+    "not_interpretable_as": [
+      "FINAL_RENDER_GEOMETRY",
+      "SOURCE_CORRECTNESS_VERDICT",
+      "TEMPORAL_CHANGE_VERDICT"
+    ]
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "schema": "jointbuildgs.artifact_manifest.phd.mvs_als_source_relation_viewer.v1",
+  "task_id": "PHD-MVS-ALS-SOURCE-RELATION-VIEWER-v1",
+  "status": "READY_FOR_QUALITATIVE_WEB_REVIEW",
+  "scientific_verdict": null,
+  "artifact_backend": {
+    "environment_variable": "JBGS_ARTIFACT_ROOT",
+    "container_root": "/artifacts/JointBuildGS",
+    "relative_root": "phase-payloads/phd/mvs_als_source_relation_v1/PHD-MVS-ALS-SOURCE-RELATION-v1/viewer"
+  },
+  "reproducibility": {
+    "git_commit": "80d7be30d8a25eef9690c58cdb94165e2b08eeb7",
+    "config_path": "configs/phd/mvs_als_source_relation_viewer_v1/viewer_v1.json",
+    "config_sha256": "c0aac6625b4b92476f366d7c7674f15ee07d6c6c1932bdb47f059d3585b4a3a9",
+    "builder_path": "scripts/phd/mvs_als_source_relation_viewer_v1/build.py",
+    "builder_sha256": "bc36f5ec3fc9bb83db338ace6c2a8a08c357951e6e47d7b931f3e20ef0b2f158",
+    "serve_path": "scripts/phd/mvs_als_source_relation_viewer_v1/serve.sh",
+    "serve_sha256": "658c6ef8acc8a0e31b07c851b8f71f78f5c9bbe8a46b918d839ee874291c3dca",
+    "container_image": "jointbuildgs:dev",
+    "default_url": "http://127.0.0.1:8891/"
+  },
+  "upstream_relation_inputs": {
+    "partition_receipt.json": "99acb2e00b8dae375551218d5b1754a899a94ffa39bdfea3158a8b26689f0534",
+    "relation_map.npy": "d6b4cf8c32289a169aaed5d68a46e8e9ba7fa9b501e0cff66e3c61c07982c8a1",
+    "technical_return.json": "44a926f201cf8e0af34aaceb42559ac584cd625226e569f677f71197f7226276"
+  },
+  "display_contract": {
+    "simultaneous_layers": [
+      "CURRENT_IMAGE_MVS",
+      "REGISTERED_EXISTING_ALS",
+      "FIVE_CLASS_RELATION_CORES"
+    ],
+    "source_display_voxel_m": 1.0,
+    "source_display_counts": {
+      "mvs": 460443,
+      "als": 683124
+    },
+    "relation_core_count": 199813,
+    "relation_classes": [
+      "COMPATIBLE_WITHIN_LOD",
+      "SIGNIFICANT_DISCREPANCY",
+      "MVS_ONLY_SUPPORT",
+      "PRIOR_ONLY_SUPPORT",
+      "NOT_COMPARABLE"
+    ],
+    "display_sampling_role": "DISPLAY_ONLY_NO_METHOD_FEEDBACK",
+    "prohibited_inputs_accessed": []
+  },
+  "receipts": {
+    "viewer_manifest.json": "db3d731cfdeaab3c6a26cd5319582cd16966abb9a76777de45228a28c9dc7c3d",
+    "viewer_build_receipt.json": "7a9b6c3ed93a3c20a7512b1ab51a2447a8486799a6dd8ccdb01ed3a6cee2ab89",
+    "viewer_validation_receipt.json": "664f1bbffc4cde5baa475fbbfe45431e2961c702669b1ce0657c578c096d01a1"
+  },
+  "validation": {
+    "asset_hashes_and_strides": "PASS",
+    "five_class_counts": "PASS",
+    "both_source_layers": "PASS",
+    "offline_dependencies": "PASS",
+    "http_200": "PASS",
+    "headless_chrome_dom_ready": "PASS",
+    "headless_chrome_webgl_screenshot": "PASS",
+    "observed_dom_status": "ready - 199,813 relation cores"
+  }
+}

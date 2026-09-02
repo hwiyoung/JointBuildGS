@@ -1,0 +1,48 @@
+{
+  "schema": "jointbuildgs.artifact_manifest.phd.mvs_als_current_view_render.v1",
+  "task_id": "PHD-MVS-ALS-CURRENT-VIEW-RENDER-PILOT-v1",
+  "status": "COMPLETE_DEVELOPMENT_NON_CONFIRMATORY",
+  "scientific_verdict": null,
+  "artifact_backend": {
+    "environment_variable": "JBGS_ARTIFACT_ROOT",
+    "relative_root": "phase-payloads/phd/mvs_als_current_view_render_v1/PHD-MVS-ALS-CURRENT-VIEW-RENDER-PILOT-v1"
+  },
+  "reproducibility": {
+    "git_commit": "80d7be30d8a25eef9690c58cdb94165e2b08eeb7",
+    "config_path": "configs/phd/mvs_als_current_view_render_v1/pilot_v1.json",
+    "config_sha256": "5cf333ef97db830f0a440b8602622d631e1856a7d3a3f76ca91fb998e38743ee",
+    "driver_path": "scripts/phd/mvs_als_current_view_render_v1/render.py",
+    "driver_sha256": "33bbdbc4f1817ae541364020c620712d7ef18c83091ccdd88d97c3c68690e549",
+    "host_wrapper_sha256": "47bab097a97e0556a7ba818656ca106c941dc03c39e7ab0e9eef8f75e5a04fab",
+    "container_image": "jointbuildgs:dev"
+  },
+  "result": {
+    "views": ["TOP", "OBLIQUE_A", "OBLIQUE_B"],
+    "source_points_in_pilot_prism": {"mvs": 139033, "existing_als": 20189},
+    "relation_cores_in_pilot_prism": 610,
+    "visible_relation_cores": {"TOP": 506, "OBLIQUE_A": 401, "OBLIQUE_B": 368},
+    "source_relation_class_used": "DISPLAY_ONLY",
+    "surface_patch_used": "DISPLAY_ONLY",
+    "fusion_performed": false,
+    "gaussian_optimization_performed": false,
+    "source_authority_decision": null
+  },
+  "receipts": {
+    "artifact_manifest.json": "2a85ad743270765181038baec58be7bed3104bab1d6340f26f144de75a32175a",
+    "validation_receipt.json": "ada32af9a5ee630778400fb1999ce3f2eb344d1ef24a61d7f3a3db38cf412a3a",
+    "technical_return.json": "10e8e3a590d71db0f1106d7ee56c55171a9cf2713540ab88da9c5a433ad4e7ba",
+    "resolved_input_manifest.json": "eb0d207357029f9b149672af564c1c7337a84ebb6f67d9d71e2ed1cf9a04e884",
+    "view_metrics.csv": "43b114ff1d6a56851d5abd4d73312cce5e0943b0208c2cb03914930617718868"
+  },
+  "validation": {
+    "docker_unittest": "PASS_9_OF_9",
+    "artifact_count": 21,
+    "artifact_hashes": "PASS",
+    "source_independent_raw_and_proxy": "PASS",
+    "own_source_raw_z_visibility_gate": "PASS",
+    "overlay_does_not_change_source_metrics": "PASS",
+    "no_source_decision_fusion_or_gs": "PASS",
+    "prohibited_inputs_accessed": [],
+    "scientific_verdict_null": "PASS"
+  }
+}

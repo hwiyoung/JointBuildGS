@@ -1,0 +1,172 @@
+{
+  "schema": "jointbuildgs.phd.mvs_als_current_view_render.pilot.v1",
+  "task_id": "PHD-MVS-ALS-CURRENT-VIEW-RENDER-PILOT-v1",
+  "status": "DEVELOPMENT_NON_CONFIRMATORY",
+  "scientific_verdict": null,
+  "purpose": "Bounded current-image diagnostic of independently projected exact MVS and registered Existing ALS source bytes. It compares raw point z-buffers with a clearly separated connected display proxy; it does not select, weight, fuse, optimize, or rank either source.",
+  "artifact_root": "/artifacts/JointBuildGS",
+  "output_relative_root": "phase-payloads/phd/mvs_als_current_view_render_v1/PHD-MVS-ALS-CURRENT-VIEW-RENDER-PILOT-v1",
+  "inputs": {
+    "source_relation": {
+      "relative_root": "phase-payloads/phd/mvs_als_source_relation_v1/PHD-MVS-ALS-SOURCE-RELATION-v1",
+      "partition_receipt": {
+        "relative_path": "partition_receipt.json",
+        "bytes": 9818,
+        "sha256": "99acb2e00b8dae375551218d5b1754a899a94ffa39bdfea3158a8b26689f0534"
+      },
+      "tile_id": "x003_y004",
+      "partitions": {
+        "mvs": {
+          "relative_path": "partition/mvs/x003_y004.xyz_f32le.bin",
+          "bytes": 213676272,
+          "point_count": 17806356,
+          "sha256": "6174e0113c339ffeff824ec5d7a9f857e9f09a4c791bfb07d8830e68f5f65749"
+        },
+        "existing_als": {
+          "relative_path": "partition/als/x003_y004.xyz_f32le.bin",
+          "bytes": 14614260,
+          "point_count": 1217855,
+          "sha256": "cb9db09947278d8e7499a29941619093cc79835184b0d846dcf63313614dfd49"
+        }
+      },
+      "partition_semantics": "Exact source-specific XYZ float32 bytes produced before M3C2 core sampling; relation and patch classes are never used to alter these source z-buffers or their metrics."
+    },
+    "source_relation_core_map": {
+      "relative_root": "phase-payloads/phd/mvs_als_source_relation_v1/PHD-MVS-ALS-SOURCE-RELATION-v1",
+      "relative_path": "relation_map.npy",
+      "bytes": 13587860,
+      "core_count": 199813,
+      "sha256": "d6b4cf8c32289a169aaed5d68a46e8e9ba7fa9b501e0cff66e3c61c07982c8a1",
+      "use": "DISPLAY_ONLY_PATCH_AUDIT_OVERLAY"
+    },
+    "surface_patch": {
+      "relative_root": "phase-payloads/phd/mvs_als_surface_patch_v1/PHD-MVS-ALS-SURFACE-PATCH-v1",
+      "artifact_manifest": {
+        "relative_path": "artifact_manifest.json",
+        "bytes": 2289,
+        "sha256": "cba448654e6a108a00488f139f47278831aef59b10081f927d2ed647b8ee1b39"
+      },
+      "validation_receipt": {
+        "relative_path": "validation_receipt.json",
+        "bytes": 802,
+        "sha256": "54f2312733ba7a60ccbff4f91ce68934c2c76015012ab57ab3a5fd429271dda4"
+      },
+      "outputs": {
+        "patch_membership.npy": {
+          "bytes": 4995709,
+          "sha256": "b00d2d824b03aebb3a2805f9d071e1875c1e343a4b1c792f0e65cc11f2a20f05"
+        },
+        "surface_patch_summary.npy": {
+          "bytes": 5416312,
+          "sha256": "2fc6579d45d20d93d2d553b3b2b4e0327d41e82616283f0018989749364e948f"
+        }
+      },
+      "use": "DISPLAY_ONLY_PATCH_AUDIT_OVERLAY"
+    },
+    "current_image_camera_root_relative_path": "phase-payloads/p0-audit/data/work/mvs/colmap_dense",
+    "exact_937_crosswalk": {
+      "git_relative_path": "artifacts/manifests/gate_s0/common_base_r2b/exact_937_member_crosswalk_v1.json",
+      "bytes": 378466,
+      "sha256": "b4af779ecfae859de9772ce50cb24326b20c3f86614f6a8957453779d1cd4c17",
+      "member_count": 937
+    },
+    "camera_files": {
+      "sparse/cameras.bin": {
+        "bytes": 64,
+        "sha256": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99"
+      },
+      "sparse/images.bin": {
+        "bytes": 114415526,
+        "sha256": "dfc779496ee3b13f8df5dd28fae465746ce0adf4aca7922d38cbed275a2fd951"
+      }
+    },
+    "selected_views": [
+      {
+        "role": "TOP",
+        "colmap_image_id": 90,
+        "source_camera_uid": "29443536668497814",
+        "name": "DJI_20241217084551_0099_D.JPG",
+        "image_bytes": 904418,
+        "image_sha256": "a973b430489c227dfa9b3084e0ec99db88c5906add644d8bd8d86c0e3e2cbcb4"
+      },
+      {
+        "role": "OBLIQUE_A",
+        "colmap_image_id": 840,
+        "source_camera_uid": "11690275784334762911",
+        "name": "DJI_20241217102957_0024_D.JPG",
+        "image_bytes": 1010059,
+        "image_sha256": "d25f069b4d6409d826bb2dc52f43d2d4ec2043306e2825312645a941a8f05e28"
+      },
+      {
+        "role": "OBLIQUE_B",
+        "colmap_image_id": 659,
+        "source_camera_uid": "5089976669006012448",
+        "name": "DJI_20241217101453_0037_D.JPG",
+        "image_bytes": 900220,
+        "image_sha256": "b789af9e854326221f7fcca5c9a8c5a7ba1c582d56e13eee5d7e3d14a1078d98"
+      }
+    ]
+  },
+  "pilot_prism_local_xyz_m": {
+    "x": [-23.0, 7.0],
+    "y": [-21.0, 9.0],
+    "z": [-44.272, -25.962],
+    "interval": "HALF_OPEN",
+    "selection_origin": "SOURCE_ONLY_LOCAL_RELATION_INSPECTION"
+  },
+  "render": {
+    "downscale": 0.5,
+    "raw_projection": "ROUND_TO_NEAREST_PIXEL_SOURCE_INDEPENDENT_NEAREST_CAMERA_Z",
+    "connected_display_proxy": "SOURCE_INDEPENDENT_MIN_DEPTH_DISK_SPLAT_FROM_RAW_ZBUFFER",
+    "display_splat_radius_px": 2,
+    "roi_policy": "PROJECTED_PILOT_PRISM_CORNERS_PLUS_FIXED_PADDING",
+    "roi_padding_px": 32,
+    "minimum_roi_size_px": 128,
+    "canny_low": 80,
+    "canny_high": 160,
+    "edge_distance_thresholds_px": [2, 4, 8],
+    "depth_residual_display_max_m": 5.0
+  },
+  "relation_patch_overlay": {
+    "use": "DISPLAY_ONLY",
+    "visibility_gate": "CORE_SOURCE_INDEPENDENT_RAW_ZBUFFER_ABSOLUTE_CAMERA_Z_DIFFERENCE",
+    "core_visibility_tolerance_m": 0.75,
+    "marker_size_px2": 20.0,
+    "marker_alpha": 0.90,
+    "relation_class_colors": {
+      "1": "#22c55e",
+      "2": "#ef4444",
+      "3": "#3b82f6",
+      "4": "#f59e0b",
+      "5": "#9ca3af"
+    },
+    "source_family_colors": {
+      "0": "#67e8f9",
+      "1": "#c4b5fd"
+    },
+    "patch_status_colors": {
+      "0": "#64748b",
+      "1": "#10b981",
+      "2": "#eab308",
+      "3": "#f97316",
+      "4": "#a855f7"
+    }
+  },
+  "interpretation_boundary": {
+    "raw_point_zbuffer": "Exact selected source points after deterministic projection and nearest-depth occlusion only.",
+    "connected_display_proxy": "A display-only disk expansion of raw visible pixels. It is not a surface reconstruction, mesh, Gaussian, or new geometric observation.",
+    "metrics": "Coverage, connectivity, cross-source depth residual, and RGB-edge proximity are diagnostics of renderability and image consistency, not source correctness, authority, temporal validity, or a scientific verdict.",
+    "no_source_decision": true,
+    "no_source_weight": true,
+    "no_fusion": true,
+    "no_gaussian_optimization": true,
+    "relation_and_patch_classes_used": "DISPLAY_ONLY"
+  },
+  "prohibited_inputs": [
+    "CURRENT_UAS_LIDAR",
+    "REFERENCE_ROOF_GEOMETRY",
+    "STANDARD_BUILDING_FOOTPRINT",
+    "BUILDING_STABLE_ID",
+    "EVALUATION_ROSTER"
+  ]
+}

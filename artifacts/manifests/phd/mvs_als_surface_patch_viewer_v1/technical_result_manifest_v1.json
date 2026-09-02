@@ -1,0 +1,50 @@
+{
+  "schema": "jointbuildgs.artifact_manifest.phd.mvs_als_surface_patch_viewer.v1",
+  "task_id": "PHD-MVS-ALS-SURFACE-PATCH-VIEWER-v1",
+  "status": "READY_FOR_QUALITATIVE_WEB_REVIEW",
+  "scientific_verdict": null,
+  "artifact_backend": {
+    "environment_variable": "JBGS_ARTIFACT_ROOT",
+    "relative_root": "phase-payloads/phd/mvs_als_surface_patch_v1/PHD-MVS-ALS-SURFACE-PATCH-v1/viewer"
+  },
+  "reproducibility": {
+    "git_commit": "80d7be30d8a25eef9690c58cdb94165e2b08eeb7",
+    "config_path": "configs/phd/mvs_als_surface_patch_viewer_v1/viewer_v1.json",
+    "config_sha256": "d02a8cac1f0f2d364aa57f533cb4f3a55c3ab5f63b24e8b1914e74427bf989ed",
+    "builder_path": "scripts/phd/mvs_als_surface_patch_viewer_v1/build.py",
+    "builder_sha256": "afdb7d25c82dabc868d9a21a408e4de59cf34d3328a589abaa55343fd13e10d8",
+    "build_wrapper_sha256": "960eed8cbf45bffcb115d529b1f73e8947d15418a9573c32067b364a09243df8",
+    "serve_wrapper_sha256": "4f9644e99b1646ed82b025f01ed8bdfb97a5107b9bca656d0f46f090b531e744",
+    "container_image": "jointbuildgs:dev",
+    "default_url": "http://127.0.0.1:8892/"
+  },
+  "upstream": {
+    "relation_viewer_manifest": "db3d731cfdeaab3c6a26cd5319582cd16966abb9a76777de45228a28c9dc7c3d",
+    "patch_artifact_manifest": "cba448654e6a108a00488f139f47278831aef59b10081f927d2ed647b8ee1b39",
+    "patch_validation_receipt": "54f2312733ba7a60ccbff4f91ce68934c2c76015012ab57ab3a5fd429271dda4"
+  },
+  "display_contract": {
+    "relation_core_count": 199813,
+    "patch_count": 45129,
+    "modes": ["RAW_FIVE_CLASS", "PATCH_FIVE_CLASS", "PATCH_UID", "SOURCE_FAMILY", "PATCH_STATUS"],
+    "candidate_to_compatible_core_count": 0,
+    "m3c2_recomputed": false,
+    "display_only_no_method_feedback": true,
+    "prohibited_inputs_accessed": []
+  },
+  "receipts": {
+    "viewer_manifest.json": "d1f0412da9a86305acd536fde8467e6782bb7ce18fe11f0436b554e7e1ee806d",
+    "viewer_build_receipt.json": "0961e395cf5e5a256ff8fb37cf68d3fe1b740e146a8cc0cf2ec5c90796a5355e",
+    "viewer_validation_receipt.json": "477180204bb38dacc09f23eb69128c204b9c41361c674070bf9fb5e88ce4d374"
+  },
+  "validation": {
+    "docker_unittest": "PASS_5_OF_5",
+    "asset_hashes_and_strides": "PASS",
+    "both_source_layers": "PASS",
+    "raw_and_patch_five_class": "PASS",
+    "patch_uid_integrity": "PASS",
+    "offline_dependencies": "PASS",
+    "http_dom_webgl_smoke": "PASS",
+    "scientific_verdict_null": "PASS"
+  }
+}
