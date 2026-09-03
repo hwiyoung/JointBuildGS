@@ -1,0 +1,114 @@
+{
+  "schema": "jointbuildgs.artifact_manifest.phd.surface_patch_rg.v1",
+  "task_id": "PHD-SURFACE-PATCH-RG-v1",
+  "status": "COMPLETE_DEVELOPMENT_NON_CONFIRMATORY",
+  "scientific_verdict": null,
+  "artifact_backend": {
+    "environment_variable": "JBGS_ARTIFACT_ROOT",
+    "container_root": "/artifacts/JointBuildGS",
+    "relative_root": "phase-payloads/phd/surface_patch_rg_v1/PHD-SURFACE-PATCH-RG-v1"
+  },
+  "reproducibility": {
+    "git_commit": "14e79b75773e383597673f794eb7d3b20ea76ac2",
+    "config_path": "configs/phd/surface_patch_rg_v1/run_v1.json",
+    "config_sha256": "76006568a25fc584d609ef1e7d5e6270206cf684c57f35d0fc048ba62f30d96b",
+    "driver_path": "scripts/phd/surface_patch_rg_v1/run.py",
+    "driver_sha256": "2854b9928247db59662152f4b1e8b864794f17c09862cc743a484a7a17848190",
+    "host_wrapper_path": "scripts/phd/surface_patch_rg_v1/run_host.sh",
+    "host_wrapper_sha256": "2572c3044f7422fc837a101df334d26c783538525d14f2144b88a22a54e829dc",
+    "container_image": "jointbuildgs:dev"
+  },
+  "upstream": {
+    "als": "cb9db09947278d8e7499a29941619093cc79835184b0d846dcf63313614dfd49",
+    "mvs": "6174e0113c339ffeff824ec5d7a9f857e9f09a4c791bfb07d8830e68f5f65749",
+    "partition_receipt": "99acb2e00b8dae375551218d5b1754a899a94ffa39bdfea3158a8b26689f0534"
+  },
+  "domain": {
+    "kind": "HALF_OPEN_PRISM_SCENE_LOCAL",
+    "selection_origin": "FROZEN_PILOT_PRISM_FROM_PHD-MVS-ALS-CURRENT-VIEW-RENDER-PILOT-v1",
+    "x": [
+      -23.0,
+      7.0
+    ],
+    "y": [
+      -21.0,
+      9.0
+    ],
+    "z": [
+      -44.272,
+      -25.962
+    ]
+  },
+  "result": {
+    "als": {
+      "elapsed_seconds": 0.8213603449985385,
+      "euclidean_clusters": 12,
+      "largest_patch_points": 6257,
+      "points": 20189,
+      "points_in_euclidean_clusters": 3471,
+      "points_in_smooth_regions": 16621,
+      "points_noise": 97,
+      "smooth_regions": 57,
+      "type_counts": {
+        "LINEAR": 1,
+        "PLANAR": 65,
+        "SCATTERED": 3
+      },
+      "type_point_counts": {
+        "LINEAR": 54,
+        "PLANAR": 16730,
+        "SCATTERED": 3308
+      }
+    },
+    "mvs": {
+      "elapsed_seconds": 21.31927079707384,
+      "euclidean_clusters": 30,
+      "largest_patch_points": 72783,
+      "points": 139033,
+      "points_in_euclidean_clusters": 18591,
+      "points_in_smooth_regions": 119568,
+      "points_noise": 874,
+      "smooth_regions": 267,
+      "type_counts": {
+        "LINEAR": 4,
+        "PLANAR": 279,
+        "SCATTERED": 14
+      },
+      "type_point_counts": {
+        "LINEAR": 2530,
+        "PLANAR": 120048,
+        "SCATTERED": 15581
+      }
+    }
+  },
+  "outputs": {
+    "patches_als.npy": "68c89f9308426fcde234c9a218562859f43afede67c7af39905aec96aa607883",
+    "patches_mvs.npy": "e94d407844f93093396a98b75d12a2fa808bc34781bc8eb01deadcfd173dafc3",
+    "point_rows_als.npy": "17113b567f1729e09fb59a1d2d3c8774c5d4d2b25eac0461ca6b44b7c5771811",
+    "point_rows_mvs.npy": "a18eeb7563ba79be8c1ed6ea0be041aa25b1f337ac85be1da794e66ea9e34528",
+    "points_als.npy": "688b32ab1e193053309f237b55fc8269e1ad3e643f77471f3697402575bfd9a4",
+    "points_mvs.npy": "6c24ec01f241325ed03ef285b4a2eba54514ea34d2f722e6d847adc195d6d9d1",
+    "surface_patch_preview.png": "5411ffd9583a000d8034e48a052a6212c0f91b571f149d8cc97ae646b4761176"
+  },
+  "receipts": {
+    "artifact_manifest.json": "1a3c5cfb7e8e08c802959e69e240fa6e9831f53556fc1d70582e96fd31b4f742",
+    "technical_return.json": "742736cf9bd9228368a3b796d0611e5a8d29d95b21e7c07e76ad5ebbc9682560",
+    "validation_receipt.json": "3775bf7534c4969944afd76aa851948d4f9bc0f6abb59074cd732b82d87b58fa"
+  },
+  "scope_controls": {
+    "prohibited_inputs_accessed": [],
+    "not_decided_here": [
+      "SOURCE_AUTHORITY",
+      "TEMPORAL_CHANGE",
+      "REGISTRATION_DELTA",
+      "RESPONSIBILITY_PI",
+      "CROSS_SOURCE_PAIRING"
+    ],
+    "not_interpretable_as": [
+      "SOURCE_AUTHORITY_DECISION",
+      "TEMPORAL_CHANGE_VERDICT",
+      "CROSS_SOURCE_PAIRING",
+      "RESPONSIBILITY_OR_WEIGHT"
+    ]
+  }
+}
