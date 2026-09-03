@@ -1,0 +1,93 @@
+{
+  "schema": "jointbuildgs.artifact_manifest.phd.patch_pairing_xy.v1",
+  "task_id": "PHD-PATCH-PAIRING-XY-P2-v1",
+  "status": "COMPLETE_DEVELOPMENT_NON_CONFIRMATORY",
+  "scientific_verdict": null,
+  "prism": "P2 = east sawtooth-roof building, tile x004_y004, x[110,158) y[86,132) z[-49.386,-17.679); chosen as an H_M candidate, measured as a second H_chg case (see docs/experiments/phd/warp_ncc_v1/TECHNICAL_RETURN_ko_v1.md, 부록 P2)",
+  "artifact_backend": {
+    "environment_variable": "JBGS_ARTIFACT_ROOT",
+    "container_root": "/artifacts/JointBuildGS",
+    "relative_root": "phase-payloads/phd/patch_pairing_xy_v1/PHD-PATCH-PAIRING-XY-P2-v1"
+  },
+  "reproducibility": {
+    "git_commit": "17a440b37748c18e76efc46e1a8a5daccf1516b9",
+    "config_path": "configs/phd/patch_pairing_xy_v1/run_v1_p2.json",
+    "config_sha256": "a35477f3551045256ca4b4a5e44125e641922a47ee388ca5137678743fa9879c",
+    "driver_path": "scripts/phd/patch_pairing_xy_v1/run.py",
+    "driver_sha256": "b4b79718431773e8c201878d79e4000c625dbdef9bda6da1f51ef4c5b4b8e3ba",
+    "driver_sha256_matches_working_tree": true,
+    "container_image": "jointbuildgs:dev",
+    "orchestration": "scratch chain script (P2_START) copied to phase-payloads/phd/warp_ncc_v1/PHD-WARP-NCC-P2-v1/illustrations/p2_chain.py"
+  },
+  "upstream": {
+    "partition_als": {
+      "path": "/artifacts/JointBuildGS/phase-payloads/phd/mvs_als_source_relation_v1/PHD-MVS-ALS-SOURCE-RELATION-v1/partition/als/x004_y004.xyz_f32le.bin",
+      "sha256": "4f9a4ef1449d8ac80f293c98a7e99d07737ef8d084233bb0fafaede0f85ee8d3"
+    },
+    "partition_mvs": {
+      "path": "/artifacts/JointBuildGS/phase-payloads/phd/mvs_als_source_relation_v1/PHD-MVS-ALS-SOURCE-RELATION-v1/partition/mvs/x004_y004.xyz_f32le.bin",
+      "sha256": "87868aa654334e89d0988a0cea0e527bd5ebb49636b51b40ecae11208bc04234"
+    },
+    "surface_patch_artifact_manifest": {
+      "path": "/artifacts/JointBuildGS/phase-payloads/phd/surface_patch_rg_v1/PHD-SURFACE-PATCH-RG-P2-v1/artifact_manifest.json",
+      "sha256": "cb2aecffb2dda99cdb077dd55294faba99779dbe294d28ea39599d025574dc89"
+    }
+  },
+  "domain": {
+    "kind": "HALF_OPEN_PRISM_SCENE_LOCAL",
+    "x": [
+      110.0,
+      158.0
+    ],
+    "y": [
+      86.0,
+      132.0
+    ],
+    "z": [
+      -49.386,
+      -17.679
+    ]
+  },
+  "outputs": {
+    "pair_cells.npy": {
+      "bytes": 353621,
+      "path": "pair_cells.npy",
+      "sha256": "595399f49d27a807eac3e23df92d1e173bf5f6688afb517e4d2bd088e277a115"
+    },
+    "pair_pairs.npy": {
+      "bytes": 9157,
+      "path": "pair_pairs.npy",
+      "sha256": "bcfddfb028b5b2e8e9eded07bfe8f0b9fc7286ea03f0e38d39d1235aa45a4972"
+    },
+    "pair_walls.npy": {
+      "bytes": 2956,
+      "path": "pair_walls.npy",
+      "sha256": "cc95b94e1cf4f3a56557410f434fde2185f4704504b41f9a302d5f0dc3f5dd76"
+    },
+    "pairing_preview.png": {
+      "bytes": 47180,
+      "path": "pairing_preview.png",
+      "sha256": "44f910d83a61bd4717f9893e1bf87e1aa55024dd078534b4478b5cc4fe7662e2"
+    },
+    "technical_return.json": {
+      "bytes": 4004,
+      "path": "technical_return.json",
+      "sha256": "b709add582ba1953ab8d5a2313f2e43b963c6ca4de7195574502d4bfa46c3b49"
+    }
+  },
+  "artifact_manifest_sha256": "3ec4cc68ab486561449f833f5f3dd3dd533e56aca6dad7ae50fad7a29a529bba",
+  "validation_receipt": {
+    "sha256": "9872b0021918419eea07ecdd52f43987d61b718cf3823e0ceb86f2900fba7f56",
+    "checks": {
+      "cell_state_consistency": "PASS",
+      "determinism_rerun": "PASS",
+      "input_hashes_and_upstream_receipt_binding": "PASS",
+      "output_hashes": "PASS",
+      "patch_pair_integrity": "PASS",
+      "prohibited_inputs": "PASS",
+      "scientific_verdict_null": "PASS"
+    },
+    "generated_utc": "2026-09-03T05:37:24.110231+00:00"
+  },
+  "prohibited_inputs_accessed": []
+}

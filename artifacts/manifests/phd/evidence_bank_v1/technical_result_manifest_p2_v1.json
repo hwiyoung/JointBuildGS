@@ -1,0 +1,97 @@
+{
+  "schema": "jointbuildgs.artifact_manifest.phd.evidence_bank.v1",
+  "task_id": "PHD-EVIDENCE-BANK-P2-v1",
+  "status": "COMPLETE_DEVELOPMENT_NON_CONFIRMATORY",
+  "scientific_verdict": null,
+  "prism": "P2 = east sawtooth-roof building, tile x004_y004, x[110,158) y[86,132) z[-49.386,-17.679); chosen as an H_M candidate, measured as a second H_chg case (see docs/experiments/phd/warp_ncc_v1/TECHNICAL_RETURN_ko_v1.md, 부록 P2)",
+  "artifact_backend": {
+    "environment_variable": "JBGS_ARTIFACT_ROOT",
+    "container_root": "/artifacts/JointBuildGS",
+    "relative_root": "phase-payloads/phd/evidence_bank_v1/PHD-EVIDENCE-BANK-P2-v1"
+  },
+  "reproducibility": {
+    "git_commit": "17a440b37748c18e76efc46e1a8a5daccf1516b9",
+    "config_path": "configs/phd/evidence_bank_v1/run_v1_p2.json",
+    "config_sha256": "4a6a54d13d63d3baa659e9b4f7eedb1917da8cac3d95a886fe9f3de24819ed1b",
+    "driver_path": "scripts/phd/evidence_bank_v1/run.py",
+    "driver_sha256": "81cf9c472dfe10255955f54666a9670f1d37d79958d2b8e468d13af46cf4ac57",
+    "driver_sha256_matches_working_tree": true,
+    "container_image": "jointbuildgs:dev",
+    "orchestration": "scratch chain script (P2_START) copied to phase-payloads/phd/warp_ncc_v1/PHD-WARP-NCC-P2-v1/illustrations/p2_chain.py"
+  },
+  "upstream": {
+    "camera_root": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense",
+    "pairing_manifest_sha256": "3ec4cc68ab486561449f833f5f3dd3dd533e56aca6dad7ae50fad7a29a529bba",
+    "pairing_root": "/artifacts/JointBuildGS/phase-payloads/phd/patch_pairing_xy_v1/PHD-PATCH-PAIRING-XY-P2-v1",
+    "patch_manifest_sha256": "cb2aecffb2dda99cdb077dd55294faba99779dbe294d28ea39599d025574dc89",
+    "patch_root": "/artifacts/JointBuildGS/phase-payloads/phd/surface_patch_rg_v1/PHD-SURFACE-PATCH-RG-P2-v1",
+    "relation_root": "/artifacts/JointBuildGS/phase-payloads/phd/mvs_als_source_relation_v1/PHD-MVS-ALS-SOURCE-RELATION-v1"
+  },
+  "domain": {
+    "kind": "HALF_OPEN_PRISM_SCENE_LOCAL",
+    "x": [
+      110.0,
+      158.0
+    ],
+    "y": [
+      86.0,
+      132.0
+    ],
+    "z": [
+      -49.386,
+      -17.679
+    ]
+  },
+  "outputs": {
+    "evaluation.json": {
+      "bytes": 7477,
+      "path": "evaluation.json",
+      "sha256": "db4ba4eff12c03fc69c4b6bdc132a8968bba24232beec110e9cf07802ba6c71a"
+    },
+    "evidence_cells.npy": {
+      "bytes": 812916,
+      "path": "evidence_cells.npy",
+      "sha256": "2066a6febdedd207282ced0e45af808beca5af120fc8f0d7786a738e87446ace"
+    },
+    "evidence_pairs.npy": {
+      "bytes": 25458,
+      "path": "evidence_pairs.npy",
+      "sha256": "1e5a896da82227aa46a1536fe650094cd00d8a72810ac511cdd824fd9f5928a6"
+    },
+    "evidence_preview.png": {
+      "bytes": 213365,
+      "path": "evidence_preview.png",
+      "sha256": "a7445f3ede12d92d4921956224d467682f6fe4e954a2ebac3b2ffc815289d404"
+    },
+    "evidence_views.json": {
+      "bytes": 19409,
+      "path": "evidence_views.json",
+      "sha256": "dc7be25b2256fb94ad8e62836227f32fe5be47c47a95c93e1b3115c36071ebd3"
+    },
+    "technical_return.json": {
+      "bytes": 9171,
+      "path": "technical_return.json",
+      "sha256": "1e584c2a8e632855bef9678bb283102ece8c77e554eb3b8ae6fc531cb7797b43"
+    }
+  },
+  "artifact_manifest_sha256": "2f35d8de83280e41b3ad2829d67994d5efacc510c57bafd8206dcfcb916dda6d",
+  "validation_receipt": {
+    "sha256": "cc8dd6289e311b529ff0b0002f877e4071e713f90913770122554707c4ebda58",
+    "checks": {
+      "cell_consistency": "PASS",
+      "determinism_rerun": "PASS",
+      "input_hashes_and_upstream_binding": "PASS",
+      "output_hashes": "PASS",
+      "prohibited_inputs": "PASS",
+      "scientific_verdict_null": "PASS"
+    },
+    "generated_utc": "2026-09-03T05:50:55.147104+00:00"
+  },
+  "prohibited_inputs_accessed": [],
+  "view_count": 66,
+  "view_selection": {
+    "min_cell_fraction": 0.5,
+    "reason": "the 48 x 46 x 32 m prism does not fit whole in a near-nadir frame; the pilot's all-corners rule kept only distant obliques (41 views, 200-356 m, 57-96 deg off-nadir, almost fully occluded)",
+    "rule": "cell_fraction_inside"
+  }
+}

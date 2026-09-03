@@ -1,0 +1,111 @@
+{
+  "schema": "jointbuildgs.phd.surface_patch_rg.run.v1",
+  "task_id": "PHD-SURFACE-PATCH-RG-P3-v1",
+  "status": "USER_APPROVED_DEVELOPMENT_NON_CONFIRMATORY",
+  "scientific_verdict": null,
+  "purpose": "Textbook surface-patch segmentation of the frozen source point clouds, per source, on raw points, for every object class: smoothness-constraint region growing (Rabbani, van den Heuvel & Vosselman 2006; PCL RegionGrowing) followed by Euclidean clustering of the residual (PCL EuclideanClusterExtraction). Patches are typed by eigen-features (Weinmann et al. 2015). No building prior, no source decision, no pairing. [P2: second prism, H_M candidate site; same algorithm and parameters as the pilot.]",
+  "artifact_root": "/artifacts/JointBuildGS",
+  "output_relative_root": "phase-payloads/phd/surface_patch_rg_v1/PHD-SURFACE-PATCH-RG-P3-v1",
+  "inputs": {
+    "source_relation_relative_root": "phase-payloads/phd/mvs_als_source_relation_v1/PHD-MVS-ALS-SOURCE-RELATION-v1",
+    "partition_receipt": {
+      "relative_path": "partition_receipt.json",
+      "bytes": 9818,
+      "sha256": "99acb2e00b8dae375551218d5b1754a899a94ffa39bdfea3158a8b26689f0534"
+    },
+    "partitions": {
+      "mvs": {
+        "relative_path": "partition/mvs/x003_y004.xyz_f32le.bin",
+        "bytes": 213676272,
+        "point_count": 17806356,
+        "sha256": "6174e0113c339ffeff824ec5d7a9f857e9f09a4c791bfb07d8830e68f5f65749"
+      },
+      "als": {
+        "relative_path": "partition/als/x003_y004.xyz_f32le.bin",
+        "bytes": 14614260,
+        "point_count": 1217855,
+        "sha256": "cb9db09947278d8e7499a29941619093cc79835184b0d846dcf63313614dfd49"
+      }
+    }
+  },
+  "frame": {
+    "horizontal_crs": "EPSG:25832",
+    "working_coordinates": "SCENE_LOCAL_XYZ",
+    "world_shift_xyz_m": [
+      690953.0,
+      5336071.0,
+      604.0
+    ]
+  },
+  "domain": {
+    "kind": "HALF_OPEN_PRISM_SCENE_LOCAL",
+    "x": [
+      -60.0,
+      -20.0
+    ],
+    "y": [
+      -42.0,
+      12.0
+    ],
+    "z": [
+      -49.223,
+      -16.993
+    ],
+    "selection_origin": "P3 = prior-quality-better candidate: 22 m building with a bright corrugated metal roof west of the pilot plaza, where both sources support the same surface but sigma_MVS (0.51 m) is >= 3x sigma_ALS (0.08 m) (viewer quality_zones cluster 1); expectation = MVS noisy, prior precise, no height change; z = joint 0.1-99.9 % quantiles of both sources padded 0.5/1.0 m"
+  },
+  "algorithm": {
+    "name": "VOSSELMAN_PLANAR_SURFACE_GROWING_PLUS_EUCLIDEAN_CLUSTERING_v1",
+    "references": [
+      "Rabbani T., van den Heuvel F., Vosselman G. (2006) Segmentation of point clouds using smoothness constraint. ISPRS Archives XXXVI-5",
+      "Vosselman G., Gorte B.G.H., Sithole G., Rabbani T. (2004) Recognising structure in laser scanner point clouds. ISPRS Archives XXXVI-8/W2 (surface growing); Vosselman G., Maas H.-G. (eds.) (2010) Airborne and Terrestrial Laser Scanning, Whittles, ch. 2 segmentation",
+      "Rusu R.B., Cousins S. (2011) 3D is here: Point Cloud Library (PCL). ICRA; classes RegionGrowing, EuclideanClusterExtraction",
+      "Weinmann M., Jutzi B., Hinz S., Mallet C. (2015) Semantic point cloud interpretation based on optimal neighborhoods. ISPRS JPRS 105"
+    ],
+    "semantics": "Normals and curvature from k-NN PCA. Growth criterion 'planar_surface' (Vosselman surface growing): seeds in ascending curvature; a neighbour joins the region if its normal is within smoothness_deg of the REGION plane normal (sign-invariant) and its distance to the region plane is below max_point_to_plane_m; the region plane is PCA-refit at every doubling of the member count (accepted only if conditioned and within smoothness_deg of the seed normal). Regions below min_cluster_points are released. The pure Rabbani/PCL criterion 'smoothness' (neighbour-vs-current-point angle + curvature gate) is kept as an alternative; on dense-image MVS it either fragments the ground (strict) or leaks across ground, vegetation and roofs (loose), see technical return. Residual points: Euclidean clustering; clusters below euclidean_min_points are explicit NOISE (label 0), never deleted.",
+    "per_source": {
+      "mvs": {
+        "growth_criterion": "planar_surface",
+        "k_neighbors": 60,
+        "smoothness_deg": 15.0,
+        "max_point_to_plane_m": 0.15,
+        "curvature_threshold": 0.05,
+        "min_cluster_points": 50,
+        "euclidean_tolerance_m": 0.5,
+        "euclidean_min_points": 20
+      },
+      "als": {
+        "growth_criterion": "planar_surface",
+        "k_neighbors": 20,
+        "smoothness_deg": 15.0,
+        "max_point_to_plane_m": 0.15,
+        "curvature_threshold": 0.05,
+        "min_cluster_points": 15,
+        "euclidean_tolerance_m": 1.0,
+        "euclidean_min_points": 8
+      }
+    },
+    "parameter_provenance": "k 60 (MVS) / 20 (ALS): neighbourhood radius ~0.35 m / ~0.5 m so that MVS normal noise (~7 cm rms ground) averages out; smoothness 15 deg = surface_patch_v1 base normal angle; max_point_to_plane 0.15 m = S1 legacy RANSAC tolerance; min_cluster 50 = PCL tutorial default (ALS 15 scaled to ~22 pts/m2); Euclidean tolerance = 2-3 x mean spacing. The pilot sweep of the pure smoothness criterion (k 30/60/100 x 10/15/20 deg x curvature 0.03/0.05/0.10) is recorded in the technical return.",
+    "typing": {
+      "rule": "PLANAR if the patch plane RMSE <= planar_max_rmse_m (same 0.15 m tolerance as the S1 legacy RANSAC); LINEAR if linearity=(l1-l2)/l1 >= linearity_min and sphericity=l3/l1 < 0.05; else SCATTERED. Eigen-features follow Weinmann et al. 2015 but are applied at patch level only for the linear test.",
+      "planar_max_rmse_m": 0.15,
+      "linearity_min": 0.8,
+      "area_proxy": "occupied 0.25 m cells of the projection on the patch PCA plane"
+    },
+    "smoothness_sweep_note": "pure Rabbani/PCL criterion on MVS: strict (k60,15deg,c0.05) -> ground split into a 51k-point region plus a 38k-point residual cluster; loose (k100,10deg,c0.10) -> one 111k-point region with plane RMSE 1.33 m (ground+low vegetation+roofs merged)."
+  },
+  "not_decided_here": [
+    "SOURCE_AUTHORITY",
+    "TEMPORAL_CHANGE",
+    "REGISTRATION_DELTA",
+    "RESPONSIBILITY_PI",
+    "CROSS_SOURCE_PAIRING"
+  ],
+  "prohibited_inputs": [
+    "CURRENT_UAS_LIDAR",
+    "LOD2_GROUNDSURFACE_FOOTPRINT",
+    "LOD2_ROOFSURFACE",
+    "LOD2_Z",
+    "BUILDING_STABLE_ID",
+    "JOURNAL1_93_ROSTER"
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "schema": "jointbuildgs.artifact_manifest.phd.surface_patch_rg.v1",
+  "task_id": "PHD-SURFACE-PATCH-RG-P3-v1",
+  "status": "COMPLETE_DEVELOPMENT_NON_CONFIRMATORY",
+  "scientific_verdict": null,
+  "prism": "P3 = west metal-roof building, tile x003_y004, x[-60,-20) y[-42,12) z[-49.223,-16.993); chosen from the viewer quality_zones finder (both sources on the same roof, sigma_MVS 0.51 m vs sigma_ALS 0.08 m) as a prior-quality-better candidate",
+  "artifact_backend": {
+    "environment_variable": "JBGS_ARTIFACT_ROOT",
+    "container_root": "/artifacts/JointBuildGS",
+    "relative_root": "phase-payloads/phd/surface_patch_rg_v1/PHD-SURFACE-PATCH-RG-P3-v1"
+  },
+  "reproducibility": {
+    "git_commit": "17a440b37748c18e76efc46e1a8a5daccf1516b9",
+    "config_path": "configs/phd/surface_patch_rg_v1/run_v1_p3.json",
+    "config_sha256": "45ecd5b7d50dab9df6e7f719a9e416571796e36daac5579ee07892fb35575844",
+    "driver_path": "scripts/phd/surface_patch_rg_v1/run.py",
+    "driver_sha256": "2854b9928247db59662152f4b1e8b864794f17c09862cc743a484a7a17848190",
+    "driver_sha256_matches_working_tree": true,
+    "container_image": "jointbuildgs:dev",
+    "orchestration": "prism_chain.py (PRISM=p3) copied to phase-payloads/phd/warp_ncc_v1/PHD-WARP-NCC-P3-v1/illustrations/"
+  },
+  "upstream": {
+    "als": {
+      "bytes": 14614260,
+      "path": "/artifacts/JointBuildGS/phase-payloads/phd/mvs_als_source_relation_v1/PHD-MVS-ALS-SOURCE-RELATION-v1/partition/als/x003_y004.xyz_f32le.bin",
+      "sha256": "cb9db09947278d8e7499a29941619093cc79835184b0d846dcf63313614dfd49"
+    },
+    "mvs": {
+      "bytes": 213676272,
+      "path": "/artifacts/JointBuildGS/phase-payloads/phd/mvs_als_source_relation_v1/PHD-MVS-ALS-SOURCE-RELATION-v1/partition/mvs/x003_y004.xyz_f32le.bin",
+      "sha256": "6174e0113c339ffeff824ec5d7a9f857e9f09a4c791bfb07d8830e68f5f65749"
+    },
+    "partition_receipt": {
+      "bytes": 9818,
+      "path": "/artifacts/JointBuildGS/phase-payloads/phd/mvs_als_source_relation_v1/PHD-MVS-ALS-SOURCE-RELATION-v1/partition_receipt.json",
+      "sha256": "99acb2e00b8dae375551218d5b1754a899a94ffa39bdfea3158a8b26689f0534"
+    }
+  },
+  "domain": {
+    "kind": "HALF_OPEN_PRISM_SCENE_LOCAL",
+    "selection_origin": "P3 = prior-quality-better candidate: 22 m building with a bright corrugated metal roof west of the pilot plaza, where both sources support the same surface but sigma_MVS (0.51 m) is >= 3x sigma_ALS (0.08 m) (viewer quality_zones cluster 1); expectation = MVS noisy, prior precise, no height change; z = joint 0.1-99.9 % quantiles of both sources padded 0.5/1.0 m",
+    "x": [
+      -60.0,
+      -20.0
+    ],
+    "y": [
+      -42.0,
+      12.0
+    ],
+    "z": [
+      -49.223,
+      -16.993
+    ]
+  },
+  "outputs": {
+    "patches_als.npy": {
+      "bytes": 24220,
+      "path": "patches_als.npy",
+      "sha256": "014c8c06ae6abbb606628c68669b7dc27399e2143e9856e2e4944858001c9d14"
+    },
+    "patches_mvs.npy": {
+      "bytes": 200260,
+      "path": "patches_mvs.npy",
+      "sha256": "f01bd59dd57d0dc743ded844609366b374ad96a3275ef01c6281f9dc6f7306b4"
+    },
+    "point_rows_als.npy": {
+      "bytes": 211176,
+      "path": "point_rows_als.npy",
+      "sha256": "a2de5caa9863fae00cbe1969a55c98eb1cc0171944376de6888b62c7d9c233f5"
+    },
+    "point_rows_mvs.npy": {
+      "bytes": 3460560,
+      "path": "point_rows_mvs.npy",
+      "sha256": "10d94f2ffcc0045a89d77117cbb7a8f432d1d32793ee90f3b22bae292ccfb194"
+    },
+    "points_als.npy": {
+      "bytes": 1108194,
+      "path": "points_als.npy",
+      "sha256": "4661dc1943d78ed49588d21ea00127b00e02bd9fbcc568ceed0afcfbfc5f9677"
+    },
+    "points_mvs.npy": {
+      "bytes": 18167460,
+      "path": "points_mvs.npy",
+      "sha256": "2dd451328e83df855b03acf2968105c6cea91bcb62d530f28f327890c85c9215"
+    },
+    "surface_patch_preview.png": {
+      "bytes": 3867009,
+      "path": "surface_patch_preview.png",
+      "sha256": "06057c148813bb4394726d29a66081ba8fb7dcdf521648ed018166a2ec080784"
+    },
+    "technical_return.json": {
+      "bytes": 6554,
+      "path": "technical_return.json",
+      "sha256": "a1c9a0bcd349b0ba3743e65586e6f6797408351d3a0fd3cbe14dc9554b9d4ba9"
+    }
+  },
+  "artifact_manifest_sha256": "30cb8e00dc504d1c4392daaadea697475624fbc50059dce0e74852b8dcf3788d",
+  "validation_receipt": {
+    "sha256": "61047488d3544653d8674ffbe0c3c589e5b37d37ba608355b4519cc0caaeae4f",
+    "checks": {
+      "coverage_every_point_labelled_or_explicit_noise": "PASS",
+      "determinism_rerun": "PASS",
+      "input_hashes": "PASS",
+      "output_hashes": "PASS",
+      "patch_integrity": "PASS",
+      "prohibited_inputs": "PASS",
+      "scientific_verdict_null": "PASS"
+    },
+    "generated_utc": "2026-09-03T07:08:42.982670+00:00"
+  },
+  "prohibited_inputs_accessed": []
+}

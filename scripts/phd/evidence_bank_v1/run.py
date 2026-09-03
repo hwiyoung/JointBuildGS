@@ -237,7 +237,13 @@ def eval_expectations(summary: dict[str, dict[str, float]], expectations: dict[s
 # pipeline
 # ----------------------------------------------------------------------------
 
-def select_views(cameras: dict, images: dict, members: set[int], domain: dict[str, Any]) -> list[int]:
+def select_views(cameras: dict, images: dict, members: set[int], domain: dict[str, Any], rule: dict[str, Any] | None = None,
+                 cell_points: np.ndarray | None = None) -> list[int]:
+    """(D-3.1) view set.  Default rule ``all_corners_inside``: every prism corner projects inside the frame (pilot prism, 30 x 30 m).
+    Rule ``cell_fraction_inside``: at least ``min_cell_fraction`` of the top-layer cell centres (``cell_points``, x y z) project inside the
+    frame in front of the camera — needed when the prism is larger than what a near-nadir frame can hold whole (P2, 48 x 46 x 32 m):
+    the corner rule would drop exactly the near-nadir views and keep only distant obliques."""
+    rule = rule or {"rule": "all_corners_inside"}
     low, high = domain_bounds(domain)
     corners = np.array([[x, y, z] for x in (low[0], high[0]) for y in (low[1], high[1]) for z in (low[2], high[2])])
     chosen = []
@@ -245,10 +251,26 @@ def select_views(cameras: dict, images: dict, members: set[int], domain: dict[st
         if iid not in members:
             continue
         im = images[iid]; cam = cameras[im.camera_id]
-        x, y, z, inside = project(corners, im.R(), im.tvec, cam.K(), cam.width, cam.height)
-        if np.all(inside):
-            chosen.append(int(iid))
+        if rule["rule"] == "all_corners_inside":
+            x, y, z, inside = project(corners, im.R(), im.tvec, cam.K(), cam.width, cam.height)
+            if np.all(inside):
+                chosen.append(int(iid))
+        elif rule["rule"] == "cell_fraction_inside":
+            if cell_points is None or not len(cell_points):
+                raise ValueError("cell_fraction_inside needs the top-layer cell points")
+            x, y, z, inside = project(cell_points, im.R(), im.tvec, cam.K(), cam.width, cam.height)
+            if inside.mean() >= float(rule["min_cell_fraction"]):
+                chosen.append(int(iid))
+        else:
+            raise ValueError(f"unknown view selection rule: {rule['rule']}")
     return chosen
+
+
+def top_cell_points(pair_cells: np.ndarray, domain: dict[str, Any], cell: float) -> np.ndarray:
+    top = pair_cells[pair_cells["layer"] == 0]
+    low, _ = domain_bounds(domain)
+    z = np.where(np.isfinite(top["mvs_z"]), top["mvs_z"], top["als_z"])
+    return np.column_stack((low[0] + (top["ix"] + 0.5) * cell, low[1] + (top["iy"] + 0.5) * cell, z)).astype(np.float64)
 
 
 def build_evidence(cfg: dict[str, Any], pair_cells: np.ndarray, pair_pairs: np.ndarray, patches: dict[str, np.ndarray],
@@ -517,7 +539,7 @@ def run(cfg: dict[str, Any], config_path: Path) -> dict[str, Any]:
     out = Path(cfg["artifact_root"]) / cfg["output_relative_root"]; out.mkdir(parents=True, exist_ok=True)
     resolved = resolve_inputs(cfg)
     pair_cells, pair_pairs, patches, points, per_point, tile_mvs, cores, cameras, images, members = load_everything(cfg, resolved)
-    views = select_views(cameras, images, members, cfg["domain"])
+    views = select_views(cameras, images, members, cfg["domain"], cfg["algorithm"].get("view_selection"), top_cell_points(pair_cells, cfg["domain"], float(cfg["algorithm"]["cell_size_m"])))
     hashes: dict[int, str] = {}
     loader = make_image_loader(Path(resolved["camera_root"]), images, hashes)
     result = build_evidence(cfg, pair_cells, pair_pairs, patches, points, per_point, tile_mvs, cores, cameras, images, views, loader)
@@ -534,6 +556,7 @@ def run(cfg: dict[str, Any], config_path: Path) -> dict[str, Any]:
         "status": "COMPLETE_DEVELOPMENT_NON_CONFIRMATORY", "generated_utc": utc_now(), "git_commit": git_head(),
         "config": {"path": str(config_path), "sha256": sha256(config_path)}, "driver": {"path": str(Path(__file__)), "sha256": sha256(Path(__file__))},
         "domain": cfg["domain"], "algorithm": cfg["algorithm"], "view_count": len(views),
+        "view_selection": cfg["algorithm"].get("view_selection", {"rule": "all_corners_inside"}),
         "per_state_summary": result["summary"], "expectation_checks": result["evaluation"],
         "ray_class_names": RAY_NAMES, "not_decided_here": cfg["not_decided_here"],
         "elapsed_seconds": time.perf_counter() - started, "prohibited_inputs_accessed": [], "scientific_verdict": None,
@@ -572,7 +595,7 @@ def validate(cfg: dict[str, Any], rerun: bool = True) -> dict[str, Any]:
     checks["cell_consistency"] = "PASS"
     if rerun:
         pair_cells, pair_pairs, patches, points, per_point, tile_mvs, cores, cameras, images, members = load_everything(cfg, resolved)
-        views = select_views(cameras, images, members, cfg["domain"])
+        views = select_views(cameras, images, members, cfg["domain"], cfg["algorithm"].get("view_selection"), top_cell_points(pair_cells, cfg["domain"], float(cfg["algorithm"]["cell_size_m"])))
         loader = make_image_loader(Path(resolved["camera_root"]), images, {})
         again = build_evidence(cfg, pair_cells, pair_pairs, patches, points, per_point, tile_mvs, cores, cameras, images, views, loader)
         for name, arr in (("evidence_cells.npy", again["cells"]), ("evidence_pairs.npy", again["pairs"])):

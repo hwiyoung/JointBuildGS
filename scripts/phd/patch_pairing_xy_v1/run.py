@@ -321,7 +321,24 @@ def write_preview(path: Path, cfg: dict[str, Any], result: dict[str, Any], point
     from src.stage2.colmap_io import read_cameras_bin, read_images_bin
     cells = result["cells"]; top = cells[cells["layer"] == 0]
     alg = cfg["algorithm"]; dom = cfg["domain"]; cell = float(alg["cell_size_m"])
-    root = Path(cfg["artifact_root"]); disp = cfg["inputs"]["display_only_current_image"]
+    root = Path(cfg["artifact_root"]); disp = cfg["inputs"].get("display_only_current_image")
+    if disp is None:  # no pre-rendered current-image crop for this prism: state map only
+        origin = np.array([dom["x"][0], dom["y"][0]])
+        nx = int(np.ceil((dom["x"][1] - dom["x"][0]) / cell)); ny = int(np.ceil((dom["y"][1] - dom["y"][0]) / cell))
+        state_grid = np.zeros((ny, nx), dtype=np.uint8); state_grid[top["iy"], top["ix"]] = top["state"]
+        palette = np.zeros((6, 3))
+        for k, c in STATE_COLORS.items():
+            palette[k] = to_rgb(c)
+        fig, ax = plt.subplots(1, 1, figsize=(9, 8.6), dpi=100)
+        ax.imshow(palette[state_grid], origin="lower", extent=[dom["x"][0], dom["x"][1], dom["y"][0], dom["y"][1]])
+        ax.set_title(f"pair state per {cell} m XY cell (top layer), scene-local XY"); ax.set_aspect("equal")
+        acc = result["accounting"]["state_area_m2_top"]
+        handles = [plt.Line2D([], [], marker="s", linestyle="", color=STATE_COLORS[k], markersize=12,
+                              label=f"{STATE_NAMES[k]}  {acc[STATE_NAMES[k]]:.0f} m²") for k in range(1, 6)]
+        fig.legend(handles=handles, loc="lower center", ncol=3, fontsize=10, frameon=False)
+        fig.suptitle("XY-column pairing of surface patches (descriptive height-offset state; not a source or change verdict)", fontsize=11)
+        fig.tight_layout(rect=(0, 0.08, 1, 1)); path.parent.mkdir(parents=True, exist_ok=True); fig.savefig(path); plt.close(fig)
+        return
     cam_root = root / disp["camera_root_relative_path"]
     for name, key in (("sparse/cameras.bin", "cameras_bin_sha256"), ("sparse/images.bin", "images_bin_sha256")):
         if sha256(cam_root / name) != disp[key]:
@@ -395,7 +412,7 @@ def run(cfg: dict[str, Any], config_path: Path) -> dict[str, Any]:
         "config": {"path": str(config_path), "sha256": sha256(config_path)}, "driver": {"path": str(Path(__file__)), "sha256": sha256(Path(__file__))},
         "domain": cfg["domain"], "algorithm": cfg["algorithm"], "accounting": result["accounting"],
         "state_names": STATE_NAMES, "wall_state_names": WALL_NAMES, "not_decided_here": cfg["not_decided_here"],
-        "display_only_current_image_used_for_preview_only": True,
+        "display_only_current_image_used_for_preview_only": cfg["inputs"].get("display_only_current_image") is not None,
         "elapsed_seconds": time.perf_counter() - started, "prohibited_inputs_accessed": [], "scientific_verdict": None,
     }
     atomic_json(out / "technical_return.json", technical)

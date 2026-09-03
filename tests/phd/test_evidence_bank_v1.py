@@ -31,6 +31,22 @@ class EvidenceBankV1Test(unittest.TestCase):
         tex = eb.texture_map(img, 7)
         self.assertLess(float(tex[20, 5]), 1e-3); self.assertGreater(float(tex[20, 20]), 50.0)
 
+    def test_view_selection_rules(self):
+        from types import SimpleNamespace
+        K = np.array([[100.0, 0, 50.0], [0, 100.0, 50.0], [0, 0, 1.0]])
+        cam = SimpleNamespace(K=lambda: K, width=100, height=100, camera_id=1)
+        # camera at z = 100 looking straight down (COLMAP: x right, y down, z forward); world z-up → R flips y and z
+        R = np.diag([1.0, -1.0, -1.0]); t = np.array([0.0, 0.0, 100.0])
+        im = SimpleNamespace(R=lambda: R, tvec=t, camera_id=1)
+        domain = {"x": [-20.0, 60.0], "y": [-20.0, 20.0], "z": [0.0, 5.0]}   # wide prism: corners at x = 60 fall outside the 100 px frame
+        cells = np.array([[x, 0.0, 0.0] for x in np.arange(-19.0, 60.0, 2.0)])
+        members = {7}
+        self.assertEqual(eb.select_views({1: cam}, {7: im}, members, domain), [])
+        chosen = eb.select_views({1: cam}, {7: im}, members, domain, {"rule": "cell_fraction_inside", "min_cell_fraction": 0.5}, cells)
+        self.assertEqual(chosen, [7])
+        strict = eb.select_views({1: cam}, {7: im}, members, domain, {"rule": "cell_fraction_inside", "min_cell_fraction": 0.95}, cells)
+        self.assertEqual(strict, [])
+
     def test_expectation_checker(self):
         summary = {"PRIOR_ABOVE": {"core_d_median_m": 3.2, "f_penetrate_mean": 0.8, "f_agree_mean": 0.1, "f_block_mean": 0.1, "r_ge3_fraction": 0.9, "r_le1_fraction": 0.0, "n_no_landing": 0, "n_tested": 10, "n_mvs_only": 0},
                    "COMPATIBLE": {"core_d_median_m": 0.05, "f_penetrate_mean": 0.05, "f_agree_mean": 0.9, "f_block_mean": 0.05, "r_ge3_fraction": 0.7, "r_le1_fraction": 0.0, "n_no_landing": 0, "n_tested": 10, "n_mvs_only": 0}}
