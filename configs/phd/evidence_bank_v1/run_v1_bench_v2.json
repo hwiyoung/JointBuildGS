@@ -1,0 +1,139 @@
+{
+  "schema": "jointbuildgs.phd.evidence_bank.run.v1",
+  "task_id": "PHD-EVIDENCE-BANK-BENCH-V2-v1",
+  "status": "USER_APPROVED_DEVELOPMENT_NON_CONFIRMATORY",
+  "scientific_verdict": null,
+  "purpose": "T1 evidence bank on the XY-column pairs of the pilot prism: 3D-a aggregation of the frozen M3C2 relation cores, 3D-b free-space ray statistics from every exact-937 camera that frames the prism (pose-only z-buffers of MVS and Existing ALS with a tile-wide MVS occluder), 2D-c texture/view/incidence observability and the power count r. Evidence only; no responsibility, weight, registration or change verdict. [P2: H_M candidate site; the 3D signatures are expected to look like the pilot's removed roof, which is exactly why 2D-a (T2) is needed there.] [injection bench V2: als_shift_all (H_delta_z); inputs are the perturbed partition copies under phase-payloads/phd/injection_bench_v1/PHD-INJECTION-BENCH-v1/V2; the relation map is the frozen original]",
+  "design_reference": "docs/experiments/phd/mvs_als_surface_patch_v1/SOURCE_DECISION_METHOD_DESIGN_ko_v2.md#D-3·D-7",
+  "artifact_root": "/artifacts/JointBuildGS",
+  "output_relative_root": "phase-payloads/phd/evidence_bank_v1/PHD-EVIDENCE-BANK-BENCH-V2-v1",
+  "inputs": {
+    "pairing_relative_root": "phase-payloads/phd/patch_pairing_xy_v1/PHD-PATCH-PAIRING-XY-BENCH-V2-v1",
+    "pairing_task_id": "PHD-PATCH-PAIRING-XY-BENCH-V2-v1",
+    "pairing_artifact_manifest_sha256": "e128c3b50550fba3dbe20862614e96f3252818ea211252515e7d4d03dc616182",
+    "pairing_validation_receipt_sha256": "854679688a5a39f7bcb35bc3683c10f311f7a7108357c6fd405f539ccee16fd7",
+    "surface_patch_relative_root": "phase-payloads/phd/surface_patch_rg_v1/PHD-SURFACE-PATCH-RG-BENCH-V2-v1",
+    "surface_patch_artifact_manifest_sha256": "60296be289ddf53824b6502733e54b90c7bd87f5894e4cec90246a55bfbce70d",
+    "source_relation_relative_root": "phase-payloads/phd/injection_bench_v1/PHD-INJECTION-BENCH-v1/V2",
+    "relation_map": {
+      "relative_path": "relation_map.npy",
+      "bytes": 13587860,
+      "sha256": "d6b4cf8c32289a169aaed5d68a46e8e9ba7fa9b501e0cff66e3c61c07982c8a1"
+    },
+    "partitions": {
+      "mvs": {
+        "relative_path": "partition/mvs/x004_y004.xyz_f32le.bin",
+        "bytes": 111030480,
+        "sha256": "87868aa654334e89d0988a0cea0e527bd5ebb49636b51b40ecae11208bc04234"
+      },
+      "als": {
+        "relative_path": "partition/als/x004_y004.xyz_f32le.bin",
+        "bytes": 11572716,
+        "sha256": "e248566728370aae908c5f5932a59f7d6dd4212d680e503c0e4f3d6a002551b2"
+      }
+    },
+    "current_cameras": {
+      "camera_root_relative_path": "phase-payloads/p0-audit/data/work/mvs/colmap_dense",
+      "cameras_bin_sha256": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99",
+      "images_bin_sha256": "dfc779496ee3b13f8df5dd28fae465746ce0adf4aca7922d38cbed275a2fd951",
+      "exact_937_crosswalk_git_relative_path": "artifacts/manifests/gate_s0/common_base_r2b/exact_937_member_crosswalk_v1.json",
+      "exact_937_crosswalk_sha256": "b4af779ecfae859de9772ce50cb24326b20c3f86614f6a8957453779d1cd4c17",
+      "view_selection": "every crosswalk member whose frame contains all eight prism corners (z > 0, inside image)",
+      "image_use": "2D-c texture only; image bytes are hashed into the resolved input manifest"
+    }
+  },
+  "frame": {
+    "horizontal_crs": "EPSG:25832",
+    "working_coordinates": "SCENE_LOCAL_XYZ",
+    "world_shift_xyz_m": [
+      690953.0,
+      5336071.0,
+      604.0
+    ]
+  },
+  "domain": {
+    "kind": "HALF_OPEN_PRISM_SCENE_LOCAL",
+    "x": [
+      110.0,
+      158.0
+    ],
+    "y": [
+      86.0,
+      132.0
+    ],
+    "z": [
+      -49.386,
+      -17.679
+    ]
+  },
+  "algorithm": {
+    "name": "EVIDENCE_BANK_3DA_3DB_2DC_v1",
+    "cell_size_m": 0.5,
+    "rays": {
+      "tolerance_m": 0.5,
+      "splat_px_mvs": 1,
+      "splat_px_als": 2,
+      "occluder_point_stride": 2,
+      "min_tested_rays": 20
+    },
+    "cores": {
+      "min_cores_cell": 1,
+      "min_cores_pair": 3
+    },
+    "observability": {
+      "texture_window_px": 7,
+      "texture_min_gray_std": 6.0,
+      "min_pixels_per_view": 10,
+      "min_views": 2,
+      "max_incidence_deg": 75.0
+    },
+    "provenance": "tolerance 0.5 m = C4 registration envelope (source_relation_v1 registration_sensitivity_upper_m); splat 1/2 px mirrors the current-view render pilot raw/proxy; occluder stride 2 = runtime bound; the rest are new registrations, not frozen",
+    "view_selection": {
+      "rule": "cell_fraction_inside",
+      "min_cell_fraction": 0.5,
+      "reason": "the 48 x 46 x 32 m prism does not fit whole in a near-nadir frame; the pilot's all-corners rule kept only distant obliques (41 views, 200-356 m, 57-96 deg off-nadir, almost fully occluded)"
+    }
+  },
+  "expectations_before_run": {
+    "COMPATIBLE": {
+      "3D-a": "median |d| <= 0.3 m",
+      "3D-b": "AGREE >= 0.70 of tested",
+      "r": ">= 3 for the majority (planar)"
+    },
+    "PRIOR_ABOVE": {
+      "3D-a": "median d in [1.0, 5.0] m (ALS roof ridges above the low / sparse MVS roof)",
+      "3D-b": "PENETRATE >= 0.50 of tested (same ray signature as a removed surface: 3D alone cannot separate H_M from H_chg)",
+      "r": ">= 3 for the majority (planar)"
+    },
+    "CURRENT_ABOVE": {
+      "3D-a": "mixed",
+      "3D-b": "BLOCK >= PENETRATE",
+      "r": "<= 2 for the majority (rough)"
+    },
+    "PRIOR_ONLY": {
+      "3D-a": "few cores",
+      "3D-b": "NO_LANDING dominant, tested < 20",
+      "r": "<= 1"
+    },
+    "CURRENT_ONLY": {
+      "3D-a": "class 3",
+      "3D-b": "MVS_ONLY dominant",
+      "r": "n/a"
+    }
+  },
+  "not_decided_here": [
+    "SOURCE_AUTHORITY",
+    "TEMPORAL_CHANGE",
+    "REGISTRATION_DELTA",
+    "RESPONSIBILITY_PI",
+    "GAUSSIAN_WEIGHT"
+  ],
+  "prohibited_inputs": [
+    "CURRENT_UAS_LIDAR",
+    "LOD2_GROUNDSURFACE_FOOTPRINT",
+    "LOD2_ROOFSURFACE",
+    "LOD2_Z",
+    "BUILDING_STABLE_ID",
+    "JOURNAL1_93_ROSTER"
+  ]
+}

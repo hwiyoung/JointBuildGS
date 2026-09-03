@@ -1,0 +1,81 @@
+{
+  "schema": "jointbuildgs.phd.patch_pairing_xy.run.v1",
+  "task_id": "PHD-PATCH-PAIRING-XY-BENCH-V3-v1",
+  "status": "USER_APPROVED_DEVELOPMENT_NON_CONFIRMATORY",
+  "scientific_verdict": null,
+  "purpose": "Pair the per-source surface patches (PHD-SURFACE-PATCH-RG-v1) by XY column (2.5D): per 0.5 m XY cell the top surface of each source is paired (and, where a source shows a second surface more than layer_gap_m below, the bottom surfaces form a second pair). Vertical patches (tilt > wall_tilt_deg) are excluded from the columns and paired by 3D proximity instead. The pair state is a DESCRIPTIVE height-offset class (compatible / prior above / current above / prior only / current only), not a source or change verdict. [injection bench V3: als_shift_all (H_delta_z); inputs are the perturbed partition copies under phase-payloads/phd/injection_bench_v1/PHD-INJECTION-BENCH-v1/V3; the relation map is the frozen original]",
+  "artifact_root": "/artifacts/JointBuildGS",
+  "output_relative_root": "phase-payloads/phd/patch_pairing_xy_v1/PHD-PATCH-PAIRING-XY-BENCH-V3-v1",
+  "inputs": {
+    "surface_patch_relative_root": "phase-payloads/phd/surface_patch_rg_v1/PHD-SURFACE-PATCH-RG-BENCH-V3-v1",
+    "surface_patch_task_id": "PHD-SURFACE-PATCH-RG-BENCH-V3-v1",
+    "surface_patch_artifact_manifest_sha256": "0f9f1d298717404d0ab58a1feda9d2975662bbe4d924d460abfe6e1e46a37fa8",
+    "surface_patch_validation_receipt_sha256": "ec830cddaade02e877bc9de0a259a4024b2ef398d4ff42242ec9400f54a26f3e",
+    "source_relation_relative_root": "phase-payloads/phd/injection_bench_v1/PHD-INJECTION-BENCH-v1/V3",
+    "partitions": {
+      "mvs": {
+        "relative_path": "partition/mvs/x004_y004.xyz_f32le.bin",
+        "bytes": 111030480,
+        "sha256": "87868aa654334e89d0988a0cea0e527bd5ebb49636b51b40ecae11208bc04234"
+      },
+      "als": {
+        "relative_path": "partition/als/x004_y004.xyz_f32le.bin",
+        "bytes": 11572716,
+        "sha256": "f48145e6dba6e80e1c2fcf04a2f910f45c99230d6d802adfeb4dc8c1f0c020f7"
+      }
+    },
+    "display_only_current_image": null
+  },
+  "frame": {
+    "horizontal_crs": "EPSG:25832",
+    "working_coordinates": "SCENE_LOCAL_XYZ",
+    "world_shift_xyz_m": [
+      690953.0,
+      5336071.0,
+      604.0
+    ]
+  },
+  "domain": {
+    "kind": "HALF_OPEN_PRISM_SCENE_LOCAL",
+    "x": [
+      110.0,
+      158.0
+    ],
+    "y": [
+      86.0,
+      132.0
+    ],
+    "z": [
+      -49.386,
+      -17.679
+    ]
+  },
+  "algorithm": {
+    "name": "XY_COLUMN_TOP_BOTTOM_PAIRING_WITH_WALL_EXCEPTION_v1",
+    "cell_size_m": 0.5,
+    "min_points_per_cell_patch": 2,
+    "layer_gap_m": 1.0,
+    "wall_tilt_deg": 70.0,
+    "wall_pair_distance_m": 1.0,
+    "wall_pair_min_fraction": 0.3,
+    "same_surface_tolerance_m": 0.3,
+    "min_cells_per_patch_pair": 4,
+    "semantics": "For each XY cell and source, every patch present with >= min_points_per_cell_patch points gets its median z in the cell; the TOP surface is the patch with the highest median, the BOTTOM surface the lowest (a second layer only if TOP - BOTTOM > layer_gap_m). Pairs are formed per cell: TOP-TOP always; BOTTOM-BOTTOM when both sources have a second layer. dz = z_prior - z_current. State: COMPATIBLE if |dz| <= same_surface_tolerance_m; PRIOR_ABOVE if dz > tol; CURRENT_ABOVE if dz < -tol; PRIOR_ONLY / CURRENT_ONLY when one source has no patch in the cell. Cells whose paired patches include a Euclidean cluster are additionally flagged ROUGH. Planar patches with tilt > wall_tilt_deg are walls: they do not enter the columns; a wall is WALL_PAIRED to the partner patch (steeper than wall_partner_min_tilt_deg, or a scattered cluster; never a near-horizontal ground/roof patch) that holds >= wall_pair_min_fraction of its points within wall_pair_distance_m, else WALL_CURRENT_ONLY (and symmetrically for ALS walls). Patch pairs aggregate cells (>= min_cells_per_patch_pair) with median dz and MAD.",
+    "provenance": "cell 0.5 m = 2 x MVS/ALS working spacing so ALS keeps ~5 points per cell; tolerance 0.3 m = 2 x point-to-plane residual of the patch stage; layer gap 1.0 m = M3C2 projection radius; wall 70 deg and 1.0 m = surface_patch_v1 / M3C2 radius conventions",
+    "wall_partner_min_tilt_deg": 30.0
+  },
+  "not_decided_here": [
+    "SOURCE_AUTHORITY",
+    "TEMPORAL_CHANGE",
+    "REGISTRATION_DELTA",
+    "RESPONSIBILITY_PI"
+  ],
+  "prohibited_inputs": [
+    "CURRENT_UAS_LIDAR",
+    "LOD2_GROUNDSURFACE_FOOTPRINT",
+    "LOD2_ROOFSURFACE",
+    "LOD2_Z",
+    "BUILDING_STABLE_ID",
+    "JOURNAL1_93_ROSTER"
+  ]
+}

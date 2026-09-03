@@ -1,0 +1,209 @@
+{
+  "schema": "jointbuildgs.phd.warp_ncc.run.v1",
+  "task_id": "PHD-WARP-NCC-BENCH-V8-v1",
+  "status": "USER_APPROVED_DEVELOPMENT_NON_CONFIRMATORY",
+  "scientific_verdict": null,
+  "purpose": "T2 on the T1 XY-column cells of the pilot prism: 2D-a inter-view warp-NCC of the current images through each candidate height field (current MVS top layer M, Existing ALS top layer P at delta0 = 0) with candidate-specific visibility, per-candidate and paired (common view pair) statistics, synthetic-shift control candidates that measure the channel's own power, and the auxiliary 2D-b depth-edge to image-edge distance. Evidence only; no responsibility, weight, registration or change verdict. [P2: H_M candidate site (east sawtooth roof, near-nadir coverage); r2 settings unchanged; PRIOR_ABOVE expectation mirrored (delta_sign -1).] [injection bench V8: als_shift_patches (H_chg_stale); inputs are the perturbed partition copies under phase-payloads/phd/injection_bench_v1/PHD-INJECTION-BENCH-v1/V8; the relation map is the frozen original]",
+  "design_reference": "docs/experiments/phd/mvs_als_surface_patch_v1/SOURCE_DECISION_METHOD_DESIGN_ko_v2.md#D-5·D-6",
+  "artifact_root": "/artifacts/JointBuildGS",
+  "output_relative_root": "phase-payloads/phd/warp_ncc_v1/PHD-WARP-NCC-BENCH-V8-v1",
+  "inputs": {
+    "evidence_bank_relative_root": "phase-payloads/phd/evidence_bank_v1/PHD-EVIDENCE-BANK-BENCH-V8-v1",
+    "evidence_bank_task_id": "PHD-EVIDENCE-BANK-BENCH-V8-v1",
+    "evidence_bank_artifact_manifest_sha256": "3f940634cd28eab70e7704df4fc4a070c4f7163bcb8e7d008e2bd9a7e2a6d6ed",
+    "evidence_bank_validation_receipt_sha256": "b87b250db071f385d69e3c414b9789ce9c12c7e9f4c7ec48e397b871281d1cda",
+    "pairing_relative_root": "phase-payloads/phd/patch_pairing_xy_v1/PHD-PATCH-PAIRING-XY-BENCH-V8-v1",
+    "pairing_task_id": "PHD-PATCH-PAIRING-XY-BENCH-V8-v1",
+    "pairing_artifact_manifest_sha256": "0a044a1940ed04963ed986409d27f0901ad457cf6850be2e9ea0c0e7d31fb9c7",
+    "source_relation_relative_root": "phase-payloads/phd/injection_bench_v1/PHD-INJECTION-BENCH-v1/V8",
+    "partitions": {
+      "mvs": {
+        "relative_path": "partition/mvs/x004_y004.xyz_f32le.bin",
+        "bytes": 111030480,
+        "sha256": "87868aa654334e89d0988a0cea0e527bd5ebb49636b51b40ecae11208bc04234"
+      }
+    },
+    "current_cameras": {
+      "camera_root_relative_path": "phase-payloads/p0-audit/data/work/mvs/colmap_dense",
+      "cameras_bin_sha256": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99",
+      "images_bin_sha256": "dfc779496ee3b13f8df5dd28fae465746ce0adf4aca7922d38cbed275a2fd951",
+      "exact_937_crosswalk_git_relative_path": "artifacts/manifests/gate_s0/common_base_r2b/exact_937_member_crosswalk_v1.json",
+      "exact_937_crosswalk_sha256": "b4af779ecfae859de9772ce50cb24326b20c3f86614f6a8957453779d1cd4c17",
+      "view_selection": "the exact view list frozen by the T1 evidence bank (evidence_views.json)",
+      "image_use": "2D-a inter-view photometric consistency and 2D-b image edges only; no model colour; image bytes are hashed against the T1 view list"
+    }
+  },
+  "frame": {
+    "horizontal_crs": "EPSG:25832",
+    "working_coordinates": "SCENE_LOCAL_XYZ",
+    "world_shift_xyz_m": [
+      690953.0,
+      5336071.0,
+      604.0
+    ]
+  },
+  "domain": {
+    "kind": "HALF_OPEN_PRISM_SCENE_LOCAL",
+    "x": [
+      110.0,
+      158.0
+    ],
+    "y": [
+      86.0,
+      132.0
+    ],
+    "z": [
+      -49.386,
+      -17.679
+    ]
+  },
+  "algorithm": {
+    "name": "WARP_NCC_2DA_EDGE_2DB_v1",
+    "cell_size_m": 0.5,
+    "candidates": {
+      "M": "current-image MVS top-layer height field (pairing mvs_z)",
+      "P": "Existing ALS top-layer height field at delta0 = 0 (pairing als_z)"
+    },
+    "controls": [
+      {
+        "name": "M+z0.5",
+        "base": "M",
+        "shift_xyz_m": [
+          0.0,
+          0.0,
+          0.5
+        ]
+      },
+      {
+        "name": "M+z1",
+        "base": "M",
+        "shift_xyz_m": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "M+z2",
+        "base": "M",
+        "shift_xyz_m": [
+          0.0,
+          0.0,
+          2.0
+        ]
+      },
+      {
+        "name": "M+x1",
+        "base": "M",
+        "shift_xyz_m": [
+          1.0,
+          0.0,
+          0.0
+        ]
+      }
+    ],
+    "window": {
+      "half_size_m": 1.0,
+      "sample_step_m": 0.125,
+      "gaussian_sigma_m": 0.5,
+      "min_effective_samples": 30.0,
+      "min_visible_fraction": 0.8
+    },
+    "visibility": {
+      "height_field_step_m": 0.0625,
+      "zbuffer_supersample": 3,
+      "self_splat_fine_px": 1,
+      "tolerance_m": 0.5,
+      "outside_occluder_point_stride": 2
+    },
+    "pairs": {
+      "min_angle_deg": 3.0,
+      "max_angle_deg": 60.0,
+      "max_distance_ratio": 2.0,
+      "angle_reference": "prism centre at the median M height"
+    },
+    "ncc": {
+      "min_weighted_std_grey": 2.0,
+      "good_threshold": 0.5,
+      "contrast_margin": 0.1,
+      "min_pairs_power": 3,
+      "fisher_clip": 0.99,
+      "summary_angle_max_deg": 20.0
+    },
+    "edges": {
+      "depth_jump_m": 1.0,
+      "canny_low": 50,
+      "canny_high": 150,
+      "blur_sigma_px": 1.0,
+      "max_distance_px": 20
+    },
+    "chips": {
+      "pair_choice": "summary-band common pair whose angle is closest to 10 deg (M-only or P-only pair otherwise)",
+      "tile_px": 96,
+      "target_angle_deg": 10.0
+    },
+    "provenance": "tolerance 0.5 m = T1 ray tolerance (C4 registration envelope); window 2 m / sigma 0.5 m / step 0.125 m / n_eff 30 / std 2 / good 0.5 / margin 0.1 / min pairs 3 / angle 3-60 deg / edge jump 1 m / Canny 50/150 are new placeholders registered before the run, not frozen; r2: summary_angle_max_deg 20 (post-r1 adjustment, see revision_r2), chip target 10 deg"
+  },
+  "expectations_before_run": {
+    "COMPATIBLE": {
+      "visibility": "n_pairs(M) median >= 3; P_2Da(M) majority (near-nadir views exist over this site)",
+      "2D-a": "S_M >= 0.6; |delta| <= 0.1 median; f_M>P ~ f_P>M",
+      "2D-b": "d_M ~ d_P"
+    },
+    "PRIOR_ABOVE": {
+      "visibility": "n_views(P) > n_views(M) (ridges above the MVS roof)",
+      "2D-a": "delta <= -0.2 median, f_P>M >= 0.7, S_M <= 0.5: the current images support the ALS ridges, not the low MVS roof (H_M signature, opposite sign to the pilot)",
+      "2D-b": "d_M > d_P",
+      "delta_sign": 1
+    },
+    "CURRENT_ABOVE": {
+      "visibility": "low, unstable",
+      "2D-a": "S_M <= 0.6 (rough)",
+      "2D-b": "n/a"
+    },
+    "PRIOR_ONLY": {
+      "visibility": "n_pairs(M) = 0",
+      "2D-a": "S_P <= 0.5 or no power",
+      "2D-b": "n/a"
+    },
+    "CONTROLS": {
+      "2D-a": "AUC(z 2 m) >= 0.9, AUC(z 1 m) >= 0.75, AUC(z 0.5 m) >= 0.6, AUC(x 1 m) ~ 0.5 on COMPATIBLE planar cells"
+    },
+    "BENCH": {
+      "V7_vs_V8": "V7 (MVS biased up) shows 3D-b BLOCK dominant and 2D-a delta < 0 (P explains the images); V8 (ALS lifted) shows PENETRATE dominant and delta > 0: opposite signs in both channels",
+      "V5": "MVS pairs 0, NO_LANDING dominant, S_P stays >= 0.6 (the images do not contradict P)",
+      "V1_V2_V3": "compatible cells move to PRIOR_ABOVE from delta_z 0.5 with PENETRATE and delta > 0 (the sequential reading confuses registration with change); dz across cells is coherent (variance <= 0.1 m2, sign agreement >= 0.95), unlike V8's local patches",
+      "V4": "horizontal 1 m shift is unobservable on horizontal ground (dz ~ 0, delta ~ 0); signal only on slopes / walls"
+    }
+  },
+  "not_decided_here": [
+    "SOURCE_AUTHORITY",
+    "TEMPORAL_CHANGE",
+    "REGISTRATION_DELTA",
+    "RESPONSIBILITY_PI",
+    "GAUSSIAN_WEIGHT"
+  ],
+  "prohibited_inputs": [
+    "CURRENT_UAS_LIDAR",
+    "LOD2_GROUNDSURFACE_FOOTPRINT",
+    "LOD2_ROOFSURFACE",
+    "LOD2_Z",
+    "BUILDING_STABLE_ID",
+    "JOURNAL1_93_ROSTER"
+  ],
+  "revision_r2": {
+    "date": "2026-09-04",
+    "trigger": "r1 (pairs 3-60 deg, pre-registered) angle-stratified analysis of the stored per-pair rho: at 3-10 deg the true surface scores rho_M ~0.88 and the old roof rho_P ~0.40 (paired delta +0.27, f(M>P) 0.83, 1 m vertical control f 0.63), while for theta >= 20 deg every candidate collapses to rho ~0 (December low sun: moving shadows between strips; anisotropic 2 m windows in 65 deg off-nadir views)",
+    "changed": {
+      "ncc.summary_angle_max_deg": 20.0,
+      "chips.target_angle_deg": 10.0
+    },
+    "unchanged": "the bank (ncc_pair_values_f16.npy) still holds every pair 3-60 deg with its angle; wide-band medians are kept per cell (n_pairs_wide_*, ncc_median_wide_*, delta_median_wide)",
+    "r1_results_kept_in": "docs/experiments/phd/warp_ncc_v1/TECHNICAL_RETURN_ko_v1.md (r1 table)",
+    "restated_expectations": {
+      "CONTROLS_PAIRED_r2": "paired per-pair fraction in the band: f(M > M+z2) >= 0.65, f(M > M+z1) >= 0.6, f(M > M+z0.5) >= 0.4, f(M > M+x1) <= 0.2",
+      "note": "the pre-registered cell-level AUC checks are kept and reported as-is; the paired form is the fairer statement of a comparator channel"
+    },
+    "p2_note": "P2 reuses the r2 summary band (<= 20 deg) registered on the pilot; whether the band generalises is one of the questions this prism answers"
+  }
+}
