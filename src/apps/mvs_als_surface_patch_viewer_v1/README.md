@@ -8,7 +8,15 @@ relation-core rows:
   locally connected surface-patch generation.
 
 It also exposes patch UID, source-family, patch-status, core/patch metadata,
-and click-to-highlight inspection.  The source point clouds are byte-verified
+and click-to-highlight inspection.
+
+Since T0 (`PHD-REGION-UNIT-v1`, design v2 appendix D-1) it additionally shows
+the **T0 region units** on the frozen pilot prism: the per-source working cells
+coloured by unit UID / kind / primary source / pairing / prior support / pair
+distance / tilt / cell role, with click-to-inspect unit records, member
+highlight, unit bbox, adjacency, and the coverage accounting.  Units are the
+data-defined places where one continuous responsibility will later attach;
+they carry no source, change, or registration verdict.  The source point clouds are byte-verified
 copies of the already-built relation viewer display assets.  The patch
 membership and summary are verified against the upstream patch artifact
 manifest and validation receipt.

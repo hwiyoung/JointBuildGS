@@ -1,0 +1,221 @@
+{
+  "schema": "jointbuildgs.phd.region_unit.run.v1",
+  "task_id": "PHD-REGION-UNIT-v1",
+  "status": "USER_APPROVED_DEVELOPMENT_NON_CONFIRMATORY",
+  "scientific_verdict": null,
+  "purpose": "T0 region unit: define, once and outside the loop, the data-defined spatial units (per-source surface segments with cross-source location pairing) to which one continuous responsibility attaches. It decides neither source authority nor temporal change nor registration.",
+  "design_reference": "docs/experiments/phd/mvs_als_surface_patch_v1/SOURCE_DECISION_METHOD_DESIGN_ko_v2.md#D-1",
+  "artifact_root": "/artifacts/JointBuildGS",
+  "output_relative_root": "phase-payloads/phd/region_unit_v1/PHD-REGION-UNIT-v1",
+  "inputs": {
+    "source_relation_relative_root": "phase-payloads/phd/mvs_als_source_relation_v1/PHD-MVS-ALS-SOURCE-RELATION-v1",
+    "partition_receipt": {
+      "relative_path": "partition_receipt.json",
+      "bytes": 9818,
+      "sha256": "99acb2e00b8dae375551218d5b1754a899a94ffa39bdfea3158a8b26689f0534"
+    },
+    "tile_id": "x003_y004",
+    "partitions": {
+      "mvs": {
+        "relative_path": "partition/mvs/x003_y004.xyz_f32le.bin",
+        "bytes": 213676272,
+        "point_count": 17806356,
+        "sha256": "6174e0113c339ffeff824ec5d7a9f857e9f09a4c791bfb07d8830e68f5f65749"
+      },
+      "existing_als": {
+        "relative_path": "partition/als/x003_y004.xyz_f32le.bin",
+        "bytes": 14614260,
+        "point_count": 1217855,
+        "sha256": "cb9db09947278d8e7499a29941619093cc79835184b0d846dcf63313614dfd49"
+      }
+    },
+    "partition_semantics": "Exact source-specific scene-local XYZ float32 bytes produced before M3C2 core sampling. Existing ALS bytes carry the frozen z-bridge; delta0 = 0 and T0 estimates no registration.",
+    "gravity_checkpoint": {
+      "relative_path": "phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/checkpoints/030-dense_mvs_and_gravity.json",
+      "bytes": 2951,
+      "sha256": "b301d3dc7dec2423ff5760c47db4dfef4f62e919b5aac5808a30c82a9330a8f8",
+      "use": "DESCRIPTIVE_TILT_ONLY_NOT_SEGMENTATION",
+      "required_flag": {
+        "hardcoded_gravity": false
+      }
+    },
+    "relation_map": {
+      "relative_path": "relation_map.npy",
+      "bytes": 13587860,
+      "core_count": 199813,
+      "sha256": "d6b4cf8c32289a169aaed5d68a46e8e9ba7fa9b501e0cff66e3c61c07982c8a1",
+      "use": "POST_HOC_CORE_TO_UNIT_INDEX_ONLY_D1J_NO_FEEDBACK_INTO_SEGMENTATION_OR_PAIRING"
+    }
+  },
+  "frame": {
+    "horizontal_crs": "EPSG:25832",
+    "working_coordinates": "SCENE_LOCAL_XYZ",
+    "world_shift_xyz_m": [
+      690953.0,
+      5336071.0,
+      604.0
+    ]
+  },
+  "domain": {
+    "kind": "HALF_OPEN_PRISM_SCENE_LOCAL",
+    "x": [
+      -23.0,
+      7.0
+    ],
+    "y": [
+      -21.0,
+      9.0
+    ],
+    "z": [
+      -44.272,
+      -25.962
+    ],
+    "selection_origin": "FROZEN_PILOT_PRISM_FROM_PHD-MVS-ALS-CURRENT-VIEW-RENDER-PILOT-v1 (source-only local relation inspection)"
+  },
+  "sources": {
+    "0": "MVS",
+    "1": "EXISTING_ALS"
+  },
+  "unit_kinds": {
+    "0": "PLANAR",
+    "1": "ROUGH"
+  },
+  "cell_roles": {
+    "0": "PLANAR_CORE",
+    "1": "ROUGH_MEMBER",
+    "2": "ABSORBED_SMALL"
+  },
+  "algorithm": {
+    "name": "DETERMINISTIC_SOURCE_CELL_REGION_GROWING_PAIRING_v1_1",
+    "selected_profile": "base",
+    "selection_rule": "base fixed before any output and without score-only references; fine/coarse are parameter-sensitivity diagnostics only.",
+    "profiles": {
+      "base": {
+        "cell_size_m": 0.25,
+        "normal_radius_m": 1.0,
+        "normal_min_neighbors": 8,
+        "seed_max_surface_variation": 0.02,
+        "grow_max_normal_angle_deg": 15.0,
+        "grow_max_plane_distance_m": 0.15,
+        "grow_radius_m": 0.6,
+        "minimum_unit_area_m2": 1.0,
+        "maximum_unit_extent_m": 8.0,
+        "rough_component_radius_m": 0.6,
+        "rough_attach_radius_m": 1.0,
+        "pair_normal_half_length_m": 3.0,
+        "pair_rough_radius_m": 1.0,
+        "resolver_radius_m": 1.0,
+        "adjacency_radius_m": 0.6,
+        "refit_condition_ratio": 0.05,
+        "pair_inplane_radius_m": 1.0,
+        "prior_layer_split_offset_m": 0.3,
+        "prior_layer_min_cells": 4
+      },
+      "fine": {
+        "cell_size_m": 0.25,
+        "normal_radius_m": 1.0,
+        "normal_min_neighbors": 8,
+        "seed_max_surface_variation": 0.01,
+        "grow_max_normal_angle_deg": 10.0,
+        "grow_max_plane_distance_m": 0.1,
+        "grow_radius_m": 0.6,
+        "minimum_unit_area_m2": 0.5,
+        "maximum_unit_extent_m": 6.0,
+        "rough_component_radius_m": 0.6,
+        "rough_attach_radius_m": 1.0,
+        "pair_normal_half_length_m": 3.0,
+        "pair_rough_radius_m": 1.0,
+        "resolver_radius_m": 1.0,
+        "adjacency_radius_m": 0.6,
+        "refit_condition_ratio": 0.05,
+        "pair_inplane_radius_m": 1.0,
+        "prior_layer_split_offset_m": 0.2,
+        "prior_layer_min_cells": 4
+      },
+      "coarse": {
+        "cell_size_m": 0.25,
+        "normal_radius_m": 1.0,
+        "normal_min_neighbors": 8,
+        "seed_max_surface_variation": 0.04,
+        "grow_max_normal_angle_deg": 20.0,
+        "grow_max_plane_distance_m": 0.25,
+        "grow_radius_m": 0.6,
+        "minimum_unit_area_m2": 2.0,
+        "maximum_unit_extent_m": 12.0,
+        "rough_component_radius_m": 0.6,
+        "rough_attach_radius_m": 1.0,
+        "pair_normal_half_length_m": 3.0,
+        "pair_rough_radius_m": 1.0,
+        "resolver_radius_m": 1.0,
+        "adjacency_radius_m": 0.6,
+        "refit_condition_ratio": 0.05,
+        "pair_inplane_radius_m": 1.0,
+        "prior_layer_split_offset_m": 0.5,
+        "prior_layer_min_cells": 4
+      }
+    },
+    "provenance": {
+      "grow_max_normal_angle_deg": "surface_patch_v1 base/fine/coarse maximum_normal_angle_deg",
+      "grow_max_plane_distance_m": "scripts/p2/arrgs_v1/real_scene.py ransac_planes tol=0.15 (S1 legacy) for base",
+      "maximum_unit_extent_m": "surface_patch_v1 maximum_patch_radius_m",
+      "pair_normal_half_length_m": "source_relation_v1 m3c2.projection_half_length_m = 3.0",
+      "pair_rough_radius_m": "source_relation_v1 m3c2.projection_diameter_m / 2 = 1.0",
+      "rough_attach_radius_m": "source_relation_v1 m3c2.projection_diameter_m / 2 = 1.0",
+      "resolver_radius_m": "source_relation_v1 m3c2.projection_diameter_m / 2 = 1.0",
+      "cell_size_m": "rule: sparser-source mean spacing rounded up (ALS 0.21 m -> 0.25 m); pilot MVS 139,033 points -> 36,104 cells, ALS 20,189 -> 15,992 cells",
+      "grow_radius_m": "new registration: exceeds the cell diagonal (0.433 m) and reaches the 2-cell face neighbour (0.5 m)",
+      "minimum_unit_area_m2": "new registration: lower observability bound is re-evaluated by T1 r",
+      "seed_max_surface_variation": "new registration: stricter than surface_patch_v1 maximum_bridge_surface_variation 0.15",
+      "normal_radius_m": "source_relation_v1 m3c2.normal_diameter_m 4.0 / 4 at cell scale (new registration)",
+      "normal_min_neighbors": "new registration: source_relation_v1 minimum_normal_points 10 reduced to 8 at 0.25 m cell scale",
+      "rough_component_radius_m": "= grow_radius_m",
+      "adjacency_radius_m": "= grow_radius_m (D-1i identity, enforced by load_config)",
+      "refit_condition_ratio": "new registration: in-plane conditioning guard for PCA refits (D-1b)",
+      "pair_inplane_radius_m": "source_relation_v1 m3c2.projection_diameter_m / 2 = 1.0 (in-plane tolerance of D-1e')",
+      "prior_layer_split_offset_m": "2 * grow_max_plane_distance_m (D-1k tau_split)",
+      "prior_layer_min_cells": "source_relation_v1 m3c2.minimum_projection_points = 4"
+    },
+    "coverage_rule": "Every occupied working cell of both sources belongs to exactly one unit; nothing is deleted; unassigned is impossible by construction and validated.",
+    "unit_definition_rule": "Units are defined on frozen source data only; no Gaussian, render residual, learned color, or registration estimate participates.",
+    "pairing_rule": "D-1e': window measured along the Existing ALS cell normal (t = (d_u - n_u.x_p)/(n_u.n_p), |t| <= h_pair, in-plane distance of the hit to the unit core <= pair_inplane_radius_m); rough MVS units use the M3C2 cylinder along the ALS normal; invalid ALS normals fall back to distance-only rules and are flagged per cell.",
+    "prior_layer_rule": "D-1k: planar MVS units whose prior side contains an ALS segment group offset by more than prior_layer_split_offset_m from the majority group are carved by that group's in-plane footprint when it covers >= minimum_unit_area_m2; otherwise mixed_prior=1.",
+    "cell_size_sensitivity": [
+      {
+        "cell_size_m": 0.15,
+        "grow_radius_m": 0.6
+      },
+      {
+        "cell_size_m": 0.2,
+        "grow_radius_m": 0.6
+      },
+      {
+        "cell_size_m": 0.3,
+        "grow_radius_m": 0.6
+      },
+      {
+        "cell_size_m": 0.4,
+        "grow_radius_m": 0.75
+      },
+      {
+        "cell_size_m": 0.5,
+        "grow_radius_m": 0.9
+      }
+    ],
+    "cell_size_rule": "cell_size_m = mean point spacing of the sparser source (Existing ALS ~22 pts/m2 -> 0.21 m) rounded up to 0.25 m, so the sparser source keeps ~1 point per occupied cell and the denser MVS is reduced to a comparable working density; all physical thresholds (normal radius, growth radius, minimum area, extent cap, pairing window) are in metres and independent of the cell size. The sensitivity sweep above measures the remaining dependence."
+  },
+  "not_decided_here": [
+    "SOURCE_AUTHORITY",
+    "TEMPORAL_CHANGE",
+    "REGISTRATION_DELTA",
+    "RESPONSIBILITY_PI",
+    "GAUSSIAN_WEIGHT"
+  ],
+  "prohibited_inputs": [
+    "CURRENT_UAS_LIDAR",
+    "LOD2_GROUNDSURFACE_FOOTPRINT",
+    "LOD2_ROOFSURFACE",
+    "LOD2_Z",
+    "BUILDING_STABLE_ID",
+    "JOURNAL1_93_ROSTER"
+  ]
+}

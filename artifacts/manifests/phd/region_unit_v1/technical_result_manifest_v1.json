@@ -1,0 +1,137 @@
+{
+  "schema": "jointbuildgs.artifact_manifest.phd.region_unit.v1",
+  "task_id": "PHD-REGION-UNIT-v1",
+  "status": "COMPLETE_DEVELOPMENT_NON_CONFIRMATORY",
+  "scientific_verdict": null,
+  "artifact_backend": {
+    "environment_variable": "JBGS_ARTIFACT_ROOT",
+    "container_root": "/artifacts/JointBuildGS",
+    "relative_root": "phase-payloads/phd/region_unit_v1/PHD-REGION-UNIT-v1"
+  },
+  "reproducibility": {
+    "git_commit": "14e79b75773e383597673f794eb7d3b20ea76ac2",
+    "config_path": "configs/phd/region_unit_v1/run_v1.json",
+    "config_sha256": "b532d0df475598e8d29d69af3ba45eff2cc5516eb92f71436f35a544cdd5bdcc",
+    "driver_path": "scripts/phd/region_unit_v1/run.py",
+    "driver_sha256": "dd916554925beab6c8c009787f48747614fe625083cd45a0b9dcffcb5c2979fc",
+    "host_wrapper_path": "scripts/phd/region_unit_v1/run_host.sh",
+    "host_wrapper_sha256": "e631b381f013f0f890b6be69a49e661c9a4d293e1bbf8edaac466cc1e0d14c1b",
+    "container_image": "jointbuildgs:dev",
+    "environment": {
+      "numpy": "1.26.4",
+      "scipy": "1.13.1"
+    },
+    "note": "git_commit is the HEAD at run time; the T0 sources were uncommitted when this manifest was generated and are committed with task PHD-REGION-UNIT-v1"
+  },
+  "design_reference": "docs/experiments/phd/mvs_als_surface_patch_v1/SOURCE_DECISION_METHOD_DESIGN_ko_v2.md#D-1",
+  "upstream": {
+    "existing_als": "cb9db09947278d8e7499a29941619093cc79835184b0d846dcf63313614dfd49",
+    "gravity": "b301d3dc7dec2423ff5760c47db4dfef4f62e919b5aac5808a30c82a9330a8f8",
+    "mvs": "6174e0113c339ffeff824ec5d7a9f857e9f09a4c791bfb07d8830e68f5f65749",
+    "partition_receipt": "99acb2e00b8dae375551218d5b1754a899a94ffa39bdfea3158a8b26689f0534",
+    "relation_map": "d6b4cf8c32289a169aaed5d68a46e8e9ba7fa9b501e0cff66e3c61c07982c8a1"
+  },
+  "domain": {
+    "kind": "HALF_OPEN_PRISM_SCENE_LOCAL",
+    "selection_origin": "FROZEN_PILOT_PRISM_FROM_PHD-MVS-ALS-CURRENT-VIEW-RENDER-PILOT-v1 (source-only local relation inspection)",
+    "x": [
+      -23.0,
+      7.0
+    ],
+    "y": [
+      -21.0,
+      9.0
+    ],
+    "z": [
+      -44.272,
+      -25.962
+    ]
+  },
+  "selected_profile": "base",
+  "unit_set_sha256": "f3bb9751dca7e80c897e0810f9b0b5935edf91bd63ed1f598c8493b04784ec95",
+  "result": {
+    "unit_count": 214,
+    "cell_count": 52096,
+    "mvs_cells": 36104,
+    "als_cells": 15992,
+    "cells_unassigned": 0,
+    "mvs_primary_units": 173,
+    "mvs_primary_kind_counts": {
+      "PLANAR": 105,
+      "ROUGH": 68
+    },
+    "prior_only_units": 41,
+    "prior_only_kind_counts": {
+      "PLANAR": 12,
+      "ROUGH": 29
+    },
+    "als_cells_paired": 12642,
+    "als_cells_prior_only_zone": 3350,
+    "pair_rule_counts": {
+      "ABSORBED_SMALL_PRIOR_COMPONENT_INTO_MVS_UNIT": 211,
+      "NONE_PRIOR_ONLY_ZONE": 3350,
+      "PLANAR_ALONG_ALS_SEGMENT_NORMAL": 15,
+      "PLANAR_ALONG_OWN_ALS_NORMAL": 6355,
+      "PLANAR_EUCLIDEAN_FALLBACK_NO_NORMAL": 24,
+      "ROUGH_CYLINDER_ALONG_ALS_NORMAL": 6013,
+      "ROUGH_EUCLIDEAN_FALLBACK_NO_NORMAL": 24
+    },
+    "small_units": 55,
+    "split_children": 89,
+    "split_reason_counts": {
+      "EXTENT_CAP": 43,
+      "NONE": 125,
+      "PRIOR_LAYER": 46
+    },
+    "units_over_extent_cap": 0,
+    "units_with_one_component": 214,
+    "mvs_units_split_by_prior_layer": 46,
+    "mvs_units_flagged_mixed_prior": 46,
+    "relation_cores_in_domain": 610,
+    "relation_cores_unresolved": 0,
+    "units_with_zero_cores": 83,
+    "adjacency_edges": 698,
+    "source_authority_decided": false,
+    "temporal_change_decided": false,
+    "registration_delta_estimated": false
+  },
+  "outputs": {
+    "cell_size_sensitivity.json": "c9ef17331a811a147a8ba427d466268f4d59697753cfd9245aae7b080c3b5e91",
+    "cells.npy": "af94c4762b297aac05e6118bda96369e6d6a344aa8cbdd7d05ebc8696ab8f862",
+    "point_cell_als.npy": "6c4a95df4847cdff57ab7017f780cd377f1d6bdaaa0ca877e71fa9596f403dd4",
+    "point_cell_mvs.npy": "3eb6658525ce5404a06d8b211ec4a6e315ae0481a45e1dcd1aa46394169c438c",
+    "point_rows_als.npy": "17113b567f1729e09fb59a1d2d3c8774c5d4d2b25eac0461ca6b44b7c5771811",
+    "point_rows_mvs.npy": "a18eeb7563ba79be8c1ed6ea0be041aa25b1f337ac85be1da794e66ea9e34528",
+    "profile_sensitivity.json": "0f296a2f39e1d70f88ab7f4fa8772c531c8161e5ac54c39305040b597366d7fa",
+    "region_unit_map.ply": "ae5d2903af2864110d46706948342ede7b973aaa20a6d4c8abb1773c12a8bfb8",
+    "region_unit_preview.png": "34f786ea1b259442ca87f0adbdf161d36ee72c63966c153fb8167cf0baf0f736",
+    "unit_adjacency.npy": "f9f0af24d9b26ed71365e1e5baed4f97b6e82229c301c7cf21fd5c666bdb7f26",
+    "unit_cores.npy": "848af1fa44ed3aa51763d23777480ab62aa0a89ee7a358796c6efa37859c063f",
+    "unit_prior_composition.json": "8f4e95f508bec3be0849d57e791ac27ded45308c6cfd76e00d3afa3d763eff40",
+    "units.csv.gz": "86ac5be27f1079c563574e3b06d836f8b335ebe6482b3d246c53a21af28e28ef",
+    "units.npy": "ca26beb742bd9d52b81a3c038968ada9bd782bfe58f5cd511b85db925754a94c"
+  },
+  "receipts": {
+    "artifact_manifest.json": "1a7a1ca1b85d88fa69b1a7dd91c951e21ebc7758f7cf8dd2f9faadec10f69284",
+    "technical_return.json": "f52af30b31308d103ea5273c75743321e96abdc31c2419f56301558a301d0be8",
+    "validation_receipt.json": "c5a205222d962e6e44866e34d339158a2b58bdfc865fd4b8722dc745b89adad6",
+    "resolved_input_manifest.json": "e8a819b5078bc0b639aaf215c3f30208cc33994a5a3bd20bedd845aec1bef790"
+  },
+  "scope_controls": {
+    "prohibited_inputs_accessed": [],
+    "not_decided_here": [
+      "SOURCE_AUTHORITY",
+      "TEMPORAL_CHANGE",
+      "REGISTRATION_DELTA",
+      "RESPONSIBILITY_PI",
+      "GAUSSIAN_WEIGHT"
+    ],
+    "not_interpretable_as": [
+      "SOURCE_AUTHORITY_DECISION",
+      "TEMPORAL_CHANGE_VERDICT",
+      "REGISTRATION_ESTIMATE",
+      "RESPONSIBILITY_OR_WEIGHT",
+      "FINAL_RENDER_GEOMETRY"
+    ]
+  }
+}

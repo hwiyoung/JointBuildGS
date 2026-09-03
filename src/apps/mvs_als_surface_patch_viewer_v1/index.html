@@ -57,6 +57,38 @@
           <div id="status-legend" class="legend"></div>
         </section>
 
+        <section id="t0-section">
+          <div class="section-title"><h2>T0 판정 단위 · pilot prism</h2><span id="t0-counts"></span></div>
+          <label class="source-row"><input id="show-t0" type="checkbox" checked><span>T0 단위 셀 표시</span></label>
+          <label class="source-row"><input id="t0-show-mvs" type="checkbox" checked><i class="swatch source-mvs"></i><span>MVS 작업 셀</span></label>
+          <label class="source-row"><input id="t0-show-als" type="checkbox" checked><i class="swatch source-als"></i><span>Existing ALS 작업 셀</span></label>
+          <label class="select-row"><span>색 모드</span>
+            <select id="t0-mode">
+              <option value="uid">unit UID</option>
+              <option value="kind">kind · planar / rough</option>
+              <option value="primary">primary source</option>
+              <option value="pairing">pairing · ALS paired / prior-only</option>
+              <option value="support">prior support f_P (MVS 단위)</option>
+              <option value="pairdist">pair distance (ALS 셀)</option>
+              <option value="tilt">tilt from up</option>
+              <option value="role">cell role</option>
+              <option value="pairrule">pair rule (ALS 셀)</option>
+              <option value="layer">prior layer split / spread</option>
+              <option value="cores">relation cores per unit</option>
+            </select>
+          </label>
+          <p id="t0-note" class="muted"></p>
+          <label class="range-row"><span>cell point</span><input id="t0-size" type="range" min="1" max="9" value="3.2" step="0.2"><output>3.2</output></label>
+          <label class="source-row"><input id="t0-dim" type="checkbox" checked><span>다른 층 흐리게 (core·source)</span></label>
+          <label class="source-row"><input id="t0-xray" type="checkbox"><span>단위 셀 X-ray</span></label>
+          <div class="preset-row">
+            <button id="view-prism" type="button">prism 보기</button>
+            <button id="t0-clear" type="button">선택 해제</button>
+          </div>
+          <div id="t0-legend" class="legend"></div>
+          <dl id="t0-accounting" class="accounting"></dl>
+        </section>
+
         <section>
           <h2>카메라·tile</h2>
           <div class="preset-row">
@@ -69,8 +101,8 @@
         </section>
 
         <section class="selection">
-          <h2>선택한 relation core / patch</h2>
-          <dl id="selection-details"><div><dt>상태</dt><dd>core를 클릭하세요.</dd></div></dl>
+          <h2>선택한 relation core / patch / T0 단위</h2>
+          <dl id="selection-details"><div><dt>상태</dt><dd>core 또는 T0 셀을 클릭하세요.</dd></div></dl>
         </section>
       </aside>
 
@@ -83,14 +115,15 @@
         <div class="viewport-overlay bottom-left">
           <span><i class="swatch source-mvs"></i>MVS</span>
           <span><i class="swatch source-als"></i>ALS</span>
-          <span>scene-local XYZ · patch는 source family별 연결</span>
+          <span>scene-local XYZ · patch는 source family별 연결 · T0 단위는 pilot prism 안 데이터 정의</span>
         </div>
       </section>
     </main>
 
     <footer>
       before는 동결된 1회 M3C2/support 관계 core, after는 기하 연결 후 patch 집계 라벨이다.
-      patch는 source authority·실제 변화·정확도 판정이 아니며 scientific_verdict는 null이다.
+      T0 단위는 책임 하나가 붙는 자리를 소스 데이터에 정의한 것일 뿐이다.
+      patch도 T0 단위도 source authority·실제 변화·정확도 판정이 아니며 scientific_verdict는 null이다.
     </footer>
   </div>
 

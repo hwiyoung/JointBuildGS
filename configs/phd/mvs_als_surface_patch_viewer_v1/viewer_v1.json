@@ -3,7 +3,7 @@
   "task_id": "PHD-MVS-ALS-SURFACE-PATCH-VIEWER-v1",
   "status": "USER_APPROVED_DEVELOPMENT_NON_CONFIRMATORY",
   "scientific_verdict": null,
-  "purpose": "Compare the frozen one-pass five-class source-relation cores with locally connected source-surface patches. This viewer is display-only and cannot decide source authority, temporal change, or scientific performance.",
+  "purpose": "Compare the frozen one-pass five-class source-relation cores with locally connected source-surface patches. This viewer is display-only and cannot decide source authority, temporal change, or scientific performance. It additionally overlays the T0 region units (data-defined decision units, PHD-REGION-UNIT-v1) on the pilot prism; the overlay is display-only.",
   "artifact_root": "/artifacts/JointBuildGS",
   "source_relation_viewer_relative_root": "phase-payloads/phd/mvs_als_source_relation_v1/PHD-MVS-ALS-SOURCE-RELATION-v1/viewer",
   "source_relation_viewer_manifest_sha256": "db3d731cfdeaab3c6a26cd5319582cd16966abb9a76777de45228a28c9dc7c3d",
@@ -19,11 +19,26 @@
   },
   "default_port": 8892,
   "classes": {
-    "1": {"name": "COMPATIBLE_WITHIN_LOD", "color": "#22c55e"},
-    "2": {"name": "SIGNIFICANT_DISCREPANCY", "color": "#ef4444"},
-    "3": {"name": "MVS_ONLY_SUPPORT", "color": "#3b82f6"},
-    "4": {"name": "PRIOR_ONLY_SUPPORT", "color": "#f59e0b"},
-    "5": {"name": "NOT_COMPARABLE", "color": "#9ca3af"}
+    "1": {
+      "name": "COMPATIBLE_WITHIN_LOD",
+      "color": "#22c55e"
+    },
+    "2": {
+      "name": "SIGNIFICANT_DISCREPANCY",
+      "color": "#ef4444"
+    },
+    "3": {
+      "name": "MVS_ONLY_SUPPORT",
+      "color": "#3b82f6"
+    },
+    "4": {
+      "name": "PRIOR_ONLY_SUPPORT",
+      "color": "#f59e0b"
+    },
+    "5": {
+      "name": "NOT_COMPARABLE",
+      "color": "#9ca3af"
+    }
   },
   "patch_status_colors": {
     "0": "#64748b",
@@ -42,7 +57,11 @@
     "mvs": "#67e8f9",
     "als": "#c4b5fd"
   },
-  "render_queue_classes": [2, 3, 4],
+  "render_queue_classes": [
+    2,
+    3,
+    4
+  ],
   "display_sampling": {
     "source_voxel_m": 1.0,
     "relation_core_spacing_m": 2.0,
@@ -55,5 +74,29 @@
     "LOD2_Z",
     "BUILDING_STABLE_ID",
     "JOURNAL1_93_ROSTER"
-  ]
+  ],
+  "region_unit_relative_root": "phase-payloads/phd/region_unit_v1/PHD-REGION-UNIT-v1",
+  "region_unit_task_id": "PHD-REGION-UNIT-v1",
+  "region_unit_artifact_manifest_sha256": "1a7a1ca1b85d88fa69b1a7dd91c951e21ebc7758f7cf8dd2f9faadec10f69284",
+  "region_unit_validation_receipt_sha256": "c5a205222d962e6e44866e34d339158a2b58bdfc865fd4b8722dc745b89adad6",
+  "region_unit_colors": {
+    "kind": {
+      "0": "#22c55e",
+      "1": "#f97316"
+    },
+    "primary": {
+      "0": "#67e8f9",
+      "1": "#c4b5fd"
+    },
+    "role": {
+      "0": "#22c55e",
+      "1": "#f97316",
+      "2": "#eab308"
+    },
+    "pairing": {
+      "als_paired": "#22c55e",
+      "als_prior_only": "#c4b5fd",
+      "mvs": "#475569"
+    }
+  }
 }

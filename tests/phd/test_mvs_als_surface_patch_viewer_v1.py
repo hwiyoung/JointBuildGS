@@ -24,12 +24,17 @@ class SurfacePatchViewerV1Tests(unittest.TestCase):
         self.assertEqual(cfg["display_sampling"]["role"], "DISPLAY_ONLY_NO_METHOD_FEEDBACK")
         self.assertEqual(len(cfg["surface_patch_artifact_manifest_sha256"]), 64)
         self.assertEqual(len(cfg["surface_patch_validation_receipt_sha256"]), 64)
+        self.assertEqual(len(cfg["region_unit_artifact_manifest_sha256"]), 64)
+        self.assertEqual(len(cfg["region_unit_validation_receipt_sha256"]), 64)
+        self.assertEqual(cfg["region_unit_task_id"], "PHD-REGION-UNIT-v1")
+        self.assertNotEqual(cfg["region_unit_relative_root"], cfg["viewer_output_relative_root"])
 
     def test_input_paths_exclude_evaluation_sources(self):
         cfg = json.loads(CONFIG.read_text(encoding="utf-8"))
         serialized = json.dumps({
             "relation": cfg["source_relation_viewer_relative_root"],
             "patch": cfg["surface_patch_relative_root"],
+            "unit": cfg["region_unit_relative_root"],
             "viewer": cfg["viewer_output_relative_root"],
         }).lower()
         for token in ("uas", "lod2", "footprint", "stable_id", "journal1"):
@@ -46,6 +51,50 @@ class SurfacePatchViewerV1Tests(unittest.TestCase):
         self.assertIn("function selectCore", app)
         self.assertIn("patchHighlight", app)
         self.assertIn("uidColorByPatch", app)
+
+    def test_app_exposes_t0_region_unit_layer(self):
+        html = (APP / "index.html").read_text(encoding="utf-8")
+        app = (APP / "app.js").read_text(encoding="utf-8")
+        for control in ("show-t0", "t0-show-mvs", "t0-show-als", "t0-mode", "t0-dim", "view-prism", "t0-accounting"):
+            self.assertIn(f'id="{control}"', html)
+        for mode in ("uid", "kind", "primary", "pairing", "support", "pairdist", "tilt", "role", "pairrule", "layer", "cores"):
+            self.assertIn(f'value="{mode}"', html)
+        for symbol in ("function selectUnit", "manifest.region_units", "createT0Layer", "Box3Helper", "t0Neighbors"):
+            self.assertIn(symbol, app)
+
+    def test_region_unit_array_contract_rejects_coverage_drift(self):
+        cells = np.zeros(3, dtype=[
+            ("cell_index", "<u4"), ("source", "u1"), ("kx", "<i4"), ("ky", "<i4"), ("kz", "<i4"),
+            ("x", "<f4"), ("y", "<f4"), ("z", "<f4"), ("point_count", "<u4"),
+            ("nx", "<f4"), ("ny", "<f4"), ("nz", "<f4"), ("surface_variation", "<f4"), ("normal_valid", "u1"),
+            ("segment_id", "<u4"), ("unit_id", "<u4"), ("role", "u1"), ("pair_distance_m", "<f4"), ("pair_rule", "u1"),
+        ])
+        cells["unit_id"] = [1, 2, 2]
+        cells["source"] = [0, 0, 1]
+        units = np.zeros(2, dtype=[
+            ("unit_id", "<u4"), ("unit_uid", "S16"), ("primary_source", "u1"), ("kind", "u1"),
+            ("small", "u1"), ("split_child", "u1"), ("split_reason", "u1"), ("mixed_prior", "u1"),
+            ("absorbed_cell_count", "<u4"), ("prior_segment_count", "<u4"), ("prior_offset_median_m", "<f4"),
+            ("prior_offset_spread_m", "<f4"), ("prior_plane_rmse_m", "<f4"), ("core_count_total", "<u4"),
+            ("core_count_class_1", "<u4"), ("core_count_class_2", "<u4"), ("core_count_class_3", "<u4"),
+            ("core_count_class_4", "<u4"), ("core_count_class_5", "<u4"),
+            ("mvs_cell_count", "<u4"), ("mvs_point_count", "<u4"), ("als_cell_count", "<u4"), ("als_point_count", "<u4"),
+            ("area_m2", "<f4"), ("cx", "<f4"), ("cy", "<f4"), ("cz", "<f4"), ("nx", "<f4"), ("ny", "<f4"), ("nz", "<f4"),
+            ("plane_d", "<f4"), ("plane_rmse_m", "<f4"), ("plane_p95_abs_residual_m", "<f4"),
+            ("extent_e1_m", "<f4"), ("extent_e2_m", "<f4"), ("tilt_from_up_deg", "<f4"), ("prior_support_fraction", "<f4"),
+            ("paired_als_segment_count", "<u4"), ("component_count", "<u4"),
+            ("bbox_min_x", "<f4"), ("bbox_min_y", "<f4"), ("bbox_min_z", "<f4"),
+            ("bbox_max_x", "<f4"), ("bbox_max_y", "<f4"), ("bbox_max_z", "<f4"),
+        ])
+        units["unit_id"] = [1, 2]
+        units["unit_uid"] = [b"aaaaaaaaaaaaaaaa", b"bbbbbbbbbbbbbbbb"]
+        adjacency = np.zeros(1, dtype=[("unit_a", "<u4"), ("unit_b", "<u4"), ("contact_pairs", "<u4"), ("same_primary", "u1"),
+                                       ("contact_mvs_mvs", "<u4"), ("contact_als_als", "<u4"), ("contact_cross", "<u4")])
+        adjacency["unit_a"], adjacency["unit_b"], adjacency["contact_pairs"], adjacency["contact_mvs_mvs"] = 1, 2, 3, 3
+        viewer.validate_region_unit_arrays(cells, units, adjacency)
+        cells["unit_id"][1] = 0
+        with self.assertRaisesRegex(RuntimeError, "coverage drift"):
+            viewer.validate_region_unit_arrays(cells, units, adjacency)
 
     def test_app_has_no_remote_browser_dependency(self):
         for name in ("index.html", "app.js", "styles.css"):
