@@ -1,0 +1,320 @@
+{
+  "schema": "jointbuildgs.artifact_manifest.phd.evidence_bank.v1",
+  "task_id": "PHD-EVIDENCE-BANK-v1",
+  "status": "COMPLETE_DEVELOPMENT_NON_CONFIRMATORY",
+  "scientific_verdict": null,
+  "artifact_backend": {
+    "environment_variable": "JBGS_ARTIFACT_ROOT",
+    "container_root": "/artifacts/JointBuildGS",
+    "relative_root": "phase-payloads/phd/evidence_bank_v1/PHD-EVIDENCE-BANK-v1"
+  },
+  "reproducibility": {
+    "git_commit": "14e79b75773e383597673f794eb7d3b20ea76ac2",
+    "config_path": "configs/phd/evidence_bank_v1/run_v1.json",
+    "config_sha256": "56a3d2ee3478e5ab1faa80e77e7b0df66dc1af6e024308ff44c8978860d4182e",
+    "driver_path": "scripts/phd/evidence_bank_v1/run.py",
+    "driver_sha256": "7fb1d1f5a74a0c860816a8ee27b8707aca52f5c8dbfa0da6301973a90a0a371c",
+    "host_wrapper_path": "scripts/phd/evidence_bank_v1/run_host.sh",
+    "host_wrapper_sha256": "0f39b1b4f790a7bb8f66556355a94f39500926584a3410d141cd0c6de189040f",
+    "container_image": "jointbuildgs:dev"
+  },
+  "upstream": {
+    "camera_root": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense",
+    "pairing_manifest_sha256": "41ae3f19b24262de036fc8cc0d1da60506ec8d5a34e9b5ad30f8b6e06d904c2d",
+    "pairing_root": "/artifacts/JointBuildGS/phase-payloads/phd/patch_pairing_xy_v1/PHD-PATCH-PAIRING-XY-v1",
+    "patch_manifest_sha256": "1a3c5cfb7e8e08c802959e69e240fa6e9831f53556fc1d70582e96fd31b4f742",
+    "patch_root": "/artifacts/JointBuildGS/phase-payloads/phd/surface_patch_rg_v1/PHD-SURFACE-PATCH-RG-v1",
+    "relation_root": "/artifacts/JointBuildGS/phase-payloads/phd/mvs_als_source_relation_v1/PHD-MVS-ALS-SOURCE-RELATION-v1"
+  },
+  "domain": {
+    "kind": "HALF_OPEN_PRISM_SCENE_LOCAL",
+    "x": [
+      -23.0,
+      7.0
+    ],
+    "y": [
+      -21.0,
+      9.0
+    ],
+    "z": [
+      -44.272,
+      -25.962
+    ]
+  },
+  "view_count": 113,
+  "result": {
+    "per_state_summary": {
+      "COMPATIBLE": {
+        "area_m2": 310.25,
+        "cells": 1241,
+        "cells_with_ray_power": 1241,
+        "core_class_counts": {
+          "1": 19,
+          "2": 130,
+          "3": 3,
+          "4": 4,
+          "5": 4
+        },
+        "core_d_median_m": -0.026271549984812737,
+        "core_lod_median_m": 0.03259776905179024,
+        "f_agree_mean": 0.8096805159336425,
+        "f_block_mean": 0.09399023836242446,
+        "f_penetrate_mean": 0.09632924570393304,
+        "incidence_best_median_deg": 12.477310180664062,
+        "n_cores": 160,
+        "n_mvs_only": 8399,
+        "n_no_landing": 14094,
+        "n_occluded": 500903,
+        "n_tested": 369815,
+        "r_distribution": {
+          "0": 0,
+          "1": 77,
+          "2": 1034,
+          "3": 130
+        },
+        "r_ge3_fraction": 0.10475423045930701,
+        "r_le1_fraction": 0.062046736502820304,
+        "rough_cells": 101,
+        "texture_median": 21.94690704345703,
+        "views_unoccluded_median": 8.0
+      },
+      "CURRENT_ABOVE": {
+        "area_m2": 162.75,
+        "cells": 651,
+        "cells_with_ray_power": 651,
+        "core_class_counts": {
+          "1": 22,
+          "2": 108,
+          "3": 13,
+          "4": 19,
+          "5": 16
+        },
+        "core_d_median_m": -0.13256068527698517,
+        "core_lod_median_m": 0.21994926035404205,
+        "f_agree_mean": 0.38344522704433487,
+        "f_block_mean": 0.4200838255839604,
+        "f_penetrate_mean": 0.19647094737170473,
+        "incidence_best_median_deg": 23.146087646484375,
+        "n_cores": 178,
+        "n_mvs_only": 87971,
+        "n_no_landing": 53688,
+        "n_occluded": 712583,
+        "n_tested": 448789,
+        "r_distribution": {
+          "0": 0,
+          "1": 220,
+          "2": 353,
+          "3": 78
+        },
+        "r_ge3_fraction": 0.11981566820276497,
+        "r_le1_fraction": 0.3379416282642089,
+        "rough_cells": 474,
+        "texture_median": 23.272436141967773,
+        "views_unoccluded_median": 21.0
+      },
+      "CURRENT_ONLY": {
+        "area_m2": 11.5,
+        "cells": 46,
+        "cells_with_ray_power": 46,
+        "core_class_counts": {
+          "1": 6,
+          "2": 4,
+          "3": 2,
+          "4": 2,
+          "5": 0
+        },
+        "core_d_median_m": -0.0016313900705426931,
+        "core_lod_median_m": 0.16646893322467804,
+        "f_agree_mean": 0.41799884038764185,
+        "f_block_mean": 0.47829868301167894,
+        "f_penetrate_mean": 0.1037024766006792,
+        "incidence_best_median_deg": 12.155935287475586,
+        "n_cores": 14,
+        "n_mvs_only": 8740,
+        "n_no_landing": 1716,
+        "n_occluded": 51640,
+        "n_tested": 24146,
+        "r_distribution": {
+          "0": 0,
+          "1": 8,
+          "2": 30,
+          "3": 8
+        },
+        "r_ge3_fraction": 0.17391304347826086,
+        "r_le1_fraction": 0.17391304347826086,
+        "rough_cells": 11,
+        "texture_median": 24.456504821777344,
+        "views_unoccluded_median": 8.0
+      },
+      "PRIOR_ABOVE": {
+        "area_m2": 407.0,
+        "cells": 1628,
+        "cells_with_ray_power": 1628,
+        "core_class_counts": {
+          "1": 6,
+          "2": 83,
+          "3": 89,
+          "4": 68,
+          "5": 10
+        },
+        "core_d_median_m": 2.3075692653656006,
+        "core_lod_median_m": 0.0698973685503006,
+        "f_agree_mean": 0.060528245550862496,
+        "f_block_mean": 0.03144819393009118,
+        "f_penetrate_mean": 0.9080235605190463,
+        "incidence_best_median_deg": 7.392855644226074,
+        "n_cores": 256,
+        "n_mvs_only": 59226,
+        "n_no_landing": 186082,
+        "n_occluded": 697399,
+        "n_tested": 380467,
+        "r_distribution": {
+          "0": 0,
+          "1": 342,
+          "2": 1100,
+          "3": 186
+        },
+        "r_ge3_fraction": 0.11425061425061425,
+        "r_le1_fraction": 0.21007371007371006,
+        "rough_cells": 399,
+        "texture_median": 16.057601928710938,
+        "views_unoccluded_median": 6.0
+      },
+      "PRIOR_ONLY": {
+        "area_m2": 8.5,
+        "cells": 34,
+        "cells_with_ray_power": 11,
+        "core_class_counts": {
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 2,
+          "5": 0
+        },
+        "core_d_median_m": null,
+        "core_lod_median_m": null,
+        "f_agree_mean": 0.0891089108910891,
+        "f_block_mean": 0.09405940594059406,
+        "f_penetrate_mean": 0.8168316831683168,
+        "incidence_best_median_deg": null,
+        "n_cores": 2,
+        "n_mvs_only": 28,
+        "n_no_landing": 8722,
+        "n_occluded": 20469,
+        "n_tested": 2626,
+        "r_distribution": {
+          "0": 23,
+          "1": 9,
+          "2": 2,
+          "3": 0
+        },
+        "r_ge3_fraction": 0.0,
+        "r_le1_fraction": 0.9411764705882353,
+        "rough_cells": 0,
+        "texture_median": 20.42026138305664,
+        "views_unoccluded_median": 0.0
+      }
+    },
+    "expectation_checks": {
+      "COMPATIBLE": {
+        "checks": {
+          "3D-a median |d| <= 0.3": true,
+          "3D-b AGREE >= 0.70": true,
+          "r >= 3 majority": false
+        },
+        "expected": {
+          "3D-a": "median |d| <= 0.3 m",
+          "3D-b": "AGREE >= 0.70 of tested",
+          "r": ">= 3 for the majority (planar)"
+        },
+        "met": 2,
+        "present": true,
+        "total": 3
+      },
+      "CURRENT_ABOVE": {
+        "checks": {
+          "3D-b BLOCK >= PENETRATE": true,
+          "r <= 2 majority": true
+        },
+        "expected": {
+          "3D-a": "mixed",
+          "3D-b": "BLOCK >= PENETRATE",
+          "r": "<= 2 for the majority (rough)"
+        },
+        "met": 2,
+        "present": true,
+        "total": 2
+      },
+      "CURRENT_ONLY": {
+        "checks": {
+          "3D-b MVS_ONLY dominant": false
+        },
+        "expected": {
+          "3D-a": "class 3",
+          "3D-b": "MVS_ONLY dominant",
+          "r": "n/a"
+        },
+        "met": 0,
+        "present": true,
+        "total": 1
+      },
+      "PRIOR_ABOVE": {
+        "checks": {
+          "3D-a median d in [1,5] m": true,
+          "3D-b PENETRATE >= 0.50": true,
+          "r >= 3 majority": false
+        },
+        "expected": {
+          "3D-a": "median d in [1.0, 5.0] m, >> LoD",
+          "3D-b": "PENETRATE >= 0.50 of tested",
+          "r": ">= 3 for the majority (planar)"
+        },
+        "met": 2,
+        "present": true,
+        "total": 3
+      },
+      "PRIOR_ONLY": {
+        "checks": {
+          "3D-b NO_LANDING dominant": true,
+          "r <= 1 majority": true
+        },
+        "expected": {
+          "3D-a": "few cores",
+          "3D-b": "NO_LANDING dominant, tested < 20",
+          "r": "<= 1"
+        },
+        "met": 2,
+        "present": true,
+        "total": 2
+      }
+    }
+  },
+  "outputs": {
+    "evaluation.json": "2959db8a57072c62b613300fac961c5508dc6d555ef1d9344c457385ee856d80",
+    "evidence_cells.npy": "12d44659d0d8e0e4a8b61e4f38455e804c4803bfd79abad624c32167e487e874",
+    "evidence_pairs.npy": "68229e19dc3d318d7bc8f07fce2a8ea891b70eb7fcba28292b3fc10248544e7f",
+    "evidence_preview.png": "ae4d4db6c913d7aeeb167df8381a806f522914792d44457aca90118f77045bf1",
+    "evidence_views.json": "87ef4ef46747983ebf22a5a45d558fa106456d96e01d87cd734e16ca25cbcb8d"
+  },
+  "receipts": {
+    "artifact_manifest.json": "d80c5f41eb1aee73a8d6b58d91d84098d9400801fb5bd81b42c332d5abfa705a",
+    "technical_return.json": "b37000fdbc867b3611d682b1fff280f63ad387fcfb9cd26c5145ed70baa69dc7",
+    "validation_receipt.json": "c3c42794713d8f54f8165e944727c25a0514d034aeafee9e57a27c916adb3133"
+  },
+  "scope_controls": {
+    "prohibited_inputs_accessed": [],
+    "not_decided_here": [
+      "SOURCE_AUTHORITY",
+      "TEMPORAL_CHANGE",
+      "REGISTRATION_DELTA",
+      "RESPONSIBILITY_PI",
+      "GAUSSIAN_WEIGHT"
+    ],
+    "images_used_for": "2D-c texture only (hashed per view in evidence_views.json)",
+    "not_interpretable_as": [
+      "SOURCE_AUTHORITY_DECISION",
+      "TEMPORAL_CHANGE_VERDICT",
+      "RESPONSIBILITY_OR_WEIGHT"
+    ]
+  }
+}
