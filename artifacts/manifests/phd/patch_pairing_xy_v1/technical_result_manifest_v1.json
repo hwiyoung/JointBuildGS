@@ -1,0 +1,102 @@
+{
+  "schema": "jointbuildgs.artifact_manifest.phd.patch_pairing_xy.v1",
+  "task_id": "PHD-PATCH-PAIRING-XY-v1",
+  "status": "COMPLETE_DEVELOPMENT_NON_CONFIRMATORY",
+  "scientific_verdict": null,
+  "artifact_backend": {
+    "environment_variable": "JBGS_ARTIFACT_ROOT",
+    "container_root": "/artifacts/JointBuildGS",
+    "relative_root": "phase-payloads/phd/patch_pairing_xy_v1/PHD-PATCH-PAIRING-XY-v1"
+  },
+  "reproducibility": {
+    "git_commit": "14e79b75773e383597673f794eb7d3b20ea76ac2",
+    "config_path": "configs/phd/patch_pairing_xy_v1/run_v1.json",
+    "config_sha256": "d1230d2bac362a231d1e8bab85e552603bd17647619bcde9ba7a57674339c69a",
+    "driver_path": "scripts/phd/patch_pairing_xy_v1/run.py",
+    "driver_sha256": "30b0cbaac78423227d1d410ff43fd90b473564b1ce0ae30b78d947ba4fdfe581",
+    "host_wrapper_path": "scripts/phd/patch_pairing_xy_v1/run_host.sh",
+    "host_wrapper_sha256": "d8027b0a1a52e17ec9a59892eaaceb1584617038582ea5048e036b190a6babaa",
+    "container_image": "jointbuildgs:dev"
+  },
+  "upstream": {
+    "partition_als": "cb9db09947278d8e7499a29941619093cc79835184b0d846dcf63313614dfd49",
+    "partition_mvs": "6174e0113c339ffeff824ec5d7a9f857e9f09a4c791bfb07d8830e68f5f65749",
+    "surface_patch_artifact_manifest": "1a3c5cfb7e8e08c802959e69e240fa6e9831f53556fc1d70582e96fd31b4f742"
+  },
+  "domain": {
+    "kind": "HALF_OPEN_PRISM_SCENE_LOCAL",
+    "x": [
+      -23.0,
+      7.0
+    ],
+    "y": [
+      -21.0,
+      9.0
+    ],
+    "z": [
+      -44.272,
+      -25.962
+    ]
+  },
+  "result": {
+    "cells_top_layer": 3600,
+    "cells_with_second_layer_pair": 342,
+    "dz_quantiles_both_present_m": {
+      "p10": -1.130551719665527,
+      "p50": 0.04516887664794922,
+      "p90": 4.236521148681641
+    },
+    "patch_pair_states": {
+      "COMPATIBLE": 41,
+      "CURRENT_ABOVE": 55,
+      "PRIOR_ABOVE": 66
+    },
+    "patch_pairs": 162,
+    "state_area_m2_top": {
+      "COMPATIBLE": 310.25,
+      "CURRENT_ABOVE": 162.75,
+      "CURRENT_ONLY": 11.5,
+      "PRIOR_ABOVE": 407.0,
+      "PRIOR_ONLY": 8.5
+    },
+    "state_area_m2_top_rough_flagged": {
+      "COMPATIBLE": 25.25,
+      "CURRENT_ABOVE": 118.5,
+      "CURRENT_ONLY": 2.75,
+      "PRIOR_ABOVE": 99.75,
+      "PRIOR_ONLY": 0.0
+    },
+    "walls": {
+      "als": 8,
+      "mvs": 35,
+      "paired_3d": 16,
+      "single_source": 27
+    }
+  },
+  "outputs": {
+    "pair_cells.npy": "c16689f6f097d02182383468b745707d498476f2c0ba015b63ac3c9e609f468b",
+    "pair_pairs.npy": "f634e27ac0a3bd539337c1b6c05dc7d7c2308b9c522f61965d6f25d89d750f4c",
+    "pair_walls.npy": "2ff9191e573ee86587a0512b56419c0c413b90f15d88c12a6ecf44110ca15e13",
+    "pairing_preview.png": "fbede75231e47d992ccfa02185a63f2922ac2b41a360e59042637dfd91980366"
+  },
+  "receipts": {
+    "artifact_manifest.json": "41ae3f19b24262de036fc8cc0d1da60506ec8d5a34e9b5ad30f8b6e06d904c2d",
+    "technical_return.json": "3263f1a7e46a4743066412fef5bd7c894aaa42744b33e237937e02e3fea9ace6",
+    "validation_receipt.json": "293315ace9389038fc9073e0d861e9e39cadcd6b1403ec953f9ca44a7d7b07b0"
+  },
+  "scope_controls": {
+    "prohibited_inputs_accessed": [],
+    "not_decided_here": [
+      "SOURCE_AUTHORITY",
+      "TEMPORAL_CHANGE",
+      "REGISTRATION_DELTA",
+      "RESPONSIBILITY_PI"
+    ],
+    "display_only_current_image": "preview only",
+    "not_interpretable_as": [
+      "SOURCE_AUTHORITY_DECISION",
+      "TEMPORAL_CHANGE_VERDICT",
+      "RESPONSIBILITY_OR_WEIGHT"
+    ]
+  }
+}
