@@ -7,6 +7,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import re
 import shutil
 from typing import Any, Iterable
 
@@ -83,14 +84,27 @@ def load_config(path: Path = DEFAULT_CONFIG) -> dict[str, Any]:
         raise ValueError("surface-patch artifact manifest hash is not frozen")
     if len(cfg.get("surface_patch_validation_receipt_sha256", "")) != 64:
         raise ValueError("surface-patch validation receipt hash is not frozen")
-    if len(cfg.get("region_unit_artifact_manifest_sha256", "")) != 64:
-        raise ValueError("region-unit artifact manifest hash is not frozen")
-    if len(cfg.get("region_unit_validation_receipt_sha256", "")) != 64:
-        raise ValueError("region-unit validation receipt hash is not frozen")
+    prisms = cfg.get("prisms", [])
+    if not prisms:
+        raise ValueError("at least one prism (evidence bank + warp-ncc) is required")
+    names = [item["name"] for item in prisms]
+    if len(set(names)) != len(names) or any(not re.fullmatch(r"[a-z0-9_]+", n) for n in names):
+        raise ValueError("prism names must be unique lowercase identifiers")
+    for item in prisms:
+        for key in ("evidence_bank_artifact_manifest_sha256", "evidence_bank_validation_receipt_sha256",
+                    "warp_ncc_artifact_manifest_sha256", "warp_ncc_validation_receipt_sha256"):
+            if len(item.get(key, "")) != 64:
+                raise ValueError(f"prism {item['name']}: {key} is not frozen")
+    hm = cfg.get("hm_zone_rule", {})
+    if float(hm.get("min_height_above_ground_m", 0)) <= 0 or float(hm.get("min_area_m2", 0)) <= 0:
+        raise ValueError("hm_zone_rule must give positive height and area thresholds")
+    qz = cfg.get("quality_zone_rule", {})
+    if float(qz.get("min_sigma_ratio", 0)) < 1 or float(qz.get("min_sigma_mvs_m", 0)) <= 0:
+        raise ValueError("quality_zone_rule must give a sigma ratio >= 1 and a positive sigma floor")
     serialized = json.dumps({
         "relation": cfg["source_relation_viewer_relative_root"],
         "patch": cfg["surface_patch_relative_root"],
-        "unit": cfg["region_unit_relative_root"],
+        "prisms": [[item["evidence_bank_relative_root"], item["warp_ncc_relative_root"]] for item in prisms],
         "viewer": cfg["viewer_output_relative_root"],
     }).lower()
     for token in ("uas", "lod2", "footprint", "stable_id", "journal1"):
@@ -171,76 +185,94 @@ def verify_patch_upstream(cfg: dict[str, Any], root: Path) -> tuple[dict[str, An
     return manifest, technical, files
 
 
-def verify_region_unit_upstream(cfg: dict[str, Any], root: Path) -> tuple[dict[str, Any], dict[str, Any], dict[str, Path]]:
+def _verify_receipt_bound_workstream(root: Path, manifest_sha: str, receipt_sha: str, task_id: str, schema: str, label: str,
+                                     required_outputs: tuple[str, ...]) -> tuple[dict[str, Any], dict[str, Any], dict[str, Path]]:
+    """Shared contract for a receipt-bound phd workstream: pinned manifest + receipt, receipt bound to the manifest, all checks PASS,
+    every required output byte-verified, scientific_verdict null everywhere."""
     manifest_path = root / "artifact_manifest.json"
     validation_path = root / "validation_receipt.json"
     for path in (manifest_path, validation_path):
         if not path.is_file() or path.is_symlink():
-            raise RuntimeError(f"missing region-unit receipt: {path}")
-    if sha256(manifest_path) != cfg["region_unit_artifact_manifest_sha256"]:
-        raise RuntimeError("region-unit artifact manifest hash drift")
-    if sha256(validation_path) != cfg["region_unit_validation_receipt_sha256"]:
-        raise RuntimeError("region-unit validation receipt hash drift")
+            raise RuntimeError(f"missing {label} receipt: {path}")
+    if sha256(manifest_path) != manifest_sha:
+        raise RuntimeError(f"{label} artifact manifest hash drift")
+    if sha256(validation_path) != receipt_sha:
+        raise RuntimeError(f"{label} validation receipt hash drift")
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     validation = json.loads(validation_path.read_text(encoding="utf-8"))
-    if manifest.get("task_id") != cfg["region_unit_task_id"]:
-        raise RuntimeError("region-unit task ID drift")
-    if manifest.get("schema") != "jointbuildgs.phd.region_unit.artifact_manifest.v1":
-        raise RuntimeError("region-unit artifact manifest schema drift")
+    if manifest.get("task_id") != task_id or manifest.get("schema") != schema:
+        raise RuntimeError(f"{label} task ID / schema drift")
     for item in (manifest, validation):
         if item.get("scientific_verdict", "missing") is not None:
-            raise RuntimeError("upstream region-unit scientific_verdict is not null")
+            raise RuntimeError(f"upstream {label} scientific_verdict is not null")
     if any(value != "PASS" for value in validation.get("checks", {}).values()):
-        raise RuntimeError("upstream region-unit validation contains a non-PASS check")
+        raise RuntimeError(f"upstream {label} validation contains a non-PASS check")
     if validation.get("artifact_manifest_sha256") != sha256(manifest_path):
-        raise RuntimeError("region-unit validation receipt is not bound to this artifact manifest")
+        raise RuntimeError(f"{label} validation receipt is not bound to this artifact manifest")
     files = {}
-    for name in ("cells.npy", "units.npy", "unit_adjacency.npy", "technical_return.json"):
+    for name in required_outputs:
         if name not in manifest.get("outputs", {}):
-            raise RuntimeError(f"region-unit artifact manifest omits {name}")
-        files[name] = require_file(root, manifest["outputs"][name])
+            raise RuntimeError(f"{label} artifact manifest omits {name}")
+        files[name] = require_file(root, dict(manifest["outputs"][name], path=name))
     technical = json.loads(files["technical_return.json"].read_text(encoding="utf-8"))
     if technical.get("scientific_verdict", "missing") is not None or technical.get("prohibited_inputs_accessed") != []:
-        raise RuntimeError("upstream region-unit technical return contract drift")
-    interpretation = technical.get("interpretation", {})
-    if interpretation.get("units_are_defined_on_frozen_source_data_only") is not True:
-        raise RuntimeError("region units must be defined on frozen source data only")
-    if interpretation.get("source_authority_decided") or interpretation.get("temporal_change_decided"):
-        raise RuntimeError("region units must not carry a source or change verdict")
+        raise RuntimeError(f"upstream {label} technical return contract drift")
     files["artifact_manifest.json"] = manifest_path
     files["validation_receipt.json"] = validation_path
     return manifest, technical, files
 
 
-def validate_region_unit_arrays(cells: np.ndarray, units: np.ndarray, adjacency: np.ndarray) -> None:
-    _require_names(cells.dtype, (
-        "cell_index", "source", "x", "y", "z", "point_count", "nx", "ny", "nz",
-        "surface_variation", "normal_valid", "segment_id", "unit_id", "role", "pair_distance_m", "pair_rule",
-    ), "region-unit cells")
-    _require_names(units.dtype, (
-        "unit_id", "unit_uid", "primary_source", "kind", "small", "split_child", "split_reason", "mixed_prior",
-        "absorbed_cell_count", "prior_segment_count", "prior_offset_median_m", "prior_offset_spread_m",
-        "prior_plane_rmse_m", "core_count_total", "core_count_class_1", "core_count_class_2",
-        "core_count_class_3", "core_count_class_4", "core_count_class_5",
-        "mvs_cell_count", "mvs_point_count", "als_cell_count", "als_point_count", "area_m2",
-        "cx", "cy", "cz", "nx", "ny", "nz", "plane_d", "plane_rmse_m", "plane_p95_abs_residual_m",
-        "extent_e1_m", "extent_e2_m", "tilt_from_up_deg", "prior_support_fraction",
-        "paired_als_segment_count", "component_count",
-        "bbox_min_x", "bbox_min_y", "bbox_min_z", "bbox_max_x", "bbox_max_y", "bbox_max_z",
-    ), "region-unit units")
-    _require_names(adjacency.dtype, ("unit_a", "unit_b", "contact_pairs", "same_primary",
-                                     "contact_mvs_mvs", "contact_als_als", "contact_cross"), "region-unit adjacency")
-    if not np.array_equal(units["unit_id"], np.arange(1, len(units) + 1, dtype=np.uint32)):
-        raise RuntimeError("region-unit ids are not contiguous")
-    if np.any(cells["unit_id"] == 0) or np.any(cells["unit_id"] > len(units)):
-        raise RuntimeError("region-unit coverage drift: a cell has no unit")
-    if not set(np.unique(cells["source"])).issubset({0, 1}) or not set(np.unique(units["kind"])).issubset({0, 1}):
-        raise RuntimeError("unknown region-unit source or kind")
-    uids = [bytes(value).rstrip(b"\0") for value in units["unit_uid"]]
-    if any(not uid for uid in uids) or len(set(uids)) != len(uids):
-        raise RuntimeError("region-unit uid is empty or non-unique")
-    if len(adjacency) and (np.any(adjacency["unit_a"] >= adjacency["unit_b"]) or np.any(adjacency["unit_b"] > len(units))):
-        raise RuntimeError("region-unit adjacency drift")
+def verify_evidence_bank_upstream(cfg: dict[str, Any], root: Path):
+    return _verify_receipt_bound_workstream(
+        root, cfg["evidence_bank_artifact_manifest_sha256"], cfg["evidence_bank_validation_receipt_sha256"], cfg["evidence_bank_task_id"],
+        "jointbuildgs.phd.evidence_bank.artifact_manifest.v1", "evidence-bank",
+        ("evidence_cells.npy", "evidence_pairs.npy", "evidence_views.json", "evaluation.json", "evidence_preview.png", "technical_return.json"))
+
+
+def verify_warp_ncc_upstream(cfg: dict[str, Any], root: Path):
+    manifest, technical, files = _verify_receipt_bound_workstream(
+        root, cfg["warp_ncc_artifact_manifest_sha256"], cfg["warp_ncc_validation_receipt_sha256"], cfg["warp_ncc_task_id"],
+        "jointbuildgs.phd.warp_ncc.artifact_manifest.v1", "warp-ncc",
+        ("warp_ncc_cells.npy", "warp_ncc_pairs.npy", "warp_ncc_views.json", "chips_index.json", "evaluation.json",
+         "warp_ncc_preview.png", "warp_ncc_on_image.png", "technical_return.json"))
+    chips = manifest.get("chips", {})
+    chip_dir = root / chips.get("directory", "chips")
+    digest = hashlib.sha256(); count = 0
+    for path in sorted(chip_dir.glob("cell_*.png")):
+        digest.update(path.name.encode()); digest.update(path.read_bytes()); count += 1
+    if digest.hexdigest() != chips.get("sha256") or count != int(chips.get("count", -1)):
+        raise RuntimeError("warp-ncc chip digest drift")
+    files["chips_dir"] = chip_dir
+    return manifest, technical, files
+
+
+T1_METRIC_NAMES = ("n_cores", "core_d_median_m", "core_lod_median_m", "n_agree", "n_penetrate", "n_block", "n_mvs_only", "n_no_landing",
+                   "n_occluded", "f_agree", "f_penetrate", "f_block", "texture_median", "n_views_unoccluded", "incidence_best_deg")
+T2_METRIC_NAMES = ("n_views_m", "n_views_p", "n_pairs_m", "n_pairs_p", "ncc_median_m", "ncc_median_p", "ncc_fisher_m", "ncc_fisher_p",
+                   "f_good_m", "f_good_p", "angle_median_m", "angle_median_p", "n_pairs_common", "delta_median", "f_m_over_p", "f_p_over_m",
+                   "n_pairs_wide_m", "n_pairs_wide_p", "ncc_median_wide_m", "ncc_median_wide_p", "n_pairs_common_wide", "delta_median_wide",
+                   "ncc_median_ctrl_0", "ncc_median_ctrl_1", "ncc_median_ctrl_2", "ncc_median_ctrl_3",
+                   "n_pairs_ctrl_0", "n_pairs_ctrl_1", "n_pairs_ctrl_2", "n_pairs_ctrl_3",
+                   "n_edge_px_m", "edge_dist_median_px_m", "edge_dist_median_m_m", "n_edge_px_p", "edge_dist_median_px_p", "edge_dist_median_m_p",
+                   "chip_view_a", "chip_view_b", "chip_angle_deg", "chip_ncc_m", "chip_ncc_p")
+
+
+def validate_evidence_arrays(t1: np.ndarray, t2: np.ndarray, top: np.ndarray) -> None:
+    _require_names(t1.dtype, ("ix", "iy", "state", "rough", "mvs_patch", "als_patch", "power_3da", "power_3db", "power_2da", "r") + T1_METRIC_NAMES, "T1 cells")
+    _require_names(t2.dtype, ("ix", "iy", "state", "rough", "mvs_patch", "als_patch", "power_2da_m", "power_2da_p", "power_2da_any", "r_t1", "r_t2",
+                              "n_pairs_ctrl", "ncc_median_ctrl") + tuple(n for n in T2_METRIC_NAMES if "ctrl" not in n), "T2 cells")
+    _require_names(top.dtype, ("ix", "iy", "layer", "mvs_z", "als_z"), "pairing cells")
+    if len(t1) != len(t2) or len(top) != len(t1):
+        raise RuntimeError("T1 / T2 / pairing top-layer cell counts differ")
+    for f in ("ix", "iy", "state", "rough", "mvs_patch", "als_patch"):
+        if not np.array_equal(t1[f], t2[f]) or not np.array_equal(t1[f][:0], t1[f][:0]):
+            raise RuntimeError(f"T1 / T2 cell field drift: {f}")
+    if not np.array_equal(top["ix"], t1["ix"]) or not np.array_equal(top["iy"], t1["iy"]):
+        raise RuntimeError("pairing top-layer cells are not the T1 cell set")
+    if not np.array_equal(t2["r_t1"], t1["r"]):
+        raise RuntimeError("T2 r_t1 does not reproduce the T1 r")
+    if not set(np.unique(t1["state"])).issubset({1, 2, 3, 4, 5}):
+        raise RuntimeError("unknown pairing state in the evidence cells")
 
 
 def validate_patch_arrays(
@@ -284,6 +316,109 @@ def validate_patch_arrays(
     uids = [bytes(value).rstrip(b"\0") for value in summaries["patch_uid"]]
     if any(not uid for uid in uids) or len(set(uids)) != len(uids):
         raise RuntimeError("patch UID is empty or non-unique")
+
+
+def _local_height(xyz: np.ndarray, gcell: float) -> np.ndarray:
+    """Height of every core above the local ground (5th-percentile core z per gcell cell, min over the 3x3 neighbourhood)."""
+    off = 1.0e5
+    gx = np.floor((xyz[:, 0] + off) / gcell).astype(np.int64); gy = np.floor((xyz[:, 1] + off) / gcell).astype(np.int64)
+    gkeys = gx * 10_000_000 + gy
+    uniq, inv = np.unique(gkeys, return_inverse=True)
+    order = np.argsort(inv, kind="stable"); sorted_inv = inv[order]; sorted_z = xyz[order, 2]
+    starts = np.searchsorted(sorted_inv, np.arange(len(uniq))); ends = np.append(starts[1:], len(sorted_inv))
+    ground = np.array([float(np.quantile(sorted_z[a:b], 0.05)) for a, b in zip(starts, ends)])
+    lookup = {int(k): float(g) for k, g in zip(uniq, ground)}
+    local = np.full(len(xyz), np.inf)
+    for dx in (-1, 0, 1):
+        for dy in (-1, 0, 1):
+            keys = (gx + dx) * 10_000_000 + (gy + dy)
+            local = np.minimum(local, np.array([lookup.get(int(k), np.inf) for k in keys]))
+    return xyz[:, 2] - local
+
+
+def _cluster_flagged(xyz: np.ndarray, flag: np.ndarray, height: np.ndarray, ccell: float, min_cores: int, min_area: float, margin: float,
+                     bounds_min: np.ndarray, bounds_max: np.ndarray, mvs_xyz: np.ndarray | None, extra: dict[str, np.ndarray] | None = None
+                     ) -> tuple[np.ndarray, list[dict[str, Any]]]:
+    """Grid the flagged cores into ccell cells with >= min_cores cores, 8-connect, drop clusters below min_area, flag scene-boundary contact,
+    and record the fraction of cluster columns holding any MVS point (display cloud).  ``extra`` = per-core arrays whose cluster medians are
+    reported (e.g. sigma ratios).  Returns the per-core cluster id (u16, 0 = none) and the cluster table sorted by area."""
+    off = 1.0e5
+    cluster = np.zeros(len(xyz), dtype=np.uint16)
+    idx = np.flatnonzero(flag)
+    if not len(idx):
+        return cluster, []
+    cx = np.floor((xyz[idx, 0] + off) / ccell).astype(np.int64); cy = np.floor((xyz[idx, 1] + off) / ccell).astype(np.int64)
+    ckeys = cx * 10_000_000 + cy
+    cu, ccnt = np.unique(ckeys, return_counts=True)
+    dense = set(int(k) for k, c in zip(cu, ccnt) if c >= min_cores)
+    seen: set[int] = set(); comps: list[list[int]] = []
+    for k in sorted(dense):
+        if k in seen:
+            continue
+        stack = [k]; seen.add(k); comp = []
+        while stack:
+            c = stack.pop(); comp.append(c); qx, qy = divmod(c, 10_000_000)
+            for dx in (-1, 0, 1):
+                for dy in (-1, 0, 1):
+                    n = (qx + dx) * 10_000_000 + (qy + dy)
+                    if n in dense and n not in seen:
+                        seen.add(n); stack.append(n)
+        comps.append(comp)
+    mvs_keys: set[int] = set()
+    if mvs_xyz is not None and len(mvs_xyz):
+        mx = np.floor((mvs_xyz[:, 0] + off) / ccell).astype(np.int64); my = np.floor((mvs_xyz[:, 1] + off) / ccell).astype(np.int64)
+        mvs_keys = set(map(int, np.unique(mx * 10_000_000 + my)))
+    table = []; key_to_cluster: dict[int, int] = {}
+    for comp in comps:
+        area = len(comp) * ccell * ccell
+        if area < min_area:
+            continue
+        qx = np.array([divmod(c, 10_000_000)[0] for c in comp]); qy = np.array([divmod(c, 10_000_000)[1] for c in comp])
+        x0, x1 = float(qx.min() * ccell - off), float((qx.max() + 1) * ccell - off); y0, y1 = float(qy.min() * ccell - off), float((qy.max() + 1) * ccell - off)
+        member = np.isin(ckeys, comp)
+        boundary = bool(x0 <= bounds_min[0] + margin or y0 <= bounds_min[1] + margin or x1 >= bounds_max[0] - margin or y1 >= bounds_max[1] - margin)
+        item = {"comp": comp, "area_m2": area, "cores": int(member.sum()), "bbox": [x0, y0, x1, y1],
+                "height_median_m": float(np.median(height[idx][member])), "z_median": float(np.median(xyz[idx, 2][member])),
+                "touches_scene_boundary": boundary,
+                "mvs_column_fraction": float(sum(1 for c in comp if c in mvs_keys) / len(comp)) if mvs_keys else None}
+        for name, values in (extra or {}).items():
+            item[name] = float(np.median(values[idx][member]))
+        table.append(item)
+    table.sort(key=lambda item: (-item["area_m2"], item["bbox"]))
+    for cid, item in enumerate(table, start=1):
+        item["id"] = cid
+        for c in item.pop("comp"):
+            key_to_cluster[c] = cid
+    for j, k in enumerate(ckeys):
+        cluster[idx[j]] = key_to_cluster.get(int(k), 0)
+    return cluster, table
+
+
+def hm_zones(xyz: np.ndarray, relation_class: np.ndarray, rule: dict[str, Any], bounds_min: np.ndarray, bounds_max: np.ndarray,
+             mvs_xyz: np.ndarray | None = None) -> tuple[np.ndarray, np.ndarray, list[dict[str, Any]]]:
+    """Scene-wide 'MVS empty, prior present' zones: class-4 (PRIOR_ONLY_SUPPORT) cores at least ``min_height_above_ground_m`` above the
+    local ground, clustered (see _cluster_flagged).  Display-only candidate finder; not a method input."""
+    height = _local_height(xyz, float(rule["ground_cell_m"]))
+    flag = ((relation_class == 4) & (height >= float(rule["min_height_above_ground_m"]))).astype(np.uint8)
+    cluster, table = _cluster_flagged(xyz, flag.astype(bool), height, float(rule["cluster_cell_m"]), int(rule["min_cores_per_cell"]),
+                                      float(rule["min_area_m2"]), float(rule["boundary_margin_m"]), bounds_min, bounds_max, mvs_xyz)
+    return flag, cluster, table
+
+
+def quality_zones(xyz: np.ndarray, relation_class: np.ndarray, metrics: np.ndarray, rule: dict[str, Any], bounds_min: np.ndarray,
+                  bounds_max: np.ndarray, mvs_xyz: np.ndarray | None = None) -> tuple[np.ndarray, np.ndarray, list[dict[str, Any]]]:
+    """Scene-wide 'prior quality better' zones: cores where BOTH sources support the same surface (class 1 or 2) but the MVS local noise
+    sigma_mvs is at least ``min_sigma_ratio`` times sigma_als and at least ``min_sigma_mvs_m``, elevated as in hm_zones, clustered.
+    ``metrics`` = relation metrics (N, 6) with sigma_mvs at column 4 and sigma_als at column 5.  Display-only candidate finder."""
+    height = _local_height(xyz, float(rule["ground_cell_m"]))
+    sm = metrics[:, 4].astype(np.float64); sa = metrics[:, 5].astype(np.float64)
+    ok = np.isin(relation_class, [1, 2]) & np.isfinite(sm) & np.isfinite(sa) & (sa > 0)
+    ratio = np.where(ok, sm / np.maximum(sa, 1e-6), 0.0)
+    flag = (ok & (ratio >= float(rule["min_sigma_ratio"])) & (sm >= float(rule["min_sigma_mvs_m"])) & (height >= float(rule["min_height_above_ground_m"]))).astype(np.uint8)
+    cluster, table = _cluster_flagged(xyz, flag.astype(bool), height, float(rule["cluster_cell_m"]), int(rule["min_cores_per_cell"]),
+                                      float(rule["min_area_m2"]), float(rule["boundary_margin_m"]), bounds_min, bounds_max, mvs_xyz,
+                                      extra={"sigma_mvs_median_m": sm, "sigma_als_median_m": sa})
+    return flag, cluster, table
 
 
 def _class_counts(values: np.ndarray) -> dict[str, int]:
@@ -366,48 +501,113 @@ def build(cfg: dict[str, Any], config_path: Path) -> dict[str, Any]:
     for name, array in patch_arrays.items():
         write_array(patch_paths[name], array)
 
-    unit_root = artifact_root / cfg["region_unit_relative_root"]
-    unit_manifest, unit_technical, unit_files = verify_region_unit_upstream(cfg, unit_root)
-    cells = np.load(unit_files["cells.npy"], allow_pickle=False)
-    units = np.load(unit_files["units.npy"], allow_pickle=False)
-    adjacency = np.load(unit_files["unit_adjacency.npy"], allow_pickle=False)
-    validate_region_unit_arrays(cells, units, adjacency)
-    if unit_technical.get("frame") != relation_manifest["frame"]:
-        raise RuntimeError("region-unit frame drift versus relation viewer")
-    unit_kind_of_cell = units["kind"][cells["unit_id"] - 1]
-    unit_primary_of_cell = units["primary_source"][cells["unit_id"] - 1]
-    unit_arrays = {
-        "cells_xyz": np.ascontiguousarray(np.column_stack((cells["x"], cells["y"], cells["z"])), dtype="<f4"),
-        "cells_attributes": np.ascontiguousarray(np.column_stack((
-            cells["source"], cells["role"], unit_kind_of_cell, unit_primary_of_cell, cells["pair_rule"])), dtype=np.uint8),
-        "cells_unit": np.ascontiguousarray(cells["unit_id"], dtype="<u4"),
-        "cells_metrics": np.ascontiguousarray(np.column_stack((
-            cells["surface_variation"], cells["pair_distance_m"])), dtype="<f4"),
-        "units_ids": np.ascontiguousarray(np.column_stack((
-            units["unit_id"], units["mvs_cell_count"], units["mvs_point_count"], units["als_cell_count"],
-            units["als_point_count"], units["absorbed_cell_count"], units["paired_als_segment_count"],
-            units["component_count"], units["core_count_total"], units["core_count_class_1"],
-            units["core_count_class_2"], units["core_count_class_3"], units["core_count_class_4"],
-            units["core_count_class_5"])), dtype="<u4"),
-        "units_attributes": np.ascontiguousarray(np.column_stack((
-            units["primary_source"], units["kind"], units["small"], units["split_child"],
-            units["split_reason"], units["mixed_prior"])), dtype=np.uint8),
-        "units_pose": np.ascontiguousarray(np.column_stack((
-            units["cx"], units["cy"], units["cz"], units["nx"], units["ny"], units["nz"], units["plane_d"])), dtype="<f4"),
-        "units_metrics": np.ascontiguousarray(np.column_stack((
-            units["area_m2"], units["plane_rmse_m"], units["plane_p95_abs_residual_m"],
-            units["extent_e1_m"], units["extent_e2_m"], units["tilt_from_up_deg"], units["prior_support_fraction"],
-            units["bbox_min_x"], units["bbox_min_y"], units["bbox_min_z"],
-            units["bbox_max_x"], units["bbox_max_y"], units["bbox_max_z"],
-            units["prior_offset_median_m"], units["prior_offset_spread_m"], units["prior_plane_rmse_m"])), dtype="<f4"),
-        "units_uids": np.ascontiguousarray(units["unit_uid"].astype("S16", copy=False)),
-        "adjacency": np.ascontiguousarray(np.column_stack((
-            adjacency["unit_a"], adjacency["unit_b"], adjacency["contact_pairs"], adjacency["same_primary"],
-            adjacency["contact_mvs_mvs"], adjacency["contact_als_als"], adjacency["contact_cross"])), dtype="<u4"),
-    }
-    unit_paths = {name: assets / f"t0_{name}.bin" for name in unit_arrays}
-    for name, array in unit_arrays.items():
-        write_array(unit_paths[name], array)
+    # ---- scene-wide "MVS empty, prior present" zones from the frozen relation cores (display-only)
+    core_xyz = np.fromfile(copied["xyz"], dtype="<f4").reshape(-1, 3).astype(np.float64)
+    core_class = relation_attributes[:, 0]
+    bmin = np.array(relation_manifest["bounds"]["scene_local"]["min"], dtype=np.float64); bmax = np.array(relation_manifest["bounds"]["scene_local"]["max"], dtype=np.float64)
+    mvs_display_xyz = np.fromfile(copied["mvs"], dtype="<f4").reshape(-1, 3).astype(np.float64)
+    hm_flag, hm_cluster, hm_table = hm_zones(core_xyz, core_class, cfg["hm_zone_rule"], bmin, bmax, mvs_display_xyz)
+    hm_paths = {"flag": assets / "hm_flag_u8.bin", "cluster": assets / "hm_cluster_u16le.bin"}
+    write_array(hm_paths["flag"], hm_flag); write_array(hm_paths["cluster"], hm_cluster.astype("<u2"))
+    core_metrics = np.fromfile(copied["metrics"], dtype="<f4").reshape(-1, int(relation_manifest["relations"]["metrics_stride"]))
+    q_flag, q_cluster, q_table = quality_zones(core_xyz, core_class, core_metrics, cfg["quality_zone_rule"], bmin, bmax, mvs_display_xyz)
+    q_paths = {"flag": assets / "quality_flag_u8.bin", "cluster": assets / "quality_cluster_u16le.bin"}
+    write_array(q_paths["flag"], q_flag); write_array(q_paths["cluster"], q_cluster.astype("<u2"))
+
+    # ---- prisms: T1 evidence bank + T2 warp-NCC cells (display-only), one block per prism
+    prism_blocks = []
+    prism_upstreams = {}
+    chip_total = 0
+    for item in cfg["prisms"]:
+        name = item["name"]
+        evidence_root = artifact_root / item["evidence_bank_relative_root"]
+        warp_root = artifact_root / item["warp_ncc_relative_root"]
+        t1_manifest, t1_technical, t1_files = verify_evidence_bank_upstream(item, evidence_root)
+        t2_manifest, t2_technical, t2_files = verify_warp_ncc_upstream(item, warp_root)
+        t1_cells = np.load(t1_files["evidence_cells.npy"], allow_pickle=False)
+        t2_cells = np.load(t2_files["warp_ncc_cells.npy"], allow_pickle=False)
+        pairing_root = artifact_root / t1_manifest["inputs"]["pairing_root"].split("/artifacts/JointBuildGS/")[-1]
+        pair_cells = np.load(pairing_root / "pair_cells.npy", allow_pickle=False)
+        if sha256(pairing_root / "artifact_manifest.json") != t1_manifest["inputs"]["pairing_manifest_sha256"]:
+            raise RuntimeError(f"prism {name}: pairing manifest drift versus the evidence bank lineage")
+        top = pair_cells[pair_cells["layer"] == 0]
+        validate_evidence_arrays(t1_cells, t2_cells, top)
+        if t2_technical.get("domain") != t1_technical.get("domain"):
+            raise RuntimeError(f"prism {name}: T1 / T2 domain drift")
+        dom = t1_technical["domain"]; cell_m = float(t1_technical["algorithm"]["cell_size_m"])
+        cx = dom["x"][0] + (t1_cells["ix"] + 0.5) * cell_m; cy = dom["y"][0] + (t1_cells["iy"] + 0.5) * cell_m
+        z_auto = np.where(np.isfinite(top["mvs_z"]), top["mvs_z"], top["als_z"])
+        t1_metrics = np.column_stack([t1_cells[n].astype(np.float32) for n in T1_METRIC_NAMES])
+        t2_columns = []
+        for n in T2_METRIC_NAMES:
+            if n.startswith("ncc_median_ctrl_") or n.startswith("n_pairs_ctrl_"):
+                base, k = n.rsplit("_", 1); t2_columns.append(t2_cells[base][:, int(k)].astype(np.float32))
+            else:
+                t2_columns.append(t2_cells[n].astype(np.float32))
+        t2_metrics = np.column_stack(t2_columns)
+        evidence_arrays = {
+            "cells_xyz": np.ascontiguousarray(np.column_stack((cx, cy, z_auto)), dtype="<f4"),
+            "cells_z": np.ascontiguousarray(np.column_stack((top["mvs_z"], top["als_z"])), dtype="<f4"),
+            "cells_attributes": np.ascontiguousarray(np.column_stack((
+                t1_cells["state"], t1_cells["rough"], t1_cells["power_3da"], t1_cells["power_3db"],
+                t2_cells["power_2da_m"], t2_cells["power_2da_p"], t2_cells["r_t1"], t2_cells["r_t2"])), dtype=np.uint8),
+            "cells_patches": np.ascontiguousarray(np.column_stack((t1_cells["mvs_patch"], t1_cells["als_patch"])), dtype="<i4"),
+            "cells_t1_metrics": np.ascontiguousarray(t1_metrics, dtype="<f4"),
+            "cells_t2_metrics": np.ascontiguousarray(t2_metrics, dtype="<f4"),
+        }
+        evidence_paths = {key: assets / f"t12_{name}_{key}.bin" for key in evidence_arrays}
+        for key, array in evidence_arrays.items():
+            write_array(evidence_paths[key], array)
+        chip_target = assets / f"t2_chips_{name}"
+        chip_target.mkdir(parents=True, exist_ok=True)
+        for old in chip_target.glob("cell_*.png"):
+            old.unlink()
+        chip_index = json.loads(t2_files["chips_index.json"].read_text(encoding="utf-8"))
+        for entry in chip_index["cells"].values():
+            atomic_copy(warp_root / entry["file"], chip_target / Path(entry["file"]).name)
+        chip_count = len(chip_index["cells"]); chip_total += chip_count
+        image_assets = {}
+        for key, source in (("t1_preview", t1_files["evidence_preview.png"]), ("t2_preview", t2_files["warp_ncc_preview.png"]),
+                            ("t2_on_image", t2_files["warp_ncc_on_image.png"])):
+            target = assets / f"{name}_{key}.png"
+            atomic_copy(source, target)
+            image_assets[key] = target
+        t1_eval = json.loads(t1_files["evaluation.json"].read_text(encoding="utf-8"))
+        t2_eval = json.loads(t2_files["evaluation.json"].read_text(encoding="utf-8"))
+        t2_views = json.loads(t2_files["warp_ncc_views.json"].read_text(encoding="utf-8"))
+        prism_blocks.append({
+            "name": name, "label": item.get("label", name), "site_note": item.get("site_note", ""),
+            "role": "T1_T2_EVIDENCE_CELLS_DISPLAY_ONLY",
+            "t1_task_id": item["evidence_bank_task_id"], "t2_task_id": item["warp_ncc_task_id"],
+            "domain": dom, "cell_size_m": cell_m, "cell_count": int(len(t1_cells)),
+            "state_names": {"1": "COMPATIBLE", "2": "PRIOR_ABOVE", "3": "CURRENT_ABOVE", "4": "PRIOR_ONLY", "5": "CURRENT_ONLY"},
+            "state_colors": cfg["evidence_cell_colors"]["state"],
+            "t1_metric_names": list(T1_METRIC_NAMES), "t2_metric_names": list(T2_METRIC_NAMES),
+            "t1_algorithm": t1_technical["algorithm"], "t2_algorithm": t2_technical["algorithm"],
+            "t1_view_count": int(t1_technical["view_count"]), "t2_view_count": int(t2_technical["view_count"]), "t2_pair_count": int(t2_technical["pair_count"]),
+            "t2_pair_angle_histogram": t2_technical.get("pair_angle_histogram"), "t2_angle_stratified": t2_technical.get("angle_stratified"),
+            "t2_revision_r2": t2_technical.get("revision_r2"), "t2_expectations_before_run": t2_eval.get("expectations_before_run"),
+            "t1_per_state_summary": t1_eval["per_state_summary"], "t1_expectation_checks": t1_eval["expectation_checks"],
+            "t2_per_state_summary": t2_eval["per_state_summary"], "t2_controls": t2_eval["controls"], "t2_expectation_checks": t2_eval["expectation_checks"],
+            "t2_overlay_view": t2_technical.get("overlay_view"), "t2_views": {str(v["colmap_image_id"]): v["name"] for v in t2_views["views"]},
+            "chips": {"directory": f"assets/t2_chips_{name}", "count": chip_count, "tile_px": chip_index["tile_px"], "layout": chip_index["layout"],
+                      "files": {key: f"assets/t2_chips_{name}/{Path(entry['file']).name}" for key, entry in chip_index["cells"].items()}},
+            "images": {key: record(path, viewer) for key, path in image_assets.items()},
+            "not_decided_here": t2_technical.get("not_decided_here"),
+            "assets": {
+                "cells_xyz": record(evidence_paths["cells_xyz"], viewer, stride_bytes=12),
+                "cells_z": record(evidence_paths["cells_z"], viewer, stride_bytes=8, names=["mvs_z", "als_z"]),
+                "cells_attributes": record(evidence_paths["cells_attributes"], viewer, stride_bytes=8,
+                                           names=["state", "rough", "power_3da", "power_3db", "power_2da_m", "power_2da_p", "r_t1", "r_t2"]),
+                "cells_patches": record(evidence_paths["cells_patches"], viewer, stride_bytes=8, names=["mvs_patch", "als_patch"]),
+                "cells_t1_metrics": record(evidence_paths["cells_t1_metrics"], viewer, stride_bytes=4 * len(T1_METRIC_NAMES), names=list(T1_METRIC_NAMES)),
+                "cells_t2_metrics": record(evidence_paths["cells_t2_metrics"], viewer, stride_bytes=4 * len(T2_METRIC_NAMES), names=list(T2_METRIC_NAMES)),
+            },
+        })
+        prism_upstreams[f"{name}_evidence_bank_artifact_manifest"] = record(t1_files["artifact_manifest.json"], evidence_root)
+        prism_upstreams[f"{name}_evidence_bank_validation_receipt"] = record(t1_files["validation_receipt.json"], evidence_root)
+        prism_upstreams[f"{name}_warp_ncc_artifact_manifest"] = record(t2_files["artifact_manifest.json"], warp_root)
+        prism_upstreams[f"{name}_warp_ncc_validation_receipt"] = record(t2_files["validation_receipt.json"], warp_root)
 
     app_source = REPO / cfg["app_source_relative_root"]
     for name in ("index.html", "app.js", "styles.css"):
@@ -463,54 +663,6 @@ def build(cfg: dict[str, Any], config_path: Path) -> dict[str, Any]:
         }
         for key in range(5)
     }
-    unit_assets = {
-        "cells_xyz": record(unit_paths["cells_xyz"], viewer, stride_bytes=12),
-        "cells_attributes": record(unit_paths["cells_attributes"], viewer, stride_bytes=5,
-                                   names=["source", "role", "unit_kind", "unit_primary_source", "pair_rule"]),
-        "cells_unit": record(unit_paths["cells_unit"], viewer, stride_bytes=4),
-        "cells_metrics": record(unit_paths["cells_metrics"], viewer, stride_bytes=8,
-                                names=["surface_variation", "pair_distance_m"]),
-        "units_ids": record(unit_paths["units_ids"], viewer, stride_bytes=56,
-                            names=["unit_id", "mvs_cell_count", "mvs_point_count", "als_cell_count",
-                                   "als_point_count", "absorbed_cell_count", "paired_als_segment_count",
-                                   "component_count", "core_count_total", "core_count_class_1", "core_count_class_2",
-                                   "core_count_class_3", "core_count_class_4", "core_count_class_5"]),
-        "units_attributes": record(unit_paths["units_attributes"], viewer, stride_bytes=6,
-                                   names=["primary_source", "kind", "small", "split_child", "split_reason", "mixed_prior"]),
-        "units_pose": record(unit_paths["units_pose"], viewer, stride_bytes=28,
-                             names=["cx", "cy", "cz", "nx", "ny", "nz", "plane_d"]),
-        "units_metrics": record(unit_paths["units_metrics"], viewer, stride_bytes=64,
-                                names=["area_m2", "plane_rmse_m", "plane_p95_abs_residual_m", "extent_e1_m",
-                                       "extent_e2_m", "tilt_from_up_deg", "prior_support_fraction",
-                                       "bbox_min_x", "bbox_min_y", "bbox_min_z", "bbox_max_x", "bbox_max_y",
-                                       "bbox_max_z", "prior_offset_median_m", "prior_offset_spread_m",
-                                       "prior_plane_rmse_m"]),
-        "units_uids": record(unit_paths["units_uids"], viewer, stride_bytes=16),
-        "adjacency": record(unit_paths["adjacency"], viewer, stride_bytes=28,
-                            names=["unit_a", "unit_b", "contact_pairs", "same_primary",
-                                   "contact_mvs_mvs", "contact_als_als", "contact_cross"]),
-    }
-    region_units = {
-        "task_id": cfg["region_unit_task_id"],
-        "role": "T0_DATA_DEFINED_DECISION_UNITS_DISPLAY_ONLY",
-        "design_reference": unit_technical.get("design_reference"),
-        "domain": unit_technical["domain"],
-        "selected_profile": unit_technical["selected_profile"],
-        "profile": unit_technical["profile"],
-        "accounting": unit_technical["accounting"],
-        "cell_count": int(len(cells)),
-        "unit_count": int(len(units)),
-        "adjacency_count": int(len(adjacency)),
-        "source_names": unit_technical["source_names"],
-        "kind_names": unit_technical["kind_names"],
-        "role_names": unit_technical["role_names"],
-        "pair_rule_names": unit_technical["pair_rule_names"],
-        "split_reason_names": unit_technical["split_reason_names"],
-        "unit_set_sha256": unit_technical["unit_set_sha256"],
-        "colors": cfg["region_unit_colors"],
-        "not_decided_here": unit_technical["not_decided_here"],
-        "assets": unit_assets,
-    }
     manifest = {
         "schema": "jointbuildgs.phd.mvs_als_surface_patch.viewer.v1",
         "task_id": cfg["task_id"],
@@ -531,10 +683,23 @@ def build(cfg: dict[str, Any], config_path: Path) -> dict[str, Any]:
             "source_relation_viewer_manifest": record(relation_root / "viewer_manifest.json", relation_root),
             "surface_patch_artifact_manifest": record(patch_files["artifact_manifest.json"], patch_root),
             "surface_patch_validation_receipt": record(patch_files["validation_receipt.json"], patch_root),
-            "region_unit_artifact_manifest": record(unit_files["artifact_manifest.json"], unit_root),
-            "region_unit_validation_receipt": record(unit_files["validation_receipt.json"], unit_root),
+            **prism_upstreams,
         },
-        "region_units": region_units,
+        "prisms": prism_blocks,
+        "hm_zones": {
+            "role": "SCENE_WIDE_MVS_EMPTY_PRIOR_PRESENT_ZONES_DISPLAY_ONLY",
+            "rule": cfg["hm_zone_rule"],
+            "elevated_core_count": int(hm_flag.sum()),
+            "clusters": hm_table,
+            "assets": {"flag": record(hm_paths["flag"], viewer, stride_bytes=1), "cluster": record(hm_paths["cluster"], viewer, stride_bytes=2)},
+        },
+        "quality_zones": {
+            "role": "SCENE_WIDE_PRIOR_QUALITY_BETTER_ZONES_DISPLAY_ONLY",
+            "rule": cfg["quality_zone_rule"],
+            "flagged_core_count": int(q_flag.sum()),
+            "clusters": q_table,
+            "assets": {"flag": record(q_paths["flag"], viewer, stride_bytes=1), "cluster": record(q_paths["cluster"], viewer, stride_bytes=2)},
+        },
         "frame": relation_manifest["frame"],
         "bounds": relation_manifest["bounds"],
         "sources": sources,
@@ -579,13 +744,15 @@ def build(cfg: dict[str, Any], config_path: Path) -> dict[str, Any]:
             "source_relation_viewer_manifest": record(relation_root / "viewer_manifest.json", relation_root),
             "surface_patch_artifact_manifest": record(patch_files["artifact_manifest.json"], patch_root),
             "surface_patch_validation_receipt": record(patch_files["validation_receipt.json"], patch_root),
-            "region_unit_artifact_manifest": record(unit_files["artifact_manifest.json"], unit_root),
-            "region_unit_validation_receipt": record(unit_files["validation_receipt.json"], unit_root),
+            **prism_upstreams,
         },
+        "prism_count": len(prism_blocks),
+        "evidence_cell_count": int(sum(block["cell_count"] for block in prism_blocks)),
+        "chip_count": chip_total,
+        "hm_cluster_count": len(hm_table),
+        "quality_cluster_count": len(q_table),
         "relation_core_count": count,
         "patch_count": patch_count,
-        "region_unit_count": int(len(units)),
-        "region_unit_cell_count": int(len(cells)),
         "outputs": outputs,
         "prohibited_inputs_accessed": [],
         "scientific_verdict": None,
@@ -604,12 +771,16 @@ def validate(cfg: dict[str, Any]) -> dict[str, Any]:
     # re-verify the upstream pins so a standalone validate detects stale T0/patch/relation assets
     verify_relation_upstream(cfg, artifact_root / cfg["source_relation_viewer_relative_root"])
     verify_patch_upstream(cfg, artifact_root / cfg["surface_patch_relative_root"])
-    unit_root = artifact_root / cfg["region_unit_relative_root"]
-    verify_region_unit_upstream(cfg, unit_root)
-    for key, root in (("region_unit_artifact_manifest", unit_root / "artifact_manifest.json"),
-                      ("region_unit_validation_receipt", unit_root / "validation_receipt.json")):
-        if manifest["upstreams"][key]["sha256"] != sha256(root):
-            raise AssertionError(f"viewer assets are stale relative to the current {key}")
+    for item in cfg["prisms"]:
+        evidence_root = artifact_root / item["evidence_bank_relative_root"]; warp_root = artifact_root / item["warp_ncc_relative_root"]
+        verify_evidence_bank_upstream(item, evidence_root)
+        verify_warp_ncc_upstream(item, warp_root)
+        for key, path in ((f"{item['name']}_evidence_bank_artifact_manifest", evidence_root / "artifact_manifest.json"),
+                          (f"{item['name']}_evidence_bank_validation_receipt", evidence_root / "validation_receipt.json"),
+                          (f"{item['name']}_warp_ncc_artifact_manifest", warp_root / "artifact_manifest.json"),
+                          (f"{item['name']}_warp_ncc_validation_receipt", warp_root / "validation_receipt.json")):
+            if manifest["upstreams"][key]["sha256"] != sha256(path):
+                raise AssertionError(f"viewer assets are stale relative to the current {key}")
     if manifest.get("prohibited_inputs_accessed") != []:
         raise AssertionError("prohibited viewer input access is not empty")
     if manifest.get("comparison_contract", {}).get("m3c2_recomputed") is not False:
@@ -639,18 +810,43 @@ def validate(cfg: dict[str, Any]) -> dict[str, Any]:
         if path.stat().st_size != rows * int(item["stride_bytes"]) or sha256(path) != item["sha256"]:
             raise AssertionError(f"patch asset mismatch: {name}")
         checks += 1
-    units_block = manifest["region_units"]
-    unit_rows = {"cells": int(units_block["cell_count"]), "units": int(units_block["unit_count"]),
-                 "adjacency": int(units_block["adjacency_count"])}
-    for name, item in units_block["assets"].items():
-        rows = unit_rows["adjacency"] if name == "adjacency" else unit_rows["cells"] if name.startswith("cells_") else unit_rows["units"]
+    if len(manifest["prisms"]) != len(cfg["prisms"]):
+        raise AssertionError("prism count drift between config and manifest")
+    for ev_block in manifest["prisms"]:
+        ev_rows = int(ev_block["cell_count"])
+        for name, item in ev_block["assets"].items():
+            path = viewer / item["path"]
+            if path.stat().st_size != ev_rows * int(item["stride_bytes"]) or sha256(path) != item["sha256"]:
+                raise AssertionError(f"evidence-cell asset mismatch: {ev_block['name']} {name}")
+            checks += 1
+        for key, item in ev_block["images"].items():
+            path = viewer / item["path"]
+            if path.stat().st_size != int(item["bytes"]) or sha256(path) != item["sha256"]:
+                raise AssertionError(f"evidence image mismatch: {ev_block['name']} {key}")
+        chip_files = sorted((viewer / ev_block["chips"]["directory"]).glob("cell_*.png"))
+        if len(chip_files) != int(ev_block["chips"]["count"]) or len(ev_block["chips"]["files"]) != len(chip_files):
+            raise AssertionError(f"chip count drift in viewer assets: {ev_block['name']}")
+        states = np.fromfile(viewer / ev_block["assets"]["cells_attributes"]["path"], dtype=np.uint8).reshape(-1, 8)[:, 0]
+        if not set(np.unique(states)).issubset({1, 2, 3, 4, 5}):
+            raise AssertionError(f"evidence-cell state drift in viewer assets: {ev_block['name']}")
+    hm_block = manifest["hm_zones"]
+    for name, item in hm_block["assets"].items():
         path = viewer / item["path"]
-        if path.stat().st_size != rows * int(item["stride_bytes"]) or sha256(path) != item["sha256"]:
-            raise AssertionError(f"region-unit asset mismatch: {name}")
+        if path.stat().st_size != count * int(item["stride_bytes"]) or sha256(path) != item["sha256"]:
+            raise AssertionError(f"hm-zone asset mismatch: {name}")
         checks += 1
-    unit_ids = np.fromfile(viewer / units_block["assets"]["cells_unit"]["path"], dtype="<u4")
-    if np.any(unit_ids == 0) or np.any(unit_ids > unit_rows["units"]):
-        raise AssertionError("region-unit coverage drift in viewer assets")
+    hm_flag = np.fromfile(viewer / hm_block["assets"]["flag"]["path"], dtype=np.uint8)
+    if int(hm_flag.sum()) != int(hm_block["elevated_core_count"]):
+        raise AssertionError("hm-zone elevated core count drift")
+    q_block = manifest["quality_zones"]
+    for name, item in q_block["assets"].items():
+        path = viewer / item["path"]
+        if path.stat().st_size != count * int(item["stride_bytes"]) or sha256(path) != item["sha256"]:
+            raise AssertionError(f"quality-zone asset mismatch: {name}")
+        checks += 1
+    q_flag = np.fromfile(viewer / q_block["assets"]["flag"]["path"], dtype=np.uint8)
+    if int(q_flag.sum()) != int(q_block["flagged_core_count"]):
+        raise AssertionError("quality-zone flagged core count drift")
     raw = np.fromfile(viewer / manifest["relations"]["attributes"]["path"], dtype=np.uint8).reshape(-1, 4)[:, 0]
     patch = np.fromfile(viewer / manifest["patches"]["assets"]["attributes"]["path"], dtype=np.uint8).reshape(-1, 4)[:, 0]
     if _class_counts(raw) != manifest["patches"]["raw_class_counts"]:
@@ -677,7 +873,9 @@ def validate(cfg: dict[str, Any]) -> dict[str, Any]:
             "raw_five_class_preserved": "PASS",
             "patch_five_class_and_uid_integrity": "PASS",
             "both_source_layers": "PASS",
-            "region_unit_assets_and_full_coverage": "PASS",
+            "evidence_cell_assets_chips_and_images": "PASS",
+            "hm_zone_assets": "PASS",
+            "quality_zone_assets": "PASS",
             "offline_dependencies": "PASS",
             "m3c2_not_recomputed": "PASS",
             "candidate_evidence_never_smoothed_to_compatible": "PASS",
@@ -687,7 +885,11 @@ def validate(cfg: dict[str, Any]) -> dict[str, Any]:
         "assets_checked": checks,
         "relation_core_count": count,
         "patch_count": patch_count,
-        "region_unit_count": unit_rows["units"],
+        "prism_count": len(manifest["prisms"]),
+        "evidence_cell_count": int(sum(block["cell_count"] for block in manifest["prisms"])),
+        "chip_count": int(sum(block["chips"]["count"] for block in manifest["prisms"])),
+        "hm_cluster_count": len(hm_block["clusters"]),
+        "quality_cluster_count": len(q_block["clusters"]),
         "scientific_verdict": None,
     }
     atomic_json(viewer / "viewer_validation_receipt.json", receipt)

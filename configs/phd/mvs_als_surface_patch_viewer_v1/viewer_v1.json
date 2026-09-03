@@ -3,7 +3,7 @@
   "task_id": "PHD-MVS-ALS-SURFACE-PATCH-VIEWER-v1",
   "status": "USER_APPROVED_DEVELOPMENT_NON_CONFIRMATORY",
   "scientific_verdict": null,
-  "purpose": "Compare the frozen one-pass five-class source-relation cores with locally connected source-surface patches. This viewer is display-only and cannot decide source authority, temporal change, or scientific performance. It additionally overlays the T0 region units (data-defined decision units, PHD-REGION-UNIT-v1) on the pilot prism; the overlay is display-only.",
+  "purpose": "Stage-by-stage qualitative viewer for the source-decision method on the frozen pilot prisms: the scene-wide frozen relation cores (3D-a sample) with the 'MVS empty, prior present' zones, and per prism the stage-1 pairing state, the T1 3D evidence and the T2 warp-NCC evidence with warp chips and the current TOP image overlay. Display-only; it cannot decide source authority, temporal change, or scientific performance.",
   "artifact_root": "/artifacts/JointBuildGS",
   "source_relation_viewer_relative_root": "phase-payloads/phd/mvs_als_source_relation_v1/PHD-MVS-ALS-SOURCE-RELATION-v1/viewer",
   "source_relation_viewer_manifest_sha256": "db3d731cfdeaab3c6a26cd5319582cd16966abb9a76777de45228a28c9dc7c3d",
@@ -75,28 +75,113 @@
     "BUILDING_STABLE_ID",
     "JOURNAL1_93_ROSTER"
   ],
-  "region_unit_relative_root": "phase-payloads/phd/region_unit_v1/PHD-REGION-UNIT-v1",
-  "region_unit_task_id": "PHD-REGION-UNIT-v1",
-  "region_unit_artifact_manifest_sha256": "1a7a1ca1b85d88fa69b1a7dd91c951e21ebc7758f7cf8dd2f9faadec10f69284",
-  "region_unit_validation_receipt_sha256": "c5a205222d962e6e44866e34d339158a2b58bdfc865fd4b8722dc745b89adad6",
-  "region_unit_colors": {
-    "kind": {
-      "0": "#22c55e",
-      "1": "#f97316"
-    },
-    "primary": {
-      "0": "#67e8f9",
-      "1": "#c4b5fd"
-    },
-    "role": {
-      "0": "#22c55e",
-      "1": "#f97316",
-      "2": "#eab308"
-    },
-    "pairing": {
-      "als_paired": "#22c55e",
-      "als_prior_only": "#c4b5fd",
-      "mvs": "#475569"
+  "evidence_cell_colors": {
+    "state": {
+      "1": "#22c55e",
+      "2": "#ef4444",
+      "3": "#f97316",
+      "4": "#c4b5fd",
+      "5": "#67e8f9"
     }
+  },
+  "prisms": [
+    {
+      "name": "pilot",
+      "label": "prism 1 (pilot) · TUM 안뜰 (옛 지붕 소실)",
+      "site_note": "2022 임시 구조물 지붕 자리가 2024 광장 (H_chg 소실) + 양립 광장 (H_C) + 수목 + 수관 아래 (H_U)",
+      "evidence_bank_relative_root": "phase-payloads/phd/evidence_bank_v1/PHD-EVIDENCE-BANK-v1",
+      "evidence_bank_task_id": "PHD-EVIDENCE-BANK-v1",
+      "evidence_bank_artifact_manifest_sha256": "d80c5f41eb1aee73a8d6b58d91d84098d9400801fb5bd81b42c332d5abfa705a",
+      "evidence_bank_validation_receipt_sha256": "c3c42794713d8f54f8165e944727c25a0514d034aeafee9e57a27c916adb3133",
+      "warp_ncc_relative_root": "phase-payloads/phd/warp_ncc_v1/PHD-WARP-NCC-v1",
+      "warp_ncc_task_id": "PHD-WARP-NCC-v1",
+      "warp_ncc_artifact_manifest_sha256": "7b54696dd0f5cddcad278dcb7e62bdee97d4b9a6847e8f75d2dc49685cb89de8",
+      "warp_ncc_validation_receipt_sha256": "08717d981674f7642579e7829ee83665053d755de3b2aa7b1671dbfa92cebafc"
+    },
+    {
+      "name": "p2",
+      "label": "prism 2 · 동쪽 톱니 지붕 (변화 사례로 판명)",
+      "site_note": "현재 사진에 건물이 있는데 MVS 지붕이 낮거나 비어 있는 자리: 3D 서명은 파일럿의 사라진 지붕과 같고(관통), 사진 채널이 P를 지지해야 한다 (H_M)",
+      "evidence_bank_relative_root": "phase-payloads/phd/evidence_bank_v1/PHD-EVIDENCE-BANK-P2-v1",
+      "evidence_bank_task_id": "PHD-EVIDENCE-BANK-P2-v1",
+      "evidence_bank_artifact_manifest_sha256": "2f35d8de83280e41b3ad2829d67994d5efacc510c57bafd8206dcfcb916dda6d",
+      "evidence_bank_validation_receipt_sha256": "cc8dd6289e311b529ff0b0002f877e4071e713f90913770122554707c4ebda58",
+      "warp_ncc_relative_root": "phase-payloads/phd/warp_ncc_v1/PHD-WARP-NCC-P2-v1",
+      "warp_ncc_task_id": "PHD-WARP-NCC-P2-v1",
+      "warp_ncc_artifact_manifest_sha256": "44899d4fb6a1aef2914f9a94945cc8580e6d60ff9e08d383ecedd39171bd5c63",
+      "warp_ncc_validation_receipt_sha256": "e0bcbf87f21afba41a0a43d3f946ccdc7b0e7090988531a610c519dc8f195a5a"
+    },
+    {
+      "name": "p3",
+      "label": "prism 3 · 서쪽 금속 지붕 건물 (prior 품질 우세 후보)",
+      "site_note": "두 소스가 같은 지붕면을 지지하지만 반사 금속 지붕에서 MVS 잡음이 ALS의 6배(σ 0.51 대 0.08): 높이 변화가 아니라 품질 비대칭 사례 후보",
+      "evidence_bank_relative_root": "phase-payloads/phd/evidence_bank_v1/PHD-EVIDENCE-BANK-P3-v1",
+      "evidence_bank_task_id": "PHD-EVIDENCE-BANK-P3-v1",
+      "evidence_bank_artifact_manifest_sha256": "20ab53839cb17408163de69cbf0262bf5be9ccd35efef7432cc74281ba7fcaf1",
+      "evidence_bank_validation_receipt_sha256": "d2e13d0ccd0b1c4847eb423a97123e05e22a61d8ba7ba87f20339ce55b3b24a5",
+      "warp_ncc_relative_root": "phase-payloads/phd/warp_ncc_v1/PHD-WARP-NCC-P3-v1",
+      "warp_ncc_task_id": "PHD-WARP-NCC-P3-v1",
+      "warp_ncc_artifact_manifest_sha256": "83fc3eb7441cca3eadfbcb4c436175bfc229e4a98e4577f3e2187f72d44bb505",
+      "warp_ncc_validation_receipt_sha256": "86194e988a7aaf3c6c8d5a3c2e00ec6938a10e4d9bb0483805ec6071812d147f"
+    },
+    {
+      "name": "bench_v5",
+      "label": "주입 V5 · prism 2 에 MVS 결손 조각 (H_M 결손)",
+      "site_note": "양립 지면에 3 m 조각 15칸의 MVS 점을 지움: 무착지 + 사진이 P 유지(S_P 0.94)",
+      "evidence_bank_relative_root": "phase-payloads/phd/evidence_bank_v1/PHD-EVIDENCE-BANK-BENCH-V5-v1",
+      "evidence_bank_task_id": "PHD-EVIDENCE-BANK-BENCH-V5-v1",
+      "evidence_bank_artifact_manifest_sha256": "75d9a37f19a10726ec94666bed2c7d657a39365a0178a5abd5ce8da0f74304e0",
+      "evidence_bank_validation_receipt_sha256": "3aa1a75b138982edd72133650c9bfd3c78fc22f690501a1033f8a188f77eaa5b",
+      "warp_ncc_relative_root": "phase-payloads/phd/warp_ncc_v1/PHD-WARP-NCC-BENCH-V5-v1",
+      "warp_ncc_task_id": "PHD-WARP-NCC-BENCH-V5-v1",
+      "warp_ncc_artifact_manifest_sha256": "80bf632d083a8e3fa9e4bb9c7e5c0f07b2eb1bf7117fd78e63a9dfa35b693dae",
+      "warp_ncc_validation_receipt_sha256": "08bc4023a34e478526a83327d2d4e6ca633ba6872d7602b0260d470b690212d4"
+    },
+    {
+      "name": "bench_v7",
+      "label": "주입 V7 · prism 2 에 MVS +1 m 편향 조각 (H_M 편향)",
+      "site_note": "같은 조각의 MVS 를 1 m 올림: 광선 차단 0.99 + 사진이 P 지지(Δ −0.44)",
+      "evidence_bank_relative_root": "phase-payloads/phd/evidence_bank_v1/PHD-EVIDENCE-BANK-BENCH-V7-v1",
+      "evidence_bank_task_id": "PHD-EVIDENCE-BANK-BENCH-V7-v1",
+      "evidence_bank_artifact_manifest_sha256": "0db57ddf5e9eb22896c80db7b568f896bf809ba9d77723897171fe83ef8a3a41",
+      "evidence_bank_validation_receipt_sha256": "3c12180b670215b15959ebc74d00a1e057d13afea217872d7d2bcf3ec9502778",
+      "warp_ncc_relative_root": "phase-payloads/phd/warp_ncc_v1/PHD-WARP-NCC-BENCH-V7-v1",
+      "warp_ncc_task_id": "PHD-WARP-NCC-BENCH-V7-v1",
+      "warp_ncc_artifact_manifest_sha256": "cbff645456cc26de32caf467d9d41acda34166cb4977e983aff71101991edab0",
+      "warp_ncc_validation_receipt_sha256": "02a5c39729cd112dbdb5e11131e8cd9d459621fb61acfc3065407d4574f42272"
+    },
+    {
+      "name": "bench_v8",
+      "label": "주입 V8 · prism 2 에 ALS +2 m 조각 (H_chg 소실 합성)",
+      "site_note": "같은 조각의 ALS 를 2 m 올림: 관통 0.96 + 사진이 M 지지(Δ +0.51) — V7 과 부호 반대",
+      "evidence_bank_relative_root": "phase-payloads/phd/evidence_bank_v1/PHD-EVIDENCE-BANK-BENCH-V8-v1",
+      "evidence_bank_task_id": "PHD-EVIDENCE-BANK-BENCH-V8-v1",
+      "evidence_bank_artifact_manifest_sha256": "3f940634cd28eab70e7704df4fc4a070c4f7163bcb8e7d008e2bd9a7e2a6d6ed",
+      "evidence_bank_validation_receipt_sha256": "b87b250db071f385d69e3c414b9789ce9c12c7e9f4c7ec48e397b871281d1cda",
+      "warp_ncc_relative_root": "phase-payloads/phd/warp_ncc_v1/PHD-WARP-NCC-BENCH-V8-v1",
+      "warp_ncc_task_id": "PHD-WARP-NCC-BENCH-V8-v1",
+      "warp_ncc_artifact_manifest_sha256": "48d56bb0f3dfc704eabff3cd25bc132483dca93e9d9931f69c16d28570d12ccd",
+      "warp_ncc_validation_receipt_sha256": "081c8b6c87b2377b87d1bba4480e28baa708fa77ed2e988d9be290d41c0ffff2"
+    }
+  ],
+  "hm_zone_rule": {
+    "min_height_above_ground_m": 3.0,
+    "ground_cell_m": 24.0,
+    "cluster_cell_m": 2.0,
+    "min_cores_per_cell": 2,
+    "min_area_m2": 80.0,
+    "boundary_margin_m": 6.0,
+    "semantics": "class-4 (PRIOR_ONLY_SUPPORT) relation cores >= 3 m above the local ground (5th-percentile core z per 24 m cell, min over 3x3), 2 m cells with >= 2 cores, 8-connected, >= 80 m2; display-only candidate finder for H_M sites, not a method input"
+  },
+  "quality_zone_rule": {
+    "min_sigma_ratio": 3.0,
+    "min_sigma_mvs_m": 0.15,
+    "min_height_above_ground_m": 3.0,
+    "ground_cell_m": 24.0,
+    "cluster_cell_m": 2.0,
+    "min_cores_per_cell": 2,
+    "min_area_m2": 80.0,
+    "boundary_margin_m": 6.0,
+    "semantics": "cores where both sources support the same surface (class 1/2) but the MVS local noise is >= 3x the ALS noise and >= 0.15 m, elevated >= 3 m; display-only finder for 'prior quality better' candidate sites, not a method input"
   }
 }

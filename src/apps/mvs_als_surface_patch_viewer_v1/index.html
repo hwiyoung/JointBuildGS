@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>MVS–ALS raw relation / surface-patch viewer</title>
+  <title>소스 판정 증거 뷰어 — 단계별 결과</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div id="app">
     <header>
       <div>
-        <p class="eyebrow">JointBuildGS · before / after qualitative diagnostic</p>
-        <h1>MVS–Existing ALS 관계 core → 연결 표면 patch</h1>
+        <p class="eyebrow">JointBuildGS · 소스 판정 방법 · 단계별 결과의 정성 확인</p>
+        <h1>장면 → 1 영역 → 2 증거 T1(3D) → 2 증거 T2(사진)</h1>
       </div>
       <div class="header-meta">
         <span class="badge">development / non-confirmatory</span>
@@ -22,108 +22,167 @@
     <main>
       <aside id="controls">
         <section>
-          <div class="section-title"><h2>원본 3D source</h2><span id="source-counts"></span></div>
-          <label class="source-row"><input id="show-mvs" type="checkbox" checked><i class="swatch source-mvs"></i><span>current-image MVS</span></label>
-          <label class="source-row"><input id="show-als" type="checkbox" checked><i class="swatch source-als"></i><span>registered Existing ALS</span></label>
-          <label class="range-row"><span>source opacity</span><input id="source-opacity" type="range" min="0.03" max="1" value="0.26" step="0.01"><output>0.26</output></label>
-          <label class="range-row"><span>source point</span><input id="source-size" type="range" min="0.5" max="3" value="1.0" step="0.1"><output>1.0</output></label>
-        </section>
-
-        <section>
-          <div class="section-title"><h2>before / after</h2><span id="relation-total"></span></div>
-          <div class="comparison-tabs" role="group" aria-label="색상 모드">
-            <button type="button" data-mode="raw" class="active">before · raw 5-class</button>
-            <button type="button" data-mode="patch">after · patch 5-class</button>
+          <div id="stage-tabs" class="comparison-tabs" role="group" aria-label="단계">
+            <button type="button" data-stage="scene" class="active">장면</button>
+            <button type="button" data-stage="s1">1 영역</button>
+            <button type="button" data-stage="t1">2 증거 T1</button>
+            <button type="button" data-stage="t2">2 증거 T2</button>
           </div>
-          <label class="select-row"><span>추가 검사 모드</span>
-            <select id="color-mode">
-              <option value="raw">raw relation</option>
-              <option value="patch">patch relation</option>
-              <option value="uid">patch UID</option>
-              <option value="source">source family</option>
-              <option value="status">patch status</option>
-            </select>
-          </label>
-          <p id="mode-note" class="muted"></p>
-          <div class="preset-row">
-            <button id="preset-all" type="button">5개 전체</button>
-            <button id="preset-queue" type="button">후보 2·3·4</button>
-          </div>
-          <div class="section-title sub"><h2 id="class-basis">raw relation filter</h2><span></span></div>
-          <div id="class-controls"></div>
-          <label class="range-row"><span>core point</span><input id="relation-size" type="range" min="1" max="9" value="3.4" step="0.2"><output>3.4</output></label>
-          <label class="source-row"><input id="xray-labels" type="checkbox"><span>core X-ray overlay</span></label>
-          <label class="source-row"><input id="show-centroids" type="checkbox"><span>patch centroid 표시</span></label>
-          <div id="status-legend" class="legend"></div>
-        </section>
-
-        <section id="t0-section">
-          <div class="section-title"><h2>T0 판정 단위 · pilot prism</h2><span id="t0-counts"></span></div>
-          <label class="source-row"><input id="show-t0" type="checkbox" checked><span>T0 단위 셀 표시</span></label>
-          <label class="source-row"><input id="t0-show-mvs" type="checkbox" checked><i class="swatch source-mvs"></i><span>MVS 작업 셀</span></label>
-          <label class="source-row"><input id="t0-show-als" type="checkbox" checked><i class="swatch source-als"></i><span>Existing ALS 작업 셀</span></label>
-          <label class="select-row"><span>색 모드</span>
-            <select id="t0-mode">
-              <option value="uid">unit UID</option>
-              <option value="kind">kind · planar / rough</option>
-              <option value="primary">primary source</option>
-              <option value="pairing">pairing · ALS paired / prior-only</option>
-              <option value="support">prior support f_P (MVS 단위)</option>
-              <option value="pairdist">pair distance (ALS 셀)</option>
-              <option value="tilt">tilt from up</option>
-              <option value="role">cell role</option>
-              <option value="pairrule">pair rule (ALS 셀)</option>
-              <option value="layer">prior layer split / spread</option>
-              <option value="cores">relation cores per unit</option>
-            </select>
-          </label>
-          <p id="t0-note" class="muted"></p>
-          <label class="range-row"><span>cell point</span><input id="t0-size" type="range" min="1" max="9" value="3.2" step="0.2"><output>3.2</output></label>
-          <label class="source-row"><input id="t0-dim" type="checkbox" checked><span>다른 층 흐리게 (core·source)</span></label>
-          <label class="source-row"><input id="t0-xray" type="checkbox"><span>단위 셀 X-ray</span></label>
+          <label class="select-row"><span>prism</span><select id="prism-select"></select></label>
+          <p id="prism-note" class="muted"></p>
           <div class="preset-row">
             <button id="view-prism" type="button">prism 보기</button>
-            <button id="t0-clear" type="button">선택 해제</button>
+            <button id="view-scene" type="button">장면 전체</button>
+            <button id="clear-selection" type="button">선택 해제</button>
           </div>
-          <div id="t0-legend" class="legend"></div>
-          <dl id="t0-accounting" class="accounting"></dl>
+          <div id="split-panel" hidden>
+            <div class="section-title sub"><h2>소스별 표시</h2><span></span></div>
+            <label class="source-row"><input id="show-cells-m" type="checkbox" checked><i class="swatch source-mvs"></i><span>M 셀 (현재 MVS 위층 높이)</span></label>
+            <label class="source-row"><input id="show-cells-p" type="checkbox" checked><i class="swatch source-als"></i><span>P 셀 (2022 ALS 위층 높이, 흐리게)</span></label>
+            <label class="source-row"><input id="show-raw-m" type="checkbox"><i class="swatch source-mvs"></i><span>원본 MVS 점군 (prism 안, 흐림 해제)</span></label>
+            <label class="source-row"><input id="show-raw-p" type="checkbox"><i class="swatch source-als"></i><span>원본 ALS 점군 (prism 안, 흐림 해제)</span></label>
+            <div class="section-title sub"><h2>영역별 표시 (pairing 상태)</h2><span></span></div>
+            <div id="state-filter"></div>
+            <label class="source-row"><input id="only-selected-pair" type="checkbox"><span>선택한 패치 짝만</span></label>
+          </div>
         </section>
 
-        <section>
-          <h2>카메라·tile</h2>
+        <section id="stage-scene" class="stage">
+          <div class="section-title"><h2>장면 · 동결 관계 core (3D-a 표본)</h2><span id="scene-counts"></span></div>
+          <p class="help">장면 = 조사 구역 전체(약 460 × 520 m). prism(파랑 상자)이 어디에 있고, 어디를 다음 prism으로 볼지 고르는 탭이다. 점 = 관계 core: 2 m 간격 표본점마다 두 소스(현재 MVS, 2022 ALS = prior)를 법선 방향 원통 안에서 비교한 결과로, 파일럿 이전 첫 워크스트림의 동결 산출물이자 T1 3D-a의 표본이다. <b>"MVS 빔 · prior 있음"</b> 모드는 그중 ALS만 지지하고 지면보다 3 m 이상 높은 core를 자홍으로, 군집을 상자로 보여 준다. 목록의 "MVS 없음"은 그 기둥에 MVS가 거의 없는 곳(H_M 후보), "MVS 다른 높이"는 MVS 표면이 다른 높이에 있는 곳(변화 후보)이다. "이동"을 누르면 카메라가 간다.</p>
+          <label class="select-row"><span>색 모드</span>
+            <select id="scene-mode">
+              <option value="hm">MVS 빔 · prior 있음 (H_M 후보 구역)</option>
+              <option value="quality">prior 품질 우세 후보 (같은 표면, σ_MVS ≥ 3 σ_ALS)</option>
+              <option value="class">관계 5-class (동결 M3C2)</option>
+            </select>
+          </label>
+          <p id="scene-note" class="muted"></p>
+          <div id="scene-legend" class="legend"></div>
+          <label class="source-row"><input id="hm-boundary" type="checkbox"><span>장면 경계에 닿은 군집도 표시</span></label>
+          <dl id="hm-list" class="accounting"></dl>
+          <dl id="quality-list" class="accounting" hidden></dl>
+          <details class="sub-details">
+            <summary>원본 점군 표시</summary>
+            <label class="source-row"><input id="show-mvs" type="checkbox" checked><i class="swatch source-mvs"></i><span>current-image MVS</span></label>
+            <label class="source-row"><input id="show-als" type="checkbox" checked><i class="swatch source-als"></i><span>registered Existing ALS</span></label>
+            <label class="source-row"><input id="show-cores" type="checkbox" checked><span>관계 core</span></label>
+            <label class="range-row"><span>source opacity</span><input id="source-opacity" type="range" min="0.03" max="1" value="0.26" step="0.01"><output>0.26</output></label>
+            <label class="range-row"><span>core point</span><input id="core-size" type="range" min="1" max="9" value="3.0" step="0.2"><output>3.0</output></label>
+          </details>
+        </section>
+
+        <section id="stage-s1" class="stage" hidden>
+          <div class="section-title"><h2>1 영역 · 표면 패치의 XY 컬럼 짝</h2><span id="s1-counts"></span></div>
+          <p class="help">prism 안 0.5 m XY 셀마다 두 소스의 위층 표면을 짝지은 결과. 상태는 높이차 dz = z_prior − z_current의 <b>서술</b>(허용 0.3 m)이지 판정이 아니다. 여기서 볼 것: 어느 자리가 양립·옛 것 위·지금 것 위·한쪽만인지, 그리고 그 배치가 사진(장면)과 맞는지.</p>
+          <label class="select-row"><span>색 모드</span>
+            <select id="s1-mode">
+              <option value="state">pairing 상태</option>
+              <option value="dz">dz = z_prior − z_current (m)</option>
+              <option value="rough">거친(산재) 짝</option>
+            </select>
+          </label>
+          <p id="s1-note" class="muted"></p>
+          <div id="s1-legend" class="legend"></div>
+        </section>
+
+        <section id="stage-t1" class="stage" hidden>
+          <div class="section-title"><h2>2 증거 · T1 (3D 채널: 소스 대 소스)</h2><span id="t1-counts"></span></div>
+          <p class="help">두 소스를 서로 잰 값. 3D-a는 M3C2 부호거리(2 m 간격 표본), 3D-b는 현재 카메라 광선이 두 표면에 어떻게 착지하는지의 비율, 2D-c는 텍스처·뷰 수·입사각, r은 검정력 있는 채널 수. 여기서 볼 것: 불일치의 <b>자리와 서명</b>(관통 = 옛 표면이 사라졌거나 MVS가 낮음, 차단 = 새 표면). 3D만으로는 그 둘을 못 가른다.</p>
+          <label class="select-row"><span>색 모드</span>
+            <select id="t1-mode">
+              <option value="fpen">3D-b 관통 비율 (광선이 prior를 지나 MVS에 착지)</option>
+              <option value="fagree">3D-b 일치 비율</option>
+              <option value="fblock">3D-b 차단 비율 (MVS가 prior 앞)</option>
+              <option value="d3a">3D-a core 부호거리 d = ALS − MVS</option>
+              <option value="texture">2D-c 텍스처 (국소 std)</option>
+              <option value="r1">r (검정력 있는 채널 수, T1 정의)</option>
+            </select>
+          </label>
+          <p id="t1-note" class="muted"></p>
+          <div id="t1-legend" class="legend"></div>
+          <details class="sub-details">
+            <summary>T1 실측 요약</summary>
+            <dl id="t1-accounting" class="accounting"></dl>
+          </details>
+        </section>
+
+        <section id="stage-t2" class="stage" hidden>
+          <div class="section-title"><h2>2 증거 · T2 (사진 채널: 후보 대 사진)</h2><span id="t2-counts"></span></div>
+          <p class="help">기호: <b>M</b> = 현재 MVS 표면(후보), <b>P</b> = 2022 ALS(prior) 표면(후보). prism 이름의 "prism 2"와는 무관하다. 후보 표면으로 사진 A의 2 m 창을 사진 B로 옮겨 잰 NCC. 질문은 하나: <b>사진들이 어느 표면을 설명하는가.</b> 이 뷰어는 결정하는 곳이 아니라 채널 숫자가 사진과 같은 말을 하는지 눈으로 확인하는 곳이다. "검토 사례"를 순서대로 고르면 카메라가 그 셀로 가고 기대·채널값·확인 방법이 나온다.</p>
+          <label class="select-row"><span>검토 사례</span>
+            <select id="t2-case"><option value="">— 고르면 셀로 이동 —</option></select>
+          </label>
+          <p id="t2-case-note" class="help" hidden></p>
+          <label class="select-row"><span>색 모드</span>
+            <select id="t2-mode">
+              <option value="delta">Δ = ρ_M − ρ_P (빨강 = 사진이 M 지지, 파랑 = P 지지)</option>
+              <option value="fmp">f(M &gt; P) 쌍 비율</option>
+              <option value="fpm">f(P &gt; M) 쌍 비율</option>
+              <option value="sm">S_M (M으로 옮긴 NCC)</option>
+              <option value="sp">S_P (P로 옮긴 NCC)</option>
+              <option value="power">검정력 (쌍 ≥ 3: M / P / 둘 다 / 없음)</option>
+              <option value="npm">유효 쌍 수 (M)</option>
+              <option value="npp">유효 쌍 수 (P)</option>
+              <option value="nvdiff">가시성 차 n_views(P) − n_views(M)</option>
+              <option value="ctrl">통제: 1 m 올린 가짜 M의 손실</option>
+              <option value="edge">2D-b 에지 d_P − d_M (px, 보조)</option>
+              <option value="r2">r_t2 (2D-a를 T2로 갱신한 검정력 수)</option>
+            </select>
+          </label>
+          <p id="t2-note" class="muted"></p>
+          <div id="t2-legend" class="legend"></div>
+
           <div class="preset-row">
-            <button id="view-oblique" type="button">사선</button>
-            <button id="view-top" type="button">수직</button>
-            <button id="view-fit" type="button">전체</button>
+            <button id="image-top" type="button">TOP 사진 위 S_M·S_P·Δ</button>
           </div>
-          <label class="select-row"><span>active tile</span><select id="tile-select"><option value="">전체 공간</option></select></label>
-          <p class="muted">좌 drag: 회전 · 우 drag: 이동 · wheel: 확대 · core click: patch 전체 강조</p>
+          <details class="sub-details">
+            <summary>T2 실측 요약 (r2, 판별 대역 θ ≤ 20°)</summary>
+            <dl id="t2-accounting" class="accounting"></dl>
+          </details>
         </section>
 
         <section class="selection">
-          <h2>선택한 relation core / patch / T0 단위</h2>
-          <dl id="selection-details"><div><dt>상태</dt><dd>core 또는 T0 셀을 클릭하세요.</dd></div></dl>
+          <h2>선택</h2>
+          <dl id="selection-details"><div><dt>상태</dt><dd>셀 또는 core를 클릭하세요.</dd></div></dl>
+          <div id="chip-panel" hidden>
+            <p id="chip-caption" class="muted"></p>
+            <img id="chip-img" alt="warp chip" style="width:100%;image-rendering:pixelated;border:1px solid #263243;border-radius:4px">
+            <p class="muted">타일 = [뷰 a · M | 뷰 b · M | 뷰 a · P | 뷰 b · P]. 같은 XY 창을 각 후보 표면으로 두 뷰에 투영해 읽은 회색값(NCC 입력, 타일별 정규화, 북쪽 위). 후보가 맞으면 그 후보의 두 타일이 서로 닮는다.</p>
+          </div>
         </section>
+
+        <details class="panel">
+          <summary>표시 옵션</summary>
+          <label class="range-row"><span>cell point</span><input id="cell-size" type="range" min="1" max="12" value="5.0" step="0.2"><output>5.0</output></label>
+          <label class="source-row"><input id="ev-dim" type="checkbox" checked><span>prism 단계에서 장면 층 흐리게</span></label>
+          <p class="muted">셀은 pairing 위층 표면의 높이에 놓인다. "M 셀"은 현재 MVS 위층 높이(가장자리에서 위로 뜨는 편향이 그대로 보임), "P 셀"은 2022 ALS 위층 높이. 소스별·영역별 분리는 prism 단계의 "표시 분리" 칸에서 한다.</p>
+          <label class="source-row"><input id="ev-xray" type="checkbox"><span>셀 X-ray</span></label>
+          <label class="select-row"><span>active tile</span><select id="tile-select"><option value="">전체 공간</option></select></label>
+          <p class="muted">좌 drag: 회전 · 우 drag: 이동 · wheel: 확대</p>
+        </details>
       </aside>
 
       <section id="viewport-panel">
         <div id="viewport"></div>
         <div class="viewport-overlay top-left">
-          <strong id="mode-title">before · raw five-class cores</strong>
+          <strong id="mode-title">장면</strong>
           <span id="view-summary">loading…</span>
+        </div>
+        <div id="image-panel" class="image-panel" hidden>
+          <div class="image-panel-bar"><strong id="image-title"></strong><button id="image-close" type="button">닫기 (Esc)</button></div>
+          <img id="image-view" alt="evidence image">
         </div>
         <div class="viewport-overlay bottom-left">
           <span><i class="swatch source-mvs"></i>MVS</span>
           <span><i class="swatch source-als"></i>ALS</span>
-          <span>scene-local XYZ · patch는 source family별 연결 · T0 단위는 pilot prism 안 데이터 정의</span>
+          <span>scene-local XYZ · 증거 셀은 prism 안 0.5 m XY 위층 짝</span>
         </div>
       </section>
     </main>
 
     <footer>
-      before는 동결된 1회 M3C2/support 관계 core, after는 기하 연결 후 patch 집계 라벨이다.
-      T0 단위는 책임 하나가 붙는 자리를 소스 데이터에 정의한 것일 뿐이다.
-      patch도 T0 단위도 source authority·실제 변화·정확도 판정이 아니며 scientific_verdict는 null이다.
+      관계 core·pairing 상태·T1·T2 채널값은 모두 증거이며 책임·가중치·δ·변화 판정이 아니다. "MVS 빔 · prior 있음" 구역은 후보지 탐색용 표시이지 방법 입력이 아니다. scientific_verdict는 null이다.
     </footer>
   </div>
 
