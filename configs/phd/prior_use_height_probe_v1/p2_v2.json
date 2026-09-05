@@ -1,0 +1,95 @@
+{
+  "schema": "jointbuildgs.phd.prior_use_height_probe.v1",
+  "task_id": "PHD-PRIOR-USE-HEIGHT-PROBE-v2",
+  "status": "USER_DIRECTED_DEVELOPMENT_NON_CONFIRMATORY",
+  "scientific_verdict": null,
+  "authorization": "2026-09-06 user requested experiments showing existing calculation -> remaining judgment problem -> added calculation -> changed decision",
+  "artifact_root": "/artifacts/JointBuildGS",
+  "output_root": "/output",
+  "inputs": {
+    "als_tile": "phase-payloads/phd/mvs_als_source_relation_v1/PHD-MVS-ALS-SOURCE-RELATION-v1/partition/als/x004_y004.xyz_f32le.bin",
+    "als_tile_sha256": "4f9a4ef1449d8ac80f293c98a7e99d07737ef8d084233bb0fafaede0f85ee8d3",
+    "patch_root": "phase-payloads/phd/surface_patch_rg_v1/PHD-SURFACE-PATCH-RG-P2-v1",
+    "patch_files": {
+      "point_rows_als.npy": "831f92c7a0c00b59460beb5da0d4939f457a5e6a2b0d8a90dfe298bd463d441a",
+      "points_als.npy": "bfa6998d740e12122cb1a2cacba1eec84ab7598d3afd57fe2febdbd4156ac72b",
+      "patches_als.npy": "be9fe3ee607574ca1b230c918995c040990162b3227b11f2f7c629cb51e36a0d"
+    },
+    "views": "phase-payloads/phd/evidence_bank_v1/PHD-EVIDENCE-BANK-P2-v1/evidence_views.json",
+    "views_sha256": "dc7be25b2256fb94ad8e62836227f32fe5be47c47a95c93e1b3115c36071ebd3",
+    "camera_root": "phase-payloads/p0-audit/data/work/mvs/colmap_dense",
+    "cameras_sha256": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99",
+    "images_sha256": "dfc779496ee3b13f8df5dd28fae465746ce0adf4aca7922d38cbed275a2fd951",
+    "crosswalk": "artifacts/manifests/gate_s0/common_base_r2b/exact_937_member_crosswalk_v1.json",
+    "crosswalk_sha256": "b4af779ecfae859de9772ce50cb24326b20c3f86614f6a8957453779d1cd4c17"
+  },
+  "scope": {
+    "candidate_geometry": "native ALS points; immutable tile row membership",
+    "height_axis": "SCENE_LOCAL_Z; coordinate component, not an estimated gravity claim",
+    "horizontal_crs": "EPSG:25832",
+    "camera_and_registration": "fixed supplied values; uncertainty is not calibrated by this probe",
+    "visibility": "field-of-view only; current occlusion and free space are not verified",
+    "candidate_availability": "MVS excluded from this measurement; this is a controlled prior-only input setting, not proof of a natural MVS hole",
+    "sampling_origin": "historical P2 development prism originally selected using MVS-ALS relations; subgroup selection now uses prior geometry only",
+    "truth": "current metric truth of unshifted prior unknown; height offsets are test hypotheses, not current-error labels",
+    "full_current_use_action": null
+  },
+  "groups": {
+    "grid_size_m": 2,
+    "planar_type": 1,
+    "min_points": 30,
+    "max_groups": 64,
+    "max_points_per_group": 64,
+    "selection": "group by patch_id and floor(XY/grid_size); lexicographic keys, uniformly spaced indices before any image measurement; uniformly spaced original rows within each group"
+  },
+  "views": {
+    "max_views": 66,
+    "selection": "Use all 66 historical frozen views; ranking retained for audit. Revised after v1's geometry-only 12-view selection produced zero admissible pairs; no candidate photo scores existed in v1."
+  },
+  "measurement": {
+    "height_min_m": -2,
+    "height_max_m": 2,
+    "height_step_m": 0.125,
+    "min_pair_angle_deg": 3,
+    "max_pair_angle_deg": 60,
+    "max_distance_ratio": 2,
+    "min_points": 30,
+    "min_gray_std": 2,
+    "min_common_pairs": 3,
+    "score_summary": "median ZNCC on identical native points and identical pairs across every tested height"
+  },
+  "comparison": {
+    "score_thresholds": [
+      0.3,
+      0.5,
+      0.7,
+      0.9
+    ],
+    "height_tolerances_m": [
+      0.25,
+      0.5,
+      1
+    ],
+    "pair_angle_maxima_deg": [
+      20,
+      60
+    ],
+    "tested_extents_m": [
+      1,
+      2
+    ],
+    "candidate_height_offset_m": 0,
+    "baseline": "CANDIDATE_SCORE_GATE",
+    "proposal_component": "DISCRETE_ALT_RANGE_GATE",
+    "boundary_rule": "any compatible height on tested boundary -> unresolved boundary",
+    "missing_rule": "no adequate common measurement or empty compatible set -> no support; retain reason",
+    "calibration_status": "UNVALIDATED_SENSITIVITY_AXES; no winning threshold will be selected",
+    "parameter_provenance": "0.5 ZNCC and 2/3-60/20 degree conventions originate in earlier exploratory T2; 20 degree band was historically post-result adjusted. Other threshold/tolerance entries are sensitivity axes, not application specifications or calibrated accuracy. +/-2m tests mirror existing metre-scale controls; 0.125m samples a finite vertical hypothesis grid. Group/view caps are computational scope, chosen before image measurements."
+  },
+  "revision": {
+    "predecessor": "PHD-PRIOR-USE-HEIGHT-PROBE-v1",
+    "reason": "0 admissible view pairs in selected 12; use all 66 already frozen views",
+    "changed": "view cap 12 -> 66 only; groups, height grid, pair geometry limits, score thresholds and tolerances unchanged",
+    "confirmatory": false
+  }
+}

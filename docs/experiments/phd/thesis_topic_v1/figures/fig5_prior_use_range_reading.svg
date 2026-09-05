@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="960" viewBox="0 0 1500 960" role="img" aria-labelledby="title desc">
+  <title id="title">가능한 현재 높이와 고정 prior의 허용오차 비교</title>
+  <desc id="desc">설명용 일차원 단면이며 실측이 아니다. 고정 prior와 허용 띠는 네 상황에서 같다. 사진이 남긴 가능한 현재 높이가 모두 띠 안이면 조건부 PRIOR, 띠 안팎에 있으면 미확정 ABSTAIN, 비어 있지 않은 가능집합 전체가 띠 밖이면 사용 반대 ABSTAIN, 가능집합이 비면 관측과 모형 진단을 위한 ABSTAIN이다. 입력과 오차 모형의 성립을 가정하며 점 검정을 면 전체의 채택으로 확대하지 않는다.</desc>
+  <defs>
+    <style>
+      text { font-family: "Noto Sans CJK KR", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; fill: #162b3e; }
+      .card { fill: #ffffff; stroke: #d6dfe7; stroke-width: 1.5; }
+      .heading { font-size: 27px; font-weight: 700; }
+      .label { font-size: 18px; fill: #4c6073; }
+      .explain { font-size: 20px; fill: #42576b; }
+      .result { font-size: 25px; font-weight: 700; }
+      .band { fill: #e5eff9; }
+      .boundary { stroke: #7898b7; stroke-width: 1.5; stroke-dasharray: 5 4; }
+      .axis { stroke: #a8b7c5; stroke-width: 1.5; }
+      .prior { stroke: #182d40; stroke-width: 4; }
+      .possible { fill: #e7892d; stroke: #ab5d12; stroke-width: 1.5; }
+    </style>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#a8b7c5"/>
+    </marker>
+    <g id="height-comparison">
+      <rect class="band" x="253" y="90" width="174" height="90" rx="3"/>
+      <line class="boundary" x1="253" y1="90" x2="253" y2="180"/>
+      <line class="boundary" x1="427" y1="90" x2="427" y2="180"/>
+      <line class="axis" x1="48" y1="139" x2="631" y2="139" marker-end="url(#arrow)"/>
+      <text class="label" x="340" y="78" text-anchor="middle">고정 prior</text>
+      <text class="label" x="629" y="201" text-anchor="end">현재 높이 →</text>
+    </g>
+    <g id="fixed-prior">
+      <line class="prior" x1="340" y1="91" x2="340" y2="180"/>
+      <path d="M340,132 L347,139 L340,146 L333,139 Z" fill="#182d40"/>
+    </g>
+  </defs>
+
+  <rect width="1500" height="960" fill="#f5f8fb"/>
+  <text x="50" y="59" font-size="34" font-weight="700">가능한 현재 높이를 고정 prior의 허용 띠와 비교한다</text>
+  <text x="50" y="99" font-size="22" fill="#435b70">prior는 움직이지 않는다. 사진이 남긴 현재 높이 대안이 어디까지 퍼져 있는지를 검사한다.</text>
+
+  <line x1="58" y1="122" x2="58" y2="146" class="prior"/>
+  <text x="75" y="143" font-size="20">고정 prior</text>
+  <rect x="264" y="123" width="38" height="24" class="band" stroke="#7898b7"/>
+  <text x="316" y="143" font-size="20">사용 허용오차 띠 · 경계 포함</text>
+  <rect x="665" y="127" width="40" height="16" rx="6" class="possible"/>
+  <text x="719" y="143" font-size="20">사진이 남긴 가능한 현재 높이</text>
+
+  <g transform="translate(50,177)">
+    <rect class="card" width="680" height="310" rx="14"/>
+    <text class="heading" x="26" y="42">모든 대안이 허용 띠 안</text>
+    <use href="#height-comparison"/>
+    <rect class="possible" x="288" y="131" width="96" height="16" rx="7"/>
+    <use href="#fixed-prior"/>
+    <text class="result" x="26" y="243" style="fill:#17644d">조건부 PRIOR</text>
+    <text class="explain" x="26" y="279">가능집합이 비어 있지 않고, 최대 오차도 허용 이내</text>
+  </g>
+
+  <g transform="translate(770,177)">
+    <rect class="card" width="680" height="310" rx="14"/>
+    <text class="heading" x="26" y="42">허용 띠 안팎에 대안이 남음</text>
+    <use href="#height-comparison"/>
+    <rect class="possible" x="291" y="131" width="39" height="16" rx="7"/>
+    <rect class="possible" x="468" y="131" width="67" height="16" rx="7"/>
+    <use href="#fixed-prior"/>
+    <text class="result" x="26" y="243" style="fill:#805b12">미확정 → ABSTAIN</text>
+    <text class="explain" x="26" y="279">가까운 설명이 있어도, 멀리 있는 설명을 배제하지 못함</text>
+  </g>
+
+  <g transform="translate(50,519)">
+    <rect class="card" width="680" height="310" rx="14"/>
+    <text class="heading" x="26" y="42">모든 대안이 허용 띠 밖</text>
+    <use href="#height-comparison"/>
+    <rect class="possible" x="145" y="131" width="67" height="16" rx="7"/>
+    <rect class="possible" x="473" y="131" width="64" height="16" rx="7"/>
+    <use href="#fixed-prior"/>
+    <text class="result" x="26" y="243" style="fill:#a03d33">사용 반대 → ABSTAIN</text>
+    <text class="explain" x="26" y="279">가능집합이 비어 있지 않고, 최소 오차도 허용 초과</text>
+  </g>
+
+  <g transform="translate(770,519)">
+    <rect class="card" width="680" height="310" rx="14"/>
+    <text class="heading" x="26" y="42">가능집합이 비어 있음</text>
+    <use href="#height-comparison"/>
+    <use href="#fixed-prior"/>
+    <rect x="445" y="107" width="185" height="47" rx="7" fill="#f5f0f8"/>
+    <text x="537" y="138" font-size="20" text-anchor="middle" style="fill:#715781">남은 높이 없음</text>
+    <text class="result" x="26" y="243" style="fill:#715781">모형·관측 진단 → ABSTAIN</text>
+    <text class="explain" x="26" y="279">최소·최대 오차를 계산해 후보 오류로 단정하지 않음</text>
+  </g>
+
+  <text x="50" y="871" font-size="21" font-weight="700">설명용 일차원 단면 · 실측 아님 · 확률적 신뢰구간 아님</text>
+  <text x="50" y="908" font-size="20">입력·오차 모형이 성립하고 필요한 기하 대안을 포함한다는 가정 아래의 판단이다.</text>
+  <text x="50" y="938" font-size="20">지지된 관측 지점·성분의 검정이며, 점 검정을 면 전체의 채택으로 확대하지 않는다.</text>
+</svg>
