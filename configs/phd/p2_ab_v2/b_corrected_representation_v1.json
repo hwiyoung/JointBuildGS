@@ -1,0 +1,8 @@
+{
+  "extends": "configs/phd/p2_ab_v2/b_native_v1.json",
+  "geometry_adapter_root": "/artifacts/JointBuildGS/phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-B-GEOMETRY-ADAPTER-v2",
+  "geometry_adapter_audit": "/artifacts/JointBuildGS/phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-B-GEOMETRY-ADAPTER-AUDIT-v3/corrected/audit.json",
+  "arms": ["geometry_fixed", "structured_detail"],
+  "seed_subdivision": 4,
+  "correction_scope": "Same four tangent child seeds and 2048 steps, corrected independent geometry adapter only."
+}

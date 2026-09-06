@@ -1,0 +1,619 @@
+{
+  "schema": "jointbuildgs.phd.p2_ab.sample.v1",
+  "task_id": "PHD-P2-AB-COMMON-v2",
+  "scientific_verdict": null,
+  "status": "COMMON_INPUTS_FROZEN_DEVELOPMENT_ONLY",
+  "frame": {
+    "horizontal_crs": "EPSG:25832",
+    "working_coordinates": "SCENE_LOCAL_XYZ",
+    "world_shift_xyz_m": [
+      690953.0,
+      5336071.0,
+      604.0
+    ]
+  },
+  "domain": {
+    "kind": "HALF_OPEN_PRISM_SCENE_LOCAL",
+    "x": [
+      110.0,
+      158.0
+    ],
+    "y": [
+      86.0,
+      132.0
+    ],
+    "z": [
+      -49.386,
+      -17.679
+    ],
+    "selection_origin": "P2 = H_M candidate site (east sawtooth-roof building): compact cluster of class-4 relation cores >= 3 m above local ground with an existing building in the current image (PHD-WARP-NCC-v1 illustrations/hm_candidates.json); XY box chosen to hold the roof core plus the road/ground on the west; z = joint 0.1-99.9 % quantiles of both sources padded 0.5/1.0 m"
+  },
+  "source_lineage": {
+    "mvs": {
+      "raw_files": [
+        "/artifacts/JointBuildGS/phase-payloads/p2/mvs_native_textured_mesh_preflight_v1/P2-MVS-NATIVE-DENSE-SCENE-RECOVERY-v2/work/mvs/openmvs/dim_dense.ply"
+      ],
+      "membership_status": "ALL_TILE_XYZ_EXACTLY_REPLAYED_FROM_RAW_BYTES",
+      "point_order": "ascending immutable tile rows",
+      "tile_point_count": 9252540
+    },
+    "als": {
+      "raw_files": [
+        "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/raw/als/690_5335.laz",
+        "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/raw/als/690_5336.laz",
+        "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/raw/als/691_5335.laz",
+        "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/raw/als/691_5336.laz"
+      ],
+      "membership_status": "ALL_TILE_XYZ_EXACTLY_REPLAYED_FROM_RAW_BYTES",
+      "point_order": "ascending immutable tile rows",
+      "tile_point_count": 964393
+    }
+  },
+  "denominators": {
+    "mvs": {
+      "prism_native_points": 330679,
+      "nonempty_xy_units": 550,
+      "planar_points": 293020,
+      "empty_xy_units": 2
+    },
+    "als": {
+      "prism_native_points": 45986,
+      "nonempty_xy_units": 552,
+      "planar_points": 38439,
+      "empty_xy_units": 0
+    }
+  },
+  "unit_count": 552,
+  "pilot_unit_indices": [
+    0,
+    8,
+    17,
+    26,
+    34,
+    43,
+    52,
+    61,
+    69,
+    78,
+    87,
+    96,
+    104,
+    113,
+    122,
+    131,
+    139,
+    148,
+    157,
+    166,
+    174,
+    183,
+    192,
+    201,
+    209,
+    218,
+    227,
+    236,
+    244,
+    253,
+    262,
+    271,
+    279,
+    288,
+    297,
+    306,
+    314,
+    323,
+    332,
+    341,
+    349,
+    358,
+    367,
+    376,
+    384,
+    393,
+    402,
+    411,
+    419,
+    428,
+    437,
+    446,
+    454,
+    463,
+    472,
+    481,
+    489,
+    498,
+    507,
+    516,
+    524,
+    533,
+    542,
+    551
+  ],
+  "view_split": {
+    "seed": "PHD-P2-AB-v1:",
+    "decision_count": 22,
+    "train_count": 33,
+    "appearance_eval_count": 11,
+    "rule": "sort ascending SHA256(seed + decimal COLMAP image ID); first 22 decision, next 33 train, remaining 11 appearance_eval",
+    "historical_development_reuse": true,
+    "candidate_mvs_uses_all_exact_937": true,
+    "confirmatory": false
+  },
+  "inputs": [
+    {
+      "path": "configs/phd/p2_ab_v1/sample_recovery_v2.json",
+      "sha256": "befa0700d3fee57127588343ed3498064ac4bcdb2c5b69688f5a9e69fb2a4e57",
+      "bytes": 1528
+    },
+    {
+      "path": "/workspace/JointBuildGS/configs/phd/surface_patch_rg_v1/run_v1_p2.json",
+      "sha256": "d37b144ad458ad4fcf95b09f2c1f702aed2338362fa9d2a02093a35eb56cb774",
+      "bytes": 6383
+    },
+    {
+      "path": "/workspace/JointBuildGS/configs/phd/prior_use_height_probe_v1/p2_v2.json",
+      "sha256": "6556b2a8451c6e2ee10a51d671d29a92ab3b6684ded58bbf449bfe2ea2ff5a13",
+      "bytes": 4966
+    },
+    {
+      "path": "/workspace/JointBuildGS/configs/phd/mvs_als_source_relation_v1/run_v1.json",
+      "sha256": "9143447590270dad89977aae352366fa9f50aee9fb30760c88e6d1627c253243",
+      "bytes": 3876
+    },
+    {
+      "path": "/workspace/JointBuildGS/configs/p2/c1_c2_shared_footprint_199_v1/run_v1.json",
+      "sha256": "be61f18bb924ca65b3ace3b245ccc85afbcdc8b05f307a916366e6c2922ec58e",
+      "bytes": 3451
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/phd/mvs_als_source_relation_v1/PHD-MVS-ALS-SOURCE-RELATION-v1/partition/mvs/x004_y004.xyz_f32le.bin",
+      "sha256": "87868aa654334e89d0988a0cea0e527bd5ebb49636b51b40ecae11208bc04234",
+      "bytes": 111030480
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/phd/surface_patch_rg_v1/PHD-SURFACE-PATCH-RG-P2-v1/point_rows_mvs.npy",
+      "sha256": "5b44d303da94c64eb5413ccbea82439f684e5fe158fcb380aee4e0c1bf245f7f",
+      "bytes": 1322844
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/phd/surface_patch_rg_v1/PHD-SURFACE-PATCH-RG-P2-v1/points_mvs.npy",
+      "sha256": "b581cf9b21eae6e75b9a84cac10cf84750574903a59a86fc552475f0bc34b124",
+      "bytes": 6944451
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/phd/surface_patch_rg_v1/PHD-SURFACE-PATCH-RG-P2-v1/patches_mvs.npy",
+      "sha256": "2c8f7d9593209a242f75203e8127bf4775b55af83406717bdfccd7417b344a15",
+      "bytes": 82270
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p2/mvs_native_textured_mesh_preflight_v1/P2-MVS-NATIVE-DENSE-SCENE-RECOVERY-v2/work/mvs/openmvs/dim_dense.ply",
+      "sha256": "fc2561ab3e41adaa64a5cbc1f7a13c5f887999d2d81f94d4dca082c2c43c02ce",
+      "bytes": 658898693
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/phd/mvs_als_source_relation_v1/PHD-MVS-ALS-SOURCE-RELATION-v1/partition/als/x004_y004.xyz_f32le.bin",
+      "sha256": "4f9a4ef1449d8ac80f293c98a7e99d07737ef8d084233bb0fafaede0f85ee8d3",
+      "bytes": 11572716
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/phd/surface_patch_rg_v1/PHD-SURFACE-PATCH-RG-P2-v1/point_rows_als.npy",
+      "sha256": "831f92c7a0c00b59460beb5da0d4939f457a5e6a2b0d8a90dfe298bd463d441a",
+      "bytes": 184072
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/phd/surface_patch_rg_v1/PHD-SURFACE-PATCH-RG-P2-v1/points_als.npy",
+      "sha256": "bfa6998d740e12122cb1a2cacba1eec84ab7598d3afd57fe2febdbd4156ac72b",
+      "bytes": 965898
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/phd/surface_patch_rg_v1/PHD-SURFACE-PATCH-RG-P2-v1/patches_als.npy",
+      "sha256": "be9fe3ee607574ca1b230c918995c040990162b3227b11f2f7c629cb51e36a0d",
+      "bytes": 26830
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/raw/als/690_5335.laz",
+      "sha256": "01602b7385aaf7324f89da6183df3dbdeffa237f85bf57dc27208b554b4fc0b3",
+      "bytes": 110979201
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/raw/als/690_5336.laz",
+      "sha256": "98ab7ad7f4c5108ebf41bc62186b336c6cd8a70b82fceec57136a56c0188b566",
+      "bytes": 119749181
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/raw/als/691_5335.laz",
+      "sha256": "9e14119bb0af7d5a300aa3a2a19074219b4d6d290923b4b90277c317e8b33720",
+      "bytes": 107359041
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/raw/als/691_5336.laz",
+      "sha256": "63c64002fc55d8b99a49749b5a2e36d802186186a950c89779463274e3cb950d",
+      "bytes": 132681326
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/sparse/cameras.bin",
+      "sha256": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99",
+      "bytes": 64
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/sparse/images.bin",
+      "sha256": "dfc779496ee3b13f8df5dd28fae465746ce0adf4aca7922d38cbed275a2fd951",
+      "bytes": 114415526
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/phd/evidence_bank_v1/PHD-EVIDENCE-BANK-P2-v1/evidence_views.json",
+      "sha256": "dc7be25b2256fb94ad8e62836227f32fe5be47c47a95c93e1b3115c36071ebd3",
+      "bytes": 19409
+    },
+    {
+      "path": "/workspace/JointBuildGS/artifacts/manifests/gate_s0/common_base_r2b/exact_937_member_crosswalk_v1.json",
+      "sha256": "b4af779ecfae859de9772ce50cb24326b20c3f86614f6a8957453779d1cd4c17",
+      "bytes": 378466
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217094108_0059_D.JPG",
+      "sha256": "7063ee4326e6a45c72f90abcdc203376ab4877a9a43bdbdc7c5589c81092734e",
+      "bytes": 1124079
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217094010_0030_D.JPG",
+      "sha256": "bc7b409b0caf76cec36e61db4c98337e7b672c94dbe15099199483ee9fef9d2d",
+      "bytes": 1051286
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217094104_0057_D.JPG",
+      "sha256": "a32022688f8de0b204ab175541687121333e371e1f8a31ff270d44e6d88bd929",
+      "bytes": 1242494
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217095147_0080_D.JPG",
+      "sha256": "d0ed3f7b90b28f4affd54e4156b50cf06daedff8c34fb0651599f735a28fcbb1",
+      "bytes": 871637
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217095125_0069_D.JPG",
+      "sha256": "4402a3ce97d54038b914c518d842b847aa587b21a4aba0ad3550ce05db176307",
+      "bytes": 951364
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217095141_0077_D.JPG",
+      "sha256": "cab69d6ec2996b46a7c0221c50cc9d1a9c34e0f0bd88471e440e2ed0637ca1ab",
+      "bytes": 869462
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217084503_0075_D.JPG",
+      "sha256": "e5f918528a2f1218aacf5b507f8035c91e22b05407892720fd2c1900d179dd74",
+      "bytes": 1080134
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217094014_0032_D.JPG",
+      "sha256": "11ac24d7be2ad56aec5b2c7e75383d6a58f8b73b10e8641939ab91e4f8bcba34",
+      "bytes": 1121740
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217102537_0021_D.JPG",
+      "sha256": "5a942f9fb016db5d746dc095d56f80d99584dc8edd2814bbdac7917499b91446",
+      "bytes": 873335
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217093905_0026_D.JPG",
+      "sha256": "c9e192be69365ad65219670baf2c8a6caed5eb21ec5b96aaa318b9235b01694b",
+      "bytes": 1024865
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217095139_0076_D.JPG",
+      "sha256": "673a57be9542fd143a9d3ca48b8db7f5bf8f0e1733d7dbd941bdae371bc40e9e",
+      "bytes": 996755
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217101359_0032_D.JPG",
+      "sha256": "fd34ddc0b9491c949670586e746700a5f71bb5b7cc2d46b2bac6dc7a6061ac43",
+      "bytes": 927898
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217094012_0031_D.JPG",
+      "sha256": "c2a8cfb285908a5403508cf5736602813a2c899cada0ca7c4b90ceb5e9b4f295",
+      "bytes": 1068239
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217091249_0147_D.JPG",
+      "sha256": "3276ae50119a9a3653a2000480a4e76237972a9340f5806eff09c63b8c5c8b9e",
+      "bytes": 1023293
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217094947_0020_D.JPG",
+      "sha256": "16463d6f9e13d0cb69ef79f1095add0423011b72719a9a3f1be874c6311105a5",
+      "bytes": 940687
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217094959_0026_D.JPG",
+      "sha256": "bb0ed884a0e060126f9eed463d54d6b2900dad86e276fe60616365fa82dc8f78",
+      "bytes": 871068
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217094953_0023_D.JPG",
+      "sha256": "18231b9ff668bada57bbe3cd421aa8346d17674395a7ed3cf6f2ce4bb7b56b0e",
+      "bytes": 927094
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217095009_0031_D.JPG",
+      "sha256": "d1281a74c94c6208d50e54abff16240152b1cef3f4d99230ae53fb1948055fa6",
+      "bytes": 881032
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217095017_0035_D.JPG",
+      "sha256": "3f96c83b02554dfab7c0cc7d3f4847ea412c22a22de39c44cb3e682c68625304",
+      "bytes": 931681
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217084505_0076_D.JPG",
+      "sha256": "e51ff7398569f390b1428b8969d8625bfe4cc9ab24c7369221219791009b67d1",
+      "bytes": 1133329
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217095829_0019_D.JPG",
+      "sha256": "5a86b79c0247e192c6a286310bec6b01f3e387f273314a7468c198db64561b3f",
+      "bytes": 931133
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217095051_0052_D.JPG",
+      "sha256": "1f65ac29ae894efc1c2c474a9013ca0fb9315c299fcc72bfef266c14bafacf3f",
+      "bytes": 862893
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217091131_0108_D.JPG",
+      "sha256": "3480c137a4c129adb59d2e8fbd3dc894bcb125dcc640b22c1608f6223e65efc9",
+      "bytes": 1010275
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217091133_0109_D.JPG",
+      "sha256": "a37c419757eeb15cacd7fb770e754cd879974271ae294d3cf3849ec205d97a3d",
+      "bytes": 1036927
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217091137_0111_D.JPG",
+      "sha256": "3ee44b013c41e9f7994e06ee0dd36b7b53cc59e22e5163d5dabfc7e218a32b18",
+      "bytes": 1045854
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217091135_0110_D.JPG",
+      "sha256": "de2cc3824540e147879eb149410f028cf353d0ddcd3a7f581e8e3ee497339b48",
+      "bytes": 1045733
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217094945_0019_D.JPG",
+      "sha256": "04a68e5355656390643693022ed9858e5e7457c974336089ad571fc3690af887",
+      "bytes": 985529
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217094925_0009_D.JPG",
+      "sha256": "5827d7f79c60719e9a0ef6dd7268228b582c9328943f9ddc86c93266612e2dbb",
+      "bytes": 849084
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217095039_0046_D.JPG",
+      "sha256": "cb3cbcac1be187ee7eeb1755b60cc91789ae9b6d5496161bd494c7feb9504669",
+      "bytes": 983288
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217094935_0014_D.JPG",
+      "sha256": "05f02e64f0c7b6eb37b80f0be1bf07dfc5912a1fa23974e71db47f445f4b0d82",
+      "bytes": 895271
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217091251_0148_D.JPG",
+      "sha256": "0b43e41bff58d3ca68f94f37a9a8525c63017d74a690531f70fa272eb0a3a489",
+      "bytes": 1019810
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217091125_0105_D.JPG",
+      "sha256": "6d94c213687f8d5c0fb08b0206d3cff4d10f3586ba74f05646a32fda4e926e99",
+      "bytes": 980715
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217091247_0146_D.JPG",
+      "sha256": "884a67928580a86c00ba0cf81f8702bd13489b2e5fe711f274d88b708cb98062",
+      "bytes": 1029350
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217095055_0054_D.JPG",
+      "sha256": "6a3c13b73444ed9500d4f0c4c582946a76c458e1bfd3fab920d5a416716ce60f",
+      "bytes": 879900
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217095057_0055_D.JPG",
+      "sha256": "ea7a81914db3e763bbaa500e7da63de6fc6f29af91449739d3cfce73a46d7f1f",
+      "bytes": 959271
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217095907_0038_D.JPG",
+      "sha256": "25e4b84e77942b0ef634c9811667b65da5bb6f92d8cddd16f14c2bf7b3f1cc18",
+      "bytes": 987765
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217091245_0145_D.JPG",
+      "sha256": "9743db541b7155ee44a67721ddb6db0fc4ebb5a571be45933ef28789a3a39781",
+      "bytes": 1035594
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217094957_0025_D.JPG",
+      "sha256": "41c475c310f72c0979dbacb8e32b313af94f721f9c81f212733c2406bf1618ec",
+      "bytes": 820546
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217095015_0034_D.JPG",
+      "sha256": "4e2447a59ef9776772c9c6632bda0b7e3374a7a6cbd0b6ca32a213832a8059e4",
+      "bytes": 951987
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217095149_0081_D.JPG",
+      "sha256": "4881a8f2dcdb0924001ee5f5475f9921363d4770b1085638f20c9f506c3677f5",
+      "bytes": 865874
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217094955_0024_D.JPG",
+      "sha256": "7d39168cfbf956754aebd75669dba95acb72ded62f71ce7232732fcbb4ead296",
+      "bytes": 924101
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217094917_0005_D.JPG",
+      "sha256": "d37eb4a750ec2e57246016856bee69e18abac8358cb6fd001afebbe24cc9779a",
+      "bytes": 984776
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217095013_0033_D.JPG",
+      "sha256": "7cfd860c5e00339ba20ea22d9c129855ca1964ce181f7c7f0a3998c196d3921a",
+      "bytes": 924410
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217093907_0027_D.JPG",
+      "sha256": "4065236cee6f951a6b163b5ec2495c9b61fa5a83bf747367d12eaef8081dcbe0",
+      "bytes": 1037143
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217095053_0053_D.JPG",
+      "sha256": "17ee74e9ee178501897b99e9b08b0520d887be8c3c2272720ff8f0f1cb1ea73e",
+      "bytes": 749347
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217093911_0029_D.JPG",
+      "sha256": "bd48f1642fc3a475b1da335d9b32d0513ffbba594547b62f212c0355d18f73e8",
+      "bytes": 1034097
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217095127_0070_D.JPG",
+      "sha256": "48ec231f9c3e8685b5ccecdc0cbfca672e61775447c311d4f5fb83650598ea57",
+      "bytes": 981084
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217091129_0107_D.JPG",
+      "sha256": "2a8149ded9d447119194ac7b90cf6d8cff7ac463ebf644f91afc8c9dcc5747c9",
+      "bytes": 996921
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217091127_0106_D.JPG",
+      "sha256": "be7597de9952980a1411156e430586b21c1c8911245da9689ce423f7b440d4ed",
+      "bytes": 983619
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217095029_0041_D.JPG",
+      "sha256": "ce73d034b7ff484eb4e78f9dfcc2698886efa03f27b5b699850814bfcbbd7362",
+      "bytes": 927992
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217095905_0037_D.JPG",
+      "sha256": "d807b392938ad1d38109d5c5e8bef9354ae7a4fe6604966650b266c5834e5e25",
+      "bytes": 987192
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217095121_0067_D.JPG",
+      "sha256": "97305ecffb319ebe8678f694bc27948955d05d5340db747bb9a36ffea452fb87",
+      "bytes": 708475
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217095023_0038_D.JPG",
+      "sha256": "3f5ca7c2d7e71634a6f22ec312a822b47752be7d2cffe295f2d05b7e5b845c00",
+      "bytes": 888282
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217095143_0078_D.JPG",
+      "sha256": "e1150573bc6f9110b7e2fc6b4d05de4f5a0d50facbf87ed568ba3746f020386e",
+      "bytes": 872404
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217093909_0028_D.JPG",
+      "sha256": "4e66b21e92ab26c60a055ce0e87af437c348ee99d122b01935efeaa20605b935",
+      "bytes": 1063055
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217095903_0036_D.JPG",
+      "sha256": "c4602d1335ba0c54c03f621935f5965c5d0524973322fb2711929cd03eaa89bc",
+      "bytes": 967703
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217095145_0079_D.JPG",
+      "sha256": "72536c9d3b595c104c741eb92d25fae66af4e510194347b922046f247ca4b824",
+      "bytes": 873849
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217091241_0143_D.JPG",
+      "sha256": "0969bcd50349a7f456a9dd14a267ee8778a8be27f92e9e64beea0bf4281a31f1",
+      "bytes": 1050917
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217100056_0034_D.JPG",
+      "sha256": "47c1f7c2f35864ff916ba420f1bdfcac2038c3fdb8c764341c07ce1c85ec26c6",
+      "bytes": 1006794
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217095123_0068_D.JPG",
+      "sha256": "4ed592488c488870fcf943fb80a79fec8b78e121cf174276a31d8958e1a8e2d1",
+      "bytes": 916791
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217095011_0032_D.JPG",
+      "sha256": "c8e5a08023e957144bc616ef8cecc97eca533807efa6248fa1433e3ea2084ac3",
+      "bytes": 910281
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217091243_0144_D.JPG",
+      "sha256": "97f14b34be536e27354c393a9ef5b8bcf1cef79e6fcbe5bce4df5f2f19ceca3f",
+      "bytes": 1039961
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217095901_0035_D.JPG",
+      "sha256": "c2c1d14ee35829b14d23f2058d45968bb302b554fd7c205be1cda8881b9b3491",
+      "bytes": 943996
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217091253_0149_D.JPG",
+      "sha256": "9322834bfcddd27c081de05f2a76383218939bf1949903c6212d5a309fb226cd",
+      "bytes": 1014803
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217094933_0013_D.JPG",
+      "sha256": "c9113543546d6c24d9cf7fe8289cb6029f90ff1a6271166e89727afbef64eed9",
+      "bytes": 912636
+    },
+    {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217094106_0058_D.JPG",
+      "sha256": "cf298b173c15be5194359f632bac999a001d45cf7d87544839db878d5c6c6af5",
+      "bytes": 1048587
+    }
+  ],
+  "git_commit": "72f45bcf861c5fe6e0c70e28e0686a72e9424b17",
+  "versions": {
+    "python": "3.11.15",
+    "numpy": "1.26.4",
+    "laspy": "2.6.1"
+  },
+  "source_transform": {
+    "mvs": "Native scene-local; no added correction.",
+    "als": "Partition already applies raw Z +45.7 then subtracts [690953,5336071,604]; additional correction=0."
+  },
+  "unresolved": [
+    "Camera/registration metric uncertainty not calibrated",
+    "No measured terrain gravity supplied by this sample; scene Z is a coordinate axis",
+    "Prior current usability not determined by this manifest"
+  ],
+  "evaluation_reference_accessed": false,
+  "elapsed_seconds": 14.339085102081299,
+  "outputs": {
+    "units.npz": {
+      "path": "/artifacts/JointBuildGS/phase-payloads/phd/p2_ab_v1/PHD-P2-AB-COMMON-v2/common/units.npz",
+      "sha256": "a772a429707e764725d83679f920f23f9d4aed7f1edcd86b86553f95fe6096f8",
+      "bytes": 9378011
+    },
+    "units.json": {
+      "path": "/artifacts/JointBuildGS/phase-payloads/phd/p2_ab_v1/PHD-P2-AB-COMMON-v2/common/units.json",
+      "sha256": "5c613938a5d7978835c95fadea67090c5801972eee906398a769fe3085ed6847",
+      "bytes": 4441750
+    },
+    "views.json": {
+      "path": "/artifacts/JointBuildGS/phase-payloads/phd/p2_ab_v1/PHD-P2-AB-COMMON-v2/common/views.json",
+      "sha256": "4a0b94dda4b6069c707c524f20876aa127bfddeaa308bfa90ede61442ab0e37e",
+      "bytes": 81702
+    }
+  }
+}

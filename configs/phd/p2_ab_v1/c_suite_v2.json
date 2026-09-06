@@ -1,0 +1,19 @@
+{
+  "task_id": "PHD-P2-AB-C-v2",
+  "scientific_verdict": null,
+  "common": "PHD-P2-AB-COMMON-v2/common",
+  "reference": "PHD-P2-AB-COMMON-v2/evaluation_v2",
+  "a_root": "PHD-P2-AB-A-v1",
+  "b_roots": [
+    "PHD-P2-AB-B-RANGE-v1", "PHD-P2-AB-B-SCORE-v1", "PHD-P2-AB-B-BAYES-v1",
+    "PHD-P2-AB-B-IMAGE-v1", "PHD-P2-AB-B-PRIOR-v2",
+    "PHD-P2-AB-B-SHARED-SHIFT-v1", "PHD-P2-AB-B-DN-v2"
+  ],
+  "evaluation_config": "configs/phd/p2_ab_v1/c_evaluation_v1.json",
+  "output": "PHD-P2-AB-C-v2",
+  "appearance_output": "PHD-P2-AB-C-APPEARANCE-v2",
+  "summary_output": "PHD-P2-AB-C-SUMMARY-v2",
+  "common_ray_domain": "alpha>=0.5 union of unoptimized FIXED_IMAGE and FIXED_PRIOR branches on identical full-prism crops",
+  "changes_from_v1": ["Add measured all-ABSTAIN handoff through B", "Add pinned original DN-Splatter development comparator", "Browser-tested view fitting and mobile layout", "Record finite-height bounds next to separate reference-error components"],
+  "preserve_previous_runs": true
+}

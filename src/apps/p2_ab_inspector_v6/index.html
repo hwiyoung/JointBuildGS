@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>P2 · 관측 범위와 표면 갱신의 실제 비교</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+  <script src="evidence.js" defer></script>
+</head>
+<body>
+  <main>
+    <header class="page-header">
+      <div><p class="eyebrow">JOINTBUILDGS · P2 DEVELOPMENT</p>
+        <h1>P2 · 관측 범위와 표면 갱신의 실제 비교</h1>
+        <p class="scope-line">실제 사진의 위치 검사 → 조건부 허용 변위 → 국소 기하 갱신 · 절대오차 보정은 미완료</p>
+      </div>
+      <span class="badge">실제 사진 · 저장된 렌더</span>
+    </header>
+
+    <section class="toolbar" aria-label="비교 설정">
+      <label class="view-control">사진 <select id="view-select" disabled aria-label="사진 뷰 선택"></select></label>
+      <div class="quick-views" role="group" aria-label="대상별 사진 바로 보기">
+        <button id="view-roof" type="button" disabled>지붕 전체 · 333</button>
+        <button id="view-window" type="button" disabled>창가 · 361</button>
+      </div>
+      <div class="mode-controls" role="group" aria-label="비교 방식">
+        <button id="mode-grid" type="button" class="active" aria-pressed="true">나란히</button>
+        <button id="mode-wipe" type="button" aria-pressed="false">겹쳐 비교</button>
+      </div>
+      <div class="zoom-controls" role="group" aria-label="확대 및 이동">
+        <button id="zoom-out" type="button" aria-label="축소">−</button>
+        <output id="zoom-readout" aria-label="확대 비율">—</output>
+        <button id="zoom-in" type="button" aria-label="확대">+</button>
+        <button id="fit-button" type="button">전체 맞춤</button>
+        <button id="native-button" type="button">1:1</button>
+      </div>
+    </section>
+    <div class="context-row"><p id="view-context">비교 자료를 불러오는 중입니다.</p>
+      <p>휠로 확대 · 끌어서 이동 · 모든 화면 동기화</p></div>
+    <p id="error-message" class="error" role="alert" hidden></p>
+    <p id="loading-message" class="loading" role="status">이미지 준비 중…</p>
+
+    <section id="grid-mode" class="comparison-grid" aria-label="네 화면 동기 비교">
+      <article class="panel target-panel" data-panel="target">
+        <div class="panel-heading"><div><span class="panel-number">01</span><h2>현재 사진</h2></div><span class="source-pill">TARGET</span></div>
+        <div class="canvas-wrap"><canvas id="canvas-target" tabindex="0" aria-label="현재 사진. 화살표 이동, 더하기 빼기 확대"></canvas></div>
+        <p class="metric-caption" id="metric-target">비교 기준 · 저장된 현재 사진</p>
+      </article>
+      <article class="panel" data-panel="render-0">
+        <div class="panel-heading"><span class="panel-number">02</span><label class="sr-only" for="model-select-0">두 번째 화면 결과</label><select id="model-select-0" class="model-select" disabled></select></div>
+        <div class="canvas-wrap"><canvas id="canvas-render-0" tabindex="0" aria-label="초기 기하 렌더. 동기 확대 및 이동"></canvas></div>
+        <p class="metric-caption" id="metric-0">—</p>
+      </article>
+      <article class="panel" data-panel="render-1">
+        <div class="panel-heading"><span class="panel-number">03</span><label class="sr-only" for="model-select-1">세 번째 화면 결과</label><select id="model-select-1" class="model-select" disabled></select></div>
+        <div class="canvas-wrap"><canvas id="canvas-render-1" tabindex="0" aria-label="균등 학습 렌더. 동기 확대 및 이동"></canvas></div>
+        <p class="metric-caption" id="metric-1">—</p>
+      </article>
+      <article class="panel" data-panel="render-2">
+        <div class="panel-heading"><span class="panel-number">04</span><label class="sr-only" for="model-select-2">네 번째 화면 결과</label><select id="model-select-2" class="model-select" disabled></select></div>
+        <div class="canvas-wrap"><canvas id="canvas-render-2" tabindex="0" aria-label="잔차 가중 학습 렌더. 동기 확대 및 이동"></canvas></div>
+        <p class="metric-caption" id="metric-2">—</p>
+      </article>
+    </section>
+
+    <section id="wipe-mode" class="panel wipe-panel" aria-label="슬라이더 겹쳐 비교" hidden>
+      <div class="wipe-heading">
+        <label>왼쪽 <select id="wipe-left" aria-label="겹쳐 비교 왼쪽"><option value="target">현재 사진</option></select></label>
+        <span class="versus">↔</span>
+        <label>오른쪽 <select id="wipe-model" aria-label="겹쳐 비교 오른쪽" disabled></select></label>
+      </div>
+      <div class="canvas-wrap wipe-wrap"><canvas id="canvas-wipe" tabindex="0" aria-label="좌우 겹쳐 비교. 아래 슬라이더로 경계 이동"></canvas></div>
+      <div class="wipe-slider"><label for="wipe-position">비교 경계</label><input id="wipe-position" type="range" min="0" max="100" value="50"><output id="wipe-position-output">50%</output></div>
+      <p class="metric-caption" id="metric-wipe">—</p>
+    </section>
+
+    <section class="evidence-panel">
+      <h2>관측에서 허용 변위까지 · 실제 계산</h2>
+      <p id="evidence-summary">실제 관측 결과를 불러오는 중입니다.</p>
+      <label>검사 위치 <select id="evidence-case"></select></label>
+      <button id="evidence-locate" type="button">이 위치를 사진에서 확대</button>
+      <canvas id="evidence-plot" width="900" height="250" style="width:100%;height:250px"></canvas>
+      <p id="evidence-numbers"></p>
+      <p>파랑·주황: 서로 다른 사진 그룹의 위치별 비교 비용. 음영: 관측 위치 범위. 초록: 조건부 사용오차를 만족하는 결과 위치 범위. 선이 낮다는 사실만으로 현재 기하의 절대 정확도를 인증하지 않습니다.</p>
+      <h2>같은 초기값에서의 결과</h2>
+      <div id="result-table" style="overflow:auto"></div>
+    </section>
+    <footer>
+      <p class="metric-help">공통 픽셀 MAE: 작을수록 좋음. 같은 사진의 같은 평가 픽셀에서 비교합니다.</p>
+      <p class="metric-help">렌더의 검정은 P2 렌더 지지가 없는 영역입니다. 영역 밖과 미복원이 함께 포함될 수 있어 모두 실제 결손을 뜻하지는 않습니다.</p>
+      <p class="metric-help">색이 잘 맞는다는 사실만으로 현재 기하의 정확도나 구조 복원을 확인할 수는 없습니다.</p>
+      <p class="metric-help">선택 목록의 법선·깊이 변화·갱신 마스크는 기하 진단입니다. 초기 마스크는 A 관측 위치, 최종 마스크는 1mm 초과 이동한 Gaussian 중심을 3픽셀로 표시합니다. 깊이 변화 색상은 0–0.3m입니다.</p>
+      <p class="metric-help">미해결 관측점과 A 관측이 없는 배경은 비교용 초기 MVS로 남아 있습니다. 화면 전체가 A에서 채택된 기하라는 뜻이 아닙니다. 보호 ray 검사는 33개 학습 뷰의 제한된 표면 위치를 대상으로 합니다.</p>
+      <details id="technical-details"><summary>자료 범위와 출처</summary>
+        <div id="technical-content"></div>
+      </details>
+    </footer>
+  </main>
+</body>
+</html>

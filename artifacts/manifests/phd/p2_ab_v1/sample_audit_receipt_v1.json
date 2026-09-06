@@ -1,0 +1,70 @@
+{
+  "schema": "jointbuildgs.phd.p2_ab.sample_audit.v1",
+  "status": "PASS_DEVELOPMENT_INPUT_AND_ROLE_CONTRACT",
+  "scientific_verdict": null,
+  "checks": [
+    "All common and evaluation payload hashes match immutable manifests",
+    "Native tile rows strictly increase; raw file-row identities unique; all 552 unit counts exact",
+    "22 decision,33 train,11 appearance_eval IDs are pairwise disjoint and exhaustive over frozen66",
+    "Pilot64 deterministic source-count-only selection matches config and both manifests",
+    "UAS raw row IDs unique/increasing; current reference finite; class0 preserved as unclassified"
+  ],
+  "source_code": {
+    "scripts/phd/p2_ab_v1/sample_build.py": {
+      "path": "/workspace/JointBuildGS/scripts/phd/p2_ab_v1/sample_build.py",
+      "sha256": "1d3485f1d6c73e267f895b8de409bc4dbfa16055398331570f38ba82ba96fc5f",
+      "bytes": 18779
+    },
+    "scripts/phd/p2_ab_v1/sample_audit.py": {
+      "path": "/workspace/JointBuildGS/scripts/phd/p2_ab_v1/sample_audit.py",
+      "sha256": "ccc125f1aadd722171c034f372cf9ce0d6808c03df58a7e1915bdbfb2d317570",
+      "bytes": 8300
+    }
+  },
+  "configs": {
+    "configs/phd/p2_ab_v1/sample_v1.json": {
+      "path": "/workspace/JointBuildGS/configs/phd/p2_ab_v1/sample_v1.json",
+      "sha256": "201936c303c185a4ddd8a3660f2a2255d14eaa565f1141ebd72f03354b3c7e22",
+      "bytes": 1528
+    },
+    "configs/phd/p2_ab_v1/sample_recovery_v2.json": {
+      "path": "/workspace/JointBuildGS/configs/phd/p2_ab_v1/sample_recovery_v2.json",
+      "sha256": "befa0700d3fee57127588343ed3498064ac4bcdb2c5b69688f5a9e69fb2a4e57",
+      "bytes": 1528
+    },
+    "configs/phd/p2_ab_v1/sample_evaluation_recovery_v3.json": {
+      "path": "/workspace/JointBuildGS/configs/phd/p2_ab_v1/sample_evaluation_recovery_v3.json",
+      "sha256": "00b71953096cc74479393242007b44609aba974163b51e0131896a9fc580c5e7",
+      "bytes": 1571
+    }
+  },
+  "container_image": "jointbuildgs:dev",
+  "container_image_id": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+  "reference_class_counts": {
+    "0": 2325976
+  },
+  "pilot_source_counts": {
+    "both_present": 63,
+    "mvs_absent": 1,
+    "als_absent": 0
+  },
+  "full_prism_reference_points": 2325976,
+  "source_error_calibration_performed": false,
+  "outputs": {
+    "common_manifest": {
+      "path": "/artifacts/JointBuildGS/phase-payloads/phd/p2_ab_v1/PHD-P2-AB-COMMON-v2/common/sample_manifest.json",
+      "sha256": "70efd7e159114a8dadf76b145536305dc46a3581ef753c9c1c7e811cbbef6568",
+      "bytes": 26092
+    },
+    "reference_manifest": {
+      "path": "/artifacts/JointBuildGS/phase-payloads/phd/p2_ab_v1/PHD-P2-AB-COMMON-v2/evaluation_v2/reference_manifest.json",
+      "sha256": "f8d0eb99ae4180a1a1f9338ae01ab860ecad508a632f310502f272b26b0c0dee",
+      "bytes": 127668
+    },
+    "frame_audit": {
+      "path": "/artifacts/JointBuildGS/phase-payloads/phd/p2_ab_v1/PHD-P2-AB-COMMON-v2/common/frame_audit.json",
+      "sha256": "7c15d19ce28e6c1a942cc78a051f7a2b118296d173b436c2787fb2aa32bb5e34",
+      "bytes": 5404
+    }
+  }
+}

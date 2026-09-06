@@ -1,0 +1,23 @@
+{
+  "source_run":"/artifacts/JointBuildGS/phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-B-CORRECTED-NATIVE-v1",
+  "source_arm":"image_only",
+  "source_seeds":"mvs_source_seeds.npz",
+  "expected_seed_count":266361,
+  "frozen_source_manifest":"/artifacts/JointBuildGS/phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-B-CORRECTED-RETURN-v1/manifest.json",
+  "training_schedule_path":"/artifacts/JointBuildGS/phase-payloads/phd/p2_ab_v3/PHD-P2-AB-V3-B-APPEARANCE-v1/uniform/training.jsonl",
+  "arms":{"sh0_uniform":{"sh_degree":0,"gain":0.0},"sh0_residual_weighted":{"sh_degree":0,"gain":1.0},"sh3_uniform":{"sh_degree":3,"gain":0.0},"sh3_residual_weighted":{"sh_degree":3,"gain":1.0}},
+  "steps":512,
+  "seed":1709,
+  "color_lr":0.015,
+  "higher_sh_lr_factor":0.05,
+  "ssim_fraction":0.2,
+  "residual_cap":2.0,
+  "residual_scale_floor":0.00392156862745098,
+  "quality_low":0.00392156862745098,
+  "quality_high":0.996078431372549,
+  "clipped_quality_weight":0.25,
+  "log_every":64,
+  "evaluation_every":128,
+  "scientific_verdict":null,
+  "scope":"Current-image MVS G0 color-only diagnostic, no actual A decision consumed; SH0/SH3 and uniform/residual 2x2 comparison; all geometry, opacity, support parameters and count fixed; same stored v3 view/tile schedule, no UAS or result-based tuning."
+}

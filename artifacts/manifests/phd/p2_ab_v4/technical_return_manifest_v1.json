@@ -1,0 +1,163 @@
+{
+  "schema": "jointbuildgs.phd.p2_ab_v4.technical_return.v1",
+  "task_id": "PHD-P2-AB-V4-MVS-INITIALIZATION-AND-VISUAL-RETURN-v1",
+  "status": "MVS_APPEARANCE_AND_QUALITATIVE_VALIDATION_COMPLETE",
+  "scientific_verdict": null,
+  "utc": "2026-09-07T02:59:52.976847+00:00",
+  "git_head": "72f45bcf861c5fe6e0c70e28e0686a72e9424b17",
+  "container_image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+  "source_sha256": {
+    "configs/phd/p2_ab_v4/b_mvs_appearance_v1.json": "fccb5af762257e0391a947980d0653173552640d9cf7617fe08252feb956e0fe",
+    "configs/phd/p2_ab_v4/qualitative_viewer_v1.json": "5aa4e30edf02272298a7f4c2257a26ba14a1e4b536799fb31ffc0039547058a6",
+    "docs/experiments/phd/p2_ab_v4/00_READ_THIS_FIRST_ko_v4.md": "4c3b9cc0974b36c8599bfaf295ca8b91c0b7d96ffea848124de4bbc869a856ae",
+    "docs/experiments/phd/p2_ab_v4/A_STATUS_AND_WORKED_CALCULATION_ko_v4.md": "5d29faa0972c8ccce6a9bcf3047597ef8778aef050f035a14298e977e1ac5ae5",
+    "docs/experiments/phd/p2_ab_v4/B_MVS_INITIALIZATION_RETURN_ko_v4.md": "c85959ffd9dd6046faa44fbf8b1e4e81fdc8d8835021cbbad4818354712cdad9",
+    "docs/experiments/phd/p2_ab_v4/ISSUES_ko_v4.md": "a579c42f89e8cf7c4ceb1b1d9a784ec69a4ffdccf7d6477fa6ec1cd64311bc63",
+    "scripts/phd/p2_ab_v4/b_mvs_appearance_docker.sh": "43289a99b0941e6812ea6cb8dd68e9edb2331cc3921bfefc2abe753ff997cda8",
+    "scripts/phd/p2_ab_v4/b_mvs_appearance_probe.py": "199c01aba5364fede0ff3207a38c7e8dbf28322997963e08c60d503c3302b2f9",
+    "scripts/phd/p2_ab_v4/browser_qa.mjs": "f252a9b468960edab6536e9580b35a72287741140d7a702de1502827a566ebce",
+    "scripts/phd/p2_ab_v4/browser_qa.sh": "d20b7ee0d6d5b271df1b0b3a5e35fb9edb9e1acae4fe5a08c8c8d881ab5dc626",
+    "scripts/phd/p2_ab_v4/build_qualitative_viewer.py": "a4f9d70580c8f024c0c53681586efc2f1a7a6ff253a705e4fda7d66609d46a3e",
+    "scripts/phd/p2_ab_v4/package_return.py": "d90d4e84ac5cbc268d588ae0f990ea4e441ba0800ea2f712362a9f2cbb252a75",
+    "scripts/phd/p2_ab_v4/package_return_docker.sh": "569ed8c91abee4cdf595069064318ad4c0d6aa45a696d578b14a778b9f015e77",
+    "scripts/phd/p2_ab_v4/qualitative_viewer_docker.sh": "34eb540b5f84fa580b993dff2c951df5d08b48fc374ee1eb7300dd4ec57f911b",
+    "src/apps/p2_ab_inspector_v4/app.js": "70f4e212804f13960f741ca78cc71ead793e8203b90e8dea78afffb876e444be",
+    "src/apps/p2_ab_inspector_v4/index.html": "d5e846cb9f523c4d742b9b2126d3a5cbdca5213d11a1f0765be4440628c94019",
+    "src/apps/p2_ab_inspector_v4/style.css": "25560c4b690ede385458156ee3c5573102fd9e36c8c07f559e6b04e4e621f639",
+    "src/phd/p2_ab_v4/appearance_probe.py": "3693ec18931e5aad3a221cdf6aa3e3f4707e8837e6e85255b07b3206b97faeb6",
+    "tests/phd/test_p2_ab_v4_common_pixels.py": "7f84d454f80cefed667c4b0747341f7ea5d0919c0c6138eaa17e9bf084bd83f3",
+    "tests/phd/test_p2_ab_v4_mvs_init.py": "4fe58bda5f78c7627fd73575563e2a39e3b3d360694573b519a1abdbddb8f6fa"
+  },
+  "receipts": {
+    "MVS_B": {
+      "artifact_relative_path": "phase-payloads/phd/p2_ab_v4/PHD-P2-AB-V4-B-MVS-APPEARANCE-v1/result.json",
+      "sha256": "5e159105d9144ccd057253ee4b0f33a2a28744c805f1d38765b72694e8e5c518"
+    },
+    "viewer_common_pixels": {
+      "artifact_relative_path": "phase-payloads/phd/p2_ab_v4/PHD-P2-AB-V4-QUALITATIVE-v1/viewer/technical_receipt.json",
+      "sha256": "ca6e7f2b3d1d5346848e44614ae939659a4d1dc3befa69c5dc50468ab62eda53"
+    },
+    "browser_QA": {
+      "artifact_relative_path": "phase-payloads/phd/p2_ab_v4/PHD-P2-AB-V4-BROWSER-QA-v1/browser_qa.json",
+      "sha256": "066982cf838abb3fd930d509a094301777e23fae1e96c781071a7e83913ea5f7"
+    },
+    "unit_tests": {
+      "artifact_relative_path": "phase-payloads/phd/p2_ab_v4/PHD-P2-AB-V4-UNIT-TESTS-v1/capture.json",
+      "sha256": "044b79abd0b7aa85ed4ac257a07333744e2aed14c620c1b33628a8ad42631917"
+    }
+  },
+  "preserved": {
+    "v2": {
+      "source_files": 89,
+      "receipts": 20,
+      "status": "PASS"
+    },
+    "v3": {
+      "source_files": 25,
+      "receipts": 5,
+      "status": "PASS"
+    }
+  },
+  "browser_checks": 354,
+  "unit_tests": 5,
+  "viewer_url": "http://127.0.0.1:8895/PHD-P2-AB-V4-QUALITATIVE-v1/viewer/?view=333",
+  "common_pixels": 5150892,
+  "comparison_summary": {
+    "mvs_initial": {
+      "pixels": 5150892,
+      "absolute_rgb_sum": 2489627.4039215688,
+      "squared_rgb_sum": 806201.8682352945,
+      "geometry_present_pixels": 4582636,
+      "mae": 0.16111302689071905,
+      "psnr_db": 12.825598985165534,
+      "geometry_present_fraction": 0.8896781373012674
+    },
+    "mvs_sh0_uniform": {
+      "pixels": 5150892,
+      "absolute_rgb_sum": 2578775.176470588,
+      "squared_rgb_sum": 839025.3012841218,
+      "geometry_present_pixels": 4582636,
+      "mae": 0.16688211002874764,
+      "psnr_db": 12.652286413153842,
+      "geometry_present_fraction": 0.8896781373012674
+    },
+    "mvs_sh0_residual_weighted": {
+      "pixels": 5150892,
+      "absolute_rgb_sum": 2564213.658823529,
+      "squared_rgb_sum": 825346.1896962705,
+      "geometry_present_pixels": 4582636,
+      "mae": 0.16593978019234526,
+      "psnr_db": 12.723675480806344,
+      "geometry_present_fraction": 0.8896781373012674
+    },
+    "mvs_sh3_uniform": {
+      "pixels": 5150892,
+      "absolute_rgb_sum": 2309041.7882352946,
+      "squared_rgb_sum": 730203.7954632835,
+      "geometry_present_pixels": 4582636,
+      "mae": 0.14942666164975532,
+      "psnr_db": 13.255596127367461,
+      "geometry_present_fraction": 0.8896781373012674
+    },
+    "mvs_sh3_residual_weighted": {
+      "pixels": 5150892,
+      "absolute_rgb_sum": 2292242.7019607835,
+      "squared_rgb_sum": 717343.4186697421,
+      "geometry_present_pixels": 4582636,
+      "mae": 0.14833953044513348,
+      "psnr_db": 13.332765805501076,
+      "geometry_present_fraction": 0.8896781373012674
+    },
+    "als_initial": {
+      "pixels": 5150892,
+      "absolute_rgb_sum": 3095887.3137254906,
+      "squared_rgb_sum": 1079910.3905728569,
+      "geometry_present_pixels": 4688310,
+      "mae": 0.20034635513780852,
+      "psnr_db": 11.556159788940672,
+      "geometry_present_fraction": 0.9101938072085378
+    },
+    "als_sh0_uniform": {
+      "pixels": 5150892,
+      "absolute_rgb_sum": 3131144.615686275,
+      "squared_rgb_sum": 1091008.499300269,
+      "geometry_present_pixels": 4688310,
+      "mae": 0.2026279859673674,
+      "psnr_db": 11.511755648456315,
+      "geometry_present_fraction": 0.9101938072085378
+    },
+    "als_sh0_residual_weighted": {
+      "pixels": 5150892,
+      "absolute_rgb_sum": 3122542.560784314,
+      "squared_rgb_sum": 1071249.8934717416,
+      "geometry_present_pixels": 4688310,
+      "mae": 0.20207131507735707,
+      "psnr_db": 11.59112906994396,
+      "geometry_present_fraction": 0.9101938072085378
+    },
+    "als_sh3_uniform": {
+      "pixels": 5150892,
+      "absolute_rgb_sum": 2931310.1137254904,
+      "squared_rgb_sum": 989840.8926874283,
+      "geometry_present_pixels": 4688310,
+      "mae": 0.18969595387397564,
+      "psnr_db": 11.93438307151801,
+      "geometry_present_fraction": 0.9101938072085378
+    },
+    "als_sh3_residual_weighted": {
+      "pixels": 5150892,
+      "absolute_rgb_sum": 2923496.7882352937,
+      "squared_rgb_sum": 971877.7922183775,
+      "geometry_present_pixels": 4688310,
+      "mae": 0.1891903245907242,
+      "psnr_db": 12.013920402953302,
+      "geometry_present_fraction": 0.9101938072085378
+    }
+  },
+  "limitations": [
+    "A scalar numbers are synthetic, not P2 decisions",
+    "MVS initialization is the user-directed development baseline, not an inferred A action",
+    "Geometry remains fixed; improvements are appearance, not new geometry/detail recovery",
+    "P2/its 11 evaluation views are development observations, not independent confirmation"
+  ]
+}

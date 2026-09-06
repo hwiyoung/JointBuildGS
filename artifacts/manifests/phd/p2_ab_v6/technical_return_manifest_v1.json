@@ -1,0 +1,353 @@
+{
+  "schema": "jointbuildgs.phd.p2_ab_v6.technical_return.v1",
+  "task_id": "PHD-P2-AB-V6-OBSERVATION-TO-SURFACE-DEVELOPMENT-v1",
+  "status": "CONDITIONAL_MECHANISM_EXPERIMENT_AND_VISUAL_RETURN_COMPLETE",
+  "scientific_verdict": null,
+  "utc": "2026-09-07T05:20:56.013856+00:00",
+  "git_head": "72f45bcf861c5fe6e0c70e28e0686a72e9424b17",
+  "container_image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+  "versions": {
+    "torch": "2.4.1+cu121",
+    "numpy": "1.26.4",
+    "scipy": "1.13.1",
+    "gsplat": "1.4.0"
+  },
+  "coordinates": {
+    "frame": "SCENE_LOCAL_XYZ",
+    "horizontal_crs": "EPSG:25832",
+    "world_shift_m": [
+      690953,
+      5336071,
+      604
+    ]
+  },
+  "source_sha256": {
+    "configs/phd/p2_ab_v6/a_observational_envelope_v1.json": "8d8244cc90607f1ea3d51b2c5fe1b12bb1f1f773a3749d8e9193a319c776f571",
+    "configs/phd/p2_ab_v6/a_observational_envelope_v2.json": "b4e788c57c942475b62a8677a394416c30430ce49bdb0ea65145a2c4db60fff9",
+    "configs/phd/p2_ab_v6/a_observational_envelope_v3.json": "4b2a85f76e341a1801ecbb7b318d0ee096a16cdda0c73ffed015ead64766ade1",
+    "configs/phd/p2_ab_v6/b_surface_probe_v1.json": "3951901d5e5a7b299c8574f23b3a54263e992b7f480ddb7e4c0a999d8b2f3aaf",
+    "configs/phd/p2_ab_v6/b_surface_probe_v2.json": "19859dfebac1e68bdd4c98a4af71cea034f22cd4e75887068c3bf5c2952d47f1",
+    "configs/phd/p2_ab_v6/b_surface_probe_v3.json": "ab1c8f1cc0c2afb7476aa544c7dd1260efb4033bd8b977549a128d534f990ad9",
+    "docs/experiments/phd/p2_ab_v6/A_ISSUES_ko_v6.md": "762a40a87cf1134215671e26218c5468ee7b4e9ea64151228043a6fb56d425c3",
+    "docs/experiments/phd/p2_ab_v6/A_METHOD_ko_v6.md": "ef3e96e30832a51fefee855542ea4e666c71dcb8047341acf9a49f7aae95f574",
+    "docs/experiments/phd/p2_ab_v6/A_MULTIPAIR_METHOD_ko_v6.md": "98f42242b9d7f6f28aa70938dceb9eeaef1d5c0f175ad835678e76be90d9be35",
+    "docs/experiments/phd/p2_ab_v6/A_RETURN_ko_v6.md": "c5639178b7498bf653213c446429f4290afb16b410721c05b288067111f58ff6",
+    "docs/experiments/phd/p2_ab_v6/A_TEXTURE_VALIDITY_FIX_ko_v6.md": "d4edda77f7f599471d21790832dc8fb7eaf8ae9a9692a4675bdd6ac49a23ed95",
+    "docs/experiments/phd/p2_ab_v6/B_METHOD_ko_v6.md": "5b6e0fe628b64908644762fdcbbf5a8e9ea4f0820d7e992878a8ea0c97e7c6ce",
+    "docs/experiments/phd/p2_ab_v6/ISSUES_ko_v6.md": "76b2b9d6821ad12b210b4a45df993cbab22330f1f0b1a676b70a61a2b908624d",
+    "docs/experiments/phd/p2_ab_v6/TECHNICAL_RETURN_ko_v6.md": "787e01c0277a638c01119e6761a2fb6ba4a309c1d5f07275b264336204a398cf",
+    "scripts/phd/p2_ab_v6/a_observational_envelope.py": "97a127fa497fc96f0bb1ed1e770b503d320ca673f8e3c1b682a6421ec111ed48",
+    "scripts/phd/p2_ab_v6/a_observational_envelope_docker.sh": "20e56e62947052917a343089145e4df56639fd70aef7eab911cb32c163d25c80",
+    "scripts/phd/p2_ab_v6/a_observational_envelope_multipair.py": "dd3b819eccd3527c0af6be35f2b4dfcd8db31731acbb7d0d3ac6161c0299598e",
+    "scripts/phd/p2_ab_v6/a_observational_envelope_multipair_docker.sh": "3f5dd3713e0e5c8bf1515cd7265529b8cd5d9154853cbc480a458eec99de90e4",
+    "scripts/phd/p2_ab_v6/a_observational_envelope_texture.py": "0231c1c160f31227a160bc35c7c22eb75d4c4ea46ac22dc9a3fab77d346adaeb",
+    "scripts/phd/p2_ab_v6/a_observational_envelope_texture_docker.sh": "51cb814f2dcad09ddcfe60d8be642551eaa3716484d1cde3e9a96f52aa229773",
+    "scripts/phd/p2_ab_v6/b_surface_docker.sh": "dca55c48bcad93cb5f0e3b512bd391ef5f682dede54446d42d621fac8a77ce61",
+    "scripts/phd/p2_ab_v6/b_surface_joint_docker.sh": "a2fc8071c0f6a719f3ac88fdfc1d0ec014aebd6ed95824541d7debceb377a8a3",
+    "scripts/phd/p2_ab_v6/b_surface_probe.py": "68d6c03f5b43558818cc4a94add68d5b100e4c7bea39c19dfe023af7d05cad9a",
+    "scripts/phd/p2_ab_v6/b_surface_repeat_docker.sh": "bf80e4b196677e640af4488405ea4a98eae8608bc3797bc638e081509fe37f4d",
+    "scripts/phd/p2_ab_v6/browser_qa.mjs": "4c992c923c3f510d5bbc4e515d988525bc1234ecd5917016d63a5edc04f33657",
+    "scripts/phd/p2_ab_v6/browser_qa.sh": "1c48597db5caacaad96f113a5f883533cc63955d530563e8e7c680c46a374f4e",
+    "scripts/phd/p2_ab_v6/build_viewer.py": "1e7cb85b5ab083989a82678a35dc34c76387b1694ba0617989887e931c829209",
+    "scripts/phd/p2_ab_v6/build_viewer_docker.sh": "95752d0fd211ecb35bb2a95e9609d5a62de63cf83b80c39d242f86d595fbf57b",
+    "scripts/phd/p2_ab_v6/c_reference_docker.sh": "c5e68b84dcc6426973e3eb4a7a7b91f18bee63fe546577debd3d98d9edce83f7",
+    "scripts/phd/p2_ab_v6/c_reference_evaluate.py": "700047d6df27c5e23e781d1ef4dc1414b5e7d534f1c4d79112e22d3699d300b5",
+    "scripts/phd/p2_ab_v6/package_return.py": "a07343a4c1d560c6bd3d2ab6e43d53db7f1bf5fafcf0cb7e01efa1198ddaca29",
+    "scripts/phd/p2_ab_v6/package_return_docker.sh": "bd7ebe7a5f3b3c4b40b78e90d1b6bace6d9abd9d5f1ded42f0a307715cd64779",
+    "scripts/phd/p2_ab_v6/serve_viewer.sh": "79cf46ec35ac0e7b1b6f7c7844790b471259df3c8c40d2cb6b6eeecb85b3cb0d",
+    "src/apps/p2_ab_inspector_v6/app.js": "597175101a4687e68a470f425e5b2c2e0f42b46ca4266daa75919a11e397cfed",
+    "src/apps/p2_ab_inspector_v6/evidence.js": "107138953d5a4d5adb65cd44f86b0dbdb6bde8017924600c4841e573b222d04c",
+    "src/apps/p2_ab_inspector_v6/index.html": "c20fdafc60e8cf95ce82a556d39f94c6ddc2b7cddfe0817c6cb3e0543d74b95e",
+    "src/apps/p2_ab_inspector_v6/style.css": "177dd229457c9ea3b7bd59f72172d0cb68404d2e5f4c8c2dfb3ff1a3a1625a63",
+    "src/phd/p2_ab_v6/a_multipair_profiles.py": "fea7ea72188c61e1bc130aa1d2807ebd212d143acc8954e382677817280cfd55",
+    "src/phd/p2_ab_v6/a_multipair_texture_profiles.py": "3e95ad19354e8aae442ac3d5ea6f0f45db00768bbb609a5adf2e5dba3e29f427",
+    "src/phd/p2_ab_v6/a_observational_envelope.py": "1b07ac0b3cecad4a40ec8297d09988d8d195c9652128804ae848ffa3df83f9af",
+    "src/phd/p2_ab_v6/a_texture_profile.py": "fcc3305a039965eb4944e0c1ad0f5c318d550cbd9eff864b437ed1011127e5f8",
+    "src/phd/p2_ab_v6/surface_budget.py": "bbc5dc2c30b8ba4d79803523535b9f52ef2ae4a430f922d7369ab7059d3c119d",
+    "tests/phd/test_p2_ab_v6_a_envelope.py": "6e3f90e93a3797e35c19e6a682243c6442e87db0089d3e1c10b3662ddb550624",
+    "tests/phd/test_p2_ab_v6_a_multipair.py": "7a578b99137011a42339b0bebce8eeff44e41fd0b0aa02495263c64167c26536",
+    "tests/phd/test_p2_ab_v6_a_texture.py": "63e86dd7023103fff11f4d9c02a9f704933afac7273dc1f64676d516816d3a12",
+    "tests/phd/test_p2_ab_v6_surface_budget.py": "e5eb820b6410fe5f42853bd94ca7211e9562dc487ca6e609f1585d502c215cb9"
+  },
+  "payload_sha256": {
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-A-OBSERVATIONAL-v1/technical_receipt.json": "c59ee161c4b08e0e6a1d241bb982610025f8941f797e758b2547f596ca29b217",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-A-OBSERVATIONAL-v1/config.json": "9da3bb6562fd946c365c0af61e8733982bcb49cd6bc53f2b07db19e00a796a4b",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-A-OBSERVATIONAL-v1/als_profiles.npz": "9fde4fdf438f30eee34684bb81b3b87d5afca37aaddddb7a6b891f9ef9ea2107",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-A-OBSERVATIONAL-v1/paired_mvs_profiles.npz": "cf3584ce483737ee73fe21140c8a3d86ca90192467d6c901e294444ac825aa3f",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-A-OBSERVATIONAL-v1/anchors.npz": "cadf7ced5db56d676595c2ccac6722cd0a97327999ce86b77440978609d3ed4c",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-A-OBSERVATIONAL-v1/mvs_profiles.npz": "133f9d905a5ffc9388840262e6a1bca8b0ab161fd3f0f86b683b56b39766f123",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-A-OBSERVATIONAL-v1/handoff_mvs.npz": "a4a36174c278f6aa3a072220ab7b7f5e0d5c23a9573bfbd958df91e9f4bcaa5f",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-A-OBSERVATIONAL-v1/paired_als_profiles.npz": "b911ec837b25633087ddc64646c5fd71decec86b231444887929a88eed901cda",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-B-SURFACE-v1/result.json": "13ad1f562f17e5571e87fc21ebfa3935c1201119c2ae0ad094265690b58f4c62",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-B-SURFACE-v1/config.json": "70587553e3212953946cc6812c46dbf85a68a33243192c7a5e615a41d47f7983",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-A-OBSERVATIONAL-v2/technical_receipt.json": "ff67a03e54f1e48fc53325197056cc15f5c6cbc22b19262b6537e59331335bf1",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-A-OBSERVATIONAL-v2/config.json": "3e4fca12fcb91e6203272e3be6997644954105300ad102d9b3f867d10d26a490",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-A-OBSERVATIONAL-v2/als_profiles.npz": "a873ce9a48359489686a3b9fc121618bacce9bb5126d16fd61b972f315507dcd",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-A-OBSERVATIONAL-v2/paired_mvs_profiles.npz": "4ea3548fcd05b8b4ee89864dfe3dc6439f11c683881cd7ea83785353ca83c2ff",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-A-OBSERVATIONAL-v2/anchors.npz": "736d7a382bbb1a1245c47dd07d160e77abb16b75b11bd1b16f33650101da72d9",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-A-OBSERVATIONAL-v2/mvs_profiles.npz": "d972b3e725105a179689428ad106500e93b8375ae01a106f15d6aa6b001c96be",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-A-OBSERVATIONAL-v2/handoff_mvs.npz": "998b110e2839640cfbe1bb4cb7479e2c44d24f3948ae7e42033963974cc903ee",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-A-OBSERVATIONAL-v2/all_pair_profiles.npz": "9749217d87c596b82cb19d7680284c6e62190e0d1b4083da02a84e3074a184e8",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-A-OBSERVATIONAL-v2/paired_als_profiles.npz": "587dcd27d87c88ae93a93dc26970c59c8d9af6500c27f466a4ed76531d331775",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-B-SURFACE-v2/result.json": "4393c65550cd7b3e64aa8fd935497b9ccb3495d3f8aad3093e74030cd44522bd",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-B-SURFACE-v2/config.json": "a874df8782315bae092b8028ab98a5e47355404428468b59a0a89ef17e47ebf0",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-A-OBSERVATIONAL-v3/technical_receipt.json": "740582aa04dab568b3855b083d87bd705cb7de5e5a7d61273f855f27785d2aa8",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-A-OBSERVATIONAL-v3/config.json": "ce4193b95a89a94fd0f23397bb80ae96c74931dbf190d305374523890bfd3fed",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-A-OBSERVATIONAL-v3/als_profiles.npz": "5698e39148496edb2286b3a1dab45ef609b9080a11a2f35d4f3683a644a019a4",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-A-OBSERVATIONAL-v3/paired_mvs_profiles.npz": "a77f78783dc3544d1ad409cc4f73489b14cc8bfe07633da895cc9bf444b27c85",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-A-OBSERVATIONAL-v3/anchors.npz": "186c61769f8b23dd8ed2b255a3d304acf68a40216ec743d6bff7b0f75bed8cd7",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-A-OBSERVATIONAL-v3/mvs_profiles.npz": "fecd6590fcddd5bb9b87c91a69899aff1df68d159b1ce8107158c18816c66384",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-A-OBSERVATIONAL-v3/handoff_mvs.npz": "a233977c81cfc8f393c0d6305f0f942a113fbfdab936abb820c2cf24a369eecc",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-A-OBSERVATIONAL-v3/all_pair_profiles.npz": "13dc1f050eeb84c5a43870153d985c1d62eea15e6367dd7dae267de337d9a1f6",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-A-OBSERVATIONAL-v3/paired_als_profiles.npz": "2217ba3cdf7d36ce4529bfa8eadc2bba294cb1e1cb164539aa96b239794be79c",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-B-SURFACE-v3/result.json": "cbb19a3b29779fd6cc8e3ee722db247d87d72b95ff7c91e4df3d4332f0e6d5c1",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-B-SURFACE-v3/config.json": "10af523be404cfa8563db0050da8e9efe1c9bb61fc52dd6ca7919a669ec14837",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-B-SURFACE-v3/initial/gaussians.npz": "97bd4b01ad73ea28d3e8f3b1a6923d686a49227720f3be81bb00fe8eaf63a7bd",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-B-SURFACE-v3/dynamic_surface_guard/gaussians_final.npz": "dead4639e029b67cf1e1bcdc4d7c0bd3ce092ff0d01799f131cfdd2ddf86a482",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-B-SURFACE-v3/rgb_residual/gaussians_final.npz": "c0ad87a9af0649921ca646385387a171c556c1b1b48d8badc86e95f42008792f",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-B-SURFACE-v3/fixed_color/gaussians_final.npz": "ce64d0cd548dd59254eb6455b93bf67e3ca4cb79324fe5c2cfc7a5e45a8400c9",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-B-SURFACE-v3/static_evidence/gaussians_final.npz": "eafc1867d618a84d9f60326ca863d1a23efbdf1f68aef9d1962e982fedd27eec",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-B-SURFACE-v3/dynamic_evidence/gaussians_final.npz": "fc00611643e145470a1b9acdf4f54cac15752802bdf2e46b99bf9c326c61fa91",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-B-SURFACE-v3/initial/extracted_surface.npz": "ee48d397dc0ed7db7a9974bb1934dac77d074a48e8ede76f54c4de77349ac91a",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-B-SURFACE-v3/dynamic_surface_guard/extracted_surface.npz": "4fe9006b238be4f3fa1f2112d793e042689b43344c4d0fa9e82cd198792a3fe3",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-B-SURFACE-v3/rgb_residual/extracted_surface.npz": "a5a79ea4c345f625e872ad91e58eb09cdec9bc15c9bcc5b75bf1244fb6d52c6f",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-B-SURFACE-v3/fixed_color/extracted_surface.npz": "ee48d397dc0ed7db7a9974bb1934dac77d074a48e8ede76f54c4de77349ac91a",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-B-SURFACE-v3/static_evidence/extracted_surface.npz": "907afa16fdba676470d542d2ac84ea2a365ac3a98cd2684c02c0c356f03d0b10",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-B-SURFACE-v3/dynamic_evidence/extracted_surface.npz": "ec394b1e7fc99ee28070a203994551b4f519fa5fd1f38eaf18d7f8fe0faab2b1",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-B-SURFACE-v3/dynamic_surface_guard/conditional_status.npz": "23f44edafa134507aa080bdea9b756de08b27e5876de39197b39509af56cc64c",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-B-SURFACE-v3/rgb_residual/conditional_status.npz": "87e8c2f4bc3cb748a003fd033ba9ad52e35032cc09373512f808e89fb8e29342",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-B-SURFACE-v3/fixed_color/conditional_status.npz": "bf1d26e5d8dcfb083e2b51e91b15427fe16190bde6d06976a76ee11293e662d7",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-B-SURFACE-v3/static_evidence/conditional_status.npz": "0bb6a204f8e2b783eb43865d1f2c268d5234b932598be1f4799617c14502764a",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-B-SURFACE-v3/dynamic_evidence/conditional_status.npz": "e3a87a4e0fd7ffacc6c529cb9f5701254e8e5e9d011a106e1ac6358e424c0d1c",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-B-SURFACE-v3/dynamic_surface_guard/training.jsonl": "d39986472bb711a49dfe0c272111ecf641b9128ad10179535329664c4e22d924",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-B-SURFACE-v3/rgb_residual/training.jsonl": "e329b671a02f7959127271c08d28554e0d4593c4ec3d785eb1373cb14967df81",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-B-SURFACE-v3/fixed_color/training.jsonl": "46a4da7ce9aa1a7041e4bacc007a6eff3d13d12332d0eae272891d4966424b50",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-B-SURFACE-v3/static_evidence/training.jsonl": "e2ac98e3ad6b7fb02e41f2b9631dba7f847f16767027391e492cf7bc3ca44c7b",
+    "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-B-SURFACE-v3/dynamic_evidence/training.jsonl": "0083cff4b55f8f1f063d13963cdaa2448f547a89787bb58d99dfa3ce9d9ff93c"
+  },
+  "receipts": {
+    "A": {
+      "artifact_relative_path": "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-A-OBSERVATIONAL-v3/technical_receipt.json",
+      "sha256": "740582aa04dab568b3855b083d87bd705cb7de5e5a7d61273f855f27785d2aa8"
+    },
+    "B": {
+      "artifact_relative_path": "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-B-SURFACE-v3/result.json",
+      "sha256": "cbb19a3b29779fd6cc8e3ee722db247d87d72b95ff7c91e4df3d4332f0e6d5c1"
+    },
+    "C": {
+      "artifact_relative_path": "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-C-REFERENCE-v1/evaluation/evaluation.json",
+      "sha256": "4d8b907181e0151d452c2617460e24ee5cd33514a323e597fc88ea66d77ac39b"
+    },
+    "viewer": {
+      "artifact_relative_path": "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-VIEWER-v1/viewer/technical_receipt.json",
+      "sha256": "7a25583c25572e8c2060ba231898fac2c667550375396cd719c626f3ecbe7d21"
+    },
+    "browser": {
+      "artifact_relative_path": "phase-payloads/phd/p2_ab_v6/PHD-P2-AB-V6-BROWSER-QA-v2/browser_qa.json",
+      "sha256": "ef3032478ff56c5c43cd688638264c9dcad2b141cac37de22f57777ee3711a2e"
+    }
+  },
+  "preserved": {
+    "v2": {
+      "status": "PASS",
+      "source_files": 89,
+      "receipts": 20
+    },
+    "v3": {
+      "status": "PASS",
+      "source_files": 25,
+      "receipts": 5
+    },
+    "v4": {
+      "status": "PASS",
+      "source_files": 20,
+      "receipts": 4
+    }
+  },
+  "unit_tests": 13,
+  "browser_checks": 1105,
+  "viewer_url": "http://127.0.0.1:8896/PHD-P2-AB-V6-VIEWER-v1/viewer/?view=333",
+  "common_pixels": 5150892,
+  "A_observable_gaussians": 381,
+  "B_final_summary": {
+    "changed_gt1mm": 27,
+    "conditional_eligible_count": 139,
+    "unresolved_count": 242,
+    "changed_outside_allowable_count": 0,
+    "evidence_worse_than_initial_count": 0,
+    "protected_surface": {
+      "passed": true,
+      "protected_pixels": 630,
+      "violations": 0,
+      "missing": 0,
+      "max_excess_m": 0.0,
+      "mean_depth_change_m": 0.00280441405281188,
+      "views": [
+        {
+          "image_id": 296,
+          "pixels": 54,
+          "violations": 0,
+          "missing": 0
+        },
+        {
+          "image_id": 297,
+          "pixels": 53,
+          "violations": 0,
+          "missing": 0
+        },
+        {
+          "image_id": 300,
+          "pixels": 33,
+          "violations": 0,
+          "missing": 0
+        },
+        {
+          "image_id": 299,
+          "pixels": 48,
+          "violations": 0,
+          "missing": 0
+        },
+        {
+          "image_id": 390,
+          "pixels": 1,
+          "violations": 0,
+          "missing": 0
+        },
+        {
+          "image_id": 418,
+          "pixels": 5,
+          "violations": 0,
+          "missing": 0
+        },
+        {
+          "image_id": 395,
+          "pixels": 1,
+          "violations": 0,
+          "missing": 0
+        },
+        {
+          "image_id": 336,
+          "pixels": 27,
+          "violations": 0,
+          "missing": 0
+        },
+        {
+          "image_id": 294,
+          "pixels": 63,
+          "violations": 0,
+          "missing": 0
+        },
+        {
+          "image_id": 335,
+          "pixels": 20,
+          "violations": 0,
+          "missing": 0
+        },
+        {
+          "image_id": 422,
+          "pixels": 4,
+          "violations": 0,
+          "missing": 0
+        },
+        {
+          "image_id": 423,
+          "pixels": 5,
+          "violations": 0,
+          "missing": 0
+        },
+        {
+          "image_id": 545,
+          "pixels": 52,
+          "violations": 0,
+          "missing": 0
+        },
+        {
+          "image_id": 334,
+          "pixels": 23,
+          "violations": 0,
+          "missing": 0
+        },
+        {
+          "image_id": 413,
+          "pixels": 1,
+          "violations": 0,
+          "missing": 0
+        },
+        {
+          "image_id": 437,
+          "pixels": 5,
+          "violations": 0,
+          "missing": 0
+        },
+        {
+          "image_id": 347,
+          "pixels": 3,
+          "violations": 0,
+          "missing": 0
+        },
+        {
+          "image_id": 421,
+          "pixels": 5,
+          "violations": 0,
+          "missing": 0
+        },
+        {
+          "image_id": 348,
+          "pixels": 1,
+          "violations": 0,
+          "missing": 0
+        },
+        {
+          "image_id": 428,
+          "pixels": 7,
+          "violations": 0,
+          "missing": 0
+        },
+        {
+          "image_id": 298,
+          "pixels": 77,
+          "violations": 0,
+          "missing": 0
+        },
+        {
+          "image_id": 295,
+          "pixels": 73,
+          "violations": 0,
+          "missing": 0
+        },
+        {
+          "image_id": 544,
+          "pixels": 54,
+          "violations": 0,
+          "missing": 0
+        },
+        {
+          "image_id": 425,
+          "pixels": 6,
+          "violations": 0,
+          "missing": 0
+        },
+        {
+          "image_id": 434,
+          "pixels": 5,
+          "violations": 0,
+          "missing": 0
+        },
+        {
+          "image_id": 346,
+          "pixels": 4,
+          "violations": 0,
+          "missing": 0
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "Full P2 joint source/systematic error calibration and automatic source selection incomplete.",
+    "Observational envelope covers 381/266361 Gaussians; transferred local normal intervals are conditional.",
+    "Only 630 sampled training rays protected; full boundaries/topology not certified.",
+    "All 242 initially correction-needed points remain unresolved after guarded optimization.",
+    "No substantive incremental appearance/detail gain; no densification or new semantic geometry tested.",
+    "P2 is development evidence; evaluation reference not newly accuracy-calibrated."
+  ]
+}

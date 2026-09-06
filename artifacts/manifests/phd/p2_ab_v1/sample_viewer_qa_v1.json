@@ -1,0 +1,160 @@
+{
+  "schema": "jointbuildgs.phd.p2_ab.viewer_qa.v1",
+  "task_id": "PHD-P2-AB-VIEWER-QA-v1",
+  "status": "PASS_BROWSER_UI_DEVELOPMENT",
+  "scientific_verdict": null,
+  "final_url": "http://127.0.0.1:8893/PHD-P2-AB-C-v2/viewer/",
+  "checks": {
+    "ready": true,
+    "arm_count": 29,
+    "arms_checked": 29,
+    "webgl2_contexts": 2,
+    "drag_changed_screenshot": true,
+    "runtime_and_console_errors": 0,
+    "network_failures": 0,
+    "missing_current_image_assets": 0,
+    "dn_evaluation_views_checked": 11,
+    "all_abstain_reference_units": 64,
+    "mobile_client_width": 390,
+    "mobile_scroll_width": 390,
+    "mobile_overflow": false,
+    "technical_links_http_200": true
+  },
+  "resolved_issues": [
+    "unit-specific Z centre and span",
+    "selected point visibility",
+    "390px select overflow",
+    "A fixed candidates versus B reconstruction title"
+  ],
+  "preserved_initial_outputs": [
+    "baseline",
+    "preview_case_v1",
+    "fixed_preview"
+  ],
+  "server": {
+    "container_name": "jbgs-p2-ab-inspector-8893",
+    "container_id": "67ea41674ae08619237aae6033feb3c54d03a92fd6db9926f27fdef452ea818c",
+    "image": "jointbuildgs:dev",
+    "image_id": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "host_binding": "127.0.0.1:8893",
+    "container_port": 8080,
+    "served_root": "phase-payloads/phd/p2_ab_v1",
+    "mount_read_only": true,
+    "rootfs_read_only": true,
+    "user": "1000:1000",
+    "command": "python -m http.server 8080 --bind 0.0.0.0",
+    "running_after_qa": true,
+    "existing_servers_changed": false
+  },
+  "browser": {
+    "version": "Google Chrome 146.0.7680.80",
+    "isolated_profile": "/tmp/jbgs-p2-ab-viewer-qa.VvbqPo",
+    "flags": [
+      "--headless=new",
+      "--use-gl=angle",
+      "--use-angle=swiftshader",
+      "--enable-unsafe-swiftshader"
+    ],
+    "user_profile_accessed": false,
+    "project_numerical_dependencies_run_on_host": false,
+    "new_host_packages_installed": false,
+    "chrome_main_pid": 1027157,
+    "chrome_only_stopped": true,
+    "debug_port_9227_closed": true,
+    "background_stderr_note": "Chrome background GCM deprecated-endpoint and adapter warnings were separate from the checked page; final page/CDP errors=0"
+  },
+  "driver": {
+    "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-operator/scripts/phd/p2_ab_v1/sample_browser_qa.mjs",
+    "bytes": 10014,
+    "sha256": "bf401b209fb5c6f3d4484143d1c69f3c864f5297316f84bf62666c150b654774"
+  },
+  "source_files": [
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/p2_ab_v1/PHD-P2-AB-C-v2/viewer/index.html",
+      "bytes": 4528,
+      "sha256": "38c005ab7d5dbe03a4534f7ff2a530f00649176d9f3e12bb5ce7ecf22161c911"
+    },
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/p2_ab_v1/PHD-P2-AB-C-v2/viewer/app.js",
+      "bytes": 6475,
+      "sha256": "0ffa9a48927ac80574494000cd68e9f8fcce5a9102265e53fa81823b7ae3358c"
+    },
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/p2_ab_v1/PHD-P2-AB-C-v2/viewer/inspection.json",
+      "bytes": 32905981,
+      "sha256": "3a099babcd6fe581358f37902fc7e418d0128492eaae11078366dfdc73d8ad21"
+    },
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/p2_ab_v1/PHD-P2-AB-C-v2/viewer/three.module.min.js",
+      "bytes": 670681,
+      "sha256": "3e690ac7d180b0aadf0891bea39eec643e29e2d3e75c99b18689518665f69ba6"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/p2_ab_v1/PHD-P2-AB-VIEWER-QA-v1/final_combined/all_abstain_with_reference.png",
+      "bytes": 528526,
+      "sha256": "7ddbf0e2ced06958b3f71dc12c6259116e9e7b04b5587a7ea287c118b14c9562"
+    },
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/p2_ab_v1/PHD-P2-AB-VIEWER-QA-v1/final_combined/all_abstain_without_reference.png",
+      "bytes": 337510,
+      "sha256": "0bd86a7e2e8d189ab5f57a8467cf581a2c6dc5981fc3c6251bb21ac6d54cbfbd"
+    },
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/p2_ab_v1/PHD-P2-AB-VIEWER-QA-v1/final_combined/browser_qa.json",
+      "bytes": 31538,
+      "sha256": "781c204073ed143f4899314689b9a0c7ca77b37cc17c364b0704601396cc7134"
+    },
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/p2_ab_v1/PHD-P2-AB-VIEWER-QA-v1/final_combined/desktop_before.png",
+      "bytes": 337976,
+      "sha256": "27626fd752cb6a084c3286ee0e8c29a5acc884ce8e040674eba2c1d288733e90"
+    },
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/p2_ab_v1/PHD-P2-AB-VIEWER-QA-v1/final_combined/desktop_dragged.png",
+      "bytes": 366402,
+      "sha256": "f2a33c650a373f43945ee7f7ddcd713bdc792514211add98d66847a4b92e0ea5"
+    },
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/p2_ab_v1/PHD-P2-AB-VIEWER-QA-v1/final_combined/dn_desktop.png",
+      "bytes": 546663,
+      "sha256": "9496b056e50c31c4df27e0f69017c825d7439308bca2f80539c6e196006add24"
+    },
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/p2_ab_v1/PHD-P2-AB-VIEWER-QA-v1/final_combined/dn_images.png",
+      "bytes": 369713,
+      "sha256": "c3aa4f9a8578af25a54f1581396d5ea9f9e7d2a6b0ff09db4663c8741fb3e2ad"
+    },
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/p2_ab_v1/PHD-P2-AB-VIEWER-QA-v1/final_combined/first_b_arm_desktop.png",
+      "bytes": 542523,
+      "sha256": "b5c43f47f1c45b474babe98fe7e8c0e3ded4de97e943f06ef13acc5b257ea695"
+    },
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/p2_ab_v1/PHD-P2-AB-VIEWER-QA-v1/final_combined/mobile_390.png",
+      "bytes": 167179,
+      "sha256": "af68d8954723521df03e0c033d2358a73cc442de0a6eba48aaddb597d53a4617"
+    },
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/p2_ab_v1/PHD-P2-AB-VIEWER-QA-v1/final_combined/unit0_oblique.png",
+      "bytes": 112892,
+      "sha256": "e99f7b24798c978e8ff9daceeb161399d94d27dd49e5bd243810ebe2c400ed54"
+    },
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/p2_ab_v1/PHD-P2-AB-VIEWER-QA-v1/final_combined/unit0_top.png",
+      "bytes": 113115,
+      "sha256": "2800fecda58c881d4c1371cfa1f402410e8cb294c6d0ea267afeaeb4e7f23f99"
+    },
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/p2_ab_v1/PHD-P2-AB-VIEWER-QA-v1/final_combined/unit542_oblique.png",
+      "bytes": 111262,
+      "sha256": "28ac725a4b2584d752729fce934a70ee0df3e7202b26c448db31f70d95ae23ff"
+    },
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/p2_ab_v1/PHD-P2-AB-VIEWER-QA-v1/final_combined/unit542_section_with_reference.png",
+      "bytes": 111077,
+      "sha256": "d579a9d60e9057bb6b25d6a8acefb83027cac915ff574eb6e72b89490f55251a"
+    }
+  ]
+}

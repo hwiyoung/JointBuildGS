@@ -1,0 +1,262 @@
+{
+  "schema": "jointbuildgs.phd.p2_ab.technical_result_manifest.v2",
+  "task_id": "PHD-P2-AB-v2",
+  "status": "A_DESIGN_B_DEVELOPMENT_AND_C_VALIDATION_COMPLETE",
+  "scientific_verdict": null,
+  "authorization": "Direct user: proceed with A literature/design and B same-P2 Gaussian reconstruction development, preserve existing work",
+  "research_scope": {
+    "A": "Primary literature, error-aware candidate usability and judgment design; no new calibrated P2 decisions executed",
+    "B": "Twelve conditional same-P2 gsplat development comparisons after the renderer contract correction; same-ALS-G0 comparisons, separate MVS initialization, density and prior-shift controls",
+    "C": "Fixed common observation pixels, reference-only geometry and detail diagnostics, actual Gaussian viewer and browser validation"
+  },
+  "limitations": [
+    "A has not produced new calibrated candidate-usability decisions; B assumes conditional source use for a solver experiment",
+    "All images and P2 are historical development material, not independent confirmatory data",
+    "The B comparison isolates components of a local solver; it is not a full reproduction of strong published systems",
+    "Parameter bounds do not certify the extracted surface, currentness, or calibrated metric accuracy",
+    "Independent plane-hit expected depth can mix multiple valid surfaces; shared tile culling and center-depth ordering remain",
+    "Reference datum, epoch, completeness and absolute accuracy are not fully calibrated; NN sampling is not surface area",
+    "Cell-median height detail diagnostics are affected by sampling, mixed layers and reference noise",
+    "No Roofer, LoD2, semantic textured-mesh pass or scientific verdict is inferred"
+  ],
+  "promoted_results": {
+    "sample": {
+      "artifact_relative_path": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-COMMON-v1/sample_manifest.json",
+      "sha256": "90cc68f22d5925dfa491b1e9fd1b7adf29b594ac36b4de33db884887a65c7428",
+      "bytes": 26271
+    },
+    "sample_audit": {
+      "artifact_relative_path": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-COMMON-AUDIT-v1/audit_receipt.json",
+      "sha256": "b2e362a8d86b6bac785a02bc4f8036f17f5f047117158d34fae44279c4cb1935",
+      "bytes": 31105
+    },
+    "depth_context": {
+      "artifact_relative_path": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-COMMON-GLOBAL-DEPTH-AUDIT-v1/global_depth_audit_receipt.json",
+      "sha256": "f070974f847db53b40e756fc6afd50f49cacafa9d4760fd3e70b0222c8b4de4c",
+      "bytes": 4970
+    },
+    "native_reference": {
+      "artifact_relative_path": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-COMMON-NATIVE-REFERENCE-v1/native_reference_receipt.json",
+      "sha256": "cdf819db1e381ff03c614b36c79f0c38e10bfee508833bf8eee14ddacd34597e",
+      "bytes": 5388
+    },
+    "geometry_adapter": {
+      "artifact_relative_path": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-B-GEOMETRY-ADAPTER-v2/adapter_manifest.json",
+      "sha256": "fd2ae5546a978f8cb1dd6f7d1f40d32b9653533bec03cffb6e725bf6475443a5",
+      "bytes": 1805
+    },
+    "geometry_adapter_audit": {
+      "artifact_relative_path": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-B-GEOMETRY-ADAPTER-AUDIT-v3/corrected/audit.json",
+      "sha256": "b6c36e4202aad2ae596a57e6f03998b045359187e27c6dda99223a4d96a09e9a",
+      "bytes": 3560
+    },
+    "geometry_adapter_audit_inputs": {
+      "artifact_relative_path": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-B-GEOMETRY-ADAPTER-AUDIT-BINDING-v1/audit_provenance_binding.json",
+      "sha256": "f39fcee853e423d11f7ed9926931df3daac9f3f75688b3bc9d729fb16f62ded9",
+      "bytes": 2129
+    },
+    "B_native": {
+      "artifact_relative_path": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-B-CORRECTED-NATIVE-v1/result.json",
+      "sha256": "3624540b3c8c1a58eafd0bf8852e2c5b5c72dc1161b52549a08cc3c7072902c9",
+      "bytes": 515526
+    },
+    "B_representation": {
+      "artifact_relative_path": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-B-CORRECTED-REPRESENTATION-v1/result.json",
+      "sha256": "9e87fd081d65e4ab9ff7eeb200f4a006f0c8a97e2f3c77c43cdbe5c2b8fa594e",
+      "bytes": 133092
+    },
+    "B_prior_shift": {
+      "artifact_relative_path": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-B-CORRECTED-PRIOR-SHIFT-v1/result.json",
+      "sha256": "3e13067f13c83da58241d08ef494a3fcba3b524a75cf624ad20ee58cee793a7f",
+      "bytes": 133938
+    },
+    "B_verification": {
+      "artifact_relative_path": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-B-CORRECTED-VERIFICATION-v1/verification.json",
+      "sha256": "7d8eacd6417b0960004c8fb95957bc048744985a3f4c698eebefae9d0d74ad47",
+      "bytes": 334483
+    },
+    "B_loss_gradients": {
+      "artifact_relative_path": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-B-CORRECTED-GRADIENT-AUDIT-v1/gradient_audit.json",
+      "sha256": "fee130ea2810bd417749d9d0811c6ba0eab5323ebc87d903e2fee54fab84cbab",
+      "bytes": 2969
+    },
+    "B_frozen_return": {
+      "artifact_relative_path": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-B-CORRECTED-RETURN-v1/manifest.json",
+      "sha256": "c1b9296ea76d556810e29644639c82b1cd591893a6256bb52c98675eb5f05086",
+      "bytes": 7837
+    },
+    "C_geometry": {
+      "artifact_relative_path": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-C-GEOMETRY-CORRECTED-v1/geometry/technical_receipt.json",
+      "sha256": "cb7a40439340dd820f332de252e44a41c2dd8b2917700088e2b88c11bc8de737",
+      "bytes": 144200
+    },
+    "C_appearance": {
+      "artifact_relative_path": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-C-APPEARANCE-CORRECTED-v1/appearance/technical_receipt.json",
+      "sha256": "cd83c69e0b40ccdbe86659c398e22a01d72722b862d122dce23dd83e0a33bbbc",
+      "bytes": 193342
+    },
+    "C_summary": {
+      "artifact_relative_path": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-C-SUMMARY-CORRECTED-v1/summary/summary.json",
+      "sha256": "b41f1fae8193d8cc8b301e18526b6f7e9b98e4d58bb84fdd1437166b718d008e",
+      "bytes": 22836
+    },
+    "viewer": {
+      "artifact_relative_path": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-VIEWER-CORRECTED-v3/viewer/technical_receipt.json",
+      "sha256": "7c7f4fc5a3633f6b496e32e919345f0c00acf47ec86c59d1913059783925278d",
+      "bytes": 84157
+    },
+    "browser_qa": {
+      "artifact_relative_path": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-VIEWER-QA-CORRECTED-v2/browser_qa.json",
+      "sha256": "f265cccb3a3415f5c81c6a685e8825cc5755c9bb620a4963f4224be743bb8c99",
+      "bytes": 3701548
+    },
+    "browser_full_fit": {
+      "artifact_relative_path": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-VIEWER-QA-CORRECTED-v2/gaussian_full_fit_audit.json",
+      "sha256": "91c56f3872f7c10545ca6bae4f84af1bdbe9dfee55423849aa0b8466919191ef",
+      "bytes": 2360
+    },
+    "source_check": {
+      "artifact_relative_path": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-SOURCE-CHECK-v2/receipt.json",
+      "sha256": "fed410a075e8d2024cc46e920b8d1eb2ce3857a1daf9ce3046abe29d5335ac45",
+      "bytes": 11928
+    }
+  },
+  "existing_work_preservation": {
+    "status": "PASS",
+    "scientific_verdict": null,
+    "checked_at_utc": "2026-09-06T23:28:51.938831+00:00",
+    "protected_repository_files": 6116,
+    "inventory_sha256": "8ee76ba05bdb9adab1df785ee50964fd7da4a09a943a32255d87f6fa17e6e5e3",
+    "command": "sha256sum --check --quiet protected_repository_v2.sha256 (repository working directory)",
+    "exit_code": 0,
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "directory_symlink": {
+      "path": "src/apps/experiment_dashboard/_shared/build",
+      "target": "../../gs3d_4way_viewer/build",
+      "unchanged": true
+    },
+    "scope": "Existing readable repository files from pre-task inventory; external raw/old run payloads were mounted read-only in new development runs"
+  },
+  "source_sha256": {
+    "configs/phd/p2_ab_v2/b_adapter_audit_v1.json": "3da28f6ffdf628698ba485b77bc5b92ece9b0a5537290479a17ad852ce5a100d",
+    "configs/phd/p2_ab_v2/b_adapter_binding_v1.json": "fdb847d715cf9448e952edc80cac0bf2366aece5285b980c9cfe7ef6fb8790d5",
+    "configs/phd/p2_ab_v2/b_corrected_gradient_audit_v1.json": "f0b6a1f0a45aa70d02d419d94171c217a9b21720b885bcaacd576dd17345bbac",
+    "configs/phd/p2_ab_v2/b_corrected_native_v1.json": "4a830ef261f08e5f1c1a9ad632078abd8ba11214d38126f067cc87055bcfe098",
+    "configs/phd/p2_ab_v2/b_corrected_prior_shift_v1.json": "d988bef9cbfb28d9d8dbdbcf0aaeb4a610162d462cb73c7e2c3dfadd93729db4",
+    "configs/phd/p2_ab_v2/b_corrected_representation_v1.json": "0a2380fd50a6793b00d8b2c2cea888e893e4b6756626d3c92cb1bc9590aabd5d",
+    "configs/phd/p2_ab_v2/b_corrected_return_v1.json": "24a78237f72249f88cd6339843e6069243f9ff93f4aa0e261efaf8237ae24319",
+    "configs/phd/p2_ab_v2/b_corrected_verification_v1.json": "20295c89f25aecd63764587d97af8a62030dffc8b6ff0f4ae3f033f00b86bb1d",
+    "configs/phd/p2_ab_v2/b_fixed_corrected_v2.json": "7271d919b5863cf376694d8155bdfc1a03ff57164b71b5c6e41e9d83bd114100",
+    "configs/phd/p2_ab_v2/b_geometry_adapter_v1.json": "1d9e791aff1c8b0b763a32fb2a380412f419a21d425aa620bd250965b715193b",
+    "configs/phd/p2_ab_v2/b_gradient_audit_v1.json": "a36d4833e227b2384595544bd51f1421326d297b917d9f36d52029c76b3d9195",
+    "configs/phd/p2_ab_v2/b_native_v1.json": "2a885de16a083d3a0f42d0483b48fbe42da19a2f9d17b4c594cace796454a83b",
+    "configs/phd/p2_ab_v2/b_preflight_v1.json": "1f882af5d816b54879992c4266a146c9c82ca289956d7e9e4939aa0e32cd40c1",
+    "configs/phd/p2_ab_v2/b_prior_shift_v1.json": "44fdd123e2a9aecfb9ce46fffb99b2bbe83ff2f6059719d2aa09c1e57fa0cf45",
+    "configs/phd/p2_ab_v2/b_representation_v1.json": "3ec4ac286ac4ef654686b8aea34067512f8a45779840064292b3b3111af394a2",
+    "configs/phd/p2_ab_v2/b_surface_audit_v1.json": "490bcccd2cbe09fd27d6446a6e6d5bbd2cbebef105bab90187dbf9fa15903d99",
+    "configs/phd/p2_ab_v2/b_verification_v1.json": "94d1b33569ca2c1d3d7ef2bdd826f28335a748804205cd846702c56b7edae737",
+    "configs/phd/p2_ab_v2/c_final_corrected_v2.json": "57974274a33b7b2c7808ad90fdf85644ac53064ed9e9c581ca77a01a41e2586b",
+    "configs/phd/p2_ab_v2/c_final_v1.json": "3991d6f52c44f117ded4de84722d694a1d08b7620ea657f18ddb7dda3f4d49a7",
+    "configs/phd/p2_ab_v2/c_package_corrected_v1.json": "5937da46a4e251dc00815df10f8cb5a0f50494a453f4843eb834151ba6dd03f5",
+    "configs/phd/p2_ab_v2/sample_audit_v1.json": "4512ee6633e867543c621e1dab1f2c898aad7b3f7dcbb0adb70f715d8a4ce414",
+    "configs/phd/p2_ab_v2/sample_depth_audit_v1.json": "58a24121f1cffb9eccbcb17719d8ae00df375024d789874b935dc18d53697d87",
+    "configs/phd/p2_ab_v2/sample_depth_figure_v1.json": "950acaa8bb79ef11a310fc0c075a8a9a2d6bc3585bcf216b4181ff3bcbff491c",
+    "configs/phd/p2_ab_v2/sample_global_depth_audit_v1.json": "4f3969277ee4df55991cecb63e2cb4b13cdfb52859b5d0d471aca3e09c3d566c",
+    "configs/phd/p2_ab_v2/sample_native_reference_baseline_v1.json": "2523d7fcdf3ab85ab774c9538206c7d00a19632b7037d649638d693b60851856",
+    "configs/phd/p2_ab_v2/sample_native_v1.json": "2d386dceff87a02332dd6a7bc25257c2f44e4bb8042e689f572bf455b732b55b",
+    "configs/phd/p2_ab_v2/sample_nn_performance_v1.json": "5806ef9f9bb9393329d525a4ff8c7f24e00c583b0e7c295c3b79d01f088dcf17",
+    "docs/experiments/phd/p2_ab_v2/A_LITERATURE_AND_DESIGN_ko_v2.md": "d6de95f6a0e8135d970cf0455a4822342760b13cdacd9570c26a6e50a7704df3",
+    "docs/experiments/phd/p2_ab_v2/B_CORRECTED_TECHNICAL_RETURN_ko_v2.md": "b6c15d480a49a02f6043f13dc4eed3c8653fad81424733f379398d654514c834",
+    "docs/experiments/phd/p2_ab_v2/B_GEOMETRY_ADAPTER_CORRECTION_ko_v2.md": "479d6bdaddc64ad1d71902bfa6d9fc0083cf3862fed078956cf6575550dfcb65",
+    "docs/experiments/phd/p2_ab_v2/B_ISSUES_ko_v2.md": "a2bc020b7b537a3581e956474c9f872c8bc56dd3b2a5d5bb532cad2a65313540",
+    "docs/experiments/phd/p2_ab_v2/B_RECONSTRUCTION_DESIGN_ko_v2.md": "41da45bd5b28fd277feac1eef03a4f10d4ae3111bbb651112b1a8e50806989f2",
+    "docs/experiments/phd/p2_ab_v2/B_TECHNICAL_RETURN_ko_v2.md": "a72b69a595328d630117af25df1f65631ebb37ecc6306a62e4008d50baa74361",
+    "docs/experiments/phd/p2_ab_v2/CORRECTIONS_ko_v2.md": "7d67f2724bae9392c5cbb265e14f32c7f0ecbeddfbc3478f0a0501689fe238c4",
+    "docs/experiments/phd/p2_ab_v2/C_EVALUATION_PROTOCOL_ko_v2.md": "b730d401e5ef7e401ba4bb011b9aaaf28ef4660d46c4ac0f4bc27d0f2a77fb46",
+    "docs/experiments/phd/p2_ab_v2/ISSUES_ko_v2.md": "6c7aed152a09dcc94f6b11d46464f25aedf057ab3a9b77dc40085016800b652f",
+    "docs/experiments/phd/p2_ab_v2/README.md": "a34e87f068f46aa38bae35616a949be2537a72180866f786df3467738f38baef",
+    "docs/experiments/phd/p2_ab_v2/SAMPLE_C_CORRECTED_REVIEW_ko_v2.md": "e2f640314f0342863d4da5566e3f70bcef3fdc90f00f197f6d5376d6bddf419b",
+    "docs/experiments/phd/p2_ab_v2/SAMPLE_DEPTH_OCCLUSION_ISSUES_ko_v2.md": "b57bec62a640d078093b5805c6c2549adeeda53d75bc4ec7d52d52bd4a0e19aa",
+    "docs/experiments/phd/p2_ab_v2/SAMPLE_NATIVE_IMAGE_AUDIT_ko_v2.md": "6cb0ec0400e0873fb68eb5755b97e558a5acfc91d10799ca5f92aec518279c2b",
+    "docs/experiments/phd/p2_ab_v2/SAMPLE_NN_PERFORMANCE_ko_v2.md": "dcf01f8d1bc371b173a096aeb546260375f1469094de600ac031c8c6cfa537ea",
+    "docs/experiments/phd/p2_ab_v2/SAMPLE_VIEWER_QA_ko_v2.md": "77acf59c17c4e6822a5315004d98d0c43ec2eff572de53311ed03b634dd64055",
+    "docs/experiments/phd/p2_ab_v2/TECHNICAL_RETURN_ko_v2.md": "e207fd6bffd0fb1db96db8a664c5ec7e5a7a18472238ccff6cbdfc13d0866fee",
+    "scripts/phd/p2_ab_v2/b_adapter_audit.py": "4245bc929b694bc758129712c8e97f8a289aed2b99005921911d3ca7c1e652b4",
+    "scripts/phd/p2_ab_v2/b_adapter_audit_docker.sh": "b56bfb7ee7c4ea879723fbff5145244ec937b3a764f9e470fed2a8fbc31f4c2c",
+    "scripts/phd/p2_ab_v2/b_bind_adapter_audit.py": "dd9b93f7b111afde30314cf0070208ba3dbf7594597624e2711d311bfb2678db",
+    "scripts/phd/p2_ab_v2/b_bind_adapter_audit_docker.sh": "106b6bc8c5a332ed8e91355a0027e2891cad5ed9378d4d6f23a44e194f1d59af",
+    "scripts/phd/p2_ab_v2/b_corrected_followups_docker.sh": "1be7dadc9a11b2208d369b90c0fda73f700a7736bfe39d394436071fb4af28b0",
+    "scripts/phd/p2_ab_v2/b_finish_queue.sh": "1638d6937d91569923febc1ea803554b2ebac816ab10e24cb0d005b8423d98ec",
+    "scripts/phd/p2_ab_v2/b_freeze_corrected_return.py": "18b0ab8366343796cfcf53daca63b1dbd7e99b679d43312b410bca08a8f10e65",
+    "scripts/phd/p2_ab_v2/b_freeze_corrected_return_docker.sh": "c055ad6abc004d0949f8c074a82489a28004de42f08761d00246646d82d81887",
+    "scripts/phd/p2_ab_v2/b_gradient_audit.py": "f1206ac6cd87269ff0c9454dac1f033f53a179f99d84433513bf9b1b29e30ae6",
+    "scripts/phd/p2_ab_v2/b_gradient_corrected_docker.sh": "4518e115adbc696734e7fe1b0eb2c7c61578e22e4160fafddd2f92440b3e8b56",
+    "scripts/phd/p2_ab_v2/b_gradient_docker.sh": "0684d3b38f0e27a7ec86c04cf4a577c021424626e7cc6d951e8a693e9f0c2647",
+    "scripts/phd/p2_ab_v2/b_prepare_geometry_adapter.py": "513b0950edd7ffd6c4c0624e8e7f00fd5e3d1b4b42c3489eab6bdeb8975176f8",
+    "scripts/phd/p2_ab_v2/b_run.py": "fba2f706efec0edcd9d98131f8b019d1baa1c526278a17355f472b243caaf004",
+    "scripts/phd/p2_ab_v2/b_run_corrected_docker.sh": "376d277daae5e084797f74430c5e2065f7d745a176b094ff8cbb30394c6da95e",
+    "scripts/phd/p2_ab_v2/b_run_docker.sh": "fa070fe051e4269cdfbadfcdf4197c82d81f97f20d69b96744a69cdd99bc82dd",
+    "scripts/phd/p2_ab_v2/b_surface_audit.py": "ec600a948f0a2b07cdfd07353cf56ae492c315ca91440d5421b786d5d20892b6",
+    "scripts/phd/p2_ab_v2/b_surface_audit_docker.sh": "9a8ea38baec722360b87df794f040a59d415c6ecc1aad87887eaef30c2652d7c",
+    "scripts/phd/p2_ab_v2/b_verify.py": "fd7068ae282adda40f7b56e9c3cf4a32b69ca861afe6eb714d06938d0a3470f7",
+    "scripts/phd/p2_ab_v2/b_verify_corrected.py": "55e0f28995f966925b2f9ec241ba33a16e56a13ed0fcd9dc682bc0e6d77c46ac",
+    "scripts/phd/p2_ab_v2/b_verify_corrected_docker.sh": "37fe0e127fd5ae0b9de19ca1ae08b1c601d18d467fe2b4027d0d394465f1f7ad",
+    "scripts/phd/p2_ab_v2/b_verify_docker.sh": "8ffd1690e5f7ed8fbd89529934796ca728fec985e11dcc6c364fe264c31b76ed",
+    "scripts/phd/p2_ab_v2/b_verify_docker_v2.sh": "2e0d36475c5fbb528c5879a8d8ee5c30882496e425fa8727ae4cf18143a35b49",
+    "scripts/phd/p2_ab_v2/c_browser_qa.mjs": "240fd1e832861ec4317ea8d00a3fc1e23ee89cd5f32042c8bd9936b35317f415",
+    "scripts/phd/p2_ab_v2/c_common_appearance.py": "0db19a0cbdd0f84232c72696df44d94baecdd9c9c6424144aa9254259823555c",
+    "scripts/phd/p2_ab_v2/c_evaluate.py": "90d2ce97271c8d92ce06c135116c1ee1f331b8ac6b7e8f585c8b6e769be63aa1",
+    "scripts/phd/p2_ab_v2/c_package.py": "6499bb51a9deebe6cb17e76e1994af8d6e7d1a8e6b1696095d5fe9de94849964",
+    "scripts/phd/p2_ab_v2/c_pipeline.py": "898dbdd6848e973a75cfba6bd82f42562f6cd2f95dfdca61eedbf2c012c4b364",
+    "scripts/phd/p2_ab_v2/c_run_docker.sh": "f5777a2de812c40beb7e6ef375bf7f7d0478cabe879f464d702fee4575d6720a",
+    "scripts/phd/p2_ab_v2/c_summarize.py": "61d292d948a16cc7e229068ceb7b86bc55721c5656244713dcde96288bd77cd2",
+    "scripts/phd/p2_ab_v2/c_viewer_build.py": "af01455501c36d08fa84482f1c65e767f927374a60d86c483813ecd61015a2bd",
+    "scripts/phd/p2_ab_v2/sample_audit.py": "dc3667bc24ce39548605fe5a4cfdc3a668def4fa5acd44c5dd029ad73c817e62",
+    "scripts/phd/p2_ab_v2/sample_browser_framing_audit.mjs": "b0523e7bac27bdeca731f2a1eb5cbce95e8fdaa511d5667faf6c4e97aa35d97a",
+    "scripts/phd/p2_ab_v2/sample_build.py": "156f93f5fc0a83078766e3b531a16ac50f5f5e81a00c2b0e339d1c8e108d29f1",
+    "scripts/phd/p2_ab_v2/sample_depth_audit.py": "6bda17c34c2ba3ffe534ecd912dd4a1846054a885e3a83051455f878f30439dc",
+    "scripts/phd/p2_ab_v2/sample_depth_figure.py": "8e0df4d39a3b45b71f45fa0bca0af0015a7397ce8b1f0a60bb2d373321d4355e",
+    "scripts/phd/p2_ab_v2/sample_depth_mapping.py": "e0e0e12eab1259307aca26a81c5c19594cf9bc4d552338d049dd2c7f1b2d698b",
+    "scripts/phd/p2_ab_v2/sample_global_depth_audit.py": "941577f01f63389d0d08d7fdeae5330deaddecb14b1d12bcf68abd7fb95b7e3d",
+    "scripts/phd/p2_ab_v2/sample_native_reference_baseline.py": "65a0c86cc20584118a00786cce0a32f89e033903b238174b1d01fc2dd19e7b31",
+    "scripts/phd/p2_ab_v2/sample_nn_performance.py": "83f735721470cb95bca6fab9c8d4052ea9c83da55fcac32f627f387bb9fedb25",
+    "src/apps/p2_ab_inspector_v2/app.js": "eea6a71820c24a88aa4cc47efdb3f00f690d0bb68792e5a11ee437959154fb76",
+    "src/apps/p2_ab_inspector_v2/index.html": "8151d347a7ffd6b9e017fa6132d2b70d69bffa886203c371245a9be88521b8b8",
+    "src/phd/p2_ab_v2/evaluation.py": "b919794d3331a8f7aee2ec561b0d6c6d208cfd797e10beb683454192288f5951",
+    "src/phd/p2_ab_v2/geometry_evaluation.py": "5615505371ae2a146f09ff7cb103ca88bb291a7a1022ed621234f123f2bab2de",
+    "src/phd/p2_ab_v2/reconstruction.py": "96573eb6d6da685f76e5d26efaeeb305de98bcce359208320ec2713e5439a232",
+    "tests/phd/test_p2_ab_v2_evaluation.py": "ee3b5a909207f7188d4275b80306ffefbfaa7aefd80e9ae5506d13574ce28204",
+    "tests/phd/test_p2_ab_v2_reconstruction.py": "e5a5ea4ca1ae82b67d49dfb04bbbb8a7a7ea16caf1748efd73789141fd9e47b2"
+  },
+  "git_head": "72f45bcf861c5fe6e0c70e28e0686a72e9424b17",
+  "container_image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+  "validation_environment": {
+    "python": "3.11.15",
+    "packages": {
+      "numpy": "1.26.4",
+      "scipy": "1.13.1",
+      "torch": "2.4.1+cu121",
+      "opencv-python": "4.10.0.84"
+    }
+  },
+  "committed": false,
+  "reproduction": "Use exact per-run source/config/input snapshots; Git HEAD alone excludes dirty task files",
+  "artifact_root_container": "/artifacts/JointBuildGS",
+  "local_storage_is_not_durable_backup": true,
+  "viewer": {
+    "url": "http://127.0.0.1:8894/PHD-P2-AB-V2-VIEWER-CORRECTED-v3/viewer/",
+    "container": "jbgs-p2-ab-inspector-v2-8894",
+    "access": "loopback, read-only artifact subtree; existing 8893 viewer retained"
+  },
+  "excluded_runs": {
+    "PHD-P2-AB-V2-B-NATIVE-v1": "Preserved, invalid for method conclusion: screen-only low-pass contributions polluted geometry auxiliaries and dependent masks/losses",
+    "PHD-P2-AB-V2-B-NATIVE-FIXED-v2": "Preserved, color-domain repair did not repair the geometry auxiliary contract",
+    "PHD-P2-AB-V2-B-REPRESENTATION-v1": "Preserved, invalid geometry auxiliary contract",
+    "PHD-P2-AB-V2-B-PRIOR-SHIFT-v1": "Preserved, invalid geometry auxiliary contract",
+    "PHD-P2-AB-V2-C-GEOMETRY-v1": "Stopped and preserved after confirmed input geometry contract error",
+    "PHD-P2-AB-V2-C-APPEARANCE-v1": "Preserved, uses observations and models from invalid geometry path",
+    "PHD-P2-AB-V2-VIEWER-v1": "UI validation only; old Gaussian fits are excluded from method conclusions",
+    "PHD-P2-AB-V2-VIEWER-CORRECTED-v1": "Corrected research data retained; superseded by v3 display fit repair",
+    "PHD-P2-AB-V2-VIEWER-CORRECTED-v2": "Aspect-only fit repair retained; superseded by v3 bounding-sphere fit"
+  }
+}

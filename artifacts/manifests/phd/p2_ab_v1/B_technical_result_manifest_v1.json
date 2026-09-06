@@ -1,0 +1,230 @@
+{
+  "schema": "jointbuildgs.phd.p2_ab_reconstruction.v1",
+  "status": "TECHNICAL_DEVELOPMENT_COMPLETE_LIMITATIONS_RETAINED",
+  "scientific_verdict": null,
+  "artifact_root": "/artifacts/JointBuildGS/phase-payloads/phd/p2_ab_v1",
+  "common_sample": "PHD-P2-AB-COMMON-v2",
+  "decision_input": "PHD-P2-AB-A-v1",
+  "verification_relative_path": "B_VERIFICATION_v2.json",
+  "verification_sha256": "4dd0b256340b38fcca0d2bc64d22a559849ee6d34d59503896e89181b2885e87",
+  "verification_status": "PASS",
+  "source_snapshot_scope": "final reproducible implementation/config/report after execution; original runtime DN config.yml retained",
+  "source_hashes": {
+    "src/phd/p2_ab_v1/reconstruction.py": "c4289f6f39c6ac5d712e7f6b6499f3c05d3f9799ae5d5ef88a560e83623179cc",
+    "tests/phd/test_p2_ab_reconstruction.py": "3feac348e8fd326673183d5dae928b1b996711c48be495df4b43a6f42d9d89e2",
+    "scripts/phd/p2_ab_v1/b_dn_adapter.py": "aac9d89524900a33205e3e5a5c70dad4b2f73c662affb4630bd6c62882136ea6",
+    "scripts/phd/p2_ab_v1/b_dn_evaluate.py": "85d3a756f5793b230a3f6d4c22b65c5296882590844601e03a258d749d3cefac",
+    "scripts/phd/p2_ab_v1/b_dn_finalize.py": "7fa4c30694f6aa355af0f2e42c60fa0a05265f48bf212ff063678d5bbf6d28fd",
+    "scripts/phd/p2_ab_v1/b_run.py": "6eb0275d625c9684c158d792ffed2aef453e7e81f58e52f06327787ebae0311d",
+    "scripts/phd/p2_ab_v1/b_verify.py": "056e47f523233688b9ef84b145db4f8a349746ada36fa775d9d8e9d181d6d185",
+    "scripts/phd/p2_ab_v1/b_dn_evaluate_docker.sh": "8b256e2be3f6dd681954ca1a37ec54b3878a46ad827e449194ca4113818454b5",
+    "scripts/phd/p2_ab_v1/b_dn_run.sh": "37c9c41a53abeabacc997f33b9281bbd6aa3a1edf8ecaf3a45c1b43fb9d5192f",
+    "scripts/phd/p2_ab_v1/b_run_docker.sh": "3b7d69a322c943cd030c89440ad8e51b7038b5e83590fa7c6631dabf569fee51",
+    "configs/phd/p2_ab_v1/b_bayes_v1.json": "0ba48d20764aed1dc7e4d2d988a333a9aaae33c018aae6ee142e3815c0e4e871",
+    "configs/phd/p2_ab_v1/b_dn_v2.json": "03c93baa8ff3faf3d46c1608ad7cda8523993689dc7b88bb3e6caf8cc9e4888a",
+    "configs/phd/p2_ab_v1/b_image_v1.json": "6511a70beaff4dfe77fce826e8a8b8f783ea529940924717c45156bbd78e0515",
+    "configs/phd/p2_ab_v1/b_prior_v1.json": "120ba375eefd5989e11201eff3c978a436316e8689a855caa7d11d8316b7b921",
+    "configs/phd/p2_ab_v1/b_range_v1.json": "0a2326f1345ed110332cc8a2c7f252c20c9d709b3c1a360901d9a4bc9950ae45",
+    "configs/phd/p2_ab_v1/b_score_v1.json": "90056882d6b543ebdd19636e7a24545aea6a41d59f5df6ef33891b8e6e923234",
+    "configs/phd/p2_ab_v1/b_shared_shift_v1.json": "2d39e4240937fec5dcadab18e656991f9cc23368ec4614674a647fdb4bd4d472",
+    "docs/experiments/phd/p2_ab_v1/B_ISSUES_ko_v1.md": "b6d51665c1f7a5135b56d11e057eb272639756be58d4389b7e4af8d7217ee31b",
+    "docs/experiments/phd/p2_ab_v1/B_RECONSTRUCTION_DESIGN_ko_v1.md": "4ee1145ae60164a17717da0c5de68f317ee2c6afe338ea742c9e839a1670c7c7",
+    "docs/experiments/phd/p2_ab_v1/B_TECHNICAL_RETURN_ko_v1.md": "21c4d8e766cf23e27f70b4de89bb98be754fdd50980a8d1bdb40a73bc824dcb3"
+  },
+  "runs": [
+    {
+      "run": "PHD-P2-AB-B-RANGE-v1",
+      "arms": [
+        {
+          "arm": "surface_texturing",
+          "surface_points": 765,
+          "initial_surface_points": 765,
+          "surface_sha256": "e0866424b9a2a8b8179e9d0d09fb418fbd6c29bfd5cf6ff0d883841d2e407cc3",
+          "initial_surface_sha256": "e0866424b9a2a8b8179e9d0d09fb418fbd6c29bfd5cf6ff0d883841d2e407cc3"
+        },
+        {
+          "arm": "fixed_gs",
+          "surface_points": 765,
+          "initial_surface_points": 765,
+          "surface_sha256": "e0866424b9a2a8b8179e9d0d09fb418fbd6c29bfd5cf6ff0d883841d2e407cc3",
+          "initial_surface_sha256": "e0866424b9a2a8b8179e9d0d09fb418fbd6c29bfd5cf6ff0d883841d2e407cc3"
+        },
+        {
+          "arm": "prior_loss_gs",
+          "surface_points": 800,
+          "initial_surface_points": 765,
+          "surface_sha256": "b60237a1b481cbde36d43f25701d05bb66d7a403a2bec95271631d58fa31eee7",
+          "initial_surface_sha256": "e0866424b9a2a8b8179e9d0d09fb418fbd6c29bfd5cf6ff0d883841d2e407cc3"
+        },
+        {
+          "arm": "constrained_gs",
+          "surface_points": 765,
+          "initial_surface_points": 765,
+          "surface_sha256": "e0866424b9a2a8b8179e9d0d09fb418fbd6c29bfd5cf6ff0d883841d2e407cc3",
+          "initial_surface_sha256": "e0866424b9a2a8b8179e9d0d09fb418fbd6c29bfd5cf6ff0d883841d2e407cc3"
+        }
+      ],
+      "result_sha256": "084e2cb741704840ef3f7e0dee50c796181ff6a030df101274e053090c2dcf91"
+    },
+    {
+      "run": "PHD-P2-AB-B-SCORE-v1",
+      "arms": [
+        {
+          "arm": "surface_texturing",
+          "surface_points": 1171,
+          "initial_surface_points": 1171,
+          "surface_sha256": "716b94f3659cf759ae27c9f57da8a50a0052b118b7c60be5c51121fb92585c42",
+          "initial_surface_sha256": "716b94f3659cf759ae27c9f57da8a50a0052b118b7c60be5c51121fb92585c42"
+        },
+        {
+          "arm": "fixed_gs",
+          "surface_points": 1171,
+          "initial_surface_points": 1171,
+          "surface_sha256": "716b94f3659cf759ae27c9f57da8a50a0052b118b7c60be5c51121fb92585c42",
+          "initial_surface_sha256": "716b94f3659cf759ae27c9f57da8a50a0052b118b7c60be5c51121fb92585c42"
+        },
+        {
+          "arm": "prior_loss_gs",
+          "surface_points": 1259,
+          "initial_surface_points": 1171,
+          "surface_sha256": "7e00674da927b41fabdbe6458ef0afe301159a26ccb2d685fa657404a5e23046",
+          "initial_surface_sha256": "716b94f3659cf759ae27c9f57da8a50a0052b118b7c60be5c51121fb92585c42"
+        },
+        {
+          "arm": "constrained_gs",
+          "surface_points": 1171,
+          "initial_surface_points": 1171,
+          "surface_sha256": "716b94f3659cf759ae27c9f57da8a50a0052b118b7c60be5c51121fb92585c42",
+          "initial_surface_sha256": "716b94f3659cf759ae27c9f57da8a50a0052b118b7c60be5c51121fb92585c42"
+        }
+      ],
+      "result_sha256": "d4fbe4cb3ecfee06e63e8044bd9709a3f2413ef262dbf176a877958543cb4ffc"
+    },
+    {
+      "run": "PHD-P2-AB-B-BAYES-v1",
+      "arms": [
+        {
+          "arm": "surface_texturing",
+          "surface_points": 3003,
+          "initial_surface_points": 3003,
+          "surface_sha256": "3dc94a515a2f7015578b07203fff575e6c368a627fe43bc7fdbe7daeb09ce8f3",
+          "initial_surface_sha256": "3dc94a515a2f7015578b07203fff575e6c368a627fe43bc7fdbe7daeb09ce8f3"
+        },
+        {
+          "arm": "fixed_gs",
+          "surface_points": 3003,
+          "initial_surface_points": 3003,
+          "surface_sha256": "3dc94a515a2f7015578b07203fff575e6c368a627fe43bc7fdbe7daeb09ce8f3",
+          "initial_surface_sha256": "3dc94a515a2f7015578b07203fff575e6c368a627fe43bc7fdbe7daeb09ce8f3"
+        },
+        {
+          "arm": "prior_loss_gs",
+          "surface_points": 3219,
+          "initial_surface_points": 3003,
+          "surface_sha256": "e789b43bb33a3922f498b6dc35cfbf759d9630e078ca8f17e8d2e7ef6a15e606",
+          "initial_surface_sha256": "3dc94a515a2f7015578b07203fff575e6c368a627fe43bc7fdbe7daeb09ce8f3"
+        },
+        {
+          "arm": "constrained_gs",
+          "surface_points": 3003,
+          "initial_surface_points": 3003,
+          "surface_sha256": "3dc94a515a2f7015578b07203fff575e6c368a627fe43bc7fdbe7daeb09ce8f3",
+          "initial_surface_sha256": "3dc94a515a2f7015578b07203fff575e6c368a627fe43bc7fdbe7daeb09ce8f3"
+        }
+      ],
+      "result_sha256": "d071fe39326d5762d6a93d1261f19a546b141eb8e97ff6e7299c76bb6c05d1a8"
+    },
+    {
+      "run": "PHD-P2-AB-B-IMAGE-v1",
+      "arms": [
+        {
+          "arm": "surface_texturing",
+          "surface_points": 50914,
+          "initial_surface_points": 50914,
+          "surface_sha256": "b9bcf520a41a61b848bcaf14b22eb60522547f9f4286cbb60c7898d151e98e25",
+          "initial_surface_sha256": "b9bcf520a41a61b848bcaf14b22eb60522547f9f4286cbb60c7898d151e98e25"
+        },
+        {
+          "arm": "fixed_gs",
+          "surface_points": 50914,
+          "initial_surface_points": 50914,
+          "surface_sha256": "b9bcf520a41a61b848bcaf14b22eb60522547f9f4286cbb60c7898d151e98e25",
+          "initial_surface_sha256": "b9bcf520a41a61b848bcaf14b22eb60522547f9f4286cbb60c7898d151e98e25"
+        },
+        {
+          "arm": "prior_loss_gs",
+          "surface_points": 52935,
+          "initial_surface_points": 50914,
+          "surface_sha256": "6d4ce04759d5c9fab30e021d8d5a8ca09a95356d44450b7417d08705b5f9c130",
+          "initial_surface_sha256": "b9bcf520a41a61b848bcaf14b22eb60522547f9f4286cbb60c7898d151e98e25"
+        },
+        {
+          "arm": "constrained_gs",
+          "surface_points": 50914,
+          "initial_surface_points": 50914,
+          "surface_sha256": "b9bcf520a41a61b848bcaf14b22eb60522547f9f4286cbb60c7898d151e98e25",
+          "initial_surface_sha256": "b9bcf520a41a61b848bcaf14b22eb60522547f9f4286cbb60c7898d151e98e25"
+        }
+      ],
+      "result_sha256": "adecd11cd3a059eae27306f6d67837635b28b0ead4e4142f24fb6cb542f7fce7"
+    },
+    {
+      "run": "PHD-P2-AB-B-PRIOR-v2",
+      "arms": [
+        {
+          "arm": "surface_texturing",
+          "surface_points": 32706,
+          "initial_surface_points": 32706,
+          "surface_sha256": "19eb07e924d15fa081bcd46f7907518a5883c06968407181a8482dcee30ab1ea",
+          "initial_surface_sha256": "19eb07e924d15fa081bcd46f7907518a5883c06968407181a8482dcee30ab1ea"
+        },
+        {
+          "arm": "fixed_gs",
+          "surface_points": 32706,
+          "initial_surface_points": 32706,
+          "surface_sha256": "19eb07e924d15fa081bcd46f7907518a5883c06968407181a8482dcee30ab1ea",
+          "initial_surface_sha256": "19eb07e924d15fa081bcd46f7907518a5883c06968407181a8482dcee30ab1ea"
+        },
+        {
+          "arm": "prior_loss_gs",
+          "surface_points": 34111,
+          "initial_surface_points": 32706,
+          "surface_sha256": "5e7f6c63a6f1dc036dced6ec78618a27988e117dcdc8962c66ed6d85e7a0ccb9",
+          "initial_surface_sha256": "19eb07e924d15fa081bcd46f7907518a5883c06968407181a8482dcee30ab1ea"
+        },
+        {
+          "arm": "constrained_gs",
+          "surface_points": 32706,
+          "initial_surface_points": 32706,
+          "surface_sha256": "19eb07e924d15fa081bcd46f7907518a5883c06968407181a8482dcee30ab1ea",
+          "initial_surface_sha256": "19eb07e924d15fa081bcd46f7907518a5883c06968407181a8482dcee30ab1ea"
+        }
+      ],
+      "result_sha256": "cb163c7f2f5354692a71f06565e0b77fc92419dce45f58247ab8fbda86855f2d"
+    },
+    {
+      "run": "PHD-P2-AB-B-DN-v2",
+      "arms": [
+        {
+          "arm": "dn_splatter_original_v2",
+          "surface_points": 25976,
+          "initial_surface_points": 6898,
+          "surface_sha256": "48ccc3dc5ec036be87870cfbd124d37220b19d2a688cbf9f79413368e7350171",
+          "initial_surface_sha256": "34d774a282ac3b2b8fe50b8d27fb9392f03d31fc857ad25a90844533077021fb"
+        }
+      ],
+      "result_sha256": "8e874af47c4e80e6c9c84bdbe7aabaf2e5b366701335ce9bcc2991956b89ad24"
+    }
+  ],
+  "all_abstain_run": "PHD-P2-AB-B-SHARED-SHIFT-v1",
+  "preserved_preparatory_runs": [
+    "PHD-P2-AB-B-PRIOR-v1",
+    "PHD-P2-AB-B-DN-v1"
+  ],
+  "strict_current_surface_authority": "ABSTAIN_ALL; conditional reconstruction representation only",
+  "unit_tests_passed": 8,
+  "camera_crops_roles_matched": 44,
+  "report": "docs/experiments/phd/p2_ab_v1/B_TECHNICAL_RETURN_ko_v1.md",
+  "design": "docs/experiments/phd/p2_ab_v1/B_RECONSTRUCTION_DESIGN_ko_v1.md",
+  "issues": "docs/experiments/phd/p2_ab_v1/B_ISSUES_ko_v1.md"
+}
