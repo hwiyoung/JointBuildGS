@@ -1,0 +1,121 @@
+schema: jointbuildgs.external-task-resolver.v1
+task_id: PHD-GEOGS-MVS-PGSR-v1
+scientific_verdict: null
+snapshot_utc: '2026-09-14T14:44:30Z'
+status: SIX_PREFLIGHTS_PASS_BACKGROUND_TRAINING_RUNNING
+scope: P1/P2/P3 existing GeoGS Anchor8k continuation with MVS depth and PGSR-style geometry losses
+canonical_e1_e6_contract_changed: false
+backend:
+  local_sibling: ../JointBuildGS-artifacts
+  container_artifact_root: /artifacts/JointBuildGS
+  relative: phase-payloads/phd/geogs_mvs_pgsr_v1/PHD-GEOGS-MVS-PGSR-v1
+  durability: local external storage; not a durable-backup claim
+parent:
+  resolver: artifacts/manifests/geogs_p1p2p3_v1.yaml
+  relative: phase-payloads/phd/geogs_p1p2p3_v1/PHD-GEOGS-P1P2P3-v1
+  source_relative: sources/GeoGS-state-camera-v1
+  geogs_commit: db40c95c657ec03ff21c83cb99cf39f4e90247a6
+  anchors:
+    P1:
+      relative: runs/P1/D005_Pnative/model/jbgs_complete/iteration_8000
+      checkpoint_sha256: c08a39aa2deb81b26dd4dd75d0be9e6bb5e150db503f9d422a05423388679274
+    P2:
+      relative: runs_allocator_v2/P2/D005_Pnative/model/jbgs_complete/iteration_8000
+      checkpoint_sha256: 91bc9ad74b115c37d4ae35ec4eb197832e730be165d36f52ebe4bb291f1ebcfd
+    P3:
+      relative: runs_allocator_v2/P3/D005_Pnative/model/jbgs_complete/iteration_8000
+      checkpoint_sha256: 3b0de04d99435e36d05ffca49951976352bd663192cce14e59f2bddb58bdf567
+source:
+  pgsr_reference_commit: de24f1a38b350387e8d8fe381b2cd70c1ae946e7
+  prepared_relative: sources/GeoGS-mvs-pgsr-v1
+  provenance_relative: sources/GeoGS-mvs-pgsr-v1/mvs_pgsr_source_provenance.json
+  provenance_sha256: 62b7b9d97ec48c82c5ef3783ccbde82dbdabd4ed62642efca9abe5224063afe3
+  renderer: inherited GeoGS diff-surfel-rasterization; expected-depth adaptation, not full PGSR reproduction
+runtime:
+  image: jointbuildgs:geogs-official-db40c95-compat-v1
+  image_id: sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e
+  allocator: backend:native,max_split_size_mb:128
+inputs:
+  active_relative: inputs_v2
+  config: configs/phd/geogs_mvs_pgsr_v1/experiment_v2.json
+  exact_config_copy_relative: inputs_v2/experiment.json
+  config_sha256: 3555f528c7b2c91941c4f9e4812bcf918351605ec6c793c272be7e42a8785c5c
+  receipt_relative: inputs_v2/receipt.json
+  receipt_sha256: 9c008994d4827a7f1401bd6d6f9fc77484ad88f49880759e63ad86087a98e475
+  preparation_attempt_relative: input_preparation_v2_attempt_20260914T142620Z_GSJ0dE
+  camera_depth_convention: CAMERA_Z_METERS
+  rgb_width_height: [1400, 1013]
+  native_depth_width_height: [1024, 741]
+  resampling: integer RGB ray through native K; nearest; no hole filling or scale fitting
+  confidence_inferred: false
+  maximum_neighbors: 8
+  neighbor_axis_angle_degrees: 30.0
+  neighbor_baseline_depth_ratio: 1.0
+  empty_neighbor_policy: single_view_only_record_skip
+  regions:
+    P1:
+      binding_relative: inputs_v2/P1/bindings.json
+      binding_sha256: c8afb896b9e6a0cdee1921b49c46e97a3d0cb0c568dd2b37ddce9f592bc1d9d8
+      train_count: 98
+      empty_neighbor_count: 1
+    P2:
+      binding_relative: inputs_v2/P2/bindings.json
+      binding_sha256: 64a9d28a22f1679bb63efeac22f91ba569f04c7bee674840638e4924b120cbdf
+      train_count: 57
+      empty_neighbor_count: 2
+    P3:
+      binding_relative: inputs_v2/P3/bindings.json
+      binding_sha256: e3e6adbab866418890fa2d2c57e64a53265232230d0e860a6500c623ce5fe8ac
+      train_count: 137
+      empty_neighbor_count: 1
+preserved_failure:
+  inputs_relative: inputs_v1
+  attempt_relative: input_preparation_attempt_20260914T142134Z_bh21n7
+  graph_relative: inputs_v1/P1/failed_neighbor_graph.json
+  reason: overly strict every-camera nonempty-neighbor gate failed at one P1 camera
+  disposition: preserved; superseded by explicit missing-support policy without changing neighbor thresholds
+validation:
+  docker_cpu_test_count: 30
+  docker_cpu_status: PASS
+  six_gpu_preflights:
+    status: PASS
+    count: 6
+    summary_relative: preflight_summary_v1.json
+    summary_sha256: 6c79daa10e248dff73fd545895b5db38a4ff002d933a1840784eafa4c36c7344
+    execution_gate_relative: execution_gate_v1.json
+  finalizer_readiness:
+    status: PASS
+    marker_relative: finalization_ready_v1.json
+    frozen_plan_relative: evaluation/static_preflight/attempt.ti3XIMjN/static.json
+    launch_validation_relative: queue/attempt.eh1jxGEn/finalizer_ready_at_launch.json
+  first_gpu_preflight:
+    relative: preflight/P2/mvs_pgsr_0.005/attempt.zWaYG9SA
+    receipt_sha256: 3b77982dcb12a19d888789c0e981fe8384dde22c0d224956548f299eff5672f1
+    status: PASS
+    start_iteration: 8000
+    final_iteration: 8100
+    immediate_complete_anchor_restore: PASS
+    scientific_verdict: null
+background_execution:
+  status_at_snapshot: TRAINING_P1_PRIOR_0.005
+  queue_relative: queue/attempt.eh1jxGEn
+  status_relative: queue/attempt.eh1jxGEn/status.txt
+  systemd_user_unit: jbgs-mvs-pgsr-attempt-eh1jxgen.service
+  main_pid_at_snapshot: 2657104
+  supervisor_started_kst: '2026-09-14T23:43:08+09:00'
+  launch_verification_relative: queue/attempt.eh1jxGEn/systemd_launch_verification.txt
+  prior_supervisor_failure_relative: queue/attempt.1hSipiEc/launch_failure.txt
+  entrypoint: scripts/phd/geogs_mvs_pgsr_v1/run_queue.sh
+  planned_new_training_count: 12
+  existing_control_count: 6
+  prior_weights: [0.005, 0.0005]
+  protection: native
+  requested_completion: training, extraction, paired evaluation and final report, then desktop notification
+  final_result_resolver_relative: evaluation/finalization_receipt_v1.json
+  final_result_resolver_exists_at_snapshot: false
+documents:
+  plan: docs/experiments/phd/geogs_mvs_pgsr_v1/EXPERIMENT_PLAN_ko_v1.md
+  input_readiness: docs/experiments/phd/geogs_mvs_pgsr_v1/INPUT_READINESS_ko_v2.md
+  preflight_return: docs/experiments/phd/geogs_mvs_pgsr_v1/PREFLIGHT_RETURN_ko_v1.md
+  background_launch: docs/experiments/phd/geogs_mvs_pgsr_v1/BACKGROUND_LAUNCH_ko_v1.md
+  issues: docs/experiments/phd/geogs_mvs_pgsr_v1/ISSUES_ko_v1.md

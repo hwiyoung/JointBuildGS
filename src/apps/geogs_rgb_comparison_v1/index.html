@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>P1 · P2 · P3 — RGB 기하 비교</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="page-header" id="page-header">
+    <div class="brand"><span class="brand-mark" aria-hidden="true">J</span><div><p class="eyebrow">JointBuildGS / 실험 관찰</p><h1>하나의 뷰, 일곱 가지 기하</h1></div></div>
+    <div class="run-summary" aria-live="polite"><span class="run-label" id="queue-status">실험 상태 불러오는 중</span><strong id="run-progress">— / 12</strong><span class="progress-track"><span id="progress-fill"></span></span></div>
+  </header>
+  <main>
+    <div class="intro"><p>Prior부터 현재 Drone LiDAR까지, 같은 좌표와 카메라로 RGB 기하를 비교합니다. <a href="/app/matched.html">P1·P2 동일 조건 비교 ↗</a> · <a href="/app/rgb_diagnostic.html">학습뷰·평가뷰 RGB 비교 ↗</a> · <a href="/app/p1_weights.html">P1 영역 가중치 0·1·4 비교 ↗</a></p><span class="development-tag">개발 실험 · 과학적 판정 없음</span></div>
+    <section class="toolbar" id="toolbar" aria-label="비교 화면 설정">
+      <div class="region-controls"><span class="control-label">관찰 영역</span><div id="region-tabs" class="segmented" role="group" aria-label="관찰 영역"></div><select id="region-select" aria-label="관찰 영역 선택" hidden></select></div>
+      <div class="toolbar-divider"></div>
+      <label>표현<select id="representation-select"><option value="auto">자동 · 표면 우선</option><option value="points">RGB 점</option><option value="mesh">RGB 표면</option></select></label>
+      <label class="point-control">점 크기<input id="point-size" type="range" min="1" max="6" value="2" step=".25"><output id="point-size-value" for="point-size">2 px</output></label>
+      <div class="view-presets" role="group" aria-label="일곱 화면 카메라 변경"><button type="button" id="preset-top" data-preset="top">위에서</button><button type="button" id="preset-oblique" data-preset="oblique" class="active">비스듬히</button><button type="button" id="preset-side" data-preset="side">옆에서</button><button type="button" id="reset-view" title="현재 영역 전체 보기">전체 맞춤 ↺</button></div>
+    </section>
+    <div class="view-info" id="view-info"><span class="sync-indicator"><i></i> 7개 카메라 동기화</span><span class="interaction-help">드래그 회전 · Shift / 오른쪽 드래그 이동 · 휠 확대</span><span id="availability" class="availability"></span></div>
+    <div id="loading" class="notice" role="status">관찰할 기하와 색상 출처를 불러오고 있습니다.</div>
+    <div id="error" class="notice error" role="alert" hidden></div>
+    <section id="panels" class="panels" aria-label="일곱 가지 RGB 기하 비교"></section>
+    <aside class="interpretation" id="interpretation"><span class="info-icon" aria-hidden="true">i</span><p><strong>색상과 기하의 출처를 함께 보세요.</strong> Prior에 현재 영상의 RGB를 입혀도 prior 기하가 최신 형상으로 바뀌지는 않습니다. MVS GeoGS는 추출된 RGB 표면으로 표시하며, 아직 표면이 없는 조건은 추출을 기다립니다.</p></aside>
+    <footer id="page-footer"><span id="frame-label">공통 좌표계 확인 중</span><a id="final-report" target="_blank" rel="noopener noreferrer" hidden>최종 평가 보고서 ↗</a><span id="refresh-status">60초마다 결과 확인</span><button id="refresh-now" type="button">지금 새로고침</button></footer>
+  </main>
+  <div id="focus-backdrop" class="focus-backdrop" hidden></div>
+  <script type="module" src="./viewer.js"></script>
+</body>
+</html>

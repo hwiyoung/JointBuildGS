@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>P1/P2/P3 · 결과와 depth 가중치</title><link rel="icon" href="data:,"><link rel="stylesheet" href="./matched.css">
+<style>
+.completion{display:inline-block;background:#e5f4ec;color:#206d50;padding:7px 12px;border-radius:20px;font-size:13px;margin-bottom:8px}.jump-links,.weight-links{display:flex;gap:20px;flex-wrap:wrap;font-size:13px;margin:12px 0}.weight-card{background:white;border:1px solid #dbe2ea;border-radius:10px;padding:16px;margin:20px 0 28px}.weight-card h3{margin:0;font-size:18px}.weight-card p{font-size:13px;line-height:1.7;color:#566d82}.weight-card .image-slot{aspect-ratio:auto;min-height:100px;background:#f4f5f7}.weight-card .image-slot img{height:auto}.weight-card .camera-name{overflow-wrap:anywhere;color:#2c5575}.weight-card .legend{font-size:12px}.results-heading{font-size:20px}.segmented{flex-wrap:wrap}
+</style></head>
+<body>
+<header><div><p class="eyebrow">JointBuildGS / 수동 영역 가중치 실험</p><h1>P1 · P2 · P3 — 결과와 depth 가중치</h1></div><a href="/app/index.html">기존 기하 비교 ↗</a></header>
+<main>
+<span class="completion">9 / 9 완료 · 30,000회 학습 + 표면 추출 + 렌더</span>
+<p class="intro">대상을 선택하면 가중치 0·1·4의 최종 결과와 해당 촬영 영상의 입력 MVS·가중치 영역도를 함께 볼 수 있습니다. 세 조건은 같은 Anchor 8k에서 시작하며 prior 0.005, native 보호, 전역 MVS 계수 0.05를 사용합니다.</p>
+<div class="toolbar"><div class="segmented" id="region-tabs" role="group" aria-label="실험 대상"></div><label>3D 표시 범위<select id="region-scope"><option value="roi">기존 평가 범위</option><option value="context">주변 포함</option></select></label><label>기하 표현<select id="representation"><option value="mesh">Raw RGB mesh</option></select></label><div class="presets"><button data-preset="top">위에서</button><button data-preset="oblique" class="active">비스듬히</button><button data-preset="side">옆에서</button><button id="reset-camera">전체 맞춤 ↺</button></div><button id="refresh">자료 새로고침</button></div>
+<nav class="jump-links"><a href="./weights.html?comparison=prior">Prior 0.005 ↔ 0.0005 · R1=4</a><a href="./weights.html">R1 가중치 0·1·4</a><a href="#geometry-panels">3D 결과</a><a href="#observations">입력 depth · 가중치 영역</a><a href="#render-panels">GS RGB · depth 결과</a><a href="./weight_response.html">가중치에 따른 변화 위치 ↗</a></nav>
+<nav class="jump-links"><a href="./depth_evidence.html">2단계 · P1/P2/P3 관측 근거 지도 ↗</a><a href="/data/mechanism_diagnostic_v1/attempt.2TRgwhGr/report.html">1단계 · Gaussian 렌더 기여 ↗</a></nav>
+<div class="view-info"><span>● 세 카메라 동기화</span><span>드래그 회전 · Shift / 오른쪽 드래그 이동 · 휠 확대</span><span id="surface-contract"></span></div>
+<p id="error" class="notice error" hidden></p><p id="loading" class="notice">완료 자료를 불러오는 중입니다.</p><p id="representation-note" class="notice subtle"></p>
+<section id="geometry-panels" class="three-columns" aria-label="가중치별 동기화 3D 비교"></section>
+<section class="renders" id="observations"><div class="section-heading"><div><p class="eyebrow">입력과 결과를 같은 촬영 영상으로 연결</p><h2>원사진 · 입력 depth · 가중치 영역</h2></div><label>촬영 영상<select id="photo-view"></select></label></div>
+<p class="render-explanation">촬영 영상을 바꾸면 아래 영역도와 세 조건의 GS RGB·depth가 함께 바뀝니다. 3D 표시 범위 선택은 기하 화면만 자르며, 입력 영역도는 전체 프레임을 표시합니다. 사진과 렌더는 고정 촬영 시점이며 위 3D 회전에 따라 바뀌지 않습니다.</p>
+<div class="reference-row"><figure class="original"><figcaption><strong>원사진</strong><span id="photo-name">—</span></figcaption><div class="image-slot" id="original-slot"></div></figure><div class="reference-info"><p id="view-details"></p><p id="depth-scale"></p><p>원사진과의 학습뷰 일치도는 독립적인 복원 정확도 평가가 아닙니다. 가중치 0은 R1의 MVS 감독을 끈 조건이며 RGB·prior 감독은 남아 있습니다.</p></div></div>
+<article class="weight-card"><h3>실제 학습에 사용한 depth 가중치 영역</h3><p class="camera-name" id="weight-camera"></p><p id="weight-policy"></p><p id="weight-note"></p><div class="image-slot" id="weight-slot"></div><p class="legend">입력 MVS의 색 = 깊이값 · 영역 분류의 색 = R1–R6 · 가중치 그림의 색 = 0 / 1 / 4. 각 그림의 범례를 구분해 읽어주세요.</p><div class="weight-links" id="weight-links"></div></article>
+<p class="render-explanation">P2/P3 도면 안의 ‘검토용 초안·학습에 아직 연결하지 않았습니다’는 도면 제작 당시의 기록입니다. 현재는 표시된 동일 마스크로 학습과 후처리가 완료됐습니다.</p>
+<h2 class="results-heading">같은 촬영 영상의 최종 GS RGB · depth</h2>
+<div id="render-panels" class="three-columns" aria-label="가중치별 RGB와 depth"></div></section>
+<p id="comparison-downloads"></p><footer><span id="freshness"></span><span>개발 실험 · 과학적 판정 없음</span><a href="/data/weights_v1/receipt.json">완료·영역 연결 검증 기록 ↗</a></footer>
+</main>
+<script type="application/json" id="comparison-config">{"roles":["alpha_0","alpha_1","alpha_4"],"titles":{"alpha_0":"R1 가중치 0","alpha_1":"R1 가중치 1 · 대조군","alpha_4":"R1 가중치 4"},"manifest":"/data/weights_v1/manifest.json","schema":"unified_weight_comparison_v1","regions":["P1","P1_context","P2","P2_context","P3","P3_context"],"group_regions":true}</script>
+<script>
+if(new URLSearchParams(location.search).get('comparison')==='prior'){
+ const node=document.getElementById('comparison-config'),config=JSON.parse(node.textContent);
+ Object.assign(config,{roles:['alpha_4','prior_0005_alpha4'],titles:{alpha_4:'Prior 0.005 · R1=4',prior_0005_alpha4:'Prior 0.0005 · R1=4'},manifest:'/data/prior_weights_v1/manifest.json',schema:'prior_weight_comparison_v1',poll_seconds:60});
+ node.textContent=JSON.stringify(config);document.body.classList.add('prior-compare');
+ document.querySelector('h1').textContent='P1 · P2 · P3 — Prior 0.005 ↔ 0.0005';
+ document.title='Prior 0.005 ↔ 0.0005 · R1=4';
+ document.querySelector('.completion').textContent='추가 3조건 · 학습·표면 추출 완료 순서대로 표시';
+ document.querySelector('.intro').textContent='R1=4를 고정하고 전역 prior 계수만 비교합니다. 동일 Anchor 8k·마스크·카메라·native 보호·MVS 0.05를 유지합니다. 왼쪽은 기존 결과, 오른쪽은 추가 결과이며 완료되면 자동으로 갱신됩니다.';
+ document.querySelector('.view-info span').textContent='● 두 카메라 동기화';
+ document.querySelector('.reference-info p:last-child').textContent='두 조건 모두 R1=4, R2/R3=1, 제외 영역=0입니다. 학습뷰 적합도와 독립적인 복원 정확도는 구분합니다.';
+ const style=document.createElement('style');style.textContent='.prior-compare .three-columns{grid-template-columns:repeat(2,minmax(0,1fr))}@media(max-width:800px){.prior-compare .three-columns{grid-template-columns:1fr}}';document.head.append(style);
+ document.querySelectorAll('.render-explanation').forEach(p=>p.textContent=p.textContent.replaceAll('세 조건','두 조건'));
+ document.querySelector('footer a').href='/data/prior_weights_v1/manifest.json';document.querySelector('footer a').textContent='추가 실험 진행·등록 상태 ↗';
+}
+</script>
+<script type="module" src="./matched.js"></script>
+</body></html>

@@ -1,0 +1,286 @@
+{
+  "task_id": "PHD-GEOGS-CAUSAL-FOLLOWUP-v1",
+  "scientific_verdict": null,
+  "status": "PASS_CACHED_SAMPLE_DIAGNOSTIC",
+  "config": {
+    "task_id": "PHD-GEOGS-CAUSAL-FOLLOWUP-v1",
+    "scientific_verdict": null,
+    "region": "P2",
+    "cached_evaluation": "sample0.1_reference0.1",
+    "x_half_open_m": [
+      133.75,
+      134.25
+    ],
+    "y_half_open_m": [
+      90.0,
+      112.0
+    ],
+    "z_half_open_m": [
+      -33.0,
+      -27.0
+    ],
+    "y_bin_width_m": 0.25,
+    "diagnostic_windows_y_m": [
+      [
+        96.5,
+        97.0
+      ],
+      [
+        100.5,
+        101.0
+      ]
+    ],
+    "zoom_windows_y_m": [
+      [
+        95.5,
+        98.5
+      ],
+      [
+        99.5,
+        102.5
+      ]
+    ],
+    "selection_status": "POST_HOC_DIAGNOSTIC_FROM_PREVIOUS_SECTION_NOT_CONFIRMATORY",
+    "candidates": [
+      {
+        "id": "prior_mesh",
+        "label": "Input ALS-derived prior",
+        "color": "#19835d"
+      },
+      {
+        "id": "D005_Pnative.anchor_512.raw",
+        "label": "Anchor | 512 raw",
+        "color": "#9d62b3"
+      },
+      {
+        "id": "D005_Pnative.mesh_512.raw",
+        "label": "Refined | prior weight 0.005 | 512 raw",
+        "color": "#df8319"
+      },
+      {
+        "id": "D0005_Pnative.mesh_512.raw",
+        "label": "Refined | prior weight 0.0005 | 512 raw",
+        "color": "#087fce"
+      }
+    ],
+    "interpretation": "Scatter of all stored surface/reference samples in the specified 0.5 m X band. Not a mesh-plane intersection, not matched point error, not evidence of continuous topology or training information sufficiency. No new scene rendering, mesh extraction, registration, distance calculation or method experiment."
+  },
+  "input_sha256": {
+    "evaluation/geometry/P2/prior_mesh/sample0.1_reference0.1.npz": "cafdab59fe12f0f5f7c46ae5e939ef017180d61f84727728d64bf6ccc88c289f",
+    "evaluation/geometry/P2/prior_mesh/sample0.1_reference0.1.json": "4a3eda892ca51ca74f61dc4a4bb1b2160ae729750f78d2e838496272917ec7f1",
+    "evaluation/geometry/P2/D005_Pnative.anchor_512.raw/sample0.1_reference0.1.npz": "751947dc03eb2c4d4290ea88af5f94dd6a8ff5bb8602f71042166904ce1ba44d",
+    "evaluation/geometry/P2/D005_Pnative.anchor_512.raw/sample0.1_reference0.1.json": "27469ec74fe9fd731ce6de591b1ff2317bca9e075cd45cec552f01d2fbf305a0",
+    "evaluation/geometry/P2/D005_Pnative.mesh_512.raw/sample0.1_reference0.1.npz": "89f51cf36000506d4bf1a5b32a3bdd096ff69db1a81cb1f93f4912c9c7c3a78d",
+    "evaluation/geometry/P2/D005_Pnative.mesh_512.raw/sample0.1_reference0.1.json": "23deae2141f8a72bb07a714bacff919c4972495c926b522055049a45bb9fcabe",
+    "evaluation/geometry/P2/D0005_Pnative.mesh_512.raw/sample0.1_reference0.1.npz": "685010cc28ca132181e3a8d6fb9313921b78e7bc9418b3be2b4b20799c24ed20",
+    "evaluation/geometry/P2/D0005_Pnative.mesh_512.raw/sample0.1_reference0.1.json": "5c9650c5ebefaed878f06dfb79fccf5ff4b738045741ef978a87b7844ba79435"
+  },
+  "script_sha256": "262c0925f78f18aeb3bb01796f5e5e7d925586d16dc915b0cd276017dcc9f78f",
+  "config_sha256": "21e0d3a5be5b563d4e277a37293a6adff03bd3529b343db9e4f73a83843a2a0d",
+  "git_commit": "72f45bcf861c5fe6e0c70e28e0686a72e9424b17",
+  "docker_image_id": "sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e",
+  "versions": {
+    "python": "3.10.20",
+    "numpy": "1.26.4",
+    "matplotlib": "3.9.2"
+  },
+  "same_reference_points_and_original_ids": true,
+  "source_preserved_sha256_before_after": true,
+  "crs": {
+    "working": "EPSG:25832",
+    "world_shift": [
+      690953,
+      5336071,
+      604
+    ],
+    "als_z_bridge_m": 45.7,
+    "uas_header": "EPSG:32632",
+    "new_reference_alignment": false,
+    "absolute_datum_calibration_verified": false
+  },
+  "candidate_metadata": {
+    "prior_mesh": {
+      "mesh_res": null,
+      "iteration": null,
+      "surface_kind": "triangle_surface",
+      "surface_samples": 495013,
+      "surface_sample_spacing_m": 0.1,
+      "reference_voxel_size_m": 0.1,
+      "source_sha256": "cb953d820447a633a4c2c73f30caa5846c5259fd3fb79d420b604c4a35a24714"
+    },
+    "D005_Pnative.anchor_512.raw": {
+      "mesh_res": 512,
+      "iteration": 8000,
+      "surface_kind": "triangle_surface",
+      "surface_samples": 654344,
+      "surface_sample_spacing_m": 0.1,
+      "reference_voxel_size_m": 0.1,
+      "source_sha256": "3775f29e245c45b1389be8b865264d5bf1fa16a94386e8554750506e9002f7a3"
+    },
+    "D005_Pnative.mesh_512.raw": {
+      "mesh_res": 512,
+      "iteration": 30000,
+      "surface_kind": "triangle_surface",
+      "surface_samples": 543784,
+      "surface_sample_spacing_m": 0.1,
+      "reference_voxel_size_m": 0.1,
+      "source_sha256": "29718ffdd8599f9273bae763be0f378b1ace0e1a5a43a9f03fbb4dc61df7f375"
+    },
+    "D0005_Pnative.mesh_512.raw": {
+      "mesh_res": 512,
+      "iteration": 30000,
+      "surface_kind": "triangle_surface",
+      "surface_samples": 387131,
+      "surface_sample_spacing_m": 0.1,
+      "reference_voxel_size_m": 0.1,
+      "source_sha256": "b9d84eb2529b84c3dcb89dedff47a7c5976bb7f5db59183428d6c11996ddfcfd"
+    }
+  },
+  "band_sample_counts": {
+    "prior_mesh": 1601,
+    "D005_Pnative.anchor_512.raw": 3186,
+    "D005_Pnative.mesh_512.raw": 1945,
+    "D0005_Pnative.mesh_512.raw": 1465,
+    "observed_UAS": 2574
+  },
+  "window_statistics": [
+    {
+      "window": "A",
+      "source": "prior_mesh",
+      "y_lo_m": 96.5,
+      "y_hi_m": 97.0,
+      "count": 38,
+      "z_min_m": -31.323893042482005,
+      "z_q10_m": -31.248278778721893,
+      "z_median_m": -30.952115466591167,
+      "z_q90_m": -30.139149079043467,
+      "z_max_m": -30.033254389576065
+    },
+    {
+      "window": "A",
+      "source": "D005_Pnative.anchor_512.raw",
+      "y_lo_m": 96.5,
+      "y_hi_m": 97.0,
+      "count": 88,
+      "z_min_m": -31.66097144931828,
+      "z_q10_m": -31.490442323564846,
+      "z_median_m": -30.23328243701863,
+      "z_q90_m": -29.794372500488535,
+      "z_max_m": -29.518037908285457
+    },
+    {
+      "window": "A",
+      "source": "D005_Pnative.mesh_512.raw",
+      "y_lo_m": 96.5,
+      "y_hi_m": 97.0,
+      "count": 55,
+      "z_min_m": -32.52931555508036,
+      "z_q10_m": -32.46420079280008,
+      "z_median_m": -29.735884100054758,
+      "z_q90_m": -29.488757082548425,
+      "z_max_m": -29.419136518977716
+    },
+    {
+      "window": "A",
+      "source": "D0005_Pnative.mesh_512.raw",
+      "y_lo_m": 96.5,
+      "y_hi_m": 97.0,
+      "count": 30,
+      "z_min_m": -29.949078485791667,
+      "z_q10_m": -29.845275511769216,
+      "z_median_m": -29.61228493632838,
+      "z_q90_m": -29.46564886410241,
+      "z_max_m": -29.32786706627432
+    },
+    {
+      "window": "A",
+      "source": "observed_UAS",
+      "y_lo_m": 96.5,
+      "y_hi_m": 97.0,
+      "count": 77,
+      "z_min_m": -31.33789999999999,
+      "z_q10_m": -31.314499999999953,
+      "z_median_m": -31.214999999999918,
+      "z_q90_m": -30.80093999999997,
+      "z_max_m": -30.359699999999975
+    },
+    {
+      "window": "B",
+      "source": "prior_mesh",
+      "y_lo_m": 100.5,
+      "y_hi_m": 101.0,
+      "count": 13,
+      "z_min_m": -31.368049079832517,
+      "z_q10_m": -31.32201338721027,
+      "z_median_m": -31.264724208234913,
+      "z_q90_m": -31.237406888490558,
+      "z_max_m": -31.036829317509287
+    },
+    {
+      "window": "B",
+      "source": "D005_Pnative.anchor_512.raw",
+      "y_lo_m": 100.5,
+      "y_hi_m": 101.0,
+      "count": 99,
+      "z_min_m": -32.990756754055475,
+      "z_q10_m": -32.918613760970786,
+      "z_median_m": -31.21124055975143,
+      "z_q90_m": -29.936725449007806,
+      "z_max_m": -29.85733725317737
+    },
+    {
+      "window": "B",
+      "source": "D005_Pnative.mesh_512.raw",
+      "y_lo_m": 100.5,
+      "y_hi_m": 101.0,
+      "count": 73,
+      "z_min_m": -32.536091723828335,
+      "z_q10_m": -32.414670699932444,
+      "z_median_m": -30.04833546488679,
+      "z_q90_m": -29.67617744783283,
+      "z_max_m": -29.548750173432524
+    },
+    {
+      "window": "B",
+      "source": "D0005_Pnative.mesh_512.raw",
+      "y_lo_m": 100.5,
+      "y_hi_m": 101.0,
+      "count": 37,
+      "z_min_m": -30.1956182423325,
+      "z_q10_m": -30.159228051310205,
+      "z_median_m": -30.075985746730087,
+      "z_q90_m": -29.79443163646992,
+      "z_max_m": -29.580782406242683
+    },
+    {
+      "window": "B",
+      "source": "observed_UAS",
+      "y_lo_m": 100.5,
+      "y_hi_m": 101.0,
+      "count": 71,
+      "z_min_m": -31.36189999999999,
+      "z_q10_m": -31.334299999999985,
+      "z_median_m": -31.16809999999998,
+      "z_q90_m": -30.859899999999925,
+      "z_max_m": -30.645899999999983
+    }
+  ],
+  "new_training_runs": 0,
+  "new_scene_renders": 0,
+  "new_mesh_extractions": 0,
+  "new_registration": 0,
+  "new_distance_queries": 0,
+  "warnings": [
+    "Post hoc fixed-window sample diagnostics, not confirmatory performance.",
+    "Z bounds deliberately show roof-height support; out-of-window surfaces remain in source arrays.",
+    "Quantile differences compare distributions in the same XY strip; they are not paired errors or topology proof.",
+    "Anchor contains multiple surface layers, so near-reference samples do not demonstrate unique correct geometry."
+  ],
+  "output_sha256": {
+    "figures/valley_panels.png": "52bd655cdf250861f972bd41fec2f881dcf7773465bb5f2462b2733b6af1a3b5",
+    "figures/valley_zooms.png": "5a9039fe0125e3f4ddc1c2cc5a5eee8d2ae53070fb1336ef6414d6f76543e910",
+    "analysis/valley_bins.csv": "101ce04467619618e49e55e46e01f4d27e50610f66dbdd77fe93056df93a2746",
+    "analysis/valley_windows.csv": "74bfe33b3f86d9e2c0408f81493c0822e48db03de85d26e512cfc6489c73c647",
+    "analysis/valley_samples.csv": "22f7d4c5e3ff026b0b7eb50b1f2e3c4ec779309dd4ce87868a3674c379e5d0d8"
+  }
+}

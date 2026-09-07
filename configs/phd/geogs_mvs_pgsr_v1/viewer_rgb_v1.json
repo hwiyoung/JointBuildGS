@@ -1,0 +1,18 @@
+{
+  "task_id": "PHD-GEOGS-MVS-PGSR-RGB-VIEWER-v1",
+  "scientific_verdict": null,
+  "regions": ["P1", "P2", "P3"],
+  "panel_order": ["prior", "mvs", "anchor", "vanilla", "geogs", "mvs_geogs", "gt"],
+  "point_cap": 200000,
+  "prior_color_maximum_views": 32,
+  "mesh_resolution": 512,
+  "mesh_kind": "raw",
+  "poll_seconds": 60,
+  "port": 8910,
+  "source_policy": "Sealed original native RGB surfaces and exact completed MVS runs; immutable sources, display-only exports. Pending runs are never substituted.",
+  "prior_color_policy": "Current photographs projected on unchanged prior geometry using same-prior visibility; appearance only.",
+  "mvs_color_policy": "Default actual COLMAP depth backprojection plus original photo RGB; original paired OpenMVS fused RGB point cloud as a separately labeled option.",
+  "uas_color_policy": "Recover original 16-bit LAZ RGB by exact frozen reference raw-row IDs, verify XYZ, divide channels by 256.",
+  "new_geometry_policy": "MVS GeoGS is always a native RGB raw TSDF512 surface. Resolve exact-run canonical extractions first, completed matched-comparison extractions second. Missing surfaces stay pending; never substitute Gaussian centers. Other six panels retain their existing representations; no extra GPU work.",
+  "runtime_image_id": "sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e"
+}

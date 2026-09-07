@@ -1,0 +1,15 @@
+schema: jointbuildgs.artifact_resolver.v1
+task_id: PHD-GEOGS-RGB-COLOR-FIT-PROBE-v1
+scientific_verdict: null
+status: PASS_SHORT_DIAGNOSTIC
+storage_root: ../JointBuildGS-artifacts
+payload: phase-payloads/phd/geogs_mvs_pgsr_v1/PHD-GEOGS-MVS-PGSR-v1/rgb_color_fit_probe_v1/attempt.BY4TsDnU
+receipt: receipt.json
+receipt_sha256: ad51058539212e31da0818b6cd699c10da7e394a6d685a4d7cd6d0fa8dab0666
+new_full_training_runs: 0
+diagnostic_color_optimizer_steps: 300
+case_condition_count: 3
+report: docs/experiments/phd/geogs_mvs_pgsr_v1/RGB_COLOR_FIT_PROBE_ko_v1.md
+script: scripts/phd/geogs_mvs_pgsr_v1/rgb_color_fit_probe.py
+config: configs/phd/geogs_mvs_pgsr_v1/rgb_color_fit_probe_v1.json
+scope: Fixed-geometry single-view SH fitting and final raw gradient diagnosis; no canonical model modification or generalization claim.

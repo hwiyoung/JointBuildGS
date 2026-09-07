@@ -1,0 +1,5 @@
+FROM node:22-alpine
+RUN apk add --no-cache chromium font-noto-cjk xvfb
+ENV CHROME_BIN=/usr/bin/chromium
+WORKDIR /qa
+ENTRYPOINT ["node"]

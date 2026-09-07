@@ -1,0 +1,20 @@
+{
+  "schema": "GEOGS_SFM_PREVIEW22000_GALLERY_v1",
+  "scientific_verdict": null,
+  "region": "P2",
+  "iteration": 22000,
+  "preview_relative": "preview22000_v1/P2",
+  "output_name": "gallery_v1",
+  "policy_sha256": "b104c30133fc22a26b35428a1865f78c6a8e3d86d2186d3552897c130c19dcfc",
+  "baseline_seal_relative": "contracts/candidates_sealed_v1.json",
+  "baseline_seal_sha256": "8fc78431dcdfc1bf803c0ac2db4a5bb2cad75c1c163ce2519b571d3710cd011d",
+  "roi_receipt_relative": "evaluation/renders/P2/D005_Pnative/final/receipt.json",
+  "roi_receipt_sha256": "a9808d1467c02a57cf3d0adb7261077b4982cd92cf3ad89887d36e2efef0d238",
+  "baseline_conditions": ["D005_Pnative", "D0005_Pnative"],
+  "expected_images": 9,
+  "first_index": 0,
+  "image_processing": "fixed existing ROI crop only; no resampling, exposure or color adjustment",
+  "quality_scoring": false,
+  "geometry_assessed": false,
+  "main_completion_inferred": false
+}

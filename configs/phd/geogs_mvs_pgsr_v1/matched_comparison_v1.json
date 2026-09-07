@@ -1,0 +1,16 @@
+{
+  "task_id": "PHD-GEOGS-MVS-PGSR-MATCHED-v1",
+  "scientific_verdict": null,
+  "regions": ["P1", "P2"],
+  "modes": ["da3", "mvs", "mvs_pgsr"],
+  "prior": 0.005,
+  "protection": "native",
+  "iteration": 30000,
+  "mesh_resolution": 512,
+  "surface": "raw",
+  "point_cap": 200000,
+  "diagnostic_opacity_threshold": 0.1,
+  "view_count": 2,
+  "view_selection": "Largest fixed input ROI projected areas; ties by frozen evaluation index; selected before new surfaces or reference access",
+  "scope": "Matched display and geometry development diagnostic; no retraining, smoothing, tuned filtering, or scientific verdict"
+}

@@ -1,0 +1,547 @@
+{
+  "task_id": "PHD-GEOGS-CONTRIBUTION-v1",
+  "status": "SOURCE_CONTROL_DIAGNOSTIC_COMPLETE",
+  "created_utc": "2026-09-07T11:52:36.482424+00:00",
+  "scientific_verdict": null,
+  "git_head": "72f45bcf861c5fe6e0c70e28e0686a72e9424b17",
+  "source_commit": "db40c95c657ec03ff21c83cb99cf39f4e90247a6",
+  "external_root": "phase-payloads/phd/geogs_contribution_v1/PHD-GEOGS-CONTRIBUTION-v1",
+  "scene_training_runs": 0,
+  "native_performance_reproduction": false,
+  "contribution_proven": false,
+  "fulltext_available": false,
+  "preservation": {
+    "before_files": 6459,
+    "unchanged": 6458,
+    "additive_handoff": "docs/experiments/phd/thesis_topic_v1/04_NEXT_SESSION_HANDOFF_ko_v1.md",
+    "original_handoff_exact_suffix": true,
+    "dirty_files_archived": 439,
+    "external_old_results_reexecuted_or_modified": false
+  },
+  "validation": {
+    "source_files_verified": 55,
+    "local_links_checked": 7,
+    "executed_script_config_hashes": "PASS",
+    "official_ast_probe": "COMPLETED",
+    "figure_visually_checked": true
+  },
+  "example_acquisition": {
+    "task_id": "PHD-GEOGS-CONTRIBUTION-v1-OFFICIAL-EXAMPLE-INSPECTION",
+    "status": "OFFICIAL_EXAMPLE_DOWNLOADED_AND_METADATA_INSPECTED",
+    "source_url": "https://drive.google.com/uc?export=download&id=1QPp349lFSuBiyfcJBbcG3eIweiVt_Etp",
+    "upstream_commit": "db40c95c657ec03ff21c83cb99cf39f4e90247a6",
+    "started_utc": "2026-09-07T11:46:04.054596+00:00",
+    "maximum_download_bytes": 2000000000,
+    "maximum_elapsed_seconds": 300,
+    "python": "3.11.15",
+    "container_image_id": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "script_sha256": "809715019eb590f5df1fd06676626351ea33776c02ccc1f9fbe9d1a8348e189f",
+    "command_argv": [
+      "scripts/phd/geogs_contribution_v1/fetch_example.py",
+      "--output",
+      "/out",
+      "--max-bytes",
+      "2000000000",
+      "--timeout-seconds",
+      "300",
+      "--image-id",
+      "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774"
+    ],
+    "http_responses": [
+      {
+        "attempt": 1,
+        "status": 200,
+        "url": "https://drive.usercontent.google.com/download?id=1QPp349lFSuBiyfcJBbcG3eIweiVt_Etp&export=download",
+        "content_type": "text/html; charset=utf-8",
+        "content_length": "2434",
+        "content_disposition": null,
+        "html_sha256": "7f0d9813bff5280f5cc79a8db370660fc044d67cf6c2b86de9605fefc183abaa",
+        "html_bytes_inspected": 2434,
+        "public_confirmation_form_count": 1,
+        "confirmation_action": "https://drive.usercontent.google.com/download",
+        "confirmation_field_names": [
+          "id",
+          "export",
+          "confirm",
+          "uuid"
+        ]
+      },
+      {
+        "attempt": 2,
+        "status": 200,
+        "url": "https://drive.usercontent.google.com/download?id=1QPp349lFSuBiyfcJBbcG3eIweiVt_Etp&export=download&confirm=t&uuid=15204d43-d575-481a-acf6-982bdadca062",
+        "content_type": "application/octet-stream",
+        "content_length": "963110591",
+        "content_disposition": "attachment; filename=\"example_scene.zip\""
+      }
+    ],
+    "download_bytes": 963110591,
+    "sha256_scope": "Locally computed download identity; author-published checksum not provided",
+    "archive_extracted": false,
+    "training_or_inference_executed": false,
+    "scientific_verdict": null,
+    "download_final_url": "https://drive.usercontent.google.com/download?id=1QPp349lFSuBiyfcJBbcG3eIweiVt_Etp&export=download&confirm=t&uuid=15204d43-d575-481a-acf6-982bdadca062",
+    "download_sha256": "572e83a09d9204c26af174f38c184e3cdae45cdb2687549028e640642f7aad44",
+    "archive_path": "example_scene.zip",
+    "content_length_matches": true,
+    "member_count": 55,
+    "uncompressed_total_bytes": 1838235840,
+    "input_counts": {
+      "evaluation_reference": 1,
+      "da3_visual_depth": 15,
+      "lod2_protection_pointcloud": 1,
+      "rgb_images": 15,
+      "initial_pointcloud": 4,
+      "camera_metadata": 4,
+      "lod_structural_depth": 15
+    },
+    "inspected_metadata_count": 3,
+    "archive_crc_check_scope": "Inspected small members only; no full payload decompression or CRC test",
+    "elapsed_seconds": 96.24269730458036,
+    "finished_utc": "2026-09-07T11:47:40.297293+00:00"
+  },
+  "repo_files": [
+    {
+      "path": "configs/phd/geogs_contribution_v1/native_example_conditions_v1.json",
+      "sha256": "6515f1833eaf4df7a1eb6a7bc4184a93819114f936aa4c32170d94bc15ee4d29",
+      "bytes": 2196
+    },
+    {
+      "path": "configs/phd/geogs_contribution_v1/probe_v1.json",
+      "sha256": "667eec4f72ead10617398ac40a8cad5b0b79e6b62bd2845becde2febc4938825",
+      "bytes": 582
+    },
+    {
+      "path": "docs/experiments/phd/geogs_contribution_v1/CONTRIBUTION_AUDIT_ko_v1.md",
+      "sha256": "dec176bdb472a1654a132c3ea3726c2faf50619ed3775cb9efe2956753dbd3bc",
+      "bytes": 14424
+    },
+    {
+      "path": "docs/experiments/phd/geogs_contribution_v1/ISSUES_ko_v1.md",
+      "sha256": "d161320e6d12bc465562e4da1bb12a88ca26b522df037d1bc1d8bfa623619772",
+      "bytes": 1952
+    },
+    {
+      "path": "docs/experiments/phd/geogs_contribution_v1/figures/control_diagnostic.png",
+      "sha256": "7017f1aa20c22cba3cf2dd3f3de75df12dcc2b5b3da24d479bd39efbf38888ec",
+      "bytes": 92014
+    },
+    {
+      "path": "docs/experiments/phd/geogs_contribution_v1/figures/control_diagnostic.svg",
+      "sha256": "4a6478c13e8129fad29f0a2e31894ddef71116a43e65cc98e3fa2b0c52a58b57",
+      "bytes": 61479
+    },
+    {
+      "path": "docs/experiments/phd/thesis_topic_v1/04_NEXT_SESSION_HANDOFF_ko_v1.md",
+      "sha256": "dd9a6b998ca02c01d1ccde1c325155ae9254c3d0f4cee3bb30eca55e138bdaeb",
+      "bytes": 44949
+    },
+    {
+      "path": "scripts/phd/geogs_contribution_v1/fetch_example.py",
+      "sha256": "809715019eb590f5df1fd06676626351ea33776c02ccc1f9fbe9d1a8348e189f",
+      "bytes": 15954
+    },
+    {
+      "path": "scripts/phd/geogs_contribution_v1/inspect_example_cameras.py",
+      "sha256": "45351016c372571e594c5f003e8257c356d467b84c4476f41b5cdf75a3cd4eaf",
+      "bytes": 6998
+    },
+    {
+      "path": "scripts/phd/geogs_contribution_v1/probe.py",
+      "sha256": "7a34d4c88d515f14de0edf48510232362f6353bce576479d63bd7436cc55e630",
+      "bytes": 10461
+    },
+    {
+      "path": "scripts/phd/geogs_contribution_v1/run_probe.sh",
+      "sha256": "437cd8b14d4bcaa0834e499a6798ccb0ec0973715562bd6135f566b85246d012",
+      "bytes": 652
+    },
+    {
+      "path": "scripts/phd/geogs_contribution_v1/seal.py",
+      "sha256": "4e12814019b4acc2ada9925f80a7be6b5f2737bb8912ada163cc3a0ee2e43c57",
+      "bytes": 4546
+    }
+  ],
+  "payloads": [
+    {
+      "path": "environment.json",
+      "sha256": "e16f21885a7fc32a9998efd3886dde556f4d8d82954c6e483058ecd45ad456bd",
+      "bytes": 169
+    },
+    {
+      "path": "example_availability.json",
+      "sha256": "1e8c83ffb95f02e970c8419451c4f444ff79a7ec8b589d60adc56ddd1889b92a",
+      "bytes": 456
+    },
+    {
+      "path": "example_source/archive_members.json",
+      "sha256": "3f96180384deb41b5ffe560242923214e993b405093a5ed692066b054f3e4833",
+      "bytes": 10763
+    },
+    {
+      "path": "example_source/camera_inspection_r2/receipt.json",
+      "sha256": "c75575d72f18c853845f2ee824011ffaece2cda8ad47279e247a273a27f17bdb",
+      "bytes": 7645
+    },
+    {
+      "path": "example_source/example_scene.zip",
+      "sha256": "572e83a09d9204c26af174f38c184e3cdae45cdb2687549028e640642f7aad44",
+      "bytes": 963110591
+    },
+    {
+      "path": "example_source/input_manifest.json",
+      "sha256": "6aeaf22438092456250c6c798a60af179f7e8d985e90439ac6836f9019abe391",
+      "bytes": 14091
+    },
+    {
+      "path": "example_source/receipt.json",
+      "sha256": "d8217a2d4bad0ac363a352da76c61ef6beba39751cc88c6271b3f8cc186a8c3c",
+      "bytes": 3064
+    },
+    {
+      "path": "example_source/small_metadata_inspection.json",
+      "sha256": "caf36162d0b9486babcbc84201097f753ce46f8a10135d07d8be7689672c8217",
+      "bytes": 8418
+    },
+    {
+      "path": "preservation/before.json",
+      "sha256": "9ac229ecb407b90c8653dd0f10b393e389192b354f26be1ff185bf7bc14778a7",
+      "bytes": 1408571
+    },
+    {
+      "path": "preservation/preexisting_dirty.tar.gz",
+      "sha256": "c9fe88e42a8cfedf6267b1fd47c9ef624843b00fd8cce7a8fb995ddaf8ad7734",
+      "bytes": 1159934
+    },
+    {
+      "path": "preservation/status_before.txt",
+      "sha256": "e0eef6fe669446645f3f94f90741af627d2943c936e216e64a718071db61fde4",
+      "bytes": 4031
+    },
+    {
+      "path": "probe_v1/adam_trace.csv",
+      "sha256": "13cc07b9de5494b25c09715ff204140ccc17fe19d22e4478f810df921dd37f2b",
+      "bytes": 34581
+    },
+    {
+      "path": "probe_v1/control_diagnostic.png",
+      "sha256": "7017f1aa20c22cba3cf2dd3f3de75df12dcc2b5b3da24d479bd39efbf38888ec",
+      "bytes": 92014
+    },
+    {
+      "path": "probe_v1/control_diagnostic.svg",
+      "sha256": "4a6478c13e8129fad29f0a2e31894ddef71116a43e65cc98e3fa2b0c52a58b57",
+      "bytes": 61479
+    },
+    {
+      "path": "probe_v1/official_fragment_stdout.txt",
+      "sha256": "3d60c9ffcc386ade645c2941dc7e9cfc49c66aa63b94949502ac7c5157627fbf",
+      "bytes": 1598
+    },
+    {
+      "path": "probe_v1/receipt.json",
+      "sha256": "7a649495b8d222ebaa28111002067eb091e81225e631c6deda6d753c119df7ea",
+      "bytes": 4713
+    },
+    {
+      "path": "probe_v1/weight_trace.csv",
+      "sha256": "9fcc200d3075336bd9e39e31ce2224e62c1042173b92c5a53723b746faa5a674",
+      "bytes": 689815
+    },
+    {
+      "path": "sources/GeoGS/.gitignore",
+      "sha256": "6484b4d3ef13e435c78939fb0de8d9f94dbec0f9c74dd2bf63babb80193049ff",
+      "bytes": 293
+    },
+    {
+      "path": "sources/GeoGS/.gitmodules",
+      "sha256": "fb2e8e763e87e680e01b2256ee57b1ed2589b375586543d87e9945f4a4c02ec9",
+      "bytes": 276
+    },
+    {
+      "path": "sources/GeoGS/LICENSE.md",
+      "sha256": "cd5c95b3cfff3acc1bd412420c770f88809331c3db6872df11a970147aa8e81f",
+      "bytes": 4275
+    },
+    {
+      "path": "sources/GeoGS/LoD2Depth/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "sources/GeoGS/LoD2Depth/camera_loader.py",
+      "sha256": "0ad3336e57a8de8adce907526fe8dd653f7530b35621128daaf8cb1f03657796",
+      "bytes": 4958
+    },
+    {
+      "path": "sources/GeoGS/LoD2Depth/main.py",
+      "sha256": "227b7b07af75a9f3ad936c86ee8b936d5c10fc8b822c5622e5931a9b1baa2e08",
+      "bytes": 10108
+    },
+    {
+      "path": "sources/GeoGS/LoD2Depth/mesh_loader.py",
+      "sha256": "b21a6ac46a973f0cce4e43fd84fe036c4dff4583ae51d5d35ea15a5024f23d0d",
+      "bytes": 1732
+    },
+    {
+      "path": "sources/GeoGS/LoD2Depth/mesh_saver.py",
+      "sha256": "24b7477a1730afc07c90b240a3dcea7c2ceefa5046dfcc6a03b7bc61f828ce93",
+      "bytes": 2114
+    },
+    {
+      "path": "sources/GeoGS/LoD2Depth/raycasting.py",
+      "sha256": "384210596ec1376b8eec5a743bf50eb37bd9a529c92df388a46b98d1d26c0a90",
+      "bytes": 17459
+    },
+    {
+      "path": "sources/GeoGS/LoD2Depth/reference_frame.py",
+      "sha256": "d98a6ff173d85b74ea48848b670b739251aba738c9c4277c0b253f90c9d5b12d",
+      "bytes": 1555
+    },
+    {
+      "path": "sources/GeoGS/LoD2Depth/visualization.py",
+      "sha256": "a09d9f98569b80b54830ff52a7bcb5b0b4f606ea199a5ce587441eaac0a48d21",
+      "bytes": 2205
+    },
+    {
+      "path": "sources/GeoGS/README.md",
+      "sha256": "ab4677cafce95ed222440637305cadc8b36d232ddd093c2a87bbf375e8e5ca0a",
+      "bytes": 9876
+    },
+    {
+      "path": "sources/GeoGS/arguments/__init__.py",
+      "sha256": "059113ea23d1905b750b9849f95aafb1f7ea3f644f8a261a656535454ec0c71c",
+      "bytes": 9970
+    },
+    {
+      "path": "sources/GeoGS/data/generate_pcd.py",
+      "sha256": "ad1476bb478c228fc7cd0d67ed6f217faf8afae5dcfb5147e59b02e3d6cac781",
+      "bytes": 16205
+    },
+    {
+      "path": "sources/GeoGS/data/lodgs_utils.py",
+      "sha256": "5a3fb60c827eab7b16dbdc96f8a0993579a299de50bde450c521b6c644a47a49",
+      "bytes": 897
+    },
+    {
+      "path": "sources/GeoGS/data/mesh_handler.py",
+      "sha256": "7c103b6d83034b275056d42c27b442680f383976ce3a327624f2fd02335b673c",
+      "bytes": 3001
+    },
+    {
+      "path": "sources/GeoGS/data/sample_colmap.py",
+      "sha256": "c285c35456182e8eb2efd4d3bb47b163b7e6ce994b15c36a29c6f6be48d29d45",
+      "bytes": 10242
+    },
+    {
+      "path": "sources/GeoGS/environment.yml",
+      "sha256": "4f19f206ce7f43c9f8794a2fe6563b42eff8536fd918d19d4c8754561f2b134f",
+      "bytes": 121
+    },
+    {
+      "path": "sources/GeoGS/evaluation/eval_f1.py",
+      "sha256": "c9d21a6db09952af997a167ee96fee293e3ec70b33bf44d039c02520c536ed26",
+      "bytes": 4569
+    },
+    {
+      "path": "sources/GeoGS/evaluation/eval_full.py",
+      "sha256": "827f3ed401117289de26fc8d7b85ffb92bd081dee13c636464397b3412245776",
+      "bytes": 17012
+    },
+    {
+      "path": "sources/GeoGS/evaluation/mesh2pcd.py",
+      "sha256": "f120cd9325f2437e3523c0a46d629cb02d48a8f2fa37c7d6a48ca8ed7f4b84fc",
+      "bytes": 1029
+    },
+    {
+      "path": "sources/GeoGS/evaluation/transform_gt_pcd.py",
+      "sha256": "b06eafdf747c6b512b41767fe33c1c62a73d73e6e680cfefe02f2a81b1a4db9b",
+      "bytes": 4581
+    },
+    {
+      "path": "sources/GeoGS/gaussian_renderer/__init__.py",
+      "sha256": "6a7710f9a52aaf419705fbb983d6cdaeb8c6986e33a07446267ce2d407448492",
+      "bytes": 7394
+    },
+    {
+      "path": "sources/GeoGS/gaussian_renderer/network_gui.py",
+      "sha256": "579f920d2a38d3ab832e25c3a2334711470c11cadee5714030475c3eff6839e4",
+      "bytes": 3126
+    },
+    {
+      "path": "sources/GeoGS/lpipsPyTorch/__init__.py",
+      "sha256": "a657ce7355782eb970f95fd0d2e26eec5b9023212d2b655814da6e15b70510b4",
+      "bytes": 635
+    },
+    {
+      "path": "sources/GeoGS/lpipsPyTorch/modules/lpips.py",
+      "sha256": "3bece0b9cf9943af5b043026458819d259df9bfe7c2a1d3ffc6c905e7e5aa2b4",
+      "bytes": 1151
+    },
+    {
+      "path": "sources/GeoGS/lpipsPyTorch/modules/networks.py",
+      "sha256": "dfa6f152b0e3fbc23ac3bfaea52b46e9473e64ad539ea22ab030c57af51c7f14",
+      "bytes": 2692
+    },
+    {
+      "path": "sources/GeoGS/lpipsPyTorch/modules/utils.py",
+      "sha256": "1bd4a7d4e7b43215497675ed852936fe4f27e7ea3068afe0b0e1f7cfb6c48570",
+      "bytes": 885
+    },
+    {
+      "path": "sources/GeoGS/media/teaser_rev_fin.png",
+      "sha256": "e20eb81395ef69fa00f88287acf386b24946109dcc58c6c334205a2ae54797ff",
+      "bytes": 2164962
+    },
+    {
+      "path": "sources/GeoGS/metrics.py",
+      "sha256": "04a4bacbbd09d44a0db32840dd85120f4867f554ea867207f01521377c0f631b",
+      "bytes": 4129
+    },
+    {
+      "path": "sources/GeoGS/preprocessing/README.md",
+      "sha256": "742a83e2e9bf63b71bee0ec10df41680b0d19f5cbda05250f01305b218c363ef",
+      "bytes": 1586
+    },
+    {
+      "path": "sources/GeoGS/preprocessing/get_da3_depth_with_colmap.py",
+      "sha256": "97703618afba7563b7f6f8ef2671219b525925e1474140871609db2fc2c7c2ea",
+      "bytes": 29044
+    },
+    {
+      "path": "sources/GeoGS/render.py",
+      "sha256": "1b1f4c45bd4c3c68e9b2a557d9ea5d8cd843a8e09b5a0b62f20323b399de8734",
+      "bytes": 7480
+    },
+    {
+      "path": "sources/GeoGS/requirements.txt",
+      "sha256": "59d10fe2d3382c0ffec7b9ef693cad0f17181a45bcb5d47cbf42043828f71db1",
+      "bytes": 489
+    },
+    {
+      "path": "sources/GeoGS/scene/__init__.py",
+      "sha256": "86ef830ea778ac821a1283b1437b378608d07d203e6d9bf8a1c688cc21d514e1",
+      "bytes": 5286
+    },
+    {
+      "path": "sources/GeoGS/scene/cameras.py",
+      "sha256": "5244fb5dcb97a811f5ac2feaaefe69e8e74fb9d425e5c9653825e21b2ca610d9",
+      "bytes": 2813
+    },
+    {
+      "path": "sources/GeoGS/scene/colmap_loader.py",
+      "sha256": "6948ce06366e1f727ddffc39a445bf4b6873824f02abc39df63eb0c8f0fb3f36",
+      "bytes": 11859
+    },
+    {
+      "path": "sources/GeoGS/scene/dataset_readers.py",
+      "sha256": "278da15c122fea150941c6a3479bc622cc8cc507d4c1461a7e385833a563008a",
+      "bytes": 22009
+    },
+    {
+      "path": "sources/GeoGS/scene/gaussian_model.py",
+      "sha256": "4be070008683ba1943de9e22d1f4d1a9c194aef56010c0b3186d0bd7f6aadb9a",
+      "bytes": 22822
+    },
+    {
+      "path": "sources/GeoGS/scripts/eval_3d.sh",
+      "sha256": "23517430795a62eaec9490af75756461377eead25dbf9d09a0ca046a5ce73b8c",
+      "bytes": 1469
+    },
+    {
+      "path": "sources/GeoGS/scripts/render.sh",
+      "sha256": "befbbf2fa14e0f16023f319235b671b3174db926735e0b3ed401c265802d5c53",
+      "bytes": 438
+    },
+    {
+      "path": "sources/GeoGS/scripts/run_example.sh",
+      "sha256": "834ee9802f360ca64aeacb95ead494718de85f1e345172911873f26f429f8c46",
+      "bytes": 1493
+    },
+    {
+      "path": "sources/GeoGS/scripts/train.sh",
+      "sha256": "9fb1b1899ecf4348d51c9aac9d1bcc73d1333c0c994f5422aee8cafb2274f189",
+      "bytes": 1276
+    },
+    {
+      "path": "sources/GeoGS/train.py",
+      "sha256": "4c09f6a117d7f4a13e3bd3c5d9eb49b1830e428950a53c0f86be4001637c7a10",
+      "bytes": 66088
+    },
+    {
+      "path": "sources/GeoGS/utils/camera_utils.py",
+      "sha256": "e4d10477c939deaa3caebecf981f80d7b73ddbb3681ca5e12e006c1a6fac41eb",
+      "bytes": 2969
+    },
+    {
+      "path": "sources/GeoGS/utils/general_utils.py",
+      "sha256": "7823e66a944496e4f06971888a8a4277adde41ecdb557fc3d8717db139a5d59b",
+      "bytes": 5944
+    },
+    {
+      "path": "sources/GeoGS/utils/graphics_utils.py",
+      "sha256": "d6e75de8161e98b72c2691e8a944a842e1b6625d2306035d079c868ac632edfc",
+      "bytes": 2052
+    },
+    {
+      "path": "sources/GeoGS/utils/image_utils.py",
+      "sha256": "9f7e4fd3c3eae0dcf1894e3f329ec7304eedf825a1e40e0c765e295465a9805d",
+      "bytes": 2223
+    },
+    {
+      "path": "sources/GeoGS/utils/loss_utils.py",
+      "sha256": "8f366bd24120741f1f0edd6935a3e69d6aad724af689023b6cedcc7abd8f38d1",
+      "bytes": 2734
+    },
+    {
+      "path": "sources/GeoGS/utils/mcube_utils.py",
+      "sha256": "2b0c3c5e65afc4b022e62c23aa6a98f8dfa35ddfc789dc5e85082538afe80d76",
+      "bytes": 3497
+    },
+    {
+      "path": "sources/GeoGS/utils/mesh_utils.py",
+      "sha256": "bc36607b2cec4e435c9448d1f504fe6fde0df9cd5d2b190765d044f85139c99c",
+      "bytes": 15284
+    },
+    {
+      "path": "sources/GeoGS/utils/point_utils.py",
+      "sha256": "3bfbd7a496b7f55d30aebccb1abc6df407a2dd4896283f68f5c8a67513317703",
+      "bytes": 1388
+    },
+    {
+      "path": "sources/GeoGS/utils/render_utils.py",
+      "sha256": "2c75c00d93d4d9bd80f05a663e67612db1f8a6d7dbd15a8dab01387c0c52c075",
+      "bytes": 14378
+    },
+    {
+      "path": "sources/GeoGS/utils/sh_utils.py",
+      "sha256": "7d1ff267546390635e6d1f68c4f88c4a8b052482d5c9be1d32f06bc69e9a96e7",
+      "bytes": 4371
+    },
+    {
+      "path": "sources/GeoGS/utils/system_utils.py",
+      "sha256": "be01c02d3118c5d53808bc04efccd00c35a705a43a87c3583ea2f4752bc48553",
+      "bytes": 785
+    },
+    {
+      "path": "sources/fulltext_access/fetch_receipt.json",
+      "sha256": "da4f1c66c9340d0286bd809c631d917cdf800f7486f5c4fa6e984ef15bea4df4",
+      "bytes": 2038
+    },
+    {
+      "path": "sources/fulltext_access/fetch_receipt_r2.json",
+      "sha256": "88b7388f9a84af48e6e528ac5fe3f2fc7c9bb0f62ef78c2905e6ea3eb3a02421",
+      "bytes": 2641
+    },
+    {
+      "path": "sources/fulltext_access/fetch_receipt_r3.json",
+      "sha256": "ffe64df41aeff2a2361663cd31be4b7c3287b45c4e20588962414acf43b24297",
+      "bytes": 2451
+    },
+    {
+      "path": "sources/manifest.json",
+      "sha256": "5c86b43a8be51ab07fdf49238799dc9390cfb6dde601efde29f83f6ef3fe9ce0",
+      "bytes": 8714
+    }
+  ]
+}

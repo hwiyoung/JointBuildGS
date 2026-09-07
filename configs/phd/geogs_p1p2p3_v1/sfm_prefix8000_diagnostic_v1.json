@@ -1,0 +1,27 @@
+{
+  "schema": "GEOGS_SFM_PREFIX_DIAGNOSTIC_POLICY_v1",
+  "scientific_verdict": null,
+  "task_id": "PHD-GEOGS-SFM-NO-ANCHOR-v1",
+  "analysis_role": "SUPPLEMENTARY_PREFIX_DIAGNOSTIC",
+  "trigger": "After the selected regional jobs close, at least one planned 22000/30000 reconstruction is unavailable because training or extraction failed.",
+  "main_experiment_replaced": false,
+  "training_parameters_changed": false,
+  "additional_training_authorized_by_this_policy": false,
+  "prefix_iteration": 8000,
+  "regions": ["P1", "P2", "P3"],
+  "selected_attempts": {
+    "P1": "no_anchor_sfm_memory_recovery_v2",
+    "P2": "no_anchor_sfm_memory_recovery_P2_v2",
+    "P3": "no_anchor_sfm_memory_recovery_P3_v3"
+  },
+  "selection_rule": "The same fixed 8000 checkpoint for all three regions. No last-available or quality-based checkpoint selection; missing prefix is unavailable.",
+  "parent_training_receipt_required_closed": true,
+  "parent_failure_status_preserved": true,
+  "validation": ["Original configuration/input/source/amendment/invocation identity", "Fresh initialization and first-step PASS", "Complete iteration8000 receipt, checkpoint and PLY hashes, count and finite values", "Recorded 8000 trace and post-optimizer save provenance"],
+  "export": {"official_renderer_and_extractor": true, "mesh_res": 512, "num_cluster": 50, "retain_raw_and_post": true, "gpu_concurrent_with_training_on_same_device": false},
+  "comparison": {"primary": "Existing ALS-initialized Anchor8000 versus SfM-initialized refinement8000", "final30000": "Context only; different optimization budget", "pure_anchor_only_ablation": false, "image_only": false},
+  "evaluation": {"same_frozen_reference_ROI_sampling_thresholds_and_photos": true, "prior_anchor_rgb_stage": "anchor_512", "reference_used_for_training_or_checkpoint_choice": false},
+  "producer_root": "completed_prefix8000_v1",
+  "evaluation_root": "evaluation/no_anchor_sfm_prefix8000_v1",
+  "limitations": ["A valid 8000 prefix does not establish 22000/30000 completion or final convergence.", "Initialization, supervision, protection membership and schedules still differ.", "Surface export may fail independently of checkpoint availability."]
+}

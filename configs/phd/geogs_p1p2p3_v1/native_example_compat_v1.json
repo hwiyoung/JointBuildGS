@@ -1,0 +1,73 @@
+{
+  "task_id": "PHD-GEOGS-P1P2P3-v1",
+  "scientific_verdict": null,
+  "purpose": "Unmodified official LoD2 example execution and input contract verification; not P1/P2/P3 performance",
+  "official_commit": "db40c95c657ec03ff21c83cb99cf39f4e90247a6",
+  "runtime_image": "jointbuildgs:geogs-official-db40c95-compat-v1",
+  "runtime_image_id": "sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e",
+  "archive_sha256": "572e83a09d9204c26af174f38c184e3cdae45cdb2687549028e640642f7aad44",
+  "archive_bytes": 963110591,
+  "coordinate_frame": "Original author local transformed frame; global EPSG mapping unverified",
+  "da3_evaluation_view_participation": "UNKNOWN_AUTHOR_PRECOMPUTATION; native example never used as independent P1/P2/P3 image quality evidence",
+  "seed": 0,
+  "train_views": 13,
+  "test_views": 2,
+  "train_command": [
+    "python",
+    "train.py",
+    "-s",
+    "/scene",
+    "-m",
+    "/output/model",
+    "--lod_depth_path",
+    "/scene/lod2_prior",
+    "--da_depth_path",
+    "/scene/da3_prior",
+    "--lod2_pcd_path",
+    "/scene/lod2_pcd.ply",
+    "--eval",
+    "--lod_init",
+    "--freeze_onlybldg",
+    "--protect_bldg",
+    "--dynamic_depth_weight",
+    "--checkpoint_iterations",
+    "8000",
+    "8100",
+    "30000"
+  ],
+  "render_command": [
+    "python",
+    "render.py",
+    "-s",
+    "/scene",
+    "-m",
+    "/output/model",
+    "--iteration",
+    "30000",
+    "--mesh_res",
+    "1024"
+  ],
+  "metrics_command": [
+    "python",
+    "metrics.py",
+    "-m",
+    "/output/model"
+  ],
+  "measurement_override": "Native checkpoint export at8000/8100/30000; no optimization or renderer changes",
+  "resource": {
+    "gpu": 1,
+    "cpus": 8,
+    "memory_gib": 32
+  },
+  "reference_mount_during_training_rendering_metrics": false,
+  "output_relative": "native_example_retry_compat_v1/output",
+  "input_relative": "native_example/scene",
+  "runtime_compatibility": {
+    "matplotlib": "3.9.2",
+    "official_pin": "3.10.9",
+    "reason": "Official colormap calls tostring_rgb removed in3.10; initial run failed at8000 before checkpoint saving",
+    "ld_preload": "/opt/geogs/lib/libstdc++.so.6",
+    "renderer_optimizer_and_controls_changed": false
+  },
+  "original_failure": "native_example/output/train_receipt.json"
+}

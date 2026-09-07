@@ -1,0 +1,21 @@
+{
+  "scientific_verdict": null,
+  "purpose": "Additive same-reference-point maps; original all-height context maps remain preserved",
+  "regions": ["P1", "P2", "P3"],
+  "conditions": ["D005_Pnative", "D0005_Pnative", "D0_Pnative", "D005_Prelease", "D0005_Prelease", "D0_Prelease"],
+  "main_conditions": ["D005_Pnative", "D0005_Pnative"],
+  "cell_size_m": 0.5,
+  "representative_tile_size_m": 2.0,
+  "distance_threshold_m": 0.5,
+  "map_aggregation": "Every DA3 and outcome cell median uses exactly the same finite strict DA3 reference-point membership",
+  "tile_selection": "Posthoc illustrative locations: maximum point count in each named cohort and Anchor-state group; ties use lexicographically first XY tile. No outcome values used for location selection.",
+  "representative_cases": [
+    {"id": "A", "region": "P1", "cohort": "above1", "initial": "near"},
+    {"id": "B", "region": "P1", "cohort": "above1", "initial": "far"},
+    {"id": "C", "region": "P2", "cohort": "within05", "initial": "far"},
+    {"id": "D", "region": "P2", "cohort": "above1", "initial": "near"},
+    {"id": "E", "region": "P3", "cohort": "below1", "initial": "far"},
+    {"id": "F", "region": "P3", "cohort": "above1", "initial": "near"}
+  ],
+  "causal_limit": "Same-point association only. No DA3-off contrast exists; shared UAS reference, visibility, pose and data coverage uncertainty remain."
+}

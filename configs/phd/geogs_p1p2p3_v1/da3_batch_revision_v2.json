@@ -1,0 +1,17 @@
+{
+  "task_id": "PHD-GEOGS-P1P2P3-v1",
+  "batch_revision": 2,
+  "scientific_verdict": null,
+  "da3": {
+    "partition": "balanced_consecutive_disjoint_train_only",
+    "min_batch_views": 3,
+    "max_batch_views": 8,
+    "batch_revision": 2,
+    "group_count": "ceil(train_view_count / max_batch_views)",
+    "grouping": "numpy.array_split of lexicographically ordered train views",
+    "source_camera_center_rank_min": 2,
+    "rank_test": "numpy.linalg.matrix_rank on centered camera positions; report singular values and numerical tolerance",
+    "reason": "Official DA3 pose-scale alignment failed on two-view tail with evo Umeyama degenerate covariance rank. Balanced batches fix the input contract before GeoGS results.",
+    "unchanged": ["train/evaluation membership", "RGB bytes", "camera poses", "process resolution 840", "official DA3 model", "maximum eight views", "seed 0"]
+  }
+}

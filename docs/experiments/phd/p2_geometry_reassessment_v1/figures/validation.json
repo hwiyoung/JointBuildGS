@@ -1,0 +1,108 @@
+{
+  "scientific_verdict": null,
+  "status": "PASS_AGGREGATION_AND_PRESENTATION_CHECKS",
+  "height_partition_pairs_checked": 60,
+  "area_partition_models_checked": 4,
+  "interpretation": "Share with caveats: descriptive same-reference decomposition, not causal or semantic building evaluation",
+  "low_height_recall_loss_decomposition": [
+    {
+      "resolution": "512",
+      "setting": "sample0.1_reference0.1",
+      "threshold_m": 0.5,
+      "total_net_recall_loss_points": 80405,
+      "z_minus44_to_minus42_net_loss": 63977,
+      "band_share_of_net_recall_loss": 0.7956843479883092,
+      "band_share_of_gross_lost_points": 0.5900151688532879
+    },
+    {
+      "resolution": "512",
+      "setting": "sample0.05_reference0.1",
+      "threshold_m": 0.5,
+      "total_net_recall_loss_points": 80405,
+      "z_minus44_to_minus42_net_loss": 63977,
+      "band_share_of_net_recall_loss": 0.7956843479883092,
+      "band_share_of_gross_lost_points": 0.5900151688532879
+    },
+    {
+      "resolution": "512",
+      "setting": "sample0.2_reference0.1",
+      "threshold_m": 0.5,
+      "total_net_recall_loss_points": 80405,
+      "z_minus44_to_minus42_net_loss": 63977,
+      "band_share_of_net_recall_loss": 0.7956843479883092,
+      "band_share_of_gross_lost_points": 0.5900151688532879
+    },
+    {
+      "resolution": "512",
+      "setting": "sample0.1_reference0.05",
+      "threshold_m": 0.5,
+      "total_net_recall_loss_points": 194215,
+      "z_minus44_to_minus42_net_loss": 172388,
+      "band_share_of_net_recall_loss": 0.8876142419483563,
+      "band_share_of_gross_lost_points": 0.6346469004048642
+    },
+    {
+      "resolution": "512",
+      "setting": "sample0.1_reference0.2",
+      "threshold_m": 0.5,
+      "total_net_recall_loss_points": 23977,
+      "z_minus44_to_minus42_net_loss": 17096,
+      "band_share_of_net_recall_loss": 0.7130166409475748,
+      "band_share_of_gross_lost_points": 0.5361136023916293
+    },
+    {
+      "resolution": "1024",
+      "setting": "sample0.1_reference0.1",
+      "threshold_m": 0.5,
+      "total_net_recall_loss_points": 86061,
+      "z_minus44_to_minus42_net_loss": 69268,
+      "band_share_of_net_recall_loss": 0.8048709636188285,
+      "band_share_of_gross_lost_points": 0.5724538122100635
+    },
+    {
+      "resolution": "1024",
+      "setting": "sample0.05_reference0.1",
+      "threshold_m": 0.5,
+      "total_net_recall_loss_points": 86061,
+      "z_minus44_to_minus42_net_loss": 69268,
+      "band_share_of_net_recall_loss": 0.8048709636188285,
+      "band_share_of_gross_lost_points": 0.5724538122100635
+    },
+    {
+      "resolution": "1024",
+      "setting": "sample0.2_reference0.1",
+      "threshold_m": 0.5,
+      "total_net_recall_loss_points": 86061,
+      "z_minus44_to_minus42_net_loss": 69268,
+      "band_share_of_net_recall_loss": 0.8048709636188285,
+      "band_share_of_gross_lost_points": 0.5724538122100635
+    },
+    {
+      "resolution": "1024",
+      "setting": "sample0.1_reference0.05",
+      "threshold_m": 0.5,
+      "total_net_recall_loss_points": 189045,
+      "z_minus44_to_minus42_net_loss": 176582,
+      "band_share_of_net_recall_loss": 0.9340738977492131,
+      "band_share_of_gross_lost_points": 0.6090939673715438
+    },
+    {
+      "resolution": "1024",
+      "setting": "sample0.1_reference0.2",
+      "threshold_m": 0.5,
+      "total_net_recall_loss_points": 24799,
+      "z_minus44_to_minus42_net_loss": 18072,
+      "band_share_of_net_recall_loss": 0.728739062058954,
+      "band_share_of_gross_lost_points": 0.5161703311995547
+    }
+  ],
+  "source_csv_sha256": {
+    "paired_reference.csv": "5143a1ab59d84b453fa90c1a0baa8b2fecf48fe3b99f535e87a29df5ed6d7707",
+    "prediction_distance_area.csv": "71fb5962ceb18f3e02e554c0b8191897b68e68e39df1c861d444978d093876d7",
+    "global_recomputed.csv": "5416049fe05e12ee6366cb23dbf35c7e4d570f0313546386b0f0c881bb641e89",
+    "xy_cells.csv": "8e480565d6a0259994ca40b8bc337f919db571bf182a2cd6e3ca183379e107f2",
+    "height_strata.csv": "0055ccd4bd03e18661b3827ff45fce0904460514df6e1dc8601f8e7d4fd2c24b",
+    "paired_reference_height.csv": "f038be17f7102bb6abd71edc267be371552dddba416f223ed5591647ff55db20"
+  },
+  "presentation_script_sha256": "20181d75867f3856fd23c68e8d84bffc7787ccd67e27f0aa56e2bfa062ed9552"
+}

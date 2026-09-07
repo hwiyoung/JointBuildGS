@@ -1,0 +1,36 @@
+{
+  "schema": "GEOGS_RESOURCE_PREFIX_FIGURE_CONTRACT_v1",
+  "scientific_verdict": null,
+  "iteration_range": [0, 8000],
+  "regions": ["P1", "P2", "P3"],
+  "runtime_layout_sha256": "28b83d4a462d764cbe0d59b32f7a816db92236141879806a5a1bc8ce4e450cd5",
+  "historical_policy_sha256": "a312c4999ff590d757116dc0f4a90695020e3ac70130df24fdf6e02a0eb769f0",
+  "runtime_image_id": "sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e",
+  "chart_contract": {
+    "question": "How do total and registered-protected Gaussian counts evolve over the same fixed0..8000 interval in these specified regional executions?",
+    "takeaway": "The selected trajectories have different initialization counts and protection registration timing; counts alone establish neither geometric quality nor anchor necessity.",
+    "family": "Trend",
+    "variant": "One faceted step-line figure:2 count metrics by3 regions, same comparison in each facet",
+    "renderer": "Matplotlib standalone PNG and vector PDF",
+    "expected_rows": 489,
+    "grain": "Native100-step trace plus declared initialization; SfM also has recorded iteration1",
+    "scope": "Count/resource evidence only, no surface fallback activation or new final-retry substitution",
+    "x_axis": "Fixed0..8000 optimizer iterations",
+    "total_y_axis": "Shared linear count from zero, displayed in millions",
+    "protected_y_axis": "Shared zero-preserving symlog, linear through1000; counts are exact, not total prior influence",
+    "palette_policy": "hard two-root cap; blue and orange plus neutral scaffolding",
+    "palette": {"ALS_anchor": "#2563A6", "Historical_SfM_no_anchor": "#C56B21"},
+    "non_color_distinction": {"ALS_anchor": "dashed step line and open square endpoints", "Historical_SfM_no_anchor": "solid step line and circle endpoints"},
+    "footprint_inches": [15, 9],
+    "png_dpi": 220,
+    "visual_qa": "Inspect final PNG; both PNG and PDF derive from the same figure"
+  },
+  "limitations": [
+    "Registered protected count is the frozen_mask membership, not the total influence of the prior.",
+    "ALS anchoring loss already acts before8000 while its registered mask is0; matching is registered at8000.",
+    "SfM initializes from different image-derived points and registers a different mask before step1.",
+    "CPU moment offload and cache transfer costs are not pure-method timing; no speed comparison is plotted.",
+    "Large8k payload hashes are quoted from hash-bound complete receipts and are not freshly recomputed by this counts-only figure.",
+    "No geometric-quality, anchor-necessity, final-convergence or22k/30k completion conclusion."
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "task_id": "PHD-GEOGS-P1P2P3-v1",
+  "status": "FROZEN_BEFORE_ANY_REGIONAL_TRAINING_OR_REFERENCE_EVALUATION",
+  "scientific_verdict": null,
+  "cell_size_m": 0.5,
+  "cell_origin_xy": [0, 0],
+  "column_height_gap_m": 0.5,
+  "column_interpretation": "separated samples can indicate roof/wall/holes or multiple surfaces; not automatic false-double-surface labels",
+  "diagnostic_strata": {
+    "source": "fixed prior mesh compared with observed UAS at evaluation only",
+    "reference_consistent_prior": "cell mean UAS-to-prior-triangle distance <0.25m",
+    "reference_disagreeing_prior": "cell mean UAS-to-prior-triangle distance >=0.5m",
+    "intermediate": "otherwise",
+    "reference_absence": "no observed UAS in fixed XY cell",
+    "temporal_label": "manual actual-image/input-lineage interpretation only; distance does not establish change",
+    "observation_support": "report original MVS/ALS/reference point support independently; absence of MVS is not proof of absent image observation"
+  },
+  "case_selection": {
+    "eligible": "fixed XY cells with at least3voxel-selected observed UAS points",
+    "score": "native mean UAS-to-triangle distance minus changed mean on identical reference point identities",
+    "examples": ["largest positive reduction if one exists", "largest negative reduction if one exists", "minimum absolute reduction", "reference-absent cell if present"],
+    "ties": "cell x then y ascending",
+    "use": "post-freeze diagnostic selection; show signed values and all-cell machine-readable table; no favorable parameter selection"
+  },
+  "density_sensitivity": "one factor at a time: surface0.05/0.1/0.2m with reference0.1m, then reference0.05/0.2m with surface0.1m; not Cartesian sweep",
+  "display": {"source_point_voxel_m": 0.1, "max_points": 200000, "selection": "original point nearest fixed voxel center then deterministic ordered cap", "display_only": true, "distance_scale_m": [0, 2]},
+  "render_aggregation": "unweighted per-image means per region/domain; report image and pixel counts; pooled image-weighted and region-macro values remain descriptive due overlap",
+  "geometry_aggregation": "per region and equal-region descriptive macro; preserve distinct point-NN and mesh-surface estimands"
+}

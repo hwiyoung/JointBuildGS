@@ -1,0 +1,24 @@
+{
+  "task_id": "PHD-GEOGS-CAUSAL-FOLLOWUP-v1",
+  "scientific_verdict": null,
+  "purpose": "Post hoc, evaluation-only projection of existing reference samples into saved training-view prior, DA3, anchor, and final depth arrays. No training, rendering, inference, extraction, registration, or masking.",
+  "probes": [
+    {"id": "P1_old_roof_current_floor", "region": "P1", "target_xyz": [-8.0, -15.0, -42.0], "bounds": [[-8.25, -7.75], [-15.5, -14.5], [-43.0, -41.0]]},
+    {"id": "P2_changed_upper_roof", "region": "P2", "target_xyz": [134.0, 127.0, -27.5], "bounds": [[133.75, 134.25], [126.5, 127.5], [-29.0, -26.0]]},
+    {"id": "P2_repeated_valley", "region": "P2", "target_xyz": [134.0, 96.65, -31.16], "bounds": [[133.75, 134.25], [96.5, 97.0], [-33.0, -30.0]]}
+  ],
+  "reference_selection": "Nearest existing evaluation sample to the stated target within fixed half-open bounds; no new reference processing.",
+  "camera_selection": "All training cameras in front of reference point and >=10 pixels from image boundary, sorted by descending downward ray vertical cosine, then image name. Report first 3; no outcome-based selection.",
+  "n_cameras": 3,
+  "patch_radius_pixels": 2,
+  "depth_sample": "Nearest integer array pixel via numpy rint; also report same 5x5 array-pixel patch finite-positive min, median, max. Prior uses Open3D rays at u+0.5,v+0.5 whereas saved GS uses integer u,v. DA3 original-grid resizing has its own interpolation convention. Therefore equal array indices are not exactly equal rays; no resampling was applied. Projected point camera-Z is an evaluation-only target, not a raycast or visibility proof.",
+  "final_conditions": ["D005_Pnative", "D0005_Pnative", "D0_Prelease"],
+  "anchor_path": "extraction_resource_v3/primary/{region}/D005_Pnative/auxiliary/anchor_512/model/train/ours_8000",
+  "reference_path": "evaluation/geometry/{region}/prior_mesh/sample0.1_reference0.1.npz",
+  "source_camera_path": "sources/GeoGS-state-camera-v1",
+  "new_training": 0,
+  "new_scene_renders": 0,
+  "new_inference": 0,
+  "new_mesh_extractions": 0,
+  "new_registration": 0
+}

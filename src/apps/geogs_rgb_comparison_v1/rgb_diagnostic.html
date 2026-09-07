@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><link rel="icon" href="data:,"><title>GeoGS · 학습뷰와 평가뷰 RGB</title><link rel="stylesheet" href="./rgb_diagnostic.css"></head>
+<body>
+<header><a href="/">← 3D 기하 비교</a><p class="eyebrow">JointBuildGS / 저장된 30,000 step 결과</p><h1>표면 추출 전, 사진은 얼마나 복원됐을까?</h1><p>원사진과 full-SH Gaussian RGB 렌더를 같은 카메라·같은 픽셀 영역에서 비교합니다.</p></header>
+<main>
+<div class="controls">
+<label>영역<select id="region"><option>P1</option><option>P2</option><option>P3</option></select></label>
+<label>사진 구분<select id="split"><option value="train">학습뷰 · RGB 학습에 사용</option><option value="evaluation">평가뷰 · RGB 학습에서 제외</option></select></label>
+<label>관찰 사진<select id="case"></select></label>
+<label>Prior 가중치<select id="prior"><option value="both">0.005와 0.0005 함께</option><option value="0.005">0.005</option><option value="0.0005">0.0005</option></select></label>
+</div>
+<p id="status" role="status">비교 자료를 불러오고 있습니다.</p><p id="error" role="alert" hidden></p>
+<div class="case-meta" id="case-meta"></div>
+<section id="comparisons" aria-label="원사진과 여섯 조건의 RGB 비교"></section>
+<aside><strong>보이는 결과의 범위</strong><p>이 화면은 추출 mesh의 정점 색상이 아닌, 저장된 Gaussian RGB 렌더입니다. 학습뷰에서도 세부가 사라져 있다면 그 손실은 표면 추출 이전부터 존재합니다. 원사진과의 차이에는 기하·가림·색상·카메라 오차 등이 함께 반영되므로, 이 비교만으로 하나의 원인을 확정할 수는 없습니다.</p><p>각 영역에서 학습 2장·평가 2장을 입력 카메라의 고정 영역 투영 면적 순으로 골랐습니다. 사진별 관측 조건이 달라 두 집단의 점수 차이를 일반화 성능으로 해석하지 않습니다. MVS 생성 영상의 최종 명단이 미복구되어, 평가뷰는 MVS와 독립인 검증 자료가 아닙니다.</p><a id="manifest" target="_blank" rel="noopener">카메라·원본·수치 근거 JSON ↗</a></aside>
+</main>
+<dialog id="detail"><div class="dialog-head"><div><strong id="detail-title"></strong><p>두 패널의 스크롤이 함께 움직입니다. 100%는 원본 1픽셀을 화면 1픽셀로 표시합니다.</p></div><label>확대<select id="zoom"><option value="1">100%</option><option value="2">200%</option><option value="0.5">50%</option></select></label><button id="close-detail" type="button">닫기</button></div><div class="detail-grid"><section><h2>원사진</h2><div class="viewport"><img id="detail-photo" alt="선택한 원사진의 원본 크기 영역"></div></section><section><h2 id="detail-method"></h2><div class="viewport"><img id="detail-render" alt="선택한 조건의 원본 크기 렌더 영역"></div></section></div></dialog>
+<script type="module" src="./rgb_diagnostic.js"></script>
+</body></html>

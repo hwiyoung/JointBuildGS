@@ -1,0 +1,41 @@
+{
+  "schema": "GEOGS_SUPPLEMENTAL_NATIVE_REPEAT_v1",
+  "task_id": "PHD-GEOGS-P1P2P3-v1",
+  "repeat_id": "native_repeat_1",
+  "scientific_verdict": null,
+  "supplemental_only": true,
+  "output_directory": "native_repeat_allocator_v2",
+  "regions": ["P1", "P2", "P3"],
+  "condition_id": "D005_Pnative",
+  "phases": ["train", "render", "metrics", "auxiliary"],
+  "start_iteration": 8000,
+  "iterations": 30000,
+  "seed": 0,
+  "lambda_lod_anchor": 0.005,
+  "protection": "native",
+  "runtime_image_id": "sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e",
+  "allocator": "backend:native,max_split_size_mb:128",
+  "scientific_config_sha256": "b08bbcc808da060322fc1ed05902edbb08db2a0784dd146f4644adc12228eab4",
+  "runtime_layout_sha256": "28b83d4a462d764cbe0d59b32f7a816db92236141879806a5a1bc8ce4e450cd5",
+  "anchor_policy": "Exact completed iteration8000 checkpoint selected by the unchanged primary runtime layout and its exact common-anchor gate",
+  "anchors": {
+    "P1": {"checkpoint_directory": "runs/P1/D005_Pnative/model/jbgs_complete/iteration_8000", "checkpoint_sha256": "c08a39aa2deb81b26dd4dd75d0be9e6bb5e150db503f9d422a05423388679274"},
+    "P2": {"checkpoint_directory": "runs_allocator_v2/P2/D005_Pnative/model/jbgs_complete/iteration_8000", "checkpoint_sha256": null},
+    "P3": {"checkpoint_directory": "runs_allocator_v2/P3/D005_Pnative/model/jbgs_complete/iteration_8000", "checkpoint_sha256": null}
+  },
+  "unresolved_anchor_hash_policy": "P2/P3 paths are fixed before their runs; execution must bind the exact checkpoint SHA from the primary completed-state receipt and matching runtime-layout anchor gate. No new anchor is generated for a repeat.",
+  "schedule": "Run only after all18 primary region-by-condition jobs complete all4 phases; parent scheduler assigns a free GPU. Seal all3 repeats before UAS evaluation.",
+  "reason": "Reference-free P1 common-prefix diagnostics show sizeable same-condition population divergence; measure same-allocator native repeat variation without changing scientific controls.",
+  "trigger_evidence": {
+    "path": "runtime/p1_common_prefix_14400_v1/receipt.json",
+    "sha256": "a44ecdf78076a9d605afd11865f64c7b6a57a06817882c17a0a4a98a1660d6c5",
+    "native_max_relative_gaussian_count_difference": 0.10591287767730387,
+    "D0005_max_relative_gaussian_count_difference": 0.11725893327401263,
+    "interpretation": "Population differences are not a geometric/render quality noise bound or a causal allocator-effect estimate. Original native is uninterrupted; new native resumes its anchor."
+  },
+  "new_seed": false,
+  "scientific_controls_changed": false,
+  "input_bytes_changed": false,
+  "reference_accessed_for_this_decision": false,
+  "evaluation": "Separate supplemental candidate identity and repeat-variation tables. Do not mix with the primary six-condition ranking or make independent/generalization/noise-bound claims from one repeat per region."
+}

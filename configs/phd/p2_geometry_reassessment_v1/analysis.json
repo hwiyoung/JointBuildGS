@@ -1,0 +1,26 @@
+{
+  "task_id": "PHD-P2-GEOMETRY-REASSESSMENT-v1",
+  "scientific_verdict": null,
+  "scope": "Offline descriptive reanalysis of frozen P2 distance arrays; no fitting, alignment, reconstruction, or scene rendering",
+  "pairs": {
+    "512": ["D005_Pnative.mesh_512.raw", "D0005_Pnative.mesh_512.raw"],
+    "1024": ["D005_Pnative.final.raw", "D0005_Pnative.final.raw"]
+  },
+  "settings": ["sample0.1_reference0.1", "sample0.05_reference0.1", "sample0.2_reference0.1", "sample0.1_reference0.05", "sample0.1_reference0.2"],
+  "primary_setting": "sample0.1_reference0.1",
+  "thresholds_m": [0.1, 0.2, 0.25, 0.5, 1.0, 2.0],
+  "bounds_xyz_half_open": [[110, 158], [86, 132], [-49.386, -17.679]],
+  "height_bin_edges_m": [-50, -48, -46, -44, -42, -40, -38, -36, -34, -32, -30, -28, -26, -24, -22, -20, -18, -16],
+  "distance_bin_edges_m": [0, 0.1, 0.25, 0.5, 1.0, 2.0],
+  "xy_cell_size_m": 0.5,
+  "xy_origin_m": [0, 0],
+  "paired_distance_tolerance_m": 0.000001,
+  "interpretation": {
+    "height_bins": "Uniform absolute-local-Z bins over the whole prism, not building/roof/ground semantic labels; declared before numerical stratification",
+    "reference_membership": "Exact common saved UAS coordinates and original indices must match within each comparison",
+    "prediction_membership": "Different meshes have different area samples; never pair predictions by row index",
+    "distance_queries": "Reuse distances to the original full-prism candidate/reference; do not recrop nearest-neighbor targets per stratum",
+    "area": "Same area-uniform Monte Carlo estimate as existing scoring; distance from observed UAS is not proof of false surface where reference support is absent",
+    "inference": "Descriptive diagnostic only; no optimal threshold selection or confirmatory/scientific verdict"
+  }
+}

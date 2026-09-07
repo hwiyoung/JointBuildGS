@@ -1,0 +1,20 @@
+{
+  "task_id": "PHD-GEOGS-P1P2P3-v1",
+  "scientific_verdict": null,
+  "purpose": "Actual CUDA native-example complete-state and unchanged-control parity diagnostic",
+  "runtime_image_id": "sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e",
+  "source_relative": "sources/GeoGS-state-camera-v1",
+  "source_train_sha256": "08cfab996b144488b1a583bf722b991c627d90136a9031f85f7d33b1cae0c44b",
+  "source_sidecar_sha256": "7114f78e6f429c9186ce44e81a0c40d18e5087994f99a52d81eeee18ab7fa570",
+  "input_manifest_sha256": "085525b13e867c134853a4e452a17b8436938c4ff52c7a57e634b877759f1782",
+  "seed": 0,
+  "optimization_iterations": 30000,
+  "stop_after": 8100,
+  "gpu": 0,
+  "native_example_calibration_metadata_must_be_absent": true,
+  "reference_mount": false,
+  "base_command": ["python", "train.py", "-s", "/scene", "-m", "/output/model", "--lod_depth_path", "/scene/lod2_prior", "--da_depth_path", "/scene/da3_prior", "--lod2_pcd_path", "/scene/lod2_pcd.ply", "--eval", "--lod_init", "--freeze_onlybldg", "--protect_bldg", "--dynamic_depth_weight", "--checkpoint_iterations", "8000", "8100", "30000", "--jbgs_input_manifest", "/input_manifest.json", "--jbgs_stop_after", "8100"],
+  "uninterrupted_options": ["--jbgs_capture_iterations", "8000", "8100"],
+  "resumed_options": ["--jbgs_capture_iterations", "8100", "--jbgs_resume_full", "/anchor/checkpoint.pth"],
+  "interpretation": "Compare exact states first; independent CUDA trajectory differences are recorded, never silently reclassified as exact parity. This is the author example, not regional performance."
+}

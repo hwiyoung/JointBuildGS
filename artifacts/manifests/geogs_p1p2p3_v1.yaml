@@ -1,0 +1,79 @@
+schema: jointbuildgs.external-task-resolver.v1
+task_id: PHD-GEOGS-P1P2P3-v1
+scientific_verdict: null
+status: PRIMARY18_SEALED_SUPPLEMENTAL_INCOMPLETE_ACTUAL_EVALUATION_RUNNING
+scope: official GeoGS development diagnostic in the fixed P1/P2/P3 spatial crops
+canonical_e1_e6_contract_changed: false
+backend:
+  local_sibling: ../JointBuildGS-artifacts
+  container_artifact_root: /artifacts/JointBuildGS
+  relative: phase-payloads/phd/geogs_p1p2p3_v1/PHD-GEOGS-P1P2P3-v1
+  durability: local external storage; not a durable-backup claim
+source:
+  official_repository: https://github.com/zqlin0521/GeoGS
+  official_commit: db40c95c657ec03ff21c83cb99cf39f4e90247a6
+  pristine: sources/GeoGS
+  execution_copy: sources/GeoGS-state-camera-v1
+  changes: complete state instrumentation and explicit regional calibration adapter; preserved patches and hashes
+runtime:
+  image: jointbuildgs:geogs-official-db40c95-compat-v1
+  image_id: sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e
+  layout_revision: allocator_v2
+  layout_contract: contracts/runtime_layout_allocator_v2.json
+  allocator: backend:native,max_split_size_mb:128
+  continuation: runtime/resource_v3_continuation/attempt.bPR61e
+  continuation_status: exited_1_after_initial_P1_P2_native_repeat_CUDA_OOM
+  candidate_seal: contracts/candidates_sealed_v1.json
+  candidate_seal_sha256: 8fc78431dcdfc1bf803c0ac2db4a5bb2cad75c1c163ce2519b571d3710cd011d
+  actual_evaluation: runtime/finalization_primary18_v2/attempt.Pty1O1
+contracts:
+  execution: contracts/execution_v1.json
+  evaluation: contracts/evaluation_analysis_v1.json
+  baseline_inputs: contracts/evaluation_sources_v1.json
+  runtime_gate: contracts/runtime_gate_v1.json
+  runtime_layout: contracts/runtime_layout_allocator_v2.json
+  supplemental_repeat: contracts/supplemental_repeat_v1.json
+  extraction_resource_amendment: contracts/extraction_resource_v3.json
+  candidate_seal_expected: contracts/candidates_sealed_v1.json
+inputs:
+  P1: inputs/P1/input_manifest.json
+  P2: inputs/P2/input_manifest.json
+  P3: inputs/P3/input_manifest.json
+outputs:
+  native_example: native_example_retry_compat_v1/output
+  regions: runs_allocator_v2
+  exact_anchor_validation: parity_allocator_v2
+  queue: queue_allocator_v2
+  supplemental_native_repeats_expected: native_repeat_allocator_v2
+  resource_amended_extractions_expected: extraction_resource_v3
+  reference_free_prefix_diagnostic: runtime/p1_common_prefix_14400_v1
+  p1_shared_anchor: runs/P1/D005_Pnative/model/jbgs_complete/iteration_8000
+  p2_shared_anchor_expected: runs_allocator_v2/P2/D005_Pnative/model/jbgs_complete/iteration_8000
+  p3_shared_anchor_expected: runs_allocator_v2/P3/D005_Pnative/model/jbgs_complete/iteration_8000
+  input_diagnostics: input_diagnostics_v1
+  quantitative_expected: evaluation/summary
+  actual_cases_expected: evaluation/cases_v1
+  viewer_expected: evaluation/viewer/manifest_v2.json
+  preservation: preservation
+  failures: preserved attempt directories and phase receipts; docs/experiments/phd/geogs_p1p2p3_v1/ISSUES_ko_v1.md
+preserved_failed_attempts:
+  - runs/P1/D005_Pnative
+  - runs/P1/D0005_Pnative
+runtime_interpretation:
+  primary_matrix: all new conditions use allocator_v2; old failed attempts are not mixed into the primary comparison
+  p1_history: same original 8000-step anchor retained; allocator_v2 native condition resumes from it
+  p2_p3_history: anchors and later comparisons start under allocator_v2
+  successful_recovery_claim: false
+  primary_required_outputs_complete: true
+  primary_completion_observed_kst: '2026-09-08 18:56:58'
+  evaluation_completion_contract: contracts/evaluation_completion_v2.json
+  evaluation_completion_contract_sha256: 3e200db7de4cc171158b08deccffd3869bfd2d30c2a5b89805b86ad1903112c6
+  supplemental_completion: P1 and P2 initial CUDA OOM failures preserved; P3 not attempted; further diagnostics and retries deferred outside this completion scope
+  remaining: primary18 seal with explicit supplemental incompleteness, quantitative and qualitative analysis, actual viewer QA, final preservation and handoff
+preservation_interim:
+  raw_report: preservation/interim_allocator_v2.json
+  reconciliation: preservation/interim_allocator_v2_reconciliation.json
+  status: source bytes and service identities checked; potential reference-bearing payload hashes deferred until candidate seal
+repository_plan: docs/experiments/phd/geogs_p1p2p3_v1/EXPERIMENT_PLAN_ko_v1.md
+training_reference_mount: prohibited
+reference_evaluation_gate: all18 primary and all3 repeats with required final1024/final512 and common anchor512 plus every optional extraction availability sealed first

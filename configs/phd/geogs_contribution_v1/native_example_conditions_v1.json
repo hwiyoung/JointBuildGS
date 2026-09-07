@@ -1,0 +1,44 @@
+{
+  "task_id": "PHD-GEOGS-CONTRIBUTION-v1",
+  "purpose": "Concrete conditions for a subsequent native-example technical reproduction",
+  "status": "INPUT_ARCHIVE_ACQUIRED; TRAINING_NOT_RUN",
+  "scientific_verdict": null,
+  "official_commit": "db40c95c657ec03ff21c83cb99cf39f4e90247a6",
+  "archive": "phase-payloads/phd/geogs_contribution_v1/PHD-GEOGS-CONTRIBUTION-v1/example_source/example_scene.zip",
+  "archive_sha256": "572e83a09d9204c26af174f38c184e3cdae45cdb2687549028e640642f7aad44",
+  "archive_bytes": 963110591,
+  "scene_prefix": "example_scene",
+  "rgb_directory": "images",
+  "pose_directory": "sparse/0",
+  "lod_initialization_directory": "sparse_lod/0",
+  "lod_depth_directory": "lod2_prior/raw_depth",
+  "visual_depth_directory": "da3_prior/raw_depth",
+  "protection_pointcloud": "lod2_pcd.ply",
+  "evaluation_only_reference": "ground_truth/r1_b1_sub002_transformed.ply",
+  "image_count": 15,
+  "split_basis": "Upstream --eval with default llffhold=8; derived, not an author run receipt",
+  "expected_train_views": 13,
+  "expected_evaluation_views": 2,
+  "lod_camera_inventory_check": "PASS: 15 image names and qvec/tvec equal to sparse/0; maximum difference 0",
+  "default_evaluation_filenames": [
+    "DJI_20241217101259_0002_D.JPG",
+    "DJI_20241217101327_0016_D.JPG"
+  ],
+  "native_driver": "scripts/run_example.sh",
+  "renderer_identity": "Original diff-surfel-rasterization dependency; distinct from a gsplat port",
+  "coordinate_frame": "Author local transformed frame; global EPSG mapping not verified from archive",
+  "do_not_infer": [
+    "P1/P2/P3 equivalence",
+    "Author full-paper metric reproduction",
+    "DA3 inference excluded evaluation images",
+    "Currentness or accuracy of the LoD2 asset",
+    "ALS input equivalence"
+  ],
+  "remaining_checks": [
+    "Verify full payload integrity and readable arrays after separate extraction",
+    "Pin isolated dependency versions and native submodule commits",
+    "Keep supplied evaluation reference out of every training and parameter-selection path",
+    "Record precomputed DA3 provenance as unknown until evidence is available",
+    "Choose new immutable run output; preserve this archive and previous runs"
+  ]
+}

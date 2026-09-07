@@ -1,0 +1,16 @@
+{
+  "task_id": "PHD-GEOGS-RGB-COLOR-FIT-PROBE-v1",
+  "scientific_verdict": null,
+  "diagnostic_attempt": "attempt.Ym5F9Uzs",
+  "diagnostic_manifest_sha256": "f2b338a0da04831a9eabd3abb0a69fab27b844a8ceb9874658b2c18a1246c70b",
+  "cases": [
+    {"case": "P1_train_1", "condition": "mvs_0.0005"},
+    {"case": "P1_train_1", "condition": "mvs_0.005"},
+    {"case": "P2_train_1", "condition": "da3_0.005"}
+  ],
+  "steps": 100,
+  "learning_rate": 0.01,
+  "optimizer": "Adam, fresh moments, DC and higher-order SH both lr0.01",
+  "loss": "0.8 L1 + 0.2 (1-SSIM), fixed original training-view ROI",
+  "scope": "Diagnostic single-view appearance fitting from immutable 30k models. XYZ, rotation, scale, opacity, camera, Gaussian count fixed. Does not establish optimal attainable quality or multiview/generalization performance. No checkpoint export or canonical-model modification."
+}

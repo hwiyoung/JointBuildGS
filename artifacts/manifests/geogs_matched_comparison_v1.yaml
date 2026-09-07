@@ -1,0 +1,53 @@
+schema: jointbuildgs.external-task-resolver.v1
+task_id: PHD-GEOGS-MVS-PGSR-MATCHED-v1
+scientific_verdict: null
+status: PASS_MATCHED_COMPARISON_AND_BROWSER_QA
+parent: artifacts/manifests/geogs_mvs_pgsr_v1.yaml
+scope: P1/P2 DA3, MVS-only, MVS+PGSR matched raw TSDF512 and same-camera RGB/depth diagnostic
+backend:
+  local_sibling: ../JointBuildGS-artifacts
+  relative: phase-payloads/phd/geogs_mvs_pgsr_v1/PHD-GEOGS-MVS-PGSR-v1/matched_comparison_v1/attempt.uWs3ytqy
+  durability: local external storage; not a durable-backup claim
+runtime:
+  systemd_user_unit: jbgs-matched-attempt.uws3ytqy.service
+  runtime_max_seconds: 3600
+  gpu: GPU-4bdfcab8-1464-94b0-0a2f-dd9693ace2a0
+  image_id: sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e
+  original_training_interrupted: false
+  parent_dispatcher_hold: positive PID only, PID and start-time identity checked
+  resume_guards: EXIT/INT/TERM trap and systemd ExecStopPost
+preserved_failure:
+  attempts: [matched_comparison_v1/attempt.pu5g0JEC, matched_comparison_v1/attempt.BVeZA67j]
+  issue: MGP-012
+  extraction_count: 0
+  dispatcher_resumed: true
+comparison:
+  regions: [P1, P2]
+  prior: 0.005
+  protection: native
+  final_iteration: 30000
+  mesh_resolution: 512
+  surface: raw
+  frozen_evaluation_view_indices:
+    P1: [0, 12]
+    P2: [0, 1]
+  view_selection: top two fixed ROI projected areas, selected before new surface or UAS access
+  same_reference_ids: required
+viewer:
+  url: http://127.0.0.1:8910/app/matched.html
+  packet_relative: phase-payloads/phd/geogs_mvs_pgsr_v1/PHD-GEOGS-MVS-PGSR-v1/viewer_rgb_v1/matched
+  published_manifest_sha256: 908ae75971edec47826db66abfa9ea86ac6cb1dbd7e8bc6a6abd0e38adf621e8
+validation:
+  extraction_receipts: 4
+  regional_matched_evaluation_receipts: 2
+  original_dispatcher_resumed: true
+  browser_checks_passed: 137
+  browser_errors: 0
+  browser_screenshots: 11
+  browser_receipt_relative: matched_comparison_v1/browser_qa/attempt.20260915T021452Z.9Hvyqn5b/receipt.json
+  browser_receipt_sha256: dd59736e15ec1322c30902e47cd19acc224729198860cdd7e65df22f8e5902b2
+  components_receipt_relative: matched_comparison_v1/attempt.uWs3ytqy/component_diagnostic/attempt.v2/results/receipt.json
+  components_receipt_sha256: 24703ab5bafba4e7b532679852d7faa30f87d81f4e1b291600a75948a8f58dab
+documents:
+  protocol: docs/experiments/phd/geogs_mvs_pgsr_v1/MATCHED_COMPARISON_ko_v1.md
+  result: docs/experiments/phd/geogs_mvs_pgsr_v1/MATCHED_RETURN_ko_v1.md

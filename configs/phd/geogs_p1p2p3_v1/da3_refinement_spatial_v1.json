@@ -1,0 +1,30 @@
+{
+  "scientific_verdict": null,
+  "analysis_role": "POSTHOC_PAIRED_SPATIAL_ASSOCIATION_NOT_DA3_CAUSAL_EFFECT",
+  "regions": ["P1", "P2", "P3"],
+  "conditions": ["D005_Pnative", "D0005_Pnative", "D0_Pnative", "D005_Prelease", "D0005_Prelease", "D0_Prelease"],
+  "surface": "raw",
+  "mesh_res": 512,
+  "surface_sample_spacing_m": 0.1,
+  "reference_voxel_size_m": 0.1,
+  "nadir_view_direction_z_max": -0.95,
+  "projection_block_px": 2,
+  "visibility_depth_tolerance_m": 0.2,
+  "image_neighborhood_px_blocks": 3,
+  "strict_depth_range_m": 0.5,
+  "top_envelope_xy_m": 0.25,
+  "top_envelope_tolerance_m": 0.25,
+  "spatial_cell_m": 0.5,
+  "signed_target_height_bins_m": [-1000000, -2, -1, -0.5, 0.5, 1, 2, 1000000],
+  "paired_distance_thresholds_m": [0.25, 0.5, 1.0],
+  "world_z_error_display_clip_m": 3,
+  "distance_change_display_clip_m": 1,
+  "definitions": {
+    "strict_support": "Top-envelope UAS points, near-nadir training views only, regional UAS z-buffer visible, all 3x3 projected cells covered with range <=0.5m. Independent of DA3 residual magnitude.",
+    "visibility_limit": "No external occluders supplied. Strict support reduces but does not certify physical visibility; oblique views omitted from error attribution.",
+    "da3_target_height_error": "Along the actual image ray, world vertical component of (DA3 camera-Z minus reference camera-Z); does not assume camera-Z equals world height.",
+    "paired_outcome": "Same reference points: change in distance to actual extracted triangles and proximity gained/lost. Reference-conditioned recall, not subset F1.",
+    "height_ray": "Vertical first intersection of extracted surface at fixed 0.5m XY centres; top-surface diagnostic, not Gaussian correspondence or full surface quality.",
+    "causal_limit": "All completed conditions share DA3 inputs; other supervision/schedules change. Shared UAS noise may correlate input residual and output error. No percentage of final error is assigned solely to DA3."
+  }
+}

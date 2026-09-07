@@ -1,0 +1,18 @@
+{
+  "task_id": "PHD-GEOGS-RGB-CHECKPOINT-TIMELINE-v1",
+  "scientific_verdict": null,
+  "diagnostic_attempt": "attempt.Ym5F9Uzs",
+  "diagnostic_manifest_sha256": "f2b338a0da04831a9eabd3abb0a69fab27b844a8ceb9874658b2c18a1246c70b",
+  "case": "P1_train_1",
+  "large_radius_px": 100,
+  "stages": [
+    {"id": "common_anchor_8000", "iteration": 8000},
+    {"id": "da3_005_8100", "condition": "da3_0.005", "iteration": 8100},
+    {"id": "da3_0005_8100", "condition": "da3_0.0005", "iteration": 8100},
+    {"id": "da3_005_30000", "condition": "da3_0.005", "iteration": 30000},
+    {"id": "da3_0005_30000", "condition": "da3_0.0005", "iteration": 30000},
+    {"id": "mvs_005_30000", "condition": "mvs_0.005", "iteration": 30000},
+    {"id": "mvs_0005_30000", "condition": "mvs_0.0005", "iteration": 30000}
+  ],
+  "scope": "Inventory original checkpoints and sampled traces; same-camera forward renders of seven saved P1 states. MVS main runs have no intermediate8100/10000/15000 model snapshots. No optimizer or replay. Protected-mask rows are bound to each checkpoint own PLY."
+}

@@ -1,0 +1,47 @@
+{
+  "schema": "GEOGS_SFM_FINAL_RESOURCE_RETRY_POLICY_v1",
+  "task_id": "PHD-GEOGS-SFM-NO-ANCHOR-v1",
+  "scientific_verdict": null,
+  "selection_basis": "Technical completion only, fixed before reading any new SfM surface or image quality metrics",
+  "selected_predecessors": {
+    "P1": "no_anchor_sfm_memory_recovery_v2",
+    "P2": "no_anchor_sfm_memory_recovery_P2_v2",
+    "P3": "no_anchor_sfm_memory_recovery_P3_v3"
+  },
+  "retry_attempts": {
+    "P1": "no_anchor_sfm_gradient_memory_v3_P1",
+    "P2": "no_anchor_sfm_gradient_memory_v3_P2",
+    "P3": "no_anchor_sfm_gradient_memory_v3_P3"
+  },
+  "maximum_additional_fresh_training_attempts_per_region": 1,
+  "eligibility": "Selected predecessor has an actual closed native training FAIL receipt, a recorded resource failure and successful fresh-initialization first step. Its native process and GPU work must have ended. A running or successful training is not replaced.",
+  "recovery_changes": [
+    "Release previous-step parameter gradients before the next forward, after the previous optimizer and densification have finished; retain the original zero_grad before backward",
+    "Serialize the same native PLY header, field order and float32 bytes in bounded chunks",
+    "Preserve the already validated v2 CPU depth cache and pinned Adam-moment storage"
+  ],
+  "runtime_identity": {"resource_recovery_version": 3, "storage_version": 2},
+  "required_proofs": [
+    "Frozen source membership and hashes, exact v2 train.py, exact original renderer and loss/optimizer expressions",
+    "CPU native-versus-streamed PLY entire-file SHA equality including 61 fields, SH ordering, negative zero and multiple chunk boundaries",
+    "Tiny CUDA parameter, optimizer-moment and step-counter equivalence with existing gradients and growth/pruning; run on an actually available GPU before sealing training",
+    "Original scientific config and selected SfM/input bytes unchanged",
+    "Closed predecessor failure and its entire earlier attempt history bound by SHA"
+  ],
+  "fresh_initialization_only": true,
+  "checkpoint_resume_allowed": false,
+  "capture_iterations": [1, 8000, 15000, 22000, 30000],
+  "science_parameters_changed": false,
+  "resource_limits": {"gpus_per_run": 1, "cpus": 8, "ram_gib": 32, "shm_gib": 4, "same_gpu_training_export_overlap": false},
+  "existing_services_preserved": true,
+  "quality_or_reference_driven_parameter_selection": false,
+  "main_result_selection": "For each region retain the selected predecessor if it completes. If eligible for this one additional attempt, report that attempt as the fixed main producer regardless of quality or success; retain the predecessor failure and cost. Never fall back to the better-looking trajectory.",
+  "historical_prefix_policy": "contracts/sfm_prefix8000_diagnostic_v1.json remains immutable and uses its original selected predecessor trajectories. Any 8000 result from a fresh retry is a different trajectory and must not replace or be spliced into that prefix diagnostic.",
+  "stop_rule": "After this additional fresh attempt fails, perform no further fresh training retry or outcome-driven point cap, loss, protection, camera or resolution change under this experiment. Report missing main results explicitly and complete the fixed available prefix diagnostic.",
+  "limitations": [
+    "Tiny equivalence fixtures do not prove full CUDA training trajectory bitwise equality or guarantee completion",
+    "This is a resource implementation variation and its timing is reported separately",
+    "A memory failure is not evidence that Anchor is geometrically necessary or that a source-selection algorithm is superior",
+    "The SfM/no-Anchor path jointly changes initialization, stage and schedules, and remains ALS-supervised"
+  ]
+}

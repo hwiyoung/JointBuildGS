@@ -1,0 +1,17 @@
+{
+  "task_id": "PHD-GEOGS-CAUSAL-FOLLOWUP-v1",
+  "scientific_verdict": null,
+  "cached_evaluation": "sample0.1_reference0.1",
+  "selection_status": "POST_HOC_DIAGNOSTIC_FROM_PREVIOUS_SECTIONS_NOT_CONFIRMATORY",
+  "y_bin_width_m": 0.5,
+  "regions": [
+    {"id": "P1", "title": "P1 | residual elevated surface", "bounds_half_open_m": [[-8.25, -7.75], [-21.0, -5.0], [-44.0, -35.0]]},
+    {"id": "P2", "title": "P2 | surface lowered near current reference", "bounds_half_open_m": [[133.75, 134.25], [125.0, 129.0], [-30.0, -22.0]]}
+  ],
+  "candidates": [
+    {"id": "prior_mesh", "label": "Input ALS-derived prior", "color": "#19835d"},
+    {"id": "D005_Pnative.mesh_512.raw", "label": "Refined | prior weight 0.005 | 512 raw", "color": "#df8319"},
+    {"id": "D0005_Pnative.mesh_512.raw", "label": "Refined | prior weight 0.0005 | 512 raw", "color": "#087fce"}
+  ],
+  "interpretation": "All cached surface/reference samples in two independently selected 0.5 m X bands. Different local axis ranges explicitly displayed. Not mesh-plane intersections, paired errors, global change success rates or proof of actual demolition. UAS is evaluation-only."
+}

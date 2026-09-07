@@ -1,0 +1,25 @@
+ARG GEOGS_BASE_IMAGE=jointbuildgs:dev
+FROM ${GEOGS_BASE_IMAGE}
+
+LABEL org.opencontainers.image.title="JointBuildGS isolated official GeoGS diagnostic runtime"
+LABEL org.opencontainers.image.revision="db40c95c657ec03ff21c83cb99cf39f4e90247a6"
+LABEL jbgs.task_id="PHD-GEOGS-P1P2P3-v1"
+LABEL jbgs.runtime.deviation="CUDA compiler 12.1.105 instead of author-tested 12.4; renderer source unchanged"
+
+# This new environment does not alter the existing project's Python installation.
+RUN conda create -y -p /opt/geogs --override-channels -c conda-forge \
+      python=3.10.20 pip=26.1.1 setuptools=68.2.2 && conda clean -afy
+ENV PATH="/opt/geogs/bin:${PATH}"
+ENV PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1 PIP_NO_CACHE_DIR=1
+ENV TORCH_CUDA_ARCH_LIST=8.6 MAX_JOBS=2
+RUN python -m pip install torch==2.1.2 torchvision==0.16.2 torchaudio==2.1.2 \
+      --index-url https://download.pytorch.org/whl/cu121
+COPY requirements.txt /opt/geogs-source/requirements.txt
+RUN python -m pip install -r /opt/geogs-source/requirements.txt
+COPY submodules /opt/geogs-source/submodules
+RUN python -m pip install /opt/geogs-source/submodules/diff-surfel-rasterization --no-build-isolation \
+    && python -m pip install /opt/geogs-source/submodules/simple-knn --no-build-isolation
+RUN python -m pip freeze > /opt/geogs-runtime-freeze.txt
+WORKDIR /workspace/geogs
+ENTRYPOINT []
+CMD ["python", "--version"]

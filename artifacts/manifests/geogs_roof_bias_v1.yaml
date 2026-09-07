@@ -1,0 +1,14 @@
+schema_version: 1
+task_id: GEOGS-ROOF-BIAS-20260921
+scientific_verdict: null
+kind: external-author-method-diagnostic
+payload: file:../JointBuildGS-artifacts/phase-payloads/phd/geogs_roof_bias_v1/GEOGS-ROOF-BIAS-20260921
+runtime_status: status.json
+report: report.md
+source_commit: db40c95c657ec03ff21c83cb99cf39f4e90247a6
+method_source_diff: provenance/method_source.diff
+conditions: [N, B+0.25, B+0.5, B+1.0, B-1.0]
+source_scene: author-example-15-views
+source_mesh: TUM2TWIN-CityGML-recovery-not-byte-identical-author-OBJ
+independent_confirmatory_claim: false
+retention: preserve-inputs-checkpoints-logs-and-provenance

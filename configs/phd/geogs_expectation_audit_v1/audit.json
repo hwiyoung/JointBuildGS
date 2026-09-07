@@ -1,0 +1,19 @@
+{
+  "task_id": "PHD-GEOGS-EXPECTATION-AUDIT-v1",
+  "scientific_verdict": null,
+  "regions": ["P1", "P2", "P3"],
+  "p2_photo_ids": [67, 294, 656],
+  "p2_initialization_window": {
+    "bounds_half_open": [[133.75, 134.25], [90.0, 112.0], [-33.0, -30.0]],
+    "y_bin_width_m": 2.0,
+    "status": "POST_HOC_DIAGNOSTIC_FROM_EXISTING_SECTION; NOT_A_TRAINING_MASK_OR_FEATURE_GROUND_TRUTH",
+    "meaning": "Count existing samples and visibility-retained IDs near the previously inspected roof valleys; do not infer metric surface accuracy or sufficient image observability from membership."
+  },
+  "raw_post_pairs": ["D005_Pnative", "D0005_Pnative"],
+  "thresholds_m": [0.1, 0.2, 0.25, 0.5, 1.0, 2.0],
+  "setting": "sample0.1_reference0.1",
+  "new_training": 0,
+  "new_scene_renders": 0,
+  "new_mesh_extractions": 0,
+  "new_distance_queries": 0
+}

@@ -1,0 +1,20 @@
+{
+  "schema": "GEOGS_PREFIX8000_SUPPORT_TRANSITION_CONFIG_v1",
+  "scientific_verdict": null,
+  "regions": ["P1", "P2", "P3"],
+  "kinds": ["raw", "post"],
+  "optimizer_updates": 8000,
+  "baseline_condition": "D005_Pnative.anchor_512",
+  "new_condition": "SFM_noanchor_D005_Pnative_PREFIX8000.mesh_512",
+  "baseline_root": "evaluation/geometry",
+  "prefix_root": "evaluation/no_anchor_sfm_prefix8000_v1",
+  "primary_sampling": "sample0.1_reference0.1",
+  "thresholds_m": [0.1, 0.2, 0.25, 0.5, 1.0, 2.0],
+  "threshold_operator": "strictly_less_than",
+  "figure_threshold_m": 0.5,
+  "prefix_policy_sha256": "a312c4999ff590d757116dc0f4a90695020e3ac70130df24fdf6e02a0eb769f0",
+  "source_reference_identity": "original indices, XYZ dtype/order/bytes and frozen evaluation domain must be identical",
+  "interpretation": "Evaluation-only reference-to-triangle proximity transitions. A retained/new/lost hit is not a valid/obsolete structure label. Reference absence remains unobserved. No geometry, alignment, sampling, scoring, or training is recomputed.",
+  "runtime_image": "sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e",
+  "resources": {"cpus": 2, "ram_gib": 2, "gpu": false}
+}
