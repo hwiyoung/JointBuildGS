@@ -1,0 +1,86 @@
+{
+  "task_id": "PHD-WU-VALLET-SYNTHESIS-v7",
+  "scientific_verdict": null,
+  "artifact_root": "/artifacts/JointBuildGS",
+  "primary_arm": "corrected_area1",
+  "primary_evaluation_method": "Wu_area1",
+  "near_threshold_m": 0.5,
+  "far_threshold_m": 2.0,
+  "regions": [
+    {
+      "id": "P1",
+      "inputs": {
+        "update": {
+          "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/run/receipt.json",
+          "sha256": "cab2efc4bf5106a3a992f8154d29aefbad13c1604559795d36045071e45858b8"
+        },
+        "points": {
+          "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/run/corrected_area1/updated_points.npz",
+          "sha256": "cab9e584112d88643f7353595de556e417948278309972a503af9fb24f261245"
+        },
+        "common": {
+          "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/run/common.npz",
+          "sha256": "1381e9f7bcedd0ce84fca8921eb0ddecaed2c677f2ed40875e181e9428e39e86"
+        },
+        "evaluation": {
+          "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P1/evaluation.json",
+          "sha256": "ca6ed0a781588f7f9edc916d996d0f2451e21e02cf7731acb2a6090cdb931f3a"
+        },
+        "distances": {
+          "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P1/source_distances.npz",
+          "sha256": "d2037f755615c64e1ff6d7a9cbec2ed9bf01f7ad4bad5cbd743f251fc2c3eddc"
+        }
+      }
+    },
+    {
+      "id": "P2",
+      "inputs": {
+        "update": {
+          "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/run/receipt.json",
+          "sha256": "d9943101d088907dbed3091786f7dd3fab2c63377cfc16419e2d2a19873b7d48"
+        },
+        "points": {
+          "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/run/corrected_area1/updated_points.npz",
+          "sha256": "f8d052af59e8205b4553ec4979fa16c441571af4a69de42bbd222e27acfd3c26"
+        },
+        "common": {
+          "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/run/common.npz",
+          "sha256": "2044cbcbeb77dffa47e4a65a0642f7da38942edb0f3107d8ed3d548ed1a9d0dc"
+        },
+        "evaluation": {
+          "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P2/evaluation.json",
+          "sha256": "3d0e03e83b4669b938a127bb302bdbae19acbbe793eefc5d8a30332432747090"
+        },
+        "distances": {
+          "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P2/source_distances.npz",
+          "sha256": "1a29695db7d78cafce64b26072bf19f317b47d95e35460c5176bd07866cea39d"
+        }
+      }
+    },
+    {
+      "id": "P3",
+      "inputs": {
+        "update": {
+          "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/run/receipt.json",
+          "sha256": "e4d81814e13b86177bafe8cfb44bf1f22c3b3d180a679fd0a1d75a70cb099795"
+        },
+        "points": {
+          "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/run/corrected_area1/updated_points.npz",
+          "sha256": "2892bc89198ea24db5414227240dbd96b2b987ef0ee05181f3a448ba16d85387"
+        },
+        "common": {
+          "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/run/common.npz",
+          "sha256": "171efd2f3c37c5d1f6dd6a4899e36f0613496d23200ea12f97f3757d9ee37070"
+        },
+        "evaluation": {
+          "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P3/evaluation.json",
+          "sha256": "5d329aa234d62573829a23cf27a73ca590aa0099bc9bc87fd423261d81f30cd0"
+        },
+        "distances": {
+          "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P3/source_distances.npz",
+          "sha256": "a64c0e0872f9e39aebede8153975baf755ae8ace474ee08179a0b7555983f8bf"
+        }
+      }
+    }
+  ]
+}

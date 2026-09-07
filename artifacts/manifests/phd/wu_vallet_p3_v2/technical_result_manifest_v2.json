@@ -1,0 +1,2833 @@
+{
+  "schema": "jointbuildgs.phd.wu_vallet_p3.technical_package.v2",
+  "task_id": "PHD-WU-VALLET-P3-UPDATE-v2",
+  "status": "PAPER_BASED_POINT_UPDATE_COMPLETE",
+  "scientific_verdict": null,
+  "created_utc": "2026-09-07T07:13:36.687584+00:00",
+  "host_artifact_root_relative_to_repository": "../JointBuildGS-artifacts",
+  "artifact_root_env": "JBGS_ARTIFACT_ROOT",
+  "container_artifact_root": "/artifacts/JointBuildGS",
+  "git_head_at_start": "72f45bcf861c5fe6e0c70e28e0686a72e9424b17",
+  "commit_or_push_performed": false,
+  "full_author_reproduction": false,
+  "GS_executed": false,
+  "estimated_bidirectional_point_update_executed": true,
+  "completed_receipts": {
+    "acquisition": {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-ACQUISITION-v2/receipt.json",
+      "sha256": "cafa0f9b3dfaf1873f4ac6661fbc22c9ac9d86c3e8a10eda6a511ac26a563855",
+      "status": "RECORDED_GPS_PULSE_AND_SCAN_COORDINATES_RECOVERED"
+    },
+    "trajectory": {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-TRAJECTORY-v2/receipt.json",
+      "sha256": "8ad378397ac92c610dcfa8118949fd437de9c31cba4cd8b50faa12de83660bf0",
+      "status": "ESTIMATED_TRAJECTORY_DEVELOPMENT_COMPLETE"
+    },
+    "native_point_update": {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/receipt.json",
+      "sha256": "7ac18469448e84ae2be4a8b3c68f4969aca1c04fda4910cd33940774d4ecc6f4",
+      "status": "PAPER_BASED_POINT_UPDATE_COMPLETE"
+    },
+    "origin_sensitivity": {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-ORIGIN-SENSITIVITY-v2/receipt.json",
+      "sha256": "6194adc1cf336ef911e659d11174418d65bf0f9ede965803dc239ed098cfdaa5",
+      "status": "ORIGIN_ESTIMATOR_DECISION_SENSITIVITY_COMPLETE"
+    },
+    "reference_evaluation": {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-EVALUATION-v2/run/evaluation.json",
+      "sha256": "a5a505d9a44c62acf418d45794faa877bd519875fb7a3a2191239af00939c9cb",
+      "status": "REFERENCE_ONLY_POINT_UPDATE_EVALUATION_COMPLETE"
+    },
+    "viewer": {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/viewer_manifest.json",
+      "sha256": "0bc693306ac7e5861f2b7b122d3e4baff430bd0a94013ad9e2fb3b7ecab7ce09",
+      "status": "WU_VALLET_POINT_UPDATE_VIEWER_COMPLETE"
+    },
+    "browser_qa": {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-BROWSER-QA-v2-r3/browser_qa.json",
+      "sha256": "f1f479d49023c7d03f485b72e22f06db74c664346d378a4864d71ff741ffbbc5",
+      "status": "PASS"
+    }
+  },
+  "remaining_reproduction_limits": [
+    "COLMAP replaces PSMNet matching",
+    "estimated ALS optical centers if available",
+    "separate return-number sensor triangulation layers",
+    "finite sampled rays",
+    "declared distance/area/filter/aggregation choices",
+    "bounded context occlusion"
+  ],
+  "preservation": {
+    "files_checked": 310,
+    "unchanged_hash_count": 309,
+    "missing": [],
+    "changed": [
+      "docs/experiments/phd/thesis_topic_v1/04_NEXT_SESSION_HANDOFF_ko_v1.md"
+    ],
+    "handoff_entire_prior_body_preserved": true
+  },
+  "validation": {
+    "unit_tests": 35,
+    "unit_tests_status": "PASS",
+    "browser_status": "PASS",
+    "browser_checks": 571,
+    "syntax_and_whitespace": "PASS"
+  },
+  "viewer_url": "http://127.0.0.1:8898/",
+  "repo_files": [
+    {
+      "path": "configs/phd/wu_vallet_p3_v2/acquisition_v2.json",
+      "sha256": "bf365a0dfc78ff6c449c94a04082b8ae88c126779ef4198459fe0d3da83f4ed9"
+    },
+    {
+      "path": "configs/phd/wu_vallet_p3_v2/evaluation_v2.json",
+      "sha256": "96acd1c905f72526cecf4a17f277a546ab804a8648d558d83017f2ccdd9ce5e1"
+    },
+    {
+      "path": "configs/phd/wu_vallet_p3_v2/origin_sensitivity_v2.json",
+      "sha256": "97c75a60c9ed2388895e44be54a43928171667342030c6cf46fa3d253eb9f3f9"
+    },
+    {
+      "path": "configs/phd/wu_vallet_p3_v2/trajectory_v2.json",
+      "sha256": "76ca8a47193c743ac2283a0e4c6197308befd134474008aea61a5df54e87b010"
+    },
+    {
+      "path": "configs/phd/wu_vallet_p3_v2/update_v2.json",
+      "sha256": "58b84e3da9a0cfc616e21b8915c02a2ec0ca27b47a6a381b09ac079ad29d1ad6"
+    },
+    {
+      "path": "configs/phd/wu_vallet_p3_v2/viewer_v2.json",
+      "sha256": "69d465f17728ffde6369b35093c5248b47c06fbe354ed6da84750f169ab4875b"
+    },
+    {
+      "path": "docs/experiments/phd/wu_vallet_p3_v2/ISSUES.md",
+      "sha256": "c90b5b44ab31db73ca7256dc47be20a5bfe557713ba3ea1566e45dfdd2face5f"
+    },
+    {
+      "path": "docs/experiments/phd/wu_vallet_p3_v2/PROTOCOL_ko_v2.md",
+      "sha256": "36672f019a68cffbde040da90eb2482c79484614e557d77bbed2ec33c7e6bfad"
+    },
+    {
+      "path": "docs/experiments/phd/wu_vallet_p3_v2/TECHNICAL_RETURN_ko_v2.md",
+      "sha256": "ea5bebb655d439da2c5d938f8661f369c3437d986b4c310dfd9369b3c22523d5"
+    },
+    {
+      "path": "scripts/phd/wu_vallet_p3_v2/browser_qa.mjs",
+      "sha256": "a3ede0037ea71318edbe79ceb8617d111df8fb3ab24adf9ddd8ff16c68732ba5"
+    },
+    {
+      "path": "scripts/phd/wu_vallet_p3_v2/browser_qa.sh",
+      "sha256": "a8cd8f4c8148b0efa3894e95734424b04814866b0272b43c03a800a72cdae44c"
+    },
+    {
+      "path": "scripts/phd/wu_vallet_p3_v2/build_viewer.py",
+      "sha256": "14f20c79dc48ae82b3a161e74be2783bd4d5868165ff2fcfcd6efb607a143666"
+    },
+    {
+      "path": "scripts/phd/wu_vallet_p3_v2/evaluate_update.py",
+      "sha256": "37a4663d42ab8266548a9786458b1b0258b35be7364162b4e18ace5967882142"
+    },
+    {
+      "path": "scripts/phd/wu_vallet_p3_v2/origin_sensitivity.py",
+      "sha256": "af779d019204d615b8f20cef357a6116273d9fc261c0b7a7c9adf063e9746250"
+    },
+    {
+      "path": "scripts/phd/wu_vallet_p3_v2/recover_acquisition.py",
+      "sha256": "7f5d0f78623cd9e75a9e23cb4961de2be1afca29f60fe13918148b92bda154c5"
+    },
+    {
+      "path": "scripts/phd/wu_vallet_p3_v2/recover_trajectory.py",
+      "sha256": "3b8d522b983d1f1a20b679373d9034f806717cebd5e4ba6622d3b071b1c445f6"
+    },
+    {
+      "path": "scripts/phd/wu_vallet_p3_v2/run_docker.sh",
+      "sha256": "98b4dd93fee959a21437a6eb79940ae4e2e2aa0e99437090d042cd4d0c76f5a9"
+    },
+    {
+      "path": "scripts/phd/wu_vallet_p3_v2/seal_package.py",
+      "sha256": "9cdf159d56fe3f09ed12e75915bd23a1e137b8d120c7bdc9cb842fa5e90bdae7"
+    },
+    {
+      "path": "scripts/phd/wu_vallet_p3_v2/serve_viewer.sh",
+      "sha256": "32e7f5074f2f60e3f93d7ae915a2ce1800589ae06ab6683c6ad6bd850c8d6c62"
+    },
+    {
+      "path": "scripts/phd/wu_vallet_p3_v2/update_points.py",
+      "sha256": "553eab83f3049a6e07d1a36efc00ecaa77828a13c245cb104b9ddb7eef94a93e"
+    },
+    {
+      "path": "scripts/phd/wu_vallet_p3_v2/validate.sh",
+      "sha256": "a5a892192f2a799b253205d351bfaf2b9f1ab3802c7a1160478f6646df25578e"
+    },
+    {
+      "path": "src/phd/wu_vallet_p3_v2/acquisition.py",
+      "sha256": "1cbf9e57acb7184430343bee712eec11ec531fadd1dfe93080ee17c720f0e12b"
+    },
+    {
+      "path": "src/phd/wu_vallet_p3_v2/ray_runtime.py",
+      "sha256": "3d2a6bbfd5968c3b523085e8bc39d20a9eea3db3bbf41a08232a3aa206e152ba"
+    },
+    {
+      "path": "src/phd/wu_vallet_p3_v2/trajectory.py",
+      "sha256": "e09b671d36d3361efa993166d3c69fc09e63d6de7be60d369ec56dffb5db05e4"
+    },
+    {
+      "path": "tests/phd/test_wu_vallet_acquisition_v2.py",
+      "sha256": "4aefd1eb23352dedd420c64441ecf4b5d7967772810aadd33e335df3b0af473b"
+    },
+    {
+      "path": "tests/phd/test_wu_vallet_ray_runtime_v2.py",
+      "sha256": "eb623f772d53a47c519dadfe6831718f6acec4e666d4d69d3f21d0866d200c5d"
+    },
+    {
+      "path": "tests/phd/test_wu_vallet_trajectory_v2.py",
+      "sha256": "914dda8e4f7292925f2f350f65511715e8a68d6f0f47b699b872a97dfd6a6677"
+    },
+    {
+      "path": "docs/experiments/phd/thesis_topic_v1/04_NEXT_SESSION_HANDOFF_ko_v1.md",
+      "sha256": "0ed4830085ca38b1d052742b083475baf2079b1d99915d7b4d0f6450ee9902d4"
+    }
+  ],
+  "payloads": [
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-ACQUISITION-v2/STARTED.json",
+      "bytes": 126,
+      "sha256": "1d1198647797048905ae3c73d1288d8f604a4a8e8dde9dc5d47d62bb2a3c875f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-ACQUISITION-v2/acquisition.npz",
+      "bytes": 68775920,
+      "sha256": "5e5edb4b94996cfbd55aa9c1b5b6c6f0502ac1b48a65c6d50b93e153f30adfe4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-ACQUISITION-v2/acquisition.py",
+      "bytes": 5732,
+      "sha256": "1cbf9e57acb7184430343bee712eec11ec531fadd1dfe93080ee17c720f0e12b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-ACQUISITION-v2/additional_validation.json",
+      "bytes": 1949,
+      "sha256": "0810351d762aa8abf116747043da2156d0c7537e5a080d470709caba603f37d0"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-ACQUISITION-v2/config.json",
+      "bytes": 930,
+      "sha256": "bf365a0dfc78ff6c449c94a04082b8ae88c126779ef4198459fe0d3da83f4ed9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-ACQUISITION-v2/receipt.json",
+      "bytes": 15773,
+      "sha256": "cafa0f9b3dfaf1873f4ac6661fbc22c9ac9d86c3e8a10eda6a511ac26a563855"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-ACQUISITION-v2/recover_acquisition.py",
+      "bytes": 13017,
+      "sha256": "7f5d0f78623cd9e75a9e23cb4961de2be1afca29f60fe13918148b92bda154c5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-BROWSER-QA-v2/FAILED.json",
+      "bytes": 142061,
+      "sha256": "7fbaddf21a260e56753860a6b2f27213e35fc491f3e86b7b7b32e68d66704743"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-BROWSER-QA-v2/browser_qa_source.mjs",
+      "bytes": 13883,
+      "sha256": "a99a032c5af2dc6100f5ca7e0bdb0acd8175207444e5c25e61086991f7c81259"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-BROWSER-QA-v2/browser_qa_wrapper.sh",
+      "bytes": 1568,
+      "sha256": "c7569d784a63307a27ff54051fc3853003f3354f8041c9908a0f8334a3581820"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-BROWSER-QA-v2-r2/browser_qa.json",
+      "bytes": 99896,
+      "sha256": "fed1d629bdedd0c1f78de2e17662c31a47f8bc7bdf0c0434312aed81757a38a5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-BROWSER-QA-v2-r2/browser_qa_source.mjs",
+      "bytes": 14093,
+      "sha256": "9dd31f1330013b8f5f3b3c8000db02aab3ed4f66fd50b6101948523c9aa96ea0"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-BROWSER-QA-v2-r2/browser_qa_wrapper.sh",
+      "bytes": 1639,
+      "sha256": "a8cd8f4c8148b0efa3894e95734424b04814866b0272b43c03a800a72cdae44c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-BROWSER-QA-v2-r2/desktop_maps_sections.png",
+      "bytes": 613389,
+      "sha256": "0c09a10dfc990dbf5be4a9161f1ead8c00b8912860ac35d70656bd759331c5ad"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-BROWSER-QA-v2-r2/desktop_native_classification.png",
+      "bytes": 259037,
+      "sha256": "bb6311b545fddc7a255bf1c70f2b287d939e472f6a2b5d13418fed7993888524"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-BROWSER-QA-v2-r2/desktop_point_update.png",
+      "bytes": 229200,
+      "sha256": "8ca4520e749fa1f6192a0cd2795e7168c96bda91a4c37f5e6d348a6965495c60"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-BROWSER-QA-v2-r2/desktop_top_view.png",
+      "bytes": 265599,
+      "sha256": "9cea46c38ce0ae43c3da40f2741eafadfeb174670ebe2c9be5ecee58486ffa90"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-BROWSER-QA-v2-r2/mobile_overview.png",
+      "bytes": 87068,
+      "sha256": "4225d48e327e23a33ef1980c681a3b58f96b6d213beab8ddea9b9e7a2784ed58"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-BROWSER-QA-v2-r2/mobile_point_scene.png",
+      "bytes": 99251,
+      "sha256": "67224ad08eb6a1c1debafeb66d59ecc0556f7dd11af60f5df48a2e6cd2243ca7"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-BROWSER-QA-v2-r2/mobile_sensitivity_table.png",
+      "bytes": 78624,
+      "sha256": "29fb42cff069b8f2aa1e6a51ea995d63273e77c564184c26d39c4dc9ca7ebddf"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-BROWSER-QA-v2-r3/browser_qa.json",
+      "bytes": 100886,
+      "sha256": "f1f479d49023c7d03f485b72e22f06db74c664346d378a4864d71ff741ffbbc5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-BROWSER-QA-v2-r3/browser_qa_source.mjs",
+      "bytes": 14923,
+      "sha256": "a3ede0037ea71318edbe79ceb8617d111df8fb3ab24adf9ddd8ff16c68732ba5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-BROWSER-QA-v2-r3/browser_qa_wrapper.sh",
+      "bytes": 1639,
+      "sha256": "a8cd8f4c8148b0efa3894e95734424b04814866b0272b43c03a800a72cdae44c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-BROWSER-QA-v2-r3/desktop_maps_sections.png",
+      "bytes": 613322,
+      "sha256": "77c587875e2057df1ba008affa7eac0a40e970b3589b1d3caa4e58b6e58d0502"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-BROWSER-QA-v2-r3/desktop_native_classification.png",
+      "bytes": 258788,
+      "sha256": "ebacaae2824ab9c7b2fc4c027be8e9f58142f64ffc28223a674ae69d4d3be275"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-BROWSER-QA-v2-r3/desktop_point_update.png",
+      "bytes": 229315,
+      "sha256": "f7e5c440cd188c4b21c650caa8419cd11f1c95c2e3013c988fc1db66f82215ce"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-BROWSER-QA-v2-r3/desktop_top_view.png",
+      "bytes": 265345,
+      "sha256": "1134e6c993ec66edd29ce1c5d36b4a2e2e8db88625c6456ee08c9c7054b332e9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-BROWSER-QA-v2-r3/mobile_overview.png",
+      "bytes": 86774,
+      "sha256": "452720a30af1a9159bc34366f5a6c46715871ed0a5e1913e0a11fc8695941612"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-BROWSER-QA-v2-r3/mobile_point_scene.png",
+      "bytes": 82634,
+      "sha256": "2299ef49999f12a55b99d9467b75edda07a94f65a0a4e722cd23a391ae3f6d8c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-BROWSER-QA-v2-r3/mobile_sensitivity_table.png",
+      "bytes": 85942,
+      "sha256": "ab2eafb00a7dcff8e5e6e3f409953fccbdc75b0807404107dcf25142d7fee6b4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-EVALUATION-v2/run/config.json",
+      "bytes": 960,
+      "sha256": "af01edb9bbae7677374eaeb2925e6fa4f3820397284d9c3d505ec69b01aa21d4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-EVALUATION-v2/run/cross_sections.png",
+      "bytes": 174058,
+      "sha256": "c33b022fedaf82322dabb2ea3dd17835ea2f1617cfe6e6a07ef91437106e8bde"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-EVALUATION-v2/run/evaluation.json",
+      "bytes": 66624,
+      "sha256": "a5a505d9a44c62acf418d45794faa877bd519875fb7a3a2191239af00939c9cb"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-EVALUATION-v2/run/height_comparison.png",
+      "bytes": 197699,
+      "sha256": "fd78ec2bfe737b032dc17ed2c4de51a37f983c4a7a2f9c11ad3612c9adeda7d7"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-EVALUATION-v2.console.log",
+      "bytes": 699,
+      "sha256": "ce97761b98705bd99f6cfc5a33c01b2a3ebfdb0c9f8c5887e1f37d1e3050065f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-EVALUATION-v2_source/SOURCE_MANIFEST.json",
+      "bytes": 287944,
+      "sha256": "5f54baa18d87061789930c6de74259ea4fe0081bb21feddd65b334e9e0c67e8c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-ORIGIN-SENSITIVITY-v2/STARTED.json",
+      "bytes": 133,
+      "sha256": "f9fc676554440fb789874023587343b2616044569e2093e664bed4978096bd14"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-ORIGIN-SENSITIVITY-v2/config.json",
+      "bytes": 1506,
+      "sha256": "97c75a60c9ed2388895e44be54a43928171667342030c6cf46fa3d253eb9f3f9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-ORIGIN-SENSITIVITY-v2/main_with_sep2_pad010_forward_support/labels.npz",
+      "bytes": 384344,
+      "sha256": "a34bec38b92a9dc3588c1e2181d540abb23dd27ebf0bca044865f661e45a0bec"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-ORIGIN-SENSITIVITY-v2/main_with_sep2_pad010_forward_support/receipt.json",
+      "bytes": 3775,
+      "sha256": "decf435e4d3065dc5e29501f1814dfbd3639f286de3cbb24c0000d4609a0f5fe"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-ORIGIN-SENSITIVITY-v2/origin_sensitivity.py",
+      "bytes": 13284,
+      "sha256": "af779d019204d615b8f20cef357a6116273d9fc261c0b7a7c9adf063e9746250"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-ORIGIN-SENSITIVITY-v2/receipt.json",
+      "bytes": 40025,
+      "sha256": "6194adc1cf336ef911e659d11174418d65bf0f9ede965803dc239ed098cfdaa5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-ORIGIN-SENSITIVITY-v2/sep1_pad025_forward/labels.npz",
+      "bytes": 384419,
+      "sha256": "167615fdc80f45d3105b1d4f5f23d5afd4e98da28981b37cf08a64ba157220df"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-ORIGIN-SENSITIVITY-v2/sep1_pad025_forward/receipt.json",
+      "bytes": 3924,
+      "sha256": "36d57967cadfbf909d610474218b10cd86ede7cb93cdbf7aecaef8bfca6324f8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-ORIGIN-SENSITIVITY-v2/sep2_pad010_forward/labels.npz",
+      "bytes": 384465,
+      "sha256": "0e91de51a54706687e6c44355214088633c1adc06c5234f660a2af0252a4ea23"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-ORIGIN-SENSITIVITY-v2/sep2_pad010_forward/receipt.json",
+      "bytes": 3938,
+      "sha256": "45096d942bb4e812e7ed5b52aa804f85d02f93ca069edf476f9f03fff8c2fa75"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-ORIGIN-SENSITIVITY-v2/sep2_pad025_forward/labels.npz",
+      "bytes": 384344,
+      "sha256": "a34bec38b92a9dc3588c1e2181d540abb23dd27ebf0bca044865f661e45a0bec"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-ORIGIN-SENSITIVITY-v2/sep2_pad025_forward/receipt.json",
+      "bytes": 3784,
+      "sha256": "158e200abf3898d7602094d3a563b3cc2ab59dd5e633c7d4f5af8f857ee0d610"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-ORIGIN-SENSITIVITY-v2/sep2_pad025_reverse/labels.npz",
+      "bytes": 384404,
+      "sha256": "e7f5e7f2a35993570cd32352387cf40692cdef09b7aa7ac37defc6996e37304c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-ORIGIN-SENSITIVITY-v2/sep2_pad025_reverse/receipt.json",
+      "bytes": 3926,
+      "sha256": "0037c2318ff25c358e4af2fe0258a7dfaf58c509e668b22cf340618ff110eaa2"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-ORIGIN-SENSITIVITY-v2/sep5_pad025_forward/labels.npz",
+      "bytes": 384420,
+      "sha256": "b887b85b02d82fef37332c75e276d83426db6aa182ae2ab3f4c195bfe2fd64d5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-ORIGIN-SENSITIVITY-v2/sep5_pad025_forward/receipt.json",
+      "bytes": 3923,
+      "sha256": "d4954fe437223a541425157b731229b6bd941e4701275a3d2b43ae9d89484d5f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-ORIGIN-SENSITIVITY-v2_source/SOURCE_MANIFEST.json",
+      "bytes": 588,
+      "sha256": "69e0c8dcabbf08089d4c01e16b1877ec54d089e339caf690ba053969cfc98e9f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-TRAJECTORY-v2/STARTED.json",
+      "bytes": 125,
+      "sha256": "51d821f5c0b656c7ff9c2b2519313686443a24bf8806b32519d14c2e516cf886"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-TRAJECTORY-v2/config.json",
+      "bytes": 2682,
+      "sha256": "76ca8a47193c743ac2283a0e4c6197308befd134474008aea61a5df54e87b010"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-TRAJECTORY-v2/estimated_origins.npz",
+      "bytes": 23114857,
+      "sha256": "aa90db5e07c547f598e1e249658c53ee73b528ba3eb2840bf26174cbe9b26f20"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-TRAJECTORY-v2/fit_pulse_membership.npz",
+      "bytes": 48769,
+      "sha256": "74a4d75deebf8e188fcf767a3d7de6a8d289b20962568f120743482f8e3e9ba8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-TRAJECTORY-v2/fits.json",
+      "bytes": 84531,
+      "sha256": "affdfd0c8d1108290ffab8464aacef1f357a925f807b1da69f624eee48e4f789"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-TRAJECTORY-v2/receipt.json",
+      "bytes": 9706,
+      "sha256": "8ad378397ac92c610dcfa8118949fd437de9c31cba4cd8b50faa12de83660bf0"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-TRAJECTORY-v2/recover_trajectory.py",
+      "bytes": 12741,
+      "sha256": "3b8d522b983d1f1a20b679373d9034f806717cebd5e4ba6622d3b071b1c445f6"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-TRAJECTORY-v2/trajectory.py",
+      "bytes": 17291,
+      "sha256": "e09b671d36d3361efa993166d3c69fc09e63d6de7be60d369ec56dffb5db05e4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-TRAJECTORY-v2/unit_tests.log",
+      "bytes": 2265,
+      "sha256": "cba0062de4ea2c7692147b5c14f576d6dd9bb468856417a703a7e6025f15c085"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-TRAJECTORY-v2/validation_receipt.json",
+      "bytes": 635,
+      "sha256": "d0d6c52c623a729d13c5a7612d10c8010cc94d0964703d32ade10d85d412d82a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-TRAJECTORY-v2_source/SOURCE_MANIFEST.json",
+      "bytes": 472,
+      "sha256": "744e148f94b90f86da963ec05e1a0337bbddc25e3c56783a905596a446a65742"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/STARTED.json",
+      "bytes": 33,
+      "sha256": "a0e4c3db695f6a9efc8b0347b4a1889190c002a351a00fd4f2d5f9623c82d640"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/TRAJECTORY_SCOPE.json",
+      "bytes": 219,
+      "sha256": "5d27008ced89e466542785ce4539e13c5e99ba32f20a350e71aa1df97bfe3d14"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/common.npz",
+      "bytes": 4112724,
+      "sha256": "b0c487158b2b67097eeaf95a208b5439a5b5c4ead95126369f3ead87efeabbb8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/config.json",
+      "bytes": 2318,
+      "sha256": "3a41cddd3c8f2ad8205bb2e8a12862eacd42710a75245c1afd0c05a34eaf876c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/estimated_bidir_d0.1_a0/face_decisions.npz",
+      "bytes": 10255600,
+      "sha256": "dd98bfec17e13b9339641ad200ae92cd063b6fd28a383343b7aea6005385b319"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/estimated_bidir_d0.1_a0/result.json",
+      "bytes": 5725,
+      "sha256": "8f3726b7f72ef68588a173198b0bccb91576f829379a107537643b0dab7b9a1d"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/estimated_bidir_d0.1_a0/updated_points.npz",
+      "bytes": 2276260,
+      "sha256": "34558abb336279e28cb6deb31cd914cab90e55ee915a5961ce9716aa895bc1ae"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/estimated_bidir_d0.1_a0/updated_points.ply",
+      "bytes": 2403066,
+      "sha256": "1b85328750087654848d89af4ff42a65923f7ebb3e5fddd2fb52061724d934a7"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/estimated_bidir_d0.1_a1/face_decisions.npz",
+      "bytes": 10196123,
+      "sha256": "25550a83fc38b7c6ce7fcb6a0ca94624f29a752d83e2c0292e5953858f3fcabd"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/estimated_bidir_d0.1_a1/result.json",
+      "bytes": 5728,
+      "sha256": "fcd48831d8ac8702c4d6f7da135f1c57f8fb14ca5f2a7f92084a5194600af63e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/estimated_bidir_d0.1_a1/updated_points.npz",
+      "bytes": 2332039,
+      "sha256": "58420938d4b16fc6bdb5567184569a30e5b7a498ce75c945565bbeca20120aa3"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/estimated_bidir_d0.1_a1/updated_points.ply",
+      "bytes": 2542417,
+      "sha256": "91b9ae4e2fbfff61ba1cf8bdf365c4759e390151016c9743e5d93812120b6e1e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/estimated_bidir_d0.3_a0/face_decisions.npz",
+      "bytes": 7325883,
+      "sha256": "31efc396dcce9ef08247979248cbea3dc8a66393c60162fb3a72aa88f7940118"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/estimated_bidir_d0.3_a0/result.json",
+      "bytes": 5729,
+      "sha256": "a8e1cc173fde7ef5757ae88190eafa4881ec13a3496b616545aebdcdcc63511c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/estimated_bidir_d0.3_a0/updated_points.npz",
+      "bytes": 1713830,
+      "sha256": "9b5db6c815b00bdc1c88b812e2bb83a1031509b3cd35eed7f01a3927520308a5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/estimated_bidir_d0.3_a0/updated_points.ply",
+      "bytes": 1909016,
+      "sha256": "9e16bae7ab0926b50e5c765d32edf189a9c7f610e0a471cc299920f691a1054b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/estimated_bidir_d0.3_a1/face_decisions.npz",
+      "bytes": 7296725,
+      "sha256": "40c433b5b88115aa80389fee92741149dde31fb52075006ac192a776e3c6957b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/estimated_bidir_d0.3_a1/result.json",
+      "bytes": 5728,
+      "sha256": "066af8115bde2524898e103c42068546f9455da8dd7f2bea673837d2a692285c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/estimated_bidir_d0.3_a1/updated_points.npz",
+      "bytes": 1759832,
+      "sha256": "f1ca89029f6c7575392fc8f2846a0b2d1a8933586f932c926f3f3e48f37cb4bc"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/estimated_bidir_d0.3_a1/updated_points.ply",
+      "bytes": 2021016,
+      "sha256": "513b260d2f8d89c91560c4ea39327a6e796bdbe4135315cd70db7a13de1b92a0"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/estimated_bidir_d0.6_a0/face_decisions.npz",
+      "bytes": 5950041,
+      "sha256": "bc2eb08e9661a2f575840c1e54912ce236968708748d44ae2fc4746b7d2a94fc"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/estimated_bidir_d0.6_a0/result.json",
+      "bytes": 5726,
+      "sha256": "60ac2e4ec573e67984fe55776ee2062782dfd0ef76c6411a8d01a952302b6e80"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/estimated_bidir_d0.6_a0/updated_points.npz",
+      "bytes": 1363516,
+      "sha256": "aa017108ed3aa3474da374bb5d8779bc0797a5cff4afff4c2f8c5497f91fa19a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/estimated_bidir_d0.6_a0/updated_points.ply",
+      "bytes": 1615291,
+      "sha256": "cfb2dd60b61c64bd388ff457b0820b7d6bf3a33bb18bb4a5fed67ab513a66702"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/estimated_bidir_d0.6_a1/face_decisions.npz",
+      "bytes": 5940827,
+      "sha256": "156657da05df41189c5a9ed7f9661edc23ba322360f990e8a340e96178eff983"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/estimated_bidir_d0.6_a1/result.json",
+      "bytes": 5726,
+      "sha256": "ab4cdbc5a588fe304b0ce2550c057385351204ee4b0947e653686d6cba93b6a8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/estimated_bidir_d0.6_a1/updated_points.npz",
+      "bytes": 1398152,
+      "sha256": "7148c2a34d33d061780a973e49324dea0ea85e9efec717261a202d15f408206f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/estimated_bidir_d0.6_a1/updated_points.ply",
+      "bytes": 1695416,
+      "sha256": "fec8699073b6c2f834e66778a2c7f441605a1265e8bc9d7973c3b915fa13aea8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/image_direction_d0.1_a0/face_decisions.npz",
+      "bytes": 9242258,
+      "sha256": "92b135c539b4aa6b9197f9f65ea182b205854d7984d1102b1ad44f1fa346f361"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/image_direction_d0.1_a0/result.json",
+      "bytes": 5529,
+      "sha256": "d84b6e95afb8718302eaf6d89050d242c12e341739de90cf5a458f60fff385d3"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/image_direction_d0.1_a0/updated_points.npz",
+      "bytes": 2351871,
+      "sha256": "5da66a3cc8bb2a29e88361fa151aef8678a043142598298d2893a4866bf11cbe"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/image_direction_d0.1_a0/updated_points.ply",
+      "bytes": 2583842,
+      "sha256": "e8c62f1ebc94976471bf7b86731851e61ceb9925c453c6c9ab6ac9775399e749"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/image_direction_d0.1_a1/face_decisions.npz",
+      "bytes": 9220606,
+      "sha256": "869f1a7e5006abe519b35c3caec44f068e2c1ad8c0720cf50b412f74a13cf403"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/image_direction_d0.1_a1/result.json",
+      "bytes": 5527,
+      "sha256": "0d0a898b329ea84b5325e6d760e33e08e6171c1876e5c506654f04e6cdfcb474"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/image_direction_d0.1_a1/updated_points.npz",
+      "bytes": 2392283,
+      "sha256": "bcbbe87b911fa211f0ec3e3a920553be0ebd74e199832f91427d40ad58af87ab"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/image_direction_d0.1_a1/updated_points.ply",
+      "bytes": 2676292,
+      "sha256": "10a816400b193e8daabd2ec270c50e3ae41dcc96e2ede524b8c9a2cf7b2d039c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/image_direction_d0.3_a0/face_decisions.npz",
+      "bytes": 6792882,
+      "sha256": "1eaf598ac747c8533dacbae36d533c24ee993117b898c76da85f80966c0dcf56"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/image_direction_d0.3_a0/result.json",
+      "bytes": 5527,
+      "sha256": "477eb7a1fb42099b8cf8569a3e5072914570203ad6da9a9d5253fa78d0ad3372"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/image_direction_d0.3_a0/updated_points.npz",
+      "bytes": 1765318,
+      "sha256": "aa819430426232c53dbb802cd60ed257b0c42be7f40c8dee7b8edee8acda6c8b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/image_direction_d0.3_a0/updated_points.ply",
+      "bytes": 2034541,
+      "sha256": "377bed965b2b688ddfc699c06e15dcc2b9f55312f290ec9e443ecd2163ca691f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/image_direction_d0.3_a1/face_decisions.npz",
+      "bytes": 6785450,
+      "sha256": "11e97b54251bce92bbf61e1b516b6769d110ba5779587c38f9982780bcbe9f57"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/image_direction_d0.3_a1/result.json",
+      "bytes": 5527,
+      "sha256": "b474f12ca9869c6a86843e62c4788cf891e1de4b523d429d0458dc97a31f93a2"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/image_direction_d0.3_a1/updated_points.npz",
+      "bytes": 1788672,
+      "sha256": "35a267b808d0d4d5fe8ed5982963daf51d5b9b7477d640530acb0310610cf707"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/image_direction_d0.3_a1/updated_points.ply",
+      "bytes": 2088916,
+      "sha256": "6e09aa56c2e6bda193b4313f84a23828885192deb568963eebf3ce3f0828cc90"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/image_direction_d0.6_a0/face_decisions.npz",
+      "bytes": 5658459,
+      "sha256": "1c71c66cb48ec5b62ec44f6ab859806d4c6759cda3e092ec0fbfa6cae3fc4f58"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/image_direction_d0.6_a0/result.json",
+      "bytes": 5528,
+      "sha256": "0d3f0584622a6ee6a6b1b56b6335f1fa3c7da1567541ac55ee90072bb1af0cfb"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/image_direction_d0.6_a0/updated_points.npz",
+      "bytes": 1396807,
+      "sha256": "d1cf1cccdd4ddc322c4882f635cf1046546a4ef6d51ad06cdea0b6cade35c540"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/image_direction_d0.6_a0/updated_points.ply",
+      "bytes": 1696966,
+      "sha256": "889b25264f149ba3bab91db779701b7807c97fbdce065d0343a875c0f33dd1da"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/image_direction_d0.6_a1/face_decisions.npz",
+      "bytes": 5657783,
+      "sha256": "c3687ff936684f299f69c161cb9b348d522b64b4bfc9aa2c5f6ff023da2e59fc"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/image_direction_d0.6_a1/result.json",
+      "bytes": 5528,
+      "sha256": "45240ffc10822a2c7d80705e777f592d528f77c7c01e0180b47f480f86ac6b35"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/image_direction_d0.6_a1/updated_points.npz",
+      "bytes": 1411103,
+      "sha256": "68d520efb933c1c0257f49bd93028e450d39f0fc6a221b5985c0f030460d3d0f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/image_direction_d0.6_a1/updated_points.ply",
+      "bytes": 1729441,
+      "sha256": "7eb2599814e3b95b7e8a330c916cc58e757450bfe9592b146be7fd43e3a74936"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/mesh_receipt.json",
+      "bytes": 3808,
+      "sha256": "5371b4309769d88fe80bcac8ee0d4ec16caa7561d86bbb88db52acf141dc311f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/meshes.npz",
+      "bytes": 25856190,
+      "sha256": "bfc7a14cce19e270ddb051a52fd45a41f4a5ea4b76fa4389eca1a8b16a376d1c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/receipt.json",
+      "bytes": 78963,
+      "sha256": "7ac18469448e84ae2be4a8b3c68f4969aca1c04fda4910cd33940774d4ecc6f4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2.console.log",
+      "bytes": 4660,
+      "sha256": "3a1da072a263138849ca9b1ca9a70fcaa8151687f818c39b7d29278ca00c8b70"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2_source/SOURCE_MANIFEST.json",
+      "bytes": 287713,
+      "sha256": "ae1c09a330605d10dc16d0c76daa8efc18438f30cfa8fbbe8cb841a4291d717e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VALIDATION-v2/unit_tests.log",
+      "bytes": 6322,
+      "sha256": "5c6eec6a52fcc6f39a7065aec2c5f3e97faa8dcf8e99440ef789cf6f57009a2d"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.1_a0/new_keep.bin",
+      "bytes": 48526,
+      "sha256": "dde009b756f56960d50c1518172fe694474095ea7b9e00657311cfef513cf205"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.1_a0/new_labels.bin",
+      "bytes": 48526,
+      "sha256": "ef8e8100eb45ec0672023cde091ccb1d055bc64f2feb54f6648e073dcd7cba78"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.1_a0/new_section_x_keep.bin",
+      "bytes": 1688,
+      "sha256": "32ebe911fefe0656b32ccdd1223d6f42646bbe6440803b673fbf2fb800b2806a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.1_a0/new_section_x_labels.bin",
+      "bytes": 1688,
+      "sha256": "83effbdc7133c8c0077116345302ad6a8f3861d0e14483ce0ab1f6767690eae2"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.1_a0/new_section_y_keep.bin",
+      "bytes": 1426,
+      "sha256": "0beb8cd692b60edec18c5096f371a1b18d78061ae10d86000686d0e46ea0c306"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.1_a0/new_section_y_labels.bin",
+      "bytes": 1426,
+      "sha256": "d7160a478cb03873db97016d489ed35fd9107ed24782ee64b0ea962b230055f8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.1_a0/old_keep.bin",
+      "bytes": 52762,
+      "sha256": "e3b1d8bca0d9f59b29ab9bac503795e57af349f5578b20dc54362eac314bb03b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.1_a0/old_labels.bin",
+      "bytes": 52762,
+      "sha256": "9c2dee9d4ef8a33b114d4645cc4cb6f3f66cd375937804f31caebcf371c5335a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.1_a0/old_section_x_keep.bin",
+      "bytes": 459,
+      "sha256": "a286bc6b5fe8316630c242eb97c280aeb1344a25783d6978f5e474dc1019f4f5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.1_a0/old_section_x_labels.bin",
+      "bytes": 459,
+      "sha256": "95000ca7b20a52bf2cbc61b53011bfb156ccb7045f8d72067cfefabd78abcad4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.1_a0/old_section_y_keep.bin",
+      "bytes": 348,
+      "sha256": "3098d033fb25e3b0976f35672bfc8cd049f2f1d7f12afc4c01e663646360d157"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.1_a0/old_section_y_labels.bin",
+      "bytes": 348,
+      "sha256": "998fe704b321c9508ecf64d99bbc9273faa166738c17d122c91732edb0c8b74c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.1_a1/new_keep.bin",
+      "bytes": 48526,
+      "sha256": "dde009b756f56960d50c1518172fe694474095ea7b9e00657311cfef513cf205"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.1_a1/new_labels.bin",
+      "bytes": 48526,
+      "sha256": "9cb5ca7a9657e16f1f7f505646e0a31af65f1eeb2162414fd6e22a56d59b973b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.1_a1/new_section_x_keep.bin",
+      "bytes": 1688,
+      "sha256": "32ebe911fefe0656b32ccdd1223d6f42646bbe6440803b673fbf2fb800b2806a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.1_a1/new_section_x_labels.bin",
+      "bytes": 1688,
+      "sha256": "3ffeaf9e4e8d6d261984c3afc825491f1fee16628b6338fc4a0eda27f31e39f2"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.1_a1/new_section_y_keep.bin",
+      "bytes": 1426,
+      "sha256": "0beb8cd692b60edec18c5096f371a1b18d78061ae10d86000686d0e46ea0c306"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.1_a1/new_section_y_labels.bin",
+      "bytes": 1426,
+      "sha256": "e3cf72c88c876ff4a9131926d49f9afb67b4d123bb6017022619397e5a84c23e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.1_a1/old_keep.bin",
+      "bytes": 52762,
+      "sha256": "6d9404869de7f69b3eedd20e13c3c401d696297c6b4566bb38c1e10128a79c13"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.1_a1/old_labels.bin",
+      "bytes": 52762,
+      "sha256": "4261554bdd8360452b8aeb3c5c9b3afa0751b82da150ec7a61960e6e879ef159"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.1_a1/old_section_x_keep.bin",
+      "bytes": 459,
+      "sha256": "de3dfa6000db5c94bc402d1845a84b4b061768a60ed3bcbdbcb5eee05d0ee6fc"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.1_a1/old_section_x_labels.bin",
+      "bytes": 459,
+      "sha256": "d228d9343e369bc727060c9b72c124e4db44ddc59512755c74fc36a310e7a09f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.1_a1/old_section_y_keep.bin",
+      "bytes": 348,
+      "sha256": "9578842c9a366dbf487ba7bfa7727bc471f031acca811eb3f38e4146bcc8adc3"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.1_a1/old_section_y_labels.bin",
+      "bytes": 348,
+      "sha256": "30432b139843749c45888524d202dca7ef2b22f91a6c535c622787f44470371f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.3_a0/new_keep.bin",
+      "bytes": 48526,
+      "sha256": "e758c4f93b050e41a7878f12469103858cb1dde8206b30636ab35fddf018801b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.3_a0/new_labels.bin",
+      "bytes": 48526,
+      "sha256": "d3fa7890fa0dcc788cc3519e84e2b130ed29b5bd878d68da4f2ae7f67cf4940a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.3_a0/new_section_x_keep.bin",
+      "bytes": 1688,
+      "sha256": "78f9ab4fa10b5727344e71de7a114d0f7a20dedc7031b74cce0c2949d09ff9b8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.3_a0/new_section_x_labels.bin",
+      "bytes": 1688,
+      "sha256": "2229ff36847e41a8a7d5a25dc3ec560b2efb5d8843dca143d4a274b3a6a6e9b1"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.3_a0/new_section_y_keep.bin",
+      "bytes": 1426,
+      "sha256": "57459203d15b16e2c830464977ea02bdbf925cfd784ff3fcbc46584ff89c6675"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.3_a0/new_section_y_labels.bin",
+      "bytes": 1426,
+      "sha256": "0681b87a5789026103e5fc25773d3902c0a0d12ce73161319c4191dd8b602dda"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.3_a0/old_keep.bin",
+      "bytes": 52762,
+      "sha256": "2a3ea12e2d277cb2b55965eabdeb5027692ae9f913c194047567146abf1c235c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.3_a0/old_labels.bin",
+      "bytes": 52762,
+      "sha256": "992485899df1881c68153501257f52bc52b53b9a9dba539962adfe5ee59e4f46"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.3_a0/old_section_x_keep.bin",
+      "bytes": 459,
+      "sha256": "ea3b2f65d81e130d9c1a6541e21630a040a4f250c47073c81baf9d870829a74d"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.3_a0/old_section_x_labels.bin",
+      "bytes": 459,
+      "sha256": "3492485eca9b3f5f27cb7b80f97bfb13b40f69d1e0f4efeac0fe83369caf1a6a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.3_a0/old_section_y_keep.bin",
+      "bytes": 348,
+      "sha256": "f49d4b6728aa3dfa218b4f99b7a1038c71fbc6f4d53d651b0bd5462d59427272"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.3_a0/old_section_y_labels.bin",
+      "bytes": 348,
+      "sha256": "685ee3d36df48ac5163d2965c2a9bcbe71e89f57bfc5b1b8ae89594c2483bbdc"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.3_a1/new_keep.bin",
+      "bytes": 48526,
+      "sha256": "e758c4f93b050e41a7878f12469103858cb1dde8206b30636ab35fddf018801b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.3_a1/new_labels.bin",
+      "bytes": 48526,
+      "sha256": "3f0c7ec17647b4b681378a4280042694c25447bc3328d667c0c8cd44adf19c22"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.3_a1/new_section_x_keep.bin",
+      "bytes": 1688,
+      "sha256": "78f9ab4fa10b5727344e71de7a114d0f7a20dedc7031b74cce0c2949d09ff9b8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.3_a1/new_section_x_labels.bin",
+      "bytes": 1688,
+      "sha256": "425753098786f840472a6b15dc2b745e3efa72cfea8564ce6e3d4b6eda917290"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.3_a1/new_section_y_keep.bin",
+      "bytes": 1426,
+      "sha256": "57459203d15b16e2c830464977ea02bdbf925cfd784ff3fcbc46584ff89c6675"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.3_a1/new_section_y_labels.bin",
+      "bytes": 1426,
+      "sha256": "24b4731faeebe13f0d017af1e07fed4d417027cd333bafd546c9880f4449534c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.3_a1/old_keep.bin",
+      "bytes": 52762,
+      "sha256": "bfda14fb793a612bbf391977c69d4f621d5033abf87678d48751230cfa5caf1c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.3_a1/old_labels.bin",
+      "bytes": 52762,
+      "sha256": "f59b57ced71d997eb350770407ea32de8732f755315a9b7cfc26c2f19dac4d89"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.3_a1/old_section_x_keep.bin",
+      "bytes": 459,
+      "sha256": "1b784f96f00238ce00c3e7527ca4f6e9bbba2d54e8d8df7214ea21b32822a807"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.3_a1/old_section_x_labels.bin",
+      "bytes": 459,
+      "sha256": "91c99ea8f5d1ca0e20ed049137986fcec54f756f1014f14edc8aaf6f26251b7b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.3_a1/old_section_y_keep.bin",
+      "bytes": 348,
+      "sha256": "a1dde9231c9655b6713847cfa3a5d1fcbc3e81412db3306198b77f855898efe4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.3_a1/old_section_y_labels.bin",
+      "bytes": 348,
+      "sha256": "fe1ce9d372f305d331fcaf9325905bdbce2093aa3ac1ea66cdecebdfba256e14"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.6_a0/new_keep.bin",
+      "bytes": 48526,
+      "sha256": "98fcbadcfe2cddb0b75da07a5d655714c888833b03da62759b015b76ca7d9f4e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.6_a0/new_labels.bin",
+      "bytes": 48526,
+      "sha256": "6670746b2deaa0648984462c949bf88f230bdd72589d79d9dc77af81c414df30"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.6_a0/new_section_x_keep.bin",
+      "bytes": 1688,
+      "sha256": "a1a9a3ce49eb5e0f6983f1c6ee81aa77d58fdddd0293c950f6e526ecf551dc35"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.6_a0/new_section_x_labels.bin",
+      "bytes": 1688,
+      "sha256": "81c47bf567d997e9860cec54de1458e05e8ade962c40c06e7ee5a90fa22d5f69"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.6_a0/new_section_y_keep.bin",
+      "bytes": 1426,
+      "sha256": "fb729e562b336f4d8c172218cb70542e7af7f7df7df3fb236c1b9f109339bd56"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.6_a0/new_section_y_labels.bin",
+      "bytes": 1426,
+      "sha256": "ff8a793a82d285bd61a81d0319aa2319d2cd01b2f1a217cc7db5637e4251a93e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.6_a0/old_keep.bin",
+      "bytes": 52762,
+      "sha256": "9c27f4a9af0f7ffdeaed4854e6369dda1178400dc212607fc8f53b77172a1c8f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.6_a0/old_labels.bin",
+      "bytes": 52762,
+      "sha256": "ccc13930af3c06c7b772987f217cf8e1b33031e002cb96cf592f6c7398950bb6"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.6_a0/old_section_x_keep.bin",
+      "bytes": 459,
+      "sha256": "5ac2b6ca9f9bd9cce71a0c84a7e301f410837eec867486532bb96d83eb8655ca"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.6_a0/old_section_x_labels.bin",
+      "bytes": 459,
+      "sha256": "d2c413538e0be00da45dc57ab94078ea967e9199babdce7c32a15c79f6935cd4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.6_a0/old_section_y_keep.bin",
+      "bytes": 348,
+      "sha256": "a98cbdd9fb1787140fd47ddfaff5e33d0ec1262580efab390c2f90c32d2dc486"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.6_a0/old_section_y_labels.bin",
+      "bytes": 348,
+      "sha256": "98f585e103cc24b70b5d6e09c6b7a9b99dd9fa81905720da6ece2b162383b811"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.6_a1/new_keep.bin",
+      "bytes": 48526,
+      "sha256": "98fcbadcfe2cddb0b75da07a5d655714c888833b03da62759b015b76ca7d9f4e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.6_a1/new_labels.bin",
+      "bytes": 48526,
+      "sha256": "f678feef5a96c10a7bf5137cba74d7b8f188d7706a54c7403a6de049829bbf40"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.6_a1/new_section_x_keep.bin",
+      "bytes": 1688,
+      "sha256": "a1a9a3ce49eb5e0f6983f1c6ee81aa77d58fdddd0293c950f6e526ecf551dc35"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.6_a1/new_section_x_labels.bin",
+      "bytes": 1688,
+      "sha256": "0bf6ff1cff368a377aa9c5ecadc64e0ffbb054f55f3996ba732c06f3be25653a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.6_a1/new_section_y_keep.bin",
+      "bytes": 1426,
+      "sha256": "fb729e562b336f4d8c172218cb70542e7af7f7df7df3fb236c1b9f109339bd56"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.6_a1/new_section_y_labels.bin",
+      "bytes": 1426,
+      "sha256": "1c6fbeddaf9328d7af55ce6f01f0ba41aaadab5a7fae476349bb94c06db9dc26"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.6_a1/old_keep.bin",
+      "bytes": 52762,
+      "sha256": "056fdf52db7c40a2087d7965ee55680c6f37aca2896c92379cd861dedd8a25d4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.6_a1/old_labels.bin",
+      "bytes": 52762,
+      "sha256": "9f41d4fe20563a63224d65b6df3794578d9256ce83f5a9056e8863604db2aea2"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.6_a1/old_section_x_keep.bin",
+      "bytes": 459,
+      "sha256": "b96c5e96dcc887884d4a36f48b6599e96f4145d66355fc14ae7dda3660957a57"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.6_a1/old_section_x_labels.bin",
+      "bytes": 459,
+      "sha256": "7b70e9eaa3ad4b3e8c89de908eb5bdf0c6c1c6a45bbc5cf81a5570292867d0da"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.6_a1/old_section_y_keep.bin",
+      "bytes": 348,
+      "sha256": "ad413bbcf944e4dc6f925fa31130f28bc1562b7dcade6723cf23d1dfa5ac7fd7"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/estimated_bidir_d0.6_a1/old_section_y_labels.bin",
+      "bytes": 348,
+      "sha256": "0ba0c26e7ce9de4ec099e53ed6c00466e1c1245e77a5d4ee0d1d2740e89e73f7"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.1_a0/new_keep.bin",
+      "bytes": 48526,
+      "sha256": "dde009b756f56960d50c1518172fe694474095ea7b9e00657311cfef513cf205"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.1_a0/new_labels.bin",
+      "bytes": 48526,
+      "sha256": "9daeeef9740790002fc98c4b53083b47067396884b7bf67dd923d7fb42355987"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.1_a0/new_section_x_keep.bin",
+      "bytes": 1688,
+      "sha256": "32ebe911fefe0656b32ccdd1223d6f42646bbe6440803b673fbf2fb800b2806a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.1_a0/new_section_x_labels.bin",
+      "bytes": 1688,
+      "sha256": "3c34dd87f91f2560ecb0fd8dddf4ad4b1d836c8cccec82bb8e2c62a0d3fc7eba"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.1_a0/new_section_y_keep.bin",
+      "bytes": 1426,
+      "sha256": "0beb8cd692b60edec18c5096f371a1b18d78061ae10d86000686d0e46ea0c306"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.1_a0/new_section_y_labels.bin",
+      "bytes": 1426,
+      "sha256": "6a27c47298bf83a91f59808fa66f623f1a0d7d12b821b73ae47eac466c1fa02a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.1_a0/old_keep.bin",
+      "bytes": 52762,
+      "sha256": "4360cb0535d088c14a3c4a2ebad993627ba453b95289ea2a37d551ac3f488ee1"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.1_a0/old_labels.bin",
+      "bytes": 52762,
+      "sha256": "85c667d7d15c4b52efe3bfaff46e8ea37691252c424e5625183a658a2978ac38"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.1_a0/old_section_x_keep.bin",
+      "bytes": 459,
+      "sha256": "cff615d3d5208335d22dd10a60fd3b1d951433cd7cf43208ee2f61eb6594f1db"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.1_a0/old_section_x_labels.bin",
+      "bytes": 459,
+      "sha256": "e0cdc255bf5ae9246ea2b268fadd265b9aad2d6210d366960ee47a86b43286a4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.1_a0/old_section_y_keep.bin",
+      "bytes": 348,
+      "sha256": "cbbe73463df4dd2c3903bbaffe1293a6b9157f7331b2e755549738bffeaa61ee"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.1_a0/old_section_y_labels.bin",
+      "bytes": 348,
+      "sha256": "4d83f02a21f0aacc114a49bbc81bb8ec6b6715986c8518427e7066c2347b35f5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.1_a1/new_keep.bin",
+      "bytes": 48526,
+      "sha256": "dde009b756f56960d50c1518172fe694474095ea7b9e00657311cfef513cf205"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.1_a1/new_labels.bin",
+      "bytes": 48526,
+      "sha256": "dbd1c2a8e897f9d603aaeeebf8fb08445e596245171ddc7fce60cfa09931ddfa"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.1_a1/new_section_x_keep.bin",
+      "bytes": 1688,
+      "sha256": "32ebe911fefe0656b32ccdd1223d6f42646bbe6440803b673fbf2fb800b2806a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.1_a1/new_section_x_labels.bin",
+      "bytes": 1688,
+      "sha256": "dee8c21a96f859af2ccfec4f73f3052c8aff37cf867161dba76b2f26023bf6bb"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.1_a1/new_section_y_keep.bin",
+      "bytes": 1426,
+      "sha256": "0beb8cd692b60edec18c5096f371a1b18d78061ae10d86000686d0e46ea0c306"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.1_a1/new_section_y_labels.bin",
+      "bytes": 1426,
+      "sha256": "e3cf72c88c876ff4a9131926d49f9afb67b4d123bb6017022619397e5a84c23e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.1_a1/old_keep.bin",
+      "bytes": 52762,
+      "sha256": "ab63aded023b27e22161161ea6a7e3ea20a0d75d554cef66e37a982479fc2cc6"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.1_a1/old_labels.bin",
+      "bytes": 52762,
+      "sha256": "e766494c53c4d54c08f9e159fdc822a01c2a0e51330b6402947a55dd4cdb3337"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.1_a1/old_section_x_keep.bin",
+      "bytes": 459,
+      "sha256": "3383a51a2fb2de0b5c3bcdc2a15ba5175a8a23beef096fea5eb54cf75d262ec3"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.1_a1/old_section_x_labels.bin",
+      "bytes": 459,
+      "sha256": "54654c09501457f20c740c6a880afdeb80e5d93ac3f681ba554fdbe450349b31"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.1_a1/old_section_y_keep.bin",
+      "bytes": 348,
+      "sha256": "45e30cbeaefb0b30f77b314829e698eadf58e5024375d32eec9255a1f53899e0"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.1_a1/old_section_y_labels.bin",
+      "bytes": 348,
+      "sha256": "da9769cd2769323a32d05b20ffe30ad619e63585922993124e428ed3f55f1a6b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.3_a0/new_keep.bin",
+      "bytes": 48526,
+      "sha256": "e758c4f93b050e41a7878f12469103858cb1dde8206b30636ab35fddf018801b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.3_a0/new_labels.bin",
+      "bytes": 48526,
+      "sha256": "a43e4360ea55c31102f7232b6a3094ad6e6ef91ac0fd6a0402daf6d366c23e99"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.3_a0/new_section_x_keep.bin",
+      "bytes": 1688,
+      "sha256": "78f9ab4fa10b5727344e71de7a114d0f7a20dedc7031b74cce0c2949d09ff9b8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.3_a0/new_section_x_labels.bin",
+      "bytes": 1688,
+      "sha256": "2a70b16f35e633204035ac12604793e8b86ddce260e5ceafb0f84612c995c323"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.3_a0/new_section_y_keep.bin",
+      "bytes": 1426,
+      "sha256": "57459203d15b16e2c830464977ea02bdbf925cfd784ff3fcbc46584ff89c6675"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.3_a0/new_section_y_labels.bin",
+      "bytes": 1426,
+      "sha256": "2b2fe6dd385f823d53561a73cba53e54e45c40d3aaecf02bb1f6b7776faf9ee9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.3_a0/old_keep.bin",
+      "bytes": 52762,
+      "sha256": "5664f0841df4f6a9658d84198ba1dbc95e569183217ce8e390e27147c18a1cc6"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.3_a0/old_labels.bin",
+      "bytes": 52762,
+      "sha256": "41d9de737b64ac199dcf41976bc07e036aaf2267cb6547f103b782c89ccaa691"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.3_a0/old_section_x_keep.bin",
+      "bytes": 459,
+      "sha256": "371d3a198b44df7141daee7a04796c06a6b64e65a138351a19c229c337638414"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.3_a0/old_section_x_labels.bin",
+      "bytes": 459,
+      "sha256": "7ece1f80dcfb48005588cadc4eb11980bb6c3ed34ce028f0698062982b455666"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.3_a0/old_section_y_keep.bin",
+      "bytes": 348,
+      "sha256": "5597c460cba71dc044e90b89af99c89261078c1a32be493867a00d701283b0a8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.3_a0/old_section_y_labels.bin",
+      "bytes": 348,
+      "sha256": "6c0f23c819813d20b8d8c3959af95b7e841671b7f2480c7db7b1057da4831837"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.3_a1/new_keep.bin",
+      "bytes": 48526,
+      "sha256": "e758c4f93b050e41a7878f12469103858cb1dde8206b30636ab35fddf018801b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.3_a1/new_labels.bin",
+      "bytes": 48526,
+      "sha256": "28b8ad6f849de6b36a6b401b04aae109da835b19fa984dca68bfb7f8349d1ba4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.3_a1/new_section_x_keep.bin",
+      "bytes": 1688,
+      "sha256": "78f9ab4fa10b5727344e71de7a114d0f7a20dedc7031b74cce0c2949d09ff9b8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.3_a1/new_section_x_labels.bin",
+      "bytes": 1688,
+      "sha256": "425753098786f840472a6b15dc2b745e3efa72cfea8564ce6e3d4b6eda917290"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.3_a1/new_section_y_keep.bin",
+      "bytes": 1426,
+      "sha256": "57459203d15b16e2c830464977ea02bdbf925cfd784ff3fcbc46584ff89c6675"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.3_a1/new_section_y_labels.bin",
+      "bytes": 1426,
+      "sha256": "24b4731faeebe13f0d017af1e07fed4d417027cd333bafd546c9880f4449534c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.3_a1/old_keep.bin",
+      "bytes": 52762,
+      "sha256": "7f976f323ad6f51606e2b6aabfad36c8648aca3de62903ba8219cd4fe8633417"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.3_a1/old_labels.bin",
+      "bytes": 52762,
+      "sha256": "cd1304ab604b9f920cd9cc4e6c6fc57784503fccba1db88ec4bd3f6fb08e10a7"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.3_a1/old_section_x_keep.bin",
+      "bytes": 459,
+      "sha256": "b4ee222e30f4e401b666bc5b9fa936b2eed919f83fc8a466d2b43fc49e6f7186"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.3_a1/old_section_x_labels.bin",
+      "bytes": 459,
+      "sha256": "fa7955b3d0c91e1a62083db81eb739d360a1f0f9b4dccc5978168c3ba0ffd3dd"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.3_a1/old_section_y_keep.bin",
+      "bytes": 348,
+      "sha256": "da66dc1e30a30c540d5f05e50cd09d6d0f327f04f5bd4e2b77cfd2490ebdb4d9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.3_a1/old_section_y_labels.bin",
+      "bytes": 348,
+      "sha256": "4a580917d44aa62d8b9d440c2d5433810b8aaa7c4a2bcc7b95f9d4a5b4da53c7"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.6_a0/new_keep.bin",
+      "bytes": 48526,
+      "sha256": "98fcbadcfe2cddb0b75da07a5d655714c888833b03da62759b015b76ca7d9f4e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.6_a0/new_labels.bin",
+      "bytes": 48526,
+      "sha256": "cb8190aa81a77328e4fbcc14db273414a6d15a7ab6357020b08fedbd64fd1dfc"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.6_a0/new_section_x_keep.bin",
+      "bytes": 1688,
+      "sha256": "a1a9a3ce49eb5e0f6983f1c6ee81aa77d58fdddd0293c950f6e526ecf551dc35"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.6_a0/new_section_x_labels.bin",
+      "bytes": 1688,
+      "sha256": "d9e6511548cc694b4bd8a470a10415d933732edb1e7e3dbb727808edef248d9f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.6_a0/new_section_y_keep.bin",
+      "bytes": 1426,
+      "sha256": "fb729e562b336f4d8c172218cb70542e7af7f7df7df3fb236c1b9f109339bd56"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.6_a0/new_section_y_labels.bin",
+      "bytes": 1426,
+      "sha256": "78a7c38f0c664a090ac1032864ea305c961d24ba30be3e981ded617ddbd75ff7"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.6_a0/old_keep.bin",
+      "bytes": 52762,
+      "sha256": "0f343611cc3647390835ab547191c45804425d1c03f52580067767c7fdbf929d"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.6_a0/old_labels.bin",
+      "bytes": 52762,
+      "sha256": "e73c13ddc8749a2a730514538be3dd90956fcfcad275d9b7f67399a42a6e60d2"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.6_a0/old_section_x_keep.bin",
+      "bytes": 459,
+      "sha256": "1443e7e0968dc0c49f8c082d313385b6ba53f678f19d887aa08921883dad7b1f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.6_a0/old_section_x_labels.bin",
+      "bytes": 459,
+      "sha256": "334ab68bb2642da86c69f1391f1e4f0ffd79c8e91538d407d0e6aa3b63f7e4f2"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.6_a0/old_section_y_keep.bin",
+      "bytes": 348,
+      "sha256": "a5a2926c03522422e9d37b0471dd34bbeb48dbf2d8959dd4548a6564d6ee7cc9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.6_a0/old_section_y_labels.bin",
+      "bytes": 348,
+      "sha256": "6c316dee7b21c413f67b1f8a38dfb8528cddac92fc178fdbbead901259b35fb5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.6_a1/new_keep.bin",
+      "bytes": 48526,
+      "sha256": "98fcbadcfe2cddb0b75da07a5d655714c888833b03da62759b015b76ca7d9f4e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.6_a1/new_labels.bin",
+      "bytes": 48526,
+      "sha256": "4c535f7040b8b6891363ff5bfa941b68b747bfb77e2158942213b3158f5406cf"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.6_a1/new_section_x_keep.bin",
+      "bytes": 1688,
+      "sha256": "a1a9a3ce49eb5e0f6983f1c6ee81aa77d58fdddd0293c950f6e526ecf551dc35"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.6_a1/new_section_x_labels.bin",
+      "bytes": 1688,
+      "sha256": "0bf6ff1cff368a377aa9c5ecadc64e0ffbb054f55f3996ba732c06f3be25653a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.6_a1/new_section_y_keep.bin",
+      "bytes": 1426,
+      "sha256": "fb729e562b336f4d8c172218cb70542e7af7f7df7df3fb236c1b9f109339bd56"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.6_a1/new_section_y_labels.bin",
+      "bytes": 1426,
+      "sha256": "1c6fbeddaf9328d7af55ce6f01f0ba41aaadab5a7fae476349bb94c06db9dc26"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.6_a1/old_keep.bin",
+      "bytes": 52762,
+      "sha256": "ff722d4d7ecbf177701d627927f09f56822668b8a56725e4eeea2adbf940c79f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.6_a1/old_labels.bin",
+      "bytes": 52762,
+      "sha256": "60cbbacc4db9303edebcebf83310028bcf4415152a397109a42af636d1963ade"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.6_a1/old_section_x_keep.bin",
+      "bytes": 459,
+      "sha256": "3f6be8a6f97d16458195f5028dcda782d5d2f0db14f6e16136de287332137f16"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.6_a1/old_section_x_labels.bin",
+      "bytes": 459,
+      "sha256": "034586c32439a130bec48a45b7789e45635cfbfd424585b9063da82860c828e6"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.6_a1/old_section_y_keep.bin",
+      "bytes": 348,
+      "sha256": "a094cf10ec19c4f2a1798ac1120bc2c157086eae2568456bb68239a51548e12b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/image_direction_d0.6_a1/old_section_y_labels.bin",
+      "bytes": 348,
+      "sha256": "3a0244b0a1262b72a92ce7506c3f4bb39274910a245bfbe987c3f796c555ad8d"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/new_indices.bin",
+      "bytes": 388208,
+      "sha256": "2ac6e44be206875daff5d1da160a34f337d105a8c9bcaf414a78bb4d2e84531d"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/new_section_x_indices.bin",
+      "bytes": 13504,
+      "sha256": "695366f2df16a22f8b4c9256261e5541786dfea09517eb3c1db035a81ae0096b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/new_section_x_xyz.bin",
+      "bytes": 20256,
+      "sha256": "0b746dcb76c4bba9a091d4ed28582d52808c2cc34e057ccd122efc30e36032a4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/new_section_y_indices.bin",
+      "bytes": 11408,
+      "sha256": "02781792a4f1c172acaf912df2d80c2002f83d5f2936c8139cc240c1d620c8cd"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/new_section_y_xyz.bin",
+      "bytes": 17112,
+      "sha256": "3bb00bcba07e8de9ebe98e4c16364376a7de59783334c469e376a06654a25952"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/new_xyz.bin",
+      "bytes": 582312,
+      "sha256": "8656911d212a6c916abb6bb02df22001810cc8ea199609bae0bd03afcec91f4c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/old_indices.bin",
+      "bytes": 422096,
+      "sha256": "a32c4544dd3be195123660320ffd73d2b98ddb09ce062b58adbf7e290276581e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/old_section_x_indices.bin",
+      "bytes": 3672,
+      "sha256": "4f1e9203aaf83eb2541076aa91c75b4fb9055cfd687cfe5f63b1f41e5fc36949"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/old_section_x_xyz.bin",
+      "bytes": 5508,
+      "sha256": "4adfa4ac546f5da0d5c6f9acaac111148ad94720f5fef22814b2c2debe81a229"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/old_section_y_indices.bin",
+      "bytes": 2784,
+      "sha256": "916ee824f61f65c5487e5f207211a2b47fcf899ec918aac7baf240c09995e535"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/old_section_y_xyz.bin",
+      "bytes": 4176,
+      "sha256": "535548a1d180f934e92d548612ef12e73ec74151788437d99e9a862a5c4ce2a9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/display/old_xyz.bin",
+      "bytes": 633144,
+      "sha256": "871d9d13c421e73620f874f9fada1ad031b22e72f9e7aa02437b0319f867a214"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/downloads/common.npz",
+      "bytes": 4112724,
+      "sha256": "b0c487158b2b67097eeaf95a208b5439a5b5c4ead95126369f3ead87efeabbb8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/downloads/estimated_bidir_d0.1_a0.npz",
+      "bytes": 2276260,
+      "sha256": "34558abb336279e28cb6deb31cd914cab90e55ee915a5961ce9716aa895bc1ae"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/downloads/estimated_bidir_d0.1_a0.ply",
+      "bytes": 2403066,
+      "sha256": "1b85328750087654848d89af4ff42a65923f7ebb3e5fddd2fb52061724d934a7"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/downloads/estimated_bidir_d0.1_a1.npz",
+      "bytes": 2332039,
+      "sha256": "58420938d4b16fc6bdb5567184569a30e5b7a498ce75c945565bbeca20120aa3"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/downloads/estimated_bidir_d0.1_a1.ply",
+      "bytes": 2542417,
+      "sha256": "91b9ae4e2fbfff61ba1cf8bdf365c4759e390151016c9743e5d93812120b6e1e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/downloads/estimated_bidir_d0.3_a0.npz",
+      "bytes": 1713830,
+      "sha256": "9b5db6c815b00bdc1c88b812e2bb83a1031509b3cd35eed7f01a3927520308a5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/downloads/estimated_bidir_d0.3_a0.ply",
+      "bytes": 1909016,
+      "sha256": "9e16bae7ab0926b50e5c765d32edf189a9c7f610e0a471cc299920f691a1054b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/downloads/estimated_bidir_d0.3_a1.npz",
+      "bytes": 1759832,
+      "sha256": "f1ca89029f6c7575392fc8f2846a0b2d1a8933586f932c926f3f3e48f37cb4bc"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/downloads/estimated_bidir_d0.3_a1.ply",
+      "bytes": 2021016,
+      "sha256": "513b260d2f8d89c91560c4ea39327a6e796bdbe4135315cd70db7a13de1b92a0"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/downloads/estimated_bidir_d0.6_a0.npz",
+      "bytes": 1363516,
+      "sha256": "aa017108ed3aa3474da374bb5d8779bc0797a5cff4afff4c2f8c5497f91fa19a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/downloads/estimated_bidir_d0.6_a0.ply",
+      "bytes": 1615291,
+      "sha256": "cfb2dd60b61c64bd388ff457b0820b7d6bf3a33bb18bb4a5fed67ab513a66702"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/downloads/estimated_bidir_d0.6_a1.npz",
+      "bytes": 1398152,
+      "sha256": "7148c2a34d33d061780a973e49324dea0ea85e9efec717261a202d15f408206f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/downloads/estimated_bidir_d0.6_a1.ply",
+      "bytes": 1695416,
+      "sha256": "fec8699073b6c2f834e66778a2c7f441605a1265e8bc9d7973c3b915fa13aea8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/downloads/image_direction_d0.1_a0.npz",
+      "bytes": 2351871,
+      "sha256": "5da66a3cc8bb2a29e88361fa151aef8678a043142598298d2893a4866bf11cbe"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/downloads/image_direction_d0.1_a0.ply",
+      "bytes": 2583842,
+      "sha256": "e8c62f1ebc94976471bf7b86731851e61ceb9925c453c6c9ab6ac9775399e749"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/downloads/image_direction_d0.1_a1.npz",
+      "bytes": 2392283,
+      "sha256": "bcbbe87b911fa211f0ec3e3a920553be0ebd74e199832f91427d40ad58af87ab"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/downloads/image_direction_d0.1_a1.ply",
+      "bytes": 2676292,
+      "sha256": "10a816400b193e8daabd2ec270c50e3ae41dcc96e2ede524b8c9a2cf7b2d039c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/downloads/image_direction_d0.3_a0.npz",
+      "bytes": 1765318,
+      "sha256": "aa819430426232c53dbb802cd60ed257b0c42be7f40c8dee7b8edee8acda6c8b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/downloads/image_direction_d0.3_a0.ply",
+      "bytes": 2034541,
+      "sha256": "377bed965b2b688ddfc699c06e15dcc2b9f55312f290ec9e443ecd2163ca691f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/downloads/image_direction_d0.3_a1.npz",
+      "bytes": 1788672,
+      "sha256": "35a267b808d0d4d5fe8ed5982963daf51d5b9b7477d640530acb0310610cf707"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/downloads/image_direction_d0.3_a1.ply",
+      "bytes": 2088916,
+      "sha256": "6e09aa56c2e6bda193b4313f84a23828885192deb568963eebf3ce3f0828cc90"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/downloads/image_direction_d0.6_a0.npz",
+      "bytes": 1396807,
+      "sha256": "d1cf1cccdd4ddc322c4882f635cf1046546a4ef6d51ad06cdea0b6cade35c540"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/downloads/image_direction_d0.6_a0.ply",
+      "bytes": 1696966,
+      "sha256": "889b25264f149ba3bab91db779701b7807c97fbdce065d0343a875c0f33dd1da"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/downloads/image_direction_d0.6_a1.npz",
+      "bytes": 1411103,
+      "sha256": "68d520efb933c1c0257f49bd93028e450d39f0fc6a221b5985c0f030460d3d0f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/downloads/image_direction_d0.6_a1.ply",
+      "bytes": 1729441,
+      "sha256": "7eb2599814e3b95b7e8a330c916cc58e757450bfe9592b146be7fd43e3a74936"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/index.html",
+      "bytes": 92336,
+      "sha256": "54508d065aa1b733dc3798afebbfd115e28226a6150780f2f40ecfc893f72b88"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/receipts/estimated_bidir_d0.1_a0.json",
+      "bytes": 5725,
+      "sha256": "8f3726b7f72ef68588a173198b0bccb91576f829379a107537643b0dab7b9a1d"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/receipts/estimated_bidir_d0.1_a1.json",
+      "bytes": 5728,
+      "sha256": "fcd48831d8ac8702c4d6f7da135f1c57f8fb14ca5f2a7f92084a5194600af63e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/receipts/estimated_bidir_d0.3_a0.json",
+      "bytes": 5729,
+      "sha256": "a8e1cc173fde7ef5757ae88190eafa4881ec13a3496b616545aebdcdcc63511c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/receipts/estimated_bidir_d0.3_a1.json",
+      "bytes": 5728,
+      "sha256": "066af8115bde2524898e103c42068546f9455da8dd7f2bea673837d2a692285c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/receipts/estimated_bidir_d0.6_a0.json",
+      "bytes": 5726,
+      "sha256": "60ac2e4ec573e67984fe55776ee2062782dfd0ef76c6411a8d01a952302b6e80"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/receipts/estimated_bidir_d0.6_a1.json",
+      "bytes": 5726,
+      "sha256": "ab4cdbc5a588fe304b0ce2550c057385351204ee4b0947e653686d6cba93b6a8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/receipts/evaluation.json",
+      "bytes": 66624,
+      "sha256": "a5a505d9a44c62acf418d45794faa877bd519875fb7a3a2191239af00939c9cb"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/receipts/image_direction_d0.1_a0.json",
+      "bytes": 5529,
+      "sha256": "d84b6e95afb8718302eaf6d89050d242c12e341739de90cf5a458f60fff385d3"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/receipts/image_direction_d0.1_a1.json",
+      "bytes": 5527,
+      "sha256": "0d0a898b329ea84b5325e6d760e33e08e6171c1876e5c506654f04e6cdfcb474"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/receipts/image_direction_d0.3_a0.json",
+      "bytes": 5527,
+      "sha256": "477eb7a1fb42099b8cf8569a3e5072914570203ad6da9a9d5253fa78d0ad3372"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/receipts/image_direction_d0.3_a1.json",
+      "bytes": 5527,
+      "sha256": "b474f12ca9869c6a86843e62c4788cf891e1de4b523d429d0458dc97a31f93a2"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/receipts/image_direction_d0.6_a0.json",
+      "bytes": 5528,
+      "sha256": "0d3f0584622a6ee6a6b1b56b6335f1fa3c7da1567541ac55ee90072bb1af0cfb"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/receipts/image_direction_d0.6_a1.json",
+      "bytes": 5528,
+      "sha256": "45240ffc10822a2c7d80705e777f592d528f77c7c01e0180b47f480f86ac6b35"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/receipts/update_receipt.json",
+      "bytes": 78963,
+      "sha256": "7ac18469448e84ae2be4a8b3c68f4969aca1c04fda4910cd33940774d4ecc6f4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/receipts/viewer_config.json",
+      "bytes": 534,
+      "sha256": "69d465f17728ffde6369b35093c5248b47c06fbe354ed6da84750f169ab4875b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/three.module.min.js",
+      "bytes": 670681,
+      "sha256": "3e690ac7d180b0aadf0891bea39eec643e29e2d3e75c99b18689518665f69ba6"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2/run/viewer_manifest.json",
+      "bytes": 68688,
+      "sha256": "a016f6a571c967079a700612a28f27c2052ec9dfd0cc55ae048b0b6b2cd8e097"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.1_a0/new_keep.bin",
+      "bytes": 48526,
+      "sha256": "dde009b756f56960d50c1518172fe694474095ea7b9e00657311cfef513cf205"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.1_a0/new_labels.bin",
+      "bytes": 48526,
+      "sha256": "ef8e8100eb45ec0672023cde091ccb1d055bc64f2feb54f6648e073dcd7cba78"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.1_a0/new_section_x_keep.bin",
+      "bytes": 1688,
+      "sha256": "32ebe911fefe0656b32ccdd1223d6f42646bbe6440803b673fbf2fb800b2806a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.1_a0/new_section_x_labels.bin",
+      "bytes": 1688,
+      "sha256": "83effbdc7133c8c0077116345302ad6a8f3861d0e14483ce0ab1f6767690eae2"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.1_a0/new_section_y_keep.bin",
+      "bytes": 1426,
+      "sha256": "0beb8cd692b60edec18c5096f371a1b18d78061ae10d86000686d0e46ea0c306"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.1_a0/new_section_y_labels.bin",
+      "bytes": 1426,
+      "sha256": "d7160a478cb03873db97016d489ed35fd9107ed24782ee64b0ea962b230055f8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.1_a0/old_keep.bin",
+      "bytes": 52762,
+      "sha256": "e3b1d8bca0d9f59b29ab9bac503795e57af349f5578b20dc54362eac314bb03b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.1_a0/old_labels.bin",
+      "bytes": 52762,
+      "sha256": "9c2dee9d4ef8a33b114d4645cc4cb6f3f66cd375937804f31caebcf371c5335a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.1_a0/old_section_x_keep.bin",
+      "bytes": 459,
+      "sha256": "a286bc6b5fe8316630c242eb97c280aeb1344a25783d6978f5e474dc1019f4f5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.1_a0/old_section_x_labels.bin",
+      "bytes": 459,
+      "sha256": "95000ca7b20a52bf2cbc61b53011bfb156ccb7045f8d72067cfefabd78abcad4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.1_a0/old_section_y_keep.bin",
+      "bytes": 348,
+      "sha256": "3098d033fb25e3b0976f35672bfc8cd049f2f1d7f12afc4c01e663646360d157"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.1_a0/old_section_y_labels.bin",
+      "bytes": 348,
+      "sha256": "998fe704b321c9508ecf64d99bbc9273faa166738c17d122c91732edb0c8b74c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.1_a1/new_keep.bin",
+      "bytes": 48526,
+      "sha256": "dde009b756f56960d50c1518172fe694474095ea7b9e00657311cfef513cf205"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.1_a1/new_labels.bin",
+      "bytes": 48526,
+      "sha256": "9cb5ca7a9657e16f1f7f505646e0a31af65f1eeb2162414fd6e22a56d59b973b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.1_a1/new_section_x_keep.bin",
+      "bytes": 1688,
+      "sha256": "32ebe911fefe0656b32ccdd1223d6f42646bbe6440803b673fbf2fb800b2806a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.1_a1/new_section_x_labels.bin",
+      "bytes": 1688,
+      "sha256": "3ffeaf9e4e8d6d261984c3afc825491f1fee16628b6338fc4a0eda27f31e39f2"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.1_a1/new_section_y_keep.bin",
+      "bytes": 1426,
+      "sha256": "0beb8cd692b60edec18c5096f371a1b18d78061ae10d86000686d0e46ea0c306"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.1_a1/new_section_y_labels.bin",
+      "bytes": 1426,
+      "sha256": "e3cf72c88c876ff4a9131926d49f9afb67b4d123bb6017022619397e5a84c23e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.1_a1/old_keep.bin",
+      "bytes": 52762,
+      "sha256": "6d9404869de7f69b3eedd20e13c3c401d696297c6b4566bb38c1e10128a79c13"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.1_a1/old_labels.bin",
+      "bytes": 52762,
+      "sha256": "4261554bdd8360452b8aeb3c5c9b3afa0751b82da150ec7a61960e6e879ef159"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.1_a1/old_section_x_keep.bin",
+      "bytes": 459,
+      "sha256": "de3dfa6000db5c94bc402d1845a84b4b061768a60ed3bcbdbcb5eee05d0ee6fc"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.1_a1/old_section_x_labels.bin",
+      "bytes": 459,
+      "sha256": "d228d9343e369bc727060c9b72c124e4db44ddc59512755c74fc36a310e7a09f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.1_a1/old_section_y_keep.bin",
+      "bytes": 348,
+      "sha256": "9578842c9a366dbf487ba7bfa7727bc471f031acca811eb3f38e4146bcc8adc3"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.1_a1/old_section_y_labels.bin",
+      "bytes": 348,
+      "sha256": "30432b139843749c45888524d202dca7ef2b22f91a6c535c622787f44470371f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.3_a0/new_keep.bin",
+      "bytes": 48526,
+      "sha256": "e758c4f93b050e41a7878f12469103858cb1dde8206b30636ab35fddf018801b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.3_a0/new_labels.bin",
+      "bytes": 48526,
+      "sha256": "d3fa7890fa0dcc788cc3519e84e2b130ed29b5bd878d68da4f2ae7f67cf4940a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.3_a0/new_section_x_keep.bin",
+      "bytes": 1688,
+      "sha256": "78f9ab4fa10b5727344e71de7a114d0f7a20dedc7031b74cce0c2949d09ff9b8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.3_a0/new_section_x_labels.bin",
+      "bytes": 1688,
+      "sha256": "2229ff36847e41a8a7d5a25dc3ec560b2efb5d8843dca143d4a274b3a6a6e9b1"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.3_a0/new_section_y_keep.bin",
+      "bytes": 1426,
+      "sha256": "57459203d15b16e2c830464977ea02bdbf925cfd784ff3fcbc46584ff89c6675"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.3_a0/new_section_y_labels.bin",
+      "bytes": 1426,
+      "sha256": "0681b87a5789026103e5fc25773d3902c0a0d12ce73161319c4191dd8b602dda"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.3_a0/old_keep.bin",
+      "bytes": 52762,
+      "sha256": "2a3ea12e2d277cb2b55965eabdeb5027692ae9f913c194047567146abf1c235c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.3_a0/old_labels.bin",
+      "bytes": 52762,
+      "sha256": "992485899df1881c68153501257f52bc52b53b9a9dba539962adfe5ee59e4f46"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.3_a0/old_section_x_keep.bin",
+      "bytes": 459,
+      "sha256": "ea3b2f65d81e130d9c1a6541e21630a040a4f250c47073c81baf9d870829a74d"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.3_a0/old_section_x_labels.bin",
+      "bytes": 459,
+      "sha256": "3492485eca9b3f5f27cb7b80f97bfb13b40f69d1e0f4efeac0fe83369caf1a6a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.3_a0/old_section_y_keep.bin",
+      "bytes": 348,
+      "sha256": "f49d4b6728aa3dfa218b4f99b7a1038c71fbc6f4d53d651b0bd5462d59427272"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.3_a0/old_section_y_labels.bin",
+      "bytes": 348,
+      "sha256": "685ee3d36df48ac5163d2965c2a9bcbe71e89f57bfc5b1b8ae89594c2483bbdc"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.3_a1/new_keep.bin",
+      "bytes": 48526,
+      "sha256": "e758c4f93b050e41a7878f12469103858cb1dde8206b30636ab35fddf018801b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.3_a1/new_labels.bin",
+      "bytes": 48526,
+      "sha256": "3f0c7ec17647b4b681378a4280042694c25447bc3328d667c0c8cd44adf19c22"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.3_a1/new_section_x_keep.bin",
+      "bytes": 1688,
+      "sha256": "78f9ab4fa10b5727344e71de7a114d0f7a20dedc7031b74cce0c2949d09ff9b8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.3_a1/new_section_x_labels.bin",
+      "bytes": 1688,
+      "sha256": "425753098786f840472a6b15dc2b745e3efa72cfea8564ce6e3d4b6eda917290"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.3_a1/new_section_y_keep.bin",
+      "bytes": 1426,
+      "sha256": "57459203d15b16e2c830464977ea02bdbf925cfd784ff3fcbc46584ff89c6675"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.3_a1/new_section_y_labels.bin",
+      "bytes": 1426,
+      "sha256": "24b4731faeebe13f0d017af1e07fed4d417027cd333bafd546c9880f4449534c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.3_a1/old_keep.bin",
+      "bytes": 52762,
+      "sha256": "bfda14fb793a612bbf391977c69d4f621d5033abf87678d48751230cfa5caf1c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.3_a1/old_labels.bin",
+      "bytes": 52762,
+      "sha256": "f59b57ced71d997eb350770407ea32de8732f755315a9b7cfc26c2f19dac4d89"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.3_a1/old_section_x_keep.bin",
+      "bytes": 459,
+      "sha256": "1b784f96f00238ce00c3e7527ca4f6e9bbba2d54e8d8df7214ea21b32822a807"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.3_a1/old_section_x_labels.bin",
+      "bytes": 459,
+      "sha256": "91c99ea8f5d1ca0e20ed049137986fcec54f756f1014f14edc8aaf6f26251b7b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.3_a1/old_section_y_keep.bin",
+      "bytes": 348,
+      "sha256": "a1dde9231c9655b6713847cfa3a5d1fcbc3e81412db3306198b77f855898efe4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.3_a1/old_section_y_labels.bin",
+      "bytes": 348,
+      "sha256": "fe1ce9d372f305d331fcaf9325905bdbce2093aa3ac1ea66cdecebdfba256e14"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.6_a0/new_keep.bin",
+      "bytes": 48526,
+      "sha256": "98fcbadcfe2cddb0b75da07a5d655714c888833b03da62759b015b76ca7d9f4e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.6_a0/new_labels.bin",
+      "bytes": 48526,
+      "sha256": "6670746b2deaa0648984462c949bf88f230bdd72589d79d9dc77af81c414df30"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.6_a0/new_section_x_keep.bin",
+      "bytes": 1688,
+      "sha256": "a1a9a3ce49eb5e0f6983f1c6ee81aa77d58fdddd0293c950f6e526ecf551dc35"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.6_a0/new_section_x_labels.bin",
+      "bytes": 1688,
+      "sha256": "81c47bf567d997e9860cec54de1458e05e8ade962c40c06e7ee5a90fa22d5f69"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.6_a0/new_section_y_keep.bin",
+      "bytes": 1426,
+      "sha256": "fb729e562b336f4d8c172218cb70542e7af7f7df7df3fb236c1b9f109339bd56"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.6_a0/new_section_y_labels.bin",
+      "bytes": 1426,
+      "sha256": "ff8a793a82d285bd61a81d0319aa2319d2cd01b2f1a217cc7db5637e4251a93e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.6_a0/old_keep.bin",
+      "bytes": 52762,
+      "sha256": "9c27f4a9af0f7ffdeaed4854e6369dda1178400dc212607fc8f53b77172a1c8f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.6_a0/old_labels.bin",
+      "bytes": 52762,
+      "sha256": "ccc13930af3c06c7b772987f217cf8e1b33031e002cb96cf592f6c7398950bb6"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.6_a0/old_section_x_keep.bin",
+      "bytes": 459,
+      "sha256": "5ac2b6ca9f9bd9cce71a0c84a7e301f410837eec867486532bb96d83eb8655ca"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.6_a0/old_section_x_labels.bin",
+      "bytes": 459,
+      "sha256": "d2c413538e0be00da45dc57ab94078ea967e9199babdce7c32a15c79f6935cd4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.6_a0/old_section_y_keep.bin",
+      "bytes": 348,
+      "sha256": "a98cbdd9fb1787140fd47ddfaff5e33d0ec1262580efab390c2f90c32d2dc486"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.6_a0/old_section_y_labels.bin",
+      "bytes": 348,
+      "sha256": "98f585e103cc24b70b5d6e09c6b7a9b99dd9fa81905720da6ece2b162383b811"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.6_a1/new_keep.bin",
+      "bytes": 48526,
+      "sha256": "98fcbadcfe2cddb0b75da07a5d655714c888833b03da62759b015b76ca7d9f4e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.6_a1/new_labels.bin",
+      "bytes": 48526,
+      "sha256": "f678feef5a96c10a7bf5137cba74d7b8f188d7706a54c7403a6de049829bbf40"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.6_a1/new_section_x_keep.bin",
+      "bytes": 1688,
+      "sha256": "a1a9a3ce49eb5e0f6983f1c6ee81aa77d58fdddd0293c950f6e526ecf551dc35"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.6_a1/new_section_x_labels.bin",
+      "bytes": 1688,
+      "sha256": "0bf6ff1cff368a377aa9c5ecadc64e0ffbb054f55f3996ba732c06f3be25653a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.6_a1/new_section_y_keep.bin",
+      "bytes": 1426,
+      "sha256": "fb729e562b336f4d8c172218cb70542e7af7f7df7df3fb236c1b9f109339bd56"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.6_a1/new_section_y_labels.bin",
+      "bytes": 1426,
+      "sha256": "1c6fbeddaf9328d7af55ce6f01f0ba41aaadab5a7fae476349bb94c06db9dc26"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.6_a1/old_keep.bin",
+      "bytes": 52762,
+      "sha256": "056fdf52db7c40a2087d7965ee55680c6f37aca2896c92379cd861dedd8a25d4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.6_a1/old_labels.bin",
+      "bytes": 52762,
+      "sha256": "9f41d4fe20563a63224d65b6df3794578d9256ce83f5a9056e8863604db2aea2"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.6_a1/old_section_x_keep.bin",
+      "bytes": 459,
+      "sha256": "b96c5e96dcc887884d4a36f48b6599e96f4145d66355fc14ae7dda3660957a57"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.6_a1/old_section_x_labels.bin",
+      "bytes": 459,
+      "sha256": "7b70e9eaa3ad4b3e8c89de908eb5bdf0c6c1c6a45bbc5cf81a5570292867d0da"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.6_a1/old_section_y_keep.bin",
+      "bytes": 348,
+      "sha256": "ad413bbcf944e4dc6f925fa31130f28bc1562b7dcade6723cf23d1dfa5ac7fd7"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/estimated_bidir_d0.6_a1/old_section_y_labels.bin",
+      "bytes": 348,
+      "sha256": "0ba0c26e7ce9de4ec099e53ed6c00466e1c1245e77a5d4ee0d1d2740e89e73f7"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.1_a0/new_keep.bin",
+      "bytes": 48526,
+      "sha256": "dde009b756f56960d50c1518172fe694474095ea7b9e00657311cfef513cf205"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.1_a0/new_labels.bin",
+      "bytes": 48526,
+      "sha256": "9daeeef9740790002fc98c4b53083b47067396884b7bf67dd923d7fb42355987"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.1_a0/new_section_x_keep.bin",
+      "bytes": 1688,
+      "sha256": "32ebe911fefe0656b32ccdd1223d6f42646bbe6440803b673fbf2fb800b2806a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.1_a0/new_section_x_labels.bin",
+      "bytes": 1688,
+      "sha256": "3c34dd87f91f2560ecb0fd8dddf4ad4b1d836c8cccec82bb8e2c62a0d3fc7eba"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.1_a0/new_section_y_keep.bin",
+      "bytes": 1426,
+      "sha256": "0beb8cd692b60edec18c5096f371a1b18d78061ae10d86000686d0e46ea0c306"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.1_a0/new_section_y_labels.bin",
+      "bytes": 1426,
+      "sha256": "6a27c47298bf83a91f59808fa66f623f1a0d7d12b821b73ae47eac466c1fa02a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.1_a0/old_keep.bin",
+      "bytes": 52762,
+      "sha256": "4360cb0535d088c14a3c4a2ebad993627ba453b95289ea2a37d551ac3f488ee1"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.1_a0/old_labels.bin",
+      "bytes": 52762,
+      "sha256": "85c667d7d15c4b52efe3bfaff46e8ea37691252c424e5625183a658a2978ac38"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.1_a0/old_section_x_keep.bin",
+      "bytes": 459,
+      "sha256": "cff615d3d5208335d22dd10a60fd3b1d951433cd7cf43208ee2f61eb6594f1db"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.1_a0/old_section_x_labels.bin",
+      "bytes": 459,
+      "sha256": "e0cdc255bf5ae9246ea2b268fadd265b9aad2d6210d366960ee47a86b43286a4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.1_a0/old_section_y_keep.bin",
+      "bytes": 348,
+      "sha256": "cbbe73463df4dd2c3903bbaffe1293a6b9157f7331b2e755549738bffeaa61ee"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.1_a0/old_section_y_labels.bin",
+      "bytes": 348,
+      "sha256": "4d83f02a21f0aacc114a49bbc81bb8ec6b6715986c8518427e7066c2347b35f5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.1_a1/new_keep.bin",
+      "bytes": 48526,
+      "sha256": "dde009b756f56960d50c1518172fe694474095ea7b9e00657311cfef513cf205"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.1_a1/new_labels.bin",
+      "bytes": 48526,
+      "sha256": "dbd1c2a8e897f9d603aaeeebf8fb08445e596245171ddc7fce60cfa09931ddfa"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.1_a1/new_section_x_keep.bin",
+      "bytes": 1688,
+      "sha256": "32ebe911fefe0656b32ccdd1223d6f42646bbe6440803b673fbf2fb800b2806a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.1_a1/new_section_x_labels.bin",
+      "bytes": 1688,
+      "sha256": "dee8c21a96f859af2ccfec4f73f3052c8aff37cf867161dba76b2f26023bf6bb"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.1_a1/new_section_y_keep.bin",
+      "bytes": 1426,
+      "sha256": "0beb8cd692b60edec18c5096f371a1b18d78061ae10d86000686d0e46ea0c306"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.1_a1/new_section_y_labels.bin",
+      "bytes": 1426,
+      "sha256": "e3cf72c88c876ff4a9131926d49f9afb67b4d123bb6017022619397e5a84c23e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.1_a1/old_keep.bin",
+      "bytes": 52762,
+      "sha256": "ab63aded023b27e22161161ea6a7e3ea20a0d75d554cef66e37a982479fc2cc6"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.1_a1/old_labels.bin",
+      "bytes": 52762,
+      "sha256": "e766494c53c4d54c08f9e159fdc822a01c2a0e51330b6402947a55dd4cdb3337"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.1_a1/old_section_x_keep.bin",
+      "bytes": 459,
+      "sha256": "3383a51a2fb2de0b5c3bcdc2a15ba5175a8a23beef096fea5eb54cf75d262ec3"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.1_a1/old_section_x_labels.bin",
+      "bytes": 459,
+      "sha256": "54654c09501457f20c740c6a880afdeb80e5d93ac3f681ba554fdbe450349b31"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.1_a1/old_section_y_keep.bin",
+      "bytes": 348,
+      "sha256": "45e30cbeaefb0b30f77b314829e698eadf58e5024375d32eec9255a1f53899e0"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.1_a1/old_section_y_labels.bin",
+      "bytes": 348,
+      "sha256": "da9769cd2769323a32d05b20ffe30ad619e63585922993124e428ed3f55f1a6b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.3_a0/new_keep.bin",
+      "bytes": 48526,
+      "sha256": "e758c4f93b050e41a7878f12469103858cb1dde8206b30636ab35fddf018801b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.3_a0/new_labels.bin",
+      "bytes": 48526,
+      "sha256": "a43e4360ea55c31102f7232b6a3094ad6e6ef91ac0fd6a0402daf6d366c23e99"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.3_a0/new_section_x_keep.bin",
+      "bytes": 1688,
+      "sha256": "78f9ab4fa10b5727344e71de7a114d0f7a20dedc7031b74cce0c2949d09ff9b8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.3_a0/new_section_x_labels.bin",
+      "bytes": 1688,
+      "sha256": "2a70b16f35e633204035ac12604793e8b86ddce260e5ceafb0f84612c995c323"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.3_a0/new_section_y_keep.bin",
+      "bytes": 1426,
+      "sha256": "57459203d15b16e2c830464977ea02bdbf925cfd784ff3fcbc46584ff89c6675"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.3_a0/new_section_y_labels.bin",
+      "bytes": 1426,
+      "sha256": "2b2fe6dd385f823d53561a73cba53e54e45c40d3aaecf02bb1f6b7776faf9ee9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.3_a0/old_keep.bin",
+      "bytes": 52762,
+      "sha256": "5664f0841df4f6a9658d84198ba1dbc95e569183217ce8e390e27147c18a1cc6"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.3_a0/old_labels.bin",
+      "bytes": 52762,
+      "sha256": "41d9de737b64ac199dcf41976bc07e036aaf2267cb6547f103b782c89ccaa691"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.3_a0/old_section_x_keep.bin",
+      "bytes": 459,
+      "sha256": "371d3a198b44df7141daee7a04796c06a6b64e65a138351a19c229c337638414"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.3_a0/old_section_x_labels.bin",
+      "bytes": 459,
+      "sha256": "7ece1f80dcfb48005588cadc4eb11980bb6c3ed34ce028f0698062982b455666"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.3_a0/old_section_y_keep.bin",
+      "bytes": 348,
+      "sha256": "5597c460cba71dc044e90b89af99c89261078c1a32be493867a00d701283b0a8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.3_a0/old_section_y_labels.bin",
+      "bytes": 348,
+      "sha256": "6c0f23c819813d20b8d8c3959af95b7e841671b7f2480c7db7b1057da4831837"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.3_a1/new_keep.bin",
+      "bytes": 48526,
+      "sha256": "e758c4f93b050e41a7878f12469103858cb1dde8206b30636ab35fddf018801b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.3_a1/new_labels.bin",
+      "bytes": 48526,
+      "sha256": "28b8ad6f849de6b36a6b401b04aae109da835b19fa984dca68bfb7f8349d1ba4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.3_a1/new_section_x_keep.bin",
+      "bytes": 1688,
+      "sha256": "78f9ab4fa10b5727344e71de7a114d0f7a20dedc7031b74cce0c2949d09ff9b8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.3_a1/new_section_x_labels.bin",
+      "bytes": 1688,
+      "sha256": "425753098786f840472a6b15dc2b745e3efa72cfea8564ce6e3d4b6eda917290"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.3_a1/new_section_y_keep.bin",
+      "bytes": 1426,
+      "sha256": "57459203d15b16e2c830464977ea02bdbf925cfd784ff3fcbc46584ff89c6675"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.3_a1/new_section_y_labels.bin",
+      "bytes": 1426,
+      "sha256": "24b4731faeebe13f0d017af1e07fed4d417027cd333bafd546c9880f4449534c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.3_a1/old_keep.bin",
+      "bytes": 52762,
+      "sha256": "7f976f323ad6f51606e2b6aabfad36c8648aca3de62903ba8219cd4fe8633417"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.3_a1/old_labels.bin",
+      "bytes": 52762,
+      "sha256": "cd1304ab604b9f920cd9cc4e6c6fc57784503fccba1db88ec4bd3f6fb08e10a7"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.3_a1/old_section_x_keep.bin",
+      "bytes": 459,
+      "sha256": "b4ee222e30f4e401b666bc5b9fa936b2eed919f83fc8a466d2b43fc49e6f7186"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.3_a1/old_section_x_labels.bin",
+      "bytes": 459,
+      "sha256": "fa7955b3d0c91e1a62083db81eb739d360a1f0f9b4dccc5978168c3ba0ffd3dd"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.3_a1/old_section_y_keep.bin",
+      "bytes": 348,
+      "sha256": "da66dc1e30a30c540d5f05e50cd09d6d0f327f04f5bd4e2b77cfd2490ebdb4d9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.3_a1/old_section_y_labels.bin",
+      "bytes": 348,
+      "sha256": "4a580917d44aa62d8b9d440c2d5433810b8aaa7c4a2bcc7b95f9d4a5b4da53c7"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.6_a0/new_keep.bin",
+      "bytes": 48526,
+      "sha256": "98fcbadcfe2cddb0b75da07a5d655714c888833b03da62759b015b76ca7d9f4e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.6_a0/new_labels.bin",
+      "bytes": 48526,
+      "sha256": "cb8190aa81a77328e4fbcc14db273414a6d15a7ab6357020b08fedbd64fd1dfc"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.6_a0/new_section_x_keep.bin",
+      "bytes": 1688,
+      "sha256": "a1a9a3ce49eb5e0f6983f1c6ee81aa77d58fdddd0293c950f6e526ecf551dc35"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.6_a0/new_section_x_labels.bin",
+      "bytes": 1688,
+      "sha256": "d9e6511548cc694b4bd8a470a10415d933732edb1e7e3dbb727808edef248d9f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.6_a0/new_section_y_keep.bin",
+      "bytes": 1426,
+      "sha256": "fb729e562b336f4d8c172218cb70542e7af7f7df7df3fb236c1b9f109339bd56"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.6_a0/new_section_y_labels.bin",
+      "bytes": 1426,
+      "sha256": "78a7c38f0c664a090ac1032864ea305c961d24ba30be3e981ded617ddbd75ff7"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.6_a0/old_keep.bin",
+      "bytes": 52762,
+      "sha256": "0f343611cc3647390835ab547191c45804425d1c03f52580067767c7fdbf929d"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.6_a0/old_labels.bin",
+      "bytes": 52762,
+      "sha256": "e73c13ddc8749a2a730514538be3dd90956fcfcad275d9b7f67399a42a6e60d2"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.6_a0/old_section_x_keep.bin",
+      "bytes": 459,
+      "sha256": "1443e7e0968dc0c49f8c082d313385b6ba53f678f19d887aa08921883dad7b1f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.6_a0/old_section_x_labels.bin",
+      "bytes": 459,
+      "sha256": "334ab68bb2642da86c69f1391f1e4f0ffd79c8e91538d407d0e6aa3b63f7e4f2"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.6_a0/old_section_y_keep.bin",
+      "bytes": 348,
+      "sha256": "a5a2926c03522422e9d37b0471dd34bbeb48dbf2d8959dd4548a6564d6ee7cc9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.6_a0/old_section_y_labels.bin",
+      "bytes": 348,
+      "sha256": "6c316dee7b21c413f67b1f8a38dfb8528cddac92fc178fdbbead901259b35fb5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.6_a1/new_keep.bin",
+      "bytes": 48526,
+      "sha256": "98fcbadcfe2cddb0b75da07a5d655714c888833b03da62759b015b76ca7d9f4e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.6_a1/new_labels.bin",
+      "bytes": 48526,
+      "sha256": "4c535f7040b8b6891363ff5bfa941b68b747bfb77e2158942213b3158f5406cf"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.6_a1/new_section_x_keep.bin",
+      "bytes": 1688,
+      "sha256": "a1a9a3ce49eb5e0f6983f1c6ee81aa77d58fdddd0293c950f6e526ecf551dc35"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.6_a1/new_section_x_labels.bin",
+      "bytes": 1688,
+      "sha256": "0bf6ff1cff368a377aa9c5ecadc64e0ffbb054f55f3996ba732c06f3be25653a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.6_a1/new_section_y_keep.bin",
+      "bytes": 1426,
+      "sha256": "fb729e562b336f4d8c172218cb70542e7af7f7df7df3fb236c1b9f109339bd56"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.6_a1/new_section_y_labels.bin",
+      "bytes": 1426,
+      "sha256": "1c6fbeddaf9328d7af55ce6f01f0ba41aaadab5a7fae476349bb94c06db9dc26"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.6_a1/old_keep.bin",
+      "bytes": 52762,
+      "sha256": "ff722d4d7ecbf177701d627927f09f56822668b8a56725e4eeea2adbf940c79f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.6_a1/old_labels.bin",
+      "bytes": 52762,
+      "sha256": "60cbbacc4db9303edebcebf83310028bcf4415152a397109a42af636d1963ade"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.6_a1/old_section_x_keep.bin",
+      "bytes": 459,
+      "sha256": "3f6be8a6f97d16458195f5028dcda782d5d2f0db14f6e16136de287332137f16"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.6_a1/old_section_x_labels.bin",
+      "bytes": 459,
+      "sha256": "034586c32439a130bec48a45b7789e45635cfbfd424585b9063da82860c828e6"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.6_a1/old_section_y_keep.bin",
+      "bytes": 348,
+      "sha256": "a094cf10ec19c4f2a1798ac1120bc2c157086eae2568456bb68239a51548e12b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/image_direction_d0.6_a1/old_section_y_labels.bin",
+      "bytes": 348,
+      "sha256": "3a0244b0a1262b72a92ce7506c3f4bb39274910a245bfbe987c3f796c555ad8d"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/new_indices.bin",
+      "bytes": 388208,
+      "sha256": "2ac6e44be206875daff5d1da160a34f337d105a8c9bcaf414a78bb4d2e84531d"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/new_section_x_indices.bin",
+      "bytes": 13504,
+      "sha256": "695366f2df16a22f8b4c9256261e5541786dfea09517eb3c1db035a81ae0096b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/new_section_x_xyz.bin",
+      "bytes": 20256,
+      "sha256": "0b746dcb76c4bba9a091d4ed28582d52808c2cc34e057ccd122efc30e36032a4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/new_section_y_indices.bin",
+      "bytes": 11408,
+      "sha256": "02781792a4f1c172acaf912df2d80c2002f83d5f2936c8139cc240c1d620c8cd"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/new_section_y_xyz.bin",
+      "bytes": 17112,
+      "sha256": "3bb00bcba07e8de9ebe98e4c16364376a7de59783334c469e376a06654a25952"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/new_xyz.bin",
+      "bytes": 582312,
+      "sha256": "8656911d212a6c916abb6bb02df22001810cc8ea199609bae0bd03afcec91f4c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/old_indices.bin",
+      "bytes": 422096,
+      "sha256": "a32c4544dd3be195123660320ffd73d2b98ddb09ce062b58adbf7e290276581e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/old_section_x_indices.bin",
+      "bytes": 3672,
+      "sha256": "4f1e9203aaf83eb2541076aa91c75b4fb9055cfd687cfe5f63b1f41e5fc36949"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/old_section_x_xyz.bin",
+      "bytes": 5508,
+      "sha256": "4adfa4ac546f5da0d5c6f9acaac111148ad94720f5fef22814b2c2debe81a229"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/old_section_y_indices.bin",
+      "bytes": 2784,
+      "sha256": "916ee824f61f65c5487e5f207211a2b47fcf899ec918aac7baf240c09995e535"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/old_section_y_xyz.bin",
+      "bytes": 4176,
+      "sha256": "535548a1d180f934e92d548612ef12e73ec74151788437d99e9a862a5c4ce2a9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/display/old_xyz.bin",
+      "bytes": 633144,
+      "sha256": "871d9d13c421e73620f874f9fada1ad031b22e72f9e7aa02437b0319f867a214"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/downloads/common.npz",
+      "bytes": 4112724,
+      "sha256": "b0c487158b2b67097eeaf95a208b5439a5b5c4ead95126369f3ead87efeabbb8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/downloads/estimated_bidir_d0.1_a0.npz",
+      "bytes": 2276260,
+      "sha256": "34558abb336279e28cb6deb31cd914cab90e55ee915a5961ce9716aa895bc1ae"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/downloads/estimated_bidir_d0.1_a0.ply",
+      "bytes": 2403066,
+      "sha256": "1b85328750087654848d89af4ff42a65923f7ebb3e5fddd2fb52061724d934a7"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/downloads/estimated_bidir_d0.1_a1.npz",
+      "bytes": 2332039,
+      "sha256": "58420938d4b16fc6bdb5567184569a30e5b7a498ce75c945565bbeca20120aa3"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/downloads/estimated_bidir_d0.1_a1.ply",
+      "bytes": 2542417,
+      "sha256": "91b9ae4e2fbfff61ba1cf8bdf365c4759e390151016c9743e5d93812120b6e1e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/downloads/estimated_bidir_d0.3_a0.npz",
+      "bytes": 1713830,
+      "sha256": "9b5db6c815b00bdc1c88b812e2bb83a1031509b3cd35eed7f01a3927520308a5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/downloads/estimated_bidir_d0.3_a0.ply",
+      "bytes": 1909016,
+      "sha256": "9e16bae7ab0926b50e5c765d32edf189a9c7f610e0a471cc299920f691a1054b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/downloads/estimated_bidir_d0.3_a1.npz",
+      "bytes": 1759832,
+      "sha256": "f1ca89029f6c7575392fc8f2846a0b2d1a8933586f932c926f3f3e48f37cb4bc"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/downloads/estimated_bidir_d0.3_a1.ply",
+      "bytes": 2021016,
+      "sha256": "513b260d2f8d89c91560c4ea39327a6e796bdbe4135315cd70db7a13de1b92a0"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/downloads/estimated_bidir_d0.6_a0.npz",
+      "bytes": 1363516,
+      "sha256": "aa017108ed3aa3474da374bb5d8779bc0797a5cff4afff4c2f8c5497f91fa19a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/downloads/estimated_bidir_d0.6_a0.ply",
+      "bytes": 1615291,
+      "sha256": "cfb2dd60b61c64bd388ff457b0820b7d6bf3a33bb18bb4a5fed67ab513a66702"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/downloads/estimated_bidir_d0.6_a1.npz",
+      "bytes": 1398152,
+      "sha256": "7148c2a34d33d061780a973e49324dea0ea85e9efec717261a202d15f408206f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/downloads/estimated_bidir_d0.6_a1.ply",
+      "bytes": 1695416,
+      "sha256": "fec8699073b6c2f834e66778a2c7f441605a1265e8bc9d7973c3b915fa13aea8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/downloads/image_direction_d0.1_a0.npz",
+      "bytes": 2351871,
+      "sha256": "5da66a3cc8bb2a29e88361fa151aef8678a043142598298d2893a4866bf11cbe"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/downloads/image_direction_d0.1_a0.ply",
+      "bytes": 2583842,
+      "sha256": "e8c62f1ebc94976471bf7b86731851e61ceb9925c453c6c9ab6ac9775399e749"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/downloads/image_direction_d0.1_a1.npz",
+      "bytes": 2392283,
+      "sha256": "bcbbe87b911fa211f0ec3e3a920553be0ebd74e199832f91427d40ad58af87ab"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/downloads/image_direction_d0.1_a1.ply",
+      "bytes": 2676292,
+      "sha256": "10a816400b193e8daabd2ec270c50e3ae41dcc96e2ede524b8c9a2cf7b2d039c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/downloads/image_direction_d0.3_a0.npz",
+      "bytes": 1765318,
+      "sha256": "aa819430426232c53dbb802cd60ed257b0c42be7f40c8dee7b8edee8acda6c8b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/downloads/image_direction_d0.3_a0.ply",
+      "bytes": 2034541,
+      "sha256": "377bed965b2b688ddfc699c06e15dcc2b9f55312f290ec9e443ecd2163ca691f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/downloads/image_direction_d0.3_a1.npz",
+      "bytes": 1788672,
+      "sha256": "35a267b808d0d4d5fe8ed5982963daf51d5b9b7477d640530acb0310610cf707"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/downloads/image_direction_d0.3_a1.ply",
+      "bytes": 2088916,
+      "sha256": "6e09aa56c2e6bda193b4313f84a23828885192deb568963eebf3ce3f0828cc90"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/downloads/image_direction_d0.6_a0.npz",
+      "bytes": 1396807,
+      "sha256": "d1cf1cccdd4ddc322c4882f635cf1046546a4ef6d51ad06cdea0b6cade35c540"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/downloads/image_direction_d0.6_a0.ply",
+      "bytes": 1696966,
+      "sha256": "889b25264f149ba3bab91db779701b7807c97fbdce065d0343a875c0f33dd1da"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/downloads/image_direction_d0.6_a1.npz",
+      "bytes": 1411103,
+      "sha256": "68d520efb933c1c0257f49bd93028e450d39f0fc6a221b5985c0f030460d3d0f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/downloads/image_direction_d0.6_a1.ply",
+      "bytes": 1729441,
+      "sha256": "7eb2599814e3b95b7e8a330c916cc58e757450bfe9592b146be7fd43e3a74936"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/figures/cross_sections.png",
+      "bytes": 174058,
+      "sha256": "c33b022fedaf82322dabb2ea3dd17835ea2f1617cfe6e6a07ef91437106e8bde"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/figures/height_comparison.png",
+      "bytes": 197699,
+      "sha256": "fd78ec2bfe737b032dc17ed2c4de51a37f983c4a7a2f9c11ad3612c9adeda7d7"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/index.html",
+      "bytes": 93839,
+      "sha256": "a643c00d108d017982d44be0f8c34eafed5f7d76e90dd5697ab17254d5d58efb"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/receipts/estimated_bidir_d0.1_a0.json",
+      "bytes": 5725,
+      "sha256": "8f3726b7f72ef68588a173198b0bccb91576f829379a107537643b0dab7b9a1d"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/receipts/estimated_bidir_d0.1_a1.json",
+      "bytes": 5728,
+      "sha256": "fcd48831d8ac8702c4d6f7da135f1c57f8fb14ca5f2a7f92084a5194600af63e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/receipts/estimated_bidir_d0.3_a0.json",
+      "bytes": 5729,
+      "sha256": "a8e1cc173fde7ef5757ae88190eafa4881ec13a3496b616545aebdcdcc63511c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/receipts/estimated_bidir_d0.3_a1.json",
+      "bytes": 5728,
+      "sha256": "066af8115bde2524898e103c42068546f9455da8dd7f2bea673837d2a692285c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/receipts/estimated_bidir_d0.6_a0.json",
+      "bytes": 5726,
+      "sha256": "60ac2e4ec573e67984fe55776ee2062782dfd0ef76c6411a8d01a952302b6e80"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/receipts/estimated_bidir_d0.6_a1.json",
+      "bytes": 5726,
+      "sha256": "ab4cdbc5a588fe304b0ce2550c057385351204ee4b0947e653686d6cba93b6a8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/receipts/evaluation.json",
+      "bytes": 66624,
+      "sha256": "a5a505d9a44c62acf418d45794faa877bd519875fb7a3a2191239af00939c9cb"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/receipts/image_direction_d0.1_a0.json",
+      "bytes": 5529,
+      "sha256": "d84b6e95afb8718302eaf6d89050d242c12e341739de90cf5a458f60fff385d3"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/receipts/image_direction_d0.1_a1.json",
+      "bytes": 5527,
+      "sha256": "0d0a898b329ea84b5325e6d760e33e08e6171c1876e5c506654f04e6cdfcb474"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/receipts/image_direction_d0.3_a0.json",
+      "bytes": 5527,
+      "sha256": "477eb7a1fb42099b8cf8569a3e5072914570203ad6da9a9d5253fa78d0ad3372"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/receipts/image_direction_d0.3_a1.json",
+      "bytes": 5527,
+      "sha256": "b474f12ca9869c6a86843e62c4788cf891e1de4b523d429d0458dc97a31f93a2"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/receipts/image_direction_d0.6_a0.json",
+      "bytes": 5528,
+      "sha256": "0d3f0584622a6ee6a6b1b56b6335f1fa3c7da1567541ac55ee90072bb1af0cfb"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/receipts/image_direction_d0.6_a1.json",
+      "bytes": 5528,
+      "sha256": "45240ffc10822a2c7d80705e777f592d528f77c7c01e0180b47f480f86ac6b35"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/receipts/update_receipt.json",
+      "bytes": 78963,
+      "sha256": "7ac18469448e84ae2be4a8b3c68f4969aca1c04fda4910cd33940774d4ecc6f4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/receipts/viewer_config.json",
+      "bytes": 534,
+      "sha256": "69d465f17728ffde6369b35093c5248b47c06fbe354ed6da84750f169ab4875b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/three.module.min.js",
+      "bytes": 670681,
+      "sha256": "3e690ac7d180b0aadf0891bea39eec643e29e2d3e75c99b18689518665f69ba6"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2/run/viewer_manifest.json",
+      "bytes": 69635,
+      "sha256": "0bc693306ac7e5861f2b7b122d3e4baff430bd0a94013ad9e2fb3b7ecab7ce09"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2.console.log",
+      "bytes": 90,
+      "sha256": "98a0312121a729cc1e10d87237e6663a9319b1d58227d2baf47b7b8c266d2a4c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2-r2_source/SOURCE_MANIFEST.json",
+      "bytes": 288308,
+      "sha256": "b1bc4ac2974054893cca27ad44afbb6eabcb06c1832ff0401376f73ed3837773"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2.console.log",
+      "bytes": 90,
+      "sha256": "98a0312121a729cc1e10d87237e6663a9319b1d58227d2baf47b7b8c266d2a4c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-VIEWER-v2_source/SOURCE_MANIFEST.json",
+      "bytes": 287944,
+      "sha256": "5f54baa18d87061789930c6de74259ea4fe0081bb21feddd65b334e9e0c67e8c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/preservation_start_v2/preexisting_work.tar.gz",
+      "bytes": 712723,
+      "sha256": "07f33d7f39c9b2206abf2791399a95c472604f08d575c9d26b9ad7f68c2bb66c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p3_v2/preservation_start_v2/preservation.json",
+      "bytes": 56266,
+      "sha256": "0eae08c14b6934ccec10f68fb2ffa75940f4b213a89e14640af3b0abbae25213"
+    }
+  ]
+}

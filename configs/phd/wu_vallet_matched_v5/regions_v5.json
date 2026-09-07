@@ -1,0 +1,195 @@
+{
+  "schema": "jointbuildgs.wu_vallet.matched.v5",
+  "task_id": "PHD-WU-VALLET-MATCHED-v5",
+  "scientific_verdict": null,
+  "artifact_root": "/artifacts/JointBuildGS",
+  "source_config": "configs/phd/mvs_als_source_relation_v1/run_v1.json",
+  "working_crs": "EPSG:25832",
+  "frame": {
+    "horizontal_crs": "EPSG:25832",
+    "working_coordinates": "SCENE_LOCAL_XYZ",
+    "world_shift_xyz_m": [
+      690953.0,
+      5336071.0,
+      604.0
+    ]
+  },
+  "regions": {
+    "P1": {
+      "region_id": "P1",
+      "patch_config": "configs/phd/surface_patch_rg_v1/run_v1.json",
+      "camera_config": "configs/phd/evidence_bank_v1/run_v1.json",
+      "tile_xy": [
+        3,
+        4
+      ],
+      "domain": {
+        "x": [
+          -23.0,
+          7.0
+        ],
+        "y": [
+          -21.0,
+          9.0
+        ],
+        "z": [
+          -44.272,
+          -25.962
+        ]
+      },
+      "context_domain": {
+        "x": [
+          -48.0,
+          32.0
+        ],
+        "y": [
+          -46.0,
+          34.0
+        ],
+        "z": [
+          -90.0,
+          80.0
+        ]
+      },
+      "patch_manifest_sha256": "1a3c5cfb7e8e08c802959e69e240fa6e9831f53556fc1d70582e96fd31b4f742",
+      "evidence_manifest_sha256": "d80c5f41eb1aee73a8d6b58d91d84098d9400801fb5bd81b42c332d5abfa705a",
+      "common_root": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run/common",
+      "acquisition_root": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-P1-ACQUISITION-v4/run",
+      "trajectory_root": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-P1-TRAJECTORY-v4/run",
+      "frozen_view_count": 113,
+      "original_native_npz": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-P1-INPUT-v4/run/common/native.npz",
+      "original_native_sha256": "ef4dba8cf7946ebc7e0337c234298ae9af27e6c46add561cbecdca298e7db794"
+    },
+    "P2": {
+      "region_id": "P2",
+      "patch_config": "configs/phd/surface_patch_rg_v1/run_v1_p2.json",
+      "camera_config": "configs/phd/evidence_bank_v1/run_v1_p2.json",
+      "tile_xy": [
+        4,
+        4
+      ],
+      "domain": {
+        "x": [
+          110.0,
+          158.0
+        ],
+        "y": [
+          86.0,
+          132.0
+        ],
+        "z": [
+          -49.386,
+          -17.679
+        ]
+      },
+      "context_domain": {
+        "x": [
+          85.0,
+          183.0
+        ],
+        "y": [
+          61.0,
+          157.0
+        ],
+        "z": [
+          -90.0,
+          80.0
+        ]
+      },
+      "patch_manifest_sha256": "cb2aecffb2dda99cdb077dd55294faba99779dbe294d28ea39599d025574dc89",
+      "evidence_manifest_sha256": "2f35d8de83280e41b3ad2829d67994d5efacc510c57bafd8206dcfcb916dda6d",
+      "common_root": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run/common",
+      "acquisition_root": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-P2-ACQUISITION-v4/run",
+      "trajectory_root": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-P2-TRAJECTORY-v4/run",
+      "frozen_view_count": 66,
+      "original_native_npz": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-P2-INPUT-v4/run/common/native.npz",
+      "original_native_sha256": "4d64f75d2acdb9ccf3db1f1bdff6c37b954c0519cf349c4ae7330c4302981d6a"
+    },
+    "P3": {
+      "region_id": "P3",
+      "patch_config": "configs/phd/surface_patch_rg_v1/run_v1_p3.json",
+      "camera_config": "configs/phd/evidence_bank_v1/run_v1_p3.json",
+      "tile_xy": [
+        3,
+        4
+      ],
+      "domain": {
+        "x": [
+          -60.0,
+          -20.0
+        ],
+        "y": [
+          -42.0,
+          12.0
+        ],
+        "z": [
+          -49.223,
+          -16.993
+        ]
+      },
+      "patch_manifest_sha256": "30cb8e00dc504d1c4392daaadea697475624fbc50059dce0e74852b8dcf3788d",
+      "evidence_manifest_sha256": "20ab53839cb17408163de69cbf0262bf5be9ccd35efef7432cc74281ba7fcaf1",
+      "frozen_view_count": 157,
+      "common_root": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run/common",
+      "context_domain": {
+        "x": [
+          -85.0,
+          5.0
+        ],
+        "y": [
+          -67.0,
+          37.0
+        ],
+        "z": [
+          -90.0,
+          80.0
+        ]
+      },
+      "original_native_npz": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_p3_v1/PHD-WU-VALLET-P3-v1-r2/common/native.npz",
+      "original_native_sha256": "ef75f95818fb7d7edc7b3eebd43f794b91986e30a6020d946849a1c4b3908f57",
+      "acquisition_root": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-ACQUISITION-ADAPTER-v5/run",
+      "original_acquisition_root": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-ACQUISITION-v2",
+      "original_acquisition_sha256": "5e5edb4b94996cfbd55aa9c1b5b6c6f0502ac1b48a65c6d50b93e153f30adfe4",
+      "trajectory_root": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-TRAJECTORY-ADAPTER-v5/run",
+      "original_trajectory_root": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-TRAJECTORY-v2",
+      "original_trajectory_sha256": "aa90db5e07c547f598e1e249658c53ee73b528ba3eb2840bf26174cbe9b26f20"
+    }
+  },
+  "view_selection": {
+    "mode": "max_native_xy_cells",
+    "decision_count": "ALL_FROZEN_REGIONAL_VIEWS",
+    "seed": "PHD-WU-VALLET-P3-v1",
+    "minimum_faces": 64,
+    "xy_cell_size_m": 0.5,
+    "tie_break": "ascending SHA256(seed + decimal COLMAP image ID), then first hash rank",
+    "rule": "For every region audit every previously frozen regional view. Among meshes with >=64 faces choose maximal occupied 0.5m XY cells of its own native sensor-mesh vertices in the unchanged prism. No current UAS, MVS agreement, photometric metric, update outcome or reference quality is used.",
+    "status": "Same deterministic protocol for all regions; historical development sets, not untouched confirmation."
+  },
+  "image_mesh": {
+    "max_edge_length_m": 2.0,
+    "max_depth_jump_m": 1.0,
+    "pixel_center_offset": 0.0,
+    "retain_isolated_vertices": false
+  },
+  "als_mesh": {
+    "max_scan_gap": 1,
+    "max_beam_coordinate_gap": 32.0,
+    "max_edge_length_m": 2.0
+  },
+  "distance_tolerance_m": 0.3,
+  "area_sensitivity_m2": [
+    0.25,
+    1.0,
+    4.0
+  ],
+  "primary_area_m2": 1.0,
+  "changed_only_sensitivity_area_m2": 1.0,
+  "scope": "Matched v5 input protocol for P1/P2/P3: all frozen regional views, one identical selection/mesh/crop/context rule; every region gets newly prepared common inputs. Native source coordinates and original membership unchanged. Acquisition and estimated origins reused exactly, with lossless P3 schema-key adaptation. UAS raw and reference crops are absent from candidate container mounts. All regions are development-used; no blinded-confirmation claim.",
+  "context_rule": {
+    "xy_padding_m": 25.0,
+    "z": [
+      -90.0,
+      80.0
+    ]
+  }
+}

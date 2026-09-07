@@ -1,0 +1,13 @@
+{
+  "task_id": "PHD-WU-VALLET-P3-FILTER-v3",
+  "scientific_verdict": null,
+  "update_root": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run",
+  "frozen_arms": {"v2_a0": "estimated_bidir_d0.3_a0", "v2_a1": "estimated_bidir_d0.3_a1"},
+  "area_sensitivity_m2": [0.25, 1.0, 4.0],
+  "changed_only_sensitivity_area_m2": 1.0,
+  "area_parameter_basis": "Declared full-context edge-connected changed-triangle area sensitivity, fixed without reference feedback. The paper does not publish this exact threshold, area metric, aggregation or removed-region relabeling rule.",
+  "reference_npz": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_p3_v1/PHD-WU-VALLET-P3-EVALUATION-v1-r2/evaluation/evaluation_reference.npz",
+  "reference_sha256": "a72041a28c8242d3901f5696d88e607473814299baab43103fda89fc179b1f81",
+  "reference_large_discrepancy_m": 2.0,
+  "scope": "Replay frozen raw decisions without rerunning rays. Correct only filtered-new-region admission bookkeeping; preserve original SINGLE separately and every retained native XYZ exactly. UAS is opened only in a separate evaluation process after candidate sealing. No statistical outlier filter, PSMNet, GS, or reference-based selection."
+}

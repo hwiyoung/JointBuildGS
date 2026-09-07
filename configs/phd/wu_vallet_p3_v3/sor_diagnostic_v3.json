@@ -1,0 +1,14 @@
+{
+  "task_id": "PHD-WU-VALLET-P3-SOR-DIAGNOSTIC-v3",
+  "mesh_npz": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/meshes.npz",
+  "common_npz": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run/common.npz",
+  "sor": {"nb_neighbors": 20, "std_ratio": 2.0},
+  "parameter_basis": "Open3D official outlier-removal tutorial parameters, fixed before this diagnostic; neither Wu-Vallet defaults nor reference-tuned settings. Same parameters for full sensor context and P3-only input.",
+  "official_source": "https://www.open3d.org/docs/release/tutorial/geometry/pointcloud_outlier_removal.html#Statistical-outlier-removal",
+  "reference_npz": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_p3_v1/PHD-WU-VALLET-P3-EVALUATION-v1-r2/evaluation/evaluation_reference.npz",
+  "reference_sha256": "a72041a28c8242d3901f5696d88e607473814299baab43103fda89fc179b1f81",
+  "diagnostic_reference_distance_m": 2.0,
+  "diagnostic_distance_basis": "Reuse the previously reported 2m post-hoc reference discrepancy stratum only after SOR masks are frozen; never a source acceptance rule.",
+  "workers": 4,
+  "scientific_verdict": null
+}

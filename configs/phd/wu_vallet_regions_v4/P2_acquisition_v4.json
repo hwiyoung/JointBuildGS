@@ -1,0 +1,22 @@
+{
+  "schema": "jointbuildgs.wu_vallet.regional_acquisition.v4",
+  "task_id": "PHD-WU-VALLET-P2-ACQUISITION-v4",
+  "artifact_root": "/artifacts/JointBuildGS",
+  "native_relative_path": "phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-P2-INPUT-v4/run/common/als_native.npz",
+  "native_sha256": "795e32f053957e22e90a1685147b57c551ddf3538cd061cff7b503cf69a4691c",
+  "source_config": "configs/phd/mvs_als_source_relation_v1/run_v1.json",
+  "output_relative_path": "phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-P2-ACQUISITION-v4/run",
+  "context_time_padding_seconds": 0.25,
+  "scan_reset_degrees": 5.0,
+  "scan_reset_sensitivity_degrees": [
+    2.0,
+    5.0,
+    10.0,
+    20.0
+  ],
+  "minimum_scan_boundaries": 4,
+  "scientific_verdict": null,
+  "scope": "Exact regional ALS raw-row replay, pulse and scan order; same frozen P3 v2 algorithm/settings. No reference or imagery used.",
+  "region_id": "P2",
+  "expected_region_points": 45986
+}

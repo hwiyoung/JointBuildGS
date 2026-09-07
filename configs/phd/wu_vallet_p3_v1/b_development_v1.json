@@ -1,0 +1,32 @@
+{
+  "task_id": "PHD-WU-VALLET-P3-B-DEVELOPMENT-v1",
+  "common_root": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_p3_v1/PHD-WU-VALLET-P3-v1-r2/common",
+  "scope": "Source-conditioned P3 reconstruction development; not Wu-Vallet reproduction, source authority, or a proposed-method efficacy result",
+  "scientific_verdict": null,
+  "arms": [
+    {"name": "mvs_color", "source": "mvs", "geometry": false},
+    {"name": "als_color", "source": "als", "geometry": false},
+    {"name": "union_color", "source": "union", "geometry": false},
+    {"name": "als_bounded_normal", "source": "als", "geometry": true}
+  ],
+  "seed": 70926,
+  "steps": 384,
+  "maximum_view_dimension_px": 768,
+  "seed_voxel_m": 0.25,
+  "structure_cell_m": 4.0,
+  "scale_spacing_factor": 0.8,
+  "minimum_scale_m": 0.12,
+  "maximum_scale_m": 0.4,
+  "detail_spacing_factor": 0.2,
+  "minimum_detail_bound_m": 0.02,
+  "maximum_detail_bound_m": 0.15,
+  "initial_opacity": 0.9,
+  "minimum_detail_views": 3,
+  "foreground_exclusion_gap_m": 0.5,
+  "color_lr": 0.015,
+  "normal_lr": 0.001,
+  "normal_limit_m": 0.15,
+  "normal_anchor_weight": 0.02,
+  "parameter_basis": "Predeclared engineering diagnostic settings; 0.15 m is a displacement cap, not a calibrated source accuracy bound. Equal 384 steps and view order. No reference tuning. Normal changes test sensitivity to RGB fitting, not certified geometric detail recovery.",
+  "limits": ["All selected views and the exact937 MVS have historical development use", "Visibility is conditional on each source surface; external occlusion remains unresolved", "Source selection and Wu-Vallet original reproduction remain separate", "Native voxel-selected points initialize Gaussians; Gaussian centers are not extracted surfaces", "No densification, structural normal rotation, or semantic reconstruction is tested"]
+}

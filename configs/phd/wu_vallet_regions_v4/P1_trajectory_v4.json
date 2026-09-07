@@ -1,0 +1,82 @@
+{
+  "schema": "jointbuildgs.wu_vallet.regional_estimated_trajectory.v4",
+  "task_id": "PHD-WU-VALLET-P1-TRAJECTORY-v4",
+  "artifact_root": "/artifacts/JointBuildGS",
+  "acquisition_relative_path": "phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-P1-ACQUISITION-v4/run/acquisition.npz",
+  "output_relative_path": "phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-P1-TRAJECTORY-v4/run",
+  "multiple_pulse_sampling_interval_s": 0.001,
+  "max_pulse_collinearity_error_m": 0.01,
+  "require_same_recorded_scan_angle_per_pulse": true,
+  "sampling_rule": "largest first-last separation complete nonambiguous pulse per time bin, then earliest time tie-break",
+  "main_variant": "sep2_pad025_forward",
+  "variants": [
+    {
+      "name": "sep2_pad025_forward",
+      "min_return_separation_m": 2.0,
+      "padding_s": 0.25,
+      "objective": "forward_endpoint"
+    },
+    {
+      "name": "sep1_pad025_forward",
+      "min_return_separation_m": 1.0,
+      "padding_s": 0.25,
+      "objective": "forward_endpoint"
+    },
+    {
+      "name": "sep5_pad025_forward",
+      "min_return_separation_m": 5.0,
+      "padding_s": 0.25,
+      "objective": "forward_endpoint"
+    },
+    {
+      "name": "sep2_pad010_forward",
+      "min_return_separation_m": 2.0,
+      "padding_s": 0.1,
+      "objective": "forward_endpoint"
+    },
+    {
+      "name": "sep2_pad025_reverse",
+      "min_return_separation_m": 2.0,
+      "padding_s": 0.25,
+      "objective": "weighted_reverse_line"
+    }
+  ],
+  "fit_config": {
+    "min_return_separation_m": 2.0,
+    "separation_weight_cap_m": 50.0,
+    "min_train_pulses": 100,
+    "min_holdout_pulses": 30,
+    "holdout_every": 5,
+    "max_condition_number": 10000.0,
+    "robust_line_scale_m": 1.0,
+    "robust_endpoint_scale_m": 0.02,
+    "max_holdout_line_p90_m": 5.0,
+    "max_holdout_endpoint_p90_m": 0.05,
+    "min_sensor_range_m": 50.0,
+    "max_sensor_range_m": 5000.0,
+    "min_forward_fraction": 0.99,
+    "max_speed_m_per_s": 200.0,
+    "bootstrap_repetitions": 16,
+    "max_bootstrap_origin_p95_m": 10.0,
+    "random_seed": 20260907,
+    "objective": "forward_endpoint",
+    "max_irls_iterations": 12,
+    "max_nonlinear_evaluations": 80,
+    "bootstrap_mode": "contiguous_time_blocks",
+    "bootstrap_blocks": 12
+  },
+  "origin_role": "ESTIMATED_SENSOR_ORIGINS_FROM_MULTIRETURN_LINES",
+  "threshold_role": "Declared development plausibility and sampling-stability guards; not calibrated to current UAS, MVS, GT or downstream labels",
+  "literature": [
+    "https://arxiv.org/html/2208.12116v1",
+    "https://pdal.io/en/2.7.2/stages/filters.trajectory.html"
+  ],
+  "differences_from_PDAL": [
+    "Independent local linear windows instead of joint cubic spline",
+    "No scan-angle or attitude objective",
+    "SciPy optimizer instead of Ceres",
+    "Declared holdout, conditioning and temporal-block bootstrap gates"
+  ],
+  "scientific_verdict": null,
+  "region_id": "P1"
+}

@@ -1,0 +1,10 @@
+{
+  "task_id": "PHD-WU-VALLET-P1-VISIBLE-IMAGE-SUPPORT-v4",
+  "regions_config": "configs/phd/wu_vallet_regions_v4/regions_P1_visible_v4.json",
+  "regions": [
+    "P1"
+  ],
+  "xy_cell_size_m": 0.5,
+  "scientific_verdict": null,
+  "scope": "Audit all 113 frozen decision views in the P1-visible sensitivity. Count finite native depth endpoints in XY versus exact XYZ, slab ray/prism relations, native fused-MVS XY support and camera projection. Before-prism depth may mean foreground or erroneous depth; this audit cannot distinguish them. No UAS/GT, crop expansion, master reselection, point modification, filtering, or downstream score feedback."
+}

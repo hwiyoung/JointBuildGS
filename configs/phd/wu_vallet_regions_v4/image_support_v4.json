@@ -1,0 +1,8 @@
+{
+  "task_id": "PHD-WU-VALLET-REGIONS-IMAGE-SUPPORT-v4",
+  "regions_config": "configs/phd/wu_vallet_regions_v4/regions_v4.json",
+  "regions": ["P1", "P2"],
+  "xy_cell_size_m": 0.5,
+  "scientific_verdict": null,
+  "scope": "Audit all 40 frozen decision views per region. Count finite native depth endpoints in XY versus exact XYZ, slab ray/prism relations, native fused-MVS XY support and camera projection. Before-prism depth may mean foreground or erroneous depth; this audit cannot distinguish them. No UAS/GT, crop expansion, master reselection, point modification, filtering, or downstream score feedback."
+}
