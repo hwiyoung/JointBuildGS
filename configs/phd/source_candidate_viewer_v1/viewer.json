@@ -1,0 +1,14 @@
+{
+  "schema": "jointbuildgs.source_candidate.viewer.v1",
+  "task_id": "PHD-SOURCE-CANDIDATE-VIEWER-v1",
+  "source_run": "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1",
+  "port": 8903,
+  "bind": "127.0.0.1",
+  "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+  "browser_image": "sha256:5043f84d76db9d54e64fcf457125aad90ac5423fded88eca6cf487d2b4713a9e",
+  "cpus": 3,
+  "memory": "4g",
+  "regional_display_point_cap_per_source": 60000,
+  "scientific_verdict": null,
+  "interpretation": "Read-only view of frozen candidates, observations, source decisions and post-freeze reference metrics. Display-only point sampling and camera controls never alter measurements. No new source decisions or GS training."
+}

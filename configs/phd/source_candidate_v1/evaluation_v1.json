@@ -1,0 +1,12 @@
+{
+  "task_id": "PHD-SOURCE-CANDIDATE-P1P2P3-v1",
+  "scientific_verdict": null,
+  "selection_deadband_m": 0.1,
+  "completeness_thresholds_m": [0.1,0.2,0.5,1.0,2.0],
+  "reference_interpretation": "Frozen native UAS numerical discrepancy; existing EPSG:32632 header versus EPSG:25832 working bridge is not recalibrated. No reference-dependent registration or parameter selection.",
+  "references": {
+    "P1": {"path": "/reference/P1/reference.npz", "sha256": "3d111cf0cd8ab39fccb85ce0075486ec40f4f60584b5c68b2ab122918b321543"},
+    "P2": {"path": "/reference/P2/reference.npz", "sha256": "9dc75111e8a5e83808d566c0b6621092423898a1f6badb9438f1a0d75e16e7ba"},
+    "P3": {"path": "/reference/P3/reference.npz", "sha256": "a72041a28c8242d3901f5696d88e607473814299baab43103fda89fc179b1f81"}
+  }
+}

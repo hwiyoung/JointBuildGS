@@ -1,0 +1,26 @@
+{
+  "schema": "jointbuildgs.source_candidate.v1",
+  "task_id": "PHD-SOURCE-CANDIDATE-P1P2P3-v1",
+  "status": "USER_AUTHORIZED_DEVELOPMENT_NON_CONFIRMATORY",
+  "authorization": "2026-09-08 user requested running the multiview source-specific 3D candidate evaluator on P1/P2/P3 with candidate-input, observation, source-decision quantitative/qualitative analysis.",
+  "scientific_verdict": null,
+  "method_scope": "Custom nonlearned finite-plane multiview evaluator inspired by COLMAP view/hypothesis scoring; not execution or reproduction of COLMAP PatchMatch. No GS training or geometry update.",
+  "working_crs": "EPSG:25832",
+  "coordinates": "Existing scene-local native XYZ; no transform reapplication",
+  "source_names": ["mvs", "als"],
+  "gravity_manifest": "artifacts/manifests/gate_s0/freeze_recovery_v1/technical_freeze_manifest_v1.json",
+  "rgb_root": "phase-payloads/p0-audit/data/work/mvs/colmap_dense/images",
+  "regions": {
+    "P1": {"domain": {"x": [-23,7], "y": [-21,9], "z": [-44.272,-25.962]}, "common_root": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run/common", "native_sha256": "ef4dba8cf7946ebc7e0337c234298ae9af27e6c46add561cbecdca298e7db794", "views_sha256": "c31f3bed179b9fc59ea48203d7cb5a65d72e2399bad170eba064624e22d12a04", "view_count": 113},
+    "P2": {"domain": {"x": [110,158], "y": [86,132], "z": [-49.386,-17.679]}, "common_root": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run/common", "native_sha256": "4d64f75d2acdb9ccf3db1f1bdff6c37b954c0519cf349c4ae7330c4302981d6a", "views_sha256": "c58fabaa43a5ab65934601e0e677eb845449900c9a362ee2a5b998b78056975e", "view_count": 66},
+    "P3": {"domain": {"x": [-60,-20], "y": [-42,12], "z": [-49.223,-16.993]}, "common_root": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run/common", "native_sha256": "b2a30325d0742ee1c426ea24cdac8519fd39d148189e98566b82214bb2db7acf", "views_sha256": "165af276acdc1abc99afa578cc78908849ede0512bc2022368c8a6542f6b057a", "view_count": 157}
+  },
+  "geometry": {"cell_m": 2.0, "min_points": 6, "fit_cap": 512, "seed": 41, "ransac_trials": 64, "inlier_distance_m": 0.15, "minimum_inlier_fraction": 0.6, "minimum_second_spread_m": 0.08},
+  "self_visibility": {"downsample": 4, "splat_radius": 1, "semantics": "Own-source native-core point-depth hypotheses only. Not verified current depth, free space or full-scene visibility. Missing support remains unknown."},
+  "photometry": {"max_views": 16, "max_pairs": 24, "max_patch_centers": 9, "patch_width": 9, "minimum_patch_pixels": 16, "minimum_patch_fraction": 0.2, "minimum_patch_std": 2.0, "support_tolerance_m": 0.6, "angle_min_deg": 2.0, "angle_max_deg": 45.0, "preferred_angle_deg": 12.0, "resolution_ratio_max": 2.0, "visibility_tolerance_m": 0.75, "profile_offsets_m": [-2,-1,-0.5,0,0.5,1,2], "profile_shift_axis": "normal", "pixel_center_offset": 0.0},
+  "decision": {"min_common_pairs": 3, "min_distinct_views": 4, "min_disjoint_pairs": 2, "max_cost": 0.25, "margin": 0.05, "min_support_fraction": 0.75, "min_profile_separation": 0.03, "max_best_shift_m": 0.5, "profile_control_min_abs_shift_m": 1.0, "min_profile_coverage": 0.75},
+  "sensitivity": {"max_cost": [0.15,0.25,0.35], "margin": [0.02,0.05,0.1], "min_support_fraction": [0.67,0.75,1.0]},
+  "parameter_status": "Exploratory engineering defaults fixed jointly for all regions before image scores/reference. Full sensitivity reported; no winning threshold selected using UAS.",
+  "limitations": ["Fixed supplied camera poses and prior registration; uncertainty is not calibrated.", "Local dominant planes approximate native surface patches; sparse, linear, mixed cells remain inadmissible in the full census.", "All regional images and MVS share developmental image lineage; observations are not independent confirmatory views.", "Own-source local visibility is conditional; no absence/currentness proof or deletion permission.", "FUSION is not instantiated because a combined geometry/error model is not yet validated.", "P1/P2/P3 are developmental prisms, not representative independent buildings or ground-truth temporal-change classes."],
+  "runtime": {"image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774", "cpu": 6, "memory": "12g", "network": "none", "gpu": false}
+}

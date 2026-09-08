@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>소스 후보 평가 · JointBuildGS</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand-row"><div><div class="eyebrow">JOINTBUILDGS · SOURCE EVIDENCE</div><h1>어떤 기하를 사용할 수 있는가</h1></div><span class="research-badge">개발 검증 · 현재성 미확정</span></div>
+    <div class="navigation-row"><nav id="region-tabs" class="region-tabs" aria-label="실험 영역"></nav><div class="header-meta"><span id="task-label"></span><span id="seal-label" title="관측·판단을 고정한 뒤 참조 평가"></span></div></div>
+    <nav class="stage-tabs" aria-label="평가 단계" role="tablist">
+      <button type="button" role="tab" data-stage="1" data-testid="stage-1" aria-selected="true"><span>01</span> 후보입력 <small>실제 두 소스의 구조</small></button>
+      <button type="button" role="tab" data-stage="2" data-testid="stage-2" aria-selected="false"><span>02</span> 관측평가 <small>원본 영상으로 비교</small></button>
+      <button type="button" role="tab" data-stage="3" data-testid="stage-3" aria-selected="false"><span>03</span> 소스판단 <small>선택과 유보의 근거</small></button>
+    </nav>
+  </header>
+  <div id="error-banner" role="alert" hidden><span id="error-message"></span><button id="retry" type="button">다시 불러오기</button></div>
+  <div id="loading-indicator" class="loading-indicator" role="status" aria-live="polite">자료를 불러오는 중입니다.</div>
+  <main class="workspace">
+    <aside class="sidebar" aria-label="영역과 셀 탐색">
+      <div class="sidebar-heading"><h2 id="region-title">영역 탐색</h2><span class="chip">고정 2 m 셀</span></div>
+      <label class="field">지도 표시<select id="map-layer" data-testid="map-layer"><option value="action">소스판단</option><option value="gap">MVS − ALS 높이차</option><option value="coverage">공통 관측쌍 수</option></select></label>
+      <svg id="cell-map" data-testid="cell-map" role="img" aria-label="셀을 클릭하여 선택하는 영역 지도" viewBox="0 0 300 300"></svg>
+      <div id="map-legend" class="map-legend"></div><p id="map-description" class="micro"></p>
+      <label class="field">셀 필터<select id="cell-filter" data-testid="cell-filter"><option value="all">전체 셀</option><option value="IMAGE">IMAGE · 현재 MVS 선택</option><option value="PRIOR">PRIOR · 과거 ALS 선택</option><option value="ABSTAIN">ABSTAIN · 판단 유보</option><option value="large">높이차 절댓값 &gt; 1 m</option><option value="valid">두 후보 모두 유효</option></select></label>
+      <div class="cell-switch"><button id="cell-prev" type="button" aria-label="이전 셀">←</button><select id="cell-select" aria-label="셀 선택" data-testid="cell-select"></select><button id="cell-next" type="button" aria-label="다음 셀">→</button></div>
+      <div class="cell-jump"><input id="cell-search" type="number" min="0" step="1" placeholder="셀 ID" aria-label="이동할 셀 ID"><button id="cell-jump" type="button">이동</button></div>
+      <div id="filter-status" class="micro" aria-live="polite"></div>
+      <h3 class="mini-heading">사례 바로가기</h3><div id="recommended-cases" class="case-links"></div>
+      <div class="sidebar-bottom"><span class="dot blue"></span> 현재 MVS <span class="dot orange"></span> 과거 ALS <span class="dot gray"></span> 유보</div>
+    </aside>
+    <div class="main-content">
+      <div class="selection-heading"><div><div class="eyebrow dark" id="cell-location">SOURCE CANDIDATES</div><h2 id="cell-title">셀 자료를 준비하고 있습니다</h2></div><span id="action-badge" class="action-badge">—</span></div>
+      <section id="stage-1" class="stage-content" role="tabpanel" aria-label="후보입력">
+        <div id="candidate-stats" class="metric-grid"></div>
+        <article class="panel"><div class="panel-heading"><div><h3>원래 소스의 3D 점을 겹쳐 봅니다</h3><p>점은 표시용으로만 줄입니다. 지표와 원래 점 소속은 바뀌지 않습니다.</p></div><button id="cloud-reset" type="button">시점 초기화</button></div>
+          <div class="cloud-toolbar"><label><input type="checkbox" id="source-mvs" checked><span class="dot blue"></span> 현재 MVS</label><label><input type="checkbox" id="source-als" checked><span class="dot orange"></span> 과거 ALS</label><label>범위 <select id="view-scope"><option value="cell">선택 셀</option><option value="region">영역 전체</option></select></label><label>색상 <select id="point-color"><option value="rgb">MVS RGB · ALS 구분색</option><option value="source">두 소스 구분색</option></select></label><div class="view-buttons"><button data-view="iso" type="button" aria-pressed="true">입체</button><button data-view="top" type="button" aria-pressed="false">위에서</button><button data-view="side" type="button" aria-pressed="false">옆에서</button></div></div>
+          <div id="cloud-host" class="cloud-host"><canvas id="cloud-canvas" data-testid="cloud-canvas" aria-label="실제 MVS와 ALS 후보 점 3D 보기" tabindex="0"></canvas><div id="cloud-empty" class="cloud-empty" hidden>표시할 원래 점이 없습니다.</div><div class="cloud-hint">드래그 회전 · Shift/오른쪽 드래그 이동 · 휠 확대</div><div id="cloud-counts" class="cloud-counts"></div></div>
+        </article>
+        <div class="two-columns"><article class="panel text-panel"><h3>현재 MVS 후보</h3><div id="mvs-candidate-detail"></div></article><article class="panel text-panel"><h3>과거 ALS 후보</h3><div id="als-candidate-detail"></div></article></div>
+      </section>
+      <section id="stage-2" class="stage-content" role="tabpanel" aria-label="관측평가" hidden>
+        <div class="observation-toolbar panel"><div><h3>동일한 픽셀·관측쌍으로 비교합니다</h3><p id="observation-description">큰 영상은 원본 관측, 아래 작은 격자는 점수 계산에 사용한 패치입니다.</p></div><div class="observation-selects"><label>카메라쌍 <select id="pair-select" aria-label="관측 카메라쌍"></select></label><label>공통 패치 <select id="anchor-select" aria-label="패치 번호"></select></label></div></div>
+        <div id="evidence-unavailable" class="unavailable" hidden></div>
+        <div id="photo-grid" class="photo-grid">
+          <article class="panel photo-panel" id="reference-photo"><div class="photo-heading"><h3>현재 원본 영상 A <span class="quiet">기준 관측</span></h3><span id="reference-resolution"></span></div><div class="photo-toolbar"><button type="button" data-photo="reference" data-photo-action="fit">화면 맞춤</button><button type="button" data-photo="reference" data-photo-action="actual">1:1</button><button type="button" data-photo="reference" data-photo-action="focus">선택 위치</button><button type="button" data-photo="reference" data-photo-action="full">확대 보기 ↗</button><span id="reference-zoom"></span></div><div class="photo-viewport"><canvas id="reference-canvas" data-testid="reference-canvas" aria-label="원본 영상 A · 드래그 이동, 휠 확대" tabindex="0"></canvas><div class="photo-empty">공통 관측쌍을 선택하세요.</div></div><img id="reference-image" class="decoded-image" alt="점수 계산에 사용한 실제 원본 영상 A"><div id="reference-caption" class="photo-caption"></div></article>
+          <article class="panel photo-panel" id="target-photo"><div class="photo-heading"><h3>현재 원본 영상 B <span class="quiet">비교 관측</span></h3><span id="target-resolution"></span></div><div class="photo-toolbar"><button type="button" data-photo="target" data-photo-action="fit">화면 맞춤</button><button type="button" data-photo="target" data-photo-action="actual">1:1</button><button type="button" data-photo="target" data-photo-action="focus">선택 위치</button><button type="button" data-photo="target" data-photo-action="full">확대 보기 ↗</button><span id="target-zoom"></span></div><div class="photo-viewport"><canvas id="target-canvas" data-testid="target-canvas" aria-label="원본 영상 B · 드래그 이동, 휠 확대" tabindex="0"></canvas><div class="photo-empty">공통 관측쌍을 선택하세요.</div></div><img id="target-image" class="decoded-image" alt="점수 계산에 사용한 실제 원본 영상 B"><div id="target-caption" class="photo-caption"></div></article>
+        </div>
+        <article id="patch-panel" class="panel patch-panel"><div class="panel-heading"><div><h3>점수를 계산한 실제 패치</h3><p id="patch-note">확대한 원본 영상과 구분되는 작은 검사 격자입니다. 회색 픽셀은 비교에서 제외됩니다.</p></div><span class="chip" id="reproduction-badge">동일 픽셀 비교</span></div><div class="patch-grid"><figure><canvas id="patch-reference" aria-label="현재 영상의 공통 기준 패치"></canvas><figcaption>현재 영상 A 패치</figcaption></figure><figure><canvas id="patch-mvs" aria-label="현재 MVS 평면으로 옮긴 영상 B 패치"></canvas><figcaption><span class="dot blue"></span> MVS 평면 재투영 <strong id="mvs-patch-cost"></strong></figcaption></figure><figure><canvas id="patch-als" aria-label="과거 ALS 평면으로 옮긴 영상 B 패치"></canvas><figcaption><span class="dot orange"></span> ALS 평면 재투영 <strong id="als-patch-cost"></strong></figcaption></figure><figure><canvas id="patch-mask" aria-label="두 후보 공통 유효 픽셀 마스크"></canvas><figcaption>공통 유효 픽셀 <strong id="common-pixel-count"></strong></figcaption></figure></div></article>
+        <div class="two-columns"><article class="panel text-panel"><h3>관측쌍별 비용</h3><p class="micro">비용 = (1 − ZNCC) / 2 · 낮을수록 영상과 잘 맞음</p><div id="pair-chart" class="chart"></div></article><article class="panel text-panel"><h3>기하 위치를 바꾼 대조 검사</h3><p class="micro">같은 픽셀에서 이동 후보 비용 − 원래 후보 비용</p><div id="profile-chart" class="chart"></div></article></div>
+      </section>
+      <section id="stage-3" class="stage-content" role="tabpanel" aria-label="소스판단" hidden>
+        <article id="decision-card" class="panel decision-card"></article>
+        <div class="two-columns"><article class="panel text-panel"><h3>선택 셀의 관측 근거</h3><div id="decision-evidence"></div></article><article class="panel text-panel evaluation-panel"><div class="evaluation-label">판단을 고정한 뒤 별도로 평가</div><h3>현재 UAS 참조에 대한 기하 오차</h3><p class="micro">같은 셀의 원래 인라이어 점과 참조점 간 대칭 평균 최근접 거리입니다.</p><div id="evaluation-metrics"></div></article></div>
+        <article class="panel text-panel"><h3 id="region-summary-title">전체 셀에서의 적용 범위</h3><p class="micro">선택 비율은 정확도가 아닙니다. 후보 부재·관측 부족·판단 유보를 모두 분모에 포함합니다.</p><div id="region-stats" class="metric-grid"></div><div id="coverage-bar" class="coverage-bar"></div><div id="coverage-labels" class="coverage-labels"></div></article>
+        <details class="panel text-panel"><summary>셀의 원본 측정 기록 확인</summary><pre id="raw-record"></pre></details>
+      </section>
+      <footer>원래 입력과 동결된 측정을 읽는 뷰어입니다. 소스 선택은 조건부 관측 지지이며, 시간적 변화·현재 기하의 정답·GS 복원 성능을 확정하지 않습니다.</footer>
+    </div>
+  </main>
+  <dialog id="lightbox"><div class="lightbox-heading"><div><h2 id="lightbox-title">원본 영상 확대</h2><p>휠 확대 · 드래그 이동 · Escape 닫기</p></div><div><button id="lightbox-fit" type="button">화면 맞춤</button><button id="lightbox-actual" type="button">1:1</button><button id="lightbox-focus" type="button">선택 위치</button><button id="lightbox-fullscreen" type="button">전체 화면</button><button id="lightbox-close" type="button" aria-label="확대 영상 닫기">닫기 ×</button></div></div><div class="lightbox-viewport"><canvas id="lightbox-canvas" aria-label="확대된 실제 원본 영상" tabindex="0"></canvas></div><img id="lightbox-image" class="decoded-image" alt="실제 원본 영상 확대"></dialog>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

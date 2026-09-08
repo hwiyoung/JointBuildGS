@@ -1,0 +1,17 @@
+{
+  "task_id": "PHD-SRDM-P1P2P3-v1",
+  "scientific_verdict": null,
+  "frame": {"working_crs": "EPSG:25832", "world_shift_xyz_m": [690953.0, 5336071.0, 604.0], "uas_header_crs": "EPSG:32632", "datum_epoch_calibration_verified": false},
+  "workers": 4,
+  "xy_cell_m": 0.5,
+  "section_half_width_m": 0.25,
+  "distance_thresholds_m": [0.1, 0.2, 0.25, 0.5, 1.0, 2.0],
+  "density_voxel_m": [0.1, 0.25, 0.5],
+  "display_max_points": 100000,
+  "interpretation": "Fixed-frame cropped-reference discrepancy in development crops. Distance support does not establish prior currentness, visibility or calibrated absolute accuracy. All parameters fixed before accessing reference. Single stereo pair per crop; not a full multiview comparison.",
+  "regions": [
+    {"id": "P1", "domain": {"bbox_min": [-23.0, -21.0, -44.272], "bbox_max": [7.0, 9.0, -25.962]}, "frozen_reference_npz": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-REGIONS-EVALUATION-v4/run/P1/reference.npz", "frozen_reference_sha256": "3d111cf0cd8ab39fccb85ce0075486ec40f4f60584b5c68b2ab122918b321543"},
+    {"id": "P2", "domain": {"bbox_min": [110.0, 86.0, -49.386], "bbox_max": [158.0, 132.0, -17.679]}, "frozen_reference_npz": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-REGIONS-EVALUATION-v4/run/P2/reference.npz", "frozen_reference_sha256": "9dc75111e8a5e83808d566c0b6621092423898a1f6badb9438f1a0d75e16e7ba"},
+    {"id": "P3", "domain": {"bbox_min": [-60.0, -42.0, -49.223], "bbox_max": [-20.0, 12.0, -16.993]}, "frozen_reference_npz": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-REGIONS-EVALUATION-v4/run/P3/reference.npz", "frozen_reference_sha256": "a72041a28c8242d3901f5696d88e607473814299baab43103fda89fc179b1f81"}
+  ]
+}

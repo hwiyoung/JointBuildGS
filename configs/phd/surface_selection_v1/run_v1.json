@@ -1,0 +1,168 @@
+{
+  "regions": {
+    "P1": {
+      "domain": {
+        "x": [
+          -23,
+          7
+        ],
+        "y": [
+          -21,
+          9
+        ],
+        "z": [
+          -44.272,
+          -25.962
+        ]
+      },
+      "common_root": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run/common",
+      "native_sha256": "ef4dba8cf7946ebc7e0337c234298ae9af27e6c46add561cbecdca298e7db794",
+      "views_sha256": "c31f3bed179b9fc59ea48203d7cb5a65d72e2399bad170eba064624e22d12a04",
+      "view_count": 113
+    },
+    "P2": {
+      "domain": {
+        "x": [
+          110,
+          158
+        ],
+        "y": [
+          86,
+          132
+        ],
+        "z": [
+          -49.386,
+          -17.679
+        ]
+      },
+      "common_root": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run/common",
+      "native_sha256": "4d64f75d2acdb9ccf3db1f1bdff6c37b954c0519cf349c4ae7330c4302981d6a",
+      "views_sha256": "c58fabaa43a5ab65934601e0e677eb845449900c9a362ee2a5b998b78056975e",
+      "view_count": 66
+    },
+    "P3": {
+      "domain": {
+        "x": [
+          -60,
+          -20
+        ],
+        "y": [
+          -42,
+          12
+        ],
+        "z": [
+          -49.223,
+          -16.993
+        ]
+      },
+      "common_root": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run/common",
+      "native_sha256": "b2a30325d0742ee1c426ea24cdac8519fd39d148189e98566b82214bb2db7acf",
+      "views_sha256": "165af276acdc1abc99afa578cc78908849ede0512bc2022368c8a6542f6b057a",
+      "view_count": 157
+    }
+  },
+  "gravity_manifest": "artifacts/manifests/gate_s0/freeze_recovery_v1/technical_freeze_manifest_v1.json",
+  "rgb_root": "phase-payloads/p0-audit/data/work/mvs/colmap_dense/images",
+  "working_crs": "EPSG:25832",
+  "coordinates": "Existing scene-local native XYZ; no transform reapplication",
+  "runtime": {
+    "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "cpu": 6,
+    "memory": "12g",
+    "network": "none",
+    "gpu": false
+  },
+  "schema": "jointbuildgs.surface_selection.v1",
+  "task_id": "PHD-SURFACE-SELECTION-P1P2P3-v1",
+  "status": "USER_AUTHORIZED_DEVELOPMENT_NON_CONFIRMATORY",
+  "scientific_verdict": null,
+  "authorization": "2026-09-08 user authorized source-specific height/normal surface segmentation, adjacency graph, boundary-aware evidence aggregation/selection and full result viewer on P1/P2/P3.",
+  "baseline_run": "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1",
+  "segmentation": {
+    "voxel_size_m": 0.3,
+    "normal_radius_m": 1.2,
+    "normal_neighbors": 24,
+    "min_normal_neighbors": 6,
+    "max_surface_variation": 0.08,
+    "minimum_second_spread_m": 0.1,
+    "connectivity_radius_m": 0.8,
+    "connectivity_neighbors": 20,
+    "normal_angle_deg": 18.0,
+    "local_plane_distance_m": 0.18,
+    "surface_distance_m": 0.22,
+    "min_voxels": 12,
+    "min_native_points": 30,
+    "min_area_xy_m2": 1.0,
+    "occupancy_grid_m": 0.5,
+    "adjacency_radius_m": 1.25,
+    "adjacency_neighbors": 24,
+    "adjacency_min_contacts": 3,
+    "coplanar_angle_deg": 10.0,
+    "coplanar_distance_m": 0.2,
+    "query_chunk": 4096
+  },
+  "unit_spacing_m": 0.5,
+  "evidence": {
+    "max_anchor_centers": 36,
+    "footprint_spacing_m": 0.5,
+    "photometry": {
+      "max_views": 16,
+      "max_pairs": 24,
+      "max_patch_centers": 36,
+      "patch_width": 9,
+      "minimum_patch_pixels": 16,
+      "minimum_patch_fraction": 0.2,
+      "minimum_patch_std": 2.0,
+      "support_tolerance_m": 0.6,
+      "angle_min_deg": 2.0,
+      "angle_max_deg": 45.0,
+      "preferred_angle_deg": 12.0,
+      "resolution_ratio_max": 2.0,
+      "visibility_tolerance_m": 0.75,
+      "profile_offsets_m": [
+        -2.0,
+        -1.0,
+        -0.5,
+        0.0,
+        0.5,
+        1.0,
+        2.0
+      ],
+      "profile_shift_axis": "normal",
+      "pixel_center_offset": 0.0
+    },
+    "decision": {
+      "min_common_pairs": 3,
+      "min_distinct_views": 4,
+      "min_disjoint_pairs": 2,
+      "max_cost": 0.25,
+      "min_pair_quality_fraction": 0.75,
+      "margin": 0.05,
+      "min_support_fraction": 0.75,
+      "min_profile_separation": 0.03,
+      "max_best_shift_m": 0.5,
+      "profile_control_min_abs_shift_m": 1.0,
+      "min_profile_coverage": 0.75,
+      "reject_cost": 0.4,
+      "min_spatial_consistency": 0.75,
+      "min_scored_tiles": 3
+    }
+  },
+  "self_visibility": {
+    "downsample": 4,
+    "splat_radius": 1
+  },
+  "viewer": {
+    "port": 8904,
+    "display_cap_per_source": 80000,
+    "browser_image": "sha256:5043f84d76db9d54e64fcf457125aad90ac5423fded88eca6cf487d2b4713a9e"
+  },
+  "parameter_status": "Engineering defaults frozen before this run and reference access; no reference-tuned winner.",
+  "limitations": [
+    "P1/P2/P3 are frozen development ROIs, not independent building identities or semantic truth.",
+    "Segmentation and scoring changed together; not an isolated unit-size causal ablation.",
+    "Native point membership retained; planar support cannot guarantee semantic roof identity.",
+    "Conditional model visibility; images overlap MVS development lineage; no calibrated registration uncertainty.",
+    "Only directly supported sampled tile scope accepted; no automatic whole-unit or adjacent-unit propagation."
+  ]
+}

@@ -1,0 +1,878 @@
+{
+  "schema": "jointbuildgs.source_candidate.technical_result.v1",
+  "task_id": "PHD-SOURCE-CANDIDATE-P1P2P3-v1",
+  "technical_status": "COMPLETED",
+  "capability_status": "PARTIAL_LOW_COVERAGE",
+  "scientific_verdict": null,
+  "backend": "JBGS_ARTIFACT_ROOT",
+  "backend_local_path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts",
+  "root_relative": "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1",
+  "created_at": "2026-09-08T11:32:55.471724+00:00",
+  "method_seal_sha256": "481f6f7fa22371607aa058706137e8ba90094049471f105a9bb6c1ea3378d978",
+  "stages": [
+    {
+      "region": "P1",
+      "all_cells": 225,
+      "mvs_points": 139033,
+      "als_points": 20189,
+      "views": 113,
+      "both_valid": 150,
+      "any_common_score": 52,
+      "matched_observation": 20,
+      "image": 0,
+      "prior": 0,
+      "abstain": 225,
+      "coverage": 0.0
+    },
+    {
+      "region": "P2",
+      "all_cells": 552,
+      "mvs_points": 330679,
+      "als_points": 45986,
+      "views": 66,
+      "both_valid": 282,
+      "any_common_score": 270,
+      "matched_observation": 81,
+      "image": 38,
+      "prior": 3,
+      "abstain": 511,
+      "coverage": 0.07427536231884058
+    },
+    {
+      "region": "P3",
+      "all_cells": 540,
+      "mvs_points": 865108,
+      "als_points": 52762,
+      "views": 157,
+      "both_valid": 190,
+      "any_common_score": 86,
+      "matched_observation": 25,
+      "image": 0,
+      "prior": 1,
+      "abstain": 539,
+      "coverage": 0.001851851851851852
+    }
+  ],
+  "package_test_counts": {
+    "method": 27,
+    "evaluation": 9
+  },
+  "figure_count": 17,
+  "payload": {
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/P1/candidates.json": {
+      "sha256": "a9a6bde4a0d7cf1b1fe9cd6722d46b5b7ecd3fc1ae350ca14e86093afeca3e19",
+      "bytes": 391831
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/P1/decision_summary.json": {
+      "sha256": "ca3f9038ef1ed04cdfe0bb3f24c4d4fea4ba83b0e11beee79fa7ec0a7ca716f1",
+      "bytes": 514
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/P1/decisions.json": {
+      "sha256": "985c0f57cc030ff0edfcc64c1dcb517770787c977a757479ae8b1b04cd977308",
+      "bytes": 110989
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/P1/input_summary.json": {
+      "sha256": "8beb7737e836841cf8fdf8552850cb189a4265a6c899bf636571516c7a6a0935",
+      "bytes": 1522
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/P1/membership.npz": {
+      "sha256": "639c4eb3822a2dc15324017554ddf4c3f8b5d78c67d9be29e22d086660f2ce0a",
+      "bytes": 66935
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/P1/observation_summary.json": {
+      "sha256": "6826476077d08ab3ff5251c701ad787895c4d678ad095a2265b35441b1b67f81",
+      "bytes": 1013
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/P1/observations.json": {
+      "sha256": "d531706f7cac91420641f4bb59257c69ac49cd4ca92b5fed89dc6e4bc5bbb2a7",
+      "bytes": 9194857
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/P1/rgb_ledger.json": {
+      "sha256": "58c10a94d7840427983dd568a0cbfd6c595c622b2397702fc95abc5ddec34635",
+      "bytes": 22036
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/P2/candidates.json": {
+      "sha256": "fc6e6fa9a8883c5b088dab8e875476c871e8a787f33170690c948dd8aa038cba",
+      "bytes": 961879
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/P2/decision_summary.json": {
+      "sha256": "e03c75ea3c9451ea057874081533c19823c63f7ed0eacad7af3abf5c36714e90",
+      "bytes": 635
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/P2/decisions.json": {
+      "sha256": "d3e9403da055c0d9d2f6b46f8eef2afb22c6ae565a56c030368704c437a1d72f",
+      "bytes": 293168
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/P2/input_summary.json": {
+      "sha256": "25b0289c689056c7eae2c40f098db6f57dda9175aac2a04034df9af86c9aaa26",
+      "bytes": 1561
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/P2/membership.npz": {
+      "sha256": "0bc163eb34024be84af9e28507f999b832c5f3db1c333aecd6cff2f888c86bf9",
+      "bytes": 149231
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/P2/observation_summary.json": {
+      "sha256": "890654489e6bf7e131373b09347278e327f35266873befa0fefe85157575aa8a",
+      "bytes": 1003
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/P2/observations.json": {
+      "sha256": "db2c19c1ddd08e92be83a8043bb91f7edef93f8c408cc83779075a9ef121f9de",
+      "bytes": 17918016
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/P2/rgb_ledger.json": {
+      "sha256": "fe4cea827d2e978988f5452b40d8bcc8c79b03b58b8ac6b9e3b300b503f51227",
+      "bytes": 12871
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/P3/candidates.json": {
+      "sha256": "4cbdfacb0c370f5de45e9c28b3246118dd765e61ac1f0ad2edc972983eacf2af",
+      "bytes": 947459
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/P3/decision_summary.json": {
+      "sha256": "0170f66414078e2e39988466b193ea45ba9cedb532ab756a8dfce1e41b97c088",
+      "bytes": 738
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/P3/decisions.json": {
+      "sha256": "2e38085e9f086dc09602cb6993c360a397b6146b42a4b0338c493e7be557db2e",
+      "bytes": 265501
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/P3/input_summary.json": {
+      "sha256": "76a8954981d24899e41e13e7f48d57fd6f01c43142a7bfcab54dfd74baaabfdb",
+      "bytes": 1546
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/P3/membership.npz": {
+      "sha256": "106231fd7829f8f4661d210b7f0ba693b89d3cb95ca3012cfd101519df0cd6f7",
+      "bytes": 414322
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/P3/observation_summary.json": {
+      "sha256": "4c4ac6b0e1186b6c802af4158950895a24884c8ad46d35d7cc9ef2a1ae387b1b",
+      "bytes": 1021
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/P3/observations.json": {
+      "sha256": "908f773641c10fc4cf028f0ca26712ad2e8c5ad7a643d5cfbd98eb2c126d1ed3",
+      "bytes": 10481337
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/P3/rgb_ledger.json": {
+      "sha256": "beb944f7bde38e51e00e1529e7d1f975d20ebd1ff1c0874a7340ea6b0b2376dd",
+      "bytes": 30615
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/config.json": {
+      "sha256": "80a326db4b1fed53db4b1fa255364ce03a25ff4027f760c0ab896ca9fc647ae8",
+      "bytes": 5153
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/decision_summary.json": {
+      "sha256": "fdcc208f8881623cd62a63418059345ab0b11719c09ed8d8a989adeffbc3c1b0",
+      "bytes": 2041
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/evaluation/evaluation_receipt.json": {
+      "sha256": "dc4705efbc06ac1df63b676d2b92868e466302c31406afc8d206bae0b6bd0455",
+      "bytes": 667
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/evaluation/per_cell.csv": {
+      "sha256": "dde60b01574c19f9dfdea8585c2833f12bddf88cc155d84444a98ae2ee0bdf87",
+      "bytes": 616190
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/evaluation/per_cell.json": {
+      "sha256": "15f6192b78f7322830c75d05c70c93c26124cc0886224fcf83646f6e22e231c5",
+      "bytes": 5917592
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/evaluation/risk_coverage.csv": {
+      "sha256": "cbdb7f018a3da1516a1329471b77704823940b3b7f4e59752ca6698c4bb79421",
+      "bytes": 7689
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/evaluation/risk_coverage.json": {
+      "sha256": "47084b460e193b33746fa3a09930a64c82b29e85d23e52b287d5e7c9b4729634",
+      "bytes": 31644
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/evaluation/summary.json": {
+      "sha256": "50d61a7e7f761203d4f2a87407c03205f87d25db7f31c13d94a81ed29eb1440d",
+      "bytes": 49386
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/input_summary.json": {
+      "sha256": "90df6db7582d029d757fa005e9f5b4f1db4c9e5964909d16c7d504c63e438185",
+      "bytes": 5037
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/method_seal.json": {
+      "sha256": "481f6f7fa22371607aa058706137e8ba90094049471f105a9bb6c1ea3378d978",
+      "bytes": 3013
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/run/sensitivity.json": {
+      "sha256": "df9edeea94c911ab34d20ad406a8c88a088447b0d14e65c096f2174527a1c7be",
+      "bytes": 620175
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/00_stage_summary.pdf": {
+      "sha256": "ad28bbb63f2450e5b9eb6fd00419ea127c6151ca1d55a2527f92c42b8ed9d5fc",
+      "bytes": 29104
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/00_stage_summary.png": {
+      "sha256": "c06e9bd798f9b0ced4ad874936e1d7804d1d6815e9c7337021c40daaf54e5a86",
+      "bytes": 140562
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/P1_case_0000.pdf": {
+      "sha256": "13015c869c78d482e2bf079128451e4c0174438dbe3fdd10bd4babd6e8ae1253",
+      "bytes": 88400
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/P1_case_0000.png": {
+      "sha256": "b9f05bf2fddaf64a19aee801cf07f2a776c1d64b2e728cb8be286cb6c8820402",
+      "bytes": 476963
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/P1_case_0016.pdf": {
+      "sha256": "70e507f24cd6e649ddf44b3579670f2afe7b9b70439df0ad979101b9b09a3c35",
+      "bytes": 141482
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/P1_case_0016.png": {
+      "sha256": "cb98d655f733694b90c9667a8eca87e8dd3b10e58790e81e00b98bc82e469106",
+      "bytes": 618713
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/P1_case_0045.pdf": {
+      "sha256": "3d066405ebb079de1908ae2f42d70b23357b03d493c63f076deabe5bd4d7c081",
+      "bytes": 111749
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/P1_case_0045.png": {
+      "sha256": "09aeead21afc7190e371e91125561e563bcf22d1b27cbc974011dea559a7b084",
+      "bytes": 533143
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/P1_stage_overview.pdf": {
+      "sha256": "d4f835784fa3f493673b10c898712b6a3deaa6e964231712218da26883f491a0",
+      "bytes": 1201661
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/P1_stage_overview.png": {
+      "sha256": "8dffbb2eb8df5daf95b39605b738014656d44409acf184f2a57e267328093f43",
+      "bytes": 1534937
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/P2_case_0000.pdf": {
+      "sha256": "80eb7b711eb6c4b4923f420ebcb666442de2f3060cbacd85fead048923d0dcd9",
+      "bytes": 110306
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/P2_case_0000.png": {
+      "sha256": "979b3864709efdc84aa17be264cb37394a0dc6993f5db0386925d340f1724168",
+      "bytes": 500098
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/P2_case_0004.pdf": {
+      "sha256": "e1d611b4c3d95a8b904b8e5b951919584df5bf189cb4c4c5492d56dff9e6d253",
+      "bytes": 155503
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/P2_case_0004.png": {
+      "sha256": "f6679fe20f612c10a12ab3059449df339caa8b4f1b9e6c937714528366f58cc9",
+      "bytes": 654160
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/P2_case_0005.pdf": {
+      "sha256": "14725bd373705152a7bed56168c1d64df1b01c7a9a17de6acb663e1bf171203e",
+      "bytes": 156830
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/P2_case_0005.png": {
+      "sha256": "14eb3f41e357db7286883c73d322d23bef5228cc2a3d3ddecc244565b6463e52",
+      "bytes": 649087
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/P2_case_0120.pdf": {
+      "sha256": "889071ef5e11dd3a8f7c549089a2c8ab4dbf2d06b8454e817602c59a0208da08",
+      "bytes": 178818
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/P2_case_0120.png": {
+      "sha256": "10cdabde8c40eb2fe235dfa953d4a5e1780e43864f49c00c6af8c9be8558bfcd",
+      "bytes": 691170
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/P2_case_0139.pdf": {
+      "sha256": "6a2089f401aa64d6afd805199ecf6577d303dd2a106fa5ebda100ba437b5d8e6",
+      "bytes": 64931
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/P2_case_0139.png": {
+      "sha256": "e48705a476719e4aea8e2e8d6353c0cb198bb26557c1104d0819c5a1f4857860",
+      "bytes": 441751
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/P2_case_0195.pdf": {
+      "sha256": "1c973c392d5405fc78df1a18d24407d62a9f5bbcc7c3bdd13d8862f2184c0627",
+      "bytes": 141877
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/P2_case_0195.png": {
+      "sha256": "e1ad38c452420f4bd278428b3959c4a78b0a5141aa4188209f199de7d8d04a88",
+      "bytes": 644885
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/P2_stage_overview.pdf": {
+      "sha256": "73d704112995d52b30b58054a52b6113695381710555c513551a66d9058874e6",
+      "bytes": 1127591
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/P2_stage_overview.png": {
+      "sha256": "5bab158752398e7d0421c0d42f4393e5fdc9692ad7fbe7bd746f2d8f93a91d7d",
+      "bytes": 1570396
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/P3_case_0000.pdf": {
+      "sha256": "a2168ada3c15e3e49a339ae87db85f92a0cccce13a01bbb40e092dd925fe5ea3",
+      "bytes": 165595
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/P3_case_0000.png": {
+      "sha256": "5175fc7777517b04166331b27759c82d6843a222630ed50348bd4894f249fb58",
+      "bytes": 601855
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/P3_case_0006.pdf": {
+      "sha256": "15f7196d9b6a7fd463dddddd42bb0d602d935787670abe34bcfff0519e386920",
+      "bytes": 159666
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/P3_case_0006.png": {
+      "sha256": "d07b7b1324d0a66101056730097ba8d5f3d82bf71a351398b1569bd36dcf683b",
+      "bytes": 640416
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/P3_case_0043.pdf": {
+      "sha256": "aa25fecda41d4235ba7effb755158c2a73eacbd959994217895f2887e9ed98c3",
+      "bytes": 176447
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/P3_case_0043.png": {
+      "sha256": "890271000d8d28b8d05475a41e44b32ea9b15085fee1f57c1942eb02804fdce5",
+      "bytes": 676090
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/P3_case_0498.pdf": {
+      "sha256": "0eacf88bd3a61c3300d21d004b380cd465405e7a7f4b01206badacf31764d654",
+      "bytes": 143679
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/P3_case_0498.png": {
+      "sha256": "9061cd1cef1ab86b27982b98856c8f56c27c6d0ee23c5776b1321826d75e694b",
+      "bytes": 572775
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/P3_stage_overview.pdf": {
+      "sha256": "4ec538f362eced1f16c983b3f163051b4a4c4019609f491c206d3481f1a02312",
+      "bytes": 748822
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/P3_stage_overview.png": {
+      "sha256": "74c6eafa4ac15d8878edb93a2deaa93dd19b5d28b62a862cc5740bf61eb21fa6",
+      "bytes": 1239786
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures/figure_manifest.json": {
+      "sha256": "07e4f09c8fafaa8a86bcebb724b16640e36700d191abeaabeefcaf1130d4c305",
+      "bytes": 100467
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/report/RESULT_ko_v1.md": {
+      "sha256": "e0683aacbc93e2927ad5b764f98585d0623c7dd20eff6972c1fc357c9ced7137",
+      "bytes": 21566
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/report/accepted_gap_gt2m.csv": {
+      "sha256": "6d4f5ab439e4a58507f3aedea470c8d869643f6f77008155578256bdc381da92",
+      "bytes": 170
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/report/accepted_same_cells.csv": {
+      "sha256": "5bd4629517043737fe955ff7b93d6cd217c08b1a0c63db09ca17b153a3a49c68",
+      "bytes": 332
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/report/analysis.json": {
+      "sha256": "e70513e4b1954279140153243c01c8b3fd8ae30227033c1e21a9c05156e8381b",
+      "bytes": 9665
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/report/decision_reasons.csv": {
+      "sha256": "002637c9e993447b54c547c778591959f2d916e3fb168f946056d86998d6d8a3",
+      "bytes": 1216
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/report/native_filter_diagnostic.csv": {
+      "sha256": "7407328cfd7ae8361ef22a76ebd9fa2fa85bd636dfb314c9d689ad02d2aa608f",
+      "bytes": 360
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/report/plane_gap_strata.csv": {
+      "sha256": "c3ce9fc0da89a36f7cf078205860ff6cf316ba30c35efec304de2601c9f4d447",
+      "bytes": 423
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/report/reference_oracle.csv": {
+      "sha256": "baa7302f1e09345a14476d81eeda387662d26ef724b08d38aeb40b6fafc85e8b",
+      "bytes": 187
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/report/report_receipt.json": {
+      "sha256": "cbd137bf5f46f2d3a155f1e1c5d2e383e039647775ea1af0998b37b79914d0bc",
+      "bytes": 1289
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/report/sensitivity_ranges.csv": {
+      "sha256": "71d3558e7c05c62eeb0b4d63615212e05d34de227814621f899db15da0e66f73",
+      "bytes": 168
+    },
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/report/stages.csv": {
+      "sha256": "095d918e9686f49ca45b75ef91b694fee16632e878b55d9133acb3992626270e",
+      "bytes": 298
+    }
+  },
+  "stage_launch_receipts": {
+    "method": {
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--name",
+        "jbgs-source-candidate-method-didate-p1p2p3-v1",
+        "--network",
+        "none",
+        "--cpus",
+        "6",
+        "--memory",
+        "12g",
+        "--entrypoint",
+        "python",
+        "--workdir",
+        "/workspace/JointBuildGS",
+        "--env",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "--env",
+        "OPENBLAS_NUM_THREADS=1",
+        "--env",
+        "OMP_NUM_THREADS=2",
+        "--env",
+        "MPLCONFIGDIR=/tmp/matplotlib",
+        "--env",
+        "JBGS_SOURCE_GIT_HEAD=72f45bcf861c5fe6e0c70e28e0686a72e9424b17",
+        "--env",
+        "JBGS_CONTAINER_IMAGE_ID=sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/method_source,dst=/workspace/JointBuildGS,readonly",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1,dst=/output",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run/common/native.npz,dst=/inputs/P1/native.npz,readonly",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run/common/views.json,dst=/inputs/P1/views.json,readonly",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run/common/native.npz,dst=/inputs/P2/native.npz,readonly",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run/common/views.json,dst=/inputs/P2/views.json,readonly",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run/common/native.npz,dst=/inputs/P3/native.npz,readonly",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run/common/views.json,dst=/inputs/P3/views.json,readonly",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images,dst=/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images,readonly",
+        "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+        "-u",
+        "-m",
+        "scripts.phd.source_candidate_v1.run",
+        "--config",
+        "configs/phd/source_candidate_v1/run_v1.json"
+      ],
+      "mounts": [
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/method_source",
+          "target": "/workspace/JointBuildGS",
+          "readonly": true
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1",
+          "target": "/output",
+          "readonly": false
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run/common/native.npz",
+          "target": "/inputs/P1/native.npz",
+          "readonly": true
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run/common/views.json",
+          "target": "/inputs/P1/views.json",
+          "readonly": true
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run/common/native.npz",
+          "target": "/inputs/P2/native.npz",
+          "readonly": true
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run/common/views.json",
+          "target": "/inputs/P2/views.json",
+          "readonly": true
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run/common/native.npz",
+          "target": "/inputs/P3/native.npz",
+          "readonly": true
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run/common/views.json",
+          "target": "/inputs/P3/views.json",
+          "readonly": true
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images",
+          "target": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images",
+          "readonly": true
+        }
+      ],
+      "source_manifest_sha256": "74a01ecf3ae484c9b7d8291160a012ba9c98c2c439becc646c1ddf4cdfb20bcf",
+      "git_head": "72f45bcf861c5fe6e0c70e28e0686a72e9424b17",
+      "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+      "scientific_verdict": null,
+      "created_at": "2026-09-08T11:17:59.156938+00:00"
+    },
+    "evaluation": {
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--name",
+        "jbgs-source-candidate-evaluation-didate-p1p2p3-v1",
+        "--network",
+        "none",
+        "--cpus",
+        "6",
+        "--memory",
+        "12g",
+        "--entrypoint",
+        "python",
+        "--workdir",
+        "/workspace/JointBuildGS",
+        "--env",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "--env",
+        "OPENBLAS_NUM_THREADS=1",
+        "--env",
+        "OMP_NUM_THREADS=2",
+        "--env",
+        "MPLCONFIGDIR=/tmp/matplotlib",
+        "--env",
+        "JBGS_SOURCE_GIT_HEAD=72f45bcf861c5fe6e0c70e28e0686a72e9424b17",
+        "--env",
+        "JBGS_CONTAINER_IMAGE_ID=sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/evaluation_source,dst=/workspace/JointBuildGS,readonly",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1,dst=/output",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run/common/native.npz,dst=/inputs/P1/native.npz,readonly",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run/common/views.json,dst=/inputs/P1/views.json,readonly",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run/common/native.npz,dst=/inputs/P2/native.npz,readonly",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run/common/views.json,dst=/inputs/P2/views.json,readonly",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run/common/native.npz,dst=/inputs/P3/native.npz,readonly",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run/common/views.json,dst=/inputs/P3/views.json,readonly",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images,dst=/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images,readonly",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-REGIONS-EVALUATION-v4/run/P1/reference.npz,dst=/reference/P1/reference.npz,readonly",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-REGIONS-EVALUATION-v4/run/P2/reference.npz,dst=/reference/P2/reference.npz,readonly",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-REGIONS-EVALUATION-v4/run/P3/reference.npz,dst=/reference/P3/reference.npz,readonly",
+        "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+        "-u",
+        "-m",
+        "scripts.phd.source_candidate_v1.evaluate",
+        "--run",
+        "/output/run",
+        "--config",
+        "configs/phd/source_candidate_v1/evaluation_v1.json"
+      ],
+      "mounts": [
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/evaluation_source",
+          "target": "/workspace/JointBuildGS",
+          "readonly": true
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1",
+          "target": "/output",
+          "readonly": false
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run/common/native.npz",
+          "target": "/inputs/P1/native.npz",
+          "readonly": true
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run/common/views.json",
+          "target": "/inputs/P1/views.json",
+          "readonly": true
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run/common/native.npz",
+          "target": "/inputs/P2/native.npz",
+          "readonly": true
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run/common/views.json",
+          "target": "/inputs/P2/views.json",
+          "readonly": true
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run/common/native.npz",
+          "target": "/inputs/P3/native.npz",
+          "readonly": true
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run/common/views.json",
+          "target": "/inputs/P3/views.json",
+          "readonly": true
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images",
+          "target": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images",
+          "readonly": true
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-REGIONS-EVALUATION-v4/run/P1/reference.npz",
+          "target": "/reference/P1/reference.npz",
+          "readonly": true
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-REGIONS-EVALUATION-v4/run/P2/reference.npz",
+          "target": "/reference/P2/reference.npz",
+          "readonly": true
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-REGIONS-EVALUATION-v4/run/P3/reference.npz",
+          "target": "/reference/P3/reference.npz",
+          "readonly": true
+        }
+      ],
+      "source_manifest_sha256": "0e536993d49ae2e3009be13617181cbd60ed1d93c1e42f94a2c3bdce2e35a18f",
+      "git_head": "72f45bcf861c5fe6e0c70e28e0686a72e9424b17",
+      "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+      "scientific_verdict": null,
+      "created_at": "2026-09-08T11:24:19.401155+00:00"
+    },
+    "figures": {
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--name",
+        "jbgs-source-candidate-figures-didate-p1p2p3-v1",
+        "--network",
+        "none",
+        "--cpus",
+        "6",
+        "--memory",
+        "12g",
+        "--entrypoint",
+        "python",
+        "--workdir",
+        "/workspace/JointBuildGS",
+        "--env",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "--env",
+        "OPENBLAS_NUM_THREADS=1",
+        "--env",
+        "OMP_NUM_THREADS=2",
+        "--env",
+        "MPLCONFIGDIR=/tmp/matplotlib",
+        "--env",
+        "JBGS_SOURCE_GIT_HEAD=72f45bcf861c5fe6e0c70e28e0686a72e9424b17",
+        "--env",
+        "JBGS_CONTAINER_IMAGE_ID=sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures_source,dst=/workspace/JointBuildGS,readonly",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1,dst=/output",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run/common/native.npz,dst=/inputs/P1/native.npz,readonly",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run/common/views.json,dst=/inputs/P1/views.json,readonly",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run/common/native.npz,dst=/inputs/P2/native.npz,readonly",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run/common/views.json,dst=/inputs/P2/views.json,readonly",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run/common/native.npz,dst=/inputs/P3/native.npz,readonly",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run/common/views.json,dst=/inputs/P3/views.json,readonly",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images,dst=/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images,readonly",
+        "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+        "-u",
+        "-m",
+        "scripts.phd.source_candidate_v1.figures",
+        "--run",
+        "/output/run",
+        "--output",
+        "/output/figures"
+      ],
+      "mounts": [
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/figures_source",
+          "target": "/workspace/JointBuildGS",
+          "readonly": true
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1",
+          "target": "/output",
+          "readonly": false
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run/common/native.npz",
+          "target": "/inputs/P1/native.npz",
+          "readonly": true
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run/common/views.json",
+          "target": "/inputs/P1/views.json",
+          "readonly": true
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run/common/native.npz",
+          "target": "/inputs/P2/native.npz",
+          "readonly": true
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run/common/views.json",
+          "target": "/inputs/P2/views.json",
+          "readonly": true
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run/common/native.npz",
+          "target": "/inputs/P3/native.npz",
+          "readonly": true
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run/common/views.json",
+          "target": "/inputs/P3/views.json",
+          "readonly": true
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images",
+          "target": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images",
+          "readonly": true
+        }
+      ],
+      "source_manifest_sha256": "4c553415f7a32f543e2026f3bbfdd6756de7d0be2f3773574ef9eb9ab0c63459",
+      "git_head": "72f45bcf861c5fe6e0c70e28e0686a72e9424b17",
+      "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+      "scientific_verdict": null,
+      "created_at": "2026-09-08T11:28:28.570880+00:00"
+    },
+    "report": {
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--name",
+        "jbgs-source-candidate-report-didate-p1p2p3-v1",
+        "--network",
+        "none",
+        "--cpus",
+        "6",
+        "--memory",
+        "12g",
+        "--entrypoint",
+        "python",
+        "--workdir",
+        "/workspace/JointBuildGS",
+        "--env",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "--env",
+        "OPENBLAS_NUM_THREADS=1",
+        "--env",
+        "OMP_NUM_THREADS=2",
+        "--env",
+        "MPLCONFIGDIR=/tmp/matplotlib",
+        "--env",
+        "JBGS_SOURCE_GIT_HEAD=72f45bcf861c5fe6e0c70e28e0686a72e9424b17",
+        "--env",
+        "JBGS_CONTAINER_IMAGE_ID=sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/report_source,dst=/workspace/JointBuildGS,readonly",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1,dst=/output",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run/common/native.npz,dst=/inputs/P1/native.npz,readonly",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run/common/views.json,dst=/inputs/P1/views.json,readonly",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run/common/native.npz,dst=/inputs/P2/native.npz,readonly",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run/common/views.json,dst=/inputs/P2/views.json,readonly",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run/common/native.npz,dst=/inputs/P3/native.npz,readonly",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run/common/views.json,dst=/inputs/P3/views.json,readonly",
+        "--mount",
+        "type=bind,src=/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images,dst=/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images,readonly",
+        "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+        "-u",
+        "-m",
+        "scripts.phd.source_candidate_v1.report",
+        "--run",
+        "/output/run",
+        "--output",
+        "/output/report",
+        "--artifact-host-root",
+        "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1"
+      ],
+      "mounts": [
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/report_source",
+          "target": "/workspace/JointBuildGS",
+          "readonly": true
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1",
+          "target": "/output",
+          "readonly": false
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run/common/native.npz",
+          "target": "/inputs/P1/native.npz",
+          "readonly": true
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run/common/views.json",
+          "target": "/inputs/P1/views.json",
+          "readonly": true
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run/common/native.npz",
+          "target": "/inputs/P2/native.npz",
+          "readonly": true
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run/common/views.json",
+          "target": "/inputs/P2/views.json",
+          "readonly": true
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run/common/native.npz",
+          "target": "/inputs/P3/native.npz",
+          "readonly": true
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run/common/views.json",
+          "target": "/inputs/P3/views.json",
+          "readonly": true
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images",
+          "target": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images",
+          "readonly": true
+        }
+      ],
+      "source_manifest_sha256": "b220600a8abcd44f27701ce28cad036f6573dd2080ebd81af7e5274a34ac0420",
+      "git_head": "72f45bcf861c5fe6e0c70e28e0686a72e9424b17",
+      "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+      "scientific_verdict": null,
+      "created_at": "2026-09-08T11:30:57.057697+00:00"
+    }
+  },
+  "source_snapshots": {
+    "method": "74a01ecf3ae484c9b7d8291160a012ba9c98c2c439becc646c1ddf4cdfb20bcf",
+    "evaluation": "0e536993d49ae2e3009be13617181cbd60ed1d93c1e42f94a2c3bdce2e35a18f",
+    "figures": "4c553415f7a32f543e2026f3bbfdd6756de7d0be2f3773574ef9eb9ab0c63459",
+    "report": "b220600a8abcd44f27701ce28cad036f6573dd2080ebd81af7e5274a34ac0420"
+  },
+  "failed_attempts": [
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/failed_attempts/evaluation_20260908T112348330393Z",
+    "phase-payloads/phd/source_candidate_v1/PHD-SOURCE-CANDIDATE-P1P2P3-v1/failed_attempts/evaluation_20260908T112419020791Z"
+  ],
+  "promoted_files": {
+    "docs/experiments/phd/source_candidate_v1/RESULT_ko_v1.md": "ab26e35c52e4e208eb507bbd96e6f0a0bd453a90e4de5562b5b5289bee83f829",
+    "docs/experiments/phd/source_candidate_v1/analysis.json": "e70513e4b1954279140153243c01c8b3fd8ae30227033c1e21a9c05156e8381b"
+  },
+  "promotion_script_sha256": "8d47c6d4a6939c7ba08662f62e1f1360b0c3d4057edfcf1e4a4347dce3737a61",
+  "limitations": [
+    "Development evaluation only; shared MVS/image lineage.",
+    "Prior selection in large-discrepancy regions not established.",
+    "Fixed supplied pose/registration and UAS datum uncertainty; no calibrated absolute accuracy.",
+    "No GS training, surface update or scientific verdict in this task."
+  ],
+  "promoted_editorial_changes": [
+    "Korean surface-normal terminology corrected: 정상 방향 to 법선 방향; no numeric/artifact changes."
+  ],
+  "final_integrity_validation": {
+    "snapshot_files_verified": 75,
+    "method_code_unchanged": true,
+    "method_reference_mount_absent": true,
+    "payload_files_verified": 81,
+    "figure_warp_pairs_reproduced": 7,
+    "warp_cost_absolute_tolerance": 1e-06
+  }
+}
