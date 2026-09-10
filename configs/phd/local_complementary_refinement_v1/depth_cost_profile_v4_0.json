@@ -1,0 +1,23 @@
+{
+  "task_id": "PHD-DEPTH-COST-PROFILE-v4.0",
+  "scientific_verdict": null,
+  "scope": "synthetic_observation_profiles_not_operational_confidence",
+  "training": false,
+  "real_gt_input": false,
+  "fixture_config": "configs/phd/local_complementary_refinement_v1/observation_identifiability_v3_9.json",
+  "inverse_depth_grids": [
+    {"name": "wide_fine", "minimum": 0.04, "maximum": 0.12, "count": 321},
+    {"name": "wide_coarse", "minimum": 0.04, "maximum": 0.12, "count": 161},
+    {"name": "narrow", "minimum": 0.08, "maximum": 0.12, "count": 161}
+  ],
+  "numeric_tolerance": 1e-10,
+  "display_excess_cost_levels": [0.0, 0.005, 0.01, 0.02, 0.05, 0.1],
+  "display_levels_are_policy_thresholds": false,
+  "primary_grid": "wide_fine",
+  "source_target_depths_m": [10.0, 20.0],
+  "aggregation": "median_for_display_only_keep_all_view_scale_profiles",
+  "normal": "same_source_derived_fixed_orientation_parallel_plane_sweep",
+  "weight_mapping_from_profiles": null,
+  "docker_image": "sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e",
+  "resources": {"cpus": 2, "memory": "2g", "network": "none", "gpu": false}
+}

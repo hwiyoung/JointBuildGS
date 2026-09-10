@@ -1,0 +1,45 @@
+{
+  "schema": "jbgs_weight_budget_candidate_v4_0",
+  "scientific_verdict": null,
+  "execution_ready_for_training": false,
+  "scope": "synthetic_allocation_budget_only_no_gt_no_gpu_no_training",
+  "allocation_q_source": "prescribed_synthetic_values_not_observation_or_v38_SI_conversion",
+  "rule": "both_active: s=min(cP/(1-q),cI/q), with q=0:s=cP and q=1:s=cI; wP=s*(1-q),wI=s*q",
+  "inactive_policy": {
+    "prior_missing_or_disabled": "image requires separate single_image_admission; absent admission gives zero",
+    "image_missing_or_disabled": "retain prior cP when active",
+    "both_inactive": "zero depth supervision",
+    "zero_coefficient": "inactive independently of availability metadata",
+    "metadata": "missing and disabled remain distinct labels"
+  },
+  "runtime": {
+    "image_id": "sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e",
+    "cpus": 2,
+    "memory_mib": 2048,
+    "network": "none",
+    "gpu": false
+  },
+  "coefficient_cases": [
+    {"id": "ratio_1", "cP": 0.005, "cI": 0.005},
+    {"id": "ratio_10", "cP": 0.005, "cI": 0.05},
+    {"id": "ratio_100", "cP": 0.0005, "cI": 0.05}
+  ],
+  "prescribed_q": [0, 0.001, 0.01, 0.1, 0.25, 0.49, 0.5, 0.51, 0.75, 0.9, 0.99, 0.999, 1],
+  "single_image_admission": [null, 0, 0.2, 1],
+  "activation_probe_coefficients": [0, 1e-12, 1e-9, 1e-6, 0.0005, 0.005],
+  "activation_probe_q": [0, 0.5, 0.9, 1],
+  "synthetic_targets": {
+    "distinct": [0, 1],
+    "identical": [0, 0],
+    "predictions": [-1, 0.25, 0.5, 0.75, 2]
+  },
+  "tolerance": 1e-12,
+  "required_limitations": [
+    "q must be validated from observations separately; no v38 support-to-q mapping is evaluated",
+    "fixed source caps can substantially attenuate valid image supervision at intermediate q",
+    "there is no coefficient-independent positive minimum total strength",
+    "identical targets can lose total depth strength relative to cP+cI",
+    "scalar L1 image preference requires q>0.5; it is not a Gaussian update claim",
+    "availability and zero-coefficient policy changes are discrete even though the both-active mapping is continuous"
+  ]
+}

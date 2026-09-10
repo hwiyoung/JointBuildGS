@@ -1,0 +1,58 @@
+{
+  "task_id": "PHD-LOCAL-COST-WEIGHT-CANDIDATE-v3.8",
+  "status": "CANDIDATE_FORMULAS_OBSERVATION_GATE_NOT_BOUND",
+  "scientific_verdict": null,
+  "training_execution_enabled": false,
+  "scene_weight_map_validated": false,
+  "scope": "new isolated cost-to-weight candidate and CPU algebra checks",
+  "cost": {
+    "per_view": "(1-ZNCC)/2",
+    "patch_sizes_px": [9, 17, 33],
+    "normal_fit_patch_px": 9,
+    "branches": ["raw_depth", "same_source_center_anchored_normal_plane"],
+    "branch_selection": "separate_fixed_comparisons_never_per_source_minimum",
+    "per_scale_aggregation": "median_on_same_camera_intersection_across_sources_and_scales",
+    "min_cameras": 2,
+    "min_common_fraction": 0.8,
+    "min_grayscale_std": 0.02,
+    "summary_only": "mean_of_three_scale_medians",
+    "holes": "unavailable_not_numeric_bad_cost"
+  },
+  "evidence": {
+    "ramp_support_full_cost": 0.1,
+    "ramp_neutral_cost": 0.3,
+    "ramp_refutation_full_cost": 0.5,
+    "support": "g * min_scale(clip((0.3-E_scale)/0.2,0,1))",
+    "refutation": "g * min_scale(clip((E_scale-0.3)/0.2,0,1))",
+    "unknown": "1-support-refutation",
+    "is_calibrated_probability": false,
+    "observation_gate_provider": null,
+    "unknown_visibility_gate": 0,
+    "cost_only_gate_one_label": "HYPOTHETICAL_COST_ONLY",
+    "sensitivity_triplets_not_gt_winner_selection": [[0.05,0.25,0.45],[0.1,0.3,0.5],[0.15,0.35,0.55]]
+  },
+  "weights": {
+    "base_coefficient": "c_s=lambda_s(t)*target_valid_s/N_original_valid_s; empty=>0",
+    "prior": "A_P*(c_P*(1-R_P)+c_I*S_P*R_I)",
+    "image": "A_I*S_I*(c_I+c_P*R_P)",
+    "active": "A_s=1[c_s>0]",
+    "budget": "0<=w_P+w_I<=c_P+c_I",
+    "renormalize": false,
+    "loss_reduction": "sum weighted L1 on valid targets; no second mean",
+    "detach_scores_and_weights": true,
+    "unknown_fallback": "original prior coefficient only if active",
+    "both_refuted_endpoint": "zero depth supervision; RGB and other losses remain"
+  },
+  "reference_use": "evaluation_only_after_frozen_scores_weights",
+  "known_v3_7_cases": "already_inspected_development_examples_not_independent_validation",
+  "runtime_source": "src/phd/local_source_weight_v3_8.py",
+  "test_source": "tests/phd/local_complementary_refinement_v1/test_source_weight_v3_8.py",
+  "docker_image": "sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e",
+  "resources": {"gpu": false, "cpus": 2, "memory": "2g", "network": "none"},
+  "pending_before_training": [
+    "bind and validate current-RGB observation correspondence and visibility provider",
+    "synthetic cost identifiability and ambiguity cases",
+    "frozen real-case cost and weight evaluation with coverage and harms",
+    "same-anchor reduction/controller parity and run-spec binding"
+  ]
+}

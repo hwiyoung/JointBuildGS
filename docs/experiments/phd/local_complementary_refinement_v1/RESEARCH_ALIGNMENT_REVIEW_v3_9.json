@@ -1,0 +1,50 @@
+{
+  "task_id": "PHD-RESEARCH-ALIGNMENT-v3.9",
+  "scientific_verdict": null,
+  "status": "DEVELOPMENT_REVIEW_COMPLETE_CANDIDATE_POLICY_REQUIRES_REVISION",
+  "training_execution_enabled": false,
+  "scope": "purpose alignment review plus bounded CPU counterexamples and saved cost replay",
+  "direction_assessment": "source_specific_observation_to_local_supervision_is_relevant_but_v3_8_is_not_validated_for_adoption",
+  "completed": {
+    "synthetic_observation_fixtures": 7,
+    "synthetic_observation_checks": 12,
+    "weight_algebra_intent_checks": 727,
+    "saved_photo_score_rows": 192,
+    "saved_comparison_units": 32,
+    "comparable_units": 18,
+    "unavailable_units": 14,
+    "threshold_triplets_reported_without_selection": 3
+  },
+  "findings": [
+    "repeated_texture_and_linear_brightness_ramp_allow_known_10m_depth_difference_at_zero_NCC_cost",
+    "contrast_and_in_frame_support_do_not_certify_visibility_or_identifiability",
+    "weak_image_support_can_dominate_strong_prior_support_through_existing_coefficient_ratio",
+    "prior_fallback_reproduces_prior_target_and_does_not_freeze_current_GS",
+    "all_real_observation_gates_remain_unknown",
+    "hypothetical_image_weight_positive_in_only_2_of_18_comparable_pair_branch_units_at_all_three_triplets",
+    "known_P2_reference_closer_DA3_not_recovered_by_v3_8_cost_to_weight_candidate"
+  ],
+  "limits": {
+    "source_accuracy_calibrated": false,
+    "new_real_reference_evaluation": false,
+    "dense_weight_map": false,
+    "gaussian_update": false,
+    "spatial_allocation_benefit": false,
+    "generalization_or_method_novelty_verdict": false,
+    "synthetic_occurrence_rates_are_scene_rates": false
+  },
+  "external_base": "JBGS_ARTIFACT_ROOT/phase-payloads/phd/local_complementary_refinement_v1/PHD-LOCAL-COMPLEMENTARY-REFINEMENT-v1/main_v2/research_alignment_v3_9",
+  "receipts": [
+    "observation_20260911T124414Z/receipt.json",
+    "weight_20260911T124342Z/receipt.json",
+    "cost_20260911T124139Z/receipt.json"
+  ],
+  "existing_reference_reused_only_for_interpretation": "main_v2/normal_photometry_v3_7/evaluation_20260911T112438Z_M1x7Qj/payload/P2_high_disagreement_evaluation.json",
+  "future_experiment_requirements": [
+    "observation ambiguity and visibility validated against fixed controlled cases",
+    "explicit allocation versus total strength policy independent of hidden base-ratio interpretation",
+    "strong_weak_image_by_valid_stale_prior_by_good_bad_alignment_controlled_matrix",
+    "same reference IDs and simultaneous correction_damage_missed_change_coverage_reporting",
+    "matched global mean coefficients, controller fixed or replayed, source replacement isolated, repeat runs"
+  ]
+}

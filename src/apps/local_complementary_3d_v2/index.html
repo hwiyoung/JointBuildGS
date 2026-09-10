@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>국소 상보 LC · 동일 조건 G와 3D 비교</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div><span class="eyebrow">JointBuildGS · 국소 상보 depth refinement</span><h1>기존 G와 새 LC · 같은 위치 3D 비교</h1></div>
+  <span class="badge">DISPLAY_ONLY · scientific_verdict: null</span>
+  <nav><a href="/" style="color:#d8ecfa">최신 결과</a> · <a href="http://localhost:8905" style="color:#d8ecfa">정성·정량 결과</a></nav>
+</header>
+<main>
+  <p class="intro">같은 영역·시점·축척으로 입력과 추출 표면을 살펴봅니다. 표시 표본과 평가 범위로 잘린 실제 삼각형을 전환할 수 있습니다. 화면용 자료와 정량 평가 원자료의 수·계보는 패널별로 구분합니다.</p>
+  <div class="toolbar">
+    <label>지역 <select id="region-select" aria-label="지역 선택"></select></label>
+    <label>비교할 LC 조건 <select id="condition-select" aria-label="변경 조건 선택"></select></label>
+    <label id="resolution-label" hidden>추출 해상도 <select id="resolution-select" aria-label="추출 해상도 선택"></select></label>
+    <label>GeoGS 표면 <select id="surface-select"><option value="raw">Raw TSDF</option><option value="post">공식 후처리</option></select></label>
+    <label>Prior 표시 <select id="prior-select"><option value="mesh">ALS 변환 표면</option><option value="points">원 ALS 점</option></select></label>
+    <label>3D 표시 <select id="representation-select" aria-label="점 표본 또는 실제 삼각형 선택"><option value="points">표시 표본 (점)</option><option value="mesh">실제 삼각형 (메시)</option></select></label>
+    <label>기록된 사례 <select id="case-select"><option value="">지역 전체</option></select></label>
+    <label>색상 <select id="color-select"><option value="source">등록된 소스 색상</option><option value="distance">참조 거리</option><option value="height">높이</option></select></label>
+    <label>표시 점 크기 <input id="point-size" type="range" min="1" max="4" step="0.25" value="1.5"></label>
+    <div class="buttons"><button id="reset-view">초기 시점</button><button id="top-view">위에서</button><button id="front-view">앞에서</button></div>
+  </div>
+  <p id="region-note" class="muted"></p>
+  <p id="resolution-note" class="muted" hidden></p>
+  <p id="case-description" class="muted" hidden></p>
+  <div id="legend" aria-live="polite"></div>
+  <p class="help">드래그: 여섯 화면 함께 회전 · Shift+드래그 / 오른쪽 드래그: 이동 · 휠: 함께 확대 · 좌표 단위: m</p>
+  <p id="loading" role="status">실제 산출물 목록을 읽는 중입니다.</p>
+  <p id="error" role="alert" hidden></p>
+  <section id="panels" class="panels" aria-label="동기화된 표면 비교"></section>
+  <section class="evidence">
+    <div class="section-heading"><h2>동일 위치·폭·축척의 단면</h2><label>단면 <select id="section-select"></select></label></div>
+    <p id="section-empty" class="empty">등록된 실제 단면 그림이 없습니다.</p>
+    <figure id="section-figure" hidden><a id="section-link" target="_blank" rel="noopener"><img id="section-image" alt="같은 공간 범위의 실제 단면 비교"></a><figcaption id="section-caption"></figcaption></figure>
+  </section>
+  <section class="evidence">
+    <div class="section-heading"><h2>독립 평가 사진과 실제 렌더</h2></div>
+    <div class="gallery-filters"><label>평가 범위 <select id="render-domain-select"></select></label><label>실제 사진 <select id="render-image-select"></select></label><label>비교 그림 <select id="render-select"></select></label></div>
+    <p id="render-empty" class="empty">등록된 실제 렌더 비교 그림이 없습니다.</p>
+    <figure id="render-figure" hidden><a id="render-link" target="_blank" rel="noopener"><img id="render-image" alt="실제 평가 사진, GeoGS 렌더, 오차 비교"></a><figcaption id="render-caption"></figcaption></figure>
+  </section>
+  <section class="evidence"><h2>사례 선택과 평가 계보</h2><p id="case-note" class="muted"></p><div id="downloads" class="downloads"></div><details><summary>입력·표면·표시 표본의 계보 펼치기</summary><pre id="provenance"></pre></details></section>
+</main>
+<footer>영상 또는 ALS를 지역 전체의 정답으로 미리 간주하지 않습니다. 참조 부재, 복원 실패, 추출 자원 부족, 산출물 대기는 별도 상태입니다.</footer>
+<script type="module" src="viewer.js"></script>
+</body>
+</html>

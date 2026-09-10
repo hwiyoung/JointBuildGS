@@ -1,0 +1,19 @@
+{
+  "schema": "jbgs.local_photo_target_diagnostic.v2",
+  "scientific_verdict": null,
+  "reference_use": "evaluation_only",
+  "main_training_policy_modified": false,
+  "purpose": "Connect preserved A-F illustrative reference cohorts to actual training photos and unmodified DA3/prior samples; manual visibility review remains separate.",
+  "case_selection": "Reuse the six historical strict diagnostic max-cohort-count 2m tiles; selected before these LC results. No LC outcome selects the tile, camera or crop.",
+  "camera_selection": "Most finite strict per-view observations of the fixed case points; ties use lexicographically first photo name.",
+  "crop_padding_px": 64,
+  "stored_residual_absolute_tolerance_m": 0.00002,
+  "cases": [
+    {"id":"A","region":"P1","cohort":"above1","initial":"near","xy_lower_m":[-12,4],"expected_reference_count":749},
+    {"id":"B","region":"P1","cohort":"above1","initial":"far","xy_lower_m":[-6,-18],"expected_reference_count":712},
+    {"id":"C","region":"P2","cohort":"within05","initial":"far","xy_lower_m":[120,92],"expected_reference_count":663},
+    {"id":"D","region":"P2","cohort":"above1","initial":"near","xy_lower_m":[110,112],"expected_reference_count":744},
+    {"id":"E","region":"P3","cohort":"below1","initial":"far","xy_lower_m":[-34,-36],"expected_reference_count":345},
+    {"id":"F","region":"P3","cohort":"above1","initial":"near","xy_lower_m":[-28,0],"expected_reference_count":690}
+  ]
+}

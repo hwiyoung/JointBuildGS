@@ -1,0 +1,23 @@
+task_id: PHD-LOCAL-COMPLEMENTARY-REFINEMENT-v1
+scientific_verdict: null
+status: PLAN_REVIEW_MAIN_EXPERIMENT_NOT_STARTED
+current_session_scope: documentation_only_after_user_correction
+next_session_scope: resolve_plan_then_implement_validate_execute_evaluate
+payload_host_root: /media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/local_complementary_refinement_v1/PHD-LOCAL-COMPLEMENTARY-REFINEMENT-v1
+parent_resolver: artifacts/manifests/geogs_p1p2p3_v1.yaml
+handoff: docs/experiments/phd/local_complementary_refinement_v1/START_HERE_ko_v1.md
+plan: docs/experiments/phd/local_complementary_refinement_v1/EXPERIMENT_PLAN_ko_v1.md
+prepared_artifacts:
+  input_binding: contracts/input_binding.json
+  threshold_diagnostics: contracts/threshold_diagnostics.json
+  quantile_probe_config: contracts/experiment_v1.json
+  source_copy: source
+  one_step_probe: preflight/P2_LC_D005_Pnative/probe_receipt.json
+planned_main_runs: 18
+started_main_runs: 0
+planned_prior_coefficients: [0.005, 0.0005, 0.0]
+planned_protection_states: [native, release]
+planned_regions: [P1, P2, P3]
+main_thresholds_frozen: false
+implementation_status: draft_partial_technical_validation
+existing_data_and_services_preserved: true
