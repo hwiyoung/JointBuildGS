@@ -1,0 +1,235 @@
+{
+  "schema": "jbgs.mvs_surface_update.technical_result.v1",
+  "task_id": "PHD-MVS-SURFACE-UPDATE-v1",
+  "scientific_verdict": null,
+  "status": "PARTIAL_NO_ELIGIBLE_UPDATE",
+  "technical_pipeline_verified": true,
+  "actual_update_effect_comparison_available": false,
+  "artifact_root_local": "../JointBuildGS-artifacts",
+  "artifact_root_container": "/artifacts/JointBuildGS",
+  "attempt_relative": "phase-payloads/phd/mvs_surface_update_v1/PHD-MVS-SURFACE-UPDATE-v1/attempt",
+  "git_base": "72f45bcf861c5fe6e0c70e28e0686a72e9424b17",
+  "receipts": [
+    {
+      "path": "prepare_v2/receipt.json",
+      "sha256": "f1eb7805a5836c3b2d8077140e9f59a77600233c82b6dfdf611d7932a2b2be04",
+      "status": "PASS_PREPARED_CASES"
+    },
+    {
+      "path": "prepare_screen/receipt.json",
+      "sha256": "7de6bd4302dbeedaf592457be6eedcadb826627ef421baa9723b8507bd04a392",
+      "status": "PASS_PREPARED_CASES"
+    },
+    {
+      "path": "probe/P1/receipt.json",
+      "sha256": "9100af96fb0869ae46e9bcd1ccb6df6f93a69c2e26d8b8fa49680881faf5c0f4",
+      "status": "PASS_BOUNDED_INFERENCE_DIAGNOSTIC"
+    },
+    {
+      "path": "probe/P2/receipt.json",
+      "sha256": "449cd43a6ecc2b44160743ff0802c1fe373afa853d18a80d60ac4f991e035258",
+      "status": "PASS_BOUNDED_INFERENCE_DIAGNOSTIC"
+    },
+    {
+      "path": "probe/P3/receipt.json",
+      "sha256": "25eb043f69e2e957d62a031abfc6090c63b4e9a0225130cbc28b65a6146aec76",
+      "status": "PASS_BOUNDED_INFERENCE_DIAGNOSTIC"
+    },
+    {
+      "path": "screen/P2/receipt.json",
+      "sha256": "06c09292f89fea91e380558eef81a638c9bfe79070720c92e7c660b305890d73",
+      "status": "PASS_ASSOCIATION_ONLY_SCREEN"
+    },
+    {
+      "path": "screen/P3/receipt.json",
+      "sha256": "ff57e3a26257627ef39484e6dd92d39c883bbc816f972f3a8fe8c943ef1ee76d",
+      "status": "PASS_ASSOCIATION_ONLY_SCREEN"
+    },
+    {
+      "path": "reference/P1/receipt.json",
+      "sha256": "2a87968f3e5c6c20d0c2daca995ea23eef9c238ee173f70990f20cd8a6e2d7c4",
+      "status": "PASS_REFERENCE_DIAGNOSTIC"
+    },
+    {
+      "path": "reference/P2/receipt.json",
+      "sha256": "160164763477b5e17caf85ef87129b85786a8948bc72ec3c9ff590a67a1db765",
+      "status": "PASS_REFERENCE_DIAGNOSTIC"
+    },
+    {
+      "path": "reference/P3/receipt.json",
+      "sha256": "85e0bd3edebdc5e7d2fab33a7170f85edda6f613d654c511185151b8d06eb90d",
+      "status": "PASS_REFERENCE_DIAGNOSTIC"
+    },
+    {
+      "path": "review/receipt.json",
+      "sha256": "9c9c0291bedd5a60595b4733865fa5a574d0b40960db8cef08d8565ff75896cb",
+      "status": "PASS_REVIEW_BUILD"
+    },
+    {
+      "path": "mobile_overview_v2/receipt.json",
+      "sha256": "98055315c5fb1a2e764c04a7ca507a24ab45c1721d9c9c29ee7394a7ef0924b6",
+      "status": "PASS_MOBILE_OVERVIEW"
+    },
+    {
+      "path": "qa_v2/receipt.json",
+      "sha256": "db3d2a847d1060168918b442db7fe2c8fdcc76ebc1191a70c0b6721e51a4b500",
+      "status": "PASS_ACTUAL_BROWSER"
+    }
+  ],
+  "source_snapshot": "final_source",
+  "source_sha256": [
+    {
+      "path": "configs/phd/mvs_surface_update_v1/association_screen.json",
+      "sha256": "54017ff92bcc806a19cce377abb115a61d5539b5250f472cfbb12c02b6c44c3c"
+    },
+    {
+      "path": "configs/phd/mvs_surface_update_v1/experiment.json",
+      "sha256": "80fcba8089535a87d597bbcf798e69af250d19b20f3d6893ca1fb6bb05c18787"
+    },
+    {
+      "path": "docs/experiments/phd/mvs_surface_update_v1/ASSOCIATION_SCREEN_FINDINGS_ko_v1.md",
+      "sha256": "a9a448d8f997b8675955a725788b9dd960f25393c54f854657aac1490692db05"
+    },
+    {
+      "path": "docs/experiments/phd/mvs_surface_update_v1/ISSUES_ko_v1.md",
+      "sha256": "ca951443fbdda5b97c141321495edbe7f5356ef074e08dbe1d760e0020c20324"
+    },
+    {
+      "path": "docs/experiments/phd/mvs_surface_update_v1/PLAN_ko_v1.md",
+      "sha256": "b12aed91bd1bb75de52564f2e9e59c029458d1364ad74ab85ac35d18a3e1e0f8"
+    },
+    {
+      "path": "docs/experiments/phd/mvs_surface_update_v1/RESULT_ko_v1.md",
+      "sha256": "07c3f509448be4c1ea62671a290f4bd250b0d89441ac01901cb415bd6c8c4042"
+    },
+    {
+      "path": "scripts/phd/mvs_surface_update_v1/association_screen.py",
+      "sha256": "5021626e7e4f3fb626ff3a12802c3d91c76c8e6b7631ff7a5c31d393ff82f24a"
+    },
+    {
+      "path": "scripts/phd/mvs_surface_update_v1/browser_qa.mjs",
+      "sha256": "320679428a08e9a8f20cf6cab7d9e0fbab6bbde433d96144e98592569f4c567b"
+    },
+    {
+      "path": "scripts/phd/mvs_surface_update_v1/deliver.py",
+      "sha256": "9485291d2651d340bd47adbd776548a0de57a42df8d995f56a9546d3e5df1e54"
+    },
+    {
+      "path": "scripts/phd/mvs_surface_update_v1/evaluate_reference.py",
+      "sha256": "f47066b3fb44e9cd29b319beafd0112b65bcb75beb97e7401355a322320212f9"
+    },
+    {
+      "path": "scripts/phd/mvs_surface_update_v1/finalize.py",
+      "sha256": "846bfac792e028b4d6294ee6d190c9ee02980079453360f97671200431442b69"
+    },
+    {
+      "path": "scripts/phd/mvs_surface_update_v1/gaussian_probe.py",
+      "sha256": "36d71f7dfd7a496c008417d07484696c04197c2a7aa0075946046514f0798be4"
+    },
+    {
+      "path": "scripts/phd/mvs_surface_update_v1/mobile_overview.py",
+      "sha256": "6f9d44e54aab88cb24ddeda3095c85d38d78a80ebecac91d94c7fc68db4124fa"
+    },
+    {
+      "path": "scripts/phd/mvs_surface_update_v1/prepare.py",
+      "sha256": "e17b0f801cbeecfc40acfe695cf86c53b3d10fe66e91124d1516b3704e5caf46"
+    },
+    {
+      "path": "scripts/phd/mvs_surface_update_v1/run_prepare.sh",
+      "sha256": "2c8f4dc2f5a24162562c37ffc6a1f74f2c2f0f5fd03c0f26a0fd7aef877d08ac"
+    },
+    {
+      "path": "scripts/phd/mvs_surface_update_v1/run_probe.sh",
+      "sha256": "f840deb1d834a88eb5f296d102b11954294cdd85d35898e1ff0bac8bfd8fbfb3"
+    },
+    {
+      "path": "scripts/phd/mvs_surface_update_v1/run_screen.sh",
+      "sha256": "a53efe36a0081d4029f3444f70c447f8bcf3af8e280f9189dcd83001a282f583"
+    },
+    {
+      "path": "scripts/phd/mvs_surface_update_v1/serve_review.sh",
+      "sha256": "031d927ee2bd34ee98b7cc5efa341bc3517af7c67d6ba677580ba59136e3aa6f"
+    },
+    {
+      "path": "src/apps/mvs_surface_update_v1/index.html",
+      "sha256": "a8a7ba085efaf11b94f39933fed0bfe8cf82be5bfb32133c3b9e3f5c4bd377cb"
+    },
+    {
+      "path": "src/phd/mvs_surface_update_v1.py",
+      "sha256": "6f4226cde4b51abae3202dcb4db8e184c46886e30cd9adeadba0f8bd6e97879c"
+    },
+    {
+      "path": "tests/phd/test_mvs_association_screen_v1.py",
+      "sha256": "2ea6301a16fa8d460d84974e6f050bf57ebdf3ff791313f9854faa8f939a6d7d"
+    },
+    {
+      "path": "tests/phd/test_mvs_gaussian_probe_v1.py",
+      "sha256": "0b6040c1350d2dd7c43d117b7e2efb5850117f30dbba158ef3491a3f815b453f"
+    },
+    {
+      "path": "tests/phd/test_mvs_surface_update_reference_v1.py",
+      "sha256": "eeabdc03518956b7e749bf552ef21d567f779621b5b59a2c0ccb8082fec3a2c9"
+    },
+    {
+      "path": "tests/phd/test_mvs_surface_update_v1.py",
+      "sha256": "5c37f0a7f522007425827a50aa07dc61cbbefebde8dc4cfab42c63b42d87c005"
+    }
+  ],
+  "regions": [
+    {
+      "region": "P1",
+      "discrepancy_observations": 271,
+      "admitted_observations": 0,
+      "screened_admitted_observations": 0,
+      "eligible_update_observations": 0,
+      "changed_gaussians": 0
+    },
+    {
+      "region": "P2",
+      "discrepancy_observations": 2049,
+      "admitted_observations": 11,
+      "screened_admitted_observations": 11,
+      "eligible_update_observations": 0,
+      "changed_gaussians": 0
+    },
+    {
+      "region": "P3",
+      "discrepancy_observations": 1011,
+      "admitted_observations": 2,
+      "screened_admitted_observations": 2,
+      "eligible_update_observations": 0,
+      "changed_gaussians": 0
+    }
+  ],
+  "representative_cases": 9,
+  "stage_cards": 72,
+  "browser": {
+    "checks": 637,
+    "desktop_width": 1440,
+    "mobile_width": 390,
+    "desktop_cards": 72,
+    "mobile_cards": 72,
+    "artifacts": 107,
+    "screenshots": 15
+  },
+  "renderer": "Exact native GeoGS-state-camera-v1 planar surfel renderer bound by Anchor8k implementation hashes",
+  "optimization_continuation": false,
+  "checkpoint_and_existing_training_modified": false,
+  "actual_gaussian_edits": 0,
+  "evaluation_reference_used_for_selection": false,
+  "reference": "UAS evaluation only after probe freeze; same original return IDs and paired support",
+  "crs": "EPSG:25832 shifted local; inherited absolute datum limitations",
+  "depth_axis": "camera_Z_m",
+  "interpretation": "No eligible edit under frozen gates. Zero before-after differences do not establish correction or preservation after an edit.",
+  "preserved_earlier_payloads": [
+    "prepare",
+    "mobile_overview",
+    "qa"
+  ],
+  "review_url": "http://127.0.0.1:8908/review/",
+  "binding": "loopback",
+  "mobile_summary": "mobile_overview_v2/P1_P2_P3_overview.png",
+  "staged_pdf": "review/P1_P2_P3_eight_stages.pdf",
+  "comparison_pdf": "review/all_cases_mobile.pdf",
+  "report": "docs/experiments/phd/mvs_surface_update_v1/RESULT_ko_v1.md"
+}
