@@ -1,0 +1,22 @@
+{
+  "scientific_verdict": null,
+  "stage": "2_INPUT_EVIDENCE_MAPS_ONLY",
+  "runtime": "sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e",
+  "base": "geogs_p1p2p3_v1/PHD-GEOGS-P1P2P3-v1",
+  "global": "geogs_mvs_pgsr_v1/PHD-GEOGS-MVS-PGSR-v1",
+  "bundle": "prior_weight_followup_v1/PHD-P1P2P3-PRIOR0005-R1A4-v1/attempt.rNaCh1sO",
+  "camera_contract": "configs/phd/region_view_support_v1/regions_v1.json",
+  "native_pixel_stride": 4,
+  "depth_tolerances_m": [0.1, 0.25, 0.5],
+  "primary_depth_tolerance_m": 0.25,
+  "roundtrip_tolerance_rgb_px": 2.0,
+  "source_pools": ["regional_train", "all937_context"],
+  "scope": "All937 is context only and includes historical evaluation image exposure. Regional_train excludes its region evaluation list. These are correlated MVS self-consistency observations, not calibrated confidence or weights.",
+  "cases": [
+    {"id": "P1_0100", "region": "P1", "suffix": "084553_0100_D.JPG"},
+    {"id": "P2_0146", "region": "P2", "suffix": "0146_D.JPG"},
+    {"id": "P2_0108", "region": "P2", "suffix": "0108_D.JPG"},
+    {"id": "P3_0142", "region": "P3", "suffix": "084717_0142_D.JPG"},
+    {"id": "P3_0046", "region": "P3", "suffix": "103041_0046_D.JPG"}
+  ]
+}

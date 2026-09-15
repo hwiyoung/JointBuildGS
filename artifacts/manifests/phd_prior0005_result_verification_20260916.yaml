@@ -1,0 +1,30 @@
+schema: jointbuildgs.external-task-resolver.v1
+task_id: PHD-P1P2P3-PRIOR0005-GLOBAL-REGIONAL-VERIFICATION-v1
+scientific_verdict: null
+status: PASS_EXISTING_RESULT_DIAGNOSTIC
+training_changed: false
+backend:
+  local_sibling: ../JointBuildGS-artifacts
+  relative: phase-payloads/phd/prior_weight_followup_v1/PHD-P1P2P3-PRIOR0005-R1A4-v1/verification.jCU13Dtc
+  durability: local external storage; not a durable-backup claim
+outputs:
+  metrics: metrics.json
+  validation: validation.json
+  frozen_config: config.json
+  frozen_sources_sha256: final_source.sha256
+  paired_reference_arrays: [P1_paired_surface.npz, P2_paired_surface.npz, P3_paired_surface.npz]
+  report: report.html
+  browser_screenshot: report_browser.png
+viewer_url: http://localhost:8910/data/prior_verification_v1/verification.jCU13Dtc/report.html
+report: docs/experiments/phd/region_weight_v1/GLOBAL_REGIONAL_VERIFICATION_20260916_ko.md
+validation_scope:
+  - exact original UAS coordinates and raw row IDs
+  - same reference membership across every condition
+  - original mesh SHA and equal extraction parameters
+  - same Anchor SHA and observed effective weight audit
+  - metric recomputation from preserved paired arrays
+  - actual Chromium report display and HTTP 200 figures
+limitations:
+  - descriptive posthoc development evaluation; no repeat variance estimate
+  - GT-to-mesh distance does not fully measure spurious surfaces
+  - historical P2/P3 MVS coefficient varied between 0.0475 and 0.05

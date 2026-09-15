@@ -1,0 +1,58 @@
+schema_version: 1
+artifact_id: PHD-P1-MANUAL-REGIONS-v1
+created_on: 2026-09-15
+status: PASS_ALL_TRAIN_VIEW_ANNOTATION_DRAFT
+export_validation: PASS_EXPORTED_ARRAYS_AND_HASHES
+scientific_verdict: null
+training_executed: false
+human_reviewed_all_pixels: false
+backend:
+  kind: local-filesystem
+  repository_relative_uri: file:../JointBuildGS-artifacts/phase-payloads/phd/manual_region_masks_v1/PHD-P1-MANUAL-REGIONS-v1/attempt.boolfix.QrP8Ir
+  docker_uri: file:/artifacts/JointBuildGS/phase-payloads/phd/manual_region_masks_v1/PHD-P1-MANUAL-REGIONS-v1/attempt.boolfix.QrP8Ir
+  durable_backup_claim: false
+inventory:
+  files: 922
+  bytes_including_directory_entries: 284268971
+  train_cameras: 98
+  manual_source_cameras: 2
+  evaluation_cameras_used: 0
+  pdf_pages: 98
+  contact_sheet_pages: 9
+  native_and_rgb_mask_archives_checked: 196
+  output_hashes_checked: 900
+receipts:
+  result:
+    path: result/receipt.json
+    sha256: 809c14181dc5afb21a5fd056c48c2d09ee9e815c943167e1d44830644dcec66a
+  validation:
+    path: qa/receipt.json
+    sha256: 5e767d749328029845feaaf9bc8ced8bc162e55a5a2cdcf26a40ddd328cffd4e
+predecessor:
+  immutable_attempt: attempt.uCJGq4
+  result_receipt_sha256: 2c22267e4add65ad757bba70a3d7d28b4166868924754d8f0a7909a62922f02c
+  reason_for_new_attempt: Boolean RGB export dtype corrected; every array value and every figure preserved.
+input_inspection:
+  repository_relative_uri: file:../JointBuildGS-artifacts/phase-payloads/phd/manual_region_masks_v1/inspection.RJeuQh
+  receipt_sha256: 941688b570cda83617fc7f8de19dda3e072f2ef37795624125f4950d00b21049
+entry_points:
+  two_views: result/P1_two_views.png
+  all_views: result/P1_all_98_views.pdf
+  first_full_frame: result/views/000_DJI_20241217084553_0100_D/full_frame.png
+  oblique_full_frame: result/views/083_DJI_20241217102955_0023_D/full_frame.png
+  coverage: result/coverage.csv
+  contact_sheets: result/contact_sheets
+source:
+  implementation: src/phd/manual_region_masks_v1.py
+  config: configs/phd/manual_region_masks_v1/p1_v1.json
+  generation: scripts/phd/manual_region_masks_v1/run_p1.sh
+  export_repair: scripts/phd/manual_region_masks_v1/repair_p1_boolean_exports.sh
+  validation: scripts/phd/manual_region_masks_v1/validate_output.py
+  tests: tests/phd/test_manual_region_masks_v1.py
+  report: docs/experiments/phd/manual_region_masks_v1/RESULT_ko_v1.md
+limitations:
+  - Manual input annotation plus MVS-based transfer is a reviewable draft, not semantic ground truth.
+  - Full pixel partition includes unknown and outside classes; assigned labels cover 26.29 percent of valid-context RGB samples.
+  - 19 cameras have candidate pixels, including tiny fragments; this is not a sufficient-view-support count.
+  - Current-view transient objects not seen in manual source cameras may remain undiscovered.
+  - No optimizer connection, MVS confidence calibration, Gaussian update, or scientific performance evaluation occurred.

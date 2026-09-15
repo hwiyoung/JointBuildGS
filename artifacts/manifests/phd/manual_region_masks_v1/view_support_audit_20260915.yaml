@@ -1,0 +1,41 @@
+schema_version: 1
+artifact_id: PHD-P1-MVS-VIEW-SUPPORT-AUDIT-v1
+status: PASS_READ_ONLY_VIEW_SUPPORT_AUDIT
+scientific_verdict: null
+training_executed: false
+existing_masks_modified: false
+backend:
+  kind: local-filesystem
+  repository_relative_uri: file:../JointBuildGS-artifacts/phase-payloads/phd/manual_region_masks_v1/support_audit.rvEKKQ
+  durable_backup_claim: false
+runtime:
+  image: sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e
+  python: 3.10.20
+  numpy: 1.26.4
+  matplotlib: 3.9.2
+  cpus: 2
+  memory: 3GiB
+  gpu: false
+  network: none
+outputs:
+  - path: result/receipt.json
+    sha256: 8bd8d583c0776f41dad11e45e3798513e575c57fa5c42ce2708eb0241395291f
+  - path: result/reference_sample_support.npz
+    sha256: 13a736e82d57188c84c9b7aea87e58a40ca8427a7d43d5d79e485239b201a016
+  - path: result/view_support.csv
+    sha256: 6b3cac873d3d19d35cccb2a5ea7d471923988191a8cac87b0232b8153877f0b8
+  - path: result/other_view_support.png
+    sha256: a2510dc50bcb435b20ec24562a86a8697d5c6e5ef9853bddfb231cbf51f273a0
+evidence:
+  source_snapshot: source/
+  command: command.txt
+  commit: commit.txt
+  log: run.log
+  config: configs/phd/manual_region_masks_v1/view_support_audit_v1.json
+  script: scripts/phd/manual_region_masks_v1/audit_view_support.py
+  report: docs/experiments/phd/manual_region_masks_v1/VIEW_SUPPORT_AUDIT_ko_v1.md
+interpretation:
+  first_view_native_r1_sample_fraction: 0.7783787960744919
+  original_p1_r1_reference_samples: 23118
+  any_other_view_agrees_fraction: 0.341984600744009
+  note: Source-0 conditioned depth and reprojection agreement; not independent accuracy, unique physical area, or calibrated confidence.

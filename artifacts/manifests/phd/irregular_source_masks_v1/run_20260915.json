@@ -1,0 +1,22 @@
+{
+  "schema": "jbgs.irregular_source_masks.artifact_resolver.v1",
+  "task_id": "PHD-IRREGULAR-SOURCE-MASKS-v1",
+  "scientific_verdict": null,
+  "artifact_root_local": "../JointBuildGS-artifacts",
+  "attempt_relative": "phase-payloads/phd/irregular_source_masks_v1/PHD-IRREGULAR-SOURCE-MASKS-v1/attempt_20260915T014234Z_NtoOoy",
+  "status_source": "status.txt",
+  "process_service": "jbgs-irregular-masks-attempt_20260915t014234z_ntoooy.service",
+  "container_name": "jbgs-irregular-attempt_20260915t014234z_ntoooy",
+  "runtime_image": "sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e",
+  "source_hashes": "source_sha256.txt",
+  "numerical_validation": "numerical_validation.json",
+  "log": "run.log",
+  "completion_receipt": "evidence/receipt.json",
+  "review_url": "http://127.0.0.1:8911/report/",
+  "review_binding": "loopback",
+  "payload": "evidence/data.json",
+  "gpu_used": false,
+  "existing_experiments_modified": false,
+  "plan": "docs/experiments/phd/irregular_source_masks_v1/PLAN_ko_v1.md",
+  "interpretation": "This resolver records a launched CPU diagnostic, not completed masks or demonstrated selection accuracy. Inspect live status and completion receipt."
+}

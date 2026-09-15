@@ -1,0 +1,17 @@
+{
+  "scientific_verdict": null,
+  "runtime": "sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e",
+  "base": "geogs_p1p2p3_v1/PHD-GEOGS-P1P2P3-v1",
+  "global": "geogs_mvs_pgsr_v1/PHD-GEOGS-MVS-PGSR-v1",
+  "bundle": "prior_weight_followup_v1/PHD-P1P2P3-PRIOR0005-R1A4-v1/attempt.rNaCh1sO",
+  "camera": "DJI_20241217084553_0100_D.JPG",
+  "minimum_prior_mvs_gap_m": 2.0,
+  "anchor_cohort_prior_tolerance_m": 1.0,
+  "current_center_tolerance_m": 0.5,
+  "states": [
+    {"id": "anchor", "label": "Anchor 8000", "path": "geogs_p1p2p3_v1/PHD-GEOGS-P1P2P3-v1/runs/P1/D005_Pnative/model/jbgs_complete/iteration_8000"},
+    {"id": "global_0005", "label": "Global prior .0005", "path": "geogs_mvs_pgsr_v1/PHD-GEOGS-MVS-PGSR-v1/train/P1/mvs_0.0005/attempt.3iBmJucV/model/jbgs_complete/iteration_30000", "saved_depth": "geogs_mvs_pgsr_v1/PHD-GEOGS-MVS-PGSR-v1/evaluation/attempt.LwEnygWG/extractions/P1.mvs.D0005_Pnative/model/train/ours_30000/vis/depth_00000.tiff"},
+    {"id": "regional_005", "label": "Regional prior .005 / R1=4", "path": "p1_single_view_weight_v1/PHD-P1-SINGLE-VIEW-WEIGHT-v1/attempt.annotated.uOkHWmgi/train/alpha_4/model/jbgs_complete/iteration_30000", "saved_depth": "geogs_mvs_pgsr_v1/PHD-GEOGS-MVS-PGSR-v1/viewer_rgb_v1/p1_weights_v1/alpha_4/extraction/model/train/ours_30000/vis/depth_00000.tiff"},
+    {"id": "regional_0005", "label": "Regional prior .0005 / R1=4", "path": "prior_weight_followup_v1/PHD-P1P2P3-PRIOR0005-R1A4-v1/attempt.rNaCh1sO/P1/train/alpha_4/model/jbgs_complete/iteration_30000", "saved_depth": "geogs_mvs_pgsr_v1/PHD-GEOGS-MVS-PGSR-v1/viewer_rgb_v1/prior_weights_v1/P1/alpha_4/extraction/model/train/ours_30000/vis/depth_00000.tiff"}
+  ]
+}

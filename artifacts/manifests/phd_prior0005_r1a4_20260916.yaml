@@ -1,0 +1,16 @@
+schema: jbgs_local_artifact_resolver_v1
+task_id: PHD-P1P2P3-PRIOR0005-R1A4-v1
+scientific_verdict: null
+artifact_root: ../JointBuildGS-artifacts
+payload: phase-payloads/phd/prior_weight_followup_v1/PHD-P1P2P3-PRIOR0005-R1A4-v1/attempt.rNaCh1sO
+config: configs/phd/region_weight_v1/prior_0005_v1.json
+preparation: preparation.json
+frozen_files: frozen_files.json
+regions: [P1, P2, P3]
+prior_weight: 0.0005
+r1_weight: 4
+viewer_manifest: phase-payloads/phd/geogs_mvs_pgsr_v1/PHD-GEOGS-MVS-PGSR-v1/viewer_rgb_v1/prior_weights_v1/manifest.json
+viewer_url: http://127.0.0.1:8910/app/weights.html?comparison=prior
+initial_browser_qa: browser_qa/receipt.json
+initial_browser_qa_status: PASS_PRIOR_WEIGHT_BROWSER
+initial_browser_qa_checks: 51

@@ -1,0 +1,1123 @@
+{
+  "task_id": "PHD-P2P3-MANUAL-REGIONS-v1",
+  "status": "MANUAL_SOURCE_MULTIVIEW_DRAFT",
+  "scientific_verdict": null,
+  "reference_access": false,
+  "depth_match_m": 0.5,
+  "roundtrip_native_px": 2,
+  "source_boundary_native_px": 2,
+  "target_boundary_native_px": 1,
+  "depth_edge_native_px": 1,
+  "depth_edge_m": 0.75,
+  "display_alpha": 4,
+  "candidate_alpha_values": [
+    0,
+    1,
+    4
+  ],
+  "intervention_base_regions": [
+    2
+  ],
+  "font_path": "/font/NotoSansCJK-Regular.ttc",
+  "depth_display_percentiles": [
+    2,
+    98
+  ],
+  "policy": "Input-only manual RGB polygons after native MVS and prior inspection. R1 is a roof/facade intervention trial, not a change or source-authority label. Complete native/RGB partitions for bound train cameras. Unknown, invalid, excluded and outside context are zero. No training.",
+  "unknown_policy": "Unannotated abstains; current MVS depth agreement <=0.5 m and roundtrip <=2 native pixels required for transfer. Accepted exclusion vetoes other-source labels. Local manual source labels take priority. Depth/label boundaries abstain. Invalid is R5; valid outside context R6.",
+  "region_labels": {
+    "1": "보정 시험 대상",
+    "2": "기타 건물 표면",
+    "3": "정적 지면",
+    "4": "관측 제외 대상",
+    "5": "미분류·판단 유보",
+    "6": "설정 범위 밖"
+  },
+  "colors": {
+    "1": "#E69F00",
+    "2": "#267DB3",
+    "3": "#6F8C62",
+    "4": "#BD5C86",
+    "5": "#B8B8BE",
+    "6": "#353A40"
+  },
+  "region": "P3",
+  "train_view_count": 137,
+  "binding_sha256": "e3e6adbab866418890fa2d2c57e64a53265232230d0e860a6500c623ce5fe8ac",
+  "training_context": {
+    "x": [
+      -85,
+      5
+    ],
+    "y": [
+      -67,
+      37
+    ],
+    "z": [
+      -90,
+      80
+    ]
+  },
+  "evaluation_roi": {
+    "x": [
+      -60,
+      -20
+    ],
+    "y": [
+      -42,
+      12
+    ],
+    "z": [
+      -49.223,
+      -16.993
+    ]
+  },
+  "input_inspection_attempt": "inspect.P3.w4bEb3UQ",
+  "rationale": "R1 includes target curved roof and visible front facade; oblique source 119 supplies well-observed facade, nadir source 4 supplies roof/top context with original holes retained. MVS roof is fragmented; valid samples remain trial observations, not confidence-certified. Connecting bridge and permanent roof fittings are building surfaces R2. R1 does not imply demolition.",
+  "manual_sources": [
+    {
+      "train_index": 119,
+      "name": "DJI_20241217103041_0046_D.JPG",
+      "coordinates": "Full input RGB 1400x1013 integer pixel coordinates; ordered polygons overwrite; manually inspected draft",
+      "default_region": 5,
+      "polygons": [
+        {
+          "region": 2,
+          "note": "Target curved roof and front facade",
+          "xy": [
+            [
+              0,
+              145
+            ],
+            [
+              1168,
+              88
+            ],
+            [
+              1230,
+              163
+            ],
+            [
+              1240,
+              188
+            ],
+            [
+              1158,
+              526
+            ],
+            [
+              0,
+              633
+            ]
+          ]
+        },
+        {
+          "region": 2,
+          "note": "Background upper facade, clear patch",
+          "xy": [
+            [
+              245,
+              7
+            ],
+            [
+              690,
+              7
+            ],
+            [
+              690,
+              105
+            ],
+            [
+              252,
+              123
+            ]
+          ]
+        },
+        {
+          "region": 2,
+          "note": "Eastern end wall",
+          "xy": [
+            [
+              1280,
+              133
+            ],
+            [
+              1398,
+              173
+            ],
+            [
+              1398,
+              476
+            ],
+            [
+              1214,
+              542
+            ],
+            [
+              1207,
+              443
+            ]
+          ]
+        },
+        {
+          "region": 2,
+          "note": "Foreground roof with permanent roof fittings",
+          "xy": [
+            [
+              0,
+              830
+            ],
+            [
+              641,
+              744
+            ],
+            [
+              654,
+              701
+            ],
+            [
+              1240,
+              626
+            ],
+            [
+              1246,
+              587
+            ],
+            [
+              1399,
+              555
+            ],
+            [
+              1399,
+              1013
+            ],
+            [
+              0,
+              1013
+            ]
+          ]
+        },
+        {
+          "region": 2,
+          "note": "Elevated connecting bridge is building structure",
+          "xy": [
+            [
+              617,
+              399
+            ],
+            [
+              651,
+              396
+            ],
+            [
+              837,
+              670
+            ],
+            [
+              782,
+              678
+            ],
+            [
+              738,
+              598
+            ]
+          ]
+        },
+        {
+          "region": 4,
+          "note": "Trees in front of lower target facade",
+          "xy": [
+            [
+              0,
+              645
+            ],
+            [
+              212,
+              535
+            ],
+            [
+              384,
+              565
+            ],
+            [
+              511,
+              551
+            ],
+            [
+              658,
+              595
+            ],
+            [
+              690,
+              702
+            ],
+            [
+              606,
+              731
+            ],
+            [
+              269,
+              753
+            ],
+            [
+              213,
+              797
+            ],
+            [
+              0,
+              818
+            ]
+          ]
+        },
+        {
+          "region": 4,
+          "note": "Eastern lower facade trees",
+          "xy": [
+            [
+              862,
+              573
+            ],
+            [
+              1030,
+              483
+            ],
+            [
+              1106,
+              516
+            ],
+            [
+              1204,
+              451
+            ],
+            [
+              1260,
+              474
+            ],
+            [
+              1270,
+              570
+            ],
+            [
+              1210,
+              621
+            ],
+            [
+              1039,
+              631
+            ],
+            [
+              904,
+              659
+            ]
+          ]
+        },
+        {
+          "region": 4,
+          "note": "Parked van",
+          "xy": [
+            [
+              658,
+              634
+            ],
+            [
+              711,
+              634
+            ],
+            [
+              711,
+              702
+            ],
+            [
+              658,
+              702
+            ]
+          ]
+        },
+        {
+          "region": 4,
+          "note": "Parked western vans",
+          "xy": [
+            [
+              289,
+              686
+            ],
+            [
+              448,
+              686
+            ],
+            [
+              448,
+              774
+            ],
+            [
+              289,
+              774
+            ]
+          ]
+        },
+        {
+          "region": 5,
+          "note": "Ambiguous target roof edge behind foreground occlusions",
+          "xy": [
+            [
+              0,
+              631
+            ],
+            [
+              207,
+              597
+            ],
+            [
+              197,
+              625
+            ],
+            [
+              0,
+              659
+            ]
+          ]
+        }
+      ],
+      "intervention_polygon": {
+        "region": 1,
+        "note": "Manually selected target building surface; no prior-minus-MVS threshold and no change truth claim; clipped to observed building labels",
+        "xy": [
+          [
+            0,
+            145
+          ],
+          [
+            1168,
+            88
+          ],
+          [
+            1230,
+            163
+          ],
+          [
+            1240,
+            188
+          ],
+          [
+            1158,
+            526
+          ],
+          [
+            0,
+            633
+          ]
+        ]
+      }
+    },
+    {
+      "train_index": 4,
+      "name": "DJI_20241217084717_0142_D.JPG",
+      "coordinates": "Full input RGB 1400x1013 integer pixel coordinates; ordered polygons overwrite; manually inspected draft",
+      "default_region": 5,
+      "polygons": [
+        {
+          "region": 2,
+          "note": "Target curved roof, only existing valid depth will receive weight",
+          "xy": [
+            [
+              522,
+              0
+            ],
+            [
+              740,
+              0
+            ],
+            [
+              921,
+              861
+            ],
+            [
+              906,
+              905
+            ],
+            [
+              692,
+              931
+            ]
+          ]
+        },
+        {
+          "region": 2,
+          "note": "Western neighbouring roof and facade",
+          "xy": [
+            [
+              0,
+              0
+            ],
+            [
+              92,
+              0
+            ],
+            [
+              166,
+              127
+            ],
+            [
+              239,
+              380
+            ],
+            [
+              347,
+              698
+            ],
+            [
+              424,
+              999
+            ],
+            [
+              409,
+              1013
+            ],
+            [
+              0,
+              1013
+            ]
+          ]
+        },
+        {
+          "region": 2,
+          "note": "Connecting bridge kept as permanent building structure",
+          "xy": [
+            [
+              279,
+              538
+            ],
+            [
+              580,
+              390
+            ],
+            [
+              589,
+              425
+            ],
+            [
+              302,
+              567
+            ]
+          ]
+        },
+        {
+          "region": 2,
+          "note": "Upper connecting bridge",
+          "xy": [
+            [
+              159,
+              63
+            ],
+            [
+              294,
+              0
+            ],
+            [
+              351,
+              0
+            ],
+            [
+              177,
+              104
+            ]
+          ]
+        },
+        {
+          "region": 2,
+          "note": "Neighbouring semicircular roof and permanent fittings",
+          "xy": [
+            [
+              984,
+              693
+            ],
+            [
+              1008,
+              659
+            ],
+            [
+              1090,
+              602
+            ],
+            [
+              1176,
+              590
+            ],
+            [
+              1258,
+              626
+            ],
+            [
+              1298,
+              685
+            ],
+            [
+              1316,
+              754
+            ],
+            [
+              1354,
+              778
+            ],
+            [
+              1344,
+              906
+            ],
+            [
+              1277,
+              874
+            ],
+            [
+              1184,
+              821
+            ],
+            [
+              1035,
+              799
+            ],
+            [
+              986,
+              747
+            ]
+          ]
+        },
+        {
+          "region": 3,
+          "note": "Paved open courtyard",
+          "xy": [
+            [
+              950,
+              0
+            ],
+            [
+              1399,
+              0
+            ],
+            [
+              1399,
+              426
+            ],
+            [
+              1345,
+              441
+            ],
+            [
+              1328,
+              474
+            ],
+            [
+              1180,
+              484
+            ],
+            [
+              1128,
+              436
+            ],
+            [
+              1044,
+              438
+            ],
+            [
+              849,
+              388
+            ],
+            [
+              809,
+              190
+            ]
+          ]
+        },
+        {
+          "region": 3,
+          "note": "Conservative unobstructed service lane west of target",
+          "xy": [
+            [
+              439,
+              358
+            ],
+            [
+              487,
+              349
+            ],
+            [
+              517,
+              416
+            ],
+            [
+              435,
+              463
+            ],
+            [
+              403,
+              455
+            ]
+          ]
+        },
+        {
+          "region": 3,
+          "note": "Lower unobstructed paved service lane",
+          "xy": [
+            [
+              466,
+              727
+            ],
+            [
+              503,
+              724
+            ],
+            [
+              550,
+              826
+            ],
+            [
+              600,
+              859
+            ],
+            [
+              634,
+              903
+            ],
+            [
+              633,
+              979
+            ],
+            [
+              469,
+              1000
+            ],
+            [
+              462,
+              964
+            ],
+            [
+              501,
+              939
+            ],
+            [
+              465,
+              851
+            ]
+          ]
+        },
+        {
+          "region": 4,
+          "note": "Mobile yellow blue equipment",
+          "xy": [
+            [
+              904,
+              194
+            ],
+            [
+              974,
+              182
+            ],
+            [
+              977,
+              239
+            ],
+            [
+              1014,
+              245
+            ],
+            [
+              1016,
+              277
+            ],
+            [
+              973,
+              289
+            ],
+            [
+              965,
+              331
+            ],
+            [
+              898,
+              320
+            ],
+            [
+              903,
+              292
+            ],
+            [
+              925,
+              274
+            ],
+            [
+              910,
+              252
+            ],
+            [
+              872,
+              262
+            ],
+            [
+              870,
+              236
+            ]
+          ]
+        },
+        {
+          "region": 4,
+          "note": "Scultpure outside building surface objective",
+          "xy": [
+            [
+              1171,
+              262
+            ],
+            [
+              1223,
+              257
+            ],
+            [
+              1246,
+              308
+            ],
+            [
+              1231,
+              343
+            ],
+            [
+              1187,
+              324
+            ],
+            [
+              1174,
+              294
+            ]
+          ]
+        },
+        {
+          "region": 4,
+          "note": "Large tree/vegetation courtyard",
+          "xy": [
+            [
+              943,
+              424
+            ],
+            [
+              1062,
+              420
+            ],
+            [
+              1135,
+              439
+            ],
+            [
+              1183,
+              487
+            ],
+            [
+              1399,
+              437
+            ],
+            [
+              1399,
+              659
+            ],
+            [
+              1295,
+              676
+            ],
+            [
+              1226,
+              606
+            ],
+            [
+              1167,
+              583
+            ],
+            [
+              1087,
+              605
+            ],
+            [
+              1000,
+              666
+            ],
+            [
+              945,
+              715
+            ],
+            [
+              895,
+              551
+            ]
+          ]
+        },
+        {
+          "region": 4,
+          "note": "Upper courtyard tree",
+          "xy": [
+            [
+              779,
+              0
+            ],
+            [
+              954,
+              0
+            ],
+            [
+              956,
+              125
+            ],
+            [
+              913,
+              171
+            ],
+            [
+              839,
+              183
+            ],
+            [
+              799,
+              152
+            ]
+          ]
+        },
+        {
+          "region": 4,
+          "note": "West courtyard vehicles and trees",
+          "xy": [
+            [
+              286,
+              0
+            ],
+            [
+              491,
+              0
+            ],
+            [
+              521,
+              367
+            ],
+            [
+              454,
+              414
+            ],
+            [
+              392,
+              462
+            ],
+            [
+              316,
+              447
+            ],
+            [
+              257,
+              307
+            ],
+            [
+              252,
+              183
+            ]
+          ]
+        },
+        {
+          "region": 4,
+          "note": "Lower western courtyard stored materials and vegetation",
+          "xy": [
+            [
+              305,
+              585
+            ],
+            [
+              385,
+              553
+            ],
+            [
+              454,
+              554
+            ],
+            [
+              492,
+              691
+            ],
+            [
+              467,
+              740
+            ],
+            [
+              481,
+              839
+            ],
+            [
+              447,
+              922
+            ],
+            [
+              398,
+              898
+            ],
+            [
+              370,
+              771
+            ]
+          ]
+        },
+        {
+          "region": 4,
+          "note": "Person",
+          "xy": [
+            [
+              1094,
+              162
+            ],
+            [
+              1125,
+              162
+            ],
+            [
+              1125,
+              192
+            ],
+            [
+              1094,
+              192
+            ]
+          ]
+        },
+        {
+          "region": 4,
+          "note": "Person",
+          "xy": [
+            [
+              1193,
+              143
+            ],
+            [
+              1218,
+              143
+            ],
+            [
+              1218,
+              168
+            ],
+            [
+              1193,
+              168
+            ]
+          ]
+        },
+        {
+          "region": 4,
+          "note": "Person",
+          "xy": [
+            [
+              1242,
+              135
+            ],
+            [
+              1272,
+              135
+            ],
+            [
+              1272,
+              158
+            ],
+            [
+              1242,
+              158
+            ]
+          ]
+        },
+        {
+          "region": 4,
+          "note": "Person",
+          "xy": [
+            [
+              1228,
+              183
+            ],
+            [
+              1262,
+              183
+            ],
+            [
+              1262,
+              209
+            ],
+            [
+              1228,
+              209
+            ]
+          ]
+        },
+        {
+          "region": 4,
+          "note": "Person",
+          "xy": [
+            [
+              1138,
+              249
+            ],
+            [
+              1171,
+              249
+            ],
+            [
+              1171,
+              274
+            ],
+            [
+              1138,
+              274
+            ]
+          ]
+        },
+        {
+          "region": 5,
+          "note": "Roof boundary uncertain attached structures",
+          "xy": [
+            [
+              909,
+              859
+            ],
+            [
+              961,
+              807
+            ],
+            [
+              1074,
+              901
+            ],
+            [
+              976,
+              946
+            ],
+            [
+              918,
+              939
+            ]
+          ]
+        }
+      ],
+      "intervention_polygon": {
+        "region": 1,
+        "note": "Manually selected target building surface; no prior-minus-MVS threshold and no change truth claim; clipped to observed building labels",
+        "xy": [
+          [
+            522,
+            0
+          ],
+          [
+            740,
+            0
+          ],
+          [
+            921,
+            861
+          ],
+          [
+            906,
+            905
+          ],
+          [
+            692,
+            931
+          ]
+        ]
+      }
+    }
+  ]
+}
