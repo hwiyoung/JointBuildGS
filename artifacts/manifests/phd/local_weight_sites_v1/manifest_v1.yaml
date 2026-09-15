@@ -1,0 +1,101 @@
+schema: jointbuildgs.external-task-resolver.v1
+task_id: PHD-LOCAL-WEIGHT-SITES-v1
+status: PASS_TECHNICAL_SEARCH_WEIGHT_CAUSALITY_UNRESOLVED
+scientific_verdict: null
+backend:
+  local_sibling: ../JointBuildGS-artifacts
+  relative: phase-payloads/phd/local_weight_sites_v1/PHD-LOCAL-WEIGHT-SITES-v1
+  durability: local external storage; not a durable-backup claim
+active_attempt: attempt_20260918T150858Z_wA09F7
+report: docs/experiments/phd/local_weight_sites_v1/RESULT_20260919_ko.md
+issues: docs/experiments/phd/local_weight_sites_v1/ISSUES_ko_v1.md
+configuration: configs/phd/local_weight_sites_v1/search_v1.json
+review_configuration: configs/phd/local_weight_sites_v1/review_v1.json
+source: scripts/phd/local_weight_sites_v1
+search_receipt: result/receipt.json
+inspection_receipt: inspection/receipt.json
+review_receipt: review/receipt.json
+completion_receipt: completion_receipt.json
+replay_driver: scripts/phd/local_weight_sites_v1/replay.sh
+reviewed_sites: review/reviewed_sites.csv
+all_components: review/all_components.csv
+photos: review/candidate_sheet.png
+regions: [R1, R2, R3, R4, R5]
+baselines: [mvs_geogs, da3_geogs]
+priority_review: [W019]
+priority_review_scope: original MVS-conflict-search snapshot only; see current_review below
+held_source_support: [W138, W145]
+extraction_review: [W139]
+da3_failure_mvs_recovered: [W011]
+input_reference_used_for_selection: false
+uas_role: secondary_evaluation_only
+training_changes: false
+global_weight_sweep_performed: false
+runtime: CPU Docker, no GPU allocation
+reconciliation:
+  task_id: PHD-LOCAL-WEIGHT-SITES-RECONCILIATION-v1
+  folder: reconciliation_20260918T155636Z_HKghQb
+  receipt: reconciliation_20260918T155636Z_HKghQb/result/receipt.json
+  report: docs/experiments/phd/local_weight_sites_v1/CANDIDATE_LEDGER_20260919_ko.md
+  promoted_csv: docs/experiments/phd/local_weight_sites_v1/case_ledger_20260919.csv
+  case_records: 20
+  priority_case_ids: [C03, C04, C05, C06, C07, W019]
+  confirmed_weight_only_failure_count: 0
+  unique_site_count: null
+  scientific_verdict: null
+current_review:
+  status: C10_MVS_PRIORITY_DA3_C03_C07_W019_FACADE_CORRESPONDENCE_HELD
+  report: docs/experiments/phd/local_weight_sites_v1/CANDIDATE_LEDGER_20260919_ko.md
+  priority_case_ids: [C10, C03, C04, C05, C06, C07]
+  priority_case_count: 6
+  mvs_primary_review: [C10]
+  mvs_secondary_preservation_review: [C05]
+  da3_primary_review: [C03, C04, C05, C06, C07]
+  facade_correspondence_held: [W019]
+  revision_date: 2026-09-21
+  case_records: 20
+  other_case_records: 14
+  interpretation: review priorities, not exhaustive candidate count or proven local-weight necessity
+  previous_reconciliation_csv_role: frozen historical classification; C10 updated by this reassessment
+  z07_audit_folder: z07_reference_subset_20260919_v1
+  z07_audit_receipt: z07_reference_subset_20260919_v1/result/receipt.json
+  z07_audit_config: configs/phd/local_weight_sites_v1/z07_reference_subset_v1.json
+  z07_audit_driver: scripts/phd/local_weight_sites_v1/replay_z07_reference_subset.sh
+  z07_upper_sample_count: 80
+  z07_upper_prior_near_baseline_far_count: 80
+  confirmed_weight_only_failure_count: 0
+  unique_site_count: null
+  scientific_verdict: null
+viewer:
+  task_id: PHD-LOCAL-WEIGHT-SITES-MVS-REAUDIT-v1
+  status: PASS_MVS_REAUDIT_AND_VIEWER_ENTRY_RECOVERY
+  folder: mvs_reaudit_20260921_v2
+  previous_folder: photo_overlay_20260921_v1
+  previous_publication: local_weight_sites_20260921_v3
+  url: http://127.0.0.1:8913/data/local_weight_sites_20260921_v5/index.html?case=C10
+  default_case: C10
+  report: docs/experiments/phd/local_weight_sites_v1/MVS_REAUDIT_20260921_ko.md
+  configuration: configs/phd/local_weight_sites_v1/mvs_reaudit_v1.json
+  build_receipt: mvs_reaudit_20260921_v2/build_receipt.json
+  publication_receipt: mvs_reaudit_20260921_v2/local_weight_sites_20260921_v5_publication.json
+  browser_receipt: mvs_reaudit_20260921_v2/qa_v1/receipt.json
+  completion_receipt: mvs_reaudit_20260921_v2/completion_receipt.json
+  mvs_audit_receipt: mvs_reaudit_20260921_v2/audit_receipt.json
+  entry_retention_review: mvs_reaudit_20260921_v2/entry_retention_review.json
+  entry_link_receipt: mvs_reaudit_20260921_v2/entry_link_receipt.json
+  entry_browser_receipt: mvs_reaudit_20260921_v2/qa_entry_v1/receipt.json
+  old_entry_redirects: [local_weight_sites_20260920_v2, local_weight_sites_20260921_v3]
+  historical_entry_filename: index.archived.html
+  case_records: 20
+  geometry_replay_checks: 80
+  geometry_replay_role: inherited exact parent checks; native geometry and metric cohorts verified unchanged
+  photo_projection_views: 45
+  cases_with_photos: 19
+  http_verified_files: 571
+  browser_checks_passed: 246
+  entry_browser_checks_passed: 8
+  screenshots: 17
+  z07_reference_cohorts: [155, 80, 75]
+  original_results_modified: false
+  training_changes: false
+  scientific_verdict: null

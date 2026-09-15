@@ -1,0 +1,78 @@
+{
+  "task_id": "PHD-R1R5-COMPARISON-v1",
+  "scientific_verdict": null,
+  "authorization": "2026-09-17 user requested unified six-panel R1-R5 comparison, DA3 branch, and per-region reviewed correction areas with local prior depth weight zero; background preparation/training/extraction authorized by this request.",
+  "training_execution_enabled": false,
+  "manual_weights_enabled": false,
+  "region": "R4",
+  "region_version": "R1R5_OBJECT_ALIGNED_v1",
+  "audit_relative": "phase-payloads/phd/region_view_support_v1/PHD-R1R5-VIEW-SUPPORT-v1/attempt_20260915T130845Z_TkeMtl",
+  "audit_receipt_sha256": "9abf36630ccfbda9f48549fbebf4515081c2afec76f13107676406e3145a09e4",
+  "expected_counts": {
+    "all": 117,
+    "train": 102,
+    "evaluation": 15
+  },
+  "context_buffer_uv_m": 25.0,
+  "seed": 0,
+  "als_source_config": "configs/phd/mvs_als_source_relation_v1/run_v1.json",
+  "acquisition": {
+    "time_padding_seconds": 0.25,
+    "scan_reset_degrees": 5.0,
+    "minimum_scan_boundaries": 4
+  },
+  "als_surface": {
+    "max_scan_gap": 1,
+    "max_beam_coordinate_gap": 32,
+    "max_edge_length_m": 2.0,
+    "max_z_jump_m": null
+  },
+  "initialization": {
+    "num_points": 100000,
+    "min_observations": 2,
+    "max_observations": 15,
+    "color_rgb": [
+      128,
+      128,
+      128
+    ],
+    "visibility_tolerance_m": 0.05,
+    "additional_z_offset_m": 0.0
+  },
+  "baseline": {
+    "condition_id": "R4_MVS_D005_Pnative",
+    "scope": "ALS-adapted GeoGS development control; separate from canonical gsplat E1-E6 program",
+    "visual_depth": "existing_COLMAP_geometric_CAMERA_Z",
+    "prior_depth": "same ALS scan/beam triangulation and original GeoGS prior raycasting convention",
+    "iterations": 30000,
+    "anchor_iteration": 8000,
+    "lambda_lod_init": 0.08,
+    "lambda_lod_anchor": 0.005,
+    "lambda_da_depth_compatibility_name": 0.05,
+    "dynamic_visual_weight": true,
+    "dynamic_stage_switch": false,
+    "protection": "native",
+    "lod_init": true,
+    "freeze_onlybldg": true,
+    "protect_bldg": true,
+    "gaussian_completion": false,
+    "pgsr_enabled": false,
+    "confidence_weighting": false,
+    "scale_fit": false,
+    "mvs_hole_filling": false,
+    "regional_loss_mask": false,
+    "rgb_loss_domain": "full original frame as inherited; finite context/background mismatch to be logged, no hand-selected outcome mask",
+    "same_anchor_future_branches": "Share new complete R4 Anchor8k across MVS, DA3 and local prior0"
+  },
+  "resources": {
+    "cpu_preparation_cpus": 4,
+    "cpu_preparation_memory_gib": 12,
+    "network": "none",
+    "gpu_exposed": false
+  },
+  "limitations": [
+    "Existing MVS uses evaluation images in its historical producer lineage; development-only.",
+    "Input agreement does not prove accuracy or currentness.",
+    "ALS 45.7m vertical bridge is inherited, not a new verified datum calibration."
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "task_id": "PHD-LOCAL-WEIGHT-SITES-v1",
+  "scientific_verdict": null,
+  "reviewer": "agent image inspection; not human scientific verdict",
+  "cases": {
+    "W019": {"status": "LOCAL_CORRECTION_REVIEW_CANDIDATE", "name": "R1 Z11 외벽 하단 출입구 부속 구조", "note": "Prior와 MVS 충돌, 두 출력의 약 2m 잔여 거리. 10점 중 6점은 0.5m 이내 UAS 표본 존재. 작은 부속 구조의 누락과 가림, seed/protection을 구분해야 함."},
+    "W138": {"status": "HOLD_SOURCE_AND_SHARED_VIEW_SUPPORT", "name": "R1 Z06 은색 곡면지붕의 띠 경계", "note": "입력 불일치와 출력 잔여 거리는 확인. 각 점의 관측은 있으나 절반 이상 점을 함께 보는 분리 시점은 1개뿐. 가까운 UAS 표본이 없어 MVS 정확성과 표면 대응 미확인."},
+    "W139": {"status": "CHECK_SURFACE_EXTRACTION_FIRST", "name": "R1 Z06 은색 건물 우측 어두운 외벽", "note": "MVS–GeoGS mesh 거리 2.17m와 달리 조사한 세 시점 render-MVS 잔차는 약 0.33–0.46m. 표면 추출/가림/참조 결측을 먼저 확인."},
+    "W011": {"status": "DA3_FAILURE_MVS_CONTROL_RECOVERED", "name": "R2 Z06 채광창 건물의 도로측 녹화지붕 띠", "note": "DA3–GeoGS에는 잔여 오차가 있으나 MVS–GeoGS는 이미 현재 입력과 UAS에 가까움. MVS 기반 국소 가중치의 필요 사례로 세지 않음."},
+    "W150": {"status": "PARTIAL_CORRECTION_BOUNDARY_VISIBILITY_REVIEW", "name": "R2 Z02 상단 사각 건물 경계", "note": "Prior 대비 거리 감소가 이미 있음. 사시 영상에서 큰 ray-depth 잔차와 부분적인 UAS 근접성: 외벽/경계 가시성과 표현·추출 문제를 분리해야 함."},
+    "W013": {"status": "EXCLUDE_BUILDING_CASE_VEGETATION", "name": "R1 Z12 연결교 뒤 수목", "note": "원사진에서 표본이 수목에 투영됨. 가까운 UAS가 있어도 건물 가중치 필요 사례로 채택하지 않음."},
+    "W015": {"status": "HOLD_THIN_STRUCTURE_CORRESPONDENCE", "name": "R1 Z08 중정의 가느다란 기둥·시설물 부근", "note": "원사진에서 평평한 건물면이 아닌 가느다란 시설물 부근에 투영. 정확한 객체·표면 대응을 보류."},
+    "W020": {"status": "EXCLUDE_BUILDING_CASE_ROAD_OVERHEAD_STRUCTURE", "name": "R5 Z08 도로 위 선형 구조 후보", "note": "사진상 도로를 가로지르는 가는 선을 따라 표본이 놓임. 높은 local Z와 UAS 근접성은 있으나 건물 지붕 사례가 아님."},
+    "W125": {"status": "SUBSTANTIAL_CORRECTION_ALREADY_PRESENT", "name": "R1 Z06 은색 건물 중앙 외벽", "note": "Prior 거리 2.04m에서 MVS–GeoGS 0.61m로 이미 감소. 잔여 차이만으로 미보정 사례라고 하지 않음."},
+    "W145": {"status": "HOLD_SHARED_VIEW_SUPPORT", "name": "R1 Z06 은색 지붕의 인접 띠 경계", "note": "각 점은 3시점 이상 지지되지만 이 군집 절반 이상을 함께 보는 시점이 없어 사진 패널 생성 불가. 0.5m 이내 UAS 표본도 없음."}
+  },
+  "sheet_ids": ["W019", "W138", "W139", "W011"]
+}

@@ -1,0 +1,52 @@
+{
+  "scientific_verdict": null,
+  "reviewer": "assistant input inspection; not a human scientific verdict",
+  "evidence": "Each regional full_input_atlas.png and views_1.png inspected on 2026-09-17; first six selected photographs per region. No trained output or evaluation reference used.",
+  "membership": "Z00 covers the complete region; subsequent rectangles overwrite membership in order. Each tuple is id, name, kind, u_min, u_max, v_min, v_max, correction_test.",
+  "correction_semantics": "Exploratory prior-release hypothesis on reviewed structural context with stable local geometry and repeated current-behind-prior support. Not proof of temporal change or proof that MVS is more accurate. Other pixels retain the baseline.",
+  "R2": [
+    ["Z00","잔여 경계·도로·혼합","mixed",105,245,50,125,false],
+    ["Z01","상단 긴 건물 경계 지붕","building",105,179,50,65,false],
+    ["Z02","상단 사각 중정형 지붕동","building",193,226,50,73,false],
+    ["Z03","상단 건물 사이 도로·통로","circulation",105,245,73,80,false],
+    ["Z04","P2 본체 반복 곡면 채광 지붕","building",126,194,86,99,false],
+    ["Z05","P2 본체 상측 평지붕 띠","building",121,192,81,86,true],
+    ["Z06","P2 본체 하측 평지붕 띠","building",121,192,100,105,true],
+    ["Z07","긴 건물 우측 평지붕·옥상 설비","building",194,227,82,105,true],
+    ["Z08","하단 도로·수목 경계","circulation",105,245,108,125,false]
+  ],
+  "R3": [
+    ["Z00","잔여 경계·혼합","mixed",100,190,-30,70,false],
+    ["Z01","상단 긴 연결 지붕동","building",101,180,-24,-13,false],
+    ["Z02","중정·수목·보행 공간","courtyard",103,134,-12,54,false],
+    ["Z03","중정 우측 건물 접면·연결부","building",135,146,-11,53,true],
+    ["Z04","오른쪽 넓은 평지붕 내부","building",147,170,-11,52,true],
+    ["Z05","우측 경계 긴 건물·외벽","building",171,181,-12,64,false],
+    ["Z06","하단 연결 지붕동","building",103,171,55,64,false],
+    ["Z07","외곽 통로·경계","circulation",181,190,-30,70,false]
+  ],
+  "R4": [
+    ["Z00","잔여 경계·혼합·관측 부족","mixed",240,325,-65,125,false],
+    ["Z01","상단 사각 지붕·설비동","building",246,281,-50,-29,true],
+    ["Z02","상단 중정·수목","courtyard",247,282,-28,-13,false],
+    ["Z03","중앙 위 저층 경사지붕동","building",247,269,-12,12,true],
+    ["Z04","중앙 경사지붕 본체","building",247,271,21,48,true],
+    ["Z05","중앙 중정·수목·통로","courtyard",271,284,-12,55,false],
+    ["Z06","하단 L자형 붉은 지붕동","building",247,278,57,100,true],
+    ["Z07","하단 중정 내부","courtyard",257,284,69,96,false],
+    ["Z08","오른쪽 긴 건물 열","building",285,304,-35,102,false],
+    ["Z09","하단 가로 연결동","building",247,312,104,114,false],
+    ["Z10","오른쪽 관측 경계","mixed",305,325,-65,125,false]
+  ],
+  "R5": [
+    ["Z00","잔여 경계·통로·혼합","mixed",100,240,-90,-10,false],
+    ["Z01","왼쪽 독립동 본체·옥상","building",123,159,-72,-37,true],
+    ["Z02","독립동 하단 돌출 설비·연결부","building",145,155,-37,-30,false],
+    ["Z03","상단 오른쪽 긴 평지붕동","building",171,231,-77,-62,true],
+    ["Z04","오른쪽 사각 지붕동","building",195,226,-49,-21,true],
+    ["Z05","중앙 작은 사각 연결·설비동","building",166,181,-43,-29,false],
+    ["Z06","하단 긴 연결 지붕동","building",100,180,-23,-13,false],
+    ["Z07","중앙 통로·수목대","circulation",160,194,-61,-44,false],
+    ["Z08","상단 도로 경계","circulation",100,240,-90,-79,false]
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "task_id": "PHD-R1R5-COMPARISON-v1",
+  "analysis": "result_analysis_20260918T203139_v3",
+  "scientific_verdict": null,
+  "artifact_root": "/art",
+  "attempt_relative": "phase-payloads/phd/r1r5_comparison_v1/PHD-R1R5-COMPARISON-v1/attempt_20260917T132641Z_aa9r3kak",
+  "r1_review_relative": "phase-payloads/phd/r1_area_judgment_v1/PHD-R1-AREA-JUDGMENT-v1/attempt_20260916T134132Z_9keJVvIo/review_20260916T140058Z_pvyQNrYK/result",
+  "regions": [
+    "R1",
+    "R2",
+    "R3",
+    "R4",
+    "R5"
+  ],
+  "branches": [
+    "mvs",
+    "da3",
+    "local_prior0"
+  ],
+  "distance_cap_m": 10.0,
+  "mesh": "native fuse.ply before component filtering; hash bound",
+  "queries": "UAS in entire fixed R domains, all heights and classes; zone membership is XY context only",
+  "crs": "Inherited EPSG:25832 local frame; UAS source EPSG:32632 numeric identity, no new alignment",
+  "purpose": "Second descriptive exterior-surface screen: top reference support within0.5m per0.5m XY column; distances >0.5m; no training parameters",
+  "thresholds": "0.5/1/2m descriptive distance summaries; 0.1m descriptive paired change; no pass/fail meaning",
+  "runtime": "CPU Docker, 4 threads, no training or input mutation",
+  "reference": {
+    "relative": "phase-payloads/p0-audit/data/raw/tum2twin/TUM_Downtown_ULS_20241217_nadir.laz",
+    "sha256": "50783bfb205ea5532ac2a300d7e41b6b6426e45009d6c961d603e079cc5ae7b4",
+    "bytes": 1277996022,
+    "point_count": 177981904
+  },
+  "world_shift": [
+    690953.0,
+    5336071.0,
+    604.0
+  ],
+  "reference_voxel_m": 0.25,
+  "sections": {
+    "R1": {
+      "v": 0.0,
+      "u": [
+        -40,
+        6
+      ]
+    },
+    "R2": {
+      "v": 102.5,
+      "u": [
+        121,
+        192
+      ]
+    }
+  },
+  "authorization": "User requested drone LiDAR distances and localization of R1 deterioration; frozen results evaluation only.",
+  "reference_role": "EVALUATION_ONLY",
+  "metric": "Same first-native-row-per-0.25m-voxel UAS points to native mesh triangles; distances capped at10m",
+  "reuse_localization": "uas_evaluation_20260918T124001Z",
+  "localization_hashes": {
+    "R1_masked_localization.json": "53de12bfc8916114ffeb9386491831b324a1346f30f9b7653bd466c391c0fa7f",
+    "R1_masked_localization.png": "0e19bc6b3f35b0f82b2f35d4995dc6e920d45afd92f1b0a150451f85c136d20b"
+  },
+  "uas_folder": "uas_evaluation_20260918T124240Z_v2",
+  "git_commit": "72f45bcf861c5fe6e0c70e28e0686a72e9424b17",
+  "existing_viewer_mesh": {
+    "xyz": "phase-payloads/phd/r1_mvs_control_run_v1/PHD-R1-MVS-CONTROL-RUN-v1/attempt_20260916T141804Z_0zDUJ0xj/viewer/data/cache/extract_final_63b48f7b84cc2bd2/mesh.xyz.bin",
+    "indices": "phase-payloads/phd/r1_mvs_control_run_v1/PHD-R1-MVS-CONTROL-RUN-v1/attempt_20260916T141804Z_0zDUJ0xj/viewer/data/cache/extract_final_63b48f7b84cc2bd2/mesh.indices.bin"
+  },
+  "cell_size_m": [
+    4,
+    4,
+    2
+  ],
+  "minimum_points": 80,
+  "plane_rms_max_m": 0.08,
+  "normal_z_min": 0.65,
+  "minimum_category_fraction": 0.6,
+  "separation_m": 12,
+  "shortlist_per_region": 4,
+  "far_m": 0.5,
+  "minimum_top_fraction": 0.8
+}

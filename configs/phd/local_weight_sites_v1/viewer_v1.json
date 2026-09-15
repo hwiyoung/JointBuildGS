@@ -1,0 +1,32 @@
+{
+  "task_id": "PHD-LOCAL-WEIGHT-SITES-VIEWER-v1",
+  "scientific_verdict": null,
+  "artifact_root": "/art",
+  "comparison_relative": "phase-payloads/phd/r1r5_comparison_v1/PHD-R1R5-COMPARISON-v1/attempt_20260917T132641Z_aa9r3kak",
+  "analysis": "result_analysis_20260918T203139_v3",
+  "uas_folder": "uas_evaluation_20260918T124240Z_v2",
+  "old_sites_folder": "improvement_sites_20260918T135645Z",
+  "failure_folder": "failure_inspector_20260918T133424Z",
+  "search_relative": "phase-payloads/phd/local_weight_sites_v1/PHD-LOCAL-WEIGHT-SITES-v1/attempt_20260918T150858Z_wA09F7",
+  "reconciliation_relative": "phase-payloads/phd/local_weight_sites_v1/PHD-LOCAL-WEIGHT-SITES-v1/reconciliation_20260918T155636Z_HKghQb/result",
+  "z07_relative": "phase-payloads/phd/local_weight_sites_v1/PHD-LOCAL-WEIGHT-SITES-v1/z07_reference_subset_20260919_v1/result",
+  "default_case": "C10",
+  "ordered_ids": ["C10", "W019", "C03", "C04", "C05", "C06", "C07", "W138", "W145", "W139", "W125", "W150", "W011", "C01", "C02", "C08", "C09", "W015", "W013", "W020"],
+  "priority_ids": ["C10", "W019", "C03", "C04", "C05", "C06", "C07"],
+  "review_groups": {
+    "C10": "preservation", "W019": "correction", "C03": "correction",
+    "C04": "preservation", "C05": "missing_observation", "C06": "preservation", "C07": "preservation",
+    "W138": "held", "W145": "held", "W139": "extraction", "W125": "partial", "W150": "partial",
+    "W011": "recovered", "C01": "held", "C02": "held", "C08": "held", "C09": "held", "W015": "held",
+    "W013": "excluded", "W020": "excluded"
+  },
+  "object_axis_angle_degrees": 70,
+  "map_display_voxel_m": 1.0,
+  "w_crop_margin_m": 12,
+  "distance_cap_m": 10,
+  "distance_replay_tolerance_m": 0.001,
+  "publication_name": "local_weight_sites_20260920_v1",
+  "publication_url": "http://127.0.0.1:8913/data/local_weight_sites_20260920_v1/index.html",
+  "crs": "EPSG:25832 inherited object frame; UAS source EPSG:32632 numeric identity; no new alignment",
+  "purpose": "Visual and quantitative review of all 20 retained case records, including C10 reassessment; no new training or weight changes"
+}

@@ -1,0 +1,38 @@
+{
+  "task_id": "PHD-LOCAL-WEIGHT-SITES-RECONCILIATION-v1",
+  "scientific_verdict": null,
+  "artifact_root": "/art",
+  "previous_relative": "phase-payloads/phd/r1r5_comparison_v1/PHD-R1R5-COMPARISON-v1/attempt_20260917T132641Z_aa9r3kak/improvement_sites_20260918T135645Z",
+  "current_relative": "phase-payloads/phd/local_weight_sites_v1/PHD-LOCAL-WEIGHT-SITES-v1/attempt_20260918T150858Z_wA09F7",
+  "priority_ids": ["C03", "C04", "C05", "C06", "C07", "W019"],
+  "meaning_of_priority": "Sites to review weight hypotheses; no proof of local-weight necessity, sufficiency or superiority over the best global weight",
+  "previous_cases": {
+    "C01": {"status": "HOLD_REFERENCE_CORRESPONDENCE", "baseline": "MVS_AND_DA3", "reason": "유리 채광 지붕 아래의 평가 표본. 상단 UAS와 중앙 높이차 6.568m라 같은 외부 표면인지 미확인.", "hypothesis": "가중치 방향 결정 전 참조 표면 대응 확인"},
+    "C02": {"status": "HOLD_REFERENCE_CORRESPONDENCE", "baseline": "MVS_AND_DA3", "reason": "상단 지붕과 다른 층의 표본이 섞임. 상단 UAS와 중앙 높이차 4.145m.", "hypothesis": "가중치 방향 결정 전 참조 표면 대응 확인"},
+    "C03": {"status": "WEIGHT_HYPOTHESIS_PRIORITY", "baseline": "DA3", "reason": "현재 UAS 표면에서 prior 3.608m, DA3 결과 1.845m지만 MVS 결과 0.055m. Prior와 현재 표면이 다르고 DA3도 편향됨.", "hypothesis": "Prior 일괄 강화는 부적절. 해당 위치의 prior 감쇠와 유효한 현재 관측 반영을 검토; DA3 편향도 별도 처리"},
+    "C04": {"status": "WEIGHT_HYPOTHESIS_PRIORITY", "baseline": "DA3", "reason": "Prior 0.068m, MVS 결과 0.013m로 UAS에 가깝지만 DA3 결과 1.122m. 두 입력이 지지하던 평지붕의 위치가 벗어남.", "hypothesis": "유효한 prior 보존 및 편향된 DA3 감독 영향 감소를 검토"},
+    "C05": {"status": "WEIGHT_HYPOTHESIS_PRIORITY", "baseline": "DA3", "reason": "Prior 0.039m, DA3 결과 1.297m. 조사한 5영상 중 패치 80% 이상 MVS depth가 유효한 영상은 1개.", "hypothesis": "관측 부족 시 prior 유지와 불확실한 depth 감독 약화를 검토; 전체 학습 영상의 결측 판정은 아님"},
+    "C06": {"status": "WEIGHT_HYPOTHESIS_PRIORITY", "baseline": "DA3", "reason": "Prior 0.102m, MVS 결과 0.043m지만 DA3 결과 1.178m. 같은 녹화 지붕의 위치 보존 실패 진단.", "hypothesis": "신뢰되는 기존 구조 보존과 국소 depth 편향 억제를 검토"},
+    "C07": {"status": "WEIGHT_HYPOTHESIS_PRIORITY", "baseline": "DA3", "reason": "Prior 0.083m, MVS 결과 0.015m지만 DA3 결과 1.137m. 별도 독립동 옥상에서 같은 위치 이탈이 나타남.", "hypothesis": "유효한 prior 보존과 편향된 DA3 감독 억제를 검토"},
+    "C08": {"status": "HOLD_REFERENCE_CORRESPONDENCE", "baseline": "MVS_AND_DA3", "reason": "채광창 경계의 아래층 표본. 상단 UAS와 중앙 높이차 4.429m이며 외부 표면 대응 미확인.", "hypothesis": "참조의 외부 표면 대응을 먼저 확정"},
+    "C09": {"status": "HOLD_REFERENCE_CORRESPONDENCE", "baseline": "MVS_AND_DA3", "reason": "상단 관측면보다 중앙값 22.067m 아래의 표본으로, 시점에 따라 외벽과 옥상으로 투영됨.", "hypothesis": "가림과 평가 표면 대응 확인 전 가중치 후보 확정 금지"},
+    "C10": {"status": "HOLD_REFERENCE_CORRESPONDENCE", "baseline": "MVS_AND_DA3", "reason": "R1 Z07 기존 보존 실패 후보. 155점 중 상단 관측면 근처는 80점(51.6%)뿐이므로 경계·다층 대응 보류.", "hypothesis": "큰 거리만으로 prior 보호 가중치 부족을 확정하지 않음"}
+  },
+  "current_hypotheses": {
+    "W019": "유효한 현재 관측 반영을 늘릴 후보. Prior 가중치, native protection, seed 부족 및 가림 원인 분리 필요",
+    "W138": "MVS 정확성과 패치 공동 시점 지지 확인 전 가중치 방향 보류",
+    "W139": "저장 렌더는 MVS에 비교적 가까우므로 추출·가림·표면 대응부터 확인",
+    "W011": "같은 R2 Z06 지붕의 C03 인접 표본. DA3 문제 검토에 연결하되 MVS 국소 가중치 필요 사례로 추가 집계하지 않음",
+    "W150": "이미 부분 보정된 건물 경계. 가시성·표현·추출 원인 확인 후 가중치 검토",
+    "W013": "수목이므로 건물 가중치 주 사례에서 제외",
+    "W015": "가느다란 시설물의 객체·표면 대응을 먼저 확인",
+    "W020": "도로 위 선형 구조로 건물 지붕 가중치 주 사례에서 제외",
+    "W125": "이미 상당 부분 보정됐으므로 미보정 주 사례에서 제외하고 잔여·비열화 비교로 유지",
+    "W145": "패치 공동 관측 부족과 참조 대응을 먼저 확인"
+  },
+  "supplemental_reports": [
+    "docs/experiments/phd/r1r5_comparison_v1/IMPROVEMENT_SITES_20260918_ko.md",
+    "docs/experiments/phd/r1r5_comparison_v1/R1_Z06_FLOATER_ko.md",
+    "docs/experiments/phd/region_weight_v1/GLOBAL_REGIONAL_VERIFICATION_20260916_ko.md"
+  ]
+}

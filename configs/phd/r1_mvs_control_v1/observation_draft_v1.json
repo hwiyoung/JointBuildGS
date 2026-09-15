@@ -1,0 +1,20 @@
+{
+  "task_id": "PHD-R1-MVS-CONTROL-PREP-v1",
+  "scientific_verdict": null,
+  "status": "INPUT_OBSERVATION_DRAFT_NOT_TRUTH_OR_WEIGHTS",
+  "supersedes": "observation_draft only in preparation_v1.json; CPU input configuration remains immutable",
+  "source_correction": "Old P3 source 0046 is evaluation in the new R1 split. It was inspected during preparation; finalized S1/U1 use neighboring train view 0045 without changing the split. This is a development split, not untouched evaluation.",
+  "region_config": "configs/phd/region_view_support_v1/regions_v1.json",
+  "source_point_sha256": "13a736e82d57188c84c9b7aea87e58a40ca8427a7d43d5d79e485239b201a016",
+  "depth_agreement_m": 0.5,
+  "roundtrip_native_px": 2.0,
+  "audit_max_points_per_area": 4096,
+  "manual_weight_values": null,
+  "reference_geometry_used": false,
+  "unmarked_R1": "UNREVIEWED",
+  "areas": [
+    {"id":"C1", "role":"CORRECTION_CANDIDATE", "name":"DJI_20241217084553_0100_D.JPG", "label":"Courtyard: correction candidate", "membership":"whole_r1 from old P1 input-only sample audit, intersected with new R1", "rgb_polygon":[[497,282],[596,259],[613,372],[697,355],[688,288],[878,238],[969,487],[947,573],[762,614],[767,652],[578,694]]},
+    {"id":"S1", "role":"PRESERVATION_CANDIDATE", "name":"DJI_20241217103039_0045_D.JPG", "label":"Long roof: preservation candidate", "membership":"source RGB polygon and positive native MVS, intersected with new R1", "rgb_polygon":[[300,139],[1150,108],[1150,165],[300,196]]},
+    {"id":"U1", "role":"UNRESOLVED", "name":"DJI_20241217103039_0045_D.JPG", "label":"Facade: unresolved", "membership":"source RGB polygon and positive native MVS, intersected with new R1", "rgb_polygon":[[300,270],[1170,230],[1120,370],[825,402],[765,460],[420,540]]}
+  ]
+}

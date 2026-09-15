@@ -1,0 +1,55 @@
+{
+  "task_id": "PHD-R1R5-COMPARISON-v1",
+  "scientific_verdict": null,
+  "status": "PREPARED_NOT_EXECUTED",
+  "training_execution_enabled": false,
+  "runtime_image_id": "sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e",
+  "allocator": "backend:native,max_split_size_mb:128",
+  "seed": 0,
+  "regions": [
+    "R3"
+  ],
+  "modes": [
+    "mvs"
+  ],
+  "prior_weights": [
+    0.005
+  ],
+  "protection": "native",
+  "anchor_iteration": 8000,
+  "final_iteration": 30000,
+  "depth": {
+    "source": "COLMAP_MVS_CAMERA_Z",
+    "mapping": "integer RGB ray through native K; nearest native sample; positive finite depth only, invalid zero; no scale fitting or hole filling",
+    "dynamic_visual_weight": "native controller; initial 0.05; actual weights must be traced",
+    "independent_of_evaluation_images": false
+  },
+  "geometry": {
+    "enabled": false,
+    "start_iteration": 8001,
+    "svgeo_weight": 0,
+    "mvrgb_weight": 0,
+    "mvgeom_weight": 0,
+    "normal_policy": "retain original GeoGS normal regularizer"
+  },
+  "observation_draft_used_in_training": false,
+  "manual_weights": null,
+  "camera_data_device": "cpu",
+  "camera_data_device_note": "Explicit CPU RGB storage; native training transfers sampled original_image to CUDA. Mathematical inputs unchanged; timing and GPU equivalence remain untested for R1.",
+  "future_run_checks": [
+    "Verify sealed input and implementation hashes and resolve a currently available GPU before execution",
+    "Fresh R1 initialization; never resume P1/P3",
+    "Record actual train camera membership, depth valid counts, CUDA memory, finite losses and gradients",
+    "Capture R1 complete state at iteration 8000; bind new checkpoint hash before continuation",
+    "Require exact immediate restore of model, optimizer, RNG, camera order/stack and native protection",
+    "First continuation step must use actual MVS depth and prior coefficient 0.005; trace dynamic MVS weight",
+    "Audit per-view sampled frequency and actual valid-loss/gradient support in C1/S1/U1 before interpreting contribution",
+    "Check full-frame RGB versus finite 25m context boundary effects"
+  ],
+  "scope": "ALS-adapted GeoGS development comparator, separate from gsplat E1-E6 and independent accuracy evaluation",
+  "expected_counts": {
+    "all": 347,
+    "train": 303,
+    "evaluation": 44
+  }
+}
