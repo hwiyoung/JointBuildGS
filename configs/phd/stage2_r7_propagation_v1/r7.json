@@ -1,0 +1,53 @@
+{
+  "task_id": "PHD-STAGE2-R7-PROPAGATION-v1",
+  "purpose": "Make the stage-2 code do what the method document (3.3-3.5, 4.1-4.6) describes for location-based judgments and their propagation, and check it before training: unified height conversion with the scene's own surface normals, tolerance per surface kind, building outlines as TIN surface boundaries, the propagation rule as one shared module used by the training fork (initialisation, re-read every 500 iterations, protection, prior-term gate, density control, attributes), then the pre-measurement again with the fixed values. No training.",
+  "parent_tasks": ["PHD-STAGE2-R6-FIX-v1 (fork r6)", "PHD-STAGE2-PROPAGATION-PREMEASURE-v1 (pre-measurement v1)"],
+  "method_document": "the order transcribes 3.3-3.5, 4.1-4.6 and tables 6, 8-13; the attachment itself did not reach this session, so the order text is the design (differences would be reported)",
+  "shared_module": "src/phd/prior_propagation_v1 (conversion, tolerance, surfaces, outlines, rule, locations, seat)",
+  "settings": {
+    "M_N": {"prior": "LoD2", "scene": "nominal", "prior_map_set": "prior_M_N", "condition": "P_M_N"},
+    "M_B": {"prior": "LoD2", "scene": "main roof 3396 +1 m", "prior_map_set": "prior_M_B", "condition": "P_M_B", "injected": [3396]},
+    "L_N": {"prior": "airborne LiDAR TIN", "scene": "nominal", "prior_map_set": "prior_L_N", "condition": "P_L_N"},
+    "L_B": {"prior": "airborne LiDAR TIN", "scene": "points inside the 3396 footprint +1 m", "prior_map_set": "prior_L_B", "condition": "P_L_B", "injected": "raised surfaces"},
+    "M_C": {"prior": "LoD2", "scene": "shaded roof end 3394 +1 m (optional scene of this task)", "prior_map_set": null, "condition": null, "injected": [3394], "optional": true}
+  },
+  "values": {
+    "majority": 0.6666666666666666,
+    "min_evidence_locations": 5,
+    "max_distance_m": 1.0,
+    "cell_m": 0.25,
+    "e_threshold": 0.5,
+    "lock_lr_scale": 0.01,
+    "lock_opacity_floor": 0.5,
+    "lock_drift_tau_mult": 4.0,
+    "reread_interval": 500,
+    "init_plant_conflict": 0,
+    "init_plant_conflict_note": "0 = points of missing locations whose propagated judgment is conflict are not planted (default); 1 = planted as they are (baseline). Relocation is not part of this order."
+  },
+  "sensitivity": {"min_evidence_locations": [3, 10], "max_distance_m": [0.5, 2.0], "cell_m": [0.5], "tolerance_spec_lower_bound": [false]},
+  "conversion": {"roof_nz": 0.5, "rule": "roof-like r*|n.d|/|n_z|, wall-like r*|n.d|, no surface |d_z|; n = the scene's own surface normal (LoD2 polygon, TIN triangle hit by the pixel); d = R^T(x, y, 1) with camera-Z depth (= unit ray direction with the range residual)"},
+  "tolerance": {
+    "k": 2.5, "clip_nmad": 3.0,
+    "spec_m": {"L": {"roof": 0.12, "wall": null}, "M": {"roof": 1.0, "wall": null}},
+    "spec_source": {"L_roof": "TUM2TWIN: Bavarian ALS vertical accuracy 0.12 m (configs/phd/stage1_conf_tol_conflict_v1/experiment.json)", "M_roof": "LoD2 height accuracy about 1 m (same file)", "walls": "no agency wall accuracy in the data -> no lower bound, recorded as 'no spec'"},
+    "spec_lower_bound": true,
+    "spec_lower_bound_note": "order: tolerance = max(2.5 x NMAD, agency spec). The 2026-09-23 decision used the data width only; the data-only tolerance is reported as a sensitivity row",
+    "pool": "nominal scene, 15 views (as stage 1), A = 1, surfaces of the target building DEBY_LOD2_4959323 (LoD2 polygons of that building; TIN building surfaces inside its LoD2 GroundSurface outline), split by surface kind of the own normal",
+    "registration": "unchanged (L +0.0186 m, M +0.1216 m, estimated on inclined roof faces in stage 1 v2); the post-registration median is recorded"
+  },
+  "surfaces": {
+    "steep_nz": 0.5,
+    "tin_outline_sources": ["LoD2 GroundSurface polygons (given, used)", "clusters of the TIN's own building class (derived, compared)", "none (steepness only; pre-measurement v1)"],
+    "classification_outline": {"cell_m": 0.5, "building_class": 6, "min_share": 0.5, "close_iter": 1, "min_cells": 8},
+    "tin_building_surface": "majority of the surface's vertices carry class 6"
+  },
+  "locations": {
+    "views": "13 training views of r5/r6/r7 for the location states (test views 0002 and 0016 excluded)",
+    "resolution": "stage-1 native 5644 x 4082; the fork reads the per-view location maps at the training resolution 1600 x 1157 (nearest, as jbgs_judgment._load_set)",
+    "view_mark": "a supporting view marks the location agree when its agree pixels >= its conflict pixels (implementation choice)",
+    "vote_tie": "agree (document)"
+  },
+  "reread": {"samples_per_cell": 3, "depth_tol_m": 0.5, "alpha_min": 0.05, "occlusion": "one-sided; initialisation = the stage-1 product (prior render), later = the current rendered expected depth"},
+  "prior_gate": {"rule": "the prior depth term is on at pixels whose prior-surface location does not carry a propagated conflict (decided once at initialisation)", "variant_location": "also off where a support location's vote is conflict (reported, not default)"},
+  "scientific_verdict": null
+}

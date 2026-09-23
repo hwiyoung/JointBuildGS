@@ -1,0 +1,30 @@
+schema_version: 1
+task_id: PHD-STAGE2-R6-FIX-v1
+scientific_verdict: null
+kind: implementation-revision-short-check
+purpose: stage-2 fork r6 = r5 + the five fixes of the 4.4 audit (occlusion by the current render after the first E, E at 1 and multiples of 500, protection needs drift <= 4 tau_v, opacity floor at protection time, invisible initial prior points removed, both depth terms divided by the pixel count); short instrumented check; section 5 height-conversion check
+parent_task: PHD-STAGE2-CONF-GUIDED-GS-v1
+reference_audit: PHD-STAGE2-PROTECTION-AUDIT-v1 (r5 numbers; r5 not rerun)
+payload: file:../JointBuildGS-artifacts/phase-payloads/phd/stage2_conf_guided_gs_v1/PHD-STAGE2-R6-FIX-v1
+container_payload: /artifacts/JointBuildGS/phase-payloads/phd/stage2_conf_guided_gs_v1/PHD-STAGE2-R6-FIX-v1
+status: COMPLETE_TECHNICAL
+verdict_first_line: "4.4를 확정할 수 있다" (residuals: 302 wall-foot ground points kept by fix 4; boundary releases of fix 2 at 0.8-2.4 % of protected per update; design consequence: invisible prior removed, back roof 3393 94 %)
+report: docs/experiments/phd/stage2_conf_guided_gs_v1/R6_FIX_4_4_ko_v1.md
+summary_figure: docs/experiments/phd/stage2_conf_guided_gs_v1/figures/r6_fix_4_4_summary_v1.png
+r6_fork: sources/GeoGS-conf-guided-v1-r6 (changed vs r5: jbgs_judgment.py b3b20a18..., train.py daa279b9...; provenance/build_report_r6.json, provenance/patches/)
+r6_audit_fork: sources/GeoGS-conf-guided-v1-r6-audit (r6 + 9 guarded lines; provenance/audit/build_report.json)
+runs:
+  N: {condition: P_M_N, receipt: runs/N/receipt.json, status: PASS, seconds: 456}
+  B: {condition: P_M_B, receipt: runs/B/receipt.json, status: PASS, seconds: 453}
+smoke_runs: [runs/N_smoke700]
+training_free: [init_counts/ (fix 4 per face type, L and M), offline/ (like-for-like visibility of r5/r6 final models), height_check/ (section 5), out/supp_r6.json]
+results: out/results.json
+tables: out/csv/*.csv
+figures: out/figures/*.png
+iterations: 3500
+seed: 0 (safe_state)
+runtime_images: [jointbuildgs:geogs-conf-guided-v1, jointbuildgs:dev]
+config: configs/phd/stage2_r6_fix_v1/r6.json
+scripts: scripts/phd/stage2_r6_fix_v1
+tests: [tests/phd/test_stage2_conf_guided_gs_r6.py (CPU, 10 pass), scripts/phd/stage2_r6_fix_v1/gpu_tests_r6.py (GPU, 4 pass)]
+retention: preserve sources, runs, out, logs and provenance

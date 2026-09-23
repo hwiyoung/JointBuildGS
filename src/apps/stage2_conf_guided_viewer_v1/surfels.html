@@ -1,0 +1,856 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>가우시안 3D 보기</title>
+<style>
+:root { color-scheme: dark; --bg:#0b0b0d; --ui:#15161a; --line:#2c2d33; --fg:#ececf0; --mute:#9a9aa3; --accent:#69d6ff; }
+* { box-sizing:border-box; }
+html, body { margin:0; height:100%; background:var(--bg); color:var(--fg); font:13px/1.45 system-ui, -apple-system, "Noto Sans KR", sans-serif; overflow:hidden; }
+#bar { position:fixed; top:0; left:0; right:0; z-index:20; display:flex; flex-wrap:wrap; gap:6px 14px; align-items:center; padding:7px 10px; background:var(--ui); border-bottom:1px solid var(--line); max-height:62vh; overflow:auto; }
+#bar .row { display:flex; flex-wrap:wrap; gap:6px 14px; align-items:center; flex-basis:100%; }
+#bar b { font-size:14px; }
+.seg { display:inline-flex; border:1px solid var(--line); border-radius:7px; overflow:hidden; }
+.seg button { font:inherit; border:none; background:transparent; color:var(--fg); padding:4px 9px; cursor:pointer; border-right:1px solid var(--line); }
+.seg button:last-child { border-right:none; }
+.seg button.on { background:var(--fg); color:#111; }
+button.act { font:inherit; border:1px solid var(--line); border-radius:7px; background:transparent; color:var(--fg); padding:4px 9px; cursor:pointer; }
+.lab { color:var(--mute); margin-right:4px; }
+input[type=range] { width:90px; vertical-align:middle; }
+a { color:var(--accent); }
+#grid { position:fixed; left:0; right:0; bottom:0; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:2px; background:#000; }
+#grid.one { grid-template-columns:1fr; grid-template-rows:1fr; }
+.pane { position:relative; overflow:hidden; background:#050505; }
+.pane canvas { display:block; width:100%; height:100%; }
+.plabel { position:absolute; top:6px; left:8px; z-index:5; background:rgba(0,0,0,.72); padding:3px 7px; border-radius:4px; pointer-events:none; }
+.pstats { position:absolute; bottom:6px; left:8px; right:8px; z-index:5; background:rgba(0,0,0,.78); padding:4px 8px; border-radius:4px; pointer-events:none; font-size:12px; white-space:pre-wrap; font-variant-numeric:tabular-nums; }
+.tag3d { position:absolute; z-index:6; transform:translate(-50%, -50%); background:#f5c542; color:#111; font-weight:700; border-radius:14px; padding:1px 8px; cursor:pointer; white-space:nowrap; box-shadow:0 1px 4px rgba(0,0,0,.6); }
+.tag3d span { font-weight:500; margin-left:4px; }
+#places { flex-basis:100%; display:none; }
+#places .pl { display:flex; gap:8px; align-items:baseline; margin:2px 0; }
+#places .num { background:#f5c542; color:#111; font-weight:700; border-radius:12px; padding:0 7px; }
+#places .sh { color:var(--mute); }
+#legend { flex-basis:100%; font-size:12px; }
+#legend .sw { display:inline-block; width:11px; height:11px; border-radius:2px; margin:0 4px -1px 10px; }
+#legend .sw:first-child { margin-left:0; }
+#help { color:var(--mute); }
+.empty { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:var(--mute); padding:20px; text-align:center; }
+#info { flex-basis:100%; background:#1d1e24; border:1px solid var(--line); border-radius:8px; padding:6px 10px; font-size:12.5px; display:none; }
+#info table { border-collapse:collapse; margin-top:4px; }
+#info td, #info th { padding:2px 9px 2px 0; text-align:left; white-space:nowrap; font-variant-numeric:tabular-nums; }
+#info th { color:var(--mute); font-weight:600; }
+#info .x { float:right; cursor:pointer; color:var(--mute); margin-left:10px; }
+.ok { color:#4ade80; } .no { color:#f87171; }
+</style>
+</head>
+<body>
+<div id="bar">
+ <div class="row">
+  <b>가우시안 3D 보기</b>
+  <span><span class="lab">prior</span><span class="seg" id="prior"><button data-v="M">LoD2</button><button data-v="L">ALS</button></span></span>
+  <span><span class="lab">장면</span><span class="seg" id="scene"><button data-v="N">정상</button><button data-v="B">본지붕 +1 m</button></span></span>
+  <span><span class="lab">보기</span><span class="seg" id="target"><button data-v="explain">설명: prior vs 실제</button><button data-v="surface">결과(조건별): 표가 센 픽셀</button><button data-v="judge">막대: 픽셀별 어긋남</button><button data-v="disks">가우시안 원반</button></span></span>
+  <span><span class="lab">영역</span><span class="seg" id="region"><button data-v="1">지붕</button><button data-v="2">벽</button><button data-v="0">둘 다</button></span></span>
+  <span><span class="lab">판정</span><span class="seg" id="cls"><button data-v="0">전체</button><button data-v="1">일치</button><button data-v="2">충돌</button><button data-v="3">미측정</button></span></span>
+  <span><span class="lab">시점</span><span class="seg" id="preset"><button data-v="0009">영상 0009</button><button data-v="0024">영상 0024</button><button data-v="0005">영상 0005</button><button data-v="top">위에서</button><button data-v="back">뒤에서(영상 없음)</button></span></span>
+ </div>
+ <div id="places"></div>
+ <div class="row">
+  <span><span class="lab">색</span><span class="seg" id="mode"><button data-v="0">실제 색</button><button data-v="1">판정</button><button data-v="5">어긋난 크기(prior−영상)</button><button data-v="6">영상−GT</button><button data-v="7">prior−GT</button><button data-v="2">판정 부합?</button><button data-v="3">결과−GT</button><button data-v="4">출처·고정</button></span></span>
+  <label id="ovMeshL"><input type="checkbox" id="ovMesh"> prior 모형</label>
+  <label id="ovPL"><input type="checkbox" id="ovP"> P 결과(초록)</label>
+  <label id="ovP0L"><input type="checkbox" id="ovP0"> P0 결과(빨강)</label>
+  <span id="exagBox"><span class="lab">막대 과장</span><input type="range" id="exag" min="1" max="10" step="1" value="1"> <span id="exagV"></span></span>
+  <label id="ovPriorL"><input type="checkbox" id="ovPrior"> prior 표면(파랑 점)</label>
+  <label id="ovPhotoL"><input type="checkbox" id="ovPhoto"> 영상 표면(주황 점)</label>
+  <label id="ovUnseenL"><input type="checkbox" id="ovUnseen"> 비가시 면(청록)</label>
+  <label id="hiddenL"><input type="checkbox" id="hidden"> 표면에 안 드러난 원반(회색)</label>
+ </div>
+ <div class="row">
+  <span><span class="lab">단면</span><span class="seg" id="slab"><button data-v="off">끄기</button><button data-v="across">가로(정면 벽에 수직)</button><button data-v="along">세로(정면 벽과 나란히)</button></span></span>
+  <span><span class="lab">위치</span><input type="range" id="slabPos" min="-45" max="45" step="0.1" value="0"> <span id="slabPosV"></span></span>
+  <span><span class="lab">두께</span><input type="range" id="slabW" min="0.1" max="3" step="0.1" value="0.5"> <span id="slabWV"></span></span>
+  <button class="act" id="slabView">단면을 옆에서 보기</button>
+  <span><span class="lab">점 크기</span><input type="range" id="size" min="0.5" max="3" step="0.1" value="1.2"></span>
+  <span id="minABox"><span class="lab">불투명도 하한</span><input type="range" id="minA" min="0" max="0.9" step="0.05" value="0.1"></span>
+  <a href="intent.html">의도 점검 표·지도</a>
+ </div>
+ <div id="legend"><span id="legendBody"></span><div id="help"></div></div>
+ <div id="info"></div>
+</div>
+<div id="grid"></div>
+<script type="importmap">{ "imports": { "three": "./lib/three.module.min.js" } }</script>
+<script type="module">
+import * as THREE from 'three';
+const FPS = 22, FPP = 13, FPI = 14, FPU = 7, FPR = 4, FPH = 11;
+const NAMES = {P: 'P 판정 GS(제안)', P0: 'P0 prior 강제 GS', O: 'O 공식 GeoGS', I: 'I 영상 GS(prior 없음)'};
+const SHORT = {P: 'P 판정 GS', P0: 'P0 prior 강제 GS', O: 'O 공식 GeoGS', I: 'I 영상 GS'};
+const TAU = {M: 5.7, L: 4.1}, PNAME = {M: 'LoD2', L: 'ALS'};
+const SETIDX = {M_N: 0, M_B: 1, L_N: 2, L_B: 3};
+const MODES = {explain: ['0', '1'], judge: ['1', '5', '6', '7'], surface: ['1', '2', '3', '5', '0'], disks: ['1', '2', '3', '4', '0']};
+const ONE = t => t === 'explain' || t === 'judge';
+const getJSON = async u => (await fetch(u, {cache: 'no-store'})).json();
+const index = await getJSON('surfels/index.json'), sindex = await getJSON('surfels/surface_index.json');
+const uindex = await getJSON('surfels/unseen_index.json').catch(() => null);
+const VIEWS = await getJSON('surfels/views.json').catch(() => null);
+const PLACES = await getJSON('surfels/places.json').catch(() => null);
+const SETS = {M_N: ['P_M_N', 'P0_M_N', 'O_M_N', 'I'], M_B: ['P_M_B', 'P0_M_B', 'O_M_B', 'I'], L_N: ['P_L_N', 'P0_L_N', 'I'], L_B: ['P_L_B', 'P0_L_B', 'I']};
+let st = {prior: 'M', scene: 'N', target: 'explain', mode: '0', preset: '0009', size: 1.2, minA: 0.1, hidden: false, region: '0', cls: '0',
+          ovMesh: true, ovP: false, ovP0: false, ovPrior: false, ovPhoto: false, ovUnseen: true, slab: 'off', slabPos: 0, slabW: 0.5, exag: 1};
+try { Object.assign(st, JSON.parse(localStorage.getItem('surfelState4') || '{}')); } catch (e) {}
+for (const kv of location.hash.replace(/^#/, '').split('&')) { const [k, v] = kv.split('='); if (k in st && v) st[k] = decodeURIComponent(v); }
+for (const k of ['size', 'minA', 'slabPos', 'slabW', 'exag']) st[k] = +st[k];
+for (const k of ['hidden', 'ovMesh', 'ovP', 'ovP0', 'ovPrior', 'ovPhoto', 'ovUnseen']) st[k] = st[k] === true || st[k] === 'true';
+if (!MODES[st.target]) st.target = 'explain';
+if (!MODES[st.target].includes(st.mode)) st.mode = MODES[st.target][0];
+
+// section frame: front wall 3403 (outward normal n); 'across' cuts perpendicular to the front wall, 'along' parallel to it
+const FR = uindex ? uindex.frame : {front_normal: [0.9302, -0.3669]};
+const NF = new THREE.Vector2(FR.front_normal[0], FR.front_normal[1]).normalize(), AL = new THREE.Vector2(-NF.y, NF.x);
+const SLAB_O = new THREE.Vector2(index.target_center[0], index.target_center[1]);
+const slabNormal = () => st.slab === 'along' ? NF : AL;
+
+const COMMON = `
+uniform int slabOn; uniform vec2 slabO; uniform vec2 slabN; uniform float slabC; uniform float slabHalf;
+bool outSlab(vec3 p) { return slabOn == 1 && abs(dot(p.xy - slabO, slabN) - slabC) > slabHalf; }
+vec3 diverging(float x) { x = clamp(x, -1.0, 1.0); return x >= 0.0 ? mix(vec3(1.0), vec3(0.86, 0.1, 0.1), x) : mix(vec3(1.0), vec3(0.1, 0.25, 0.95), -x); }
+vec3 classColor(float c) { return c < 1.5 ? vec3(0.26, 0.52, 0.96) : (c < 2.5 ? vec3(1.0, 0.6, 0.0) : vec3(0.61, 0.15, 0.69)); }`;
+const slabUniforms = () => ({slabOn: {value: 0}, slabO: {value: SLAB_O.clone()}, slabN: {value: new THREE.Vector2(1, 0)}, slabC: {value: 0}, slabHalf: {value: 0.25}});
+const HIDE = 'gl_Position = vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = 0.0; return;';
+const PFS = `precision highp float; varying vec3 vColor;
+void main() { vec2 c = gl_PointCoord - 0.5; if (dot(c, c) > 0.25) discard; gl_FragColor = vec4(vColor, 1.0); }`;
+const LFS = `precision highp float; varying vec3 vColor; void main() { gl_FragColor = vec4(vColor, 1.0); }`;
+const pointTail = (scale, maxPx) => `vec4 mv = modelViewMatrix * vec4(position, 1.0); gl_Position = projectionMatrix * mv; gl_PointSize = clamp(pointSize * ${scale} / -mv.z, 1.0, ${maxPx});`;
+
+// real surface: the pixels the photos measured, in the photo's colour (or the judgment class of the setting)
+const PHVS = `precision highp float;
+attribute vec3 aRgb; attribute vec4 aCls; attribute float aReg;
+uniform float pointSize; uniform int mode; uniform int setIdx; uniform int showClass; uniform int showRegion;
+${COMMON}
+varying vec3 vColor;
+void main() {
+  float cls = setIdx == 0 ? aCls.x : (setIdx == 1 ? aCls.y : (setIdx == 2 ? aCls.z : aCls.w));
+  if ((showClass > 0 && abs(cls - float(showClass)) > 0.5) || (showRegion > 0 && abs(aReg - float(showRegion)) > 0.5) || outSlab(position)) { ${HIDE} }
+  vColor = mode == 1 ? classColor(cls) : aRgb;
+  ${pointTail('260.0', '9.0')}
+}`;
+// result points of one condition in a single colour (explain view)
+const CVS = `precision highp float;
+attribute vec4 iInfo;
+uniform float pointSize; uniform int showClass; uniform int showRegion; uniform vec3 color;
+${COMMON}
+varying vec3 vColor;
+void main() {
+  vColor = color;
+  if (position.x != position.x || (showClass > 0 && abs(iInfo.x - float(showClass)) > 0.5) || (showRegion > 0 && abs(iInfo.w - float(showRegion)) > 0.5) || outSlab(position)) { ${HIDE} }
+  ${pointTail('220.0', '8.0')}
+}`;
+// judged position of each pixel: photo point where the photos measured (A=1), prior point where not
+const JVS = `precision highp float;
+attribute vec3 aMeta; attribute vec2 aGT;
+uniform float pointSize; uniform int mode; uniform int showClass; uniform int showRegion;
+${COMMON}
+varying vec3 vColor;
+void main() {
+  float cls = aMeta.x, reg = aMeta.y, spm = aMeta.z, v = mode == 6 ? aGT.x : aGT.y;
+  if (position.x != position.x || (showClass > 0 && abs(cls - float(showClass)) > 0.5) || (showRegion > 0 && abs(reg - float(showRegion)) > 0.5) || outSlab(position)) { ${HIDE} }
+  if ((mode == 6 || mode == 7) && v != v) { ${HIDE} }
+  if (mode == 5) vColor = spm != spm ? vec3(0.61, 0.15, 0.69) : diverging(spm / 0.5);
+  else if (mode == 6 || mode == 7) vColor = diverging(v / 0.5);
+  else vColor = classColor(cls);
+  ${pointTail('260.0', '9.0')}
+}`;
+const SVS = `precision highp float;
+attribute vec3 aDir; attribute float aW; attribute vec3 aMeta;
+uniform float exag; uniform int showClass; uniform int showRegion;
+${COMMON}
+varying vec3 vColor;
+void main() {
+  float reg = aMeta.y, spm = aMeta.z;
+  bool far = abs(spm) > 3.0;
+  vColor = far ? vec3(0.85, 0.2, 0.85) : (spm > 0.0 ? mix(vec3(1.0, 0.75, 0.75), vec3(0.9, 0.12, 0.12), clamp(spm / 0.4, 0.3, 1.0))
+                                                    : mix(vec3(0.7, 0.95, 1.0), vec3(0.0, 0.72, 0.85), clamp(-spm / 0.4, 0.3, 1.0)));
+  if ((showClass > 0 && showClass != 2) || (showRegion > 0 && abs(reg - float(showRegion)) > 0.5) || outSlab(position)) { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); return; }
+  float k = far ? 0.4 / abs(spm) : exag;
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(position + aDir * aW * k, 1.0);
+}`;
+const RVS = `precision highp float;
+attribute vec3 iRgb; attribute vec4 iInfo; attribute float iSpm;
+uniform float pointSize; uniform int mode; uniform int showClass; uniform int showRegion; uniform int neutral;
+${COMMON}
+varying vec3 vColor;
+void main() {
+  float cls = iInfo.x, fol = iInfo.y, herr = iInfo.z, reg = iInfo.w;
+  if (position.x != position.x || (showClass > 0 && abs(cls - float(showClass)) > 0.5) || (showRegion > 0 && abs(reg - float(showRegion)) > 0.5)
+      || (mode == 3 && herr != herr) || outSlab(position)) { ${HIDE} }
+  if (mode == 0) vColor = iRgb;
+  else if (mode == 1) vColor = classColor(cls);
+  else if (mode == 2) vColor = fol > 0.5 ? vec3(0.18, 0.66, 0.28) : vec3(0.88, 0.15, 0.15);
+  else if (mode == 3) vColor = diverging(herr / 0.5);
+  else if (mode == 5) vColor = iSpm != iSpm ? vec3(0.61, 0.15, 0.69) : diverging(iSpm / 0.5);
+  else vColor = vec3(0.42);
+  if (neutral == 1) vColor = vec3(0.92);
+  ${pointTail('260.0', '9.0')}
+}`;
+const IVS = `precision highp float;
+attribute vec3 iMeta;
+uniform float pointSize; uniform int showClass; uniform int showRegion; uniform vec3 color;
+${COMMON}
+varying vec3 vColor;
+void main() {
+  vColor = color;
+  if (position.x != position.x || (showClass > 0 && abs(iMeta.y - float(showClass)) > 0.5) || (showRegion > 0 && abs(iMeta.z - float(showRegion)) > 0.5) || outSlab(position)) { ${HIDE} }
+  ${pointTail('200.0', '7.0')}
+}`;
+const UVS = `precision highp float;
+attribute vec4 iU;
+uniform float pointSize; uniform int mode; uniform float minAlpha; uniform int showRegion; uniform int isRef;
+${COMMON}
+varying vec3 vColor;
+void main() {
+  float grp = isRef == 1 ? iU.x : iU.w;
+  if ((showRegion > 0 && abs(grp - float(showRegion)) > 0.5) || outSlab(position) || (isRef == 0 && iU.x < minAlpha)) { ${HIDE} }
+  if (isRef == 1) vColor = vec3(0.30, 0.36, 0.50);
+  else if (mode == 4) vColor = iU.z > 0.5 ? vec3(0.55, 0.0, 0.05) : (iU.y > 0.5 ? vec3(1.0, 0.65, 0.2) : (iU.y > -0.5 ? vec3(0.2, 0.75, 0.92) : vec3(0.8)));
+  else vColor = vec3(0.12, 0.85, 0.80);
+  vec4 mv = modelViewMatrix * vec4(position, 1.0); gl_Position = projectionMatrix * mv;
+  gl_PointSize = clamp(pointSize * (isRef == 1 ? 130.0 : 260.0) / -mv.z, 1.0, isRef == 1 ? 4.0 : 9.0);
+}`;
+const DVS = `precision highp float;
+attribute vec3 iCenter; attribute vec3 iAxis0; attribute vec3 iAxis1; attribute vec3 iNormal;
+attribute vec4 iColorAlpha; attribute vec4 iInfo; attribute vec2 iInfo2;
+uniform float sizeScale; uniform int mode;
+${COMMON}
+varying vec2 vLocal; varying vec3 vColor; varying float vAlpha; varying float vHidden; varying vec3 vNormal; varying vec3 vWorld; varying float vCls;
+void main() {
+  vLocal = position.xy; vAlpha = iColorAlpha.a; vNormal = iNormal;
+  float cls = iInfo.x, fol = iInfo.y, herr = iInfo.z, org = iInfo.w, locked = iInfo2.x;
+  vHidden = (cls < 0.5) ? 1.0 : 0.0; vCls = cls;
+  vec3 gray = vec3(0.42);
+  if (mode == 0) vColor = iColorAlpha.rgb;
+  else if (mode == 1) vColor = cls < 0.5 ? gray : classColor(cls);
+  else if (mode == 2) vColor = fol < -0.5 ? gray : (fol > 0.5 ? vec3(0.18, 0.66, 0.28) : vec3(0.88, 0.15, 0.15));
+  else if (mode == 3) vColor = (herr != herr || cls < 0.5) ? gray : diverging(herr / 0.5);
+  else if (mode == 4) vColor = locked > 0.5 ? vec3(0.55, 0.0, 0.05) : (org > 0.5 ? vec3(1.0, 0.65, 0.2) : (org > -0.5 ? vec3(0.2, 0.75, 0.92) : vec3(0.8)));
+  else vColor = gray;
+  vec3 w = iCenter + (iAxis0 * position.x + iAxis1 * position.y) * sizeScale;
+  vWorld = w;
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(w, 1.0);
+}`;
+const DFS = `precision highp float;
+uniform int mode; uniform float minAlpha; uniform int showHidden; uniform int showClass;
+${COMMON}
+varying vec2 vLocal; varying vec3 vColor; varying float vAlpha; varying float vHidden; varying vec3 vNormal; varying vec3 vWorld; varying float vCls;
+void main() {
+  float r2 = dot(vLocal, vLocal);
+  if (r2 > 1.0 || vAlpha < minAlpha || outSlab(vWorld)) discard;
+  if (showClass > 0 && abs(vCls - float(showClass)) > 0.5) discard;
+  if (vHidden > 0.5 && showHidden == 0 && mode != 0) discard;
+  float facing = 0.55 + 0.45 * abs(dot(normalize(vNormal), normalize(cameraPosition - vWorld)));
+  if (mode == 0 && vAlpha * exp(-2.2 * r2) < 0.25) discard;
+  gl_FragColor = vec4(vColor * facing, 1.0);
+}`;
+
+async function loadF32(url, magic, stride) {
+  const buf = await (await fetch(url)).arrayBuffer();
+  if (String.fromCharCode(...new Uint8Array(buf, 0, 8)) !== magic) throw new Error('bad magic ' + url);
+  const dv = new DataView(buf), count = dv.getUint32(8, true), s = dv.getUint32(12, true);
+  if (s !== stride) throw new Error('stride ' + s + ' ' + url);
+  return {count, stride, data: new Float32Array(buf, 16, count * stride)};
+}
+async function loadMesh(url) {
+  const buf = await (await fetch(url)).arrayBuffer();
+  if (String.fromCharCode(...new Uint8Array(buf, 0, 8)) !== 'JBMS3D1\0') throw new Error('bad magic ' + url);
+  const dv = new DataView(buf), nv = dv.getUint32(8, true), nt = dv.getUint32(12, true);
+  return {nv, nt, V: new Float32Array(buf, 16, nv * 3), T: new Uint32Array(buf, 16 + nv * 12, nt * 3), R: new Float32Array(buf, 16 + nv * 12 + nt * 12, nt)};
+}
+const cache = {};
+const cached = (url, magic, stride) => cache[url] || (cache[url] = loadF32(url, magic, stride));
+const cachedMesh = url => cache[url] || (cache[url] = loadMesh(url));
+function mat(vs, fs, u, extra = {}) { return new THREE.ShaderMaterial({vertexShader: vs, fragmentShader: fs, uniforms: {...u, ...slabUniforms()}, ...extra}); }
+
+function photoGeometry(ph) {
+  const g = new THREE.BufferGeometry(), ib = new THREE.InterleavedBuffer(ph.data, FPH);
+  g.setAttribute('position', new THREE.InterleavedBufferAttribute(ib, 3, 0));
+  g.setAttribute('aRgb', new THREE.InterleavedBufferAttribute(ib, 3, 3));
+  g.setAttribute('aCls', new THREE.InterleavedBufferAttribute(ib, 4, 6));
+  g.setAttribute('aReg', new THREE.InterleavedBufferAttribute(ib, 1, 10));
+  return g;
+}
+function meshGeometry(m) {
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.BufferAttribute(m.V, 3)); g.setIndex(new THREE.BufferAttribute(m.T, 1));
+  return g;
+}
+function sliceSegments(m, n, c) {
+  // intersection of the mesh with the vertical plane n.(p - O) = c: the old surface in the section, as line segments
+  const out = [], V = m.V, T = m.T;
+  const d = i => (V[i * 3] - SLAB_O.x) * n.x + (V[i * 3 + 1] - SLAB_O.y) * n.y - c;
+  for (let t = 0; t < m.nt; t++) {
+    const ids = [T[t * 3], T[t * 3 + 1], T[t * 3 + 2]], ds = ids.map(d), pts = [];
+    for (let e = 0; e < 3; e++) {
+      const i = ids[e], j = ids[(e + 1) % 3], a = ds[e], b = ds[(e + 1) % 3];
+      if ((a < 0) !== (b < 0)) { const s = a / (a - b); pts.push([V[i * 3] + s * (V[j * 3] - V[i * 3]), V[i * 3 + 1] + s * (V[j * 3 + 1] - V[i * 3 + 1]), V[i * 3 + 2] + s * (V[j * 3 + 2] - V[i * 3 + 2])]); }
+    }
+    if (pts.length === 2) out.push(...pts[0], ...pts[1]);
+  }
+  return new Float32Array(out);
+}
+function judgeGeometry(inp) {
+  const n = inp.count, I = inp.data, pos = new Float32Array(n * 3), meta = new Float32Array(n * 3), gt = new Float32Array(n * 2);
+  for (let i = 0; i < n; i++) {
+    const k = i * FPI, o = I[k + 3] === I[k + 3] ? 3 : 0;
+    pos[i * 3] = I[k + o]; pos[i * 3 + 1] = I[k + o + 1]; pos[i * 3 + 2] = I[k + o + 2];
+    meta[i * 3] = I[k + 7]; meta[i * 3 + 1] = I[k + 8]; meta[i * 3 + 2] = I[k + 6];
+    gt[i * 2] = I[k + 12]; gt[i * 2 + 1] = I[k + 13];
+  }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); g.setAttribute('aMeta', new THREE.BufferAttribute(meta, 3));
+  g.setAttribute('aGT', new THREE.BufferAttribute(gt, 2));
+  return g;
+}
+function stickGeometry(inp) {
+  const I = inp.data, idx = [];
+  for (let i = 0; i < inp.count; i++) { const k = i * FPI; if (I[k + 7] === 2 && I[k + 9] === I[k + 9]) idx.push(i); }
+  const m = idx.length, pos = new Float32Array(m * 6), dir = new Float32Array(m * 6), w = new Float32Array(m * 2), meta = new Float32Array(m * 6);
+  idx.forEach((i, j) => {
+    const k = i * FPI;
+    for (let e = 0; e < 2; e++) {
+      const q = (j * 2 + e) * 3;
+      pos[q] = I[k + 3]; pos[q + 1] = I[k + 4]; pos[q + 2] = I[k + 5];
+      dir[q] = I[k + 9] - I[k + 3]; dir[q + 1] = I[k + 10] - I[k + 4]; dir[q + 2] = I[k + 11] - I[k + 5];
+      meta[q] = I[k + 7]; meta[q + 1] = I[k + 8]; meta[q + 2] = I[k + 6]; w[j * 2 + e] = e;
+    }
+  });
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); g.setAttribute('aDir', new THREE.BufferAttribute(dir, 3));
+  g.setAttribute('aW', new THREE.BufferAttribute(w, 1)); g.setAttribute('aMeta', new THREE.BufferAttribute(meta, 3));
+  return g;
+}
+function resultGeometry(bin, inp) {
+  const g = new THREE.BufferGeometry(), ib = new THREE.InterleavedBuffer(bin.data, FPP);
+  g.setAttribute('position', new THREE.InterleavedBufferAttribute(ib, 3, 0));
+  g.setAttribute('iRgb', new THREE.InterleavedBufferAttribute(ib, 3, 3));
+  g.setAttribute('iInfo', new THREE.InterleavedBufferAttribute(ib, 4, 6));
+  if (inp) {
+    const spm = new Float32Array(bin.count);
+    for (let i = 0; i < bin.count; i++) spm[i] = inp.data[i * FPI + 6];
+    g.setAttribute('iSpm', new THREE.BufferAttribute(spm, 1));
+  }
+  return g;
+}
+function inputGeometry(inp, offset) {
+  const g = new THREE.BufferGeometry(), ib = new THREE.InterleavedBuffer(inp.data, FPI);
+  g.setAttribute('position', new THREE.InterleavedBufferAttribute(ib, 3, offset));
+  g.setAttribute('iMeta', new THREE.InterleavedBufferAttribute(ib, 3, 6));
+  return g;
+}
+function unseenGeometry(bin, stride) {
+  const g = new THREE.BufferGeometry(), ib = new THREE.InterleavedBuffer(bin.data, stride);
+  g.setAttribute('position', new THREE.InterleavedBufferAttribute(ib, 3, 0));
+  g.setAttribute('iU', new THREE.InterleavedBufferAttribute(ib, stride === FPU ? 4 : 1, 3));
+  return g;
+}
+function discGeometry(bin) {
+  const g = new THREE.InstancedBufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute([-1, -1, 0, 1, -1, 0, 1, 1, 0, -1, 1, 0], 3));
+  g.setIndex([0, 1, 2, 0, 2, 3]);
+  const ib = new THREE.InstancedInterleavedBuffer(bin.data, FPS, 1);
+  for (const [n, s, o] of [['iCenter', 3, 0], ['iAxis0', 3, 3], ['iAxis1', 3, 6], ['iNormal', 3, 9], ['iColorAlpha', 4, 12], ['iInfo', 4, 16], ['iInfo2', 2, 20]])
+    g.setAttribute(n, new THREE.InterleavedBufferAttribute(ib, s, o));
+  g.instanceCount = bin.count;
+  return g;
+}
+
+// shared orbit camera: z up; presets look from the photo camera centres at the building centre
+const center = new THREE.Vector3(index.target_center[0], index.target_center[1], -25);
+const orbit = {target: center.clone(), dist: 90, yaw: 0, pitch: 0.6};
+function setPreset(p) {
+  orbit.target.copy(center);
+  if (p === 'top') { orbit.dist = 95; orbit.yaw = -Math.PI / 2; orbit.pitch = 1.45; return; }
+  if (p === 'back') { orbit.dist = 85; orbit.yaw = Math.atan2(-NF.y, -NF.x); orbit.pitch = 0.55; return; }
+  if (p === 'slab') {
+    const n = slabNormal();
+    orbit.target.set(SLAB_O.x + n.x * st.slabPos, SLAB_O.y + n.y * st.slabPos, center.z);
+    orbit.yaw = Math.atan2(n.y, n.x); orbit.pitch = 0.02; orbit.dist = 45; return;
+  }
+  if (!index.presets[p]) return;
+  const c = index.presets[p].center, d = new THREE.Vector3(c[0], c[1], c[2]).sub(center);
+  orbit.dist = d.length() * 1.15; orbit.yaw = Math.atan2(d.y, d.x); orbit.pitch = Math.asin(d.z / d.length());
+}
+function applyOrbit(cam) {
+  const cp = Math.cos(orbit.pitch);
+  cam.position.set(orbit.target.x + orbit.dist * cp * Math.cos(orbit.yaw), orbit.target.y + orbit.dist * cp * Math.sin(orbit.yaw), orbit.target.z + orbit.dist * Math.sin(orbit.pitch));
+  cam.up.set(0, 0, 1); cam.lookAt(orbit.target);
+}
+
+const grid = document.getElementById('grid');
+const panes = [];
+for (let i = 0; i < 4; i++) {
+  const el = document.createElement('div'); el.className = 'pane';
+  el.innerHTML = `<div class="plabel"></div><div class="pstats"></div>`;
+  grid.appendChild(el);
+  const renderer = new THREE.WebGLRenderer({antialias: true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+  renderer.localClippingEnabled = true;
+  el.appendChild(renderer.domElement);
+  const scene = new THREE.Scene(); scene.background = new THREE.Color(0x050505);
+  const cam = new THREE.PerspectiveCamera(45, 1, 0.05, 3000);
+  const pane = {el, renderer, scene, cam, objs: [], mats: [], cond: null, sbin: null, bin: null, marker: null, tags: []};
+  panes.push(pane);
+  let drag = null;
+  const cv = renderer.domElement;
+  cv.addEventListener('contextmenu', e => e.preventDefault());
+  cv.addEventListener('pointerdown', e => { cv.setPointerCapture(e.pointerId); drag = {x: e.clientX, y: e.clientY, x0: e.clientX, y0: e.clientY, pan: e.button === 2 || e.shiftKey}; });
+  cv.addEventListener('pointermove', e => {
+    if (!drag) return;
+    const dx = e.clientX - drag.x, dy = e.clientY - drag.y; drag.x = e.clientX; drag.y = e.clientY;
+    if (drag.pan) {
+      cam.updateMatrixWorld();
+      const r = new THREE.Vector3().setFromMatrixColumn(cam.matrixWorld, 0), u = new THREE.Vector3().setFromMatrixColumn(cam.matrixWorld, 1), s = orbit.dist * 0.0016;
+      orbit.target.addScaledVector(r, -dx * s).addScaledVector(u, dy * s);
+    } else { orbit.yaw -= dx * 0.005; orbit.pitch = Math.max(-1.45, Math.min(1.5, orbit.pitch + dy * 0.005)); }
+  });
+  cv.addEventListener('pointerup', e => {
+    const click = drag && Math.hypot(e.clientX - drag.x0, e.clientY - drag.y0) < 4 && !drag.pan;
+    drag = null;
+    if (click && st.target !== 'explain') pick(pane, e.clientX, e.clientY);
+  });
+  cv.addEventListener('wheel', e => { e.preventDefault(); orbit.dist = Math.max(0.3, Math.min(600, orbit.dist * Math.exp(e.deltaY * 0.0012))); }, {passive: false});
+}
+function layout() {
+  const h = document.getElementById('bar').offsetHeight;
+  grid.style.top = h + 'px';
+  grid.classList.toggle('one', ONE(st.target));
+  panes.forEach((p, i) => { p.el.style.display = (ONE(st.target) && i > 0) ? 'none' : ''; });
+  for (const p of panes) {
+    const w = p.el.clientWidth, hh = p.el.clientHeight;
+    if (!w || !hh) continue;
+    p.renderer.setSize(w, hh, false); p.cam.aspect = w / Math.max(1, hh); p.cam.updateProjectionMatrix();
+  }
+}
+window.addEventListener('resize', layout);
+new ResizeObserver(layout).observe(document.getElementById('bar'));
+
+// ---- numbers: the table next to the same numbers recounted from the points on screen (1:1)
+const pct = x => x == null || x !== x ? '—' : (x * 100).toFixed(0) + '%';
+const cm = x => x == null || x !== x ? '—' : (x * 100).toFixed(0) + ' cm';
+const cmS = x => (x == null || x !== x) ? '—' : (x >= 0 ? '+' : '−') + Math.abs(x * 100).toFixed(0) + ' cm';
+const CLS = [['1', 'agree', '일치'], ['2', 'conflict', '충돌'], ['3', 'unobserved', '미측정']];
+const REG = {'1': ['roof', '지붕'], '2': ['wall', '벽']};
+function median(a) { if (!a.length) return null; const s = Float32Array.from(a).sort(); return s[s.length >> 1]; }
+function regionsOn() { return st.region === '0' ? ['1', '2'] : [st.region]; }
+function classesOn() { return st.cls === '0' ? CLS : CLS.filter(c => c[0] === st.cls); }
+function judgeStats(key) {
+  const T = sindex[`${key}/_inputs`]; if (!T) return '';
+  const I = inputs.data, lines = [];
+  for (const r of regionsOn()) {
+    const cnt = {1: 0, 2: 0, 3: 0}, ph = {1: [], 2: [], 3: []}, pr = {1: [], 2: [], 3: []};
+    let far = 0;
+    for (let i = 0; i < inputs.count; i++) {
+      const k = i * FPI; if (I[k + 8] !== +r) continue;
+      const c = I[k + 7]; cnt[c]++; if (c === 2 && Math.abs(I[k + 6]) > 3) far++;
+      if (I[k + 12] === I[k + 12]) ph[c].push(Math.abs(I[k + 12]));
+      if (I[k + 13] === I[k + 13]) pr[c].push(Math.abs(I[k + 13]));
+    }
+    const tot = cnt[1] + cnt[2] + cnt[3];
+    for (const [c, kn, name] of classesOn()) {
+      const t = T.table[REG[r][0]][kn];
+      lines.push(`${REG[r][1]} ${name}  표: 비율 ${pct(t.share)} · 소스 오차 영상 ${cm(t.err_photos)} / ${PNAME[st.prior]} ${cm(t.err_prior)}` +
+                 `   ‖ 화면 점으로 다시 셈: ${pct(cnt[c] / tot)} · ${cm(median(ph[c]))} / ${cm(median(pr[c]))} (점 ${cnt[c].toLocaleString()})` +
+                 (c === '2' ? ` · 그중 3 m 넘는 차이 ${(100 * far / Math.max(cnt[2], 1)).toFixed(1)}%` : ''));
+    }
+  }
+  return lines.join('\n');
+}
+function resultStats(p) {
+  const f = sindex[p.fkey]; if (!f || !p.sbin) return '';
+  const d = p.sbin.data, lines = [];
+  for (const r of regionsOn()) {
+    for (const [c, kn, name] of classesOn()) {
+      const t = f.table[REG[r][0]][kn];
+      let n = 0, fol = 0; const e = [];
+      for (let i = 0; i < p.sbin.count; i++) {
+        const o = i * FPP; if (d[o + 9] !== +r || d[o + 6] !== +c || d[o] !== d[o]) continue;
+        n++; fol += d[o + 7] > 0.5 ? 1 : 0; if (d[o + 8] === d[o + 8]) e.push(Math.abs(d[o + 8]));
+      }
+      lines.push(`${REG[r][1]} ${name}  표: 판정 부합률 ${pct(t.followed)} · 결과 오차 ${cm(t.err)}   ‖ 화면 점: ${pct(n ? fol / n : null)} · ${cm(median(e))} (점 ${n.toLocaleString()})`);
+    }
+  }
+  return lines.join('\n');
+}
+function unseenStats(key) {
+  const u = uindex && uindex.files[key]; if (!u) return '';
+  return `비가시 면 덮임: 뒷지붕 ${pct(u.roof.coverage)}(시작 ${pct(u.roof.coverage_start)}) · 뒷벽 ${pct(u.wall.coverage)}(시작 ${pct(u.wall.coverage_start)})`;
+}
+function discStats(p) {
+  const f = index.files[p.fkey]; if (!f) return '';
+  const c = f.classes, vis = c.agree.n + c.conflict.n + c.unobserved.n;
+  return `원반 ${f.exported.toLocaleString()}개 표시(영역 안 ${f.in_box.toLocaleString()}) · 표면 원반 중 일치 ${pct(c.agree.n / vis)} · 충돌 ${pct(c.conflict.n / vis)} · 미측정 ${pct(c.unobserved.n / vis)} — 원반 기준이라 표와 1:1이 아니다(표는 결과 보기)`;
+}
+function explainStats(key) {
+  const T = sindex[`${key}/_inputs`]; if (!T) return '';
+  const t = T.table;
+  return `이 장면에서 영상과 ${PNAME[st.prior]}가 τ(${TAU[st.prior]} cm) 넘게 다른 픽셀(충돌): 지붕 ${pct(t.roof.conflict.share)} · 벽 ${pct(t.wall.conflict.share)}` +
+         ` — 어디서 왜 다른지는 위의 번호. 영상이 못 잰 픽셀(미측정): 지붕 ${pct(t.roof.unobserved.share)} · 벽 ${pct(t.wall.unobserved.share)}`;
+}
+
+const LEG = {
+  explain: {
+    '0': () => `<span class="sw" style="background:${st.prior === 'M' ? '#3d7bff' : '#a060ff'}"></span>prior ${PNAME[st.prior]} 모형(반투명 면; 단면에서는 선) <span class="sw" style="background:#c9b89a"></span>영상이 잰 실제 표면(영상 색 점)` +
+                 (st.ovP ? ' <span class="sw" style="background:#2ea043"></span>P 결과 표면' : '') + (st.ovP0 ? ' <span class="sw" style="background:#dc2626"></span>P0 결과 표면' : '') + ' — 둘이 떨어진 곳이 충돌',
+    '1': () => `<span class="sw" style="background:${st.prior === 'M' ? '#3d7bff' : '#a060ff'}"></span>prior ${PNAME[st.prior]} 모형 · 영상이 잰 표면을 판정으로: <span class="sw" style="background:#4285f4"></span>일치 <span class="sw" style="background:#ff9800"></span>충돌`,
+  },
+  judge: {
+    '1': '<span class="sw" style="background:#4285f4"></span>일치 <span class="sw" style="background:#ff9800"></span>충돌 + 막대 <span class="sw" style="background:#e51f1f"></span>prior가 위/바깥 <span class="sw" style="background:#00b8d9"></span>아래/안쪽 <span class="sw" style="background:#d633d6"></span>3 m 넘는 차이(0.4 m로 줄임) <span class="sw" style="background:#9c27b0"></span>미측정',
+    '5': 'prior − 영상: <span class="sw" style="background:#1a40f2"></span>0.5 m 아래 <span class="sw" style="background:#fff"></span>같음 <span class="sw" style="background:#db1a1a"></span>0.5 m 위 <span class="sw" style="background:#9c27b0"></span>영상이 미측정',
+    '6': '영상 − 참값(정리한 참값): <span class="sw" style="background:#1a40f2"></span>−0.5 m <span class="sw" style="background:#fff"></span>0 <span class="sw" style="background:#db1a1a"></span>+0.5 m',
+    '7': 'prior − 참값: <span class="sw" style="background:#1a40f2"></span>−0.5 m <span class="sw" style="background:#fff"></span>0 <span class="sw" style="background:#db1a1a"></span>+0.5 m',
+  },
+  surface: {
+    '0': '실제 색: 학습된 결과의 색.',
+    '1': '<span class="sw" style="background:#4285f4"></span>일치 <span class="sw" style="background:#ff9800"></span>충돌 <span class="sw" style="background:#9c27b0"></span>미측정 — 그 픽셀의 판정(네 조건 같음). 점은 각 조건의 결과 자리',
+    '2': '<span class="sw" style="background:#2ea847"></span>부합 <span class="sw" style="background:#e02626"></span>불부합',
+    '3': '결과 − 참값(정리한 참값): <span class="sw" style="background:#1a40f2"></span>−0.5 m <span class="sw" style="background:#fff"></span>0 <span class="sw" style="background:#db1a1a"></span>+0.5 m (위 / 바깥 +)',
+    '5': 'prior − 영상(그 픽셀): <span class="sw" style="background:#1a40f2"></span>아래 <span class="sw" style="background:#fff"></span>같음 <span class="sw" style="background:#db1a1a"></span>위 <span class="sw" style="background:#9c27b0"></span>영상이 미측정',
+  },
+  disks: {
+    '0': '실제 색: 원반의 색.',
+    '1': '<span class="sw" style="background:#4285f4"></span>일치 <span class="sw" style="background:#ff9800"></span>충돌 <span class="sw" style="background:#9c27b0"></span>미측정 <span class="sw" style="background:#6b6b6b"></span>표면에 안 드러남',
+    '2': '<span class="sw" style="background:#2ea847"></span>부합 <span class="sw" style="background:#e02626"></span>불부합 (원반 기준)',
+    '3': '원반 − GT: <span class="sw" style="background:#1a40f2"></span>−0.5 m <span class="sw" style="background:#fff"></span>0 <span class="sw" style="background:#db1a1a"></span>+0.5 m',
+    '4': '<span class="sw" style="background:#8c000d"></span>고정된 prior 원반 <span class="sw" style="background:#ffa633"></span>prior 출신 <span class="sw" style="background:#33bfeb"></span>영상 출신 <span class="sw" style="background:#ccc"></span>출처 없음(O)',
+  },
+};
+const HELP = {
+  explain: '<b>설명 보기</b>: prior 모형과 영상이 잰 실제 건물을 겹쳐 본다. 노란 번호를 누르면 그 자리를 지나는 단면으로 간다 — 단면에서 선(prior)과 색 점(실제)이 떨어진 만큼이 충돌이다. P·P0 결과를 켜면 같은 단면에서 각 조건이 어디로 갔는지 보인다.',
+  judge: '<b>막대 보기</b>: 충돌 픽셀마다 영상 자리에서 prior 자리까지 막대(지붕 연직, 벽 법선 = 표의 거리). 아래 수치는 표 값과 화면 점으로 다시 센 값.',
+  surface: '<b>결과 보기</b>: 점 하나 = 표가 센 픽셀 하나를 그 조건의 결과 깊이에 놓은 것. 아래 수치는 표 값과 화면 점(4 % 표본)으로 다시 센 값.',
+  disks: '<b>가우시안 원반</b>: 원인(고정·출처) 보기용. 표와 1:1은 결과 보기.',
+};
+const LEG_OV = () => [st.ovPrior && st.target !== 'explain' ? '<span class="sw" style="background:#3f7fff"></span>prior 표면' : '', st.ovPhoto && st.target === 'surface' ? '<span class="sw" style="background:#ffa21f"></span>영상 표면' : '',
+  st.ovUnseen && st.target !== 'explain' ? '<span class="sw" style="background:#1fd9cc"></span>비가시 면에 남은 원반 <span class="sw" style="background:#4d5c80"></span>그 면의 옛 LoD2 자리' : ''].filter(Boolean).join(' ');
+
+function disposePane(p) {
+  for (const o of p.objs) { p.scene.remove(o); o.geometry.dispose(); }
+  for (const m of p.mats) m.dispose();
+  p.objs = []; p.mats = []; clearMarker(p);
+  for (const t of p.tags) t.el.remove(); p.tags = [];
+  if (p.scaleBar) { p.scene.remove(p.scaleBar); p.scaleBar.geometry.dispose(); p.scaleBar.material.dispose(); p.scaleBar = null; }
+  for (const k of ['main', 'sticks', 'ovPrior', 'ovPhoto', 'ovUn', 'ovRef', 'mesh', 'edges', 'slice', 'resP', 'resP0']) p[k] = null;
+}
+function addObj(p, name, obj, m) { obj.frustumCulled = false; p.scene.add(obj); p.objs.push(obj); p.mats.push(m); p[name] = obj; return obj; }
+
+let inputs = null, uref = null, photo = null, pmesh = null, curPlace = null;
+async function loadSetting() {
+  const key = `${st.prior}_${st.scene}`, conds = SETS[key];
+  document.getElementById('info').style.display = 'none';
+  inputs = await cached(`surfels/inputs_${key}.bin`, 'JBIN3D2\0', FPI);
+  if (uindex && !uref) uref = await cached('surfels/unseen_ref.bin', 'JBUR3D1\0', FPR);
+  for (let i = 0; i < 4; i++) {
+    const p = panes[i], cond = conds[i];
+    disposePane(p); p.el.querySelector('.empty')?.remove();
+    p.cond = cond; p.fkey = cond ? `${key}/${cond}` : null; p.bin = null;
+    p.sbin = cond ? await cached(`surfels/${sindex[p.fkey].file}`, 'JBSP3D2\0', FPP) : null;
+  }
+  const U = {pointSize: {value: st.size}, mode: {value: +st.mode}, showClass: {value: +st.cls}, showRegion: {value: +st.region}};
+  if (st.target === 'explain') {
+    const p = panes[0];
+    p.el.querySelector('.plabel').textContent = `설명 — prior ${PNAME[st.prior]} 모형과 영상이 잰 실제 건물 · ${st.scene === 'N' ? '정상' : '본지붕 +1 m'} 장면`;
+    photo = photo || await cached('surfels/photo_points.bin', 'JBPH3D1\0', FPH);
+    let m = mat(PHVS, PFS, {...U, setIdx: {value: SETIDX[key]}}); addObj(p, 'main', new THREE.Points(photoGeometry(photo), m), m);
+    pmesh = await cachedMesh(`surfels/mesh_${key}.bin`);
+    const col = st.prior === 'M' ? 0x3d7bff : 0xa060ff;
+    const mm = new THREE.MeshBasicMaterial({color: col, transparent: true, opacity: st.prior === 'M' ? 0.32 : 0.22, side: THREE.DoubleSide, depthWrite: false});
+    addObj(p, 'mesh', new THREE.Mesh(meshGeometry(pmesh), mm), mm);
+    const em = new THREE.LineBasicMaterial({color: st.prior === 'M' ? 0x9cc0ff : 0xc9a6ff, transparent: true, opacity: st.prior === 'M' ? 0.9 : 0.12});
+    addObj(p, 'edges', new THREE.LineSegments(new THREE.EdgesGeometry(meshGeometry(pmesh), st.prior === 'M' ? 15 : 1), em), em);
+    const sm = new THREE.LineBasicMaterial({color: st.prior === 'M' ? 0x5aa0ff : 0xc080ff, depthTest: false});
+    const sl = addObj(p, 'slice', new THREE.LineSegments(new THREE.BufferGeometry(), sm), sm); sl.renderOrder = 8;
+    for (const [name, j, color] of [['resP', 0, [0.18, 0.63, 0.26]], ['resP0', 1, [0.86, 0.15, 0.15]]]) {
+      const b = panes[j].sbin; if (!b) continue;
+      m = mat(CVS, PFS, {...U, color: {value: new THREE.Vector3(...color)}}); addObj(p, name, new THREE.Points(resultGeometry(b, null), m), m);
+    }
+    for (const pl of (PLACES && PLACES.places[key]) || []) {
+      const el = document.createElement('div'); el.className = 'tag3d'; el.innerHTML = `${'①②③④⑤'[pl.n - 1]}<span>${pl.title}</span>`;
+      el.onclick = () => goPlace(pl); p.el.appendChild(el); p.tags.push({el, pos: new THREE.Vector3(...pl.anchor), kind: 'place'});
+    }
+  } else if (st.target === 'judge') {
+    const p = panes[0];
+    p.el.querySelector('.plabel').textContent = `막대 — 두 입력(영상·${PNAME[st.prior]})의 픽셀별 어긋남 · ${st.scene === 'N' ? '정상' : '본지붕 +1 m'} 장면 · 네 조건 공통`;
+    let m = mat(JVS, PFS, {...U}); addObj(p, 'main', new THREE.Points(judgeGeometry(inputs), m), m);
+    m = mat(SVS, LFS, {exag: {value: st.exag}, showClass: {value: +st.cls}, showRegion: {value: +st.region}}); addObj(p, 'sticks', new THREE.LineSegments(stickGeometry(inputs), m), m);
+    m = mat(IVS, PFS, {...U, color: {value: new THREE.Vector3(0.25, 0.5, 1.0)}}); addObj(p, 'ovPrior', new THREE.Points(inputGeometry(inputs, 0), m), m);
+    if (uref) { m = mat(UVS, PFS, {...U, minAlpha: {value: st.minA}, isRef: {value: 1}}); addObj(p, 'ovRef', new THREE.Points(unseenGeometry(uref, FPR), m), m); }
+  } else {
+    for (let i = 0; i < 4; i++) {
+      const p = panes[i], cond = conds[i];
+      if (!cond) {
+        p.el.querySelector('.plabel').textContent = ''; p.el.querySelector('.pstats').textContent = '';
+        const e = document.createElement('div'); e.className = 'empty';
+        e.textContent = 'ALS prior에는 공식 GeoGS 조건이 없다(공식 GeoGS는 LoD2 입력).'; p.el.appendChild(e); continue;
+      }
+      p.el.querySelector('.plabel').textContent = `${NAMES[cond.split('_')[0]]}  ·  ${cond}`;
+      let m;
+      if (st.target === 'surface') {
+        m = mat(RVS, PFS, {...U, neutral: {value: 0}}); addObj(p, 'main', new THREE.Points(resultGeometry(p.sbin, inputs), m), m);
+      } else {
+        p.bin = await cached(`surfels/${index.files[p.fkey].file}`, 'JBSF2D2\0', FPS);
+        m = mat(DVS, DFS, {sizeScale: {value: st.size}, mode: {value: +st.mode}, minAlpha: {value: st.minA}, showHidden: {value: st.hidden ? 1 : 0}, showClass: {value: +st.cls}}, {side: THREE.DoubleSide});
+        addObj(p, 'main', new THREE.Mesh(discGeometry(p.bin), m), m);
+      }
+      for (const [name, off, color] of [['ovPrior', 0, [0.25, 0.5, 1.0]], ['ovPhoto', 3, [1.0, 0.63, 0.12]]]) {
+        m = mat(IVS, PFS, {...U, color: {value: new THREE.Vector3(...color)}}); addObj(p, name, new THREE.Points(inputGeometry(inputs, off), m), m);
+      }
+      if (uindex) {
+        const ubin = await cached(`surfels/${uindex.files[p.fkey].file}`, 'JBUN3D1\0', FPU);
+        m = mat(UVS, PFS, {...U, minAlpha: {value: st.minA}, isRef: {value: 1}}); addObj(p, 'ovRef', new THREE.Points(unseenGeometry(uref, FPR), m), m);
+        m = mat(UVS, PFS, {...U, minAlpha: {value: st.minA}, isRef: {value: 0}}); addObj(p, 'ovUn', new THREE.Points(unseenGeometry(ubin, FPU), m), m);
+      }
+    }
+  }
+  drawPlaces();
+  applyDisplay();
+}
+function drawPlaces() {
+  const box = document.getElementById('places'), key = `${st.prior}_${st.scene}`;
+  if (st.target !== 'explain' || !PLACES) { box.style.display = 'none'; return; }
+  box.style.display = 'block';
+  box.innerHTML = (PLACES.places[key] || []).map(pl =>
+    `<div class="pl"><span class="num">${'①②③④⑤'[pl.n - 1]}</span><b>${pl.title}</b><span>${pl.text}</span><span class="sh">(${pl.share})</span> <button class="act" data-n="${pl.n}">단면 보기</button></div>`).join('') +
+    `<div class="pl"><button class="act" id="overview">전체 보기로</button></div>`;
+  box.querySelectorAll('button[data-n]').forEach(b => { b.onclick = () => goPlace((PLACES.places[key] || []).find(q => q.n === +b.dataset.n)); });
+  document.getElementById('overview').onclick = () => { curPlace = null; sectionHelpers(null); panes[0].el.querySelector('.plabel').textContent = `설명 — prior ${PNAME[st.prior]} 모형과 영상이 잰 실제 건물 · ${st.scene === 'N' ? '정상' : '본지붕 +1 m'} 장면`; st.slab = 'off'; seg('slab', applyDisplay); st.preset = '0009'; seg('preset', () => setPreset(st.preset)); save(); applyDisplay(); setPreset('0009'); };
+}
+function sectionHelpers(pl) {
+  // scale bar (20 cm on the facade, 1 m elsewhere) and, on walls, which side is outside
+  const p = panes[0];
+  for (const t of p.tags.filter(t => t.kind === 'sect')) t.el.remove();
+  p.tags = p.tags.filter(t => t.kind !== 'sect');
+  if (p.scaleBar) { p.scene.remove(p.scaleBar); p.scaleBar.geometry.dispose(); p.scaleBar.material.dispose(); p.scaleBar = null; }
+  if (!pl) return;
+  const n = slabNormal(), h = new THREE.Vector3(-n.y, n.x, 0), L = pl.n === 1 ? 0.2 : 1.0, dz = pl.n === 1 ? 1.2 : 3.0;
+  const a = new THREE.Vector3(...pl.anchor).add(new THREE.Vector3(0, 0, dz)), b = a.clone().addScaledVector(h, L), tk = 0.06 * L / 0.2 * (pl.n === 1 ? 1 : 0.5);
+  const pts = [a, b, a.clone().setZ(a.z - tk), a.clone().setZ(a.z + tk), b.clone().setZ(b.z - tk), b.clone().setZ(b.z + tk)];
+  p.scaleBar = new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(pts), new THREE.LineBasicMaterial({color: 0xffffff, depthTest: false}));
+  p.scaleBar.renderOrder = 9; p.scene.add(p.scaleBar);
+  const tag = (txt, pos) => { const el = document.createElement('div'); el.className = 'tag3d'; el.style.background = '#ffffff'; el.textContent = txt; p.el.appendChild(el); p.tags.push({el, pos, kind: 'sect'}); };
+  tag(L < 1 ? '20 cm' : '1 m', a.clone().addScaledVector(h, L / 2).add(new THREE.Vector3(0, 0, pl.n === 1 ? 0.12 : 0.5)));
+  if (pl.n === 1) {
+    const out = new THREE.Vector3(NF.x, NF.y, 0);
+    tag('← 바깥(길 쪽)', new THREE.Vector3(...pl.anchor).addScaledVector(out, 0.7).add(new THREE.Vector3(0, 0, -1.2)));
+    tag('건물 안 →', new THREE.Vector3(...pl.anchor).addScaledVector(out, -0.8).add(new THREE.Vector3(0, 0, -1.2)));
+  }
+}
+function goPlace(pl) {
+  if (!pl) return;
+  curPlace = pl;
+  st.slab = pl.slab; const n = slabNormal();
+  st.slabPos = (pl.anchor[0] - SLAB_O.x) * n.x + (pl.anchor[1] - SLAB_O.y) * n.y; st.slabW = pl.n === 1 ? 0.4 : 0.6;
+  document.getElementById('slabPos').value = st.slabPos; document.getElementById('slabW').value = st.slabW;
+  seg('slab', applyDisplay); st.preset = 'slab'; seg('preset', () => setPreset(st.preset)); save(); applyDisplay();
+  orbit.target.set(...pl.anchor); orbit.yaw = Math.atan2(n.y, n.x); orbit.pitch = 0.02; orbit.dist = pl.dist;
+  sectionHelpers(pl);
+  panes[0].el.querySelector('.plabel').innerHTML = `<b>${'①②③④⑤'[pl.n - 1]} ${pl.title} 단면</b> — ${pl.text}<br><span style="color:#9a9aa3">선 = prior ${PNAME[st.prior]} 면 · 색 점 = 영상이 잰 실제 표면` +
+    (st.ovP ? ' · 초록 = P 결과' : '') + (st.ovP0 ? ' · 빨강 = P0 결과' : '') + '</span>';
+}
+function updateSlice() {
+  const p = panes[0];
+  if (!p.slice || !pmesh) return;
+  const pos = st.slab !== 'off' ? sliceSegments(pmesh, slabNormal(), st.slabPos) : new Float32Array(0);
+  p.slice.geometry.dispose(); p.slice.geometry = new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(pos, 3));
+}
+function applyDisplay() {
+  const on = st.slab !== 'off' ? 1 : 0, n = slabNormal(), T = st.target, key = `${st.prior}_${st.scene}`;
+  for (const b of document.querySelectorAll('#mode button')) b.style.display = MODES[T].includes(b.dataset.v) ? '' : 'none';
+  const show = (id, v) => { document.getElementById(id).style.display = v ? '' : 'none'; };
+  show('exagBox', T === 'judge'); show('ovMeshL', T === 'explain'); show('ovPL', T === 'explain'); show('ovP0L', T === 'explain');
+  show('ovPriorL', T === 'surface' || T === 'disks' || T === 'judge'); show('ovPhotoL', T === 'surface' || T === 'disks');
+  show('ovUnseenL', T !== 'explain'); show('hiddenL', T === 'disks'); show('minABox', T === 'surface' || T === 'disks');
+  const planes = on ? [new THREE.Plane(new THREE.Vector3(n.x, n.y, 0), -(st.slabPos - st.slabW / 2) - (n.x * SLAB_O.x + n.y * SLAB_O.y)),
+                       new THREE.Plane(new THREE.Vector3(-n.x, -n.y, 0), (st.slabPos + st.slabW / 2) + (n.x * SLAB_O.x + n.y * SLAB_O.y))] : [];
+  for (const p of panes) {
+    if (!p.objs.length) continue;
+    for (const m of p.mats) {
+      const u = m.uniforms;
+      if (!u) { m.clippingPlanes = planes; continue; }
+      if (u.mode) u.mode.value = +st.mode;
+      if (u.showClass) u.showClass.value = +st.cls;
+      if (u.showRegion) u.showRegion.value = +st.region;
+      if (u.pointSize) u.pointSize.value = st.size;
+      if (u.sizeScale) u.sizeScale.value = st.size;
+      if (u.minAlpha) u.minAlpha.value = st.minA;
+      if (u.showHidden) u.showHidden.value = st.hidden ? 1 : 0;
+      if (u.exag) u.exag.value = st.exag;
+      if (u.neutral) u.neutral.value = (st.ovPrior || st.ovPhoto) ? 1 : 0;
+      if (u.setIdx) u.setIdx.value = SETIDX[key];
+      u.slabOn.value = on; u.slabN.value.copy(n); u.slabC.value = st.slabPos; u.slabHalf.value = st.slabW / 2;
+    }
+    if (p.slice) p.slice.material.clippingPlanes = [];
+    if (p.mesh) { p.mesh.visible = st.ovMesh; p.edges.visible = st.ovMesh && !on; p.slice.visible = st.ovMesh && !!on; p.mesh.material.opacity = on ? 0.12 : (st.prior === 'M' ? 0.32 : 0.22); }
+    if (p.resP) p.resP.visible = st.ovP;
+    if (p.resP0) p.resP0.visible = st.ovP0;
+    if (p.ovPrior) p.ovPrior.visible = st.ovPrior;
+    if (p.ovPhoto) p.ovPhoto.visible = st.ovPhoto;
+    if (p.ovRef) p.ovRef.visible = st.ovUnseen;
+    if (p.ovUn) p.ovUn.visible = st.ovUnseen;
+    const un = st.ovUnseen && T !== 'explain' && T !== 'judge' ? '\n' + unseenStats(p.fkey) : '';
+    p.el.querySelector('.pstats').textContent = T === 'explain' ? explainStats(key) : T === 'judge' ? judgeStats(key) : (T === 'surface' ? resultStats(p) : discStats(p)) + un;
+  }
+  updateSlice();
+  const neutral = (st.ovPrior || st.ovPhoto) && T === 'surface';
+  const leg = LEG[T][st.mode], legTxt = typeof leg === 'function' ? leg() : leg;
+  document.getElementById('legendBody').innerHTML = (neutral ? '입력 겹쳐 보기 중: <span class="sw" style="background:#ebebeb"></span>결과 표면(흰색)' : legTxt) + (LEG_OV() ? ' &nbsp;|&nbsp; ' + LEG_OV() : '');
+  document.getElementById('help').innerHTML = HELP[T] + ' 드래그 회전 · 오른쪽 드래그/Shift 이동 · 휠 확대' + (T === 'explain' ? '.' : ' · 점 클릭 = 그 픽셀 값.');
+  document.getElementById('slabPosV').textContent = `${st.slabPos >= 0 ? '+' : ''}${st.slabPos.toFixed(1)} m`;
+  document.getElementById('slabWV').textContent = `${st.slabW.toFixed(1)} m`;
+  document.getElementById('exagV').textContent = `×${st.exag}`;
+  layout();
+}
+
+// ---- click (result / stick views): the pixel under the cursor, its two inputs and the four results
+const ray = new THREE.Raycaster();
+function visibleAt(x, y, cls, reg) {
+  if (x !== x) return false;
+  if (st.cls !== '0' && Math.abs(cls - +st.cls) > 0.5) return false;
+  if (st.region !== '0' && Math.abs(reg - +st.region) > 0.5) return false;
+  if (st.slab !== 'off') { const n = slabNormal(); if (Math.abs((x - SLAB_O.x) * n.x + (y - SLAB_O.y) * n.y - st.slabPos) > st.slabW / 2) return false; }
+  return true;
+}
+function pick(p, cx, cy) {
+  const r = p.renderer.domElement.getBoundingClientRect();
+  ray.setFromCamera(new THREE.Vector2(((cx - r.left) / r.width) * 2 - 1, -((cy - r.top) / r.height) * 2 + 1), p.cam);
+  const o = ray.ray.origin, dir = ray.ray.direction, tol = 6 * 2 * Math.tan(THREE.MathUtils.degToRad(p.cam.fov / 2)) / r.height;
+  const judge = st.target === 'judge';
+  let pos, meta, n;
+  if (judge) { pos = p.main.geometry.attributes.position.array; meta = p.main.geometry.attributes.aMeta.array; n = inputs.count; }
+  else if (p.sbin) n = p.sbin.count;
+  else return;
+  let best = -1, bestT = Infinity;
+  for (let i = 0; i < n; i++) {
+    let x, y, z, cls, reg;
+    if (judge) { x = pos[i * 3]; y = pos[i * 3 + 1]; z = pos[i * 3 + 2]; cls = meta[i * 3]; reg = meta[i * 3 + 1]; }
+    else { const d = p.sbin.data, k = i * FPP; x = d[k]; y = d[k + 1]; z = d[k + 2]; cls = d[k + 6]; reg = d[k + 9]; }
+    const dx = x - o.x, dy = y - o.y, dz = z - o.z, t = dx * dir.x + dy * dir.y + dz * dir.z;
+    if (!(t > 0) || t >= bestT) continue;
+    if (dx * dx + dy * dy + dz * dz - t * t > (tol * t) * (tol * t) || !visibleAt(x, y, cls, reg)) continue;
+    best = i; bestT = t;
+  }
+  if (best >= 0) showPixel(best);
+}
+function clearMarker(p) { if (p.marker) { p.scene.remove(p.marker); p.marker.traverse(o => { o.geometry?.dispose(); o.material?.dispose(); }); p.marker = null; } }
+function marker(pts, colors) {
+  const g = new THREE.Group();
+  const pg = new THREE.BufferGeometry().setAttribute('position', new THREE.Float32BufferAttribute(pts.flat(), 3));
+  pg.setAttribute('color', new THREE.Float32BufferAttribute(colors.flat(), 3));
+  const P = new THREE.Points(pg, new THREE.PointsMaterial({size: 11, sizeAttenuation: false, vertexColors: true, depthTest: false})); P.renderOrder = 10; g.add(P);
+  const L = new THREE.Line(new THREE.BufferGeometry().setAttribute('position', new THREE.Float32BufferAttribute(pts.flat(), 3)),
+    new THREE.LineBasicMaterial({color: 0xffffff, depthTest: false})); L.renderOrder = 9; g.add(L);
+  return g;
+}
+let picked = null;
+function cutAt(p0) {
+  const g = p0.gap, a = Math.abs(g[0] * AL.x + g[1] * AL.y), b = Math.abs(g[0] * NF.x + g[1] * NF.y);
+  st.slab = a > b ? 'along' : 'across';
+  const n = slabNormal();
+  st.slabPos = (p0.anchor[0] - SLAB_O.x) * n.x + (p0.anchor[1] - SLAB_O.y) * n.y; st.slabW = 0.3;
+  document.getElementById('slabPos').value = st.slabPos; document.getElementById('slabW').value = st.slabW;
+  seg('slab', applyDisplay); st.preset = 'slab'; seg('preset', () => setPreset(st.preset)); save(); applyDisplay();
+  orbit.target.set(...p0.anchor); orbit.yaw = Math.atan2(n.y, n.x); orbit.pitch = 0.02; orbit.dist = 3.0;
+}
+function showInfo(html) {
+  const el = document.getElementById('info');
+  el.style.display = 'block';
+  el.innerHTML = `<span class="x" id="infoX">닫기 ✕</span>` + html;
+  document.getElementById('infoX').onclick = () => { el.style.display = 'none'; for (const p of panes) clearMarker(p); layout(); };
+  document.getElementById('cutHere').onclick = () => picked && cutAt(picked);
+  document.getElementById('zoomHere').onclick = () => { if (picked) { orbit.target.set(...picked.anchor); orbit.dist = 4.5; } };
+  layout();
+}
+function showPixel(i) {
+  const I = inputs.data, k = i * FPI;
+  const prior = [I[k], I[k + 1], I[k + 2]], ph = [I[k + 3], I[k + 4], I[k + 5]], stick = [I[k + 9], I[k + 10], I[k + 11]];
+  const spm = I[k + 6], cls = I[k + 7], reg = I[k + 8], pgt = I[k + 12], rgt = I[k + 13];
+  const hasPhoto = ph[0] === ph[0], tau = TAU[st.prior], pname = PNAME[st.prior];
+  const r0 = panes[0].sbin.data, vi = r0[i * FPP + 10], view = VIEWS ? VIEWS[vi].slice(-6, -2) : '#' + vi;
+  const anchor = hasPhoto ? ph : prior, gap = hasPhoto ? [prior[0] - ph[0], prior[1] - ph[1]] : [NF.x, NF.y];
+  picked = {i, anchor, gap: Math.hypot(gap[0], gap[1]) > 1e-4 ? gap : [NF.x, NF.y]};
+  let rows = '';
+  for (const [j, p] of panes.entries()) {
+    clearMarker(p);
+    if (!p.sbin) continue;
+    const d = p.sbin.data, o = i * FPP, res = [d[o], d[o + 1], d[o + 2]];
+    const pts = [prior], cols = [[0.25, 0.5, 1.0]];
+    if (hasPhoto) { pts.push(ph); cols.push([1.0, 0.63, 0.12]); }
+    if (st.target === 'judge' && j === 0 && hasPhoto && stick[0] === stick[0]) { pts.push(stick); cols.push([0.9, 0.12, 0.12]); }
+    else if (st.target !== 'judge' && res[0] === res[0]) { pts.push(res); cols.push([1, 1, 1]); }
+    if (st.target !== 'judge' || j === 0) { p.marker = marker(pts, cols); p.scene.add(p.marker); }
+    const fol = d[o + 7] > 0.5;
+    rows += `<tr><td>${SHORT[p.cond.split('_')[0]]}</td><td>${cmS(d[o + 11])}</td><td>${cmS(d[o + 12])}</td><td>${cmS(d[o + 8])}</td><td class="${fol ? 'ok' : 'no'}">${fol ? '예' : '아니오'}</td></tr>`;
+  }
+  const clsName = {1: '일치', 2: '충돌', 3: '미측정'}[cls] || '—', where = reg === 1 ? '지붕' : '벽', up = reg === 1 ? '위' : '바깥';
+  const why = cls === 3 ? `영상이 이 픽셀의 깊이를 못 쟀다(A=0) → 판정: <b>${pname} 자리에 남으면 판정 부합</b>`
+    : `${pname} − 영상 = <b>${cmS(spm)}</b> (+ = ${pname}가 영상보다 ${up}) → |차이| ${Math.abs(spm * 100).toFixed(0)} cm ${Math.abs(spm * 100) <= tau ? '≤' : '>'} τ ${tau} cm → <b>${clsName}</b>: ${cls === 2 ? '선택 소스 = 영상(영상 깊이로 가면 판정 부합)' : '선택 소스 = prior(그 자리에 남으면 판정 부합)'}`;
+  showInfo(`<b>픽셀</b> 영상 ${view} · ${where} · 판정 <b>${clsName}</b><br>${why}<br>
+    입력과 참값: 영상 − GT ${cmS(pgt)} · ${pname} − GT ${cmS(rgt)}
+    <table><tr><th>조건</th><th>결과 − 영상</th><th>결과 − ${pname}</th><th>결과 − GT</th><th>판정 부합</th></tr>${rows}</table>
+    <div style="margin-top:6px"><button class="act" id="cutHere">이 자리 단면으로 보기</button> <button class="act" id="zoomHere">가까이 보기</button></div>
+    <div style="color:var(--mute);margin-top:4px">표시: <span style="color:#6f9bff">●</span> ${pname} 자리 <span style="color:#ffa21f">●</span> 영상이 잰 자리 ○ 결과. cm, 지붕은 연직·벽은 법선, + = ${up}. 참값은 정리한 참값(가려진 점 제거, 지면 기준 높이 맞춤).</div>`);
+}
+
+function save() { try { localStorage.setItem('surfelState4', JSON.stringify(st)); } catch (e) {} history.replaceState(null, '', '#' + Object.entries(st).map(([k, v]) => `${k}=${encodeURIComponent(v)}`).join('&')); }
+function seg(id, onChange) {
+  document.getElementById(id).querySelectorAll('button').forEach(b => {
+    b.classList.toggle('on', b.dataset.v === String(st[id]));
+    b.onclick = () => { st[id] = b.dataset.v; document.getElementById(id).querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); save(); onChange(); };
+  });
+}
+seg('prior', loadSetting); seg('scene', loadSetting); seg('mode', applyDisplay);
+seg('target', () => { if (!MODES[st.target].includes(st.mode)) { st.mode = MODES[st.target][0]; seg('mode', applyDisplay); } save(); loadSetting(); });
+seg('region', applyDisplay); seg('cls', applyDisplay);
+seg('preset', () => setPreset(st.preset)); seg('slab', applyDisplay);
+for (const id of ['size', 'minA', 'slabPos', 'slabW', 'exag']) { const el = document.getElementById(id); el.value = st[id]; el.oninput = () => { st[id] = +el.value; save(); applyDisplay(); }; }
+for (const id of ['hidden', 'ovMesh', 'ovP', 'ovP0', 'ovPrior', 'ovPhoto', 'ovUnseen']) { const el = document.getElementById(id); el.checked = st[id]; el.onchange = () => { st[id] = el.checked; save(); applyDisplay(); }; }
+document.getElementById('slabView').onclick = () => {
+  if (st.slab === 'off') { st.slab = 'across'; seg('slab', applyDisplay); applyDisplay(); }
+  st.preset = 'slab'; seg('preset', () => setPreset(st.preset)); save(); setPreset('slab');
+};
+layout();
+await loadSetting();
+{ // building centre height = median height of the judged points
+  const I = inputs.data, zs = [];
+  for (let i = 0; i < inputs.count; i += Math.max(1, Math.floor(inputs.count / 20000))) { const z = I[i * FPI + 5] === I[i * FPI + 5] ? I[i * FPI + 5] : I[i * FPI + 2]; if (z === z) zs.push(z); }
+  zs.sort((x, y) => x - y); if (zs.length) center.z = zs[Math.floor(zs.length / 2)];
+}
+setPreset(st.preset);
+{ // shareable camera: #...&cam=<target x>,<y>,<z>,<yaw>,<pitch>,<distance>
+  const cm_ = location.hash.match(/(?:^#|&)cam=([-0-9.,]+)/);
+  if (cm_) { const c = cm_[1].split(',').map(Number); if (c.length === 6 && c.every(Number.isFinite)) { orbit.target.set(c[0], c[1], c[2]); orbit.yaw = c[3]; orbit.pitch = c[4]; orbit.dist = c[5]; } }
+}
+{ // shareable: #...&place=<n> (explain view) or #...&pick=<record index>[&cut=1]
+  const pm = location.hash.match(/(?:^#|&)place=(\d+)/), m = location.hash.match(/(?:^#|&)pick=(\d+)/);
+  if (pm && st.target === 'explain' && PLACES) goPlace((PLACES.places[`${st.prior}_${st.scene}`] || []).find(q => q.n === +pm[1]));
+  else if (m) { showPixel(+m[1]); if (/(?:^#|&)cut=1/.test(location.hash)) cutAt(picked); }
+}
+const v3 = new THREE.Vector3();
+(function loop() {
+  for (const [i, p] of panes.entries()) {
+    if (ONE(st.target) && i > 0) continue;
+    applyOrbit(p.cam); if (p.objs.length) p.renderer.render(p.scene, p.cam); else p.renderer.clear();
+    if (p.tags.length) {
+      const w = p.el.clientWidth, h = p.el.clientHeight;
+      for (const t of p.tags) {
+        v3.copy(t.pos).project(p.cam);
+        const vis = v3.z < 1 && Math.abs(v3.x) < 1.1 && Math.abs(v3.y) < 1.1 && (t.kind === 'place' ? st.slab === 'off' : st.slab !== 'off');
+        t.el.style.display = vis ? '' : 'none';
+        if (vis) { t.el.style.left = ((v3.x + 1) / 2 * w) + 'px'; t.el.style.top = ((1 - v3.y) / 2 * h) + 'px'; }
+      }
+    }
+  }
+  requestAnimationFrame(loop);
+})();
+window.__ready = true;
+</script>
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2단계 진행 확인</title>
+<style>
+:root { --bg:#fff; --fg:#1d1d1f; --mute:#6e6e73; --line:#d9d9de; --panel:#f6f6f8; --green:#1f8a3b; --yellow:#b7791f; --red:#c62828; --blue:#1f5fbf; --accent:#5b3fd6; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141416; --fg:#ececf0; --mute:#9a9aa3; --line:#34343a; --panel:#1d1d21; --green:#4cc36b; --yellow:#e0a93b; --red:#ff6b6b; --blue:#6aa0ff; --accent:#a58cff; } }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg); font:14px/1.45 system-ui, -apple-system, "Noto Sans KR", sans-serif; }
+header { padding:14px 16px 6px; display:flex; flex-wrap:wrap; gap:8px 18px; align-items:baseline; }
+h1 { font-size:18px; margin:0; }
+h2 { font-size:15px; margin:18px 0 6px; }
+.mute { color:var(--mute); font-size:12px; }
+main { padding:0 16px 32px; }
+table { border-collapse:collapse; width:100%; }
+th, td { padding:5px 7px; border-bottom:1px solid var(--line); text-align:left; white-space:nowrap; font-variant-numeric:tabular-nums; }
+th { font-weight:600; font-size:12px; color:var(--mute); }
+tr.sel td { background:var(--panel); }
+tbody tr { cursor:pointer; }
+.wrap { overflow-x:auto; }
+.chip { display:inline-block; padding:1px 7px; border-radius:9px; font-size:12px; color:#fff; margin-right:3px; }
+.green { background:var(--green); } .yellow { background:var(--yellow); } .red { background:var(--red); } .pending, .none { background:var(--mute); }
+.st-running { color:var(--blue); font-weight:600; } .st-done { color:var(--green); } .st-failed { color:var(--red); font-weight:600; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(330px, 1fr)); gap:14px; }
+.card { background:var(--panel); border-radius:8px; padding:10px 12px; min-width:0; }
+.card h3 { font-size:13px; margin:0 0 6px; }
+svg { width:100%; height:auto; display:block; }
+.legend span { display:inline-block; margin-right:10px; font-size:12px; }
+.legend i { display:inline-block; width:10px; height:3px; margin-right:4px; vertical-align:middle; }
+.snaps img { width:100%; border-radius:6px; margin-top:6px; }
+select { font:inherit; padding:2px 6px; background:var(--bg); color:var(--fg); border:1px solid var(--line); border-radius:6px; }
+.note { font-size:12px; color:var(--mute); margin:4px 0 0; }
+</style>
+</head>
+<body>
+<header>
+  <h1>2단계 판정 유도 GS — 진행 확인</h1>
+  <span class="mute" id="gen"></span>
+  <span class="mute">60초마다 자동 갱신 · 곡선 상세는 TensorBoard(<span id="tb"></span>)</span>
+</header>
+<main>
+  <div class="wrap"><table id="status"><thead><tr>
+    <th>조건</th><th>방법·옛 자료·장면</th><th>GPU</th><th>상태</th><th>반복</th><th>남은 시간</th><th>최근 점검</th><th>본지붕 d_F</th><th>시험 PSNR</th>
+  </tr></thead><tbody></tbody></table></div>
+  <p class="note">부호: d_F = median((D−P)·f), + = 옛 자료가 렌더 표면보다 위(벽은 바깥). B 조건 목표는 +1.0(렌더가 올린 지붕을 떠나 사진으로 돌아옴). g_F = GT 기준(평가 전용). 판정 라벨: 보존 |d_F|&lt;τ · 보정 |d_F|≥τ, |e_F|&lt;τ · 미판정 cov&lt;0.5.</p>
+  <section id="detail"></section>
+  <h2>문제 기록 (최근)</h2>
+  <div class="wrap"><table id="issues"><thead><tr><th>시각</th><th>조건</th><th>내용</th></tr></thead><tbody></tbody></table></div>
+</main>
+<script>
+const MODE = {P:"P 판정 켬", P0:"P0 판정 끔", O:"O 공식 GeoGS", I:"I 영상 단독"};
+const LABEL = {preserve:"보존", correct:"보정", undecided:"미판정", other:"기타", "n/a":"—"};
+const FACE_COLORS = {"3387":"#d1495b", "3389":"#edae49", "3394":"#00798c", "3404":"#30638e", "3393":"#8d6a9f", "3396":"#5b3fd6", "wall":"#6e6e73"};
+let selected = null;
+try { selected = localStorage.getItem("s2sel"); } catch (e) {}
+document.getElementById("tb").textContent = location.hostname + ":6006";
+
+const fmt = (x, n = 3) => (x === null || x === undefined || Number.isNaN(x)) ? "—" : (+x).toFixed(n);
+const sgn = (x, n = 3) => (x === null || x === undefined) ? "—" : ((x >= 0 ? "+" : "") + (+x).toFixed(n));
+function hms(s) { if (!s && s !== 0) return "—"; s = Math.max(0, Math.round(s)); const h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60); return h ? `${h}시간 ${m}분` : `${m}분`; }
+function chip(st, text) { return `<span class="chip ${st || "none"}">${text}</span>`; }
+
+function state(c) {
+  if (c.receipt) return c.receipt.status === "PASS" ? ["done", "완료"] : ["failed", c.stop ? "빨간 신호 정지" : "실패"];
+  const q = c.queue || {};
+  if (q.state === "running") return ["running", "학습 중"];
+  if (q.state === "failed") return ["failed", "실패"];
+  return ["", "대기"];
+}
+function lastCheck(c) {
+  const cl = c.checklist || [];
+  return cl.length ? cl[cl.length - 1] : null;
+}
+function lastFace(c, f) { const a = (c.faces || {})[f]; return a && a.length ? a[a.length - 1] : null; }
+
+function renderStatus(D) {
+  const tb = document.querySelector("#status tbody");
+  tb.innerHTML = "";
+  for (const c of D.conditions) {
+    const [cls, txt] = state(c);
+    const lc = lastCheck(c);
+    const chips = lc ? lc.items.filter(i => i.name !== "undecided_roof_faces").map(i => chip(i.status, `${i.status === "pending" ? "대기" : i.status} @${lc.iteration}`)).join("") : "";
+    const f = lastFace(c, "3396");
+    const m = (c.metrics || []).slice(-1)[0];
+    const it = c.receipt && c.receipt.status === "PASS" ? (c.total || 30000) : c.iteration;
+    const tr = document.createElement("tr");
+    if (c.name === selected) tr.className = "sel";
+    tr.innerHTML = `<td><b>${c.name}</b></td><td>${MODE[c.mode] || c.mode} · ${c.prior || "—"} · ${c.scene}</td><td>${(c.queue || {}).gpu ?? "—"}</td>
+      <td class="st-${cls}">${txt}</td><td>${it ? it.toLocaleString() : "—"}${c.total ? " / " + c.total.toLocaleString() : ""}</td>
+      <td>${c.receipt ? hms(c.receipt.seconds) + " 걸림" : hms(c.eta_s)}</td><td>${chips || "—"}</td>
+      <td>${f ? sgn(f.d) + " m" : "—"}</td><td>${m ? fmt(m.psnr, 2) + " @" + m.it : "—"}</td>`;
+    tr.onclick = () => { selected = c.name; try { localStorage.setItem("s2sel", selected); } catch (e) {} draw(); };
+    tb.appendChild(tr);
+  }
+}
+
+function lineChart({series, band, hline, ylabel, height = 190, xmax, log = false}) {
+  if (log) series = series.map(s => ({...s, pts: s.pts.map(p => [p[0], p[1] > 0 ? Math.log10(p[1]) : null])}));
+  const W = 560, H = height, L = 46, R = 10, T = 10, B = 26;
+  const pts = series.flatMap(s => s.pts).filter(p => p[1] !== null && p[1] !== undefined);
+  if (!pts.length) return `<p class="note">아직 자료 없음</p>`;
+  let x1 = xmax || Math.max(...pts.map(p => p[0])), x0 = 0;
+  let ys = pts.map(p => p[1]);
+  if (band) ys = ys.concat(band);
+  if (hline !== undefined) ys = ys.concat(hline);
+  let y0 = Math.min(...ys), y1 = Math.max(...ys);
+  if (y1 - y0 < 1e-9) { y0 -= 1; y1 += 1; }
+  const pad = (y1 - y0) * 0.08; y0 -= pad; y1 += pad;
+  const X = x => L + (x - x0) / (x1 - x0 || 1) * (W - L - R), Y = y => T + (y1 - y) / (y1 - y0) * (H - T - B);
+  let g = `<svg viewBox="0 0 ${W} ${H}" role="img">`;
+  const ticks = 4;
+  for (let i = 0; i <= ticks; i++) {
+    const yv = y0 + (y1 - y0) * i / ticks, yy = Y(yv);
+    g += `<line x1="${L}" x2="${W - R}" y1="${yy}" y2="${yy}" stroke="var(--line)" stroke-width="1"/>`;
+    g += `<text x="${L - 6}" y="${yy + 4}" font-size="11" text-anchor="end" fill="var(--mute)">${Math.abs(yv) >= 100 ? yv.toFixed(0) : yv.toFixed(2)}</text>`;
+  }
+  for (let i = 0; i <= 3; i++) {
+    const xv = x0 + (x1 - x0) * i / 3;
+    g += `<text x="${X(xv)}" y="${H - 8}" font-size="11" text-anchor="middle" fill="var(--mute)">${Math.round(xv).toLocaleString()}</text>`;
+  }
+  if (band) g += `<rect x="${L}" width="${W - L - R}" y="${Y(band[1])}" height="${Math.max(0, Y(band[0]) - Y(band[1]))}" fill="var(--green)" opacity="0.14"/>`;
+  if (hline !== undefined) g += `<line x1="${L}" x2="${W - R}" y1="${Y(hline)}" y2="${Y(hline)}" stroke="var(--fg)" stroke-dasharray="4 3" stroke-width="1"/>`;
+  for (const s of series) {
+    const p = s.pts.filter(q => q[1] !== null && q[1] !== undefined);
+    if (!p.length) continue;
+    g += `<polyline fill="none" stroke="${s.color}" stroke-width="2" points="${p.map(q => X(q[0]).toFixed(1) + "," + Y(q[1]).toFixed(1)).join(" ")}"/>`;
+    const q = p[p.length - 1];
+    g += `<circle cx="${X(q[0])}" cy="${Y(q[1])}" r="3" fill="${s.color}"><title>${s.name} ${q[0]}: ${q[1].toFixed(4)}</title></circle>`;
+  }
+  if (ylabel) g += `<text x="4" y="12" font-size="11" fill="var(--mute)">${ylabel}</text>`;
+  g += `</svg><div class="legend">${series.map(s => `<span><i style="background:${s.color}"></i>${s.name}</span>`).join("")}</div>`;
+  return g;
+}
+
+function renderDetail(D) {
+  const el = document.getElementById("detail");
+  const c = D.conditions.find(x => x.name === selected) || D.conditions[0];
+  if (!c) { el.innerHTML = ""; return; }
+  selected = c.name;
+  const tau = c.tau_v, total = c.total || 30000;
+  let h = `<h2>${c.name} — ${MODE[c.mode] || c.mode}${c.prior ? " · 옛 자료 " + c.prior : ""} · 장면 ${c.scene === "B" ? "B(본지붕 +1 m)" : "N(정상)"}${tau ? ` · τ_v ${tau.toFixed(3)} m` : ""}</h2>`;
+  if (c.stop) h += `<p class="st-failed">빨간 신호로 정지: 반복 ${c.stop.iteration} — ${c.stop.red.map(r => r.name + " " + sgn(r.value)).join(", ")}</p>`;
+  if (c.mode === "O") h += `<p class="note">공식 GeoGS 조건은 판정 모듈이 없어 진행률·시험 PSNR만 여기 나오고, 면 판독은 학습 뒤 평가 렌더로 만든다.</p>`;
+  // checklist history
+  const cl = c.checklist || [];
+  if (cl.length) {
+    h += `<div class="card"><h3>점검표 (발주서 7절, 조건 P에서만 구속)</h3><div class="wrap"><table><thead><tr><th>반복</th><th>항목</th><th>값</th><th>규칙</th></tr></thead><tbody>`;
+    for (const r of cl.slice(-8).reverse()) for (const i of r.items)
+      h += `<tr><td>${r.iteration.toLocaleString()}</td><td>${chip(i.status, i.status === "pending" ? "대기" : i.status)} ${i.name}${i.binding ? "" : " <span class='mute'>(기록만)</span>"}</td><td>${i.name === "undecided_roof_faces" ? i.value + "면" : (typeof i.value === "number" ? sgn(i.value) : i.value)}</td><td class="mute">${i.rule}</td></tr>`;
+    h += `</tbody></table></div></div>`;
+  }
+  // face table
+  const faces = Object.keys(c.faces || {});
+  if (faces.length) {
+    const it = lastFace(c, faces[0]).it;
+    h += `<h2>면 판독 — 반복 ${it.toLocaleString()} (15시점, 학습 해상도)</h2><div class="wrap"><table><thead><tr><th>면</th><th>cov</th><th>d_F (옛 자료 대비)</th><th>e_F (MVS 대비)</th><th>g_F (GT 대비)</th><th>g NMAD</th><th>라벨</th></tr></thead><tbody>`;
+    for (const f of ["3396", "3387", "3389", "3394", "3404", "3393", "wall"]) {
+      const r = lastFace(c, f); if (!r) continue;
+      h += `<tr><td><b>${f === "wall" ? "벽(법선)" : f}</b>${f === "3396" ? " 본지붕" : ""}</td><td>${fmt(r.cov, 2)}</td><td>${sgn(r.d)}</td><td>${sgn(r.e)}</td><td>${sgn(r.g)}</td><td>${fmt(r.g_nmad)}</td><td>${LABEL[r.label] || r.label}</td></tr>`;
+    }
+    h += `</tbody></table></div>`;
+  }
+  // charts
+  h += `<div class="grid" style="margin-top:12px">`;
+  if (faces.length) {
+    const main = (c.faces["3396"] || []).map(r => [r.it, r.d]);
+    const target = c.scene === "B" ? 1.0 : 0.0;
+    h += `<div class="card"><h3>본지붕 3396 d_F (m) — 초록 띠 = 목표 ± ${c.scene === "B" ? "4τ" : "τ"}</h3>${lineChart({series: [{name: "d_F", color: "var(--accent)", pts: main}], band: tau ? (c.scene === "B" ? [target - 4 * tau, target + 4 * tau] : [-tau, tau]) : null, hline: target, xmax: total})}</div>`;
+    const small = ["3387", "3389", "3394", "3404"].map(f => ({name: f, color: FACE_COLORS[f], pts: (c.faces[f] || []).map(r => [r.it, r.g])}));
+    h += `<div class="card"><h3>소면 g_F (GT 대비, m) — 0에 가까울수록 좋음</h3>${lineChart({series: small, hline: 0, xmax: total})}</div>`;
+  }
+  const sc = c.scalars || [];
+  if (sc.length) {
+    h += `<div class="card"><h3>손실 항 (가중 전, log10)</h3>${lineChart({log: true, series: [
+      {name: "rgb", color: "#d1495b", pts: sc.map(r => [r.iteration, r.rgb])},
+      {name: "mvs (A·L1, m)", color: "#00798c", pts: sc.map(r => [r.iteration, r.mvs])},
+      {name: "prior (ρ_τ, m)", color: "#edae49", pts: sc.map(r => [r.iteration, r.prior])}], xmax: total})}</div>`;
+    h += `<div class="card"><h3>원반 수</h3>${lineChart({series: [
+      {name: "전체", color: "var(--fg)", pts: sc.map(r => [r.iteration, r.n])},
+      {name: "prior 출신", color: "#edae49", pts: sc.map(r => [r.iteration, r.n_prior])},
+      {name: "잠김", color: "#d1495b", pts: sc.map(r => [r.iteration, r.n_locked])}], xmax: total})}
+      <p class="note">${(() => { const e = (c.E || []).slice(-1)[0]; return e ? `E 갱신 ${e.iteration}: 잠김 ${e.n_locked.toLocaleString()} · 못 보는 prior ${e.n_prior_unseen.toLocaleString()} · 옛 자료 표면을 떠나 풀린 원반 ${(e.n_prior_off_prior ?? 0).toLocaleString()}` : ""; })()}</p></div>`;
+  }
+  h += `</div>`;
+  // snapshots
+  const its = Object.keys(c.snaps || {}).map(Number).sort((a, b) => a - b);
+  if (its.length) {
+    h += `<h2>감시 시점 스냅샷 <select id="snapsel">${its.map(i => `<option ${i === its[its.length - 1] ? "selected" : ""}>${i}</option>`).join("")}</select></h2>
+      <p class="note">패널: 렌더 · D−P · D−M(빨강 = 기준이 위, ±1.5 m) · A 겹침 · 이 시점에서 보이는 잠긴 원반</p><div class="grid snaps" id="snapbox"></div>`;
+  }
+  el.innerHTML = h;
+  if (its.length) {
+    const sel = document.getElementById("snapsel");
+    const show = () => { document.getElementById("snapbox").innerHTML = (c.snaps[sel.value] || []).map(s => `<div class="card"><h3>${s.view}</h3><a href="${s.src}" target="_blank"><img src="${s.src}" alt="${s.view}"></a></div>`).join(""); };
+    sel.onchange = show; show();
+  }
+}
+
+function renderIssues(D) {
+  const tb = document.querySelector("#issues tbody");
+  tb.innerHTML = (D.issues || []).slice().reverse().map(i => `<tr><td>${(i.at || "").replace("T", " ").slice(0, 19)}</td><td>${i.condition || "—"}</td><td style="white-space:normal">${i.event || i.error || (i.exit_code !== undefined ? "종료 코드 " + i.exit_code : "")}${i.red_stop ? " — 빨간 신호 " + JSON.stringify(i.red_stop.red.map(r => r.name)) : ""}${i.action ? " · " + i.action : ""}</td></tr>`).join("") || `<tr><td colspan="3" class="mute">없음</td></tr>`;
+}
+
+function draw() {
+  const D = window.S2DATA;
+  if (!D) return;
+  document.getElementById("gen").textContent = `생성 ${D.generated_at.replace("T", " ")}${D.queue_active ? " · 대기열 실행 중" : " · 대기열 종료"}`;
+  renderStatus(D); renderDetail(D); renderIssues(D);
+}
+function load() {
+  const s = document.createElement("script");
+  s.src = "data.js?t=" + Date.now();
+  s.onload = () => { draw(); s.remove(); };
+  document.head.appendChild(s);
+}
+load();
+setInterval(load, 60000);
+</script>
+</body>
+</html>

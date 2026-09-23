@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>의도 점검</title>
+<style>
+:root { --bg:#fff; --fg:#1d1d1f; --mute:#6e6e73; --line:#dcdce0; --panel:#f5f5f7; --agree:#4285f4; --conflict:#ff9800; --unobs:#9c27b0; --ok:#2ea043; --bad:#dc2626; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141416; --fg:#ececf0; --mute:#9a9aa3; --line:#34343a; --panel:#1d1d21; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--fg); font:14px/1.5 system-ui, -apple-system, "Noto Sans KR", sans-serif; }
+main { max-width:1500px; margin:0 auto; padding:14px 16px 40px; }
+h1 { font-size:19px; margin:0 0 4px; }
+h2 { font-size:15px; margin:18px 0 8px; }
+.mute { color:var(--mute); font-size:12.5px; }
+.explain { background:var(--panel); border-radius:10px; padding:10px 14px; margin:10px 0; }
+.explain table td { padding:3px 10px 3px 0; border:none; vertical-align:top; }
+.sw { display:inline-block; width:12px; height:12px; border-radius:3px; vertical-align:-1px; margin-right:5px; }
+.controls { display:flex; flex-wrap:wrap; gap:14px; align-items:center; margin:12px 0; }
+.seg { display:inline-flex; border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+.seg button { font:inherit; border:none; background:var(--bg); color:var(--fg); padding:5px 11px; cursor:pointer; border-right:1px solid var(--line); }
+.seg button:last-child { border-right:none; }
+.seg button.on { background:var(--fg); color:var(--bg); }
+.label { font-size:12.5px; color:var(--mute); margin-right:6px; }
+.wrap { overflow-x:auto; }
+table.t { border-collapse:collapse; width:100%; }
+table.t th, table.t td { padding:6px 8px; border-bottom:1px solid var(--line); text-align:left; white-space:nowrap; font-variant-numeric:tabular-nums; }
+table.t th { font-size:12px; color:var(--mute); font-weight:600; }
+.bar { display:inline-block; height:8px; border-radius:4px; background:var(--ok); vertical-align:middle; margin-right:6px; }
+.bad { color:var(--bad); font-weight:600; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:12px; }
+.card { background:var(--panel); border-radius:10px; padding:8px 10px; min-width:0; }
+.card h3 { font-size:13px; margin:2px 0 6px; }
+.card img { width:100%; border-radius:6px; display:block; margin-bottom:4px; }
+.cap { font-size:12px; color:var(--mute); margin:0 0 6px; }
+.legend span { margin-right:12px; font-size:12.5px; white-space:nowrap; }
+details.explain summary { cursor:pointer; }
+.num { font-variant-numeric:tabular-nums; }
+a.l3 { color:inherit; text-decoration:underline dotted; text-underline-offset:3px; }
+.ramp { display:inline-block; width:140px; height:10px; border-radius:3px; vertical-align:middle; background:linear-gradient(90deg,#0000ff,#ffffff,#ff0000); margin:0 6px; }
+</style>
+</head>
+<body>
+<main>
+<h1>의도 점검 — 판정대로 움직였나, 맞았나</h1>
+<div class="mute">2단계 판정 유도 GS, 30,000회 최종 결과. 대상 건물의 지붕 6면·벽 12면 픽셀, 15시점 학습 해상도. <a href="index.html">진행 대시보드</a> · <a href="surfels.html">가우시안 3D 보기</a> · <b><a href="reading.html">판정 유도 GS 결과 — 유지 · 수정 · 유보</a></b> · 이전 판 <a href="reading_v5.html">v5</a> · <a href="reading_v4.html">v4</a> · <a href="reading_v3.html">v3</a> · <a href="reading_v2.html">v2</a> · <a href="reading_v1.html">v1</a></div>
+
+<div class="explain">
+<table>
+<tr><td><span class="sw" style="background:var(--agree)"></span><b>일치</b></td><td>사진이 잼(A=1), |사진 − 옛 자료| ≤ τ</td><td>→ <b>그 자리에 머물기</b>: 옛 자료와 사진이 같은 자리(τ 안)이므로 결과 표면이 거기 남으면 성공</td></tr>
+<tr><td><span class="sw" style="background:var(--conflict)"></span><b>충돌</b></td><td>사진이 잼(A=1), |사진 − 옛 자료| &gt; τ</td><td>→ <b>사진 자리로 가기</b>: 결과 표면이 사진 표면에서 τ 안으로 가면 성공</td></tr>
+<tr><td><span class="sw" style="background:var(--unobs)"></span><b>못 잼</b></td><td>사진이 못 잼(A=0)</td><td>→ <b>옛 자료 자리에 머물기</b>(옛 자료가 맞든 틀리든). 이 칸의 GT 오차는 옛 자료 자체의 품질</td></tr>
+</table>
+<div class="mute"><b>τ(허용 오차)</b> = 사진과 옛 자료를 '같다'고 보는 폭: <b>LoD2 5.7 cm, ALS 4.1 cm</b> (지붕은 연직, 벽은 벽 법선 방향 거리). 1단계에서 사진이 잰 지붕 픽셀의 (옛 자료 − 사진) 흩어짐 s2의 2.5배로 정했다(LoD2 s2 = 2.3 cm, ALS 1.6 cm). 판정은 1단계 입력(사진 깊이, 옛 자료 깊이, 관측 지도 A, τ)만으로 정해지고 학습 조건과 무관하다.</div>
+</div>
+
+<div class="controls">
+  <span><span class="label">옛 자료</span><span class="seg" id="prior"><button data-v="M">LoD2</button><button data-v="L">ALS</button></span></span>
+  <span><span class="label">장면</span><span class="seg" id="scene"><button data-v="N">정상</button><button data-v="B">본지붕 +1 m</button></span></span>
+  <span><span class="label">표 영역</span><span class="seg" id="region"><button data-v="roof">지붕</button><button data-v="wall">벽</button></span></span>
+</div>
+
+<h2>칸별 결과</h2>
+<div class="wrap"><table class="t" id="table"></table></div>
+<p class="mute"><b>숫자를 누르면</b> 3D 보기가 그 칸의 픽셀만 그 값으로 칠해 열리고, 창 아래에 표 값과 화면의 점으로 다시 센 값이 나란히 나온다(비율·소스 오차 → 막대 보기, 판정대로·결과 오차 → 결과 보기). <b>판정대로 %</b> = 그 칸 픽셀 중 결과 표면(학습된 모델을 그 사진의 카메라로 렌더한 깊이)이 시킨 자리에서 τ 안에 있는 픽셀의 몫 — 머물기는 옛 자료 면, 가기는 사진 표면이 기준. <b>결과 오차</b> = 결과 표면이 참값에서 떨어진 거리의 중앙값. I는 옛 자료를 쓰지 않으므로 참고 값. O는 건물 전체가 약 0.3 m 위로 치우쳐(공식 구현의 주점 가정 차이로 추정) 거의 모든 칸에서 0에 가깝다 — 보정 카메라 재실행 전에는 참고만.</p>
+
+<h3>사진에 안 찍힌 면 — 옛 자료를 지켰나</h3>
+<div class="mute">위 표의 세 칸은 사진 15장에 찍힌 픽셀만 센다. 어느 사진에도 안 찍힌 면(뒷지붕·뒷벽)은 학습된 원반으로 따로 잰다: 옛 자료(LoD2) 면에서 ±0.3 m 안에 불투명 원반(α &gt; 0.5)이 있는 1 m 칸의 몫. 의도 = 옛 자료 유지. <a href="surfels.html#preset=back&ovUnseen=true&target=surface&region=0">3D로 보기(뒤에서)</a></div>
+<div class="wrap"><table class="t" id="unseenTable"></table></div>
+
+<h3 id="bdTitle">충돌 칸은 어디서 왔나</h3>
+<div class="mute" id="bdNote"></div>
+<div class="wrap"><table class="t" id="bdTable"></table></div>
+
+<details class="explain" id="howto">
+<summary><b>소스 오차와 참값 — 참값을 어떻게 정리했나</b></summary>
+<table>
+<tr><td><b>소스 오차</b></td><td>학습 전 입력 자체가 참값에서 떨어진 거리의 중앙값(사진 = MVS 깊이, 옛 자료 = LoD2/ALS 깊이). 그 칸에서 어느 입력이 맞았는지를 보여 준다. 일치 칸은 정의상 두 입력이 τ 안에서 같은 자리라 두 값이 거의 같다.</td></tr>
+<tr><td><b>참값(GT)</b></td><td>GeoGS 예제와 함께 배포된 평가용 점군(약 470만 점; 1단계 문서에 드론 LiDAR로 기록, 센서는 따로 확인하지 않음)을 각 사진에 투영한 픽셀별 참 깊이. 판정·학습에는 쓰지 않는다.</td></tr>
+<tr><td><b>참값 정리</b></td><td id="offText"></td></tr>
+</table>
+<div id="offFig"></div>
+</details>
+
+<h2 id="anatomy">충돌이 실제로 무엇인가 — <span id="anatPrior"></span> · 정상 장면</h2>
+<div class="mute">왼쪽 = 사진(위)과 판정 칸(아래), 가운데·오른쪽 = 수직 단면: 검정 GT, 주황 사진 표면, 점선 = 옛 자료(파랑 LoD2 · 보라 ALS), 초록 P(판정 켬) 결과 표면, 빨강 P0(판정 끔) 결과 표면. '본지붕 +1 m' 장면의 지붕 충돌은 대부분 일부러 올린 1 m다(위 '충돌 칸은 어디서 왔나').</div>
+<div id="anatFigs"></div>
+<div class="wrap"><table class="t" id="anatTable"></table></div>
+<p class="mute">면별 값 = 그 면의 모든 픽셀에서 정리한 참값 기준 거리의 부호 있는 중앙값(cm, 지붕은 위 +, 벽은 바깥 +). '옛 자료 − 사진'은 GT 없이 입력끼리 잰 어긋남. 1만 픽셀 미만의 작은 면은 생략.</p>
+
+<h2>지도로 보기</h2>
+<div class="controls"><span><span class="label">시점</span><span class="seg" id="view"></span></span></div>
+<div class="legend"><span><span class="sw" style="background:var(--ok)"></span>판정대로 움직임</span><span><span class="sw" style="background:var(--bad)"></span>판정과 다르게 움직임</span><span>색 막대 <span class="ramp"></span> 파랑 −0.5 m · 흰색 0 · 빨강 +0.5 m (위 / 바깥 +)</span></div>
+<div class="grid" id="maps" style="margin-top:10px"></div>
+<h2 id="depthqa">소스별 깊이 지도 — 이 시점에서 각 입력이 잰 거리</h2>
+<div class="mute">같은 색 막대(가까움 빨강 → 멂 파랑, 이 시점의 사진 깊이 2~98 %)로 소스마다 한 장. 아래 줄은 각 소스 − 사진(표의 단위: 지붕 연직, 벽 법선; 빨강 = 소스가 위/바깥, ±0.5 m). 보라 = 사진이 못 잰 픽셀, 자홍 = 참값 점이 사진 표면보다 30 cm 넘게 뒤(가려진 면의 점). 대상 건물 픽셀만 칠함.</div>
+<div class="wrap"><table class="t" id="depthTable"></table></div>
+<div class="grid" id="depthMaps" style="margin-top:10px"></div>
+</main>
+<script src="intent/data.js"></script>
+<script src="intent/anatomy.js"></script>
+<script src="intent/depth_qa.js"></script>
+<script>
+const D = window.INTENT, AN = window.ANATOMY || null;
+let UN = null;
+fetch("surfels/unseen_index.json", {cache: "no-store"}).then(r => r.json()).then(j => { UN = j; draw(); }).catch(() => {});
+const NAMES = {P: "P 판정 켬", P0: "P0 판정 끔", O: "O 공식 GeoGS", I: "I 영상 단독(옛 자료 없음)"};
+const CLS = [["agree", "일치", "var(--agree)", "그 자리에 머물기"], ["conflict", "충돌", "var(--conflict)", "사진 자리로 가기"],
+             ["unobserved", "못 잼", "var(--unobs)", "옛 자료 자리에 머물기"]];
+const PRIOR_NAME = {M: "LoD2", L: "ALS"}, SCENE_NAME = {N: "정상", B: "본지붕 +1 m"}, REGION_NAME = {roof: "지붕", wall: "벽"};
+const PLACE = {3403: "정면 벽", 3391: "건물 끝 벽", 3396: "본지붕 앞 경사면", 3404: "건물 끝 경사면", 3387: "뒤쪽 날개 지붕 (한쪽)",
+               3389: "뒤쪽 날개 지붕 (반대쪽)", 3394: "날개 옆 작은 지붕면"};
+let st = {prior: "M", scene: "N", region: "roof", view: D.views[0].name};
+try { Object.assign(st, JSON.parse(localStorage.getItem("intentState") || "{}")); } catch (e) {}
+for (const kv of location.hash.replace(/^#/, "").split("&")) { const [k, v] = kv.split("="); if (k in st && v) st[k] = decodeURIComponent(v); }
+const cname = c => NAMES[c.split("_")[0]] || c;
+const cm = x => x == null ? "—" : (x * 100).toFixed(0) + " cm";
+const sgn = x => x == null ? "—" : (x > 0 ? "+" : "") + x.toFixed(0);
+const pct = x => x == null ? "—" : (x * 100).toFixed(0) + "%";
+const num = x => x == null ? "—" : x.toFixed(0);
+const sgnc = x => x == null ? "—" : x >= 999 ? "≥+10 m" : x <= -999 ? "≤−10 m" : sgn(x);      // breakdown range is clamped at ±10 m
+const bar = f => f == null ? "—" : `<span class="bar" style="width:${Math.round(f * 60)}px;${f < 0.5 ? "background:var(--bad)" : ""}"></span><span class="${f < 0.5 ? "bad" : ""}">${(f * 100).toFixed(0)}%</span>`;
+
+function seg(id, vals) {
+  const el = document.getElementById(id);
+  if (vals) el.innerHTML = vals.map(([v, t]) => `<button data-v="${v}">${t}</button>`).join("");
+  el.querySelectorAll("button").forEach(b => {
+    b.classList.toggle("on", b.dataset.v === st[id]);
+    b.onclick = () => { st[id] = b.dataset.v; try { localStorage.setItem("intentState", JSON.stringify(st)); } catch (e) {}
+      history.replaceState(null, "", "#" + Object.entries(st).map(([k, v]) => `${k}=${encodeURIComponent(v)}`).join("&")); draw(); };
+  });
+}
+
+function drawBreakdown(key, S) {
+  const title = document.getElementById("bdTitle"), note = document.getElementById("bdNote"), tb = document.getElementById("bdTable");
+  const rows = AN && AN.breakdown[key] && AN.breakdown[key][st.region];
+  if (!rows) { title.style.display = "none"; note.textContent = ""; tb.innerHTML = ""; return; }
+  title.style.display = "";
+  const cf = S.table[st.region].conflict;
+  title.textContent = `충돌 칸은 어디서 왔나 — ${PRIOR_NAME[st.prior]} · ${SCENE_NAME[st.scene]} · ${REGION_NAME[st.region]}`;
+  note.innerHTML = `위 표의 '충돌' 한 줄(소스 오차 사진 ${cm(cf.err_photos)} / 옛 자료 ${cm(cf.err_prior)})을 건물의 자리별로 나눈 것. ` +
+    `<b>옛 자료 − 사진</b>: + = 옛 자료가 사진 표면보다 위(벽은 바깥), 가운데 값과 10~90 % 범위. 옛 자료 오차가 큰 자리가 많은 몫을 차지하면 그 칸의 옛 자료 오차가 커진다. ` +
+    `'면 가장자리 띠' = 면 경계에서 약 0.5 m 안(처마·용마루·면 경계). ` +
+    `소스 오차는 정리한 참값 기준(가려진 점 제거, 지면 기준 높이 맞춤).`;
+  let h = `<tr><th>자리</th><th>충돌 픽셀 몫</th><th>그 자리 픽셀 중 충돌</th><th>면 가장자리 띠</th><th>옛 자료 − 사진 cm<br>가운데 (10~90 %)</th><th>소스 오차<br>사진 / 옛 자료</th>` +
+    S.conds.map(c => `<th>${cname(c)}<br>사진 자리로 감 · 결과 오차</th>`).join("") + `</tr>`;
+  for (const r of rows) {
+    if (r.share_of_region_conflicts < 0.005) continue;
+    h += `<tr><td>${r.place}</td><td class="num"><b>${pct(r.share_of_region_conflicts)}</b></td><td class="num">${pct(r.conflict_rate_in_place)}</td>
+      <td class="num">${pct(r.edge_band_share)}</td><td class="num"><b>${sgnc(r.prior_minus_photo_cm)}</b> (${sgnc(r.prior_minus_photo_p10_cm)} ~ ${sgnc(r.prior_minus_photo_p90_cm)})</td>
+      <td class="num">${num(r.err_photo_cm)} / ${num(r.err_prior_cm)} cm</td>` +
+      S.conds.map(c => `<td class="num">${bar(r["followed_" + c])} · ${r["err_" + c + "_cm"] == null ? "—" : r["err_" + c + "_cm"].toFixed(0) + " cm"}</td>`).join("") + `</tr>`;
+  }
+  tb.innerHTML = h;
+}
+
+function drawUnseen(key, S) {
+  const tb = document.getElementById("unseenTable");
+  if (!UN) { tb.innerHTML = ""; return; }
+  let h = `<tr><th>안 찍힌 면</th><th>넓이</th>` + S.conds.map(c => `<th>${cname(c)}<br>시작 → 끝</th>`).join("") + `</tr>`;
+  for (const [g, name] of [["roof", "뒷지붕 (3393)"], ["wall", "뒷벽·옆벽 " + UN.faces.wall.length + "면"]]) {
+    h += `<tr><td>${name}</td><td class="num">${Math.round(UN.area[g]).toLocaleString()} m²</td>` + S.conds.map(c => {
+      const f = UN.files[`${key}/${c}`]; if (!f) return "<td>—</td>";
+      return `<td class="num">${pct(f[g].coverage_start)} → ${bar(f[g].coverage)}</td>`;
+    }).join("") + `</tr>`;
+  }
+  tb.innerHTML = h;
+}
+
+function drawAnatomy() {
+  const sec = document.getElementById("anatomy");
+  if (!AN) { sec.style.display = "none"; return; }
+  const P = AN.priors[st.prior];
+  document.getElementById("anatPrior").textContent = PRIOR_NAME[st.prior];
+  document.getElementById("anatFigs").innerHTML = P.figures.map(f =>
+    `<a href="intent/${f}" target="_blank"><img src="intent/${f}" alt="단면" style="width:100%;border-radius:8px;margin:8px 0"></a>`).join("");
+  const nm = PRIOR_NAME[st.prior];
+  let h = `<tr><th>면</th><th>위치</th><th>픽셀</th><th>충돌 비율<br>(그 영역 충돌 중 몫)</th><th>${nm} − 사진<br>cm</th><th>GT 기준 위치 cm<br>${nm} · 사진 · P · P0 · I</th></tr>`;
+  for (const r of P.faces) {
+    h += `<tr><td>${r.face}</td><td>${PLACE[r.face] || ""} (${REGION_NAME[r.region]})</td><td class="num">${r.n_px.toLocaleString()}</td>
+      <td class="num">${pct(r.share_conflict)} (${pct(r.conflict_share_of_region)})</td><td class="num">${sgn(r.prior_vs_photo_cm)}</td>
+      <td class="num">${sgn(r.prior_vs_gt_cm)} · ${sgn(r.photo_vs_gt_cm)} · <b>${sgn(r.P_vs_gt_cm)}</b> · ${sgn(r.P0_vs_gt_cm)} · ${sgn(r.I_vs_gt_cm)}</td></tr>`;
+  }
+  document.getElementById("anatTable").innerHTML = h;
+}
+
+function drawOffsets() {
+  if (!AN) return;
+  const R = Object.fromEntries(AN.photo_vs_gt.rows.map(r => [r.surface, r])), C = AN.gt_clean;
+  const f = x => (x >= 0 ? "+" : "") + (x * 100).toFixed(1) + " cm";
+  if (C) {
+    const b = C.photo_minus_gt_m.before, a = C.photo_minus_gt_m.after;
+    document.getElementById("offText").innerHTML =
+      `원래 참값 깊이 지도에는 결함이 두 가지 있었다. <b>① 가려진 점</b>: 참값 점을 사진에 그대로 투영해, 지붕 픽셀의 <b>${(b.roof_gt_behind_30cm_share * 100).toFixed(0)} %</b>가 지붕 뒤에 가려진 면(안뜰·반대편 벽, 중앙값 12 m 뒤)의 점을 참값으로 쓰고 있었다. ` +
+      `<b>② 높이 차</b>: 참값 전체가 사진보다 위에 있었다(사진 − 참값: 지면 ${f(b.ground)}, 지붕 일치 칸 ${f(b.roof_agree)}). ` +
+      `정리: 주변 ${C.k_px}×${C.k_px} 픽셀의 가장 가까운 참값보다 ${C.behind_m * 100} cm 넘게 뒤인 점을 빼고, 판정과 무관한 <b>지면</b>에서 잰 높이 차만큼 참값을 <b>${(-C.datum_shift_z_m * 100).toFixed(1)} cm</b> 내렸다. ` +
+      `정리 후 사진 − 참값: 지면 <b>${f(a.ground)}</b>, 지붕 일치 칸 <b>${f(a.roof_agree)}</b>, 정면 벽(수평) ${f(a.wall)}, 가려진 점 ${(a.roof_gt_behind_30cm_share * 100).toFixed(1)} %. ` +
+      `표의 모든 참값 비교(소스 오차·결과 오차)는 정리한 참값 기준이고, 원래 참값으로 계산한 표는 <code>eval/rawgt_20260925/</code>에 있다.`;
+  } else {
+    const r = R.roof_agree, g = R.ground;
+    document.getElementById("offText").innerHTML = `원래 참값: 사진 − 참값 지붕 일치 칸 ${sgn(r.median_front_cm)} cm, 지면 ${sgn(g.median_front_cm)} cm.`;
+  }
+  document.getElementById("offFig").innerHTML = `<a href="intent/${AN.photo_vs_gt.figure}" target="_blank"><img src="intent/${AN.photo_vs_gt.figure}" alt="사진 − 참값" style="width:100%;max-width:980px;border-radius:8px;margin-top:8px"></a>`;
+}
+
+function draw() {
+  seg("prior"); seg("scene"); seg("region");
+  seg("view", D.views.map(v => [v.name, v.name.slice(-6, -2) + (v.test ? " (시험)" : "")]));
+  const key = `${st.prior}_${st.scene}`, S = D.settings[key], T = S.table[st.region];
+  let h = `<tr><th>칸 (비율)</th><th>판정이 시킨 것</th><th>소스 오차<br>사진 / 옛 자료</th>` + S.conds.map(c => `<th>${cname(c)}<br>판정대로 % · 결과 오차</th>`).join("") + `</tr>`;
+  // every number opens the 3D view that shows exactly those pixels, coloured by that measure (and recounts it)
+  const R = st.region === "roof" ? "1" : "2", CI = {agree: "1", conflict: "2", unobserved: "3"};
+  const link3d = (txt, k, target, mode) => `<a class="l3" href="surfels.html#prior=${st.prior}&scene=${st.scene}&target=${target}&mode=${mode}&region=${R}&cls=${CI[k]}&slab=off&preset=0009&ovPrior=false&ovPhoto=false" target="_blank" title="3D로 보기">${txt}</a>`;
+  for (const [k, name, col, todo] of CLS) {
+    const r = T[k];
+    if (!r || !r.n) continue;
+    h += `<tr><td><span class="sw" style="background:${col}"></span><b>${name}</b> (${link3d((r.share * 100).toFixed(1) + "%", k, "judge", 1)})</td><td>${todo}</td>` +
+         `<td>${link3d(cm(r.err_photos), k, "judge", 6)} / ${link3d(cm(r.err_prior), k, "judge", 7)}</td>`;
+    for (const c of S.conds) {
+      const x = r.cond[c];
+      h += `<td>${link3d(bar(x && x.followed != null ? x.followed : null), k, "surface", 2)} · ${link3d(cm(x && x.err), k, "surface", 3)}</td>`;
+    }
+    h += `</tr>`;
+  }
+  document.getElementById("table").innerHTML = h;
+  drawBreakdown(key, S); drawAnatomy(); drawUnseen(key, S);
+  const v = st.view, base = `intent/${key}_${v}`, pn = PRIOR_NAME[st.prior];
+  let g = `<div class="card"><h3>판정 지도</h3><img src="${base}_classes.jpg" alt="판정 지도"><p class="cap">파랑 일치 · 주황 충돌 · 보라 못 잼 (옛 자료 ${pn}, ${SCENE_NAME[st.scene]})</p></div>`;
+  g += `<div class="card"><h3>어긋난 크기: ${pn} − 사진</h3><a href="${base}_size.jpg" target="_blank"><img src="${base}_size.jpg" alt="어긋난 크기"></a><p class="cap">빨강 = ${pn}가 사진 표면보다 위(벽은 바깥), 파랑 = 아래(안쪽), 흰색 = 같음. τ(${st.prior === "M" ? "5.7" : "4.1"} cm)보다 진하면 충돌. ±0.5 m에서 포화, 보라 = 사진이 못 잼</p></div>`;
+  for (const c of S.conds) {
+    g += `<div class="card"><h3>${cname(c)} <span class="mute">${c}</span></h3>
+      <a href="${base}_${c}_followed.jpg" target="_blank"><img src="${base}_${c}_followed.jpg" alt="따랐나"></a><p class="cap">따랐나: 초록 = 판정대로, 빨강 = 다르게</p>
+      <a href="${base}_${c}_error.jpg" target="_blank"><img src="${base}_${c}_error.jpg" alt="오차"></a><p class="cap">맞았나: 결과 표면 − 참값 높이(정리한 참값)</p></div>`;
+  }
+  document.getElementById("maps").innerHTML = g;
+  drawDepth(v);
+}
+
+function drawDepth(v) {
+  const Q = window.DEPTHQA, box = document.getElementById("depthMaps"), tb = document.getElementById("depthTable");
+  if (!Q) { document.getElementById("depthqa").style.display = "none"; return; }
+  const sc = st.scene, NAME = {mvs: "사진(MVS)", lod2_N: "LoD2 (정상)", lod2_B: "LoD2 (+1 m)", als_N: "ALS (정상)", als_B: "ALS (+1 m)", gt: "참값(GT)"};
+  let h = `<tr><th>소스</th><th>대상 건물 픽셀 중 값이 있는 몫</th><th>소스 − 사진 (가운데)</th><th>사진과 τ 넘게 다른 몫</th><th>참값: 가려진 면의 점</th></tr>`;
+  for (const r of Q.rows) {
+    h += `<tr><td>${NAME[r.source] || r.source}</td><td class="num">${pct(r.coverage)}</td><td class="num">${r.median_source_minus_photo_cm == null ? "—" : sgn(r.median_source_minus_photo_cm) + " cm"}</td>
+      <td class="num">${r.share_beyond_tau == null ? "—" : pct(r.share_beyond_tau)}</td><td class="num">${r.gt_hidden_surface_share == null ? "—" : pct(r.gt_hidden_surface_share)}</td></tr>`;
+  }
+  tb.innerHTML = h;
+  if (!Q.views.includes(v)) { box.innerHTML = `<p class="mute">이 시점의 깊이 지도는 만들지 않았다.</p>`; return; }
+  const b = `intent/depth_${v}_`, card = (f, t, c) => `<div class="card"><h3>${t}</h3><a href="${b}${f}.jpg" target="_blank"><img src="${b}${f}.jpg" alt="${t}"></a><p class="cap">${c}</p></div>`;
+  box.innerHTML = card("mvs", "사진(MVS) 깊이", "사진이 잰 곳만(A=1). 보라 = 못 잼") + card(`lod2_${sc}`, "LoD2 깊이", "옛 LoD2 모형을 이 카메라로 본 깊이") +
+    card(`als_${sc}`, "ALS 깊이", "옛 ALS 2.5D TIN. 벽의 세로 줄무늬 = 처마 점–땅 점 삼각형") + card("gt", "참값(GT) 깊이", "점이 떨어진 픽셀만. 자홍 = 가려진 면의 점") +
+    card(`d_lod2_${sc}`, "LoD2 − 사진", "빨강 = LoD2가 위/바깥") + card(`d_als_${sc}`, "ALS − 사진", "빨강 = ALS가 위/바깥") + card("d_gt", "참값 − 사진", "빨강 = 참값이 위/바깥(정리 후 지붕 약 2 cm 위)");
+}
+drawOffsets();
+draw();
+</script>
+</body>
+</html>

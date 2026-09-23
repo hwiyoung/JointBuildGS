@@ -1,0 +1,57 @@
+{
+  "task_id": "PHD-STAGE2-PROPAGATION-PREMEASURE-v1",
+  "purpose": "Pre-measurement without training for the stage-2 propagation rule: surface numbers and agree/conflict marks of the prior, per-surface support/missing locations, in-surface distance from missing to support locations, and the judgment counts over the candidate grid (majority threshold, minimum evidence, maximum distance). Values are chosen by the reviewer from the report, not here.",
+  "parent_task": "PHD-STAGE2-CONF-GUIDED-GS-v1 (scene B0; r5 / r6 runs)",
+  "settings": {
+    "M_N": {"prior": "LoD2", "scene": "nominal", "prior_map_set": "prior_M_N", "tau_key": "M"},
+    "M_B": {"prior": "LoD2", "scene": "main roof 3396 raised 1 m (stage-2 scene B)", "prior_map_set": "prior_M_B", "tau_key": "M", "injected": "polygon 3396"},
+    "L_N": {"prior": "airborne LiDAR TIN", "scene": "nominal", "prior_map_set": "prior_L_N", "tau_key": "L"},
+    "L_B": {"prior": "airborne LiDAR TIN", "scene": "points inside the 3396 footprint raised 1 m (stage-2 scene B)", "prior_map_set": "prior_L_B", "tau_key": "L", "injected": "surfaces whose vertices are mostly raised"}
+  },
+  "tau_v_source": "PHD-STAGE1-VERIFY-v2/out_v2_data/checks_v2.json handover (L 0.040533 m, M 0.056770 m), the values r5/r6 used",
+  "surface_rules": {
+    "lod2": "one polygon (poly_index) = one surface; the five vertical step quads of scene M_B get numbers 100000 + quad",
+    "tin": "gentle triangles (|n_z| >= steep_nz) connected through shared edges = one surface; steep triangles are boundaries without a number",
+    "steep_nz": 0.5,
+    "steep_nz_note": "same value as the stage-2 wall rule WALL_NZ (prepare_stage2_inputs.py:33); chosen, reported",
+    "tin_building_surface": "majority of the surface's vertices carry airborne LiDAR class 6 (building); class 2 majority = ground surface, not a building face",
+    "lod2_kinds": "RoofSurface -> roof, WallSurface -> wall, GroundSurface -> ground (building floor), step quads -> wall (injection step)"
+  },
+  "mark_rule": {
+    "support_pixel": "A = 1 (stage-1 observation confidence) on a building-surface pixel with a prior depth",
+    "agree": "|MVS - prior| * f_p <= tau_v; conflict otherwise",
+    "f_p": "roof-like surface (|n_z| >= 0.5): |n.d| / |n_z| (vertical); wall-like: |n.d| (along the normal); n = normal of the scene's own surface (LoD2 polygon, TIN triangle hit by the pixel); d = R^T (x, y, 1) at the pixel centre",
+    "implementation_comparison": "the same marks with the stage-2 per-pixel width maps tau_M / tau_L (LoD2 nominal polygon normals for both priors) are counted for check (a)"
+  },
+  "location_rules": {
+    "spacing_m": 0.25,
+    "spacing_note": "airborne LiDAR point spacing (16.0 points per m2 -> 0.25 m); LoD2 has no own spacing (stage-2 samples 0.22 m available, 0.34 m used), so the same cell is used for both priors",
+    "lod2_cells": "square cells of the polygon's own plane (axes: horizontal line of the plane, and the in-plane direction perpendicular to it); a cell belongs to the polygon when its centre lies inside it and inside the crop rectangle",
+    "tin_cells": "square cells of the XY grid over the crop rectangle; a cell belongs to the surface of the triangle under its centre; area = spacing^2 / |n_z| of that triangle; surfaces without a whole cell get one location at their centroid",
+    "pixel_to_location": "pixel -> 3D point on the prior (prior depth) -> cell of the pixel's surface; pixels in a cell of another owner go to the nearest cell of their own surface",
+    "views": "13 training views of r5/r6 (test views 0002 and 0016 excluded: the judgment is a training input)",
+    "per_view_state": "a view observes a location when at least one of its pixels maps there; it measures it when at least half of those pixels have A = 1; its mark is agree when agree pixels >= conflict pixels among its A = 1 pixels",
+    "location_state": "invisible: no training view observes it; support: measuring views / observing views >= 0.5 (the E >= 0.5 side of the stage-2 protection rule); missing: below 0.5",
+    "location_vote": "majority of the measuring views' marks; a tie is broken by the pooled pixel counts of those views; an exact tie counts as agree"
+  },
+  "distance_rules": {
+    "graph": "cells of one surface, 16-neighbourhood (orthogonal, diagonal, knight moves) with Euclidean edge lengths between cell centres (TIN: 3D, centre height on the TIN); a diagonal step needs one of the two side cells, a knight step both straddled cells in the same surface",
+    "no_support": "missing locations whose surface has no support location are counted separately"
+  },
+  "grid": {
+    "majority": [0.55, 0.6, 0.6666666666666666, 0.75, 0.8],
+    "min_evidence_locations": [1, 3, 5, 10],
+    "max_distance_percentiles": [25, 50, 75, 90],
+    "max_distance_source": "percentiles of the per-setting distribution of item 4 (missing locations with a support location on the same surface)",
+    "rule": "collect the support locations of the same surface nearest first; stop at min_evidence; do not collect beyond max_distance; conflict share >= majority -> conflict, agree share >= majority -> agree, otherwise mixed; fewer than min_evidence collected -> insufficient evidence",
+    "ties": "support locations at equal distance are taken in location order",
+    "reference": {"majority": 0.6666666666666666, "min_evidence_locations": 3, "max_distance_percentile": 50}
+  },
+  "stable_range_rule": "a parameter step counts as 'almost unchanged' when every category changes by less than 2 % of the setting's missing locations",
+  "figure": {
+    "panels": ["support locations and conflict share per surface (bars)", "cumulative distribution of the item-4 distance", "one training view: surface boundaries, agree/conflict marks and the propagated judgment (majority 2/3, minimum 3, maximum distance = median)"],
+    "map_setting": "M_N",
+    "map_view_rule": "training view with the most pixels in missing locations of target-building surfaces"
+  },
+  "scientific_verdict": null
+}

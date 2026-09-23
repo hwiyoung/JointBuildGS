@@ -1,0 +1,35 @@
+schema_version: 1
+task_id: PHD-STAGE2-R10-TWO-FIXES-THREE-CHECKS-v1
+scientific_verdict: null
+kind: implementation-fixes-checks-and-short-trainings
+purpose: put the two rules the r9 review fixed into the code - when the re-read of the Gaussian judgment and the opacity reset fall on one iteration the re-read comes first and the reset reads the protection it has just set (already r9's order; recorded, no code change); the part of an LoD2 wall that overlaps a wall of another building is left out of the prior surface - and make three checks - the mesh check of invisible faces in two layers (mechanism / product), the initial direction of airborne LiDAR prior Gaussians by two methods (vertex / cell), and whether r9's worse ground-truth column of case 3 in airborne LiDAR nominal is spread or the share of the initial-direction fix. No claim about the method's effect; no baseline, no multi-building evaluation.
+parent_tasks: [PHD-STAGE2-R9-THREE-FIXES-v1]
+payload: file:../JointBuildGS-artifacts/phase-payloads/phd/stage2_conf_guided_gs_v1/PHD-STAGE2-R10-TWO-FIXES-THREE-CHECKS-v1
+container_payload: /artifacts/JointBuildGS/phase-payloads/phd/stage2_conf_guided_gs_v1/PHD-STAGE2-R10-TWO-FIXES-THREE-CHECKS-v1
+status: COMPLETE_TECHNICAL
+report: docs/experiments/phd/stage2_conf_guided_gs_v1/R10_TWO_FIXES_THREE_CHECKS_ko_v1.md
+summary_figure: docs/experiments/phd/stage2_conf_guided_gs_v1/figures/r10_two_fixes_three_checks_summary_v1.png
+shared_module: src/phd/prior_propagation_v4 (v3 + faces.party_wall_overlaps / cut_triangles / ear_clip and locations.build_plane_store option 'o'; the other seven files byte-identical to v3); v3 kept unchanged as the r9 lineage; the fork r10 keeps importing v3 (it uses none of the changed functions)
+settings: [M_N, M_B, L_N, L_B]
+inputs_reused_read_only: PHD-STAGE2-R9-THREE-FIXES-v1 (fork r9, LoD2 meshes / prior depth / ids / products / inputs / scenes as the starting point, the airborne LiDAR stage-1 products and inputs read by the r10 trainings as they are, r9 runs and cases for comparison); PHD-STAGE2-R8-FOUR-CASES-v1 (r8 runs and products for check 'ma', r8 virtual cameras for the figure); PHD-STAGE2-R7-PROPAGATION-v1/stage1/meshes; PHD-STAGE2-CONF-GUIDED-GS-v1/inputs/maps and runs/<condition>/scene
+outputs:
+  lod2_without_party_wall_overlaps: stage1/meshes/{M_N.npz, M_B.npz, faces_<setting>.npz, frames_<setting>.npz (r9 grid origin and plane normal of every polygon), cuts_<setting>.json (pairs, regions as WKT in the common plane), meshes_r10.json}
+  lod2_prior_render: stage1/ids/<setting>/<view>.npz, stage1/prior/<setting>/raw_depth/<view>.npy, stage1/ids/render_check.json (r9 prior depth except the rays that hit a cut part)
+  stage1: stage1/{tolerance.json, residuals_{M,L}.npz, products/{M_N,M_B}/{store_poly_c0.25.npz, surfaces_poly.json, tri_surface_poly.npy, fconv/, locmap/, markmap/, summary.json}}
+  stage2_inputs: inputs/{M_N,M_B}/{tau/, seat_surface.npy, prior_normal.npy, prior_normal_rule.npy, removed_party_points.npy, prepare_<setting>.json}; scenes/{M_N, M_B} (r9 cloud without the points on cut parts)
+  fork_r10: sources/GeoGS-conf-guided-v1-r10 (changed vs r9: jbgs_judgment.py only; provenance/build_report_r10.json, provenance/patches/)
+  dry_runs: runs/dry_{M_N, M_B, L_N, L_B, L_N_cell, L_B_cell}/{model/monitor/{init_report.json, init_points.npz (face_normal_file, face_normal_cell), unplanted.npz, locations.npz, gate_check.npz}, receipt.json}
+  trainings: runs/{M_N, M_N_rep, M_N_nodepth, M_B, L_N_vertex, L_N_cell, L_N_cell_rep, L_B_vertex, L_B_cell}/{model/{point_cloud/iteration_3500, dump/iteration_3500 (M_N, L_N_vertex also 3000, 3001, 3050 and dump/reset_states/reset_3000_{pre,post}_reset.pt), monitor/...}, receipt.json}
+  reset_probes: runs/probe_{M_N, L_N_vertex}/{model/monitor/{reset_probe.json, reset_probe.npz}, receipt.json} (offline re-read of the two reset states, dry_init 3)
+  meshes: mesh/<run>/{mesh_train.ply, mesh_train_virtual.ply (product layer), mesh_mechanism.ply (mechanism layer), mesh.json, invisible.npz, dist_region_{train,train_virtual,mechanism}.npy, occluders.json (first 3-sigma count, record only), occluders_v2.json (removal and 1-sigma count), figure_views.npz (r8's virtual cameras 3 and 11)}
+  verification: verify/verify_dry.json
+  premeasure_v5: premeasure_v5/{tables.json, cells_<setting>.npz}
+  cases: cases/{cases.json, ga.json, na.json, da.json, ra.json, ma.json, prot.json, reset_layers.json, reset_states_check.json, ra_maps.npz, ma_maps.npz, tables.md}
+  figures: figures/r10_two_fixes_three_checks_summary_v1.png
+runtime_images: [jointbuildgs:geogs-conf-guided-v1 (fork dry runs, trainings, probes, GPU tests, meshes, occluders, reset-state check), jointbuildgs:geogs-official-db40c95-compat-v1 (LoD2Depth renders), jointbuildgs:dev (all other steps)]
+config: configs/phd/stage2_r10_two_fixes_three_checks_v1/r10.json
+scripts: scripts/phd/stage2_r10_two_fixes_three_checks_v1 (run_all.sh)
+tests: [tests/phd/test_prior_propagation_v4.py (CPU, 34 v3 tests on v4 incl. the 24 v2 tests + 11 new, pass), scripts/phd/stage2_r10_two_fixes_three_checks_v1/gpu_tests_r10.py (GPU, r9's 8 groups on r10 + unchanged-function check + order + cell method, pass), verify_dry_r10.py (6 dry runs pass), reset_states_check.py (M_N, L_N_vertex pass)]
+training_schedule: "as PHD-STAGE2-R9-THREE-FIXES-v1: 3,500 iterations, seed 0, 13 training + 2 test views at 1600 x 1157, base settings; read-out red/green checks recorded, not stopping"
+payload_size: about 28 GB
+retention: preserve stage1, inputs, scenes, sources, runs, mesh, verify, premeasure_v5, cases, figures, logs, provenance
