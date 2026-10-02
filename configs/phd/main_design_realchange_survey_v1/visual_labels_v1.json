@@ -1,0 +1,133 @@
+{
+  "task_id": "PHD-MAIN-DESIGN-REALCHANGE-SURVEY-v1",
+  "scientific_verdict": null,
+  "status": "ANALYST_READING_PENDING_HUMAN_REVIEW",
+  "method": "Analyst (assistant) reading of each target row: nadir/oblique photo crop of the 937 current images + MVS-ALS / MVS-LoD2 maps + section with ULS reference. Category is a reading, not a verdict; the human reviewer decides.",
+  "categories": {
+    "REAL": "실제 변화: 드론 LiDAR(참값)·MVS·사진이 같은 방향의 변화를 보임",
+    "REAL_TEMP": "실제 변화이나 임시 시설로 보임(덮개·가설물)",
+    "REAL_SMALL": "실제 변화로 보이나 작음(문턱 근처)",
+    "TRANSIENT": "건물 변화 아님: 크레인·차량·수증기·나무처럼 한 시기에만 있는 물체",
+    "EDGE": "건물 변화 아님: 외벽 경계 띠(처마·피복 경계·평면 차이)",
+    "LOD2_ONLY": "LoD2만 다름(항공 LiDAR 2022 = 현재): LoD2 일반화·모델 오차 또는 2022 이전 변화, 이 자료로 구분 못 함",
+    "UNCERTAIN": "판정 보류"
+  },
+  "labels": {
+    "R1_Z08": {
+      "cat": "REAL",
+      "basis": "ALS",
+      "type_ko": "철거(구조물 제거)",
+      "note_ko": "2022 항공 LiDAR에 높이 약 4~5 m 박공 두 개 모양 상부 표면(다중반사 9 % = 단단한 표면, 분류 20이 95 %), 지금은 포장 광장(사진 0100_D). LoD2 평면은 Z08의 1 %만 덮음."
+    },
+    "C01": {
+      "cat": "TRANSIENT",
+      "basis": "-",
+      "type_ko": "차량",
+      "note_ko": "도로 위 3.3 m 물체, 드론 LiDAR에만 있고 MVS·사진(0045_D)에는 없음 — 드론 LiDAR 취득 때 서 있던 큰 차량으로 보임."
+    },
+    "C02": {
+      "cat": "REAL",
+      "basis": "ALS+LoD2",
+      "type_ko": "증축(지붕 일부 약 +3 m)",
+      "note_ko": "단면에서 지붕 일부가 2022 항공 LiDAR·LoD2보다 2~3 m 높음, MVS도 같음. 드론 LiDAR가 건물의 61 %만 덮음(AX-10 'B112 절반 피복')."
+    },
+    "C03": {
+      "cat": "TRANSIENT",
+      "basis": "-",
+      "type_ko": "굴뚝 수증기",
+      "note_ko": "사진(0139_D)에 굴뚝 수증기 기둥. 드론 LiDAR만 38 m 높이 반사, MVS 일치 0.6 %."
+    },
+    "C04": {
+      "cat": "REAL_TEMP",
+      "basis": "ALS+LoD2",
+      "type_ko": "새 구조물(약 5.3 m, 흰 덮개)",
+      "note_ko": "2022에는 통로(지면), 지금은 흰 덮개를 씌운 5.3 m 구조물(사진 0079_D). 드론 LiDAR·MVS 일치 99.7 %. 가설물일 가능성."
+    },
+    "C05": {
+      "cat": "REAL",
+      "basis": "ALS+LoD2",
+      "type_ko": "철거(약 3 m 단층)",
+      "note_ko": "DEBY_LOD2_4907510(평면 119 m², 높이 3.1 m) 자리가 지금 맨흙(사진 0123_D), 지면이 2022보다 약 0.5 m 낮음."
+    },
+    "C06": {
+      "cat": "REAL",
+      "basis": "ALS+LoD2",
+      "type_ko": "철거(약 3.7 m)",
+      "note_ko": "DEBY_LOD2_4907508(평면 131 m², 높이 4.1 m) 자리에 철거 잔해와 공사 펜스(사진 0126_D). 옆 나무 수관 일부가 같은 덩어리에 섞임(항공 LiDAR 다중반사 70 %)."
+    },
+    "C07": {
+      "cat": "EDGE",
+      "basis": "-",
+      "type_ko": "외벽 경계 띠",
+      "note_ko": "DEBY_LOD2_4959320 동쪽 외벽을 따라 폭 2~4 m 띠. 드론 LiDAR가 이 지붕을 덮지 않음(피복 경계), 사진상 외벽·잔디 그대로. 2026-07-04 기록에도 '실물 확인으로 시간차는 아님'."
+    },
+    "C08": {
+      "cat": "TRANSIENT",
+      "basis": "ALS",
+      "type_ko": "크레인(2022)",
+      "note_ko": "2022 항공 LiDAR에만 40 m 넘는 가는 구조(다중반사 52 %). 지금 지붕은 LoD2와 일치. 크레인으로 보이나 2022 사진이 없어 확인 못 함."
+    },
+    "C09": {
+      "cat": "EDGE",
+      "basis": "-",
+      "type_ko": "외벽 경계 띠",
+      "note_ko": "C07과 같은 외벽의 다른 토막."
+    },
+    "C10": {
+      "cat": "TRANSIENT",
+      "basis": "ALS",
+      "type_ko": "나무 제거로 보임(2022 수관 약 19~23 m)",
+      "note_ko": "곡면 지붕 끝 위 2022 구조. 항공 LiDAR 점의 다중반사 93 %, 분류 20이 73 % → 나무 수관. 지금 그 자리는 비어 있음(벌목·가지치기로 보임). 건물 변화 아님."
+    },
+    "C11": {
+      "cat": "REAL",
+      "basis": "ALS+LoD2",
+      "type_ko": "지붕 재건(박공 → 평지붕, 약 −4.6 m)",
+      "note_ko": "B173 = DEBY_LOD2_4959326. 양쪽 날개 박공 지붕(약 21~23 m)이 약 15.5 m 녹화 평지붕으로, 가운데 톱날 채광 지붕은 그대로(단면·사진 0144_D)."
+    },
+    "C12": {
+      "cat": "TRANSIENT",
+      "basis": "ALS",
+      "type_ko": "나무 제거로 보임(2022 수관 약 14 m)",
+      "note_ko": "두 건물 사이 2022 구조. 항공 LiDAR 점의 다중반사 95 %, 분류 20이 69 %(분류 6은 15 %) → 나무 수관. 지금은 공조기가 있는 낮은 틈(사진 0055_D). 건물 변화 아님."
+    },
+    "C14": {
+      "cat": "EDGE",
+      "basis": "-",
+      "type_ko": "외벽 경계 띠",
+      "note_ko": "LoD2 평면 밖 처마·돌출부; 항공 LiDAR 기준 차이 없음."
+    },
+    "C27": {
+      "cat": "REAL_SMALL",
+      "basis": "ALS+LoD2",
+      "type_ko": "작은 새 구조물(약 3 m)",
+      "note_ko": "건물 모서리 옆 약 3 m 낮은 구조(차양·창고류로 보임). 2022 항공 LiDAR는 지면. 넓이 27.5 m²로 문턱 근처."
+    },
+    "C30": {
+      "cat": "EDGE",
+      "basis": "-",
+      "type_ko": "외벽 경계 띠",
+      "note_ko": "LoD2 평면 밖 처마; 항공 LiDAR·MVS 기준 차이 없음."
+    },
+    "C33": {
+      "cat": "LOD2_ONLY",
+      "basis": "LoD2",
+      "type_ko": "LoD2만 높음(9 m vs 4.3 m)",
+      "note_ko": "2022·2024 모두 4.3 m인데 LoD2만 9 m."
+    },
+    "C17": {
+      "cat": "LOD2_ONLY",
+      "basis": "LoD2",
+      "type_ko": "LoD2만 다름(계단 vs 경사 지붕)",
+      "note_ko": "LoD2는 17 m 계단으로 끊고 실제(2022·2024)는 24→17 m 경사 지붕; |ULS-ALS| 중앙값 0.59 m."
+    },
+    "C34": {
+      "cat": "LOD2_ONLY",
+      "basis": "LoD2",
+      "type_ko": "LoD2만 다름(곡면 지붕 가장자리)",
+      "note_ko": "곡면 지붕 가장자리 바깥까지 LoD2가 18 m 평면을 연장; 2022·2024는 외벽에서 지면으로 떨어짐."
+    }
+  },
+  "default_for_lod2_only_components": "LOD2_ONLY when the median |ULS - ALS| inside the component is < 0.5 m (computed in s6); spot-checked rows C13, C17, C18, C22, C24, C28, C29, C31, C32, C35 show roof-shape simplification, missing roof superstructures or vault approximation.",
+  "multireturn_rule": "Tree crowns vs solid structures: ALS 2022 multi-return share inside the component (qa/candidate_multireturn.json); solid roofs 0.09-0.26, tree crowns 0.87-0.99 in this survey."
+}

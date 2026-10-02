@@ -1,0 +1,75 @@
+"""Height conversion of a depth residual: the one implementation stage 1 and stage 2 call (prior_propagation_v2,
+PHD-STAGE2-R8-FOUR-CASES-v1; the formulas are those of v1, unchanged).
+
+Depth maps hold camera-Z depth: a pixel's 3-D point is C + z * d with d = R^T (x_n, y_n, 1), x_n = (u + 0.5 - c_x) / f_x
+(Open3D create_rays_pinhole / LoD2Depth convention, pixel centres). A camera-Z residual dz moves the point by dz * d.
+Its distance from a surface with unit normal n is |dz| * |n.d|; its vertical offset over that surface is
+|dz| * |n.d| / |n_z|. The method document writes the same with the unit ray direction d_hat and the residual along the
+ray (range) drho = dz * |d|: drho * |n.d_hat| / |n_z|. Both give the same metres (test_conversion_forms_agree).
+
+  roof-like surface (|n_z| >= ROOF_NZ) : f = |n.d| / |n_z|    vertical offset
+  wall-like surface (|n_z| <  ROOF_NZ) : f = |n.d|            offset along the surface normal
+  pixel without a surface              : f = |d_z|            vertical component of the ray
+
+n is the normal of the scene's own prior surface at the pixel: the LoD2 polygon, or the TIN triangle the pixel hit.
+
+v2 adds offset_metres: the distance u_i of eq. (7) between a Gaussian and its initial position, measured the same way
+(vertical offset over the initial surface on roof-like surfaces, along its normal on wall-like ones, vertical without a
+surface), so that the protection bound 4 tau and the truncation point 4 tau of eq. (5) are the same distance."""
+import numpy as np
+
+ROOF_NZ = 0.5
+KIND_NONE, KIND_ROOF, KIND_WALL = 0, 1, 2
+
+
+def camera_centre(R, t):
+    return -np.asarray(R).T @ np.asarray(t)
+
+
+def pixel_rays(fx, fy, cx, cy, R, W, H, flat_idx=None, dtype=np.float32):
+    """R^T (x_n, y_n, 1) at the pixel centres. flat_idx None -> [H, W, 3]; else [N, 3] for the flat pixel indices."""
+    R = np.asarray(R, np.float64)
+    if flat_idx is None:
+        xn = ((np.arange(W) + 0.5 - cx) / fx)[None, :]
+        yn = ((np.arange(H) + 0.5 - cy) / fy)[:, None]
+    else:
+        v, u = np.divmod(np.asarray(flat_idx, np.int64), W)
+        xn = (u + 0.5 - cx) / fx
+        yn = (v + 0.5 - cy) / fy
+    return np.stack([(R[0, k] * xn + R[1, k] * yn + R[2, k]).astype(dtype) for k in range(3)], -1)
+
+
+def surface_kind(nz, roof_nz=ROOF_NZ):
+    """KIND_ROOF where |n_z| >= roof_nz, else KIND_WALL."""
+    return np.where(np.abs(nz) >= roof_nz, KIND_ROOF, KIND_WALL).astype(np.int8)
+
+
+def factor(n, d, has_surface=None, roof_nz=ROOF_NZ):
+    """Metres per metre of camera depth (see module text). n [..., 3] unit normals, d [..., 3] rays of pixel_rays,
+    has_surface [...] bool (None = every pixel has a surface). Same dtype as d."""
+    n = np.asarray(n); d = np.asarray(d)
+    nd = np.abs((n * d).sum(-1))
+    nz = np.abs(n[..., 2])
+    f = np.where(nz >= roof_nz, nd / np.maximum(nz, 1e-12), nd)
+    if has_surface is not None:
+        f = np.where(has_surface, f, np.abs(d[..., 2]))
+    return f.astype(d.dtype, copy=False)
+
+
+def residual_metres(r_camz, f):
+    """Signed residual in metres (vertical on roof-like surfaces, along the normal on wall-like ones)."""
+    return r_camz * f
+
+
+def offset_metres(disp, n, kind):
+    """u of eq. (7) for displacements disp [N, 3] from the initial positions: |n.disp| / |n_z| where kind == KIND_ROOF,
+    |n.disp| where kind == KIND_WALL, |disp_z| where kind == KIND_NONE (no surface). n [N, 3] unit normals of the initial
+    surface (ignored for KIND_NONE). numpy arrays or torch tensors (same backend for all three)."""
+    nd = abs((disp * n).sum(-1))
+    nz = abs(n[..., 2])
+    if isinstance(nd, np.ndarray):
+        roof = nd / np.maximum(nz, 1e-12)
+        return np.where(kind == KIND_ROOF, roof, np.where(kind == KIND_WALL, nd, np.abs(disp[..., 2])))
+    import torch
+    roof = nd / nz.clamp_min(1e-12)
+    return torch.where(kind == KIND_ROOF, roof, torch.where(kind == KIND_WALL, nd, disp[..., 2].abs()))
